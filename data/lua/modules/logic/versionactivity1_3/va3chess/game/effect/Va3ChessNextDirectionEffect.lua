@@ -1,44 +1,56 @@
-module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessNextDirectionEffect", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessNextDirectionEffect", package.seeall)
 
-slot0 = class("Va3ChessNextDirectionEffect", Va3ChessEffectBase)
+local var_0_0 = class("Va3ChessNextDirectionEffect", Va3ChessEffectBase)
 
-function slot0.refreshEffect(slot0)
+function var_0_0.refreshEffect(arg_1_0)
+	return
 end
 
-function slot0.onDispose(slot0)
+function var_0_0.onDispose(arg_2_0)
+	return
 end
 
-function slot0.refreshNextDirFlag(slot0)
-	if slot0._target.originData.data and slot0._target.originData.data.alertArea then
-		slot1 = slot0._target.originData.posX
-		slot2 = slot0._target.originData.posY
+function var_0_0.refreshNextDirFlag(arg_3_0)
+	if arg_3_0._target.originData.data and arg_3_0._target.originData.data.alertArea then
+		local var_3_0 = arg_3_0._target.originData.posX
+		local var_3_1 = arg_3_0._target.originData.posY
+		local var_3_2 = arg_3_0._target.originData.data.alertArea
 
-		if #slot0._target.originData.data.alertArea == 1 then
-			slot0._target:getHandler():faceTo(Va3ChessMapUtils.ToDirection(slot0._target.originData.posX, slot0._target.originData.posY, slot3[1].x, slot3[1].y))
+		if #var_3_2 == 1 then
+			local var_3_3 = var_3_2[1].x
+			local var_3_4 = var_3_2[1].y
+			local var_3_5 = arg_3_0._target.originData.posX
+			local var_3_6 = arg_3_0._target.originData.posY
+			local var_3_7 = Va3ChessMapUtils.ToDirection(var_3_5, var_3_6, var_3_3, var_3_4)
+
+			arg_3_0._target:getHandler():faceTo(var_3_7)
 		end
 	end
 end
 
-function slot0.onAvatarLoaded(slot0)
-	slot1 = slot0._loader
+function var_0_0.onAvatarLoaded(arg_4_0)
+	local var_4_0 = arg_4_0._loader
 
-	if not slot0._loader then
+	if not arg_4_0._loader then
 		return
 	end
 
-	if not gohelper.isNil(slot1:getInstGO()) then
-		slot3 = slot0._target.avatar
+	local var_4_1 = var_4_0:getInstGO()
 
-		for slot7, slot8 in ipairs(Va3ChessInteractObject.DirectionList) do
-			slot9 = gohelper.findChild(slot2, "dir_" .. slot8)
-			slot3.goNextDirection = slot2
-			slot3["goMovetoDir" .. slot8] = slot9
+	if not gohelper.isNil(var_4_1) then
+		local var_4_2 = arg_4_0._target.avatar
 
-			gohelper.setActive(slot9, false)
+		for iter_4_0, iter_4_1 in ipairs(Va3ChessInteractObject.DirectionList) do
+			local var_4_3 = gohelper.findChild(var_4_1, "dir_" .. iter_4_1)
+
+			var_4_2.goNextDirection = var_4_1
+			var_4_2["goMovetoDir" .. iter_4_1] = var_4_3
+
+			gohelper.setActive(var_4_3, false)
 		end
 	end
 
-	slot0:refreshNextDirFlag()
+	arg_4_0:refreshNextDirFlag()
 end
 
-return slot0
+return var_0_0

@@ -1,60 +1,64 @@
-module("modules.logic.room.model.record.RoomTradeTaskListModel", package.seeall)
+﻿module("modules.logic.room.model.record.RoomTradeTaskListModel", package.seeall)
 
-slot0 = class("RoomTradeTaskListModel", ListScrollModel)
+local var_0_0 = class("RoomTradeTaskListModel", ListScrollModel)
 
-function slot0.setMoList(slot0, slot1)
-	if LuaUtil.tableNotEmpty(RoomTradeTaskModel.instance:getLevelTaskMo(slot1) or {}) then
-		table.sort(slot2, slot0.sort)
+function var_0_0.setMoList(arg_1_0, arg_1_1)
+	local var_1_0 = RoomTradeTaskModel.instance:getLevelTaskMo(arg_1_1) or {}
+
+	if LuaUtil.tableNotEmpty(var_1_0) then
+		table.sort(var_1_0, arg_1_0.sort)
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 
-	return slot2
+	return var_1_0
 end
 
-function slot0.sort(slot0, slot1)
-	slot2 = slot0.co
-	slot3 = slot1.co
+function var_0_0.sort(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0.co
+	local var_2_1 = arg_2_1.co
 
-	if slot0.hasFinish ~= slot1.hasFinish then
-		return slot1.hasFinish
+	if arg_2_0.hasFinish ~= arg_2_1.hasFinish then
+		return arg_2_1.hasFinish
 	end
 
-	if slot2 and slot3 then
-		return slot2.sortId < slot3.sortId
+	if var_2_0 and var_2_1 then
+		return var_2_0.sortId < var_2_1.sortId
 	end
 
-	return slot0.id < slot1.id
+	return arg_2_0.id < arg_2_1.id
 end
 
-function slot0.getNewFinishTaskIds(slot0, slot1)
-	slot2 = {}
+function var_0_0.getNewFinishTaskIds(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+	local var_3_1 = RoomTradeTaskModel.instance:getLevelTaskMo(arg_3_1)
 
-	if RoomTradeTaskModel.instance:getLevelTaskMo(slot1) then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot8.new then
-				table.insert(slot2, slot8.id)
+	if var_3_1 then
+		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+			if iter_3_1.new then
+				table.insert(var_3_0, iter_3_1.id)
 			end
 		end
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.getFinishOrNotTaskIds(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getFinishOrNotTaskIds(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = {}
+	local var_4_1 = RoomTradeTaskModel.instance:getLevelTaskMo(arg_4_1)
 
-	if RoomTradeTaskModel.instance:getLevelTaskMo(slot1) then
-		for slot8, slot9 in ipairs(slot4) do
-			if slot9:isFinish() == slot2 then
-				table.insert(slot3, slot9.id)
+	if var_4_1 then
+		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+			if iter_4_1:isFinish() == arg_4_2 then
+				table.insert(var_4_0, iter_4_1.id)
 			end
 		end
 	end
 
-	return slot3
+	return var_4_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,14 +1,15 @@
-module("modules.logic.versionactivity.view.VersionActivityVideoViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityVideoViewContainer", package.seeall)
 
-slot0 = class("VersionActivityVideoViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivityVideoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivityVideoView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-return slot0
+return var_0_0

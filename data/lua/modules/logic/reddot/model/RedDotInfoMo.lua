@@ -1,18 +1,18 @@
-module("modules.logic.reddot.model.RedDotInfoMo", package.seeall)
+﻿module("modules.logic.reddot.model.RedDotInfoMo", package.seeall)
 
-slot0 = pureTable("RedDotInfoMo")
+local var_0_0 = pureTable("RedDotInfoMo")
 
-function slot0.init(slot0, slot1)
-	slot0.uid = tonumber(slot1.id)
-	slot0.value = tonumber(slot1.value)
-	slot0.time = slot1.time
-	slot0.ext = slot1.ext
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.uid = tonumber(arg_1_1.id)
+	arg_1_0.value = tonumber(arg_1_1.value)
+	arg_1_0.time = arg_1_1.time
+	arg_1_0.ext = arg_1_1.ext
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.value = tonumber(slot1.value)
-	slot0.time = slot1.time
-	slot0.ext = slot1.ext
+function var_0_0.reset(arg_2_0, arg_2_1)
+	arg_2_0.value = tonumber(arg_2_1.value)
+	arg_2_0.time = arg_2_1.time
+	arg_2_0.ext = arg_2_1.ext
 end
 
-return slot0
+return var_0_0

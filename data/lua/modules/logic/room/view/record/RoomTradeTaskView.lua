@@ -1,381 +1,397 @@
-module("modules.logic.room.view.record.RoomTradeTaskView", package.seeall)
+﻿module("modules.logic.room.view.record.RoomTradeTaskView", package.seeall)
 
-slot0 = class("RoomTradeTaskView", BaseView)
+local var_0_0 = class("RoomTradeTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnlog = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_log")
-	slot0._gologreddot = gohelper.findChild(slot0.viewGO, "root/#btn_log/#go_logreddot")
-	slot0._btnhandbook = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_handbook")
-	slot0._gohandbookreddot = gohelper.findChild(slot0.viewGO, "root/#btn_handbook/#go_handbookreddot")
-	slot0._simageidcard = gohelper.findChildSingleImage(slot0.viewGO, "root/playerInfo/#simage_idcard")
-	slot0._txtplayername = gohelper.findChildText(slot0.viewGO, "root/playerInfo/#txt_playername")
-	slot0._txtplayerId = gohelper.findChildText(slot0.viewGO, "root/playerInfo/#txt_playerId")
-	slot0._simageheroIcon = gohelper.findChildSingleImage(slot0.viewGO, "root/playerInfo/#simage_heroIcon")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "root/playerInfo/#txt_level")
-	slot0._txtscale = gohelper.findChildText(slot0.viewGO, "root/playerInfo/#txt_scale")
-	slot0._golevelUp = gohelper.findChild(slot0.viewGO, "root/levelup/#go_levelUp")
-	slot0._scrolllevel = gohelper.findChildScrollRect(slot0.viewGO, "root/levelup/#go_levelUp/#scroll_level")
-	slot0._txtleveluptip = gohelper.findChildText(slot0.viewGO, "root/levelup/#go_levelUp/#txt_levelup_tip")
-	slot0._btnlevelup = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/levelup/#go_levelUp/#btn_levelup")
-	slot0._golevelupreddot = gohelper.findChild(slot0.viewGO, "root/levelup/#go_levelUp/#btn_levelup/#go_levelupreddot")
-	slot0._gomax = gohelper.findChild(slot0.viewGO, "root/levelup/#go_max")
-	slot0._txttasktitle = gohelper.findChildText(slot0.viewGO, "root/task/title/txt_task_title")
-	slot0._btntaskleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/task/title/#btn_taskleft")
-	slot0._btntaskright = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/task/title/#btn_taskright")
-	slot0._scrolltask = gohelper.findChildScrollRect(slot0.viewGO, "root/task/#scroll_task")
-	slot0._txtrewardtitle = gohelper.findChildText(slot0.viewGO, "root/reward/#txt_reward_title")
-	slot0._btnrewardleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/reward/#txt_reward_title/#btn_rewardleft")
-	slot0._gorewardleftreddot = gohelper.findChild(slot0.viewGO, "root/reward/#txt_reward_title/#btn_rewardleft/#go_leftreddot")
-	slot0._btnrewardright = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/reward/#txt_reward_title/#btn_rewardright")
-	slot0._gorewardrightreddot = gohelper.findChild(slot0.viewGO, "root/reward/#txt_reward_title/#btn_rewardright/#go_rightreddot")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "root/reward/#scroll_reward")
-	slot0._gotaskrewarditem = gohelper.findChild(slot0.viewGO, "root/reward/#scroll_reward/Viewport/Content/#go_taskrewarditem")
-	slot0._btngetclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/reward/#scroll_reward/#btn_getclick")
-	slot0._txtprogress = gohelper.findChildText(slot0.viewGO, "root/reward/progress/#txt_progress")
-	slot0._gopoint = gohelper.findChild(slot0.viewGO, "root/reward/point/#go_point")
-	slot0._btnachievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_achievement")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnlog = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_log")
+	arg_1_0._gologreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_log/#go_logreddot")
+	arg_1_0._btnhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_handbook")
+	arg_1_0._gohandbookreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_handbook/#go_handbookreddot")
+	arg_1_0._simageidcard = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/playerInfo/#simage_idcard")
+	arg_1_0._txtplayername = gohelper.findChildText(arg_1_0.viewGO, "root/playerInfo/#txt_playername")
+	arg_1_0._txtplayerId = gohelper.findChildText(arg_1_0.viewGO, "root/playerInfo/#txt_playerId")
+	arg_1_0._simageheroIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/playerInfo/#simage_heroIcon")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "root/playerInfo/#txt_level")
+	arg_1_0._txtscale = gohelper.findChildText(arg_1_0.viewGO, "root/playerInfo/#txt_scale")
+	arg_1_0._golevelUp = gohelper.findChild(arg_1_0.viewGO, "root/levelup/#go_levelUp")
+	arg_1_0._scrolllevel = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/levelup/#go_levelUp/#scroll_level")
+	arg_1_0._txtleveluptip = gohelper.findChildText(arg_1_0.viewGO, "root/levelup/#go_levelUp/#txt_levelup_tip")
+	arg_1_0._btnlevelup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/levelup/#go_levelUp/#btn_levelup")
+	arg_1_0._golevelupreddot = gohelper.findChild(arg_1_0.viewGO, "root/levelup/#go_levelUp/#btn_levelup/#go_levelupreddot")
+	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "root/levelup/#go_max")
+	arg_1_0._txttasktitle = gohelper.findChildText(arg_1_0.viewGO, "root/task/title/txt_task_title")
+	arg_1_0._btntaskleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/task/title/#btn_taskleft")
+	arg_1_0._btntaskright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/task/title/#btn_taskright")
+	arg_1_0._scrolltask = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/task/#scroll_task")
+	arg_1_0._txtrewardtitle = gohelper.findChildText(arg_1_0.viewGO, "root/reward/#txt_reward_title")
+	arg_1_0._btnrewardleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward/#txt_reward_title/#btn_rewardleft")
+	arg_1_0._gorewardleftreddot = gohelper.findChild(arg_1_0.viewGO, "root/reward/#txt_reward_title/#btn_rewardleft/#go_leftreddot")
+	arg_1_0._btnrewardright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward/#txt_reward_title/#btn_rewardright")
+	arg_1_0._gorewardrightreddot = gohelper.findChild(arg_1_0.viewGO, "root/reward/#txt_reward_title/#btn_rewardright/#go_rightreddot")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/reward/#scroll_reward")
+	arg_1_0._gotaskrewarditem = gohelper.findChild(arg_1_0.viewGO, "root/reward/#scroll_reward/Viewport/Content/#go_taskrewarditem")
+	arg_1_0._btngetclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward/#scroll_reward/#btn_getclick")
+	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "root/reward/progress/#txt_progress")
+	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "root/reward/point/#go_point")
+	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_achievement")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlog:AddClickListener(slot0._btnlogOnClick, slot0)
-	slot0._btnhandbook:AddClickListener(slot0._btnhandbookOnClick, slot0)
-	slot0._btnlevelup:AddClickListener(slot0._btnlevelupOnClick, slot0)
-	slot0._btntaskleft:AddClickListener(slot0._btntaskleftOnClick, slot0)
-	slot0._btntaskright:AddClickListener(slot0._btntaskrightOnClick, slot0)
-	slot0._btnrewardleft:AddClickListener(slot0._btnrewardleftOnClick, slot0)
-	slot0._btnrewardright:AddClickListener(slot0._btnrewardrightOnClick, slot0)
-	slot0._btngetclick:AddClickListener(slot0._btngetclickOnClick, slot0)
-	slot0._btnachievement:AddClickListener(slot0._btnachievementOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlog:AddClickListener(arg_2_0._btnlogOnClick, arg_2_0)
+	arg_2_0._btnhandbook:AddClickListener(arg_2_0._btnhandbookOnClick, arg_2_0)
+	arg_2_0._btnlevelup:AddClickListener(arg_2_0._btnlevelupOnClick, arg_2_0)
+	arg_2_0._btntaskleft:AddClickListener(arg_2_0._btntaskleftOnClick, arg_2_0)
+	arg_2_0._btntaskright:AddClickListener(arg_2_0._btntaskrightOnClick, arg_2_0)
+	arg_2_0._btnrewardleft:AddClickListener(arg_2_0._btnrewardleftOnClick, arg_2_0)
+	arg_2_0._btnrewardright:AddClickListener(arg_2_0._btnrewardrightOnClick, arg_2_0)
+	arg_2_0._btngetclick:AddClickListener(arg_2_0._btngetclickOnClick, arg_2_0)
+	arg_2_0._btnachievement:AddClickListener(arg_2_0._btnachievementOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlog:RemoveClickListener()
-	slot0._btnhandbook:RemoveClickListener()
-	slot0._btnlevelup:RemoveClickListener()
-	slot0._btntaskleft:RemoveClickListener()
-	slot0._btntaskright:RemoveClickListener()
-	slot0._btnrewardleft:RemoveClickListener()
-	slot0._btnrewardright:RemoveClickListener()
-	slot0._btngetclick:RemoveClickListener()
-	slot0._btnachievement:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlog:RemoveClickListener()
+	arg_3_0._btnhandbook:RemoveClickListener()
+	arg_3_0._btnlevelup:RemoveClickListener()
+	arg_3_0._btntaskleft:RemoveClickListener()
+	arg_3_0._btntaskright:RemoveClickListener()
+	arg_3_0._btnrewardleft:RemoveClickListener()
+	arg_3_0._btnrewardright:RemoveClickListener()
+	arg_3_0._btngetclick:RemoveClickListener()
+	arg_3_0._btnachievement:RemoveClickListener()
 end
 
-function slot0._btnlogOnClick(slot0)
+function var_0_0._btnlogOnClick(arg_4_0)
 	RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
 		animName = RoomRecordEnum.AnimName.Task2Log,
 		view = RoomRecordEnum.View.Log
 	})
 end
 
-function slot0._btnhandbookOnClick(slot0)
+function var_0_0._btnhandbookOnClick(arg_5_0)
 	RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
 		animName = RoomRecordEnum.AnimName.Task2HandBook,
 		view = RoomRecordEnum.View.HandBook
 	})
 end
 
-function slot0._btngetclickOnClick(slot0)
-	if not slot0._selectTaskRewardIndex then
+function var_0_0._btngetclickOnClick(arg_6_0)
+	if not arg_6_0._selectTaskRewardIndex then
 		return
 	end
 
-	slot1, slot2 = RoomTradeTaskModel.instance:isCanLevelBonus(slot0._selectTaskRewardIndex)
+	local var_6_0, var_6_1 = RoomTradeTaskModel.instance:isCanLevelBonus(arg_6_0._selectTaskRewardIndex)
 
-	if slot2 then
+	if var_6_1 then
 		return
 	end
 
-	if not slot1 then
+	if not var_6_0 then
 		return
 	end
 
-	RoomRpc.instance:sendGetTradeSupportBonusRequest(slot0._selectTaskRewardIndex)
+	RoomRpc.instance:sendGetTradeSupportBonusRequest(arg_6_0._selectTaskRewardIndex)
 end
 
-function slot0._btnlevelupOnClick(slot0)
+function var_0_0._btnlevelupOnClick(arg_7_0)
 	if RoomTradeTaskModel.instance:isCanLevelUp() then
 		RoomRpc.instance:sendTradeLevelUpRequest()
 	end
 end
 
-slot0.SwitchAnimTime = 0.16
-slot0.SwitchAnimTime2 = 0.367
+var_0_0.SwitchAnimTime = 0.16
+var_0_0.SwitchAnimTime2 = 0.367
 
-function slot0._btntaskleftOnClick(slot0)
-	if slot0._isLongPress then
+function var_0_0._btntaskleftOnClick(arg_8_0)
+	if arg_8_0._isLongPress then
 		return
 	end
 
-	slot0:_btntaskleftOnClickCallBack()
+	arg_8_0:_btntaskleftOnClickCallBack()
 end
 
-function slot0._btntaskleftOnClickCallBack(slot0)
-	if slot0._isPlayingTaskSwitchAnim or slot0._curShowLevel <= 1 then
+function var_0_0._btntaskleftOnClickCallBack(arg_9_0)
+	if arg_9_0._isPlayingTaskSwitchAnim or arg_9_0._curShowLevel <= 1 then
 		return
 	end
 
-	slot0._isPlayingTaskSwitchAnim = true
+	arg_9_0._isPlayingTaskSwitchAnim = true
 
-	slot0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
-	TaskDispatcher.runDelay(slot0._cutLastLevelTask, slot0, uv0.SwitchAnimTime)
+	arg_9_0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
+	TaskDispatcher.runDelay(arg_9_0._cutLastLevelTask, arg_9_0, var_0_0.SwitchAnimTime)
 end
 
-function slot0._btntaskrightOnClick(slot0)
-	if slot0._isLongPress then
+function var_0_0._btntaskrightOnClick(arg_10_0)
+	if arg_10_0._isLongPress then
 		return
 	end
 
-	slot0:_btntasRighttOnClickCallBack()
+	arg_10_0:_btntasRighttOnClickCallBack()
 end
 
-function slot0._btntasRighttOnClickCallBack(slot0)
-	if slot0._isPlayingTaskSwitchAnim or slot0:_getMaxLevel() <= slot0._curShowLevel then
+function var_0_0._btntasRighttOnClickCallBack(arg_11_0)
+	if arg_11_0._isPlayingTaskSwitchAnim or arg_11_0._curShowLevel >= arg_11_0:_getMaxLevel() then
 		return
 	end
 
-	slot0._isPlayingTaskSwitchAnim = true
+	arg_11_0._isPlayingTaskSwitchAnim = true
 
-	slot0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
-	TaskDispatcher.runDelay(slot0._cutNextLevelTask, slot0, uv0.SwitchAnimTime)
+	arg_11_0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
+	TaskDispatcher.runDelay(arg_11_0._cutNextLevelTask, arg_11_0, var_0_0.SwitchAnimTime)
 end
 
-function slot0._btnrewardleftOnClick(slot0)
-	if slot0._isPlayingRewardSwitchAnim or slot0._selectTaskRewardIndex <= 1 then
+function var_0_0._btnrewardleftOnClick(arg_12_0)
+	if arg_12_0._isPlayingRewardSwitchAnim or arg_12_0._selectTaskRewardIndex <= 1 then
 		return
 	end
 
-	slot0._isPlayingRewardSwitchAnim = true
+	arg_12_0._isPlayingRewardSwitchAnim = true
 
-	slot0._rewardAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
-	TaskDispatcher.runDelay(slot0._cutLastTaskReward, slot0, uv0.SwitchAnimTime)
+	arg_12_0._rewardAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
+	TaskDispatcher.runDelay(arg_12_0._cutLastTaskReward, arg_12_0, var_0_0.SwitchAnimTime)
 end
 
-function slot0._btnrewardrightOnClick(slot0)
-	if slot0._isPlayingRewardSwitchAnim or slot0._rewardPointPage <= slot0._selectTaskRewardIndex then
+function var_0_0._btnrewardrightOnClick(arg_13_0)
+	if arg_13_0._isPlayingRewardSwitchAnim or arg_13_0._selectTaskRewardIndex >= arg_13_0._rewardPointPage then
 		return
 	end
 
-	slot0._isPlayingRewardSwitchAnim = true
+	arg_13_0._isPlayingRewardSwitchAnim = true
 
-	slot0._rewardAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
-	TaskDispatcher.runDelay(slot0._cutNextTaskReward, slot0, uv0.SwitchAnimTime)
+	arg_13_0._rewardAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
+	TaskDispatcher.runDelay(arg_13_0._cutNextTaskReward, arg_13_0, var_0_0.SwitchAnimTime)
 end
 
-function slot0._btnachievementOnClick(slot0)
-	if ActivityConfig.instance:getActivityCo(VersionActivity2_2Enum.ActivityId.RoomCritter) and slot1.achievementJumpId and JumpConfig.instance:getJumpConfig(tonumber(slot2)) then
-		slot5 = string.split(slot3.param, "#")
+function var_0_0._btnachievementOnClick(arg_14_0)
+	local var_14_0 = ActivityConfig.instance:getActivityCo(VersionActivity2_2Enum.ActivityId.RoomCritter)
+	local var_14_1 = var_14_0 and var_14_0.achievementJumpId
 
-		AchievementController.instance:openAchievementGroupPreView(tonumber(slot5[3]), slot5[4])
+	if var_14_1 then
+		local var_14_2 = tonumber(var_14_1)
+		local var_14_3 = JumpConfig.instance:getJumpConfig(var_14_2)
+
+		if var_14_3 then
+			local var_14_4 = var_14_3.param
+			local var_14_5 = string.split(var_14_4, "#")
+
+			AchievementController.instance:openAchievementGroupPreView(tonumber(var_14_5[3]), var_14_5[4])
+		end
 	end
 end
 
-function slot0._ontaskleftLongPress(slot0)
-	if slot0._isPlayingTaskSwitchAnim then
+function var_0_0._ontaskleftLongPress(arg_15_0)
+	if arg_15_0._isPlayingTaskSwitchAnim then
 		return
 	end
 
-	if slot0:_getNotFinishTaskLevel(true) and slot1 == slot0._curShowLevel then
+	local var_15_0 = arg_15_0:_getNotFinishTaskLevel(true)
+
+	if var_15_0 and var_15_0 == arg_15_0._curShowLevel then
 		return
 	end
 
-	slot0._isLongPress = true
+	arg_15_0._isLongPress = true
 
-	slot0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
-	TaskDispatcher.runDelay(slot0._btntaskleftOnClickCallBack, slot0, uv0.SwitchAnimTime2)
+	arg_15_0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
+	TaskDispatcher.runDelay(arg_15_0._btntaskleftOnClickCallBack, arg_15_0, var_0_0.SwitchAnimTime2)
 end
 
-function slot0._ontaskrightLongPress(slot0)
-	if slot0._isPlayingTaskSwitchAnim then
+function var_0_0._ontaskrightLongPress(arg_16_0)
+	if arg_16_0._isPlayingTaskSwitchAnim then
 		return
 	end
 
-	if slot0:_getNotFinishTaskLevel(false) and slot1 == slot0._curShowLevel then
+	local var_16_0 = arg_16_0:_getNotFinishTaskLevel(false)
+
+	if var_16_0 and var_16_0 == arg_16_0._curShowLevel then
 		return
 	end
 
-	slot0._isLongPress = true
+	arg_16_0._isLongPress = true
 
-	slot0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
-	TaskDispatcher.runDelay(slot0._btntasRighttOnClickCallBack, slot0, uv0.SwitchAnimTime2)
+	arg_16_0._taskAnimator:Play(RoomTradeEnum.TradeTaskAnim.Swicth, 0, 0)
+	TaskDispatcher.runDelay(arg_16_0._btntasRighttOnClickCallBack, arg_16_0, var_0_0.SwitchAnimTime2)
 end
 
-function slot0._onClicktaskleftDownHandler(slot0)
-	slot0._isLongPress = nil
+function var_0_0._onClicktaskleftDownHandler(arg_17_0)
+	arg_17_0._isLongPress = nil
 end
 
-function slot0._onClicktaskrightDownHandler(slot0)
-	slot0._isLongPress = nil
+function var_0_0._onClicktaskrightDownHandler(arg_18_0)
+	arg_18_0._isLongPress = nil
 end
 
-function slot0._getNotFinishTaskLevel(slot0, slot1)
-	if slot1 then
-		if slot0._curShowLevel <= 1 or not slot0._curShowLevel then
+function var_0_0._getNotFinishTaskLevel(arg_19_0, arg_19_1)
+	if arg_19_1 then
+		if arg_19_0._curShowLevel <= 1 or not arg_19_0._curShowLevel then
 			return
 		end
 
-		for slot5 = slot0._curShowLevel - 1, 2 do
-			if RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(slot5, false) then
-				return slot5
+		for iter_19_0 = arg_19_0._curShowLevel - 1, 2 do
+			if RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(iter_19_0, false) then
+				return iter_19_0
 			end
 		end
 	else
-		if slot0:_getCurLevel() <= slot0._curShowLevel or not slot0._curShowLevel then
+		if arg_19_0._curShowLevel >= arg_19_0:_getCurLevel() or not arg_19_0._curShowLevel then
 			return
 		end
 
-		for slot5 = slot0._curShowLevel + 1, slot0:_getCurLevel() do
-			if RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(slot5, false) then
-				return slot5
+		for iter_19_1 = arg_19_0._curShowLevel + 1, arg_19_0:_getCurLevel() do
+			if RoomTradeTaskListModel.instance:getFinishOrNotTaskIds(iter_19_1, false) then
+				return iter_19_1
 			end
 		end
 	end
 end
 
-slot1 = 2
-slot2 = 99999
+local var_0_1 = 2
+local var_0_2 = 99999
 
-function slot0._editableInitView(slot0)
-	slot0._goReward = gohelper.findChild(slot0.viewGO, "root/reward")
-	slot0._gotask = gohelper.findChild(slot0.viewGO, "root/task")
+function var_0_0._editableInitView(arg_20_0)
+	arg_20_0._goReward = gohelper.findChild(arg_20_0.viewGO, "root/reward")
+	arg_20_0._gotask = gohelper.findChild(arg_20_0.viewGO, "root/task")
 
-	gohelper.setActive(slot0._gotaskrewarditem, false)
-	gohelper.setActive(slot0._gopoint, false)
+	gohelper.setActive(arg_20_0._gotaskrewarditem, false)
+	gohelper.setActive(arg_20_0._gopoint, false)
 
-	slot0._rewardAnimator = slot0._goReward:GetComponent(typeof(UnityEngine.Animator))
-	slot0._taskAnimator = slot0._gotask:GetComponent(typeof(UnityEngine.Animator))
-	slot0._btntaskleftlongPrees = SLFramework.UGUI.UILongPressListener.Get(slot0._btntaskleft.gameObject)
+	arg_20_0._rewardAnimator = arg_20_0._goReward:GetComponent(typeof(UnityEngine.Animator))
+	arg_20_0._taskAnimator = arg_20_0._gotask:GetComponent(typeof(UnityEngine.Animator))
+	arg_20_0._btntaskleftlongPrees = SLFramework.UGUI.UILongPressListener.Get(arg_20_0._btntaskleft.gameObject)
 
-	slot0._btntaskleftlongPrees:SetLongPressTime({
-		uv0,
-		uv1
+	arg_20_0._btntaskleftlongPrees:SetLongPressTime({
+		var_0_1,
+		var_0_2
 	})
-	slot0._btntaskleftlongPrees:AddLongPressListener(slot0._ontaskleftLongPress, slot0)
+	arg_20_0._btntaskleftlongPrees:AddLongPressListener(arg_20_0._ontaskleftLongPress, arg_20_0)
 
-	slot0._tasklefttouch = SLFramework.UGUI.UIClickListener.Get(slot0._btntaskleft.gameObject)
+	arg_20_0._tasklefttouch = SLFramework.UGUI.UIClickListener.Get(arg_20_0._btntaskleft.gameObject)
 
-	slot0._tasklefttouch:AddClickDownListener(slot0._onClicktaskleftDownHandler, slot0)
+	arg_20_0._tasklefttouch:AddClickDownListener(arg_20_0._onClicktaskleftDownHandler, arg_20_0)
 
-	slot0._btntaskrightlongPrees = SLFramework.UGUI.UILongPressListener.Get(slot0._btntaskright.gameObject)
+	arg_20_0._btntaskrightlongPrees = SLFramework.UGUI.UILongPressListener.Get(arg_20_0._btntaskright.gameObject)
 
-	slot0._btntaskrightlongPrees:SetLongPressTime({
-		uv0,
-		uv1
+	arg_20_0._btntaskrightlongPrees:SetLongPressTime({
+		var_0_1,
+		var_0_2
 	})
-	slot0._btntaskrightlongPrees:AddLongPressListener(slot0._ontaskrightLongPress, slot0)
+	arg_20_0._btntaskrightlongPrees:AddLongPressListener(arg_20_0._ontaskrightLongPress, arg_20_0)
 
-	slot0._taskrighttouch = SLFramework.UGUI.UIClickListener.Get(slot0._btntaskright.gameObject)
+	arg_20_0._taskrighttouch = SLFramework.UGUI.UIClickListener.Get(arg_20_0._btntaskright.gameObject)
 
-	slot0._taskrighttouch:AddClickDownListener(slot0._onClicktaskrightDownHandler, slot0)
+	arg_20_0._taskrighttouch:AddClickDownListener(arg_20_0._onClicktaskrightDownHandler, arg_20_0)
 
-	slot0._taskContent = slot0._scrolltask.content.gameObject
+	arg_20_0._taskContent = arg_20_0._scrolltask.content.gameObject
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_21_0)
+	return
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskInfo, slot0._onGetTradeTaskInfo, slot0)
-	slot0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnReadNewTradeTaskReply, slot0._onReadNewTradeTaskReply, slot0)
-	slot0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, slot0._onTradeLevelUpReply, slot0)
-	slot0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeSupportBonusReply, slot0._onGetTradeSupportBonusReply, slot0)
+function var_0_0._addEvents(arg_22_0)
+	arg_22_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskInfo, arg_22_0._onGetTradeTaskInfo, arg_22_0)
+	arg_22_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnReadNewTradeTaskReply, arg_22_0._onReadNewTradeTaskReply, arg_22_0)
+	arg_22_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, arg_22_0._onTradeLevelUpReply, arg_22_0)
+	arg_22_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeSupportBonusReply, arg_22_0._onGetTradeSupportBonusReply, arg_22_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskInfo, slot0._onGetTradeTaskInfo, slot0)
-	slot0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnReadNewTradeTaskReply, slot0._onReadNewTradeTaskReply, slot0)
-	slot0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, slot0._onTradeLevelUpReply, slot0)
-	slot0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeSupportBonusReply, slot0._onGetTradeSupportBonusReply, slot0)
+function var_0_0._removeEvents(arg_23_0)
+	arg_23_0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskInfo, arg_23_0._onGetTradeTaskInfo, arg_23_0)
+	arg_23_0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnReadNewTradeTaskReply, arg_23_0._onReadNewTradeTaskReply, arg_23_0)
+	arg_23_0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, arg_23_0._onTradeLevelUpReply, arg_23_0)
+	arg_23_0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeSupportBonusReply, arg_23_0._onGetTradeSupportBonusReply, arg_23_0)
 
-	if slot0._btntaskleftlongPrees then
-		slot0._btntaskleftlongPrees:RemoveLongPressListener()
+	if arg_23_0._btntaskleftlongPrees then
+		arg_23_0._btntaskleftlongPrees:RemoveLongPressListener()
 
-		slot0._btntaskleftlongPrees = nil
+		arg_23_0._btntaskleftlongPrees = nil
 	end
 
-	if slot0._btntaskrightlongPrees then
-		slot0._btntaskrightlongPrees:RemoveLongPressListener()
+	if arg_23_0._btntaskrightlongPrees then
+		arg_23_0._btntaskrightlongPrees:RemoveLongPressListener()
 
-		slot0._btntaskrightlongPrees = nil
+		arg_23_0._btntaskrightlongPrees = nil
 	end
 
-	if slot0._tasklefttouch then
-		slot0._tasklefttouch:RemoveClickDownListener()
+	if arg_23_0._tasklefttouch then
+		arg_23_0._tasklefttouch:RemoveClickDownListener()
 
-		slot0._tasklefttouch = nil
+		arg_23_0._tasklefttouch = nil
 	end
 
-	if slot0._taskrighttouch then
-		slot0._taskrighttouch:RemoveClickDownListener()
+	if arg_23_0._taskrighttouch then
+		arg_23_0._taskrighttouch:RemoveClickDownListener()
 
-		slot0._taskrighttouch = nil
+		arg_23_0._taskrighttouch = nil
 	end
 end
 
-function slot0._onGetTradeTaskInfo(slot0)
-	slot0._curShowLevel = nil
+function var_0_0._onGetTradeTaskInfo(arg_24_0)
+	arg_24_0._curShowLevel = nil
 
-	slot0:_cutLevelTask(slot0:_getCurLevel())
-	slot0:onRefresh()
+	local var_24_0 = arg_24_0:_getCurLevel()
+
+	arg_24_0:_cutLevelTask(var_24_0)
+	arg_24_0:onRefresh()
 end
 
-function slot0._onReadNewTradeTaskReply(slot0)
-	slot0:_refreshTaskReward()
+function var_0_0._onReadNewTradeTaskReply(arg_25_0)
+	arg_25_0:_refreshTaskReward()
 end
 
-function slot0._onTradeLevelUpReply(slot0, slot1)
-	slot0:onRefresh()
-	slot0:_cutLevelTask(slot1)
-	RoomTradeController.instance:openLevelUpTipView(slot1)
+function var_0_0._onTradeLevelUpReply(arg_26_0, arg_26_1)
+	arg_26_0:onRefresh()
+	arg_26_0:_cutLevelTask(arg_26_1)
+	RoomTradeController.instance:openLevelUpTipView(arg_26_1)
 end
 
-function slot0._onGetTradeSupportBonusReply(slot0)
-	slot0:_refreshSelectTaskReward(slot0._selectTaskRewardIndex)
-	slot0:_refreshTaskItemList(slot0._curShowLevel)
+function var_0_0._onGetTradeSupportBonusReply(arg_27_0)
+	arg_27_0:_refreshSelectTaskReward(arg_27_0._selectTaskRewardIndex)
+	arg_27_0:_refreshTaskItemList(arg_27_0._curShowLevel)
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvents()
+function var_0_0.onOpen(arg_28_0)
+	arg_28_0:_addEvents()
 
-	slot0._rewardPointCount, slot0._rewardPointPage = RoomTradeTaskModel.instance:getTaskPointMaxCount()
+	arg_28_0._rewardPointCount, arg_28_0._rewardPointPage = RoomTradeTaskModel.instance:getTaskPointMaxCount()
 
-	slot0:_onGetTradeTaskInfo()
-	slot0:_setPlayerInfo()
-	RedDotController.instance:addRedDot(slot0._golevelupreddot, RedDotEnum.DotNode.TradeTaskLevelUp)
-	RedDotController.instance:addRedDot(slot0._gorewardleftreddot, RedDotEnum.DotNode.TradeTaskGetBonus)
-	RedDotController.instance:addRedDot(slot0._gorewardrightreddot, RedDotEnum.DotNode.TradeTaskGetBonus)
-	RedDotController.instance:addRedDot(slot0._gohandbookreddot, RedDotEnum.DotNode.CritterHandBook)
-	RedDotController.instance:addRedDot(slot0._gologreddot, RedDotEnum.DotNode.CritterLog)
+	arg_28_0:_onGetTradeTaskInfo()
+	arg_28_0:_setPlayerInfo()
+	RedDotController.instance:addRedDot(arg_28_0._golevelupreddot, RedDotEnum.DotNode.TradeTaskLevelUp)
+	RedDotController.instance:addRedDot(arg_28_0._gorewardleftreddot, RedDotEnum.DotNode.TradeTaskGetBonus)
+	RedDotController.instance:addRedDot(arg_28_0._gorewardrightreddot, RedDotEnum.DotNode.TradeTaskGetBonus)
+	RedDotController.instance:addRedDot(arg_28_0._gohandbookreddot, RedDotEnum.DotNode.CritterHandBook)
+	RedDotController.instance:addRedDot(arg_28_0._gologreddot, RedDotEnum.DotNode.CritterLog)
 end
 
-function slot0._getCanGetTaskPage(slot0)
-	for slot4 = 1, slot0._rewardPointPage do
-		slot5, slot6 = RoomTradeTaskModel.instance:isCanLevelBonus(slot4)
+function var_0_0._getCanGetTaskPage(arg_29_0)
+	for iter_29_0 = 1, arg_29_0._rewardPointPage do
+		local var_29_0, var_29_1 = RoomTradeTaskModel.instance:isCanLevelBonus(iter_29_0)
 
-		if slot5 then
-			if not slot6 then
-				return slot4
+		if var_29_0 then
+			if not var_29_1 then
+				return iter_29_0
 			end
 		else
-			return slot4
+			return iter_29_0
 		end
 	end
 
 	return 1
 end
 
-function slot0._isLeftCanGetBonus(slot0)
-	if not slot0._selectTaskRewardIndex or slot0._selectTaskRewardIndex <= 1 then
+function var_0_0._isLeftCanGetBonus(arg_30_0)
+	if not arg_30_0._selectTaskRewardIndex or arg_30_0._selectTaskRewardIndex <= 1 then
 		return
 	end
 
-	for slot4 = 1, slot0._selectTaskRewardIndex - 1 do
-		slot5, slot6 = RoomTradeTaskModel.instance:isCanLevelBonus(slot4)
+	for iter_30_0 = 1, arg_30_0._selectTaskRewardIndex - 1 do
+		local var_30_0, var_30_1 = RoomTradeTaskModel.instance:isCanLevelBonus(iter_30_0)
 
-		if slot5 and not slot6 then
+		if var_30_0 and not var_30_1 then
 			return true
 		end
 	end
@@ -383,15 +399,15 @@ function slot0._isLeftCanGetBonus(slot0)
 	return false
 end
 
-function slot0._isRightCanGetBonus(slot0)
-	if not slot0._selectTaskRewardIndex or slot0._rewardPointPage <= slot0._selectTaskRewardIndex then
+function var_0_0._isRightCanGetBonus(arg_31_0)
+	if not arg_31_0._selectTaskRewardIndex or arg_31_0._selectTaskRewardIndex >= arg_31_0._rewardPointPage then
 		return
 	end
 
-	for slot4 = slot0._selectTaskRewardIndex + 1, slot0._rewardPointPage do
-		slot5, slot6 = RoomTradeTaskModel.instance:isCanLevelBonus(slot4)
+	for iter_31_0 = arg_31_0._selectTaskRewardIndex + 1, arg_31_0._rewardPointPage do
+		local var_31_0, var_31_1 = RoomTradeTaskModel.instance:isCanLevelBonus(iter_31_0)
 
-		if slot5 and not slot6 then
+		if var_31_0 and not var_31_1 then
 			return true
 		end
 	end
@@ -399,307 +415,364 @@ function slot0._isRightCanGetBonus(slot0)
 	return false
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshLevelReward()
-	slot0:_refreshLevel()
+function var_0_0.onRefresh(arg_32_0)
+	arg_32_0:_refreshLevelReward()
+	arg_32_0:_refreshLevel()
 
-	if not slot0._selectTaskRewardIndex then
-		slot0._selectTaskRewardIndex = slot0:_getCanGetTaskPage()
+	if not arg_32_0._selectTaskRewardIndex then
+		arg_32_0._selectTaskRewardIndex = arg_32_0:_getCanGetTaskPage()
 	end
 
-	slot0:_refreshSelectTaskReward(slot0._selectTaskRewardIndex)
-	slot0:_refreshLevelUnlock()
-	slot0:_newFinishTask()
+	arg_32_0:_refreshSelectTaskReward(arg_32_0._selectTaskRewardIndex)
+	arg_32_0:_refreshLevelUnlock()
+	arg_32_0:_newFinishTask()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_33_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageheroIcon:UnLoadImage()
-	slot0._simageidcard:UnLoadImage()
-	slot0:_removeEvents()
-	TaskDispatcher.cancelTask(slot0._cutLastLevelTask, slot0)
-	TaskDispatcher.cancelTask(slot0._cutNextLevelTask, slot0)
-	TaskDispatcher.cancelTask(slot0._cutLastTaskReward, slot0)
-	TaskDispatcher.cancelTask(slot0._cutNextTaskReward, slot0)
-	TaskDispatcher.cancelTask(slot0._btntaskleftOnClickCallBack, slot0)
-	TaskDispatcher.cancelTask(slot0._btntasRighttOnClickCallBack, slot0)
+function var_0_0.onDestroyView(arg_34_0)
+	arg_34_0._simageheroIcon:UnLoadImage()
+	arg_34_0._simageidcard:UnLoadImage()
+	arg_34_0:_removeEvents()
+	TaskDispatcher.cancelTask(arg_34_0._cutLastLevelTask, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._cutNextLevelTask, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._cutLastTaskReward, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._cutNextTaskReward, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._btntaskleftOnClickCallBack, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._btntasRighttOnClickCallBack, arg_34_0)
 end
 
-function slot0._setPlayerInfo(slot0)
-	slot1 = PlayerModel.instance:getPlayinfo()
+function var_0_0._setPlayerInfo(arg_35_0)
+	local var_35_0 = PlayerModel.instance:getPlayinfo()
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageheroIcon)
+	if not arg_35_0._liveHeadIcon then
+		arg_35_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_35_0._simageheroIcon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot1.portrait)
+	arg_35_0._liveHeadIcon:setLiveHead(var_35_0.portrait)
 
-	slot0._txtplayername.text = slot1.name
-	slot0._txtplayerId.text = "ID:" .. slot1.userId
+	arg_35_0._txtplayername.text = var_35_0.name
+	arg_35_0._txtplayerId.text = "ID:" .. var_35_0.userId
 end
 
-function slot0._refreshLevel(slot0)
-	slot1 = slot0:_getCurLevel()
-	slot2 = ManufactureConfig.instance:getTradeLevelCfg(slot1)
-	slot0._txtlevel.text = slot2.dimension
-	slot0._txtscale.text = slot2.job
+function var_0_0._refreshLevel(arg_36_0)
+	local var_36_0 = arg_36_0:_getCurLevel()
+	local var_36_1 = ManufactureConfig.instance:getTradeLevelCfg(var_36_0)
 
-	slot0._simageidcard:LoadImage(ResUrl.getRoomCritterIcon(slot2.jobCard))
-	gohelper.setActive(slot0._goReward, RoomTradeTaskModel.instance:getOpenSupportLevel() <= slot1)
+	arg_36_0._txtlevel.text = var_36_1.dimension
+	arg_36_0._txtscale.text = var_36_1.job
+
+	local var_36_2 = ResUrl.getRoomCritterIcon(var_36_1.jobCard)
+
+	arg_36_0._simageidcard:LoadImage(var_36_2)
+
+	local var_36_3 = RoomTradeTaskModel.instance:getOpenSupportLevel()
+
+	gohelper.setActive(arg_36_0._goReward, var_36_3 <= var_36_0)
 end
 
-function slot0._getCurLevel(slot0)
+function var_0_0._getCurLevel(arg_37_0)
 	return ManufactureModel.instance:getTradeLevel() or 1
 end
 
-function slot0._cutLastLevelTask(slot0)
-	slot0:_cutLevelTask(slot0._curShowLevel - 1)
+function var_0_0._cutLastLevelTask(arg_38_0)
+	arg_38_0:_cutLevelTask(arg_38_0._curShowLevel - 1)
 end
 
-function slot0._cutNextLevelTask(slot0)
-	slot0:_cutLevelTask(slot0._curShowLevel + 1)
+function var_0_0._cutNextLevelTask(arg_39_0)
+	arg_39_0:_cutLevelTask(arg_39_0._curShowLevel + 1)
 end
 
-function slot0._cutLevelTask(slot0, slot1)
-	slot0._isPlayingTaskSwitchAnim = false
+function var_0_0._cutLevelTask(arg_40_0, arg_40_1)
+	arg_40_0._isPlayingTaskSwitchAnim = false
+	arg_40_1 = math.min(RoomTradeTaskModel.instance:getTaskMaxLevel(), arg_40_1)
 
-	if slot0._curShowLevel == math.min(RoomTradeTaskModel.instance:getTaskMaxLevel(), slot1) then
+	if arg_40_0._curShowLevel == arg_40_1 then
 		return
 	end
 
-	slot0._curShowLevel = slot1
+	arg_40_0._curShowLevel = arg_40_1
 
-	slot0:_refreshTaskItemList(slot1)
+	arg_40_0:_refreshTaskItemList(arg_40_1)
 
-	slot0._txttasktitle.text = RoomTradeConfig.instance:getLevelCo(slot1).taskName
+	local var_40_0 = RoomTradeConfig.instance:getLevelCo(arg_40_1)
 
-	gohelper.setActive(slot0._btntaskleft.gameObject, slot1 > 1)
-	gohelper.setActive(slot0._btntaskright.gameObject, slot1 < slot0:_getMaxLevel())
+	arg_40_0._txttasktitle.text = var_40_0.taskName
+
+	gohelper.setActive(arg_40_0._btntaskleft.gameObject, arg_40_1 > 1)
+	gohelper.setActive(arg_40_0._btntaskright.gameObject, arg_40_1 < arg_40_0:_getMaxLevel())
 end
 
-function slot0._getMaxLevel(slot0)
-	return math.min(slot0:_getCurLevel(), RoomTradeTaskModel.instance:getTaskMaxLevel())
+function var_0_0._getMaxLevel(arg_41_0)
+	return math.min(arg_41_0:_getCurLevel(), RoomTradeTaskModel.instance:getTaskMaxLevel())
 end
 
-function slot0._refreshTaskItemList(slot0, slot1)
-	slot2 = RoomTradeTaskListModel.instance:setMoList(slot1)
+function var_0_0._refreshTaskItemList(arg_42_0, arg_42_1)
+	local var_42_0 = RoomTradeTaskListModel.instance:setMoList(arg_42_1)
 
-	if not slot0._taskItems then
-		slot0._taskItems = slot0:getUserDataTb_()
+	if not arg_42_0._taskItems then
+		arg_42_0._taskItems = arg_42_0:getUserDataTb_()
 	end
 
-	slot3 = 0
+	local var_42_1 = 0
 
-	if slot2 then
-		for slot7, slot8 in ipairs(slot2) do
-			slot9 = slot0:_getTaskItem(slot7)
+	if var_42_0 then
+		for iter_42_0, iter_42_1 in ipairs(var_42_0) do
+			local var_42_2 = arg_42_0:_getTaskItem(iter_42_0)
 
-			slot9:onUpdateMO(slot8)
+			var_42_2:onUpdateMO(iter_42_1)
 
-			slot3 = slot9:getNextItemAnchorY(slot3)
+			var_42_1 = var_42_2:getNextItemAnchorY(var_42_1)
 		end
 
-		for slot7, slot8 in ipairs(slot0._taskItems) do
-			slot8:activeGo(slot7 <= #slot2)
+		for iter_42_2, iter_42_3 in ipairs(arg_42_0._taskItems) do
+			iter_42_3:activeGo(iter_42_2 <= #var_42_0)
 		end
 	end
 
-	recthelper.setHeight(slot0._taskContent.transform, math.abs(slot3))
+	recthelper.setHeight(arg_42_0._taskContent.transform, math.abs(var_42_1))
 end
 
-function slot0._getTaskItem(slot0, slot1)
-	if not slot0._taskItems[slot1] then
-		slot0._taskItems[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._taskContent, "task_item" .. tostring(slot1)), RoomTradeTaskItem)
+function var_0_0._getTaskItem(arg_43_0, arg_43_1)
+	local var_43_0 = arg_43_0._taskItems[arg_43_1]
+
+	if not var_43_0 then
+		local var_43_1 = arg_43_0.viewContainer:getSetting().otherRes[1]
+		local var_43_2 = arg_43_0:getResInst(var_43_1, arg_43_0._taskContent, "task_item" .. tostring(arg_43_1))
+
+		var_43_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_43_2, RoomTradeTaskItem)
+		arg_43_0._taskItems[arg_43_1] = var_43_0
 	end
 
-	return slot2
+	return var_43_0
 end
 
-function slot0._refreshLevelReward(slot0)
-	slot1 = slot0:_getCurLevel()
-	slot3, slot4 = RoomTradeTaskModel.instance:getLevelTaskCount(slot1)
-	slot0._txtleveluptip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("room_finish_tradetask"), {
-		RoomTradeConfig.instance:getLevelCo(slot1).taskName,
-		slot4 <= slot3 and "#000000" or "#b6341a",
-		slot3,
-		slot4
-	})
+function var_0_0._refreshLevelReward(arg_44_0)
+	local var_44_0 = arg_44_0:_getCurLevel()
+	local var_44_1 = RoomTradeConfig.instance:getLevelCo(var_44_0)
+	local var_44_2, var_44_3 = RoomTradeTaskModel.instance:getLevelTaskCount(var_44_0)
+	local var_44_4 = var_44_1.taskName
+	local var_44_5 = var_44_3 <= var_44_2 and "#000000" or "#b6341a"
+	local var_44_6 = luaLang("room_finish_tradetask")
+	local var_44_7 = {
+		var_44_4,
+		var_44_5,
+		var_44_2,
+		var_44_3
+	}
+
+	arg_44_0._txtleveluptip.text = GameUtil.getSubPlaceholderLuaLang(var_44_6, var_44_7)
 end
 
-function slot0._refreshLevelUnlock(slot0)
-	slot1, slot2, slot3 = RoomTradeTaskModel.instance:isCanLevelUp()
+function var_0_0._refreshLevelUnlock(arg_45_0)
+	local var_45_0, var_45_1, var_45_2 = RoomTradeTaskModel.instance:isCanLevelUp()
 
-	gohelper.setActive(slot0._golevelUp, not slot3)
-	gohelper.setActive(slot0._gomax, slot3)
+	gohelper.setActive(arg_45_0._golevelUp, not var_45_2)
+	gohelper.setActive(arg_45_0._gomax, var_45_2)
 
-	if slot3 then
+	if var_45_2 then
 		return
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnlevelup.gameObject, not slot1)
+	ZProj.UGUIHelper.SetGrayscale(arg_45_0._btnlevelup.gameObject, not var_45_0)
 
-	slot4 = RoomTradeTaskModel.instance:getLevelUnlock(slot2 + 1)
+	local var_45_3 = RoomTradeTaskModel.instance:getLevelUnlock(var_45_1 + 1)
 
-	if not slot0._refreshLevelUnlockItem then
-		slot0._refreshLevelUnlockItem = slot0:getUserDataTb_()
+	if not arg_45_0._refreshLevelUnlockItem then
+		arg_45_0._refreshLevelUnlockItem = arg_45_0:getUserDataTb_()
 	end
 
-	if slot4 then
-		for slot8, slot9 in ipairs(slot4) do
-			slot10 = slot0:_getLevelUnlockItem(slot8)
+	if var_45_3 then
+		for iter_45_0, iter_45_1 in ipairs(var_45_3) do
+			local var_45_4 = arg_45_0:_getLevelUnlockItem(iter_45_0)
 
-			slot10:onRefreshMo(slot9)
-			gohelper.setActive(slot10.viewGO, true)
+			var_45_4:onRefreshMo(iter_45_1)
+			gohelper.setActive(var_45_4.viewGO, true)
 		end
 
-		if slot0._refreshLevelUnlockItem then
-			for slot8 = 1, #slot0._refreshLevelUnlockItem do
-				gohelper.setActive(slot0._refreshLevelUnlockItem[slot8].viewGO, slot8 <= #slot4)
+		if arg_45_0._refreshLevelUnlockItem then
+			for iter_45_2 = 1, #arg_45_0._refreshLevelUnlockItem do
+				gohelper.setActive(arg_45_0._refreshLevelUnlockItem[iter_45_2].viewGO, iter_45_2 <= #var_45_3)
 			end
 		end
 	end
 end
 
-function slot0._getLevelUnlockItem(slot0, slot1)
-	if not slot0._refreshLevelUnlockItem[slot1] then
-		slot0._refreshLevelUnlockItem[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._scrolllevel.content.gameObject), RoomTradeLevelUnlockItem)
+function var_0_0._getLevelUnlockItem(arg_46_0, arg_46_1)
+	local var_46_0 = arg_46_0._refreshLevelUnlockItem[arg_46_1]
+
+	if not var_46_0 then
+		local var_46_1 = arg_46_0._scrolllevel.content.gameObject
+		local var_46_2 = arg_46_0.viewContainer:getSetting().otherRes[2]
+		local var_46_3 = arg_46_0:getResInst(var_46_2, var_46_1)
+
+		var_46_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_46_3, RoomTradeLevelUnlockItem)
+		arg_46_0._refreshLevelUnlockItem[arg_46_1] = var_46_0
 	end
 
-	return slot2
+	return var_46_0
 end
 
-function slot0._refreshTaskReward(slot0)
-	slot0._txtprogress.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("room_trade_reward_progress"), "#000000", RoomTradeTaskModel.instance:getTaskFinishPointCount(), RoomTradeConfig.instance:getSupportBonusById(slot0._selectTaskRewardIndex).needTask)
+function var_0_0._refreshTaskReward(arg_47_0)
+	local var_47_0 = RoomTradeTaskModel.instance:getTaskFinishPointCount()
+	local var_47_1 = luaLang("room_trade_reward_progress")
+	local var_47_2 = "#000000"
+	local var_47_3 = RoomTradeConfig.instance:getSupportBonusById(arg_47_0._selectTaskRewardIndex).needTask
+	local var_47_4 = GameUtil.getSubPlaceholderLuaLangThreeParam(var_47_1, var_47_2, var_47_0, var_47_3)
 
-	if slot0._rewardPointItem then
-		for slot10, slot11 in ipairs(slot0._rewardPointItem) do
-			gohelper.setActive(slot11.go, slot10 <= slot0._rewardPointPage)
+	arg_47_0._txtprogress.text = var_47_4
+
+	if arg_47_0._rewardPointItem then
+		for iter_47_0, iter_47_1 in ipairs(arg_47_0._rewardPointItem) do
+			gohelper.setActive(iter_47_1.go, iter_47_0 <= arg_47_0._rewardPointPage)
 		end
 	end
 end
 
-function slot0._cutLastTaskReward(slot0)
-	slot0:_refreshSelectTaskReward(slot0._selectTaskRewardIndex - 1)
+function var_0_0._cutLastTaskReward(arg_48_0)
+	arg_48_0:_refreshSelectTaskReward(arg_48_0._selectTaskRewardIndex - 1)
 end
 
-function slot0._cutNextTaskReward(slot0)
-	slot0:_refreshSelectTaskReward(slot0._selectTaskRewardIndex + 1)
+function var_0_0._cutNextTaskReward(arg_49_0)
+	arg_49_0:_refreshSelectTaskReward(arg_49_0._selectTaskRewardIndex + 1)
 end
 
-function slot0._refreshSelectTaskReward(slot0, slot1)
-	slot0._isPlayingRewardSwitchAnim = false
+function var_0_0._refreshSelectTaskReward(arg_50_0, arg_50_1)
+	arg_50_0._isPlayingRewardSwitchAnim = false
 
-	if not slot0._taskRewards then
-		slot0._taskRewards = RoomTradeTaskModel.instance:getAllTaskRewards()
+	if not arg_50_0._taskRewards then
+		arg_50_0._taskRewards = RoomTradeTaskModel.instance:getAllTaskRewards()
 	end
 
-	if not slot0._taskRewardItemList then
-		slot0._taskRewardItemList = slot0:getUserDataTb_()
+	if not arg_50_0._taskRewardItemList then
+		arg_50_0._taskRewardItemList = arg_50_0:getUserDataTb_()
 	end
 
-	slot0._selectTaskRewardIndex = slot1
+	arg_50_0._selectTaskRewardIndex = arg_50_1
 
-	slot0:_refreshTaskReward()
+	arg_50_0:_refreshTaskReward()
 
-	slot3, slot4 = RoomTradeTaskModel.instance:isCanLevelBonus(slot1)
+	local var_50_0 = arg_50_0._taskRewards[arg_50_1]
+	local var_50_1, var_50_2 = RoomTradeTaskModel.instance:isCanLevelBonus(arg_50_1)
 
-	gohelper.setActive(slot0._btngetclick.gameObject, not slot4 and slot3)
+	var_50_1 = not var_50_2 and var_50_1
 
-	for slot8, slot9 in ipairs(slot0._taskRewards[slot1]) do
-		slot13, slot14 = slot0:_getRewardItem(slot8)
+	gohelper.setActive(arg_50_0._btngetclick.gameObject, var_50_1)
 
-		if slot13 then
-			if slot13.item then
-				slot15:setMOValue(slot9[1], slot9[2], slot9[3], nil, true)
+	for iter_50_0, iter_50_1 in ipairs(var_50_0) do
+		local var_50_3 = iter_50_1[1]
+		local var_50_4 = iter_50_1[2]
+		local var_50_5 = iter_50_1[3]
+		local var_50_6, var_50_7 = arg_50_0:_getRewardItem(iter_50_0)
 
-				if slot14 then
-					slot15:setCountFontSize(40)
-					slot15:showStackableNum2()
-					slot15:isShowEffect(true)
+		if var_50_6 then
+			local var_50_8 = var_50_6.item
+
+			if var_50_8 then
+				var_50_8:setMOValue(var_50_3, var_50_4, var_50_5, nil, true)
+
+				if var_50_7 then
+					var_50_8:setCountFontSize(40)
+					var_50_8:showStackableNum2()
+					var_50_8:isShowEffect(true)
 				end
 			end
 
-			gohelper.setActive(slot13.goGot, slot4)
-			gohelper.setActive(slot13.goCanGet, slot3)
+			gohelper.setActive(var_50_6.goGot, var_50_2)
+			gohelper.setActive(var_50_6.goCanGet, var_50_1)
 		end
 	end
 
-	for slot8 = 1, #slot0._taskRewardItemList do
-		gohelper.setActive(slot0._taskRewardItemList[slot8].go, slot8 <= #slot2)
+	for iter_50_2 = 1, #arg_50_0._taskRewardItemList do
+		gohelper.setActive(arg_50_0._taskRewardItemList[iter_50_2].go, iter_50_2 <= #var_50_0)
 	end
 
-	if not slot0._leftDark then
-		slot0._leftDark = gohelper.findChild(slot0._btnrewardleft.gameObject, "dark")
+	if not arg_50_0._leftDark then
+		arg_50_0._leftDark = gohelper.findChild(arg_50_0._btnrewardleft.gameObject, "dark")
 	end
 
-	if not slot0._rightDark then
-		slot0._rightDark = gohelper.findChild(slot0._btnrewardright.gameObject, "dark")
+	if not arg_50_0._rightDark then
+		arg_50_0._rightDark = gohelper.findChild(arg_50_0._btnrewardright.gameObject, "dark")
 	end
 
-	gohelper.setActive(slot0._leftDark, slot1 <= 1)
-	gohelper.setActive(slot0._rightDark, slot0._rewardPointPage <= slot1)
+	gohelper.setActive(arg_50_0._leftDark, arg_50_1 <= 1)
+	gohelper.setActive(arg_50_0._rightDark, arg_50_1 >= arg_50_0._rewardPointPage)
 
-	for slot8 = 1, slot0._rewardPointPage do
-		gohelper.setActive(slot0:_getRewardPointItem(slot8).normal, slot8 ~= slot1)
-		gohelper.setActive(slot9.select, slot8 == slot1)
+	for iter_50_3 = 1, arg_50_0._rewardPointPage do
+		local var_50_9 = arg_50_0:_getRewardPointItem(iter_50_3)
+
+		gohelper.setActive(var_50_9.normal, iter_50_3 ~= arg_50_1)
+		gohelper.setActive(var_50_9.select, iter_50_3 == arg_50_1)
 	end
 
-	for slot8 = 1, #slot0._rewardPointItem do
-		gohelper.setActive(slot0._rewardPointItem[slot8].go, slot8 <= slot0._rewardPointPage)
+	for iter_50_4 = 1, #arg_50_0._rewardPointItem do
+		gohelper.setActive(arg_50_0._rewardPointItem[iter_50_4].go, iter_50_4 <= arg_50_0._rewardPointPage)
 	end
 
-	gohelper.setActive(slot0._gorewardleftreddot, slot0:_isLeftCanGetBonus())
-	gohelper.setActive(slot0._gorewardrightreddot, slot0:_isRightCanGetBonus())
+	gohelper.setActive(arg_50_0._gorewardleftreddot, arg_50_0:_isLeftCanGetBonus())
+	gohelper.setActive(arg_50_0._gorewardrightreddot, arg_50_0:_isRightCanGetBonus())
 end
 
-function slot0._getRewardItem(slot0, slot1)
-	if not slot0._taskRewardItemList then
-		slot0._taskRewardItemList = slot0:getUserDataTb_()
+function var_0_0._getRewardItem(arg_51_0, arg_51_1)
+	if not arg_51_0._taskRewardItemList then
+		arg_51_0._taskRewardItemList = arg_51_0:getUserDataTb_()
 	end
 
-	if not slot0._taskRewardItemList[slot1] then
-		slot3 = gohelper.cloneInPlace(slot0._gotaskrewarditem)
-		slot5 = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot3, "item"))
-		slot2 = {
-			item = slot5,
-			go = slot3,
-			goGot = gohelper.findChild(slot3, "#goHasGet"),
-			goCanGet = gohelper.findChild(slot3, "#goCanGet")
+	local var_51_0 = arg_51_0._taskRewardItemList[arg_51_1]
+
+	if not var_51_0 then
+		local var_51_1 = gohelper.cloneInPlace(arg_51_0._gotaskrewarditem)
+		local var_51_2 = gohelper.findChild(var_51_1, "item")
+		local var_51_3 = IconMgr.instance:getCommonPropItemIcon(var_51_2)
+
+		var_51_0 = {
+			item = var_51_3,
+			go = var_51_1,
+			goGot = gohelper.findChild(var_51_1, "#goHasGet"),
+			goCanGet = gohelper.findChild(var_51_1, "#goCanGet")
 		}
 
-		transformhelper.setLocalScale(slot5.go.transform, 0.62, 0.62, 1)
+		transformhelper.setLocalScale(var_51_3.go.transform, 0.62, 0.62, 1)
 
-		slot0._taskRewardItemList[slot1] = slot2
+		arg_51_0._taskRewardItemList[arg_51_1] = var_51_0
 
-		return slot2, true
+		return var_51_0, true
 	end
 
-	return slot2, false
+	return var_51_0, false
 end
 
-function slot0._getRewardPointItem(slot0, slot1)
-	if not slot0._rewardPointItem then
-		slot0._rewardPointItem = slot0:getUserDataTb_()
+function var_0_0._getRewardPointItem(arg_52_0, arg_52_1)
+	if not arg_52_0._rewardPointItem then
+		arg_52_0._rewardPointItem = arg_52_0:getUserDataTb_()
 	end
 
-	if not slot0._rewardPointItem[slot1] then
-		slot3 = gohelper.cloneInPlace(slot0._gopoint, "point_" .. slot1)
-		slot0._rewardPointItem[slot1] = {
-			go = slot3,
-			normal = gohelper.findChild(slot3, "normal"),
-			select = gohelper.findChild(slot3, "select")
+	local var_52_0 = arg_52_0._rewardPointItem[arg_52_1]
+
+	if not var_52_0 then
+		local var_52_1 = gohelper.cloneInPlace(arg_52_0._gopoint, "point_" .. arg_52_1)
+		local var_52_2 = gohelper.findChild(var_52_1, "normal")
+		local var_52_3 = gohelper.findChild(var_52_1, "select")
+
+		var_52_0 = {
+			go = var_52_1,
+			normal = var_52_2,
+			select = var_52_3
 		}
+		arg_52_0._rewardPointItem[arg_52_1] = var_52_0
 	end
 
-	return slot2
+	return var_52_0
 end
 
-function slot0._newFinishTask(slot0)
-	if LuaUtil.tableNotEmpty(RoomTradeTaskListModel.instance:getNewFinishTaskIds(slot0._curShowLevel)) then
-		RoomRpc.instance:sendReadNewTradeTaskRequest(slot1)
+function var_0_0._newFinishTask(arg_53_0)
+	local var_53_0 = RoomTradeTaskListModel.instance:getNewFinishTaskIds(arg_53_0._curShowLevel)
+
+	if LuaUtil.tableNotEmpty(var_53_0) then
+		RoomRpc.instance:sendReadNewTradeTaskRequest(var_53_0)
 	end
 end
 
-return slot0
+return var_0_0

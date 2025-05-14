@@ -1,9 +1,9 @@
-module("modules.logic.fight.model.data.FightClientPlayCardData", package.seeall)
+﻿module("modules.logic.fight.model.data.FightClientPlayCardData", package.seeall)
 
-slot0 = FightDataClass("FightClientPlayCardData", FightCardData)
+local var_0_0 = FightDataClass("FightClientPlayCardData", FightCardData)
 
-function slot0.onConstructor(slot0, slot1, slot2)
-	slot0.index = slot2
+function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.index = arg_1_2
 end
 
-return slot0
+return var_0_0

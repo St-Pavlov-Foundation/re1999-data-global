@@ -1,42 +1,43 @@
-module("modules.logic.weekwalk.view.WeekWalkEnemyInfoViewContainer", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkEnemyInfoViewContainer", package.seeall)
 
-slot0 = class("WeekWalkEnemyInfoViewContainer", BaseViewContainer)
+local var_0_0 = class("WeekWalkEnemyInfoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.weekWalkOriginalEnemyInfoView = WeekWalkOriginalEnemyInfoView.New()
-	slot0.weekWalkEnemyInfoViewRule = WeekWalkEnemyInfoViewRule.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.weekWalkOriginalEnemyInfoView = WeekWalkOriginalEnemyInfoView.New()
+	arg_1_0.weekWalkEnemyInfoViewRule = WeekWalkEnemyInfoViewRule.New()
 
 	return {
 		WeekWalkEnemyInfoView.New(),
-		slot0.weekWalkOriginalEnemyInfoView,
-		slot0.weekWalkEnemyInfoViewRule,
+		arg_1_0.weekWalkOriginalEnemyInfoView,
+		arg_1_0.weekWalkEnemyInfoViewRule,
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.getEnemyInfoView(slot0)
-	return slot0.weekWalkOriginalEnemyInfoView
+function var_0_0.getEnemyInfoView(arg_2_0)
+	return arg_2_0.weekWalkOriginalEnemyInfoView
 end
 
-function slot0.getWeekWalkEnemyInfoViewRule(slot0)
-	return slot0.weekWalkEnemyInfoViewRule
+function var_0_0.getWeekWalkEnemyInfoViewRule(arg_3_0)
+	return arg_3_0.weekWalkEnemyInfoViewRule
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_4_0, arg_4_1)
+	if arg_4_1 == 1 then
+		arg_4_0.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_4_0.navigationView
 		}
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
+function var_0_0.onContainerOpenFinish(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

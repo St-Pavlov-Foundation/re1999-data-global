@@ -1,245 +1,279 @@
-module("modules.logic.rouge.view.RougeHeroGroupFightMiscView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeHeroGroupFightMiscView", package.seeall)
 
-slot0 = class("RougeHeroGroupFightMiscView", BaseView)
+local var_0_0 = class("RougeHeroGroupFightMiscView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnbag = gohelper.findChildButtonWithAudio(slot0.viewGO, "rouge/#btn_bag")
-	slot0._btnliupai = gohelper.findChildButtonWithAudio(slot0.viewGO, "rouge/#btn_liupai")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "rouge/#btn_liupai/liupai/#image_icon")
-	slot0._godetail = gohelper.findChild(slot0.viewGO, "rouge/#btn_liupai/liupai/#go_detail")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "rouge/#btn_liupai/liupai/#go_detail/#txt_dec")
-	slot0._gozhouyu = gohelper.findChild(slot0.viewGO, "rouge/#btn_liupai/#go_zhouyu")
-	slot0._goskillitem = gohelper.findChild(slot0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_skillitem")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "rouge/leftbg/#txt_title")
-	slot0._txttitleen = gohelper.findChildText(slot0.viewGO, "rouge/leftbg/#txt_title/#txt_en")
-	slot0._godetail2 = gohelper.findChild(slot0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_detail2")
-	slot0._txtdec2 = gohelper.findChildText(slot0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_detail2/#txt_dec2")
-	slot0._imageskillicon = gohelper.findChildImage(slot0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_detail2/icon")
-	slot0._gorouge = gohelper.findChild(slot0.viewGO, "rouge")
-	slot0._aniamtor = gohelper.onceAddComponent(slot0._gorouge, gohelper.Type_Animator)
-	slot0._skillItemList = slot0:getUserDataTb_()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnbag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rouge/#btn_bag")
+	arg_1_0._btnliupai = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rouge/#btn_liupai")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "rouge/#btn_liupai/liupai/#image_icon")
+	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "rouge/#btn_liupai/liupai/#go_detail")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "rouge/#btn_liupai/liupai/#go_detail/#txt_dec")
+	arg_1_0._gozhouyu = gohelper.findChild(arg_1_0.viewGO, "rouge/#btn_liupai/#go_zhouyu")
+	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_skillitem")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "rouge/leftbg/#txt_title")
+	arg_1_0._txttitleen = gohelper.findChildText(arg_1_0.viewGO, "rouge/leftbg/#txt_title/#txt_en")
+	arg_1_0._godetail2 = gohelper.findChild(arg_1_0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_detail2")
+	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_detail2/#txt_dec2")
+	arg_1_0._imageskillicon = gohelper.findChildImage(arg_1_0.viewGO, "rouge/#btn_liupai/#go_zhouyu/#go_detail2/icon")
+	arg_1_0._gorouge = gohelper.findChild(arg_1_0.viewGO, "rouge")
+	arg_1_0._aniamtor = gohelper.onceAddComponent(arg_1_0._gorouge, gohelper.Type_Animator)
+	arg_1_0._skillItemList = arg_1_0:getUserDataTb_()
 
-	slot0:_initCapacity()
-	slot0:_updateHeroList()
+	arg_1_0:_initCapacity()
+	arg_1_0:_updateHeroList()
 end
 
-function slot0._initCapacity(slot0)
-	slot0._rougeCapacityComp = RougeCapacityComp.Add(gohelper.findChild(slot0.viewGO, "rouge/bg/volume"), 0, RougeModel.instance:getTeamCapacity(), true, RougeCapacityComp.SpriteType2)
+function var_0_0._initCapacity(arg_2_0)
+	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "rouge/bg/volume")
+	local var_2_1 = RougeModel.instance:getTeamCapacity()
+
+	arg_2_0._rougeCapacityComp = RougeCapacityComp.Add(var_2_0, 0, var_2_1, true, RougeCapacityComp.SpriteType2)
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbag:AddClickListener(slot0._btnbagOnClick, slot0)
-	slot0._btnliupai:AddClickListener(slot0._btnliupaiOnClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnbag:AddClickListener(arg_3_0._btnbagOnClick, arg_3_0)
+	arg_3_0._btnliupai:AddClickListener(arg_3_0._btnliupaiOnClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbag:RemoveClickListener()
-	slot0._btnliupai:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnbag:RemoveClickListener()
+	arg_4_0._btnliupai:RemoveClickListener()
 end
 
-function slot0._setBtnStatus(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot2, not slot1)
-	gohelper.setActive(slot3, slot1)
+function var_0_0._setBtnStatus(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	gohelper.setActive(arg_5_2, not arg_5_1)
+	gohelper.setActive(arg_5_3, arg_5_1)
 end
 
-function slot0._btnbagOnClick(slot0)
+function var_0_0._btnbagOnClick(arg_6_0)
 	RougeController.instance:openRougeCollectionChessView()
 end
 
-function slot0._btnliupaiOnClick(slot0)
-	slot0._showDetail = true
+function var_0_0._btnliupaiOnClick(arg_7_0)
+	arg_7_0._showDetail = true
 
-	gohelper.setActive(slot0._godetail, true)
+	gohelper.setActive(arg_7_0._godetail, true)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RougeHeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, slot0._onClickHeroGroupAssitItem, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, slot0._onClickHeroGroupItem, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._updateHeroList, slot0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, slot0._onTouchScreenUp, slot0)
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:addEventCb(RougeHeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_8_0._onClickHeroGroupAssitItem, arg_8_0)
+	arg_8_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_8_0._onClickHeroGroupItem, arg_8_0)
+	arg_8_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_8_0._updateHeroList, arg_8_0)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, arg_8_0._onTouchScreenUp, arg_8_0)
 
-	slot0._season = RougeConfig1.instance:season()
-	slot0._rougeInfo = RougeModel.instance:getRougeInfo()
-	slot0._styleConfig = RougeConfig1.instance:getStyleConfig(RougeModel.instance:getStyle())
+	arg_8_0._season = RougeConfig1.instance:season()
+	arg_8_0._rougeInfo = RougeModel.instance:getRougeInfo()
 
-	gohelper.setActive(slot0._godetail, false)
-	gohelper.setActive(slot0._godetail2, false)
-	slot0:_initIcon()
-	slot0:_initSkill()
-	slot0:_initEpisodeName()
+	local var_8_0 = RougeModel.instance:getStyle()
+
+	arg_8_0._styleConfig = RougeConfig1.instance:getStyleConfig(var_8_0)
+
+	gohelper.setActive(arg_8_0._godetail, false)
+	gohelper.setActive(arg_8_0._godetail2, false)
+	arg_8_0:_initIcon()
+	arg_8_0:_initSkill()
+	arg_8_0:_initEpisodeName()
 end
 
-function slot0._initEpisodeName(slot0)
-	slot0._txttitle.text = ""
-	slot0._txttitleen.text = ""
+function var_0_0._initEpisodeName(arg_9_0)
+	arg_9_0._txttitle.text = ""
+	arg_9_0._txttitleen.text = ""
 
-	if not DungeonConfig.instance:getEpisodeCO(RougeHeroGroupModel.instance.episodeId) then
+	local var_9_0 = RougeHeroGroupModel.instance.episodeId
+	local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0)
+
+	if not var_9_1 then
 		return
 	end
 
-	slot0._txttitleen.text = slot2.name_En
+	arg_9_0._txttitleen.text = var_9_1.name_En
 
-	if utf8.len(slot2.name) <= 0 then
+	local var_9_2 = var_9_1.name
+	local var_9_3 = utf8.len(var_9_2)
+
+	if var_9_3 <= 0 then
 		return
 	end
 
-	slot0._txttitle.text = string.format("<size=77>%s</size>%s", utf8.sub(slot3, 1, 2), utf8.sub(slot3, 2, slot4 + 1))
+	arg_9_0._txttitle.text = string.format("<size=77>%s</size>%s", utf8.sub(var_9_2, 1, 2), utf8.sub(var_9_2, 2, var_9_3 + 1))
 end
 
-function slot0._initIcon(slot0)
-	slot3 = lua_rouge_style.configDict[slot0._rougeInfo.season][slot0._rougeInfo.style]
-	slot0._txtdec.text = slot3.desc
+function var_0_0._initIcon(arg_10_0)
+	local var_10_0 = arg_10_0._rougeInfo.style
+	local var_10_1 = arg_10_0._rougeInfo.season
+	local var_10_2 = lua_rouge_style.configDict[var_10_1][var_10_0]
 
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0._imageicon, string.format("%s_light", slot3.icon))
+	arg_10_0._txtdec.text = var_10_2.desc
+
+	UISpriteSetMgr.instance:setRouge2Sprite(arg_10_0._imageicon, string.format("%s_light", var_10_2.icon))
 end
 
-function slot0._initSkill(slot0)
-	slot3 = {}
+function var_0_0._initSkill(arg_11_0)
+	local var_11_0 = RougeDLCHelper.getCurrentUseStyleFightSkills(arg_11_0._styleConfig.id)
+	local var_11_1 = RougeOutsideModel.instance:config()
+	local var_11_2 = {}
 
-	for slot7, slot8 in ipairs(RougeDLCHelper.getCurrentUseStyleFightSkills(slot0._styleConfig.id)) do
-		slot9 = slot0:_getOrCreateSkillItem(slot7)
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_3 = arg_11_0:_getOrCreateSkillItem(iter_11_0)
+		local var_11_4 = var_11_1:getSkillCo(iter_11_1.type, iter_11_1.skillId)
+		local var_11_5 = var_11_4 and var_11_4.icon
 
-		if not string.nilorempty(RougeOutsideModel.instance:config():getSkillCo(slot8.type, slot8.skillId) and slot10.icon) then
-			UISpriteSetMgr.instance:setRouge2Sprite(slot9.imagenormalicon, slot11, true)
-			UISpriteSetMgr.instance:setRouge2Sprite(slot9.imagselecticon, slot11 .. "_light", true)
+		if not string.nilorempty(var_11_5) then
+			UISpriteSetMgr.instance:setRouge2Sprite(var_11_3.imagenormalicon, var_11_5, true)
+			UISpriteSetMgr.instance:setRouge2Sprite(var_11_3.imagselecticon, var_11_5 .. "_light", true)
 		else
-			logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", slot8.type, slot8.skillId))
+			logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", iter_11_1.type, iter_11_1.skillId))
 		end
 
-		slot0["_skillDesc" .. slot7] = slot10 and slot10.desc
-		slot0["_skillIcon" .. slot7] = slot10 and slot10.icon
+		arg_11_0["_skillDesc" .. iter_11_0] = var_11_4 and var_11_4.desc
+		arg_11_0["_skillIcon" .. iter_11_0] = var_11_4 and var_11_4.icon
 
-		gohelper.setActive(slot9.viewGO, true)
+		gohelper.setActive(var_11_3.viewGO, true)
 
-		slot3[slot9] = true
+		var_11_2[var_11_3] = true
 	end
 
-	for slot7, slot8 in ipairs(slot0._skillItemList) do
-		if not slot3[slot8] then
-			gohelper.setActive(slot8.viewGO, false)
+	for iter_11_2, iter_11_3 in ipairs(arg_11_0._skillItemList) do
+		if not var_11_2[iter_11_3] then
+			gohelper.setActive(iter_11_3.viewGO, false)
 		end
 	end
 
-	gohelper.setActive(slot0._gozhouyu, slot1 and #slot1 > 0)
+	gohelper.setActive(arg_11_0._gozhouyu, var_11_0 and #var_11_0 > 0)
 end
 
-function slot0._getOrCreateSkillItem(slot0, slot1)
-	if not (slot0._skillItemList and slot0._skillItemList[slot1]) then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._goskillitem, "item_" .. slot1)
-		slot2.gonormal = gohelper.findChild(slot2.viewGO, "go_normal")
-		slot2.imagenormalicon = gohelper.findChildImage(slot2.viewGO, "go_normal/image_icon")
-		slot2.goselect = gohelper.findChild(slot2.viewGO, "go_select")
-		slot2.imagselecticon = gohelper.findChildImage(slot2.viewGO, "go_select/image_icon")
-		slot2.btnclick = gohelper.findChildButtonWithAudio(slot2.viewGO, "btn_click")
+function var_0_0._getOrCreateSkillItem(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._skillItemList and arg_12_0._skillItemList[arg_12_1]
 
-		slot2.btnclick:AddClickListener(slot0._btnskillOnClick, slot0, slot1)
-		table.insert(slot0._skillItemList, slot2)
+	if not var_12_0 then
+		var_12_0 = arg_12_0:getUserDataTb_()
+		var_12_0.viewGO = gohelper.cloneInPlace(arg_12_0._goskillitem, "item_" .. arg_12_1)
+		var_12_0.gonormal = gohelper.findChild(var_12_0.viewGO, "go_normal")
+		var_12_0.imagenormalicon = gohelper.findChildImage(var_12_0.viewGO, "go_normal/image_icon")
+		var_12_0.goselect = gohelper.findChild(var_12_0.viewGO, "go_select")
+		var_12_0.imagselecticon = gohelper.findChildImage(var_12_0.viewGO, "go_select/image_icon")
+		var_12_0.btnclick = gohelper.findChildButtonWithAudio(var_12_0.viewGO, "btn_click")
+
+		var_12_0.btnclick:AddClickListener(arg_12_0._btnskillOnClick, arg_12_0, arg_12_1)
+		table.insert(arg_12_0._skillItemList, var_12_0)
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0._btnskillOnClick(slot0, slot1)
-	slot0._showTips = true
-	slot0._txtdec2.text = slot0["_skillDesc" .. slot1]
+function var_0_0._btnskillOnClick(arg_13_0, arg_13_1)
+	arg_13_0._showTips = true
+	arg_13_0._txtdec2.text = arg_13_0["_skillDesc" .. arg_13_1]
 
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0._imageskillicon, slot0["_skillIcon" .. slot1], true)
-	gohelper.setActive(slot0._godetail2, false)
-	gohelper.setActive(slot0._godetail2, true)
-	gohelper.setAsLastSibling(slot0._godetail2)
-	slot0:_refreshAllBtnStatus(slot1)
+	UISpriteSetMgr.instance:setRouge2Sprite(arg_13_0._imageskillicon, arg_13_0["_skillIcon" .. arg_13_1], true)
+	gohelper.setActive(arg_13_0._godetail2, false)
+	gohelper.setActive(arg_13_0._godetail2, true)
+	gohelper.setAsLastSibling(arg_13_0._godetail2)
+	arg_13_0:_refreshAllBtnStatus(arg_13_1)
 end
 
-function slot0._refreshAllBtnStatus(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._skillItemList) do
-		slot0:_setBtnStatus(slot1 == slot5, slot6.gonormal, slot6.goselect)
+function var_0_0._refreshAllBtnStatus(arg_14_0, arg_14_1)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._skillItemList) do
+		local var_14_0 = arg_14_1 == iter_14_0
+
+		arg_14_0:_setBtnStatus(var_14_0, iter_14_1.gonormal, iter_14_1.goselect)
 	end
 end
 
-function slot0._removeAllSkillClickListener(slot0)
-	if slot0._skillItemList then
-		for slot4, slot5 in pairs(slot0._skillItemList) do
-			if slot5.btnclick then
-				slot5.btnclick:RemoveClickListener()
+function var_0_0._removeAllSkillClickListener(arg_15_0)
+	if arg_15_0._skillItemList then
+		for iter_15_0, iter_15_1 in pairs(arg_15_0._skillItemList) do
+			if iter_15_1.btnclick then
+				iter_15_1.btnclick:RemoveClickListener()
 			end
 		end
 	end
 end
 
-function slot0._onTouchScreenUp(slot0)
-	if slot0._showDetail then
-		slot0._showDetail = false
+function var_0_0._onTouchScreenUp(arg_16_0)
+	if arg_16_0._showDetail then
+		arg_16_0._showDetail = false
 	else
-		gohelper.setActive(slot0._godetail, false)
+		gohelper.setActive(arg_16_0._godetail, false)
 	end
 
-	if slot0._showTips then
-		slot0._showTips = false
+	if arg_16_0._showTips then
+		arg_16_0._showTips = false
 
 		return
 	end
 
-	gohelper.setActive(slot0._godetail2, false)
-	slot0:_refreshAllBtnStatus()
+	gohelper.setActive(arg_16_0._godetail2, false)
+	arg_16_0:_refreshAllBtnStatus()
 end
 
-function slot0._onClickHeroGroupAssitItem(slot0, slot1)
-	slot0:_openRougeHeroGroupEditView(slot1, RougeEnum.HeroGroupEditType.FightAssit)
+function var_0_0._onClickHeroGroupAssitItem(arg_17_0, arg_17_1)
+	arg_17_0:_openRougeHeroGroupEditView(arg_17_1, RougeEnum.HeroGroupEditType.FightAssit)
 end
 
-function slot0._onClickHeroGroupItem(slot0, slot1)
-	slot0:_openRougeHeroGroupEditView(slot1, RougeEnum.HeroGroupEditType.Fight)
+function var_0_0._onClickHeroGroupItem(arg_18_0, arg_18_1)
+	arg_18_0:_openRougeHeroGroupEditView(arg_18_1, RougeEnum.HeroGroupEditType.Fight)
 end
 
-function slot0._openRougeHeroGroupEditView(slot0, slot1, slot2)
-	slot6 = RougeHeroSingleGroupModel.instance:getById(slot1) and slot5:getHeroMO()
+function var_0_0._openRougeHeroGroupEditView(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = RougeHeroGroupModel.instance:getCurGroupMO():getPosEquips(arg_19_1 - 1).equipUid
+	local var_19_1 = RougeHeroSingleGroupModel.instance:getById(arg_19_1)
+	local var_19_2 = var_19_1 and var_19_1:getHeroMO()
+	local var_19_3 = arg_19_0._rougeCapacityComp:getCurNum()
+	local var_19_4 = arg_19_0._rougeCapacityComp:getMaxNum()
+	local var_19_5 = var_19_2 and RougeConfig1.instance:getRoleCapacity(var_19_2.config.rare) or 0
+	local var_19_6 = {
+		singleGroupMOId = arg_19_1,
+		originalHeroUid = RougeHeroSingleGroupModel.instance:getHeroUid(arg_19_1),
+		equips = var_19_0,
+		heroGroupEditType = arg_19_2,
+		selectHeroCapacity = var_19_5,
+		curCapacity = var_19_3,
+		totalCapacity = var_19_4
+	}
 
-	ViewMgr.instance:openView(ViewName.RougeHeroGroupEditView, {
-		singleGroupMOId = slot1,
-		originalHeroUid = RougeHeroSingleGroupModel.instance:getHeroUid(slot1),
-		equips = RougeHeroGroupModel.instance:getCurGroupMO():getPosEquips(slot1 - 1).equipUid,
-		heroGroupEditType = slot2,
-		selectHeroCapacity = slot6 and RougeConfig1.instance:getRoleCapacity(slot6.config.rare) or 0,
-		curCapacity = slot0._rougeCapacityComp:getCurNum(),
-		totalCapacity = slot0._rougeCapacityComp:getMaxNum()
-	})
+	ViewMgr.instance:openView(ViewName.RougeHeroGroupEditView, var_19_6)
 end
 
-function slot0._updateHeroList(slot0)
-	for slot5 = 1, RougeEnum.FightTeamHeroNum do
-		slot8 = 0
-		slot1 = 0 + RougeController.instance:getRoleStyleCapacity(RougeHeroSingleGroupModel.instance:getById(slot5) and slot6:getHeroMO(), RougeEnum.FightTeamNormalHeroNum < slot5)
+function var_0_0._updateHeroList(arg_20_0)
+	local var_20_0 = 0
+
+	for iter_20_0 = 1, RougeEnum.FightTeamHeroNum do
+		local var_20_1 = RougeHeroSingleGroupModel.instance:getById(iter_20_0)
+		local var_20_2 = var_20_1 and var_20_1:getHeroMO()
+		local var_20_3 = 0
+
+		var_20_0 = var_20_0 + RougeController.instance:getRoleStyleCapacity(var_20_2, iter_20_0 > RougeEnum.FightTeamNormalHeroNum)
 	end
 
-	slot0._rougeCapacityComp:updateCurNum(slot1)
+	arg_20_0._rougeCapacityComp:updateCurNum(var_20_0)
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_21_0)
 	if RougeController.instance:checkNeedContinueFight() then
-		slot0._canvasGroup = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup))
-		slot0._canvasGroup.interactable = false
-		slot0._canvasGroup.blocksRaycasts = false
+		arg_21_0._canvasGroup = gohelper.onceAddComponent(arg_21_0.viewGO, typeof(UnityEngine.CanvasGroup))
+		arg_21_0._canvasGroup.interactable = false
+		arg_21_0._canvasGroup.blocksRaycasts = false
 
-		TaskDispatcher.cancelTask(slot0._delayModifyCanvasGroup, slot0)
-		TaskDispatcher.runDelay(slot0._delayModifyCanvasGroup, slot0, 5)
+		TaskDispatcher.cancelTask(arg_21_0._delayModifyCanvasGroup, arg_21_0)
+		TaskDispatcher.runDelay(arg_21_0._delayModifyCanvasGroup, arg_21_0, 5)
 	end
 end
 
-function slot0._delayModifyCanvasGroup(slot0)
-	if not slot0._canvasGroup then
+function var_0_0._delayModifyCanvasGroup(arg_22_0)
+	if not arg_22_0._canvasGroup then
 		return
 	end
 
-	slot0._canvasGroup.interactable = true
-	slot0._canvasGroup.blocksRaycasts = true
+	arg_22_0._canvasGroup.interactable = true
+	arg_22_0._canvasGroup.blocksRaycasts = true
 end
 
-function slot0.onClose(slot0)
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, slot0._onTouchScreenUp, slot0)
-	TaskDispatcher.cancelTask(slot0._delayModifyCanvasGroup, slot0)
-	slot0._aniamtor:Play("close", 0, 0)
-	slot0:_removeAllSkillClickListener()
+function var_0_0.onClose(arg_23_0)
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_23_0._onTouchScreenUp, arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._delayModifyCanvasGroup, arg_23_0)
+	arg_23_0._aniamtor:Play("close", 0, 0)
+	arg_23_0:_removeAllSkillClickListener()
 end
 
-return slot0
+return var_0_0

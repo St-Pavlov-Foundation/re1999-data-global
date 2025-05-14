@@ -1,15 +1,15 @@
-module("modules.logic.fight.view.FightSpecialTipViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightSpecialTipViewContainer", package.seeall)
 
-slot0 = class("FightSpecialTipViewContainer", BaseViewContainer)
+local var_0_0 = class("FightSpecialTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightSpecialTipView.New()
 	}
 end
 
-function slot0.onContainerCloseFinish(slot0)
+function var_0_0.onContainerCloseFinish(arg_2_0)
 	FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOriginPos)
 end
 
-return slot0
+return var_0_0

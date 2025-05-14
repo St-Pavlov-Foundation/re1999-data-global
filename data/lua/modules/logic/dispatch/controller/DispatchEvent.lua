@@ -1,10 +1,11 @@
-module("modules.logic.dispatch.controller.DispatchEvent", package.seeall)
+﻿module("modules.logic.dispatch.controller.DispatchEvent", package.seeall)
 
-slot0 = _M
-slot0.AddDispatchInfo = 1
-slot0.RemoveDispatchInfo = 2
-slot0.ChangeSelectedHero = 3
-slot0.OnDispatchFinish = 4
-slot0.ChangeDispatchHeroContainerEvent = 5
+local var_0_0 = _M
 
-return slot0
+var_0_0.AddDispatchInfo = 1
+var_0_0.RemoveDispatchInfo = 2
+var_0_0.ChangeSelectedHero = 3
+var_0_0.OnDispatchFinish = 4
+var_0_0.ChangeDispatchHeroContainerEvent = 5
+
+return var_0_0

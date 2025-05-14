@@ -1,25 +1,25 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionClickAnywhere", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionClickAnywhere", package.seeall)
 
-slot0 = class("WaitGuideActionClickAnywhere", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionClickAnywhere", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	GuideViewMgr.instance:setHoleClickCallback(slot0._onClickTarget, slot0)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
+	GuideViewMgr.instance:setHoleClickCallback(arg_2_0._onClickTarget, arg_2_0)
 	GuideViewMgr.instance:enableSpaceBtn(true)
 end
 
-function slot0.clearWork(slot0)
-	GuideViewMgr.instance:setHoleClickCallback(nil, )
+function var_0_0.clearWork(arg_3_0)
+	GuideViewMgr.instance:setHoleClickCallback(nil, nil)
 	GuideViewMgr.instance:enableSpaceBtn(false)
-	TaskDispatcher.cancelTask(slot0._delayCheckPressingState, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._delayCheckPressingState, arg_3_0)
 end
 
-function slot0._onClickTarget(slot0, slot1)
-	slot0:onDone(true)
+function var_0_0._onClickTarget(arg_4_0, arg_4_1)
+	arg_4_0:onDone(true)
 end
 
-return slot0
+return var_0_0

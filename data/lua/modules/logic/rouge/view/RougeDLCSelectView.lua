@@ -1,90 +1,98 @@
-module("modules.logic.rouge.view.RougeDLCSelectView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeDLCSelectView", package.seeall)
 
-slot0 = class("RougeDLCSelectView", BaseView)
+local var_0_0 = class("RougeDLCSelectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goroot = gohelper.findChild(slot0.viewGO, "#go_root")
-	slot0._scrolldlcs = gohelper.findChildScrollRect(slot0.viewGO, "#go_root/#scroll_dlcs")
-	slot0._godlcitem = gohelper.findChild(slot0.viewGO, "#go_root/#scroll_dlcs/Viewport/Content/#go_dlcitem")
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_root/#go_container")
-	slot0._txtdlcname = gohelper.findChildText(slot0.viewGO, "#go_root/#go_container/#txt_dlcname")
-	slot0._scrollinfo = gohelper.findChildScrollRect(slot0.viewGO, "#go_root/#go_container/#scroll_info")
-	slot0._simagebanner = gohelper.findChildSingleImage(slot0.viewGO, "#go_root/#go_container/#scroll_info/Viewport/Content/bg/#simage_banner")
-	slot0._txtdlcdesc = gohelper.findChildText(slot0.viewGO, "#go_root/#go_container/#scroll_info/Viewport/Content/#txt_dlcdesc")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_root/#go_container/#btn_add")
-	slot0._btnremove = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_root/#go_container/#btn_remove")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_root/#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
+	arg_1_0._scrolldlcs = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_root/#scroll_dlcs")
+	arg_1_0._godlcitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_dlcs/Viewport/Content/#go_dlcitem")
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_root/#go_container")
+	arg_1_0._txtdlcname = gohelper.findChildText(arg_1_0.viewGO, "#go_root/#go_container/#txt_dlcname")
+	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_root/#go_container/#scroll_info")
+	arg_1_0._simagebanner = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_root/#go_container/#scroll_info/Viewport/Content/bg/#simage_banner")
+	arg_1_0._txtdlcdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_root/#go_container/#scroll_info/Viewport/Content/#txt_dlcdesc")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_root/#go_container/#btn_add")
+	arg_1_0._btnremove = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_root/#go_container/#btn_remove")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_root/#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btnremove:AddClickListener(slot0._btnremoveOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btnremove:AddClickListener(arg_2_0._btnremoveOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnadd:RemoveClickListener()
-	slot0._btnremove:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btnremove:RemoveClickListener()
 end
 
-function slot0._btnaddOnClick(slot0)
-	RougeDLCController.instance:addDLC(slot0._selectVersionId)
+function var_0_0._btnaddOnClick(arg_4_0)
+	RougeDLCController.instance:addDLC(arg_4_0._selectVersionId)
 end
 
-function slot0._btnremoveOnClick(slot0)
-	RougeDLCController.instance:removeDLC(slot0._selectVersionId)
+function var_0_0._btnremoveOnClick(arg_5_0)
+	RougeDLCController.instance:removeDLC(arg_5_0._selectVersionId)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeDLCController.instance, RougeEvent.OnSelectDLC, slot0._onSelectDLC, slot0)
-	slot0:addEventCb(RougeDLCController.instance, RougeEvent.OnGetVersionInfo, slot0._onGetVersionInfo, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:addEventCb(RougeDLCController.instance, RougeEvent.OnSelectDLC, arg_6_0._onSelectDLC, arg_6_0)
+	arg_6_0:addEventCb(RougeDLCController.instance, RougeEvent.OnGetVersionInfo, arg_6_0._onGetVersionInfo, arg_6_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	RougeDLCSelectListModel.instance:onInit()
 end
 
-function slot0._onSelectDLC(slot0, slot1)
-	slot0._selectVersionId = slot1
-	slot2 = lua_rouge_season.configDict[slot0._selectVersionId]
+function var_0_0._onSelectDLC(arg_9_0, arg_9_1)
+	arg_9_0._selectVersionId = arg_9_1
 
-	slot0:refreshDLCContainer(slot2)
-	slot0:refreshButtons(slot2)
+	local var_9_0 = lua_rouge_season.configDict[arg_9_0._selectVersionId]
+
+	arg_9_0:refreshDLCContainer(var_9_0)
+	arg_9_0:refreshButtons(var_9_0)
 end
 
-function slot0.refreshDLCContainer(slot0, slot1)
-	if slot1 then
-		slot0._txtdlcname.text = slot1.name
-		slot0._txtdlcdesc.text = slot1.desc
+function var_0_0.refreshDLCContainer(arg_10_0, arg_10_1)
+	if arg_10_1 then
+		arg_10_0._txtdlcname.text = arg_10_1.name
+		arg_10_0._txtdlcdesc.text = arg_10_1.desc
 
-		slot0._simagebanner:LoadImage(ResUrl.getRougeDLCLangImage("rouge_dlc_banner_" .. slot1.id))
+		local var_10_0 = ResUrl.getRougeDLCLangImage("rouge_dlc_banner_" .. arg_10_1.id)
+
+		arg_10_0._simagebanner:LoadImage(var_10_0)
 	end
 end
 
-function slot0.refreshButtons(slot0, slot1)
-	slot3 = tabletool.indexOf(RougeDLCSelectListModel.instance:getCurSelectVersions(), slot1.id) ~= nil
+function var_0_0.refreshButtons(arg_11_0, arg_11_1)
+	local var_11_0 = RougeDLCSelectListModel.instance:getCurSelectVersions()
+	local var_11_1 = tabletool.indexOf(var_11_0, arg_11_1.id) ~= nil
 
-	gohelper.setActive(slot0._btnadd, not slot3)
-	gohelper.setActive(slot0._btnremove, slot3)
+	gohelper.setActive(arg_11_0._btnadd, not var_11_1)
+	gohelper.setActive(arg_11_0._btnremove, var_11_1)
 end
 
-function slot0._onGetVersionInfo(slot0)
-	if slot0._selectVersionId then
-		slot0:refreshButtons(lua_rouge_season.configDict[slot0._selectVersionId])
+function var_0_0._onGetVersionInfo(arg_12_0)
+	if arg_12_0._selectVersionId then
+		local var_12_0 = lua_rouge_season.configDict[arg_12_0._selectVersionId]
+
+		arg_12_0:refreshButtons(var_12_0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
 	RougeDLCController.instance:dispatchEvent(RougeEvent.UpdateRougeVersion)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

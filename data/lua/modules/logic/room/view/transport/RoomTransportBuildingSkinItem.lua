@@ -1,67 +1,75 @@
-module("modules.logic.room.view.transport.RoomTransportBuildingSkinItem", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportBuildingSkinItem", package.seeall)
 
-slot0 = class("RoomTransportBuildingSkinItem", ListScrollCellExtend)
+local var_0_0 = class("RoomTransportBuildingSkinItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "#go_content/#image_rare")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_content/#simage_icon")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_content/#btn_click")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "#go_content/#go_reddot")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_content/#go_selected")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_content/#go_lock")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_rare")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_content/#simage_icon")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_click")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_reddot")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_selected")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_lock")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._mo and slot0._view and slot0._view.viewContainer then
-		slot0._view.viewContainer:dispatchEvent(RoomEvent.TransportBuildingSkinSelect, slot0._mo)
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._mo and arg_4_0._view and arg_4_0._view.viewContainer then
+		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.TransportBuildingSkinSelect, arg_4_0._mo)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0:_refreshUI()
+	arg_8_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0._goselected, arg_9_1)
 end
 
-function slot0._refreshUI(slot0)
-	slot2 = slot0._mo and slot1.config or slot1.buildingCfg
+function var_0_0._refreshUI(arg_10_0)
+	local var_10_0 = arg_10_0._mo
+	local var_10_1 = var_10_0 and var_10_0.config or var_10_0.buildingCfg
 
-	if slot1 then
-		slot0._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. slot2.icon))
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imagerare, RoomBuildingEnum.RareFrame[slot2.rare] or RoomBuildingEnum.RareFrame[1])
-		gohelper.setActive(slot0._golock, slot1.isLock)
+	if var_10_0 then
+		arg_10_0._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. var_10_1.icon))
+
+		local var_10_2 = RoomBuildingEnum.RareFrame[var_10_1.rare] or RoomBuildingEnum.RareFrame[1]
+
+		UISpriteSetMgr.instance:setRoomSprite(arg_10_0._imagerare, var_10_2)
+		gohelper.setActive(arg_10_0._golock, var_10_0.isLock)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-slot0.prefabPath = "ui/viewres/room/transport/roomtransportbuildingskinitem.prefab"
+var_0_0.prefabPath = "ui/viewres/room/transport/roomtransportbuildingskinitem.prefab"
 
-return slot0
+return var_0_0

@@ -1,108 +1,113 @@
-module("modules.logic.store.view.StoreSkinConfirmView", package.seeall)
+﻿module("modules.logic.store.view.StoreSkinConfirmView", package.seeall)
 
-slot0 = class("StoreSkinConfirmView", BaseView)
+local var_0_0 = class("StoreSkinConfirmView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagehuawen1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/tipbg/#simage_huawen1")
-	slot0._simagehuawen2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/tipbg/#simage_huawen2")
-	slot0._simagebeforeicon = gohelper.findChildSingleImage(slot0.viewGO, "cost/before/#simage_beforeicon")
-	slot0._simageaftericon = gohelper.findChildSingleImage(slot0.viewGO, "cost/after/#simage_aftericon")
-	slot0._txtbeforequantity = gohelper.findChildText(slot0.viewGO, "cost/before/numbg/#txt_beforequantity")
-	slot0._txtafterquantity = gohelper.findChildText(slot0.viewGO, "cost/after/numbg/#txt_afterquantity")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._btnyes = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_yes")
-	slot0._btnno = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_no")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagehuawen1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen1")
+	arg_1_0._simagehuawen2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen2")
+	arg_1_0._simagebeforeicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/before/#simage_beforeicon")
+	arg_1_0._simageaftericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/after/#simage_aftericon")
+	arg_1_0._txtbeforequantity = gohelper.findChildText(arg_1_0.viewGO, "cost/before/numbg/#txt_beforequantity")
+	arg_1_0._txtafterquantity = gohelper.findChildText(arg_1_0.viewGO, "cost/after/numbg/#txt_afterquantity")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
+	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnyes:AddClickListener(slot0._btnyesOnClick, slot0)
-	slot0._btnno:AddClickListener(slot0._btnnoOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
+	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnyes:RemoveClickListener()
-	slot0._btnno:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnyes:RemoveClickListener()
+	arg_3_0._btnno:RemoveClickListener()
 end
 
-function slot0._btnyesOnClick(slot0)
-	slot0._yes = true
+function var_0_0._btnyesOnClick(arg_4_0)
+	arg_4_0._yes = true
 
-	CurrencyController.instance:checkExchangeFreeDiamond(slot0.viewParam.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.SkinStore, slot0._callback, slot0._callbackObj, slot0.jumpCallBack, slot0)
-	slot0:closeThis()
+	CurrencyController.instance:checkExchangeFreeDiamond(arg_4_0.viewParam.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.SkinStore, arg_4_0._callback, arg_4_0._callbackObj, arg_4_0.jumpCallBack, arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnnoOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnnoOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
-	slot0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
-	gohelper.addUIClickAudio(slot0._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
+	arg_6_0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
+	gohelper.addUIClickAudio(arg_6_0._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_6_0._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
-	slot0._type = slot0.viewParam.type
-	slot0._id = slot0.viewParam.id
-	slot0._quantity = slot0.viewParam.quantity
-	slot0._callback = slot0.viewParam.callback
-	slot0._callbackObj = slot0.viewParam.callbackObj
-	slot0._yes = false
-	slot0.needTransform = slot0.viewParam.needTransform
-	slot1 = false
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._type = arg_8_0.viewParam.type
+	arg_8_0._id = arg_8_0.viewParam.id
+	arg_8_0._quantity = arg_8_0.viewParam.quantity
+	arg_8_0._callback = arg_8_0.viewParam.callback
+	arg_8_0._callbackObj = arg_8_0.viewParam.callbackObj
+	arg_8_0._yes = false
+	arg_8_0.needTransform = arg_8_0.viewParam.needTransform
 
-	if slot0._type == MaterialEnum.MaterialType.Currency and (slot0._id == CurrencyEnum.CurrencyType.Diamond or slot0._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
-		slot1 = true
+	local var_8_0 = false
+
+	if arg_8_0._type == MaterialEnum.MaterialType.Currency and (arg_8_0._id == CurrencyEnum.CurrencyType.Diamond or arg_8_0._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
+		var_8_0 = true
 	end
 
-	slot2, slot3 = ItemModel.instance:getItemConfigAndIcon(slot0._type, slot0._id)
+	local var_8_1, var_8_2 = ItemModel.instance:getItemConfigAndIcon(arg_8_0._type, arg_8_0._id)
 
-	slot0._simageaftericon:LoadImage(slot3)
+	arg_8_0._simageaftericon:LoadImage(var_8_2)
 
-	slot4, slot5 = ItemModel.instance:getItemConfigAndIcon(slot0.viewParam.cost_type, slot0.viewParam.cost_id)
+	local var_8_3, var_8_4 = ItemModel.instance:getItemConfigAndIcon(arg_8_0.viewParam.cost_type, arg_8_0.viewParam.cost_id)
 
-	slot0._simagebeforeicon:LoadImage(slot5)
+	arg_8_0._simagebeforeicon:LoadImage(var_8_4)
 
-	slot0._txtbeforequantity.text = GameUtil.numberDisplay(slot0.viewParam.cost_quantity)
-	slot0._txtafterquantity.text = GameUtil.numberDisplay(slot0.viewParam.miss_quantity)
-	slot0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("skin_transform_desc"), {
-		slot0.viewParam.miss_quantity,
-		slot1 and luaLang("summon_confirm_quantifier1") or luaLang("skin_confirm_quantifier1"),
-		slot2.name,
-		slot0.viewParam.cost_quantity,
-		slot4.name
-	})
+	arg_8_0._txtbeforequantity.text = GameUtil.numberDisplay(arg_8_0.viewParam.cost_quantity)
+	arg_8_0._txtafterquantity.text = GameUtil.numberDisplay(arg_8_0.viewParam.miss_quantity)
+
+	local var_8_5 = {
+		arg_8_0.viewParam.miss_quantity,
+		var_8_0 and luaLang("summon_confirm_quantifier1") or luaLang("skin_confirm_quantifier1"),
+		var_8_1.name,
+		arg_8_0.viewParam.cost_quantity,
+		var_8_3.name
+	}
+
+	arg_8_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("skin_transform_desc"), var_8_5)
 end
 
-function slot0.jumpCallBack(slot0)
+function var_0_0.jumpCallBack(arg_9_0)
 	ViewMgr.instance:closeView(ViewName.StoreSkinGoodsView)
 	ViewMgr.instance:closeView(ViewName.StoreSkinPreviewView)
-	slot0:closeThis()
+	arg_9_0:closeThis()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onCloseFinish(slot0)
-	if slot0._yes and not slot0.viewParam.notEnough and slot0._callback then
-		slot0._callback(slot0._callbackObj)
+function var_0_0.onCloseFinish(arg_11_0)
+	if arg_11_0._yes and not arg_11_0.viewParam.notEnough and arg_11_0._callback then
+		arg_11_0._callback(arg_11_0._callbackObj)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagehuawen1:UnLoadImage()
-	slot0._simagehuawen2:UnLoadImage()
-	slot0._simagebeforeicon:UnLoadImage()
-	slot0._simageaftericon:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simagehuawen1:UnLoadImage()
+	arg_12_0._simagehuawen2:UnLoadImage()
+	arg_12_0._simagebeforeicon:UnLoadImage()
+	arg_12_0._simageaftericon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

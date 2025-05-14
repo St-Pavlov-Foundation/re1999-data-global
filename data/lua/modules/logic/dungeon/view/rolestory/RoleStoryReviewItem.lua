@@ -1,74 +1,78 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryReviewItem", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryReviewItem", package.seeall)
 
-slot0 = class("RoleStoryReviewItem", ListScrollCellExtend)
+local var_0_0 = class("RoleStoryReviewItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0.goSelect = gohelper.findChild(slot0.viewGO, "selectbg")
-	slot0.txtSelectOrder = gohelper.findChildTextMesh(slot0.goSelect, "#txt_selectorder")
-	slot0.goNormal = gohelper.findChild(slot0.viewGO, "normalbg")
-	slot0.txtNormalOrder = gohelper.findChildTextMesh(slot0.goNormal, "#txt_normalorder")
-	slot0.txtStoryName = gohelper.findChildTextMesh(slot0.viewGO, "#txt_storyname")
-	slot0.btnClick = gohelper.findButtonWithAudio(slot0.viewGO)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "selectbg")
+	arg_1_0.txtSelectOrder = gohelper.findChildTextMesh(arg_1_0.goSelect, "#txt_selectorder")
+	arg_1_0.goNormal = gohelper.findChild(arg_1_0.viewGO, "normalbg")
+	arg_1_0.txtNormalOrder = gohelper.findChildTextMesh(arg_1_0.goNormal, "#txt_normalorder")
+	arg_1_0.txtStoryName = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_storyname")
+	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.viewGO)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClick, slot0.onClickBtnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClickBtnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickBtnClick(slot0)
-	if not slot0.data then
+function var_0_0.onClickBtnClick(arg_4_0)
+	if not arg_4_0.data then
 		return
 	end
 
-	if slot0.selectDispatchId == slot0.data.id then
+	if arg_4_0.selectDispatchId == arg_4_0.data.id then
 		return
 	end
 
-	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickReviewItem, slot0.data.id)
+	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickReviewItem, arg_4_0.data.id)
 end
 
-function slot0.refreshItem(slot0)
-	if not slot0.data then
-		gohelper.setActive(slot0.viewGO, false)
+function var_0_0.refreshItem(arg_5_0)
+	if not arg_5_0.data then
+		gohelper.setActive(arg_5_0.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_5_0.viewGO, true)
 
-	slot0.txtSelectOrder.text = string.format("%02d", slot0.index)
-	slot0.txtNormalOrder.text = string.format("%02d", slot0.index)
-	slot0.txtStoryName.text = slot0.data.name
-	slot1 = slot0.selectDispatchId == slot0.data.id
+	arg_5_0.txtSelectOrder.text = string.format("%02d", arg_5_0.index)
+	arg_5_0.txtNormalOrder.text = string.format("%02d", arg_5_0.index)
+	arg_5_0.txtStoryName.text = arg_5_0.data.name
 
-	gohelper.setActive(slot0.goSelect, slot1)
-	gohelper.setActive(slot0.goNormal, not slot1)
+	local var_5_0 = arg_5_0.selectDispatchId == arg_5_0.data.id
+
+	gohelper.setActive(arg_5_0.goSelect, var_5_0)
+	gohelper.setActive(arg_5_0.goNormal, not var_5_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0.data = slot1
-	slot0.index = slot2
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.data = arg_6_1
+	arg_6_0.index = arg_6_2
 
-	slot0:refreshItem()
+	arg_6_0:refreshItem()
 end
 
-function slot0.updateSelect(slot0, slot1)
-	slot0.selectDispatchId = slot1
+function var_0_0.updateSelect(arg_7_0, arg_7_1)
+	arg_7_0.selectDispatchId = arg_7_1
 
-	slot0:refreshItem()
+	arg_7_0:refreshItem()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

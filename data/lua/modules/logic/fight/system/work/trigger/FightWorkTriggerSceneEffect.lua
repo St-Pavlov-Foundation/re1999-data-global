@@ -1,27 +1,34 @@
-module("modules.logic.fight.system.work.trigger.FightWorkTriggerSceneEffect", package.seeall)
+﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerSceneEffect", package.seeall)
 
-slot0 = class("FightWorkTriggerSceneEffect", BaseWork)
+local var_0_0 = class("FightWorkTriggerSceneEffect", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._fightStepMO = slot1
-	slot0._actEffectMO = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._actEffectMO = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	slot0._config = lua_trigger_action.configDict[slot0._actEffectMO.effectNum]
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
 
-	if GameSceneMgr.instance:getCurScene() and slot1.level:getSceneGo() and FightHelper.getEntity(FightEntityScene.MySideId) then
-		if slot0._config.param2 == 0 then
-			slot3.effect:removeEffectByEffectName(slot0._config.param1)
-		else
-			slot3.effect:addGlobalEffect(slot0._config.param1)
+	local var_2_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_2_0 and var_2_0.level:getSceneGo() then
+		local var_2_1 = FightHelper.getEntity(FightEntityScene.MySideId)
+
+		if var_2_1 then
+			if arg_2_0._config.param2 == 0 then
+				var_2_1.effect:removeEffectByEffectName(arg_2_0._config.param1)
+			else
+				var_2_1.effect:addGlobalEffect(arg_2_0._config.param1)
+			end
 		end
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

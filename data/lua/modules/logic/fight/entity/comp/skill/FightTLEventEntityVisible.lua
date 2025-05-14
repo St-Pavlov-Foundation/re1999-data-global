@@ -1,101 +1,133 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityVisible", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityVisible", package.seeall)
 
-slot0 = class("FightTLEventEntityVisible")
-slot1 = nil
-slot2 = {
+local var_0_0 = class("FightTLEventEntityVisible")
+local var_0_1
+local var_0_2 = {
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
 	[FightEnum.EffectType.STORAGEINJURY] = true,
 	[FightEnum.EffectType.SHIELDVALUECHANGE] = true,
 	[FightEnum.EffectType.SHAREHURT] = true
 }
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if FightHelper.getEntity(slot1.fromId) and slot4.skill and slot4.skill:sameSkillPlaying() then
-		-- Nothing
-	elseif uv0 and slot1.stepUid < uv0 then
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = FightHelper.getEntity(arg_1_1.fromId)
+	local var_1_1 = var_1_0 and var_1_0.skill and var_1_0.skill:sameSkillPlaying()
+
+	if var_1_1 then
+		-- block empty
+	elseif var_0_1 and arg_1_1.stepUid < var_0_1 then
 		return
 	end
 
-	uv0 = slot1.stepUid
-	uv1.latestStepUid = uv0
-	slot8 = tonumber(slot3[3]) or 0.2
-	slot11 = GameSceneMgr.instance:getCurScene().entityMgr
-	slot12 = slot11:getTagUnitDict(SceneTag.UnitPlayer)
-	slot13 = slot11:getTagUnitDict(SceneTag.UnitMonster)
-	slot16, slot17 = slot0:_getVisibleList(slot9, FightHelper.getDefenders(slot1, false, uv2), FightHelper.getEntity(slot1.fromId):isMySide() and slot12 or slot13, tonumber(slot3[1]) or 1, slot9:isMySide() and slot13 or slot12, tonumber(slot3[2]) or 1, slot1)
+	var_0_1 = arg_1_1.stepUid
+	var_0_0.latestStepUid = var_0_1
 
-	if not string.nilorempty(slot3[5]) and FightHelper.getEntity(slot1.stepUid .. "_" .. slot3[5]) then
-		table.insert(slot17, slot18)
+	local var_1_2 = tonumber(arg_1_3[1]) or 1
+	local var_1_3 = tonumber(arg_1_3[2]) or 1
+	local var_1_4 = tonumber(arg_1_3[3]) or 0.2
+	local var_1_5 = FightHelper.getEntity(arg_1_1.fromId)
+	local var_1_6 = FightHelper.getDefenders(arg_1_1, false, var_0_2)
+	local var_1_7 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_1_8 = var_1_7:getTagUnitDict(SceneTag.UnitPlayer)
+	local var_1_9 = var_1_7:getTagUnitDict(SceneTag.UnitMonster)
+	local var_1_10 = var_1_5:isMySide() and var_1_8 or var_1_9
+	local var_1_11 = var_1_5:isMySide() and var_1_9 or var_1_8
+	local var_1_12, var_1_13 = arg_1_0:_getVisibleList(var_1_5, var_1_6, var_1_10, var_1_2, var_1_11, var_1_3, arg_1_1)
+
+	if not string.nilorempty(arg_1_3[5]) then
+		local var_1_14 = FightHelper.getEntity(arg_1_1.stepUid .. "_" .. arg_1_3[5])
+
+		if var_1_14 then
+			table.insert(var_1_13, var_1_14)
+		end
 	end
 
-	if not string.nilorempty(slot3[6]) and FightHelper.getEntity(slot1.stepUid .. "_" .. slot3[6]) then
-		table.insert(slot16, slot18)
+	if not string.nilorempty(arg_1_3[6]) then
+		local var_1_15 = FightHelper.getEntity(arg_1_1.stepUid .. "_" .. arg_1_3[6])
+
+		if var_1_15 then
+			table.insert(var_1_12, var_1_15)
+		end
 	end
 
-	for slot21, slot22 in ipairs(slot16) do
-		FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, slot22, slot1, true, slot8)
+	for iter_1_0, iter_1_1 in ipairs(var_1_12) do
+		FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, iter_1_1, arg_1_1, true, var_1_4)
 	end
 
-	if slot3[4] ~= "1" or not slot5 then
-		for slot21, slot22 in ipairs(slot17) do
-			if true then
-				FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, slot22, slot1, false, slot8)
+	if arg_1_3[4] == "1" and var_1_1 then
+		-- block empty
+	else
+		for iter_1_2, iter_1_3 in ipairs(var_1_13) do
+			local var_1_16 = true
+
+			if var_1_16 then
+				FightController.instance:dispatchEvent(FightEvent.SetEntityVisibleByTimeline, iter_1_3, arg_1_1, false, var_1_4)
 			end
 		end
 	end
 end
 
-function slot0._getVisibleList(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot8 = {}
-	slot9 = {}
+function var_0_0._getVisibleList(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6, arg_2_7)
+	local var_2_0 = {}
+	local var_2_1 = {}
 
-	for slot13, slot14 in pairs(slot3) do
-		slot15 = nil
+	for iter_2_0, iter_2_1 in pairs(arg_2_3) do
+		local var_2_2
 
-		if slot4 == 0 then
-			slot15 = true
-		elseif slot4 == 1 then
-			slot15 = false
-		elseif slot4 == 2 then
-			slot15 = slot1 ~= slot14
-		elseif slot4 == 3 then
-			slot15 = slot1 == slot14
-		elseif slot4 == 4 then
-			slot15 = slot1 ~= slot14 and not tabletool.indexOf(slot2, slot14)
+		if arg_2_4 == 0 then
+			var_2_2 = true
+		elseif arg_2_4 == 1 then
+			var_2_2 = false
+		elseif arg_2_4 == 2 then
+			var_2_2 = arg_2_1 ~= iter_2_1
+		elseif arg_2_4 == 3 then
+			var_2_2 = arg_2_1 == iter_2_1
+		elseif arg_2_4 == 4 then
+			var_2_2 = arg_2_1 ~= iter_2_1 and not tabletool.indexOf(arg_2_2, iter_2_1)
 		end
 
-		if slot15 then
-			table.insert(slot8, slot14)
+		if var_2_2 then
+			table.insert(var_2_0, iter_2_1)
 		else
-			table.insert(slot9, slot14)
+			table.insert(var_2_1, iter_2_1)
 		end
 	end
 
-	for slot13, slot14 in pairs(slot5) do
-		slot15 = nil
+	for iter_2_2, iter_2_3 in pairs(arg_2_5) do
+		local var_2_3
 
-		if slot6 == 0 then
-			slot15 = true
-		elseif slot6 == 1 then
-			slot15 = false
-		elseif slot6 == 2 then
-			if not tabletool.indexOf(slot2, slot14) and slot14:getMO() and FightConfig.instance:getSkinCO(slot16.skin) and slot17.canHide == 1 then
-				slot15 = false
+		if arg_2_6 == 0 then
+			var_2_3 = true
+		elseif arg_2_6 == 1 then
+			var_2_3 = false
+		elseif arg_2_6 == 2 then
+			var_2_3 = not tabletool.indexOf(arg_2_2, iter_2_3)
+
+			if var_2_3 then
+				local var_2_4 = iter_2_3:getMO()
+
+				if var_2_4 then
+					local var_2_5 = FightConfig.instance:getSkinCO(var_2_4.skin)
+
+					if var_2_5 and var_2_5.canHide == 1 then
+						var_2_3 = false
+					end
+				end
 			end
-		elseif slot6 == 3 then
-			slot15 = tabletool.indexOf(slot2, slot14)
-		elseif slot6 == 4 then
-			slot15 = slot14.id ~= slot7.toId
+		elseif arg_2_6 == 3 then
+			var_2_3 = tabletool.indexOf(arg_2_2, iter_2_3)
+		elseif arg_2_6 == 4 then
+			var_2_3 = iter_2_3.id ~= arg_2_7.toId
 		end
 
-		if slot15 then
-			table.insert(slot8, slot14)
+		if var_2_3 then
+			table.insert(var_2_0, iter_2_3)
 		else
-			table.insert(slot9, slot14)
+			table.insert(var_2_1, iter_2_3)
 		end
 	end
 
-	return slot9, slot8
+	return var_2_1, var_2_0
 end
 
-return slot0
+return var_0_0

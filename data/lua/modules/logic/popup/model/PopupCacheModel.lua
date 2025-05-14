@@ -1,21 +1,23 @@
-module("modules.logic.popup.model.PopupCacheModel", package.seeall)
+﻿module("modules.logic.popup.model.PopupCacheModel", package.seeall)
 
-slot0 = class("PopupCacheModel", BaseModel)
+local var_0_0 = class("PopupCacheModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.recordCachePopupParam(slot0, slot1)
-	slot0:addAtLast(slot1)
+function var_0_0.recordCachePopupParam(arg_3_0, arg_3_1)
+	arg_3_0:addAtLast(arg_3_1)
 end
 
-function slot0.popNextPopupParam(slot0)
-	return slot0:removeFirst()
+function var_0_0.popNextPopupParam(arg_4_0)
+	return (arg_4_0:removeFirst())
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

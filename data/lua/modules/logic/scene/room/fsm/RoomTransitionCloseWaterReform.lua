@@ -1,22 +1,25 @@
-module("modules.logic.scene.room.fsm.RoomTransitionCloseWaterReform", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionCloseWaterReform", package.seeall)
 
-slot0 = class("RoomTransitionCloseWaterReform", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionCloseWaterReform", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
 	RoomWaterReformListModel.instance:clear()
 	RoomWaterReformController.instance:clearSelectWater()
 	RoomWaterReformModel.instance:clear()
 	RoomWaterReformController.instance:refreshHighlightWaterBlock()
-	slot0:onDone()
+	arg_2_0:onDone()
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_3_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

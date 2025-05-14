@@ -1,37 +1,41 @@
-module("modules.logic.rouge.view.RougePickAssistItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougePickAssistItem", package.seeall)
 
-slot0 = class("RougePickAssistItem", PickAssistItem)
+local var_0_0 = class("RougePickAssistItem", PickAssistItem)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
-	slot0:_initCapacity()
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
+	arg_1_0:_initCapacity()
 end
 
-function slot0._initCapacity(slot0)
-	slot0._capacityComp = RougeCapacityComp.Add(gohelper.findChild(slot0.viewGO, "volume"), nil, , true)
+function var_0_0._initCapacity(arg_2_0)
+	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "volume")
 
-	slot0._capacityComp:setSpriteType(RougeCapacityComp.SpriteType3, RougeCapacityComp.SpriteType3)
+	arg_2_0._capacityComp = RougeCapacityComp.Add(var_2_0, nil, nil, true)
+
+	arg_2_0._capacityComp:setSpriteType(RougeCapacityComp.SpriteType3, RougeCapacityComp.SpriteType3)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
+	var_0_0.super.onUpdateMO(arg_3_0, arg_3_1)
 
-	slot2 = slot0._mo.heroMO
+	local var_3_0 = arg_3_0._mo.heroMO
+	local var_3_1 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(var_3_0.heroId)
 
-	if slot2.level < RougeHeroGroupBalanceHelper.getHeroBalanceLv(slot2.heroId) then
-		slot0._heroItem:setBalanceLv(slot3)
+	if var_3_1 > var_3_0.level then
+		arg_3_0._heroItem:setBalanceLv(var_3_1)
 	end
 
-	slot4 = RougeConfig1.instance:getRoleCapacity(slot1.heroMO.config.rare)
-	slot0._capacity = slot4
+	local var_3_2 = RougeConfig1.instance:getRoleCapacity(arg_3_1.heroMO.config.rare)
 
-	slot0._capacityComp:updateMaxNum(slot4)
+	arg_3_0._capacity = var_3_2
+
+	arg_3_0._capacityComp:updateMaxNum(var_3_2)
 end
 
-function slot0._checkClick(slot0)
-	slot1 = RougeController.instance.pickAssistViewParams
+function var_0_0._checkClick(arg_4_0)
+	local var_4_0 = RougeController.instance.pickAssistViewParams
 
-	if slot1.totalCapacity < slot1.curCapacity + slot0._capacity then
+	if var_4_0.curCapacity + arg_4_0._capacity > var_4_0.totalCapacity then
 		GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 		return false
@@ -40,4 +44,4 @@ function slot0._checkClick(slot0)
 	return true
 end
 
-return slot0
+return var_0_0

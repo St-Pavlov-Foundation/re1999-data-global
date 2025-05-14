@@ -1,11 +1,12 @@
-module("modules.logic.versionactivity1_3.va3chess.define.Va3ChessEnum", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.define.Va3ChessEnum", package.seeall)
 
-slot0 = _M
-slot0.TileBaseType = {
+local var_0_0 = _M
+
+var_0_0.TileBaseType = {
 	Normal = 1,
 	None = 0
 }
-slot0.TileShowSettings = {
+var_0_0.TileShowSettings = {
 	width = 152.7,
 	height = 54.6,
 	offsetYX = 24.6,
@@ -13,7 +14,7 @@ slot0.TileShowSettings = {
 	offsetX = 154.8,
 	offsetXY = -29.3
 }
-slot0.InteractType = {
+var_0_0.InteractType = {
 	Item = 3,
 	PushedOnceBlock = 15,
 	DestroyableItem = 14,
@@ -38,41 +39,41 @@ slot0.InteractType = {
 	DestroyableTrap = 20,
 	NextMap = 11
 }
-slot0.Direction = {
+var_0_0.Direction = {
 	Down = 2,
 	Up = 8,
 	Left = 4,
 	Right = 6
 }
-slot0.InteractParamType = {
+var_0_0.InteractParamType = {
 	Story = 4
 }
-slot0.EffectType = {
+var_0_0.EffectType = {
 	ArrowHit = 1
 }
-slot0.EffectPath = {
-	[slot0.EffectType.ArrowHit] = "scenes/v1a5_m_s12_dfw_krd/perefab/vx_jian_hit.prefab"
+var_0_0.EffectPath = {
+	[var_0_0.EffectType.ArrowHit] = "scenes/v1a5_m_s12_dfw_krd/perefab/vx_jian_hit.prefab"
 }
-slot0.ScenePosZRange = {
+var_0_0.ScenePosZRange = {
 	Max = -0.2,
 	Min = 0
 }
-slot0.InteractSelectPriority = {
-	[slot0.InteractType.Player] = 1,
-	[slot0.InteractType.AssistPlayer] = 1
+var_0_0.InteractSelectPriority = {
+	[var_0_0.InteractType.Player] = 1,
+	[var_0_0.InteractType.AssistPlayer] = 1
 }
-slot0.SelectPosStatus = {
+var_0_0.SelectPosStatus = {
 	SelectObjWaitPos = 2,
 	None = 1
 }
-slot0.GameEventType = {
+var_0_0.GameEventType = {
 	FinishEvent = 3,
 	Battle = 1,
 	UseItem = 2,
 	Lock = -1,
 	Normal = 0
 }
-slot0.GameStepType = {
+var_0_0.GameStepType = {
 	MapUpdate = 14,
 	NextRound = 1,
 	CallEvent = 4,
@@ -92,21 +93,21 @@ slot0.GameStepType = {
 	InteractFinish = 8,
 	Move = 3
 }
-slot0.GameEffectType = {
+var_0_0.GameEffectType = {
 	Display = 5,
 	Direction = 2,
 	Sleep = 3,
 	Hero = 1,
 	Monster = 4
 }
-slot0.Act120StepType = {
+var_0_0.Act120StepType = {
 	TilePosui = 13
 }
-slot0.Act142StepType = {
+var_0_0.Act142StepType = {
 	TileBroken = 13,
 	TileFragile = 19
 }
-slot0.DeleteReason = {
+var_0_0.DeleteReason = {
 	Default = 0,
 	MoveKill = 5,
 	Change = 6,
@@ -115,31 +116,31 @@ slot0.DeleteReason = {
 	Arrow = 3,
 	FireBall = 4
 }
-slot0.ChessClearCondition = {
+var_0_0.ChessClearCondition = {
 	InteractFinish = 2,
 	RoundLimit = 1,
 	HpLimit = 3,
 	InteractAllFinish = 4
 }
-slot0.ChessSelectType = {
+var_0_0.ChessSelectType = {
 	UseItem = 2,
 	Normal = 1
 }
-slot0.ClickRangeX = 125
-slot0.ClickRangeY = 80
-slot0.ClickYWeight = 1.2
-slot0.ChessBoardOffsetX = -785
-slot0.ChessBoardOffsetY = -20
-slot0.TaskTypeClearEpisode = "Act109Star"
-slot0.SWITCH_OPEN_ANIM = "swopen"
-slot0.GuideIDForSwitchButton = 747
-slot0.ResOffsetXY = {
+var_0_0.ClickRangeX = 125
+var_0_0.ClickRangeY = 80
+var_0_0.ClickYWeight = 1.2
+var_0_0.ChessBoardOffsetX = -785
+var_0_0.ChessBoardOffsetY = -20
+var_0_0.TaskTypeClearEpisode = "Act109Star"
+var_0_0.SWITCH_OPEN_ANIM = "swopen"
+var_0_0.GuideIDForSwitchButton = 747
+var_0_0.ResOffsetXY = {
 	pingzi_a = {
 		0,
 		-14.5
 	}
 }
-slot0.SceneResPath = {
+var_0_0.SceneResPath = {
 	SceneFormatPath = "%s.prefab",
 	AlarmItem3 = "scenes/v1a5_m_s12_dfw_krd/perefab/diban_red.prefab",
 	GroundItem = "scenes/common_m_s12_dfw/prefab/m_s12_diban_1×1.prefab",
@@ -149,14 +150,14 @@ slot0.SceneResPath = {
 	AvatarItemPath = "%s.prefab",
 	DefaultScene = "scenes/m_s12_dfw/prefab/m_s12_pikelesi_a_01_p.prefab"
 }
-slot0.FailReason = {
+var_0_0.FailReason = {
 	CanNotMove = 2,
 	MaxRound = 3,
 	Battle = 1,
 	FailInteract = 4,
 	None = 0
 }
-slot0.Res2SortOrder = {
+var_0_0.Res2SortOrder = {
 	jingcha_b = 1,
 	chuandan_b = 9,
 	youke_a = 7,
@@ -171,43 +172,43 @@ slot0.Res2SortOrder = {
 	chuandan_a = 10,
 	interact_exit = 11
 }
-slot0.AlarmOrder = {
+var_0_0.AlarmOrder = {
 	AlarmItem = -100,
 	DirItem = -150
 }
-slot0.ViewType = {
+var_0_0.ViewType = {
 	Game = 1,
 	Reward = 3,
 	Result = 2
 }
-slot0.TileTrigger = {
+var_0_0.TileTrigger = {
 	PoSui = 2,
 	Broken = 3
 }
-slot0.TriggerStatus = {
-	[slot0.TileTrigger.Broken] = {
+var_0_0.TriggerStatus = {
+	[var_0_0.TileTrigger.Broken] = {
 		Broken = 3,
 		Fragile = 2,
 		Normal = 1
 	}
 }
-slot0.ActivityId = {
+var_0_0.ActivityId = {
 	Act109 = 11103,
 	Act122 = 11304,
 	Act120 = 11306,
 	Act142 = VersionActivity1_5Enum.ActivityId.Activity142
 }
-slot0.ObjState = {
+var_0_0.ObjState = {
 	Idle = 1,
 	Interoperable = 2
 }
-slot0.ComponentType = {
+var_0_0.ComponentType = {
 	Animator = typeof(UnityEngine.Animator),
 	MeshRenderer = typeof(UnityEngine.MeshRenderer)
 }
-slot0.DEFAULT_BULLET_SPEED = 8
-slot0.DEFAULT_BULLET_FLY_TIME = 1
-slot0.Bullet = {
+var_0_0.DEFAULT_BULLET_SPEED = 8
+var_0_0.DEFAULT_BULLET_FLY_TIME = 1
+var_0_0.Bullet = {
 	Arrow = {
 		speed = 8,
 		path = "scenes/v1a5_m_s12_dfw_krd/perefab/vx_jian.prefab"
@@ -218,4 +219,4 @@ slot0.Bullet = {
 	}
 }
 
-return slot0
+return var_0_0

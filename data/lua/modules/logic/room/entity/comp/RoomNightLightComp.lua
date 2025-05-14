@@ -1,54 +1,59 @@
-module("modules.logic.room.entity.comp.RoomNightLightComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomNightLightComp", package.seeall)
 
-slot0 = class("RoomNightLightComp", LuaCompBase)
+local var_0_0 = class("RoomNightLightComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._effectKey = RoomEnum.EffectKey.BuildingGOKey
-	slot0._isNight = RoomWeatherModel.instance:getIsNight()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+	arg_1_0._isNight = RoomWeatherModel.instance:getIsNight()
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 end
 
-function slot0.setEffectKey(slot0, slot1)
-	slot0._effectKey = slot1
+function var_0_0.setEffectKey(arg_3_0, arg_3_1)
+	arg_3_0._effectKey = arg_3_1
 end
 
-function slot0.addEventListeners(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.MapEntityNightLight, slot0._onNightLight, slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	RoomMapController.instance:registerCallback(RoomEvent.MapEntityNightLight, arg_4_0._onNightLight, arg_4_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.MapEntityNightLight, slot0._onNightLight, slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.MapEntityNightLight, arg_5_0._onNightLight, arg_5_0)
 end
 
-function slot0._onNightLight(slot0, slot1)
-	if slot1 ~= nil and slot0._isNight ~= slot1 then
-		slot0._isNight = slot1
+function var_0_0._onNightLight(arg_6_0, arg_6_1)
+	if arg_6_1 ~= nil and arg_6_0._isNight ~= arg_6_1 then
+		arg_6_0._isNight = arg_6_1
 
-		slot0:_updateNight()
+		arg_6_0:_updateNight()
 	end
 end
 
-function slot0._updateNight(slot0)
-	if slot0.entity.effect:getGameObjectsByName(slot0._effectKey, RoomEnum.EntityChildKey.NightLightGOKey) then
-		for slot5, slot6 in ipairs(slot1) do
-			gohelper.setActive(slot6, slot0._isNight)
+function var_0_0._updateNight(arg_7_0)
+	local var_7_0 = arg_7_0.entity.effect:getGameObjectsByName(arg_7_0._effectKey, RoomEnum.EntityChildKey.NightLightGOKey)
+
+	if var_7_0 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			gohelper.setActive(iter_7_1, arg_7_0._isNight)
 		end
 	end
 end
 
-function slot0.beforeDestroy(slot0)
+function var_0_0.beforeDestroy(arg_8_0)
+	return
 end
 
-function slot0.onEffectRebuild(slot0)
-	if slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) and not slot1:isSameResByKey(slot0._effectKey, slot0._effectRes) then
-		slot0._effectRes = slot1:getEffectRes(slot0._effectKey)
+function var_0_0.onEffectRebuild(arg_9_0)
+	local var_9_0 = arg_9_0.entity.effect
 
-		slot0:_updateNight()
+	if var_9_0:isHasEffectGOByKey(arg_9_0._effectKey) and not var_9_0:isSameResByKey(arg_9_0._effectKey, arg_9_0._effectRes) then
+		arg_9_0._effectRes = var_9_0:getEffectRes(arg_9_0._effectKey)
+
+		arg_9_0:_updateNight()
 	end
 end
 
-return slot0
+return var_0_0

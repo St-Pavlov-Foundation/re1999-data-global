@@ -1,91 +1,107 @@
-module("modules.logic.versionactivity1_4.act130.view.Activity130DungeonChange", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.view.Activity130DungeonChange", package.seeall)
 
-slot0 = class("Activity130DungeonChange", BaseView)
+local var_0_0 = class("Activity130DungeonChange", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvents()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:_addEvents()
 
-	slot0._changeRoot = gohelper.findChild(slot0.viewGO, "#go_dungeonchange")
-	slot0._changeGo = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._changeRoot)
-	slot0._changeAnimator = slot0._changeGo:GetComponent(typeof(UnityEngine.Animator))
-	slot0._changeAnimatorPlayer = SLFramework.AnimatorPlayer.Get(slot0._changeGo)
+	arg_6_0._changeRoot = gohelper.findChild(arg_6_0.viewGO, "#go_dungeonchange")
 
-	gohelper.setActive(slot0._changeRoot, false)
+	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
+
+	arg_6_0._changeGo = arg_6_0:getResInst(var_6_0, arg_6_0._changeRoot)
+	arg_6_0._changeAnimator = arg_6_0._changeGo:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0._changeAnimatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0._changeGo)
+
+	gohelper.setActive(arg_6_0._changeRoot, false)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0._onNewUnlockChangeLevelScene(slot0)
-	if Activity130Model.instance:getNewUnlockEpisode() > -1 then
-		slot0:_onChangeLevelScene(slot1)
+function var_0_0._onNewUnlockChangeLevelScene(arg_8_0)
+	local var_8_0 = Activity130Model.instance:getNewUnlockEpisode()
+
+	if var_8_0 > -1 then
+		arg_8_0:_onChangeLevelScene(var_8_0)
 	end
 end
 
-function slot0._onChangeLevelScene(slot0, slot1)
-	if Activity130Model.instance:getCurEpisodeId() > 4 and slot1 > 4 then
+function var_0_0._onChangeLevelScene(arg_9_0, arg_9_1)
+	local var_9_0 = Activity130Model.instance:getCurEpisodeId()
+
+	if var_9_0 > 4 and arg_9_1 > 4 then
 		return
 	end
 
-	if slot2 < 5 and slot1 < 5 then
+	if var_9_0 < 5 and arg_9_1 < 5 then
 		return
 	end
 
-	slot3 = VersionActivity1_4Enum.ActivityId.Role37
-	slot0._toSceneType = slot1 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(slot3, slot1).lvscene
+	local var_9_1 = VersionActivity1_4Enum.ActivityId.Role37
+	local var_9_2 = var_9_0 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(var_9_1, var_9_0).lvscene
 
-	gohelper.setActive(slot0._changeRoot, true)
+	arg_9_0._toSceneType = arg_9_1 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(var_9_1, arg_9_1).lvscene
 
-	if slot0._toSceneType == Activity130Enum.lvSceneType.Light then
-		slot0._changeAnimator:Play("to_sun", 0, 0)
+	gohelper.setActive(arg_9_0._changeRoot, true)
 
-		if slot0._toSceneType ~= (slot2 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(slot3, slot2).lvscene) then
-			TaskDispatcher.runDelay(slot0._startChangeScene, slot0, 0.17)
+	if arg_9_0._toSceneType == Activity130Enum.lvSceneType.Light then
+		arg_9_0._changeAnimator:Play("to_sun", 0, 0)
+
+		if arg_9_0._toSceneType ~= var_9_2 then
+			TaskDispatcher.runDelay(arg_9_0._startChangeScene, arg_9_0, 0.17)
 		end
-	elseif slot0._toSceneType == Activity130Enum.lvSceneType.Moon then
-		slot0._changeAnimator:Play("to_moon", 0, 0)
+	elseif arg_9_0._toSceneType == Activity130Enum.lvSceneType.Moon then
+		arg_9_0._changeAnimator:Play("to_moon", 0, 0)
 
-		if slot0._toSceneType ~= slot4 then
-			TaskDispatcher.runDelay(slot0._startChangeScene, slot0, 0.17)
+		if arg_9_0._toSceneType ~= var_9_2 then
+			TaskDispatcher.runDelay(arg_9_0._startChangeScene, arg_9_0, 0.17)
 		end
 	end
 end
 
-function slot0._startChangeScene(slot0)
-	slot0.viewContainer:changeLvScene(slot0._toSceneType)
-	TaskDispatcher.runDelay(slot0._aniFinished, slot0, 0.83)
+function var_0_0._startChangeScene(arg_10_0)
+	arg_10_0.viewContainer:changeLvScene(arg_10_0._toSceneType)
+	TaskDispatcher.runDelay(arg_10_0._aniFinished, arg_10_0, 0.83)
 end
 
-function slot0._aniFinished(slot0)
-	gohelper.setActive(slot0._changeRoot, false)
+function var_0_0._aniFinished(arg_11_0)
+	gohelper.setActive(arg_11_0._changeRoot, false)
 end
 
-function slot0._addEvents(slot0)
+function var_0_0._addEvents(arg_12_0)
+	return
 end
 
-function slot0._removeEvents(slot0)
+function var_0_0._removeEvents(arg_13_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

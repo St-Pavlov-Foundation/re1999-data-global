@@ -1,31 +1,31 @@
-module("modules.logic.room.utils.fsm.JompFSMBaseTransition", package.seeall)
+﻿module("modules.logic.room.utils.fsm.JompFSMBaseTransition", package.seeall)
 
-slot0 = class("JompFSMBaseTransition", SimpleFSMBaseTransition)
+local var_0_0 = class("JompFSMBaseTransition", SimpleFSMBaseTransition)
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0.jompStateNames = {}
+	arg_1_0.jompStateNames = {}
 
-	tabletool.addValues(slot0.jompStateNames, slot4)
+	tabletool.addValues(arg_1_0.jompStateNames, arg_1_4)
 end
 
-function slot0.onDone(slot0)
-	slot1 = nil
+function var_0_0.onDone(arg_2_0)
+	local var_2_0
 
-	for slot5 = 1, #slot0.jompStateNames do
-		if slot0:checkJompState(slot0.jompStateNames[slot5]) then
-			slot1 = slot0.jompStateNames[slot5]
+	for iter_2_0 = 1, #arg_2_0.jompStateNames do
+		if arg_2_0:checkJompState(arg_2_0.jompStateNames[iter_2_0]) then
+			var_2_0 = arg_2_0.jompStateNames[iter_2_0]
 
 			break
 		end
 	end
 
-	slot0.fsm:endTransition(slot1 or slot0.toStateName)
+	arg_2_0.fsm:endTransition(var_2_0 or arg_2_0.toStateName)
 end
 
-function slot0.checkJompState(slot0, slot1)
-	return slot1 and RoomFSMHelper.isCanJompTo(slot1)
+function var_0_0.checkJompState(arg_3_0, arg_3_1)
+	return arg_3_1 and RoomFSMHelper.isCanJompTo(arg_3_1)
 end
 
-return slot0
+return var_0_0

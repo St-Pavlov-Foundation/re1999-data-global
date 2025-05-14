@@ -1,53 +1,53 @@
-module("modules.logic.scene.room.compwork.RoomSceneWaitEventCompWork", package.seeall)
+﻿module("modules.logic.scene.room.compwork.RoomSceneWaitEventCompWork", package.seeall)
 
-slot0 = class("RoomSceneWaitEventCompWork", BaseWork)
+local var_0_0 = class("RoomSceneWaitEventCompWork", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._comp = slot1
-	slot0._event = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._comp = arg_1_1
+	arg_1_0._event = arg_1_2
 end
 
-function slot0.onStart(slot0, slot1)
-	slot2 = slot1.sceneId
-	slot3 = slot1.levelId
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.sceneId
+	local var_2_1 = arg_2_1.levelId
 
-	if not slot0._comp then
+	if not arg_2_0._comp then
 		logError("RoomSceneWaitEventCompWork: 没有comp")
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot0._comp.init then
-		slot0._comp:registerCallback(slot0._event, slot0._onEvent, slot0)
-		slot0._comp:init(slot2, slot3)
+	if arg_2_0._comp.init then
+		arg_2_0._comp:registerCallback(arg_2_0._event, arg_2_0._onEvent, arg_2_0)
+		arg_2_0._comp:init(var_2_0, var_2_1)
 	else
-		logError(string.format("%s: 没有init", slot0._comp.__cname))
-		slot0:onDone(true)
+		logError(string.format("%s: 没有init", arg_2_0._comp.__cname))
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onEvent(slot0)
-	if not slot0._comp then
+function var_0_0._onEvent(arg_3_0)
+	if not arg_3_0._comp then
 		logError("RoomSceneWaitEventCompWork: 没有comp")
 
 		return
 	end
 
-	slot0._comp:unregisterCallback(slot0._event, slot0._onEvent, slot0)
-	slot0:onDone(true)
+	arg_3_0._comp:unregisterCallback(arg_3_0._event, arg_3_0._onEvent, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_4_0)
+	var_0_0.super.onDestroy(arg_4_0)
 
-	if not slot0._comp then
+	if not arg_4_0._comp then
 		logError("RoomSceneWaitEventCompWork: 没有comp")
 
 		return
 	end
 
-	slot0._comp:unregisterCallback(slot0._event, slot0._onEvent, slot0)
+	arg_4_0._comp:unregisterCallback(arg_4_0._event, arg_4_0._onEvent, arg_4_0)
 end
 
-return slot0
+return var_0_0

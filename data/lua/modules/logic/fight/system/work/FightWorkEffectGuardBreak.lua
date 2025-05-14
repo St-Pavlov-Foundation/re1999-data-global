@@ -1,21 +1,23 @@
-module("modules.logic.fight.system.work.FightWorkEffectGuardBreak", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectGuardBreak", package.seeall)
 
-slot0 = class("FightWorkEffectGuardBreak", FightEffectBase)
+local var_0_0 = class("FightWorkEffectGuardBreak", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) and slot1.effect then
-		slot2 = 0.5
-		slot3 = slot1.effect:addHangEffect("buff/buff_podun", ModuleEnum.SpineHangPoint.mountmiddle, nil, slot2)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
 
-		slot3:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot3)
-		slot0:com_registTimer(slot0._delayAfterPerformance, slot2)
+	if var_1_0 and var_1_0.effect then
+		local var_1_1 = 0.5
+		local var_1_2 = var_1_0.effect:addHangEffect("buff/buff_podun", ModuleEnum.SpineHangPoint.mountmiddle, nil, var_1_1)
+
+		var_1_2:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(var_1_0.id, var_1_2)
+		arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_1)
 		AudioMgr.instance:trigger(410000102)
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

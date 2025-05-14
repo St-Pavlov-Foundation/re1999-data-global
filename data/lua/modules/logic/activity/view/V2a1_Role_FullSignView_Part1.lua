@@ -1,10 +1,10 @@
-module("modules.logic.activity.view.V2a1_Role_FullSignView_Part1", package.seeall)
+﻿module("modules.logic.activity.view.V2a1_Role_FullSignView_Part1", package.seeall)
 
-slot0 = class("V2a1_Role_FullSignView_Part1", V2a1_Role_FullSignView)
+local var_0_0 = class("V2a1_Role_FullSignView_Part1", V2a1_Role_FullSignView)
 
-function slot0._editableInitView(slot0)
-	slot0._simageFullBG:LoadImage(ResUrl.getV2a1SignSingleBg("v2a1_sign_fullbg1"))
-	slot0._simageTitle:LoadImage(ResUrl.getV2a1SignSingleBgLang("v2a1_sign_title1"))
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simageFullBG:LoadImage(ResUrl.getV2a1SignSingleBg("v2a1_sign_fullbg1"))
+	arg_1_0._simageTitle:LoadImage(ResUrl.getV2a1SignSingleBgLang("v2a1_sign_title1"))
 end
 
-return slot0
+return var_0_0

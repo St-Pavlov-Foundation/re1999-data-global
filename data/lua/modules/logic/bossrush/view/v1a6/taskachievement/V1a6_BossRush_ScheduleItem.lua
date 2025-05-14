@@ -1,152 +1,163 @@
-module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_ScheduleItem", package.seeall)
+﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_ScheduleItem", package.seeall)
 
-slot0 = class("V1a6_BossRush_ScheduleItem", ListScrollCellExtend)
+local var_0_0 = class("V1a6_BossRush_ScheduleItem", ListScrollCellExtend)
 
-function slot0._initScollParentGameObject(slot0)
-	if not slot0._isSetParent then
-		slot0._scrollrewardLimitScollRect.parentGameObject = slot0._view:getCsListScroll().gameObject
-		slot0._isSetParent = true
+function var_0_0._initScollParentGameObject(arg_1_0)
+	if not arg_1_0._isSetParent then
+		arg_1_0._scrollrewardLimitScollRect.parentGameObject = arg_1_0._view:getCsListScroll().gameObject
+		arg_1_0._isSetParent = true
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._goNormal = gohelper.findChild(slot0.viewGO, "#go_Normal")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "#go_Normal/#txt_Descr")
-	slot0._imgIcon = gohelper.findChildImage(slot0.viewGO, "#go_Normal/image_Icon")
-	slot0._scrollRewards = gohelper.findChildScrollRect(slot0.viewGO, "#go_Normal/#scroll_Rewards")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_Normal/#scroll_Rewards/Viewport/#go_rewards")
-	slot0._btnNotFinish = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Normal/#btn_NotFinish")
-	slot0._btnFinished = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Normal/#btn_Finished")
-	slot0._goAllFinished = gohelper.findChild(slot0.viewGO, "#go_Normal/#go_AllFinished")
-	slot0._goGetAll = gohelper.findChild(slot0.viewGO, "#go_GetAll")
-	slot0._btngetall = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_GetAll/#btn_getall/click")
-	slot0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0._goNormal)
-	slot0.animator = slot0._goNormal:GetComponent(typeof(UnityEngine.Animator))
-	slot0.animatorGetAll = slot0._goGetAll:GetComponent(typeof(UnityEngine.Animator))
-	slot0.animatorPlayerGetAll = ZProj.ProjAnimatorPlayer.Get(slot0._goGetAll)
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._goNormal = gohelper.findChild(arg_2_0.viewGO, "#go_Normal")
+	arg_2_0._txtDescr = gohelper.findChildText(arg_2_0.viewGO, "#go_Normal/#txt_Descr")
+	arg_2_0._imgIcon = gohelper.findChildImage(arg_2_0.viewGO, "#go_Normal/image_Icon")
+	arg_2_0._scrollRewards = gohelper.findChildScrollRect(arg_2_0.viewGO, "#go_Normal/#scroll_Rewards")
+	arg_2_0._gorewards = gohelper.findChild(arg_2_0.viewGO, "#go_Normal/#scroll_Rewards/Viewport/#go_rewards")
+	arg_2_0._btnNotFinish = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_Normal/#btn_NotFinish")
+	arg_2_0._btnFinished = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_Normal/#btn_Finished")
+	arg_2_0._goAllFinished = gohelper.findChild(arg_2_0.viewGO, "#go_Normal/#go_AllFinished")
+	arg_2_0._goGetAll = gohelper.findChild(arg_2_0.viewGO, "#go_GetAll")
+	arg_2_0._btngetall = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_GetAll/#btn_getall/click")
+	arg_2_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0._goNormal)
+	arg_2_0.animator = arg_2_0._goNormal:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0.animatorGetAll = arg_2_0._goGetAll:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0.animatorPlayerGetAll = ZProj.ProjAnimatorPlayer.Get(arg_2_0._goGetAll)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnNotFinish:AddClickListener(slot0._btnNotFinishOnClick, slot0)
-	slot0._btnFinished:AddClickListener(slot0._btnFinishedOnClick, slot0)
-	slot0._btngetall:AddClickListener(slot0._btngetallOnClick, slot0)
-	slot0:addEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllScheduleBouns, slot0._OnClickGetAllScheduleBouns, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnNotFinish:AddClickListener(arg_3_0._btnNotFinishOnClick, arg_3_0)
+	arg_3_0._btnFinished:AddClickListener(arg_3_0._btnFinishedOnClick, arg_3_0)
+	arg_3_0._btngetall:AddClickListener(arg_3_0._btngetallOnClick, arg_3_0)
+	arg_3_0:addEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllScheduleBouns, arg_3_0._OnClickGetAllScheduleBouns, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnNotFinish:RemoveClickListener()
-	slot0._btnFinished:RemoveClickListener()
-	slot0._btngetall:RemoveClickListener()
-	slot0:removeEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllScheduleBouns, slot0._OnClickGetAllScheduleBouns, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnNotFinish:RemoveClickListener()
+	arg_4_0._btnFinished:RemoveClickListener()
+	arg_4_0._btngetall:RemoveClickListener()
+	arg_4_0:removeEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllScheduleBouns, arg_4_0._OnClickGetAllScheduleBouns, arg_4_0)
 end
 
-slot0.UI_CLICK_BLOCK_KEY = "V1a6_BossRush_ScheduleItemClick"
+var_0_0.UI_CLICK_BLOCK_KEY = "V1a6_BossRush_ScheduleItemClick"
 
-function slot0._btngetallOnClick(slot0)
-	slot0:_btnFinishedOnClick()
+function var_0_0._btngetallOnClick(arg_5_0)
+	arg_5_0:_btnFinishedOnClick()
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnClickGetAllScheduleBouns)
 end
 
-function slot0._btnNotFinishOnClick(slot0)
+function var_0_0._btnNotFinishOnClick(arg_6_0)
+	return
 end
 
-function slot0._btnFinishedOnClick(slot0)
-	UIBlockMgr.instance:startBlock(uv0.UI_CLICK_BLOCK_KEY)
-	slot0:getAnimatorPlayer():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, slot0.firstAnimationDone, slot0)
+function var_0_0._btnFinishedOnClick(arg_7_0)
+	UIBlockMgr.instance:startBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+	arg_7_0:getAnimatorPlayer():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, arg_7_0.firstAnimationDone, arg_7_0)
 end
 
-function slot0._OnClickGetAllScheduleBouns(slot0)
-	if slot0._mo and slot0._mo.isCanClaim then
-		slot0:getAnimator():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, 0, 0)
+function var_0_0._OnClickGetAllScheduleBouns(arg_8_0)
+	if arg_8_0._mo and arg_8_0._mo.isCanClaim then
+		arg_8_0:getAnimator():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, 0, 0)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scrollrewardLimitScollRect = slot0._scrollRewards:GetComponent(gohelper.Type_LimitedScrollRect)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._scrollrewardLimitScollRect = arg_9_0._scrollRewards:GetComponent(gohelper.Type_LimitedScrollRect)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_10_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_11_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0:_initScollParentGameObject()
+function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+	arg_12_0:_initScollParentGameObject()
 
-	slot0._mo = slot1
+	arg_12_0._mo = arg_12_1
 
-	if not slot1.getAll then
-		slot0:refreshNormalUI(slot1)
+	if not arg_12_1.getAll then
+		arg_12_0:refreshNormalUI(arg_12_1)
 	else
-		slot0:refreshGetAllUI(slot1)
+		arg_12_0:refreshGetAllUI(arg_12_1)
 	end
 end
 
-function slot0.refreshNormalUI(slot0, slot1)
-	slot2 = slot1.isGot
-	slot3 = slot1.stageRewardCO
-	slot6 = slot3.rewardPointNum <= BossRushModel.instance:getLastPointInfo(slot3.stage).cur
-	slot0._imgIcon.color = slot6 and GameUtil.parseColor("#c48152") or GameUtil.parseColor("#919191")
-	slot0._mo.isCanClaim = not slot2 and slot6
+function var_0_0.refreshNormalUI(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.isGot
+	local var_13_1 = arg_13_1.stageRewardCO
+	local var_13_2 = var_13_1.stage
+	local var_13_3 = BossRushModel.instance:getLastPointInfo(var_13_2).cur >= var_13_1.rewardPointNum
+	local var_13_4 = ItemModel.instance:getItemDataListByConfigStr(var_13_1.reward)
+	local var_13_5 = var_13_3 and GameUtil.parseColor("#c48152") or GameUtil.parseColor("#919191")
 
-	gohelper.setActive(slot0._goAllFinished, slot2)
-	gohelper.setActive(slot0._btnFinished.gameObject, slot0._mo.isCanClaim)
-	gohelper.setActive(slot0._btnNotFinish.gameObject, not slot2 and not slot6)
-	gohelper.setActive(slot0._goGetAll, false)
-	gohelper.setActive(slot0._goNormal, true)
-	IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onRewardItemShow, ItemModel.instance:getItemDataListByConfigStr(slot3.reward), slot0._gorewards)
+	arg_13_0._imgIcon.color = var_13_5
+	arg_13_0._mo.isCanClaim = not var_13_0 and var_13_3
 
-	slot0._txtDescr.text = string.format(luaLang("v1a6_bossrush_scheduleview_desc"), slot3.rewardPointNum)
+	gohelper.setActive(arg_13_0._goAllFinished, var_13_0)
+	gohelper.setActive(arg_13_0._btnFinished.gameObject, arg_13_0._mo.isCanClaim)
+	gohelper.setActive(arg_13_0._btnNotFinish.gameObject, not var_13_0 and not var_13_3)
+	gohelper.setActive(arg_13_0._goGetAll, false)
+	gohelper.setActive(arg_13_0._goNormal, true)
+	IconMgr.instance:getCommonPropItemIconList(arg_13_0, arg_13_0._onRewardItemShow, var_13_4, arg_13_0._gorewards)
+
+	arg_13_0._txtDescr.text = string.format(luaLang("v1a6_bossrush_scheduleview_desc"), var_13_1.rewardPointNum)
 end
 
-function slot0.refreshGetAllUI(slot0, slot1)
-	gohelper.setActive(slot0._goGetAll, true)
-	gohelper.setActive(slot0._goNormal, false)
+function var_0_0.refreshGetAllUI(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._goGetAll, true)
+	gohelper.setActive(arg_14_0._goNormal, false)
 end
 
-function slot0._onRewardItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:showStackableNum2()
-	slot1:setCountFontSize(48)
+function var_0_0._onRewardItemShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_1:onUpdateMO(arg_15_2)
+	arg_15_1:showStackableNum2()
+	arg_15_1:setCountFontSize(48)
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_16_0, arg_16_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-function slot0.firstAnimationDone(slot0)
-	if slot0._view.viewContainer:getScrollAnimRemoveItem(BossRushEnum.BonusViewTab.ScheduleTab) then
-		slot1:removeByIndex(slot0._index, slot0.secondAnimationDone, slot0)
+function var_0_0.firstAnimationDone(arg_18_0)
+	local var_18_0 = arg_18_0._view.viewContainer:getScrollAnimRemoveItem(BossRushEnum.BonusViewTab.ScheduleTab)
+
+	if var_18_0 then
+		var_18_0:removeByIndex(arg_18_0._index, arg_18_0.secondAnimationDone, arg_18_0)
 	else
-		slot0:secondAnimationDone()
+		arg_18_0:secondAnimationDone()
 	end
 end
 
-function slot0.secondAnimationDone(slot0)
-	if slot0._mo then
-		if slot0._mo.getAll then
-			BossRushRpc.instance:sendAct128GetTotalRewardsRequest(slot0._mo.stage)
-		elseif slot0._mo.stageRewardCO then
-			BossRushRpc.instance:sendAct128GetTotalSingleRewardRequest(slot0._mo.stage, slot0._mo.stageRewardCO.id)
+function var_0_0.secondAnimationDone(arg_19_0)
+	if arg_19_0._mo then
+		if arg_19_0._mo.getAll then
+			BossRushRpc.instance:sendAct128GetTotalRewardsRequest(arg_19_0._mo.stage)
+		elseif arg_19_0._mo.stageRewardCO then
+			BossRushRpc.instance:sendAct128GetTotalSingleRewardRequest(arg_19_0._mo.stage, arg_19_0._mo.stageRewardCO.id)
 		end
 
-		UIBlockMgr.instance:endBlock(uv0.UI_CLICK_BLOCK_KEY)
+		UIBlockMgr.instance:endBlock(var_0_0.UI_CLICK_BLOCK_KEY)
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._mo.getAll and slot0.animatorGetAll or slot0.animator
+function var_0_0.getAnimator(arg_20_0)
+	return arg_20_0._mo.getAll and arg_20_0.animatorGetAll or arg_20_0.animator
 end
 
-function slot0.getAnimatorPlayer(slot0)
-	return slot0._mo.getAll and slot0.animatorPlayerGetAll or slot0.animatorPlayer
+function var_0_0.getAnimatorPlayer(arg_21_0)
+	return arg_21_0._mo.getAll and arg_21_0.animatorPlayerGetAll or arg_21_0.animatorPlayer
 end
 
-return slot0
+return var_0_0

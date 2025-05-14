@@ -1,151 +1,173 @@
-module("modules.logic.turnback.model.TurnbackTaskModel", package.seeall)
+﻿module("modules.logic.turnback.model.TurnbackTaskModel", package.seeall)
 
-slot0 = class("TurnbackTaskModel", ListScrollModel)
+local var_0_0 = class("TurnbackTaskModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0.tempTaskModel = BaseModel.New()
-	slot0.tempOnlineTaskModel = BaseModel.New()
-	slot0.taskLoopTypeDotDict = {}
-	slot0.taskSearchList = {}
-	slot0.taskSearchDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.tempTaskModel = BaseModel.New()
+	arg_1_0.tempOnlineTaskModel = BaseModel.New()
+	arg_1_0.taskLoopTypeDotDict = {}
+	arg_1_0.taskSearchList = {}
+	arg_1_0.taskSearchDict = {}
 end
 
-function slot0.reInit(slot0)
-	slot0.tempTaskModel:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.tempTaskModel:clear()
 
-	slot0.taskLoopTypeDotDict = {}
-	slot0.taskSearchList = {}
-	slot0.taskSearchDict = {}
+	arg_2_0.taskLoopTypeDotDict = {}
+	arg_2_0.taskSearchList = {}
+	arg_2_0.taskSearchDict = {}
 end
 
-function slot0.setTaskInfoList(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
-	slot0.taskSearchList = {}
+function var_0_0.setTaskInfoList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+	local var_3_1 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		if TurnbackConfig.instance:getTurnbackTaskCo(slot9.id) then
-			TaskMo.New():init(slot9, slot10)
+	arg_3_0.taskSearchList = {}
 
-			if TurnbackModel.instance:isNewType() then
-				if slot10.type ~= TurnbackEnum.TaskEnum.Online then
-					table.insert(slot2, slot11)
+	local var_3_2 = TurnbackModel.instance:isNewType()
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_3 = TurnbackConfig.instance:getTurnbackTaskCo(iter_3_1.id)
+
+		if var_3_3 then
+			local var_3_4 = TaskMo.New()
+
+			var_3_4:init(iter_3_1, var_3_3)
+
+			if var_3_2 then
+				if var_3_3.type ~= TurnbackEnum.TaskEnum.Online then
+					table.insert(var_3_0, var_3_4)
 				else
-					table.insert(slot3, slot11)
+					table.insert(var_3_1, var_3_4)
 				end
 
-				if slot10.listenerType == "TodayOnlineSeconds" then
-					table.insert(slot0.taskSearchList, slot11)
+				if var_3_3.listenerType == "TodayOnlineSeconds" then
+					table.insert(arg_3_0.taskSearchList, var_3_4)
 
-					slot0.taskSearchDict[slot11.id] = slot11
+					arg_3_0.taskSearchDict[var_3_4.id] = var_3_4
 				end
 			else
-				table.insert(slot2, slot11)
+				table.insert(var_3_0, var_3_4)
 			end
 		end
 	end
 
-	table.sort(slot0.taskSearchList, SortUtil.keyLower("id"))
-	slot0.tempTaskModel:setList(slot2)
-	slot0.tempOnlineTaskModel:setList(slot3)
-	slot0:sortList()
-	slot0:checkTaskLoopTypeDotState()
+	table.sort(arg_3_0.taskSearchList, SortUtil.keyLower("id"))
+	arg_3_0.tempTaskModel:setList(var_3_0)
+	arg_3_0.tempOnlineTaskModel:setList(var_3_1)
+	arg_3_0:sortList()
+	arg_3_0:checkTaskLoopTypeDotState()
 end
 
-function slot0.sortList(slot0)
-	slot0.tempTaskModel:sort(function (slot0, slot1)
-		if (slot0.finishCount > 0 and 3 or slot0.config.maxProgress <= slot0.progress and 1 or 2) == (slot1.finishCount > 0 and 3 or slot1.config.maxProgress <= slot1.progress and 1 or 2) then
-			if slot0.config.sortId == slot1.config.sortId then
-				return slot0.id < slot1.id
+function var_0_0.sortList(arg_4_0)
+	arg_4_0.tempTaskModel:sort(function(arg_5_0, arg_5_1)
+		local var_5_0 = arg_5_0.finishCount > 0 and 3 or arg_5_0.progress >= arg_5_0.config.maxProgress and 1 or 2
+		local var_5_1 = arg_5_1.finishCount > 0 and 3 or arg_5_1.progress >= arg_5_1.config.maxProgress and 1 or 2
+
+		if var_5_0 == var_5_1 then
+			if arg_5_0.config.sortId == arg_5_1.config.sortId then
+				return arg_5_0.id < arg_5_1.id
 			else
-				return slot0.config.sortId < slot1.config.sortId
+				return arg_5_0.config.sortId < arg_5_1.config.sortId
 			end
 		else
-			return slot2 < slot3
+			return var_5_0 < var_5_1
 		end
 	end)
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot2 = false
+function var_0_0.updateInfo(arg_6_0, arg_6_1)
+	local var_6_0 = false
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.type == TaskEnum.TaskType.Turnback then
-			if not slot0.tempTaskModel:getById(slot7.id) then
-				if TurnbackConfig.instance:getTurnbackTaskCo(slot7.id) then
-					slot8 = TaskMo.New()
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		if iter_6_1.type == TaskEnum.TaskType.Turnback then
+			local var_6_1 = arg_6_0.tempTaskModel:getById(iter_6_1.id)
 
-					slot8:init(slot7, slot9)
-					slot0.tempTaskModel:addAtLast(slot8)
+			if not var_6_1 then
+				local var_6_2 = TurnbackConfig.instance:getTurnbackTaskCo(iter_6_1.id)
+
+				if var_6_2 then
+					var_6_1 = TaskMo.New()
+
+					var_6_1:init(iter_6_1, var_6_2)
+					arg_6_0.tempTaskModel:addAtLast(var_6_1)
 				else
-					logError("TurnbackTaskConfig by id is not exit: " .. tostring(slot7.id))
+					logError("TurnbackTaskConfig by id is not exit: " .. tostring(iter_6_1.id))
 				end
 			else
-				slot8:update(slot7)
+				var_6_1:update(iter_6_1)
 			end
 
-			slot2 = true
+			var_6_0 = true
 		end
 	end
 
-	if slot2 then
-		slot0:sortList()
-		slot0:checkTaskLoopTypeDotState()
+	if var_6_0 then
+		arg_6_0:sortList()
+		arg_6_0:checkTaskLoopTypeDotState()
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.checkTaskLoopTypeDotState(slot0)
-	for slot4, slot5 in pairs(slot0.taskLoopTypeDotDict) do
-		slot0.taskLoopTypeDotDict[slot4] = false
+function var_0_0.checkTaskLoopTypeDotState(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.taskLoopTypeDotDict) do
+		arg_7_0.taskLoopTypeDotDict[iter_7_0] = false
 	end
 
-	for slot4, slot5 in ipairs(slot0.tempTaskModel:getList()) do
-		if slot5.config.maxProgress <= slot5.progress and slot5.finishCount == 0 then
-			slot0.taskLoopTypeDotDict[slot5.config.loopType] = true
+	for iter_7_2, iter_7_3 in ipairs(arg_7_0.tempTaskModel:getList()) do
+		if iter_7_3.progress >= iter_7_3.config.maxProgress and iter_7_3.finishCount == 0 then
+			arg_7_0.taskLoopTypeDotDict[iter_7_3.config.loopType] = true
 		end
 	end
 end
 
-function slot0.getTaskLoopTypeDotState(slot0)
-	return slot0.taskLoopTypeDotDict
+function var_0_0.getTaskLoopTypeDotState(arg_8_0)
+	return arg_8_0.taskLoopTypeDotDict
 end
 
-function slot0.refreshListNewTaskList(slot0)
-	slot1 = {}
+function var_0_0.refreshListNewTaskList(arg_9_0)
+	local var_9_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.tempTaskModel:getList()) do
-		if slot6.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() and ServerTime.now() >= TurnbackModel.instance:getCurTurnbackMo().startTime + (slot6.config.unlockDay - 1) * TimeUtil.OneDaySecond then
-			table.insert(slot1, slot6)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.tempTaskModel:getList()) do
+		if iter_9_1.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
+			local var_9_1 = TurnbackModel.instance:getCurTurnbackMo()
+
+			if ServerTime.now() >= var_9_1.startTime + (iter_9_1.config.unlockDay - 1) * TimeUtil.OneDaySecond then
+				table.insert(var_9_0, iter_9_1)
+			end
 		end
 	end
 
-	slot0:setList(slot0:checkAndRemoveTask(slot1))
+	local var_9_2 = arg_9_0:checkAndRemoveTask(var_9_0)
+
+	arg_9_0:setList(var_9_2)
 end
 
-function slot0.refreshList(slot0, slot1)
-	slot2 = {}
+function var_0_0.refreshList(arg_10_0, arg_10_1)
+	local var_10_0 = {}
 
-	for slot6, slot7 in ipairs(slot0.tempTaskModel:getList()) do
-		if slot7.config.loopType == slot1 and slot7.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
-			slot0.curTaskLoopType = slot1
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.tempTaskModel:getList()) do
+		if iter_10_1.config.loopType == arg_10_1 and iter_10_1.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
+			arg_10_0.curTaskLoopType = arg_10_1
 
-			table.insert(slot2, slot7)
+			table.insert(var_10_0, iter_10_1)
 		end
 	end
 
-	slot0:setList(slot0:checkAndRemovePreposeTask(slot2))
-	slot0:checkTaskLoopTypeDotState()
+	local var_10_1 = arg_10_0:checkAndRemovePreposeTask(var_10_0)
+
+	arg_10_0:setList(var_10_1)
+	arg_10_0:checkTaskLoopTypeDotState()
 end
 
-function slot0.getCurTaskLoopType(slot0)
-	return slot0.curTaskLoopType or TurnbackEnum.TaskLoopType.Day
+function var_0_0.getCurTaskLoopType(arg_11_0)
+	return arg_11_0.curTaskLoopType or TurnbackEnum.TaskLoopType.Day
 end
 
-function slot0.haveTaskItemReward(slot0)
-	for slot4, slot5 in ipairs(slot0.tempTaskModel:getList()) do
-		if slot5.config.maxProgress <= slot5.progress and slot5.finishCount == 0 then
+function var_0_0.haveTaskItemReward(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.tempTaskModel:getList()) do
+		if iter_12_1.progress >= iter_12_1.config.maxProgress and iter_12_1.finishCount == 0 then
 			return true
 		end
 	end
@@ -153,53 +175,65 @@ function slot0.haveTaskItemReward(slot0)
 	return false
 end
 
-function slot0.isTaskFinished(slot0, slot1)
-	return slot1.finishCount > 0 and slot1.config.maxProgress <= slot1.progress
+function var_0_0.isTaskFinished(arg_13_0, arg_13_1)
+	return arg_13_1.finishCount > 0 and arg_13_1.progress >= arg_13_1.config.maxProgress
 end
 
-function slot0.getSearchTaskMoList(slot0)
-	return slot0.taskSearchList
+function var_0_0.getSearchTaskMoList(arg_14_0)
+	return arg_14_0.taskSearchList
 end
 
-function slot0.getSearchTaskMoById(slot0, slot1)
-	return slot0.taskSearchDict[slot1]
+function var_0_0.getSearchTaskMoById(arg_15_0, arg_15_1)
+	return arg_15_0.taskSearchDict[arg_15_1]
 end
 
-function slot0.checkAndRemovePreposeTask(slot0, slot1)
-	for slot6, slot7 in ipairs(tabletool.copy(slot1)) do
-		for slot12, slot13 in ipairs(string.split(slot7.config.prepose, "#")) do
-			if slot0.tempTaskModel:getById(tonumber(slot13)) and not slot0:isTaskFinished(slot14) then
-				table.remove(slot2, slot6)
+function var_0_0.checkAndRemovePreposeTask(arg_16_0, arg_16_1)
+	local var_16_0 = tabletool.copy(arg_16_1)
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_1 = string.split(iter_16_1.config.prepose, "#")
+
+		for iter_16_2, iter_16_3 in ipairs(var_16_1) do
+			local var_16_2 = arg_16_0.tempTaskModel:getById(tonumber(iter_16_3))
+
+			if var_16_2 and not arg_16_0:isTaskFinished(var_16_2) then
+				table.remove(var_16_0, iter_16_0)
 
 				break
 			end
 		end
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.checkAndRemoveTask(slot0, slot1)
-	slot2 = tabletool.copy(slot1)
+function var_0_0.checkAndRemoveTask(arg_17_0, arg_17_1)
+	local var_17_0 = tabletool.copy(arg_17_1)
+	local var_17_1 = #arg_17_1
 
-	for slot7 = 1, #slot1 do
-		for slot13, slot14 in ipairs(string.split(slot1[slot7].config.prepose, "#")) do
-			if slot0.tempTaskModel:getById(tonumber(slot14)) and not slot0:isTaskFinished(slot15) then
-				tabletool.removeValue(slot2, slot8)
+	for iter_17_0 = 1, var_17_1 do
+		local var_17_2 = arg_17_1[iter_17_0]
+		local var_17_3 = string.split(var_17_2.config.prepose, "#")
+
+		for iter_17_1, iter_17_2 in ipairs(var_17_3) do
+			local var_17_4 = arg_17_0.tempTaskModel:getById(tonumber(iter_17_2))
+
+			if var_17_4 and not arg_17_0:isTaskFinished(var_17_4) then
+				tabletool.removeValue(var_17_0, var_17_2)
 			end
 		end
 
-		if slot8.config.isOnlineTimeTask then
-			tabletool.removeValue(slot2, slot8)
+		if var_17_2.config.isOnlineTimeTask then
+			tabletool.removeValue(var_17_0, var_17_2)
 		end
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.checkOnlineTaskAllFinish(slot0)
-	for slot4, slot5 in ipairs(slot0.taskSearchList) do
-		if slot5.finishCount <= 0 then
+function var_0_0.checkOnlineTaskAllFinish(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.taskSearchList) do
+		if not (iter_18_1.finishCount > 0) then
 			return false
 		end
 	end
@@ -207,6 +241,6 @@ function slot0.checkOnlineTaskAllFinish(slot0)
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

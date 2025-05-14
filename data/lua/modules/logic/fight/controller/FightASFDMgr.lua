@@ -1,580 +1,659 @@
-module("modules.logic.fight.controller.FightASFDMgr", package.seeall)
+﻿module("modules.logic.fight.controller.FightASFDMgr", package.seeall)
 
-slot0 = class("FightASFDMgr", FightUserDataBaseClass)
-slot0.LoadingStatus = {
+local var_0_0 = class("FightASFDMgr", FightUserDataBaseClass)
+
+var_0_0.LoadingStatus = {
 	NotLoad = 1,
 	Loaded = 3,
 	Loading = 2
 }
 
-function slot0.init(slot0)
-	uv0.super.init(slot0)
+function var_0_0.init(arg_1_0)
+	var_0_0.super.init(arg_1_0)
 
-	slot0.effectWrap2EntityIdDict = {}
-	slot0.sideEmitterWrap = nil
-	slot0.missileWrapList = {}
-	slot0.missileMoverList = {}
-	slot0.explosionWrapList = {}
-	slot0.playHitAnimEntityIdDict = {}
-	slot0.startAnimLoadingStatus = uv0.LoadingStatus.NotLoad
-	slot0.endAnimLoadingStatus = uv0.LoadingStatus.NotLoad
+	arg_1_0.effectWrap2EntityIdDict = {}
+	arg_1_0.sideEmitterWrap = nil
+	arg_1_0.missileWrapList = {}
+	arg_1_0.missileMoverList = {}
+	arg_1_0.explosionWrapList = {}
+	arg_1_0.playHitAnimEntityIdDict = {}
+	arg_1_0.startAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
+	arg_1_0.endAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
 
-	slot0:addEventCb(FightController.instance, FightEvent.AddUseCard, slot0.onAddUseCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, slot0.onMySideRoundEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforePlayUniqueSkill, slot0.onBeforePlayUniqueSkill, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.AfterPlayUniqueSkill, slot0.onAfterPlayUniqueSkill, slot0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.AddUseCard, arg_1_0.onAddUseCard, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_1_0.onMySideRoundEnd, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforePlayUniqueSkill, arg_1_0.onBeforePlayUniqueSkill, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.AfterPlayUniqueSkill, arg_1_0.onAfterPlayUniqueSkill, arg_1_0)
 end
 
-function slot0.playAudio(slot0, slot1)
-	if not slot1 then
+function var_0_0.playAudio(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return
 	end
 
-	if slot1 ~= 0 then
-		AudioMgr.instance:trigger(slot1)
+	if arg_2_1 ~= 0 then
+		AudioMgr.instance:trigger(arg_2_1)
 	end
 end
 
-function slot0.onBeforePlayUniqueSkill(slot0)
-	if slot0.bornEffectWrap then
-		slot0.bornEffectWrap:setActive(false)
+function var_0_0.onBeforePlayUniqueSkill(arg_3_0)
+	if arg_3_0.bornEffectWrap then
+		arg_3_0.bornEffectWrap:setActive(false)
 	end
 end
 
-function slot0.onAfterPlayUniqueSkill(slot0)
-	if slot0.bornEffectWrap then
-		slot0.bornEffectWrap:setActive(true)
+function var_0_0.onAfterPlayUniqueSkill(arg_4_0)
+	if arg_4_0.bornEffectWrap then
+		arg_4_0.bornEffectWrap:setActive(true)
 	end
 end
 
-function slot0.onAddUseCard(slot0, slot1)
-	if not (FightPlayCardModel.instance:getUsedCards() and slot2[slot1]) then
+function var_0_0.onAddUseCard(arg_5_0, arg_5_1)
+	local var_5_0 = FightPlayCardModel.instance:getUsedCards()
+	local var_5_1 = var_5_0 and var_5_0[arg_5_1]
+
+	if not var_5_1 then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot3.uid) then
+	local var_5_2 = var_5_1.uid
+	local var_5_3 = FightDataHelper.entityMgr:getById(var_5_2)
+
+	if not var_5_3 then
 		return
 	end
 
-	if not slot5:isASFDEmitter() then
+	if not var_5_3:isASFDEmitter() then
 		return
 	end
 
-	if not (slot4 and FightHelper.getEntity(slot4)) then
-		logError("没有找到发射奥术飞弹的实体" .. tostring(slot4))
+	local var_5_4 = var_5_2 and FightHelper.getEntity(var_5_2)
+
+	if not var_5_4 then
+		logError("没有找到发射奥术飞弹的实体" .. tostring(var_5_2))
 
 		return
 	end
 
-	slot7 = FightASFDHelper.getBornCo(slot4)
-	slot0.curBornCo = slot7
-	slot0.bornEntity = slot6
-	slot0.bornEffectWrap = slot6.effect:addGlobalEffect(slot7.res)
+	local var_5_5 = FightASFDHelper.getBornCo(var_5_2)
+	local var_5_6 = var_5_5.res
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot4, slot0.bornEffectWrap, FightRenderOrderMgr.MaxOrder)
-	slot0.bornEffectWrap:setLocalPos(FightASFDHelper.getEmitterPos(slot5.side))
+	arg_5_0.curBornCo = var_5_5
+	arg_5_0.bornEntity = var_5_4
+	arg_5_0.bornEffectWrap = var_5_4.effect:addGlobalEffect(var_5_6)
 
-	if slot7.scale == 0 then
-		slot9 = 1
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_5_2, arg_5_0.bornEffectWrap, FightRenderOrderMgr.MaxOrder)
+	arg_5_0.bornEffectWrap:setLocalPos(FightASFDHelper.getEmitterPos(var_5_3.side))
+
+	local var_5_7 = var_5_5.scale
+
+	if var_5_7 == 0 then
+		var_5_7 = 1
 	end
 
-	slot0.bornEffectWrap:setEffectScale(slot9)
-	slot0:playAudio(slot7.audio)
+	arg_5_0.bornEffectWrap:setEffectScale(var_5_7)
+	arg_5_0:playAudio(var_5_5.audio)
 
-	slot0.effectWrap2EntityIdDict[slot0.bornEffectWrap] = slot4
+	arg_5_0.effectWrap2EntityIdDict[arg_5_0.bornEffectWrap] = var_5_2
 end
 
-function slot0.onMySideRoundEnd(slot0)
-	slot0:clearBornEffect()
+function var_0_0.onMySideRoundEnd(arg_6_0)
+	arg_6_0:clearBornEffect()
 end
 
-function slot0.createEmitterWrap(slot0, slot1)
-	if not slot1 then
+function var_0_0.createEmitterWrap(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot1.fromId) then
+	local var_7_0 = arg_7_1.fromId
+	local var_7_1 = FightDataHelper.entityMgr:getById(var_7_0)
+
+	if not var_7_1 then
 		logError("没有找到发射奥术飞弹的实体 mo")
 
 		return
 	end
 
-	if slot0.sideEmitterWrap then
+	if arg_7_0.sideEmitterWrap then
 		return
 	end
 
-	if not FightHelper.getEntity(slot2) then
+	local var_7_2 = FightHelper.getEntity(var_7_0)
+
+	if not var_7_2 then
 		logError("没有找到发射奥术飞弹的实体")
 
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, slot4, FightASFDConfig.instance.skillId, slot1)
-	slot0:clearBornEffect(true)
+	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, var_7_2, FightASFDConfig.instance.skillId, arg_7_1)
+	arg_7_0:clearBornEffect(true)
 
-	slot5 = FightASFDHelper.getEmitterCo(slot2)
-	slot7 = slot4.effect:addGlobalEffect(slot5.res)
+	local var_7_3 = FightASFDHelper.getEmitterCo(var_7_0)
+	local var_7_4 = var_7_3.res
+	local var_7_5 = var_7_2.effect:addGlobalEffect(var_7_4)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot2, slot7, FightRenderOrderMgr.MaxOrder)
-	slot7:setLocalPos(FightASFDHelper.getEmitterPos(slot3.side))
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_7_0, var_7_5, FightRenderOrderMgr.MaxOrder)
+	var_7_5:setLocalPos(FightASFDHelper.getEmitterPos(var_7_1.side))
 
-	if slot5.scale == 0 then
-		slot8 = 1
+	local var_7_6 = var_7_3.scale
+
+	if var_7_6 == 0 then
+		var_7_6 = 1
 	end
 
-	slot7:setEffectScale(slot8)
-	slot0:playAudio(slot5.audio)
+	var_7_5:setEffectScale(var_7_6)
+	arg_7_0:playAudio(var_7_3.audio)
 
-	slot0.sideEmitterWrap = slot7
-	slot0.effectWrap2EntityIdDict[slot7] = slot2
+	arg_7_0.sideEmitterWrap = var_7_5
+	arg_7_0.effectWrap2EntityIdDict[var_7_5] = var_7_0
 
-	slot0:preloadEmitterRemoveRes(slot5)
-	slot0:playStartASFDAnim()
+	arg_7_0:preloadEmitterRemoveRes(var_7_3)
+	arg_7_0:playStartASFDAnim()
 
-	return slot7
+	return var_7_5
 end
 
-function slot0.preloadEmitterRemoveRes(slot0, slot1)
-	loadAbAsset(FightHelper.getEffectUrlWithLod(FightASFDHelper.getASFDEmitterRemoveRes(slot1)), true)
+function var_0_0.preloadEmitterRemoveRes(arg_8_0, arg_8_1)
+	local var_8_0 = FightASFDHelper.getASFDEmitterRemoveRes(arg_8_1)
+	local var_8_1 = FightHelper.getEffectUrlWithLod(var_8_0)
+
+	loadAbAsset(var_8_1, true)
 end
 
-function slot0.emitMissile(slot0, slot1, slot2)
-	if not slot1 then
-		return slot0:emitterFail(slot1)
+function var_0_0.emitMissile(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_1 then
+		return arg_9_0:emitterFail(arg_9_1)
 	end
 
-	slot0.curStepMo = slot1
-	slot0.arriveCount = 0
-	slot0.missileCount = 0
-	slot3 = true
+	arg_9_0.curStepMo = arg_9_1
+	arg_9_0.arriveCount = 0
+	arg_9_0.missileCount = 0
 
-	if not ((not FightASFDHelper.hasASFDFissionEffect(slot1) or slot0:emitterFissionMissile(slot1, slot2)) and slot0:emitterNormalMissile(slot1, slot2)) then
-		return slot0:emitterFail(slot1)
+	local var_9_0 = true
+
+	if FightASFDHelper.hasASFDFissionEffect(arg_9_1) then
+		var_9_0 = arg_9_0:emitterFissionMissile(arg_9_1, arg_9_2)
+	else
+		var_9_0 = arg_9_0:emitterNormalMissile(arg_9_1, arg_9_2)
+	end
+
+	if not var_9_0 then
+		return arg_9_0:emitterFail(arg_9_1)
 	end
 end
 
-function slot0.emitterNormalMissile(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.emitterNormalMissile(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_1 then
 		return
 	end
 
-	if slot0:_emitterOneMissile(slot1, FightASFDHelper.getMissileTargetId(slot1), slot2) then
-		slot0.missileCount = slot0.missileCount + 1
+	local var_10_0 = FightASFDHelper.getMissileTargetId(arg_10_1)
+
+	if arg_10_0:_emitterOneMissile(arg_10_1, var_10_0, arg_10_2) then
+		arg_10_0.missileCount = arg_10_0.missileCount + 1
 
 		return true
 	end
 end
 
-function slot0.emitterFissionMissile(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.emitterFissionMissile(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_1 then
 		return
 	end
 
-	slot0.targetDict = slot0.targetDict or {}
+	arg_11_0.targetDict = arg_11_0.targetDict or {}
 
-	tabletool.clear(slot0.targetDict)
+	tabletool.clear(arg_11_0.targetDict)
 
-	for slot6, slot7 in ipairs(slot1.actEffectMOs) do
-		if FightASFDHelper.isDamageEffect(slot7.effectType) then
-			slot0.targetDict[slot7.targetId] = true
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1.actEffectMOs) do
+		if FightASFDHelper.isDamageEffect(iter_11_1.effectType) then
+			arg_11_0.targetDict[iter_11_1.targetId] = true
 		end
 	end
 
-	slot3 = true
+	local var_11_0 = true
 
-	for slot7, slot8 in pairs(slot0.targetDict) do
-		if slot0:_emitterOneMissile(slot1, slot7, slot2) then
-			slot3 = false
-			slot0.missileCount = slot0.missileCount + 1
+	for iter_11_2, iter_11_3 in pairs(arg_11_0.targetDict) do
+		local var_11_1 = arg_11_0:_emitterOneMissile(arg_11_1, iter_11_2, arg_11_2)
 
-			slot9:setEffectScale(FightASFDConfig.instance.fissionScale)
+		if var_11_1 then
+			var_11_0 = false
+			arg_11_0.missileCount = arg_11_0.missileCount + 1
+
+			var_11_1:setEffectScale(FightASFDConfig.instance.fissionScale)
 		end
 	end
 
-	tabletool.clear(slot0.targetDict)
+	tabletool.clear(arg_11_0.targetDict)
 
-	return not slot3
+	return not var_11_0
 end
 
-function slot0._emitterOneMissile(slot0, slot1, slot2, slot3)
-	if not FightHelper.getEntity(slot1.fromId) then
-		logError("没有找到发射奥术飞弹的实体, entityId : " .. tostring(slot4))
+function var_0_0._emitterOneMissile(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_1.fromId
+	local var_12_1 = FightHelper.getEntity(var_12_0)
+
+	if not var_12_1 then
+		logError("没有找到发射奥术飞弹的实体, entityId : " .. tostring(var_12_0))
 
 		return
 	end
 
-	if not FightHelper.getEntity(slot2) then
-		logError("没有找到奥术飞弹 命中实体, toId : " .. tostring(slot2))
+	if not FightHelper.getEntity(arg_12_2) then
+		logError("没有找到奥术飞弹 命中实体, toId : " .. tostring(arg_12_2))
 
 		return
 	end
 
-	slot9 = FightASFDHelper.getMissileCo(slot4)
-	slot11 = slot5.effect:addGlobalEffect(slot9.res)
+	local var_12_2 = var_12_1:getMO().side
+	local var_12_3 = FightASFDHelper.getMissileCo(var_12_0)
+	local var_12_4 = var_12_3.res
+	local var_12_5 = var_12_1.effect:addGlobalEffect(var_12_4)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot4, slot11, FightRenderOrderMgr.MaxOrder)
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_12_0, var_12_5, FightRenderOrderMgr.MaxOrder)
 
-	slot12 = MonoHelper.addLuaComOnceToGo(slot11.containerGO, UnitMoverBezier3)
+	local var_12_6 = MonoHelper.addLuaComOnceToGo(var_12_5.containerGO, UnitMoverBezier3)
 
-	MonoHelper.addLuaComOnceToGo(slot11.containerGO, UnitMoverHandler)
-	slot12:registerCallback(UnitMoveEvent.Arrive, slot0.onArrived, slot0)
+	MonoHelper.addLuaComOnceToGo(var_12_5.containerGO, UnitMoverHandler)
+	var_12_6:registerCallback(UnitMoveEvent.Arrive, arg_12_0.onArrived, arg_12_0)
 
-	slot12.missileWrap = slot11
-	slot12.stepMo = slot1
-	slot12.toId = slot2
+	var_12_6.missileWrap = var_12_5
+	var_12_6.stepMo = arg_12_1
+	var_12_6.toId = arg_12_2
 
 	FightASFDHelper.changeRandomArea()
 
-	slot13 = FightASFDHelper.getStartPos(slot5:getMO().side)
-	slot14 = FightASFDHelper.getEndPos(slot2)
-	slot15 = slot13
-	slot17 = FightASFDHelper.getRandomPos(slot13, slot14, slot9)
-	slot18 = slot14
+	local var_12_7 = FightASFDHelper.getStartPos(var_12_2)
+	local var_12_8 = FightASFDHelper.getEndPos(arg_12_2)
+	local var_12_9 = var_12_7
+	local var_12_10 = FightASFDHelper.getRandomPos(var_12_7, var_12_8, var_12_3)
+	local var_12_11 = var_12_10
+	local var_12_12 = var_12_8
 
-	slot11:setWorldPos(slot13.x, slot13.y, slot13.z)
+	var_12_5:setWorldPos(var_12_7.x, var_12_7.y, var_12_7.z)
 
-	if slot9.scale == 0 then
-		slot19 = 1
+	local var_12_13 = var_12_3.scale
+
+	if var_12_13 == 0 then
+		var_12_13 = 1
 	end
 
-	slot11:setEffectScale(slot19)
-	slot0:playAudio(slot9.audio)
-	slot12:setEaseType(FightASFDConfig.instance.lineType)
-	slot12:simpleMove(slot15, slot16, slot17, slot18, FightASFDConfig.instance:getFlyDuration(slot3) / FightModel.instance:getSpeed())
-	table.insert(slot0.missileMoverList, slot12)
-	table.insert(slot0.missileWrapList, slot11)
+	var_12_5:setEffectScale(var_12_13)
+	arg_12_0:playAudio(var_12_3.audio)
+	var_12_6:setEaseType(FightASFDConfig.instance.lineType)
 
-	slot0.effectWrap2EntityIdDict[slot11] = slot4
+	local var_12_14 = FightASFDConfig.instance:getFlyDuration(arg_12_3) / FightModel.instance:getSpeed()
 
-	return slot11
+	var_12_6:simpleMove(var_12_9, var_12_10, var_12_11, var_12_12, var_12_14)
+	table.insert(arg_12_0.missileMoverList, var_12_6)
+	table.insert(arg_12_0.missileWrapList, var_12_5)
+
+	arg_12_0.effectWrap2EntityIdDict[var_12_5] = var_12_0
+
+	return var_12_5
 end
 
-function slot0.emitterFail(slot0, slot1)
-	return slot0:onASFDArrived(slot1)
+function var_0_0.emitterFail(arg_13_0, arg_13_1)
+	return arg_13_0:onASFDArrived(arg_13_1)
 end
 
-function slot0.onArrived(slot0, slot1)
-	slot0.arriveCount = slot0.arriveCount + 1
+function var_0_0.onArrived(arg_14_0, arg_14_1)
+	arg_14_0.arriveCount = arg_14_0.arriveCount + 1
 
-	slot0:createExplosionEffect(slot1.stepMo, slot1.toId)
-	slot0:playHitAction(slot1.toId)
-	slot0:clearMover(slot1)
+	local var_14_0 = arg_14_1.stepMo
 
-	if slot0.missileCount <= slot0.arriveCount then
-		return slot0:onASFDArrived(slot2)
+	arg_14_0:createExplosionEffect(var_14_0, arg_14_1.toId)
+	arg_14_0:playHitAction(arg_14_1.toId)
+	arg_14_0:clearMover(arg_14_1)
+
+	if arg_14_0.arriveCount >= arg_14_0.missileCount then
+		return arg_14_0:onASFDArrived(var_14_0)
 	end
 end
 
-function slot0.onASFDArrived(slot0, slot1)
+function var_0_0.onASFDArrived(arg_15_0, arg_15_1)
 	return FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDArrivedDone)
 end
 
-function slot0.createExplosionEffect(slot0, slot1, slot2)
-	if not FightHelper.getEntity(slot2) then
+function var_0_0.createExplosionEffect(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = FightHelper.getEntity(arg_16_2)
+
+	if not var_16_0 then
 		return
 	end
 
-	slot4 = FightASFDHelper.getExplosionCo(slot1 and slot1.fromId)
-	slot5 = FightASFDConfig.instance.explosionDuration / FightModel.instance:getSpeed()
-	slot6 = slot3.effect:addHangEffect(slot4.res, ModuleEnum.SpineHangPoint.mountbody, nil, slot5)
+	local var_16_1 = FightASFDHelper.getExplosionCo(arg_16_1 and arg_16_1.fromId)
+	local var_16_2 = FightASFDConfig.instance.explosionDuration / FightModel.instance:getSpeed()
+	local var_16_3 = var_16_0.effect:addHangEffect(var_16_1.res, ModuleEnum.SpineHangPoint.mountbody, nil, var_16_2)
 
-	slot6:setLocalPos(0, 0, 0)
-	slot6:setEffectScale(FightASFDHelper.getASFDExplosionScale(slot1, slot4, slot2))
-	slot0:playAudio(slot4.audio)
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot2, slot6, FightRenderOrderMgr.MaxOrder)
+	var_16_3:setLocalPos(0, 0, 0)
 
-	slot0.effectWrap2EntityIdDict[slot6] = slot2
+	local var_16_4 = FightASFDHelper.getASFDExplosionScale(arg_16_1, var_16_1, arg_16_2)
 
-	table.insert(slot0.explosionWrapList, slot6)
-	TaskDispatcher.cancelTask(slot0.onExplosionEffectDone, slot0)
-	TaskDispatcher.runDelay(slot0.onExplosionEffectDone, slot0, slot5)
+	var_16_3:setEffectScale(var_16_4)
+	arg_16_0:playAudio(var_16_1.audio)
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(arg_16_2, var_16_3, FightRenderOrderMgr.MaxOrder)
+
+	arg_16_0.effectWrap2EntityIdDict[var_16_3] = arg_16_2
+
+	table.insert(arg_16_0.explosionWrapList, var_16_3)
+	TaskDispatcher.cancelTask(arg_16_0.onExplosionEffectDone, arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0.onExplosionEffectDone, arg_16_0, var_16_2)
 end
 
-function slot0.onExplosionEffectDone(slot0)
+function var_0_0.onExplosionEffectDone(arg_17_0)
 	FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDExplosionDone)
 end
 
-function slot0.playHitAction(slot0, slot1)
-	if not FightHelper.getEntity(slot1) then
+function var_0_0.playHitAction(arg_18_0, arg_18_1)
+	local var_18_0 = FightHelper.getEntity(arg_18_1)
+
+	if not var_18_0 then
 		return
 	end
 
-	slot3 = FightHelper.processEntityActionName(slot2, "hit")
+	local var_18_1 = FightHelper.processEntityActionName(var_18_0, "hit")
 
-	slot2.spine:play(slot3, false, true, true)
-	slot2.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-	slot2.spine:addAnimEventCallback(slot0._onAnimEvent, slot0, {
-		slot2,
-		slot3
+	var_18_0.spine:play(var_18_1, false, true, true)
+	var_18_0.spine:removeAnimEventCallback(arg_18_0._onAnimEvent, arg_18_0)
+	var_18_0.spine:addAnimEventCallback(arg_18_0._onAnimEvent, arg_18_0, {
+		var_18_0,
+		var_18_1
 	})
 
-	slot0.playHitAnimEntityIdDict[slot1] = true
+	arg_18_0.playHitAnimEntityIdDict[arg_18_1] = true
 end
 
-function slot0._onAnimEvent(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot4[1]
+function var_0_0._onAnimEvent(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	local var_19_0 = arg_19_4[1]
+	local var_19_1 = arg_19_4[2]
 
-	if slot2 == SpineAnimEvent.ActionComplete and slot1 == slot4[2] then
-		slot5.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-		slot5:resetAnimState()
+	if arg_19_2 == SpineAnimEvent.ActionComplete and arg_19_1 == var_19_1 then
+		var_19_0.spine:removeAnimEventCallback(arg_19_0._onAnimEvent, arg_19_0)
+		var_19_0:resetAnimState()
 	end
 end
 
-function slot0.onContinueASFDFlowDone(slot0)
-	slot0.curStepMo = nil
+function var_0_0.onContinueASFDFlowDone(arg_20_0)
+	arg_20_0.curStepMo = nil
 
-	TaskDispatcher.cancelTask(slot0.onExplosionEffectDone, slot0)
+	TaskDispatcher.cancelTask(arg_20_0.onExplosionEffectDone, arg_20_0)
 end
 
-function slot0.onASFDFlowDone(slot0, slot1)
-	slot0.curStepMo = nil
+function var_0_0.onASFDFlowDone(arg_21_0, arg_21_1)
+	arg_21_0.curStepMo = nil
 
-	slot0:clearBornEffect(true)
-	slot0:clearEmitterEffect(slot1)
-	slot0:clearMissileEffect()
-	slot0:clearExplosionEffect()
-	tabletool.clear(slot0.effectWrap2EntityIdDict)
-	TaskDispatcher.cancelTask(slot0.onExplosionEffectDone, slot0)
-	slot0:resetSpineAnim()
+	arg_21_0:clearBornEffect(true)
+	arg_21_0:clearEmitterEffect(arg_21_1)
+	arg_21_0:clearMissileEffect()
+	arg_21_0:clearExplosionEffect()
+	tabletool.clear(arg_21_0.effectWrap2EntityIdDict)
+	TaskDispatcher.cancelTask(arg_21_0.onExplosionEffectDone, arg_21_0)
+	arg_21_0:resetSpineAnim()
 end
 
-function slot0.clearBornEffect(slot0, slot1)
-	if not slot0.bornEffectWrap then
+function var_0_0.clearBornEffect(arg_22_0, arg_22_1)
+	if not arg_22_0.bornEffectWrap then
 		return
 	end
 
-	slot0:removeEffect(slot0.bornEffectWrap)
+	arg_22_0:removeEffect(arg_22_0.bornEffectWrap)
 
-	slot0.bornEffectWrap = nil
+	arg_22_0.bornEffectWrap = nil
 
-	if not slot1 then
-		slot0:createBornRemoveEffect()
+	if not arg_22_1 then
+		arg_22_0:createBornRemoveEffect()
 	end
 
-	slot0.curBornCo = nil
-	slot0.bornEntity = nil
+	arg_22_0.curBornCo = nil
+	arg_22_0.bornEntity = nil
 end
 
-function slot0.createBornRemoveEffect(slot0)
-	if slot0.curBornCo and slot0.bornEntity then
-		slot2 = slot0.bornEntity.effect:addGlobalEffect(FightASFDHelper.getASFDBornRemoveRes(slot0.curBornCo), nil, 1)
+function var_0_0.createBornRemoveEffect(arg_23_0)
+	if arg_23_0.curBornCo and arg_23_0.bornEntity then
+		local var_23_0 = FightASFDHelper.getASFDBornRemoveRes(arg_23_0.curBornCo)
+		local var_23_1 = arg_23_0.bornEntity.effect:addGlobalEffect(var_23_0, nil, 1)
 
-		FightRenderOrderMgr.instance:addEffectWrapByOrder(slot0.bornEntity.id, slot2, FightRenderOrderMgr.MaxOrder)
-		slot2:setLocalPos(FightASFDHelper.getEmitterPos(slot0.bornEntity:getMO().side))
+		FightRenderOrderMgr.instance:addEffectWrapByOrder(arg_23_0.bornEntity.id, var_23_1, FightRenderOrderMgr.MaxOrder)
 
-		if slot0.curBornCo.scale == 0 then
-			slot4 = 1
+		local var_23_2 = arg_23_0.bornEntity:getMO()
+
+		var_23_1:setLocalPos(FightASFDHelper.getEmitterPos(var_23_2.side))
+
+		local var_23_3 = arg_23_0.curBornCo.scale
+
+		if var_23_3 == 0 then
+			var_23_3 = 1
 		end
 
-		slot2:setEffectScale(slot4)
+		var_23_1:setEffectScale(var_23_3)
 	end
 end
 
-function slot0.clearEmitterEffect(slot0, slot1)
-	if not slot0.sideEmitterWrap then
+function var_0_0.clearEmitterEffect(arg_24_0, arg_24_1)
+	if not arg_24_0.sideEmitterWrap then
 		return
 	end
 
-	slot0:removeEffect(slot0.sideEmitterWrap)
-	slot0:createRemoveEmitterEffect(slot1)
-	slot0:playEndASFDAnim()
+	arg_24_0:removeEffect(arg_24_0.sideEmitterWrap)
+	arg_24_0:createRemoveEmitterEffect(arg_24_1)
+	arg_24_0:playEndASFDAnim()
 
-	slot0.sideEmitterWrap = nil
+	arg_24_0.sideEmitterWrap = nil
 end
 
-function slot0.createRemoveEmitterEffect(slot0, slot1)
-	if not slot1 then
+function var_0_0.createRemoveEmitterEffect(arg_25_0, arg_25_1)
+	if not arg_25_1 then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot1.fromId) then
+	local var_25_0 = arg_25_1.fromId
+	local var_25_1 = FightDataHelper.entityMgr:getById(var_25_0)
+
+	if not var_25_1 then
 		return
 	end
 
-	if not FightHelper.getEntity(slot2) then
+	local var_25_2 = FightHelper.getEntity(var_25_0)
+
+	if not var_25_2 then
 		return
 	end
 
-	slot5 = FightASFDHelper.getEmitterCo(slot2)
-	slot7 = slot4.effect:addGlobalEffect(FightASFDHelper.getASFDEmitterRemoveRes(slot5), nil, 1)
+	local var_25_3 = FightASFDHelper.getEmitterCo(var_25_0)
+	local var_25_4 = FightASFDHelper.getASFDEmitterRemoveRes(var_25_3)
+	local var_25_5 = var_25_2.effect:addGlobalEffect(var_25_4, nil, 1)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(slot2, slot7, FightRenderOrderMgr.MaxOrder)
-	slot7:setLocalPos(FightASFDHelper.getEmitterPos(slot3.side))
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_25_0, var_25_5, FightRenderOrderMgr.MaxOrder)
+	var_25_5:setLocalPos(FightASFDHelper.getEmitterPos(var_25_1.side))
 
-	if slot5.scale == 0 then
-		slot8 = 1
+	local var_25_6 = var_25_3.scale
+
+	if var_25_6 == 0 then
+		var_25_6 = 1
 	end
 
-	slot7:setEffectScale(slot8)
+	var_25_5:setEffectScale(var_25_6)
 end
 
-function slot0.clearMissileEffect(slot0)
-	if slot0.missileWrapList then
-		for slot4, slot5 in ipairs(slot0.missileWrapList) do
-			slot0:removeEffect(slot5)
+function var_0_0.clearMissileEffect(arg_26_0)
+	if arg_26_0.missileWrapList then
+		for iter_26_0, iter_26_1 in ipairs(arg_26_0.missileWrapList) do
+			arg_26_0:removeEffect(iter_26_1)
 		end
 
-		tabletool.clear(slot0.missileWrapList)
+		tabletool.clear(arg_26_0.missileWrapList)
 	end
 
-	if slot0.missileMoverList then
-		for slot4, slot5 in ipairs(slot0.missileMoverList) do
-			slot0:clearMover(slot5)
+	if arg_26_0.missileMoverList then
+		for iter_26_2, iter_26_3 in ipairs(arg_26_0.missileMoverList) do
+			arg_26_0:clearMover(iter_26_3)
 		end
 
-		tabletool.clear(slot0.missileMoverList)
+		tabletool.clear(arg_26_0.missileMoverList)
 	end
 end
 
-function slot0.clearMover(slot0, slot1)
-	if not slot1 then
+function var_0_0.clearMover(arg_27_0, arg_27_1)
+	if not arg_27_1 then
 		return
 	end
 
-	slot1:unregisterCallback(UnitMoveEvent.Arrive, slot0.onArrived, slot0)
+	arg_27_1:unregisterCallback(UnitMoveEvent.Arrive, arg_27_0.onArrived, arg_27_0)
 
-	slot1.missileWrap = nil
-	slot1.stepMo = nil
-	slot1.toId = nil
+	arg_27_1.missileWrap = nil
+	arg_27_1.stepMo = nil
+	arg_27_1.toId = nil
 end
 
-function slot0.clearExplosionEffect(slot0)
-	if not slot0.explosionWrapList then
+function var_0_0.clearExplosionEffect(arg_28_0)
+	if not arg_28_0.explosionWrapList then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0.explosionWrapList) do
-		slot0:removeEffect(slot5)
+	for iter_28_0, iter_28_1 in ipairs(arg_28_0.explosionWrapList) do
+		arg_28_0:removeEffect(iter_28_1)
 	end
 
-	tabletool.clear(slot0.explosionWrapList)
+	tabletool.clear(arg_28_0.explosionWrapList)
 end
 
-function slot0.removeEffect(slot0, slot1)
-	if not slot1 then
+function var_0_0.removeEffect(arg_29_0, arg_29_1)
+	if not arg_29_1 then
 		return
 	end
 
-	if FightHelper.getEntity(slot0.effectWrap2EntityIdDict[slot1]) then
-		slot3.effect:removeEffect(slot1)
+	local var_29_0 = arg_29_0.effectWrap2EntityIdDict[arg_29_1]
+	local var_29_1 = FightHelper.getEntity(var_29_0)
+
+	if var_29_1 then
+		var_29_1.effect:removeEffect(arg_29_1)
 	end
 
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(slot2, slot1)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(var_29_0, arg_29_1)
 end
 
-function slot0.resetSpineAnim(slot0)
-	if not slot0.playHitAnimEntityIdDict then
+function var_0_0.resetSpineAnim(arg_30_0)
+	if not arg_30_0.playHitAnimEntityIdDict then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0.playHitAnimEntityIdDict) do
-		if FightHelper.getEntity(slot4) then
-			slot6.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-			slot6:resetAnimState()
+	for iter_30_0, iter_30_1 in pairs(arg_30_0.playHitAnimEntityIdDict) do
+		local var_30_0 = FightHelper.getEntity(iter_30_0)
+
+		if var_30_0 then
+			var_30_0.spine:removeAnimEventCallback(arg_30_0._onAnimEvent, arg_30_0)
+			var_30_0:resetAnimState()
 		end
 	end
 
-	tabletool.clear(slot0.playHitAnimEntityIdDict)
+	tabletool.clear(arg_30_0.playHitAnimEntityIdDict)
 end
 
-function slot0.playStartASFDAnim(slot0)
-	if slot0.startAnimLoadingStatus == uv0.LoadingStatus.NotLoad then
-		loadAbAsset(FightASFDConfig.instance.startAnimAbUrl, false, slot0.loadStartAnimCallback, slot0)
+function var_0_0.playStartASFDAnim(arg_31_0)
+	if arg_31_0.startAnimLoadingStatus == var_0_0.LoadingStatus.NotLoad then
+		loadAbAsset(FightASFDConfig.instance.startAnimAbUrl, false, arg_31_0.loadStartAnimCallback, arg_31_0)
 
-		slot0.startAnimLoadingStatus = uv0.LoadingStatus.Loading
+		arg_31_0.startAnimLoadingStatus = var_0_0.LoadingStatus.Loading
 
 		return
 	end
 
-	if slot0.startAnimLoadingStatus == uv0.LoadingStatus.Loading then
+	if arg_31_0.startAnimLoadingStatus == var_0_0.LoadingStatus.Loading then
 		return
 	end
 
-	if CameraMgr.instance:getCameraRootAnimator() then
-		slot1.enabled = true
-		slot1.runtimeAnimatorController = slot0.startAnimController
+	local var_31_0 = CameraMgr.instance:getCameraRootAnimator()
 
-		slot1:Play("v2a4_asfd_start", 0, 0)
+	if var_31_0 then
+		var_31_0.enabled = true
+		var_31_0.runtimeAnimatorController = arg_31_0.startAnimController
+
+		var_31_0:Play("v2a4_asfd_start", 0, 0)
 	end
 end
 
-function slot0.loadStartAnimCallback(slot0, slot1)
-	if not slot1.IsLoadSuccess then
-		slot0.startAnimLoadingStatus = uv0.LoadingStatus.NotLoad
-
-		return
-	end
-
-	slot0.startAnimLoadingStatus = uv0.LoadingStatus.Loaded
-	slot0.startAssetItem = slot1
-
-	slot1:Retain()
-
-	slot0.startAnimController = slot1:GetResource(FightASFDConfig.instance.startAnim)
-
-	return slot0:playStartASFDAnim()
-end
-
-function slot0.playEndASFDAnim(slot0)
-	if slot0.endAnimLoadingStatus == uv0.LoadingStatus.NotLoad then
-		loadAbAsset(FightASFDConfig.instance.endAnimAbUrl, false, slot0.loadEndAnimCallback, slot0)
-
-		slot0.endAnimLoadingStatus = uv0.LoadingStatus.Loading
+function var_0_0.loadStartAnimCallback(arg_32_0, arg_32_1)
+	if not arg_32_1.IsLoadSuccess then
+		arg_32_0.startAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
 
 		return
 	end
 
-	if slot0.endAnimLoadingStatus == uv0.LoadingStatus.Loading then
+	arg_32_0.startAnimLoadingStatus = var_0_0.LoadingStatus.Loaded
+	arg_32_0.startAssetItem = arg_32_1
+
+	arg_32_1:Retain()
+
+	arg_32_0.startAnimController = arg_32_1:GetResource(FightASFDConfig.instance.startAnim)
+
+	return arg_32_0:playStartASFDAnim()
+end
+
+function var_0_0.playEndASFDAnim(arg_33_0)
+	if arg_33_0.endAnimLoadingStatus == var_0_0.LoadingStatus.NotLoad then
+		loadAbAsset(FightASFDConfig.instance.endAnimAbUrl, false, arg_33_0.loadEndAnimCallback, arg_33_0)
+
+		arg_33_0.endAnimLoadingStatus = var_0_0.LoadingStatus.Loading
+
 		return
 	end
 
-	if CameraMgr.instance:getCameraRootAnimator() then
-		slot1.enabled = true
-		slot1.runtimeAnimatorController = slot0.endAnimController
+	if arg_33_0.endAnimLoadingStatus == var_0_0.LoadingStatus.Loading then
+		return
+	end
 
-		slot1:Play("v2a4_asfd_end", 0, 0)
+	local var_33_0 = CameraMgr.instance:getCameraRootAnimator()
+
+	if var_33_0 then
+		var_33_0.enabled = true
+		var_33_0.runtimeAnimatorController = arg_33_0.endAnimController
+
+		var_33_0:Play("v2a4_asfd_end", 0, 0)
 	end
 end
 
-function slot0.loadEndAnimCallback(slot0, slot1)
-	if not slot1.IsLoadSuccess then
-		slot0.endAnimLoadingStatus = uv0.LoadingStatus.NotLoad
+function var_0_0.loadEndAnimCallback(arg_34_0, arg_34_1)
+	if not arg_34_1.IsLoadSuccess then
+		arg_34_0.endAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
 
 		return
 	end
 
-	slot0.endAnimLoadingStatus = uv0.LoadingStatus.Loaded
-	slot0.endAssetItem = slot1
+	arg_34_0.endAnimLoadingStatus = var_0_0.LoadingStatus.Loaded
+	arg_34_0.endAssetItem = arg_34_1
 
-	slot1:Retain()
+	arg_34_1:Retain()
 
-	slot0.endAnimController = slot1:GetResource(FightASFDConfig.instance.endAnim)
+	arg_34_0.endAnimController = arg_34_1:GetResource(FightASFDConfig.instance.endAnim)
 
-	return slot0:playEndASFDAnim()
+	return arg_34_0:playEndASFDAnim()
 end
 
-function slot0.removeLoader(slot0)
-	removeAssetLoadCb(FightASFDConfig.instance.startAnimAbUrl, slot0.loadStartAnimCallback, slot0)
+function var_0_0.removeLoader(arg_35_0)
+	removeAssetLoadCb(FightASFDConfig.instance.startAnimAbUrl, arg_35_0.loadStartAnimCallback, arg_35_0)
 
-	if slot0.startAssetItem then
-		slot0.startAssetItem:Release()
+	if arg_35_0.startAssetItem then
+		arg_35_0.startAssetItem:Release()
 
-		slot0.startAssetItem = nil
+		arg_35_0.startAssetItem = nil
 	end
 
-	removeAssetLoadCb(FightASFDConfig.instance.endAnimAbUrl, slot0.loadEndAnimCallback, slot0)
+	removeAssetLoadCb(FightASFDConfig.instance.endAnimAbUrl, arg_35_0.loadEndAnimCallback, arg_35_0)
 
-	if slot0.endAssetItem then
-		slot0.endAssetItem:Release()
+	if arg_35_0.endAssetItem then
+		arg_35_0.endAssetItem:Release()
 
-		slot0.endAssetItem = nil
+		arg_35_0.endAssetItem = nil
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0:onASFDFlowDone()
-	slot0:removeLoader()
-	uv0.super.dispose(slot0)
+function var_0_0.dispose(arg_36_0)
+	arg_36_0:onASFDFlowDone()
+	arg_36_0:removeLoader()
+	var_0_0.super.dispose(arg_36_0)
 end
 
-return slot0
+return var_0_0

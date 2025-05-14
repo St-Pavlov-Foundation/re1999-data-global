@@ -1,48 +1,55 @@
-module("modules.logic.herogroup.model.HeroGroupActivity104EquipMo", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupActivity104EquipMo", package.seeall)
 
-slot0 = pureTable("HeroGroupActivity104EquipMo")
+local var_0_0 = pureTable("HeroGroupActivity104EquipMo")
 
-function slot0.init(slot0, slot1)
-	slot0.index = slot1.index
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.index = arg_1_1.index
 
-	if slot0.index == 4 then
-		if not slot0._mainCardNum then
-			slot0.equipUid = {
-				slot1.equipUid and slot1.equipUid[1] or "0"
+	if arg_1_0.index == 4 then
+		if not arg_1_0._mainCardNum then
+			local var_1_0 = arg_1_1.equipUid and arg_1_1.equipUid[1] or "0"
+
+			arg_1_0.equipUid = {
+				var_1_0
 			}
 		else
-			slot0.equipUid = {}
+			arg_1_0.equipUid = {}
 
-			for slot5 = 1, slot0._mainCardNum do
-				table.insert(slot0.equipUid, slot1.equipUid and slot1.equipUid[slot5] or "0")
+			for iter_1_0 = 1, arg_1_0._mainCardNum do
+				local var_1_1 = arg_1_1.equipUid and arg_1_1.equipUid[iter_1_0] or "0"
+
+				table.insert(arg_1_0.equipUid, var_1_1)
 			end
 		end
 	else
-		slot0.equipUid = {}
+		arg_1_0.equipUid = {}
 
-		if not slot0._normalCardNum then
-			for slot5 = 1, 2 do
-				table.insert(slot0.equipUid, slot1.equipUid and slot1.equipUid[slot5] or "0")
+		if not arg_1_0._normalCardNum then
+			for iter_1_1 = 1, 2 do
+				local var_1_2 = arg_1_1.equipUid and arg_1_1.equipUid[iter_1_1] or "0"
+
+				table.insert(arg_1_0.equipUid, var_1_2)
 			end
 		else
-			for slot5 = 1, slot0._normalCardNum do
-				table.insert(slot0.equipUid, slot1.equipUid and slot1.equipUid[slot5] or "0")
+			for iter_1_2 = 1, arg_1_0._normalCardNum do
+				local var_1_3 = arg_1_1.equipUid and arg_1_1.equipUid[iter_1_2] or "0"
+
+				table.insert(arg_1_0.equipUid, var_1_3)
 			end
 		end
 	end
 end
 
-function slot0.setLimitNum(slot0, slot1, slot2)
-	slot0._normalCardNum = slot2
-	slot0._mainCardNum = slot1
+function var_0_0.setLimitNum(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._mainCardNum, arg_2_0._normalCardNum = arg_2_1, arg_2_2
 end
 
-function slot0.getEquipUID(slot0, slot1)
-	if not slot0.equipUid then
+function var_0_0.getEquipUID(arg_3_0, arg_3_1)
+	if not arg_3_0.equipUid then
 		return
 	end
 
-	return slot0.equipUid[slot1]
+	return arg_3_0.equipUid[arg_3_1]
 end
 
-return slot0
+return var_0_0

@@ -1,64 +1,72 @@
-module("modules.logic.toughbattle.view.ToughBattleFightSuccView", package.seeall)
+﻿module("modules.logic.toughbattle.view.ToughBattleFightSuccView", package.seeall)
 
-slot0 = class("ToughBattleFightSuccView", FightSuccView)
+local var_0_0 = class("ToughBattleFightSuccView", FightSuccView)
 
-function slot0.onInitView(slot0)
-	slot0._goalcontent = gohelper.findChild(slot0.viewGO, "goalcontent")
-	slot0._gotoughbattle = gohelper.findChild(slot0.viewGO, "#go_toughbattle")
-	slot0._gotoughbattlerole = gohelper.findChild(slot0.viewGO, "#go_toughbattle_role")
-	slot0._txtdiffcult = gohelper.findChildText(slot0.viewGO, "#go_toughbattle/info/txt_difficulty/#txt_diff")
-	slot0._txtround = gohelper.findChildText(slot0.viewGO, "#go_toughbattle/info/txt_order/#txt_num")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_toughbattle/desc/#txt_desc")
-	slot0._simagetoughbattlerole = gohelper.findChildImage(slot0.viewGO, "#go_toughbattle_role/role/#simage_rolehead")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_toughbattle_role/role/#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goalcontent = gohelper.findChild(arg_1_0.viewGO, "goalcontent")
+	arg_1_0._gotoughbattle = gohelper.findChild(arg_1_0.viewGO, "#go_toughbattle")
+	arg_1_0._gotoughbattlerole = gohelper.findChild(arg_1_0.viewGO, "#go_toughbattle_role")
+	arg_1_0._txtdiffcult = gohelper.findChildText(arg_1_0.viewGO, "#go_toughbattle/info/txt_difficulty/#txt_diff")
+	arg_1_0._txtround = gohelper.findChildText(arg_1_0.viewGO, "#go_toughbattle/info/txt_order/#txt_num")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_toughbattle/desc/#txt_desc")
+	arg_1_0._simagetoughbattlerole = gohelper.findChildImage(arg_1_0.viewGO, "#go_toughbattle_role/role/#simage_rolehead")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_toughbattle_role/role/#btn_click")
 
-	uv0.super.onInitView(slot0)
+	var_0_0.super.onInitView(arg_1_0)
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0.onClickSkill, slot0)
-	uv0.super.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0.onClickSkill, arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	uv0.super.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	var_0_0.super.removeEvents(arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	gohelper.setActive(slot0._gotoughbattle, false)
-	gohelper.setActive(slot0._gotoughbattlerole, false)
-	slot0:setToughInfo()
+function var_0_0.onOpen(arg_4_0)
+	var_0_0.super.onOpen(arg_4_0)
+	gohelper.setActive(arg_4_0._gotoughbattle, false)
+	gohelper.setActive(arg_4_0._gotoughbattlerole, false)
+	arg_4_0:setToughInfo()
 end
 
-function slot0.setToughInfo(slot0)
-	if ToughBattleConfig.instance:isActStage2EpisodeId(slot0._curEpisodeId) then
-		gohelper.setActive(slot0._goalcontent, false)
-		gohelper.setActive(slot0._gotoughbattle, true)
+function var_0_0.setToughInfo(arg_5_0)
+	if ToughBattleConfig.instance:isActStage2EpisodeId(arg_5_0._curEpisodeId) then
+		gohelper.setActive(arg_5_0._goalcontent, false)
+		gohelper.setActive(arg_5_0._gotoughbattle, true)
 
-		slot0._txtdiffcult.text = luaLang("toughbattle_diffcult_" .. (ToughBattleConfig.instance:getCoByEpisodeId(slot0._curEpisodeId) and slot1.difficulty or 1))
-		slot0._txtround.text = FightResultModel.instance.totalRound or 0
-		slot0._txtdesc.text = ToughBattleConfig.instance:getRoundDesc(FightResultModel.instance.totalRound or 0)
+		local var_5_0 = ToughBattleConfig.instance:getCoByEpisodeId(arg_5_0._curEpisodeId)
+		local var_5_1 = var_5_0 and var_5_0.difficulty or 1
+
+		arg_5_0._txtdiffcult.text = luaLang("toughbattle_diffcult_" .. var_5_1)
+		arg_5_0._txtround.text = FightResultModel.instance.totalRound or 0
+		arg_5_0._txtdesc.text = ToughBattleConfig.instance:getRoundDesc(FightResultModel.instance.totalRound or 0)
 	else
-		gohelper.setActive(slot0._gotoughbattlerole, true)
-		UISpriteSetMgr.instance:setToughBattleRoleSprite(slot0._simagetoughbattlerole, "roleheadpic0" .. ToughBattleConfig.instance:getCoByEpisodeId(slot0._curEpisodeId).sort)
+		gohelper.setActive(arg_5_0._gotoughbattlerole, true)
+
+		local var_5_2 = ToughBattleConfig.instance:getCoByEpisodeId(arg_5_0._curEpisodeId)
+
+		UISpriteSetMgr.instance:setToughBattleRoleSprite(arg_5_0._simagetoughbattlerole, "roleheadpic0" .. var_5_2.sort)
 	end
 end
 
-function slot0.onClickSkill(slot0)
+function var_0_0.onClickSkill(arg_6_0)
+	local var_6_0 = ToughBattleConfig.instance:getCoByEpisodeId(arg_6_0._curEpisodeId)
+
 	ViewMgr.instance:openView(ViewName.ToughBattleSkillView, {
 		isShowList = false,
-		showCo = ToughBattleConfig.instance:getCoByEpisodeId(slot0._curEpisodeId)
+		showCo = var_6_0
 	})
 end
 
-function slot0._addItem(slot0, slot1, ...)
-	if slot1.bonusTag == FightEnum.FightBonusTag.FirstBonus then
-		slot1.bonusTag = FightEnum.FightBonusTag.TimeFirstBonus
+function var_0_0._addItem(arg_7_0, arg_7_1, ...)
+	if arg_7_1.bonusTag == FightEnum.FightBonusTag.FirstBonus then
+		arg_7_1.bonusTag = FightEnum.FightBonusTag.TimeFirstBonus
 	end
 
-	return uv0.super._addItem(slot0, slot1, ...)
+	return var_0_0.super._addItem(arg_7_0, arg_7_1, ...)
 end
 
-return slot0
+return var_0_0

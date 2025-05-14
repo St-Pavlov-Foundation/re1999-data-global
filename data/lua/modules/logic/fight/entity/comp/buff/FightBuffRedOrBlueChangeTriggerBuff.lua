@@ -1,24 +1,25 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffRedOrBlueChangeTriggerBuff", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffRedOrBlueChangeTriggerBuff", package.seeall)
 
-slot0 = class("FightBuffRedOrBlueChangeTriggerBuff")
+local var_0_0 = class("FightBuffRedOrBlueChangeTriggerBuff")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onBuffStart(slot0, slot1, slot2)
-	FightDataHelper.LYDataMgr:setLYChangeTriggerBuff(slot2)
+function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+	FightDataHelper.LYDataMgr:setLYChangeTriggerBuff(arg_2_2)
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
 	FightDataHelper.LYDataMgr:setLYChangeTriggerBuff(nil)
 end
 
-function slot0.onBuffEnd(slot0)
-	slot0:clear()
+function var_0_0.onBuffEnd(arg_4_0)
+	arg_4_0:clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:clear()
+function var_0_0.dispose(arg_5_0)
+	arg_5_0:clear()
 end
 
-return slot0
+return var_0_0

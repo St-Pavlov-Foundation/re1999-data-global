@@ -1,156 +1,167 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGameModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGameModel", package.seeall)
 
-slot0 = class("AiZiLaGameModel", BaseModel)
+local var_0_0 = class("AiZiLaGameModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._curEpisodeId = 0
-	slot0._roundCount = 0
-	slot0._elevation = 0
-	slot0._isSafe = false
-	slot0._isFirstPass = false
-	slot0._curActivityId = VersionActivity1_5Enum.ActivityId.AiZiLa
-	slot0._itemModel = slot0:_clearOrCreateModel(slot0._itemModel)
-	slot0._resultItemModel = slot0:_clearOrCreateModel(slot0._resultItemModel)
-	slot0._equipModel = slot0:_clearOrCreateModel(slot0._equipModel)
-	slot0._curEpisodeMO = slot0._curEpisodeMO or AiZiLaEpsiodeMO.New()
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._curEpisodeId = 0
+	arg_4_0._roundCount = 0
+	arg_4_0._elevation = 0
+	arg_4_0._isSafe = false
+	arg_4_0._isFirstPass = false
+	arg_4_0._curActivityId = VersionActivity1_5Enum.ActivityId.AiZiLa
+	arg_4_0._itemModel = arg_4_0:_clearOrCreateModel(arg_4_0._itemModel)
+	arg_4_0._resultItemModel = arg_4_0:_clearOrCreateModel(arg_4_0._resultItemModel)
+	arg_4_0._equipModel = arg_4_0:_clearOrCreateModel(arg_4_0._equipModel)
+	arg_4_0._curEpisodeMO = arg_4_0._curEpisodeMO or AiZiLaEpsiodeMO.New()
 end
 
-function slot0._clearOrCreateModel(slot0, slot1)
-	return AiZiLaHelper.clearOrCreateModel(slot1)
+function var_0_0._clearOrCreateModel(arg_5_0, arg_5_1)
+	return AiZiLaHelper.clearOrCreateModel(arg_5_1)
 end
 
-function slot0._updateMOModel(slot0, slot1, slot2, slot3, slot4)
-	return AiZiLaHelper.updateMOModel(slot1, slot2, slot3, slot4)
+function var_0_0._updateMOModel(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	return AiZiLaHelper.updateMOModel(arg_6_1, arg_6_2, arg_6_3, arg_6_4)
 end
 
-function slot0._updateItemModel(slot0, slot1)
-	return slot0:_updateMOModel(AiZiLaItemMO, slot0._itemModel, slot1.itemId, slot1)
+function var_0_0._updateItemModel(arg_7_0, arg_7_1)
+	return arg_7_0:_updateMOModel(AiZiLaItemMO, arg_7_0._itemModel, arg_7_1.itemId, arg_7_1)
 end
 
-function slot0.setEpisodeId(slot0, slot1, slot2)
-	slot0._curEpisodeId = slot1
-	slot0._curEpisodeMO = AiZiLaEpsiodeMO.New()
+function var_0_0.setEpisodeId(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._curEpisodeId = arg_8_1
+	arg_8_0._curEpisodeMO = AiZiLaEpsiodeMO.New()
 
-	slot0._curEpisodeMO:init(slot1)
+	arg_8_0._curEpisodeMO:init(arg_8_1)
 
-	slot0._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(VersionActivity1_5Enum.ActivityId.AiZiLa, slot1)
+	local var_8_0 = VersionActivity1_5Enum.ActivityId.AiZiLa
+
+	arg_8_0._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(var_8_0, arg_8_1)
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._curEpisodeId
+function var_0_0.getEpisodeId(arg_9_0)
+	return arg_9_0._curEpisodeId
 end
 
-function slot0.getActivityID(slot0)
-	return slot0._curActivityId
+function var_0_0.getActivityID(arg_10_0)
+	return arg_10_0._curActivityId
 end
 
-function slot0.getItemList(slot0)
-	return slot0._itemModel:getList()
+function var_0_0.getItemList(arg_11_0)
+	return arg_11_0._itemModel:getList()
 end
 
-function slot0.getItemQuantity(slot0, slot1)
-	return slot0._itemModel:getById(slot1) and slot2:getQuantity() or 0
+function var_0_0.getItemQuantity(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._itemModel:getById(arg_12_1)
+
+	return var_12_0 and var_12_0:getQuantity() or 0
 end
 
-function slot0.getResultItemList(slot0, slot1)
-	return slot0._resultItemModel:getList()
+function var_0_0.getResultItemList(arg_13_0, arg_13_1)
+	return arg_13_0._resultItemModel:getList()
 end
 
-function slot0.setIsSafe(slot0, slot1)
-	slot0._isSafe = slot1
+function var_0_0.setIsSafe(arg_14_0, arg_14_1)
+	arg_14_0._isSafe = arg_14_1
 end
 
-function slot0.getIsSafe(slot0)
-	return slot0._isSafe
+function var_0_0.getIsSafe(arg_15_0)
+	return arg_15_0._isSafe
 end
 
-function slot0.isPass(slot0)
-	return slot0._curEpisodeMO and slot0._curEpisodeMO:isPass() or false
+function var_0_0.isPass(arg_16_0)
+	return arg_16_0._curEpisodeMO and arg_16_0._curEpisodeMO:isPass() or false
 end
 
-function slot0.getIsFirstPass(slot0)
-	return slot0._isFirstPass
+function var_0_0.getIsFirstPass(arg_17_0)
+	return arg_17_0._isFirstPass
 end
 
-function slot0.getEventId(slot0)
-	return slot0._curEpisodeMO and slot0._curEpisodeMO.eventId or 0
+function var_0_0.getEventId(arg_18_0)
+	return arg_18_0._curEpisodeMO and arg_18_0._curEpisodeMO.eventId or 0
 end
 
-function slot0.getBuffIdList(slot0)
-	return slot0._curEpisodeMO and slot0._curEpisodeMO.buffIds
+function var_0_0.getBuffIdList(arg_19_0)
+	return arg_19_0._curEpisodeMO and arg_19_0._curEpisodeMO.buffIds
 end
 
-function slot0.getElevation(slot0)
-	return slot0._curEpisodeMO and slot0._curEpisodeMO.altitude or 0
+function var_0_0.getElevation(arg_20_0)
+	return arg_20_0._curEpisodeMO and arg_20_0._curEpisodeMO.altitude or 0
 end
 
-function slot0.getRoundCount(slot0)
-	return slot0._curEpisodeMO and slot0._curEpisodeMO.day
+function var_0_0.getRoundCount(arg_21_0)
+	return arg_21_0._curEpisodeMO and arg_21_0._curEpisodeMO.day
 end
 
-function slot0.getEpisodeMO(slot0)
-	return slot0._curEpisodeMO
+function var_0_0.getEpisodeMO(arg_22_0)
+	return arg_22_0._curEpisodeMO
 end
 
-function slot0.updateEpisode(slot0, slot1)
-	slot0._curEpisodeMO:updateInfo(slot1)
+function var_0_0.updateEpisode(arg_23_0, arg_23_1)
+	arg_23_0._curEpisodeMO:updateInfo(arg_23_1)
 end
 
-function slot0.addAct144Items(slot0, slot1)
-	slot0:_addModelAct144Items(slot0._itemModel, slot1)
+function var_0_0.addAct144Items(arg_24_0, arg_24_1)
+	arg_24_0:_addModelAct144Items(arg_24_0._itemModel, arg_24_1)
 end
 
-function slot0.setAct144Items(slot0, slot1)
-	slot0._itemModel = slot0:_clearOrCreateModel(slot0._itemModel)
+function var_0_0.setAct144Items(arg_25_0, arg_25_1)
+	arg_25_0._itemModel = arg_25_0:_clearOrCreateModel(arg_25_0._itemModel)
 
-	slot0:_addModelAct144Items(slot0._itemModel, slot1)
+	arg_25_0:_addModelAct144Items(arg_25_0._itemModel, arg_25_1)
 end
 
-function slot0._addModelAct144Items(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if slot1:getById(slot7.itemId) then
-			slot8:addInfo(slot7)
+function var_0_0._addModelAct144Items(arg_26_0, arg_26_1, arg_26_2)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_2) do
+		local var_26_0 = arg_26_1:getById(iter_26_1.itemId)
+
+		if var_26_0 then
+			var_26_0:addInfo(iter_26_1)
 		else
-			slot8 = AiZiLaItemMO.New()
+			local var_26_1 = AiZiLaItemMO.New()
 
-			slot8:init(slot7.itemId, slot7.itemId, slot7.quantity)
-			slot1:addAtLast(slot8)
+			var_26_1:init(iter_26_1.itemId, iter_26_1.itemId, iter_26_1.quantity)
+			arg_26_1:addAtLast(var_26_1)
 		end
 	end
 end
 
-function slot0.setAct144ResultItems(slot0, slot1)
-	slot0._resultItemModel = slot0:_clearOrCreateModel(slot0._resultItemModel)
+function var_0_0.setAct144ResultItems(arg_27_0, arg_27_1)
+	arg_27_0._resultItemModel = arg_27_0:_clearOrCreateModel(arg_27_0._resultItemModel)
 
-	slot0:_addModelAct144Items(slot0._resultItemModel, slot1)
+	arg_27_0:_addModelAct144Items(arg_27_0._resultItemModel, arg_27_1)
 end
 
-function slot0.settlePush(slot0, slot1)
-	slot0._isSafe = slot1.isSafe
-	slot0._isFirstPass = slot1.isFirstPass
+function var_0_0.settlePush(arg_28_0, arg_28_1)
+	arg_28_0._isSafe = arg_28_1.isSafe
+	arg_28_0._isFirstPass = arg_28_1.isFirstPass
 
-	slot0:setAct144ResultItems(slot1.tempAct144Items or {})
-	slot0:updateEpisode(slot1)
+	local var_28_0 = arg_28_1.tempAct144Items or {}
+
+	arg_28_0:setAct144ResultItems(var_28_0)
+	arg_28_0:updateEpisode(arg_28_1)
 end
 
-function slot0.settleEpisodeReply(slot0, slot1)
-	slot0:setAct144ResultItems(slot1.act144Episode and slot2.tempAct144Items or {})
-	slot0:updateEpisode(slot2)
+function var_0_0.settleEpisodeReply(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_1.act144Episode
+	local var_29_1 = var_29_0 and var_29_0.tempAct144Items or {}
+
+	arg_29_0:setAct144ResultItems(var_29_1)
+	arg_29_0:updateEpisode(var_29_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

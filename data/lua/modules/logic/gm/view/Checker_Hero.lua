@@ -1,202 +1,229 @@
-module("modules.logic.gm.view.Checker_Hero", package.seeall)
+﻿module("modules.logic.gm.view.Checker_Hero", package.seeall)
 
-class("Checker_Hero", Checker_Base).Type = {
+local var_0_0 = class("Checker_Hero", Checker_Base)
+
+var_0_0.Type = {
 	Live2d = 1,
 	Spine = 0
 }
-slot1 = {}
-slot2 = {
-	[ResUrl.getRolesPrefabStory(slot7.verticalDrawing)] = slot7.id
-}
 
-for slot6, slot7 in ipairs(lua_skin.configList) do
-	slot9 = slot7.characterId
+local var_0_1 = {}
+local var_0_2 = {}
 
-	if not string.nilorempty(slot7.verticalDrawing) then
-		-- Nothing
+for iter_0_0, iter_0_1 in ipairs(lua_skin.configList) do
+	local var_0_3 = iter_0_1.id
+	local var_0_4 = iter_0_1.characterId
+
+	if not string.nilorempty(iter_0_1.verticalDrawing) then
+		var_0_2[ResUrl.getRolesPrefabStory(iter_0_1.verticalDrawing)] = var_0_3
 	end
 
-	if not string.nilorempty(slot7.live2d) then
-		slot2[ResUrl.getLightLive2d(slot7.live2d)] = slot8
+	if not string.nilorempty(iter_0_1.live2d) then
+		var_0_2[ResUrl.getLightLive2d(iter_0_1.live2d)] = var_0_3
 	end
 
-	slot1[slot9] = slot1[slot9] or {}
+	var_0_1[var_0_4] = var_0_1[var_0_4] or {}
 
-	table.insert(slot1[slot9], slot7)
+	table.insert(var_0_1[var_0_4], iter_0_1)
 end
 
-function slot3(slot0)
-	return lua_character_voice.configDict[slot0]
+local function var_0_5(arg_1_0)
+	return lua_character_voice.configDict[arg_1_0]
 end
 
-function slot4(slot0, slot1)
-	return uv0[slot0][slot1]
+local function var_0_6(arg_2_0, arg_2_1)
+	return var_0_1[arg_2_0][arg_2_1]
 end
 
-function slot5(slot0)
-	return assert(tonumber(string.match(string.match(slot0, ".+/([^/]*%.%w+)$"), "(%w+)")), "invalid resPath: " .. slot0)
+local function var_0_7(arg_3_0)
+	local var_3_0 = string.match(arg_3_0, ".+/([^/]*%.%w+)$")
+	local var_3_1 = string.match(var_3_0, "(%w+)")
+
+	return assert(tonumber(var_3_1), "invalid resPath: " .. arg_3_0)
 end
 
-function slot6(slot0, slot1)
-	if not slot0 or not slot1 then
+local function var_0_8(arg_4_0, arg_4_1)
+	if not arg_4_0 or not arg_4_1 then
 		return false
 	end
 
-	if string.nilorempty(slot0.skins) then
+	local var_4_0 = arg_4_0.skins
+
+	if string.nilorempty(var_4_0) then
 		return false
 	end
 
-	return string.find(slot2, slot1)
+	return string.find(var_4_0, arg_4_1)
 end
 
-function slot7(slot0)
-	if slot0.class.__cname == "GuiSpine" or slot1 == "LightSpine" then
-		return uv0.Type.Spine, slot0, slot0:getResPath()
-	elseif slot1 == "GuiLive2d" or slot1 == "LightLive2d" then
-		return uv0.Type.Live2d, slot0, slot0:getResPath()
+local function var_0_9(arg_5_0)
+	local var_5_0 = arg_5_0.class.__cname
+
+	if var_5_0 == "GuiSpine" or var_5_0 == "LightSpine" then
+		return var_0_0.Type.Spine, arg_5_0, arg_5_0:getResPath()
+	elseif var_5_0 == "GuiLive2d" or var_5_0 == "LightLive2d" then
+		return var_0_0.Type.Live2d, arg_5_0, arg_5_0:getResPath()
 	end
 end
 
-function slot8(slot0)
-	if not slot0._curModel then
+local function var_0_10(arg_6_0)
+	local var_6_0 = arg_6_0._curModel
+
+	if not var_6_0 then
 		return
 	end
 
-	return uv0(slot1)
+	return var_0_9(var_6_0)
 end
 
-function slot9(slot0)
-	if not slot0 then
+local function var_0_11(arg_7_0)
+	if not arg_7_0 then
 		return
 	end
 
-	if slot0.class.__cname ~= "GuiModelAgent" and false then
-		-- Nothing
+	if arg_7_0.class.__cname ~= "GuiModelAgent" and false then
+		-- block empty
 	end
 
-	return uv0(slot0)
+	do return var_0_10(arg_7_0) end
 
-	if uv0(slot0) then
-		return uv1(slot0)
+	if false then
+		return var_0_9(arg_7_0)
 	end
 end
 
-function slot0.ctor(slot0, slot1)
-	Checker_Base.ctor(slot0)
-	slot0:reset(slot1)
+function var_0_0.ctor(arg_8_0, arg_8_1)
+	Checker_Base.ctor(arg_8_0)
+	arg_8_0:reset(arg_8_1)
 end
 
-function slot0.reset(slot0, slot1)
-	slot0._heroId = slot1
-	slot0._heroCO = HeroConfig.instance:getHeroCO(slot1)
-	slot0._resPath = ""
-	slot0._skinId = false
+function var_0_0.reset(arg_9_0, arg_9_1)
+	arg_9_0._heroId = arg_9_1
+	arg_9_0._heroCO = HeroConfig.instance:getHeroCO(arg_9_1)
+	arg_9_0._resPath = ""
+	arg_9_0._skinId = false
 end
 
-function slot0._logError(slot0, slot1)
-	return string.format("%s%s(%s)", slot1 or "", slot0:heroName(), tostring(slot0:heroId()))
+function var_0_0._logError(arg_10_0, arg_10_1)
+	arg_10_1 = arg_10_1 or ""
+
+	return string.format("%s%s(%s)", arg_10_1, arg_10_0:heroName(), tostring(arg_10_0:heroId()))
 end
 
-function slot0.exec(slot0, slot1, slot2)
-	if slot2 then
-		slot0:reset(slot2)
+function var_0_0.exec(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_2 then
+		arg_11_0:reset(arg_11_2)
 	end
 
-	slot3, slot4, slot0._resPath = uv0(slot1)
+	local var_11_0, var_11_1, var_11_2 = var_0_11(arg_11_1)
 
-	if not slot3 or not slot4 then
-		slot0:_logError("[_getInfoFromObj]: ")
+	arg_11_0._resPath = var_11_2
+
+	if not var_11_0 or not var_11_1 then
+		arg_11_0:_logError("[_getInfoFromObj]: ")
 
 		return
 	end
 
-	if slot3 == uv1.Type.Spine then
-		slot0:_onExec_Spine(slot4)
-	elseif slot3 == uv1.Type.Live2d then
-		slot0:_onExec_Live2d(slot4)
+	if var_11_0 == var_0_0.Type.Spine then
+		arg_11_0:_onExec_Spine(var_11_1)
+	elseif var_11_0 == var_0_0.Type.Live2d then
+		arg_11_0:_onExec_Live2d(var_11_1)
 	else
-		assert(false, "unsupported Checker_Hero.Type!! type=" .. tostring(slot3))
+		assert(false, "unsupported Checker_Hero.Type!! type=" .. tostring(var_11_0))
 	end
 end
 
-function slot0._onExec_Spine(slot0, slot1)
+function var_0_0._onExec_Spine(arg_12_0, arg_12_1)
 	assert(false, "please override this function!")
 end
 
-function slot0._onExec_Live2d(slot0, slot1)
+function var_0_0._onExec_Live2d(arg_13_0, arg_13_1)
 	assert(false, "please override this function!")
 end
 
-function slot0.heroId(slot0)
-	return slot0._heroId
+function var_0_0.heroId(arg_14_0)
+	return arg_14_0._heroId
 end
 
-function slot0.heroCO(slot0)
-	return slot0._heroCO
+function var_0_0.heroCO(arg_15_0)
+	return arg_15_0._heroCO
 end
 
-function slot0.heroName(slot0)
-	return slot0._heroCO.name
+function var_0_0.heroName(arg_16_0)
+	return arg_16_0._heroCO.name
 end
 
-function slot0.resPath(slot0)
-	return slot0._resPath
+function var_0_0.resPath(arg_17_0)
+	return arg_17_0._resPath
 end
 
-function slot0.skinId(slot0)
-	assert(not string.nilorempty(slot0._resPath), "please call exec first!!")
+function var_0_0.skinId(arg_18_0)
+	assert(not string.nilorempty(arg_18_0._resPath), "please call exec first!!")
 
-	if not slot0._skinId then
-		slot0._skinId = uv0[slot0._resPath] or uv1(slot0._resPath)
+	if not arg_18_0._skinId then
+		arg_18_0._skinId = var_0_2[arg_18_0._resPath] or var_0_7(arg_18_0._resPath)
 	end
 
-	return slot0._skinId
+	return arg_18_0._skinId
 end
 
-function slot0.characterVoiceCO(slot0)
-	return uv0(slot0._heroId)
+function var_0_0.characterVoiceCO(arg_19_0)
+	return var_0_5(arg_19_0._heroId)
 end
 
-function slot0.characterSkinCO(slot0)
-	return uv0[slot0._heroId][slot0:skinId()]
+function var_0_0.characterSkinCO(arg_20_0)
+	local var_20_0 = arg_20_0:skinId()
+
+	return var_0_6[arg_20_0._heroId][var_20_0]
 end
 
-function slot0.skincharacterVoiceCOList(slot0)
-	return slot0:_skincharacterVoiceCOList(slot0:skinId())
+function var_0_0.skincharacterVoiceCOList(arg_21_0)
+	local var_21_0 = arg_21_0:skinId()
+
+	return arg_21_0:_skincharacterVoiceCOList(var_21_0)
 end
 
-function slot0.heroMO(slot0)
-	return HeroModel.instance:getByHeroId(slot0._heroId)
+function var_0_0.heroMO(arg_22_0)
+	return HeroModel.instance:getByHeroId(arg_22_0._heroId)
 end
 
-function slot0.heroMOSkinId(slot0)
-	if slot0:heroMO() then
-		return slot1.skin
+function var_0_0.heroMOSkinId(arg_23_0)
+	local var_23_0 = arg_23_0:heroMO()
+
+	if var_23_0 then
+		return var_23_0.skin
 	end
 end
 
-function slot0.heroMOSkinCO(slot0)
-	if slot0:heroMOSkinId() then
-		return uv0[slot0._heroId][slot1]
+function var_0_0.heroMOSkinCO(arg_24_0)
+	local var_24_0 = arg_24_0:heroMOSkinId()
+
+	if var_24_0 then
+		return var_0_6[arg_24_0._heroId][var_24_0]
 	end
 end
 
-function slot0.heroMOSkincharacterVoiceCOList(slot0)
-	return slot0:_skincharacterVoiceCOList(slot0:heroMOSkinId())
+function var_0_0.heroMOSkincharacterVoiceCOList(arg_25_0)
+	return arg_25_0:_skincharacterVoiceCOList(arg_25_0:heroMOSkinId())
 end
 
-function slot0._skincharacterVoiceCOList(slot0, slot1)
-	if not slot1 then
-		return {}
+function var_0_0._skincharacterVoiceCOList(arg_26_0, arg_26_1)
+	local var_26_0 = {}
+
+	if not arg_26_1 then
+		return var_26_0
 	end
 
-	for slot7, slot8 in pairs(slot0:characterVoiceCO()) do
-		if uv0(slot8, slot1) then
-			table.insert(slot2, slot8)
+	local var_26_1 = arg_26_0:characterVoiceCO()
+
+	for iter_26_0, iter_26_1 in pairs(var_26_1) do
+		if var_0_8(iter_26_1, arg_26_1) then
+			table.insert(var_26_0, iter_26_1)
 		end
 	end
 
-	return slot2
+	return var_26_0
 end
 
-return slot0
+return var_0_0

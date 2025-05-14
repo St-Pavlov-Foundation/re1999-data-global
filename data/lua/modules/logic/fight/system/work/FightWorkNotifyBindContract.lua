@@ -1,10 +1,12 @@
-module("modules.logic.fight.system.work.FightWorkNotifyBindContract", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkNotifyBindContract", package.seeall)
 
-slot0 = class("FightWorkNotifyBindContract", FightEffectBase)
+local var_0_0 = class("FightWorkNotifyBindContract", FightEffectBase)
 
-function slot0.onStart(slot0)
-	FightModel.instance:setNotifyContractInfo(slot0._actEffectMO.targetId, FightStrUtil.instance:getSplitCache(slot0._actEffectMO.reserveStr, "#"))
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightStrUtil.instance:getSplitCache(arg_1_0._actEffectMO.reserveStr, "#")
+
+	FightModel.instance:setNotifyContractInfo(arg_1_0._actEffectMO.targetId, var_1_0)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

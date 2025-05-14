@@ -1,50 +1,50 @@
-module("modules.logic.fight.system.work.FightWorkEntityPlayAct", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEntityPlayAct", package.seeall)
 
-slot0 = class("FightWorkEntityPlayAct", BaseWork)
+local var_0_0 = class("FightWorkEntityPlayAct", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._entity = slot1
-	slot0._actName = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._entity = arg_1_1
+	arg_1_0._actName = arg_1_2
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0:_playAnim()
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	arg_2_0:_playAnim()
 end
 
-function slot0._playAnim(slot0)
-	if slot0._entity.spine and slot0._entity.spine:hasAnimation(slot0._actName) then
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 30)
-		slot0._entity.spine:addAnimEventCallback(slot0._onAnimEvent, slot0)
-		slot0._entity.spine:play(slot0._actName, false, true)
+function var_0_0._playAnim(arg_3_0)
+	if arg_3_0._entity.spine and arg_3_0._entity.spine:hasAnimation(arg_3_0._actName) then
+		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 30)
+		arg_3_0._entity.spine:addAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
+		arg_3_0._entity.spine:play(arg_3_0._actName, false, true)
 
-		slot0._entity.spine.lockAct = true
+		arg_3_0._entity.spine.lockAct = true
 	else
-		slot0:onDone(true)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
-	if slot2 == SpineAnimEvent.ActionComplete then
-		slot0._entity.spine.lockAct = false
+function var_0_0._onAnimEvent(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_2 == SpineAnimEvent.ActionComplete then
+		arg_5_0._entity.spine.lockAct = false
 
-		slot0._entity.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-		slot0._entity:resetAnimState()
-		slot0:onDone(true)
+		arg_5_0._entity.spine:removeAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
+		arg_5_0._entity:resetAnimState()
+		arg_5_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	if slot0._entity.spine then
-		slot0._entity.spine.lockAct = false
+function var_0_0.clearWork(arg_6_0)
+	if arg_6_0._entity.spine then
+		arg_6_0._entity.spine.lockAct = false
 
-		slot0._entity.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
+		arg_6_0._entity.spine:removeAnimEventCallback(arg_6_0._onAnimEvent, arg_6_0)
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
 end
 
-return slot0
+return var_0_0

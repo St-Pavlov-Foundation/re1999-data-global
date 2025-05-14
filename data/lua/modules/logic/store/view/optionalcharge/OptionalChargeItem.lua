@@ -1,65 +1,66 @@
-module("modules.logic.store.view.optionalcharge.OptionalChargeItem", package.seeall)
+﻿module("modules.logic.store.view.optionalcharge.OptionalChargeItem", package.seeall)
 
-slot0 = class("OptionalChargeItem", LuaCompBase)
+local var_0_0 = class("OptionalChargeItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._imageQuality = gohelper.findChildImage(slot1, "#img_Quality")
-	slot0._simageItem = gohelper.findChildSingleImage(slot1, "#simage_Item")
-	slot0._txtNum = gohelper.findChildText(slot1, "image_NumBG/#txt_Num")
-	slot0._txtItemName = gohelper.findChildText(slot1, "#txt_ItemName")
-	slot0.goSelected = gohelper.findChild(slot1, "#go_Selected")
-	slot0.click = gohelper.findChildClick(slot1, "click")
-	slot0.longPress = SLFramework.UGUI.UILongPressListener.GetWithPath(slot1, "click")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._imageQuality = gohelper.findChildImage(arg_1_1, "#img_Quality")
+	arg_1_0._simageItem = gohelper.findChildSingleImage(arg_1_1, "#simage_Item")
+	arg_1_0._txtNum = gohelper.findChildText(arg_1_1, "image_NumBG/#txt_Num")
+	arg_1_0._txtItemName = gohelper.findChildText(arg_1_1, "#txt_ItemName")
+	arg_1_0.goSelected = gohelper.findChild(arg_1_1, "#go_Selected")
+	arg_1_0.click = gohelper.findChildClick(arg_1_1, "click")
+	arg_1_0.longPress = SLFramework.UGUI.UILongPressListener.GetWithPath(arg_1_1, "click")
 
-	slot0.longPress:SetLongPressTime({
+	arg_1_0.longPress:SetLongPressTime({
 		0.5,
 		99999
 	})
-	slot0:refreshSelect()
+	arg_1_0:refreshSelect()
 end
 
-function slot0.onStart(slot0)
-	slot0.click:AddClickListener(slot0._onClickItem, slot0)
-	slot0.longPress:AddLongPressListener(slot0._onClickInfo, slot0)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0.click:AddClickListener(arg_2_0._onClickItem, arg_2_0)
+	arg_2_0.longPress:AddLongPressListener(arg_2_0._onClickInfo, arg_2_0)
 end
 
-function slot0.onDestroy(slot0)
-	slot0.click:RemoveClickListener()
-	slot0.longPress:RemoveLongPressListener()
+function var_0_0.onDestroy(arg_3_0)
+	arg_3_0.click:RemoveClickListener()
+	arg_3_0.longPress:RemoveLongPressListener()
 
-	if slot0._simageItem then
-		slot0._simageItem:UnLoadImage()
+	if arg_3_0._simageItem then
+		arg_3_0._simageItem:UnLoadImage()
 	end
 end
 
-function slot0.setValue(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.itemStr = slot1
-	slot0.itemArr = string.splitToNumber(slot1, "#")
-	slot0.clickCallback = slot2
-	slot0.view = slot3
-	slot0.areaIndex = slot4
-	slot0.index = slot5
-	slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot0.itemArr[1], slot0.itemArr[2])
+function var_0_0.setValue(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+	arg_4_0.itemStr = arg_4_1
+	arg_4_0.itemArr = string.splitToNumber(arg_4_1, "#")
+	arg_4_0.clickCallback = arg_4_2
+	arg_4_0.view = arg_4_3
+	arg_4_0.areaIndex = arg_4_4
+	arg_4_0.index = arg_4_5
 
-	UISpriteSetMgr.instance:setOptionalGiftSprite(slot0._imageQuality, "bg_pinjidi_" .. slot6.rare)
-	slot0._simageItem:LoadImage(slot7)
+	local var_4_0, var_4_1 = ItemModel.instance:getItemConfigAndIcon(arg_4_0.itemArr[1], arg_4_0.itemArr[2])
 
-	slot0._txtNum.text = GameUtil.numberDisplay(slot0.itemArr[3])
-	slot0._txtItemName.text = slot6.name
+	UISpriteSetMgr.instance:setOptionalGiftSprite(arg_4_0._imageQuality, "bg_pinjidi_" .. var_4_0.rare)
+	arg_4_0._simageItem:LoadImage(var_4_1)
+
+	arg_4_0._txtNum.text = GameUtil.numberDisplay(arg_4_0.itemArr[3])
+	arg_4_0._txtItemName.text = var_4_0.name
 end
 
-function slot0.refreshSelect(slot0, slot1)
-	gohelper.setActive(slot0.goSelected, slot1)
+function var_0_0.refreshSelect(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0.goSelected, arg_5_1)
 end
 
-function slot0._onClickInfo(slot0)
-	MaterialTipController.instance:showMaterialInfo(slot0.itemArr[1], slot0.itemArr[2], false, nil, , , , , , slot0.view.closeThis, slot0.view)
+function var_0_0._onClickInfo(arg_6_0)
+	MaterialTipController.instance:showMaterialInfo(arg_6_0.itemArr[1], arg_6_0.itemArr[2], false, nil, nil, nil, nil, nil, nil, arg_6_0.view.closeThis, arg_6_0.view)
 end
 
-function slot0._onClickItem(slot0)
-	if slot0.clickCallback then
-		slot0.clickCallback(slot0.view, slot0.areaIndex, slot0.index)
+function var_0_0._onClickItem(arg_7_0)
+	if arg_7_0.clickCallback then
+		arg_7_0.clickCallback(arg_7_0.view, arg_7_0.areaIndex, arg_7_0.index)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,117 +1,123 @@
-module("modules.logic.room.view.layout.RoomLayoutCreateTipsView", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutCreateTipsView", package.seeall)
 
-slot0 = class("RoomLayoutCreateTipsView", BaseView)
+local var_0_0 = class("RoomLayoutCreateTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagetipbg = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_tipbg")
-	slot0._btnselect = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_select")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "root/#btn_select/txt_desc/#go_select")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btn/#btn_cancel")
-	slot0._btnsure = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btn/#btn_sure")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_tipbg")
+	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_select")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/#btn_select/txt_desc/#go_select")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_cancel")
+	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_sure")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnselect:AddClickListener(slot0._btnselectOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
-	slot0._btnsure:AddClickListener(slot0._btnsureOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnselect:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnsure:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnselect:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnsure:RemoveClickListener()
 end
 
-function slot0._btnselectOnClick(slot0)
-	slot0:_setSelect(slot0._isSelect == false)
+function var_0_0._btnselectOnClick(arg_4_0)
+	arg_4_0:_setSelect(arg_4_0._isSelect == false)
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
-	slot0:_closeInvokeCallback()
+function var_0_0._btncancelOnClick(arg_5_0)
+	arg_5_0:closeThis()
+	arg_5_0:_closeInvokeCallback()
 end
 
-function slot0._btnsureOnClick(slot0)
-	slot0:closeThis()
-	slot0:_closeInvokeCallback(true)
+function var_0_0._btnsureOnClick(arg_6_0)
+	arg_6_0:closeThis()
+	arg_6_0:_closeInvokeCallback(true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "root/txt_desc")
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._txtdesc = gohelper.findChildText(arg_7_0.viewGO, "root/txt_desc")
 
-	slot0:_setSelect(true)
-	slot0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	arg_7_0:_setSelect(true)
+	arg_7_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
 
-	slot0._txtdescTrs = slot0._txtdesc.transform
-	slot0._descX, slot0._descY = transformhelper.getLocalPos(slot0._txtdescTrs)
-	slot1, slot0._hidY = transformhelper.getLocalPos(slot0._simagetipbg.transform)
+	arg_7_0._txtdescTrs = arg_7_0._txtdesc.transform
+	arg_7_0._descX, arg_7_0._descY = transformhelper.getLocalPos(arg_7_0._txtdescTrs)
+
+	local var_7_0, var_7_1 = transformhelper.getLocalPos(arg_7_0._simagetipbg.transform)
+
+	arg_7_0._hidY = var_7_1
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshInitUI()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:_refreshInitUI()
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewContainer then
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onEscape, slot0)
+function var_0_0.onOpen(arg_9_0)
+	if arg_9_0.viewContainer then
+		NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0._onEscape, arg_9_0)
 	end
 
-	slot0:_refreshInitUI()
+	arg_9_0:_refreshInitUI()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_upgrade)
 end
 
-function slot0._onEscape(slot0)
-	slot0:_btncancelOnClick()
+function var_0_0._onEscape(arg_10_0)
+	arg_10_0:_btncancelOnClick()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetipbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simagetipbg:UnLoadImage()
 end
 
-function slot0._refreshInitUI(slot0)
-	if slot0.viewParam then
-		if slot0.viewParam.isSelect ~= nil then
-			slot0:_setSelect(slot0.viewParam.isSelect)
+function var_0_0._refreshInitUI(arg_13_0)
+	if arg_13_0.viewParam then
+		if arg_13_0.viewParam.isSelect ~= nil then
+			arg_13_0:_setSelect(arg_13_0.viewParam.isSelect)
 		end
 
-		slot0._txtdesc.text = slot0.viewParam.titleStr or luaLang("p_roomlayoutcreatetipsview_tips1")
+		arg_13_0._txtdesc.text = arg_13_0.viewParam.titleStr or luaLang("p_roomlayoutcreatetipsview_tips1")
 
-		if slot0.viewParam.isShowSetlect ~= nil then
-			slot0:_setShowSelect(slot0.viewParam.isShowSetlect)
+		if arg_13_0.viewParam.isShowSetlect ~= nil then
+			arg_13_0:_setShowSelect(arg_13_0.viewParam.isShowSetlect)
 		end
 	end
 end
 
-function slot0._closeInvokeCallback(slot0, slot1)
-	if slot1 then
-		if slot0.viewParam.yesCallback then
-			if slot0.viewParam.callbockObj then
-				slot0.viewParam.yesCallback(slot0.viewParam.callbockObj, slot0._isSelect and true or false)
+function var_0_0._closeInvokeCallback(arg_14_0, arg_14_1)
+	if arg_14_1 then
+		if arg_14_0.viewParam.yesCallback then
+			local var_14_0 = arg_14_0._isSelect and true or false
+
+			if arg_14_0.viewParam.callbockObj then
+				arg_14_0.viewParam.yesCallback(arg_14_0.viewParam.callbockObj, var_14_0)
 			else
-				slot0.viewParam.yesCallback(slot2)
+				arg_14_0.viewParam.yesCallback(var_14_0)
 			end
 		end
-	elseif slot0.viewParam.noCallback then
-		slot0.viewParam.noCallback(slot0.viewParam.noCallbackObj)
+	elseif arg_14_0.viewParam.noCallback then
+		arg_14_0.viewParam.noCallback(arg_14_0.viewParam.noCallbackObj)
 	end
 end
 
-function slot0._setSelect(slot0, slot1)
-	slot0._isSelect = slot1 and true or false
+function var_0_0._setSelect(arg_15_0, arg_15_1)
+	arg_15_0._isSelect = arg_15_1 and true or false
 
-	gohelper.setActive(slot0._goselect, slot0._isSelect)
+	gohelper.setActive(arg_15_0._goselect, arg_15_0._isSelect)
 end
 
-function slot0._setShowSelect(slot0, slot1)
-	gohelper.setActive(slot0._btnselect, slot1)
-	transformhelper.setLocalPosXY(slot0._txtdescTrs, slot0._descX, slot1 and slot0._descY or slot0._hidY)
+function var_0_0._setShowSelect(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._btnselect, arg_16_1)
+	transformhelper.setLocalPosXY(arg_16_0._txtdescTrs, arg_16_0._descX, arg_16_1 and arg_16_0._descY or arg_16_0._hidY)
 end
 
-return slot0
+return var_0_0

@@ -1,17 +1,17 @@
-module("modules.logic.explore.map.unit.ExploreArchiveUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreArchiveUnit", package.seeall)
 
-slot0 = class("ExploreArchiveUnit", ExploreBaseMoveUnit)
+local var_0_0 = class("ExploreArchiveUnit", ExploreBaseMoveUnit)
 
-function slot0.needInteractAnim(slot0)
+function var_0_0.needInteractAnim(arg_1_0)
 	return true
 end
 
-function slot0.canTrigger(slot0)
-	if slot0.mo:isInteractActiveState() then
+function var_0_0.canTrigger(arg_2_0)
+	if arg_2_0.mo:isInteractActiveState() then
 		return false
 	end
 
-	return uv0.super.canTrigger(slot0)
+	return var_0_0.super.canTrigger(arg_2_0)
 end
 
-return slot0
+return var_0_0

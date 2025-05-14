@@ -1,29 +1,32 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenTransitionViewByEventCoWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenTransitionViewByEventCoWork", package.seeall)
 
-slot0 = class("Activity114OpenTransitionViewByEventCoWork", Activity114OpenTransitionViewWork)
+local var_0_0 = class("Activity114OpenTransitionViewByEventCoWork", Activity114OpenTransitionViewWork)
 
-function slot0.getTransitionId(slot0)
-	if slot0._transitionId then
-		return slot0._transitionId
+function var_0_0.getTransitionId(arg_1_0)
+	if arg_1_0._transitionId then
+		return arg_1_0._transitionId
 	end
 
-	if string.nilorempty(slot0.context.eventCo.config.isTransition) then
+	local var_1_0 = arg_1_0.context.eventCo
+
+	if string.nilorempty(var_1_0.config.isTransition) then
 		return
 	end
 
-	slot3 = nil
+	local var_1_1 = string.splitToNumber(var_1_0.config.isTransition, "#")
+	local var_1_2
 
-	if slot0.context.result == Activity114Enum.Result.Success or slot0.context.result == Activity114Enum.Result.FightSucess then
-		slot3 = string.splitToNumber(slot1.config.isTransition, "#")[1]
-	elseif slot0.context.result == Activity114Enum.Result.Fail then
-		slot3 = slot2[2]
+	if arg_1_0.context.result == Activity114Enum.Result.Success or arg_1_0.context.result == Activity114Enum.Result.FightSucess then
+		var_1_2 = var_1_1[1]
+	elseif arg_1_0.context.result == Activity114Enum.Result.Fail then
+		var_1_2 = var_1_1[2]
 	end
 
-	if not slot3 or slot3 == 0 then
+	if not var_1_2 or var_1_2 == 0 then
 		return
 	end
 
-	return slot3
+	return var_1_2
 end
 
-return slot0
+return var_0_0

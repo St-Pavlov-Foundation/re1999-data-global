@@ -1,122 +1,128 @@
-module("modules.logic.rouge.view.RougeCollectionInitialView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionInitialView", package.seeall)
 
-slot0 = class("RougeCollectionInitialView", BaseView)
+local var_0_0 = class("RougeCollectionInitialView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagemaskbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_maskbg")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "scroll_view/Viewport/#go_content")
-	slot0._gocollectionitem = gohelper.findChild(slot0.viewGO, "scroll_view/Viewport/#go_content/#go_collectionitem")
-	slot0._btnemptyBlock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_emptyBlock")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "scroll_view/Viewport/#go_content")
+	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "scroll_view/Viewport/#go_content/#go_collectionitem")
+	arg_1_0._btnemptyBlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBlock")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnemptyBlock:AddClickListener(slot0._btnemptyBlockOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnemptyBlock:AddClickListener(arg_2_0._btnemptyBlockOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnemptyBlock:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnemptyBlock:RemoveClickListener()
 end
 
-function slot0._btnemptyBlockOnClick(slot0)
-	slot0:setActiveBlock(false)
+function var_0_0._btnemptyBlockOnClick(arg_4_0)
+	arg_4_0:setActiveBlock(false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnemptyBlockGo = slot0._btnemptyBlock.gameObject
-	slot0._collectionObjList = {}
-	slot0._scrollView = gohelper.findChildScrollRect(slot0.viewGO, "scroll_view")
-	slot0._scrollViewGo = slot0._scrollView.gameObject
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._btnemptyBlockGo = arg_5_0._btnemptyBlock.gameObject
+	arg_5_0._collectionObjList = {}
+	arg_5_0._scrollView = gohelper.findChildScrollRect(arg_5_0.viewGO, "scroll_view")
+	arg_5_0._scrollViewGo = arg_5_0._scrollView.gameObject
 
-	slot0._simagemaskbg:LoadImage("singlebg/rouge/rouge_talent_bg.png")
-	gohelper.setActive(slot0._gocollectionitem, false)
-	slot0:setActiveBlock(false)
+	arg_5_0._simagemaskbg:LoadImage("singlebg/rouge/rouge_talent_bg.png")
+	gohelper.setActive(arg_5_0._gocollectionitem, false)
+	arg_5_0:setActiveBlock(false)
 end
 
-function slot0.setActiveBlock(slot0, slot1)
-	if slot0._isBlocked == slot1 then
+function var_0_0.setActiveBlock(arg_6_0, arg_6_1)
+	if arg_6_0._isBlocked == arg_6_1 then
 		return
 	end
 
-	slot0._isBlocked = slot1
+	arg_6_0._isBlocked = arg_6_1
 
-	gohelper.setActive(slot0._btnemptyBlockGo, slot1)
+	gohelper.setActive(arg_6_0._btnemptyBlockGo, arg_6_1)
 
-	if not slot1 then
-		for slot5, slot6 in ipairs(slot0._collectionObjList) do
-			slot6:onCloseBlock()
+	if not arg_6_1 then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._collectionObjList) do
+			iter_6_1:onCloseBlock()
 		end
 	end
 end
 
-function slot0.getScrollViewGo(slot0)
-	return slot0._scrollViewGo
+function var_0_0.getScrollViewGo(arg_7_0)
+	return arg_7_0._scrollViewGo
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	slot0._isBlocked = nil
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._isBlocked = nil
 
-	slot0:onUpdateParam()
+	arg_9_0:onUpdateParam()
 
-	slot0._scrollView.horizontalNormalizedPosition = 0
+	arg_9_0._scrollView.horizontalNormalizedPosition = 0
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_clearing_open_20190323)
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshList()
+function var_0_0._refresh(arg_11_0)
+	arg_11_0:_refreshList()
 end
 
-function slot0._refreshList(slot0)
-	for slot5, slot6 in ipairs(slot0:_collectionCfgIdList()) do
-		slot7 = nil
+function var_0_0._refreshList(arg_12_0)
+	local var_12_0 = arg_12_0:_collectionCfgIdList()
 
-		if slot5 > #slot0._collectionObjList then
-			table.insert(slot0._collectionObjList, slot0:_create_RougeCollectionInitialCollectionItem(slot5))
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_1
+
+		if iter_12_0 > #arg_12_0._collectionObjList then
+			var_12_1 = arg_12_0:_create_RougeCollectionInitialCollectionItem(iter_12_0)
+
+			table.insert(arg_12_0._collectionObjList, var_12_1)
 		else
-			slot7 = slot0._collectionObjList[slot5]
+			var_12_1 = arg_12_0._collectionObjList[iter_12_0]
 		end
 
-		slot7:onUpdateMO(slot6)
-		slot7:setActive(true)
+		var_12_1:onUpdateMO(iter_12_1)
+		var_12_1:setActive(true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._collectionObjList do
-		slot0._collectionObjList[slot5]:setActive(false)
+	for iter_12_2 = #var_12_0 + 1, #arg_12_0._collectionObjList do
+		arg_12_0._collectionObjList[iter_12_2]:setActive(false)
 	end
 end
 
-function slot0._collectionCfgIdList(slot0)
-	return slot0.viewParam and slot0.viewParam.collectionCfgIds or {}
+function var_0_0._collectionCfgIdList(arg_13_0)
+	return arg_13_0.viewParam and arg_13_0.viewParam.collectionCfgIds or {}
 end
 
-function slot0.onClose(slot0)
-	GameUtil.onDestroyViewMember_SImage(slot0, "_simagemaskbg")
-	GameUtil.onDestroyViewMemberList(slot0, "_collectionObjList")
+function var_0_0.onClose(arg_14_0)
+	GameUtil.onDestroyViewMember_SImage(arg_14_0, "_simagemaskbg")
+	GameUtil.onDestroyViewMemberList(arg_14_0, "_collectionObjList")
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-function slot0._create_RougeCollectionInitialCollectionItem(slot0, slot1)
-	slot3 = RougeCollectionInitialCollectionItem.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+function var_0_0._create_RougeCollectionInitialCollectionItem(arg_16_0, arg_16_1)
+	local var_16_0 = gohelper.cloneInPlace(arg_16_0._gocollectionitem)
+	local var_16_1 = RougeCollectionInitialCollectionItem.New({
+		parent = arg_16_0,
+		baseViewContainer = arg_16_0.viewContainer
 	})
 
-	slot3:setIndex(slot1)
-	slot3:init(gohelper.cloneInPlace(slot0._gocollectionitem))
+	var_16_1:setIndex(arg_16_1)
+	var_16_1:init(var_16_0)
 
-	return slot3
+	return var_16_1
 end
 
-return slot0
+return var_0_0

@@ -1,35 +1,37 @@
-module("modules.logic.fight.view.FightPreDisplayView", package.seeall)
+﻿module("modules.logic.fight.view.FightPreDisplayView", package.seeall)
 
-slot0 = class("FightPreDisplayView", BaseView)
+local var_0_0 = class("FightPreDisplayView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._obj = gohelper.findChild(slot0.viewGO, "root/predisplay")
-	slot0._text = gohelper.findChildText(slot0._obj, "#txt_CardNum")
-	slot0._btn = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/predisplay")
-	slot0._ani = SLFramework.AnimatorPlayer.Get(slot0._btn.gameObject)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._obj = gohelper.findChild(arg_1_0.viewGO, "root/predisplay")
+	arg_1_0._text = gohelper.findChildText(arg_1_0._obj, "#txt_CardNum")
+	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/predisplay")
+	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0._btn.gameObject)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, slot0._onCameraFocusChanged, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, slot0._onAddPlayOperationData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnResetCard, slot0._onResetCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, slot0._onClothSkillExpand, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, slot0._onClothSkillShrink, slot0)
-	slot0:addClickCb(slot0._btn, slot0._onBtnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, arg_2_0._onAddPlayOperationData, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillExpand, arg_2_0._onClothSkillExpand, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillShrink, arg_2_0._onClothSkillShrink, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btn, arg_2_0._onBtnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onBtnClick(slot0)
+function var_0_0._onBtnClick(arg_5_0)
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
@@ -39,108 +41,111 @@ function slot0._onBtnClick(slot0)
 	})
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._obj, false)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_7_0)
+	gohelper.setActive(arg_7_0._obj, false)
+	arg_7_0:_refreshUI()
 end
 
-function slot0._onResetCard(slot0)
-	gohelper.setActive(slot0._obj, false)
-	slot0:_refreshUI()
+function var_0_0._onResetCard(arg_8_0)
+	gohelper.setActive(arg_8_0._obj, false)
+	arg_8_0:_refreshUI()
 
-	slot0._lastCount = slot0._curCardCount
-	slot0._isVisible = false
+	arg_8_0._lastCount = arg_8_0._curCardCount
+	arg_8_0._isVisible = false
 end
 
-function slot0._refreshUI(slot0)
-	slot0._cardList = FightHelper.getNextRoundGetCardList()
-	slot0._curCardCount = #slot0._cardList
-	slot0._text.text = luaLang("multiple") .. slot0._curCardCount
+function var_0_0._refreshUI(arg_9_0)
+	arg_9_0._cardList = FightHelper.getNextRoundGetCardList()
+	arg_9_0._curCardCount = #arg_9_0._cardList
+	arg_9_0._text.text = luaLang("multiple") .. arg_9_0._curCardCount
 end
 
-function slot0._onAddPlayOperationData(slot0)
+function var_0_0._onAddPlayOperationData(arg_10_0)
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return
 	end
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 
-	if slot0._curCardCount > 0 then
-		slot0._isVisible = true
+	if arg_10_0._curCardCount > 0 then
+		arg_10_0._isVisible = true
 	end
 
-	if slot0._lastCount then
-		if slot0._lastCount < #slot0._cardList then
-			slot0:_playAni("fiy")
+	if arg_10_0._lastCount then
+		if #arg_10_0._cardList > arg_10_0._lastCount then
+			arg_10_0:_playAni("fiy")
 		end
-	elseif #slot0._cardList > 0 then
-		slot0:_playAni("open")
+	elseif #arg_10_0._cardList > 0 then
+		arg_10_0:_playAni("open")
 	end
 
-	slot0._lastCount = #slot0._cardList
+	arg_10_0._lastCount = #arg_10_0._cardList
 end
 
-function slot0._playAni(slot0, slot1)
-	slot0._state = slot1
+function var_0_0._playAni(arg_11_0, arg_11_1)
+	arg_11_0._state = arg_11_1
 
-	gohelper.setActive(slot0._obj, true)
-	slot0._ani:Play(slot1, slot0._aniDone, slot0)
+	gohelper.setActive(arg_11_0._obj, true)
+	arg_11_0._ani:Play(arg_11_1, arg_11_0._aniDone, arg_11_0)
 end
 
-function slot0._aniDone(slot0)
-	if slot0._state == "close" then
-		gohelper.setActive(slot0._obj, false)
+function var_0_0._aniDone(arg_12_0)
+	if arg_12_0._state == "close" then
+		gohelper.setActive(arg_12_0._obj, false)
 	end
 end
 
-function slot0._setActive(slot0, slot1)
-	if slot1 then
-		if slot0._isVisible then
-			slot0:_playAni("open")
+function var_0_0._setActive(arg_13_0, arg_13_1)
+	if arg_13_1 then
+		if arg_13_0._isVisible then
+			arg_13_0:_playAni("open")
 		end
-	elseif slot0._isVisible then
-		slot0:_playAni("close")
+	elseif arg_13_0._isVisible then
+		arg_13_0:_playAni("close")
 	end
 end
 
-function slot0._hide(slot0)
-	if slot0._isVisible then
-		slot0:_playAni("close")
+function var_0_0._hide(arg_14_0)
+	if arg_14_0._isVisible then
+		arg_14_0:_playAni("close")
 	end
 end
 
-function slot0._onCameraFocusChanged(slot0, slot1)
-	if slot1 then
-		slot0:_setActive(false)
+function var_0_0._onCameraFocusChanged(arg_15_0, arg_15_1)
+	if arg_15_1 then
+		arg_15_0:_setActive(false)
 	else
-		slot0:_setActive(true)
+		arg_15_0:_setActive(true)
 	end
 end
 
-function slot0._onStageChange(slot0, slot1)
-	if slot1 ~= FightEnum.Stage.Card then
-		gohelper.setActive(slot0._obj, false)
+function var_0_0._onStageChange(arg_16_0, arg_16_1)
+	if arg_16_1 ~= FightEnum.Stage.Card then
+		gohelper.setActive(arg_16_0._obj, false)
 
-		slot0._isVisible = false
-		slot0._lastCount = nil
+		arg_16_0._isVisible = false
+		arg_16_0._lastCount = nil
 	end
 end
 
-function slot0._onClothSkillExpand(slot0)
-	slot0:_setActive(false)
+function var_0_0._onClothSkillExpand(arg_17_0)
+	arg_17_0:_setActive(false)
 end
 
-function slot0._onClothSkillShrink(slot0)
-	slot0:_setActive(true)
+function var_0_0._onClothSkillShrink(arg_18_0)
+	arg_18_0:_setActive(true)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

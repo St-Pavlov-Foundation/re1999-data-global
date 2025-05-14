@@ -1,41 +1,41 @@
-module("modules.logic.fight.model.data.FightCardData", package.seeall)
+﻿module("modules.logic.fight.model.data.FightCardData", package.seeall)
 
-slot0 = FightDataClass("FightCardData")
+local var_0_0 = FightDataClass("FightCardData")
 
-function slot0.onConstructor(slot0, slot1)
-	slot0.uid = slot1.uid
-	slot0.skillId = slot1.skillId
-	slot0.cardEffect = slot1.cardEffect or 0
-	slot0.tempCard = slot1.tempCard or false
-	slot0.enchants = {}
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
+	arg_1_0.uid = arg_1_1.uid
+	arg_1_0.skillId = arg_1_1.skillId
+	arg_1_0.cardEffect = arg_1_1.cardEffect or 0
+	arg_1_0.tempCard = arg_1_1.tempCard or false
+	arg_1_0.enchants = {}
 
-	if slot1.enchants then
-		for slot5, slot6 in ipairs(slot1.enchants) do
-			slot7 = {
-				enchantId = slot6.enchantId,
-				duration = slot6.duration,
+	if arg_1_1.enchants then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_1.enchants) do
+			local var_1_0 = {
+				enchantId = iter_1_1.enchantId,
+				duration = iter_1_1.duration,
 				exInfo = {}
 			}
 
-			for slot11, slot12 in ipairs(slot6.exInfo) do
-				table.insert(slot7.exInfo, slot12)
+			for iter_1_2, iter_1_3 in ipairs(iter_1_1.exInfo) do
+				table.insert(var_1_0.exInfo, iter_1_3)
 			end
 
-			table.insert(slot0.enchants, slot7)
+			table.insert(arg_1_0.enchants, var_1_0)
 		end
 	end
 
-	slot0.cardType = slot1.cardType or FightEnum.CardType.NONE
-	slot0.heroId = slot1.heroId or 0
-	slot0.status = slot1.status or FightEnum.CardInfoStatus.STATUS_NONE
-	slot0.targetUid = slot1.targetUid or "0"
-	slot0.energy = slot1.energy or 0
-	slot0.areaRedOrBlue = slot1.areaRedOrBlue
-	slot0.heatId = slot1.heatId
+	arg_1_0.cardType = arg_1_1.cardType or FightEnum.CardType.NONE
+	arg_1_0.heroId = arg_1_1.heroId or 0
+	arg_1_0.status = arg_1_1.status or FightEnum.CardInfoStatus.STATUS_NONE
+	arg_1_0.targetUid = arg_1_1.targetUid or "0"
+	arg_1_0.energy = arg_1_1.energy or 0
+	arg_1_0.areaRedOrBlue = arg_1_1.areaRedOrBlue
+	arg_1_0.heatId = arg_1_1.heatId
 end
 
-function slot0.isUniqueSkill(slot0)
-	return FightCardModel.instance:isUniqueSkill(slot0.targetUid, slot0.skillId)
+function var_0_0.isUniqueSkill(arg_2_0)
+	return FightCardModel.instance:isUniqueSkill(arg_2_0.targetUid, arg_2_0.skillId)
 end
 
-return slot0
+return var_0_0

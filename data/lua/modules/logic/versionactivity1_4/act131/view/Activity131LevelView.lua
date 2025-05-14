@@ -1,315 +1,360 @@
-module("modules.logic.versionactivity1_4.act131.view.Activity131LevelView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act131.view.Activity131LevelView", package.seeall)
 
-slot0 = class("Activity131LevelView", BaseView)
+local var_0_0 = class("Activity131LevelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
-	slot0._gopath = gohelper.findChild(slot0.viewGO, "#go_path")
-	slot0._goscrollcontent = gohelper.findChild(slot0.viewGO, "#go_path/#go_scrollcontent")
-	slot0._gostages = gohelper.findChild(slot0.viewGO, "#go_path/#go_scrollcontent/#go_stages")
-	slot0._gotitle = gohelper.findChild(slot0.viewGO, "#go_title")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#go_title/#simage_title")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_title/#go_time")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_task", 25001038)
-	slot0._gotaskani = gohelper.findChild(slot0.viewGO, "#btn_task/ani")
-	slot0._goreddotreward = gohelper.findChild(slot0.viewGO, "#btn_task/#go_reddotreward")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._goexcessive = gohelper.findChild(slot0.viewGO, "#go_excessive")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
+	arg_1_0._gopath = gohelper.findChild(arg_1_0.viewGO, "#go_path")
+	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent")
+	arg_1_0._gostages = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent/#go_stages")
+	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_title/#simage_title")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_title/#go_time")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task", 25001038)
+	arg_1_0._gotaskani = gohelper.findChild(arg_1_0.viewGO, "#btn_task/ani")
+	arg_1_0._goreddotreward = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_reddotreward")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntask:RemoveClickListener()
 end
 
-function slot0._btntaskOnClick(slot0)
+function var_0_0._btntaskOnClick(arg_4_0)
 	Activity131Controller.instance:openActivity131TaskView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewAnimator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._viewAnimator = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0._simagemask:LoadImage(ResUrl.getV1a4Role37SingleBg("v1a4_role37_igfullmask"))
+	arg_5_0._simagemask:LoadImage(ResUrl.getV1a4Role37SingleBg("v1a4_role37_igfullmask"))
 
-	slot0._pathAnimator = gohelper.findChild(slot0.viewGO, "#go_path/#go_scrollcontent/path/path_2"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._taskAnimator = slot0._gotaskani:GetComponent(typeof(UnityEngine.Animator))
+	arg_5_0._pathAnimator = gohelper.findChild(arg_5_0.viewGO, "#go_path/#go_scrollcontent/path/path_2"):GetComponent(typeof(UnityEngine.Animator))
+	arg_5_0._taskAnimator = arg_5_0._gotaskani:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_4Enum.ActivityId.Role6)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_4Enum.ActivityId.Role6
 	})
-	RedDotController.instance:addRedDot(slot0._goreddotreward, RedDotEnum.DotNode.Activity1_4Role6Task)
+	RedDotController.instance:addRedDot(arg_7_0._goreddotreward, RedDotEnum.DotNode.Activity1_4Role6Task)
 
 	if Activity131Model.instance:getMaxUnlockEpisode() == 1 then
-		slot0._pathAnimator:Play("go1", 0, 0)
+		arg_7_0._pathAnimator:Play("go1", 0, 0)
 
-		slot0._pathAnimator.speed = 0
+		arg_7_0._pathAnimator.speed = 0
 	end
 
-	slot0:_initStages()
-	slot0:_addEvents()
-	slot0:_backToLevelView()
-	slot0:_refreshTask()
+	arg_7_0:_initStages()
+	arg_7_0:_addEvents()
+	arg_7_0:_backToLevelView()
+	arg_7_0:_refreshTask()
 end
 
-function slot0._refreshTask(slot0)
+function var_0_0._refreshTask(arg_8_0)
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Activity1_4Role6Task, 0) then
-		slot0._taskAnimator:Play("loop", 0, 0)
+		arg_8_0._taskAnimator:Play("loop", 0, 0)
 	else
-		slot0._taskAnimator:Play("idle", 0, 0)
+		arg_8_0._taskAnimator:Play("idle", 0, 0)
 	end
 end
 
-function slot0._initStages(slot0)
-	if slot0._stageItemList then
+function var_0_0._initStages(arg_9_0)
+	if arg_9_0._stageItemList then
 		return
 	end
 
-	slot0._stageItemList = {}
+	local var_9_0 = arg_9_0.viewContainer:getSetting().otherRes[1]
 
-	for slot6 = 1, Activity131Model.instance:getMaxEpisode() do
-		slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], gohelper.findChild(slot0._gostages, "stage" .. slot6)), Activity131LevelViewStageItem, slot0)
+	arg_9_0._stageItemList = {}
 
-		slot9:refreshItem(Activity131Config.instance:getActivity131EpisodeCo(VersionActivity1_4Enum.ActivityId.Role6, slot6), slot6)
-		table.insert(slot0._stageItemList, slot9)
+	local var_9_1 = Activity131Model.instance:getMaxEpisode()
+
+	for iter_9_0 = 1, var_9_1 do
+		local var_9_2 = gohelper.findChild(arg_9_0._gostages, "stage" .. iter_9_0)
+		local var_9_3 = arg_9_0:getResInst(var_9_0, var_9_2)
+		local var_9_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_3, Activity131LevelViewStageItem, arg_9_0)
+		local var_9_5 = VersionActivity1_4Enum.ActivityId.Role6
+		local var_9_6 = Activity131Config.instance:getActivity131EpisodeCo(var_9_5, iter_9_0)
+
+		var_9_4:refreshItem(var_9_6, iter_9_0)
+		table.insert(arg_9_0._stageItemList, var_9_4)
 	end
 end
 
-function slot0._refreshStageItem(slot0, slot1, slot2)
-	for slot6 = 1, #slot0._stageItemList do
-		slot0._stageItemList[slot6]:refreshItem(Activity131Config.instance:getActivity131EpisodeCo(VersionActivity1_4Enum.ActivityId.Role6, slot6), slot6)
+function var_0_0._refreshStageItem(arg_10_0, arg_10_1, arg_10_2)
+	for iter_10_0 = 1, #arg_10_0._stageItemList do
+		local var_10_0 = VersionActivity1_4Enum.ActivityId.Role6
+		local var_10_1 = Activity131Config.instance:getActivity131EpisodeCo(var_10_0, iter_10_0)
+
+		arg_10_0._stageItemList[iter_10_0]:refreshItem(var_10_1, iter_10_0)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = Activity131Model.instance:getMaxUnlockEpisode()
+function var_0_0._refreshUI(arg_11_0)
+	local var_11_0 = Activity131Model.instance:getMaxUnlockEpisode()
+	local var_11_1 = Activity131Model.instance:getNewUnlockEpisode()
 
-	if Activity131Model.instance:getNewUnlockEpisode() > -1 then
-		slot1 = slot2
+	if var_11_1 > -1 then
+		var_11_0 = var_11_1
 	end
 
-	if slot1 == 1 then
-		slot0._pathAnimator.speed = 0
+	if var_11_0 == 1 then
+		arg_11_0._pathAnimator.speed = 0
 
-		slot0._pathAnimator:Play("go1", 0, 0)
+		arg_11_0._pathAnimator:Play("go1", 0, 0)
 	else
-		slot0._pathAnimator.speed = 1
+		arg_11_0._pathAnimator.speed = 1
 
-		slot0._pathAnimator:Play("go" .. slot1 - 1, 0, 1)
+		arg_11_0._pathAnimator:Play("go" .. var_11_0 - 1, 0, 1)
 	end
 
 	Activity131Model.instance:setNewUnlockEpisode(-1)
-	slot0:_refreshStageItem()
+	arg_11_0:_refreshStageItem()
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeEvents()
+function var_0_0.onClose(arg_12_0)
+	arg_12_0:_removeEvents()
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._initDragPos = slot2.position.x
+function var_0_0._onDragBegin(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._initDragPos = arg_13_2.position.x
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	slot3 = slot2.position.x
+function var_0_0._onDrag(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_2.position.x
+	local var_14_1 = recthelper.getAnchorX(arg_14_0._goscrollcontent.transform) + arg_14_2.delta.x * Activity131Enum.SlideSpeed
 
-	if recthelper.getAnchorX(slot0._goscrollcontent.transform) + slot2.delta.x * Activity131Enum.SlideSpeed > 0 then
-		slot4 = 0
-	end
+	var_14_1 = var_14_1 > 0 and 0 or var_14_1
+	var_14_1 = var_14_1 > -Activity131Enum.MaxSlideX and var_14_1 or -Activity131Enum.MaxSlideX
 
-	slot4 = slot4 > -Activity131Enum.MaxSlideX and slot4 or -Activity131Enum.MaxSlideX
+	recthelper.setAnchorX(arg_14_0._goscrollcontent.transform, var_14_1)
 
-	recthelper.setAnchorX(slot0._goscrollcontent.transform, slot4)
-	Activity131Controller.instance:dispatchEvent(Activity131Event.SetScenePos, slot4 * Activity131Enum.SceneMaxX / Activity131Enum.MaxSlideX)
+	local var_14_2 = var_14_1 * Activity131Enum.SceneMaxX / Activity131Enum.MaxSlideX
+
+	Activity131Controller.instance:dispatchEvent(Activity131Event.SetScenePos, var_14_2)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
+function var_0_0._onDragEnd(arg_15_0, arg_15_1, arg_15_2)
+	return
 end
 
-function slot0._checkLevelUpdate(slot0)
-	slot1 = Activity131Model.instance:getCurEpisodeId()
-	slot2 = Activity131Model.instance:getEpisodeState(slot1)
-	slot6 = Activity131Model.instance:isEpisodeUnlock(slot1 < Activity131Model.instance:getMaxEpisode() and slot1 + 1 or slot1)
+function var_0_0._checkLevelUpdate(arg_16_0)
+	local var_16_0 = Activity131Model.instance:getCurEpisodeId()
+	local var_16_1 = Activity131Model.instance:getEpisodeState(var_16_0)
+	local var_16_2 = Activity131Model.instance:isEpisodeFinished(var_16_0)
+	local var_16_3 = var_16_0 < Activity131Model.instance:getMaxEpisode() and var_16_0 + 1 or var_16_0
+	local var_16_4 = Activity131Model.instance:isEpisodeUnlock(var_16_3)
 
-	if not Activity131Model.instance:isEpisodeFinished(slot1) then
+	if not var_16_2 then
 		return
 	end
 
-	if slot6 and slot5 ~= slot1 then
+	if var_16_4 and var_16_3 ~= var_16_0 then
 		return
 	end
 
-	Activity131Model.instance:setNewFinishEpisode(slot1)
-	Activity131Model.instance:setNewUnlockEpisode(slot5 == slot1 and -1 or slot5)
-	Activity131Rpc.instance:sendGet131InfosRequest(VersionActivity1_4Enum.ActivityId.Role6, slot0._getInfoSuccess, slot0)
+	Activity131Model.instance:setNewFinishEpisode(var_16_0)
+
+	local var_16_5 = var_16_3 == var_16_0 and -1 or var_16_3
+
+	Activity131Model.instance:setNewUnlockEpisode(var_16_5)
+
+	local var_16_6 = VersionActivity1_4Enum.ActivityId.Role6
+
+	Activity131Rpc.instance:sendGet131InfosRequest(var_16_6, arg_16_0._getInfoSuccess, arg_16_0)
 end
 
-function slot0._getInfoSuccess(slot0, slot1, slot2)
-	if slot2 ~= 0 then
+function var_0_0._getInfoSuccess(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 ~= 0 then
 		return
 	end
 
 	Activity131Controller.instance:dispatchEvent(Activity131Event.NewEpisodeUnlock)
-	slot0:_backToLevelView()
+	arg_17_0:_backToLevelView()
 end
 
-function slot0._setToPos(slot0)
-	slot0:_onSlideFinish()
+function var_0_0._setToPos(arg_18_0)
+	arg_18_0:_onSlideFinish()
 end
 
-function slot0._onSlideFinish(slot0)
-	slot1 = Activity131Model.instance:getCurEpisodeId()
+function var_0_0._onSlideFinish(arg_19_0)
+	local var_19_0 = Activity131Model.instance:getCurEpisodeId()
+	local var_19_1 = Activity131Model.instance:getNewUnlockEpisode()
 
-	if Activity131Model.instance:getNewUnlockEpisode() > -1 then
-		slot1 = slot2
+	if var_19_1 > -1 then
+		var_19_0 = var_19_1
 	end
 
-	if (slot1 and slot1 or 1) < Activity131Enum.MaxShowEpisodeCount + 1 then
+	local var_19_2 = var_19_0 and var_19_0 or 1
+
+	if var_19_2 < Activity131Enum.MaxShowEpisodeCount + 1 then
 		return
 	end
 
-	if Activity131Enum.MaxSlideX < (slot3 - Activity131Enum.MaxShowEpisodeCount) * Activity131Enum.MaxSlideX / (Activity131Model.instance:getTotalEpisodeCount() - Activity131Enum.MaxShowEpisodeCount) then
-		slot5 = Activity131Enum.MaxSlideX or slot5
-	end
+	local var_19_3 = Activity131Model.instance:getTotalEpisodeCount()
+	local var_19_4 = (var_19_2 - Activity131Enum.MaxShowEpisodeCount) * Activity131Enum.MaxSlideX / (var_19_3 - Activity131Enum.MaxShowEpisodeCount)
 
-	transformhelper.setLocalPos(slot0._goscrollcontent.transform, -slot5, 0, 0)
-	Activity131Controller.instance:dispatchEvent(Activity131Event.SetScenePos, -slot5 * Activity131Enum.SceneMaxX / Activity131Enum.MaxSlideX)
+	var_19_4 = var_19_4 > Activity131Enum.MaxSlideX and Activity131Enum.MaxSlideX or var_19_4
+
+	transformhelper.setLocalPos(arg_19_0._goscrollcontent.transform, -var_19_4, 0, 0)
+
+	local var_19_5 = -var_19_4 * Activity131Enum.SceneMaxX / Activity131Enum.MaxSlideX
+
+	Activity131Controller.instance:dispatchEvent(Activity131Event.SetScenePos, var_19_5)
 end
 
-function slot0._backToLevelView(slot0)
+function var_0_0._backToLevelView(arg_20_0)
 	StoryController.instance:closeStoryView()
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("newepisode")
-	slot0._viewAnimator:Play("open", 0, 0)
+	arg_20_0._viewAnimator:Play("open", 0, 0)
 
-	slot2 = Activity131Model.instance:getCurEpisodeId()
+	local var_20_0 = Activity131Model.instance:getNewFinishEpisode()
+	local var_20_1 = Activity131Model.instance:getCurEpisodeId()
 
-	if Activity131Model.instance:getNewFinishEpisode() > -1 then
-		if slot1 == 1 then
-			slot0._pathAnimator.speed = 0
+	if var_20_0 > -1 then
+		local var_20_2 = var_20_0
 
-			slot0._pathAnimator:Play("go1", 0, 0)
+		if var_20_2 == 1 then
+			arg_20_0._pathAnimator.speed = 0
+
+			arg_20_0._pathAnimator:Play("go1", 0, 0)
 		else
-			slot0._pathAnimator.speed = 1
+			arg_20_0._pathAnimator.speed = 1
 
-			slot0._pathAnimator:Play("go" .. slot2 - 1, 0, 1)
+			arg_20_0._pathAnimator:Play("go" .. var_20_2 - 1, 0, 1)
 		end
 	else
-		slot0._pathAnimator.speed = 1
+		local var_20_3 = Activity131Model.instance:getMaxUnlockEpisode()
 
-		slot0._pathAnimator:Play("go" .. Activity131Model.instance:getMaxUnlockEpisode() - 1, 0, 1)
+		arg_20_0._pathAnimator.speed = 1
+
+		arg_20_0._pathAnimator:Play("go" .. var_20_3 - 1, 0, 1)
 	end
 
-	slot0:_setToPos()
-	TaskDispatcher.runDelay(slot0._checkNewFinishEpisode, slot0, 1)
+	arg_20_0:_setToPos()
+	TaskDispatcher.runDelay(arg_20_0._checkNewFinishEpisode, arg_20_0, 1)
 end
 
-function slot0._checkNewFinishEpisode(slot0)
-	if Activity131Model.instance:getNewFinishEpisode() > -1 then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.playNewFinishEpisode, slot1)
+function var_0_0._checkNewFinishEpisode(arg_21_0)
+	local var_21_0 = Activity131Model.instance:getNewFinishEpisode()
+
+	if var_21_0 > -1 then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.playNewFinishEpisode, var_21_0)
 		Activity131Model.instance:setNewFinishEpisode(-1)
-		TaskDispatcher.runDelay(slot0._checkNewUnlockEpisode, slot0, 1.5)
+		TaskDispatcher.runDelay(arg_21_0._checkNewUnlockEpisode, arg_21_0, 1.5)
 	else
-		slot0:_checkNewUnlockEpisode()
+		arg_21_0:_checkNewUnlockEpisode()
 	end
 end
 
-function slot0._checkNewUnlockEpisode(slot0)
-	if Activity131Model.instance:getNewUnlockEpisode() > -1 then
-		slot0._pathAnimator.speed = 1
+function var_0_0._checkNewUnlockEpisode(arg_22_0)
+	local var_22_0 = Activity131Model.instance:getNewUnlockEpisode()
 
-		slot0._pathAnimator:Play("go" .. slot1 - 1, 0, 0)
-		TaskDispatcher.runDelay(slot0._startShowUnlock, slot0, 0.34)
+	if var_22_0 > -1 then
+		arg_22_0._pathAnimator.speed = 1
+
+		arg_22_0._pathAnimator:Play("go" .. var_22_0 - 1, 0, 0)
+		TaskDispatcher.runDelay(arg_22_0._startShowUnlock, arg_22_0, 0.34)
 	else
-		slot0:_startShowUnlock()
+		arg_22_0:_startShowUnlock()
 	end
 end
 
-function slot0._startShowUnlock(slot0)
+function var_0_0._startShowUnlock(arg_23_0)
 	UIBlockMgr.instance:endBlock("newepisode")
 
-	if Activity131Model.instance:getNewUnlockEpisode() > -1 then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.playNewUnlockEpisode, slot1)
-		TaskDispatcher.runDelay(slot0._showUnlockFinished, slot0, 0.67)
+	local var_23_0 = Activity131Model.instance:getNewUnlockEpisode()
+
+	if var_23_0 > -1 then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.playNewUnlockEpisode, var_23_0)
+		TaskDispatcher.runDelay(arg_23_0._showUnlockFinished, arg_23_0, 0.67)
 	else
-		slot0:_showUnlockFinished()
+		arg_23_0:_showUnlockFinished()
 	end
 end
 
-function slot0._showUnlockFinished(slot0)
-	if Activity131Model.instance:getNewUnlockEpisode() > -1 then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.PlayChessAutoToNewEpisode, slot1)
+function var_0_0._showUnlockFinished(arg_24_0)
+	local var_24_0 = Activity131Model.instance:getNewUnlockEpisode()
+
+	if var_24_0 > -1 then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.PlayChessAutoToNewEpisode, var_24_0)
 	end
 
-	slot0:_refreshUI()
+	arg_24_0:_refreshUI()
 end
 
-function slot0._enterGameView(slot0)
-	slot0._viewAnimator:Play("close", 0, 0)
-	TaskDispatcher.runDelay(slot0._realEnterGameView, slot0, 0.34)
+function var_0_0._enterGameView(arg_25_0)
+	arg_25_0._viewAnimator:Play("close", 0, 0)
+	TaskDispatcher.runDelay(arg_25_0._realEnterGameView, arg_25_0, 0.34)
 end
 
-function slot0._realEnterGameView(slot0)
-	Activity131Controller.instance:openActivity131GameView({
+function var_0_0._realEnterGameView(arg_26_0)
+	local var_26_0 = {
 		episodeId = Activity131Model.instance:getCurEpisodeId()
-	})
+	}
+
+	Activity131Controller.instance:openActivity131GameView(var_26_0)
 end
 
-function slot0._playCloseLevelView(slot0)
-	slot0._viewAnimator:Play("close", 0, 0)
+function var_0_0._playCloseLevelView(arg_27_0)
+	arg_27_0._viewAnimator:Play("close", 0, 0)
 end
 
-function slot0._addEvents(slot0)
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._gopath.gameObject)
+function var_0_0._addEvents(arg_28_0)
+	arg_28_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_28_0._gopath.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
-	slot0:addEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, slot0._checkLevelUpdate, slot0)
-	slot0:addEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, slot0._checkLevelUpdate, slot0)
-	slot0:addEventCb(Activity131Controller.instance, Activity131Event.OnStoryFinishedSuccess, slot0._checkLevelUpdate, slot0)
-	slot0:addEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, slot0._backToLevelView, slot0)
-	slot0:addEventCb(Activity131Controller.instance, Activity131Event.StartEnterGameView, slot0._enterGameView, slot0)
-	slot0:addEventCb(Activity131Controller.instance, Activity131Event.PlayLeaveLevelView, slot0._playCloseLevelView, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0._refreshTask, slot0)
+	arg_28_0._drag:AddDragBeginListener(arg_28_0._onDragBegin, arg_28_0)
+	arg_28_0._drag:AddDragEndListener(arg_28_0._onDragEnd, arg_28_0)
+	arg_28_0._drag:AddDragListener(arg_28_0._onDrag, arg_28_0)
+	arg_28_0:addEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, arg_28_0._checkLevelUpdate, arg_28_0)
+	arg_28_0:addEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, arg_28_0._checkLevelUpdate, arg_28_0)
+	arg_28_0:addEventCb(Activity131Controller.instance, Activity131Event.OnStoryFinishedSuccess, arg_28_0._checkLevelUpdate, arg_28_0)
+	arg_28_0:addEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, arg_28_0._backToLevelView, arg_28_0)
+	arg_28_0:addEventCb(Activity131Controller.instance, Activity131Event.StartEnterGameView, arg_28_0._enterGameView, arg_28_0)
+	arg_28_0:addEventCb(Activity131Controller.instance, Activity131Event.PlayLeaveLevelView, arg_28_0._playCloseLevelView, arg_28_0)
+	arg_28_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_28_0._refreshTask, arg_28_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0:removeEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, slot0._checkLevelUpdate, slot0)
-	slot0:removeEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, slot0._checkLevelUpdate, slot0)
-	slot0:removeEventCb(Activity131Controller.instance, Activity131Event.OnStoryFinishedSuccess, slot0._checkLevelUpdate, slot0)
-	slot0:removeEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, slot0._backToLevelView, slot0)
-	slot0:removeEventCb(Activity131Controller.instance, Activity131Event.StartEnterGameView, slot0._enterGameView, slot0)
-	slot0:removeEventCb(Activity131Controller.instance, Activity131Event.PlayLeaveLevelView, slot0._playCloseLevelView, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0._refreshTask, slot0)
+function var_0_0._removeEvents(arg_29_0)
+	arg_29_0._drag:RemoveDragBeginListener()
+	arg_29_0._drag:RemoveDragListener()
+	arg_29_0._drag:RemoveDragEndListener()
+	arg_29_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, arg_29_0._checkLevelUpdate, arg_29_0)
+	arg_29_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, arg_29_0._checkLevelUpdate, arg_29_0)
+	arg_29_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnStoryFinishedSuccess, arg_29_0._checkLevelUpdate, arg_29_0)
+	arg_29_0:removeEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, arg_29_0._backToLevelView, arg_29_0)
+	arg_29_0:removeEventCb(Activity131Controller.instance, Activity131Event.StartEnterGameView, arg_29_0._enterGameView, arg_29_0)
+	arg_29_0:removeEventCb(Activity131Controller.instance, Activity131Event.PlayLeaveLevelView, arg_29_0._playCloseLevelView, arg_29_0)
+	arg_29_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_29_0._refreshTask, arg_29_0)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._stageItemList then
-		for slot4, slot5 in ipairs(slot0._stageItemList) do
-			slot5:onDestroyView()
+function var_0_0.onDestroyView(arg_30_0)
+	if arg_30_0._stageItemList then
+		for iter_30_0, iter_30_1 in ipairs(arg_30_0._stageItemList) do
+			iter_30_1:onDestroyView()
 		end
 
-		slot0._stageItemList = nil
+		arg_30_0._stageItemList = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._showUnlockFinished, slot0)
-	slot0._simagemask:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_30_0._showUnlockFinished, arg_30_0)
+	arg_30_0._simagemask:UnLoadImage()
 end
 
-return slot0
+return var_0_0

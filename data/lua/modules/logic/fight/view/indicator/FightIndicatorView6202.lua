@@ -1,19 +1,19 @@
-module("modules.logic.fight.view.indicator.FightIndicatorView6202", package.seeall)
+﻿module("modules.logic.fight.view.indicator.FightIndicatorView6202", package.seeall)
 
-slot0 = class("FightIndicatorView6202", FightIndicatorView)
+local var_0_0 = class("FightIndicatorView6202", FightIndicatorView)
 
-function slot0.initView(slot0, slot1, slot2, slot3)
-	uv0.super.initView(slot0, slot1, slot2, slot3)
+function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0.totalIndicatorNum = 4
+	arg_1_0.totalIndicatorNum = 4
 end
 
-function slot0.getCardConfig(slot0)
-	return Season123Config.instance:getSeasonEquipCo(slot0:getCardId())
+function var_0_0.getCardConfig(arg_2_0)
+	return Season123Config.instance:getSeasonEquipCo(arg_2_0:getCardId())
 end
 
-function slot0.getCardId(slot0)
+function var_0_0.getCardId(arg_3_0)
 	return 200042
 end
 
-return slot0
+return var_0_0

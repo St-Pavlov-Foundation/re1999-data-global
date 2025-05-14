@@ -1,210 +1,242 @@
-module("modules.logic.share.view.ShareEditorView", package.seeall)
+﻿module("modules.logic.share.view.ShareEditorView", package.seeall)
 
-slot0 = class("ShareEditorView", BaseView)
+local var_0_0 = class("ShareEditorView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gorawImage = gohelper.findChild(slot0.viewGO, "container/frame/#go_rawImage")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "container/frame/#go_content")
-	slot0._goplatformitem = gohelper.findChild(slot0.viewGO, "container/frame/#go_platformitem")
-	slot0._togglehideview = gohelper.findChildToggle(slot0.viewGO, "container/frame/#toggle_hideview")
-	slot0._simagelogo = gohelper.findChildSingleImage(slot0.viewGO, "#simage_logo")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gorawImage = gohelper.findChild(arg_1_0.viewGO, "container/frame/#go_rawImage")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "container/frame/#go_content")
+	arg_1_0._goplatformitem = gohelper.findChild(arg_1_0.viewGO, "container/frame/#go_platformitem")
+	arg_1_0._togglehideview = gohelper.findChildToggle(arg_1_0.viewGO, "container/frame/#toggle_hideview")
+	arg_1_0._simagelogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_logo")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewOpen = false
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._viewOpen = false
 
-	gohelper.setActive(slot0._togglehideview.gameObject, false)
+	gohelper.setActive(arg_4_0._togglehideview.gameObject, false)
 
-	slot1 = nil
-	slot1 = (SDKMgr.instance:getChannelId() ~= SDKMgr.ChannelId.QQMobile or {
-		"fenxiang_qq",
-		"fenxiang_kongjian"
-	}) and (SDKMgr.instance:getChannelId() ~= SDKMgr.ChannelId.Douyin or {
-		"fenxiang_douyin"
-	}) and {
-		"fenxiang_weixin",
-		"fenxiang_pengyouqvan",
-		"fenxiang_weibo",
-		"fenxiang_qq",
-		"fenxiang_kongjian",
-		"fenxiang_douyin",
-		"fenxiang_xiaohongshu",
-		"fenxiang_xiazai"
-	}
-	slot0._listenerList = slot0:getUserDataTb_()
+	local var_4_0
 
-	for slot5, slot6 in ipairs((not GameChannelConfig.isEfun() or {
-		"fenxiang_facebook",
-		"fenxiang_instagram",
-		"fenxiang_line",
-		"fenxiang_discord",
-		"fenxiang_xiazai"
-	}) and {
-		"fenxiang_facebook",
-		"fenxiang_twitter",
-		"fenxiang_xiazai"
-	}) do
-		slot7 = gohelper.clone(slot0._goplatformitem, slot0._gocontent, slot6)
+	if SDKMgr.instance:getChannelId() == SDKMgr.ChannelId.QQMobile then
+		var_4_0 = {
+			"fenxiang_qq",
+			"fenxiang_kongjian"
+		}
+	elseif SDKMgr.instance:getChannelId() == SDKMgr.ChannelId.Douyin then
+		var_4_0 = {
+			"fenxiang_douyin"
+		}
+	else
+		var_4_0 = {
+			"fenxiang_weixin",
+			"fenxiang_pengyouqvan",
+			"fenxiang_weibo",
+			"fenxiang_qq",
+			"fenxiang_kongjian",
+			"fenxiang_douyin",
+			"fenxiang_xiaohongshu",
+			"fenxiang_xiazai"
+		}
+	end
 
-		gohelper.setActive(slot7, true)
-		UISpriteSetMgr.instance:setShareSprite(slot7:GetComponent(gohelper.Type_Image), slot6)
+	if GameChannelConfig.isEfun() then
+		var_4_0 = {
+			"fenxiang_facebook",
+			"fenxiang_instagram",
+			"fenxiang_line",
+			"fenxiang_discord",
+			"fenxiang_xiazai"
+		}
+	else
+		var_4_0 = {
+			"fenxiang_facebook",
+			"fenxiang_twitter",
+			"fenxiang_xiazai"
+		}
+	end
 
-		slot9 = SLFramework.UGUI.UIClickListener.Get(slot7)
+	arg_4_0._listenerList = arg_4_0:getUserDataTb_()
 
-		slot9:AddClickListener(slot0._onClick, slot0, slot6)
-		table.insert(slot0._listenerList, slot9)
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		local var_4_1 = gohelper.clone(arg_4_0._goplatformitem, arg_4_0._gocontent, iter_4_1)
+
+		gohelper.setActive(var_4_1, true)
+
+		local var_4_2 = var_4_1:GetComponent(gohelper.Type_Image)
+
+		UISpriteSetMgr.instance:setShareSprite(var_4_2, iter_4_1)
+
+		local var_4_3 = SLFramework.UGUI.UIClickListener.Get(var_4_1)
+
+		var_4_3:AddClickListener(arg_4_0._onClick, arg_4_0, iter_4_1)
+		table.insert(arg_4_0._listenerList, var_4_3)
 	end
 end
 
-function slot0._onClick(slot0, slot1)
-	if not slot0._canClick then
+function var_0_0._onClick(arg_5_0, arg_5_1)
+	if not arg_5_0._canClick then
 		return
 	end
 
-	if string.nilorempty(slot0._msg) then
+	if string.nilorempty(arg_5_0._msg) then
 		logError("图片地址为空")
 
 		return
 	end
 
-	logNormal(slot0._msg)
+	logNormal(arg_5_0._msg)
 
-	if slot1 == "fenxiang_weixin" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatFriend, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_pengyouqvan" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatMoment, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_weibo" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.SinaWeibo, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_douyin" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.TikTok, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_xiaohongshu" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.XiaoHongShu, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_qq" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQ, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_kongjian" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQZone, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_xiazai" then
-		SDKMgr.instance:saveImage(slot0._msg)
-	elseif slot1 == "fenxiang_facebook" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Facebook, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_twitter" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Twitter, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_line" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.LINE, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_whatsapp" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WHATSAPP, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_instagram" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.INSTAGRAM, SDKMgr.ShareContentType.Image, slot0._msg)
-	elseif slot1 == "fenxiang_discord" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.DISCORD, SDKMgr.ShareContentType.Image, slot0._msg)
+	if arg_5_1 == "fenxiang_weixin" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatFriend, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_pengyouqvan" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatMoment, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_weibo" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.SinaWeibo, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_douyin" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.TikTok, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_xiaohongshu" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.XiaoHongShu, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_qq" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQ, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_kongjian" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQZone, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_xiazai" then
+		SDKMgr.instance:saveImage(arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_facebook" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Facebook, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_twitter" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Twitter, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_line" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.LINE, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_whatsapp" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WHATSAPP, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_instagram" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.INSTAGRAM, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	elseif arg_5_1 == "fenxiang_discord" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.DISCORD, SDKMgr.ShareContentType.Image, arg_5_0._msg)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._viewOpen = true
-	slot0._canClick = false
-	slot0._texture = slot0.viewParam
-	slot0._image = gohelper.onceAddComponent(slot0._gorawImage, gohelper.Type_RawImage)
-	slot0._image.texture = slot0._texture
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._viewOpen = true
+	arg_6_0._canClick = false
+	arg_6_0._texture = arg_6_0.viewParam
+	arg_6_0._image = gohelper.onceAddComponent(arg_6_0._gorawImage, gohelper.Type_RawImage)
+	arg_6_0._image.texture = arg_6_0._texture
 
-	slot0._simagelogo:LoadImage(ResUrl.getLoginBgLangIcon("bg_logo"), slot0._logoLoaded, slot0)
-	TaskDispatcher.runDelay(slot0._overTime, slot0, 1)
+	arg_6_0._simagelogo:LoadImage(ResUrl.getLoginBgLangIcon("bg_logo"), arg_6_0._logoLoaded, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._overTime, arg_6_0, 1)
 end
 
-function slot0._overTime(slot0)
-	slot0._canClick = true
+function var_0_0._overTime(arg_7_0)
+	arg_7_0._canClick = true
 end
 
-function slot0._logoLoaded(slot0)
-	if not slot0._viewOpen then
+function var_0_0._logoLoaded(arg_8_0)
+	if not arg_8_0._viewOpen then
 		return
 	end
 
-	slot1 = slot0._simagelogo.gameObject:GetComponent(typeof(UnityEngine.UI.Image))
+	local var_8_0 = arg_8_0._simagelogo.gameObject:GetComponent(typeof(UnityEngine.UI.Image))
 
-	slot1:SetNativeSize()
+	var_8_0:SetNativeSize()
 
-	slot0._co = coroutine.start(slot0._addLogo, slot0, slot0._texture, slot1.sprite.texture, slot0:_getRect(slot0._texture, slot0._simagelogo.gameObject))
+	local var_8_1 = var_8_0.sprite.texture
+	local var_8_2 = arg_8_0:_getRect(arg_8_0._texture, arg_8_0._simagelogo.gameObject)
+
+	arg_8_0._co = coroutine.start(arg_8_0._addLogo, arg_8_0, arg_8_0._texture, var_8_1, var_8_2)
 end
 
-function slot0._onCoroutineDone(slot0)
-	slot0._msg = slot0:_saveImage(slot0._texture)
-	slot0._image.texture = slot0._texture
-	slot0._canClick = true
+function var_0_0._onCoroutineDone(arg_9_0)
+	arg_9_0._msg = arg_9_0:_saveImage(arg_9_0._texture)
+	arg_9_0._image.texture = arg_9_0._texture
+	arg_9_0._canClick = true
 end
 
-function slot0._getRect(slot0, slot1, slot2)
-	slot2:GetComponent(typeof(UnityEngine.RectTransform)):GetWorldCorners(System.Array.CreateInstance(typeof(Vector3), 4))
+function var_0_0._getRect(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = gohelper.find("UICamera"):GetComponent(typeof(UnityEngine.Camera))
+	local var_10_1 = arg_10_2:GetComponent(typeof(UnityEngine.RectTransform))
+	local var_10_2 = System.Array.CreateInstance(typeof(Vector3), 4)
 
-	slot6 = System.Array.CreateInstance(typeof(Vector2), 4)
+	var_10_1:GetWorldCorners(var_10_2)
 
-	for slot10 = 0, 3 do
-		slot6[slot10] = UnityEngine.RectTransformUtility.WorldToScreenPoint(gohelper.find("UICamera"):GetComponent(typeof(UnityEngine.Camera)), slot5[slot10])
+	local var_10_3 = System.Array.CreateInstance(typeof(Vector2), 4)
+
+	for iter_10_0 = 0, 3 do
+		var_10_3[iter_10_0] = UnityEngine.RectTransformUtility.WorldToScreenPoint(var_10_0, var_10_2[iter_10_0])
 	end
 
-	slot7 = slot6[2] - slot6[0]
+	local var_10_4 = var_10_3[2] - var_10_3[0]
+	local var_10_5 = Vector2(arg_10_1.width - var_10_4.x, arg_10_1.height - var_10_4.y)
 
-	return UnityEngine.Rect.New(Vector2(slot1.width - slot7.x, slot1.height - slot7.y), slot7)
+	return UnityEngine.Rect.New(var_10_5, var_10_4)
 end
 
-function slot0._addLogo(slot0, slot1, slot2, slot3)
+function var_0_0._addLogo(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
 	WaitForEndOfFrame()
 
-	slot4 = UnityEngine.RenderTexture.GetTemporary(slot1.width, slot1.height, 0, UnityEngine.RenderTextureFormat.Default)
-	UnityEngine.RenderTexture.active = slot4
+	local var_11_0 = UnityEngine.RenderTexture.GetTemporary(arg_11_1.width, arg_11_1.height, 0, UnityEngine.RenderTextureFormat.Default)
+	local var_11_1 = UnityEngine.RenderTexture.active
+
+	UnityEngine.RenderTexture.active = var_11_0
 
 	UnityEngine.GL.PushMatrix()
-	UnityEngine.GL.LoadPixelMatrix(0, slot1.width, slot1.height, 0)
-	UnityEngine.Graphics.Blit(slot1, slot4)
-	UnityEngine.Graphics.DrawTexture(slot3, slot2)
-	slot1:ReadPixels(UnityEngine.Rect.New(0, 0, slot1.width, slot1.height), 0, 0)
-	slot1:Apply()
+	UnityEngine.GL.LoadPixelMatrix(0, arg_11_1.width, arg_11_1.height, 0)
+	UnityEngine.Graphics.Blit(arg_11_1, var_11_0)
+	UnityEngine.Graphics.DrawTexture(arg_11_3, arg_11_2)
+	arg_11_1:ReadPixels(UnityEngine.Rect.New(0, 0, arg_11_1.width, arg_11_1.height), 0, 0)
+	arg_11_1:Apply()
 	UnityEngine.GL.PopMatrix()
 
-	UnityEngine.RenderTexture.active = UnityEngine.RenderTexture.active
+	UnityEngine.RenderTexture.active = var_11_1
 
-	UnityEngine.RenderTexture.ReleaseTemporary(slot4)
-	slot0:_onCoroutineDone()
+	UnityEngine.RenderTexture.ReleaseTemporary(var_11_0)
+	arg_11_0:_onCoroutineDone()
 end
 
-function slot0._saveImage(slot0, slot1)
-	slot4 = System.DateTime.Now
-	slot6 = System.IO.Path.Combine(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot"), string.format("screenshot_%s%s%s_%s%s%s%s.png", slot4.Year, slot4.Month, slot4.Day, slot4.Hour, slot4.Minute, slot4.Second, slot4.Millisecond))
+function var_0_0._saveImage(arg_12_0, arg_12_1)
+	local var_12_0 = UnityEngine.ImageConversion.EncodeToPNG(arg_12_1)
+	local var_12_1 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot")
+	local var_12_2 = System.DateTime.Now
+	local var_12_3 = string.format("screenshot_%s%s%s_%s%s%s%s.png", var_12_2.Year, var_12_2.Month, var_12_2.Day, var_12_2.Hour, var_12_2.Minute, var_12_2.Second, var_12_2.Millisecond)
+	local var_12_4 = System.IO.Path.Combine(var_12_1, var_12_3)
 
-	SLFramework.FileHelper.WriteAllBytesToPath(slot6, UnityEngine.ImageConversion.EncodeToPNG(slot1))
+	SLFramework.FileHelper.WriteAllBytesToPath(var_12_4, var_12_0)
 
-	return slot6
+	return var_12_4
 end
 
-function slot0.onClose(slot0)
-	slot0._viewOpen = false
+function var_0_0.onClose(arg_13_0)
+	arg_13_0._viewOpen = false
 
-	UnityEngine.Object.Destroy(slot0._texture)
+	UnityEngine.Object.Destroy(arg_13_0._texture)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._co then
-		coroutine.stop(slot0._co)
+function var_0_0.onDestroyView(arg_14_0)
+	if arg_14_0._co then
+		coroutine.stop(arg_14_0._co)
 	end
 
-	TaskDispatcher.cancelTask(slot0._overTime, slot0)
+	TaskDispatcher.cancelTask(arg_14_0._overTime, arg_14_0)
 
-	for slot4, slot5 in ipairs(slot0._listenerList) do
-		slot5:RemoveClickListener()
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._listenerList) do
+		iter_14_1:RemoveClickListener()
 	end
 
-	slot0._simagelogo:UnLoadImage()
+	arg_14_0._simagelogo:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,99 +1,114 @@
-module("modules.logic.tower.view.assistboss.TowerBossAttributeTipsView", package.seeall)
+﻿module("modules.logic.tower.view.assistboss.TowerBossAttributeTipsView", package.seeall)
 
-slot0 = class("TowerBossAttributeTipsView", BaseView)
+local var_0_0 = class("TowerBossAttributeTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.gotipitem = gohelper.findChild(slot0.viewGO, "mask/root/scrollview/viewport/content/tipitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.gotipitem = gohelper.findChild(arg_1_0.viewGO, "mask/root/scrollview/viewport/content/tipitem")
 
-	gohelper.setActive(slot0.gotipitem, false)
+	gohelper.setActive(arg_1_0.gotipitem, false)
 
-	slot0.items = {}
+	arg_1_0.items = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_5_0)
+	arg_5_0:refreshParam()
+	arg_5_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:refreshParam()
+	arg_6_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.bossId = slot0.viewParam.bossId
-	slot0.isFromHeroGroup = slot0.viewParam.isFromHeroGroup
-	slot0.bossMo = TowerAssistBossModel.instance:getById(slot0.bossId)
-	slot0.config = TowerConfig.instance:getAssistBossConfig(slot0.bossId)
+function var_0_0.refreshParam(arg_7_0)
+	arg_7_0.bossId = arg_7_0.viewParam.bossId
+	arg_7_0.isFromHeroGroup = arg_7_0.viewParam.isFromHeroGroup
+	arg_7_0.bossMo = TowerAssistBossModel.instance:getById(arg_7_0.bossId)
+	arg_7_0.config = TowerConfig.instance:getAssistBossConfig(arg_7_0.bossId)
 end
 
-function slot0.refreshView(slot0)
-	slot0:refreshAttr()
+function var_0_0.refreshView(arg_8_0)
+	arg_8_0:refreshAttr()
 end
 
-function slot0.refreshAttr(slot0)
-	for slot8 = 1, math.max(#TowerConfig.instance:getHeroGroupAddAttr(slot0.bossId, 0, slot0.bossMo and slot0.bossMo.level or 1), #slot0.items) do
-		slot0:updateAttrItem(slot0:getAttrItem(slot8), slot3[slot8])
+function var_0_0.refreshAttr(arg_9_0)
+	local var_9_0 = 0
+	local var_9_1 = arg_9_0.bossMo and arg_9_0.bossMo.level or 1
+	local var_9_2 = TowerConfig.instance:getHeroGroupAddAttr(arg_9_0.bossId, var_9_0, var_9_1)
+	local var_9_3 = math.max(#var_9_2, #arg_9_0.items)
+
+	for iter_9_0 = 1, var_9_3 do
+		local var_9_4 = arg_9_0:getAttrItem(iter_9_0)
+
+		arg_9_0:updateAttrItem(var_9_4, var_9_2[iter_9_0])
 	end
 end
 
-function slot0.getAttrItem(slot0, slot1)
-	if not slot0.items[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0.gotipitem)
-		slot2.imgIcon = gohelper.findChildImage(slot2.go, "icon")
-		slot2.txtName = gohelper.findChildTextMesh(slot2.go, "name")
-		slot2.txtNum = gohelper.findChildTextMesh(slot2.go, "num")
-		slot2.txtAdd = gohelper.findChildTextMesh(slot2.go, "add")
-		slot0.items[slot1] = slot2
+function var_0_0.getAttrItem(arg_10_0, arg_10_1)
+	if not arg_10_0.items[arg_10_1] then
+		local var_10_0 = arg_10_0:getUserDataTb_()
+
+		var_10_0.go = gohelper.cloneInPlace(arg_10_0.gotipitem)
+		var_10_0.imgIcon = gohelper.findChildImage(var_10_0.go, "icon")
+		var_10_0.txtName = gohelper.findChildTextMesh(var_10_0.go, "name")
+		var_10_0.txtNum = gohelper.findChildTextMesh(var_10_0.go, "num")
+		var_10_0.txtAdd = gohelper.findChildTextMesh(var_10_0.go, "add")
+		arg_10_0.items[arg_10_1] = var_10_0
 	end
 
-	return slot0.items[slot1]
+	return arg_10_0.items[arg_10_1]
 end
 
-function slot0.updateAttrItem(slot0, slot1, slot2)
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.updateAttrItem(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_2 then
+		gohelper.setActive(arg_11_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(arg_11_1.go, true)
 
-	slot1.txtName.text = HeroConfig.instance:getHeroAttributeCO(slot2.key).name
+	local var_11_0 = HeroConfig.instance:getHeroAttributeCO(arg_11_2.key)
 
-	if slot2.val then
-		if slot2.upAttr then
-			slot1.txtNum.text = string.format("%s%%", slot2.val * 0.1)
+	arg_11_1.txtName.text = var_11_0.name
+
+	if arg_11_2.val then
+		if arg_11_2.upAttr then
+			arg_11_1.txtNum.text = string.format("%s%%", arg_11_2.val * 0.1)
 		else
-			slot1.txtNum.text = string.format("%s", slot2.val)
+			arg_11_1.txtNum.text = string.format("%s", arg_11_2.val)
 		end
 	else
-		slot1.txtNum.text = ""
+		arg_11_1.txtNum.text = ""
 	end
 
-	slot1.txtAdd.text = string.format("+%s%%", slot2.add * 0.1)
+	arg_11_1.txtAdd.text = string.format("+%s%%", arg_11_2.add * 0.1)
 
-	UISpriteSetMgr.instance:setCommonSprite(slot1.imgIcon, string.format("icon_att_%s", slot2.key))
+	UISpriteSetMgr.instance:setCommonSprite(arg_11_1.imgIcon, string.format("icon_att_%s", arg_11_2.key))
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

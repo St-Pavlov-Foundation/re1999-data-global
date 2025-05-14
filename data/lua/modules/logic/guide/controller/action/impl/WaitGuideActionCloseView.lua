@@ -1,28 +1,28 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionCloseView", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionCloseView", package.seeall)
 
-slot0 = class("WaitGuideActionCloseView", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionCloseView", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._viewName = slot0.actionParam
+	arg_1_0._viewName = arg_1_0.actionParam
 
-	if ViewMgr.instance:isOpen(slot0._viewName) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	if ViewMgr.instance:isOpen(arg_1_0._viewName) then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1, slot2)
-	if slot0._viewName == slot1 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-		slot0:onDone(true)
+function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_0._viewName == arg_2_1 then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 end
 
-return slot0
+return var_0_0

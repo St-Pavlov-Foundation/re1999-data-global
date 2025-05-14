@@ -1,35 +1,44 @@
-module("modules.logic.fight.system.work.FightWorkEffectDamage", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectDamage", package.seeall)
 
-slot0 = class("FightWorkEffectDamage", FightEffectBase)
+local var_0_0 = class("FightWorkEffectDamage", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) and slot0._actEffectMO.effectNum > 0 then
-		FightFloatMgr.instance:float(slot1.id, slot0:getFloatType(), slot1:isMySide() and -slot2 or slot2)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
 
-		if slot1.nameUI then
-			slot1.nameUI:addHp(-slot2)
+	if var_1_0 then
+		local var_1_1 = arg_1_0._actEffectMO.effectNum
+
+		if var_1_1 > 0 then
+			local var_1_2 = var_1_0:isMySide() and -var_1_1 or var_1_1
+			local var_1_3 = arg_1_0:getFloatType()
+
+			FightFloatMgr.instance:float(var_1_0.id, var_1_3, var_1_2)
+
+			if var_1_0.nameUI then
+				var_1_0.nameUI:addHp(-var_1_1)
+			end
+
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, -var_1_1)
 		end
-
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot2)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.getFloatType(slot0)
-	if FightHelper.isRestrain(slot0._fightStepMO.fromId, slot0._actEffectMO.targetId) then
-		if slot0._actEffectMO.effectType == FightEnum.EffectType.DAMAGE then
+function var_0_0.getFloatType(arg_2_0)
+	if FightHelper.isRestrain(arg_2_0._fightStepMO.fromId, arg_2_0._actEffectMO.targetId) then
+		if arg_2_0._actEffectMO.effectType == FightEnum.EffectType.DAMAGE then
 			return FightEnum.FloatType.restrain
-		elseif slot0._actEffectMO.effectType == FightEnum.EffectType.CRIT then
+		elseif arg_2_0._actEffectMO.effectType == FightEnum.EffectType.CRIT then
 			return FightEnum.FloatType.crit_restrain
 		end
-	elseif slot0._actEffectMO.effectType == FightEnum.EffectType.DAMAGE then
+	elseif arg_2_0._actEffectMO.effectType == FightEnum.EffectType.DAMAGE then
 		return FightEnum.FloatType.damage
-	elseif slot0._actEffectMO.effectType == FightEnum.EffectType.CRIT then
+	elseif arg_2_0._actEffectMO.effectType == FightEnum.EffectType.CRIT then
 		return FightEnum.FloatType.crit_damage
 	end
 
 	return FightEnum.FloatType.damage
 end
 
-return slot0
+return var_0_0

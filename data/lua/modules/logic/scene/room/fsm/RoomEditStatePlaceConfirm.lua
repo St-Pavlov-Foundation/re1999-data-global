@@ -1,23 +1,25 @@
-module("modules.logic.scene.room.fsm.RoomEditStatePlaceConfirm", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomEditStatePlaceConfirm", package.seeall)
 
-slot0 = class("RoomEditStatePlaceConfirm", SimpleFSMBaseState)
+local var_0_0 = class("RoomEditStatePlaceConfirm", SimpleFSMBaseState)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.onEnter(slot0)
-	uv0.super.onEnter(slot0)
+function var_0_0.onEnter(arg_2_0)
+	var_0_0.super.onEnter(arg_2_0)
 end
 
-function slot0.onLeave(slot0)
-	uv0.super.onLeave(slot0)
+function var_0_0.onLeave(arg_3_0)
+	var_0_0.super.onLeave(arg_3_0)
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_4_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

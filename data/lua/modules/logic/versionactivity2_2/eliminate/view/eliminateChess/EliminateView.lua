@@ -1,579 +1,663 @@
-module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateView", package.seeall)
 
-slot0 = class("EliminateView", BaseView)
+local var_0_0 = class("EliminateView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._viewGO = slot0.viewGO
-	slot0.viewGO = gohelper.findChild(slot0._viewGO, "#go_cameraMain/Middle/#go_eliminatechess")
-	slot0._goChessFrame = gohelper.findChild(slot0.viewGO, "Middle/#go_ChessFrame")
-	slot0._goTimes = gohelper.findChild(slot0.viewGO, "Middle/#go_Times")
-	slot0._txtTimes = gohelper.findChildText(slot0.viewGO, "Middle/#go_Times/#txt_Times")
-	slot0._txtTimeseff = gohelper.findChildText(slot0.viewGO, "Middle/#go_Times/#txt_Times_eff")
-	slot0._gochessBg = gohelper.findChild(slot0.viewGO, "Middle/#go_chessBg")
-	slot0._gochessBoard = gohelper.findChild(slot0.viewGO, "Middle/#go_chessBg/#go_chessBoard")
-	slot0._gochess = gohelper.findChild(slot0.viewGO, "Middle/#go_chessBg/#go_chess")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "Middle/#go_chessBg/#go_chess/#btn_click")
-	slot0._goskill = gohelper.findChild(slot0.viewGO, "Middle/#go_skill")
-	slot0._gomask = gohelper.findChild(slot0.viewGO, "Middle/#go_mask")
-	slot0._goResourceList = gohelper.findChild(slot0.viewGO, "Middle/Resource/#go_ResourceList")
-	slot0._goResourceItem = gohelper.findChild(slot0.viewGO, "Middle/Resource/#go_ResourceList/#go_ResourceItem")
-	slot0._imageResourceQuality = gohelper.findChildImage(slot0.viewGO, "Middle/Resource/#go_ResourceList/#go_ResourceItem/#image_ResourceQuality")
-	slot0._txtResourceNum = gohelper.findChildText(slot0.viewGO, "Middle/Resource/#go_ResourceList/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
-	slot0._btnChessBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_ChessBtn")
-	slot0._goPointViewList = gohelper.findChild(slot0.viewGO, "Right/#go_PointViewList")
-	slot0._goItem = gohelper.findChild(slot0.viewGO, "Right/#go_PointViewList/#go_Item")
-	slot0._imagePointPic = gohelper.findChildImage(slot0.viewGO, "Right/#go_PointViewList/#go_Item/#image_PointPic")
-	slot0._txtselfHP = gohelper.findChildText(slot0.viewGO, "Right/#go_PointViewList/#go_Item/image_SelfHPNumBG/#txt_selfHP")
-	slot0._txtenemyHP = gohelper.findChildText(slot0.viewGO, "Right/#go_PointViewList/#go_Item/imageEnemyHPNumBG/#txt_enemyHP")
-	slot0._goChessViewTips = gohelper.findChild(slot0.viewGO, "Right/#go_ChessViewTips")
-	slot0._btncloseChessViewTip = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_ChessViewTips/#btn_closeChessViewTip")
-	slot0._imageTipsBG = gohelper.findChildImage(slot0.viewGO, "Right/#go_ChessViewTips/#image_TipsBG")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._viewGO = arg_1_0.viewGO
+	arg_1_0.viewGO = gohelper.findChild(arg_1_0._viewGO, "#go_cameraMain/Middle/#go_eliminatechess")
+	arg_1_0._goChessFrame = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_ChessFrame")
+	arg_1_0._goTimes = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_Times")
+	arg_1_0._txtTimes = gohelper.findChildText(arg_1_0.viewGO, "Middle/#go_Times/#txt_Times")
+	arg_1_0._txtTimeseff = gohelper.findChildText(arg_1_0.viewGO, "Middle/#go_Times/#txt_Times_eff")
+	arg_1_0._gochessBg = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_chessBg")
+	arg_1_0._gochessBoard = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_chessBg/#go_chessBoard")
+	arg_1_0._gochess = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_chessBg/#go_chess")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_chessBg/#go_chess/#btn_click")
+	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_skill")
+	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_mask")
+	arg_1_0._goResourceList = gohelper.findChild(arg_1_0.viewGO, "Middle/Resource/#go_ResourceList")
+	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "Middle/Resource/#go_ResourceList/#go_ResourceItem")
+	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "Middle/Resource/#go_ResourceList/#go_ResourceItem/#image_ResourceQuality")
+	arg_1_0._txtResourceNum = gohelper.findChildText(arg_1_0.viewGO, "Middle/Resource/#go_ResourceList/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
+	arg_1_0._btnChessBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_ChessBtn")
+	arg_1_0._goPointViewList = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PointViewList")
+	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PointViewList/#go_Item")
+	arg_1_0._imagePointPic = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_PointViewList/#go_Item/#image_PointPic")
+	arg_1_0._txtselfHP = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_PointViewList/#go_Item/image_SelfHPNumBG/#txt_selfHP")
+	arg_1_0._txtenemyHP = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_PointViewList/#go_Item/imageEnemyHPNumBG/#txt_enemyHP")
+	arg_1_0._goChessViewTips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_ChessViewTips")
+	arg_1_0._btncloseChessViewTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_ChessViewTips/#btn_closeChessViewTip")
+	arg_1_0._imageTipsBG = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_ChessViewTips/#image_TipsBG")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnChessBtn:AddClickListener(slot0._btnChessBtnOnClick, slot0)
-	slot0._btncloseChessViewTip:AddClickListener(slot0._btncloseChessViewTipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnChessBtn:AddClickListener(arg_2_0._btnChessBtnOnClick, arg_2_0)
+	arg_2_0._btncloseChessViewTip:AddClickListener(arg_2_0._btncloseChessViewTipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnChessBtn:RemoveClickListener()
-	slot0._btncloseChessViewTip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnChessBtn:RemoveClickListener()
+	arg_3_0._btncloseChessViewTip:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_4_0)
+	return
 end
 
-function slot0._btncloseChessViewTipOnClick(slot0)
-	slot0:hideSoliderChessTip()
+function var_0_0._btncloseChessViewTipOnClick(arg_5_0)
+	arg_5_0:hideSoliderChessTip()
 end
 
-function slot0._btnChessBtnOnClick(slot0)
+function var_0_0._btnChessBtnOnClick(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
 
-	slot0._isShowChessViewTips = not slot0._isShowChessViewTips
+	arg_6_0._isShowChessViewTips = not arg_6_0._isShowChessViewTips
 
-	if not slot0._isShowChessViewTips then
-		if slot0._chessTipsAni then
-			slot0._chessTipsAni:Play("close")
+	if not arg_6_0._isShowChessViewTips then
+		if arg_6_0._chessTipsAni then
+			arg_6_0._chessTipsAni:Play("close")
 		end
 
-		TaskDispatcher.runDelay(slot0.setChessViewTipsActive, slot0, 0.27)
+		TaskDispatcher.runDelay(arg_6_0.setChessViewTipsActive, arg_6_0, 0.27)
 	else
-		slot0:setChessViewTipsActive()
+		arg_6_0:setChessViewTipsActive()
 	end
 end
 
-function slot0.setChessViewTipsActive(slot0)
-	gohelper.setActive(slot0._goChessViewTips, slot0._isShowChessViewTips)
+function var_0_0.setChessViewTipsActive(arg_7_0)
+	gohelper.setActive(arg_7_0._goChessViewTips, arg_7_0._isShowChessViewTips)
 
-	if slot0._isShowChessViewTips then
-		for slot4, slot5 in pairs(slot0._slotList) do
-			slot5:refreshView()
+	if arg_7_0._isShowChessViewTips then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._slotList) do
+			iter_7_1:refreshView()
 		end
 	end
 end
 
-slot1 = SLFramework.UGUI.UIClickListener
+local var_0_1 = SLFramework.UGUI.UIClickListener
 
-function slot0._editableInitView(slot0)
-	slot0._goChessTipViewClick = uv0.Get(slot0._goChessViewTips)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._goChessTipViewClick = var_0_1.Get(arg_8_0._goChessViewTips)
 
-	slot0._goChessTipViewClick:AddClickListener(slot0._btnChessBtnOnClick, slot0)
+	arg_8_0._goChessTipViewClick:AddClickListener(arg_8_0._btnChessBtnOnClick, arg_8_0)
 
-	slot0._soliderView = nil
-	slot0._timeAni = slot0._goTimes:GetComponent(typeof(UnityEngine.Animator))
-	slot0._chessTipsAni = slot0._goChessViewTips:GetComponent(typeof(UnityEngine.Animator))
-	slot0._eliminateChessViewAni = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_8_0._soliderView = nil
+	arg_8_0._timeAni = arg_8_0._goTimes:GetComponent(typeof(UnityEngine.Animator))
+	arg_8_0._chessTipsAni = arg_8_0._goChessViewTips:GetComponent(typeof(UnityEngine.Animator))
+	arg_8_0._eliminateChessViewAni = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot0._btncloseChessViewTip, false)
+	gohelper.setActive(arg_8_0._btncloseChessViewTip, false)
 
-	slot0._goDengKen = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_dengken")
-	slot0._goLuoPeiLa = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_luopeila")
-	slot0._goLuoPeiLaLeft = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_luopeila/left")
-	slot0._goLuoPeiLaRight = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_luopeila/right")
-	slot0._goLuoPeiLaTop = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_luopeila/top")
-	slot0._goLuoPeiLaBottom = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_luopeila/bottom")
-	slot0._goWeierting1 = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_weierting1")
-	slot0._goWeierting2 = gohelper.findChild(slot0.viewGO, "Middle/#go_skill/skill_weierting2")
-	slot0._goResource = gohelper.findChild(slot0.viewGO, "Middle/Resource")
+	arg_8_0._goDengKen = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_dengken")
+	arg_8_0._goLuoPeiLa = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_luopeila")
+	arg_8_0._goLuoPeiLaLeft = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_luopeila/left")
+	arg_8_0._goLuoPeiLaRight = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_luopeila/right")
+	arg_8_0._goLuoPeiLaTop = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_luopeila/top")
+	arg_8_0._goLuoPeiLaBottom = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_luopeila/bottom")
+	arg_8_0._goWeierting1 = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_weierting1")
+	arg_8_0._goWeierting2 = gohelper.findChild(arg_8_0.viewGO, "Middle/#go_skill/skill_weierting2")
+	arg_8_0._goResource = gohelper.findChild(arg_8_0.viewGO, "Middle/Resource")
 
-	if EliminateChessItemController.instance:InitCloneGo(slot0._gochess, slot0._gochessBoard, slot0._gochessBg, slot0._gochessBg) then
+	if EliminateChessItemController.instance:InitCloneGo(arg_8_0._gochess, arg_8_0._gochessBoard, arg_8_0._gochessBg, arg_8_0._gochessBg) then
 		EliminateChessItemController.instance:InitChessBoard()
 		EliminateChessItemController.instance:InitChess()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:maskControl(true)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.OnChessSelect, slot0.onSelectItem, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformBegin, slot0.onPerformBegin, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformEnd, slot0.onPerformEnd, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.ShowChessInfo, slot0.showSoliderChessTip, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessEndViewOpen, slot0.match3ChessEndViewOpen, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessBeginViewClose, slot0.match3ChessBeginViewClose, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.ChessResourceFlyEffect, slot0.playResourceFlyEffect, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.ChessResourceFlyEffectPlayFinish, slot0.resourceFlyFinish, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.RefreshInitChessShow, slot0.refreshViewActive, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PlayEliminateEffect, slot0.playEliminateEffect, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, slot0.updateViewStateChangeEnd, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, slot0.updateViewState, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillViewOpen, slot0.characterSkillOpen, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillCancel, slot0.characterSkillClose, slot0)
-	slot0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPowerChange, slot0.updateStrongHoldItemInfo, slot0)
-	slot0:initView()
-	slot0:hideSoliderChessTip()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:maskControl(true)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.OnChessSelect, arg_9_0.onSelectItem, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformBegin, arg_9_0.onPerformBegin, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformEnd, arg_9_0.onPerformEnd, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.ShowChessInfo, arg_9_0.showSoliderChessTip, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessEndViewOpen, arg_9_0.match3ChessEndViewOpen, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessBeginViewClose, arg_9_0.match3ChessBeginViewClose, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.ChessResourceFlyEffect, arg_9_0.playResourceFlyEffect, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.ChessResourceFlyEffectPlayFinish, arg_9_0.resourceFlyFinish, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.RefreshInitChessShow, arg_9_0.refreshViewActive, arg_9_0)
+	arg_9_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PlayEliminateEffect, arg_9_0.playEliminateEffect, arg_9_0)
+	arg_9_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, arg_9_0.updateViewStateChangeEnd, arg_9_0)
+	arg_9_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, arg_9_0.updateViewState, arg_9_0)
+	arg_9_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillViewOpen, arg_9_0.characterSkillOpen, arg_9_0)
+	arg_9_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillCancel, arg_9_0.characterSkillClose, arg_9_0)
+	arg_9_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.StrongHoldPowerChange, arg_9_0.updateStrongHoldItemInfo, arg_9_0)
+	arg_9_0:initView()
+	arg_9_0:hideSoliderChessTip()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onSelectItem(slot0, slot1, slot2, slot3)
-	if slot0._maskState or slot0:checkSkillRelease(slot1, slot2) then
-		if slot0._lastSelectX and slot0._lastSelectY then
-			slot0:setSelect(false, slot0._lastSelectX, slot0._lastSelectY)
-			slot0:recordLastSelect(nil, )
+function var_0_0.onSelectItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_0._maskState or arg_11_0:checkSkillRelease(arg_11_1, arg_11_2) then
+		if arg_11_0._lastSelectX and arg_11_0._lastSelectY then
+			arg_11_0:setSelect(false, arg_11_0._lastSelectX, arg_11_0._lastSelectY)
+			arg_11_0:recordLastSelect(nil, nil)
 		end
 
 		return
 	end
 
-	if slot0._lastSelectX and slot0._lastSelectY then
-		slot0:setSelect(false, slot0._lastSelectX, slot0._lastSelectY)
+	if arg_11_0._lastSelectX and arg_11_0._lastSelectY then
+		arg_11_0:setSelect(false, arg_11_0._lastSelectX, arg_11_0._lastSelectY)
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_sources_move)
 
-		if EliminateChessController.instance:exchangeCell(slot0._lastSelectX, slot0._lastSelectY, slot1, slot2) then
-			slot0:onPerformBegin()
-			slot0:recordLastSelect(nil, )
+		if EliminateChessController.instance:exchangeCell(arg_11_0._lastSelectX, arg_11_0._lastSelectY, arg_11_1, arg_11_2) then
+			arg_11_0:onPerformBegin()
+			arg_11_0:recordLastSelect(nil, nil)
 		else
-			if slot3 then
-				slot0:setSelect(true, slot1, slot2)
+			if arg_11_3 then
+				arg_11_0:setSelect(true, arg_11_1, arg_11_2)
 			end
 
-			slot0:recordLastSelect(slot1, slot2)
+			arg_11_0:recordLastSelect(arg_11_1, arg_11_2)
 		end
 	else
-		if slot3 then
-			slot0:setSelect(true, slot1, slot2)
+		if arg_11_3 then
+			arg_11_0:setSelect(true, arg_11_1, arg_11_2)
 		end
 
-		slot0:recordLastSelect(slot1, slot2)
+		arg_11_0:recordLastSelect(arg_11_1, arg_11_2)
 	end
 end
 
-function slot0.initView(slot0)
-	gohelper.setActive(slot0._goChessViewTips, false)
+function var_0_0.initView(arg_12_0)
+	gohelper.setActive(arg_12_0._goChessViewTips, false)
 
-	slot0._isShowChessViewTips = false
+	arg_12_0._isShowChessViewTips = false
 
-	slot0:calChessViewPosAndSize()
-	slot0:initSlot()
-	slot0:initResource()
-	slot0:initStrongHoldItem()
+	arg_12_0:calChessViewPosAndSize()
+	arg_12_0:initSlot()
+	arg_12_0:initResource()
+	arg_12_0:initStrongHoldItem()
 end
 
-function slot0.initSlot(slot0)
-	slot0._slotList = slot0:getUserDataTb_()
+function var_0_0.initSlot(arg_13_0)
+	arg_13_0._slotList = arg_13_0:getUserDataTb_()
 
-	for slot7, slot8 in ipairs(EliminateTeamChessModel.instance:getSlotIds()) do
-		slot9 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._imageTipsBG.gameObject, slot8)
-		slot10 = MonoHelper.addNoUpdateLuaComOnceToGo(slot9, EliminateTeamChessDetailItem)
+	local var_13_0 = EliminateTeamChessModel.instance:getSlotIds()
+	local var_13_1 = arg_13_0.viewContainer:getSetting().otherRes[1]
+	local var_13_2 = arg_13_0._imageTipsBG.gameObject
 
-		gohelper.setActive(slot9, true)
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_3 = arg_13_0:getResInst(var_13_1, var_13_2, iter_13_1)
+		local var_13_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_3, EliminateTeamChessDetailItem)
 
-		slot0._slotList[slot7] = slot10
+		gohelper.setActive(var_13_3, true)
 
-		slot10:setSoliderId(slot8)
+		arg_13_0._slotList[iter_13_0] = var_13_4
+
+		var_13_4:setSoliderId(iter_13_1)
 	end
 end
 
-function slot0.initResource(slot0)
-	slot0._resourceItem = slot0:getUserDataTb_()
+function var_0_0.initResource(arg_14_0)
+	local var_14_0 = EliminateTeamChessEnum.ResourceType
 
-	for slot5, slot6 in pairs(EliminateTeamChessEnum.ResourceType) do
-		slot7 = gohelper.clone(slot0._goResourceItem, slot0._goResourceList, slot5)
-		slot8 = gohelper.findChildImage(slot7, "#image_ResourceQuality")
-		slot9 = gohelper.findChildText(slot7, "#image_ResourceQuality/#txt_ResourceNum")
+	arg_14_0._resourceItem = arg_14_0:getUserDataTb_()
 
-		UISpriteSetMgr.instance:setV2a2EliminateSprite(slot8, EliminateTeamChessEnum.ResourceTypeToImagePath[slot5], false)
-		gohelper.setActive(slot7, true)
+	for iter_14_0, iter_14_1 in pairs(var_14_0) do
+		local var_14_1 = gohelper.clone(arg_14_0._goResourceItem, arg_14_0._goResourceList, iter_14_0)
+		local var_14_2 = gohelper.findChildImage(var_14_1, "#image_ResourceQuality")
+		local var_14_3 = gohelper.findChildText(var_14_1, "#image_ResourceQuality/#txt_ResourceNum")
+		local var_14_4 = EliminateTeamChessModel.instance:getResourceNumber(iter_14_0)
+		local var_14_5 = var_14_1:GetComponent(typeof(UnityEngine.Animator))
+		local var_14_6 = var_14_4 and var_14_4 or 0
 
-		slot9.text = EliminateTeamChessModel.instance:getResourceNumber(slot5) and slot10 or 0
-		slot0._resourceItem[slot5] = {
-			item = slot7,
-			ani = slot7:GetComponent(typeof(UnityEngine.Animator)),
-			resourceImage = slot8,
-			resourceNumberText = slot9
+		UISpriteSetMgr.instance:setV2a2EliminateSprite(var_14_2, EliminateTeamChessEnum.ResourceTypeToImagePath[iter_14_0], false)
+		gohelper.setActive(var_14_1, true)
+
+		var_14_3.text = var_14_6
+		arg_14_0._resourceItem[iter_14_0] = {
+			item = var_14_1,
+			ani = var_14_5,
+			resourceImage = var_14_2,
+			resourceNumberText = var_14_3
 		}
 	end
 end
 
-function slot0.initStrongHoldItem(slot0)
-	slot0._strongHoldItem = slot0:getUserDataTb_()
+function var_0_0.initStrongHoldItem(arg_15_0)
+	arg_15_0._strongHoldItem = arg_15_0:getUserDataTb_()
 
-	for slot5 = 1, #EliminateTeamChessModel.instance:getStrongholds() do
-		slot6 = slot1[slot5]
-		slot8 = gohelper.clone(slot0._goItem, slot0._goPointViewList, slot6.id)
-		slot9 = gohelper.findChildImage(slot8, "image_SelfHPNumBG")
-		slot10 = gohelper.findChildImage(slot8, "imageEnemyHPNumBG")
-		slot14 = gohelper.findChild(slot8, "image_SelfHPNumBG/vx_fire_01")
-		slot15 = gohelper.findChild(slot8, "imageEnemyHPNumBG/vx_fire_01")
-		gohelper.findChildText(slot8, "image_SelfHPNumBG/#txt_selfHP").text = slot6.myScore
-		gohelper.findChildText(slot8, "imageEnemyHPNumBG/#txt_enemyHP").text = slot6.enemyScore
+	local var_15_0 = EliminateTeamChessModel.instance:getStrongholds()
 
-		if not string.nilorempty(slot6:getStrongholdConfig().eliminateBg) then
-			UISpriteSetMgr.instance:setV2a2eliminatePointSprite(gohelper.findChildImage(slot8, "#image_PointPic"), slot16, false)
+	for iter_15_0 = 1, #var_15_0 do
+		local var_15_1 = var_15_0[iter_15_0]
+		local var_15_2 = var_15_1:getStrongholdConfig()
+		local var_15_3 = gohelper.clone(arg_15_0._goItem, arg_15_0._goPointViewList, var_15_1.id)
+		local var_15_4 = gohelper.findChildImage(var_15_3, "image_SelfHPNumBG")
+		local var_15_5 = gohelper.findChildImage(var_15_3, "imageEnemyHPNumBG")
+		local var_15_6 = gohelper.findChildText(var_15_3, "image_SelfHPNumBG/#txt_selfHP")
+		local var_15_7 = gohelper.findChildText(var_15_3, "imageEnemyHPNumBG/#txt_enemyHP")
+		local var_15_8 = gohelper.findChildImage(var_15_3, "#image_PointPic")
+		local var_15_9 = gohelper.findChild(var_15_3, "image_SelfHPNumBG/vx_fire_01")
+		local var_15_10 = gohelper.findChild(var_15_3, "imageEnemyHPNumBG/vx_fire_01")
+
+		var_15_6.text = var_15_1.myScore
+		var_15_7.text = var_15_1.enemyScore
+
+		local var_15_11 = var_15_2.eliminateBg
+
+		if not string.nilorempty(var_15_11) then
+			UISpriteSetMgr.instance:setV2a2eliminatePointSprite(var_15_8, var_15_11, false)
 		end
 
-		gohelper.setActive(slot8, true)
+		gohelper.setActive(var_15_3, true)
 
-		slot0._strongHoldItem[slot5] = {
-			item = slot8,
-			myText = slot11,
-			enemyText = slot12,
-			myImage = slot9,
-			enemyImage = slot10,
-			enemyVx = slot15,
-			selfVx = slot14
+		arg_15_0._strongHoldItem[iter_15_0] = {
+			item = var_15_3,
+			myText = var_15_6,
+			enemyText = var_15_7,
+			myImage = var_15_4,
+			enemyImage = var_15_5,
+			enemyVx = var_15_10,
+			selfVx = var_15_9
 		}
 
-		slot0:refreshStateByScore(slot0._strongHoldItem[slot5], slot6.myScore, slot6.enemyScore)
+		arg_15_0:refreshStateByScore(arg_15_0._strongHoldItem[iter_15_0], var_15_1.myScore, var_15_1.enemyScore)
 	end
 end
 
-function slot0.updateStrongHoldItemInfo(slot0)
-	if slot0._strongHoldItem == nil or #slot0._strongHoldItem == 0 then
+function var_0_0.updateStrongHoldItemInfo(arg_16_0)
+	if arg_16_0._strongHoldItem == nil or #arg_16_0._strongHoldItem == 0 then
 		return
 	end
 
-	for slot5 = 1, #EliminateTeamChessModel.instance:getStrongholds() do
-		slot6 = slot0._strongHoldItem[slot5]
-		slot6.myText.text = slot1[slot5].myScore
-		slot6.enemyText.text = slot1[slot5].enemyScore
+	local var_16_0 = EliminateTeamChessModel.instance:getStrongholds()
 
-		slot0:refreshStateByScore(slot6, slot1[slot5].myScore, slot1[slot5].enemyScore)
+	for iter_16_0 = 1, #var_16_0 do
+		local var_16_1 = arg_16_0._strongHoldItem[iter_16_0]
+
+		var_16_1.myText.text = var_16_0[iter_16_0].myScore
+		var_16_1.enemyText.text = var_16_0[iter_16_0].enemyScore
+
+		arg_16_0:refreshStateByScore(var_16_1, var_16_0[iter_16_0].myScore, var_16_0[iter_16_0].enemyScore)
 	end
 end
 
-function slot0.refreshStateByScore(slot0, slot1, slot2, slot3)
-	slot1.myText.color = slot3 < slot2 and EliminateLevelEnum.winColor or EliminateLevelEnum.loserColor
-	slot1.enemyText.color = slot2 < slot3 and EliminateLevelEnum.winColor or EliminateLevelEnum.loserColor
+function var_0_0.refreshStateByScore(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = arg_17_1.myText
+	local var_17_1 = arg_17_1.enemyText
+	local var_17_2 = arg_17_1.myImage
+	local var_17_3 = arg_17_1.enemyImage
+	local var_17_4 = arg_17_1.selfVx
+	local var_17_5 = arg_17_1.enemyVx
 
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(slot1.myImage, slot3 < slot2 and EliminateLevelEnum.winImageName1 or EliminateLevelEnum.loserImageName1, true)
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(slot1.enemyImage, slot2 < slot3 and EliminateLevelEnum.winImageName1 or EliminateLevelEnum.loserImageName1, true)
-	gohelper.setActive(slot1.enemyVx, slot2 < slot3)
-	gohelper.setActive(slot1.selfVx, slot3 < slot2)
+	var_17_0.color = arg_17_3 < arg_17_2 and EliminateLevelEnum.winColor or EliminateLevelEnum.loserColor
+	var_17_1.color = arg_17_2 < arg_17_3 and EliminateLevelEnum.winColor or EliminateLevelEnum.loserColor
+
+	local var_17_6 = arg_17_3 < arg_17_2 and EliminateLevelEnum.winImageName1 or EliminateLevelEnum.loserImageName1
+	local var_17_7 = arg_17_2 < arg_17_3 and EliminateLevelEnum.winImageName1 or EliminateLevelEnum.loserImageName1
+
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(var_17_2, var_17_6, true)
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(var_17_3, var_17_7, true)
+	gohelper.setActive(var_17_5, arg_17_2 < arg_17_3)
+	gohelper.setActive(var_17_4, arg_17_3 < arg_17_2)
 end
 
-function slot0.setTextColorAndSize(slot0, slot1, slot2, slot3)
-	slot1.color = slot2
-	slot1.fontSize = slot3
+function var_0_0.setTextColorAndSize(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	arg_18_1.color = arg_18_2
+	arg_18_1.fontSize = arg_18_3
 end
 
-function slot0.updateMovePoint(slot0)
-	if slot0._lastMovePoint and slot0._lastMovePoint == EliminateChessModel.instance:getMovePoint() then
+function var_0_0.updateMovePoint(arg_19_0)
+	local var_19_0 = EliminateChessModel.instance:getMovePoint()
+
+	if arg_19_0._lastMovePoint and arg_19_0._lastMovePoint == var_19_0 then
 		return
 	end
 
-	if slot0._lastMovePoint ~= nil and slot0._timeAni then
-		slot0._timeAni:Play("refresh")
+	if arg_19_0._lastMovePoint ~= nil and arg_19_0._timeAni then
+		arg_19_0._timeAni:Play("refresh")
 	end
 
-	slot2 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("eliminate_movePoint_txt"), slot1)
-	slot0._txtTimes.text = slot2
-	slot0._txtTimeseff.text = slot2
-	slot0._lastMovePoint = slot1
+	local var_19_1 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("eliminate_movePoint_txt"), var_19_0)
+
+	arg_19_0._txtTimes.text = var_19_1
+	arg_19_0._txtTimeseff.text = var_19_1
+	arg_19_0._lastMovePoint = var_19_0
 end
 
-function slot0.updateResource(slot0)
-	for slot4, slot5 in pairs(slot0._resourceItem) do
-		slot0:updateResourceDataChange(slot4, false)
+function var_0_0.updateResource(arg_20_0)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._resourceItem) do
+		arg_20_0:updateResourceDataChange(iter_20_0, false)
 	end
 end
 
-function slot0.updateResourceDataChange(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0.updateResourceDataChange(arg_21_0, arg_21_1, arg_21_2)
+	if string.nilorempty(arg_21_1) then
 		return
 	end
 
-	if slot0._resourceItem[slot1].resourceNumberText then
-		slot4.resourceNumberText.text = EliminateTeamChessModel.instance:getResourceNumber(slot1)
-		slot5 = slot4.ani
+	local var_21_0 = EliminateTeamChessModel.instance:getResourceNumber(arg_21_1)
+	local var_21_1 = arg_21_0._resourceItem[arg_21_1]
 
-		if slot2 and slot5 then
-			slot5:Play("add")
+	if var_21_1.resourceNumberText then
+		var_21_1.resourceNumberText.text = var_21_0
+
+		local var_21_2 = var_21_1.ani
+
+		if arg_21_2 and var_21_2 then
+			var_21_2:Play("add")
 		end
 	end
 end
 
-function slot0.setSelect(slot0, slot1, slot2, slot3)
-	slot4 = nil
+function var_0_0.setSelect(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	local var_22_0
 
-	if ((not slot2 or not slot3 or EliminateChessItemController.instance:getChessItem(slot2, slot3)) and EliminateChessItemController.instance:getChessItem(slot0._lastSelectX, slot0._lastSelectY)) ~= nil then
-		slot4:setSelect(slot1)
+	if arg_22_2 and arg_22_3 then
+		var_22_0 = EliminateChessItemController.instance:getChessItem(arg_22_2, arg_22_3)
+	else
+		var_22_0 = EliminateChessItemController.instance:getChessItem(arg_22_0._lastSelectX, arg_22_0._lastSelectY)
+	end
+
+	if var_22_0 ~= nil then
+		var_22_0:setSelect(arg_22_1)
 	end
 end
 
-function slot0.recordLastSelect(slot0, slot1, slot2)
-	slot0._lastSelectX = slot1
-	slot0._lastSelectY = slot2
+function var_0_0.recordLastSelect(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0._lastSelectX = arg_23_1
+	arg_23_0._lastSelectY = arg_23_2
 
-	slot0:updateTipTime()
-	slot0:tip(false)
+	arg_23_0:updateTipTime()
+	arg_23_0:tip(false)
 end
 
-function slot0.updateTipTime(slot0)
-	slot0._lastClickTime = os.time()
+function var_0_0.updateTipTime(arg_24_0)
+	arg_24_0._lastClickTime = os.time()
 end
 
-function slot0.checkTip(slot0)
-	if slot0._lastClickTime == nil then
-		slot0._lastClickTime = os.time()
+function var_0_0.checkTip(arg_25_0)
+	if arg_25_0._lastClickTime == nil then
+		arg_25_0._lastClickTime = os.time()
 	end
 
-	if EliminateEnum.DotMoveTipInterval <= os.time() - slot0._lastClickTime then
-		slot0:tip(true)
+	if os.time() - arg_25_0._lastClickTime >= EliminateEnum.DotMoveTipInterval then
+		arg_25_0:tip(true)
 	end
 end
 
-function slot0.tip(slot0, slot1)
-	if slot0._lastTipActive ~= nil and slot0._lastTipActive == slot1 then
+function var_0_0.tip(arg_26_0, arg_26_1)
+	if arg_26_0._lastTipActive ~= nil and arg_26_0._lastTipActive == arg_26_1 then
 		return
 	end
 
-	if slot1 and not slot0.canTip then
+	if arg_26_1 and not arg_26_0.canTip then
 		return
 	end
 
-	if EliminateChessModel.instance:getTipInfo() and slot2.from ~= nil then
-		for slot7 = 1, #slot2.eliminate, 2 do
-			EliminateChessItemController.instance:getChessItem(slot3[slot7], slot3[slot7 + 1]):toTip(slot1)
+	local var_26_0 = EliminateChessModel.instance:getTipInfo()
+
+	if var_26_0 and var_26_0.from ~= nil then
+		local var_26_1 = var_26_0.eliminate
+
+		for iter_26_0 = 1, #var_26_1, 2 do
+			local var_26_2 = var_26_1[iter_26_0]
+			local var_26_3 = var_26_1[iter_26_0 + 1]
+
+			EliminateChessItemController.instance:getChessItem(var_26_2, var_26_3):toTip(arg_26_1)
 		end
 	end
 
-	slot0._lastTipActive = slot1
+	arg_26_0._lastTipActive = arg_26_1
 end
 
-function slot0.updateViewState(slot0)
-	slot0:clearSelect()
-	slot0:maskControl(not (EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.Match3Chess))
-	slot0:setSendCheck(true)
+function var_0_0.updateViewState(arg_27_0)
+	local var_27_0 = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.Match3Chess
+
+	arg_27_0:clearSelect()
+	arg_27_0:maskControl(not var_27_0)
+	arg_27_0:setSendCheck(true)
 end
 
-function slot0.updateViewStateChangeEnd(slot0)
-	if EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.Match3Chess and slot0._eliminateChessViewAni then
-		slot0._eliminateChessViewAni:Play("open")
-		TaskDispatcher.runDelay(slot0.refreshViewActive, slot0, 0.33)
+function var_0_0.updateViewStateChangeEnd(arg_28_0)
+	local var_28_0 = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.Match3Chess
+
+	if var_28_0 and arg_28_0._eliminateChessViewAni then
+		arg_28_0._eliminateChessViewAni:Play("open")
+		TaskDispatcher.runDelay(arg_28_0.refreshViewActive, arg_28_0, 0.33)
 	end
 
-	if slot2 then
+	if var_28_0 then
 		EliminateChessController.instance:createInitMoveStepAndUpdatePos()
-		slot0:updateMovePoint()
-		slot0:updateResource()
+		arg_28_0:updateMovePoint()
+		arg_28_0:updateResource()
 	end
 
-	slot0:changeTipState(slot2, false, true)
+	arg_28_0:changeTipState(var_28_0, false, true)
 end
 
-function slot0.refreshViewActive(slot0, slot1)
-	slot3 = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.Match3Chess
+function var_0_0.refreshViewActive(arg_29_0, arg_29_1)
+	local var_29_0 = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.Match3Chess
 
-	if slot1 == nil then
-		slot1 = true
+	if arg_29_1 == nil then
+		arg_29_1 = true
 	end
 
-	if slot3 then
-		if slot1 and EliminateChessController.instance:buildSeqFlow(EliminateStepUtil.createStep(EliminateEnum.StepWorkType.StartShowView, EliminateEnum.ShowStartTime)) then
+	if var_29_0 then
+		if arg_29_1 then
+			local var_29_1 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.StartShowView, EliminateEnum.ShowStartTime)
+
+			if EliminateChessController.instance:buildSeqFlow(var_29_1) then
+				EliminateChessController.instance:startSeqStepFlow()
+			end
+		end
+
+		local var_29_2, var_29_3 = EliminateChessController.instance:createInitMoveStep()
+
+		if var_29_2 then
 			EliminateChessController.instance:startSeqStepFlow()
 		end
 
-		slot4, slot5 = EliminateChessController.instance:createInitMoveStep()
+		local var_29_4 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.HandleData)
 
-		if slot4 then
-			EliminateChessController.instance:startSeqStepFlow()
+		EliminateChessController.instance:buildSeqFlow(var_29_4)
+
+		arg_29_0._roundBeginPerform = true
+	end
+end
+
+function var_0_0.onPerformBegin(arg_30_0)
+	arg_30_0:maskControl(true)
+	arg_30_0:changeTipState(false, true, false)
+end
+
+function var_0_0.onPerformEnd(arg_31_0)
+	arg_31_0:changeTipState(true, false, true)
+	arg_31_0:updateTipTime()
+	arg_31_0:updateMovePoint()
+
+	if arg_31_0._roundBeginPerform then
+		local var_31_0 = EliminateLevelModel.instance:getRoundNumber()
+		local var_31_1 = EliminateLevelModel.instance:getLevelId()
+
+		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.Match3RoundBegin, string.format("%s_%s", var_31_1, var_31_0))
+
+		arg_31_0._roundBeginPerform = false
+	end
+
+	local var_31_2 = false
+	local var_31_3 = false
+
+	if arg_31_0.check then
+		var_31_3 = EliminateChessController.instance:checkState()
+		var_31_2 = var_31_3
+	else
+		var_31_2 = true
+	end
+
+	if var_31_3 then
+		arg_31_0:setSendCheck(false)
+	end
+
+	arg_31_0:maskControl(var_31_2)
+end
+
+function var_0_0.setSendCheck(arg_32_0, arg_32_1)
+	arg_32_0.check = arg_32_1
+end
+
+function var_0_0.maskControl(arg_33_0, arg_33_1)
+	arg_33_0._maskState = arg_33_1
+
+	gohelper.setActive(arg_33_0._gomask, arg_33_1)
+end
+
+function var_0_0.showSoliderChessTip(arg_34_0, arg_34_1)
+	if arg_34_0._soliderView == nil then
+		local var_34_0 = arg_34_0.viewContainer:getSetting().otherRes[6]
+		local var_34_1 = arg_34_0:getResInst(var_34_0, arg_34_0._goChessViewTips)
+
+		arg_34_0._soliderView = MonoHelper.addNoUpdateLuaComOnceToGo(var_34_1, EliminateChessTipView)
+
+		local var_34_2 = arg_34_0._imageTipsBG.gameObject.transform
+		local var_34_3 = recthelper.getAnchorX(var_34_2) - recthelper.getWidth(var_34_2) + EliminateEnum.teamChessDescTipOffsetX
+
+		if var_34_3 < EliminateEnum.teamChessDescMinAnchorX then
+			var_34_3 = EliminateEnum.teamChessDescMinAnchorX
 		end
 
-		EliminateChessController.instance:buildSeqFlow(EliminateStepUtil.createStep(EliminateEnum.StepWorkType.HandleData))
-
-		slot0._roundBeginPerform = true
-	end
-end
-
-function slot0.onPerformBegin(slot0)
-	slot0:maskControl(true)
-	slot0:changeTipState(false, true, false)
-end
-
-function slot0.onPerformEnd(slot0)
-	slot0:changeTipState(true, false, true)
-	slot0:updateTipTime()
-	slot0:updateMovePoint()
-
-	if slot0._roundBeginPerform then
-		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.Match3RoundBegin, string.format("%s_%s", EliminateLevelModel.instance:getLevelId(), EliminateLevelModel.instance:getRoundNumber()))
-
-		slot0._roundBeginPerform = false
+		recthelper.setAnchorX(var_34_1.transform, var_34_3)
+		recthelper.setAnchorY(var_34_1.transform, EliminateEnum.teamChessDescTipOffsetY)
 	end
 
-	slot1 = false
-	slot1 = (not slot0.check or EliminateChessController.instance:checkState()) and true
-
-	if false then
-		slot0:setSendCheck(false)
-	end
-
-	slot0:maskControl(slot1)
+	arg_34_0._soliderView:setSoliderIdAndShowType(arg_34_1, EliminateTeamChessEnum.ChessTipType.showDesc)
+	gohelper.setActive(arg_34_0._btncloseChessViewTip, true)
+	arg_34_0._btncloseChessViewTip:AddClickListener(arg_34_0._btncloseChessViewTipOnClick, arg_34_0)
 end
 
-function slot0.setSendCheck(slot0, slot1)
-	slot0.check = slot1
-end
-
-function slot0.maskControl(slot0, slot1)
-	slot0._maskState = slot1
-
-	gohelper.setActive(slot0._gomask, slot1)
-end
-
-function slot0.showSoliderChessTip(slot0, slot1)
-	if slot0._soliderView == nil then
-		slot0._soliderView = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[6], slot0._goChessViewTips), EliminateChessTipView)
-		slot4 = slot0._imageTipsBG.gameObject.transform
-
-		if recthelper.getAnchorX(slot4) - recthelper.getWidth(slot4) + EliminateEnum.teamChessDescTipOffsetX < EliminateEnum.teamChessDescMinAnchorX then
-			slot7 = EliminateEnum.teamChessDescMinAnchorX
-		end
-
-		recthelper.setAnchorX(slot3.transform, slot7)
-		recthelper.setAnchorY(slot3.transform, EliminateEnum.teamChessDescTipOffsetY)
-	end
-
-	slot0._soliderView:setSoliderIdAndShowType(slot1, EliminateTeamChessEnum.ChessTipType.showDesc)
-	gohelper.setActive(slot0._btncloseChessViewTip, true)
-	slot0._btncloseChessViewTip:AddClickListener(slot0._btncloseChessViewTipOnClick, slot0)
-end
-
-function slot0.hideSoliderChessTip(slot0)
-	if slot0._soliderView then
-		slot0._soliderView:hideView(function ()
-			gohelper.setActive(uv0._btncloseChessViewTip, false)
+function var_0_0.hideSoliderChessTip(arg_35_0)
+	if arg_35_0._soliderView then
+		arg_35_0._soliderView:hideView(function()
+			gohelper.setActive(arg_35_0._btncloseChessViewTip, false)
 		end, nil)
 	end
 
-	slot0._btncloseChessViewTip:RemoveClickListener()
+	arg_35_0._btncloseChessViewTip:RemoveClickListener()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_37_0)
+	return
 end
 
-function slot0.calChessViewPosAndSize(slot0)
-	slot1 = slot0._gochessBg.transform
-	slot2, slot3 = EliminateChessItemController.instance:getMaxWidthAndHeight()
+function var_0_0.calChessViewPosAndSize(arg_38_0)
+	local var_38_0 = arg_38_0._gochessBg.transform
+	local var_38_1, var_38_2 = EliminateChessItemController.instance:getMaxWidthAndHeight()
 
-	recthelper.setSize(slot1, slot2, slot3)
+	recthelper.setSize(var_38_0, var_38_1, var_38_2)
 
-	slot4, slot5 = EliminateChessItemController.instance:getMaxLineAndRow()
-	slot6 = 0
-	slot7 = 0
-	slot7 = (EliminateEnum.ChessMaxLineValue - slot4) * EliminateEnum.ChessHeight * 0.5
-	slot8, slot9 = recthelper.getAnchor(slot1)
+	local var_38_3, var_38_4 = EliminateChessItemController.instance:getMaxLineAndRow()
+	local var_38_5 = 0
+	local var_38_6 = 0
+	local var_38_7 = (EliminateEnum.ChessMaxLineValue - var_38_3) * EliminateEnum.ChessHeight * 0.5
+	local var_38_8 = (EliminateEnum.ChessMaxRowValue - var_38_4) * EliminateEnum.ChessWidth * 0.5
+	local var_38_9, var_38_10 = recthelper.getAnchor(var_38_0)
 
-	recthelper.setAnchor(slot1, slot8 + (EliminateEnum.ChessMaxRowValue - slot5) * EliminateEnum.ChessWidth * 0.5, slot9 + slot7)
+	recthelper.setAnchor(var_38_0, var_38_9 + var_38_8, var_38_10 + var_38_7)
 
-	slot10, slot11 = recthelper.getAnchor(slot0._goResource.transform)
+	local var_38_11, var_38_12 = recthelper.getAnchor(arg_38_0._goResource.transform)
 
-	recthelper.setAnchorY(slot0._goResource.transform, slot11 + slot7)
-	recthelper.setSize(slot0._goChessFrame.transform, EliminateEnum.chessFrameBgMaxWidth * slot5 / EliminateEnum.ChessMaxRowValue, EliminateEnum.chessFrameBgMaxHeight * slot4 / EliminateEnum.ChessMaxLineValue)
+	recthelper.setAnchorY(arg_38_0._goResource.transform, var_38_12 + var_38_7)
+
+	local var_38_13 = EliminateEnum.chessFrameBgMaxWidth * var_38_4 / EliminateEnum.ChessMaxRowValue
+	local var_38_14 = EliminateEnum.chessFrameBgMaxHeight * var_38_3 / EliminateEnum.ChessMaxLineValue
+
+	recthelper.setSize(arg_38_0._goChessFrame.transform, var_38_13, var_38_14)
 end
 
-function slot0.match3ChessEndViewOpen(slot0)
-	slot0:changeTipState(false, true, false)
+function var_0_0.match3ChessEndViewOpen(arg_39_0)
+	arg_39_0:changeTipState(false, true, false)
 end
 
-function slot0.match3ChessBeginViewClose(slot0)
-	slot0:changeTipState(true, false, true)
+function var_0_0.match3ChessBeginViewClose(arg_40_0)
+	arg_40_0:changeTipState(true, false, true)
 end
 
-function slot0.changeTipState(slot0, slot1, slot2, slot3)
-	slot0.canTip = slot1
+function var_0_0.changeTipState(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	arg_41_0.canTip = arg_41_1
 
-	if slot2 then
-		slot0._lastClickTime = nil
+	if arg_41_2 then
+		arg_41_0._lastClickTime = nil
 
-		slot0:tip(false)
-		TaskDispatcher.cancelTask(slot0.checkTip, slot0)
+		arg_41_0:tip(false)
+		TaskDispatcher.cancelTask(arg_41_0.checkTip, arg_41_0)
 	end
 
-	if slot3 then
-		slot0._lastClickTime = nil
+	if arg_41_3 then
+		arg_41_0._lastClickTime = nil
 
-		TaskDispatcher.cancelTask(slot0.checkTip, slot0)
-		TaskDispatcher.runRepeat(slot0.checkTip, slot0, 1)
+		TaskDispatcher.cancelTask(arg_41_0.checkTip, arg_41_0)
+		TaskDispatcher.runRepeat(arg_41_0.checkTip, arg_41_0, 1)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.checkTip, slot0)
-	TaskDispatcher.cancelTask(slot0.setChessViewTipsActive, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshViewActive, slot0)
+function var_0_0.onDestroyView(arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.checkTip, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.setChessViewTipsActive, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.refreshViewActive, arg_42_0)
 
-	if slot0._soliderView then
-		slot0._soliderView:onDestroy()
+	if arg_42_0._soliderView then
+		arg_42_0._soliderView:onDestroy()
 
-		slot0._soliderView = nil
+		arg_42_0._soliderView = nil
 	end
 
-	if slot0._goChessTipViewClick then
-		slot0._goChessTipViewClick:RemoveClickListener()
+	if arg_42_0._goChessTipViewClick then
+		arg_42_0._goChessTipViewClick:RemoveClickListener()
 
-		slot0._goChessTipViewClick = nil
+		arg_42_0._goChessTipViewClick = nil
 	end
 
-	if slot0.flyItemPool then
-		slot0.flyItemPool:dispose()
+	if arg_42_0.flyItemPool then
+		arg_42_0.flyItemPool:dispose()
 
-		slot0.flyItemPool = nil
+		arg_42_0.flyItemPool = nil
 	end
 
-	slot0._timeAni = nil
-	slot0._lastSelectX = nil
-	slot0._lastSelectY = nil
+	arg_42_0._timeAni = nil
+	arg_42_0._lastSelectX = nil
+	arg_42_0._lastSelectY = nil
 end
 
-function slot0.checkSkillRelease(slot0, slot1, slot2)
+function var_0_0.checkSkillRelease(arg_43_0, arg_43_1, arg_43_2)
 	if not EliminateLevelController.instance:canReleaseByRound() then
 		return false
 	end
 
 	if EliminateLevelController.instance:getCurSelectSkill() ~= nil then
-		if slot0.cacheTemp ~= nil then
-			for slot6 = 1, #slot0.cacheTemp do
-				if slot0.cacheTemp[slot6].x == slot1 and slot0.cacheTemp[slot6].y == slot2 then
+		if arg_43_0.cacheTemp ~= nil then
+			for iter_43_0 = 1, #arg_43_0.cacheTemp do
+				if arg_43_0.cacheTemp[iter_43_0].x == arg_43_1 and arg_43_0.cacheTemp[iter_43_0].y == arg_43_2 then
 					return false
 				end
 			end
 		end
 
-		EliminateLevelController.instance:setSkillDataParams(slot1, slot2)
-		slot0:setSelect(true, slot1, slot2)
+		EliminateLevelController.instance:setSkillDataParams(arg_43_1, arg_43_2)
+		arg_43_0:setSelect(true, arg_43_1, arg_43_2)
 
-		if slot0.cacheTemp == nil then
-			slot0.cacheTemp = {}
+		if arg_43_0.cacheTemp == nil then
+			arg_43_0.cacheTemp = {}
 		end
 
-		table.insert(slot0.cacheTemp, {
-			x = slot1,
-			y = slot2
+		table.insert(arg_43_0.cacheTemp, {
+			x = arg_43_1,
+			y = arg_43_2
 		})
 
 		if EliminateLevelController.instance:canRelease() then
-			slot0:maskControl(true)
-			EliminateLevelController.instance:releaseSkill(slot0.releaseSkillSuccess, slot0)
+			arg_43_0:maskControl(true)
+			EliminateLevelController.instance:releaseSkill(arg_43_0.releaseSkillSuccess, arg_43_0)
 
 			return true
 		end
@@ -582,120 +666,122 @@ function slot0.checkSkillRelease(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.clearSelect(slot0)
-	if slot0.cacheTemp == nil then
+function var_0_0.clearSelect(arg_44_0)
+	if arg_44_0.cacheTemp == nil then
 		return
 	end
 
-	for slot4 = 1, #slot0.cacheTemp do
-		slot0:setSelect(false, slot0.cacheTemp[slot4].x, slot0.cacheTemp[slot4].y)
+	for iter_44_0 = 1, #arg_44_0.cacheTemp do
+		arg_44_0:setSelect(false, arg_44_0.cacheTemp[iter_44_0].x, arg_44_0.cacheTemp[iter_44_0].y)
 	end
 
-	slot0.cacheTemp = nil
+	arg_44_0.cacheTemp = nil
 end
 
-function slot0.releaseSkillSuccess(slot0)
-	slot0:characterSkillClose(false)
+function var_0_0.releaseSkillSuccess(arg_45_0)
+	arg_45_0:characterSkillClose(false)
 end
 
-function slot0.characterSkillOpen(slot0)
-	slot0:clearSelect()
+function var_0_0.characterSkillOpen(arg_46_0)
+	arg_46_0:clearSelect()
 
-	if slot0._lastSelectX ~= nil and slot0._lastSelectY ~= nil then
-		slot0:setSelect(false, slot0._lastSelectX, slot0._lastSelectY)
-		slot0:recordLastSelect(nil, )
+	if arg_46_0._lastSelectX ~= nil and arg_46_0._lastSelectY ~= nil then
+		arg_46_0:setSelect(false, arg_46_0._lastSelectX, arg_46_0._lastSelectY)
+		arg_46_0:recordLastSelect(nil, nil)
 	end
 
-	slot0:changeTipState(false, true, false)
+	arg_46_0:changeTipState(false, true, false)
 end
 
-function slot0.characterSkillClose(slot0, slot1)
-	if slot1 then
-		slot0:maskControl(false)
+function var_0_0.characterSkillClose(arg_47_0, arg_47_1)
+	if arg_47_1 then
+		arg_47_0:maskControl(false)
 	end
 
-	slot0:clearSelect()
-	slot0:changeTipState(true, false, true)
+	arg_47_0:clearSelect()
+	arg_47_0:changeTipState(true, false, true)
 end
 
-function slot0.playResourceFlyEffect(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6 = transformhelper.getPos(slot0._goResourceList.transform)
+function var_0_0.playResourceFlyEffect(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
+	local var_48_0, var_48_1, var_48_2 = transformhelper.getPos(arg_48_0._goResourceList.transform)
 
-	for slot10 = 1, #slot1 do
-		slot11 = slot1[slot10]
+	for iter_48_0 = 1, #arg_48_1 do
+		local var_48_3 = arg_48_1[iter_48_0]
 
-		if slot0._resourceItem and slot0._resourceItem[slot11] then
-			slot4, slot5, slot6 = transformhelper.getPos(slot0._resourceItem[slot11].item.transform)
+		if arg_48_0._resourceItem and arg_48_0._resourceItem[var_48_3] then
+			local var_48_4
+
+			var_48_0, var_48_1, var_48_4 = transformhelper.getPos(arg_48_0._resourceItem[var_48_3].item.transform)
 		end
 
-		EliminateChessController.instance:dispatchEvent(EliminateChessEvent.ChessResourceFlyEffectPlay, slot11, slot2, slot3, slot4, slot5)
+		EliminateChessController.instance:dispatchEvent(EliminateChessEvent.ChessResourceFlyEffectPlay, var_48_3, arg_48_2, arg_48_3, var_48_0, var_48_1)
 	end
 end
 
-function slot0.resourceFlyFinish(slot0, slot1)
-	slot0:updateResourceDataChange(slot1, true)
+function var_0_0.resourceFlyFinish(arg_49_0, arg_49_1)
+	arg_49_0:updateResourceDataChange(arg_49_1, true)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_sources_lit)
 end
 
-function slot0.playEliminateEffect(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	slot9 = 0
+function var_0_0.playEliminateEffect(arg_50_0, arg_50_1, arg_50_2, arg_50_3, arg_50_4, arg_50_5, arg_50_6, arg_50_7, arg_50_8)
+	local var_50_0 = 0
 
-	if slot1 == EliminateEnum.EffectType.crossEliminate then
-		if slot6 then
+	if arg_50_1 == EliminateEnum.EffectType.crossEliminate then
+		if arg_50_6 then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_luopeila_skill)
-			transformhelper.setPos(slot0._goLuoPeiLa.transform, slot4, slot5, 0)
+			transformhelper.setPos(arg_50_0._goLuoPeiLa.transform, arg_50_4, arg_50_5, 0)
 
-			slot9 = 0.8
+			var_50_0 = 0.8
 
-			gohelper.setActive(slot0._goLuoPeiLaLeft, slot2 ~= 1)
-			gohelper.setActive(slot0._goLuoPeiLaRight, slot2 ~= EliminateEnum.ChessMaxRowValue)
-			gohelper.setActive(slot0._goLuoPeiLaTop, slot3 ~= EliminateEnum.ChessMaxLineValue)
-			gohelper.setActive(slot0._goLuoPeiLaBottom, slot3 ~= 1)
+			gohelper.setActive(arg_50_0._goLuoPeiLaLeft, arg_50_2 ~= 1)
+			gohelper.setActive(arg_50_0._goLuoPeiLaRight, arg_50_2 ~= EliminateEnum.ChessMaxRowValue)
+			gohelper.setActive(arg_50_0._goLuoPeiLaTop, arg_50_3 ~= EliminateEnum.ChessMaxLineValue)
+			gohelper.setActive(arg_50_0._goLuoPeiLaBottom, arg_50_3 ~= 1)
 		end
 
-		gohelper.setActive(slot0._goLuoPeiLa, slot6)
+		gohelper.setActive(arg_50_0._goLuoPeiLa, arg_50_6)
 	end
 
-	if slot1 == EliminateEnum.EffectType.blockEliminate then
-		if slot6 then
+	if arg_50_1 == EliminateEnum.EffectType.blockEliminate then
+		if arg_50_6 then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_dengken_skill)
-			transformhelper.setPos(slot0._goDengKen.transform, slot4, slot5, 0)
-			gohelper.setActive(slot0._goDengKen, slot6)
+			transformhelper.setPos(arg_50_0._goDengKen.transform, arg_50_4, arg_50_5, 0)
+			gohelper.setActive(arg_50_0._goDengKen, arg_50_6)
 
-			slot9 = 0.8
+			var_50_0 = 0.8
 		end
 
-		gohelper.setActive(slot0._goDengKen, slot6)
+		gohelper.setActive(arg_50_0._goDengKen, arg_50_6)
 	end
 
-	if slot1 == EliminateEnum.EffectType.exchange_1 then
-		if slot6 then
+	if arg_50_1 == EliminateEnum.EffectType.exchange_1 then
+		if arg_50_6 then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_weierting_skill)
-			transformhelper.setPos(slot0._goWeierting1.transform, slot4, slot5, 0)
+			transformhelper.setPos(arg_50_0._goWeierting1.transform, arg_50_4, arg_50_5, 0)
 
-			slot9 = 0.6
+			var_50_0 = 0.6
 		end
 
-		gohelper.setActive(slot0._goWeierting1, slot6)
+		gohelper.setActive(arg_50_0._goWeierting1, arg_50_6)
 	end
 
-	if slot1 == EliminateEnum.EffectType.exchange_2 then
-		if slot6 then
-			transformhelper.setPos(slot0._goWeierting2.transform, slot4, slot5, 0)
+	if arg_50_1 == EliminateEnum.EffectType.exchange_2 then
+		if arg_50_6 then
+			transformhelper.setPos(arg_50_0._goWeierting2.transform, arg_50_4, arg_50_5, 0)
 
-			slot9 = 0.6
+			var_50_0 = 0.6
 		end
 
-		gohelper.setActive(slot0._goWeierting2, slot6)
+		gohelper.setActive(arg_50_0._goWeierting2, arg_50_6)
 	end
 
-	if slot7 then
-		TaskDispatcher.runDelay(function ()
-			if uv0 then
-				uv0(uv1)
+	if arg_50_7 then
+		TaskDispatcher.runDelay(function()
+			if arg_50_7 then
+				arg_50_7(arg_50_8)
 			end
-		end, slot0, slot9)
+		end, arg_50_0, var_50_0)
 	end
 end
 
-return slot0
+return var_0_0

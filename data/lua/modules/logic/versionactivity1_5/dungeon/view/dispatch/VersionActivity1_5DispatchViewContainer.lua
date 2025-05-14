@@ -1,32 +1,33 @@
-module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_5DispatchViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_5DispatchViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "container/left/#go_herocontainer/#scroll_hero"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "container/left/#go_herocontainer/#scroll_hero/Viewport/Content/#go_heroitem"
-	slot1.cellClass = VersionActivity1_5DispatchHeroItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 4
-	slot1.cellWidth = 154
-	slot1.cellHeight = 164
-	slot1.cellSpaceH = 25
-	slot1.cellSpaceV = 25
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "container/left/#go_herocontainer/#scroll_hero"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "container/left/#go_herocontainer/#scroll_hero/Viewport/Content/#go_heroitem"
+	var_1_0.cellClass = VersionActivity1_5DispatchHeroItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 4
+	var_1_0.cellWidth = 154
+	var_1_0.cellHeight = 164
+	var_1_0.cellSpaceH = 25
+	var_1_0.cellSpaceV = 25
 
 	return {
 		VersionActivity1_5DispatchView.New(),
-		LuaListScrollView.New(VersionActivity1_5HeroListModel.instance, slot1)
+		LuaListScrollView.New(VersionActivity1_5HeroListModel.instance, var_1_0)
 	}
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_page_turn)
 end
 
-function slot0.onContainerCloseFinish(slot0)
+function var_0_0.onContainerCloseFinish(arg_3_0)
 	VersionActivity1_5HeroListModel.instance:clear()
 end
 
-return slot0
+return var_0_0

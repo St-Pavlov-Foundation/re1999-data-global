@@ -1,40 +1,40 @@
-module("modules.logic.fight.view.FightViewMultiBossHp", package.seeall)
+﻿module("modules.logic.fight.view.FightViewMultiBossHp", package.seeall)
 
-slot0 = class("FightViewMultiBossHp", FightViewBossHp)
+local var_0_0 = class("FightViewMultiBossHp", FightViewBossHp)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._ani = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
+	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
 
-	slot0._ani:Play("idle", nil, )
+	arg_1_0._ani:Play("idle", nil, nil)
 end
 
-function slot0.onRefreshViewParam(slot0, slot1)
-	slot0._entityId = slot1
+function var_0_0.onRefreshViewParam(arg_2_0, arg_2_1)
+	arg_2_0._entityId = arg_2_1
 end
 
-function slot0._checkBossAndUpdate(slot0)
-	slot0._bossEntityMO = slot0:_getBossEntityMO()
+function var_0_0._checkBossAndUpdate(arg_3_0)
+	arg_3_0._bossEntityMO = arg_3_0:_getBossEntityMO()
 
-	if slot0._bossEntityMO then
-		gohelper.setActive(slot0.viewGO, true)
-		gohelper.setActive(slot0._bossHpGO, true)
-		slot0:_refreshBossHpUI()
+	if arg_3_0._bossEntityMO then
+		gohelper.setActive(arg_3_0.viewGO, true)
+		gohelper.setActive(arg_3_0._bossHpGO, true)
+		arg_3_0:_refreshBossHpUI()
 	end
 end
 
-function slot0._onEntityDead(slot0, slot1)
-	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
-		slot0._bossEntityMO = nil
+function var_0_0._onEntityDead(arg_4_0, arg_4_1)
+	if arg_4_0._bossEntityMO and arg_4_0._bossEntityMO.id == arg_4_1 then
+		arg_4_0._bossEntityMO = nil
 
-		slot0:_tweenFillAmount()
-		slot0._ani:Play("die", nil, )
+		arg_4_0:_tweenFillAmount()
+		arg_4_0._ani:Play("die", nil, nil)
 	end
 end
 
-function slot0._getBossEntityMO(slot0)
-	return FightDataHelper.entityMgr:getById(slot0._entityId)
+function var_0_0._getBossEntityMO(arg_5_0)
+	return FightDataHelper.entityMgr:getById(arg_5_0._entityId)
 end
 
-return slot0
+return var_0_0

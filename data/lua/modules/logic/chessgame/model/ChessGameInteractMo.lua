@@ -1,105 +1,107 @@
-module("modules.logic.chessgame.model.ChessGameInteractMo", package.seeall)
+﻿module("modules.logic.chessgame.model.ChessGameInteractMo", package.seeall)
 
-slot0 = class("ChessGameInteractMo")
+local var_0_0 = class("ChessGameInteractMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:setCo(slot1)
-	slot0:setMo(slot2)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:setCo(arg_1_1)
+	arg_1_0:setMo(arg_1_2)
 end
 
-function slot0.setCo(slot0, slot1)
-	slot0.config = slot1
-	slot0.interactType = slot1.interactType
-	slot0.path = slot1.path
-	slot0.walkable = slot1.walkable
-	slot0.show = slot1.show
-	slot0.canMove = slot1.canMove
-	slot0.touchTrigger = slot1.touchTrigger
-	slot0.iconType = slot1.iconType
-	slot0.posX = slot1.x
-	slot0.posY = slot1.y
-	slot0.direction = slot1.dir
+function var_0_0.setCo(arg_2_0, arg_2_1)
+	arg_2_0.config = arg_2_1
+	arg_2_0.interactType = arg_2_1.interactType
+	arg_2_0.path = arg_2_1.path
+	arg_2_0.walkable = arg_2_1.walkable
+	arg_2_0.show = arg_2_1.show
+	arg_2_0.canMove = arg_2_1.canMove
+	arg_2_0.touchTrigger = arg_2_1.touchTrigger
+	arg_2_0.iconType = arg_2_1.iconType
+	arg_2_0.posX = arg_2_1.x
+	arg_2_0.posY = arg_2_1.y
+	arg_2_0.direction = arg_2_1.dir
 end
 
-function slot0.setMo(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.direction = slot1.direction or slot1.dir or slot0.config.dir
-	slot0.show = slot1.show
-	slot0.triggerByClick = slot1.triggerByclick
-	slot0.mapIndex = slot1.mapIndex
-	slot0.posX = slot1.posX or slot1.x or slot0.config.x
-	slot0.posY = slot1.posY or slot1.y or slot0.config.y
+function var_0_0.setMo(arg_3_0, arg_3_1)
+	arg_3_0.id = arg_3_1.id
+	arg_3_0.direction = arg_3_1.direction or arg_3_1.dir or arg_3_0.config.dir
+	arg_3_0.show = arg_3_1.show
+	arg_3_0.triggerByClick = arg_3_1.triggerByclick
+	arg_3_0.mapIndex = arg_3_1.mapIndex
+	arg_3_0.posX = arg_3_1.posX or arg_3_1.x or arg_3_0.config.x
+	arg_3_0.posY = arg_3_1.posY or arg_3_1.y or arg_3_0.config.y
 
-	if slot1.attrMap then
-		slot0:setIsFinsh(slot1.attrMap)
+	if arg_3_1.attrMap then
+		arg_3_0:setIsFinsh(arg_3_1.attrMap)
 	end
 
-	slot0:setParamStr(slot1.attrData)
+	arg_3_0:setParamStr(arg_3_1.attrData)
 end
 
-function slot0.isShow(slot0)
-	return slot0.show
+function var_0_0.isShow(arg_4_0)
+	return arg_4_0.show
 end
 
-function slot0.getConfig(slot0)
-	return slot0.config
+function var_0_0.getConfig(arg_5_0)
+	return arg_5_0.config
 end
 
-function slot0.getId(slot0)
-	return slot0.id or slot0:getConfig().id
+function var_0_0.getId(arg_6_0)
+	return arg_6_0.id or arg_6_0:getConfig().id
 end
 
-function slot0.getInteractTypeName(slot0)
-	return ChessGameEnum.InteractTypeToName[slot0.interactType]
+function var_0_0.getInteractTypeName(arg_7_0)
+	return ChessGameEnum.InteractTypeToName[arg_7_0.interactType]
 end
 
-function slot0.setDirection(slot0, slot1)
-	slot0.direction = slot1
+function var_0_0.setDirection(arg_8_0, arg_8_1)
+	arg_8_0.direction = arg_8_1
 end
 
-function slot0.getDirection(slot0)
-	return slot0.direction
+function var_0_0.getDirection(arg_9_0)
+	return arg_9_0.direction
 end
 
-function slot0.setXY(slot0, slot1, slot2)
-	slot0.posX = slot1
-	slot0.posY = slot2
+function var_0_0.setXY(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0.posX = arg_10_1
+	arg_10_0.posY = arg_10_2
 end
 
-function slot0.getXY(slot0)
-	return slot0.posX, slot0.posY
+function var_0_0.getXY(arg_11_0)
+	return arg_11_0.posX, arg_11_0.posY
 end
 
-function slot0.setParamStr(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0.setParamStr(arg_12_0, arg_12_1)
+	if string.nilorempty(arg_12_1) then
 		return
 	end
 
-	if cjson.decode(slot1) then
-		slot0.isFinish = slot2.Completed
+	local var_12_0 = cjson.decode(arg_12_1)
+
+	if var_12_0 then
+		arg_12_0.isFinish = var_12_0.Completed
 	end
 end
 
-function slot0.setIsFinsh(slot0, slot1)
-	if slot1 then
-		slot0.isFinish = slot1.Completed
+function var_0_0.setIsFinsh(arg_13_0, arg_13_1)
+	if arg_13_1 then
+		arg_13_0.isFinish = arg_13_1.Completed
 	end
 end
 
-function slot0.CheckInteractFinish(slot0)
-	return slot0.isFinish
+function var_0_0.CheckInteractFinish(arg_14_0)
+	return arg_14_0.isFinish
 end
 
-function slot0.isInCurrentMap(slot0)
-	return slot0.mapIndex == ChessGameModel.instance:getNowMapIndex()
+function var_0_0.isInCurrentMap(arg_15_0)
+	return arg_15_0.mapIndex == ChessGameModel.instance:getNowMapIndex()
 end
 
-function slot0.checkWalkable(slot0)
-	return slot0.isWalkable and not slot0.show
+function var_0_0.checkWalkable(arg_16_0)
+	return arg_16_0.isWalkable and not arg_16_0.show
 end
 
-function slot0.getEffectType(slot0)
-	return slot0.iconType
+function var_0_0.getEffectType(arg_17_0)
+	return arg_17_0.iconType
 end
 
-return slot0
+return var_0_0

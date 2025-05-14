@@ -1,83 +1,85 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183EpisodeRecordMO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183EpisodeRecordMO", package.seeall)
 
-slot0 = pureTable("Act183EpisodeRecordMO")
+local var_0_0 = pureTable("Act183EpisodeRecordMO")
 
-function slot0.init(slot0, slot1)
-	slot0._episodeId = slot1.episodeId
-	slot0._passOrder = slot1.passOrder
-	slot0._heroes = Act183Helper.rpcInfosToList(slot1.heroes, Act183HeroMO)
-	slot0._useBadgeNum = slot1.useBadgeNum
-	slot0._passConditions = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._episodeId = arg_1_1.episodeId
+	arg_1_0._passOrder = arg_1_1.passOrder
+	arg_1_0._heroes = Act183Helper.rpcInfosToList(arg_1_1.heroes, Act183HeroMO)
+	arg_1_0._useBadgeNum = arg_1_1.useBadgeNum
+	arg_1_0._passConditions = {}
 
-	tabletool.addValues(slot0._passConditions, slot1.unlockConditions)
+	tabletool.addValues(arg_1_0._passConditions, arg_1_1.unlockConditions)
 
-	slot0._chooseConditions = {}
+	arg_1_0._chooseConditions = {}
 
-	tabletool.addValues(slot0._chooseConditions, slot1.chooseConditions)
+	tabletool.addValues(arg_1_0._chooseConditions, arg_1_1.chooseConditions)
 
-	slot0._repress = Act183RepressMO.New()
+	arg_1_0._repress = Act183RepressMO.New()
 
-	slot0._repress:init(slot1.repress)
+	arg_1_0._repress:init(arg_1_1.repress)
 
-	slot0._config = Act183Config.instance:getEpisodeCo(slot0._episodeId)
-	slot0._params = slot1.params
+	arg_1_0._config = Act183Config.instance:getEpisodeCo(arg_1_0._episodeId)
+	arg_1_0._params = arg_1_1.params
 end
 
-function slot0.getConfig(slot0)
-	return slot0._config
+function var_0_0.getConfig(arg_2_0)
+	return arg_2_0._config
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._episodeId
+function var_0_0.getEpisodeId(arg_3_0)
+	return arg_3_0._episodeId
 end
 
-function slot0.getPassOrder(slot0)
-	return slot0._passOrder
+function var_0_0.getPassOrder(arg_4_0)
+	return arg_4_0._passOrder
 end
 
-function slot0.getUseBadgeNum(slot0)
-	return slot0._useBadgeNum
+function var_0_0.getUseBadgeNum(arg_5_0)
+	return arg_5_0._useBadgeNum
 end
 
-function slot0.getHeroMos(slot0)
-	return slot0._heroes
+function var_0_0.getHeroMos(arg_6_0)
+	return arg_6_0._heroes
 end
 
-function slot0.getEpisodeType(slot0)
-	return Act183Helper.getEpisodeType(slot0._episodeId)
+function var_0_0.getEpisodeType(arg_7_0)
+	return Act183Helper.getEpisodeType(arg_7_0._episodeId)
 end
 
-function slot0.getGroupType(slot0)
-	return slot0._config and slot0._config.type
+function var_0_0.getGroupType(arg_8_0)
+	return arg_8_0._config and arg_8_0._config.type
 end
 
-function slot0.getConditionIds(slot0)
-	if slot0._config then
-		return string.splitToNumber(slot0._config.condition, "#")
+function var_0_0.getConditionIds(arg_9_0)
+	if arg_9_0._config then
+		return string.splitToNumber(arg_9_0._config.condition, "#")
 	end
 end
 
-function slot0.getPassConditions(slot0)
-	return slot0._passConditions
+function var_0_0.getPassConditions(arg_10_0)
+	return arg_10_0._passConditions
 end
 
-function slot0.getChooseConditions(slot0)
-	return slot0._chooseConditions
+function var_0_0.getChooseConditions(arg_11_0)
+	return arg_11_0._chooseConditions
 end
 
-function slot0.isConditionPass(slot0, slot1)
-	if slot0._passConditions then
-		return tabletool.indexOf(slot0._passConditions, slot1) ~= nil
+function var_0_0.isConditionPass(arg_12_0, arg_12_1)
+	if arg_12_0._passConditions then
+		return tabletool.indexOf(arg_12_0._passConditions, arg_12_1) ~= nil
 	end
 end
 
-function slot0.getAllConditions(slot0)
-	return string.splitToNumber(slot0._config.condition, "#")
+function var_0_0.getAllConditions(arg_13_0)
+	return (string.splitToNumber(arg_13_0._config.condition, "#"))
 end
 
-function slot0.isAllConditionPass(slot0)
-	for slot5, slot6 in ipairs(slot0:getAllConditions()) do
-		if not slot0:isConditionPass(slot6) then
+function var_0_0.isAllConditionPass(arg_14_0)
+	local var_14_0 = arg_14_0:getAllConditions()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		if not arg_14_0:isConditionPass(iter_14_1) then
 			return false
 		end
 	end
@@ -85,12 +87,12 @@ function slot0.isAllConditionPass(slot0)
 	return true
 end
 
-function slot0.getRuleStatus(slot0, slot1)
-	if slot0._repress:getRuleIndex() == slot1 then
+function var_0_0.getRuleStatus(arg_15_0, arg_15_1)
+	if arg_15_0._repress:getRuleIndex() == arg_15_1 then
 		return Act183Enum.RuleStatus.Repress
 	end
 
 	return Act183Enum.RuleStatus.Escape
 end
 
-return slot0
+return var_0_0

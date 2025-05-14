@@ -1,38 +1,47 @@
-module("modules.logic.resonance.model.TalentStyle.TalentStyleModel", package.seeall)
+﻿module("modules.logic.resonance.model.TalentStyle.TalentStyleModel", package.seeall)
 
-slot0 = class("TalentStyleModel", BaseModel)
+local var_0_0 = class("TalentStyleModel", BaseModel)
 
-function slot0.openView(slot0, slot1)
-	slot0._heroId = slot1
-	slot0._heroMo = HeroModel.instance:getByHeroId(slot1)
-	slot0._selectStyleId = nil
-	slot0._unlockIdList = slot0:getUnlockStyle(slot1)
-	slot0._newUnlockStyle = nil
+function var_0_0.openView(arg_1_0, arg_1_1)
+	arg_1_0._heroId = arg_1_1
+	arg_1_0._heroMo = HeroModel.instance:getByHeroId(arg_1_1)
+	arg_1_0._selectStyleId = nil
+	arg_1_0._unlockIdList = arg_1_0:getUnlockStyle(arg_1_1)
+	arg_1_0._newUnlockStyle = nil
 
-	slot0:refreshNewState(slot1)
-	TalentStyleListModel.instance:initData(slot1)
+	arg_1_0:refreshNewState(arg_1_1)
+	TalentStyleListModel.instance:initData(arg_1_1)
 end
 
-function slot0.getHeroMainCubeMo(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1) and slot2.talentCubeInfos:getMainCubeMo()
+function var_0_0.getHeroMainCubeMo(arg_2_0, arg_2_1)
+	local var_2_0 = HeroModel.instance:getByHeroId(arg_2_1)
+
+	return var_2_0 and var_2_0.talentCubeInfos:getMainCubeMo()
 end
 
-function slot0.getHeroUseCubeStyleId(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1) and slot2:getHeroUseCubeStyleId()
+function var_0_0.getHeroUseCubeStyleId(arg_3_0, arg_3_1)
+	local var_3_0 = HeroModel.instance:getByHeroId(arg_3_1)
+
+	return var_3_0 and var_3_0:getHeroUseCubeStyleId()
 end
 
-function slot0.getHeroUseCubeId(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1) and slot2:getHeroUseStyleCubeId()
+function var_0_0.getHeroUseCubeId(arg_4_0, arg_4_1)
+	local var_4_0 = HeroModel.instance:getByHeroId(arg_4_1)
+
+	return var_4_0 and var_4_0:getHeroUseStyleCubeId()
 end
 
-function slot0.UseStyle(slot0, slot1, slot2)
-	if slot2 then
-		if slot2._isUnlock then
-			if not slot2._isUse then
-				HeroRpc.instance:setUseTalentStyleRequest(slot1, slot0:getTalentTemplateId(slot1), slot2._styleId)
-				slot0:selectCubeStyle(slot1, slot2._styleId)
+function var_0_0.UseStyle(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_2 then
+		if arg_5_2._isUnlock then
+			if not arg_5_2._isUse then
+				local var_5_0 = arg_5_2._styleId
+				local var_5_1 = arg_5_0:getTalentTemplateId(arg_5_1)
+
+				HeroRpc.instance:setUseTalentStyleRequest(arg_5_1, var_5_1, var_5_0)
+				arg_5_0:selectCubeStyle(arg_5_1, arg_5_2._styleId)
 			end
-		elseif HeroModel.instance:getByHeroId(slot1).config.heroType == 6 then
+		elseif HeroModel.instance:getByHeroId(arg_5_1).config.heroType == 6 then
 			GameFacade.showToast(ToastEnum.TalentStyleLock2)
 		else
 			GameFacade.showToast(ToastEnum.TalentStyleLock1)
@@ -40,241 +49,286 @@ function slot0.UseStyle(slot0, slot1, slot2)
 	end
 end
 
-function slot0.getTalentTemplateId(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1) and slot2.useTalentTemplateId
+function var_0_0.getTalentTemplateId(arg_6_0, arg_6_1)
+	local var_6_0 = HeroModel.instance:getByHeroId(arg_6_1)
+
+	return var_6_0 and var_6_0.useTalentTemplateId
 end
 
-function slot0.getHeroUseCubeMo(slot0, slot1)
-	return slot0:getCubeMoByStyle(slot1, slot0:getHeroUseCubeStyleId(slot1))
+function var_0_0.getHeroUseCubeMo(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getHeroUseCubeStyleId(arg_7_1)
+
+	return (arg_7_0:getCubeMoByStyle(arg_7_1, var_7_0))
 end
 
-function slot0.getSelectStyleId(slot0, slot1)
-	if not slot0._selectStyleId then
-		slot0._selectStyleId = slot0:getHeroUseCubeStyleId(slot1)
+function var_0_0.getSelectStyleId(arg_8_0, arg_8_1)
+	if not arg_8_0._selectStyleId then
+		arg_8_0._selectStyleId = arg_8_0:getHeroUseCubeStyleId(arg_8_1)
 	end
 
-	return slot0._selectStyleId
+	return arg_8_0._selectStyleId
 end
 
-function slot0.selectCubeStyle(slot0, slot1, slot2)
-	if slot0._selectStyleId == slot2 then
+function var_0_0.selectCubeStyle(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._selectStyleId == arg_9_2 then
 		return
 	end
 
-	slot0._selectStyleId = slot2
+	arg_9_0._selectStyleId = arg_9_2
 
-	slot0:setNewSelectStyle(slot2)
-	TalentStyleListModel.instance:refreshData(slot1, slot2)
-	CharacterController.instance:dispatchEvent(CharacterEvent.onSelectTalentStyle, slot2)
+	arg_9_0:setNewSelectStyle(arg_9_2)
+	TalentStyleListModel.instance:refreshData(arg_9_1, arg_9_2)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onSelectTalentStyle, arg_9_2)
 end
 
-function slot0.getSelectCubeMo(slot0, slot1)
-	slot2 = slot0:getSelectStyleId(slot1)
+function var_0_0.getSelectCubeMo(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getSelectStyleId(arg_10_1)
+	local var_10_1 = arg_10_0:getStyleCoList(arg_10_1)
 
-	if slot0:getStyleCoList(slot1) and slot3[slot2] then
-		return slot3[slot2]
+	if var_10_1 and var_10_1[var_10_0] then
+		return var_10_1[var_10_0]
 	end
 
-	slot0:selectCubeStyle(slot1, 0)
+	arg_10_0:selectCubeStyle(arg_10_1, 0)
 end
 
-function slot0.clear(slot0)
-	slot0:setHeroUseSelectId()
+function var_0_0.clear(arg_11_0)
+	arg_11_0:setHeroUseSelectId()
 end
 
-function slot0.getTalentStyle(slot0, slot1, slot2)
-	if HeroResonanceConfig.instance:getTalentStyle(slot1) and slot3[slot2] then
-		return slot3[slot2]
-	end
-end
+function var_0_0.getTalentStyle(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = HeroResonanceConfig.instance:getTalentStyle(arg_12_1)
 
-function slot0.getStyleCoList(slot0, slot1)
-	if slot0:getHeroMainCubeMo(slot1) and slot2 and slot2.id then
-		return HeroResonanceConfig.instance:getTalentStyle(slot3)
+	if var_12_0 and var_12_0[arg_12_2] then
+		return var_12_0[arg_12_2]
 	end
 end
 
-function slot0.getStyleMoList(slot0, slot1)
-	return slot0:refreshMoList(slot1, slot0:getStyleCoList(slot1))
+function var_0_0.getStyleCoList(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getHeroMainCubeMo(arg_13_1)
+
+	if var_13_0 then
+		local var_13_1 = var_13_0 and var_13_0.id
+
+		if var_13_1 then
+			return (HeroResonanceConfig.instance:getTalentStyle(var_13_1))
+		end
+	end
 end
 
-function slot0.refreshMoList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getStyleMoList(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getStyleCoList(arg_14_1)
 
-	if slot2 then
-		slot6, slot7, slot8 = slot0:getCurInfo(slot1)
+	return (arg_14_0:refreshMoList(arg_14_1, var_14_0))
+end
 
-		for slot12, slot13 in pairs(slot2) do
-			if slot13:isCanUnlock(HeroModel.instance:getByHeroId(slot1) and slot4.talent or 0) then
-				slot13:onRefresh(slot6, slot7, LuaUtil.tableContains(slot8, slot13._styleId))
-				table.insert(slot3, slot13)
+function var_0_0.refreshMoList(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = {}
+
+	if arg_15_2 then
+		local var_15_1 = HeroModel.instance:getByHeroId(arg_15_1)
+		local var_15_2 = var_15_1 and var_15_1.talent or 0
+		local var_15_3, var_15_4, var_15_5 = arg_15_0:getCurInfo(arg_15_1)
+
+		for iter_15_0, iter_15_1 in pairs(arg_15_2) do
+			if iter_15_1:isCanUnlock(var_15_2) then
+				local var_15_6 = iter_15_1._styleId
+				local var_15_7 = LuaUtil.tableContains(var_15_5, var_15_6)
+
+				iter_15_1:onRefresh(var_15_3, var_15_4, var_15_7)
+				table.insert(var_15_0, iter_15_1)
 			end
 		end
 	end
 
-	return slot3
+	return var_15_0
 end
 
-function slot0.refreshNewState(slot0, slot1)
-	for slot7, slot8 in pairs(slot0:getStyleMoList(slot1)) do
-		slot8:setNew(HeroModel.instance:getByHeroId(slot1).isShowTalentStyleRed)
+function var_0_0.refreshNewState(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getStyleMoList(arg_16_1)
+	local var_16_1 = HeroModel.instance:getByHeroId(arg_16_1)
+
+	for iter_16_0, iter_16_1 in pairs(var_16_0) do
+		iter_16_1:setNew(var_16_1.isShowTalentStyleRed)
 	end
 end
 
-function slot0.hideNewState(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getStyleMoList(slot1)) do
-		slot7:setNew(false)
+function var_0_0.hideNewState(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:getStyleMoList(arg_17_1)
+
+	for iter_17_0, iter_17_1 in pairs(var_17_0) do
+		iter_17_1:setNew(false)
 	end
 end
 
-function slot0.getCurInfo(slot0, slot1)
-	return slot0:getHeroUseCubeStyleId(slot1), slot0:getSelectStyleId(slot1), slot0._unlockIdList
+function var_0_0.getCurInfo(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0:getHeroUseCubeStyleId(arg_18_1)
+	local var_18_1 = arg_18_0:getSelectStyleId(arg_18_1)
+	local var_18_2 = arg_18_0._unlockIdList
+
+	return var_18_0, var_18_1, var_18_2
 end
 
-function slot0.getCubeMoByStyle(slot0, slot1, slot2)
-	if slot0:getStyleCoList(slot1) and slot3[slot2] then
-		return slot3[slot2]
+function var_0_0.getCubeMoByStyle(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0:getStyleCoList(arg_19_1)
+
+	if var_19_0 and var_19_0[arg_19_2] then
+		return var_19_0[arg_19_2]
 	end
 
-	return slot3 and slot3[0]
+	return var_19_0 and var_19_0[0]
 end
 
-function slot0.refreshUnlockInfo(slot0, slot1)
-	slot0:refreshUnlockList(slot1)
+function var_0_0.refreshUnlockInfo(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:getStyleCoList(arg_20_1)
 
-	slot3, slot4, slot5 = slot0:getCurInfo(slot1)
+	arg_20_0:refreshUnlockList(arg_20_1)
 
-	for slot9, slot10 in pairs(slot0:getStyleCoList(slot1)) do
-		slot10:onRefresh(slot3, slot4, LuaUtil.tableContains(slot5, slot10._styleId))
+	local var_20_1, var_20_2, var_20_3 = arg_20_0:getCurInfo(arg_20_1)
+
+	for iter_20_0, iter_20_1 in pairs(var_20_0) do
+		local var_20_4 = LuaUtil.tableContains(var_20_3, iter_20_1._styleId)
+
+		iter_20_1:onRefresh(var_20_1, var_20_2, var_20_4)
 	end
 end
 
-function slot0.getUnlockStyle(slot0, slot1)
-	slot3 = 0
+function var_0_0.getUnlockStyle(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:getStyleCoList(arg_21_1)
+	local var_21_1 = 0
 
-	if slot0:getStyleCoList(slot1) then
-		for slot7, slot8 in pairs(slot2) do
-			slot3 = math.max(slot7, slot3)
+	if var_21_0 then
+		for iter_21_0, iter_21_1 in pairs(var_21_0) do
+			var_21_1 = math.max(iter_21_0, var_21_1)
 		end
 	end
 
-	return slot0:parseUnlock(HeroModel.instance:getByHeroId(slot1).talentStyleUnlock, slot3)
+	local var_21_2 = HeroModel.instance:getByHeroId(arg_21_1).talentStyleUnlock
+
+	return (arg_21_0:parseUnlock(var_21_2, var_21_1))
 end
 
-function slot0.refreshUnlockList(slot0, slot1)
-	slot0._unlockIdList = slot0:getUnlockStyle(slot1)
+function var_0_0.refreshUnlockList(arg_22_0, arg_22_1)
+	arg_22_0._unlockIdList = arg_22_0:getUnlockStyle(arg_22_1)
 end
 
-function slot0.parseUnlock(slot0, slot1, slot2)
-	slot4 = slot1
+function var_0_0.parseUnlock(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = {}
+	local var_23_1 = arg_23_1
 
-	for slot8 = slot2, 0, -1 do
-		if slot4 >= 2^slot8 then
-			table.insert({}, slot8)
+	for iter_23_0 = arg_23_2, 0, -1 do
+		local var_23_2 = 2^iter_23_0
 
-			if slot4 - slot9 == 0 then
+		if var_23_2 <= var_23_1 then
+			table.insert(var_23_0, iter_23_0)
+
+			var_23_1 = var_23_1 - var_23_2
+
+			if var_23_1 == 0 then
 				break
 			end
 		end
 	end
 
-	if slot4 ~= 0 then
-		logError("解锁数据计算错误：" .. slot1)
+	if var_23_1 ~= 0 then
+		logError("解锁数据计算错误：" .. arg_23_1)
 	end
 
-	return slot3
+	return var_23_0
 end
 
-function slot0.getLevelUnlockStyle(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(HeroResonanceConfig.instance:getTalentStyle(slot1)) do
-		if slot8._styleCo.level == slot2 then
+function var_0_0.getLevelUnlockStyle(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = HeroResonanceConfig.instance:getTalentStyle(arg_24_1)
+
+	for iter_24_0, iter_24_1 in pairs(var_24_0) do
+		if iter_24_1._styleCo.level == arg_24_2 then
 			return true
 		end
 	end
 end
 
-function slot0.isUnlockStyleSystem(slot0, slot1)
-	return slot1 >= 10
+function var_0_0.isUnlockStyleSystem(arg_25_0, arg_25_1)
+	return arg_25_1 >= 10
 end
 
-function slot0.setNewUnlockStyle(slot0, slot1)
-	slot0._newUnlockStyle = slot1
+function var_0_0.setNewUnlockStyle(arg_26_0, arg_26_1)
+	arg_26_0._newUnlockStyle = arg_26_1
 end
 
-function slot0.getNewUnlockStyle(slot0)
-	return slot0._newUnlockStyle
+function var_0_0.getNewUnlockStyle(arg_27_0)
+	return arg_27_0._newUnlockStyle
 end
 
-function slot0.setNewSelectStyle(slot0, slot1)
-	slot0._newSelectStyle = slot1
+function var_0_0.setNewSelectStyle(arg_28_0, arg_28_1)
+	arg_28_0._newSelectStyle = arg_28_1
 end
 
-function slot0.getNewSelectStyle(slot0)
-	return slot0._newSelectStyle
+function var_0_0.getNewSelectStyle(arg_29_0)
+	return arg_29_0._newSelectStyle
 end
 
-function slot0.isPlayAnim(slot0, slot1, slot2)
-	return GameUtil.playerPrefsGetNumberByUserId(slot0:getPlayUnlockAnimKey(slot1, slot2), 0) == 0
+function var_0_0.isPlayAnim(arg_30_0, arg_30_1, arg_30_2)
+	return GameUtil.playerPrefsGetNumberByUserId(arg_30_0:getPlayUnlockAnimKey(arg_30_1, arg_30_2), 0) == 0
 end
 
-function slot0.setPlayAnim(slot0, slot1, slot2)
-	return GameUtil.playerPrefsSetNumberByUserId(slot0:getPlayUnlockAnimKey(slot1, slot2), 1)
+function var_0_0.setPlayAnim(arg_31_0, arg_31_1, arg_31_2)
+	return GameUtil.playerPrefsSetNumberByUserId(arg_31_0:getPlayUnlockAnimKey(arg_31_1, arg_31_2), 1)
 end
 
-function slot0.getPlayUnlockAnimKey(slot0, slot1, slot2)
-	return "TalentStyleModel_PlayUnlockAnim_" .. slot1 .. "_" .. slot2
+function var_0_0.getPlayUnlockAnimKey(arg_32_0, arg_32_1, arg_32_2)
+	return "TalentStyleModel_PlayUnlockAnim_" .. arg_32_1 .. "_" .. arg_32_2
 end
 
-function slot0.isPlayStyleEnterBtnAnim(slot0, slot1)
-	return GameUtil.playerPrefsGetNumberByUserId(slot0:getPlayStyleEnterBtnAnimKey(slot1), 0) == 0
+function var_0_0.isPlayStyleEnterBtnAnim(arg_33_0, arg_33_1)
+	return GameUtil.playerPrefsGetNumberByUserId(arg_33_0:getPlayStyleEnterBtnAnimKey(arg_33_1), 0) == 0
 end
 
-function slot0.setPlayStyleEnterBtnAnim(slot0, slot1)
-	return GameUtil.playerPrefsSetNumberByUserId(slot0:getPlayStyleEnterBtnAnimKey(slot1), 1)
+function var_0_0.setPlayStyleEnterBtnAnim(arg_34_0, arg_34_1)
+	return GameUtil.playerPrefsSetNumberByUserId(arg_34_0:getPlayStyleEnterBtnAnimKey(arg_34_1), 1)
 end
 
-function slot0.getPlayStyleEnterBtnAnimKey(slot0, slot1)
-	return "PlayStyleEnterBtnAnimKey_" .. slot1
+function var_0_0.getPlayStyleEnterBtnAnimKey(arg_35_0, arg_35_1)
+	return "PlayStyleEnterBtnAnimKey_" .. arg_35_1
 end
 
-function slot0.setHeroTalentStyleStatInfo(slot0, slot1)
-	if not slot0.unlockStateInfo then
-		slot0.unlockStateInfo = {}
+function var_0_0.setHeroTalentStyleStatInfo(arg_36_0, arg_36_1)
+	if not arg_36_0.unlockStateInfo then
+		arg_36_0.unlockStateInfo = {}
 	end
 
-	if not slot0.unlockStateInfo[slot1.heroId] then
-		slot0.unlockStateInfo[slot1.heroId] = {}
+	if not arg_36_0.unlockStateInfo[arg_36_1.heroId] then
+		arg_36_0.unlockStateInfo[arg_36_1.heroId] = {}
 	end
 
-	slot2 = 0
+	local var_36_0 = 0
 
-	if slot1.stylePercentList then
-		for slot6 = 1, #slot1.stylePercentList do
-			slot7 = slot1.stylePercentList[slot6]
-			slot8 = slot0:getCubeMoByStyle(slot1.heroId, slot7.style)
+	if arg_36_1.stylePercentList then
+		for iter_36_0 = 1, #arg_36_1.stylePercentList do
+			local var_36_1 = arg_36_1.stylePercentList[iter_36_0]
+			local var_36_2 = arg_36_0:getCubeMoByStyle(arg_36_1.heroId, var_36_1.style)
 
-			slot8:setUnlockPercent(slot7.percent)
+			var_36_2:setUnlockPercent(var_36_1.percent)
 
-			slot0.unlockStateInfo[slot1.heroId][slot7.style] = slot8
-			slot2 = math.max(slot7.percent, slot2)
+			arg_36_0.unlockStateInfo[arg_36_1.heroId][var_36_1.style] = var_36_2
+			var_36_0 = math.max(var_36_1.percent, var_36_0)
 		end
 	end
 
-	if slot0.unlockStateInfo[slot1.heroId] then
-		for slot6, slot7 in pairs(slot0.unlockStateInfo[slot1.heroId]) do
-			slot7:setHotUnlockStyle(slot2 == slot7:getUnlockPercent())
+	if arg_36_0.unlockStateInfo[arg_36_1.heroId] then
+		for iter_36_1, iter_36_2 in pairs(arg_36_0.unlockStateInfo[arg_36_1.heroId]) do
+			iter_36_2:setHotUnlockStyle(var_36_0 == iter_36_2:getUnlockPercent())
 		end
 	end
 end
 
-function slot0.sortUnlockPercent(slot0, slot1)
-	return slot1:getUnlockPercent() < slot0:getUnlockPercent()
+function var_0_0.sortUnlockPercent(arg_37_0, arg_37_1)
+	return arg_37_0:getUnlockPercent() > arg_37_1:getUnlockPercent()
 end
 
-function slot0.getHeroTalentStyleStatInfo(slot0, slot1)
-	return slot0.unlockStateInfo and slot0.unlockStateInfo[slot1]
+function var_0_0.getHeroTalentStyleStatInfo(arg_38_0, arg_38_1)
+	return arg_38_0.unlockStateInfo and arg_38_0.unlockStateInfo[arg_38_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

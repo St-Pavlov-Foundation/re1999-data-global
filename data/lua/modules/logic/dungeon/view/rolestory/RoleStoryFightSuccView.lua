@@ -1,480 +1,545 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccView", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccView", package.seeall)
 
-slot0 = class("RoleStoryFightSuccView", BaseView)
+local var_0_0 = class("RoleStoryFightSuccView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._click = gohelper.getClick(slot0.viewGO)
-	slot0._btnData = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnData")
-	slot0._simagecharacterbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_characterbg")
-	slot0._simagemaskImage = gohelper.findChildSingleImage(slot0.viewGO, "#simage_maskImage")
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "spineContainer/spine")
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
-	slot0._txtFbNameEn = gohelper.findChildText(slot0.viewGO, "txtFbNameen")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._click = gohelper.getClick(arg_1_0.viewGO)
+	arg_1_0._btnData = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnData")
+	arg_1_0._simagecharacterbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_characterbg")
+	arg_1_0._simagemaskImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskImage")
+	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "spineContainer/spine")
+	arg_1_0._uiSpine = GuiModelAgent.Create(arg_1_0._gospine, true)
+	arg_1_0._txtFbNameEn = gohelper.findChildText(arg_1_0.viewGO, "txtFbNameen")
 
-	slot0._uiSpine:useRT()
+	arg_1_0._uiSpine:useRT()
 
-	slot0._txtFbName = gohelper.findChildText(slot0.viewGO, "txtFbName")
-	slot0._txtChapterIndex = gohelper.findChildText(slot0.viewGO, "txtFbName/#go_normaltag/section")
-	slot0._txtEpisodeIndex = gohelper.findChildText(slot0.viewGO, "txtFbName/#go_normaltag/unit")
-	slot0._gonormaltag = gohelper.findChild(slot0.viewGO, "txtFbName/#go_normaltag")
-	slot0._goroletag = gohelper.findChild(slot0.viewGO, "txtFbName/#go_roletag")
-	slot0._txtSayCn = gohelper.findChildText(slot0.viewGO, "txtSayCn")
-	slot0._txtSayEn = gohelper.findChildText(slot0.viewGO, "SayEn/txtSayEn")
-	slot0._gocoverrecordpart = gohelper.findChild(slot0.viewGO, "#go_cover_record_part")
-	slot0._btncoverrecord = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cover_record_part/#btn_cover_record")
-	slot0._txtcurroundcount = gohelper.findChildText(slot0.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
-	slot0._txtmaxroundcount = gohelper.findChildText(slot0.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
-	slot0._goCoverLessThan = gohelper.findChild(slot0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
-	slot0._goCoverMuchThan = gohelper.findChild(slot0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
-	slot0._goCoverEqual = gohelper.findChild(slot0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
-	slot0.txtScore = gohelper.findChildText(slot0.viewGO, "goRoleStorytips/#txt_num")
-	slot0.txtScoreAdd = gohelper.findChildText(slot0.viewGO, "goRoleStorytips/#txt_num/#txt_add")
-	slot0.gofightgoal = gohelper.findChild(slot0.viewGO, "fightgoal")
-	slot0.txtCondition = gohelper.findChildText(slot0.gofightgoal, "condition")
-	slot0.txtWave = gohelper.findChildText(slot0.gofightgoal, "count")
+	arg_1_0._txtFbName = gohelper.findChildText(arg_1_0.viewGO, "txtFbName")
+	arg_1_0._txtChapterIndex = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#go_normaltag/section")
+	arg_1_0._txtEpisodeIndex = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#go_normaltag/unit")
+	arg_1_0._gonormaltag = gohelper.findChild(arg_1_0.viewGO, "txtFbName/#go_normaltag")
+	arg_1_0._goroletag = gohelper.findChild(arg_1_0.viewGO, "txtFbName/#go_roletag")
+	arg_1_0._txtSayCn = gohelper.findChildText(arg_1_0.viewGO, "txtSayCn")
+	arg_1_0._txtSayEn = gohelper.findChildText(arg_1_0.viewGO, "SayEn/txtSayEn")
+	arg_1_0._gocoverrecordpart = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part")
+	arg_1_0._btncoverrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cover_record_part/#btn_cover_record")
+	arg_1_0._txtcurroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
+	arg_1_0._txtmaxroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
+	arg_1_0._goCoverLessThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_lessthan")
+	arg_1_0._goCoverMuchThan = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_muchthan")
+	arg_1_0._goCoverEqual = gohelper.findChild(arg_1_0.viewGO, "#go_cover_record_part/tipbg/container/middle/#go_equal")
+	arg_1_0.txtScore = gohelper.findChildText(arg_1_0.viewGO, "goRoleStorytips/#txt_num")
+	arg_1_0.txtScoreAdd = gohelper.findChildText(arg_1_0.viewGO, "goRoleStorytips/#txt_num/#txt_add")
+	arg_1_0.gofightgoal = gohelper.findChild(arg_1_0.viewGO, "fightgoal")
+	arg_1_0.txtCondition = gohelper.findChildText(arg_1_0.gofightgoal, "condition")
+	arg_1_0.txtWave = gohelper.findChildText(arg_1_0.gofightgoal, "count")
 end
 
-function slot0.addEvents(slot0)
-	slot0._click:AddClickListener(slot0._onClickClose, slot0)
-	slot0._btnData:AddClickListener(slot0._onClickData, slot0)
-	slot0:addClickCb(slot0._btncoverrecord, slot0._onBtnCoverRecordClick, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, slot0._onCoverDungeonRecordReply, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickClose, arg_2_0)
+	arg_2_0._btnData:AddClickListener(arg_2_0._onClickData, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btncoverrecord, arg_2_0._onBtnCoverRecordClick, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, arg_2_0._onCoverDungeonRecordReply, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
-	slot0._btnData:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	arg_3_0._btnData:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0._canClick = false
-	slot0._animation = slot0.viewGO:GetComponent(typeof(UnityEngine.Animation))
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0._canClick = false
+	arg_4_0._animation = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
 
-	slot0._animation:Play("fightsucc_in", UnityEngine.PlayMode.StopAll)
-	slot0._animation:PlayQueued("fightsucc_loop", UnityEngine.QueueMode.CompleteOthers, UnityEngine.PlayMode.StopAll)
+	arg_4_0._animation:Play("fightsucc_in", UnityEngine.PlayMode.StopAll)
+	arg_4_0._animation:PlayQueued("fightsucc_loop", UnityEngine.QueueMode.CompleteOthers, UnityEngine.PlayMode.StopAll)
 
-	slot0._animEventWrap = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	arg_4_0._animEventWrap = arg_4_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
 	FightController.instance:checkFightQuitTipViewClose()
-	gohelper.setActive(slot0._bonusItemGo, false)
+	gohelper.setActive(arg_4_0._bonusItemGo, false)
 
-	slot0._curEpisodeId = DungeonModel.instance.curSendEpisodeId
-	slot0._curChapterId = DungeonModel.instance.curSendChapterId
-	slot1 = FightResultModel.instance
-	slot2 = lua_episode.configDict[slot0._curEpisodeId]
-	slot0._hardMode = DungeonConfig.instance:getChapterCO(slot0._curChapterId) and slot3.type == DungeonEnum.ChapterType.Hard
-	slot4 = slot2 and slot2.type or DungeonEnum.EpisodeType.Normal
-	slot0._curEpisodeId = FightResultModel.instance.episodeId
-	slot0.hadHighRareProp = false
-	slot0._randomEntityMO = slot0:_getRandomEntityMO()
+	arg_4_0._curEpisodeId = DungeonModel.instance.curSendEpisodeId
+	arg_4_0._curChapterId = DungeonModel.instance.curSendChapterId
 
-	slot0._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
-	slot0._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
+	local var_4_0 = FightResultModel.instance
+	local var_4_1 = lua_episode.configDict[arg_4_0._curEpisodeId]
+	local var_4_2 = DungeonConfig.instance:getChapterCO(arg_4_0._curChapterId)
 
-	slot7 = lua_chapter.configDict[slot1:getChapterId()] ~= nil and lua_episode.configDict[slot1:getEpisodeId()] ~= nil
+	arg_4_0._hardMode = var_4_2 and var_4_2.type == DungeonEnum.ChapterType.Hard
 
-	gohelper.setActive(slot0._txtFbName.gameObject, slot7)
-	gohelper.setActive(slot0._txtFbNameEn.gameObject, slot7 and GameConfig:GetCurLangType() == LangSettings.zh)
-
-	if slot7 then
-		slot0:_setFbName(slot6)
+	if not var_4_1 or not var_4_1.type then
+		local var_4_3 = DungeonEnum.EpisodeType.Normal
 	end
 
-	slot0:_setSpineVoice()
-	NavigateMgr.instance:addEscape(ViewName.RoleStoryFightSuccView, slot0._onClickClose, slot0)
+	arg_4_0._curEpisodeId = FightResultModel.instance.episodeId
+	arg_4_0.hadHighRareProp = false
+	arg_4_0._randomEntityMO = arg_4_0:_getRandomEntityMO()
 
-	slot0._canPlayVoice = false
+	arg_4_0._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
+	arg_4_0._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
 
-	TaskDispatcher.runDelay(slot0._setCanPlayVoice, slot0, 0.9)
+	local var_4_4 = lua_chapter.configDict[var_4_0:getChapterId()]
+	local var_4_5 = lua_episode.configDict[var_4_0:getEpisodeId()]
+	local var_4_6 = var_4_4 ~= nil and var_4_5 ~= nil
+
+	gohelper.setActive(arg_4_0._txtFbName.gameObject, var_4_6)
+	gohelper.setActive(arg_4_0._txtFbNameEn.gameObject, var_4_6 and GameConfig:GetCurLangType() == LangSettings.zh)
+
+	if var_4_6 then
+		arg_4_0:_setFbName(var_4_5)
+	end
+
+	arg_4_0:_setSpineVoice()
+	NavigateMgr.instance:addEscape(ViewName.RoleStoryFightSuccView, arg_4_0._onClickClose, arg_4_0)
+
+	arg_4_0._canPlayVoice = false
+
+	TaskDispatcher.runDelay(arg_4_0._setCanPlayVoice, arg_4_0, 0.9)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_win)
-	slot0:_checkNewRecord()
-	slot0:_detectCoverRecord()
-	slot0:showWave()
-	slot0:showScore()
+	arg_4_0:_checkNewRecord()
+	arg_4_0:_detectCoverRecord()
+	arg_4_0:showWave()
+	arg_4_0:showScore()
 end
 
-function slot0._showPlatCondition(slot0, slot1, slot2, slot3, slot4)
-	if string.nilorempty(slot1) then
-		gohelper.setActive(slot2, false)
+function var_0_0._showPlatCondition(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	if string.nilorempty(arg_5_1) then
+		gohelper.setActive(arg_5_2, false)
 	else
-		gohelper.setActive(slot2, true)
+		gohelper.setActive(arg_5_2, true)
 
-		if slot4 > (tonumber(FightResultModel.instance.star) or 0) then
-			gohelper.findChildText(slot2, "condition").text = gohelper.getRichColorText(slot1, "#6C6C6B")
+		local var_5_0 = tonumber(FightResultModel.instance.star) or 0
+
+		if var_5_0 < arg_5_4 then
+			gohelper.findChildText(arg_5_2, "condition").text = gohelper.getRichColorText(arg_5_1, "#6C6C6B")
 		else
-			gohelper.findChildText(slot2, "condition").text = gohelper.getRichColorText(slot1, "#C4C0BD")
+			gohelper.findChildText(arg_5_2, "condition").text = gohelper.getRichColorText(arg_5_1, "#C4C0BD")
 		end
 
-		slot6 = gohelper.findChildImage(slot2, "star")
-		slot7 = "#87898C"
+		local var_5_1 = gohelper.findChildImage(arg_5_2, "star")
+		local var_5_2 = "#87898C"
 
-		if slot4 <= slot5 then
-			slot7 = slot0._hardMode and "#FF4343" or "#F77040"
+		if arg_5_4 <= var_5_0 then
+			var_5_2 = arg_5_0._hardMode and "#FF4343" or "#F77040"
 		end
 
-		UISpriteSetMgr.instance:setCommonSprite(slot6, slot3, true)
-		SLFramework.UGUI.GuiHelper.SetColor(slot6, slot7)
+		UISpriteSetMgr.instance:setCommonSprite(var_5_1, arg_5_3, true)
+		SLFramework.UGUI.GuiHelper.SetColor(var_5_1, var_5_2)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0._canPlayVoice = false
+function var_0_0.onClose(arg_6_0)
+	arg_6_0._canPlayVoice = false
 
-	TaskDispatcher.cancelTask(slot0._setCanPlayVoice, slot0)
-	gohelper.setActive(slot0._gospine, false)
+	TaskDispatcher.cancelTask(arg_6_0._setCanPlayVoice, arg_6_0)
+	gohelper.setActive(arg_6_0._gospine, false)
 
-	if FightResultModel.instance.canUpdateDungeonRecord and not slot0._hasSendCoverRecord then
+	if FightResultModel.instance.canUpdateDungeonRecord and not arg_6_0._hasSendCoverRecord then
 		DungeonRpc.instance:sendCoverDungeonRecordRequest(false)
 	end
 
-	if slot0._popupFlow then
-		slot0._popupFlow:destroy()
+	if arg_6_0._popupFlow then
+		arg_6_0._popupFlow:destroy()
 
-		slot0._popupFlow = nil
+		arg_6_0._popupFlow = nil
 	end
 end
 
-function slot0._detectCoverRecord(slot0)
-	gohelper.setActive(slot0._gocoverrecordpart, FightResultModel.instance.canUpdateDungeonRecord or false)
+function var_0_0._detectCoverRecord(arg_7_0)
+	gohelper.setActive(arg_7_0._gocoverrecordpart, FightResultModel.instance.canUpdateDungeonRecord or false)
 
 	if FightResultModel.instance.canUpdateDungeonRecord then
-		slot0._txtcurroundcount.text = FightResultModel.instance.newRecordRound or ""
-		slot0._txtmaxroundcount.text = FightResultModel.instance.oldRecordRound or ""
+		arg_7_0._txtcurroundcount.text = FightResultModel.instance.newRecordRound or ""
+		arg_7_0._txtmaxroundcount.text = FightResultModel.instance.oldRecordRound or ""
 
-		gohelper.setActive(slot0._goCoverLessThan, FightResultModel.instance.newRecordRound < FightResultModel.instance.oldRecordRound)
-		gohelper.setActive(slot0._goCoverMuchThan, FightResultModel.instance.oldRecordRound < FightResultModel.instance.newRecordRound)
-		gohelper.setActive(slot0._goCoverEqual, FightResultModel.instance.newRecordRound == FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(arg_7_0._goCoverLessThan, FightResultModel.instance.newRecordRound < FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(arg_7_0._goCoverMuchThan, FightResultModel.instance.newRecordRound > FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(arg_7_0._goCoverEqual, FightResultModel.instance.newRecordRound == FightResultModel.instance.oldRecordRound)
 
-		if FightResultModel.instance.oldRecordRound <= FightResultModel.instance.newRecordRound then
-			slot0._txtcurroundcount.color = GameUtil.parseColor("#272525")
+		if FightResultModel.instance.newRecordRound >= FightResultModel.instance.oldRecordRound then
+			arg_7_0._txtcurroundcount.color = GameUtil.parseColor("#272525")
 		else
-			slot0._txtcurroundcount.color = GameUtil.parseColor("#AC5320")
+			arg_7_0._txtcurroundcount.color = GameUtil.parseColor("#AC5320")
 		end
 	end
 end
 
-function slot0._onBtnCoverRecordClick(slot0)
+function var_0_0._onBtnCoverRecordClick(arg_8_0)
 	DungeonRpc.instance:sendCoverDungeonRecordRequest(true)
 end
 
-function slot0._onCoverDungeonRecordReply(slot0, slot1)
-	slot0._hasSendCoverRecord = true
+function var_0_0._onCoverDungeonRecordReply(arg_9_0, arg_9_1)
+	arg_9_0._hasSendCoverRecord = true
 
-	gohelper.setActive(slot0._gocoverrecordpart, false)
+	gohelper.setActive(arg_9_0._gocoverrecordpart, false)
 
-	if slot1 then
+	if arg_9_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 		GameFacade.showToast(ToastEnum.FightSuccIsCover)
 	end
 end
 
-function slot0._getRandomEntityMO(slot0)
-	slot4 = {}
+function var_0_0._getRandomEntityMO(arg_10_0)
+	local var_10_0 = FightDataHelper.entityMgr:getMyNormalList()
+	local var_10_1 = FightDataHelper.entityMgr:getMySubList()
+	local var_10_2 = FightDataHelper.entityMgr:getMyDeadList()
+	local var_10_3 = {}
 
-	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMyNormalList())
-	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMySubList())
-	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMyDeadList())
+	tabletool.addValues(var_10_3, var_10_0)
+	tabletool.addValues(var_10_3, var_10_1)
+	tabletool.addValues(var_10_3, var_10_2)
 
-	for slot8 = #slot4, 1, -1 do
-		if not slot0:_getSkin(slot4[slot8]) then
-			table.remove(slot4, slot8)
+	for iter_10_0 = #var_10_3, 1, -1 do
+		local var_10_4 = var_10_3[iter_10_0]
+
+		if not arg_10_0:_getSkin(var_10_4) then
+			table.remove(var_10_3, iter_10_0)
 		end
 	end
 
-	slot5 = {}
+	local var_10_5 = {}
 
-	tabletool.addValues(slot5, slot4)
+	tabletool.addValues(var_10_5, var_10_3)
 
-	for slot9 = #slot5, 1, -1 do
-		if FightAudioMgr.instance:_getHeroVoiceCOs(slot4[slot9].modelId, CharacterEnum.VoiceType.FightResult) and #slot11 > 0 then
-			if slot10:isMonster() then
-				table.remove(slot5, slot9)
+	for iter_10_1 = #var_10_5, 1, -1 do
+		local var_10_6 = var_10_3[iter_10_1]
+		local var_10_7 = FightAudioMgr.instance:_getHeroVoiceCOs(var_10_6.modelId, CharacterEnum.VoiceType.FightResult)
+
+		if var_10_7 and #var_10_7 > 0 then
+			if var_10_6:isMonster() then
+				table.remove(var_10_5, iter_10_1)
 			end
 		else
-			table.remove(slot5, slot9)
+			table.remove(var_10_5, iter_10_1)
 		end
 	end
 
-	if #slot5 > 0 then
-		return slot5[math.random(#slot5)]
-	elseif #slot4 > 0 then
-		return slot4[math.random(#slot4)]
+	if #var_10_5 > 0 then
+		return var_10_5[math.random(#var_10_5)]
+	elseif #var_10_3 > 0 then
+		return var_10_3[math.random(#var_10_3)]
 	else
 		logError("没有角色")
 	end
 end
 
-function slot0._checkNewRecord(slot0)
+function var_0_0._checkNewRecord(arg_11_0)
 	if FightResultModel.instance.updateDungeonRecord then
 		GameFacade.showToast(ToastEnum.FightNewRecord)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 	elseif OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
-		slot3 = FightModel.instance:getFightParam() and slot2.battleId
+		local var_11_0 = DungeonConfig.instance:getEpisodeCO(arg_11_0._curEpisodeId)
+		local var_11_1 = FightModel.instance:getFightParam()
+		local var_11_2 = var_11_1 and var_11_1.battleId
 
-		if DungeonConfig.instance:getEpisodeCO(slot0._curEpisodeId) and slot3 and slot1.firstBattleId == slot3 and not HeroGroupBalanceHelper.getIsBalanceMode() then
+		if var_11_0 and var_11_2 and var_11_0.firstBattleId == var_11_2 and not HeroGroupBalanceHelper.getIsBalanceMode() then
 			GameFacade.showToast(ToastEnum.CantRecordReplay)
 		end
 	end
 end
 
-function slot0._setCanPlayVoice(slot0)
-	slot0._canPlayVoice = true
+function var_0_0._setCanPlayVoice(arg_12_0)
+	arg_12_0._canPlayVoice = true
 
-	slot0:_playSpineVoice()
+	arg_12_0:_playSpineVoice()
 end
 
-function slot0._setFbName(slot0, slot1)
-	slot2 = DungeonConfig.instance:getNormalEpisodeId(slot1.id)
-	slot3 = DungeonConfig.instance:getEpisodeCO(slot2)
-	slot5, slot6 = DungeonConfig.instance:getChapterIndex(DungeonConfig.instance:getChapterCO(slot3.chapterId).type, slot3.chapterId)
-	slot7, slot8 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(slot3.chapterId, slot2)
+function var_0_0._setFbName(arg_13_0, arg_13_1)
+	local var_13_0 = DungeonConfig.instance:getNormalEpisodeId(arg_13_1.id)
+	local var_13_1 = DungeonConfig.instance:getEpisodeCO(var_13_0)
+	local var_13_2 = DungeonConfig.instance:getChapterCO(var_13_1.chapterId)
+	local var_13_3, var_13_4 = DungeonConfig.instance:getChapterIndex(var_13_2.type, var_13_1.chapterId)
+	local var_13_5, var_13_6 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_13_1.chapterId, var_13_0)
 
-	if slot1.type == DungeonEnum.EpisodeType.Sp then
-		slot7 = slot1.id % 100
+	if arg_13_1.type == DungeonEnum.EpisodeType.Sp then
+		local var_13_7 = math.floor(arg_13_1.id % 10000 / 100)
 
-		if TeachNoteModel.instance:isTeachNoteEpisode(slot1.id) then
-			slot0._txtChapterIndex.text = slot4.chapterIndex .. tostring(math.floor(slot1.id % 10000 / 100))
+		var_13_5 = arg_13_1.id % 100
+
+		if TeachNoteModel.instance:isTeachNoteEpisode(arg_13_1.id) then
+			arg_13_0._txtChapterIndex.text = var_13_2.chapterIndex .. tostring(var_13_7)
 		else
-			slot0._txtChapterIndex.text = "SP" .. tostring(slot9)
+			arg_13_0._txtChapterIndex.text = "SP" .. tostring(var_13_7)
 		end
 	else
-		slot0._txtChapterIndex.text = slot4.chapterIndex
+		arg_13_0._txtChapterIndex.text = var_13_2.chapterIndex
 	end
 
-	slot0._txtFbNameEn.text = slot1.name_En
+	arg_13_0._txtFbNameEn.text = arg_13_1.name_En
 
-	slot0:_setEpisodeName(slot1, slot7)
-	slot0:_setTag(slot1)
+	arg_13_0:_setEpisodeName(arg_13_1, var_13_5)
+	arg_13_0:_setTag(arg_13_1)
 end
 
-function slot0._setTag(slot0, slot1)
-	slot4 = tabletool.indexOf(string.splitToNumber(lua_const.configDict[ConstEnum.DungeonSuccessType].value, "#"), slot1.type)
+function var_0_0._setTag(arg_14_0, arg_14_1)
+	local var_14_0 = lua_const.configDict[ConstEnum.DungeonSuccessType].value
+	local var_14_1 = string.splitToNumber(var_14_0, "#")
+	local var_14_2 = tabletool.indexOf(var_14_1, arg_14_1.type)
 
-	gohelper.setActive(slot0._gonormaltag, slot4)
-	gohelper.setActive(slot0._goroletag, not slot4)
+	gohelper.setActive(arg_14_0._gonormaltag, var_14_2)
+	gohelper.setActive(arg_14_0._goroletag, not var_14_2)
 end
 
-function slot0._setEpisodeName(slot0, slot1, slot2)
-	if slot1.type == DungeonEnum.EpisodeType.WeekWalk then
-		slot0._txtFbName.text, slot7 = WeekWalkModel.instance:getInfo():getNameIndexByBattleId(FightModel.instance:getFightParam().battleId)
+function var_0_0._setEpisodeName(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1.type == DungeonEnum.EpisodeType.WeekWalk then
+		local var_15_0 = FightModel.instance:getFightParam().battleId
+		local var_15_1, var_15_2 = WeekWalkModel.instance:getInfo():getNameIndexByBattleId(var_15_0)
 
-		if slot7 then
-			slot0._txtEpisodeIndex.text = slot7
+		if var_15_2 then
+			arg_15_0._txtFbName.text = var_15_1
+			arg_15_0._txtEpisodeIndex.text = var_15_2
 
 			return
 		end
-	elseif slot1.type == DungeonEnum.EpisodeType.Season then
-		slot4, slot5, slot6 = Activity104Model.instance:getSeasonEpisodeDifficultByBattleId(FightModel.instance:getFightParam().battleId)
-		slot0._txtgrademark.text = slot5 == 1 and luaLang("season_permanent_level_score") or luaLang("season_limit_level_score")
-		slot0._txtFbName.text = SeasonConfig.instance:getSeasonEpisodeConfig(slot4, slot5).name
-		slot0._txtEpisodeIndex.text = slot5
+	elseif arg_15_1.type == DungeonEnum.EpisodeType.Season then
+		local var_15_3 = FightModel.instance:getFightParam()
+		local var_15_4, var_15_5, var_15_6 = Activity104Model.instance:getSeasonEpisodeDifficultByBattleId(var_15_3.battleId)
+		local var_15_7 = SeasonConfig.instance:getSeasonEpisodeConfig(var_15_4, var_15_5)
+
+		arg_15_0._txtgrademark.text = var_15_5 == 1 and luaLang("season_permanent_level_score") or luaLang("season_limit_level_score")
+		arg_15_0._txtFbName.text = var_15_7.name
+		arg_15_0._txtEpisodeIndex.text = var_15_5
 
 		return
-	elseif slot1.type == DungeonEnum.EpisodeType.Dog then
-		slot3, slot4 = Activity109ChessController.instance:getFightSourceEpisode()
+	elseif arg_15_1.type == DungeonEnum.EpisodeType.Dog then
+		local var_15_8, var_15_9 = Activity109ChessController.instance:getFightSourceEpisode()
 
-		if slot3 and slot4 and Activity109Config.instance:getEpisodeCo(slot3, slot4) then
-			slot0._txtFbName.text = slot1.name
-			slot0._txtEpisodeIndex.text = slot5.id
+		if var_15_8 and var_15_9 then
+			local var_15_10 = Activity109Config.instance:getEpisodeCo(var_15_8, var_15_9)
 
-			return
+			if var_15_10 then
+				arg_15_0._txtFbName.text = arg_15_1.name
+				arg_15_0._txtEpisodeIndex.text = var_15_10.id
+
+				return
+			end
 		end
 	end
 
-	if DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(slot1) and #slot3 > 1 then
-		slot2 = DungeonConfig.instance:getEpisodeLevelIndexByEpisodeId(slot3[1].id)
+	local var_15_11 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(arg_15_1)
+
+	if var_15_11 and #var_15_11 > 1 then
+		arg_15_2 = DungeonConfig.instance:getEpisodeLevelIndexByEpisodeId(var_15_11[1].id)
 	end
 
-	if DungeonConfig.instance:getChapterCO(slot1.chapterId) then
-		if slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonHard then
-			slot2 = VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(slot1.id)
+	local var_15_12 = DungeonConfig.instance:getChapterCO(arg_15_1.chapterId)
+
+	if var_15_12 then
+		if var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or var_15_12.type == DungeonEnum.ChapterType.Activity1_2DungeonHard then
+			arg_15_2 = VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(arg_15_1.id)
 		end
 
-		if slot4.actId == VersionActivity1_3Enum.ActivityId.Dungeon then
-			slot2 = VersionActivity1_3DungeonController.instance:getEpisodeIndex(slot1.id)
+		if var_15_12.actId == VersionActivity1_3Enum.ActivityId.Dungeon then
+			arg_15_2 = VersionActivity1_3DungeonController.instance:getEpisodeIndex(arg_15_1.id)
 		end
 	end
 
-	slot0._txtFbName.text = slot1.name
-	slot0._txtEpisodeIndex.text = slot2
+	arg_15_0._txtFbName.text = arg_15_1.name
+	arg_15_0._txtEpisodeIndex.text = arg_15_2
 end
 
-function slot0._getSkin(slot0, slot1)
-	if FightConfig.instance:getSkinCO(slot1.skin) and not string.nilorempty(slot2.verticalDrawing) or slot2 and not string.nilorempty(slot2.live2d) then
-		return slot2
+function var_0_0._getSkin(arg_16_0, arg_16_1)
+	local var_16_0 = FightConfig.instance:getSkinCO(arg_16_1.skin)
+	local var_16_1 = var_16_0 and not string.nilorempty(var_16_0.verticalDrawing)
+	local var_16_2 = var_16_0 and not string.nilorempty(var_16_0.live2d)
+
+	if var_16_1 or var_16_2 then
+		return var_16_0
 	end
 end
 
-function slot0._setSpineVoice(slot0)
-	if not slot0._randomEntityMO then
+function var_0_0._setSpineVoice(arg_17_0)
+	if not arg_17_0._randomEntityMO then
 		return
 	end
 
-	if slot0:_getSkin(slot0._randomEntityMO) then
-		slot0._spineLoaded = false
+	local var_17_0 = arg_17_0:_getSkin(arg_17_0._randomEntityMO)
 
-		slot0._uiSpine:setImgPos(0)
-		slot0._uiSpine:setResPath(slot1, function ()
-			uv0._spineLoaded = true
+	if var_17_0 then
+		arg_17_0._spineLoaded = false
 
-			uv0._uiSpine:setUIMask(true)
-			uv0:_playSpineVoice()
-		end, slot0)
+		arg_17_0._uiSpine:setImgPos(0)
+		arg_17_0._uiSpine:setResPath(var_17_0, function()
+			arg_17_0._spineLoaded = true
 
-		slot2, slot3 = SkinConfig.instance:getSkinOffset(slot1.fightSuccViewOffset)
+			arg_17_0._uiSpine:setUIMask(true)
+			arg_17_0:_playSpineVoice()
+		end, arg_17_0)
 
-		if slot3 then
-			slot4, _ = SkinConfig.instance:getSkinOffset(slot1.characterViewOffset)
-			slot2 = SkinConfig.instance:getAfterRelativeOffset(504, slot4)
+		local var_17_1, var_17_2 = SkinConfig.instance:getSkinOffset(var_17_0.fightSuccViewOffset)
+
+		if var_17_2 then
+			var_17_1, _ = SkinConfig.instance:getSkinOffset(var_17_0.characterViewOffset)
+			var_17_1 = SkinConfig.instance:getAfterRelativeOffset(504, var_17_1)
 		end
 
-		slot4 = tonumber(slot2[3])
+		local var_17_3 = tonumber(var_17_1[3])
+		local var_17_4 = tonumber(var_17_1[1])
+		local var_17_5 = tonumber(var_17_1[2])
 
-		recthelper.setAnchor(slot0._gospine.transform, tonumber(slot2[1]), tonumber(slot2[2]))
-		transformhelper.setLocalScale(slot0._gospine.transform, slot4, slot4, slot4)
+		recthelper.setAnchor(arg_17_0._gospine.transform, var_17_4, var_17_5)
+		transformhelper.setLocalScale(arg_17_0._gospine.transform, var_17_3, var_17_3, var_17_3)
 	else
-		gohelper.setActive(slot0._gospine, false)
+		gohelper.setActive(arg_17_0._gospine, false)
 	end
 end
 
-function slot0._playSpineVoice(slot0)
-	if not slot0._canPlayVoice then
+function var_0_0._playSpineVoice(arg_19_0)
+	if not arg_19_0._canPlayVoice then
 		return
 	end
 
-	if not slot0._spineLoaded then
+	if not arg_19_0._spineLoaded then
 		return
 	end
 
-	if (HeroModel.instance:getVoiceConfig(slot0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, nil, slot0._randomEntityMO.skin) or FightAudioMgr.instance:_getHeroVoiceCOs(slot0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, slot0._randomEntityMO.skin)) and #slot1 > 0 then
-		slot0._uiSpine:playVoice(slot1[1], nil, slot0._txtSayCn, slot0._txtSayEn)
+	local var_19_0 = HeroModel.instance:getVoiceConfig(arg_19_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, nil, arg_19_0._randomEntityMO.skin) or FightAudioMgr.instance:_getHeroVoiceCOs(arg_19_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, arg_19_0._randomEntityMO.skin)
+
+	if var_19_0 and #var_19_0 > 0 then
+		local var_19_1 = var_19_0[1]
+
+		arg_19_0._uiSpine:playVoice(var_19_1, nil, arg_19_0._txtSayCn, arg_19_0._txtSayEn)
 	end
 end
 
-function slot0._getSayContent(slot0, slot1)
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, false, "|", "#")) do
-		slot3 = "" .. slot8[1]
+function var_0_0._getSayContent(arg_20_0, arg_20_1)
+	local var_20_0 = GameUtil.splitString2(arg_20_1, false, "|", "#")
+	local var_20_1 = ""
+
+	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+		var_20_1 = var_20_1 .. iter_20_1[1]
 	end
 
-	return slot3
+	return var_20_1
 end
 
-function slot0.onCloseFinish(slot0)
-	slot0._simagecharacterbg:UnLoadImage()
-	slot0._simagemaskImage:UnLoadImage()
+function var_0_0.onCloseFinish(arg_21_0)
+	arg_21_0._simagecharacterbg:UnLoadImage()
+	arg_21_0._simagemaskImage:UnLoadImage()
 	FightStatModel.instance:clear()
-	slot0._animEventWrap:RemoveAllEventListener()
+	arg_21_0._animEventWrap:RemoveAllEventListener()
 
-	if slot0._farmTweenId then
-		ZProj.TweenHelper.KillById(slot0._farmTweenId)
+	if arg_21_0._farmTweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._farmTweenId)
 	end
 end
 
-function slot0._getHeroIconPath(slot0)
-	if slot0._randomEntityMO and FightConfig.instance:getSkinCO(slot0._randomEntityMO.skin) then
-		return ResUrl.getHeadIconLarge(slot1.largeIcon)
+function var_0_0._getHeroIconPath(arg_22_0)
+	if arg_22_0._randomEntityMO then
+		local var_22_0 = FightConfig.instance:getSkinCO(arg_22_0._randomEntityMO.skin)
+
+		if var_22_0 then
+			return ResUrl.getHeadIconLarge(var_22_0.largeIcon)
+		end
 	end
 end
 
-function slot0._onClickClose(slot0)
-	if not slot0._canClick then
+function var_0_0._onClickClose(arg_23_0)
+	if not arg_23_0._canClick then
 		return
 	end
 
-	if slot0._uiSpine then
-		slot0._uiSpine:stopVoice()
+	if arg_23_0._uiSpine then
+		arg_23_0._uiSpine:stopVoice()
 	end
 
-	slot0:closeThis()
+	arg_23_0:closeThis()
 
-	if FightModel.instance:getAfterStory() > 0 and not StoryModel.instance:isStoryFinished(slot1) then
-		uv0._storyId = slot1
-		uv0._clientFinish = false
-		uv0._serverFinish = false
+	local var_23_0 = FightModel.instance:getAfterStory()
 
-		StoryController.instance:registerCallback(StoryEvent.FinishFromServer, uv0._finishStoryFromServer)
-		StoryController.instance:playStory(slot1, {
-			mark = true,
-			episodeId = DungeonModel.instance.curSendEpisodeId
-		}, function ()
-			TaskDispatcher.runDelay(uv0.onStoryEnd, nil, 3)
+	if var_23_0 > 0 and not StoryModel.instance:isStoryFinished(var_23_0) then
+		var_0_0._storyId = var_23_0
+		var_0_0._clientFinish = false
+		var_0_0._serverFinish = false
 
-			uv0._clientFinish = true
+		StoryController.instance:registerCallback(StoryEvent.FinishFromServer, var_0_0._finishStoryFromServer)
 
-			uv0.checkStoryEnd()
+		local var_23_1 = {}
+
+		var_23_1.mark = true
+		var_23_1.episodeId = DungeonModel.instance.curSendEpisodeId
+
+		StoryController.instance:playStory(var_23_0, var_23_1, function()
+			TaskDispatcher.runDelay(var_0_0.onStoryEnd, nil, 3)
+
+			var_0_0._clientFinish = true
+
+			var_0_0.checkStoryEnd()
 		end)
 
 		return
 	end
 
-	uv0.onStoryEnd()
+	var_0_0.onStoryEnd()
 end
 
-function slot0._finishStoryFromServer(slot0)
-	if uv0._storyId == slot0 then
-		uv0._serverFinish = true
+function var_0_0._finishStoryFromServer(arg_25_0)
+	if var_0_0._storyId == arg_25_0 then
+		var_0_0._serverFinish = true
 
-		uv0.checkStoryEnd()
+		var_0_0.checkStoryEnd()
 	end
 end
 
-function slot0.checkStoryEnd()
-	if uv0._clientFinish and uv0._serverFinish then
-		uv0.onStoryEnd()
+function var_0_0.checkStoryEnd()
+	if var_0_0._clientFinish and var_0_0._serverFinish then
+		var_0_0.onStoryEnd()
 	end
 end
 
-function slot0.onStoryEnd()
-	uv0._storyId = nil
-	uv0._clientFinish = false
-	uv0._serverFinish = false
+function var_0_0.onStoryEnd()
+	var_0_0._storyId = nil
+	var_0_0._clientFinish = false
+	var_0_0._serverFinish = false
 
-	TaskDispatcher.cancelTask(uv0.onStoryEnd, nil)
-	StoryController.instance:unregisterCallback(StoryEvent.FinishFromServer, uv0._finishStoryFromServer)
+	TaskDispatcher.cancelTask(var_0_0.onStoryEnd, nil)
+	StoryController.instance:unregisterCallback(StoryEvent.FinishFromServer, var_0_0._finishStoryFromServer)
 	FightController.onResultViewClose()
 end
 
-function slot0.checkRecordFarmItem(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkRecordFarmItem(arg_28_0, arg_28_1)
+	if not arg_28_1 then
 		return false
 	end
 
-	if slot1.checkFunc then
-		return slot1.checkFunc(slot1.checkFuncObj)
+	if arg_28_1.checkFunc then
+		return arg_28_1.checkFunc(arg_28_1.checkFuncObj)
 	end
 
-	for slot6, slot7 in ipairs(ItemModel.instance:processRPCItemList(FightResultModel.instance:getMaterialDataList())) do
-		if slot7.materilType == slot1.type and slot7.materilId == slot1.id then
+	local var_28_0 = ItemModel.instance:processRPCItemList(FightResultModel.instance:getMaterialDataList())
+
+	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+		if iter_28_1.materilType == arg_28_1.type and iter_28_1.materilId == arg_28_1.id then
 			return true
 		end
 	end
 
-	if not (slot0 and DungeonConfig.instance:getEpisodeCO(slot0)) then
+	if not (arg_28_0 and DungeonConfig.instance:getEpisodeCO(arg_28_0)) then
 		return false
 	end
 
-	if uv0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeFirstBonus(slot0), slot1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeFirstBonus(arg_28_0), arg_28_1) then
 		return true
 	end
 
-	if uv0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeAdvancedBonus(slot0), slot1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeAdvancedBonus(arg_28_0), arg_28_1) then
 		return true
 	end
 
-	if uv0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeBonus(slot0), slot1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeBonus(arg_28_0), arg_28_1) then
 		return true
 	end
 
-	if uv0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeRewardList(slot0), slot1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeRewardList(arg_28_0), arg_28_1) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.checkRecordFarmItemByReward(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0) do
-		if tonumber(slot6[1]) == slot1.type and tonumber(slot6[2]) == slot1.id then
+function var_0_0.checkRecordFarmItemByReward(arg_29_0, arg_29_1)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_0) do
+		if tonumber(iter_29_1[1]) == arg_29_1.type and tonumber(iter_29_1[2]) == arg_29_1.id then
 			return true
 		end
 	end
@@ -482,36 +547,45 @@ function slot0.checkRecordFarmItemByReward(slot0, slot1)
 	return false
 end
 
-function slot0._showCharacterGetView(slot0)
+function var_0_0._showCharacterGetView(arg_30_0)
 	PopupController.instance:setPause("fightsuccess", false)
 
-	slot0._canClick = true
+	arg_30_0._canClick = true
 end
 
-function slot0.showWave(slot0)
-	slot2 = FightModel.instance.maxWave
-	slot0.txtCondition.text = luaLang("dungeon_beat_all")
+function var_0_0.showWave(arg_31_0)
+	local var_31_0 = FightModel.instance:getCurWaveId()
+	local var_31_1 = FightModel.instance.maxWave
 
-	if FightDataHelper.entityMgr:getEnemyNormalList() and #slot3 > 0 then
-		slot1 = FightModel.instance:getCurWaveId() - 1
+	arg_31_0.txtCondition.text = luaLang("dungeon_beat_all")
+
+	local var_31_2 = FightDataHelper.entityMgr:getEnemyNormalList()
+
+	if var_31_2 and #var_31_2 > 0 then
+		var_31_0 = var_31_0 - 1
 	end
 
-	slot0.txtWave.text = string.format("<color=#E57937>%s</color>/%s", slot1, slot2)
+	arg_31_0.txtWave.text = string.format("<color=#E57937>%s</color>/%s", var_31_0, var_31_1)
 end
 
-function slot0.showScore(slot0)
-	slot0.txtScore.text = RoleStoryModel.instance:getById(RoleStoryModel.instance:getCurActStoryId()) and slot2:getScore() or 0
-	slot0.txtScoreAdd.text = string.format("(+%s)", slot2 and slot2:getAddScore() or 0)
+function var_0_0.showScore(arg_32_0)
+	local var_32_0 = RoleStoryModel.instance:getCurActStoryId()
+	local var_32_1 = RoleStoryModel.instance:getById(var_32_0)
+	local var_32_2 = var_32_1 and var_32_1:getScore() or 0
+	local var_32_3 = var_32_1 and var_32_1:getAddScore() or 0
 
-	slot0:_onAllTweenFinish()
+	arg_32_0.txtScore.text = var_32_2
+	arg_32_0.txtScoreAdd.text = string.format("(+%s)", var_32_3)
+
+	arg_32_0:_onAllTweenFinish()
 end
 
-function slot0._onAllTweenFinish(slot0)
-	slot0:_showCharacterGetView()
+function var_0_0._onAllTweenFinish(arg_33_0)
+	arg_33_0:_showCharacterGetView()
 end
 
-function slot0._onClickData(slot0)
+function var_0_0._onClickData(arg_34_0)
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-return slot0
+return var_0_0

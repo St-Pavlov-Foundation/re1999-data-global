@@ -1,18 +1,18 @@
-module("modules.logic.fight.entity.FightEntityPlayer", package.seeall)
+﻿module("modules.logic.fight.entity.FightEntityPlayer", package.seeall)
 
-slot0 = class("FightEntityPlayer", BaseFightEntity)
+local var_0_0 = class("FightEntityPlayer", BaseFightEntity)
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_1_0)
 	return SceneTag.UnitPlayer
 end
 
-function slot0.initComponents(slot0)
-	uv0.super.initComponents(slot0)
-	slot0:addComp("readyAttack", FightPlayerReadyAttackComp)
-	slot0:addComp("variantCrayon", FightVariantCrayonComp)
-	slot0:addComp("entityVisible", FightEntityVisibleComp)
-	slot0:addComp("nameUIVisible", FightNameUIVisibleComp)
-	slot0:addComp("variantHeart", FightVariantHeartComp)
+function var_0_0.initComponents(arg_2_0)
+	var_0_0.super.initComponents(arg_2_0)
+	arg_2_0:addComp("readyAttack", FightPlayerReadyAttackComp)
+	arg_2_0:addComp("variantCrayon", FightVariantCrayonComp)
+	arg_2_0:addComp("entityVisible", FightEntityVisibleComp)
+	arg_2_0:addComp("nameUIVisible", FightNameUIVisibleComp)
+	arg_2_0:addComp("variantHeart", FightVariantHeartComp)
 end
 
-return slot0
+return var_0_0

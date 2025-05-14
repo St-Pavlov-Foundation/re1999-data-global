@@ -1,137 +1,145 @@
-module("modules.logic.sdk.model.SDKChannelEventModel", package.seeall)
+﻿module("modules.logic.sdk.model.SDKChannelEventModel", package.seeall)
 
-slot0 = class("SDKChannelEventModel", BaseController)
+local var_0_0 = class("SDKChannelEventModel", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._enum = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._enum = nil
 
 	if GameChannelConfig.isEfun() then
-		slot0._enum = SDKEfunChannelEventEnum
+		arg_1_0._enum = SDKEfunChannelEventEnum
 	elseif GameChannelConfig.isLongCheng() and BootNativeUtil.isMobilePlayer() then
-		slot0._enum = SDKLongchengChannelEventEnum
+		arg_1_0._enum = SDKLongchengChannelEventEnum
 	end
 
-	slot0._totalChargeAmount = nil
-	slot0._dailyTaskActiveNum = 0
-	slot0._consumeItemDic = {}
-	slot0._totalSummonCount = nil
-	slot0._needAppReview = false
+	arg_1_0._totalChargeAmount = nil
+	arg_1_0._dailyTaskActiveNum = 0
+	arg_1_0._consumeItemDic = {}
+	arg_1_0._totalSummonCount = nil
+	arg_1_0._needAppReview = false
 end
 
-function slot0.reInit(slot0)
-	slot0._dailyTaskActiveNum = 0
-	slot0._totalChargeAmount = nil
-	slot0._consumeItemDic = {}
-	slot0._totalSummonCount = nil
-	slot0._needAppReview = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._dailyTaskActiveNum = 0
+	arg_2_0._totalChargeAmount = nil
+	arg_2_0._consumeItemDic = {}
+	arg_2_0._totalSummonCount = nil
+	arg_2_0._needAppReview = false
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.episodePass(slot0, slot1)
-	if slot0._enum and slot0._enum.EpisodePass[slot1] then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.EpisodePass[slot1])
+function var_0_0.episodePass(arg_4_0, arg_4_1)
+	if arg_4_0._enum and arg_4_0._enum.EpisodePass[arg_4_1] then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_4_0._enum.EpisodePass[arg_4_1])
 	end
 
-	if slot0._enum and slot1 and slot0._enum.AppReviewePisodeId == slot1 then
+	if arg_4_0._enum and arg_4_1 and arg_4_0._enum.AppReviewePisodeId == arg_4_1 then
 		SDKMgr.instance:appReview()
 	end
 end
 
-function slot0.playerLevelUp(slot0, slot1)
-	if slot0._enum and slot0._enum.PlayerLevelUp[slot1] then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.PlayerLevelUp[slot1])
+function var_0_0.playerLevelUp(arg_5_0, arg_5_1)
+	if arg_5_0._enum and arg_5_0._enum.PlayerLevelUp[arg_5_1] then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_5_0._enum.PlayerLevelUp[arg_5_1])
 	end
 
-	if GameChannelConfig.isEfun() and slot1 == 5 then
+	if GameChannelConfig.isEfun() and arg_5_1 == 5 then
 		SDKMgr.instance:showATTDialog("level_five")
 	end
 end
 
-function slot0.firstSummon(slot0)
-	if slot0._enum and slot0._enum.FirstSummon then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.FirstSummon)
+function var_0_0.firstSummon(arg_6_0)
+	if arg_6_0._enum and arg_6_0._enum.FirstSummon then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_6_0._enum.FirstSummon)
 	end
 end
 
-function slot0.addTotalSummonCount(slot0, slot1)
-	if not slot0._totalSummonCount then
-		slot0._totalSummonCount = 0
+function var_0_0.addTotalSummonCount(arg_7_0, arg_7_1)
+	if not arg_7_0._totalSummonCount then
+		arg_7_0._totalSummonCount = 0
 	end
 
-	slot0:updateTotalSummonCount(slot0._totalSummonCount + slot1)
+	arg_7_0:updateTotalSummonCount(arg_7_0._totalSummonCount + arg_7_1)
 end
 
-function slot0.updateTotalSummonCount(slot0, slot1)
-	if slot0._totalSummonCount and slot0._enum and slot0._enum.Summon then
-		for slot5, slot6 in pairs(slot0._enum.Summon) do
-			if slot0._totalSummonCount < slot5 and slot5 <= slot1 then
-				SDKDataTrackMgr.instance:trackChannelEvent(slot6)
+function var_0_0.updateTotalSummonCount(arg_8_0, arg_8_1)
+	if arg_8_0._totalSummonCount and arg_8_0._enum and arg_8_0._enum.Summon then
+		for iter_8_0, iter_8_1 in pairs(arg_8_0._enum.Summon) do
+			if iter_8_0 > arg_8_0._totalSummonCount and iter_8_0 <= arg_8_1 then
+				SDKDataTrackMgr.instance:trackChannelEvent(iter_8_1)
 			end
 		end
 	end
 
-	slot0._totalSummonCount = slot1
+	arg_8_0._totalSummonCount = arg_8_1
 end
 
-function slot0.consumeItem(slot0, slot1, slot2)
-	if slot0._enum and slot0._enum.ConsumeItem[slot1] and slot0._consumeItemDic[slot1] and slot0._consumeItemDic[slot1] < slot0._enum.ConsumeItem[slot1][1] and slot4[1] <= slot2 then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot4[2])
+function var_0_0.consumeItem(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._enum and arg_9_0._enum.ConsumeItem[arg_9_1] and arg_9_0._consumeItemDic[arg_9_1] then
+		local var_9_0 = arg_9_0._consumeItemDic[arg_9_1]
+		local var_9_1 = arg_9_0._enum.ConsumeItem[arg_9_1]
+
+		if var_9_0 < var_9_1[1] and arg_9_2 >= var_9_1[1] then
+			SDKDataTrackMgr.instance:trackChannelEvent(var_9_1[2])
+		end
 	end
 
-	slot0._consumeItemDic[slot1] = slot2
+	arg_9_0._consumeItemDic[arg_9_1] = arg_9_2
 end
 
-function slot0.firstPurchase(slot0)
-	if slot0._enum and slot0._enum.FirstPurchase then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.FirstPurchase)
+function var_0_0.firstPurchase(arg_10_0)
+	if arg_10_0._enum and arg_10_0._enum.FirstPurchase then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_10_0._enum.FirstPurchase)
 	end
 end
 
-function slot0.purchase(slot0, slot1)
-	if slot0._enum and slot0._enum.Purchase[slot1] then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.Purchase[slot1])
+function var_0_0.purchase(arg_11_0, arg_11_1)
+	if arg_11_0._enum and arg_11_0._enum.Purchase[arg_11_1] then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_11_0._enum.Purchase[arg_11_1])
 	end
 end
 
-function slot0.totalChargeAmount(slot0, slot1)
-	slot1 = tonumber(slot1)
+function var_0_0.totalChargeAmount(arg_12_0, arg_12_1)
+	arg_12_1 = tonumber(arg_12_1)
 
-	if slot0._totalChargeAmount then
-		if slot0._enum and slot0._enum.TotalChargeAmount then
-			for slot5, slot6 in pairs(slot0._enum.TotalChargeAmount) do
-				if slot0._totalChargeAmount < slot5 and slot5 <= slot1 then
-					SDKDataTrackMgr.instance:trackChannelEvent(slot6)
+	if arg_12_0._totalChargeAmount then
+		if arg_12_0._enum and arg_12_0._enum.TotalChargeAmount then
+			for iter_12_0, iter_12_1 in pairs(arg_12_0._enum.TotalChargeAmount) do
+				if iter_12_0 > arg_12_0._totalChargeAmount and iter_12_0 <= arg_12_1 then
+					SDKDataTrackMgr.instance:trackChannelEvent(iter_12_1)
 				end
 			end
 		end
 
-		for slot6, slot7 in pairs(GameChannelConfig.isGpJapan() and SDKMediaEventEnum.JP_TotalChargeAmount or SDKMediaEventEnum.TotalChargeAmount) do
-			if slot0._totalChargeAmount < slot6 and slot6 <= slot1 then
-				SDKDataTrackMgr.instance:trackMediaEvent(slot7)
+		local var_12_0 = GameChannelConfig.isGpJapan() and SDKMediaEventEnum.JP_TotalChargeAmount or SDKMediaEventEnum.TotalChargeAmount
+
+		for iter_12_2, iter_12_3 in pairs(var_12_0) do
+			if iter_12_2 > arg_12_0._totalChargeAmount and iter_12_2 <= arg_12_1 then
+				SDKDataTrackMgr.instance:trackMediaEvent(iter_12_3)
 			end
 		end
 	end
 
-	slot0._totalChargeAmount = slot1
+	arg_12_0._totalChargeAmount = arg_12_1
 end
 
-function slot0.getMaxRareHero(slot0)
-	if slot0._enum and slot0._enum.GetMaxRareHero then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.GetMaxRareHero)
+function var_0_0.getMaxRareHero(arg_13_0)
+	if arg_13_0._enum and arg_13_0._enum.GetMaxRareHero then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_13_0._enum.GetMaxRareHero)
 	end
 end
 
-function slot0.onSummonResult(slot0, slot1)
+function var_0_0.onSummonResult(arg_14_0, arg_14_1)
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.AppReview) == 1 then
 		return
 	end
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot6.heroId and slot6.heroId ~= 0 and HeroConfig.instance:getHeroCO(slot6.heroId).rare == CharacterEnum.MaxRare then
-				slot0:setNeedAppReview(true)
+	if arg_14_1 and #arg_14_1 > 0 then
+		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+			if iter_14_1.heroId and iter_14_1.heroId ~= 0 and HeroConfig.instance:getHeroCO(iter_14_1.heroId).rare == CharacterEnum.MaxRare then
+				arg_14_0:setNeedAppReview(true)
 
 				break
 			end
@@ -139,46 +147,48 @@ function slot0.onSummonResult(slot0, slot1)
 	end
 end
 
-function slot0.setNeedAppReview(slot0, slot1)
-	slot0._needAppReview = slot1
+function var_0_0.setNeedAppReview(arg_15_0, arg_15_1)
+	arg_15_0._needAppReview = arg_15_1
 end
 
-function slot0.needAppReview(slot0)
+function var_0_0.needAppReview(arg_16_0)
 	return false
 end
 
-function slot0.firstBuyPower(slot0)
-	if slot0._enum and slot0._enum.FirstBuyPower then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.FirstBuyPower)
+function var_0_0.firstBuyPower(arg_17_0)
+	if arg_17_0._enum and arg_17_0._enum.FirstBuyPower then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_17_0._enum.FirstBuyPower)
 	end
 end
 
-function slot0.nickName(slot0)
-	if slot0._enum and slot0._enum.NickName then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.NickName)
+function var_0_0.nickName(arg_18_0)
+	if arg_18_0._enum and arg_18_0._enum.NickName then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_18_0._enum.NickName)
 	end
 end
 
-function slot0.firstExchangeDiamond(slot0)
-	if slot0._enum and slot0._enum.FirstExchangeDiamond then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.FirstExchangeDiamond)
+function var_0_0.firstExchangeDiamond(arg_19_0)
+	if arg_19_0._enum and arg_19_0._enum.FirstExchangeDiamond then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_19_0._enum.FirstExchangeDiamond)
 	end
 end
 
-function slot0.heroRankUp(slot0, slot1)
-	if slot0._enum and slot0._enum.HeroRankUp[slot1] then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.HeroRankUp[slot1])
+function var_0_0.heroRankUp(arg_20_0, arg_20_1)
+	if arg_20_0._enum and arg_20_0._enum.HeroRankUp[arg_20_1] then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_20_0._enum.HeroRankUp[arg_20_1])
 	end
 end
 
-function slot0.updateDailyTaskActive(slot0)
-	if slot0._dailyTaskActiveNum ~= TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.Daily).value and slot0._enum and slot0._enum.DailyTaskActive[slot2] then
-		SDKDataTrackMgr.instance:trackChannelEvent(slot0._enum.DailyTaskActive[slot2])
+function var_0_0.updateDailyTaskActive(arg_21_0)
+	local var_21_0 = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.Daily).value
+
+	if arg_21_0._dailyTaskActiveNum ~= var_21_0 and arg_21_0._enum and arg_21_0._enum.DailyTaskActive[var_21_0] then
+		SDKDataTrackMgr.instance:trackChannelEvent(arg_21_0._enum.DailyTaskActive[var_21_0])
 	end
 
-	slot0._dailyTaskActiveNum = slot2
+	arg_21_0._dailyTaskActiveNum = var_21_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

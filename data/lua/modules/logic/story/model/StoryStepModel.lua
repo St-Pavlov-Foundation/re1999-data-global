@@ -1,50 +1,53 @@
-module("modules.logic.story.model.StoryStepModel", package.seeall)
+﻿module("modules.logic.story.model.StoryStepModel", package.seeall)
 
-slot0 = class("StoryStepModel", BaseModel)
+local var_0_0 = class("StoryStepModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._stepList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._stepList = {}
 end
 
-function slot0.setStepList(slot0, slot1)
-	slot0._stepList = {}
+function var_0_0.setStepList(arg_2_0, arg_2_1)
+	arg_2_0._stepList = {}
 
-	if slot1 then
-		for slot5, slot6 in pairs(slot1) do
-			slot7 = StoryStepMo.New()
+	if arg_2_1 then
+		for iter_2_0, iter_2_1 in pairs(arg_2_1) do
+			local var_2_0 = StoryStepMo.New()
 
-			slot7:init(slot6)
-			table.insert(slot0._stepList, slot7)
+			var_2_0:init(iter_2_1)
+			table.insert(arg_2_0._stepList, var_2_0)
 		end
 	end
 
-	slot0:setList(slot0._stepList)
+	arg_2_0:setList(arg_2_0._stepList)
 end
 
-function slot0.getStepList(slot0)
-	return slot0._stepList
+function var_0_0.getStepList(arg_3_0)
+	return arg_3_0._stepList
 end
 
-function slot0.getStepListById(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._stepList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.getStepListById(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._stepList) do
+		if iter_4_1.id == arg_4_1 then
+			return iter_4_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.getStepFavor(slot0, slot1)
-	for slot7, slot8 in pairs(slot0:getStepListById(slot1).optList) do
-		if slot8.feedbackType == 1 then
-			slot3 = 0 + slot8.feedbackValue
+function var_0_0.getStepFavor(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getStepListById(arg_5_1).optList
+	local var_5_1 = 0
+
+	for iter_5_0, iter_5_1 in pairs(var_5_0) do
+		if iter_5_1.feedbackType == 1 then
+			var_5_1 = var_5_1 + iter_5_1.feedbackValue
 		end
 	end
 
-	return slot3
+	return var_5_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

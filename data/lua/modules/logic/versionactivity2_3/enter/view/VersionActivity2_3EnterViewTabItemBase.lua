@@ -1,135 +1,150 @@
-module("modules.logic.versionactivity2_3.enter.view.VersionActivity2_3EnterViewTabItemBase", package.seeall)
+﻿module("modules.logic.versionactivity2_3.enter.view.VersionActivity2_3EnterViewTabItemBase", package.seeall)
 
-slot0 = class("VersionActivity2_3EnterViewTabItemBase", VersionActivityEnterViewBaseTabItem)
+local var_0_0 = class("VersionActivity2_3EnterViewTabItemBase", VersionActivityEnterViewBaseTabItem)
 
-function slot0._editableInitView(slot0)
-	slot0.goSelected = gohelper.findChild(slot0.go, "#go_select")
-	slot0.imageSelectTabIcon = gohelper.findChildImage(slot0.go, "#go_select/#image_tabicon")
-	slot0.goUnselected = gohelper.findChild(slot0.go, "#go_unselect")
-	slot0.imageUnSelectTabIcon = gohelper.findChildImage(slot0.go, "#go_unselect/#image_tabicon")
-	slot1 = slot0:_getTagPath()
-	slot0.goTag = gohelper.findChild(slot0.go, slot1)
-	slot0.goTagNewAct = gohelper.findChild(slot0.go, slot1 .. "/#go_newact")
-	slot0.goTagNewLevel = gohelper.findChild(slot0.go, slot1 .. "/#go_newlevel")
-	slot0.goTagTime = gohelper.findChild(slot0.go, slot1 .. "/#go_time")
-	slot0.goTagLock = gohelper.findChild(slot0.go, slot1 .. "/#go_lock")
-	slot0.txtTime = gohelper.findChildText(slot0.goTagTime, "bg/#txt_time")
-	slot0.txtLock = gohelper.findChildText(slot0.goTagLock, "bg/#txt_lock")
-	slot0.goRedDot = gohelper.findChild(slot0.go, "#go_reddot")
-	slot0.animator = slot0.go:GetComponent(gohelper.Type_Animator)
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0.goSelected = gohelper.findChild(arg_1_0.go, "#go_select")
+	arg_1_0.imageSelectTabIcon = gohelper.findChildImage(arg_1_0.go, "#go_select/#image_tabicon")
+	arg_1_0.goUnselected = gohelper.findChild(arg_1_0.go, "#go_unselect")
+	arg_1_0.imageUnSelectTabIcon = gohelper.findChildImage(arg_1_0.go, "#go_unselect/#image_tabicon")
 
-	if not slot0.goTag or not slot0.goTagNewAct or not slot0.goTagNewLevel or not slot0.goTagTime or not slot0.goTagLock then
-		logError("error node:", tostring(slot0.goTag), tostring(slot0.goTagNewAct), tostring(slot0.goTagNewLevel), tostring(slot0.goTagTime), tostring(slot0.goTagLock))
+	local var_1_0 = arg_1_0:_getTagPath()
+
+	arg_1_0.goTag = gohelper.findChild(arg_1_0.go, var_1_0)
+	arg_1_0.goTagNewAct = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_newact")
+	arg_1_0.goTagNewLevel = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_newlevel")
+	arg_1_0.goTagTime = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_time")
+	arg_1_0.goTagLock = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_lock")
+	arg_1_0.txtTime = gohelper.findChildText(arg_1_0.goTagTime, "bg/#txt_time")
+	arg_1_0.txtLock = gohelper.findChildText(arg_1_0.goTagLock, "bg/#txt_lock")
+	arg_1_0.goRedDot = gohelper.findChild(arg_1_0.go, "#go_reddot")
+	arg_1_0.animator = arg_1_0.go:GetComponent(gohelper.Type_Animator)
+
+	if not arg_1_0.goTag or not arg_1_0.goTagNewAct or not arg_1_0.goTagNewLevel or not arg_1_0.goTagTime or not arg_1_0.goTagLock then
+		logError("error node:", tostring(arg_1_0.goTag), tostring(arg_1_0.goTagNewAct), tostring(arg_1_0.goTagNewLevel), tostring(arg_1_0.goTagTime), tostring(arg_1_0.goTagLock))
 	end
 
-	if not slot0.txtTime or not slot0.txtLock then
-		logError("error node txt:", tostring(slot0.txtTime), tostring(slot0.txtLock))
+	if not arg_1_0.txtTime or not arg_1_0.txtLock then
+		logError("error node txt:", tostring(arg_1_0.txtTime), tostring(arg_1_0.txtLock))
 	end
 end
 
-function slot0._getTagPath(slot0)
+function var_0_0._getTagPath(arg_2_0)
 	return "#txt_name/#go_tag"
 end
 
-function slot0.afterSetData(slot0)
-	if slot0.actId then
-		slot0.activityCo = ActivityConfig.instance:getActivityCo(slot0.actId)
+function var_0_0.afterSetData(arg_3_0)
+	if arg_3_0.actId then
+		arg_3_0.activityCo = ActivityConfig.instance:getActivityCo(arg_3_0.actId)
 	end
 
-	if not slot0.activityCo then
-		gohelper.setActive(slot0.go, false)
-		logError("VersionActivity2_3EnterViewTabItemBase.afterSetData error, no act config, actId:%s", slot0.actId)
+	if not arg_3_0.activityCo then
+		gohelper.setActive(arg_3_0.go, false)
+		logError("VersionActivity2_3EnterViewTabItemBase.afterSetData error, no act config, actId:%s", arg_3_0.actId)
 
 		return
 	end
 
-	if not string.nilorempty(string.split(slot0.activityCo.tabBgPath, "#")[1]) then
-		UISpriteSetMgr.instance:setV2a3MainActivitySprite(slot0.imageSelectTabIcon, slot2)
+	local var_3_0 = string.split(arg_3_0.activityCo.tabBgPath, "#")
+	local var_3_1 = var_3_0[1]
+
+	if not string.nilorempty(var_3_1) then
+		UISpriteSetMgr.instance:setV2a3MainActivitySprite(arg_3_0.imageSelectTabIcon, var_3_1)
 	end
 
-	if not string.nilorempty(slot1[2]) then
-		UISpriteSetMgr.instance:setV2a3MainActivitySprite(slot0.imageUnSelectTabIcon, slot3)
+	local var_3_2 = var_3_0[2]
+
+	if not string.nilorempty(var_3_2) then
+		UISpriteSetMgr.instance:setV2a3MainActivitySprite(arg_3_0.imageUnSelectTabIcon, var_3_2)
 	end
 
-	slot0.redDotIcon = RedDotController.instance:addRedDot(slot0.goRedDot, slot0.activityCo.redDotId, slot0.redDotUid)
+	arg_3_0.redDotIcon = RedDotController.instance:addRedDot(arg_3_0.goRedDot, arg_3_0.activityCo.redDotId, arg_3_0.redDotUid)
 end
 
-function slot0.childRefreshSelect(slot0)
-	gohelper.setActive(slot0.goSelected, slot0.isSelect)
-	gohelper.setActive(slot0.goUnselected, not slot0.isSelect)
+function var_0_0.childRefreshSelect(arg_4_0)
+	gohelper.setActive(arg_4_0.goSelected, arg_4_0.isSelect)
+	gohelper.setActive(arg_4_0.goUnselected, not arg_4_0.isSelect)
 end
 
-function slot0.childRefreshUI(slot0)
-	gohelper.setActive(slot0.goRedDot, ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.Normal)
+function var_0_0.childRefreshUI(arg_5_0)
+	local var_5_0 = ActivityHelper.getActivityStatus(arg_5_0.actId)
+
+	gohelper.setActive(arg_5_0.goRedDot, var_5_0 == ActivityEnum.ActivityStatus.Normal)
 end
 
-function slot0.refreshTag(slot0)
-	slot0:clearTag()
+function var_0_0.refreshTag(arg_6_0)
+	arg_6_0:clearTag()
 
-	if not slot0.actId then
+	if not arg_6_0.actId then
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.Normal then
-		slot0:refreshNormalTag()
-	elseif slot1 == ActivityEnum.ActivityStatus.NotUnlock then
-		slot0:refreshNotUnlockTag()
+	local var_6_0 = ActivityHelper.getActivityStatus(arg_6_0.actId)
+
+	if var_6_0 == ActivityEnum.ActivityStatus.Normal then
+		arg_6_0:refreshNormalTag()
+	elseif var_6_0 == ActivityEnum.ActivityStatus.NotUnlock then
+		arg_6_0:refreshNotUnlockTag()
 	else
-		slot0:refreshLockTag()
+		arg_6_0:refreshLockTag()
 	end
 end
 
-function slot0.clearTag(slot0)
-	gohelper.setActive(slot0.goTagNewAct, false)
-	gohelper.setActive(slot0.goTagNewLevel, false)
-	gohelper.setActive(slot0.goTagTime, false)
-	gohelper.setActive(slot0.goTagLock, false)
+function var_0_0.clearTag(arg_7_0)
+	gohelper.setActive(arg_7_0.goTagNewAct, false)
+	gohelper.setActive(arg_7_0.goTagNewLevel, false)
+	gohelper.setActive(arg_7_0.goTagTime, false)
+	gohelper.setActive(arg_7_0.goTagLock, false)
 end
 
-function slot0.refreshNormalTag(slot0)
-	if not ActivityEnterMgr.instance:isEnteredActivity(slot0.actId) then
-		gohelper.setActive(slot0.goTagNewAct, true)
+function var_0_0.refreshNormalTag(arg_8_0)
+	if not ActivityEnterMgr.instance:isEnteredActivity(arg_8_0.actId) then
+		gohelper.setActive(arg_8_0.goTagNewAct, true)
 
 		return
 	end
 
-	if ActivityModel.instance:getActivityInfo()[slot0.actId] and slot1:isNewStageOpen() then
-		gohelper.setActive(slot0.goTagNewLevel, true)
+	local var_8_0 = ActivityModel.instance:getActivityInfo()[arg_8_0.actId]
+
+	if var_8_0 and var_8_0:isNewStageOpen() then
+		gohelper.setActive(arg_8_0.goTagNewLevel, true)
 
 		return
 	end
 
-	if VersionActivity2_3EnterHelper.GetIsShowTabRemainTime(slot0.actId) and slot1 then
-		if VersionActivity2_3Enum.MaxShowTimeOffset < slot1:getRealEndTimeStamp() - ServerTime.now() then
+	if VersionActivity2_3EnterHelper.GetIsShowTabRemainTime(arg_8_0.actId) and var_8_0 then
+		if var_8_0:getRealEndTimeStamp() - ServerTime.now() > VersionActivity2_3Enum.MaxShowTimeOffset then
 			return
 		end
 
-		gohelper.setActive(slot0.goTagTime, true)
+		gohelper.setActive(arg_8_0.goTagTime, true)
 
-		slot0.txtTime.text = slot1:getRemainTimeStr2ByEndTime()
+		arg_8_0.txtTime.text = var_8_0:getRemainTimeStr2ByEndTime()
 	end
 end
 
-function slot0.refreshNotUnlockTag(slot0)
-	gohelper.setActive(slot0.goTagLock, false)
+function var_0_0.refreshNotUnlockTag(arg_9_0)
+	gohelper.setActive(arg_9_0.goTagLock, false)
 
-	if not ActivityEnterMgr.instance:isEnteredActivity(slot0.actId) then
-		gohelper.setActive(slot0.goTagNewAct, true)
+	if not ActivityEnterMgr.instance:isEnteredActivity(arg_9_0.actId) then
+		gohelper.setActive(arg_9_0.goTagNewAct, true)
 	end
 end
 
-function slot0.refreshLockTag(slot0)
-	gohelper.setActive(slot0.goTagLock, true)
+function var_0_0.refreshLockTag(arg_10_0)
+	gohelper.setActive(arg_10_0.goTagLock, true)
 
-	if ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.NotOpen then
-		slot0.txtLock.text = ActivityModel.instance:getActivityInfo()[slot0.actId]:getRemainTimeStr2ByOpenTime()
+	if ActivityHelper.getActivityStatus(arg_10_0.actId) == ActivityEnum.ActivityStatus.NotOpen then
+		local var_10_0 = ActivityModel.instance:getActivityInfo()[arg_10_0.actId]:getRemainTimeStr2ByOpenTime()
+
+		arg_10_0.txtLock.text = var_10_0
 	else
-		gohelper.setActive(slot0.goTagLock, false)
+		gohelper.setActive(arg_10_0.goTagLock, false)
 	end
 end
 
-function slot0.isShowRedDot(slot0)
-	return slot0.redDotIcon and slot0.redDotIcon.show
+function var_0_0.isShowRedDot(arg_11_0)
+	return arg_11_0.redDotIcon and arg_11_0.redDotIcon.show
 end
 
-return slot0
+return var_0_0

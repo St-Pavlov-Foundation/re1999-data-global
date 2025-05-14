@@ -1,110 +1,122 @@
-module("modules.logic.versionactivity1_4.act129.model.Activity129Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.model.Activity129Model", package.seeall)
 
-slot0 = class("Activity129Model", BaseModel)
+local var_0_0 = class("Activity129Model", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0.selectPoolId = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.selectPoolId = nil
 end
 
-function slot0.setInfo(slot0, slot1)
-	slot0:getActivityMo(slot1.activityId):init(slot1)
+function var_0_0.setInfo(arg_3_0, arg_3_1)
+	arg_3_0:getActivityMo(arg_3_1.activityId):init(arg_3_1)
 end
 
-function slot0.onLotterySuccess(slot0, slot1)
-	slot3 = {}
-	slot4 = {}
-	slot5 = {}
+function var_0_0.onLotterySuccess(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.rewards
+	local var_4_1 = {}
+	local var_4_2 = {}
+	local var_4_3 = {}
 
-	for slot9 = 1, #slot1.rewards do
-		slot10 = slot2[slot9]
-		slot16 = slot10.rewardId
-		slot11 = Activity129Config.instance:getRewardConfig(slot1.poolId, slot10.rare, slot10.rewardType, slot16)
+	for iter_4_0 = 1, #var_4_0 do
+		local var_4_4 = var_4_0[iter_4_0]
+		local var_4_5 = Activity129Config.instance:getRewardConfig(arg_4_1.poolId, var_4_4.rare, var_4_4.rewardType, var_4_4.rewardId)
+		local var_4_6 = Activity129Config.instance:getPoolConfig(arg_4_1.activityId, arg_4_1.poolId)
 
-		for slot16 = 1, slot10.num do
-			if slot10.rare == 5 then
-				if Activity129Config.instance:getPoolConfig(slot1.activityId, slot1.poolId).type ~= Activity129Enum.PoolType.Unlimite then
-					table.insert(slot4, slot11)
+		for iter_4_1 = 1, var_4_4.num do
+			if var_4_4.rare == 5 then
+				if var_4_6.type ~= Activity129Enum.PoolType.Unlimite then
+					table.insert(var_4_2, var_4_5)
 				end
 
-				table.insert(slot3, slot11)
+				table.insert(var_4_1, var_4_5)
 			else
-				table.insert(slot5, slot11)
+				table.insert(var_4_3, var_4_5)
 			end
 		end
 	end
 
-	tabletool.addValues(slot3, slot5)
-	Activity129Controller.instance:dispatchEvent(Activity129Event.OnShowSpecialReward, slot4, slot3)
-	slot0:getActivityMo(slot1.activityId):onLotterySuccess(slot1)
+	tabletool.addValues(var_4_1, var_4_3)
+	Activity129Controller.instance:dispatchEvent(Activity129Event.OnShowSpecialReward, var_4_2, var_4_1)
+	arg_4_0:getActivityMo(arg_4_1.activityId):onLotterySuccess(arg_4_1)
 end
 
-function slot0.getActivityMo(slot0, slot1)
-	if not slot0:getById(slot1) then
-		slot0:addAtLast(Activity129Mo.New(slot1))
+function var_0_0.getActivityMo(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getById(arg_5_1)
+
+	if not var_5_0 then
+		var_5_0 = Activity129Mo.New(arg_5_1)
+
+		arg_5_0:addAtLast(var_5_0)
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getShopVoiceConfig(slot0, slot1, slot2, slot3, slot4)
-	if not slot0:getHeroShopVoice(slot1, slot4) or not next(slot6) then
-		return {}
+function var_0_0.getShopVoiceConfig(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	local var_6_0 = {}
+	local var_6_1 = arg_6_0:getHeroShopVoice(arg_6_1, arg_6_4)
+
+	if not var_6_1 or not next(var_6_1) then
+		return var_6_0
 	end
 
-	for slot10, slot11 in pairs(slot6) do
-		if slot11.type == slot2 and (not slot3 or slot3(slot11)) then
-			table.insert(slot5, slot11)
+	for iter_6_0, iter_6_1 in pairs(var_6_1) do
+		if iter_6_1.type == arg_6_2 and (not arg_6_3 or arg_6_3(iter_6_1)) then
+			table.insert(var_6_0, iter_6_1)
 		end
 	end
 
-	return slot5
+	return var_6_0
 end
 
-function slot0.getHeroShopVoice(slot0, slot1, slot2)
-	if not CharacterDataConfig.instance:getCharacterShopVoicesCo(slot1) then
-		return {}
+function var_0_0.getHeroShopVoice(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = {}
+	local var_7_1 = CharacterDataConfig.instance:getCharacterShopVoicesCo(arg_7_1)
+
+	if not var_7_1 then
+		return var_7_0
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		if slot0:_checkSkin(slot9, slot2) then
-			slot3[slot9.audio] = slot9
+	for iter_7_0, iter_7_1 in pairs(var_7_1) do
+		if arg_7_0:_checkSkin(iter_7_1, arg_7_2) then
+			var_7_0[iter_7_1.audio] = iter_7_1
 		end
 	end
 
-	return slot3
+	return var_7_0
 end
 
-function slot0._checkSkin(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._checkSkin(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_1 then
 		return false
 	end
 
-	if string.nilorempty(slot1.skins) or not slot2 then
+	if string.nilorempty(arg_8_1.skins) or not arg_8_2 then
 		return true
 	end
 
-	return string.find(slot1.skins, slot2)
+	return string.find(arg_8_1.skins, arg_8_2)
 end
 
-function slot0.setSelectPoolId(slot0, slot1, slot2)
-	slot0.selectPoolId = slot1
+function var_0_0.setSelectPoolId(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.selectPoolId = arg_9_1
 
-	if not slot2 then
+	if not arg_9_2 then
 		Activity129Controller.instance:dispatchEvent(Activity129Event.OnEnterPool)
 	end
 end
 
-function slot0.getSelectPoolId(slot0)
-	return slot0.selectPoolId
+function var_0_0.getSelectPoolId(arg_10_0)
+	return arg_10_0.selectPoolId
 end
 
-function slot0.checkPoolIsEmpty(slot0, slot1, slot2)
-	return slot0:getActivityMo(slot1):checkPoolIsEmpty(slot2)
+function var_0_0.checkPoolIsEmpty(arg_11_0, arg_11_1, arg_11_2)
+	return arg_11_0:getActivityMo(arg_11_1):checkPoolIsEmpty(arg_11_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

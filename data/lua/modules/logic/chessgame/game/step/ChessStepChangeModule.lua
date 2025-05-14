@@ -1,19 +1,22 @@
-module("modules.logic.chessgame.game.step.ChessStepChangeModule", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepChangeModule", package.seeall)
 
-slot0 = class("ChessStepChangeModule", BaseWork)
+local var_0_0 = class("ChessStepChangeModule", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot1 = slot0.originData.interactId
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = arg_2_0.originData.interactId
+	local var_2_1 = arg_2_0.originData.path
+	local var_2_2 = ChessGameController.instance.interactsMgr:get(var_2_0)
+	local var_2_3 = ChessGameInteractModel.instance:getInteractById(var_2_0)
 
-	if ChessGameInteractModel.instance:getInteractById(slot1) and slot4:isInCurrentMap() then
-		ChessGameController.instance.interactsMgr:get(slot1):changeModule(slot0.originData.path)
+	if var_2_3 and var_2_3:isInCurrentMap() then
+		var_2_2:changeModule(var_2_1)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

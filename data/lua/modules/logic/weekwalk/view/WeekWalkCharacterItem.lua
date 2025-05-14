@@ -1,63 +1,77 @@
-module("modules.logic.weekwalk.view.WeekWalkCharacterItem", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkCharacterItem", package.seeall)
 
-slot0 = class("WeekWalkCharacterItem", ListScrollCell)
+local var_0_0 = class("WeekWalkCharacterItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._heroGOParent = gohelper.findChild(slot1, "hero")
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(slot0._heroGOParent)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
+	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
 
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
 
-	slot0._goAnim = slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
-	slot0._hpbg = gohelper.findChild(slot1, "hpbg")
+	arg_1_0._goAnim = arg_1_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._hpbg = gohelper.findChild(arg_1_1, "hpbg")
 
-	gohelper.setActive(slot0._hpbg, false)
+	gohelper.setActive(arg_1_0._hpbg, false)
 
-	slot0._hptextwhite = gohelper.findChildText(slot1, "hpbg/hptextwhite")
-	slot0._hptextred = gohelper.findChildText(slot1, "hpbg/hptextred")
-	slot0._hpimage = gohelper.findChildImage(slot1, "hpbg/hp")
+	arg_1_0._hptextwhite = gohelper.findChildText(arg_1_1, "hpbg/hptextwhite")
+	arg_1_0._hptextred = gohelper.findChildText(arg_1_1, "hpbg/hptextred")
+	arg_1_0._hpimage = gohelper.findChildImage(arg_1_1, "hpbg/hp")
 
-	slot0:_initObj()
+	arg_1_0:_initObj()
 end
 
-function slot0._initObj(slot0)
+function var_0_0._initObj(arg_2_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0._heroItem:onUpdateMO(slot1)
+	arg_5_0._heroItem:onUpdateMO(arg_5_1)
 
-	slot2 = 1
+	local var_5_0 = 1
+	local var_5_1 = WeekWalkModel.instance:getInfo()
 
-	if WeekWalkModel.instance:getInfo() and slot3:getHeroHp(slot0._mo.config.id) then
-		slot2 = slot4 / slot0._mo.baseAttr.hp
+	if var_5_1 then
+		local var_5_2 = var_5_1:getHeroHp(arg_5_0._mo.config.id)
+
+		if var_5_2 then
+			var_5_0 = var_5_2 / arg_5_0._mo.baseAttr.hp
+		end
 	end
 
-	slot0._heroItem:setInjury(math.min(slot2, 1) <= 0)
-	slot0._heroItem:setAdventureBuff(slot3:getHeroBuff(slot0._mo.heroId))
+	local var_5_3 = math.min(var_5_0, 1)
+
+	arg_5_0._heroItem:setInjury(var_5_3 <= 0)
+
+	local var_5_4 = var_5_1:getHeroBuff(arg_5_0._mo.heroId)
+
+	arg_5_0._heroItem:setAdventureBuff(var_5_4)
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	slot1 = {}
-	slot1 = slot0._mo
+	local var_6_0 = {}
+	local var_6_1 = arg_6_0._mo
 
-	CharacterController.instance:openCharacterView(slot0._mo)
+	CharacterController.instance:openCharacterView(arg_6_0._mo)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._goAnim
+function var_0_0.getAnimator(arg_7_0)
+	return arg_7_0._goAnim
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

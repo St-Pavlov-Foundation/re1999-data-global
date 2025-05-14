@@ -1,113 +1,124 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_ResultView", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_ResultView", package.seeall)
 
-slot0 = class("V1a4_BossRush_ResultView", BaseView)
+local var_0_0 = class("V1a4_BossRush_ResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Title/#simage_Title")
-	slot0._btnRank = gohelper.findChildButtonWithAudio(slot0.viewGO, "Title/#btn_Rank")
-	slot0._simagePlayerHead = gohelper.findChildSingleImage(slot0.viewGO, "Player/PlayerHead/#simage_PlayerHead")
-	slot0._txtPlayerName = gohelper.findChildText(slot0.viewGO, "Player/#txt_PlayerName")
-	slot0._txtTime = gohelper.findChildText(slot0.viewGO, "Player/#txt_Time")
-	slot0._goAssessScore = gohelper.findChild(slot0.viewGO, "Right/#go_AssessScore")
-	slot0._goGroup = gohelper.findChild(slot0.viewGO, "Right/#go_Group")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Title/#simage_Title")
+	arg_1_0._btnRank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/#btn_Rank")
+	arg_1_0._simagePlayerHead = gohelper.findChildSingleImage(arg_1_0.viewGO, "Player/PlayerHead/#simage_PlayerHead")
+	arg_1_0._txtPlayerName = gohelper.findChildText(arg_1_0.viewGO, "Player/#txt_PlayerName")
+	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "Player/#txt_Time")
+	arg_1_0._goAssessScore = gohelper.findChild(arg_1_0.viewGO, "Right/#go_AssessScore")
+	arg_1_0._goGroup = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Group")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnRank:AddClickListener(slot0._btnRankOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnRank:AddClickListener(arg_2_0._btnRankOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnRank:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnRank:RemoveClickListener()
 end
 
-function slot0._btnRankOnClick(slot0)
+function var_0_0._btnRankOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._bossBgList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._bossBgList = arg_5_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		slot0._bossBgList[slot4] = gohelper.findChild(slot0.viewGO, "boss_topbg" .. slot4)
+	for iter_5_0 = 1, 3 do
+		arg_5_0._bossBgList[iter_5_0] = gohelper.findChild(arg_5_0.viewGO, "boss_topbg" .. iter_5_0)
 	end
 
-	slot0:_initAssessScore()
-	slot0:_initHeroGroup()
+	arg_5_0:_initAssessScore()
+	arg_5_0:_initHeroGroup()
 
-	slot0._click = gohelper.getClick(slot0.viewGO)
+	arg_5_0._click = gohelper.getClick(arg_5_0.viewGO)
 
-	slot0._click:AddClickListener(slot0.closeThis, slot0)
-	NavigateMgr.instance:addEscape(ViewName.V1a4_BossRush_ResultView, slot0.closeThis, slot0)
+	arg_5_0._click:AddClickListener(arg_5_0.closeThis, arg_5_0)
+	NavigateMgr.instance:addEscape(ViewName.V1a4_BossRush_ResultView, arg_5_0.closeThis, arg_5_0)
 end
 
-function slot0._initAssessScore(slot0)
-	slot1 = V1a4_BossRush_Assess_Score
-	slot0._assessScore = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_result_assess, slot0._goAssessScore, slot1.__name), slot1)
+function var_0_0._initAssessScore(arg_6_0)
+	local var_6_0 = V1a4_BossRush_Assess_Score
+	local var_6_1 = arg_6_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_result_assess, arg_6_0._goAssessScore, var_6_0.__name)
 
-	slot0._assessScore:setActiveDesc(false)
-	slot0._assessIcon:initData(slot0, false)
+	arg_6_0._assessScore = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, var_6_0)
+
+	arg_6_0._assessScore:setActiveDesc(false)
+	arg_6_0._assessIcon:initData(arg_6_0, false)
 end
 
-function slot0._initHeroGroup(slot0)
-	slot1 = V1a4_BossRush_HeroGroup
-	slot0._heroGroup = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_herogroup, slot0._goGroup, slot1.__cname), slot1, slot0.viewContainer)
+function var_0_0._initHeroGroup(arg_7_0)
+	local var_7_0 = V1a4_BossRush_HeroGroup
+	local var_7_1 = arg_7_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_herogroup, arg_7_0._goGroup, var_7_0.__cname)
+
+	arg_7_0._heroGroup = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, var_7_0, arg_7_0.viewContainer)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._curStage, slot0._curLayer = BossRushModel.instance:getBattleStageAndLayer()
-	slot2 = PlayerModel.instance:getPlayinfo().portrait
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._curStage, arg_9_0._curLayer = BossRushModel.instance:getBattleStageAndLayer()
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simagePlayerHead)
+	local var_9_0 = PlayerModel.instance:getPlayinfo()
+	local var_9_1 = var_9_0.portrait
+
+	if not arg_9_0._liveHeadIcon then
+		arg_9_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_9_0._simagePlayerHead)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot2)
+	arg_9_0._liveHeadIcon:setLiveHead(var_9_1)
 
-	slot0._txtTime.text = TimeUtil.getServerDateUTCToString()
-	slot0._txtPlayerName.text = slot1.name
+	arg_9_0._txtTime.text = TimeUtil.getServerDateUTCToString()
+	arg_9_0._txtPlayerName.text = var_9_0.name
 
-	slot0:_refresh()
+	arg_9_0:_refresh()
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_lose)
 end
 
-function slot0.onClose(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.onClose(arg_11_0)
+	arg_11_0._click:RemoveClickListener()
 	FightController.onResultViewClose()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageFullBG:UnLoadImage()
-	slot0._simageTitle:UnLoadImage()
-	slot0._simagePlayerHead:UnLoadImage()
-	GameUtil.onDestroyViewMember(slot0, "_heroGroup")
-	GameUtil.onDestroyViewMember(slot0, "_assessScore")
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simageFullBG:UnLoadImage()
+	arg_12_0._simageTitle:UnLoadImage()
+	arg_12_0._simagePlayerHead:UnLoadImage()
+	GameUtil.onDestroyViewMember(arg_12_0, "_heroGroup")
+	GameUtil.onDestroyViewMember(arg_12_0, "_assessScore")
 end
 
-function slot0._refresh(slot0)
-	if not slot0._curStage then
+function var_0_0._refresh(arg_13_0)
+	local var_13_0 = arg_13_0._curStage
+
+	if not var_13_0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._bossBgList) do
-		gohelper.setActive(slot7, (slot1 == 1 and 1 or slot1 == 2 and 3 or 2) == slot6)
+	local var_13_1 = var_13_0 == 1 and 1 or var_13_0 == 2 and 3 or 2
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._bossBgList) do
+		gohelper.setActive(iter_13_1, var_13_1 == iter_13_0)
 	end
 
-	slot0._simageFullBG:LoadImage(BossRushConfig.instance:getResultViewFullBgSImage(slot1))
-	slot0._simageTitle:LoadImage(BossRushConfig.instance:getResultViewNameSImage(slot1))
-	slot0._assessScore:setData_ResultView(slot1, BossRushModel.instance:getFightScore())
-	slot0._assessScore:setActiveNewRecord(BossRushModel.instance:checkIsNewHighestPointRecord(slot1))
-	slot0._heroGroup:setDataByCurFightParam()
+	arg_13_0._simageFullBG:LoadImage(BossRushConfig.instance:getResultViewFullBgSImage(var_13_0))
+	arg_13_0._simageTitle:LoadImage(BossRushConfig.instance:getResultViewNameSImage(var_13_0))
+	arg_13_0._assessScore:setData_ResultView(var_13_0, BossRushModel.instance:getFightScore())
+	arg_13_0._assessScore:setActiveNewRecord(BossRushModel.instance:checkIsNewHighestPointRecord(var_13_0))
+	arg_13_0._heroGroup:setDataByCurFightParam()
 end
 
-return slot0
+return var_0_0

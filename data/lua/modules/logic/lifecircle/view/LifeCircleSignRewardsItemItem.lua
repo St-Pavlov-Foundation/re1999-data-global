@@ -1,138 +1,147 @@
-module("modules.logic.lifecircle.view.LifeCircleSignRewardsItemItem", package.seeall)
+﻿module("modules.logic.lifecircle.view.LifeCircleSignRewardsItemItem", package.seeall)
 
-slot0 = class("LifeCircleSignRewardsItemItem", RougeSimpleItemBase)
+local var_0_0 = class("LifeCircleSignRewardsItemItem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._imagebg = gohelper.findChildImage(slot0.viewGO, "#image_bg")
-	slot0._simageReward = gohelper.findChildSingleImage(slot0.viewGO, "#simage_Reward")
-	slot0._gohasget = gohelper.findChild(slot0.viewGO, "#go_hasget")
-	slot0._txtrewardcount = gohelper.findChildText(slot0.viewGO, "#txt_rewardcount")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "#image_bg")
+	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Reward")
+	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "#go_hasget")
+	arg_1_0._txtrewardcount = gohelper.findChildText(arg_1_0.viewGO, "#txt_rewardcount")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = Color.New(0.6941177, 0.6941177, 0.6941177, 1)
-slot2 = Color.New(1, 1, 1, 1)
-slot3 = Color.New(0.5, 0.5, 0.5, 1)
-slot4 = Color.New(1, 1, 1, 1)
-slot5 = Color.New(0.227451, 0.227451, 0.227451, 1)
-slot6 = Color.New(0.227451, 0.227451, 0.227451, 1)
+local var_0_1 = Color.New(0.6941177, 0.6941177, 0.6941177, 1)
+local var_0_2 = Color.New(1, 1, 1, 1)
+local var_0_3 = Color.New(0.5, 0.5, 0.5, 1)
+local var_0_4 = Color.New(1, 1, 1, 1)
+local var_0_5 = Color.New(0.227451, 0.227451, 0.227451, 1)
+local var_0_6 = Color.New(0.227451, 0.227451, 0.227451, 1)
 
-function slot0.ctor(slot0, ...)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	arg_4_0:__onInit()
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
 
-	slot0._simageRewardGo = slot0._simageReward.gameObject
-	slot0._simageRewardImg = slot0._simageReward:GetComponent(gohelper.Type_Image)
-	slot0._imagebgGo = slot0._imagebg.gameObject
-	slot0._itemIcon = IconMgr.instance:getCommonPropItemIcon(slot0._simageRewardGo)
+	arg_5_0._simageRewardGo = arg_5_0._simageReward.gameObject
+	arg_5_0._simageRewardImg = arg_5_0._simageReward:GetComponent(gohelper.Type_Image)
+	arg_5_0._imagebgGo = arg_5_0._imagebg.gameObject
+	arg_5_0._itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_5_0._simageRewardGo)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMember(slot0, "_itemIcon")
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_6_0)
+	GameUtil.onDestroyViewMember(arg_6_0, "_itemIcon")
+	var_0_0.super.onDestroyView(arg_6_0)
+	arg_6_0:__onDispose()
 end
 
-function slot0._isClaimed(slot0)
-	return slot0:parent():isClaimed()
+function var_0_0._isClaimed(arg_7_0)
+	return arg_7_0:parent():isClaimed()
 end
 
-function slot0._logindaysid(slot0)
-	return slot0:parent():logindaysid()
+function var_0_0._logindaysid(arg_8_0)
+	return arg_8_0:parent():logindaysid()
 end
 
-function slot0._setData_Normal(slot0, slot1)
-	slot2 = slot1[1]
-	slot3 = slot1[2]
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot2, slot3)
+function var_0_0._setData_Normal(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1[1]
+	local var_9_1 = arg_9_1[2]
+	local var_9_2 = arg_9_1[3]
+	local var_9_3, var_9_4 = ItemModel.instance:getItemConfigAndIcon(var_9_0, var_9_1)
 
-	slot0._itemIcon:setMOValue(slot2, slot3, slot1[3])
-	slot0._itemIcon:isShowQuality(false)
-	slot0._itemIcon:isShowEquipAndItemCount(false)
-	slot0._itemIcon:customOnClickCallback(slot0._onItemClick, slot0)
+	arg_9_0._itemIcon:setMOValue(var_9_0, var_9_1, var_9_2)
+	arg_9_0._itemIcon:isShowQuality(false)
+	arg_9_0._itemIcon:isShowEquipAndItemCount(false)
+	arg_9_0._itemIcon:customOnClickCallback(arg_9_0._onItemClick, arg_9_0)
 
-	if slot0._itemIcon:isEquipIcon() then
-		slot0._itemIcon:setScale(0.7)
+	if arg_9_0._itemIcon:isEquipIcon() then
+		arg_9_0._itemIcon:setScale(0.7)
 	else
-		slot0._itemIcon:setScale(0.8)
+		arg_9_0._itemIcon:setScale(0.8)
 	end
 
-	slot0:_setBg(slot5.rare)
+	arg_9_0:_setBg(var_9_3.rare)
 
-	slot0._txtrewardcount.text = slot4 and luaLang("multiple") .. slot4 or ""
+	arg_9_0._txtrewardcount.text = var_9_2 and luaLang("multiple") .. var_9_2 or ""
 end
 
-function slot0._setBg(slot0, slot1)
-	UISpriteSetMgr.instance:setUiFBSprite(slot0._imagebg, "bg_pinjidi_" .. tostring(slot1 or 0))
+function var_0_0._setBg(arg_10_0, arg_10_1)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_10_0._imagebg, "bg_pinjidi_" .. tostring(arg_10_1 or 0))
 end
 
-function slot0._setData_LastOne(slot0)
-	slot0._txtrewardcount.text = ""
+function var_0_0._setData_LastOne(arg_11_0)
+	arg_11_0._txtrewardcount.text = ""
 
-	gohelper.setActive(slot0._imagebgGo, true)
-	UISpriteSetMgr.instance:setUiFBSprite(slot0._imagebg, "bg_pinjidi_0")
-	slot0:_setBg(0)
+	gohelper.setActive(arg_11_0._imagebgGo, true)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_11_0._imagebg, "bg_pinjidi_0")
+	arg_11_0:_setBg(0)
 end
 
-function slot0.setData(slot0, slot1)
-	uv0.super.setData(slot0, slot1)
+function var_0_0.setData(arg_12_0, arg_12_1)
+	var_0_0.super.setData(arg_12_0, arg_12_1)
 
-	slot3 = slot0:_isClaimed() and uv1 or uv2
-	slot4 = slot2 and uv3 or uv4
-	slot5 = slot2 and uv5 or uv6
+	local var_12_0 = arg_12_0:_isClaimed()
+	local var_12_1 = var_12_0 and var_0_1 or var_0_2
+	local var_12_2 = var_12_0 and var_0_3 or var_0_4
+	local var_12_3 = var_12_0 and var_0_5 or var_0_6
 
-	gohelper.setActive(slot0._simageRewardGo, slot1 and true or false)
+	gohelper.setActive(arg_12_0._simageRewardGo, arg_12_1 and true or false)
 
-	slot6 = slot1 and true or false
+	local var_12_4 = arg_12_1 and true or false
 
-	slot0:_setActive_itemIcon(slot6)
+	arg_12_0:_setActive_itemIcon(var_12_4)
 
-	slot0._simageRewardImg.enabled = not slot6
+	arg_12_0._simageRewardImg.enabled = not var_12_4
 
-	if not slot1 then
-		slot0:_setData_LastOne()
+	if not arg_12_1 then
+		arg_12_0:_setData_LastOne()
 	else
-		slot0:_setData_Normal(slot1)
+		arg_12_0:_setData_Normal(arg_12_1)
 	end
 
-	slot0._simageRewardImg.color = slot3
-	slot0._imagebg.color = slot4
-	slot0._txtrewardcount.color = slot5
+	arg_12_0._simageRewardImg.color = var_12_1
+	arg_12_0._imagebg.color = var_12_2
+	arg_12_0._txtrewardcount.color = var_12_3
 
-	gohelper.setActive(slot0._gohasget, slot2)
+	gohelper.setActive(arg_12_0._gohasget, var_12_0)
 end
 
-function slot0._onItemClick(slot0)
-	if not slot0:parent():onItemClick() then
+function var_0_0._onItemClick(arg_13_0)
+	if not arg_13_0:parent():onItemClick() then
 		return
 	end
 
-	if not slot0._mo then
+	local var_13_0 = arg_13_0._mo
+
+	if not var_13_0 then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(slot2[1], slot2[2])
+	local var_13_1 = var_13_0[1]
+	local var_13_2 = var_13_0[2]
+
+	MaterialTipController.instance:showMaterialInfo(var_13_1, var_13_2)
 end
 
-function slot0._setActive_itemIcon(slot0, slot1)
-	if slot1 then
-		slot0._itemIcon:setPropItemScale(1)
+function var_0_0._setActive_itemIcon(arg_14_0, arg_14_1)
+	if arg_14_1 then
+		arg_14_0._itemIcon:setPropItemScale(1)
 	else
-		slot0._itemIcon:setPropItemScale(0)
+		arg_14_0._itemIcon:setPropItemScale(0)
 	end
 end
 
-return slot0
+return var_0_0

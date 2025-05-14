@@ -1,13 +1,13 @@
-module("modules.logic.fight.entity.comp.FightAssembledMonsterSpine", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightAssembledMonsterSpine", package.seeall)
 
-slot0 = class("FightAssembledMonsterSpine", FightUnitSpine)
+local var_0_0 = class("FightAssembledMonsterSpine", FightUnitSpine)
 
-function slot0.playBySub(slot0, slot1, slot2, slot3, slot4)
-	if slot2 == "die" or slot2 == "idle" then
+function var_0_0.playBySub(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	if arg_1_2 == "die" or arg_1_2 == "idle" then
 		return
 	end
 
-	slot0:play(slot2, slot3, slot4)
+	arg_1_0:play(arg_1_2, arg_1_3, arg_1_4)
 end
 
-return slot0
+return var_0_0

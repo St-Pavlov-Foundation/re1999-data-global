@@ -1,59 +1,61 @@
-module("modules.logic.investigate.model.InvestigateOpinionModel", package.seeall)
+﻿module("modules.logic.investigate.model.InvestigateOpinionModel", package.seeall)
 
-slot0 = class("InvestigateOpinionModel", BaseModel)
+local var_0_0 = class("InvestigateOpinionModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._isInitOpinionInfo = false
-	slot0._connectedId = {}
-	slot0._unLockedId = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._isInitOpinionInfo = false
+	arg_1_0._connectedId = {}
+	arg_1_0._unLockedId = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.getIsInitOpinionInfo(slot0)
-	return slot0._isInitOpinionInfo
+function var_0_0.getIsInitOpinionInfo(arg_3_0)
+	return arg_3_0._isInitOpinionInfo
 end
 
-function slot0.initOpinionInfo(slot0, slot1)
-	slot0._isInitOpinionInfo = true
+function var_0_0.initOpinionInfo(arg_4_0, arg_4_1)
+	arg_4_0._isInitOpinionInfo = true
 
-	for slot5, slot6 in ipairs(slot1.intelBox) do
-		for slot10, slot11 in ipairs(slot6.clueIds) do
-			slot0._connectedId[slot11] = slot11
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.intelBox) do
+		for iter_4_2, iter_4_3 in ipairs(iter_4_1.clueIds) do
+			arg_4_0._connectedId[iter_4_3] = iter_4_3
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot1.clueIds) do
-		slot0._unLockedId[slot6] = slot6
+	for iter_4_4, iter_4_5 in ipairs(arg_4_1.clueIds) do
+		arg_4_0._unLockedId[iter_4_5] = iter_4_5
 	end
 end
 
-function slot0.isUnlocked(slot0, slot1)
-	return slot0._unLockedId[slot1] ~= nil
+function var_0_0.isUnlocked(arg_5_0, arg_5_1)
+	return arg_5_0._unLockedId[arg_5_1] ~= nil
 end
 
-function slot0.setInfo(slot0, slot1, slot2)
-	slot0._mo = slot1
-	slot0._moList = slot2
+function var_0_0.setInfo(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._mo = arg_6_1
+	arg_6_0._moList = arg_6_2
 end
 
-function slot0.getInfo(slot0)
-	return slot0._mo, slot0._moList
+function var_0_0.getInfo(arg_7_0)
+	return arg_7_0._mo, arg_7_0._moList
 end
 
-function slot0.getLinkedStatus(slot0, slot1)
-	return slot0._connectedId[slot1] ~= nil
+function var_0_0.getLinkedStatus(arg_8_0, arg_8_1)
+	return arg_8_0._connectedId[arg_8_1] ~= nil
 end
 
-function slot0.setLinkedStatus(slot0, slot1, slot2)
-	slot0._connectedId[slot1] = slot2
+function var_0_0.setLinkedStatus(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._connectedId[arg_9_1] = arg_9_2
 end
 
-function slot0.allOpinionLinked(slot0, slot1)
-	for slot6, slot7 in ipairs(InvestigateConfig.instance:getInvestigateAllClueInfos(slot1)) do
-		if not slot0:getLinkedStatus(slot7.id) then
+function var_0_0.allOpinionLinked(arg_10_0, arg_10_1)
+	local var_10_0 = InvestigateConfig.instance:getInvestigateAllClueInfos(arg_10_1)
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		if not arg_10_0:getLinkedStatus(iter_10_1.id) then
 			return false
 		end
 	end
@@ -61,6 +63,6 @@ function slot0.allOpinionLinked(slot0, slot1)
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

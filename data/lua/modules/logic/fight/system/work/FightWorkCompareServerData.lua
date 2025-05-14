@@ -1,7 +1,7 @@
-module("modules.logic.fight.system.work.FightWorkCompareServerData", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCompareServerData", package.seeall)
 
-slot0 = class("FightWorkCompareServerData", BaseWork)
-slot1 = {
+local var_0_0 = class("FightWorkCompareServerData", BaseWork)
+local var_0_1 = {
 	stanceIndex = true,
 	playCardExPoint = true,
 	stanceDic = true,
@@ -18,148 +18,165 @@ slot1 = {
 	_moveCardAddExpoint = true
 }
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if FightModel.instance:isFinish() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if FightReplayModel.instance:isReplay() then
 		if FightModel.instance:getVersion() >= 4 then
-			slot0:_compareLocalWithPerformance()
+			arg_1_0:_compareLocalWithPerformance()
 		end
 
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot0:_compareLocalWithPerformance(true)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 5)
+		arg_1_0:_compareLocalWithPerformance(true)
+		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 5)
 
-		slot0._count = 0
-		slot6 = slot0
+		arg_1_0._count = 0
 
-		FightController.instance:registerCallback(FightEvent.CountEntityInfoReply, slot0._onCountEntityInfoReply, slot6)
+		FightController.instance:registerCallback(FightEvent.CountEntityInfoReply, arg_1_0._onCountEntityInfoReply, arg_1_0)
 
-		for slot6, slot7 in pairs(FightLocalDataMgr.instance.entityMgr:getAllEntityMO()) do
-			if not slot7:isStatusDead() then
-				slot0._count = slot0._count + 1
+		local var_1_0 = FightLocalDataMgr.instance.entityMgr:getAllEntityMO()
 
-				FightRpc.instance:sendEntityInfoRequest(slot7.uid)
+		for iter_1_0, iter_1_1 in pairs(var_1_0) do
+			if not iter_1_1:isStatusDead() then
+				arg_1_0._count = arg_1_0._count + 1
+
+				local var_1_1 = iter_1_1.uid
+
+				FightRpc.instance:sendEntityInfoRequest(var_1_1)
 			end
 		end
 
-		if slot0._count == 0 then
-			slot0:onDone(true)
+		if arg_1_0._count == 0 then
+			arg_1_0:onDone(true)
 		end
 	else
-		slot0:_compareLocalWithPerformance()
-		slot0:onDone(true)
+		arg_1_0:_compareLocalWithPerformance()
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._compareLocalWithPerformance(slot0, slot1)
-	slot3 = false
+function var_0_0._compareLocalWithPerformance(arg_2_0, arg_2_1)
+	local var_2_0 = FightLocalDataMgr.instance.entityMgr:getAllEntityMO()
+	local var_2_1 = false
 
-	for slot7, slot8 in pairs(FightLocalDataMgr.instance.entityMgr:getAllEntityMO()) do
-		if slot0:_compareLocalData(slot8, FightDataHelper.entityMgr:getById(slot8.id), slot1) then
-			slot3 = true
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		local var_2_2 = FightDataHelper.entityMgr:getById(iter_2_1.id)
+
+		if arg_2_0:_compareLocalData(iter_2_1, var_2_2, arg_2_1) then
+			var_2_1 = true
 		end
 	end
 
-	if slot3 then
+	if var_2_1 then
 		FightController.instance:dispatchEvent(FightEvent.AfterForceUpdatePerformanceData)
 	end
 
-	return slot3
+	return var_2_1
 end
 
-function slot0._compareLocalData(slot0, slot1, slot2, slot3)
-	if slot1 and slot2 and not slot1:isStatusDead() then
-		slot4 = slot1.id
+function var_0_0._compareLocalData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 and arg_3_2 and not arg_3_1:isStatusDead() then
+		local var_3_0 = arg_3_1.id
 
-		for slot8, slot9 in pairs(slot2.buffDic) do
-			if not slot1.buffDic[slot8] then
-				if FightHelper.getEntity(slot1.id) and slot10.buff then
-					slot10.buff:delBuff(slot8)
+		for iter_3_0, iter_3_1 in pairs(arg_3_2.buffDic) do
+			if not arg_3_1.buffDic[iter_3_0] then
+				local var_3_1 = FightHelper.getEntity(arg_3_1.id)
+
+				if var_3_1 and var_3_1.buff then
+					var_3_1.buff:delBuff(iter_3_0)
 				end
 
-				slot2.buffDic[slot8] = nil
+				arg_3_2.buffDic[iter_3_0] = nil
 			end
 		end
 
-		slot5, slot6, slot7, slot8 = FightHelper.compareData(slot1, slot2, uv0)
+		local var_3_2, var_3_3, var_3_4, var_3_5 = FightHelper.compareData(arg_3_1, arg_3_2, var_0_1)
 
-		if not slot5 then
-			FightEntityDataHelper.copyEntityMO(slot1, slot2)
-			FightController.instance:dispatchEvent(FightEvent.ForceUpdatePerformanceData, slot4)
+		if not var_3_2 then
+			FightEntityDataHelper.copyEntityMO(arg_3_1, arg_3_2)
+			FightController.instance:dispatchEvent(FightEvent.ForceUpdatePerformanceData, var_3_0)
 
 			return true
 		end
 	end
 end
 
-function slot0.sortBuffList(slot0, slot1)
-	return slot0.time < slot1.time
+function var_0_0.sortBuffList(arg_4_0, arg_4_1)
+	return arg_4_0.time < arg_4_1.time
 end
 
-function slot0._onCountEntityInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		if slot2.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(slot2.entityInfo.uid) then
-			slot4 = slot3.id
-			slot5 = FightEntityMO.New()
+function var_0_0._onCountEntityInfoReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		local var_5_0 = arg_5_2.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(arg_5_2.entityInfo.uid)
 
-			slot5:init(slot2.entityInfo, slot3.side)
+		if var_5_0 then
+			local var_5_1 = var_5_0.id
+			local var_5_2 = FightEntityMO.New()
 
-			slot6, slot7, slot8, slot9 = FightHelper.compareData(slot5, slot3, uv0)
+			var_5_2:init(arg_5_2.entityInfo, var_5_0.side)
 
-			if not slot6 then
-				logError(string.format("前后端entity数据不一致,entityId:%s, 角色名称:%s, key = %s, \nserverValue = %s, \nlocalValue = %s", slot4, slot3:getCO() and slot10.name or "", slot7, FightHelper.logStr(slot8, uv0), FightHelper.logStr(slot9, uv0)))
-				FightLocalDataMgr.instance.entityMgr:replaceEntityMO(slot5)
+			local var_5_3, var_5_4, var_5_5, var_5_6 = FightHelper.compareData(var_5_2, var_5_0, var_0_1)
 
-				if FightDataHelper.entityMgr:getById(slot4) then
-					FightEntityDataHelper.copyEntityMO(slot5, slot12)
-					FightController.instance:dispatchEvent(FightEvent.ForceUpdatePerformanceData, slot4)
+			if not var_5_3 then
+				local var_5_7 = var_5_0:getCO()
+				local var_5_8 = "前后端entity数据不一致,entityId:%s, 角色名称:%s, key = %s, \nserverValue = %s, \nlocalValue = %s"
+
+				logError(string.format(var_5_8, var_5_1, var_5_7 and var_5_7.name or "", var_5_4, FightHelper.logStr(var_5_5, var_0_1), FightHelper.logStr(var_5_6, var_0_1)))
+				FightLocalDataMgr.instance.entityMgr:replaceEntityMO(var_5_2)
+
+				local var_5_9 = FightDataHelper.entityMgr:getById(var_5_1)
+
+				if var_5_9 then
+					FightEntityDataHelper.copyEntityMO(var_5_2, var_5_9)
+					FightController.instance:dispatchEvent(FightEvent.ForceUpdatePerformanceData, var_5_1)
 				end
 			else
-				slot0:_compareLocalData(slot3, FightDataHelper.entityMgr:getById(slot4))
+				local var_5_10 = FightDataHelper.entityMgr:getById(var_5_1)
+
+				arg_5_0:_compareLocalData(var_5_0, var_5_10)
 			end
 		else
 			logError("数据错误")
 		end
 	end
 
-	slot0._count = slot0._count - 1
+	arg_5_0._count = arg_5_0._count - 1
 
-	if slot0._count <= 0 then
+	if arg_5_0._count <= 0 then
 		FightController.instance:dispatchEvent(FightEvent.AfterForceUpdatePerformanceData)
-		slot0:onDone(true)
+		arg_5_0:onDone(true)
 	end
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_6_0)
 	logError("对比前后端数据超时")
-	slot0:onDone(true)
+	arg_6_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.CountEntityInfoReply, slot0._onCountEntityInfoReply, slot0)
+function var_0_0.clearWork(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0._delayDone, arg_7_0)
+	FightController.instance:unregisterCallback(FightEvent.CountEntityInfoReply, arg_7_0._onCountEntityInfoReply, arg_7_0)
 end
 
-return slot0
+return var_0_0

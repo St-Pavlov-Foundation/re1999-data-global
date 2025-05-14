@@ -1,96 +1,102 @@
-module("modules.logic.main.view.MainSwitchCategoryItem", package.seeall)
+﻿module("modules.logic.main.view.MainSwitchCategoryItem", package.seeall)
 
-slot0 = class("MainSwitchCategoryItem", ListScrollCellExtend)
+local var_0_0 = class("MainSwitchCategoryItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._txtitemcn1 = gohelper.findChildText(slot0.viewGO, "bg1/#txt_itemcn1")
-	slot0._goreddot1 = gohelper.findChild(slot0.viewGO, "bg1/#txt_itemcn1/#go_reddot1")
-	slot0._txtitemen1 = gohelper.findChildText(slot0.viewGO, "bg1/#txt_itemen1")
-	slot0._txtitemcn2 = gohelper.findChildText(slot0.viewGO, "bg2/#txt_itemcn2")
-	slot0._goreddot2 = gohelper.findChild(slot0.viewGO, "bg2/#txt_itemcn2/#go_reddot2")
-	slot0._txtitemen2 = gohelper.findChildText(slot0.viewGO, "bg2/#txt_itemen2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtitemcn1 = gohelper.findChildText(arg_1_0.viewGO, "bg1/#txt_itemcn1")
+	arg_1_0._goreddot1 = gohelper.findChild(arg_1_0.viewGO, "bg1/#txt_itemcn1/#go_reddot1")
+	arg_1_0._txtitemen1 = gohelper.findChildText(arg_1_0.viewGO, "bg1/#txt_itemen1")
+	arg_1_0._txtitemcn2 = gohelper.findChildText(arg_1_0.viewGO, "bg2/#txt_itemcn2")
+	arg_1_0._goreddot2 = gohelper.findChild(arg_1_0.viewGO, "bg2/#txt_itemcn2/#go_reddot2")
+	arg_1_0._txtitemen2 = gohelper.findChildText(arg_1_0.viewGO, "bg2/#txt_itemen2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnCategory = SLFramework.UGUI.UIClickListener.Get(slot0.viewGO)
-	slot4 = slot0
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._btnCategory = SLFramework.UGUI.UIClickListener.Get(arg_4_0.viewGO)
 
-	slot0._btnCategory:AddClickListener(slot0._onItemClick, slot4)
+	arg_4_0._btnCategory:AddClickListener(arg_4_0._onItemClick, arg_4_0)
 
-	slot0._bgs = slot0:getUserDataTb_()
+	arg_4_0._bgs = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, 2 do
-		slot0._bgs[slot4] = gohelper.findChild(slot0.viewGO, "bg" .. tostring(slot4))
+	for iter_4_0 = 1, 2 do
+		arg_4_0._bgs[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, "bg" .. tostring(iter_4_0))
 	end
 
-	gohelper.setActive(slot0._bgs[2], false)
+	gohelper.setActive(arg_4_0._bgs[2], false)
 end
 
-function slot0._editableAddEvents(slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, slot0._refreshReddot, slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_5_0._refreshReddot, arg_5_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, slot0._refreshReddot, slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_6_0._refreshReddot, arg_6_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 
-	slot0:refreshStatus()
+	arg_7_0:refreshStatus()
 end
 
-function slot0.refreshStatus(slot0)
-	slot1 = slot0:_isSelected()
+function var_0_0.refreshStatus(arg_8_0)
+	local var_8_0 = arg_8_0:_isSelected()
 
-	gohelper.setActive(slot0._bgs[1], not slot1)
-	gohelper.setActive(slot0._bgs[2], slot1)
-	slot0:_refreshReddot()
+	gohelper.setActive(arg_8_0._bgs[1], not var_8_0)
+	gohelper.setActive(arg_8_0._bgs[2], var_8_0)
+	arg_8_0:_refreshReddot()
 end
 
-function slot0._refreshReddot(slot0)
-	slot1 = false
+function var_0_0._refreshReddot(arg_9_0)
+	local var_9_0 = false
 
-	if slot0._mo.id == MainEnum.SwitchType.Scene and RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0) and slot0:_isSelected() then
-		MainSceneSwitchController.closeReddot()
+	if arg_9_0._mo.id == MainEnum.SwitchType.Scene then
+		var_9_0 = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0)
 
-		slot1 = false
+		if var_9_0 and arg_9_0:_isSelected() then
+			MainSceneSwitchController.closeReddot()
+
+			var_9_0 = false
+		end
 	end
 
-	gohelper.setActive(slot0._goreddot1, slot1)
+	gohelper.setActive(arg_9_0._goreddot1, var_9_0)
 end
 
-function slot0._isSelected(slot0)
-	return slot0._mo.id == MainSwitchCategoryListModel.instance:getCategoryId()
+function var_0_0._isSelected(arg_10_0)
+	return arg_10_0._mo.id == MainSwitchCategoryListModel.instance:getCategoryId()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0._onItemClick(slot0)
-	if slot0:_isSelected() then
+function var_0_0._onItemClick(arg_12_0)
+	if arg_12_0:_isSelected() then
 		return
 	end
 
-	MainSwitchCategoryListModel.instance:setCategoryId(slot0._mo.id)
+	MainSwitchCategoryListModel.instance:setCategoryId(arg_12_0._mo.id)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SwitchCategoryClick, slot0._mo.id)
+	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SwitchCategoryClick, arg_12_0._mo.id)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._btnCategory then
-		slot0._btnCategory:RemoveClickListener()
+function var_0_0.onDestroyView(arg_13_0)
+	if arg_13_0._btnCategory then
+		arg_13_0._btnCategory:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

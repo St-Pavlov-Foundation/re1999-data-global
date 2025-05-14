@@ -1,109 +1,122 @@
-module("modules.logic.room.controller.RoomLayoutController", package.seeall)
+﻿module("modules.logic.room.controller.RoomLayoutController", package.seeall)
 
-slot0 = class("RoomLayoutController", BaseController)
+local var_0_0 = class("RoomLayoutController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.OnLateInitDone, slot0._onEnterRoomDone, slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.OnSwitchModeDone, slot0._onEnterRoomDone, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, slot0._onUpateRoomLevel, slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	arg_4_0:addEventCb(RoomController.instance, RoomEvent.OnLateInitDone, arg_4_0._onEnterRoomDone, arg_4_0)
+	arg_4_0:addEventCb(RoomController.instance, RoomEvent.OnSwitchModeDone, arg_4_0._onEnterRoomDone, arg_4_0)
+	arg_4_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_4_0._onUpateRoomLevel, arg_4_0)
 end
 
-function slot0._onEnterRoomDone(slot0)
-	if slot0._lastSwitchbuildDegree and RoomController.instance:isObMode() then
-		slot0._lastSwitchbuildDegree = nil
+function var_0_0._onEnterRoomDone(arg_5_0)
+	if arg_5_0._lastSwitchbuildDegree and RoomController.instance:isObMode() then
+		local var_5_0 = RoomConfig.instance:getBuildBonusByBuildDegree(arg_5_0._lastSwitchbuildDegree)
+		local var_5_1 = RoomMapModel.instance:getAllBuildDegree()
+		local var_5_2 = RoomConfig.instance:getBuildBonusByBuildDegree(var_5_1)
 
-		if RoomConfig.instance:getBuildBonusByBuildDegree(slot0._lastSwitchbuildDegree) ~= RoomConfig.instance:getBuildBonusByBuildDegree(RoomMapModel.instance:getAllBuildDegree()) then
-			slot0:dispatchEvent(RoomEvent.UISwitchLayoutPlanBuildDegree)
+		arg_5_0._lastSwitchbuildDegree = nil
+
+		if var_5_0 ~= var_5_2 then
+			arg_5_0:dispatchEvent(RoomEvent.UISwitchLayoutPlanBuildDegree)
 		end
 	end
 end
 
-function slot0._onUpateRoomLevel(slot0)
+function var_0_0._onUpateRoomLevel(arg_6_0)
 	if (CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutPlanOpen) or 0) == RoomModel.instance:getRoomLevel() then
-		slot0:sendGetRoomPlanInfoRpc()
+		arg_6_0:sendGetRoomPlanInfoRpc()
 	end
 end
 
-function slot0.isOpen(slot0, slot1)
-	if (CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutPlanOpen) or 0) <= RoomModel.instance:getRoomLevel() then
+function var_0_0.isOpen(arg_7_0, arg_7_1)
+	local var_7_0 = CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutPlanOpen) or 0
+
+	if var_7_0 <= RoomModel.instance:getRoomLevel() then
 		return true
 	end
 
-	if slot1 == true then
-		GameFacade.showToast(RoomEnum.Toast.LayoutPlanNotOpen, slot2)
+	if arg_7_1 == true then
+		GameFacade.showToast(RoomEnum.Toast.LayoutPlanNotOpen, var_7_0)
 	end
 
 	return false
 end
 
-function slot0.openView(slot0)
-	slot1 = false
+function var_0_0.openView(arg_8_0)
+	local var_8_0 = false
 
-	if slot0:isOpen(true) then
+	if arg_8_0:isOpen(true) then
 		if RoomController.instance:isObMode() then
-			slot0:updateObInfo()
+			arg_8_0:updateObInfo()
 		end
 
 		RoomLayoutListModel.instance:init()
 		ViewMgr.instance:openView(ViewName.RoomLayoutView)
 
-		slot1 = true
+		var_8_0 = true
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0.openCopyTips(slot0, slot1)
-	slot0._openTipsParam = {
+function var_0_0.openCopyTips(arg_9_0, arg_9_1)
+	local var_9_0 = luaLang("room_layoutplan_copy_tips_title")
+
+	arg_9_0._openTipsParam = {
 		showBuy = true,
-		titleStr = luaLang("room_layoutplan_copy_tips_title")
+		titleStr = var_9_0
 	}
 
-	slot0:_onOpenTips(slot1)
+	arg_9_0:_onOpenTips(arg_9_1)
 end
 
-function slot0.openTips(slot0, slot1, slot2, slot3, slot4)
-	if not RoomLayoutModel.instance:getById(slot1) then
+function var_0_0.openTips(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	local var_10_0 = RoomLayoutModel.instance:getById(arg_10_1)
+
+	if not var_10_0 then
 		return
 	end
 
-	slot0._openTipsParam = {
-		uiWorldPos = slot2,
-		offsetWidth = slot3,
-		offsetHeight = slot4,
-		titleStr = formatLuaLang("room_layoutplan_look_details", slot5.name or "")
+	arg_10_0._openTipsParam = {
+		uiWorldPos = arg_10_2,
+		offsetWidth = arg_10_3,
+		offsetHeight = arg_10_4,
+		titleStr = formatLuaLang("room_layoutplan_look_details", var_10_0.name or "")
 	}
 
-	if slot5:isHasBlockBuildingInfo() then
-		slot0:_onOpenTips(slot5)
-	elseif slot1 == RoomEnum.LayoutUsedPlanId then
-		slot0:updateObInfo()
-		slot0:_onOpenTips(slot5)
+	if var_10_0:isHasBlockBuildingInfo() then
+		arg_10_0:_onOpenTips(var_10_0)
+	elseif arg_10_1 == RoomEnum.LayoutUsedPlanId then
+		arg_10_0:updateObInfo()
+		arg_10_0:_onOpenTips(var_10_0)
 	else
-		slot0._waitingOpenPlanId = slot1
-		slot0._waitingOpenWorldPos = slot2
+		arg_10_0._waitingOpenPlanId = arg_10_1
+		arg_10_0._waitingOpenWorldPos = arg_10_2
 
-		RoomRpc.instance:sendGetRoomPlanDetailsRequest(slot1)
+		RoomRpc.instance:sendGetRoomPlanDetailsRequest(arg_10_1)
 	end
 end
 
-function slot0._onOpenTips(slot0, slot1)
-	slot0._waitingOpenPlanId = nil
-	slot2 = slot0._openTipsParam
-	slot0._openTipsParam = nil
+function var_0_0._onOpenTips(arg_11_0, arg_11_1)
+	arg_11_0._waitingOpenPlanId = nil
 
-	RoomLayoutItemListModel.instance:init(slot1.infos, slot1.buildingInfos)
+	local var_11_0 = arg_11_0._openTipsParam
+
+	arg_11_0._openTipsParam = nil
+
+	RoomLayoutItemListModel.instance:init(arg_11_1.infos, arg_11_1.buildingInfos)
 
 	if RoomLayoutItemListModel.instance:getCount() <= 0 then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanMapNothing)
@@ -111,134 +124,159 @@ function slot0._onOpenTips(slot0, slot1)
 		return
 	end
 
-	if not ViewMgr.instance:isOpen(ViewName.RoomLayoutItemTips) and ViewMgr.instance:getSetting(slot3) then
-		slot4.bgBlur = RoomController.instance:isVisitMode() and ViewMgr.instance:isOpen(RoomLayoutCreateTipsView) and 1 or nil
+	local var_11_1 = ViewName.RoomLayoutItemTips
+
+	if not ViewMgr.instance:isOpen(var_11_1) then
+		local var_11_2 = ViewMgr.instance:getSetting(var_11_1)
+
+		if var_11_2 then
+			var_11_2.bgBlur = RoomController.instance:isVisitMode() and ViewMgr.instance:isOpen(RoomLayoutCreateTipsView) and 1 or nil
+		end
 	end
 
-	ViewMgr.instance:openView(slot3, slot2)
+	ViewMgr.instance:openView(var_11_1, var_11_0)
 end
 
-function slot0.openBgSelectView(slot0, slot1, slot2, slot3)
-	RoomLayoutBgResListModel.instance:init(RoomLayoutListModel.instance:getSelectMO() and slot4:getCoverId())
+function var_0_0.openBgSelectView(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = RoomLayoutListModel.instance:getSelectMO()
+
+	RoomLayoutBgResListModel.instance:init(var_12_0 and var_12_0:getCoverId())
 	ViewMgr.instance:openView(ViewName.RoomLayoutBgSelectView, {
-		uiWorldPos = slot1,
-		offsetWidth = slot2,
-		offsetHeight = slot3
+		uiWorldPos = arg_12_1,
+		offsetWidth = arg_12_2,
+		offsetHeight = arg_12_3
 	})
 end
 
-function slot0.openCreateTipsView(slot0, slot1, slot2, slot3, slot4, slot5)
-	ViewMgr.instance:openView(ViewName.RoomLayoutCreateTipsView, {
-		titleStr = slot1,
-		isSelect = slot2,
-		isShowSetlect = slot3,
-		yesCallback = slot4,
-		callbockObj = slot5
-	})
+function var_0_0.openCreateTipsView(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
+	local var_13_0 = {
+		titleStr = arg_13_1,
+		isSelect = arg_13_2,
+		isShowSetlect = arg_13_3,
+		yesCallback = arg_13_4,
+		callbockObj = arg_13_5
+	}
+
+	ViewMgr.instance:openView(ViewName.RoomLayoutCreateTipsView, var_13_0)
 end
 
-function slot0.openRenameView(slot0)
+function var_0_0.openRenameView(arg_14_0)
 	ViewMgr.instance:openView(ViewName.RoomLayoutRenameView)
 end
 
-function slot0.openCopyView(slot0, slot1)
-	if slot0:_getObPlanInfo() == nil then
+function var_0_0.openCopyView(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:_getObPlanInfo()
+
+	if var_15_0 == nil then
 		return
 	end
 
-	if RoomMapBlockModel.instance:getMaxBlockCount(RoomModel.instance:getRoomLevel()) < slot2.blockCount then
+	if RoomMapBlockModel.instance:getMaxBlockCount(RoomModel.instance:getRoomLevel()) < var_15_0.blockCount then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanMax)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.RoomLayoutCopyView, {
+	local var_15_1 = RoomLayoutModel.instance:findDefaultName()
+	local var_15_2 = {
 		yesBtnNotClose = true,
-		planInfo = slot2,
-		defaultName = RoomLayoutModel.instance:findDefaultName(),
-		yesCallback = slot0._onYesCopyViewCallback,
-		callbockObj = slot0,
-		playerName = slot1
-	})
+		planInfo = var_15_0,
+		defaultName = var_15_1,
+		yesCallback = arg_15_0._onYesCopyViewCallback,
+		callbockObj = arg_15_0,
+		playerName = arg_15_1
+	}
+
+	ViewMgr.instance:openView(ViewName.RoomLayoutCopyView, var_15_2)
 end
 
-slot0.COPY_SHARE_CODE_WORD_TEST_RPC = "RoomLayoutController.COPY_SHARE_CODE_WORD_TEST_RPC"
+var_0_0.COPY_SHARE_CODE_WORD_TEST_RPC = "RoomLayoutController.COPY_SHARE_CODE_WORD_TEST_RPC"
 
-function slot0._onYesCopyViewCallback(slot0, slot1)
-	UIBlockMgr.instance:startBlock(uv0.COPY_SHARE_CODE_WORD_TEST_RPC)
-	ChatRpc.instance:sendWordTestRequest(slot1, slot0._onCopyWordTestReply, slot0)
-	RoomLayoutModel.instance:setVisitCopyName(slot1)
+function var_0_0._onYesCopyViewCallback(arg_16_0, arg_16_1)
+	UIBlockMgr.instance:startBlock(var_0_0.COPY_SHARE_CODE_WORD_TEST_RPC)
+	ChatRpc.instance:sendWordTestRequest(arg_16_1, arg_16_0._onCopyWordTestReply, arg_16_0)
+	RoomLayoutModel.instance:setVisitCopyName(arg_16_1)
 end
 
-function slot0._onCopyWordTestReply(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:endBlock(uv0.COPY_SHARE_CODE_WORD_TEST_RPC)
+function var_0_0._onCopyWordTestReply(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	UIBlockMgr.instance:endBlock(var_0_0.COPY_SHARE_CODE_WORD_TEST_RPC)
 
-	if slot2 == 0 then
+	if arg_17_2 == 0 then
 		ViewMgr.instance:closeView(ViewName.RoomLayoutCopyView)
-		slot0:openView()
+		arg_17_0:openView()
 	end
 end
 
-function slot0._getObPlanInfo(slot0, slot1)
-	if not RoomModel.instance:getInfoByMode(slot1 or RoomModel.instance:getGameMode()) then
+function var_0_0._getObPlanInfo(arg_18_0, arg_18_1)
+	local var_18_0 = RoomModel.instance:getInfoByMode(arg_18_1 or RoomModel.instance:getGameMode())
+
+	if not var_18_0 then
 		return
 	end
 
-	return RoomLayoutHelper.createInfoByObInfo(slot2)
+	return RoomLayoutHelper.createInfoByObInfo(var_18_0)
 end
 
-function slot0.updateObInfo(slot0)
-	if slot0:_getObPlanInfo(RoomEnum.GameMode.Ob) then
-		slot1.id = RoomEnum.LayoutUsedPlanId
+function var_0_0.updateObInfo(arg_19_0)
+	local var_19_0 = arg_19_0:_getObPlanInfo(RoomEnum.GameMode.Ob)
 
-		RoomLayoutModel.instance:updateRoomPlanInfoReply(slot1)
+	if var_19_0 then
+		var_19_0.id = RoomEnum.LayoutUsedPlanId
+
+		RoomLayoutModel.instance:updateRoomPlanInfoReply(var_19_0)
 	end
 end
 
-function slot0.sendGetRoomPlanInfoRpc(slot0)
-	if slot0:isOpen() then
+function var_0_0.sendGetRoomPlanInfoRpc(arg_20_0)
+	if arg_20_0:isOpen() then
 		RoomRpc.instance:sendGetRoomPlanInfoRequest()
 	end
 end
 
-function slot0.sendCreateRpc(slot0, slot1, slot2)
-	slot3 = slot1:getCoverId()
+function var_0_0.sendCreateRpc(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_1:getCoverId()
 
-	if slot1:isEmpty() then
-		slot1:setName(RoomLayoutModel.instance:findDefaultName())
-	elseif RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId) then
-		slot3 = slot4:getCoverId() or slot3
+	if arg_21_1:isEmpty() then
+		arg_21_1:setName(RoomLayoutModel.instance:findDefaultName())
+	else
+		local var_21_1 = RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId)
+
+		var_21_0 = var_21_1 and var_21_1:getCoverId() or var_21_0
 	end
 
-	RoomRpc.instance:sendSetRoomPlanRequest(slot1.id, slot3, slot1:getName())
+	RoomRpc.instance:sendSetRoomPlanRequest(arg_21_1.id, var_21_0, arg_21_1:getName())
 
-	if slot2 and slot1.id ~= RoomEnum.LayoutUsedPlanId then
-		slot0:sendSwitchRoomPlanRequest(slot1.id)
-	end
-end
-
-function slot0.sendSwitchRoomPlanRequest(slot0, slot1)
-	if slot1 ~= RoomEnum.LayoutUsedPlanId then
-		slot0._hasSwitchPlan = true
-
-		RoomRpc.instance:sendSwitchRoomPlanRequest(RoomEnum.LayoutUsedPlanId, slot1, slot0._onObSwitchPlanReplay, slot0)
+	if arg_21_2 and arg_21_1.id ~= RoomEnum.LayoutUsedPlanId then
+		arg_21_0:sendSwitchRoomPlanRequest(arg_21_1.id)
 	end
 end
 
-function slot0._onObSwitchPlanReplay(slot0, slot1, slot2, slot3)
-	slot0._hasSwitchPlan = false
+function var_0_0.sendSwitchRoomPlanRequest(arg_22_0, arg_22_1)
+	if arg_22_1 ~= RoomEnum.LayoutUsedPlanId then
+		arg_22_0._hasSwitchPlan = true
 
-	if slot2 == 0 then
-		GameFacade.showToast(slot0._hasSwitchPlan and RoomEnum.Toast.LayoutPlanSaveAndUse or RoomEnum.Toast.LayoutPlanUse)
-
-		slot0._lastSwitchbuildDegree = RoomMapModel.instance:getAllBuildDegree()
-
-		slot0:_swicthPlanCritterRequest()
-		RoomController.instance:enterRoom(RoomEnum.GameMode.Ob, nil, , , , , true)
+		RoomRpc.instance:sendSwitchRoomPlanRequest(RoomEnum.LayoutUsedPlanId, arg_22_1, arg_22_0._onObSwitchPlanReplay, arg_22_0)
 	end
 end
 
-function slot0._swicthPlanCritterRequest(slot0)
+function var_0_0._onObSwitchPlanReplay(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	local var_23_0 = arg_23_0._hasSwitchPlan
+
+	arg_23_0._hasSwitchPlan = false
+
+	if arg_23_2 == 0 then
+		local var_23_1 = var_23_0 and RoomEnum.Toast.LayoutPlanSaveAndUse or RoomEnum.Toast.LayoutPlanUse
+
+		GameFacade.showToast(var_23_1)
+
+		arg_23_0._lastSwitchbuildDegree = RoomMapModel.instance:getAllBuildDegree()
+
+		arg_23_0:_swicthPlanCritterRequest()
+		RoomController.instance:enterRoom(RoomEnum.GameMode.Ob, nil, nil, nil, nil, nil, true)
+	end
+end
+
+function var_0_0._swicthPlanCritterRequest(arg_24_0)
 	if CritterModel.instance:isCritterUnlock() then
 		CritterRpc.instance:sendCritterGetInfoRequest()
 	end
@@ -246,213 +284,245 @@ function slot0._swicthPlanCritterRequest(slot0)
 	ManufactureController.instance:getManufactureServerInfo()
 end
 
-function slot0.sendVisitCopyRpc(slot0, slot1, slot2)
-	slot3 = RoomModel.instance:getVisitParam()
-	slot4 = slot1.id
-	slot5 = slot1:getCoverId()
-	slot6 = RoomLayoutModel.instance:getVisitCopyName()
+function var_0_0.sendVisitCopyRpc(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0 = RoomModel.instance:getVisitParam()
+	local var_25_1 = arg_25_1.id
+	local var_25_2 = arg_25_1:getCoverId()
+	local var_25_3 = RoomLayoutModel.instance:getVisitCopyName()
 
-	if slot2 and slot4 ~= RoomEnum.LayoutUsedPlanId then
-		slot0._visitsWitchPlanId = slot4
+	if arg_25_2 and var_25_1 ~= RoomEnum.LayoutUsedPlanId then
+		arg_25_0._visitsWitchPlanId = var_25_1
 	end
 
-	if (slot2 or slot4 == RoomEnum.LayoutUsedPlanId) and RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId) then
-		slot0._lastSwitchbuildDegree = slot7.buildingDegree
+	if arg_25_2 or var_25_1 == RoomEnum.LayoutUsedPlanId then
+		local var_25_4 = RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId)
+
+		if var_25_4 then
+			arg_25_0._lastSwitchbuildDegree = var_25_4.buildingDegree
+		end
 	end
 
 	if RoomController.instance:isVisitShareMode() then
-		RoomRpc.instance:sendUseRoomShareRequest(slot3.shareCode, slot4, slot5, slot6, slot0._onVisitCopyReply, slot0)
+		RoomRpc.instance:sendUseRoomShareRequest(var_25_0.shareCode, var_25_1, var_25_2, var_25_3, arg_25_0._onVisitCopyReply, arg_25_0)
 	else
-		RoomRpc.instance:sendCopyOtherRoomPlanRequest(slot3.userId, slot4, slot5, slot6, slot0._onVisitCopyReply, slot0)
+		RoomRpc.instance:sendCopyOtherRoomPlanRequest(var_25_0.userId, var_25_1, var_25_2, var_25_3, arg_25_0._onVisitCopyReply, arg_25_0)
 	end
 end
 
-function slot0._onVisitCopyReply(slot0, slot1, slot2, slot3)
-	slot4 = slot0._visitsWitchPlanId
-	slot0._visitsWitchPlanId = nil
+function var_0_0._onVisitCopyReply(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = arg_26_0._visitsWitchPlanId
 
-	if slot2 == 0 then
+	arg_26_0._visitsWitchPlanId = nil
+
+	if arg_26_2 == 0 then
 		RoomLayoutModel.instance:clearNeedRpcGet()
 
-		if slot4 then
-			slot0._hasSwitchPlan = true
+		if var_26_0 then
+			arg_26_0._hasSwitchPlan = true
 
-			RoomRpc.instance:sendSwitchRoomPlanRequest(RoomEnum.LayoutUsedPlanId, slot4, slot0._onVisitSwitchPlanReplay, slot0)
+			RoomRpc.instance:sendSwitchRoomPlanRequest(RoomEnum.LayoutUsedPlanId, var_26_0, arg_26_0._onVisitSwitchPlanReplay, arg_26_0)
 		end
 
 		if RoomController.instance:isVisitMode() then
-			slot0:_swicthPlanCritterRequest()
-			RoomController.instance:enterRoom(RoomEnum.GameMode.Ob, nil, , , {
+			local var_26_1 = {
 				{
 					viewName = ViewName.RoomLayoutView
 				}
-			}, nil, true)
+			}
+
+			arg_26_0:_swicthPlanCritterRequest()
+			RoomController.instance:enterRoom(RoomEnum.GameMode.Ob, nil, nil, nil, var_26_1, nil, true)
 		end
 	end
 end
 
-function slot0._onVisitSwitchPlanReplay(slot0, slot1, slot2, slot3)
-	slot0._hasSwitchPlan = false
+function var_0_0._onVisitSwitchPlanReplay(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0 = arg_27_0._hasSwitchPlan
 
-	if slot2 == 0 then
-		GameFacade.showToast(slot0._hasSwitchPlan and RoomEnum.Toast.LayoutPlanSaveAndUse or RoomEnum.Toast.LayoutPlanUse)
+	arg_27_0._hasSwitchPlan = false
+
+	if arg_27_2 == 0 then
+		local var_27_1 = var_27_0 and RoomEnum.Toast.LayoutPlanSaveAndUse or RoomEnum.Toast.LayoutPlanUse
+
+		GameFacade.showToast(var_27_1)
 	end
 end
 
-function slot0.copyShareCodeTxt(slot0, slot1)
-	if not string.nilorempty(slot1) then
-		ZProj.UGUIHelper.CopyText(slot1)
+function var_0_0.copyShareCodeTxt(arg_28_0, arg_28_1)
+	if not string.nilorempty(arg_28_1) then
+		ZProj.UGUIHelper.CopyText(arg_28_1)
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanCopyShareCodeTxt)
 	end
 end
 
-slot0.GET_SHARE_CODE_RPC = "RoomLayoutController.GET_SHARE_CODE_RPC"
+var_0_0.GET_SHARE_CODE_RPC = "RoomLayoutController.GET_SHARE_CODE_RPC"
 
-function slot0.sendGetShareCodeRpc(slot0, slot1)
-	UIBlockMgr.instance:startBlock(uv0.GET_SHARE_CODE_RPC)
-	RoomRpc.instance:sendGetRoomShareRequest(slot1, slot0._getGetRoomShareReply, slot0)
+function var_0_0.sendGetShareCodeRpc(arg_29_0, arg_29_1)
+	UIBlockMgr.instance:startBlock(var_0_0.GET_SHARE_CODE_RPC)
+	RoomRpc.instance:sendGetRoomShareRequest(arg_29_1, arg_29_0._getGetRoomShareReply, arg_29_0)
 end
 
-function slot0._getGetRoomShareReply(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:endBlock(uv0.GET_SHARE_CODE_RPC)
+function var_0_0._getGetRoomShareReply(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	UIBlockMgr.instance:endBlock(var_0_0.GET_SHARE_CODE_RPC)
 
-	if slot2 == 0 then
-		RoomController.instance:enterRoom(RoomEnum.GameMode.VisitShare, nil, slot3, {
-			userId = slot3.shareUserId,
-			shareCode = slot3.shareCode
-		}, nil, , true)
+	if arg_30_2 == 0 then
+		local var_30_0 = {
+			userId = arg_30_3.shareUserId,
+			shareCode = arg_30_3.shareCode
+		}
+		local var_30_1 = arg_30_3
+
+		RoomController.instance:enterRoom(RoomEnum.GameMode.VisitShare, nil, var_30_1, var_30_0, nil, nil, true)
 	end
 end
 
-function slot0.sendSetRoomPlanNameRpc(slot0, slot1, slot2)
-	RoomRpc.instance:sendSetRoomPlanNameRequest(slot1, slot2, slot0._onSetRoomPlanNameReply, slot0)
+function var_0_0.sendSetRoomPlanNameRpc(arg_31_0, arg_31_1, arg_31_2)
+	RoomRpc.instance:sendSetRoomPlanNameRequest(arg_31_1, arg_31_2, arg_31_0._onSetRoomPlanNameReply, arg_31_0)
 end
 
-function slot0._onSetRoomPlanNameReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._onSetRoomPlanNameReply(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	if arg_32_2 == 0 then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanRename)
 		ViewMgr.instance:closeView(ViewName.RoomLayoutRenameView)
 	end
 end
 
-function slot0.getRoomPlanInfoReply(slot0, slot1)
+function var_0_0.getRoomPlanInfoReply(arg_33_0, arg_33_1)
 	RoomLayoutModel.instance:rpcGetFinish()
-	RoomLayoutModel.instance:setRoomPlanInfoReply(slot1)
-	slot0:updateObInfo()
+	RoomLayoutModel.instance:setRoomPlanInfoReply(arg_33_1)
+	arg_33_0:updateObInfo()
 	RoomLayoutListModel.instance:init()
 
-	if slot1.infos then
-		for slot5, slot6 in ipairs(slot1.infos) do
-			if string.nilorempty(slot6.name) then
-				RoomRpc.instance:sendSetRoomPlanNameRequest(slot6.id, formatLuaLang("room_layoutplan_default_name", ""))
+	if arg_33_1.infos then
+		for iter_33_0, iter_33_1 in ipairs(arg_33_1.infos) do
+			if string.nilorempty(iter_33_1.name) then
+				RoomRpc.instance:sendSetRoomPlanNameRequest(iter_33_1.id, formatLuaLang("room_layoutplan_default_name", ""))
 			end
 		end
 	end
 end
 
-function slot0.getRoomPlanDestailsReply(slot0, slot1)
-	RoomLayoutModel.instance:updateRoomPlanInfoReply(slot1.info)
+function var_0_0.getRoomPlanDestailsReply(arg_34_0, arg_34_1)
+	RoomLayoutModel.instance:updateRoomPlanInfoReply(arg_34_1.info)
 
-	if slot1.info.id == slot0._waitingOpenPlanId then
-		slot0:_onOpenTips(RoomLayoutModel.instance:getById(slot1.info.id), slot0._waitingOpenWorldPos)
+	if arg_34_1.info.id == arg_34_0._waitingOpenPlanId then
+		local var_34_0 = RoomLayoutModel.instance:getById(arg_34_1.info.id)
+
+		arg_34_0:_onOpenTips(var_34_0, arg_34_0._waitingOpenWorldPos)
 	end
 end
 
-function slot0.setRoomPlanReply(slot0, slot1)
-	slot2 = slot0:_getObPlanInfo() or {}
-	slot2.id = slot1.id
-	slot2.coverId = slot1.coverId
-	slot2.name = slot1.name
-	slot2.shareCode = slot1.shareCode or ""
-	slot3 = RoomLayoutModel.instance:getById(slot1.id) == nil
+function var_0_0.setRoomPlanReply(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0:_getObPlanInfo() or {}
 
-	RoomLayoutModel.instance:updateRoomPlanInfoReply(slot2)
+	var_35_0.id = arg_35_1.id
+	var_35_0.coverId = arg_35_1.coverId
+	var_35_0.name = arg_35_1.name
+	var_35_0.shareCode = arg_35_1.shareCode or ""
 
-	if slot0._hasSwitchPlan ~= true then
+	local var_35_1 = RoomLayoutModel.instance:getById(arg_35_1.id) == nil
+
+	RoomLayoutModel.instance:updateRoomPlanInfoReply(var_35_0)
+
+	if arg_35_0._hasSwitchPlan ~= true then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanSave)
 	end
 
-	if slot3 then
+	if var_35_1 then
 		RoomLayoutListModel.instance:init()
-		RoomLayoutListModel.instance:setSelect(slot1.id)
-		slot0:dispatchEvent(RoomEvent.UISelectLayoutPlanItem)
+		RoomLayoutListModel.instance:setSelect(arg_35_1.id)
+		arg_35_0:dispatchEvent(RoomEvent.UISelectLayoutPlanItem)
 	else
 		RoomLayoutListModel.instance:refreshList()
 	end
 end
 
-function slot0.setRoomPlanNameReply(slot0, slot1)
-	if RoomLayoutModel.instance:getById(slot1.id) then
-		slot2.name = slot1.name
+function var_0_0.setRoomPlanNameReply(arg_36_0, arg_36_1)
+	local var_36_0 = RoomLayoutModel.instance:getById(arg_36_1.id)
+
+	if var_36_0 then
+		var_36_0.name = arg_36_1.name
 	end
 
 	RoomLayoutListModel.instance:refreshList()
 end
 
-function slot0.setRoomPlanCoverReply(slot0, slot1)
-	if RoomLayoutModel.instance:getById(slot1.id) then
-		slot2.coverId = slot1.coverId
+function var_0_0.setRoomPlanCoverReply(arg_37_0, arg_37_1)
+	local var_37_0 = RoomLayoutModel.instance:getById(arg_37_1.id)
+
+	if var_37_0 then
+		var_37_0.coverId = arg_37_1.coverId
 	end
 end
 
-function slot0.useRoomPlanReply(slot0, slot1)
+function var_0_0.useRoomPlanReply(arg_38_0, arg_38_1)
+	return
 end
 
-function slot0.switchRoomPlanReply(slot0, slot1)
-	for slot7 = 1, #slot1.infos do
-		RoomLayoutModel.instance:updateRoomPlanInfoReply(slot2[slot7])
+function var_0_0.switchRoomPlanReply(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_1.infos
+	local var_39_1 = RoomLayoutModel.instance
+
+	for iter_39_0 = 1, #var_39_0 do
+		var_39_1:updateRoomPlanInfoReply(var_39_0[iter_39_0])
 	end
 end
 
-function slot0.deleteRoomPlanReply(slot0, slot1)
-	if RoomLayoutModel.instance:getById(slot1.id) then
-		RoomLayoutModel.instance:remove(slot2)
+function var_0_0.deleteRoomPlanReply(arg_40_0, arg_40_1)
+	local var_40_0 = RoomLayoutModel.instance:getById(arg_40_1.id)
+
+	if var_40_0 then
+		RoomLayoutModel.instance:remove(var_40_0)
 		RoomLayoutListModel.instance:init()
-		RoomLayoutListModel.instance:setSelect(slot1.id)
-		slot0:dispatchEvent(RoomEvent.UISelectLayoutPlanItem)
+		RoomLayoutListModel.instance:setSelect(arg_40_1.id)
+		arg_40_0:dispatchEvent(RoomEvent.UISelectLayoutPlanItem)
 	end
 
 	GameFacade.showToast(RoomEnum.Toast.LayoutPlanDelete)
 end
 
-function slot0.copyOtherRoomPlanReply(slot0, slot1)
-	RoomLayoutModel.instance:updateRoomPlanInfoReply(slot1)
+function var_0_0.copyOtherRoomPlanReply(arg_41_0, arg_41_1)
+	RoomLayoutModel.instance:updateRoomPlanInfoReply(arg_41_1)
 
-	if (not slot1.buildDegree or not slot1.blockCount) and slot0:_getObPlanInfo() then
-		slot2.id = slot1.id
+	if not arg_41_1.buildDegree or not arg_41_1.blockCount then
+		local var_41_0 = arg_41_0:_getObPlanInfo()
 
-		RoomLayoutModel.instance:updateRoomPlanInfoReply(slot2)
+		if var_41_0 then
+			var_41_0.id = arg_41_1.id
+
+			RoomLayoutModel.instance:updateRoomPlanInfoReply(var_41_0)
+		end
 	end
 
 	RoomLayoutListModel.instance:init()
 	RoomLayoutModel.instance:clearNeedRpcGet()
 
-	if slot0._hasSwitchPlan ~= true then
+	if arg_41_0._hasSwitchPlan ~= true then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanCopy)
 	end
 end
 
-function slot0.useRoomShareReply(slot0, slot1)
-	RoomLayoutModel.instance:updateRoomPlanInfoReply(slot1)
-	RoomLayoutModel.instance:setCanUseShareCount(slot1.canUseShareCount)
+function var_0_0.useRoomShareReply(arg_42_0, arg_42_1)
+	RoomLayoutModel.instance:updateRoomPlanInfoReply(arg_42_1)
+	RoomLayoutModel.instance:setCanUseShareCount(arg_42_1.canUseShareCount)
 	RoomLayoutListModel.instance:init()
 end
 
-function slot0.shareRoomPlanReply(slot0, slot1)
-	RoomLayoutModel.instance:updateRoomPlanInfoReply(slot1)
-	RoomLayoutModel.instance:setCanShareCount(slot1.canShareCount)
+function var_0_0.shareRoomPlanReply(arg_43_0, arg_43_1)
+	RoomLayoutModel.instance:updateRoomPlanInfoReply(arg_43_1)
+	RoomLayoutModel.instance:setCanShareCount(arg_43_1.canShareCount)
 	RoomLayoutListModel.instance:init()
 end
 
-function slot0.deleteRoomShareReply(slot0, slot1)
+function var_0_0.deleteRoomShareReply(arg_44_0, arg_44_1)
 	RoomLayoutModel.instance:updateRoomPlanInfoReply({
 		shareCode = "",
-		id = slot1.id,
-		useCount = slot1.useCount or 0
+		id = arg_44_1.id,
+		useCount = arg_44_1.useCount or 0
 	})
 	RoomLayoutListModel.instance:init()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

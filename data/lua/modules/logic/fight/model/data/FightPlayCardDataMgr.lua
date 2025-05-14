@@ -1,15 +1,15 @@
-module("modules.logic.fight.model.data.FightPlayCardDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightPlayCardDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightPlayCardDataMgr")
+local var_0_0 = FightDataClass("FightPlayCardDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0.playCard = {}
-	slot0.enemyPlayCard = {}
-	slot0.enemyAct174PlayCard = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.playCard = {}
+	arg_1_0.enemyPlayCard = {}
+	arg_1_0.enemyAct174PlayCard = {}
 end
 
-function slot0.setAct174EnemyCard(slot0, slot1)
-	FightDataHelper.coverData(FightCardDataHelper.newPlayCardList(slot1), slot0.enemyAct174PlayCard)
+function var_0_0.setAct174EnemyCard(arg_2_0, arg_2_1)
+	FightDataHelper.coverData(FightCardDataHelper.newPlayCardList(arg_2_1), arg_2_0.enemyAct174PlayCard)
 end
 
-return slot0
+return var_0_0

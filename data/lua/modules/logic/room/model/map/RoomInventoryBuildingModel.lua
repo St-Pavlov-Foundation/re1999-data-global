@@ -1,131 +1,150 @@
-module("modules.logic.room.model.map.RoomInventoryBuildingModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomInventoryBuildingModel", package.seeall)
 
-slot0 = class("RoomInventoryBuildingModel", BaseModel)
+local var_0_0 = class("RoomInventoryBuildingModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._hasBuildingDict = {}
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._hasBuildingDict = {}
 end
 
-function slot0.initInventory(slot0, slot1)
-	slot0:clear()
-	slot0:addBuilding(slot1)
+function var_0_0.initInventory(arg_5_0, arg_5_1)
+	arg_5_0:clear()
+	arg_5_0:addBuilding(arg_5_1)
 
-	slot3 = RoomConfig.instance:getBuildingConfigList()
+	local var_5_0 = lua_manufacture_building.configList
+	local var_5_1 = RoomConfig.instance:getBuildingConfigList()
+	local var_5_2 = {
+		use = false
+	}
 
-	for slot8 = 1, #lua_manufacture_building.configList do
-		if RoomConfig.instance:getBuildingConfig(slot2[slot8].id) and not slot0._hasBuildingDict[slot10] then
-			slot0._hasBuildingDict[slot10] = true
-			slot12 = RoomBuildingMO.New()
+	for iter_5_0 = 1, #var_5_0 do
+		local var_5_3 = var_5_0[iter_5_0].id
 
-			slot12:init({
-				use = false,
-				uid = -slot10,
-				buildingId = slot10,
-				buildingState = RoomBuildingEnum.BuildingState.Inventory
-			})
-			slot0:_addBuildingMO(slot12)
+		if RoomConfig.instance:getBuildingConfig(var_5_3) and not arg_5_0._hasBuildingDict[var_5_3] then
+			arg_5_0._hasBuildingDict[var_5_3] = true
+			var_5_2.uid = -var_5_3
+			var_5_2.buildingId = var_5_3
+			var_5_2.buildingState = RoomBuildingEnum.BuildingState.Inventory
+
+			local var_5_4 = RoomBuildingMO.New()
+
+			var_5_4:init(var_5_2)
+			arg_5_0:_addBuildingMO(var_5_4)
 		end
 	end
 end
 
-function slot0.checkBuildingPut(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getBuildingMOList()) do
-		if slot7.buildingId == tonumber(slot1) then
-			return RoomBuildingHelper.getRecommendHexPoint(slot7.buildingId) and slot8.hexPoint ~= nil
+function var_0_0.checkBuildingPut(arg_6_0, arg_6_1)
+	arg_6_1 = tonumber(arg_6_1)
+
+	local var_6_0 = arg_6_0:getBuildingMOList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1.buildingId == arg_6_1 then
+			local var_6_1 = RoomBuildingHelper.getRecommendHexPoint(iter_6_1.buildingId)
+
+			return var_6_1 and var_6_1.hexPoint ~= nil
 		end
 	end
 
 	return false
 end
 
-function slot0.addBuilding(slot0, slot1)
-	if not slot1 or #slot1 <= 0 then
+function var_0_0.addBuilding(arg_7_0, arg_7_1)
+	if not arg_7_1 or #arg_7_1 <= 0 then
 		return
 	end
 
-	slot0._hasBuildingDict = slot0._hasBuildingDict or {}
+	arg_7_0._hasBuildingDict = arg_7_0._hasBuildingDict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._hasBuildingDict[slot6.defineId] = true
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		arg_7_0._hasBuildingDict[iter_7_1.defineId] = true
 
-		if not slot6.use then
-			slot8 = RoomBuildingMO.New()
+		if not iter_7_1.use then
+			local var_7_0 = RoomInfoHelper.serverInfoToBuildingInfo(iter_7_1)
+			local var_7_1 = RoomBuildingMO.New()
 
-			slot8:init(RoomInfoHelper.serverInfoToBuildingInfo(slot6))
+			var_7_1:init(var_7_0)
 
-			if slot8.config then
-				slot0:_addBuildingMO(slot8)
+			if var_7_1.config then
+				arg_7_0:_addBuildingMO(var_7_1)
 			end
 		end
 
-		slot0:_removeBuildingMOByUId(-slot6.defineId)
+		arg_7_0:_removeBuildingMOByUId(-iter_7_1.defineId)
 	end
 end
 
-function slot0._addBuildingMO(slot0, slot1)
-	if slot0:getById(slot1.id) then
-		slot0:remove(slot2)
+function var_0_0._addBuildingMO(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getById(arg_8_1.id)
+
+	if var_8_0 then
+		arg_8_0:remove(var_8_0)
 	end
 
-	slot0:addAtLast(slot1)
+	arg_8_0:addAtLast(arg_8_1)
 end
 
-function slot0._removeBuildingMO(slot0, slot1)
-	slot0:remove(slot1)
+function var_0_0._removeBuildingMO(arg_9_0, arg_9_1)
+	arg_9_0:remove(arg_9_1)
 end
 
-function slot0._removeBuildingMOByUId(slot0, slot1)
-	if slot0:getById(slot1) then
-		slot0:remove(slot2)
+function var_0_0._removeBuildingMOByUId(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getById(arg_10_1)
+
+	if var_10_0 then
+		arg_10_0:remove(var_10_0)
 	end
 end
 
-function slot0.placeBuilding(slot0, slot1)
-	slot0:_removeBuildingMOByUId(slot1.uid)
+function var_0_0.placeBuilding(arg_11_0, arg_11_1)
+	arg_11_0:_removeBuildingMOByUId(arg_11_1.uid)
 end
 
-function slot0.unUseBuilding(slot0, slot1)
-	if slot0:getById(slot1.uid) then
-		slot2.use = false
+function var_0_0.unUseBuilding(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getById(arg_12_1.uid)
+
+	if var_12_0 then
+		var_12_0.use = false
 
 		return
 	end
 
-	if slot1.use then
+	if arg_12_1.use then
 		return
 	end
 
-	slot4 = RoomBuildingMO.New()
+	local var_12_1 = RoomInfoHelper.serverInfoToBuildingInfo(arg_12_1)
+	local var_12_2 = RoomBuildingMO.New()
 
-	slot4:init(RoomInfoHelper.serverInfoToBuildingInfo(slot1))
-	slot0:_addBuildingMO(slot4)
+	var_12_2:init(var_12_1)
+	arg_12_0:_addBuildingMO(var_12_2)
 end
 
-function slot0.getBuildingMOList(slot0)
-	return slot0:getList()
+function var_0_0.getBuildingMOList(arg_13_0)
+	return arg_13_0:getList()
 end
 
-function slot0.getBuildingMOById(slot0, slot1)
-	return slot0:getById(slot1)
+function var_0_0.getBuildingMOById(arg_14_0, arg_14_1)
+	return arg_14_0:getById(arg_14_1)
 end
 
-function slot0.getCount(slot0)
-	return slot0:getCount()
+function var_0_0.getCount(arg_15_0)
+	return arg_15_0:getCount()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

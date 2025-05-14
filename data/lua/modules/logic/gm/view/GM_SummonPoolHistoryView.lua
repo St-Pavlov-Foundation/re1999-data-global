@@ -1,90 +1,95 @@
-module("modules.logic.gm.view.GM_SummonPoolHistoryView", package.seeall)
+﻿module("modules.logic.gm.view.GM_SummonPoolHistoryView", package.seeall)
 
-slot0 = class("GM_SummonPoolHistoryView", BaseView)
-slot1 = "#00FF00"
+local var_0_0 = class("GM_SummonPoolHistoryView", BaseView)
+local var_0_1 = "#00FF00"
 
-function slot0.register()
-	uv0.SummonPoolHistoryView_register(SummonPoolHistoryView)
-	uv0.SummonPoolHistoryTypeItem_register(SummonPoolHistoryTypeItem)
+function var_0_0.register()
+	var_0_0.SummonPoolHistoryView_register(SummonPoolHistoryView)
+	var_0_0.SummonPoolHistoryTypeItem_register(SummonPoolHistoryTypeItem)
 end
 
-function slot0.SummonPoolHistoryView_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "removeEvents")
+function var_0_0.SummonPoolHistoryView_register(arg_2_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
 
-	function slot0._editableInitView(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(slot0)
+	function arg_2_0._editableInitView(arg_3_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(arg_3_0)
 	end
 
-	function slot0.addEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(slot0)
-		GM_SummonPoolHistoryViewContainer.addEvents(slot0)
+	function arg_2_0.addEvents(arg_4_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
+		GM_SummonPoolHistoryViewContainer.addEvents(arg_4_0)
 	end
 
-	function slot0.removeEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(slot0)
-		GM_SummonPoolHistoryViewContainer.removeEvents(slot0)
+	function arg_2_0.removeEvents(arg_5_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
+		GM_SummonPoolHistoryViewContainer.removeEvents(arg_5_0)
 	end
 
-	function slot0._gm_showAllTabIdUpdate(slot0)
+	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
 		SummonPoolHistoryTypeListModel.instance:onModelUpdate()
 	end
 end
 
-function slot0.SummonPoolHistoryTypeItem_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "onUpdateMO")
+function var_0_0.SummonPoolHistoryTypeItem_register(arg_7_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "onUpdateMO")
 
-	function slot0.onUpdateMO(slot0, slot1, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "onUpdateMO", slot1, ...)
+	function arg_7_0.onUpdateMO(arg_8_0, arg_8_1, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "onUpdateMO", arg_8_1, ...)
 
-		if not uv0.s_ShowAllTabId then
+		if not var_0_0.s_ShowAllTabId then
 			return
 		end
 
-		slot2 = slot1.config
-		slot3 = slot2.name .. gohelper.getRichColorText(slot2.id, uv1)
-		slot0._txtunname.text = slot3
-		slot0._txtname.text = slot3
+		local var_8_0 = arg_8_1.config
+		local var_8_1 = var_8_0.name .. gohelper.getRichColorText(var_8_0.id, var_0_1)
+
+		arg_8_0._txtunname.text = var_8_1
+		arg_8_0._txtname.text = var_8_1
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._item1Toggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item1/Toggle")
+function var_0_0.onInitView(arg_9_0)
+	arg_9_0._btnClose = gohelper.findChildButtonWithAudio(arg_9_0.viewGO, "btnClose")
+	arg_9_0._item1Toggle = gohelper.findChildToggle(arg_9_0.viewGO, "viewport/content/item1/Toggle")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._item1Toggle:AddOnValueChanged(slot0._onItem1ToggleValueChanged, slot0)
+function var_0_0.addEvents(arg_10_0)
+	arg_10_0._btnClose:AddClickListener(arg_10_0.closeThis, arg_10_0)
+	arg_10_0._item1Toggle:AddOnValueChanged(arg_10_0._onItem1ToggleValueChanged, arg_10_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._item1Toggle:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_11_0)
+	arg_11_0._btnClose:RemoveClickListener()
+	arg_11_0._item1Toggle:RemoveOnValueChanged()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshItem1()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:_refreshItem1()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-slot0.s_ShowAllTabId = false
+var_0_0.s_ShowAllTabId = false
 
-function slot0._refreshItem1(slot0)
-	slot0._item1Toggle.isOn = uv0.s_ShowAllTabId
+function var_0_0._refreshItem1(arg_14_0)
+	local var_14_0 = var_0_0.s_ShowAllTabId
+
+	arg_14_0._item1Toggle.isOn = var_14_0
 end
 
-function slot0._onItem1ToggleValueChanged(slot0)
-	slot1 = slot0._item1Toggle.isOn
-	uv0.s_ShowAllTabId = slot1
+function var_0_0._onItem1ToggleValueChanged(arg_15_0)
+	local var_15_0 = arg_15_0._item1Toggle.isOn
 
-	GMController.instance:dispatchEvent(GMEvent.SummonPoolHistoryView_ShowAllTabIdUpdate, slot1)
+	var_0_0.s_ShowAllTabId = var_15_0
+
+	GMController.instance:dispatchEvent(GMEvent.SummonPoolHistoryView_ShowAllTabIdUpdate, var_15_0)
 end
 
-return slot0
+return var_0_0

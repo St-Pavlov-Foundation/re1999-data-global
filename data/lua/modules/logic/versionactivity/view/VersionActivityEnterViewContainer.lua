@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity.view.VersionActivityEnterViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityEnterViewContainer", package.seeall)
 
-slot0 = class("VersionActivityEnterViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivityEnterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivityEnterView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,17 +19,17 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-function slot0.onContainerInit(slot0)
-	ActivityStageHelper.recordActivityStage(slot0.viewParam.activityIdList)
+function var_0_0.onContainerInit(arg_3_0)
+	ActivityStageHelper.recordActivityStage(arg_3_0.viewParam.activityIdList)
 end
 
-function slot0.onContainerClose(slot0)
-	if slot0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
+function var_0_0.onContainerClose(arg_4_0)
+	if arg_4_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-slot0.kIconResPath = {
+var_0_0.kIconResPath = {
 	"singlebg_lang/txt_versionactivity/rk1.png",
 	"singlebg_lang/txt_versionactivity/rk2.png",
 	"singlebg_lang/txt_versionactivity/btn_ls2.png",
@@ -38,8 +38,8 @@ slot0.kIconResPath = {
 	"singlebg_lang/txt_versionactivity/btn_1.png"
 }
 
-function slot0.getPreLoaderResPathList(slot0)
-	return uv0.kIconResPath
+function var_0_0.getPreLoaderResPathList(arg_5_0)
+	return var_0_0.kIconResPath
 end
 
-return slot0
+return var_0_0

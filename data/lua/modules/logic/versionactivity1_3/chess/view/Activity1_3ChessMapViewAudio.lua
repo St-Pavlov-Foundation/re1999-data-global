@@ -1,58 +1,58 @@
-module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapViewAudio", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapViewAudio", package.seeall)
 
-slot0 = class("Activity1_3ChessMapViewAudio", BaseView)
+local var_0_0 = class("Activity1_3ChessMapViewAudio", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseGameView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenGameView, slot0)
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseGameView, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenGameView, arg_2_0)
 end
 
-function slot0._onCloseGameView(slot0, slot1)
-	if (slot1 == ViewName.Activity1_3ChessGameView or slot1 == ViewName.StoryFrontView) and slot0:_canPlayAmbient() then
-		slot0:playAmbientAudio()
+function var_0_0._onCloseGameView(arg_3_0, arg_3_1)
+	if (arg_3_1 == ViewName.Activity1_3ChessGameView or arg_3_1 == ViewName.StoryFrontView) and arg_3_0:_canPlayAmbient() then
+		arg_3_0:playAmbientAudio()
 	end
 end
 
-function slot0._onOpenGameView(slot0, slot1)
-	if slot1 == ViewName.Activity1_3ChessGameView or slot1 == ViewName.StoryFrontView then
+function var_0_0._onOpenGameView(arg_4_0, arg_4_1)
+	if arg_4_1 == ViewName.Activity1_3ChessGameView or arg_4_1 == ViewName.StoryFrontView then
 		AudioMgr.instance:trigger(AudioEnum.Story.Stop_Plot_noise)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:playEnterAudio()
-	slot0:playAmbientAudio()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:playEnterAudio()
+	arg_5_0:playAmbientAudio()
 end
 
-function slot0.playEnterAudio(slot0)
+function var_0_0.playEnterAudio(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.EnterChessMap)
 end
 
-function slot0.playAmbientAudio(slot0)
-	slot0:closeAmbientSound()
+function var_0_0.playAmbientAudio(arg_7_0)
+	arg_7_0:closeAmbientSound()
 
-	slot0._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Bgm.Activity1_3ChessMapViewAmbientBgm)
+	arg_7_0._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Bgm.Activity1_3ChessMapViewAmbientBgm)
 end
 
-function slot0.closeAmbientSound(slot0)
-	if slot0._ambientAudioId then
-		AudioMgr.instance:stopPlayingID(slot0._ambientAudioId)
+function var_0_0.closeAmbientSound(arg_8_0)
+	if arg_8_0._ambientAudioId then
+		AudioMgr.instance:stopPlayingID(arg_8_0._ambientAudioId)
 
-		slot0._ambientAudioId = nil
+		arg_8_0._ambientAudioId = nil
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:closeAmbientSound()
+function var_0_0.onClose(arg_9_0)
+	arg_9_0:closeAmbientSound()
 end
 
-function slot0._canPlayAmbient(slot0)
+function var_0_0._canPlayAmbient(arg_10_0)
 	if ViewMgr.instance:isOpen(ViewName.Activity1_3ChessGameView) or ViewMgr.instance:isOpen(ViewName.StoryFrontView) then
 		return false
 	end
@@ -60,4 +60,4 @@ function slot0._canPlayAmbient(slot0)
 	return true
 end
 
-return slot0
+return var_0_0

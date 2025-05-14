@@ -1,11 +1,13 @@
-module("modules.logic.herogroup.view.HeroGroupFightCleanView", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupFightCleanView", package.seeall)
 
-slot0 = class("HeroGroupFightCleanView", BaseView)
+local var_0_0 = class("HeroGroupFightCleanView", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

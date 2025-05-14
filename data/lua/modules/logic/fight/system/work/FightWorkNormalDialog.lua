@@ -1,39 +1,39 @@
-module("modules.logic.fight.system.work.FightWorkNormalDialog", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkNormalDialog", package.seeall)
 
-slot0 = class("FightWorkNormalDialog", BaseWork)
+local var_0_0 = class("FightWorkNormalDialog", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._dialogType = slot1
-	slot0._param = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._dialogType = arg_1_1
+	arg_1_0._param = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	FightController.instance:dispatchEvent(FightEvent.FightDialog, slot0._dialogType, slot0._param)
+function var_0_0.onStart(arg_2_0)
+	FightController.instance:dispatchEvent(FightEvent.FightDialog, arg_2_0._dialogType, arg_2_0._param)
 
 	if FightViewDialog.showFightDialog then
-		slot0._dialogWork = FightWorkWaitDialog.New()
+		arg_2_0._dialogWork = FightWorkWaitDialog.New()
 
-		slot0._dialogWork:registerDoneListener(slot0._onFightDialogEnd, slot0)
-		slot0._dialogWork:onStart()
+		arg_2_0._dialogWork:registerDoneListener(arg_2_0._onFightDialogEnd, arg_2_0)
+		arg_2_0._dialogWork:onStart()
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onFightDialogEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onFightDialogEnd(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, slot0._onFightDialogEnd, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_4_0._onFightDialogEnd, arg_4_0)
 
-	if slot0._dialogWork then
-		slot0._dialogWork:unregisterDoneListener(slot0._onFightDialogEnd, slot0)
+	if arg_4_0._dialogWork then
+		arg_4_0._dialogWork:unregisterDoneListener(arg_4_0._onFightDialogEnd, arg_4_0)
 
-		slot0._dialogWork = nil
+		arg_4_0._dialogWork = nil
 	end
 end
 
-return slot0
+return var_0_0

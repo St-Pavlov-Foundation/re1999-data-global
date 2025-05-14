@@ -1,49 +1,56 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotScoreConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotScoreConfig", package.seeall)
 
-slot0 = class("V1a6_CachotScoreConfig")
+local var_0_0 = class("V1a6_CachotScoreConfig")
 
-function slot0.init(slot0, slot1)
-	slot0._scroeConfigTable = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._scroeConfigTable = arg_1_1
 end
 
-function slot0.getConfigList(slot0)
-	return slot0._scroeConfigTable.configList
+function var_0_0.getConfigList(arg_2_0)
+	return arg_2_0._scroeConfigTable.configList
 end
 
-function slot0.getStagePartRange(slot0, slot1)
-	if slot0._scroeConfigTable.configDict then
-		slot2, slot3, slot4, slot5 = nil
+function var_0_0.getStagePartRange(arg_3_0, arg_3_1)
+	if arg_3_0._scroeConfigTable.configDict then
+		local var_3_0
+		local var_3_1
+		local var_3_2
+		local var_3_3
 
-		for slot9, slot10 in pairs(slot0._scroeConfigTable.configDict) do
-			if slot1 <= slot10.score and (not slot2 or slot10.score <= slot2) then
-				slot2 = slot10.score
-				slot5 = slot9
+		for iter_3_0, iter_3_1 in pairs(arg_3_0._scroeConfigTable.configDict) do
+			if arg_3_1 <= iter_3_1.score and (not var_3_0 or var_3_0 >= iter_3_1.score) then
+				var_3_0 = iter_3_1.score
+				var_3_3 = iter_3_0
 			end
 
-			if slot10.score < slot1 and (not slot3 or slot3 < slot10.score) then
-				slot3 = slot10.score
-				slot4 = slot9
+			if arg_3_1 > iter_3_1.score and (not var_3_1 or var_3_1 < iter_3_1.score) then
+				var_3_1 = iter_3_1.score
+				var_3_2 = iter_3_0
 			end
 		end
 
-		return slot4, slot5
+		return var_3_2, var_3_3
 	end
 end
 
-function slot0.getStagePartConfig(slot0, slot1)
-	if slot0._scroeConfigTable and slot0._scroeConfigTable.configDict then
-		return slot2[slot1]
+function var_0_0.getStagePartConfig(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._scroeConfigTable and arg_4_0._scroeConfigTable.configDict
+
+	if var_4_0 then
+		return var_4_0[arg_4_1]
 	end
 end
 
-function slot0.getStagePartScore(slot0, slot1)
-	if slot0._scroeConfigTable and slot0._scroeConfigTable.configDict and slot2[slot1] then
-		return slot2[slot1].score
+function var_0_0.getStagePartScore(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._scroeConfigTable and arg_5_0._scroeConfigTable.configDict
+
+	if var_5_0 and var_5_0[arg_5_1] then
+		return var_5_0[arg_5_1].score
 	end
 
 	return 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,245 +1,258 @@
-module("modules.logic.story.view.StoryVideoPlayList", package.seeall)
+﻿module("modules.logic.story.view.StoryVideoPlayList", package.seeall)
 
-slot0 = class("StoryVideoPlayList", UserDataDispose)
-slot0.MaxIndexCount = 7
-slot0.PlayPos = {
+local var_0_0 = class("StoryVideoPlayList", UserDataDispose)
+
+var_0_0.MaxIndexCount = 7
+var_0_0.PlayPos = {
 	CommonPlay = 0,
 	CommonPlay2 = 6,
 	CommonLoop = 1
 }
-slot0.Empty = ""
+var_0_0.Empty = ""
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._isPlaying = false
-	slot0.parentGO = slot2
-	slot0.viewGO = slot1
+	arg_1_0._isPlaying = false
+	arg_1_0.parentGO = arg_1_2
+	arg_1_0.viewGO = arg_1_1
 
 	if SettingsModel.instance:getVideoEnabled() == false then
-		slot0._uguiPlayList = AvProUGUIListPlayer_adjust.New()
-		slot0._mediaPlayList = PlaylistMediaPlayer_adjust.New()
+		arg_1_0._uguiPlayList = AvProUGUIListPlayer_adjust.New()
+		arg_1_0._mediaPlayList = PlaylistMediaPlayer_adjust.New()
 	else
-		slot0._uguiPlayList = slot0.viewGO:GetComponent(typeof(ZProj.AvProUGUIListPlayer))
-		slot0._mediaPlayList = slot0.viewGO:GetComponent(typeof(RenderHeads.Media.AVProVideo.PlaylistMediaPlayer))
-		slot0._displayUGUI = slot0.viewGO:GetComponent(typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
+		arg_1_0._uguiPlayList = arg_1_0.viewGO:GetComponent(typeof(ZProj.AvProUGUIListPlayer))
+		arg_1_0._mediaPlayList = arg_1_0.viewGO:GetComponent(typeof(RenderHeads.Media.AVProVideo.PlaylistMediaPlayer))
+		arg_1_0._displayUGUI = arg_1_0.viewGO:GetComponent(typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
 	end
 
-	slot0._uguiPlayList:SetEventListener(slot0._onVideoEvent, slot0)
+	arg_1_0._uguiPlayList:SetEventListener(arg_1_0._onVideoEvent, arg_1_0)
+	recthelper.setSize(arg_1_0.viewGO.transform, 2592, 1080)
+	gohelper.setActive(arg_1_0.viewGO, false)
 
-	slot6 = 1080
+	arg_1_0._path2StartCallback = {}
+	arg_1_0._path2StartCallbackObj = {}
+	arg_1_0._path2StartVideoItem = {}
+	arg_1_0._currentPlayNameMap = {}
 
-	recthelper.setSize(slot0.viewGO.transform, 2592, slot6)
-	gohelper.setActive(slot0.viewGO, false)
-
-	slot0._path2StartCallback = {}
-	slot0._path2StartCallbackObj = {}
-	slot0._path2StartVideoItem = {}
-	slot0._currentPlayNameMap = {}
-
-	for slot6 = 0, uv0.MaxIndexCount - 1 do
-		slot0._currentPlayNameMap[slot6] = uv0.Empty
+	for iter_1_0 = 0, var_0_0.MaxIndexCount - 1 do
+		arg_1_0._currentPlayNameMap[iter_1_0] = var_0_0.Empty
 	end
 end
 
-function slot0.buildAndStart(slot0, slot1, slot2, slot3, slot4, slot5)
-	StoryController.instance:dispatchEvent(StoryEvent.VideoStart, slot1, slot2)
+function var_0_0.buildAndStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
+	StoryController.instance:dispatchEvent(StoryEvent.VideoStart, arg_2_1, arg_2_2)
 
-	slot6 = nil
-	slot6 = (not slot2 or uv0.PlayPos.CommonLoop) and slot0:getNextNormalPlayIndex()
-	slot7 = slot0._currentPlayNameMap[slot6]
+	local var_2_0
 
-	logNormal(string.format("StoryVideoPlayList play set path : [%s] \nto index [%s], loop = %s", tostring(slot1), tostring(slot6), tostring(slot2)))
-
-	slot0._path2StartCallback[slot1] = slot3
-	slot0._path2StartCallbackObj[slot1] = slot4
-	slot0._path2StartVideoItem[slot1] = slot5
-
-	gohelper.setActive(slot0.viewGO, true)
-	slot0:setPathAtIndex(slot1, slot6)
-	slot0._mediaPlayList:JumpToItem(slot6)
-
-	if not slot0._isPlaying then
-		slot0._mediaPlayList:Play()
-		slot0._mediaPlayList:JumpToItem(slot6)
-
-		slot0._isPlaying = true
+	if arg_2_2 then
+		var_2_0 = var_0_0.PlayPos.CommonLoop
+	else
+		var_2_0 = arg_2_0:getNextNormalPlayIndex()
 	end
 
-	if not string.nilorempty(slot7) then
-		logNormal(string.format("video still playing : [%s], loop mode = [%s] will stop!", tostring(slot7), tostring(slot2)))
-		slot0:stop(slot7)
+	local var_2_1 = arg_2_0._currentPlayNameMap[var_2_0]
+
+	logNormal(string.format("StoryVideoPlayList play set path : [%s] \nto index [%s], loop = %s", tostring(arg_2_1), tostring(var_2_0), tostring(arg_2_2)))
+
+	arg_2_0._path2StartCallback[arg_2_1] = arg_2_3
+	arg_2_0._path2StartCallbackObj[arg_2_1] = arg_2_4
+	arg_2_0._path2StartVideoItem[arg_2_1] = arg_2_5
+
+	gohelper.setActive(arg_2_0.viewGO, true)
+	arg_2_0:setPathAtIndex(arg_2_1, var_2_0)
+	arg_2_0._mediaPlayList:JumpToItem(var_2_0)
+
+	if not arg_2_0._isPlaying then
+		arg_2_0._mediaPlayList:Play()
+		arg_2_0._mediaPlayList:JumpToItem(var_2_0)
+
+		arg_2_0._isPlaying = true
 	end
 
-	slot0:_startIOSDetectPause()
+	if not string.nilorempty(var_2_1) then
+		logNormal(string.format("video still playing : [%s], loop mode = [%s] will stop!", tostring(var_2_1), tostring(arg_2_2)))
+		arg_2_0:stop(var_2_1)
+	end
+
+	arg_2_0:_startIOSDetectPause()
 end
 
-function slot0.setPauseState(slot0, slot1, slot2)
-	if slot1 == slot0._currentPlayNameMap[slot0._mediaPlayList.PlaylistIndex] and slot0._mediaPlayList then
-		if slot2 then
-			slot0._mediaPlayList:Play()
-			slot0:_startIOSDetectPause()
+function var_0_0.setPauseState(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0._mediaPlayList.PlaylistIndex
+
+	if arg_3_1 == arg_3_0._currentPlayNameMap[var_3_0] and arg_3_0._mediaPlayList then
+		if arg_3_2 then
+			arg_3_0._mediaPlayList:Play()
+			arg_3_0:_startIOSDetectPause()
 		else
-			slot0._mediaPlayList:Pause()
-			slot0:_stopIOSDetectPause()
+			arg_3_0._mediaPlayList:Pause()
+			arg_3_0:_stopIOSDetectPause()
 		end
 	end
 end
 
-function slot0.stop(slot0, slot1)
-	if not slot0._mediaPlayList then
+function var_0_0.stop(arg_4_0, arg_4_1)
+	if not arg_4_0._mediaPlayList then
 		return
 	end
 
-	if slot0._currentPlayNameMap[slot0._mediaPlayList.PlaylistIndex] == slot1 or SettingsModel.instance:getVideoEnabled() == false then
-		logNormal("targetName = " .. tostring(slot1) .. " stop!")
-		slot0:_stopIOSDetectPause()
+	local var_4_0 = arg_4_0._mediaPlayList.PlaylistIndex
 
-		if slot0._mediaPlayList then
-			slot0._mediaPlayList:Stop()
+	if arg_4_0._currentPlayNameMap[var_4_0] == arg_4_1 or SettingsModel.instance:getVideoEnabled() == false then
+		logNormal("targetName = " .. tostring(arg_4_1) .. " stop!")
+		arg_4_0:_stopIOSDetectPause()
+
+		if arg_4_0._mediaPlayList then
+			arg_4_0._mediaPlayList:Stop()
 		end
 
-		slot0:setParent(slot0.parentGO)
-		gohelper.setActive(slot0.viewGO, false)
+		arg_4_0:setParent(arg_4_0.parentGO)
+		gohelper.setActive(arg_4_0.viewGO, false)
 	end
 
-	for slot7, slot8 in pairs(slot0._currentPlayNameMap) do
-		if slot8 == slot1 then
-			slot0:setPathAtIndex(uv0.Empty, slot7)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._currentPlayNameMap) do
+		if iter_4_1 == arg_4_1 then
+			arg_4_0:setPathAtIndex(var_0_0.Empty, iter_4_0)
 		end
 	end
 
-	slot0._path2StartCallback[slot1] = nil
-	slot0._path2StartCallbackObj[slot1] = nil
-	slot0._path2StartVideoItem[slot1] = nil
+	arg_4_0._path2StartCallback[arg_4_1] = nil
+	arg_4_0._path2StartCallbackObj[arg_4_1] = nil
+	arg_4_0._path2StartVideoItem[arg_4_1] = nil
 
-	slot0:checkAllStop()
+	arg_4_0:checkAllStop()
 end
 
-function slot0.checkAllStop(slot0)
-	if not slot0._currentPlayNameMap then
+function var_0_0.checkAllStop(arg_5_0)
+	if not arg_5_0._currentPlayNameMap then
 		logNormal("null playlist, now stop play.")
 
-		slot0._isPlaying = false
+		arg_5_0._isPlaying = false
 	else
-		for slot4, slot5 in pairs(slot0._currentPlayNameMap) do
-			if slot5 ~= uv0.Empty then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._currentPlayNameMap) do
+			if iter_5_1 ~= var_0_0.Empty then
 				return
 			end
 		end
 
 		logNormal("empty playlist, now stop play.")
 
-		slot0._isPlaying = false
+		arg_5_0._isPlaying = false
 	end
 end
 
-function slot0.clearOtherIndex(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._currentPlayNameMap) do
-		if slot5 ~= slot1 then
-			slot7 = slot0._currentPlayNameMap[slot5]
-			slot0._currentPlayNameMap[slot5] = nil
-			slot0._path2StartCallback[slot7] = nil
-			slot0._path2StartCallbackObj[slot7] = nil
-			slot0._path2StartVideoItem[slot7] = nil
+function var_0_0.clearOtherIndex(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._currentPlayNameMap) do
+		if iter_6_0 ~= arg_6_1 then
+			local var_6_0 = arg_6_0._currentPlayNameMap[iter_6_0]
+
+			arg_6_0._currentPlayNameMap[iter_6_0] = nil
+			arg_6_0._path2StartCallback[var_6_0] = nil
+			arg_6_0._path2StartCallbackObj[var_6_0] = nil
+			arg_6_0._path2StartVideoItem[var_6_0] = nil
 		end
 	end
 end
 
-function slot0.fixNeedPlayVideo(slot0, slot1)
-	slot2, slot3 = nil
+function var_0_0.fixNeedPlayVideo(arg_7_0, arg_7_1)
+	local var_7_0
+	local var_7_1
 
-	for slot7, slot8 in pairs(slot0._currentPlayNameMap) do
-		if slot8 ~= uv0.Empty then
-			slot2 = slot8
-			slot3 = slot7
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._currentPlayNameMap) do
+		if iter_7_1 ~= var_0_0.Empty then
+			var_7_0 = iter_7_1
+			var_7_1 = iter_7_0
 
 			break
 		end
 	end
 
-	logNormal(string.format("check need fix video curName [%s] evt [%s] curPos [%s] list [%s]", tostring(slot2), tostring(slot1), tostring(slot3), tostring(slot0._mediaPlayList.PlaylistIndex)))
+	logNormal(string.format("check need fix video curName [%s] evt [%s] curPos [%s] list [%s]", tostring(var_7_0), tostring(arg_7_1), tostring(var_7_1), tostring(arg_7_0._mediaPlayList.PlaylistIndex)))
 
-	if slot2 ~= slot1 and not gohelper.isNil(slot0._mediaPlayList) and slot0._mediaPlayList.PlaylistIndex == slot3 then
-		slot0._mediaPlayList:JumpToItem(slot3)
-		slot0._mediaPlayList:Play()
-		slot0._mediaPlayList:JumpToItem(slot3)
-		logNormal("try fix play index : " .. tostring(slot3) .. " name : " .. tostring(slot2))
+	if var_7_0 ~= arg_7_1 and not gohelper.isNil(arg_7_0._mediaPlayList) and arg_7_0._mediaPlayList.PlaylistIndex == var_7_1 then
+		arg_7_0._mediaPlayList:JumpToItem(var_7_1)
+		arg_7_0._mediaPlayList:Play()
+		arg_7_0._mediaPlayList:JumpToItem(var_7_1)
+		logNormal("try fix play index : " .. tostring(var_7_1) .. " name : " .. tostring(var_7_0))
 	end
 end
 
-function slot0.setPathAtIndex(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
-		slot0._uguiPlayList:SetMediaPath(uv0.Empty, slot2)
+function var_0_0.setPathAtIndex(arg_8_0, arg_8_1, arg_8_2)
+	if string.nilorempty(arg_8_1) then
+		arg_8_0._uguiPlayList:SetMediaPath(var_0_0.Empty, arg_8_2)
 
-		slot0._currentPlayNameMap[slot2] = uv0.Empty
+		arg_8_0._currentPlayNameMap[arg_8_2] = var_0_0.Empty
 	else
-		slot0:clearOtherIndex(slot2)
-		slot0._uguiPlayList:SetMediaPath(SLFramework.FrameworkSettings.GetAssetFullPathForWWW(langVideoUrl(slot1)), slot2)
+		arg_8_0:clearOtherIndex(arg_8_2)
+		arg_8_0._uguiPlayList:SetMediaPath(SLFramework.FrameworkSettings.GetAssetFullPathForWWW(langVideoUrl(arg_8_1)), arg_8_2)
 
-		slot0._currentPlayNameMap[slot2] = slot1
+		arg_8_0._currentPlayNameMap[arg_8_2] = arg_8_1
 	end
 end
 
-function slot0.setParent(slot0, slot1)
-	gohelper.addChildPosStay(slot1, slot0.viewGO)
+function var_0_0.setParent(arg_9_0, arg_9_1)
+	gohelper.addChildPosStay(arg_9_1, arg_9_0.viewGO)
 end
 
-function slot0._onVideoEvent(slot0, slot1, slot2, slot3)
-	slot4 = string.split(slot1, "/")
+function var_0_0._onVideoEvent(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = string.split(arg_10_1, "/")
+	local var_10_1 = var_10_0[#var_10_0]
 
-	logNormal(string.format("StoryVideoPlayList:_onVideoEvent, path = %s \nstatus = %s errorCode = %s\ntime = %s", tostring(slot1), tostring(AvProEnum.getPlayerStatusEnumName(slot2)), AvProEnum.getErrorCodeEnumName(slot3), tostring(Time.time)))
+	var_10_1 = string.split(var_10_1, ".")[1] or var_10_1
 
-	if slot2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		slot0:fixNeedPlayVideo(string.split(slot4[#slot4], ".")[1] or slot5)
-		slot0:_stopIOSDetectPause()
-	elseif slot2 == AvProEnum.PlayerStatus.FirstFrameReady and BootNativeUtil.isIOS() and slot0._path2StartCallback[slot5] then
-		slot0._path2StartCallback[slot5](slot0._path2StartCallbackObj[slot5], slot0._path2StartVideoItem[slot5])
+	logNormal(string.format("StoryVideoPlayList:_onVideoEvent, path = %s \nstatus = %s errorCode = %s\ntime = %s", tostring(arg_10_1), tostring(AvProEnum.getPlayerStatusEnumName(arg_10_2)), AvProEnum.getErrorCodeEnumName(arg_10_3), tostring(Time.time)))
+
+	if arg_10_2 == AvProEnum.PlayerStatus.FinishedPlaying then
+		arg_10_0:fixNeedPlayVideo(var_10_1)
+		arg_10_0:_stopIOSDetectPause()
+	elseif arg_10_2 == AvProEnum.PlayerStatus.FirstFrameReady and BootNativeUtil.isIOS() and arg_10_0._path2StartCallback[var_10_1] then
+		arg_10_0._path2StartCallback[var_10_1](arg_10_0._path2StartCallbackObj[var_10_1], arg_10_0._path2StartVideoItem[var_10_1])
 	end
 
-	if slot3 ~= AvProEnum.ErrorCode.None then
-		slot0:stop(slot5)
-		slot0:_stopIOSDetectPause()
-	end
-end
-
-function slot0._detectPause(slot0)
-	if slot0._mediaPlayList and slot0._mediaPlayList:IsPaused() then
-		slot0._mediaPlayList:Play()
+	if arg_10_3 ~= AvProEnum.ErrorCode.None then
+		arg_10_0:stop(var_10_1)
+		arg_10_0:_stopIOSDetectPause()
 	end
 end
 
-function slot0._startIOSDetectPause(slot0)
+function var_0_0._detectPause(arg_11_0)
+	if arg_11_0._mediaPlayList and arg_11_0._mediaPlayList:IsPaused() then
+		arg_11_0._mediaPlayList:Play()
+	end
+end
+
+function var_0_0._startIOSDetectPause(arg_12_0)
 	if BootNativeUtil.isIOS() then
-		TaskDispatcher.runRepeat(slot0._detectPause, slot0, 0.05)
+		TaskDispatcher.runRepeat(arg_12_0._detectPause, arg_12_0, 0.05)
 	end
 end
 
-function slot0._stopIOSDetectPause(slot0)
+function var_0_0._stopIOSDetectPause(arg_13_0)
 	if BootNativeUtil.isIOS() then
-		TaskDispatcher.cancelTask(slot0._detectPause, slot0)
+		TaskDispatcher.cancelTask(arg_13_0._detectPause, arg_13_0)
 	end
 end
 
-function slot0.getNextNormalPlayIndex(slot0)
-	if slot0._lastNormalIndex == nil or slot0._lastNormalIndex == uv0.PlayPos.CommonPlay2 then
-		slot0._lastNormalIndex = uv0.PlayPos.CommonPlay
+function var_0_0.getNextNormalPlayIndex(arg_14_0)
+	if arg_14_0._lastNormalIndex == nil or arg_14_0._lastNormalIndex == var_0_0.PlayPos.CommonPlay2 then
+		arg_14_0._lastNormalIndex = var_0_0.PlayPos.CommonPlay
 	else
-		slot0._lastNormalIndex = uv0.PlayPos.CommonPlay2
+		arg_14_0._lastNormalIndex = var_0_0.PlayPos.CommonPlay2
 	end
 
-	return slot0._lastNormalIndex
+	return arg_14_0._lastNormalIndex
 end
 
-function slot0.dispose(slot0)
-	if slot0._uguiPlayList then
-		slot1 = slot0._uguiPlayList.PlaylistMediaPlayer
+function var_0_0.dispose(arg_15_0)
+	if arg_15_0._uguiPlayList then
+		local var_15_0 = arg_15_0._uguiPlayList.PlaylistMediaPlayer
 
-		slot0._uguiPlayList:Clear()
+		arg_15_0._uguiPlayList:Clear()
 	end
 
-	slot0:_stopIOSDetectPause()
-	slot0:__onDispose()
+	arg_15_0:_stopIOSDetectPause()
+	arg_15_0:__onDispose()
 end
 
-return slot0
+return var_0_0

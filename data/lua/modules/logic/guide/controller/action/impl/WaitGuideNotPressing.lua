@@ -1,31 +1,31 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideNotPressing", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideNotPressing", package.seeall)
 
-slot0 = class("WaitGuideNotPressing", BaseGuideAction)
+local var_0_0 = class("WaitGuideNotPressing", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
 	if GamepadController.instance:isOpen() then
-		slot0:onDone(true)
-	elseif slot0:_notPressing() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
+	elseif arg_1_0:_notPressing() then
+		arg_1_0:onDone(true)
 	else
-		TaskDispatcher.runRepeat(slot0._onFrame, slot0, 0.01)
+		TaskDispatcher.runRepeat(arg_1_0._onFrame, arg_1_0, 0.01)
 	end
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._onFrame, slot0)
+function var_0_0.clearWork(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._onFrame, arg_2_0)
 end
 
-function slot0._onFrame(slot0)
-	if slot0:_notPressing() then
-		slot0:onDone(true)
+function var_0_0._onFrame(arg_3_0)
+	if arg_3_0:_notPressing() then
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._notPressing(slot0)
+function var_0_0._notPressing(arg_4_0)
 	return not (UnityEngine.Input.touchCount > 0)
 end
 
-return slot0
+return var_0_0

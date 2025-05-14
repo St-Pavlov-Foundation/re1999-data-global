@@ -1,53 +1,59 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotGuideDragTip", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotGuideDragTip", package.seeall)
 
-slot0 = class("V1a6_CachotGuideDragTip", BaseView)
+local var_0_0 = class("V1a6_CachotGuideDragTip", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = gohelper.findChild(slot0.viewGO, "#guide")
-	slot0._gohand = gohelper.findChild(slot1, "shou")
-	slot0._guideAnimator = slot1:GetComponent("Animator")
-	slot0._guideblock = gohelper.findChild(slot0.viewGO, "guideblock")
+function var_0_0._editableInitView(arg_2_0)
+	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "#guide")
 
-	gohelper.setActive(slot0._guideblock, false)
+	arg_2_0._gohand = gohelper.findChild(var_2_0, "shou")
+	arg_2_0._guideAnimator = var_2_0:GetComponent("Animator")
+	arg_2_0._guideblock = gohelper.findChild(arg_2_0.viewGO, "guideblock")
+
+	gohelper.setActive(arg_2_0._guideblock, false)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.GuideDragTip, slot0._guideDragTip, slot0)
-	slot0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.PlayerMove, slot0._playerMove, slot0)
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.GuideDragTip, arg_3_0._guideDragTip, arg_3_0)
+	arg_3_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.PlayerMove, arg_3_0._playerMove, arg_3_0)
 end
 
-function slot0._playerMove(slot0)
+function var_0_0._playerMove(arg_4_0)
+	return
 end
 
-function slot0._guideDragTip(slot0, slot1)
-	if tonumber(slot1) == V1a6_CachotEnum.GuideDragTipType.Left then
-		gohelper.setActive(slot0._guideAnimator.gameObject, true)
-		gohelper.setActive(slot0._guideblock, true)
-		slot0._guideAnimator:Play("left")
-	elseif slot2 == V1a6_CachotEnum.GuideDragTipType.Right then
-		gohelper.setActive(slot0._guideAnimator.gameObject, true)
-		gohelper.setActive(slot0._guideblock, true)
-		slot0._guideAnimator:Play("right")
+function var_0_0._guideDragTip(arg_5_0, arg_5_1)
+	local var_5_0 = tonumber(arg_5_1)
+
+	if var_5_0 == V1a6_CachotEnum.GuideDragTipType.Left then
+		gohelper.setActive(arg_5_0._guideAnimator.gameObject, true)
+		gohelper.setActive(arg_5_0._guideblock, true)
+		arg_5_0._guideAnimator:Play("left")
+	elseif var_5_0 == V1a6_CachotEnum.GuideDragTipType.Right then
+		gohelper.setActive(arg_5_0._guideAnimator.gameObject, true)
+		gohelper.setActive(arg_5_0._guideblock, true)
+		arg_5_0._guideAnimator:Play("right")
 	else
-		gohelper.setActive(slot0._guideAnimator.gameObject, false)
-		gohelper.setActive(slot0._guideblock, false)
+		gohelper.setActive(arg_5_0._guideAnimator.gameObject, false)
+		gohelper.setActive(arg_5_0._guideblock, false)
 	end
 end
 
-function slot0.isShowDragTip(slot0)
-	return slot0._guideblock.activeSelf
+function var_0_0.isShowDragTip(arg_6_0)
+	return arg_6_0._guideblock.activeSelf
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

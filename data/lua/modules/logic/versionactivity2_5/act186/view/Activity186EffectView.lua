@@ -1,74 +1,80 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186EffectView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186EffectView", package.seeall)
 
-slot0 = class("Activity186EffectView", BaseView)
+local var_0_0 = class("Activity186EffectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.effectList = slot0:getUserDataTb_()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.effectList = arg_1_0:getUserDataTb_()
 
-	for slot4 = 1, 4 do
-		slot0.effectList[slot4] = gohelper.findChild(slot0.viewGO, "#go_effect" .. slot4)
+	for iter_1_0 = 1, 4 do
+		arg_1_0.effectList[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, "#go_effect" .. iter_1_0)
 	end
 
-	slot0.audioIdList = {
+	arg_1_0.audioIdList = {
 		[Activity186Enum.ViewEffect.Caidai] = AudioEnum.Act186.play_ui_tangren_banger,
 		[Activity186Enum.ViewEffect.Yanhua] = AudioEnum.Act186.play_ui_tangren_firework,
 		[Activity186Enum.ViewEffect.Jinsha] = AudioEnum.Act186.play_ui_tangren_mysticism,
 		[Activity186Enum.ViewEffect.Xiangyun] = AudioEnum.Act186.play_ui_tangren_cloud
 	}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onClickBtnClose(slot0)
-	slot0:closeThis()
+function var_0_0.onClickBtnClose(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:refreshParam()
+	arg_6_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:refreshParam()
+	arg_7_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.effectId = slot0.viewParam.effectId
+function var_0_0.refreshParam(arg_8_0)
+	arg_8_0.effectId = arg_8_0.viewParam.effectId
 end
 
-function slot0.refreshView(slot0)
+function var_0_0.refreshView(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.stop_ui_bus)
 
-	for slot4, slot5 in ipairs(slot0.effectList) do
-		gohelper.setActive(slot5, false)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.effectList) do
+		gohelper.setActive(iter_9_1, false)
 
-		if slot4 == slot0.effectId then
-			gohelper.setActive(slot5, true)
+		if iter_9_0 == arg_9_0.effectId then
+			gohelper.setActive(iter_9_1, true)
 		end
 	end
 
-	if slot0.audioIdList[slot0.effectId] then
-		AudioMgr.instance:trigger(slot1)
+	local var_9_0 = arg_9_0.audioIdList[arg_9_0.effectId]
+
+	if var_9_0 then
+		AudioMgr.instance:trigger(var_9_0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.stop_ui_bus)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

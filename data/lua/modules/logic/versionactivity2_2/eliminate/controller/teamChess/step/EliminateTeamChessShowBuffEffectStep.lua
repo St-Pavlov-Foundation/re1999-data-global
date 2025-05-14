@@ -1,34 +1,39 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessShowBuffEffectStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessShowBuffEffectStep", package.seeall)
 
-slot0 = class("EliminateTeamChessShowBuffEffectStep", EliminateTeamChessStepBase)
+local var_0_0 = class("EliminateTeamChessShowBuffEffectStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data
-	slot2 = slot1.vxEffectType
-	slot4 = slot1.time
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
+	local var_1_1 = var_1_0.vxEffectType
+	local var_1_2 = var_1_0.uid
+	local var_1_3 = var_1_0.time
+	local var_1_4 = TeamChessUnitEntityMgr.instance:getEntity(var_1_2)
 
-	if TeamChessUnitEntityMgr.instance:getEntity(slot1.uid) == nil then
-		slot0:onDone(true)
-
-		return
-	end
-
-	if string.nilorempty(EliminateTeamChessEnum.VxEffectTypeToPath[slot2]) then
-		slot0:onDone(true)
+	if var_1_4 == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot4 = slot4 or EliminateTeamChessEnum.VxEffectTypePlayTime[slot2]
-	slot7, slot8, slot9 = slot5:getPosXYZ()
+	local var_1_5 = EliminateTeamChessEnum.VxEffectTypeToPath[var_1_1]
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, slot2, slot7, slot8, slot9, slot4)
+	if string.nilorempty(var_1_5) then
+		arg_1_0:onDone(true)
 
-	if slot4 ~= nil then
-		TaskDispatcher.runDelay(slot0._onDone, slot0, slot4)
+		return
+	end
+
+	var_1_3 = var_1_3 or EliminateTeamChessEnum.VxEffectTypePlayTime[var_1_1]
+
+	local var_1_6, var_1_7, var_1_8 = var_1_4:getPosXYZ()
+
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, var_1_1, var_1_6, var_1_7, var_1_8, var_1_3)
+
+	if var_1_3 ~= nil then
+		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

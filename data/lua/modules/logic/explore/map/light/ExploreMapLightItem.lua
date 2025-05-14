@@ -1,70 +1,72 @@
-module("modules.logic.explore.map.light.ExploreMapLightItem", package.seeall)
+﻿module("modules.logic.explore.map.light.ExploreMapLightItem", package.seeall)
 
-slot0 = class("ExploreMapLightItem")
-slot0._itemPool = nil
+local var_0_0 = class("ExploreMapLightItem")
 
-function slot0.getPool()
-	if not uv0._itemPool then
-		uv0._itemPool = LuaObjPool.New(100, uv0._poolNew, uv0._poolRelease, uv0._poolReset)
+var_0_0._itemPool = nil
+
+function var_0_0.getPool()
+	if not var_0_0._itemPool then
+		var_0_0._itemPool = LuaObjPool.New(100, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
 	end
 
-	return uv0._itemPool
+	return var_0_0._itemPool
 end
 
-function slot0._poolNew()
-	return uv0.New()
+function var_0_0._poolNew()
+	return var_0_0.New()
 end
 
-function slot0._poolRelease(slot0)
-	slot0:release()
+function var_0_0._poolRelease(arg_3_0)
+	arg_3_0:release()
 end
 
-function slot0._poolReset(slot0)
-	slot0:reset()
+function var_0_0._poolReset(arg_4_0)
+	arg_4_0:reset()
 end
 
-function slot0.release(slot0)
-	if slot0._cloneGo then
-		gohelper.destroy(slot0._cloneGo)
+function var_0_0.release(arg_5_0)
+	if arg_5_0._cloneGo then
+		gohelper.destroy(arg_5_0._cloneGo)
 
-		slot0._cloneGo = nil
+		arg_5_0._cloneGo = nil
 	end
 
-	slot0._trans = nil
-	slot0._lightCenter = nil
-	slot0._lightLast = nil
+	arg_5_0._trans = nil
+	arg_5_0._lightCenter = nil
+	arg_5_0._lightLast = nil
 end
 
-function slot0.reset(slot0)
-	slot0._trans:SetParent(nil)
-	transformhelper.setLocalScale(slot0._trans, 0, 0, 0)
+function var_0_0.reset(arg_6_0)
+	arg_6_0._trans:SetParent(nil)
+	transformhelper.setLocalScale(arg_6_0._trans, 0, 0, 0)
 end
 
-function slot0.ctor(slot0)
-	slot0._cloneGo = nil
+function var_0_0.ctor(arg_7_0)
+	arg_7_0._cloneGo = nil
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	if not slot0._cloneGo then
-		slot0._cloneGo = gohelper.clone(slot3, slot2)
-		slot0._trans = slot0._cloneGo.transform
-		slot0._lightCenter = slot0._trans:Find("zhong")
-		slot0._lightLast = slot0._trans:Find("wei")
+function var_0_0.init(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_0._cloneGo then
+		arg_8_0._cloneGo = gohelper.clone(arg_8_3, arg_8_2)
+		arg_8_0._trans = arg_8_0._cloneGo.transform
+		arg_8_0._lightCenter = arg_8_0._trans:Find("zhong")
+		arg_8_0._lightLast = arg_8_0._trans:Find("wei")
 	else
-		slot0._trans:SetParent(slot2.transform)
+		arg_8_0._trans:SetParent(arg_8_2.transform)
 	end
 
-	slot0:updateLightMO(slot1)
+	arg_8_0:updateLightMO(arg_8_1)
 end
 
-function slot0.updateLightMO(slot0, slot1)
-	slot3 = slot1.lightLen
+function var_0_0.updateLightMO(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1.dir
+	local var_9_1 = arg_9_1.lightLen
 
-	transformhelper.setLocalPos(slot0._trans, 0, 1, 0)
-	transformhelper.setLocalRotation(slot0._trans, 0, slot1.dir, 0)
-	transformhelper.setLocalScale(slot0._trans, 1, 1, 1)
-	transformhelper.setLocalScale(slot0._lightCenter, 3, 0.2, slot3 - 0.5)
-	transformhelper.setLocalPos(slot0._lightLast, 0, 0, slot3 - 0.1)
+	transformhelper.setLocalPos(arg_9_0._trans, 0, 1, 0)
+	transformhelper.setLocalRotation(arg_9_0._trans, 0, var_9_0, 0)
+	transformhelper.setLocalScale(arg_9_0._trans, 1, 1, 1)
+	transformhelper.setLocalScale(arg_9_0._lightCenter, 3, 0.2, var_9_1 - 0.5)
+	transformhelper.setLocalPos(arg_9_0._lightLast, 0, 0, var_9_1 - 0.1)
 end
 
-return slot0
+return var_0_0

@@ -1,36 +1,49 @@
-module("modules.logic.versionactivity1_2.jiexika.model.Activity114FeaturesModel", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114FeaturesModel", package.seeall)
 
-slot0 = class("Activity114FeaturesModel", ListScrollModel)
+local var_0_0 = class("Activity114FeaturesModel", ListScrollModel)
 
-function slot0.onFeatureListUpdate(slot0, slot1)
-	for slot6 = 1, #slot1 do
+function var_0_0.onFeatureListUpdate(arg_1_0, arg_1_1)
+	local var_1_0 = {}
+
+	for iter_1_0 = 1, #arg_1_1 do
+		var_1_0[iter_1_0] = Activity114Config.instance:getFeatureCo(Activity114Model.instance.id, arg_1_1[iter_1_0])
 	end
 
-	slot0:setList({
-		[slot6] = Activity114Config.instance:getFeatureCo(Activity114Model.instance.id, slot1[slot6])
-	})
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.getAllMaxLength(slot0, slot1)
-	for slot7, slot8 in pairs(Activity114Config.instance:getFeatureName(Activity114Model.instance.id)) do
-		slot3 = math.max(0, SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot1, slot8))
+function var_0_0.getAllMaxLength(arg_2_0, arg_2_1)
+	local var_2_0 = Activity114Config.instance:getFeatureName(Activity114Model.instance.id)
+	local var_2_1 = 0
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		local var_2_2 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_2_1, iter_2_1)
+
+		var_2_1 = math.max(var_2_1, var_2_2)
 	end
 
-	return Mathf.Clamp(slot3 + 20, 276, 420)
+	return Mathf.Clamp(var_2_1 + 20, 276, 420)
 end
 
-function slot0.getFeaturePreferredLength(slot0, slot1, slot2, slot3)
-	return Mathf.Clamp(slot0:getFeatureMaxLength(slot1) + 20, slot2, slot3)
+function var_0_0.getFeaturePreferredLength(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_0:getFeatureMaxLength(arg_3_1)
+
+	return Mathf.Clamp(var_3_0 + 20, arg_3_2, arg_3_3)
 end
 
-function slot0.getFeatureMaxLength(slot0, slot1)
-	for slot7, slot8 in pairs(slot0:getList()) do
-		slot3 = math.max(0, SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot1, slot8.features))
+function var_0_0.getFeatureMaxLength(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getList()
+	local var_4_1 = 0
+
+	for iter_4_0, iter_4_1 in pairs(var_4_0) do
+		local var_4_2 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_4_1, iter_4_1.features)
+
+		var_4_1 = math.max(var_4_1, var_4_2)
 	end
 
-	return slot3
+	return var_4_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

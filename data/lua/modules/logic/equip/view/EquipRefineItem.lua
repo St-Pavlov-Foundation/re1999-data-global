@@ -1,74 +1,76 @@
-module("modules.logic.equip.view.EquipRefineItem", package.seeall)
+﻿module("modules.logic.equip.view.EquipRefineItem", package.seeall)
 
-slot0 = class("EquipRefineItem", ListScrollCellExtend)
+local var_0_0 = class("EquipRefineItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goequip = gohelper.findChild(slot0.viewGO, "#go_equip")
-	slot0._goreduce = gohelper.findChild(slot0.viewGO, "#go_reduce")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_equip")
+	arg_1_0._goreduce = gohelper.findChild(arg_1_0.viewGO, "#go_reduce")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.click = gohelper.getClick(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.click = gohelper.getClick(arg_4_0.viewGO)
 
-	slot0.click:AddClickListener(slot0._onClick, slot0)
+	arg_4_0.click:AddClickListener(arg_4_0._onClick, arg_4_0)
 
-	slot0._reduceClick = gohelper.getClick(slot0._goreduce)
+	arg_4_0._reduceClick = gohelper.getClick(arg_4_0._goreduce)
 
-	slot0._reduceClick:AddClickListener(slot0._onReduceClick, slot0)
+	arg_4_0._reduceClick:AddClickListener(arg_4_0._onReduceClick, arg_4_0)
 
-	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(slot0._goequip, 1)
+	arg_4_0.animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(arg_4_0._goequip, 1)
 
-	slot0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, slot0._commonEquipIcon)
+	arg_4_0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, arg_4_0._commonEquipIcon)
 end
 
-function slot0._editableAddEvents(slot0)
-	EquipController.instance:registerCallback(EquipEvent.OnRefineSelectedEquipChange, slot0.updateSelected, slot0)
-	EquipController.instance:registerCallback(EquipEvent.onEquipLockChange, slot0.onEquipLockChange, slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	EquipController.instance:registerCallback(EquipEvent.OnRefineSelectedEquipChange, arg_5_0.updateSelected, arg_5_0)
+	EquipController.instance:registerCallback(EquipEvent.onEquipLockChange, arg_5_0.onEquipLockChange, arg_5_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	EquipController.instance:unregisterCallback(EquipEvent.OnRefineSelectedEquipChange, slot0.updateSelected, slot0)
-	EquipController.instance:unregisterCallback(EquipEvent.onEquipLockChange, slot0.onEquipLockChange, slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	EquipController.instance:unregisterCallback(EquipEvent.OnRefineSelectedEquipChange, arg_6_0.updateSelected, arg_6_0)
+	EquipController.instance:unregisterCallback(EquipEvent.onEquipLockChange, arg_6_0.onEquipLockChange, arg_6_0)
 end
 
-function slot0.onEquipLockChange(slot0, slot1)
-	if slot0._mo.id == tonumber(slot1.uid) then
-		slot0:refreshLockUI()
+function var_0_0.onEquipLockChange(arg_7_0, arg_7_1)
+	if arg_7_0._mo.id == tonumber(arg_7_1.uid) then
+		arg_7_0:refreshLockUI()
 
-		if slot1.isLock then
-			EquipRefineListModel.instance:deselectEquip(slot0._mo)
+		if arg_7_1.isLock then
+			EquipRefineListModel.instance:deselectEquip(arg_7_0._mo)
 		end
 	end
 end
 
-function slot0._onReduceClick(slot0)
+function var_0_0._onReduceClick(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Forget)
-	EquipRefineListModel.instance:deselectEquip(slot0._mo)
-	gohelper.setActive(slot0._goreduce, false)
+	EquipRefineListModel.instance:deselectEquip(arg_8_0._mo)
+	gohelper.setActive(arg_8_0._goreduce, false)
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	slot0.animator:Play(UIAnimationName.Click, 0, 0)
+	arg_9_0.animator:Play(UIAnimationName.Click, 0, 0)
 
-	if slot0._mo.isLock then
+	if arg_9_0._mo.isLock then
 		GameFacade.showToast(ToastEnum.EquipChooseLock)
 
-		if EquipHelper.isNormalEquip(slot0._mo.config) then
+		if EquipHelper.isNormalEquip(arg_9_0._mo.config) then
 			ViewMgr.instance:openView(ViewName.EquipInfoTipsView, {
-				equipMo = slot0._mo
+				equipMo = arg_9_0._mo
 			})
 		end
 
@@ -77,35 +79,37 @@ function slot0._onClick(slot0)
 
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 
-	if EquipRefineListModel.instance:selectEquip(slot0._mo) == EquipRefineListModel.SelectStatusEnum.OutMaxRefineLv then
+	local var_9_0 = EquipRefineListModel.instance:selectEquip(arg_9_0._mo)
+
+	if var_9_0 == EquipRefineListModel.SelectStatusEnum.OutMaxRefineLv then
 		GameFacade.showToast(ToastEnum.EquipOutMaxRefineLv)
 
 		return
-	elseif slot1 == EquipRefineListModel.SelectStatusEnum.Selected then
+	elseif var_9_0 == EquipRefineListModel.SelectStatusEnum.Selected then
 		return
 	end
 
-	gohelper.setActive(slot0._goreduce, true)
+	gohelper.setActive(arg_9_0._goreduce, true)
 end
 
-function slot0.refreshLockUI(slot0)
-	slot0._commonEquipIcon:refreshLock(slot0._mo.isLock)
+function var_0_0.refreshLockUI(arg_10_0)
+	arg_10_0._commonEquipIcon:refreshLock(arg_10_0._mo.isLock)
 end
 
-function slot0.updateSelected(slot0)
-	gohelper.setActive(slot0._goreduce, EquipRefineListModel.instance:isSelected(slot0._mo))
+function var_0_0.updateSelected(arg_11_0)
+	gohelper.setActive(arg_11_0._goreduce, EquipRefineListModel.instance:isSelected(arg_11_0._mo))
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+	arg_12_0._mo = arg_12_1
 
-	slot0._commonEquipIcon:setEquipMO(slot1)
-	slot0:updateSelected()
+	arg_12_0._commonEquipIcon:setEquipMO(arg_12_1)
+	arg_12_0:updateSelected()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.click:RemoveClickListener()
-	slot0._reduceClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0.click:RemoveClickListener()
+	arg_13_0._reduceClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

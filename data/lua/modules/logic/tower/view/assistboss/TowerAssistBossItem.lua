@@ -1,196 +1,209 @@
-module("modules.logic.tower.view.assistboss.TowerAssistBossItem", package.seeall)
+﻿module("modules.logic.tower.view.assistboss.TowerAssistBossItem", package.seeall)
 
-slot0 = class("TowerAssistBossItem", ListScrollCellExtend)
+local var_0_0 = class("TowerAssistBossItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0.goOpen = gohelper.findChild(slot0.viewGO, "root/go_open")
-	slot0.goLock = gohelper.findChild(slot0.viewGO, "root/go_lock")
-	slot0.goSelected = gohelper.findChild(slot0.viewGO, "root/go_selected")
-	slot0.goUnSelect = gohelper.findChild(slot0.viewGO, "root/go_unselect")
-	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "click")
-	slot0.btnSure = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btnSure")
-	slot0.goSureBg = gohelper.findChild(slot0.viewGO, "root/btnSure/bg")
-	slot0.btnCancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btnCancel")
-	slot0.goLevel = gohelper.findChild(slot0.viewGO, "root/level")
-	slot0.txtLevel = gohelper.findChildTextMesh(slot0.viewGO, "root/level/#txt_level")
-	slot0.goArrow = gohelper.findChild(slot0.viewGO, "root/level/#go_Arrow")
-	slot0.itemList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goOpen = gohelper.findChild(arg_1_0.viewGO, "root/go_open")
+	arg_1_0.goLock = gohelper.findChild(arg_1_0.viewGO, "root/go_lock")
+	arg_1_0.goSelected = gohelper.findChild(arg_1_0.viewGO, "root/go_selected")
+	arg_1_0.goUnSelect = gohelper.findChild(arg_1_0.viewGO, "root/go_unselect")
+	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "click")
+	arg_1_0.btnSure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btnSure")
+	arg_1_0.goSureBg = gohelper.findChild(arg_1_0.viewGO, "root/btnSure/bg")
+	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btnCancel")
+	arg_1_0.goLevel = gohelper.findChild(arg_1_0.viewGO, "root/level")
+	arg_1_0.txtLevel = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/level/#txt_level")
+	arg_1_0.goArrow = gohelper.findChild(arg_1_0.viewGO, "root/level/#go_Arrow")
+	arg_1_0.itemList = {}
 
-	slot0:createItem(slot0.goOpen)
-	slot0:createItem(slot0.goLock)
-	slot0:createItem(slot0.goSelected)
-	slot0:createItem(slot0.goUnSelect)
+	arg_1_0:createItem(arg_1_0.goOpen)
+	arg_1_0:createItem(arg_1_0.goLock)
+	arg_1_0:createItem(arg_1_0.goSelected)
+	arg_1_0:createItem(arg_1_0.goUnSelect)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClick, slot0.onBtnClick, slot0)
-	slot0:addClickCb(slot0.btnSure, slot0.onBtnSure, slot0)
-	slot0:addClickCb(slot0.btnCancel, slot0.onBtnCancel, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onBtnClick, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnSure, arg_2_0.onBtnSure, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnCancel, arg_2_0.onBtnCancel, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0.btnClick)
-	slot0:removeClickCb(slot0.btnSure)
-	slot0:removeClickCb(slot0.btnCancel)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0.btnClick)
+	arg_3_0:removeClickCb(arg_3_0.btnSure)
+	arg_3_0:removeClickCb(arg_3_0.btnCancel)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onResetTalent(slot0, slot1)
-	slot0:refreshTalent()
+function var_0_0._onResetTalent(arg_5_0, arg_5_1)
+	arg_5_0:refreshTalent()
 end
 
-function slot0._onActiveTalent(slot0, slot1)
-	slot0:refreshTalent()
+function var_0_0._onActiveTalent(arg_6_0, arg_6_1)
+	arg_6_0:refreshTalent()
 end
 
-function slot0.onBtnSure(slot0)
-	if not slot0._mo then
+function var_0_0.onBtnSure(arg_7_0)
+	if not arg_7_0._mo then
 		return
 	end
 
-	if slot0._mo.isLock == 1 then
+	if arg_7_0._mo.isLock == 1 then
 		GameFacade.showToast(ToastEnum.TowerAssistBossLock)
 
 		return
 	end
 
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock then
+	local var_7_0 = TowerModel.instance:getRecordFightParam()
+
+	if var_7_0.isHeroGroupLock then
 		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 
 		return
 	end
 
-	if slot2.towerType == TowerEnum.TowerType.Boss then
+	if var_7_0.towerType == TowerEnum.TowerType.Boss then
 		GameFacade.showToast(ToastEnum.TowerAssistBossCannotChange)
 
 		return
 	end
 
-	if TowerModel.instance:isBossBan(slot0._mo.bossId) then
-		GameFacade.showToast(ToastEnum.TowerAssistBossBan, slot0._mo.config.name)
+	if TowerModel.instance:isBossBan(arg_7_0._mo.bossId) then
+		GameFacade.showToast(ToastEnum.TowerAssistBossBan, arg_7_0._mo.config.name)
 
 		return
 	end
 
-	HeroGroupModel.instance:getCurGroupMO():setAssistBossId(slot0._mo.bossId)
-	slot0:saveGroup()
+	HeroGroupModel.instance:getCurGroupMO():setAssistBossId(arg_7_0._mo.bossId)
+	arg_7_0:saveGroup()
 end
 
-function slot0.onBtnCancel(slot0)
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock then
+function var_0_0.onBtnCancel(arg_8_0)
+	local var_8_0 = TowerModel.instance:getRecordFightParam()
+
+	if var_8_0.isHeroGroupLock then
 		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 
 		return
 	end
 
-	if slot1.towerType == TowerEnum.TowerType.Boss then
+	if var_8_0.towerType == TowerEnum.TowerType.Boss then
 		GameFacade.showToast(ToastEnum.TowerAssistBossCannotChange)
 
 		return
 	end
 
 	HeroGroupModel.instance:getCurGroupMO():setAssistBossId(0)
-	slot0:saveGroup()
+	arg_8_0:saveGroup()
 end
 
-function slot0.saveGroup(slot0)
+function var_0_0.saveGroup(arg_9_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 end
 
-function slot0.onBtnClick(slot0)
-	if not slot0._mo then
+function var_0_0.onBtnClick(arg_10_0)
+	if not arg_10_0._mo then
 		return
 	end
 
-	if slot0._mo.isLock == 1 then
+	if arg_10_0._mo.isLock == 1 then
 		GameFacade.showToast(ToastEnum.TowerAssistBossLock)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossDetailView, {
-		bossId = slot0._mo.bossId,
-		isFromHeroGroup = slot0._mo.isFromHeroGroup
+		bossId = arg_10_0._mo.bossId,
+		isFromHeroGroup = arg_10_0._mo.isFromHeroGroup
 	})
 end
 
-function slot0.createItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.txtName = gohelper.findChildTextMesh(slot1, "name/#txt_name")
-	slot2.imgCareer = gohelper.findChildImage(slot1, "career")
-	slot2.simageBoss = gohelper.findChildSingleImage(slot1, "#simage_bossicon")
-	slot2.goTxtOpen = gohelper.findChild(slot1, "toptips")
-	slot0.itemList[slot1] = slot2
+function var_0_0.createItem(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getUserDataTb_()
+
+	var_11_0.go = arg_11_1
+	var_11_0.txtName = gohelper.findChildTextMesh(arg_11_1, "name/#txt_name")
+	var_11_0.imgCareer = gohelper.findChildImage(arg_11_1, "career")
+	var_11_0.simageBoss = gohelper.findChildSingleImage(arg_11_1, "#simage_bossicon")
+	var_11_0.goTxtOpen = gohelper.findChild(arg_11_1, "toptips")
+	arg_11_0.itemList[arg_11_1] = var_11_0
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot3 = slot0.goOpen
+function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+	arg_12_0._mo = arg_12_1
 
-	if slot1.isFromHeroGroup then
-		slot3 = slot1.isSelect and slot0.goSelected or slot0.goUnSelect
+	local var_12_0 = arg_12_1.isLock == 1
+	local var_12_1 = arg_12_0.goOpen
 
-		gohelper.setActive(slot0.btnSure, not slot1.isSelect)
-		gohelper.setActive(slot0.btnCancel, slot1.isSelect)
-		ZProj.UGUIHelper.SetGrayscale(slot0.goSureBg, slot1.isBanOrder == 1 or slot1.isLock == 1)
+	if arg_12_1.isFromHeroGroup then
+		var_12_1 = arg_12_1.isSelect and arg_12_0.goSelected or arg_12_0.goUnSelect
+
+		gohelper.setActive(arg_12_0.btnSure, not arg_12_1.isSelect)
+		gohelper.setActive(arg_12_0.btnCancel, arg_12_1.isSelect)
+
+		local var_12_2 = arg_12_1.isBanOrder == 1 or var_12_0
+
+		ZProj.UGUIHelper.SetGrayscale(arg_12_0.goSureBg, var_12_2)
 	else
-		gohelper.setActive(slot0.btnSure, false)
-		gohelper.setActive(slot0.btnCancel, false)
+		gohelper.setActive(arg_12_0.btnSure, false)
+		gohelper.setActive(arg_12_0.btnCancel, false)
 	end
 
-	if slot2 then
-		slot3 = slot0.goLock
+	if var_12_0 then
+		var_12_1 = arg_12_0.goLock
 	end
 
-	for slot7, slot8 in pairs(slot0.itemList) do
-		slot0:updateItem(slot8, slot3)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.itemList) do
+		arg_12_0:updateItem(iter_12_1, var_12_1)
 	end
 
-	slot4 = not slot2
+	local var_12_3 = not var_12_0
 
-	gohelper.setActive(slot0.goLevel, slot4)
+	gohelper.setActive(arg_12_0.goLevel, var_12_3)
 
-	if slot4 then
-		slot0.txtLevel.text = tostring(slot0._mo.bossInfo.level)
+	if var_12_3 then
+		local var_12_4 = arg_12_0._mo.bossInfo.level
+
+		arg_12_0.txtLevel.text = tostring(var_12_4)
 	end
 
-	slot0:refreshTalent()
+	arg_12_0:refreshTalent()
 end
 
-function slot0.refreshTalent(slot0)
-	gohelper.setActive(slot0.goArrow, slot0._mo.bossInfo and slot0._mo.bossInfo:hasTalentCanActive() or false)
+function var_0_0.refreshTalent(arg_13_0)
+	gohelper.setActive(arg_13_0.goArrow, arg_13_0._mo.bossInfo and arg_13_0._mo.bossInfo:hasTalentCanActive() or false)
 end
 
-function slot0.updateItem(slot0, slot1, slot2)
-	slot3 = slot1.go == slot2
+function var_0_0.updateItem(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_1.go == arg_14_2
 
-	gohelper.setActive(slot1.go, slot3)
+	gohelper.setActive(arg_14_1.go, var_14_0)
 
-	if not slot3 then
+	if not var_14_0 then
 		return
 	end
 
-	slot1.txtName.text = slot0._mo.config.name
+	arg_14_1.txtName.text = arg_14_0._mo.config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(slot1.imgCareer, string.format("lssx_%s", slot0._mo.config.career))
-	slot1.simageBoss:LoadImage(slot0._mo.config.bossPic)
-	gohelper.setActive(slot1.goTxtOpen, slot0._mo.isTowerOpen and not slot0._mo.isFromHeroGroup)
+	UISpriteSetMgr.instance:setCommonSprite(arg_14_1.imgCareer, string.format("lssx_%s", arg_14_0._mo.config.career))
+	arg_14_1.simageBoss:LoadImage(arg_14_0._mo.config.bossPic)
+	gohelper.setActive(arg_14_1.goTxtOpen, arg_14_0._mo.isTowerOpen and not arg_14_0._mo.isFromHeroGroup)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.itemList) do
-		slot5.simageBoss:UnLoadImage()
+function var_0_0.onDestroyView(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0.itemList) do
+		iter_15_1.simageBoss:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

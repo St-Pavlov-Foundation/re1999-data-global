@@ -1,68 +1,73 @@
-module("modules.logic.fight.view.cardeffect.FightCardDissolveMoveEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardDissolveMoveEffect", package.seeall)
 
-slot0 = class("FightCardDissolveMoveEffect", BaseWork)
-slot2 = 1 * 0.033
+local var_0_0 = class("FightCardDissolveMoveEffect", BaseWork)
+local var_0_1 = 1
+local var_0_2 = var_0_1 * 0.033
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._dt = uv1 / FightModel.instance:getUISpeed()
-	slot2 = {}
+	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
 
-	for slot6, slot7 in ipairs(slot1.handCardItemList) do
-		if not tabletool.indexOf(slot1.dissolveCardIndexs, slot6) then
-			table.insert(slot2, slot6)
+	local var_1_0 = {}
+
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.handCardItemList) do
+		if not tabletool.indexOf(arg_1_1.dissolveCardIndexs, iter_1_0) then
+			table.insert(var_1_0, iter_1_0)
 		end
 	end
 
-	slot0._dissolveCardIndexs = nil
-	slot0._moveCardFlow = FlowParallel.New()
-	slot3 = 1
+	arg_1_0._dissolveCardIndexs = nil
+	arg_1_0._moveCardFlow = FlowParallel.New()
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot10 = slot1.handCardItemList[slot7].go
+	local var_1_1 = 1
 
-		if not gohelper.isNil(slot1.handCardItemList[slot8].go) and not gohelper.isNil(slot10) and slot9 ~= slot10 then
-			slot11 = slot9.transform
-			slot12 = FlowSequence.New()
+	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
+		local var_1_2 = arg_1_1.handCardItemList[iter_1_3].go
+		local var_1_3 = arg_1_1.handCardItemList[iter_1_2].go
 
-			slot12:addWork(WorkWaitSeconds.New(3 * slot3 * slot0._dt))
+		if not gohelper.isNil(var_1_2) and not gohelper.isNil(var_1_3) and var_1_2 ~= var_1_3 then
+			local var_1_4 = var_1_2.transform
+			local var_1_5 = FlowSequence.New()
 
-			slot13, slot14 = recthelper.getAnchor(slot10.transform)
+			var_1_5:addWork(WorkWaitSeconds.New(3 * var_1_1 * arg_1_0._dt))
 
-			slot12:addWork(TweenWork.New({
+			local var_1_6, var_1_7 = recthelper.getAnchor(var_1_3.transform)
+			local var_1_8 = var_1_6 + 10
+
+			var_1_5:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = slot11,
-				to = slot13 + 10,
-				t = slot0._dt * 5
+				tr = var_1_4,
+				to = var_1_8,
+				t = arg_1_0._dt * 5
 			}))
-			slot12:addWork(TweenWork.New({
+			var_1_5:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = slot11,
-				to = slot13,
-				t = slot0._dt * 2
+				tr = var_1_4,
+				to = var_1_6,
+				t = arg_1_0._dt * 2
 			}))
-			slot0._moveCardFlow:addWork(slot12)
+			arg_1_0._moveCardFlow:addWork(var_1_5)
 
-			slot3 = slot3 + 1
+			var_1_1 = var_1_1 + 1
 		end
 	end
 
-	slot0._moveCardFlow:registerDoneListener(slot0._onWorkDone, slot0)
-	slot0._moveCardFlow:start()
+	arg_1_0._moveCardFlow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
+	arg_1_0._moveCardFlow:start()
 end
 
-function slot0.onStop(slot0)
-	uv0.super.onStop(slot0)
-	slot0._moveCardFlow:unregisterDoneListener(slot0._onWorkDone, slot0)
+function var_0_0.onStop(arg_2_0)
+	var_0_0.super.onStop(arg_2_0)
+	arg_2_0._moveCardFlow:unregisterDoneListener(arg_2_0._onWorkDone, arg_2_0)
 
-	if slot0._moveCardFlow.status == WorkStatus.Running then
-		slot0._moveCardFlow:stop()
+	if arg_2_0._moveCardFlow.status == WorkStatus.Running then
+		arg_2_0._moveCardFlow:stop()
 	end
 end
 
-function slot0._onWorkDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onWorkDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

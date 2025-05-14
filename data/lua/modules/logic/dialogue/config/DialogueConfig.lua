@@ -1,11 +1,12 @@
-module("modules.logic.dialogue.config.DialogueConfig", package.seeall)
+﻿module("modules.logic.dialogue.config.DialogueConfig", package.seeall)
 
-slot0 = class("DialogueConfig", BaseConfig)
+local var_0_0 = class("DialogueConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"dialog_group",
 		"dialog",
@@ -14,64 +15,72 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "dialog" then
-		slot0.dialogueDict = slot2
-	elseif slot1 == "dialog_step" then
-		slot0:initDialogueStepList(slot2.configList)
-	elseif slot1 == "dialogue_chess_info" then
-		slot0:initChessInfo(slot2.configList)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "dialog" then
+		arg_3_0.dialogueDict = arg_3_2
+	elseif arg_3_1 == "dialog_step" then
+		arg_3_0:initDialogueStepList(arg_3_2.configList)
+	elseif arg_3_1 == "dialogue_chess_info" then
+		arg_3_0:initChessInfo(arg_3_2.configList)
 	end
 end
 
-function slot0.initDialogueStepList(slot0, slot1)
-	slot0.dialogueGroup2StepList = {}
+function var_0_0.initDialogueStepList(arg_4_0, arg_4_1)
+	arg_4_0.dialogueGroup2StepList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.dialogueGroup2StepList[slot6.groupId] then
-			slot0.dialogueGroup2StepList[slot6.groupId] = {}
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_0 = arg_4_0.dialogueGroup2StepList[iter_4_1.groupId]
+
+		if not var_4_0 then
+			var_4_0 = {}
+			arg_4_0.dialogueGroup2StepList[iter_4_1.groupId] = var_4_0
 		end
 
-		table.insert(slot7, slot6)
+		table.insert(var_4_0, iter_4_1)
 	end
 
-	for slot5, slot6 in pairs(slot0.dialogueGroup2StepList) do
-		table.sort(slot6, uv0.sortStepFunc)
+	for iter_4_2, iter_4_3 in pairs(arg_4_0.dialogueGroup2StepList) do
+		table.sort(iter_4_3, var_0_0.sortStepFunc)
 	end
 end
 
-function slot0.sortStepFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortStepFunc(arg_5_0, arg_5_1)
+	return arg_5_0.id < arg_5_1.id
 end
 
-function slot0.initChessInfo(slot0, slot1)
-	slot0.dialogueId2ChessCoList = {}
+function var_0_0.initChessInfo(arg_6_0, arg_6_1)
+	arg_6_0.dialogueId2ChessCoList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.dialogueId2ChessCoList[slot6.dialogueId] then
-			slot0.dialogueId2ChessCoList[slot6.dialogueId] = {}
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		local var_6_0 = arg_6_0.dialogueId2ChessCoList[iter_6_1.dialogueId]
+
+		if not var_6_0 then
+			var_6_0 = {}
+			arg_6_0.dialogueId2ChessCoList[iter_6_1.dialogueId] = var_6_0
 		end
 
-		table.insert(slot7, slot6)
+		table.insert(var_6_0, iter_6_1)
 	end
 end
 
-function slot0.getDialogueCo(slot0, slot1)
-	return slot0.dialogueDict.configDict[slot1]
+function var_0_0.getDialogueCo(arg_7_0, arg_7_1)
+	return arg_7_0.dialogueDict.configDict[arg_7_1]
 end
 
-function slot0.getDialogueStepList(slot0, slot1)
-	if not slot0.dialogueGroup2StepList[slot1] then
-		logError("not found group step , group id : " .. tostring(slot1))
+function var_0_0.getDialogueStepList(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.dialogueGroup2StepList[arg_8_1]
+
+	if not var_8_0 then
+		logError("not found group step , group id : " .. tostring(arg_8_1))
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getChessCoList(slot0, slot1)
-	return slot0.dialogueId2ChessCoList[slot1]
+function var_0_0.getChessCoList(arg_9_0, arg_9_1)
+	return arg_9_0.dialogueId2ChessCoList[arg_9_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

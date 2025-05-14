@@ -1,80 +1,80 @@
-module("modules.logic.gm.view.HierarchyView", package.seeall)
+﻿module("modules.logic.gm.view.HierarchyView", package.seeall)
 
-slot0 = class("HierarchyView", BaseView)
-slot1 = 1
-slot2 = 2
-slot3 = 3
+local var_0_0 = class("HierarchyView", BaseView)
+local var_0_1 = 1
+local var_0_2 = 2
+local var_0_3 = 3
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "go/btnClose")
-	slot0._btnShow = gohelper.findChildButtonWithAudio(slot0.viewGO, "go/btnShow")
-	slot0._btnHide = gohelper.findChildButtonWithAudio(slot0.viewGO, "go/btnHide")
-	slot0._rect = gohelper.findChild(slot0.viewGO, "go").transform
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go/btnClose")
+	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go/btnShow")
+	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go/btnHide")
+	arg_1_0._rect = gohelper.findChild(arg_1_0.viewGO, "go").transform
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnShow:AddClickListener(slot0._onClickShow, slot0)
-	slot0._btnHide:AddClickListener(slot0._onClickHide, slot0)
-	slot0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, slot0._onTouch, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnShow:AddClickListener(arg_2_0._onClickShow, arg_2_0)
+	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
+	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0._onTouch, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnShow:RemoveClickListener()
-	slot0._btnHide:RemoveClickListener()
-	slot0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, slot0._onTouch, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnShow:RemoveClickListener()
+	arg_3_0._btnHide:RemoveClickListener()
+	arg_3_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_3_0._onTouch, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0._state = uv0
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0._state = var_0_1
 
-	slot0:_updateBtns()
+	arg_4_0:_updateBtns()
 end
 
-function slot0.onClose(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.onClose(arg_5_0)
+	if arg_5_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_5_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_5_0._tweenId = nil
 	end
 end
 
-function slot0._onTouch(slot0)
-	gohelper.setLayer(slot0.viewGO, UnityLayer.UITop, true)
+function var_0_0._onTouch(arg_6_0)
+	gohelper.setLayer(arg_6_0.viewGO, UnityLayer.UITop, true)
 end
 
-function slot0._onClickShow(slot0)
-	if slot0._state == uv0 then
-		slot0._state = uv1
-		slot0._tweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._rect, 0, 0.2, slot0._onShow, slot0)
+function var_0_0._onClickShow(arg_7_0)
+	if arg_7_0._state == var_0_2 then
+		arg_7_0._state = var_0_3
+		arg_7_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_7_0._rect, 0, 0.2, arg_7_0._onShow, arg_7_0)
 	end
 end
 
-function slot0._onShow(slot0)
-	slot0._tweenId = nil
-	slot0._state = uv0
+function var_0_0._onShow(arg_8_0)
+	arg_8_0._tweenId = nil
+	arg_8_0._state = var_0_1
 
-	slot0:_updateBtns()
+	arg_8_0:_updateBtns()
 end
 
-function slot0._onClickHide(slot0)
-	if slot0._state == uv0 then
-		slot0._state = uv1
-		slot0._tweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._rect, 800, 0.2, slot0._onHide, slot0)
+function var_0_0._onClickHide(arg_9_0)
+	if arg_9_0._state == var_0_1 then
+		arg_9_0._state = var_0_3
+		arg_9_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_9_0._rect, 800, 0.2, arg_9_0._onHide, arg_9_0)
 	end
 end
 
-function slot0._onHide(slot0)
-	slot0._tweenId = nil
-	slot0._state = uv0
+function var_0_0._onHide(arg_10_0)
+	arg_10_0._tweenId = nil
+	arg_10_0._state = var_0_2
 
-	slot0:_updateBtns()
+	arg_10_0:_updateBtns()
 end
 
-function slot0._updateBtns(slot0)
-	gohelper.setActive(slot0._btnShow.gameObject, slot0._state == uv0)
-	gohelper.setActive(slot0._btnHide.gameObject, slot0._state == uv1)
+function var_0_0._updateBtns(arg_11_0)
+	gohelper.setActive(arg_11_0._btnShow.gameObject, arg_11_0._state == var_0_2)
+	gohelper.setActive(arg_11_0._btnHide.gameObject, arg_11_0._state == var_0_1)
 end
 
-return slot0
+return var_0_0

@@ -1,16 +1,17 @@
-module("modules.logic.toughbattle.controller.ToughBattleEvent", package.seeall)
+﻿module("modules.logic.toughbattle.controller.ToughBattleEvent", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.StageUpdate = slot1()
-slot0.ToughBattleActChange = slot1()
-slot0.InitFightIndex = slot1()
-slot0.ToughBattleActBtnShow = slot1()
-slot0.BeginPlayFightSucessAnim = slot1()
-slot0.GuideCurStage = slot1()
-slot0.GuideSetElementsActive = slot1()
-slot0.GuideFocusElement = slot1()
-slot0.GuideClickElement = slot1()
-slot0.GuideOpenBossInfoView = slot1()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return slot0
+var_0_0.StageUpdate = var_0_1()
+var_0_0.ToughBattleActChange = var_0_1()
+var_0_0.InitFightIndex = var_0_1()
+var_0_0.ToughBattleActBtnShow = var_0_1()
+var_0_0.BeginPlayFightSucessAnim = var_0_1()
+var_0_0.GuideCurStage = var_0_1()
+var_0_0.GuideSetElementsActive = var_0_1()
+var_0_0.GuideFocusElement = var_0_1()
+var_0_0.GuideClickElement = var_0_1()
+var_0_0.GuideOpenBossInfoView = var_0_1()
+
+return var_0_0

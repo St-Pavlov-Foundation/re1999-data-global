@@ -1,125 +1,135 @@
-module("modules.logic.summon.view.luckybag.SummonLuckyBagChoice", package.seeall)
+﻿module("modules.logic.summon.view.luckybag.SummonLuckyBagChoice", package.seeall)
 
-slot0 = class("SummonLuckyBagChoice", BaseView)
+local var_0_0 = class("SummonLuckyBagChoice", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "Tips2/#txt_num")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_cancel")
-	slot0._scrollrule = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_rule")
-	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
-	slot0._goexskill = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem/role/#go_exskill")
-	slot0._imageexskill = gohelper.findChildImage(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem/role/#go_exskill/#image_exskill")
-	slot0._goclick = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem/select/#go_click")
-	slot0._gonogain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
-	slot0._goown = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Tips2/#txt_num")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
+	arg_1_0._scrollrule = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rule")
+	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
+	arg_1_0._goexskill = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem/role/#go_exskill")
+	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem/role/#go_exskill/#image_exskill")
+	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem/select/#go_click")
+	arg_1_0._gonogain = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
+	arg_1_0._goown = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
+function var_0_0._btnconfirmOnClick(arg_4_0)
 	SummonLuckyBagChoiceController.instance:trySendChoice()
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._noGainHeroes = {}
-	slot0._ownHeroes = {}
-	slot0._goTitleNoGain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
-	slot0._goTitleOwn = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
-	slot0.goTips2 = gohelper.findChild(slot0.viewGO, "Tips2")
-	slot0._tfcontent = slot0._gostoreItem.transform
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._noGainHeroes = {}
+	arg_6_0._ownHeroes = {}
+	arg_6_0._goTitleNoGain = gohelper.findChild(arg_6_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
+	arg_6_0._goTitleOwn = gohelper.findChild(arg_6_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
+	arg_6_0._txtTitle = gohelper.findChildText(arg_6_0.viewGO, "Title")
+	arg_6_0._goitem = gohelper.findChild(arg_6_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
+	arg_6_0.goTips2 = gohelper.findChild(arg_6_0.viewGO, "Tips2")
+	arg_6_0._tfcontent = arg_6_0._gostoreItem.transform
 
-	gohelper.setActive(slot0._goitem, false)
-	gohelper.setActive(slot0.goTips2, false)
+	gohelper.setActive(arg_6_0._goitem, false)
+	gohelper.setActive(arg_6_0.goTips2, false)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_7_0)
 	SummonLuckyBagChoiceController.instance:onCloseView()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	logNormal("SummonLuckyBagChoice onOpen")
-	slot0:addEventCb(SummonController.instance, SummonEvent.onLuckyBagOpened, slot0.handleLuckyBagOpened, slot0)
-	slot0:addEventCb(SummonLuckyBagChoiceController.instance, SummonEvent.onLuckyListChanged, slot0.refreshUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	SummonLuckyBagChoiceController.instance:onOpenView(slot0.viewParam.luckyBagId, slot0.viewParam.poolId)
-	slot0:refreshUI()
+	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onLuckyBagOpened, arg_8_0.handleLuckyBagOpened, arg_8_0)
+	arg_8_0:addEventCb(SummonLuckyBagChoiceController.instance, SummonEvent.onLuckyListChanged, arg_8_0.refreshUI, arg_8_0)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0._onCloseView, arg_8_0)
+	SummonLuckyBagChoiceController.instance:onOpenView(arg_8_0.viewParam.luckyBagId, arg_8_0.viewParam.poolId)
+	arg_8_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnconfirm.gameObject, SummonLuckyBagChoiceController.instance:isLuckyBagOpened() or SummonLuckyBagChoiceListModel.instance:getSelectId() == nil)
-	slot0:refreshList()
+function var_0_0.refreshUI(arg_10_0)
+	local var_10_0 = SummonLuckyBagChoiceController.instance:isLuckyBagOpened()
+	local var_10_1 = SummonLuckyBagChoiceListModel.instance:getSelectId()
+
+	ZProj.UGUIHelper.SetGrayscale(arg_10_0._btnconfirm.gameObject, var_10_0 or var_10_1 == nil)
+	arg_10_0:refreshList()
 end
 
-function slot0.handleLuckyBagOpened(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnconfirm.gameObject, SummonLuckyBagChoiceController.instance:isLuckyBagOpened() or SummonLuckyBagChoiceListModel.instance:getSelectId() == nil)
+function var_0_0.handleLuckyBagOpened(arg_11_0)
+	arg_11_0._btnconfirm:RemoveClickListener()
+	arg_11_0._btncancel:RemoveClickListener()
+
+	local var_11_0 = SummonLuckyBagChoiceController.instance:isLuckyBagOpened()
+	local var_11_1 = SummonLuckyBagChoiceListModel.instance:getSelectId()
+
+	ZProj.UGUIHelper.SetGrayscale(arg_11_0._btnconfirm.gameObject, var_11_0 or var_11_1 == nil)
 end
 
-function slot0.refreshList(slot0)
-	slot0:refreshItems(SummonLuckyBagChoiceListModel.instance.noGainList, slot0._noGainHeroes, slot0._gonogain, slot0._goTitleNoGain)
-	slot0:refreshItems(SummonLuckyBagChoiceListModel.instance.ownList, slot0._ownHeroes, slot0._goown, slot0._goTitleOwn)
-	ZProj.UGUIHelper.RebuildLayout(slot0._tfcontent)
+function var_0_0.refreshList(arg_12_0)
+	arg_12_0:refreshItems(SummonLuckyBagChoiceListModel.instance.noGainList, arg_12_0._noGainHeroes, arg_12_0._gonogain, arg_12_0._goTitleNoGain)
+	arg_12_0:refreshItems(SummonLuckyBagChoiceListModel.instance.ownList, arg_12_0._ownHeroes, arg_12_0._goown, arg_12_0._goTitleOwn)
+	ZProj.UGUIHelper.RebuildLayout(arg_12_0._tfcontent)
 end
 
-function slot0.refreshItems(slot0, slot1, slot2, slot3, slot4)
-	if slot1 and #slot1 > 0 then
-		gohelper.setActive(slot3, true)
-		gohelper.setActive(slot4, true)
+function var_0_0.refreshItems(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	if arg_13_1 and #arg_13_1 > 0 then
+		gohelper.setActive(arg_13_3, true)
+		gohelper.setActive(arg_13_4, true)
 
-		for slot8, slot9 in ipairs(slot1) do
-			slot0:getOrCreateItem(slot8, slot2, slot3).component:onUpdateMO(slot9)
+		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+			arg_13_0:getOrCreateItem(iter_13_0, arg_13_2, arg_13_3).component:onUpdateMO(iter_13_1)
 		end
 	else
-		gohelper.setActive(slot3, false)
-		gohelper.setActive(slot4, false)
+		gohelper.setActive(arg_13_3, false)
+		gohelper.setActive(arg_13_4, false)
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.CharacterGetView then
-		slot0:closeThis()
+function var_0_0._onCloseView(arg_14_0, arg_14_1)
+	if arg_14_1 == ViewName.CharacterGetView then
+		arg_14_0:closeThis()
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1, slot2, slot3)
-	if not slot2[slot1] then
-		slot4 = slot0:getUserDataTb_()
-		slot4.go = gohelper.clone(slot0._goitem, slot3, "item" .. tostring(slot1))
+function var_0_0.getOrCreateItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = arg_15_2[arg_15_1]
 
-		gohelper.setActive(slot4.go, true)
+	if not var_15_0 then
+		var_15_0 = arg_15_0:getUserDataTb_()
+		var_15_0.go = gohelper.clone(arg_15_0._goitem, arg_15_3, "item" .. tostring(arg_15_1))
 
-		slot4.component = MonoHelper.addNoUpdateLuaComOnceToGo(slot4.go, SummonLuckyBagChoiceItem)
+		gohelper.setActive(var_15_0.go, true)
 
-		slot4.component:init(slot4.go)
-		slot4.component:addEvents()
+		var_15_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_0.go, SummonLuckyBagChoiceItem)
 
-		slot2[slot1] = slot4
+		var_15_0.component:init(var_15_0.go)
+		var_15_0.component:addEvents()
+
+		arg_15_2[arg_15_1] = var_15_0
 	end
 
-	return slot4
+	return var_15_0
 end
 
-return slot0
+return var_0_0

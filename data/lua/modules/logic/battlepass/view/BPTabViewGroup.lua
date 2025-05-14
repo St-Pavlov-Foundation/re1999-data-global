@@ -1,106 +1,108 @@
-module("modules.logic.battlepass.view.BPTabViewGroup", package.seeall)
+﻿module("modules.logic.battlepass.view.BPTabViewGroup", package.seeall)
 
-slot0 = class("BPTabViewGroup", TabViewGroup)
+local var_0_0 = class("BPTabViewGroup", TabViewGroup)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 
-	slot0.isInClosingTween = false
-	slot0._tabAnims = {}
-	slot0._closeViewIndex = nil
-	slot0._openId = nil
+	arg_1_0.isInClosingTween = false
+	arg_1_0._tabAnims = {}
+	arg_1_0._closeViewIndex = nil
+	arg_1_0._openId = nil
 end
 
-function slot0._openTabView(slot0, slot1)
-	if slot0._curTabId == slot1 then
+function var_0_0._openTabView(arg_2_0, arg_2_1)
+	if arg_2_0._curTabId == arg_2_1 then
 		return
 	end
 
-	uv0.super._openTabView(slot0, slot1)
+	var_0_0.super._openTabView(arg_2_0, arg_2_1)
 end
 
-function slot0._setVisible(slot0, slot1, slot2)
-	slot3 = slot0._tabViews[slot1].viewGO
-	slot5 = false
+function var_0_0._setVisible(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0._tabViews[arg_3_1].viewGO
+	local var_3_1 = arg_3_0._tabAnims[arg_3_1]
+	local var_3_2 = false
 
-	if slot0._tabAnims[slot1] == nil then
-		slot0._tabAnims[slot1] = slot3:GetComponent(typeof(UnityEngine.Animator)) and ZProj.ProjAnimatorPlayer.Get(slot3) or false
-		slot5 = true
+	if var_3_1 == nil then
+		var_3_1 = var_3_0:GetComponent(typeof(UnityEngine.Animator)) and ZProj.ProjAnimatorPlayer.Get(var_3_0) or false
+		arg_3_0._tabAnims[arg_3_1] = var_3_1
+		var_3_2 = true
 	end
 
-	if slot2 then
-		if slot0.isInClosingTween then
-			slot0._openId = slot1
+	if arg_3_2 then
+		if arg_3_0.isInClosingTween then
+			arg_3_0._openId = arg_3_1
 
-			if slot0._closeViewIndex ~= slot1 then
-				if slot5 then
-					slot3:GetComponent(typeof(UnityEngine.Animator)).enabled = false
+			if arg_3_0._closeViewIndex ~= arg_3_1 then
+				if var_3_2 then
+					var_3_0:GetComponent(typeof(UnityEngine.Animator)).enabled = false
 				end
 
-				uv0.super._setVisible(slot0, slot1, false)
+				var_0_0.super._setVisible(arg_3_0, arg_3_1, false)
 			end
 
 			return
 		end
 
-		slot3:GetComponent(typeof(UnityEngine.Animator)).enabled = true
+		var_3_0:GetComponent(typeof(UnityEngine.Animator)).enabled = true
 
-		uv0.super._setVisible(slot0, slot1, true)
+		var_0_0.super._setVisible(arg_3_0, arg_3_1, true)
 
-		if slot4 then
-			slot4:Play(UIAnimationName.Open)
+		if var_3_1 then
+			var_3_1:Play(UIAnimationName.Open)
 		end
 
-		slot0.viewContainer:dispatchEvent(BpEvent.TapViewOpenAnimBegin, slot1)
+		arg_3_0.viewContainer:dispatchEvent(BpEvent.TapViewOpenAnimBegin, arg_3_1)
 	else
-		if slot0.isInClosingTween then
+		if arg_3_0.isInClosingTween then
 			return
 		end
 
-		if slot0._openId == slot1 then
-			slot0._openId = nil
+		if arg_3_0._openId == arg_3_1 then
+			arg_3_0._openId = nil
 		end
 
-		if slot4 then
-			slot0.isInClosingTween = true
-			slot0._closeViewIndex = slot1
+		if var_3_1 then
+			arg_3_0.isInClosingTween = true
+			arg_3_0._closeViewIndex = arg_3_1
 
-			slot0.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimBegin, slot1)
-			slot4:Play(UIAnimationName.Close, slot0.onCloseTweenFinish, slot0)
+			arg_3_0.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimBegin, arg_3_1)
+			var_3_1:Play(UIAnimationName.Close, arg_3_0.onCloseTweenFinish, arg_3_0)
 		else
-			uv0.super._setVisible(slot0, slot1, false)
+			var_0_0.super._setVisible(arg_3_0, arg_3_1, false)
 		end
 	end
 end
 
-function slot0.onCloseTweenFinish(slot0)
-	if not slot0._closeViewIndex then
+function var_0_0.onCloseTweenFinish(arg_4_0)
+	if not arg_4_0._closeViewIndex then
 		return
 	end
 
-	slot1 = slot0._closeViewIndex
+	local var_4_0 = arg_4_0._closeViewIndex
 
-	uv0.super._setVisible(slot0, slot0._closeViewIndex, false)
+	var_0_0.super._setVisible(arg_4_0, arg_4_0._closeViewIndex, false)
 
-	slot0._closeViewIndex = nil
-	slot0.isInClosingTween = false
+	arg_4_0._closeViewIndex = nil
+	arg_4_0.isInClosingTween = false
 
-	if slot0._openId then
-		slot0:_setVisible(slot0._openId, true)
+	if arg_4_0._openId then
+		arg_4_0:_setVisible(arg_4_0._openId, true)
 
-		slot0._openId = nil
+		arg_4_0._openId = nil
 	end
 
-	slot0.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimEnd, slot1)
+	arg_4_0.viewContainer:dispatchEvent(BpEvent.TapViewCloseAnimEnd, var_4_0)
 end
 
-function slot0.onDestroyView(slot0, ...)
-	slot0.isInClosingTween = nil
-	slot0._tabAnims = nil
-	slot0._closeViewIndex = nil
-	slot0._openId = nil
+function var_0_0.onDestroyView(arg_5_0, ...)
+	arg_5_0.isInClosingTween = nil
+	arg_5_0._tabAnims = nil
+	arg_5_0._closeViewIndex = nil
+	arg_5_0._openId = nil
 
-	uv0.super.onDestroyView(slot0, ...)
+	var_0_0.super.onDestroyView(arg_5_0, ...)
 end
 
-return slot0
+return var_0_0

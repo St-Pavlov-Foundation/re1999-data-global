@@ -1,85 +1,106 @@
-module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementShape", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementShape", package.seeall)
 
-slot0 = class("FairyLandElementShape", FairyLandElementBase)
+local var_0_0 = class("FairyLandElementShape", FairyLandElementBase)
 
-function slot0.onInitView(slot0)
-	slot0.stateGoDict = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.stateGoDict = {}
 
-	for slot4, slot5 in pairs(FairyLandEnum.ShapeState) do
-		if not gohelper.isNil(gohelper.findChild(slot0._go, tostring(slot5))) then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = slot6
-			slot7.rootGo = gohelper.findChild(slot6, "root")
-			slot7.rootAnim = slot7.rootGo:GetComponent(typeof(UnityEngine.Animator))
-			slot0.stateGoDict[slot5] = slot7
+	for iter_1_0, iter_1_1 in pairs(FairyLandEnum.ShapeState) do
+		local var_1_0 = gohelper.findChild(arg_1_0._go, tostring(iter_1_1))
+
+		if not gohelper.isNil(var_1_0) then
+			local var_1_1 = arg_1_0:getUserDataTb_()
+
+			var_1_1.go = var_1_0
+			var_1_1.rootGo = gohelper.findChild(var_1_0, "root")
+			var_1_1.rootAnim = var_1_1.rootGo:GetComponent(typeof(UnityEngine.Animator))
+			arg_1_0.stateGoDict[iter_1_1] = var_1_1
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0.stateGoDict) do
-		gohelper.setActive(slot6.go, slot5 == slot0:getState())
+	local var_1_2 = arg_1_0:getState()
+
+	for iter_1_2, iter_1_3 in pairs(arg_1_0.stateGoDict) do
+		local var_1_3 = iter_1_2 == var_1_2
+
+		gohelper.setActive(iter_1_3.go, var_1_3)
 	end
 end
 
-function slot0.getClickGO(slot0)
-	return slot0._go
+function var_0_0.getClickGO(arg_2_0)
+	return arg_2_0._go
 end
 
-function slot0.refresh(slot0)
-	for slot5, slot6 in pairs(slot0.stateGoDict) do
-		slot7 = slot5 == slot0:getState()
+function var_0_0.refresh(arg_3_0)
+	local var_3_0 = arg_3_0:getState()
 
-		gohelper.setActive(slot6.go, slot7)
+	for iter_3_0, iter_3_1 in pairs(arg_3_0.stateGoDict) do
+		local var_3_1 = iter_3_0 == var_3_0
 
-		if slot7 then
-			slot6.rootAnim:Play("open", 0, 0)
+		gohelper.setActive(iter_3_1.go, var_3_1)
+
+		if var_3_1 then
+			iter_3_1.rootAnim:Play("open", 0, 0)
 		end
 	end
 end
 
-function slot0.getState(slot0)
-	if FairyLandModel.instance:isFinishElement(slot0:getElementId()) then
+function var_0_0.getState(arg_4_0)
+	local var_4_0 = arg_4_0:getElementId()
+
+	if FairyLandModel.instance:isFinishElement(var_4_0) then
 		return FairyLandEnum.ShapeState.Hide
 	end
 
-	if not FairyLandConfig.instance:getElementConfig(slot1 - 1) then
+	local var_4_1 = var_4_0 - 1
+	local var_4_2 = FairyLandConfig.instance:getElementConfig(var_4_1)
+
+	if not var_4_2 then
 		return FairyLandEnum.ShapeState.CanClick
 	end
 
-	if FairyLandEnum.ConfigType2ElementType[slot3.type] == FairyLandEnum.ElementType.NPC then
-		if slot0._elements.elementDict[slot2] then
+	local var_4_3 = FairyLandEnum.ConfigType2ElementType[var_4_2.type]
+	local var_4_4 = arg_4_0._elements.elementDict[var_4_1]
+
+	if var_4_3 == FairyLandEnum.ElementType.NPC then
+		if var_4_4 then
 			return FairyLandEnum.ShapeState.Hide
 		end
 
-		slot7 = true
+		local var_4_5 = string.splitToNumber(var_4_2.puzzleId, "#")
+		local var_4_6 = true
 
-		for slot11, slot12 in ipairs(string.splitToNumber(slot3.puzzleId, "#")) do
-			slot7 = false
-			slot13 = FairyLandConfig.instance:getFairlyLandPuzzleConfig(slot12)
+		for iter_4_0, iter_4_1 in ipairs(var_4_5) do
+			var_4_6 = false
 
-			if FairyLandModel.instance:isPassPuzzle(slot12) and (slot13.storyTalkId == 0 or FairyLandModel.instance:isFinishDialog(slot13.storyTalkId)) then
-				slot7 = true
+			local var_4_7 = FairyLandConfig.instance:getFairlyLandPuzzleConfig(iter_4_1)
+
+			if FairyLandModel.instance:isPassPuzzle(iter_4_1) and (var_4_7.storyTalkId == 0 or FairyLandModel.instance:isFinishDialog(var_4_7.storyTalkId)) then
+				var_4_6 = true
 			end
 
-			if not slot7 then
+			if not var_4_6 then
 				break
 			end
 		end
 
-		if slot7 then
+		if var_4_6 then
 			return FairyLandEnum.ShapeState.CanClick
 		else
 			return FairyLandEnum.ShapeState.Hide
 		end
-	elseif slot5 then
-		if slot5:getState() == FairyLandEnum.ShapeState.Hide then
+	elseif var_4_4 then
+		local var_4_8 = var_4_4:getState()
+
+		if var_4_8 == FairyLandEnum.ShapeState.Hide then
 			return FairyLandEnum.ShapeState.Hide
 		end
 
-		if slot6 == FairyLandEnum.ShapeState.CanClick then
+		if var_4_8 == FairyLandEnum.ShapeState.CanClick then
 			return FairyLandEnum.ShapeState.NextCanClick
 		end
 
-		if slot6 == FairyLandEnum.ShapeState.NextCanClick then
+		if var_4_8 == FairyLandEnum.ShapeState.NextCanClick then
 			return FairyLandEnum.ShapeState.LockClick
 		end
 
@@ -89,33 +110,35 @@ function slot0.getState(slot0)
 	return FairyLandEnum.ShapeState.CanClick
 end
 
-function slot0.onClick(slot0)
-	if slot0:getState() == FairyLandEnum.ShapeState.CanClick and not slot0._elements:isMoveing() then
+function var_0_0.onClick(arg_5_0)
+	if arg_5_0:getState() == FairyLandEnum.ShapeState.CanClick and not arg_5_0._elements:isMoveing() then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_symbol_click)
-		slot0:setFinish()
+		arg_5_0:setFinish()
 	end
 end
 
-function slot0.finish(slot0)
-	slot0:onFinish()
+function var_0_0.finish(arg_6_0)
+	arg_6_0:onFinish()
 end
 
-function slot0.onFinish(slot0)
-	if slot0.stateGoDict[FairyLandEnum.ShapeState.CanClick] then
-		slot1.rootAnim:Play("click", 0, 0)
-		TaskDispatcher.runDelay(slot0._finishCallback, slot0, 1)
+function var_0_0.onFinish(arg_7_0)
+	local var_7_0 = arg_7_0.stateGoDict[FairyLandEnum.ShapeState.CanClick]
+
+	if var_7_0 then
+		var_7_0.rootAnim:Play("click", 0, 0)
+		TaskDispatcher.runDelay(arg_7_0._finishCallback, arg_7_0, 1)
 	end
 
-	FairyLandModel.instance:setPos(slot0:getPos(), true)
-	slot0._elements:characterMove()
+	FairyLandModel.instance:setPos(arg_7_0:getPos(), true)
+	arg_7_0._elements:characterMove()
 end
 
-function slot0._finishCallback(slot0)
-	slot0:onDestroy()
+function var_0_0._finishCallback(arg_8_0)
+	arg_8_0:onDestroy()
 end
 
-function slot0.onDestroyElement(slot0)
-	TaskDispatcher.cancelTask(slot0._finishCallback, slot0)
+function var_0_0.onDestroyElement(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._finishCallback, arg_9_0)
 end
 
-return slot0
+return var_0_0

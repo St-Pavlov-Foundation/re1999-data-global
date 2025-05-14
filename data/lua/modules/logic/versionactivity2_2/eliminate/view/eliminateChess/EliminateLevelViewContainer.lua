@@ -1,37 +1,38 @@
-module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelViewContainer", package.seeall)
 
-slot0 = class("EliminateLevelViewContainer", BaseViewContainer)
+local var_0_0 = class("EliminateLevelViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._sceneView = EliminateSceneView.New()
-	slot0._teamChessView = EliminateTeamChessView.New()
-	slot0._eliminateView = EliminateView.New()
-	slot0._eliminateLevelView = EliminateLevelView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._sceneView = EliminateSceneView.New()
+	arg_1_0._teamChessView = EliminateTeamChessView.New()
+	arg_1_0._eliminateView = EliminateView.New()
+	arg_1_0._eliminateLevelView = EliminateLevelView.New()
 
 	return {
-		slot0._sceneView,
-		slot0._teamChessView,
-		slot0._eliminateView,
-		slot0._eliminateLevelView
+		arg_1_0._sceneView,
+		arg_1_0._teamChessView,
+		arg_1_0._eliminateView,
+		arg_1_0._eliminateLevelView
 	}
 end
 
-function slot0.setTeamChessViewParent(slot0, slot1, slot2)
-	slot0._eliminateLevelView:setParent(slot1, slot2)
+function var_0_0.setTeamChessViewParent(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._eliminateLevelView:setParent(arg_2_1, arg_2_2)
 end
 
-function slot0.setTeamChessTipViewParent(slot0, slot1, slot2)
-	slot0._teamChessView:setTipViewParent(slot1, slot2)
+function var_0_0.setTeamChessTipViewParent(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._teamChessView:setTipViewParent(arg_3_1, arg_3_2)
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	if slot0._sceneView ~= nil then
-		slot0._sceneView:setSceneVisible(slot1)
-		uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_4_0, arg_4_1)
+	if arg_4_0._sceneView ~= nil then
+		arg_4_0._sceneView:setSceneVisible(arg_4_1)
+		var_0_0.super.setVisibleInternal(arg_4_0, arg_4_1)
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
+function var_0_0.onContainerOpenFinish(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

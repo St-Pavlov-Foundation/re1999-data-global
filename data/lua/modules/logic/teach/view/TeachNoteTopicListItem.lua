@@ -1,46 +1,48 @@
-module("modules.logic.teach.view.TeachNoteTopicListItem", package.seeall)
+﻿module("modules.logic.teach.view.TeachNoteTopicListItem", package.seeall)
 
-slot0 = class("TeachNoteTopicListItem", LuaCompBase)
+local var_0_0 = class("TeachNoteTopicListItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.go = slot1
-	slot0.id = slot2
-	slot0.index = slot3
-	slot0._showReward = slot4
-	slot0._allFinishState = slot5
-	slot0._goSelected = gohelper.findChild(slot1, "go_selected")
-	slot0._imagebg = gohelper.findChildImage(slot1, "image_bg")
-	slot0._txtSelectCn = gohelper.findChildText(slot1, "go_selected/txt_itemcn2")
-	slot0._goSelectFinish = gohelper.findChild(slot1, "go_selected/go_finish2")
-	slot0._txtSelectEn = gohelper.findChildText(slot1, "go_selected/txt_itemen2")
-	slot0._goUnselected = gohelper.findChild(slot1, "go_unselected")
-	slot0._txtUnselectCn = gohelper.findChildText(slot1, "go_unselected/txt_itemcn1")
-	slot0._goUnselectFinish = gohelper.findChild(slot1, "go_unselected/go_finish1")
-	slot0._txtUnselectEn = gohelper.findChildText(slot1, "go_unselected/txt_itemen1")
-	slot0._goLocked = gohelper.findChild(slot1, "go_locked")
-	slot0._goReddot = gohelper.findChild(slot1, "redpoint")
-	slot0._itemClick = gohelper.getClickWithAudio(slot1)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0.go = arg_1_1
+	arg_1_0.id = arg_1_2
+	arg_1_0.index = arg_1_3
+	arg_1_0._showReward = arg_1_4
+	arg_1_0._allFinishState = arg_1_5
+	arg_1_0._goSelected = gohelper.findChild(arg_1_1, "go_selected")
+	arg_1_0._imagebg = gohelper.findChildImage(arg_1_1, "image_bg")
+	arg_1_0._txtSelectCn = gohelper.findChildText(arg_1_1, "go_selected/txt_itemcn2")
+	arg_1_0._goSelectFinish = gohelper.findChild(arg_1_1, "go_selected/go_finish2")
+	arg_1_0._txtSelectEn = gohelper.findChildText(arg_1_1, "go_selected/txt_itemen2")
+	arg_1_0._goUnselected = gohelper.findChild(arg_1_1, "go_unselected")
+	arg_1_0._txtUnselectCn = gohelper.findChildText(arg_1_1, "go_unselected/txt_itemcn1")
+	arg_1_0._goUnselectFinish = gohelper.findChild(arg_1_1, "go_unselected/go_finish1")
+	arg_1_0._txtUnselectEn = gohelper.findChildText(arg_1_1, "go_unselected/txt_itemen1")
+	arg_1_0._goLocked = gohelper.findChild(arg_1_1, "go_locked")
+	arg_1_0._goReddot = gohelper.findChild(arg_1_1, "redpoint")
+	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_1)
 
-	slot0:addEvents()
-	slot0:_refreshItem()
+	arg_1_0:addEvents()
+	arg_1_0:_refreshItem()
 end
 
-function slot0.addEvents(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
-	TeachNoteController.instance:registerCallback(TeachNoteEvent.ClickTopicItem, slot0._refreshItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+	TeachNoteController.instance:registerCallback(TeachNoteEvent.ClickTopicItem, arg_2_0._refreshItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._itemClick:RemoveClickListener()
-	TeachNoteController.instance:unregisterCallback(TeachNoteEvent.ClickTopicItem, slot0._refreshItem, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._itemClick:RemoveClickListener()
+	TeachNoteController.instance:unregisterCallback(TeachNoteEvent.ClickTopicItem, arg_3_0._refreshItem, arg_3_0)
 end
 
-function slot0._onItemClick(slot0)
-	if slot0.id == TeachNoteModel.instance:getTeachNoticeTopicId() then
+function var_0_0._onItemClick(arg_4_0)
+	local var_4_0 = TeachNoteModel.instance:getTeachNoticeTopicId()
+
+	if arg_4_0.id == var_4_0 then
 		return
 	end
 
-	if not TeachNoteModel.instance:isTopicUnlock(slot0.id) then
+	if not TeachNoteModel.instance:isTopicUnlock(arg_4_0.id) then
 		GameFacade.showToast(ToastEnum.TeachNoteTopic)
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_no_requirement)
 
@@ -48,41 +50,45 @@ function slot0._onItemClick(slot0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_activity_switch)
-	TeachNoteModel.instance:setTeachNoticeTopicId(slot0.id, 0)
-	TeachNoteController.instance:dispatchEvent(TeachNoteEvent.ClickTopicItem, slot0.id)
+	TeachNoteModel.instance:setTeachNoticeTopicId(arg_4_0.id, 0)
+	TeachNoteController.instance:dispatchEvent(TeachNoteEvent.ClickTopicItem, arg_4_0.id)
 end
 
-function slot0._refreshItem(slot0)
-	if TeachNoteModel.instance:isTopicUnlock(slot0.id) then
-		slot2 = TeachNoteModel.instance:getTeachNoticeTopicId()
+function var_0_0._refreshItem(arg_5_0)
+	if TeachNoteModel.instance:isTopicUnlock(arg_5_0.id) then
+		local var_5_0 = TeachNoteModel.instance:getTeachNoticeTopicId()
 
-		if slot0._showReward then
-			slot2 = 0
+		if arg_5_0._showReward then
+			var_5_0 = 0
 		end
 
-		UISpriteSetMgr.instance:setTeachNoteSprite(slot0._imagebg, slot2 == slot0.id and "bg_jiaoxuebiji_biaoqian_" .. slot0.index .. "_ovr" or "bg_jiaoxuebiji_biaoqian_" .. slot0.index)
-		gohelper.setActive(slot0._goSelected, slot2 == slot0.id)
-		gohelper.setActive(slot0._goUnselected, slot2 ~= slot0.id)
-		gohelper.setActive(slot0._goLocked, false)
-		gohelper.setActive(slot0._goSelectFinish, slot0._allFinishState)
-		gohelper.setActive(slot0._goUnselectFinish, slot0._allFinishState)
+		local var_5_1 = var_5_0 == arg_5_0.id and "bg_jiaoxuebiji_biaoqian_" .. arg_5_0.index .. "_ovr" or "bg_jiaoxuebiji_biaoqian_" .. arg_5_0.index
 
-		slot5 = DungeonConfig.instance:getChapterCO(TeachNoteConfig.instance:getInstructionTopicCO(slot0.id).chapterId).name
-		slot0._txtSelectCn.text = slot5
-		slot0._txtUnselectCn.text = slot5
+		UISpriteSetMgr.instance:setTeachNoteSprite(arg_5_0._imagebg, var_5_1)
+		gohelper.setActive(arg_5_0._goSelected, var_5_0 == arg_5_0.id)
+		gohelper.setActive(arg_5_0._goUnselected, var_5_0 ~= arg_5_0.id)
+		gohelper.setActive(arg_5_0._goLocked, false)
+		gohelper.setActive(arg_5_0._goSelectFinish, arg_5_0._allFinishState)
+		gohelper.setActive(arg_5_0._goUnselectFinish, arg_5_0._allFinishState)
+
+		local var_5_2 = TeachNoteConfig.instance:getInstructionTopicCO(arg_5_0.id).chapterId
+		local var_5_3 = DungeonConfig.instance:getChapterCO(var_5_2).name
+
+		arg_5_0._txtSelectCn.text = var_5_3
+		arg_5_0._txtUnselectCn.text = var_5_3
 	else
-		gohelper.setActive(slot0._goSelected, false)
-		gohelper.setActive(slot0._goUnselected, false)
-		gohelper.setActive(slot0._goLocked, true)
-		UISpriteSetMgr.instance:setTeachNoteSprite(slot0._imagebg, "bg_jiaoxuebiji_biaoqian_" .. slot0.index .. "_dis")
+		gohelper.setActive(arg_5_0._goSelected, false)
+		gohelper.setActive(arg_5_0._goUnselected, false)
+		gohelper.setActive(arg_5_0._goLocked, true)
+		UISpriteSetMgr.instance:setTeachNoteSprite(arg_5_0._imagebg, "bg_jiaoxuebiji_biaoqian_" .. arg_5_0.index .. "_dis")
 	end
 
-	gohelper.setActive(slot0._goReddot, TeachNoteModel.instance:isTopicNew(slot0.id))
+	gohelper.setActive(arg_5_0._goReddot, TeachNoteModel.instance:isTopicNew(arg_5_0.id))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:removeEvents()
-	gohelper.destroy(slot0.go)
+function var_0_0.onDestroyView(arg_6_0)
+	arg_6_0:removeEvents()
+	gohelper.destroy(arg_6_0.go)
 end
 
-return slot0
+return var_0_0

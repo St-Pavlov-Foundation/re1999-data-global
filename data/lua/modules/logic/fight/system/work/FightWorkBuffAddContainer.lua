@@ -1,80 +1,97 @@
-module("modules.logic.fight.system.work.FightWorkBuffAddContainer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkBuffAddContainer", package.seeall)
 
-slot0 = class("FightWorkBuffAddContainer", FightStepEffectFlow)
-slot1 = {
+local var_0_0 = class("FightWorkBuffAddContainer", FightStepEffectFlow)
+local var_0_1 = {
 	[FightEnum.EffectType.BUFFADD] = true
 }
-slot2 = 0.15
-slot3 = 0.05
+local var_0_2 = 0.15
+local var_0_3 = 0.05
 
-function slot0.onStart(slot0)
-	slot2 = slot0:com_registWorkDoneFlowParallel()
-	slot3 = {}
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0:getAdjacentSameEffectList(var_0_1, true)
+	local var_1_1 = arg_1_0:com_registWorkDoneFlowParallel()
+	local var_1_2 = {}
 
-	for slot7, slot8 in ipairs(slot0:getAdjacentSameEffectList(uv0, true)) do
-		if slot8.effect.buff then
-			slot11 = lua_skill_buff.configDict[slot10.buffId]
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_3 = iter_1_1.effect
+		local var_1_4 = var_1_3.buff
 
-			if slot11 and lua_skill_bufftype.configDict[slot11.typeId] then
-				if not slot3[slot9.targetId] then
-					slot3[slot9.targetId] = {}
+		if var_1_4 then
+			local var_1_5 = lua_skill_buff.configDict[var_1_4.buffId]
+			local var_1_6 = lua_skill_bufftype.configDict[var_1_5.typeId]
+
+			if var_1_5 and var_1_6 then
+				local var_1_7 = var_1_2[var_1_3.targetId]
+
+				if not var_1_7 then
+					var_1_7 = {}
+					var_1_2[var_1_3.targetId] = var_1_7
 				end
 
-				table.insert(slot13, slot8)
+				table.insert(var_1_7, iter_1_1)
 			end
 		end
 	end
 
-	slot4 = {}
+	local var_1_8 = {}
 
-	for slot8, slot9 in pairs(slot3) do
-		for slot13, slot14 in ipairs(slot9) do
-			slot15 = slot14.stepMO
-			slot16 = slot14.effect
-			slot19 = lua_skill_bufftype.configDict[lua_skill_buff.configDict[slot16.buff.buffId].typeId]
+	for iter_1_2, iter_1_3 in pairs(var_1_2) do
+		for iter_1_4, iter_1_5 in ipairs(iter_1_3) do
+			local var_1_9 = iter_1_5.stepMO
+			local var_1_10 = iter_1_5.effect
+			local var_1_11 = var_1_10.buff.buffId
+			local var_1_12 = lua_skill_buff.configDict[var_1_11]
+			local var_1_13 = lua_skill_bufftype.configDict[var_1_12.typeId]
+			local var_1_14 = var_1_8[var_1_10.targetId]
 
-			if not slot4[slot16.targetId] then
-				slot4[slot16.targetId] = slot2:registWork(FightWorkFlowSequence)
+			if not var_1_14 then
+				var_1_14 = var_1_1:registWork(FightWorkFlowSequence)
+				var_1_8[var_1_10.targetId] = var_1_14
 			end
 
-			if slot18.isNoShow == 1 then
-				slot20:registWork(FightWorkStepBuff, slot15, slot16)
-			elseif slot19.skipDelay == 1 then
-				slot20:registWork(FightWorkStepBuff, slot15, slot16)
-			elseif lua_fight_stacked_buff_combine.configDict[slot18.id] then
-				if slot9[slot13 + 1] and slot21.buff and slot21.buff.buffId == slot17 then
-					slot20:registWork(FightWorkFunction, slot0._lockEntityBuffFloat, slot0, {
+			if var_1_12.isNoShow == 1 then
+				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
+			elseif var_1_13.skipDelay == 1 then
+				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
+			elseif lua_fight_stacked_buff_combine.configDict[var_1_12.id] then
+				local var_1_15 = iter_1_3[iter_1_4 + 1]
+
+				if var_1_15 and var_1_15.buff and var_1_15.buff.buffId == var_1_11 then
+					var_1_14:registWork(FightWorkFunction, arg_1_0._lockEntityBuffFloat, arg_1_0, {
 						true,
-						entityId = slot16.targetId
+						entityId = var_1_10.targetId
 					})
 				else
-					slot20:registWork(FightWorkFunction, slot0._lockEntityBuffFloat, slot0, {
+					var_1_14:registWork(FightWorkFunction, arg_1_0._lockEntityBuffFloat, arg_1_0, {
 						false,
-						entityId = slot16.targetId
+						entityId = var_1_10.targetId
 					})
 				end
 
-				slot20:registWork(FightWorkStepBuff, slot15, slot16)
-			elseif slot18.effect ~= "0" and not string.nilorempty(slot18.effect) then
-				slot20:registWork(FightWorkStepBuff, slot15, slot16)
-				slot20:registWork(FightWorkDelayTimer, uv1 / FightModel.instance:getSpeed())
+				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
+			elseif var_1_12.effect ~= "0" and not string.nilorempty(var_1_12.effect) then
+				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
+				var_1_14:registWork(FightWorkDelayTimer, var_0_2 / FightModel.instance:getSpeed())
 			else
-				slot20:registWork(FightWorkStepBuff, slot15, slot16)
-				slot20:registWork(FightWorkDelayTimer, uv2 / FightModel.instance:getSpeed())
+				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
+				var_1_14:registWork(FightWorkDelayTimer, var_0_3 / FightModel.instance:getSpeed())
 			end
 		end
 	end
 
-	slot2:start()
+	var_1_1:start()
 end
 
-function slot0._lockEntityBuffFloat(slot0, slot1)
-	if FightHelper.getEntity(slot1.entityId) and slot2.buff then
-		slot2.buff.lockFloat = slot1.state
+function var_0_0._lockEntityBuffFloat(arg_2_0, arg_2_1)
+	local var_2_0 = FightHelper.getEntity(arg_2_1.entityId)
+
+	if var_2_0 and var_2_0.buff then
+		var_2_0.buff.lockFloat = arg_2_1.state
 	end
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

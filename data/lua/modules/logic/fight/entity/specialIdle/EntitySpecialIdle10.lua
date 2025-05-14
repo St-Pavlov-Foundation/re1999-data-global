@@ -1,17 +1,17 @@
-module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle10", package.seeall)
+﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle10", package.seeall)
 
-slot0 = class("EntitySpecialIdle10", UserDataDispose)
+local var_0_0 = class("EntitySpecialIdle10", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._entity = slot1
+	arg_1_0._entity = arg_1_1
 end
 
-function slot0.releaseSelf(slot0)
-	slot0._entity = nil
+function var_0_0.releaseSelf(arg_2_0)
+	arg_2_0._entity = nil
 
-	slot0:__onDispose()
+	arg_2_0:__onDispose()
 end
 
-return slot0
+return var_0_0

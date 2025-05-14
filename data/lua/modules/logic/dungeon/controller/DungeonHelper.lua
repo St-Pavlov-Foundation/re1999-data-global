@@ -1,56 +1,66 @@
-module("modules.logic.dungeon.controller.DungeonHelper", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.getEpisodeRecommendLevel(slot0, slot1)
-	if not DungeonConfig.instance:getEpisodeBattleId(slot0) then
+function var_0_0.getEpisodeRecommendLevel(arg_1_0, arg_1_1)
+	local var_1_0 = DungeonConfig.instance:getEpisodeBattleId(arg_1_0)
+
+	if not var_1_0 then
 		return 0
 	end
 
-	return uv0.getBattleRecommendLevel(slot2, slot1)
+	return var_0_0.getBattleRecommendLevel(var_1_0, arg_1_1)
 end
 
-function slot0.getBattleRecommendLevel(slot0, slot1)
-	slot2 = slot1 and "levelEasy" or "level"
+function var_0_0.getBattleRecommendLevel(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1 and "levelEasy" or "level"
+	local var_2_1 = lua_battle.configDict[arg_2_0]
 
-	if not lua_battle.configDict[slot0] then
+	if not var_2_1 then
 		return 0
 	end
 
-	slot4 = {}
-	slot5 = {}
-	slot6, slot7 = nil
-	slot11 = "#"
+	local var_2_2 = {}
+	local var_2_3 = {}
+	local var_2_4
+	local var_2_5
 
-	for slot11, slot12 in ipairs(string.splitToNumber(slot3.monsterGroupIds, slot11)) do
-		for slot16, slot17 in ipairs(string.splitToNumber(lua_monster_group.configDict[slot12].monster, "#")) do
-			if uv0.isBossId(lua_monster_group.configDict[slot12].bossId, slot17) then
-				table.insert(slot5, slot17)
+	for iter_2_0, iter_2_1 in ipairs(string.splitToNumber(var_2_1.monsterGroupIds, "#")) do
+		local var_2_6 = lua_monster_group.configDict[iter_2_1].bossId
+		local var_2_7 = string.splitToNumber(lua_monster_group.configDict[iter_2_1].monster, "#")
+
+		for iter_2_2, iter_2_3 in ipairs(var_2_7) do
+			if var_0_0.isBossId(var_2_6, iter_2_3) then
+				table.insert(var_2_3, iter_2_3)
 			else
-				table.insert(slot4, slot17)
+				table.insert(var_2_2, iter_2_3)
 			end
 		end
 	end
 
-	if #slot5 > 0 then
-		return lua_monster.configDict[slot5[1]][slot2]
-	elseif #slot4 > 0 then
-		for slot12, slot13 in ipairs(slot4) do
-			slot8 = 0 + lua_monster.configDict[slot13][slot2]
+	if #var_2_3 > 0 then
+		return lua_monster.configDict[var_2_3[1]][var_2_0]
+	elseif #var_2_2 > 0 then
+		local var_2_8 = 0
+
+		for iter_2_4, iter_2_5 in ipairs(var_2_2) do
+			var_2_8 = var_2_8 + lua_monster.configDict[iter_2_5][var_2_0]
 		end
 
-		return math.ceil(slot8 / #slot4)
+		return math.ceil(var_2_8 / #var_2_2)
 	else
 		return 0
 	end
 end
 
-function slot0.isBossId(slot0, slot1)
-	for slot6, slot7 in ipairs(string.splitToNumber(slot0, "#")) do
-		if slot1 == slot7 then
+function var_0_0.isBossId(arg_3_0, arg_3_1)
+	local var_3_0 = string.splitToNumber(arg_3_0, "#")
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		if arg_3_1 == iter_3_1 then
 			return true
 		end
 	end
 end
 
-return slot0
+return var_0_0

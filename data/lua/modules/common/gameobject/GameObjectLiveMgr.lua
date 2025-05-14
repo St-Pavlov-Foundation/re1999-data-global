@@ -1,8 +1,9 @@
-module("modules.common.gameobject.GameObjectLiveMgr", package.seeall)
+﻿module("modules.common.gameobject.GameObjectLiveMgr", package.seeall)
 
-slot0 = class("GameObjectLiveMgr")
-slot0.instance = slot0.New()
+local var_0_0 = class("GameObjectLiveMgr")
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+var_0_0.instance = var_0_0.New()
 
-return slot0
+LuaEventSystem.addEventMechanism(var_0_0.instance)
+
+return var_0_0

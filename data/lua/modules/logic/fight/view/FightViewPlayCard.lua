@@ -1,105 +1,110 @@
-module("modules.logic.fight.view.FightViewPlayCard", package.seeall)
+﻿module("modules.logic.fight.view.FightViewPlayCard", package.seeall)
 
-slot0 = class("FightViewPlayCard", BaseView)
-slot0.PlayCardWidth = 130
-slot0.HalfCardWidth = slot0.PlayCardWidth / 2
-slot0.VisibleCount = 9
-slot0.HalfScrollWidth = 610
-slot0.OffsetX = 1220 - slot0.PlayCardWidth * slot0.VisibleCount
-slot0.OffsetHalfX = slot0.OffsetX / 2
+local var_0_0 = class("FightViewPlayCard", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._playCardGO = gohelper.findChild(slot0.viewGO, "root/playcards")
-	slot0._playCardTr = slot0._playCardGO.transform
-	slot0._scrollViewObj = gohelper.findChild(slot0.viewGO, "root/playcards/#scroll_cards")
-	slot0._scrollView = gohelper.onceAddComponent(slot0._scrollViewObj, gohelper.Type_ScrollRect)
-	slot0._playCardItemRoot = gohelper.findChild(slot0.viewGO, "root/playcards/#scroll_cards/Viewport/Content")
-	slot0._playCardItemTransform = slot0._playCardItemRoot.transform
-	slot0._playCardItemPrefab = gohelper.findChild(slot0.viewGO, "root/playcards/#scroll_cards/Viewport/Content/cardItem")
+var_0_0.PlayCardWidth = 130
+var_0_0.HalfCardWidth = var_0_0.PlayCardWidth / 2
+var_0_0.VisibleCount = 9
+var_0_0.HalfScrollWidth = 610
+var_0_0.OffsetX = 1220 - var_0_0.PlayCardWidth * var_0_0.VisibleCount
+var_0_0.OffsetHalfX = var_0_0.OffsetX / 2
 
-	gohelper.setActive(slot0._playCardItemPrefab, false)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._playCardGO = gohelper.findChild(arg_1_0.viewGO, "root/playcards")
+	arg_1_0._playCardTr = arg_1_0._playCardGO.transform
+	arg_1_0._scrollViewObj = gohelper.findChild(arg_1_0.viewGO, "root/playcards/#scroll_cards")
+	arg_1_0._scrollView = gohelper.onceAddComponent(arg_1_0._scrollViewObj, gohelper.Type_ScrollRect)
+	arg_1_0._playCardItemRoot = gohelper.findChild(arg_1_0.viewGO, "root/playcards/#scroll_cards/Viewport/Content")
+	arg_1_0._playCardItemTransform = arg_1_0._playCardItemRoot.transform
+	arg_1_0._playCardItemPrefab = gohelper.findChild(arg_1_0.viewGO, "root/playcards/#scroll_cards/Viewport/Content/cardItem")
 
-	slot0._playCardItemList = {}
-	slot0._resetCardFlow = FlowSequence.New()
+	gohelper.setActive(arg_1_0._playCardItemPrefab, false)
 
-	slot0._resetCardFlow:addWork(FightCardResetEffect.New())
-	slot0:_clearBeginRoundOps()
+	arg_1_0._playCardItemList = {}
+	arg_1_0._resetCardFlow = FlowSequence.New()
+
+	arg_1_0._resetCardFlow:addWork(FightCardResetEffect.New())
+	arg_1_0:_clearBeginRoundOps()
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.DistributeCards, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PushCardInfo, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRevertCard, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnResetCard, slot0._onResetCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnAddActPoint, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnEffectExtraMoveAct, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRestartFightDisposeDone, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._refreshAllItemData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ShowPlayCardEffect, slot0._showPlayCardEffect, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ShowPlayCardFlyEffect, slot0._onShowPlayCardFlyEffect, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, slot0._onAddPlayOperationData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PlayOperationEffectDone, slot0._onPlayOperationEffectDone, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.onNoActCostMoveFlowOver, slot0._onNoActCostMoveFlowOver, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.CorrectPlayCardVisible, slot0._onCorrectPlayCardVisible, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleBackPack, slot0.OnBackPackClick, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RefreshPlayCardRoundOp, slot0._onRefreshPlayCardRoundOp, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, slot0._onPlayCardFlowDone, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnPlayAssistBossCardFlowDone, slot0._onPlayAssistBossCardDone, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.EnterOperateState, slot0._onEnterOperateState, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.HidePlayCardAllCard, slot0._onHidePlayCardAllCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.EnterStage, slot0._onEnterStage, slot0)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.DistributeCards, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.PushCardInfo, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnRevertCard, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_4_0._onResetCard, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnAddActPoint, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnEffectExtraMoveAct, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnRestartFightDisposeDone, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_4_0._refreshAllItemData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.ShowPlayCardEffect, arg_4_0._showPlayCardEffect, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.ShowPlayCardFlyEffect, arg_4_0._onShowPlayCardFlyEffect, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.AddPlayOperationData, arg_4_0._onAddPlayOperationData, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.PlayOperationEffectDone, arg_4_0._onPlayOperationEffectDone, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.onNoActCostMoveFlowOver, arg_4_0._onNoActCostMoveFlowOver, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.CorrectPlayCardVisible, arg_4_0._onCorrectPlayCardVisible, arg_4_0)
+	arg_4_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleBackPack, arg_4_0.OnBackPackClick, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.RefreshPlayCardRoundOp, arg_4_0._onRefreshPlayCardRoundOp, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, arg_4_0._onPlayCardFlowDone, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.OnPlayAssistBossCardFlowDone, arg_4_0._onPlayAssistBossCardDone, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.EnterOperateState, arg_4_0._onEnterOperateState, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.ExitOperateState, arg_4_0._onExitOperateState, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.HidePlayCardAllCard, arg_4_0._onHidePlayCardAllCard, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.EnterStage, arg_4_0._onEnterStage, arg_4_0)
 end
 
-function slot0._onEnterStage(slot0, slot1)
+function var_0_0._onEnterStage(arg_5_0, arg_5_1)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
 
-	if slot1 == FightStageMgr.StageType.Play then
-		gohelper.setActive(slot0._playCardGO, false)
+	if arg_5_1 == FightStageMgr.StageType.Play then
+		gohelper.setActive(arg_5_0._playCardGO, false)
 	end
 end
 
-function slot0._onEnterOperateState(slot0, slot1)
-	if slot1 == FightStageMgr.OperateStateType.SeasonChangeHero then
-		gohelper.setActive(slot0._playCardGO, false)
+function var_0_0._onEnterOperateState(arg_6_0, arg_6_1)
+	if arg_6_1 == FightStageMgr.OperateStateType.SeasonChangeHero then
+		gohelper.setActive(arg_6_0._playCardGO, false)
 	end
 end
 
-function slot0._onExitOperateState(slot0, slot1)
-	if slot1 == FightStageMgr.OperateStateType.SeasonChangeHero then
-		gohelper.setActive(slot0._playCardGO, true)
+function var_0_0._onExitOperateState(arg_7_0, arg_7_1)
+	if arg_7_1 == FightStageMgr.OperateStateType.SeasonChangeHero then
+		gohelper.setActive(arg_7_0._playCardGO, true)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._resetScrollView, slot0)
-	slot0._resetCardFlow:unregisterDoneListener(slot0._onResetEffectDone, slot0)
-	slot0._resetCardFlow:stop()
-	slot0:_clearBeginRoundOps()
-	slot0:_releaseAllFlyItems()
+function var_0_0.onClose(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._resetScrollView, arg_8_0)
+	arg_8_0._resetCardFlow:unregisterDoneListener(arg_8_0._onResetEffectDone, arg_8_0)
+	arg_8_0._resetCardFlow:stop()
+	arg_8_0:_clearBeginRoundOps()
+	arg_8_0:_releaseAllFlyItems()
 end
 
-function slot0.isVisible(slot0, slot1, slot2)
-	slot5 = false
+function var_0_0.isVisible(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = var_0_0.calcCardPosX(arg_9_0, arg_9_1) + arg_9_2
+	local var_9_1 = math.abs(var_9_0)
+	local var_9_2 = false
 
-	return math.abs(uv0.calcCardPosX(slot0, slot1) + slot2) + uv0.HalfCardWidth <= uv0.HalfScrollWidth and slot4 - uv0.HalfCardWidth <= uv0.HalfScrollWidth and true or false
+	return var_9_1 + var_0_0.HalfCardWidth <= var_0_0.HalfScrollWidth and var_9_1 - var_0_0.HalfCardWidth <= var_0_0.HalfScrollWidth and true or false
 end
 
-function slot0.OnBackPackClick(slot0)
-	if slot0._playCardItemList then
-		for slot4, slot5 in pairs(slot0._playCardItemList) do
-			if slot5 then
-				slot5:_onClickThis()
+function var_0_0.OnBackPackClick(arg_10_0)
+	if arg_10_0._playCardItemList then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0._playCardItemList) do
+			if iter_10_1 then
+				iter_10_1:_onClickThis()
 				FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
 
 				return
@@ -108,185 +113,208 @@ function slot0.OnBackPackClick(slot0)
 	end
 end
 
-function slot0.calContentPosX(slot0, slot1, slot2)
-	if slot1 <= uv0.VisibleCount then
+function var_0_0.calContentPosX(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 <= var_0_0.VisibleCount then
 		return 0
 	end
 
-	slot3 = uv0.calcCardPosX(slot0, slot1)
-	slot4 = uv0.isVisible(slot0, slot1, slot2)
+	local var_11_0 = var_0_0.calcCardPosX(arg_11_0, arg_11_1)
+	local var_11_1 = var_0_0.isVisible(arg_11_0, arg_11_1, arg_11_2)
 
-	if slot1 - slot0 <= 2 then
-		return -((slot1 - uv0.VisibleCount) * uv0.HalfCardWidth) + uv0.OffsetHalfX
-	elseif slot4 then
-		if not uv0.isVisible(slot0 + 2, slot1, slot2) then
-			return -(slot1 - uv0.VisibleCount) * uv0.HalfCardWidth + (slot1 - (slot0 + 2)) * uv0.PlayCardWidth - uv0.OffsetHalfX
+	if arg_11_1 - arg_11_0 <= 2 then
+		return -((arg_11_1 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth) + var_0_0.OffsetHalfX
+	elseif var_11_1 then
+		if not var_0_0.isVisible(arg_11_0 + 2, arg_11_1, arg_11_2) then
+			return -(arg_11_1 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth + (arg_11_1 - (arg_11_0 + 2)) * var_0_0.PlayCardWidth - var_0_0.OffsetHalfX
 		else
-			return slot2
+			return arg_11_2
 		end
-	elseif slot3 < 0 then
-		return (slot1 - uv0.VisibleCount) * uv0.HalfCardWidth - (slot0 - 1) * uv0.PlayCardWidth - uv0.OffsetHalfX
+	elseif var_11_0 < 0 then
+		return (arg_11_1 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth - (arg_11_0 - 1) * var_0_0.PlayCardWidth - var_0_0.OffsetHalfX
 	else
-		return -(slot1 - uv0.VisibleCount) * uv0.HalfCardWidth + (slot1 - (slot0 + 2)) * uv0.PlayCardWidth - uv0.OffsetHalfX
+		return -(arg_11_1 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth + (arg_11_1 - (arg_11_0 + 2)) * var_0_0.PlayCardWidth - var_0_0.OffsetHalfX
 	end
 
 	return 0
 end
 
-function slot0._resetScrollView(slot0)
-	slot0._scrollView.enabled = true
+function var_0_0._resetScrollView(arg_12_0)
+	arg_12_0._scrollView.enabled = true
 end
 
-function slot0._onAddPlayOperationData(slot0, slot1)
-	if not slot1 then
+function var_0_0._onAddPlayOperationData(arg_13_0, arg_13_1)
+	if not arg_13_1 then
 		return
 	end
 
-	slot0:recordPlayData(slot1)
+	arg_13_0:recordPlayData(arg_13_1)
 
-	slot0._scrollView.enabled = false
+	arg_13_0._scrollView.enabled = false
 
-	TaskDispatcher.cancelTask(slot0._resetScrollView, slot0)
-	TaskDispatcher.runDelay(slot0._resetScrollView, slot0, 1)
+	TaskDispatcher.cancelTask(arg_13_0._resetScrollView, arg_13_0)
+	TaskDispatcher.runDelay(arg_13_0._resetScrollView, arg_13_0, 1)
 
-	if uv0.VisibleCount < uv0.getMaxItemCount() then
-		if FightCardDataHelper.isNoCostSpecialCard(slot1.cardInfoMO) then
+	local var_13_0 = var_0_0.getMaxItemCount()
+
+	if var_13_0 > var_0_0.VisibleCount then
+		if FightCardDataHelper.isNoCostSpecialCard(arg_13_1.cardInfoMO) then
 			return
 		end
 
-		if not slot0._playCardItemList[slot0:getShowIndex(slot1)] then
+		local var_13_1 = arg_13_0:getShowIndex(arg_13_1)
+		local var_13_2 = arg_13_0._playCardItemList[var_13_1]
+
+		if not var_13_2 then
 			return
 		end
 
-		if gohelper.fitScrollItemOffset(slot0._scrollViewObj, slot0._playCardItemRoot, slot4.go, ScrollEnum.ScrollDirH) > 0 then
-			recthelper.setAnchorX(slot0._playCardItemTransform, (slot2 - uv0.VisibleCount) * uv0.HalfCardWidth - (slot3 - 1) * uv0.PlayCardWidth - uv0.OffsetHalfX)
-		elseif slot2 - slot3 <= 2 then
-			recthelper.setAnchorX(slot0._playCardItemTransform, -((slot2 - uv0.VisibleCount) * uv0.HalfCardWidth) + uv0.OffsetHalfX)
+		if gohelper.fitScrollItemOffset(arg_13_0._scrollViewObj, arg_13_0._playCardItemRoot, var_13_2.go, ScrollEnum.ScrollDirH) > 0 then
+			local var_13_3 = (var_13_0 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth - (var_13_1 - 1) * var_0_0.PlayCardWidth - var_0_0.OffsetHalfX
+
+			recthelper.setAnchorX(arg_13_0._playCardItemTransform, var_13_3)
+		elseif var_13_0 - var_13_1 <= 2 then
+			local var_13_4 = -((var_13_0 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth) + var_0_0.OffsetHalfX
+
+			recthelper.setAnchorX(arg_13_0._playCardItemTransform, var_13_4)
 		else
-			if not slot0._playCardItemList[slot3 + 2] then
+			local var_13_5 = var_13_1 + 2
+			local var_13_6 = arg_13_0._playCardItemList[var_13_5]
+
+			if not var_13_6 then
 				return
 			end
 
-			if gohelper.fitScrollItemOffset(slot0._scrollViewObj, slot0._playCardItemRoot, slot7.go, ScrollEnum.ScrollDirH) ~= 0 then
-				recthelper.setAnchorX(slot0._playCardItemTransform, -(slot2 - uv0.VisibleCount) * uv0.HalfCardWidth + (slot2 - slot6) * uv0.PlayCardWidth - uv0.OffsetHalfX)
+			if gohelper.fitScrollItemOffset(arg_13_0._scrollViewObj, arg_13_0._playCardItemRoot, var_13_6.go, ScrollEnum.ScrollDirH) ~= 0 then
+				local var_13_7 = -(var_13_0 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth + (var_13_0 - var_13_5) * var_0_0.PlayCardWidth - var_0_0.OffsetHalfX
+
+				recthelper.setAnchorX(arg_13_0._playCardItemTransform, var_13_7)
 			end
 		end
 	else
-		slot0:_onCorrectPlayCardVisible(slot2)
+		arg_13_0:_onCorrectPlayCardVisible(var_13_0)
 	end
 end
 
-function slot0.getMaxItemCount()
-	slot2 = FightCardModel.instance:getCardMO().actPoint
-	slot3 = 0
+function var_0_0.getMaxItemCount()
+	local var_14_0 = FightCardModel.instance:getCardMO().actPoint
+	local var_14_1 = FightCardModel.instance:getCardMO().extraMoveAct
+	local var_14_2 = var_14_0
+	local var_14_3 = 0
 
-	if FightCardModel.instance:getCardMO().extraMoveAct > 0 then
-		slot2 = slot1 + slot0
+	if var_14_1 > 0 then
+		var_14_2 = var_14_1 + var_14_0
 	end
 
-	for slot8, slot9 in ipairs(FightCardModel.instance:getShowOpActList()) do
-		if slot9:isPlayCard() and slot9.costActPoint == 0 then
-			slot2 = slot2 + 1
-			slot3 = slot3 + 1
+	local var_14_4 = FightCardModel.instance:getShowOpActList()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_4) do
+		if iter_14_1:isPlayCard() and iter_14_1.costActPoint == 0 then
+			var_14_2 = var_14_2 + 1
+			var_14_3 = var_14_3 + 1
 		end
 
-		if slot9:isPlayCard() and slot9:needCopyCard() then
-			slot2 = slot2 + 1
-			slot3 = slot3 + 1
+		if iter_14_1:isPlayCard() and iter_14_1:needCopyCard() then
+			var_14_2 = var_14_2 + 1
+			var_14_3 = var_14_3 + 1
 		end
 
-		if slot9:isAssistBossPlayCard() then
-			slot2 = slot2 + 1
-			slot3 = slot3 + 1
+		if iter_14_1:isAssistBossPlayCard() then
+			var_14_2 = var_14_2 + 1
+			var_14_3 = var_14_3 + 1
 		end
 
-		if slot9:isPlayerFinisherSkill() then
-			slot2 = slot2 + 1
-			slot3 = slot3 + 1
+		if iter_14_1:isPlayerFinisherSkill() then
+			var_14_2 = var_14_2 + 1
+			var_14_3 = var_14_3 + 1
 		end
 	end
 
-	return slot2, slot3
+	return var_14_2, var_14_3
 end
 
-function slot0._refreshAllItemData(slot0)
+function var_0_0._refreshAllItemData(arg_15_0)
 	if not FightCardModel.instance:getCardMO() then
 		return
 	end
 
-	slot0:_clearAllItemData()
+	arg_15_0:_clearAllItemData()
 
-	slot2 = slot0:_onCorrectPlayCardObjList()
+	local var_15_0 = arg_15_0:_onCorrectPlayCardObjList()
+	local var_15_1 = FightCardModel.instance:getShowOpActList()
 
-	for slot7, slot8 in ipairs(FightCardModel.instance:getShowOpActList()) do
-		slot0:recordPlayData(slot8)
-		slot0:_refreshPlayOperationData(slot8)
+	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
+		arg_15_0:recordPlayData(iter_15_1)
+		arg_15_0:_refreshPlayOperationData(iter_15_1)
 	end
 
-	slot0:_onCorrectPlayCardVisible(slot2)
-	slot0:_refreshSeasonArrowShow()
+	arg_15_0:_onCorrectPlayCardVisible(var_15_0)
+	arg_15_0:_refreshSeasonArrowShow()
 end
 
-function slot0._onCorrectPlayCardVisible(slot0, slot1)
-	if (slot1 or uv0.getMaxItemCount()) <= uv0.VisibleCount then
-		recthelper.setAnchorX(slot0._playCardItemTransform, 0)
+function var_0_0._onCorrectPlayCardVisible(arg_16_0, arg_16_1)
+	arg_16_1 = arg_16_1 or var_0_0.getMaxItemCount()
+
+	if arg_16_1 <= var_0_0.VisibleCount then
+		recthelper.setAnchorX(arg_16_0._playCardItemTransform, 0)
 	else
-		recthelper.setAnchorX(slot0._playCardItemTransform, (slot1 - uv0.VisibleCount) * uv0.HalfCardWidth - uv0.OffsetHalfX)
+		recthelper.setAnchorX(arg_16_0._playCardItemTransform, (arg_16_1 - var_0_0.VisibleCount) * var_0_0.HalfCardWidth - var_0_0.OffsetHalfX)
 	end
 end
 
-function slot0.recordPlayData(slot0, slot1)
-	if not slot1 then
+function var_0_0.recordPlayData(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	if not FightCardModel.instance:canShowOpAct(slot1) then
+	if not FightCardModel.instance:canShowOpAct(arg_17_1) then
 		return
 	end
 
-	if slot1:isPlayCard() or slot1:isAssistBossPlayCard() or slot1:isPlayerFinisherSkill() then
-		table.insert(slot0._begin_round_ops, slot1)
-	elseif slot1:isMoveCard() then
-		if FightCardModel.instance:getCardMO().extraMoveAct > 0 and slot2 > #slot0._extra_move_round_ops then
-			table.insert(slot0._extra_move_round_ops, slot1)
+	if arg_17_1:isPlayCard() or arg_17_1:isAssistBossPlayCard() or arg_17_1:isPlayerFinisherSkill() then
+		table.insert(arg_17_0._begin_round_ops, arg_17_1)
+	elseif arg_17_1:isMoveCard() then
+		local var_17_0 = FightCardModel.instance:getCardMO().extraMoveAct
+
+		if var_17_0 > 0 and var_17_0 > #arg_17_0._extra_move_round_ops then
+			table.insert(arg_17_0._extra_move_round_ops, arg_17_1)
 		else
-			table.insert(slot0._begin_round_ops, slot1)
+			table.insert(arg_17_0._begin_round_ops, arg_17_1)
 		end
 	end
 
-	table.insert(slot0._all_recorded_ops, slot1)
+	table.insert(arg_17_0._all_recorded_ops, arg_17_1)
 end
 
-function slot0._onPlayOperationEffectDone(slot0, slot1, slot2)
-	slot0:_refreshPlayOperationData(slot1, slot2)
-	slot0:_refreshSeasonArrowShow()
+function var_0_0._onPlayOperationEffectDone(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0:_refreshPlayOperationData(arg_18_1, arg_18_2)
+	arg_18_0:_refreshSeasonArrowShow()
 
-	if #slot0._all_recorded_ops == 0 then
-		FightController.instance:dispatchEvent(FightEvent.DetectCardOpEndAfterOperationEffectDone, slot1)
+	if #arg_18_0._all_recorded_ops == 0 then
+		FightController.instance:dispatchEvent(FightEvent.DetectCardOpEndAfterOperationEffectDone, arg_18_1)
 	end
 end
 
-function slot0._onPlayCardFlowDone(slot0, slot1)
-	tabletool.removeValue(slot0._all_recorded_ops, slot1)
+function var_0_0._onPlayCardFlowDone(arg_19_0, arg_19_1)
+	tabletool.removeValue(arg_19_0._all_recorded_ops, arg_19_1)
 
-	if #slot0._all_recorded_ops == 0 then
+	if #arg_19_0._all_recorded_ops == 0 then
 		FightController.instance:dispatchEvent(FightEvent.DetectCardOpEndAfterOperationEffectDone)
 	end
 end
 
-function slot0._onPlayAssistBossCardDone(slot0, slot1)
-	tabletool.removeValue(slot0._all_recorded_ops, slot1)
+function var_0_0._onPlayAssistBossCardDone(arg_20_0, arg_20_1)
+	tabletool.removeValue(arg_20_0._all_recorded_ops, arg_20_1)
 
-	if #slot0._all_recorded_ops == 0 then
+	if #arg_20_0._all_recorded_ops == 0 then
 		FightController.instance:dispatchEvent(FightEvent.DetectCardOpEndAfterOperationEffectDone)
 	end
 end
 
-function slot0._onRefreshPlayCardRoundOp(slot0, slot1)
-	slot0:_onPlayOperationEffectDone(slot1, true)
+function var_0_0._onRefreshPlayCardRoundOp(arg_21_0, arg_21_1)
+	arg_21_0:_onPlayOperationEffectDone(arg_21_1, true)
 end
 
-function slot0._refreshSeasonArrowShow(slot0)
+function var_0_0._refreshSeasonArrowShow(arg_22_0)
 	if not FightModel.instance:isSeason2() then
 		return
 	end
@@ -295,167 +323,207 @@ function slot0._refreshSeasonArrowShow(slot0)
 		return
 	end
 
-	slot1, slot2 = uv0.getMaxItemCount()
+	local var_22_0, var_22_1 = var_0_0.getMaxItemCount()
+	local var_22_2 = false
 
-	for slot7 = 1, slot1 do
-		if slot0._playCardItemList[slot7] and not slot8.fightBeginRoundOp then
-			if not false then
-				slot8:refreshSeasonArrowShow(true)
+	for iter_22_0 = 1, var_22_0 do
+		local var_22_3 = arg_22_0._playCardItemList[iter_22_0]
 
-				slot3 = true
+		if var_22_3 and not var_22_3.fightBeginRoundOp then
+			if not var_22_2 then
+				var_22_3:refreshSeasonArrowShow(true)
+
+				var_22_2 = true
 			else
-				slot8:refreshSeasonArrowShow(false)
+				var_22_3:refreshSeasonArrowShow(false)
 			end
 		end
 	end
 end
 
-function slot0._refreshPlayOperationData(slot0, slot1, slot2)
-	if slot0:getShowIndex(slot1) then
-		slot0:_refreshItemData(slot3, slot1)
+function var_0_0._refreshPlayOperationData(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = arg_23_0:getShowIndex(arg_23_1)
 
-		if not slot2 then
-			tabletool.removeValue(slot0._all_recorded_ops, slot1)
+	if var_23_0 then
+		arg_23_0:_refreshItemData(var_23_0, arg_23_1)
+
+		if not arg_23_2 then
+			tabletool.removeValue(arg_23_0._all_recorded_ops, arg_23_1)
 		end
 	end
 end
 
-function slot0.getShowIndex(slot0, slot1)
-	if tabletool.indexOf(slot0._begin_round_ops, slot1) then
-		for slot6 = 1, slot2 - 1 do
-			if slot0._begin_round_ops[slot6]:needCopyCard() then
-				slot2 = slot2 + 1
+function var_0_0.getShowIndex(arg_24_0, arg_24_1)
+	local var_24_0 = tabletool.indexOf(arg_24_0._begin_round_ops, arg_24_1)
+
+	if var_24_0 then
+		for iter_24_0 = 1, var_24_0 - 1 do
+			if arg_24_0._begin_round_ops[iter_24_0]:needCopyCard() then
+				var_24_0 = var_24_0 + 1
 			end
 		end
 	end
 
-	if not slot2 and tabletool.indexOf(slot0._extra_move_round_ops, slot1) then
-		slot2 = uv0.getMaxItemCount() - FightCardModel.instance:getCardMO().extraMoveAct + slot3
+	if not var_24_0 then
+		local var_24_1 = tabletool.indexOf(arg_24_0._extra_move_round_ops, arg_24_1)
+
+		if var_24_1 then
+			var_24_0 = var_0_0.getMaxItemCount() - FightCardModel.instance:getCardMO().extraMoveAct + var_24_1
+		end
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0._refreshItemData(slot0, slot1, slot2)
-	if not slot0._playCardItemList[slot1] then
-		slot0:_onCorrectPlayCardObjList()
+function var_0_0._refreshItemData(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0 = arg_25_0._playCardItemList[arg_25_1]
 
-		slot3 = slot0._playCardItemList[slot1]
+	if not var_25_0 then
+		arg_25_0:_onCorrectPlayCardObjList()
+
+		var_25_0 = arg_25_0._playCardItemList[arg_25_1]
 	end
 
-	if not slot3 then
-		logError(string.format("刷新出牌区出错,想要刷新下标:%d,但是当前总可用牌区点数为:%d", slot1, uv0.getMaxItemCount()))
-		slot0:_refreshAllItemData()
+	if not var_25_0 then
+		local var_25_1 = string.format("刷新出牌区出错,想要刷新下标:%d,但是当前总可用牌区点数为:%d", arg_25_1, var_0_0.getMaxItemCount())
+
+		logError(var_25_1)
+		arg_25_0:_refreshAllItemData()
 
 		return
 	end
 
-	gohelper.setActive(slot3.go, true)
-	slot3:updateItem(slot2)
-	slot0:_refreshItemAni(slot1, slot2)
+	gohelper.setActive(var_25_0.go, true)
+	var_25_0:updateItem(arg_25_2)
+	arg_25_0:_refreshItemAni(arg_25_1, arg_25_2)
 
-	if slot2 and slot2:needCopyCard() then
-		slot0:_onCorrectPlayCardObjList()
+	if arg_25_2 and arg_25_2:needCopyCard() then
+		arg_25_0:_onCorrectPlayCardObjList()
 
-		slot3 = slot0._playCardItemList[slot1 + 1]
+		local var_25_2 = arg_25_0._playCardItemList[arg_25_1 + 1]
 
-		gohelper.setActive(slot3.go, true)
-		slot3:updateItem(slot2)
-		slot3:setCopyCard()
-		slot0:_refreshItemAni(slot1 + 1, slot2)
+		gohelper.setActive(var_25_2.go, true)
+		var_25_2:updateItem(arg_25_2)
+		var_25_2:setCopyCard()
+		arg_25_0:_refreshItemAni(arg_25_1 + 1, arg_25_2)
 	end
 end
 
-function slot0._refreshItemAni(slot0, slot1, slot2)
-	slot4, slot5 = uv0.getMaxItemCount()
+function var_0_0._refreshItemAni(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_0._playCardItemList[arg_26_1]
+	local var_26_1, var_26_2 = var_0_0.getMaxItemCount()
 
-	if slot1 > slot4 - FightCardModel.instance:getCardMO().extraMoveAct then
-		if slot2 then
-			slot0._playCardItemList[slot1]:showExtMoveEndEffect()
+	if arg_26_1 > var_26_1 - FightCardModel.instance:getCardMO().extraMoveAct then
+		if arg_26_2 then
+			var_26_0:showExtMoveEndEffect()
 		else
-			slot3:showExtMoveEffect()
+			var_26_0:showExtMoveEffect()
 		end
 	else
-		slot3:hideExtMoveEffect()
+		var_26_0:hideExtMoveEffect()
 	end
 end
 
-function slot0._onCorrectPlayCardObjList(slot0)
-	slot1, slot2 = uv0.getMaxItemCount()
+function var_0_0._onCorrectPlayCardObjList(arg_27_0)
+	local var_27_0, var_27_1 = var_0_0.getMaxItemCount()
 
-	for slot6 = 1, slot1 do
-		slot7 = slot0._playCardItemList[slot6] or slot0:_createNewPlayItemObj(slot6)
+	for iter_27_0 = 1, var_27_0 do
+		local var_27_2 = arg_27_0._playCardItemList[iter_27_0] or arg_27_0:_createNewPlayItemObj(iter_27_0)
 
-		gohelper.setActive(slot7.go, true)
+		gohelper.setActive(var_27_2.go, true)
 
-		slot8, slot9 = uv0.calcCardPosX(slot6, slot1)
+		local var_27_3, var_27_4 = var_0_0.calcCardPosX(iter_27_0, var_27_0)
 
-		recthelper.setAnchor(slot7.tr, slot8, slot9)
+		recthelper.setAnchor(var_27_2.tr, var_27_3, var_27_4)
 	end
 
-	for slot6 = slot1 + 1, #slot0._playCardItemList do
-		slot7 = slot0._playCardItemList[slot6]
+	for iter_27_1 = var_27_0 + 1, #arg_27_0._playCardItemList do
+		local var_27_5 = arg_27_0._playCardItemList[iter_27_1]
 
-		slot7:updateItem(nil)
-		gohelper.setActive(slot7.go, false)
+		var_27_5:updateItem(nil)
+		gohelper.setActive(var_27_5.go, false)
 	end
 
-	slot0._curShowItemCount = slot1
+	arg_27_0._curShowItemCount = var_27_0
 
-	recthelper.setWidth(slot0._playCardItemTransform, slot1 * uv0.PlayCardWidth)
+	recthelper.setWidth(arg_27_0._playCardItemTransform, var_27_0 * var_0_0.PlayCardWidth)
 
-	return slot1
+	return var_27_0
 end
 
-function slot0._createNewPlayItemObj(slot0, slot1)
-	slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._playCardItemPrefab, slot0._playCardItemRoot, "cardItem" .. slot1), FightViewPlayCardItem)
-	slot3.PARENTVIEW = slot0
+function var_0_0._createNewPlayItemObj(arg_28_0, arg_28_1)
+	local var_28_0 = gohelper.clone(arg_28_0._playCardItemPrefab, arg_28_0._playCardItemRoot, "cardItem" .. arg_28_1)
+	local var_28_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_28_0, FightViewPlayCardItem)
 
-	table.insert(slot0._playCardItemList, slot1, slot3)
-	slot0:_refreshItemData(slot1, nil)
+	var_28_1.PARENTVIEW = arg_28_0
 
-	return slot3
+	table.insert(arg_28_0._playCardItemList, arg_28_1, var_28_1)
+	arg_28_0:_refreshItemData(arg_28_1, nil)
+
+	return var_28_1
 end
 
-function slot0._onHidePlayCardAllCard(slot0)
-	slot0:_hideAllCard()
+function var_0_0._onHidePlayCardAllCard(arg_29_0)
+	arg_29_0:_hideAllCard()
 end
 
-function slot0._hideAllCard(slot0)
-	for slot4, slot5 in ipairs(slot0._playCardItemList) do
-		gohelper.setActive(slot5._innerGO, false)
+function var_0_0._hideAllCard(arg_30_0)
+	for iter_30_0, iter_30_1 in ipairs(arg_30_0._playCardItemList) do
+		gohelper.setActive(iter_30_1._innerGO, false)
 	end
 end
 
-function slot0.refreshRankUpDown(slot0)
-	slot1 = {}
+function var_0_0.refreshRankUpDown(arg_31_0)
+	local var_31_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._playCardItemList) do
-		if slot0._playCardItemList[slot5].fightBeginRoundOp and slot8:isPlayCard() and lua_skill.configDict[slot8.skillId] then
-			for slot13 = 1, FightEnum.MaxBehavior do
-				if slot9["behavior" .. slot13] and FightStrUtil.instance:getSplitCache(slot14, "#")[1] == "60075" then
-					slot17 = slot15[3] ~= "0"
+	for iter_31_0, iter_31_1 in ipairs(arg_31_0._playCardItemList) do
+		local var_31_1 = arg_31_0._playCardItemList[iter_31_0].fightBeginRoundOp
 
-					if slot15[2] ~= "0" then
-						for slot21 = slot5 - 1, 1, -1 do
-							if slot0._playCardItemList[slot21].fightBeginRoundOp and slot23:isPlayCard() then
-								slot1[slot21] = slot1[slot21] or {}
+		if var_31_1 and var_31_1:isPlayCard() then
+			local var_31_2 = lua_skill.configDict[var_31_1.skillId]
 
-								table.insert(slot1[slot21], tonumber(slot15[2]) > 0 and "Up" or "Down")
+			if var_31_2 then
+				for iter_31_2 = 1, FightEnum.MaxBehavior do
+					local var_31_3 = var_31_2["behavior" .. iter_31_2]
 
-								break
+					if var_31_3 then
+						local var_31_4 = FightStrUtil.instance:getSplitCache(var_31_3, "#")
+
+						if var_31_4[1] == "60075" then
+							local var_31_5 = var_31_4[2] ~= "0"
+							local var_31_6 = var_31_4[3] ~= "0"
+
+							if var_31_5 then
+								for iter_31_3 = iter_31_0 - 1, 1, -1 do
+									local var_31_7 = arg_31_0._playCardItemList[iter_31_3].fightBeginRoundOp
+
+									if var_31_7 and var_31_7:isPlayCard() then
+										var_31_0[iter_31_3] = var_31_0[iter_31_3] or {}
+
+										local var_31_8 = tonumber(var_31_4[2])
+
+										table.insert(var_31_0[iter_31_3], var_31_8 > 0 and "Up" or "Down")
+
+										break
+									end
+								end
 							end
-						end
-					end
 
-					if slot17 then
-						for slot21 = slot5 + 1, #slot0._playCardItemList do
-							if slot0._playCardItemList[slot21] and slot22.fightBeginRoundOp and slot23:isPlayCard() then
-								slot1[slot21] = slot1[slot21] or {}
+							if var_31_6 then
+								for iter_31_4 = iter_31_0 + 1, #arg_31_0._playCardItemList do
+									local var_31_9 = arg_31_0._playCardItemList[iter_31_4]
+									local var_31_10 = var_31_9 and var_31_9.fightBeginRoundOp
 
-								table.insert(slot1[slot21], tonumber(slot15[3]) > 0 and "Up" or "Down")
+									if var_31_10 and var_31_10:isPlayCard() then
+										var_31_0[iter_31_4] = var_31_0[iter_31_4] or {}
 
-								break
+										local var_31_11 = tonumber(var_31_4[3])
+
+										table.insert(var_31_0[iter_31_4], var_31_11 > 0 and "Up" or "Down")
+
+										break
+									end
+								end
 							end
 						end
 					end
@@ -464,72 +532,82 @@ function slot0.refreshRankUpDown(slot0)
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0._playCardItemList) do
-		slot7 = slot1[slot5]
+	for iter_31_5, iter_31_6 in ipairs(arg_31_0._playCardItemList) do
+		local var_31_12 = var_31_0[iter_31_5]
 
-		gohelper.setActive(slot6.rankChangeRoot, slot7)
+		gohelper.setActive(iter_31_6.rankChangeRoot, var_31_12)
 
-		if slot7 then
-			for slot14 = 0, slot6.rankChangeRoot.transform.childCount - 1 do
-				slot15 = slot9:GetChild(slot14).gameObject
+		if var_31_12 then
+			local var_31_13 = "#go_" .. table.concat(var_31_12)
+			local var_31_14 = iter_31_6.rankChangeRoot.transform
+			local var_31_15 = var_31_14.childCount
 
-				gohelper.setActive(slot15, slot15.name == "#go_" .. table.concat(slot7))
+			for iter_31_7 = 0, var_31_15 - 1 do
+				local var_31_16 = var_31_14:GetChild(iter_31_7).gameObject
+
+				gohelper.setActive(var_31_16, var_31_16.name == var_31_13)
 			end
 		end
 	end
 end
 
-function slot0._clearAllItemData(slot0)
-	for slot4 = 1, #slot0._playCardItemList do
-		slot0._playCardItemList[slot4]:updateItem(nil)
-		slot0:_refreshItemAni(slot4, nil)
+function var_0_0._clearAllItemData(arg_32_0)
+	for iter_32_0 = 1, #arg_32_0._playCardItemList do
+		arg_32_0._playCardItemList[iter_32_0]:updateItem(nil)
+		arg_32_0:_refreshItemAni(iter_32_0, nil)
 	end
 
-	slot0:_clearBeginRoundOps()
+	arg_32_0:_clearBeginRoundOps()
 end
 
-function slot0._createAndInsertItem(slot0, slot1)
-	slot2, slot3 = uv0.getMaxItemCount()
+function var_0_0._createAndInsertItem(arg_33_0, arg_33_1)
+	local var_33_0, var_33_1 = var_0_0.getMaxItemCount()
 
-	if slot2 > #slot0._playCardItemList then
-		slot0:_createNewPlayItemObj(slot1)
+	if var_33_0 > #arg_33_0._playCardItemList then
+		arg_33_0:_createNewPlayItemObj(arg_33_1)
 	else
-		table.insert(slot0._playCardItemList, slot1, table.remove(slot0._playCardItemList, #slot0._playCardItemList))
+		local var_33_2 = #arg_33_0._playCardItemList
+		local var_33_3 = table.remove(arg_33_0._playCardItemList, var_33_2)
+
+		table.insert(arg_33_0._playCardItemList, arg_33_1, var_33_3)
 	end
 
-	for slot7, slot8 in ipairs(slot0._playCardItemList) do
-		slot8.go.name = "cardItem" .. slot7
-	end
-end
-
-function slot0._onNoActCostMoveFlowOver(slot0)
-	slot2 = #slot0._begin_round_ops + 1
-
-	slot0:_createAndInsertItem(slot2)
-	slot0:_onCorrectPlayCardObjList()
-	slot0:_refreshItemData(slot2, nil)
-
-	if uv0.calContentPosX(slot2 - 1, uv0.getMaxItemCount(), recthelper.getAnchorX(slot0._playCardItemTransform)) then
-		recthelper.setAnchorX(slot0._playCardItemTransform, slot3)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_0._playCardItemList) do
+		iter_33_1.go.name = "cardItem" .. iter_33_0
 	end
 end
 
-function slot0._onShowPlayCardFlyEffect(slot0, slot1, slot2, slot3)
-	if not slot0._fly_items then
-		slot0._fly_items = {}
+function var_0_0._onNoActCostMoveFlowOver(arg_34_0)
+	local var_34_0 = var_0_0.getMaxItemCount()
+	local var_34_1 = #arg_34_0._begin_round_ops + 1
+
+	arg_34_0:_createAndInsertItem(var_34_1)
+	arg_34_0:_onCorrectPlayCardObjList()
+	arg_34_0:_refreshItemData(var_34_1, nil)
+
+	local var_34_2 = var_0_0.calContentPosX(var_34_1 - 1, var_34_0, recthelper.getAnchorX(arg_34_0._playCardItemTransform))
+
+	if var_34_2 then
+		recthelper.setAnchorX(arg_34_0._playCardItemTransform, var_34_2)
 	end
-
-	slot4 = FightCardPlayFlyEffect.New(slot0, slot1, slot2, slot3)
-
-	slot4:_startFly()
-	table.insert(slot0._fly_items, slot4)
 end
 
-function slot0.onFlyDone(slot0, slot1)
-	if slot0._fly_items then
-		for slot5, slot6 in ipairs(slot0._fly_items) do
-			if slot6 == slot1 then
-				table.remove(slot0._fly_items, slot5)
+function var_0_0._onShowPlayCardFlyEffect(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	if not arg_35_0._fly_items then
+		arg_35_0._fly_items = {}
+	end
+
+	local var_35_0 = FightCardPlayFlyEffect.New(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+
+	var_35_0:_startFly()
+	table.insert(arg_35_0._fly_items, var_35_0)
+end
+
+function var_0_0.onFlyDone(arg_36_0, arg_36_1)
+	if arg_36_0._fly_items then
+		for iter_36_0, iter_36_1 in ipairs(arg_36_0._fly_items) do
+			if iter_36_1 == arg_36_1 then
+				table.remove(arg_36_0._fly_items, iter_36_0)
 
 				break
 			end
@@ -537,58 +615,61 @@ function slot0.onFlyDone(slot0, slot1)
 	end
 end
 
-function slot0._releaseAllFlyItems(slot0)
-	if slot0._fly_items then
-		for slot4, slot5 in ipairs(slot0._fly_items) do
-			slot5:releaseSelf()
+function var_0_0._releaseAllFlyItems(arg_37_0)
+	if arg_37_0._fly_items then
+		for iter_37_0, iter_37_1 in ipairs(arg_37_0._fly_items) do
+			iter_37_1:releaseSelf()
 		end
 	end
 
-	slot0._fly_items = nil
+	arg_37_0._fly_items = nil
 end
 
-function slot0._showPlayCardEffect(slot0, slot1, slot2, slot3)
-	if slot0._playCardItemList[slot2] and slot1 then
-		slot4:showPlayCardEffect(slot1, slot3)
+function var_0_0._showPlayCardEffect(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	local var_38_0 = arg_38_0._playCardItemList[arg_38_2]
+
+	if var_38_0 and arg_38_1 then
+		var_38_0:showPlayCardEffect(arg_38_1, arg_38_3)
 	end
 end
 
-function slot0._clearBeginRoundOps(slot0)
-	slot0._begin_round_ops = {}
-	slot0._extra_move_round_ops = {}
-	slot0._all_recorded_ops = {}
+function var_0_0._clearBeginRoundOps(arg_39_0)
+	arg_39_0._begin_round_ops = {}
+	arg_39_0._extra_move_round_ops = {}
+	arg_39_0._all_recorded_ops = {}
 end
 
-function slot0._onResetCard(slot0, slot1)
-	slot0:_releaseAllFlyItems()
+function var_0_0._onResetCard(arg_40_0, arg_40_1)
+	arg_40_0:_releaseAllFlyItems()
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, true)
 
-	slot2 = slot0:getUserDataTb_()
-	slot2.view = slot0
-	slot2.viewGO = slot0.viewGO
-	slot2.playCardItemList = slot0._playCardItemList
-	slot2.oldCardOps = slot1
+	local var_40_0 = arg_40_0:getUserDataTb_()
 
-	slot0:_hideRankChangeEffect()
-	slot0._resetCardFlow:registerDoneListener(slot0._onResetEffectDone, slot0)
-	slot0._resetCardFlow:start(slot2)
+	var_40_0.view = arg_40_0
+	var_40_0.viewGO = arg_40_0.viewGO
+	var_40_0.playCardItemList = arg_40_0._playCardItemList
+	var_40_0.oldCardOps = arg_40_1
+
+	arg_40_0:_hideRankChangeEffect()
+	arg_40_0._resetCardFlow:registerDoneListener(arg_40_0._onResetEffectDone, arg_40_0)
+	arg_40_0._resetCardFlow:start(var_40_0)
 end
 
-function slot0._hideRankChangeEffect(slot0)
-	for slot4, slot5 in ipairs(slot0._playCardItemList) do
-		gohelper.setActive(slot5.rankChangeRoot, false)
+function var_0_0._hideRankChangeEffect(arg_41_0)
+	for iter_41_0, iter_41_1 in ipairs(arg_41_0._playCardItemList) do
+		gohelper.setActive(iter_41_1.rankChangeRoot, false)
 	end
 end
 
-function slot0._onResetEffectDone(slot0)
-	slot0:_onCorrectPlayCardObjList()
-	slot0:_clearAllItemData()
-	slot0._resetCardFlow:unregisterDoneListener(slot0._onResetEffectDone, slot0)
+function var_0_0._onResetEffectDone(arg_42_0)
+	arg_42_0:_onCorrectPlayCardObjList()
+	arg_42_0:_clearAllItemData()
+	arg_42_0._resetCardFlow:unregisterDoneListener(arg_42_0._onResetEffectDone, arg_42_0)
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, false)
 end
 
-function slot0.calcCardPosX(slot0, slot1)
-	return -uv0.PlayCardWidth * slot1 / 2 - uv0.HalfCardWidth + uv0.PlayCardWidth * slot0, 2
+function var_0_0.calcCardPosX(arg_43_0, arg_43_1)
+	return -var_0_0.PlayCardWidth * arg_43_1 / 2 - var_0_0.HalfCardWidth + var_0_0.PlayCardWidth * arg_43_0, 2
 end
 
-return slot0
+return var_0_0

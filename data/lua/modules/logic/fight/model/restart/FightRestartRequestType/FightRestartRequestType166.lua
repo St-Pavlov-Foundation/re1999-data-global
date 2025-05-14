@@ -1,34 +1,40 @@
-module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType166", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType166", package.seeall)
 
-slot0 = class("FightRestartRequestType166", FightRestartRequestType1)
+local var_0_0 = class("FightRestartRequestType166", FightRestartRequestType1)
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0:__onInit()
 
-	slot0._fight_work = slot1
-	slot0._fightParam = slot2
-	slot0._episode_config = slot3
-	slot0._chapter_config = slot4
+	arg_1_0._fight_work = arg_1_1
+	arg_1_0._fightParam = arg_1_2
+	arg_1_0._episode_config = arg_1_3
+	arg_1_0._chapter_config = arg_1_4
 end
 
-function slot0.requestFight(slot0)
-	slot1 = FightModel.instance:getFightParam()
-	slot2 = Season166Model.instance:getBattleContext()
+function var_0_0.requestFight(arg_2_0)
+	local var_2_0 = FightModel.instance:getFightParam()
+	local var_2_1 = Season166Model.instance:getBattleContext()
+	local var_2_2 = var_2_1.actId
+	local var_2_3 = var_2_0.episodeId
+	local var_2_4 = var_2_1.episodeType
+	local var_2_5 = Season166HeroGroupModel.instance:getEpisodeConfigId(var_2_0.episodeId)
+	local var_2_6 = var_2_1.talentId
+	local var_2_7 = var_2_0.chapterId
 
-	Activity166Rpc.instance:sendStartAct166BattleRequest(slot2.actId, slot2.episodeType, Season166HeroGroupModel.instance:getEpisodeConfigId(slot1.episodeId), slot2.talentId, slot1.chapterId, slot1.episodeId, slot1, 1, nil, , true, slot0._onReceiveBeforeStartBattleReply, slot0)
-	slot0._fight_work:onDone(true)
+	Activity166Rpc.instance:sendStartAct166BattleRequest(var_2_2, var_2_4, var_2_5, var_2_6, var_2_7, var_2_3, var_2_0, 1, nil, nil, true, arg_2_0._onReceiveBeforeStartBattleReply, arg_2_0)
+	arg_2_0._fight_work:onDone(true)
 end
 
-function slot0._onReceiveBeforeStartBattleReply(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._onReceiveBeforeStartBattleReply(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_2 ~= 0 then
 		FightSystem.instance:restartFightFail()
 
 		return
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_4_0)
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

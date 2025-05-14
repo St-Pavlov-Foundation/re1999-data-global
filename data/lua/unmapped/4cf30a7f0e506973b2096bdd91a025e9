@@ -1,8 +1,0 @@
-module("framework.mvc.view.scroll.BaseEmptyScrollHandler", package.seeall)
-
-slot0 = class("BaseEmptyScrollHandler")
-
-function slot0.refreshEmptyView(slot0, slot1, slot2)
-end
-
-return slot0

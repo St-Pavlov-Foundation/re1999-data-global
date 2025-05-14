@@ -1,90 +1,100 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_TaskView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_TaskView", package.seeall)
 
-slot0 = class("V2a4_WarmUp_TaskView", BaseView)
+local var_0_0 = class("V2a4_WarmUp_TaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._scrollTaskList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_TaskList")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	Activity125Controller.instance:sendGetTaskInfoRequest(slot0._fallbackCheckIsFinishedReadTasks, slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	Activity125Controller.instance:sendGetTaskInfoRequest(arg_6_0._fallbackCheckIsFinishedReadTasks, arg_6_0)
 end
 
-function slot0.onOpen(slot0)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, slot0._refresh, slot0)
-	TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, slot0._refresh, slot0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0._refresh, slot0)
-	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
-	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, slot0._onFinishTask, slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_7_0)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_7_0._refresh, arg_7_0)
+	TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, arg_7_0._refresh, arg_7_0)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_7_0._refresh, arg_7_0)
+	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_7_0._onFinishTask, arg_7_0)
+	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_7_0._onFinishTask, arg_7_0)
+	arg_7_0:onUpdateParam()
 end
 
-function slot0.onClose(slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, slot0._refresh, slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, slot0._refresh, slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, slot0._refresh, slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, slot0._onFinishTask, slot0)
+function var_0_0.onClose(arg_8_0)
+	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, arg_8_0._refresh, arg_8_0)
+	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, arg_8_0._refresh, arg_8_0)
+	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, arg_8_0._refresh, arg_8_0)
+	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, arg_8_0._onFinishTask, arg_8_0)
+	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_8_0._onFinishTask, arg_8_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageFullBG:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simageFullBG:UnLoadImage()
 end
 
-function slot0._refresh(slot0)
+function var_0_0._refresh(arg_10_0)
 	V2a4_WarmUp_TaskListModel.instance:setTaskList()
 end
 
-function slot0._onFinishTask(slot0)
-	slot0:_refresh()
+function var_0_0._onFinishTask(arg_11_0)
+	arg_11_0:_refresh()
 	V2a4_WarmUpController.instance:dispatchEventUpdateActTag()
 end
 
-function slot0._fallbackCheckIsFinishedReadTasks(slot0, slot1, slot2)
-	if slot2 ~= 0 then
+function var_0_0._fallbackCheckIsFinishedReadTasks(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_2 ~= 0 then
 		return
 	end
 
-	if not TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity125, slot0.viewContainer:actId()) or #slot4 == 0 then
+	local var_12_0 = arg_12_0.viewContainer:actId()
+	local var_12_1 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity125, var_12_0)
+
+	if not var_12_1 or #var_12_1 == 0 then
 		return
 	end
 
-	slot6 = {}
+	local var_12_2 = Activity125Config.instance:getTaskCO_ReadTask_Tag(var_12_0, ActivityWarmUpEnum.Activity125TaskTag.sum_help_npc)
+	local var_12_3 = {}
 
-	for slot10, slot11 in ipairs(slot4) do
-		slot15 = slot11.progress
+	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+		local var_12_4 = iter_12_1.config
+		local var_12_5 = iter_12_1.type
+		local var_12_6 = iter_12_1.id
+		local var_12_7 = iter_12_1.progress
 
-		if Activity125Config.instance:getTaskCO_ReadTask_Tag(slot3, ActivityWarmUpEnum.Activity125TaskTag.sum_help_npc)[slot11.id] and not slot11.hasFinished then
-			slot15 = Activity125Controller.instance:get_V2a4_WarmUp_sum_help_npc(0)
+		if var_12_2[var_12_6] and not iter_12_1.hasFinished then
+			local var_12_8 = Activity125Controller.instance:get_V2a4_WarmUp_sum_help_npc(0)
+			local var_12_9 = var_12_4.clientlistenerParam
+			local var_12_10 = tonumber(var_12_9) or var_12_8 + 1
 
-			V2a4_WarmUpController.instance:appendCompleteTask(slot6, slot11.type, slot14, slot15, tonumber(slot11.config.clientlistenerParam) or slot15 + 1)
+			V2a4_WarmUpController.instance:appendCompleteTask(var_12_3, var_12_5, var_12_6, var_12_8, var_12_10)
 		end
 	end
 
-	if #slot6 > 0 then
-		V2a4_WarmUpController.instance:sendFinishReadTaskRequest(slot6)
+	if #var_12_3 > 0 then
+		V2a4_WarmUpController.instance:sendFinishReadTaskRequest(var_12_3)
 	end
 end
 
-return slot0
+return var_0_0

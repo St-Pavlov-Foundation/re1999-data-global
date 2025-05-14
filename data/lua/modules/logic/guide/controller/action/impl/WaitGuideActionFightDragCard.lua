@@ -1,35 +1,37 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionFightDragCard", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightDragCard", package.seeall)
 
-slot0 = class("WaitGuideActionFightDragCard", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionFightDragCard", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.splitToNumber(slot0.actionParam, "#")
-	slot3 = slot2[1]
-	slot4 = {}
+	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+	local var_1_1 = var_1_0[1]
+	local var_1_2 = {}
 
-	for slot8 = 2, #slot2 do
-		table.insert(slot4, slot2[slot8])
+	for iter_1_0 = 2, #var_1_0 do
+		local var_1_3 = var_1_0[iter_1_0]
+
+		table.insert(var_1_2, var_1_3)
 	end
 
 	GuideViewMgr.instance:enableDrag(true)
 	GuideModel.instance:setFlag(GuideModel.GuideFlag.FightMoveCard, {
-		from = slot3,
-		tos = slot4
-	}, slot0.guideId)
-	FightController.instance:registerCallback(FightEvent.OnGuideDragCard, slot0._onGuideDragCard, slot0)
+		from = var_1_1,
+		tos = var_1_2
+	}, arg_1_0.guideId)
+	FightController.instance:registerCallback(FightEvent.OnGuideDragCard, arg_1_0._onGuideDragCard, arg_1_0)
 end
 
-function slot0._onGuideDragCard(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideDragCard, slot0._onGuideDragCard, slot0)
-	slot0:onDone(true)
+function var_0_0._onGuideDragCard(arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnGuideDragCard, arg_2_0._onGuideDragCard, arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
 	GuideViewMgr.instance:enableDrag(false)
-	GuideModel.instance:setFlag(GuideModel.GuideFlag.FightMoveCard, nil, slot0.guideId)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideDragCard, slot0._onGuideDragCard, slot0)
+	GuideModel.instance:setFlag(GuideModel.GuideFlag.FightMoveCard, nil, arg_3_0.guideId)
+	FightController.instance:unregisterCallback(FightEvent.OnGuideDragCard, arg_3_0._onGuideDragCard, arg_3_0)
 end
 
-return slot0
+return var_0_0

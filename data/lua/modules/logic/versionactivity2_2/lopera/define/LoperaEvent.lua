@@ -1,19 +1,20 @@
-module("modules.logic.versionactivity2_2.lopera.define.LoperaEvent", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.define.LoperaEvent", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.EpisodeClick = slot1()
-slot0.ClickOtherEpisode = slot1()
-slot0.GoodItemClick = slot1()
-slot0.BeforeEnterEpisode = slot1()
-slot0.EnterEpisode = slot1()
-slot0.EpisodeMove = slot1()
-slot0.SelectOption = slot1()
-slot0.EpisodeUpdate = slot1()
-slot0.EpisodeFinish = slot1()
-slot0.ComposeDone = slot1()
-slot0.OneClickClaimReward = slot1()
-slot0.ExitGame = slot1()
-slot0.EndlessUnlock = slot1()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return slot0
+var_0_0.EpisodeClick = var_0_1()
+var_0_0.ClickOtherEpisode = var_0_1()
+var_0_0.GoodItemClick = var_0_1()
+var_0_0.BeforeEnterEpisode = var_0_1()
+var_0_0.EnterEpisode = var_0_1()
+var_0_0.EpisodeMove = var_0_1()
+var_0_0.SelectOption = var_0_1()
+var_0_0.EpisodeUpdate = var_0_1()
+var_0_0.EpisodeFinish = var_0_1()
+var_0_0.ComposeDone = var_0_1()
+var_0_0.OneClickClaimReward = var_0_1()
+var_0_0.ExitGame = var_0_1()
+var_0_0.EndlessUnlock = var_0_1()
+
+return var_0_0

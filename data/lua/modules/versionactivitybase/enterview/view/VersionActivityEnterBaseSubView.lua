@@ -1,45 +1,52 @@
-module("modules.versionactivitybase.enterview.view.VersionActivityEnterBaseSubView", package.seeall)
+﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterBaseSubView", package.seeall)
 
-slot0 = class("VersionActivityEnterBaseSubView", BaseView)
+local var_0_0 = class("VersionActivityEnterBaseSubView", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewGO:GetComponent(typeof(UnityEngine.Animator)) then
-		slot1:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.onOpen(arg_3_0)
+	local var_3_0 = arg_3_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if var_3_0 then
+		var_3_0:Play(UIAnimationName.Open, 0, 0)
 	end
 
-	slot0:everySecondCall()
-	slot0:beginPerSecondRefresh()
+	arg_3_0:everySecondCall()
+	arg_3_0:beginPerSecondRefresh()
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_4_0)
+	return
 end
 
-function slot0.onEnterVideoFinished(slot0)
-	slot0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
+function var_0_0.onEnterVideoFinished(arg_5_0)
+	arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.everySecondCall, slot0)
+function var_0_0.onClose(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.everySecondCall, arg_6_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:everySecondCall()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:everySecondCall()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-function slot0.beginPerSecondRefresh(slot0)
-	TaskDispatcher.runRepeat(slot0.everySecondCall, slot0, 1)
+function var_0_0.beginPerSecondRefresh(arg_9_0)
+	TaskDispatcher.runRepeat(arg_9_0.everySecondCall, arg_9_0, 1)
 end
 
-function slot0.everySecondCall(slot0)
+function var_0_0.everySecondCall(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

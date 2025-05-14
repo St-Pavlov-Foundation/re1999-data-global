@@ -1,98 +1,107 @@
-module("modules.logic.fight.view.work.FightViewWorkAddUseCard", package.seeall)
+﻿module("modules.logic.fight.view.work.FightViewWorkAddUseCard", package.seeall)
 
-slot0 = class("FightViewWorkAddUseCard", BaseWork)
+local var_0_0 = class("FightViewWorkAddUseCard", BaseWork)
 
-function slot0.onStart(slot0)
-	slot1 = 0.16 / FightModel.instance:getUISpeed()
-	slot3 = #FightPlayCardModel.instance:getUsedCards()
-	slot6 = {
-		[tabletool.indexOf(slot2, slot11._cardInfoMO)] = recthelper.getAnchorX(slot11.go.transform.parent)
-	}
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = 0.16 / FightModel.instance:getUISpeed()
+	local var_1_1 = FightPlayCardModel.instance:getUsedCards()
+	local var_1_2 = #var_1_1
+	local var_1_3 = arg_1_0.context
+	local var_1_4 = var_1_3._cardItemList
+	local var_1_5 = {}
 
-	for slot10, slot11 in ipairs(slot0.context._cardItemList) do
-		if slot11.go.activeInHierarchy then
-			-- Nothing
+	for iter_1_0, iter_1_1 in ipairs(var_1_4) do
+		if iter_1_1.go.activeInHierarchy then
+			var_1_5[tabletool.indexOf(var_1_1, iter_1_1._cardInfoMO)] = recthelper.getAnchorX(iter_1_1.go.transform.parent)
 		end
 	end
 
-	slot4:_onSetUseCards()
+	var_1_3:_onSetUseCards()
 
-	slot0._flow = FlowParallel.New()
+	arg_1_0._flow = FlowParallel.New()
 
-	for slot10, slot11 in ipairs(slot5) do
-		slot12 = slot11.go.transform.parent
+	for iter_1_2, iter_1_3 in ipairs(var_1_4) do
+		local var_1_6 = iter_1_3.go.transform.parent
 
-		if slot11.go.activeInHierarchy and slot6[slot10] then
-			recthelper.setAnchorX(slot12, slot6[slot10])
-			slot0._flow:addWork(TweenWork.New({
+		if iter_1_3.go.activeInHierarchy and var_1_5[iter_1_2] then
+			recthelper.setAnchorX(var_1_6, var_1_5[iter_1_2])
+
+			local var_1_7 = FightViewWaitingAreaVersion1.getCardPos(iter_1_2, var_1_2)
+
+			arg_1_0._flow:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = slot12,
-				to = FightViewWaitingAreaVersion1.getCardPos(slot10, slot3),
-				t = slot1
+				tr = var_1_6,
+				to = var_1_7,
+				t = var_1_0
 			}))
 		end
 
-		recthelper.setAnchorY(slot12, 150)
+		recthelper.setAnchorY(var_1_6, 150)
 	end
 
-	slot7 = 0.2 / FightModel.instance:getUISpeed()
-	slot8 = 0.25 / FightModel.instance:getUISpeed()
+	local var_1_8 = 0.2 / FightModel.instance:getUISpeed()
+	local var_1_9 = 0.25 / FightModel.instance:getUISpeed()
 
-	for slot12, slot13 in ipairs(slot5) do
-		if slot13.go.activeInHierarchy then
-			slot13:hideCardAppearEffect()
-			slot13:onCardAniFinish()
+	for iter_1_4, iter_1_5 in ipairs(var_1_4) do
+		if iter_1_5.go.activeInHierarchy then
+			iter_1_5:hideCardAppearEffect()
+			iter_1_5:onCardAniFinish()
 
-			gohelper.onceAddComponent(slot13.go, gohelper.Type_CanvasGroup).alpha = 1
+			gohelper.onceAddComponent(iter_1_5.go, gohelper.Type_CanvasGroup).alpha = 1
 
-			if slot13._cardInfoMO.CUSTOMADDUSECARD then
-				gohelper.onceAddComponent(slot13.go, gohelper.Type_CanvasGroup).alpha = 0
+			local var_1_10 = iter_1_5._cardInfoMO
 
-				if not FightHelper.isASFDSkill(slot14.skillId) then
-					slot13:playAppearEffect()
+			if var_1_10.CUSTOMADDUSECARD then
+				gohelper.onceAddComponent(iter_1_5.go, gohelper.Type_CanvasGroup).alpha = 0
+
+				if not FightHelper.isASFDSkill(var_1_10.skillId) then
+					iter_1_5:playAppearEffect()
 				end
 
-				slot13:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
+				iter_1_5:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
 
-				slot15 = FlowSequence.New()
+				local var_1_11 = FlowSequence.New()
 
-				slot15:addWork(WorkWaitSeconds.New(slot7))
+				var_1_11:addWork(WorkWaitSeconds.New(var_1_8))
 
-				slot16 = slot13.go.transform.parent
+				local var_1_12 = iter_1_5.go.transform.parent
 
-				recthelper.setAnchorY(slot16, 300)
-				slot15:addWork(TweenWork.New({
+				recthelper.setAnchorY(var_1_12, 300)
+				var_1_11:addWork(TweenWork.New({
 					type = "DOAnchorPosY",
 					to = 150,
-					tr = slot16,
-					t = slot8,
+					tr = var_1_12,
+					t = var_1_9,
 					ease = EaseType.OutQuart
 				}))
-				slot0._flow:addWork(slot15)
+				arg_1_0._flow:addWork(var_1_11)
 			end
 		end
 	end
 
-	slot0._flow:addWork(FunctionWork.New(slot0._clearSign, slot0))
+	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._clearSign, arg_1_0))
 	AudioMgr.instance:trigger(20211406)
-	slot0._flow:start()
+	arg_1_0._flow:start()
 end
 
-function slot0._clearSign(slot0)
-	for slot5, slot6 in ipairs(FightPlayCardModel.instance:getUsedCards()) do
-		slot6.CUSTOMADDUSECARD = nil
+function var_0_0._clearSign(arg_2_0)
+	local var_2_0 = FightPlayCardModel.instance:getUsedCards()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		iter_2_1.CUSTOMADDUSECARD = nil
 	end
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_3_0)
+	return
 end
 
-function slot0.clearWork(slot0)
-	if slot0._flow then
-		slot0._flow:stop()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._flow then
+		arg_4_0._flow:stop()
 
-		slot0._flow = nil
+		arg_4_0._flow = nil
 	end
 end
 
-return slot0
+return var_0_0

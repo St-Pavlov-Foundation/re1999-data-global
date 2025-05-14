@@ -1,92 +1,104 @@
-module("modules.logic.seasonver.act166.utils.Season166HeroGroupUtils", package.seeall)
+﻿module("modules.logic.seasonver.act166.utils.Season166HeroGroupUtils", package.seeall)
 
-slot0 = class("Season166HeroGroupUtils")
+local var_0_0 = class("Season166HeroGroupUtils")
 
-function slot0.buildSnapshotHeroGroups(slot0)
-	slot1 = {
-		[slot8.groupId] = slot8
-	}
+function var_0_0.buildSnapshotHeroGroups(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = #arg_1_0 == 0 and {
+		arg_1_0
+	} or arg_1_0
 
-	for slot6, slot7 in ipairs(#slot0 == 0 and {
-		slot0
-	} or slot0) do
-		slot8 = Season166HeroGroupMO.New()
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_2 = Season166HeroGroupMO.New()
 
-		if slot7.heroList == nil or #slot7.heroList <= 0 then
-			if not uv0.checkFirstCopyHeroGroup(slot7, slot8) then
-				uv0.createEmptyGroup(slot7, slot8)
+		if iter_1_1.heroList == nil or #iter_1_1.heroList <= 0 then
+			if not var_0_0.checkFirstCopyHeroGroup(iter_1_1, var_1_2) then
+				var_0_0.createEmptyGroup(iter_1_1, var_1_2)
+
+				var_1_0[var_1_2.groupId] = var_1_2
 			end
 		else
-			slot8:init(slot7)
+			var_1_2:init(iter_1_1)
 
-			slot1[slot7.groupId] = slot8
+			var_1_0[iter_1_1.groupId] = var_1_2
 		end
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot0.groupId < slot1.groupId
+	table.sort(var_1_0, function(arg_2_0, arg_2_1)
+		return arg_2_0.groupId < arg_2_1.groupId
 	end)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.checkFirstCopyHeroGroup(slot0, slot1)
-	if slot0.groupId == 1 and Season166HeroGroupModel.instance:getById(1) then
-		slot1.id = slot0.groupId
-		slot1.groupId = slot0.groupId
-		slot1.name = slot2.name
-		slot1.heroList = {}
+function var_0_0.checkFirstCopyHeroGroup(arg_3_0, arg_3_1)
+	if arg_3_0.groupId == 1 then
+		local var_3_0 = Season166HeroGroupModel.instance:getById(1)
 
-		for slot6 = 1, Season166Enum.MaxHeroCount do
-			table.insert(slot1.heroList, Season166Enum.EmptyUid)
+		if var_3_0 then
+			arg_3_1.id = arg_3_0.groupId
+			arg_3_1.groupId = arg_3_0.groupId
+			arg_3_1.name = var_3_0.name
+			arg_3_1.heroList = {}
+
+			for iter_3_0 = 1, Season166Enum.MaxHeroCount do
+				table.insert(arg_3_1.heroList, Season166Enum.EmptyUid)
+			end
+
+			arg_3_1.aidDict = LuaUtil.deepCopy(var_3_0.aidDict)
+			arg_3_1.clothId = var_3_0.clothId
+			arg_3_1.equips = LuaUtil.deepCopy(var_3_0.equips)
+
+			return true
 		end
-
-		slot1.aidDict = LuaUtil.deepCopy(slot2.aidDict)
-		slot1.clothId = slot2.clothId
-		slot1.equips = LuaUtil.deepCopy(slot2.equips)
-
-		return true
 	end
 
 	return false
 end
 
-function slot0.createEmptyGroup(slot0, slot1)
-	slot2 = Season166HeroGroupModel.instance:getById(1)
-	slot1.id = slot0.groupId or 1
-	slot1.groupId = slot0.groupId or 1
-	slot1.name = ""
-	slot1.heroList = {}
+function var_0_0.createEmptyGroup(arg_4_0, arg_4_1)
+	local var_4_0 = Season166HeroGroupModel.instance:getById(1)
 
-	for slot6 = 1, Season166Enum.MaxHeroCount do
-		table.insert(slot1.heroList, Season166Enum.EmptyUid)
+	arg_4_1.id = arg_4_0.groupId or 1
+	arg_4_1.groupId = arg_4_0.groupId or 1
+	arg_4_1.name = ""
+	arg_4_1.heroList = {}
+
+	for iter_4_0 = 1, Season166Enum.MaxHeroCount do
+		table.insert(arg_4_1.heroList, Season166Enum.EmptyUid)
 	end
 
-	if slot2 then
-		slot1.clothId = slot2.clothId
+	if var_4_0 then
+		arg_4_1.clothId = var_4_0.clothId
 	end
 
-	slot1.equips = {}
+	arg_4_1.equips = {}
 
-	for slot7 = 0, Season166Enum.MaxHeroCount - 1 do
-		slot8 = HeroGroupEquipMO.New()
+	local var_4_1 = Season166Enum.MaxHeroCount
 
-		slot8:init({
-			index = slot7,
+	for iter_4_1 = 0, var_4_1 - 1 do
+		local var_4_2 = HeroGroupEquipMO.New()
+
+		var_4_2:init({
+			index = iter_4_1,
 			equipUid = {
 				Season166Enum.EmptyUid
 			}
 		})
 
-		slot1.equips[slot7] = slot8
+		arg_4_1.equips[iter_4_1] = var_4_2
 	end
 end
 
-function slot0.buildFightGroupAssistHero(slot0, slot1)
-	if slot0 == ModuleEnum.HeroGroupType.Season166Train and Season166HeroSingleGroupModel.instance.assistMO and tonumber(slot2.pickAssistHeroMO.heroUid) ~= 0 then
-		slot1.assistUserId = slot2.userId
-		slot1.assistHeroUid = slot2.pickAssistHeroMO.heroUid
+function var_0_0.buildFightGroupAssistHero(arg_5_0, arg_5_1)
+	if arg_5_0 == ModuleEnum.HeroGroupType.Season166Train then
+		local var_5_0 = Season166HeroSingleGroupModel.instance.assistMO
+
+		if var_5_0 and tonumber(var_5_0.pickAssistHeroMO.heroUid) ~= 0 then
+			arg_5_1.assistUserId = var_5_0.userId
+			arg_5_1.assistHeroUid = var_5_0.pickAssistHeroMO.heroUid
+		end
 	end
 end
 
-return slot0
+return var_0_0

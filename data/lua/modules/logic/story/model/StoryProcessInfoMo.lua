@@ -1,17 +1,17 @@
-module("modules.logic.story.model.StoryProcessInfoMo", package.seeall)
+﻿module("modules.logic.story.model.StoryProcessInfoMo", package.seeall)
 
-slot0 = pureTable("StoryProcessInfoMo")
+local var_0_0 = pureTable("StoryProcessInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.storyId = nil
-	slot0.stepId = nil
-	slot0.favor = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.storyId = nil
+	arg_1_0.stepId = nil
+	arg_1_0.favor = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.storyId = slot1.storyId
-	slot0.stepId = slot1.stepId
-	slot0.favor = slot1.favor
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.storyId = arg_2_1.storyId
+	arg_2_0.stepId = arg_2_1.stepId
+	arg_2_0.favor = arg_2_1.favor
 end
 
-return slot0
+return var_0_0

@@ -1,45 +1,50 @@
-module("modules.logic.fight.model.mo.FightReasonMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightReasonMO", package.seeall)
 
-slot0 = pureTable("FightReasonMO")
+local var_0_0 = pureTable("FightReasonMO")
 
-function slot0.init(slot0, slot1)
-	slot0.type = slot1.type
-	slot0.content = slot1.content
-	slot0.episodeId = tonumber(slot0.content)
-	slot0.battleId = slot1.battleId
-	slot0.multiplication = slot1.multiplication
-	slot0.data = slot1.data
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.type = arg_1_1.type
+	arg_1_0.content = arg_1_1.content
+	arg_1_0.episodeId = tonumber(arg_1_0.content)
+	arg_1_0.battleId = arg_1_1.battleId
+	arg_1_0.multiplication = arg_1_1.multiplication
+	arg_1_0.data = arg_1_1.data
 
-	slot0:_parseData()
+	arg_1_0:_parseData()
 end
 
-function slot0._parseData(slot0)
-	if not slot0.episodeId then
+function var_0_0._parseData(arg_2_0)
+	if not arg_2_0.episodeId then
 		return
 	end
 
-	if DungeonConfig.instance:getEpisodeCO(slot0.episodeId).type == DungeonEnum.EpisodeType.WeekWalk then
-		slot2 = string.splitToNumber(slot0.data, "#")
-		slot0.layerId = slot2[2]
-		slot0.elementId = slot2[3]
-	elseif slot1.type == DungeonEnum.EpisodeType.Meilanni then
-		slot2 = string.splitToNumber(slot0.data, "#")
-		slot0.battleId = slot2[#slot2]
-		slot0.eventEpisodeId = slot2[3]
-	elseif slot1.type == DungeonEnum.EpisodeType.Dog then
-		slot2 = string.splitToNumber(slot0.data, "#")
-		slot0.fromChessGame = true
-		slot0.actId = slot2[1]
-		slot0.actElementId = slot2[2]
-		slot0.battleId = slot2[3]
-		slot0.actEpisodeId = slot2[4]
-	elseif slot1.type == DungeonEnum.EpisodeType.TowerPermanent or slot1.type == DungeonEnum.EpisodeType.TowerBoss or slot1.type == DungeonEnum.EpisodeType.TowerLimited then
-		slot2 = string.splitToNumber(slot0.data, "#")
+	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_0.episodeId)
 
-		TowerModel.instance:setRecordFightParam(slot2[1], slot2[2], slot2[3], slot2[4], slot2[5])
-	elseif slot1.type == DungeonEnum.EpisodeType.Season166Base or slot1.type == DungeonEnum.EpisodeType.Season166Train then
-		Season166Model.instance:unpackFightReconnectData(slot0.data)
+	if var_2_0.type == DungeonEnum.EpisodeType.WeekWalk then
+		local var_2_1 = string.splitToNumber(arg_2_0.data, "#")
+
+		arg_2_0.layerId = var_2_1[2]
+		arg_2_0.elementId = var_2_1[3]
+	elseif var_2_0.type == DungeonEnum.EpisodeType.Meilanni then
+		local var_2_2 = string.splitToNumber(arg_2_0.data, "#")
+
+		arg_2_0.battleId = var_2_2[#var_2_2]
+		arg_2_0.eventEpisodeId = var_2_2[3]
+	elseif var_2_0.type == DungeonEnum.EpisodeType.Dog then
+		local var_2_3 = string.splitToNumber(arg_2_0.data, "#")
+
+		arg_2_0.fromChessGame = true
+		arg_2_0.actId = var_2_3[1]
+		arg_2_0.actElementId = var_2_3[2]
+		arg_2_0.battleId = var_2_3[3]
+		arg_2_0.actEpisodeId = var_2_3[4]
+	elseif var_2_0.type == DungeonEnum.EpisodeType.TowerPermanent or var_2_0.type == DungeonEnum.EpisodeType.TowerBoss or var_2_0.type == DungeonEnum.EpisodeType.TowerLimited then
+		local var_2_4 = string.splitToNumber(arg_2_0.data, "#")
+
+		TowerModel.instance:setRecordFightParam(var_2_4[1], var_2_4[2], var_2_4[3], var_2_4[4], var_2_4[5])
+	elseif var_2_0.type == DungeonEnum.EpisodeType.Season166Base or var_2_0.type == DungeonEnum.EpisodeType.Season166Train then
+		Season166Model.instance:unpackFightReconnectData(arg_2_0.data)
 	end
 end
 
-return slot0
+return var_0_0

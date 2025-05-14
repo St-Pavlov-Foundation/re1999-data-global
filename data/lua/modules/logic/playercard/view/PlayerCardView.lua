@@ -1,169 +1,193 @@
-module("modules.logic.playercard.view.PlayerCardView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardView", package.seeall)
 
-slot0 = class("PlayerCardView", BaseView)
+local var_0_0 = class("PlayerCardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goRight = gohelper.findChild(slot0.viewGO, "Right")
-	slot0.btnDetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_detail/#btn_click")
-	slot0.goPlayerInfo = gohelper.findChild(slot0.goRight, "#go_playerinfo")
-	slot0.goAssit = gohelper.findChild(slot0.goRight, "#go_assit")
-	slot0.goChapter = gohelper.findChild(slot0.goRight, "#go_chapter")
-	slot0.goCardGroup = gohelper.findChild(slot0.goRight, "#go_cardgroup")
-	slot0.goAchievement = gohelper.findChild(slot0.goRight, "#go_achievement")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goRight = gohelper.findChild(arg_1_0.viewGO, "Right")
+	arg_1_0.btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_detail/#btn_click")
+	arg_1_0.goPlayerInfo = gohelper.findChild(arg_1_0.goRight, "#go_playerinfo")
+	arg_1_0.goAssit = gohelper.findChild(arg_1_0.goRight, "#go_assit")
+	arg_1_0.goChapter = gohelper.findChild(arg_1_0.goRight, "#go_chapter")
+	arg_1_0.goCardGroup = gohelper.findChild(arg_1_0.goRight, "#go_cardgroup")
+	arg_1_0.goAchievement = gohelper.findChild(arg_1_0.goRight, "#go_achievement")
 
-	slot0:loadRight()
-	slot0:initRightLayout()
+	arg_1_0:loadRight()
+	arg_1_0:initRightLayout()
 
-	slot0.gotips = gohelper.findChild(slot0.viewGO, "#go_tips")
-	slot0.btnCloseTips = gohelper.findChildButtonWithAudio(slot0.gotips, "#btn_close")
-	slot0.goTipsNode = gohelper.findChild(slot0.gotips, "node")
-	slot0.btnLayout = gohelper.findChildButtonWithAudio(slot0.goTipsNode, "#btn_layout")
-	slot0.btnChangeSkin = gohelper.findChildButtonWithAudio(slot0.goTipsNode, "#btn_changeskin")
+	arg_1_0.gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
+	arg_1_0.btnCloseTips = gohelper.findChildButtonWithAudio(arg_1_0.gotips, "#btn_close")
+	arg_1_0.goTipsNode = gohelper.findChild(arg_1_0.gotips, "node")
+	arg_1_0.btnLayout = gohelper.findChildButtonWithAudio(arg_1_0.goTipsNode, "#btn_layout")
+	arg_1_0.btnChangeSkin = gohelper.findChildButtonWithAudio(arg_1_0.goTipsNode, "#btn_changeskin")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnCloseTips, slot0.onClickCloseTips, slot0)
-	slot0:addClickCb(slot0.btnLayout, slot0.onClickLayout, slot0)
-	slot0:addClickCb(slot0.btnChangeSkin, slot0.onClickChangeSkin, slot0)
-	slot0:addClickCb(slot0.btnDetail, slot0.onClickDetail, slot0)
-	slot0:addEventCb(PlayerController.instance, PlayerEvent.PlayerbassinfoChange, slot0.onPlayerBaseInfoChange, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, slot0.refreshView, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowListBtn, slot0.onShowListBtn, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnCloseTips, arg_2_0.onClickCloseTips, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnLayout, arg_2_0.onClickLayout, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnChangeSkin, arg_2_0.onClickChangeSkin, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnDetail, arg_2_0.onClickDetail, arg_2_0)
+	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.PlayerbassinfoChange, arg_2_0.onPlayerBaseInfoChange, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, arg_2_0.refreshView, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ShowListBtn, arg_2_0.onShowListBtn, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onShowListBtn(slot0, slot1)
-	gohelper.setActive(slot0.gotips, true)
+function var_0_0.onShowListBtn(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0.gotips, true)
 
-	slot3, slot4 = recthelper.rectToRelativeAnchorPos2(slot1.transform.position, slot0.gotips.transform)
+	local var_4_0 = arg_4_1.transform
+	local var_4_1, var_4_2 = recthelper.rectToRelativeAnchorPos2(var_4_0.position, arg_4_0.gotips.transform)
 
-	recthelper.setAnchor(slot0.goTipsNode.transform, slot3 - 190, slot4 - 105)
+	recthelper.setAnchor(arg_4_0.goTipsNode.transform, var_4_1 - 190, var_4_2 - 105)
 end
 
-function slot0.onClickCloseTips(slot0)
-	gohelper.setActive(slot0.gotips, false)
+function var_0_0.onClickCloseTips(arg_5_0)
+	gohelper.setActive(arg_5_0.gotips, false)
 end
 
-function slot0.onClickLayout(slot0)
-	gohelper.setActive(slot0.gotips, false)
+function var_0_0.onClickLayout(arg_6_0)
+	gohelper.setActive(arg_6_0.gotips, false)
 	ViewMgr.instance:openView(ViewName.PlayerCardLayoutView, {
-		userId = slot0.userId
+		userId = arg_6_0.userId
 	})
 end
 
-function slot0.onClickChangeSkin(slot0)
-	gohelper.setActive(slot0.gotips, false)
+function var_0_0.onClickChangeSkin(arg_7_0)
+	gohelper.setActive(arg_7_0.gotips, false)
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ShowTheme)
 end
 
-function slot0.onClickDetail(slot0)
-	if not slot0:getCardInfo() then
+function var_0_0.onClickDetail(arg_8_0)
+	local var_8_0 = arg_8_0:getCardInfo()
+
+	if not var_8_0 then
 		return
 	end
 
-	slot0:closeThis()
-	PlayerController.instance:openPlayerView(slot1:getPlayerInfo(), slot1:isSelf())
+	arg_8_0:closeThis()
+	PlayerController.instance:openPlayerView(var_8_0:getPlayerInfo(), var_8_0:isSelf())
 end
 
-function slot0.initRightLayout(slot0)
-	slot0.rightLayout = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.goRight, PlayerCardLayout)
-	slot1 = {}
+function var_0_0.initRightLayout(arg_9_0)
+	arg_9_0.rightLayout = MonoHelper.addNoUpdateLuaComOnceToGo(arg_9_0.goRight, PlayerCardLayout)
 
-	table.insert(slot1, slot0:getLayoutItem(slot0.goAssit, PlayerCardEnum.RightLayout.Assit))
-	table.insert(slot1, slot0:getLayoutItem(slot0.goChapter, PlayerCardEnum.RightLayout.Chapter))
-	table.insert(slot1, slot0:getLayoutItem(slot0.goCardGroup, PlayerCardEnum.RightLayout.CardGroup, PlayerCardLayoutItemCardGroup, slot0.cardGroupComp))
-	table.insert(slot1, slot0:getLayoutItem(slot0.goAchievement, PlayerCardEnum.RightLayout.Achievement))
-	slot0.rightLayout:setLayoutList(slot1)
+	local var_9_0 = {}
+
+	table.insert(var_9_0, arg_9_0:getLayoutItem(arg_9_0.goAssit, PlayerCardEnum.RightLayout.Assit))
+	table.insert(var_9_0, arg_9_0:getLayoutItem(arg_9_0.goChapter, PlayerCardEnum.RightLayout.Chapter))
+	table.insert(var_9_0, arg_9_0:getLayoutItem(arg_9_0.goCardGroup, PlayerCardEnum.RightLayout.CardGroup, PlayerCardLayoutItemCardGroup, arg_9_0.cardGroupComp))
+	table.insert(var_9_0, arg_9_0:getLayoutItem(arg_9_0.goAchievement, PlayerCardEnum.RightLayout.Achievement))
+	arg_9_0.rightLayout:setLayoutList(var_9_0)
 end
 
-function slot0.getLayoutItem(slot0, slot1, slot2, slot3, slot4)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(slot1, slot3 or PlayerCardLayoutItem, {
-		layoutKey = slot2,
-		viewRoot = slot0.viewGO,
-		layout = slot0.rightLayout,
-		cardComp = slot4
-	})
+function var_0_0.getLayoutItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	local var_10_0 = {
+		layoutKey = arg_10_2,
+		viewRoot = arg_10_0.viewGO,
+		layout = arg_10_0.rightLayout,
+		cardComp = arg_10_4
+	}
+
+	arg_10_3 = arg_10_3 or PlayerCardLayoutItem
+
+	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_1, arg_10_3, var_10_0)
 end
 
-function slot0.refreshLayout(slot0, slot1)
-	slot0.rightLayout:setEditMode(false)
-	slot0.rightLayout:setData(slot1:getLayoutData())
+function var_0_0.refreshLayout(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1:getLayoutData()
+
+	arg_11_0.rightLayout:setEditMode(false)
+	arg_11_0.rightLayout:setData(var_11_0)
 end
 
-function slot0.loadRight(slot0)
-	slot0.compList = {}
-	slot1 = slot0.viewContainer:getSetting().otherRes
+function var_0_0.loadRight(arg_12_0)
+	arg_12_0.compList = {}
 
-	slot0:loadGO(slot0.goPlayerInfo, PlayerCardPlayerInfo, slot1.infoview)
-	slot0:loadGO(slot0.goAssit, PlayerCardAssit, slot1.assitview)
-	slot0:loadGO(slot0.goChapter, PlayerCardChapter, slot1.chapterview)
-	slot0:loadGO(slot0.goAchievement, PlayerCardAchievement, slot1.achieveview, {
-		itemRes = slot0.viewContainer:getRes(slot1.achieveitem)
-	})
+	local var_12_0 = arg_12_0.viewContainer:getSetting().otherRes
 
-	slot0.cardGroupComp = slot0:loadGO(slot0.goCardGroup, PlayerCardCardGroup, slot1.groupview, {
-		itemRes = slot0.viewContainer:getRes(slot1.carditem)
-	})
+	arg_12_0:loadGO(arg_12_0.goPlayerInfo, PlayerCardPlayerInfo, var_12_0.infoview)
+	arg_12_0:loadGO(arg_12_0.goAssit, PlayerCardAssit, var_12_0.assitview)
+	arg_12_0:loadGO(arg_12_0.goChapter, PlayerCardChapter, var_12_0.chapterview)
+
+	local var_12_1 = {
+		itemRes = arg_12_0.viewContainer:getRes(var_12_0.achieveitem)
+	}
+
+	arg_12_0:loadGO(arg_12_0.goAchievement, PlayerCardAchievement, var_12_0.achieveview, var_12_1)
+
+	local var_12_2 = {
+		itemRes = arg_12_0.viewContainer:getRes(var_12_0.carditem)
+	}
+
+	arg_12_0.cardGroupComp = arg_12_0:loadGO(arg_12_0.goCardGroup, PlayerCardCardGroup, var_12_0.groupview, var_12_2)
 end
 
-function slot0.loadGO(slot0, slot1, slot2, slot3, slot4)
-	gohelper.setAsFirstSibling(slot0:getResInst(slot3, gohelper.findChild(slot1, "card") or slot1))
+function var_0_0.loadGO(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	local var_13_0 = gohelper.findChild(arg_13_1, "card")
+	local var_13_1 = arg_13_0:getResInst(arg_13_3, var_13_0 or arg_13_1)
 
-	slot4 = slot4 or {}
-	slot4.compType = PlayerCardEnum.CompType.Normal
-	slot7 = MonoHelper.addNoUpdateLuaComOnceToGo(slot6, slot2, slot4)
+	gohelper.setAsFirstSibling(var_13_1)
 
-	table.insert(slot0.compList, slot7)
+	arg_13_4 = arg_13_4 or {}
+	arg_13_4.compType = PlayerCardEnum.CompType.Normal
 
-	return slot7
+	local var_13_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1, arg_13_2, arg_13_4)
+
+	table.insert(arg_13_0.compList, var_13_2)
+
+	return var_13_2
 end
 
-function slot0.onPlayerBaseInfoChange(slot0, slot1)
-	if slot1.userId == slot0.userId then
-		slot0:refreshView()
+function var_0_0.onPlayerBaseInfoChange(arg_14_0, arg_14_1)
+	if arg_14_1.userId == arg_14_0.userId then
+		arg_14_0:refreshView()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0:_updateParam()
+	arg_15_0:refreshView()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_updateParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_16_0)
+	arg_16_0:_updateParam()
+	arg_16_0:refreshView()
 end
 
-function slot0._updateParam(slot0)
-	slot0.userId = slot0.viewParam.userId
+function var_0_0._updateParam(arg_17_0)
+	arg_17_0.userId = arg_17_0.viewParam.userId
 end
 
-function slot0.getCardInfo(slot0)
-	return PlayerCardModel.instance:getCardInfo(slot0.userId)
+function var_0_0.getCardInfo(arg_18_0)
+	return PlayerCardModel.instance:getCardInfo(arg_18_0.userId)
 end
 
-function slot0.refreshView(slot0)
-	if not slot0:getCardInfo() then
+function var_0_0.refreshView(arg_19_0)
+	local var_19_0 = arg_19_0:getCardInfo()
+
+	if not var_19_0 then
 		return
 	end
 
-	slot0:refreshCompList(slot1)
-	slot0:refreshLayout(slot1)
+	arg_19_0:refreshCompList(var_19_0)
+	arg_19_0:refreshLayout(var_19_0)
 end
 
-function slot0.refreshCompList(slot0, slot1)
-	if not slot0.compList then
+function var_0_0.refreshCompList(arg_20_0, arg_20_1)
+	if not arg_20_0.compList then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0.compList) do
-		slot6:refreshView(slot1)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0.compList) do
+		iter_20_1:refreshView(arg_20_1)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_21_0)
+	return
 end
 
-return slot0
+return var_0_0

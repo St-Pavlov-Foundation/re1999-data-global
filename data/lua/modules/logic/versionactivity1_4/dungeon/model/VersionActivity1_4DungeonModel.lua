@@ -1,55 +1,61 @@
-module("modules.logic.versionactivity1_4.dungeon.model.VersionActivity1_4DungeonModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.dungeon.model.VersionActivity1_4DungeonModel", package.seeall)
 
-slot0 = class("VersionActivity1_4DungeonModel", ListScrollModel)
+local var_0_0 = class("VersionActivity1_4DungeonModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.setSelectEpisodeId(slot0, slot1)
-	slot0._selectEpisodeId = slot1
+function var_0_0.setSelectEpisodeId(arg_3_0, arg_3_1)
+	arg_3_0._selectEpisodeId = arg_3_1
 
 	VersionActivity1_4DungeonController.instance:dispatchEvent(VersionActivity1_4DungeonEvent.OnSelectEpisodeId)
 end
 
-function slot0.getSelectEpisodeId(slot0)
-	return slot0._selectEpisodeId
+function var_0_0.getSelectEpisodeId(arg_4_0)
+	return arg_4_0._selectEpisodeId
 end
 
-function slot0.getEpisodeState(slot0, slot1)
-	slot2 = {}
+function var_0_0.getEpisodeState(arg_5_0, arg_5_1)
+	local var_5_0 = {}
+	local var_5_1 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_4_DungeonAnim), "")
+	local var_5_2 = GameUtil.splitString2(var_5_1, true)
 
-	if GameUtil.splitString2(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_4_DungeonAnim), ""), true) then
-		for slot8, slot9 in pairs(slot4) do
-			slot2[slot9[1]] = slot9[2] or 0
+	if var_5_2 then
+		for iter_5_0, iter_5_1 in pairs(var_5_2) do
+			var_5_0[iter_5_1[1]] = iter_5_1[2] or 0
 		end
 	end
 
-	return slot2[slot1] or 0
+	return var_5_0[arg_5_1] or 0
 end
 
-function slot0.setEpisodeState(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.setEpisodeState(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = {}
+	local var_6_1 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_4_DungeonAnim), "")
+	local var_6_2 = GameUtil.splitString2(var_6_1, true)
 
-	if GameUtil.splitString2(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_4_DungeonAnim), ""), true) then
-		for slot9, slot10 in pairs(slot5) do
-			slot3[slot10[1]] = slot10[2] or 0
+	if var_6_2 then
+		for iter_6_0, iter_6_1 in pairs(var_6_2) do
+			var_6_0[iter_6_1[1]] = iter_6_1[2] or 0
 		end
 	end
 
-	slot3[slot1] = slot2
-	slot6 = {}
+	var_6_0[arg_6_1] = arg_6_2
 
-	for slot10, slot11 in pairs(slot3) do
-		table.insert(slot6, string.format("%s#%s", slot10, slot11))
+	local var_6_3 = {}
+
+	for iter_6_2, iter_6_3 in pairs(var_6_0) do
+		table.insert(var_6_3, string.format("%s#%s", iter_6_2, iter_6_3))
 	end
 
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_4_DungeonAnim), table.concat(slot6, "|"))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_4_DungeonAnim), table.concat(var_6_3, "|"))
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

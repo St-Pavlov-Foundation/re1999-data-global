@@ -1,43 +1,49 @@
-module("modules.logic.versionactivity2_2.dungeon.model.VersionActivity2_2StoreListModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.dungeon.model.VersionActivity2_2StoreListModel", package.seeall)
 
-slot0 = class("VersionActivity2_2StoreListModel", ListScrollModel)
+local var_0_0 = class("VersionActivity2_2StoreListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.initStoreGoodsConfig(slot0)
-	if slot0.goodsConfigList then
+function var_0_0.initStoreGoodsConfig(arg_3_0)
+	if arg_3_0.goodsConfigList then
 		return
 	end
 
-	slot0.goodsConfigList = {}
+	arg_3_0.goodsConfigList = {}
 
-	for slot5, slot6 in pairs(ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity2_2Enum.ActivityId.DungeonStore) or {}) do
-		tabletool.addValues(slot0.goodsConfigList, slot6)
+	local var_3_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(VersionActivity2_2Enum.ActivityId.DungeonStore) or {}
+
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		tabletool.addValues(arg_3_0.goodsConfigList, iter_3_1)
 	end
 end
 
-function slot0._sortGoods(slot0, slot1)
-	if (slot0.maxBuyCount ~= 0 and slot0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity2_2Enum.ActivityId.DungeonStore, slot0.id) <= 0) ~= (slot1.maxBuyCount ~= 0 and slot1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity2_2Enum.ActivityId.DungeonStore, slot1.id) <= 0) then
-		if slot2 then
+function var_0_0._sortGoods(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.maxBuyCount ~= 0 and arg_4_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity2_2Enum.ActivityId.DungeonStore, arg_4_0.id) <= 0
+
+	if var_4_0 ~= (arg_4_1.maxBuyCount ~= 0 and arg_4_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity2_2Enum.ActivityId.DungeonStore, arg_4_1.id) <= 0) then
+		if var_4_0 then
 			return false
 		end
 
 		return true
 	end
 
-	return slot0.id < slot1.id
+	return arg_4_0.id < arg_4_1.id
 end
 
-function slot0.refreshStore(slot0)
-	slot0:initStoreGoodsConfig()
-	table.sort(slot0.goodsConfigList, uv0._sortGoods)
-	slot0:setList(slot0.goodsConfigList)
+function var_0_0.refreshStore(arg_5_0)
+	arg_5_0:initStoreGoodsConfig()
+	table.sort(arg_5_0.goodsConfigList, var_0_0._sortGoods)
+	arg_5_0:setList(arg_5_0.goodsConfigList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

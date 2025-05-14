@@ -1,66 +1,70 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.rpc.Activity116Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.rpc.Activity116Rpc", package.seeall)
 
-slot0 = class("Activity116Rpc", BaseRpc)
+local var_0_0 = class("Activity116Rpc", BaseRpc)
 
-function slot0.sendGet116InfosRequest(slot0)
-	slot1 = Activity116Module_pb.Get116InfosRequest()
-	slot1.activityId = VersionActivity1_2Enum.ActivityId.Building
+function var_0_0.sendGet116InfosRequest(arg_1_0)
+	local var_1_0 = Activity116Module_pb.Get116InfosRequest()
 
-	slot0:sendMsg(slot1)
+	var_1_0.activityId = VersionActivity1_2Enum.ActivityId.Building
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGet116InfosReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceiveGet116InfosReply(slot2)
+function var_0_0.onReceiveGet116InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceiveGet116InfosReply(arg_2_2)
 	end
 end
 
-function slot0.onReceiveAct116InfoUpdatePush(slot0, slot1, slot2)
-	VersionActivity1_2DungeonModel.instance:onReceiveAct116InfoUpdatePush(slot2)
+function var_0_0.onReceiveAct116InfoUpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	VersionActivity1_2DungeonModel.instance:onReceiveAct116InfoUpdatePush(arg_3_2)
 end
 
-function slot0.sendUpgradeElementRequest(slot0, slot1)
-	slot2 = Activity116Module_pb.UpgradeElementRequest()
-	slot2.activityId = VersionActivity1_2Enum.ActivityId.Building
-	slot2.elementId = slot1
+function var_0_0.sendUpgradeElementRequest(arg_4_0, arg_4_1)
+	local var_4_0 = Activity116Module_pb.UpgradeElementRequest()
 
-	slot0:sendMsg(slot2)
+	var_4_0.activityId = VersionActivity1_2Enum.ActivityId.Building
+	var_4_0.elementId = arg_4_1
+
+	arg_4_0:sendMsg(var_4_0)
 end
 
-function slot0.onReceiveUpgradeElementReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceiveUpgradeElementReply(slot2)
+function var_0_0.onReceiveUpgradeElementReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceiveUpgradeElementReply(arg_5_2)
 	end
 end
 
-function slot0.sendBuildTrapRequest(slot0, slot1)
-	slot2 = Activity116Module_pb.BuildTrapRequest()
-	slot2.activityId = VersionActivity1_2Enum.ActivityId.Building
-	slot2.trapId = slot1
+function var_0_0.sendBuildTrapRequest(arg_6_0, arg_6_1)
+	local var_6_0 = Activity116Module_pb.BuildTrapRequest()
 
-	slot0:sendMsg(slot2)
+	var_6_0.activityId = VersionActivity1_2Enum.ActivityId.Building
+	var_6_0.trapId = arg_6_1
+
+	arg_6_0:sendMsg(var_6_0)
 end
 
-function slot0.onReceiveBuildTrapReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceiveBuildTrapReply(slot2)
+function var_0_0.onReceiveBuildTrapReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceiveBuildTrapReply(arg_7_2)
 	end
 end
 
-function slot0.sendPutTrapRequest(slot0, slot1)
-	slot2 = Activity116Module_pb.PutTrapRequest()
-	slot2.activityId = VersionActivity1_2Enum.ActivityId.Building
-	slot2.trapId = slot1
+function var_0_0.sendPutTrapRequest(arg_8_0, arg_8_1)
+	local var_8_0 = Activity116Module_pb.PutTrapRequest()
 
-	slot0:sendMsg(slot2)
+	var_8_0.activityId = VersionActivity1_2Enum.ActivityId.Building
+	var_8_0.trapId = arg_8_1
+
+	arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceivePutTrapReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceivePutTrapReply(slot2)
+function var_0_0.onReceivePutTrapReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceivePutTrapReply(arg_9_2)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

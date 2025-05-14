@@ -1,65 +1,67 @@
-module("modules.logic.toughbattle.view.ToughBattleWordView", package.seeall)
+﻿module("modules.logic.toughbattle.view.ToughBattleWordView", package.seeall)
 
-slot0 = class("ToughBattleWordView", BaseView)
+local var_0_0 = class("ToughBattleWordView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._root = gohelper.findChild(slot0.viewGO, "root/#go_words")
-	slot0._item = gohelper.findChild(slot0.viewGO, "root/#go_words/item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._root = gohelper.findChild(arg_1_0.viewGO, "root/#go_words")
+	arg_1_0._item = gohelper.findChild(arg_1_0.viewGO, "root/#go_words/item")
 end
 
-function slot0.onOpen(slot0)
-	slot0._wordRes = slot0:getResInst(slot0.viewContainer._viewSetting.otherRes.word, slot0._root)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0._wordRes = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes.word, arg_2_0._root)
 
-	gohelper.setActive(slot0._item, false)
-	gohelper.setActive(slot0._wordRes, false)
-	TaskDispatcher.runRepeat(slot0._createWord, slot0, ToughBattleEnum.WordInterval, -1)
-	slot0:_createWord()
+	gohelper.setActive(arg_2_0._item, false)
+	gohelper.setActive(arg_2_0._wordRes, false)
+	TaskDispatcher.runRepeat(arg_2_0._createWord, arg_2_0, ToughBattleEnum.WordInterval, -1)
+	arg_2_0:_createWord()
 end
 
-function slot0._createWord(slot0)
-	if not slot0._nowPosIndex then
-		slot0._nowPosIndex = math.random(1, #ToughBattleEnum.WordPlace)
+function var_0_0._createWord(arg_3_0)
+	if not arg_3_0._nowPosIndex then
+		arg_3_0._nowPosIndex = math.random(1, #ToughBattleEnum.WordPlace)
 	else
-		if slot0._nowPosIndex <= math.random(1, #ToughBattleEnum.WordPlace - 1) then
-			slot1 = slot1 + 1
+		local var_3_0 = math.random(1, #ToughBattleEnum.WordPlace - 1)
+
+		if var_3_0 >= arg_3_0._nowPosIndex then
+			var_3_0 = var_3_0 + 1
 		end
 
-		slot0._nowPosIndex = slot1
+		arg_3_0._nowPosIndex = var_3_0
 	end
 
-	slot0._coIndexSort = slot0._coIndexSort or {}
+	arg_3_0._coIndexSort = arg_3_0._coIndexSort or {}
 
-	if slot0._coIndexSort[1] then
-		slot0._nowCoIndex = table.remove(slot0._coIndexSort, 1)
+	if arg_3_0._coIndexSort[1] then
+		arg_3_0._nowCoIndex = table.remove(arg_3_0._coIndexSort, 1)
 	else
-		for slot4 = 1, #lua_siege_battle_word.configList do
-			slot0._coIndexSort[slot4] = slot4
+		for iter_3_0 = 1, #lua_siege_battle_word.configList do
+			arg_3_0._coIndexSort[iter_3_0] = iter_3_0
 		end
 
-		slot0._coIndexSort = GameUtil.randomTable(slot0._coIndexSort)
+		arg_3_0._coIndexSort = GameUtil.randomTable(arg_3_0._coIndexSort)
 
-		if slot0._nowCoIndex == slot0._coIndexSort[1] then
-			slot0._nowCoIndex = table.remove(slot0._coIndexSort, 2)
+		if arg_3_0._nowCoIndex == arg_3_0._coIndexSort[1] then
+			arg_3_0._nowCoIndex = table.remove(arg_3_0._coIndexSort, 2)
 		else
-			slot0._nowCoIndex = table.remove(slot0._coIndexSort, 1)
+			arg_3_0._nowCoIndex = table.remove(arg_3_0._coIndexSort, 1)
 		end
 	end
 
-	slot1 = gohelper.cloneInPlace(slot0._item)
+	local var_3_1 = gohelper.cloneInPlace(arg_3_0._item)
 
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(var_3_1, true)
 
-	slot2 = ToughBattleEnum.WordPlace[slot0._nowPosIndex]
+	local var_3_2 = ToughBattleEnum.WordPlace[arg_3_0._nowPosIndex]
 
-	recthelper.setAnchor(slot1.transform, slot2.x, slot2.y)
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot1, ToughBattleWordComp, {
-		co = lua_siege_battle_word.configList[slot0._nowCoIndex],
-		res = slot0._wordRes
+	recthelper.setAnchor(var_3_1.transform, var_3_2.x, var_3_2.y)
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_3_1, ToughBattleWordComp, {
+		co = lua_siege_battle_word.configList[arg_3_0._nowCoIndex],
+		res = arg_3_0._wordRes
 	})
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._createWord, slot0)
+function var_0_0.onClose(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._createWord, arg_4_0)
 end
 
-return slot0
+return var_0_0

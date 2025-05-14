@@ -1,217 +1,232 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1DecomposeFilterView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1DecomposeFilterView", package.seeall)
 
-slot0 = class("Season123_2_1DecomposeFilterView", BaseView)
+local var_0_0 = class("Season123_2_1DecomposeFilterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gorare = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_rare")
-	slot0._gorareContainer = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer")
-	slot0._gorareItem = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer/#go_rareItem")
-	slot0._gotag = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_tag")
-	slot0._scrolltag = gohelper.findChildScrollRect(slot0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag")
-	slot0._gotagContainer = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer")
-	slot0._gotagItem = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer/#go_tagItem")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#btn_reset")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#btn_confirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gorare = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_rare")
+	arg_1_0._gorareContainer = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer")
+	arg_1_0._gorareItem = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer/#go_rareItem")
+	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag")
+	arg_1_0._scrolltag = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag")
+	arg_1_0._gotagContainer = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer")
+	arg_1_0._gotagItem = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer/#go_tagItem")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_reset")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_confirm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnresetOnClick(slot0)
-	for slot4, slot5 in pairs(slot0.rareSelectTab) do
-		slot0.rareSelectTab[slot4] = false
+function var_0_0._btnresetOnClick(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0.rareSelectTab) do
+		arg_5_0.rareSelectTab[iter_5_0] = false
 	end
 
-	for slot4, slot5 in pairs(slot0.tagSelectTab) do
-		slot0.tagSelectTab[slot4] = false
+	for iter_5_2, iter_5_3 in pairs(arg_5_0.tagSelectTab) do
+		arg_5_0.tagSelectTab[iter_5_2] = false
 	end
 
-	for slot4, slot5 in pairs(slot0.rareItemTab) do
-		gohelper.setActive(slot5.goSelected, false)
-		gohelper.setActive(slot5.goUnSelected, true)
+	for iter_5_4, iter_5_5 in pairs(arg_5_0.rareItemTab) do
+		gohelper.setActive(iter_5_5.goSelected, false)
+		gohelper.setActive(iter_5_5.goUnSelected, true)
 	end
 
-	for slot4, slot5 in pairs(slot0.tagItemTab) do
-		gohelper.setActive(slot5.goSelected, false)
-		gohelper.setActive(slot5.goUnSelected, true)
+	for iter_5_6, iter_5_7 in pairs(arg_5_0.tagItemTab) do
+		gohelper.setActive(iter_5_7.goSelected, false)
+		gohelper.setActive(iter_5_7.goUnSelected, true)
 	end
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	Season123DecomposeModel.instance:setRareSelectItem(slot0.rareSelectTab)
-	Season123DecomposeModel.instance:setTagSelectItem(slot0.tagSelectTab)
+function var_0_0._btnconfirmOnClick(arg_6_0)
+	Season123DecomposeModel.instance:setRareSelectItem(arg_6_0.rareSelectTab)
+	Season123DecomposeModel.instance:setTagSelectItem(arg_6_0.tagSelectTab)
 	Season123DecomposeModel.instance:clearCurSelectItem()
 	Season123DecomposeModel.instance:initList()
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnResetBatchDecomposeView)
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnDecomposeItemSelect)
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gorareItem, false)
+function var_0_0._editableInitView(arg_7_0)
+	gohelper.setActive(arg_7_0._gorareItem, false)
 
-	slot0.rareItemTab = slot0:getUserDataTb_()
-	slot0.rareSelectTab = {}
-	slot0.tagItemTab = slot0:getUserDataTb_()
-	slot0.tagSelectTab = {}
+	arg_7_0.rareItemTab = arg_7_0:getUserDataTb_()
+	arg_7_0.rareSelectTab = {}
+	arg_7_0.tagItemTab = arg_7_0:getUserDataTb_()
+	arg_7_0.tagSelectTab = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0:createRareItem()
-	slot0:createTagItem()
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:createRareItem()
+	arg_8_0:createTagItem()
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshRareSelectUI()
-	slot0:refreshTagSelectUI()
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshRareSelectUI()
+	arg_9_0:refreshTagSelectUI()
 end
 
-function slot0.refreshRareSelectUI(slot0)
-	slot0.rareSelectTab = tabletool.copy(Season123DecomposeModel.instance.rareSelectTab)
+function var_0_0.refreshRareSelectUI(arg_10_0)
+	arg_10_0.rareSelectTab = tabletool.copy(Season123DecomposeModel.instance.rareSelectTab)
 
-	for slot4, slot5 in pairs(slot0.rareItemTab) do
-		gohelper.setActive(slot5.goSelected, slot0.rareSelectTab[slot4])
-		gohelper.setActive(slot5.goUnSelected, not slot0.rareSelectTab[slot4])
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.rareItemTab) do
+		gohelper.setActive(iter_10_1.goSelected, arg_10_0.rareSelectTab[iter_10_0])
+		gohelper.setActive(iter_10_1.goUnSelected, not arg_10_0.rareSelectTab[iter_10_0])
 	end
 end
 
-function slot0.refreshTagSelectUI(slot0)
-	slot0.tagSelectTab = tabletool.copy(Season123DecomposeModel.instance.tagSelectTab)
+function var_0_0.refreshTagSelectUI(arg_11_0)
+	arg_11_0.tagSelectTab = tabletool.copy(Season123DecomposeModel.instance.tagSelectTab)
 
-	for slot4, slot5 in pairs(slot0.tagItemTab) do
-		slot6 = slot5.data.id
+	for iter_11_0, iter_11_1 in pairs(arg_11_0.tagItemTab) do
+		local var_11_0 = iter_11_1.data.id
 
-		gohelper.setActive(slot5.goSelected, slot0.tagSelectTab[slot6])
-		gohelper.setActive(slot5.goUnSelected, not slot0.tagSelectTab[slot6])
+		gohelper.setActive(iter_11_1.goSelected, arg_11_0.tagSelectTab[var_11_0])
+		gohelper.setActive(iter_11_1.goUnSelected, not arg_11_0.tagSelectTab[var_11_0])
 	end
 end
 
-function slot0.createRareItem(slot0)
-	for slot4 = 5, 1, -1 do
-		if not slot0.rareItemTab[slot4] then
-			slot5 = {
-				rare = slot4,
-				go = gohelper.clone(slot0._gorareItem, slot0._gorareContainer, "rare" .. slot4)
+function var_0_0.createRareItem(arg_12_0)
+	for iter_12_0 = 5, 1, -1 do
+		local var_12_0 = arg_12_0.rareItemTab[iter_12_0]
+
+		if not var_12_0 then
+			var_12_0 = {
+				rare = iter_12_0,
+				go = gohelper.clone(arg_12_0._gorareItem, arg_12_0._gorareContainer, "rare" .. iter_12_0)
 			}
-			slot5.goSelected = gohelper.findChild(slot5.go, "selected")
-			slot5.goUnSelected = gohelper.findChild(slot5.go, "unselected")
-			slot5.icon = gohelper.findChildImage(slot5.go, "image_rareicon")
-			slot5.txt = gohelper.findChildText(slot5.go, "tagText")
-			slot5.click = gohelper.findChildButtonWithAudio(slot5.go, "click")
-			slot0.rareItemTab[slot4] = slot5
+			var_12_0.goSelected = gohelper.findChild(var_12_0.go, "selected")
+			var_12_0.goUnSelected = gohelper.findChild(var_12_0.go, "unselected")
+			var_12_0.icon = gohelper.findChildImage(var_12_0.go, "image_rareicon")
+			var_12_0.txt = gohelper.findChildText(var_12_0.go, "tagText")
+			var_12_0.click = gohelper.findChildButtonWithAudio(var_12_0.go, "click")
+			arg_12_0.rareItemTab[iter_12_0] = var_12_0
 		end
 
-		gohelper.setActive(slot5.go, true)
-		gohelper.setActive(slot5.goUnSelected, true)
-		gohelper.setActive(slot5.goSelected, false)
-		UISpriteSetMgr.instance:setSeason123Sprite(slot5.icon, "v1a7_season_cardcareer_" .. slot4, true)
-		SLFramework.UGUI.GuiHelper.SetColor(slot5.txt, "#C1C1C1")
+		gohelper.setActive(var_12_0.go, true)
+		gohelper.setActive(var_12_0.goUnSelected, true)
+		gohelper.setActive(var_12_0.goSelected, false)
+		UISpriteSetMgr.instance:setSeason123Sprite(var_12_0.icon, "v1a7_season_cardcareer_" .. iter_12_0, true)
+		SLFramework.UGUI.GuiHelper.SetColor(var_12_0.txt, "#C1C1C1")
 
-		slot5.txt.text = luaLang("Season123Rare_" .. slot4)
+		var_12_0.txt.text = luaLang("Season123Rare_" .. iter_12_0)
 
-		slot5.click:AddClickListener(slot0.rareItemOnClick, slot0, slot4)
+		var_12_0.click:AddClickListener(arg_12_0.rareItemOnClick, arg_12_0, iter_12_0)
 	end
 end
 
-function slot0.rareItemOnClick(slot0, slot1)
-	slot0:setRareSelectState(slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0.rareItemTab[slot1].txt, slot0.rareSelectTab[slot1] and "#FF7C41" or "#C1C1C1")
-	gohelper.setActive(slot0.rareItemTab[slot1].goSelected, slot2)
-	gohelper.setActive(slot0.rareItemTab[slot1].goUnSelected, not slot2)
+function var_0_0.rareItemOnClick(arg_13_0, arg_13_1)
+	arg_13_0:setRareSelectState(arg_13_1)
+
+	local var_13_0 = arg_13_0.rareSelectTab[arg_13_1]
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_13_0.rareItemTab[arg_13_1].txt, var_13_0 and "#FF7C41" or "#C1C1C1")
+	gohelper.setActive(arg_13_0.rareItemTab[arg_13_1].goSelected, var_13_0)
+	gohelper.setActive(arg_13_0.rareItemTab[arg_13_1].goUnSelected, not var_13_0)
 end
 
-function slot0.setRareSelectState(slot0, slot1)
-	if slot0.rareSelectTab[slot1] then
-		slot0.rareSelectTab[slot1] = false
+function var_0_0.setRareSelectState(arg_14_0, arg_14_1)
+	if arg_14_0.rareSelectTab[arg_14_1] then
+		arg_14_0.rareSelectTab[arg_14_1] = false
 	else
-		slot0.rareSelectTab[slot1] = true
+		arg_14_0.rareSelectTab[arg_14_1] = true
 	end
 end
 
-function slot0.createTagItem(slot0)
-	gohelper.CreateObjList(slot0, slot0.tagItemShow, slot0:tagItemSort(Season123Config.instance:getSeasonTagDesc(Season123DecomposeModel.instance.curActId)), slot0._gotagContainer, slot0._gotagItem)
+function var_0_0.createTagItem(arg_15_0)
+	local var_15_0 = Season123DecomposeModel.instance.curActId
+	local var_15_1 = Season123Config.instance:getSeasonTagDesc(var_15_0)
+	local var_15_2 = arg_15_0:tagItemSort(var_15_1)
+
+	gohelper.CreateObjList(arg_15_0, arg_15_0.tagItemShow, var_15_2, arg_15_0._gotagContainer, arg_15_0._gotagItem)
 end
 
-function slot0.tagItemSort(slot0, slot1)
-	slot2 = {}
+function var_0_0.tagItemSort(arg_16_0, arg_16_1)
+	local var_16_0 = {}
+	local var_16_1 = tabletool.copy(arg_16_1)
 
-	for slot7, slot8 in pairs(tabletool.copy(slot1)) do
-		table.insert(slot2, slot8)
+	for iter_16_0, iter_16_1 in pairs(var_16_1) do
+		table.insert(var_16_0, iter_16_1)
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.order < slot1.order
+	table.sort(var_16_0, function(arg_17_0, arg_17_1)
+		return arg_17_0.order < arg_17_1.order
 	end)
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.tagItemShow(slot0, slot1, slot2, slot3)
-	slot4 = {
-		data = slot2,
-		go = slot1
+function var_0_0.tagItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = {
+		data = arg_18_2,
+		go = arg_18_1
 	}
-	slot4.goSelected = gohelper.findChild(slot4.go, "selected")
-	slot4.goUnSelected = gohelper.findChild(slot4.go, "unselected")
-	slot4.tagText = gohelper.findChildText(slot4.go, "tagText")
-	slot4.click = gohelper.findChildButtonWithAudio(slot4.go, "click")
 
-	slot4.click:AddClickListener(slot0.tagItemOnClick, slot0, slot2)
-	gohelper.setActive(slot4.goSelected, false)
-	gohelper.setActive(slot4.goUnSelected, true)
-	SLFramework.UGUI.GuiHelper.SetColor(slot4.tagText, "#C1C1C1")
+	var_18_0.goSelected = gohelper.findChild(var_18_0.go, "selected")
+	var_18_0.goUnSelected = gohelper.findChild(var_18_0.go, "unselected")
+	var_18_0.tagText = gohelper.findChildText(var_18_0.go, "tagText")
+	var_18_0.click = gohelper.findChildButtonWithAudio(var_18_0.go, "click")
 
-	slot4.tagText.text = slot2.desc
-	slot0.tagItemTab[slot2.id] = slot4
+	var_18_0.click:AddClickListener(arg_18_0.tagItemOnClick, arg_18_0, arg_18_2)
+	gohelper.setActive(var_18_0.goSelected, false)
+	gohelper.setActive(var_18_0.goUnSelected, true)
+	SLFramework.UGUI.GuiHelper.SetColor(var_18_0.tagText, "#C1C1C1")
+
+	var_18_0.tagText.text = arg_18_2.desc
+	arg_18_0.tagItemTab[arg_18_2.id] = var_18_0
 end
 
-function slot0.tagItemOnClick(slot0, slot1)
-	slot2 = slot1.id
+function var_0_0.tagItemOnClick(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_1.id
 
-	slot0:setTagSelectState(slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0.tagItemTab[slot2].tagText, slot0.tagSelectTab[slot2] and "#FF7C41" or "#C1C1C1")
-	gohelper.setActive(slot0.tagItemTab[slot2].goSelected, slot3)
-	gohelper.setActive(slot0.tagItemTab[slot2].goUnSelected, not slot3)
+	arg_19_0:setTagSelectState(var_19_0)
+
+	local var_19_1 = arg_19_0.tagSelectTab[var_19_0]
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_19_0.tagItemTab[var_19_0].tagText, var_19_1 and "#FF7C41" or "#C1C1C1")
+	gohelper.setActive(arg_19_0.tagItemTab[var_19_0].goSelected, var_19_1)
+	gohelper.setActive(arg_19_0.tagItemTab[var_19_0].goUnSelected, not var_19_1)
 end
 
-function slot0.setTagSelectState(slot0, slot1)
-	if slot0.tagSelectTab[slot1] then
-		slot0.tagSelectTab[slot1] = false
+function var_0_0.setTagSelectState(arg_20_0, arg_20_1)
+	if arg_20_0.tagSelectTab[arg_20_1] then
+		arg_20_0.tagSelectTab[arg_20_1] = false
 	else
-		slot0.tagSelectTab[slot1] = true
+		arg_20_0.tagSelectTab[arg_20_1] = true
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_21_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.rareItemTab) do
-		slot5.click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_22_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0.rareItemTab) do
+		iter_22_1.click:RemoveClickListener()
 	end
 
-	for slot4, slot5 in pairs(slot0.tagItemTab) do
-		slot5.click:RemoveClickListener()
+	for iter_22_2, iter_22_3 in pairs(arg_22_0.tagItemTab) do
+		iter_22_3.click:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

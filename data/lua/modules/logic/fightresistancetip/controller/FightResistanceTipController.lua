@@ -1,14 +1,14 @@
-module("modules.logic.fightresistancetip.controller.FightResistanceTipController", package.seeall)
+﻿module("modules.logic.fightresistancetip.controller.FightResistanceTipController", package.seeall)
 
-slot0 = class("FightResistanceTipController")
+local var_0_0 = class("FightResistanceTipController")
 
-function slot0.openFightResistanceTipView(slot0, slot1, slot2)
+function var_0_0.openFightResistanceTipView(arg_1_0, arg_1_1, arg_1_2)
 	ViewMgr.instance:openView(ViewName.FightResistanceTipView, {
-		resistanceDict = slot1,
-		screenPos = slot2
+		resistanceDict = arg_1_1,
+		screenPos = arg_1_2
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

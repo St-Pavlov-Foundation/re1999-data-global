@@ -1,47 +1,54 @@
-module("modules.logic.backpack.view.BackpackPropView", package.seeall)
+﻿module("modules.logic.backpack.view.BackpackPropView", package.seeall)
 
-slot0 = class("BackpackPropView", BaseView)
+local var_0_0 = class("BackpackPropView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollprop = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_prop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, slot0._updateItemList, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_4_0._updateItemList, arg_4_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = BackpackModel.instance:getCurCategoryId() or ItemEnum.CategoryType.Material
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = BackpackModel.instance:getCurCategoryId() or ItemEnum.CategoryType.Material
 
-	slot0.viewContainer:setCurrentSelectCategoryId(slot1)
-	BackpackPropListModel.instance:setCategoryPropItemList(BackpackModel.instance:getCategoryItemlist(slot1))
+	arg_6_0.viewContainer:setCurrentSelectCategoryId(var_6_0)
+
+	local var_6_1 = BackpackModel.instance:getCategoryItemlist(var_6_0)
+
+	BackpackPropListModel.instance:setCategoryPropItemList(var_6_1)
 end
 
-function slot0._updateItemList(slot0)
-	slot0._itemList = BackpackModel.instance:getBackpackList()
+function var_0_0._updateItemList(arg_7_0)
+	arg_7_0._itemList = BackpackModel.instance:getBackpackList()
 
-	BackpackModel.instance:setBackpackItemList(slot0._itemList)
-	slot0:onOpen()
+	BackpackModel.instance:setBackpackItemList(arg_7_0._itemList)
+	arg_7_0:onOpen()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, slot0._updateItemList, slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_9_0._updateItemList, arg_9_0)
 end
 
-return slot0
+return var_0_0

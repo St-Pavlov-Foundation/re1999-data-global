@@ -1,35 +1,37 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballCityViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballCityViewContainer", package.seeall)
 
-slot0 = class("PinballCityViewContainer", BaseViewContainer)
+local var_0_0 = class("PinballCityViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._mapViewScene = PinballCitySceneView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._mapViewScene = PinballCitySceneView.New()
 
 	return {
-		slot0._mapViewScene,
+		arg_1_0._mapViewScene,
 		PinballCityView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
+			true,
+			true,
+			false
+		})
+
 		return {
-			NavigateButtonsView.New({
-				true,
-				true,
-				false
-			})
+			var_2_0
 		}
 	end
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	if slot0._mapViewScene then
-		slot0._mapViewScene:setSceneVisible(slot1)
+function var_0_0.setVisibleInternal(arg_3_0, arg_3_1)
+	if arg_3_0._mapViewScene then
+		arg_3_0._mapViewScene:setSceneVisible(arg_3_1)
 	end
 
-	uv0.super.setVisibleInternal(slot0, slot1)
+	var_0_0.super.setVisibleInternal(arg_3_0, arg_3_1)
 end
 
-return slot0
+return var_0_0

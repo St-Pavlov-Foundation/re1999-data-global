@@ -1,350 +1,408 @@
-module("modules.common.others.TabViewGroupFit", package.seeall)
+﻿module("modules.common.others.TabViewGroupFit", package.seeall)
 
-slot0 = class("TabViewGroupFit", BaseView)
+local var_0_0 = class("TabViewGroupFit", BaseView)
 
-function slot0.ctor(slot0, slot1, slot2)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._tabContainerId = slot1 or 1
-	slot0._tabGOContainerPath = slot2
-	slot0._tabGOContainer = nil
-	slot0._tabAbLoaders = {}
-	slot0._tabCanvasGroup = {}
-	slot0._tabViews = nil
-	slot0._curTabId = nil
-	slot0._hasOpenFinish = false
-	slot0._UIBlockKey = nil
+	arg_1_0._tabContainerId = arg_1_1 or 1
+	arg_1_0._tabGOContainerPath = arg_1_2
+	arg_1_0._tabGOContainer = nil
+	arg_1_0._tabAbLoaders = {}
+	arg_1_0._tabCanvasGroup = {}
+	arg_1_0._tabViews = nil
+	arg_1_0._curTabId = nil
+	arg_1_0._hasOpenFinish = false
+	arg_1_0._UIBlockKey = nil
 end
 
-function slot0.onInitView(slot0)
-	slot0._UIBlockKey = slot0.viewName .. UIBlockKey.TabViewOpening .. slot0._tabContainerId
-	slot0._tabGOContainer = slot0.viewGO
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._UIBlockKey = arg_2_0.viewName .. UIBlockKey.TabViewOpening .. arg_2_0._tabContainerId
+	arg_2_0._tabGOContainer = arg_2_0.viewGO
 
-	if not string.nilorempty(slot0._tabGOContainerPath) then
-		slot0._tabGOContainer = gohelper.findChild(slot0.viewGO, slot0._tabGOContainerPath)
+	if not string.nilorempty(arg_2_0._tabGOContainerPath) then
+		arg_2_0._tabGOContainer = gohelper.findChild(arg_2_0.viewGO, arg_2_0._tabGOContainerPath)
 	end
 
-	if not slot0._tabGOContainer then
-		logError(slot0.viewName .. " tabGOContainer not exist: " .. slot0._tabGOContainerPath)
+	if not arg_2_0._tabGOContainer then
+		logError(arg_2_0.viewName .. " tabGOContainer not exist: " .. arg_2_0._tabGOContainerPath)
 	end
 
-	slot0._tabViews = slot0.viewContainer:buildTabViews(slot0._tabContainerId)
-	slot0._rawGetRes = slot0.viewContainer.getRes
-	slot0._rawGetResInst = slot0.viewContainer.getResInst
+	arg_2_0._tabViews = arg_2_0.viewContainer:buildTabViews(arg_2_0._tabContainerId)
+	arg_2_0._rawGetRes = arg_2_0.viewContainer.getRes
+	arg_2_0._rawGetResInst = arg_2_0.viewContainer.getResInst
 
-	slot0:_setHook()
+	arg_2_0:_setHook()
 end
 
-function slot0.onOpen(slot0)
-	slot0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, slot0._toSwitchTab, slot0)
-	slot0:_openTabView(slot0.viewParam and type(slot0.viewParam) == "table" and slot0.viewParam.defaultTabIds and slot0.viewParam.defaultTabIds[slot0._tabContainerId] or 1)
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
+
+	local var_3_0 = arg_3_0.viewParam and type(arg_3_0.viewParam) == "table" and arg_3_0.viewParam.defaultTabIds and arg_3_0.viewParam.defaultTabIds[arg_3_0._tabContainerId] or 1
+
+	arg_3_0:_openTabView(var_3_0)
 end
 
-function slot0.onOpenFinish(slot0)
-	for slot4, slot5 in pairs(slot0._tabViews) do
-		if slot0._tabAbLoaders[slot4] and slot6.isTabLoadFinished then
-			slot5:onOpenFinishInternal()
+function var_0_0.onOpenFinish(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._tabViews) do
+		local var_4_0 = arg_4_0._tabAbLoaders[iter_4_0]
+
+		if var_4_0 and var_4_0.isTabLoadFinished then
+			iter_4_1:onOpenFinishInternal()
 		end
 	end
 
-	slot0._hasOpenFinish = true
+	arg_4_0._hasOpenFinish = true
 end
 
-function slot0.onUpdateParam(slot0)
-	for slot4, slot5 in pairs(slot0._tabViews) do
-		if slot0._tabAbLoaders[slot4] and slot6.isTabLoadFinished then
-			slot5:onUpdateParamInternal()
+function var_0_0.onUpdateParam(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._tabViews) do
+		local var_5_0 = arg_5_0._tabAbLoaders[iter_5_0]
+
+		if var_5_0 and var_5_0.isTabLoadFinished then
+			iter_5_1:onUpdateParamInternal()
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0._hasOpenFinish = false
-	slot4 = slot0._toSwitchTab
-	slot5 = slot0
+function var_0_0.onClose(arg_6_0)
+	arg_6_0._hasOpenFinish = false
 
-	slot0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, slot4, slot5)
+	arg_6_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_6_0._toSwitchTab, arg_6_0)
 
-	for slot4, slot5 in pairs(slot0._tabViews) do
-		slot0:_closeTabView(slot4)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._tabViews) do
+		arg_6_0:_closeTabView(iter_6_0)
 	end
 end
 
-function slot0.onCloseFinish(slot0)
-	for slot4, slot5 in pairs(slot0._tabViews) do
-		if slot0._tabAbLoaders[slot4] and slot6.isTabLoadFinished then
-			slot5:onCloseFinishInternal()
+function var_0_0.onCloseFinish(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._tabViews) do
+		local var_7_0 = arg_7_0._tabAbLoaders[iter_7_0]
+
+		if var_7_0 and var_7_0.isTabLoadFinished then
+			iter_7_1:onCloseFinishInternal()
 		end
 	end
 
-	slot0._curTabId = nil
+	arg_7_0._curTabId = nil
 end
 
-function slot0.removeEvents(slot0)
-	if slot0._tabViews then
-		for slot4, slot5 in pairs(slot0._tabViews) do
-			if slot0._tabAbLoaders[slot4] and slot6.isTabLoadFinished then
-				slot5:removeEventsInternal()
+function var_0_0.removeEvents(arg_8_0)
+	if arg_8_0._tabViews then
+		for iter_8_0, iter_8_1 in pairs(arg_8_0._tabViews) do
+			local var_8_0 = arg_8_0._tabAbLoaders[iter_8_0]
+
+			if var_8_0 and var_8_0.isTabLoadFinished then
+				iter_8_1:removeEventsInternal()
 			end
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_resetHook()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0:_resetHook()
 
-	if slot0._tabViews then
-		for slot4, slot5 in pairs(slot0._tabViews) do
-			if slot0._tabAbLoaders[slot4] and slot6.isTabLoadFinished then
-				slot5:onDestroyViewInternal()
-				slot5:__onDispose()
+	if arg_9_0._tabViews then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._tabViews) do
+			local var_9_0 = arg_9_0._tabAbLoaders[iter_9_0]
+
+			if var_9_0 and var_9_0.isTabLoadFinished then
+				iter_9_1:onDestroyViewInternal()
+				iter_9_1:__onDispose()
 			end
 		end
 	end
 
-	for slot4, slot5 in pairs(slot0._tabAbLoaders) do
-		slot5:dispose()
+	for iter_9_2, iter_9_3 in pairs(arg_9_0._tabAbLoaders) do
+		iter_9_3:dispose()
 	end
 
-	slot0._tabAbLoaders = nil
-	slot0._tabCanvasGroup = nil
-	slot0._tabGOContainer = nil
-	slot0._tabViews = nil
+	arg_9_0._tabAbLoaders = nil
+	arg_9_0._tabCanvasGroup = nil
+	arg_9_0._tabGOContainer = nil
+	arg_9_0._tabViews = nil
 end
 
-function slot0.getTabContainerId(slot0)
-	return slot0._tabContainerId
+function var_0_0.getTabContainerId(arg_10_0)
+	return arg_10_0._tabContainerId
 end
 
-function slot0.getCurTabId(slot0)
-	return slot0._curTabId
+function var_0_0.getCurTabId(arg_11_0)
+	return arg_11_0._curTabId
 end
 
-function slot0._toSwitchTab(slot0, slot1, slot2)
-	if slot1 == slot0._tabContainerId then
-		slot0:_openTabView(slot2)
+function var_0_0._toSwitchTab(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == arg_12_0._tabContainerId then
+		arg_12_0:_openTabView(arg_12_2)
 	end
 end
 
-function slot0._openTabView(slot0, slot1)
-	slot0:_switchCloseTabView(slot0._curTabId)
+function var_0_0._openTabView(arg_13_0, arg_13_1)
+	arg_13_0:_switchCloseTabView(arg_13_0._curTabId)
 
-	slot0._curTabId = slot1
+	arg_13_0._curTabId = arg_13_1
 
 	ViewMgr.instance:dispatchEvent(ViewEvent.BeforeOpenTabView, {
-		tabGroupView = slot0,
-		viewName = slot0.viewName,
-		tabView = slot0._tabViews[slot0._curTabId]
+		tabGroupView = arg_13_0,
+		viewName = arg_13_0.viewName,
+		tabView = arg_13_0._tabViews[arg_13_0._curTabId]
 	})
 
-	if slot0._tabAbLoaders[slot0._curTabId] then
-		if not slot2.isTabLoadFinished then
+	local var_13_0 = arg_13_0._tabAbLoaders[arg_13_0._curTabId]
+
+	if var_13_0 then
+		if not var_13_0.isTabLoadFinished then
 			return
 		end
 
-		slot0:_setVisible(slot0._curTabId, true)
+		arg_13_0:_setVisible(arg_13_0._curTabId, true)
 
-		if slot0._tabViews[slot0._curTabId].onTabSwitchOpen then
-			slot3:onTabSwitchOpen()
+		local var_13_1 = arg_13_0._tabViews[arg_13_0._curTabId]
+
+		if var_13_1.onTabSwitchOpen then
+			var_13_1:onTabSwitchOpen()
 		end
 
-		if slot0._tabOpenFinishCallback then
-			slot0._tabOpenFinishCallback(slot0._tabOpenFinishCallbackObj, slot0._curTabId, slot3, false)
+		if arg_13_0._tabOpenFinishCallback then
+			arg_13_0._tabOpenFinishCallback(arg_13_0._tabOpenFinishCallbackObj, arg_13_0._curTabId, var_13_1, false)
 		end
 	else
-		slot0._tabAbLoaders[slot0._curTabId] = MultiAbLoader.New()
+		local var_13_2 = MultiAbLoader.New()
 
-		if slot0.viewContainer:getSetting().tabRes and slot4[slot0._tabContainerId] and slot4[slot0._tabContainerId][slot0._curTabId] then
-			UIBlockMgr.instance:startBlock(slot0._UIBlockKey)
-			slot3:setPathList(slot5)
-			slot3:startLoad(slot0._finishCallback, slot0)
+		arg_13_0._tabAbLoaders[arg_13_0._curTabId] = var_13_2
+
+		local var_13_3 = arg_13_0.viewContainer:getSetting().tabRes
+		local var_13_4 = var_13_3 and var_13_3[arg_13_0._tabContainerId] and var_13_3[arg_13_0._tabContainerId][arg_13_0._curTabId]
+
+		if var_13_4 then
+			UIBlockMgr.instance:startBlock(arg_13_0._UIBlockKey)
+			var_13_2:setPathList(var_13_4)
+			var_13_2:startLoad(arg_13_0._finishCallback, arg_13_0)
 		else
-			logError(string.format("TabView no res: tabContainerId_%d, tabId_%d", slot0._tabContainerId, slot0._curTabId))
+			logError(string.format("TabView no res: tabContainerId_%d, tabId_%d", arg_13_0._tabContainerId, arg_13_0._curTabId))
 		end
 	end
 end
 
-function slot0._switchCloseTabView(slot0, slot1)
-	if slot1 and slot0._tabAbLoaders[slot1] then
-		if slot2.isLoading then
-			slot2:dispose()
+function var_0_0._switchCloseTabView(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1 and arg_14_0._tabAbLoaders[arg_14_1]
 
-			slot0._tabAbLoaders[slot1] = nil
+	if var_14_0 then
+		if var_14_0.isLoading then
+			var_14_0:dispose()
 
-			UIBlockMgr.instance:endBlock(slot0._UIBlockKey)
-		elseif slot2.isTabLoadFinished then
-			if slot0._tabViews[slot1].onTabSwitchClose then
-				slot3:onTabSwitchClose()
+			arg_14_0._tabAbLoaders[arg_14_1] = nil
+
+			UIBlockMgr.instance:endBlock(arg_14_0._UIBlockKey)
+		elseif var_14_0.isTabLoadFinished then
+			local var_14_1 = arg_14_0._tabViews[arg_14_1]
+
+			if var_14_1.onTabSwitchClose then
+				var_14_1:onTabSwitchClose()
 			end
 
-			slot0:_setVisible(slot1, false)
+			arg_14_0:_setVisible(arg_14_1, false)
 
-			if slot0._tabCloseFinishCallback then
-				slot0._tabCloseFinishCallback(slot0._tabCloseFinishCallbackObj, slot1, slot3)
+			if arg_14_0._tabCloseFinishCallback then
+				arg_14_0._tabCloseFinishCallback(arg_14_0._tabCloseFinishCallbackObj, arg_14_1, var_14_1)
 			end
 		end
 	end
 end
 
-function slot0._closeTabView(slot0, slot1)
-	if slot1 and slot0._tabAbLoaders[slot1] then
-		if slot2.isLoading then
-			slot2:dispose()
+function var_0_0._closeTabView(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1 and arg_15_0._tabAbLoaders[arg_15_1]
 
-			slot0._tabAbLoaders[slot1] = nil
+	if var_15_0 then
+		if var_15_0.isLoading then
+			var_15_0:dispose()
 
-			UIBlockMgr.instance:endBlock(slot0._UIBlockKey)
-		elseif slot2.isTabLoadFinished then
-			if slot0._tabViews[slot1].onTabSwitchClose then
-				slot3:onTabSwitchClose(true)
+			arg_15_0._tabAbLoaders[arg_15_1] = nil
+
+			UIBlockMgr.instance:endBlock(arg_15_0._UIBlockKey)
+		elseif var_15_0.isTabLoadFinished then
+			local var_15_1 = arg_15_0._tabViews[arg_15_1]
+
+			if var_15_1.onTabSwitchClose then
+				var_15_1:onTabSwitchClose(true)
 			end
 
-			slot3:onCloseInternal()
+			var_15_1:onCloseInternal()
 
-			if slot0._keepCloseVisible then
+			if arg_15_0._keepCloseVisible then
 				return
 			end
 
-			slot0:_setVisible(slot1, false)
+			arg_15_0:_setVisible(arg_15_1, false)
 		end
 	end
 end
 
-function slot0._setVisible(slot0, slot1, slot2)
-	if not slot0._tabCanvasGroup then
+function var_0_0._setVisible(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_0._tabCanvasGroup then
 		return
 	end
 
-	if not slot0._tabCanvasGroup[slot1] then
-		slot0._tabCanvasGroup[slot1] = gohelper.onceAddComponent(slot0._tabViews[slot1].viewGO, typeof(UnityEngine.CanvasGroup))
+	local var_16_0 = arg_16_0._tabCanvasGroup[arg_16_1]
+
+	if not var_16_0 then
+		local var_16_1 = arg_16_0._tabViews[arg_16_1].viewGO
+
+		var_16_0 = gohelper.onceAddComponent(var_16_1, typeof(UnityEngine.CanvasGroup))
+		arg_16_0._tabCanvasGroup[arg_16_1] = var_16_0
 	end
 
-	if slot2 then
-		slot3.alpha = 1
-		slot3.interactable = true
-		slot3.blocksRaycasts = true
+	if arg_16_2 then
+		var_16_0.alpha = 1
+		var_16_0.interactable = true
+		var_16_0.blocksRaycasts = true
 	else
-		slot3.alpha = 0
-		slot3.interactable = false
-		slot3.blocksRaycasts = false
+		var_16_0.alpha = 0
+		var_16_0.interactable = false
+		var_16_0.blocksRaycasts = false
 	end
 end
 
-function slot0.setTabCloseFinishCallback(slot0, slot1, slot2)
-	slot0._tabCloseFinishCallback = slot1
-	slot0._tabCloseFinishCallbackObj = slot2
+function var_0_0.setTabCloseFinishCallback(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._tabCloseFinishCallback = arg_17_1
+	arg_17_0._tabCloseFinishCallbackObj = arg_17_2
 end
 
-function slot0.setTabOpenFinishCallback(slot0, slot1, slot2)
-	slot0._tabOpenFinishCallback = slot1
-	slot0._tabOpenFinishCallbackObj = slot2
+function var_0_0.setTabOpenFinishCallback(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0._tabOpenFinishCallback = arg_18_1
+	arg_18_0._tabOpenFinishCallbackObj = arg_18_2
 end
 
-function slot0.setTabAlpha(slot0, slot1, slot2)
-	if not slot0._tabCanvasGroup then
+function var_0_0.setTabAlpha(arg_19_0, arg_19_1, arg_19_2)
+	if not arg_19_0._tabCanvasGroup then
 		return
 	end
 
-	if not slot0._tabCanvasGroup[slot1] then
-		if not slot0._tabViews[slot1].viewGO then
+	local var_19_0 = arg_19_0._tabCanvasGroup[arg_19_1]
+
+	if not var_19_0 then
+		local var_19_1 = arg_19_0._tabViews[arg_19_1].viewGO
+
+		if not var_19_1 then
 			return
 		end
 
-		slot0._tabCanvasGroup[slot1] = gohelper.onceAddComponent(slot4, typeof(UnityEngine.CanvasGroup))
+		var_19_0 = gohelper.onceAddComponent(var_19_1, typeof(UnityEngine.CanvasGroup))
+		arg_19_0._tabCanvasGroup[arg_19_1] = var_19_0
 	end
 
-	if slot3 then
-		slot3.alpha = slot2
+	if var_19_0 then
+		var_19_0.alpha = arg_19_2
 	end
 end
 
-function slot0.keepCloseVisible(slot0, slot1)
-	slot0._keepCloseVisible = slot1
+function var_0_0.keepCloseVisible(arg_20_0, arg_20_1)
+	arg_20_0._keepCloseVisible = arg_20_1
 end
 
-function slot0._setHook(slot0)
-	function slot0.viewContainer.getRes(slot0, slot1)
-		if uv0:_getRes(slot1) then
-			return slot2
+function var_0_0._setHook(arg_21_0)
+	function arg_21_0.viewContainer.getRes(arg_22_0, arg_22_1)
+		local var_22_0 = arg_21_0:_getRes(arg_22_1)
+
+		if var_22_0 then
+			return var_22_0
 		end
 
-		return uv0._rawGetRes(slot0, slot1)
+		return arg_21_0._rawGetRes(arg_22_0, arg_22_1)
 	end
 
-	function slot0.viewContainer.getResInst(slot0, slot1, slot2, slot3)
-		if uv0:_getResInst(slot1, slot2, slot3) then
-			return slot4
+	function arg_21_0.viewContainer.getResInst(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+		local var_23_0 = arg_21_0:_getResInst(arg_23_1, arg_23_2, arg_23_3)
+
+		if var_23_0 then
+			return var_23_0
 		end
 
-		return uv0._rawGetResInst(slot0, slot1, slot2, slot3)
+		return arg_21_0._rawGetResInst(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
 	end
 end
 
-function slot0._resetHook(slot0)
-	slot0.viewContainer.getRes = slot0._rawGetRes
-	slot0.viewContainer.getResInst = slot0._rawGetResInst
-	slot0._rawGetRes = nil
-	slot0._rawGetResInst = nil
+function var_0_0._resetHook(arg_24_0)
+	arg_24_0.viewContainer.getRes = arg_24_0._rawGetRes
+	arg_24_0.viewContainer.getResInst = arg_24_0._rawGetResInst
+	arg_24_0._rawGetRes = nil
+	arg_24_0._rawGetResInst = nil
 end
 
-function slot0._getRes(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._tabAbLoaders) do
-		if slot6.isTabLoadFinished and slot6:getAssetItem(slot1) then
-			return slot7:GetResource(slot1)
+function var_0_0._getRes(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._tabAbLoaders) do
+		if iter_25_1.isTabLoadFinished then
+			local var_25_0 = iter_25_1:getAssetItem(arg_25_1)
+
+			if var_25_0 then
+				return var_25_0:GetResource(arg_25_1)
+			end
 		end
 	end
 
 	return nil
 end
 
-function slot0._getResInst(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in pairs(slot0._tabAbLoaders) do
-		if slot8.isTabLoadFinished and slot8:getAssetItem(slot1) and slot9:GetResource(slot1) then
-			return gohelper.clone(slot10, slot2, slot3)
+function var_0_0._getResInst(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	for iter_26_0, iter_26_1 in pairs(arg_26_0._tabAbLoaders) do
+		if iter_26_1.isTabLoadFinished then
+			local var_26_0 = iter_26_1:getAssetItem(arg_26_1)
+
+			if var_26_0 then
+				local var_26_1 = var_26_0:GetResource(arg_26_1)
+
+				if var_26_1 then
+					return gohelper.clone(var_26_1, arg_26_2, arg_26_3)
+				end
+			end
 		end
 	end
 end
 
-function slot0._finishCallback(slot0, slot1)
-	UIBlockMgr.instance:endBlock(slot0._UIBlockKey)
+function var_0_0._finishCallback(arg_27_0, arg_27_1)
+	UIBlockMgr.instance:endBlock(arg_27_0._UIBlockKey)
 
-	if slot0._tabViews[slot0._curTabId] then
-		slot1.isTabLoadFinished = true
+	local var_27_0 = arg_27_1:getFirstAssetItem():GetResource()
+	local var_27_1 = gohelper.clone(var_27_0, arg_27_0._tabGOContainer)
+	local var_27_2 = arg_27_0._tabViews[arg_27_0._curTabId]
 
-		slot5:__onInit()
+	if var_27_2 then
+		arg_27_1.isTabLoadFinished = true
 
-		slot5.rootGO = slot0.viewGO
-		slot5.viewGO = gohelper.clone(slot1:getFirstAssetItem():GetResource(), slot0._tabGOContainer)
-		slot5.tabContainer = slot0
-		slot5.viewContainer = slot0.viewContainer
-		slot5.viewName = slot0.viewName
-		slot5.viewParam = slot0.viewParam
+		var_27_2:__onInit()
 
-		slot0:_setVisible(slot0._curTabId, true)
-		slot5:onInitViewInternal()
-		slot5:addEventsInternal()
-		slot5:onOpenInternal()
+		var_27_2.rootGO = arg_27_0.viewGO
+		var_27_2.viewGO = var_27_1
+		var_27_2.tabContainer = arg_27_0
+		var_27_2.viewContainer = arg_27_0.viewContainer
+		var_27_2.viewName = arg_27_0.viewName
+		var_27_2.viewParam = arg_27_0.viewParam
 
-		if slot5.onTabSwitchOpen then
-			slot5:onTabSwitchOpen()
+		arg_27_0:_setVisible(arg_27_0._curTabId, true)
+		var_27_2:onInitViewInternal()
+		var_27_2:addEventsInternal()
+		var_27_2:onOpenInternal()
+
+		if var_27_2.onTabSwitchOpen then
+			var_27_2:onTabSwitchOpen()
 		end
 
-		if slot0._hasOpenFinish then
-			slot5:onOpenFinishInternal()
+		if arg_27_0._hasOpenFinish then
+			var_27_2:onOpenFinishInternal()
 		end
 
-		if slot0._tabOpenFinishCallback then
-			slot0._tabOpenFinishCallback(slot0._tabOpenFinishCallbackObj, slot0._curTabId, slot5, true)
+		if arg_27_0._tabOpenFinishCallback then
+			arg_27_0._tabOpenFinishCallback(arg_27_0._tabOpenFinishCallbackObj, arg_27_0._curTabId, var_27_2, true)
 		end
 	else
-		logError(string.format("TabView not exist: tabContainerId_%d, tabId_%d", slot0._tabContainerId, slot0._curTabId))
+		logError(string.format("TabView not exist: tabContainerId_%d, tabId_%d", arg_27_0._tabContainerId, arg_27_0._curTabId))
 	end
 end
 
-function slot0._hasLoaded(slot0, slot1)
-	slot2 = slot0._tabAbLoaders and slot0._tabAbLoaders[slot1]
+function var_0_0._hasLoaded(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._tabAbLoaders and arg_28_0._tabAbLoaders[arg_28_1]
 
-	return slot2 and slot2.isTabLoadFinished
+	return var_28_0 and var_28_0.isTabLoadFinished
 end
 
-return slot0
+return var_0_0

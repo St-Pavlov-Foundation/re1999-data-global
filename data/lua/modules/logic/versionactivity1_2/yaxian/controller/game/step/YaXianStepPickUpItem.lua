@@ -1,13 +1,14 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepPickUpItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepPickUpItem", package.seeall)
 
-slot0 = class("YaXianStepPickUpItem", YaXianStepBase)
+local var_0_0 = class("YaXianStepPickUpItem", YaXianStepBase)
 
-function slot0.start(slot0)
-	slot0:finish()
+function var_0_0.start(arg_1_0)
+	arg_1_0:finish()
 	logError("un handle Pick Up type")
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

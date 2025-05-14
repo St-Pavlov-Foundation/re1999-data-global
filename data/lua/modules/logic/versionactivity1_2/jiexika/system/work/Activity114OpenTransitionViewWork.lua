@@ -1,36 +1,39 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenTransitionViewWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenTransitionViewWork", package.seeall)
 
-slot0 = class("Activity114OpenTransitionViewWork", Activity114OpenViewWork)
+local var_0_0 = class("Activity114OpenTransitionViewWork", Activity114OpenViewWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._transitionId = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._transitionId = arg_1_1
 end
 
-function slot0.getTransitionId(slot0)
-	return slot0._transitionId
+function var_0_0.getTransitionId(arg_2_0)
+	return arg_2_0._transitionId
 end
 
-function slot0.onStart(slot0, slot1)
-	if not slot0:getTransitionId() then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getTransitionId()
+
+	if not var_3_0 then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	slot0.context.transitionId = slot2
-	slot3, slot4 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, slot0.context.transitionId)
+	arg_3_0.context.transitionId = var_3_0
 
-	if string.nilorempty(slot4) then
-		slot0.context.transitionId = nil
+	local var_3_1, var_3_2 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, arg_3_0.context.transitionId)
 
-		slot0:onDone(true)
+	if string.nilorempty(var_3_2) then
+		arg_3_0.context.transitionId = nil
+
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	slot0._viewName = ViewName.Activity114TransitionView
+	arg_3_0._viewName = ViewName.Activity114TransitionView
 
-	uv0.super.onStart(slot0, slot1)
+	var_0_0.super.onStart(arg_3_0, arg_3_1)
 end
 
-return slot0
+return var_0_0

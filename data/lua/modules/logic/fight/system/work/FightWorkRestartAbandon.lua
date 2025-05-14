@@ -1,20 +1,23 @@
-module("modules.logic.fight.system.work.FightWorkRestartAbandon", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRestartAbandon", package.seeall)
 
-slot0 = class("FightWorkRestartAbandon", BaseWork)
+local var_0_0 = class("FightWorkRestartAbandon", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightParam = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightParam = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot0.episode_config = slot0._fightParam:getCurEpisodeConfig()
-	slot0.chapter_config = DungeonConfig.instance:getChapterCO(slot0.episode_config.chapterId)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0.episode_config = arg_2_0._fightParam:getCurEpisodeConfig()
+	arg_2_0.chapter_config = DungeonConfig.instance:getChapterCO(arg_2_0.episode_config.chapterId)
 
-	if _G["FightRestartAbandonType" .. slot0.chapter_config.type] or _G["FightRestartAbandonType" .. (FightRestartSequence.RestartType2Type[slot1] or slot1)] then
-		slot0._abandon_class = slot2.New(slot0, slot0._fightParam, slot0.episode_config, slot0.chapter_config)
+	local var_2_0 = arg_2_0.chapter_config.type
+	local var_2_1 = _G["FightRestartAbandonType" .. var_2_0] or _G["FightRestartAbandonType" .. (FightRestartSequence.RestartType2Type[var_2_0] or var_2_0)]
 
-		if slot0._abandon_class:canRestart() then
-			slot0._abandon_class:abandon()
+	if var_2_1 then
+		arg_2_0._abandon_class = var_2_1.New(arg_2_0, arg_2_0._fightParam, arg_2_0.episode_config, arg_2_0.chapter_config)
+
+		if arg_2_0._abandon_class:canRestart() then
+			arg_2_0._abandon_class:abandon()
 		else
 			FightSystem.instance:cancelRestart()
 		end
@@ -23,13 +26,13 @@ function slot0.onStart(slot0)
 	end
 end
 
-function slot0.clearWork(slot0)
-	if slot0._abandon_class then
-		slot0._abandon_class:releaseEvent()
-		slot0._abandon_class:releaseSelf()
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._abandon_class then
+		arg_3_0._abandon_class:releaseEvent()
+		arg_3_0._abandon_class:releaseSelf()
 
-		slot0._abandon_class = nil
+		arg_3_0._abandon_class = nil
 	end
 end
 
-return slot0
+return var_0_0

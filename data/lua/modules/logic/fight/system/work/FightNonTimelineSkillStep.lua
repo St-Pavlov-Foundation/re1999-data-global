@@ -1,14 +1,14 @@
-module("modules.logic.fight.system.work.FightNonTimelineSkillStep", package.seeall)
+﻿module("modules.logic.fight.system.work.FightNonTimelineSkillStep", package.seeall)
 
-slot0 = class("FightNonTimelineSkillStep", BaseWork)
+local var_0_0 = class("FightNonTimelineSkillStep", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.stepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.stepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnInvokeSkill, slot0.stepMO)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	FightController.instance:dispatchEvent(FightEvent.OnInvokeSkill, arg_2_0.stepMO)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,255 +1,284 @@
-module("modules.logic.character.view.CharacterDataCultureView", package.seeall)
+﻿module("modules.logic.character.view.CharacterDataCultureView", package.seeall)
 
-slot0 = class("CharacterDataCultureView", BaseView)
+local var_0_0 = class("CharacterDataCultureView", BaseView)
 
-function slot0._getFormatStr_overseas(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0._getFormatStr_overseas(arg_1_0, arg_1_1)
+	if string.nilorempty(arg_1_1) then
 		return "", ""
 	end
 
-	slot2 = LangSettings.instance:isZh() or LangSettings.instance:isTw()
+	local var_1_0 = LangSettings.instance:isZh() or LangSettings.instance:isTw()
 
-	GameUtil.setActive01(slot0._gofirstTran, slot2)
+	GameUtil.setActive01(arg_1_0._gofirstTran, var_1_0)
 
-	if slot2 then
-		return slot0:_getFormatStr(slot1)
+	if var_1_0 then
+		return arg_1_0:_getFormatStr(arg_1_1)
 	else
-		slot3, slot4 = slot0:SwitchLangTab()
-		slot5 = string.rep(" ", slot3)
+		local var_1_1, var_1_2 = arg_1_0:SwitchLangTab()
+		local var_1_3 = string.rep(" ", var_1_1)
+		local var_1_4 = "\n" .. var_1_3
 
-		return "", slot5 .. string.gsub(slot1, "\n", "\n" .. slot5)
+		arg_1_1 = var_1_3 .. string.gsub(arg_1_1, "\n", var_1_4)
+
+		return "", arg_1_1
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._simagecentericon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_centericon")
-	slot0._simagelefticon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_lefticon")
-	slot0._simagerighticon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_righticon")
-	slot0._simagerighticon2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_righticon2")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_mask")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "content/scrollview/viewport/content/#go_content")
-	slot0._goconversation = gohelper.findChild(slot0.viewGO, "content/scrollview/viewport/content/#go_conversation")
-	slot0._gofirst = gohelper.findChild(slot0.viewGO, "content/scrollview/viewport/content/#go_first")
-	slot0._txtfirst = gohelper.findChildText(slot0.viewGO, "content/scrollview/viewport/content/#go_first/bg/#txt_first")
-	slot0._txtindenthelper = gohelper.findChildText(slot0.viewGO, "content/scrollview/viewport/content/#txt_indenthelper")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "content/scrollview")
-	slot0._txttitle1 = gohelper.findChildText(slot0.viewGO, "content/#txt_title1")
-	slot0._txttitle2 = gohelper.findChildText(slot0.viewGO, "content/#txt_title2")
-	slot0._txttitleen1 = gohelper.findChildText(slot0.viewGO, "content/#txt_titleen1")
-	slot0._txttitleen3 = gohelper.findChildText(slot0.viewGO, "content/#txt_titleen3")
-	slot0._simagepic = gohelper.findChildSingleImage(slot0.viewGO, "content/#simage_pic")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/pageicon/#btn_next")
-	slot0._btnprevious = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/pageicon/#btn_previous")
-	slot0._gomask = gohelper.findChild(slot0.viewGO, "content/#go_mask")
-	slot0._goCustomRedIcon = gohelper.findChild(slot0.viewGO, "content/scrollview/viewport/content/#go_customredicon")
-	slot0._txtCustomContent = gohelper.findChildText(slot0.viewGO, "content/scrollview/viewport/content/#txt_customcontent")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_bg")
+	arg_2_0._simagecentericon = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_centericon")
+	arg_2_0._simagelefticon = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_lefticon")
+	arg_2_0._simagerighticon = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_righticon")
+	arg_2_0._simagerighticon2 = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_righticon2")
+	arg_2_0._simagemask = gohelper.findChildSingleImage(arg_2_0.viewGO, "bg/#simage_mask")
+	arg_2_0._gocontent = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_content")
+	arg_2_0._goconversation = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_conversation")
+	arg_2_0._gofirst = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_first")
+	arg_2_0._txtfirst = gohelper.findChildText(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_first/bg/#txt_first")
+	arg_2_0._txtindenthelper = gohelper.findChildText(arg_2_0.viewGO, "content/scrollview/viewport/content/#txt_indenthelper")
+	arg_2_0._scrollview = gohelper.findChildScrollRect(arg_2_0.viewGO, "content/scrollview")
+	arg_2_0._txttitle1 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_title1")
+	arg_2_0._txttitle2 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_title2")
+	arg_2_0._txttitleen1 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_titleen1")
+	arg_2_0._txttitleen3 = gohelper.findChildText(arg_2_0.viewGO, "content/#txt_titleen3")
+	arg_2_0._simagepic = gohelper.findChildSingleImage(arg_2_0.viewGO, "content/#simage_pic")
+	arg_2_0._btnnext = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "content/pageicon/#btn_next")
+	arg_2_0._btnprevious = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "content/pageicon/#btn_previous")
+	arg_2_0._gomask = gohelper.findChild(arg_2_0.viewGO, "content/#go_mask")
+	arg_2_0._goCustomRedIcon = gohelper.findChild(arg_2_0.viewGO, "content/scrollview/viewport/content/#go_customredicon")
+	arg_2_0._txtCustomContent = gohelper.findChildText(arg_2_0.viewGO, "content/scrollview/viewport/content/#txt_customcontent")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnprevious:AddClickListener(slot0._btnpreviousOnClick, slot0)
-	slot0._scrollview:AddOnValueChanged(slot0._onContentScrollValueChanged, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnnext:AddClickListener(arg_3_0._btnnextOnClick, arg_3_0)
+	arg_3_0._btnprevious:AddClickListener(arg_3_0._btnpreviousOnClick, arg_3_0)
+	arg_3_0._scrollview:AddOnValueChanged(arg_3_0._onContentScrollValueChanged, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnext:RemoveClickListener()
-	slot0._btnprevious:RemoveClickListener()
-	slot0._scrollview:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnnext:RemoveClickListener()
+	arg_4_0._btnprevious:RemoveClickListener()
+	arg_4_0._scrollview:RemoveOnValueChanged()
 end
 
-function slot0._btnnextOnClick(slot0)
-	if slot0._selectIndex and slot0._selectIndex ~= 0 then
-		slot0:_itemOnClick(math.max(1, math.min(3, slot0._selectIndex + 1)))
+function var_0_0._btnnextOnClick(arg_5_0)
+	if arg_5_0._selectIndex and arg_5_0._selectIndex ~= 0 then
+		arg_5_0:_itemOnClick(math.max(1, math.min(3, arg_5_0._selectIndex + 1)))
 	end
 end
 
-function slot0._btnpreviousOnClick(slot0)
-	if slot0._selectIndex and slot0._selectIndex ~= 0 then
-		slot0:_itemOnClick(math.max(1, math.min(3, slot0._selectIndex - 1)))
+function var_0_0._btnpreviousOnClick(arg_6_0)
+	if arg_6_0._selectIndex and arg_6_0._selectIndex ~= 0 then
+		arg_6_0:_itemOnClick(math.max(1, math.min(3, arg_6_0._selectIndex - 1)))
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	slot0._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_fm_circle.png"))
-	slot0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	slot0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	slot0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	arg_7_0._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_fm_circle.png"))
+	arg_7_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	arg_7_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	arg_7_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	arg_7_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
 
-	slot4 = "full/bg_noise2"
+	arg_7_0._scrollcontent = gohelper.findChild(arg_7_0._scrollview.gameObject, "viewport/content")
+	arg_7_0._items = {}
 
-	slot0._simagemask:LoadImage(ResUrl.getCommonIcon(slot4))
+	for iter_7_0 = 1, 3 do
+		local var_7_0 = arg_7_0:getUserDataTb_()
 
-	slot0._scrollcontent = gohelper.findChild(slot0._scrollview.gameObject, "viewport/content")
-	slot0._items = {}
+		var_7_0.go = gohelper.findChild(arg_7_0.viewGO, "content/container/go_item" .. iter_7_0)
+		var_7_0.index = iter_7_0
+		var_7_0.gochapteron = gohelper.findChild(var_7_0.go, "go_chapteron")
+		var_7_0.gochapteroff = gohelper.findChild(var_7_0.go, "go_chapteroff")
+		var_7_0.gotreasurebox = gohelper.findChild(var_7_0.go, "go_treasurebox")
+		var_7_0.gochapterunlock = gohelper.findChild(var_7_0.go, "go_chapterunlock")
+		var_7_0.txtunlockconditine = gohelper.findChildText(var_7_0.go, "go_chapterunlock/txt_unlockconditine")
+		var_7_0.btn = SLFramework.UGUI.UIClickListener.Get(var_7_0.go)
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "content/container/go_item" .. slot4)
-		slot5.index = slot4
-		slot5.gochapteron = gohelper.findChild(slot5.go, "go_chapteron")
-		slot5.gochapteroff = gohelper.findChild(slot5.go, "go_chapteroff")
-		slot5.gotreasurebox = gohelper.findChild(slot5.go, "go_treasurebox")
-		slot5.gochapterunlock = gohelper.findChild(slot5.go, "go_chapterunlock")
-		slot5.txtunlockconditine = gohelper.findChildText(slot5.go, "go_chapterunlock/txt_unlockconditine")
-		slot5.btn = SLFramework.UGUI.UIClickListener.Get(slot5.go)
-
-		slot5.btn:AddClickListener(slot0._itemOnClick, slot0, slot5.index)
-		table.insert(slot0._items, slot5)
+		var_7_0.btn:AddClickListener(arg_7_0._itemOnClick, arg_7_0, var_7_0.index)
+		table.insert(arg_7_0._items, var_7_0)
 	end
 
-	slot0._txtcontent = slot0._gocontent:GetComponent(typeof(ZProj.CustomTMP))
+	arg_7_0._txtcontent = arg_7_0._gocontent:GetComponent(typeof(ZProj.CustomTMP))
 
-	slot0._txtcontent:SetOffset(0, -13, false, true)
-	slot0._txtcontent:SetSize(5)
-	slot0._txtcontent:SetAlignment(0, -2)
+	arg_7_0._txtcontent:SetOffset(0, -13, false, true)
+	arg_7_0._txtcontent:SetSize(5)
+	arg_7_0._txtcontent:SetAlignment(0, -2)
 
-	slot0._txtconversation = slot0._goconversation:GetComponent(typeof(ZProj.CustomTMP))
+	arg_7_0._txtconversation = arg_7_0._goconversation:GetComponent(typeof(ZProj.CustomTMP))
 
-	slot0._txtconversation:SetOffset(0, -13, false, true)
-	slot0._txtconversation:SetSize(5)
-	slot0._txtconversation:SetAlignment(0, -2)
+	arg_7_0._txtconversation:SetOffset(0, -13, false, true)
+	arg_7_0._txtconversation:SetSize(5)
+	arg_7_0._txtconversation:SetAlignment(0, -2)
 
-	slot0._scrollHeight = recthelper.getHeight(slot0._scrollview.transform)
+	arg_7_0._scrollHeight = recthelper.getHeight(arg_7_0._scrollview.transform)
 
-	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItemFail, slot0._unlockItemCallbackFail, slot0)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItemFail, arg_7_0._unlockItemCallbackFail, arg_7_0)
 
-	slot0._gofirstTran = slot0._gofirst.transform
-	slot0._gofirstPosX, slot0._gofirstPosY = recthelper.getAnchor(slot0._gofirstTran)
+	arg_7_0._gofirstTran = arg_7_0._gofirst.transform
+	arg_7_0._gofirstPosX, arg_7_0._gofirstPosY = recthelper.getAnchor(arg_7_0._gofirstTran)
 
-	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItem, slot0._unlockItemCallback, slot0)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroDataAddUnlockItem, arg_7_0._unlockItemCallback, arg_7_0)
 end
 
-function slot0._itemOnClick(slot0, slot1)
-	if slot0._selectIndex == slot1 then
+function var_0_0._itemOnClick(arg_8_0, arg_8_1)
+	if arg_8_0._selectIndex == arg_8_1 then
 		return
 	end
 
-	slot2 = CharacterDataConfig.instance:getCharacterDataCO(slot0._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, slot1)
+	local var_8_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_8_0._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, arg_8_1)
 
-	if slot0._items[slot1]._lock then
-		slot4 = ""
+	if arg_8_0._items[arg_8_1]._lock then
+		local var_8_1 = string.splitToNumber(var_8_0.unlockConditine, "#")
+		local var_8_2 = ""
 
-		GameFacade.showToast(slot2.lockText, (string.splitToNumber(slot2.unlockConditine, "#")[1] ~= CharacterDataConfig.unlockConditionEpisodeID or DungeonConfig.instance:getEpisodeCO(slot3[2]).name) and (slot3[1] ~= CharacterDataConfig.unlockConditionRankID or {
-			slot3[2] - 1
-		}) and slot3[2])
+		if var_8_1[1] == CharacterDataConfig.unlockConditionEpisodeID then
+			var_8_2 = DungeonConfig.instance:getEpisodeCO(var_8_1[2]).name
+		elseif var_8_1[1] == CharacterDataConfig.unlockConditionRankID then
+			var_8_2 = {
+				var_8_1[2] - 1
+			}
+		else
+			var_8_2 = var_8_1[2]
+		end
+
+		GameFacade.showToast(var_8_0.lockText, var_8_2)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Ui_Role_Story_Switch)
-		slot0:_refreshSelect(slot1)
-		slot0:_refreshDesc(slot1)
+		arg_8_0:_refreshSelect(arg_8_1)
+		arg_8_0:_refreshDesc(arg_8_1)
 
-		slot0._selectIndex = slot1
+		arg_8_0._selectIndex = arg_8_1
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0.viewGO, true)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_10_0)
+	gohelper.setActive(arg_10_0.viewGO, true)
+	arg_10_0:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_culture_open)
 end
 
-function slot0._unlockItemCallback(slot0, slot1, slot2)
+function var_0_0._unlockItemCallback(arg_11_0, arg_11_1, arg_11_2)
 	UIBlockMgr.instance:endBlock("playRewardsAnimtion")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	if slot2 >= 5 then
-		slot0:_refreshSelect(slot0._selectIndex)
+	if arg_11_2 >= 5 then
+		arg_11_0:_refreshSelect(arg_11_0._selectIndex)
 	end
 end
 
-function slot0._unlockItemCallbackFail(slot0)
+function var_0_0._unlockItemCallbackFail(arg_12_0)
 	UIBlockMgr.instance:endBlock("playRewardsAnimtion")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0._refreshUI(slot0)
-	if slot0._heroId and slot0._heroId == CharacterDataModel.instance:getCurHeroId() then
-		slot0:_statEnd()
-		slot0:_statStart()
+function var_0_0._refreshUI(arg_13_0)
+	if arg_13_0._heroId and arg_13_0._heroId == CharacterDataModel.instance:getCurHeroId() then
+		arg_13_0:_statEnd()
+		arg_13_0:_statStart()
 
 		return
 	end
 
-	slot0._heroId = CharacterDataModel.instance:getCurHeroId()
-	slot0.heroMo = HeroModel.instance:getByHeroId(slot0._heroId)
+	arg_13_0._heroId = CharacterDataModel.instance:getCurHeroId()
+	arg_13_0.heroMo = HeroModel.instance:getByHeroId(arg_13_0._heroId)
 
-	slot0:_initInfo()
+	arg_13_0:_initInfo()
 end
 
-function slot0._initInfo(slot0)
-	slot0._selectIndex = 0
+function var_0_0._initInfo(arg_14_0)
+	arg_14_0._selectIndex = 0
 
-	for slot4 = 1, 3 do
-		slot6 = CharacterDataConfig.instance:checkLockCondition(CharacterDataConfig.instance:getCharacterDataCO(slot0._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, slot4))
+	for iter_14_0 = 1, 3 do
+		local var_14_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_14_0._heroId, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, iter_14_0)
+		local var_14_1 = CharacterDataConfig.instance:checkLockCondition(var_14_0)
 
-		gohelper.setActive(slot0._items[slot4].golock, slot6)
+		gohelper.setActive(arg_14_0._items[iter_14_0].golock, var_14_1)
 
-		slot0._items[slot4]._lock = slot6
+		arg_14_0._items[iter_14_0]._lock = var_14_1
 
-		if slot6 then
-			slot8 = {}
-			slot0._items[slot4].txtunlockconditine.text = GameUtil.getSubPlaceholderLuaLang(ToastConfig.instance:getToastCO(slot5.lockText).tips, (string.splitToNumber(slot5.unlockConditine, "#")[1] ~= CharacterDataConfig.unlockConditionEpisodeID or {
-				DungeonConfig.instance:getEpisodeCO(slot7[2]).name
-			}) and (slot7[1] ~= CharacterDataConfig.unlockConditionRankID or {
-				slot7[2] - 1
-			}) and {
-				slot7[2]
-			})
-		elseif slot0._selectIndex == 0 then
-			slot0._selectIndex = slot4
+		if var_14_1 then
+			local var_14_2 = string.splitToNumber(var_14_0.unlockConditine, "#")
+			local var_14_3 = {}
+
+			if var_14_2[1] == CharacterDataConfig.unlockConditionEpisodeID then
+				var_14_3 = {
+					DungeonConfig.instance:getEpisodeCO(var_14_2[2]).name
+				}
+			elseif var_14_2[1] == CharacterDataConfig.unlockConditionRankID then
+				var_14_3 = {
+					var_14_2[2] - 1
+				}
+			else
+				var_14_3 = {
+					var_14_2[2]
+				}
+			end
+
+			local var_14_4 = ToastConfig.instance:getToastCO(var_14_0.lockText).tips
+			local var_14_5 = GameUtil.getSubPlaceholderLuaLang(var_14_4, var_14_3)
+
+			arg_14_0._items[iter_14_0].txtunlockconditine.text = var_14_5
+		elseif arg_14_0._selectIndex == 0 then
+			arg_14_0._selectIndex = iter_14_0
 		end
 	end
 
-	gohelper.setActive(slot0._btnnext.gameObject, slot0._selectIndex and slot0._selectIndex ~= 3)
-	gohelper.setActive(slot0._btnprevious.gameObject, slot0._selectIndex and slot0._selectIndex ~= 1)
-	slot0:_refreshSelect(slot0._selectIndex)
-	slot0:_refreshDesc(slot0._selectIndex)
+	gohelper.setActive(arg_14_0._btnnext.gameObject, arg_14_0._selectIndex and arg_14_0._selectIndex ~= 3)
+	gohelper.setActive(arg_14_0._btnprevious.gameObject, arg_14_0._selectIndex and arg_14_0._selectIndex ~= 1)
+	arg_14_0:_refreshSelect(arg_14_0._selectIndex)
+	arg_14_0:_refreshDesc(arg_14_0._selectIndex)
 end
 
-function slot0._refreshDesc(slot0, slot1)
-	slot0:_statEnd()
-	slot0:_statStart()
+function var_0_0._refreshDesc(arg_15_0, arg_15_1)
+	arg_15_0:_statEnd()
+	arg_15_0:_statStart()
 
-	if slot1 == 0 then
-		gohelper.setActive(slot0._scrollview.gameObject, false)
-		gohelper.setActive(slot0._txttitle1.gameObject, false)
-		gohelper.setActive(slot0._txttitle2.gameObject, false)
-		gohelper.setActive(slot0._txttitleen1.gameObject, false)
-		gohelper.setActive(slot0._txttitleen3.gameObject, false)
-		gohelper.setActive(slot0._txttitleen4.gameObject, false)
-		gohelper.setActive(slot0._simagepic.gameObject, false)
+	if arg_15_1 == 0 then
+		gohelper.setActive(arg_15_0._scrollview.gameObject, false)
+		gohelper.setActive(arg_15_0._txttitle1.gameObject, false)
+		gohelper.setActive(arg_15_0._txttitle2.gameObject, false)
+		gohelper.setActive(arg_15_0._txttitleen1.gameObject, false)
+		gohelper.setActive(arg_15_0._txttitleen3.gameObject, false)
+		gohelper.setActive(arg_15_0._txttitleen4.gameObject, false)
+		gohelper.setActive(arg_15_0._simagepic.gameObject, false)
 
 		return
 	end
 
-	if slot0._items[slot1]._lock then
+	if arg_15_0._items[arg_15_1]._lock then
 		return
 	end
 
-	slot0._config = CharacterDataConfig.instance:getCharacterDataCO(slot0._heroId, slot0.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, slot1)
-	slot3 = not string.nilorempty(slot0._config.title) and string.split(slot2, "\n") or {}
-	slot0._txttitle1.text = slot3[1] or ""
-	slot0._txttitle2.text = slot3[2] or ""
+	arg_15_0._config = CharacterDataConfig.instance:getCharacterDataCO(arg_15_0._heroId, arg_15_0.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, arg_15_1)
 
-	gohelper.setActive(slot0._txttitleen1.gameObject, slot1 ~= 3 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN)
-	gohelper.setActive(slot0._txttitleen3.gameObject, slot1 == 3)
+	local var_15_0 = arg_15_0._config.title
+	local var_15_1 = not string.nilorempty(var_15_0) and string.split(var_15_0, "\n") or {}
 
-	if slot1 == 3 then
-		slot0._txttitleen3.text = "[UTTU" .. luaLang("multiple") .. tostring(HeroConfig.instance:getHeroCO(slot0._heroId).name) .. "]"
+	arg_15_0._txttitle1.text = var_15_1[1] or ""
+	arg_15_0._txttitle2.text = var_15_1[2] or ""
+
+	gohelper.setActive(arg_15_0._txttitleen1.gameObject, arg_15_1 ~= 3 and GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN)
+	gohelper.setActive(arg_15_0._txttitleen3.gameObject, arg_15_1 == 3)
+
+	if arg_15_1 == 3 then
+		local var_15_2 = HeroConfig.instance:getHeroCO(arg_15_0._heroId)
+
+		arg_15_0._txttitleen3.text = "[UTTU" .. luaLang("multiple") .. tostring(var_15_2.name) .. "]"
 	else
-		slot0._txttitleen1.text = slot0._config.titleEn
+		arg_15_0._txttitleen1.text = arg_15_0._config.titleEn
 	end
 
-	slot4 = slot3[2] and {
+	local var_15_3 = var_15_1[2] and {
 		-282.6,
 		-134.5
 	} or {
@@ -257,174 +286,220 @@ function slot0._refreshDesc(slot0, slot1)
 		-151.3
 	}
 
-	recthelper.setAnchor(slot0._txttitle1.transform, slot4[1], slot4[2])
-	recthelper.setAnchorY(slot0._txttitleen1.transform, slot3[2] and -216.5 or -181.5)
-	gohelper.setActive(slot0._gocontent, slot1 ~= 3 and slot0._config.isCustom ~= 1)
-	gohelper.setActive(slot0._gofirst, slot1 ~= 3 and slot0._config.isCustom ~= 1)
-	gohelper.setActive(slot0._txtCustomContent.gameObject, slot0._config.isCustom == 1)
-	gohelper.setActive(slot0._goconversation, slot1 == 3 and slot0._config.isCustom ~= 1)
-	gohelper.setActive(slot0._goCustomRedIcon, false)
+	recthelper.setAnchor(arg_15_0._txttitle1.transform, var_15_3[1], var_15_3[2])
+	recthelper.setAnchorY(arg_15_0._txttitleen1.transform, var_15_1[2] and -216.5 or -181.5)
+	gohelper.setActive(arg_15_0._gocontent, arg_15_1 ~= 3 and arg_15_0._config.isCustom ~= 1)
+	gohelper.setActive(arg_15_0._gofirst, arg_15_1 ~= 3 and arg_15_0._config.isCustom ~= 1)
+	gohelper.setActive(arg_15_0._txtCustomContent.gameObject, arg_15_0._config.isCustom == 1)
+	gohelper.setActive(arg_15_0._goconversation, arg_15_1 == 3 and arg_15_0._config.isCustom ~= 1)
+	gohelper.setActive(arg_15_0._goCustomRedIcon, false)
 
-	if slot1 == 3 then
-		slot6 = slot0:_getAfterContent(slot0._config.text)
+	local var_15_4 = arg_15_0._config.text
 
-		slot0._txtconversation:SetText(GameUtil.getMarkText(slot6), GameUtil.getMarkIndexList(slot6))
-	elseif slot0._config.isCustom == 1 then
-		slot0._txtCustomContent.text = slot5
+	if arg_15_1 == 3 then
+		local var_15_5 = arg_15_0:_getAfterContent(var_15_4)
+		local var_15_6 = GameUtil.getMarkText(var_15_5)
+		local var_15_7 = GameUtil.getMarkIndexList(var_15_5)
 
-		TaskDispatcher.runDelay(slot0._setCustomRedIconPos, slot0, 0.01)
+		arg_15_0._txtconversation:SetText(var_15_6, var_15_7)
+	elseif arg_15_0._config.isCustom == 1 then
+		arg_15_0._txtCustomContent.text = var_15_4
+
+		TaskDispatcher.runDelay(arg_15_0._setCustomRedIconPos, arg_15_0, 0.01)
 	else
-		slot0._txtfirst.text, slot7 = slot0:_getFormatStr_overseas(slot5)
-		slot10 = slot0:_getFirstOffsetByLang()
+		local var_15_8, var_15_9 = arg_15_0:_getFormatStr_overseas(var_15_4)
+		local var_15_10 = GameUtil.getMarkText(var_15_9)
+		local var_15_11 = GameUtil.getMarkIndexList(var_15_9)
+		local var_15_12 = arg_15_0:_getFirstOffsetByLang()
 
-		recthelper.setAnchor(slot0._gofirstTran, slot0._gofirstPosX + slot10.x, slot0._gofirstPosY + slot10.y)
-		slot0._txtcontent:SetText(GameUtil.getMarkText(slot7), GameUtil.getMarkIndexList(slot7))
+		recthelper.setAnchor(arg_15_0._gofirstTran, arg_15_0._gofirstPosX + var_15_12.x, arg_15_0._gofirstPosY + var_15_12.y)
+
+		arg_15_0._txtfirst.text = var_15_8
+
+		arg_15_0._txtcontent:SetText(var_15_10, var_15_11)
 	end
 
-	slot0._scrollview.verticalNormalizedPosition = 1
+	arg_15_0._scrollview.verticalNormalizedPosition = 1
 
-	if slot1 == 1 then
-		slot0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu1.png"))
-	elseif slot1 == 2 then
-		slot0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu2.png"))
+	if arg_15_1 == 1 then
+		arg_15_0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu1.png"))
+	elseif arg_15_1 == 2 then
+		arg_15_0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu2.png"))
 	else
-		slot0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu3.png"))
+		arg_15_0._simagepic:LoadImage(ResUrl.getCharacterDataIcon("tu3.png"))
 	end
 
-	gohelper.setActive(slot0._scrollview.gameObject, true)
-	gohelper.setActive(slot0._txttitle1.gameObject, true)
-	gohelper.setActive(slot0._txttitle2.gameObject, true)
-	gohelper.setActive(slot0._simagepic.gameObject, true)
-	ZProj.UGUIHelper.RebuildLayout(slot0._scrollcontent.transform)
+	gohelper.setActive(arg_15_0._scrollview.gameObject, true)
+	gohelper.setActive(arg_15_0._txttitle1.gameObject, true)
+	gohelper.setActive(arg_15_0._txttitle2.gameObject, true)
+	gohelper.setActive(arg_15_0._simagepic.gameObject, true)
+	ZProj.UGUIHelper.RebuildLayout(arg_15_0._scrollcontent.transform)
 
-	slot0._couldScroll = slot0._scrollHeight < recthelper.getHeight(slot0._scrollcontent.transform) and true or false
+	arg_15_0._couldScroll = recthelper.getHeight(arg_15_0._scrollcontent.transform) > arg_15_0._scrollHeight and true or false
 
-	gohelper.setActive(slot0._gomask, slot0._couldScroll)
+	gohelper.setActive(arg_15_0._gomask, arg_15_0._couldScroll)
 end
 
-function slot0._setCustomRedIconPos(slot0)
-	gohelper.setActive(slot0._goCustomRedIcon, true)
+function var_0_0._setCustomRedIconPos(arg_16_0)
+	gohelper.setActive(arg_16_0._goCustomRedIcon, true)
 
-	slot1 = slot0._txtCustomContent:GetTextInfo(slot0._config.text)
-	slot4 = slot1.characterInfo[slot1.lineInfo[0].firstVisibleCharacterIndex]
-	slot5 = slot4.bottomLeft
-	slot8 = slot4.topRight
-	slot0._goCustomRedIcon.transform.position = slot0._txtCustomContent.transform:TransformPoint((slot5.x + slot4.bottomRight.x) * 0.5, (slot5.y + slot4.topLeft.y) * 0.5, 0)
+	local var_16_0 = arg_16_0._txtCustomContent:GetTextInfo(arg_16_0._config.text)
+	local var_16_1 = var_16_0.characterInfo[var_16_0.lineInfo[0].firstVisibleCharacterIndex]
+	local var_16_2 = var_16_1.bottomLeft
+	local var_16_3 = var_16_1.topLeft
+	local var_16_4 = var_16_1.bottomRight
+	local var_16_5 = var_16_1.topRight
+	local var_16_6 = (var_16_2.x + var_16_4.x) * 0.5
+	local var_16_7 = (var_16_2.y + var_16_3.y) * 0.5
+	local var_16_8 = arg_16_0._txtCustomContent.transform:TransformPoint(var_16_6, var_16_7, 0)
+
+	arg_16_0._goCustomRedIcon.transform.position = var_16_8
 end
 
-function slot0._refreshSelect(slot0, slot1)
-	for slot5 = 1, 3 do
-		gohelper.setActive(slot0._items[slot5].gochapteron, false)
-		gohelper.setActive(slot0._items[slot5].gochapteroff, false)
-		gohelper.setActive(slot0._items[slot5].gotreasurebox, false)
-		gohelper.setActive(slot0._items[slot5].gochapterunlock, false)
+function var_0_0._refreshSelect(arg_17_0, arg_17_1)
+	for iter_17_0 = 1, 3 do
+		gohelper.setActive(arg_17_0._items[iter_17_0].gochapteron, false)
+		gohelper.setActive(arg_17_0._items[iter_17_0].gochapteroff, false)
+		gohelper.setActive(arg_17_0._items[iter_17_0].gotreasurebox, false)
+		gohelper.setActive(arg_17_0._items[iter_17_0].gochapterunlock, false)
 
-		if slot5 == slot1 then
-			gohelper.setActive(slot0._items[slot5].gochapteron, true)
-			gohelper.setActive(slot0._btnnext.gameObject, slot1 ~= 3 and HeroModel.instance:checkGetRewards(slot0._heroId, slot5 == 3 and 4 + slot5 or 5 + slot5))
-			gohelper.setActive(slot0._btnprevious.gameObject, slot1 ~= 1)
+		local var_17_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_17_0._heroId, arg_17_0.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, iter_17_0)
+		local var_17_1 = iter_17_0 == 3 and 4 + iter_17_0 or 5 + iter_17_0
+		local var_17_2 = iter_17_0 == arg_17_1
+		local var_17_3 = CharacterDataConfig.instance:checkLockCondition(var_17_0)
+		local var_17_4 = HeroModel.instance:checkGetRewards(arg_17_0._heroId, var_17_1)
+		local var_17_5 = HeroModel.instance:checkGetRewards(arg_17_0._heroId, 4 + iter_17_0)
 
-			if not HeroModel.instance:checkGetRewards(slot0._heroId, 4 + slot5) and not string.nilorempty(slot6.unlockRewards) then
-				if CharacterDataConfig.instance:checkLockCondition(CharacterDataConfig.instance:getCharacterDataCO(slot0._heroId, slot0.heroMo.skin, CharacterEnum.CharacterDataItemType.Culture, slot5)) then
-					slot13 = ""
+		if var_17_2 then
+			gohelper.setActive(arg_17_0._items[iter_17_0].gochapteron, true)
+			gohelper.setActive(arg_17_0._btnnext.gameObject, arg_17_1 ~= 3 and var_17_4)
+			gohelper.setActive(arg_17_0._btnprevious.gameObject, arg_17_1 ~= 1)
 
-					GameFacade.showToast(slot6.lockText, (string.splitToNumber(slot6.unlockConditine, "#")[1] ~= CharacterDataConfig.unlockConditionEpisodeID or DungeonConfig.instance:getEpisodeCO(slot12[2]).name) and (slot12[1] == CharacterDataConfig.unlockConditionRankID and slot12[2] - 1 or slot12[2]))
-				elseif not slot11 then
+			if not var_17_5 and not string.nilorempty(var_17_0.unlockRewards) then
+				if var_17_3 then
+					local var_17_6 = string.splitToNumber(var_17_0.unlockConditine, "#")
+					local var_17_7 = ""
+
+					if var_17_6[1] == CharacterDataConfig.unlockConditionEpisodeID then
+						var_17_7 = DungeonConfig.instance:getEpisodeCO(var_17_6[2]).name
+					elseif var_17_6[1] == CharacterDataConfig.unlockConditionRankID then
+						var_17_7 = var_17_6[2] - 1
+					else
+						var_17_7 = var_17_6[2]
+					end
+
+					GameFacade.showToast(var_17_0.lockText, var_17_7)
+				elseif not var_17_5 then
 					UIBlockMgr.instance:startBlock("playRewardsAnimtion")
 					UIBlockMgrExtend.setNeedCircleMv(false)
-					HeroRpc.instance:sendItemUnlockRequest(slot0._heroId, slot6.id)
+					HeroRpc.instance:sendItemUnlockRequest(arg_17_0._heroId, var_17_0.id)
 				end
 			end
-		elseif slot9 then
-			gohelper.setActive(slot0._items[slot5].gochapterunlock, true)
-		elseif slot11 or string.nilorempty(slot6.unlockRewards) then
-			gohelper.setActive(slot0._items[slot5].gochapteroff, true)
+		elseif var_17_3 then
+			gohelper.setActive(arg_17_0._items[iter_17_0].gochapterunlock, true)
+		elseif var_17_5 or string.nilorempty(var_17_0.unlockRewards) then
+			gohelper.setActive(arg_17_0._items[iter_17_0].gochapteroff, true)
 		else
-			gohelper.setActive(slot0._items[slot5].gotreasurebox, true)
+			gohelper.setActive(arg_17_0._items[iter_17_0].gotreasurebox, true)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	gohelper.setActive(slot0.viewGO, false)
-	slot0:_statEnd()
+function var_0_0.onClose(arg_18_0)
+	gohelper.setActive(arg_18_0.viewGO, false)
+	arg_18_0:_statEnd()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagecentericon:UnLoadImage()
-	slot0._simagelefticon:UnLoadImage()
-	slot0._simagerighticon:UnLoadImage()
-	slot0._simagerighticon2:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0._simagebg:UnLoadImage()
+	arg_19_0._simagecentericon:UnLoadImage()
+	arg_19_0._simagelefticon:UnLoadImage()
+	arg_19_0._simagerighticon:UnLoadImage()
+	arg_19_0._simagerighticon2:UnLoadImage()
+	arg_19_0._simagemask:UnLoadImage()
 
-	for slot4 = 1, 3 do
-		slot0._items[slot4].btn:RemoveClickListener()
+	for iter_19_0 = 1, 3 do
+		arg_19_0._items[iter_19_0].btn:RemoveClickListener()
 	end
 
-	slot0._simagepic:UnLoadImage()
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItemFail, slot0._unlockItemCallbackFail, slot0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItem, slot0._unlockItemCallback, slot0)
-	TaskDispatcher.cancelTask(slot0._setCustomRedIconPos, slot0)
+	arg_19_0._simagepic:UnLoadImage()
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItemFail, arg_19_0._unlockItemCallbackFail, arg_19_0)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroDataAddUnlockItem, arg_19_0._unlockItemCallback, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._setCustomRedIconPos, arg_19_0)
 end
 
-function slot0._getFormatStr(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0._getFormatStr(arg_20_0, arg_20_1)
+	if string.nilorempty(arg_20_1) then
 		return "", ""
 	end
 
-	slot2, slot3 = slot0.SwitchLangTab()
+	local var_20_0, var_20_1 = arg_20_0.SwitchLangTab()
+	local var_20_2 = "\n" .. string.rep(" ", var_20_0)
 
-	if not string.nilorempty(string.match(string.gsub(slot1, "\n", "\n" .. string.rep(" ", slot2)), "^<.->.-<.->")) then
-		slot6, slot7, slot8, slot9, slot10 = string.find(slot5, "(<.->)(.-)(<.->)")
-		slot11 = string.format("%s%s%s", slot8, string.nilorempty(slot9) and "" or GameUtil.utf8sub(slot9, 1, 1), slot10)
-		slot12 = ""
+	arg_20_1 = string.gsub(arg_20_1, "\n", var_20_2)
 
-		if GameUtil.utf8len(slot9) >= 2 then
-			slot12 = string.format("%s%s%s", slot8, GameUtil.utf8sub(slot9, 2, GameUtil.utf8len(slot9) - 1), slot10)
+	local var_20_3 = string.match(arg_20_1, "^<.->.-<.->")
+
+	if not string.nilorempty(var_20_3) then
+		local var_20_4, var_20_5, var_20_6, var_20_7, var_20_8 = string.find(var_20_3, "(<.->)(.-)(<.->)")
+		local var_20_9 = string.nilorempty(var_20_7) and "" or GameUtil.utf8sub(var_20_7, 1, 1)
+		local var_20_10 = string.format("%s%s%s", var_20_6, var_20_9, var_20_8)
+		local var_20_11 = ""
+
+		if GameUtil.utf8len(var_20_7) >= 2 then
+			var_20_11 = string.format("%s%s%s", var_20_6, GameUtil.utf8sub(var_20_7, 2, GameUtil.utf8len(var_20_7) - 1), var_20_8)
 		end
 
-		return slot11, string.format("<size=28><space=2.82em></size> %s", slot12 .. string.gsub(slot1, "^<.->.-<.->", ""))
+		arg_20_1 = string.gsub(arg_20_1, "^<.->.-<.->", "")
+
+		local var_20_12 = var_20_11 .. arg_20_1
+		local var_20_13 = string.format("<size=28><space=2.82em></size> %s", var_20_12)
+
+		return var_20_10, var_20_13
 	else
-		slot6 = GameUtil.utf8sub(slot1, 1, 1)
-		slot7 = ""
+		local var_20_14 = GameUtil.utf8sub(arg_20_1, 1, 1)
+		local var_20_15 = ""
 
-		if GameUtil.utf8len(slot1) >= 2 then
-			slot7 = string.format("<size=28><space=%fem></size> %s", slot3, GameUtil.utf8sub(slot1, 2, GameUtil.utf8len(slot1) - 1))
+		if GameUtil.utf8len(arg_20_1) >= 2 then
+			var_20_15 = string.format("<size=28><space=%fem></size> %s", var_20_1, GameUtil.utf8sub(arg_20_1, 2, GameUtil.utf8len(arg_20_1) - 1))
 		end
 
-		return slot6, slot7
+		return var_20_14, var_20_15
 	end
 end
 
-function slot0.SwitchLangTab(slot0)
-	if ({
-		cn = function ()
-			uv0 = 6
-			uv1 = 2.75
+function var_0_0.SwitchLangTab(arg_21_0)
+	local var_21_0
+	local var_21_1
+	local var_21_2 = ({
+		cn = function()
+			var_21_0 = 6
+			var_21_1 = 2.75
 		end,
-		en = function ()
-			uv0 = 6
-			uv1 = 1.83
+		en = function()
+			var_21_0 = 6
+			var_21_1 = 1.83
 		end,
-		jp = function ()
-			uv0 = 4
-			uv1 = 1.63
+		jp = function()
+			var_21_0 = 4
+			var_21_1 = 1.63
 		end,
-		kr = function ()
-			uv0 = 3
-			uv1 = 1.63
+		kr = function()
+			var_21_0 = 3
+			var_21_1 = 1.63
 		end
-	})[LangSettings.instance:getCurLangShortcut()] then
-		slot4()
+	})[LangSettings.instance:getCurLangShortcut()]
 
-		return nil, 
+	if var_21_2 then
+		var_21_2()
+
+		return var_21_0, var_21_1
 	else
 		return 6, 2.75
 	end
 end
 
-function slot0._getFirstOffsetByLang(slot0)
+function var_0_0._getFirstOffsetByLang(arg_26_0)
 	return ({
 		kr = {
 			x = -31,
@@ -436,64 +511,88 @@ function slot0._getFirstOffsetByLang(slot0)
 	}
 end
 
-function slot0._getAfterContent(slot0, slot1)
-	slot2 = {}
-	slot3 = nil
-	slot7 = "\n"
+function var_0_0._getAfterContent(arg_27_0, arg_27_1)
+	arg_27_1 = string.gsub(arg_27_1, "：", ":")
 
-	for slot7, slot8 in ipairs(string.split(string.gsub(slot1, "：", ":"), slot7)) do
-		if string.split(slot8, ":") and #slot3 >= 2 and not tabletool.indexOf(slot2, slot3[1]) then
-			table.insert(slot2, string.gsub(slot3[1], "%-", "%%-"))
+	local var_27_0 = {}
+	local var_27_1
+
+	for iter_27_0, iter_27_1 in ipairs(string.split(arg_27_1, "\n")) do
+		local var_27_2 = string.split(iter_27_1, ":")
+
+		if var_27_2 and #var_27_2 >= 2 and not tabletool.indexOf(var_27_0, var_27_2[1]) then
+			local var_27_3 = var_27_2[1]
+			local var_27_4 = string.gsub(var_27_3, "%-", "%%-")
+
+			table.insert(var_27_0, var_27_4)
 		end
 	end
 
-	slot5 = nil
+	local var_27_5 = 0
+	local var_27_6
 
-	for slot9, slot10 in ipairs(slot2) do
-		if 0 < SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0._txtindenthelper, string.gsub(slot10, "<[^<>][^<>]->", "")) then
-			slot4 = slot5
+	for iter_27_2, iter_27_3 in ipairs(var_27_0) do
+		local var_27_7 = string.gsub(iter_27_3, "<[^<>][^<>]->", "")
+		local var_27_8 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_27_0._txtindenthelper, var_27_7)
+
+		if var_27_5 < var_27_8 then
+			var_27_5 = var_27_8
 		end
 	end
 
-	table.insert({}, string.gsub(slot6.name, "%-", "%%-") .. ":")
-	table.insert({}, string.format("<indent=0%%%%><color=#943308><b><cspace=%d>%s</cspace></b></color>：</indent><indent=%d%%%%>", GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and -7 or 0, slot6.name, math.max(slot4, SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0._txtindenthelper, HeroConfig.instance:getHeroCO(slot0._heroId).name)) / 28 * (GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and 3.5 or 5) + 3))
+	local var_27_9 = HeroConfig.instance:getHeroCO(arg_27_0._heroId)
+	local var_27_10 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_27_0._txtindenthelper, var_27_9.name)
+	local var_27_11 = GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and 3.5 or 5
+	local var_27_12 = math.max(var_27_5, var_27_10) / 28 * var_27_11 + 3
+	local var_27_13 = {}
+	local var_27_14 = {}
+	local var_27_15 = GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.JP and -7 or 0
+	local var_27_16 = var_27_9.name
+	local var_27_17 = string.gsub(var_27_16, "%-", "%%-")
 
-	for slot16, slot17 in ipairs(slot2) do
-		table.insert(slot9, slot17 .. ":")
-		table.insert(slot10, string.format("<indent=0%%%%><color=#352725><b><cspace=%d>%s</cspace></b></color>:</indent><indent=%d%%%%>", slot11, slot17, slot5))
+	table.insert(var_27_13, var_27_17 .. ":")
+	table.insert(var_27_14, string.format("<indent=0%%%%><color=#943308><b><cspace=%d>%s</cspace></b></color>：</indent><indent=%d%%%%>", var_27_15, var_27_9.name, var_27_12))
+
+	for iter_27_4, iter_27_5 in ipairs(var_27_0) do
+		table.insert(var_27_13, iter_27_5 .. ":")
+		table.insert(var_27_14, string.format("<indent=0%%%%><color=#352725><b><cspace=%d>%s</cspace></b></color>:</indent><indent=%d%%%%>", var_27_15, iter_27_5, var_27_12))
 	end
 
-	for slot16 = 1, #slot9 do
-		slot1 = string.gsub(slot1, slot9[slot16], slot10[slot16])
+	for iter_27_6 = 1, #var_27_13 do
+		arg_27_1 = string.gsub(arg_27_1, var_27_13[iter_27_6], var_27_14[iter_27_6])
 	end
 
 	if GameConfig:GetCurLangType() == LangSettings.jp then
-		slot1 = string.gsub(string.gsub(slot1, ":", ""), "：", "")
+		arg_27_1 = string.gsub(arg_27_1, ":", "")
+		arg_27_1 = string.gsub(arg_27_1, "：", "")
 	elseif GameConfig:GetCurLangType() == LangSettings.en then
-		slot1 = string.gsub(slot1, "：", ":")
+		arg_27_1 = string.gsub(arg_27_1, "：", ":")
 	end
 
-	return slot1
+	return arg_27_1
 end
 
-function slot0._statStart(slot0)
-	slot0._viewTime = ServerTime.now()
+function var_0_0._statStart(arg_28_0)
+	arg_28_0._viewTime = ServerTime.now()
 end
 
-function slot0._statEnd(slot0)
-	if not slot0._heroId then
+function var_0_0._statEnd(arg_29_0)
+	if not arg_29_0._heroId then
 		return
 	end
 
-	if slot0._viewTime then
-		CharacterController.instance:statCharacterData(StatEnum.EventName.ReadHeroCulture, slot0._heroId, slot0._config and slot0._config.id, ServerTime.now() - slot0._viewTime, slot0.viewParam and type(slot0.viewParam) == "table" and slot0.viewParam.fromHandbookView)
+	if arg_29_0._viewTime then
+		local var_29_0 = ServerTime.now() - arg_29_0._viewTime
+		local var_29_1 = arg_29_0.viewParam and type(arg_29_0.viewParam) == "table" and arg_29_0.viewParam.fromHandbookView
+
+		CharacterController.instance:statCharacterData(StatEnum.EventName.ReadHeroCulture, arg_29_0._heroId, arg_29_0._config and arg_29_0._config.id, var_29_0, var_29_1)
 	end
 
-	slot0._viewTime = nil
+	arg_29_0._viewTime = nil
 end
 
-function slot0._onContentScrollValueChanged(slot0, slot1)
-	gohelper.setActive(slot0._gomask, slot0._couldScroll and gohelper.getRemindFourNumberFloat(slot0._scrollview.verticalNormalizedPosition) > 0)
+function var_0_0._onContentScrollValueChanged(arg_30_0, arg_30_1)
+	gohelper.setActive(arg_30_0._gomask, arg_30_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_30_0._scrollview.verticalNormalizedPosition) <= 0))
 end
 
-return slot0
+return var_0_0

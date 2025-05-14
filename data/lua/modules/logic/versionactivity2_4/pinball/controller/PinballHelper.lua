@@ -1,172 +1,204 @@
-module("modules.logic.versionactivity2_4.pinball.controller.PinballHelper", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.controller.PinballHelper", package.seeall)
 
-slot0 = class("PinballHelper")
+local var_0_0 = class("PinballHelper")
 
-function slot0.getHitInfo(slot0, slot1)
-	if slot0.shape == PinballEnum.Shape.Rect and slot1.shape == PinballEnum.Shape.Rect then
-		return uv0.getHitRectRect(slot0, slot1)
-	elseif slot0.shape == PinballEnum.Shape.Circle and slot1.shape == PinballEnum.Shape.Circle then
-		return uv0.getHitCirCleCirCle(slot0, slot1)
-	elseif slot0.shape == PinballEnum.Shape.Rect and slot1.shape == PinballEnum.Shape.Circle then
-		return uv0.getHitRectCircle(slot0, slot1)
-	elseif slot0.shape == PinballEnum.Shape.Circle and slot1.shape == PinballEnum.Shape.Rect then
-		slot2, slot3, slot4 = uv0.getHitRectCircle(slot1, slot0)
+function var_0_0.getHitInfo(arg_1_0, arg_1_1)
+	if arg_1_0.shape == PinballEnum.Shape.Rect and arg_1_1.shape == PinballEnum.Shape.Rect then
+		return var_0_0.getHitRectRect(arg_1_0, arg_1_1)
+	elseif arg_1_0.shape == PinballEnum.Shape.Circle and arg_1_1.shape == PinballEnum.Shape.Circle then
+		return var_0_0.getHitCirCleCirCle(arg_1_0, arg_1_1)
+	elseif arg_1_0.shape == PinballEnum.Shape.Rect and arg_1_1.shape == PinballEnum.Shape.Circle then
+		return var_0_0.getHitRectCircle(arg_1_0, arg_1_1)
+	elseif arg_1_0.shape == PinballEnum.Shape.Circle and arg_1_1.shape == PinballEnum.Shape.Rect then
+		local var_1_0, var_1_1, var_1_2 = var_0_0.getHitRectCircle(arg_1_1, arg_1_0)
 
-		return slot2, slot3, slot4 and -slot4
+		var_1_2 = var_1_2 and -var_1_2
+
+		return var_1_0, var_1_1, var_1_2
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	width = 0,
 	height = 0,
 	angle = 0,
 	y = 0,
 	x = 0
 }
-slot2 = {
+local var_0_2 = {
 	width = 0,
 	height = 0,
 	angle = 0,
 	y = 0,
 	x = 0
 }
-slot3 = Vector2()
+local var_0_3 = Vector2()
 
-function slot0.getHitRectCircle(slot0, slot1)
-	if slot0.angle ~= 0 then
-		uv0.x = slot1.x - slot0.x
-		uv0.y = slot1.y - slot0.y
-		uv1.x = slot0.x + uv0.x * math.cos(-slot0.angle * Mathf.Deg2Rad) - uv0.y * math.sin(-slot0.angle * Mathf.Deg2Rad)
-		uv1.y = slot0.y + uv0.x * math.sin(-slot0.angle * Mathf.Deg2Rad) + uv0.y * math.cos(-slot0.angle * Mathf.Deg2Rad)
-		uv1.width = slot1.width
-		uv1.height = slot1.height
-		uv2.x = slot0.x
-		uv2.y = slot0.y
-		uv2.width = slot0.width
-		uv2.height = slot0.height
-		slot2, slot3 = uv3.getHitRectCircle(uv2, uv1)
+function var_0_0.getHitRectCircle(arg_2_0, arg_2_1)
+	if arg_2_0.angle ~= 0 then
+		var_0_3.x = arg_2_1.x - arg_2_0.x
+		var_0_3.y = arg_2_1.y - arg_2_0.y
+		var_0_1.x = arg_2_0.x + var_0_3.x * math.cos(-arg_2_0.angle * Mathf.Deg2Rad) - var_0_3.y * math.sin(-arg_2_0.angle * Mathf.Deg2Rad)
+		var_0_1.y = arg_2_0.y + var_0_3.x * math.sin(-arg_2_0.angle * Mathf.Deg2Rad) + var_0_3.y * math.cos(-arg_2_0.angle * Mathf.Deg2Rad)
+		var_0_1.width = arg_2_1.width
+		var_0_1.height = arg_2_1.height
+		var_0_2.x = arg_2_0.x
+		var_0_2.y = arg_2_0.y
+		var_0_2.width = arg_2_0.width
+		var_0_2.height = arg_2_0.height
 
-		if slot2 then
-			uv0.x = slot2 - slot0.x
-			uv0.y = slot3 - slot0.y
-			slot2 = slot0.x + uv0.x * math.cos(slot0.angle * Mathf.Deg2Rad) - uv0.y * math.sin(slot0.angle * Mathf.Deg2Rad)
-			slot3 = slot0.y + uv0.x * math.sin(slot0.angle * Mathf.Deg2Rad) + uv0.y * math.cos(slot0.angle * Mathf.Deg2Rad)
+		local var_2_0, var_2_1 = var_0_0.getHitRectCircle(var_0_2, var_0_1)
+
+		if var_2_0 then
+			var_0_3.x = var_2_0 - arg_2_0.x
+			var_0_3.y = var_2_1 - arg_2_0.y
+			var_2_0 = arg_2_0.x + var_0_3.x * math.cos(arg_2_0.angle * Mathf.Deg2Rad) - var_0_3.y * math.sin(arg_2_0.angle * Mathf.Deg2Rad)
+			var_2_1 = arg_2_0.y + var_0_3.x * math.sin(arg_2_0.angle * Mathf.Deg2Rad) + var_0_3.y * math.cos(arg_2_0.angle * Mathf.Deg2Rad)
 		end
 
-		return slot2, slot3, PinballEnum.Dir.None
+		return var_2_0, var_2_1, PinballEnum.Dir.None
 	end
 
-	slot3 = math.abs(slot0.y - slot1.y)
+	local var_2_2 = math.abs(arg_2_0.x - arg_2_1.x)
+	local var_2_3 = math.abs(arg_2_0.y - arg_2_1.y)
 
-	if math.abs(slot0.x - slot1.x) > slot0.width + slot1.width or slot3 > slot0.height + slot1.width then
+	if var_2_2 > arg_2_0.width + arg_2_1.width or var_2_3 > arg_2_0.height + arg_2_1.width then
 		return
 	end
 
-	slot4, slot5, slot6 = nil
+	local var_2_4
+	local var_2_5
+	local var_2_6
 
-	if slot2 <= slot0.width and slot3 <= slot0.height then
-		if slot0.width - slot2 > slot0.height - slot3 then
-			slot4 = slot1.x
-			slot5 = slot0.y < slot1.y and slot0.y + slot0.height or slot0.y - slot0.height
-			slot6 = slot0.y < slot1.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	if var_2_2 <= arg_2_0.width and var_2_3 <= arg_2_0.height then
+		if arg_2_0.width - var_2_2 > arg_2_0.height - var_2_3 then
+			var_2_4 = arg_2_1.x
+			var_2_5 = arg_2_1.y > arg_2_0.y and arg_2_0.y + arg_2_0.height or arg_2_0.y - arg_2_0.height
+			var_2_6 = arg_2_1.y > arg_2_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
 		else
-			slot4 = slot0.x < slot1.x and slot0.x + slot0.width or slot0.x - slot0.width
-			slot5 = slot1.y
-			slot6 = slot1.x < slot0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+			var_2_4 = arg_2_1.x > arg_2_0.x and arg_2_0.x + arg_2_0.width or arg_2_0.x - arg_2_0.width
+			var_2_5 = arg_2_1.y
+			var_2_6 = arg_2_1.x < arg_2_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 		end
-	elseif slot2 <= slot0.width then
-		slot4 = slot1.x
-		slot5 = slot0.y < slot1.y and slot0.y + slot0.height or slot0.y - slot0.height
-		slot6 = slot0.y < slot1.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
-	elseif slot3 <= slot0.height then
-		slot4 = slot0.x < slot1.x and slot0.x + slot0.width or slot0.x - slot0.width
-		slot5 = slot1.y
-		slot6 = slot1.x < slot0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+	elseif var_2_2 <= arg_2_0.width then
+		var_2_4 = arg_2_1.x
+		var_2_5 = arg_2_1.y > arg_2_0.y and arg_2_0.y + arg_2_0.height or arg_2_0.y - arg_2_0.height
+		var_2_6 = arg_2_1.y > arg_2_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	elseif var_2_3 <= arg_2_0.height then
+		var_2_4 = arg_2_1.x > arg_2_0.x and arg_2_0.x + arg_2_0.width or arg_2_0.x - arg_2_0.width
+		var_2_5 = arg_2_1.y
+		var_2_6 = arg_2_1.x < arg_2_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 	else
-		for slot10 = -1, 1, 2 do
-			for slot14 = -1, 1, 2 do
-				if (slot0.x + slot10 * slot0.width - slot1.x)^2 + (slot0.y + slot14 * slot0.height - slot1.y)^2 <= slot1.width^2 then
-					slot4 = slot15
-					slot5 = slot16
-					slot6 = slot0.y < slot1.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+		for iter_2_0 = -1, 1, 2 do
+			for iter_2_1 = -1, 1, 2 do
+				local var_2_7 = arg_2_0.x + iter_2_0 * arg_2_0.width
+				local var_2_8 = arg_2_0.y + iter_2_1 * arg_2_0.height
+
+				if (var_2_7 - arg_2_1.x)^2 + (var_2_8 - arg_2_1.y)^2 <= arg_2_1.width^2 then
+					var_2_4 = var_2_7
+					var_2_5 = var_2_8
+					var_2_6 = arg_2_1.y > arg_2_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
 
 					break
 				end
 			end
 
-			if slot4 then
+			if var_2_4 then
 				break
 			end
 		end
 	end
 
-	return slot4, slot5, slot6
+	return var_2_4, var_2_5, var_2_6
 end
 
-function slot0.rotateAngle(slot0, slot1, slot2)
-	return slot0 * math.cos(slot2 * Mathf.Deg2Rad) - slot1 * math.sin(slot2 * Mathf.Deg2Rad), slot0 * math.sin(slot2 * Mathf.Deg2Rad) + slot1 * math.cos(slot2 * Mathf.Deg2Rad)
+function var_0_0.rotateAngle(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0 * math.cos(arg_3_2 * Mathf.Deg2Rad) - arg_3_1 * math.sin(arg_3_2 * Mathf.Deg2Rad)
+	local var_3_1 = arg_3_0 * math.sin(arg_3_2 * Mathf.Deg2Rad) + arg_3_1 * math.cos(arg_3_2 * Mathf.Deg2Rad)
+
+	return var_3_0, var_3_1
 end
 
-function slot0.getHitRectRect(slot0, slot1)
-	if math.abs(slot0.x - slot1.x) > slot0.width + slot1.width or math.abs(slot0.y - slot1.y) > slot0.height + slot1.height then
+function var_0_0.getHitRectRect(arg_4_0, arg_4_1)
+	local var_4_0 = math.abs(arg_4_0.x - arg_4_1.x)
+	local var_4_1 = math.abs(arg_4_0.y - arg_4_1.y)
+
+	if var_4_0 > arg_4_0.width + arg_4_1.width or var_4_1 > arg_4_0.height + arg_4_1.height then
 		return
 	end
 
-	slot4, slot5, slot6 = nil
-	slot4 = (slot1.x + slot0.x) / 2
-	slot5 = (slot1.y + slot0.y) / 2
+	local var_4_2
+	local var_4_3
+	local var_4_4
+	local var_4_5 = (arg_4_1.x + arg_4_0.x) / 2
+	local var_4_6 = (arg_4_1.y + arg_4_0.y) / 2
 
-	if slot2 <= slot0.width then
-		slot6 = slot0.y < slot1.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
-	elseif slot3 <= slot0.height then
-		slot6 = slot1.x < slot0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+	if var_4_0 <= arg_4_0.width then
+		var_4_4 = arg_4_1.y > arg_4_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	elseif var_4_1 <= arg_4_0.height then
+		var_4_4 = arg_4_1.x < arg_4_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 	end
 
-	return slot4, slot5, slot6
+	return var_4_5, var_4_6, var_4_4
 end
 
-function slot0.getHitCirCleCirCle(slot0, slot1)
-	slot3 = math.abs(slot0.y - slot1.y)
+function var_0_0.getHitCirCleCirCle(arg_5_0, arg_5_1)
+	local var_5_0 = math.abs(arg_5_0.x - arg_5_1.x)
+	local var_5_1 = math.abs(arg_5_0.y - arg_5_1.y)
 
-	if math.abs(slot0.x - slot1.x) > slot0.width + slot1.width or slot3 > slot0.height + slot1.height then
+	if var_5_0 > arg_5_0.width + arg_5_1.width or var_5_1 > arg_5_0.height + arg_5_1.height then
 		return
 	end
 
-	if slot2^2 + slot3^2 > (slot0.width + slot1.width)^2 then
+	if var_5_0^2 + var_5_1^2 > (arg_5_0.width + arg_5_1.width)^2 then
 		return
 	end
 
-	slot5, slot6, slot7 = nil
+	local var_5_2
+	local var_5_3
+	local var_5_4
+	local var_5_5 = (arg_5_1.x + arg_5_0.x) / 2
+	local var_5_6 = (arg_5_1.y + arg_5_0.y) / 2
 
-	return (slot1.x + slot0.x) / 2, (slot1.y + slot0.y) / 2, slot3 < slot2 and (slot1.x < slot0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right) or slot0.y < slot1.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	if var_5_1 < var_5_0 then
+		var_5_4 = arg_5_1.x < arg_5_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+	else
+		var_5_4 = arg_5_1.y > arg_5_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	end
+
+	return var_5_5, var_5_6, var_5_4
 end
 
-function slot0.isResType(slot0)
-	return slot0 == PinballEnum.UnitType.ResSmallFood or slot0 == PinballEnum.UnitType.ResFood or slot0 == PinballEnum.UnitType.ResMine or slot0 == PinballEnum.UnitType.ResStone or slot0 == PinballEnum.UnitType.ResWood
+function var_0_0.isResType(arg_6_0)
+	return arg_6_0 == PinballEnum.UnitType.ResSmallFood or arg_6_0 == PinballEnum.UnitType.ResFood or arg_6_0 == PinballEnum.UnitType.ResMine or arg_6_0 == PinballEnum.UnitType.ResStone or arg_6_0 == PinballEnum.UnitType.ResWood
 end
 
-function slot0.isMarblesType(slot0)
-	return slot0 == PinballEnum.UnitType.MarblesNormal or slot0 == PinballEnum.UnitType.MarblesDivision or slot0 == PinballEnum.UnitType.MarblesElasticity or slot0 == PinballEnum.UnitType.MarblesExplosion or slot0 == PinballEnum.UnitType.MarblesGlass
+function var_0_0.isMarblesType(arg_7_0)
+	return arg_7_0 == PinballEnum.UnitType.MarblesNormal or arg_7_0 == PinballEnum.UnitType.MarblesDivision or arg_7_0 == PinballEnum.UnitType.MarblesElasticity or arg_7_0 == PinballEnum.UnitType.MarblesExplosion or arg_7_0 == PinballEnum.UnitType.MarblesGlass
 end
 
-function slot0.isOtherType(slot0)
-	return not uv0.isResType(slot0) and not uv0.isMarblesType(slot0)
+function var_0_0.isOtherType(arg_8_0)
+	return not var_0_0.isResType(arg_8_0) and not var_0_0.isMarblesType(arg_8_0)
 end
 
-function slot0.getLimitTimeStr()
-	if not ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.Pinball) then
+function var_0_0.getLimitTimeStr()
+	local var_9_0 = ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.Pinball)
+
+	if not var_9_0 then
 		return ""
 	end
 
-	if slot0:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		return TimeUtil.SecondToActivityTimeFormat(slot1)
+	local var_9_1 = var_9_0:getRealEndTimeStamp() - ServerTime.now()
+
+	if var_9_1 > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(var_9_1)
 	end
 
 	return ""
 end
 
-function slot0.isBanOper()
+function var_0_0.isBanOper()
 	return GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.PinballBanOper)
 end
 
-return slot0
+return var_0_0

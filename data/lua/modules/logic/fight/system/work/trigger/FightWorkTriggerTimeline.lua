@@ -1,59 +1,62 @@
-module("modules.logic.fight.system.work.trigger.FightWorkTriggerTimeline", package.seeall)
+﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerTimeline", package.seeall)
 
-slot0 = class("FightWorkTriggerTimeline", BaseWork)
+local var_0_0 = class("FightWorkTriggerTimeline", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._fightStepMO = slot1
-	slot0._actEffectMO = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._actEffectMO = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	slot0._config = lua_trigger_action.configDict[slot0._actEffectMO.effectNum]
-	slot1 = tonumber(slot0._config.param1)
-	slot2 = FightHelper.getEnemyEntityByMonsterId(slot1)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
 
-	if slot1 == 0 then
-		slot2 = FightHelper.getEntity(FightEntityScene.MySideId)
+	local var_2_0 = tonumber(arg_2_0._config.param1)
+	local var_2_1 = FightHelper.getEnemyEntityByMonsterId(var_2_0)
+
+	if var_2_0 == 0 then
+		var_2_1 = FightHelper.getEntity(FightEntityScene.MySideId)
 	end
 
-	if slot2 and slot2.skill then
-		slot0._entityId = slot2.id
+	if var_2_1 and var_2_1.skill then
+		arg_2_0._entityId = var_2_1.id
 
-		FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 20)
-		slot2.skill:playTimeline(slot0._config.param2, {
+		local var_2_2 = {
 			actId = 0,
 			stepUid = 0,
 			actEffectMOs = {
 				{
-					targetId = slot0._entityId
+					targetId = arg_2_0._entityId
 				}
 			},
 			actEffect = {},
-			fromId = slot0._entityId,
-			toId = slot0._fightStepMO.toId,
+			fromId = arg_2_0._entityId,
+			toId = arg_2_0._fightStepMO.toId,
 			actType = FightEnum.ActType.SKILL
-		})
+		}
+
+		FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
+		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 20)
+		var_2_1.skill:playTimeline(arg_2_0._config.param2, var_2_2)
 
 		return
 	end
 
-	slot0:_delayDone()
+	arg_2_0:_delayDone()
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1)
-	if slot1.id == slot0._entityId then
-		slot0:_delayDone()
+function var_0_0._onSkillPlayFinish(arg_4_0, arg_4_1)
+	if arg_4_1.id == arg_4_0._entityId then
+		arg_4_0:_delayDone()
 	end
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_5_0._onSkillPlayFinish, arg_5_0)
 end
 
-return slot0
+return var_0_0

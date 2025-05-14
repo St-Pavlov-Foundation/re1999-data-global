@@ -1,47 +1,47 @@
-module("modules.logic.voyage.model.Activity1001Model", package.seeall)
+﻿module("modules.logic.voyage.model.Activity1001Model", package.seeall)
 
-slot0 = class("Activity1001Model", BaseModel)
+local var_0_0 = class("Activity1001Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.__activityId = false
-	slot0.__config = false
-	slot0.__id2StateDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.__activityId = false
+	arg_2_0.__config = false
+	arg_2_0.__id2StateDict = {}
 end
 
-function slot0._internal_set_activity(slot0, slot1)
-	slot0.__activityId = slot1
+function var_0_0._internal_set_activity(arg_3_0, arg_3_1)
+	arg_3_0.__activityId = arg_3_1
 end
 
-function slot0._internal_set_config(slot0, slot1)
-	assert(isTypeOf(slot1, Activity1001Config), debug.traceback())
+function var_0_0._internal_set_config(arg_4_0, arg_4_1)
+	assert(isTypeOf(arg_4_1, Activity1001Config), debug.traceback())
 
-	slot0.__config = slot1
+	arg_4_0.__config = arg_4_1
 end
 
-function slot0.getConfig(slot0)
-	return assert(slot0.__config, "pleaes call self:_internal_set_config(config) first")
+function var_0_0.getConfig(arg_5_0)
+	return assert(arg_5_0.__config, "pleaes call self:_internal_set_config(config) first")
 end
 
-function slot0._updateInfo(slot0, slot1)
-	slot0.__id2StateDict[slot1.id] = slot1.state
+function var_0_0._updateInfo(arg_6_0, arg_6_1)
+	arg_6_0.__id2StateDict[arg_6_1.id] = arg_6_1.state
 end
 
-function slot0.onReceiveAct1001GetInfoReply(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.act1001Infos) do
-		slot0:_updateInfo(slot6)
+function var_0_0.onReceiveAct1001GetInfoReply(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1.act1001Infos) do
+		arg_7_0:_updateInfo(iter_7_1)
 	end
 end
 
-function slot0.onReceiveAct1001UpdatePush(slot0, slot1)
-	slot0:_updateInfo(slot1)
+function var_0_0.onReceiveAct1001UpdatePush(arg_8_0, arg_8_1)
+	arg_8_0:_updateInfo(arg_8_1)
 end
 
-function slot0.getStateById(slot0, slot1)
-	return slot0.__id2StateDict[slot1] or VoyageEnum.State.None
+function var_0_0.getStateById(arg_9_0, arg_9_1)
+	return arg_9_0.__id2StateDict[arg_9_1] or VoyageEnum.State.None
 end
 
-return slot0
+return var_0_0

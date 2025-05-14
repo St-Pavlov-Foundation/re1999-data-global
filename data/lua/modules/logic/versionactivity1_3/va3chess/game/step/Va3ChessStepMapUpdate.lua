@@ -1,14 +1,16 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepMapUpdate", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepMapUpdate", package.seeall)
 
-slot0 = class("Va3ChessStepMapUpdate", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepMapUpdate", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot0:processMapUpdate()
+function var_0_0.start(arg_1_0)
+	arg_1_0:processMapUpdate()
 end
 
-function slot0.processMapUpdate(slot0)
-	Va3ChessGameController.instance:updateServerMap(Va3ChessModel.instance:getActId(), slot0.originData)
-	slot0:finish()
+function var_0_0.processMapUpdate(arg_2_0)
+	local var_2_0 = Va3ChessModel.instance:getActId()
+
+	Va3ChessGameController.instance:updateServerMap(var_2_0, arg_2_0.originData)
+	arg_2_0:finish()
 end
 
-return slot0
+return var_0_0

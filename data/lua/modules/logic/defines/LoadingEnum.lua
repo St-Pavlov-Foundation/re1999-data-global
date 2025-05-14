@@ -1,7 +1,8 @@
-module("modules.logic.defines.LoadingEnum", package.seeall)
+﻿module("modules.logic.defines.LoadingEnum", package.seeall)
 
-slot0 = _M
-slot0.LoadingSceneType = {
+local var_0_0 = _M
+
+var_0_0.LoadingSceneType = {
 	Main = 2,
 	Room = 4,
 	Other = 1,
@@ -9,4 +10,4 @@ slot0.LoadingSceneType = {
 	Summon = 3
 }
 
-return slot0
+return var_0_0

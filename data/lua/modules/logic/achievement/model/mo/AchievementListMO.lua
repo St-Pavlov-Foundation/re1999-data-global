@@ -1,117 +1,147 @@
-module("modules.logic.achievement.model.mo.AchievementListMO", package.seeall)
+﻿module("modules.logic.achievement.model.mo.AchievementListMO", package.seeall)
 
-slot0 = pureTable("AchievementListMO")
+local var_0_0 = pureTable("AchievementListMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1
-	slot0.taskCfgs = AchievementConfig.instance:getTasksByAchievementId(slot1)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_1
+	arg_1_0.taskCfgs = AchievementConfig.instance:getTasksByAchievementId(arg_1_1)
 
-	slot0:buildTaskStateMap()
+	arg_1_0:buildTaskStateMap()
 
-	slot0.isFold = false
-	slot0.isGroupTop = slot2
+	arg_1_0.isFold = false
+	arg_1_0.isGroupTop = arg_1_2
 end
 
-function slot0.buildTaskStateMap(slot0)
-	slot0._unlockTaskList = {}
-	slot0._loackTaskList = {}
+function var_0_0.buildTaskStateMap(arg_2_0)
+	arg_2_0._unlockTaskList = {}
+	arg_2_0._loackTaskList = {}
 
-	if slot0.taskCfgs then
-		for slot4, slot5 in ipairs(slot0.taskCfgs) do
-			if AchievementModel.instance:isAchievementTaskFinished(slot5.id) then
-				table.insert(slot0._unlockTaskList, slot5)
+	if arg_2_0.taskCfgs then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0.taskCfgs) do
+			if AchievementModel.instance:isAchievementTaskFinished(iter_2_1.id) then
+				table.insert(arg_2_0._unlockTaskList, iter_2_1)
 			else
-				table.insert(slot0._loackTaskList, slot5)
+				table.insert(arg_2_0._loackTaskList, iter_2_1)
 			end
 		end
 	end
 end
 
-function slot0.getTaskListBySearchFilterType(slot0, slot1)
-	if (slot1 or AchievementEnum.SearchFilterType.All) == AchievementEnum.SearchFilterType.All then
-		return slot0.taskCfgs
-	elseif slot1 == AchievementEnum.SearchFilterType.Locked then
-		return slot0._loackTaskList
+function var_0_0.getTaskListBySearchFilterType(arg_3_0, arg_3_1)
+	arg_3_1 = arg_3_1 or AchievementEnum.SearchFilterType.All
+
+	if arg_3_1 == AchievementEnum.SearchFilterType.All then
+		return arg_3_0.taskCfgs
+	elseif arg_3_1 == AchievementEnum.SearchFilterType.Locked then
+		return arg_3_0._loackTaskList
 	else
-		return slot0._unlockTaskList
+		return arg_3_0._unlockTaskList
 	end
 end
 
-function slot0.getTotalTaskConfigList(slot0)
-	return slot0.taskCfgs
+function var_0_0.getTotalTaskConfigList(arg_4_0)
+	return arg_4_0.taskCfgs
 end
 
-function slot0.getLockTaskList(slot0)
-	return slot0._loackTaskList
+function var_0_0.getLockTaskList(arg_5_0)
+	return arg_5_0._loackTaskList
 end
 
-function slot0.getUnlockTaskList(slot0)
-	return slot0._unlockTaskList
+function var_0_0.getUnlockTaskList(arg_6_0)
+	return arg_6_0._unlockTaskList
 end
 
-function slot0.getFilterTaskList(slot0, slot1, slot2)
-	slot1 = slot1 or AchievementEnum.SortType.RareDown
+function var_0_0.getFilterTaskList(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_1 = arg_7_1 or AchievementEnum.SortType.RareDown
+	arg_7_2 = arg_7_2 or AchievementEnum.SearchFilterType.All
 
-	if slot0:getTaskListBySearchFilterType(slot2 or AchievementEnum.SearchFilterType.All) then
-		table.sort(slot3, slot0.sortTaskFunction)
+	local var_7_0 = arg_7_0:getTaskListBySearchFilterType(arg_7_2)
+
+	if var_7_0 then
+		table.sort(var_7_0, arg_7_0.sortTaskFunction)
 	end
 
-	return slot3
+	return var_7_0
 end
 
-function slot0.sortTaskFunction(slot0, slot1)
-	slot2 = AchievementModel.instance:isAchievementTaskFinished(slot0.id)
-	slot3 = AchievementModel.instance:isAchievementTaskFinished(slot1.id)
+function var_0_0.sortTaskFunction(arg_8_0, arg_8_1)
+	local var_8_0 = AchievementModel.instance:isAchievementTaskFinished(arg_8_0.id)
+	local var_8_1 = AchievementModel.instance:isAchievementTaskFinished(arg_8_1.id)
 
-	return slot0.id < slot1.id
+	return arg_8_0.id < arg_8_1.id
 end
 
-function slot0.isAchievementMatch(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.isAchievementMatch(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = false
 
-	return slot1 == AchievementEnum.AchievementType.Single and slot2 == slot0.id or AchievementConfig.instance:getAchievement(slot0.id) and slot4.groupId ~= 0 and slot4.groupId == slot2
-end
+	if arg_9_1 == AchievementEnum.AchievementType.Single then
+		var_9_0 = arg_9_2 == arg_9_0.id
+	else
+		local var_9_1 = AchievementConfig.instance:getAchievement(arg_9_0.id)
 
-function slot0.setIsFold(slot0, slot1)
-	slot0.isFold = slot1
-end
-
-function slot0.getIsFold(slot0)
-	return slot0.isFold
-end
-
-slot1 = 46
-slot2 = 74
-slot3 = 206
-
-function slot0.getLineHeightFunction(slot0, slot1, slot2)
-	slot3 = 0
-
-	return slot2 and (slot0:getAchievementType() == AchievementEnum.AchievementType.Group and (slot0.isGroupTop and uv0 or 0) or uv1) or (slot0:getTaskListBySearchFilterType(slot1) and #slot6 or 0) * uv2 + (slot0.isGroupTop and uv0 + uv1 or uv1)
-end
-
-function slot0.overrideLineHeight(slot0, slot1)
-	slot0._cellHeight = slot1
-end
-
-function slot0.clearOverrideLineHeight(slot0)
-	slot0._cellHeight = nil
-end
-
-function slot0.getLineHeight(slot0, slot1, slot2)
-	if slot0._cellHeight then
-		return slot0._cellHeight
+		var_9_0 = var_9_1 and var_9_1.groupId ~= 0 and var_9_1.groupId == arg_9_2
 	end
 
-	return slot0:getLineHeightFunction(slot1, slot2)
+	return var_9_0
 end
 
-function slot0.getAchievementType(slot0)
-	if not slot0._achievementType then
-		slot0._achievementType = AchievementConfig.instance:getAchievement(slot0.id) and slot1.groupId ~= 0 and AchievementEnum.AchievementType.Group or AchievementEnum.AchievementType.Single
+function var_0_0.setIsFold(arg_10_0, arg_10_1)
+	arg_10_0.isFold = arg_10_1
+end
+
+function var_0_0.getIsFold(arg_11_0)
+	return arg_11_0.isFold
+end
+
+local var_0_1 = 46
+local var_0_2 = 74
+local var_0_3 = 206
+
+function var_0_0.getLineHeightFunction(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = 0
+	local var_12_1 = arg_12_0:getAchievementType() == AchievementEnum.AchievementType.Group
+
+	if arg_12_2 then
+		if var_12_1 then
+			var_12_0 = arg_12_0.isGroupTop and var_0_2 or 0
+		else
+			var_12_0 = var_0_1
+		end
+	else
+		local var_12_2 = arg_12_0:getTaskListBySearchFilterType(arg_12_1)
+		local var_12_3 = var_12_2 and #var_12_2 or 0
+		local var_12_4 = arg_12_0.isGroupTop and var_0_2 + var_0_1 or var_0_1
+
+		var_12_0 = var_12_3 * var_0_3 + var_12_4
 	end
 
-	return slot0._achievementType
+	return var_12_0
 end
 
-return slot0
+function var_0_0.overrideLineHeight(arg_13_0, arg_13_1)
+	arg_13_0._cellHeight = arg_13_1
+end
+
+function var_0_0.clearOverrideLineHeight(arg_14_0)
+	arg_14_0._cellHeight = nil
+end
+
+function var_0_0.getLineHeight(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0._cellHeight then
+		return arg_15_0._cellHeight
+	end
+
+	return (arg_15_0:getLineHeightFunction(arg_15_1, arg_15_2))
+end
+
+function var_0_0.getAchievementType(arg_16_0)
+	if not arg_16_0._achievementType then
+		local var_16_0 = AchievementConfig.instance:getAchievement(arg_16_0.id)
+
+		arg_16_0._achievementType = var_16_0 and var_16_0.groupId ~= 0 and AchievementEnum.AchievementType.Group or AchievementEnum.AchievementType.Single
+	end
+
+	return arg_16_0._achievementType
+end
+
+return var_0_0

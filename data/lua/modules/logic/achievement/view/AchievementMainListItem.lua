@@ -1,304 +1,361 @@
-module("modules.logic.achievement.view.AchievementMainListItem", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementMainListItem", package.seeall)
 
-slot0 = class("AchievementMainListItem", ListScrollCellExtend)
+local var_0_0 = class("AchievementMainListItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gotop1 = gohelper.findChild(slot0.viewGO, "go_top")
-	slot0._gotop2 = gohelper.findChild(slot0.viewGO, "go_top2")
-	slot0._txtachievementname = gohelper.findChildText(slot0.viewGO, "go_top/image_AchievementNameBG/#txt_achievementname")
-	slot0._simageAchievementGroupBG = gohelper.findChildSingleImage(slot0.viewGO, "go_top2/#simage_AchievementGroupBG")
-	slot0._txtachievementgroupname = gohelper.findChildText(slot0.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname")
-	slot0._golayout = gohelper.findChild(slot0.viewGO, "go_layout")
-	slot0._gotaskitem = gohelper.findChild(slot0.viewGO, "go_layout/go_taskitem")
-	slot0._btnpopup = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_top2/#btn_popup")
-	slot0._gooff = gohelper.findChild(slot0.viewGO, "go_top2/#btn_popup/#go_off")
-	slot0._goon = gohelper.findChild(slot0.viewGO, "go_top2/#btn_popup/#go_on")
-	slot0._goallcollect = gohelper.findChild(slot0.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname/#go_allcollect")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotop1 = gohelper.findChild(arg_1_0.viewGO, "go_top")
+	arg_1_0._gotop2 = gohelper.findChild(arg_1_0.viewGO, "go_top2")
+	arg_1_0._txtachievementname = gohelper.findChildText(arg_1_0.viewGO, "go_top/image_AchievementNameBG/#txt_achievementname")
+	arg_1_0._simageAchievementGroupBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_top2/#simage_AchievementGroupBG")
+	arg_1_0._txtachievementgroupname = gohelper.findChildText(arg_1_0.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname")
+	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "go_layout")
+	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "go_layout/go_taskitem")
+	arg_1_0._btnpopup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_top2/#btn_popup")
+	arg_1_0._gooff = gohelper.findChild(arg_1_0.viewGO, "go_top2/#btn_popup/#go_off")
+	arg_1_0._goon = gohelper.findChild(arg_1_0.viewGO, "go_top2/#btn_popup/#go_on")
+	arg_1_0._goallcollect = gohelper.findChild(arg_1_0.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname/#go_allcollect")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnpopup:AddClickListener(slot0._btnpopupOnClick, slot0)
-	slot0:addEventCb(AchievementMainController.instance, AchievementEvent.OnPlayGroupFadeAnim, slot0._onPlayGroupFadeAnimation, slot0)
-	slot0:addEventCb(AchievementMainController.instance, AchievementEvent.OnFocusAchievementFinished, slot0._onFocusFinished, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnpopup:AddClickListener(arg_2_0._btnpopupOnClick, arg_2_0)
+	arg_2_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnPlayGroupFadeAnim, arg_2_0._onPlayGroupFadeAnimation, arg_2_0)
+	arg_2_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnFocusAchievementFinished, arg_2_0._onFocusFinished, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnpopup:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnpopup:RemoveClickListener()
 end
 
-function slot0._btnpopupOnClick(slot0)
-	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnClickGroupFoldBtn, AchievementConfig.instance:getAchievement(slot0._mo.id).groupId, not slot0._mo:getIsFold())
+function var_0_0._btnpopupOnClick(arg_4_0)
+	local var_4_0 = arg_4_0._mo:getIsFold()
+	local var_4_1 = AchievementConfig.instance:getAchievement(arg_4_0._mo.id).groupId
+
+	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnClickGroupFoldBtn, var_4_1, not var_4_0)
 end
 
-function slot0._onPlayGroupFadeAnimation(slot0, slot1)
-	if not slot1 or not slot1.achievementId or slot2 ~= slot0._mo.id then
+function var_0_0._onPlayGroupFadeAnimation(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1 and arg_5_1.achievementId
+
+	if not var_5_0 or var_5_0 ~= arg_5_0._mo.id then
 		return
 	end
 
-	slot0._isFold = slot1.isFold
+	arg_5_0._isFold = arg_5_1.isFold
 
-	if not slot0._isFold then
-		slot0._mo:setIsFold(slot0._isFold)
+	if not arg_5_0._isFold then
+		arg_5_0._mo:setIsFold(arg_5_0._isFold)
 	end
 
-	slot0._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(slot1.orginLineHeight, slot1.targetLineHeight, slot1.duration, slot0._onOpenTweenFrameCallback, slot0._onOpenTweenFinishCallback, slot0, nil)
+	local var_5_1 = arg_5_1.orginLineHeight
+	local var_5_2 = arg_5_1.targetLineHeight
+	local var_5_3 = arg_5_1.duration
+
+	arg_5_0._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(var_5_1, var_5_2, var_5_3, arg_5_0._onOpenTweenFrameCallback, arg_5_0._onOpenTweenFinishCallback, arg_5_0, nil)
 end
 
-function slot0._onOpenTweenFrameCallback(slot0, slot1)
-	slot0._mo:overrideLineHeight(slot1)
+function var_0_0._onOpenTweenFrameCallback(arg_6_0, arg_6_1)
+	arg_6_0._mo:overrideLineHeight(arg_6_1)
 	AchievementMainListModel.instance:onModelUpdate()
 end
 
-function slot0._onOpenTweenFinishCallback(slot0)
-	slot0._mo:clearOverrideLineHeight()
-	slot0._mo:setIsFold(slot0._isFold)
+function var_0_0._onOpenTweenFinishCallback(arg_7_0)
+	arg_7_0._mo:clearOverrideLineHeight()
+	arg_7_0._mo:setIsFold(arg_7_0._isFold)
 	AchievementMainListModel.instance:onModelUpdate()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._taskItemTab = slot0:getUserDataTb_()
-	slot0._topAnimator = gohelper.onceAddComponent(slot0._gotop1, gohelper.Type_Animator)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._taskItemTab = arg_8_0:getUserDataTb_()
+	arg_8_0._topAnimator = gohelper.onceAddComponent(arg_8_0._gotop1, gohelper.Type_Animator)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._simageAchievementGroupBG:UnLoadImage()
-	slot0:recycleAchievementMainIcon()
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0._simageAchievementGroupBG:UnLoadImage()
+	arg_9_0:recycleAchievementMainIcon()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	if slot0._mo and slot0._mo ~= slot1 and slot0._openAnimTweenId then
-		ZProj.TweenHelper.KillById(slot0._openAnimTweenId)
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	if arg_10_0._mo and arg_10_0._mo ~= arg_10_1 and arg_10_0._openAnimTweenId then
+		ZProj.TweenHelper.KillById(arg_10_0._openAnimTweenId)
 
-		slot0._openAnimTweenId = nil
+		arg_10_0._openAnimTweenId = nil
 	end
 
-	slot0._mo = slot1
+	arg_10_0._mo = arg_10_1
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if AchievementConfig.instance:getAchievement(slot0._mo.id) then
-		slot0._groupId = slot1.groupId
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = AchievementConfig.instance:getAchievement(arg_11_0._mo.id)
 
-		slot0:refreshTaskList(slot0._mo:getFilterTaskList(AchievementMainCommonModel.instance:getCurrentSortType(), AchievementMainCommonModel.instance:getCurrentFilterType()))
-		slot0:refreshTopUI(slot1)
+	if var_11_0 then
+		arg_11_0._groupId = var_11_0.groupId
+
+		local var_11_1 = AchievementMainCommonModel.instance:getCurrentSortType()
+		local var_11_2 = AchievementMainCommonModel.instance:getCurrentFilterType()
+		local var_11_3 = arg_11_0._mo:getFilterTaskList(var_11_1, var_11_2)
+
+		arg_11_0:refreshTaskList(var_11_3)
+		arg_11_0:refreshTopUI(var_11_0)
 	end
 end
 
-slot1 = 1
-slot2 = 0.5
-slot3 = 1
-slot4 = 0.5
-slot5 = "#FFFFFF"
-slot6 = "#4D4D4D"
+local var_0_1 = 1
+local var_0_2 = 0.5
+local var_0_3 = 1
+local var_0_4 = 0.5
+local var_0_5 = "#FFFFFF"
+local var_0_6 = "#4D4D4D"
 
-function slot0.refreshTaskList(slot0, slot1)
-	slot2 = nil
-	slot3 = slot0._mo:getIsFold()
+function var_0_0.refreshTaskList(arg_12_0, arg_12_1)
+	local var_12_0
+	local var_12_1 = arg_12_0._mo:getIsFold()
 
-	gohelper.setActive(slot0._golayout, not slot3)
-	gohelper.setActive(slot0._goon, not slot3)
-	gohelper.setActive(slot0._gooff, slot3)
+	gohelper.setActive(arg_12_0._golayout, not var_12_1)
+	gohelper.setActive(arg_12_0._goon, not var_12_1)
+	gohelper.setActive(arg_12_0._gooff, var_12_1)
 
-	slot0._hasTaskFinished = false
+	arg_12_0._hasTaskFinished = false
 
-	if not slot3 and slot1 then
-		slot2 = {
-			[slot0:getOrCreateTaskItem(slot7)] = true
-		}
+	if not var_12_1 and arg_12_1 then
+		var_12_0 = {}
 
-		for slot7, slot8 in ipairs(slot1) do
-			slot11 = AchievementModel.instance:getById(slot8.id) and slot10.hasFinished
-			slot9.txtTaskDesc2.text = slot8.extraDesc
+		for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+			local var_12_2 = arg_12_0:getOrCreateTaskItem(iter_12_0)
 
-			slot9.taskIcon:setData(slot8)
-			slot9.taskIcon:setIconColor(slot11 and uv0 or uv1)
-			ZProj.UGUIHelper.SetColorAlpha(slot9.txtTaskDesc2, slot11 and uv2 or uv3)
-			ZProj.UGUIHelper.SetColorAlpha(slot9.txtTaskDesc, slot11 and uv4 or uv5)
-			gohelper.setActive(slot9.goUnLockTime, slot11)
-			gohelper.setActive(slot9.goNormalBG, slot11)
-			gohelper.setActive(slot9.golockedBG, not slot11)
+			var_12_0[var_12_2] = true
 
-			if slot11 then
-				slot9.txtUnLockedTime.text = TimeUtil.localTime2ServerTimeString(slot10.finishTime)
-				slot9.txtTaskDesc.text = slot8.desc
-				slot0._hasTaskFinished = true
+			local var_12_3 = AchievementModel.instance:getById(iter_12_1.id)
+			local var_12_4 = var_12_3 and var_12_3.hasFinished
+
+			var_12_2.txtTaskDesc2.text = iter_12_1.extraDesc
+
+			var_12_2.taskIcon:setData(iter_12_1)
+			var_12_2.taskIcon:setIconColor(var_12_4 and var_0_5 or var_0_6)
+			ZProj.UGUIHelper.SetColorAlpha(var_12_2.txtTaskDesc2, var_12_4 and var_0_3 or var_0_4)
+			ZProj.UGUIHelper.SetColorAlpha(var_12_2.txtTaskDesc, var_12_4 and var_0_1 or var_0_2)
+			gohelper.setActive(var_12_2.goUnLockTime, var_12_4)
+			gohelper.setActive(var_12_2.goNormalBG, var_12_4)
+			gohelper.setActive(var_12_2.golockedBG, not var_12_4)
+
+			if var_12_4 then
+				var_12_2.txtUnLockedTime.text = TimeUtil.localTime2ServerTimeString(var_12_3.finishTime)
+				var_12_2.txtTaskDesc.text = iter_12_1.desc
+				arg_12_0._hasTaskFinished = true
 			else
-				slot9.txtTaskDesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementmainview_unlockPath"), {
-					slot8.desc,
-					slot10 and slot10.progress or 0,
-					slot8.maxProgress
-				})
+				local var_12_5 = iter_12_1.maxProgress
+				local var_12_6 = var_12_3 and var_12_3.progress or 0
+				local var_12_7 = {
+					iter_12_1.desc,
+					var_12_6,
+					var_12_5
+				}
+
+				var_12_2.txtTaskDesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementmainview_unlockPath"), var_12_7)
 			end
 
-			slot0:playTaskAnim(slot9)
-			slot0:tryPlayUpgradeEffect(slot10, slot9)
+			arg_12_0:playTaskAnim(var_12_2)
+			arg_12_0:tryPlayUpgradeEffect(var_12_3, var_12_2)
 		end
 	end
 
-	slot0:recycleUnuseTaskItem(slot2)
-	slot0:onTasksPlayUpgradeEffectFinished()
+	arg_12_0:recycleUnuseTaskItem(var_12_0)
+	arg_12_0:onTasksPlayUpgradeEffectFinished()
 end
 
-function slot0.tryPlayUpgradeEffect(slot0, slot1, slot2)
-	if AchievementMainCommonModel.instance:isCurrentScrollFocusing() or not slot0.viewGO.activeInHierarchy or not slot1 or not slot2 then
+function var_0_0.tryPlayUpgradeEffect(arg_13_0, arg_13_1, arg_13_2)
+	if AchievementMainCommonModel.instance:isCurrentScrollFocusing() or not arg_13_0.viewGO.activeInHierarchy or not arg_13_1 or not arg_13_2 then
 		return
 	end
 
-	slot0._achievementId = AchievementConfig.instance:getTask(slot1.id) and slot3.achievementId
-	slot0._isNeedPlayEffect = false
+	local var_13_0 = AchievementConfig.instance:getTask(arg_13_1.id)
 
-	if slot1 and slot1.hasFinished and slot1.isNew and not AchievementMainCommonModel.instance:isAchievementPlayEffect(slot0._achievementId) then
-		slot0._isNeedPlayEffect = true
+	arg_13_0._achievementId = var_13_0 and var_13_0.achievementId
+
+	local var_13_1 = AchievementMainCommonModel.instance:isAchievementPlayEffect(arg_13_0._achievementId)
+
+	arg_13_0._isNeedPlayEffect = false
+
+	if arg_13_1 and arg_13_1.hasFinished and arg_13_1.isNew and not var_13_1 then
+		arg_13_0._isNeedPlayEffect = true
 	end
 
-	gohelper.setActive(slot2.goupgrade, slot0._isNeedPlayEffect)
+	gohelper.setActive(arg_13_2.goupgrade, arg_13_0._isNeedPlayEffect)
 
-	if slot0._isNeedPlayEffect then
-		slot2.goupgradeAnimator:Play("upgrade2", 0, AchievementMainCommonModel.instance:isTaskPlayFinishedEffect(slot1.id) and 1 or 0)
+	if arg_13_0._isNeedPlayEffect then
+		local var_13_2 = AchievementMainCommonModel.instance:isTaskPlayFinishedEffect(arg_13_1.id)
 
-		if not slot5 then
-			AchievementMainCommonModel.instance:markTaskPlayFinishedEffect(slot1.id)
+		arg_13_2.goupgradeAnimator:Play("upgrade2", 0, var_13_2 and 1 or 0)
+
+		if not var_13_2 then
+			AchievementMainCommonModel.instance:markTaskPlayFinishedEffect(arg_13_1.id)
 		end
 	end
 end
 
-function slot0.onTasksPlayUpgradeEffectFinished(slot0)
-	if slot0._isNeedPlayEffect and slot0._achievementId then
-		AchievementMainCommonModel.instance:markAchievementPlayEffect(slot0._achievementId)
+function var_0_0.onTasksPlayUpgradeEffectFinished(arg_14_0)
+	if arg_14_0._isNeedPlayEffect and arg_14_0._achievementId then
+		AchievementMainCommonModel.instance:markAchievementPlayEffect(arg_14_0._achievementId)
 	end
 end
 
-function slot0._onFocusFinished(slot0, slot1)
-	if slot1 ~= AchievementEnum.ViewType.List then
+function var_0_0._onFocusFinished(arg_15_0, arg_15_1)
+	if arg_15_1 ~= AchievementEnum.ViewType.List then
 		return
 	end
 
-	if slot0._taskItemTab then
-		for slot8, slot9 in ipairs(slot0._mo:getFilterTaskList(AchievementMainCommonModel.instance:getCurrentSortType(), AchievementMainCommonModel.instance:getCurrentFilterType())) do
-			slot0:tryPlayUpgradeEffect(AchievementModel.instance:getById(slot9.id), slot0:getOrCreateTaskItem(slot8))
+	if arg_15_0._taskItemTab then
+		local var_15_0 = AchievementMainCommonModel.instance:getCurrentSortType()
+		local var_15_1 = AchievementMainCommonModel.instance:getCurrentFilterType()
+		local var_15_2 = arg_15_0._mo:getFilterTaskList(var_15_0, var_15_1)
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_2) do
+			local var_15_3 = arg_15_0:getOrCreateTaskItem(iter_15_0)
+			local var_15_4 = AchievementModel.instance:getById(iter_15_1.id)
+
+			arg_15_0:tryPlayUpgradeEffect(var_15_4, var_15_3)
 		end
 
-		slot0:onTasksPlayUpgradeEffectFinished()
+		arg_15_0:onTasksPlayUpgradeEffectFinished()
 	end
 end
 
-function slot0.playTaskAnim(slot0, slot1)
-	if not slot1 or not slot1.viewGO.activeInHierarchy then
+function var_0_0.playTaskAnim(arg_16_0, arg_16_1)
+	if not arg_16_1 or not arg_16_1.viewGO.activeInHierarchy then
 		return
 	end
 
 	if AchievementMainListModel.instance:isCurTaskNeedPlayIdleAnim() then
-		slot1.animator:Play("idle", 0, 0)
+		arg_16_1.animator:Play("idle", 0, 0)
 	else
-		slot1.animator:Play("open", 0, 0)
+		arg_16_1.animator:Play("open", 0, 0)
 	end
 end
 
-function slot0.getOrCreateTaskItem(slot0, slot1)
-	if not slot0._taskItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._gotaskitem, "task_" .. slot1)
-		slot2.goNormalBG = gohelper.findChild(slot2.viewGO, "#go_NormalBG")
-		slot2.golockedBG = gohelper.findChild(slot2.viewGO, "#go_lockedBG")
-		slot2.txtTaskDesc = gohelper.findChildText(slot2.viewGO, "Descr/txt_taskdesc")
-		slot2.txtTaskDesc2 = gohelper.findChildText(slot2.viewGO, "Descr/txt_taskdesc2")
-		slot2.goUnLockTime = gohelper.findChild(slot2.viewGO, "UnLockedTime")
-		slot2.txtUnLockedTime = gohelper.findChildText(slot2.viewGO, "UnLockedTime/#txt_UnLockedTime")
-		slot2.goupgrade = gohelper.findChild(slot2.viewGO, "#go_upgrade")
-		slot2.goupgradeAnimator = gohelper.onceAddComponent(slot2.goupgrade, gohelper.Type_Animator)
-		slot2.goIcon = gohelper.findChild(slot2.viewGO, "go_icon")
-		slot2.animator = gohelper.onceAddComponent(slot2.viewGO, gohelper.Type_Animator)
+function var_0_0.getOrCreateTaskItem(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._taskItemTab[arg_17_1]
 
-		if slot0._view and slot0._view.viewContainer and slot0._view.viewContainer:getPoolView() then
-			slot2.taskIcon = slot3:getIcon(slot2.goIcon)
+	if not var_17_0 then
+		var_17_0 = arg_17_0:getUserDataTb_()
+		var_17_0.viewGO = gohelper.cloneInPlace(arg_17_0._gotaskitem, "task_" .. arg_17_1)
+		var_17_0.goNormalBG = gohelper.findChild(var_17_0.viewGO, "#go_NormalBG")
+		var_17_0.golockedBG = gohelper.findChild(var_17_0.viewGO, "#go_lockedBG")
+		var_17_0.txtTaskDesc = gohelper.findChildText(var_17_0.viewGO, "Descr/txt_taskdesc")
+		var_17_0.txtTaskDesc2 = gohelper.findChildText(var_17_0.viewGO, "Descr/txt_taskdesc2")
+		var_17_0.goUnLockTime = gohelper.findChild(var_17_0.viewGO, "UnLockedTime")
+		var_17_0.txtUnLockedTime = gohelper.findChildText(var_17_0.viewGO, "UnLockedTime/#txt_UnLockedTime")
+		var_17_0.goupgrade = gohelper.findChild(var_17_0.viewGO, "#go_upgrade")
+		var_17_0.goupgradeAnimator = gohelper.onceAddComponent(var_17_0.goupgrade, gohelper.Type_Animator)
+		var_17_0.goIcon = gohelper.findChild(var_17_0.viewGO, "go_icon")
+		var_17_0.animator = gohelper.onceAddComponent(var_17_0.viewGO, gohelper.Type_Animator)
 
-			slot2.taskIcon:setNameTxtVisible(false)
-			slot2.taskIcon:setClickCall(slot0._iconClickCallBack, slot0)
+		if arg_17_0._view and arg_17_0._view.viewContainer then
+			local var_17_1 = arg_17_0._view.viewContainer:getPoolView()
+
+			if var_17_1 then
+				var_17_0.taskIcon = var_17_1:getIcon(var_17_0.goIcon)
+
+				var_17_0.taskIcon:setNameTxtVisible(false)
+				var_17_0.taskIcon:setClickCall(arg_17_0._iconClickCallBack, arg_17_0)
+			end
 		end
 
-		slot0._taskItemTab[slot1] = slot2
+		arg_17_0._taskItemTab[arg_17_1] = var_17_0
 	end
 
-	gohelper.setActive(slot2.viewGO, true)
+	gohelper.setActive(var_17_0.viewGO, true)
 
-	return slot2
+	return var_17_0
 end
 
-function slot0._iconClickCallBack(slot0)
+function var_0_0._iconClickCallBack(arg_18_0)
+	return
 end
 
-function slot0.recycleUnuseTaskItem(slot0, slot1)
-	if slot1 and slot0._taskItemTab then
-		for slot5, slot6 in pairs(slot0._taskItemTab) do
-			if not slot1[slot6] then
-				gohelper.setActive(slot6.viewGO, false)
+function var_0_0.recycleUnuseTaskItem(arg_19_0, arg_19_1)
+	if arg_19_1 and arg_19_0._taskItemTab then
+		for iter_19_0, iter_19_1 in pairs(arg_19_0._taskItemTab) do
+			if not arg_19_1[iter_19_1] then
+				gohelper.setActive(iter_19_1.viewGO, false)
 			end
 		end
 	end
 end
 
-function slot0.refreshTopUI(slot0, slot1)
-	if slot1 and slot1.groupId ~= 0 and slot0._mo.isGroupTop then
-		slot0:refreshGroupTopUI(AchievementConfig.instance:getGroup(slot1.groupId))
+function var_0_0.refreshTopUI(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_1 and arg_20_1.groupId ~= 0 and arg_20_0._mo.isGroupTop
+
+	if var_20_0 then
+		local var_20_1 = AchievementConfig.instance:getGroup(arg_20_1.groupId)
+
+		arg_20_0:refreshGroupTopUI(var_20_1)
 	end
 
-	if not slot0._mo:getIsFold() then
-		slot0:refreshSingleTopUI(slot1)
+	local var_20_2 = arg_20_0._mo:getIsFold()
+
+	if not var_20_2 then
+		arg_20_0:refreshSingleTopUI(arg_20_1)
 	end
 
-	gohelper.setActive(slot0._gotop1, not slot4)
-	gohelper.setActive(slot0._gotop2, slot3)
+	gohelper.setActive(arg_20_0._gotop1, not var_20_2)
+	gohelper.setActive(arg_20_0._gotop2, var_20_0)
 
-	if not slot4 then
-		slot0:playTopAnim()
+	if not var_20_2 then
+		arg_20_0:playTopAnim()
 	end
 end
 
-function slot0.playTopAnim(slot0)
-	if not slot0._gotop1.activeInHierarchy then
+function var_0_0.playTopAnim(arg_21_0)
+	if not arg_21_0._gotop1.activeInHierarchy then
 		return
 	end
 
 	if AchievementMainListModel.instance:isCurTaskNeedPlayIdleAnim() then
-		slot0._topAnimator:Play("idle", 0, 0)
+		arg_21_0._topAnimator:Play("idle", 0, 0)
 	else
-		slot0._topAnimator:Play("open", 0, 0)
+		arg_21_0._topAnimator:Play("open", 0, 0)
 	end
 end
 
-slot7 = 1
-slot8 = 0.5
+local var_0_7 = 1
+local var_0_8 = 0.5
 
-function slot0.refreshSingleTopUI(slot0, slot1)
-	if slot1 then
-		slot0._txtachievementname.text = slot1.name
+function var_0_0.refreshSingleTopUI(arg_22_0, arg_22_1)
+	if arg_22_1 then
+		arg_22_0._txtachievementname.text = arg_22_1.name
 
-		ZProj.UGUIHelper.SetColorAlpha(slot0._txtachievementname, slot0._hasTaskFinished and uv0 or uv1)
+		local var_22_0 = arg_22_0._hasTaskFinished and var_0_7 or var_0_8
+
+		ZProj.UGUIHelper.SetColorAlpha(arg_22_0._txtachievementname, var_22_0)
 	end
 end
 
-function slot0.refreshGroupTopUI(slot0, slot1)
-	if slot1 then
-		slot0._txtachievementgroupname.text = slot1.name
+function var_0_0.refreshGroupTopUI(arg_23_0, arg_23_1)
+	if arg_23_1 then
+		local var_23_0 = AchievementConfig.instance:getGroupTitleColorConfig(arg_23_1.id, AchievementEnum.GroupParamType.Player)
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtachievementgroupname, AchievementConfig.instance:getGroupTitleColorConfig(slot1.id, AchievementEnum.GroupParamType.Player))
-		slot0._simageAchievementGroupBG:LoadImage(ResUrl.getAchievementIcon(string.format("grouptitle/%s", slot1.id)))
-		gohelper.setActive(slot0._goallcollect, AchievementModel.instance:isGroupFinished(slot1.id))
+		arg_23_0._txtachievementgroupname.text = arg_23_1.name
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_23_0._txtachievementgroupname, var_23_0)
+		arg_23_0._simageAchievementGroupBG:LoadImage(ResUrl.getAchievementIcon(string.format("grouptitle/%s", arg_23_1.id)))
+
+		local var_23_1 = AchievementModel.instance:isGroupFinished(arg_23_1.id)
+
+		gohelper.setActive(arg_23_0._goallcollect, var_23_1)
 	end
 end
 
-function slot0.recycleAchievementMainIcon(slot0)
-	if slot0._taskItemTab then
-		for slot4, slot5 in pairs(slot0._taskItemTab) do
-			slot5.taskIcon:dispose()
+function var_0_0.recycleAchievementMainIcon(arg_24_0)
+	if arg_24_0._taskItemTab then
+		for iter_24_0, iter_24_1 in pairs(arg_24_0._taskItemTab) do
+			iter_24_1.taskIcon:dispose()
 		end
 	end
 end
 
-return slot0
+return var_0_0

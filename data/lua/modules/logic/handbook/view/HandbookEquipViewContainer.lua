@@ -1,63 +1,65 @@
-module("modules.logic.handbook.view.HandbookEquipViewContainer", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookEquipViewContainer", package.seeall)
 
-slot0 = class("HandbookEquipViewContainer", BaseViewContainer)
+local var_0_0 = class("HandbookEquipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, HandbookEquipView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, HandbookEquipView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
-	slot0:checkConfigValid()
+function var_0_0.onContainerInit(arg_3_0)
+	arg_3_0:checkConfigValid()
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
-	slot0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+	arg_4_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
 end
 
-function slot0.checkConfigValid(slot0)
+function var_0_0.checkConfigValid(arg_5_0)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	slot1 = {
-		[slot6.equipId] = true
-	}
+	local var_5_0 = {}
 
-	for slot5, slot6 in ipairs(lua_handbook_equip.configList) do
-		-- Nothing
+	for iter_5_0, iter_5_1 in ipairs(lua_handbook_equip.configList) do
+		var_5_0[iter_5_1.equipId] = true
 	end
 
-	for slot6, slot7 in ipairs(lua_equip.configList) do
-		-- Nothing
+	local var_5_1 = {}
+
+	for iter_5_2, iter_5_3 in ipairs(lua_equip.configList) do
+		var_5_1[iter_5_3.id] = true
 	end
 
-	for slot6, slot7 in pairs({
-		[slot7.id] = true
-	}) do
-		if not slot1[slot6] and string.nilorempty(lua_equip.configDict[slot6].canShowHandbook) then
-			logError("图鉴心相表未配置装备id : " .. slot6)
+	for iter_5_4, iter_5_5 in pairs(var_5_1) do
+		if not var_5_0[iter_5_4] then
+			local var_5_2 = lua_equip.configDict[iter_5_4]
+
+			if string.nilorempty(var_5_2.canShowHandbook) then
+				logError("图鉴心相表未配置装备id : " .. iter_5_4)
+			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

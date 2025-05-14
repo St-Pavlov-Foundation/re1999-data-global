@@ -1,38 +1,41 @@
-module("modules.logic.fight.system.work.FightWorkSkillOrBuffFocusMonster", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSkillOrBuffFocusMonster", package.seeall)
 
-slot0 = class("FightWorkSkillOrBuffFocusMonster", BaseWork)
+local var_0_0 = class("FightWorkSkillOrBuffFocusMonster", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	if slot0:isSkillFocus(slot0._fightStepMO) then
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = arg_2_0:isSkillFocus(arg_2_0._fightStepMO)
+
+	if var_2_0 then
 		ViewMgr.instance:openView(ViewName.FightTechniqueGuideView, {
-			entity = FightDataHelper.entityMgr:getById(slot1),
-			config = slot0.monster_guide_focus_config
+			entity = FightDataHelper.entityMgr:getById(var_2_0),
+			config = arg_2_0.monster_guide_focus_config
 		})
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.FightTechniqueGuideView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, FightWorkFocusMonster.EaseTime)
+function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
+	if arg_3_1 == ViewName.FightTechniqueGuideView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, FightWorkFocusMonster.EaseTime)
 	end
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.isSkillFocus(slot0, slot1)
-	slot2 = FightModel.instance:getFightParam()
+function var_0_0.isSkillFocus(arg_5_0, arg_5_1)
+	local var_5_0 = FightModel.instance:getFightParam()
+	local var_5_1 = FightHelper.getEntity(arg_5_1.fromId)
 
-	if not FightHelper.getEntity(slot1.fromId) or not slot3:getMO() then
+	if not var_5_1 or not var_5_1:getMO() then
 		return
 	end
 
@@ -40,40 +43,55 @@ function slot0.isSkillFocus(slot0, slot1)
 		return
 	end
 
-	if DungeonModel.instance:hasPassLevel(slot2.episodeId) then
+	if DungeonModel.instance:hasPassLevel(var_5_0.episodeId) then
 		return
 	end
 
-	if not lua_monster_guide_focus.configDict[slot2.episodeId] then
+	if not lua_monster_guide_focus.configDict[var_5_0.episodeId] then
 		return
 	end
 
-	if not FightConfig.instance:getMonsterGuideFocusConfig(slot2.episodeId, slot1.actType, slot1.actId, slot3:getMO().modelId) then
-		for slot8, slot9 in ipairs(slot1.actEffectMOs) do
-			if slot9.effectType == FightEnum.EffectType.BUFFADD and FightDataHelper.entityMgr:getById(slot9.targetId) and FightConfig.instance:getMonsterGuideFocusConfig(slot2.episodeId, FightWorkFocusMonster.invokeType.Buff, slot9.buff.buffId, slot10.modelId) then
-				break
+	local var_5_2 = FightConfig.instance:getMonsterGuideFocusConfig(var_5_0.episodeId, arg_5_1.actType, arg_5_1.actId, var_5_1:getMO().modelId)
+
+	if not var_5_2 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_1.actEffectMOs) do
+			if iter_5_1.effectType == FightEnum.EffectType.BUFFADD then
+				local var_5_3 = FightDataHelper.entityMgr:getById(iter_5_1.targetId)
+
+				if var_5_3 then
+					var_5_2 = FightConfig.instance:getMonsterGuideFocusConfig(var_5_0.episodeId, FightWorkFocusMonster.invokeType.Buff, iter_5_1.buff.buffId, var_5_3.modelId)
+
+					if var_5_2 then
+						break
+					end
+				end
 			end
 		end
 
-		if not slot4 then
+		if not var_5_2 then
 			return
 		end
 	end
 
-	slot0.monster_guide_focus_config = slot4
+	arg_5_0.monster_guide_focus_config = var_5_2
 
-	if PlayerPrefsHelper.hasKey(uv0.getPlayerPrefKey(slot4)) then
+	local var_5_4 = var_0_0.getPlayerPrefKey(var_5_2)
+
+	if PlayerPrefsHelper.hasKey(var_5_4) then
 		return
 	end
 
-	return slot1.fromId
+	return arg_5_1.fromId
 end
 
-function slot0.getPlayerPrefKey(slot0)
-	return string.format("%s_%s_%s_%s_%s_%s", PlayerPrefsKey.FightFocusSkillOrBuffMonster, PlayerModel.instance:getPlayinfo().userId, tostring(slot0.id), tostring(slot0.invokeType), tostring(slot0.param), tostring(slot0.monster))
+function var_0_0.getPlayerPrefKey(arg_6_0)
+	local var_6_0 = PlayerModel.instance:getPlayinfo()
+
+	return string.format("%s_%s_%s_%s_%s_%s", PlayerPrefsKey.FightFocusSkillOrBuffMonster, var_6_0.userId, tostring(arg_6_0.id), tostring(arg_6_0.invokeType), tostring(arg_6_0.param), tostring(arg_6_0.monster))
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

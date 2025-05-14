@@ -1,55 +1,60 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionBackToMain", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionBackToMain", package.seeall)
 
-slot0 = class("WaitGuideActionBackToMain", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionBackToMain", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, slot0._onEnterMainScene, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._checkInMain, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkInMain, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onEnterMainScene, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._checkInMain, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkInMain, arg_1_0)
 
-	slot0._needView = slot0.actionParam
+	arg_1_0._needView = arg_1_0.actionParam
 
-	slot0:_checkInMain()
+	arg_1_0:_checkInMain()
 end
 
-function slot0._onEnterMainScene(slot0, slot1, slot2)
-	if slot2 == 1 then
-		slot0:_checkInMain()
+function var_0_0._onEnterMainScene(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 == 1 then
+		arg_2_0:_checkInMain()
 	end
 end
 
-function slot0._checkInMain(slot0)
-	if slot0:checkGuideLock() then
+function var_0_0._checkInMain(arg_3_0)
+	if arg_3_0:checkGuideLock() then
 		return
 	end
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not GameSceneMgr.instance:isLoading() and not GameSceneMgr.instance:isClosing() then
-		slot4 = false
+	local var_3_0 = GameSceneMgr.instance:getCurSceneType() == SceneType.Main
+	local var_3_1 = GameSceneMgr.instance:isLoading()
+	local var_3_2 = GameSceneMgr.instance:isClosing()
 
-		for slot9, slot10 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-			if slot10 ~= slot0._needView and (ViewMgr.instance:isModal(slot10) or ViewMgr.instance:isFull(slot10)) then
-				slot4 = true
+	if var_3_0 and not var_3_1 and not var_3_2 then
+		local var_3_3 = false
+		local var_3_4 = ViewMgr.instance:getOpenViewNameList()
+
+		for iter_3_0, iter_3_1 in ipairs(var_3_4) do
+			if iter_3_1 ~= arg_3_0._needView and (ViewMgr.instance:isModal(iter_3_1) or ViewMgr.instance:isFull(iter_3_1)) then
+				var_3_3 = true
 
 				break
 			end
 		end
 
-		if not slot4 and (string.nilorempty(slot0._needView) or ViewMgr.instance:isOpen(slot0._needView)) then
-			slot0:_removeEvents()
-			slot0:onDone(true)
+		if not var_3_3 and (string.nilorempty(arg_3_0._needView) or ViewMgr.instance:isOpen(arg_3_0._needView)) then
+			arg_3_0:_removeEvents()
+			arg_3_0:onDone(true)
 		end
 	end
 end
 
-function slot0._removeEvents(slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneType.Main, slot0._onEnterMainScene, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._checkInMain, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkInMain, slot0)
+function var_0_0._removeEvents(arg_4_0)
+	GameSceneMgr.instance:unregisterCallback(SceneType.Main, arg_4_0._onEnterMainScene, arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._checkInMain, arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._checkInMain, arg_4_0)
 end
 
-function slot0.clearWork(slot0)
-	slot0:_removeEvents()
+function var_0_0.clearWork(arg_5_0)
+	arg_5_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

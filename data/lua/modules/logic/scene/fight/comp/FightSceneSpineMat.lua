@@ -1,53 +1,61 @@
-module("modules.logic.scene.fight.comp.FightSceneSpineMat", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneSpineMat", package.seeall)
 
-slot0 = class("FightSceneSpineMat", BaseSceneComp)
+local var_0_0 = class("FightSceneSpineMat", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0:_setLevelCO(slot2)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:_setLevelCO(arg_1_2)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
-	slot0:_setAllSpineColor()
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+	arg_2_0:_setAllSpineColor()
 end
 
-function slot0.onSceneClose(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	slot0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onSceneClose(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
+	arg_3_0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
 
-	slot0._spineColor = nil
+	arg_3_0._spineColor = nil
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if slot0._spineColor and slot1 then
-		MaterialUtil.setMainColor(slot1.unitSpawn.spineRenderer:getReplaceMat(), slot0._spineColor)
+function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
+	if arg_4_0._spineColor and arg_4_1 then
+		local var_4_0 = arg_4_1.unitSpawn.spineRenderer:getReplaceMat()
+
+		MaterialUtil.setMainColor(var_4_0, arg_4_0._spineColor)
 	end
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	slot0:_setLevelCO(slot1)
-	slot0:_setAllSpineColor()
+function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
+	arg_5_0:_setLevelCO(arg_5_1)
+	arg_5_0:_setAllSpineColor()
 end
 
-function slot0._setLevelCO(slot0, slot1)
-	slot0._spineColor = nil
+function var_0_0._setLevelCO(arg_6_0, arg_6_1)
+	arg_6_0._spineColor = nil
 
-	if lua_scene_level.configDict[slot1].spineR ~= 0 or slot2.spineG ~= 0 or slot2.spineB ~= 0 then
-		slot0._spineColor = Color.New(slot2.spineR, slot2.spineG, slot2.spineB, 1)
+	local var_6_0 = lua_scene_level.configDict[arg_6_1]
+
+	if var_6_0.spineR ~= 0 or var_6_0.spineG ~= 0 or var_6_0.spineB ~= 0 then
+		arg_6_0._spineColor = Color.New(var_6_0.spineR, var_6_0.spineG, var_6_0.spineB, 1)
 	end
 end
 
-function slot0._setAllSpineColor(slot0)
-	if not slot0._spineColor then
+function var_0_0._setAllSpineColor(arg_7_0)
+	if not arg_7_0._spineColor then
 		return
 	end
 
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitysContainUnitNpc()) do
-		if slot6.spineRenderer then
-			MaterialUtil.setMainColor(slot6.spineRenderer:getReplaceMat(), slot0._spineColor)
+	local var_7_0 = FightHelper.getAllEntitysContainUnitNpc()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.spineRenderer then
+			local var_7_1 = iter_7_1.spineRenderer:getReplaceMat()
+
+			MaterialUtil.setMainColor(var_7_1, arg_7_0._spineColor)
 		end
 	end
 end
 
-return slot0
+return var_0_0

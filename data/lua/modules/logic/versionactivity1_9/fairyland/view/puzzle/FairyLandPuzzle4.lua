@@ -1,46 +1,54 @@
-module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzle4", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzle4", package.seeall)
 
-slot0 = class("FairyLandPuzzle4", FairyLandPuzzleBase)
-slot1 = "0123456789%+%-%*%/%.１２３４５６７８９０×"
+local var_0_0 = class("FairyLandPuzzle4", FairyLandPuzzleBase)
+local var_0_1 = "0123456789%+%-%*%/%.１２３４５６７８９０×"
 
-function slot0.onInitView(slot0)
-	slot0._shapeGO = gohelper.findChild(slot0.viewGO, "main/#go_Shape/4")
-	slot0.goPuzzle = gohelper.findChild(slot0._shapeGO, "#go_NumPuzzleBG")
-	slot0.txtQuestion = gohelper.findChildTextMesh(slot0.goPuzzle, "#txt_Equation")
-	slot0.goInput = gohelper.findChild(slot0._shapeGO, "#go_Input")
-	slot0.btnConfirm = gohelper.findChildButtonWithAudio(slot0.goInput, "#go_SelectFrame/#go_Confirm")
-	slot0.goInputNum = gohelper.findChild(slot0.goInput, "#inputNum")
-	slot0.inputNum = gohelper.findChildTextMeshInputField(slot0.goInput, "#inputNum")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._shapeGO = gohelper.findChild(arg_1_0.viewGO, "main/#go_Shape/4")
+	arg_1_0.goPuzzle = gohelper.findChild(arg_1_0._shapeGO, "#go_NumPuzzleBG")
+	arg_1_0.txtQuestion = gohelper.findChildTextMesh(arg_1_0.goPuzzle, "#txt_Equation")
+	arg_1_0.goInput = gohelper.findChild(arg_1_0._shapeGO, "#go_Input")
+	arg_1_0.btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.goInput, "#go_SelectFrame/#go_Confirm")
+	arg_1_0.goInputNum = gohelper.findChild(arg_1_0.goInput, "#inputNum")
+	arg_1_0.inputNum = gohelper.findChildTextMeshInputField(arg_1_0.goInput, "#inputNum")
 
-	slot0.inputNum:AddOnValueChanged(slot0.onAddOnValueChanged, slot0)
+	arg_1_0.inputNum:AddOnValueChanged(arg_1_0.onAddOnValueChanged, arg_1_0)
 
-	slot0.inputTxtGO = gohelper.findChild(slot0.goInput, "#inputNum/Text Area/Text")
-	slot0.animInput = SLFramework.AnimatorPlayer.Get(slot0.inputTxtGO)
-	slot0.numComp = FairyLandFullScreenNumber.New()
+	arg_1_0.inputTxtGO = gohelper.findChild(arg_1_0.goInput, "#inputNum/Text Area/Text")
+	arg_1_0.animInput = SLFramework.AnimatorPlayer.Get(arg_1_0.inputTxtGO)
+	arg_1_0.numComp = FairyLandFullScreenNumber.New()
 
-	slot0.numComp:init({
-		viewGO = slot0.viewGO
-	})
-	slot0:addClickCb(slot0.btnConfirm, slot0.onClickBtnConfirm, slot0)
-	gohelper.setActive(slot0.btnConfirm, false)
+	local var_1_0 = {
+		viewGO = arg_1_0.viewGO
+	}
 
-	slot2 = string.gsub(uv0, "[%-%[%]%^]", "%%%1")
-	slot0.pattern = string.format("^[%s]*$", slot2)
-	slot0.clearPattern = string.format("[^%s]", slot2)
+	arg_1_0.numComp:init(var_1_0)
+	arg_1_0:addClickCb(arg_1_0.btnConfirm, arg_1_0.onClickBtnConfirm, arg_1_0)
+	gohelper.setActive(arg_1_0.btnConfirm, false)
+
+	local var_1_1 = string.gsub(var_0_1, "[%-%[%]%^]", "%%%1")
+
+	arg_1_0.pattern = string.format("^[%s]*$", var_1_1)
+	arg_1_0.clearPattern = string.format("[^%s]", var_1_1)
 end
 
-function slot0.onAddOnValueChanged(slot0, slot1)
-	if not string.match(slot1, slot0.pattern) then
-		slot0.inputNum:SetText(string.gsub(slot1, slot0.clearPattern, ""))
+function var_0_0.onAddOnValueChanged(arg_2_0, arg_2_1)
+	if not string.match(arg_2_1, arg_2_0.pattern) then
+		local var_2_0 = string.gsub(arg_2_1, arg_2_0.clearPattern, "")
+
+		arg_2_0.inputNum:SetText(var_2_0)
 
 		return
 	end
 
-	gohelper.setActive(slot0.btnConfirm, not string.nilorempty(slot0.inputNum:GetText()))
+	local var_2_1 = arg_2_0.inputNum:GetText()
+
+	gohelper.setActive(arg_2_0.btnConfirm, not string.nilorempty(var_2_1))
 end
 
-function slot0.onClickBtnConfirm(slot0)
-	for slot7, slot8 in ipairs({
+function var_0_0.onClickBtnConfirm(arg_3_0)
+	local var_3_0 = arg_3_0.inputNum:GetText()
+	local var_3_1 = {
 		"１",
 		"２",
 		"３",
@@ -51,189 +59,205 @@ function slot0.onClickBtnConfirm(slot0)
 		"８",
 		"９",
 		"０"
-	}) do
-		slot1 = string.gsub(slot0.inputNum:GetText(), slot8, ({
-			"1",
-			"2",
-			"3",
-			"4",
-			"5",
-			"6",
-			"7",
-			"8",
-			"9",
-			"0"
-		})[slot7])
+	}
+	local var_3_2 = {
+		"1",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"0"
+	}
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		var_3_0 = string.gsub(var_3_0, iter_3_1, var_3_2[iter_3_0])
 	end
 
-	if slot1 == slot0.config.answer then
-		gohelper.setActive(slot0.btnConfirm, false)
+	if var_3_0 == arg_3_0.config.answer then
+		gohelper.setActive(arg_3_0.btnConfirm, false)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_input_right)
-		slot0.animInput:Play("correct", slot0.onCorrectAnimEnd, slot0)
+		arg_3_0.animInput:Play("correct", arg_3_0.onCorrectAnimEnd, arg_3_0)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_input_mistake)
-		slot0.animInput:Play("error", slot0.onErrorAnimEnd, slot0)
+		arg_3_0.animInput:Play("error", arg_3_0.onErrorAnimEnd, arg_3_0)
 	end
 end
 
-function slot0.onCorrectAnimEnd(slot0)
-	slot0.inputNum:SetText("")
-	slot0.animInput:Play("idle", slot0.onAnimEnd, slot0)
-	slot0:finished()
+function var_0_0.onCorrectAnimEnd(arg_4_0)
+	arg_4_0.inputNum:SetText("")
+	arg_4_0.animInput:Play("idle", arg_4_0.onAnimEnd, arg_4_0)
+	arg_4_0:finished()
 end
 
-function slot0.onErrorAnimEnd(slot0)
-	slot0.inputNum:SetText("")
-	slot0.animInput:Play("idle", slot0.onAnimEnd, slot0)
-	slot0:playErrorTalk()
-	slot0:startCheckTips()
+function var_0_0.onErrorAnimEnd(arg_5_0)
+	arg_5_0.inputNum:SetText("")
+	arg_5_0.animInput:Play("idle", arg_5_0.onAnimEnd, arg_5_0)
+	arg_5_0:playErrorTalk()
+	arg_5_0:startCheckTips()
 end
 
-function slot0.onAnimEnd(slot0)
+function var_0_0.onAnimEnd(arg_6_0)
+	return
 end
 
-function slot0.onStart(slot0)
-	slot0.txtQuestion.text = slot0:getQuestion()
+function var_0_0.onStart(arg_7_0)
+	arg_7_0.txtQuestion.text = arg_7_0:getQuestion()
 
-	slot0.inputNum:SetText("")
+	arg_7_0.inputNum:SetText("")
 
-	slot1 = slot0:isEndPuzzle()
+	local var_7_0 = arg_7_0:isEndPuzzle()
 
-	gohelper.setActive(slot0.goPuzzle, not slot1)
+	gohelper.setActive(arg_7_0.goPuzzle, not var_7_0)
 
-	if slot1 then
-		recthelper.setAnchor(slot0.goInput.transform, 0, 180)
+	if var_7_0 then
+		recthelper.setAnchor(arg_7_0.goInput.transform, 0, 180)
 	else
-		slot0:layoutContent()
-		TaskDispatcher.runDelay(slot0.layoutContent, slot0, 0.1)
+		arg_7_0:layoutContent()
+		TaskDispatcher.runDelay(arg_7_0.layoutContent, arg_7_0, 0.1)
 	end
 
-	gohelper.setActive(slot0._shapeGO, false)
-	gohelper.setActive(slot0._shapeGO, not FairyLandModel.instance:isPassPuzzle(slot0.config.id) or not slot1)
-	gohelper.setActive(slot0.goInputNum, not slot2)
+	local var_7_1 = FairyLandModel.instance:isPassPuzzle(arg_7_0.config.id)
 
-	if slot1 and not slot2 then
-		slot0:showNumberText()
+	gohelper.setActive(arg_7_0._shapeGO, false)
+	gohelper.setActive(arg_7_0._shapeGO, not var_7_1 or not var_7_0)
+	gohelper.setActive(arg_7_0.goInputNum, not var_7_1)
+
+	if var_7_0 and not var_7_1 then
+		arg_7_0:showNumberText()
 	end
 
-	slot0:startCheckTips()
+	arg_7_0:startCheckTips()
 end
 
-function slot0.onRefreshView(slot0)
-	slot0.txtQuestion.text = slot0:getQuestion()
+function var_0_0.onRefreshView(arg_8_0)
+	arg_8_0.txtQuestion.text = arg_8_0:getQuestion()
 
-	gohelper.setActive(slot0._shapeGO, false)
-	gohelper.setActive(slot0._shapeGO, not FairyLandModel.instance:isPassPuzzle(slot0.config.id) or not slot0:isEndPuzzle())
-	gohelper.setActive(slot0.goInputNum, not slot2)
+	local var_8_0 = arg_8_0:isEndPuzzle()
+	local var_8_1 = FairyLandModel.instance:isPassPuzzle(arg_8_0.config.id)
 
-	if not slot2 then
-		gohelper.setActive(slot0.goPuzzle, not slot1)
+	gohelper.setActive(arg_8_0._shapeGO, false)
+	gohelper.setActive(arg_8_0._shapeGO, not var_8_1 or not var_8_0)
+	gohelper.setActive(arg_8_0.goInputNum, not var_8_1)
 
-		if slot1 then
-			slot0.tweenId = ZProj.TweenHelper.DOAnchorPos(slot0.goInput.transform, 0, 180, 1)
+	if not var_8_1 then
+		gohelper.setActive(arg_8_0.goPuzzle, not var_8_0)
 
-			slot0:showNumberText()
+		if var_8_0 then
+			arg_8_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_8_0.goInput.transform, 0, 180, 1)
+
+			arg_8_0:showNumberText()
 		else
-			slot0:layoutContent()
+			arg_8_0:layoutContent()
 		end
 	end
 
-	slot0:startCheckTips()
+	arg_8_0:startCheckTips()
 end
 
-function slot0.layoutContent(slot0)
-	recthelper.setAnchor(slot0.txtQuestion.transform, -346 * 0.5, 0)
-	recthelper.setAnchor(slot0.goInput.transform, slot0.txtQuestion.preferredWidth * 0.5, 350)
+function var_0_0.layoutContent(arg_9_0)
+	local var_9_0 = arg_9_0.txtQuestion.preferredWidth
+	local var_9_1 = 346
+	local var_9_2 = -var_9_1 * 0.5
+	local var_9_3 = var_9_0 * 0.5
+
+	recthelper.setAnchor(arg_9_0.txtQuestion.transform, var_9_2, 0)
+	recthelper.setAnchor(arg_9_0.goInput.transform, var_9_3, 350)
 end
 
-function slot0.isEndPuzzle(slot0)
-	return slot0.config.id == 10
+function var_0_0.isEndPuzzle(arg_10_0)
+	return arg_10_0.config.id == 10
 end
 
-function slot0.getQuestion(slot0)
-	if slot0.config.id == 4 then
+function var_0_0.getQuestion(arg_11_0)
+	local var_11_0 = arg_11_0.config.id
+
+	if var_11_0 == 4 then
 		return "1+2+3=1×2×3="
 	end
 
-	if slot1 == 5 then
+	if var_11_0 == 5 then
 		return "1+2+3=1+2+3=6"
 	end
 
-	if slot1 == 6 then
+	if var_11_0 == 6 then
 		return "111÷3="
 	end
 
-	if slot1 == 7 then
+	if var_11_0 == 7 then
 		return "111÷3=37"
 	end
 
-	if slot1 == 8 then
+	if var_11_0 == 8 then
 		return "2×3×5×7="
 	end
 
-	if slot1 == 9 then
+	if var_11_0 == 9 then
 		return "2×3×5×7=210"
 	end
 
 	return ""
 end
 
-function slot0.finished(slot0)
-	slot0:stopCheckTips()
-	gohelper.setActive(slot0.goInputNum, false)
+function var_0_0.finished(arg_12_0)
+	arg_12_0:stopCheckTips()
+	gohelper.setActive(arg_12_0.goInputNum, false)
 	FairyLandController.instance:closeDialogView()
 
-	if slot0:isEndPuzzle() then
-		slot0:showZeroText()
+	if arg_12_0:isEndPuzzle() then
+		arg_12_0:showZeroText()
 	else
-		slot0:playSuccessTalk()
+		arg_12_0:playSuccessTalk()
 	end
 end
 
-function slot0.playSuccessTalk(slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsTalk, slot0)
+function var_0_0.playSuccessTalk(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0.playTipsTalk, arg_13_0)
 
-	if not FairyLandModel.instance:isPassPuzzle(slot0.config.id) then
-		FairyLandRpc.instance:sendResolvePuzzleRequest(slot0.config.id, slot0.config.answer)
+	if not FairyLandModel.instance:isPassPuzzle(arg_13_0.config.id) then
+		FairyLandRpc.instance:sendResolvePuzzleRequest(arg_13_0.config.id, arg_13_0.config.answer)
 	end
 
-	slot0:playTalk(slot0.config.successTalkId, slot0.onSuccessTalkCallback, slot0)
+	arg_13_0:playTalk(arg_13_0.config.successTalkId, arg_13_0.onSuccessTalkCallback, arg_13_0)
 end
 
-function slot0.onSuccessTalkCallback(slot0)
-	if slot0:isEndPuzzle() then
-		gohelper.setActive(slot0._shapeGO, false)
-		slot0:clearNumTween()
-		slot0:openCompleteView()
-	end
-end
-
-function slot0.showNumberText(slot0)
-	if slot0.numComp then
-		slot0.numComp:playShowTween()
+function var_0_0.onSuccessTalkCallback(arg_14_0)
+	if arg_14_0:isEndPuzzle() then
+		gohelper.setActive(arg_14_0._shapeGO, false)
+		arg_14_0:clearNumTween()
+		arg_14_0:openCompleteView()
 	end
 end
 
-function slot0.showZeroText(slot0)
-	if slot0.numComp then
-		slot0.numComp:playZeroTween(slot0.playSuccessTalk, slot0)
+function var_0_0.showNumberText(arg_15_0)
+	if arg_15_0.numComp then
+		arg_15_0.numComp:playShowTween()
 	end
 end
 
-function slot0.clearNumTween(slot0)
-	if slot0.numComp then
-		slot0.numComp:clear()
+function var_0_0.showZeroText(arg_16_0)
+	if arg_16_0.numComp then
+		arg_16_0.numComp:playZeroTween(arg_16_0.playSuccessTalk, arg_16_0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.inputNum:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(slot0.layoutContent, slot0)
-	gohelper.setActive(slot0._shapeGO, false)
-
-	if slot0.numComp then
-		slot0.numComp:destory()
+function var_0_0.clearNumTween(arg_17_0)
+	if arg_17_0.numComp then
+		arg_17_0.numComp:clear()
 	end
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0.inputNum:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(arg_18_0.layoutContent, arg_18_0)
+	gohelper.setActive(arg_18_0._shapeGO, false)
+
+	if arg_18_0.numComp then
+		arg_18_0.numComp:destory()
+	end
+end
+
+return var_0_0

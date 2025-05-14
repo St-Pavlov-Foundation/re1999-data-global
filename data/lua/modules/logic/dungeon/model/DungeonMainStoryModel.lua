@@ -1,35 +1,36 @@
-module("modules.logic.dungeon.model.DungeonMainStoryModel", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonMainStoryModel", package.seeall)
 
-slot0 = class("DungeonMainStoryModel")
+local var_0_0 = class("DungeonMainStoryModel")
 
-function slot0.setChapterList(slot0, slot1)
-	slot0._list = {}
+function var_0_0.setChapterList(arg_1_0, arg_1_1)
+	arg_1_0._list = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot8 = slot0._list[DungeonConfig.instance:getChapterDivideSectionId(slot6.id)] or {}
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		local var_1_0 = DungeonConfig.instance:getChapterDivideSectionId(iter_1_1.id)
+		local var_1_1 = arg_1_0._list[var_1_0] or {}
 
-		table.insert(slot8, slot6)
+		table.insert(var_1_1, iter_1_1)
 
-		slot0._list[slot7] = slot8
+		arg_1_0._list[var_1_0] = var_1_1
 	end
 end
 
-function slot0.getChapterList(slot0, slot1)
-	return slot1 and slot0._list[slot1]
+function var_0_0.getChapterList(arg_2_0, arg_2_1)
+	return arg_2_1 and arg_2_0._list[arg_2_1]
 end
 
-function slot0.setSectionSelected(slot0, slot1)
-	slot0._selectedSectionId = slot1
+function var_0_0.setSectionSelected(arg_3_0, arg_3_1)
+	arg_3_0._selectedSectionId = arg_3_1
 end
 
-function slot0.getSelectedSectionId(slot0)
-	return slot0._selectedSectionId
+function var_0_0.getSelectedSectionId(arg_4_0)
+	return arg_4_0._selectedSectionId
 end
 
-function slot0.sectionIsSelected(slot0, slot1)
-	return slot0._selectedSectionId == slot1
+function var_0_0.sectionIsSelected(arg_5_0, arg_5_1)
+	return arg_5_0._selectedSectionId == arg_5_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

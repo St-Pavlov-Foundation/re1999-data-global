@@ -1,45 +1,52 @@
-module("modules.logic.bossrush.view.V1a4_BossRushLevelDetail_Spine", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRushLevelDetail_Spine", package.seeall)
 
-slot0 = class("V1a4_BossRushLevelDetail_Spine", LuaCompBase)
+local var_0_0 = class("V1a4_BossRushLevelDetail_Spine", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._gospine = gohelper.findChild(slot1, "#go_spine")
-	slot0._gospineTran = slot0._gospine.transform
-	slot0._gospineX, slot0._gospineY = recthelper.getAnchor(slot0._gospineTran)
-	slot0._uiSpine = GuiSpine.Create(slot0._gospine, false)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._gospine = gohelper.findChild(arg_1_1, "#go_spine")
+	arg_1_0._gospineTran = arg_1_0._gospine.transform
+	arg_1_0._gospineX, arg_1_0._gospineY = recthelper.getAnchor(arg_1_0._gospineTran)
+	arg_1_0._uiSpine = GuiSpine.Create(arg_1_0._gospine, false)
 end
 
-function slot0.setData(slot0, slot1)
-	if FightConfig.instance:getSkinCO(slot1) then
-		slot0._uiSpine:showModel()
-		slot0._uiSpine:setResPath(ResUrl.getSpineUIPrefab(slot2.spine), slot0._onSpineLoaded, slot0, true)
+function var_0_0.setData(arg_2_0, arg_2_1)
+	local var_2_0 = FightConfig.instance:getSkinCO(arg_2_1)
+
+	if var_2_0 then
+		local var_2_1 = ResUrl.getSpineUIPrefab(var_2_0.spine)
+
+		arg_2_0._uiSpine:showModel()
+		arg_2_0._uiSpine:setResPath(var_2_1, arg_2_0._onSpineLoaded, arg_2_0, true)
 	else
-		slot0._uiSpine:hideModel()
+		arg_2_0._uiSpine:hideModel()
 	end
 end
 
-function slot0.setOffsetXY(slot0, slot1, slot2)
-	recthelper.setAnchor(slot0._gospineTran, slot0._gospineX + (slot1 or 0), slot0._gospineY + (slot2 or 0))
+function var_0_0.setOffsetXY(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0._gospineX + (arg_3_1 or 0)
+	local var_3_1 = arg_3_0._gospineY + (arg_3_2 or 0)
+
+	recthelper.setAnchor(arg_3_0._gospineTran, var_3_0, var_3_1)
 end
 
-function slot0.setScale(slot0, slot1)
-	if not slot1 then
+function var_0_0.setScale(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	transformhelper.setLocalScale(slot0._gospineTran, slot1, slot1, slot1)
+	transformhelper.setLocalScale(arg_4_0._gospineTran, arg_4_1, arg_4_1, arg_4_1)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:doClear()
+function var_0_0.onDestroy(arg_5_0)
+	if arg_5_0._uiSpine then
+		arg_5_0._uiSpine:doClear()
 	end
 
-	slot0._uiSpine = nil
+	arg_5_0._uiSpine = nil
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:onDestroy()
+function var_0_0.onDestroyView(arg_6_0)
+	arg_6_0:onDestroy()
 end
 
-return slot0
+return var_0_0

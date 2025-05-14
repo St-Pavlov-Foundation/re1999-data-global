@@ -1,76 +1,76 @@
-module("modules.logic.skin.view.SkinOffsetAdjustView", package.seeall)
+﻿module("modules.logic.skin.view.SkinOffsetAdjustView", package.seeall)
 
-slot0 = class("SkinOffsetAdjustView", BaseView)
-slot1 = 5
+local var_0_0 = class("SkinOffsetAdjustView", BaseView)
+local var_0_1 = 5
 
-function slot0.onInitView(slot0)
-	slot0._btnblock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_block")
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
-	slot0._gotrigger = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger")
-	slot0._gotrigger34 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger3_4")
-	slot0._gotrigger33 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger3_3")
-	slot0._gotrigger32 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger3_2")
-	slot0._gotrigger31 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger3_1")
-	slot0._gotrigger14 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger1_4")
-	slot0._gotrigger13 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger1_3")
-	slot0._gotrigger12 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger1_2")
-	slot0._gotrigger11 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger1_1")
-	slot0._gotrigger24 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger2_4")
-	slot0._gotrigger23 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger2_3")
-	slot0._gotrigger22 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger2_2")
-	slot0._gotrigger21 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger2_1")
-	slot0._gotrigger44 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger4_4")
-	slot0._gotrigger43 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger4_3")
-	slot0._gotrigger42 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger4_2")
-	slot0._gotrigger41 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger4_1")
-	slot0._gotrigger54 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger5_4")
-	slot0._gotrigger53 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger5_3")
-	slot0._gotrigger52 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger5_2")
-	slot0._gotrigger51 = gohelper.findChild(slot0.viewGO, "#go_container/#go_trigger/#go_trigger5_1")
-	slot0._btnsaveTrigger = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_trigger/#btn_saveTrigger")
-	slot0._gooffset = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset")
-	slot0._txtoffsetkey = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_offset/#txt_offsetkey")
-	slot0._txtoffsetParentKey = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_offset/#txt_offsetParentKey")
-	slot0._txtoffsetValue = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_offset/#txt_offsetValue")
-	slot0._slideroffsetx = gohelper.findChildSlider(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset1/#slider_offsetx")
-	slot0._txtoffsetx = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset1/#txt_offsetx")
-	slot0._slideroffsety = gohelper.findChildSlider(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset2/#slider_offsety")
-	slot0._txtoffsety = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset2/#txt_offsety")
-	slot0._slideroffsetscale = gohelper.findChildSlider(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset3/#slider_offsetscale")
-	slot0._txtoffsetscale = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset3/#txt_offsetscale")
-	slot0._btnsaveOffset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_offset/#btn_saveOffset")
-	slot0._btnresetOffset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_offset/#btn_resetOffset")
-	slot0._btnswitchOffset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_offset/#btn_switchOffset")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#btn_close")
-	slot0._btnswitch = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_switch")
-	slot0._txtswitch = gohelper.findChildText(slot0.viewGO, "#btn_switch/#txt_switch")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnblock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_block")
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+	arg_1_0._gotrigger = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger")
+	arg_1_0._gotrigger34 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger3_4")
+	arg_1_0._gotrigger33 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger3_3")
+	arg_1_0._gotrigger32 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger3_2")
+	arg_1_0._gotrigger31 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger3_1")
+	arg_1_0._gotrigger14 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger1_4")
+	arg_1_0._gotrigger13 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger1_3")
+	arg_1_0._gotrigger12 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger1_2")
+	arg_1_0._gotrigger11 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger1_1")
+	arg_1_0._gotrigger24 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger2_4")
+	arg_1_0._gotrigger23 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger2_3")
+	arg_1_0._gotrigger22 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger2_2")
+	arg_1_0._gotrigger21 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger2_1")
+	arg_1_0._gotrigger44 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger4_4")
+	arg_1_0._gotrigger43 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger4_3")
+	arg_1_0._gotrigger42 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger4_2")
+	arg_1_0._gotrigger41 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger4_1")
+	arg_1_0._gotrigger54 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger5_4")
+	arg_1_0._gotrigger53 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger5_3")
+	arg_1_0._gotrigger52 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger5_2")
+	arg_1_0._gotrigger51 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_trigger/#go_trigger5_1")
+	arg_1_0._btnsaveTrigger = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_trigger/#btn_saveTrigger")
+	arg_1_0._gooffset = gohelper.findChild(arg_1_0.viewGO, "#go_container/component/#go_offset")
+	arg_1_0._txtoffsetkey = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/#go_offset/#txt_offsetkey")
+	arg_1_0._txtoffsetParentKey = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/#go_offset/#txt_offsetParentKey")
+	arg_1_0._txtoffsetValue = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/#go_offset/#txt_offsetValue")
+	arg_1_0._slideroffsetx = gohelper.findChildSlider(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/offset1/#slider_offsetx")
+	arg_1_0._txtoffsetx = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/offset1/#txt_offsetx")
+	arg_1_0._slideroffsety = gohelper.findChildSlider(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/offset2/#slider_offsety")
+	arg_1_0._txtoffsety = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/offset2/#txt_offsety")
+	arg_1_0._slideroffsetscale = gohelper.findChildSlider(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/offset3/#slider_offsetscale")
+	arg_1_0._txtoffsetscale = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/offset3/#txt_offsetscale")
+	arg_1_0._btnsaveOffset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#go_offset/#btn_saveOffset")
+	arg_1_0._btnresetOffset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#go_offset/#btn_resetOffset")
+	arg_1_0._btnswitchOffset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#go_offset/#btn_switchOffset")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#btn_close")
+	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_switch")
+	arg_1_0._txtswitch = gohelper.findChildText(arg_1_0.viewGO, "#btn_switch/#txt_switch")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnblock:AddClickListener(slot0._btnblockOnClick, slot0)
-	slot0._btnsaveTrigger:AddClickListener(slot0._btnsaveTriggerOnClick, slot0)
-	slot0._btnsaveOffset:AddClickListener(slot0._btnsaveOffsetOnClick, slot0)
-	slot0._btnresetOffset:AddClickListener(slot0._btnresetOffsetOnClick, slot0)
-	slot0._btnswitchOffset:AddClickListener(slot0._btnswitchOffsetOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnswitch:AddClickListener(slot0._btnswitchOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnblock:AddClickListener(arg_2_0._btnblockOnClick, arg_2_0)
+	arg_2_0._btnsaveTrigger:AddClickListener(arg_2_0._btnsaveTriggerOnClick, arg_2_0)
+	arg_2_0._btnsaveOffset:AddClickListener(arg_2_0._btnsaveOffsetOnClick, arg_2_0)
+	arg_2_0._btnresetOffset:AddClickListener(arg_2_0._btnresetOffsetOnClick, arg_2_0)
+	arg_2_0._btnswitchOffset:AddClickListener(arg_2_0._btnswitchOffsetOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnblock:RemoveClickListener()
-	slot0._btnsaveTrigger:RemoveClickListener()
-	slot0._btnsaveOffset:RemoveClickListener()
-	slot0._btnresetOffset:RemoveClickListener()
-	slot0._btnswitchOffset:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnswitch:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnblock:RemoveClickListener()
+	arg_3_0._btnsaveTrigger:RemoveClickListener()
+	arg_3_0._btnsaveOffset:RemoveClickListener()
+	arg_3_0._btnresetOffset:RemoveClickListener()
+	arg_3_0._btnswitchOffset:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnswitch:RemoveClickListener()
 end
 
-slot0.key2ParentKeyConstIdDict = {
+var_0_0.key2ParentKeyConstIdDict = {
 	mainThumbnailViewOffset = 506,
 	playercardViewImgOffset = 507,
 	fightSuccViewOffset = 504,
@@ -82,96 +82,98 @@ slot0.key2ParentKeyConstIdDict = {
 	characterDataVoiceViewOffset = 502
 }
 
-function slot0._btnswitchOffsetOnClick(slot0)
-	if slot0._curOffsetKey == "haloOffset" then
-		slot0:_onCharacterViewUpdate()
+function var_0_0._btnswitchOffsetOnClick(arg_4_0)
+	if arg_4_0._curOffsetKey == "haloOffset" then
+		arg_4_0:_onCharacterViewUpdate()
 	else
-		slot0:_onCharacterHoloUpdate()
+		arg_4_0:_onCharacterHoloUpdate()
 	end
 end
 
-function slot0._btnswitchOnClick(slot0)
-	gohelper.setActive(slot0._gocontainer, not slot0._gocontainer.activeSelf)
+function var_0_0._btnswitchOnClick(arg_5_0)
+	gohelper.setActive(arg_5_0._gocontainer, not arg_5_0._gocontainer.activeSelf)
 
-	if slot0._gocontainer.activeSelf then
-		slot0._txtswitch.text = "点击隐藏"
+	if arg_5_0._gocontainer.activeSelf then
+		arg_5_0._txtswitch.text = "点击隐藏"
 	else
-		slot0._txtswitch.text = "点击显示"
+		arg_5_0._txtswitch.text = "点击显示"
 	end
 end
 
-function slot0._btnresetOffsetOnClick(slot0)
-	SkinOffsetAdjustModel.instance:resetTempOffset(slot0._curSkinInfo, slot0._curOffsetKey)
+function var_0_0._btnresetOffsetOnClick(arg_6_0)
+	SkinOffsetAdjustModel.instance:resetTempOffset(arg_6_0._curSkinInfo, arg_6_0._curOffsetKey)
 
-	slot1, slot2, slot3 = SkinOffsetAdjustModel.instance:getOffset(slot0._curSkinInfo, slot0._curOffsetKey)
+	local var_6_0, var_6_1, var_6_2 = SkinOffsetAdjustModel.instance:getOffset(arg_6_0._curSkinInfo, arg_6_0._curOffsetKey)
 
-	slot0:initSliderValue(slot1, slot2, slot3)
-	slot0._changeOffsetCallback(slot1, slot2, slot3)
+	arg_6_0:initSliderValue(var_6_0, var_6_1, var_6_2)
+	arg_6_0._changeOffsetCallback(var_6_0, var_6_1, var_6_2)
 end
 
-function slot0._btnsaveTriggerOnClick(slot0)
-	for slot4 = 1, uv0 do
-		slot0:saveTrigger(slot4)
+function var_0_0._btnsaveTriggerOnClick(arg_7_0)
+	for iter_7_0 = 1, var_0_1 do
+		arg_7_0:saveTrigger(iter_7_0)
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._btnsaveOffsetOnClick(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._btnsaveOffsetOnClick(arg_9_0)
+	if not arg_9_0._curViewInfo or not arg_9_0._curSkinInfo then
 		return
 	end
 
-	slot1 = string.format(slot0:_getXPrecision(), slot0._slideroffsetx:GetValue())
-	slot2 = string.format(slot0:_getYPrecision(), slot0._slideroffsety:GetValue())
-	slot3 = string.format(slot0:_getSPrecision(), slot0._slideroffsetscale:GetValue())
+	local var_9_0 = string.format(arg_9_0:_getXPrecision(), arg_9_0._slideroffsetx:GetValue())
+	local var_9_1 = string.format(arg_9_0:_getYPrecision(), arg_9_0._slideroffsety:GetValue())
+	local var_9_2 = string.format(arg_9_0:_getSPrecision(), arg_9_0._slideroffsetscale:GetValue())
 
-	if slot0._curOffsetKey == "decorateskinOffset" or slot0._curOffsetKey == "decorateskinl2dOffset" or slot0._curOffsetKey == "decorateskinl2dBgOffset" then
-		logError(string.format("%s#%s#%s", slot1, slot2, slot3))
+	if arg_9_0._curOffsetKey == "decorateskinOffset" or arg_9_0._curOffsetKey == "decorateskinl2dOffset" or arg_9_0._curOffsetKey == "decorateskinl2dBgOffset" then
+		logError(string.format("%s#%s#%s", var_9_0, var_9_1, var_9_2))
 
 		return
 	end
 
-	SkinOffsetAdjustModel.instance:setOffset(slot0._curSkinInfo, slot0._curOffsetKey, slot1, slot2, slot3)
+	SkinOffsetAdjustModel.instance:setOffset(arg_9_0._curSkinInfo, arg_9_0._curOffsetKey, var_9_0, var_9_1, var_9_2)
 end
 
-function slot0._btnblockOnClick(slot0)
-	slot0.isShowSkinContainer = false
-	slot0.isShowViewContainer = false
+function var_0_0._btnblockOnClick(arg_10_0)
+	arg_10_0.isShowSkinContainer = false
+	arg_10_0.isShowViewContainer = false
 
-	gohelper.setActive(slot0._goskinscroll, false)
-	gohelper.setActive(slot0._goviewcroll, false)
+	gohelper.setActive(arg_10_0._goskinscroll, false)
+	gohelper.setActive(arg_10_0._goviewcroll, false)
 end
 
-function slot0.onSkinContainerClick(slot0)
-	gohelper.setActive(slot0._goskinscroll, true)
+function var_0_0.onSkinContainerClick(arg_11_0)
+	gohelper.setActive(arg_11_0._goskinscroll, true)
 
-	slot0.isShowSkinContainer = true
+	arg_11_0.isShowSkinContainer = true
 
 	SkinOffsetSkinListModel.instance:initSkinList()
 end
 
-function slot0.onViewContainerClick(slot0)
-	if slot0.isShowViewContainer then
-		slot0:_btnblockOnClick()
+function var_0_0.onViewContainerClick(arg_12_0)
+	if arg_12_0.isShowViewContainer then
+		arg_12_0:_btnblockOnClick()
 
 		return
 	end
 
-	gohelper.setActive(slot0._goviewcroll, true)
+	gohelper.setActive(arg_12_0._goviewcroll, true)
 
-	slot0.isShowViewContainer = true
+	arg_12_0.isShowViewContainer = true
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0.startDragPosX = slot2.position.x
+function var_0_0._onDragBegin(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0.startDragPosX = arg_13_2.position.x
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if math.abs(slot2.position.x - slot0.startDragPosX) > 30 then
-		if slot3 < slot0.startDragPosX then
+function var_0_0._onDragEnd(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_2.position.x
+
+	if math.abs(var_14_0 - arg_14_0.startDragPosX) > 30 then
+		if var_14_0 < arg_14_0.startDragPosX then
 			SkinOffsetSkinListModel.instance:slideNext()
 		else
 			SkinOffsetSkinListModel.instance:slidePre()
@@ -179,427 +181,460 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_15_0)
 	SkinOffsetSkinListModel.instance:initOriginSkinList()
-	SkinOffsetSkinListModel.instance:setScrollView(slot0)
+	SkinOffsetSkinListModel.instance:setScrollView(arg_15_0)
 
-	slot0.drag = SLFramework.UGUI.UIDragListener.Get(slot0._btnblock.gameObject)
+	arg_15_0.drag = SLFramework.UGUI.UIDragListener.Get(arg_15_0._btnblock.gameObject)
 
-	slot0.drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0.drag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_15_0.drag:AddDragBeginListener(arg_15_0._onDragBegin, arg_15_0)
+	arg_15_0.drag:AddDragEndListener(arg_15_0._onDragEnd, arg_15_0)
 
-	slot0._simageList = slot0:getUserDataTb_()
+	arg_15_0._simageList = arg_15_0:getUserDataTb_()
 
-	gohelper.setLayer(slot0.viewGO, UnityLayer.UITop, true)
+	gohelper.setLayer(arg_15_0.viewGO, UnityLayer.UITop, true)
 
-	slot0._goskincontainer = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_skincontainer")
-	slot0._goskinscroll = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_skincontainer/#scroll_skin")
-	slot0._goskinscrollrect = SLFramework.UGUI.ScrollRectWrap.Get(slot0._goskinscroll)
-	slot0._inputSkinLabel = gohelper.findChildTextMeshInputField(slot0.viewGO, "#go_container/component/#go_skincontainer/input_label")
+	arg_15_0._goskincontainer = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_skincontainer")
+	arg_15_0._goskinscroll = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_skincontainer/#scroll_skin")
+	arg_15_0._goskinscrollrect = SLFramework.UGUI.ScrollRectWrap.Get(arg_15_0._goskinscroll)
+	arg_15_0._inputSkinLabel = gohelper.findChildTextMeshInputField(arg_15_0.viewGO, "#go_container/component/#go_skincontainer/input_label")
 
-	slot0._inputSkinLabel:AddOnValueChanged(slot0.onSkinInputValueChanged, slot0)
+	arg_15_0._inputSkinLabel:AddOnValueChanged(arg_15_0.onSkinInputValueChanged, arg_15_0)
 
-	slot0.goFullSkinContainer = gohelper.findChild(slot0.viewGO, "fullSkinContainer")
-	slot0._inputCameraSize = gohelper.findChildTextMeshInputField(slot0.viewGO, "fullSkinContainer/camera_input")
+	arg_15_0.goFullSkinContainer = gohelper.findChild(arg_15_0.viewGO, "fullSkinContainer")
+	arg_15_0._inputCameraSize = gohelper.findChildTextMeshInputField(arg_15_0.viewGO, "fullSkinContainer/camera_input")
 
-	slot0._inputCameraSize:AddOnValueChanged(slot0.onCameraSizeInput, slot0)
+	arg_15_0._inputCameraSize:AddOnValueChanged(arg_15_0.onCameraSizeInput, arg_15_0)
 
-	slot0._txtScale = gohelper.findChildText(slot0.viewGO, "fullSkinContainer/txt_scale")
-	slot0._btnSearch = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_skincontainer/input_label/#btn_search")
+	arg_15_0._txtScale = gohelper.findChildText(arg_15_0.viewGO, "fullSkinContainer/txt_scale")
+	arg_15_0._btnSearch = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "#go_container/component/#go_skincontainer/input_label/#btn_search")
 
-	slot0._btnSearch:AddClickListener(slot0.onClickSearch, slot0)
+	arg_15_0._btnSearch:AddClickListener(arg_15_0.onClickSearch, arg_15_0)
 
-	slot0._goviewcontainer = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_viewcontainer")
-	slot0._goviewcroll = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_viewcontainer/#scroll_view")
-	slot0._txtviewlabel = gohelper.findChildText(slot0.viewGO, "#go_container/component/#go_viewcontainer/#txt_label")
-	slot0._goviewitem = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_viewcontainer/#scroll_view/Viewport/Content/item")
+	arg_15_0._goviewcontainer = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_viewcontainer")
+	arg_15_0._goviewcroll = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_viewcontainer/#scroll_view")
+	arg_15_0._txtviewlabel = gohelper.findChildText(arg_15_0.viewGO, "#go_container/component/#go_viewcontainer/#txt_label")
+	arg_15_0._goviewitem = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_viewcontainer/#scroll_view/Viewport/Content/item")
 
-	gohelper.setActive(slot0._goviewitem, false)
+	gohelper.setActive(arg_15_0._goviewitem, false)
 
-	slot0._goskincontainerclick = gohelper.getClick(slot0._inputSkinLabel.gameObject)
+	arg_15_0._goskincontainerclick = gohelper.getClick(arg_15_0._inputSkinLabel.gameObject)
 
-	slot0._goskincontainerclick:AddClickListener(slot0.onSkinContainerClick, slot0)
+	arg_15_0._goskincontainerclick:AddClickListener(arg_15_0.onSkinContainerClick, arg_15_0)
 
-	slot0._goviewcontainerclick = gohelper.getClick(slot0._goviewcontainer)
+	arg_15_0._goviewcontainerclick = gohelper.getClick(arg_15_0._goviewcontainer)
 
-	slot0._goviewcontainerclick:AddClickListener(slot0.onViewContainerClick, slot0)
-	slot0:_initViewList()
-	slot0:_initSkinList()
-	slot0:initSlider(slot0._slideroffsetx, 2000, -2000, slot0._onOffsetXChange)
-	slot0:initSlider(slot0._slideroffsety, 2000, -2000, slot0._onOffsetYChange)
-	slot0:initSlider(slot0._slideroffsetscale, 3, 0, slot0._onOffsetScaleChange)
+	arg_15_0._goviewcontainerclick:AddClickListener(arg_15_0.onViewContainerClick, arg_15_0)
+	arg_15_0:_initViewList()
+	arg_15_0:_initSkinList()
+	arg_15_0:initSlider(arg_15_0._slideroffsetx, 2000, -2000, arg_15_0._onOffsetXChange)
+	arg_15_0:initSlider(arg_15_0._slideroffsety, 2000, -2000, arg_15_0._onOffsetYChange)
+	arg_15_0:initSlider(arg_15_0._slideroffsetscale, 3, 0, arg_15_0._onOffsetScaleChange)
 
-	slot0._goOffset1 = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset1")
-	slot0._goOffset2 = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset2")
-	slot0._goOffset3 = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset/offsets/offset3")
-	slot0._btnList = {}
+	arg_15_0._goOffset1 = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_offset/offsets/offset1")
+	arg_15_0._goOffset2 = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_offset/offsets/offset2")
+	arg_15_0._goOffset3 = gohelper.findChild(arg_15_0.viewGO, "#go_container/component/#go_offset/offsets/offset3")
+	arg_15_0._btnList = {}
 
-	slot0:initOffsetItem(slot0._goOffset1, slot0._slideroffsetx, "x")
-	slot0:initOffsetItem(slot0._goOffset2, slot0._slideroffsety, "y")
-	slot0:initOffsetItem(slot0._goOffset3, slot0._slideroffsetscale, "s")
-	gohelper.setActive(slot0._gooffset, false)
-	gohelper.setActive(slot0._btnswitchOffset.gameObject, false)
+	arg_15_0:initOffsetItem(arg_15_0._goOffset1, arg_15_0._slideroffsetx, "x")
+	arg_15_0:initOffsetItem(arg_15_0._goOffset2, arg_15_0._slideroffsety, "y")
+	arg_15_0:initOffsetItem(arg_15_0._goOffset3, arg_15_0._slideroffsetscale, "s")
+	gohelper.setActive(arg_15_0._gooffset, false)
+	gohelper.setActive(arg_15_0._btnswitchOffset.gameObject, false)
 
-	slot0._txtoffsetParentKey.text = ""
-	slot0._txtoffsetValue.text = ""
+	arg_15_0._txtoffsetParentKey.text = ""
+	arg_15_0._txtoffsetValue.text = ""
 end
 
-function slot0.setSkinScrollRectVertical(slot0, slot1)
-	slot0._goskinscrollrect.verticalNormalizedPosition = slot1
+function var_0_0.setSkinScrollRectVertical(arg_16_0, arg_16_1)
+	arg_16_0._goskinscrollrect.verticalNormalizedPosition = arg_16_1
 end
 
-function slot0.initSlider(slot0, slot1, slot2, slot3, slot4)
-	if slot4 then
-		slot1:AddOnValueChanged(slot4, slot0)
+function var_0_0.initSlider(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	if arg_17_4 then
+		arg_17_1:AddOnValueChanged(arg_17_4, arg_17_0)
 
-		slot5 = SLFramework.UGUI.UIDragListener.Get(slot1.gameObject)
+		local var_17_0 = SLFramework.UGUI.UIDragListener.Get(arg_17_1.gameObject)
 
-		slot5:AddDragBeginListener(function (slot0, slot1)
+		var_17_0:AddDragBeginListener(function(arg_18_0, arg_18_1)
 			if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-				uv0.slider.enabled = false
+				arg_17_1.slider.enabled = false
 			end
 		end, nil)
-		slot5:AddDragEndListener(function (slot0, slot1)
+		var_17_0:AddDragEndListener(function(arg_19_0, arg_19_1)
 			if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-				uv0.slider.enabled = true
+				arg_17_1.slider.enabled = true
 			end
 		end, nil)
-		slot5:AddDragListener(function (slot0, slot1)
-			slot2 = slot1.delta.x
+		var_17_0:AddDragListener(function(arg_20_0, arg_20_1)
+			local var_20_0 = arg_20_1.delta.x
 
-			if uv0 == uv1._slideroffsetscale then
+			if arg_17_1 == arg_17_0._slideroffsetscale then
+				var_20_0 = arg_20_1.delta.x < 0 and -0.1 or 0.1
+
 				if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-					slot2 = (slot1.delta.x < 0 and -0.1 or 0.1) * 0.1
+					var_20_0 = var_20_0 * 0.1
 				end
 			elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-				slot2 = slot1.delta.x < 0 and -0.1 or 0.1
+				var_20_0 = arg_20_1.delta.x < 0 and -0.1 or 0.1
 			end
 
-			uv0:SetValue(uv0:GetValue() + slot2)
+			arg_17_1:SetValue(arg_17_1:GetValue() + var_20_0)
 		end, nil)
 	end
 
-	slot1.slider.maxValue = slot2
-	slot1.slider.minValue = slot3
+	arg_17_1.slider.maxValue = arg_17_2
+	arg_17_1.slider.minValue = arg_17_3
 end
 
-function slot0.initOffsetItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildButtonWithAudio(slot1, "AddBtn")
-	slot5 = gohelper.findChildButtonWithAudio(slot1, "ReduceBtn")
-	slot6 = gohelper.findChildTextMeshInputField(slot1, "IntervalField")
+function var_0_0.initOffsetItem(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = gohelper.findChildButtonWithAudio(arg_21_1, "AddBtn")
+	local var_21_1 = gohelper.findChildButtonWithAudio(arg_21_1, "ReduceBtn")
+	local var_21_2 = gohelper.findChildTextMeshInputField(arg_21_1, "IntervalField")
 
-	slot6:SetText(1)
-	slot4:AddClickListener(slot0.addBtnClick, slot0, {
-		intervalField = slot6,
-		slider = slot2,
-		propName = slot3
+	var_21_2:SetText(1)
+	var_21_0:AddClickListener(arg_21_0.addBtnClick, arg_21_0, {
+		intervalField = var_21_2,
+		slider = arg_21_2,
+		propName = arg_21_3
 	})
-	slot5:AddClickListener(slot0.reduceBtnClick, slot0, {
-		intervalField = slot6,
-		slider = slot2,
-		propName = slot3
+	var_21_1:AddClickListener(arg_21_0.reduceBtnClick, arg_21_0, {
+		intervalField = var_21_2,
+		slider = arg_21_2,
+		propName = arg_21_3
 	})
-	table.insert(slot0._btnList, slot4)
-	table.insert(slot0._btnList, slot5)
+	table.insert(arg_21_0._btnList, var_21_0)
+	table.insert(arg_21_0._btnList, var_21_1)
 end
 
-function slot0.addBtnClick(slot0, slot1)
-	slot1.slider:SetValue(tonumber(slot1.slider:GetValue()) + tonumber(slot1.intervalField:GetText()))
+function var_0_0.addBtnClick(arg_22_0, arg_22_1)
+	local var_22_0 = tonumber(arg_22_1.intervalField:GetText())
+	local var_22_1 = tonumber(arg_22_1.slider:GetValue())
+
+	arg_22_1.slider:SetValue(var_22_1 + var_22_0)
 end
 
-function slot0.reduceBtnClick(slot0, slot1)
-	slot1.slider:SetValue(tonumber(slot1.slider:GetValue()) - tonumber(slot1.intervalField:GetText()))
+function var_0_0.reduceBtnClick(arg_23_0, arg_23_1)
+	local var_23_0 = tonumber(arg_23_1.intervalField:GetText())
+	local var_23_1 = tonumber(arg_23_1.slider:GetValue())
+
+	arg_23_1.slider:SetValue(var_23_1 - var_23_0)
 end
 
-function slot0._onOffsetXChange(slot0, slot1, slot2)
-	slot0._txtoffsetx.text = string.format("x:" .. slot0:_getXPrecision(), slot2)
+function var_0_0._onOffsetXChange(arg_24_0, arg_24_1, arg_24_2)
+	arg_24_0._txtoffsetx.text = string.format("x:" .. arg_24_0:_getXPrecision(), arg_24_2)
 
-	slot0:_onOffsetChange()
+	arg_24_0:_onOffsetChange()
 end
 
-function slot0._onOffsetYChange(slot0, slot1, slot2)
-	slot0._txtoffsety.text = string.format("y:" .. slot0:_getYPrecision(), slot2)
+function var_0_0._onOffsetYChange(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0._txtoffsety.text = string.format("y:" .. arg_25_0:_getYPrecision(), arg_25_2)
 
-	slot0:_onOffsetChange()
+	arg_25_0:_onOffsetChange()
 end
 
-function slot0._onOffsetScaleChange(slot0, slot1, slot2)
-	slot0._txtoffsetscale.text = string.format("s:" .. slot0:_getSPrecision(), slot2)
+function var_0_0._onOffsetScaleChange(arg_26_0, arg_26_1, arg_26_2)
+	arg_26_0._txtoffsetscale.text = string.format("s:" .. arg_26_0:_getSPrecision(), arg_26_2)
 
-	slot0:_onOffsetChange()
+	arg_26_0:_onOffsetChange()
 end
 
-function slot0._onOffsetChange(slot0)
-	if slot0._changeOffsetCallback then
-		slot1 = string.format(slot0:_getXPrecision(), slot0._slideroffsetx:GetValue())
-		slot2 = string.format(slot0:_getYPrecision(), slot0._slideroffsety:GetValue())
-		slot3 = string.format(slot0:_getSPrecision(), slot0._slideroffsetscale:GetValue())
+function var_0_0._onOffsetChange(arg_27_0)
+	if arg_27_0._changeOffsetCallback then
+		local var_27_0 = string.format(arg_27_0:_getXPrecision(), arg_27_0._slideroffsetx:GetValue())
+		local var_27_1 = string.format(arg_27_0:_getYPrecision(), arg_27_0._slideroffsety:GetValue())
+		local var_27_2 = string.format(arg_27_0:_getSPrecision(), arg_27_0._slideroffsetscale:GetValue())
 
-		SkinOffsetAdjustModel.instance:setTempOffset(slot0._curSkinInfo, slot0._curOffsetKey, tonumber(slot1), tonumber(slot2), tonumber(slot3))
-		slot0._changeOffsetCallback(tonumber(slot1), tonumber(slot2), tonumber(slot3))
+		SkinOffsetAdjustModel.instance:setTempOffset(arg_27_0._curSkinInfo, arg_27_0._curOffsetKey, tonumber(var_27_0), tonumber(var_27_1), tonumber(var_27_2))
+		arg_27_0._changeOffsetCallback(tonumber(var_27_0), tonumber(var_27_1), tonumber(var_27_2))
 	end
 end
 
-function slot0.initSliderValue(slot0, slot1, slot2, slot3)
-	slot0._slideroffsetx:SetValue(slot1)
-	slot0._slideroffsety:SetValue(slot2)
-	slot0._slideroffsetscale:SetValue(slot3)
+function var_0_0.initSliderValue(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	arg_28_0._slideroffsetx:SetValue(arg_28_1)
+	arg_28_0._slideroffsety:SetValue(arg_28_2)
+	arg_28_0._slideroffsetscale:SetValue(arg_28_3)
 
-	slot0._txtoffsetx.text = string.format("x:" .. slot0:_getXPrecision(), slot1)
-	slot0._txtoffsety.text = string.format("y:" .. slot0:_getYPrecision(), slot2)
-	slot0._txtoffsetscale.text = string.format("s:" .. slot0:_getSPrecision(), slot3)
+	arg_28_0._txtoffsetx.text = string.format("x:" .. arg_28_0:_getXPrecision(), arg_28_1)
+	arg_28_0._txtoffsety.text = string.format("y:" .. arg_28_0:_getYPrecision(), arg_28_2)
+	arg_28_0._txtoffsetscale.text = string.format("s:" .. arg_28_0:_getSPrecision(), arg_28_3)
 end
 
-function slot0._getXPrecision(slot0)
-	return "%." .. (slot0._precisionDefine and slot0._precisionDefine.x or 1) .. "f"
+function var_0_0._getXPrecision(arg_29_0)
+	return "%." .. (arg_29_0._precisionDefine and arg_29_0._precisionDefine.x or 1) .. "f"
 end
 
-function slot0._getYPrecision(slot0)
-	return "%." .. (slot0._precisionDefine and slot0._precisionDefine.y or 1) .. "f"
+function var_0_0._getYPrecision(arg_30_0)
+	return "%." .. (arg_30_0._precisionDefine and arg_30_0._precisionDefine.y or 1) .. "f"
 end
 
-function slot0._getSPrecision(slot0)
-	return "%." .. (slot0._precisionDefine and slot0._precisionDefine.s or 2) .. "f"
+function var_0_0._getSPrecision(arg_31_0)
+	return "%." .. (arg_31_0._precisionDefine and arg_31_0._precisionDefine.s or 2) .. "f"
 end
 
-function slot0._initSkinList(slot0)
+function var_0_0._initSkinList(arg_32_0)
 	SkinOffsetSkinListModel.instance:initSkinList()
-	slot0:_btnblockOnClick()
+	arg_32_0:_btnblockOnClick()
 end
 
-function slot0._initViewList(slot0)
-	slot0._viewList = {}
-	slot0._viewNameList = {}
+function var_0_0._initViewList(arg_33_0)
+	arg_33_0._viewList = {}
+	arg_33_0._viewNameList = {}
 
-	table.insert(slot0._viewNameList, "0#动态立绘(常量表的501~505设置相对偏移)")
-	slot0:_addView("主界面", ViewName.MainView, slot0._onMainViewOpen, slot0._onMainViewUpdate, "UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
-	slot0:_addView("相框", ViewName.MainView, slot0._onMainViewFrameOpen, slot0._onMainViewFrameUpdate, "UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine", "mainViewFrameOffset")
-	slot0:_addView("主界面缩略图界面", ViewName.MainThumbnailView, slot0.onMainThumbnailViewOpen, slot0.onMainThumbnailViewUpdate, "UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine/#go_lightspine", "mainThumbnailViewOffset", "mainViewOffset")
-	slot0:_addView("角色切换界面 -> 复用主界面, 不能特殊设置", ViewName.CharacterSwitchView, slot0._onCommonCharacterViewOpen, slot0._onCharacterSwitchUpdate, "UIRoot/POPUP_TOP/CharacterSwitchView/#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
-	slot0:_addView("角色界面", ViewName.CharacterView, slot0._onCharacterViewOpen, slot0._onCharacterViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/dynamiccontainer/#go_spine", "characterViewOffset")
-	slot0:_addView("洞悉界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterRankUpView, slot0._onCommonCharacterViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterRankUpView/spineContainer/#go_spine", "characterRankUpViewOffset", "characterViewOffset")
-	slot0:_addView("结算界面 -> 复用角色界面, 可以特殊设置", ViewName.FightSuccView, slot0._onCommonCharacterViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/FightSuccView/spineContainer/spine", "fightSuccViewOffset", "characterViewOffset")
-	slot0:_addView("角色获得界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterGetView, slot0._onCharacterGetViewOpen, slot0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterGetView/charactercontainer/#go_spine", "characterGetViewOffset", "characterViewOffset")
-	slot0:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
-	slot0:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, slot0._onCharacterDataViewOpen, slot0._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
-	slot0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewLive2dOffset", "characterViewOffset")
-	slot0:_addView("装饰商店", ViewName.StoreView, slot0._onDecorateStoreViewOpen, slot0._onDecorateStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
-	table.insert(slot0._viewNameList, "0#静态立绘")
-	slot0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, slot0._onCharacterDataViewOpenFromHandbook, slot0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset")
-	slot0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, slot0._onCharacterSkinSwitchViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset")
-	slot0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, slot0._onCharacterSkinGainViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset")
-	slot0:_addView("角色界面静态立绘", ViewName.CharacterView, slot0._onCharacterViewChangeStaticDrawingOpen, slot0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset")
-	slot0:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, slot0._onCharacterGetViewOpen, slot0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset")
-	slot0:_addView("个人名片", ViewName.PlayerCardView, slot0._onPlayerCardViewOpen, slot0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset")
-	slot0:_addView("装饰商店静态立绘", ViewName.StoreView, slot0._onDecorateStoreStaticViewOpen, slot0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset")
-	slot0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, slot0._onSummonCustomThreePickOpen, slot0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset")
-	table.insert(slot0._viewNameList, "0#spine小人")
-	slot0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, slot0._onCharacterSkinSwitchViewOpen, slot0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
-	table.insert(slot0._viewNameList, "0#皮肤放大缩小界面")
-	slot0:_addView("皮肤放大缩小界面live2d", ViewName.CharacterSkinFullScreenView, slot0._onCharacterSkinFullViewOpen, slot0._onCharacterSkinFullViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer/#go_spine", "fullScreenLive2dOffset", "characterViewOffset", slot0.beforeOpenSkinFullView, slot0.beforeCloseSkinFullView)
-	slot0:initViewItem()
+	table.insert(arg_33_0._viewNameList, "0#动态立绘(常量表的501~505设置相对偏移)")
+	arg_33_0:_addView("主界面", ViewName.MainView, arg_33_0._onMainViewOpen, arg_33_0._onMainViewUpdate, "UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
+	arg_33_0:_addView("相框", ViewName.MainView, arg_33_0._onMainViewFrameOpen, arg_33_0._onMainViewFrameUpdate, "UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine", "mainViewFrameOffset")
+	arg_33_0:_addView("主界面缩略图界面", ViewName.MainThumbnailView, arg_33_0.onMainThumbnailViewOpen, arg_33_0.onMainThumbnailViewUpdate, "UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine/#go_lightspine", "mainThumbnailViewOffset", "mainViewOffset")
+	arg_33_0:_addView("角色切换界面 -> 复用主界面, 不能特殊设置", ViewName.CharacterSwitchView, arg_33_0._onCommonCharacterViewOpen, arg_33_0._onCharacterSwitchUpdate, "UIRoot/POPUP_TOP/CharacterSwitchView/#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
+	arg_33_0:_addView("角色界面", ViewName.CharacterView, arg_33_0._onCharacterViewOpen, arg_33_0._onCharacterViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/dynamiccontainer/#go_spine", "characterViewOffset")
+	arg_33_0:_addView("洞悉界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterRankUpView, arg_33_0._onCommonCharacterViewOpen, arg_33_0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterRankUpView/spineContainer/#go_spine", "characterRankUpViewOffset", "characterViewOffset")
+	arg_33_0:_addView("结算界面 -> 复用角色界面, 可以特殊设置", ViewName.FightSuccView, arg_33_0._onCommonCharacterViewOpen, arg_33_0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/FightSuccView/spineContainer/spine", "fightSuccViewOffset", "characterViewOffset")
+	arg_33_0:_addView("角色获得界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterGetView, arg_33_0._onCharacterGetViewOpen, arg_33_0._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterGetView/charactercontainer/#go_spine", "characterGetViewOffset", "characterViewOffset")
+	arg_33_0:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpen, arg_33_0._onCharacterSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
+	arg_33_0:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpen, arg_33_0._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
+	arg_33_0:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewLive2dOffset", "characterViewOffset")
+	arg_33_0:_addView("装饰商店", ViewName.StoreView, arg_33_0._onDecorateStoreViewOpen, arg_33_0._onDecorateStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
+	table.insert(arg_33_0._viewNameList, "0#静态立绘")
+	arg_33_0:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, arg_33_0._onCharacterDataViewOpenFromHandbook, arg_33_0._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset")
+	arg_33_0:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset")
+	arg_33_0:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, arg_33_0._onCharacterSkinGainViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset")
+	arg_33_0:_addView("角色界面静态立绘", ViewName.CharacterView, arg_33_0._onCharacterViewChangeStaticDrawingOpen, arg_33_0._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset")
+	arg_33_0:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, arg_33_0._onCharacterGetViewOpen, arg_33_0._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset")
+	arg_33_0:_addView("个人名片", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset")
+	arg_33_0:_addView("装饰商店静态立绘", ViewName.StoreView, arg_33_0._onDecorateStoreStaticViewOpen, arg_33_0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset")
+	arg_33_0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, arg_33_0._onSummonCustomThreePickOpen, arg_33_0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset")
+	table.insert(arg_33_0._viewNameList, "0#spine小人")
+	arg_33_0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
+	table.insert(arg_33_0._viewNameList, "0#皮肤放大缩小界面")
+	arg_33_0:_addView("皮肤放大缩小界面live2d", ViewName.CharacterSkinFullScreenView, arg_33_0._onCharacterSkinFullViewOpen, arg_33_0._onCharacterSkinFullViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer/#go_spine", "fullScreenLive2dOffset", "characterViewOffset", arg_33_0.beforeOpenSkinFullView, arg_33_0.beforeCloseSkinFullView)
+	arg_33_0:initViewItem()
 end
 
-function slot0._addView(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
-	table.insert(slot0._viewList, {
+function var_0_0._addView(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5, arg_34_6, arg_34_7, arg_34_8, arg_34_9)
+	local var_34_0 = {
 		viewInfo = {
-			slot1,
-			slot2,
-			slot3,
-			slot4,
-			slot5,
-			slot6,
-			slot7
+			arg_34_1,
+			arg_34_2,
+			arg_34_3,
+			arg_34_4,
+			arg_34_5,
+			arg_34_6,
+			arg_34_7
 		},
-		beforeOpenView = slot8,
-		beforeCloseView = slot9
-	})
-	table.insert(slot0._viewNameList, slot1)
+		beforeOpenView = arg_34_8,
+		beforeCloseView = arg_34_9
+	}
+
+	table.insert(arg_34_0._viewList, var_34_0)
+	table.insert(arg_34_0._viewNameList, arg_34_1)
 end
 
-function slot0.initViewItem(slot0)
-	slot1 = 0
-	slot2 = nil
-	slot0.viewItemList = {}
+function var_0_0.initViewItem(arg_35_0)
+	local var_35_0 = 0
+	local var_35_1
 
-	for slot6, slot7 in ipairs(slot0._viewNameList) do
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goviewitem, slot6)
-		slot2.goSelect = gohelper.findChild(slot2.go, "#go_select")
+	arg_35_0.viewItemList = {}
 
-		gohelper.setActive(slot2.go, true)
-		gohelper.setActive(slot2.goSelect, false)
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0._viewNameList) do
+		local var_35_2 = arg_35_0:getUserDataTb_()
 
-		if slot0:isHeaderView(slot7) then
-			slot7 = string.gsub(slot7, "^0#", "")
+		var_35_2.go = gohelper.cloneInPlace(arg_35_0._goviewitem, iter_35_0)
+		var_35_2.goSelect = gohelper.findChild(var_35_2.go, "#go_select")
+
+		gohelper.setActive(var_35_2.go, true)
+		gohelper.setActive(var_35_2.goSelect, false)
+
+		if arg_35_0:isHeaderView(iter_35_1) then
+			iter_35_1 = string.gsub(iter_35_1, "^0#", "")
 		else
-			slot2.click = gohelper.getClick(slot2.go)
+			var_35_0 = var_35_0 + 1
+			var_35_2.click = gohelper.getClick(var_35_2.go)
 
-			slot2.click:AddClickListener(slot0._onViewValueClick, slot0, slot2)
+			var_35_2.click:AddClickListener(arg_35_0._onViewValueClick, arg_35_0, var_35_2)
 
-			slot7 = "    " .. slot1 + 1 .. "." .. slot7
+			iter_35_1 = "    " .. var_35_0 .. "." .. iter_35_1
 
-			table.insert(slot0.viewItemList, slot2)
+			table.insert(arg_35_0.viewItemList, var_35_2)
 		end
 
-		slot2.viewName = slot7
-		slot2.index = slot1
-		gohelper.findChildText(slot2.go, "#txt_skinname").text = slot7
+		var_35_2.viewName = iter_35_1
+		var_35_2.index = var_35_0
+		gohelper.findChildText(var_35_2.go, "#txt_skinname").text = iter_35_1
 	end
 end
 
-function slot0.isHeaderView(slot0, slot1)
-	return string.match(slot1, "^0#.*")
+function var_0_0.isHeaderView(arg_36_0, arg_36_1)
+	return string.match(arg_36_1, "^0#.*")
 end
 
-function slot0._onMainViewOpen(slot0, slot1)
-	slot0:_onMainViewUpdate()
+function var_0_0._onMainViewOpen(arg_37_0, arg_37_1)
+	arg_37_0:_onMainViewUpdate()
 end
 
-function slot0._onMainViewFrameOpen(slot0, slot1)
-	slot0:_onMainViewFrameUpdate()
+function var_0_0._onMainViewFrameOpen(arg_38_0, arg_38_1)
+	arg_38_0:_onMainViewFrameUpdate()
 end
 
-function slot0.showTrigger(slot0)
-	gohelper.setActive(slot0._gotrigger, true)
+function var_0_0.showTrigger(arg_39_0)
+	gohelper.setActive(arg_39_0._gotrigger, true)
 
-	for slot4 = 1, uv0 do
-		slot0:updateTrigger(slot4)
+	for iter_39_0 = 1, var_0_1 do
+		arg_39_0:updateTrigger(iter_39_0)
 	end
 end
 
-function slot0.updateTrigger(slot0, slot1)
-	slot6 = slot1
+function var_0_0.updateTrigger(arg_40_0, arg_40_1)
+	local var_40_0 = SkinOffsetAdjustModel.instance:getTrigger(arg_40_0._curSkinInfo, "triggerArea" .. arg_40_1)
 
-	for slot6 = 1, 4 do
-		slot7 = slot0["_gotrigger" .. slot1 .. slot6]
+	for iter_40_0 = 1, 4 do
+		local var_40_1 = arg_40_0["_gotrigger" .. arg_40_1 .. iter_40_0]
+		local var_40_2 = var_40_0[iter_40_0]
 
-		if SkinOffsetAdjustModel.instance:getTrigger(slot0._curSkinInfo, "triggerArea" .. slot6)[slot6] then
-			gohelper.setActive(slot7, true)
+		if var_40_2 then
+			gohelper.setActive(var_40_1, true)
 
-			slot9, slot10, slot11, slot12 = unpack(slot8)
+			local var_40_3, var_40_4, var_40_5, var_40_6 = unpack(var_40_2)
 
-			recthelper.setAnchor(slot7.transform, slot9, slot10)
-			recthelper.setSize(slot7.transform, slot11 - slot9, slot10 - slot12)
+			recthelper.setAnchor(var_40_1.transform, var_40_3, var_40_4)
+			recthelper.setSize(var_40_1.transform, var_40_5 - var_40_3, var_40_4 - var_40_6)
 		else
-			gohelper.setActive(slot7, false)
+			gohelper.setActive(var_40_1, false)
 		end
 	end
 end
 
-function slot0.saveTrigger(slot0, slot1)
-	slot2 = {}
+function var_0_0.saveTrigger(arg_41_0, arg_41_1)
+	local var_41_0 = {}
 
-	for slot6 = 1, 4 do
-		if slot0:getOneTrigger(slot1, slot6) then
-			table.insert(slot2, slot7)
+	for iter_41_0 = 1, 4 do
+		local var_41_1 = arg_41_0:getOneTrigger(arg_41_1, iter_41_0)
+
+		if var_41_1 then
+			table.insert(var_41_0, var_41_1)
 		end
 	end
 
-	if #slot2 == 0 then
+	if #var_41_0 == 0 then
 		return
 	end
 
-	SkinOffsetAdjustModel.instance:setTrigger(slot0._curSkinInfo, "triggerArea" .. slot1, slot2)
+	SkinOffsetAdjustModel.instance:setTrigger(arg_41_0._curSkinInfo, "triggerArea" .. arg_41_1, var_41_0)
 end
 
-function slot0.getOneTrigger(slot0, slot1, slot2)
-	if not slot0["_gotrigger" .. slot1 .. slot2].activeSelf then
+function var_0_0.getOneTrigger(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = arg_42_0["_gotrigger" .. arg_42_1 .. arg_42_2]
+
+	if not var_42_0.activeSelf then
 		return
 	end
 
-	slot4, slot5 = recthelper.getAnchor(slot3.transform)
+	local var_42_1, var_42_2 = recthelper.getAnchor(var_42_0.transform)
+	local var_42_3 = recthelper.getWidth(var_42_0.transform)
+	local var_42_4 = recthelper.getHeight(var_42_0.transform)
+	local var_42_5 = var_42_3 + var_42_1
+	local var_42_6 = var_42_2 - var_42_4
+	local var_42_7 = string.format("%.1f", var_42_1)
+	local var_42_8 = string.format("%.1f", var_42_2)
+	local var_42_9 = string.format("%.1f", var_42_5)
+	local var_42_10 = string.format("%.1f", var_42_6)
 
 	return {
-		string.format("%.1f", slot4),
-		string.format("%.1f", slot5),
-		string.format("%.1f", recthelper.getWidth(slot3.transform) + slot4),
-		string.format("%.1f", slot5 - recthelper.getHeight(slot3.transform))
+		var_42_7,
+		var_42_8,
+		var_42_9,
+		var_42_10
 	}
 end
 
-function slot0.setOffset(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	gohelper.setActive(slot0._gooffset, true)
+function var_0_0.setOffset(arg_43_0, arg_43_1, arg_43_2, arg_43_3, arg_43_4, arg_43_5, arg_43_6)
+	gohelper.setActive(arg_43_0._gooffset, true)
 
-	slot7 = -1
-	slot0._txtoffsetkey.text = "currentKey : " .. slot2
+	local var_43_0 = -1
 
-	if string.nilorempty(slot5) then
-		slot0._txtoffsetParentKey.text = ""
-		slot0._txtoffsetValue.text = ""
+	arg_43_0._txtoffsetkey.text = "currentKey : " .. arg_43_2
+
+	if string.nilorempty(arg_43_5) then
+		arg_43_0._txtoffsetParentKey.text = ""
+		arg_43_0._txtoffsetValue.text = ""
 	else
-		slot0._txtoffsetParentKey.text = "parentKey : " .. slot5
+		arg_43_0._txtoffsetParentKey.text = "parentKey : " .. arg_43_5
+		var_43_0 = var_0_0.key2ParentKeyConstIdDict[arg_43_2]
 
-		if not uv0.key2ParentKeyConstIdDict[slot2] then
-			logError(string.format("'%s' -> '%s' not config const id", slot2, slot5))
+		if not var_43_0 then
+			logError(string.format("'%s' -> '%s' not config const id", arg_43_2, arg_43_5))
 		end
 
-		slot0._txtoffsetValue.text = "offsetValue  : " .. CommonConfig.instance:getConstStr(slot7)
+		arg_43_0._txtoffsetValue.text = "offsetValue  : " .. CommonConfig.instance:getConstStr(var_43_0)
 	end
 
-	slot0._curOffsetKey = slot2
+	arg_43_0._curOffsetKey = arg_43_2
 
-	if slot2 == "decorateskinOffset" or slot2 == "decorateskinl2dOffset" then
-		slot10 = slot4[1]
-		slot11 = slot4[2]
-		slot12 = slot4[3]
+	if arg_43_2 == "decorateskinOffset" or arg_43_2 == "decorateskinl2dOffset" then
+		local var_43_1 = DecorateStoreConfig.instance:getDecorateConfig(700005)
+		local var_43_2 = string.splitToNumber(var_43_1[arg_43_2], "#")
+		local var_43_3 = arg_43_4[1]
+		local var_43_4 = arg_43_4[2]
+		local var_43_5 = arg_43_4[3]
 
-		if #string.splitToNumber(DecorateStoreConfig.instance:getDecorateConfig(700005)[slot2], "#") == 3 then
-			slot10 = slot9[1]
-			slot11 = slot9[2]
-			slot12 = slot9[3]
+		if #var_43_2 == 3 then
+			var_43_3 = var_43_2[1]
+			var_43_4 = var_43_2[2]
+			var_43_5 = var_43_2[3]
 		end
 
-		slot3(slot10, slot11, slot12)
+		arg_43_3(var_43_3, var_43_4, var_43_5)
 
-		slot0._changeOffsetCallback = slot3
-		slot0._precisionDefine = slot6
+		arg_43_0._changeOffsetCallback = arg_43_3
+		arg_43_0._precisionDefine = arg_43_6
 
-		slot0:initSliderValue(slot10, slot11, slot12)
+		arg_43_0:initSliderValue(var_43_3, var_43_4, var_43_5)
 	else
-		slot8, slot9, slot10, slot11 = SkinOffsetAdjustModel.instance:getOffset(slot0._curSkinInfo, slot2, slot5, slot7)
+		local var_43_6, var_43_7, var_43_8, var_43_9 = SkinOffsetAdjustModel.instance:getOffset(arg_43_0._curSkinInfo, arg_43_2, arg_43_5, var_43_0)
 
-		if slot11 and slot4 then
-			slot8 = slot4[1]
-			slot9 = slot4[2]
-			slot10 = slot4[3]
+		if var_43_9 and arg_43_4 then
+			var_43_6 = arg_43_4[1]
+			var_43_7 = arg_43_4[2]
+			var_43_8 = arg_43_4[3]
 		end
 
-		slot3(slot8, slot9, slot10)
+		arg_43_3(var_43_6, var_43_7, var_43_8)
 
-		slot0._changeOffsetCallback = slot3
-		slot0._precisionDefine = slot6
+		arg_43_0._changeOffsetCallback = arg_43_3
+		arg_43_0._precisionDefine = arg_43_6
 
-		slot0:initSliderValue(slot8, slot9, slot10)
+		arg_43_0:initSliderValue(var_43_6, var_43_7, var_43_8)
 	end
 end
 
-function slot0._onMainViewFrameUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onMainViewFrameUpdate(arg_44_0)
+	if not arg_44_0._curViewInfo or not arg_44_0._curSkinInfo then
 		return
 	end
 
-	slot3 = gohelper.find(slot0._curViewInfo[5])
+	local var_44_0 = "mainViewOffset"
+	local var_44_1 = arg_44_0._curViewInfo[5]
+	local var_44_2 = gohelper.find(var_44_1)
 
-	slot0:setOffset(slot0._curSkinInfo, "mainViewOffset", function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_44_0:setOffset(arg_44_0._curSkinInfo, var_44_0, function(arg_45_0, arg_45_1, arg_45_2)
+		local var_45_0 = var_44_2.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_45_0, arg_45_0, arg_45_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_45_0.localScale = Vector3.one * arg_45_2
 	end)
-	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, slot0._curSkinInfo, true)
-	TaskDispatcher.runDelay(function ()
-		MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, uv0._curSkinInfo, false)
+	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_44_0._curSkinInfo, true)
+	TaskDispatcher.runDelay(function()
+		MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_44_0._curSkinInfo, false)
 
-		slot1 = gohelper.find(string.format("cameraroot/SceneRoot/MainScene/%s_p(Clone)/s01_obj_a/Anim/Drawing/spine", MainSceneSwitchModel.instance:getCurSceneResName()))
+		local var_46_0 = arg_44_0._curViewInfo[6]
+		local var_46_1 = gohelper.find(string.format("cameraroot/SceneRoot/MainScene/%s_p(Clone)/s01_obj_a/Anim/Drawing/spine", MainSceneSwitchModel.instance:getCurSceneResName()))
 
-		uv0:setOffset(uv0._curSkinInfo, uv0._curViewInfo[6], function (slot0, slot1, slot2)
-			slot3 = uv0.transform
+		arg_44_0:setOffset(arg_44_0._curSkinInfo, var_46_0, function(arg_47_0, arg_47_1, arg_47_2)
+			local var_47_0 = var_46_1.transform
 
-			transformhelper.setLocalPosXY(slot3, slot0, slot1)
+			transformhelper.setLocalPosXY(var_47_0, arg_47_0, arg_47_1)
 
-			slot3.localScale = Vector3.one * slot2
+			var_47_0.localScale = Vector3.one * arg_47_2
 		end, {
 			3.11,
 			0.51,
@@ -612,144 +647,170 @@ function slot0._onMainViewFrameUpdate(slot0)
 	end, nil, 0.5)
 end
 
-function slot0._onMainViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onMainViewUpdate(arg_48_0)
+	if not arg_48_0._curViewInfo or not arg_48_0._curSkinInfo then
 		return
 	end
 
-	slot0:_onMainViewSwitchHeroUpdate()
-	slot0:showTrigger()
+	arg_48_0:_onMainViewSwitchHeroUpdate()
+	arg_48_0:showTrigger()
 end
 
-function slot0._onMainViewSwitchHeroUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onMainViewSwitchHeroUpdate(arg_49_0)
+	if not arg_49_0._curViewInfo or not arg_49_0._curSkinInfo then
 		return
 	end
 
-	slot3 = gohelper.find(slot0._curViewInfo[5])
+	local var_49_0 = arg_49_0._curViewInfo[6]
+	local var_49_1 = arg_49_0._curViewInfo[5]
+	local var_49_2 = gohelper.find(var_49_1)
 
-	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, slot0._curSkinInfo, true)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_49_0._curSkinInfo, true)
+	arg_49_0:setOffset(arg_49_0._curSkinInfo, var_49_0, function(arg_50_0, arg_50_1, arg_50_2)
+		local var_50_0 = var_49_2.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_50_0, arg_50_0, arg_50_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_50_0.localScale = Vector3.one * arg_50_2
 	end)
 end
 
-function slot0._onCharacterSwitchUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterSwitchUpdate(arg_51_0)
+	if not arg_51_0._curViewInfo or not arg_51_0._curSkinInfo then
 		return
 	end
 
-	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, slot0._curSkinInfo, true)
+	local var_51_0 = arg_51_0._curViewInfo[6]
+	local var_51_1 = arg_51_0._curViewInfo[5]
+	local var_51_2 = gohelper.find(var_51_1)
 
-	slot0._lightSpine = LightModelAgent.Create(gohelper.find(slot0._curViewInfo[5]), true)
+	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_51_0._curSkinInfo, true)
 
-	slot0._lightSpine:setResPath(slot0._curSkinInfo)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_51_0._lightSpine = LightModelAgent.Create(var_51_2, true)
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+	arg_51_0._lightSpine:setResPath(arg_51_0._curSkinInfo)
+	arg_51_0:setOffset(arg_51_0._curSkinInfo, var_51_0, function(arg_52_0, arg_52_1, arg_52_2)
+		local var_52_0 = var_51_2.transform
 
-		slot3.localScale = Vector3.one * slot2
+		recthelper.setAnchor(var_52_0, arg_52_0, arg_52_1)
+
+		var_52_0.localScale = Vector3.one * arg_52_2
 	end)
 end
 
-function slot0._onCharacterViewUpdate(slot0, slot1)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterViewUpdate(arg_53_0, arg_53_1)
+	if not arg_53_0._curViewInfo or not arg_53_0._curSkinInfo then
 		return
 	end
 
-	if slot1 then
-		slot0:_onCharacterHoloUpdate()
+	if arg_53_1 then
+		arg_53_0:_onCharacterHoloUpdate()
 	end
 
-	slot0._uiSpine = GuiModelAgent.Create(gohelper.find(slot0._curViewInfo[5]), true)
+	local var_53_0 = arg_53_0._curViewInfo[6]
+	local var_53_1 = arg_53_0._curViewInfo[5]
+	local var_53_2 = gohelper.find(var_53_1)
 
-	slot0._uiSpine:setResPath(slot0._curSkinInfo)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_53_0._uiSpine = GuiModelAgent.Create(var_53_2, true)
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+	arg_53_0._uiSpine:setResPath(arg_53_0._curSkinInfo)
+	arg_53_0:setOffset(arg_53_0._curSkinInfo, var_53_0, function(arg_54_0, arg_54_1, arg_54_2)
+		local var_54_0 = var_53_2.transform
 
-		slot3.localScale = Vector3.one * slot2
+		recthelper.setAnchor(var_54_0, arg_54_0, arg_54_1)
+
+		var_54_0.localScale = Vector3.one * arg_54_2
 	end)
 end
 
-function slot0._onCharacterHoloUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterHoloUpdate(arg_55_0)
+	if not arg_55_0._curViewInfo or not arg_55_0._curSkinInfo then
 		return
 	end
 
-	slot2 = gohelper.find("UIRoot/POPUP_TOP/CharacterView/anim/bgcanvas/bg/#simage_playerbg")
+	local var_55_0 = "UIRoot/POPUP_TOP/CharacterView/anim/bgcanvas/bg/#simage_playerbg"
+	local var_55_1 = gohelper.find(var_55_0)
 
-	slot0:setOffset(slot0._curSkinInfo, "haloOffset", function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_55_0:setOffset(arg_55_0._curSkinInfo, "haloOffset", function(arg_56_0, arg_56_1, arg_56_2)
+		local var_56_0 = var_55_1.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_56_0, arg_56_0, arg_56_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_56_0.localScale = Vector3.one * arg_56_2
 	end)
 end
 
-function slot0._onCharacterRankUpViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterRankUpViewUpdate(arg_57_0)
+	if not arg_57_0._curViewInfo or not arg_57_0._curSkinInfo then
 		return
 	end
 
-	slot0._uiSpine = GuiModelAgent.Create(gohelper.find(slot0._curViewInfo[5]), true)
+	local var_57_0 = arg_57_0._curViewInfo[6]
+	local var_57_1 = arg_57_0._curViewInfo[7]
+	local var_57_2 = arg_57_0._curViewInfo[5]
+	local var_57_3 = gohelper.find(var_57_2)
 
-	slot0._uiSpine:setResPath(slot0._curSkinInfo)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_57_0._uiSpine = GuiModelAgent.Create(var_57_3, true)
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+	arg_57_0._uiSpine:setResPath(arg_57_0._curSkinInfo)
+	arg_57_0:setOffset(arg_57_0._curSkinInfo, var_57_0, function(arg_58_0, arg_58_1, arg_58_2)
+		local var_58_0 = var_57_3.transform
 
-		slot3.localScale = Vector3.one * slot2
+		recthelper.setAnchor(var_58_0, arg_58_0, arg_58_1)
+
+		var_58_0.localScale = Vector3.one * arg_58_2
 	end, {
 		0,
 		0,
 		1
-	}, slot0._curViewInfo[7])
+	}, var_57_1)
 end
 
-function slot0._onCharacterSkinViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterSkinViewUpdate(arg_59_0)
+	if not arg_59_0._curViewInfo or not arg_59_0._curSkinInfo then
 		return
 	end
 
-	slot0._uiSpine = GuiModelAgent.Create(gohelper.find(slot0._curViewInfo[5]), true)
+	local var_59_0 = arg_59_0._curViewInfo[6]
+	local var_59_1 = arg_59_0._curViewInfo[7]
+	local var_59_2 = arg_59_0._curViewInfo[5]
+	local var_59_3 = gohelper.find(var_59_2)
 
-	slot0._uiSpine:setResPath(slot0._curSkinInfo)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_59_0._uiSpine = GuiModelAgent.Create(var_59_3, true)
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+	arg_59_0._uiSpine:setResPath(arg_59_0._curSkinInfo)
+	arg_59_0:setOffset(arg_59_0._curSkinInfo, var_59_0, function(arg_60_0, arg_60_1, arg_60_2)
+		local var_60_0 = var_59_3.transform
 
-		slot3.localScale = Vector3.one * slot2
+		recthelper.setAnchor(var_60_0, arg_60_0, arg_60_1)
+
+		var_60_0.localScale = Vector3.one * arg_60_2
 	end, {
 		0,
 		0,
 		1
-	}, slot0._curViewInfo[7])
+	}, var_59_1)
 end
 
-function slot0._onCharacterStaticSkinViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterStaticSkinViewUpdate(arg_61_0)
+	if not arg_61_0._curViewInfo or not arg_61_0._curSkinInfo then
 		return
 	end
 
-	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	local var_61_0 = arg_61_0._curViewInfo[6]
+	local var_61_1 = arg_61_0._curViewInfo[5]
+	local var_61_2 = gohelper.find(var_61_1)
+	local var_61_3 = gohelper.getSingleImage(var_61_2)
+
+	var_61_3:LoadImage(ResUrl.getHeadIconImg(arg_61_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_61_3.gameObject)
 	end, nil)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_61_0:setOffset(arg_61_0._curSkinInfo, var_61_0, function(arg_63_0, arg_63_1, arg_63_2)
+		local var_63_0 = var_61_3.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_63_0, arg_63_0, arg_63_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_63_0.localScale = Vector3.one * arg_63_2
 	end, {
 		-400,
 		500,
@@ -757,271 +818,325 @@ function slot0._onCharacterStaticSkinViewUpdate(slot0)
 	})
 end
 
-function slot0._onCharacterSkinSwitchViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterSkinSwitchViewUpdate(arg_64_0)
+	if not arg_64_0._curViewInfo or not arg_64_0._curSkinInfo then
 		return
 	end
 
-	slot0._uiSpine = GuiSpine.Create(gohelper.find(slot0._curViewInfo[5]), false)
+	local var_64_0 = arg_64_0._curViewInfo[6]
+	local var_64_1 = arg_64_0._curViewInfo[5]
+	local var_64_2 = gohelper.find(var_64_1)
 
-	slot0._uiSpine:setResPath(ResUrl.getSpineUIPrefab(slot0._curSkinInfo.spine))
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_64_0._uiSpine = GuiSpine.Create(var_64_2, false)
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+	arg_64_0._uiSpine:setResPath(ResUrl.getSpineUIPrefab(arg_64_0._curSkinInfo.spine))
+	arg_64_0:setOffset(arg_64_0._curSkinInfo, var_64_0, function(arg_65_0, arg_65_1, arg_65_2)
+		local var_65_0 = var_64_2.transform
 
-		slot3.localScale = Vector3.one * slot2
+		recthelper.setAnchor(var_65_0, arg_65_0, arg_65_1)
+
+		var_65_0.localScale = Vector3.one * arg_65_2
 	end)
 end
 
-function slot0._onPlayerCardViewStaticDrawingUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onPlayerCardViewStaticDrawingUpdate(arg_66_0)
+	if not arg_66_0._curViewInfo or not arg_66_0._curSkinInfo then
 		return
 	end
 
-	gohelper.getSingleImage(gohelper.findChild(gohelper.find(slot0._curViewInfo[5]).transform:GetChild(0).gameObject, "root/main/top/role/skinnode/#simage_role")):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	local var_66_0 = arg_66_0._curViewInfo[5]
+	local var_66_1 = gohelper.find(var_66_0).transform:GetChild(0).gameObject
+	local var_66_2 = gohelper.findChild(var_66_1, "root/main/top/role/skinnode/#simage_role")
+	local var_66_3 = arg_66_0._curViewInfo[6]
+	local var_66_4 = arg_66_0._curViewInfo[7]
+	local var_66_5 = var_66_2
+	local var_66_6 = gohelper.getSingleImage(var_66_5)
+
+	var_66_6:LoadImage(ResUrl.getHeadIconImg(arg_66_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_66_6.gameObject)
 	end, nil)
 
-	slot0.playCardViewStaticDrawingDefaultOffset = slot0.playCardViewStaticDrawingDefaultOffset or {
+	arg_66_0.playCardViewStaticDrawingDefaultOffset = arg_66_0.playCardViewStaticDrawingDefaultOffset or {
 		-150,
 		-150,
 		0.6
 	}
 
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_66_0:setOffset(arg_66_0._curSkinInfo, var_66_3, function(arg_68_0, arg_68_1, arg_68_2)
+		local var_68_0 = var_66_6.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_68_0, arg_68_0, arg_68_1)
 
-		slot3.localScale = Vector3.one * slot2
-	end, slot0.playCardViewStaticDrawingDefaultOffset, slot0._curViewInfo[7])
+		var_68_0.localScale = Vector3.one * arg_68_2
+	end, arg_66_0.playCardViewStaticDrawingDefaultOffset, var_66_4)
 end
 
-function slot0._onDecorateStoreStaticViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onDecorateStoreStaticViewUpdate(arg_69_0)
+	if not arg_69_0._curViewInfo or not arg_69_0._curSkinInfo then
 		return
 	end
 
-	gohelper.findChildSingleImage(gohelper.find(slot0._curViewInfo[5]), "#simage_skin"):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	local var_69_0 = arg_69_0._curViewInfo[5]
+	local var_69_1 = gohelper.find(var_69_0)
+	local var_69_2 = gohelper.findChildSingleImage(var_69_1, "#simage_skin")
+	local var_69_3 = arg_69_0._curViewInfo[6]
 
-		if not string.nilorempty(uv1._curSkinInfo.skinViewImgOffset) then
-			slot1 = string.splitToNumber(slot0, "#")
+	var_69_2:LoadImage(ResUrl.getHeadIconImg(arg_69_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_69_2.gameObject)
 
-			recthelper.setAnchor(uv0.transform, tonumber(slot1[1]), tonumber(slot1[2]))
-			transformhelper.setLocalScale(uv0.transform, tonumber(slot1[3]), tonumber(slot1[3]), tonumber(slot1[3]))
+		local var_70_0 = arg_69_0._curSkinInfo.skinViewImgOffset
+
+		if not string.nilorempty(var_70_0) then
+			local var_70_1 = string.splitToNumber(var_70_0, "#")
+
+			recthelper.setAnchor(var_69_2.transform, tonumber(var_70_1[1]), tonumber(var_70_1[2]))
+			transformhelper.setLocalScale(var_69_2.transform, tonumber(var_70_1[3]), tonumber(var_70_1[3]), tonumber(var_70_1[3]))
 		else
-			recthelper.setAnchor(uv0.transform, -150, -150)
-			transformhelper.setLocalScale(uv0.transform, 0.6, 0.6, 0.6)
+			recthelper.setAnchor(var_69_2.transform, -150, -150)
+			transformhelper.setLocalScale(var_69_2.transform, 0.6, 0.6, 0.6)
 		end
 	end, nil)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
-
-		slot3.localScale = Vector3.one * slot2
-	end, {
+	local var_69_4 = {
 		0,
 		0,
 		1
-	})
+	}
+
+	arg_69_0:setOffset(arg_69_0._curSkinInfo, var_69_3, function(arg_71_0, arg_71_1, arg_71_2)
+		local var_71_0 = var_69_1.transform
+
+		recthelper.setAnchor(var_71_0, arg_71_0, arg_71_1)
+
+		var_71_0.localScale = Vector3.one * arg_71_2
+	end, var_69_4)
 end
 
-function slot0._onCharacterSkinStaticDrawingViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterSkinStaticDrawingViewUpdate(arg_72_0)
+	if not arg_72_0._curViewInfo or not arg_72_0._curSkinInfo then
 		return
 	end
 
-	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	local var_72_0 = arg_72_0._curViewInfo[6]
+	local var_72_1 = arg_72_0._curViewInfo[5]
+	local var_72_2 = gohelper.find(var_72_1)
+	local var_72_3 = gohelper.getSingleImage(var_72_2)
+
+	var_72_3:LoadImage(ResUrl.getHeadIconImg(arg_72_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_72_3.gameObject)
 	end, nil)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform.parent
+	arg_72_0:setOffset(arg_72_0._curSkinInfo, var_72_0, function(arg_74_0, arg_74_1, arg_74_2)
+		local var_74_0 = var_72_3.transform.parent
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_74_0, arg_74_0, arg_74_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_74_0.localScale = Vector3.one * arg_74_2
 	end)
 end
 
-function slot0._onCharacterSkinStaticDrawingViewUpdate1(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterSkinStaticDrawingViewUpdate1(arg_75_0)
+	if not arg_75_0._curViewInfo or not arg_75_0._curSkinInfo then
 		return
 	end
 
-	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	local var_75_0 = arg_75_0._curViewInfo[6]
+	local var_75_1 = arg_75_0._curViewInfo[5]
+	local var_75_2 = gohelper.find(var_75_1)
+	local var_75_3 = gohelper.getSingleImage(var_75_2)
+
+	var_75_3:LoadImage(ResUrl.getHeadIconImg(arg_75_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_75_3.gameObject)
 	end, nil)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		recthelper.setAnchor(uv0.transform, slot0, slot1)
+	arg_75_0:setOffset(arg_75_0._curSkinInfo, var_75_0, function(arg_77_0, arg_77_1, arg_77_2)
+		recthelper.setAnchor(var_75_3.transform, arg_77_0, arg_77_1)
 
-		uv0.transform.localScale = Vector3.one * slot2
+		var_75_3.transform.localScale = Vector3.one * arg_77_2
 	end)
 end
 
-function slot0._onCharacterViewSkinStaticDrawingViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterViewSkinStaticDrawingViewUpdate(arg_78_0)
+	if not arg_78_0._curViewInfo or not arg_78_0._curSkinInfo then
 		return
 	end
 
-	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	local var_78_0 = arg_78_0._curViewInfo[6]
+	local var_78_1 = arg_78_0._curViewInfo[5]
+	local var_78_2 = gohelper.find(var_78_1)
+	local var_78_3 = gohelper.getSingleImage(var_78_2)
+
+	var_78_3:LoadImage(ResUrl.getHeadIconImg(arg_78_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_78_3.gameObject)
 	end, nil)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_78_0:setOffset(arg_78_0._curSkinInfo, var_78_0, function(arg_80_0, arg_80_1, arg_80_2)
+		local var_80_0 = var_78_3.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_80_0, arg_80_0, arg_80_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_80_0.localScale = Vector3.one * arg_80_2
 	end)
 end
 
-function slot0._onCharacterSkinGetDetailViewBaseUpdate(slot0, slot1)
-	gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5])):LoadImage(slot1, function ()
+function var_0_0._onCharacterSkinGetDetailViewBaseUpdate(arg_81_0, arg_81_1)
+	local var_81_0 = arg_81_0._curViewInfo[6]
+	local var_81_1 = arg_81_0._curViewInfo[5]
+	local var_81_2 = gohelper.find(var_81_1)
+	local var_81_3 = gohelper.getSingleImage(var_81_2)
+
+	var_81_3:LoadImage(arg_81_1, function()
+		return
 	end, nil)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_81_0:setOffset(arg_81_0._curSkinInfo, var_81_0, function(arg_83_0, arg_83_1, arg_83_2)
+		local var_83_0 = var_81_3.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_83_0, arg_83_0, arg_83_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_83_0.localScale = Vector3.one * arg_83_2
 	end)
 end
 
-function slot0._onCharacterDataTitleViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterDataTitleViewUpdate(arg_84_0)
+	if not arg_84_0._curViewInfo or not arg_84_0._curSkinInfo then
 		return
 	end
 
-	slot0:_onCharacterSkinGetDetailViewBaseUpdate(ResUrl.getHeadIconImg(slot0._curSkinInfo.id))
+	arg_84_0:_onCharacterSkinGetDetailViewBaseUpdate(ResUrl.getHeadIconImg(arg_84_0._curSkinInfo.id))
 end
 
-function slot0._onPlayerClothViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onPlayerClothViewUpdate(arg_85_0)
+	if not arg_85_0._curViewInfo or not arg_85_0._curSkinInfo then
 		return
 	end
 
-	slot4 = gohelper.getSingleImage(gohelper.find(slot0._curViewInfo[5]))
+	local var_85_0 = arg_85_0._curViewInfo[6]
+	local var_85_1 = arg_85_0._curViewInfo[5]
+	local var_85_2 = gohelper.find(var_85_1)
+	local var_85_3 = gohelper.getSingleImage(var_85_2)
 
-	slot4:LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-		ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+	var_85_3.LoadImage(var_85_3, ResUrl.getHeadIconImg(arg_85_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_85_3.gameObject)
 	end)
 
-	slot0._simageList[slot4] = true
+	arg_85_0._simageList[var_85_3] = true
 
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_85_0:setOffset(arg_85_0._curSkinInfo, var_85_0, function(arg_87_0, arg_87_1, arg_87_2)
+		local var_87_0 = var_85_3.transform
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+		recthelper.setAnchor(var_87_0, arg_87_0, arg_87_1)
 
-		slot3.localScale = Vector3.one * slot2
+		var_87_0.localScale = Vector3.one * arg_87_2
 	end)
 end
 
-function slot0._onCharacterDataVoiceViewUpdate(slot0)
+function var_0_0._onCharacterDataVoiceViewUpdate(arg_88_0)
 	CharacterController.instance:dispatchEvent(CharacterEvent.SelectPage, 2)
 
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+	if not arg_88_0._curViewInfo or not arg_88_0._curSkinInfo then
 		return
 	end
 
-	slot1 = slot0._curViewInfo[6]
-	slot2 = slot0._curViewInfo[7]
+	local var_88_0 = arg_88_0._curViewInfo[6]
+	local var_88_1 = arg_88_0._curViewInfo[7]
 
-	TaskDispatcher.runDelay(function ()
-		uv0._uiSpine = GuiModelAgent.Create(gohelper.find(uv0._curViewInfo[5]), true)
+	TaskDispatcher.runDelay(function()
+		local var_89_0 = arg_88_0._curViewInfo[5]
+		local var_89_1 = gohelper.find(var_89_0)
 
-		uv0._uiSpine:setResPath(uv0._curSkinInfo)
-		uv0:setOffset(uv0._curSkinInfo, uv1, function (slot0, slot1, slot2)
-			slot3 = uv0.transform
+		arg_88_0._uiSpine = GuiModelAgent.Create(var_89_1, true)
 
-			recthelper.setAnchor(slot3, slot0, slot1)
+		arg_88_0._uiSpine:setResPath(arg_88_0._curSkinInfo)
+		arg_88_0:setOffset(arg_88_0._curSkinInfo, var_88_0, function(arg_90_0, arg_90_1, arg_90_2)
+			local var_90_0 = var_89_1.transform
 
-			slot3.localScale = Vector3.one * slot2
+			recthelper.setAnchor(var_90_0, arg_90_0, arg_90_1)
+
+			var_90_0.localScale = Vector3.one * arg_90_2
 		end, {
 			0,
 			0,
 			1
-		}, uv2)
+		}, var_88_1)
 	end, nil, 0.5)
 end
 
-function slot0._onPlayerCardViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onPlayerCardViewUpdate(arg_91_0)
+	if not arg_91_0._curViewInfo or not arg_91_0._curSkinInfo then
 		return
 	end
 
-	slot3 = gohelper.find(slot0._curViewInfo[5]).transform:GetChild(0)
-	slot4 = gohelper.findChild(slot3, "main/top/role/skinnode/")
+	local var_91_0 = arg_91_0._curViewInfo[5]
+	local var_91_1 = gohelper.find(var_91_0).transform:GetChild(0)
+	local var_91_2 = gohelper.findChild(var_91_1, "main/top/role/skinnode/")
+	local var_91_3 = gohelper.findChild(var_91_1, "main/top/role/skinnode/#simage_role")
 
-	gohelper.setActive(gohelper.findChild(slot3, "main/top/role/skinnode/#simage_role"), false)
+	gohelper.setActive(var_91_3, false)
 
-	slot6 = slot0._curViewInfo[6]
-	slot7 = slot0._curViewInfo[7]
+	local var_91_4 = arg_91_0._curViewInfo[6]
+	local var_91_5 = arg_91_0._curViewInfo[7]
 
-	TaskDispatcher.runDelay(function ()
-		uv0._uiSpine = GuiModelAgent.Create(uv1, true)
+	TaskDispatcher.runDelay(function()
+		arg_91_0._uiSpine = GuiModelAgent.Create(var_91_2, true)
 
-		uv0._uiSpine:setResPath(uv0._curSkinInfo)
-		uv0:setOffset(uv0._curSkinInfo, uv2, function (slot0, slot1, slot2)
-			slot3 = uv0.transform
+		arg_91_0._uiSpine:setResPath(arg_91_0._curSkinInfo)
+		arg_91_0:setOffset(arg_91_0._curSkinInfo, var_91_4, function(arg_93_0, arg_93_1, arg_93_2)
+			local var_93_0 = var_91_2.transform
 
-			recthelper.setAnchor(slot3, slot0, slot1)
+			recthelper.setAnchor(var_93_0, arg_93_0, arg_93_1)
 
-			slot3.localScale = Vector3.one * slot2
+			var_93_0.localScale = Vector3.one * arg_93_2
 		end, {
 			0,
 			0,
 			1
-		}, uv3)
+		}, var_91_5)
 	end, nil, 0.5)
 end
 
-function slot0._onDecorateStoreViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onDecorateStoreViewUpdate(arg_94_0)
+	if not arg_94_0._curViewInfo or not arg_94_0._curSkinInfo then
 		return
 	end
 
-	slot2 = gohelper.find(slot0._curViewInfo[5])
-	slot3 = gohelper.findChild(slot2, "#go_spinecontainer/#go_spine")
-	slot4 = gohelper.findChildSingleImage(slot2, "#go_spinecontainer/#simage_l2d")
-	slot5 = slot0._curViewInfo[6]
+	local var_94_0 = arg_94_0._curViewInfo[5]
+	local var_94_1 = gohelper.find(var_94_0)
+	local var_94_2 = gohelper.findChild(var_94_1, "#go_spinecontainer/#go_spine")
+	local var_94_3 = gohelper.findChildSingleImage(var_94_1, "#go_spinecontainer/#simage_l2d")
+	local var_94_4 = arg_94_0._curViewInfo[6]
 
-	TaskDispatcher.runDelay(function ()
-		if not string.nilorempty(uv0._curSkinInfo.live2dbg) then
-			gohelper.setActive(uv1.gameObject, true)
-			uv1:LoadImage(ResUrl.getCharacterSkinLive2dBg(uv0._curSkinInfo.live2dbg))
+	TaskDispatcher.runDelay(function()
+		if not string.nilorempty(arg_94_0._curSkinInfo.live2dbg) then
+			gohelper.setActive(var_94_3.gameObject, true)
+			var_94_3:LoadImage(ResUrl.getCharacterSkinLive2dBg(arg_94_0._curSkinInfo.live2dbg))
 		else
-			gohelper.setActive(uv1.gameObject, false)
+			gohelper.setActive(var_94_3.gameObject, false)
 		end
 
-		uv0._uiSpine = GuiModelAgent.Create(uv2, true)
+		arg_94_0._uiSpine = GuiModelAgent.Create(var_94_2, true)
 
-		uv0._uiSpine:setResPath(uv0._curSkinInfo, function ()
-			if string.nilorempty(uv0._curSkinInfo.skinViewLive2dOffset) then
-				slot0 = uv0._curSkinInfo.characterViewOffset
+		arg_94_0._uiSpine:setResPath(arg_94_0._curSkinInfo, function()
+			local var_96_0 = arg_94_0._curSkinInfo.skinViewLive2dOffset
+
+			if string.nilorempty(var_96_0) then
+				var_96_0 = arg_94_0._curSkinInfo.characterViewOffset
 			end
 
-			slot1 = SkinConfig.instance:getSkinOffset(slot0)
+			local var_96_1 = SkinConfig.instance:getSkinOffset(var_96_0)
 
-			recthelper.setAnchor(uv1.transform, tonumber(slot1[1]), tonumber(slot1[2]))
-			transformhelper.setLocalScale(uv1.transform, tonumber(slot1[3]), tonumber(slot1[3]), tonumber(slot1[3]))
+			recthelper.setAnchor(var_94_2.transform, tonumber(var_96_1[1]), tonumber(var_96_1[2]))
+			transformhelper.setLocalScale(var_94_2.transform, tonumber(var_96_1[3]), tonumber(var_96_1[3]), tonumber(var_96_1[3]))
 		end)
 
-		if not string.nilorempty(uv0._curSkinInfo.live2d) then
-			uv0._uiSpine:setLive2dCameraLoadedCallback(function ()
-				gohelper.setAsFirstSibling(uv0.gameObject)
+		if not string.nilorempty(arg_94_0._curSkinInfo.live2d) then
+			arg_94_0._uiSpine:setLive2dCameraLoadedCallback(function()
+				gohelper.setAsFirstSibling(var_94_3.gameObject)
 			end)
 		end
 
-		uv0:setOffset(uv0._curSkinInfo, uv3, function (slot0, slot1, slot2)
-			slot3 = uv0.transform
+		arg_94_0:setOffset(arg_94_0._curSkinInfo, var_94_4, function(arg_98_0, arg_98_1, arg_98_2)
+			local var_98_0 = var_94_1.transform
 
-			recthelper.setAnchor(slot3, slot0, slot1)
+			recthelper.setAnchor(var_98_0, arg_98_0, arg_98_1)
 
-			slot3.localScale = Vector3.one * slot2
+			var_98_0.localScale = Vector3.one * arg_98_2
 		end, {
 			0,
 			0,
@@ -1030,134 +1145,158 @@ function slot0._onDecorateStoreViewUpdate(slot0)
 	end, nil, 0.5)
 end
 
-function slot0._onCharacterViewOpen(slot0)
-	slot0:_onCommonCharacterViewOpen()
-	gohelper.setActive(slot0._btnswitchOffset.gameObject, true)
+function var_0_0._onCharacterViewOpen(arg_99_0)
+	arg_99_0:_onCommonCharacterViewOpen()
+	gohelper.setActive(arg_99_0._btnswitchOffset.gameObject, true)
 end
 
-function slot0._onCharacterViewChangeStaticDrawingOpen(slot0)
+function var_0_0._onCharacterViewChangeStaticDrawingOpen(arg_100_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
 
-	slot1 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+	local var_100_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
 
-	CharacterDataModel.instance:setCurHeroId(slot1.heroId)
+	CharacterDataModel.instance:setCurHeroId(var_100_0.heroId)
 
-	slot1.isSettingSkinOffset = true
+	var_100_0.isSettingSkinOffset = true
 
-	ViewMgr.instance:openView(slot0._curViewInfo[2], slot1)
+	local var_100_1 = arg_100_0._curViewInfo[2]
+
+	ViewMgr.instance:openView(var_100_1, var_100_0)
 end
 
-function slot0._onCommonCharacterViewOpen(slot0)
+function var_0_0._onCommonCharacterViewOpen(arg_101_0)
 	FightResultModel.instance.episodeId = 10101
 	DungeonModel.instance.curSendEpisodeId = 10101
 	DungeonModel.instance.curSendChapterId = 101
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
 
-	slot1 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+	local var_101_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
 
-	CharacterDataModel.instance:setCurHeroId(slot1.heroId)
-	ViewMgr.instance:openView(slot0._curViewInfo[2], slot1)
+	CharacterDataModel.instance:setCurHeroId(var_101_0.heroId)
+
+	local var_101_1 = arg_101_0._curViewInfo[2]
+
+	ViewMgr.instance:openView(var_101_1, var_101_0)
 end
 
-function slot0._onCharacterSkinSwitchViewOpen(slot0)
+function var_0_0._onCharacterSkinSwitchViewOpen(arg_102_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-	CharacterDataModel.instance:setCurHeroId(CharacterBackpackCardListModel.instance:getCharacterCardList()[1].heroId)
 
-	if slot0._curViewInfo[2] == ViewName.CharacterSkinView then
-		slot3 = CharacterSkinLeftView._editableInitView
+	local var_102_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
 
-		function CharacterSkinLeftView._editableInitView(slot0)
-			uv0(slot0)
+	CharacterDataModel.instance:setCurHeroId(var_102_0.heroId)
 
-			slot0.showDynamicVertical = false
+	local var_102_1 = arg_102_0._curViewInfo[2]
+
+	if var_102_1 == ViewName.CharacterSkinView then
+		local var_102_2 = CharacterSkinLeftView._editableInitView
+
+		function CharacterSkinLeftView._editableInitView(arg_103_0)
+			var_102_2(arg_103_0)
+
+			arg_103_0.showDynamicVertical = false
 		end
 	end
 
-	ViewMgr.instance:openView(slot2, slot1)
+	ViewMgr.instance:openView(var_102_1, var_102_0)
 end
 
-function slot0._onCharacterSkinGainViewOpen(slot0)
-	ViewMgr.instance:openView(slot0._curViewInfo[2], {
+function var_0_0._onCharacterSkinGainViewOpen(arg_104_0)
+	local var_104_0 = arg_104_0._curViewInfo[2]
+
+	ViewMgr.instance:openView(var_104_0, {
 		skinId = 302503
 	})
 end
 
-function slot0._onCharacterGetViewOpen(slot0)
+function var_0_0._onCharacterGetViewOpen(arg_105_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-	ViewMgr.instance:openView(slot0._curViewInfo[2], {
-		heroId = CharacterBackpackCardListModel.instance:getCharacterCardList()[1].heroId
+
+	local var_105_0 = arg_105_0._curViewInfo[2]
+	local var_105_1 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
+
+	ViewMgr.instance:openView(var_105_0, {
+		heroId = var_105_1.heroId
 	})
 end
 
-function slot0._onCharacterDataViewOpen(slot0)
+function var_0_0._onCharacterDataViewOpen(arg_106_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-	CharacterDataModel.instance:setCurHeroId(CharacterBackpackCardListModel.instance:getCharacterCardList()[1].heroId)
 
-	slot2 = slot0._curViewInfo[2]
+	local var_106_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
 
-	TaskDispatcher.runDelay(function ()
-		ViewMgr.instance:openView(uv0, uv1.heroId)
+	CharacterDataModel.instance:setCurHeroId(var_106_0.heroId)
+
+	local var_106_1 = arg_106_0._curViewInfo[2]
+
+	TaskDispatcher.runDelay(function()
+		ViewMgr.instance:openView(var_106_1, var_106_0.heroId)
 	end, nil, 0.5)
 end
 
-function slot0._onPlayerCardViewOpen(slot0)
+function var_0_0._onPlayerCardViewOpen(arg_108_0)
 	PlayerCardController.instance:openPlayerCardView()
 end
 
-function slot0._onDecorateStoreViewOpen(slot0)
+function var_0_0._onDecorateStoreViewOpen(arg_109_0)
 	DecorateStoreModel.instance:setCurGood(700005)
 
-	if slot0._curViewInfo[2] == ViewName.StoreView then
-		slot2 = DecorateStoreView._editableInitView
+	if arg_109_0._curViewInfo[2] == ViewName.StoreView then
+		local var_109_0 = DecorateStoreView._editableInitView
 
-		function DecorateStoreView._editableInitView(slot0)
-			uv0(slot0)
+		function DecorateStoreView._editableInitView(arg_110_0)
+			var_109_0(arg_110_0)
 
-			slot0._showLive2d = true
-			slot0._adjust = true
+			arg_110_0._showLive2d = true
+			arg_110_0._adjust = true
 		end
 	end
 
 	GameFacade.jump(JumpEnum.JumpId.DecorateStorePay)
 end
 
-function slot0._onDecorateStoreStaticViewOpen(slot0)
+function var_0_0._onDecorateStoreStaticViewOpen(arg_111_0)
 	DecorateStoreModel.instance:setCurGood(700005)
 
-	if slot0._curViewInfo[2] == ViewName.StoreView then
-		slot2 = DecorateStoreView._editableInitView
+	if arg_111_0._curViewInfo[2] == ViewName.StoreView then
+		local var_111_0 = DecorateStoreView._editableInitView
 
-		function DecorateStoreView._editableInitView(slot0)
-			uv0(slot0)
+		function DecorateStoreView._editableInitView(arg_112_0)
+			var_111_0(arg_112_0)
 
-			slot0._showLive2d = false
-			slot0._adjust = true
+			arg_112_0._showLive2d = false
+			arg_112_0._adjust = true
 		end
 	end
 
 	GameFacade.jump(JumpEnum.JumpId.DecorateStorePay)
 end
 
-function slot0._onSummonCustomThreePickOpen(slot0)
-	SummonMainModel.instance:trySetSelectPoolId(22161)
-	ViewMgr.instance:openView(slot0._curViewInfo[2])
-	TaskDispatcher.runDelay(function ()
-		SummonCustomPickChoiceListModel.instance:initDatas(uv0)
+function var_0_0._onSummonCustomThreePickOpen(arg_113_0)
+	local var_113_0 = arg_113_0._curViewInfo[2]
+	local var_113_1 = 22161
+
+	SummonMainModel.instance:trySetSelectPoolId(var_113_1)
+	ViewMgr.instance:openView(var_113_0)
+	TaskDispatcher.runDelay(function()
+		SummonCustomPickChoiceListModel.instance:initDatas(var_113_1)
 		SummonCustomPickChoiceController.instance:setSelect(3071)
 		SummonCustomPickChoiceController.instance:setSelect(3072)
 		SummonCustomPickChoiceController.instance:setSelect(3073)
 
-		slot0 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+		local var_114_0 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+		local var_114_1 = SummonMainModel.instance:getCurPool()
+		local var_114_2 = SummonMainModel.instance:getPoolServerMO(var_114_1.id)
 
-		if SummonMainModel.instance:getPoolServerMO(SummonMainModel.instance:getCurPool().id) and slot2.customPickMO then
-			slot3 = {}
+		if var_114_2 and var_114_2.customPickMO then
+			local var_114_3 = {}
 
-			for slot7, slot8 in ipairs(slot0) do
-				table.insert(slot3, slot8)
+			for iter_114_0, iter_114_1 in ipairs(var_114_0) do
+				table.insert(var_114_3, iter_114_1)
 			end
 
-			slot2.customPickMO.pickHeroIds = slot3
+			var_114_2.customPickMO.pickHeroIds = var_114_3
 		end
 
 		SummonController.instance:dispatchEvent(SummonEvent.onCustomPicked)
@@ -1165,330 +1304,391 @@ function slot0._onSummonCustomThreePickOpen(slot0)
 	end, nil, 0.1)
 end
 
-function slot0._onSummonCustomThreePickDataUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onSummonCustomThreePickDataUpdate(arg_115_0)
+	if not arg_115_0._curViewInfo or not arg_115_0._curSkinInfo then
 		return
 	end
 
-	slot3 = slot0._curViewInfo[6]
+	local var_115_0 = arg_115_0._curViewInfo[5]
+	local var_115_1 = "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s_outline"
+	local var_115_2 = arg_115_0._curViewInfo[6]
+	local var_115_3 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
+	local var_115_4 = {}
+	local var_115_5 = {}
 
-	for slot10 = 1, SummonCustomPickChoiceListModel.instance:getMaxSelectCount() do
-		slot11 = tostring(slot10)
-		slot14 = gohelper.getSingleImage(gohelper.find(string.format(slot0._curViewInfo[5], slot11, slot11)))
+	for iter_115_0 = 1, var_115_3 do
+		local var_115_6 = tostring(iter_115_0)
+		local var_115_7 = string.format(var_115_0, var_115_6, var_115_6)
+		local var_115_8 = gohelper.find(var_115_7)
+		local var_115_9 = gohelper.getSingleImage(var_115_8)
 
-		slot14:LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-			ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+		var_115_9:LoadImage(ResUrl.getHeadIconImg(arg_115_0._curSkinInfo.id), function()
+			ZProj.UGUIHelper.SetImageSize(var_115_9.gameObject)
 		end, nil)
 
-		slot17 = gohelper.getSingleImage(gohelper.find(string.format("UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s_outline", slot11, slot11)))
+		local var_115_10 = string.format(var_115_1, var_115_6, var_115_6)
+		local var_115_11 = gohelper.find(var_115_10)
+		local var_115_12 = gohelper.getSingleImage(var_115_11)
 
-		slot17:LoadImage(ResUrl.getHeadIconImg(slot0._curSkinInfo.id), function ()
-			ZProj.UGUIHelper.SetImageSize(uv0.gameObject)
+		var_115_12:LoadImage(ResUrl.getHeadIconImg(arg_115_0._curSkinInfo.id), function()
+			ZProj.UGUIHelper.SetImageSize(var_115_12.gameObject)
 		end, nil)
-		table.insert({}, slot14)
-		table.insert({}, slot17)
+		table.insert(var_115_4, var_115_9)
+		table.insert(var_115_5, var_115_12)
 	end
 
-	slot0:setOffset(slot0._curSkinInfo, slot3, function (slot0, slot1, slot2)
-		for slot7 = 1, #uv0 do
-			slot8 = uv0[slot7].transform
-			slot9 = uv1[slot7].transform
+	arg_115_0:setOffset(arg_115_0._curSkinInfo, var_115_2, function(arg_118_0, arg_118_1, arg_118_2)
+		local var_118_0 = #var_115_4
 
-			recthelper.setAnchor(slot8, slot0, slot1)
+		for iter_118_0 = 1, var_118_0 do
+			local var_118_1 = var_115_4[iter_118_0].transform
+			local var_118_2 = var_115_5[iter_118_0].transform
 
-			slot8.localScale = Vector3.one * slot2
+			recthelper.setAnchor(var_118_1, arg_118_0, arg_118_1)
 
-			recthelper.setAnchor(slot9, slot0 - 5, slot1 + 2)
+			var_118_1.localScale = Vector3.one * arg_118_2
 
-			slot9.localScale = Vector3.one * slot2
+			recthelper.setAnchor(var_118_2, arg_118_0 - 5, arg_118_1 + 2)
+
+			var_118_2.localScale = Vector3.one * arg_118_2
 		end
 	end)
 end
 
-function slot0._onCharacterDataViewOpenFromHandbook(slot0)
+function var_0_0._onCharacterDataViewOpenFromHandbook(arg_119_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.SkinOffsetAdjust)
-	CharacterDataModel.instance:setCurHeroId(CharacterBackpackCardListModel.instance:getCharacterCardList()[1].heroId)
 
-	slot2 = slot0._curViewInfo[2]
+	local var_119_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()[1]
 
-	TaskDispatcher.runDelay(function ()
-		ViewMgr.instance:openView(uv0, {
+	CharacterDataModel.instance:setCurHeroId(var_119_0.heroId)
+
+	local var_119_1 = arg_119_0._curViewInfo[2]
+
+	TaskDispatcher.runDelay(function()
+		ViewMgr.instance:openView(var_119_1, {
 			adjustStaticOffset = true,
 			fromHandbookView = true,
-			heroId = uv1.heroId
+			heroId = var_119_0.heroId
 		})
 	end, nil, 0.5)
 end
 
-function slot0.onMainThumbnailViewOpen(slot0)
+function var_0_0.onMainThumbnailViewOpen(arg_121_0)
 	MainController.instance:openMainThumbnailView()
 end
 
-function slot0.onMainThumbnailViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0.onMainThumbnailViewUpdate(arg_122_0)
+	if not arg_122_0._curViewInfo or not arg_122_0._curSkinInfo then
 		return
 	end
 
-	slot6 = gohelper.find(slot0._curViewInfo[5])
+	local var_122_0 = UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine")
+	local var_122_1 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine")
+	local var_122_2 = arg_122_0._curViewInfo[6]
+	local var_122_3 = arg_122_0._curViewInfo[5]
+	local var_122_4 = arg_122_0._curViewInfo[7]
+	local var_122_5 = gohelper.find(var_122_3)
 
-	slot6.transform:SetParent(UnityEngine.GameObject.Find("UIRoot/HUD/MainView/#go_spine_scale/lightspine").transform, false)
-	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, slot0._curSkinInfo, true, false)
-	slot6.transform:SetParent(UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine").transform, false)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		recthelper.setAnchor(uv0.transform, slot0, slot1)
+	var_122_5.transform:SetParent(var_122_0.transform, false)
+	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, arg_122_0._curSkinInfo, true, false)
+	var_122_5.transform:SetParent(var_122_1.transform, false)
+	arg_122_0:setOffset(arg_122_0._curSkinInfo, var_122_2, function(arg_123_0, arg_123_1, arg_123_2)
+		local var_123_0 = var_122_5.transform
+
+		recthelper.setAnchor(var_123_0, arg_123_0, arg_123_1)
 	end, {
 		0,
 		0,
 		1
-	}, slot0._curViewInfo[7])
+	}, var_122_4)
 end
 
-function slot0._onViewValueClick(slot0, slot1)
-	if slot1.index == slot0.selectIndex then
+function var_0_0._onViewValueClick(arg_124_0, arg_124_1)
+	if arg_124_1.index == arg_124_0.selectIndex then
 		return
 	end
 
-	if slot0.selectIndex and slot0._viewList[slot0.selectIndex] and slot0._viewList[slot0.selectIndex].beforeCloseView then
-		slot2(slot0)
+	if arg_124_0.selectIndex then
+		local var_124_0 = arg_124_0._viewList[arg_124_0.selectIndex] and arg_124_0._viewList[arg_124_0.selectIndex].beforeCloseView
+
+		if var_124_0 then
+			var_124_0(arg_124_0)
+		end
 	end
 
-	slot0.selectIndex = slot1.index
+	arg_124_0.selectIndex = arg_124_1.index
 
-	gohelper.setActive(slot0._btnswitchOffset.gameObject, false)
-	gohelper.setActive(slot0._gotrigger, false)
+	gohelper.setActive(arg_124_0._btnswitchOffset.gameObject, false)
+	gohelper.setActive(arg_124_0._gotrigger, false)
 
-	slot0._changeOffsetCallback = nil
-	slot3 = slot0._viewList[slot1.index].viewInfo
-	slot4 = slot3[3]
-	slot0._curViewInfo = slot3
+	arg_124_0._changeOffsetCallback = nil
 
-	if slot0.lastSelectViewItem then
-		gohelper.setActive(slot0.lastSelectViewItem.goSelect, false)
+	local var_124_1 = arg_124_0._viewList[arg_124_1.index]
+	local var_124_2 = var_124_1.viewInfo
+	local var_124_3 = var_124_2[3]
+
+	arg_124_0._curViewInfo = var_124_2
+
+	if arg_124_0.lastSelectViewItem then
+		gohelper.setActive(arg_124_0.lastSelectViewItem.goSelect, false)
 	end
 
-	gohelper.setActive(slot1.goSelect, true)
+	gohelper.setActive(arg_124_1.goSelect, true)
 
-	slot0.lastSelectViewItem = slot1
-	slot0._txtviewlabel.text = slot1.viewName
+	arg_124_0.lastSelectViewItem = arg_124_1
+	arg_124_0._txtviewlabel.text = arg_124_1.viewName
 
-	slot0:_btnblockOnClick()
-	slot0:backToHome()
+	arg_124_0:_btnblockOnClick()
+	arg_124_0:backToHome()
 
-	if slot2.beforeOpenView then
-		slot5(slot0)
+	local var_124_4 = var_124_1.beforeOpenView
+
+	if var_124_4 then
+		var_124_4(arg_124_0)
 	end
 
-	if slot4 then
-		slot4(slot0)
+	if var_124_3 then
+		var_124_3(arg_124_0)
 	end
 end
 
-function slot0.backToHome(slot0)
+function var_0_0.backToHome(arg_125_0)
 	ViewMgr.instance:closeAllPopupViews()
 	MainController.instance:enterMainScene()
 end
 
-function slot0.refreshSkin(slot0, slot1)
-	slot0.selectMo = slot1
+function var_0_0.refreshSkin(arg_126_0, arg_126_1)
+	arg_126_0.selectMo = arg_126_1
 
-	slot0._inputSkinLabel:SetText(slot1.skinId .. "#" .. slot1.skinName)
-	slot0:_btnblockOnClick()
+	arg_126_0._inputSkinLabel:SetText(arg_126_1.skinId .. "#" .. arg_126_1.skinName)
+	arg_126_0:_btnblockOnClick()
 
-	slot0._curSkinInfo = SkinConfig.instance:getSkinCo(slot1.skinId)
+	arg_126_0._curSkinInfo = SkinConfig.instance:getSkinCo(arg_126_1.skinId)
 
-	slot0:updateSkin()
+	arg_126_0:updateSkin()
 end
 
-function slot0.updateSkin(slot0)
-	if not slot0._curViewInfo then
+function var_0_0.updateSkin(arg_127_0)
+	if not arg_127_0._curViewInfo then
 		return
 	end
 
-	if slot0._curViewInfo[4] then
-		slot1(slot0, true)
+	local var_127_0 = arg_127_0._curViewInfo[4]
+
+	if var_127_0 then
+		var_127_0(arg_127_0, true)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_128_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenView, slot0)
+function var_0_0.onOpen(arg_129_0)
+	arg_129_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_129_0._onOpenView, arg_129_0)
 
 	module_views.FightSuccView.viewType = ViewType.Full
 	module_views.CharacterGetView.viewType = ViewType.Full
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if not slot0._curViewInfo then
+function var_0_0._onOpenView(arg_130_0, arg_130_1)
+	if not arg_130_0._curViewInfo then
 		return
 	end
 
-	if slot1 == slot0._curViewInfo[2] and slot0._curViewInfo[4] then
-		slot3(slot0, true)
+	if arg_130_1 == arg_130_0._curViewInfo[2] then
+		local var_130_0 = arg_130_0._curViewInfo[4]
+
+		if var_130_0 then
+			var_130_0(arg_130_0, true)
+		end
 	end
 end
 
-function slot0.onClickSearch(slot0)
-	if string.nilorempty(slot0._inputSkinLabel:GetText()) then
+function var_0_0.onClickSearch(arg_131_0)
+	local var_131_0 = arg_131_0._inputSkinLabel:GetText()
+
+	if string.nilorempty(var_131_0) then
 		SkinOffsetSkinListModel.instance:initSkinList()
-	elseif string.match(slot1, "^%d+") then
-		SkinOffsetSkinListModel.instance:filterById(slot1)
+	elseif string.match(var_131_0, "^%d+") then
+		SkinOffsetSkinListModel.instance:filterById(var_131_0)
 	else
-		SkinOffsetSkinListModel.instance:filterByName(slot1)
+		SkinOffsetSkinListModel.instance:filterByName(var_131_0)
 	end
 end
 
-function slot0.onSkinInputValueChanged(slot0, slot1)
+function var_0_0.onSkinInputValueChanged(arg_132_0, arg_132_1)
+	return
 end
 
-function slot0.beforeOpenSkinFullView(slot0)
-	slot0.isOpenSkinFullView = true
-	slot0.skinViewOldFunc = CharacterSkinFullScreenView.setLocalScale
+function var_0_0.beforeOpenSkinFullView(arg_133_0)
+	arg_133_0.isOpenSkinFullView = true
+	arg_133_0.skinViewOldFunc = CharacterSkinFullScreenView.setLocalScale
 
-	function CharacterSkinFullScreenView.setLocalScale(slot0)
-		uv0.skinViewOldFunc(slot0)
+	function CharacterSkinFullScreenView.setLocalScale(arg_134_0)
+		arg_133_0.skinViewOldFunc(arg_134_0)
 
-		uv0._txtScale.text = "Scale : " .. slot0.curScaleX
+		arg_133_0._txtScale.text = "Scale : " .. arg_134_0.curScaleX
 	end
 
-	gohelper.setActive(slot0.goFullSkinContainer, true)
-	SkinOffsetSkinListModel.instance:setInitFilterFunc(slot0.filterLive2dFunc)
+	gohelper.setActive(arg_133_0.goFullSkinContainer, true)
+	SkinOffsetSkinListModel.instance:setInitFilterFunc(arg_133_0.filterLive2dFunc)
 	SkinOffsetSkinListModel.instance:initSkinList()
 end
 
-function slot0.beforeCloseSkinFullView(slot0)
-	slot0.isOpenSkinFullView = false
-	slot0.live2dCamera = nil
-	CharacterSkinFullScreenView.setLocalScale = slot0.skinViewOldFunc
+function var_0_0.beforeCloseSkinFullView(arg_135_0)
+	arg_135_0.isOpenSkinFullView = false
+	arg_135_0.live2dCamera = nil
+	CharacterSkinFullScreenView.setLocalScale = arg_135_0.skinViewOldFunc
 
-	gohelper.setActive(slot0.goFullSkinContainer, false)
+	gohelper.setActive(arg_135_0.goFullSkinContainer, false)
 	SkinOffsetSkinListModel.instance:setInitFilterFunc(nil)
 end
 
-function slot0._onCharacterSkinFullViewOpen(slot0)
+function var_0_0._onCharacterSkinFullViewOpen(arg_136_0)
 	SkinOffsetSkinListModel.instance:initSkinList()
 
-	slot2 = SkinConfig.instance:getSkinCo(SkinOffsetSkinListModel.instance:getFirst().skinId)
-	slot0._curSkinInfo = slot2
-
-	ViewMgr.instance:openView(ViewName.CharacterSkinFullScreenView, {
-		skinCo = slot2,
+	local var_136_0 = SkinOffsetSkinListModel.instance:getFirst()
+	local var_136_1 = SkinConfig.instance:getSkinCo(var_136_0.skinId)
+	local var_136_2 = {
+		skinCo = var_136_1,
 		showEnum = CharacterEnum.ShowSkinEnum.Dynamic
-	})
+	}
+
+	arg_136_0._curSkinInfo = var_136_1
+
+	ViewMgr.instance:openView(ViewName.CharacterSkinFullScreenView, var_136_2)
 end
 
-function slot0._onCharacterSkinFullViewUpdate(slot0)
-	if not slot0._curViewInfo or not slot0._curSkinInfo then
+function var_0_0._onCharacterSkinFullViewUpdate(arg_137_0)
+	if not arg_137_0._curViewInfo or not arg_137_0._curSkinInfo then
 		return
 	end
 
-	if not SkinOffsetAdjustModel.instance:getCameraSize(slot0._curSkinInfo.id) and slot0._curSkinInfo.fullScreenCameraSize <= 0 then
-		slot1 = CharacterSkinFullScreenView.DefaultLive2dCameraSize
+	local var_137_0 = SkinOffsetAdjustModel.instance:getCameraSize(arg_137_0._curSkinInfo.id)
+
+	if not var_137_0 then
+		var_137_0 = arg_137_0._curSkinInfo.fullScreenCameraSize
+
+		if var_137_0 <= 0 then
+			var_137_0 = CharacterSkinFullScreenView.DefaultLive2dCameraSize
+		end
 	end
 
-	slot0._inputCameraSize:SetText(slot1)
+	arg_137_0._inputCameraSize:SetText(var_137_0)
 
-	slot0._uiSpine = GuiModelAgent.Create(gohelper.find(slot0._curViewInfo[5]), true)
+	local var_137_1 = arg_137_0._curViewInfo[6]
+	local var_137_2 = arg_137_0._curViewInfo[5]
+	local var_137_3 = gohelper.find(var_137_2)
 
-	slot0._uiSpine:setLive2dCameraLoadedCallback(slot0.onLive2dCameraLoadedCallback, slot0)
-	slot0._uiSpine:setResPath(slot0._curSkinInfo, nil, , slot1)
-	slot0:setOffset(slot0._curSkinInfo, slot0._curViewInfo[6], function (slot0, slot1, slot2)
-		slot3 = uv0.transform
+	arg_137_0._uiSpine = GuiModelAgent.Create(var_137_3, true)
 
-		recthelper.setAnchor(slot3, slot0, slot1)
+	arg_137_0._uiSpine:setLive2dCameraLoadedCallback(arg_137_0.onLive2dCameraLoadedCallback, arg_137_0)
+	arg_137_0._uiSpine:setResPath(arg_137_0._curSkinInfo, nil, nil, var_137_0)
 
-		slot3.localScale = Vector3.one * slot2
+	local var_137_4 = arg_137_0._curViewInfo[7]
+
+	arg_137_0:setOffset(arg_137_0._curSkinInfo, var_137_1, function(arg_138_0, arg_138_1, arg_138_2)
+		local var_138_0 = var_137_3.transform
+
+		recthelper.setAnchor(var_138_0, arg_138_0, arg_138_1)
+
+		var_138_0.localScale = Vector3.one * arg_138_2
 	end, {
 		0,
 		0,
 		1
-	}, slot0._curViewInfo[7])
+	}, var_137_4)
 end
 
-function slot0.onLive2dCameraLoadedCallback(slot0, slot1)
-	gohelper.addChild(gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer"), slot1._rawImageGo)
+function var_0_0.onLive2dCameraLoadedCallback(arg_139_0, arg_139_1)
+	local var_139_0 = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer")
 
-	slot4 = slot1._rawImageGo:GetComponent(gohelper.Type_RawImage)
-	slot0.live2dCamera = slot1._camera
-	slot0.live2dRwaImageTexture = slot4.texture
+	gohelper.addChild(var_139_0, arg_139_1._rawImageGo)
 
-	recthelper.setAnchor(slot1._rawImageGo.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
-	recthelper.setAnchor(gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer").transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
+	local var_139_1 = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer")
+	local var_139_2 = arg_139_1._rawImageGo:GetComponent(gohelper.Type_RawImage)
 
-	slot0:getPreviewImage().texture = slot4.texture
+	arg_139_0.live2dCamera = arg_139_1._camera
+	arg_139_0.live2dRwaImageTexture = var_139_2.texture
+
+	recthelper.setAnchor(arg_139_1._rawImageGo.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
+	recthelper.setAnchor(var_139_1.transform, 0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
+
+	arg_139_0:getPreviewImage().texture = var_139_2.texture
 end
 
-function slot0.getPreviewImage(slot0)
-	if not slot0.previewImage then
-		slot1 = gohelper.create2d(slot0.goFullSkinContainer, "previewImageBg")
-		slot2 = slot1.transform
-		slot2.anchorMin = RectTransformDefine.Anchor.RightMiddle
-		slot2.anchorMax = RectTransformDefine.Anchor.RightMiddle
+function var_0_0.getPreviewImage(arg_140_0)
+	if not arg_140_0.previewImage then
+		local var_140_0 = gohelper.create2d(arg_140_0.goFullSkinContainer, "previewImageBg")
+		local var_140_1 = var_140_0.transform
 
-		recthelper.setSize(slot2, 200, 200)
-		recthelper.setAnchor(slot2, -100, -150)
-		gohelper.onceAddComponent(slot1, gohelper.Type_RawImage)
+		var_140_1.anchorMin = RectTransformDefine.Anchor.RightMiddle
+		var_140_1.anchorMax = RectTransformDefine.Anchor.RightMiddle
 
-		slot3 = gohelper.create2d(slot0.goFullSkinContainer, "previewImage")
-		slot2 = slot3.transform
-		slot2.anchorMin = RectTransformDefine.Anchor.RightMiddle
-		slot2.anchorMax = RectTransformDefine.Anchor.RightMiddle
+		recthelper.setSize(var_140_1, 200, 200)
+		recthelper.setAnchor(var_140_1, -100, -150)
+		gohelper.onceAddComponent(var_140_0, gohelper.Type_RawImage)
 
-		recthelper.setSize(slot2, 200, 200)
-		recthelper.setAnchor(slot2, -100, -150)
+		local var_140_2 = gohelper.create2d(arg_140_0.goFullSkinContainer, "previewImage")
+		local var_140_3 = var_140_2.transform
 
-		slot0.previewImage = gohelper.onceAddComponent(slot3, gohelper.Type_RawImage)
+		var_140_3.anchorMin = RectTransformDefine.Anchor.RightMiddle
+		var_140_3.anchorMax = RectTransformDefine.Anchor.RightMiddle
+
+		recthelper.setSize(var_140_3, 200, 200)
+		recthelper.setAnchor(var_140_3, -100, -150)
+
+		arg_140_0.previewImage = gohelper.onceAddComponent(var_140_2, gohelper.Type_RawImage)
 	end
 
-	return slot0.previewImage
+	return arg_140_0.previewImage
 end
 
-function slot0.onCameraSizeInput(slot0, slot1)
-	if not tonumber(slot1) or slot1 <= 0 then
-		slot1 = 14
+function var_0_0.onCameraSizeInput(arg_141_0, arg_141_1)
+	arg_141_1 = tonumber(arg_141_1)
+
+	if not arg_141_1 or arg_141_1 <= 0 then
+		arg_141_1 = 14
 	end
 
-	if slot0.live2dCamera then
-		slot0.live2dCamera.orthographicSize = slot1
+	if arg_141_0.live2dCamera then
+		arg_141_0.live2dCamera.orthographicSize = arg_141_1
 
-		SkinOffsetAdjustModel.instance:saveCameraSize(slot0._curSkinInfo, slot1)
+		SkinOffsetAdjustModel.instance:saveCameraSize(arg_141_0._curSkinInfo, arg_141_1)
 	end
 end
 
-function slot0.filterLive2dFunc(slot0)
-	return slot0 and not string.nilorempty(slot0.live2d)
+function var_0_0.filterLive2dFunc(arg_142_0)
+	return arg_142_0 and not string.nilorempty(arg_142_0.live2d)
 end
 
-function slot0.onClose(slot0)
-	slot0._slideroffsetx:RemoveOnValueChanged()
-	slot0._slideroffsety:RemoveOnValueChanged()
-	slot0._slideroffsetscale:RemoveOnValueChanged()
-	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot0._slideroffsetx.gameObject))
-	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot0._slideroffsety.gameObject))
+function var_0_0.onClose(arg_143_0)
+	arg_143_0._slideroffsetx:RemoveOnValueChanged()
+	arg_143_0._slideroffsety:RemoveOnValueChanged()
+	arg_143_0._slideroffsetscale:RemoveOnValueChanged()
+	arg_143_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_143_0._slideroffsetx.gameObject))
+	arg_143_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_143_0._slideroffsety.gameObject))
+	arg_143_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_143_0._slideroffsetscale.gameObject))
 
-	slot4 = slot0._slideroffsetscale.gameObject
-
-	slot0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(slot4))
-
-	for slot4, slot5 in ipairs(slot0._btnList) do
-		slot5:RemoveClickListener()
+	for iter_143_0, iter_143_1 in ipairs(arg_143_0._btnList) do
+		iter_143_1:RemoveClickListener()
 	end
 
-	slot0._btnSearch:RemoveClickListener()
-	slot0._goviewcontainerclick:RemoveClickListener()
-	slot0._inputSkinLabel:RemoveOnValueChanged()
-	slot0._inputCameraSize:RemoveOnValueChanged()
+	arg_143_0._btnSearch:RemoveClickListener()
+	arg_143_0._goviewcontainerclick:RemoveClickListener()
+	arg_143_0._inputSkinLabel:RemoveOnValueChanged()
+	arg_143_0._inputCameraSize:RemoveOnValueChanged()
 
-	for slot4, slot5 in ipairs(slot0.viewItemList) do
-		if slot5.click then
-			slot5.click:RemoveClickListener()
+	for iter_143_2, iter_143_3 in ipairs(arg_143_0.viewItemList) do
+		if iter_143_3.click then
+			iter_143_3.click:RemoveClickListener()
 		end
 	end
 
-	slot0.drag:RemoveDragBeginListener()
-	slot0.drag:RemoveDragEndListener()
-	slot0._goskincontainerclick:RemoveClickListener()
+	arg_143_0.drag:RemoveDragBeginListener()
+	arg_143_0.drag:RemoveDragEndListener()
+	arg_143_0._goskincontainerclick:RemoveClickListener()
 
 	module_views.FightSuccView.viewType = ViewType.Modal
 	module_views.CharacterGetView.viewType = ViewType.Normal
@@ -1496,16 +1696,16 @@ function slot0.onClose(slot0)
 	logError("偏移编辑器修改了部分界面的参数，关闭偏移编辑器后应重开游戏再体验！！！")
 end
 
-function slot0.removeDragListener(slot0, slot1)
-	slot1:RemoveDragBeginListener()
-	slot1:RemoveDragListener()
-	slot1:RemoveDragEndListener()
+function var_0_0.removeDragListener(arg_144_0, arg_144_1)
+	arg_144_1:RemoveDragBeginListener()
+	arg_144_1:RemoveDragListener()
+	arg_144_1:RemoveDragEndListener()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._simageList) do
-		slot4:UnLoadImage()
+function var_0_0.onDestroyView(arg_145_0)
+	for iter_145_0, iter_145_1 in pairs(arg_145_0._simageList) do
+		iter_145_0:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

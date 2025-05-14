@@ -1,107 +1,111 @@
-module("modules.logic.backpack.config.ItemIconGetDefine", package.seeall)
+﻿module("modules.logic.backpack.config.ItemIconGetDefine", package.seeall)
 
-slot0 = class("ItemIconGetDefine", BaseConfig)
+local var_0_0 = class("ItemIconGetDefine", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._defineList = {
-		[MaterialEnum.MaterialType.Item] = uv0._getItem,
-		[MaterialEnum.MaterialType.Currency] = uv0._getCurrency,
-		[MaterialEnum.MaterialType.PowerPotion] = uv0._getPowerPotion,
-		[MaterialEnum.MaterialType.HeroSkin] = uv0._getHeroSkin,
-		[MaterialEnum.MaterialType.Hero] = uv0._getHero,
-		[MaterialEnum.MaterialType.Equip] = uv0._getEquip,
-		[MaterialEnum.MaterialType.PlayerCloth] = uv0._getPlayerCloth,
-		[MaterialEnum.MaterialType.Building] = uv0._getBuilding,
-		[MaterialEnum.MaterialType.Formula] = uv0._getFormula,
-		[MaterialEnum.MaterialType.BlockPackage] = uv0._getBlockPackage,
-		[MaterialEnum.MaterialType.SpecialBlock] = uv0._getSpecialBlock,
-		[MaterialEnum.MaterialType.RoomTheme] = uv0._getRoomTheme,
-		[MaterialEnum.MaterialType.Explore] = uv0._getExplore,
-		[MaterialEnum.MaterialType.EquipCard] = uv0._getEquipCard,
-		[MaterialEnum.MaterialType.Antique] = uv0._getAntique,
-		[MaterialEnum.MaterialType.V1a5AiZiLa] = uv0._getV1a5AiZiLaItem,
-		[MaterialEnum.MaterialType.Season123EquipCard] = uv0._getEquipCard,
-		[MaterialEnum.MaterialType.NewInsight] = uv0._getNewInsight,
-		[MaterialEnum.MaterialType.Critter] = uv0._getCritterIcon
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._defineList = {
+		[MaterialEnum.MaterialType.Item] = var_0_0._getItem,
+		[MaterialEnum.MaterialType.Currency] = var_0_0._getCurrency,
+		[MaterialEnum.MaterialType.PowerPotion] = var_0_0._getPowerPotion,
+		[MaterialEnum.MaterialType.HeroSkin] = var_0_0._getHeroSkin,
+		[MaterialEnum.MaterialType.Hero] = var_0_0._getHero,
+		[MaterialEnum.MaterialType.Equip] = var_0_0._getEquip,
+		[MaterialEnum.MaterialType.PlayerCloth] = var_0_0._getPlayerCloth,
+		[MaterialEnum.MaterialType.Building] = var_0_0._getBuilding,
+		[MaterialEnum.MaterialType.Formula] = var_0_0._getFormula,
+		[MaterialEnum.MaterialType.BlockPackage] = var_0_0._getBlockPackage,
+		[MaterialEnum.MaterialType.SpecialBlock] = var_0_0._getSpecialBlock,
+		[MaterialEnum.MaterialType.RoomTheme] = var_0_0._getRoomTheme,
+		[MaterialEnum.MaterialType.Explore] = var_0_0._getExplore,
+		[MaterialEnum.MaterialType.EquipCard] = var_0_0._getEquipCard,
+		[MaterialEnum.MaterialType.Antique] = var_0_0._getAntique,
+		[MaterialEnum.MaterialType.V1a5AiZiLa] = var_0_0._getV1a5AiZiLaItem,
+		[MaterialEnum.MaterialType.Season123EquipCard] = var_0_0._getEquipCard,
+		[MaterialEnum.MaterialType.NewInsight] = var_0_0._getNewInsight,
+		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritterIcon
 	}
 end
 
-function slot0._getItem(slot0)
-	return ResUrl.getPropItemIcon(slot0.icon)
+function var_0_0._getItem(arg_2_0)
+	return ResUrl.getPropItemIcon(arg_2_0.icon)
 end
 
-function slot0._getCurrency(slot0)
-	return ResUrl.getCurrencyItemIcon(slot0.icon)
+function var_0_0._getCurrency(arg_3_0)
+	return ResUrl.getCurrencyItemIcon(arg_3_0.icon)
 end
 
-function slot0._getPowerPotion(slot0)
-	return ResUrl.getPropItemIcon(slot0.icon)
+function var_0_0._getPowerPotion(arg_4_0)
+	return ResUrl.getPropItemIcon(arg_4_0.icon)
 end
 
-function slot0._getHeroSkin(slot0)
-	return ResUrl.getHeadIconSmall(slot0.headIcon), ResUrl.getHeroSkinPropIcon(slot0.itemIcon)
+function var_0_0._getHeroSkin(arg_5_0)
+	return ResUrl.getHeadIconSmall(arg_5_0.headIcon), ResUrl.getHeroSkinPropIcon(arg_5_0.itemIcon)
 end
 
-function slot0._getHero(slot0)
-	return ResUrl.getHeadIconSmall(SkinConfig.instance:getSkinCo(slot0.skinId).headIcon), ResUrl.getHeadIconNew(slot0.id)
+function var_0_0._getHero(arg_6_0)
+	local var_6_0 = SkinConfig.instance:getSkinCo(arg_6_0.skinId)
+
+	return ResUrl.getHeadIconSmall(var_6_0.headIcon), ResUrl.getHeadIconNew(arg_6_0.id)
 end
 
-function slot0._getEquip(slot0)
-	return ResUrl.getEquipIcon(slot0.icon)
+function var_0_0._getEquip(arg_7_0)
+	return ResUrl.getEquipIcon(arg_7_0.icon)
 end
 
-function slot0._getPlayerCloth(slot0)
-	return ResUrl.getPlayerClothIcon(slot0.icon)
+function var_0_0._getPlayerCloth(arg_8_0)
+	return ResUrl.getPlayerClothIcon(arg_8_0.icon)
 end
 
-function slot0._getBuilding(slot0)
-	return ResUrl.getRoomBuildingPropIcon(slot0.icon)
+function var_0_0._getBuilding(arg_9_0)
+	return ResUrl.getRoomBuildingPropIcon(arg_9_0.icon)
 end
 
-function slot0._getFormula(slot0)
-	return ResUrl.getPropItemIcon(slot0.icon)
+function var_0_0._getFormula(arg_10_0)
+	return ResUrl.getPropItemIcon(arg_10_0.icon)
 end
 
-function slot0._getBlockPackage(slot0)
-	return ResUrl.getRoomBlockPackagePropIcon(slot0.icon)
+function var_0_0._getBlockPackage(arg_11_0)
+	return ResUrl.getRoomBlockPackagePropIcon(arg_11_0.icon)
 end
 
-function slot0._getSpecialBlock(slot0)
-	return ResUrl.getRoomBlockPropIcon(slot0.icon)
+function var_0_0._getSpecialBlock(arg_12_0)
+	return ResUrl.getRoomBlockPropIcon(arg_12_0.icon)
 end
 
-function slot0._getRoomTheme(slot0)
-	return ResUrl.getRoomThemePropIcon(slot0.icon)
+function var_0_0._getRoomTheme(arg_13_0)
+	return ResUrl.getRoomThemePropIcon(arg_13_0.icon)
 end
 
-function slot0._getExplore(slot0)
-	return ResUrl.getPropItemIcon(slot0.icon)
+function var_0_0._getExplore(arg_14_0)
+	return ResUrl.getPropItemIcon(arg_14_0.icon)
 end
 
-function slot0._getEquipCard(slot0)
-	return ResUrl.getSeasonCelebrityCard(slot0.icon)
+function var_0_0._getEquipCard(arg_15_0)
+	return ResUrl.getSeasonCelebrityCard(arg_15_0.icon)
 end
 
-function slot0._getAntique(slot0)
-	return ResUrl.getPropItemIcon(slot0.icon)
+function var_0_0._getAntique(arg_16_0)
+	return ResUrl.getPropItemIcon(arg_16_0.icon)
 end
 
-function slot0._getV1a5AiZiLaItem(slot0)
-	return ResUrl.getV1a5AiZiLaItemIcon(slot0.icon)
+function var_0_0._getV1a5AiZiLaItem(arg_17_0)
+	return ResUrl.getV1a5AiZiLaItemIcon(arg_17_0.icon)
 end
 
-function slot0._getNewInsight(slot0)
-	return ResUrl.getPropItemIcon(slot0.icon)
+function var_0_0._getNewInsight(arg_18_0)
+	return ResUrl.getPropItemIcon(arg_18_0.icon)
 end
 
-function slot0._getCritterIcon(slot0)
-	return ResUrl.getCritterItemIcon(slot0.icon)
+function var_0_0._getCritterIcon(arg_19_0)
+	return ResUrl.getCritterItemIcon(arg_19_0.icon)
 end
 
-function slot0.getItemIconFunc(slot0, slot1)
-	return slot0._defineList[tonumber(slot1)]
+function var_0_0.getItemIconFunc(arg_20_0, arg_20_1)
+	arg_20_1 = tonumber(arg_20_1)
+
+	return arg_20_0._defineList[arg_20_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

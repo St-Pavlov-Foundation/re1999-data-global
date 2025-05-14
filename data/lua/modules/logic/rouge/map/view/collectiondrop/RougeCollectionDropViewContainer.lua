@@ -1,26 +1,26 @@
-module("modules.logic.rouge.map.view.collectiondrop.RougeCollectionDropViewContainer", package.seeall)
+﻿module("modules.logic.rouge.map.view.collectiondrop.RougeCollectionDropViewContainer", package.seeall)
 
-slot0 = class("RougeCollectionDropViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeCollectionDropViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeCollectionDropView.New())
-	table.insert(slot1, TabViewGroup.New(2, "layout/#go_rougemapdetailcontainer"))
+	table.insert(var_1_0, RougeCollectionDropView.New())
+	table.insert(var_1_0, TabViewGroup.New(2, "layout/#go_rougemapdetailcontainer"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.playCloseTransition(slot0)
-	TaskDispatcher.runDelay(slot0.onPlayCloseTransitionFinish, slot0, RougeMapEnum.CollectionChangeAnimDuration)
+function var_0_0.playCloseTransition(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0.onPlayCloseTransitionFinish, arg_2_0, RougeMapEnum.CollectionChangeAnimDuration)
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 2 then
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-return slot0
+return var_0_0

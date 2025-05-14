@@ -1,46 +1,51 @@
-module("modules.logic.versionactivity1_4.act132.model.Activity132CollectMo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.model.Activity132CollectMo", package.seeall)
 
-slot0 = class("Activity132CollectMo")
+local var_0_0 = class("Activity132CollectMo")
 
-function slot0.ctor(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.collectId = slot1.collectId
-	slot0.name = slot1.name
-	slot0.bg = slot1.bg
-	slot0.nameEn = slot1.nameEn
-	slot0.clueDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.collectId = arg_1_1.collectId
+	arg_1_0.name = arg_1_1.name
+	arg_1_0.bg = arg_1_1.bg
+	arg_1_0.nameEn = arg_1_1.nameEn
+	arg_1_0.clueDict = {}
 
-	for slot6, slot7 in ipairs(string.splitToNumber(slot1.clues, "#")) do
-		slot9 = Activity132Config.instance:getClueConfig(slot0.activityId, slot7)
+	local var_1_0 = string.splitToNumber(arg_1_1.clues, "#")
 
-		if not slot0.clueDict[slot7] and slot9 then
-			slot0.clueDict[slot7] = Activity132ClueMo.New(slot9)
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_1 = arg_1_0.clueDict[iter_1_1]
+		local var_1_2 = Activity132Config.instance:getClueConfig(arg_1_0.activityId, iter_1_1)
+
+		if not var_1_1 and var_1_2 then
+			local var_1_3 = Activity132ClueMo.New(var_1_2)
+
+			arg_1_0.clueDict[iter_1_1] = var_1_3
 		end
 	end
 
-	slot0._cfg = slot1
+	arg_1_0._cfg = arg_1_1
 end
 
-function slot0.getClueList(slot0)
-	slot1 = {}
+function var_0_0.getClueList(arg_2_0)
+	local var_2_0 = {}
 
-	for slot5, slot6 in pairs(slot0.clueDict) do
-		table.insert(slot1, slot6)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0.clueDict) do
+		table.insert(var_2_0, iter_2_1)
 	end
 
-	if #slot1 > 1 then
-		table.sort(slot1, SortUtil.keyLower("clueId"))
+	if #var_2_0 > 1 then
+		table.sort(var_2_0, SortUtil.keyLower("clueId"))
 	end
 
-	return slot1
+	return var_2_0
 end
 
-function slot0.getClueMo(slot0, slot1)
-	return slot0.clueDict[slot1]
+function var_0_0.getClueMo(arg_3_0, arg_3_1)
+	return arg_3_0.clueDict[arg_3_1]
 end
 
-function slot0.getName(slot0)
-	return slot0._cfg.name
+function var_0_0.getName(arg_4_0)
+	return arg_4_0._cfg.name
 end
 
-return slot0
+return var_0_0

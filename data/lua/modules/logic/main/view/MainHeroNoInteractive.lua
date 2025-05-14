@@ -1,168 +1,189 @@
-module("modules.logic.main.view.MainHeroNoInteractive", package.seeall)
+﻿module("modules.logic.main.view.MainHeroNoInteractive", package.seeall)
 
-slot0 = class("MainHeroNoInteractive", BaseView)
+local var_0_0 = class("MainHeroNoInteractive", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtanacn = gohelper.findChildText(slot0.viewGO, "bottom/#txt_ana_cn")
-	slot0._txtanaen = gohelper.findChildText(slot0.viewGO, "bottom/#txt_ana_en")
-	slot0._gocontentbg = gohelper.findChild(slot0.viewGO, "bottom/#go_contentbg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_cn")
+	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_en")
+	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.init(slot0)
-	slot0._heroView = slot0.viewContainer:getMainHeroView()
-	slot0._heroId = slot0._heroView._heroId
-	slot0._skinId = slot0._heroView._skinId
+function var_0_0.init(arg_4_0)
+	arg_4_0._heroView = arg_4_0.viewContainer:getMainHeroView()
+	arg_4_0._heroId = arg_4_0._heroView._heroId
+	arg_4_0._skinId = arg_4_0._heroView._skinId
 
-	slot0:_initNoInteraction()
-	slot0:_initSpecialIdle()
+	arg_4_0:_initNoInteraction()
+	arg_4_0:_initSpecialIdle()
 
-	if not slot0._touchEventMgr then
-		slot0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(slot0.viewGO)
+	if not arg_4_0._touchEventMgr then
+		arg_4_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_4_0.viewGO)
 
-		slot0._touchEventMgr:SetIgnoreUI(true)
-		slot0._touchEventMgr:SetOnlyTouch(true)
-		slot0._touchEventMgr:SetOnTouchUp(slot0.touchUpHandler, slot0)
-		slot0:addEventCb(MainController.instance, MainEvent.ClickDown, slot0.touchDownHandler, slot0)
+		arg_4_0._touchEventMgr:SetIgnoreUI(true)
+		arg_4_0._touchEventMgr:SetOnlyTouch(true)
+		arg_4_0._touchEventMgr:SetOnTouchUp(arg_4_0.touchUpHandler, arg_4_0)
+		arg_4_0:addEventCb(MainController.instance, MainEvent.ClickDown, arg_4_0.touchDownHandler, arg_4_0)
 	end
 
-	TaskDispatcher.runRepeat(slot0._checkNoInteraction, slot0, 1)
+	TaskDispatcher.runRepeat(arg_4_0._checkNoInteraction, arg_4_0, 1)
 end
 
-function slot0._clearSpecialIdleVars(slot0)
-	slot0._inSpecialIdle = nil
-	slot0._playSpecialIdle1 = nil
-	slot0._specialIdleStartTime = nil
-	slot0._specialCDStartTime = nil
+function var_0_0._clearSpecialIdleVars(arg_5_0)
+	arg_5_0._inSpecialIdle = nil
+	arg_5_0._playSpecialIdle1 = nil
+	arg_5_0._specialIdleStartTime = nil
+	arg_5_0._specialCDStartTime = nil
 end
 
-function slot0._initSpecialIdle(slot0)
-	slot0:_clearSpecialIdleVars()
+function var_0_0._initSpecialIdle(arg_6_0)
+	arg_6_0:_clearSpecialIdleVars()
 
-	slot0._specialIdleTime = nil
-	slot0._specialIdleCD = nil
-	slot0._specialIdle1 = nil
-	slot0._specialIdle2 = nil
+	arg_6_0._specialIdleTime = nil
+	arg_6_0._specialIdleCD = nil
+	arg_6_0._specialIdle1 = nil
+	arg_6_0._specialIdle2 = nil
 
-	if not HeroModel.instance:getVoiceConfig(slot0._heroId, CharacterEnum.VoiceType.SpecialIdle1, nil, slot0._skinId) or #slot1 <= 0 then
+	local var_6_0 = HeroModel.instance:getVoiceConfig(arg_6_0._heroId, CharacterEnum.VoiceType.SpecialIdle1, nil, arg_6_0._skinId)
+
+	if not var_6_0 or #var_6_0 <= 0 then
 		return
 	end
 
-	slot0._specialIdleStartTime = Time.time
-	slot2 = slot1[1]
-	slot3 = string.split(slot2.param, "#")
-	slot0._specialIdleTime = tonumber(slot3[1])
-	slot0._specialIdleCD = tonumber(slot3[2])
-	slot0._specialIdle1 = slot2
-	slot0._specialIdle2 = HeroModel.instance:getVoiceConfig(slot0._heroId, CharacterEnum.VoiceType.SpecialIdle2, nil, slot0._skinId)
+	arg_6_0._specialIdleStartTime = Time.time
+
+	local var_6_1 = var_6_0[1]
+	local var_6_2 = string.split(var_6_1.param, "#")
+
+	arg_6_0._specialIdleTime = tonumber(var_6_2[1])
+	arg_6_0._specialIdleCD = tonumber(var_6_2[2])
+	arg_6_0._specialIdle1 = var_6_1
+	arg_6_0._specialIdle2 = HeroModel.instance:getVoiceConfig(arg_6_0._heroId, CharacterEnum.VoiceType.SpecialIdle2, nil, arg_6_0._skinId)
 end
 
-function slot0._initNoInteraction(slot0)
-	slot0._interactionStartTime = Time.time
+function var_0_0._initNoInteraction(arg_7_0)
+	arg_7_0._interactionStartTime = Time.time
 
-	if slot0:_getNoInteractionVoice() then
-		slot2 = string.split(slot1.param, "#")
-		slot0._noInteractionTime = tonumber(slot2[1])
-		slot0._noInteractionCD = tonumber(slot2[2])
-		slot0._noInteractionConfig = slot1
+	local var_7_0 = arg_7_0:_getNoInteractionVoice()
+
+	if var_7_0 then
+		local var_7_1 = string.split(var_7_0.param, "#")
+
+		arg_7_0._noInteractionTime = tonumber(var_7_1[1])
+		arg_7_0._noInteractionCD = tonumber(var_7_1[2])
+		arg_7_0._noInteractionConfig = var_7_0
 	else
-		slot0._noInteractionTime = nil
-		slot0._noInteractionCD = nil
+		arg_7_0._noInteractionTime = nil
+		arg_7_0._noInteractionCD = nil
 	end
 end
 
-function slot0._getNoInteractionVoice(slot0)
-	if HeroModel.instance:getVoiceConfig(slot0._heroId, CharacterEnum.VoiceType.MainViewNoInteraction, nil, slot0._skinId) and #slot1 > 0 then
-		return slot1[1]
+function var_0_0._getNoInteractionVoice(arg_8_0)
+	local var_8_0 = HeroModel.instance:getVoiceConfig(arg_8_0._heroId, CharacterEnum.VoiceType.MainViewNoInteraction, nil, arg_8_0._skinId)
+
+	if var_8_0 and #var_8_0 > 0 then
+		return var_8_0[1]
 	end
 end
 
-function slot0._checkNoInteraction(slot0)
-	slot0:_checkMainViewNoInteraction()
-	slot0:_checkSpecialIdle()
+function var_0_0._checkNoInteraction(arg_9_0)
+	arg_9_0:_checkMainViewNoInteraction()
+	arg_9_0:_checkSpecialIdle()
 end
 
-function slot0._checkSpecialIdle(slot0)
-	if not slot0._heroView:isShowInScene() then
-		slot0._inSpecialIdle = nil
+function var_0_0._checkSpecialIdle(arg_10_0)
+	if not arg_10_0._heroView:isShowInScene() then
+		arg_10_0._inSpecialIdle = nil
 
 		return
 	end
 
-	if not slot0._specialIdleTime or not slot0._specialIdleStartTime then
-		slot0._inSpecialIdle = nil
+	if not arg_10_0._specialIdleTime or not arg_10_0._specialIdleStartTime then
+		arg_10_0._inSpecialIdle = nil
 
 		return
 	end
 
-	if slot0:isPlayingVoice() then
+	if arg_10_0:isPlayingVoice() then
 		return
 	end
 
-	slot0._inSpecialIdle = nil
+	arg_10_0._inSpecialIdle = nil
 
 	if #ViewMgr.instance:getOpenViewNameList() - (ViewMgr.instance:isOpen(ViewName.ToastView) and 1 or 0) - (ViewMgr.instance:isOpen(ViewName.WaterMarkView) and 1 or 0) - (ViewMgr.instance:isOpen(ViewName.PlayerIdView) and 1 or 0) > 1 then
 		return
 	end
 
-	if Time.time - slot0._specialIdleStartTime < slot0._specialIdleTime then
+	if Time.time - arg_10_0._specialIdleStartTime < arg_10_0._specialIdleTime then
 		return
 	end
 
-	slot0._inSpecialIdle = true
+	arg_10_0._inSpecialIdle = true
 
-	if not slot0._playSpecialIdle1 then
-		slot0._playSpecialIdle1 = true
+	if not arg_10_0._playSpecialIdle1 then
+		arg_10_0._playSpecialIdle1 = true
 
-		slot0:playVoice(slot0._specialIdle1)
+		arg_10_0:playVoice(arg_10_0._specialIdle1)
 
-		slot0._specialCDStartTime = Time.time
+		arg_10_0._specialCDStartTime = Time.time
 
 		return
 	end
 
-	if slot0._specialCDStartTime and Time.time - slot0._specialCDStartTime < slot0._specialIdleCD then
+	if arg_10_0._specialCDStartTime and Time.time - arg_10_0._specialCDStartTime < arg_10_0._specialIdleCD then
 		return
 	end
 
-	slot3 = #slot0._specialIdle2
+	local var_10_0 = 0
+	local var_10_1 = #arg_10_0._specialIdle2
 
 	while true do
-		if math.random(slot3) ~= slot0._specialRandomIndex or slot3 <= 0 + 1 then
-			slot0._specialRandomIndex = slot4
+		var_10_0 = var_10_0 + 1
 
-			slot0:playVoice(slot0._specialIdle2[slot4])
+		local var_10_2 = math.random(var_10_1)
+
+		if var_10_2 ~= arg_10_0._specialRandomIndex or var_10_1 <= var_10_0 then
+			arg_10_0._specialRandomIndex = var_10_2
+
+			local var_10_3 = arg_10_0._specialIdle2[var_10_2]
+
+			arg_10_0:playVoice(var_10_3)
 
 			break
 		end
 	end
 
-	slot0._specialCDStartTime = Time.time
+	arg_10_0._specialCDStartTime = Time.time
 end
 
-function slot0._checkMainViewNoInteraction(slot0)
-	if not slot0._noInteractionTime or not slot0._interactionStartTime or not slot0._noInteractionConfig then
+function var_0_0._checkMainViewNoInteraction(arg_11_0)
+	if not arg_11_0._noInteractionTime or not arg_11_0._interactionStartTime or not arg_11_0._noInteractionConfig then
 		return
 	end
 
-	if Time.time - slot0._interactionStartTime < slot0._noInteractionTime then
+	if Time.time - arg_11_0._interactionStartTime < arg_11_0._noInteractionTime then
 		return
 	end
 
-	if slot0._interactionCDStartTime and Time.time - slot0._interactionCDStartTime < slot0._noInteractionCD then
+	if arg_11_0._interactionCDStartTime and Time.time - arg_11_0._interactionCDStartTime < arg_11_0._noInteractionCD then
 		return
 	end
 
-	if slot0._heroView:getLightSpine() and slot1:getPlayVoiceStartTime() and Time.time - slot2 < 10 then
+	local var_11_0 = arg_11_0._heroView:getLightSpine()
+	local var_11_1 = var_11_0 and var_11_0:getPlayVoiceStartTime()
+
+	if var_11_1 and Time.time - var_11_1 < 10 then
 		return
 	end
 
@@ -170,56 +191,60 @@ function slot0._checkMainViewNoInteraction(slot0)
 		return
 	end
 
-	slot0._noInteractionConfig = slot0:_getNoInteractionVoice()
+	arg_11_0._noInteractionConfig = arg_11_0:_getNoInteractionVoice()
 
-	if not slot0._noInteractionConfig then
+	if not arg_11_0._noInteractionConfig then
 		return
 	end
 
-	slot0:playVoice(slot0._noInteractionConfig)
+	arg_11_0:playVoice(arg_11_0._noInteractionConfig)
 
-	slot0._interactionCDStartTime = Time.time
+	arg_11_0._interactionCDStartTime = Time.time
 end
 
-function slot0.touchUpHandler(slot0)
-	slot0._interactionStartTime = Time.time
-	slot0._specialIdleStartTime = Time.time
+function var_0_0.touchUpHandler(arg_12_0)
+	arg_12_0._interactionStartTime = Time.time
+	arg_12_0._specialIdleStartTime = Time.time
 end
 
-function slot0.touchDownHandler(slot0)
-	slot0._interactionStartTime = nil
+function var_0_0.touchDownHandler(arg_13_0)
+	arg_13_0._interactionStartTime = nil
 
-	if slot0._inSpecialIdle then
-		slot0._inSpecialIdle = nil
+	if arg_13_0._inSpecialIdle then
+		arg_13_0._inSpecialIdle = nil
 
-		if slot0._heroView:getLightSpine() then
-			slot1:stopVoice()
+		local var_13_0 = arg_13_0._heroView:getLightSpine()
+
+		if var_13_0 then
+			var_13_0:stopVoice()
 		end
 	end
 
-	slot0:_clearSpecialIdleVars()
+	arg_13_0:_clearSpecialIdleVars()
 end
 
-function slot0.isPlayingVoice(slot0)
-	return slot0._heroView:isPlayingVoice()
+function var_0_0.isPlayingVoice(arg_14_0)
+	return arg_14_0._heroView:isPlayingVoice()
 end
 
-function slot0.playVoice(slot0, slot1)
-	if not slot0._heroView:getLightSpine() then
+function var_0_0.playVoice(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._heroView:getLightSpine()
+
+	if not var_15_0 then
 		return
 	end
 
-	slot2:playVoice(slot1, nil, slot0._txtanacn, slot0._txtanaen, slot0._gocontentbg)
+	var_15_0:playVoice(arg_15_1, nil, arg_15_0._txtanacn, arg_15_0._txtanaen, arg_15_0._gocontentbg)
 end
 
-function slot0.onClose(slot0)
-	if slot0._touchEventMgr then
-		TouchEventMgrHepler.remove(slot0._touchEventMgr)
+function var_0_0.onClose(arg_16_0)
+	if arg_16_0._touchEventMgr then
+		TouchEventMgrHepler.remove(arg_16_0._touchEventMgr)
 
-		slot0._touchEventMgr = nil
+		arg_16_0._touchEventMgr = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._checkNoInteraction, slot0)
+	TaskDispatcher.cancelTask(arg_16_0._checkNoInteraction, arg_16_0)
 end
 
-return slot0
+return var_0_0

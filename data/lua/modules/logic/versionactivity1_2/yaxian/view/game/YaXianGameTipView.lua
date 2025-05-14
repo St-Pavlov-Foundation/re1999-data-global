@@ -1,84 +1,87 @@
-module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameTipView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameTipView", package.seeall)
 
-slot0 = class("YaXianGameTipView", BaseView)
+local var_0_0 = class("YaXianGameTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnblock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_block")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "rotate/layout/top/title/#txt_title")
-	slot0._txtrecommondlevel = gohelper.findChildText(slot0.viewGO, "rotate/desc_container/recommond/#txt_recommondlevel")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "rotate/desc_container/scroll_desc/Viewport/Content/#txt_info")
-	slot0._goop = gohelper.findChild(slot0.viewGO, "rotate/#go_op")
-	slot0._btnback = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op/#btn_back")
-	slot0._btnfight = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op/#btn_fight")
-	slot0._simagedesccontainer = gohelper.findChildSingleImage(slot0.viewGO, "rotate/desc_container")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnblock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_block")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "rotate/layout/top/title/#txt_title")
+	arg_1_0._txtrecommondlevel = gohelper.findChildText(arg_1_0.viewGO, "rotate/desc_container/recommond/#txt_recommondlevel")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "rotate/desc_container/scroll_desc/Viewport/Content/#txt_info")
+	arg_1_0._goop = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op")
+	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op/#btn_back")
+	arg_1_0._btnfight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op/#btn_fight")
+	arg_1_0._simagedesccontainer = gohelper.findChildSingleImage(arg_1_0.viewGO, "rotate/desc_container")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnblock:AddClickListener(slot0._btnblockOnClick, slot0)
-	slot0._btnback:AddClickListener(slot0._btnbackOnClick, slot0)
-	slot0._btnfight:AddClickListener(slot0._btnfightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnblock:AddClickListener(arg_2_0._btnblockOnClick, arg_2_0)
+	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+	arg_2_0._btnfight:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnblock:RemoveClickListener()
-	slot0._btnback:RemoveClickListener()
-	slot0._btnfight:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnblock:RemoveClickListener()
+	arg_3_0._btnback:RemoveClickListener()
+	arg_3_0._btnfight:RemoveClickListener()
 end
 
-function slot0._btnblockOnClick(slot0)
-	slot0:fallBack()
+function var_0_0._btnblockOnClick(arg_4_0)
+	arg_4_0:fallBack()
 end
 
-function slot0._btnbackOnClick(slot0)
-	slot0:fallBack()
+function var_0_0._btnbackOnClick(arg_5_0)
+	arg_5_0:fallBack()
 end
 
-function slot0._btnfightOnClick(slot0)
-	YaXianDungeonController.instance:enterFight(slot0.battleId)
-	slot0:closeThis()
+function var_0_0._btnfightOnClick(arg_6_0)
+	YaXianDungeonController.instance:enterFight(arg_6_0.battleId)
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, slot0.closeThis, slot0)
-	slot0._simagedesccontainer:LoadImage(ResUrl.getVersionActivityDungeon_1_2("tanchaung_di"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, arg_7_0.closeThis, arg_7_0)
+	arg_7_0._simagedesccontainer:LoadImage(ResUrl.getVersionActivityDungeon_1_2("tanchaung_di"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.interactId = slot0.viewParam.interactId
-	slot0.interactCo = YaXianConfig.instance:getInteractObjectCo(YaXianEnum.ActivityId, slot0.interactId)
-	slot0.battleId = tonumber(slot0.interactCo.param)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.interactId = arg_9_0.viewParam.interactId
+	arg_9_0.interactCo = YaXianConfig.instance:getInteractObjectCo(YaXianEnum.ActivityId, arg_9_0.interactId)
+	arg_9_0.battleId = tonumber(arg_9_0.interactCo.param)
 
-	slot0:refreshUI()
+	arg_9_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txttitle.text = slot0.interactCo.battleName
-	slot0._txtrecommondlevel.text = HeroConfig.instance:getCommonLevelDisplay(slot0.interactCo.recommendLevel)
-	slot0._txtinfo.text = slot0.interactCo.battleDesc
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0._txttitle.text = arg_10_0.interactCo.battleName
+	arg_10_0._txtrecommondlevel.text = HeroConfig.instance:getCommonLevelDisplay(arg_10_0.interactCo.recommendLevel)
+	arg_10_0._txtinfo.text = arg_10_0.interactCo.battleDesc
 end
 
-function slot0.fallBack(slot0)
+function var_0_0.fallBack(arg_11_0)
 	Activity115Rpc.instance:sendAct115RevertRequest(YaXianGameModel.instance:getActId())
-	slot0:closeThis()
+	arg_11_0:closeThis()
 end
 
-function slot0.onClose(slot0)
-	if YaXianGameController.instance.state then
-		slot1:disposeEventState()
+function var_0_0.onClose(arg_12_0)
+	local var_12_0 = YaXianGameController.instance.state
+
+	if var_12_0 then
+		var_12_0:disposeEventState()
 	end
 
 	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnStateFinish, YaXianGameEnum.GameStateType.Battle)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagedesccontainer:UnLoadImage()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0._simagedesccontainer:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,117 +1,127 @@
-module("modules.logic.achievement.controller.AchievementStateController", package.seeall)
+﻿module("modules.logic.achievement.controller.AchievementStateController", package.seeall)
 
-slot0 = class("AchievementStateController", BaseController)
+local var_0_0 = class("AchievementStateController", BaseController)
 
-function slot0.addConstEvents(slot0)
-	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, slot0._onCheckFuncUnlock, slot0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, slot0._onNewFuncOpen, slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_1_0._onCheckFuncUnlock, arg_1_0)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_1_0._onNewFuncOpen, arg_1_0)
 end
 
-function slot0.reInit(slot0)
-	slot0:release()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:release()
 end
 
-function slot0._onCheckFuncUnlock(slot0)
+function var_0_0._onCheckFuncUnlock(arg_3_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		return
 	end
 
 	AchievementConfig.instance:initWaitAchievements()
-	slot0:checkReadyAchievmeentOnline()
+	arg_3_0:checkReadyAchievmeentOnline()
 end
 
-function slot0._onNewFuncOpen(slot0, slot1)
-	if tabletool.indexOf(slot1, OpenEnum.UnlockFunc.Achievement) then
+function var_0_0._onNewFuncOpen(arg_4_0, arg_4_1)
+	if tabletool.indexOf(arg_4_1, OpenEnum.UnlockFunc.Achievement) then
 		AchievementConfig.instance:initWaitAchievements()
-		slot0:checkReadyAchievmeentOnline()
+		arg_4_0:checkReadyAchievmeentOnline()
 	end
 end
 
-function slot0.checkReadyAchievmeentOnline(slot0)
-	slot2 = AchievementConfig.instance:getWaitOfflineAchievementList()
+function var_0_0.checkReadyAchievmeentOnline(arg_5_0)
+	local var_5_0 = AchievementConfig.instance:getWaitOnlineAchievementList()
+	local var_5_1 = AchievementConfig.instance:getWaitOfflineAchievementList()
 
-	if AchievementConfig.instance:getWaitOnlineAchievementList() and #slot1 > 0 then
-		slot0._onlinePriorityQueue = PriorityQueue.New(function (slot0, slot1)
-			return slot0.startTime < slot1.startTime
+	if var_5_0 and #var_5_0 > 0 then
+		arg_5_0._onlinePriorityQueue = PriorityQueue.New(function(arg_6_0, arg_6_1)
+			return arg_6_0.startTime < arg_6_1.startTime
 		end)
 
-		for slot6, slot7 in pairs(slot1) do
-			slot0._onlinePriorityQueue:add(slot7)
+		for iter_5_0, iter_5_1 in pairs(var_5_0) do
+			arg_5_0._onlinePriorityQueue:add(iter_5_1)
 		end
 
-		slot0:startTickAchievementOnline()
+		arg_5_0:startTickAchievementOnline()
 	end
 
-	if slot2 and #slot2 > 0 then
-		slot0._offlinePriorityQueue = PriorityQueue.New(function (slot0, slot1)
-			return slot0.endTime < slot1.endTime
+	if var_5_1 and #var_5_1 > 0 then
+		arg_5_0._offlinePriorityQueue = PriorityQueue.New(function(arg_7_0, arg_7_1)
+			return arg_7_0.endTime < arg_7_1.endTime
 		end)
 
-		for slot6, slot7 in ipairs(slot2) do
-			slot0._offlinePriorityQueue:add(slot7)
+		for iter_5_2, iter_5_3 in ipairs(var_5_1) do
+			arg_5_0._offlinePriorityQueue:add(iter_5_3)
 		end
 
-		slot0:startTickAchievementOffline()
+		arg_5_0:startTickAchievementOffline()
 	end
 end
 
-function slot0.startTickAchievementOnline(slot0)
-	TaskDispatcher.cancelTask(slot0.onAchievementOnline, slot0)
-	TaskDispatcher.runDelay(slot0.onAchievementOnline, slot0, slot0:getAchievementStartLeftSeconds(slot0._onlinePriorityQueue:getFirst()))
+function var_0_0.startTickAchievementOnline(arg_8_0)
+	local var_8_0 = arg_8_0._onlinePriorityQueue:getFirst()
+	local var_8_1 = arg_8_0:getAchievementStartLeftSeconds(var_8_0)
+
+	TaskDispatcher.cancelTask(arg_8_0.onAchievementOnline, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0.onAchievementOnline, arg_8_0, var_8_1)
 end
 
-function slot0.onAchievementOnline(slot0)
-	AchievementConfig.instance:onAchievementArriveOnlineTime(slot0._onlinePriorityQueue:getFirst().id)
+function var_0_0.onAchievementOnline(arg_9_0)
+	local var_9_0 = arg_9_0._onlinePriorityQueue:getFirst()
+
+	AchievementConfig.instance:onAchievementArriveOnlineTime(var_9_0.id)
 	AchievementController.instance:dispatchEvent(AchievementEvent.UpdateAchievementState)
-	slot0._onlinePriorityQueue:getFirstAndRemove()
+	arg_9_0._onlinePriorityQueue:getFirstAndRemove()
 
-	if slot0._onlinePriorityQueue:getSize() > 0 then
-		slot0:startTickAchievementOnline()
+	if arg_9_0._onlinePriorityQueue:getSize() > 0 then
+		arg_9_0:startTickAchievementOnline()
 	else
-		slot0._onlinePriorityQueue = nil
+		arg_9_0._onlinePriorityQueue = nil
 	end
 end
 
-function slot0.startTickAchievementOffline(slot0)
-	slot1 = slot0._offlinePriorityQueue:getFirst()
-	slot2 = slot0:getAchievementEndLeftSeconds(slot1)
+function var_0_0.startTickAchievementOffline(arg_10_0)
+	local var_10_0 = arg_10_0._offlinePriorityQueue:getFirst()
+	local var_10_1 = arg_10_0:getAchievementEndLeftSeconds(var_10_0)
 
-	logNormal(string.format("成就{%s}准备下架,倒计时:{%s}秒", slot1.id, slot2))
-	TaskDispatcher.cancelTask(slot0.onAchievementOffline, slot0)
-	TaskDispatcher.runDelay(slot0.onAchievementOffline, slot0, slot2)
+	logNormal(string.format("成就{%s}准备下架,倒计时:{%s}秒", var_10_0.id, var_10_1))
+	TaskDispatcher.cancelTask(arg_10_0.onAchievementOffline, arg_10_0)
+	TaskDispatcher.runDelay(arg_10_0.onAchievementOffline, arg_10_0, var_10_1)
 end
 
-function slot0.onAchievementOffline(slot0)
-	slot1 = slot0._offlinePriorityQueue:getFirst()
+function var_0_0.onAchievementOffline(arg_11_0)
+	local var_11_0 = arg_11_0._offlinePriorityQueue:getFirst()
 
-	AchievementConfig.instance:onAchievementArriveOfflineTime(slot1.id)
+	AchievementConfig.instance:onAchievementArriveOfflineTime(var_11_0.id)
 	AchievementController.instance:dispatchEvent(AchievementEvent.UpdateAchievementState)
-	slot0._offlinePriorityQueue:getFirstAndRemove()
-	logNormal(string.format("成就{%s}下架", slot1.id))
+	arg_11_0._offlinePriorityQueue:getFirstAndRemove()
+	logNormal(string.format("成就{%s}下架", var_11_0.id))
 
-	if slot0._offlinePriorityQueue:getSize() > 0 then
-		slot0:startTickAchievementOnline()
+	if arg_11_0._offlinePriorityQueue:getSize() > 0 then
+		arg_11_0:startTickAchievementOnline()
 	else
-		slot0._offlinePriorityQueue = nil
+		arg_11_0._offlinePriorityQueue = nil
 	end
 end
 
-function slot0.getAchievementStartLeftSeconds(slot0, slot1)
-	return TimeUtil.stringToTimestamp(slot1.startTime) - ServerTime.now()
+function var_0_0.getAchievementStartLeftSeconds(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.startTime
+
+	return TimeUtil.stringToTimestamp(var_12_0) - ServerTime.now()
 end
 
-function slot0.getAchievementEndLeftSeconds(slot0, slot1)
-	return TimeUtil.stringToTimestamp(slot1.endTime) - ServerTime.now()
+function var_0_0.getAchievementEndLeftSeconds(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.endTime
+
+	return TimeUtil.stringToTimestamp(var_13_0) - ServerTime.now()
 end
 
-function slot0.release(slot0)
-	TaskDispatcher.cancelTask(slot0.onAchievementOnline, slot0)
-	TaskDispatcher.cancelTask(slot0.onAchievementOffline, slot0)
+function var_0_0.release(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0.onAchievementOnline, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0.onAchievementOffline, arg_14_0)
 
-	slot0._offlinePriorityQueue = nil
-	slot0._onlinePriorityQueue = nil
+	arg_14_0._offlinePriorityQueue = nil
+	arg_14_0._onlinePriorityQueue = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

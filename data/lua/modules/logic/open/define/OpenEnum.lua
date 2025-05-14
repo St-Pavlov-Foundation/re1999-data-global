@@ -1,7 +1,8 @@
-module("modules.logic.open.define.OpenEnum", package.seeall)
+﻿module("modules.logic.open.define.OpenEnum", package.seeall)
 
-slot0 = _M
-slot0.UnlockFunc = {
+local var_0_0 = _M
+
+var_0_0.UnlockFunc = {
 	SummonEquip = 38,
 	EquipDungeon = 18,
 	Summon = 11,
@@ -83,4 +84,4 @@ slot0.UnlockFunc = {
 	AudioDownload = 39
 }
 
-return slot0
+return var_0_0

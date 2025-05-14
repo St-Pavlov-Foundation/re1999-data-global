@@ -1,89 +1,99 @@
-module("modules.logic.seasonver.act123.view1_9.component.Season123_1_9EntryCamera", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.component.Season123_1_9EntryCamera", package.seeall)
 
-slot0 = class("Season123_1_9EntryCamera", UserDataDispose)
+local var_0_0 = class("Season123_1_9EntryCamera", UserDataDispose)
 
-function slot0.init(slot0)
-	slot0:__onInit()
-	slot0:initCamera()
+function var_0_0.init(arg_1_0)
+	arg_1_0:__onInit()
+	arg_1_0:initCamera()
 end
 
-function slot0.dispose(slot0)
-	slot0:killTween()
-	slot0:__onDispose()
-	MainCameraMgr.instance:addView(ViewName.Season123_1_9EntryView, nil, , )
+function var_0_0.dispose(arg_2_0)
+	arg_2_0:killTween()
+	arg_2_0:__onDispose()
+	MainCameraMgr.instance:addView(ViewName.Season123_1_9EntryView, nil, nil, nil)
 end
 
-function slot0.initCamera(slot0)
-	if slot0._isInitCamera then
+function var_0_0.initCamera(arg_3_0)
+	if arg_3_0._isInitCamera then
 		return
 	end
 
-	slot0._isInitCamera = true
-	slot0._seasonSize = SeasonEntryEnum.CameraSize
-	slot0._seasonScale = 1
+	arg_3_0._isInitCamera = true
+	arg_3_0._seasonSize = SeasonEntryEnum.CameraSize
+	arg_3_0._seasonScale = 1
 
-	MainCameraMgr.instance:addView(ViewName.Season123_1_9EntryView, slot0.onScreenResize, slot0.resetCamera, slot0)
-	slot0:onScreenResize()
+	MainCameraMgr.instance:addView(ViewName.Season123_1_9EntryView, arg_3_0.onScreenResize, arg_3_0.resetCamera, arg_3_0)
+	arg_3_0:onScreenResize()
 end
 
-function slot0.onScreenResize(slot0)
-	slot0:killTween()
+function var_0_0.onScreenResize(arg_4_0)
+	arg_4_0:killTween()
 
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
-	slot1.orthographicSize = slot0:getCurrentOrthographicSize()
+	local var_4_0 = CameraMgr.instance:getMainCamera()
+
+	var_4_0.orthographic = true
+	var_4_0.orthographicSize = arg_4_0:getCurrentOrthographicSize()
 end
 
-function slot0.setScaleWithoutTween(slot0, slot1)
-	slot0._seasonScale = slot1
-	CameraMgr.instance:getMainCamera().orthographicSize = slot0:getCurrentOrthographicSize()
+function var_0_0.setScaleWithoutTween(arg_5_0, arg_5_1)
+	local var_5_0 = CameraMgr.instance:getMainCamera()
+
+	arg_5_0._seasonScale = arg_5_1
+	var_5_0.orthographicSize = arg_5_0:getCurrentOrthographicSize()
 end
 
-function slot0.tweenToScale(slot0, slot1, slot2, slot3, slot4)
-	slot0:killTween()
+function var_0_0.tweenToScale(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	arg_6_0:killTween()
 
-	slot0._seasonScale = slot1
-	slot0._isScaleTweening = true
-	slot0._tweenScaleId = nil
+	arg_6_0._seasonScale = arg_6_1
+	arg_6_0._isScaleTweening = true
+	arg_6_0._tweenScaleId = nil
 
-	if slot0:getCurrentOrthographicSize() <= 0 then
-		slot5 = 0.1
+	local var_6_0 = arg_6_0:getCurrentOrthographicSize()
+
+	if var_6_0 <= 0 then
+		var_6_0 = 0.1
 	end
 
-	slot6 = CameraMgr.instance:getMainCamera()
-	slot7 = slot6.orthographicSize / slot5
-	slot0._focusFinishCallback = slot3
-	slot0._focusFinishCallbackObj = slot4
-	slot0._tweenScaleId = ZProj.TweenHelper.DOTweenFloat(slot6.orthographicSize, slot5, slot2, slot0.onTweenSizeUpdate, slot0.onTweenFinish, slot0, nil, EaseType.OutCubic)
+	local var_6_1 = CameraMgr.instance:getMainCamera()
+	local var_6_2 = var_6_1.orthographicSize / var_6_0
+
+	arg_6_0._focusFinishCallback = arg_6_3
+	arg_6_0._focusFinishCallbackObj = arg_6_4
+	arg_6_0._tweenScaleId = ZProj.TweenHelper.DOTweenFloat(var_6_1.orthographicSize, var_6_0, arg_6_2, arg_6_0.onTweenSizeUpdate, arg_6_0.onTweenFinish, arg_6_0, nil, EaseType.OutCubic)
 end
 
-function slot0.killTween(slot0)
-	slot0._isScaleTweening = false
+function var_0_0.killTween(arg_7_0)
+	arg_7_0._isScaleTweening = false
 
-	if slot0._tweenScaleId then
-		ZProj.TweenHelper.KillById(slot0._tweenScaleId)
+	if arg_7_0._tweenScaleId then
+		ZProj.TweenHelper.KillById(arg_7_0._tweenScaleId)
 
-		slot0._tweenScaleId = nil
-	end
-end
-
-function slot0.onTweenSizeUpdate(slot0, slot1)
-	if CameraMgr.instance:getMainCamera() then
-		slot2.orthographicSize = slot1
-	end
-end
-
-function slot0.onTweenFinish(slot0)
-	if slot0._focusFinishCallback then
-		slot0._focusFinishCallback(slot0._focusFinishCallbackObj)
-
-		slot0._focusFinishCallback = nil
-		slot0._focusFinishCallbackObj = nil
+		arg_7_0._tweenScaleId = nil
 	end
 end
 
-function slot0.getCurrentOrthographicSize(slot0)
-	return slot0._seasonSize * GameUtil.getAdapterScale(true) * slot0._seasonScale
+function var_0_0.onTweenSizeUpdate(arg_8_0, arg_8_1)
+	local var_8_0 = CameraMgr.instance:getMainCamera()
+
+	if var_8_0 then
+		var_8_0.orthographicSize = arg_8_1
+	end
 end
 
-return slot0
+function var_0_0.onTweenFinish(arg_9_0)
+	if arg_9_0._focusFinishCallback then
+		arg_9_0._focusFinishCallback(arg_9_0._focusFinishCallbackObj)
+
+		arg_9_0._focusFinishCallback = nil
+		arg_9_0._focusFinishCallbackObj = nil
+	end
+end
+
+function var_0_0.getCurrentOrthographicSize(arg_10_0)
+	local var_10_0 = GameUtil.getAdapterScale(true)
+
+	return arg_10_0._seasonSize * var_10_0 * arg_10_0._seasonScale
+end
+
+return var_0_0

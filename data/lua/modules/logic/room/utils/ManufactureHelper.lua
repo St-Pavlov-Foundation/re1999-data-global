@@ -1,66 +1,102 @@
-module("modules.logic.room.utils.ManufactureHelper", package.seeall)
+﻿module("modules.logic.room.utils.ManufactureHelper", package.seeall)
 
-return {
-	__EMPTY__TABLE = {},
-	findItemIdListByBUid = function (slot0)
-		if not ManufactureModel.instance:getManufactureMOById(slot0) then
-			return uv0.__EMPTY__TABLE
-		end
+local var_0_0 = {
+	__EMPTY__TABLE = {}
+}
 
-		slot2 = {}
+function var_0_0.findItemIdListByBUid(arg_1_0)
+	local var_1_0 = ManufactureModel.instance:getManufactureMOById(arg_1_0)
 
-		for slot7, slot8 in ipairs(slot1:getAllUnlockedSlotMOList()) do
-			if (slot8:getSlotState() == RoomManufactureEnum.SlotState.Running or slot9 == RoomManufactureEnum.SlotState.Wait or slot9 == RoomManufactureEnum.SlotState.Stop or slot9 == RoomManufactureEnum.SlotState.Complete) and not tabletool.indexOf(slot2, ManufactureConfig.instance:getItemId(slot8:getSlotManufactureItemId())) then
-				table.insert(slot2, slot11)
+	if not var_1_0 then
+		return var_0_0.__EMPTY__TABLE
+	end
+
+	local var_1_1 = {}
+	local var_1_2 = var_1_0:getAllUnlockedSlotMOList()
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_2) do
+		local var_1_3 = iter_1_1:getSlotState()
+
+		if var_1_3 == RoomManufactureEnum.SlotState.Running or var_1_3 == RoomManufactureEnum.SlotState.Wait or var_1_3 == RoomManufactureEnum.SlotState.Stop or var_1_3 == RoomManufactureEnum.SlotState.Complete then
+			local var_1_4 = iter_1_1:getSlotManufactureItemId()
+			local var_1_5 = ManufactureConfig.instance:getItemId(var_1_4)
+
+			if not tabletool.indexOf(var_1_1, var_1_5) then
+				table.insert(var_1_1, var_1_5)
 			end
 		end
+	end
 
-		return slot2
-	end,
-	findLuckyItemIdListByBUid = function (slot0)
-		slot1, slot2 = uv0.findLuckyItemParamByBUid(slot0)
+	return var_1_1
+end
 
-		if not slot1 and not slot2 then
-			return uv0.__EMPTY__TABLE
+function var_0_0.findLuckyItemIdListByBUid(arg_2_0)
+	local var_2_0, var_2_1 = var_0_0.findLuckyItemParamByBUid(arg_2_0)
+
+	if not var_2_0 and not var_2_1 then
+		return var_0_0.__EMPTY__TABLE
+	end
+
+	local var_2_2 = var_0_0.findItemIdListByBUid(arg_2_0)
+
+	if var_2_0 then
+		return var_2_2
+	end
+
+	for iter_2_0 = #var_2_2, 1, -1 do
+		local var_2_3 = var_2_2[iter_2_0]
+
+		if not var_2_1 or not var_2_1[var_2_3] then
+			table.remove(var_2_2, 1)
 		end
+	end
 
-		slot3 = uv0.findItemIdListByBUid(slot0)
+	return var_2_2
+end
 
-		if slot1 then
-			return slot3
-		end
+function var_0_0.findLuckyItemParamByBUid(arg_3_0)
+	local var_3_0 = false
+	local var_3_1
+	local var_3_2 = RoomMapBuildingModel.instance:getBuildingMOById(arg_3_0)
+	local var_3_3 = CritterHelper.getWorkCritterMOListByBuid(arg_3_0)
 
-		for slot7 = #slot3, 1, -1 do
-			if not slot2 or not slot2[slot3[slot7]] then
-				table.remove(slot3, 1)
-			end
-		end
+	if not var_3_2 or not var_3_3 or #var_3_3 < 1 then
+		return var_3_0, var_3_1
+	end
 
-		return slot3
-	end,
-	findLuckyItemParamByBUid = function (slot0)
-		slot4 = CritterHelper.getWorkCritterMOListByBuid(slot0)
+	local var_3_4 = var_3_2.buildingId
+	local var_3_5 = CritterConfig.instance
+	local var_3_6 = ManufactureCritterListModel.instance
 
-		if not RoomMapBuildingModel.instance:getBuildingMOById(slot0) or not slot4 or #slot4 < 1 then
-			return false, nil
-		end
+	for iter_3_0 = 1, #var_3_3 do
+		local var_3_7 = var_3_3[iter_3_0]
+		local var_3_8 = var_3_6:getPreviewAttrInfo(var_3_7:getId(), var_3_4, false)
 
-		slot6 = CritterConfig.instance
+		if var_3_8 and var_3_8.skillTags and #var_3_8.skillTags > 0 then
+			local var_3_9 = var_3_8.skillTags
 
-		for slot11 = 1, #slot4 do
-			if ManufactureCritterListModel.instance:getPreviewAttrInfo(slot4[slot11]:getId(), slot3.buildingId, false) and slot13.skillTags and #slot13.skillTags > 0 then
-				for slot18 = 1, #slot13.skillTags do
-					if slot6:getCritterTagCfg(slot14[slot18]) and slot19.luckyItemType == RoomManufactureEnum.LuckyItemType.All then
-						return true, slot2
-					elseif slot19 and slot19.luckyItemType == RoomManufactureEnum.LuckyItemType.ItemId and not string.nilorempty(slot19.luckyItemIds) and string.splitToNumber(slot19.luckyItemIds) then
-						for slot24, slot25 in ipairs(slot20) do
-							(slot2 or {})[slot25] = true
+			for iter_3_1 = 1, #var_3_9 do
+				local var_3_10 = var_3_5:getCritterTagCfg(var_3_9[iter_3_1])
+
+				if var_3_10 and var_3_10.luckyItemType == RoomManufactureEnum.LuckyItemType.All then
+					var_3_0 = true
+
+					return var_3_0, var_3_1
+				elseif var_3_10 and var_3_10.luckyItemType == RoomManufactureEnum.LuckyItemType.ItemId and not string.nilorempty(var_3_10.luckyItemIds) then
+					local var_3_11 = string.splitToNumber(var_3_10.luckyItemIds)
+
+					if var_3_11 then
+						for iter_3_2, iter_3_3 in ipairs(var_3_11) do
+							var_3_1 = var_3_1 or {}
+							var_3_1[iter_3_3] = true
 						end
 					end
 				end
 			end
 		end
-
-		return slot1, slot2
 	end
-}
+
+	return var_3_0, var_3_1
+end
+
+return var_0_0

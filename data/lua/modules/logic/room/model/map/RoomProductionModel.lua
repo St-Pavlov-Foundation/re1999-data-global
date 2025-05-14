@@ -1,115 +1,130 @@
-module("modules.logic.room.model.map.RoomProductionModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomProductionModel", package.seeall)
 
-slot0 = class("RoomProductionModel", BaseModel)
+local var_0_0 = class("RoomProductionModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	TaskDispatcher.cancelTask(slot0._OnTimeNextFinish, slot0)
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._OnTimeNextFinish, arg_3_0)
 
-	slot0._unlockAnimLineIdDict = {}
-	slot0._unlockDetailAnimLineIdDict = {}
+	arg_3_0._unlockAnimLineIdDict = {}
+	arg_3_0._unlockDetailAnimLineIdDict = {}
 end
 
-function slot0.updateProductionLines(slot0, slot1)
-	slot2 = {}
+function var_0_0.updateProductionLines(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.id ~= 0 then
-			slot8 = slot0:getLineMO(slot7.id)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		if iter_4_1.id ~= 0 then
+			local var_4_1 = arg_4_0:getLineMO(iter_4_1.id)
 
-			slot8:updateInfo(slot7)
-			table.insert(slot2, slot8)
+			var_4_1:updateInfo(iter_4_1)
+			table.insert(var_4_0, var_4_1)
 		end
 	end
 
-	slot0:addList(slot2)
+	arg_4_0:addList(var_4_0)
 	RoomController.instance:dispatchEvent(RoomEvent.UpdateProduceLineData)
 
-	slot4, slot5 = nil
-	slot7 = {}
+	local var_4_2 = arg_4_0:getList()
+	local var_4_3
+	local var_4_4
+	local var_4_5 = ServerTime.now()
+	local var_4_6 = {}
 
-	for slot11, slot12 in ipairs(slot0:getList()) do
-		if slot12.nextFinishTime > 0 and slot12.pauseTime == 0 then
-			if slot4 == nil or slot12.nextFinishTime < slot4 then
-				slot5 = slot12.nextFinishTime - ServerTime.now()
+	for iter_4_2, iter_4_3 in ipairs(var_4_2) do
+		if iter_4_3.nextFinishTime > 0 and iter_4_3.pauseTime == 0 then
+			if var_4_3 == nil or var_4_3 > iter_4_3.nextFinishTime then
+				var_4_3 = iter_4_3.nextFinishTime
+				var_4_4 = var_4_3 - var_4_5
+				var_4_6 = {}
 
-				table.insert({}, slot12.id)
-			elseif slot12.nextFinishTime == slot4 then
-				table.insert(slot7, slot12.id)
+				table.insert(var_4_6, iter_4_3.id)
+			elseif iter_4_3.nextFinishTime == var_4_3 then
+				table.insert(var_4_6, iter_4_3.id)
 			end
 		end
 	end
 
-	slot0:updateNextFinishList(slot7, slot5)
+	arg_4_0:updateNextFinishList(var_4_6, var_4_4)
 end
 
-function slot0.updateNextFinishList(slot0, slot1, slot2)
-	slot0._nextFinishList = slot1
+function var_0_0.updateNextFinishList(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._nextFinishList = arg_5_1
 
-	TaskDispatcher.cancelTask(slot0._OnTimeNextFinish, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._OnTimeNextFinish, arg_5_0)
 
-	if slot2 then
-		TaskDispatcher.runDelay(slot0._OnTimeNextFinish, slot0, math.max(1, slot2) + 0.5)
+	if arg_5_2 then
+		arg_5_2 = math.max(1, arg_5_2)
+
+		TaskDispatcher.runDelay(arg_5_0._OnTimeNextFinish, arg_5_0, arg_5_2 + 0.5)
 	end
 end
 
-function slot0._OnTimeNextFinish(slot0, slot1)
-	RoomRpc.instance:sendProductionLineInfoRequest(slot1)
+function var_0_0._OnTimeNextFinish(arg_6_0, arg_6_1)
+	RoomRpc.instance:sendProductionLineInfoRequest(arg_6_1)
 end
 
-function slot0.updateProductionLinesLevel(slot0, slot1, slot2)
-	slot0:getLineMO(slot1):updateLevel(slot2)
+function var_0_0.updateProductionLinesLevel(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:getLineMO(arg_7_1):updateLevel(arg_7_2)
 	RoomController.instance:dispatchEvent(RoomEvent.UpdateProduceLineData)
 	RoomController.instance:dispatchEvent(RoomEvent.ProduceLineLevelUp)
 end
 
-function slot0.getLineMO(slot0, slot1)
-	if slot0:getById(slot1) == nil then
-		RoomProductionLineMO.New():init(slot1)
+function var_0_0.getLineMO(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getById(arg_8_1)
+
+	if var_8_0 == nil then
+		var_8_0 = RoomProductionLineMO.New()
+
+		var_8_0:init(arg_8_1)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.updateLineMaxLevel(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		slot6:updateMaxLevel()
+function var_0_0.updateLineMaxLevel(arg_9_0)
+	local var_9_0 = arg_9_0:getList()
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		iter_9_1:updateMaxLevel()
 	end
 end
 
-function slot0.checkUnlockLine(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_production_line.configList) do
-		if not RoomProductionHelper.isLineUnlock(slot6.id, slot1 - 1) and RoomProductionHelper.isLineUnlock(slot7, slot1) then
-			slot0:setPlayLineUnlock(slot7, true)
-			slot0:setPlayLineUnlockDetail(slot7, true)
+function var_0_0.checkUnlockLine(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(lua_production_line.configList) do
+		local var_10_0 = iter_10_1.id
+
+		if not RoomProductionHelper.isLineUnlock(var_10_0, arg_10_1 - 1) and RoomProductionHelper.isLineUnlock(var_10_0, arg_10_1) then
+			arg_10_0:setPlayLineUnlock(var_10_0, true)
+			arg_10_0:setPlayLineUnlockDetail(var_10_0, true)
 		end
 	end
 end
 
-function slot0.shouldPlayLineUnlock(slot0, slot1)
-	return slot0._unlockAnimLineIdDict[slot1]
+function var_0_0.shouldPlayLineUnlock(arg_11_0, arg_11_1)
+	return arg_11_0._unlockAnimLineIdDict[arg_11_1]
 end
 
-function slot0.setPlayLineUnlock(slot0, slot1, slot2)
-	slot0._unlockAnimLineIdDict[slot1] = slot2
+function var_0_0.setPlayLineUnlock(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._unlockAnimLineIdDict[arg_12_1] = arg_12_2
 end
 
-function slot0.shouldPlayLineUnlockDetail(slot0, slot1)
-	return slot0._unlockDetailAnimLineIdDict[slot1]
+function var_0_0.shouldPlayLineUnlockDetail(arg_13_0, arg_13_1)
+	return arg_13_0._unlockDetailAnimLineIdDict[arg_13_1]
 end
 
-function slot0.setPlayLineUnlockDetail(slot0, slot1, slot2)
-	slot0._unlockDetailAnimLineIdDict[slot1] = slot2
+function var_0_0.setPlayLineUnlockDetail(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0._unlockDetailAnimLineIdDict[arg_14_1] = arg_14_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

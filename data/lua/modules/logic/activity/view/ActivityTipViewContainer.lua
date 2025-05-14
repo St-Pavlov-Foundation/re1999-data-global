@@ -1,11 +1,11 @@
-module("modules.logic.activity.view.ActivityTipViewContainer", package.seeall)
+﻿module("modules.logic.activity.view.ActivityTipViewContainer", package.seeall)
 
-slot0 = class("ActivityTipViewContainer", BaseViewContainer)
+local var_0_0 = class("ActivityTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ActivityTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

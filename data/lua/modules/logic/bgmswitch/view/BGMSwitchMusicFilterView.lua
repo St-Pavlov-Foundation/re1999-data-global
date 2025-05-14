@@ -1,109 +1,117 @@
-module("modules.logic.bgmswitch.view.BGMSwitchMusicFilterView", package.seeall)
+﻿module("modules.logic.bgmswitch.view.BGMSwitchMusicFilterView", package.seeall)
 
-slot0 = class("BGMSwitchMusicFilterView", BaseView)
+local var_0_0 = class("BGMSwitchMusicFilterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goobtain = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_obtain")
-	slot0._scrollAmount = gohelper.findChildScrollRect(slot0.viewGO, "container/layoutgroup/#go_obtain/#scroll_Amount")
-	slot0._gotypeitem = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_obtain/#scroll_Amount/Viewport/Container/#go_typeitem")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#btn_reset")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#btn_confirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goobtain = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_obtain")
+	arg_1_0._scrollAmount = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/layoutgroup/#go_obtain/#scroll_Amount")
+	arg_1_0._gotypeitem = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_obtain/#scroll_Amount/Viewport/Container/#go_typeitem")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_reset")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_confirm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_5_0)
 	BGMSwitchModel.instance:clearFilterTypes()
 	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.FilterClassSelect)
-	slot0:_refreshView()
+	arg_5_0:_refreshView()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnconfirmOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._items = {}
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._items = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addSelfEvents()
-	slot0:_refreshView()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:_addSelfEvents()
+	arg_9_0:_refreshView()
 end
 
-function slot0._addSelfEvents(slot0)
+function var_0_0._addSelfEvents(arg_10_0)
+	return
 end
 
-function slot0._refreshView(slot0)
-	slot0:_refreshContent()
-	slot0:_refreshItems()
+function var_0_0._refreshView(arg_11_0)
+	arg_11_0:_refreshContent()
+	arg_11_0:_refreshItems()
 end
 
-function slot0._refreshContent(slot0)
+function var_0_0._refreshContent(arg_12_0)
+	return
 end
 
-function slot0._refreshItems(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0._refreshItems(arg_13_0)
+	local var_13_0 = {}
+	local var_13_1 = {}
+	local var_13_2 = BGMSwitchModel.instance:getBGMSelectType()
 
-	if BGMSwitchModel.instance:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
-		slot2 = BGMSwitchModel.instance:getUnfilteredAllBgmsSorted()
-	elseif slot3 == BGMSwitchEnum.SelectType.Loved then
-		slot2 = BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted()
+	if var_13_2 == BGMSwitchEnum.SelectType.All then
+		var_13_1 = BGMSwitchModel.instance:getUnfilteredAllBgmsSorted()
+	elseif var_13_2 == BGMSwitchEnum.SelectType.Loved then
+		var_13_1 = BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted()
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		slot1[BGMSwitchConfig.instance:getBGMSwitchCO(slot8).audioType] = true
+	for iter_13_0, iter_13_1 in pairs(var_13_1) do
+		var_13_0[BGMSwitchConfig.instance:getBGMSwitchCO(iter_13_1).audioType] = true
 	end
 
-	for slot7, slot8 in pairs(slot1) do
-		if not slot0._items[slot7] then
-			slot9 = BGMSwitchMusicFilterItem.New()
+	for iter_13_2, iter_13_3 in pairs(var_13_0) do
+		if not arg_13_0._items[iter_13_2] then
+			local var_13_3 = BGMSwitchMusicFilterItem.New()
+			local var_13_4 = gohelper.cloneInPlace(arg_13_0._gotypeitem, iter_13_2)
 
-			slot9:init(gohelper.cloneInPlace(slot0._gotypeitem, slot7))
+			var_13_3:init(var_13_4)
 
-			slot0._items[slot7] = slot9
+			arg_13_0._items[iter_13_2] = var_13_3
 		end
 
-		slot0._items[slot7]:setItem(BGMSwitchConfig.instance:getBGMTypeCO(slot7))
+		local var_13_5 = BGMSwitchConfig.instance:getBGMTypeCO(iter_13_2)
+
+		arg_13_0._items[iter_13_2]:setItem(var_13_5)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeSelfEvents()
+function var_0_0.onClose(arg_14_0)
+	arg_14_0:_removeSelfEvents()
 end
 
-function slot0._removeSelfEvents(slot0)
+function var_0_0._removeSelfEvents(arg_15_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._items then
-		for slot4, slot5 in pairs(slot0._items) do
-			slot5:destroy()
+function var_0_0.onDestroyView(arg_16_0)
+	if arg_16_0._items then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0._items) do
+			iter_16_1:destroy()
 		end
 	end
 end
 
-return slot0
+return var_0_0

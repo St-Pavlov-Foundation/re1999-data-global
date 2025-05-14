@@ -1,74 +1,77 @@
-module("framework.core.callback.LuaGeneralCallback", package.seeall)
+﻿module("framework.core.callback.LuaGeneralCallback", package.seeall)
 
-slot0 = class("LuaGeneralCallback")
-slot0._pool = nil
+local var_0_0 = class("LuaGeneralCallback")
 
-function slot0.getPool()
-	if not uv0._pool then
-		uv0._pool = LuaObjPool.New(32, uv0._poolNew, uv0._poolRelease, uv0._poolReset)
+var_0_0._pool = nil
+
+function var_0_0.getPool()
+	if not var_0_0._pool then
+		var_0_0._pool = LuaObjPool.New(32, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
 	end
 
-	return uv0._pool
+	return var_0_0._pool
 end
 
-function slot0._poolNew()
-	return uv0.New()
+function var_0_0._poolNew()
+	return var_0_0.New()
 end
 
-function slot0._poolRelease(slot0)
-	slot0:release()
+function var_0_0._poolRelease(arg_3_0)
+	arg_3_0:release()
 end
 
-function slot0._poolReset(slot0)
-	slot0:reset()
+function var_0_0._poolReset(arg_4_0)
+	arg_4_0:reset()
 end
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.callback = nil
-	slot0.hasCbObj = false
-	slot0.cbObjContainer = {}
+function var_0_0.ctor(arg_5_0)
+	arg_5_0.id = 0
+	arg_5_0.callback = nil
+	arg_5_0.hasCbObj = false
+	arg_5_0.cbObjContainer = {}
 
-	setmetatable(slot0.cbObjContainer, {
+	setmetatable(arg_5_0.cbObjContainer, {
 		__mode = "v"
 	})
 
-	slot0.cbObjContainer.value = nil
+	arg_5_0.cbObjContainer.value = nil
 end
 
-function slot0.setCbObj(slot0, slot1)
-	slot0.hasCbObj = slot1 ~= nil
+function var_0_0.setCbObj(arg_6_0, arg_6_1)
+	arg_6_0.hasCbObj = arg_6_1 ~= nil
 
-	if slot0.hasCbObj then
-		slot0.cbObjContainer.value = slot1
+	if arg_6_0.hasCbObj then
+		arg_6_0.cbObjContainer.value = arg_6_1
 	end
 end
 
-function slot0.invoke(slot0, ...)
-	if slot0.hasCbObj and not slot0.cbObjContainer.value then
+function var_0_0.invoke(arg_7_0, ...)
+	if arg_7_0.hasCbObj and not arg_7_0.cbObjContainer.value then
 		return false
 	end
 
-	if not slot0.hasCbObj then
-		slot0.callback(unpack({
-			...
-		}))
+	local var_7_0 = {
+		...
+	}
+
+	if not arg_7_0.hasCbObj then
+		arg_7_0.callback(unpack(var_7_0))
 	else
-		slot0.callback(slot0.cbObjContainer.value, unpack(slot1))
+		arg_7_0.callback(arg_7_0.cbObjContainer.value, unpack(var_7_0))
 	end
 
 	return true
 end
 
-function slot0.reset(slot0)
-	slot0.id = 0
-	slot0.callback = nil
-	slot0.hasCbObj = false
-	slot0.cbObjContainer.value = nil
+function var_0_0.reset(arg_8_0)
+	arg_8_0.id = 0
+	arg_8_0.callback = nil
+	arg_8_0.hasCbObj = false
+	arg_8_0.cbObjContainer.value = nil
 end
 
-function slot0.release(slot0)
-	slot0:reset()
+function var_0_0.release(arg_9_0)
+	arg_9_0:reset()
 end
 
-return slot0
+return var_0_0

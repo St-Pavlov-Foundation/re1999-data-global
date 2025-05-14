@@ -1,60 +1,68 @@
-module("modules.logic.investigate.view.InvestigateTipsView", package.seeall)
+﻿module("modules.logic.investigate.view.InvestigateTipsView", package.seeall)
 
-slot0 = class("InvestigateTipsView", BaseView)
+local var_0_0 = class("InvestigateTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagewindowbg = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_windowbg")
-	slot0._simagepic = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_pic")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "root/#scroll_desc")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "root/#scroll_desc/viewport/content/#txt_dec")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagewindowbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_windowbg")
+	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_pic")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_desc")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "root/#scroll_desc/viewport/content/#txt_dec")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._elementId = slot0.viewParam.elementId
-	slot0._fragmentId = slot0.viewParam.fragmentId
-	slot0._txtdec.text = lua_chapter_map_fragment.configDict[slot0._fragmentId].content
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._elementId = arg_7_0.viewParam.elementId
+	arg_7_0._fragmentId = arg_7_0.viewParam.fragmentId
 
-	if InvestigateConfig.instance:getInvestigateClueInfoByElement(slot0._elementId) then
-		slot0._simagepic:LoadImage(slot2.mapRes)
+	local var_7_0 = lua_chapter_map_fragment.configDict[arg_7_0._fragmentId]
+
+	arg_7_0._txtdec.text = var_7_0.content
+
+	local var_7_1 = InvestigateConfig.instance:getInvestigateClueInfoByElement(arg_7_0._elementId)
+
+	if var_7_1 then
+		arg_7_0._simagepic:LoadImage(var_7_1.mapRes)
 	end
 
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, false)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Investigate.play_ui_molu_jlbn_open)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Investigate.play_ui_shuori_dreamsong_receive_open)
 end
 
-function slot0.onCloseFinish(slot0)
+function var_0_0.onCloseFinish(arg_9_0)
 	InvestigateController.instance:dispatchEvent(InvestigateEvent.ShowGetEffect)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

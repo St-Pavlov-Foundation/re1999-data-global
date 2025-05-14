@@ -1,185 +1,202 @@
-module("modules.logic.meilanni.view.MeilanniMapItem", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniMapItem", package.seeall)
 
-slot0 = class("MeilanniMapItem", ListScrollCellExtend)
+local var_0_0 = class("MeilanniMapItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_click")
-	slot0._btnstory = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_finish/btn_story")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "go_lock")
-	slot0._godoing = gohelper.findChild(slot0.viewGO, "go_doing")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "go_finish")
-	slot0._imagegrade = gohelper.findChildImage(slot0.viewGO, "image_grade")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_click")
+	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_finish/btn_story")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "go_lock")
+	arg_1_0._godoing = gohelper.findChild(arg_1_0.viewGO, "go_doing")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "go_finish")
+	arg_1_0._imagegrade = gohelper.findChildImage(arg_1_0.viewGO, "image_grade")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnstory:AddClickListener(slot0._btnstoryOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnstory:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnstory:RemoveClickListener()
 end
 
-function slot0._btnstoryOnClick(slot0)
-	uv0.playStoryList(slot0._mapIndex)
+function var_0_0._btnstoryOnClick(arg_4_0)
+	var_0_0.playStoryList(arg_4_0._mapIndex)
 end
 
-function slot0.playStoryList(slot0)
-	slot1 = {}
+function var_0_0.playStoryList(arg_5_0)
+	local var_5_0 = {}
 
-	for slot5, slot6 in ipairs(lua_activity108_story.configList) do
-		if slot6.bind == slot0 then
-			table.insert(slot1, slot6.story)
+	for iter_5_0, iter_5_1 in ipairs(lua_activity108_story.configList) do
+		if iter_5_1.bind == arg_5_0 then
+			table.insert(var_5_0, iter_5_1.story)
 		end
 	end
 
-	if not slot1 or #slot1 < 1 then
+	if not var_5_0 or #var_5_0 < 1 then
 		return
 	end
 
-	StoryController.instance:playStories(slot1)
+	StoryController.instance:playStories(var_5_0)
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._lockStatus then
-		slot0:_showLockToast(slot0._mapConfig)
+function var_0_0._btnclickOnClick(arg_6_0)
+	if arg_6_0._lockStatus then
+		arg_6_0:_showLockToast(arg_6_0._mapConfig)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
-	uv0.gotoMap(slot0._mapId)
+	var_0_0.gotoMap(arg_6_0._mapId)
 end
 
-function slot0.gotoMap(slot0)
-	if not MeilanniModel.instance:getMapInfo(slot0) or slot1:checkFinish() then
+function var_0_0.gotoMap(arg_7_0)
+	local var_7_0 = MeilanniModel.instance:getMapInfo(arg_7_0)
+
+	if not var_7_0 or var_7_0:checkFinish() then
 		MeilanniController.instance:openMeilanniEntrustView({
-			mapId = slot0
+			mapId = arg_7_0
 		})
 
 		return
 	end
 
 	MeilanniController.instance:openMeilanniView({
-		mapId = slot0
+		mapId = arg_7_0
 	})
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0._mapConfig = slot1
-	slot0._mapId = slot0._mapConfig.id
-	slot0._mapIndex = slot0._mapId - 100
+function var_0_0.ctor(arg_8_0, arg_8_1)
+	arg_8_0._mapConfig = arg_8_1
+	arg_8_0._mapId = arg_8_0._mapConfig.id
+	arg_8_0._mapIndex = arg_8_0._mapId - 100
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_9_0)
+	return
 end
 
-function slot0.updateLockStatus(slot0)
-	if slot0._needPlayUnlockAnim then
+function var_0_0.updateLockStatus(arg_10_0)
+	if arg_10_0._needPlayUnlockAnim then
 		return
 	end
 
-	gohelper.setActive(slot0._godoing, false)
-	gohelper.setActive(slot0._gofinish, false)
+	gohelper.setActive(arg_10_0._godoing, false)
+	gohelper.setActive(arg_10_0._gofinish, false)
 
-	slot1 = slot0._lockStatus
-	slot0._lockStatus = uv0.isLock(slot0._mapConfig)
+	local var_10_0 = arg_10_0._lockStatus
 
-	gohelper.setActive(slot0._golock, slot0._lockStatus)
-	gohelper.setActive(slot0._imagegrade.gameObject, false)
+	arg_10_0._lockStatus = var_0_0.isLock(arg_10_0._mapConfig)
 
-	if slot0._lockStatus then
+	gohelper.setActive(arg_10_0._golock, arg_10_0._lockStatus)
+	gohelper.setActive(arg_10_0._imagegrade.gameObject, false)
+
+	if arg_10_0._lockStatus then
 		return
 	end
 
-	if MeilanniModel.instance:getMapInfo(slot0._mapId) and slot2.highestScore > 0 then
-		gohelper.setActive(slot0._imagegrade.gameObject, true)
-		UISpriteSetMgr.instance:setMeilanniSprite(slot0._imagegrade, "bg_pingfen_xiao_" .. tostring(MeilanniConfig.instance:getScoreIndex(slot2.highestScore)))
-		gohelper.setActive(slot0._gofinish, true)
-		gohelper.setActive(slot0._godoing, false)
+	local var_10_1 = MeilanniModel.instance:getMapInfo(arg_10_0._mapId)
+
+	if var_10_1 and var_10_1.highestScore > 0 then
+		gohelper.setActive(arg_10_0._imagegrade.gameObject, true)
+
+		local var_10_2 = MeilanniConfig.instance:getScoreIndex(var_10_1.highestScore)
+
+		UISpriteSetMgr.instance:setMeilanniSprite(arg_10_0._imagegrade, "bg_pingfen_xiao_" .. tostring(var_10_2))
+		gohelper.setActive(arg_10_0._gofinish, true)
+		gohelper.setActive(arg_10_0._godoing, false)
 	else
-		gohelper.setActive(slot0._gofinish, false)
-		gohelper.setActive(slot0._godoing, true)
+		gohelper.setActive(arg_10_0._gofinish, false)
+		gohelper.setActive(arg_10_0._godoing, true)
 	end
 
-	if slot1 then
-		slot0._needPlayUnlockAnim = true
+	if var_10_0 then
+		arg_10_0._needPlayUnlockAnim = true
 	end
 
-	if slot0._needPlayUnlockAnim then
-		gohelper.setActive(slot0._golock, true)
-		TaskDispatcher.runDelay(slot0._playUnlockAnim, slot0, 0.5)
+	if arg_10_0._needPlayUnlockAnim then
+		gohelper.setActive(arg_10_0._golock, true)
+		TaskDispatcher.runDelay(arg_10_0._playUnlockAnim, arg_10_0, 0.5)
 	end
 end
 
-function slot0._playUnlockAnim(slot0)
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
+function var_0_0._playUnlockAnim(arg_11_0)
+	arg_11_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_11_0.viewGO)
 
-	slot0._animatorPlayer:Play("unlock", slot0._unlockDone, slot0)
+	arg_11_0._animatorPlayer:Play("unlock", arg_11_0._unlockDone, arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_unlock)
 end
 
-function slot0._unlockDone(slot0)
-	slot0._needPlayUnlockAnim = nil
+function var_0_0._unlockDone(arg_12_0)
+	arg_12_0._needPlayUnlockAnim = nil
 
-	gohelper.setActive(slot0._golock, false)
+	gohelper.setActive(arg_12_0._golock, false)
 end
 
-function slot0.isLock(slot0)
-	if slot0.preId <= 0 then
+function var_0_0.isLock(arg_13_0)
+	if arg_13_0.preId <= 0 then
 		return false
 	end
 
-	if MeilanniModel.instance:getMapInfo(slot0.id) then
+	if MeilanniModel.instance:getMapInfo(arg_13_0.id) then
 		return false
 	end
 
-	if slot0.onlineDay > 0 and ActivityModel.instance:getActMO(MeilanniEnum.activityId):getRealStartTimeStamp() + (slot0.onlineDay - 1) * 86400 - ServerTime.now() > 0 then
+	if arg_13_0.onlineDay > 0 and ActivityModel.instance:getActMO(MeilanniEnum.activityId):getRealStartTimeStamp() + (arg_13_0.onlineDay - 1) * 86400 - ServerTime.now() > 0 then
 		return true
 	end
 
-	return not MeilanniModel.instance:getMapInfo(slot0.preId) or slot2.highestScore <= 0
+	local var_13_0 = MeilanniModel.instance:getMapInfo(arg_13_0.preId)
+
+	return not var_13_0 or not (var_13_0.highestScore > 0)
 end
 
-function slot0._showLockToast(slot0, slot1)
-	if slot1.onlineDay > 0 then
-		if ActivityModel.instance:getActMO(MeilanniEnum.activityId):getRealStartTimeStamp() + (slot1.onlineDay - 1) * 86400 - ServerTime.now() > 86400 then
-			GameFacade.showToast(ToastEnum.MeilanniEntranceLock2, math.ceil(slot4 / 86400))
+function var_0_0._showLockToast(arg_14_0, arg_14_1)
+	if arg_14_1.onlineDay > 0 then
+		local var_14_0 = ActivityModel.instance:getActMO(MeilanniEnum.activityId):getRealStartTimeStamp() + (arg_14_1.onlineDay - 1) * 86400 - ServerTime.now()
+
+		if var_14_0 > 86400 then
+			GameFacade.showToast(ToastEnum.MeilanniEntranceLock2, math.ceil(var_14_0 / 86400))
 
 			return
-		elseif slot4 > 3600 then
-			GameFacade.showToast(ToastEnum.MeilanniEntranceLock3, math.ceil(slot4 / 3600))
+		elseif var_14_0 > 3600 then
+			GameFacade.showToast(ToastEnum.MeilanniEntranceLock3, math.ceil(var_14_0 / 3600))
 
 			return
-		elseif slot4 > 0 then
+		elseif var_14_0 > 0 then
 			GameFacade.showToast(ToastEnum.MeilanniEntranceLock4)
 
 			return
 		end
 	end
 
-	if slot1.preId <= 0 then
+	if arg_14_1.preId <= 0 then
 		return
 	end
 
-	if not MeilanniModel.instance:getMapInfo(slot1.preId) or slot2.highestScore <= 0 then
+	local var_14_1 = MeilanniModel.instance:getMapInfo(arg_14_1.preId)
+
+	if not var_14_1 or var_14_1.highestScore <= 0 then
 		GameFacade.showToast(ToastEnum.MeilanniEntranceLock5)
 	end
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_15_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._playUnlockAnim, slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._playUnlockAnim, arg_17_0)
 end
 
-return slot0
+return var_0_0

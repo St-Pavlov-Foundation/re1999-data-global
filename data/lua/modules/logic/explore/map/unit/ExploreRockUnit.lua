@@ -1,49 +1,49 @@
-module("modules.logic.explore.map.unit.ExploreRockUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreRockUnit", package.seeall)
 
-slot0 = class("ExploreRockUnit", ExploreItemUnit)
+local var_0_0 = class("ExploreRockUnit", ExploreItemUnit)
 
-function slot0.needInteractAnim(slot0)
+function var_0_0.needInteractAnim(arg_1_0)
 	return true
 end
 
-function slot0.setExitCallback(slot0, slot1, slot2)
-	if slot0._displayTr and slot0:isInFOV() and ExploreModel.instance:isHeroInControl(ExploreEnum.HeroLock.Spike) and ExploreModel.instance:isHeroInControl(ExploreEnum.HeroLock.Teleport) then
-		slot0._exitCallback = slot1
-		slot0._exitCallbackObj = slot2
+function var_0_0.setExitCallback(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_0._displayTr and arg_2_0:isInFOV() and ExploreModel.instance:isHeroInControl(ExploreEnum.HeroLock.Spike) and ExploreModel.instance:isHeroInControl(ExploreEnum.HeroLock.Teleport) then
+		arg_2_0._exitCallback = arg_2_1
+		arg_2_0._exitCallbackObj = arg_2_2
 	else
-		slot1(slot2)
+		arg_2_1(arg_2_2)
 	end
 end
 
-function slot0._releaseDisplayGo(slot0)
-	if slot0._exitCallback then
-		slot0._exitCallback(slot0._exitCallbackObj)
+function var_0_0._releaseDisplayGo(arg_3_0)
+	if arg_3_0._exitCallback then
+		arg_3_0._exitCallback(arg_3_0._exitCallbackObj)
 	end
 
-	slot0._exitCallback = nil
-	slot0._exitCallbackObj = nil
+	arg_3_0._exitCallback = nil
+	arg_3_0._exitCallbackObj = nil
 
-	uv0.super._releaseDisplayGo(slot0)
+	var_0_0.super._releaseDisplayGo(arg_3_0)
 end
 
-function slot0.onAnimEnd(slot0, slot1, slot2)
-	if slot1 == ExploreAnimEnum.AnimName.exit then
-		if slot0._exitCallback then
-			slot0._exitCallback(slot0._exitCallbackObj)
+function var_0_0.onAnimEnd(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == ExploreAnimEnum.AnimName.exit then
+		if arg_4_0._exitCallback then
+			arg_4_0._exitCallback(arg_4_0._exitCallbackObj)
 		end
 
-		slot0._exitCallback = nil
-		slot0._exitCallbackObj = nil
+		arg_4_0._exitCallback = nil
+		arg_4_0._exitCallbackObj = nil
 	end
 
-	uv0.super.onAnimEnd(slot0, slot1, slot2)
+	var_0_0.super.onAnimEnd(arg_4_0, arg_4_1, arg_4_2)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._exitCallback = nil
-	slot0._exitCallbackObj = nil
+function var_0_0.onDestroy(arg_5_0)
+	arg_5_0._exitCallback = nil
+	arg_5_0._exitCallbackObj = nil
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_5_0)
 end
 
-return slot0
+return var_0_0

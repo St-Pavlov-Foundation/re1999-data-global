@@ -1,60 +1,65 @@
-module("modules.logic.equip.view.EquipChooseView", package.seeall)
+﻿module("modules.logic.equip.view.EquipChooseView", package.seeall)
 
-slot0 = class("EquipChooseView", BaseView)
+local var_0_0 = class("EquipChooseView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._scrollequip = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_equip")
-	slot0._gostrengthenbtns = gohelper.findChild(slot0.viewGO, "topright/#go_strengthenbtns")
-	slot0._btnfastadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "topright/#go_strengthenbtns/fast/#btn_fastadd")
-	slot0._btnupgrade = gohelper.findChildButtonWithAudio(slot0.viewGO, "topright/#go_strengthenbtns/start/#btn_upgrade")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_equip")
+	arg_1_0._gostrengthenbtns = gohelper.findChild(arg_1_0.viewGO, "topright/#go_strengthenbtns")
+	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/#go_strengthenbtns/fast/#btn_fastadd")
+	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/#go_strengthenbtns/start/#btn_upgrade")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnfastadd:AddClickListener(slot0._btnfastaddOnClick, slot0)
-	slot0._btnupgrade:AddClickListener(slot0._btnupgradeOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
+	arg_2_0._btnupgrade:AddClickListener(arg_2_0._btnupgradeOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnfastadd:RemoveClickListener()
-	slot0._btnupgrade:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnfastadd:RemoveClickListener()
+	arg_3_0._btnupgrade:RemoveClickListener()
 end
 
-function slot0._btnfastaddOnClick(slot0)
+function var_0_0._btnfastaddOnClick(arg_4_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onStrengthenFast)
 end
 
-function slot0._btnupgradeOnClick(slot0)
+function var_0_0._btnupgradeOnClick(arg_5_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onStrengthenUpgrade)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
 	EquipChooseListModel.instance:setEquipList()
 end
 
-function slot0._refreshBtns(slot0)
+function var_0_0._refreshBtns(arg_8_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_10_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

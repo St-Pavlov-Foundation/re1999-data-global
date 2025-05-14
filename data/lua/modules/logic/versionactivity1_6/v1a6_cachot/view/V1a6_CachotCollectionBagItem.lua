@@ -1,124 +1,137 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionBagItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionBagItem", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionBagItem", ListScrollCellExtend)
+local var_0_0 = class("V1a6_CachotCollectionBagItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._simagecollection = gohelper.findChildSingleImage(slot0.viewGO, "#simage_collection")
-	slot0._imageframe = gohelper.findChildImage(slot0.viewGO, "#image_frame")
-	slot0._gogrid1 = gohelper.findChild(slot0.viewGO, "layout/#go_grid1")
-	slot0._gonone1 = gohelper.findChild(slot0.viewGO, "layout/#go_grid1/#go_none1")
-	slot0._goget1 = gohelper.findChildSingleImage(slot0.viewGO, "layout/#go_grid1/#go_get1")
-	slot0._simageicon1 = gohelper.findChildSingleImage(slot0.viewGO, "layout/#go_grid1/#go_get1/#simage_icon1")
-	slot0._gonone2 = gohelper.findChild(slot0.viewGO, "layout/#go_grid2/#go_none2")
-	slot0._gogrid2 = gohelper.findChild(slot0.viewGO, "layout/#go_grid2")
-	slot0._goget2 = gohelper.findChild(slot0.viewGO, "layout/#go_grid2/#go_get2")
-	slot0._simageicon2 = gohelper.findChildSingleImage(slot0.viewGO, "layout/#go_grid2/#go_get2/#simage_icon2")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_collection")
+	arg_1_0._imageframe = gohelper.findChildImage(arg_1_0.viewGO, "#image_frame")
+	arg_1_0._gogrid1 = gohelper.findChild(arg_1_0.viewGO, "layout/#go_grid1")
+	arg_1_0._gonone1 = gohelper.findChild(arg_1_0.viewGO, "layout/#go_grid1/#go_none1")
+	arg_1_0._goget1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "layout/#go_grid1/#go_get1")
+	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "layout/#go_grid1/#go_get1/#simage_icon1")
+	arg_1_0._gonone2 = gohelper.findChild(arg_1_0.viewGO, "layout/#go_grid2/#go_none2")
+	arg_1_0._gogrid2 = gohelper.findChild(arg_1_0.viewGO, "layout/#go_grid2")
+	arg_1_0._goget2 = gohelper.findChild(arg_1_0.viewGO, "layout/#go_grid2/#go_get2")
+	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "layout/#go_grid2/#go_get2/#simage_icon2")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._isSelect then
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._isSelect then
 		return
 	end
 
-	if slot0._clickCallBack then
-		slot0._clickCallBack(slot0._clickCallBackObj)
+	if arg_4_0._clickCallBack then
+		arg_4_0._clickCallBack(arg_4_0._clickCallBackObj)
 	else
-		slot0:defaultClickCallBack()
+		arg_4_0:defaultClickCallBack()
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, not slot1.isFake)
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0.viewGO, not arg_8_1.isFake)
 
-	if slot1.isFake then
+	if arg_8_1.isFake then
 		return
 	end
 
-	slot0._mo = slot1
+	arg_8_0._mo = arg_8_1
 
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot0._mo.cfgId) then
-		slot0:refreshEnchants(slot1)
-		UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imageframe, string.format("v1a6_cachot_img_collectionframe%s", slot1.showRare))
-		gohelper.setActive(slot0._gonew, slot0._mo.state == V1a6_CachotEnum.CollectionState.New)
-		slot0._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. slot1.icon))
+function var_0_0.refreshUI(arg_9_0)
+	local var_9_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_9_0._mo.cfgId)
+
+	if var_9_0 then
+		arg_9_0:refreshEnchants(var_9_0)
+		UISpriteSetMgr.instance:setV1a6CachotSprite(arg_9_0._imageframe, string.format("v1a6_cachot_img_collectionframe%s", var_9_0.showRare))
+
+		local var_9_1 = arg_9_0._mo.state
+
+		gohelper.setActive(arg_9_0._gonew, var_9_1 == V1a6_CachotEnum.CollectionState.New)
+		arg_9_0._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_9_0.icon))
 	end
 end
 
-function slot0.refreshEnchants(slot0, slot1)
-	gohelper.setActive(slot0._gogrid1, slot1 and slot1.holeNum >= 1)
-	gohelper.setActive(slot0._gogrid2, slot1 and slot1.holeNum >= 2)
+function var_0_0.refreshEnchants(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._gogrid1, arg_10_1 and arg_10_1.holeNum >= 1)
+	gohelper.setActive(arg_10_0._gogrid2, arg_10_1 and arg_10_1.holeNum >= 2)
 
-	if not slot1 or slot1.holeNum <= 0 then
+	if not arg_10_1 or not (arg_10_1.holeNum > 0) then
 		return
 	end
 
-	slot0:refreshSingleHole(V1a6_CachotEnum.CollectionHole.Left)
-	slot0:refreshSingleHole(V1a6_CachotEnum.CollectionHole.Right)
+	arg_10_0:refreshSingleHole(V1a6_CachotEnum.CollectionHole.Left)
+	arg_10_0:refreshSingleHole(V1a6_CachotEnum.CollectionHole.Right)
 end
 
-function slot0.refreshSingleHole(slot0, slot1)
-	if slot0._mo and slot0._mo:getEnchantId(slot1) and slot2 ~= 0 then
-		gohelper.setActive(slot0["_gonone" .. slot1], false)
-		gohelper.setActive(slot0["_goget" .. slot1], true)
+function var_0_0.refreshSingleHole(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0._mo and arg_11_0._mo:getEnchantId(arg_11_1)
 
-		slot4 = V1a6_CachotModel.instance:getRogueInfo() and slot3:getCollectionByUid(slot2)
+	if var_11_0 and var_11_0 ~= 0 then
+		gohelper.setActive(arg_11_0["_gonone" .. arg_11_1], false)
+		gohelper.setActive(arg_11_0["_goget" .. arg_11_1], true)
 
-		if V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot4 and slot4.cfgId) then
-			slot0["_simageicon" .. slot1]:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. slot6.icon))
+		local var_11_1 = V1a6_CachotModel.instance:getRogueInfo()
+		local var_11_2 = var_11_1 and var_11_1:getCollectionByUid(var_11_0)
+		local var_11_3 = var_11_2 and var_11_2.cfgId
+		local var_11_4 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_11_3)
+
+		if var_11_4 then
+			arg_11_0["_simageicon" .. arg_11_1]:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_11_4.icon))
 		end
 	else
-		gohelper.setActive(slot0["_gonone" .. slot1], true)
-		gohelper.setActive(slot0["_goget" .. slot1], false)
+		gohelper.setActive(arg_11_0["_gonone" .. arg_11_1], true)
+		gohelper.setActive(arg_11_0["_goget" .. arg_11_1], false)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.onSelect(arg_12_0, arg_12_1)
+	arg_12_0._isSelect = arg_12_1
 
-	gohelper.setActive(slot0._goselect, slot1)
+	gohelper.setActive(arg_12_0._goselect, arg_12_1)
 end
 
-function slot0.setClickCallBack(slot0, slot1, slot2)
-	slot0._clickCallBack = slot1
-	slot0._clickCallBackObj = slot2
+function var_0_0.setClickCallBack(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._clickCallBack = arg_13_1
+	arg_13_0._clickCallBackObj = arg_13_2
 end
 
-function slot0.defaultClickCallBack(slot0)
-	V1a6_CachotCollectionBagController.instance:onSelectBagItemByIndex(slot0._index)
+function var_0_0.defaultClickCallBack(arg_14_0)
+	V1a6_CachotCollectionBagController.instance:onSelectBagItemByIndex(arg_14_0._index)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._clickCallBack = nil
-	slot0._clickCallBackObj = nil
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._clickCallBack = nil
+	arg_15_0._clickCallBackObj = nil
 
-	slot0._simagecollection:UnLoadImage()
+	arg_15_0._simagecollection:UnLoadImage()
 end
 
-return slot0
+return var_0_0

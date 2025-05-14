@@ -1,67 +1,70 @@
-module("modules.logic.versionactivity1_4.act136.model.Activity136Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.model.Activity136Model", package.seeall)
 
-slot0 = class("Activity136Model", BaseModel)
+local var_0_0 = class("Activity136Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	slot0.curActivity136Id = slot1.activityId
-	slot0.alreadyReceivedCharacterId = slot1.selectHeroId
+function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
+	arg_3_0.curActivity136Id = arg_3_1.activityId
+	arg_3_0.alreadyReceivedCharacterId = arg_3_1.selectHeroId
 
 	Activity136Controller.instance:dispatchEvent(Activity136Event.ActivityDataUpdate)
 end
 
-function slot0.isActivity136InOpen(slot0, slot1)
-	slot2 = false
+function var_0_0.isActivity136InOpen(arg_4_0, arg_4_1)
+	local var_4_0 = false
+	local var_4_1 = arg_4_0:getCurActivity136Id()
 
-	if slot0:getCurActivity136Id() then
-		slot4, slot5, slot6 = ActivityHelper.getActivityStatusAndToast(slot3)
+	if var_4_1 then
+		local var_4_2, var_4_3, var_4_4 = ActivityHelper.getActivityStatusAndToast(var_4_1)
 
-		if slot4 == ActivityEnum.ActivityStatus.Normal then
-			slot2 = true
-		elseif slot5 and slot1 then
-			GameFacade.showToastWithTableParam(slot5, slot6)
+		if var_4_2 == ActivityEnum.ActivityStatus.Normal then
+			var_4_0 = true
+		elseif var_4_3 and arg_4_1 then
+			GameFacade.showToastWithTableParam(var_4_3, var_4_4)
 		end
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.hasReceivedCharacter(slot0)
-	return slot0:getAlreadyReceivedCharacterId() and slot1 ~= 0
+function var_0_0.hasReceivedCharacter(arg_5_0)
+	local var_5_0 = arg_5_0:getAlreadyReceivedCharacterId()
+
+	return var_5_0 and var_5_0 ~= 0
 end
 
-function slot0.isShowRedDot(slot0)
-	slot1 = false
+function var_0_0.isShowRedDot(arg_6_0)
+	local var_6_0 = false
 
-	if slot0:isActivity136InOpen() then
-		slot1 = not slot0:hasReceivedCharacter()
+	if arg_6_0:isActivity136InOpen() then
+		var_6_0 = not arg_6_0:hasReceivedCharacter()
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.getAlreadyReceivedCharacterId(slot0)
-	return slot0.alreadyReceivedCharacterId
+function var_0_0.getAlreadyReceivedCharacterId(arg_7_0)
+	return arg_7_0.alreadyReceivedCharacterId
 end
 
-function slot0.getCurActivity136Id(slot0)
-	return slot0.curActivity136Id
+function var_0_0.getCurActivity136Id(arg_8_0)
+	return arg_8_0.curActivity136Id
 end
 
-function slot0.clear(slot0)
-	slot0.curActivity136Id = nil
-	slot0.alreadyReceivedCharacterId = 0
+function var_0_0.clear(arg_9_0)
+	arg_9_0.curActivity136Id = nil
+	arg_9_0.alreadyReceivedCharacterId = 0
 
-	uv0.super.clear(slot0)
+	var_0_0.super.clear(arg_9_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

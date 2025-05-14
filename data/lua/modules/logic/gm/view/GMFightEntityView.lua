@@ -1,31 +1,34 @@
-module("modules.logic.gm.view.GMFightEntityView", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntityView", package.seeall)
 
-slot0 = class("GMFightEntityView", BaseView)
-slot0.Evt_OnGetEntityDetailInfos = GameUtil.getEventId()
-slot0.Evt_SelectHero = GameUtil.getEventId()
+local var_0_0 = class("GMFightEntityView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
+var_0_0.Evt_OnGetEntityDetailInfos = GameUtil.getEventId()
+var_0_0.Evt_SelectHero = GameUtil.getEventId()
+
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
 	GMFightEntityModel.instance:onOpen()
 
-	if GMFightEntityModel.instance:getList()[1] then
-		slot0.viewContainer.entityListView:setSelect(slot1)
+	local var_4_0 = GMFightEntityModel.instance:getList()[1]
+
+	if var_4_0 then
+		arg_4_0.viewContainer.entityListView:setSelect(var_4_0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
 	ViewMgr.instance:openView(ViewName.GMToolView)
 end
 
-return slot0
+return var_0_0

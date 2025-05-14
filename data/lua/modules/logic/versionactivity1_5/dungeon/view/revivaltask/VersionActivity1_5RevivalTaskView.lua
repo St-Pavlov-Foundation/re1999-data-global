@@ -1,56 +1,61 @@
-module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5RevivalTaskView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5RevivalTaskView", package.seeall)
 
-slot0 = class("VersionActivity1_5RevivalTaskView", BaseView)
+local var_0_0 = class("VersionActivity1_5RevivalTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goheroTabList = gohelper.findChild(slot0.viewGO, "#go_heroTabList")
-	slot0._goTabItem = gohelper.findChild(slot0.viewGO, "#go_heroTabList/#go_TabItem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goheroTabList = gohelper.findChild(arg_1_0.viewGO, "#go_heroTabList")
+	arg_1_0._goTabItem = gohelper.findChild(arg_1_0.viewGO, "#go_heroTabList/#go_TabItem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goTabItem, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._goTabItem, false)
 
-	slot0.heroTabItemList = {}
+	arg_4_0.heroTabItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	for slot5, slot6 in ipairs(VersionActivity1_5RevivalTaskModel.instance:getTaskMoList()) do
-		table.insert(slot0.heroTabItemList, VersionActivity1_5HeroTabItem.createItem(gohelper.cloneInPlace(slot0._goTabItem), slot6))
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = false
 
-		if not false and slot6:isUnlock() then
-			slot1 = true
+	for iter_6_0, iter_6_1 in ipairs(VersionActivity1_5RevivalTaskModel.instance:getTaskMoList()) do
+		local var_6_1 = VersionActivity1_5HeroTabItem.createItem(gohelper.cloneInPlace(arg_6_0._goTabItem), iter_6_1)
 
-			VersionActivity1_5RevivalTaskModel.instance:setSelectHeroTaskId(slot6.id)
+		table.insert(arg_6_0.heroTabItemList, var_6_1)
+
+		if not var_6_0 and iter_6_1:isUnlock() then
+			var_6_0 = true
+
+			VersionActivity1_5RevivalTaskModel.instance:setSelectHeroTaskId(iter_6_1.id)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
 	VersionActivity1_5RevivalTaskModel.instance:clearSelectTaskId()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.heroTabItemList) do
-		slot5:destroy()
+function var_0_0.onDestroyView(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.heroTabItemList) do
+		iter_8_1:destroy()
 	end
 
-	slot0.heroTabItemList = nil
+	arg_8_0.heroTabItemList = nil
 end
 
-return slot0
+return var_0_0

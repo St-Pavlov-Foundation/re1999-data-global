@@ -1,40 +1,45 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonViewContainer", package.seeall)
 
-slot0 = class("Act183DungeonViewContainer", BaseViewContainer)
+local var_0_0 = class("Act183DungeonViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
 
-	slot0._mainView = Act183DungeonView.New()
+	arg_1_0._mainView = Act183DungeonView.New()
 
-	table.insert(slot1, slot0._mainView)
-	table.insert(slot1, Act183DungeonView_Animation.New())
-	table.insert(slot1, Act183DungeonView_Detail.New())
+	table.insert(var_1_0, arg_1_0._mainView)
+	table.insert(var_1_0, Act183DungeonView_Animation.New())
+	table.insert(var_1_0, Act183DungeonView_Detail.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = arg_2_0:_getHelpId()
+
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
-			slot0:_getHelpId() ~= nil
-		}, slot2)
+			var_2_0 ~= nil
+		}, var_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0._getHelpId(slot0)
-	if HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Act183EnterDungeon) and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Act183Repress) then
+function var_0_0._getHelpId(arg_3_0)
+	local var_3_0 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Act183EnterDungeon)
+	local var_3_1 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Act183Repress)
+
+	if var_3_0 and var_3_1 then
 		return HelpEnum.HelpId.Act183DungeonAndRepress
-	elseif slot2 ~= slot1 then
-		if slot2 then
+	elseif var_3_1 ~= var_3_0 then
+		if var_3_1 then
 			return HelpEnum.HelpId.Act183Repress
 		else
 			return HelpEnum.HelpId.Act183EnterDungeon
@@ -42,18 +47,20 @@ function slot0._getHelpId(slot0)
 	end
 end
 
-function slot0.getMainView(slot0)
-	return slot0._mainView
+function var_0_0.getMainView(arg_4_0)
+	return arg_4_0._mainView
 end
 
-function slot0.refreshHelpId(slot0)
-	if slot0:_getHelpId() ~= nil then
-		slot0.navigateView:setHelpId(slot1)
+function var_0_0.refreshHelpId(arg_5_0)
+	local var_5_0 = arg_5_0:_getHelpId()
+
+	if var_5_0 ~= nil then
+		arg_5_0.navigateView:setHelpId(var_5_0)
 	end
 end
 
-function slot0.onContainerInit(slot0)
-	slot0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, slot0.refreshHelpId, slot0)
+function var_0_0.onContainerInit(arg_6_0)
+	arg_6_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_6_0.refreshHelpId, arg_6_0)
 end
 
-return slot0
+return var_0_0

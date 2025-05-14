@@ -1,20 +1,20 @@
-module("modules.logic.versionactivity2_1.lanshoupa.model.LanShouPaStoryMO", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.model.LanShouPaStoryMO", package.seeall)
 
-slot0 = pureTable("LanShouPaStoryMO")
+local var_0_0 = pureTable("LanShouPaStoryMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot2.id or slot1
-	slot0.index = slot1
-	slot0.storyId = slot2.id
-	slot0.config = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_2.id or arg_1_1
+	arg_1_0.index = arg_1_1
+	arg_1_0.storyId = arg_1_2.id
+	arg_1_0.config = arg_1_2
 end
 
-function slot0.isLocked(slot0)
-	if StoryModel.instance:isStoryHasPlayed(slot0.storyId) then
+function var_0_0.isLocked(arg_2_0)
+	if StoryModel.instance:isStoryHasPlayed(arg_2_0.storyId) then
 		return false
 	end
 
 	return true
 end
 
-return slot0
+return var_0_0

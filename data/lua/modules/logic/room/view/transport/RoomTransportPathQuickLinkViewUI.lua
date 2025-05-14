@@ -1,153 +1,178 @@
-module("modules.logic.room.view.transport.RoomTransportPathQuickLinkViewUI", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportPathQuickLinkViewUI", package.seeall)
 
-slot0 = class("RoomTransportPathQuickLinkViewUI", BaseView)
+local var_0_0 = class("RoomTransportPathQuickLinkViewUI", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gomapui = gohelper.findChild(slot0.viewGO, "go_mapui")
-	slot0._gomapuiitem = gohelper.findChild(slot0.viewGO, "go_mapui/go_quickuiitem")
-	slot0._gomapuiTrs = slot0._gomapui.transform
-	slot0._uiitemTBList = {
-		slot0:_createTB(slot0._gomapuiitem)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gomapui = gohelper.findChild(arg_4_0.viewGO, "go_mapui")
+	arg_4_0._gomapuiitem = gohelper.findChild(arg_4_0.viewGO, "go_mapui/go_quickuiitem")
+	arg_4_0._gomapuiTrs = arg_4_0._gomapui.transform
+	arg_4_0._uiitemTBList = {
+		arg_4_0:_createTB(arg_4_0._gomapuiitem)
 	}
 
-	gohelper.setActive(slot0._gomapuiitem, false)
+	gohelper.setActive(arg_4_0._gomapuiitem, false)
 
-	slot0._isLinkFinsh = true
+	arg_4_0._isLinkFinsh = true
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._quickLinkMO = RoomTransportQuickLinkMO.New()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._quickLinkMO = RoomTransportQuickLinkMO.New()
 
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
+	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_6_0._cameraTransformUpdate, arg_6_0)
 
-	if slot0.viewContainer then
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportPathSelectLineItem, slot0._onSelectLineItem, slot0)
+	if arg_6_0.viewContainer then
+		arg_6_0:addEventCb(arg_6_0.viewContainer, RoomEvent.TransportPathSelectLineItem, arg_6_0._onSelectLineItem, arg_6_0)
 	end
 
-	slot0._quickLinkMO:init()
-	slot0:startWaitRunDelayTask()
+	arg_6_0._quickLinkMO:init()
+	arg_6_0:startWaitRunDelayTask()
 end
 
-function slot0.onClose(slot0)
-	slot0.__hasWaitRunDelayTask_ = false
+function var_0_0.onClose(arg_7_0)
+	arg_7_0.__hasWaitRunDelayTask_ = false
 
-	TaskDispatcher.cancelTask(slot0.__onWaitRunDelayTask_, slot0)
+	TaskDispatcher.cancelTask(arg_7_0.__onWaitRunDelayTask_, arg_7_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-function slot0._cameraTransformUpdate(slot0)
-	slot0:_refreshItemUIPos()
+function var_0_0._cameraTransformUpdate(arg_9_0)
+	arg_9_0:_refreshItemUIPos()
 end
 
-function slot0._onSelectLineItem(slot0, slot1)
-	if slot1 == nil then
+function var_0_0._onSelectLineItem(arg_10_0, arg_10_1)
+	if arg_10_1 == nil then
 		return
 	end
 
-	if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot1.fromType, slot1.toType) and slot2:isLinkFinish() then
-		slot0._isLinkFinsh = true
+	local var_10_0 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_10_1.fromType, arg_10_1.toType)
+
+	if var_10_0 and var_10_0:isLinkFinish() then
+		arg_10_0._isLinkFinsh = true
 	else
-		slot0._isLinkFinsh = false
+		arg_10_0._isLinkFinsh = false
 
-		slot0._quickLinkMO:findPath(slot1.fromType, slot1.toType, true)
+		arg_10_0._quickLinkMO:findPath(arg_10_1.fromType, arg_10_1.toType, true)
 	end
 
-	slot0:startWaitRunDelayTask()
+	arg_10_0:startWaitRunDelayTask()
 end
 
-function slot0.startWaitRunDelayTask(slot0)
-	if not slot0.__hasWaitRunDelayTask_ then
-		slot0.__hasWaitRunDelayTask_ = true
+function var_0_0.startWaitRunDelayTask(arg_11_0)
+	if not arg_11_0.__hasWaitRunDelayTask_ then
+		arg_11_0.__hasWaitRunDelayTask_ = true
 
-		TaskDispatcher.runDelay(slot0.__onWaitRunDelayTask_, slot0, 0.001)
-	end
-end
-
-function slot0.__onWaitRunDelayTask_(slot0)
-	slot0.__hasWaitRunDelayTask_ = false
-
-	slot0:_refreshItemList()
-	slot0:_refreshItemUIPos()
-end
-
-function slot0._createTB(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goTrs = slot1.transform
-	slot2._txtquick = gohelper.findChildText(slot1, "txt_quick")
-
-	return slot2
-end
-
-function slot0._refreshTB(slot0, slot1, slot2, slot3)
-	if slot1.searchIndex ~= slot2.searchIndex then
-		slot1.searchIndex = slot2.searchIndex
-		slot1._txtquick.text = slot2.searchIndex
-	end
-
-	if slot1.hexPoint == nil or slot1.hexPoint ~= slot3 then
-		slot1.hexPoint = slot3
-		slot4, slot5 = HexMath.hexXYToPosXY(slot3.x, slot3.y, RoomBlockEnum.BlockSize)
-		slot1.worldPos = Vector3(slot4, 0, slot5)
+		TaskDispatcher.runDelay(arg_11_0.__onWaitRunDelayTask_, arg_11_0, 0.001)
 	end
 end
 
-function slot0._refreshItemList(slot0)
-	slot1 = slot0._quickLinkMO:getNodeList()
-	slot2 = 0
+function var_0_0.__onWaitRunDelayTask_(arg_12_0)
+	arg_12_0.__hasWaitRunDelayTask_ = false
 
-	if not slot0._isLinkFinsh and slot1 and #slot1 > 0 then
-		slot3 = RoomMapHexPointModel.instance
-		slot4 = RoomMapModel.instance
+	arg_12_0:_refreshItemList()
+	arg_12_0:_refreshItemUIPos()
+end
 
-		for slot8, slot9 in ipairs(slot1) do
-			if not slot0._uiitemTBList[slot2 + 1] then
-				slot0._uiitemTBList[slot2] = slot0:_createTB(gohelper.cloneInPlace(slot0._gomapuiitem))
+function var_0_0._createTB(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getUserDataTb_()
+
+	var_13_0.go = arg_13_1
+	var_13_0.goTrs = arg_13_1.transform
+	var_13_0._txtquick = gohelper.findChildText(arg_13_1, "txt_quick")
+
+	return var_13_0
+end
+
+function var_0_0._refreshTB(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if arg_14_1.searchIndex ~= arg_14_2.searchIndex then
+		arg_14_1.searchIndex = arg_14_2.searchIndex
+		arg_14_1._txtquick.text = arg_14_2.searchIndex
+	end
+
+	if arg_14_1.hexPoint == nil or arg_14_1.hexPoint ~= arg_14_3 then
+		arg_14_1.hexPoint = arg_14_3
+
+		local var_14_0, var_14_1 = HexMath.hexXYToPosXY(arg_14_3.x, arg_14_3.y, RoomBlockEnum.BlockSize)
+
+		arg_14_1.worldPos = Vector3(var_14_0, 0, var_14_1)
+	end
+end
+
+function var_0_0._refreshItemList(arg_15_0)
+	local var_15_0 = arg_15_0._quickLinkMO:getNodeList()
+	local var_15_1 = 0
+
+	if not arg_15_0._isLinkFinsh and var_15_0 and #var_15_0 > 0 then
+		local var_15_2 = RoomMapHexPointModel.instance
+		local var_15_3 = RoomMapModel.instance
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			var_15_1 = var_15_1 + 1
+
+			local var_15_4 = arg_15_0._uiitemTBList[var_15_1]
+
+			if not var_15_4 then
+				var_15_4 = arg_15_0:_createTB(gohelper.cloneInPlace(arg_15_0._gomapuiitem))
+				arg_15_0._uiitemTBList[var_15_1] = var_15_4
 			end
 
-			slot0:_refreshTB(slot10, slot9, slot9.hexPoint)
+			arg_15_0:_refreshTB(var_15_4, iter_15_1, iter_15_1.hexPoint)
 		end
 	end
 
-	for slot6 = 1, #slot0._uiitemTBList do
-		if slot0._uiitemTBList[slot6].isActive ~= (slot6 <= slot2) then
-			slot7.isActive = slot8
+	for iter_15_2 = 1, #arg_15_0._uiitemTBList do
+		local var_15_5 = arg_15_0._uiitemTBList[iter_15_2]
+		local var_15_6 = iter_15_2 <= var_15_1
 
-			gohelper.setActive(slot7.go, slot8)
-		end
-	end
-end
+		if var_15_5.isActive ~= var_15_6 then
+			var_15_5.isActive = var_15_6
 
-function slot0._refreshItemUIPos(slot0)
-	for slot4 = 1, #slot0._uiitemTBList do
-		if slot0._uiitemTBList[slot4].isActive then
-			slot0:_setUIPos(slot5.worldPos, slot5.goTrs, slot0._gomapuiTrs, 0.12)
+			gohelper.setActive(var_15_5.go, var_15_6)
 		end
 	end
 end
 
-function slot0._setUIPos(slot0, slot1, slot2, slot3, slot4)
-	slot5 = RoomBendingHelper.worldToBendingSimple(slot1)
-	slot9 = recthelper.worldPosToAnchorPos(Vector3(slot5.x, slot5.y + (slot4 or 0.12), slot5.z), slot3)
+function var_0_0._refreshItemUIPos(arg_16_0)
+	for iter_16_0 = 1, #arg_16_0._uiitemTBList do
+		local var_16_0 = arg_16_0._uiitemTBList[iter_16_0]
 
-	recthelper.setAnchor(slot2, slot9.x, slot9.y)
+		if var_16_0.isActive then
+			arg_16_0:_setUIPos(var_16_0.worldPos, var_16_0.goTrs, arg_16_0._gomapuiTrs, 0.12)
+		end
+	end
 end
 
-return slot0
+function var_0_0._setUIPos(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = RoomBendingHelper.worldToBendingSimple(arg_17_1)
+	local var_17_1 = var_17_0.x
+	local var_17_2 = var_17_0.z
+
+	arg_17_4 = arg_17_4 or 0.12
+
+	local var_17_3 = Vector3(var_17_1, var_17_0.y + arg_17_4, var_17_2)
+	local var_17_4 = recthelper.worldPosToAnchorPos(var_17_3, arg_17_3)
+
+	recthelper.setAnchor(arg_17_2, var_17_4.x, var_17_4.y)
+end
+
+return var_0_0

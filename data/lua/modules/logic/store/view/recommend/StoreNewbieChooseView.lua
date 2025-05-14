@@ -1,107 +1,120 @@
-module("modules.logic.store.view.recommend.StoreNewbieChooseView", package.seeall)
+﻿module("modules.logic.store.view.recommend.StoreNewbieChooseView", package.seeall)
 
-slot0 = class("StoreNewbieChooseView", StoreRecommendBaseSubView)
+local var_0_0 = class("StoreNewbieChooseView", StoreRecommendBaseSubView)
 
-function slot1(slot0)
-	slot2, slot3 = PayModel.instance:getProductOriginPriceNum(slot0)
-	slot4 = ""
+local function var_0_1(arg_1_0)
+	local var_1_0 = PayModel.instance:getProductOriginPriceSymbol(arg_1_0)
+	local var_1_1, var_1_2 = PayModel.instance:getProductOriginPriceNum(arg_1_0)
+	local var_1_3 = ""
 
-	if string.nilorempty(PayModel.instance:getProductOriginPriceSymbol(slot0)) then
-		slot5 = string.reverse(slot3)
-		slot6 = string.len(slot5) - string.find(slot5, "%d") + 1
+	if string.nilorempty(var_1_0) then
+		local var_1_4 = string.reverse(var_1_2)
+		local var_1_5 = string.find(var_1_4, "%d")
+		local var_1_6 = string.len(var_1_4) - var_1_5 + 1
+		local var_1_7 = string.sub(var_1_2, var_1_6 + 1, string.len(var_1_2))
 
-		return string.format("%s<size=60>%s</size>", string.sub(slot3, 1, slot6), string.sub(slot3, slot6 + 1, string.len(slot3)))
+		var_1_2 = string.sub(var_1_2, 1, var_1_6)
+
+		return string.format("%s<size=60>%s</size>", var_1_2, var_1_7)
 	else
-		return string.format("<size=60>%s</size>%s", slot1, slot3)
+		return string.format("<size=60>%s</size>%s", var_1_0, var_1_2)
 	end
 end
 
-slot2 = 3
-slot3 = 3
-slot4 = {
+local var_0_2 = 3
+local var_0_3 = 3
+local var_0_4 = {
 	3082,
 	3020,
 	3076
 }
-slot5 = {
-	[3020.0] = 105,
-	[3076.0] = 103,
-	[3082.0] = 104
+local var_0_5 = {
+	[3020] = 105,
+	[3076] = 103,
+	[3082] = 104
 }
-slot6 = 10170
+local var_0_6 = 10170
 
-function slot0.onInitView(slot0)
-	slot0._goNewbieChar1 = gohelper.findChild(slot0.viewGO, "recommend/anibg/#simage_char1")
-	slot0._goNewbieChar2 = gohelper.findChild(slot0.viewGO, "recommend/anibg/#simage_char2")
-	slot0._goNewbieChar3 = gohelper.findChild(slot0.viewGO, "recommend/anibg/#simage_char3")
-	slot0._charAnim = gohelper.findChild(slot0.viewGO, "recommend/anibg"):GetComponent(typeof(UnityEngine.Animation))
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._goNewbieChar1 = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg/#simage_char1")
+	arg_2_0._goNewbieChar2 = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg/#simage_char2")
+	arg_2_0._goNewbieChar3 = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg/#simage_char3")
+	arg_2_0._charAnim = gohelper.findChild(arg_2_0.viewGO, "recommend/anibg"):GetComponent(typeof(UnityEngine.Animation))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btn:AddClickListener(slot0._onClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btn:AddClickListener(arg_3_0._onClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btn:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btn:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtNum = gohelper.findChildText(slot0.viewGO, "recommend/Buy/txt_Num")
-	slot0._txtNum.text = uv0(StoreEnum.NewbiePackId)
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(gohelper.findChild(slot0.viewGO, "recommend"))
-	slot0._btn = gohelper.getClickWithAudio(slot0.viewGO)
-	slot0._newbieCharGoList = slot0:getUserDataTb_()
-	slot0._newbieCharGoList[1] = slot0._goNewbieChar3
-	slot0._newbieCharGoList[2] = slot0._goNewbieChar2
-	slot0._newbieCharGoList[3] = slot0._goNewbieChar1
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._txtNum = gohelper.findChildText(arg_5_0.viewGO, "recommend/Buy/txt_Num")
+	arg_5_0._txtNum.text = var_0_1(StoreEnum.NewbiePackId)
+	arg_5_0._animator = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "recommend")
+
+	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(var_5_0)
+	arg_5_0._btn = gohelper.getClickWithAudio(arg_5_0.viewGO)
+	arg_5_0._newbieCharGoList = arg_5_0:getUserDataTb_()
+	arg_5_0._newbieCharGoList[1] = arg_5_0._goNewbieChar3
+	arg_5_0._newbieCharGoList[2] = arg_5_0._goNewbieChar2
+	arg_5_0._newbieCharGoList[3] = arg_5_0._goNewbieChar1
 end
 
-function slot0.onOpen(slot0)
-	StoreRecommendBaseSubView.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
+	StoreRecommendBaseSubView.onOpen(arg_6_0)
 	StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, false)
 
-	slot0._curCharIdx = 0
+	arg_6_0._curCharIdx = 0
 
-	slot0:_toNextChar()
-	slot0._charAnim:Play()
+	arg_6_0:_toNextChar()
+	arg_6_0._charAnim:Play()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._toNextChar, slot0)
-	StoreRecommendBaseSubView.onClose(slot0)
-	slot0._charAnim:Stop()
+function var_0_0.onClose(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0._toNextChar, arg_7_0)
+	StoreRecommendBaseSubView.onClose(arg_7_0)
+	arg_7_0._charAnim:Stop()
 	StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, true)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0._toNextChar(slot0)
-	if uv0 <= slot0._curCharIdx then
-		slot0._curCharIdx = 0
+function var_0_0._toNextChar(arg_9_0)
+	if arg_9_0._curCharIdx >= var_0_2 then
+		arg_9_0._curCharIdx = 0
 	end
 
-	slot0._curCharIdx = slot0._curCharIdx + 1
+	arg_9_0._curCharIdx = arg_9_0._curCharIdx + 1
 
-	if slot0._curCharIdx == uv0 then
+	if arg_9_0._curCharIdx == var_0_2 then
 		StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, true)
 	end
 
-	slot1 = slot0._newbieCharGoList[slot0._curCharIdx]
-	slot5 = HeroConfig.instance:getHeroCO(uv1[slot0._curCharIdx])
-	gohelper.findChildText(slot1, "name/image_NameBG/#txt_Name").text = slot5.name
+	local var_9_0 = arg_9_0._newbieCharGoList[arg_9_0._curCharIdx]
+	local var_9_1 = var_0_4[arg_9_0._curCharIdx]
+	local var_9_2 = gohelper.findChildText(var_9_0, "name/image_NameBG/#txt_Name")
+	local var_9_3 = gohelper.findChildImage(var_9_0, "name/#image_Attr")
+	local var_9_4 = HeroConfig.instance:getHeroCO(var_9_1)
 
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot1, "name/#image_Attr"), "lssx_" .. slot5.career)
-	TaskDispatcher.runDelay(slot0._toNextChar, slot0, uv2)
+	var_9_2.text = var_9_4.name
+
+	UISpriteSetMgr.instance:setCommonSprite(var_9_3, "lssx_" .. var_9_4.career)
+	TaskDispatcher.runDelay(arg_9_0._toNextChar, arg_9_0, var_0_3)
 end
 
-function slot0._onClick(slot0)
-	GameFacade.jumpByAdditionParam(uv0 .. "#" .. StoreEnum.NewbiePackId)
+function var_0_0._onClick(arg_10_0)
+	GameFacade.jumpByAdditionParam(var_0_6 .. "#" .. StoreEnum.NewbiePackId)
 	AudioMgr.instance:trigger(2000001)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
@@ -110,8 +123,8 @@ function slot0._onClick(slot0)
 	})
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._toNextChar, slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._toNextChar, arg_11_0)
 end
 
-return slot0
+return var_0_0

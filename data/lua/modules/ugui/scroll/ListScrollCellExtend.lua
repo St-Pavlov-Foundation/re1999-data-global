@@ -1,49 +1,57 @@
-module("modules.ugui.scroll.ListScrollCellExtend", package.seeall)
+﻿module("modules.ugui.scroll.ListScrollCellExtend", package.seeall)
 
-slot0 = class("ListScrollCellExtend", ListScrollCell)
+local var_0_0 = class("ListScrollCellExtend", ListScrollCell)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_4_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_5_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_6_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_7_0, arg_7_1)
+	arg_7_0.viewGO = arg_7_1
 
-	slot0:onInitView()
+	arg_7_0:onInitView()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
-	slot0:_editableAddEvents()
+function var_0_0.addEventListeners(arg_8_0)
+	arg_8_0:addEvents()
+	arg_8_0:_editableAddEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
-	slot0:_editableRemoveEvents()
+function var_0_0.removeEventListeners(arg_9_0)
+	arg_9_0:removeEvents()
+	arg_9_0:_editableRemoveEvents()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyView()
+function var_0_0.onDestroy(arg_12_0)
+	arg_12_0:onDestroyView()
 end
 
-return slot0
+return var_0_0

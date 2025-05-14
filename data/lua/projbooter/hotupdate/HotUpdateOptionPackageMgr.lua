@@ -1,192 +1,213 @@
-module("projbooter.hotupdate.HotUpdateOptionPackageMgr", package.seeall)
+﻿module("projbooter.hotupdate.HotUpdateOptionPackageMgr", package.seeall)
 
-slot0 = class("HotUpdateOptionPackageMgr")
-slot0.EnableEditorDebug = false
-slot1 = "HotUpdateOptionPackageMgr_OptionPackageNamesKey"
+local var_0_0 = class("HotUpdateOptionPackageMgr")
 
-function slot0.init(slot0)
-	slot0._optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+var_0_0.EnableEditorDebug = false
 
-	slot0._optionalUpdateInst:Init()
+local var_0_1 = "HotUpdateOptionPackageMgr_OptionPackageNamesKey"
 
-	slot0._downloader = OptionPackageDownloader.New()
-	slot0._httpWorker = OptionPackageHttpWorker.New()
+function var_0_0.init(arg_1_0)
+	arg_1_0._optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+
+	arg_1_0._optionalUpdateInst:Init()
+
+	arg_1_0._downloader = OptionPackageDownloader.New()
+	arg_1_0._httpWorker = OptionPackageHttpWorker.New()
 end
 
-function slot0.getSupportVoiceLangs(slot0)
-	if not tabletool.indexOf(HotUpdateVoiceMgr.instance:getSupportVoiceLangs(), GameConfig:GetDefaultVoiceShortcut()) then
-		table.insert(slot1, 1, slot2)
+function var_0_0.getSupportVoiceLangs(arg_2_0)
+	local var_2_0 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_2_1 = GameConfig:GetDefaultVoiceShortcut()
+
+	if not tabletool.indexOf(var_2_0, var_2_1) then
+		table.insert(var_2_0, 1, var_2_1)
 	end
 
-	logNormal("\n语言：" .. slot2 .. "\n排序：" .. table.concat(slot1, ","))
+	logNormal("\n语言：" .. var_2_1 .. "\n排序：" .. table.concat(var_2_0, ","))
 
-	return slot1
+	return var_2_0
 end
 
-function slot0.getHotUpdateLangPacks(slot0)
-	if not slot0:getPackageNameList() or #slot1 < 1 then
-		return nil, 
+function var_0_0.getHotUpdateLangPacks(arg_3_0)
+	local var_3_0 = arg_3_0:getPackageNameList()
+
+	if not var_3_0 or #var_3_0 < 1 then
+		return nil, nil
 	end
 
-	slot2 = {
+	local var_3_1 = {
 		"res",
 		"media"
 	}
+	local var_3_2 = arg_3_0:getHotUpdateVoiceLangs()
 
-	tabletool.addValues(slot2, slot0:getHotUpdateVoiceLangs())
+	tabletool.addValues(var_3_1, var_3_2)
 
-	return slot0:formatLangPackList(slot2, slot1)
+	return (arg_3_0:formatLangPackList(var_3_1, var_3_0))
 end
 
-function slot0.getHotUpdateVoiceLangs(slot0)
-	slot2 = {}
+function var_0_0.getHotUpdateVoiceLangs(arg_4_0)
+	local var_4_0 = arg_4_0:getSupportVoiceLangs()
+	local var_4_1 = {}
 
-	for slot6, slot7 in ipairs(slot0:getSupportVoiceLangs()) do
-		if slot0:isNeedDownloadVoiceLang(slot7) then
-			table.insert(slot2, 1, slot7)
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if arg_4_0:isNeedDownloadVoiceLang(iter_4_1) then
+			table.insert(var_4_1, 1, iter_4_1)
 		end
 	end
 
-	return slot2
+	return var_4_1
 end
 
-function slot0.isNeedDownloadVoiceLang(slot0, slot1)
-	if HotUpdateVoiceMgr.ForceSelect and HotUpdateVoiceMgr.ForceSelect[slot1] then
+function var_0_0.isNeedDownloadVoiceLang(arg_5_0, arg_5_1)
+	if HotUpdateVoiceMgr.ForceSelect and HotUpdateVoiceMgr.ForceSelect[arg_5_1] then
 		return true
 	end
 
-	if not string.nilorempty(slot0._optionalUpdateInst:GetLocalVersion(slot1)) then
+	local var_5_0 = arg_5_0._optionalUpdateInst:GetLocalVersion(arg_5_1)
+
+	if not string.nilorempty(var_5_0) then
 		return true
 	end
 
-	if GameConfig:GetDefaultVoiceShortcut() == slot1 then
+	if GameConfig:GetDefaultVoiceShortcut() == arg_5_1 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getPackageNameList(slot0)
-	if not string.nilorempty(UnityEngine.PlayerPrefs.GetString(uv0, "")) then
-		return string.split(slot1, "#")
+function var_0_0.getPackageNameList(arg_6_0)
+	local var_6_0 = UnityEngine.PlayerPrefs.GetString(var_0_1, "")
+
+	if not string.nilorempty(var_6_0) then
+		return string.split(var_6_0, "#")
 	end
 
 	return {}
 end
 
-function slot0.savePackageNameList(slot0, slot1)
-	slot2 = ""
+function var_0_0.savePackageNameList(arg_7_0, arg_7_1)
+	local var_7_0 = ""
 
-	if slot1 and #slot1 > 0 then
-		slot2 = table.concat(slot1, "#")
+	if arg_7_1 and #arg_7_1 > 0 then
+		var_7_0 = table.concat(arg_7_1, "#")
 	end
 
-	UnityEngine.PlayerPrefs.SetString(uv0, slot2)
+	UnityEngine.PlayerPrefs.SetString(var_0_1, var_7_0)
 	UnityEngine.PlayerPrefs.Save()
 end
 
-function slot0.showDownload(slot0, slot1, slot2, slot3)
-	if not slot3 or not slot3:getHttpGetterList() or #slot4 < 1 then
-		slot1(slot2)
+function var_0_0.showDownload(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_3 and arg_8_3:getHttpGetterList()
+
+	if not var_8_0 or #var_8_0 < 1 then
+		arg_8_1(arg_8_2)
 
 		return
 	end
 
-	slot0._adppter = slot3
+	arg_8_0._adppter = arg_8_3
 
-	slot0._adppter:setDownloder(slot0._downloader, slot0)
+	arg_8_0._adppter:setDownloder(arg_8_0._downloader, arg_8_0)
 
 	if VersionValidator.instance:isInReviewing() then
-		slot1(slot2)
-	elseif GameResMgr.IsFromEditorDir and not uv0.EnableEditorDebug then
-		slot1(slot2)
+		arg_8_1(arg_8_2)
+	elseif GameResMgr.IsFromEditorDir and not var_0_0.EnableEditorDebug then
+		arg_8_1(arg_8_2)
 	else
-		slot0._httpWorker:start(slot4, slot1, slot2)
+		arg_8_0._httpWorker:start(var_8_0, arg_8_1, arg_8_2)
 	end
 end
 
-function slot0.startDownload(slot0, slot1, slot2)
-	if VersionValidator.instance:isInReviewing() and not uv0.EnableEditorDebug then
-		slot1(slot2)
-	elseif GameResMgr.IsFromEditorDir and not uv0.EnableEditorDebug then
-		slot1(slot2)
+function var_0_0.startDownload(arg_9_0, arg_9_1, arg_9_2)
+	if VersionValidator.instance:isInReviewing() and not var_0_0.EnableEditorDebug then
+		arg_9_1(arg_9_2)
+	elseif GameResMgr.IsFromEditorDir and not var_0_0.EnableEditorDebug then
+		arg_9_1(arg_9_2)
 	elseif BootNativeUtil.isIOS() and HotUpdateMgr.instance:hasHotUpdate() then
 		logNormal("热更新紧接着语音更新，延迟开始")
-		Timer.New(function ()
+		Timer.New(function()
 			logNormal("独立资源包更新开始")
-			uv0._downloader:start(uv0:getHttpResult(), uv1, uv2, uv0._adppter)
+			arg_9_0._downloader:start(arg_9_0:getHttpResult(), arg_9_1, arg_9_2, arg_9_0._adppter)
 		end, 1.5):Start()
 	else
-		slot0._downloader:start(slot0:getHttpResult(), slot1, slot2, slot0._adppter)
+		arg_9_0._downloader:start(arg_9_0:getHttpResult(), arg_9_1, arg_9_2, arg_9_0._adppter)
 	end
 end
 
-function slot0.getHttpResult(slot0)
-	return slot0._httpWorker:getHttpResult()
+function var_0_0.getHttpResult(arg_11_0)
+	return arg_11_0._httpWorker:getHttpResult()
 end
 
-function slot0.getNeedDownloadSize(slot0)
-	if not slot0:getHttpResult() then
+function var_0_0.getNeedDownloadSize(arg_12_0)
+	local var_12_0 = arg_12_0:getHttpResult()
+
+	if not var_12_0 then
 		return 0
 	end
 
-	slot2 = 0
+	local var_12_1 = 0
 
-	for slot6, slot7 in pairs(slot1) do
-		if slot7.res then
-			slot9 = {}
-			slot10 = {}
-			slot11 = {}
-			slot12 = {}
+	for iter_12_0, iter_12_1 in pairs(var_12_0) do
+		local var_12_2 = iter_12_1.res
 
-			for slot16, slot17 in ipairs(slot8) do
-				table.insert(slot9, slot17.name)
-				table.insert(slot10, slot17.hash)
-				table.insert(slot11, slot17.order)
-				table.insert(slot12, slot17.length)
+		if var_12_2 then
+			local var_12_3 = {}
+			local var_12_4 = {}
+			local var_12_5 = {}
+			local var_12_6 = {}
 
-				slot2 = slot2 + slot17.length
+			for iter_12_2, iter_12_3 in ipairs(var_12_2) do
+				table.insert(var_12_3, iter_12_3.name)
+				table.insert(var_12_4, iter_12_3.hash)
+				table.insert(var_12_5, iter_12_3.order)
+				table.insert(var_12_6, iter_12_3.length)
+
+				var_12_1 = var_12_1 + iter_12_3.length
 			end
 
-			slot0._optionalUpdateInst:InitBreakPointInfo(slot9, slot10, slot11, slot12)
+			arg_12_0._optionalUpdateInst:InitBreakPointInfo(var_12_3, var_12_4, var_12_5, var_12_6)
 
-			slot2 = slot2 - tonumber(slot0._optionalUpdateInst:GetRecvSize())
+			local var_12_7 = arg_12_0._optionalUpdateInst:GetRecvSize()
+
+			var_12_1 = var_12_1 - tonumber(var_12_7)
 		end
 	end
 
-	return slot2
+	return var_12_1
 end
 
-function slot0.formatLangPackList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.formatLangPackList(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = {}
 
-	if not slot2 or #slot2 < 1 then
-		tabletool.addValues(slot3, slot1)
+	if not arg_13_2 or #arg_13_2 < 1 then
+		tabletool.addValues(var_13_0, arg_13_1)
 
-		return slot3
+		return var_13_0
 	end
 
-	for slot7, slot8 in ipairs(slot2) do
-		for slot12, slot13 in ipairs(slot1) do
-			table.insert(slot3, slot0:formatLangPackName(slot13, slot8))
+	for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
+		for iter_13_2, iter_13_3 in ipairs(arg_13_1) do
+			table.insert(var_13_0, arg_13_0:formatLangPackName(iter_13_3, iter_13_1))
 		end
 	end
 
-	return slot3
+	return var_13_0
 end
 
-function slot0.formatLangPackName(slot0, slot1, slot2)
-	if string.nilorempty(slot2) then
-		return slot1
+function var_0_0.formatLangPackName(arg_14_0, arg_14_1, arg_14_2)
+	if string.nilorempty(arg_14_2) then
+		return arg_14_1
 	end
 
-	return string.format("%s-%s", slot1, slot2)
+	return string.format("%s-%s", arg_14_1, arg_14_2)
 end
 
-function slot0.stop(slot0)
-	slot0._downloader:cancelDownload()
+function var_0_0.stop(arg_15_0)
+	arg_15_0._downloader:cancelDownload()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

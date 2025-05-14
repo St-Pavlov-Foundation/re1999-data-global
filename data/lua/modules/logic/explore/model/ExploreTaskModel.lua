@@ -1,19 +1,19 @@
-module("modules.logic.explore.model.ExploreTaskModel", package.seeall)
+﻿module("modules.logic.explore.model.ExploreTaskModel", package.seeall)
 
-slot0 = class("ExploreTaskModel", BaseModel)
+local var_0_0 = class("ExploreTaskModel", BaseModel)
 
-function slot0.ctor(slot0)
-	slot0._models = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._models = {}
 end
 
-function slot0.getTaskList(slot0, slot1)
-	if not slot0._models[slot1] then
-		slot0._models[slot1] = ListScrollModel.New()
+function var_0_0.getTaskList(arg_2_0, arg_2_1)
+	if not arg_2_0._models[arg_2_1] then
+		arg_2_0._models[arg_2_1] = ListScrollModel.New()
 	end
 
-	return slot0._models[slot1]
+	return arg_2_0._models[arg_2_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

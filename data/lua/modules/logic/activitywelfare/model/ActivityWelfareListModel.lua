@@ -1,36 +1,41 @@
-module("modules.logic.activitywelfare.model.ActivityWelfareListModel", package.seeall)
+﻿module("modules.logic.activitywelfare.model.ActivityWelfareListModel", package.seeall)
 
-slot0 = class("ActivityWelfareListModel", ListScrollModel)
+local var_0_0 = class("ActivityWelfareListModel", ListScrollModel)
 
-function slot0.setCategoryList(slot0, slot1)
-	slot0._moList = slot1 and slot1 or {}
+function var_0_0.setCategoryList(arg_1_0, arg_1_1)
+	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
 
-	table.sort(slot0._moList, uv0._sort)
-	slot0:setList(slot0._moList)
-	slot0.checkTargetCategory(slot0._moList)
+	table.sort(arg_1_0._moList, var_0_0._sort)
+	arg_1_0:setList(arg_1_0._moList)
+	arg_1_0.checkTargetCategory(arg_1_0._moList)
 end
 
-function slot0.checkTargetCategory(slot0)
-	if ActivityModel.instance:getCurTargetActivityCategoryId() > 0 or not slot0 or #slot0 <= 0 then
+function var_0_0.checkTargetCategory(arg_2_0)
+	if ActivityModel.instance:getCurTargetActivityCategoryId() > 0 or not arg_2_0 or #arg_2_0 <= 0 then
 		return
 	end
 
-	table.sort(slot0, uv0._sort)
-	ActivityModel.instance:setTargetActivityCategoryId(slot0[1].co.id)
+	table.sort(arg_2_0, var_0_0._sort)
+	ActivityModel.instance:setTargetActivityCategoryId(arg_2_0[1].co.id)
 end
 
-function slot0._sort(slot0, slot1)
-	if slot0.co.defaultPriority == slot1.co.defaultPriority then
-		return slot1.co.id < slot0.co.id
+function var_0_0._sort(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.co.id
+	local var_3_1 = arg_3_1.co.id
+	local var_3_2 = arg_3_0.co.defaultPriority
+	local var_3_3 = arg_3_1.co.defaultPriority
+
+	if var_3_2 == var_3_3 then
+		return var_3_1 < var_3_0
 	end
 
-	return slot5 < slot4
+	return var_3_3 < var_3_2
 end
 
-function slot0.setOpenViewTime(slot0)
-	slot0.openViewTime = Time.realtimeSinceStartup
+function var_0_0.setOpenViewTime(arg_4_0)
+	arg_4_0.openViewTime = Time.realtimeSinceStartup
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

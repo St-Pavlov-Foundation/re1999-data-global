@@ -1,40 +1,42 @@
-module("modules.logic.versionactivity1_9.roomgift.rpc.RoomGiftRpc", package.seeall)
+﻿module("modules.logic.versionactivity1_9.roomgift.rpc.RoomGiftRpc", package.seeall)
 
-slot0 = class("RoomGiftRpc", BaseRpc)
+local var_0_0 = class("RoomGiftRpc", BaseRpc)
 
-function slot0.sendGet159InfosRequest(slot0, slot1)
-	if not slot1 then
+function var_0_0.sendGet159InfosRequest(arg_1_0, arg_1_1)
+	if not arg_1_1 then
 		return
 	end
 
-	slot2 = Activity159Module_pb.Get159InfosRequest()
-	slot2.activityId = slot1
+	local var_1_0 = Activity159Module_pb.Get159InfosRequest()
 
-	return slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGet159InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet159InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	RoomGiftModel.instance:setActivityInfo(slot2)
+	RoomGiftModel.instance:setActivityInfo(arg_2_2)
 	RoomGiftController.instance:dispatchEvent(RoomGiftEvent.UpdateActInfo)
 end
 
-function slot0.sendGet159BonusRequest(slot0, slot1)
-	if not slot1 then
+function var_0_0.sendGet159BonusRequest(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	slot2 = Activity159Module_pb.Get159BonusRequest()
-	slot2.activityId = slot1
+	local var_3_0 = Activity159Module_pb.Get159BonusRequest()
 
-	return slot0:sendMsg(slot2)
+	var_3_0.activityId = arg_3_1
+
+	return arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveGet159BonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet159BonusReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
@@ -42,6 +44,6 @@ function slot0.onReceiveGet159BonusReply(slot0, slot1, slot2)
 	RoomGiftController.instance:dispatchEvent(RoomGiftEvent.GetBonus)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,521 +1,585 @@
-module("modules.logic.room.view.manufacture.RoomCritterRestView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomCritterRestView", package.seeall)
 
-slot0 = class("RoomCritterRestView", BaseView)
+local var_0_0 = class("RoomCritterRestView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "content")
-	slot0._btnoverview = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/leftbtn/#btn_overview")
-	slot0._goOverviewReddot = gohelper.findChild(slot0.viewGO, "content/leftbtn/#btn_overview/#go_reddot")
-	slot0._btnwarehouse = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/leftbtn/#btn_warehouse")
-	slot0._btnhide = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/rightbtn/#btn_hide")
-	slot0._btnseat = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/rightbtn/#btn_seat")
-	slot0._btnreplaceAll = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/quickbtn/#btn_replaceAll")
-	slot0._btnunloadAll = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/quickbtn/#btn_unloadAll")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_arrow")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_arrow/#btn_left")
-	slot0._txtleftIndex = gohelper.findChildText(slot0.viewGO, "#go_arrow/#btn_left/#txt_leftIndex")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_arrow/#btn_right")
-	slot0._goselectedArrow = gohelper.findChild(slot0.viewGO, "content/#go_select")
-	slot0._goselectedMood = gohelper.findChild(slot0.viewGO, "content/#go_select/mood")
-	slot0._txtrightIndex = gohelper.findChildText(slot0.viewGO, "#go_arrow/#btn_right/#txt_rightIndex")
-	slot0._contentAnimator = gohelper.findChildComponent(slot0.viewGO, "content", typeof(UnityEngine.Animator))
-	slot0._txttopName = gohelper.findChildText(slot0.viewGO, "content/top/tips/#txt_name")
-	slot0._gotopmood = gohelper.findChild(slot0.viewGO, "content/top/tips/#txt_name/mood")
-	slot0._gotopcrittericon = gohelper.findChild(slot0.viewGO, "content/top/tips/#txt_name/crittericon")
-	slot0._goseatSlotBtnRoot = gohelper.findChild(slot0.viewGO, "#go_seatSlotBtns")
-	slot0._transseatSlotBtnRoot = slot0._goseatSlotBtnRoot.transform
-	slot0._goseatSlotBtn = gohelper.findChild(slot0.viewGO, "#go_seatSlotBtns/#btn_seatSlot")
-	slot0._btnShowView = gohelper.findChildClickWithAudio(slot0.viewGO, "#btn_show")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "content")
+	arg_1_0._btnoverview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/leftbtn/#btn_overview")
+	arg_1_0._goOverviewReddot = gohelper.findChild(arg_1_0.viewGO, "content/leftbtn/#btn_overview/#go_reddot")
+	arg_1_0._btnwarehouse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/leftbtn/#btn_warehouse")
+	arg_1_0._btnhide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/rightbtn/#btn_hide")
+	arg_1_0._btnseat = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/rightbtn/#btn_seat")
+	arg_1_0._btnreplaceAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/quickbtn/#btn_replaceAll")
+	arg_1_0._btnunloadAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/quickbtn/#btn_unloadAll")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_arrow/#btn_left")
+	arg_1_0._txtleftIndex = gohelper.findChildText(arg_1_0.viewGO, "#go_arrow/#btn_left/#txt_leftIndex")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_arrow/#btn_right")
+	arg_1_0._goselectedArrow = gohelper.findChild(arg_1_0.viewGO, "content/#go_select")
+	arg_1_0._goselectedMood = gohelper.findChild(arg_1_0.viewGO, "content/#go_select/mood")
+	arg_1_0._txtrightIndex = gohelper.findChildText(arg_1_0.viewGO, "#go_arrow/#btn_right/#txt_rightIndex")
+	arg_1_0._contentAnimator = gohelper.findChildComponent(arg_1_0.viewGO, "content", typeof(UnityEngine.Animator))
+	arg_1_0._txttopName = gohelper.findChildText(arg_1_0.viewGO, "content/top/tips/#txt_name")
+	arg_1_0._gotopmood = gohelper.findChild(arg_1_0.viewGO, "content/top/tips/#txt_name/mood")
+	arg_1_0._gotopcrittericon = gohelper.findChild(arg_1_0.viewGO, "content/top/tips/#txt_name/crittericon")
+	arg_1_0._goseatSlotBtnRoot = gohelper.findChild(arg_1_0.viewGO, "#go_seatSlotBtns")
+	arg_1_0._transseatSlotBtnRoot = arg_1_0._goseatSlotBtnRoot.transform
+	arg_1_0._goseatSlotBtn = gohelper.findChild(arg_1_0.viewGO, "#go_seatSlotBtns/#btn_seatSlot")
+	arg_1_0._btnShowView = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#btn_show")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnoverview:AddClickListener(slot0._btnoverviewOnClick, slot0)
-	slot0._btnwarehouse:AddClickListener(slot0._btnwarehouseOnClick, slot0)
-	slot0._btnhide:AddClickListener(slot0._btnhideOnClick, slot0)
-	slot0._btnseat:AddClickListener(slot0._btnseatOnClick, slot0)
-	slot0._btnreplaceAll:AddClickListener(slot0._btnreplaceAllOnClick, slot0)
-	slot0._btnunloadAll:AddClickListener(slot0._btnunloadAllOnClick, slot0)
-	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
-	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
-	slot0._btnShowView:AddClickListener(slot0._btnShowViewOnClick, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSelectCritter, slot0.refreshSelectCritter, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, slot0._canOperateCritter, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, slot0.refreshSeatSlotBtns, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, slot0._checkSelectedCritter, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, slot0._checkSelectedCritter, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnoverview:AddClickListener(arg_2_0._btnoverviewOnClick, arg_2_0)
+	arg_2_0._btnwarehouse:AddClickListener(arg_2_0._btnwarehouseOnClick, arg_2_0)
+	arg_2_0._btnhide:AddClickListener(arg_2_0._btnhideOnClick, arg_2_0)
+	arg_2_0._btnseat:AddClickListener(arg_2_0._btnseatOnClick, arg_2_0)
+	arg_2_0._btnreplaceAll:AddClickListener(arg_2_0._btnreplaceAllOnClick, arg_2_0)
+	arg_2_0._btnunloadAll:AddClickListener(arg_2_0._btnunloadAllOnClick, arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
+	arg_2_0._btnShowView:AddClickListener(arg_2_0._btnShowViewOnClick, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSelectCritter, arg_2_0.refreshSelectCritter, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, arg_2_0._canOperateCritter, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, arg_2_0.refreshSeatSlotBtns, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, arg_2_0._checkSelectedCritter, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, arg_2_0._checkSelectedCritter, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnoverview:RemoveClickListener()
-	slot0._btnwarehouse:RemoveClickListener()
-	slot0._btnhide:RemoveClickListener()
-	slot0._btnseat:RemoveClickListener()
-	slot0._btnreplaceAll:RemoveClickListener()
-	slot0._btnunloadAll:RemoveClickListener()
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
-	slot0._btnShowView:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnoverview:RemoveClickListener()
+	arg_3_0._btnwarehouse:RemoveClickListener()
+	arg_3_0._btnhide:RemoveClickListener()
+	arg_3_0._btnseat:RemoveClickListener()
+	arg_3_0._btnreplaceAll:RemoveClickListener()
+	arg_3_0._btnunloadAll:RemoveClickListener()
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
+	arg_3_0._btnShowView:RemoveClickListener()
 
-	if slot0._seatSlotBtnDict then
-		for slot4, slot5 in pairs(slot0._seatSlotBtnDict) do
-			slot5.click:RemoveClickListener()
-			slot5.drag:RemoveDragBeginListener()
-			slot5.drag:RemoveDragListener()
-			slot5.drag:RemoveDragEndListener()
+	if arg_3_0._seatSlotBtnDict then
+		for iter_3_0, iter_3_1 in pairs(arg_3_0._seatSlotBtnDict) do
+			iter_3_1.click:RemoveClickListener()
+			iter_3_1.drag:RemoveDragBeginListener()
+			iter_3_1.drag:RemoveDragListener()
+			iter_3_1.drag:RemoveDragEndListener()
 		end
 	end
 
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingSelectCritter, slot0.refreshSelectCritter, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, slot0._canOperateCritter, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, slot0.refreshSeatSlotBtns, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, slot0._checkSelectedCritter, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, slot0._checkSelectedCritter, slot0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingSelectCritter, arg_3_0.refreshSelectCritter, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, arg_3_0._canOperateCritter, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, arg_3_0.refreshSeatSlotBtns, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, arg_3_0._checkSelectedCritter, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, arg_3_0._checkSelectedCritter, arg_3_0)
 end
 
-function slot0._btnreplaceAllOnClick(slot0)
-	if slot0:getViewBuilding() then
-		RoomRpc.instance:sendReplaceRestBuildingCrittersRequest(slot1)
+function var_0_0._btnreplaceAllOnClick(arg_4_0)
+	local var_4_0 = arg_4_0:getViewBuilding()
+
+	if var_4_0 then
+		RoomRpc.instance:sendReplaceRestBuildingCrittersRequest(var_4_0)
 	end
 end
 
-function slot0._btnunloadAllOnClick(slot0)
-	if slot0:getViewBuilding() then
-		RoomRpc.instance:sendUnloadRestBuildingCrittersRequest(slot1)
+function var_0_0._btnunloadAllOnClick(arg_5_0)
+	local var_5_0 = arg_5_0:getViewBuilding()
+
+	if var_5_0 then
+		RoomRpc.instance:sendUnloadRestBuildingCrittersRequest(var_5_0)
 	end
 end
 
-function slot0._btnoverviewOnClick(slot0)
+function var_0_0._btnoverviewOnClick(arg_6_0)
 	ManufactureController.instance:openOverView(true)
 end
 
-function slot0._btnwarehouseOnClick(slot0)
+function var_0_0._btnwarehouseOnClick(arg_7_0)
 	ManufactureController.instance:openRoomBackpackView()
 end
 
-function slot0._btnhideOnClick(slot0)
+function var_0_0._btnhideOnClick(arg_8_0)
 	CritterController.instance:clearSelectedCritterSeatSlot()
-	slot0:playAnim(UIAnimationName.Close)
-	gohelper.setActive(slot0._goShowViewBtn, true)
-	slot0:_canOperateCritter(false)
+	arg_8_0:playAnim(UIAnimationName.Close)
+	gohelper.setActive(arg_8_0._goShowViewBtn, true)
+	arg_8_0:_canOperateCritter(false)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingHideView)
 end
 
-function slot0._btnseatOnClick(slot0)
-	slot0:playAnim("hide")
-	ManufactureController.instance:openCritterPlaceView(slot0:getViewBuilding())
+function var_0_0._btnseatOnClick(arg_9_0)
+	arg_9_0:playAnim("hide")
+
+	local var_9_0 = arg_9_0:getViewBuilding()
+
+	ManufactureController.instance:openCritterPlaceView(var_9_0)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingHideView, true, true)
 end
 
-function slot0._btnleftOnClick(slot0)
-	slot1 = nil
-	slot3 = ManufactureModel.instance:getCritterBuildingListInOrder()
+function var_0_0._btnleftOnClick(arg_10_0)
+	local var_10_0
+	local var_10_1 = arg_10_0.index <= 1
+	local var_10_2 = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if not (slot0.index <= 1) and slot3 then
-		slot0.viewContainer:setContainerViewBuildingUid(slot3[slot0.index - 1].buildingUid)
+	if not var_10_1 and var_10_2 then
+		var_10_0 = var_10_2[arg_10_0.index - 1].buildingUid
+
+		arg_10_0.viewContainer:setContainerViewBuildingUid(var_10_0)
 		CritterController.instance:clearSelectedCritterSeatSlot()
 	end
 
-	slot0:updateBuildingIndex()
-	slot0:refreshCamera(slot0.refreshSeatSlotBtns, slot0)
-	slot0:_playSwitchBuildingAnim()
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewChangeBuilding, slot1)
+	arg_10_0:updateBuildingIndex()
+	arg_10_0:refreshCamera(arg_10_0.refreshSeatSlotBtns, arg_10_0)
+	arg_10_0:_playSwitchBuildingAnim()
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewChangeBuilding, var_10_0)
 end
 
-function slot0._btnrightOnClick(slot0)
-	slot1 = nil
+function var_0_0._btnrightOnClick(arg_11_0)
+	local var_11_0
+	local var_11_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if ManufactureModel.instance:getCritterBuildingListInOrder() and slot0.index < #slot2 then
-		slot0.viewContainer:setContainerViewBuildingUid(slot2[slot0.index + 1].buildingUid)
+	if var_11_1 and arg_11_0.index < #var_11_1 then
+		var_11_0 = var_11_1[arg_11_0.index + 1].buildingUid
+
+		arg_11_0.viewContainer:setContainerViewBuildingUid(var_11_0)
 		CritterController.instance:clearSelectedCritterSeatSlot()
 	end
 
-	slot0:updateBuildingIndex()
-	slot0:refreshCamera(slot0.refreshSeatSlotBtns, slot0)
-	slot0:_playSwitchBuildingAnim()
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewChangeBuilding, slot1)
+	arg_11_0:updateBuildingIndex()
+	arg_11_0:refreshCamera(arg_11_0.refreshSeatSlotBtns, arg_11_0)
+	arg_11_0:_playSwitchBuildingAnim()
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewChangeBuilding, var_11_0)
 end
 
-function slot0._playSwitchBuildingAnim(slot0)
+function var_0_0._playSwitchBuildingAnim(arg_12_0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
-		slot0:refreshArrow()
+		arg_12_0:refreshArrow()
 
 		return
 	end
 
-	slot0:playAnim(UIAnimationName.Close)
-	TaskDispatcher.cancelTask(slot0._switchFinish, slot0)
-	TaskDispatcher.runDelay(slot0._switchFinish, slot0, CritterEnum.CritterBuildingChangeBuildingAnimTime)
+	arg_12_0:playAnim(UIAnimationName.Close)
+	TaskDispatcher.cancelTask(arg_12_0._switchFinish, arg_12_0)
+	TaskDispatcher.runDelay(arg_12_0._switchFinish, arg_12_0, CritterEnum.CritterBuildingChangeBuildingAnimTime)
 end
 
-function slot0._switchFinish(slot0)
-	slot0:refreshArrow()
-	slot0:playAnim(UIAnimationName.Open)
+function var_0_0._switchFinish(arg_13_0)
+	arg_13_0:refreshArrow()
+	arg_13_0:playAnim(UIAnimationName.Open)
 end
 
-function slot0._btnShowViewOnClick(slot0)
-	slot0:playAnim(UIAnimationName.Open)
-	gohelper.setActive(slot0._goShowViewBtn, false)
-	slot0:_canOperateCritter(true)
+function var_0_0._btnShowViewOnClick(arg_14_0)
+	arg_14_0:playAnim(UIAnimationName.Open)
+	gohelper.setActive(arg_14_0._goShowViewBtn, false)
+	arg_14_0:_canOperateCritter(true)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingShowView)
 end
 
-function slot0._onClickSeatSlot(slot0, slot1)
-	if slot0._dragCritterEntity then
+function var_0_0._onClickSeatSlot(arg_15_0, arg_15_1)
+	if arg_15_0._dragCritterEntity then
 		return
 	end
 
-	slot2, slot3 = slot0:getViewBuilding()
+	local var_15_0, var_15_1 = arg_15_0:getViewBuilding()
 
-	if not slot2 or not slot3 then
+	if not var_15_0 or not var_15_1 then
 		return
 	end
 
-	if slot3:getRestingCritter(slot1) and (not ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) or true) then
-		CritterController.instance:clickCritterInCritterBuilding(slot2, slot6)
-	elseif slot3:getSeatSlotMO(slot1) then
-		if not slot4 then
-			slot0:_btnseatOnClick()
+	local var_15_2 = ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView)
+	local var_15_3 = true
+	local var_15_4 = var_15_1:getRestingCritter(arg_15_1)
+
+	if var_15_4 and (not var_15_2 or var_15_3) then
+		CritterController.instance:clickCritterInCritterBuilding(var_15_0, var_15_4)
+	elseif var_15_1:getSeatSlotMO(arg_15_1) then
+		if not var_15_2 then
+			arg_15_0:_btnseatOnClick()
 			AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 		end
 	else
 		ViewMgr.instance:openView(ViewName.RoomCritterRestTipsView, {
-			buildingUid = slot2,
-			seatSlotId = slot1
+			buildingUid = var_15_0,
+			seatSlotId = arg_15_1
 		})
 	end
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	if slot0._dragCritterEntity or not slot0._scene then
+function var_0_0._onDragBegin(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_0._dragCritterEntity or not arg_16_0._scene then
 		return
 	end
 
-	slot3, slot4 = slot0:getViewBuilding()
+	local var_16_0, var_16_1 = arg_16_0:getViewBuilding()
+	local var_16_2 = var_16_1 and var_16_1:getRestingCritter(arg_16_1)
+	local var_16_3 = arg_16_0._scene.buildingcrittermgr:getCritterEntity(var_16_2)
 
-	if not slot0._scene.buildingcrittermgr:getCritterEntity(slot4 and slot4:getRestingCritter(slot1)) then
+	if not var_16_3 then
 		return
 	end
 
-	if gohelper.isNil(slot0._scene.buildingmgr:getBuildingEntity(slot3, SceneTag.RoomBuilding) and slot7:getCritterPoint(slot1)) then
-		logError(string.format("RoomCritterRestView:_onDragBegin error, no critter point, buildingUid:%s,index:%s", slot3, slot1 + 1))
+	local var_16_4 = arg_16_0._scene.buildingmgr:getBuildingEntity(var_16_0, SceneTag.RoomBuilding)
+	local var_16_5 = var_16_4 and var_16_4:getCritterPoint(arg_16_1)
+
+	if gohelper.isNil(var_16_5) then
+		logError(string.format("RoomCritterRestView:_onDragBegin error, no critter point, buildingUid:%s,index:%s", var_16_0, arg_16_1 + 1))
 
 		return
 	end
 
 	CritterController.instance:clearSelectedCritterSeatSlot()
 
-	slot0._critterPointPos = slot8.transform.position
-	slot0._dragCritterEntity = slot6
+	arg_16_0._critterPointPos = var_16_5.transform.position
+	arg_16_0._dragCritterEntity = var_16_3
 
-	slot0._dragCritterEntity:tweenUp()
+	arg_16_0._dragCritterEntity:tweenUp()
 end
 
-slot1 = 0.02
+local var_0_1 = 0.02
 
-function slot0._onDragIng(slot0, slot1, slot2)
-	if not slot0._dragCritterEntity then
+function var_0_0._onDragIng(arg_17_0, arg_17_1, arg_17_2)
+	if not arg_17_0._dragCritterEntity then
 		return
 	end
 
-	slot4 = RoomBendingHelper.screenPosToRay(slot2.position)
-	slot5, slot6 = UnityEngine.Physics.Raycast(slot4.origin, slot4.direction, nil, 10, LayerMask.GetMask("UI3D"))
+	local var_17_0 = arg_17_2.position
+	local var_17_1 = RoomBendingHelper.screenPosToRay(var_17_0)
+	local var_17_2, var_17_3 = UnityEngine.Physics.Raycast(var_17_1.origin, var_17_1.direction, nil, 10, LayerMask.GetMask("UI3D"))
 
-	if not slot5 then
+	if not var_17_2 then
 		return
 	end
 
-	slot0._dragCritterEntity:setLocalPos(slot6.point.x, slot6.point.y + uv0, slot6.point.z)
-	slot0.viewContainer:dispatchEvent(CritterEvent.UICritterDragIng)
+	local var_17_4 = var_17_3.point.x
+	local var_17_5 = var_17_3.point.y + var_0_1
+	local var_17_6 = var_17_3.point.z
+
+	arg_17_0._dragCritterEntity:setLocalPos(var_17_4, var_17_5, var_17_6)
+	arg_17_0.viewContainer:dispatchEvent(CritterEvent.UICritterDragIng)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if not slot0._dragCritterEntity then
+function var_0_0._onDragEnd(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_0._dragCritterEntity then
 		return
 	end
 
-	slot4, slot5 = recthelper.screenPosToAnchorPos2(slot2.position, slot0._transseatSlotBtnRoot)
-	slot6 = nil
+	local var_18_0 = arg_18_2.position
+	local var_18_1, var_18_2 = recthelper.screenPosToAnchorPos2(var_18_0, arg_18_0._transseatSlotBtnRoot)
+	local var_18_3
 
-	if slot0._seatSlotBtnDict then
-		for slot10, slot11 in pairs(slot0._seatSlotBtnDict) do
-			slot12, slot13 = recthelper.getAnchor(slot11.trans)
+	if arg_18_0._seatSlotBtnDict then
+		for iter_18_0, iter_18_1 in pairs(arg_18_0._seatSlotBtnDict) do
+			local var_18_4, var_18_5 = recthelper.getAnchor(iter_18_1.trans)
+			local var_18_6 = recthelper.getWidth(iter_18_1.trans) / 2
+			local var_18_7 = recthelper.getHeight(iter_18_1.trans)
 
-			if slot4 >= slot12 - recthelper.getWidth(slot11.trans) / 2 and slot4 <= slot12 + slot14 and slot13 <= slot5 and slot5 <= slot13 + recthelper.getHeight(slot11.trans) then
-				slot6 = slot10
+			if var_18_1 >= var_18_4 - var_18_6 and var_18_1 <= var_18_4 + var_18_6 and var_18_5 <= var_18_2 and var_18_2 <= var_18_5 + var_18_7 then
+				var_18_3 = iter_18_0
 			end
 		end
 	end
 
-	if slot6 then
-		CritterController.instance:exchangeSeatSlot(slot0:getViewBuilding(), slot1, slot6)
+	if var_18_3 then
+		local var_18_8 = arg_18_0:getViewBuilding()
+
+		CritterController.instance:exchangeSeatSlot(var_18_8, arg_18_1, var_18_3)
 	else
-		slot0._scene.buildingcrittermgr:refreshAllCritterEntityPos()
+		arg_18_0._scene.buildingcrittermgr:refreshAllCritterEntityPos()
 	end
 
-	slot0._dragCritterEntity:tweenDown()
+	arg_18_0._dragCritterEntity:tweenDown()
 
-	slot0._dragCritterEntity = nil
-	slot0._critterPointPos = nil
+	arg_18_0._dragCritterEntity = nil
+	arg_18_0._critterPointPos = nil
 
-	slot0.viewContainer:dispatchEvent(CritterEvent.UICritterDragEnd)
+	arg_18_0.viewContainer:dispatchEvent(CritterEvent.UICritterDragEnd)
 end
 
-function slot0._canOperateCritter(slot0, slot1)
-	gohelper.setActive(slot0._goseatSlotBtnRoot, slot1)
-	gohelper.setActive(slot0._goarrow, slot1)
+function var_0_0._canOperateCritter(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._goseatSlotBtnRoot, arg_19_1)
+	gohelper.setActive(arg_19_0._goarrow, arg_19_1)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.RoomCritterPlaceView then
-		slot0:playAnim(UIAnimationName.Open)
-		slot0:_canOperateCritter(true)
-		slot0:_checkQuickbtnActive()
+function var_0_0._onCloseView(arg_20_0, arg_20_1)
+	if arg_20_1 == ViewName.RoomCritterPlaceView then
+		arg_20_0:playAnim(UIAnimationName.Open)
+		arg_20_0:_canOperateCritter(true)
+		arg_20_0:_checkQuickbtnActive()
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	slot0:_checkQuickbtnActive()
+function var_0_0._onOpenView(arg_21_0, arg_21_1)
+	arg_21_0:_checkQuickbtnActive()
 end
 
-function slot0._checkSelectedCritter(slot0)
-	slot1 = nil
-	slot2, slot3 = slot0:getViewBuilding()
-	slot4, slot5 = ManufactureModel.instance:getSelectedCritterSeatSlot()
+function var_0_0._checkSelectedCritter(arg_22_0)
+	local var_22_0
+	local var_22_1, var_22_2 = arg_22_0:getViewBuilding()
+	local var_22_3, var_22_4 = ManufactureModel.instance:getSelectedCritterSeatSlot()
 
-	if slot4 == slot2 then
-		slot1 = slot3:getRestingCritter(slot5)
+	if var_22_3 == var_22_1 then
+		var_22_0 = var_22_2:getRestingCritter(var_22_4)
 	end
 
-	if not slot1 then
+	if not var_22_0 then
 		CritterController.instance:clearSelectedCritterSeatSlot()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goquickbtn = gohelper.findChild(slot0.viewGO, "content/quickbtn")
-	slot0._transcontent = slot0._gocontent.transform
-	slot0._transselectedArrow = slot0._goselectedArrow.transform
-	slot0._gobtnLeft = slot0._btnleft.gameObject
-	slot0._gobtnright = slot0._btnright.gameObject
-	slot0._goShowViewBtn = slot0._btnShowView.gameObject
-	slot0._scene = RoomCameraController.instance:getRoomScene()
+function var_0_0._editableInitView(arg_23_0)
+	arg_23_0._goquickbtn = gohelper.findChild(arg_23_0.viewGO, "content/quickbtn")
+	arg_23_0._transcontent = arg_23_0._gocontent.transform
+	arg_23_0._transselectedArrow = arg_23_0._goselectedArrow.transform
+	arg_23_0._gobtnLeft = arg_23_0._btnleft.gameObject
+	arg_23_0._gobtnright = arg_23_0._btnright.gameObject
+	arg_23_0._goShowViewBtn = arg_23_0._btnShowView.gameObject
+	arg_23_0._scene = RoomCameraController.instance:getRoomScene()
 
-	slot0:initSeatSlotBtns()
-	slot0:refreshSeatSlotBtns()
+	arg_23_0:initSeatSlotBtns()
+	arg_23_0:refreshSeatSlotBtns()
 
-	slot0._topMoodItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gotopmood, CritterMoodItem)
-	slot0._selectMoodItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goselectedMood, CritterMoodItem)
-	slot0._topCritterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gotopcrittericon)
+	arg_23_0._topMoodItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_23_0._gotopmood, CritterMoodItem)
+	arg_23_0._selectMoodItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_23_0._goselectedMood, CritterMoodItem)
+	arg_23_0._topCritterIcon = IconMgr.instance:getCommonCritterIcon(arg_23_0._gotopcrittericon)
 
-	slot0._selectMoodItem:setShowMoodRestore(false)
+	arg_23_0._selectMoodItem:setShowMoodRestore(false)
 end
 
-function slot0.initSeatSlotBtns(slot0)
-	for slot5 = 1, CritterEnum.CritterMaxSeatCount do
+function var_0_0.initSeatSlotBtns(arg_24_0)
+	local var_24_0 = {}
+
+	for iter_24_0 = 1, CritterEnum.CritterMaxSeatCount do
+		var_24_0[iter_24_0] = iter_24_0 - 1
 	end
 
-	slot0._seatSlotBtnDict = {}
+	arg_24_0._seatSlotBtnDict = {}
 
-	gohelper.CreateObjList(slot0, slot0.onSetSeatSlotBtn, {
-		[slot5] = slot5 - 1
-	}, slot0._goseatSlotBtnRoot, slot0._goseatSlotBtn)
+	gohelper.CreateObjList(arg_24_0, arg_24_0.onSetSeatSlotBtn, var_24_0, arg_24_0._goseatSlotBtnRoot, arg_24_0._goseatSlotBtn)
 end
 
-function slot0.onSetSeatSlotBtn(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot4.go = slot1
-	slot4.trans = slot1.transform
-	slot4.seatSlotId = slot2
-	slot4.click = SLFramework.UGUI.UIClickListener.Get(slot4.go)
+function var_0_0.onSetSeatSlotBtn(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = arg_25_0:getUserDataTb_()
 
-	slot4.click:AddClickListener(slot0._onClickSeatSlot, slot0, slot2)
+	var_25_0.go = arg_25_1
+	var_25_0.trans = arg_25_1.transform
+	var_25_0.seatSlotId = arg_25_2
+	var_25_0.click = SLFramework.UGUI.UIClickListener.Get(var_25_0.go)
 
-	slot4.drag = SLFramework.UGUI.UIDragListener.Get(slot4.go)
+	var_25_0.click:AddClickListener(arg_25_0._onClickSeatSlot, arg_25_0, arg_25_2)
 
-	slot4.drag:AddDragBeginListener(slot0._onDragBegin, slot0, slot2)
-	slot4.drag:AddDragListener(slot0._onDragIng, slot0, slot2)
-	slot4.drag:AddDragEndListener(slot0._onDragEnd, slot0, slot2)
+	var_25_0.drag = SLFramework.UGUI.UIDragListener.Get(var_25_0.go)
 
-	slot0._seatSlotBtnDict[slot2] = slot4
+	var_25_0.drag:AddDragBeginListener(arg_25_0._onDragBegin, arg_25_0, arg_25_2)
+	var_25_0.drag:AddDragListener(arg_25_0._onDragIng, arg_25_0, arg_25_2)
+	var_25_0.drag:AddDragEndListener(arg_25_0._onDragEnd, arg_25_0, arg_25_2)
+
+	arg_25_0._seatSlotBtnDict[arg_25_2] = var_25_0
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_26_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:updateBuildingIndex()
-	slot0:refresh(true)
-	gohelper.setActive(slot0._goShowViewBtn, false)
-	RedDotController.instance:addRedDot(slot0._goOverviewReddot, RedDotEnum.DotNode.OverviewEntrance)
-	slot0:_checkQuickbtnActive()
+function var_0_0.onOpen(arg_27_0)
+	arg_27_0:updateBuildingIndex()
+	arg_27_0:refresh(true)
+	gohelper.setActive(arg_27_0._goShowViewBtn, false)
+	RedDotController.instance:addRedDot(arg_27_0._goOverviewReddot, RedDotEnum.DotNode.OverviewEntrance)
+	arg_27_0:_checkQuickbtnActive()
 end
 
-function slot0._checkQuickbtnActive(slot0)
-	gohelper.setActive(slot0._goquickbtn, ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView))
+function var_0_0._checkQuickbtnActive(arg_28_0)
+	gohelper.setActive(arg_28_0._goquickbtn, ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView))
 end
 
-function slot0.refresh(slot0, slot1)
-	slot0:refreshArrow()
-	slot0:refreshSelectCritter(slot1)
+function var_0_0.refresh(arg_29_0, arg_29_1)
+	arg_29_0:refreshArrow()
+	arg_29_0:refreshSelectCritter(arg_29_1)
 end
 
-function slot0.refreshArrow(slot0)
-	if not (slot0.index <= 1) then
-		slot0._txtleftIndex.text = slot0.index - 1
+function var_0_0.refreshArrow(arg_30_0)
+	local var_30_0 = arg_30_0.index <= 1
+
+	if not var_30_0 then
+		local var_30_1 = arg_30_0.index - 1
+
+		arg_30_0._txtleftIndex.text = var_30_1
 	end
 
-	gohelper.setActive(slot0._gobtnLeft, not slot1)
+	gohelper.setActive(arg_30_0._gobtnLeft, not var_30_0)
 
-	slot2 = true
+	local var_30_2 = true
+	local var_30_3 = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if ManufactureModel.instance:getCritterBuildingListInOrder() then
-		slot2 = slot0.index >= #slot3
+	if var_30_3 then
+		var_30_2 = arg_30_0.index >= #var_30_3
 	end
 
-	if not slot2 then
-		slot0._txtrightIndex.text = slot0.index + 1
+	if not var_30_2 then
+		local var_30_4 = arg_30_0.index + 1
+
+		arg_30_0._txtrightIndex.text = var_30_4
 	end
 
-	gohelper.setActive(slot0._gobtnright, not slot2)
+	gohelper.setActive(arg_30_0._gobtnright, not var_30_2)
 end
 
-function slot0.refreshCamera(slot0, slot1, slot2)
-	slot3, slot4 = slot0:getViewBuilding()
+function var_0_0.refreshCamera(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0, var_31_1 = arg_31_0:getViewBuilding()
 
-	if not slot4 then
+	if not var_31_1 then
 		return
 	end
 
-	slot6 = ManufactureConfig.instance:getBuildingCameraIdByIndex(slot4.buildingId)
+	local var_31_2 = var_31_1.buildingId
+	local var_31_3 = ManufactureConfig.instance:getBuildingCameraIdByIndex(var_31_2)
 
-	if RoomCameraController.instance:getRoomCamera() and slot6 then
-		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(slot3, slot6, slot1, slot2)
+	if RoomCameraController.instance:getRoomCamera() and var_31_3 then
+		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(var_31_0, var_31_3, arg_31_1, arg_31_2)
 	end
 end
 
-function slot0.refreshSelectCritter(slot0, slot1)
-	slot2, slot3 = slot0:getViewBuilding()
-	slot4 = nil
-	slot5, slot6 = ManufactureModel.instance:getSelectedCritterSeatSlot()
+function var_0_0.refreshSelectCritter(arg_32_0, arg_32_1)
+	local var_32_0, var_32_1 = arg_32_0:getViewBuilding()
+	local var_32_2
+	local var_32_3, var_32_4 = ManufactureModel.instance:getSelectedCritterSeatSlot()
+	local var_32_5 = var_32_1:getRestingCritter(var_32_4)
 
-	if slot5 == slot2 then
-		slot4 = CritterModel.instance:getCritterMOByUid(slot3:getRestingCritter(slot6))
+	if var_32_3 == var_32_0 then
+		var_32_2 = CritterModel.instance:getCritterMOByUid(var_32_5)
 	end
 
-	if slot4 then
-		slot0._txttopName.text = slot4:getName()
+	if var_32_2 then
+		local var_32_6 = var_32_2:getDefineId()
 
-		slot0._topCritterIcon:onUpdateMO(slot4)
-		slot0._topMoodItem:setCritterUid(slot7)
-		slot0._selectMoodItem:setCritterUid(slot7)
-		slot0:refreshSelectArrow(slot6)
-		slot0:refreshCritterFood(slot4:getDefineId())
+		arg_32_0._txttopName.text = var_32_2:getName()
+
+		arg_32_0._topCritterIcon:onUpdateMO(var_32_2)
+		arg_32_0._topMoodItem:setCritterUid(var_32_5)
+		arg_32_0._selectMoodItem:setCritterUid(var_32_5)
+		arg_32_0:refreshSelectArrow(var_32_4)
+		arg_32_0:refreshCritterFood(var_32_6)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_value)
 	end
 
-	gohelper.setActive(slot0._gotop, slot4)
+	gohelper.setActive(arg_32_0._gotop, var_32_2)
 
-	if slot1 then
-		slot0._contentAnimator:Play(UIAnimationName.Close, 0, 1)
+	if arg_32_1 then
+		arg_32_0._contentAnimator:Play(UIAnimationName.Close, 0, 1)
 	else
-		slot0._contentAnimator:Play(slot4 and UIAnimationName.Open or UIAnimationName.Close)
+		arg_32_0._contentAnimator:Play(var_32_2 and UIAnimationName.Open or UIAnimationName.Close)
 
-		if slot4 and not ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
-			slot0:_btnseatOnClick()
+		if var_32_2 and not ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
+			arg_32_0:_btnseatOnClick()
 		end
 	end
 end
 
-function slot0.refreshSelectArrow(slot0, slot1)
-	slot2, slot3 = slot0:getViewBuilding()
+function var_0_0.refreshSelectArrow(arg_33_0, arg_33_1)
+	local var_33_0, var_33_1 = arg_33_0:getViewBuilding()
 
-	if not slot0._scene or not slot3 then
+	if not arg_33_0._scene or not var_33_1 then
 		return
 	end
 
-	if gohelper.isNil(slot0._scene.buildingcrittermgr:getCritterEntity(slot3:getRestingCritter(slot1)) and slot5.critterspine:getMountheadGOTrs()) then
+	local var_33_2 = var_33_1:getRestingCritter(arg_33_1)
+	local var_33_3 = arg_33_0._scene.buildingcrittermgr:getCritterEntity(var_33_2)
+	local var_33_4 = var_33_3 and var_33_3.critterspine:getMountheadGOTrs()
+
+	if gohelper.isNil(var_33_4) then
 		return
 	end
 
-	if RoomBendingHelper.worldPosToAnchorPos(RoomBendingHelper.worldToBendingSimple(slot6.position), slot0._transcontent) then
-		recthelper.setAnchor(slot0._transselectedArrow, slot9.x, slot9.y)
+	local var_33_5 = var_33_4.position
+	local var_33_6 = RoomBendingHelper.worldToBendingSimple(var_33_5)
+	local var_33_7 = RoomBendingHelper.worldPosToAnchorPos(var_33_6, arg_33_0._transcontent)
+
+	if var_33_7 then
+		recthelper.setAnchor(arg_33_0._transselectedArrow, var_33_7.x, var_33_7.y)
 	end
 end
 
-function slot0.refreshCritterFood(slot0, slot1)
-	RoomCritterFoodListModel.instance:setCritterFoodList(slot1)
+function var_0_0.refreshCritterFood(arg_34_0, arg_34_1)
+	RoomCritterFoodListModel.instance:setCritterFoodList(arg_34_1)
 end
 
-slot2 = -15
+local var_0_2 = -15
 
-function slot0.refreshSeatSlotBtns(slot0)
-	if not slot0._seatSlotBtnDict or not slot0._scene then
+function var_0_0.refreshSeatSlotBtns(arg_35_0)
+	if not arg_35_0._seatSlotBtnDict or not arg_35_0._scene then
 		return
 	end
 
-	slot2 = slot0._scene.buildingmgr:getBuildingEntity(slot0:getViewBuilding(), SceneTag.RoomBuilding)
+	local var_35_0 = arg_35_0:getViewBuilding()
+	local var_35_1 = arg_35_0._scene.buildingmgr:getBuildingEntity(var_35_0, SceneTag.RoomBuilding)
 
-	for slot6, slot7 in pairs(slot0._seatSlotBtnDict) do
-		if not gohelper.isNil(slot2 and slot2:getCritterPoint(slot6)) then
-			if RoomBendingHelper.worldPosToAnchorPos(RoomBendingHelper.worldToBendingSimple(slot8.transform.position), slot0._transseatSlotBtnRoot) then
-				recthelper.setAnchor(slot7.trans, slot11.x, slot11.y + uv0)
+	for iter_35_0, iter_35_1 in pairs(arg_35_0._seatSlotBtnDict) do
+		local var_35_2 = var_35_1 and var_35_1:getCritterPoint(iter_35_0)
+
+		if not gohelper.isNil(var_35_2) then
+			local var_35_3 = var_35_2.transform.position
+			local var_35_4 = RoomBendingHelper.worldToBendingSimple(var_35_3)
+			local var_35_5 = RoomBendingHelper.worldPosToAnchorPos(var_35_4, arg_35_0._transseatSlotBtnRoot)
+
+			if var_35_5 then
+				recthelper.setAnchor(iter_35_1.trans, var_35_5.x, var_35_5.y + var_0_2)
 			end
 		else
-			logError(string.format("RoomCritterRestView:refreshSeatSlotBtns error, no critter point, buildingUid:%s, index:%s", slot1, slot6 + 1))
+			logError(string.format("RoomCritterRestView:refreshSeatSlotBtns error, no critter point, buildingUid:%s, index:%s", var_35_0, iter_35_0 + 1))
 		end
 	end
 end
 
-function slot0.updateBuildingIndex(slot0)
-	slot0.index = 0
-	slot2 = slot0:getViewBuilding()
+function var_0_0.updateBuildingIndex(arg_36_0)
+	arg_36_0.index = 0
 
-	if not ManufactureModel.instance:getCritterBuildingListInOrder() then
+	local var_36_0 = ManufactureModel.instance:getCritterBuildingListInOrder()
+	local var_36_1 = arg_36_0:getViewBuilding()
+
+	if not var_36_0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot2 == slot7.buildingUid then
-			slot0.index = slot6
+	for iter_36_0, iter_36_1 in ipairs(var_36_0) do
+		if var_36_1 == iter_36_1.buildingUid then
+			arg_36_0.index = iter_36_0
 		end
 	end
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0._animator.enabled = true
+function var_0_0.playAnim(arg_37_0, arg_37_1)
+	arg_37_0._animator.enabled = true
 
-	slot0._animator:Play(slot1, 0, 0)
+	arg_37_0._animator:Play(arg_37_1, 0, 0)
 end
 
-function slot0.getViewBuilding(slot0)
-	slot1, slot2 = slot0.viewContainer:getContainerViewBuilding()
+function var_0_0.getViewBuilding(arg_38_0)
+	local var_38_0, var_38_1 = arg_38_0.viewContainer:getContainerViewBuilding()
 
-	return slot1, slot2
+	return var_38_0, var_38_1
 end
 
-function slot0.onClose(slot0)
-	if slot0._dragCritterEntity then
-		slot0._scene.buildingcrittermgr:refreshAllCritterEntityPos()
-		slot0._dragCritterEntity:tweenDown()
+function var_0_0.onClose(arg_39_0)
+	if arg_39_0._dragCritterEntity then
+		arg_39_0._scene.buildingcrittermgr:refreshAllCritterEntityPos()
+		arg_39_0._dragCritterEntity:tweenDown()
 
-		slot0._dragCritterEntity = nil
-		slot0._critterPointPos = nil
+		arg_39_0._dragCritterEntity = nil
+		arg_39_0._critterPointPos = nil
 	end
 
 	CritterController.instance:clearSelectedCritterSeatSlot()
-	TaskDispatcher.cancelTask(slot0._switchFinish, slot0)
+	TaskDispatcher.cancelTask(arg_39_0._switchFinish, arg_39_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_40_0)
+	return
 end
 
-return slot0
+return var_0_0

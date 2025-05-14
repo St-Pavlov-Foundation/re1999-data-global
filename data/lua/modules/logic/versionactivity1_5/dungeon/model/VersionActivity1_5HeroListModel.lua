@@ -1,188 +1,199 @@
-module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5HeroListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5HeroListModel", package.seeall)
 
-slot0 = class("VersionActivity1_5HeroListModel", ListScrollModel)
+local var_0_0 = class("VersionActivity1_5HeroListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onOpenDispatchView(slot0, slot1)
-	slot0:initHeroList()
-	slot0:initSelectedHeroList(slot1.id)
+function var_0_0.onOpenDispatchView(arg_3_0, arg_3_1)
+	arg_3_0:initHeroList()
+	arg_3_0:initSelectedHeroList(arg_3_1.id)
 
-	slot0.maxSelectCount = slot1.maxCount
+	arg_3_0.maxSelectCount = arg_3_1.maxCount
 end
 
-function slot0.resetSelectHeroList(slot0)
-	slot0.selectedHeroList = {}
-	slot0.selectedHeroIndexDict = {}
+function var_0_0.resetSelectHeroList(arg_4_0)
+	arg_4_0.selectedHeroList = {}
+	arg_4_0.selectedHeroIndexDict = {}
 end
 
-function slot0.onCloseDispatchView(slot0)
-	slot0:clearSelectedHeroList()
+function var_0_0.onCloseDispatchView(arg_5_0)
+	arg_5_0:clearSelectedHeroList()
 end
 
-function slot0.initHeroList(slot0)
-	if slot0.heroList then
+function var_0_0.initHeroList(arg_6_0)
+	if arg_6_0.heroList then
 		return
 	end
 
-	slot0.heroList = {}
+	arg_6_0.heroList = {}
 
-	for slot4, slot5 in ipairs(HeroModel.instance:getList()) do
-		slot6 = VersionActivity1_5DispatchHeroMo.New()
+	for iter_6_0, iter_6_1 in ipairs(HeroModel.instance:getList()) do
+		local var_6_0 = VersionActivity1_5DispatchHeroMo.New()
 
-		slot6:init(slot5)
-		table.insert(slot0.heroList, slot6)
+		var_6_0:init(iter_6_1)
+		table.insert(arg_6_0.heroList, var_6_0)
 	end
 end
 
-function slot0.initSelectedHeroList(slot0, slot1)
-	slot0.selectedHeroList = {}
-	slot0.selectedHeroIndexDict = {}
+function var_0_0.initSelectedHeroList(arg_7_0, arg_7_1)
+	arg_7_0.selectedHeroList = {}
+	arg_7_0.selectedHeroIndexDict = {}
 
-	if slot1 and VersionActivity1_5DungeonModel.instance:getDispatchMo(slot1) then
-		for slot6, slot7 in ipairs(slot2.heroIdList) do
-			if slot0:getDispatchHeroMo(slot7) then
-				table.insert(slot0.selectedHeroList, slot8)
+	if arg_7_1 then
+		local var_7_0 = VersionActivity1_5DungeonModel.instance:getDispatchMo(arg_7_1)
 
-				slot0.selectedHeroIndexDict[slot8] = slot6
-			else
-				logError("not found dispatched hero id : " .. tostring(slot7))
+		if var_7_0 then
+			for iter_7_0, iter_7_1 in ipairs(var_7_0.heroIdList) do
+				local var_7_1 = arg_7_0:getDispatchHeroMo(iter_7_1)
+
+				if var_7_1 then
+					table.insert(arg_7_0.selectedHeroList, var_7_1)
+
+					arg_7_0.selectedHeroIndexDict[var_7_1] = iter_7_0
+				else
+					logError("not found dispatched hero id : " .. tostring(iter_7_1))
+				end
 			end
 		end
 	end
 end
 
-function slot0.getDispatchHeroMo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.heroList) do
-		if slot6.heroId == slot1 then
-			return slot6
+function var_0_0.getDispatchHeroMo(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.heroList) do
+		if iter_8_1.heroId == arg_8_1 then
+			return iter_8_1
 		end
 	end
 end
 
-function slot0.refreshHero(slot0)
-	slot0:resortHeroList()
-	slot0:setList(slot0.heroList)
+function var_0_0.refreshHero(arg_9_0)
+	arg_9_0:resortHeroList()
+	arg_9_0:setList(arg_9_0.heroList)
 end
 
-function slot0.resortHeroList(slot0)
-	table.sort(slot0.heroList, uv0._sortFunc)
+function var_0_0.resortHeroList(arg_10_0)
+	table.sort(arg_10_0.heroList, var_0_0._sortFunc)
 end
 
-function slot0._sortFunc(slot0, slot1)
-	if slot0:isDispatched() ~= slot1:isDispatched() then
-		return slot3
+function var_0_0._sortFunc(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:isDispatched()
+	local var_11_1 = arg_11_1:isDispatched()
+
+	if var_11_0 ~= var_11_1 then
+		return var_11_1
 	end
 
-	if slot0.level ~= slot1.level then
-		return slot1.level < slot0.level
+	if arg_11_0.level ~= arg_11_1.level then
+		return arg_11_0.level > arg_11_1.level
 	end
 
-	if slot0.rare ~= slot1.rare then
-		return slot1.rare < slot0.rare
+	if arg_11_0.rare ~= arg_11_1.rare then
+		return arg_11_0.rare > arg_11_1.rare
 	end
 
-	return slot1.heroId < slot0.heroId
+	return arg_11_0.heroId > arg_11_1.heroId
 end
 
-function slot0.canAddMo(slot0)
-	return #slot0.selectedHeroList < slot0.maxSelectCount
+function var_0_0.canAddMo(arg_12_0)
+	return #arg_12_0.selectedHeroList < arg_12_0.maxSelectCount
 end
 
-function slot0.canChangeHeroMo(slot0)
-	return slot0.dispatchViewStatus == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch
+function var_0_0.canChangeHeroMo(arg_13_0)
+	return arg_13_0.dispatchViewStatus == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch
 end
 
-function slot0.selectMo(slot0, slot1)
-	if not slot1 then
+function var_0_0.selectMo(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0.selectedHeroList) do
-		if slot6.heroId == slot1.heroId then
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.selectedHeroList) do
+		if iter_14_1.heroId == arg_14_1.heroId then
 			return
 		end
 	end
 
-	table.insert(slot0.selectedHeroList, slot1)
+	table.insert(arg_14_0.selectedHeroList, arg_14_1)
 
-	slot0.selectedHeroIndexDict[slot1] = #slot0.selectedHeroList
+	arg_14_0.selectedHeroIndexDict[arg_14_1] = #arg_14_0.selectedHeroList
 
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ChangeSelectedHero)
 end
 
-function slot0.deselectMo(slot0, slot1)
-	if not slot1 then
+function var_0_0.deselectMo(arg_15_0, arg_15_1)
+	if not arg_15_1 then
 		return
 	end
 
-	slot2 = 0
+	local var_15_0 = 0
 
-	for slot6, slot7 in ipairs(slot0.selectedHeroList) do
-		if slot7.heroId == slot1.heroId then
-			slot2 = slot6
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.selectedHeroList) do
+		if iter_15_1.heroId == arg_15_1.heroId then
+			var_15_0 = iter_15_0
 		end
 	end
 
-	if slot2 > 0 then
-		table.remove(slot0.selectedHeroList, slot2)
+	if var_15_0 > 0 then
+		table.remove(arg_15_0.selectedHeroList, var_15_0)
 
-		slot0.selectedHeroIndexDict[slot1] = nil
+		arg_15_0.selectedHeroIndexDict[arg_15_1] = nil
 
-		for slot6, slot7 in ipairs(slot0.selectedHeroList) do
-			slot0.selectedHeroIndexDict[slot7] = slot6
+		for iter_15_2, iter_15_3 in ipairs(arg_15_0.selectedHeroList) do
+			arg_15_0.selectedHeroIndexDict[iter_15_3] = iter_15_2
 		end
 
 		VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ChangeSelectedHero)
 	end
 end
 
-function slot0.getSelectedIndex(slot0, slot1)
-	return slot0.selectedHeroIndexDict[slot1]
+function var_0_0.getSelectedIndex(arg_16_0, arg_16_1)
+	return arg_16_0.selectedHeroIndexDict[arg_16_1]
 end
 
-function slot0.getSelectedMoByIndex(slot0, slot1)
-	return slot0.selectedHeroList[slot1]
+function var_0_0.getSelectedMoByIndex(arg_17_0, arg_17_1)
+	return arg_17_0.selectedHeroList[arg_17_1]
 end
 
-function slot0.getSelectedHeroCount(slot0)
-	return #slot0.selectedHeroList
+function var_0_0.getSelectedHeroCount(arg_18_0)
+	return #arg_18_0.selectedHeroList
 end
 
-function slot0.getSelectedHeroList(slot0)
-	return slot0.selectedHeroList
+function var_0_0.getSelectedHeroList(arg_19_0)
+	return arg_19_0.selectedHeroList
 end
 
-function slot0.getSelectedHeroIdList(slot0)
-	slot1 = {}
+function var_0_0.getSelectedHeroIdList(arg_20_0)
+	local var_20_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.selectedHeroList) do
-		table.insert(slot1, slot6.heroId)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0.selectedHeroList) do
+		table.insert(var_20_0, iter_20_1.heroId)
 	end
 
-	return slot1
+	return var_20_0
 end
 
-function slot0.setDispatchViewStatus(slot0, slot1)
-	slot0.dispatchViewStatus = slot1
+function var_0_0.setDispatchViewStatus(arg_21_0, arg_21_1)
+	arg_21_0.dispatchViewStatus = arg_21_1
 end
 
-function slot0.clearSelectedHeroList(slot0)
-	slot0.selectedHeroList = nil
-	slot0.selectedHeroIndexDict = nil
-	slot0.dispatchViewStatus = nil
+function var_0_0.clearSelectedHeroList(arg_22_0)
+	arg_22_0.selectedHeroList = nil
+	arg_22_0.selectedHeroIndexDict = nil
+	arg_22_0.dispatchViewStatus = nil
 end
 
-function slot0.clear(slot0)
-	slot0:clearSelectedHeroList()
+function var_0_0.clear(arg_23_0)
+	arg_23_0:clearSelectedHeroList()
 
-	slot0.heroList = nil
+	arg_23_0.heroList = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,160 +1,163 @@
-module("modules.logic.social.view.SocialMessageItem", package.seeall)
+﻿module("modules.logic.social.view.SocialMessageItem", package.seeall)
 
-slot0 = class("SocialMessageItem", ListScrollCellExtend)
+local var_0_0 = class("SocialMessageItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#go_left")
-	slot0._txtnameleft = gohelper.findChildText(slot0.viewGO, "#go_left/textcontainer/#txt_nameleft")
-	slot0._txtcontentleft = gohelper.findChildText(slot0.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft")
-	slot0._goplayericonleft = gohelper.findChild(slot0.viewGO, "#go_left/#go_playericonleft")
-	slot0._goright = gohelper.findChild(slot0.viewGO, "#go_right")
-	slot0._goplayericonright = gohelper.findChild(slot0.viewGO, "#go_right/#go_playericonright")
-	slot0._txtnameright = gohelper.findChildText(slot0.viewGO, "#go_right/textcontainer/#txt_nameright")
-	slot0._txtcontentright = gohelper.findChildText(slot0.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright")
-	slot0._gochattime = gohelper.findChild(slot0.viewGO, "#go_chattime")
-	slot0._txtchattime = gohelper.findChildText(slot0.viewGO, "#go_chattime/#txt_chattime")
-	slot0._btnopright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright/#btn_opright")
-	slot0._txtopright = gohelper.findChildText(slot0.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright/#btn_opright/#txt_opright")
-	slot0._btnopleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft/#btn_opleft")
-	slot0._txtopleft = gohelper.findChildText(slot0.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft/#btn_opleft/#txt_opleft")
-	slot0._gowarm = gohelper.findChild(slot0.viewGO, "#go_warm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+	arg_1_0._txtnameleft = gohelper.findChildText(arg_1_0.viewGO, "#go_left/textcontainer/#txt_nameleft")
+	arg_1_0._txtcontentleft = gohelper.findChildText(arg_1_0.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft")
+	arg_1_0._goplayericonleft = gohelper.findChild(arg_1_0.viewGO, "#go_left/#go_playericonleft")
+	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_right")
+	arg_1_0._goplayericonright = gohelper.findChild(arg_1_0.viewGO, "#go_right/#go_playericonright")
+	arg_1_0._txtnameright = gohelper.findChildText(arg_1_0.viewGO, "#go_right/textcontainer/#txt_nameright")
+	arg_1_0._txtcontentright = gohelper.findChildText(arg_1_0.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright")
+	arg_1_0._gochattime = gohelper.findChild(arg_1_0.viewGO, "#go_chattime")
+	arg_1_0._txtchattime = gohelper.findChildText(arg_1_0.viewGO, "#go_chattime/#txt_chattime")
+	arg_1_0._btnopright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright/#btn_opright")
+	arg_1_0._txtopright = gohelper.findChildText(arg_1_0.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright/#btn_opright/#txt_opright")
+	arg_1_0._btnopleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft/#btn_opleft")
+	arg_1_0._txtopleft = gohelper.findChildText(arg_1_0.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft/#btn_opleft/#txt_opleft")
+	arg_1_0._gowarm = gohelper.findChild(arg_1_0.viewGO, "#go_warm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, slot0.updateDesc, slot0)
-	slot0._btnopleft:AddClickListener(slot0._btnopleftOnClick, slot0)
-	slot0._btnopright:AddClickListener(slot0._btnoprightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, arg_2_0.updateDesc, arg_2_0)
+	arg_2_0._btnopleft:AddClickListener(arg_2_0._btnopleftOnClick, arg_2_0)
+	arg_2_0._btnopright:AddClickListener(arg_2_0._btnoprightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, slot0.updateDesc, slot0)
-	slot0._btnopleft:RemoveClickListener()
-	slot0._btnopright:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, arg_3_0.updateDesc, arg_3_0)
+	arg_3_0._btnopleft:RemoveClickListener()
+	arg_3_0._btnopright:RemoveClickListener()
 end
 
-function slot0._btnopleftOnClick(slot0)
-	SocialMessageController.instance:opMessageOnClick(slot0._mo)
+function var_0_0._btnopleftOnClick(arg_4_0)
+	SocialMessageController.instance:opMessageOnClick(arg_4_0._mo)
 end
 
-function slot0._btnoprightOnClick(slot0)
-	SocialMessageController.instance:opMessageOnClick(slot0._mo)
+function var_0_0._btnoprightOnClick(arg_5_0)
+	SocialMessageController.instance:opMessageOnClick(arg_5_0._mo)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	if slot0._mo.chattime then
-		gohelper.setActive(slot0._gochattime, true)
-		gohelper.setActive(slot0._goright, false)
-		gohelper.setActive(slot0._goleft, false)
+function var_0_0._refreshUI(arg_7_0)
+	if arg_7_0._mo.chattime then
+		gohelper.setActive(arg_7_0._gochattime, true)
+		gohelper.setActive(arg_7_0._goright, false)
+		gohelper.setActive(arg_7_0._goleft, false)
 
-		slot0._txtchattime.text = slot0._mo.chattime
+		arg_7_0._txtchattime.text = arg_7_0._mo.chattime
 
-		gohelper.setActive(slot0._gowarm, false)
+		gohelper.setActive(arg_7_0._gowarm, false)
 
 		return
 	end
 
-	if slot0._mo.showWarm then
-		gohelper.setActive(slot0._gochattime, false)
-		gohelper.setActive(slot0._goright, false)
-		gohelper.setActive(slot0._goleft, false)
-		gohelper.setActive(slot0._gowarm, true)
+	if arg_7_0._mo.showWarm then
+		gohelper.setActive(arg_7_0._gochattime, false)
+		gohelper.setActive(arg_7_0._goright, false)
+		gohelper.setActive(arg_7_0._goleft, false)
+		gohelper.setActive(arg_7_0._gowarm, true)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gowarm, false)
-	gohelper.setActive(slot0._gochattime, false)
+	gohelper.setActive(arg_7_0._gowarm, false)
+	gohelper.setActive(arg_7_0._gochattime, false)
 
-	slot2 = SocialModel.instance:getPlayerMO(slot0._mo.senderId)
+	local var_7_0 = PlayerModel.instance:getMyUserId()
+	local var_7_1 = SocialModel.instance:getPlayerMO(arg_7_0._mo.senderId)
 
-	gohelper.setActive(slot0._goright, PlayerModel.instance:getMyUserId() == slot0._mo.senderId)
-	gohelper.setActive(slot0._goleft, slot1 ~= slot0._mo.senderId)
+	gohelper.setActive(arg_7_0._goright, var_7_0 == arg_7_0._mo.senderId)
+	gohelper.setActive(arg_7_0._goleft, var_7_0 ~= arg_7_0._mo.senderId)
 
-	slot3 = slot0._mo:isHasOp()
+	local var_7_2 = arg_7_0._mo:isHasOp()
 
-	if slot1 == slot0._mo.senderId then
-		if not slot0._playericonright then
-			slot0._playericonright = IconMgr.instance:getCommonPlayerIcon(slot0._goplayericonright)
+	if var_7_0 == arg_7_0._mo.senderId then
+		if not arg_7_0._playericonright then
+			arg_7_0._playericonright = IconMgr.instance:getCommonPlayerIcon(arg_7_0._goplayericonright)
 
-			slot0._playericonright:setScale(1.1)
+			arg_7_0._playericonright:setScale(1.1)
 		end
 
-		if slot2 then
-			slot0._playericonright:onUpdateMO(slot2)
+		if var_7_1 then
+			arg_7_0._playericonright:onUpdateMO(var_7_1)
 		else
-			slot0._playericonright:setMOValue(slot0._mo.senderId, slot0._mo.senderName, slot0._mo.level, slot0._mo.portrait, 0)
+			arg_7_0._playericonright:setMOValue(arg_7_0._mo.senderId, arg_7_0._mo.senderName, arg_7_0._mo.level, arg_7_0._mo.portrait, 0)
 		end
 
-		slot0._playericonright:setShowLevel(false)
+		arg_7_0._playericonright:setShowLevel(false)
 
-		slot0._txtnameright.text = slot0._mo:getSenderName()
-		slot0._txtcontentright.text = LuaUtil.replaceSpace(slot0._mo.content, true)
+		arg_7_0._txtnameright.text = arg_7_0._mo:getSenderName()
+		arg_7_0._txtcontentright.text = LuaUtil.replaceSpace(arg_7_0._mo.content, true)
 
-		gohelper.setActive(slot0._btnopright, slot3)
+		gohelper.setActive(arg_7_0._btnopright, var_7_2)
 
-		if slot3 then
-			slot0._txtopright.text = slot0:_getOpTetStr(slot0._mo.msgType)
+		if var_7_2 then
+			arg_7_0._txtopright.text = arg_7_0:_getOpTetStr(arg_7_0._mo.msgType)
 		end
 	else
-		if not slot0._playericonleft then
-			slot0._playericonleft = IconMgr.instance:getCommonPlayerIcon(slot0._goplayericonleft)
+		if not arg_7_0._playericonleft then
+			arg_7_0._playericonleft = IconMgr.instance:getCommonPlayerIcon(arg_7_0._goplayericonleft)
 
-			slot0._playericonleft:setScale(1.1)
+			arg_7_0._playericonleft:setScale(1.1)
 		end
 
-		if slot2 then
-			slot0._playericonleft:onUpdateMO(slot2)
+		if var_7_1 then
+			arg_7_0._playericonleft:onUpdateMO(var_7_1)
 		else
-			slot0._playericonleft:setMOValue(slot0._mo.senderId, slot0._mo.senderName, slot0._mo.level, slot0._mo.portrait, 0)
+			arg_7_0._playericonleft:setMOValue(arg_7_0._mo.senderId, arg_7_0._mo.senderName, arg_7_0._mo.level, arg_7_0._mo.portrait, 0)
 		end
 
-		slot0._playericonleft:setShowLevel(false)
+		arg_7_0._playericonleft:setShowLevel(false)
 
-		slot4 = slot0._mo:getSenderName()
+		local var_7_3 = arg_7_0._mo:getSenderName()
 
-		if slot2 and not string.nilorempty(slot2.desc) then
-			slot4 = slot2.desc
+		if var_7_1 and not string.nilorempty(var_7_1.desc) then
+			var_7_3 = var_7_1.desc
 		end
 
-		slot0._txtnameleft.text = slot4
-		slot0._txtcontentleft.text = LuaUtil.replaceSpace(slot0._mo.content, true)
+		arg_7_0._txtnameleft.text = var_7_3
+		arg_7_0._txtcontentleft.text = LuaUtil.replaceSpace(arg_7_0._mo.content, true)
 
-		gohelper.setActive(slot0._btnopleft, slot3)
+		gohelper.setActive(arg_7_0._btnopleft, var_7_2)
 
-		if slot3 then
-			slot0._txtopleft.text = slot0:_getOpTetStr(slot0._mo.msgType)
+		if var_7_2 then
+			arg_7_0._txtopleft.text = arg_7_0:_getOpTetStr(arg_7_0._mo.msgType)
 		end
 	end
 end
 
-function slot0._getOpTetStr(slot0, slot1)
-	if ChatEnum.MsgTypeOPLang[slot1] then
-		return luaLang(ChatEnum.MsgTypeOPLang[slot1])
+function var_0_0._getOpTetStr(arg_8_0, arg_8_1)
+	if ChatEnum.MsgTypeOPLang[arg_8_1] then
+		return luaLang(ChatEnum.MsgTypeOPLang[arg_8_1])
 	end
 
 	return ""
 end
 
-function slot0.updateDesc(slot0, slot1)
-	if slot1 == slot0._mo.senderId then
-		slot0:_refreshUI()
+function var_0_0.updateDesc(arg_9_0, arg_9_1)
+	if arg_9_1 == arg_9_0._mo.senderId then
+		arg_9_0:_refreshUI()
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._mo = arg_10_1
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

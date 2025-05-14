@@ -1,248 +1,261 @@
-module("modules.logic.navigatebtn.view.NavigateButtonsView", package.seeall)
+﻿module("modules.logic.navigatebtn.view.NavigateButtonsView", package.seeall)
 
-slot0 = class("NavigateButtonsView", BaseView)
+local var_0_0 = class("NavigateButtonsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnhome = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_home")
-	slot0._btnhelp = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_help")
-	slot0._imageclose = gohelper.findChildImage(slot0.viewGO, "#btn_close")
-	slot0._imagehome = gohelper.findChildImage(slot0.viewGO, "#btn_home")
-	slot0._imagehelp = gohelper.findChildImage(slot0.viewGO, "#btn_help")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnhome = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_home")
+	arg_1_0._btnhelp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_help")
+	arg_1_0._imageclose = gohelper.findChildImage(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._imagehome = gohelper.findChildImage(arg_1_0.viewGO, "#btn_home")
+	arg_1_0._imagehelp = gohelper.findChildImage(arg_1_0.viewGO, "#btn_help")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnhome:AddClickListener(slot0._btnhomeOnClick, slot0)
-	slot0._btnhelp:AddClickListener(slot0._btnhelpOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnhome:AddClickListener(arg_2_0._btnhomeOnClick, arg_2_0)
+	arg_2_0._btnhelp:AddClickListener(arg_2_0._btnhelpOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnhome:RemoveClickListener()
-	slot0._btnhelp:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnhome:RemoveClickListener()
+	arg_3_0._btnhelp:RemoveClickListener()
 end
 
-slot0.DefaultHelpId = 100
+var_0_0.DefaultHelpId = 100
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if not slot1 then
-		slot0.param = {
+function var_0_0.ctor(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
+	if not arg_4_1 then
+		arg_4_0.param = {
 			true,
 			true,
 			true
 		}
 	else
-		slot0.param = slot1
+		arg_4_0.param = arg_4_1
 	end
 
-	if not slot2 then
-		slot0.helpId = uv0.DefaultHelpId
+	if not arg_4_2 then
+		arg_4_0.helpId = var_0_0.DefaultHelpId
 	else
-		slot0.helpId = slot2
+		arg_4_0.helpId = arg_4_2
 	end
 
-	if slot7 == nil then
-		slot0._useLightBtn = true
+	if arg_4_7 == nil then
+		arg_4_0._useLightBtn = true
 	else
-		slot0._useLightBtn = slot7
+		arg_4_0._useLightBtn = arg_4_7
 	end
 
-	slot0._extendBtns = slot0:getUserDataTb_()
-	slot0._closeCallback = slot3
-	slot0._homeCallback = slot4
-	slot0._helpCallback = slot5
-	slot0._callbackObj = slot6
-	slot0._animEnabled = true
-	slot0.initDone = false
-	slot0.needReplaceCloseBtnAudioId = false
-	slot0.replaceCloseBtnAudioId = 0
-	slot0.needReplaceHomeBtnAudioId = false
-	slot0.replaceHomeBtnAudioId = 0
-	slot0.needReplaceHelpBtnAudioId = false
-	slot0.replaceHelpBtnAudioId = 0
+	arg_4_0._extendBtns = arg_4_0:getUserDataTb_()
+	arg_4_0._closeCallback = arg_4_3
+	arg_4_0._homeCallback = arg_4_4
+	arg_4_0._helpCallback = arg_4_5
+	arg_4_0._callbackObj = arg_4_6
+	arg_4_0._animEnabled = true
+	arg_4_0.initDone = false
+	arg_4_0.needReplaceCloseBtnAudioId = false
+	arg_4_0.replaceCloseBtnAudioId = 0
+	arg_4_0.needReplaceHomeBtnAudioId = false
+	arg_4_0.replaceHomeBtnAudioId = 0
+	arg_4_0.needReplaceHelpBtnAudioId = false
+	arg_4_0.replaceHelpBtnAudioId = 0
 end
 
-function slot0.setOpenCallback(slot0, slot1, slot2)
-	if slot0._has_onOpen then
-		if slot1 then
-			slot1(slot2)
+function var_0_0.setOpenCallback(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._has_onOpen then
+		if arg_5_1 then
+			arg_5_1(arg_5_2)
 		end
 
 		return
 	end
 
-	slot0._openCallback = slot1
-	slot0._openCallbackTarget = slot2
+	arg_5_0._openCallback = arg_5_1
+	arg_5_0._openCallbackTarget = arg_5_2
 end
 
-function slot0.addExtendBtn(slot0, slot1, slot2, slot3, slot4)
-	if slot0._extendBtns[slot1] then
-		return slot5[1]
+function var_0_0.addExtendBtn(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	local var_6_0 = arg_6_0._extendBtns[arg_6_1]
+
+	if var_6_0 then
+		return var_6_0[1]
 	end
 
-	slot6 = gohelper.cloneInPlace(slot0._btnhelp.gameObject)
+	local var_6_1 = gohelper.cloneInPlace(arg_6_0._btnhelp.gameObject)
 
-	gohelper.setActive(slot6, true)
-	gohelper.addUIClickAudio(slot6)
+	gohelper.setActive(var_6_1, true)
+	gohelper.addUIClickAudio(var_6_1)
 
-	slot7 = SLFramework.UGUI.ButtonWrap.Get(slot6)
+	local var_6_2 = SLFramework.UGUI.ButtonWrap.Get(var_6_1)
 
-	slot7:AddClickListener(slot0._extendBtnClick, slot0, slot1)
+	var_6_2:AddClickListener(arg_6_0._extendBtnClick, arg_6_0, arg_6_1)
 
-	slot0._extendBtns[slot1] = {
-		slot7,
-		slot3,
-		slot4
+	arg_6_0._extendBtns[arg_6_1] = {
+		var_6_2,
+		arg_6_3,
+		arg_6_4
 	}
 
-	if slot2 then
-		UISpriteSetMgr.instance:setCommonSprite(slot7:GetComponent(gohelper.Type_Image), slot2)
+	if arg_6_2 then
+		local var_6_3 = var_6_2:GetComponent(gohelper.Type_Image)
+
+		UISpriteSetMgr.instance:setCommonSprite(var_6_3, arg_6_2)
 	end
 
-	gohelper.setSibling(slot6, slot1)
+	gohelper.setSibling(var_6_1, arg_6_1)
 
-	return slot7
+	return var_6_2
 end
 
-function slot0.getExtendBtn(slot0, slot1)
-	if slot0._extendBtns[slot1] then
-		return slot2[1]
+function var_0_0.getExtendBtn(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._extendBtns[arg_7_1]
+
+	if var_7_0 then
+		return var_7_0[1]
 	end
 end
 
-function slot0._extendBtnClick(slot0, slot1)
-	if not slot0._extendBtns[slot1] then
+function var_0_0._extendBtnClick(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._extendBtns[arg_8_1]
+
+	if not var_8_0 then
 		return
 	end
 
-	if slot2[2] then
-		slot3(slot2[3])
+	local var_8_1 = var_8_0[2]
+	local var_8_2 = var_8_0[3]
+
+	if var_8_1 then
+		var_8_1(var_8_2)
 	end
 end
 
-function slot0.setLight(slot0, slot1)
-	if slot1 == nil then
-		slot0._useLightBtn = true
+function var_0_0.setLight(arg_9_0, arg_9_1)
+	if arg_9_1 == nil then
+		arg_9_0._useLightBtn = true
 	else
-		slot0._useLightBtn = slot1
+		arg_9_0._useLightBtn = arg_9_1
 	end
 end
 
-function slot0.setCloseCheck(slot0, slot1, slot2)
-	slot0._closeCheckFunc = slot1
-	slot0._closeCheckObj = slot2
+function var_0_0.setCloseCheck(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._closeCheckFunc = arg_10_1
+	arg_10_0._closeCheckObj = arg_10_2
 end
 
-function slot0.setHomeCheck(slot0, slot1, slot2)
-	slot0._homeCheckFunc = slot1
-	slot0._homeCheckObj = slot2
+function var_0_0.setHomeCheck(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._homeCheckFunc = arg_11_1
+	arg_11_0._homeCheckObj = arg_11_2
 end
 
-function slot0.setOverrideClose(slot0, slot1, slot2)
-	slot0._overrideCloseFunc = slot1
-	slot0._overrideCloseObj = slot2
+function var_0_0.setOverrideClose(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._overrideCloseFunc = arg_12_1
+	arg_12_0._overrideCloseObj = arg_12_2
 end
 
-function slot0.setOverrideHome(slot0, slot1, slot2)
-	slot0._overrideHomeFunc = slot1
-	slot0._overrideHomeFuncObj = slot2
+function var_0_0.setOverrideHome(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._overrideHomeFunc = arg_13_1
+	arg_13_0._overrideHomeFuncObj = arg_13_2
 end
 
-function slot0.setOverrideHelp(slot0, slot1, slot2)
-	slot0._overrideHelpFunc = slot1
-	slot0._overrideHelpObj = slot2
+function var_0_0.setOverrideHelp(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0._overrideHelpFunc = arg_14_1
+	arg_14_0._overrideHelpObj = arg_14_2
 end
 
-function slot0.setHelpId(slot0, slot1)
-	if slot0.helpId == slot1 then
+function var_0_0.setHelpId(arg_15_0, arg_15_1)
+	if arg_15_0.helpId == arg_15_1 then
 		return
 	end
 
-	slot0.helpId = slot1
+	arg_15_0.helpId = arg_15_1
 
-	slot0:setParam({
-		slot0.param[1],
-		slot0.param[2],
+	arg_15_0:setParam({
+		arg_15_0.param[1],
+		arg_15_0.param[2],
 		true
 	})
 end
 
-function slot0.hideHelpIcon(slot0)
-	if slot0.helpId == uv0.DefaultHelpId then
+function var_0_0.hideHelpIcon(arg_16_0)
+	if arg_16_0.helpId == var_0_0.DefaultHelpId then
 		return
 	end
 
-	slot0.helpId = uv0.DefaultHelpId
+	arg_16_0.helpId = var_0_0.DefaultHelpId
 
-	slot0:setParam({
-		slot0.param[1],
-		slot0.param[2],
+	arg_16_0:setParam({
+		arg_16_0.param[1],
+		arg_16_0.param[2],
 		false
 	})
 end
 
-function slot0.setAnimEnabled(slot0, slot1)
-	slot0._animEnabled = slot1
+function var_0_0.setAnimEnabled(arg_17_0, arg_17_1)
+	arg_17_0._animEnabled = arg_17_1
 end
 
-function slot0._onEscBtnClick(slot0)
-	if slot0.param[1] and slot0._btnclose.gameObject.activeInHierarchy then
-		slot0:_btncloseOnClick()
+function var_0_0._onEscBtnClick(arg_18_0)
+	if arg_18_0.param[1] and arg_18_0._btnclose.gameObject.activeInHierarchy then
+		arg_18_0:_btncloseOnClick()
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0._closeCheckFunc and not slot0._closeCheckFunc(slot0._closeCheckObj, slot0._reallyClose, slot0) then
+function var_0_0._btncloseOnClick(arg_19_0)
+	if arg_19_0._closeCheckFunc and not arg_19_0._closeCheckFunc(arg_19_0._closeCheckObj, arg_19_0._reallyClose, arg_19_0) then
 		return
 	end
 
-	if slot0._overrideCloseFunc then
-		slot0._overrideCloseFunc(slot0._overrideCloseObj)
-
-		return
-	end
-
-	slot0:_reallyClose()
-end
-
-function slot0._reallyClose(slot0)
-	if ViewMgr.instance:isOpen(slot0.viewContainer.viewName) then
-		ViewMgr.instance:closeView(slot1, nil, true)
-	end
-
-	if slot0._closeCallback then
-		slot0._closeCallback(slot0._callbackObj)
-	end
-end
-
-function slot0._btnhomeOnClick(slot0)
-	if slot0._homeCheckFunc and not slot0._homeCheckFunc(slot0._homeCheckObj, slot0._reallyHome, slot0) then
-		return
-	end
-
-	if slot0._overrideHomeFunc then
-		slot0._overrideHomeFunc(slot0._overrideHomeFuncObj)
+	if arg_19_0._overrideCloseFunc then
+		arg_19_0._overrideCloseFunc(arg_19_0._overrideCloseObj)
 
 		return
 	end
 
-	slot0:_reallyHome()
+	arg_19_0:_reallyClose()
 end
 
-function slot0._reallyHome(slot0)
-	uv0.homeClick()
+function var_0_0._reallyClose(arg_20_0)
+	local var_20_0 = arg_20_0.viewContainer.viewName
 
-	if slot0._homeCallback then
-		slot0._homeCallback(slot0._callbackObj)
+	if ViewMgr.instance:isOpen(var_20_0) then
+		ViewMgr.instance:closeView(var_20_0, nil, true)
+	end
+
+	if arg_20_0._closeCallback then
+		arg_20_0._closeCallback(arg_20_0._callbackObj)
 	end
 end
 
-function slot0.homeClick()
+function var_0_0._btnhomeOnClick(arg_21_0)
+	if arg_21_0._homeCheckFunc and not arg_21_0._homeCheckFunc(arg_21_0._homeCheckObj, arg_21_0._reallyHome, arg_21_0) then
+		return
+	end
+
+	if arg_21_0._overrideHomeFunc then
+		arg_21_0._overrideHomeFunc(arg_21_0._overrideHomeFuncObj)
+
+		return
+	end
+
+	arg_21_0:_reallyHome()
+end
+
+function var_0_0._reallyHome(arg_22_0)
+	var_0_0.homeClick()
+
+	if arg_22_0._homeCallback then
+		arg_22_0._homeCallback(arg_22_0._callbackObj)
+	end
+end
+
+function var_0_0.homeClick()
 	NavigateMgr.instance:dispatchEvent(NavigateEvent.BeforeClickHome)
 
 	DungeonModel.instance.curSendEpisodeId = nil
@@ -253,9 +266,13 @@ function slot0.homeClick()
 		ViewMgr.instance:closeAllPopupViews(nil, true)
 		MainController.instance:enterMainScene(true, false)
 
-		if not ViewMgr.instance:isOpen(ViewName.MainView) and GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
+		local var_23_0 = GameSceneMgr.instance:getCurSceneType()
+		local var_23_1 = ViewMgr.instance:isOpen(ViewName.MainView)
+		local var_23_2 = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain)
+
+		if not var_23_1 and var_23_0 == SceneType.Main and not var_23_2 then
 			ViewMgr.instance:openView(ViewName.MainView)
-		elseif slot1 and slot2 then
+		elseif var_23_1 and var_23_2 then
 			ViewMgr.instance:closeView(ViewName.MainView)
 		end
 	end
@@ -263,198 +280,198 @@ function slot0.homeClick()
 	NavigateMgr.instance:dispatchEvent(NavigateEvent.ClickHome)
 end
 
-function slot0._btnhelpOnClick(slot0)
-	if not HelpController.instance:checkGuideStepLock(slot0.helpId) then
+function var_0_0._btnhelpOnClick(arg_24_0)
+	if not HelpController.instance:checkGuideStepLock(arg_24_0.helpId) then
 		return
 	end
 
-	if slot0._overrideHelpFunc then
-		slot0._overrideHelpFunc(slot0._overrideHelpObj)
+	if arg_24_0._overrideHelpFunc then
+		arg_24_0._overrideHelpFunc(arg_24_0._overrideHelpObj)
 
 		return
 	end
 
-	HelpController.instance:showHelp(slot0.helpId)
+	HelpController.instance:showHelp(arg_24_0.helpId)
 
-	if slot0._helpCallback then
-		slot0._helpCallback(slot0._callbackObj)
+	if arg_24_0._helpCallback then
+		arg_24_0._helpCallback(arg_24_0._callbackObj)
 	end
 end
 
-function slot0._changeIconState(slot0)
-	if not slot0._initialized then
+function var_0_0._changeIconState(arg_25_0)
+	if not arg_25_0._initialized then
 		return
 	end
 
-	if slot0._useLightBtn then
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imageclose, "btn_back_light")
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imagehome, "btn_home_light")
+	if arg_25_0._useLightBtn then
+		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imageclose, "btn_back_light")
+		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imagehome, "btn_home_light")
 	else
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imageclose, "btn_back_dark")
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imagehome, "btn_home_dark")
+		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imageclose, "btn_back_dark")
+		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imagehome, "btn_home_dark")
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_26_0)
+	arg_26_0._anim = arg_26_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.addUIClickAudio(slot0._btnhome.gameObject, AudioEnum.UI.play_ui_common_pause)
+	gohelper.addUIClickAudio(arg_26_0._btnhome.gameObject, AudioEnum.UI.play_ui_common_pause)
 
-	slot0._initialized = true
+	arg_26_0._initialized = true
 
-	slot0:refreshUI()
+	arg_26_0:refreshUI()
 
-	slot0.initDone = true
+	arg_26_0.initDone = true
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._btnclose and slot0._btnclose.gameObject, slot0.param[1])
-	gohelper.setActive(slot0._btnhome and slot0._btnhome.gameObject, slot0.param[2])
-	slot0:_updateHelpBtn()
+function var_0_0.refreshUI(arg_27_0)
+	gohelper.setActive(arg_27_0._btnclose and arg_27_0._btnclose.gameObject, arg_27_0.param[1])
+	gohelper.setActive(arg_27_0._btnhome and arg_27_0._btnhome.gameObject, arg_27_0.param[2])
+	arg_27_0:_updateHelpBtn()
 end
 
-function slot0._updateHelpBtn(slot0)
-	if slot0._helpVisible then
-		gohelper.setActive(slot0._btnhelp and slot0._btnhelp.gameObject, slot0._helpVisible)
+function var_0_0._updateHelpBtn(arg_28_0)
+	if arg_28_0._helpVisible then
+		gohelper.setActive(arg_28_0._btnhelp and arg_28_0._btnhelp.gameObject, arg_28_0._helpVisible)
 	else
-		gohelper.setActive(slot0._btnhelp and slot0._btnhelp.gameObject, slot0.param[3] and HelpController.instance:checkGuideStepLock(slot0.helpId))
+		gohelper.setActive(arg_28_0._btnhelp and arg_28_0._btnhelp.gameObject, arg_28_0.param[3] and HelpController.instance:checkGuideStepLock(arg_28_0.helpId))
 	end
 end
 
-function slot0.setParam(slot0, slot1)
-	slot0.param = slot1
+function var_0_0.setParam(arg_29_0, arg_29_1)
+	arg_29_0.param = arg_29_1
 
-	slot0:refreshUI()
+	arg_29_0:refreshUI()
 end
 
-function slot0.showHelpBtnIcon(slot0)
-	slot0:setParam({
-		slot0.param[1],
-		slot0.param[2],
+function var_0_0.showHelpBtnIcon(arg_30_0)
+	arg_30_0:setParam({
+		arg_30_0.param[1],
+		arg_30_0.param[2],
 		true
 	})
 end
 
-function slot0.changerHelpId(slot0, slot1)
-	slot0.helpId = slot1
+function var_0_0.changerHelpId(arg_31_0, arg_31_1)
+	arg_31_0.helpId = arg_31_1
 
-	slot0:showHelpBtnIcon()
+	arg_31_0:showHelpBtnIcon()
 end
 
-function slot0.resetCloseBtnAudioId(slot0, slot1)
-	if slot0.initDone then
-		slot0:_resetCloseBtnAudioId(slot1)
+function var_0_0.resetCloseBtnAudioId(arg_32_0, arg_32_1)
+	if arg_32_0.initDone then
+		arg_32_0:_resetCloseBtnAudioId(arg_32_1)
 	else
-		slot0.needReplaceCloseBtnAudioId = true
-		slot0.replaceCloseBtnAudioId = slot1
+		arg_32_0.needReplaceCloseBtnAudioId = true
+		arg_32_0.replaceCloseBtnAudioId = arg_32_1
 	end
 end
 
-function slot0._resetCloseBtnAudioId(slot0, slot1)
-	if slot1 ~= 0 then
-		gohelper.addUIClickAudio(slot0._btnclose.gameObject, slot1)
+function var_0_0._resetCloseBtnAudioId(arg_33_0, arg_33_1)
+	if arg_33_1 ~= 0 then
+		gohelper.addUIClickAudio(arg_33_0._btnclose.gameObject, arg_33_1)
 	else
-		gohelper.removeUIClickAudio(slot0._btnclose.gameObject)
+		gohelper.removeUIClickAudio(arg_33_0._btnclose.gameObject)
 	end
 end
 
-function slot0.resetHomeBtnAudioId(slot0, slot1)
-	if slot0.initDone then
-		slot0:_resetHomeBtnAudioId(slot1)
+function var_0_0.resetHomeBtnAudioId(arg_34_0, arg_34_1)
+	if arg_34_0.initDone then
+		arg_34_0:_resetHomeBtnAudioId(arg_34_1)
 	else
-		slot0.needReplaceHomeBtnAudioId = true
-		slot0.replaceHomeBtnAudioId = slot1
+		arg_34_0.needReplaceHomeBtnAudioId = true
+		arg_34_0.replaceHomeBtnAudioId = arg_34_1
 	end
 end
 
-function slot0._resetHomeBtnAudioId(slot0, slot1)
-	if slot1 ~= 0 then
-		gohelper.addUIClickAudio(slot0._btnhome.gameObject, slot1)
+function var_0_0._resetHomeBtnAudioId(arg_35_0, arg_35_1)
+	if arg_35_1 ~= 0 then
+		gohelper.addUIClickAudio(arg_35_0._btnhome.gameObject, arg_35_1)
 	else
-		gohelper.removeUIClickAudio(slot0._btnhome.gameObject)
+		gohelper.removeUIClickAudio(arg_35_0._btnhome.gameObject)
 	end
 end
 
-function slot0.resetHelpBtnAudioId(slot0, slot1)
-	if slot0.initDone then
-		slot0:_resetHelpBtnAudioId(slot1)
+function var_0_0.resetHelpBtnAudioId(arg_36_0, arg_36_1)
+	if arg_36_0.initDone then
+		arg_36_0:_resetHelpBtnAudioId(arg_36_1)
 	else
-		slot0.needReplaceHelpBtnAudioId = true
-		slot0.replaceHelpBtnAudioId = slot1
+		arg_36_0.needReplaceHelpBtnAudioId = true
+		arg_36_0.replaceHelpBtnAudioId = arg_36_1
 	end
 end
 
-function slot0._resetHelpBtnAudioId(slot0, slot1)
-	if slot1 ~= 0 then
-		gohelper.addUIClickAudio(slot0._btnhelp.gameObject, slot1)
+function var_0_0._resetHelpBtnAudioId(arg_37_0, arg_37_1)
+	if arg_37_1 ~= 0 then
+		gohelper.addUIClickAudio(arg_37_0._btnhelp.gameObject, arg_37_1)
 	else
-		gohelper.removeUIClickAudio(slot0._btnhelp.gameObject)
+		gohelper.removeUIClickAudio(arg_37_0._btnhelp.gameObject)
 	end
 end
 
-function slot0.setHelpVisible(slot0, slot1)
-	slot0._helpVisible = slot1
+function var_0_0.setHelpVisible(arg_38_0, arg_38_1)
+	arg_38_0._helpVisible = arg_38_1
 
-	if not slot0._btnhelp then
+	if not arg_38_0._btnhelp then
 		return
 	end
 
-	gohelper.setActive(slot0._btnhelp.gameObject, slot1)
+	gohelper.setActive(arg_38_0._btnhelp.gameObject, arg_38_1)
 end
 
-function slot0.resetOnCloseViewAudio(slot0, slot1)
-	slot0:resetCloseBtnAudioId(slot1)
-	slot0:resetHomeBtnAudioId(slot1)
+function var_0_0.resetOnCloseViewAudio(arg_39_0, arg_39_1)
+	arg_39_0:resetCloseBtnAudioId(arg_39_1)
+	arg_39_0:resetHomeBtnAudioId(arg_39_1)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._extendBtns) do
-		slot5[1]:RemoveClickListener()
-	end
-end
-
-function slot0.onOpen(slot0)
-	if slot0._anim and slot0._animEnabled then
-		slot0._anim:Play(UIAnimationName.Open, 0, 0)
-	end
-
-	NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onEscBtnClick, slot0, true)
-
-	if slot0.needReplaceCloseBtnAudioId then
-		slot0:_resetCloseBtnAudioId(slot0.replaceCloseBtnAudioId)
-
-		slot0.needReplaceCloseBtnAudioId = false
-	end
-
-	if slot0.needReplaceHomeBtnAudioId then
-		slot0:_resetHomeBtnAudioId(slot0.replaceHomeBtnAudioId)
-
-		slot0.needReplaceHomeBtnAudioId = false
-	end
-
-	if slot0.needReplaceHelpBtnAudioId then
-		slot0:_resetHomeBtnAudioId(slot0.replaceHelpBtnAudioId)
-
-		slot0.needReplaceHelpBtnAudioId = false
-	end
-
-	if slot0._openCallback then
-		slot0._openCallback(slot0._openCallbackTarget)
-	end
-
-	slot0:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, slot0._gudieEnd, slot0)
-end
-
-function slot0._gudieEnd(slot0)
-	slot0:_updateHelpBtn()
-end
-
-function slot0.onClose(slot0)
-	if slot0._anim and slot0._animEnabled then
-		slot0._anim:Play(UIAnimationName.Close, 0, 0)
+function var_0_0.onDestroyView(arg_40_0)
+	for iter_40_0, iter_40_1 in pairs(arg_40_0._extendBtns) do
+		iter_40_1[1]:RemoveClickListener()
 	end
 end
 
-slot0.prefabPath = "ui/viewres/common/commonbtnsview.prefab"
+function var_0_0.onOpen(arg_41_0)
+	if arg_41_0._anim and arg_41_0._animEnabled then
+		arg_41_0._anim:Play(UIAnimationName.Open, 0, 0)
+	end
 
-return slot0
+	NavigateMgr.instance:addEscape(arg_41_0.viewContainer.viewName, arg_41_0._onEscBtnClick, arg_41_0, true)
+
+	if arg_41_0.needReplaceCloseBtnAudioId then
+		arg_41_0:_resetCloseBtnAudioId(arg_41_0.replaceCloseBtnAudioId)
+
+		arg_41_0.needReplaceCloseBtnAudioId = false
+	end
+
+	if arg_41_0.needReplaceHomeBtnAudioId then
+		arg_41_0:_resetHomeBtnAudioId(arg_41_0.replaceHomeBtnAudioId)
+
+		arg_41_0.needReplaceHomeBtnAudioId = false
+	end
+
+	if arg_41_0.needReplaceHelpBtnAudioId then
+		arg_41_0:_resetHomeBtnAudioId(arg_41_0.replaceHelpBtnAudioId)
+
+		arg_41_0.needReplaceHelpBtnAudioId = false
+	end
+
+	if arg_41_0._openCallback then
+		arg_41_0._openCallback(arg_41_0._openCallbackTarget)
+	end
+
+	arg_41_0:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, arg_41_0._gudieEnd, arg_41_0)
+end
+
+function var_0_0._gudieEnd(arg_42_0)
+	arg_42_0:_updateHelpBtn()
+end
+
+function var_0_0.onClose(arg_43_0)
+	if arg_43_0._anim and arg_43_0._animEnabled then
+		arg_43_0._anim:Play(UIAnimationName.Close, 0, 0)
+	end
+end
+
+var_0_0.prefabPath = "ui/viewres/common/commonbtnsview.prefab"
+
+return var_0_0

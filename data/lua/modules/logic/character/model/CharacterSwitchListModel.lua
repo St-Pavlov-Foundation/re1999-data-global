@@ -1,228 +1,247 @@
-module("modules.logic.character.model.CharacterSwitchListModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterSwitchListModel", package.seeall)
 
-slot0 = class("CharacterSwitchListModel", ListScrollModel)
+local var_0_0 = class("CharacterSwitchListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._tempHeroId = nil
-	slot0._tempSkinId = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._tempHeroId = nil
+	arg_1_0._tempSkinId = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._tempHeroId = nil
-	slot0._tempSkinId = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._tempHeroId = nil
+	arg_2_0._tempSkinId = nil
 end
 
-function slot0.initHeroList(slot0)
-	slot0._mainHeroList = {}
-	slot0.curHeroId = nil
-	slot1 = CharacterMainHeroMO.New()
-	slot6 = true
+function var_0_0.initHeroList(arg_3_0)
+	arg_3_0._mainHeroList = {}
+	arg_3_0.curHeroId = nil
 
-	slot1:init(nil, 0, slot6)
-	table.insert(slot0._mainHeroList, slot1)
+	local var_3_0 = CharacterMainHeroMO.New()
 
-	for slot6, slot7 in ipairs(HeroModel.instance:getList()) do
-		slot8 = CharacterMainHeroMO.New()
+	var_3_0:init(nil, 0, true)
+	table.insert(arg_3_0._mainHeroList, var_3_0)
 
-		slot8:init(slot7, slot7.config.skinId, false)
-		table.insert(slot0._mainHeroList, slot8)
+	local var_3_1 = HeroModel.instance:getList()
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		local var_3_2 = CharacterMainHeroMO.New()
+
+		var_3_2:init(iter_3_1, iter_3_1.config.skinId, false)
+		table.insert(arg_3_0._mainHeroList, var_3_2)
 	end
 end
 
-function slot0._isDefaultSkinId(slot0, slot1)
-	return slot1.skinId == slot1.heroMO.config.skinId
+function var_0_0._isDefaultSkinId(arg_4_0, arg_4_1)
+	return arg_4_1.skinId == arg_4_1.heroMO.config.skinId
 end
 
-function slot0._commonSort(slot0, slot1, slot2)
-	if slot1.isRandom then
+function var_0_0._commonSort(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1.isRandom then
 		return true
 	end
 
-	if slot2.isRandom then
+	if arg_5_2.isRandom then
 		return false
 	end
 
-	if slot1.heroMO.heroId == slot0.curHeroId then
+	if arg_5_1.heroMO.heroId == arg_5_0.curHeroId then
 		return true
 	end
 
-	if slot2.heroMO.heroId == slot0.curHeroId then
+	if arg_5_2.heroMO.heroId == arg_5_0.curHeroId then
 		return false
 	end
 
-	if slot1.heroMO.heroId == slot2.heroMO.heroId then
-		return slot0:_isDefaultSkinId(slot1) and not slot0:_isDefaultSkinId(slot2)
+	if arg_5_1.heroMO.heroId == arg_5_2.heroMO.heroId then
+		return arg_5_0:_isDefaultSkinId(arg_5_1) and not arg_5_0:_isDefaultSkinId(arg_5_2)
 	end
 
 	return nil
 end
 
-function slot0.sortByTime(slot0, slot1)
-	table.sort(slot0._mainHeroList, function (slot0, slot1)
-		if uv0:_commonSort(slot0, slot1) ~= nil then
-			return slot2
+function var_0_0.sortByTime(arg_6_0, arg_6_1)
+	table.sort(arg_6_0._mainHeroList, function(arg_7_0, arg_7_1)
+		local var_7_0 = arg_6_0:_commonSort(arg_7_0, arg_7_1)
+
+		if var_7_0 ~= nil then
+			return var_7_0
 		end
 
-		if slot0.heroMO.createTime ~= slot1.heroMO.createTime then
-			if uv1 then
-				return slot0.heroMO.createTime < slot1.heroMO.createTime
+		if arg_7_0.heroMO.createTime ~= arg_7_1.heroMO.createTime then
+			if arg_6_1 then
+				return arg_7_0.heroMO.createTime < arg_7_1.heroMO.createTime
 			else
-				return slot1.heroMO.createTime < slot0.heroMO.createTime
+				return arg_7_0.heroMO.createTime > arg_7_1.heroMO.createTime
 			end
 		end
 
-		return slot0.heroMO.heroId < slot1.heroMO.heroId
+		return arg_7_0.heroMO.heroId < arg_7_1.heroMO.heroId
 	end)
-	slot0:setList(slot0._mainHeroList)
+	arg_6_0:setList(arg_6_0._mainHeroList)
 end
 
-function slot0.sortByRare(slot0, slot1)
-	table.sort(slot0._mainHeroList, function (slot0, slot1)
-		if uv0:_commonSort(slot0, slot1) ~= nil then
-			return slot2
+function var_0_0.sortByRare(arg_8_0, arg_8_1)
+	table.sort(arg_8_0._mainHeroList, function(arg_9_0, arg_9_1)
+		local var_9_0 = arg_8_0:_commonSort(arg_9_0, arg_9_1)
+
+		if var_9_0 ~= nil then
+			return var_9_0
 		end
 
-		if slot0.heroMO.config.rare == slot1.heroMO.config.rare then
-			return slot0.heroMO.config.id < slot1.heroMO.config.id
+		if arg_9_0.heroMO.config.rare == arg_9_1.heroMO.config.rare then
+			return arg_9_0.heroMO.config.id < arg_9_1.heroMO.config.id
 		end
 
-		if slot0.heroMO.config.rare ~= slot1.heroMO.config.rare then
-			if uv1 then
-				return slot0.heroMO.config.rare < slot1.heroMO.config.rare
+		if arg_9_0.heroMO.config.rare ~= arg_9_1.heroMO.config.rare then
+			if arg_8_1 then
+				return arg_9_0.heroMO.config.rare < arg_9_1.heroMO.config.rare
 			else
-				return slot1.heroMO.config.rare < slot0.heroMO.config.rare
+				return arg_9_0.heroMO.config.rare > arg_9_1.heroMO.config.rare
 			end
 		end
 
-		return slot0.heroMO.heroId < slot1.heroMO.heroId
+		return arg_9_0.heroMO.heroId < arg_9_1.heroMO.heroId
 	end)
-	slot0:setList(slot0._mainHeroList)
+	arg_8_0:setList(arg_8_0._mainHeroList)
 end
 
-function slot0.getMoByHeroId(slot0, slot1)
-	if not slot0._mainHeroList then
+function var_0_0.getMoByHeroId(arg_10_0, arg_10_1)
+	if not arg_10_0._mainHeroList then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._mainHeroList) do
-		if not slot6.heroMO and not slot1 or slot6.heroMO and slot6.heroMO.heroId == slot1 then
-			return slot6
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._mainHeroList) do
+		if not iter_10_1.heroMO and not arg_10_1 or iter_10_1.heroMO and iter_10_1.heroMO.heroId == arg_10_1 then
+			return iter_10_1
 		end
 	end
 end
 
-function slot0.getMoByHero(slot0, slot1, slot2)
-	if not slot0._mainHeroList then
+function var_0_0.getMoByHero(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0._mainHeroList then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._mainHeroList) do
-		if slot2 and slot7.skinId == slot2 then
-			return slot7
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._mainHeroList) do
+		if arg_11_2 and iter_11_1.skinId == arg_11_2 then
+			return iter_11_1
 		end
 
-		if not slot2 and slot7.heroMO.heroId and slot7.skinId == slot7.heroMO.config.skinId then
-			return slot7
+		if not arg_11_2 and iter_11_1.heroMO.heroId and iter_11_1.skinId == iter_11_1.heroMO.config.skinId then
+			return iter_11_1
 		end
 	end
 end
 
-function slot0.getMainHero(slot0, slot1)
-	slot3 = string.splitToNumber(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainHero), "#")
-	slot5 = slot3[2]
+function var_0_0.getMainHero(arg_12_0, arg_12_1)
+	local var_12_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainHero)
+	local var_12_1 = string.splitToNumber(var_12_0, "#")
+	local var_12_2 = var_12_1[1]
+	local var_12_3 = var_12_1[2]
+	local var_12_4 = var_12_2 == -1
 
-	if slot3[1] == -1 then
-		if slot1 or not slot0._tempHeroId or not slot0._tempSkinId then
-			slot7 = HeroModel.instance:getList()
+	if var_12_4 then
+		if arg_12_1 or not arg_12_0._tempHeroId or not arg_12_0._tempSkinId then
+			local var_12_5 = HeroModel.instance:getList()
+			local var_12_6 = var_12_5[math.random(#var_12_5)]
 
-			if slot7[math.random(#slot7)] then
-				slot9 = {
-					slot8.config.skinId
+			if var_12_6 then
+				local var_12_7 = {
+					var_12_6.config.skinId
 				}
 
-				for slot13, slot14 in ipairs(slot8.skinInfoList) do
-					table.insert(slot9, slot14.skin)
+				for iter_12_0, iter_12_1 in ipairs(var_12_6.skinInfoList) do
+					table.insert(var_12_7, iter_12_1.skin)
 				end
 
-				slot0._tempHeroId = slot8.heroId
-				slot0._tempSkinId = slot9[math.random(#slot9)]
+				arg_12_0._tempHeroId = var_12_6.heroId
+				arg_12_0._tempSkinId = var_12_7[math.random(#var_12_7)]
 			end
 		else
-			return slot0._tempHeroId, slot0._tempSkinId, true
+			return arg_12_0._tempHeroId, arg_12_0._tempSkinId, true
 		end
 	else
-		if not slot4 or slot4 == 0 or not HeroConfig.instance:getHeroCO(slot4) then
-			slot4 = slot0:getDefaultHeroId()
-			slot5 = nil
+		if not var_12_2 or var_12_2 == 0 or not HeroConfig.instance:getHeroCO(var_12_2) then
+			var_12_2 = arg_12_0:getDefaultHeroId()
+			var_12_3 = nil
 		end
 
-		if (not slot5 or slot5 == 0) and slot4 and slot4 ~= 0 then
-			slot5 = HeroConfig.instance:getHeroCO(slot4) and slot7.skinId
+		if (not var_12_3 or var_12_3 == 0) and var_12_2 and var_12_2 ~= 0 then
+			local var_12_8 = HeroConfig.instance:getHeroCO(var_12_2)
+
+			var_12_3 = var_12_8 and var_12_8.skinId
 		end
 
-		slot0._tempHeroId = slot4
-		slot0._tempSkinId = slot5
+		arg_12_0._tempHeroId = var_12_2
+		arg_12_0._tempSkinId = var_12_3
 	end
 
-	slot7 = ""
+	local var_12_9 = ""
 
-	if slot4 then
-		if slot5 then
-			slot7 = tostring(slot4) .. "#" .. tostring(slot5)
+	if var_12_2 then
+		var_12_9 = tostring(var_12_2)
+
+		if var_12_3 then
+			var_12_9 = var_12_9 .. "#" .. tostring(var_12_3)
 		end
 	end
 
-	if not string.nilorempty(slot7) and slot7 ~= slot2 then
-		PlayerModel.instance:forceSetSimpleProperty(PlayerEnum.SimpleProperty.MainHero, slot7)
-		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.MainHero, slot7)
+	if not string.nilorempty(var_12_9) and var_12_9 ~= var_12_0 then
+		PlayerModel.instance:forceSetSimpleProperty(PlayerEnum.SimpleProperty.MainHero, var_12_9)
+		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.MainHero, var_12_9)
 	end
 
-	return slot4, slot5, slot6
+	return var_12_2, var_12_3, var_12_4
 end
 
-function slot0.getDefaultHeroId(slot0)
-	slot1 = CommonConfig.instance:getConstNum(ConstEnum.MainViewDefaultHeroId)
-	slot3 = #HeroModel.instance:getList() > 0 and slot2[1].config.id or nil
+function var_0_0.getDefaultHeroId(arg_13_0)
+	local var_13_0 = CommonConfig.instance:getConstNum(ConstEnum.MainViewDefaultHeroId)
+	local var_13_1 = HeroModel.instance:getList()
+	local var_13_2 = #var_13_1 > 0 and var_13_1[1].config.id or nil
 
-	for slot7, slot8 in ipairs(slot2) do
-		if slot8.config.id == slot1 then
-			return slot1
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		local var_13_3 = iter_13_1.config.id
+
+		if var_13_3 == var_13_0 then
+			return var_13_0
 		end
 
-		if slot9 < slot3 then
-			slot3 = slot9
+		if var_13_3 < var_13_2 then
+			var_13_2 = var_13_3
 		end
 	end
 
-	return slot3
+	return var_13_2
 end
 
-function slot0.changeMainHero(slot0, slot1, slot2, slot3)
-	slot1 = slot1 and tonumber(slot1)
-	slot2 = slot2 and tonumber(slot2)
+function var_0_0.changeMainHero(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	arg_14_1 = arg_14_1 and tonumber(arg_14_1)
+	arg_14_2 = arg_14_2 and tonumber(arg_14_2)
 
-	if slot3 then
-		slot1 = -1
-		slot2 = -1
-	elseif not slot2 or slot2 == 0 then
-		slot2 = HeroConfig.instance:getHeroCO(slot1).skinId
+	if arg_14_3 then
+		arg_14_1 = -1
+		arg_14_2 = -1
+	elseif not arg_14_2 or arg_14_2 == 0 then
+		arg_14_2 = HeroConfig.instance:getHeroCO(arg_14_1).skinId
 	end
 
-	slot4 = ""
+	local var_14_0 = ""
 
-	if slot1 then
-		if slot2 then
-			slot4 = tostring(slot1) .. "#" .. tostring(slot2)
+	if arg_14_1 then
+		var_14_0 = tostring(arg_14_1)
+
+		if arg_14_2 then
+			var_14_0 = var_14_0 .. "#" .. tostring(arg_14_2)
 		end
 	end
 
-	if not string.nilorempty(slot4) then
-		PlayerModel.instance:forceSetSimpleProperty(PlayerEnum.SimpleProperty.MainHero, slot4)
-		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.MainHero, tostring(slot4))
+	if not string.nilorempty(var_14_0) then
+		PlayerModel.instance:forceSetSimpleProperty(PlayerEnum.SimpleProperty.MainHero, var_14_0)
+		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.MainHero, tostring(var_14_0))
 		CharacterController.instance:dispatchEvent(CharacterEvent.ChangeMainHero)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

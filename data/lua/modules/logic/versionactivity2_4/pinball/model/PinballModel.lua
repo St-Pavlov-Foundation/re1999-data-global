@@ -1,198 +1,224 @@
-module("modules.logic.versionactivity2_4.pinball.model.PinballModel", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.model.PinballModel", package.seeall)
 
-slot0 = class("PinballModel", BaseModel)
+local var_0_0 = class("PinballModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._buildingInfo = {}
-	slot0._resInfo = {}
-	slot0._unlockTalents = {}
-	slot0.day = 0
-	slot0.restCdDay = 0
-	slot0.maxProsperity = 0
-	slot0.isGuideAddGrain = false
-	slot0.gameAddResDict = {}
-	slot0.leftEpisodeId = 0
-	slot0.marblesLvDict = {}
-	slot0._gmball = 0
-	slot0._gmUnlockAll = false
-	slot0._gmkey = false
-	slot0._talentRedDict = {}
-	slot0.guideHole = 1
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._buildingInfo = {}
+	arg_1_0._resInfo = {}
+	arg_1_0._unlockTalents = {}
+	arg_1_0.day = 0
+	arg_1_0.restCdDay = 0
+	arg_1_0.maxProsperity = 0
+	arg_1_0.isGuideAddGrain = false
+	arg_1_0.gameAddResDict = {}
+	arg_1_0.leftEpisodeId = 0
+	arg_1_0.marblesLvDict = {}
+	arg_1_0._gmball = 0
+	arg_1_0._gmUnlockAll = false
+	arg_1_0._gmkey = false
+	arg_1_0._talentRedDict = {}
+	arg_1_0.guideHole = 1
 end
 
-function slot0.reInit(slot0)
-	slot0._buildingInfo = {}
-	slot0._resInfo = {}
-	slot0._unlockTalents = {}
-	slot0.day = 0
-	slot0.gameAddResDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._buildingInfo = {}
+	arg_2_0._resInfo = {}
+	arg_2_0._unlockTalents = {}
+	arg_2_0.day = 0
+	arg_2_0.gameAddResDict = {}
 end
 
-function slot0.isOpen(slot0)
+function var_0_0.isOpen(arg_3_0)
 	return ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.Pinball, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-function slot0.initData(slot0, slot1)
-	slot0.day = slot1.day
-	slot0.oper = slot1.oper
-	slot0.restCdDay = slot1.restCdDay
-	slot0.maxProsperity = slot1.maxProsperity
-	slot0.isGuideAddGrain = slot1.isGuideAddGrain
-	slot0._buildingInfo = {}
-	slot0._resInfo = {}
-	slot0._unlockTalents = {}
-	slot0.gameAddResDict = {}
+function var_0_0.initData(arg_4_0, arg_4_1)
+	arg_4_0.day = arg_4_1.day
+	arg_4_0.oper = arg_4_1.oper
+	arg_4_0.restCdDay = arg_4_1.restCdDay
+	arg_4_0.maxProsperity = arg_4_1.maxProsperity
+	arg_4_0.isGuideAddGrain = arg_4_1.isGuideAddGrain
+	arg_4_0._buildingInfo = {}
+	arg_4_0._resInfo = {}
+	arg_4_0._unlockTalents = {}
+	arg_4_0.gameAddResDict = {}
 
-	for slot5, slot6 in ipairs(slot1.buildings) do
-		slot0._buildingInfo[slot6.index] = PinballBuildingMo.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.buildings) do
+		arg_4_0._buildingInfo[iter_4_1.index] = PinballBuildingMo.New()
 
-		slot0._buildingInfo[slot6.index]:init(slot6)
+		arg_4_0._buildingInfo[iter_4_1.index]:init(iter_4_1)
 	end
 
-	for slot5, slot6 in ipairs(slot1.currencys) do
-		slot0._resInfo[slot6.type] = PinballCurrencyMo.New()
+	for iter_4_2, iter_4_3 in ipairs(arg_4_1.currencys) do
+		arg_4_0._resInfo[iter_4_3.type] = PinballCurrencyMo.New()
 
-		slot0._resInfo[slot6.type]:init(slot6)
+		arg_4_0._resInfo[iter_4_3.type]:init(iter_4_3)
 	end
 
-	for slot5, slot6 in ipairs(slot1.talentIds) do
-		slot7 = PinballTalentMo.New()
+	for iter_4_4, iter_4_5 in ipairs(arg_4_1.talentIds) do
+		local var_4_0 = PinballTalentMo.New()
 
-		slot7:init(slot6)
+		var_4_0:init(iter_4_5)
 
-		slot0._unlockTalents[slot6] = slot7
+		arg_4_0._unlockTalents[iter_4_5] = var_4_0
 	end
 
-	slot0:checkTalentRed()
+	arg_4_0:checkTalentRed()
 	PinballController.instance:dispatchEvent(PinballEvent.DataInited)
 end
 
-function slot0.unlockTalent(slot0, slot1)
-	slot2 = PinballTalentMo.New()
+function var_0_0.unlockTalent(arg_5_0, arg_5_1)
+	local var_5_0 = PinballTalentMo.New()
 
-	slot2:init(slot1)
+	var_5_0:init(arg_5_1)
 
-	slot0._unlockTalents[slot1] = slot2
+	arg_5_0._unlockTalents[arg_5_1] = var_5_0
 
-	slot0:checkTalentRed()
+	arg_5_0:checkTalentRed()
 end
 
-function slot0.getTalentMo(slot0, slot1)
-	return slot0._unlockTalents[slot1]
+function var_0_0.getTalentMo(arg_6_0, arg_6_1)
+	return arg_6_0._unlockTalents[arg_6_1]
 end
 
-function slot0.getBuildingNum(slot0, slot1)
-	for slot6, slot7 in pairs(slot0._buildingInfo) do
-		if slot7.baseCo.id == slot1 then
-			slot2 = 0 + 1
+function var_0_0.getBuildingNum(arg_7_0, arg_7_1)
+	local var_7_0 = 0
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._buildingInfo) do
+		if iter_7_1.baseCo.id == arg_7_1 then
+			var_7_0 = var_7_0 + 1
 		end
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.onCurrencyChange(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._resInfo[slot6.type] = slot0._resInfo[slot6.type] or PinballCurrencyMo.New()
+function var_0_0.onCurrencyChange(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		arg_8_0._resInfo[iter_8_1.type] = arg_8_0._resInfo[iter_8_1.type] or PinballCurrencyMo.New()
 
-		slot0._resInfo[slot6.type]:init(slot6)
+		arg_8_0._resInfo[iter_8_1.type]:init(iter_8_1)
 	end
 
-	slot0:checkTalentRed()
+	arg_8_0:checkTalentRed()
 end
 
-function slot0.getScoreLevel(slot0)
-	return PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, slot0:getResNum(PinballEnum.ResType.Score))
+function var_0_0.getScoreLevel(arg_9_0)
+	local var_9_0 = arg_9_0:getResNum(PinballEnum.ResType.Score)
+
+	return PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_9_0)
 end
 
-function slot0.setCurrency(slot0, slot1)
-	if not slot0._resInfo[slot1.type] then
-		slot0._resInfo[slot1.type] = PinballCurrencyMo.New()
+function var_0_0.setCurrency(arg_10_0, arg_10_1)
+	if not arg_10_0._resInfo[arg_10_1.type] then
+		arg_10_0._resInfo[arg_10_1.type] = PinballCurrencyMo.New()
 	end
 
-	slot0._resInfo[slot1.type]:init(slot1)
+	arg_10_0._resInfo[arg_10_1.type]:init(arg_10_1)
 end
 
-function slot0.getResNum(slot0, slot1)
-	if not slot0._resInfo[slot1] then
+function var_0_0.getResNum(arg_11_0, arg_11_1)
+	if not arg_11_0._resInfo[arg_11_1] then
 		return 0, 0
 	end
 
-	return slot0._resInfo[slot1].num, slot0._resInfo[slot1].changeNum
+	return arg_11_0._resInfo[arg_11_1].num, arg_11_0._resInfo[arg_11_1].changeNum
 end
 
-function slot0.getTotalFoodCost(slot0)
-	for slot5, slot6 in pairs(slot0._buildingInfo) do
-		slot1 = 0 + slot6:getFoodCost()
+function var_0_0.getTotalFoodCost(arg_12_0)
+	local var_12_0 = 0
+
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._buildingInfo) do
+		var_12_0 = var_12_0 + iter_12_1:getFoodCost()
 	end
 
-	return slot1
+	return var_12_0
 end
 
-function slot0.getTotalPlayDemand(slot0)
-	for slot5, slot6 in pairs(slot0._buildingInfo) do
-		slot1 = 0 + slot6:getPlayDemand()
+function var_0_0.getTotalPlayDemand(arg_13_0)
+	local var_13_0 = 0
+
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._buildingInfo) do
+		var_13_0 = var_13_0 + iter_13_1:getPlayDemand()
 	end
 
-	return math.max(0, slot1 - slot0:getPlayDec())
+	local var_13_1 = var_13_0 - arg_13_0:getPlayDec()
+
+	return (math.max(0, var_13_1))
 end
 
-function slot0.getCostDec(slot0)
-	for slot5, slot6 in pairs(slot0._unlockTalents) do
-		slot1 = 0 + slot6:getCostDec()
+function var_0_0.getCostDec(arg_14_0)
+	local var_14_0 = 0
+
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._unlockTalents) do
+		var_14_0 = var_14_0 + iter_14_1:getCostDec()
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.getResAdd(slot0, slot1)
-	for slot6, slot7 in pairs(slot0._unlockTalents) do
-		slot2 = 0 + slot7:getResAdd(slot1)
+function var_0_0.getResAdd(arg_15_0, arg_15_1)
+	local var_15_0 = 0
+
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._unlockTalents) do
+		var_15_0 = var_15_0 + iter_15_1:getResAdd(arg_15_1)
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.checkTalentRed(slot0)
-	slot0._talentRedDict = {}
+function var_0_0.checkTalentRed(arg_16_0)
+	arg_16_0._talentRedDict = {}
 
-	for slot4, slot5 in pairs(slot0._buildingInfo) do
-		if slot5.baseCo.type == PinballEnum.BuildingType.Talent then
-			slot6 = slot5.level
-			slot7 = 1
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._buildingInfo) do
+		if iter_16_1.baseCo.type == PinballEnum.BuildingType.Talent then
+			local var_16_0 = iter_16_1.level
+			local var_16_1 = 1
+			local var_16_2 = GameUtil.splitString2(iter_16_1.baseCo.effect, true) or {}
 
-			for slot12, slot13 in pairs(GameUtil.splitString2(slot5.baseCo.effect, true) or {}) do
-				if slot13[1] == PinballEnum.BuildingEffectType.UnlockTalent then
-					slot7 = slot13[2]
+			for iter_16_2, iter_16_3 in pairs(var_16_2) do
+				if iter_16_3[1] == PinballEnum.BuildingEffectType.UnlockTalent then
+					var_16_1 = iter_16_3[2]
 
 					break
 				end
 			end
 
-			for slot13, slot14 in pairs(PinballConfig.instance:getTalentCoByRoot(VersionActivity2_4Enum.ActivityId.Pinball, slot7)) do
-				if not slot0:getTalentMo(slot14.id) and slot14.needLv <= slot6 then
-					slot17 = true
+			local var_16_3 = PinballConfig.instance:getTalentCoByRoot(VersionActivity2_4Enum.ActivityId.Pinball, var_16_1)
 
-					for slot21, slot22 in pairs(string.splitToNumber(slot14.condition, "#") or {}) do
-						if not slot0:getTalentMo(slot22) then
-							slot17 = false
+			for iter_16_4, iter_16_5 in pairs(var_16_3) do
+				local var_16_4 = iter_16_5.needLv
+
+				if not arg_16_0:getTalentMo(iter_16_5.id) and var_16_4 <= var_16_0 then
+					local var_16_5 = string.splitToNumber(iter_16_5.condition, "#") or {}
+					local var_16_6 = true
+
+					for iter_16_6, iter_16_7 in pairs(var_16_5) do
+						if not arg_16_0:getTalentMo(iter_16_7) then
+							var_16_6 = false
 
 							break
 						end
 					end
 
-					if slot17 and not string.nilorempty(slot14.cost) then
-						for slot23, slot24 in pairs(GameUtil.splitString2(slot18, true)) do
-							if slot0:getResNum(slot24[1]) < slot24[2] then
-								slot17 = false
+					if var_16_6 then
+						local var_16_7 = iter_16_5.cost
 
-								break
+						if not string.nilorempty(var_16_7) then
+							local var_16_8 = GameUtil.splitString2(var_16_7, true)
+
+							for iter_16_8, iter_16_9 in pairs(var_16_8) do
+								if iter_16_9[2] > arg_16_0:getResNum(iter_16_9[1]) then
+									var_16_6 = false
+
+									break
+								end
 							end
 						end
 					end
 
-					if slot17 then
-						slot0._talentRedDict[slot5.baseCo.id] = true
+					if var_16_6 then
+						arg_16_0._talentRedDict[iter_16_1.baseCo.id] = true
 
 						break
 					end
@@ -204,29 +230,33 @@ function slot0.checkTalentRed(slot0)
 	PinballController.instance:dispatchEvent(PinballEvent.TalentRedChange)
 end
 
-function slot0.getTalentRed(slot0, slot1)
-	return slot0._talentRedDict[slot1] or false
+function var_0_0.getTalentRed(arg_17_0, arg_17_1)
+	return arg_17_0._talentRedDict[arg_17_1] or false
 end
 
-function slot0.getPlayDec(slot0)
-	for slot5, slot6 in pairs(slot0._unlockTalents) do
-		slot1 = 0 + slot6:getPlayDec()
+function var_0_0.getPlayDec(arg_18_0)
+	local var_18_0 = 0
+
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._unlockTalents) do
+		var_18_0 = var_18_0 + iter_18_1:getPlayDec()
 	end
 
-	return slot1
+	return var_18_0
 end
 
-function slot0.getMarblesLv(slot0, slot1)
-	for slot6, slot7 in pairs(slot0._unlockTalents) do
-		slot2 = math.max(slot7:getMarblesLv(slot1), 1)
+function var_0_0.getMarblesLv(arg_19_0, arg_19_1)
+	local var_19_0 = 1
+
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._unlockTalents) do
+		var_19_0 = math.max(iter_19_1:getMarblesLv(arg_19_1), var_19_0)
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.getMarblesIsUnlock(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._unlockTalents) do
-		if slot6:getIsUnlockMarbles(slot1) then
+function var_0_0.getMarblesIsUnlock(arg_20_0, arg_20_1)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._unlockTalents) do
+		if iter_20_1:getIsUnlockMarbles(arg_20_1) then
 			return true
 		end
 	end
@@ -234,143 +264,150 @@ function slot0.getMarblesIsUnlock(slot0, slot1)
 	return false
 end
 
-function slot0.getAllMarblesNum(slot0)
-	slot1 = {
-		[slot11[1]] = slot11[2]
-	}
-	slot2 = {}
-	slot3 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.DefaultMarblesHoleNum)
-	slot4, slot5 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.DefaultMarblesNum)
+function var_0_0.getAllMarblesNum(arg_21_0)
+	local var_21_0 = {}
+	local var_21_1 = {}
+	local var_21_2 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.DefaultMarblesHoleNum)
+	local var_21_3, var_21_4 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.DefaultMarblesNum)
+	local var_21_5 = GameUtil.splitString2(var_21_4, true) or {}
 
-	for slot10, slot11 in pairs(GameUtil.splitString2(slot5, true) or {}) do
-		-- Nothing
+	for iter_21_0, iter_21_1 in pairs(var_21_5) do
+		var_21_0[iter_21_1[1]] = iter_21_1[2]
 	end
 
-	for slot10 = 1, 5 do
-		slot1[slot10] = slot1[slot10] or 0
+	for iter_21_2 = 1, 5 do
+		var_21_0[iter_21_2] = var_21_0[iter_21_2] or 0
 
-		if slot0:getMarblesIsUnlock(slot10) then
-			slot2[slot10] = slot0:getMarblesLv(slot10)
-			slot13 = string.splitToNumber(lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot10].limit, "#") or {}
-			slot1[slot10] = slot1[slot10] + (slot13[slot11] or slot13[#slot13] or 0)
+		if arg_21_0:getMarblesIsUnlock(iter_21_2) then
+			local var_21_6 = arg_21_0:getMarblesLv(iter_21_2)
+
+			var_21_1[iter_21_2] = var_21_6
+
+			local var_21_7 = lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][iter_21_2]
+			local var_21_8 = string.splitToNumber(var_21_7.limit, "#") or {}
+
+			var_21_0[iter_21_2] = var_21_0[iter_21_2] + (var_21_8[var_21_6] or var_21_8[#var_21_8] or 0)
 		end
 	end
 
-	if slot0._gmUnlockAll then
-		for slot10 = 1, 5 do
-			slot1[slot10] = 5
-			slot2[slot10] = 4
+	if arg_21_0._gmUnlockAll then
+		for iter_21_3 = 1, 5 do
+			var_21_0[iter_21_3] = 5
+			var_21_1[iter_21_3] = 4
 		end
 	end
 
-	slot7 = slot3
+	local var_21_9 = var_21_2
+	local var_21_10 = var_0_0.instance:getResNum(PinballEnum.ResType.Complaint)
 
-	if PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit) <= uv0.instance:getResNum(PinballEnum.ResType.Complaint) then
-		slot3 = slot3 - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintMaxSubHoleNum)
-	elseif PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThreshold) <= slot8 then
-		slot3 = slot3 - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThresholdSubHoleNum)
+	if var_21_10 >= PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit) then
+		var_21_2 = var_21_2 - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintMaxSubHoleNum)
+	elseif var_21_10 >= PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThreshold) then
+		var_21_2 = var_21_2 - PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThresholdSubHoleNum)
 	end
 
-	slot0.marblesLvDict = slot2
+	arg_21_0.marblesLvDict = var_21_1
 
-	return slot1, slot3, slot7
+	return var_21_0, var_21_2, var_21_9
 end
 
-function slot0.getMarblesLvCache(slot0, slot1)
-	return slot0.marblesLvDict[slot1] or 1
+function var_0_0.getMarblesLvCache(arg_22_0, arg_22_1)
+	return arg_22_0.marblesLvDict[arg_22_1] or 1
 end
 
-function slot0.addGameRes(slot0, slot1, slot2)
-	slot0.gameAddResDict[slot1] = slot0.gameAddResDict[slot1] or 0
-	slot0.gameAddResDict[slot1] = slot0.gameAddResDict[slot1] + slot2
+function var_0_0.addGameRes(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0.gameAddResDict[arg_23_1] = arg_23_0.gameAddResDict[arg_23_1] or 0
+	arg_23_0.gameAddResDict[arg_23_1] = arg_23_0.gameAddResDict[arg_23_1] + arg_23_2
 
 	PinballController.instance:dispatchEvent(PinballEvent.GameResChange)
 end
 
-function slot0.getGameRes(slot0, slot1)
-	slot2 = 0
+function var_0_0.getGameRes(arg_24_0, arg_24_1)
+	local var_24_0 = 0
 
-	if not slot1 or slot1 == 0 then
-		for slot6, slot7 in pairs(slot0.gameAddResDict) do
-			slot2 = slot2 + slot7
+	if not arg_24_1 or arg_24_1 == 0 then
+		for iter_24_0, iter_24_1 in pairs(arg_24_0.gameAddResDict) do
+			var_24_0 = var_24_0 + iter_24_1
 		end
 	else
-		slot2 = slot0.gameAddResDict[slot1] or 0
+		var_24_0 = arg_24_0.gameAddResDict[arg_24_1] or 0
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0.clearGameRes(slot0)
-	slot0.gameAddResDict = {}
+function var_0_0.clearGameRes(arg_25_0)
+	arg_25_0.gameAddResDict = {}
 end
 
-function slot0.getBuildingInfo(slot0, slot1)
-	return slot0._buildingInfo[slot1]
+function var_0_0.getBuildingInfo(arg_26_0, arg_26_1)
+	return arg_26_0._buildingInfo[arg_26_1]
 end
 
-function slot0.getBuildingInfoById(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._buildingInfo) do
-		if slot6.baseCo.id == slot1 then
-			return slot6
+function var_0_0.getBuildingInfoById(arg_27_0, arg_27_1)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._buildingInfo) do
+		if iter_27_1.baseCo.id == arg_27_1 then
+			return iter_27_1
 		end
 	end
 end
 
-function slot0.getAllTalentBuildingId(slot0)
-	slot1 = {}
+function var_0_0.getAllTalentBuildingId(arg_28_0)
+	local var_28_0 = {}
 
-	for slot5, slot6 in pairs(slot0._buildingInfo) do
-		if slot6.baseCo.type == PinballEnum.BuildingType.Talent then
-			table.insert(slot1, slot6.baseCo.id)
+	for iter_28_0, iter_28_1 in pairs(arg_28_0._buildingInfo) do
+		if iter_28_1.baseCo.type == PinballEnum.BuildingType.Talent then
+			table.insert(var_28_0, iter_28_1.baseCo.id)
 		end
 	end
 
-	table.sort(slot1)
+	table.sort(var_28_0)
 
-	return slot1
+	return var_28_0
 end
 
-function slot0.addBuilding(slot0, slot1, slot2)
-	if slot0._buildingInfo[slot2] then
-		logError("建筑已存在？？" .. slot2)
+function var_0_0.addBuilding(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_0._buildingInfo[arg_29_2] then
+		logError("建筑已存在？？" .. arg_29_2)
 	end
 
-	slot0._buildingInfo[slot2] = PinballBuildingMo.New()
-
-	slot0._buildingInfo[slot2]:init({
+	local var_29_0 = {
 		food = 0,
 		interact = 0,
 		level = 1,
-		configId = slot1,
-		index = slot2
-	})
-	slot0:checkTalentRed()
-	PinballController.instance:dispatchEvent(PinballEvent.AddBuilding, slot2)
+		configId = arg_29_1,
+		index = arg_29_2
+	}
+
+	arg_29_0._buildingInfo[arg_29_2] = PinballBuildingMo.New()
+
+	arg_29_0._buildingInfo[arg_29_2]:init(var_29_0)
+	arg_29_0:checkTalentRed()
+	PinballController.instance:dispatchEvent(PinballEvent.AddBuilding, arg_29_2)
 end
 
-function slot0.upgradeBuilding(slot0, slot1)
-	if not slot0._buildingInfo[slot1] then
-		logError("建筑不存在？？" .. slot1)
+function var_0_0.upgradeBuilding(arg_30_0, arg_30_1)
+	if not arg_30_0._buildingInfo[arg_30_1] then
+		logError("建筑不存在？？" .. arg_30_1)
 
 		return
 	end
 
-	slot0._buildingInfo[slot1]:upgrade()
-	slot0:checkTalentRed()
-	PinballController.instance:dispatchEvent(PinballEvent.UpgradeBuilding, slot1)
+	arg_30_0._buildingInfo[arg_30_1]:upgrade()
+	arg_30_0:checkTalentRed()
+	PinballController.instance:dispatchEvent(PinballEvent.UpgradeBuilding, arg_30_1)
 end
 
-function slot0.removeBuilding(slot0, slot1)
-	if not slot0._buildingInfo[slot1] then
-		logError("建筑不存在？？" .. slot1)
+function var_0_0.removeBuilding(arg_31_0, arg_31_1)
+	if not arg_31_0._buildingInfo[arg_31_1] then
+		logError("建筑不存在？？" .. arg_31_1)
 	end
 
-	slot0._buildingInfo[slot1] = nil
+	arg_31_0._buildingInfo[arg_31_1] = nil
 
-	PinballController.instance:dispatchEvent(PinballEvent.RemoveBuilding, slot1)
+	PinballController.instance:dispatchEvent(PinballEvent.RemoveBuilding, arg_31_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

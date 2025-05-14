@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_4.puzzle.controller.Role37PuzzleController", package.seeall)
+﻿module("modules.logic.versionactivity1_4.puzzle.controller.Role37PuzzleController", package.seeall)
 
-slot0 = class("Role37PuzzleController", BaseController)
+local var_0_0 = class("Role37PuzzleController", BaseController)
 
-function slot0.openPuzzleResultView(slot0)
+function var_0_0.openPuzzleResultView(arg_1_0)
 	ViewMgr.instance:openView(ViewName.Role37PuzzleResultView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

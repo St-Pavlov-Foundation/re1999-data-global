@@ -1,27 +1,28 @@
-module("modules.logic.fight.controller.replay.FightReplayWorkWaitCardStage", package.seeall)
+﻿module("modules.logic.fight.controller.replay.FightReplayWorkWaitCardStage", package.seeall)
 
-slot0 = class("FightReplayWorkWaitCardStage", BaseWork)
+local var_0_0 = class("FightReplayWorkWaitCardStage", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.Card then
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	else
-		FightController.instance:registerCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
+		FightController.instance:registerCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
 	end
 end
 
-function slot0._onStageChange(slot0, slot1)
-	if slot1 == FightEnum.Stage.Card then
-		FightController.instance:unregisterCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
-		slot0:onDone(true)
+function var_0_0._onStageChange(arg_3_0, arg_3_1)
+	if arg_3_1 == FightEnum.Stage.Card then
+		FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_3_0._onStageChange, arg_3_0)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_4_0._onStageChange, arg_4_0)
 end
 
-return slot0
+return var_0_0

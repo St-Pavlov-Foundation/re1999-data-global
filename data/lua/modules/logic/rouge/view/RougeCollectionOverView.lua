@@ -1,46 +1,50 @@
-module("modules.logic.rouge.view.RougeCollectionOverView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionOverView", package.seeall)
 
-slot0 = class("RougeCollectionOverView", RougeBaseDLCViewComp)
+local var_0_0 = class("RougeCollectionOverView", RougeBaseDLCViewComp)
 
-function slot0.onInitView(slot0)
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_view")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	var_0_0.super._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_4_0._onSwitchCollectionInfoType, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
+	var_0_0.super.onOpen(arg_5_0)
 	RougeCollectionOverListModel.instance:onInitData()
-	slot0:refreshUI()
+	arg_5_0:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_store_open)
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._goempty, RougeCollectionOverListModel.instance:getCount() <= 0)
-	gohelper.setActive(slot0._scrollview.gameObject, slot1 > 0)
+function var_0_0.refreshUI(arg_6_0)
+	local var_6_0 = RougeCollectionOverListModel.instance:getCount()
+
+	gohelper.setActive(arg_6_0._goempty, var_6_0 <= 0)
+	gohelper.setActive(arg_6_0._scrollview.gameObject, var_6_0 > 0)
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
+function var_0_0._onSwitchCollectionInfoType(arg_7_0)
 	RougeCollectionOverListModel.instance:onModelUpdate()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	ViewMgr.instance:closeView(ViewName.CommonBuffTipView)
 	ViewMgr.instance:closeView(ViewName.RougeCollectionTipView)
 end
 
-return slot0
+return var_0_0

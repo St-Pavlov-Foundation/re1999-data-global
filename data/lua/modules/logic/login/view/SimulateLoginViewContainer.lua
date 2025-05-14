@@ -1,11 +1,11 @@
-module("modules.logic.login.view.SimulateLoginViewContainer", package.seeall)
+﻿module("modules.logic.login.view.SimulateLoginViewContainer", package.seeall)
 
-slot0 = class("SimulateLoginViewContainer", BaseViewContainer)
+local var_0_0 = class("SimulateLoginViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		SimulateLoginView.New()
 	}
 end
 
-return slot0
+return var_0_0

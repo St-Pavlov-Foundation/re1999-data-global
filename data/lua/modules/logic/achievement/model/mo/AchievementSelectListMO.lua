@@ -1,22 +1,22 @@
-module("modules.logic.achievement.model.mo.AchievementSelectListMO", package.seeall)
+﻿module("modules.logic.achievement.model.mo.AchievementSelectListMO", package.seeall)
 
-slot0 = pureTable("AchievementSelectListMO")
+local var_0_0 = pureTable("AchievementSelectListMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.achievementCfgs = slot1
-	slot0.groupId = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.achievementCfgs = arg_1_1
+	arg_1_0.groupId = arg_1_2
 end
 
-function slot0.getLineHeight(slot0)
-	if slot0.groupId == 0 then
+function var_0_0.getLineHeight(arg_2_0)
+	if arg_2_0.groupId == 0 then
 		return 313
 	else
 		return 460
 	end
 end
 
-function slot0.getAchievementType(slot0)
-	return slot0.groupId and slot0.groupId ~= 0 and AchievementEnum.AchievementType.Single or AchievementEnum.AchievementType.Group
+function var_0_0.getAchievementType(arg_3_0)
+	return arg_3_0.groupId and arg_3_0.groupId ~= 0 and AchievementEnum.AchievementType.Single or AchievementEnum.AchievementType.Group
 end
 
-return slot0
+return var_0_0

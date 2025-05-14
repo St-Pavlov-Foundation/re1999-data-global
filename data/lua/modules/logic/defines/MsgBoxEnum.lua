@@ -1,19 +1,20 @@
-module("modules.logic.defines.MsgBoxEnum", package.seeall)
+﻿module("modules.logic.defines.MsgBoxEnum", package.seeall)
 
-slot0 = _M
-slot0.BoxType = {
+local var_0_0 = _M
+
+var_0_0.BoxType = {
 	Yes = 2,
 	NO = 3,
 	Yes_No = 1
 }
-slot0.CloseType = {
+var_0_0.CloseType = {
 	Yes = 1,
 	Close = 0,
 	No = -1
 }
-slot0.optionType = {
+var_0_0.optionType = {
 	NotShow = 2,
 	Daily = 1
 }
 
-return slot0
+return var_0_0

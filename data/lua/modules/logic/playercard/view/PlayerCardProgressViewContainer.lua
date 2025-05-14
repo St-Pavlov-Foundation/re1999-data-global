@@ -1,71 +1,72 @@
-module("modules.logic.playercard.view.PlayerCardProgressViewContainer", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardProgressViewContainer", package.seeall)
 
-slot0 = class("PlayerCardProgressViewContainer", BaseViewContainer)
+local var_0_0 = class("PlayerCardProgressViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, PlayerCardProgressView.New())
+	table.insert(var_1_0, PlayerCardProgressView.New())
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_progress"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "#scroll_progress/Viewport/Content/#go_progressitem"
-	slot2.cellClass = PlayerCardProgressItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 2
-	slot2.cellWidth = 260
-	slot2.cellHeight = 224
-	slot2.cellSpaceH = 11
-	slot2.cellSpaceV = 11
-	slot0._scrollView = LuaListScrollView.New(PlayerCardProgressModel.instance, slot2)
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, slot0._scrollView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_lefttop"))
+	var_1_1.scrollGOPath = "#scroll_progress"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "#scroll_progress/Viewport/Content/#go_progressitem"
+	var_1_1.cellClass = PlayerCardProgressItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 2
+	var_1_1.cellWidth = 260
+	var_1_1.cellHeight = 224
+	var_1_1.cellSpaceH = 11
+	var_1_1.cellSpaceV = 11
+	arg_1_0._scrollView = LuaListScrollView.New(PlayerCardProgressModel.instance, var_1_1)
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._scrollView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0.navigateView:setOverrideClose(slot0._overrideClose, slot0)
+		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0._overrideClose(slot0)
-	slot0:checkCloseFunc()
+function var_0_0._overrideClose(arg_3_0)
+	arg_3_0:checkCloseFunc()
 end
 
-function slot0.checkCloseFunc(slot0)
+function var_0_0.checkCloseFunc(arg_4_0)
 	if PlayerCardProgressModel.instance:checkDiff() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, uv0.yesCallback, uv0.cancel)
+		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, var_0_0.yesCallback, var_0_0.cancel)
 	else
-		slot0:closeFunc()
+		arg_4_0:closeFunc()
 	end
 end
 
-function slot0.yesCallback()
+function var_0_0.yesCallback()
 	PlayerCardProgressModel.instance:confirmData()
 	ViewMgr.instance:closeView(ViewName.PlayerCardProgressView, nil, true)
 end
 
-function slot0.cancel()
+function var_0_0.cancel()
 	PlayerCardProgressModel.instance:reselectData()
 	ViewMgr.instance:closeView(ViewName.PlayerCardProgressView, nil, true)
 end
 
-function slot0.closeFunc(slot0)
+function var_0_0.closeFunc(arg_7_0)
 	ViewMgr.instance:closeView(ViewName.PlayerCardProgressView, nil, true)
 end
 
-return slot0
+return var_0_0

@@ -1,335 +1,353 @@
-module("modules.logic.turnback.view.TurnbackRecommendView", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackRecommendView", package.seeall)
 
-slot0 = class("TurnbackRecommendView", BaseView)
+local var_0_0 = class("TurnbackRecommendView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._gobanner = gohelper.findChild(slot0.viewGO, "#go_banner")
-	slot0._gobannercontent = gohelper.findChild(slot0.viewGO, "#go_banner/#go_bannercontent")
-	slot0._gobannerIcon = gohelper.findChild(slot0.viewGO, "#go_banner/#go_bannercontent/#go_bannerIcon")
-	slot0._goslider = gohelper.findChild(slot0.viewGO, "#go_banner/#go_slider")
-	slot0._goindexItem = gohelper.findChild(slot0.viewGO, "#go_banner/#go_slider/#go_indexItem")
-	slot0._gobannerscroll = gohelper.findChild(slot0.viewGO, "#go_banner/#go_bannerscroll")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
-	slot0._btnleftArrow = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_leftArrow")
-	slot0._btnrightArrow = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_rightArrow")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._gobanner = gohelper.findChild(arg_1_0.viewGO, "#go_banner")
+	arg_1_0._gobannercontent = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannercontent")
+	arg_1_0._gobannerIcon = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannercontent/#go_bannerIcon")
+	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_slider")
+	arg_1_0._goindexItem = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_slider/#go_indexItem")
+	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannerscroll")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+	arg_1_0._btnleftArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_leftArrow")
+	arg_1_0._btnrightArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rightArrow")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbanner:AddClickListener(slot0._btnjumpOnClick, slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
-	slot0._btnleftArrow:AddClickListener(slot0._btnleftArrowOnClick, slot0)
-	slot0._btnrightArrow:AddClickListener(slot0._btnrightArrowOnClick, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0.dailyResetData, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, slot0.dailyResetData, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbanner:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+	arg_2_0._btnleftArrow:AddClickListener(arg_2_0._btnleftArrowOnClick, arg_2_0)
+	arg_2_0._btnrightArrow:AddClickListener(arg_2_0._btnrightArrowOnClick, arg_2_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.dailyResetData, arg_2_0)
+	arg_2_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_2_0.dailyResetData, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbanner:RemoveClickListener()
-	slot0._btnjump:RemoveClickListener()
-	slot0._btnleftArrow:RemoveClickListener()
-	slot0._btnrightArrow:RemoveClickListener()
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0.dailyResetData, slot0)
-	slot0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, slot0.dailyResetData, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbanner:RemoveClickListener()
+	arg_3_0._btnjump:RemoveClickListener()
+	arg_3_0._btnleftArrow:RemoveClickListener()
+	arg_3_0._btnrightArrow:RemoveClickListener()
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.dailyResetData, arg_3_0)
+	arg_3_0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_3_0.dailyResetData, arg_3_0)
 end
 
-slot0.bannerWidth = 1332
-slot0.moveDistance = 100
+var_0_0.bannerWidth = 1332
+var_0_0.moveDistance = 100
 
-function slot0._btnjumpOnClick(slot0)
-	if slot0.scrollStartPos then
+function var_0_0._btnjumpOnClick(arg_4_0)
+	if arg_4_0.scrollStartPos then
 		return
 	end
 
-	slot0:onBannerClick({
-		config = slot0.bannerConfigTab[slot0.targetIndex]
-	})
+	local var_4_0 = {
+		config = arg_4_0.bannerConfigTab[arg_4_0.targetIndex]
+	}
+
+	arg_4_0:onBannerClick(var_4_0)
 end
 
-function slot0._btnleftArrowOnClick(slot0)
-	if slot0.configCount == 1 then
+function var_0_0._btnleftArrowOnClick(arg_5_0)
+	if arg_5_0.configCount == 1 then
 		return
 	end
 
-	slot0:slidePre()
-	slot0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
+	arg_5_0:slidePre()
+	arg_5_0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
 end
 
-function slot0._btnrightArrowOnClick(slot0)
-	if slot0.configCount == 1 then
+function var_0_0._btnrightArrowOnClick(arg_6_0)
+	if arg_6_0.configCount == 1 then
 		return
 	end
 
-	slot0:slideNext()
-	slot0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
+	arg_6_0:slideNext()
+	arg_6_0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
 end
 
-function slot0.slideNext(slot0)
-	if slot0.configCount == 1 then
+function var_0_0.slideNext(arg_7_0)
+	if arg_7_0.configCount == 1 then
 		return
 	end
 
-	if slot0.configCount <= slot0.targetIndex then
-		slot0.targetIndex = 1
+	if arg_7_0.targetIndex >= arg_7_0.configCount then
+		arg_7_0.targetIndex = 1
 	else
-		slot0.targetIndex = slot0.targetIndex + 1
+		arg_7_0.targetIndex = arg_7_0.targetIndex + 1
 	end
 
-	slot0:setBannerPos(true)
-	slot0:autoMoveBanner()
+	arg_7_0:setBannerPos(true)
+	arg_7_0:autoMoveBanner()
 end
 
-function slot0.slidePre(slot0)
-	if slot0.configCount == 1 then
+function var_0_0.slidePre(arg_8_0)
+	if arg_8_0.configCount == 1 then
 		return
 	end
 
-	if slot0.targetIndex <= 1 then
-		slot0.targetIndex = slot0.configCount
+	if arg_8_0.targetIndex <= 1 then
+		arg_8_0.targetIndex = arg_8_0.configCount
 	else
-		slot0.targetIndex = slot0.targetIndex - 1
+		arg_8_0.targetIndex = arg_8_0.targetIndex - 1
 	end
 
-	slot0:setBannerPos(false)
-	slot0:autoMoveBanner()
+	arg_8_0:setBannerPos(false)
+	arg_8_0:autoMoveBanner()
 end
 
-function slot0._onScrollDragBegin(slot0, slot1, slot2)
-	slot0.scrollStartPos = slot2.position
+function var_0_0._onScrollDragBegin(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.scrollStartPos = arg_9_2.position
 end
 
-function slot0._onScrollDragEnd(slot0, slot1, slot2)
-	if slot3.x > 0 and Mathf.Abs((slot2.position - slot0.scrollStartPos).x) - uv0.moveDistance >= 0 then
-		slot0:slidePre()
-		slot0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
-	elseif slot3.x < 0 and slot4 then
-		slot0:slideNext()
-		slot0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
+function var_0_0._onScrollDragEnd(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_2.position - arg_10_0.scrollStartPos
+	local var_10_1 = Mathf.Abs(var_10_0.x) - var_0_0.moveDistance >= 0
+
+	if var_10_0.x > 0 and var_10_1 then
+		arg_10_0:slidePre()
+		arg_10_0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
+	elseif var_10_0.x < 0 and var_10_1 then
+		arg_10_0:slideNext()
+		arg_10_0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Manual)
 	end
 
-	slot0.scrollStartPos = nil
+	arg_10_0.scrollStartPos = nil
 
-	slot0:autoMoveBanner()
+	arg_10_0:autoMoveBanner()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	TurnbackRecommendModel.instance:initReommendShowState(slot0.turnbackId)
+	TurnbackRecommendModel.instance:initReommendShowState(arg_11_0.turnbackId)
 
-	slot0.bannerConfigTab = {}
-	slot0.indexItemTab = slot0:getUserDataTb_()
-	slot0.bannerTab = slot0:getUserDataTb_()
+	arg_11_0.bannerConfigTab = {}
+	arg_11_0.indexItemTab = arg_11_0:getUserDataTb_()
+	arg_11_0.bannerTab = arg_11_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._gobannerIcon, false)
-	gohelper.setActive(slot0._goindexItem, false)
+	gohelper.setActive(arg_11_0._gobannerIcon, false)
+	gohelper.setActive(arg_11_0._goindexItem, false)
 
-	slot0.targetIndex = 1
-	slot0.configCount = 0
-	slot0.layoutGroup = slot0._gobannercontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	slot0.bannerContentTrans = slot0._gobannercontent:GetComponent(gohelper.Type_RectTransform)
-	slot0._btnbanner = gohelper.getClickWithAudio(slot0._gobannerscroll)
-	slot0._scroll = SLFramework.UGUI.UIDragListener.Get(slot0._gobannerscroll)
+	arg_11_0.targetIndex = 1
+	arg_11_0.configCount = 0
+	arg_11_0.layoutGroup = arg_11_0._gobannercontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	arg_11_0.bannerContentTrans = arg_11_0._gobannercontent:GetComponent(gohelper.Type_RectTransform)
+	arg_11_0._btnbanner = gohelper.getClickWithAudio(arg_11_0._gobannerscroll)
+	arg_11_0._scroll = SLFramework.UGUI.UIDragListener.Get(arg_11_0._gobannerscroll)
 
-	slot0._scroll:AddDragBeginListener(slot0._onScrollDragBegin, slot0)
-	slot0._scroll:AddDragEndListener(slot0._onScrollDragEnd, slot0)
+	arg_11_0._scroll:AddDragBeginListener(arg_11_0._onScrollDragBegin, arg_11_0)
+	arg_11_0._scroll:AddDragEndListener(arg_11_0._onScrollDragEnd, arg_11_0)
 
-	slot0.isMoving = false
+	arg_11_0.isMoving = false
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_13_0)
+	local var_13_0 = arg_13_0.viewParam.parent
 
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-	slot0:refreshUI()
-	slot0:initBannerItem()
-	slot0:autoMoveBanner()
+	arg_13_0.actId = arg_13_0.viewParam.actId
+
+	gohelper.addChild(var_13_0, arg_13_0.viewGO)
+	arg_13_0:refreshUI()
+	arg_13_0:initBannerItem()
+	arg_13_0:autoMoveBanner()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:creatAndRefreshIndexItem()
+function var_0_0.refreshUI(arg_14_0)
+	arg_14_0:creatAndRefreshIndexItem()
 
-	slot0._txtdesc.text = TurnbackConfig.instance:getTurnbackSubModuleCo(slot0.actId).actDesc
+	local var_14_0 = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_14_0.actId)
 
-	slot0:refreshIndexItem()
-	gohelper.setActive(slot0._btnleftArrow.gameObject, slot0.configCount > 1)
-	gohelper.setActive(slot0._btnrightArrow.gameObject, slot0.configCount > 1)
+	arg_14_0._txtdesc.text = var_14_0.actDesc
+
+	arg_14_0:refreshIndexItem()
+	gohelper.setActive(arg_14_0._btnleftArrow.gameObject, arg_14_0.configCount > 1)
+	gohelper.setActive(arg_14_0._btnrightArrow.gameObject, arg_14_0.configCount > 1)
 end
 
-function slot0.initBannerItem(slot0)
-	if GameUtil.getTabLen(slot0.bannerConfigTab) == 0 then
+function var_0_0.initBannerItem(arg_15_0)
+	if GameUtil.getTabLen(arg_15_0.bannerConfigTab) == 0 then
 		return
 	end
 
-	for slot4 = 1, 2 do
-		if not slot0.bannerTab[slot4] then
-			slot5 = {
-				go = gohelper.clone(slot0._gobannerIcon, slot0._gobannercontent, "banner" .. slot4)
+	for iter_15_0 = 1, 2 do
+		if not arg_15_0.bannerTab[iter_15_0] then
+			local var_15_0 = {
+				go = gohelper.clone(arg_15_0._gobannerIcon, arg_15_0._gobannercontent, "banner" .. iter_15_0)
 			}
-			slot5.simage = gohelper.findChildSingleImage(slot5.go, "simage_bannerIcon")
-			slot5.trans = slot5.go:GetComponent(gohelper.Type_RectTransform)
 
-			gohelper.setActive(slot5.go, true)
+			var_15_0.simage = gohelper.findChildSingleImage(var_15_0.go, "simage_bannerIcon")
+			var_15_0.trans = var_15_0.go:GetComponent(gohelper.Type_RectTransform)
 
-			slot0.bannerTab[slot4] = slot5
+			gohelper.setActive(var_15_0.go, true)
+
+			arg_15_0.bannerTab[iter_15_0] = var_15_0
 		end
 	end
 
-	slot0.mainBanner = slot0.bannerTab[1]
-	slot0.helpBanner = slot0.bannerTab[2]
-	slot0.centerBannerPosX = 0
-	slot0.leftBannerPosX = -(uv0.bannerWidth + slot0.layoutGroup.spacing)
-	slot0.rightBannerPosX = uv0.bannerWidth + slot0.layoutGroup.spacing
+	arg_15_0.mainBanner = arg_15_0.bannerTab[1]
+	arg_15_0.helpBanner = arg_15_0.bannerTab[2]
+	arg_15_0.centerBannerPosX = 0
+	arg_15_0.leftBannerPosX = -(var_0_0.bannerWidth + arg_15_0.layoutGroup.spacing)
+	arg_15_0.rightBannerPosX = var_0_0.bannerWidth + arg_15_0.layoutGroup.spacing
 
-	recthelper.setAnchorX(slot0.mainBanner.trans, slot0.centerBannerPosX)
-	recthelper.setAnchorX(slot0.helpBanner.trans, slot0.rightBannerPosX)
-	slot0.mainBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(slot0.bannerConfigTab[slot0.targetIndex].icon)))
-	slot0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.First)
+	recthelper.setAnchorX(arg_15_0.mainBanner.trans, arg_15_0.centerBannerPosX)
+	recthelper.setAnchorX(arg_15_0.helpBanner.trans, arg_15_0.rightBannerPosX)
+	arg_15_0.mainBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(arg_15_0.bannerConfigTab[arg_15_0.targetIndex].icon)))
+	arg_15_0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.First)
 end
 
-function slot0.creatAndRefreshIndexItem(slot0)
-	slot1 = TurnbackRecommendModel.instance:getCanShowRecommendList() or {}
-	slot0.configCount = Mathf.Min(TurnbackConfig.instance:getAllRecommendList(slot0.turnbackId)[1].limitCount, #slot1)
+function var_0_0.creatAndRefreshIndexItem(arg_16_0)
+	local var_16_0 = TurnbackRecommendModel.instance:getCanShowRecommendList() or {}
+	local var_16_1 = TurnbackConfig.instance:getAllRecommendList(arg_16_0.turnbackId)[1].limitCount
 
-	table.sort(slot1, uv0.sortRecommend)
+	arg_16_0.configCount = Mathf.Min(var_16_1, #var_16_0)
 
-	for slot6 = 1, slot0.configCount do
-		slot0.bannerConfigTab[slot6] = slot1[slot6]
+	table.sort(var_16_0, var_0_0.sortRecommend)
 
-		if not slot0.indexItemTab[slot6] then
-			slot7 = {
-				go = gohelper.clone(slot0._goindexItem, slot0._goslider, "index" .. slot6)
+	for iter_16_0 = 1, arg_16_0.configCount do
+		arg_16_0.bannerConfigTab[iter_16_0] = var_16_0[iter_16_0]
+
+		local var_16_2 = arg_16_0.indexItemTab[iter_16_0]
+
+		if not var_16_2 then
+			var_16_2 = {
+				go = gohelper.clone(arg_16_0._goindexItem, arg_16_0._goslider, "index" .. iter_16_0)
 			}
-			slot7.nomalstar = gohelper.findChild(slot7.go, "go_nomalstar")
-			slot7.lightstar = gohelper.findChild(slot7.go, "go_lightstar")
-			slot0.indexItemTab[slot6] = slot7
+			var_16_2.nomalstar = gohelper.findChild(var_16_2.go, "go_nomalstar")
+			var_16_2.lightstar = gohelper.findChild(var_16_2.go, "go_lightstar")
+			arg_16_0.indexItemTab[iter_16_0] = var_16_2
 		end
 
-		gohelper.setActive(slot7.go, true)
+		gohelper.setActive(var_16_2.go, true)
 	end
 
-	for slot6 = slot0.configCount + 1, #slot0.indexItemTab do
-		gohelper.setActive(slot0.indexItemTab[slot6].go, false)
+	for iter_16_1 = arg_16_0.configCount + 1, #arg_16_0.indexItemTab do
+		gohelper.setActive(arg_16_0.indexItemTab[iter_16_1].go, false)
 	end
 end
 
-function slot0.onBannerClick(slot0, slot1)
-	if slot1.config and slot1.config.jumpId > 0 then
+function var_0_0.onBannerClick(arg_17_0, arg_17_1)
+	if arg_17_1.config and arg_17_1.config.jumpId > 0 then
 		StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 			[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Return,
-			[StatEnum.EventProperties.RecommendPageId] = tostring(slot1.config.id),
+			[StatEnum.EventProperties.RecommendPageId] = tostring(arg_17_1.config.id),
 			[StatEnum.EventProperties.RecommendPageName] = ""
 		})
-		GameFacade.jump(slot1.config.jumpId)
+		GameFacade.jump(arg_17_1.config.jumpId)
 	end
 end
 
-function slot0.sortRecommend(slot0, slot1)
-	return slot0.order < slot1.order
+function var_0_0.sortRecommend(arg_18_0, arg_18_1)
+	return arg_18_0.order < arg_18_1.order
 end
 
-function slot0.autoMoveBanner(slot0)
-	TaskDispatcher.cancelTask(slot0.autoSwitch, slot0)
-	TaskDispatcher.runRepeat(slot0.autoSwitch, slot0, 5)
+function var_0_0.autoMoveBanner(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0.autoSwitch, arg_19_0)
+	TaskDispatcher.runRepeat(arg_19_0.autoSwitch, arg_19_0, 5)
 end
 
-function slot0.autoSwitch(slot0)
-	slot0:slideNext()
+function var_0_0.autoSwitch(arg_20_0)
+	arg_20_0:slideNext()
 
-	if ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Auto)
+	if ViewHelper.instance:checkViewOnTheTop(arg_20_0.viewName) then
+		arg_20_0:statRecommendPage(StatEnum.RecommendType.Return, StatEnum.DragType.Auto)
 	end
 end
 
-function slot0.setBannerPos(slot0, slot1)
-	if GameUtil.getTabLen(slot0.bannerConfigTab) == 0 or slot0.configCount <= 1 then
+function var_0_0.setBannerPos(arg_21_0, arg_21_1)
+	if GameUtil.getTabLen(arg_21_0.bannerConfigTab) == 0 or arg_21_0.configCount <= 1 then
 		return
 	end
 
-	recthelper.setAnchorX(slot0.mainBanner.trans, slot0.centerBannerPosX)
+	recthelper.setAnchorX(arg_21_0.mainBanner.trans, arg_21_0.centerBannerPosX)
 
-	slot2 = slot0.bannerConfigTab[slot0.targetIndex]
+	local var_21_0 = arg_21_0.bannerConfigTab[arg_21_0.targetIndex]
 
-	slot0:refreshIndexItem()
+	arg_21_0:refreshIndexItem()
 
-	if slot0.isMoving then
-		slot0:killMoveTween()
-		slot0:changeBanner()
-		recthelper.setAnchorX(slot0.mainBanner.trans, slot0.centerBannerPosX)
-		recthelper.setAnchorX(slot0.helpBanner.trans, slot1 and slot0.rightBannerPosX or slot0.leftBannerPosX)
+	if arg_21_0.isMoving then
+		arg_21_0:killMoveTween()
+		arg_21_0:changeBanner()
+		recthelper.setAnchorX(arg_21_0.mainBanner.trans, arg_21_0.centerBannerPosX)
+		recthelper.setAnchorX(arg_21_0.helpBanner.trans, arg_21_1 and arg_21_0.rightBannerPosX or arg_21_0.leftBannerPosX)
 	end
 
-	slot0.helpBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(slot2.icon)))
-	recthelper.setAnchorX(slot0.helpBanner.trans, slot1 and slot0.rightBannerPosX or slot0.leftBannerPosX)
+	arg_21_0.helpBanner.simage:LoadImage(SLFramework.LanguageMgr.Instance:GetLangPathFromAssetPath(ResUrl.getTurnbackRecommendLangPath(var_21_0.icon)))
+	recthelper.setAnchorX(arg_21_0.helpBanner.trans, arg_21_1 and arg_21_0.rightBannerPosX or arg_21_0.leftBannerPosX)
 
-	slot0.helpBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(slot0.helpBanner.trans, slot0.centerBannerPosX, 0.5, slot0.changeBanner, slot0)
-	slot0.mainBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(slot0.mainBanner.trans, slot1 and slot0.leftBannerPosX or slot0.rightBannerPosX, 0.5)
-	slot0.isMoving = true
+	arg_21_0.helpBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_21_0.helpBanner.trans, arg_21_0.centerBannerPosX, 0.5, arg_21_0.changeBanner, arg_21_0)
+	arg_21_0.mainBannerMoveTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_21_0.mainBanner.trans, arg_21_1 and arg_21_0.leftBannerPosX or arg_21_0.rightBannerPosX, 0.5)
+	arg_21_0.isMoving = true
 end
 
-function slot0.refreshIndexItem(slot0)
-	for slot4, slot5 in ipairs(slot0.indexItemTab) do
-		gohelper.setActive(slot5.nomalstar, slot4 ~= slot0.targetIndex)
-		gohelper.setActive(slot5.lightstar, slot4 == slot0.targetIndex)
+function var_0_0.refreshIndexItem(arg_22_0)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.indexItemTab) do
+		gohelper.setActive(iter_22_1.nomalstar, iter_22_0 ~= arg_22_0.targetIndex)
+		gohelper.setActive(iter_22_1.lightstar, iter_22_0 == arg_22_0.targetIndex)
 	end
 
-	gohelper.setActive(slot0._btnjump.gameObject, slot0.bannerConfigTab[slot0.targetIndex] and slot1.jumpId > 0)
+	local var_22_0 = arg_22_0.bannerConfigTab[arg_22_0.targetIndex]
+
+	gohelper.setActive(arg_22_0._btnjump.gameObject, var_22_0 and var_22_0.jumpId > 0)
 end
 
-function slot0.changeBanner(slot0)
-	slot0.helpBanner = slot0.mainBanner
-	slot0.mainBanner = slot0.helpBanner
-	slot0.isMoving = false
+function var_0_0.changeBanner(arg_23_0)
+	arg_23_0.mainBanner, arg_23_0.helpBanner = arg_23_0.helpBanner, arg_23_0.mainBanner
+	arg_23_0.isMoving = false
 end
 
-function slot0.dailyResetData(slot0)
-	slot0.targetIndex = 1
+function var_0_0.dailyResetData(arg_24_0)
+	arg_24_0.targetIndex = 1
 
-	TurnbackRecommendModel.instance:initReommendShowState(slot0.turnbackId)
-	slot0:refreshUI()
-	slot0:initBannerItem()
-	slot0:setBannerPos(true)
-	slot0:autoMoveBanner()
+	TurnbackRecommendModel.instance:initReommendShowState(arg_24_0.turnbackId)
+	arg_24_0:refreshUI()
+	arg_24_0:initBannerItem()
+	arg_24_0:setBannerPos(true)
+	arg_24_0:autoMoveBanner()
 end
 
-function slot0.killMoveTween(slot0)
-	if slot0.mainBannerMoveTweenId then
-		ZProj.TweenHelper.KillById(slot0.mainBannerMoveTweenId)
+function var_0_0.killMoveTween(arg_25_0)
+	if arg_25_0.mainBannerMoveTweenId then
+		ZProj.TweenHelper.KillById(arg_25_0.mainBannerMoveTweenId)
 	end
 
-	if slot0.helpBannerMoveTweenId then
-		ZProj.TweenHelper.KillById(slot0.helpBannerMoveTweenId)
+	if arg_25_0.helpBannerMoveTweenId then
+		ZProj.TweenHelper.KillById(arg_25_0.helpBannerMoveTweenId)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0._scroll:RemoveDragBeginListener()
-	slot0._scroll:RemoveDragEndListener()
-	TaskDispatcher.cancelTask(slot0.autoSwitch, slot0)
+function var_0_0.onClose(arg_26_0)
+	arg_26_0._scroll:RemoveDragBeginListener()
+	arg_26_0._scroll:RemoveDragEndListener()
+	TaskDispatcher.cancelTask(arg_26_0.autoSwitch, arg_26_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.bannerTab) do
-		slot5.simage:UnLoadImage()
+function var_0_0.onDestroyView(arg_27_0)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0.bannerTab) do
+		iter_27_1.simage:UnLoadImage()
 	end
 
-	slot0:killMoveTween()
+	arg_27_0:killMoveTween()
 end
 
-function slot0.statRecommendPage(slot0, slot1, slot2)
+function var_0_0.statRecommendPage(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = arg_28_0.bannerConfigTab[arg_28_0.targetIndex]
+
 	StatController.instance:track(StatEnum.EventName.ShowRecommendPage, {
-		[StatEnum.EventProperties.RecommendPageType] = slot1,
-		[StatEnum.EventProperties.ShowType] = slot2,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(slot0.bannerConfigTab[slot0.targetIndex].id)
+		[StatEnum.EventProperties.RecommendPageType] = arg_28_1,
+		[StatEnum.EventProperties.ShowType] = arg_28_2,
+		[StatEnum.EventProperties.RecommendPageId] = tostring(var_28_0.id)
 	})
 end
 
-return slot0
+return var_0_0

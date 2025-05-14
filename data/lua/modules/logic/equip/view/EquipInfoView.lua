@@ -1,346 +1,365 @@
-module("modules.logic.equip.view.EquipInfoView", package.seeall)
+﻿module("modules.logic.equip.view.EquipInfoView", package.seeall)
 
-slot0 = class("EquipInfoView", BaseView)
+local var_0_0 = class("EquipInfoView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "#go_progress")
-	slot0._txtcurlevel = gohelper.findChildText(slot0.viewGO, "#go_progress/#txt_curlevel")
-	slot0._txttotallevel = gohelper.findChildText(slot0.viewGO, "#go_progress/#txt_curlevel/#txt_totallevel")
-	slot0._goinsigt = gohelper.findChild(slot0.viewGO, "#go_progress/#txt_curlevel/go_insigt")
-	slot0._image1 = gohelper.findChildImage(slot0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_1")
-	slot0._image2 = gohelper.findChildImage(slot0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_2")
-	slot0._image3 = gohelper.findChildImage(slot0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_3")
-	slot0._image4 = gohelper.findChildImage(slot0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_4")
-	slot0._image5 = gohelper.findChildImage(slot0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_5")
-	slot0._imagelock = gohelper.findChildImage(slot0.viewGO, "#go_progress/#image_lock")
-	slot0._goType = gohelper.findChild(slot0.viewGO, "layout/type")
-	slot0._goTypeItem = gohelper.findChild(slot0.viewGO, "layout/type/#go_typeItem")
-	slot0._goattribute = gohelper.findChild(slot0.viewGO, "layout/attribute")
-	slot0._gostrengthenattr = gohelper.findChild(slot0.viewGO, "layout/attribute/container/#go_strengthenattr")
-	slot0._gobreakeffect = gohelper.findChild(slot0.viewGO, "layout/attribute/container/#go_breakeffect")
-	slot0._goSkill = gohelper.findChild(slot0.viewGO, "layout/#go_skill")
-	slot0._txtattributelv = gohelper.findChildText(slot0.viewGO, "layout/#go_skill/attributename/#txt_attributelv")
-	slot0._goSkillContainer = gohelper.findChild(slot0.viewGO, "layout/#go_skill")
-	slot0._goSkillItem = gohelper.findChild(slot0.viewGO, "layout/#go_skill/#scroll_desccontainer/Viewport/#go_skillContainer/#go_SkillItem")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_tip")
-	slot0._btnmaxlevel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_maxlevel")
-	slot0._imagemaxleveltip = gohelper.findChildImage(slot0.viewGO, "#btn_maxlevel")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
+	arg_1_0._txtcurlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_progress/#txt_curlevel")
+	arg_1_0._txttotallevel = gohelper.findChildText(arg_1_0.viewGO, "#go_progress/#txt_curlevel/#txt_totallevel")
+	arg_1_0._goinsigt = gohelper.findChild(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt")
+	arg_1_0._image1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_1")
+	arg_1_0._image2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_2")
+	arg_1_0._image3 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_3")
+	arg_1_0._image4 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_4")
+	arg_1_0._image5 = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#txt_curlevel/go_insigt/#image_5")
+	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.viewGO, "#go_progress/#image_lock")
+	arg_1_0._goType = gohelper.findChild(arg_1_0.viewGO, "layout/type")
+	arg_1_0._goTypeItem = gohelper.findChild(arg_1_0.viewGO, "layout/type/#go_typeItem")
+	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "layout/attribute")
+	arg_1_0._gostrengthenattr = gohelper.findChild(arg_1_0.viewGO, "layout/attribute/container/#go_strengthenattr")
+	arg_1_0._gobreakeffect = gohelper.findChild(arg_1_0.viewGO, "layout/attribute/container/#go_breakeffect")
+	arg_1_0._goSkill = gohelper.findChild(arg_1_0.viewGO, "layout/#go_skill")
+	arg_1_0._txtattributelv = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_skill/attributename/#txt_attributelv")
+	arg_1_0._goSkillContainer = gohelper.findChild(arg_1_0.viewGO, "layout/#go_skill")
+	arg_1_0._goSkillItem = gohelper.findChild(arg_1_0.viewGO, "layout/#go_skill/#scroll_desccontainer/Viewport/#go_skillContainer/#go_SkillItem")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
+	arg_1_0._btnmaxlevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_maxlevel")
+	arg_1_0._imagemaxleveltip = gohelper.findChildImage(arg_1_0.viewGO, "#btn_maxlevel")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmaxlevel:AddClickListener(slot0._onClickMaxLevelBtn, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmaxlevel:AddClickListener(arg_2_0._onClickMaxLevelBtn, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmaxlevel:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmaxlevel:RemoveClickListener()
 end
 
-function slot0._onClickMaxLevelBtn(slot0)
-	slot0._showMax = not slot0._showMax
+function var_0_0._onClickMaxLevelBtn(arg_4_0)
+	arg_4_0._showMax = not arg_4_0._showMax
 
-	slot0._animator:Play("switch", 0, 0)
-	slot0:refreshMaxLevelImage(0)
+	arg_4_0._animator:Play("switch", 0, 0)
+	arg_4_0:refreshMaxLevelImage(0)
 
-	if slot0._hadEquip then
-		if slot0._showMax then
-			slot0._equipMO = EquipHelper.createMaxLevelEquipMo(slot0._equipId, slot0._equipMO.id)
+	if arg_4_0._hadEquip then
+		if arg_4_0._showMax then
+			arg_4_0._equipMO = EquipHelper.createMaxLevelEquipMo(arg_4_0._equipId, arg_4_0._equipMO.id)
 		else
-			slot0._equipMO = slot0.viewContainer.viewParam.equipMO
+			arg_4_0._equipMO = arg_4_0.viewContainer.viewParam.equipMO
 		end
-	elseif slot0._showMax then
-		slot0._equipMO = EquipHelper.createMaxLevelEquipMo(slot0._equipId)
+	elseif arg_4_0._showMax then
+		arg_4_0._equipMO = EquipHelper.createMaxLevelEquipMo(arg_4_0._equipId)
 	else
-		slot0._equipMO = EquipHelper.createMinLevelEquipMo(slot0._equipId)
+		arg_4_0._equipMO = EquipHelper.createMinLevelEquipMo(arg_4_0._equipId)
 	end
 
-	slot0:refreshUI()
+	arg_4_0:refreshUI()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.strengthenAttrItemList = {}
-	slot0.tagItemList = {}
-	slot0.skillItemList = {}
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.strengthenAttrItemList = {}
+	arg_5_0.tagItemList = {}
+	arg_5_0.skillItemList = {}
 
-	gohelper.setActive(slot0._gostrengthenattr, false)
-	gohelper.setActive(slot0._goSkillItem, false)
-	gohelper.setActive(slot0._goTypeItem, false)
+	gohelper.setActive(arg_5_0._gostrengthenattr, false)
+	gohelper.setActive(arg_5_0._goSkillItem, false)
+	gohelper.setActive(arg_5_0._goTypeItem, false)
 
-	slot0._click = gohelper.getClickWithAudio(slot0._imagelock.gameObject)
+	arg_5_0._click = gohelper.getClickWithAudio(arg_5_0._imagelock.gameObject)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
-	gohelper.addUIClickAudio(slot0._btnmaxlevel.gameObject, AudioEnum.UI.play_ui_admission_open)
+	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
+	gohelper.addUIClickAudio(arg_5_0._btnmaxlevel.gameObject, AudioEnum.UI.play_ui_admission_open)
 
-	slot0.imageBreakIcon = gohelper.findChildImage(slot0._gobreakeffect, "image_icon")
-	slot0.txtBreakAttrName = gohelper.findChildText(slot0._gobreakeffect, "txt_name")
-	slot0.txtBreakValue = gohelper.findChildText(slot0._gobreakeffect, "txt_value")
-	slot0._animator = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.Animator))
-	slot0.txtTitle = gohelper.findChildText(slot0.viewGO, "layout/#go_skill/attributename/txttitle")
-	slot0._btnMaxLevelAnim = gohelper.onceAddComponent(slot0._btnmaxlevel.gameObject, typeof(UnityEngine.Animator))
+	arg_5_0.imageBreakIcon = gohelper.findChildImage(arg_5_0._gobreakeffect, "image_icon")
+	arg_5_0.txtBreakAttrName = gohelper.findChildText(arg_5_0._gobreakeffect, "txt_name")
+	arg_5_0.txtBreakValue = gohelper.findChildText(arg_5_0._gobreakeffect, "txt_value")
+	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0.viewGO, typeof(UnityEngine.Animator))
+	arg_5_0.txtTitle = gohelper.findChildText(arg_5_0.viewGO, "layout/#go_skill/attributename/txttitle")
+	arg_5_0._btnMaxLevelAnim = gohelper.onceAddComponent(arg_5_0._btnmaxlevel.gameObject, typeof(UnityEngine.Animator))
 end
 
-function slot0._onHyperLinkClick(slot0)
+function var_0_0._onHyperLinkClick(arg_6_0)
 	EquipController.instance:openEquipSkillTipView({
-		slot0._equipMO,
-		slot0._equipId,
+		arg_6_0._equipMO,
+		arg_6_0._equipId,
 		true
 	})
 end
 
-function slot0._onClick(slot0)
-	slot0._lock = not slot0._lock
+function var_0_0._onClick(arg_7_0)
+	arg_7_0._lock = not arg_7_0._lock
 
-	UISpriteSetMgr.instance:setEquipSprite(slot0._imagelock, slot0._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
-	EquipRpc.instance:sendEquipLockRequest(slot0._equipMO.id, slot0._lock)
+	UISpriteSetMgr.instance:setEquipSprite(arg_7_0._imagelock, arg_7_0._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
+	EquipRpc.instance:sendEquipLockRequest(arg_7_0._equipMO.id, arg_7_0._lock)
 
-	if slot0._lock then
+	if arg_7_0._lock then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Lock)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Unlock)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._equipMO = slot0.viewContainer.viewParam.equipMO
-	slot0._equipId = slot0._equipMO and slot0._equipMO.config.id or slot0.viewContainer.viewParam.equipId
-	slot0._hadEquip = true
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._equipMO = arg_9_0.viewContainer.viewParam.equipMO
+	arg_9_0._equipId = arg_9_0._equipMO and arg_9_0._equipMO.config.id or arg_9_0.viewContainer.viewParam.equipId
+	arg_9_0._hadEquip = true
 
-	if not slot0._equipMO and slot0._equipId then
-		slot0._hadEquip = false
-		slot0._equipMO = EquipHelper.createMinLevelEquipMo(slot0._equipId)
+	if not arg_9_0._equipMO and arg_9_0._equipId then
+		arg_9_0._hadEquip = false
+		arg_9_0._equipMO = EquipHelper.createMinLevelEquipMo(arg_9_0._equipId)
 	end
 
-	slot0._config = slot0._equipMO.config
-	slot0._heroId = EquipTeamListModel.instance:getHero() and slot1.heroId
-	slot0._isNormalEquip = EquipHelper.isNormalEquip(slot0._config)
+	arg_9_0._config = arg_9_0._equipMO.config
 
-	gohelper.setActive(slot0._btnmaxlevel.gameObject, slot0._isNormalEquip)
+	local var_9_0 = EquipTeamListModel.instance:getHero()
 
-	slot0._showMax = false
-	slot0._lock = slot0._equipMO.isLock
+	arg_9_0._heroId = var_9_0 and var_9_0.heroId
+	arg_9_0._isNormalEquip = EquipHelper.isNormalEquip(arg_9_0._config)
 
-	gohelper.setActive(slot0._imagelock.gameObject, slot0._hadEquip and slot0._isNormalEquip)
+	gohelper.setActive(arg_9_0._btnmaxlevel.gameObject, arg_9_0._isNormalEquip)
 
-	if slot0._hadEquip and slot0._isNormalEquip then
-		UISpriteSetMgr.instance:setEquipSprite(slot0._imagelock, slot0._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
+	arg_9_0._showMax = false
+	arg_9_0._lock = arg_9_0._equipMO.isLock
+
+	gohelper.setActive(arg_9_0._imagelock.gameObject, arg_9_0._hadEquip and arg_9_0._isNormalEquip)
+
+	if arg_9_0._hadEquip and arg_9_0._isNormalEquip then
+		UISpriteSetMgr.instance:setEquipSprite(arg_9_0._imagelock, arg_9_0._lock and "xinxiang_suo" or "xinxiang_jiesuo", false)
 	end
 
-	gohelper.setActive(slot0._goprogress, slot0._isNormalEquip)
-	gohelper.setActive(slot0._goattribute, slot0._isNormalEquip)
-	gohelper.setActive(slot0._txtattributelv.gameObject, slot0._isNormalEquip)
-	slot0:refreshMaxLevelImage(1)
-	slot0:refreshTxtTitle()
-	slot0:refreshUI()
+	gohelper.setActive(arg_9_0._goprogress, arg_9_0._isNormalEquip)
+	gohelper.setActive(arg_9_0._goattribute, arg_9_0._isNormalEquip)
+	gohelper.setActive(arg_9_0._txtattributelv.gameObject, arg_9_0._isNormalEquip)
+	arg_9_0:refreshMaxLevelImage(1)
+	arg_9_0:refreshTxtTitle()
+	arg_9_0:refreshUI()
 
-	if slot0.viewContainer:getIsOpenLeftBackpack() then
-		slot0.viewContainer.equipView:showTitleAndCenter()
+	if arg_9_0.viewContainer:getIsOpenLeftBackpack() then
+		arg_9_0.viewContainer.equipView:showTitleAndCenter()
 	end
 
-	slot0._animator:Play(UIAnimationName.Open)
+	arg_9_0._animator:Play(UIAnimationName.Open)
 end
 
-function slot0.refreshMaxLevelImage(slot0, slot1)
-	slot0._btnMaxLevelAnim:Play(slot0._showMax and "open" or "close", 0, slot1)
+function var_0_0.refreshMaxLevelImage(arg_10_0, arg_10_1)
+	arg_10_0._btnMaxLevelAnim:Play(arg_10_0._showMax and "open" or "close", 0, arg_10_1)
 end
 
-function slot0.refreshTxtTitle(slot0)
-	if EquipHelper.isExpEquip(slot0._config) then
-		slot0.txtTitle.text = luaLang("p_equipinfo_exp_title")
-	elseif EquipHelper.isRefineUniversalMaterials(slot0._config.id) or EquipHelper.isSpRefineEquip(slot0._config) then
-		slot0.txtTitle.text = luaLang("p_equipinfo_refine_title")
+function var_0_0.refreshTxtTitle(arg_11_0)
+	if EquipHelper.isExpEquip(arg_11_0._config) then
+		arg_11_0.txtTitle.text = luaLang("p_equipinfo_exp_title")
+	elseif EquipHelper.isRefineUniversalMaterials(arg_11_0._config.id) or EquipHelper.isSpRefineEquip(arg_11_0._config) then
+		arg_11_0.txtTitle.text = luaLang("p_equipinfo_refine_title")
 	else
-		slot0.txtTitle.text = luaLang("p_equipinfo_normal_title")
+		arg_11_0.txtTitle.text = luaLang("p_equipinfo_normal_title")
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshTag()
-	slot0:refreshBaseAttr()
+function var_0_0.refreshUI(arg_12_0)
+	arg_12_0:refreshTag()
+	arg_12_0:refreshBaseAttr()
 
-	if not slot0._isNormalEquip or slot0._isNormalEquip and EquipConfig.instance:getNotShowRefineRare() < slot0._equipMO.config.rare then
-		gohelper.setActive(slot0._goSkillContainer, true)
+	if not arg_12_0._isNormalEquip or arg_12_0._isNormalEquip and arg_12_0._equipMO.config.rare > EquipConfig.instance:getNotShowRefineRare() then
+		gohelper.setActive(arg_12_0._goSkillContainer, true)
 
-		slot0._txtattributelv.text = slot0._equipMO.refineLv
+		arg_12_0._txtattributelv.text = arg_12_0._equipMO.refineLv
 
-		slot0:refreshSkillDesc()
+		arg_12_0:refreshSkillDesc()
 	else
-		gohelper.setActive(slot0._goSkillContainer, false)
+		gohelper.setActive(arg_12_0._goSkillContainer, false)
 	end
 
-	slot0:showProgress()
+	arg_12_0:showProgress()
 end
 
-function slot0.refreshTag(slot0)
-	if string.nilorempty(slot0._config.tag) then
-		gohelper.setActive(slot0._goType, false)
+function var_0_0.refreshTag(arg_13_0)
+	local var_13_0 = arg_13_0._config.tag
+
+	if string.nilorempty(var_13_0) then
+		gohelper.setActive(arg_13_0._goType, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goType, true)
+	gohelper.setActive(arg_13_0._goType, true)
 
-	slot3 = nil
+	local var_13_1 = EquipConfig.instance:getTagList(arg_13_0._config)
+	local var_13_2
 
-	for slot7, slot8 in ipairs(EquipConfig.instance:getTagList(slot0._config)) do
-		if not slot0.tagItemList[slot7] then
-			slot3 = slot0:getUserDataTb_()
-			slot3.go = gohelper.cloneInPlace(slot0._goTypeItem)
-			slot3.txt = slot3.go:GetComponent(gohelper.Type_TextMesh)
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		local var_13_3 = arg_13_0.tagItemList[iter_13_0]
 
-			table.insert(slot0.tagItemList, slot3)
+		if not var_13_3 then
+			var_13_3 = arg_13_0:getUserDataTb_()
+			var_13_3.go = gohelper.cloneInPlace(arg_13_0._goTypeItem)
+			var_13_3.txt = var_13_3.go:GetComponent(gohelper.Type_TextMesh)
+
+			table.insert(arg_13_0.tagItemList, var_13_3)
 		end
 
-		gohelper.setActive(slot3.go, true)
+		gohelper.setActive(var_13_3.go, true)
 
-		slot3.txt.text = EquipConfig.instance:getTagName(slot8)
+		var_13_3.txt.text = EquipConfig.instance:getTagName(iter_13_1)
 	end
 
-	for slot7 = #slot2 + 1, #slot0.tagItemList do
-		gohelper.setActive(slot0.tagItemList[slot7].go, false)
+	for iter_13_2 = #var_13_1 + 1, #arg_13_0.tagItemList do
+		gohelper.setActive(arg_13_0.tagItemList[iter_13_2].go, false)
 	end
 end
 
-function slot0.refreshBaseAttr(slot0)
-	slot1, slot2 = nil
+function var_0_0.refreshBaseAttr(arg_14_0)
+	local var_14_0
+	local var_14_1
 
-	if slot0._equipMO then
-		slot1, slot2 = EquipConfig.instance:getEquipNormalAttr(slot0._equipId, slot0._equipMO.level, HeroConfig.sortAttrForEquipView)
+	if arg_14_0._equipMO then
+		local var_14_2
+
+		var_14_2, var_14_1 = EquipConfig.instance:getEquipNormalAttr(arg_14_0._equipId, arg_14_0._equipMO.level, HeroConfig.sortAttrForEquipView)
 	else
-		slot1, slot2 = EquipConfig.instance:getMaxEquipNormalAttr(slot0._equipId, HeroConfig.sortAttrForEquipView)
+		local var_14_3
+
+		var_14_3, var_14_1 = EquipConfig.instance:getMaxEquipNormalAttr(arg_14_0._equipId, HeroConfig.sortAttrForEquipView)
 	end
 
-	slot3 = nil
+	local var_14_4
 
-	for slot7, slot8 in ipairs(slot2) do
-		if not slot0.strengthenAttrItemList[slot7] then
-			slot3 = slot0:getUserDataTb_()
-			slot3.go = gohelper.cloneInPlace(slot0._gostrengthenattr)
-			slot3.icon = gohelper.findChildImage(slot3.go, "image_icon")
-			slot3.name = gohelper.findChildText(slot3.go, "txt_name")
-			slot3.value = gohelper.findChildText(slot3.go, "txt_value")
-			slot3.goBg = gohelper.findChild(slot3.go, "go_bg")
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		local var_14_5 = arg_14_0.strengthenAttrItemList[iter_14_0]
 
-			table.insert(slot0.strengthenAttrItemList, slot3)
+		if not var_14_5 then
+			var_14_5 = arg_14_0:getUserDataTb_()
+			var_14_5.go = gohelper.cloneInPlace(arg_14_0._gostrengthenattr)
+			var_14_5.icon = gohelper.findChildImage(var_14_5.go, "image_icon")
+			var_14_5.name = gohelper.findChildText(var_14_5.go, "txt_name")
+			var_14_5.value = gohelper.findChildText(var_14_5.go, "txt_value")
+			var_14_5.goBg = gohelper.findChild(var_14_5.go, "go_bg")
+
+			table.insert(arg_14_0.strengthenAttrItemList, var_14_5)
 		end
 
-		gohelper.setActive(slot3.go, true)
-		gohelper.setActive(slot3.goBg, slot7 % 2 == 0)
+		gohelper.setActive(var_14_5.go, true)
+		gohelper.setActive(var_14_5.goBg, iter_14_0 % 2 == 0)
 
-		slot9 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(slot8.attrType))
+		local var_14_6 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_14_1.attrType))
 
-		UISpriteSetMgr.instance:setCommonSprite(slot3.icon, "icon_att_" .. slot9.id)
+		UISpriteSetMgr.instance:setCommonSprite(var_14_5.icon, "icon_att_" .. var_14_6.id)
 
-		slot3.name.text = slot9.name
-		slot3.value.text = slot8.value
+		var_14_5.name.text = var_14_6.name
+		var_14_5.value.text = iter_14_1.value
 	end
 
-	for slot7 = #slot2 + 1, #slot0.strengthenAttrItemList do
-		gohelper.setActive(slot0.strengthenAttrItemList[slot7].go, false)
+	for iter_14_2 = #var_14_1 + 1, #arg_14_0.strengthenAttrItemList do
+		gohelper.setActive(arg_14_0.strengthenAttrItemList[iter_14_2].go, false)
 	end
 
-	slot4, slot5 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(slot0._config, slot0._equipMO.breakLv)
+	local var_14_7, var_14_8 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(arg_14_0._config, arg_14_0._equipMO.breakLv)
 
-	if slot4 then
-		gohelper.setActive(slot0._gobreakeffect, true)
-		UISpriteSetMgr.instance:setCommonSprite(slot0.imageBreakIcon, "icon_att_" .. slot4)
+	if var_14_7 then
+		gohelper.setActive(arg_14_0._gobreakeffect, true)
+		UISpriteSetMgr.instance:setCommonSprite(arg_14_0.imageBreakIcon, "icon_att_" .. var_14_7)
 
-		slot0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(slot4)
-		slot0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(slot5)
+		arg_14_0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_14_7)
+		arg_14_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_14_8)
 
-		gohelper.setAsLastSibling(slot0._gobreakeffect)
+		gohelper.setAsLastSibling(arg_14_0._gobreakeffect)
 	else
-		gohelper.setActive(slot0._gobreakeffect, false)
+		gohelper.setActive(arg_14_0._gobreakeffect, false)
 	end
 end
 
-function slot0.refreshSkillDesc(slot0)
-	if not next(EquipHelper.getEquipSkillDescList(slot0._config.id, slot0._equipMO.refineLv, "#D9A06F")) then
-		gohelper.setActive(slot0._goSkill, false)
+function var_0_0.refreshSkillDesc(arg_15_0)
+	local var_15_0 = EquipHelper.getEquipSkillDescList(arg_15_0._config.id, arg_15_0._equipMO.refineLv, "#D9A06F")
+
+	if not next(var_15_0) then
+		gohelper.setActive(arg_15_0._goSkill, false)
 	else
-		gohelper.setActive(slot0._goSkill, true)
+		gohelper.setActive(arg_15_0._goSkill, true)
 
-		slot2 = nil
+		local var_15_1
 
-		for slot6, slot7 in ipairs(slot1) do
-			if not slot0.skillItemList[slot6] then
-				slot2 = slot0:getUserDataTb_()
-				slot2.itemGo = gohelper.cloneInPlace(slot0._goSkillItem)
-				slot2.txt = gohelper.findChildText(slot2.itemGo, "skill_desc")
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			local var_15_2 = arg_15_0.skillItemList[iter_15_0]
 
-				SkillHelper.addHyperLinkClick(slot2.txt)
+			if not var_15_2 then
+				var_15_2 = arg_15_0:getUserDataTb_()
+				var_15_2.itemGo = gohelper.cloneInPlace(arg_15_0._goSkillItem)
+				var_15_2.txt = gohelper.findChildText(var_15_2.itemGo, "skill_desc")
 
-				slot2.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot2.txt.gameObject, FixTmpBreakLine)
+				SkillHelper.addHyperLinkClick(var_15_2.txt)
 
-				table.insert(slot0.skillItemList, slot2)
+				var_15_2.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_2.txt.gameObject, FixTmpBreakLine)
+
+				table.insert(arg_15_0.skillItemList, var_15_2)
 			end
 
-			slot2.txt.text = EquipHelper.getEquipSkillDesc(slot7)
+			var_15_2.txt.text = EquipHelper.getEquipSkillDesc(iter_15_1)
 
-			slot2.fixTmpBreakLine:refreshTmpContent(slot2.txt)
-			gohelper.setActive(slot2.itemGo, true)
+			var_15_2.fixTmpBreakLine:refreshTmpContent(var_15_2.txt)
+			gohelper.setActive(var_15_2.itemGo, true)
 		end
 
-		for slot6 = #slot1 + 1, #slot0.skillItemList do
-			gohelper.setActive(slot0.skillItemList[slot6].itemGo, false)
+		for iter_15_2 = #var_15_0 + 1, #arg_15_0.skillItemList do
+			gohelper.setActive(arg_15_0.skillItemList[iter_15_2].itemGo, false)
 		end
 	end
 end
 
-function slot0.showProgress(slot0)
-	if slot0._showMax then
-		for slot4 = 1, 5 do
-			UISpriteSetMgr.instance:setEquipSprite(slot0["_image" .. slot4], "bg_xinxiang_dengji")
+function var_0_0.showProgress(arg_16_0)
+	if arg_16_0._showMax then
+		for iter_16_0 = 1, 5 do
+			UISpriteSetMgr.instance:setEquipSprite(arg_16_0["_image" .. iter_16_0], "bg_xinxiang_dengji")
 		end
 
-		gohelper.setActive(slot0._txttotallevel.gameObject, false)
-	elseif slot0._isNormalEquip then
-		slot4 = EquipConfig.instance
-		slot4 = slot4.getCurrentBreakLevelMaxLevel
-		slot0._txttotallevel.text = string.format("/%s", slot4(slot4, slot0._equipMO))
+		gohelper.setActive(arg_16_0._txttotallevel.gameObject, false)
+	elseif arg_16_0._isNormalEquip then
+		arg_16_0._txttotallevel.text = string.format("/%s", EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_16_0._equipMO))
 
-		gohelper.setActive(slot0._txttotallevel.gameObject, true)
+		gohelper.setActive(arg_16_0._txttotallevel.gameObject, true)
 
-		for slot4 = 1, 5 do
-			UISpriteSetMgr.instance:setEquipSprite(slot0["_image" .. slot4], slot4 <= slot0._equipMO.refineLv and "bg_xinxiang_dengji" or "bg_xinxiang_dengji_dis")
+		for iter_16_1 = 1, 5 do
+			UISpriteSetMgr.instance:setEquipSprite(arg_16_0["_image" .. iter_16_1], iter_16_1 <= arg_16_0._equipMO.refineLv and "bg_xinxiang_dengji" or "bg_xinxiang_dengji_dis")
 		end
 	else
-		gohelper.setActive(slot0._txttotallevel.gameObject, false)
+		gohelper.setActive(arg_16_0._txttotallevel.gameObject, false)
 	end
 
-	slot0._txtcurlevel.text = slot0._equipMO.level
+	arg_16_0._txtcurlevel.text = arg_16_0._equipMO.level
 
-	gohelper.setActive(slot0._gotip, slot0._showMax and not EquipHelper.isConsumableEquip(slot0._equipMO.equipId))
+	gohelper.setActive(arg_16_0._gotip, arg_16_0._showMax and not EquipHelper.isConsumableEquip(arg_16_0._equipMO.equipId))
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_17_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	slot0:playCloseAnimation()
+function var_0_0.onClose(arg_18_0)
+	arg_18_0:playCloseAnimation()
 end
 
-function slot0.playCloseAnimation(slot0)
-	slot0._animator:Play(UIAnimationName.Close)
+function var_0_0.playCloseAnimation(arg_19_0)
+	arg_19_0._animator:Play(UIAnimationName.Close)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._itemList then
-		for slot4, slot5 in ipairs(slot0._itemList) do
-			slot5:destroyView()
+function var_0_0.onDestroyView(arg_20_0)
+	if arg_20_0._itemList then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_0._itemList) do
+			iter_20_1:destroyView()
 		end
 	end
 
-	slot0._click:RemoveClickListener()
+	arg_20_0._click:RemoveClickListener()
 
-	slot0.strengthenAttrItemList = nil
-	slot0.tagItemList = nil
-	slot0.skillItemList = nil
+	arg_20_0.strengthenAttrItemList = nil
+	arg_20_0.tagItemList = nil
+	arg_20_0.skillItemList = nil
 end
 
-return slot0
+return var_0_0

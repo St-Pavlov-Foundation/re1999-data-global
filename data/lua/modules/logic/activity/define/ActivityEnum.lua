@@ -1,12 +1,13 @@
-module("modules.logic.activity.define.ActivityEnum", package.seeall)
+﻿module("modules.logic.activity.define.ActivityEnum", package.seeall)
 
-slot0 = _M
-slot0.ActivityType = {
+local var_0_0 = _M
+
+var_0_0.ActivityType = {
 	Beginner = 2,
 	Welfare = 3,
 	Normal = 1
 }
-slot0.Activity = {
+var_0_0.Activity = {
 	Work_SignView_1_8 = 11808,
 	V1a9_SemmelWeisGift = 11916,
 	NewWelfare = 11924,
@@ -111,26 +112,26 @@ slot0.Activity = {
 	DailyAllowance = 11423,
 	StarLightSignPart2_1_3 = 11313
 }
-slot0.MainActivityCenterViewClientId = {
+var_0_0.MainActivityCenterViewClientId = {
 	Bp = -3,
 	Act186 = -5,
 	TestTask = -2,
 	TurnBack = -1,
 	BpSP = -4
 }
-slot0.ActivitySortWeight = {
-	[slot0.MainActivityCenterViewClientId.Bp] = 0,
-	[slot0.MainActivityCenterViewClientId.BpSP] = 1.1e-07,
-	[slot0.Activity.GoldenMilletPresent] = 1,
-	[slot0.Activity.DecalogPresent] = 2,
-	[slot0.Activity.RoleSignViewPart1_1_6] = 3,
-	[slot0.Activity.RoleSignViewPart2_1_6] = 4,
-	[slot0.Activity.SpringSign] = 5,
-	[slot0.MainActivityCenterViewClientId.TestTask] = 6,
-	[slot0.MainActivityCenterViewClientId.TurnBack] = 7,
-	[slot0.MainActivityCenterViewClientId.Act186] = 8
+var_0_0.ActivitySortWeight = {
+	[var_0_0.MainActivityCenterViewClientId.Bp] = 0,
+	[var_0_0.MainActivityCenterViewClientId.BpSP] = 1.1e-07,
+	[var_0_0.Activity.GoldenMilletPresent] = 1,
+	[var_0_0.Activity.DecalogPresent] = 2,
+	[var_0_0.Activity.RoleSignViewPart1_1_6] = 3,
+	[var_0_0.Activity.RoleSignViewPart2_1_6] = 4,
+	[var_0_0.Activity.SpringSign] = 5,
+	[var_0_0.MainActivityCenterViewClientId.TestTask] = 6,
+	[var_0_0.MainActivityCenterViewClientId.TurnBack] = 7,
+	[var_0_0.MainActivityCenterViewClientId.Act186] = 8
 }
-slot0.ActivityTypeID = {
+var_0_0.ActivityTypeID = {
 	Act158 = 158,
 	OpenTestWarmUp = 106,
 	DoubleDrop = 153,
@@ -141,7 +142,7 @@ slot0.ActivityTypeID = {
 	Act201 = 201,
 	Act147 = 147
 }
-slot0.ActivityStatus = {
+var_0_0.ActivityStatus = {
 	Expired = 2,
 	Normal = 0,
 	NotOnLine = 4,
@@ -149,8 +150,8 @@ slot0.ActivityStatus = {
 	NotOpen = 1,
 	None = -1
 }
-slot0.PlaceholderActivityId = 0
-slot0.VersionActivityIdDict = {
+var_0_0.PlaceholderActivityId = 0
+var_0_0.VersionActivityIdDict = {
 	Activity1_42 = 11420,
 	Activity1_3 = 11301,
 	Activity1_41 = 11401,
@@ -169,30 +170,30 @@ slot0.VersionActivityIdDict = {
 	Activity1_1 = 11101,
 	Activity2_2 = 12201
 }
-slot0.VersionActivityIdList = {
-	slot0.VersionActivityIdDict.Activity2_5
+var_0_0.VersionActivityIdList = {
+	var_0_0.VersionActivityIdDict.Activity2_5
 }
-slot0.MainIcon = {
-	[slot0.VersionActivityIdDict.Activity1_1] = "rk1111",
-	[slot0.VersionActivityIdDict.Activity1_2] = "rk_1_2",
-	[slot0.VersionActivityIdDict.Activity1_3] = "rk_1_3",
-	[slot0.VersionActivityIdDict.Activity1_41] = "rk_1_4_1",
-	[slot0.VersionActivityIdDict.Activity1_42] = "rk_1_4_2",
-	[slot0.VersionActivityIdDict.Activity1_51] = "rk_1_5_1",
-	[slot0.VersionActivityIdDict.Activity1_52] = "rk_1_5_2",
-	[slot0.VersionActivityIdDict.Activity1_6] = "rk_1_6",
-	[slot0.VersionActivityIdDict.Activity1_7] = "rk_1_7",
-	[slot0.VersionActivityIdDict.Activity1_8] = "rk_1_8",
-	[slot0.VersionActivityIdDict.Activity1_9] = "rk_1_9",
-	[slot0.VersionActivityIdDict.Activity2_0] = "rk_2_0",
-	[slot0.VersionActivityIdDict.Activity2_1] = "rk_2_1",
-	[slot0.VersionActivityIdDict.Activity2_2] = "rk_2_2",
-	[slot0.VersionActivityIdDict.Activity2_3] = "rk_2_3",
-	[slot0.VersionActivityIdDict.Activity2_4] = "rk_2_4",
-	[slot0.VersionActivityIdDict.Activity2_5] = "rk_2_5"
+var_0_0.MainIcon = {
+	[var_0_0.VersionActivityIdDict.Activity1_1] = "rk1111",
+	[var_0_0.VersionActivityIdDict.Activity1_2] = "rk_1_2",
+	[var_0_0.VersionActivityIdDict.Activity1_3] = "rk_1_3",
+	[var_0_0.VersionActivityIdDict.Activity1_41] = "rk_1_4_1",
+	[var_0_0.VersionActivityIdDict.Activity1_42] = "rk_1_4_2",
+	[var_0_0.VersionActivityIdDict.Activity1_51] = "rk_1_5_1",
+	[var_0_0.VersionActivityIdDict.Activity1_52] = "rk_1_5_2",
+	[var_0_0.VersionActivityIdDict.Activity1_6] = "rk_1_6",
+	[var_0_0.VersionActivityIdDict.Activity1_7] = "rk_1_7",
+	[var_0_0.VersionActivityIdDict.Activity1_8] = "rk_1_8",
+	[var_0_0.VersionActivityIdDict.Activity1_9] = "rk_1_9",
+	[var_0_0.VersionActivityIdDict.Activity2_0] = "rk_2_0",
+	[var_0_0.VersionActivityIdDict.Activity2_1] = "rk_2_1",
+	[var_0_0.VersionActivityIdDict.Activity2_2] = "rk_2_2",
+	[var_0_0.VersionActivityIdDict.Activity2_3] = "rk_2_3",
+	[var_0_0.VersionActivityIdDict.Activity2_4] = "rk_2_4",
+	[var_0_0.VersionActivityIdDict.Activity2_5] = "rk_2_5"
 }
-slot0.ShowVersionActivityEpisode = 10103
-slot0.MainViewActivityState = {
+var_0_0.ShowVersionActivityEpisode = 10103
+var_0_0.MainViewActivityState = {
 	WuErLiXi = 5,
 	Act178 = 7,
 	Rouge = 4,
@@ -203,10 +204,10 @@ slot0.MainViewActivityState = {
 	DouQuQu = 6,
 	None = 0
 }
-slot0.RetroType = {
+var_0_0.RetroType = {
 	Permanent = 2,
 	Retro = 1,
 	None = 0
 }
 
-return slot0
+return var_0_0

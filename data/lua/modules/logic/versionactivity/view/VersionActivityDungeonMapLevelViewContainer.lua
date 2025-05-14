@@ -1,25 +1,25 @@
-module("modules.logic.versionactivity.view.VersionActivityDungeonMapLevelViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapLevelViewContainer", package.seeall)
 
-slot0 = class("VersionActivityDungeonMapLevelViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivityDungeonMapLevelViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.mapLevelView = VersionActivityDungeonMapLevelView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.mapLevelView = VersionActivityDungeonMapLevelView.New()
 
 	return {
-		slot0.mapLevelView,
+		arg_1_0.mapLevelView,
 		TabViewGroup.New(1, "anim/#go_righttop"),
 		TabViewGroup.New(2, "anim/#go_lefttop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.Power
 			})
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -30,27 +30,27 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.setOpenedEpisodeId(slot0, slot1)
-	slot0.openedEpisodeId = slot1
+function var_0_0.setOpenedEpisodeId(arg_3_0, arg_3_1)
+	arg_3_0.openedEpisodeId = arg_3_1
 end
 
-function slot0.getOpenedEpisodeId(slot0)
-	return slot0.openedEpisodeId
+function var_0_0.getOpenedEpisodeId(arg_4_0)
+	return arg_4_0.openedEpisodeId
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:startViewOpenBlock()
-	SLFramework.AnimatorPlayer.Get(slot0.mapLevelView.goVersionActivity):Play(UIAnimationName.Close, slot0.onPlayCloseTransitionFinish, slot0)
-	TaskDispatcher.runDelay(slot0.onPlayCloseTransitionFinish, slot0, 2)
+function var_0_0.playCloseTransition(arg_5_0)
+	arg_5_0:startViewOpenBlock()
+	SLFramework.AnimatorPlayer.Get(arg_5_0.mapLevelView.goVersionActivity):Play(UIAnimationName.Close, arg_5_0.onPlayCloseTransitionFinish, arg_5_0)
+	TaskDispatcher.runDelay(arg_5_0.onPlayCloseTransitionFinish, arg_5_0, 2)
 end
 
-function slot0.onPlayCloseTransitionFinish(slot0)
-	SLFramework.AnimatorPlayer.Get(slot0.mapLevelView.goVersionActivity):Stop()
-	uv0.super.onPlayCloseTransitionFinish(slot0)
+function var_0_0.onPlayCloseTransitionFinish(arg_6_0)
+	SLFramework.AnimatorPlayer.Get(arg_6_0.mapLevelView.goVersionActivity):Stop()
+	var_0_0.super.onPlayCloseTransitionFinish(arg_6_0)
 end
 
-function slot0.stopCloseViewTask(slot0)
-	slot0.mapLevelView:cancelStartCloseTask()
+function var_0_0.stopCloseViewTask(arg_7_0)
+	arg_7_0.mapLevelView:cancelStartCloseTask()
 end
 
-return slot0
+return var_0_0

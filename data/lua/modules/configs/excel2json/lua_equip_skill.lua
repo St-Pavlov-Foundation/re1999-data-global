@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_equip_skill", package.seeall)
+﻿module("modules.configs.excel2json.lua_equip_skill", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	skill = 3,
 	skill2 = 4,
 	skillHide = 5,
@@ -25,17 +26,17 @@ slot1 = {
 	hp = 10,
 	id = 1
 }
-slot2 = {
+local var_0_2 = {
 	"id",
 	"skillLv"
 }
-slot3 = {
+local var_0_3 = {
 	baseDesc = 1,
 	baseDesc2 = 2
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

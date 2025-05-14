@@ -1,201 +1,221 @@
-module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateChessItem", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateChessItem", package.seeall)
 
-slot0 = class("EliminateChessItem", LuaCompBase)
-slot1 = ZProj.TweenHelper
-slot2 = SLFramework.UGUI.UIDragListener
+local var_0_0 = class("EliminateChessItem", LuaCompBase)
+local var_0_1 = ZProj.TweenHelper
+local var_0_2 = SLFramework.UGUI.UIDragListener
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._tr = slot1.transform
-	slot0._select = false
-	slot0._ani = slot1:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._tr = arg_1_1.transform
+	arg_1_0._select = false
+	arg_1_0._ani = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._ani then
-		slot0._ani.enabled = true
+	if arg_1_0._ani then
+		arg_1_0._ani.enabled = true
 	end
 
-	slot0._img_select = gohelper.findChild(slot0._go, "#img_select")
-	slot0._img_chess = gohelper.findChildImage(slot0._go, "#img_sprite")
-	slot0._btnClick = gohelper.findChildButtonWithAudio(slot0._go, "#btn_click")
+	arg_1_0._img_select = gohelper.findChild(arg_1_0._go, "#img_select")
+	arg_1_0._img_chess = gohelper.findChildImage(arg_1_0._go, "#img_sprite")
+	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0._go, "#btn_click")
 
-	slot0._btnClick:AddClickListener(slot0.onClick, slot0)
+	arg_1_0._btnClick:AddClickListener(arg_1_0.onClick, arg_1_0)
 
-	slot0._drag = UIDragListenerHelper.New()
-	slot0._drag = uv0.Get(slot0._btnClick.gameObject)
+	arg_1_0._drag = UIDragListenerHelper.New()
+	arg_1_0._drag = var_0_2.Get(arg_1_0._btnClick.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_1_0._drag:AddDragBeginListener(arg_1_0._onDragBegin, arg_1_0)
+	arg_1_0._drag:AddDragEndListener(arg_1_0._onDragEnd, arg_1_0)
 end
 
-function slot0.initData(slot0, slot1)
-	slot0._data = slot1
+function var_0_0.initData(arg_2_0, arg_2_1)
+	arg_2_0._data = arg_2_1
 
-	slot0:updateInfo()
+	arg_2_0:updateInfo()
 end
 
-function slot0.getData(slot0)
-	return slot0._data
+function var_0_0.getData(arg_3_0)
+	return arg_3_0._data
 end
 
-function slot0.updateInfo(slot0)
-	if slot0._data then
-		recthelper.setSize(slot0._tr, EliminateEnum.ChessWidth, EliminateEnum.ChessHeight)
+function var_0_0.updateInfo(arg_4_0)
+	if arg_4_0._data then
+		local var_4_0 = EliminateConfig.instance:getChessIconPath(arg_4_0._data.id)
+		local var_4_1 = not string.nilorempty(var_4_0)
 
-		if not string.nilorempty(EliminateConfig.instance:getChessIconPath(slot0._data.id)) then
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(slot0._img_chess, slot1, false)
+		recthelper.setSize(arg_4_0._tr, EliminateEnum.ChessWidth, EliminateEnum.ChessHeight)
+
+		if var_4_1 then
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_4_0._img_chess, var_4_0, false)
 		end
 
-		gohelper.setActiveCanvasGroup(slot0._go, slot2)
-		slot0:updatePos()
+		gohelper.setActiveCanvasGroup(arg_4_0._go, var_4_1)
+		arg_4_0:updatePos()
 	end
 end
 
-function slot0.updatePos(slot0)
-	if slot0._data then
-		transformhelper.setLocalPosXY(slot0._tr, (slot0._data.startX - 1) * EliminateEnum.ChessWidth, (slot0._data.startY - 1) * EliminateEnum.ChessHeight)
+function var_0_0.updatePos(arg_5_0)
+	if arg_5_0._data then
+		local var_5_0 = (arg_5_0._data.startX - 1) * EliminateEnum.ChessWidth
+		local var_5_1 = (arg_5_0._data.startY - 1) * EliminateEnum.ChessHeight
+
+		transformhelper.setLocalPosXY(arg_5_0._tr, var_5_0, var_5_1)
 	end
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_switch)
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.OnChessSelect, slot0._data.x, slot0._data.y, true)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.OnChessSelect, arg_6_0._data.x, arg_6_0._data.y, true)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._beginDragX = slot2.position.x
-	slot0._beginDragY = slot2.position.y
+function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._beginDragX = arg_7_2.position.x
+	arg_7_0._beginDragY = arg_7_2.position.y
 
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.OnChessSelect, slot0._data.x, slot0._data.y, false)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.OnChessSelect, arg_7_0._data.x, arg_7_0._data.y, false)
 end
 
-function slot3(slot0, slot1, slot2, slot3)
-	return math.deg(math.atan2(slot3 - slot1, slot2 - slot0))
+local function var_0_3(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_2 - arg_8_0
+	local var_8_1 = arg_8_3 - arg_8_1
+
+	return math.deg(math.atan2(var_8_1, var_8_0))
 end
 
-function slot0.getEndXYByAngle(slot0, slot1, slot2)
-	if math.abs(slot1) <= slot2 then
-		return slot0._data.x + 1, slot0._data.y
-	elseif math.abs(slot1 - 180) <= slot2 or math.abs(slot1 + 180) <= slot2 then
-		return slot3 - 1, slot4
-	elseif math.abs(slot1 - 90) <= 90 - slot2 then
-		return slot3, slot4 + 1
-	elseif math.abs(slot1 + 90) <= 90 - slot2 then
-		return slot3, slot4 - 1
+function var_0_0.getEndXYByAngle(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0._data.x
+	local var_9_1 = arg_9_0._data.y
+
+	if arg_9_2 >= math.abs(arg_9_1) then
+		return var_9_0 + 1, var_9_1
+	elseif arg_9_2 >= math.abs(arg_9_1 - 180) or arg_9_2 >= math.abs(arg_9_1 + 180) then
+		return var_9_0 - 1, var_9_1
+	elseif math.abs(arg_9_1 - 90) <= 90 - arg_9_2 then
+		return var_9_0, var_9_1 + 1
+	elseif math.abs(arg_9_1 + 90) <= 90 - arg_9_2 then
+		return var_9_0, var_9_1 - 1
 	end
 
-	return slot3, slot4
+	return var_9_0, var_9_1
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	slot6, slot7 = slot0:getEndXYByAngle(uv0(slot0._beginDragX, slot0._beginDragY, slot2.position.x, slot2.position.y), EliminateEnum.ChessDropAngleThreshold)
+function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_2.position.x
+	local var_10_1 = arg_10_2.position.y
+	local var_10_2 = var_0_3(arg_10_0._beginDragX, arg_10_0._beginDragY, var_10_0, var_10_1)
+	local var_10_3, var_10_4 = arg_10_0:getEndXYByAngle(var_10_2, EliminateEnum.ChessDropAngleThreshold)
 
-	if EliminateChessModel.instance:posIsValid(slot6, slot7) then
-		EliminateChessController.instance:dispatchEvent(EliminateChessEvent.OnChessSelect, slot6, slot7, false)
+	if EliminateChessModel.instance:posIsValid(var_10_3, var_10_4) then
+		EliminateChessController.instance:dispatchEvent(EliminateChessEvent.OnChessSelect, var_10_3, var_10_4, false)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._select = slot1
+function var_0_0.setSelect(arg_11_0, arg_11_1)
+	arg_11_0._select = arg_11_1
 
-	gohelper.setActiveCanvasGroup(slot0._img_select, slot0._select)
+	gohelper.setActiveCanvasGroup(arg_11_0._img_select, arg_11_0._select)
 end
 
-function slot0.toTip(slot0, slot1)
-	if not slot1 then
-		slot0:playAnimation("idle")
+function var_0_0.toTip(arg_12_0, arg_12_1)
+	if not arg_12_1 then
+		arg_12_0:playAnimation("idle")
 	else
-		slot0:playAnimation("hint")
+		arg_12_0:playAnimation("hint")
 	end
 end
 
-function slot0.getGoPos(slot0)
-	slot0._chessPosX, slot0._chessPosY = transformhelper.getPos(slot0._img_chess.transform)
+function var_0_0.getGoPos(arg_13_0)
+	arg_13_0._chessPosX, arg_13_0._chessPosY = transformhelper.getPos(arg_13_0._img_chess.transform)
 
-	return slot0._chessPosX, slot0._chessPosY
+	return arg_13_0._chessPosX, arg_13_0._chessPosY
 end
 
-function slot0.toDie(slot0, slot1, slot2)
-	if slot2 == 1 then
+function var_0_0.toDie(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_2 == 1 then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_sufubi_skill)
-		slot0:playAnimation("skill_sufubi")
+		arg_14_0:playAnimation("skill_sufubi")
 	else
-		slot0:playAnimation("disappear")
+		arg_14_0:playAnimation("disappear")
 	end
 
-	slot0:getGoPos()
-	TaskDispatcher.runDelay(slot0.onDestroy, slot0, slot1)
+	arg_14_0:getGoPos()
+	TaskDispatcher.runDelay(arg_14_0.onDestroy, arg_14_0, arg_14_1)
 end
 
-function slot0.toFlyResource(slot0, slot1)
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.ChessResourceFlyEffect, slot1, slot0._chessPosX, slot0._chessPosY)
+function var_0_0.toFlyResource(arg_15_0, arg_15_1)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.ChessResourceFlyEffect, arg_15_1, arg_15_0._chessPosX, arg_15_0._chessPosY)
 end
 
-function slot0.toMove(slot0, slot1, slot2, slot3, slot4)
-	uv0.DOLocalMove(slot0._tr, (slot0._data.x - 1) * EliminateEnum.ChessWidth, (slot0._data.y - 1) * EliminateEnum.ChessHeight, 0, slot1, slot0._onMoveEnd, slot0, {
-		cb = slot3,
-		cbTarget = slot4,
-		animType = slot2
+function var_0_0.toMove(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+	local var_16_0 = (arg_16_0._data.x - 1) * EliminateEnum.ChessWidth
+	local var_16_1 = (arg_16_0._data.y - 1) * EliminateEnum.ChessHeight
+
+	var_0_1.DOLocalMove(arg_16_0._tr, var_16_0, var_16_1, 0, arg_16_1, arg_16_0._onMoveEnd, arg_16_0, {
+		cb = arg_16_3,
+		cbTarget = arg_16_4,
+		animType = arg_16_2
 	}, EaseType.OutQuart)
 end
 
-function slot0._onMoveEnd(slot0, slot1)
-	if slot1.animType and slot2 == EliminateEnum.AnimType.init then
-		slot0:playAnimation("in")
+function var_0_0._onMoveEnd(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_1.animType
+
+	if var_17_0 and var_17_0 == EliminateEnum.AnimType.init then
+		arg_17_0:playAnimation("in")
 	end
 
-	if slot2 and slot2 == EliminateEnum.AnimType.drop then
-		slot0:playAnimation("add")
+	if var_17_0 and var_17_0 == EliminateEnum.AnimType.drop then
+		arg_17_0:playAnimation("add")
 	end
 
-	if slot1.cb then
-		slot1.cb(slot1.cbTarget)
-	end
-end
-
-function slot0.playAnimation(slot0, slot1)
-	if slot0._ani then
-		slot0._ani:Play(slot1, 0, 0)
+	if arg_17_1.cb then
+		arg_17_1.cb(arg_17_1.cbTarget)
 	end
 end
 
-function slot0.clear(slot0)
-	if slot0._go then
-		EliminateChessItemController.instance:putChessItemGo(slot0._go)
+function var_0_0.playAnimation(arg_18_0, arg_18_1)
+	if arg_18_0._ani then
+		arg_18_0._ani:Play(arg_18_1, 0, 0)
 	end
-
-	slot0._img_select = nil
-	slot0._img_chess = nil
-	slot0._goClick = nil
-	slot0._data = nil
-	slot0._select = false
-	slot0._drag = nil
 end
 
-function slot0.onDestroy(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0.onDestroy, slot0)
-
-	if slot0._btnClick then
-		slot0._btnClick:RemoveClickListener()
+function var_0_0.clear(arg_19_0)
+	if arg_19_0._go then
+		EliminateChessItemController.instance:putChessItemGo(arg_19_0._go)
 	end
 
-	if slot0._drag then
-		slot0._drag:RemoveDragEndListener()
-		slot0._drag:RemoveDragBeginListener()
-
-		slot0._drag = nil
-	end
-
-	if slot0._ani then
-		slot0._ani = nil
-	end
-
-	slot0:clear()
-
-	if slot1 and slot1.cb then
-		slot1.cb(slot1.cbTarget)
-	end
-
-	uv0.super.onDestroy(slot0)
+	arg_19_0._img_select = nil
+	arg_19_0._img_chess = nil
+	arg_19_0._goClick = nil
+	arg_19_0._data = nil
+	arg_19_0._select = false
+	arg_19_0._drag = nil
 end
 
-return slot0
+function var_0_0.onDestroy(arg_20_0, arg_20_1)
+	TaskDispatcher.cancelTask(arg_20_0.onDestroy, arg_20_0)
+
+	if arg_20_0._btnClick then
+		arg_20_0._btnClick:RemoveClickListener()
+	end
+
+	if arg_20_0._drag then
+		arg_20_0._drag:RemoveDragEndListener()
+		arg_20_0._drag:RemoveDragBeginListener()
+
+		arg_20_0._drag = nil
+	end
+
+	if arg_20_0._ani then
+		arg_20_0._ani = nil
+	end
+
+	arg_20_0:clear()
+
+	if arg_20_1 and arg_20_1.cb then
+		arg_20_1.cb(arg_20_1.cbTarget)
+	end
+
+	var_0_0.super.onDestroy(arg_20_0)
+end
+
+return var_0_0

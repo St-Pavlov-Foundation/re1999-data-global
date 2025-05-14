@@ -1,231 +1,254 @@
-module("modules.logic.seasonver.act166.view.information.Season166InformationReportItem", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.information.Season166InformationReportItem", package.seeall)
 
-slot0 = class("Season166InformationReportItem", LuaCompBase)
+local var_0_0 = class("Season166InformationReportItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.animItem = slot0.go:GetComponent(typeof(UnityEngine.Animator))
-	slot2 = gohelper.findChild(slot0.go, "image_Line")
-	slot0.lockedCtrl = slot2:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	slot0.animPlayer = SLFramework.AnimatorPlayer.Get(slot2)
-	slot0.simagePic = gohelper.findChildSingleImage(slot0.go, "image_Line/image_ReportPic")
-	slot0.goLock = gohelper.findChild(slot0.go, "image_Line/#go_Locked")
-	slot0.goLockTips = gohelper.findChild(slot0.goLock, "#go_LockTips")
-	slot0.txtLockTips = gohelper.findChildTextMesh(slot0.goLock, "#go_LockTips/image_LockTips/#txt_LockTips")
-	slot0.goLockIcon = gohelper.findChild(slot0.goLock, "image_LockedIcon")
-	slot0.simagePicLocked = gohelper.findChildSingleImage(slot0.goLock, "image_ReportLockedPic")
-	slot0.goSchdule = gohelper.findChild(slot0.go, "Schdule")
-	slot0.animSchdule = slot0.goSchdule:GetComponent(typeof(UnityEngine.Animator))
-	slot0.goSchduleItem = gohelper.findChild(slot0.goSchdule, "#go_Item")
+	arg_1_0.go = arg_1_1
+	arg_1_0.animItem = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot0.goSchduleItem, false)
+	local var_1_0 = gohelper.findChild(arg_1_0.go, "image_Line")
 
-	slot0.schduleItems = {}
-	slot0.btnClick = gohelper.findButtonWithAudio(slot0.go)
-	slot0.goreddot = gohelper.findChild(slot0.go, "image_Line/#go_reddot")
-	slot0.gonewReddot = gohelper.findChild(slot0.go, "image_Line/#go_infoNewReddot")
-	slot0.canShowNew = false
+	arg_1_0.lockedCtrl = var_1_0:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	arg_1_0.animPlayer = SLFramework.AnimatorPlayer.Get(var_1_0)
+	arg_1_0.simagePic = gohelper.findChildSingleImage(arg_1_0.go, "image_Line/image_ReportPic")
+	arg_1_0.goLock = gohelper.findChild(arg_1_0.go, "image_Line/#go_Locked")
+	arg_1_0.goLockTips = gohelper.findChild(arg_1_0.goLock, "#go_LockTips")
+	arg_1_0.txtLockTips = gohelper.findChildTextMesh(arg_1_0.goLock, "#go_LockTips/image_LockTips/#txt_LockTips")
+	arg_1_0.goLockIcon = gohelper.findChild(arg_1_0.goLock, "image_LockedIcon")
+	arg_1_0.simagePicLocked = gohelper.findChildSingleImage(arg_1_0.goLock, "image_ReportLockedPic")
+	arg_1_0.goSchdule = gohelper.findChild(arg_1_0.go, "Schdule")
+	arg_1_0.animSchdule = arg_1_0.goSchdule:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.goSchduleItem = gohelper.findChild(arg_1_0.goSchdule, "#go_Item")
+
+	gohelper.setActive(arg_1_0.goSchduleItem, false)
+
+	arg_1_0.schduleItems = {}
+	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.go)
+	arg_1_0.goreddot = gohelper.findChild(arg_1_0.go, "image_Line/#go_reddot")
+	arg_1_0.gonewReddot = gohelper.findChild(arg_1_0.go, "image_Line/#go_infoNewReddot")
+	arg_1_0.canShowNew = false
 end
 
-function slot0.addEventListeners(slot0)
-	slot0.btnClick:AddClickListener(slot0.onClickItem, slot0)
-	Season166Controller.instance:registerCallback(Season166Event.OnAnalyInfoSuccess, slot0.refreshReddot, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0.btnClick:AddClickListener(arg_2_0.onClickItem, arg_2_0)
+	Season166Controller.instance:registerCallback(Season166Event.OnAnalyInfoSuccess, arg_2_0.refreshReddot, arg_2_0)
 end
 
-function slot0.onClickItem(slot0)
-	if not slot0.config then
+function var_0_0.onClickItem(arg_3_0)
+	if not arg_3_0.config then
 		return
 	end
 
-	if not (Season166Model.instance:getActInfo(slot0.activityId) and slot1:getInformationMO(slot0.infoId)) then
+	local var_3_0 = Season166Model.instance:getActInfo(arg_3_0.activityId)
+
+	if not (var_3_0 and var_3_0:getInformationMO(arg_3_0.infoId)) then
 		GameFacade.showToast(ToastEnum.Season166ReportNotUnlock)
 
 		return
 	end
 
-	slot3 = {
-		actId = slot0.activityId,
-		infoId = slot0.infoId,
-		unlockState = slot0.unlockState
+	local var_3_1 = {
+		actId = arg_3_0.activityId,
+		infoId = arg_3_0.infoId,
+		unlockState = arg_3_0.unlockState
 	}
 
-	ViewMgr.instance:openView(ViewName.Season166InformationAnalyView, slot3)
+	ViewMgr.instance:openView(ViewName.Season166InformationAnalyView, var_3_1)
 
-	slot0.canShowNew = false
+	arg_3_0.canShowNew = false
 
-	Season166Controller.instance:dispatchEvent(Season166Event.ClickInfoReportItem, slot3)
-	slot0:refreshUnlockState(Season166Enum.UnlockState)
+	Season166Controller.instance:dispatchEvent(Season166Event.ClickInfoReportItem, var_3_1)
+	arg_3_0:refreshUnlockState(Season166Enum.UnlockState)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0.config = slot1
+function var_0_0.refreshUI(arg_4_0, arg_4_1)
+	arg_4_0.config = arg_4_1
 
-	gohelper.setActive(slot0.go, slot1 ~= nil)
+	gohelper.setActive(arg_4_0.go, arg_4_1 ~= nil)
 
-	if not slot1 then
+	if not arg_4_1 then
 		return
 	end
 
-	slot0.activityId = slot0.config.activityId
-	slot0.infoId = slot0.config.infoId
+	arg_4_0.activityId = arg_4_0.config.activityId
+	arg_4_0.infoId = arg_4_0.config.infoId
 
-	slot0.simagePic:LoadImage(string.format("singlebg/seasonver/season_infoanalyze_reportpic_%s_1.png", slot0.infoId))
-	slot0.simagePicLocked:LoadImage(string.format("singlebg/seasonver/season_infoanalyze_reportpic_%s_0.png", slot0.infoId))
+	arg_4_0.simagePic:LoadImage(string.format("singlebg/seasonver/season_infoanalyze_reportpic_%s_1.png", arg_4_0.infoId))
+	arg_4_0.simagePicLocked:LoadImage(string.format("singlebg/seasonver/season_infoanalyze_reportpic_%s_0.png", arg_4_0.infoId))
 
-	slot3 = Season166Model.instance:getActInfo(slot0.activityId) and slot2:getInformationMO(slot0.infoId)
-	slot0.unlockState = slot3 and Season166Enum.UnlockState or Season166Enum.LockState
+	local var_4_0 = Season166Model.instance:getActInfo(arg_4_0.activityId)
+	local var_4_1 = var_4_0 and var_4_0:getInformationMO(arg_4_0.infoId)
 
-	gohelper.setActive(slot0.goLockIcon, not slot3)
-	slot0:refreshSchdule(slot3)
-	gohelper.setActive(slot0.goLockTips, slot0.unlockState == Season166Enum.LockState)
+	arg_4_0.unlockState = var_4_1 and Season166Enum.UnlockState or Season166Enum.LockState
 
-	if slot0.unlockState == Season166Enum.LockState then
-		slot0.txtLockTips.text = slot0.config.unlockDes
+	gohelper.setActive(arg_4_0.goLockIcon, not var_4_1)
+	arg_4_0:refreshSchdule(var_4_1)
+	gohelper.setActive(arg_4_0.goLockTips, arg_4_0.unlockState == Season166Enum.LockState)
+
+	if arg_4_0.unlockState == Season166Enum.LockState then
+		arg_4_0.txtLockTips.text = arg_4_0.config.unlockDes
 	end
 
-	slot0:playOpenAnim()
+	arg_4_0:playOpenAnim()
 end
 
-function slot0.playOpenAnim(slot0)
-	if slot0.hasPlayOpen then
+function var_0_0.playOpenAnim(arg_5_0)
+	if arg_5_0.hasPlayOpen then
 		return
 	end
 
-	slot0.hasPlayOpen = true
+	arg_5_0.hasPlayOpen = true
 
-	slot0.animItem:SetBool("isUnlock", slot0.unlockState == Season166Enum.UnlockState)
+	arg_5_0.animItem:SetBool("isUnlock", arg_5_0.unlockState == Season166Enum.UnlockState)
 
-	if slot0.unlockState == Season166Enum.UnlockState then
-		slot0.animItem:Play("open")
+	if arg_5_0.unlockState == Season166Enum.UnlockState then
+		arg_5_0.animItem:Play("open")
 	else
-		slot0.animItem:Play("unlock")
+		arg_5_0.animItem:Play("unlock")
 	end
 end
 
-function slot0.refreshSchdule(slot0, slot1)
-	if not slot1 then
-		gohelper.setActive(slot0.goSchdule, false)
-		slot0:_setImgValue(0)
+function var_0_0.refreshSchdule(arg_6_0, arg_6_1)
+	if not arg_6_1 then
+		gohelper.setActive(arg_6_0.goSchdule, false)
+		arg_6_0:_setImgValue(0)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goSchdule, true)
+	gohelper.setActive(arg_6_0.goSchdule, true)
 
-	slot6 = #(Season166Config.instance:getSeasonInfoAnalys(slot0.activityId, slot0.infoId) or {})
+	local var_6_0 = Season166Config.instance:getSeasonInfoAnalys(arg_6_0.activityId, arg_6_0.infoId) or {}
 
-	for slot6 = 1, math.max(#slot0.schduleItems, slot6) do
-		slot0:refreshSchduleItem(slot0.schduleItems[slot6] or slot0:createSchduleItem(slot6), slot2[slot6], slot1.stage)
+	for iter_6_0 = 1, math.max(#arg_6_0.schduleItems, #var_6_0) do
+		local var_6_1 = arg_6_0.schduleItems[iter_6_0] or arg_6_0:createSchduleItem(iter_6_0)
+
+		arg_6_0:refreshSchduleItem(var_6_1, var_6_0[iter_6_0], arg_6_1.stage)
 	end
 
-	slot0:_setImgValue(slot1.stage / #slot2)
+	local var_6_2 = #var_6_0
+	local var_6_3 = arg_6_1.stage / var_6_2
+
+	arg_6_0:_setImgValue(var_6_3)
 end
 
-function slot0._setImgValue(slot0, slot1)
-	slot0.lockedCtrl:GetIndexProp(2, 2)
+function var_0_0._setImgValue(arg_7_0, arg_7_1)
+	arg_7_0.lockedCtrl:GetIndexProp(2, 2)
 
-	slot2 = slot0.lockedCtrl.vector_03
-	slot0.lockedCtrl.vector_03 = Vector4.New(slot1, 0.05, 0, 0)
+	local var_7_0 = arg_7_0.lockedCtrl.vector_03
 
-	slot0.lockedCtrl:SetIndexProp(2, 2)
+	arg_7_0.lockedCtrl.vector_03 = Vector4.New(arg_7_1, 0.05, 0, 0)
+
+	arg_7_0.lockedCtrl:SetIndexProp(2, 2)
 end
 
-function slot0.createSchduleItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0.goSchduleItem, string.format("schdule%s", slot1))
-	slot2.goStatus0 = gohelper.findChild(slot2.go, "image_status0")
-	slot2.goStatus = gohelper.findChild(slot2.go, "#image_status")
-	slot0.schduleItems[slot1] = slot2
+function var_0_0.createSchduleItem(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getUserDataTb_()
 
-	return slot2
+	var_8_0.go = gohelper.cloneInPlace(arg_8_0.goSchduleItem, string.format("schdule%s", arg_8_1))
+	var_8_0.goStatus0 = gohelper.findChild(var_8_0.go, "image_status0")
+	var_8_0.goStatus = gohelper.findChild(var_8_0.go, "#image_status")
+	arg_8_0.schduleItems[arg_8_1] = var_8_0
+
+	return var_8_0
 end
 
-function slot0.refreshSchduleItem(slot0, slot1, slot2, slot3)
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.refreshSchduleItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if not arg_9_2 then
+		gohelper.setActive(arg_9_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
-	gohelper.setActive(slot1.goStatus, slot2.stage <= slot3)
+	gohelper.setActive(arg_9_1.go, true)
+	gohelper.setActive(arg_9_1.goStatus, arg_9_3 >= arg_9_2.stage)
 end
 
-function slot0.refreshUnlockState(slot0, slot1)
-	if slot0.unlockState == Season166Enum.UnlockState and slot0.unlockState ~= slot1 then
-		slot0.canShowNew = true
+function var_0_0.refreshUnlockState(arg_10_0, arg_10_1)
+	if arg_10_0.unlockState == Season166Enum.UnlockState and arg_10_0.unlockState ~= arg_10_1 then
+		arg_10_0.canShowNew = true
 	else
-		slot0.canShowNew = false
+		arg_10_0.canShowNew = false
 	end
 
-	slot0:refreshReddot()
+	arg_10_0:refreshReddot()
 end
 
-function slot0.refreshUnlockAnimState(slot0, slot1)
-	if (slot1[slot0.infoId] or Season166Enum.LockState) == Season166Enum.LockState and slot0.unlockState == Season166Enum.UnlockState and (Season166Model.instance:getActInfo(slot0.activityId) and slot3:getInformationMO(slot0.infoId)).stage == 0 then
-		Season166Model.instance:setLocalPrefsTab(Season166Enum.ReportUnlockAnimLocalSaveKey, slot0.infoId, Season166Enum.UnlockState)
-		gohelper.setActive(slot0.goLockIcon, true)
-		gohelper.setActive(slot0.goSchdule, false)
-		TaskDispatcher.runDelay(slot0._playUnlockAnim, slot0, 1.6)
+function var_0_0.refreshUnlockAnimState(arg_11_0, arg_11_1)
+	if (arg_11_1[arg_11_0.infoId] or Season166Enum.LockState) == Season166Enum.LockState and arg_11_0.unlockState == Season166Enum.UnlockState then
+		local var_11_0 = Season166Model.instance:getActInfo(arg_11_0.activityId)
+
+		if (var_11_0 and var_11_0:getInformationMO(arg_11_0.infoId)).stage == 0 then
+			Season166Model.instance:setLocalPrefsTab(Season166Enum.ReportUnlockAnimLocalSaveKey, arg_11_0.infoId, Season166Enum.UnlockState)
+			gohelper.setActive(arg_11_0.goLockIcon, true)
+			gohelper.setActive(arg_11_0.goSchdule, false)
+			TaskDispatcher.runDelay(arg_11_0._playUnlockAnim, arg_11_0, 1.6)
+		end
 	end
 end
 
-function slot0._playUnlockAnim(slot0)
+function var_0_0._playUnlockAnim(arg_12_0)
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_wangshi_argus_level_open)
-	slot0.animPlayer:Play("unlock", slot0.onUnlockAnimPlayFinish, slot0)
-	gohelper.setActive(slot0.goSchdule, true)
-	slot0.animSchdule:Play("open")
+	arg_12_0.animPlayer:Play("unlock", arg_12_0.onUnlockAnimPlayFinish, arg_12_0)
+	gohelper.setActive(arg_12_0.goSchdule, true)
+	arg_12_0.animSchdule:Play("open")
 end
 
-function slot0.onUnlockAnimPlayFinish(slot0)
-	gohelper.setActive(slot0.goLockIcon, false)
+function var_0_0.onUnlockAnimPlayFinish(arg_13_0)
+	gohelper.setActive(arg_13_0.goLockIcon, false)
 end
 
-function slot0.refreshFinishAnimState(slot0, slot1)
-	if slot0.unlockState == Season166Enum.LockState then
+function var_0_0.refreshFinishAnimState(arg_14_0, arg_14_1)
+	if arg_14_0.unlockState == Season166Enum.LockState then
 		return
 	end
 
-	if (slot1[slot0.infoId] or Season166Enum.LockState) == Season166Enum.LockState and (Season166Model.instance:getActInfo(slot0.activityId) and slot4:getInformationMO(slot0.infoId)).stage >= #(Season166Config.instance:getSeasonInfoAnalys(slot0.activityId, slot0.infoId) or {}) then
-		Season166Model.instance:setLocalPrefsTab(Season166Enum.ReportFinishAnimLocalSaveKey, slot0.infoId, Season166Enum.UnlockState)
-		gohelper.setActive(slot0.goLock, true)
+	local var_14_0 = arg_14_1[arg_14_0.infoId] or Season166Enum.LockState
+	local var_14_1 = Season166Config.instance:getSeasonInfoAnalys(arg_14_0.activityId, arg_14_0.infoId) or {}
+	local var_14_2 = Season166Model.instance:getActInfo(arg_14_0.activityId)
+	local var_14_3 = (var_14_2 and var_14_2:getInformationMO(arg_14_0.infoId)).stage >= #var_14_1
+
+	if var_14_0 == Season166Enum.LockState and var_14_3 then
+		Season166Model.instance:setLocalPrefsTab(Season166Enum.ReportFinishAnimLocalSaveKey, arg_14_0.infoId, Season166Enum.UnlockState)
+		gohelper.setActive(arg_14_0.goLock, true)
 		AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_checkpoint_unlock)
-		slot0.animPlayer:Play("finish", slot0.onFinishAnimPlayFinish, slot0)
+		arg_14_0.animPlayer:Play("finish", arg_14_0.onFinishAnimPlayFinish, arg_14_0)
 	end
 end
 
-function slot0.onFinishAnimPlayFinish(slot0)
+function var_0_0.onFinishAnimPlayFinish(arg_15_0)
+	return
 end
 
-function slot0.refreshReddot(slot0)
-	RedDotController.instance:addRedDot(slot0.goreddot, RedDotEnum.DotNode.Season166InfoSmallReward, slot0.infoId, slot0.checkReddotShow, slot0)
+function var_0_0.refreshReddot(arg_16_0)
+	RedDotController.instance:addRedDot(arg_16_0.goreddot, RedDotEnum.DotNode.Season166InfoSmallReward, arg_16_0.infoId, arg_16_0.checkReddotShow, arg_16_0)
 end
 
-function slot0.checkReddotShow(slot0, slot1)
-	slot1:defaultRefreshDot()
+function var_0_0.checkReddotShow(arg_17_0, arg_17_1)
+	arg_17_1:defaultRefreshDot()
 
-	if slot0.canShowNew then
-		gohelper.setActive(slot0.gonewReddot, true)
-		gohelper.setActive(slot0.goreddot, false)
+	if arg_17_0.canShowNew then
+		gohelper.setActive(arg_17_0.gonewReddot, true)
+		gohelper.setActive(arg_17_0.goreddot, false)
 	else
-		gohelper.setActive(slot0.goreddot, true)
-		gohelper.setActive(slot0.gonewReddot, false)
-		slot1:showRedDot(RedDotEnum.Style.Normal)
+		gohelper.setActive(arg_17_0.goreddot, true)
+		gohelper.setActive(arg_17_0.gonewReddot, false)
+		arg_17_1:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0.btnClick:RemoveClickListener()
-	Season166Controller.instance:unregisterCallback(Season166Event.OnAnalyInfoSuccess, slot0.refreshReddot, slot0)
+function var_0_0.removeEventListeners(arg_18_0)
+	arg_18_0.btnClick:RemoveClickListener()
+	Season166Controller.instance:unregisterCallback(Season166Event.OnAnalyInfoSuccess, arg_18_0.refreshReddot, arg_18_0)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._playUnlockAnim, slot0)
-	slot0.simagePic:UnLoadImage()
-	slot0.simagePicLocked:UnLoadImage()
-	slot0:__onDispose()
+function var_0_0.onDestroy(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._playUnlockAnim, arg_19_0)
+	arg_19_0.simagePic:UnLoadImage()
+	arg_19_0.simagePicLocked:UnLoadImage()
+	arg_19_0:__onDispose()
 end
 
-return slot0
+return var_0_0

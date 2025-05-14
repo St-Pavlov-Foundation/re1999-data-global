@@ -1,47 +1,52 @@
-module("modules.logic.equip.model.EquipCategoryListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipCategoryListModel", package.seeall)
 
-slot0 = class("EquipCategoryListModel", ListScrollModel)
-slot0.ViewIndex = {
+local var_0_0 = class("EquipCategoryListModel", ListScrollModel)
+
+var_0_0.ViewIndex = {
 	EquipInfoViewIndex = 1,
 	EquipRefineViewIndex = 3,
 	EquipStrengthenViewIndex = 2,
 	EquipStoryViewIndex = 4
 }
 
-function slot0.initCategory(slot0, slot1, slot2)
-	table.insert({}, slot0:packMo(luaLang("equip_lang_18"), luaLang("p_equip_35"), uv0.ViewIndex.EquipInfoViewIndex))
+function var_0_0.initCategory(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = {}
 
-	if slot1 and slot2.isExpEquip ~= 1 and slot2.id ~= EquipConfig.instance:getEquipUniversalId() and not EquipHelper.isSpRefineEquip(slot2) then
-		table.insert(slot3, slot0:packMo(luaLang("equip_lang_19"), luaLang("p_equip_36"), uv0.ViewIndex.EquipStrengthenViewIndex))
-		table.insert(slot3, slot0:packMo(luaLang("equip_lang_21"), luaLang("p_equip_39"), uv0.ViewIndex.EquipRefineViewIndex))
+	table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_18"), luaLang("p_equip_35"), var_0_0.ViewIndex.EquipInfoViewIndex))
+
+	if arg_1_1 and arg_1_2.isExpEquip ~= 1 and arg_1_2.id ~= EquipConfig.instance:getEquipUniversalId() and not EquipHelper.isSpRefineEquip(arg_1_2) then
+		table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_19"), luaLang("p_equip_36"), var_0_0.ViewIndex.EquipStrengthenViewIndex))
+		table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_21"), luaLang("p_equip_39"), var_0_0.ViewIndex.EquipRefineViewIndex))
 	end
 
-	table.insert(slot3, slot0:packMo(luaLang("equip_lang_20"), luaLang("p_equip_38"), uv0.ViewIndex.EquipStoryViewIndex))
-	slot0:setList(slot3)
+	table.insert(var_1_0, arg_1_0:packMo(luaLang("equip_lang_20"), luaLang("p_equip_38"), var_0_0.ViewIndex.EquipStoryViewIndex))
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.packMo(slot0, slot1, slot2, slot3)
-	slot0._moList = slot0._moList or {}
+function var_0_0.packMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._moList = arg_2_0._moList or {}
 
-	if not slot0._moList[slot3] then
-		slot4 = {}
-		slot0._moList[slot3] = slot4
-		slot4.cnName = slot1
-		slot4.enName = slot2
-		slot4.resIndex = slot3
+	local var_2_0 = arg_2_0._moList[arg_2_3]
+
+	if not var_2_0 then
+		var_2_0 = {}
+		arg_2_0._moList[arg_2_3] = var_2_0
+		var_2_0.cnName = arg_2_1
+		var_2_0.enName = arg_2_2
+		var_2_0.resIndex = arg_2_3
 	end
 
-	if slot4.cnName ~= slot1 or slot4.enName ~= slot2 or slot4.resIndex ~= slot3 then
-		slot4 = {}
-		slot0._moList[slot3] = slot4
-		slot4.cnName = slot1
-		slot4.enName = slot2
-		slot4.resIndex = slot3
+	if var_2_0.cnName ~= arg_2_1 or var_2_0.enName ~= arg_2_2 or var_2_0.resIndex ~= arg_2_3 then
+		var_2_0 = {}
+		arg_2_0._moList[arg_2_3] = var_2_0
+		var_2_0.cnName = arg_2_1
+		var_2_0.enName = arg_2_2
+		var_2_0.resIndex = arg_2_3
 	end
 
-	return slot4
+	return var_2_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

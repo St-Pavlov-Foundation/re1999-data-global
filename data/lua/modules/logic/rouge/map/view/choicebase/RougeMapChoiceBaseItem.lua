@@ -1,147 +1,150 @@
-module("modules.logic.rouge.map.view.choicebase.RougeMapChoiceBaseItem", package.seeall)
+﻿module("modules.logic.rouge.map.view.choicebase.RougeMapChoiceBaseItem", package.seeall)
 
-slot0 = class("RougeMapChoiceBaseItem", UserDataDispose)
+local var_0_0 = class("RougeMapChoiceBaseItem", UserDataDispose)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.tr = slot1:GetComponent(gohelper.Type_RectTransform)
+	arg_1_0.go = arg_1_1
+	arg_1_0.tr = arg_1_1:GetComponent(gohelper.Type_RectTransform)
 
-	slot0:_editableInitView()
+	arg_1_0:_editableInitView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0.go)
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0.click = gohelper.getClickWithDefaultAudio(arg_2_0.go)
 
-	slot0.click:AddClickListener(slot0.onClickSelf, slot0)
+	arg_2_0.click:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
 
-	slot0.animator = slot0.go:GetComponent(gohelper.Type_Animator)
-	slot0._golocked = gohelper.findChild(slot0.go, "#go_locked")
-	slot0._txtlocktitle = gohelper.findChildText(slot0.go, "#go_locked/#txt_locktitle")
-	slot0._txtlockdesc = gohelper.findChildText(slot0.go, "#go_locked/#txt_lockdesc")
-	slot0._txtlocktip = gohelper.findChildText(slot0.go, "#go_locked/#txt_locktip")
-	slot0._golockdetail = gohelper.findChild(slot0.go, "#go_locked/#btn_lockdetail")
-	slot0._golockdetail2 = gohelper.findChild(slot0.go, "#go_locked/#btn_lockdetail2")
-	slot0.goLockTip = slot0._txtlocktip.gameObject
-	slot0._gonormal = gohelper.findChild(slot0.go, "#go_normal")
-	slot0._txtnormaltitle = gohelper.findChildText(slot0.go, "#go_normal/#txt_normaltitle")
-	slot0._txtnormaldesc = gohelper.findChildText(slot0.go, "#go_normal/#txt_normaldesc")
-	slot0._txtnormaltip = gohelper.findChildText(slot0.go, "#go_normal/#txt_normaltip")
-	slot0._gonormaldetail = gohelper.findChild(slot0.go, "#go_normal/#btn_normaldetail")
-	slot0._gonormaldetail2 = gohelper.findChild(slot0.go, "#go_normal/#btn_normaldetail2")
-	slot0._goselect = gohelper.findChild(slot0.go, "#go_select")
-	slot0._txtselecttitle = gohelper.findChildText(slot0.go, "#go_select/#txt_selecttitle")
-	slot0._txtselectdesc = gohelper.findChildText(slot0.go, "#go_select/#txt_selectdesc")
-	slot0._txtselecttip = gohelper.findChildText(slot0.go, "#go_select/#txt_selecttip")
-	slot0._goselectdetail = gohelper.findChild(slot0.go, "#go_select/#btn_selectdetail")
-	slot0._goselectdetail2 = gohelper.findChild(slot0.go, "#go_select/#btn_selectdetail2")
+	arg_2_0.animator = arg_2_0.go:GetComponent(gohelper.Type_Animator)
+	arg_2_0._golocked = gohelper.findChild(arg_2_0.go, "#go_locked")
+	arg_2_0._txtlocktitle = gohelper.findChildText(arg_2_0.go, "#go_locked/#txt_locktitle")
+	arg_2_0._txtlockdesc = gohelper.findChildText(arg_2_0.go, "#go_locked/#txt_lockdesc")
+	arg_2_0._txtlocktip = gohelper.findChildText(arg_2_0.go, "#go_locked/#txt_locktip")
+	arg_2_0._golockdetail = gohelper.findChild(arg_2_0.go, "#go_locked/#btn_lockdetail")
+	arg_2_0._golockdetail2 = gohelper.findChild(arg_2_0.go, "#go_locked/#btn_lockdetail2")
+	arg_2_0.goLockTip = arg_2_0._txtlocktip.gameObject
+	arg_2_0._gonormal = gohelper.findChild(arg_2_0.go, "#go_normal")
+	arg_2_0._txtnormaltitle = gohelper.findChildText(arg_2_0.go, "#go_normal/#txt_normaltitle")
+	arg_2_0._txtnormaldesc = gohelper.findChildText(arg_2_0.go, "#go_normal/#txt_normaldesc")
+	arg_2_0._txtnormaltip = gohelper.findChildText(arg_2_0.go, "#go_normal/#txt_normaltip")
+	arg_2_0._gonormaldetail = gohelper.findChild(arg_2_0.go, "#go_normal/#btn_normaldetail")
+	arg_2_0._gonormaldetail2 = gohelper.findChild(arg_2_0.go, "#go_normal/#btn_normaldetail2")
+	arg_2_0._goselect = gohelper.findChild(arg_2_0.go, "#go_select")
+	arg_2_0._txtselecttitle = gohelper.findChildText(arg_2_0.go, "#go_select/#txt_selecttitle")
+	arg_2_0._txtselectdesc = gohelper.findChildText(arg_2_0.go, "#go_select/#txt_selectdesc")
+	arg_2_0._txtselecttip = gohelper.findChildText(arg_2_0.go, "#go_select/#txt_selecttip")
+	arg_2_0._goselectdetail = gohelper.findChild(arg_2_0.go, "#go_select/#btn_selectdetail")
+	arg_2_0._goselectdetail2 = gohelper.findChild(arg_2_0.go, "#go_select/#btn_selectdetail2")
 
-	gohelper.setActive(slot0._golockdetail, false)
-	gohelper.setActive(slot0._golockdetail2, false)
-	gohelper.setActive(slot0._gonormaldetail, false)
-	gohelper.setActive(slot0._goselectdetail, false)
-	gohelper.setActive(slot0._gonormaldetail2, false)
-	gohelper.setActive(slot0._goselectdetail2, false)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceItemStatusChange, slot0.onStatusChange, slot0)
+	gohelper.setActive(arg_2_0._golockdetail, false)
+	gohelper.setActive(arg_2_0._golockdetail2, false)
+	gohelper.setActive(arg_2_0._gonormaldetail, false)
+	gohelper.setActive(arg_2_0._goselectdetail, false)
+	gohelper.setActive(arg_2_0._gonormaldetail2, false)
+	gohelper.setActive(arg_2_0._goselectdetail2, false)
+	arg_2_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceItemStatusChange, arg_2_0.onStatusChange, arg_2_0)
 end
 
-function slot0.onStatusChange(slot0, slot1)
+function var_0_0.onStatusChange(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0.onClickSelf(slot0)
+function var_0_0.onClickSelf(arg_4_0)
+	return
 end
 
-function slot0.onSelectAnimDone(slot0)
+function var_0_0.onSelectAnimDone(arg_5_0)
+	return
 end
 
-function slot0.update(slot0, slot1)
-	recthelper.setAnchor(slot0.tr, slot1.x, slot1.y)
+function var_0_0.update(arg_6_0, arg_6_1)
+	recthelper.setAnchor(arg_6_0.tr, arg_6_1.x, arg_6_1.y)
 end
 
-function slot0.canShowNormalUI(slot0)
-	return slot0.status == RougeMapEnum.ChoiceStatus.Normal or slot0.status == RougeMapEnum.ChoiceStatus.UnSelect
+function var_0_0.canShowNormalUI(arg_7_0)
+	return arg_7_0.status == RougeMapEnum.ChoiceStatus.Normal or arg_7_0.status == RougeMapEnum.ChoiceStatus.UnSelect
 end
 
-function slot0.canShowLockUI(slot0)
-	return slot0.status == RougeMapEnum.ChoiceStatus.Lock
+function var_0_0.canShowLockUI(arg_8_0)
+	return arg_8_0.status == RougeMapEnum.ChoiceStatus.Lock
 end
 
-function slot0.canShowSelectUI(slot0)
-	return slot0.status == RougeMapEnum.ChoiceStatus.Select
+function var_0_0.canShowSelectUI(arg_9_0)
+	return arg_9_0.status == RougeMapEnum.ChoiceStatus.Select
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshLockUI()
-	slot0:refreshNormalUI()
-	slot0:refreshSelectUI()
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0:refreshLockUI()
+	arg_10_0:refreshNormalUI()
+	arg_10_0:refreshSelectUI()
 end
 
-function slot0.refreshLockUI(slot0)
-	slot1 = slot0:canShowLockUI()
+function var_0_0.refreshLockUI(arg_11_0)
+	local var_11_0 = arg_11_0:canShowLockUI()
 
-	gohelper.setActive(slot0._golocked, slot1)
+	gohelper.setActive(arg_11_0._golocked, var_11_0)
 
-	if slot1 then
-		slot0._txtlocktitle.text = slot0.title
-		slot0._txtlockdesc.text = slot0.desc
-		slot0._txtlocktip.text = slot0.tip
+	if var_11_0 then
+		arg_11_0._txtlocktitle.text = arg_11_0.title
+		arg_11_0._txtlockdesc.text = arg_11_0.desc
+		arg_11_0._txtlocktip.text = arg_11_0.tip
 
-		gohelper.setActive(slot0.goLockTip, not string.nilorempty(slot0.tip))
+		gohelper.setActive(arg_11_0.goLockTip, not string.nilorempty(arg_11_0.tip))
 	end
 end
 
-function slot0.refreshNormalUI(slot0)
-	slot1 = slot0:canShowNormalUI()
+function var_0_0.refreshNormalUI(arg_12_0)
+	local var_12_0 = arg_12_0:canShowNormalUI()
 
-	gohelper.setActive(slot0._gonormal, slot1)
+	gohelper.setActive(arg_12_0._gonormal, var_12_0)
 
-	if slot1 then
-		slot0._txtnormaltitle.text = slot0.title
-		slot0._txtnormaldesc.text = slot0.desc
-		slot0._txtnormaltip.text = slot0.tip
+	if var_12_0 then
+		arg_12_0._txtnormaltitle.text = arg_12_0.title
+		arg_12_0._txtnormaldesc.text = arg_12_0.desc
+		arg_12_0._txtnormaltip.text = arg_12_0.tip
 
-		if slot0.status == RougeMapEnum.ChoiceStatus.Normal then
-			slot0.animator:Play("normal", 0, 0)
+		if arg_12_0.status == RougeMapEnum.ChoiceStatus.Normal then
+			arg_12_0.animator:Play("normal", 0, 0)
 		else
-			slot0.animator:Play("unselect", 0, 0)
+			arg_12_0.animator:Play("unselect", 0, 0)
 		end
 	end
 end
 
-function slot0.refreshSelectUI(slot0)
-	slot1 = slot0:canShowSelectUI()
+function var_0_0.refreshSelectUI(arg_13_0)
+	local var_13_0 = arg_13_0:canShowSelectUI()
 
-	gohelper.setActive(slot0._goselect, slot1)
+	gohelper.setActive(arg_13_0._goselect, var_13_0)
 
-	if slot1 then
-		slot0._txtselecttitle.text = slot0.title
-		slot0._txtselectdesc.text = slot0.desc
-		slot0._txtselecttip.text = slot0.tip
+	if var_13_0 then
+		arg_13_0._txtselecttitle.text = arg_13_0.title
+		arg_13_0._txtselectdesc.text = arg_13_0.desc
+		arg_13_0._txtselecttip.text = arg_13_0.tip
 	end
 end
 
-function slot0.clearCallback(slot0)
-	if slot0.callbackId then
-		RougeRpc.instance:removeCallbackById(slot0.callbackId)
+function var_0_0.clearCallback(arg_14_0)
+	if arg_14_0.callbackId then
+		RougeRpc.instance:removeCallbackById(arg_14_0.callbackId)
 
-		slot0.callbackId = nil
+		arg_14_0.callbackId = nil
 	end
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.show(arg_15_0)
+	gohelper.setActive(arg_15_0.go, true)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_16_0)
+	gohelper.setActive(arg_16_0.go, false)
 end
 
-function slot0.destroy(slot0)
-	TaskDispatcher.cancelTask(slot0.onSelectAnimDone, slot0)
-	slot0.click:RemoveClickListener()
-	slot0:clearCallback()
-	slot0:__onDispose()
+function var_0_0.destroy(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0.onSelectAnimDone, arg_17_0)
+	arg_17_0.click:RemoveClickListener()
+	arg_17_0:clearCallback()
+	arg_17_0:__onDispose()
 end
 
-return slot0
+return var_0_0

@@ -1,56 +1,59 @@
-module("modules.logic.share.controller.ShareController", package.seeall)
+﻿module("modules.logic.share.controller.ShareController", package.seeall)
 
-slot0 = class("ShareController", BaseController)
+local var_0_0 = class("ShareController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	SDKMgr.instance:setSocialShareCallBack(slot0._onSocialShare, slot0)
-	SDKMgr.instance:setScreenShotCallBack(slot0._onScreenShot, slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	SDKMgr.instance:setSocialShareCallBack(arg_4_0._onSocialShare, arg_4_0)
+	SDKMgr.instance:setScreenShotCallBack(arg_4_0._onScreenShot, arg_4_0)
 end
 
-function slot0.openShareEditorView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.ShareEditorView, slot1, slot2)
+function var_0_0.openShareEditorView(arg_5_0, arg_5_1, arg_5_2)
+	ViewMgr.instance:openView(ViewName.ShareEditorView, arg_5_1, arg_5_2)
 end
 
-function slot0.openShareTipView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.ShareTipView, slot1, slot2)
+function var_0_0.openShareTipView(arg_6_0, arg_6_1, arg_6_2)
+	ViewMgr.instance:openView(ViewName.ShareTipView, arg_6_1, arg_6_2)
 end
 
-function slot0.CaptureScreenshot(slot0)
-	ZProj.ScreenCaptureUtil.Instance:ReadScreenPixelsAsTexture(nil, slot0._onReadScene, slot0)
+function var_0_0.CaptureScreenshot(arg_7_0)
+	ZProj.ScreenCaptureUtil.Instance:ReadScreenPixelsAsTexture(nil, arg_7_0._onReadScene, arg_7_0)
 end
 
-function slot0._onReadScene(slot0, slot1)
-	slot0:openShareTipView(slot1)
+function var_0_0._onReadScene(arg_8_0, arg_8_1)
+	arg_8_0:openShareTipView(arg_8_1)
 end
 
-function slot0._onSocialShare(slot0, slot1, slot2)
-	if slot1 == 200 or slot1 == -2 then
+function var_0_0._onSocialShare(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == 200 or arg_9_1 == -2 then
 		ViewMgr.instance:closeView(ViewName.ShareEditorView)
 	end
 
-	slot3 = luaLang("datatrack_shareaction_success")
+	local var_9_0 = luaLang("datatrack_shareaction_success")
 
-	if slot1 == -1 then
-		slot3 = luaLang("datatrack_shareaction_failure")
-	elseif slot1 == -2 then
-		slot3 = luaLang("datatrack_shareaction_cancel")
+	if arg_9_1 == -1 then
+		var_9_0 = luaLang("datatrack_shareaction_failure")
+	elseif arg_9_1 == -2 then
+		var_9_0 = luaLang("datatrack_shareaction_cancel")
 	end
 
 	StatController.instance:track(StatEnum.EventName.PlayerShare, {
-		[StatEnum.EventProperties.ShareAction] = slot3
+		[StatEnum.EventProperties.ShareAction] = var_9_0
 	})
 end
 
-function slot0._onScreenShot(slot0, slot1, slot2)
+function var_0_0._onScreenShot(arg_10_0, arg_10_1, arg_10_2)
 	if VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS() then
 		return false
 	end
@@ -59,7 +62,7 @@ function slot0._onScreenShot(slot0, slot1, slot2)
 		return false
 	end
 
-	if not slot1 then
+	if not arg_10_1 then
 		return
 	end
 
@@ -72,10 +75,10 @@ function slot0._onScreenShot(slot0, slot1, slot2)
 	end
 
 	if SettingsModel.instance:getScreenshotSwitch() then
-		slot0:CaptureScreenshot()
+		arg_10_0:CaptureScreenshot()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,209 +1,229 @@
-module("modules.logic.fight.entity.mgr.FightRenderOrderMgr", package.seeall)
+﻿module("modules.logic.fight.entity.mgr.FightRenderOrderMgr", package.seeall)
 
-slot0 = class("FightRenderOrderMgr")
-slot0.MaxOrder = 20 * FightEnum.OrderRegion
-slot0.MinOrder = 0
-slot0.LYEffect = 1
-slot0.AssistBossOrder = 2
-slot0.MinSpecialOrder = 2
+local var_0_0 = class("FightRenderOrderMgr")
 
-function slot0.init(slot0)
-	slot0._registIdList = {}
-	slot0._entityId2OrderSort = {}
-	slot0._entityId2OrderFixed = {}
-	slot0._entityId2WrapList = {}
-	slot0._renderOrderType = FightEnum.RenderOrderType.StandPos
-	slot0._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+var_0_0.MaxOrder = 20 * FightEnum.OrderRegion
+var_0_0.MinOrder = 0
+var_0_0.LYEffect = 1
+var_0_0.AssistBossOrder = 2
+var_0_0.MinSpecialOrder = 2
+
+function var_0_0.init(arg_1_0)
+	arg_1_0._registIdList = {}
+	arg_1_0._entityId2OrderSort = {}
+	arg_1_0._entityId2OrderFixed = {}
+	arg_1_0._entityId2WrapList = {}
+	arg_1_0._renderOrderType = FightEnum.RenderOrderType.StandPos
+	arg_1_0._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
 end
 
-function slot0.setSortType(slot0, slot1)
-	slot0._renderOrderType = slot1
+function var_0_0.setSortType(arg_2_0, arg_2_1)
+	arg_2_0._renderOrderType = arg_2_1
 
-	slot0:refreshRenderOrder()
+	arg_2_0:refreshRenderOrder()
 end
 
-function slot0.refreshRenderOrder(slot0, slot1)
-	slot5 = slot1
-	slot0._entityId2OrderSort = uv0.sortOrder(slot0._renderOrderType, slot0._registIdList, slot5)
+function var_0_0.refreshRenderOrder(arg_3_0, arg_3_1)
+	arg_3_0._entityId2OrderSort = var_0_0.sortOrder(arg_3_0._renderOrderType, arg_3_0._registIdList, arg_3_1)
 
-	for slot5, slot6 in ipairs(slot0._registIdList) do
-		slot0:_resetRenderOrder(slot6)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._registIdList) do
+		arg_3_0:_resetRenderOrder(iter_3_1)
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0._registIdList = nil
-	slot0._entityId2OrderSort = nil
-	slot0._entityId2OrderFixed = nil
-	slot0._entityId2WrapList = nil
+function var_0_0.dispose(arg_4_0)
+	arg_4_0._registIdList = nil
+	arg_4_0._entityId2OrderSort = nil
+	arg_4_0._entityId2OrderFixed = nil
+	arg_4_0._entityId2WrapList = nil
 
-	TaskDispatcher.cancelTask(slot0.refreshRenderOrder, slot0)
+	TaskDispatcher.cancelTask(arg_4_0.refreshRenderOrder, arg_4_0)
 end
 
-function slot0.register(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0.refreshRenderOrder, slot0)
-	TaskDispatcher.runDelay(slot0.refreshRenderOrder, slot0, 0.1)
-	table.insert(slot0._registIdList, slot1)
+function var_0_0.register(arg_5_0, arg_5_1)
+	TaskDispatcher.cancelTask(arg_5_0.refreshRenderOrder, arg_5_0)
+	TaskDispatcher.runDelay(arg_5_0.refreshRenderOrder, arg_5_0, 0.1)
+	table.insert(arg_5_0._registIdList, arg_5_1)
 end
 
-function slot0.unregister(slot0, slot1)
-	if slot0._registIdList then
-		tabletool.removeValue(slot0._registIdList, slot1)
+function var_0_0.unregister(arg_6_0, arg_6_1)
+	if arg_6_0._registIdList then
+		tabletool.removeValue(arg_6_0._registIdList, arg_6_1)
 	end
 
-	if slot0._entityId2OrderFixed then
-		slot0._entityId2OrderFixed[slot1] = nil
+	if arg_6_0._entityId2OrderFixed then
+		arg_6_0._entityId2OrderFixed[arg_6_1] = nil
 	end
 end
 
-function slot0.onAddEffectWrap(slot0, slot1, slot2)
-	if not slot0._entityId2WrapList then
+function var_0_0.onAddEffectWrap(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0._entityId2WrapList then
 		return
 	end
 
-	if not slot0._entityId2WrapList[slot1] then
-		slot0._entityId2WrapList[slot1] = {}
+	if not arg_7_0._entityId2WrapList[arg_7_1] then
+		arg_7_0._entityId2WrapList[arg_7_1] = {}
 	end
 
-	table.insert(slot0._entityId2WrapList[slot1], slot2)
-	slot2:setRenderOrder(slot0:getOrder(slot1))
+	table.insert(arg_7_0._entityId2WrapList[arg_7_1], arg_7_2)
+
+	local var_7_0 = arg_7_0:getOrder(arg_7_1)
+
+	arg_7_2:setRenderOrder(var_7_0)
 end
 
-function slot0.addEffectWrapByOrder(slot0, slot1, slot2, slot3)
-	if not slot0._entityId2WrapList then
+function var_0_0.addEffectWrapByOrder(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_0._entityId2WrapList then
 		return
 	end
 
-	if not slot0._entityId2WrapList[slot1] then
-		slot0._entityId2WrapList[slot1] = {}
+	if not arg_8_0._entityId2WrapList[arg_8_1] then
+		arg_8_0._entityId2WrapList[arg_8_1] = {}
 	end
 
-	table.insert(slot0._entityId2WrapList[slot1], slot2)
-	slot2:setRenderOrder(slot3 or FightEnum.OrderRegion)
+	table.insert(arg_8_0._entityId2WrapList[arg_8_1], arg_8_2)
+
+	arg_8_3 = arg_8_3 or FightEnum.OrderRegion
+
+	arg_8_2:setRenderOrder(arg_8_3)
 end
 
-function slot0.onRemoveEffectWrap(slot0, slot1, slot2)
-	if slot0._entityId2WrapList and slot0._entityId2WrapList[slot1] then
-		tabletool.removeValue(slot0._entityId2WrapList[slot1], slot2)
+function var_0_0.onRemoveEffectWrap(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._entityId2WrapList and arg_9_0._entityId2WrapList[arg_9_1] then
+		tabletool.removeValue(arg_9_0._entityId2WrapList[arg_9_1], arg_9_2)
 	end
 
-	slot2:setRenderOrder(0)
+	arg_9_2:setRenderOrder(0)
 end
 
-function slot0.setEffectOrder(slot0, slot1, slot2)
-	slot1:setRenderOrder(slot2 * FightEnum.OrderRegion)
+function var_0_0.setEffectOrder(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_1:setRenderOrder(arg_10_2 * FightEnum.OrderRegion)
 end
 
-function slot0.setOrder(slot0, slot1, slot2)
-	slot0._entityId2OrderFixed[slot1] = slot2
+function var_0_0.setOrder(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._entityId2OrderFixed[arg_11_1] = arg_11_2
 
-	slot0:_resetRenderOrder(slot1)
+	arg_11_0:_resetRenderOrder(arg_11_1)
 end
 
-function slot0.cancelOrder(slot0, slot1)
-	if slot0._entityId2OrderFixed and slot0._entityId2OrderFixed[slot1] then
-		slot0._entityId2OrderFixed[slot1] = nil
+function var_0_0.cancelOrder(arg_12_0, arg_12_1)
+	if arg_12_0._entityId2OrderFixed and arg_12_0._entityId2OrderFixed[arg_12_1] then
+		arg_12_0._entityId2OrderFixed[arg_12_1] = nil
 
-		slot0:_resetRenderOrder(slot1)
+		arg_12_0:_resetRenderOrder(arg_12_1)
 	end
 end
 
-function slot0._resetRenderOrder(slot0, slot1)
-	if slot0._entityMgr:getEntity(slot1) then
-		slot3:setRenderOrder(slot0:getOrder(slot1))
+function var_0_0._resetRenderOrder(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getOrder(arg_13_1)
+	local var_13_1 = arg_13_0._entityMgr:getEntity(arg_13_1)
+
+	if var_13_1 then
+		var_13_1:setRenderOrder(var_13_0)
 	end
 
-	if slot0._entityId2WrapList[slot1] then
-		for slot8, slot9 in ipairs(slot4) do
-			slot9:setRenderOrder(slot2)
+	local var_13_2 = arg_13_0._entityId2WrapList[arg_13_1]
+
+	if var_13_2 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_2) do
+			iter_13_1:setRenderOrder(var_13_0)
 		end
 	end
 end
 
-function slot0.getOrder(slot0, slot1)
-	slot2 = 1
+function var_0_0.getOrder(arg_14_0, arg_14_1)
+	local var_14_0 = 1
 
-	if slot0._entityId2OrderFixed[slot1] then
-		slot2 = slot0._entityId2OrderFixed[slot1]
-	elseif slot0._entityId2OrderSort[slot1] then
-		slot2 = slot0._entityId2OrderSort[slot1]
+	if arg_14_0._entityId2OrderFixed[arg_14_1] then
+		var_14_0 = arg_14_0._entityId2OrderFixed[arg_14_1]
+	elseif arg_14_0._entityId2OrderSort[arg_14_1] then
+		var_14_0 = arg_14_0._entityId2OrderSort[arg_14_1]
 	end
 
-	return slot2 * FightEnum.OrderRegion
+	return var_14_0 * FightEnum.OrderRegion
 end
 
-function slot0.sortOrder(slot0, slot1, slot2)
-	if slot0 == FightEnum.RenderOrderType.SameOrder then
-		return {}
+function var_0_0.sortOrder(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = {}
+
+	if arg_15_0 == FightEnum.RenderOrderType.SameOrder then
+		return var_15_0
 	end
 
-	slot4 = {}
+	local var_15_1 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		slot10 = FightHelper.getEntity(slot9)
-		slot11 = nil
+	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
+		local var_15_2 = FightHelper.getEntity(iter_15_1)
+		local var_15_3
 
-		if slot2 and slot2[slot9] then
-			slot11 = slot2[slot9]
+		if arg_15_2 and arg_15_2[iter_15_1] then
+			var_15_3 = arg_15_2[iter_15_1]
 		end
 
-		if slot10 then
-			if slot0 == FightEnum.RenderOrderType.StandPos then
-				slot12, slot13, slot14 = FightHelper.getEntityStandPos(slot10:getMO())
+		if var_15_2 then
+			if arg_15_0 == FightEnum.RenderOrderType.StandPos then
+				local var_15_4, var_15_5, var_15_6 = FightHelper.getEntityStandPos(var_15_2:getMO())
 
-				table.insert(slot4, {
-					slot9,
-					slot14,
-					slot11
+				table.insert(var_15_1, {
+					iter_15_1,
+					var_15_6,
+					var_15_3
 				})
-			elseif slot0 == FightEnum.RenderOrderType.ZPos then
-				slot12, slot13, slot14 = transformhelper.getPos(slot10.go.transform)
+			elseif arg_15_0 == FightEnum.RenderOrderType.ZPos then
+				local var_15_7, var_15_8, var_15_9 = transformhelper.getPos(var_15_2.go.transform)
 
-				table.insert(slot4, {
-					slot9,
-					slot14,
-					slot11
+				table.insert(var_15_1, {
+					iter_15_1,
+					var_15_9,
+					var_15_3
 				})
 			end
 		end
 	end
 
-	table.sort(slot4, function (slot0, slot1)
-		if slot0[2] ~= slot1[2] then
-			return slot1[2] < slot0[2]
-		elseif slot0[3] and slot1[3] and slot0[3] ~= slot1[3] then
-			return slot1[3] < slot0[3]
+	table.sort(var_15_1, function(arg_16_0, arg_16_1)
+		if arg_16_0[2] ~= arg_16_1[2] then
+			return arg_16_0[2] > arg_16_1[2]
+		elseif arg_16_0[3] and arg_16_1[3] and arg_16_0[3] ~= arg_16_1[3] then
+			return arg_16_0[3] > arg_16_1[3]
 		else
-			return tonumber(slot0[1]) < tonumber(slot1[1])
+			return tonumber(arg_16_0[1]) < tonumber(arg_16_1[1])
 		end
 	end)
 
-	slot5 = 1
+	local var_15_10 = 1
 
-	for slot9, slot10 in ipairs(slot4) do
-		slot3[slot10[1]] = slot5
-		slot5 = slot5 + 1
+	for iter_15_2, iter_15_3 in ipairs(var_15_1) do
+		var_15_0[iter_15_3[1]] = var_15_10
+		var_15_10 = var_15_10 + 1
 	end
 
-	for slot10, slot11 in pairs(slot3) do
-		if FightHelper.isAssembledMonster(FightHelper.getEntity(slot10)) then
-			slot3[slot10] = nil or slot11
+	local var_15_11
+
+	for iter_15_4, iter_15_5 in pairs(var_15_0) do
+		local var_15_12 = FightHelper.getEntity(iter_15_4)
+
+		if FightHelper.isAssembledMonster(var_15_12) then
+			var_15_11 = var_15_11 or iter_15_5
+			var_15_0[iter_15_4] = var_15_11
 		end
 	end
 
-	for slot11, slot12 in pairs(slot3) do
-		slot3[slot11] = slot12 + uv0.MinSpecialOrder
+	local var_15_13 = var_0_0.MinSpecialOrder
+
+	for iter_15_6, iter_15_7 in pairs(var_15_0) do
+		var_15_0[iter_15_6] = iter_15_7 + var_15_13
 	end
 
-	for slot11, slot12 in pairs(slot3) do
-		if FightDataHelper.entityMgr:isAssistBoss(slot11) then
-			slot3[slot11] = uv0.AssistBossOrder
+	for iter_15_8, iter_15_9 in pairs(var_15_0) do
+		if FightDataHelper.entityMgr:isAssistBoss(iter_15_8) then
+			var_15_0[iter_15_8] = var_0_0.AssistBossOrder
 		end
 	end
 
-	return slot3
+	return var_15_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

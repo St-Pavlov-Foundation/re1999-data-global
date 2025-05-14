@@ -1,47 +1,53 @@
-module("modules.logic.sdk.controller.SDKController", package.seeall)
+﻿module("modules.logic.sdk.controller.SDKController", package.seeall)
 
-slot0 = class("SDKController", BaseController)
+local var_0_0 = class("SDKController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
 	SDKChannelEventModel.instance:onInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
 	SDKChannelEventModel.instance:reInit()
 end
 
-function slot0.addConstEvents(slot0)
-	SDKMgr.instance:setDataPropertiesChangeCallBack(slot0._onDataPropertiesChangeCallBack, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	SDKMgr.instance:setDataPropertiesChangeCallBack(arg_3_0._onDataPropertiesChangeCallBack, arg_3_0)
 end
 
-function slot0.onLoginSuccess(slot0)
+function var_0_0.onLoginSuccess(arg_4_0)
 	SDKModel.instance:updateBaseProperties()
 end
 
-function slot0.openSDKExitView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.SDKExitGameView, {
-		loginCallback = slot1,
-		exitCallback = slot2
-	})
+function var_0_0.openSDKExitView(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = {
+		loginCallback = arg_5_1,
+		exitCallback = arg_5_2
+	}
+
+	ViewMgr.instance:openView(ViewName.SDKExitGameView, var_5_0)
 end
 
-function slot0._onDataPropertiesChangeCallBack(slot0, slot1, slot2)
-	SDKModel.instance:updateBaseProperties(slot1, slot2)
+function var_0_0._onDataPropertiesChangeCallBack(arg_6_0, arg_6_1, arg_6_2)
+	SDKModel.instance:updateBaseProperties(arg_6_1, arg_6_2)
 end
 
-function slot0.openSDKScoreJumpView(slot0)
+function var_0_0.openSDKScoreJumpView(arg_7_0)
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.AppReview, 1)
 	SDKChannelEventModel.instance:setNeedAppReview(false)
 
-	if BootNativeUtil.getPackageName() == "en.shenlan.m.reverse1999.huawei" or slot1 == "jp.shenlan.m.reverse1999.huawei" then
+	local var_7_0 = BootNativeUtil.getPackageName()
+
+	if var_7_0 == "en.shenlan.m.reverse1999.huawei" or var_7_0 == "jp.shenlan.m.reverse1999.huawei" then
 		return
 	end
 
-	if GameChannelConfig.isGpGlobal() and UnityEngine.Application.version == "1.0.4" then
+	local var_7_1 = UnityEngine.Application.version
+
+	if GameChannelConfig.isGpGlobal() and var_7_1 == "1.0.4" then
 		if BootNativeUtil.isAndroid() then
 			ViewMgr.instance:openView(ViewName.SDKScoreJumpView)
 		end
-	elseif GameChannelConfig.isGpJapan() and slot2 == "1.0.5" then
+	elseif GameChannelConfig.isGpJapan() and var_7_1 == "1.0.5" then
 		if BootNativeUtil.isAndroid() then
 			ViewMgr.instance:openView(ViewName.SDKScoreJumpView)
 		end
@@ -50,6 +56,6 @@ function slot0.openSDKScoreJumpView(slot0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

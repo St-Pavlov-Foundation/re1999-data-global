@@ -1,174 +1,185 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114Live2dView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114Live2dView", package.seeall)
 
-slot0 = class("Activity114Live2dView", BaseView)
+local var_0_0 = class("Activity114Live2dView", BaseView)
 
-function slot0.ctor(slot0, slot1)
-	slot0._path = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._path = arg_1_1
 end
 
-function slot0.onInitView(slot0)
-	slot0.go = gohelper.findChild(slot0.viewGO, slot0._path or "")
-	slot0._lightspine = gohelper.findChild(slot0.go, "#simage_spinemask/roleContainer/#go_lightspine")
-	slot0._btnClick = gohelper.findChildButton(slot0.go, "#simage_spinemask/#btn_click")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0.go = gohelper.findChild(arg_2_0.viewGO, arg_2_0._path or "")
+	arg_2_0._lightspine = gohelper.findChild(arg_2_0.go, "#simage_spinemask/roleContainer/#go_lightspine")
+	arg_2_0._btnClick = gohelper.findChildButton(arg_2_0.go, "#simage_spinemask/#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessStart, slot0._onEventBegin, slot0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnEventEndWithResult, slot0._onEventEnd, slot0)
-	slot0._btnClick:AddClickListener(slot0._onClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessStart, arg_3_0._onEventBegin, arg_3_0)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnEventEndWithResult, arg_3_0._onEventEnd, arg_3_0)
+	arg_3_0._btnClick:AddClickListener(arg_3_0._onClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventProcessStart, slot0._onEventBegin, slot0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventEndWithResult, slot0._onEventEnd, slot0)
-	slot0._btnClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventProcessStart, arg_4_0._onEventBegin, arg_4_0)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventEndWithResult, arg_4_0._onEventEnd, arg_4_0)
+	arg_4_0._btnClick:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0._motionCo = Activity114Config.instance:getMotionCo()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0._motionCo = Activity114Config.instance:getMotionCo()
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 ~= ViewName.Activity114PhotoView then
+function var_0_0._onOpenView(arg_6_0, arg_6_1)
+	if arg_6_1 ~= ViewName.Activity114PhotoView then
 		return
 	end
 
-	slot0._pauseAnim = true
+	arg_6_0._pauseAnim = true
 
-	TaskDispatcher.cancelTask(slot0._playTriggerAnim, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._playTriggerAnim, arg_6_0)
 end
 
-function slot0._onClick(slot0)
-	slot1 = slot0._motionCo[Activity114Enum.MotionType.Click]
+function var_0_0._onClick(arg_7_0)
+	local var_7_0 = arg_7_0._motionCo[Activity114Enum.MotionType.Click]
 
-	if slot0._clickDt and ServerTime.now() - slot0._clickDt < tonumber(slot1.param) then
+	if arg_7_0._clickDt and ServerTime.now() - arg_7_0._clickDt < tonumber(var_7_0.param) then
 		return
 	end
 
-	slot0._clickDt = math.huge
+	arg_7_0._clickDt = math.huge
 
-	TaskDispatcher.cancelTask(slot0._playTriggerAnim, slot0)
+	TaskDispatcher.cancelTask(arg_7_0._playTriggerAnim, arg_7_0)
 
-	slot0._isFirstTime = true
+	arg_7_0._isFirstTime = true
 
-	slot0:_playMotion(slot1)
+	arg_7_0:_playMotion(var_7_0)
 end
 
-function slot0._playMotion(slot0, slot1)
-	if not slot0._uiSpine then
+function var_0_0._playMotion(arg_8_0, arg_8_1)
+	if not arg_8_0._uiSpine then
 		return
 	end
 
-	slot0._uiSpine:playVoice({
+	local var_8_0 = {
 		mouth = "",
-		motion = slot1.motion,
-		face = slot1.face
-	})
+		motion = arg_8_1.motion,
+		face = arg_8_1.face
+	}
+
+	arg_8_0._uiSpine:playVoice(var_8_0)
 end
 
-function slot0._onEventBegin(slot0)
-	slot0._pauseAnim = true
+function var_0_0._onEventBegin(arg_9_0)
+	arg_9_0._pauseAnim = true
 
-	TaskDispatcher.cancelTask(slot0._playTriggerAnim, slot0)
+	TaskDispatcher.cancelTask(arg_9_0._playTriggerAnim, arg_9_0)
 end
 
-function slot0._onEventEnd(slot0, slot1, slot2)
-	slot0._pauseAnim = false
-	slot3 = nil
+function var_0_0._onEventEnd(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._pauseAnim = false
 
-	if slot1 == Activity114Enum.EventType.Rest then
-		slot3 = Activity114Enum.MotionType.Rest
-	elseif slot1 == Activity114Enum.EventType.KeyDay then
-		slot3 = Activity114Enum.MotionType.KeyDay
-	elseif slot1 == Activity114Enum.EventType.Edu then
-		slot3 = Activity114Enum.MotionType.Edu
+	local var_10_0
+
+	if arg_10_1 == Activity114Enum.EventType.Rest then
+		var_10_0 = Activity114Enum.MotionType.Rest
+	elseif arg_10_1 == Activity114Enum.EventType.KeyDay then
+		var_10_0 = Activity114Enum.MotionType.KeyDay
+	elseif arg_10_1 == Activity114Enum.EventType.Edu then
+		var_10_0 = Activity114Enum.MotionType.Edu
 	else
 		return
 	end
 
-	slot0._isFirstTime = true
+	local var_10_1 = arg_10_0._motionCo[var_10_0]
 
-	if slot0._motionCo[slot3] and slot4[slot2] then
-		slot0:_playMotion(slot4)
+	var_10_1 = var_10_1 and var_10_1[arg_10_2]
+	arg_10_0._isFirstTime = true
+
+	if var_10_1 then
+		arg_10_0:_playMotion(var_10_1)
 	else
-		TaskDispatcher.runDelay(slot0._playTriggerAnim, slot0, slot0._motionCo.firstTime)
+		TaskDispatcher.runDelay(arg_10_0._playTriggerAnim, arg_10_0, arg_10_0._motionCo.firstTime)
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 ~= ViewName.Activity114PhotoView then
+function var_0_0._onCloseView(arg_11_0, arg_11_1)
+	if arg_11_1 ~= ViewName.Activity114PhotoView then
 		return
 	end
 
-	slot0._pauseAnim = false
-	slot0._isFirstTime = true
+	arg_11_0._pauseAnim = false
+	arg_11_0._isFirstTime = true
 
-	TaskDispatcher.runDelay(slot0._playTriggerAnim, slot0, slot0._motionCo.firstTime)
+	TaskDispatcher.runDelay(arg_11_0._playTriggerAnim, arg_11_0, arg_11_0._motionCo.firstTime)
 end
 
-function slot0._playTriggerAnim(slot0)
-	slot0._isFirstTime = false
-	slot1 = slot0._motionCo[Activity114Enum.MotionType.Time]
+function var_0_0._playTriggerAnim(arg_12_0)
+	arg_12_0._isFirstTime = false
 
-	slot0:_playMotion(slot1[math.random(1, #slot1)])
+	local var_12_0 = arg_12_0._motionCo[Activity114Enum.MotionType.Time]
+	local var_12_1 = var_12_0[math.random(1, #var_12_0)]
+
+	arg_12_0:_playMotion(var_12_1)
 end
 
-function slot0._onAnimEnd(slot0, slot1)
-	if slot0._clickDt == math.huge then
-		slot0._clickDt = ServerTime.now()
+function var_0_0._onAnimEnd(arg_13_0, arg_13_1)
+	if arg_13_0._clickDt == math.huge then
+		arg_13_0._clickDt = ServerTime.now()
 	end
 
-	if slot0._pauseAnim then
+	if arg_13_0._pauseAnim then
 		return
 	end
 
-	if slot0._isFirstTime then
-		TaskDispatcher.runDelay(slot0._playTriggerAnim, slot0, slot0._motionCo.firstTime)
+	if arg_13_0._isFirstTime then
+		TaskDispatcher.runDelay(arg_13_0._playTriggerAnim, arg_13_0, arg_13_0._motionCo.firstTime)
 	else
-		TaskDispatcher.runDelay(slot0._playTriggerAnim, slot0, slot0._motionCo.nextTime)
+		TaskDispatcher.runDelay(arg_13_0._playTriggerAnim, arg_13_0, arg_13_0._motionCo.nextTime)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._uiSpine = GuiModelAgent.Create(slot0._lightspine, true)
+function var_0_0._editableInitView(arg_14_0)
+	arg_14_0._uiSpine = GuiModelAgent.Create(arg_14_0._lightspine, true)
 
-	slot0._uiSpine:setResPath(lua_skin.configDict[305601], slot0.onSpineLoaded, slot0)
-	slot0._uiSpine:setModelVisible(true)
+	local var_14_0 = lua_skin.configDict[305601]
 
-	slot0._l2d = slot0._uiSpine:_getLive2d()
+	arg_14_0._uiSpine:setResPath(var_14_0, arg_14_0.onSpineLoaded, arg_14_0)
+	arg_14_0._uiSpine:setModelVisible(true)
 
-	slot0._l2d:setActionEventCb(slot0._onAnimEnd, slot0)
+	arg_14_0._l2d = arg_14_0._uiSpine:_getLive2d()
+
+	arg_14_0._l2d:setActionEventCb(arg_14_0._onAnimEnd, arg_14_0)
 end
 
-function slot0.onSpineLoaded(slot0)
+function var_0_0.onSpineLoaded(arg_15_0)
+	return
 end
 
-function slot0.getUISpine(slot0)
-	if slot0._uiSpine then
-		return slot0._uiSpine
+function var_0_0.getUISpine(arg_16_0)
+	if arg_16_0._uiSpine then
+		return arg_16_0._uiSpine
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._playTriggerAnim, slot0)
+function var_0_0.onClose(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._playTriggerAnim, arg_17_0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._playTriggerAnim, slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._playTriggerAnim, arg_18_0)
 
-	if slot0._uiSpine then
-		slot0._uiSpine:onDestroy()
+	if arg_18_0._uiSpine then
+		arg_18_0._uiSpine:onDestroy()
 
-		slot0._uiSpine = nil
+		arg_18_0._uiSpine = nil
 	end
 end
 
-return slot0
+return var_0_0

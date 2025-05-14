@@ -1,562 +1,632 @@
-module("modules.logic.character.view.CharacterTalentStyleView", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentStyleView", package.seeall)
 
-slot0 = class("CharacterTalentStyleView", BaseView)
+local var_0_0 = class("CharacterTalentStyleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._simagefrontbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_frontbg")
-	slot0._goinspirationItem = gohelper.findChild(slot0.viewGO, "#go_inspirationItem")
-	slot0._gocubeinfo = gohelper.findChild(slot0.viewGO, "#go_cubeinfo")
-	slot0._txtcompareStyleName = gohelper.findChildText(slot0.viewGO, "#go_cubeinfo/panel/compare/title/name/#txt_compareStyleName")
-	slot0._txtcompareLabel = gohelper.findChildText(slot0.viewGO, "#go_cubeinfo/panel/compare/title/desc/go_career/#txt_compareLabel")
-	slot0._gocurrency = gohelper.findChild(slot0.viewGO, "#go_cubeinfo/panel/compare/#go_currency")
-	slot0._txtcurStyleName = gohelper.findChildText(slot0.viewGO, "#go_cubeinfo/panel/cur/title/name/#txt_curStyleName")
-	slot0._txtcurLabel = gohelper.findChildText(slot0.viewGO, "#go_cubeinfo/panel/cur/title/desc/go_career/#txt_curLabel")
-	slot0._gostate = gohelper.findChild(slot0.viewGO, "#go_cubeinfo/#go_state")
-	slot0._btncompare = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cubeinfo/#go_state/#btn_compare")
-	slot0._btninteam = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cubeinfo/#go_state/#btn_inteam")
-	slot0._btnfold = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cubeinfo/#go_state/#btn_fold")
-	slot0._gorequest = gohelper.findChild(slot0.viewGO, "go_unlock/#go_request")
-	slot0._btnunlock = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_unlock/#btn_unlock")
-	slot0._btnuse = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_unlock/#btn_use")
-	slot0._gousing = gohelper.findChild(slot0.viewGO, "go_unlock/#go_using")
-	slot0._goreward = gohelper.findChild(slot0.viewGO, "go_unlock/#go_reward")
-	slot0._txtunlockpercent = gohelper.findChildText(slot0.viewGO, "go_unlock/#btn_unlock/#txt_unlockpercent")
-	slot0._scrollstyle = gohelper.findChildScrollRect(slot0.viewGO, "go_style/#scroll_style")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_style/#item_style/#btn_click")
-	slot0._txtstyle = gohelper.findChildText(slot0.viewGO, "go_style/#item_style/#txt_style")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_style/#item_style/#go_select")
-	slot0._gouse = gohelper.findChild(slot0.viewGO, "go_style/#item_style/#go_use")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "go_style/#item_style/#go_new")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gorightbtns = gohelper.findChild(slot0.viewGO, "#go_rightbtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._simagefrontbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_frontbg")
+	arg_1_0._goinspirationItem = gohelper.findChild(arg_1_0.viewGO, "#go_inspirationItem")
+	arg_1_0._gocubeinfo = gohelper.findChild(arg_1_0.viewGO, "#go_cubeinfo")
+	arg_1_0._txtcompareStyleName = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/compare/title/name/#txt_compareStyleName")
+	arg_1_0._txtcompareLabel = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/compare/title/desc/go_career/#txt_compareLabel")
+	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "#go_cubeinfo/panel/compare/#go_currency")
+	arg_1_0._txtcurStyleName = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/cur/title/name/#txt_curStyleName")
+	arg_1_0._txtcurLabel = gohelper.findChildText(arg_1_0.viewGO, "#go_cubeinfo/panel/cur/title/desc/go_career/#txt_curLabel")
+	arg_1_0._gostate = gohelper.findChild(arg_1_0.viewGO, "#go_cubeinfo/#go_state")
+	arg_1_0._btncompare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cubeinfo/#go_state/#btn_compare")
+	arg_1_0._btninteam = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cubeinfo/#go_state/#btn_inteam")
+	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cubeinfo/#go_state/#btn_fold")
+	arg_1_0._gorequest = gohelper.findChild(arg_1_0.viewGO, "go_unlock/#go_request")
+	arg_1_0._btnunlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_unlock/#btn_unlock")
+	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_unlock/#btn_use")
+	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "go_unlock/#go_using")
+	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "go_unlock/#go_reward")
+	arg_1_0._txtunlockpercent = gohelper.findChildText(arg_1_0.viewGO, "go_unlock/#btn_unlock/#txt_unlockpercent")
+	arg_1_0._scrollstyle = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_style/#scroll_style")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_style/#item_style/#btn_click")
+	arg_1_0._txtstyle = gohelper.findChildText(arg_1_0.viewGO, "go_style/#item_style/#txt_style")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_style/#item_style/#go_select")
+	arg_1_0._gouse = gohelper.findChild(arg_1_0.viewGO, "go_style/#item_style/#go_use")
+	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "go_style/#item_style/#go_new")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gorightbtns = gohelper.findChild(arg_1_0.viewGO, "#go_rightbtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncompare:AddClickListener(slot0._btncompareOnClick, slot0)
-	slot0._btninteam:AddClickListener(slot0._btninteamOnClick, slot0)
-	slot0._btnfold:AddClickListener(slot0._btnfoldOnClick, slot0)
-	slot0._btnunlock:AddClickListener(slot0._btnunlockOnClick, slot0)
-	slot0._btnuse:AddClickListener(slot0._btnuseOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncompare:AddClickListener(arg_2_0._btncompareOnClick, arg_2_0)
+	arg_2_0._btninteam:AddClickListener(arg_2_0._btninteamOnClick, arg_2_0)
+	arg_2_0._btnfold:AddClickListener(arg_2_0._btnfoldOnClick, arg_2_0)
+	arg_2_0._btnunlock:AddClickListener(arg_2_0._btnunlockOnClick, arg_2_0)
+	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncompare:RemoveClickListener()
-	slot0._btninteam:RemoveClickListener()
-	slot0._btnfold:RemoveClickListener()
-	slot0._btnunlock:RemoveClickListener()
-	slot0._btnuse:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncompare:RemoveClickListener()
+	arg_3_0._btninteam:RemoveClickListener()
+	arg_3_0._btnfold:RemoveClickListener()
+	arg_3_0._btnunlock:RemoveClickListener()
+	arg_3_0._btnuse:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnStatOnClick(slot0)
-	CharacterController.instance:openCharacterTalentStatView({
-		heroId = slot0._heroId
-	})
+function var_0_0._btnStatOnClick(arg_4_0)
+	local var_4_0 = {
+		heroId = arg_4_0._heroId
+	}
+
+	CharacterController.instance:openCharacterTalentStatView(var_4_0)
 end
 
-function slot0._btnuseOnClick(slot0)
-	TalentStyleModel.instance:UseStyle(slot0._heroId, slot0:_getSelectCubeMo())
+function var_0_0._btnuseOnClick(arg_5_0)
+	local var_5_0 = arg_5_0:_getSelectCubeMo()
+
+	TalentStyleModel.instance:UseStyle(arg_5_0._heroId, var_5_0)
 end
 
-function slot0._btncompareOnClick(slot0)
-	slot0:_showComparePanel()
-	slot0:_showCurCubeAttr()
+function var_0_0._btncompareOnClick(arg_6_0)
+	arg_6_0:_showComparePanel()
+	arg_6_0:_showCurCubeAttr()
 end
 
-function slot0._btninteamOnClick(slot0)
+function var_0_0._btninteamOnClick(arg_7_0)
+	return
 end
 
-function slot0._btnfoldOnClick(slot0)
-	slot0:_hideComparePanel()
-	slot0:_showCurCubeAttr()
+function var_0_0._btnfoldOnClick(arg_8_0)
+	arg_8_0:_hideComparePanel()
+	arg_8_0:_showCurCubeAttr()
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_9_0)
+	return
 end
 
-function slot0._btnunlockOnClick(slot0)
-	slot1 = slot0:_getSelectCubeMo()
-	slot2, slot3, slot4, slot5 = slot0:_isEnoughUnlock()
+function var_0_0._btnunlockOnClick(arg_10_0)
+	local var_10_0 = arg_10_0:_getSelectCubeMo()
+	local var_10_1, var_10_2, var_10_3, var_10_4 = arg_10_0:_isEnoughUnlock()
 
-	if slot4 then
-		if not slot1._isUnlock then
-			slot1._isUnlock = true
+	if var_10_3 then
+		if not var_10_0._isUnlock then
+			var_10_0._isUnlock = true
 
-			HeroRpc.instance:setUnlockTalentStyleRequest(slot0._heroId, slot1._styleId)
+			HeroRpc.instance:setUnlockTalentStyleRequest(arg_10_0._heroId, var_10_0._styleId)
 		end
 	else
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, slot5, slot3)
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_10_4, var_10_2)
 	end
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, slot0._onUnlockTalentStyleReply, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onUseTalentStyleReply, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, slot0._onSelectTalentStyle, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, slot0._onHeroTalentStyleStatReply, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.currencyChangeEvent, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.currencyChangeEvent, slot0)
-	slot0._scrollstyle:AddOnValueChanged(slot0._onScrollValueChanged, slot0)
+function var_0_0._addEvents(arg_11_0)
+	arg_11_0:addEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, arg_11_0._onUnlockTalentStyleReply, arg_11_0)
+	arg_11_0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_11_0._onUseTalentStyleReply, arg_11_0)
+	arg_11_0:addEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, arg_11_0._onSelectTalentStyle, arg_11_0)
+	arg_11_0:addEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, arg_11_0._onHeroTalentStyleStatReply, arg_11_0)
+	arg_11_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0.currencyChangeEvent, arg_11_0)
+	arg_11_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0.currencyChangeEvent, arg_11_0)
+	arg_11_0._scrollstyle:AddOnValueChanged(arg_11_0._onScrollValueChanged, arg_11_0)
 
-	if slot0:_getNavigateView() then
-		slot1:setOverrideStat(slot0._btnStatOnClick, slot0)
+	local var_11_0 = arg_11_0:_getNavigateView()
+
+	if var_11_0 then
+		var_11_0:setOverrideStat(arg_11_0._btnStatOnClick, arg_11_0)
 	end
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, slot0._onUnlockTalentStyleReply, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onUseTalentStyleReply, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, slot0._onSelectTalentStyle, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, slot0._onHeroTalentStyleStatReply, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.currencyChangeEvent, slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.currencyChangeEvent, slot0)
-	slot0._animEvent:RemoveAllEventListener()
-	slot0._scrollstyle:RemoveOnValueChanged()
+function var_0_0._removeEvents(arg_12_0)
+	arg_12_0:removeEventCb(CharacterController.instance, CharacterEvent.onUnlockTalentStyleReply, arg_12_0._onUnlockTalentStyleReply, arg_12_0)
+	arg_12_0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_12_0._onUseTalentStyleReply, arg_12_0)
+	arg_12_0:removeEventCb(CharacterController.instance, CharacterEvent.onSelectTalentStyle, arg_12_0._onSelectTalentStyle, arg_12_0)
+	arg_12_0:removeEventCb(CharacterController.instance, CharacterEvent.onHeroTalentStyleStatReply, arg_12_0._onHeroTalentStyleStatReply, arg_12_0)
+	arg_12_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_12_0.currencyChangeEvent, arg_12_0)
+	arg_12_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_12_0.currencyChangeEvent, arg_12_0)
+	arg_12_0._animEvent:RemoveAllEventListener()
+	arg_12_0._scrollstyle:RemoveOnValueChanged()
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = gohelper.findChild(slot0.viewGO, "#go_cubeinfo/panel")
-	slot0._attrItem = gohelper.findChild(slot1, "attributeItem")
-	slot0._curAttrPanel = gohelper.findChild(slot1, "cur/panel")
-	slot0._compareAttrPanel = gohelper.findChild(slot1, "compare/panel")
-	slot0._objCompareAttrPanel = gohelper.findChild(slot1, "compare")
-	slot0._itemCircle = gohelper.findChild(slot0.viewGO, "#go_inspirationItem/item/slot/dec1")
-	slot0._txtunlock = gohelper.findChildText(slot0.viewGO, "go_unlock/#btn_unlock/txt")
-	slot0._gounlock = gohelper.findChild(slot0.viewGO, "go_unlock")
-	slot0._goitemUnlock = gohelper.findChild(slot0.viewGO, "#go_inspirationItem/item/#unlock")
-	slot0._goitemUse = gohelper.findChild(slot0.viewGO, "#go_inspirationItem/item/#use")
-	slot0._animUnlock = SLFramework.AnimatorPlayer.Get(slot0._gounlock)
-	slot0._requestCanvas = slot0._gorequest:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._txtusing = gohelper.findChildText(slot0.viewGO, "go_unlock/#go_using/txt_using")
-	slot0._txtuse = gohelper.findChildText(slot0.viewGO, "go_unlock/#btn_use/txt")
+function var_0_0._editableInitView(arg_13_0)
+	local var_13_0 = gohelper.findChild(arg_13_0.viewGO, "#go_cubeinfo/panel")
 
-	slot0:_hideItemUnlock()
-	slot0:_hideItemUse()
-	gohelper.setActive(slot0._attrItem, false)
+	arg_13_0._attrItem = gohelper.findChild(var_13_0, "attributeItem")
+	arg_13_0._curAttrPanel = gohelper.findChild(var_13_0, "cur/panel")
+	arg_13_0._compareAttrPanel = gohelper.findChild(var_13_0, "compare/panel")
+	arg_13_0._objCompareAttrPanel = gohelper.findChild(var_13_0, "compare")
+	arg_13_0._itemCircle = gohelper.findChild(arg_13_0.viewGO, "#go_inspirationItem/item/slot/dec1")
+	arg_13_0._txtunlock = gohelper.findChildText(arg_13_0.viewGO, "go_unlock/#btn_unlock/txt")
+	arg_13_0._gounlock = gohelper.findChild(arg_13_0.viewGO, "go_unlock")
+	arg_13_0._goitemUnlock = gohelper.findChild(arg_13_0.viewGO, "#go_inspirationItem/item/#unlock")
+	arg_13_0._goitemUse = gohelper.findChild(arg_13_0.viewGO, "#go_inspirationItem/item/#use")
+	arg_13_0._animUnlock = SLFramework.AnimatorPlayer.Get(arg_13_0._gounlock)
+	arg_13_0._requestCanvas = arg_13_0._gorequest:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_13_0._txtusing = gohelper.findChildText(arg_13_0.viewGO, "go_unlock/#go_using/txt_using")
+	arg_13_0._txtuse = gohelper.findChildText(arg_13_0.viewGO, "go_unlock/#btn_use/txt")
+
+	arg_13_0:_hideItemUnlock()
+	arg_13_0:_hideItemUse()
+	gohelper.setActive(arg_13_0._attrItem, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_14_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvents()
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0:_addEvents()
 
-	slot0._isHideNewTag = nil
-	slot0._attrItems = slot0:getUserDataTb_()
+	arg_15_0._isHideNewTag = nil
+	arg_15_0._attrItems = arg_15_0:getUserDataTb_()
 
 	TalentStyleModel.instance:setNewUnlockStyle()
 	TalentStyleModel.instance:setNewSelectStyle()
 
-	slot0._animPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0._animEvent = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	arg_15_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_15_0.viewGO)
+	arg_15_0._animEvent = arg_15_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	slot0._animEvent:AddEventListener("switch", slot0._refreshView, slot0)
+	arg_15_0._animEvent:AddEventListener("switch", arg_15_0._refreshView, arg_15_0)
 
-	if not slot0.viewParam.isJustOpen then
-		slot0._animPlayer:Play("open", nil, slot0)
+	if not arg_15_0.viewParam.isJustOpen then
+		arg_15_0._animPlayer:Play("open", nil, arg_15_0)
 	end
 
-	slot0._heroId = slot0.viewParam.hero_id
-	slot0._heroMo = HeroModel.instance:getByHeroId(slot0._heroId)
-	slot0._txtusing.text = luaLang("talent_style_title_using_cn_" .. CharacterEnum.TalentTxtByHeroType[slot0._heroMo.config.heroType])
-	slot0._txtuse.text = luaLang("talent_style_title_use_cn_" .. CharacterEnum.TalentTxtByHeroType[slot0._heroMo.config.heroType])
+	arg_15_0._heroId = arg_15_0.viewParam.hero_id
+	arg_15_0._heroMo = HeroModel.instance:getByHeroId(arg_15_0._heroId)
 
-	TalentStyleModel.instance:openView(slot0._heroId)
-	slot0:_initInspirationItem()
+	local var_15_0 = luaLang("talent_style_title_using_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_15_0._heroMo.config.heroType])
+	local var_15_1 = luaLang("talent_style_title_use_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_15_0._heroMo.config.heroType])
 
-	slot0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(slot0._heroId)
+	arg_15_0._txtusing.text = var_15_0
+	arg_15_0._txtuse.text = var_15_1
 
-	slot0:_hideComparePanel()
-	slot0:_refreshView()
+	TalentStyleModel.instance:openView(arg_15_0._heroId)
+	arg_15_0:_initInspirationItem()
 
-	if slot0:_getNavigateView() then
-		slot3:showStatBtn(false)
+	arg_15_0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(arg_15_0._heroId)
+
+	arg_15_0:_hideComparePanel()
+	arg_15_0:_refreshView()
+
+	local var_15_2 = arg_15_0:_getNavigateView()
+
+	if var_15_2 then
+		var_15_2:showStatBtn(false)
 	end
 
-	HeroRpc.instance:setTalentStyleReadRequest(slot0._heroId)
-	HeroRpc.instance:setHeroTalentStyleStatRequest(slot0._heroId)
+	HeroRpc.instance:setTalentStyleReadRequest(arg_15_0._heroId)
+	HeroRpc.instance:setHeroTalentStyleStatRequest(arg_15_0._heroId)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
-	TaskDispatcher.cancelTask(slot0._hideItemUse, slot0)
-	TaskDispatcher.cancelTask(slot0._hideItemUnlock, slot0)
-	TaskDispatcher.cancelTask(slot0._hideNewTag, slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0:_removeEvents()
+	TaskDispatcher.cancelTask(arg_17_0._hideItemUse, arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._hideItemUnlock, arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._hideNewTag, arg_17_0)
 end
 
-function slot0._refreshView(slot0)
-	TalentStyleListModel.instance:refreshData(slot0._heroId)
-	slot0:_refreshAttribute()
-	slot0:_refreshBtn()
-	slot0:_refreshUnlockItem()
-	slot0:_refreshAttrCompareBtn()
-	slot0:_refreshInspirationItem()
+function var_0_0._refreshView(arg_18_0)
+	TalentStyleListModel.instance:refreshData(arg_18_0._heroId)
+	arg_18_0:_refreshAttribute()
+	arg_18_0:_refreshBtn()
+	arg_18_0:_refreshUnlockItem()
+	arg_18_0:_refreshAttrCompareBtn()
+	arg_18_0:_refreshInspirationItem()
 end
 
-function slot0._onScrollValueChanged(slot0)
-	if slot0._isHideNewTag then
+function var_0_0._onScrollValueChanged(arg_19_0)
+	if arg_19_0._isHideNewTag then
 		return
 	end
 
-	slot0._isHideNewTag = true
+	arg_19_0._isHideNewTag = true
 
-	TaskDispatcher.runDelay(slot0._hideNewTag, slot0, 0.2)
+	TaskDispatcher.runDelay(arg_19_0._hideNewTag, arg_19_0, 0.2)
 end
 
-function slot0._hideNewTag(slot0)
-	TalentStyleModel.instance:hideNewState(slot0._heroId)
+function var_0_0._hideNewTag(arg_20_0)
+	TalentStyleModel.instance:hideNewState(arg_20_0._heroId)
 end
 
-function slot0._initInspirationItem(slot0)
-	slot1 = TalentStyleModel.instance:getHeroMainCubeMo(slot0._heroId)
-	slot2 = gohelper.findChild(slot0._goinspirationItem, "item")
-	slot0._slot = gohelper.findChildImage(slot2, "slot")
-	slot0._slotAnim = slot0._slot:GetComponent(typeof(UnityEngine.Animator))
-	slot0._cubeIcon = gohelper.findChildImage(slot2, "slot/icon")
-	slot0._cubeglow = gohelper.findChildImage(slot2, "slot/glow")
-	slot5 = string.split(HeroResonanceConfig.instance:getCubeConfig(slot1.id).icon, "_")
-	slot0._slotSprite = "gz_" .. slot5[#slot5]
-	gohelper.findChildText(slot2, "level/level").text = "Lv." .. slot1.level
+function var_0_0._initInspirationItem(arg_21_0)
+	local var_21_0 = TalentStyleModel.instance:getHeroMainCubeMo(arg_21_0._heroId)
+	local var_21_1 = gohelper.findChild(arg_21_0._goinspirationItem, "item")
+
+	arg_21_0._slot = gohelper.findChildImage(var_21_1, "slot")
+	arg_21_0._slotAnim = arg_21_0._slot:GetComponent(typeof(UnityEngine.Animator))
+	arg_21_0._cubeIcon = gohelper.findChildImage(var_21_1, "slot/icon")
+	arg_21_0._cubeglow = gohelper.findChildImage(var_21_1, "slot/glow")
+
+	local var_21_2 = gohelper.findChildText(var_21_1, "level/level")
+	local var_21_3 = HeroResonanceConfig.instance:getCubeConfig(var_21_0.id)
+	local var_21_4 = string.split(var_21_3.icon, "_")
+
+	arg_21_0._slotSprite = "gz_" .. var_21_4[#var_21_4]
+	var_21_2.text = "Lv." .. var_21_0.level
 end
 
-slot1 = Color.white
-slot2 = Color(1, 1, 1, 0.5)
+local var_0_1 = Color.white
+local var_0_2 = Color(1, 1, 1, 0.5)
 
-function slot0._refreshInspirationItem(slot0)
-	slot5 = slot0._slotSprite
-	slot6 = 1.7
+function var_0_0._refreshInspirationItem(arg_22_0)
+	local var_22_0 = TalentStyleModel.instance:getSelectCubeMo(arg_22_0._heroId)
+	local var_22_1 = var_22_0._replaceId
+	local var_22_2 = arg_22_0._heroMo.talentCubeInfos.own_main_cube_id
+	local var_22_3 = HeroResonanceConfig.instance:getCubeConfig(var_22_1)
+	local var_22_4 = arg_22_0._slotSprite
+	local var_22_5 = 1.7
 
-	if HeroResonanceConfig.instance:getCubeConfig(TalentStyleModel.instance:getSelectCubeMo(slot0._heroId)._replaceId) then
-		slot8 = slot4.icon
+	if var_22_3 then
+		local var_22_6 = var_22_3.icon
+		local var_22_7 = var_22_6
 
-		if slot0._heroMo.talentCubeInfos.own_main_cube_id ~= slot2 and not string.nilorempty(slot7) then
-			slot8 = "mk_" .. slot7
-			slot5 = slot0._slotSprite .. "_2"
+		if var_22_2 ~= var_22_1 and not string.nilorempty(var_22_6) then
+			var_22_7 = "mk_" .. var_22_6
+			var_22_4 = arg_22_0._slotSprite .. "_2"
 		end
 
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._cubeIcon, slot8, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._cubeglow, slot8, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._slot, slot5, true)
-		transformhelper.setLocalScale(slot0._slot.transform, slot6, slot6, slot6)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._cubeIcon, var_22_7, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._cubeglow, var_22_7, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._slot, var_22_4, true)
+		transformhelper.setLocalScale(arg_22_0._slot.transform, var_22_5, var_22_5, var_22_5)
 	end
 
-	slot7 = slot1._isUnlock
-	slot8 = slot1._isUse
+	local var_22_8 = var_22_0._isUnlock
+	local var_22_9 = var_22_0._isUse
 
-	gohelper.setActive(slot0._itemCircle, slot8)
+	gohelper.setActive(arg_22_0._itemCircle, var_22_9)
 
-	slot0._cubeIcon.enabled = slot8
-	slot0._slotAnim.enabled = slot7
+	arg_22_0._cubeIcon.enabled = var_22_9
+	arg_22_0._slotAnim.enabled = var_22_8
 
-	slot0._slotAnim:Play("slot_loop", 0, 0)
+	arg_22_0._slotAnim:Play("slot_loop", 0, 0)
 
-	slot0._slot.color = slot7 and uv0 or uv1
-	slot0._cubeglow.color = slot7 and uv0 or uv1
+	arg_22_0._slot.color = var_22_8 and var_0_1 or var_0_2
+	arg_22_0._cubeglow.color = var_22_8 and var_0_1 or var_0_2
 
-	gohelper.setActive(slot0._cubeIcon.gameObject, slot7)
+	gohelper.setActive(arg_22_0._cubeIcon.gameObject, var_22_8)
 end
 
-function slot0._getAttributeDataList(slot0, slot1)
-	if not slot0._cubeAttrDataList then
-		slot0._cubeAttrDataList = {}
+function var_0_0._getAttributeDataList(arg_23_0, arg_23_1)
+	if not arg_23_0._cubeAttrDataList then
+		arg_23_0._cubeAttrDataList = {}
 	end
 
-	if slot0._cubeAttrDataList[slot1] then
-		return slot0._cubeAttrDataList[slot1]
+	if arg_23_0._cubeAttrDataList[arg_23_1] then
+		return arg_23_0._cubeAttrDataList[arg_23_1]
 	end
 
-	slot3 = TalentStyleModel.instance:getHeroMainCubeMo(slot0._heroId).level
-	slot4 = HeroConfig.instance:getTalentCubeAttrConfig(slot1, slot3)
-	slot5 = {}
-	slot10, slot11 = nil
+	local var_23_0 = TalentStyleModel.instance:getHeroMainCubeMo(arg_23_0._heroId).level
+	local var_23_1 = HeroConfig.instance:getTalentCubeAttrConfig(arg_23_1, var_23_0)
+	local var_23_2 = {}
 
-	slot0._heroMo:getTalentAttrGainSingle(slot1, slot5, slot10, slot11, slot3)
+	arg_23_0._heroMo:getTalentAttrGainSingle(arg_23_1, var_23_2, nil, nil, var_23_0)
 
-	slot6 = {}
+	local var_23_3 = {}
 
-	for slot10, slot11 in pairs(slot5) do
-		table.insert(slot6, {
-			key = slot10,
-			value = slot11,
-			is_special = slot4.calculateType == 1,
-			config = slot4
+	for iter_23_0, iter_23_1 in pairs(var_23_2) do
+		table.insert(var_23_3, {
+			key = iter_23_0,
+			value = iter_23_1,
+			is_special = var_23_1.calculateType == 1,
+			config = var_23_1
 		})
 	end
 
-	table.sort(slot6, slot0.sortAttr)
+	table.sort(var_23_3, arg_23_0.sortAttr)
 
-	slot0._cubeAttrDataList[slot1] = slot6
+	arg_23_0._cubeAttrDataList[arg_23_1] = var_23_3
 
-	return slot6
+	return var_23_3
 end
 
-function slot0.sortAttr(slot0, slot1)
-	if slot0.isDelete ~= slot1.isDelete then
-		return slot1.isDelete
+function var_0_0.sortAttr(arg_24_0, arg_24_1)
+	if arg_24_0.isDelete ~= arg_24_1.isDelete then
+		return arg_24_1.isDelete
 	end
 
-	return HeroConfig.instance:getIDByAttrType(slot0.key) < HeroConfig.instance:getIDByAttrType(slot1.key)
+	return HeroConfig.instance:getIDByAttrType(arg_24_0.key) < HeroConfig.instance:getIDByAttrType(arg_24_1.key)
 end
 
-function slot0._showComparePanel(slot0)
-	slot0:_showAttrItem(2, slot0:_getAttributeDataList(TalentStyleModel.instance:getHeroUseCubeId(slot0._heroId)), slot0._compareAttrPanel)
-	gohelper.setActive(slot0._objCompareAttrPanel, true)
+function var_0_0._showComparePanel(arg_25_0)
+	local var_25_0 = TalentStyleModel.instance:getHeroUseCubeId(arg_25_0._heroId)
+	local var_25_1 = arg_25_0:_getAttributeDataList(var_25_0)
 
-	slot0._txtcompareStyleName.text, slot0._txtcompareLabel.text = TalentStyleModel.instance:getHeroUseCubeMo(slot0._heroId):getStyleTag()
+	arg_25_0:_showAttrItem(2, var_25_1, arg_25_0._compareAttrPanel)
+	gohelper.setActive(arg_25_0._objCompareAttrPanel, true)
 
-	slot0:_refreshAttrCompareBtn()
+	local var_25_2, var_25_3 = TalentStyleModel.instance:getHeroUseCubeMo(arg_25_0._heroId):getStyleTag()
+
+	arg_25_0._txtcompareStyleName.text = var_25_2
+	arg_25_0._txtcompareLabel.text = var_25_3
+
+	arg_25_0:_refreshAttrCompareBtn()
 end
 
-function slot0._hideComparePanel(slot0)
-	gohelper.setActive(slot0._objCompareAttrPanel, false)
-	slot0:_refreshAttrCompareBtn()
+function var_0_0._hideComparePanel(arg_26_0)
+	gohelper.setActive(arg_26_0._objCompareAttrPanel, false)
+	arg_26_0:_refreshAttrCompareBtn()
 end
 
-function slot0._refreshAttrCompareBtn(slot0)
-	if TalentStyleModel.instance:getSelectStyleId(slot0._heroId) == TalentStyleModel.instance:getHeroUseCubeStyleId(slot0._heroId) and slot0._objCompareAttrPanel.gameObject.activeSelf then
-		gohelper.setActive(slot0._objCompareAttrPanel, false)
+function var_0_0._refreshAttrCompareBtn(arg_27_0)
+	local var_27_0 = TalentStyleModel.instance:getSelectStyleId(arg_27_0._heroId) == TalentStyleModel.instance:getHeroUseCubeStyleId(arg_27_0._heroId)
+	local var_27_1 = arg_27_0._objCompareAttrPanel.gameObject.activeSelf
 
-		slot4 = false
+	if var_27_0 and var_27_1 then
+		gohelper.setActive(arg_27_0._objCompareAttrPanel, false)
+
+		var_27_1 = false
 	end
 
-	gohelper.setActive(slot0._gounlock, not slot4)
-	gohelper.setActive(slot0._gorightbtns, not slot4)
-	gohelper.setActive(slot0._btncompare.gameObject, not slot3 and not slot4)
-	gohelper.setActive(slot0._btninteam.gameObject, slot3)
-	gohelper.setActive(slot0._btnfold.gameObject, slot4)
+	gohelper.setActive(arg_27_0._gounlock, not var_27_1)
+	gohelper.setActive(arg_27_0._gorightbtns, not var_27_1)
+	gohelper.setActive(arg_27_0._btncompare.gameObject, not var_27_0 and not var_27_1)
+	gohelper.setActive(arg_27_0._btninteam.gameObject, var_27_0)
+	gohelper.setActive(arg_27_0._btnfold.gameObject, var_27_1)
 end
 
-function slot0._getCurAttributeDataList(slot0, slot1)
-	slot4 = tabletool.copy(slot0:_getAttributeDataList(slot1))
+function var_0_0._getCurAttributeDataList(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:_getAttributeDataList(arg_28_1)
+	local var_28_1 = TalentStyleModel.instance:getHeroUseCubeId(arg_28_0._heroId)
+	local var_28_2 = tabletool.copy(var_28_0)
 
-	if TalentStyleModel.instance:getHeroUseCubeId(slot0._heroId) ~= slot1 and slot0._objCompareAttrPanel.gameObject.activeSelf then
-		slot5 = slot0:_getAttributeDataList(slot3)
+	if var_28_1 ~= arg_28_1 and arg_28_0._objCompareAttrPanel.gameObject.activeSelf then
+		local var_28_3 = arg_28_0:_getAttributeDataList(var_28_1)
 
-		for slot9, slot10 in ipairs(slot2) do
-			if slot0:getMainCubeAttrDataByType(slot5, slot10.key) then
-				if slot10.value ~= slot11.value then
-					slot10.changeNum = slot10.value - slot11.value
+		for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+			local var_28_4 = arg_28_0:getMainCubeAttrDataByType(var_28_3, iter_28_1.key)
+
+			if var_28_4 then
+				if iter_28_1.value ~= var_28_4.value then
+					iter_28_1.changeNum = iter_28_1.value - var_28_4.value
 				end
 			else
-				slot10.isNew = true
+				iter_28_1.isNew = true
 			end
 		end
 
-		for slot9, slot10 in ipairs(slot5) do
-			if not slot0:getMainCubeAttrDataByType(slot2, slot10.key) then
-				slot12 = tabletool.copy(slot10)
-				slot12.isDelete = true
+		for iter_28_2, iter_28_3 in ipairs(var_28_3) do
+			if not arg_28_0:getMainCubeAttrDataByType(var_28_0, iter_28_3.key) then
+				local var_28_5 = tabletool.copy(iter_28_3)
 
-				table.insert(slot4, slot12)
+				var_28_5.isDelete = true
+
+				table.insert(var_28_2, var_28_5)
 			end
 		end
 	else
-		for slot8, slot9 in ipairs(slot2) do
-			slot9.changeNum = nil
-			slot9.isNew = nil
-			slot9.isDelete = nil
+		for iter_28_4, iter_28_5 in ipairs(var_28_0) do
+			iter_28_5.changeNum = nil
+			iter_28_5.isNew = nil
+			iter_28_5.isDelete = nil
 		end
 	end
 
-	table.sort(slot4, slot0.sortAttr)
+	table.sort(var_28_2, arg_28_0.sortAttr)
 
-	return slot4
+	return var_28_2
 end
 
-function slot0.getMainCubeAttrDataByType(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.key == slot2 then
-			return slot7
+function var_0_0.getMainCubeAttrDataByType(arg_29_0, arg_29_1, arg_29_2)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
+		if iter_29_1.key == arg_29_2 then
+			return iter_29_1
 		end
 	end
 end
 
-function slot0._getAttrItem(slot0, slot1, slot2, slot3)
-	if not slot0._attrItems[slot1] then
-		slot0._attrItems[slot1] = slot0:getUserDataTb_()
+function var_0_0._getAttrItem(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	if not arg_30_0._attrItems[arg_30_1] then
+		local var_30_0 = arg_30_0:getUserDataTb_()
+
+		arg_30_0._attrItems[arg_30_1] = var_30_0
 	end
 
-	if not slot0._attrItems[slot1][slot2] then
-		slot0._attrItems[slot1][slot2] = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._attrItem, slot3, "item_" .. slot2), CharacterTalentStyleAttrItem)
+	local var_30_1 = arg_30_0._attrItems[arg_30_1][arg_30_2]
+
+	if not var_30_1 then
+		local var_30_2 = gohelper.clone(arg_30_0._attrItem, arg_30_3, "item_" .. arg_30_2)
+
+		var_30_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_30_2, CharacterTalentStyleAttrItem)
+		arg_30_0._attrItems[arg_30_1][arg_30_2] = var_30_1
 	end
 
-	return slot5
+	return var_30_1
 end
 
-function slot0._showAttrItem(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot2) do
-		slot0:_getAttrItem(slot1, slot7, slot3):onRefreshMo(slot7, slot8)
+function var_0_0._showAttrItem(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	for iter_31_0, iter_31_1 in ipairs(arg_31_2) do
+		arg_31_0:_getAttrItem(arg_31_1, iter_31_0, arg_31_3):onRefreshMo(iter_31_0, iter_31_1)
 	end
 
-	for slot7 = 1, #slot0._attrItems[slot1] do
-		gohelper.setActive(slot0._attrItems[slot1][slot7].viewGO, slot7 <= #slot2)
+	for iter_31_2 = 1, #arg_31_0._attrItems[arg_31_1] do
+		local var_31_0 = arg_31_0._attrItems[arg_31_1][iter_31_2]
+
+		gohelper.setActive(var_31_0.viewGO, iter_31_2 <= #arg_31_2)
 	end
 end
 
-function slot0._refreshAttribute(slot0)
-	slot0:_showCurCubeAttr()
+function var_0_0._refreshAttribute(arg_32_0)
+	local var_32_0 = arg_32_0:_getSelectCubeMo()
 
-	slot0._txtcurStyleName.text, slot0._txtcurLabel.text = slot0:_getSelectCubeMo():getStyleTag()
+	arg_32_0:_showCurCubeAttr()
+
+	local var_32_1, var_32_2 = var_32_0:getStyleTag()
+
+	arg_32_0._txtcurStyleName.text = var_32_1
+	arg_32_0._txtcurLabel.text = var_32_2
 end
 
-function slot0._showCurCubeAttr(slot0)
-	slot0:_showAttrItem(1, slot0:_getCurAttributeDataList(slot0:_getSelectCubeMo()._replaceId), slot0._curAttrPanel)
+function var_0_0._showCurCubeAttr(arg_33_0)
+	local var_33_0 = arg_33_0:_getSelectCubeMo()._replaceId
+	local var_33_1 = arg_33_0:_getCurAttributeDataList(var_33_0)
+
+	arg_33_0:_showAttrItem(1, var_33_1, arg_33_0._curAttrPanel)
 end
 
-function slot0._refreshBtn(slot0)
-	slot3 = slot0:_getSelectCubeMo()._isUnlock and slot1._isUse
+function var_0_0._refreshBtn(arg_34_0)
+	local var_34_0 = arg_34_0:_getSelectCubeMo()
+	local var_34_1 = var_34_0._isUnlock
+	local var_34_2 = var_34_1 and var_34_0._isUse
 
-	gohelper.setActive(slot0._btnunlock.gameObject, not slot2)
-	gohelper.setActive(slot0._btnuse.gameObject, slot2 and not slot3)
-	gohelper.setActive(slot0._gousing.gameObject, slot2 and slot3)
+	gohelper.setActive(arg_34_0._btnunlock.gameObject, not var_34_1)
+	gohelper.setActive(arg_34_0._btnuse.gameObject, var_34_1 and not var_34_2)
+	gohelper.setActive(arg_34_0._gousing.gameObject, var_34_1 and var_34_2)
 
-	if not slot2 then
-		slot4, slot5, slot6, slot7 = slot0:_isEnoughUnlock()
+	if not var_34_1 then
+		local var_34_3, var_34_4, var_34_5, var_34_6 = arg_34_0:_isEnoughUnlock()
 
-		ZProj.UGUIHelper.SetGrayscale(slot0._btnunlock.gameObject, not slot6)
+		ZProj.UGUIHelper.SetGrayscale(arg_34_0._btnunlock.gameObject, not var_34_5)
 
-		if slot1:isHotUnlock() then
-			slot0._txtunlockpercent.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("character_talentstyle_unlockpercent"), string.format("%.1f", slot1:getUnlockPercent() * 0.01))
+		if var_34_0:isHotUnlock() then
+			local var_34_7 = luaLang("character_talentstyle_unlockpercent")
+			local var_34_8 = string.format("%.1f", var_34_0:getUnlockPercent() * 0.01)
+
+			arg_34_0._txtunlockpercent.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_34_7, var_34_8)
 		end
 
-		gohelper.setActive(slot0._txtunlockpercent.gameObject, slot1:isHotUnlock())
+		gohelper.setActive(arg_34_0._txtunlockpercent.gameObject, var_34_0:isHotUnlock())
 	end
 
-	gohelper.setActive(slot0._gorequest, not slot2)
+	gohelper.setActive(arg_34_0._gorequest, not var_34_1)
 
-	slot0._requestCanvas.alpha = slot2 and 0 or 1
+	arg_34_0._requestCanvas.alpha = var_34_1 and 0 or 1
 end
 
-function slot0._refreshUnlockItem(slot0)
-	if not slot0:_getSelectCubeMo()._isUnlock then
-		IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onCostItemShow, slot0:_isEnoughUnlock(), slot0._gorequest)
+function var_0_0._refreshUnlockItem(arg_35_0)
+	if not arg_35_0:_getSelectCubeMo()._isUnlock then
+		local var_35_0 = arg_35_0:_isEnoughUnlock()
+
+		IconMgr.instance:getCommonPropItemIconList(arg_35_0, arg_35_0._onCostItemShow, var_35_0, arg_35_0._gorequest)
 	end
 end
 
-function slot0._isEnoughUnlock(slot0)
-	if HeroResonanceConfig.instance:getTalentStyleUnlockConsume(slot0._heroId, TalentStyleModel.instance:getSelectStyleId(slot0._heroId)) then
-		slot3 = ItemModel.instance:getItemDataListByConfigStr(slot2)
-		slot4, slot5, slot6 = ItemModel.instance:hasEnoughItemsByCellData(slot3)
+function var_0_0._isEnoughUnlock(arg_36_0)
+	local var_36_0 = TalentStyleModel.instance:getSelectStyleId(arg_36_0._heroId)
+	local var_36_1 = HeroResonanceConfig.instance:getTalentStyleUnlockConsume(arg_36_0._heroId, var_36_0)
 
-		return slot3, slot4, slot5, slot6
+	if var_36_1 then
+		local var_36_2 = ItemModel.instance:getItemDataListByConfigStr(var_36_1)
+		local var_36_3, var_36_4, var_36_5 = ItemModel.instance:hasEnoughItemsByCellData(var_36_2)
+
+		return var_36_2, var_36_3, var_36_4, var_36_5
 	end
 
 	return nil, "", true, nil
 end
 
-function slot0._onCostItemShow(slot0, slot1, slot2, slot3)
-	transformhelper.setLocalScale(slot1.viewGO.transform, 0.59, 0.59, 1)
-	slot1:onUpdateMO(slot2)
-	slot1:setConsume(true)
-	slot1:showStackableNum2()
-	slot1:isShowEffect(true)
-	slot1:setAutoPlay(true)
-	slot1:setCountFontSize(48)
-	slot1:setCountText(ItemModel.instance:getItemIsEnoughText(slot2))
-	slot1:setOnBeforeClickCallback(slot0.onBeforeClickItem, slot0)
-	slot1:setRecordFarmItem({
-		type = slot2.materilType,
-		id = slot2.materilId,
-		quantity = slot2.quantity
+function var_0_0._onCostItemShow(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	transformhelper.setLocalScale(arg_37_1.viewGO.transform, 0.59, 0.59, 1)
+	arg_37_1:onUpdateMO(arg_37_2)
+	arg_37_1:setConsume(true)
+	arg_37_1:showStackableNum2()
+	arg_37_1:isShowEffect(true)
+	arg_37_1:setAutoPlay(true)
+	arg_37_1:setCountFontSize(48)
+	arg_37_1:setCountText(ItemModel.instance:getItemIsEnoughText(arg_37_2))
+	arg_37_1:setOnBeforeClickCallback(arg_37_0.onBeforeClickItem, arg_37_0)
+	arg_37_1:setRecordFarmItem({
+		type = arg_37_2.materilType,
+		id = arg_37_2.materilId,
+		quantity = arg_37_2.quantity
 	})
 end
 
-function slot0.onBeforeClickItem(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(JumpController.instance:getCurrentOpenedView()) do
-		if slot8.viewName == ViewName.CharacterTalentStyleView then
-			slot8.viewParam.isJustOpen = true
+function var_0_0.onBeforeClickItem(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = JumpController.instance:getCurrentOpenedView()
+
+	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
+		if iter_38_1.viewName == ViewName.CharacterTalentStyleView then
+			iter_38_1.viewParam.isJustOpen = true
 
 			break
 		end
 	end
 
-	slot2:setRecordFarmItem({
-		type = slot2._itemType,
-		id = slot2._itemId,
-		quantity = slot2._itemQuantity,
+	arg_38_2:setRecordFarmItem({
+		type = arg_38_2._itemType,
+		id = arg_38_2._itemId,
+		quantity = arg_38_2._itemQuantity,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
-		openedViewNameList = slot3
+		openedViewNameList = var_38_0
 	})
 end
 
-function slot0._getSelectCubeMo(slot0)
-	if not slot0._selectCubeMo then
-		slot0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(slot0._heroId)
+function var_0_0._getSelectCubeMo(arg_39_0)
+	if not arg_39_0._selectCubeMo then
+		arg_39_0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(arg_39_0._heroId)
 	end
 
-	return slot0._selectCubeMo
+	return arg_39_0._selectCubeMo
 end
 
-function slot0._onUnlockTalentStyleReply(slot0, slot1)
-	TalentStyleModel.instance:refreshUnlockList(slot1.heroId)
-	slot0:_hideComparePanel()
-	slot0._animUnlock:Play("unlock", slot0._unlockAnimEnd, slot0)
-	TalentStyleModel.instance:setNewUnlockStyle(slot1.style)
-	TaskDispatcher.cancelTask(slot0._hideItemUnlock, slot0)
-	gohelper.setActive(slot0._goitemUnlock, true)
-	TaskDispatcher.runDelay(slot0._hideItemUnlock, slot0, 1.2)
+function var_0_0._onUnlockTalentStyleReply(arg_40_0, arg_40_1)
+	TalentStyleModel.instance:refreshUnlockList(arg_40_1.heroId)
+	arg_40_0:_hideComparePanel()
+	arg_40_0._animUnlock:Play("unlock", arg_40_0._unlockAnimEnd, arg_40_0)
+	TalentStyleModel.instance:setNewUnlockStyle(arg_40_1.style)
+	TaskDispatcher.cancelTask(arg_40_0._hideItemUnlock, arg_40_0)
+	gohelper.setActive(arg_40_0._goitemUnlock, true)
+	TaskDispatcher.runDelay(arg_40_0._hideItemUnlock, arg_40_0, 1.2)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_resonate_unlock_02)
 end
 
-function slot0._unlockAnimEnd(slot0)
-	slot0:_refreshView()
+function var_0_0._unlockAnimEnd(arg_41_0)
+	arg_41_0:_refreshView()
 end
 
-function slot0._hideItemUnlock(slot0)
-	gohelper.setActive(slot0._goitemUnlock, false)
+function var_0_0._hideItemUnlock(arg_42_0)
+	gohelper.setActive(arg_42_0._goitemUnlock, false)
 end
 
-function slot0._hideItemUse(slot0)
-	gohelper.setActive(slot0._goitemUse, false)
+function var_0_0._hideItemUse(arg_43_0)
+	gohelper.setActive(arg_43_0._goitemUse, false)
 end
 
-function slot0._onUseTalentStyleReply(slot0, slot1)
-	slot0:_hideComparePanel()
-	slot0:_refreshView()
-	TaskDispatcher.cancelTask(slot0._hideItemUse, slot0)
-	gohelper.setActive(slot0._goitemUse, true)
+function var_0_0._onUseTalentStyleReply(arg_44_0, arg_44_1)
+	arg_44_0:_hideComparePanel()
+	arg_44_0:_refreshView()
+	TaskDispatcher.cancelTask(arg_44_0._hideItemUse, arg_44_0)
+	gohelper.setActive(arg_44_0._goitemUse, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_resonate_fm)
-	TaskDispatcher.runDelay(slot0._hideItemUse, slot0, 0.6)
+	TaskDispatcher.runDelay(arg_44_0._hideItemUse, arg_44_0, 0.6)
 end
 
-function slot0._onSelectTalentStyle(slot0, slot1)
-	slot0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(slot0._heroId)
+function var_0_0._onSelectTalentStyle(arg_45_0, arg_45_1)
+	arg_45_0._selectCubeMo = TalentStyleModel.instance:getSelectCubeMo(arg_45_0._heroId)
 
-	slot0._animPlayer:Play("switch", nil, slot0)
+	arg_45_0._animPlayer:Play("switch", nil, arg_45_0)
 end
 
-function slot0.currencyChangeEvent(slot0)
-	slot0:_refreshUnlockItem()
-	slot0:_refreshBtn()
+function var_0_0.currencyChangeEvent(arg_46_0)
+	arg_46_0:_refreshUnlockItem()
+	arg_46_0:_refreshBtn()
 end
 
-function slot0.playCloseAnim(slot0)
-	slot0._animPlayer:Play("close", slot0.closeThis, slot0)
+function var_0_0.playCloseAnim(arg_47_0)
+	arg_47_0._animPlayer:Play("close", arg_47_0.closeThis, arg_47_0)
 end
 
-function slot0._onHeroTalentStyleStatReply(slot0, slot1)
-	slot2 = #slot1.stylePercentList > 0
+function var_0_0._onHeroTalentStyleStatReply(arg_48_0, arg_48_1)
+	local var_48_0 = #arg_48_1.stylePercentList > 0
+	local var_48_1 = arg_48_0:_getNavigateView()
 
-	if slot0:_getNavigateView() then
-		slot3:showStatBtn(slot2)
+	if var_48_1 then
+		var_48_1:showStatBtn(var_48_0)
 	end
 
-	if slot2 then
-		TalentStyleListModel.instance:refreshData(slot1.heroId)
+	if var_48_0 then
+		TalentStyleListModel.instance:refreshData(arg_48_1.heroId)
 	end
 end
 
-function slot0._getNavigateView(slot0)
-	return slot0.viewContainer:getNavigateView()
+function var_0_0._getNavigateView(arg_49_0)
+	return arg_49_0.viewContainer:getNavigateView()
 end
 
-return slot0
+return var_0_0

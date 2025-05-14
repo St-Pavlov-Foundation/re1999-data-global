@@ -1,6 +1,7 @@
-module("modules.logic.scene.SceneMacro", package.seeall)
+﻿module("modules.logic.scene.SceneMacro", package.seeall)
 
-slot0 = class()
+local var_0_0 = class()
+
 SceneType.Summon = 4
 SceneType.SelectFb = 5
 SceneType.Adventure = 8
@@ -12,8 +13,8 @@ SceneType.Cachot = 13
 SceneType.Rouge = 14
 SceneType.NameDict = {}
 
-for slot4, slot5 in pairs(SceneType) do
-	SceneType.NameDict[slot5] = slot4
+for iter_0_0, iter_0_1 in pairs(SceneType) do
+	SceneType.NameDict[iter_0_1] = iter_0_0
 end
 
 SceneTag.UnitCamera = "UnitCamera"
@@ -42,4 +43,4 @@ SceneLayer.Monster = "Monster"
 SceneLayer.Ignore = "Ignore"
 SceneLayer.UI3DAfterPostProcess = "UI3DAfterPostProcess"
 
-return slot0
+return var_0_0

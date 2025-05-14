@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.FightWorkCardDisappear", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCardDisappear", package.seeall)
 
-slot0 = class("FightWorkCardDisappear", FightEffectBase)
+local var_0_0 = class("FightWorkCardDisappear", FightEffectBase)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.CardDisappear)
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

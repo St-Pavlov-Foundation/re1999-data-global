@@ -1,18 +1,18 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerOpenView", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerOpenView", package.seeall)
 
-slot0 = class("GuideTriggerOpenView", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerOpenView", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return slot1 == slot2
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	return arg_2_1 == arg_2_2
 end
 
-function slot0._onOpenView(slot0, slot1, slot2)
-	slot0:checkStartGuide(slot1)
+function var_0_0._onOpenView(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0:checkStartGuide(arg_3_1)
 end
 
-return slot0
+return var_0_0

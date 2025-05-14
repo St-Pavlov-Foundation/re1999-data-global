@@ -1,10 +1,11 @@
-module("modules.logic.room.define.RoomNavigateBubbleEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomNavigateBubbleEnum", package.seeall)
 
-slot0 = _M
-slot0.CategoryType = {
+local var_0_0 = _M
+
+var_0_0.CategoryType = {
 	Factory = 1
 }
-slot0.FactoryBubbleType = {
+var_0_0.FactoryBubbleType = {
 	FaithFull = 4,
 	RoomGift = 5,
 	Manufacture = 6,
@@ -13,19 +14,19 @@ slot0.FactoryBubbleType = {
 	FaithReward = 3,
 	BuildingUpgrade = 2
 }
-slot0.Bubble2ResPath = {
-	[slot0.FactoryBubbleType.ProductProgress] = "xw_bubbleicon_8",
-	[slot0.FactoryBubbleType.BuildingUpgrade] = "xw_bubbleicon_up",
-	[slot0.FactoryBubbleType.FaithReward] = "xw_bubbleicon_4",
-	[slot0.FactoryBubbleType.FaithFull] = "xw_bubbleicon_max",
-	[slot0.FactoryBubbleType.RoomGift] = "xw_bubbleicon_7",
-	[slot0.FactoryBubbleType.Manufacture] = "xw_bubbleicon_9",
-	[slot0.FactoryBubbleType.Critter] = "xw_bubbleicon_10"
+var_0_0.Bubble2ResPath = {
+	[var_0_0.FactoryBubbleType.ProductProgress] = "xw_bubbleicon_8",
+	[var_0_0.FactoryBubbleType.BuildingUpgrade] = "xw_bubbleicon_up",
+	[var_0_0.FactoryBubbleType.FaithReward] = "xw_bubbleicon_4",
+	[var_0_0.FactoryBubbleType.FaithFull] = "xw_bubbleicon_max",
+	[var_0_0.FactoryBubbleType.RoomGift] = "xw_bubbleicon_7",
+	[var_0_0.FactoryBubbleType.Manufacture] = "xw_bubbleicon_9",
+	[var_0_0.FactoryBubbleType.Critter] = "xw_bubbleicon_10"
 }
-slot0.BubbleHideNum = {
-	[slot0.FactoryBubbleType.BuildingUpgrade] = true,
-	[slot0.FactoryBubbleType.RoomGift] = true
+var_0_0.BubbleHideNum = {
+	[var_0_0.FactoryBubbleType.BuildingUpgrade] = true,
+	[var_0_0.FactoryBubbleType.RoomGift] = true
 }
-slot0.HallId = -1
+var_0_0.HallId = -1
 
-return slot0
+return var_0_0

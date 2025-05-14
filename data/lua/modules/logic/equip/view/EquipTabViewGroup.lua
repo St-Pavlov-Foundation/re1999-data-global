@@ -1,19 +1,21 @@
-module("modules.logic.equip.view.EquipTabViewGroup", package.seeall)
+﻿module("modules.logic.equip.view.EquipTabViewGroup", package.seeall)
 
-slot0 = class("EquipTabViewGroup", TabViewGroup)
+local var_0_0 = class("EquipTabViewGroup", TabViewGroup)
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_1_0)
+	arg_1_0:onOpen()
 end
 
-function slot0.playCloseAnimation(slot0)
-	if slot0:_hasLoaded(slot0._curTabId) then
-		if isTypeOf(slot0._tabViews[slot0._curTabId], MultiView) then
-			slot1:callChildrenFunc("playCloseAnimation")
+function var_0_0.playCloseAnimation(arg_2_0)
+	if arg_2_0:_hasLoaded(arg_2_0._curTabId) then
+		local var_2_0 = arg_2_0._tabViews[arg_2_0._curTabId]
+
+		if isTypeOf(var_2_0, MultiView) then
+			var_2_0:callChildrenFunc("playCloseAnimation")
 		else
-			slot1:playCloseAnimation()
+			var_2_0:playCloseAnimation()
 		end
 	end
 end
 
-return slot0
+return var_0_0

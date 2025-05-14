@@ -1,280 +1,316 @@
-module("modules.logic.dungeon.model.DungeonMapModel", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonMapModel", package.seeall)
 
-slot0 = class("DungeonMapModel", BaseModel)
+local var_0_0 = class("DungeonMapModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._mapIds = {}
-	slot0._elements = {}
-	slot0._rewardPointInfoList = {}
-	slot0._curMap = nil
-	slot0._dialogHistory = {}
-	slot0._dialogIdHistory = {}
-	slot0._equipSpChapters = {}
-	slot0.lastElementBattleId = nil
-	slot0.playAfterStory = nil
-	slot0._finishElements = {}
-	slot0.focusEpisodeTweenDuration = nil
-	slot0.directFocusElement = nil
-	slot0.preloadMapCfg = nil
-	slot0._puzzleStatusMap = nil
-	slot0._mapInteractiveItemVisible = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._mapIds = {}
+	arg_2_0._elements = {}
+	arg_2_0._rewardPointInfoList = {}
+	arg_2_0._curMap = nil
+	arg_2_0._dialogHistory = {}
+	arg_2_0._dialogIdHistory = {}
+	arg_2_0._equipSpChapters = {}
+	arg_2_0.lastElementBattleId = nil
+	arg_2_0.playAfterStory = nil
+	arg_2_0._finishElements = {}
+	arg_2_0.focusEpisodeTweenDuration = nil
+	arg_2_0.directFocusElement = nil
+	arg_2_0.preloadMapCfg = nil
+	arg_2_0._puzzleStatusMap = nil
+	arg_2_0._mapInteractiveItemVisible = nil
 end
 
-function slot0.addDialog(slot0, slot1, slot2, slot3, slot4)
-	table.insert(slot0._dialogHistory, {
-		slot1,
-		slot2,
-		slot3,
-		slot4
+function var_0_0.addDialog(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	table.insert(arg_3_0._dialogHistory, {
+		arg_3_1,
+		arg_3_2,
+		arg_3_3,
+		arg_3_4
 	})
 end
 
-function slot0.getDialog(slot0)
-	return slot0._dialogHistory
+function var_0_0.getDialog(arg_4_0)
+	return arg_4_0._dialogHistory
 end
 
-function slot0.clearDialog(slot0)
-	slot0._dialogHistory = {}
+function var_0_0.clearDialog(arg_5_0)
+	arg_5_0._dialogHistory = {}
 end
 
-function slot0.addDialogId(slot0, slot1)
-	table.insert(slot0._dialogIdHistory, slot1)
+function var_0_0.addDialogId(arg_6_0, arg_6_1)
+	table.insert(arg_6_0._dialogIdHistory, arg_6_1)
 end
 
-function slot0.getDialogId(slot0)
-	return slot0._dialogIdHistory
+function var_0_0.getDialogId(arg_7_0)
+	return arg_7_0._dialogIdHistory
 end
 
-function slot0.clearDialogId(slot0)
-	slot0._dialogIdHistory = {}
+function var_0_0.clearDialogId(arg_8_0)
+	arg_8_0._dialogIdHistory = {}
 end
 
-function slot0.updateMapIds(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._mapIds[slot6] = slot6
+function var_0_0.updateMapIds(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		arg_9_0._mapIds[iter_9_1] = iter_9_1
 	end
 end
 
-function slot0.mapIsUnlock(slot0, slot1)
-	return slot0._mapIds[slot1]
+function var_0_0.mapIsUnlock(arg_10_0, arg_10_1)
+	return arg_10_0._mapIds[arg_10_1]
 end
 
-function slot0.getElementById(slot0, slot1)
-	return slot0._elements[slot1]
+function var_0_0.getElementById(arg_11_0, arg_11_1)
+	return arg_11_0._elements[arg_11_1]
 end
 
-function slot0.addFinishedElement(slot0, slot1)
-	slot0._finishElements[slot1] = true
+function var_0_0.addFinishedElement(arg_12_0, arg_12_1)
+	arg_12_0._finishElements[arg_12_1] = true
 end
 
-function slot0.addFinishedElements(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._finishElements[slot6] = true
+function var_0_0.addFinishedElements(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		arg_13_0._finishElements[iter_13_1] = true
 	end
 end
 
-function slot0.elementIsFinished(slot0, slot1)
-	return slot0._finishElements[slot1]
+function var_0_0.elementIsFinished(arg_14_0, arg_14_1)
+	return arg_14_0._finishElements[arg_14_1]
 end
 
-function slot0.getNewElements(slot0)
-	return slot0._newElements
+function var_0_0.getNewElements(arg_15_0)
+	return arg_15_0._newElements
 end
 
-function slot0.clearNewElements(slot0)
-	slot0._newElements = nil
+function var_0_0.clearNewElements(arg_16_0)
+	arg_16_0._newElements = nil
 end
 
-function slot0.setNewElements(slot0, slot1)
-	slot0._newElements = slot1
+function var_0_0.setNewElements(arg_17_0, arg_17_1)
+	arg_17_0._newElements = arg_17_1
 end
 
-function slot0.addElements(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._elements[slot6] = slot6
+function var_0_0.addElements(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		arg_18_0._elements[iter_18_1] = iter_18_1
 	end
 end
 
-function slot0.removeElement(slot0, slot1)
-	slot0._elements[slot1] = nil
+function var_0_0.removeElement(arg_19_0, arg_19_1)
+	arg_19_0._elements[arg_19_1] = nil
 end
 
-function slot0.getAllElements(slot0)
-	return slot0._elements
+function var_0_0.getAllElements(arg_20_0)
+	return arg_20_0._elements
 end
 
-function slot0.getElements(slot0, slot1)
-	slot2 = {}
+function var_0_0.getElements(arg_21_0, arg_21_1)
+	local var_21_0 = {}
 
-	for slot6, slot7 in pairs(slot0._elements) do
-		if VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot7) and DungeonConfig.instance:isActivity1_2Map(slot1) then
-			table.insert(slot2, DungeonConfig.instance:getChapterMapElement(slot7))
-		elseif slot8 and slot8.mapId == slot1 then
-			slot9 = true
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._elements) do
+		local var_21_1 = DungeonConfig.instance:getChapterMapElement(iter_21_1)
 
-			if ToughBattleConfig.instance:isActEleCo(slot8) and not ToughBattleModel.instance:getActIsOnline() then
-				slot9 = false
+		if VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(iter_21_1) and DungeonConfig.instance:isActivity1_2Map(arg_21_1) then
+			table.insert(var_21_0, var_21_1)
+		elseif var_21_1 and var_21_1.mapId == arg_21_1 then
+			local var_21_2 = true
+
+			if ToughBattleConfig.instance:isActEleCo(var_21_1) and not ToughBattleModel.instance:getActIsOnline() then
+				var_21_2 = false
 			end
 
-			if slot9 then
-				table.insert(slot2, slot8)
+			if var_21_2 then
+				table.insert(var_21_0, var_21_1)
 			end
 		end
 	end
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.initEquipSpChapters(slot0, slot1)
-	slot0._equipSpChapters = {}
+function var_0_0.initEquipSpChapters(arg_22_0, arg_22_1)
+	arg_22_0._equipSpChapters = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0._equipSpChapters, slot6)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
+		table.insert(arg_22_0._equipSpChapters, iter_22_1)
 	end
 end
 
-function slot0.updateEquipSpChapter(slot0, slot1, slot2)
-	if slot2 == false then
-		table.insert(slot0._equipSpChapters, slot1)
+function var_0_0.updateEquipSpChapter(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_2 == false then
+		table.insert(arg_23_0._equipSpChapters, arg_23_1)
 
 		return
 	end
 
-	tabletool.removeValue(slot0._equipSpChapters, slot1)
-	DungeonModel.instance:resetEpisodeInfoByChapterId(slot1)
+	tabletool.removeValue(arg_23_0._equipSpChapters, arg_23_1)
+	DungeonModel.instance:resetEpisodeInfoByChapterId(arg_23_1)
 end
 
-function slot0.getEquipSpChapters(slot0)
-	return slot0._equipSpChapters
+function var_0_0.getEquipSpChapters(arg_24_0)
+	return arg_24_0._equipSpChapters
 end
 
-function slot0.isUnlockSpChapter(slot0, slot1)
-	return tabletool.indexOf(slot0._equipSpChapters, slot1)
+function var_0_0.isUnlockSpChapter(arg_25_0, arg_25_1)
+	return tabletool.indexOf(arg_25_0._equipSpChapters, arg_25_1)
 end
 
-function slot0.updateRewardPoint(slot0, slot1, slot2)
-	if slot0:getRewardPointInfo(slot1) then
-		slot3:setRewardPoint(slot2)
+function var_0_0.updateRewardPoint(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_0:getRewardPointInfo(arg_26_1)
+
+	if var_26_0 then
+		var_26_0:setRewardPoint(arg_26_2)
 	end
 end
 
-function slot0.initRewardPointInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RewardPointInfoMO.New()
+function var_0_0.initRewardPointInfo(arg_27_0, arg_27_1)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_1) do
+		local var_27_0 = RewardPointInfoMO.New()
 
-		slot7:init(slot6)
+		var_27_0:init(iter_27_1)
 
-		slot0._rewardPointInfoList[slot7.chapterId] = slot7
+		arg_27_0._rewardPointInfoList[var_27_0.chapterId] = var_27_0
 	end
 end
 
-function slot0.getTotalRewardPointProgress(slot0, slot1)
-	slot2, slot3 = slot0:_getRewardPointProgress(slot1)
+function var_0_0.getTotalRewardPointProgress(arg_28_0, arg_28_1)
+	local var_28_0, var_28_1 = arg_28_0:_getRewardPointProgress(arg_28_1)
 
-	return slot2, slot3
+	return var_28_0, var_28_1
 end
 
-function slot0._getRewardPointProgress(slot0, slot1)
-	if not slot1 or slot1 <= 0 then
+function var_0_0._getRewardPointProgress(arg_29_0, arg_29_1)
+	if not arg_29_1 or arg_29_1 <= 0 then
 		return 0, 0
 	end
 
-	slot2 = uv0.instance:getRewardPointValue(slot1)
+	local var_29_0 = var_0_0.instance:getRewardPointValue(arg_29_1)
+	local var_29_1 = DungeonConfig.instance:getChapterPointReward(arg_29_1)
 
-	if not DungeonConfig.instance:getChapterPointReward(slot1) then
-		return slot0:_getRewardPointProgress(DungeonConfig.instance:getChapterCO(slot1).preChapter)
+	if not var_29_1 then
+		local var_29_2 = DungeonConfig.instance:getChapterCO(arg_29_1)
+
+		return arg_29_0:_getRewardPointProgress(var_29_2.preChapter)
 	end
 
-	slot5 = slot3[#slot3].rewardPointNum
+	local var_29_3 = var_29_1[#var_29_1].rewardPointNum
 
-	return math.min(slot2, slot5), slot5
+	return math.min(var_29_0, var_29_3), var_29_3
 end
 
-function slot0.getRewardPointInfo(slot0, slot1)
-	return slot0._rewardPointInfoList[0]
+function var_0_0.getRewardPointInfo(arg_30_0, arg_30_1)
+	arg_30_1 = 0
+
+	return arg_30_0._rewardPointInfoList[arg_30_1]
 end
 
-function slot0.getRewardPointValue(slot0, slot1)
-	return slot0:getRewardPointInfo(slot1) and slot2.rewardPoint or 0
+function var_0_0.getRewardPointValue(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0:getRewardPointInfo(arg_31_1)
+
+	return var_31_0 and var_31_0.rewardPoint or 0
 end
 
-function slot0.addRewardPoint(slot0, slot1)
-	if lua_chapter_map_element.configDict[slot1].rewardPoint <= 0 then
+function var_0_0.addRewardPoint(arg_32_0, arg_32_1)
+	local var_32_0 = lua_chapter_map_element.configDict[arg_32_1]
+
+	if var_32_0.rewardPoint <= 0 then
 		return
 	end
 
-	slot4 = slot0:getRewardPointInfo(lua_chapter_map.configDict[slot2.mapId].chapterId)
-	slot4.rewardPoint = slot4.rewardPoint + slot2.rewardPoint
+	local var_32_1 = lua_chapter_map.configDict[var_32_0.mapId]
+	local var_32_2 = arg_32_0:getRewardPointInfo(var_32_1.chapterId)
+
+	var_32_2.rewardPoint = var_32_2.rewardPoint + var_32_0.rewardPoint
 end
 
-function slot0.addPointRewardIds(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0:getRewardPointInfo(lua_chapter_point_reward.configDict[slot6].chapterId).hasGetPointRewardIds, slot6)
+function var_0_0.addPointRewardIds(arg_33_0, arg_33_1)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_1) do
+		local var_33_0 = lua_chapter_point_reward.configDict[iter_33_1]
+		local var_33_1 = arg_33_0:getRewardPointInfo(var_33_0.chapterId)
+
+		table.insert(var_33_1.hasGetPointRewardIds, iter_33_1)
 	end
 end
 
-function slot0.getUnfinishedTargetReward(slot0)
-	slot1 = uv0.instance:getRewardPointInfo()
-	slot2 = nil
+function var_0_0.getUnfinishedTargetReward(arg_34_0)
+	local var_34_0 = var_0_0.instance:getRewardPointInfo()
+	local var_34_1
 
-	for slot6, slot7 in ipairs(lua_chapter_point_reward.configList) do
-		if slot7.display > 0 and (slot1.rewardPoint < slot7.rewardPointNum or not tabletool.indexOf(slot1.hasGetPointRewardIds, slot2.id)) then
-			break
+	for iter_34_0, iter_34_1 in ipairs(lua_chapter_point_reward.configList) do
+		if iter_34_1.display > 0 then
+			var_34_1 = iter_34_1
+
+			if var_34_0.rewardPoint < var_34_1.rewardPointNum or not tabletool.indexOf(var_34_0.hasGetPointRewardIds, var_34_1.id) then
+				break
+			end
 		end
 	end
 
-	return slot2
+	return var_34_1
 end
 
-function slot0.canGetAllRewardsList(slot0)
-	return uv0.instance:canGetRewardsList(lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList].chapterId)
+function var_0_0.canGetAllRewardsList(arg_35_0)
+	local var_35_0 = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList].chapterId
+
+	return (var_0_0.instance:canGetRewardsList(var_35_0))
 end
 
-function slot0.canGetRewardsList(slot0, slot1)
-	slot2 = {}
+function var_0_0.canGetRewardsList(arg_36_0, arg_36_1)
+	local var_36_0 = {}
 
-	for slot6 = 101, slot1 do
-		tabletool.addValues(slot2, uv0.instance:canGetRewards(slot6))
+	for iter_36_0 = 101, arg_36_1 do
+		local var_36_1 = var_0_0.instance:canGetRewards(iter_36_0)
+
+		tabletool.addValues(var_36_0, var_36_1)
 	end
 
-	return slot2
+	return var_36_0
 end
 
-function slot0.canGetRewards(slot0, slot1)
-	if not slot0:getRewardPointInfo(slot1) then
+function var_0_0.canGetRewards(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_0:getRewardPointInfo(arg_37_1)
+
+	if not var_37_0 then
 		return nil
 	end
 
-	if slot2.rewardPoint <= 0 then
+	local var_37_1 = var_37_0.rewardPoint
+
+	if var_37_1 <= 0 then
 		return nil
 	end
 
-	if not DungeonConfig.instance:getChapterPointReward(slot1) then
-		return {}
+	local var_37_2 = {}
+	local var_37_3 = DungeonConfig.instance:getChapterPointReward(arg_37_1)
+
+	if not var_37_3 then
+		return var_37_2
 	end
 
-	for slot9, slot10 in ipairs(slot5) do
-		if slot10.rewardPointNum > 0 and slot10.rewardPointNum <= slot3 and not tabletool.indexOf(slot2.hasGetPointRewardIds, slot10.id) then
-			table.insert(slot4, slot10.id)
+	for iter_37_0, iter_37_1 in ipairs(var_37_3) do
+		if iter_37_1.rewardPointNum > 0 and var_37_1 >= iter_37_1.rewardPointNum and not tabletool.indexOf(var_37_0.hasGetPointRewardIds, iter_37_1.id) then
+			table.insert(var_37_2, iter_37_1.id)
 		end
 	end
 
-	return slot4
+	return var_37_2
 end
 
-function slot0.isUnFinishedElement(slot0, slot1)
-	slot2 = DungeonConfig.instance:getChapterEpisodeCOList(slot1)
+function var_0_0.isUnFinishedElement(arg_38_0, arg_38_1)
+	local var_38_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_38_1)
+	local var_38_1 = DungeonConfig.instance:getChapterMapCfg(arg_38_1, 0)
 
-	if slot0:_getMapElementsNum(DungeonConfig.instance:getChapterMapCfg(slot1, 0)) > 0 then
+	if arg_38_0:_getMapElementsNum(var_38_1) > 0 then
 		return true
 	end
 
-	for slot7, slot8 in ipairs(slot2) do
-		if slot0:_getMapElementsNum(DungeonConfig.instance:getChapterMapCfg(slot8.chapterId, slot8.id)) > 0 then
+	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
+		local var_38_2 = DungeonConfig.instance:getChapterMapCfg(iter_38_1.chapterId, iter_38_1.id)
+
+		if arg_38_0:_getMapElementsNum(var_38_2) > 0 then
 			return true
 		end
 	end
@@ -282,65 +318,82 @@ function slot0.isUnFinishedElement(slot0, slot1)
 	return false
 end
 
-function slot0._getMapElementsNum(slot0, slot1)
-	if slot1 and uv0.instance:mapIsUnlock(slot1.id) then
-		for slot7, slot8 in ipairs(uv0.instance:getElements(slot1.id)) do
-			if not string.nilorempty(slot8.effect) then
-				slot3 = 0 + 1
+function var_0_0._getMapElementsNum(arg_39_0, arg_39_1)
+	if arg_39_1 and var_0_0.instance:mapIsUnlock(arg_39_1.id) then
+		local var_39_0 = var_0_0.instance:getElements(arg_39_1.id)
+		local var_39_1 = 0
+
+		for iter_39_0, iter_39_1 in ipairs(var_39_0) do
+			if not string.nilorempty(iter_39_1.effect) then
+				var_39_1 = var_39_1 + 1
 			end
 		end
 
-		return slot3
+		return var_39_1
 	end
 
 	return 0
 end
 
-function slot0.getChapterLastMap(slot0, slot1, slot2)
-	slot4, slot5 = nil
+function var_0_0.getChapterLastMap(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_40_1)
+	local var_40_1
+	local var_40_2
 
-	for slot9, slot10 in ipairs(DungeonConfig.instance:getChapterEpisodeCOList(slot1)) do
-		if DungeonModel.instance:getEpisodeInfo(slot10.id) and slot11.isNew and DungeonConfig.instance:getChapterMapCfg(slot1, slot10.id) then
-			slot4 = slot12
+	for iter_40_0, iter_40_1 in ipairs(var_40_0) do
+		local var_40_3 = DungeonModel.instance:getEpisodeInfo(iter_40_1.id)
 
-			break
+		if var_40_3 and var_40_3.isNew then
+			local var_40_4 = DungeonConfig.instance:getChapterMapCfg(arg_40_1, iter_40_1.id)
+
+			if var_40_4 then
+				var_40_1 = var_40_4
+
+				break
+			end
 		end
 
-		if not (slot10.id == slot2) and DungeonModel.instance:hasPassLevelAndStory(slot10.id) and DungeonConfig.instance:getChapterMapCfg(slot1, slot10.id) then
-			slot4 = slot12
+		if not (iter_40_1.id == arg_40_2) and DungeonModel.instance:hasPassLevelAndStory(iter_40_1.id) then
+			local var_40_5 = DungeonConfig.instance:getChapterMapCfg(arg_40_1, iter_40_1.id)
+
+			if var_40_5 then
+				var_40_1 = var_40_5
+			end
 		end
 	end
 
-	return slot4 or DungeonConfig.instance:getChapterMapCfg(slot1, 0)
+	var_40_1 = var_40_1 or DungeonConfig.instance:getChapterMapCfg(arg_40_1, 0)
+
+	return var_40_1
 end
 
-function slot0.initMapPuzzleStatus(slot0, slot1)
-	slot0._puzzleStatusMap = {}
+function var_0_0.initMapPuzzleStatus(arg_41_0, arg_41_1)
+	arg_41_0._puzzleStatusMap = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0._puzzleStatusMap[slot6] = true
+	if arg_41_1 then
+		for iter_41_0, iter_41_1 in ipairs(arg_41_1) do
+			arg_41_0._puzzleStatusMap[iter_41_1] = true
 		end
 	end
 end
 
-function slot0.hasMapPuzzleStatus(slot0, slot1)
-	return slot0._puzzleStatusMap ~= nil and slot0._puzzleStatusMap[slot1]
+function var_0_0.hasMapPuzzleStatus(arg_42_0, arg_42_1)
+	return arg_42_0._puzzleStatusMap ~= nil and arg_42_0._puzzleStatusMap[arg_42_1]
 end
 
-function slot0.setPuzzleStatus(slot0, slot1)
-	slot0._puzzleStatusMap = slot0._puzzleStatusMap or {}
-	slot0._puzzleStatusMap[slot1] = true
+function var_0_0.setPuzzleStatus(arg_43_0, arg_43_1)
+	arg_43_0._puzzleStatusMap = arg_43_0._puzzleStatusMap or {}
+	arg_43_0._puzzleStatusMap[arg_43_1] = true
 end
 
-function slot0.setMapInteractiveItemVisible(slot0, slot1)
-	slot0._mapInteractiveItemVisible = slot1
+function var_0_0.setMapInteractiveItemVisible(arg_44_0, arg_44_1)
+	arg_44_0._mapInteractiveItemVisible = arg_44_1
 end
 
-function slot0.getMapInteractiveItemVisible(slot0)
-	return slot0._mapInteractiveItemVisible
+function var_0_0.getMapInteractiveItemVisible(arg_45_0)
+	return arg_45_0._mapInteractiveItemVisible
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

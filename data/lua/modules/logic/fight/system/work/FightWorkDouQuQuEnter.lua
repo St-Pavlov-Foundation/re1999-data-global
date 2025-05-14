@@ -1,56 +1,57 @@
-module("modules.logic.fight.system.work.FightWorkDouQuQuEnter", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDouQuQuEnter", package.seeall)
 
-slot0 = class("FightWorkDouQuQuEnter", FightWorkItem)
+local var_0_0 = class("FightWorkDouQuQuEnter", FightWorkItem)
 
-function slot0.onAwake(slot0, slot1, slot2)
-	slot0._index = slot1
-	slot0._needClearFight = slot2
+function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._index = arg_1_1
+	arg_1_0._needClearFight = arg_1_2
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	FightWorkDouQuQuStat.startTime = ServerTime.now()
 
-	slot0:cancelFightWorkSafeTimer()
+	arg_2_0:cancelFightWorkSafeTimer()
 
-	if slot0._needClearFight then
-		slot1 = slot0:com_registFlowSequence()
+	if arg_2_0._needClearFight then
+		local var_2_0 = arg_2_0:com_registFlowSequence()
 
-		slot1:registWork(Work2FightWork, FightWorkRestartBefore)
-		slot1:registFinishCallback(slot0._onClearFinish, slot0)
-		slot1:start({
+		var_2_0:registWork(Work2FightWork, FightWorkRestartBefore)
+		var_2_0:registFinishCallback(arg_2_0._onClearFinish, arg_2_0)
+		var_2_0:start({
 			noReloadScene = true
 		})
 	else
-		slot0:_onClearFinish()
+		arg_2_0:_onClearFinish()
 	end
 end
 
-function slot0._onClearFinish(slot0)
-	slot0:com_registMsg(FightMsgId.FightAct174Reply, slot0._onFightAct174Reply)
-	Activity174Rpc.instance:sendViewFightAct174Request(slot0._index, 0)
+function var_0_0._onClearFinish(arg_3_0)
+	arg_3_0:com_registMsg(FightMsgId.FightAct174Reply, arg_3_0._onFightAct174Reply)
+	Activity174Rpc.instance:sendViewFightAct174Request(arg_3_0._index, 0)
 end
 
-function slot0._onFightAct174Reply(slot0, slot1)
-	slot2 = slot1.fight
+function var_0_0._onFightAct174Reply(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.fight
+	local var_4_1 = arg_4_1.startRound
 
-	FightMgr.instance:startFight(slot2)
-	FightModel.instance:updateFight(slot2)
-	FightModel.instance:refreshBattleId(slot2)
-	FightModel.instance:updateFightRound(slot1.startRound)
+	FightMgr.instance:startFight(var_4_0)
+	FightModel.instance:updateFight(var_4_0)
+	FightModel.instance:refreshBattleId(var_4_0)
+	FightModel.instance:updateFightRound(var_4_1)
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.DouQuQu)
-	slot0:com_sendFightEvent(FightEvent.RefreshUIRound)
-	slot0:com_registEvent(GameSceneMgr.instance, SceneType.Fight, slot0._onFightSceneStart)
-	slot0:com_registFightEvent(FightEvent.OnStartSequenceFinish, slot0._onStartSequenceFinish)
+	arg_4_0:com_sendFightEvent(FightEvent.RefreshUIRound)
+	arg_4_0:com_registEvent(GameSceneMgr.instance, SceneType.Fight, arg_4_0._onFightSceneStart)
+	arg_4_0:com_registFightEvent(FightEvent.OnStartSequenceFinish, arg_4_0._onStartSequenceFinish)
 	GameSceneMgr.instance:getCurScene().director:registRespBeginFight()
 	FightController.instance:dispatchEvent(FightEvent.RespBeginFight)
 end
 
-function slot0._onFightSceneStart(slot0)
+function var_0_0._onFightSceneStart(arg_5_0)
 	FightSystem.instance:startFight()
 end
 
-function slot0._onStartSequenceFinish(slot0)
-	slot0:onDone(true)
+function var_0_0._onStartSequenceFinish(arg_6_0)
+	arg_6_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,54 +1,55 @@
-module("modules.logic.gm.view.GM_CharacterDataView", package.seeall)
+﻿module("modules.logic.gm.view.GM_CharacterDataView", package.seeall)
 
-slot0 = class("GM_CharacterDataView")
+local var_0_0 = class("GM_CharacterDataView")
 
-function slot0.register()
-	uv0.CharacterDataVoiceView_register(CharacterDataVoiceView)
-	uv0.CharacterVoiceItem_register(CharacterVoiceItem)
+function var_0_0.register()
+	var_0_0.CharacterDataVoiceView_register(CharacterDataVoiceView)
+	var_0_0.CharacterVoiceItem_register(CharacterVoiceItem)
 end
 
-function slot0.CharacterDataVoiceView_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "removeEvents")
+function var_0_0.CharacterDataVoiceView_register(arg_2_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
 
-	function slot0._editableInitView(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(slot0)
+	function arg_2_0._editableInitView(arg_3_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(arg_3_0)
 	end
 
-	function slot0.addEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(slot0)
-		GM_CharacterDataVoiceViewContainer.addEvents(slot0)
+	function arg_2_0.addEvents(arg_4_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
+		GM_CharacterDataVoiceViewContainer.addEvents(arg_4_0)
 	end
 
-	function slot0.removeEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(slot0)
-		GM_CharacterDataVoiceViewContainer.removeEvents(slot0)
+	function arg_2_0.removeEvents(arg_5_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
+		GM_CharacterDataVoiceViewContainer.removeEvents(arg_5_0)
 	end
 
-	function slot0._gm_showAllTabIdUpdate(slot0)
-		slot0:_refreshVoice()
+	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
+		arg_6_0:_refreshVoice()
 	end
 end
 
-function slot0.CharacterVoiceItem_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_refreshItem")
+function var_0_0.CharacterVoiceItem_register(arg_7_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "_refreshItem")
 
-	function slot0._refreshItem(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_refreshItem", ...)
+	function arg_7_0._refreshItem(arg_8_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "_refreshItem", ...)
 
 		if not GM_CharacterDataVoiceView.s_ShowAllTabId then
 			return
 		end
 
-		slot1 = slot0._mo
-		slot2 = slot1.id
-		slot0._txtvoicename.text = tostring(slot2) .. " " .. slot1.name
-		slot0._txtlockvoicename.text = tostring(slot2) .. " " .. CharacterDataConfig.instance:getConditionStringName(slot1)
+		local var_8_0 = arg_8_0._mo
+		local var_8_1 = var_8_0.id
+
+		arg_8_0._txtvoicename.text = tostring(var_8_1) .. " " .. var_8_0.name
+		arg_8_0._txtlockvoicename.text = tostring(var_8_1) .. " " .. CharacterDataConfig.instance:getConditionStringName(var_8_0)
 	end
 end
 
-return slot0
+return var_0_0

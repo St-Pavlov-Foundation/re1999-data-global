@@ -1,20 +1,24 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepDeductHp", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepDeductHp", package.seeall)
 
-slot0 = class("Va3ChessStepDeductHp", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepDeductHp", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot0:finish()
+function var_0_0.start(arg_1_0)
+	arg_1_0:finish()
 end
 
-function slot0.finish(slot0)
-	if Va3ChessGameController.instance.event then
-		slot1:setCurEvent(nil)
+function var_0_0.finish(arg_2_0)
+	local var_2_0 = Va3ChessGameController.instance.event
+
+	if var_2_0 then
+		var_2_0:setCurEvent(nil)
 	end
 
-	Va3ChessGameModel.instance:setHp(slot0.originData.hp)
+	local var_2_1 = arg_2_0.originData.hp
+
+	Va3ChessGameModel.instance:setHp(var_2_1)
 	Va3ChessGameController.instance:tryResumeSelectObj()
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.CurrentHpUpdate)
-	uv0.super.finish(slot0)
+	var_0_0.super.finish(arg_2_0)
 end
 
-return slot0
+return var_0_0

@@ -1,234 +1,247 @@
-module("modules.logic.versionactivity2_5.dungeon.view.map.scene.VersionActivity2_5DungeonMapElement", package.seeall)
+﻿module("modules.logic.versionactivity2_5.dungeon.view.map.scene.VersionActivity2_5DungeonMapElement", package.seeall)
 
-slot0 = class("VersionActivity2_5DungeonMapElement", LuaCompBase)
-slot1 = 1.6
-slot2 = Vector2(1.5, 1.5)
+local var_0_0 = class("VersionActivity2_5DungeonMapElement", LuaCompBase)
+local var_0_1 = 1.6
+local var_0_2 = Vector2(1.5, 1.5)
 
-function slot0.ctor(slot0, slot1)
-	slot0._config = slot1[1]
-	slot0._sceneElements = slot1[2]
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._config = arg_1_1[1]
+	arg_1_0._sceneElements = arg_1_1[2]
 end
 
-function slot0.getElementId(slot0)
-	return slot0._config.id
+function var_0_0.getElementId(arg_2_0)
+	return arg_2_0._config.id
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0._go, false)
+function var_0_0.hide(arg_3_0)
+	gohelper.setActive(arg_3_0._go, false)
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0._go, true)
+function var_0_0.show(arg_4_0)
+	gohelper.setActive(arg_4_0._go, true)
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._transform = slot1.transform
+function var_0_0.init(arg_5_0, arg_5_1)
+	arg_5_0._go = arg_5_1
+	arg_5_0._transform = arg_5_1.transform
 
-	slot0:updatePos()
+	arg_5_0:updatePos()
 
-	if slot0._resLoader then
+	if arg_5_0._resLoader then
 		return
 	end
 
-	slot0._resLoader = MultiAbLoader.New()
-	slot0._resPath = slot0._config.res
+	arg_5_0._resLoader = MultiAbLoader.New()
+	arg_5_0._resPath = arg_5_0._config.res
 
-	if not string.nilorempty(slot0._resPath) then
-		slot0._resLoader:addPath(slot0._resPath)
+	if not string.nilorempty(arg_5_0._resPath) then
+		arg_5_0._resLoader:addPath(arg_5_0._resPath)
 	end
 
-	slot0._effectPath = slot0._config.effect
+	arg_5_0._effectPath = arg_5_0._config.effect
 
-	if not string.nilorempty(slot0._effectPath) then
-		slot0._resLoader:addPath(slot0._effectPath)
+	if not string.nilorempty(arg_5_0._effectPath) then
+		arg_5_0._resLoader:addPath(arg_5_0._effectPath)
 	end
 
-	slot0._resLoader:startLoad(slot0._onResLoaded, slot0)
+	arg_5_0._resLoader:startLoad(arg_5_0._onResLoaded, arg_5_0)
 end
 
-function slot0._onResLoaded(slot0)
-	slot0:createMainPrefab()
-	slot0:createEffectPrefab()
-	slot0:autoPopInteractView()
-	slot0:tryHideSelf()
+function var_0_0._onResLoaded(arg_6_0)
+	arg_6_0:createMainPrefab()
+	arg_6_0:createEffectPrefab()
+	arg_6_0:autoPopInteractView()
+	arg_6_0:tryHideSelf()
 end
 
-function slot0.createMainPrefab(slot0)
-	if string.nilorempty(slot0._resPath) then
+function var_0_0.createMainPrefab(arg_7_0)
+	if string.nilorempty(arg_7_0._resPath) then
 		return
 	end
 
-	slot0._itemGo = gohelper.clone(slot0._resLoader:getAssetItem(slot0._resPath):GetResource(slot0._resPath), slot0._go)
-	slot0.posTransform = slot0._itemGo.transform
+	local var_7_0 = arg_7_0._resLoader:getAssetItem(arg_7_0._resPath):GetResource(arg_7_0._resPath)
 
-	if slot0._config.resScale and slot3 ~= 0 then
-		transformhelper.setLocalScale(slot0.posTransform, slot3, slot3, 1)
+	arg_7_0._itemGo = gohelper.clone(var_7_0, arg_7_0._go)
+	arg_7_0.posTransform = arg_7_0._itemGo.transform
+
+	local var_7_1 = arg_7_0._config.resScale
+
+	if var_7_1 and var_7_1 ~= 0 then
+		transformhelper.setLocalScale(arg_7_0.posTransform, var_7_1, var_7_1, 1)
 	end
 
-	gohelper.setLayer(slot0._itemGo, UnityLayer.Scene, true)
-	slot0.addBoxColliderListener(slot0._itemGo, slot0._onClickDown, slot0)
-	transformhelper.setLocalPos(slot0.posTransform, 0, 0, -1)
+	gohelper.setLayer(arg_7_0._itemGo, UnityLayer.Scene, true)
+	arg_7_0.addBoxColliderListener(arg_7_0._itemGo, arg_7_0._onClickDown, arg_7_0)
+	transformhelper.setLocalPos(arg_7_0.posTransform, 0, 0, -1)
 end
 
-function slot0.addBoxColliderListener(slot0, slot1, slot2)
-	gohelper.addBoxCollider2D(slot0, uv0)
+function var_0_0.addBoxColliderListener(arg_8_0, arg_8_1, arg_8_2)
+	gohelper.addBoxCollider2D(arg_8_0, var_0_2)
 
-	slot3 = ZProj.BoxColliderClickListener.Get(slot0)
+	local var_8_0 = ZProj.BoxColliderClickListener.Get(arg_8_0)
 
-	slot3:SetIgnoreUI(true)
-	slot3:AddClickListener(slot1, slot2)
+	var_8_0:SetIgnoreUI(true)
+	var_8_0:AddClickListener(arg_8_1, arg_8_2)
 end
 
-function slot0.createEffectPrefab(slot0)
-	if string.nilorempty(slot0._effectPath) then
+function var_0_0.createEffectPrefab(arg_9_0)
+	if string.nilorempty(arg_9_0._effectPath) then
 		return
 	end
 
-	slot0._offsetX = string.splitToNumber(slot0._config.tipOffsetPos, "#")[1] or 0
-	slot0._offsetY = slot2[2] or 0
-	slot0._effectGo = gohelper.clone(slot0._resLoader:getAssetItem(slot0._effectPath):GetResource(slot0._effectPath), slot0._go)
-	slot0.posTransform = slot0._effectGo.transform
+	local var_9_0 = arg_9_0._config.tipOffsetPos
+	local var_9_1 = string.splitToNumber(var_9_0, "#")
 
-	transformhelper.setLocalPos(slot0._effectGo.transform, slot0._offsetX, slot0._offsetY, -10)
-	slot0.addBoxColliderListener(slot0._effectGo, slot0._onClickDown, slot0)
+	arg_9_0._offsetX = var_9_1[1] or 0
+	arg_9_0._offsetY = var_9_1[2] or 0
+
+	local var_9_2 = arg_9_0._resLoader:getAssetItem(arg_9_0._effectPath):GetResource(arg_9_0._effectPath)
+
+	arg_9_0._effectGo = gohelper.clone(var_9_2, arg_9_0._go)
+	arg_9_0.posTransform = arg_9_0._effectGo.transform
+
+	transformhelper.setLocalPos(arg_9_0._effectGo.transform, arg_9_0._offsetX, arg_9_0._offsetY, -10)
+	arg_9_0.addBoxColliderListener(arg_9_0._effectGo, arg_9_0._onClickDown, arg_9_0)
 
 	if VersionActivity2_5DungeonModel.instance:checkIsShowInteractView() then
-		slot0:hideElement()
+		arg_9_0:hideElement()
 	end
 end
 
-function slot0.autoPopInteractView(slot0)
+function var_0_0.autoPopInteractView(arg_10_0)
 	if not DungeonMapModel.instance.lastElementBattleId then
 		return
 	end
 
-	if tonumber(slot0._config.param) == DungeonMapModel.instance.lastElementBattleId then
-		slot0:onClick()
+	if tonumber(arg_10_0._config.param) == DungeonMapModel.instance.lastElementBattleId then
+		arg_10_0:onClick()
 
 		DungeonMapModel.instance.lastElementBattleId = nil
 	end
 end
 
-function slot0.tryHideSelf(slot0)
+function var_0_0.tryHideSelf(arg_11_0)
 	if VersionActivity2_5DungeonModel.instance:checkIsShowInteractView() then
-		slot0:hideElement()
+		arg_11_0:hideElement()
 	end
 end
 
-function slot0.hideElement(slot0)
-	slot0:playEffectAnim("wenhao_a_001_out")
+function var_0_0.hideElement(arg_12_0)
+	arg_12_0:playEffectAnim("wenhao_a_001_out")
 end
 
-function slot0.showElement(slot0)
-	slot0:playEffectAnim("wenhao_a_001_in")
+function var_0_0.showElement(arg_13_0)
+	arg_13_0:playEffectAnim("wenhao_a_001_in")
 end
 
-function slot0.setFinish(slot0)
-	if not slot0._effectGo then
-		gohelper.destroy(slot0._itemGo)
+function var_0_0.setFinish(arg_14_0)
+	if not arg_14_0._effectGo then
+		gohelper.destroy(arg_14_0._itemGo)
 
-		slot0._itemGo = nil
+		arg_14_0._itemGo = nil
 
 		return
 	end
 
-	slot0:playEffectAnim("finish")
+	arg_14_0:playEffectAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
-	TaskDispatcher.runDelay(slot0.onFinishAnimDone, slot0, uv0)
+	TaskDispatcher.runDelay(arg_14_0.onFinishAnimDone, arg_14_0, var_0_1)
 end
 
-function slot0.onFinishAnimDone(slot0)
-	slot0:onDestroy()
+function var_0_0.onFinishAnimDone(arg_15_0)
+	arg_15_0:onDestroy()
 end
 
-function slot0.playEffectAnim(slot0, slot1)
-	if gohelper.isNil(slot0._effectGo) then
+function var_0_0.playEffectAnim(arg_16_0, arg_16_1)
+	if gohelper.isNil(arg_16_0._effectGo) then
 		return
 	end
 
-	if not slot0._effectGo.activeInHierarchy then
+	if not arg_16_0._effectGo.activeInHierarchy then
 		return
 	end
 
-	if gohelper.isNil(slot0._effectAnimator) then
-		slot0._effectAnimator = SLFramework.AnimatorPlayer.Get(slot0._effectGo)
+	if gohelper.isNil(arg_16_0._effectAnimator) then
+		arg_16_0._effectAnimator = SLFramework.AnimatorPlayer.Get(arg_16_0._effectGo)
 	end
 
-	if not gohelper.isNil(slot0._effectAnimator) then
-		slot0._effectAnimator:Play(slot1, slot0._effectAnimDone, slot0)
+	if not gohelper.isNil(arg_16_0._effectAnimator) then
+		arg_16_0._effectAnimator:Play(arg_16_1, arg_16_0._effectAnimDone, arg_16_0)
 	end
 end
 
-function slot0._effectAnimDone(slot0)
+function var_0_0._effectAnimDone(arg_17_0)
+	return
 end
 
-function slot0.updatePos(slot0)
-	transformhelper.setLocalPos(slot0._transform, string.splitToNumber(slot0._config.pos, "#")[1] or 0, slot1[2] or 0, slot1[3] or 0)
+function var_0_0.updatePos(arg_18_0)
+	local var_18_0 = string.splitToNumber(arg_18_0._config.pos, "#")
+
+	transformhelper.setLocalPos(arg_18_0._transform, var_18_0[1] or 0, var_18_0[2] or 0, var_18_0[3] or 0)
 end
 
-function slot0.getTransform(slot0)
-	return slot0._transform
+function var_0_0.getTransform(arg_19_0)
+	return arg_19_0._transform
 end
 
-function slot0.getElementPos(slot0)
-	if not slot0.posTransform then
+function var_0_0.getElementPos(arg_20_0)
+	if not arg_20_0.posTransform then
 		logError("not pos transform")
 
 		return
 	end
 
-	return transformhelper.getPos(slot0.posTransform)
+	return transformhelper.getPos(arg_20_0.posTransform)
 end
 
-function slot0.getConfig(slot0)
-	return slot0._config
+function var_0_0.getConfig(arg_21_0)
+	return arg_21_0._config
 end
 
-function slot0._onClickDown(slot0)
-	slot0._sceneElements:setMouseElementDown(slot0)
+function var_0_0._onClickDown(arg_22_0)
+	arg_22_0._sceneElements:setMouseElementDown(arg_22_0)
 end
 
-function slot0.onClick(slot0)
-	VersionActivity2_5DungeonController.instance:dispatchEvent(VersionActivity2_5DungeonEvent.OnClickElement, slot0)
+function var_0_0.onClick(arg_23_0)
+	VersionActivity2_5DungeonController.instance:dispatchEvent(VersionActivity2_5DungeonEvent.OnClickElement, arg_23_0)
 end
 
-function slot0.isValid(slot0)
-	return not gohelper.isNil(slot0._go)
+function var_0_0.isValid(arg_24_0)
+	return not gohelper.isNil(arg_24_0._go)
 end
 
-function slot0.isConfigShowArrow(slot0)
-	return slot0._config.showArrow == 1
+function var_0_0.isConfigShowArrow(arg_25_0)
+	return arg_25_0._config.showArrow == 1
 end
 
-function slot0.onDestroy(slot0)
-	gohelper.setActive(slot0._go, true)
+function var_0_0.onDestroy(arg_26_0)
+	gohelper.setActive(arg_26_0._go, true)
 
-	if slot0._effectGo then
-		gohelper.destroy(slot0._effectGo)
+	if arg_26_0._effectGo then
+		gohelper.destroy(arg_26_0._effectGo)
 
-		slot0._effectGo = nil
+		arg_26_0._effectGo = nil
 	end
 
-	if slot0._itemGo then
-		gohelper.destroy(slot0._itemGo)
+	if arg_26_0._itemGo then
+		gohelper.destroy(arg_26_0._itemGo)
 
-		slot0._itemGo = nil
+		arg_26_0._itemGo = nil
 	end
 
-	if slot0._go then
-		gohelper.destroy(slot0._go)
+	if arg_26_0._go then
+		gohelper.destroy(arg_26_0._go)
 
-		slot0._go = nil
+		arg_26_0._go = nil
 	end
 
-	if slot0._resLoader then
-		slot0._resLoader:dispose()
+	if arg_26_0._resLoader then
+		arg_26_0._resLoader:dispose()
 
-		slot0._resLoader = nil
+		arg_26_0._resLoader = nil
 	end
 
-	slot0.destroyed = true
+	arg_26_0.destroyed = true
 end
 
-return slot0
+return var_0_0

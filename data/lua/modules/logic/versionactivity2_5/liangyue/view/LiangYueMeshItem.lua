@@ -1,28 +1,29 @@
-module("modules.logic.versionactivity2_5.liangyue.view.LiangYueMeshItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueMeshItem", package.seeall)
 
-slot0 = class("LiangYueMeshItem", LuaCompBase)
+local var_0_0 = class("LiangYueMeshItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._rectTran = gohelper.findChildComponent(slot0._go, "", gohelper.Type_RectTransform)
-	slot0._goEnableBg = gohelper.findChild(slot1, "lattice")
-	slot0._imageEnableBg = gohelper.findChildImage(slot1, "lattice")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._rectTran = gohelper.findChildComponent(arg_1_0._go, "", gohelper.Type_RectTransform)
+	arg_1_0._goEnableBg = gohelper.findChild(arg_1_1, "lattice")
+	arg_1_0._imageEnableBg = gohelper.findChildImage(arg_1_1, "lattice")
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0._goEnableBg, slot1)
+function var_0_0.setActive(arg_2_0, arg_2_1)
+	gohelper.setActive(arg_2_0._goEnableBg, arg_2_1)
 end
 
-function slot0.setBgColor(slot0, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageEnableBg, slot1)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._imageEnableBg, LiangYueEnum.MeshAlpha)
+function var_0_0.setBgColor(arg_3_0, arg_3_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_3_0._imageEnableBg, arg_3_1)
+	ZProj.UGUIHelper.SetColorAlpha(arg_3_0._imageEnableBg, LiangYueEnum.MeshAlpha)
 end
 
-function slot0.setPos(slot0, slot1, slot2)
-	recthelper.setAnchor(slot0._rectTran, slot1, slot2)
+function var_0_0.setPos(arg_4_0, arg_4_1, arg_4_2)
+	recthelper.setAnchor(arg_4_0._rectTran, arg_4_1, arg_4_2)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,48 +1,57 @@
-module("modules.logic.permanent.model.PermanentModel", package.seeall)
+﻿module("modules.logic.permanent.model.PermanentModel", package.seeall)
 
-slot0 = class("PermanentModel", BaseModel)
+local var_0_0 = class("PermanentModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.localReadDic = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.localReadDic = {}
 end
 
-function slot0.getActivityDic(slot0)
-	for slot6, slot7 in pairs(PermanentConfig.instance:getPermanentDic()) do
-		if ActivityModel.instance:getActMO(slot6) then
-			-- Nothing
+function var_0_0.getActivityDic(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = PermanentConfig.instance:getPermanentDic()
+
+	for iter_3_0, iter_3_1 in pairs(var_3_1) do
+		local var_3_2 = ActivityModel.instance:getActMO(iter_3_0)
+
+		if var_3_2 then
+			var_3_0[iter_3_0] = var_3_2
 		end
 	end
 
-	return {
-		[slot6] = slot8
-	}
+	return var_3_0
 end
 
-function slot0.undateActivityInfo(slot0, slot1)
-	if slot1 then
-		-- Nothing
+function var_0_0.undateActivityInfo(arg_4_0, arg_4_1)
+	local var_4_0 = {}
+
+	if arg_4_1 then
+		var_4_0[1] = arg_4_1
 	else
-		for slot7, slot8 in pairs(PermanentConfig.instance:getPermanentDic()) do
-			if ActivityModel.instance:getActMO(slot7) and slot9:isOnline() then
-				slot2[#slot2 + 1] = slot7
+		local var_4_1 = PermanentConfig.instance:getPermanentDic()
+
+		for iter_4_0, iter_4_1 in pairs(var_4_1) do
+			local var_4_2 = ActivityModel.instance:getActMO(iter_4_0)
+
+			if var_4_2 and var_4_2:isOnline() then
+				var_4_0[#var_4_0 + 1] = iter_4_0
 			end
 		end
 	end
 
-	if #{
-		slot1
-	} > 0 then
-		ActivityRpc.instance:sendGetActivityInfosWithParamRequest(slot2)
+	if #var_4_0 > 0 then
+		ActivityRpc.instance:sendGetActivityInfosWithParamRequest(var_4_0)
 	end
 end
 
-function slot0.hasActivityOnline(slot0)
-	for slot5, slot6 in pairs(slot0:getActivityDic()) do
-		if slot6.online then
+function var_0_0.hasActivityOnline(arg_5_0)
+	local var_5_0 = arg_5_0:getActivityDic()
+
+	for iter_5_0, iter_5_1 in pairs(var_5_0) do
+		if iter_5_1.online then
 			return true
 		end
 	end
@@ -50,32 +59,39 @@ function slot0.hasActivityOnline(slot0)
 	return false
 end
 
-function slot0.setActivityLocalRead(slot0, slot1)
-	slot0:_initLocalRead()
+function var_0_0.setActivityLocalRead(arg_6_0, arg_6_1)
+	arg_6_0:_initLocalRead()
 
-	if slot1 then
-		slot0.localReadDic[tostring(slot1)] = true
+	if arg_6_1 then
+		arg_6_1 = tostring(arg_6_1)
+		arg_6_0.localReadDic[arg_6_1] = true
 	else
-		for slot6, slot7 in pairs(slot0:getActivityDic()) do
-			if not slot0.localReadDic[tostring(slot6)] then
-				slot0.localReadDic[slot6] = true
+		local var_6_0 = arg_6_0:getActivityDic()
+
+		for iter_6_0, iter_6_1 in pairs(var_6_0) do
+			iter_6_0 = tostring(iter_6_0)
+
+			if not arg_6_0.localReadDic[iter_6_0] then
+				arg_6_0.localReadDic[iter_6_0] = true
 			end
 		end
 	end
 
-	slot0:_saveLocalRead()
+	arg_6_0:_saveLocalRead()
 end
 
-function slot0.isActivityLocalRead(slot0, slot1)
-	slot0:_initLocalRead()
+function var_0_0.isActivityLocalRead(arg_7_0, arg_7_1)
+	arg_7_0:_initLocalRead()
 
-	slot2 = slot0:getActivityDic()
+	local var_7_0 = arg_7_0:getActivityDic()
 
-	if not slot1 then
-		for slot6, slot7 in pairs(slot2) do
-			slot6 = tostring(slot6)
+	if not arg_7_1 then
+		for iter_7_0, iter_7_1 in pairs(var_7_0) do
+			local var_7_1 = ActivityModel.instance:isActOnLine(iter_7_0)
 
-			if ActivityModel.instance:isActOnLine(slot6) and not slot0.localReadDic[slot6] then
+			iter_7_0 = tostring(iter_7_0)
+
+			if var_7_1 and not arg_7_0.localReadDic[iter_7_0] then
 				return false
 			end
 		end
@@ -83,23 +99,31 @@ function slot0.isActivityLocalRead(slot0, slot1)
 		return true
 	end
 
-	return slot0.localReadDic[tostring(slot1)]
+	arg_7_1 = tostring(arg_7_1)
+
+	return arg_7_0.localReadDic[arg_7_1]
 end
 
-function slot0._initLocalRead(slot0)
-	if next(slot0.localReadDic) then
+function var_0_0._initLocalRead(arg_8_0)
+	if next(arg_8_0.localReadDic) then
 		return
 	end
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.PermanentLocalRead .. PlayerModel.instance:getMyUserId())) then
-		slot0.localReadDic = cjson.decode(slot2)
+	local var_8_0 = PlayerModel.instance:getMyUserId()
+	local var_8_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.PermanentLocalRead .. var_8_0)
+
+	if not string.nilorempty(var_8_1) then
+		arg_8_0.localReadDic = cjson.decode(var_8_1)
 	end
 end
 
-function slot0._saveLocalRead(slot0)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.PermanentLocalRead .. PlayerModel.instance:getMyUserId(), cjson.encode(slot0.localReadDic))
+function var_0_0._saveLocalRead(arg_9_0)
+	local var_9_0 = PlayerModel.instance:getMyUserId()
+	local var_9_1 = cjson.encode(arg_9_0.localReadDic)
+
+	PlayerPrefsHelper.setString(PlayerPrefsKey.PermanentLocalRead .. var_9_0, var_9_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

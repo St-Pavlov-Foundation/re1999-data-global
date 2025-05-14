@@ -1,31 +1,31 @@
-module("modules.logic.playercard.view.StorePlayerCardInfoItem", package.seeall)
+﻿module("modules.logic.playercard.view.StorePlayerCardInfoItem", package.seeall)
 
-slot0 = class("StorePlayerCardInfoItem", SocialFriendItem)
+local var_0_0 = class("StorePlayerCardInfoItem", SocialFriendItem)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0.viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0._playericon:setEnableClick(false)
+	arg_1_0._playericon:setEnableClick(false)
 end
 
-function slot0.onShowDecorateStoreDefault(slot0)
-	slot0:playAnim("open", 1)
+function var_0_0.onShowDecorateStoreDefault(arg_2_0)
+	arg_2_0:playAnim("open", 1)
 
-	if slot0._goskinEffect then
-		if not slot0._skinEffectAnim then
-			slot0._skinEffectAnim = slot0._goskinEffect:GetComponent(typeof(UnityEngine.Animator))
+	if arg_2_0._goskinEffect then
+		if not arg_2_0._skinEffectAnim then
+			arg_2_0._skinEffectAnim = arg_2_0._goskinEffect:GetComponent(typeof(UnityEngine.Animator))
 		end
 
-		slot0._skinEffectAnim:Play("open", 0, 1)
+		arg_2_0._skinEffectAnim:Play("open", 0, 1)
 	end
 end
 
-function slot0.playAnim(slot0, slot1, slot2)
-	if slot0.viewAnim then
-		slot0.viewAnim:Play(slot1, 0, slot2)
+function var_0_0.playAnim(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_0.viewAnim then
+		arg_3_0.viewAnim:Play(arg_3_1, 0, arg_3_2)
 	end
 end
 
-return slot0
+return var_0_0

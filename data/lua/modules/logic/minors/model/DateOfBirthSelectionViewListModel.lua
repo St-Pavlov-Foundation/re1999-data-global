@@ -1,6 +1,7 @@
-module("modules.logic.minors.model.DateOfBirthSelectionViewListModel", package.seeall)
+﻿module("modules.logic.minors.model.DateOfBirthSelectionViewListModel", package.seeall)
 
-slot0 = class("DateOfBirthSelectionViewListModel", ListScrollModel)
-slot0.instance = slot0.New()
+local var_0_0 = class("DateOfBirthSelectionViewListModel", ListScrollModel)
 
-return slot0
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

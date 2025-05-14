@@ -1,83 +1,88 @@
-module("modules.common.others.ViewHelper", package.seeall)
+﻿module("modules.common.others.ViewHelper", package.seeall)
 
-slot0 = class("ViewHelper")
+local var_0_0 = class("ViewHelper")
 
-function slot0.checkViewNameDictInit(slot0)
-	if slot0.viewNameDict then
+function var_0_0.checkViewNameDictInit(arg_1_0)
+	if arg_1_0.viewNameDict then
 		return
 	end
 
-	slot0.viewNameDict = {}
+	arg_1_0.viewNameDict = {}
 end
 
-function slot0.OpenViewAndWaitViewClose(slot0, slot1, slot2, slot3, slot4)
-	slot0:checkViewNameDictInit()
+function var_0_0.OpenViewAndWaitViewClose(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0:checkViewNameDictInit()
 
-	if slot0.viewNameDict[slot1] then
-		logWarn(slot1 .. "close callback override!")
+	if arg_2_0.viewNameDict[arg_2_1] then
+		logWarn(arg_2_1 .. "close callback override!")
 	end
 
-	slot0.viewNameDict[slot1] = {
-		slot3,
-		slot4
+	arg_2_0.viewNameDict[arg_2_1] = {
+		arg_2_3,
+		arg_2_4
 	}
 
-	ViewMgr.instance:openView(slot1, slot2)
+	ViewMgr.instance:openView(arg_2_1, arg_2_2)
 
-	if not slot0.registerEvent then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0.onViewClose, slot0)
+	if not arg_2_0.registerEvent then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0.onViewClose, arg_2_0)
 
-		slot0.registerEvent = true
+		arg_2_0.registerEvent = true
 	end
 end
 
-function slot0.onViewClose(slot0, slot1)
-	if not slot0.viewNameDict[slot1] then
+function var_0_0.onViewClose(arg_3_0, arg_3_1)
+	if not arg_3_0.viewNameDict[arg_3_1] then
 		return
 	end
 
-	slot2 = slot0.viewNameDict[slot1][1]
-	slot3 = slot0.viewNameDict[slot1][2]
-	slot0.viewNameDict[slot1] = nil
+	local var_3_0 = arg_3_0.viewNameDict[arg_3_1][1]
+	local var_3_1 = arg_3_0.viewNameDict[arg_3_1][2]
 
-	if tabletool.len(slot0.viewNameDict) == 0 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onViewClose, slot0)
+	arg_3_0.viewNameDict[arg_3_1] = nil
 
-		slot0.registerEvent = false
+	if tabletool.len(arg_3_0.viewNameDict) == 0 then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0.onViewClose, arg_3_0)
+
+		arg_3_0.registerEvent = false
 	end
 
-	if slot2 then
-		return slot2(slot3)
+	if var_3_0 then
+		return var_3_0(var_3_1)
 	end
 end
 
-function slot0.initGlobalIgnoreViewList(slot0)
-	if not slot0.checkViewTopIgnoreViewList then
-		slot0.checkViewTopIgnoreViewList = {
+function var_0_0.initGlobalIgnoreViewList(arg_4_0)
+	if not arg_4_0.checkViewTopIgnoreViewList then
+		arg_4_0.checkViewTopIgnoreViewList = {
 			ViewName.ToastView
 		}
 	end
 
-	return slot0.checkViewTopIgnoreViewList
+	return arg_4_0.checkViewTopIgnoreViewList
 end
 
-function slot0.checkIsGlobalIgnore(slot0, slot1)
-	slot0:initGlobalIgnoreViewList()
+function var_0_0.checkIsGlobalIgnore(arg_5_0, arg_5_1)
+	arg_5_0:initGlobalIgnoreViewList()
 
-	return tabletool.indexOf(slot0.checkViewTopIgnoreViewList, slot1)
+	return tabletool.indexOf(arg_5_0.checkViewTopIgnoreViewList, arg_5_1)
 end
 
-function slot0.checkViewOnTheTop(slot0, slot1, slot2)
-	slot0:initGlobalIgnoreViewList()
+function var_0_0.checkViewOnTheTop(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0:initGlobalIgnoreViewList()
 
-	for slot8 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if not tabletool.indexOf(slot0.checkViewTopIgnoreViewList, slot3[slot8]) then
-			if not slot2 then
-				return slot9 == slot1
+	local var_6_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_6_0 = #var_6_0, 1, -1 do
+		local var_6_1 = var_6_0[iter_6_0]
+
+		if not tabletool.indexOf(arg_6_0.checkViewTopIgnoreViewList, var_6_1) then
+			if not arg_6_2 then
+				return var_6_1 == arg_6_1
 			end
 
-			if not tabletool.indexOf(slot2, slot9) then
-				return slot9 == slot1
+			if not tabletool.indexOf(arg_6_2, var_6_1) then
+				return var_6_1 == arg_6_1
 			end
 		end
 	end
@@ -85,29 +90,29 @@ function slot0.checkViewOnTheTop(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.checkAnyViewOnTheTop(slot0, slot1, slot2)
-	if not slot1 or #slot1 == 0 then
+function var_0_0.checkAnyViewOnTheTop(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 or #arg_7_1 == 0 then
 		return false
 	end
 
-	slot3 = {
-		[slot10] = true
-	}
-	slot4 = {}
-	slot5 = ViewMgr.instance:getOpenViewNameList()
+	local var_7_0 = {}
+	local var_7_1 = {}
+	local var_7_2 = ViewMgr.instance:getOpenViewNameList()
 
-	for slot9, slot10 in ipairs(slot1) do
-		-- Nothing
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		var_7_0[iter_7_1] = true
 	end
 
-	if slot2 then
-		for slot9, slot10 in ipairs(slot2) do
-			slot4[slot10] = true
+	if arg_7_2 then
+		for iter_7_2, iter_7_3 in ipairs(arg_7_2) do
+			var_7_1[iter_7_3] = true
 		end
 	end
 
-	for slot9 = #slot5, 1, -1 do
-		if ViewMgr.instance:getContainer(slot5[slot9]) and not slot0:checkIsGlobalIgnore(slot10) and not slot4[slot10] and slot3[slot10] then
+	for iter_7_4 = #var_7_2, 1, -1 do
+		local var_7_3 = var_7_2[iter_7_4]
+
+		if ViewMgr.instance:getContainer(var_7_3) and not arg_7_0:checkIsGlobalIgnore(var_7_3) and not var_7_1[var_7_3] and var_7_0[var_7_3] then
 			return true
 		end
 	end
@@ -115,6 +120,6 @@ function slot0.checkAnyViewOnTheTop(slot0, slot1, slot2)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

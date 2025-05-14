@@ -1,12 +1,6 @@
-module("projbooter.config.BooterLanguageConfig", package.seeall)
+﻿module("projbooter.config.BooterLanguageConfig", package.seeall)
 
-function booterLang(slot0)
-	return uv0[slot0][GameConfig:GetCurLangShortcut()]
-end
-
-setGlobal("booterLang", booterLang)
-
-return {
+local var_0_0 = {
 	hotupdate = {
 		jp = "更新チェック中",
 		de = "",
@@ -906,5 +900,35 @@ return {
 		fr = "",
 		thai = "",
 		en = "Connecting to network ..."
+	},
+	["res-HD_voice"] = {
+		jp = "高解像度動画リソース",
+		de = "",
+		zh = "高清视频资源",
+		tw = "高清影片資源",
+		kr = "고화질 비디오 리소스",
+		fr = "",
+		thai = "",
+		en = "HD Video Resources"
+	},
+	["res-HD_voice_desc"] = {
+		jp = "り高い解像度の動画がダウンロード可能になります。",
+		de = "",
+		zh = "为游戏内视频提供更高清晰度的可选下载项。",
+		tw = "為遊戲內影片提供更高清晰度的可選下載項。",
+		kr = "인게임 동영상을 고화질로 다운로드할 수 있는 옵션",
+		fr = "",
+		thai = "",
+		en = "Download in-game videos in higher quality."
 	}
 }
+
+function booterLang(arg_1_0)
+	local var_1_0 = GameConfig:GetCurLangShortcut()
+
+	return var_0_0[arg_1_0][var_1_0]
+end
+
+setGlobal("booterLang", booterLang)
+
+return var_0_0

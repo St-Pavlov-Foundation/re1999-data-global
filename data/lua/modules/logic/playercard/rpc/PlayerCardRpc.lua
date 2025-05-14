@@ -1,105 +1,110 @@
-module("modules.logic.playercard.rpc.PlayerCardRpc", package.seeall)
+﻿module("modules.logic.playercard.rpc.PlayerCardRpc", package.seeall)
 
-slot0 = class("PlayerCardRpc", BaseRpc)
+local var_0_0 = class("PlayerCardRpc", BaseRpc)
 
-function slot0.sendGetPlayerCardInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(PlayerCardModule_pb.GetPlayerCardInfoRequest(), slot1, slot2)
+function var_0_0.sendGetPlayerCardInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = PlayerCardModule_pb.GetPlayerCardInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetPlayerCardInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetPlayerCardInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateCardInfo(slot2.playerCardInfo)
+	PlayerCardModel.instance:updateCardInfo(arg_2_2.playerCardInfo)
 end
 
-function slot0.onReceivePlayerCardInfoPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceivePlayerCardInfoPush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateCardInfo(slot2.playerCardInfo)
+	PlayerCardModel.instance:updateCardInfo(arg_3_2.playerCardInfo)
 end
 
-function slot0.sendGetOtherPlayerCardInfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.GetOtherPlayerCardInfoRequest()
-	slot4.userId = slot1
+function var_0_0.sendGetOtherPlayerCardInfoRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = PlayerCardModule_pb.GetOtherPlayerCardInfoRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_4_0.userId = arg_4_1
+
+	return arg_4_0:sendMsg(var_4_0, arg_4_2, arg_4_3)
 end
 
-function slot0.onReceiveGetOtherPlayerCardInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetOtherPlayerCardInfoReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateCardInfo(slot2.playerCardInfo, slot2.playerInfo)
+	PlayerCardModel.instance:updateCardInfo(arg_5_2.playerCardInfo, arg_5_2.playerInfo)
 end
 
-function slot0.sendSetPlayerCardShowSettingRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.SetPlayerCardShowSettingRequest()
+function var_0_0.sendSetPlayerCardShowSettingRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = PlayerCardModule_pb.SetPlayerCardShowSettingRequest()
 
-	for slot8, slot9 in ipairs(slot1) do
-		table.insert(slot4.showSettings, slot9)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		table.insert(var_6_0.showSettings, iter_6_1)
 	end
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	return arg_6_0:sendMsg(var_6_0, arg_6_2, arg_6_3)
 end
 
-function slot0.onReceiveSetPlayerCardShowSettingReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardShowSettingReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateSetting(slot2.showSettings)
+	PlayerCardModel.instance:updateSetting(arg_7_2.showSettings)
 end
 
-function slot0.sendSetPlayerCardHeroCoverRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.SetPlayerCardHeroCoverRequest()
-	slot4.heroCover = slot1
+function var_0_0.sendSetPlayerCardHeroCoverRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = PlayerCardModule_pb.SetPlayerCardHeroCoverRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_8_0.heroCover = arg_8_1
+
+	return arg_8_0:sendMsg(var_8_0, arg_8_2, arg_8_3)
 end
 
-function slot0.onReceiveSetPlayerCardHeroCoverReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardHeroCoverReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateHeroCover(slot2.heroCover)
+	PlayerCardModel.instance:updateHeroCover(arg_9_2.heroCover)
 end
 
-function slot0.sendSetPlayerCardThemeRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.SetPlayerCardThemeRequest()
-	slot4.themeId = slot1
+function var_0_0.sendSetPlayerCardThemeRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = PlayerCardModule_pb.SetPlayerCardThemeRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_10_0.themeId = arg_10_1
+
+	return arg_10_0:sendMsg(var_10_0, arg_10_2, arg_10_3)
 end
 
-function slot0.onReceiveSetPlayerCardThemeReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardThemeReply(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateThemeId(slot2.themeId)
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ChangeSkin, slot2.themeId)
+	PlayerCardModel.instance:updateThemeId(arg_11_2.themeId)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ChangeSkin, arg_11_2.themeId)
 end
 
-function slot0.sendSetPlayerCardShowAchievementRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = PlayerCardModule_pb.SetPlayerCardShowAchievementRequest()
+function var_0_0.sendSetPlayerCardShowAchievementRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	local var_12_0 = PlayerCardModule_pb.SetPlayerCardShowAchievementRequest()
 
-	for slot9, slot10 in ipairs(slot1) do
-		slot5.ids:append(slot10)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+		var_12_0.ids:append(iter_12_1)
 	end
 
-	slot5.groupId = slot2
+	var_12_0.groupId = arg_12_2
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	return arg_12_0:sendMsg(var_12_0, arg_12_3, arg_12_4)
 end
 
-function slot0.onReceiveSetPlayerCardShowAchievementReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardShowAchievementReply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 ~= 0 then
 		return
 	end
 
@@ -108,58 +113,61 @@ function slot0.onReceiveSetPlayerCardShowAchievementReply(slot0, slot1, slot2)
 	AchievementController.instance:dispatchEvent(AchievementEvent.AchievementSaveSucc)
 end
 
-function slot0.sendSetPlayerCardProgressSettingRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.SetPlayerCardProgressSettingRequest()
-	slot4.progressSetting = slot1
+function var_0_0.sendSetPlayerCardProgressSettingRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = PlayerCardModule_pb.SetPlayerCardProgressSettingRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_14_0.progressSetting = arg_14_1
+
+	return arg_14_0:sendMsg(var_14_0, arg_14_2, arg_14_3)
 end
 
-function slot0.onReceiveSetPlayerCardProgressSettingReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardProgressSettingReply(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateProgressSetting(slot2.progressSetting)
+	PlayerCardModel.instance:updateProgressSetting(arg_15_2.progressSetting)
 	PlayerCardController.instance:statSetProgress()
 end
 
-function slot0.sendSetPlayerCardBaseInfoSettingRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.SetPlayerCardBaseSettingRequest()
-	slot4.baseSetting = slot1
+function var_0_0.sendSetPlayerCardBaseInfoSettingRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = PlayerCardModule_pb.SetPlayerCardBaseSettingRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_16_0.baseSetting = arg_16_1
+
+	return arg_16_0:sendMsg(var_16_0, arg_16_2, arg_16_3)
 end
 
-function slot0.onReceiveSetPlayerCardBaseSettingReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardBaseSettingReply(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 ~= 0 then
 		return
 	end
 
-	PlayerCardModel.instance:updateBaseInfoSetting(slot2.baseSetting)
+	PlayerCardModel.instance:updateBaseInfoSetting(arg_17_2.baseSetting)
 	PlayerCardController.instance:statSetBaseInfo()
 end
 
-function slot0.sendSetPlayerCardCritterRequest(slot0, slot1, slot2, slot3)
-	slot4 = PlayerCardModule_pb.SetPlayerCardCritterRequest()
-	slot4.critterUid = tonumber(slot1)
+function var_0_0.sendSetPlayerCardCritterRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = PlayerCardModule_pb.SetPlayerCardCritterRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_18_0.critterUid = tonumber(arg_18_1)
+
+	return arg_18_0:sendMsg(var_18_0, arg_18_2, arg_18_3)
 end
 
-function slot0.onReceiveSetPlayerCardCritterReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSetPlayerCardCritterReply(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 ~= 0 then
 		return
 	end
 
-	slot3 = CritterModel.instance:getCritterMOByUid(slot2.critterUid)
+	local var_19_0 = CritterModel.instance:getCritterMOByUid(arg_19_2.critterUid)
 
-	PlayerCardModel.instance:setSelectCritterUid(slot2.critterUid)
+	PlayerCardModel.instance:setSelectCritterUid(arg_19_2.critterUid)
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SelectCritter, {
-		uid = slot2.critterUid
+		uid = arg_19_2.critterUid
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

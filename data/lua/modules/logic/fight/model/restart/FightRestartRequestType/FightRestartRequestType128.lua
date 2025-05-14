@@ -1,10 +1,10 @@
-module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType128", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType128", package.seeall)
 
-slot0 = class("FightRestartRequestType128", FightRestartRequestType1)
+local var_0_0 = class("FightRestartRequestType128", FightRestartRequestType1)
 
-function slot0.requestFight(slot0)
-	slot0._fight_work:onDone(true)
+function var_0_0.requestFight(arg_1_0)
+	arg_1_0._fight_work:onDone(true)
 	DungeonFightController.instance:restartStage()
 end
 
-return slot0
+return var_0_0

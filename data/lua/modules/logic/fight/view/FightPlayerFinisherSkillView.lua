@@ -1,94 +1,107 @@
-module("modules.logic.fight.view.FightPlayerFinisherSkillView", package.seeall)
+﻿module("modules.logic.fight.view.FightPlayerFinisherSkillView", package.seeall)
 
-slot0 = class("FightPlayerFinisherSkillView", FightBaseView)
+local var_0_0 = class("FightPlayerFinisherSkillView", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._click = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "skill/btn_skill")
-	slot0._longPress = SLFramework.UGUI.UILongPressListener.Get(slot0._click.gameObject)
-	slot0._used = gohelper.findChild(slot0.viewGO, "skill/melody/used")
-	slot0._power = gohelper.findChild(slot0.viewGO, "skill/melody/power")
-	slot0._noPower = gohelper.findChild(slot0.viewGO, "skill/melody/noPower")
-	slot0._powerList = {}
-	slot0._aniList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "skill/btn_skill")
+	arg_1_0._longPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._click.gameObject)
+	arg_1_0._used = gohelper.findChild(arg_1_0.viewGO, "skill/melody/used")
+	arg_1_0._power = gohelper.findChild(arg_1_0.viewGO, "skill/melody/power")
+	arg_1_0._noPower = gohelper.findChild(arg_1_0.viewGO, "skill/melody/noPower")
+	arg_1_0._powerList = {}
+	arg_1_0._aniList = {}
 
-	for slot5 = 0, 4 do
-		slot6 = gohelper.findChild(slot0.viewGO, "skill/go_energy").transform:GetChild(slot5).gameObject
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "skill/go_energy").transform
 
-		table.insert(slot0._powerList, slot6)
-		table.insert(slot0._aniList, gohelper.onceAddComponent(slot6, typeof(UnityEngine.Animator)))
+	for iter_1_0 = 0, 4 do
+		local var_1_1 = var_1_0:GetChild(iter_1_0).gameObject
+
+		table.insert(arg_1_0._powerList, var_1_1)
+
+		local var_1_2 = gohelper.onceAddComponent(var_1_1, typeof(UnityEngine.Animator))
+
+		table.insert(arg_1_0._aniList, var_1_2)
 	end
 
-	slot0._tips = gohelper.findChild(slot0.viewGO, "skill/#go_skilltip")
-	slot0._btnClose = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "skill/#go_skilltip/#btn_close")
-	slot0._title = gohelper.findChildText(slot0.viewGO, "skill/#go_skilltip/bg/#txt_title")
-	slot0._desc = gohelper.findChildText(slot0.viewGO, "skill/#go_skilltip/bg/#txt_dec")
+	arg_1_0._tips = gohelper.findChild(arg_1_0.viewGO, "skill/#go_skilltip")
+	arg_1_0._btnClose = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "skill/#go_skilltip/#btn_close")
+	arg_1_0._title = gohelper.findChildText(arg_1_0.viewGO, "skill/#go_skilltip/bg/#txt_title")
+	arg_1_0._desc = gohelper.findChildText(arg_1_0.viewGO, "skill/#go_skilltip/bg/#txt_dec")
 end
 
-function slot0.addEvents(slot0)
-	slot0:com_registMsg(FightMsgId.RefreshPlayerFinisherSkill, slot0._onRefreshPlayerFinisherSkill)
-	slot0:com_registFightEvent(FightEvent.PowerChange, slot0._onPowerChange)
-	slot0:com_registFightEvent(FightEvent.PowerInfoChange, slot0._onPowerInfoChange)
-	slot0:com_registFightEvent(FightEvent.StageChanged, slot0._onStageChanged)
-	slot0:com_registFightEvent(FightEvent.CancelOperation, slot0._onCancelOperation)
-	slot0:com_registFightEvent(FightEvent.TouchFightViewScreen, slot0._onTouchFightViewScreen)
-	slot0:com_registClick(slot0._click, slot0._onClick)
-	slot0:com_registLongPress(slot0._longPress, slot0._onLongPress)
-	slot0:com_registClick(slot0._btnClose, slot0._onBtnClose)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:com_registMsg(FightMsgId.RefreshPlayerFinisherSkill, arg_2_0._onRefreshPlayerFinisherSkill)
+	arg_2_0:com_registFightEvent(FightEvent.PowerChange, arg_2_0._onPowerChange)
+	arg_2_0:com_registFightEvent(FightEvent.PowerInfoChange, arg_2_0._onPowerInfoChange)
+	arg_2_0:com_registFightEvent(FightEvent.StageChanged, arg_2_0._onStageChanged)
+	arg_2_0:com_registFightEvent(FightEvent.CancelOperation, arg_2_0._onCancelOperation)
+	arg_2_0:com_registFightEvent(FightEvent.TouchFightViewScreen, arg_2_0._onTouchFightViewScreen)
+	arg_2_0:com_registClick(arg_2_0._click, arg_2_0._onClick)
+	arg_2_0:com_registLongPress(arg_2_0._longPress, arg_2_0._onLongPress)
+	arg_2_0:com_registClick(arg_2_0._btnClose, arg_2_0._onBtnClose)
 end
 
-function slot0._onTouchFightViewScreen(slot0)
-	gohelper.setActive(slot0._tips, false)
+function var_0_0._onTouchFightViewScreen(arg_3_0)
+	gohelper.setActive(arg_3_0._tips, false)
 end
 
-function slot0._onBtnClose(slot0)
-	gohelper.setActive(slot0._tips, false)
+function var_0_0._onBtnClose(arg_4_0)
+	gohelper.setActive(arg_4_0._tips, false)
 end
 
-function slot0._onLongPress(slot0)
+function var_0_0._onLongPress(arg_5_0)
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
 
-	gohelper.setActive(slot0._tips, true)
+	gohelper.setActive(arg_5_0._tips, true)
 end
 
-function slot0._onCancelOperation(slot0)
-	slot0:_refreshPower()
+function var_0_0._onCancelOperation(arg_6_0)
+	arg_6_0:_refreshPower()
 end
 
-function slot0._onStageChanged(slot0)
-	slot0:_refreshPower()
+function var_0_0._onStageChanged(arg_7_0)
+	arg_7_0:_refreshPower()
 end
 
-function slot0._canUse(slot0)
-	if slot0:_getSkillData() then
-		if not FightDataHelper.entityMgr:getById(FightEntityScene.MySideId) then
+function var_0_0._canUse(arg_8_0)
+	local var_8_0 = arg_8_0:_getSkillData()
+
+	if var_8_0 then
+		local var_8_1 = FightDataHelper.entityMgr:getById(FightEntityScene.MySideId)
+
+		if not var_8_1 then
 			return
 		end
 
-		if not slot2:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill) then
+		local var_8_2 = var_8_1:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill)
+
+		if not var_8_2 then
 			return
 		end
 
-		slot0._curSkillId = slot1.skillId
+		arg_8_0._curSkillId = var_8_0.skillId
 
-		if FightDataHelper.fieldMgr.playerFinisherInfo.roundUseLimit <= (FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0) then
+		local var_8_3 = FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0
+
+		if var_8_3 >= FightDataHelper.fieldMgr.playerFinisherInfo.roundUseLimit then
 			return
 		end
 
-		slot6 = slot1.needPower
+		local var_8_4 = var_8_0.needPower
 
-		if slot6 > slot3.num - slot5 * slot6 then
+		if var_8_4 > var_8_2.num - var_8_3 * var_8_4 then
 			return
 		end
 
-		return true, slot1
+		return true, var_8_0
 	end
 
 	return false
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_9_0)
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
@@ -97,131 +110,154 @@ function slot0._onClick(slot0)
 		return
 	end
 
-	slot1, slot2 = slot0:_canUse()
+	local var_9_0, var_9_1 = arg_9_0:_canUse()
 
-	if slot1 then
-		slot3 = slot2.skillId
-		slot0._curSkillId = slot3
-		slot7 = #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	if var_9_0 then
+		local var_9_2 = var_9_1.skillId
 
-		if lua_skill.configDict[slot3] and FightEnum.ShowLogicTargetView[slot4.logicTarget] and slot4.targetLimit == FightEnum.TargetLimit.MySide then
-			if slot7 > 1 then
+		arg_9_0._curSkillId = var_9_2
+
+		local var_9_3 = lua_skill.configDict[var_9_2]
+		local var_9_4 = FightDataHelper.entityMgr:getMyNormalList()
+		local var_9_5 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+		local var_9_6 = #var_9_4 + #var_9_5
+
+		if var_9_3 and FightEnum.ShowLogicTargetView[var_9_3.logicTarget] and var_9_3.targetLimit == FightEnum.TargetLimit.MySide then
+			if var_9_6 > 1 then
 				ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
 					fromId = FightEntityScene.MySideId,
-					skillId = slot3,
-					callback = slot0._useSkill,
-					callbackObj = slot0
+					skillId = var_9_2,
+					callback = arg_9_0._useSkill,
+					callbackObj = arg_9_0
 				})
 
 				return
 			end
 
-			if slot7 == 1 then
-				slot0:_useSkill(slot5[1].id)
+			if var_9_6 == 1 then
+				arg_9_0:_useSkill(var_9_4[1].id)
 
 				return
 			end
 		end
 
-		slot0:_useSkill(FightCardModel.instance.curSelectEntityId)
+		arg_9_0:_useSkill(FightCardModel.instance.curSelectEntityId)
 	end
 end
 
-function slot0._useSkill(slot0, slot1)
-	slot0:_playAudio(20249031)
+function var_0_0._useSkill(arg_10_0, arg_10_1)
+	arg_10_0:_playAudio(20249031)
 
-	slot2 = FightCardModel.instance:playPlayerFinisherSkill(slot0._curSkillId, slot1)
+	local var_10_0 = FightCardModel.instance:playPlayerFinisherSkill(arg_10_0._curSkillId, arg_10_1)
 
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot2)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_10_0)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, slot2)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, slot2)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_10_0)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, var_10_0)
 
 	FightDataHelper.operationMgr.playerFinisherSkillUsedCount = (FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0) + 1
 
-	slot0:_refreshPower()
+	arg_10_0:_refreshPower()
 end
 
-function slot0._onRefreshPlayerFinisherSkill(slot0)
-	slot0:_initSkill()
-	slot0:_refreshPower()
-	slot0:_playChangeAudio()
+function var_0_0._onRefreshPlayerFinisherSkill(arg_11_0)
+	arg_11_0:_initSkill()
+	arg_11_0:_refreshPower()
+	arg_11_0:_playChangeAudio()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initSkill()
-	slot0:_refreshPower()
-	slot0:_playChangeAudio()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:_initSkill()
+	arg_12_0:_refreshPower()
+	arg_12_0:_playChangeAudio()
 end
 
-function slot0._playChangeAudio(slot0)
-	if slot0:_canUse() ~= slot0._lastCanUse then
-		slot0._lastCanUse = slot1
+function var_0_0._playChangeAudio(arg_13_0)
+	local var_13_0 = arg_13_0:_canUse()
 
-		slot0:_playAudio(slot0._lastCanUse and 20249032 or 20249030)
+	if var_13_0 ~= arg_13_0._lastCanUse then
+		arg_13_0._lastCanUse = var_13_0
+
+		arg_13_0:_playAudio(arg_13_0._lastCanUse and 20249032 or 20249030)
 	end
 end
 
-function slot0._initSkill(slot0)
-	if slot0:_getSkillData() then
-		slot2 = lua_skill.configDict[slot1.skillId]
-		slot0._title.text = slot2.name
-		slot0._desc.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getEntitySkillDesc(FightEntityScene.MySideId, slot2, slot1.skillId), "#c56131", "#7c93ad")
+function var_0_0._initSkill(arg_14_0)
+	local var_14_0 = arg_14_0:_getSkillData()
+
+	if var_14_0 then
+		local var_14_1 = lua_skill.configDict[var_14_0.skillId]
+
+		arg_14_0._title.text = var_14_1.name
+
+		local var_14_2 = FightConfig.instance:getEntitySkillDesc(FightEntityScene.MySideId, var_14_1, var_14_0.skillId)
+
+		arg_14_0._desc.text = HeroSkillModel.instance:skillDesToSpot(var_14_2, "#c56131", "#7c93ad")
 	end
 end
 
-function slot0._getSkillData(slot0)
-	return FightDataHelper.fieldMgr.playerFinisherInfo and slot1.skills[1]
+function var_0_0._getSkillData(arg_15_0)
+	local var_15_0 = FightDataHelper.fieldMgr.playerFinisherInfo
+
+	return var_15_0 and var_15_0.skills[1]
 end
 
-function slot0._refreshPower(slot0)
-	slot1 = slot0:_getSkillData()
+function var_0_0._refreshPower(arg_16_0)
+	local var_16_0 = arg_16_0:_getSkillData()
+	local var_16_1 = FightDataHelper.entityMgr:getById(FightEntityScene.MySideId)
+	local var_16_2 = var_16_1 and var_16_1:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill)
 
-	if FightDataHelper.entityMgr:getById(FightEntityScene.MySideId) and slot2:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill) then
-		gohelper.setActive(slot0.viewGO, true)
+	if var_16_2 then
+		gohelper.setActive(arg_16_0.viewGO, true)
 
-		slot4 = FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0
-		slot8 = slot3.num - slot4 * (slot1 and slot1.needPower or 0)
+		local var_16_3 = FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0
+		local var_16_4 = var_16_0 and var_16_0.needPower or 0
+		local var_16_5 = var_16_2.max
+		local var_16_6 = var_16_2.num
+		local var_16_7 = var_16_6 - var_16_3 * var_16_4
 
-		gohelper.setActive(slot0._used, slot4 > 0)
-		gohelper.setActive(slot0._power, slot4 <= 0 and slot8 > 0)
-		gohelper.setActive(slot0._noPower, slot4 <= 0 and slot8 <= 0)
+		gohelper.setActive(arg_16_0._used, var_16_3 > 0)
+		gohelper.setActive(arg_16_0._power, var_16_3 <= 0 and var_16_7 > 0)
+		gohelper.setActive(arg_16_0._noPower, var_16_3 <= 0 and var_16_7 <= 0)
 
-		for slot12, slot13 in ipairs(slot0._powerList) do
-			gohelper.setActive(slot13, slot12 <= slot3.max)
-			gohelper.setActive(gohelper.findChild(slot13, "light"), slot12 <= slot7)
-			slot0._aniList[slot12]:Play(slot12 <= slot8 and "idle" or "flash", -1, 0)
+		for iter_16_0, iter_16_1 in ipairs(arg_16_0._powerList) do
+			gohelper.setActive(iter_16_1, iter_16_0 <= var_16_5)
+			gohelper.setActive(gohelper.findChild(iter_16_1, "light"), iter_16_0 <= var_16_6)
+
+			local var_16_8 = iter_16_0 <= var_16_7 and "idle" or "flash"
+
+			arg_16_0._aniList[iter_16_0]:Play(var_16_8, -1, 0)
 		end
 	else
-		gohelper.setActive(slot0.viewGO, false)
+		gohelper.setActive(arg_16_0.viewGO, false)
 	end
 end
 
-function slot0._playAudio(slot0, slot1)
-	AudioMgr.instance:trigger(slot1)
+function var_0_0._playAudio(arg_17_0, arg_17_1)
+	AudioMgr.instance:trigger(arg_17_1)
 end
 
-function slot0._onPowerChange(slot0, slot1, slot2, slot3, slot4)
-	if slot1 == FightEntityScene.MySideId and slot2 == FightEnum.PowerType.PlayerFinisherSkill then
-		slot0:_refreshPower()
+function var_0_0._onPowerChange(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	if arg_18_1 == FightEntityScene.MySideId and arg_18_2 == FightEnum.PowerType.PlayerFinisherSkill then
+		arg_18_0:_refreshPower()
 
-		if slot3 < slot4 then
-			for slot8 = slot3 + 1, slot4 do
-				slot0._aniList[slot8]:Play("add")
+		if arg_18_3 < arg_18_4 then
+			for iter_18_0 = arg_18_3 + 1, arg_18_4 do
+				arg_18_0._aniList[iter_18_0]:Play("add")
 			end
 
-			slot0:_playAudio(20249033)
+			arg_18_0:_playAudio(20249033)
 		end
 
-		slot0:_playChangeAudio()
+		arg_18_0:_playChangeAudio()
 	end
 end
 
-function slot0._onPowerInfoChange(slot0, slot1, slot2)
-	if slot1 == FightEntityScene.MySideId and slot2 == FightEnum.PowerType.PlayerFinisherSkill then
-		slot0:_refreshPower()
-		slot0:_playChangeAudio()
+function var_0_0._onPowerInfoChange(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 == FightEntityScene.MySideId and arg_19_2 == FightEnum.PowerType.PlayerFinisherSkill then
+		arg_19_0:_refreshPower()
+		arg_19_0:_playChangeAudio()
 	end
 end
 
-return slot0
+return var_0_0

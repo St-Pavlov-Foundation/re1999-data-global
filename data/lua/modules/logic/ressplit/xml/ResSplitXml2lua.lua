@@ -1,124 +1,161 @@
-module("modules.logic.ressplit.xml.ResSplitXml2lua", package.seeall)
+﻿module("modules.logic.ressplit.xml.ResSplitXml2lua", package.seeall)
 
-function slot1(slot0, slot1)
-	if slot0 == nil then
+local var_0_0 = {
+	_VERSION = "1.5-2"
+}
+
+local function var_0_1(arg_1_0, arg_1_1)
+	if arg_1_0 == nil then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0) do
-		if type(slot7) == "table" then
-			print(string.rep(" ", (slot1 or 1) * 2) .. slot6)
-			uv0(slot7, slot1 + 1)
+	arg_1_1 = arg_1_1 or 1
+
+	local var_1_0 = string.rep(" ", arg_1_1 * 2)
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
+		if type(iter_1_1) == "table" then
+			print(var_1_0 .. iter_1_0)
+			var_0_1(iter_1_1, arg_1_1 + 1)
 		else
-			print(slot2 .. slot6 .. "=" .. slot7)
+			print(var_1_0 .. iter_1_0 .. "=" .. iter_1_1)
 		end
 	end
 end
 
-function slot2(slot0)
-	for slot5, slot6 in pairs(slot0 or {}) do
-		slot1 = "" .. " " .. slot5 .. "=" .. "\"" .. slot6 .. "\""
+function var_0_0.parser(arg_2_0)
+	if arg_2_0 == var_0_0 then
+		error("You must call ResSplitXml2lua.parse(handler) instead of ResSplitXml2lua:parse(handler)")
 	end
 
-	return slot1
+	local var_2_0 = {
+		expandEntities = 1,
+		stripWS = 1,
+		errorHandler = function(arg_3_0, arg_3_1)
+			error(string.format("%s [char=%d]\n", arg_3_0 or "Parse Error", arg_3_1))
+		end
+	}
+
+	return ResSplitXmlParser.new(arg_2_0, var_2_0)
 end
 
-function slot3(slot0)
-	if type(slot0) == "table" then
-		for slot4, slot5 in pairs(slot0) do
-			return slot4
+function var_0_0.printable(arg_4_0)
+	var_0_1(arg_4_0)
+end
+
+function var_0_0.toString(arg_5_0)
+	local var_5_0 = ""
+	local var_5_1 = ""
+
+	if type(arg_5_0) ~= "table" then
+		return arg_5_0
+	end
+
+	for iter_5_0, iter_5_1 in pairs(arg_5_0) do
+		if type(iter_5_1) == "table" then
+			iter_5_1 = var_0_0.toString(iter_5_1)
+		end
+
+		var_5_1 = var_5_1 .. var_5_0 .. string.format("%s=%s", iter_5_0, iter_5_1)
+		var_5_0 = ","
+	end
+
+	return "{" .. var_5_1 .. "}"
+end
+
+function var_0_0.loadFile(arg_6_0)
+	local var_6_0, var_6_1 = io.open(arg_6_0, "r")
+
+	if var_6_0 then
+		local var_6_2 = var_6_0:read("*a")
+
+		var_6_0:close()
+
+		return var_6_2
+	end
+
+	error(var_6_1)
+end
+
+local function var_0_2(arg_7_0)
+	local var_7_0 = ""
+
+	arg_7_0 = arg_7_0 or {}
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_0) do
+		var_7_0 = var_7_0 .. " " .. iter_7_0 .. "=" .. "\"" .. iter_7_1 .. "\""
+	end
+
+	return var_7_0
+end
+
+local function var_0_3(arg_8_0)
+	if type(arg_8_0) == "table" then
+		for iter_8_0, iter_8_1 in pairs(arg_8_0) do
+			return iter_8_0
 		end
 
 		return nil
 	end
 
-	return slot0
+	return arg_8_0
 end
 
-function slot4(slot0, slot1, slot2, slot3)
-	slot4 = string.rep(" ", slot3 * 2)
-	slot5 = ""
+local function var_0_4(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = string.rep(" ", arg_9_3 * 2)
+	local var_9_1 = ""
+	local var_9_2 = ""
 
-	table.insert(slot0, slot4 .. "<" .. slot1 .. "" .. ">" .. (type(slot2) == "table" and "\n" .. (#slot2 == 1 and slot4 .. tostring(slot2[1]) or uv1.toXml(slot2, slot1, slot3 + 1)) .. "\n" .. slot4 or tostring(slot2)) .. "</" .. slot1 .. ">")
-end
-
-return {
-	_VERSION = "1.5-2",
-	parser = function (slot0)
-		if slot0 == uv0 then
-			error("You must call ResSplitXml2lua.parse(handler) instead of ResSplitXml2lua:parse(handler)")
-		end
-
-		return ResSplitXmlParser.new(slot0, {
-			expandEntities = 1,
-			stripWS = 1,
-			errorHandler = function (slot0, slot1)
-				error(string.format("%s [char=%d]\n", slot0 or "Parse Error", slot1))
-			end
-		})
-	end,
-	printable = function (slot0)
-		uv0(slot0)
-	end,
-	toString = function (slot0)
-		slot1 = ""
-		slot2 = ""
-
-		if type(slot0) ~= "table" then
-			return slot0
-		end
-
-		for slot6, slot7 in pairs(slot0) do
-			if type(slot7) == "table" then
-				slot7 = uv0.toString(slot7)
-			end
-
-			slot2 = slot2 .. slot1 .. string.format("%s=%s", slot6, slot7)
-			slot1 = ","
-		end
-
-		return "{" .. slot2 .. "}"
-	end,
-	loadFile = function (slot0)
-		slot1, slot2 = io.open(slot0, "r")
-
-		if slot1 then
-			slot1:close()
-
-			return slot1:read("*a")
-		end
-
-		error(slot2)
-	end,
-	toXml = function (slot0, slot1, slot2)
-		slot2 = slot2 or 1
-		slot3 = slot2
-		slot1 = slot1 or ""
-
-		for slot8, slot9 in pairs(slot0) do
-			if type(slot9) == "table" then
-				if type(slot8) == "number" then
-					uv0(slot1 ~= "" and slot2 == 1 and {
-						"<" .. slot1 .. ">"
-					} or {}, slot1, slot9, slot2)
-				elseif type(uv1(slot9)) == "number" then
-					uv0(slot4, slot8, slot9, slot2 + 1)
-				else
-					uv0(slot4, slot8, slot9, slot2)
-				end
-			else
-				if type(slot8) == "number" then
-					slot8 = slot1
-				end
-
-				uv0(slot4, slot8, slot9, slot2)
-			end
-		end
-
-		if slot1 ~= "" and slot3 == 1 then
-			table.insert(slot4, "</" .. slot1 .. ">\n")
-		end
-
-		return table.concat(slot4, "\n")
+	if type(arg_9_2) == "table" then
+		var_9_2 = var_0_2(arg_9_2._attr)
+		arg_9_2._attr = nil
+		var_9_1 = #arg_9_2 == 1 and var_9_0 .. tostring(arg_9_2[1]) or var_0_0.toXml(arg_9_2, arg_9_1, arg_9_3 + 1)
+		var_9_1 = "\n" .. var_9_1 .. "\n" .. var_9_0
+	else
+		var_9_1 = tostring(arg_9_2)
 	end
-}
+
+	table.insert(arg_9_0, var_9_0 .. "<" .. arg_9_1 .. var_9_2 .. ">" .. var_9_1 .. "</" .. arg_9_1 .. ">")
+end
+
+function var_0_0.toXml(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_2 = arg_10_2 or 1
+
+	local var_10_0 = arg_10_2
+
+	arg_10_1 = arg_10_1 or ""
+
+	local var_10_1 = arg_10_1 ~= "" and arg_10_2 == 1 and {
+		"<" .. arg_10_1 .. ">"
+	} or {}
+
+	for iter_10_0, iter_10_1 in pairs(arg_10_0) do
+		if type(iter_10_1) == "table" then
+			if type(iter_10_0) == "number" then
+				var_0_4(var_10_1, arg_10_1, iter_10_1, arg_10_2)
+			else
+				arg_10_2 = arg_10_2 + 1
+
+				if type(var_0_3(iter_10_1)) == "number" then
+					var_0_4(var_10_1, iter_10_0, iter_10_1, arg_10_2)
+				else
+					var_0_4(var_10_1, iter_10_0, iter_10_1, arg_10_2)
+				end
+			end
+		else
+			if type(iter_10_0) == "number" then
+				iter_10_0 = arg_10_1
+			end
+
+			var_0_4(var_10_1, iter_10_0, iter_10_1, arg_10_2)
+		end
+	end
+
+	if arg_10_1 ~= "" and var_10_0 == 1 then
+		table.insert(var_10_1, "</" .. arg_10_1 .. ">\n")
+	end
+
+	return table.concat(var_10_1, "\n")
+end
+
+return var_0_0

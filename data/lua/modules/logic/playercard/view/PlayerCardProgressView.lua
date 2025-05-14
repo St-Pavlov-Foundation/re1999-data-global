@@ -1,78 +1,84 @@
-module("modules.logic.playercard.view.PlayerCardProgressView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardProgressView", package.seeall)
 
-slot0 = class("PlayerCardProgressView", BaseView)
+local var_0_0 = class("PlayerCardProgressView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagetop = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_top")
-	slot0._simagebottom = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bottom")
-	slot0._scrollprogress = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_progress")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0._txtchoose = gohelper.findChildText(slot0.viewGO, "#btn_confirm/#txt_choose")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_top")
+	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bottom")
+	arg_1_0._scrollprogress = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_progress")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0._txtchoose = gohelper.findChildText(arg_1_0.viewGO, "#btn_confirm/#txt_choose")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0.animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectNumChange, slot0._onNumChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectNumChange, arg_2_0._onNumChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
+function var_0_0._btnconfirmOnClick(arg_4_0)
 	PlayerCardProgressModel.instance:confirmData()
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0.viewContainer:checkCloseFunc()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0.viewContainer:checkCloseFunc()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.playercardinfo = slot0.viewParam
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0.playercardinfo = arg_8_0.viewParam
 
-	slot0.animator:Play("open")
-	PlayerCardProgressModel.instance:initSelectData(slot0.playercardinfo)
-	slot0:refreshView()
-	slot0:refreshNum()
+	arg_8_0.animator:Play("open")
+	PlayerCardProgressModel.instance:initSelectData(arg_8_0.playercardinfo)
+	arg_8_0:refreshView()
+	arg_8_0:refreshNum()
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_leimi_unlock)
 end
 
-function slot0.refreshView(slot0)
+function var_0_0.refreshView(arg_9_0)
 	PlayerCardProgressModel.instance:refreshList()
 end
 
-function slot0._onNumChange(slot0)
-	slot0:refreshNum()
+function var_0_0._onNumChange(arg_10_0)
+	arg_10_0:refreshNum()
 end
 
-function slot0.refreshNum(slot0)
-	slot0._txtchoose.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
-		PlayerCardProgressModel.instance:getSelectNum(),
-		PlayerCardEnum.MaxProgressCardNum
+function var_0_0.refreshNum(arg_11_0)
+	local var_11_0 = PlayerCardProgressModel.instance:getSelectNum()
+	local var_11_1 = PlayerCardEnum.MaxProgressCardNum
+
+	arg_11_0._txtchoose.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
+		var_11_0,
+		var_11_1
 	})
 end
 
-function slot0.onClose(slot0)
-	slot0.animator:Play("close")
+function var_0_0.onClose(arg_12_0)
+	arg_12_0.animator:Play("close")
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.OnCloseProgressView)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,352 +1,436 @@
-module("modules.logic.rouge.view.RougeSettlementView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeSettlementView", package.seeall)
 
-slot0 = class("RougeSettlementView", BaseView)
+local var_0_0 = class("RougeSettlementView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "#go_fail")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#go_fail/#simage_mask")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title/#txt_Title")
-	slot0._btnreplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_replay")
-	slot0._simagerightmask = gohelper.findChildSingleImage(slot0.viewGO, "img_dec/#simage_rightmask")
-	slot0._simageleftmask = gohelper.findChildSingleImage(slot0.viewGO, "img_dec/#simage_leftmask")
-	slot0._simagerightmask2 = gohelper.findChildSingleImage(slot0.viewGO, "img_dec/#simage_rightmask2")
-	slot0._simageleftmask2 = gohelper.findChildSingleImage(slot0.viewGO, "img_dec/#simage_leftmask2")
-	slot0._simagepoint = gohelper.findChildSingleImage(slot0.viewGO, "img_dec/#simage_point")
-	slot0._simagepoint2 = gohelper.findChildSingleImage(slot0.viewGO, "img_dec/#simage_point2")
-	slot0._txtscore1 = gohelper.findChildText(slot0.viewGO, "mode1/#txt_score1")
-	slot0._txtnum1 = gohelper.findChildText(slot0.viewGO, "mode1/#txt_num1")
-	slot0._txtscore2 = gohelper.findChildText(slot0.viewGO, "mode2/#txt_score2")
-	slot0._txtnum2 = gohelper.findChildText(slot0.viewGO, "mode2/#txt_num2")
-	slot0._txtscore3 = gohelper.findChildText(slot0.viewGO, "mode3/#txt_score3")
-	slot0._txtnum3 = gohelper.findChildText(slot0.viewGO, "mode3/#txt_num3")
-	slot0._gocollection = gohelper.findChild(slot0.viewGO, "#go_collection")
-	slot0._txtcollectionscore = gohelper.findChildText(slot0.viewGO, "#go_collection/#txt_collectionscore")
-	slot0._txtcollectionnum = gohelper.findChildText(slot0.viewGO, "#go_collection/#txt_collectionnum")
-	slot0._golevel = gohelper.findChild(slot0.viewGO, "#go_level")
-	slot0._txtlevelscore = gohelper.findChildText(slot0.viewGO, "#go_level/#txt_levelscore")
-	slot0._txtlevelnum = gohelper.findChildText(slot0.viewGO, "#go_level/#txt_levelnum")
-	slot0._gotask = gohelper.findChild(slot0.viewGO, "#go_task")
-	slot0._txttaskscore = gohelper.findChildText(slot0.viewGO, "#go_task/#txt_taskscore")
-	slot0._txttasknum = gohelper.findChildText(slot0.viewGO, "#go_task/#txt_tasknum")
-	slot0._goending = gohelper.findChild(slot0.viewGO, "#go_ending")
-	slot0._txtendingscore = gohelper.findChildText(slot0.viewGO, "#go_ending/#txt_endingscore")
-	slot0._txtendingnum = gohelper.findChildText(slot0.viewGO, "#go_ending/#txt_endingnum")
-	slot0._goachieve = gohelper.findChild(slot0.viewGO, "#go_achieve")
-	slot0._simagetitlebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_achieve/#simage_titlebg")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#go_achieve/#scroll_view")
-	slot0._goachieveitem = gohelper.findChild(slot0.viewGO, "#go_achieve/#scroll_view/Viewport/Content/#go_achieveitem")
-	slot0._simageachieveicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_achieve/#scroll_view/Viewport/Content/#go_achieveitem/normal/#simage_achieveicon")
-	slot0._goscore = gohelper.findChild(slot0.viewGO, "#go_score")
-	slot0._txtbase = gohelper.findChildText(slot0.viewGO, "#go_score/#txt_base")
-	slot0._txtmultiple = gohelper.findChildText(slot0.viewGO, "#go_score/#txt_multiple")
-	slot0._txttotal = gohelper.findChildText(slot0.viewGO, "#go_score/#txt_total")
-	slot0._txtaddpoint = gohelper.findChildText(slot0.viewGO, "#go_score/score/#txt_addpoint")
-	slot0._sliderprogress = gohelper.findChildSlider(slot0.viewGO, "#go_score/score/#slider_progress")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_score/collection/#simage_icon")
-	slot0._txtaddgenius = gohelper.findChildText(slot0.viewGO, "#go_score/collection/#txt_addgenius")
-	slot0._slidergeniusprogress = gohelper.findChildSlider(slot0.viewGO, "#go_score/collection/#slider_geniusprogress")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gotipscontainer = gohelper.findChild(slot0.viewGO, "#go_achieve/#go_tipscontainer")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "#go_achieve/#go_tipscontainer/#go_tips")
-	slot0._txttips = gohelper.findChildText(slot0.viewGO, "#go_achieve/#go_tipscontainer/#go_tips/#txt_tips")
-	slot0._btnclosetips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_achieve/#go_tipscontainer/#go_tips/#btn_closetips")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_fail/#simage_mask")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_Title")
+	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_replay")
+	arg_1_0._simagerightmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_dec/#simage_rightmask")
+	arg_1_0._simageleftmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_dec/#simage_leftmask")
+	arg_1_0._simagerightmask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_dec/#simage_rightmask2")
+	arg_1_0._simageleftmask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_dec/#simage_leftmask2")
+	arg_1_0._simagepoint = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_dec/#simage_point")
+	arg_1_0._simagepoint2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_dec/#simage_point2")
+	arg_1_0._txtscore1 = gohelper.findChildText(arg_1_0.viewGO, "mode1/#txt_score1")
+	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "mode1/#txt_num1")
+	arg_1_0._txtscore2 = gohelper.findChildText(arg_1_0.viewGO, "mode2/#txt_score2")
+	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "mode2/#txt_num2")
+	arg_1_0._txtscore3 = gohelper.findChildText(arg_1_0.viewGO, "mode3/#txt_score3")
+	arg_1_0._txtnum3 = gohelper.findChildText(arg_1_0.viewGO, "mode3/#txt_num3")
+	arg_1_0._gocollection = gohelper.findChild(arg_1_0.viewGO, "#go_collection")
+	arg_1_0._txtcollectionscore = gohelper.findChildText(arg_1_0.viewGO, "#go_collection/#txt_collectionscore")
+	arg_1_0._txtcollectionnum = gohelper.findChildText(arg_1_0.viewGO, "#go_collection/#txt_collectionnum")
+	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "#go_level")
+	arg_1_0._txtlevelscore = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#txt_levelscore")
+	arg_1_0._txtlevelnum = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#txt_levelnum")
+	arg_1_0._gotask = gohelper.findChild(arg_1_0.viewGO, "#go_task")
+	arg_1_0._txttaskscore = gohelper.findChildText(arg_1_0.viewGO, "#go_task/#txt_taskscore")
+	arg_1_0._txttasknum = gohelper.findChildText(arg_1_0.viewGO, "#go_task/#txt_tasknum")
+	arg_1_0._goending = gohelper.findChild(arg_1_0.viewGO, "#go_ending")
+	arg_1_0._txtendingscore = gohelper.findChildText(arg_1_0.viewGO, "#go_ending/#txt_endingscore")
+	arg_1_0._txtendingnum = gohelper.findChildText(arg_1_0.viewGO, "#go_ending/#txt_endingnum")
+	arg_1_0._goachieve = gohelper.findChild(arg_1_0.viewGO, "#go_achieve")
+	arg_1_0._simagetitlebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_achieve/#simage_titlebg")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_achieve/#scroll_view")
+	arg_1_0._goachieveitem = gohelper.findChild(arg_1_0.viewGO, "#go_achieve/#scroll_view/Viewport/Content/#go_achieveitem")
+	arg_1_0._simageachieveicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_achieve/#scroll_view/Viewport/Content/#go_achieveitem/normal/#simage_achieveicon")
+	arg_1_0._goscore = gohelper.findChild(arg_1_0.viewGO, "#go_score")
+	arg_1_0._txtbase = gohelper.findChildText(arg_1_0.viewGO, "#go_score/#txt_base")
+	arg_1_0._txtmultiple = gohelper.findChildText(arg_1_0.viewGO, "#go_score/#txt_multiple")
+	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_score/#txt_total")
+	arg_1_0._txtaddpoint = gohelper.findChildText(arg_1_0.viewGO, "#go_score/score/#txt_addpoint")
+	arg_1_0._sliderprogress = gohelper.findChildSlider(arg_1_0.viewGO, "#go_score/score/#slider_progress")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_score/collection/#simage_icon")
+	arg_1_0._txtaddgenius = gohelper.findChildText(arg_1_0.viewGO, "#go_score/collection/#txt_addgenius")
+	arg_1_0._slidergeniusprogress = gohelper.findChildSlider(arg_1_0.viewGO, "#go_score/collection/#slider_geniusprogress")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gotipscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_achieve/#go_tipscontainer")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_achieve/#go_tipscontainer/#go_tips")
+	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "#go_achieve/#go_tipscontainer/#go_tips/#txt_tips")
+	arg_1_0._btnclosetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_achieve/#go_tipscontainer/#go_tips/#btn_closetips")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreplay:AddClickListener(slot0._btnreplayOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclosetips:AddClickListener(slot0._btnclosetipsOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreplay:AddClickListener(arg_2_0._btnreplayOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclosetips:AddClickListener(arg_2_0._btnclosetipsOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreplay:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnclosetips:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreplay:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnclosetips:RemoveClickListener()
 end
 
-function slot0._btnreplayOnClick(slot0)
+function var_0_0._btnreplayOnClick(arg_4_0)
 	RougeController.instance:openRougeResultView()
 end
 
-function slot0._btncloseOnClick(slot0)
-	if (RougeModel.instance:getRougeResult() and slot1.finalScore or 0) > 0 then
-		RougeController.instance:openRougeResultReView({
-			reviewInfo = slot1.reviewInfo
-		})
+function var_0_0._btncloseOnClick(arg_5_0)
+	local var_5_0 = RougeModel.instance:getRougeResult()
+
+	if (var_5_0 and var_5_0.finalScore or 0) > 0 then
+		local var_5_1 = var_5_0.reviewInfo
+		local var_5_2 = {
+			reviewInfo = var_5_1
+		}
+
+		RougeController.instance:openRougeResultReView(var_5_2)
 	else
 		ViewMgr.instance:closeView(ViewName.RougeEndingThreeView)
 		ViewMgr.instance:closeView(ViewName.RougeResultView)
-		slot0:closeThis()
+		arg_5_0:closeThis()
 	end
 end
 
-function slot0._btnclosetipsOnClick(slot0)
-	gohelper.setActive(slot0._gotips, false)
+function var_0_0._btnclosetipsOnClick(arg_6_0)
+	gohelper.setActive(arg_6_0._gotips, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._badgeItemTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._badgeItemTab = arg_7_0:getUserDataTb_()
 
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinishCallBack, slot0)
-	NavigateMgr.instance:addEscape(slot0.viewName, RougeMapHelper.blockEsc)
+	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_7_0._onOpenViewFinishCallBack, arg_7_0)
+	NavigateMgr.instance:addEscape(arg_7_0.viewName, RougeMapHelper.blockEsc)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot2 = RougeModel.instance:getRougeResult() and slot1:isSucceed()
+function var_0_0.onOpen(arg_9_0)
+	local var_9_0 = RougeModel.instance:getRougeResult()
+	local var_9_1 = var_9_0 and var_9_0:isSucceed()
 
-	gohelper.setActive(slot0._gofail, not slot2)
-	gohelper.setActive(slot0._gosuccess, slot2)
-	slot0:refrehScores(slot1)
-	slot0:updateBadgeList(slot1)
+	gohelper.setActive(arg_9_0._gofail, not var_9_1)
+	gohelper.setActive(arg_9_0._gosuccess, var_9_1)
+	arg_9_0:refrehScores(var_9_0)
+	arg_9_0:updateBadgeList(var_9_0)
 end
 
-function slot0.refrehScores(slot0, slot1)
-	if not slot1 then
+function var_0_0.refrehScores(arg_10_0, arg_10_1)
+	if not arg_10_1 then
 		return
 	end
 
-	slot0._txtnum1.text, slot0._txtscore1.text = slot1:getNormalFightCountAndScore()
-	slot0._txtnum2.text, slot0._txtscore2.text = slot1:getDifficultFightCountAndScore()
-	slot0._txtnum3.text, slot0._txtscore3.text = slot1:getDangerousFightCountAndScore()
+	local var_10_0, var_10_1 = arg_10_1:getNormalFightCountAndScore()
 
-	slot0:refreshOverView(slot1)
-	slot0:refreshScoreInfo(slot1)
-	slot0:refreshRewardPoint(slot1)
-	slot0:refreshTalentPoint(slot1)
+	arg_10_0._txtnum1.text = var_10_0
+	arg_10_0._txtscore1.text = var_10_1
+
+	local var_10_2, var_10_3 = arg_10_1:getDifficultFightCountAndScore()
+
+	arg_10_0._txtnum2.text = var_10_2
+	arg_10_0._txtscore2.text = var_10_3
+
+	local var_10_4, var_10_5 = arg_10_1:getDangerousFightCountAndScore()
+
+	arg_10_0._txtnum3.text = var_10_4
+	arg_10_0._txtscore3.text = var_10_5
+
+	arg_10_0:refreshOverView(arg_10_1)
+	arg_10_0:refreshScoreInfo(arg_10_1)
+	arg_10_0:refreshRewardPoint(arg_10_1)
+	arg_10_0:refreshTalentPoint(arg_10_1)
 end
 
-function slot0.refreshOverView(slot0, slot1)
-	slot0._txtcollectionnum.text, slot0._txtcollectionscore.text = slot1:getCollectionCountAndScore()
-	slot0._txtlevelnum.text, slot0._txtlevelscore.text = slot1:getLayerCountAndScore()
-	slot0._txttasknum.text, slot0._txttaskscore.text = slot1:getEntrustCountAndScore()
-	slot0._txtendingnum.text, slot0._txtendingscore.text = slot1:getEndCountAndScore()
+function var_0_0.refreshOverView(arg_11_0, arg_11_1)
+	local var_11_0, var_11_1 = arg_11_1:getCollectionCountAndScore()
+
+	arg_11_0._txtcollectionnum.text = var_11_0
+	arg_11_0._txtcollectionscore.text = var_11_1
+
+	local var_11_2, var_11_3 = arg_11_1:getLayerCountAndScore()
+
+	arg_11_0._txtlevelnum.text = var_11_2
+	arg_11_0._txtlevelscore.text = var_11_3
+
+	local var_11_4, var_11_5 = arg_11_1:getEntrustCountAndScore()
+
+	arg_11_0._txttasknum.text = var_11_4
+	arg_11_0._txttaskscore.text = var_11_5
+
+	local var_11_6, var_11_7 = arg_11_1:getEndCountAndScore()
+
+	arg_11_0._txtendingnum.text = var_11_6
+	arg_11_0._txtendingscore.text = var_11_7
 end
 
-slot0.FinalScoreDuration = 2
-slot0.RewardPointDuration = 2
-slot0.TalentPointDuration = 2
-slot0.RewardPointProgressDuration = 2
-slot0.TalentPointProgressDuration = 2
-slot0.MaxProgressValue = 1
+var_0_0.FinalScoreDuration = 2
+var_0_0.RewardPointDuration = 2
+var_0_0.TalentPointDuration = 2
+var_0_0.RewardPointProgressDuration = 2
+var_0_0.TalentPointProgressDuration = 2
+var_0_0.MaxProgressValue = 1
 
-function slot0.refreshScoreInfo(slot0, slot1)
-	slot4 = slot1.finalScore or 0
-	slot0._txtbase.text = slot1.beforeScore or 0
-	slot0._txtmultiple.text = string.format("%s%%", slot1.scoreReward or 0)
+function var_0_0.refreshScoreInfo(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.beforeScore or 0
+	local var_12_1 = arg_12_1.scoreReward or 0
+	local var_12_2 = arg_12_1.finalScore or 0
 
-	slot0:killTween("_totalScoreTweenId")
+	arg_12_0._txtbase.text = var_12_0
+	arg_12_0._txtmultiple.text = string.format("%s%%", var_12_1)
 
-	slot0._totalScoreTweenId = ZProj.TweenHelper.DOTweenFloat(0, slot4, uv0.FinalScoreDuration, slot0.framChangeScoreCallBack, slot0.changeScoreDone, slot0)
+	local var_12_3 = 0
 
-	if slot4 > 0 then
+	arg_12_0:killTween("_totalScoreTweenId")
+
+	arg_12_0._totalScoreTweenId = ZProj.TweenHelper.DOTweenFloat(var_12_3, var_12_2, var_0_0.FinalScoreDuration, arg_12_0.framChangeScoreCallBack, arg_12_0.changeScoreDone, arg_12_0)
+
+	if var_12_2 > 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.ComputeScore)
 	end
 end
 
-function slot0.framChangeScoreCallBack(slot0, slot1)
-	slot0._txttotal.text = math.ceil(slot1)
+function var_0_0.framChangeScoreCallBack(arg_13_0, arg_13_1)
+	arg_13_0._txttotal.text = math.ceil(arg_13_1)
 end
 
-function slot0.changeScoreDone(slot0)
-	slot0._totalScoreTweenId = nil
+function var_0_0.changeScoreDone(arg_14_0)
+	arg_14_0._totalScoreTweenId = nil
 end
 
-function slot0.refreshRewardPoint(slot0, slot1)
-	slot0:killTween("_rewardPointTweenId")
+function var_0_0.refreshRewardPoint(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.addPoint or 0
+	local var_15_1 = 0
 
-	slot0._rewardPointTweenId = ZProj.TweenHelper.DOTweenFloat(0, slot1.addPoint or 0, uv0.RewardPointDuration, slot0.frameRewardPointFunc, slot0.rewardPointDone, slot0)
+	arg_15_0:killTween("_rewardPointTweenId")
 
-	if slot1.remainScore2Point / tonumber(lua_rouge_const.configDict[RougeEnum.Const.RewardTranslation].value) < (slot1.preRemainScore2Point or 0) / slot5 then
-		slot6 = slot6 + uv0.MaxProgressValue
+	arg_15_0._rewardPointTweenId = ZProj.TweenHelper.DOTweenFloat(var_15_1, var_15_0, var_0_0.RewardPointDuration, arg_15_0.frameRewardPointFunc, arg_15_0.rewardPointDone, arg_15_0)
+
+	local var_15_2 = arg_15_1.remainScore2Point
+	local var_15_3 = tonumber(lua_rouge_const.configDict[RougeEnum.Const.RewardTranslation].value)
+	local var_15_4 = var_15_2 / var_15_3
+	local var_15_5 = (arg_15_1.preRemainScore2Point or 0) / var_15_3
+
+	if var_15_4 < var_15_5 then
+		var_15_4 = var_15_4 + var_0_0.MaxProgressValue
 	end
 
-	slot0:killTween("_rewardPointProgressTweenId")
+	arg_15_0:killTween("_rewardPointProgressTweenId")
 
-	slot0._rewardPointProgressTweenId = ZProj.TweenHelper.DOTweenFloat(slot8, slot6, uv0.RewardPointProgressDuration, slot0.frameRewardPointProgressFunc, slot0.rewardPointProgressDone, slot0)
+	arg_15_0._rewardPointProgressTweenId = ZProj.TweenHelper.DOTweenFloat(var_15_5, var_15_4, var_0_0.RewardPointProgressDuration, arg_15_0.frameRewardPointProgressFunc, arg_15_0.rewardPointProgressDone, arg_15_0)
 end
 
-function slot0.frameRewardPointFunc(slot0, slot1)
-	slot0._txtaddpoint.text = math.ceil(slot1)
+function var_0_0.frameRewardPointFunc(arg_16_0, arg_16_1)
+	arg_16_0._txtaddpoint.text = math.ceil(arg_16_1)
 end
 
-function slot0.rewardPointDone(slot0)
-	slot0._rewardPointTweenId = nil
+function var_0_0.rewardPointDone(arg_17_0)
+	arg_17_0._rewardPointTweenId = nil
 end
 
-function slot0.frameRewardPointProgressFunc(slot0, slot1)
-	slot0._sliderprogress:SetValue(slot1 % uv0.MaxProgressValue)
+function var_0_0.frameRewardPointProgressFunc(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_1 % var_0_0.MaxProgressValue
+
+	arg_18_0._sliderprogress:SetValue(var_18_0)
 end
 
-function slot0.rewardPointProgressDone(slot0)
-	slot0._rewardPointProgressTweenId = nil
+function var_0_0.rewardPointProgressDone(arg_19_0)
+	arg_19_0._rewardPointProgressTweenId = nil
 end
 
-function slot0.refreshTalentPoint(slot0, slot1)
-	slot0:killTween("_talentPointTweenId")
+function var_0_0.refreshTalentPoint(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_1.addGeniusPoint
+	local var_20_1 = 0
 
-	slot0._talentPointTweenId = ZProj.TweenHelper.DOTweenFloat(0, slot1.addGeniusPoint, uv0.RewardPointDuration, slot0.frameTalentPointFunc, slot0.talentPointDone, slot0)
+	arg_20_0:killTween("_talentPointTweenId")
 
-	if slot1.remainScore2GeniusPoint / tonumber(lua_rouge_const.configDict[RougeEnum.Const.TalentTranslation].value) < (slot1.preRemainScore2GeniusPoint or 0) / slot5 then
-		slot6 = slot6 + uv0.MaxProgressValue
+	arg_20_0._talentPointTweenId = ZProj.TweenHelper.DOTweenFloat(var_20_1, var_20_0, var_0_0.RewardPointDuration, arg_20_0.frameTalentPointFunc, arg_20_0.talentPointDone, arg_20_0)
+
+	local var_20_2 = arg_20_1.remainScore2GeniusPoint
+	local var_20_3 = tonumber(lua_rouge_const.configDict[RougeEnum.Const.TalentTranslation].value)
+	local var_20_4 = var_20_2 / var_20_3
+	local var_20_5 = (arg_20_1.preRemainScore2GeniusPoint or 0) / var_20_3
+
+	if var_20_4 < var_20_5 then
+		var_20_4 = var_20_4 + var_0_0.MaxProgressValue
 	end
 
-	slot0:killTween("_talentPointProgressTweenId")
+	arg_20_0:killTween("_talentPointProgressTweenId")
 
-	slot0._talentPointProgressTweenId = ZProj.TweenHelper.DOTweenFloat(slot8, slot6, uv0.TalentPointProgressDuration, slot0.framTalentPointProgressFunc, slot0.talentPointProgressDone, slot0)
+	arg_20_0._talentPointProgressTweenId = ZProj.TweenHelper.DOTweenFloat(var_20_5, var_20_4, var_0_0.TalentPointProgressDuration, arg_20_0.framTalentPointProgressFunc, arg_20_0.talentPointProgressDone, arg_20_0)
 end
 
-function slot0.frameTalentPointFunc(slot0, slot1)
-	slot0._txtaddgenius.text = math.ceil(slot1)
+function var_0_0.frameTalentPointFunc(arg_21_0, arg_21_1)
+	arg_21_0._txtaddgenius.text = math.ceil(arg_21_1)
 end
 
-function slot0.talentPointDone(slot0)
-	slot0._talentPointTweenId = nil
+function var_0_0.talentPointDone(arg_22_0)
+	arg_22_0._talentPointTweenId = nil
 end
 
-function slot0.framTalentPointProgressFunc(slot0, slot1)
-	slot0._slidergeniusprogress:SetValue(slot1 % uv0.MaxProgressValue)
+function var_0_0.framTalentPointProgressFunc(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_1 % var_0_0.MaxProgressValue
+
+	arg_23_0._slidergeniusprogress:SetValue(var_23_0)
 end
 
-function slot0.talentPointProgressDone(slot0)
-	slot0._talentPointProgressTweenId = nil
+function var_0_0.talentPointProgressDone(arg_24_0)
+	arg_24_0._talentPointProgressTweenId = nil
 end
 
-function slot0.killTween(slot0, slot1)
-	if slot0[slot1] then
-		ZProj.TweenHelper.KillById(slot2)
+function var_0_0.killTween(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0[arg_25_1]
 
-		slot0[slot1] = nil
+	if var_25_0 then
+		ZProj.TweenHelper.KillById(var_25_0)
+
+		arg_25_0[arg_25_1] = nil
 	end
 end
 
-slot1 = 8
+local var_0_1 = 8
 
-function slot0.updateBadgeList(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateBadgeList(arg_26_0, arg_26_1)
+	if not arg_26_1 then
 		return
 	end
 
-	slot0._badgeList = slot1.badge2Score
-	slot0._badgeSeason = slot1.season
-	slot3 = {
-		[slot10] = true
-	}
-	slot4 = slot0._badgeList and #slot0._badgeList or 0
+	local var_26_0 = arg_26_1.season
 
-	for slot9 = 1, uv0 < slot4 and slot4 or uv0 do
-		slot0:refreshBadgeItemUI(slot2, slot0:getOrCreateBadgeItem(slot9), slot0._badgeList and slot0._badgeList[slot9])
+	arg_26_0._badgeList = arg_26_1.badge2Score
+	arg_26_0._badgeSeason = var_26_0
+
+	local var_26_1 = {}
+	local var_26_2 = arg_26_0._badgeList and #arg_26_0._badgeList or 0
+	local var_26_3 = var_26_2 > var_0_1 and var_26_2 or var_0_1
+
+	for iter_26_0 = 1, var_26_3 do
+		local var_26_4 = arg_26_0:getOrCreateBadgeItem(iter_26_0)
+		local var_26_5 = arg_26_0._badgeList and arg_26_0._badgeList[iter_26_0]
+
+		arg_26_0:refreshBadgeItemUI(var_26_0, var_26_4, var_26_5)
+
+		var_26_1[var_26_4] = true
 	end
 
-	if slot0._badgeItemTab then
-		for slot9, slot10 in pairs(slot0._badgeItemTab) do
-			if not slot3[slot10] then
-				gohelper.setActive(slot10.viewGO, false)
+	if arg_26_0._badgeItemTab then
+		for iter_26_1, iter_26_2 in pairs(arg_26_0._badgeItemTab) do
+			if not var_26_1[iter_26_2] then
+				gohelper.setActive(iter_26_2.viewGO, false)
 			end
 		end
 	end
 
-	if slot4 > 0 then
+	if var_26_2 > 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.ShowAchievement)
 	end
 end
 
-function slot0.refreshBadgeItemUI(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot2.viewGO, true)
-	gohelper.setActive(slot2.gonormal, slot3 ~= nil)
-	gohelper.setActive(slot2.goempty, slot3 == nil)
+function var_0_0.refreshBadgeItemUI(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	gohelper.setActive(arg_27_2.viewGO, true)
+	gohelper.setActive(arg_27_2.gonormal, arg_27_3 ~= nil)
+	gohelper.setActive(arg_27_2.goempty, arg_27_3 == nil)
 
-	if slot3 then
-		slot4 = RougeConfig.instance:getRougeBadgeCO(slot1, slot3[1])
-		slot2.txtscore.text = slot3[2]
-		slot2.txtname.text = slot4.name
+	if arg_27_3 then
+		local var_27_0 = RougeConfig.instance:getRougeBadgeCO(arg_27_1, arg_27_3[1])
 
-		UISpriteSetMgr.instance:setRouge3Sprite(slot2.imageicon, slot4.icon)
+		arg_27_2.txtscore.text = arg_27_3[2]
+		arg_27_2.txtname.text = var_27_0.name
+
+		UISpriteSetMgr.instance:setRouge3Sprite(arg_27_2.imageicon, var_27_0.icon)
 	end
 end
 
-function slot0.getOrCreateBadgeItem(slot0, slot1)
-	if not slot0._badgeItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._goachieveitem, "item_" .. tostring(slot1))
-		slot2.gonormal = gohelper.findChild(slot2.viewGO, "normal")
-		slot2.imageicon = gohelper.findChildImage(slot2.viewGO, "normal/#simage_achieveicon")
-		slot2.txtscore = gohelper.findChildText(slot2.viewGO, "normal/#txt_score")
-		slot2.txtname = gohelper.findChildText(slot2.viewGO, "normal/namebg/#txt_name")
-		slot2.goempty = gohelper.findChild(slot2.viewGO, "empty")
-		slot2.btnclick = gohelper.findChildButtonWithAudio(slot2.viewGO, "normal/btn_click")
+function var_0_0.getOrCreateBadgeItem(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._badgeItemTab[arg_28_1]
 
-		slot2.btnclick:AddClickListener(slot0._onClickBadgeItem, slot0, slot1)
+	if not var_28_0 then
+		var_28_0 = arg_28_0:getUserDataTb_()
+		var_28_0.viewGO = gohelper.cloneInPlace(arg_28_0._goachieveitem, "item_" .. tostring(arg_28_1))
+		var_28_0.gonormal = gohelper.findChild(var_28_0.viewGO, "normal")
+		var_28_0.imageicon = gohelper.findChildImage(var_28_0.viewGO, "normal/#simage_achieveicon")
+		var_28_0.txtscore = gohelper.findChildText(var_28_0.viewGO, "normal/#txt_score")
+		var_28_0.txtname = gohelper.findChildText(var_28_0.viewGO, "normal/namebg/#txt_name")
+		var_28_0.goempty = gohelper.findChild(var_28_0.viewGO, "empty")
+		var_28_0.btnclick = gohelper.findChildButtonWithAudio(var_28_0.viewGO, "normal/btn_click")
 
-		slot0._badgeItemTab[slot1] = slot2
+		var_28_0.btnclick:AddClickListener(arg_28_0._onClickBadgeItem, arg_28_0, arg_28_1)
+
+		arg_28_0._badgeItemTab[arg_28_1] = var_28_0
 	end
 
-	return slot2
+	return var_28_0
 end
 
-function slot0._onClickBadgeItem(slot0, slot1)
-	slot0:openBadgeTips(slot0._badgeSeason, slot0._badgeList[slot1] and slot2[1], slot1)
+function var_0_0._onClickBadgeItem(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0._badgeList[arg_29_1]
+	local var_29_1 = var_29_0 and var_29_0[1]
+
+	arg_29_0:openBadgeTips(arg_29_0._badgeSeason, var_29_1, arg_29_1)
 end
 
-function slot0.openBadgeTips(slot0, slot1, slot2, slot3)
-	if not RougeConfig.instance:getRougeBadgeCO(slot1, slot2) then
+function var_0_0.openBadgeTips(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	local var_30_0 = RougeConfig.instance:getRougeBadgeCO(arg_30_1, arg_30_2)
+
+	if not var_30_0 then
 		return
 	end
 
-	gohelper.setActive(slot0._gotips, true)
+	gohelper.setActive(arg_30_0._gotips, true)
 
-	slot0._txttips.text = slot4.desc
+	arg_30_0._txttips.text = var_30_0.desc
 
-	slot0:setBadgeTipsPos(slot3)
+	arg_30_0:setBadgeTipsPos(arg_30_3)
 end
 
-function slot0.setBadgeTipsPos(slot0, slot1)
-	if not slot0._badgeItemTab[slot1] then
+function var_0_0.setBadgeTipsPos(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0._badgeItemTab[arg_31_1]
+
+	if not var_31_0 then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._gotips.transform)
+	local var_31_1 = var_31_0.viewGO.transform
+	local var_31_2 = recthelper.rectToRelativeAnchorPos2(var_31_1.position, arg_31_0._gotipscontainer.transform)
 
-	slot7 = recthelper.getWidth(slot0._gotips.transform) / 2
-	slot8 = recthelper.getWidth(slot0._gotipscontainer.transform) / 2
+	ZProj.UGUIHelper.RebuildLayout(arg_31_0._gotips.transform)
 
-	recthelper.setAnchorX(slot0._gotips.transform, Mathf.Clamp(recthelper.rectToRelativeAnchorPos2(slot2.viewGO.transform.position, slot0._gotipscontainer.transform), -slot8 + slot7, slot8 - slot7))
+	local var_31_3 = recthelper.getWidth(arg_31_0._gotips.transform)
+	local var_31_4 = recthelper.getWidth(arg_31_0._gotipscontainer.transform)
+	local var_31_5 = var_31_3 / 2
+	local var_31_6 = var_31_4 / 2
+	local var_31_7 = Mathf.Clamp(var_31_2, -var_31_6 + var_31_5, var_31_6 - var_31_5)
+
+	recthelper.setAnchorX(arg_31_0._gotips.transform, var_31_7)
 end
 
-function slot0._onOpenViewFinishCallBack(slot0, slot1)
-	if slot1 == ViewName.RougeResultReView then
+function var_0_0._onOpenViewFinishCallBack(arg_32_0, arg_32_1)
+	if arg_32_1 == ViewName.RougeResultReView then
 		ViewMgr.instance:closeView(ViewName.RougeEndingThreeView)
 		ViewMgr.instance:closeView(ViewName.RougeResultView)
-		slot0:closeThis()
+		arg_32_0:closeThis()
 	end
 end
 
-function slot0.releaseAllBadgeItems(slot0)
-	if slot0._badgeItemTab then
-		for slot4, slot5 in ipairs(slot0._badgeItemTab) do
-			slot5.btnclick:RemoveClickListener()
+function var_0_0.releaseAllBadgeItems(arg_33_0)
+	if arg_33_0._badgeItemTab then
+		for iter_33_0, iter_33_1 in ipairs(arg_33_0._badgeItemTab) do
+			iter_33_1.btnclick:RemoveClickListener()
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_34_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:killTween("_totalScoreTweenId")
-	slot0:killTween("_rewardPointTweenId")
-	slot0:killTween("_talentPointTweenId")
-	slot0:killTween("_rewardPointProgressTweenId")
-	slot0:killTween("_talentPointProgressTweenId")
-	slot0:releaseAllBadgeItems()
+function var_0_0.onDestroyView(arg_35_0)
+	arg_35_0:killTween("_totalScoreTweenId")
+	arg_35_0:killTween("_rewardPointTweenId")
+	arg_35_0:killTween("_talentPointTweenId")
+	arg_35_0:killTween("_rewardPointProgressTweenId")
+	arg_35_0:killTween("_talentPointProgressTweenId")
+	arg_35_0:releaseAllBadgeItems()
 end
 
-return slot0
+return var_0_0

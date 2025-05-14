@@ -1,67 +1,70 @@
-module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillEliminationSwapMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillEliminationSwapMO", package.seeall)
 
-slot0 = class("CharacterSkillEliminationSwapMO", CharacterSkillMOBase)
+local var_0_0 = class("CharacterSkillEliminationSwapMO", CharacterSkillMOBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._x1 = -1
-	slot0._x2 = -1
-	slot0._y1 = -1
-	slot0._y2 = -1
+	arg_1_0._x1 = -1
+	arg_1_0._x2 = -1
+	arg_1_0._y1 = -1
+	arg_1_0._y2 = -1
 end
 
-function slot0.getReleaseParam(slot0)
-	slot0._releaseParam = string.format("%d_%d_%d_%d", slot0._x1 - 1, slot0._y1 - 1, slot0._x2 - 1, slot0._y2 - 1)
+function var_0_0.getReleaseParam(arg_2_0)
+	arg_2_0._releaseParam = string.format("%d_%d_%d_%d", arg_2_0._x1 - 1, arg_2_0._y1 - 1, arg_2_0._x2 - 1, arg_2_0._y2 - 1)
 
-	return slot0._releaseParam
+	return arg_2_0._releaseParam
 end
 
-function slot0.canRelease(slot0)
-	return slot0._x1 ~= -1 and slot0._y1 ~= -1 and slot0._x2 ~= -1 and slot0._y2 ~= -1
+function var_0_0.canRelease(arg_3_0)
+	return arg_3_0._x1 ~= -1 and arg_3_0._y1 ~= -1 and arg_3_0._x2 ~= -1 and arg_3_0._y2 ~= -1
 end
 
-function slot0.playAction(slot0, slot1, slot2)
-	slot0._cb = slot1
-	slot0._cbTarget = slot2
-	slot5, slot6 = EliminateChessItemController.instance:getChessItem(slot0._x1, slot0._y1):getGoPos()
-	slot7, slot8 = EliminateChessItemController.instance:getChessItem(slot0._x2, slot0._y2):getGoPos()
+function var_0_0.playAction(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._cb = arg_4_1
+	arg_4_0._cbTarget = arg_4_2
 
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, slot0._x1, slot0._y1, slot5, slot6, true, nil, )
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, slot0._x2, slot0._y2, slot7, slot8, true, slot0.playActionEnd, slot0)
+	local var_4_0 = EliminateChessItemController.instance:getChessItem(arg_4_0._x1, arg_4_0._y1)
+	local var_4_1 = EliminateChessItemController.instance:getChessItem(arg_4_0._x2, arg_4_0._y2)
+	local var_4_2, var_4_3 = var_4_0:getGoPos()
+	local var_4_4, var_4_5 = var_4_1:getGoPos()
+
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, arg_4_0._x1, arg_4_0._y1, var_4_2, var_4_3, true, nil, nil)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, arg_4_0._x2, arg_4_0._y2, var_4_4, var_4_5, true, arg_4_0.playActionEnd, arg_4_0)
 end
 
-function slot0.playActionEnd(slot0)
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, nil, , , , false, nil, )
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, nil, , , , false, nil, )
-	EliminateChessController.instance:exchangeCellShow(slot0._x1, slot0._y1, slot0._x2, slot0._y2, 0)
+function var_0_0.playActionEnd(arg_5_0)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, nil, nil, nil, nil, false, nil, nil)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, nil, nil, nil, nil, false, nil, nil)
+	EliminateChessController.instance:exchangeCellShow(arg_5_0._x1, arg_5_0._y1, arg_5_0._x2, arg_5_0._y2, 0)
 
-	if slot0._cb ~= nil then
-		slot0._cb(slot0._cbTarget)
+	if arg_5_0._cb ~= nil then
+		arg_5_0._cb(arg_5_0._cbTarget)
 	else
-		EliminateChessController.instance:exchangeCellShow(slot0._x2, slot0._y2, slot0._x1, slot0._y1, 0)
+		EliminateChessController.instance:exchangeCellShow(arg_5_0._x2, arg_5_0._y2, arg_5_0._x1, arg_5_0._y1, 0)
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.WarChessCharacterSkillCancel, false)
 	end
 
-	slot0._cb = nil
+	arg_5_0._cb = nil
 end
 
-function slot0.cancelRelease(slot0)
-	slot0._cb = nil
+function var_0_0.cancelRelease(arg_6_0)
+	arg_6_0._cb = nil
 end
 
-function slot0.setSkillParam(slot0, ...)
-	slot1 = {
+function var_0_0.setSkillParam(arg_7_0, ...)
+	local var_7_0 = {
 		...
 	}
 
-	if slot0._x1 == -1 then
-		slot0._x1 = slot1[1]
-		slot0._y1 = slot1[2]
+	if arg_7_0._x1 == -1 then
+		arg_7_0._x1 = var_7_0[1]
+		arg_7_0._y1 = var_7_0[2]
 	else
-		slot0._x2 = slot1[1]
-		slot0._y2 = slot1[2]
+		arg_7_0._x2 = var_7_0[1]
+		arg_7_0._y2 = var_7_0[2]
 	end
 end
 
-return slot0
+return var_0_0

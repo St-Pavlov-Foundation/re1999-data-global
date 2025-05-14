@@ -1,95 +1,109 @@
-module("modules.logic.room.view.record.RoomCritterHandBookBackView", package.seeall)
+﻿module("modules.logic.room.view.record.RoomCritterHandBookBackView", package.seeall)
 
-slot0 = class("RoomCritterHandBookBackView", BaseView)
+local var_0_0 = class("RoomCritterHandBookBackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "bg/#scroll_view")
-	slot0._simageback = gohelper.findChildSingleImage(slot0.viewGO, "bg/#go_show/#simage_back")
-	slot0._simageutm = gohelper.findChildSingleImage(slot0.viewGO, "bg/#go_show/#simage_utm")
-	slot0._gobackicon = gohelper.findChild(slot0.viewGO, "bg/#go_show/#simage_back/icon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "bg/#go_show/#txt_name")
-	slot0._gouse = gohelper.findChild(slot0.viewGO, "bg/#go_use")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "bg/#go_empty")
-	slot0._goshow = gohelper.findChild(slot0.viewGO, "bg/#go_show")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btn_confirm")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btn_close")
-	slot0._btnempty = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/maskbg")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "bg/txt_title")
-	slot0._scrollview = slot0.viewContainer:getScrollView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "bg/#scroll_view")
+	arg_1_0._simageback = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#go_show/#simage_back")
+	arg_1_0._simageutm = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#go_show/#simage_utm")
+	arg_1_0._gobackicon = gohelper.findChild(arg_1_0.viewGO, "bg/#go_show/#simage_back/icon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "bg/#go_show/#txt_name")
+	arg_1_0._gouse = gohelper.findChild(arg_1_0.viewGO, "bg/#go_use")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "bg/#go_empty")
+	arg_1_0._goshow = gohelper.findChild(arg_1_0.viewGO, "bg/#go_show")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_confirm")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_close")
+	arg_1_0._btnempty = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/maskbg")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "bg/txt_title")
+	arg_1_0._scrollview = arg_1_0.viewContainer:getScrollView()
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnempty:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, slot0.refreshUI, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnempty:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, arg_2_0.refreshUI, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnempty:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
-	slot0:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, slot0.refreshUI, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnempty:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, arg_3_0.refreshUI, arg_3_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	CritterRpc.instance:sendSetCritterBookBackgroundRequest(RoomHandBookModel.instance:getSelectMo().id, RoomHandBookBackModel.instance:getSelectMo():isEmpty() and 0 or slot2.id)
+function var_0_0._btnconfirmOnClick(arg_5_0)
+	local var_5_0 = RoomHandBookModel.instance:getSelectMo().id
+	local var_5_1 = RoomHandBookBackModel.instance:getSelectMo()
+	local var_5_2 = var_5_1:isEmpty() and 0 or var_5_1.id
+
+	CritterRpc.instance:sendSetCritterBookBackgroundRequest(var_5_0, var_5_2)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.updateView(slot0, slot1)
-	slot2 = slot1.id
-	slot3 = slot1.backgroundId
+function var_0_0.updateView(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.id
+	local var_8_1 = arg_8_1.backgroundId
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	RoomHandBookBackListModel.instance:init()
-	slot0:refreshUI()
-	slot0._scrollview:selectCell(RoomHandBookBackListModel.instance:getSelectIndex(), true)
+	arg_9_0:refreshUI()
+
+	local var_9_0 = RoomHandBookBackListModel.instance:getSelectIndex()
+
+	arg_9_0._scrollview:selectCell(var_9_0, true)
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = RoomHandBookBackModel.instance:getSelectMo() and slot1:isEmpty()
+function var_0_0.refreshUI(arg_10_0)
+	local var_10_0 = RoomHandBookBackModel.instance:getSelectMo()
+	local var_10_1 = var_10_0 and var_10_0:isEmpty()
 
-	gohelper.setActive(slot0._goempty, slot2)
-	gohelper.setActive(slot0._goshow, not slot2)
+	gohelper.setActive(arg_10_0._goempty, var_10_1)
+	gohelper.setActive(arg_10_0._goshow, not var_10_1)
 
-	if slot1 and not slot1:isEmpty() then
-		gohelper.setActive(slot0._gobackicon, false)
-		slot0._simageutm:LoadImage(ResUrl.getPropItemIcon(slot1:getConfig().icon))
+	if var_10_0 and not var_10_0:isEmpty() then
+		gohelper.setActive(arg_10_0._gobackicon, false)
+		arg_10_0._simageutm:LoadImage(ResUrl.getPropItemIcon(var_10_0:getConfig().icon))
 
-		slot0._txtname.text = slot1:getConfig().name
+		arg_10_0._txtname.text = var_10_0:getConfig().name
 	else
-		gohelper.setActive(slot0._gobackicon, true)
+		gohelper.setActive(arg_10_0._gobackicon, true)
 	end
 
-	if RoomHandBookModel.instance:getSelectMo() then
-		slot0._txttitle.text = string.format(luaLang("critterhandbookbacktitle"), slot3:getConfig().name)
+	local var_10_2 = RoomHandBookModel.instance:getSelectMo()
+
+	if var_10_2 then
+		arg_10_0._txttitle.text = string.format(luaLang("critterhandbookbacktitle"), var_10_2:getConfig().name)
 	end
 
-	slot4 = slot1:checkIsUse()
+	local var_10_3 = var_10_0:checkIsUse()
 
-	gohelper.setActive(slot0._gouse, slot4)
-	gohelper.setActive(slot0._btnconfirm.gameObject, not slot4)
+	gohelper.setActive(arg_10_0._gouse, var_10_3)
+	gohelper.setActive(arg_10_0._btnconfirm.gameObject, not var_10_3)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

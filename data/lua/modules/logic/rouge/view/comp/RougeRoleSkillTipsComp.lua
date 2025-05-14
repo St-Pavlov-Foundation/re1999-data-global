@@ -1,60 +1,66 @@
-module("modules.logic.rouge.view.comp.RougeRoleSkillTipsComp", package.seeall)
+﻿module("modules.logic.rouge.view.comp.RougeRoleSkillTipsComp", package.seeall)
 
-slot0 = class("RougeRoleSkillTipsComp", LuaCompBase)
+local var_0_0 = class("RougeRoleSkillTipsComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._skillicon1 = slot0:_addSkillItem(gohelper.findChild(slot0._go, "skillicon1"), slot0._onSkill1Click, slot0)
-	slot0._skillicon2 = slot0:_addSkillItem(gohelper.findChild(slot0._go, "skillicon2"), slot0._onSkill2Click, slot0)
-	slot0._click = gohelper.findChildButtonWithAudio(slot0._go, "block")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._skillicon1 = arg_1_0:_addSkillItem(gohelper.findChild(arg_1_0._go, "skillicon1"), arg_1_0._onSkill1Click, arg_1_0)
+	arg_1_0._skillicon2 = arg_1_0:_addSkillItem(gohelper.findChild(arg_1_0._go, "skillicon2"), arg_1_0._onSkill2Click, arg_1_0)
+	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0._go, "block")
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
 end
 
-function slot0.setClickCallback(slot0, slot1, slot2)
-	slot0._callback = slot1
-	slot0._target = slot2
+function var_0_0.setClickCallback(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._callback = arg_2_1
+	arg_2_0._target = arg_2_2
 end
 
-function slot0._onClick(slot0)
-	if slot0._callback then
-		slot0._callback(slot0._target)
+function var_0_0._onClick(arg_3_0)
+	if arg_3_0._callback then
+		arg_3_0._callback(arg_3_0._target)
 	end
 end
 
-function slot0._onSkill1Click(slot0)
-	slot0._displaySkillItemComp:refresh(slot0._skillicon1:getSkillCO())
-	slot0:_setSkillIconSelected(true)
+function var_0_0._onSkill1Click(arg_4_0)
+	arg_4_0._displaySkillItemComp:refresh(arg_4_0._skillicon1:getSkillCO())
+	arg_4_0:_setSkillIconSelected(true)
 	RougeHeroGroupModel.instance:rougeSaveCurGroup()
 end
 
-function slot0._onSkill2Click(slot0)
-	slot0._displaySkillItemComp:refresh(slot0._skillicon2:getSkillCO())
-	slot0:_setSkillIconSelected(false)
+function var_0_0._onSkill2Click(arg_5_0)
+	arg_5_0._displaySkillItemComp:refresh(arg_5_0._skillicon2:getSkillCO())
+	arg_5_0:_setSkillIconSelected(false)
 	RougeHeroGroupModel.instance:rougeSaveCurGroup()
 end
 
-function slot0._setSkillIconSelected(slot0, slot1)
-	slot0._skillicon1:setSelected(slot1)
-	slot0._skillicon2:setSelected(not slot1)
+function var_0_0._setSkillIconSelected(arg_6_0, arg_6_1)
+	arg_6_0._skillicon1:setSelected(arg_6_1)
+	arg_6_0._skillicon2:setSelected(not arg_6_1)
 end
 
-function slot0._addSkillItem(slot0, slot1, slot2, slot3)
-	slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(slot1, RougeRoleSkillItemComp)
+function var_0_0._addSkillItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_1, RougeRoleSkillItemComp)
 
-	slot4:setClickCallback(slot2, slot3)
+	var_7_0:setClickCallback(arg_7_2, arg_7_3)
 
-	return slot4
+	return var_7_0
 end
 
-function slot0.refresh(slot0, slot1, slot2)
-	slot0._displaySkillItemComp = slot2
+function var_0_0.refresh(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._displaySkillItemComp = arg_8_2
 
-	for slot7, slot8 in pairs(slot1) do
-		if lua_skill.configDict[slot8] then
-			if slot0["_skillicon" .. slot7] then
-				slot10:refresh(slot9)
-				slot10:setSelected(slot2:getSkillCO() == slot9)
+	local var_8_0 = arg_8_2:getSkillCO()
+
+	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
+		local var_8_1 = lua_skill.configDict[iter_8_1]
+
+		if var_8_1 then
+			local var_8_2 = arg_8_0["_skillicon" .. iter_8_0]
+
+			if var_8_2 then
+				var_8_2:refresh(var_8_1)
+				var_8_2:setSelected(var_8_0 == var_8_1)
 			else
 				break
 			end
@@ -62,8 +68,8 @@ function slot0.refresh(slot0, slot1, slot2)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0._click:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

@@ -1,8 +1,9 @@
-module("modules.logic.fight.controller.entitymohelper.FightEntityMoCompareHelper", package.seeall)
+﻿module("modules.logic.fight.controller.entitymohelper.FightEntityMoCompareHelper", package.seeall)
 
-slot0 = _M
-slot0.DeepMaxStack = 100
-slot0.CompareFilterAttrDict = {
+local var_0_0 = _M
+
+var_0_0.DeepMaxStack = 100
+var_0_0.CompareFilterAttrDict = {
 	stanceDic = true,
 	playCardExPoint = true,
 	buffFeaturesSplit = true,
@@ -19,11 +20,11 @@ slot0.CompareFilterAttrDict = {
 	_moveCardAddExpoint = true
 }
 
-function slot0.compareEntityMo(slot0, slot1)
-	uv0.initCompareHandleDict()
+function var_0_0.compareEntityMo(arg_1_0, arg_1_1)
+	var_0_0.initCompareHandleDict()
 
-	for slot5, slot6 in pairs(slot0) do
-		if not uv0.CompareFilterAttrDict[slot5] and not uv0.compareHandleDict[slot5] or uv0.defaultTableDeepCompare(slot6, slot1[slot5]) then
+	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
+		if not var_0_0.CompareFilterAttrDict[iter_1_0] and not (var_0_0.compareHandleDict[iter_1_0] or var_0_0.defaultTableDeepCompare)(iter_1_1, arg_1_1[iter_1_0]) then
 			return false
 		end
 	end
@@ -31,67 +32,69 @@ function slot0.compareEntityMo(slot0, slot1)
 	return true
 end
 
-function slot0.initCompareHandleDict()
-	if not uv0.compareHandleDict then
-		uv0.compareHandleDict = {
-			buffModel = uv0.defaultTableDeepCompare,
-			_powerInfos = uv0.defaultTableDeepCompare,
-			summonedInfo = uv0.summonedInfoCompare,
-			attrMO = uv0.attrMoCompare
+function var_0_0.initCompareHandleDict()
+	if not var_0_0.compareHandleDict then
+		var_0_0.compareHandleDict = {
+			buffModel = var_0_0.defaultTableDeepCompare,
+			_powerInfos = var_0_0.defaultTableDeepCompare,
+			summonedInfo = var_0_0.summonedInfoCompare,
+			attrMO = var_0_0.attrMoCompare
 		}
 	end
 end
 
-function slot0.defaultCompare(slot0, slot1)
-	if slot0 == slot1 then
+function var_0_0.defaultCompare(arg_3_0, arg_3_1)
+	if arg_3_0 == arg_3_1 then
 		return true
 	end
 
-	if not slot0 or not slot1 then
+	if not arg_3_0 or not arg_3_1 then
 		return false
 	end
 
-	if type(slot0) ~= type(slot1) then
+	local var_3_0 = type(arg_3_0)
+
+	if var_3_0 ~= type(arg_3_1) then
 		return false
 	end
 
-	if slot2 == "table" then
-		return uv0.defaultTableCompare(slot0, slot1)
+	if var_3_0 == "table" then
+		return var_0_0.defaultTableCompare(arg_3_0, arg_3_1)
 	end
 
-	return slot0 == slot1
+	return arg_3_0 == arg_3_1
 end
 
-slot0.CompareStatus = {
+var_0_0.CompareStatus = {
 	CompareFinish = 2,
 	WaitCompare = 1
 }
 
-function slot0._innerTableCompare(slot0, slot1)
-	if slot0 == slot1 then
-		return uv0.CompareStatus.CompareFinish, true
+function var_0_0._innerTableCompare(arg_4_0, arg_4_1)
+	if arg_4_0 == arg_4_1 then
+		return var_0_0.CompareStatus.CompareFinish, true
 	end
 
-	if not slot0 or not slot1 then
-		return uv0.CompareStatus.CompareFinish, false
+	if not arg_4_0 or not arg_4_1 then
+		return var_0_0.CompareStatus.CompareFinish, false
 	end
 
-	if type(slot0) ~= type(slot1) then
-		return uv0.CompareStatus.CompareFinish, false
+	if type(arg_4_0) ~= type(arg_4_1) then
+		return var_0_0.CompareStatus.CompareFinish, false
 	end
 
-	return uv0.CompareStatus.WaitCompare, true
+	return var_0_0.CompareStatus.WaitCompare, true
 end
 
-function slot0.defaultTableCompare(slot0, slot1)
-	slot2, slot3 = uv0._innerTableCompare(slot0, slot1)
+function var_0_0.defaultTableCompare(arg_5_0, arg_5_1)
+	local var_5_0, var_5_1 = var_0_0._innerTableCompare(arg_5_0, arg_5_1)
 
-	if slot2 == uv0.CompareStatus.CompareFinish then
-		return slot3
+	if var_5_0 == var_0_0.CompareStatus.CompareFinish then
+		return var_5_1
 	end
 
-	for slot7, slot8 in pairs(slot1) do
-		if not uv0.CompareFilterAttrDict[slot7] and slot8 ~= slot0[slot7] then
+	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
+		if not var_0_0.CompareFilterAttrDict[iter_5_0] and iter_5_1 ~= arg_5_0[iter_5_0] then
 			return false
 		end
 	end
@@ -99,33 +102,42 @@ function slot0.defaultTableCompare(slot0, slot1)
 	return true
 end
 
-function slot0.defaultTableDeepCompare(slot0, slot1, slot2, slot3)
-	if uv0.DeepMaxStack < (slot2 or 0) then
+function var_0_0.defaultTableDeepCompare(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_2 = arg_6_2 or 0
+
+	if arg_6_2 > var_0_0.DeepMaxStack then
 		logError("stackoverflow")
 
-		return true, slot3
+		return true, arg_6_3
 	end
 
-	slot4, slot5 = uv0._innerTableCompare(slot0, slot1)
+	local var_6_0, var_6_1 = var_0_0._innerTableCompare(arg_6_0, arg_6_1)
 
-	if slot4 == uv0.CompareStatus.CompareFinish then
-		return slot5, slot3
+	if var_6_0 == var_0_0.CompareStatus.CompareFinish then
+		return var_6_1, arg_6_3
 	end
 
-	for slot9, slot10 in pairs(slot0) do
-		if not uv0.CompareFilterAttrDict[slot9] then
-			if type(slot10) ~= type(slot1[slot9]) then
-				return false, slot3 and slot3 .. slot9 or slot9
+	for iter_6_0, iter_6_1 in pairs(arg_6_0) do
+		local var_6_2 = arg_6_3 and arg_6_3 .. iter_6_0 or iter_6_0
+
+		if not var_0_0.CompareFilterAttrDict[iter_6_0] then
+			local var_6_3 = arg_6_1[iter_6_0]
+			local var_6_4 = type(iter_6_1)
+
+			if var_6_4 ~= type(var_6_3) then
+				return false, var_6_2
 			end
 
-			if slot13 == "table" then
-				slot15, slot11 = uv0.defaultTableDeepCompare(slot10, slot12, slot2 + 1, slot11)
+			if var_6_4 == "table" then
+				local var_6_5, var_6_6 = var_0_0.defaultTableDeepCompare(iter_6_1, var_6_3, arg_6_2 + 1, var_6_2)
 
-				if not slot15 then
-					return false, slot11
+				var_6_2 = var_6_6
+
+				if not var_6_5 then
+					return false, var_6_2
 				end
-			elseif slot10 ~= slot12 then
-				return false, slot11
+			elseif iter_6_1 ~= var_6_3 then
+				return false, var_6_2
 			end
 		end
 	end
@@ -133,36 +145,39 @@ function slot0.defaultTableDeepCompare(slot0, slot1, slot2, slot3)
 	return true
 end
 
-function slot0.summonedInfoCompare(slot0, slot1)
-	slot2, slot3 = uv0._innerTableCompare(slot0, slot1)
+function var_0_0.summonedInfoCompare(arg_7_0, arg_7_1)
+	local var_7_0, var_7_1 = var_0_0._innerTableCompare(arg_7_0, arg_7_1)
 
-	if slot2 == uv0.CompareStatus.CompareFinish then
-		return slot3
+	if var_7_0 == var_0_0.CompareStatus.CompareFinish then
+		return var_7_1
 	end
 
-	return uv0.defaultTableDeepCompare(slot0.getDataDic and slot0:getDataDic(), slot1.getDataDic and slot1:getDataDic())
+	local var_7_2 = arg_7_0.getDataDic and arg_7_0:getDataDic()
+	local var_7_3 = arg_7_1.getDataDic and arg_7_1:getDataDic()
+
+	return var_0_0.defaultTableDeepCompare(var_7_2, var_7_3)
 end
 
-function slot0.attrMoCompare(slot0, slot1)
-	slot2, slot3 = uv0._innerTableCompare(slot0, slot1)
+function var_0_0.attrMoCompare(arg_8_0, arg_8_1)
+	local var_8_0, var_8_1 = var_0_0._innerTableCompare(arg_8_0, arg_8_1)
 
-	if slot2 == uv0.CompareStatus.CompareFinish then
-		return slot3
+	if var_8_0 == var_0_0.CompareStatus.CompareFinish then
+		return var_8_1
 	end
 
-	if slot0.hp ~= slot1.hp then
+	if arg_8_0.hp ~= arg_8_1.hp then
 		return false
 	end
 
-	if slot0.multiHpIdx ~= slot1.multiHpIdx then
+	if arg_8_0.multiHpIdx ~= arg_8_1.multiHpIdx then
 		return false
 	end
 
-	if slot0.multiHpNum ~= slot1.multiHpNum then
+	if arg_8_0.multiHpNum ~= arg_8_1.multiHpNum then
 		return false
 	end
 
 	return true
 end
 
-return slot0
+return var_0_0

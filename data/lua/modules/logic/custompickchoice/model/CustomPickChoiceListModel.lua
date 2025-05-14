@@ -1,115 +1,123 @@
-module("modules.logic.custompickchoice.model.CustomPickChoiceListModel", package.seeall)
+﻿module("modules.logic.custompickchoice.model.CustomPickChoiceListModel", package.seeall)
 
-slot0 = class("CustomPickChoiceListModel", BaseModel)
+local var_0_0 = class("CustomPickChoiceListModel", BaseModel)
 
-function slot1(slot0, slot1)
-	if HeroModel.instance:getByHeroId(slot0.id) ~= nil ~= (HeroModel.instance:getByHeroId(slot1.id) ~= nil) then
-		return slot5
+local function var_0_1(arg_1_0, arg_1_1)
+	local var_1_0 = HeroModel.instance:getByHeroId(arg_1_0.id)
+	local var_1_1 = HeroModel.instance:getByHeroId(arg_1_1.id)
+	local var_1_2 = var_1_0 ~= nil
+	local var_1_3 = var_1_1 ~= nil
+
+	if var_1_2 ~= var_1_3 then
+		return var_1_3
 	end
 
-	if (slot2 and slot2.exSkillLevel or -1) ~= (slot3 and slot3.exSkillLevel or -1) then
-		if slot6 == 5 or slot7 == 5 then
-			return slot6 ~= 5
+	local var_1_4 = var_1_0 and var_1_0.exSkillLevel or -1
+	local var_1_5 = var_1_1 and var_1_1.exSkillLevel or -1
+
+	if var_1_4 ~= var_1_5 then
+		if var_1_4 == 5 or var_1_5 == 5 then
+			return var_1_4 ~= 5
 		end
 
-		return slot7 < slot6
+		return var_1_5 < var_1_4
 	end
 
-	return slot1.id < slot0.id
+	return arg_1_0.id > arg_1_1.id
 end
 
-function slot0.onInit(slot0)
-	slot0._selectIdList = {}
-	slot0._selectIdMap = {}
-	slot0.allHeroList = {}
-	slot0.noGainList = {}
-	slot0.ownList = {}
-	slot0.maxSelectCount = nil
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._selectIdList = {}
+	arg_2_0._selectIdMap = {}
+	arg_2_0.allHeroList = {}
+	arg_2_0.noGainList = {}
+	arg_2_0.ownList = {}
+	arg_2_0.maxSelectCount = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:onInit()
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot0:onInit()
-	slot0:initList(slot1)
+function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:onInit()
+	arg_4_0:initList(arg_4_1)
 
-	slot0.maxSelectCount = slot2 or 1
+	arg_4_0.maxSelectCount = arg_4_2 or 1
 end
 
-function slot0.initList(slot0, slot1)
-	slot0.noGainList = {}
-	slot0.ownList = {}
-	slot0.allHeroList = {}
+function var_0_0.initList(arg_5_0, arg_5_1)
+	arg_5_0.noGainList = {}
+	arg_5_0.ownList = {}
+	arg_5_0.allHeroList = {}
 
-	if not slot1 then
+	if not arg_5_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = SummonCustomPickChoiceMO.New()
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = SummonCustomPickChoiceMO.New()
 
-		slot7:init(slot6)
+		var_5_0:init(iter_5_1)
 
-		if slot7:hasHero() then
-			table.insert(slot0.ownList, slot7)
+		if var_5_0:hasHero() then
+			table.insert(arg_5_0.ownList, var_5_0)
 		else
-			table.insert(slot0.noGainList, slot7)
+			table.insert(arg_5_0.noGainList, var_5_0)
 		end
 
-		table.insert(slot0.allHeroList, slot7)
+		table.insert(arg_5_0.allHeroList, var_5_0)
 	end
 
-	table.sort(slot0.ownList, uv0)
-	table.sort(slot0.noGainList, uv0)
+	table.sort(arg_5_0.ownList, var_0_1)
+	table.sort(arg_5_0.noGainList, var_0_1)
 end
 
-function slot0.setSelectId(slot0, slot1)
-	if not slot0._selectIdList then
+function var_0_0.setSelectId(arg_6_0, arg_6_1)
+	if not arg_6_0._selectIdList then
 		return
 	end
 
-	if slot0._selectIdMap[slot1] then
-		slot0._selectIdMap[slot1] = nil
+	if arg_6_0._selectIdMap[arg_6_1] then
+		arg_6_0._selectIdMap[arg_6_1] = nil
 
-		tabletool.removeValue(slot0._selectIdList, slot1)
+		tabletool.removeValue(arg_6_0._selectIdList, arg_6_1)
 	else
-		slot0._selectIdMap[slot1] = true
+		arg_6_0._selectIdMap[arg_6_1] = true
 
-		table.insert(slot0._selectIdList, slot1)
+		table.insert(arg_6_0._selectIdList, arg_6_1)
 	end
 end
 
-function slot0.clearAllSelect(slot0)
-	slot0._selectIdMap = {}
-	slot0._selectIdList = {}
+function var_0_0.clearAllSelect(arg_7_0)
+	arg_7_0._selectIdMap = {}
+	arg_7_0._selectIdList = {}
 end
 
-function slot0.getSelectIds(slot0)
-	return slot0._selectIdList
+function var_0_0.getSelectIds(arg_8_0)
+	return arg_8_0._selectIdList
 end
 
-function slot0.getSelectCount(slot0)
-	if slot0._selectIdList then
-		return #slot0._selectIdList
+function var_0_0.getSelectCount(arg_9_0)
+	if arg_9_0._selectIdList then
+		return #arg_9_0._selectIdList
 	end
 
 	return 0
 end
 
-function slot0.getMaxSelectCount(slot0)
-	return slot0.maxSelectCount
+function var_0_0.getMaxSelectCount(arg_10_0)
+	return arg_10_0.maxSelectCount
 end
 
-function slot0.isHeroIdSelected(slot0, slot1)
-	if slot0._selectIdMap then
-		return slot0._selectIdMap[slot1] ~= nil
+function var_0_0.isHeroIdSelected(arg_11_0, arg_11_1)
+	if arg_11_0._selectIdMap then
+		return arg_11_0._selectIdMap[arg_11_1] ~= nil
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

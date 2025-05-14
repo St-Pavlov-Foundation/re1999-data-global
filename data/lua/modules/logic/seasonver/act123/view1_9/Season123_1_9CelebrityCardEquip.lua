@@ -1,317 +1,328 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9CelebrityCardEquip", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9CelebrityCardEquip", package.seeall)
 
-slot0 = class("Season123_1_9CelebrityCardEquip", LuaCompBase)
+local var_0_0 = class("Season123_1_9CelebrityCardEquip", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0.viewGO = slot1
-	slot0._gorare6 = gohelper.findChild(slot0.viewGO, "#go_rare6")
-	slot0._gorare5 = gohelper.findChild(slot0.viewGO, "#go_rare5")
-	slot0._gorare4 = gohelper.findChild(slot0.viewGO, "#go_rare4")
-	slot0._gorare3 = gohelper.findChild(slot0.viewGO, "#go_rare3")
-	slot0._gorare2 = gohelper.findChild(slot0.viewGO, "#go_rare2")
-	slot0._gorare1 = gohelper.findChild(slot0.viewGO, "#go_rare1")
-	slot0._gobtnclick = gohelper.findChild(slot0.viewGO, "btn_click")
-	slot0._gotag = gohelper.findChild(slot0.viewGO, "tag")
-	slot0._gotype1 = gohelper.findChild(slot0.viewGO, "tag/#go_type1")
-	slot0._imageType1 = gohelper.findChildImage(slot0.viewGO, "tag/#go_type1")
-	slot0._gotype2 = gohelper.findChild(slot0.viewGO, "tag/#go_type2")
-	slot0._gotype3 = gohelper.findChild(slot0.viewGO, "tag/#go_type3")
-	slot0._gotype4 = gohelper.findChild(slot0.viewGO, "tag/#go_type4")
-	slot0._goindexLimit = gohelper.findChild(slot0.viewGO, "#go_indexLimit")
-	slot0._golimit1 = gohelper.findChild(slot0.viewGO, "#go_indexLimit/#go_limit1")
-	slot0._golimit2 = gohelper.findChild(slot0.viewGO, "#go_indexLimit/#go_limit2")
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._gorare6 = gohelper.findChild(arg_1_0.viewGO, "#go_rare6")
+	arg_1_0._gorare5 = gohelper.findChild(arg_1_0.viewGO, "#go_rare5")
+	arg_1_0._gorare4 = gohelper.findChild(arg_1_0.viewGO, "#go_rare4")
+	arg_1_0._gorare3 = gohelper.findChild(arg_1_0.viewGO, "#go_rare3")
+	arg_1_0._gorare2 = gohelper.findChild(arg_1_0.viewGO, "#go_rare2")
+	arg_1_0._gorare1 = gohelper.findChild(arg_1_0.viewGO, "#go_rare1")
+	arg_1_0._gobtnclick = gohelper.findChild(arg_1_0.viewGO, "btn_click")
+	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "tag")
+	arg_1_0._gotype1 = gohelper.findChild(arg_1_0.viewGO, "tag/#go_type1")
+	arg_1_0._imageType1 = gohelper.findChildImage(arg_1_0.viewGO, "tag/#go_type1")
+	arg_1_0._gotype2 = gohelper.findChild(arg_1_0.viewGO, "tag/#go_type2")
+	arg_1_0._gotype3 = gohelper.findChild(arg_1_0.viewGO, "tag/#go_type3")
+	arg_1_0._gotype4 = gohelper.findChild(arg_1_0.viewGO, "tag/#go_type4")
+	arg_1_0._goindexLimit = gohelper.findChild(arg_1_0.viewGO, "#go_indexLimit")
+	arg_1_0._golimit1 = gohelper.findChild(arg_1_0.viewGO, "#go_indexLimit/#go_limit1")
+	arg_1_0._golimit2 = gohelper.findChild(arg_1_0.viewGO, "#go_indexLimit/#go_limit2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-slot0.MaxRare = 6
-slot0.MaxLimitCount = 2
+var_0_0.MaxRare = 6
+var_0_0.MaxLimitCount = 2
 
-function slot0._editableInitView(slot0)
-	slot0._rareGoMap = {}
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._rareGoMap = {}
 
-	for slot4 = 1, uv0.MaxRare do
-		slot0._rareGoMap[slot4] = slot0:createRareMap(slot0["_gorare" .. tostring(slot4)])
+	for iter_2_0 = 1, var_0_0.MaxRare do
+		arg_2_0._rareGoMap[iter_2_0] = arg_2_0:createRareMap(arg_2_0["_gorare" .. tostring(iter_2_0)])
 	end
 
-	slot0._darkMaskColor = "#ffffff"
-	slot0._showTag = false
-	slot0._showProbability = false
-	slot0._showNewFlag = false
-	slot0._showNewFlag2 = false
-	slot0._showIndexLimit = false
+	arg_2_0._darkMaskColor = "#ffffff"
+	arg_2_0._showTag = false
+	arg_2_0._showProbability = false
+	arg_2_0._showNewFlag = false
+	arg_2_0._showNewFlag2 = false
+	arg_2_0._showIndexLimit = false
 end
 
-function slot0.onDestroy(slot0)
-	slot0:disposeUI()
+function var_0_0.onDestroy(arg_3_0)
+	arg_3_0:disposeUI()
 end
 
-function slot0.checkInitBtnClick(slot0)
-	if not slot0._btnclick then
-		slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_click")
+function var_0_0.checkInitBtnClick(arg_4_0)
+	if not arg_4_0._btnclick then
+		arg_4_0._btnclick = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "btn_click")
 
-		slot0._btnclick:AddClickListener(slot0.onClickCall, slot0)
-	end
-end
-
-function slot0.checkInitLongPress(slot0)
-	if not slot0._btnClickLongPrees then
-		slot0._btnClickLongPrees = SLFramework.UGUI.UILongPressListener.Get(slot0._gobtnclick)
-
-		slot0._btnClickLongPrees:AddLongPressListener(slot0.onLongPressCall, slot0)
+		arg_4_0._btnclick:AddClickListener(arg_4_0.onClickCall, arg_4_0)
 	end
 end
 
-function slot0.disposeUI(slot0)
-	if not slot0._isDisposed then
-		for slot4, slot5 in pairs(slot0._rareGoMap) do
-			if not gohelper.isNil(slot5.simageIcon) then
-				slot5.simageIcon:UnLoadImage()
+function var_0_0.checkInitLongPress(arg_5_0)
+	if not arg_5_0._btnClickLongPrees then
+		arg_5_0._btnClickLongPrees = SLFramework.UGUI.UILongPressListener.Get(arg_5_0._gobtnclick)
+
+		arg_5_0._btnClickLongPrees:AddLongPressListener(arg_5_0.onLongPressCall, arg_5_0)
+	end
+end
+
+function var_0_0.disposeUI(arg_6_0)
+	if not arg_6_0._isDisposed then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._rareGoMap) do
+			if not gohelper.isNil(iter_6_1.simageIcon) then
+				iter_6_1.simageIcon:UnLoadImage()
 			end
 
-			if not gohelper.isNil(slot5.simageSignature) then
-				slot5.simageSignature:UnLoadImage()
+			if not gohelper.isNil(iter_6_1.simageSignature) then
+				iter_6_1.simageSignature:UnLoadImage()
 			end
 		end
 
-		if slot0._btnClickLongPrees then
-			slot0._btnClickLongPrees:RemoveLongPressListener()
+		if arg_6_0._btnClickLongPrees then
+			arg_6_0._btnClickLongPrees:RemoveLongPressListener()
 
-			slot0._btnClickLongPrees = nil
+			arg_6_0._btnClickLongPrees = nil
 		end
 
-		if slot0._btnclick then
-			slot0._btnclick:RemoveClickListener()
+		if arg_6_0._btnclick then
+			arg_6_0._btnclick:RemoveClickListener()
 
-			slot0._btnclick = nil
+			arg_6_0._btnclick = nil
 		end
 
-		slot0._isDisposed = true
+		arg_6_0._isDisposed = true
 	end
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0.itemId = slot1
+function var_0_0.updateData(arg_7_0, arg_7_1)
+	arg_7_0.itemId = arg_7_1
 
-	slot0:refreshUI()
+	arg_7_0:refreshUI()
 end
 
-function slot0.createRareMap(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goSelfChoice = gohelper.findChild(slot1, "#go_rare6")
-	slot2.imageCareer = gohelper.findChildImage(slot1, "image_career")
-	slot2.simageIcon = gohelper.findChildSingleImage(slot1, "mask/image_icon")
-	slot2.simageSignature = gohelper.findChildSingleImage(slot1, "simage_signature")
-	slot2.imageIcon = gohelper.findChildImage(slot1, "mask/image_icon")
-	slot2.imageSignature = gohelper.findChildImage(slot1, "simage_signature")
-	slot2.imageBg = gohelper.findChildImage(slot1, "bg")
-	slot2.goSelfChoice = gohelper.findChild(slot1, "go_selfchoice")
-	slot2.imageDecorate = gohelper.findChildImage(slot1, "icon")
+function var_0_0.createRareMap(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getUserDataTb_()
 
-	return slot2
+	var_8_0.go = arg_8_1
+	var_8_0.goSelfChoice = gohelper.findChild(arg_8_1, "#go_rare6")
+	var_8_0.imageCareer = gohelper.findChildImage(arg_8_1, "image_career")
+	var_8_0.simageIcon = gohelper.findChildSingleImage(arg_8_1, "mask/image_icon")
+	var_8_0.simageSignature = gohelper.findChildSingleImage(arg_8_1, "simage_signature")
+	var_8_0.imageIcon = gohelper.findChildImage(arg_8_1, "mask/image_icon")
+	var_8_0.imageSignature = gohelper.findChildImage(arg_8_1, "simage_signature")
+	var_8_0.imageBg = gohelper.findChildImage(arg_8_1, "bg")
+	var_8_0.goSelfChoice = gohelper.findChild(arg_8_1, "go_selfchoice")
+	var_8_0.imageDecorate = gohelper.findChildImage(arg_8_1, "icon")
+
+	return var_8_0
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0.itemId then
+function var_0_0.refreshUI(arg_9_0)
+	if not arg_9_0.itemId then
 		return
 	end
 
-	slot0._goCurSelected = nil
-	slot0._cfg = Season123Config.instance:getSeasonEquipCo(slot0.itemId)
+	local var_9_0 = Season123Config.instance:getSeasonEquipCo(arg_9_0.itemId)
 
-	if not slot0._cfg then
+	arg_9_0._goCurSelected = nil
+	arg_9_0._cfg = var_9_0
+
+	if not arg_9_0._cfg then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._rareGoMap) do
-		slot9 = (slot1.rare == 4 and slot1.isMain == Activity123Enum.isMainRole and 6 or slot1.rare) == slot5
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._rareGoMap) do
+		local var_9_1 = (var_9_0.rare == 4 and var_9_0.isMain == Activity123Enum.isMainRole and 6 or var_9_0.rare) == iter_9_0
 
-		gohelper.setActive(slot6.go, slot9)
+		gohelper.setActive(iter_9_1.go, var_9_1)
 
-		if slot9 then
-			slot0._curSelectedItem = slot6
+		if var_9_1 then
+			arg_9_0._curSelectedItem = iter_9_1
 		end
 	end
 
-	slot0:refreshSelfChoice()
-	slot0:refreshIcon()
-	slot0:refreshFlag()
-	slot0:refreshIndexLimit()
+	arg_9_0:refreshSelfChoice()
+	arg_9_0:refreshIcon()
+	arg_9_0:refreshFlag()
+	arg_9_0:refreshIndexLimit()
 end
 
-function slot0.refreshSelfChoice(slot0)
-	if slot0._curSelectedItem then
-		gohelper.setActive(slot0._curSelectedItem.goSelfChoice, Season123Config.instance:getEquipIsOptional(slot0.itemId))
+function var_0_0.refreshSelfChoice(arg_10_0)
+	if arg_10_0._curSelectedItem then
+		gohelper.setActive(arg_10_0._curSelectedItem.goSelfChoice, Season123Config.instance:getEquipIsOptional(arg_10_0.itemId))
 	end
 end
 
-function slot0.refreshIcon(slot0)
-	if slot0._curSelectedItem then
-		gohelper.setActive(slot0._curSelectedItem.goSelfChoice, slot0._cfg.isOptional == 1)
+function var_0_0.refreshIcon(arg_11_0)
+	if arg_11_0._curSelectedItem then
+		local var_11_0 = arg_11_0._curSelectedItem
 
-		if not string.nilorempty(slot0._cfg.careerIcon) then
-			gohelper.setActive(slot1.imageCareer, true)
-			UISpriteSetMgr.instance:setCommonSprite(slot1.imageCareer, slot0._cfg.careerIcon)
-			SLFramework.UGUI.GuiHelper.SetColor(slot1.imageCareer, slot0._darkMaskColor)
+		gohelper.setActive(var_11_0.goSelfChoice, arg_11_0._cfg.isOptional == 1)
+
+		if not string.nilorempty(arg_11_0._cfg.careerIcon) then
+			gohelper.setActive(var_11_0.imageCareer, true)
+			UISpriteSetMgr.instance:setCommonSprite(var_11_0.imageCareer, arg_11_0._cfg.careerIcon)
+			SLFramework.UGUI.GuiHelper.SetColor(var_11_0.imageCareer, arg_11_0._darkMaskColor)
 		else
-			gohelper.setActive(slot1.imageCareer, false)
+			gohelper.setActive(var_11_0.imageCareer, false)
 		end
 
-		if not string.nilorempty(slot0._cfg.icon) and slot1.simageIcon then
-			gohelper.setActive(slot1.simageIcon, true)
-			slot1.simageIcon:LoadImage(ResUrl.getSeasonCelebrityCard(slot0._cfg.icon), slot0.handleIconLoaded, slot0)
-			SLFramework.UGUI.GuiHelper.SetColor(slot1.imageIcon, slot0._darkMaskColor)
+		if not string.nilorempty(arg_11_0._cfg.icon) and var_11_0.simageIcon then
+			gohelper.setActive(var_11_0.simageIcon, true)
+			var_11_0.simageIcon:LoadImage(ResUrl.getSeasonCelebrityCard(arg_11_0._cfg.icon), arg_11_0.handleIconLoaded, arg_11_0)
+			SLFramework.UGUI.GuiHelper.SetColor(var_11_0.imageIcon, arg_11_0._darkMaskColor)
 		else
-			gohelper.setActive(slot1.simageIcon, false)
+			gohelper.setActive(var_11_0.simageIcon, false)
 		end
 
-		if slot0._cfg.isMain == Activity123Enum.isMainRole and slot0._cfg.rare == 4 then
-			gohelper.setActive(slot1.simageSignature, false)
-		elseif not string.nilorempty(slot0._cfg.signIcon) and slot1.simageSignature then
-			gohelper.setActive(slot1.simageSignature, true)
-			slot1.simageSignature:LoadImage(ResUrl.getSignature(slot0._cfg.signIcon, "characterget"))
+		if arg_11_0._cfg.isMain == Activity123Enum.isMainRole and arg_11_0._cfg.rare == 4 then
+			gohelper.setActive(var_11_0.simageSignature, false)
+		elseif not string.nilorempty(arg_11_0._cfg.signIcon) and var_11_0.simageSignature then
+			gohelper.setActive(var_11_0.simageSignature, true)
+			var_11_0.simageSignature:LoadImage(ResUrl.getSignature(arg_11_0._cfg.signIcon, "characterget"))
 		end
 
-		if slot1.imageSignature then
-			SLFramework.UGUI.GuiHelper.SetColor(slot1.imageSignature, slot0._darkMaskColor)
+		if var_11_0.imageSignature then
+			SLFramework.UGUI.GuiHelper.SetColor(var_11_0.imageSignature, arg_11_0._darkMaskColor)
 		end
 
-		if slot1.imageDecorate then
-			SLFramework.UGUI.GuiHelper.SetColor(slot1.imageDecorate, slot0._darkMaskColor)
+		if var_11_0.imageDecorate then
+			SLFramework.UGUI.GuiHelper.SetColor(var_11_0.imageDecorate, arg_11_0._darkMaskColor)
 		end
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot1.imageBg, slot0._darkMaskColor)
-		Season123EquipMetaUtils.applyIconOffset(slot0.itemId, slot1.imageIcon, slot1.imageSignature)
+		SLFramework.UGUI.GuiHelper.SetColor(var_11_0.imageBg, arg_11_0._darkMaskColor)
+		Season123EquipMetaUtils.applyIconOffset(arg_11_0.itemId, var_11_0.imageIcon, var_11_0.imageSignature)
 	end
 end
 
-function slot0.refreshFlag(slot0)
-	if not slot0.itemId then
+function var_0_0.refreshFlag(arg_12_0)
+	if not arg_12_0.itemId then
 		return
 	end
 
-	slot1 = slot0._showProbability and slot0._cfg.isOptional ~= 1
-	slot2 = slot0._showTag and slot0._cfg.isOptional == 1
-	slot3 = slot0._showNewFlag2 and not slot2
-	slot4 = slot0._showNewFlag and not slot2
+	local var_12_0 = arg_12_0._showProbability and arg_12_0._cfg.isOptional ~= 1
+	local var_12_1 = arg_12_0._showTag and arg_12_0._cfg.isOptional == 1
+	local var_12_2 = arg_12_0._showNewFlag2 and not var_12_1
+	local var_12_3 = arg_12_0._showNewFlag and not var_12_1
 
-	gohelper.setActive(slot0._gotag, slot1 or slot2 or slot3 or slot4)
-	gohelper.setActive(slot0._gotype1, slot1)
-	gohelper.setActive(slot0._gotype2, slot2)
-	gohelper.setActive(slot0._gotype3, slot3)
-	gohelper.setActive(slot0._gotype4, slot4)
+	gohelper.setActive(arg_12_0._gotag, var_12_0 or var_12_1 or var_12_2 or var_12_3)
+	gohelper.setActive(arg_12_0._gotype1, var_12_0)
+	gohelper.setActive(arg_12_0._gotype2, var_12_1)
+	gohelper.setActive(arg_12_0._gotype3, var_12_2)
+	gohelper.setActive(arg_12_0._gotype4, var_12_3)
 end
 
-function slot0.refreshIndexLimit(slot0)
-	gohelper.setActive(slot0._goindexLimit, slot0._showIndexLimit and not string.nilorempty(slot0._cfg.indexLimit))
+function var_0_0.refreshIndexLimit(arg_13_0)
+	gohelper.setActive(arg_13_0._goindexLimit, arg_13_0._showIndexLimit and not string.nilorempty(arg_13_0._cfg.indexLimit))
 
-	if not slot0._showIndexLimit or string.nilorempty(slot0._cfg.indexLimit) then
+	if not arg_13_0._showIndexLimit or string.nilorempty(arg_13_0._cfg.indexLimit) then
 		return
 	end
 
-	for slot5 = 1, #string.split(slot0._cfg.indexLimit, "#") do
-		gohelper.setActive(slot0["_golimit" .. slot5], true)
+	local var_13_0 = string.split(arg_13_0._cfg.indexLimit, "#")
 
-		gohelper.findChildText(slot0["_golimit" .. slot5], "txt_limit" .. slot5).text = slot1[slot5]
+	for iter_13_0 = 1, #var_13_0 do
+		gohelper.setActive(arg_13_0["_golimit" .. iter_13_0], true)
+
+		gohelper.findChildText(arg_13_0["_golimit" .. iter_13_0], "txt_limit" .. iter_13_0).text = var_13_0[iter_13_0]
 	end
 
-	gohelper.setActive(slot0._golimit2, #slot1 == uv0.MaxLimitCount)
+	gohelper.setActive(arg_13_0._golimit2, #var_13_0 == var_0_0.MaxLimitCount)
 end
 
-function slot0.setIndexLimitShowState(slot0, slot1)
-	slot0._showIndexLimit = slot1
+function var_0_0.setIndexLimitShowState(arg_14_0, arg_14_1)
+	arg_14_0._showIndexLimit = arg_14_1
 
-	slot0:refreshIndexLimit()
+	arg_14_0:refreshIndexLimit()
 end
 
-function slot0.setFlagUIPos(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.setFlagUIPos(arg_15_0, arg_15_1, arg_15_2)
+	if not arg_15_1 or not arg_15_2 then
 		return
 	end
 
-	recthelper.setAnchor(slot0._gotag.transform, slot1, slot2)
+	recthelper.setAnchor(arg_15_0._gotag.transform, arg_15_1, arg_15_2)
 end
 
-slot1 = 2.3
+local var_0_1 = 2.3
 
-function slot0.setFlagUIScale(slot0, slot1)
-	slot1 = slot1 or uv0
+function var_0_0.setFlagUIScale(arg_16_0, arg_16_1)
+	arg_16_1 = arg_16_1 or var_0_1
 
-	transformhelper.setLocalScale(slot0._gotag.transform, slot1, slot1, slot1)
+	transformhelper.setLocalScale(arg_16_0._gotag.transform, arg_16_1, arg_16_1, arg_16_1)
 end
 
-function slot0.handleIconLoaded(slot0)
-	if not slot0._isDisposed and slot0._curSelectedItem then
-		gohelper.setActive(slot1.simageIcon, false)
-		gohelper.setActive(slot1.simageIcon, true)
+function var_0_0.handleIconLoaded(arg_17_0)
+	if not arg_17_0._isDisposed then
+		local var_17_0 = arg_17_0._curSelectedItem
+
+		if var_17_0 then
+			gohelper.setActive(var_17_0.simageIcon, false)
+			gohelper.setActive(var_17_0.simageIcon, true)
+		end
 	end
 end
 
-function slot0.setColorDark(slot0, slot1)
-	slot0._darkMaskColor = slot1 and "#7b7b7b" or "#ffffff"
+function var_0_0.setColorDark(arg_18_0, arg_18_1)
+	arg_18_0._darkMaskColor = arg_18_1 and "#7b7b7b" or "#ffffff"
 
-	slot0:refreshIcon()
+	arg_18_0:refreshIcon()
 end
 
-function slot0.setShowTag(slot0, slot1)
-	slot0._showTag = slot1
+function var_0_0.setShowTag(arg_19_0, arg_19_1)
+	arg_19_0._showTag = arg_19_1
 
-	slot0:refreshFlag()
+	arg_19_0:refreshFlag()
 end
 
-function slot0.setShowProbability(slot0, slot1)
-	slot0._showProbability = slot1
+function var_0_0.setShowProbability(arg_20_0, arg_20_1)
+	arg_20_0._showProbability = arg_20_1
 
-	slot0:refreshFlag()
+	arg_20_0:refreshFlag()
 end
 
-function slot0.setShowNewFlag(slot0, slot1)
-	slot0._showNewFlag = slot1
+function var_0_0.setShowNewFlag(arg_21_0, arg_21_1)
+	arg_21_0._showNewFlag = arg_21_1
 
-	slot0:refreshFlag()
+	arg_21_0:refreshFlag()
 end
 
-function slot0.setShowNewFlag2(slot0, slot1)
-	slot0._showNewFlag2 = slot1
+function var_0_0.setShowNewFlag2(arg_22_0, arg_22_1)
+	arg_22_0._showNewFlag2 = arg_22_1
 
-	slot0:refreshFlag()
+	arg_22_0:refreshFlag()
 end
 
-function slot0.setClickCall(slot0, slot1, slot2, slot3)
-	slot0._clickCallback = slot1
-	slot0._clickCallbackObj = slot2
-	slot0._clickParam = slot3
+function var_0_0.setClickCall(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	arg_23_0._clickCallback = arg_23_1
+	arg_23_0._clickCallbackObj = arg_23_2
+	arg_23_0._clickParam = arg_23_3
 
-	if slot1 then
-		slot0:checkInitBtnClick()
+	if arg_23_1 then
+		arg_23_0:checkInitBtnClick()
 	end
 end
 
-function slot0.setLongPressCall(slot0, slot1, slot2, slot3)
-	slot0._longPressCallback = slot1
-	slot0._longPressCallbackObj = slot2
-	slot0._longPressParam = slot3
+function var_0_0.setLongPressCall(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	arg_24_0._longPressCallback = arg_24_1
+	arg_24_0._longPressCallbackObj = arg_24_2
+	arg_24_0._longPressParam = arg_24_3
 
-	if slot1 then
-		slot0:checkInitLongPress()
+	if arg_24_1 then
+		arg_24_0:checkInitLongPress()
 	end
 end
 
-function slot0.onClickCall(slot0)
-	if slot0._clickCallback then
-		slot0._clickCallback(slot0._clickCallbackObj, slot0._clickParam)
+function var_0_0.onClickCall(arg_25_0)
+	if arg_25_0._clickCallback then
+		arg_25_0._clickCallback(arg_25_0._clickCallbackObj, arg_25_0._clickParam)
 	end
 end
 
-function slot0.onLongPressCall(slot0)
-	if slot0._longPressCallback then
-		slot0._longPressCallback(slot0._longPressCallbackObj, slot0._longPressParam)
+function var_0_0.onLongPressCall(arg_26_0)
+	if arg_26_0._longPressCallback then
+		arg_26_0._longPressCallback(arg_26_0._longPressCallbackObj, arg_26_0._longPressParam)
 	end
 end
 
-return slot0
+return var_0_0

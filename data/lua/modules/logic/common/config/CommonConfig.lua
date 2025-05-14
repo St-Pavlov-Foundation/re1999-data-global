@@ -1,8 +1,8 @@
-module("modules.logic.common.config.CommonConfig", package.seeall)
+﻿module("modules.logic.common.config.CommonConfig", package.seeall)
 
-slot0 = class("CommonConfig", BaseConfig)
+local var_0_0 = class("CommonConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"const",
 		"cpu_level",
@@ -15,94 +15,116 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "cpu_level" then
-		slot0._cpuLevelDict = {}
+function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == "cpu_level" then
+		arg_2_0._cpuLevelDict = {}
 
-		for slot6, slot7 in ipairs(slot2.configList) do
-			slot0._cpuLevelDict[slot0:_getStr(slot7.name)] = slot7.level
+		for iter_2_0, iter_2_1 in ipairs(arg_2_2.configList) do
+			local var_2_0 = arg_2_0:_getStr(iter_2_1.name)
+
+			arg_2_0._cpuLevelDict[var_2_0] = iter_2_1.level
 		end
-	elseif slot1 == "gpu_level" then
-		slot0._gpuLevelDict = {}
+	elseif arg_2_1 == "gpu_level" then
+		arg_2_0._gpuLevelDict = {}
 
-		for slot6, slot7 in ipairs(slot2.configList) do
-			slot0._gpuLevelDict[slot0:_getStr(slot7.name)] = slot7.level
+		for iter_2_2, iter_2_3 in ipairs(arg_2_2.configList) do
+			local var_2_1 = arg_2_0:_getStr(iter_2_3.name)
+
+			arg_2_0._gpuLevelDict[var_2_1] = iter_2_3.level
 		end
 	end
 end
 
-function slot0.getCPULevel(slot0, slot1)
-	if LuaUtil.isEmptyStr(slot0:_getStr(slot1)) then
+function var_0_0.getCPULevel(arg_3_0, arg_3_1)
+	arg_3_1 = arg_3_0:_getStr(arg_3_1)
+
+	if LuaUtil.isEmptyStr(arg_3_1) then
 		return ModuleEnum.Performance.Undefine
 	end
 
-	if slot0._cpuLevelDict[slot1] then
-		return slot2
+	local var_3_0 = arg_3_0._cpuLevelDict[arg_3_1]
+
+	if var_3_0 then
+		return var_3_0
 	end
 
-	for slot6, slot7 in pairs(slot0._cpuLevelDict) do
-		if string.find(slot6, slot1) or string.find(slot1, slot6) then
-			return slot7
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._cpuLevelDict) do
+		if string.find(iter_3_0, arg_3_1) or string.find(arg_3_1, iter_3_0) then
+			return iter_3_1
 		end
 	end
 
 	return ModuleEnum.Performance.Undefine
 end
 
-function slot0.getGPULevel(slot0, slot1)
-	if LuaUtil.isEmptyStr(slot0:_getStr(slot1)) then
+function var_0_0.getGPULevel(arg_4_0, arg_4_1)
+	arg_4_1 = arg_4_0:_getStr(arg_4_1)
+
+	if LuaUtil.isEmptyStr(arg_4_1) then
 		return ModuleEnum.Performance.Undefine
 	end
 
-	if slot0._gpuLevelDict[slot1] then
-		return slot2
+	local var_4_0 = arg_4_0._gpuLevelDict[arg_4_1]
+
+	if var_4_0 then
+		return var_4_0
 	end
 
-	for slot6, slot7 in pairs(slot0._gpuLevelDict) do
-		if string.find(slot6, slot1) or string.find(slot1, slot6) then
-			return slot7
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._gpuLevelDict) do
+		if string.find(iter_4_0, arg_4_1) or string.find(arg_4_1, iter_4_0) then
+			return iter_4_1
 		end
 	end
 
 	return ModuleEnum.Performance.Undefine
 end
 
-function slot0._getStr(slot0, slot1)
-	return string.gsub(string.lower(slot1), "%s+", "")
+function var_0_0._getStr(arg_5_0, arg_5_1)
+	return string.gsub(string.lower(arg_5_1), "%s+", "")
 end
 
-function slot0.getConstNum(slot0, slot1)
-	if string.nilorempty(slot0:getConstStr(slot1)) then
+function var_0_0.getConstNum(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getConstStr(arg_6_1)
+
+	if string.nilorempty(var_6_0) then
 		return 0
 	else
-		return tonumber(slot2)
+		return tonumber(var_6_0)
 	end
 end
 
-function slot0.getConstStr(slot0, slot1)
-	if not lua_const.configDict[slot1] then
-		printError("const not exist: ", slot1)
+function var_0_0.getConstStr(arg_7_0, arg_7_1)
+	local var_7_0 = lua_const.configDict[arg_7_1]
+
+	if not var_7_0 then
+		printError("const not exist: ", arg_7_1)
 
 		return nil
 	end
 
-	if not string.nilorempty(slot2.value) then
-		return slot3
+	local var_7_1 = var_7_0.value
+
+	if not string.nilorempty(var_7_1) then
+		return var_7_1
 	end
 
-	return slot2.value2
+	return var_7_0.value2
 end
 
-function slot0.getAct155CurrencyRatio(slot0)
-	return string.splitToNumber(lua_activity155_const.configDict[1].value2, "#") and slot2[2] or 0
+function var_0_0.getAct155CurrencyRatio(arg_8_0)
+	local var_8_0 = lua_activity155_const.configDict[1]
+	local var_8_1 = string.splitToNumber(var_8_0.value2, "#")
+
+	return var_8_1 and var_8_1[2] or 0
 end
 
-function slot0.getAct155EpisodeDisplay(slot0)
-	slot2 = string.splitToNumber(lua_activity155_const.configDict[3].value2, "#")
+function var_0_0.getAct155EpisodeDisplay(arg_9_0)
+	local var_9_0 = lua_activity155_const.configDict[3]
+	local var_9_1 = string.splitToNumber(var_9_0.value2, "#")
 
-	return slot2[1], slot2[2]
+	return var_9_1[1], var_9_1[2]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,33 +1,35 @@
-module("modules.logic.patface.controller.PatFaceCustomHandler", package.seeall)
+﻿module("modules.logic.patface.controller.PatFaceCustomHandler", package.seeall)
 
-return {
-	activity142CheckCanPat = function (slot0)
-		slot1 = false
+local var_0_0 = {
+	activity142CheckCanPat = function(arg_1_0)
+		local var_1_0 = false
 
 		if Activity136Model.instance:isActivity136InOpen() then
-			slot1 = not Activity136Model.instance:hasReceivedCharacter()
+			var_1_0 = not Activity136Model.instance:hasReceivedCharacter()
 		end
 
-		return slot1
+		return var_1_0
 	end,
-	decalogPresentCheckCanPat = function (slot0)
+	decalogPresentCheckCanPat = function(arg_2_0)
 		return DecalogPresentModel.instance:isShowRedDot()
 	end,
-	goldenMilletPresentCheckCanPat = function (slot0)
+	goldenMilletPresentCheckCanPat = function(arg_3_0)
 		return GoldenMilletPresentModel.instance:isShowRedDot()
 	end,
-	matildaGiftCheckCanPat = function (slot0)
+	matildaGiftCheckCanPat = function(arg_4_0)
 		return V1a9_MatildaGiftModel.instance:isShowRedDot()
 	end,
-	semmelWeisGiftCheckCanPat = function (slot0)
+	semmelWeisGiftCheckCanPat = function(arg_5_0)
 		return SemmelWeisGiftModel.instance:isShowRedDot()
 	end,
-	bPSPViewCanPat = function (slot0)
+	bPSPViewCanPat = function(arg_6_0)
 		if BpModel.instance:isEnd() then
 			return false
 		end
 
-		if not BpConfig.instance:getBpCO(BpModel.instance.id) or not slot1.isSp then
+		local var_6_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+
+		if not var_6_0 or not var_6_0.isSp then
 			return false
 		end
 
@@ -37,34 +39,53 @@ return {
 
 		return BpModel.instance.firstShowSp
 	end,
-	bPViewCanPat = function (slot0)
+	bPViewCanPat = function(arg_7_0)
 		if BpModel.instance:isEnd() then
 			return false
 		end
 
-		return BpModel.instance.firstShow and tonumber(PlayerPrefsHelper.getString(string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId), "")) ~= BpModel.instance.id
-	end,
-	limitDecorateCanPat = function (slot0)
-		if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.LimitDecorate, true) == ActivityEnum.ActivityStatus.Normal then
-			return uv0.checkIsFistShow(slot0)
-		end
-	end,
-	decalogPresentPat = function (slot0)
-		DecalogPresentController.instance:openDecalogPresentView(PatFaceConfig.instance:getPatFaceViewName(slot0))
-	end,
-	goldenMilletPresentPat = function (slot0)
-		GoldenMilletPresentController.instance:openGoldenMilletPresentView()
-	end,
-	matildaGiftPat = function (slot0)
-		V1a9_MatildaGiftController.instance:openMatildaGiftView()
-	end,
-	semmelWeisGiftPat = function (slot0)
-		SemmelWeisGiftController.instance:openSemmelWeisGiftView()
-	end,
-	checkIsFistShow = function (slot0)
-		return string.nilorempty(PlayerPrefsHelper.getString(string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, slot0, PlayerModel.instance:getPlayinfo().userId), ""))
-	end,
-	setHasShow = function (slot0)
-		PlayerPrefsHelper.setString(string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, slot0, PlayerModel.instance:getPlayinfo().userId), "hasEnter")
+		local var_7_0 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId)
+		local var_7_1 = PlayerPrefsHelper.getString(var_7_0, "")
+
+		return BpModel.instance.firstShow and tonumber(var_7_1) ~= BpModel.instance.id
 	end
 }
+
+function var_0_0.limitDecorateCanPat(arg_8_0)
+	if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.LimitDecorate, true) == ActivityEnum.ActivityStatus.Normal then
+		return (var_0_0.checkIsFistShow(arg_8_0))
+	end
+end
+
+function var_0_0.decalogPresentPat(arg_9_0)
+	local var_9_0 = PatFaceConfig.instance:getPatFaceViewName(arg_9_0)
+
+	DecalogPresentController.instance:openDecalogPresentView(var_9_0)
+end
+
+function var_0_0.goldenMilletPresentPat(arg_10_0)
+	GoldenMilletPresentController.instance:openGoldenMilletPresentView()
+end
+
+function var_0_0.matildaGiftPat(arg_11_0)
+	V1a9_MatildaGiftController.instance:openMatildaGiftView()
+end
+
+function var_0_0.semmelWeisGiftPat(arg_12_0)
+	SemmelWeisGiftController.instance:openSemmelWeisGiftView()
+end
+
+function var_0_0.checkIsFistShow(arg_13_0)
+	local var_13_0 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, arg_13_0, PlayerModel.instance:getPlayinfo().userId)
+	local var_13_1 = PlayerPrefsHelper.getString(var_13_0, "")
+
+	return string.nilorempty(var_13_1)
+end
+
+function var_0_0.setHasShow(arg_14_0)
+	local var_14_0 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, arg_14_0, PlayerModel.instance:getPlayinfo().userId)
+
+	PlayerPrefsHelper.setString(var_14_0, "hasEnter")
+end
+
+return var_0_0

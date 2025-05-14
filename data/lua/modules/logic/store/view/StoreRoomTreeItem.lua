@@ -1,412 +1,463 @@
-module("modules.logic.store.view.StoreRoomTreeItem", package.seeall)
+﻿module("modules.logic.store.view.StoreRoomTreeItem", package.seeall)
 
-slot0 = class("StoreRoomTreeItem", TreeScrollCell)
+local var_0_0 = class("StoreRoomTreeItem", TreeScrollCell)
 
-function slot0.ctor(slot0)
-	slot0._rootIndex = nil
-	slot0._nodeIndex = nil
-	slot0._go = nil
-	slot0._view = nil
-	slot0._isRoot = nil
-	slot0._isNode = nil
-	slot0.nodeItemList = {}
-	slot0._firstUpdate = true
-	slot0._animationStartTime = 0
-	slot0.openduration = 0.6
-	slot0.closeduration = 0.3
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._rootIndex = nil
+	arg_1_0._nodeIndex = nil
+	arg_1_0._go = nil
+	arg_1_0._view = nil
+	arg_1_0._isRoot = nil
+	arg_1_0._isNode = nil
+	arg_1_0.nodeItemList = {}
+	arg_1_0._firstUpdate = true
+	arg_1_0._animationStartTime = 0
+	arg_1_0.openduration = 0.6
+	arg_1_0.closeduration = 0.3
 end
 
-function slot0.initRoot(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1._go = gohelper.findChild(slot0._go, "root")
-	slot1._gomain = gohelper.findChild(slot1._go, "#go_main")
-	slot1._simagebg = gohelper.findChildSingleImage(slot1._go, "#go_main/#simage_bg")
-	slot1._simageicon = gohelper.findChildSingleImage(slot1._go, "#go_main/#simage_icon")
-	slot1._simagemask = gohelper.findChildSingleImage(slot1._go, "#go_main/#simage_mask")
-	slot1._simagetitle = gohelper.findChildSingleImage(slot1._go, "#go_main/#simage_title")
-	slot1._txttitle = gohelper.findChildText(slot1._go, "#go_main/left/#txt_title")
-	slot1._gotheme = gohelper.findChild(slot1._go, "#go_main/left/#txt_title/#go_theme")
-	slot1._txttype = gohelper.findChildText(slot1._go, "#go_main/left/#txt_title/#go_theme/#txt_type")
-	slot1._goclicktype = gohelper.findChild(slot1._go, "#go_main/left/#txt_title/#go_theme/clickArea")
-	slot1._gotag = gohelper.findChild(slot1._go, "#go_main/left/#txt_title/#go_Tag")
-	slot1._txttag = gohelper.findChildText(slot1._go, "#go_main/left/#txt_title/#go_Tag/#txt_Tag")
-	slot1._txtdesc = gohelper.findChildText(slot1._go, "#go_main/left/#txt_desc")
-	slot1._txthuolinum = gohelper.findChildText(slot1._go, "#go_main/left/info/huoli/#txt_huolinum")
-	slot1._txtblocknum = gohelper.findChildText(slot1._go, "#go_main/left/info/dikuai/#txt_dikuainum")
-	slot1._btnbuy = gohelper.findChildButtonWithAudio(slot1._go, "#go_main/right/#btn_buy")
-	slot1._txtcost1num = gohelper.findChildText(slot1._go, "#go_main/right/#btn_buy/bg/cost1/#txt_cost1num")
-	slot1._imagecost1num = gohelper.findChildImage(slot1._go, "#go_main/right/#btn_buy/bg/cost1/icon")
-	slot1._txtcost2num = gohelper.findChildText(slot1._go, "#go_main/right/#btn_buy/bg/cost2/#txt_cost2num")
-	slot1._imagecost2num = gohelper.findChildImage(slot1._go, "#go_main/right/#btn_buy/bg/cost2/icon")
-	slot1._godiscount = gohelper.findChild(slot1._go, "#go_main/right/#go_discount")
-	slot1._golimit = gohelper.findChild(slot1._go, "#go_main/right/#go_limit")
-	slot1._gohas = gohelper.findChild(slot1._go, "#go_main/right/#go_has")
-	slot1._txtdiscount = gohelper.findChildText(slot1._go, "#go_main/right/#go_discount/bg/label/#txt_discount")
-	slot1._goempty = gohelper.findChild(slot1._go, "#go_empty")
-	slot0.root = slot1
+function var_0_0.initRoot(arg_2_0)
+	local var_2_0 = arg_2_0:getUserDataTb_()
 
-	slot0.root._simagebg:LoadImage(ResUrl.getStoreWildness("img_taozhuang_bg"))
-	slot0.root._simagetitle:LoadImage(ResUrl.getStoreWildness("img_deco_1"))
-	slot0.root._simagemask:LoadImage(ResUrl.getStoreWildness("mask"))
+	var_2_0._go = gohelper.findChild(arg_2_0._go, "root")
+	var_2_0._gomain = gohelper.findChild(var_2_0._go, "#go_main")
+	var_2_0._simagebg = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_bg")
+	var_2_0._simageicon = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_icon")
+	var_2_0._simagemask = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_mask")
+	var_2_0._simagetitle = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_title")
+	var_2_0._txttitle = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_title")
+	var_2_0._gotheme = gohelper.findChild(var_2_0._go, "#go_main/left/#txt_title/#go_theme")
+	var_2_0._txttype = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_title/#go_theme/#txt_type")
+	var_2_0._goclicktype = gohelper.findChild(var_2_0._go, "#go_main/left/#txt_title/#go_theme/clickArea")
+	var_2_0._gotag = gohelper.findChild(var_2_0._go, "#go_main/left/#txt_title/#go_Tag")
+	var_2_0._txttag = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_title/#go_Tag/#txt_Tag")
+	var_2_0._txtdesc = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_desc")
+	var_2_0._txthuolinum = gohelper.findChildText(var_2_0._go, "#go_main/left/info/huoli/#txt_huolinum")
+	var_2_0._txtblocknum = gohelper.findChildText(var_2_0._go, "#go_main/left/info/dikuai/#txt_dikuainum")
+	var_2_0._btnbuy = gohelper.findChildButtonWithAudio(var_2_0._go, "#go_main/right/#btn_buy")
+	var_2_0._txtcost1num = gohelper.findChildText(var_2_0._go, "#go_main/right/#btn_buy/bg/cost1/#txt_cost1num")
+	var_2_0._imagecost1num = gohelper.findChildImage(var_2_0._go, "#go_main/right/#btn_buy/bg/cost1/icon")
+	var_2_0._txtcost2num = gohelper.findChildText(var_2_0._go, "#go_main/right/#btn_buy/bg/cost2/#txt_cost2num")
+	var_2_0._imagecost2num = gohelper.findChildImage(var_2_0._go, "#go_main/right/#btn_buy/bg/cost2/icon")
+	var_2_0._godiscount = gohelper.findChild(var_2_0._go, "#go_main/right/#go_discount")
+	var_2_0._golimit = gohelper.findChild(var_2_0._go, "#go_main/right/#go_limit")
+	var_2_0._gohas = gohelper.findChild(var_2_0._go, "#go_main/right/#go_has")
+	var_2_0._txtdiscount = gohelper.findChildText(var_2_0._go, "#go_main/right/#go_discount/bg/label/#txt_discount")
+	var_2_0._goempty = gohelper.findChild(var_2_0._go, "#go_empty")
+	arg_2_0.root = var_2_0
 
-	slot1._gonewtag = gohelper.findChild(slot1._go, "#go_main/#go_newtag")
-	slot1._goremaintime = gohelper.findChild(slot1._go, "#go_main/#go_remaintime")
-	slot1._txtremiantime = gohelper.findChildText(slot1._go, "#go_main/#go_remaintime/#txt_remaintime")
-	slot0._animator = slot0._go:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0.root._simagebg:LoadImage(ResUrl.getStoreWildness("img_taozhuang_bg"))
+	arg_2_0.root._simagetitle:LoadImage(ResUrl.getStoreWildness("img_deco_1"))
+	arg_2_0.root._simagemask:LoadImage(ResUrl.getStoreWildness("mask"))
+
+	var_2_0._gonewtag = gohelper.findChild(var_2_0._go, "#go_main/#go_newtag")
+	var_2_0._goremaintime = gohelper.findChild(var_2_0._go, "#go_main/#go_remaintime")
+	var_2_0._txtremiantime = gohelper.findChildText(var_2_0._go, "#go_main/#go_remaintime/#txt_remaintime")
+	arg_2_0._animator = arg_2_0._go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.initNode(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1._go = gohelper.findChild(slot0._go, "node")
-	slot1._simagedetailbg = gohelper.findChildSingleImage(slot1._go, "#simage_detailbg")
-	slot1._content = gohelper.findChild(slot1._go, "content")
-	slot0.node = slot1
+function var_0_0.initNode(arg_3_0)
+	local var_3_0 = arg_3_0:getUserDataTb_()
+
+	var_3_0._go = gohelper.findChild(arg_3_0._go, "node")
+	var_3_0._simagedetailbg = gohelper.findChildSingleImage(var_3_0._go, "#simage_detailbg")
+	var_3_0._content = gohelper.findChild(var_3_0._go, "content")
+	arg_3_0.node = var_3_0
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
-	if slot0.root then
-		if slot0.root._click then
-			slot0.root._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_5_0)
+	if arg_5_0.root then
+		if arg_5_0.root._click then
+			arg_5_0.root._click:RemoveClickListener()
 		end
 
-		if slot0.root._clickType then
-			slot0.root._clickType:RemoveClickListener()
+		if arg_5_0.root._clickType then
+			arg_5_0.root._clickType:RemoveClickListener()
 		end
 
-		slot0.root._btnbuy:RemoveClickListener()
-		slot0.root._simagebg:UnLoadImage()
-		slot0.root._simageicon:UnLoadImage()
-		slot0.root._simagemask:UnLoadImage()
-		slot0.root._simagetitle:UnLoadImage()
+		arg_5_0.root._btnbuy:RemoveClickListener()
+		arg_5_0.root._simagebg:UnLoadImage()
+		arg_5_0.root._simageicon:UnLoadImage()
+		arg_5_0.root._simagemask:UnLoadImage()
+		arg_5_0.root._simagetitle:UnLoadImage()
 	end
 
-	if next(slot0.nodeItemList) then
-		for slot4, slot5 in ipairs(slot0.nodeItemList) do
-			slot5.good:onDestroy()
+	if next(arg_5_0.nodeItemList) then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0.nodeItemList) do
+			iter_5_1.good:onDestroy()
 		end
 
-		slot0.nodeItemList = nil
+		arg_5_0.nodeItemList = nil
 	end
 end
 
-function slot0._onClick(slot0)
-	if slot0._view:isExpand(slot0._rootIndex) then
+function var_0_0._onClick(arg_6_0)
+	if arg_6_0._view:isExpand(arg_6_0._rootIndex) then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
-		if slot0.root._mo.treeRootParam then
+		if arg_6_0.root._mo.treeRootParam then
 			StoreController.instance:dispatchEvent(StoreEvent.OpenRoomStoreNode, {
 				state = false,
-				index = slot0._rootIndex,
-				itemHeight = recthelper.getHeight(slot0._go.transform)
+				index = arg_6_0._rootIndex,
+				itemHeight = recthelper.getHeight(arg_6_0._go.transform)
 			})
 		end
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_close)
 
-		if slot0.root._mo.treeRootParam then
+		if arg_6_0.root._mo.treeRootParam then
 			StoreController.instance:dispatchEvent(StoreEvent.OpenRoomStoreNode, {
 				state = true,
-				index = slot0._rootIndex,
-				itemHeight = recthelper.getHeight(slot0._go.transform)
+				index = arg_6_0._rootIndex,
+				itemHeight = recthelper.getHeight(arg_6_0._go.transform)
 			})
 		end
 	end
 
-	slot0.root._mo:setNewRedDotKey()
+	arg_6_0.root._mo:setNewRedDotKey()
 end
 
-function slot0._onBuyBtn(slot0, slot1)
-	if slot1 then
-		StoreController.instance:openNormalGoodsView(slot1)
+function var_0_0._onBuyBtn(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		StoreController.instance:openNormalGoodsView(arg_7_1)
 	else
 		logError("没找到rootmo")
 	end
 
-	slot0.root._mo:setNewRedDotKey()
-	slot0:refreshNewTag()
+	arg_7_0.root._mo:setNewRedDotKey()
+	arg_7_0:refreshNewTag()
 end
 
-function slot0._onClickType(slot0)
-	if slot0.themeId then
+function var_0_0._onClickType(arg_8_0)
+	if arg_8_0.themeId then
 		ViewMgr.instance:openView(ViewName.RoomThemeTipView, {
 			type = MaterialEnum.MaterialType.RoomTheme,
-			id = slot0.themeId
+			id = arg_8_0.themeId
 		})
 	end
 
-	slot0.root._mo:setNewRedDotKey()
-	slot0:refreshNewTag()
+	arg_8_0.root._mo:setNewRedDotKey()
+	arg_8_0:refreshNewTag()
 end
 
-function slot0._findThemeId(slot0, slot1)
-	if not slot1 then
+function var_0_0._findThemeId(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if RoomConfig.instance:getThemeIdByItem(slot7[2], slot7[1]) then
-			return slot8
+	local var_9_0 = RoomConfig.instance
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_1 = var_9_0:getThemeIdByItem(iter_9_1[2], iter_9_1[1])
+
+		if var_9_1 then
+			return var_9_1
 		end
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.refreshNewTag(slot0)
-	slot1 = slot0.root._mo:checkShowNewRedDot()
+function var_0_0.refreshNewTag(arg_11_0)
+	local var_11_0 = arg_11_0.root._mo:checkShowNewRedDot()
 
-	gohelper.setActive(slot0.root._gonewtag, slot1)
+	gohelper.setActive(arg_11_0.root._gonewtag, var_11_0)
 
-	if slot1 then
-		recthelper.setAnchorX(slot0.root._txtremiantime.transform, -8)
+	if var_11_0 then
+		recthelper.setAnchorX(arg_11_0.root._txtremiantime.transform, -8)
 	else
-		recthelper.setAnchorX(slot0.root._txtremiantime.transform, -40)
+		recthelper.setAnchorX(arg_11_0.root._txtremiantime.transform, -40)
 	end
 end
 
-function slot0.onUpdateRootMO(slot0, slot1)
-	slot2 = slot1.update
+function var_0_0.onUpdateRootMO(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.update
 
-	if slot1.type and slot1.type == 0 then
-		gohelper.setActive(slot0.root._gomain, false)
-		gohelper.setActive(slot0.root._goempty, true)
+	if arg_12_1.type and arg_12_1.type == 0 then
+		gohelper.setActive(arg_12_0.root._gomain, false)
+		gohelper.setActive(arg_12_0.root._goempty, true)
 
-		if slot0.root._click then
-			slot0.root._click:RemoveClickListener()
+		if arg_12_0.root._click then
+			arg_12_0.root._click:RemoveClickListener()
 		end
 
-		if slot1.update then
-			slot0._animationStartTime = Time.time
+		if arg_12_1.update then
+			arg_12_0._animationStartTime = Time.time
 		end
 
-		slot0:_refreshOpenAnimation()
+		arg_12_0:_refreshOpenAnimation()
 
-		slot1.update = false
+		arg_12_1.update = false
 	else
-		gohelper.setActive(slot0.root._gomain, true)
-		gohelper.setActive(slot0.root._goempty, false)
+		gohelper.setActive(arg_12_0.root._gomain, true)
+		gohelper.setActive(arg_12_0.root._goempty, false)
 
-		slot0.has = false
-		slot0.root._mo = slot1
+		arg_12_0.has = false
+		arg_12_0.root._mo = arg_12_1
 
-		gohelper.setActive(slot0.root._btnbuy.gameObject, true)
-		gohelper.setActive(slot0.root._gohas, false)
-		slot0.root._btnbuy:AddClickListener(slot0._onBuyBtn, slot0, slot0.root._mo)
+		gohelper.setActive(arg_12_0.root._btnbuy.gameObject, true)
+		gohelper.setActive(arg_12_0.root._gohas, false)
+		arg_12_0.root._btnbuy:AddClickListener(arg_12_0._onBuyBtn, arg_12_0, arg_12_0.root._mo)
 
-		slot0.root._click = SLFramework.UGUI.UIClickListener.Get(slot0.root._go)
-		slot0.root._clickType = SLFramework.UGUI.UIClickListener.Get(slot0.root._goclicktype)
+		arg_12_0.root._click = SLFramework.UGUI.UIClickListener.Get(arg_12_0.root._go)
+		arg_12_0.root._clickType = SLFramework.UGUI.UIClickListener.Get(arg_12_0.root._goclicktype)
 
-		slot0.root._click:AddClickListener(slot0._onClick, slot0)
-		slot0.root._clickType:AddClickListener(slot0._onClickType, slot0)
+		arg_12_0.root._click:AddClickListener(arg_12_0._onClick, arg_12_0)
+		arg_12_0.root._clickType:AddClickListener(arg_12_0._onClickType, arg_12_0)
 
-		slot3 = StoreConfig.instance:getGoodsConfig(slot1.goodsId)
-		slot5 = GameUtil.splitString2(slot3.product, true)
+		local var_12_1 = StoreConfig.instance:getGoodsConfig(arg_12_1.goodsId)
+		local var_12_2 = var_12_1.product
+		local var_12_3 = GameUtil.splitString2(var_12_2, true)
 
-		slot0.root._simageicon:LoadImage(slot3.bigImg)
+		arg_12_0.root._simageicon:LoadImage(var_12_1.bigImg)
 
-		slot0.root._txttitle.text = string.format("「%s」", slot1.goodscn)
-		slot0.root._txtdesc.text = GameUtil.splitString2(slot3.name)[1][2]
+		arg_12_0.root._txttitle.text = string.format("「%s」", arg_12_1.goodscn)
 
-		if string.nilorempty(slot3.cost) then
-			slot0.root._txtcost1num.text = luaLang("store_free")
+		local var_12_4 = GameUtil.splitString2(var_12_1.name)
 
-			gohelper.setActive(slot0.root._imagecost1num.gameObject, false)
+		arg_12_0.root._txtdesc.text = var_12_4[1][2]
+
+		local var_12_5 = var_12_1.cost
+
+		if string.nilorempty(var_12_5) then
+			arg_12_0.root._txtcost1num.text = luaLang("store_free")
+
+			gohelper.setActive(arg_12_0.root._imagecost1num.gameObject, false)
 		else
-			slot10 = string.splitToNumber(string.split(slot7, "|")[slot1.buyCount + 1] or slot8[#slot8], "#")
-			slot0.cost1Quantity = slot10[3]
-			slot13, slot14 = ItemModel.instance:getItemConfigAndIcon(slot10[1], slot10[2])
+			local var_12_6 = string.split(var_12_5, "|")
+			local var_12_7 = var_12_6[arg_12_1.buyCount + 1] or var_12_6[#var_12_6]
+			local var_12_8 = string.splitToNumber(var_12_7, "#")
+			local var_12_9 = var_12_8[1]
+			local var_12_10 = var_12_8[2]
 
-			UISpriteSetMgr.instance:setCurrencyItemSprite(slot0.root._imagecost1num, string.format("%s_1", slot13.icon))
-			gohelper.setActive(slot0.root._imagecost1num.gameObject, true)
+			arg_12_0.cost1Quantity = var_12_8[3]
 
-			slot0.root._txtcost1num.text = slot0.cost1Quantity
+			local var_12_11, var_12_12 = ItemModel.instance:getItemConfigAndIcon(var_12_9, var_12_10)
+			local var_12_13 = var_12_11.icon
+			local var_12_14 = string.format("%s_1", var_12_13)
+
+			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_12_0.root._imagecost1num, var_12_14)
+			gohelper.setActive(arg_12_0.root._imagecost1num.gameObject, true)
+
+			arg_12_0.root._txtcost1num.text = arg_12_0.cost1Quantity
 		end
 
-		if string.nilorempty(slot3.cost2) then
-			gohelper.setActive(slot0.root._imagecost2num.gameObject, false)
+		local var_12_15 = var_12_1.cost2
+
+		if string.nilorempty(var_12_15) then
+			gohelper.setActive(arg_12_0.root._imagecost2num.gameObject, false)
 		else
-			slot11 = string.splitToNumber(string.split(slot8, "|")[slot1.buyCount + 1] or slot9[#slot9], "#")
-			slot0.cost2Quantity = slot11[3]
-			slot14, slot15 = ItemModel.instance:getItemConfigAndIcon(slot11[1], slot11[2])
+			local var_12_16 = string.split(var_12_15, "|")
+			local var_12_17 = var_12_16[arg_12_1.buyCount + 1] or var_12_16[#var_12_16]
+			local var_12_18 = string.splitToNumber(var_12_17, "#")
+			local var_12_19 = var_12_18[1]
+			local var_12_20 = var_12_18[2]
 
-			UISpriteSetMgr.instance:setCurrencyItemSprite(slot0.root._imagecost2num, string.format("%s_1", slot14.icon))
-			gohelper.setActive(slot0.root._imagecost2num.gameObject, true)
+			arg_12_0.cost2Quantity = var_12_18[3]
 
-			slot0.root._txtcost2num.text = slot0.cost2Quantity
+			local var_12_21, var_12_22 = ItemModel.instance:getItemConfigAndIcon(var_12_19, var_12_20)
+			local var_12_23 = var_12_21.icon
+			local var_12_24 = string.format("%s_1", var_12_23)
+
+			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_12_0.root._imagecost2num, var_12_24)
+			gohelper.setActive(arg_12_0.root._imagecost2num.gameObject, true)
+
+			arg_12_0.root._txtcost2num.text = arg_12_0.cost2Quantity
 		end
 
-		gohelper.setActive(slot0.root._godiscount, slot1.config.originalCost > 0)
+		gohelper.setActive(arg_12_0.root._godiscount, arg_12_1.config.originalCost > 0)
 
-		if not string.nilorempty(slot0.cost2Quantity) then
-			slot0.root._txtdiscount.text = string.format("-%d%%", 100 - math.ceil(slot0.cost2Quantity / slot1.config.originalCost * 100))
+		if not string.nilorempty(arg_12_0.cost2Quantity) then
+			local var_12_25 = arg_12_0.cost2Quantity / arg_12_1.config.originalCost
+			local var_12_26 = math.ceil(var_12_25 * 100)
+
+			arg_12_0.root._txtdiscount.text = string.format("-%d%%", 100 - var_12_26)
 		end
 
-		slot10 = 0
+		local var_12_27 = 0
+		local var_12_28 = 0
 
-		for slot14, slot15 in ipairs(slot5) do
-			slot0.itemType = slot15[1]
-			slot0.itemId = slot15[2]
-			slot0.itemNum = slot15[3]
+		for iter_12_0, iter_12_1 in ipairs(var_12_3) do
+			arg_12_0.itemType = iter_12_1[1]
+			arg_12_0.itemId = iter_12_1[2]
+			arg_12_0.itemNum = iter_12_1[3]
 
-			if slot0.itemType == MaterialEnum.MaterialType.BlockPackage then
-				if slot0.itemId and slot0.itemNum then
-					slot9 = 0 + RoomConfig.instance:getBlockPackageFullDegree(slot0.itemId) * slot0.itemNum
-					slot16 = RoomConfig.instance:getBlockListByPackageId(slot0.itemId) or {}
+			if arg_12_0.itemType == MaterialEnum.MaterialType.BlockPackage then
+				if arg_12_0.itemId and arg_12_0.itemNum then
+					var_12_27 = var_12_27 + RoomConfig.instance:getBlockPackageFullDegree(arg_12_0.itemId) * arg_12_0.itemNum
 
-					for slot20 = 1, #slot16 do
-						if slot16[slot20].ownType ~= RoomBlockEnum.OwnType.Special or RoomModel.instance:isHasBlockById(slot21.blockId) then
-							slot10 = slot10 + 1
+					local var_12_29 = RoomConfig.instance:getBlockListByPackageId(arg_12_0.itemId) or {}
+
+					for iter_12_2 = 1, #var_12_29 do
+						local var_12_30 = var_12_29[iter_12_2]
+
+						if var_12_30.ownType ~= RoomBlockEnum.OwnType.Special or RoomModel.instance:isHasBlockById(var_12_30.blockId) then
+							var_12_28 = var_12_28 + 1
 						end
 					end
 
-					if slot10 < 1 and #slot16 >= 1 then
-						slot10 = 1
+					if var_12_28 < 1 and #var_12_29 >= 1 then
+						var_12_28 = 1
 					end
 				else
 					logError("不存在值")
 				end
-			elseif slot0.itemType == MaterialEnum.MaterialType.Building then
-				if slot0.itemId and slot0.itemNum then
-					slot9 = slot9 + RoomConfig.instance:getBuildingConfig(slot0.itemId).buildDegree * slot0.itemNum
+			elseif arg_12_0.itemType == MaterialEnum.MaterialType.Building then
+				if arg_12_0.itemId and arg_12_0.itemNum then
+					var_12_27 = var_12_27 + RoomConfig.instance:getBuildingConfig(arg_12_0.itemId).buildDegree * arg_12_0.itemNum
 				else
 					logError("不存在值")
 				end
 			end
 		end
 
-		slot0.root._txthuolinum.text = slot9
-		slot0.root._txtblocknum.text = slot10
-		slot11 = slot0:checkChildCanJump(slot1)
+		arg_12_0.root._txthuolinum.text = var_12_27
+		arg_12_0.root._txtblocknum.text = var_12_28
 
-		gohelper.setActive(slot0.root._gotheme, not slot11)
-		gohelper.setActive(slot0.root._gotag, slot11)
-		gohelper.setActive(slot0.root._golimit, slot11)
-		gohelper.setActive(slot0.root._btnbuy.gameObject, not slot11)
+		local var_12_31 = arg_12_0:checkChildCanJump(arg_12_1)
 
-		if not slot11 then
-			slot0.themeId = slot0:_findThemeId(slot5)
+		gohelper.setActive(arg_12_0.root._gotheme, not var_12_31)
+		gohelper.setActive(arg_12_0.root._gotag, var_12_31)
+		gohelper.setActive(arg_12_0.root._golimit, var_12_31)
+		gohelper.setActive(arg_12_0.root._btnbuy.gameObject, not var_12_31)
 
-			gohelper.setActive(slot0.root._txttype.gameObject, slot0.themeId ~= nil)
-			gohelper.setActive(slot0.root._goclicktype, slot0.themeId ~= nil)
+		if not var_12_31 then
+			arg_12_0.themeId = arg_12_0:_findThemeId(var_12_3)
+
+			gohelper.setActive(arg_12_0.root._txttype.gameObject, arg_12_0.themeId ~= nil)
+			gohelper.setActive(arg_12_0.root._goclicktype, arg_12_0.themeId ~= nil)
 		end
 
-		slot0.has = slot1:alreadyHas()
+		arg_12_0.has = arg_12_1:alreadyHas()
 
-		if slot0.has then
-			gohelper.setActive(slot0.root._btnbuy.gameObject, false)
-			gohelper.setActive(slot0.root._gohas, true)
-			gohelper.setActive(slot0.root._golimit, false)
+		if arg_12_0.has then
+			gohelper.setActive(arg_12_0.root._btnbuy.gameObject, false)
+			gohelper.setActive(arg_12_0.root._gohas, true)
+			gohelper.setActive(arg_12_0.root._golimit, false)
 		end
 
-		slot12 = slot1:checkShowNewRedDot()
+		local var_12_32 = arg_12_1:checkShowNewRedDot()
 
-		gohelper.setActive(slot0.root._gonewtag, slot12)
+		gohelper.setActive(arg_12_0.root._gonewtag, var_12_32)
 
-		if slot12 then
-			recthelper.setAnchorX(slot0.root._txtremiantime.transform, -8)
+		if var_12_32 then
+			recthelper.setAnchorX(arg_12_0.root._txtremiantime.transform, -8)
 		else
-			recthelper.setAnchorX(slot0.root._txtremiantime.transform, -40)
+			recthelper.setAnchorX(arg_12_0.root._txtremiantime.transform, -40)
 		end
 
-		slot13 = slot1:getOfflineTime()
+		local var_12_33 = arg_12_1:getOfflineTime()
+		local var_12_34 = var_12_33 - ServerTime.now()
 
-		gohelper.setActive(slot0.root._goremaintime, slot13 > 0)
+		gohelper.setActive(arg_12_0.root._goremaintime, var_12_33 > 0)
 
-		if slot13 - ServerTime.now() > 3600 then
-			slot15, slot16 = TimeUtil.secondToRoughTime(slot14)
-			slot0.root._txtremiantime.text = formatLuaLang("remain", slot15 .. slot16)
+		if var_12_34 > 3600 then
+			local var_12_35, var_12_36 = TimeUtil.secondToRoughTime(var_12_34)
+
+			arg_12_0.root._txtremiantime.text = formatLuaLang("remain", var_12_35 .. var_12_36)
 		else
-			slot0.root._txtremiantime.text = luaLang("not_enough_one_hour")
+			arg_12_0.root._txtremiantime.text = luaLang("not_enough_one_hour")
 		end
 	end
 
-	if slot2 then
-		slot0._animationStartTime = Time.time
+	if var_12_0 then
+		arg_12_0._animationStartTime = Time.time
 	end
 
-	if not slot1.isjump then
-		slot0:_refreshOpenAnimation()
+	if not arg_12_1.isjump then
+		arg_12_0:_refreshOpenAnimation()
 	end
 end
 
-function slot0.onUpdateNodeMO(slot0, slot1)
-	slot0.node._simagedetailbg:LoadImage(ResUrl.getStoreWildness("img_zhankai_bg"))
+function var_0_0.onUpdateNodeMO(arg_13_0, arg_13_1)
+	arg_13_0.node._simagedetailbg:LoadImage(ResUrl.getStoreWildness("img_zhankai_bg"))
 
-	if next(slot0.nodeItemList) and slot0.nodeItemList.index ~= slot1.rootindex then
-		for slot5, slot6 in ipairs(slot0.nodeItemList) do
-			slot6.good:onDestroy()
+	if next(arg_13_0.nodeItemList) and arg_13_0.nodeItemList.index ~= arg_13_1.rootindex then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_0.nodeItemList) do
+			iter_13_1.good:onDestroy()
 		end
 
-		gohelper.destroyAllChildren(slot0.node._content)
+		gohelper.destroyAllChildren(arg_13_0.node._content)
 
-		slot0.nodeItemList = {}
+		arg_13_0.nodeItemList = {}
 	end
 
-	if #slot0.nodeItemList ~= #slot1 then
-		for slot5, slot6 in ipairs(slot0.nodeItemList) do
-			slot6.good:onDestroy()
+	if #arg_13_0.nodeItemList ~= #arg_13_1 then
+		for iter_13_2, iter_13_3 in ipairs(arg_13_0.nodeItemList) do
+			iter_13_3.good:onDestroy()
 		end
 
-		gohelper.destroyAllChildren(slot0.node._content)
+		gohelper.destroyAllChildren(arg_13_0.node._content)
 
-		slot0.nodeItemList = {}
+		arg_13_0.nodeItemList = {}
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0.nodeItemList[slot5] == nil then
-			slot7 = {
-				parent = slot0.node._content
+	for iter_13_4, iter_13_5 in ipairs(arg_13_1) do
+		local var_13_0 = arg_13_0.nodeItemList[iter_13_4]
+
+		if var_13_0 == nil then
+			var_13_0 = {
+				parent = arg_13_0.node._content
 			}
-			slot8 = slot0._view:getResInst("ui/viewres/store/normalstoregoodsitem.prefab", slot7.parent, "roomNode" .. slot5)
-			slot7.good = MonoHelper.addNoUpdateLuaComOnceToGo(slot8, NormalStoreGoodsItem)
 
-			slot7.good:hideOffflineTime()
-			slot7.good:init(slot8)
+			local var_13_1 = arg_13_0._view:getResInst("ui/viewres/store/normalstoregoodsitem.prefab", var_13_0.parent, "roomNode" .. iter_13_4)
 
-			slot0.nodeItemList[slot5] = slot7
-			slot0.nodeItemList.index = slot1.rootindex
+			var_13_0.good = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1, NormalStoreGoodsItem)
+
+			var_13_0.good:hideOffflineTime()
+			var_13_0.good:init(var_13_1)
+
+			arg_13_0.nodeItemList[iter_13_4] = var_13_0
+			arg_13_0.nodeItemList.index = arg_13_1.rootindex
 		end
 
-		slot7.good:onUpdateMO(slot6)
-		gohelper.setActive(slot7.go, true)
+		var_13_0.good:onUpdateMO(iter_13_5)
+		gohelper.setActive(var_13_0.go, true)
 	end
 end
 
-function slot0._refreshOpenAnimation(slot0)
-	if not slot0._animator or not slot0._animator.gameObject.activeInHierarchy then
+function var_0_0._refreshOpenAnimation(arg_14_0)
+	if not arg_14_0._animator or not arg_14_0._animator.gameObject.activeInHierarchy then
 		return
 	end
 
-	slot1 = slot0:_getAnimationTime()
-	slot0._animator.speed = 1
+	local var_14_0 = arg_14_0:_getAnimationTime()
 
-	slot0._animator:Play(UIAnimationName.Open, 0, 0)
-	slot0._animator:Update(0)
+	arg_14_0._animator.speed = 1
 
-	if slot0._animator:GetCurrentAnimatorStateInfo(0).length <= 0 then
-		slot3 = 1
+	arg_14_0._animator:Play(UIAnimationName.Open, 0, 0)
+	arg_14_0._animator:Update(0)
+
+	local var_14_1 = arg_14_0._animator:GetCurrentAnimatorStateInfo(0).length
+
+	if var_14_1 <= 0 then
+		var_14_1 = 1
 	end
 
-	slot0._animator:Play(UIAnimationName.Open, 0, (Time.time - slot1) / slot3)
-	slot0._animator:Update(0)
+	arg_14_0._animator:Play(UIAnimationName.Open, 0, (Time.time - var_14_0) / var_14_1)
+	arg_14_0._animator:Update(0)
 end
 
-function slot0._getAnimationTime(slot0)
-	if not slot0._animationStartTime then
+function var_0_0._getAnimationTime(arg_15_0)
+	if not arg_15_0._animationStartTime then
 		return nil
 	end
 
-	return slot0._animationStartTime + 0.1 * slot0._rootIndex
+	local var_15_0 = 0.1 * arg_15_0._rootIndex
+
+	return arg_15_0._animationStartTime + var_15_0
 end
 
-function slot0.checkChildCanJump(slot0, slot1)
-	if slot1.children and #slot1.children > 0 then
-		for slot5, slot6 in ipairs(slot1.children) do
-			if slot6.config.jumpId ~= 0 then
+function var_0_0.checkChildCanJump(arg_16_0, arg_16_1)
+	if arg_16_1.children and #arg_16_1.children > 0 then
+		for iter_16_0, iter_16_1 in ipairs(arg_16_1.children) do
+			if iter_16_1.config.jumpId ~= 0 then
 				return true
 			end
 		end
@@ -415,4 +466,4 @@ function slot0.checkChildCanJump(slot0, slot1)
 	return false
 end
 
-return slot0
+return var_0_0

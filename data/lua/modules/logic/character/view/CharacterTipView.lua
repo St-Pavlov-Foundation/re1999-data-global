@@ -1,816 +1,955 @@
-module("modules.logic.character.view.CharacterTipView", package.seeall)
+﻿module("modules.logic.character.view.CharacterTipView", package.seeall)
 
-slot0 = class("CharacterTipView", BaseView)
+local var_0_0 = class("CharacterTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goattributetip = gohelper.findChild(slot0.viewGO, "#go_attributetip")
-	slot0._btnbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_attributetip/scrollview/viewport/#btn_bg")
-	slot0._goattributecontent = gohelper.findChild(slot0.viewGO, "#go_attributetip/scrollview/viewport/content")
-	slot0._godetailcontent = gohelper.findChild(slot0.viewGO, "#go_attributetip/#go_detailContent")
-	slot0._goattributecontentitem = gohelper.findChild(slot0.viewGO, "#go_attributetip/#go_detailContent/detailscroll/Viewport/#go_attributeContent/#go_attributeItem")
-	slot0._gopassiveskilltip = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip")
-	slot0._goeffectdesc = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
-	slot0._goeffectdescitem = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
-	slot0._gomask1 = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
-	slot0._simageshadow = gohelper.findChildSingleImage(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
-	slot0._btnclosepassivetip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
-	slot0._goBuffContainer = gohelper.findChild(slot0.viewGO, "#go_buffContainer")
-	slot0._btnclosebuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buffContainer/buff_bg")
-	slot0._goBuffItem = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem")
-	slot0._txtBuffName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
-	slot0._goBuffTag = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
-	slot0._txtBuffTagName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
-	slot0._txtBuffDesc = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goattributetip = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip")
+	arg_1_0._btnbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_attributetip/scrollview/viewport/#btn_bg")
+	arg_1_0._goattributecontent = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/scrollview/viewport/content")
+	arg_1_0._godetailcontent = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/#go_detailContent")
+	arg_1_0._goattributecontentitem = gohelper.findChild(arg_1_0.viewGO, "#go_attributetip/#go_detailContent/detailscroll/Viewport/#go_attributeContent/#go_attributeItem")
+	arg_1_0._gopassiveskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip")
+	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
+	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
+	arg_1_0._gomask1 = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
+	arg_1_0._simageshadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
+	arg_1_0._btnclosepassivetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
+	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer")
+	arg_1_0._btnclosebuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buffContainer/buff_bg")
+	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem")
+	arg_1_0._txtBuffName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
+	arg_1_0._goBuffTag = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
+	arg_1_0._txtBuffTagName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
+	arg_1_0._txtBuffDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbg:AddClickListener(slot0._btnbgOnClick, slot0)
-	slot0._btnclosebuff:AddClickListener(slot0._btnclosebuffOnClick, slot0)
-	slot0._scrollview:AddOnValueChanged(slot0._onDragCallHandler, slot0)
-	slot0._btnclosepassivetip:AddClickListener(slot0._btnclosepassivetipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbg:AddClickListener(arg_2_0._btnbgOnClick, arg_2_0)
+	arg_2_0._btnclosebuff:AddClickListener(arg_2_0._btnclosebuffOnClick, arg_2_0)
+	arg_2_0._scrollview:AddOnValueChanged(arg_2_0._onDragCallHandler, arg_2_0)
+	arg_2_0._btnclosepassivetip:AddClickListener(arg_2_0._btnclosepassivetipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbg:RemoveClickListener()
-	slot0._btnclosebuff:RemoveClickListener()
-	slot0._scrollview:RemoveOnValueChanged()
-	slot0._btnclosepassivetip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbg:RemoveClickListener()
+	arg_3_0._btnclosebuff:RemoveClickListener()
+	arg_3_0._scrollview:RemoveOnValueChanged()
+	arg_3_0._btnclosepassivetip:RemoveClickListener()
 end
 
-slot0.DetailOffset = 25
-slot0.DetailBottomPos = -133.7
-slot0.DetailClickMinPos = -148
-slot0.AttrColor = GameUtil.parseColor("#323c34")
+var_0_0.DetailOffset = 25
+var_0_0.DetailBottomPos = -133.7
+var_0_0.DetailClickMinPos = -148
+var_0_0.AttrColor = GameUtil.parseColor("#323c34")
 
-function slot0._btnbgOnClick(slot0)
-	if not slot0._isOpenAttrDesc then
+function var_0_0._btnbgOnClick(arg_4_0)
+	if not arg_4_0._isOpenAttrDesc then
 		return
 	end
 
-	slot0._isOpenAttrDesc = false
+	arg_4_0._isOpenAttrDesc = false
 
-	gohelper.setActive(slot0._godetailcontent, false)
+	gohelper.setActive(arg_4_0._godetailcontent, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_role_description)
 end
 
-function slot0._btnclosebuffOnClick(slot0)
-	gohelper.setActive(slot0._goBuffContainer, false)
+function var_0_0._btnclosebuffOnClick(arg_5_0)
+	gohelper.setActive(arg_5_0._goBuffContainer, false)
 end
 
-function slot0._btnclosepassivetipOnClick(slot0)
+function var_0_0._btnclosepassivetipOnClick(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0._onDragCallHandler(slot0)
-	gohelper.setActive(slot0._gomask1, slot0._couldScroll and gohelper.getRemindFourNumberFloat(slot0._scrollview.verticalNormalizedPosition) > 0)
+function var_0_0._onDragCallHandler(arg_7_0)
+	gohelper.setActive(arg_7_0._gomask1, arg_7_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_7_0._scrollview.verticalNormalizedPosition) <= 0))
 
-	slot0._passiveskilltipmask.enabled = slot0._couldScroll and gohelper.getRemindFourNumberFloat(slot0._scrollview.verticalNormalizedPosition) < 1
+	arg_7_0._passiveskilltipmask.enabled = arg_7_0._couldScroll and gohelper.getRemindFourNumberFloat(arg_7_0._scrollview.verticalNormalizedPosition) < 1
 end
 
-function slot0._editableInitView(slot0)
-	slot0._isOpenAttrDesc = false
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._isOpenAttrDesc = false
 
-	gohelper.setActive(slot0._goBuffContainer, false)
+	gohelper.setActive(arg_8_0._goBuffContainer, false)
 
-	slot0.gocontent = gohelper.findChild(slot0._goattributetip, "scrollview/viewport/content")
-	slot0.gotitleitem = gohelper.findChild(slot0._goattributetip, "scrollview/viewport/content/titleitem")
-	slot0.godescitem = gohelper.findChild(slot0._goattributetip, "scrollview/viewport/content/descitem")
-	slot0.goattrnormalitem = gohelper.findChild(slot0._goattributetip, "scrollview/viewport/content/attrnormalitem")
-	slot0.goattrnormalwithdescitem = gohelper.findChild(slot0._goattributetip, "scrollview/viewport/content/attrnormalwithdescitem")
-	slot0.goattrupperitem = gohelper.findChild(slot0._goattributetip, "scrollview/viewport/content/attrupperitem")
-	slot0._txtDetailItemName = gohelper.findChildText(slot0._goattributecontentitem, "name")
-	slot0._txtDetailItemIcon = gohelper.findChildImage(slot0._goattributecontentitem, "name/icon")
-	slot0._txtDetailItemDesc = gohelper.findChildText(slot0._goattributecontentitem, "desc")
-	slot0._passiveskilltipcontent = gohelper.findChild(slot0._gopassiveskilltip, "mask/root/scrollview/viewport/content")
-	slot0._passiveskilltipmask = gohelper.findChild(slot0._gopassiveskilltip, "mask"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	arg_8_0.gocontent = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content")
+	arg_8_0.gotitleitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/titleitem")
+	arg_8_0.godescitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/descitem")
+	arg_8_0.goattrnormalitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/attrnormalitem")
+	arg_8_0.goattrnormalwithdescitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/attrnormalwithdescitem")
+	arg_8_0.goattrupperitem = gohelper.findChild(arg_8_0._goattributetip, "scrollview/viewport/content/attrupperitem")
+	arg_8_0._txtDetailItemName = gohelper.findChildText(arg_8_0._goattributecontentitem, "name")
+	arg_8_0._txtDetailItemIcon = gohelper.findChildImage(arg_8_0._goattributecontentitem, "name/icon")
+	arg_8_0._txtDetailItemDesc = gohelper.findChildText(arg_8_0._goattributecontentitem, "desc")
+	arg_8_0._passiveskilltipcontent = gohelper.findChild(arg_8_0._gopassiveskilltip, "mask/root/scrollview/viewport/content")
+	arg_8_0._passiveskilltipmask = gohelper.findChild(arg_8_0._gopassiveskilltip, "mask"):GetComponent(typeof(UnityEngine.UI.RectMask2D))
 
-	gohelper.setActive(slot0.gotitleitem, false)
-	gohelper.setActive(slot0.godescitem, false)
-	gohelper.setActive(slot0.goattrnormalitem, false)
-	gohelper.setActive(slot0.goattrnormalwithdescitem, false)
-	gohelper.setActive(slot0.goattrupperitem, false)
+	gohelper.setActive(arg_8_0.gotitleitem, false)
+	gohelper.setActive(arg_8_0.godescitem, false)
+	gohelper.setActive(arg_8_0.goattrnormalitem, false)
+	gohelper.setActive(arg_8_0.goattrnormalwithdescitem, false)
+	gohelper.setActive(arg_8_0.goattrupperitem, false)
 
-	slot0.goTotalTitle = gohelper.clone(slot0.gotitleitem, slot0.gocontent, "totaltitle")
+	arg_8_0.goTotalTitle = gohelper.clone(arg_8_0.gotitleitem, arg_8_0.gocontent, "totaltitle")
 
-	gohelper.setActive(slot0.goTotalTitle, false)
-	slot0:_setTitleText(slot0.goTotalTitle, luaLang("character_tip_total_attribute"), "STATS")
+	gohelper.setActive(arg_8_0.goTotalTitle, false)
+	arg_8_0:_setTitleText(arg_8_0.goTotalTitle, luaLang("character_tip_total_attribute"), "STATS")
 
-	slot4 = "descitem"
-	slot0.goDescTitle = gohelper.clone(slot0.godescitem, slot0.gocontent, slot4)
+	arg_8_0.goDescTitle = gohelper.clone(arg_8_0.godescitem, arg_8_0.gocontent, "descitem")
 
-	gohelper.setActive(slot0.goDescTitle, false)
+	gohelper.setActive(arg_8_0.goDescTitle, false)
 
-	slot0._attnormalitems = {}
+	arg_8_0._attnormalitems = {}
 
-	for slot4 = 1, 4 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.clone(slot0.goattrnormalitem, slot0.gocontent, "attrnormal" .. 1)
+	for iter_8_0 = 1, 4 do
+		local var_8_0 = arg_8_0:getUserDataTb_()
 
-		gohelper.setActive(slot5.go, true)
+		var_8_0.go = gohelper.clone(arg_8_0.goattrnormalitem, arg_8_0.gocontent, "attrnormal" .. 1)
 
-		slot5.value = gohelper.findChildText(slot5.go, "value")
-		slot5.addValue = gohelper.findChildText(slot5.go, "addvalue")
-		slot5.name = gohelper.findChildText(slot5.go, "name")
-		slot5.icon = gohelper.findChildImage(slot5.go, "icon")
-		slot5.rate = gohelper.findChildImage(slot5.go, "rate")
-		slot5.detail = gohelper.findChild(slot5.go, "btndetail")
-		slot5.withDesc = false
-		slot0._attnormalitems[slot4] = slot5
+		gohelper.setActive(var_8_0.go, true)
+
+		var_8_0.value = gohelper.findChildText(var_8_0.go, "value")
+		var_8_0.addValue = gohelper.findChildText(var_8_0.go, "addvalue")
+		var_8_0.name = gohelper.findChildText(var_8_0.go, "name")
+		var_8_0.icon = gohelper.findChildImage(var_8_0.go, "icon")
+		var_8_0.rate = gohelper.findChildImage(var_8_0.go, "rate")
+		var_8_0.detail = gohelper.findChild(var_8_0.go, "btndetail")
+		var_8_0.withDesc = false
+		arg_8_0._attnormalitems[iter_8_0] = var_8_0
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot5 = "attrnormal" .. #slot0._attnormalitems + 1
-	slot1.go = gohelper.clone(slot0.goattrnormalwithdescitem, slot0.gocontent, slot5)
+	local var_8_1 = arg_8_0:getUserDataTb_()
 
-	gohelper.setActive(slot1.go, true)
+	var_8_1.go = gohelper.clone(arg_8_0.goattrnormalwithdescitem, arg_8_0.gocontent, "attrnormal" .. #arg_8_0._attnormalitems + 1)
 
-	slot1.value = gohelper.findChildText(slot1.go, "attr/value")
-	slot1.addValue = gohelper.findChildText(slot1.go, "attr/addvalue")
-	slot1.name = gohelper.findChildText(slot1.go, "attr/namelayout/name")
-	slot1.icon = gohelper.findChildImage(slot1.go, "attr/icon")
-	slot1.detail = gohelper.findChild(slot1.go, "attr/btndetail")
-	slot1.desc = gohelper.findChildText(slot1.go, "desc/#txt_desc")
-	slot1.withDesc = true
-	slot0._attnormalitems[#slot0._attnormalitems + 1] = slot1
-	slot0._attrupperitems = {}
+	gohelper.setActive(var_8_1.go, true)
 
-	for slot5 = 1, 12 do
-		slot0:_getAttrUpperItem(slot5)
+	var_8_1.value = gohelper.findChildText(var_8_1.go, "attr/value")
+	var_8_1.addValue = gohelper.findChildText(var_8_1.go, "attr/addvalue")
+	var_8_1.name = gohelper.findChildText(var_8_1.go, "attr/namelayout/name")
+	var_8_1.icon = gohelper.findChildImage(var_8_1.go, "attr/icon")
+	var_8_1.detail = gohelper.findChild(var_8_1.go, "attr/btndetail")
+	var_8_1.desc = gohelper.findChildText(var_8_1.go, "desc/#txt_desc")
+	var_8_1.withDesc = true
+	arg_8_0._attnormalitems[#arg_8_0._attnormalitems + 1] = var_8_1
+	arg_8_0._attrupperitems = {}
+
+	for iter_8_1 = 1, 12 do
+		arg_8_0:_getAttrUpperItem(iter_8_1)
 	end
 
-	slot0._passiveskillitems = {}
+	arg_8_0._passiveskillitems = {}
 
-	for slot5 = 1, 3 do
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = gohelper.findChild(slot0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(slot5))
-		slot6.desc = gohelper.findChildTextMesh(slot6.go, "desctxt")
-		slot6.hyperLinkClick = SkillHelper.addHyperLinkClick(slot6.desc, slot0._onHyperLinkClick, slot0)
-		slot6.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot6.desc.gameObject, FixTmpBreakLine)
-		slot6.on = gohelper.findChild(slot6.go, "#go_passiveskills/passiveskill/on")
-		slot6.unlocktxt = gohelper.findChildText(slot6.go, "#go_passiveskills/passiveskill/unlocktxt")
-		slot6.canvasgroup = gohelper.onceAddComponent(slot6.go, typeof(UnityEngine.CanvasGroup))
-		slot6.connectline = gohelper.findChild(slot6.go, "line")
-		slot0._passiveskillitems[slot5] = slot6
+	for iter_8_2 = 1, 3 do
+		local var_8_2 = arg_8_0:getUserDataTb_()
+
+		var_8_2.go = gohelper.findChild(arg_8_0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(iter_8_2))
+		var_8_2.desc = gohelper.findChildTextMesh(var_8_2.go, "desctxt")
+		var_8_2.hyperLinkClick = SkillHelper.addHyperLinkClick(var_8_2.desc, arg_8_0._onHyperLinkClick, arg_8_0)
+		var_8_2.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_2.desc.gameObject, FixTmpBreakLine)
+		var_8_2.on = gohelper.findChild(var_8_2.go, "#go_passiveskills/passiveskill/on")
+		var_8_2.unlocktxt = gohelper.findChildText(var_8_2.go, "#go_passiveskills/passiveskill/unlocktxt")
+		var_8_2.canvasgroup = gohelper.onceAddComponent(var_8_2.go, typeof(UnityEngine.CanvasGroup))
+		var_8_2.connectline = gohelper.findChild(var_8_2.go, "line")
+		arg_8_0._passiveskillitems[iter_8_2] = var_8_2
 	end
 
-	slot0._txtpassivename = gohelper.findChildText(slot0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
-	slot0._detailClickItems = {}
-	slot0._detailDescTab = slot0:getUserDataTb_()
-	slot0._skillEffectDescItems = slot0:getUserDataTb_()
+	arg_8_0._txtpassivename = gohelper.findChildText(arg_8_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	arg_8_0._detailClickItems = {}
+	arg_8_0._detailDescTab = arg_8_0:getUserDataTb_()
+	arg_8_0._skillEffectDescItems = arg_8_0:getUserDataTb_()
 
-	slot0._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
+	arg_8_0._simageshadow:LoadImage(ResUrl.getCharacterIcon("bg_shade"))
 end
 
-function slot0._getAttrUpperItem(slot0, slot1)
-	if not slot0._attrupperitems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.clone(slot0.goattrupperitem, slot0.gocontent, "attrupper" .. slot1)
+function var_0_0._getAttrUpperItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._attrupperitems[arg_9_1]
 
-		gohelper.setActive(slot2.go, true)
+	if not var_9_0 then
+		var_9_0 = arg_9_0:getUserDataTb_()
+		var_9_0.go = gohelper.clone(arg_9_0.goattrupperitem, arg_9_0.gocontent, "attrupper" .. arg_9_1)
 
-		slot2.value = gohelper.findChildText(slot2.go, "value")
-		slot2.addValue = gohelper.findChildText(slot2.go, "addvalue")
-		slot2.name = gohelper.findChildText(slot2.go, "name")
-		slot2.icon = gohelper.findChildImage(slot2.go, "icon")
-		slot2.detail = gohelper.findChild(slot2.go, "btndetail")
-		slot0._attrupperitems[slot1] = slot2
+		gohelper.setActive(var_9_0.go, true)
+
+		var_9_0.value = gohelper.findChildText(var_9_0.go, "value")
+		var_9_0.addValue = gohelper.findChildText(var_9_0.go, "addvalue")
+		var_9_0.name = gohelper.findChildText(var_9_0.go, "name")
+		var_9_0.icon = gohelper.findChildImage(var_9_0.go, "icon")
+		var_9_0.detail = gohelper.findChild(var_9_0.go, "btndetail")
+		arg_9_0._attrupperitems[arg_9_1] = var_9_0
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0._setTitleText(slot0, slot1, slot2, slot3)
-	if gohelper.findChildText(slot1, "attcn") then
-		slot4.text = slot2
+function var_0_0._setTitleText(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = gohelper.findChildText(arg_10_1, "attcn")
+
+	if var_10_0 then
+		var_10_0.text = arg_10_2
 	end
 
-	if gohelper.findChildText(slot1, "atten") then
-		slot5.text = slot3
-	end
-end
+	local var_10_1 = gohelper.findChildText(arg_10_1, "atten")
 
-function slot0.onUpdateParam(slot0)
-end
-
-function slot0.onDestroyView(slot0)
-	slot0._simageshadow:UnLoadImage()
-end
-
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._godetailcontent, false)
-
-	slot1 = slot0.viewParam
-	slot0.heroId = slot0.viewParam.heroid
-	slot0._level = slot0.viewParam.level
-	slot0._rank = slot0.viewParam.rank
-	slot0._passiveSkillLevel = slot0.viewParam.passiveSkillLevel
-	slot0._setEquipInfo = slot0.viewParam.setEquipInfo
-	slot0._talentCubeInfos = slot0.viewParam.talentCubeInfos
-	slot0._balanceHelper = slot0.viewParam.balanceHelper or HeroGroupBalanceHelper
-
-	gohelper.setActive(slot0.goDescTitle, true)
-	gohelper.setActive(slot0.goTotalTitle, true)
-	gohelper.setActive(slot0._goattributetip, slot1.tag == "attribute")
-	gohelper.setActive(slot0._gopassiveskilltip, slot1.tag == "passiveskill")
-
-	slot1.showAttributeOption = slot1.showAttributeOption or CharacterEnum.showAttributeOption.ShowCurrent
-
-	if slot1.tag == "attribute" then
-		slot0:_setAttribute(slot1.equips, slot1.showAttributeOption)
-	elseif slot1.tag == "passiveskill" then
-		slot0:_setPassiveSkill(slot1.heroid, slot1.showAttributeOption, slot1.anchorParams, slot1.tipPos)
+	if var_10_1 then
+		var_10_1.text = arg_10_3
 	end
 end
 
-function slot0._setAttribute(slot0, slot1, slot2)
-	for slot6 = 7, 11 do
-		gohelper.setActive(slot0._attrupperitems[slot6].go, false)
-	end
-
-	slot0:refreshBaseAttrItem(slot1, slot2)
-	slot0:refreshUpAttrItem(slot1, slot2)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.refreshBaseAttrItem(slot0, slot1, slot2)
-	slot5 = slot0:getTalentValues(slot2)
-	slot6 = slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)
-	slot7 = slot6 and slot6.destinyStoneMo
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simageshadow:UnLoadImage()
+end
 
-	for slot12, slot13 in ipairs(CharacterEnum.BaseAttrIdList) do
-		slot14 = HeroConfig.instance:getHeroAttributeCO(slot13)
-		slot0._attnormalitems[slot12].value.text = slot3[slot13]
-		slot0._attnormalitems[slot12].addValue.text = slot0:getEquipAddBaseValues(slot1, slot0:getBaseAttrValueList(slot2))[slot13] + (slot5[slot13] and slot5[slot13].value or 0) + (slot7 and slot7:getAddValueByAttrId(slot7 and slot7:getAddAttrValues(), slot13) or 0) == 0 and "" or "+" .. slot16
-		slot0._attnormalitems[slot12].name.text = slot14.name
+function var_0_0.onOpen(arg_13_0)
+	gohelper.setActive(arg_13_0._godetailcontent, false)
 
-		CharacterController.instance:SetAttriIcon(slot0._attnormalitems[slot12].icon, slot13, GameUtil.parseColor("#323c34"))
+	local var_13_0 = arg_13_0.viewParam
 
-		if slot14.isShowTips == 1 then
-			slot18 = gohelper.getClick(slot0._attnormalitems[slot12].detail)
+	arg_13_0.heroId = arg_13_0.viewParam.heroid
+	arg_13_0._level = arg_13_0.viewParam.level
+	arg_13_0._rank = arg_13_0.viewParam.rank
+	arg_13_0._passiveSkillLevel = arg_13_0.viewParam.passiveSkillLevel
+	arg_13_0._setEquipInfo = arg_13_0.viewParam.setEquipInfo
+	arg_13_0._talentCubeInfos = arg_13_0.viewParam.talentCubeInfos
+	arg_13_0._balanceHelper = arg_13_0.viewParam.balanceHelper or HeroGroupBalanceHelper
 
-			slot18:AddClickListener(slot0.showDetail, slot0, {
-				attributeId = slot14.id,
-				icon = slot13,
-				go = slot0._attnormalitems[slot12].go
-			})
-			table.insert(slot0._detailClickItems, slot18)
-			gohelper.setActive(slot0._attnormalitems[slot12].detail, true)
+	gohelper.setActive(arg_13_0.goDescTitle, true)
+	gohelper.setActive(arg_13_0.goTotalTitle, true)
+	gohelper.setActive(arg_13_0._goattributetip, var_13_0.tag == "attribute")
+	gohelper.setActive(arg_13_0._gopassiveskilltip, var_13_0.tag == "passiveskill")
+
+	var_13_0.showAttributeOption = var_13_0.showAttributeOption or CharacterEnum.showAttributeOption.ShowCurrent
+
+	if var_13_0.tag == "attribute" then
+		arg_13_0:_setAttribute(var_13_0.equips, var_13_0.showAttributeOption)
+	elseif var_13_0.tag == "passiveskill" then
+		arg_13_0:_setPassiveSkill(var_13_0.heroid, var_13_0.showAttributeOption, var_13_0.anchorParams, var_13_0.tipPos)
+	end
+end
+
+function var_0_0._setAttribute(arg_14_0, arg_14_1, arg_14_2)
+	for iter_14_0 = 7, 11 do
+		gohelper.setActive(arg_14_0._attrupperitems[iter_14_0].go, false)
+	end
+
+	arg_14_0:refreshBaseAttrItem(arg_14_1, arg_14_2)
+	arg_14_0:refreshUpAttrItem(arg_14_1, arg_14_2)
+end
+
+function var_0_0.refreshBaseAttrItem(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getBaseAttrValueList(arg_15_2)
+	local var_15_1 = arg_15_0:getEquipAddBaseValues(arg_15_1, var_15_0)
+	local var_15_2 = arg_15_0:getTalentValues(arg_15_2)
+	local var_15_3 = arg_15_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_15_0.heroId)
+	local var_15_4 = var_15_3 and var_15_3.destinyStoneMo
+	local var_15_5 = var_15_4 and var_15_4:getAddAttrValues()
+
+	for iter_15_0, iter_15_1 in ipairs(CharacterEnum.BaseAttrIdList) do
+		local var_15_6 = HeroConfig.instance:getHeroAttributeCO(iter_15_1)
+		local var_15_7 = var_15_4 and var_15_4:getAddValueByAttrId(var_15_5, iter_15_1) or 0
+		local var_15_8 = var_15_1[iter_15_1] + (var_15_2[iter_15_1] and var_15_2[iter_15_1].value or 0) + var_15_7
+
+		arg_15_0._attnormalitems[iter_15_0].value.text = var_15_0[iter_15_1]
+		arg_15_0._attnormalitems[iter_15_0].addValue.text = var_15_8 == 0 and "" or "+" .. var_15_8
+		arg_15_0._attnormalitems[iter_15_0].name.text = var_15_6.name
+
+		CharacterController.instance:SetAttriIcon(arg_15_0._attnormalitems[iter_15_0].icon, iter_15_1, GameUtil.parseColor("#323c34"))
+
+		if var_15_6.isShowTips == 1 then
+			local var_15_9 = {
+				attributeId = var_15_6.id,
+				icon = iter_15_1,
+				go = arg_15_0._attnormalitems[iter_15_0].go
+			}
+			local var_15_10 = gohelper.getClick(arg_15_0._attnormalitems[iter_15_0].detail)
+
+			var_15_10:AddClickListener(arg_15_0.showDetail, arg_15_0, var_15_9)
+			table.insert(arg_15_0._detailClickItems, var_15_10)
+			gohelper.setActive(arg_15_0._attnormalitems[iter_15_0].detail, true)
 		else
-			gohelper.setActive(slot0._attnormalitems[slot12].detail, false)
+			gohelper.setActive(arg_15_0._attnormalitems[iter_15_0].detail, false)
 		end
 
-		if slot0._attnormalitems[slot12].withDesc then
-			slot17, slot18 = slot0:calculateTechnic(slot3[CharacterEnum.AttrId.Technic], slot2)
-			slot0._attnormalitems[slot12].desc.text = string.gsub(string.gsub(CommonConfig.instance:getConstStr(ConstEnum.CharacterTechnicDesc), "▩1%%s", slot17), "▩2%%s", slot18)
+		if arg_15_0._attnormalitems[iter_15_0].withDesc then
+			local var_15_11, var_15_12 = arg_15_0:calculateTechnic(var_15_0[CharacterEnum.AttrId.Technic], arg_15_2)
+			local var_15_13 = CommonConfig.instance:getConstStr(ConstEnum.CharacterTechnicDesc)
+			local var_15_14 = string.gsub(var_15_13, "▩1%%s", var_15_11)
+			local var_15_15 = string.gsub(var_15_14, "▩2%%s", var_15_12)
+
+			arg_15_0._attnormalitems[iter_15_0].desc.text = var_15_15
 		end
 	end
 end
 
-function slot0.refreshUpAttrItem(slot0, slot1, slot2)
-	slot6 = slot0:getTalentValues(slot2)
-	slot7 = slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)
-	slot8 = slot7 and slot7.destinyStoneMo
-	slot10, slot11 = slot0:calculateTechnic(slot0:getBaseAttrValueList(slot2)[CharacterEnum.AttrId.Technic], slot2)
-	slot12 = 1
+function var_0_0.refreshUpAttrItem(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0:getBaseAttrValueList(arg_16_2)
+	local var_16_1 = arg_16_0:_getTotalUpAttributes(arg_16_2)
+	local var_16_2 = arg_16_0:getEquipBreakAddAttrValues(arg_16_1)
+	local var_16_3 = arg_16_0:getTalentValues(arg_16_2)
+	local var_16_4 = arg_16_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_16_0.heroId)
+	local var_16_5 = var_16_4 and var_16_4.destinyStoneMo
+	local var_16_6 = var_16_5 and var_16_5:getAddAttrValues()
+	local var_16_7, var_16_8 = arg_16_0:calculateTechnic(var_16_0[CharacterEnum.AttrId.Technic], arg_16_2)
+	local var_16_9 = 1
 
-	for slot16, slot17 in ipairs(CharacterEnum.UpAttrIdList) do
-		gohelper.setActive(slot0._attrupperitems[slot16].go, true)
+	for iter_16_0, iter_16_1 in ipairs(CharacterEnum.UpAttrIdList) do
+		gohelper.setActive(arg_16_0._attrupperitems[iter_16_0].go, true)
 
-		slot18 = HeroConfig.instance:getHeroAttributeCO(slot17)
-		slot20 = slot0:getEquipBreakAddAttrValues(slot1)[slot17] + (slot6[slot17] and slot6[slot17].value or 0) + (slot8 and slot8:getAddValueByAttrId(slot8 and slot8:getAddAttrValues(), slot17) or 0)
+		local var_16_10 = HeroConfig.instance:getHeroAttributeCO(iter_16_1)
+		local var_16_11 = var_16_5 and var_16_5:getAddValueByAttrId(var_16_6, iter_16_1) or 0
+		local var_16_12 = var_16_2[iter_16_1] + (var_16_3[iter_16_1] and var_16_3[iter_16_1].value or 0) + var_16_11
+		local var_16_13 = (var_16_1[iter_16_1] or 0) / 10
 
-		if slot17 == CharacterEnum.AttrId.Cri then
-			slot21 = (slot0:_getTotalUpAttributes(slot2)[slot17] or 0) / 10 + slot10
+		if iter_16_1 == CharacterEnum.AttrId.Cri then
+			var_16_13 = var_16_13 + var_16_7
 		end
 
-		if slot17 == CharacterEnum.AttrId.CriDmg then
-			slot21 = slot21 + slot11
+		if iter_16_1 == CharacterEnum.AttrId.CriDmg then
+			var_16_13 = var_16_13 + var_16_8
 		end
 
-		slot0._attrupperitems[slot16].value.text = tostring(GameUtil.noMoreThanOneDecimalPlace(slot21)) .. "%"
-		slot0._attrupperitems[slot16].addValue.text = slot20 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(slot20)) .. "%"
-		slot0._attrupperitems[slot16].name.text = slot18.name
+		local var_16_14 = tostring(GameUtil.noMoreThanOneDecimalPlace(var_16_13)) .. "%"
 
-		CharacterController.instance:SetAttriIcon(slot0._attrupperitems[slot16].icon, slot17, uv0.AttrColor)
+		arg_16_0._attrupperitems[iter_16_0].value.text = var_16_14
+		arg_16_0._attrupperitems[iter_16_0].addValue.text = var_16_12 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(var_16_12)) .. "%"
+		arg_16_0._attrupperitems[iter_16_0].name.text = var_16_10.name
 
-		if slot18.isShowTips == 1 then
-			slot23 = gohelper.getClick(slot0._attrupperitems[slot16].detail)
+		CharacterController.instance:SetAttriIcon(arg_16_0._attrupperitems[iter_16_0].icon, iter_16_1, var_0_0.AttrColor)
 
-			slot23:AddClickListener(slot0.showDetail, slot0, {
-				attributeId = slot18.id,
-				icon = slot17,
-				go = slot0._attrupperitems[slot16].go
-			})
-			table.insert(slot0._detailClickItems, slot23)
-			gohelper.setActive(slot0._attrupperitems[slot16].detail, true)
+		if var_16_10.isShowTips == 1 then
+			local var_16_15 = {
+				attributeId = var_16_10.id,
+				icon = iter_16_1,
+				go = arg_16_0._attrupperitems[iter_16_0].go
+			}
+			local var_16_16 = gohelper.getClick(arg_16_0._attrupperitems[iter_16_0].detail)
+
+			var_16_16:AddClickListener(arg_16_0.showDetail, arg_16_0, var_16_15)
+			table.insert(arg_16_0._detailClickItems, var_16_16)
+			gohelper.setActive(arg_16_0._attrupperitems[iter_16_0].detail, true)
 		else
-			gohelper.setActive(slot0._attrupperitems[slot16].detail, false)
+			gohelper.setActive(arg_16_0._attrupperitems[iter_16_0].detail, false)
 		end
 
-		slot12 = slot12 + 1
+		var_16_9 = var_16_9 + 1
 	end
 
-	for slot16, slot17 in ipairs(CharacterDestinyEnum.DestinyUpSpecialAttr) do
-		if (slot8 and slot8:getAddValueByAttrId(slot9, slot17) or 0) ~= 0 then
-			slot19 = slot0:_getAttrUpperItem(slot12)
+	for iter_16_2, iter_16_3 in ipairs(CharacterDestinyEnum.DestinyUpSpecialAttr) do
+		local var_16_17 = var_16_5 and var_16_5:getAddValueByAttrId(var_16_6, iter_16_3) or 0
 
-			gohelper.setActive(slot19.go, true)
+		if var_16_17 ~= 0 then
+			local var_16_18 = arg_16_0:_getAttrUpperItem(var_16_9)
 
-			slot20 = HeroConfig.instance:getHeroAttributeCO(slot17)
-			slot19.value.text = 0
-			slot19.addValue.text = slot18 == 0 and "" or "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(slot18)) .. "%"
-			slot19.name.text = slot20.name
+			gohelper.setActive(var_16_18.go, true)
 
-			CharacterController.instance:SetAttriIcon(slot19.icon, slot17, uv0.AttrColor)
+			local var_16_19 = HeroConfig.instance:getHeroAttributeCO(iter_16_3)
 
-			if slot20.isShowTips == 1 then
-				slot23 = gohelper.getClick(slot19.detail)
+			var_16_18.value.text = 0
 
-				slot23:AddClickListener(slot0.showDetail, slot0, {
-					attributeId = slot20.id,
-					icon = slot17,
-					go = slot19.go
-				})
-				table.insert(slot0._detailClickItems, slot23)
-				gohelper.setActive(slot19.detail, true)
+			local var_16_20 = "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(var_16_17)) .. "%"
+
+			var_16_18.addValue.text = var_16_17 == 0 and "" or var_16_20
+			var_16_18.name.text = var_16_19.name
+
+			CharacterController.instance:SetAttriIcon(var_16_18.icon, iter_16_3, var_0_0.AttrColor)
+
+			if var_16_19.isShowTips == 1 then
+				local var_16_21 = {
+					attributeId = var_16_19.id,
+					icon = iter_16_3,
+					go = var_16_18.go
+				}
+				local var_16_22 = gohelper.getClick(var_16_18.detail)
+
+				var_16_22:AddClickListener(arg_16_0.showDetail, arg_16_0, var_16_21)
+				table.insert(arg_16_0._detailClickItems, var_16_22)
+				gohelper.setActive(var_16_18.detail, true)
 			else
-				gohelper.setActive(slot19.detail, false)
+				gohelper.setActive(var_16_18.detail, false)
 			end
 
-			slot12 = slot12 + 1
+			var_16_9 = var_16_9 + 1
 		end
 	end
 end
 
-function slot0.getBaseAttrValueList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getBaseAttrValueList(arg_17_0, arg_17_1)
+	local var_17_0 = {}
 
-	if slot1 == CharacterEnum.showAttributeOption.ShowMax then
-		slot2 = slot0:_getMaxNormalAtrributes()
-	elseif slot1 == CharacterEnum.showAttributeOption.ShowMin then
-		slot2 = slot0:_getMinNormalAttribute()
+	if arg_17_1 == CharacterEnum.showAttributeOption.ShowMax then
+		var_17_0 = arg_17_0:_getMaxNormalAtrributes()
+	elseif arg_17_1 == CharacterEnum.showAttributeOption.ShowMin then
+		var_17_0 = arg_17_0:_getMinNormalAttribute()
 	else
-		slot3 = slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)
-		slot4 = slot0._level
-		slot5 = slot0._rank
+		local var_17_1 = arg_17_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_17_0.heroId)
+		local var_17_2 = arg_17_0._level
+		local var_17_3 = arg_17_0._rank
 
-		if slot0.viewParam.isBalance then
-			_, slot5 = HeroConfig.instance:getShowLevel(slot0._balanceHelper.getHeroBalanceLv(slot3.heroId))
+		if arg_17_0.viewParam.isBalance then
+			var_17_2 = arg_17_0._balanceHelper.getHeroBalanceLv(var_17_1.heroId)
+			_, var_17_3 = HeroConfig.instance:getShowLevel(var_17_2)
 		end
 
-		slot2 = slot3:getHeroBaseAttrDict(slot4, slot5)
+		var_17_0 = var_17_1:getHeroBaseAttrDict(var_17_2, var_17_3)
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.getEquipAddBaseValues(slot0, slot1, slot2)
-	slot3 = {
-		[slot9] = 0
-	}
-	slot4 = {
-		[slot9] = 0
-	}
+function var_0_0.getEquipAddBaseValues(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = {}
+	local var_18_1 = {}
 
-	for slot8, slot9 in ipairs(CharacterEnum.BaseAttrIdList) do
-		-- Nothing
+	for iter_18_0, iter_18_1 in ipairs(CharacterEnum.BaseAttrIdList) do
+		var_18_0[iter_18_1] = 0
+		var_18_1[iter_18_1] = 0
 	end
 
-	slot5 = nil
+	local var_18_2
 
-	if slot0.viewParam.isBalance then
-		_, _, slot5 = slot0._balanceHelper.getBalanceLv()
+	if arg_18_0.viewParam.isBalance then
+		_, _, var_18_2 = arg_18_0._balanceHelper.getBalanceLv()
 	end
 
-	if slot1 then
-		if slot0.viewParam.trialEquipMo then
-			(slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)):_calcEquipAttr(slot0.viewParam.trialEquipMo, slot3, slot4)
+	local var_18_3 = arg_18_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_18_0.heroId)
+
+	if arg_18_1 then
+		if arg_18_0.viewParam.trialEquipMo then
+			var_18_3:_calcEquipAttr(arg_18_0.viewParam.trialEquipMo, var_18_0, var_18_1)
 		end
 
-		for slot10 = 1, #slot1 do
-			slot6:_calcEquipAttr(EquipModel.instance:getEquip(slot1[slot10]) and slot0:_modifyEquipInfo(slot11), slot3, slot4, slot5)
+		for iter_18_2 = 1, #arg_18_1 do
+			local var_18_4 = EquipModel.instance:getEquip(arg_18_1[iter_18_2])
+
+			var_18_4 = var_18_4 and arg_18_0:_modifyEquipInfo(var_18_4)
+
+			var_18_3:_calcEquipAttr(var_18_4, var_18_0, var_18_1, var_18_2)
 		end
 	end
 
-	for slot10, slot11 in ipairs(CharacterEnum.BaseAttrIdList) do
-		slot3[slot11] = slot3[slot11] + math.floor(slot4[slot11] / 1000 * slot2[slot11])
+	for iter_18_3, iter_18_4 in ipairs(CharacterEnum.BaseAttrIdList) do
+		var_18_0[iter_18_4] = var_18_0[iter_18_4] + math.floor(var_18_1[iter_18_4] / 1000 * arg_18_2[iter_18_4])
 	end
 
-	return slot3
+	return var_18_0
 end
 
-function slot0._modifyEquipInfo(slot0, slot1)
-	if slot0._setEquipInfo then
-		if slot0._setEquipInfo[3] and slot4.isCachot then
-			return slot0._setEquipInfo[1](slot0._setEquipInfo[2], {
-				seatLevel = slot4.seatLevel,
-				equipMO = slot1
+function var_0_0._modifyEquipInfo(arg_19_0, arg_19_1)
+	if arg_19_0._setEquipInfo then
+		local var_19_0 = arg_19_0._setEquipInfo[1]
+		local var_19_1 = arg_19_0._setEquipInfo[2]
+		local var_19_2 = arg_19_0._setEquipInfo[3]
+
+		if var_19_2 and var_19_2.isCachot then
+			return var_19_0(var_19_1, {
+				seatLevel = var_19_2.seatLevel,
+				equipMO = arg_19_1
 			})
 		end
 	end
 
-	return slot1
+	return arg_19_1
 end
 
-function slot0.getTalentValues(slot0, slot1)
-	slot2 = {}
+function var_0_0.getTalentValues(arg_20_0, arg_20_1)
+	local var_20_0 = {}
 
-	if slot1 == CharacterEnum.showAttributeOption.ShowCurrent then
-		slot3 = slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)
+	if arg_20_1 == CharacterEnum.showAttributeOption.ShowCurrent then
+		local var_20_1 = arg_20_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_20_0.heroId)
 
-		if slot0.viewParam.isBalance then
-			slot4, slot5, slot6, slot7 = slot0._balanceHelper.getHeroBalanceInfo(slot3.heroId)
-			slot2 = slot3:getTalentGain(slot4, slot5, nil, slot7)
+		if arg_20_0.viewParam.isBalance then
+			local var_20_2, var_20_3, var_20_4, var_20_5 = arg_20_0._balanceHelper.getHeroBalanceInfo(var_20_1.heroId)
+
+			var_20_0 = var_20_1:getTalentGain(var_20_2, var_20_3, nil, var_20_5)
 		else
-			slot2 = slot3:getTalentGain(slot0._level or slot3.level, slot0._rank, nil, slot0._talentCubeInfos)
+			var_20_0 = var_20_1:getTalentGain(arg_20_0._level or var_20_1.level, arg_20_0._rank, nil, arg_20_0._talentCubeInfos)
 		end
 
-		for slot7, slot8 in pairs(HeroConfig.instance:talentGainTab2IDTab(slot2)) do
-			if HeroConfig.instance:getHeroAttributeCO(slot7).type ~= 1 then
-				slot2[slot7].value = slot2[slot7].value / 10
+		var_20_0 = HeroConfig.instance:talentGainTab2IDTab(var_20_0)
+
+		for iter_20_0, iter_20_1 in pairs(var_20_0) do
+			if HeroConfig.instance:getHeroAttributeCO(iter_20_0).type ~= 1 then
+				var_20_0[iter_20_0].value = var_20_0[iter_20_0].value / 10
 			else
-				slot2[slot7].value = math.floor(slot2[slot7].value)
+				var_20_0[iter_20_0].value = math.floor(var_20_0[iter_20_0].value)
 			end
 		end
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.getDestinyStoneAddValues(slot0, slot1)
-	if (slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.heroId)) and slot2.destinyStoneMo then
-		return slot3:getAddAttrValues()
+function var_0_0.getDestinyStoneAddValues(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_21_0.heroId)
+
+	if var_21_0 then
+		local var_21_1 = var_21_0.destinyStoneMo
+
+		if var_21_1 then
+			return var_21_1:getAddAttrValues()
+		end
 	end
 end
 
-function slot0.getEquipBreakAddAttrValues(slot0, slot1)
-	slot2 = {
-		[slot7] = 0
-	}
+function var_0_0.getEquipBreakAddAttrValues(arg_22_0, arg_22_1)
+	local var_22_0 = {}
 
-	for slot6, slot7 in ipairs(CharacterEnum.BaseAttrIdList) do
-		-- Nothing
+	for iter_22_0, iter_22_1 in ipairs(CharacterEnum.BaseAttrIdList) do
+		var_22_0[iter_22_1] = 0
 	end
 
-	for slot6, slot7 in ipairs(CharacterEnum.UpAttrIdList) do
-		slot2[slot7] = 0
+	for iter_22_2, iter_22_3 in ipairs(CharacterEnum.UpAttrIdList) do
+		var_22_0[iter_22_3] = 0
 	end
 
-	if slot1 and slot0.viewParam.heroMo and slot0.viewParam.trialEquipMo then
-		slot3 = slot0.viewParam.trialEquipMo
-		slot4, slot5 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(slot3.config, slot3.breakLv)
+	if arg_22_1 and arg_22_0.viewParam.heroMo and arg_22_0.viewParam.trialEquipMo then
+		local var_22_1 = arg_22_0.viewParam.trialEquipMo
+		local var_22_2, var_22_3 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_22_1.config, var_22_1.breakLv)
 
-		if slot4 then
-			slot2[slot4] = slot2[slot4] + slot5
+		if var_22_2 then
+			var_22_0[var_22_2] = var_22_0[var_22_2] + var_22_3
 		end
 	end
 
-	if slot1 and #slot1 > 0 then
-		for slot6, slot7 in ipairs(slot1) do
-			if EquipModel.instance:getEquip(slot7) then
-				slot8 = slot0:_modifyEquipInfo(slot8)
-				slot9, slot10 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(slot8.config, slot8.breakLv)
+	if arg_22_1 and #arg_22_1 > 0 then
+		for iter_22_4, iter_22_5 in ipairs(arg_22_1) do
+			local var_22_4 = EquipModel.instance:getEquip(iter_22_5)
 
-				if slot9 then
-					slot2[slot9] = slot2[slot9] + slot10
+			if var_22_4 then
+				local var_22_5 = arg_22_0:_modifyEquipInfo(var_22_4)
+				local var_22_6, var_22_7 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(var_22_5.config, var_22_5.breakLv)
+
+				if var_22_6 then
+					var_22_0[var_22_6] = var_22_0[var_22_6] + var_22_7
 				end
 			end
 		end
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		slot2[slot6] = slot7 / 10
+	for iter_22_6, iter_22_7 in pairs(var_22_0) do
+		var_22_0[iter_22_6] = iter_22_7 / 10
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0.calculateTechnic(slot0, slot1, slot2)
-	slot3, slot4, slot5 = nil
+function var_0_0.calculateTechnic(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0
+	local var_23_1
+	local var_23_2
 
-	if slot2 == CharacterEnum.showAttributeOption.ShowMax then
-		slot5 = CharacterModel.instance:getMaxLevel(slot0.viewParam.heroid)
-	elseif slot2 == CharacterEnum.showAttributeOption.ShowMin then
-		slot5 = 1
+	if arg_23_2 == CharacterEnum.showAttributeOption.ShowMax then
+		var_23_2 = CharacterModel.instance:getMaxLevel(arg_23_0.viewParam.heroid)
+	elseif arg_23_2 == CharacterEnum.showAttributeOption.ShowMin then
+		var_23_2 = 1
 	else
-		slot5 = slot0._level or (slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.viewParam.heroid)).level
+		local var_23_3 = arg_23_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_23_0.viewParam.heroid)
 
-		if slot0.viewParam.isBalance then
-			slot5 = slot0._balanceHelper.getHeroBalanceLv(slot6.heroId)
+		var_23_2 = arg_23_0._level or var_23_3.level
+
+		if arg_23_0.viewParam.isBalance then
+			var_23_2 = arg_23_0._balanceHelper.getHeroBalanceLv(var_23_3.heroId)
 		end
 	end
 
-	slot10 = (tonumber(lua_fight_const.configDict[13].value) + slot5 * tonumber(lua_fight_const.configDict[14].value) * 10) * 10
+	local var_23_4 = tonumber(lua_fight_const.configDict[11].value)
+	local var_23_5 = tonumber(lua_fight_const.configDict[12].value)
+	local var_23_6 = (tonumber(lua_fight_const.configDict[13].value) + var_23_2 * tonumber(lua_fight_const.configDict[14].value) * 10) * 10
+	local var_23_7 = string.format("%.1f", arg_23_1 * var_23_4 / var_23_6)
+	local var_23_8 = string.format("%.1f", arg_23_1 * var_23_5 / var_23_6)
 
-	return string.format("%.1f", slot1 * tonumber(lua_fight_const.configDict[11].value) / slot10), string.format("%.1f", slot1 * tonumber(lua_fight_const.configDict[12].value) / slot10)
+	return var_23_7, var_23_8
 end
 
-function slot0._getTotalUpAttributes(slot0, slot1)
-	slot2 = nil
+function var_0_0._getTotalUpAttributes(arg_24_0, arg_24_1)
+	local var_24_0
 
-	for slot7, slot8 in ipairs(CharacterEnum.UpAttrIdList) do
-		-- Nothing
+	if arg_24_1 == CharacterEnum.showAttributeOption.ShowMax then
+		local var_24_1 = CharacterModel.instance:getMaxRank(arg_24_0.viewParam.heroid)
+		local var_24_2 = CharacterModel.instance:getrankEffects(arg_24_0.viewParam.heroid, var_24_1)[1]
+
+		var_24_0 = SkillConfig.instance:getherolevelCO(arg_24_0.viewParam.heroid, var_24_2)
+	elseif arg_24_1 == CharacterEnum.showAttributeOption.ShowMin then
+		var_24_0 = SkillConfig.instance:getherolevelCO(arg_24_0.viewParam.heroid, 1)
+	else
+		var_24_0 = (arg_24_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_24_0.viewParam.heroid)):getHeroLevelConfig()
 	end
 
+	local var_24_3 = {}
+
+	for iter_24_0, iter_24_1 in ipairs(CharacterEnum.UpAttrIdList) do
+		var_24_3[iter_24_1] = var_24_0[CharacterEnum.AttrIdToAttrName[iter_24_1]] or 0
+	end
+
+	return var_24_3
+end
+
+function var_0_0._getMaxNormalAtrributes(arg_25_0)
+	local var_25_0 = CharacterModel.instance:getMaxRank(arg_25_0.viewParam.heroid)
+	local var_25_1 = CharacterModel.instance:getMaxLevel(arg_25_0.viewParam.heroid)
+	local var_25_2 = SkillConfig.instance:getherolevelCO(arg_25_0.viewParam.heroid, var_25_1)
+	local var_25_3 = SkillConfig.instance:getHeroRankAttribute(arg_25_0.viewParam.heroid, var_25_0)
+
 	return {
-		[slot8] = ((slot1 ~= CharacterEnum.showAttributeOption.ShowMax or SkillConfig.instance:getherolevelCO(slot0.viewParam.heroid, CharacterModel.instance:getrankEffects(slot0.viewParam.heroid, CharacterModel.instance:getMaxRank(slot0.viewParam.heroid))[1])) and (slot1 ~= CharacterEnum.showAttributeOption.ShowMin or SkillConfig.instance:getherolevelCO(slot0.viewParam.heroid, 1)) and (slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot0.viewParam.heroid)):getHeroLevelConfig())[CharacterEnum.AttrIdToAttrName[slot8]] or 0
+		[CharacterEnum.AttrId.Attack] = var_25_2.atk + var_25_3.atk,
+		[CharacterEnum.AttrId.Hp] = var_25_2.hp + var_25_3.hp,
+		[CharacterEnum.AttrId.Defense] = var_25_2.def + var_25_3.def,
+		[CharacterEnum.AttrId.Mdefense] = var_25_2.mdef + var_25_3.mdef,
+		[CharacterEnum.AttrId.Technic] = var_25_2.technic + var_25_3.technic
 	}
 end
 
-function slot0._getMaxNormalAtrributes(slot0)
-	slot3 = SkillConfig.instance:getherolevelCO(slot0.viewParam.heroid, CharacterModel.instance:getMaxLevel(slot0.viewParam.heroid))
-	slot4 = SkillConfig.instance:getHeroRankAttribute(slot0.viewParam.heroid, CharacterModel.instance:getMaxRank(slot0.viewParam.heroid))
+function var_0_0._getMinNormalAttribute(arg_26_0)
+	local var_26_0 = SkillConfig.instance:getherolevelCO(arg_26_0.viewParam.heroid, 1)
 
 	return {
-		[CharacterEnum.AttrId.Attack] = slot3.atk + slot4.atk,
-		[CharacterEnum.AttrId.Hp] = slot3.hp + slot4.hp,
-		[CharacterEnum.AttrId.Defense] = slot3.def + slot4.def,
-		[CharacterEnum.AttrId.Mdefense] = slot3.mdef + slot4.mdef,
-		[CharacterEnum.AttrId.Technic] = slot3.technic + slot4.technic
+		[CharacterEnum.AttrId.Attack] = var_26_0.atk,
+		[CharacterEnum.AttrId.Hp] = var_26_0.hp,
+		[CharacterEnum.AttrId.Defense] = var_26_0.def,
+		[CharacterEnum.AttrId.Mdefense] = var_26_0.mdef,
+		[CharacterEnum.AttrId.Technic] = var_26_0.technic
 	}
 end
 
-function slot0._getMinNormalAttribute(slot0)
-	slot1 = SkillConfig.instance:getherolevelCO(slot0.viewParam.heroid, 1)
-
-	return {
-		[CharacterEnum.AttrId.Attack] = slot1.atk,
-		[CharacterEnum.AttrId.Hp] = slot1.hp,
-		[CharacterEnum.AttrId.Defense] = slot1.def,
-		[CharacterEnum.AttrId.Mdefense] = slot1.mdef,
-		[CharacterEnum.AttrId.Technic] = slot1.technic
-	}
-end
-
-function slot0._countRate(slot0, slot1, slot2, slot3)
-	for slot7 = 1, slot3 - 1 do
-		if slot1 < slot2[slot7 + 1] then
-			return slot7
+function var_0_0._countRate(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	for iter_27_0 = 1, arg_27_3 - 1 do
+		if arg_27_1 < arg_27_2[iter_27_0 + 1] then
+			return iter_27_0
 		end
 	end
 
-	return slot3
+	return arg_27_3
 end
 
-function slot0._setPassiveSkill(slot0, slot1, slot2, slot3, slot4)
-	slot0._matchSkillNames = {}
-	slot5 = nil
-	slot6 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(slot1, (slot2 ~= CharacterEnum.showAttributeOption.ShowMax or CharacterEnum.MaxSkillExLevel) and (slot2 == CharacterEnum.showAttributeOption.ShowMin and 0 or (slot0.viewParam.heroMo or HeroModel.instance:getByHeroId(slot1)).exSkillLevel))
+function var_0_0._setPassiveSkill(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4)
+	arg_28_0._matchSkillNames = {}
 
-	if slot0.viewParam.heroMo and slot0.viewParam.heroMo.trialAttrCo then
-		slot6 = slot0.viewParam.heroMo:getpassiveskillsCO()
+	local var_28_0
+
+	if arg_28_2 == CharacterEnum.showAttributeOption.ShowMax then
+		var_28_0 = CharacterEnum.MaxSkillExLevel
+	else
+		var_28_0 = arg_28_2 == CharacterEnum.showAttributeOption.ShowMin and 0 or (arg_28_0.viewParam.heroMo or HeroModel.instance:getByHeroId(arg_28_1)).exSkillLevel
 	end
 
-	slot0._txtpassivename.text = lua_skill.configDict[slot6[1].skillPassive].name
-	slot10 = {}
+	local var_28_1 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(arg_28_1, var_28_0)
 
-	for slot14 = 1, #slot0:_checkDestinyEffect(slot6, slot0.viewParam.heroMo) do
-		table.insert(slot10, FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, lua_skill.configDict[slot7[slot14]]))
+	if arg_28_0.viewParam.heroMo and arg_28_0.viewParam.heroMo.trialAttrCo then
+		var_28_1 = arg_28_0.viewParam.heroMo:getpassiveskillsCO()
 	end
 
-	slot11 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(slot10)
-	slot12 = {}
-	slot13 = {}
-	slot14 = 0
+	local var_28_2 = arg_28_0:_checkDestinyEffect(var_28_1, arg_28_0.viewParam.heroMo)
+	local var_28_3 = var_28_1[1].skillPassive
 
-	if slot0.viewParam.isBalance then
-		slot14 = SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.viewParam.heroMo.heroId, math.max(slot0._level or slot0.viewParam.heroMo.level, slot0._balanceHelper.getHeroBalanceLv(slot0.viewParam.heroMo.heroId)))
+	arg_28_0._txtpassivename.text = lua_skill.configDict[var_28_3].name
+
+	local var_28_4 = {}
+
+	for iter_28_0 = 1, #var_28_2 do
+		local var_28_5 = var_28_2[iter_28_0]
+		local var_28_6 = lua_skill.configDict[var_28_5]
+		local var_28_7 = HeroConfig.instance:getHeroCO(arg_28_1)
+		local var_28_8 = FightConfig.instance:getSkillEffectDesc(var_28_7.name, var_28_6)
+
+		table.insert(var_28_4, var_28_8)
 	end
 
-	for slot18 = 1, #slot7 do
-		slot19 = slot7[slot18]
-		slot20 = slot0:_getPassiveUnlock(slot2, slot1, slot18, slot0.viewParam.heroMo)
+	local var_28_9 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_28_4)
+	local var_28_10 = {}
+	local var_28_11 = {}
+	local var_28_12 = 0
 
-		if slot0.viewParam.isBalance then
-			slot20 = slot18 <= slot14
+	if arg_28_0.viewParam.isBalance then
+		local var_28_13 = arg_28_0._balanceHelper.getHeroBalanceLv(arg_28_0.viewParam.heroMo.heroId)
+
+		var_28_12 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_28_0.viewParam.heroMo.heroId, math.max(arg_28_0._level or arg_28_0.viewParam.heroMo.level, var_28_13))
+	end
+
+	for iter_28_1 = 1, #var_28_2 do
+		local var_28_14 = var_28_2[iter_28_1]
+		local var_28_15 = arg_28_0:_getPassiveUnlock(arg_28_2, arg_28_1, iter_28_1, arg_28_0.viewParam.heroMo)
+
+		if arg_28_0.viewParam.isBalance then
+			var_28_15 = iter_28_1 <= var_28_12
 		end
 
-		for slot27, slot28 in ipairs(slot11[slot18]) do
-			if HeroSkillModel.instance:canShowSkillTag(SkillConfig.instance:getSkillEffectDescCo(slot28).name, true) and not slot12[slot30] then
-				slot12[slot30] = true
+		local var_28_16 = lua_skill.configDict[var_28_14]
+		local var_28_17 = HeroConfig.instance:getHeroCO(arg_28_1)
+		local var_28_18 = FightConfig.instance:getSkillEffectDesc(var_28_17.name, var_28_16)
 
-				if slot29.isSpecialCharacter == 1 then
-					slot23 = string.format("%s", FightConfig.instance:getSkillEffectDesc(HeroConfig.instance:getHeroCO(slot1).name, lua_skill.configDict[slot19]))
+		for iter_28_2, iter_28_3 in ipairs(var_28_9[iter_28_1]) do
+			local var_28_19 = SkillConfig.instance:getSkillEffectDescCo(iter_28_3)
+			local var_28_20 = var_28_19.name
 
-					table.insert(slot13, {
-						desc = SkillHelper.buildDesc(slot29.desc),
-						title = slot29.name
+			if HeroSkillModel.instance:canShowSkillTag(var_28_20, true) and not var_28_10[var_28_20] then
+				var_28_10[var_28_20] = true
+
+				if var_28_19.isSpecialCharacter == 1 then
+					local var_28_21 = var_28_19.desc
+
+					var_28_18 = string.format("%s", var_28_18)
+
+					local var_28_22 = SkillHelper.buildDesc(var_28_21)
+
+					table.insert(var_28_11, {
+						desc = var_28_22,
+						title = var_28_19.name
 					})
 				end
 			end
 		end
 
-		slot24 = SkillHelper.buildDesc(slot23)
+		local var_28_23 = SkillHelper.buildDesc(var_28_18)
+		local var_28_24 = arg_28_0:_getTargetRankByEffect(arg_28_1, iter_28_1)
 
-		if not slot20 then
-			slot0._passiveskillitems[slot18].unlocktxt.text = string.format(luaLang("character_passive_get"), GameUtil.getRomanNums(slot0:_getTargetRankByEffect(slot1, slot18)))
+		if not var_28_15 then
+			arg_28_0._passiveskillitems[iter_28_1].unlocktxt.text = string.format(luaLang("character_passive_get"), GameUtil.getRomanNums(var_28_24))
 
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot18].unlocktxt, "#3A3A3A")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_28_0._passiveskillitems[iter_28_1].unlocktxt, "#3A3A3A")
 		else
-			slot0._passiveskillitems[slot18].unlocktxt.text = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(slot25))
+			arg_28_0._passiveskillitems[iter_28_1].unlocktxt.text = string.format(luaLang("character_passive_unlock"), GameUtil.getRomanNums(var_28_24))
 
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot18].unlocktxt, "#313B33")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_28_0._passiveskillitems[iter_28_1].unlocktxt, "#313B33")
 		end
 
-		slot0._passiveskillitems[slot18].canvasgroup.alpha = slot20 and 1 or 0.83
+		arg_28_0._passiveskillitems[iter_28_1].canvasgroup.alpha = var_28_15 and 1 or 0.83
 
-		gohelper.setActive(slot0._passiveskillitems[slot18].on, slot20)
+		gohelper.setActive(arg_28_0._passiveskillitems[iter_28_1].on, var_28_15)
 
-		slot0._passiveskillitems[slot18].desc.text = slot24
+		arg_28_0._passiveskillitems[iter_28_1].desc.text = var_28_23
 
-		slot0._passiveskillitems[slot18].fixTmpBreakLine:refreshTmpContent(slot0._passiveskillitems[slot18].desc)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._passiveskillitems[slot18].desc, slot20 and "#272525" or "#3A3A3A")
-		gohelper.setActive(slot0._passiveskillitems[slot18].go, true)
-		gohelper.setActive(slot0._passiveskillitems[slot18].connectline, slot18 ~= #slot6)
+		arg_28_0._passiveskillitems[iter_28_1].fixTmpBreakLine:refreshTmpContent(arg_28_0._passiveskillitems[iter_28_1].desc)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_28_0._passiveskillitems[iter_28_1].desc, var_28_15 and "#272525" or "#3A3A3A")
+		gohelper.setActive(arg_28_0._passiveskillitems[iter_28_1].go, true)
+		gohelper.setActive(arg_28_0._passiveskillitems[iter_28_1].connectline, iter_28_1 ~= #var_28_1)
 	end
 
-	for slot18 = #slot6 + 1, #slot0._passiveskillitems do
-		gohelper.setActive(slot0._passiveskillitems[slot18].go, false)
+	for iter_28_4 = #var_28_1 + 1, #arg_28_0._passiveskillitems do
+		gohelper.setActive(arg_28_0._passiveskillitems[iter_28_4].go, false)
 	end
 
-	slot0:_showSkillEffectDesc(slot13)
-	slot0:_refreshPassiveSkillScroll()
-	slot0:_setTipPos(slot0._gopassiveskilltip.transform, slot4, slot3)
+	arg_28_0:_showSkillEffectDesc(var_28_11)
+	arg_28_0:_refreshPassiveSkillScroll()
+	arg_28_0:_setTipPos(arg_28_0._gopassiveskilltip.transform, arg_28_4, arg_28_3)
 end
 
-function slot0._checkDestinyEffect(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0._checkDestinyEffect(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = {}
 
-	if slot1 then
-		for slot7 = 1, #slot1 do
-			table.insert(slot3, slot1[slot7].skillPassive)
+	if arg_29_1 then
+		for iter_29_0 = 1, #arg_29_1 do
+			local var_29_1 = arg_29_1[iter_29_0].skillPassive
+
+			table.insert(var_29_0, var_29_1)
 		end
 
-		if slot2 and slot2.destinyStoneMo then
-			slot3 = slot2.destinyStoneMo:_replaceSkill(slot3)
+		if arg_29_2 and arg_29_2.destinyStoneMo then
+			var_29_0 = arg_29_2.destinyStoneMo:_replaceSkill(var_29_0)
 		end
 	end
 
-	return slot3
+	return var_29_0
 end
 
-function slot0._setTipPos(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0._setTipPos(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	if not arg_30_1 then
 		return
 	end
 
-	slot4 = slot3 and slot3[1] or Vector2.New(0.5, 0.5)
-	slot5 = slot3 and slot3[2] or Vector2.New(0.5, 0.5)
-	slot6 = slot2 and slot2 or Vector2.New(0, 0)
-	slot0._gopassiveskilltip.transform.anchorMin = slot4
-	slot0._gopassiveskilltip.transform.anchorMax = slot5
-	slot0._goBuffItem.transform.anchorMin = slot4
-	slot0._goBuffItem.transform.anchorMax = slot5
+	local var_30_0 = arg_30_3 and arg_30_3[1] or Vector2.New(0.5, 0.5)
+	local var_30_1 = arg_30_3 and arg_30_3[2] or Vector2.New(0.5, 0.5)
+	local var_30_2 = arg_30_2 and arg_30_2 or Vector2.New(0, 0)
 
-	recthelper.setAnchor(slot1, slot6.x, slot6.y)
-	recthelper.setAnchorX(slot0._goBuffItem.transform, slot0.viewParam.buffTipsX or 0)
+	arg_30_0._gopassiveskilltip.transform.anchorMin = var_30_0
+	arg_30_0._gopassiveskilltip.transform.anchorMax = var_30_1
+	arg_30_0._goBuffItem.transform.anchorMin = var_30_0
+	arg_30_0._goBuffItem.transform.anchorMax = var_30_1
+
+	recthelper.setAnchor(arg_30_1, var_30_2.x, var_30_2.y)
+	recthelper.setAnchorX(arg_30_0._goBuffItem.transform, arg_30_0.viewParam.buffTipsX or 0)
 end
 
-function slot0._refreshPassiveSkillScroll(slot0)
-	slot0:_setScrollMaskVisible()
+function var_0_0._refreshPassiveSkillScroll(arg_31_0)
+	arg_31_0:_setScrollMaskVisible()
 
-	slot1 = gohelper.findChild(slot0._gopassiveskilltip, "mask/root/scrollview/viewport")
-	slot3 = gohelper.onceAddComponent(slot1, typeof(UnityEngine.UI.LayoutElement))
-	gohelper.onceAddComponent(slot1, gohelper.Type_VerticalLayoutGroup).enabled = false
-	slot3.enabled = true
-	slot3.preferredHeight = recthelper.getHeight(slot1.transform)
+	local var_31_0 = gohelper.findChild(arg_31_0._gopassiveskilltip, "mask/root/scrollview/viewport")
+	local var_31_1 = gohelper.onceAddComponent(var_31_0, gohelper.Type_VerticalLayoutGroup)
+	local var_31_2 = gohelper.onceAddComponent(var_31_0, typeof(UnityEngine.UI.LayoutElement))
+	local var_31_3 = recthelper.getHeight(var_31_0.transform)
+
+	var_31_1.enabled = false
+	var_31_2.enabled = true
+	var_31_2.preferredHeight = var_31_3
 end
 
-function slot0._showSkillEffectDesc(slot0, slot1)
-	gohelper.setActive(slot0._goeffectdesc, slot1 and #slot1 > 0)
+function var_0_0._showSkillEffectDesc(arg_32_0, arg_32_1)
+	gohelper.setActive(arg_32_0._goeffectdesc, arg_32_1 and #arg_32_1 > 0)
 
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
-		slot7 = slot0:_getSkillEffectDescItem(slot5)
-		slot7.desc.text = slot6.desc
-		slot7.title.text = SkillHelper.removeRichTag(slot6.title)
+	for iter_32_0 = 1, #arg_32_1 do
+		local var_32_0 = arg_32_1[iter_32_0]
+		local var_32_1 = arg_32_0:_getSkillEffectDescItem(iter_32_0)
 
-		slot7.fixTmpBreakLine:refreshTmpContent(slot7.desc)
-		gohelper.setActive(slot7.go, true)
+		var_32_1.desc.text = var_32_0.desc
+		var_32_1.title.text = SkillHelper.removeRichTag(var_32_0.title)
+
+		var_32_1.fixTmpBreakLine:refreshTmpContent(var_32_1.desc)
+		gohelper.setActive(var_32_1.go, true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._skillEffectDescItems do
-		gohelper.setActive(slot0._passiveskillitems[slot5].go, false)
+	for iter_32_1 = #arg_32_1 + 1, #arg_32_0._skillEffectDescItems do
+		gohelper.setActive(arg_32_0._passiveskillitems[iter_32_1].go, false)
 	end
 end
 
-function slot0._getSkillEffectDescItem(slot0, slot1)
-	if not slot0._skillEffectDescItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goeffectdescitem, "descitem" .. slot1)
-		slot2.desc = gohelper.findChildText(slot2.go, "effectdesc")
-		slot2.title = gohelper.findChildText(slot2.go, "titlebg/bg/name")
-		slot2.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot2.desc.gameObject, FixTmpBreakLine)
-		slot2.hyperLinkClick = SkillHelper.addHyperLinkClick(slot2.desc, slot0._onHyperLinkClick, slot0)
+function var_0_0._getSkillEffectDescItem(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0._skillEffectDescItems[arg_33_1]
 
-		table.insert(slot0._skillEffectDescItems, slot1, slot2)
+	if not var_33_0 then
+		var_33_0 = arg_33_0:getUserDataTb_()
+		var_33_0.go = gohelper.cloneInPlace(arg_33_0._goeffectdescitem, "descitem" .. arg_33_1)
+		var_33_0.desc = gohelper.findChildText(var_33_0.go, "effectdesc")
+		var_33_0.title = gohelper.findChildText(var_33_0.go, "titlebg/bg/name")
+		var_33_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_33_0.desc.gameObject, FixTmpBreakLine)
+		var_33_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_33_0.desc, arg_33_0._onHyperLinkClick, arg_33_0)
+
+		table.insert(arg_33_0._skillEffectDescItems, arg_33_1, var_33_0)
 	end
 
-	return slot2
+	return var_33_0
 end
 
-slot0.LeftWidth = 470
-slot0.RightWidth = 190
-slot0.TopHeight = 292
-slot0.Interval = 10
+var_0_0.LeftWidth = 470
+var_0_0.RightWidth = 190
+var_0_0.TopHeight = 292
+var_0_0.Interval = 10
 
-function slot0._onHyperLinkClick(slot0, slot1, slot2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(slot1), slot0.setTipPosCallback, slot0)
+function var_0_0._onHyperLinkClick(arg_34_0, arg_34_1, arg_34_2)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(arg_34_1), arg_34_0.setTipPosCallback, arg_34_0)
 end
 
-function slot0.setTipPosCallback(slot0, slot1, slot2)
-	slot0.rectTrPassive = slot0.rectTrPassive or slot0._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
-	slot5, slot6 = recthelper.uiPosToScreenPos2(slot0.rectTrPassive)
-	slot7, slot8 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(slot5, slot6, slot1, CameraMgr.instance:getUICamera(), nil, )
-	slot2.pivot = CommonBuffTipEnum.Pivot.Right
-	slot12 = slot7
+function var_0_0.setTipPosCallback(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_0.rectTrPassive = arg_35_0.rectTrPassive or arg_35_0._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
 
-	recthelper.setAnchor(slot2, recthelper.getWidth(slot2) <= GameUtil.getViewSize() / 2 + slot7 - uv0.LeftWidth - uv0.Interval and slot12 - uv0.LeftWidth - uv0.Interval or slot12 + uv0.RightWidth + uv0.Interval + slot10, slot8 + uv0.TopHeight)
-end
+	local var_35_0 = GameUtil.getViewSize() / 2
+	local var_35_1, var_35_2 = recthelper.uiPosToScreenPos2(arg_35_0.rectTrPassive)
+	local var_35_3, var_35_4 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_35_1, var_35_2, arg_35_1, CameraMgr.instance:getUICamera(), nil, nil)
+	local var_35_5 = var_35_0 + var_35_3 - var_0_0.LeftWidth - var_0_0.Interval
+	local var_35_6 = recthelper.getWidth(arg_35_2)
+	local var_35_7 = var_35_6 <= var_35_5
 
-function slot0._setScrollMaskVisible(slot0)
-	ZProj.UGUIHelper.RebuildLayout(gohelper.findChild(slot0._gopassiveskilltip, "mask/root").transform)
+	arg_35_2.pivot = CommonBuffTipEnum.Pivot.Right
 
-	slot0._couldScroll = recthelper.getHeight(slot0._scrollview.transform) < recthelper.getHeight(slot0._passiveskilltipcontent.transform)
+	local var_35_8 = var_35_3
+	local var_35_9 = var_35_4
 
-	gohelper.setActive(slot0._gomask1, slot0._couldScroll and gohelper.getRemindFourNumberFloat(slot0._scrollview.verticalNormalizedPosition) > 0)
-
-	slot0._passiveskilltipmask.enabled = false
-end
-
-function slot0._getPassiveUnlock(slot0, slot1, slot2, slot3, slot4)
-	if slot1 == CharacterEnum.showAttributeOption.ShowMax then
-		return true
-	elseif slot1 == CharacterEnum.showAttributeOption.ShowMin then
-		return false
-	elseif slot4 then
-		return CharacterModel.instance:isPassiveUnlockByHeroMo(slot4, slot3, slot0._passiveSkillLevel)
+	if var_35_7 then
+		var_35_8 = var_35_8 - var_0_0.LeftWidth - var_0_0.Interval
 	else
-		return CharacterModel.instance:isPassiveUnlock(slot2, slot3)
+		var_35_8 = var_35_8 + var_0_0.RightWidth + var_0_0.Interval + var_35_6
+	end
+
+	local var_35_10 = var_35_9 + var_0_0.TopHeight
+
+	recthelper.setAnchor(arg_35_2, var_35_8, var_35_10)
+end
+
+function var_0_0._setScrollMaskVisible(arg_36_0)
+	local var_36_0 = gohelper.findChild(arg_36_0._gopassiveskilltip, "mask/root")
+
+	ZProj.UGUIHelper.RebuildLayout(var_36_0.transform)
+
+	arg_36_0._couldScroll = recthelper.getHeight(arg_36_0._passiveskilltipcontent.transform) > recthelper.getHeight(arg_36_0._scrollview.transform)
+
+	gohelper.setActive(arg_36_0._gomask1, arg_36_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_36_0._scrollview.verticalNormalizedPosition) <= 0))
+
+	arg_36_0._passiveskilltipmask.enabled = false
+end
+
+function var_0_0._getPassiveUnlock(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4)
+	if arg_37_1 == CharacterEnum.showAttributeOption.ShowMax then
+		return true
+	elseif arg_37_1 == CharacterEnum.showAttributeOption.ShowMin then
+		return false
+	elseif arg_37_4 then
+		return CharacterModel.instance:isPassiveUnlockByHeroMo(arg_37_4, arg_37_3, arg_37_0._passiveSkillLevel)
+	else
+		return CharacterModel.instance:isPassiveUnlock(arg_37_2, arg_37_3)
 	end
 end
 
-function slot0._getTargetRankByEffect(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(SkillConfig.instance:getheroranksCO(slot1)) do
-		if CharacterModel.instance:getrankEffects(slot1, slot7)[2] == slot2 then
-			return slot7 - 1
+function var_0_0._getTargetRankByEffect(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = SkillConfig.instance:getheroranksCO(arg_38_1)
+
+	for iter_38_0, iter_38_1 in pairs(var_38_0) do
+		if CharacterModel.instance:getrankEffects(arg_38_1, iter_38_0)[2] == arg_38_2 then
+			return iter_38_0 - 1
 		end
 	end
 
 	return 0
 end
 
-function slot0.showDetail(slot0, slot1)
-	slot0._isOpenAttrDesc = not slot0._isOpenAttrDesc
+function var_0_0.showDetail(arg_39_0, arg_39_1)
+	arg_39_0._isOpenAttrDesc = not arg_39_0._isOpenAttrDesc
 
-	gohelper.setActive(slot0._godetailcontent, slot0._isOpenAttrDesc)
+	gohelper.setActive(arg_39_0._godetailcontent, arg_39_0._isOpenAttrDesc)
 
-	if not slot0._isOpenAttrDesc then
+	if not arg_39_0._isOpenAttrDesc then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_role_description)
 
-	if recthelper.rectToRelativeAnchorPos(slot1.go.transform.position, slot0._goattributetip.transform).y < uv0.DetailClickMinPos then
-		recthelper.setAnchorY(slot0._godetailcontent.transform, uv0.DetailBottomPos)
+	local var_39_0 = recthelper.rectToRelativeAnchorPos(arg_39_1.go.transform.position, arg_39_0._goattributetip.transform)
+
+	if var_39_0.y < var_0_0.DetailClickMinPos then
+		recthelper.setAnchorY(arg_39_0._godetailcontent.transform, var_0_0.DetailBottomPos)
 	else
-		recthelper.setAnchorY(slot0._godetailcontent.transform, slot2.y + uv0.DetailOffset)
+		recthelper.setAnchorY(arg_39_0._godetailcontent.transform, var_39_0.y + var_0_0.DetailOffset)
 	end
 
-	slot3 = HeroConfig.instance:getHeroAttributeCO(slot1.attributeId)
-	slot0._txtDetailItemName.text = slot3.name
-	slot8 = GameUtil.parseColor
-	slot9 = "#975129"
+	local var_39_1 = HeroConfig.instance:getHeroAttributeCO(arg_39_1.attributeId)
 
-	CharacterController.instance:SetAttriIcon(slot0._txtDetailItemIcon, slot1.icon, slot8(slot9))
+	arg_39_0._txtDetailItemName.text = var_39_1.name
 
-	for slot8, slot9 in ipairs(string.split(slot3.desc, "|")) do
-		if not slot0._detailDescTab[slot8] then
-			slot10 = gohelper.clone(slot0._txtDetailItemDesc.gameObject, slot0._goattributecontentitem, "descItem")
+	CharacterController.instance:SetAttriIcon(arg_39_0._txtDetailItemIcon, arg_39_1.icon, GameUtil.parseColor("#975129"))
 
-			gohelper.setActive(slot10, false)
-			table.insert(slot0._detailDescTab, slot10)
+	local var_39_2 = string.split(var_39_1.desc, "|")
+
+	for iter_39_0, iter_39_1 in ipairs(var_39_2) do
+		local var_39_3 = arg_39_0._detailDescTab[iter_39_0]
+
+		if not var_39_3 then
+			var_39_3 = gohelper.clone(arg_39_0._txtDetailItemDesc.gameObject, arg_39_0._goattributecontentitem, "descItem")
+
+			gohelper.setActive(var_39_3, false)
+			table.insert(arg_39_0._detailDescTab, var_39_3)
 		end
 
-		gohelper.setActive(slot10, true)
+		gohelper.setActive(var_39_3, true)
 
-		slot10:GetComponent(gohelper.Type_TextMesh).text = slot9
+		var_39_3:GetComponent(gohelper.Type_TextMesh).text = iter_39_1
 	end
 
-	for slot8 = #slot4 + 1, #slot0._detailDescTab do
-		gohelper.setActive(slot0._detailDescTab[slot8], false)
-	end
-end
-
-function slot0.onClose(slot0)
-	for slot4, slot5 in pairs(slot0._detailClickItems) do
-		slot5:RemoveClickListener()
+	for iter_39_2 = #var_39_2 + 1, #arg_39_0._detailDescTab do
+		gohelper.setActive(arg_39_0._detailDescTab[iter_39_2], false)
 	end
 end
 
-return slot0
+function var_0_0.onClose(arg_40_0)
+	for iter_40_0, iter_40_1 in pairs(arg_40_0._detailClickItems) do
+		iter_40_1:RemoveClickListener()
+	end
+end
+
+return var_0_0

@@ -1,98 +1,105 @@
-module("modules.logic.versionactivity2_0.common.VersionActivity2_0JumpHandleFunc", package.seeall)
+﻿module("modules.logic.versionactivity2_0.common.VersionActivity2_0JumpHandleFunc", package.seeall)
 
-slot0 = class("VersionActivity2_0JumpHandleFunc")
+local var_0_0 = class("VersionActivity2_0JumpHandleFunc")
 
-function slot0.jumpTo12002(slot0, slot1)
+function var_0_0.jumpTo12002(arg_1_0, arg_1_1)
 	VersionActivity2_0EnterController.instance:openVersionActivityEnterView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-function slot0.jumpTo12003(slot0, slot1)
-	table.insert(slot0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
-	table.insert(slot0.closeViewNames, ViewName.VersionActivity2_0DungeonMapLevelView)
+function var_0_0.jumpTo12003(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1[2]
+	local var_2_1 = arg_2_1[3]
+
+	table.insert(arg_2_0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
+	table.insert(arg_2_0.closeViewNames, ViewName.VersionActivity2_0DungeonMapLevelView)
 	VersionActivity2_0DungeonModel.instance:setMapNeedTweenState(true)
 
-	if slot1[3] then
-		VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
-			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, uv0, function ()
+	if var_2_1 then
+		VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, var_2_1, function()
 				if VersionActivity2_0DungeonModel.instance:getOpenGraffitiEntranceState() then
 					ViewMgr.instance:closeView(ViewName.VersionActivity2_0DungeonMapGraffitiEnterView)
 				end
 
 				ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonMapLevelView, {
 					isJump = true,
-					episodeId = uv0
+					episodeId = var_2_1
 				})
 			end)
-		end, nil, slot1[2], true)
+		end, nil, var_2_0, true)
 	else
-		VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_0DungeonController.openVersionActivityDungeonMapView, VersionActivity2_0DungeonController.instance, slot2, true)
+		VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_0DungeonController.openVersionActivityDungeonMapView, VersionActivity2_0DungeonController.instance, var_2_0, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
-function slot0.jumpTo12004(slot0, slot1)
+function var_0_0.jumpTo12004(arg_5_0, arg_5_1)
 	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_0DungeonController.openStoreView, VersionActivity2_0DungeonController.instance, VersionActivity2_0Enum.ActivityId.Dungeon, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function slot0.jumpTo12005(slot0, slot1)
-	table.insert(slot0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
-	table.insert(slot0.waitOpenViewNames, ViewName.VersionActivity2_0DungeonMapView)
-	table.insert(slot0.waitOpenViewNames, ViewName.VersionActivity2_0DungeonGraffitiView)
+function var_0_0.jumpTo12005(arg_6_0, arg_6_1)
+	table.insert(arg_6_0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
+	table.insert(arg_6_0.waitOpenViewNames, ViewName.VersionActivity2_0DungeonMapView)
+	table.insert(arg_6_0.waitOpenViewNames, ViewName.VersionActivity2_0DungeonGraffitiView)
 
-	function slot2()
+	local function var_6_0()
 		Activity161Controller.instance:openGraffitiView()
 	end
 
-	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
+	local function var_6_1()
 		if ViewMgr.instance:isOpen(ViewName.VersionActivity2_0DungeonMapView) then
-			uv0()
+			var_6_0()
 		else
-			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, , uv0)
+			VersionActivity2_0DungeonController.instance:openVersionActivityDungeonMapView(nil, nil, var_6_0)
 		end
-	end, nil, , true)
+	end
+
+	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(var_6_1, nil, nil, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function slot0.jumpTo12008(slot0, slot1)
-	slot2 = slot1[2]
+function var_0_0.jumpTo12008(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1[2]
 
-	VersionActivity2_0EnterController.instance:openVersionActivityEnterView(uv0.enterRoleActivity, slot2, slot2)
-
-	return JumpEnum.JumpResult.Success
-end
-
-function slot0.jumpTo12009(slot0, slot1)
-	slot2 = slot1[2]
-
-	VersionActivity2_0EnterController.instance:openVersionActivityEnterView(uv0.enterRoleActivity, slot2, slot2)
+	VersionActivity2_0EnterController.instance:openVersionActivityEnterView(var_0_0.enterRoleActivity, var_9_0, var_9_0)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function slot0.enterRoleActivity(slot0)
-	RoleActivityController.instance:enterActivity(slot0)
+function var_0_0.jumpTo12009(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1[2]
+
+	VersionActivity2_0EnterController.instance:openVersionActivityEnterView(var_0_0.enterRoleActivity, var_10_0, var_10_0)
+
+	return JumpEnum.JumpResult.Success
 end
 
-function slot0.jumpTo12001(slot0, slot1)
-	table.insert(slot0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
-	VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(function ()
-		table.insert(uv0.waitOpenViewNames, ViewName.ReactivityStoreView)
+function var_0_0.enterRoleActivity(arg_11_0)
+	RoleActivityController.instance:enterActivity(arg_11_0)
+end
+
+function var_0_0.jumpTo12001(arg_12_0, arg_12_1)
+	table.insert(arg_12_0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
+	VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+		table.insert(arg_12_0.waitOpenViewNames, ViewName.ReactivityStoreView)
 		ReactivityController.instance:openReactivityStoreView(JumpEnum.ActIdEnum.Act1_5Dungeon)
 	end)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function slot0.jumpTo12006(slot0, slot1)
-	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, , slot1[2], true)
+function var_0_0.jumpTo12006(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1[2]
+
+	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_14_0, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-return slot0
+return var_0_0

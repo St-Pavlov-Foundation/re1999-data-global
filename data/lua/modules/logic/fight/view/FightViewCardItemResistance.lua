@@ -1,136 +1,160 @@
-module("modules.logic.fight.view.FightViewCardItemResistance", package.seeall)
+﻿module("modules.logic.fight.view.FightViewCardItemResistance", package.seeall)
 
-slot0 = class("FightViewCardItemResistance", LuaCompBase)
+local var_0_0 = class("FightViewCardItemResistance", LuaCompBase)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.resistanceGo = gohelper.findChild(slot1, "#go_resistance")
-	slot0.resistanceGoPart = gohelper.findChild(slot1, "#go_resistancecrash")
-	slot0.rectTr = slot0.resistanceGo:GetComponent(gohelper.Type_RectTransform)
-	slot0.partRectTr = slot0.resistanceGoPart:GetComponent(gohelper.Type_RectTransform)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.resistanceGo = gohelper.findChild(arg_2_1, "#go_resistance")
+	arg_2_0.resistanceGoPart = gohelper.findChild(arg_2_1, "#go_resistancecrash")
+	arg_2_0.rectTr = arg_2_0.resistanceGo:GetComponent(gohelper.Type_RectTransform)
+	arg_2_0.partRectTr = arg_2_0.resistanceGoPart:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(slot0.resistanceGo, false)
-	gohelper.setActive(slot0.resistanceGoPart, false)
+	gohelper.setActive(arg_2_0.resistanceGo, false)
+	gohelper.setActive(arg_2_0.resistanceGoPart, false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, slot0.onSelectSkillTarget, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_3_0.onSelectSkillTarget, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, slot0.onSelectSkillTarget, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_4_0.onSelectSkillTarget, arg_4_0)
 end
 
-function slot0.onSelectSkillTarget(slot0)
-	if not slot0.cardInfoMO then
+function var_0_0.onSelectSkillTarget(arg_5_0)
+	if not arg_5_0.cardInfoMO then
 		return
 	end
 
-	slot0:updateByCardInfo(slot0.cardInfoMO)
+	arg_5_0:updateByCardInfo(arg_5_0.cardInfoMO)
 end
 
-function slot0.updateByBeginRoundOp(slot0, slot1)
-	if not slot1 then
-		return slot0:hideResistanceGo()
+function var_0_0.updateByBeginRoundOp(arg_6_0, arg_6_1)
+	if not arg_6_1 then
+		return arg_6_0:hideResistanceGo()
 	end
 
-	if not slot1:isPlayCard() then
-		return slot0:hideResistanceGo()
+	if not arg_6_1:isPlayCard() then
+		return arg_6_0:hideResistanceGo()
 	end
 
-	if not slot1.toId then
-		return slot0:hideResistanceGo()
+	local var_6_0 = arg_6_1.toId
+
+	if not var_6_0 then
+		return arg_6_0:hideResistanceGo()
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot2) then
-		return slot0:hideResistanceGo()
+	local var_6_1 = FightDataHelper.entityMgr:getById(var_6_0)
+
+	if not var_6_1 then
+		return arg_6_0:hideResistanceGo()
 	end
 
-	if slot3.side ~= FightEnum.EntitySide.EnemySide then
-		return slot0:hideResistanceGo()
+	if var_6_1.side ~= FightEnum.EntitySide.EnemySide then
+		return arg_6_0:hideResistanceGo()
 	end
 
-	return slot0:refreshResistance(slot3, slot1.skillId)
+	return arg_6_0:refreshResistance(var_6_1, arg_6_1.skillId)
 end
 
-function slot0.updateByCardInfo(slot0, slot1)
-	slot0.cardInfoMO = slot1
+function var_0_0.updateByCardInfo(arg_7_0, arg_7_1)
+	arg_7_0.cardInfoMO = arg_7_1
 
-	if not slot1 then
-		return slot0:hideResistanceGo()
+	if not arg_7_1 then
+		return arg_7_0:hideResistanceGo()
 	end
 
 	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
-		return slot0:hideResistanceGo()
+		return arg_7_0:hideResistanceGo()
 	end
 
 	if FightModel.instance:isAuto() then
-		return slot0:hideResistanceGo()
+		return arg_7_0:hideResistanceGo()
 	end
 
-	if FightCardModel.instance.curSelectEntityId == 0 then
-		return slot0:hideResistanceGo()
+	local var_7_0 = FightCardModel.instance.curSelectEntityId
+
+	if var_7_0 == 0 then
+		return arg_7_0:hideResistanceGo()
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot3) then
-		return slot0:hideResistanceGo()
+	local var_7_1 = FightDataHelper.entityMgr:getById(var_7_0)
+
+	if not var_7_1 then
+		return arg_7_0:hideResistanceGo()
 	end
 
-	return slot0:refreshResistance(slot4, slot1.skillId)
+	return arg_7_0:refreshResistance(var_7_1, arg_7_1.skillId)
 end
 
-function slot0.updateBySkillDisplayMo(slot0, slot1)
-	if not slot1 then
-		return slot0:hideResistanceGo()
+function var_0_0.updateBySkillDisplayMo(arg_8_0, arg_8_1)
+	if not arg_8_1 then
+		return arg_8_0:hideResistanceGo()
 	end
 
-	if slot1.targetId == 0 then
-		return slot0:hideResistanceGo()
+	local var_8_0 = arg_8_1.targetId
+
+	if var_8_0 == 0 then
+		return arg_8_0:hideResistanceGo()
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot2) then
-		return slot0:hideResistanceGo()
+	local var_8_1 = FightDataHelper.entityMgr:getById(var_8_0)
+
+	if not var_8_1 then
+		return arg_8_0:hideResistanceGo()
 	end
 
-	return slot0:refreshResistance(slot3, slot1.skillId)
+	return arg_8_0:refreshResistance(var_8_1, arg_8_1.skillId)
 end
 
-slot0.AnchorY = {
+var_0_0.AnchorY = {
 	BigSkill = -68,
 	Normal = -54
 }
 
-function slot0.refreshResistance(slot0, slot1, slot2)
-	if not string.nilorempty(lua_skill.configDict[slot2] and slot3.resistancesTag) then
-		if slot0:checkIsFullResistance(slot1, FightStrUtil.instance:getSplitCache(slot4, "#")) then
-			slot0:showFullResistanceTag(slot3.isBigSkill == 1)
-		elseif slot0:checkIsPartResistance(slot1, slot5) then
-			slot0:showPartResistanceTag(slot3.isBigSkill == 1)
+function var_0_0.refreshResistance(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = lua_skill.configDict[arg_9_2]
+	local var_9_1 = var_9_0 and var_9_0.resistancesTag
+
+	if not string.nilorempty(var_9_1) then
+		local var_9_2 = FightStrUtil.instance:getSplitCache(var_9_1, "#")
+
+		if arg_9_0:checkIsFullResistance(arg_9_1, var_9_2) then
+			arg_9_0:showFullResistanceTag(var_9_0.isBigSkill == 1)
+		elseif arg_9_0:checkIsPartResistance(arg_9_1, var_9_2) then
+			arg_9_0:showPartResistanceTag(var_9_0.isBigSkill == 1)
 		else
-			slot0:hideResistanceGo()
+			arg_9_0:hideResistanceGo()
 		end
 	else
-		slot0:hideResistanceGo()
+		arg_9_0:hideResistanceGo()
 	end
 end
 
-function slot0.showFullResistanceTag(slot0, slot1)
-	gohelper.setActive(slot0.resistanceGo, true)
-	recthelper.setAnchorY(slot0.rectTr, slot1 and uv0.AnchorY.BigSkill or uv0.AnchorY.Normal)
+function var_0_0.showFullResistanceTag(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0.resistanceGo, true)
+
+	local var_10_0 = arg_10_1 and var_0_0.AnchorY.BigSkill or var_0_0.AnchorY.Normal
+
+	recthelper.setAnchorY(arg_10_0.rectTr, var_10_0)
 	FightController.instance:dispatchEvent(FightEvent.TriggerCardShowResistanceTag)
 end
 
-function slot0.showPartResistanceTag(slot0, slot1)
-	gohelper.setActive(slot0.resistanceGoPart, true)
-	recthelper.setAnchorY(slot0.partRectTr, slot1 and uv0.AnchorY.BigSkill or uv0.AnchorY.Normal)
+function var_0_0.showPartResistanceTag(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0.resistanceGoPart, true)
+
+	local var_11_0 = arg_11_1 and var_0_0.AnchorY.BigSkill or var_0_0.AnchorY.Normal
+
+	recthelper.setAnchorY(arg_11_0.partRectTr, var_11_0)
 	FightController.instance:dispatchEvent(FightEvent.TriggerCardShowResistanceTag)
 end
 
-function slot0.checkIsFullResistance(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if slot1:isFullResistance(slot7) then
+function var_0_0.checkIsFullResistance(arg_12_0, arg_12_1, arg_12_2)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_2) do
+		if arg_12_1:isFullResistance(iter_12_1) then
 			return true
 		end
 	end
@@ -138,9 +162,9 @@ function slot0.checkIsFullResistance(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.checkIsPartResistance(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if slot1:isPartResistance(slot7) then
+function var_0_0.checkIsPartResistance(arg_13_0, arg_13_1, arg_13_2)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
+		if arg_13_1:isPartResistance(iter_13_1) then
 			return true
 		end
 	end
@@ -148,9 +172,9 @@ function slot0.checkIsPartResistance(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.hideResistanceGo(slot0)
-	gohelper.setActive(slot0.resistanceGo, false)
-	gohelper.setActive(slot0.resistanceGoPart, false)
+function var_0_0.hideResistanceGo(arg_14_0)
+	gohelper.setActive(arg_14_0.resistanceGo, false)
+	gohelper.setActive(arg_14_0.resistanceGoPart, false)
 end
 
-return slot0
+return var_0_0

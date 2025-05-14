@@ -1,3 +1,3 @@
-module("modules.logic.explore.map.unit.ExploreItemUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreItemUnit", package.seeall)
 
-return class("ExploreItemUnit", ExploreBaseDisplayUnit)
+return (class("ExploreItemUnit", ExploreBaseDisplayUnit))

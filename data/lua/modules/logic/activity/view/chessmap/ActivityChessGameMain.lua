@@ -1,223 +1,253 @@
-module("modules.logic.activity.view.chessmap.ActivityChessGameMain", package.seeall)
+﻿module("modules.logic.activity.view.chessmap.ActivityChessGameMain", package.seeall)
 
-slot0 = class("ActivityChessGameMain", BaseView)
+local var_0_0 = class("ActivityChessGameMain", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simagechessboard = gohelper.findChildSingleImage(slot0.viewGO, "scroll/viewport/#go_content/#simage_chessboard")
-	slot0._txtcurround = gohelper.findChildText(slot0.viewGO, "roundbg/anim/curround/#txt_curround")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_restart")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "scroll/viewport/#go_content")
-	slot0._gotaskitem = gohelper.findChild(slot0.viewGO, "#go_tasklist/#go_taskitem")
-	slot0._gooptip = gohelper.findChild(slot0.viewGO, "#go_optip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simagechessboard = gohelper.findChildSingleImage(arg_1_0.viewGO, "scroll/viewport/#go_content/#simage_chessboard")
+	arg_1_0._txtcurround = gohelper.findChildText(arg_1_0.viewGO, "roundbg/anim/curround/#txt_curround")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_restart")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "scroll/viewport/#go_content")
+	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_taskitem")
+	arg_1_0._gooptip = gohelper.findChild(arg_1_0.viewGO, "#go_optip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrestart:AddClickListener(slot0._btnrestartOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrestart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnrestart:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot3 = Activity109Config.instance:getMapCo(ActivityChessGameModel.instance:getActId(), ActivityChessGameModel.instance:getMapId())
-	slot0._animRoot = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._conditionItems = {}
+function var_0_0._editableInitView(arg_4_0)
+	local var_4_0 = ActivityChessGameModel.instance:getMapId()
+	local var_4_1 = ActivityChessGameModel.instance:getActId()
+	local var_4_2 = Activity109Config.instance:getMapCo(var_4_1, var_4_0)
+
+	arg_4_0._animRoot = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._conditionItems = {}
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewVictory, slot0.onSetViewVictory, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewFail, slot0.onSetViewFail, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentRoundUpdate, slot0.refreshRound, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameResultQuit, slot0.onResultQuit, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentConditionUpdate, slot0.refreshConditions, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameMapDataUpdate, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetCenterHintText, slot0.setUICenterHintText, slot0)
-	slot0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.ResetGameByResultView, slot0.handleResetByResult, slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewVictory, arg_6_0.onSetViewVictory, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetViewFail, arg_6_0.onSetViewFail, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentRoundUpdate, arg_6_0.refreshRound, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameResultQuit, arg_6_0.onResultQuit, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.CurrentConditionUpdate, arg_6_0.refreshConditions, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.GameMapDataUpdate, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.SetCenterHintText, arg_6_0.setUICenterHintText, arg_6_0)
+	arg_6_0:addEventCb(ActivityChessGameController.instance, ActivityChessEvent.ResetGameByResultView, arg_6_0.handleResetByResult, arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
-	UIBlockMgr.instance:endBlock(uv0.UI_RESTART_BLOCK_KEY)
-	TaskDispatcher.cancelTask(slot0.delayRestartGame, slot0)
+function var_0_0.onClose(arg_7_0)
+	UIBlockMgr.instance:endBlock(var_0_0.UI_RESTART_BLOCK_KEY)
+	TaskDispatcher.cancelTask(arg_7_0.delayRestartGame, arg_7_0)
 
-	if slot0.viewContainer:isManualClose() then
+	if arg_7_0.viewContainer:isManualClose() then
 		Activity109ChessController.instance:statEnd(StatEnum.Result.Abort)
 	end
 
 	Activity109ChessController.instance:dispatchEvent(ActivityEvent.Play109EntryViewOpenAni)
 end
 
-function slot0.onSetViewVictory(slot0)
+function var_0_0.onSetViewVictory(arg_8_0)
 	Activity109ChessController.instance:statEnd(StatEnum.Result.Success)
 
-	slot2 = Activity109ChessModel.instance:getEpisodeId()
+	local var_8_0 = Activity109ChessModel.instance:getActId()
+	local var_8_1 = Activity109ChessModel.instance:getEpisodeId()
 
-	if Activity109ChessModel.instance:getActId() ~= nil and slot2 ~= nil then
-		if Activity109Config.instance:getEpisodeCo(slot1, slot2) and slot3.storyClear == 0 then
-			uv0.openWinResult()
+	if var_8_0 ~= nil and var_8_1 ~= nil then
+		local var_8_2 = Activity109Config.instance:getEpisodeCo(var_8_0, var_8_1)
+
+		if var_8_2 and var_8_2.storyClear == 0 then
+			var_0_0.openWinResult()
 
 			return
 		end
 
-		if not StoryModel.instance:isStoryHasPlayed(slot3.storyClear) then
+		local var_8_3 = var_8_2.storyClear
+
+		if not StoryModel.instance:isStoryHasPlayed(var_8_3) then
 			StoryController.instance:playStories({
-				slot4
-			}, nil, uv0.openWinResult)
+				var_8_3
+			}, nil, var_0_0.openWinResult)
 		else
-			uv0.openWinResult()
+			var_0_0.openWinResult()
 		end
 	end
 end
 
-function slot0.openWinResult()
-	slot1 = "OnChessWinPause" .. Activity109ChessModel.instance:getEpisodeId()
+function var_0_0.openWinResult()
+	local var_9_0 = Activity109ChessModel.instance:getEpisodeId()
+	local var_9_1 = "OnChessWinPause" .. var_9_0
+	local var_9_2 = GuideEvent[var_9_1]
+	local var_9_3 = GuideEvent.OnChessWinContinue
+	local var_9_4 = var_0_0._openSuccessView
+	local var_9_5
 
-	GuideController.instance:GuideFlowPauseAndContinue(slot1, GuideEvent[slot1], GuideEvent.OnChessWinContinue, uv0._openSuccessView, nil)
+	GuideController.instance:GuideFlowPauseAndContinue(var_9_1, var_9_2, var_9_3, var_9_4, var_9_5)
 end
 
-function slot0._openSuccessView()
+function var_0_0._openSuccessView()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 	ViewMgr.instance:openView(ViewName.ActivityChessGameResultView, {
 		result = true
 	})
 end
 
-function slot0.onSetViewFail(slot0)
+function var_0_0.onSetViewFail(arg_11_0)
 	Activity109ChessController.instance:statEnd(StatEnum.Result.Fail)
 	ViewMgr.instance:openView(ViewName.ActivityChessGameResultView, {
 		result = false
 	})
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshRound()
-	slot0:refreshConditions()
+function var_0_0.refreshUI(arg_12_0)
+	arg_12_0:refreshRound()
+	arg_12_0:refreshConditions()
 end
 
-function slot0.refreshRound(slot0)
-	slot2 = Activity109ChessModel.instance:getEpisodeId()
+function var_0_0.refreshRound(arg_13_0)
+	local var_13_0 = Activity109ChessModel.instance:getActId()
+	local var_13_1 = Activity109ChessModel.instance:getEpisodeId()
 
-	if not Activity109ChessModel.instance:getActId() or not slot2 then
+	if not var_13_0 or not var_13_1 then
 		return
 	end
 
-	slot0._txtcurround.text = string.format("%s/<size=36>%s</size>", tostring(ActivityChessGameModel.instance:getRound()), Activity109Config.instance:getEpisodeCo(slot1, slot2).maxRound)
+	local var_13_2 = Activity109Config.instance:getEpisodeCo(var_13_0, var_13_1)
+
+	arg_13_0._txtcurround.text = string.format("%s/<size=36>%s</size>", tostring(ActivityChessGameModel.instance:getRound()), var_13_2.maxRound)
 end
 
-function slot0.refreshConditions(slot0)
-	slot0:hideAllConditions()
+function var_0_0.refreshConditions(arg_14_0)
+	arg_14_0:hideAllConditions()
 
-	slot2 = Activity109ChessModel.instance:getEpisodeId()
+	local var_14_0 = Activity109ChessModel.instance:getActId()
+	local var_14_1 = Activity109ChessModel.instance:getEpisodeId()
 
-	if not Activity109ChessModel.instance:getActId() or not slot2 then
+	if not var_14_0 or not var_14_1 then
 		return
 	end
 
-	slot3 = Activity109Config.instance:getEpisodeCo(slot1, slot2)
-	slot7 = #string.split(slot3.extStarCondition, "|") + 1
-	slot11 = slot7
+	local var_14_2 = Activity109Config.instance:getEpisodeCo(var_14_0, var_14_1)
+	local var_14_3 = var_14_2.extStarCondition
+	local var_14_4 = string.split(var_14_3, "|")
+	local var_14_5 = string.split(var_14_2.conditionStr, "|")
+	local var_14_6 = #var_14_4 + 1
 
-	logNormal("taskLen : " .. tostring(slot11))
+	logNormal("taskLen : " .. tostring(var_14_6))
 
-	for slot11 = 1, slot7 do
-		if slot11 == 1 then
-			slot0:refreshConditionItem(slot0:getOrCreateConditionItem(slot11), nil, string.split(slot3.conditionStr, "|")[slot11])
+	for iter_14_0 = 1, var_14_6 do
+		local var_14_7 = arg_14_0:getOrCreateConditionItem(iter_14_0)
+
+		if iter_14_0 == 1 then
+			arg_14_0:refreshConditionItem(var_14_7, nil, var_14_5[iter_14_0])
 		else
-			slot0:refreshConditionItem(slot12, slot5[slot11 - 1], slot6[slot11])
+			arg_14_0:refreshConditionItem(var_14_7, var_14_4[iter_14_0 - 1], var_14_5[iter_14_0])
 		end
 	end
 end
 
-function slot0.refreshConditionItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.go, true)
+function var_0_0.refreshConditionItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	gohelper.setActive(arg_15_1.go, true)
 
-	slot4 = Activity109ChessModel.instance:getActId()
-	slot5 = Activity109ChessModel.instance:getEpisodeId()
-	slot6 = nil
-	slot7 = false
+	local var_15_0 = Activity109ChessModel.instance:getActId()
+	local var_15_1 = Activity109ChessModel.instance:getEpisodeId()
+	local var_15_2
+	local var_15_3 = false
 
-	if not string.nilorempty(slot2) then
-		slot8 = string.splitToNumber(slot2, "#")
-		slot6 = slot3 or ActivityChessMapUtils.getClearConditionDesc(slot8, slot4)
-		slot7 = ActivityChessMapUtils.isClearConditionFinish(slot8, slot4)
+	if not string.nilorempty(arg_15_2) then
+		local var_15_4 = string.splitToNumber(arg_15_2, "#")
+
+		var_15_2 = arg_15_3 or ActivityChessMapUtils.getClearConditionDesc(var_15_4, var_15_0)
+		var_15_3 = ActivityChessMapUtils.isClearConditionFinish(var_15_4, var_15_0)
 	else
-		slot6 = slot3 or luaLang("chessgame_clear_normal")
-		slot7 = ActivityChessGameModel.instance:getResult() == true
+		var_15_2 = arg_15_3 or luaLang("chessgame_clear_normal")
+		var_15_3 = ActivityChessGameModel.instance:getResult() == true
 	end
 
-	slot1.txtTaskDesc.text = slot6
+	arg_15_1.txtTaskDesc.text = var_15_2
 
-	if not slot1.goFinish.activeSelf and slot7 then
+	if not arg_15_1.goFinish.activeSelf and var_15_3 then
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.StarLight)
 	end
 
-	gohelper.setActive(slot1.goFinish, slot7)
-	gohelper.setActive(slot1.goUnFinish, not slot7)
+	gohelper.setActive(arg_15_1.goFinish, var_15_3)
+	gohelper.setActive(arg_15_1.goUnFinish, not var_15_3)
 end
 
-function slot0.setUICenterHintText(slot0, slot1)
-	slot3 = slot1.text
+function var_0_0.setUICenterHintText(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.visible
+	local var_16_1 = arg_16_1.text
 
-	gohelper.setActive(slot0._gooptip, slot1.visible)
+	gohelper.setActive(arg_16_0._gooptip, var_16_0)
 end
 
-function slot0.getOrCreateConditionItem(slot0, slot1)
-	if not slot0._conditionItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._gotaskitem, "taskitem_" .. tostring(slot1))
-		slot2.txtTaskDesc = gohelper.findChildText(slot2.go, "txt_desc")
-		slot2.goFinish = gohelper.findChild(slot2.go, "star/go_finish")
-		slot2.goUnFinish = gohelper.findChild(slot2.go, "star/go_unfinish")
-		slot0._conditionItems[slot1] = slot2
+function var_0_0.getOrCreateConditionItem(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._conditionItems[arg_17_1]
+
+	if not var_17_0 then
+		var_17_0 = arg_17_0:getUserDataTb_()
+		var_17_0.go = gohelper.cloneInPlace(arg_17_0._gotaskitem, "taskitem_" .. tostring(arg_17_1))
+		var_17_0.txtTaskDesc = gohelper.findChildText(var_17_0.go, "txt_desc")
+		var_17_0.goFinish = gohelper.findChild(var_17_0.go, "star/go_finish")
+		var_17_0.goUnFinish = gohelper.findChild(var_17_0.go, "star/go_unfinish")
+		arg_17_0._conditionItems[arg_17_1] = var_17_0
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.hideAllConditions(slot0)
-	for slot4, slot5 in pairs(slot0._conditionItems) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.hideAllConditions(arg_18_0)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._conditionItems) do
+		gohelper.setActive(iter_18_1.go, false)
 	end
 end
 
-function slot0.onResultQuit(slot0)
-	slot0:closeThis()
+function var_0_0.onResultQuit(arg_19_0)
+	arg_19_0:closeThis()
 end
 
-function slot0.handleResetByResult(slot0)
-	slot0._animRoot:Play("open", 0, 0)
+function var_0_0.handleResetByResult(arg_20_0)
+	arg_20_0._animRoot:Play("open", 0, 0)
 end
 
-slot0.UI_RESTART_BLOCK_KEY = "ActivityChessGameMainDelayRestart"
+var_0_0.UI_RESTART_BLOCK_KEY = "ActivityChessGameMainDelayRestart"
 
-function slot0._btnrestartOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, function ()
+function var_0_0._btnrestartOnClick(arg_21_0)
+	local function var_21_0()
 		Activity109ChessController.instance:statEnd(StatEnum.Result.Reset)
-		UIBlockMgr.instance:startBlock(uv0.UI_RESTART_BLOCK_KEY)
-		uv1._animRoot:Play("excessive", 0, 0)
-		TaskDispatcher.runDelay(uv1.delayRestartGame, uv1, 0.56)
+		UIBlockMgr.instance:startBlock(var_0_0.UI_RESTART_BLOCK_KEY)
+		arg_21_0._animRoot:Play("excessive", 0, 0)
+		TaskDispatcher.runDelay(arg_21_0.delayRestartGame, arg_21_0, 0.56)
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.GameReset)
-	end)
+	end
+
+	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, var_21_0)
 end
 
-function slot0.delayRestartGame(slot0)
-	UIBlockMgr.instance:endBlock(uv0.UI_RESTART_BLOCK_KEY)
-	TaskDispatcher.cancelTask(slot0.delayRestartGame, slot0)
+function var_0_0.delayRestartGame(arg_23_0)
+	UIBlockMgr.instance:endBlock(var_0_0.UI_RESTART_BLOCK_KEY)
+	TaskDispatcher.cancelTask(arg_23_0.delayRestartGame, arg_23_0)
 
-	if Activity109ChessModel.instance:getEpisodeId() then
-		Activity109ChessController.instance:startNewEpisode(slot1)
+	local var_23_0 = Activity109ChessModel.instance:getEpisodeId()
+
+	if var_23_0 then
+		Activity109ChessController.instance:startNewEpisode(var_23_0)
 	end
 
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.GameReset)
 end
 
-return slot0
+return var_0_0

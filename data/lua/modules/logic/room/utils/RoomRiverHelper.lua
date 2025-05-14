@@ -1,88 +1,124 @@
-module("modules.logic.room.utils.RoomRiverHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomRiverHelper", package.seeall)
 
-return {
+local var_0_0 = {
 	_neighborMODict = {},
-	_neighborLinkResIdDict = {},
-	getRiverTypeDictByMO = function (slot0)
-		if not slot0:isFullWater() then
-			return {}, {}, {}
-		end
-
-		if not slot0:isInMapBlock() or uv0._isNotLink(slot0) then
-			for slot8 = 1, 6 do
-				slot1[slot8] = RoomRiverEnum.LakeOutLinkType.NoLink
-				slot2[slot8] = slot0:getDefineBlockType()
-			end
-
-			return slot1, slot2
-		end
-
-		slot7 = slot0.hexPoint
-
-		for slot11 = 1, 6 do
-			slot12 = HexPoint.directions[slot11]
-
-			if RoomMapBlockModel.instance:getBlockMO(slot7.x + slot12.x, slot7.y + slot12.y) and slot13:isInMapBlock() and not uv0._isNotLink(slot13) then
-				uv0._neighborMODict[slot11] = slot13
-				uv0._neighborLinkResIdDict[slot11] = slot13:getResourceId(RoomRotateHelper.rotateDirection(slot11, 3), false, true)
-			else
-				slot4[slot11] = nil
-				slot5[slot11] = nil
-			end
-		end
-
-		for slot12 = 1, 6 do
-			slot1[slot12], slot14, slot3[slot12] = uv0._getRiverTypeByDirection(slot0, slot12, slot4, slot5)
-			slot2[slot12] = slot14 or slot0:getDefineBlockType()
-		end
-
-		return slot1, slot2, slot3
-	end,
-	_isNotLink = function (slot0)
-		if slot0 then
-			return slot0:getBlockDefineCfg() and slot1.waterLink == 1
-		end
-
-		return false
-	end,
-	_getRiverTypeByDirection = function (slot0, slot1, slot2, slot3)
-		if slot0:getResourceId(slot1, false, true) ~= RoomResourceEnum.ResourceId.River or not slot0:isInMapBlock() then
-			return RoomRiverEnum.LakeOutLinkType.NoLink
-		end
-
-		if slot2[slot1] then
-			if slot3[slot1] ~= RoomResourceEnum.ResourceId.River then
-				return RoomRiverEnum.LakeOutLinkType.Floor, slot5:getDefineBlockType()
-			end
-
-			if not slot5:isFullWater() then
-				return RoomRiverEnum.LakeOutLinkType.River, slot5:getDefineBlockType()
-			end
-		end
-
-		slot7 = RoomRotateHelper.rotateDirection(slot1, 1)
-		slot8 = RoomRotateHelper.rotateDirection(slot1, -1)
-		slot16 = uv0._checkSideFloor(RoomResourceEnum.ResourceId.River, slot2[slot8], slot3[slot8])
-
-		if not uv0._checkSideFloor(RoomResourceEnum.ResourceId.River, slot2[slot7], slot3[slot7]) and not slot16 then
-			return RoomRiverEnum.LakeOutLinkType.NoLink
-		end
-
-		if slot15 and not slot16 then
-			return RoomRiverEnum.LakeOutLinkType.Left, slot9:getDefineBlockType()
-		end
-
-		if not slot15 and slot16 then
-			return RoomRiverEnum.LakeOutLinkType.Right, slot10:getDefineBlockType()
-		end
-
-		return RoomRiverEnum.LakeOutLinkType.RightLeft, slot10:getDefineBlockType(), slot9:getDefineBlockType()
-	end,
-	_checkSideFloor = function (slot0, slot1, slot2)
-		if slot0 ~= RoomResourceEnum.ResourceId.River or not slot1 or slot1:isFullWater() and slot2 == RoomResourceEnum.ResourceId.River then
-			return false
-		end
-
-		return true
-	end
+	_neighborLinkResIdDict = {}
 }
+
+function var_0_0.getRiverTypeDictByMO(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = {}
+	local var_1_2 = {}
+
+	if not arg_1_0:isFullWater() then
+		return var_1_0, var_1_1, var_1_2
+	end
+
+	if not arg_1_0:isInMapBlock() or var_0_0._isNotLink(arg_1_0) then
+		local var_1_3 = arg_1_0:getDefineBlockType()
+
+		for iter_1_0 = 1, 6 do
+			var_1_0[iter_1_0] = RoomRiverEnum.LakeOutLinkType.NoLink
+			var_1_1[iter_1_0] = var_1_3
+		end
+
+		return var_1_0, var_1_1
+	end
+
+	local var_1_4 = var_0_0._neighborMODict
+	local var_1_5 = var_0_0._neighborLinkResIdDict
+	local var_1_6 = RoomMapBlockModel.instance
+	local var_1_7 = arg_1_0.hexPoint
+
+	for iter_1_1 = 1, 6 do
+		local var_1_8 = HexPoint.directions[iter_1_1]
+		local var_1_9 = var_1_6:getBlockMO(var_1_7.x + var_1_8.x, var_1_7.y + var_1_8.y)
+
+		if var_1_9 and var_1_9:isInMapBlock() and not var_0_0._isNotLink(var_1_9) then
+			var_1_4[iter_1_1] = var_1_9
+			var_1_5[iter_1_1] = var_1_9:getResourceId(RoomRotateHelper.rotateDirection(iter_1_1, 3), false, true)
+		else
+			var_1_4[iter_1_1] = nil
+			var_1_5[iter_1_1] = nil
+		end
+	end
+
+	local var_1_10 = arg_1_0:getDefineBlockType()
+
+	for iter_1_2 = 1, 6 do
+		local var_1_11, var_1_12, var_1_13 = var_0_0._getRiverTypeByDirection(arg_1_0, iter_1_2, var_1_4, var_1_5)
+
+		var_1_0[iter_1_2] = var_1_11
+		var_1_1[iter_1_2] = var_1_12 or var_1_10
+		var_1_2[iter_1_2] = var_1_13
+	end
+
+	return var_1_0, var_1_1, var_1_2
+end
+
+function var_0_0._isNotLink(arg_2_0)
+	if arg_2_0 then
+		local var_2_0 = arg_2_0:getBlockDefineCfg()
+
+		return var_2_0 and var_2_0.waterLink == 1
+	end
+
+	return false
+end
+
+function var_0_0._getRiverTypeByDirection(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_0:getResourceId(arg_3_1, false, true) ~= RoomResourceEnum.ResourceId.River or not arg_3_0:isInMapBlock() then
+		return RoomRiverEnum.LakeOutLinkType.NoLink
+	end
+
+	local var_3_0 = arg_3_2[arg_3_1]
+	local var_3_1 = arg_3_3[arg_3_1]
+
+	if var_3_0 then
+		if var_3_1 ~= RoomResourceEnum.ResourceId.River then
+			return RoomRiverEnum.LakeOutLinkType.Floor, var_3_0:getDefineBlockType()
+		end
+
+		if not var_3_0:isFullWater() then
+			return RoomRiverEnum.LakeOutLinkType.River, var_3_0:getDefineBlockType()
+		end
+	end
+
+	local var_3_2 = RoomRotateHelper.rotateDirection(arg_3_1, 1)
+	local var_3_3 = RoomRotateHelper.rotateDirection(arg_3_1, -1)
+	local var_3_4 = arg_3_2[var_3_2]
+	local var_3_5 = arg_3_2[var_3_3]
+	local var_3_6 = arg_3_3[var_3_2]
+	local var_3_7 = arg_3_3[var_3_3]
+	local var_3_8 = RoomResourceEnum.ResourceId.River
+	local var_3_9 = RoomResourceEnum.ResourceId.River
+	local var_3_10 = var_0_0._checkSideFloor(var_3_8, var_3_4, var_3_6)
+	local var_3_11 = var_0_0._checkSideFloor(var_3_9, var_3_5, var_3_7)
+
+	if not var_3_10 and not var_3_11 then
+		return RoomRiverEnum.LakeOutLinkType.NoLink
+	end
+
+	if var_3_10 and not var_3_11 then
+		return RoomRiverEnum.LakeOutLinkType.Left, var_3_4:getDefineBlockType()
+	end
+
+	if not var_3_10 and var_3_11 then
+		return RoomRiverEnum.LakeOutLinkType.Right, var_3_5:getDefineBlockType()
+	end
+
+	local var_3_12 = var_3_4:getDefineBlockType()
+	local var_3_13 = var_3_5:getDefineBlockType()
+
+	return RoomRiverEnum.LakeOutLinkType.RightLeft, var_3_13, var_3_12
+end
+
+function var_0_0._checkSideFloor(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0 ~= RoomResourceEnum.ResourceId.River or not arg_4_1 or arg_4_1:isFullWater() and arg_4_2 == RoomResourceEnum.ResourceId.River then
+		return false
+	end
+
+	return true
+end
+
+return var_0_0

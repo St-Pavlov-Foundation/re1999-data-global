@@ -1,163 +1,166 @@
-module("modules.logic.social.view.SocialSearchView", package.seeall)
+﻿module("modules.logic.social.view.SocialSearchView", package.seeall)
 
-slot0 = class("SocialSearchView", BaseView)
+local var_0_0 = class("SocialSearchView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gorecommend = gohelper.findChild(slot0.viewGO, "container/#go_recommend")
-	slot0._gonorecommend = gohelper.findChild(slot0.viewGO, "container/#go_recommend/#go_norecommend")
-	slot0._gohaverecommend = gohelper.findChild(slot0.viewGO, "container/#go_recommend/#go_haverecommend")
-	slot0._gosearchresults = gohelper.findChild(slot0.viewGO, "container/#go_searchresults")
-	slot0._btnchangerecommend = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#go_recommend/#go_haverecommend/#btn_change")
-	slot0._btnreturn = gohelper.findChildButtonWithAudio(slot0.viewGO, "search/#btn_return")
-	slot0._btnsearch = gohelper.findChildButtonWithAudio(slot0.viewGO, "search/#btn_search")
-	slot0._inputsearch = gohelper.findChildTextMeshInputField(slot0.viewGO, "search/#input_search")
-	slot0._gonosearch = gohelper.findChild(slot0.viewGO, "container/#go_searchresults/#go_nosearch")
-	slot0._scrollsearch = gohelper.findChildScrollRect(slot0.viewGO, "container/#go_searchresults/scrollview")
-	slot0._scrollrecommend = gohelper.findChildScrollRect(slot0.viewGO, "container/#go_recommend/scrollview")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorecommend = gohelper.findChild(arg_1_0.viewGO, "container/#go_recommend")
+	arg_1_0._gonorecommend = gohelper.findChild(arg_1_0.viewGO, "container/#go_recommend/#go_norecommend")
+	arg_1_0._gohaverecommend = gohelper.findChild(arg_1_0.viewGO, "container/#go_recommend/#go_haverecommend")
+	arg_1_0._gosearchresults = gohelper.findChild(arg_1_0.viewGO, "container/#go_searchresults")
+	arg_1_0._btnchangerecommend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#go_recommend/#go_haverecommend/#btn_change")
+	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "search/#btn_return")
+	arg_1_0._btnsearch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "search/#btn_search")
+	arg_1_0._inputsearch = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "search/#input_search")
+	arg_1_0._gonosearch = gohelper.findChild(arg_1_0.viewGO, "container/#go_searchresults/#go_nosearch")
+	arg_1_0._scrollsearch = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/#go_searchresults/scrollview")
+	arg_1_0._scrollrecommend = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/#go_recommend/scrollview")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnchangerecommend:AddClickListener(slot0._btnchangeOnClick, slot0)
-	slot0._btnreturn:AddClickListener(slot0._btnreturnOnClick, slot0)
-	slot0._btnsearch:AddClickListener(slot0._btnsearchOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnchangerecommend:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
+	arg_2_0._btnreturn:AddClickListener(arg_2_0._btnreturnOnClick, arg_2_0)
+	arg_2_0._btnsearch:AddClickListener(arg_2_0._btnsearchOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnchangerecommend:RemoveClickListener()
-	slot0._btnreturn:RemoveClickListener()
-	slot0._btnsearch:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnchangerecommend:RemoveClickListener()
+	arg_3_0._btnreturn:RemoveClickListener()
+	arg_3_0._btnsearch:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._viewAnim = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.addUIClickAudio(slot0._btnsearch.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_4_0._btnsearch.gameObject, AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0._btnchangeOnClick(slot0)
-	if slot0._searchFriendCD then
+function var_0_0._btnchangeOnClick(arg_5_0)
+	if arg_5_0._searchFriendCD then
 		GameFacade.showToast(ToastEnum.SocialSearch2)
 	else
-		slot0._searchFriendCD = SocialEnum.SearchFriendCD
+		arg_5_0._searchFriendCD = SocialEnum.SearchFriendCD
 
-		TaskDispatcher.runDelay(slot0._onTimeEnd, slot0, slot0._searchFriendCD)
-		slot0:_switchTab(1)
+		TaskDispatcher.runDelay(arg_5_0._onTimeEnd, arg_5_0, arg_5_0._searchFriendCD)
+		arg_5_0:_switchTab(1)
 		SocialModel.instance:clearRecommendList()
-		FriendRpc.instance:sendGetRecommendRequest(slot0._playSwitchAnim, slot0)
+		FriendRpc.instance:sendGetRecommendRequest(arg_5_0._playSwitchAnim, arg_5_0)
 	end
 end
 
-function slot0._inputValueChanged(slot0)
-	if slot0._inputsearch:GetText() == slot0._searchValue then
+function var_0_0._inputValueChanged(arg_6_0)
+	local var_6_0 = arg_6_0._inputsearch:GetText()
+
+	if var_6_0 == arg_6_0._searchValue then
 		return
 	end
 
-	slot0._searchValue = GameUtil.utf8sub(slot1, 1, math.min(GameUtil.utf8len(slot1), 18))
+	arg_6_0._searchValue = GameUtil.utf8sub(var_6_0, 1, math.min(GameUtil.utf8len(var_6_0), 18))
 
-	slot0._inputsearch:SetText(slot0._searchValue)
+	arg_6_0._inputsearch:SetText(arg_6_0._searchValue)
 end
 
-function slot0._btnreturnOnClick(slot0)
+function var_0_0._btnreturnOnClick(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_search_clear)
-	slot0:_resetView()
+	arg_7_0:_resetView()
 end
 
-function slot0._btnsearchOnClick(slot0)
-	if string.nilorempty(slot0._searchValue) then
+function var_0_0._btnsearchOnClick(arg_8_0)
+	if string.nilorempty(arg_8_0._searchValue) then
 		GameFacade.showToast(ToastEnum.SocialSearch1)
 
 		return
 	end
 
-	if slot0._searchFriendCD then
+	if arg_8_0._searchFriendCD then
 		GameFacade.showToast(ToastEnum.SocialSearch2)
 	else
-		slot0._searchFriendCD = SocialEnum.SearchFriendCD
+		arg_8_0._searchFriendCD = SocialEnum.SearchFriendCD
 
-		TaskDispatcher.runDelay(slot0._onTimeEnd, slot0, slot0._searchFriendCD)
-		slot0:_switchTab(2)
+		TaskDispatcher.runDelay(arg_8_0._onTimeEnd, arg_8_0, arg_8_0._searchFriendCD)
+		arg_8_0:_switchTab(2)
 		SocialModel.instance:clearSearchList()
 		SocialController.instance:dispatchEvent(SocialEvent.SearchInfoChanged)
-		FriendRpc.instance:sendSearchRequest(slot0._searchValue, slot0._playSwitchAnim, slot0)
+		FriendRpc.instance:sendSearchRequest(arg_8_0._searchValue, arg_8_0._playSwitchAnim, arg_8_0)
 	end
 end
 
-function slot0._playSwitchAnim(slot0)
-	if slot0._viewAnim then
-		slot0._viewAnim:Play("switch", 0, 0)
+function var_0_0._playSwitchAnim(arg_9_0)
+	if arg_9_0._viewAnim then
+		arg_9_0._viewAnim:Play("switch", 0, 0)
 	end
 end
 
-function slot0._onTimeEnd(slot0)
-	slot0._searchFriendCD = nil
+function var_0_0._onTimeEnd(arg_10_0)
+	arg_10_0._searchFriendCD = nil
 end
 
-function slot0._switchTab(slot0, slot1, slot2)
-	slot0._selectIndex = slot1
+function var_0_0._switchTab(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._selectIndex = arg_11_1
 
-	SocialController.instance:dispatchEvent(SocialEvent.SubTabSwitch, slot1)
-	gohelper.setActive(slot0._gorecommend, slot1 == 1)
-	gohelper.setActive(slot0._gosearchresults, slot1 == 2)
-	gohelper.setActive(slot0._btnreturn.gameObject, slot1 == 2)
-	slot0:_refreshUI(slot2)
+	SocialController.instance:dispatchEvent(SocialEvent.SubTabSwitch, arg_11_1)
+	gohelper.setActive(arg_11_0._gorecommend, arg_11_1 == 1)
+	gohelper.setActive(arg_11_0._gosearchresults, arg_11_1 == 2)
+	gohelper.setActive(arg_11_0._btnreturn.gameObject, arg_11_1 == 2)
+	arg_11_0:_refreshUI(arg_11_2)
 end
 
-function slot0.onOpen(slot0)
-	slot0._inputsearch:AddOnValueChanged(slot0._inputValueChanged, slot0)
-	slot0:addEventCb(SocialController.instance, SocialEvent.RecommendChanged, slot0._refreshUI, slot0)
-	slot0:addEventCb(SocialController.instance, SocialEvent.SearchInfoChanged, slot0._refreshUI, slot0)
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._inputsearch:AddOnValueChanged(arg_12_0._inputValueChanged, arg_12_0)
+	arg_12_0:addEventCb(SocialController.instance, SocialEvent.RecommendChanged, arg_12_0._refreshUI, arg_12_0)
+	arg_12_0:addEventCb(SocialController.instance, SocialEvent.SearchInfoChanged, arg_12_0._refreshUI, arg_12_0)
 
-	if slot0._notFirst then
-		slot0:_resetView()
+	if arg_12_0._notFirst then
+		arg_12_0:_resetView()
 	else
-		slot0:_resetView(true)
+		arg_12_0:_resetView(true)
 	end
 
-	slot0._notFirst = true
+	arg_12_0._notFirst = true
 end
 
-function slot0._resetView(slot0, slot1)
-	slot0._searchValue = ""
+function var_0_0._resetView(arg_13_0, arg_13_1)
+	arg_13_0._searchValue = ""
 
-	slot0._inputsearch:SetText(slot0._searchValue)
-	slot0:_switchTab(1, slot1)
+	arg_13_0._inputsearch:SetText(arg_13_0._searchValue)
+	arg_13_0:_switchTab(1, arg_13_1)
 
-	if SocialEnum.SearchFriendCD < UnityEngine.Time.realtimeSinceStartup - SocialModel.instance.leftSendRecommendReqDt then
+	if UnityEngine.Time.realtimeSinceStartup - SocialModel.instance.leftSendRecommendReqDt > SocialEnum.SearchFriendCD then
 		SocialModel.instance:clearRecommendList()
 		FriendRpc.instance:sendGetRecommendRequest()
 
-		slot0._searchFriendCD = SocialEnum.SearchFriendCD
+		arg_13_0._searchFriendCD = SocialEnum.SearchFriendCD
 
-		TaskDispatcher.runDelay(slot0._onTimeEnd, slot0, slot0._searchFriendCD)
+		TaskDispatcher.runDelay(arg_13_0._onTimeEnd, arg_13_0, arg_13_0._searchFriendCD)
 	end
 end
 
-function slot0._refreshUI(slot0, slot1)
-	slot2 = SocialModel.instance:getRecommendCount()
+function var_0_0._refreshUI(arg_14_0, arg_14_1)
+	local var_14_0 = SocialModel.instance:getRecommendCount()
+	local var_14_1 = SocialModel.instance:getSearchCount()
 
-	gohelper.setActive(slot0._gonorecommend, not slot1 and slot2 <= 0)
-	gohelper.setActive(slot0._gohaverecommend, not slot1 and slot2 > 0)
-	gohelper.setActive(slot0._gonosearch, not slot1 and SocialModel.instance:getSearchCount() <= 0)
+	gohelper.setActive(arg_14_0._gonorecommend, not arg_14_1 and var_14_0 <= 0)
+	gohelper.setActive(arg_14_0._gohaverecommend, not arg_14_1 and var_14_0 > 0)
+	gohelper.setActive(arg_14_0._gonosearch, not arg_14_1 and var_14_1 <= 0)
 
-	if slot0._selectIndex == 1 then
-		slot0._scrollrecommend.verticalNormalizedPosition = 1
-	elseif slot0._selectIndex == 2 then
-		slot0._scrollsearch.verticalNormalizedPosition = 1
+	if arg_14_0._selectIndex == 1 then
+		arg_14_0._scrollrecommend.verticalNormalizedPosition = 1
+	elseif arg_14_0._selectIndex == 2 then
+		arg_14_0._scrollsearch.verticalNormalizedPosition = 1
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0._inputsearch:RemoveOnValueChanged()
-	slot0:removeEventCb(SocialController.instance, SocialEvent.RecommendChanged, slot0._refreshUI, slot0)
-	slot0:removeEventCb(SocialController.instance, SocialEvent.SearchInfoChanged, slot0._refreshUI, slot0)
+function var_0_0.onClose(arg_15_0)
+	arg_15_0._inputsearch:RemoveOnValueChanged()
+	arg_15_0:removeEventCb(SocialController.instance, SocialEvent.RecommendChanged, arg_15_0._refreshUI, arg_15_0)
+	arg_15_0:removeEventCb(SocialController.instance, SocialEvent.SearchInfoChanged, arg_15_0._refreshUI, arg_15_0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onTimeEnd, slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._onTimeEnd, arg_16_0)
 end
 
-return slot0
+return var_0_0

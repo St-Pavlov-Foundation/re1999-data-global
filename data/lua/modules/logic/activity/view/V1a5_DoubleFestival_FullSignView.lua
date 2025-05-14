@@ -1,190 +1,202 @@
-module("modules.logic.activity.view.V1a5_DoubleFestival_FullSignView", package.seeall)
+﻿module("modules.logic.activity.view.V1a5_DoubleFestival_FullSignView", package.seeall)
 
-slot0 = class("V1a5_DoubleFestival_FullSignView", Activity101SignViewBase)
+local var_0_0 = class("V1a5_DoubleFestival_FullSignView", Activity101SignViewBase)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._goSign = gohelper.findChild(slot0.viewGO, "Root/#go_Sign")
-	slot0._imageSignNext = gohelper.findChildImage(slot0.viewGO, "Root/#go_Sign/#image_SignNext")
-	slot0._imageSignNow = gohelper.findChildImage(slot0.viewGO, "Root/#go_Sign/#image_SignNow")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Root/#txt_Descr")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "Root/#scroll_ItemList")
-	slot0._goBlock = gohelper.findChild(slot0.viewGO, "#go_Block")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._goSign = gohelper.findChild(arg_1_0.viewGO, "Root/#go_Sign")
+	arg_1_0._imageSignNext = gohelper.findChildImage(arg_1_0.viewGO, "Root/#go_Sign/#image_SignNext")
+	arg_1_0._imageSignNow = gohelper.findChildImage(arg_1_0.viewGO, "Root/#go_Sign/#image_SignNow")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Descr")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+	arg_1_0._goBlock = gohelper.findChild(arg_1_0.viewGO, "#go_Block")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	Activity101SignViewBase.addEvents(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	Activity101SignViewBase.addEvents(arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	Activity101SignViewBase.removeEvents(slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	Activity101SignViewBase.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
 end
 
-slot1 = ActivityEnum.Activity.DoubleFestivalSign_1_5
-slot2 = "onSwitchEnd"
+local var_0_1 = ActivityEnum.Activity.DoubleFestivalSign_1_5
+local var_0_2 = "onSwitchEnd"
 
-function slot0._editableInitView(slot0)
-	slot0._imageSignNextTran = slot0._imageSignNext.transform
-	slot0._imageSignNowTran = slot0._imageSignNow.transform
-	slot0._animSelf = slot0._goSign:GetComponent(gohelper.Type_Animator)
-	slot0._animEvent = slot0._goSign:GetComponent(gohelper.Type_AnimationEventWrap)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._imageSignNextTran = arg_4_0._imageSignNext.transform
+	arg_4_0._imageSignNowTran = arg_4_0._imageSignNow.transform
+	arg_4_0._animSelf = arg_4_0._goSign:GetComponent(gohelper.Type_Animator)
+	arg_4_0._animEvent = arg_4_0._goSign:GetComponent(gohelper.Type_AnimationEventWrap)
 
-	slot0._animEvent:AddEventListener(uv0, slot0._onSwitchEnd, slot0)
-	slot0._simageTitle:LoadImage(ResUrl.getV1a5SignSingleBgLang("v1a5_sign_df_title"))
-	slot0._simageFullBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_df_sign_fullbg"))
+	arg_4_0._animEvent:AddEventListener(var_0_2, arg_4_0._onSwitchEnd, arg_4_0)
+	arg_4_0._simageTitle:LoadImage(ResUrl.getV1a5SignSingleBgLang("v1a5_sign_df_title"))
+	arg_4_0._simageFullBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_df_sign_fullbg"))
 
-	slot0._txtDescr.text = ""
+	arg_4_0._txtDescr.text = ""
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
 	ActivityType101Model.instance:setCurIndex(nil)
 
-	slot0._lastDay = nil
-	slot0._txtLimitTime.text = ""
+	arg_5_0._lastDay = nil
+	arg_5_0._txtLimitTime.text = ""
 
-	slot0:_setActiveBlock(false)
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	slot0:internal_onOpen()
-	slot0:_resetByDay(ActivityType101Model.instance:getLastGetIndex(uv0))
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+	arg_5_0:_setActiveBlock(false)
+	arg_5_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	arg_5_0:internal_onOpen()
+
+	local var_5_0 = ActivityType101Model.instance:getLastGetIndex(var_0_1)
+
+	arg_5_0:_resetByDay(var_5_0)
+	TaskDispatcher.runRepeat(arg_5_0._refreshTimeTick, arg_5_0, 1)
 end
 
-function slot0.onClose(slot0)
-	slot0._animEvent:RemoveEventListener(uv0)
+function var_0_0.onClose(arg_6_0)
+	arg_6_0._animEvent:RemoveEventListener(var_0_2)
 
-	if slot0._fTimer then
-		slot0._fTimer:Stop()
+	if arg_6_0._fTimer then
+		arg_6_0._fTimer:Stop()
 
-		slot0._fTimer = nil
+		arg_6_0._fTimer = nil
 	end
 
-	slot0._isFirstUpdateScrollPos = nil
+	arg_6_0._isFirstUpdateScrollPos = nil
 
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
-	slot0:_setActiveBlock(false)
+	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
+	arg_6_0:_setActiveBlock(false)
 end
 
-function slot0.onDestroyView(slot0)
-	Activity101SignViewBase._internal_onDestroy(slot0)
-	slot0._simageTitle:UnLoadImage()
-	slot0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0.onDestroyView(arg_7_0)
+	Activity101SignViewBase._internal_onDestroy(arg_7_0)
+	arg_7_0._simageTitle:UnLoadImage()
+	arg_7_0._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_7_0._refreshTimeTick, arg_7_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshList()
-	slot0:_refreshTimeTick()
+function var_0_0.onRefresh(arg_8_0)
+	arg_8_0:_refreshList()
+	arg_8_0:_refreshTimeTick()
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+function var_0_0._refreshTimeTick(arg_9_0)
+	arg_9_0._txtLimitTime.text = arg_9_0:getRemainTimeStr()
 end
 
-function slot0._setPinStartIndex(slot0, slot1)
-	slot2, slot3 = slot0:getRewardCouldGetIndex()
+function var_0_0._setPinStartIndex(arg_10_0, arg_10_1)
+	local var_10_0, var_10_1 = arg_10_0:getRewardCouldGetIndex()
+	local var_10_2 = var_10_1 <= 4 and 1 or 3
 
-	slot0.viewContainer:getScrollModel():setStartPinIndex(slot3 <= 4 and 1 or 3)
+	arg_10_0.viewContainer:getScrollModel():setStartPinIndex(var_10_2)
 end
 
-function slot0._resetByDay(slot0, slot1)
-	GameUtil.setActive01(slot0._imageSignNowTran, ActivityType101Config.instance:getDoubleFestivalCOByDay(uv0, slot1) ~= nil)
-	GameUtil.setActive01(slot0._imageSignNextTran, false)
+function var_0_0._resetByDay(arg_11_0, arg_11_1)
+	local var_11_0 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_11_1)
 
-	if slot2 then
-		UISpriteSetMgr.instance:setV1a5DfSignSprite(slot0._imageSignNow, slot2.bgSpriteName)
+	GameUtil.setActive01(arg_11_0._imageSignNowTran, var_11_0 ~= nil)
+	GameUtil.setActive01(arg_11_0._imageSignNextTran, false)
+
+	if var_11_0 then
+		UISpriteSetMgr.instance:setV1a5DfSignSprite(arg_11_0._imageSignNow, var_11_0.bgSpriteName)
 	end
 
-	slot0._lastDay = slot1
+	arg_11_0._lastDay = arg_11_1
 
-	slot0._animSelf:Play(UIAnimationName.Idle, 0, 1)
+	arg_11_0._animSelf:Play(UIAnimationName.Idle, 0, 1)
 
-	slot0._txtDescr.text = slot2.blessContentType or ""
+	arg_11_0._txtDescr.text = var_11_0.blessContentType or ""
 end
 
-function slot0._setActiveBlock(slot0, slot1)
-	gohelper.setActive(slot0._goBlock, slot1)
+function var_0_0._setActiveBlock(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._goBlock, arg_12_1)
 end
 
-function slot0._tweenSprite(slot0, slot1)
-	if not slot1 then
+function var_0_0._tweenSprite(arg_13_0, arg_13_1)
+	if not arg_13_1 then
 		return
 	end
 
-	slot0:_setActiveBlock(true)
+	arg_13_0:_setActiveBlock(true)
 
-	slot0._curDay = slot1
-	slot2 = ActivityType101Config.instance:getDoubleFestivalCOByDay(uv0, slot0._lastDay)
+	arg_13_0._curDay = arg_13_1
 
-	GameUtil.setActive01(slot0._imageSignNextTran, ActivityType101Config.instance:getDoubleFestivalCOByDay(uv0, slot1) ~= nil)
+	local var_13_0 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_13_0._lastDay)
+	local var_13_1 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_13_1)
 
-	if slot3 then
-		slot4 = slot3.bgSpriteName
+	GameUtil.setActive01(arg_13_0._imageSignNextTran, var_13_1 ~= nil)
 
-		if slot2 and slot2.bgSpriteName == slot4 then
-			slot0:_onSwitchEnd()
+	if var_13_1 then
+		local var_13_2 = var_13_1.bgSpriteName
+
+		if var_13_0 and var_13_0.bgSpriteName == var_13_2 then
+			arg_13_0:_onSwitchEnd()
 
 			return
 		end
 
-		UISpriteSetMgr.instance:setV1a5DfSignSprite(slot0._imageSignNext, slot4)
+		UISpriteSetMgr.instance:setV1a5DfSignSprite(arg_13_0._imageSignNext, var_13_2)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_seal_cutting_eft)
-	slot0._animSelf:Play(UIAnimationName.Switch, 0, 0)
+	arg_13_0._animSelf:Play(UIAnimationName.Switch, 0, 0)
 end
 
-function slot0._onSwitchEnd(slot0)
-	slot0:_showWish(slot0._curDay)
-	slot0:_setActiveBlock(false)
+function var_0_0._onSwitchEnd(arg_14_0)
+	local var_14_0 = arg_14_0._curDay
+
+	arg_14_0:_showWish(var_14_0)
+	arg_14_0:_setActiveBlock(false)
 end
 
-function slot0._showWish(slot0, slot1)
-	if not slot1 then
+function var_0_0._showWish(arg_15_0, arg_15_1)
+	if not arg_15_1 then
 		return
 	end
 
-	if not slot0._fTimer then
-		slot0._fTimer = FrameTimer.New(nil, 0, 0)
+	if not arg_15_0._fTimer then
+		arg_15_0._fTimer = FrameTimer.New(nil, 0, 0)
 	end
 
-	slot2 = true
+	local var_15_0 = true
 
-	slot0._fTimer:Reset(function ()
-		if uv0 then
-			uv0 = false
+	arg_15_0._fTimer:Reset(function()
+		if var_15_0 then
+			var_15_0 = false
 
 			ViewMgr.instance:openView(ViewName.V1a5_DoubleFestival_WishPanel, {
-				day = uv1
+				day = arg_15_1
 			})
 		else
-			uv2:_resetByDay(uv1)
+			arg_15_0:_resetByDay(arg_15_1)
 		end
 	end, 1, 2)
-	slot0._fTimer:Start()
+	arg_15_0._fTimer:Start()
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 ~= ViewName.CommonPropView then
+function var_0_0._onCloseView(arg_17_0, arg_17_1)
+	if arg_17_1 ~= ViewName.CommonPropView then
 		return
 	end
 
-	if not ActivityType101Model.instance:getCurIndex() then
+	local var_17_0 = ActivityType101Model.instance:getCurIndex()
+
+	if not var_17_0 then
 		return
 	end
 
-	if slot0._lastDay == slot2 then
+	if arg_17_0._lastDay == var_17_0 then
 		return
 	end
 
-	slot0:_tweenSprite(slot2)
+	arg_17_0:_tweenSprite(var_17_0)
 end
 
-return slot0
+return var_0_0

@@ -1,33 +1,33 @@
-module("modules.common.touch.TouchEventMgrHepler", package.seeall)
+﻿module("modules.common.touch.TouchEventMgrHepler", package.seeall)
 
-slot0 = class("TouchEventMgrHepler")
-slot1 = ZProj.TouchEventMgr
-slot2 = {}
+local var_0_0 = class("TouchEventMgrHepler")
+local var_0_1 = ZProj.TouchEventMgr
+local var_0_2 = {}
 
-function slot0.getTouchEventMgr(slot0)
-	slot1 = uv0.Get(slot0)
+function var_0_0.getTouchEventMgr(arg_1_0)
+	local var_1_0 = var_0_1.Get(arg_1_0)
 
-	if SDKNativeUtil.isGamePad() and tabletool.indexOf(uv1, slot1) == nil then
-		table.insert(uv1, slot1)
-		slot1:SetDestroyCb(uv2._remove, nil)
+	if SDKNativeUtil.isGamePad() and tabletool.indexOf(var_0_2, var_1_0) == nil then
+		table.insert(var_0_2, var_1_0)
+		var_1_0:SetDestroyCb(var_0_0._remove, nil)
 	end
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.getAllMgrs()
-	return uv0
+function var_0_0.getAllMgrs()
+	return var_0_2
 end
 
-function slot0.remove(slot0)
-	if not gohelper.isNil(slot0) then
-		slot0:ClearAllCallback()
-		uv0._remove(slot0)
+function var_0_0.remove(arg_3_0)
+	if not gohelper.isNil(arg_3_0) then
+		arg_3_0:ClearAllCallback()
+		var_0_0._remove(arg_3_0)
 	end
 end
 
-function slot0._remove(slot0)
-	tabletool.removeValue(uv0, slot0)
+function var_0_0._remove(arg_4_0)
+	tabletool.removeValue(var_0_2, arg_4_0)
 end
 
-return slot0
+return var_0_0

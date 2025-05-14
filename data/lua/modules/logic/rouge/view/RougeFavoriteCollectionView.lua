@@ -1,76 +1,80 @@
-module("modules.logic.rouge.view.RougeFavoriteCollectionView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFavoriteCollectionView", package.seeall)
 
-slot0 = class("RougeFavoriteCollectionView", BaseView)
+local var_0_0 = class("RougeFavoriteCollectionView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_fullbg")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._gobottom = gohelper.findChild(slot0.viewGO, "#go_bottom")
-	slot0._btnlist = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_bottom/#btn_list")
-	slot0._golistselected = gohelper.findChild(slot0.viewGO, "#go_bottom/#btn_list/#go_list_selected")
-	slot0._btnhandbook = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_bottom/#btn_handbook")
-	slot0._gohandbookselected = gohelper.findChild(slot0.viewGO, "#go_bottom/#btn_handbook/#go_handbook_selected")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "#go_bottom")
+	arg_1_0._btnlist = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_bottom/#btn_list")
+	arg_1_0._golistselected = gohelper.findChild(arg_1_0.viewGO, "#go_bottom/#btn_list/#go_list_selected")
+	arg_1_0._btnhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_bottom/#btn_handbook")
+	arg_1_0._gohandbookselected = gohelper.findChild(arg_1_0.viewGO, "#go_bottom/#btn_handbook/#go_handbook_selected")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlist:AddClickListener(slot0._btnlistOnClick, slot0)
-	slot0._btnhandbook:AddClickListener(slot0._btnhandbookOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlist:AddClickListener(arg_2_0._btnlistOnClick, arg_2_0)
+	arg_2_0._btnhandbook:AddClickListener(arg_2_0._btnhandbookOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlist:RemoveClickListener()
-	slot0._btnhandbook:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlist:RemoveClickListener()
+	arg_3_0._btnhandbook:RemoveClickListener()
 end
 
-function slot0._btnlistOnClick(slot0)
-	if slot0._listSelected then
+function var_0_0._btnlistOnClick(arg_4_0)
+	if arg_4_0._listSelected then
 		return
 	end
 
-	slot0.viewContainer:selectTabView(1)
-	slot0:_setBtnListSelected(true)
+	arg_4_0.viewContainer:selectTabView(1)
+	arg_4_0:_setBtnListSelected(true)
 end
 
-function slot0._btnhandbookOnClick(slot0)
-	if slot0._listSelected == false then
+function var_0_0._btnhandbookOnClick(arg_5_0)
+	if arg_5_0._listSelected == false then
 		return
 	end
 
-	slot0.viewContainer:selectTabView(2)
-	slot0:_setBtnListSelected(false)
+	arg_5_0.viewContainer:selectTabView(2)
+	arg_5_0:_setBtnListSelected(false)
 end
 
-function slot0._setBtnListSelected(slot0, slot1)
-	slot0._listSelected = slot1
+function var_0_0._setBtnListSelected(arg_6_0, arg_6_1)
+	arg_6_0._listSelected = arg_6_1
 
-	gohelper.setActive(slot0._golistselected, slot1)
-	gohelper.setActive(slot0._gohandbookselected, not slot1)
+	gohelper.setActive(arg_6_0._golistselected, arg_6_1)
+	gohelper.setActive(arg_6_0._gohandbookselected, not arg_6_1)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_setBtnListSelected(true)
-	gohelper.setActive(slot0._gobottom, RougeOutsideModel.instance:passedLayerId(RougeEnum.FirstLayerId))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0:_setBtnListSelected(true)
+	gohelper.setActive(arg_7_0._gobottom, RougeOutsideModel.instance:passedLayerId(RougeEnum.FirstLayerId))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio6)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	if RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Collection) > 0 then
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(RougeOutsideModel.instance:season(), RougeEnum.FavoriteType.Collection, 0)
+		local var_10_0 = RougeOutsideModel.instance:season()
+
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_10_0, RougeEnum.FavoriteType.Collection, 0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

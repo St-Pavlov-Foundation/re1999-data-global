@@ -1,139 +1,146 @@
-module("modules.logic.commonprop.view.CommonPropListItem", package.seeall)
+﻿module("modules.logic.commonprop.view.CommonPropListItem", package.seeall)
 
-slot0 = class("CommonPropListItem", CommonPropItemIcon)
-slot0.hasOpen = false
+local var_0_0 = class("CommonPropListItem", CommonPropItemIcon)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+var_0_0.hasOpen = false
+
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	var_0_0.super._editableInitView(arg_4_0)
 end
 
-function slot0.setMOValue(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0._isEquip = tonumber(slot1) == MaterialEnum.MaterialType.Equip
-	slot0._type = slot1
-	slot0._id = slot2
-	slot0._quantity = slot3
-	slot0._uid = slot4
-	slot0._isGold = slot6
-	slot0._roomBuildingLevel = slot7
+function var_0_0.setMOValue(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7)
+	arg_5_0._isEquip = tonumber(arg_5_1) == MaterialEnum.MaterialType.Equip
+	arg_5_0._type = arg_5_1
+	arg_5_0._id = arg_5_2
+	arg_5_0._quantity = arg_5_3
+	arg_5_0._uid = arg_5_4
+	arg_5_0._isGold = arg_5_6
+	arg_5_0._roomBuildingLevel = arg_5_7
 
-	if uv0.hasOpen then
-		slot0:_playInEffect()
+	if var_0_0.hasOpen then
+		arg_5_0:_playInEffect()
 	else
-		TaskDispatcher.runDelay(slot0._playInEffect, slot0, 0.06 * slot0._index)
+		TaskDispatcher.runDelay(arg_5_0._playInEffect, arg_5_0, 0.06 * arg_5_0._index)
 	end
 
-	gohelper.setActive(slot0._nameTxt.gameObject, uv0.hasOpen and slot0._isEquip)
-	gohelper.setActive(slot0._goequip, uv0.hasOpen and slot0._isEquip)
-	gohelper.setActive(slot0._goitem, uv0.hasOpen and not slot0._isEquip)
+	gohelper.setActive(arg_5_0._nameTxt.gameObject, var_0_0.hasOpen and arg_5_0._isEquip)
+	gohelper.setActive(arg_5_0._goequip, var_0_0.hasOpen and arg_5_0._isEquip)
+	gohelper.setActive(arg_5_0._goitem, var_0_0.hasOpen and not arg_5_0._isEquip)
 end
 
-function slot0._playInEffect(slot0)
-	slot1, slot2 = ItemModel.instance:getItemConfigAndIcon(slot0._type, slot0._id)
-	slot3 = slot1.rare
+function var_0_0._playInEffect(arg_6_0)
+	local var_6_0, var_6_1 = ItemModel.instance:getItemConfigAndIcon(arg_6_0._type, arg_6_0._id)
+	local var_6_2 = var_6_0.rare
 
-	if not slot1.rare and (slot0._type == MaterialEnum.MaterialType.PlayerCloth or slot0._type == MaterialEnum.MaterialType.Antique) then
-		slot3 = 5
+	if not var_6_0.rare and (arg_6_0._type == MaterialEnum.MaterialType.PlayerCloth or arg_6_0._type == MaterialEnum.MaterialType.Antique) then
+		var_6_2 = 5
 	end
 
-	for slot7, slot8 in ipairs(slot0._rareInGos) do
-		if slot7 == slot3 then
-			gohelper.setActive(slot8, true)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._rareInGos) do
+		if iter_6_0 == var_6_2 then
+			gohelper.setActive(iter_6_1, true)
 
-			if not uv0.hasOpen then
-				if slot0._index <= 10 then
-					gohelper.setActive(slot8, true)
-					slot8:GetComponent(typeof(UnityEngine.Animation)):Play()
+			local var_6_3 = iter_6_1:GetComponent(typeof(UnityEngine.Animation))
+
+			if not var_0_0.hasOpen then
+				if arg_6_0._index <= 10 then
+					gohelper.setActive(iter_6_1, true)
+					var_6_3:Play()
 				else
-					gohelper.setActive(slot8, false)
+					gohelper.setActive(iter_6_1, false)
 				end
 
-				TaskDispatcher.runDelay(slot0._setItem, slot0, 0.5)
+				TaskDispatcher.runDelay(arg_6_0._setItem, arg_6_0, 0.5)
 			else
-				gohelper.setActive(slot8, false)
-				slot0:_setItem()
+				gohelper.setActive(iter_6_1, false)
+				arg_6_0:_setItem()
 			end
 		else
-			gohelper.setActive(slot8, false)
+			gohelper.setActive(iter_6_1, false)
 		end
 	end
 
-	slot0:showHighQualityEffect(slot0._type, slot1, slot3)
+	arg_6_0:showHighQualityEffect(arg_6_0._type, var_6_0, var_6_2)
 end
 
-function slot0._setItem(slot0)
-	gohelper.setActive(slot0._nameTxt.gameObject, slot0._isEquip)
-	gohelper.setActive(slot0._goequip, slot0._isEquip)
-	gohelper.setActive(slot0._goitem, not slot0._isEquip)
-	gohelper.setActive(slot0._gogold, slot0._isGold)
+function var_0_0._setItem(arg_7_0)
+	gohelper.setActive(arg_7_0._nameTxt.gameObject, arg_7_0._isEquip)
+	gohelper.setActive(arg_7_0._goequip, arg_7_0._isEquip)
+	gohelper.setActive(arg_7_0._goitem, not arg_7_0._isEquip)
+	gohelper.setActive(arg_7_0._gogold, arg_7_0._isGold)
 
-	if slot0._index == 10 then
-		uv0.hasOpen = true
+	if arg_7_0._index == 10 then
+		var_0_0.hasOpen = true
 	end
 
-	slot1, slot2 = ItemModel.instance:getItemConfigAndIcon(slot0._type, slot0._id)
+	local var_7_0, var_7_1 = ItemModel.instance:getItemConfigAndIcon(arg_7_0._type, arg_7_0._id)
 
-	if slot0._isEquip then
-		if not slot0._equipIcon then
-			slot0._equipIcon = IconMgr.instance:getCommonEquipIcon(slot0._goequip, 1)
+	if arg_7_0._isEquip then
+		if not arg_7_0._equipIcon then
+			arg_7_0._equipIcon = IconMgr.instance:getCommonEquipIcon(arg_7_0._goequip, 1)
 
-			slot0._equipIcon:addClick()
+			arg_7_0._equipIcon:addClick()
 		end
 
-		slot0._equipIcon:setMOValue(slot0._type, slot0._id, slot0._quantity, slot0._uid)
-		slot0._equipIcon:setCantJump(true)
-		slot0._equipIcon:isShowRefineLv(true)
-		slot0._equipIcon:playEquipAnim(UIAnimationName.Open)
+		arg_7_0._equipIcon:setMOValue(arg_7_0._type, arg_7_0._id, arg_7_0._quantity, arg_7_0._uid)
+		arg_7_0._equipIcon:setCantJump(true)
+		arg_7_0._equipIcon:isShowRefineLv(true)
+		arg_7_0._equipIcon:playEquipAnim(UIAnimationName.Open)
 
-		slot0._nameTxt.text = slot1.name
+		arg_7_0._nameTxt.text = var_7_0.name
 	else
-		slot0._itemIcon = slot0._itemIcon or IconMgr.instance:getCommonItemIcon(slot0._goitem)
+		arg_7_0._itemIcon = arg_7_0._itemIcon or IconMgr.instance:getCommonItemIcon(arg_7_0._goitem)
 
-		slot0._itemIcon:setMOValue(slot0._type, slot0._id, slot0._quantity, slot0._uid, true)
-		slot0._itemIcon:refreshDeadline(true)
-		slot0._itemIcon:showName()
-		slot0._itemIcon:playAnimation()
-		slot0._itemIcon:setCantJump(true)
+		arg_7_0._itemIcon:setMOValue(arg_7_0._type, arg_7_0._id, arg_7_0._quantity, arg_7_0._uid, true)
+		arg_7_0._itemIcon:refreshDeadline(true)
+		arg_7_0._itemIcon:showName()
+		arg_7_0._itemIcon:playAnimation()
+		arg_7_0._itemIcon:setCantJump(true)
 
-		slot3 = nil
+		local var_7_2
 
-		if slot0._type == MaterialEnum.MaterialType.Building and slot0._roomBuildingLevel and slot0._roomBuildingLevel > 0 then
-			slot3 = RoomConfig.instance:getLevelGroupConfig(slot0._id, slot0._roomBuildingLevel) and ResUrl.getRoomBuildingPropIcon(slot4.icon)
+		if arg_7_0._type == MaterialEnum.MaterialType.Building and arg_7_0._roomBuildingLevel and arg_7_0._roomBuildingLevel > 0 then
+			local var_7_3 = RoomConfig.instance:getLevelGroupConfig(arg_7_0._id, arg_7_0._roomBuildingLevel)
+
+			var_7_2 = var_7_3 and ResUrl.getRoomBuildingPropIcon(var_7_3.icon)
 		end
 
-		slot0._itemIcon:setSpecificIcon(slot3)
-		slot0._itemIcon:setRoomBuildingLevel(slot0._roomBuildingLevel)
+		arg_7_0._itemIcon:setSpecificIcon(var_7_2)
+		arg_7_0._itemIcon:setRoomBuildingLevel(arg_7_0._roomBuildingLevel)
 	end
 
-	if slot0.callback then
-		slot0:callback()
-	end
-end
-
-function slot0.hideName(slot0)
-	if slot0._isEquip then
-		slot0._nameTxt.text = ""
-	elseif slot0._itemIcon then
-		slot0._itemIcon:isShowName()
+	if arg_7_0.callback then
+		arg_7_0:callback()
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0.callback = nil
-
-	TaskDispatcher.cancelTask(slot0._playInEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._setItem, slot0)
+function var_0_0.hideName(arg_8_0)
+	if arg_8_0._isEquip then
+		arg_8_0._nameTxt.text = ""
+	elseif arg_8_0._itemIcon then
+		arg_8_0._itemIcon:isShowName()
+	end
 end
 
-return slot0
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0.callback = nil
+
+	TaskDispatcher.cancelTask(arg_9_0._playInEffect, arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._setItem, arg_9_0)
+end
+
+return var_0_0

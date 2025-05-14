@@ -1,361 +1,379 @@
-module("modules.logic.season.model.Activity104Mo", package.seeall)
+﻿module("modules.logic.season.model.Activity104Mo", package.seeall)
 
-slot0 = pureTable("Activity104Mo")
+local var_0_0 = pureTable("Activity104Mo")
 
-function slot0.ctor(slot0)
-	slot0.activityId = 0
-	slot0.activity104Items = {}
-	slot0.episodes = {}
-	slot0.retails = {}
-	slot0.specials = {}
-	slot0.unlockEquipIndexs = {}
-	slot0.optionalEquipCount = 0
-	slot0.heroGroupSnapshot = {}
-	slot0.tempHeroGroupSnapshot = {}
-	slot0.heroGroupSnapshotSubId = 1
-	slot0.retailStage = 1
-	slot0.unlockActivity104EquipIds = {}
-	slot0.activity104ItemCountDict = {}
-	slot0.trialId = 0
-	slot0.isPopSummary = true
-	slot0.lastMaxLayer = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.activityId = 0
+	arg_1_0.activity104Items = {}
+	arg_1_0.episodes = {}
+	arg_1_0.retails = {}
+	arg_1_0.specials = {}
+	arg_1_0.unlockEquipIndexs = {}
+	arg_1_0.optionalEquipCount = 0
+	arg_1_0.heroGroupSnapshot = {}
+	arg_1_0.tempHeroGroupSnapshot = {}
+	arg_1_0.heroGroupSnapshotSubId = 1
+	arg_1_0.retailStage = 1
+	arg_1_0.unlockActivity104EquipIds = {}
+	arg_1_0.activity104ItemCountDict = {}
+	arg_1_0.trialId = 0
+	arg_1_0.isPopSummary = true
+	arg_1_0.lastMaxLayer = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.activity104Items = slot0:_buildItems(slot1.activity104Items)
-	slot0.episodes = slot0:_buildEpisodes(slot1.episodes)
-	slot0.retails = slot0:_buildRetails(slot1.retails)
-	slot0.specials = slot0:_buildSpecials(slot1.specials)
-	slot0.unlockEquipIndexs = slot0:_buildList(slot1.unlockEquipIndexs)
-	slot0.optionalEquipCount = slot1.optionalEquipCount
-	slot0.heroGroupSnapshot = slot0:_buildSnapshot(slot1.heroGroupSnapshot)
-	slot0.heroGroupSnapshotSubId = slot1.heroGroupSnapshotSubId
-	slot0.retailStage = slot1.retailStage
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.activityId = arg_2_1.activityId
+	arg_2_0.activity104Items = arg_2_0:_buildItems(arg_2_1.activity104Items)
+	arg_2_0.episodes = arg_2_0:_buildEpisodes(arg_2_1.episodes)
+	arg_2_0.retails = arg_2_0:_buildRetails(arg_2_1.retails)
+	arg_2_0.specials = arg_2_0:_buildSpecials(arg_2_1.specials)
+	arg_2_0.unlockEquipIndexs = arg_2_0:_buildList(arg_2_1.unlockEquipIndexs)
+	arg_2_0.optionalEquipCount = arg_2_1.optionalEquipCount
+	arg_2_0.heroGroupSnapshot = arg_2_0:_buildSnapshot(arg_2_1.heroGroupSnapshot)
+	arg_2_0.heroGroupSnapshotSubId = arg_2_1.heroGroupSnapshotSubId
+	arg_2_0.retailStage = arg_2_1.retailStage
 
-	slot0:setUnlockActivity104EquipIds(slot1.unlockActivity104EquipIds)
+	arg_2_0:setUnlockActivity104EquipIds(arg_2_1.unlockActivity104EquipIds)
 
-	slot0.readActivity104Story = slot1.readActivity104Story
-	slot0.trialId = slot1.trial.id
-	slot0.isPopSummary = slot1.preSummary.isPopSummary
-	slot0.lastMaxLayer = slot1.preSummary.maxLayer
+	arg_2_0.readActivity104Story = arg_2_1.readActivity104Story
+	arg_2_0.trialId = arg_2_1.trial.id
+	arg_2_0.isPopSummary = arg_2_1.preSummary.isPopSummary
+	arg_2_0.lastMaxLayer = arg_2_1.preSummary.maxLayer
 
-	slot0:refreshItemCount()
+	arg_2_0:refreshItemCount()
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.trialId = slot1.trial.id
+function var_0_0.reset(arg_3_0, arg_3_1)
+	arg_3_0.activityId = arg_3_1.activityId
+	arg_3_0.trialId = arg_3_1.trial.id
 
-	slot0:_addUnlockEquipIndexs(slot1.unlockEquipIndexs)
+	arg_3_0:_addUnlockEquipIndexs(arg_3_1.unlockEquipIndexs)
 
-	slot0.optionalEquipCount = slot1.optionalEquipCount
+	arg_3_0.optionalEquipCount = arg_3_1.optionalEquipCount
 
-	for slot5, slot6 in ipairs(slot1.updateEpisodes) do
-		if not slot0.episodes[slot6.layer] then
-			slot0.episodes[slot6.layer] = Activity104EpisodeMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.updateEpisodes) do
+		if not arg_3_0.episodes[iter_3_1.layer] then
+			arg_3_0.episodes[iter_3_1.layer] = Activity104EpisodeMo.New()
 
-			slot0.episodes[slot6.layer]:init(slot6)
+			arg_3_0.episodes[iter_3_1.layer]:init(iter_3_1)
 		else
-			slot0.episodes[slot6.layer]:reset(slot6)
+			arg_3_0.episodes[iter_3_1.layer]:reset(iter_3_1)
 		end
 	end
 
-	slot0.retails = slot0:_buildRetails(slot1.retails)
+	arg_3_0.retails = arg_3_0:_buildRetails(arg_3_1.retails)
 
-	for slot5, slot6 in ipairs(slot1.updateSpecials) do
-		if not slot0.specials[slot6.layer] then
-			slot0.specials[slot6.layer] = Activity104SpecialMo.New()
+	for iter_3_2, iter_3_3 in ipairs(arg_3_1.updateSpecials) do
+		if not arg_3_0.specials[iter_3_3.layer] then
+			arg_3_0.specials[iter_3_3.layer] = Activity104SpecialMo.New()
 
-			slot0.specials[slot6.layer]:init(slot6)
+			arg_3_0.specials[iter_3_3.layer]:init(iter_3_3)
 		else
-			slot0.specials[slot6.layer]:reset(slot6)
+			arg_3_0.specials[iter_3_3.layer]:reset(iter_3_3)
 		end
 	end
 end
 
-function slot0._addUnlockEquipIndexs(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.unlockEquipIndexs, slot6)
+function var_0_0._addUnlockEquipIndexs(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		table.insert(arg_4_0.unlockEquipIndexs, iter_4_1)
 	end
 end
 
-function slot0.updateItems(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.activity104Items) do
-		if slot0.activity104Items[slot6.uid] then
-			slot0.activity104Items[slot6.uid]:reset(slot6)
+function var_0_0.updateItems(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1.activity104Items) do
+		if arg_5_0.activity104Items[iter_5_1.uid] then
+			arg_5_0.activity104Items[iter_5_1.uid]:reset(iter_5_1)
 		else
-			slot7 = Activity104ItemMo.New()
+			local var_5_0 = Activity104ItemMo.New()
 
-			slot7:init(slot6)
+			var_5_0:init(iter_5_1)
 
-			slot0.activity104Items[slot6.uid] = slot7
+			arg_5_0.activity104Items[iter_5_1.uid] = var_5_0
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot1.deleteItems) do
-		if slot0.activity104Items[slot6.uid] then
-			slot0.activity104Items[slot6.uid] = nil
+	for iter_5_2, iter_5_3 in ipairs(arg_5_1.deleteItems) do
+		if arg_5_0.activity104Items[iter_5_3.uid] then
+			arg_5_0.activity104Items[iter_5_3.uid] = nil
 		end
 	end
 
-	slot0:refreshItemCount()
+	arg_5_0:refreshItemCount()
 end
 
-function slot0._buildEpisodes(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
-		Activity104EpisodeMo.New():init(slot7)
+function var_0_0._buildEpisodes(arg_6_0, arg_6_1)
+	local var_6_0 = {}
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		local var_6_1 = Activity104EpisodeMo.New()
+
+		var_6_1:init(iter_6_1)
+
+		var_6_0[var_6_1.layer] = var_6_1
 	end
 
-	return {
-		[slot8.layer] = slot8
-	}
+	return var_6_0
 end
 
-function slot0._buildRetails(slot0, slot1)
-	slot0.lastRetails = slot0.retails
-	slot2 = {}
+function var_0_0._buildRetails(arg_7_0, arg_7_1)
+	arg_7_0.lastRetails = arg_7_0.retails
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = Activity104RetailMo.New()
+	local var_7_0 = {}
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_1 = Activity104RetailMo.New()
+
+		var_7_1:init(iter_7_1)
+		table.insert(var_7_0, var_7_1)
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(var_7_0, function(arg_8_0, arg_8_1)
+		return arg_8_0.id < arg_8_1.id
 	end)
 
-	return slot2
+	return var_7_0
 end
 
-function slot0._buildSpecials(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildSpecials(arg_9_0, arg_9_1)
+	local var_9_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = Activity104SpecialMo.New()
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_1 = Activity104SpecialMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_9_1:init(iter_9_1)
+		table.insert(var_9_0, var_9_1)
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.layer < slot1.layer
+	table.sort(var_9_0, function(arg_10_0, arg_10_1)
+		return arg_10_0.layer < arg_10_1.layer
 	end)
 
-	return slot2
+	return var_9_0
 end
 
-function slot0._buildItems(slot0, slot1)
-	slot2 = {
-		[slot7.uid] = slot8
-	}
+function var_0_0._buildItems(arg_11_0, arg_11_1)
+	local var_11_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		Activity104ItemMo.New():init(slot7)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		local var_11_1 = Activity104ItemMo.New()
+
+		var_11_1:init(iter_11_1)
+
+		var_11_0[iter_11_1.uid] = var_11_1
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.itemId < slot1.itemId
+	table.sort(var_11_0, function(arg_12_0, arg_12_1)
+		return arg_12_0.itemId < arg_12_1.itemId
 	end)
 
-	return slot2
+	return var_11_0
 end
 
-function slot0._buildList(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildList(arg_13_0, arg_13_1)
+	local var_13_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot2, slot7)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		table.insert(var_13_0, iter_13_1)
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0._buildSnapshot(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildSnapshot(arg_14_0, arg_14_1)
+	local var_14_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = HeroGroupMO.New()
-		slot9 = true
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		local var_14_1 = HeroGroupMO.New()
+		local var_14_2 = true
 
-		for slot13, slot14 in ipairs(slot7.heroList) do
-			if tonumber(slot14) ~= 0 then
-				slot9 = false
+		for iter_14_2, iter_14_3 in ipairs(iter_14_1.heroList) do
+			if tonumber(iter_14_3) ~= 0 then
+				var_14_2 = false
 			end
 
 			break
 		end
 
-		if slot9 then
-			slot10 = HeroGroupModel.instance:getById(1)
+		if var_14_2 then
+			local var_14_3 = HeroGroupModel.instance:getById(1)
 
-			if slot7.groupId == 1 and slot10 then
-				slot8.id = slot7.groupId
-				slot8.groupId = slot7.groupId
-				slot8.name = slot10.name
-				slot8.heroList = LuaUtil.deepCopy(slot10.heroList)
-				slot8.aidDict = LuaUtil.deepCopy(slot10.aidDict)
-				slot8.clothId = slot10.clothId
-				slot8.equips = LuaUtil.deepCopy(slot10.equips)
-				slot8.activity104Equips = LuaUtil.deepCopy(slot10.activity104Equips)
+			if iter_14_1.groupId == 1 and var_14_3 then
+				var_14_1.id = iter_14_1.groupId
+				var_14_1.groupId = iter_14_1.groupId
+				var_14_1.name = var_14_3.name
+				var_14_1.heroList = LuaUtil.deepCopy(var_14_3.heroList)
+				var_14_1.aidDict = LuaUtil.deepCopy(var_14_3.aidDict)
+				var_14_1.clothId = var_14_3.clothId
+				var_14_1.equips = LuaUtil.deepCopy(var_14_3.equips)
+				var_14_1.activity104Equips = LuaUtil.deepCopy(var_14_3.activity104Equips)
 			else
-				slot8.id = slot7.groupId
-				slot8.groupId = slot7.groupId
-				slot8.name = ""
-				slot8.heroList = {
+				var_14_1.id = iter_14_1.groupId
+				var_14_1.groupId = iter_14_1.groupId
+				var_14_1.name = ""
+				var_14_1.heroList = {
 					"0",
 					"0",
 					"0",
 					"0"
 				}
-				slot8.clothId = slot10.clothId
-				slot8.equips = {}
+				var_14_1.clothId = var_14_3.clothId
+				var_14_1.equips = {}
 
-				for slot14 = 0, 3 do
-					slot8:updatePosEquips({
-						index = slot14,
+				for iter_14_4 = 0, 3 do
+					var_14_1:updatePosEquips({
+						index = iter_14_4,
 						equipUid = {
 							"0"
 						}
 					})
 				end
 
-				slot8.activity104Equips = {}
+				var_14_1.activity104Equips = {}
 
-				for slot14 = 0, 3 do
-					slot8:updatePosEquips({
-						index = slot14,
+				for iter_14_5 = 0, 3 do
+					var_14_1:updatePosEquips({
+						index = iter_14_5,
 						equipUid = {
 							"0"
 						}
 					})
 				end
 
-				slot11 = HeroGroupActivity104EquipMo.New()
+				local var_14_4 = HeroGroupActivity104EquipMo.New()
 
-				slot11:init({
+				var_14_4:init({
 					index = 4,
 					equipUid = {
 						"0"
 					}
 				})
 
-				slot8.activity104Equips[4] = slot11
+				var_14_1.activity104Equips[4] = var_14_4
 			end
 		else
-			slot8:init(slot7)
+			var_14_1:init(iter_14_1)
 		end
 
-		slot8:clearAidHero()
+		var_14_1:clearAidHero()
 
-		slot2[slot7.groupId] = slot8
+		var_14_0[iter_14_1.groupId] = var_14_1
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.groupId < slot1.groupId
+	table.sort(var_14_0, function(arg_15_0, arg_15_1)
+		return arg_15_0.groupId < arg_15_1.groupId
 	end)
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.replaceRetails(slot0, slot1)
-	slot0.retails = slot0:_buildRetails(slot1)
+function var_0_0.replaceRetails(arg_16_0, arg_16_1)
+	arg_16_0.retails = arg_16_0:_buildRetails(arg_16_1)
 end
 
-function slot0.getLastRetails(slot0)
-	slot0.lastRetails = nil
+function var_0_0.getLastRetails(arg_17_0)
+	local var_17_0 = arg_17_0.lastRetails
 
-	return slot0.lastRetails
+	arg_17_0.lastRetails = nil
+
+	return var_17_0
 end
 
-function slot0.setUnlockActivity104EquipIds(slot0, slot1)
-	slot0.unlockActivity104EquipIds = {}
+function var_0_0.setUnlockActivity104EquipIds(arg_18_0, arg_18_1)
+	arg_18_0.unlockActivity104EquipIds = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.unlockActivity104EquipIds[slot6] = slot6
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		arg_18_0.unlockActivity104EquipIds[iter_18_1] = iter_18_1
 	end
 end
 
-function slot0.markStory(slot0, slot1)
-	slot0.readActivity104Story = slot1
+function var_0_0.markStory(arg_19_0, arg_19_1)
+	arg_19_0.readActivity104Story = arg_19_1
 end
 
-function slot0.markEpisodeAfterStory(slot0, slot1)
-	if slot0.episodes[slot1] then
-		slot2:markStory(true)
+function var_0_0.markEpisodeAfterStory(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0.episodes[arg_20_1]
+
+	if var_20_0 then
+		var_20_0:markStory(true)
 	end
 end
 
-function slot0.setBattleFinishLayer(slot0, slot1)
-	if slot1 > 0 then
-		slot0.battleFinishLayer = slot1
+function var_0_0.setBattleFinishLayer(arg_21_0, arg_21_1)
+	if arg_21_1 > 0 then
+		arg_21_0.battleFinishLayer = arg_21_1
 	end
 end
 
-function slot0.getBattleFinishLayer(slot0)
-	return slot0.battleFinishLayer
+function var_0_0.getBattleFinishLayer(arg_22_0)
+	return arg_22_0.battleFinishLayer
 end
 
-function slot0.refreshItemCount(slot0)
-	slot0.activity104ItemCountDict = {}
+function var_0_0.refreshItemCount(arg_23_0)
+	arg_23_0.activity104ItemCountDict = {}
 
-	if slot0.activity104Items then
-		for slot4, slot5 in pairs(slot0.activity104Items) do
-			if slot0.activity104ItemCountDict[slot5.itemId] then
-				slot0.activity104ItemCountDict[slot5.itemId] = slot0.activity104ItemCountDict[slot5.itemId] + 1
+	if arg_23_0.activity104Items then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0.activity104Items) do
+			if arg_23_0.activity104ItemCountDict[iter_23_1.itemId] then
+				arg_23_0.activity104ItemCountDict[iter_23_1.itemId] = arg_23_0.activity104ItemCountDict[iter_23_1.itemId] + 1
 			else
-				slot0.activity104ItemCountDict[slot5.itemId] = 1
+				arg_23_0.activity104ItemCountDict[iter_23_1.itemId] = 1
 			end
 		end
 	end
 end
 
-function slot0.getItemCount(slot0, slot1)
-	return slot0.activity104ItemCountDict[slot1] or 0
+function var_0_0.getItemCount(arg_24_0, arg_24_1)
+	return arg_24_0.activity104ItemCountDict[arg_24_1] or 0
 end
 
-function slot0.getSnapshotHeroGroupBySubId(slot0, slot1)
-	slot2 = slot0.heroGroupSnapshot[slot1 or slot0.heroGroupSnapshotSubId]
+function var_0_0.getSnapshotHeroGroupBySubId(arg_25_0, arg_25_1)
+	arg_25_1 = arg_25_1 or arg_25_0.heroGroupSnapshotSubId
 
-	if HeroGroupModel.instance.battleConfig and (#string.splitToNumber(slot3.aid, "#") > 0 or slot3.trialLimit > 0) then
-		return slot0.tempHeroGroupSnapshot[slot1]
+	local var_25_0 = arg_25_0.heroGroupSnapshot[arg_25_1]
+	local var_25_1 = HeroGroupModel.instance.battleConfig
+
+	if var_25_1 and (#string.splitToNumber(var_25_1.aid, "#") > 0 or var_25_1.trialLimit > 0) then
+		return arg_25_0.tempHeroGroupSnapshot[arg_25_1]
 	end
 
-	return slot2
+	return var_25_0
 end
 
-function slot0.getRealHeroGroupBySubId(slot0, slot1)
-	return slot0.heroGroupSnapshot[slot1 or slot0.heroGroupSnapshotSubId]
+function var_0_0.getRealHeroGroupBySubId(arg_26_0, arg_26_1)
+	arg_26_1 = arg_26_1 or arg_26_0.heroGroupSnapshotSubId
+
+	return arg_26_0.heroGroupSnapshot[arg_26_1]
 end
 
-function slot0.getIsPopSummary(slot0)
-	return slot0.isPopSummary
+function var_0_0.getIsPopSummary(arg_27_0)
+	return arg_27_0.isPopSummary
 end
 
-function slot0.setIsPopSummary(slot0, slot1)
-	slot0.isPopSummary = slot1
+function var_0_0.setIsPopSummary(arg_28_0, arg_28_1)
+	arg_28_0.isPopSummary = arg_28_1
 end
 
-function slot0.getLastMaxLayer(slot0)
-	return slot0.lastMaxLayer
+function var_0_0.getLastMaxLayer(arg_29_0)
+	return arg_29_0.lastMaxLayer
 end
 
-function slot0.getTrialId(slot0)
-	return slot0.trialId
+function var_0_0.getTrialId(arg_30_0)
+	return arg_30_0.trialId
 end
 
-function slot0.buildHeroGroup(slot0)
-	if HeroGroupModel.instance.battleConfig and (#string.splitToNumber(slot1.aid, "#") > 0 or slot1.trialLimit > 0) then
-		slot0.tempHeroGroupSnapshot = {}
+function var_0_0.buildHeroGroup(arg_31_0)
+	local var_31_0 = HeroGroupModel.instance.battleConfig
 
-		for slot6, slot7 in ipairs(slot0.heroGroupSnapshot) do
-			slot0.tempHeroGroupSnapshot[slot6] = HeroGroupModel.instance:generateTempGroup(slot7)
+	if var_31_0 and (#string.splitToNumber(var_31_0.aid, "#") > 0 or var_31_0.trialLimit > 0) then
+		arg_31_0.tempHeroGroupSnapshot = {}
 
-			slot0.tempHeroGroupSnapshot[slot6]:setTemp(false)
+		for iter_31_0, iter_31_1 in ipairs(arg_31_0.heroGroupSnapshot) do
+			arg_31_0.tempHeroGroupSnapshot[iter_31_0] = HeroGroupModel.instance:generateTempGroup(iter_31_1)
+
+			arg_31_0.tempHeroGroupSnapshot[iter_31_0]:setTemp(false)
 		end
 	end
 end
 
-return slot0
+return var_0_0

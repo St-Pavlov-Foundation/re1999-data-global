@@ -1,40 +1,40 @@
-module("modules.logic.activity.view.LinkageActivity_FullViewBase", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_FullViewBase", package.seeall)
 
-slot0 = class("LinkageActivity_FullViewBase", LinkageActivity_BaseView)
+local var_0_0 = class("LinkageActivity_FullViewBase", LinkageActivity_BaseView)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
+	arg_1_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
 
-	slot0._inited = false
+	arg_1_0._inited = false
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._inited = false
+function var_0_0.onDestroyView(arg_2_0)
+	arg_2_0._inited = false
 
-	uv0.super.onDestroyView(slot0)
+	var_0_0.super.onDestroyView(arg_2_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_3_0)
+	arg_3_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	if not slot0._inited then
-		slot0:internal_onOpen()
+function var_0_0.onOpen(arg_4_0)
+	if not arg_4_0._inited then
+		arg_4_0:internal_onOpen()
 
-		slot0._inited = true
+		arg_4_0._inited = true
 	else
-		slot0:_refresh()
+		arg_4_0:_refresh()
 	end
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
+function var_0_0.addEvents(arg_5_0)
+	var_0_0.super.addEvents(arg_5_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
+function var_0_0.removeEvents(arg_6_0)
+	var_0_0.super.removeEvents(arg_6_0)
 end
 
-return slot0
+return var_0_0

@@ -1,160 +1,176 @@
-slot0 = class("FightStrUtil")
-slot1 = "true"
-slot2 = "false"
+﻿local var_0_0 = class("FightStrUtil")
+local var_0_1 = "true"
+local var_0_2 = "false"
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.split(slot0, slot1)
-	slot0 = tostring(slot0)
+function var_0_0.split(arg_2_0, arg_2_1)
+	arg_2_0 = tostring(arg_2_0)
+	arg_2_1 = tostring(arg_2_1)
 
-	if tostring(slot1) == "" then
+	if arg_2_1 == "" then
 		return false
 	end
 
-	slot3 = {}
+	local var_2_0 = 0
+	local var_2_1 = {}
 
-	for slot7, slot8 in function ()
-		return string.find(uv0, uv1, uv2, true)
-	end, nil,  do
-		table.insert(slot3, string.sub(slot0, 0, slot7 - 1))
+	for iter_2_0, iter_2_1 in function()
+		return string.find(arg_2_0, arg_2_1, var_2_0, true)
+	end do
+		table.insert(var_2_1, string.sub(arg_2_0, var_2_0, iter_2_0 - 1))
 
-		slot2 = slot8 + 1
+		var_2_0 = iter_2_1 + 1
 	end
 
-	table.insert(slot3, string.sub(slot0, slot2))
+	table.insert(var_2_1, string.sub(arg_2_0, var_2_0))
 
-	return slot3
+	return var_2_1
 end
 
-function slot0.splitToNumber(slot0, slot1)
-	slot6 = slot1
+function var_0_0.splitToNumber(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6, slot7 in ipairs(uv0.split(slot0, slot6)) do
-		-- Nothing
+	for iter_4_0, iter_4_1 in ipairs(var_0_0.split(arg_4_0, arg_4_1)) do
+		var_4_0[iter_4_0] = tonumber(iter_4_1)
 	end
 
-	return {
-		[slot6] = tonumber(slot7)
-	}
+	return var_4_0
 end
 
-function slot0.splitString2(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot0) then
+function var_0_0.splitString2(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if string.nilorempty(arg_5_0) then
 		return
 	end
 
-	for slot8, slot9 in ipairs(uv0.split(slot0, slot2 or "|")) do
-		if slot1 then
-			slot4[slot8] = uv0.splitToNumber(slot9, slot3 or "#")
+	arg_5_2 = arg_5_2 or "|"
+	arg_5_3 = arg_5_3 or "#"
+
+	local var_5_0 = var_0_0.split(arg_5_0, arg_5_2)
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		if arg_5_1 then
+			var_5_0[iter_5_0] = var_0_0.splitToNumber(iter_5_1, arg_5_3)
 		else
-			slot4[slot8] = uv0.split(slot9, slot3)
+			var_5_0[iter_5_0] = var_0_0.split(iter_5_1, arg_5_3)
 		end
 	end
 
-	return slot4
+	return var_5_0
 end
 
-function slot0.init(slot0)
-	slot0.inited = true
+function var_0_0.init(arg_6_0)
+	arg_6_0.inited = true
 end
 
-function slot0.getSplitCache(slot0, slot1, slot2)
-	slot0:logNoInFight()
+function var_0_0.getSplitCache(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:logNoInFight()
 
-	slot3 = tostring(slot2)
+	local var_7_0 = tostring(arg_7_2)
 
-	if not slot0._splitCache then
-		slot0._splitCache = {}
+	if not arg_7_0._splitCache then
+		arg_7_0._splitCache = {}
 	end
 
-	if not slot0._splitCache[slot3] then
-		slot0._splitCache[slot3] = {}
+	if not arg_7_0._splitCache[var_7_0] then
+		arg_7_0._splitCache[var_7_0] = {}
 	end
 
-	if not slot0._splitCache[slot3][tostring(slot1)] then
-		slot4[slot5] = slot0.split(slot1, slot2)
+	local var_7_1 = arg_7_0._splitCache[var_7_0]
+	local var_7_2 = tostring(arg_7_1)
+
+	if not var_7_1[var_7_2] then
+		var_7_1[var_7_2] = arg_7_0.split(arg_7_1, arg_7_2)
 	end
 
-	return slot4[slot5]
+	return var_7_1[var_7_2]
 end
 
-function slot0.getSplitToNumberCache(slot0, slot1, slot2)
-	slot0:logNoInFight()
+function var_0_0.getSplitToNumberCache(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0:logNoInFight()
 
-	slot3 = tostring(slot2)
+	local var_8_0 = tostring(arg_8_2)
 
-	if not slot0._splitToNumberCache then
-		slot0._splitToNumberCache = {}
+	if not arg_8_0._splitToNumberCache then
+		arg_8_0._splitToNumberCache = {}
 	end
 
-	if not slot0._splitToNumberCache[slot3] then
-		slot0._splitToNumberCache[slot3] = {}
+	if not arg_8_0._splitToNumberCache[var_8_0] then
+		arg_8_0._splitToNumberCache[var_8_0] = {}
 	end
 
-	if not slot0._splitToNumberCache[slot3][tostring(slot1)] then
-		slot4[slot5] = slot0.splitToNumber(slot1, slot2)
+	local var_8_1 = arg_8_0._splitToNumberCache[var_8_0]
+	local var_8_2 = tostring(arg_8_1)
+
+	if not var_8_1[var_8_2] then
+		var_8_1[var_8_2] = arg_8_0.splitToNumber(arg_8_1, arg_8_2)
 	end
 
-	return slot4[slot5]
+	return var_8_1[var_8_2]
 end
 
-function slot0.getSplitString2Cache(slot0, slot1, slot2, slot3, slot4)
-	slot0:logNoInFight()
+function var_0_0.getSplitString2Cache(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	arg_9_0:logNoInFight()
 
-	if string.nilorempty(slot1) then
+	if string.nilorempty(arg_9_1) then
 		return
 	end
 
-	slot3 = slot3 or "|"
-	slot4 = slot4 or "#"
-	slot5 = slot2 and uv0 or uv1
+	arg_9_3 = arg_9_3 or "|"
+	arg_9_4 = arg_9_4 or "#"
 
-	if not slot0._splitString2Cache then
-		slot0._splitString2Cache = {}
+	local var_9_0 = arg_9_2 and var_0_1 or var_0_2
+
+	if not arg_9_0._splitString2Cache then
+		arg_9_0._splitString2Cache = {}
 	end
 
-	if not slot0._splitString2Cache[slot5] then
-		slot0._splitString2Cache[slot5] = {}
+	if not arg_9_0._splitString2Cache[var_9_0] then
+		arg_9_0._splitString2Cache[var_9_0] = {}
 	end
 
-	if not slot0._splitString2Cache[slot5][slot3] then
-		slot0._splitString2Cache[slot5][slot3] = {}
+	if not arg_9_0._splitString2Cache[var_9_0][arg_9_3] then
+		arg_9_0._splitString2Cache[var_9_0][arg_9_3] = {}
 	end
 
-	if not slot0._splitString2Cache[slot5][slot3][slot4] then
-		slot0._splitString2Cache[slot5][slot3][slot4] = {}
+	if not arg_9_0._splitString2Cache[var_9_0][arg_9_3][arg_9_4] then
+		arg_9_0._splitString2Cache[var_9_0][arg_9_3][arg_9_4] = {}
 	end
 
-	if not slot0._splitString2Cache[slot5][slot3][slot4][tostring(slot1)] then
-		slot6[slot7] = slot0.splitString2(slot1, slot2, slot3, slot4)
+	local var_9_1 = arg_9_0._splitString2Cache[var_9_0][arg_9_3][arg_9_4]
+	local var_9_2 = tostring(arg_9_1)
+
+	if not var_9_1[var_9_2] then
+		var_9_1[var_9_2] = arg_9_0.splitString2(arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	end
 
-	return slot6[slot7]
+	return var_9_1[var_9_2]
 end
 
-function slot0.logNoInFight(slot0)
-	if not slot0.inited and GameUtil.needLogInOtherSceneUseFightStrUtilFunc() then
+function var_0_0.logNoInFight(arg_10_0)
+	if not arg_10_0.inited and GameUtil.needLogInOtherSceneUseFightStrUtilFunc() then
 		logError("不在战斗内，不要调用`FightStrUtil`相关接口")
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0.inited = nil
+function var_0_0.dispose(arg_11_0)
+	arg_11_0.inited = nil
 
-	if slot0._splitCache then
-		slot0._splitCache = nil
+	if arg_11_0._splitCache then
+		arg_11_0._splitCache = nil
 	end
 
-	if slot0._splitToNumberCache then
-		slot0._splitToNumberCache = nil
+	if arg_11_0._splitToNumberCache then
+		arg_11_0._splitToNumberCache = nil
 	end
 
-	if slot0._splitString2Cache then
-		slot0._splitString2Cache = nil
+	if arg_11_0._splitString2Cache then
+		arg_11_0._splitString2Cache = nil
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

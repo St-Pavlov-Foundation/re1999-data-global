@@ -1,165 +1,172 @@
-module("modules.logic.player.view.ShowCharacterView", package.seeall)
+﻿module("modules.logic.player.view.ShowCharacterView", package.seeall)
 
-slot0 = class("ShowCharacterView", BaseView)
+local var_0_0 = class("ShowCharacterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gorolecontainer = gohelper.findChild(slot0.viewGO, "#go_rolecontainer")
-	slot0._scrollcard = gohelper.findChildScrollRect(slot0.viewGO, "#go_rolecontainer/#scroll_card")
-	slot0._goScrollContent = gohelper.findChild(slot0.viewGO, "#go_rolecontainer/#scroll_card/scrollcontent")
-	slot0._gorolesort = gohelper.findChild(slot0.viewGO, "#go_rolecontainer/#go_rolesort")
-	slot0._btnlvrank = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
-	slot0._btnrarerank = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
-	slot0._btnfaithrank = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_faithrank")
-	slot0._btnexskillrank = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
-	slot0._btnclassify = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
-	slot0._goexarrow = gohelper.findChild(slot0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
-	slot0._simagebgimg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bgimg")
-	slot0._gosearchfilter = gohelper.findChild(slot0.viewGO, "#go_searchfilter")
-	slot0._btnclosefilterview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	slot0._godmgitem = gohelper.findChild(slot0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/dmgContainer/#go_dmgitem")
-	slot0._goattritem = gohelper.findChild(slot0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/attrContainer/#go_attritem")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_searchfilter/container/#btn_reset")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_searchfilter/container/#btn_confirm")
-	slot0._goAssistReward = gohelper.findChild(slot0.viewGO, "#go_gather")
-	slot0._txtAssistRewardCount = gohelper.findChildTextMesh(slot0.viewGO, "#go_gather/#txt_count")
-	slot0._btnGetAssistReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_gather/#btn_gather")
-	slot0._btnAssistTip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_gather/#btn_tip")
-	slot0._goCanGetAssistReward = gohelper.findChild(slot0.viewGO, "#go_gather/go_canget")
-	slot0._goAssistRewardTip = gohelper.findChild(slot0.viewGO, "#go_gatherTip")
-	slot0._btnCloseAssistTip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_gatherTip/#btn_closeGatherTip")
-	slot0._txtAssistTip = gohelper.findChildTextMesh(slot0.viewGO, "#go_gatherTip/#image_tipDescBg/#txt_tipDesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gorolecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer")
+	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/#scroll_card")
+	arg_1_0._goScrollContent = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#scroll_card/scrollcontent")
+	arg_1_0._gorolesort = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort")
+	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
+	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
+	arg_1_0._btnfaithrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_faithrank")
+	arg_1_0._btnexskillrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
+	arg_1_0._btnclassify = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
+	arg_1_0._goexarrow = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
+	arg_1_0._simagebgimg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bgimg")
+	arg_1_0._gosearchfilter = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter")
+	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
+	arg_1_0._godmgitem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/dmgContainer/#go_dmgitem")
+	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/attrContainer/#go_attritem")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_reset")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_confirm")
+	arg_1_0._goAssistReward = gohelper.findChild(arg_1_0.viewGO, "#go_gather")
+	arg_1_0._txtAssistRewardCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_gather/#txt_count")
+	arg_1_0._btnGetAssistReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_gather/#btn_gather")
+	arg_1_0._btnAssistTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_gather/#btn_tip")
+	arg_1_0._goCanGetAssistReward = gohelper.findChild(arg_1_0.viewGO, "#go_gather/go_canget")
+	arg_1_0._goAssistRewardTip = gohelper.findChild(arg_1_0.viewGO, "#go_gatherTip")
+	arg_1_0._btnCloseAssistTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_gatherTip/#btn_closeGatherTip")
+	arg_1_0._txtAssistTip = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_gatherTip/#image_tipDescBg/#txt_tipDesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlvrank:AddClickListener(slot0._btnlvrankOnClick, slot0)
-	slot0._btnrarerank:AddClickListener(slot0._btnrarerankOnClick, slot0)
-	slot0._btnfaithrank:AddClickListener(slot0._btnfaithrankOnClick, slot0)
-	slot0._btnexskillrank:AddClickListener(slot0._btnexskillrankOnClick, slot0)
-	slot0._btnclassify:AddClickListener(slot0._btnclassifyOnClick, slot0)
-	slot0._btnclosefilterview:AddClickListener(slot0._btncloseFilterViewOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btnGetAssistReward:AddClickListener(slot0._btnGetAssistRewardOnClick, slot0)
-	slot0._btnAssistTip:AddClickListener(slot0._btnAssistTipOnClick, slot0)
-	slot0._btnCloseAssistTip:AddClickListener(slot0._btnCloseAssistTipOnClick, slot0)
-	slot0:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, slot0._refreshAssistRewardCount, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
+	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
+	arg_2_0._btnfaithrank:AddClickListener(arg_2_0._btnfaithrankOnClick, arg_2_0)
+	arg_2_0._btnexskillrank:AddClickListener(arg_2_0._btnexskillrankOnClick, arg_2_0)
+	arg_2_0._btnclassify:AddClickListener(arg_2_0._btnclassifyOnClick, arg_2_0)
+	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btncloseFilterViewOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btnGetAssistReward:AddClickListener(arg_2_0._btnGetAssistRewardOnClick, arg_2_0)
+	arg_2_0._btnAssistTip:AddClickListener(arg_2_0._btnAssistTipOnClick, arg_2_0)
+	arg_2_0._btnCloseAssistTip:AddClickListener(arg_2_0._btnCloseAssistTipOnClick, arg_2_0)
+	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, arg_2_0._refreshAssistRewardCount, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlvrank:RemoveClickListener()
-	slot0._btnrarerank:RemoveClickListener()
-	slot0._btnfaithrank:RemoveClickListener()
-	slot0._btnexskillrank:RemoveClickListener()
-	slot0._btnclassify:RemoveClickListener()
-	slot0._btnclosefilterview:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btnGetAssistReward:RemoveClickListener()
-	slot0._btnAssistTip:RemoveClickListener()
-	slot0._btnCloseAssistTip:RemoveClickListener()
-	slot0:removeEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, slot0._refreshAssistRewardCount, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlvrank:RemoveClickListener()
+	arg_3_0._btnrarerank:RemoveClickListener()
+	arg_3_0._btnfaithrank:RemoveClickListener()
+	arg_3_0._btnexskillrank:RemoveClickListener()
+	arg_3_0._btnclassify:RemoveClickListener()
+	arg_3_0._btnclosefilterview:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btnGetAssistReward:RemoveClickListener()
+	arg_3_0._btnAssistTip:RemoveClickListener()
+	arg_3_0._btnCloseAssistTip:RemoveClickListener()
+	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, arg_3_0._refreshAssistRewardCount, arg_3_0)
 end
 
-function slot0._btnlvrankOnClick(slot0)
-	slot1, slot2 = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+function var_0_0._btnlvrankOnClick(arg_4_0)
+	local var_4_0, var_4_1 = transformhelper.getLocalPos(arg_4_0._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(slot0._goScrollContent.transform, slot1, slot0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(arg_4_0._goScrollContent.transform, var_4_0, arg_4_0._initScrollContentPosY)
 	CharacterModel.instance:setCardListByLevel(true, CharacterEnum.FilterType.ShowCharacter)
-	slot0:_refreshBtnIcon()
+	arg_4_0:_refreshBtnIcon()
 end
 
-function slot0._btnrarerankOnClick(slot0)
-	slot1, slot2 = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+function var_0_0._btnrarerankOnClick(arg_5_0)
+	local var_5_0, var_5_1 = transformhelper.getLocalPos(arg_5_0._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(slot0._goScrollContent.transform, slot1, slot0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(arg_5_0._goScrollContent.transform, var_5_0, arg_5_0._initScrollContentPosY)
 	CharacterModel.instance:setCardListByRare(true, CharacterEnum.FilterType.ShowCharacter)
-	slot0:_refreshBtnIcon()
+	arg_5_0:_refreshBtnIcon()
 end
 
-function slot0._btnfaithrankOnClick(slot0)
-	slot1, slot2 = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+function var_0_0._btnfaithrankOnClick(arg_6_0)
+	local var_6_0, var_6_1 = transformhelper.getLocalPos(arg_6_0._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(slot0._goScrollContent.transform, slot1, slot0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(arg_6_0._goScrollContent.transform, var_6_0, arg_6_0._initScrollContentPosY)
 	CharacterModel.instance:setCardListByFaith(true, CharacterEnum.FilterType.ShowCharacter)
-	slot0:_refreshBtnIcon()
+	arg_6_0:_refreshBtnIcon()
 end
 
-function slot0._btnexskillrankOnClick(slot0)
-	slot1, slot2 = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+function var_0_0._btnexskillrankOnClick(arg_7_0)
+	local var_7_0, var_7_1 = transformhelper.getLocalPos(arg_7_0._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(slot0._goScrollContent.transform, slot1, slot0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(arg_7_0._goScrollContent.transform, var_7_0, arg_7_0._initScrollContentPosY)
 	CharacterModel.instance:setCardListByExSkill(true, CharacterEnum.FilterType.ShowCharacter)
-	slot0:_refreshBtnIcon()
+	arg_7_0:_refreshBtnIcon()
 end
 
-function slot0._btncloseFilterViewOnClick(slot0)
-	slot0._selectDmgs = LuaUtil.deepCopy(slot0._curDmgs)
-	slot0._selectAttrs = LuaUtil.deepCopy(slot0._curAttrs)
-	slot0._selectLocations = LuaUtil.deepCopy(slot0._curLocations)
-	slot1, slot2 = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+function var_0_0._btncloseFilterViewOnClick(arg_8_0)
+	arg_8_0._selectDmgs = LuaUtil.deepCopy(arg_8_0._curDmgs)
+	arg_8_0._selectAttrs = LuaUtil.deepCopy(arg_8_0._curAttrs)
+	arg_8_0._selectLocations = LuaUtil.deepCopy(arg_8_0._curLocations)
 
-	transformhelper.setLocalPosXY(slot0._goScrollContent.transform, slot1, slot0._initScrollContentPosY)
-	slot0:_refreshBtnIcon()
-	gohelper.setActive(slot0._gosearchfilter, false)
+	local var_8_0, var_8_1 = transformhelper.getLocalPos(arg_8_0._goScrollContent.transform)
+
+	transformhelper.setLocalPosXY(arg_8_0._goScrollContent.transform, var_8_0, arg_8_0._initScrollContentPosY)
+	arg_8_0:_refreshBtnIcon()
+	gohelper.setActive(arg_8_0._gosearchfilter, false)
 end
 
-function slot0._btnclassifyOnClick(slot0)
-	gohelper.setActive(slot0._gosearchfilter, true)
-	slot0:_refreshFilterView()
+function var_0_0._btnclassifyOnClick(arg_9_0)
+	gohelper.setActive(arg_9_0._gosearchfilter, true)
+	arg_9_0:_refreshFilterView()
 end
 
-function slot0._btnresetOnClick(slot0)
-	for slot4 = 1, 2 do
-		slot0._selectDmgs[slot4] = false
+function var_0_0._btnresetOnClick(arg_10_0)
+	for iter_10_0 = 1, 2 do
+		arg_10_0._selectDmgs[iter_10_0] = false
 	end
 
-	for slot4 = 1, 6 do
-		slot0._selectAttrs[slot4] = false
+	for iter_10_1 = 1, 6 do
+		arg_10_0._selectAttrs[iter_10_1] = false
 	end
 
-	for slot4 = 1, 6 do
-		slot0._selectLocations[slot4] = false
+	for iter_10_2 = 1, 6 do
+		arg_10_0._selectLocations[iter_10_2] = false
 	end
 
-	slot0:_refreshBtnIcon()
-	slot0:_refreshFilterView()
+	arg_10_0:_refreshBtnIcon()
+	arg_10_0:_refreshFilterView()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	gohelper.setActive(slot0._gosearchfilter, false)
+function var_0_0._btnconfirmOnClick(arg_11_0)
+	gohelper.setActive(arg_11_0._gosearchfilter, false)
 
-	for slot5 = 1, 2 do
-		if slot0._selectDmgs[slot5] then
-			table.insert({}, slot5)
+	local var_11_0 = {}
+
+	for iter_11_0 = 1, 2 do
+		if arg_11_0._selectDmgs[iter_11_0] then
+			table.insert(var_11_0, iter_11_0)
 		end
 	end
 
-	for slot6 = 1, 6 do
-		if slot0._selectAttrs[slot6] then
-			table.insert({}, slot6)
+	local var_11_1 = {}
+
+	for iter_11_1 = 1, 6 do
+		if arg_11_0._selectAttrs[iter_11_1] then
+			table.insert(var_11_1, iter_11_1)
 		end
 	end
 
-	for slot7 = 1, 6 do
-		if slot0._selectLocations[slot7] then
-			table.insert({}, slot7)
+	local var_11_2 = {}
+
+	for iter_11_2 = 1, 6 do
+		if arg_11_0._selectLocations[iter_11_2] then
+			table.insert(var_11_2, iter_11_2)
 		end
 	end
 
-	if #slot1 == 0 then
-		slot1 = {
+	if #var_11_0 == 0 then
+		var_11_0 = {
 			1,
 			2
 		}
 	end
 
-	if #slot2 == 0 then
-		slot2 = {
+	if #var_11_1 == 0 then
+		var_11_1 = {
 			1,
 			2,
 			3,
@@ -169,8 +176,8 @@ function slot0._btnconfirmOnClick(slot0)
 		}
 	end
 
-	if #slot3 == 0 then
-		slot3 = {
+	if #var_11_2 == 0 then
+		var_11_2 = {
 			1,
 			2,
 			3,
@@ -180,127 +187,145 @@ function slot0._btnconfirmOnClick(slot0)
 		}
 	end
 
-	slot4, slot5 = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+	local var_11_3, var_11_4 = transformhelper.getLocalPos(arg_11_0._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(slot0._goScrollContent.transform, slot4, slot0._initScrollContentPosY)
-	CharacterModel.instance:filterCardListByDmgAndCareer({
-		dmgs = slot1,
-		careers = slot2,
-		locations = slot3
-	}, true, CharacterEnum.FilterType.ShowCharacter)
+	transformhelper.setLocalPosXY(arg_11_0._goScrollContent.transform, var_11_3, arg_11_0._initScrollContentPosY)
 
-	slot0._curDmgs = LuaUtil.deepCopy(slot0._selectDmgs)
-	slot0._curAttrs = LuaUtil.deepCopy(slot0._selectAttrs)
-	slot0._curLocations = LuaUtil.deepCopy(slot0._selectLocations)
+	local var_11_5 = {
+		dmgs = var_11_0,
+		careers = var_11_1,
+		locations = var_11_2
+	}
 
-	slot0:_refreshBtnIcon()
+	CharacterModel.instance:filterCardListByDmgAndCareer(var_11_5, true, CharacterEnum.FilterType.ShowCharacter)
+
+	arg_11_0._curDmgs = LuaUtil.deepCopy(arg_11_0._selectDmgs)
+	arg_11_0._curAttrs = LuaUtil.deepCopy(arg_11_0._selectAttrs)
+	arg_11_0._curLocations = LuaUtil.deepCopy(arg_11_0._selectLocations)
+
+	arg_11_0:_refreshBtnIcon()
 end
 
-function slot0._refreshBtnIcon(slot0)
-	slot1 = CharacterModel.instance:getRankState()
+function var_0_0._refreshBtnIcon(arg_12_0)
+	local var_12_0 = CharacterModel.instance:getRankState()
+	local var_12_1 = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.ShowCharacter)
 
-	gohelper.setActive(slot0._lvBtns[1], CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.ShowCharacter) ~= 1)
-	gohelper.setActive(slot0._lvBtns[2], slot2 == 1)
-	gohelper.setActive(slot0._rareBtns[1], slot2 ~= 2)
-	gohelper.setActive(slot0._rareBtns[2], slot2 == 2)
-	gohelper.setActive(slot0._faithBtns[1], slot2 ~= 3)
-	gohelper.setActive(slot0._faithBtns[2], slot2 == 3)
+	gohelper.setActive(arg_12_0._lvBtns[1], var_12_1 ~= 1)
+	gohelper.setActive(arg_12_0._lvBtns[2], var_12_1 == 1)
+	gohelper.setActive(arg_12_0._rareBtns[1], var_12_1 ~= 2)
+	gohelper.setActive(arg_12_0._rareBtns[2], var_12_1 == 2)
+	gohelper.setActive(arg_12_0._faithBtns[1], var_12_1 ~= 3)
+	gohelper.setActive(arg_12_0._faithBtns[2], var_12_1 == 3)
 
-	slot3 = false
+	local var_12_2 = false
 
-	for slot7, slot8 in pairs(slot0._selectDmgs) do
-		if slot8 then
-			slot3 = true
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._selectDmgs) do
+		if iter_12_1 then
+			var_12_2 = true
 		end
 	end
 
-	for slot7, slot8 in pairs(slot0._selectAttrs) do
-		if slot8 then
-			slot3 = true
+	for iter_12_2, iter_12_3 in pairs(arg_12_0._selectAttrs) do
+		if iter_12_3 then
+			var_12_2 = true
 		end
 	end
 
-	for slot7, slot8 in pairs(slot0._selectLocations) do
-		if slot8 then
-			slot3 = true
+	for iter_12_4, iter_12_5 in pairs(arg_12_0._selectLocations) do
+		if iter_12_5 then
+			var_12_2 = true
 		end
 	end
 
-	gohelper.setActive(slot0._classifyBtns[1], not slot3)
-	gohelper.setActive(slot0._classifyBtns[2], slot3)
-	transformhelper.setLocalScale(slot0._lvArrow[1], 1, slot1[1], 1)
-	transformhelper.setLocalScale(slot0._lvArrow[2], 1, slot1[1], 1)
-	transformhelper.setLocalScale(slot0._rareArrow[1], 1, slot1[2], 1)
-	transformhelper.setLocalScale(slot0._rareArrow[2], 1, slot1[2], 1)
-	transformhelper.setLocalScale(slot0._faithArrow[1], 1, slot1[3], 1)
-	transformhelper.setLocalScale(slot0._faithArrow[2], 1, slot1[3], 1)
+	gohelper.setActive(arg_12_0._classifyBtns[1], not var_12_2)
+	gohelper.setActive(arg_12_0._classifyBtns[2], var_12_2)
+	transformhelper.setLocalScale(arg_12_0._lvArrow[1], 1, var_12_0[1], 1)
+	transformhelper.setLocalScale(arg_12_0._lvArrow[2], 1, var_12_0[1], 1)
+	transformhelper.setLocalScale(arg_12_0._rareArrow[1], 1, var_12_0[2], 1)
+	transformhelper.setLocalScale(arg_12_0._rareArrow[2], 1, var_12_0[2], 1)
+	transformhelper.setLocalScale(arg_12_0._faithArrow[1], 1, var_12_0[3], 1)
+	transformhelper.setLocalScale(arg_12_0._faithArrow[2], 1, var_12_0[3], 1)
 end
 
-function slot0._btnGetAssistRewardOnClick(slot0)
+function var_0_0._btnGetAssistRewardOnClick(arg_13_0)
 	PlayerController.instance:getAssistReward()
 end
 
-function slot0._btnAssistTipOnClick(slot0)
-	gohelper.setActive(slot0._goAssistRewardTip, true)
+function var_0_0._btnAssistTipOnClick(arg_14_0)
+	gohelper.setActive(arg_14_0._goAssistRewardTip, true)
 end
 
-function slot0._btnCloseAssistTipOnClick(slot0)
-	gohelper.setActive(slot0._goAssistRewardTip, false)
+function var_0_0._btnCloseAssistTipOnClick(arg_15_0)
+	gohelper.setActive(arg_15_0._goAssistRewardTip, false)
 end
 
-function slot0._refreshAssistRewardCount(slot0)
+function var_0_0._refreshAssistRewardCount(arg_16_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
-		gohelper.setActive(slot0._goAssistReward, false)
+		gohelper.setActive(arg_16_0._goAssistReward, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goAssistReward, true)
+	gohelper.setActive(arg_16_0._goAssistReward, true)
 
 	if PlayerModel.instance:isGetAssistRewardReachingLimit() then
-		slot0._txtAssistRewardCount.text = luaLang("reachUpperLimit")
+		arg_16_0._txtAssistRewardCount.text = luaLang("reachUpperLimit")
 
-		gohelper.setActive(slot0._goCanGetAssistReward, false)
+		gohelper.setActive(arg_16_0._goCanGetAssistReward, false)
 	else
-		slot0._txtAssistRewardCount.text = PlayerModel.instance:getAssistRewardCount()
+		local var_16_0 = PlayerModel.instance:getAssistRewardCount()
 
-		gohelper.setActive(slot0._goCanGetAssistReward, PlayerModel.instance:isHasAssistReward())
+		arg_16_0._txtAssistRewardCount.text = var_16_0
+
+		local var_16_1 = PlayerModel.instance:isHasAssistReward()
+
+		gohelper.setActive(arg_16_0._goCanGetAssistReward, var_16_1)
 	end
 
-	slot0._txtAssistTip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("player_assist_reward_tips"), {
-		PlayerModel.instance:getHasReceiveAssistBonus(),
-		PlayerModel.instance:getMaxAssistRewardCount()
+	local var_16_2 = PlayerModel.instance:getHasReceiveAssistBonus()
+	local var_16_3 = PlayerModel.instance:getMaxAssistRewardCount()
+	local var_16_4 = GameUtil.getSubPlaceholderLuaLang(luaLang("player_assist_reward_tips"), {
+		var_16_2,
+		var_16_3
 	})
+
+	arg_16_0._txtAssistTip.text = var_16_4
 end
 
-function slot0._updateHeroList(slot0)
-	for slot5 = 1, 2 do
-		if slot0._selectDmgs[slot5] then
-			table.insert({}, slot5)
+function var_0_0._updateHeroList(arg_17_0)
+	local var_17_0 = {}
+
+	for iter_17_0 = 1, 2 do
+		if arg_17_0._selectDmgs[iter_17_0] then
+			table.insert(var_17_0, iter_17_0)
 		end
 	end
 
-	for slot6 = 1, 6 do
-		if slot0._selectAttrs[slot6] then
-			table.insert({}, slot6)
+	local var_17_1 = {}
+
+	for iter_17_1 = 1, 6 do
+		if arg_17_0._selectAttrs[iter_17_1] then
+			table.insert(var_17_1, iter_17_1)
 		end
 	end
 
-	for slot7 = 1, 6 do
-		if slot0._selectLocations[slot7] then
-			table.insert({}, slot7)
+	local var_17_2 = {}
+
+	for iter_17_2 = 1, 6 do
+		if arg_17_0._selectLocations[iter_17_2] then
+			table.insert(var_17_2, iter_17_2)
 		end
 	end
 
-	if #slot1 == 0 then
-		slot1 = {
+	if #var_17_0 == 0 then
+		var_17_0 = {
 			1,
 			2
 		}
 	end
 
-	if #slot2 == 0 then
-		slot2 = {
+	if #var_17_1 == 0 then
+		var_17_1 = {
 			1,
 			2,
 			3,
@@ -310,8 +335,8 @@ function slot0._updateHeroList(slot0)
 		}
 	end
 
-	if #slot3 == 0 then
-		slot3 = {
+	if #var_17_2 == 0 then
+		var_17_2 = {
 			1,
 			2,
 			3,
@@ -321,170 +346,174 @@ function slot0._updateHeroList(slot0)
 		}
 	end
 
-	CharacterModel.instance:filterCardListByDmgAndCareer({
-		dmgs = slot1,
-		careers = slot2,
-		locations = slot3
-	}, true, CharacterEnum.FilterType.ShowCharacter)
-	slot0:_refreshBtnIcon()
+	local var_17_3 = {
+		dmgs = var_17_0,
+		careers = var_17_1,
+		locations = var_17_2
+	}
+
+	CharacterModel.instance:filterCardListByDmgAndCareer(var_17_3, true, CharacterEnum.FilterType.ShowCharacter)
+	arg_17_0:_refreshBtnIcon()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnfaithrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
-
-	slot4 = "full/juesebeibao_005"
-
-	slot0._simagebgimg:LoadImage(ResUrl.getCommonViewBg(slot4))
+function var_0_0._editableInitView(arg_18_0)
+	gohelper.addUIClickAudio(arg_18_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_18_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_18_0._btnfaithrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_18_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	arg_18_0._simagebgimg:LoadImage(ResUrl.getCommonViewBg("full/juesebeibao_005"))
 	CharacterModel.instance:setCardListByCareerIndex(0)
 
-	slot0._lvBtns = slot0:getUserDataTb_()
-	slot0._lvArrow = slot0:getUserDataTb_()
-	slot0._rareBtns = slot0:getUserDataTb_()
-	slot0._rareArrow = slot0:getUserDataTb_()
-	slot0._faithBtns = slot0:getUserDataTb_()
-	slot0._faithArrow = slot0:getUserDataTb_()
-	slot0._classifyBtns = slot0:getUserDataTb_()
-	slot0._selectDmgs = {}
-	slot0._dmgSelects = slot0:getUserDataTb_()
-	slot0._dmgUnselects = slot0:getUserDataTb_()
-	slot0._dmgBtnClicks = slot0:getUserDataTb_()
-	slot0._selectAttrs = {}
-	slot0._attrSelects = slot0:getUserDataTb_()
-	slot0._attrUnselects = slot0:getUserDataTb_()
-	slot0._attrBtnClicks = slot0:getUserDataTb_()
-	slot0._selectLocations = {}
-	slot0._locationSelects = slot0:getUserDataTb_()
-	slot0._locationUnselects = slot0:getUserDataTb_()
-	slot0._locationBtnClicks = slot0:getUserDataTb_()
-	slot0._curDmgs = {}
-	slot0._curAttrs = {}
-	slot0._curLocations = {}
+	arg_18_0._lvBtns = arg_18_0:getUserDataTb_()
+	arg_18_0._lvArrow = arg_18_0:getUserDataTb_()
+	arg_18_0._rareBtns = arg_18_0:getUserDataTb_()
+	arg_18_0._rareArrow = arg_18_0:getUserDataTb_()
+	arg_18_0._faithBtns = arg_18_0:getUserDataTb_()
+	arg_18_0._faithArrow = arg_18_0:getUserDataTb_()
+	arg_18_0._classifyBtns = arg_18_0:getUserDataTb_()
+	arg_18_0._selectDmgs = {}
+	arg_18_0._dmgSelects = arg_18_0:getUserDataTb_()
+	arg_18_0._dmgUnselects = arg_18_0:getUserDataTb_()
+	arg_18_0._dmgBtnClicks = arg_18_0:getUserDataTb_()
+	arg_18_0._selectAttrs = {}
+	arg_18_0._attrSelects = arg_18_0:getUserDataTb_()
+	arg_18_0._attrUnselects = arg_18_0:getUserDataTb_()
+	arg_18_0._attrBtnClicks = arg_18_0:getUserDataTb_()
+	arg_18_0._selectLocations = {}
+	arg_18_0._locationSelects = arg_18_0:getUserDataTb_()
+	arg_18_0._locationUnselects = arg_18_0:getUserDataTb_()
+	arg_18_0._locationBtnClicks = arg_18_0:getUserDataTb_()
+	arg_18_0._curDmgs = {}
+	arg_18_0._curAttrs = {}
+	arg_18_0._curLocations = {}
 
-	for slot4 = 1, 2 do
-		slot0._lvBtns[slot4] = gohelper.findChild(slot0._btnlvrank.gameObject, "btn" .. tostring(slot4))
-		slot0._lvArrow[slot4] = gohelper.findChild(slot0._lvBtns[slot4], "txt/arrow").transform
-		slot0._rareBtns[slot4] = gohelper.findChild(slot0._btnrarerank.gameObject, "btn" .. tostring(slot4))
-		slot0._rareArrow[slot4] = gohelper.findChild(slot0._rareBtns[slot4], "txt/arrow").transform
-		slot0._faithBtns[slot4] = gohelper.findChild(slot0._btnfaithrank.gameObject, "btn" .. tostring(slot4))
-		slot0._faithArrow[slot4] = gohelper.findChild(slot0._faithBtns[slot4], "txt/arrow").transform
-		slot0._classifyBtns[slot4] = gohelper.findChild(slot0._btnclassify.gameObject, "btn" .. tostring(slot4))
-		slot0._dmgUnselects[slot4] = gohelper.findChild(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. slot4 .. "/unselected")
-		slot0._dmgSelects[slot4] = gohelper.findChild(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. slot4 .. "/selected")
-		slot0._dmgBtnClicks[slot4] = gohelper.findChildButtonWithAudio(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. slot4 .. "/click")
-		slot0._selectDmgs[slot4] = false
+	for iter_18_0 = 1, 2 do
+		arg_18_0._lvBtns[iter_18_0] = gohelper.findChild(arg_18_0._btnlvrank.gameObject, "btn" .. tostring(iter_18_0))
+		arg_18_0._lvArrow[iter_18_0] = gohelper.findChild(arg_18_0._lvBtns[iter_18_0], "txt/arrow").transform
+		arg_18_0._rareBtns[iter_18_0] = gohelper.findChild(arg_18_0._btnrarerank.gameObject, "btn" .. tostring(iter_18_0))
+		arg_18_0._rareArrow[iter_18_0] = gohelper.findChild(arg_18_0._rareBtns[iter_18_0], "txt/arrow").transform
+		arg_18_0._faithBtns[iter_18_0] = gohelper.findChild(arg_18_0._btnfaithrank.gameObject, "btn" .. tostring(iter_18_0))
+		arg_18_0._faithArrow[iter_18_0] = gohelper.findChild(arg_18_0._faithBtns[iter_18_0], "txt/arrow").transform
+		arg_18_0._classifyBtns[iter_18_0] = gohelper.findChild(arg_18_0._btnclassify.gameObject, "btn" .. tostring(iter_18_0))
+		arg_18_0._dmgUnselects[iter_18_0] = gohelper.findChild(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_18_0 .. "/unselected")
+		arg_18_0._dmgSelects[iter_18_0] = gohelper.findChild(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_18_0 .. "/selected")
+		arg_18_0._dmgBtnClicks[iter_18_0] = gohelper.findChildButtonWithAudio(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_18_0 .. "/click")
+		arg_18_0._selectDmgs[iter_18_0] = false
 
-		slot0._dmgBtnClicks[slot4]:AddClickListener(slot0._dmgBtnOnClick, slot0, slot4)
+		arg_18_0._dmgBtnClicks[iter_18_0]:AddClickListener(arg_18_0._dmgBtnOnClick, arg_18_0, iter_18_0)
 	end
 
-	for slot4 = 1, 6 do
-		slot0._attrUnselects[slot4] = gohelper.findChild(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. slot4 .. "/unselected")
-		slot0._attrSelects[slot4] = gohelper.findChild(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. slot4 .. "/selected")
-		slot0._attrBtnClicks[slot4] = gohelper.findChildButtonWithAudio(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. slot4 .. "/click")
-		slot0._selectAttrs[slot4] = false
+	for iter_18_1 = 1, 6 do
+		arg_18_0._attrUnselects[iter_18_1] = gohelper.findChild(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_18_1 .. "/unselected")
+		arg_18_0._attrSelects[iter_18_1] = gohelper.findChild(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_18_1 .. "/selected")
+		arg_18_0._attrBtnClicks[iter_18_1] = gohelper.findChildButtonWithAudio(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_18_1 .. "/click")
+		arg_18_0._selectAttrs[iter_18_1] = false
 
-		slot0._attrBtnClicks[slot4]:AddClickListener(slot0._attrBtnOnClick, slot0, slot4)
+		arg_18_0._attrBtnClicks[iter_18_1]:AddClickListener(arg_18_0._attrBtnOnClick, arg_18_0, iter_18_1)
 	end
 
-	for slot4 = 1, 6 do
-		slot0._locationUnselects[slot4] = gohelper.findChild(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. slot4 .. "/unselected")
-		slot0._locationSelects[slot4] = gohelper.findChild(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. slot4 .. "/selected")
-		slot0._locationBtnClicks[slot4] = gohelper.findChildButtonWithAudio(slot0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. slot4 .. "/click")
-		slot0._selectLocations[slot4] = false
+	for iter_18_2 = 1, 6 do
+		arg_18_0._locationUnselects[iter_18_2] = gohelper.findChild(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_18_2 .. "/unselected")
+		arg_18_0._locationSelects[iter_18_2] = gohelper.findChild(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_18_2 .. "/selected")
+		arg_18_0._locationBtnClicks[iter_18_2] = gohelper.findChildButtonWithAudio(arg_18_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_18_2 .. "/click")
+		arg_18_0._selectLocations[iter_18_2] = false
 
-		slot0._locationBtnClicks[slot4]:AddClickListener(slot0._locationBtnOnClick, slot0, slot4)
+		arg_18_0._locationBtnClicks[iter_18_2]:AddClickListener(arg_18_0._locationBtnOnClick, arg_18_0, iter_18_2)
 	end
 
-	_, slot0._initScrollContentPosY = transformhelper.getLocalPos(slot0._goScrollContent.transform)
+	_, arg_18_0._initScrollContentPosY = transformhelper.getLocalPos(arg_18_0._goScrollContent.transform)
 
-	slot0:_btnCloseAssistTipOnClick()
+	arg_18_0:_btnCloseAssistTipOnClick()
 end
 
-function slot0._refreshFilterView(slot0)
-	for slot4 = 1, 2 do
-		gohelper.setActive(slot0._dmgUnselects[slot4], not slot0._selectDmgs[slot4])
-		gohelper.setActive(slot0._dmgSelects[slot4], slot0._selectDmgs[slot4])
+function var_0_0._refreshFilterView(arg_19_0)
+	for iter_19_0 = 1, 2 do
+		gohelper.setActive(arg_19_0._dmgUnselects[iter_19_0], not arg_19_0._selectDmgs[iter_19_0])
+		gohelper.setActive(arg_19_0._dmgSelects[iter_19_0], arg_19_0._selectDmgs[iter_19_0])
 	end
 
-	for slot4 = 1, 6 do
-		gohelper.setActive(slot0._attrUnselects[slot4], not slot0._selectAttrs[slot4])
-		gohelper.setActive(slot0._attrSelects[slot4], slot0._selectAttrs[slot4])
+	for iter_19_1 = 1, 6 do
+		gohelper.setActive(arg_19_0._attrUnselects[iter_19_1], not arg_19_0._selectAttrs[iter_19_1])
+		gohelper.setActive(arg_19_0._attrSelects[iter_19_1], arg_19_0._selectAttrs[iter_19_1])
 	end
 
-	for slot4 = 1, 6 do
-		gohelper.setActive(slot0._locationUnselects[slot4], not slot0._selectLocations[slot4])
-		gohelper.setActive(slot0._locationSelects[slot4], slot0._selectLocations[slot4])
+	for iter_19_2 = 1, 6 do
+		gohelper.setActive(arg_19_0._locationUnselects[iter_19_2], not arg_19_0._selectLocations[iter_19_2])
+		gohelper.setActive(arg_19_0._locationSelects[iter_19_2], arg_19_0._selectLocations[iter_19_2])
 	end
 end
 
-function slot0._dmgBtnOnClick(slot0, slot1)
-	if not slot0._selectDmgs[slot1] then
-		slot0._selectDmgs[3 - slot1] = slot0._selectDmgs[slot1]
+function var_0_0._dmgBtnOnClick(arg_20_0, arg_20_1)
+	if not arg_20_0._selectDmgs[arg_20_1] then
+		arg_20_0._selectDmgs[3 - arg_20_1] = arg_20_0._selectDmgs[arg_20_1]
 	end
 
-	slot0._selectDmgs[slot1] = not slot0._selectDmgs[slot1]
+	arg_20_0._selectDmgs[arg_20_1] = not arg_20_0._selectDmgs[arg_20_1]
 
-	slot0:_refreshFilterView()
+	arg_20_0:_refreshFilterView()
 end
 
-function slot0._attrBtnOnClick(slot0, slot1)
-	slot0._selectAttrs[slot1] = not slot0._selectAttrs[slot1]
+function var_0_0._attrBtnOnClick(arg_21_0, arg_21_1)
+	arg_21_0._selectAttrs[arg_21_1] = not arg_21_0._selectAttrs[arg_21_1]
 
-	slot0:_refreshFilterView()
+	arg_21_0:_refreshFilterView()
 end
 
-function slot0._locationBtnOnClick(slot0, slot1)
-	slot0._selectLocations[slot1] = not slot0._selectLocations[slot1]
+function var_0_0._locationBtnOnClick(arg_22_0, arg_22_1)
+	arg_22_0._selectLocations[arg_22_1] = not arg_22_0._selectLocations[arg_22_1]
 
-	slot0:_refreshFilterView()
+	arg_22_0:_refreshFilterView()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_23_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_24_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_gone)
 	CharacterModel.instance:setCharacterList(true, CharacterEnum.FilterType.HeroGroup)
-	slot0:_refreshBtnIcon()
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, slot0._updateHeroList, slot0)
-	slot0:updateAssistReward()
+	arg_24_0:_refreshBtnIcon()
+	arg_24_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_24_0._updateHeroList, arg_24_0)
+	arg_24_0:updateAssistReward()
 
-	if not (slot0.viewParam and slot0.viewParam.notRepeatUpdateAssistReward) then
-		TaskDispatcher.cancelTask(slot0.updateAssistReward, slot0)
-		TaskDispatcher.runRepeat(slot0.updateAssistReward, slot0, CommonConfig.instance:getConstNum(ConstEnum.AssistRewardUpdateFrequency))
+	if not (arg_24_0.viewParam and arg_24_0.viewParam.notRepeatUpdateAssistReward) then
+		local var_24_0 = CommonConfig.instance:getConstNum(ConstEnum.AssistRewardUpdateFrequency)
+
+		TaskDispatcher.cancelTask(arg_24_0.updateAssistReward, arg_24_0)
+		TaskDispatcher.runRepeat(arg_24_0.updateAssistReward, arg_24_0, var_24_0)
 	end
 end
 
-function slot0.updateAssistReward(slot0)
-	gohelper.setActive(slot0._goAssistReward, OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend))
+function var_0_0.updateAssistReward(arg_25_0)
+	local var_25_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend)
+
+	gohelper.setActive(arg_25_0._goAssistReward, var_25_0)
 	PlayerController.instance:updateAssistRewardCount()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, slot0._updateHeroList, slot0)
-	TaskDispatcher.cancelTask(slot0.updateAssistReward, slot0)
+function var_0_0.onClose(arg_26_0)
+	arg_26_0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_26_0._updateHeroList, arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0.updateAssistReward, arg_26_0)
 end
 
-function slot0._onQuitAdventure(slot0)
-	slot0:closeThis()
+function var_0_0._onQuitAdventure(arg_27_0)
+	arg_27_0:closeThis()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebgimg:UnLoadImage()
+function var_0_0.onDestroyView(arg_28_0)
+	arg_28_0._simagebgimg:UnLoadImage()
 
-	for slot4 = 1, 2 do
-		slot0._dmgBtnClicks[slot4]:RemoveClickListener()
+	for iter_28_0 = 1, 2 do
+		arg_28_0._dmgBtnClicks[iter_28_0]:RemoveClickListener()
 	end
 
-	for slot4 = 1, 6 do
-		slot0._attrBtnClicks[slot4]:RemoveClickListener()
+	for iter_28_1 = 1, 6 do
+		arg_28_0._attrBtnClicks[iter_28_1]:RemoveClickListener()
 	end
 
-	for slot4 = 1, 6 do
-		slot0._locationBtnClicks[slot4]:RemoveClickListener()
+	for iter_28_2 = 1, 6 do
+		arg_28_0._locationBtnClicks[iter_28_2]:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

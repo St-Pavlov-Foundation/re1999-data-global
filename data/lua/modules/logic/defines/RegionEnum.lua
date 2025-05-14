@@ -1,24 +1,25 @@
-module("modules.logic.defines.RegionEnum", package.seeall)
+﻿module("modules.logic.defines.RegionEnum", package.seeall)
 
-slot0 = _M
-slot0.en = 1
-slot0.jp = 2
-slot0.zh = 3
-slot0.tw = 4
-slot0.ko = 5
-slot0.shortcutTab = {
-	[slot0.en] = "en",
-	[slot0.jp] = "jp",
-	[slot0.zh] = "zh",
-	[slot0.tw] = "tw",
-	[slot0.ko] = "ko"
+local var_0_0 = _M
+
+var_0_0.en = 1
+var_0_0.jp = 2
+var_0_0.zh = 3
+var_0_0.tw = 4
+var_0_0.ko = 5
+var_0_0.shortcutTab = {
+	[var_0_0.en] = "en",
+	[var_0_0.jp] = "jp",
+	[var_0_0.zh] = "zh",
+	[var_0_0.tw] = "tw",
+	[var_0_0.ko] = "ko"
 }
-slot0.utcOffset = {
-	[slot0.en] = -18000,
-	[slot0.jp] = 32400,
-	[slot0.zh] = 28800,
-	[slot0.tw] = 28800,
-	[slot0.ko] = 32400
+var_0_0.utcOffset = {
+	[var_0_0.en] = -18000,
+	[var_0_0.jp] = 32400,
+	[var_0_0.zh] = 28800,
+	[var_0_0.tw] = 28800,
+	[var_0_0.ko] = 32400
 }
 
-return slot0
+return var_0_0

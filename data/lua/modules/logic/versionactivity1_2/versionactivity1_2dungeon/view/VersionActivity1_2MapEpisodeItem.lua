@@ -1,88 +1,98 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2MapEpisodeItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2MapEpisodeItem", package.seeall)
 
-slot0 = class("VersionActivity1_2MapEpisodeItem", VersionActivity1_2MapEpisodeBaseItem)
+local var_0_0 = class("VersionActivity1_2MapEpisodeItem", VersionActivity1_2MapEpisodeBaseItem)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 end
 
-function slot0.getDungeonMapLevelView(slot0)
+function var_0_0.getDungeonMapLevelView(arg_2_0)
 	return ViewName.VersionActivity1_2DungeonMapLevelView
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_3_0)
+	var_0_0.super._editableInitView(arg_3_0)
 end
 
-function slot0.refreshFlag(slot0)
-	gohelper.setActive(slot0._goflag, not DungeonModel.instance:hasPassLevelAndStory(slot0._config.id))
+function var_0_0.refreshFlag(arg_4_0)
+	local var_4_0 = DungeonModel.instance:hasPassLevelAndStory(arg_4_0._config.id)
+
+	gohelper.setActive(arg_4_0._goflag, not var_4_0)
 end
 
-function slot0._onStarItemShow(slot0, slot1, slot2, slot3)
-	slot4 = slot2
-	slot5 = DungeonConfig.instance:getEpisodeAdvancedConditionText(slot4)
-	slot6 = DungeonModel.instance:getEpisodeInfo(slot4)
-	slot10 = nil
+function var_0_0._onStarItemShow(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_2
+	local var_5_1 = DungeonConfig.instance:getEpisodeAdvancedConditionText(var_5_0)
+	local var_5_2 = DungeonModel.instance:getEpisodeInfo(var_5_0)
+	local var_5_3 = gohelper.findChildImage(arg_5_1, "#image_star1")
+	local var_5_4 = gohelper.findChildImage(arg_5_1, "#image_star2")
+	local var_5_5 = arg_5_0:isDungeonHardModel()
+	local var_5_6
 
-	if slot0:isDungeonHardModel() then
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(gohelper.findChildImage(slot1, "#image_star1"), "juqing_xing1_kn")
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(gohelper.findChildImage(slot1, "#image_star2"), "juqing_xing2_kn")
+	if var_5_5 then
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_3, "juqing_xing1_kn")
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_4, "juqing_xing2_kn")
 
-		slot10 = "#e43938"
+		var_5_6 = "#e43938"
 	else
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(slot7, "juqing_xing1")
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(slot8, "juqing_xing2")
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_3, "juqing_xing1")
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_4, "juqing_xing2")
 
-		if slot3 == 1 then
-			slot10 = "#e4b472"
-		elseif slot3 == 2 then
-			slot10 = "#e7853d"
-		elseif slot3 == 3 then
-			slot10 = "#ef3939"
+		if arg_5_3 == 1 then
+			var_5_6 = "#e4b472"
+		elseif arg_5_3 == 2 then
+			var_5_6 = "#e7853d"
+		elseif arg_5_3 == 3 then
+			var_5_6 = "#ef3939"
 		end
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot7, DungeonModel.instance:hasPassLevelAndStory(slot4) and slot10 or "#949494")
+	local var_5_7 = "#949494"
+	local var_5_8 = DungeonModel.instance:hasPassLevelAndStory(var_5_0)
 
-	if string.nilorempty(slot5) then
-		gohelper.setActive(slot8.gameObject, false)
+	SLFramework.UGUI.GuiHelper.SetColor(var_5_3, var_5_8 and var_5_6 or var_5_7)
+
+	if string.nilorempty(var_5_1) then
+		gohelper.setActive(var_5_4.gameObject, false)
 	else
-		gohelper.setActive(slot8.gameObject, true)
-		SLFramework.UGUI.GuiHelper.SetColor(slot8, slot12 and slot6 and DungeonEnum.StarType.Advanced <= slot6.star and slot10 or slot11)
+		gohelper.setActive(var_5_4.gameObject, true)
+		SLFramework.UGUI.GuiHelper.SetColor(var_5_4, var_5_8 and var_5_2 and var_5_2.star >= DungeonEnum.StarType.Advanced and var_5_6 or var_5_7)
 	end
 end
 
-function slot0.setImage(slot0, slot1, slot2, slot3)
+function var_0_0.setImage(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	return
 end
 
-function slot0.getMapCfg(slot0)
-	return VersionActivity1_2DungeonConfig.instance:get1_2EpisodeMapConfig(slot0._config.id)
+function var_0_0.getMapCfg(arg_7_0)
+	return VersionActivity1_2DungeonConfig.instance:get1_2EpisodeMapConfig(arg_7_0._config.id)
 end
 
-function slot0.playAnimation(slot0, slot1)
-	slot0.animator:Play(slot1, 0, 0)
+function var_0_0.playAnimation(arg_8_0, arg_8_1)
+	arg_8_0.animator:Play(arg_8_1, 0, 0)
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._config and slot0._config.id
+function var_0_0.getEpisodeId(arg_9_0)
+	return arg_9_0._config and arg_9_0._config.id
 end
 
-function slot0.createStarItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.goStar = slot1
-	slot2.imgStar1 = gohelper.findChildImage(slot1, "#image_star1")
-	slot2.imgStar2 = gohelper.findChildImage(slot1, "#image_star2")
+function var_0_0.createStarItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getUserDataTb_()
 
-	return slot2
+	var_10_0.goStar = arg_10_1
+	var_10_0.imgStar1 = gohelper.findChildImage(arg_10_1, "#image_star1")
+	var_10_0.imgStar2 = gohelper.findChildImage(arg_10_1, "#image_star2")
+
+	return var_10_0
 end
 
-function slot0.onClose(slot0)
-	uv0.super.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	var_0_0.super.onClose(arg_11_0)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0.goClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_12_0)
+	var_0_0.super.onDestroyView(arg_12_0)
+	arg_12_0.goClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.explore.controller.steps.ExploreUseItemStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreUseItemStep", package.seeall)
 
-slot0 = class("ExploreUseItemStep", ExploreStepBase)
+local var_0_0 = class("ExploreUseItemStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	ExploreModel.instance:setUseItemUid(tostring(slot0._data.itemUid))
+function var_0_0.onStart(arg_1_0)
+	ExploreModel.instance:setUseItemUid(tostring(arg_1_0._data.itemUid))
 	ExploreController.instance:getMap():checkAllRuneTrigger()
-	slot0:onDone()
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

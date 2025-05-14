@@ -1,14 +1,14 @@
-module("modules.logic.explore.model.mo.unit.ExploreGravityGearUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreGravityGearUnitMO", package.seeall)
 
-slot0 = pureTable("ExploreGravityGearUnitMO", ExploreBaseUnitMO)
+local var_0_0 = pureTable("ExploreGravityGearUnitMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.keyUnitTypes = string.splitToNumber(slot0.specialDatas[1], "#")
-	slot0.enterTriggerType = true
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.keyUnitTypes = string.splitToNumber(arg_1_0.specialDatas[1], "#")
+	arg_1_0.enterTriggerType = true
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_2_0)
 	return ExploreGravityTriggerUnit
 end
 
-return slot0
+return var_0_0

@@ -1,83 +1,103 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessPvpSettleView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessPvpSettleView", package.seeall)
 
-slot0 = class("AutoChessPvpSettleView", BaseView)
+local var_0_0 = class("AutoChessPvpSettleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goWin = gohelper.findChild(slot0.viewGO, "root/#go_Win")
-	slot0._goLose = gohelper.findChild(slot0.viewGO, "root/#go_Lose")
-	slot0._goBadge = gohelper.findChild(slot0.viewGO, "root/Left/#go_Badge")
-	slot0._txtRound = gohelper.findChildText(slot0.viewGO, "root/Right/Round/image/#txt_Round")
-	slot0._txtDamage = gohelper.findChildText(slot0.viewGO, "root/Right/Damage/image/#txt_Damage")
-	slot0._goHp = gohelper.findChild(slot0.viewGO, "root/Right/#go_Hp")
-	slot0._txtHp = gohelper.findChildText(slot0.viewGO, "root/Right/#go_Hp/image/#txt_Hp")
-	slot0._goChess = gohelper.findChild(slot0.viewGO, "root/Right/Team/Viewport/Content/#go_Chess")
-	slot0._goLeaderMesh = gohelper.findChild(slot0.viewGO, "root/Right/Team/Laeder/#go_LeaderMesh")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goWin = gohelper.findChild(arg_1_0.viewGO, "root/#go_Win")
+	arg_1_0._goLose = gohelper.findChild(arg_1_0.viewGO, "root/#go_Lose")
+	arg_1_0._goBadge = gohelper.findChild(arg_1_0.viewGO, "root/Left/#go_Badge")
+	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "root/Right/Round/image/#txt_Round")
+	arg_1_0._txtDamage = gohelper.findChildText(arg_1_0.viewGO, "root/Right/Damage/image/#txt_Damage")
+	arg_1_0._goHp = gohelper.findChild(arg_1_0.viewGO, "root/Right/#go_Hp")
+	arg_1_0._txtHp = gohelper.findChildText(arg_1_0.viewGO, "root/Right/#go_Hp/image/#txt_Hp")
+	arg_1_0._goChess = gohelper.findChild(arg_1_0.viewGO, "root/Right/Team/Viewport/Content/#go_Chess")
+	arg_1_0._goLeaderMesh = gohelper.findChild(arg_1_0.viewGO, "root/Right/Team/Laeder/#go_LeaderMesh")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.badgeItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.BadgeItemPath, slot0._goBadge), AutoChessBadgeItem)
+function var_0_0._editableInitView(arg_5_0)
+	local var_5_0 = arg_5_0:getResInst(AutoChessEnum.BadgeItemPath, arg_5_0._goBadge)
+
+	arg_5_0.badgeItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, AutoChessBadgeItem)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_award_get)
 
-	slot0.settleData = AutoChessModel.instance.settleData
+	arg_7_0.settleData = AutoChessModel.instance.settleData
 
-	if slot0.settleData then
-		slot0.badgeItem:setData(slot0.settleData.rank, Activity182Model.instance:getActMo().score, AutoChessBadgeItem.ShowType.PvpSettleView)
-		slot0.badgeItem:playProgressAnim(slot0.settleData.score)
+	if arg_7_0.settleData then
+		local var_7_0 = Activity182Model.instance:getActMo()
 
-		slot0._txtRound.text = string.format("%d/%d", slot0.settleData.round, lua_auto_chess_episode.configDict[slot0.settleData.episodeId].maxRound)
-		slot3 = tonumber(slot0.settleData.remainingHp)
-		slot0._txtHp.text = slot3
+		arg_7_0.badgeItem:setData(arg_7_0.settleData.rank, var_7_0.score, AutoChessBadgeItem.ShowType.PvpSettleView)
+		arg_7_0.badgeItem:playProgressAnim(arg_7_0.settleData.score)
 
-		gohelper.setActive(slot0._goHp, slot3 ~= 0)
+		local var_7_1 = lua_auto_chess_episode.configDict[arg_7_0.settleData.episodeId].maxRound
 
-		slot0._txtDamage.text = slot0.settleData.totalInjury
+		arg_7_0._txtRound.text = string.format("%d/%d", arg_7_0.settleData.round, var_7_1)
 
-		if lua_auto_chess_master.configDict[slot0.settleData.masterId] then
-			MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goLeaderMesh, AutoChessMeshComp):setData(slot4.image, false, true)
+		local var_7_2 = tonumber(arg_7_0.settleData.remainingHp)
+
+		arg_7_0._txtHp.text = var_7_2
+
+		gohelper.setActive(arg_7_0._goHp, var_7_2 ~= 0)
+
+		arg_7_0._txtDamage.text = arg_7_0.settleData.totalInjury
+
+		local var_7_3 = lua_auto_chess_master.configDict[arg_7_0.settleData.masterId]
+
+		if var_7_3 then
+			MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._goLeaderMesh, AutoChessMeshComp):setData(var_7_3.image, false, true)
 		end
 
-		for slot8, slot9 in ipairs(slot0.settleData.chessIds) do
-			if lua_auto_chess.configDict[slot9][1].type == AutoChessStrEnum.ChessType.Attack then
-				UISpriteSetMgr.instance:setAutoChessSprite(gohelper.findChildImage(gohelper.cloneInPlace(slot0._goChess, slot9), "image_bg"), "v2a5_autochess_quality1_" .. slot10.levelFromMall)
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0.settleData.chessIds) do
+			local var_7_4 = lua_auto_chess.configDict[iter_7_1][1]
+			local var_7_5 = gohelper.cloneInPlace(arg_7_0._goChess, iter_7_1)
+			local var_7_6 = gohelper.findChildImage(var_7_5, "image_bg")
+
+			if var_7_4.type == AutoChessStrEnum.ChessType.Attack then
+				UISpriteSetMgr.instance:setAutoChessSprite(var_7_6, "v2a5_autochess_quality1_" .. var_7_4.levelFromMall)
 			else
-				UISpriteSetMgr.instance:setAutoChessSprite(slot12, "v2a5_autochess_quality2_" .. slot10.levelFromMall)
+				UISpriteSetMgr.instance:setAutoChessSprite(var_7_6, "v2a5_autochess_quality2_" .. var_7_4.levelFromMall)
 			end
 
-			MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChild(slot11, "Mesh"), AutoChessMeshComp):setData(slot10.image)
+			local var_7_7 = gohelper.findChild(var_7_5, "Mesh")
+
+			MonoHelper.addNoUpdateLuaComOnceToGo(var_7_7, AutoChessMeshComp):setData(var_7_4.image)
 		end
 
-		gohelper.setActive(slot0._goWin, slot0.settleData.round == slot2)
-		gohelper.setActive(slot0._goLose, slot0.settleData.round ~= slot2)
-		gohelper.setActive(slot0._goChess, false)
+		gohelper.setActive(arg_7_0._goWin, arg_7_0.settleData.round == var_7_1)
+		gohelper.setActive(arg_7_0._goLose, arg_7_0.settleData.round ~= var_7_1)
+		gohelper.setActive(arg_7_0._goChess, false)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	AutoChessController.instance:checkRankUp()
 	AutoChessController.instance:onSettleViewClose()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

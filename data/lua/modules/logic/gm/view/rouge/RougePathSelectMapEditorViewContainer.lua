@@ -1,11 +1,11 @@
-module("modules.logic.gm.view.rouge.RougePathSelectMapEditorViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.rouge.RougePathSelectMapEditorViewContainer", package.seeall)
 
-slot0 = class("RougePathSelectMapEditorViewContainer", BaseViewContainer)
+local var_0_0 = class("RougePathSelectMapEditorViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		RougePathSelectMapEditorView.New()
 	}
 end
 
-return slot0
+return var_0_0

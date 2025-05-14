@@ -1,10 +1,11 @@
-module("modules.logic.room.controller.RoomHandBookEvent", package.seeall)
+﻿module("modules.logic.room.controller.RoomHandBookEvent", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.onClickHandBookItem = slot1()
-slot0.refreshBack = slot1()
-slot0.reverseIcon = slot1()
-slot0.showMutate = slot1()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return slot0
+var_0_0.onClickHandBookItem = var_0_1()
+var_0_0.refreshBack = var_0_1()
+var_0_0.reverseIcon = var_0_1()
+var_0_0.showMutate = var_0_1()
+
+return var_0_0

@@ -1,58 +1,63 @@
-module("modules.logic.room.model.map.RoomMapBuildingAreaMO", package.seeall)
+﻿module("modules.logic.room.model.map.RoomMapBuildingAreaMO", package.seeall)
 
-slot0 = pureTable("RoomMapBuildingAreaMO")
+local var_0_0 = pureTable("RoomMapBuildingAreaMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.uid
-	slot0.buildingType = slot1.config.buildingType
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.uid
+	arg_1_0.buildingType = arg_1_1.config.buildingType
 
-	slot0:setMainBuildingMO(slot1)
+	arg_1_0:setMainBuildingMO(arg_1_1)
 end
 
-function slot0.setMainBuildingMO(slot0, slot1)
-	slot0.mainBuildingMO = slot1
+function var_0_0.setMainBuildingMO(arg_2_0, arg_2_1)
+	arg_2_0.mainBuildingMO = arg_2_1
 
-	slot0:clearRangesHexList()
-	slot0:clearBuildingMOList()
+	arg_2_0:clearRangesHexList()
+	arg_2_0:clearBuildingMOList()
 end
 
-function slot0.getMainBuildingCfg(slot0)
-	if slot0.mainBuildingMO then
-		return slot0.mainBuildingMO.config
+function var_0_0.getMainBuildingCfg(arg_3_0)
+	if arg_3_0.mainBuildingMO then
+		return arg_3_0.mainBuildingMO.config
 	end
 end
 
-function slot0.getRangesHexPointList(slot0)
-	if slot0.mainBuildingMO then
-		slot2 = slot0.mainBuildingMO.hexPoint
-		slot3 = slot0.mainBuildingMO.rotate
+function var_0_0.getRangesHexPointList(arg_4_0)
+	if arg_4_0.mainBuildingMO then
+		local var_4_0 = arg_4_0.mainBuildingMO.buildingId
+		local var_4_1 = arg_4_0.mainBuildingMO.hexPoint
+		local var_4_2 = arg_4_0.mainBuildingMO.rotate
+		local var_4_3 = RoomBuildingEnum.BuildingAreaRange or 1
 
-		if slot0._builingId ~= slot0.mainBuildingMO.buildingId or slot0._rotate ~= slot3 or slot0._hexPoint ~= slot2 then
-			slot0._builingId = slot1
-			slot0._hexPoint = slot2
-			slot0._rotate = slot3
-			slot0._rangsHexList = slot0:_findBuildingInRanges(slot1, slot2, slot3, RoomBuildingEnum.BuildingAreaRange or 1)
+		if arg_4_0._builingId ~= var_4_0 or arg_4_0._rotate ~= var_4_2 or arg_4_0._hexPoint ~= var_4_1 then
+			arg_4_0._builingId = var_4_0
+			arg_4_0._hexPoint = var_4_1
+			arg_4_0._rotate = var_4_2
+			arg_4_0._rangsHexList = arg_4_0:_findBuildingInRanges(var_4_0, var_4_1, var_4_2, var_4_3)
 		end
 	else
-		slot0:clearRangesHexList()
+		arg_4_0:clearRangesHexList()
 	end
 
-	return slot0._rangsHexList
+	return arg_4_0._rangsHexList
 end
 
-function slot0.isInRangesByHexPoint(slot0, slot1)
-	if slot1 and slot0:isInRangesByHexXY(slot1.x, slot1.y) then
+function var_0_0.isInRangesByHexPoint(arg_5_0, arg_5_1)
+	if arg_5_1 and arg_5_0:isInRangesByHexXY(arg_5_1.x, arg_5_1.y) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isInRangesByHexXY(slot0, slot1, slot2)
-	slot4 = nil
+function var_0_0.isInRangesByHexXY(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:getRangesHexPointList()
+	local var_6_1
 
-	for slot8 = 1, #slot0:getRangesHexPointList() do
-		if slot3[slot8].x == slot1 and slot4.y == slot2 then
+	for iter_6_0 = 1, #var_6_0 do
+		local var_6_2 = var_6_0[iter_6_0]
+
+		if var_6_2.x == arg_6_1 and var_6_2.y == arg_6_2 then
 			return true
 		end
 	end
@@ -60,72 +65,89 @@ function slot0.isInRangesByHexXY(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.clearRangesHexList(slot0)
-	if slot0._rangsHexList and #slot0._rangsHexList > 0 then
-		slot0._rangsHexList = {}
+function var_0_0.clearRangesHexList(arg_7_0)
+	if arg_7_0._rangsHexList and #arg_7_0._rangsHexList > 0 then
+		arg_7_0._rangsHexList = {}
 	end
 
-	slot0._builingId = 0
-	slot0._rotate = 0
-	slot0._hexPoint = nil
+	arg_7_0._builingId = 0
+	arg_7_0._rotate = 0
+	arg_7_0._hexPoint = nil
 end
 
-function slot0.getBuildingMOList(slot0, slot1)
-	if not slot0._buildingMOList then
-		slot0._buildingMOList = slot0:_findMapBuildingMOList()
-		slot0._buildingMOWithMainList = {
-			slot0.mainBuildingMO
+function var_0_0.getBuildingMOList(arg_8_0, arg_8_1)
+	if not arg_8_0._buildingMOList then
+		arg_8_0._buildingMOList = arg_8_0:_findMapBuildingMOList()
+		arg_8_0._buildingMOWithMainList = {
+			arg_8_0.mainBuildingMO
 		}
 
-		tabletool.addValues(slot0._buildingMOWithMainList, slot0._buildingMOList)
+		tabletool.addValues(arg_8_0._buildingMOWithMainList, arg_8_0._buildingMOList)
 	end
 
-	if slot1 then
-		return slot0._buildingMOWithMainList
+	if arg_8_1 then
+		return arg_8_0._buildingMOWithMainList
 	end
 
-	return slot0._buildingMOList
+	return arg_8_0._buildingMOList
 end
 
-function slot0.clearBuildingMOList(slot0)
-	slot0._buildingMOList = nil
+function var_0_0.clearBuildingMOList(arg_9_0)
+	arg_9_0._buildingMOList = nil
 end
 
-function slot0._findMapBuildingMOList(slot0)
-	if not slot0.mainBuildingMO then
-		return {}
+function var_0_0._findMapBuildingMOList(arg_10_0)
+	local var_10_0 = {}
+
+	if not arg_10_0.mainBuildingMO then
+		return var_10_0
 	end
 
-	for slot7 = 1, #slot0:getRangesHexPointList() do
-		if slot2[slot7] and RoomMapBuildingModel.instance:getBuildingMO(slot8.x, slot8.y) and slot9:checkSameType(slot0.buildingType) and not tabletool.indexOf(slot1, slot9) then
-			table.insert(slot1, slot9)
+	local var_10_1 = arg_10_0:getRangesHexPointList()
+	local var_10_2 = RoomMapBuildingModel.instance
+
+	for iter_10_0 = 1, #var_10_1 do
+		local var_10_3 = var_10_1[iter_10_0]
+
+		if var_10_3 then
+			local var_10_4 = var_10_2:getBuildingMO(var_10_3.x, var_10_3.y)
+
+			if var_10_4 and var_10_4:checkSameType(arg_10_0.buildingType) and not tabletool.indexOf(var_10_0, var_10_4) then
+				table.insert(var_10_0, var_10_4)
+			end
 		end
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.getBuildingType(slot0)
-	return slot0.buildingType
+function var_0_0.getBuildingType(arg_11_0)
+	return arg_11_0.buildingType
 end
 
-function slot0._findBuildingInRanges(slot0, slot1, slot2, slot3, slot4)
-	slot6 = {}
+function var_0_0._findBuildingInRanges(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	arg_12_2 = arg_12_2 or HexPoint(0, 0)
+	arg_12_3 = arg_12_3 or 0
+	arg_12_4 = arg_12_4 or 1
 
-	for slot11 = 1, #RoomMapModel.instance:getBuildingPointList(slot1, slot3 or 0) do
-		slot12 = (slot2 or HexPoint(0, 0)) + slot7[slot11]
+	local var_12_0 = {}
+	local var_12_1 = {}
+	local var_12_2 = RoomMapModel.instance:getBuildingPointList(arg_12_1, arg_12_3)
 
-		table.insert({}, slot12)
-		tabletool.addValues(slot6, slot12:inRanges(slot4 or 1, true))
+	for iter_12_0 = 1, #var_12_2 do
+		local var_12_3 = arg_12_2 + var_12_2[iter_12_0]
+
+		table.insert(var_12_0, var_12_3)
+		tabletool.addValues(var_12_1, var_12_3:inRanges(arg_12_4, true))
 	end
 
-	for slot11 = #slot6, 1, -1 do
-		if tabletool.indexOf(slot5, slot6[slot11]) then
-			table.remove(slot6, slot11)
+	for iter_12_1 = #var_12_1, 1, -1 do
+		if tabletool.indexOf(var_12_0, var_12_1[iter_12_1]) then
+			table.remove(var_12_1, iter_12_1)
 		end
 	end
 
-	return slot6
+	return var_12_1
 end
 
-return slot0
+return var_0_0

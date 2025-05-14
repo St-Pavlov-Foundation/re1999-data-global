@@ -1,155 +1,206 @@
-module("modules.logic.herogroup.controller.HeroGroupBalanceHelper", package.seeall)
+﻿module("modules.logic.herogroup.controller.HeroGroupBalanceHelper", package.seeall)
 
-slot0 = class("HeroGroupBalanceHelper")
-slot0.BalanceColor = "#bfdaff"
-slot0.BalanceIconColor = "#81abe5"
+local var_0_0 = class("HeroGroupBalanceHelper")
 
-function slot0.canShowBalanceSwitchBtn()
-	if not FightModel.instance:getFightParam() or not slot0.episodeId then
+var_0_0.BalanceColor = "#bfdaff"
+var_0_0.BalanceIconColor = "#81abe5"
+
+function var_0_0.canShowBalanceSwitchBtn()
+	local var_1_0 = FightModel.instance:getFightParam()
+
+	if not var_1_0 or not var_1_0.episodeId then
 		return false
 	end
 
-	if DungeonConfig.instance:getEpisodeCO(slot0.episodeId).firstBattleId and slot2 > 0 and DungeonModel.instance:getEpisodeInfo(slot0.episodeId) and DungeonEnum.StarType.None < slot3.star and lua_battle.configDict[slot2] then
-		return not string.nilorempty(slot4.balance)
+	local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0.episodeId).firstBattleId
+
+	if var_1_1 and var_1_1 > 0 then
+		local var_1_2 = DungeonModel.instance:getEpisodeInfo(var_1_0.episodeId)
+
+		if var_1_2 and var_1_2.star > DungeonEnum.StarType.None then
+			local var_1_3 = lua_battle.configDict[var_1_1]
+
+			if var_1_3 then
+				return not string.nilorempty(var_1_3.balance)
+			end
+		end
 	end
 
 	return false
 end
 
-function slot0.switchBalanceMode()
-	uv0._isClickBalance = false
+function var_0_0.switchBalanceMode()
+	var_0_0._isClickBalance = false
 
-	if not FightModel.instance:getFightParam() then
+	local var_2_0 = FightModel.instance:getFightParam()
+
+	if not var_2_0 then
 		return
 	end
 
-	if uv0.getIsBalanceMode() then
-		slot0.battleId = DungeonConfig.instance:getEpisodeCO(slot0.episodeId).battleId
+	local var_2_1 = var_0_0.getIsBalanceMode()
+	local var_2_2 = DungeonConfig.instance:getEpisodeCO(var_2_0.episodeId)
+
+	if var_2_1 then
+		var_2_0.battleId = var_2_2.battleId
 	else
-		uv0._isClickBalance = true
-		slot0.battleId = slot2.firstBattleId
+		var_0_0._isClickBalance = true
+		var_2_0.battleId = var_2_2.firstBattleId
 	end
 
-	slot0:setBattleId(slot0.battleId)
+	var_2_0:setBattleId(var_2_0.battleId)
 
-	HeroGroupModel.instance.battleId = slot0.battleId
+	HeroGroupModel.instance.battleId = var_2_0.battleId
 
 	HeroGroupTrialModel.instance:setTrialByBattleId(HeroGroupModel.instance.battleId)
 end
 
-function slot0.clearBalanceStatus()
-	uv0._isClickBalance = false
+function var_0_0.clearBalanceStatus()
+	var_0_0._isClickBalance = false
 end
 
-function slot0.isClickBalance()
-	return uv0._isClickBalance
+function var_0_0.isClickBalance()
+	return var_0_0._isClickBalance
 end
 
-function slot0.getIsBalanceMode()
-	if not FightModel.instance:getFightParam() then
+function var_0_0.getIsBalanceMode()
+	local var_5_0 = FightModel.instance:getFightParam()
+
+	if not var_5_0 then
 		return false
 	end
 
-	return lua_battle.configDict[slot0.battleId] and not string.nilorempty(slot1.balance) or false
+	local var_5_1 = lua_battle.configDict[var_5_0.battleId]
+
+	return var_5_1 and not string.nilorempty(var_5_1.balance) or false
 end
 
-slot1, slot2 = nil
+local var_0_1
+local var_0_2
 
-function slot0.getBalanceLv()
-	if not FightModel.instance:getFightParam() then
+function var_0_0.getBalanceLv()
+	local var_6_0 = FightModel.instance:getFightParam()
+
+	if not var_6_0 then
 		return
 	end
 
-	if not lua_battle.configDict[slot0.battleId] or string.nilorempty(slot1.balance) then
+	local var_6_1 = lua_battle.configDict[var_6_0.battleId]
+
+	if not var_6_1 or string.nilorempty(var_6_1.balance) then
 		return
 	end
 
-	slot3 = string.splitToNumber(slot1.balance, "#")[1] or 0
-	slot4 = slot2[2] or 0
-	slot5 = slot2[3] or 0
+	local var_6_2 = string.splitToNumber(var_6_1.balance, "#")
+	local var_6_3 = var_6_2[1] or 0
+	local var_6_4 = var_6_2[2] or 0
+	local var_6_5 = var_6_2[3] or 0
 
-	if uv0 == nil then
-		uv0 = #lua_character_cosume.configDict
+	if var_0_1 == nil then
+		var_0_1 = #lua_character_cosume.configDict
 	end
 
-	if uv1 == nil then
-		uv1 = 1
+	if var_0_2 == nil then
+		var_0_2 = 1
 
-		for slot9, slot10 in pairs(lua_character_talent.configList) do
-			if uv1 < slot10.talentId then
-				uv1 = slot10.talentId
+		for iter_6_0, iter_6_1 in pairs(lua_character_talent.configList) do
+			if iter_6_1.talentId > var_0_2 then
+				var_0_2 = iter_6_1.talentId
 			end
 		end
 	end
 
-	return Mathf.Clamp(slot3, 1, uv0), Mathf.Clamp(slot4, 1, uv1), Mathf.Clamp(slot5, 1, EquipConfig.MaxLevel)
+	local var_6_6 = Mathf.Clamp(var_6_3, 1, var_0_1)
+	local var_6_7 = Mathf.Clamp(var_6_4, 1, var_0_2)
+	local var_6_8 = Mathf.Clamp(var_6_5, 1, EquipConfig.MaxLevel)
+
+	return var_6_6, var_6_7, var_6_8
 end
 
-function slot0.getHeroBalanceLv(slot0)
-	if not uv0.getBalanceLv() then
+function var_0_0.getHeroBalanceLv(arg_7_0)
+	local var_7_0 = var_0_0.getBalanceLv()
+
+	if not var_7_0 then
 		return 0
 	end
 
-	for slot7 in pairs(SkillConfig.instance:getherolevelsCO(slot0)) do
-		if 0 < slot7 then
-			slot2 = slot7
+	local var_7_1 = 0
+	local var_7_2 = SkillConfig.instance:getherolevelsCO(arg_7_0)
+
+	for iter_7_0 in pairs(var_7_2) do
+		if var_7_1 < iter_7_0 then
+			var_7_1 = iter_7_0
 		end
 	end
 
-	return math.min(slot2, slot1)
+	return (math.min(var_7_1, var_7_0))
 end
 
-function slot0.getHeroBalanceInfo(slot0)
-	if not HeroModel.instance:getByHeroId(slot0) then
+function var_0_0.getHeroBalanceInfo(arg_8_0)
+	local var_8_0 = HeroModel.instance:getByHeroId(arg_8_0)
+
+	if not var_8_0 then
 		return
 	end
 
-	slot2, slot3, slot4 = uv0.getBalanceLv()
+	local var_8_1, var_8_2, var_8_3 = var_0_0.getBalanceLv()
 
-	if not slot2 then
+	if not var_8_1 then
 		return
 	end
 
-	for slot10 in pairs(SkillConfig.instance:getherolevelsCO(slot0)) do
-		if 0 < slot10 then
-			slot5 = slot10
+	local var_8_4 = 0
+	local var_8_5 = SkillConfig.instance:getherolevelsCO(arg_8_0)
+
+	for iter_8_0 in pairs(var_8_5) do
+		if var_8_4 < iter_8_0 then
+			var_8_4 = iter_8_0
 		end
 	end
 
-	slot7, slot8 = SkillConfig.instance:getHeroExSkillLevelByLevel(slot0, math.max(slot1.level, math.min(slot5, slot2)))
-	slot9 = 1
+	local var_8_6 = math.min(var_8_4, var_8_1)
+	local var_8_7 = math.max(var_8_0.level, var_8_6)
+	local var_8_8, var_8_9 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_8_0, var_8_7)
+	local var_8_10 = 1
 
-	for slot13 = slot3, 1, -1 do
-		if lua_character_talent.configDict[slot0][slot13] and slot14.requirement <= slot8 then
-			slot9 = slot13
+	for iter_8_1 = var_8_2, 1, -1 do
+		local var_8_11 = lua_character_talent.configDict[arg_8_0][iter_8_1]
+
+		if var_8_11 and var_8_9 >= var_8_11.requirement then
+			var_8_10 = iter_8_1
 
 			break
 		end
 	end
 
-	slot10 = slot1.talentCubeInfos
+	local var_8_12 = var_8_0.talentCubeInfos
 
-	if (slot1.talent < slot9 or slot1.rank < CharacterEnum.TalentRank) and CharacterEnum.TalentRank <= slot8 then
-		slot11 = {}
-		slot12 = lua_character_talent.configDict[slot0][slot9]
-		slot20 = ","
+	if (var_8_10 > var_8_0.talent or var_8_0.rank < CharacterEnum.TalentRank) and var_8_9 >= CharacterEnum.TalentRank then
+		local var_8_13 = {}
+		local var_8_14 = lua_character_talent.configDict[arg_8_0][var_8_10]
+		local var_8_15 = var_8_14.talentMould
+		local var_8_16 = string.splitToNumber(var_8_14.exclusive, "#")[1]
+		local var_8_17 = lua_talent_scheme.configDict[var_8_10][var_8_15][var_8_16].talenScheme
+		local var_8_18 = GameUtil.splitString2(var_8_17, true, "#", ",")
 
-		for slot20, slot21 in ipairs(GameUtil.splitString2(lua_talent_scheme.configDict[slot9][slot12.talentMould][string.splitToNumber(slot12.exclusive, "#")[1]].talenScheme, true, "#", slot20)) do
-			HeroDef_pb.TalentCubeInfo().cubeId = slot21[1]
-			slot22.direction = slot21[2] or 0
-			slot22.posX = slot21[3] or 0
-			slot22.posY = slot21[4] or 0
+		for iter_8_2, iter_8_3 in ipairs(var_8_18) do
+			local var_8_19 = HeroDef_pb.TalentCubeInfo()
 
-			table.insert(slot11, slot22)
+			var_8_19.cubeId = iter_8_3[1]
+			var_8_19.direction = iter_8_3[2] or 0
+			var_8_19.posX = iter_8_3[3] or 0
+			var_8_19.posY = iter_8_3[4] or 0
+
+			table.insert(var_8_13, var_8_19)
 		end
 
-		slot10 = HeroTalentCubeInfosMO.New()
+		var_8_12 = HeroTalentCubeInfosMO.New()
 
-		slot10:init(slot11)
-		slot10:setOwnData(slot0, slot9)
+		var_8_12:init(var_8_13)
+		var_8_12:setOwnData(arg_8_0, var_8_10)
 	end
 
-	return slot2, slot8, slot9, slot10, slot4
+	return var_8_7, var_8_9, var_8_10, var_8_12, var_8_3
 end
 
-return slot0
+return var_0_0

@@ -1,195 +1,237 @@
-module("modules.logic.scene.fight.comp.FightSceneBloomComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneBloomComp", package.seeall)
 
-slot0 = class("FightSceneBloomComp", BaseSceneComp)
-slot0.Bloom_invisible = "invisible"
-slot0.Bloom_mirror = "mirror"
-slot0.Bloom_useShadow = "useShadow"
-slot0.Bloom_mirrorNoise = "mirrorNoise"
-slot1 = {
-	[slot0.Bloom_invisible] = "useInvisible",
-	[slot0.Bloom_mirror] = "useMirror",
-	[slot0.Bloom_useShadow] = "useShadow"
+local var_0_0 = class("FightSceneBloomComp", BaseSceneComp)
+
+var_0_0.Bloom_invisible = "invisible"
+var_0_0.Bloom_mirror = "mirror"
+var_0_0.Bloom_useShadow = "useShadow"
+var_0_0.Bloom_mirrorNoise = "mirrorNoise"
+
+local var_0_1 = {
+	[var_0_0.Bloom_invisible] = "useInvisible",
+	[var_0_0.Bloom_mirror] = "useMirror",
+	[var_0_0.Bloom_useShadow] = "useShadow"
 }
-slot2 = {
-	[slot0.Bloom_invisible] = "characterInvisibleActive"
+local var_0_2 = {
+	[var_0_0.Bloom_invisible] = "characterInvisibleActive"
 }
 
-function slot0.onInit(slot0)
-	slot0:addConstEvents()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:addConstEvents()
 end
 
-function slot0.addConstEvents(slot0)
-	slot0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	arg_2_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._entityDict = {}
-	slot0._scenePassDict = {}
-	slot0._entityPassDict = {}
+function var_0_0.onSceneStart(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._entityDict = {}
+	arg_3_0._scenePassDict = {}
+	arg_3_0._entityPassDict = {}
 
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_3_0._onSkillPlayStart, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
 end
 
-function slot0.onSceneClose(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
+function var_0_0.onSceneClose(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_4_0._onSkillPlayStart, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
 
-	if slot0._localBloomColor then
-		PostProcessingMgr.instance:setLocalBloomColor(slot0._localBloomColor)
+	if arg_4_0._localBloomColor then
+		PostProcessingMgr.instance:setLocalBloomColor(arg_4_0._localBloomColor)
 
-		slot0._localBloomColor = nil
+		arg_4_0._localBloomColor = nil
 	end
 
-	slot0._entityDict = {}
-	slot0._scenePassDict = {}
-	slot0._entityPassDict = {}
+	arg_4_0._entityDict = {}
+	arg_4_0._scenePassDict = {}
+	arg_4_0._entityPassDict = {}
 
-	slot0:_checkCameraPPVolume()
-	TaskDispatcher.cancelTask(slot0._delayAddEntityBloom, slot0)
+	arg_4_0:_checkCameraPPVolume()
+	TaskDispatcher.cancelTask(arg_4_0._delayAddEntityBloom, arg_4_0)
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	if lua_scene_level.configDict[slot1] and slot2.useBloom == 1 then
-		if slot0._localBloomColor == nil then
-			slot0._localBloomColor = PostProcessingMgr.instance:getLocalBloomColor()
+function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
+	local var_5_0 = lua_scene_level.configDict[arg_5_1]
+
+	if var_5_0 and var_5_0.useBloom == 1 then
+		if arg_5_0._localBloomColor == nil then
+			arg_5_0._localBloomColor = PostProcessingMgr.instance:getLocalBloomColor()
 		end
 
-		PostProcessingMgr.instance:setLocalBloomColor(Color.New(slot2.bloomR, slot2.bloomG, slot2.bloomB, slot2.bloomA))
-		PostProcessingMgr.instance:setFlickerSceneFactor(slot2.flickerSceneFactor)
+		PostProcessingMgr.instance:setLocalBloomColor(Color.New(var_5_0.bloomR, var_5_0.bloomG, var_5_0.bloomB, var_5_0.bloomA))
+		PostProcessingMgr.instance:setFlickerSceneFactor(var_5_0.flickerSceneFactor)
 		PostProcessingMgr.instance:setLocalBloomActive(true)
 
-		slot0._scenePassDict = {}
+		arg_5_0._scenePassDict = {}
 
-		if not string.nilorempty(slot2.bloomEffect) then
-			for slot7, slot8 in ipairs(string.split(slot2.bloomEffect, "#")) do
-				slot0._scenePassDict[slot8] = true
+		if not string.nilorempty(var_5_0.bloomEffect) then
+			local var_5_1 = string.split(var_5_0.bloomEffect, "#")
+
+			for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+				arg_5_0._scenePassDict[iter_5_1] = true
 			end
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._entityDict) do
-		slot0:_checkEntityPPEffectMask(slot6)
+	for iter_5_2, iter_5_3 in pairs(arg_5_0._entityDict) do
+		arg_5_0:_checkEntityPPEffectMask(iter_5_2)
 	end
 
-	slot0:_checkCameraPPVolume()
+	arg_5_0:_checkCameraPPVolume()
 end
 
-function slot0.addEntity(slot0, slot1)
-	slot0._delayAddEntitys = slot0._delayAddEntitys or {}
+function var_0_0.addEntity(arg_6_0, arg_6_1)
+	arg_6_0._delayAddEntitys = arg_6_0._delayAddEntitys or {}
 
-	table.insert(slot0._delayAddEntitys, slot1)
-	TaskDispatcher.cancelTask(slot0._delayAddEntityBloom, slot0)
-	TaskDispatcher.runDelay(slot0._delayAddEntityBloom, slot0, 2)
+	table.insert(arg_6_0._delayAddEntitys, arg_6_1)
+	TaskDispatcher.cancelTask(arg_6_0._delayAddEntityBloom, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._delayAddEntityBloom, arg_6_0, 2)
 end
 
-function slot0._delayAddEntityBloom(slot0)
-	for slot4, slot5 in ipairs(slot0._delayAddEntitys) do
-		slot0._entityDict[slot5] = true
+function var_0_0._delayAddEntityBloom(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._delayAddEntitys) do
+		arg_7_0._entityDict[iter_7_1] = true
 
-		slot0:_checkEntityPPEffectMask(slot5)
-		slot0:_checkCameraPPVolume()
+		arg_7_0:_checkEntityPPEffectMask(iter_7_1)
+		arg_7_0:_checkCameraPPVolume()
 	end
 
-	slot0._delayAddEntitys = nil
+	arg_7_0._delayAddEntitys = nil
 end
 
-function slot0.removeEntity(slot0, slot1)
-	slot0._entityDict[slot1] = nil
+function var_0_0.removeEntity(arg_8_0, arg_8_1)
+	arg_8_0._entityDict[arg_8_1] = nil
 
-	slot0:_checkEntityPPEffectMask(slot1)
-	slot0:_checkCameraPPVolume()
+	arg_8_0:_checkEntityPPEffectMask(arg_8_1)
+	arg_8_0:_checkCameraPPVolume()
 end
 
-function slot0.setSingleEntityPass(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._entityPassDict[slot1] then
-		slot0._entityPassDict[slot1] = {}
+function var_0_0.setSingleEntityPass(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = arg_9_0._entityPassDict[arg_9_1]
+
+	if not var_9_0 then
+		var_9_0 = {}
+		arg_9_0._entityPassDict[arg_9_1] = var_9_0
 	end
 
-	if not slot5[slot3] then
-		slot5[slot3] = {}
+	local var_9_1 = var_9_0[arg_9_3]
+
+	if not var_9_1 then
+		var_9_1 = {}
+		var_9_0[arg_9_3] = var_9_1
 	end
 
-	slot6[slot4] = slot2 and true or nil
+	var_9_1[arg_9_4] = arg_9_2 and true or nil
 
-	slot0:_checkEntityPPEffectMask(slot3)
-	slot0:_checkCameraPPVolume(slot1)
+	arg_9_0:_checkEntityPPEffectMask(arg_9_3)
+	arg_9_0:_checkCameraPPVolume(arg_9_1)
 end
 
-function slot0._checkEntityPPEffectMask(slot0, slot1)
-	if not (slot1.spine and slot1.spine:getPPEffectMask()) then
+function var_0_0._checkEntityPPEffectMask(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1.spine and arg_10_1.spine:getPPEffectMask()
+
+	if not var_10_0 then
 		return
 	end
 
-	if not slot1.spineRenderer then
+	if not arg_10_1.spineRenderer then
 		return
 	end
 
-	if gohelper.isNil(slot1.spineRenderer:getReplaceMat()) then
+	local var_10_1 = arg_10_1.spineRenderer:getReplaceMat()
+
+	if gohelper.isNil(var_10_1) then
 		logError("FightSceneBloomComp.SetPassEnable mat=nil")
 
 		return
 	end
 
-	for slot7, slot8 in pairs(uv0) do
-		if not (slot0._entityDict[slot1] and slot0._scenePassDict[slot7] or false) and slot0._entityPassDict[slot7] and slot10[slot1] then
-			for slot15, slot16 in pairs(slot11) do
-				slot9 = true
+	for iter_10_0, iter_10_1 in pairs(var_0_1) do
+		local var_10_2 = arg_10_0._entityDict[arg_10_1] and arg_10_0._scenePassDict[iter_10_0] or false
 
-				break
+		if not var_10_2 then
+			local var_10_3 = arg_10_0._entityPassDict[iter_10_0]
+
+			if var_10_3 then
+				local var_10_4 = var_10_3[arg_10_1]
+
+				if var_10_4 then
+					for iter_10_2, iter_10_3 in pairs(var_10_4) do
+						var_10_2 = true
+
+						break
+					end
+				end
 			end
 		end
 
-		slot2:SetPassEnable(slot3, slot8, slot9)
+		var_10_0:SetPassEnable(var_10_1, iter_10_1, var_10_2)
 	end
 end
 
-function slot0._checkCameraPPVolume(slot0, slot1)
-	if slot1 then
-		if uv0[slot1] then
-			slot0:_checkOneCameraPPVolume(slot1)
+function var_0_0._checkCameraPPVolume(arg_11_0, arg_11_1)
+	if arg_11_1 then
+		if var_0_2[arg_11_1] then
+			arg_11_0:_checkOneCameraPPVolume(arg_11_1)
 		end
 	else
-		for slot5, slot6 in pairs(uv0) do
-			slot0:_checkOneCameraPPVolume(slot5)
+		for iter_11_0, iter_11_1 in pairs(var_0_2) do
+			arg_11_0:_checkOneCameraPPVolume(iter_11_0)
 		end
 	end
 end
 
-function slot0._checkOneCameraPPVolume(slot0, slot1)
-	if not slot0._scenePassDict[slot1] and slot0._entityPassDict[slot1] then
-		for slot7, slot8 in pairs(slot3) do
-			for slot12, slot13 in pairs(slot8) do
-				slot2 = true
+function var_0_0._checkOneCameraPPVolume(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._scenePassDict[arg_12_1]
 
-				break
-			end
+	if not var_12_0 then
+		local var_12_1 = arg_12_0._entityPassDict[arg_12_1]
 
-			if slot2 then
-				break
-			end
-		end
-	end
+		if var_12_1 then
+			for iter_12_0, iter_12_1 in pairs(var_12_1) do
+				for iter_12_2, iter_12_3 in pairs(iter_12_1) do
+					var_12_0 = true
 
-	PostProcessingMgr.instance:setUnitPPValue(uv0[slot1], slot2)
-end
+					break
+				end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2)
-	if slot1:getMO() and slot3:isUniqueSkill(slot2) then
-		for slot8, slot9 in ipairs(FightHelper.getSideEntitys(slot3.side)) do
-			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(uv0.Bloom_invisible, false, slot9, "buff_bloom")
-		end
-	end
-end
-
-function slot0._onSkillPlayFinish(slot0, slot1, slot2)
-	if slot1:getMO() and slot3:isUniqueSkill(slot2) then
-		for slot8, slot9 in ipairs(FightHelper.getSideEntitys(slot3.side)) do
-			if slot9.buff then
-				slot9.buff:_udpateBuffVariant()
+				if var_12_0 then
+					break
+				end
 			end
 		end
 	end
+
+	local var_12_2 = var_0_2[arg_12_1]
+
+	PostProcessingMgr.instance:setUnitPPValue(var_12_2, var_12_0)
 end
 
-return slot0
+function var_0_0._onSkillPlayStart(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_1:getMO()
+
+	if var_13_0 and var_13_0:isUniqueSkill(arg_13_2) then
+		local var_13_1 = FightHelper.getSideEntitys(var_13_0.side)
+
+		for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(var_0_0.Bloom_invisible, false, iter_13_1, "buff_bloom")
+		end
+	end
+end
+
+function var_0_0._onSkillPlayFinish(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_1:getMO()
+
+	if var_14_0 and var_14_0:isUniqueSkill(arg_14_2) then
+		local var_14_1 = FightHelper.getSideEntitys(var_14_0.side)
+
+		for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+			if iter_14_1.buff then
+				iter_14_1.buff:_udpateBuffVariant()
+			end
+		end
+	end
+end
+
+return var_0_0

@@ -1,133 +1,153 @@
-module("modules.logic.room.model.backpack.RoomCritterDecomposeListModel", package.seeall)
+﻿module("modules.logic.room.model.backpack.RoomCritterDecomposeListModel", package.seeall)
 
-slot0 = class("RoomCritterDecomposeListModel", ListScrollModel)
-slot1 = 6
+local var_0_0 = class("RoomCritterDecomposeListModel", ListScrollModel)
+local var_0_1 = 6
 
-function slot0.onInit(slot0)
-	slot0:clear()
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.clearData(slot0)
-	slot0:clearCritterList()
-	slot0:setIsSortByRareAscend(false)
-	slot0:setFilterRare(CritterEnum.CritterDecomposeMinRare)
-	slot0:setFilterMature(CritterEnum.MatureFilterType.All)
+function var_0_0.clearData(arg_3_0)
+	arg_3_0:clearCritterList()
+	arg_3_0:setIsSortByRareAscend(false)
+	arg_3_0:setFilterRare(CritterEnum.CritterDecomposeMinRare)
+	arg_3_0:setFilterMature(CritterEnum.MatureFilterType.All)
 end
 
-function slot0.clearCritterList(slot0)
-	if slot0.critterList then
-		tabletool.clear(slot0.critterList)
+function var_0_0.clearCritterList(arg_4_0)
+	if arg_4_0.critterList then
+		tabletool.clear(arg_4_0.critterList)
 	else
-		slot0.critterList = {}
+		arg_4_0.critterList = {}
 	end
 
-	slot0:clearSelectedCritter()
+	arg_4_0:clearSelectedCritter()
 end
 
-function slot0.clearSelectedCritter(slot0)
-	if slot0.selectedCritterDict then
-		tabletool.clear(slot0.selectedCritterDict)
+function var_0_0.clearSelectedCritter(arg_5_0)
+	if arg_5_0.selectedCritterDict then
+		tabletool.clear(arg_5_0.selectedCritterDict)
 	else
-		slot0.selectedCritterDict = {}
+		arg_5_0.selectedCritterDict = {}
 	end
 
-	slot0.selectedCritterCount = 0
+	arg_5_0.selectedCritterCount = 0
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterDecomposeChangeSelect)
 end
 
-function slot0.updateCritterList(slot0, slot1)
-	slot0:clearCritterList()
+function var_0_0.updateCritterList(arg_6_0, arg_6_1)
+	arg_6_0:clearCritterList()
 
-	slot4 = slot0.filterMature == CritterEnum.MatureFilterType.Mature
+	local var_6_0 = CritterModel.instance:getAllCritters()
+	local var_6_1 = not arg_6_0.filterMature or arg_6_0.filterMature == CritterEnum.MatureFilterType.All
+	local var_6_2 = arg_6_0.filterMature == CritterEnum.MatureFilterType.Mature
 
-	for slot8, slot9 in ipairs(CritterModel.instance:getAllCritters()) do
-		slot10 = false
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_3 = false
 
-		if not slot0.filterMature or slot0.filterMature == CritterEnum.MatureFilterType.All then
-			slot10 = slot0:checkCanDecompose(slot9, slot1)
+		if var_6_1 then
+			var_6_3 = arg_6_0:checkCanDecompose(iter_6_1, arg_6_1)
 		else
-			slot11 = slot9:isMaturity()
+			local var_6_4 = iter_6_1:isMaturity()
 
-			if slot4 and slot11 or not slot4 and not slot11 then
-				slot10 = slot0:checkCanDecompose(slot9, slot1)
+			if var_6_2 and var_6_4 or not var_6_2 and not var_6_4 then
+				var_6_3 = arg_6_0:checkCanDecompose(iter_6_1, arg_6_1)
 			end
 		end
 
-		if slot10 then
-			table.insert(slot0.critterList, slot9)
+		if var_6_3 then
+			table.insert(arg_6_0.critterList, iter_6_1)
 		end
 	end
 
-	slot0:sortCritterList()
+	arg_6_0:sortCritterList()
 end
 
-function slot0.checkCanDecompose(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.checkCanDecompose(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = false
 
-	if slot1 and not slot1:isLock() then
-		slot5 = slot1:getId()
+	if arg_7_1 and not arg_7_1:isLock() then
+		local var_7_1 = arg_7_1:getId()
+		local var_7_2 = arg_7_1:getDefineCfg()
+		local var_7_3 = arg_7_1:isCultivating()
+		local var_7_4 = ManufactureModel.instance:getCritterWorkingBuilding(var_7_1)
+		local var_7_5 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_7_1)
 
-		if not slot1:isCultivating() and not ManufactureModel.instance:getCritterWorkingBuilding(slot5) and not RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(slot5) and slot1:getDefineCfg().rare < uv0 then
-			slot3 = (not slot2 or slot2:isPassedFilter(slot1)) and true
+		if not var_7_3 and not var_7_4 and not var_7_5 and var_7_2.rare < var_0_1 then
+			if arg_7_2 then
+				var_7_0 = arg_7_2:isPassedFilter(arg_7_1)
+			else
+				var_7_0 = true
+			end
 		end
 	end
 
-	return slot3
+	return var_7_0
 end
 
-function slot0.sortCritterList(slot0)
-	if slot0:getIsSortByRareAscend() then
-		table.sort(slot0.critterList, CritterHelper.sortByRareAscend)
+function var_0_0.sortCritterList(arg_8_0)
+	if arg_8_0:getIsSortByRareAscend() then
+		table.sort(arg_8_0.critterList, CritterHelper.sortByRareAscend)
 	else
-		table.sort(slot0.critterList, CritterHelper.sortByRareDescend)
+		table.sort(arg_8_0.critterList, CritterHelper.sortByRareDescend)
 	end
 end
 
-function slot0.refreshCritterShowList(slot0)
-	slot0:setList(slot0.critterList)
+function var_0_0.refreshCritterShowList(arg_9_0)
+	arg_9_0:setList(arg_9_0.critterList)
 end
 
-function slot0.checkDecomposeCountLimit(slot0)
-	slot1 = true
+function var_0_0.checkDecomposeCountLimit(arg_10_0)
+	local var_10_0 = true
+	local var_10_1 = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.DecomposeCountLimit)
+	local var_10_2 = tonumber(var_10_1)
 
-	if tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.DecomposeCountLimit)) and slot0.selectedCritterDict then
-		for slot10, slot11 in ipairs(CritterModel.instance:getAllCritters()) do
-			if slot11:isMaturity() then
-				slot4 = 0 + 1
+	if var_10_2 and arg_10_0.selectedCritterDict then
+		local var_10_3 = 0
+		local var_10_4 = 0
+		local var_10_5 = CritterModel.instance:getAllCritters()
 
-				if slot0.selectedCritterDict[slot11:getId()] then
-					slot5 = 0 + 1
+		for iter_10_0, iter_10_1 in ipairs(var_10_5) do
+			if iter_10_1:isMaturity() then
+				var_10_3 = var_10_3 + 1
+
+				local var_10_6 = iter_10_1:getId()
+
+				if arg_10_0.selectedCritterDict[var_10_6] then
+					var_10_4 = var_10_4 + 1
 				end
 			end
 		end
 
-		if slot3 > slot4 - slot5 then
-			slot1 = false
+		if var_10_2 > var_10_3 - var_10_4 then
+			var_10_0 = false
 		end
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.fastAddCritter(slot0)
-	tabletool.clear(slot0.selectedCritterDict)
+function var_0_0.fastAddCritter(arg_11_0)
+	tabletool.clear(arg_11_0.selectedCritterDict)
 
-	slot0.selectedCritterCount = 0
+	arg_11_0.selectedCritterCount = 0
 
-	for slot4, slot5 in ipairs(slot0.critterList) do
-		if not slot5:isLock() then
-			if slot5:getDefineCfg().rare <= slot0:getFilterRare() then
-				slot0.selectedCritterCount = slot0.selectedCritterCount + 1
-				slot0.selectedCritterDict[slot5.id] = true
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.critterList) do
+		if not iter_11_1:isLock() then
+			local var_11_0 = iter_11_1:getDefineCfg()
+
+			if arg_11_0:getFilterRare() >= var_11_0.rare then
+				arg_11_0.selectedCritterCount = arg_11_0.selectedCritterCount + 1
+				arg_11_0.selectedCritterDict[iter_11_1.id] = true
 			end
 
-			if CritterEnum.DecomposeMaxCount <= slot0.selectedCritterCount then
+			if arg_11_0.selectedCritterCount >= CritterEnum.DecomposeMaxCount then
 				break
 			end
 		end
@@ -136,94 +156,97 @@ function slot0.fastAddCritter(slot0)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterDecomposeChangeSelect)
 end
 
-function slot0.selectDecomposeCritter(slot0, slot1)
-	if CritterEnum.DecomposeMaxCount <= slot0.selectedCritterCount then
+function var_0_0.selectDecomposeCritter(arg_12_0, arg_12_1)
+	if arg_12_0.selectedCritterCount >= CritterEnum.DecomposeMaxCount then
 		return
 	end
 
-	if slot0.selectedCritterDict[slot1.id] then
+	if arg_12_0.selectedCritterDict[arg_12_1.id] then
 		return
 	end
 
-	slot0.selectedCritterDict[slot1.id] = true
-	slot0.selectedCritterCount = slot0.selectedCritterCount + 1
+	arg_12_0.selectedCritterDict[arg_12_1.id] = true
+	arg_12_0.selectedCritterCount = arg_12_0.selectedCritterCount + 1
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterDecomposeChangeSelect)
 end
 
-function slot0.unselectDecomposeCritter(slot0, slot1)
-	if not slot0.selectedCritterDict[slot1.id] then
+function var_0_0.unselectDecomposeCritter(arg_13_0, arg_13_1)
+	if not arg_13_0.selectedCritterDict[arg_13_1.id] then
 		return
 	end
 
-	slot0.selectedCritterDict[slot1.id] = nil
-	slot0.selectedCritterCount = slot0.selectedCritterCount - 1
+	arg_13_0.selectedCritterDict[arg_13_1.id] = nil
+	arg_13_0.selectedCritterCount = arg_13_0.selectedCritterCount - 1
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterDecomposeChangeSelect)
 end
 
-function slot0.isSelect(slot0, slot1)
-	return slot0.selectedCritterDict[slot1]
+function var_0_0.isSelect(arg_14_0, arg_14_1)
+	return arg_14_0.selectedCritterDict[arg_14_1]
 end
 
-function slot0.getSelectCount(slot0)
-	return slot0.selectedCritterCount
+function var_0_0.getSelectCount(arg_15_0)
+	return arg_15_0.selectedCritterCount
 end
 
-function slot0.getDecomposeCritterCount(slot0)
-	slot1 = 0
+function var_0_0.getDecomposeCritterCount(arg_16_0)
+	local var_16_0 = 0
 
-	if slot0.selectedCritterDict then
-		for slot5, slot6 in pairs(slot0.selectedCritterDict) do
-			for slot13, slot14 in ipairs(DungeonConfig.instance:getRewardItems(CritterModel.instance:getCritterMOByUid(slot5):getDefineCfg().banishBonus)) do
-				slot1 = slot1 + slot14[3]
+	if arg_16_0.selectedCritterDict then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0.selectedCritterDict) do
+			local var_16_1 = CritterModel.instance:getCritterMOByUid(iter_16_0):getDefineCfg()
+			local var_16_2 = DungeonConfig.instance:getRewardItems(var_16_1.banishBonus)
+
+			for iter_16_2, iter_16_3 in ipairs(var_16_2) do
+				var_16_0 = var_16_0 + iter_16_3[3]
 			end
 		end
 	end
 
-	return slot1
+	return var_16_0
 end
 
-function slot0.getSelectUIds(slot0)
-	slot1 = {}
+function var_0_0.getSelectUIds(arg_17_0)
+	local var_17_0 = {}
 
-	for slot5, slot6 in pairs(slot0.selectedCritterDict) do
-		slot1[#slot1 + 1] = slot5
+	for iter_17_0, iter_17_1 in pairs(arg_17_0.selectedCritterDict) do
+		var_17_0[#var_17_0 + 1] = iter_17_0
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0.setFilterMature(slot0, slot1)
-	slot0.filterMature = slot1
+function var_0_0.setFilterMature(arg_18_0, arg_18_1)
+	arg_18_0.filterMature = arg_18_1
 end
 
-function slot0.setFilterRare(slot0, slot1)
-	slot0.filterRare = slot1
+function var_0_0.setFilterRare(arg_19_0, arg_19_1)
+	arg_19_0.filterRare = arg_19_1
 end
 
-function slot0.setIsSortByRareAscend(slot0, slot1)
-	slot0._rareAscend = slot1
+function var_0_0.setIsSortByRareAscend(arg_20_0, arg_20_1)
+	arg_20_0._rareAscend = arg_20_1
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterChangeSort)
 end
 
-function slot0.getFilterMature(slot0)
-	return slot0.filterMature or CritterEnum.MatureFilterType.All
+function var_0_0.getFilterMature(arg_21_0)
+	return arg_21_0.filterMature or CritterEnum.MatureFilterType.All
 end
 
-function slot0.getFilterRare(slot0)
-	return slot0.filterRare or CritterEnum.CritterDecomposeMinRare
+function var_0_0.getFilterRare(arg_22_0)
+	return arg_22_0.filterRare or CritterEnum.CritterDecomposeMinRare
 end
 
-function slot0.getIsSortByRareAscend(slot0)
-	return slot0._rareAscend
+function var_0_0.getIsSortByRareAscend(arg_23_0)
+	return arg_23_0._rareAscend
 end
 
-function slot0.isEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isEmpty(arg_24_0)
+	return arg_24_0:getCount() <= 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

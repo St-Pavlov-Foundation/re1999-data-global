@@ -1,33 +1,39 @@
-module("modules.logic.resonance.controller.HeroResonanceController", package.seeall)
+﻿module("modules.logic.resonance.controller.HeroResonanceController", package.seeall)
 
-slot0 = class("HeroResonanceController", BaseController)
+local var_0_0 = class("HeroResonanceController", BaseController)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.statShareCode(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0.statShareCode(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = {}
 
-	if slot1 and slot1.talentCubeInfos and slot1.talentCubeInfos.data_list then
-		for slot8, slot9 in ipairs(slot1.talentCubeInfos.data_list) do
-			slot10 = slot9.cubeId
+	if arg_2_1 and arg_2_1.talentCubeInfos and arg_2_1.talentCubeInfos.data_list then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_1.talentCubeInfos.data_list) do
+			local var_2_1 = iter_2_1.cubeId
+			local var_2_2 = arg_2_1.talentCubeInfos.own_main_cube_id
 
-			if slot9.cubeId == slot1.talentCubeInfos.own_main_cube_id then
-				slot10 = slot1:getHeroUseStyleCubeId()
+			if iter_2_1.cubeId == var_2_2 then
+				var_2_1 = arg_2_1:getHeroUseStyleCubeId()
 			end
 
-			table.insert(slot4, slot10)
+			table.insert(var_2_0, var_2_1)
 		end
 	end
 
-	StatController.instance:track(slot2 and StatEnum.EventName.TalentUseRuenCode or StatEnum.EventName.TalentCopyRuenCode, {
-		[StatEnum.EventProperties.TalentShareCode] = slot3 or HeroResonaceModel.instance:getShareCode() or "",
-		[StatEnum.EventProperties.HeroId] = slot1.heroId,
-		[StatEnum.EventProperties.HeroName] = slot1.config.name,
-		[StatEnum.EventProperties.TalentRuensStateGroup] = slot4
+	arg_2_3 = arg_2_3 or HeroResonaceModel.instance:getShareCode() or ""
+
+	local var_2_3 = arg_2_2 and StatEnum.EventName.TalentUseRuenCode or StatEnum.EventName.TalentCopyRuenCode
+
+	StatController.instance:track(var_2_3, {
+		[StatEnum.EventProperties.TalentShareCode] = arg_2_3,
+		[StatEnum.EventProperties.HeroId] = arg_2_1.heroId,
+		[StatEnum.EventProperties.HeroName] = arg_2_1.config.name,
+		[StatEnum.EventProperties.TalentRuensStateGroup] = var_2_0
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

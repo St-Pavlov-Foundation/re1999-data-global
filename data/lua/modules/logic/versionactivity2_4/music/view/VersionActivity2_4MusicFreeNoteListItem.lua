@@ -1,80 +1,87 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeNoteListItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeNoteListItem", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeNoteListItem", ListScrollCellExtend)
+local var_0_0 = class("VersionActivity2_4MusicFreeNoteListItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._btnchangebtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_changebtn")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#btn_changebtn/#image_icon")
-	slot0._imagenullicon = gohelper.findChildImage(slot0.viewGO, "#btn_changebtn/#image_nullicon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#btn_changebtn/#txt_name")
-	slot0._scrollmusiclist1 = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_musiclist1")
-	slot0._goimageFrame = gohelper.findChild(slot0.viewGO, "#scroll_musiclist1/viewport/#go_image_Frame")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_musiclist1/viewport/#go_content")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#scroll_musiclist1/#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnchangebtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_changebtn")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_changebtn/#image_icon")
+	arg_1_0._imagenullicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_changebtn/#image_nullicon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#btn_changebtn/#txt_name")
+	arg_1_0._scrollmusiclist1 = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_musiclist1")
+	arg_1_0._goimageFrame = gohelper.findChild(arg_1_0.viewGO, "#scroll_musiclist1/viewport/#go_image_Frame")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_musiclist1/viewport/#go_content")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#scroll_musiclist1/#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnchangebtn:AddClickListener(slot0._btnchangebtnOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnchangebtn:AddClickListener(arg_2_0._btnchangebtnOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnchangebtn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnchangebtn:RemoveClickListener()
 end
 
-function slot0._btnchangebtnOnClick(slot0)
+function var_0_0._btnchangebtnOnClick(arg_4_0)
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeInstrumentSetView()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.initNoteItemList(slot0, slot1, slot2)
-	slot0._addNoteItem = slot1
-	slot0._noteView = slot2
+function var_0_0.initNoteItemList(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._addNoteItem = arg_8_1
+	arg_8_0._noteView = arg_8_2
 
-	for slot6 = 1, 7 do
-		slot0._addNoteItem(slot0._noteView, slot0._gocontent):onUpdateMO(slot6, slot0)
+	for iter_8_0 = 1, 7 do
+		arg_8_0._addNoteItem(arg_8_0._noteView, arg_8_0._gocontent):onUpdateMO(iter_8_0, arg_8_0)
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._instrumentId = slot1
-	slot0._instrumentConfig = slot0._instrumentId and lua_activity179_instrument.configDict[slot0._instrumentId] or nil
-	slot0._txtname.text = slot0._instrumentConfig and slot0._instrumentConfig.name or luaLang("MusicFreeNoInstrument")
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._instrumentId = arg_9_1
+	arg_9_0._instrumentConfig = arg_9_0._instrumentId and lua_activity179_instrument.configDict[arg_9_0._instrumentId] or nil
+	arg_9_0._txtname.text = arg_9_0._instrumentConfig and arg_9_0._instrumentConfig.name or luaLang("MusicFreeNoInstrument")
 
-	gohelper.setActive(slot0._gocontent, slot0._instrumentConfig ~= nil)
-	gohelper.setActive(slot0._imageicon, slot0._instrumentConfig ~= nil)
-	gohelper.setActive(slot0._goempty, slot0._instrumentConfig == nil)
-	gohelper.setActive(slot0._goimageFrame, slot0._instrumentConfig ~= nil)
-	gohelper.setActive(slot0._imagenullicon, slot0._instrumentConfig == nil)
+	gohelper.setActive(arg_9_0._gocontent, arg_9_0._instrumentConfig ~= nil)
+	gohelper.setActive(arg_9_0._imageicon, arg_9_0._instrumentConfig ~= nil)
+	gohelper.setActive(arg_9_0._goempty, arg_9_0._instrumentConfig == nil)
+	gohelper.setActive(arg_9_0._goimageFrame, arg_9_0._instrumentConfig ~= nil)
+	gohelper.setActive(arg_9_0._imagenullicon, arg_9_0._instrumentConfig == nil)
 
-	if slot0._instrumentConfig then
-		UISpriteSetMgr.instance:setMusicSprite(slot0._imageicon, "v2a4_bakaluoer_freeinstrument_" .. slot0._instrumentConfig.icon)
+	if arg_9_0._instrumentConfig then
+		UISpriteSetMgr.instance:setMusicSprite(arg_9_0._imageicon, "v2a4_bakaluoer_freeinstrument_" .. arg_9_0._instrumentConfig.icon)
 	end
 end
 
-function slot0.getNoteAudioId(slot0, slot1)
-	if slot0._instrumentId == 0 then
+function var_0_0.getNoteAudioId(arg_10_0, arg_10_1)
+	if arg_10_0._instrumentId == 0 then
 		return
 	end
 
-	return Activity179Config.instance:getNoteConfig(slot0._instrumentId, slot1) and slot2.resource
+	local var_10_0 = Activity179Config.instance:getNoteConfig(arg_10_0._instrumentId, arg_10_1)
+
+	return var_10_0 and var_10_0.resource
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,37 +1,37 @@
-module("modules.logic.rouge.map.work.WaitRougeStoryDoneWork", package.seeall)
+﻿module("modules.logic.rouge.map.work.WaitRougeStoryDoneWork", package.seeall)
 
-slot0 = class("WaitRougeStoryDoneWork", BaseWork)
-slot1 = 9.99
-slot2 = "starWaitRougeStoryDoneWorktBlock"
+local var_0_0 = class("WaitRougeStoryDoneWork", BaseWork)
+local var_0_1 = 9.99
+local var_0_2 = "starWaitRougeStoryDoneWorktBlock"
 
-function slot0._onStoryStart(slot0, slot1)
-	if slot0.storyId ~= slot1 then
+function var_0_0._onStoryStart(arg_1_0, arg_1_1)
+	if arg_1_0.storyId ~= arg_1_1 then
 		return
 	end
 
-	UIBlockHelper.instance:endBlock(uv0)
+	UIBlockHelper.instance:endBlock(var_0_2)
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0.storyId = slot1
+function var_0_0.ctor(arg_2_0, arg_2_1)
+	arg_2_0.storyId = arg_2_1
 end
 
-function slot0.onStart(slot0)
-	if not slot0.storyId or slot0.storyId == 0 then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_3_0)
+	if not arg_3_0.storyId or arg_3_0.storyId == 0 then
+		return arg_3_0:onDone(true)
 	end
 
-	StoryController.instance:registerCallback(StoryEvent.Start, slot0._onStoryStart, slot0)
-	UIBlockHelper.instance:startBlock(uv0, uv1)
-	StoryController.instance:playStory(slot0.storyId, nil, slot0.onStoryDone, slot0)
+	StoryController.instance:registerCallback(StoryEvent.Start, arg_3_0._onStoryStart, arg_3_0)
+	UIBlockHelper.instance:startBlock(var_0_2, var_0_1)
+	StoryController.instance:playStory(arg_3_0.storyId, nil, arg_3_0.onStoryDone, arg_3_0)
 end
 
-function slot0.onStoryDone(slot0)
-	slot0:onDone(true)
+function var_0_0.onStoryDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.Start, slot0._onStoryStart, slot0)
+function var_0_0.clearWork(arg_5_0)
+	StoryController.instance:unregisterCallback(StoryEvent.Start, arg_5_0._onStoryStart, arg_5_0)
 end
 
-return slot0
+return var_0_0

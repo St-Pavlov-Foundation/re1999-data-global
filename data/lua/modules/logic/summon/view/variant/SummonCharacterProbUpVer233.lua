@@ -1,39 +1,40 @@
-module("modules.logic.summon.view.variant.SummonCharacterProbUpVer233", package.seeall)
+﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer233", package.seeall)
 
-slot0 = class("SummonCharacterProbUpVer233", SummonMainCharacterProbUp)
-slot0.preloadList = {
+local var_0_0 = class("SummonCharacterProbUpVer233", SummonMainCharacterProbUp)
+
+var_0_0.preloadList = {
 	"singlebg/summon/heroversion_2_3/dudugu/v2a3_dudugu_fullbg.png",
 	"singlebg/summon/heroversion_2_3/dudugu/v2a3_dudugu_role.png",
 	"singlebg/summon/heroversion_2_3/dudugu/v2a3_dudugu_dec1.png",
 	"singlebg/summon/heroversion_2_3/dudugu/v2a3_dudugu_dec2.png"
 }
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_bg")
-	slot0._simagerole1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node1/#simage_role1")
-	slot0._simagefrontbg1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_frontbg1")
-	slot0._simagefrontbg2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_frontbg2")
-	slot0._simagerole3 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node2/#simage_role3")
-	slot0._simagerole2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node2/#simage_role2")
-	slot0._charaterItemCount = 1
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
+	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_role1")
+	arg_1_0._simagefrontbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_frontbg1")
+	arg_1_0._simagefrontbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_frontbg2")
+	arg_1_0._simagerole3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node2/#simage_role3")
+	arg_1_0._simagerole2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node2/#simage_role2")
+	arg_1_0._charaterItemCount = 1
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.refreshSingleImage(slot0)
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function var_0_0.refreshSingleImage(arg_2_0)
+	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function slot0.unloadSingleImage(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagerole1:UnLoadImage()
-	slot0._simagefrontbg1:UnLoadImage()
-	slot0._simagefrontbg2:UnLoadImage()
-	slot0._simagerole3:UnLoadImage()
-	slot0._simagerole2:UnLoadImage()
-	slot0._simageline:UnLoadImage()
-	slot0._simagecurrency1:UnLoadImage()
-	slot0._simagecurrency10:UnLoadImage()
+function var_0_0.unloadSingleImage(arg_3_0)
+	arg_3_0._simagebg:UnLoadImage()
+	arg_3_0._simagerole1:UnLoadImage()
+	arg_3_0._simagefrontbg1:UnLoadImage()
+	arg_3_0._simagefrontbg2:UnLoadImage()
+	arg_3_0._simagerole3:UnLoadImage()
+	arg_3_0._simagerole2:UnLoadImage()
+	arg_3_0._simageline:UnLoadImage()
+	arg_3_0._simagecurrency1:UnLoadImage()
+	arg_3_0._simagecurrency10:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,321 +1,355 @@
-module("modules.logic.versionactivity1_4.act132.view.Activity132CollectView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.view.Activity132CollectView", package.seeall)
 
-slot0 = class("Activity132CollectView", BaseView)
+local var_0_0 = class("Activity132CollectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goRoot = gohelper.findChild(slot0.viewGO, "root")
-	slot0.rootRectTransform = slot0.goRoot.transform
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "root/Scroll View/Viewport/Content")
-	slot0._goMask2d = gohelper.findChild(slot0._goContent, "bg")
-	slot0._gobg = gohelper.findChild(slot0._goContent, "bg/#simage_bg")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0._goContent, "bg/#simage_bg")
-	slot0._simagebgfull = gohelper.findChildSingleImage(slot0._goContent, "bg/bgfull")
-	slot0._bgFullCanvasGroup = gohelper.findChildComponent(slot0._goContent, "bg/bgfull", gohelper.Type_CanvasGroup)
-	slot0._gobgmask = gohelper.findChild(slot0._goContent, "#simagebg_mask")
-	slot0._simagebgmask = gohelper.findChildSingleImage(slot0._goContent, "#simagebg_mask")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "root/canvas/#simage_mask")
-	slot0._goChapterItem = gohelper.findChild(slot0.viewGO, "root/canvas/line/#scroll_chapterlist/viewport/content/#go_chapteritem")
-	slot0._goClueItem = gohelper.findChild(slot0._goContent, "#go_clues/#go_clueitem")
-	slot0._goMask = gohelper.findChild(slot0._goContent, "#go_mask")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goRoot = gohelper.findChild(arg_1_0.viewGO, "root")
+	arg_1_0.rootRectTransform = arg_1_0.goRoot.transform
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "root/Scroll View/Viewport/Content")
+	arg_1_0._goMask2d = gohelper.findChild(arg_1_0._goContent, "bg")
+	arg_1_0._gobg = gohelper.findChild(arg_1_0._goContent, "bg/#simage_bg")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0._goContent, "bg/#simage_bg")
+	arg_1_0._simagebgfull = gohelper.findChildSingleImage(arg_1_0._goContent, "bg/bgfull")
+	arg_1_0._bgFullCanvasGroup = gohelper.findChildComponent(arg_1_0._goContent, "bg/bgfull", gohelper.Type_CanvasGroup)
+	arg_1_0._gobgmask = gohelper.findChild(arg_1_0._goContent, "#simagebg_mask")
+	arg_1_0._simagebgmask = gohelper.findChildSingleImage(arg_1_0._goContent, "#simagebg_mask")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/canvas/#simage_mask")
+	arg_1_0._goChapterItem = gohelper.findChild(arg_1_0.viewGO, "root/canvas/line/#scroll_chapterlist/viewport/content/#go_chapteritem")
+	arg_1_0._goClueItem = gohelper.findChild(arg_1_0._goContent, "#go_clues/#go_clueitem")
+	arg_1_0._goMask = gohelper.findChild(arg_1_0._goContent, "#go_mask")
 
-	gohelper.setActive(slot0._goChapterItem, false)
+	gohelper.setActive(arg_1_0._goChapterItem, false)
 
-	slot0.chapterItemList = {}
-	slot0.clueItemList = {}
-	slot0.tweenDuration = 0.6
-	slot0.goSelect = gohelper.findChild(slot0.viewGO, "image_select")
-	slot0.goCanvas = gohelper.findChild(slot0.viewGO, "root/canvas")
-	slot0.selectPosX, slot0.selectPosY, slot0.selectPosZ = transformhelper.getPos(slot0.goSelect.transform)
+	arg_1_0.chapterItemList = {}
+	arg_1_0.clueItemList = {}
+	arg_1_0.tweenDuration = 0.6
+	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "image_select")
+	arg_1_0.goCanvas = gohelper.findChild(arg_1_0.viewGO, "root/canvas")
+	arg_1_0.selectPosX, arg_1_0.selectPosY, arg_1_0.selectPosZ = transformhelper.getPos(arg_1_0.goSelect.transform)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Activity132Controller.instance, Activity132Event.OnChangeCollect, slot0.onChangeCollect, slot0)
-	slot0:addEventCb(Activity132Controller.instance, Activity132Event.OnForceClueItem, slot0.onForceClueItem, slot0)
-	slot0:addEventCb(Activity132Controller.instance, Activity132Event.OnUpdateInfo, slot0.onUpdateInfo, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Activity132Controller.instance, Activity132Event.OnChangeCollect, arg_2_0.onChangeCollect, arg_2_0)
+	arg_2_0:addEventCb(Activity132Controller.instance, Activity132Event.OnForceClueItem, arg_2_0.onForceClueItem, arg_2_0)
+	arg_2_0:addEventCb(Activity132Controller.instance, Activity132Event.OnUpdateInfo, arg_2_0.onUpdateInfo, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(Activity132Controller.instance, Activity132Event.OnChangeCollect, slot0.onChangeCollect, slot0)
-	slot0:removeEventCb(Activity132Controller.instance, Activity132Event.OnForceClueItem, slot0.onForceClueItem, slot0)
-	slot0:removeEventCb(Activity132Controller.instance, Activity132Event.OnUpdateInfo, slot0.onUpdateInfo, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Activity132Controller.instance, Activity132Event.OnChangeCollect, arg_3_0.onChangeCollect, arg_3_0)
+	arg_3_0:removeEventCb(Activity132Controller.instance, Activity132Event.OnForceClueItem, arg_3_0.onForceClueItem, arg_3_0)
+	arg_3_0:removeEventCb(Activity132Controller.instance, Activity132Event.OnUpdateInfo, arg_3_0.onUpdateInfo, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagemask:LoadImage("singlebg/v1a4_collect_singlebg/v1a4_collect_shadow.png")
-	slot0._simagebgmask:LoadImage("singlebg/v1a4_collect_singlebg/v1a4_collect_img_fullmask.png")
-	slot0._simagebgfull:LoadImage("singlebg/v1a4_collect_singlebg/seasonsecretlandentrance_mask.png")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagemask:LoadImage("singlebg/v1a4_collect_singlebg/v1a4_collect_shadow.png")
+	arg_4_0._simagebgmask:LoadImage("singlebg/v1a4_collect_singlebg/v1a4_collect_img_fullmask.png")
+	arg_4_0._simagebgfull:LoadImage("singlebg/v1a4_collect_singlebg/seasonsecretlandentrance_mask.png")
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0.actId = arg_5_0.viewParam.actId
 
-	ActivityEnterMgr.instance:enterActivity(slot0.actId)
+	ActivityEnterMgr.instance:enterActivity(arg_5_0.actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		slot0.actId
+		arg_5_0.actId
 	})
-	slot0:refreshChapterList()
+	arg_5_0:refreshChapterList()
 end
 
-function slot0.onUpdateInfo(slot0)
-	slot0:refreshChapterList()
+function var_0_0.onUpdateInfo(arg_6_0)
+	arg_6_0:refreshChapterList()
 end
 
-function slot0.onChangeCollect(slot0)
-	if not Activity132Model.instance:getActMoById(slot0.actId) then
+function var_0_0.onChangeCollect(arg_7_0)
+	local var_7_0 = Activity132Model.instance:getActMoById(arg_7_0.actId)
+
+	if not var_7_0 then
 		return
 	end
 
-	slot2 = slot1:getSelectCollectId()
+	local var_7_1 = var_7_0:getSelectCollectId()
 
-	if slot0.chapterItemList then
-		for slot6, slot7 in pairs(slot0.chapterItemList) do
-			slot7:setSelectId(slot2)
+	if arg_7_0.chapterItemList then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0.chapterItemList) do
+			iter_7_1:setSelectId(var_7_1)
 		end
 	end
 
-	slot0:setSelect(slot2)
+	arg_7_0:setSelect(var_7_1)
 end
 
-function slot0.refreshChapterList(slot0)
-	if not Activity132Model.instance:getActMoById(slot0.actId) then
+function var_0_0.refreshChapterList(arg_8_0)
+	local var_8_0 = Activity132Model.instance:getActMoById(arg_8_0.actId)
+
+	if not var_8_0 then
 		return
 	end
 
-	slot2 = slot1:getSelectCollectId()
-	slot7 = #slot0.chapterItemList
+	local var_8_1 = var_8_0:getSelectCollectId()
+	local var_8_2 = var_8_0:getCollectList()
 
-	for slot7 = 1, math.max(#slot1:getCollectList(), slot7) do
-		if not slot0.chapterItemList[slot7] then
-			slot0.chapterItemList[slot7] = slot0:createChapterItem(slot7)
+	for iter_8_0 = 1, math.max(#var_8_2, #arg_8_0.chapterItemList) do
+		local var_8_3 = arg_8_0.chapterItemList[iter_8_0]
+
+		if not var_8_3 then
+			var_8_3 = arg_8_0:createChapterItem(iter_8_0)
+			arg_8_0.chapterItemList[iter_8_0] = var_8_3
 		end
 
-		if slot2 == nil then
-			slot2 = slot3[slot7] and slot3[slot7].collectId
+		if var_8_1 == nil then
+			var_8_1 = var_8_2[iter_8_0] and var_8_2[iter_8_0].collectId
 		end
 
-		slot8:setData(slot3[slot7], slot2)
+		var_8_3:setData(var_8_2[iter_8_0], var_8_1)
 	end
 
-	slot1:setSelectCollectId(slot2)
-	slot0:setSelect(slot2)
+	var_8_0:setSelectCollectId(var_8_1)
+	arg_8_0:setSelect(var_8_1)
 end
 
-function slot0.setSelect(slot0, slot1)
+function var_0_0.setSelect(arg_9_0, arg_9_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mail_open_1)
 
-	if Activity132Config.instance:getCollectConfig(slot0.actId, slot1) then
-		slot0._simagebg:LoadImage(slot2.bg)
+	local var_9_0 = Activity132Config.instance:getCollectConfig(arg_9_0.actId, arg_9_1)
+
+	if var_9_0 then
+		arg_9_0._simagebg:LoadImage(var_9_0.bg)
 	end
 
-	slot0:refreshClueList(slot1)
+	arg_9_0:refreshClueList(arg_9_1)
 end
 
-function slot0.createChapterItem(slot0, slot1)
-	return Activity132CollectItem.New(gohelper.cloneInPlace(slot0._goChapterItem, string.format("item%s", slot1)))
+function var_0_0.createChapterItem(arg_10_0, arg_10_1)
+	local var_10_0 = gohelper.cloneInPlace(arg_10_0._goChapterItem, string.format("item%s", arg_10_1))
+
+	return Activity132CollectItem.New(var_10_0)
 end
 
-function slot0.refreshClueList(slot0, slot1)
-	slot0.curCollectId = slot1
+function var_0_0.refreshClueList(arg_11_0, arg_11_1)
+	arg_11_0.curCollectId = arg_11_1
 
-	if not Activity132Model.instance:getActMoById(slot0.actId) then
+	local var_11_0 = Activity132Model.instance:getActMoById(arg_11_0.actId)
+
+	if not var_11_0 then
 		return
 	end
 
-	slot3, slot4 = recthelper.getAnchor(slot0._goContent.transform)
+	local var_11_1, var_11_2 = recthelper.getAnchor(arg_11_0._goContent.transform)
 
-	recthelper.setAnchor(slot0._goContent.transform, 0, 0)
+	recthelper.setAnchor(arg_11_0._goContent.transform, 0, 0)
 
-	slot6 = slot2:getCollectMo(slot1) and slot5:getClueList() or {}
-	slot10 = #slot0.clueItemList
+	local var_11_3 = var_11_0:getCollectMo(arg_11_1)
+	local var_11_4 = var_11_3 and var_11_3:getClueList() or {}
 
-	for slot10 = 1, math.max(#slot6, slot10) do
-		if not slot0.clueItemList[slot10] then
-			slot0.clueItemList[slot10] = slot0:createClueItem(slot10)
+	for iter_11_0 = 1, math.max(#var_11_4, #arg_11_0.clueItemList) do
+		local var_11_5 = arg_11_0.clueItemList[iter_11_0]
+
+		if not var_11_5 then
+			var_11_5 = arg_11_0:createClueItem(iter_11_0)
+			arg_11_0.clueItemList[iter_11_0] = var_11_5
 		end
 
-		slot11:setData(slot6[slot10])
+		var_11_5:setData(var_11_4[iter_11_0])
 	end
 
-	slot0:refreshMask()
-	recthelper.setAnchor(slot0._goContent.transform, slot3, slot4)
+	arg_11_0:refreshMask()
+	recthelper.setAnchor(arg_11_0._goContent.transform, var_11_1, var_11_2)
 end
 
-function slot0.refreshMask(slot0)
-	slot1, slot2 = nil
+function var_0_0.refreshMask(arg_12_0)
+	local var_12_0
+	local var_12_1
 
-	for slot6, slot7 in ipairs(slot0.clueItemList) do
-		if slot7.isVisible then
-			if slot1 then
-				gohelper.addChildPosStay(slot1, slot7:getMask())
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.clueItemList) do
+		if iter_12_1.isVisible then
+			local var_12_2 = iter_12_1:getMask()
+
+			if var_12_0 then
+				gohelper.addChildPosStay(var_12_0, var_12_2)
 			else
-				gohelper.addChildPosStay(slot0._goMask, slot2)
+				gohelper.addChildPosStay(arg_12_0._goMask, var_12_2)
 			end
 
-			slot1 = slot2
+			var_12_0 = var_12_2
 		end
 	end
 
-	gohelper.addChild(slot0._goMask, slot0._gobgmask)
-	recthelper.setAnchor(slot0._gobgmask.transform, 0, 0)
-	transformhelper.setLocalScale(slot0._gobgmask.transform, 1.5, 1.5, 1)
+	gohelper.addChild(arg_12_0._goMask, arg_12_0._gobgmask)
+	recthelper.setAnchor(arg_12_0._gobgmask.transform, 0, 0)
+	transformhelper.setLocalScale(arg_12_0._gobgmask.transform, 1.5, 1.5, 1)
 
-	if slot1 then
-		gohelper.addChildPosStay(slot1, slot0._gobgmask)
+	if var_12_0 then
+		gohelper.addChildPosStay(var_12_0, arg_12_0._gobgmask)
 	end
 end
 
-function slot0.createClueItem(slot0, slot1)
-	return Activity132ClueItem.New(gohelper.cloneInPlace(slot0._goClueItem, string.format("item%s", slot1)), slot1)
+function var_0_0.createClueItem(arg_13_0, arg_13_1)
+	local var_13_0 = gohelper.cloneInPlace(arg_13_0._goClueItem, string.format("item%s", arg_13_1))
+
+	return Activity132ClueItem.New(var_13_0, arg_13_1)
 end
 
-function slot0.onForceClueItem(slot0, slot1)
-	slot0.selectIndex = slot1
+function var_0_0.onForceClueItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1 and arg_14_0.clueItemList[arg_14_1]
+
+	arg_14_0.selectIndex = arg_14_1
 
 	UIBlockMgr.instance:startBlock("Activity132CollectView")
 
-	if slot1 and slot0.clueItemList[slot1] and slot2.data then
+	if var_14_0 and var_14_0.data then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
 
-		slot3 = slot2.data.activityId
+		local var_14_1 = var_14_0.data.activityId
+		local var_14_2 = var_14_0.data.clueId
+		local var_14_3 = Activity132Model.instance:getSelectCollectId(var_14_1)
 
 		ViewMgr.instance:openView(ViewName.Activity132CollectDetailView, {
-			actId = slot3,
-			clueId = slot2.data.clueId,
-			collectId = Activity132Model.instance:getSelectCollectId(slot3)
+			actId = var_14_1,
+			clueId = var_14_2,
+			collectId = var_14_3
 		})
 
-		slot6, slot7, slot8 = slot2:getPos()
+		local var_14_4, var_14_5, var_14_6 = var_14_0:getPos()
+		local var_14_7 = arg_14_0.selectPosX - var_14_4 * 2
+		local var_14_8 = arg_14_0.selectPosY - var_14_5 * 2
+		local var_14_9 = arg_14_0.selectPosZ - var_14_6 * 2
 
-		slot0:playMoveTween(slot0.selectPosX - slot6 * 2, slot0.selectPosY - slot7 * 2, slot0.selectPosZ - slot8 * 2)
-		slot0:playScaleTween(2)
-		slot0:playDoFade(0, 0.2)
-		slot0:playBgFullFade(1)
+		arg_14_0:playMoveTween(var_14_7, var_14_8, var_14_9)
+		arg_14_0:playScaleTween(2)
+		arg_14_0:playDoFade(0, 0.2)
+		arg_14_0:playBgFullFade(1)
 	else
-		slot0:playScaleTween(1)
-		slot0:playMoveTween()
-		slot0:playDoFade(1, 0.1)
-		slot0:playBgFullFade(0)
+		arg_14_0:playScaleTween(1)
+		arg_14_0:playMoveTween()
+		arg_14_0:playDoFade(1, 0.1)
+		arg_14_0:playBgFullFade(0)
 	end
 end
 
-function slot0.playScaleTween(slot0, slot1)
-	if slot0._scaleTweenId then
-		ZProj.TweenHelper.KillById(slot0._scaleTweenId)
+function var_0_0.playScaleTween(arg_15_0, arg_15_1)
+	if arg_15_0._scaleTweenId then
+		ZProj.TweenHelper.KillById(arg_15_0._scaleTweenId)
 
-		slot0._scaleTweenId = nil
+		arg_15_0._scaleTweenId = nil
 	end
 
-	slot0._scaleTweenId = ZProj.TweenHelper.DOScale(slot0.rootRectTransform, slot1, slot1, slot1, slot0.tweenDuration, slot0.onTweenFinish, slot0, nil, EaseType.OutQuart)
+	arg_15_0._scaleTweenId = ZProj.TweenHelper.DOScale(arg_15_0.rootRectTransform, arg_15_1, arg_15_1, arg_15_1, arg_15_0.tweenDuration, arg_15_0.onTweenFinish, arg_15_0, nil, EaseType.OutQuart)
 end
 
-function slot0.onTweenFinish(slot0)
+function var_0_0.onTweenFinish(arg_16_0)
 	UIBlockMgr.instance:endBlock("Activity132CollectView")
 end
 
-function slot0.playMoveTween(slot0, slot1, slot2, slot3)
-	if slot0._moveTweenId then
-		ZProj.TweenHelper.KillById(slot0._moveTweenId)
+function var_0_0.playMoveTween(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_0._moveTweenId then
+		ZProj.TweenHelper.KillById(arg_17_0._moveTweenId)
 
-		slot0._moveTweenId = nil
+		arg_17_0._moveTweenId = nil
 	end
 
-	if slot1 and slot2 and slot3 then
-		slot5 = recthelper.rectToRelativeAnchorPos(Vector3.New(slot1, slot2, slot3), slot0.viewGO.transform)
-		slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(slot0.rootRectTransform, slot5.x - recthelper.getAnchorX(slot0._goContent.transform) * 2, slot5.y, slot0.tweenDuration, nil, , , EaseType.OutQuart)
+	if arg_17_1 and arg_17_2 and arg_17_3 then
+		local var_17_0 = recthelper.getAnchorX(arg_17_0._goContent.transform)
+		local var_17_1 = recthelper.rectToRelativeAnchorPos(Vector3.New(arg_17_1, arg_17_2, arg_17_3), arg_17_0.viewGO.transform)
+		local var_17_2 = var_17_1.x - var_17_0 * 2
+		local var_17_3 = var_17_1.y
+
+		arg_17_0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_17_0.rootRectTransform, var_17_2, var_17_3, arg_17_0.tweenDuration, nil, nil, nil, EaseType.OutQuart)
 	else
-		slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(slot0.rootRectTransform, 0, 0, slot0.tweenDuration, nil, , , EaseType.OutQuart)
+		arg_17_0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_17_0.rootRectTransform, 0, 0, arg_17_0.tweenDuration, nil, nil, nil, EaseType.OutQuart)
 	end
 end
 
-function slot0.playDoFade(slot0, slot1, slot2)
-	if slot0._fadeTweenId then
-		ZProj.TweenHelper.KillById(slot0._fadeTweenId)
+function var_0_0.playDoFade(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_0._fadeTweenId then
+		ZProj.TweenHelper.KillById(arg_18_0._fadeTweenId)
 
-		slot0._fadeTweenId = nil
+		arg_18_0._fadeTweenId = nil
 	end
 
-	slot8 = slot1
-	slot9 = slot2
-	slot0._fadeTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(slot0.goCanvas, slot0.goCanvas:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha, slot8, slot9, nil, , , EaseType.OutQuart)
+	local var_18_0 = arg_18_0.goCanvas:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha
 
-	for slot8, slot9 in ipairs(slot0.clueItemList) do
-		if slot0.selectIndex then
-			slot9:resetMask()
-			slot9:setActive(slot8 == slot0.selectIndex)
-			slot9:setRootVisible(false)
+	arg_18_0._fadeTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_18_0.goCanvas, var_18_0, arg_18_1, arg_18_2, nil, nil, nil, EaseType.OutQuart)
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.clueItemList) do
+		if arg_18_0.selectIndex then
+			iter_18_1:resetMask()
+			iter_18_1:setActive(iter_18_0 == arg_18_0.selectIndex)
+			iter_18_1:setRootVisible(false)
 		else
-			slot9:resetMask()
-			slot9:setActive(slot9.data ~= nil)
-			slot9:setRootVisible(true)
+			iter_18_1:resetMask()
+			iter_18_1:setActive(iter_18_1.data ~= nil)
+			iter_18_1:setRootVisible(true)
 		end
 	end
 
-	slot0:refreshMask()
+	arg_18_0:refreshMask()
 end
 
-function slot0.playBgFullFade(slot0, slot1)
-	if slot0._fadeTweenId1 then
-		ZProj.TweenHelper.KillById(slot0._fadeTweenId1)
+function var_0_0.playBgFullFade(arg_19_0, arg_19_1)
+	if arg_19_0._fadeTweenId1 then
+		ZProj.TweenHelper.KillById(arg_19_0._fadeTweenId1)
 
-		slot0._fadeTweenId1 = nil
+		arg_19_0._fadeTweenId1 = nil
 	end
 
-	slot0._fadeTweenId1 = ZProj.TweenHelper.DOFadeCanvasGroup(slot0._bgFullCanvasGroup.gameObject, slot0._bgFullCanvasGroup.alpha, slot1, slot0.tweenDuration, nil, , , EaseType.OutQuart)
+	local var_19_0 = arg_19_0._bgFullCanvasGroup.alpha
+
+	arg_19_0._fadeTweenId1 = ZProj.TweenHelper.DOFadeCanvasGroup(arg_19_0._bgFullCanvasGroup.gameObject, var_19_0, arg_19_1, arg_19_0.tweenDuration, nil, nil, nil, EaseType.OutQuart)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
 	UIBlockMgr.instance:endBlock("Activity132CollectView")
 end
 
-function slot0.onDestroyView(slot0)
-	Activity132Model.instance:setSelectCollectId(slot0.actId)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
-	slot0._simagebgfull:UnLoadImage()
+function var_0_0.onDestroyView(arg_21_0)
+	Activity132Model.instance:setSelectCollectId(arg_21_0.actId)
+	arg_21_0._simagebg:UnLoadImage()
+	arg_21_0._simagemask:UnLoadImage()
+	arg_21_0._simagebgfull:UnLoadImage()
 
-	if slot0.chapterItemList then
-		for slot4, slot5 in pairs(slot0.chapterItemList) do
-			slot5:destroy()
+	if arg_21_0.chapterItemList then
+		for iter_21_0, iter_21_1 in pairs(arg_21_0.chapterItemList) do
+			iter_21_1:destroy()
 		end
 
-		slot0.chapterItemList = nil
+		arg_21_0.chapterItemList = nil
 	end
 
-	if slot0.clueItemList then
-		for slot4, slot5 in pairs(slot0.clueItemList) do
-			slot5:destroy()
+	if arg_21_0.clueItemList then
+		for iter_21_2, iter_21_3 in pairs(arg_21_0.clueItemList) do
+			iter_21_3:destroy()
 		end
 
-		slot0.clueItemList = nil
+		arg_21_0.clueItemList = nil
 	end
 
-	if slot0._scaleTweenId then
-		ZProj.TweenHelper.KillById(slot0._scaleTweenId)
+	if arg_21_0._scaleTweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._scaleTweenId)
 
-		slot0._scaleTweenId = nil
+		arg_21_0._scaleTweenId = nil
 	end
 
-	if slot0._moveTweenId then
-		ZProj.TweenHelper.KillById(slot0._moveTweenId)
+	if arg_21_0._moveTweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._moveTweenId)
 
-		slot0._moveTweenId = nil
+		arg_21_0._moveTweenId = nil
 	end
 
-	if slot0._fadeTweenId then
-		ZProj.TweenHelper.KillById(slot0._fadeTweenId)
+	if arg_21_0._fadeTweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._fadeTweenId)
 
-		slot0._fadeTweenId = nil
+		arg_21_0._fadeTweenId = nil
 	end
 
-	if slot0._fadeTweenId1 then
-		ZProj.TweenHelper.KillById(slot0._fadeTweenId1)
+	if arg_21_0._fadeTweenId1 then
+		ZProj.TweenHelper.KillById(arg_21_0._fadeTweenId1)
 
-		slot0._fadeTweenId1 = nil
+		arg_21_0._fadeTweenId1 = nil
 	end
 end
 
-return slot0
+return var_0_0

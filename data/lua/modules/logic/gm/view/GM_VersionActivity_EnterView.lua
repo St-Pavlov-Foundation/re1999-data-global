@@ -1,107 +1,115 @@
-module("modules.logic.gm.view.GM_VersionActivity_EnterView", package.seeall)
+﻿module("modules.logic.gm.view.GM_VersionActivity_EnterView", package.seeall)
 
-slot0 = class("GM_VersionActivity_EnterView", BaseView)
+local var_0_0 = class("GM_VersionActivity_EnterView", BaseView)
 
-function slot1()
+local function var_0_1()
 	ViewMgr.instance:openView(ViewName.GM_VersionActivity_EnterView)
 end
 
-function slot0.VersionActivityX_XEnterView(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "removeEvents")
+function var_0_0.VersionActivityX_XEnterView(arg_2_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
 
-	function slot0._editableInitView(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(slot0)
+	function arg_2_0._editableInitView(arg_3_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(arg_3_0)
 	end
 
-	function slot0.addEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(slot0, uv0)
-		GM_VersionActivity_EnterViewContainer.addEvents(slot0)
+	function arg_2_0.addEvents(arg_4_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0, var_0_1)
+		GM_VersionActivity_EnterViewContainer.addEvents(arg_4_0)
 	end
 
-	function slot0.removeEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(slot0)
-		GM_VersionActivity_EnterViewContainer.removeEvents(slot0)
+	function arg_2_0.removeEvents(arg_5_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
+		GM_VersionActivity_EnterViewContainer.removeEvents(arg_5_0)
 	end
 
-	function slot0._gm_showAllTabIdUpdate(slot0)
-		slot0:refreshUI()
+	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
+		arg_6_0:refreshUI()
 	end
 end
 
-function slot0.VersionActivityEnterViewTabItem_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "refreshNameText")
+function var_0_0.VersionActivityEnterViewTabItem_register(arg_7_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "refreshNameText")
 
-	slot1 = "#FFFF00"
+	local var_7_0 = "#FFFF00"
 
-	function slot0.refreshNameText(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "refreshNameText", ...)
+	function arg_7_0.refreshNameText(arg_8_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "refreshNameText", ...)
 
-		if not uv0.s_ShowAllTabId then
+		if not var_0_0.s_ShowAllTabId then
 			return
 		end
 
-		slot2 = gohelper.getRichColorText(tostring(slot0.actId), uv1)
-		slot0.activityNameTexts.select.text = slot2
-		slot0.activityNameTexts.normal.text = slot2
+		local var_8_0 = arg_8_0.actId
+		local var_8_1 = gohelper.getRichColorText(tostring(var_8_0), var_7_0)
+
+		arg_8_0.activityNameTexts.select.text = var_8_1
+		arg_8_0.activityNameTexts.normal.text = var_8_1
 	end
 end
 
-function slot0.VersionActivityX_XEnterViewTabItemBase_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "afterSetData")
+function var_0_0.VersionActivityX_XEnterViewTabItemBase_register(arg_9_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_9_0, "afterSetData")
 
-	slot1 = "#FFFF00"
+	local var_9_0 = "#FFFF00"
 
-	function slot0.afterSetData(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "afterSetData", ...)
+	function arg_9_0.afterSetData(arg_10_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_10_0, "afterSetData", ...)
 
-		if not uv0.s_ShowAllTabId then
+		if not var_0_0.s_ShowAllTabId then
 			return
 		end
 
-		slot3 = gohelper.getRichColorText(tostring(slot0.activityCo.id), uv1)
-		slot0.txtName.text = slot3
-		slot0.txtNameEn.text = slot3
+		local var_10_0 = arg_10_0.activityCo.id
+		local var_10_1 = gohelper.getRichColorText(tostring(var_10_0), var_9_0)
+
+		arg_10_0.txtName.text = var_10_1
+		arg_10_0.txtNameEn.text = var_10_1
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._item1Toggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item1/Toggle")
+function var_0_0.onInitView(arg_11_0)
+	arg_11_0._btnClose = gohelper.findChildButtonWithAudio(arg_11_0.viewGO, "btnClose")
+	arg_11_0._item1Toggle = gohelper.findChildToggle(arg_11_0.viewGO, "viewport/content/item1/Toggle")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._item1Toggle:AddOnValueChanged(slot0._onItem1ToggleValueChanged, slot0)
+function var_0_0.addEvents(arg_12_0)
+	arg_12_0._btnClose:AddClickListener(arg_12_0.closeThis, arg_12_0)
+	arg_12_0._item1Toggle:AddOnValueChanged(arg_12_0._onItem1ToggleValueChanged, arg_12_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._item1Toggle:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_13_0)
+	arg_13_0._btnClose:RemoveClickListener()
+	arg_13_0._item1Toggle:RemoveOnValueChanged()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshItem1()
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:_refreshItem1()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-slot0.s_ShowAllTabId = false
+var_0_0.s_ShowAllTabId = false
 
-function slot0._refreshItem1(slot0)
-	slot0._item1Toggle.isOn = uv0.s_ShowAllTabId
+function var_0_0._refreshItem1(arg_16_0)
+	local var_16_0 = var_0_0.s_ShowAllTabId
+
+	arg_16_0._item1Toggle.isOn = var_16_0
 end
 
-function slot0._onItem1ToggleValueChanged(slot0)
-	slot1 = slot0._item1Toggle.isOn
-	uv0.s_ShowAllTabId = slot1
+function var_0_0._onItem1ToggleValueChanged(arg_17_0)
+	local var_17_0 = arg_17_0._item1Toggle.isOn
 
-	GMController.instance:dispatchEvent(GMEvent.VersionActivity_EnterView_ShowAllTabIdUpdate, slot1)
+	var_0_0.s_ShowAllTabId = var_17_0
+
+	GMController.instance:dispatchEvent(GMEvent.VersionActivity_EnterView_ShowAllTabIdUpdate, var_17_0)
 end
 
-return slot0
+return var_0_0

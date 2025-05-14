@@ -1,20 +1,24 @@
-module("modules.logic.rouge.map.controller.RougeMapEffectHelper", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougeMapEffectHelper", package.seeall)
 
-slot0 = class("RougeMapEffectHelper")
+local var_0_0 = class("RougeMapEffectHelper")
 
-function slot0.checkHadEffect(slot0, slot1)
-	if not RougeModel.instance:getEffectDict() then
+function var_0_0.checkHadEffect(arg_1_0, arg_1_1)
+	local var_1_0 = RougeModel.instance:getEffectDict()
+
+	if not var_1_0 then
 		return false
 	end
 
-	uv0._initEffectHandle()
+	var_0_0._initEffectHandle()
 
-	if not uv0.effectHandleDict[slot0] then
+	local var_1_1 = var_0_0.effectHandleDict[arg_1_0]
+
+	if not var_1_1 then
 		return false
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		if slot8.type == slot0 and slot3(slot8, slot1) then
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		if iter_1_1.type == arg_1_0 and var_1_1(iter_1_1, arg_1_1) then
 			return true
 		end
 	end
@@ -22,26 +26,26 @@ function slot0.checkHadEffect(slot0, slot1)
 	return false
 end
 
-function slot0._initEffectHandle()
-	if not uv0.effectHandleDict then
-		uv0.effectHandleDict = {
-			[RougeMapEnum.EffectType.UnlockRestRefresh] = uv0.defaultCheck,
-			[RougeMapEnum.EffectType.UnlockFightDropRefresh] = uv0._checkUnlockFightDropRefresh,
-			[RougeMapEnum.EffectType.UnlockShowPassFightMask] = uv0._checkUnlockShowPassFightMask
+function var_0_0._initEffectHandle()
+	if not var_0_0.effectHandleDict then
+		var_0_0.effectHandleDict = {
+			[RougeMapEnum.EffectType.UnlockRestRefresh] = var_0_0.defaultCheck,
+			[RougeMapEnum.EffectType.UnlockFightDropRefresh] = var_0_0._checkUnlockFightDropRefresh,
+			[RougeMapEnum.EffectType.UnlockShowPassFightMask] = var_0_0._checkUnlockShowPassFightMask
 		}
 	end
 end
 
-function slot0.defaultCheck(slot0)
+function var_0_0.defaultCheck(arg_3_0)
 	return true
 end
 
-function slot0._checkUnlockFightDropRefresh(slot0, slot1)
-	return string.splitToNumber(slot0.typeParam, "#")[1] == slot1
+function var_0_0._checkUnlockFightDropRefresh(arg_4_0, arg_4_1)
+	return string.splitToNumber(arg_4_0.typeParam, "#")[1] == arg_4_1
 end
 
-function slot0._checkUnlockShowPassFightMask(slot0, slot1)
-	return tonumber(slot0.typeParam) == slot1
+function var_0_0._checkUnlockShowPassFightMask(arg_5_0, arg_5_1)
+	return tonumber(arg_5_0.typeParam) == arg_5_1
 end
 
-return slot0
+return var_0_0

@@ -1,205 +1,226 @@
-module("modules.logic.fight.view.FightLYWaitAreaCard", package.seeall)
+﻿module("modules.logic.fight.view.FightLYWaitAreaCard", package.seeall)
 
-slot0 = class("FightLYWaitAreaCard", UserDataDispose)
-slot0.LY_CardPath = "ui/viewres/fight/fight_liangyuecardview.prefab"
-slot0.LY_MAXPoint = 6
+local var_0_0 = class("FightLYWaitAreaCard", UserDataDispose)
 
-function slot0.Create(slot0)
-	slot1 = uv0.New()
+var_0_0.LY_CardPath = "ui/viewres/fight/fight_liangyuecardview.prefab"
+var_0_0.LY_MAXPoint = 6
 
-	slot1:init(slot0)
+function var_0_0.Create(arg_1_0)
+	local var_1_0 = var_0_0.New()
 
-	return slot1
+	var_1_0:init(arg_1_0)
+
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0:__onInit()
 
-	slot0.loaded = false
-	slot0.goContainer = slot1
-	slot0.LYLoader = PrefabInstantiate.Create(slot0.goContainer)
+	arg_2_0.loaded = false
+	arg_2_0.goContainer = arg_2_1
+	arg_2_0.LYLoader = PrefabInstantiate.Create(arg_2_0.goContainer)
 
-	slot0.LYLoader:startLoad(uv0.LY_CardPath, slot0.onLoadLYCardDone, slot0)
+	arg_2_0.LYLoader:startLoad(var_0_0.LY_CardPath, arg_2_0.onLoadLYCardDone, arg_2_0)
 end
 
-function slot0.onLoadLYCardDone(slot0, slot1)
-	slot0.loaded = true
-	slot0.LY_instanceGo = slot0.LYLoader:getInstGO()
-	slot0.rectTr = slot0.LY_instanceGo:GetComponent(gohelper.Type_RectTransform)
-	slot5 = gohelper.Type_Animator
-	slot0.animator = gohelper.findChildComponent(slot0.LY_instanceGo, "current", slot5)
-	slot0.LY_goCardBack = gohelper.findChild(slot0.LY_instanceGo, "current/back")
+function var_0_0.onLoadLYCardDone(arg_3_0, arg_3_1)
+	arg_3_0.loaded = true
+	arg_3_0.LY_instanceGo = arg_3_0.LYLoader:getInstGO()
+	arg_3_0.rectTr = arg_3_0.LY_instanceGo:GetComponent(gohelper.Type_RectTransform)
+	arg_3_0.animator = gohelper.findChildComponent(arg_3_0.LY_instanceGo, "current", gohelper.Type_Animator)
+	arg_3_0.LY_goCardBack = gohelper.findChild(arg_3_0.LY_instanceGo, "current/back")
 
-	gohelper.setActive(slot0.LY_goCardBack, true)
+	gohelper.setActive(arg_3_0.LY_goCardBack, true)
 
-	slot0.goSkillList = slot0:getUserDataTb_()
+	arg_3_0.goSkillList = arg_3_0:getUserDataTb_()
 
-	for slot5 = 1, 3 do
-		table.insert(slot0.goSkillList, gohelper.findChild(slot0.LY_goCardBack, tostring(slot5)))
+	for iter_3_0 = 1, 3 do
+		table.insert(arg_3_0.goSkillList, gohelper.findChild(arg_3_0.LY_goCardBack, tostring(iter_3_0)))
 	end
 
-	slot0.LY_pointItemList = {}
+	arg_3_0.LY_pointItemList = {}
 
-	for slot5 = 1, uv0.LY_MAXPoint do
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = gohelper.findChild(slot0.LY_instanceGo, "current/font/energy/" .. slot5)
-		slot6.goRed = gohelper.findChild(slot6.go, "red")
-		slot6.goBlue = gohelper.findChild(slot6.go, "green")
-		slot6.goBoth = gohelper.findChild(slot6.go, "both")
-		slot6.animator = slot6.go:GetComponent(gohelper.Type_Animator)
+	for iter_3_1 = 1, var_0_0.LY_MAXPoint do
+		local var_3_0 = arg_3_0:getUserDataTb_()
 
-		table.insert(slot0.LY_pointItemList, slot6)
+		var_3_0.go = gohelper.findChild(arg_3_0.LY_instanceGo, "current/font/energy/" .. iter_3_1)
+		var_3_0.goRed = gohelper.findChild(var_3_0.go, "red")
+		var_3_0.goBlue = gohelper.findChild(var_3_0.go, "green")
+		var_3_0.goBoth = gohelper.findChild(var_3_0.go, "both")
+		var_3_0.animator = var_3_0.go:GetComponent(gohelper.Type_Animator)
+
+		table.insert(arg_3_0.LY_pointItemList, var_3_0)
 	end
 
-	slot0:refreshLYCard()
-	slot0:setAnchorX(slot0.recordAnchorX)
-	slot0:setScale(slot0.scale)
-	slot0:addEventCb(FightController.instance, FightEvent.LY_HadRedAndBluePointChange, slot0.onPointChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.LY_PointAreaSizeChange, slot0.refreshLYCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.LY_TriggerCountSkill, slot0.onTriggerSkill, slot0)
+	arg_3_0:refreshLYCard()
+	arg_3_0:setAnchorX(arg_3_0.recordAnchorX)
+	arg_3_0:setScale(arg_3_0.scale)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.LY_HadRedAndBluePointChange, arg_3_0.onPointChange, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.LY_PointAreaSizeChange, arg_3_0.refreshLYCard, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.LY_TriggerCountSkill, arg_3_0.onTriggerSkill, arg_3_0)
 end
 
-function slot0.onPointChange(slot0, slot1, slot2)
-	if not slot0.loaded then
+function var_0_0.onPointChange(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0.loaded then
 		return
 	end
 
-	if not FightDataHelper.LYDataMgr:getPointList() then
-		gohelper.setActive(slot0.goContainer, false)
+	local var_4_0 = FightDataHelper.LYDataMgr:getPointList()
+
+	if not var_4_0 then
+		gohelper.setActive(arg_4_0.goContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goContainer, true)
-	slot0:resetAllPoint()
+	gohelper.setActive(arg_4_0.goContainer, true)
 
-	for slot9 = 1, slot4 do
-		slot11 = (FightViewRedAndBlueArea.PointIndexList[math.min(math.max(0, FightDataHelper.LYDataMgr.LYPointAreaSize), uv0.LY_MAXPoint) + 1] or {})[slot9] and slot0.LY_pointItemList[slot10]
+	local var_4_1 = FightDataHelper.LYDataMgr.LYPointAreaSize
 
-		gohelper.setActive(slot11.go, true)
-		gohelper.setActive(slot11.goRed, slot3[slot9] == FightEnum.CardColor.Red)
-		gohelper.setActive(slot11.goBlue, slot12 == FightEnum.CardColor.Blue)
-		gohelper.setActive(slot11.goBoth, slot12 == FightEnum.CardColor.Both)
+	arg_4_0:resetAllPoint()
 
-		if slot2 < slot9 and slot12 and slot12 ~= FightEnum.CardColor.None then
-			slot11.animator:Play("active", 0, 0)
+	local var_4_2 = math.min(math.max(0, var_4_1), var_0_0.LY_MAXPoint)
+	local var_4_3 = FightViewRedAndBlueArea.PointIndexList[var_4_2 + 1] or {}
+
+	for iter_4_0 = 1, var_4_2 do
+		local var_4_4 = var_4_3[iter_4_0]
+		local var_4_5 = var_4_4 and arg_4_0.LY_pointItemList[var_4_4]
+
+		gohelper.setActive(var_4_5.go, true)
+
+		local var_4_6 = var_4_0[iter_4_0]
+
+		gohelper.setActive(var_4_5.goRed, var_4_6 == FightEnum.CardColor.Red)
+		gohelper.setActive(var_4_5.goBlue, var_4_6 == FightEnum.CardColor.Blue)
+		gohelper.setActive(var_4_5.goBoth, var_4_6 == FightEnum.CardColor.Both)
+
+		if arg_4_2 < iter_4_0 and var_4_6 and var_4_6 ~= FightEnum.CardColor.None then
+			var_4_5.animator:Play("active", 0, 0)
 		else
-			slot11.animator:Play("empty", 0, 0)
+			var_4_5.animator:Play("empty", 0, 0)
 		end
 	end
 end
 
-function slot0.resetAllPoint(slot0)
-	for slot4 = 1, uv0.LY_MAXPoint do
-		gohelper.setActive(slot0.LY_pointItemList[slot4].go, false)
+function var_0_0.resetAllPoint(arg_5_0)
+	for iter_5_0 = 1, var_0_0.LY_MAXPoint do
+		local var_5_0 = arg_5_0.LY_pointItemList[iter_5_0]
+
+		gohelper.setActive(var_5_0.go, false)
 	end
 end
 
-function slot0.onSkillPlayFinish(slot0, slot1, slot2)
-	if slot0.waitSkillId == slot2 then
+function var_0_0.onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0.waitSkillId == arg_6_2 then
 		FightDataHelper.LYDataMgr:refreshPointList(true)
-		slot0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0.onSkillPlayFinish, slot0)
+		arg_6_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_6_0.onSkillPlayFinish, arg_6_0)
 
-		slot0.waitSkillId = nil
+		arg_6_0.waitSkillId = nil
 
-		if slot0.loaded then
-			slot0:refreshLYCard()
+		if arg_6_0.loaded then
+			arg_6_0:refreshLYCard()
 			AudioMgr.instance:trigger(20250501)
-			slot0.animator:Play("rotate_02", 0, 0)
+			arg_6_0.animator:Play("rotate_02", 0, 0)
 		end
 	end
 end
 
-function slot0.onTriggerSkill(slot0, slot1, slot2, slot3)
-	slot0.waitSkillId = slot3
+function var_0_0.onTriggerSkill(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0.waitSkillId = arg_7_3
 
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0.onSkillPlayFinish, slot0)
+	arg_7_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_7_0.onSkillPlayFinish, arg_7_0)
 
-	if not slot0.loaded then
+	if not arg_7_0.loaded then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot0.goSkillList) do
-		gohelper.setActive(slot8, false)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.goSkillList) do
+		gohelper.setActive(iter_7_1, false)
 	end
 
-	if slot1 == slot2 then
-		gohelper.setActive(slot0.goSkillList[1], true)
-	elseif slot1 < slot2 then
-		gohelper.setActive(slot0.goSkillList[2], true)
+	if arg_7_1 == arg_7_2 then
+		gohelper.setActive(arg_7_0.goSkillList[1], true)
+	elseif arg_7_1 < arg_7_2 then
+		gohelper.setActive(arg_7_0.goSkillList[2], true)
 	else
-		gohelper.setActive(slot0.goSkillList[3], true)
+		gohelper.setActive(arg_7_0.goSkillList[3], true)
 	end
 
-	slot0.animator:Play("rotate_01", 0, 0)
+	arg_7_0.animator:Play("rotate_01", 0, 0)
 	AudioMgr.instance:trigger(20250500)
 end
 
-function slot0.refreshLYCard(slot0)
-	if not slot0.loaded then
+function var_0_0.refreshLYCard(arg_8_0)
+	if not arg_8_0.loaded then
 		return
 	end
 
-	if not FightDataHelper.LYDataMgr:getPointList() then
-		gohelper.setActive(slot0.goContainer, false)
+	local var_8_0 = FightDataHelper.LYDataMgr:getPointList()
+
+	if not var_8_0 then
+		gohelper.setActive(arg_8_0.goContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goContainer, true)
+	gohelper.setActive(arg_8_0.goContainer, true)
 
-	for slot6 = 1, uv0.LY_MAXPoint do
-		slot7 = slot0.LY_pointItemList[slot6]
+	local var_8_1 = FightDataHelper.LYDataMgr.LYPointAreaSize
 
-		if FightDataHelper.LYDataMgr.LYPointAreaSize < slot6 then
-			gohelper.setActive(slot7.go, false)
+	for iter_8_0 = 1, var_0_0.LY_MAXPoint do
+		local var_8_2 = arg_8_0.LY_pointItemList[iter_8_0]
+
+		if var_8_1 < iter_8_0 then
+			gohelper.setActive(var_8_2.go, false)
 
 			break
 		end
 
-		gohelper.setActive(slot7.go, true)
-		gohelper.setActive(slot7.goRed, slot1[slot6] == FightEnum.CardColor.Red)
-		gohelper.setActive(slot7.goBlue, slot8 == FightEnum.CardColor.Blue)
-		gohelper.setActive(slot7.goBoth, slot8 == FightEnum.CardColor.Both)
+		local var_8_3 = var_8_0[iter_8_0]
+
+		gohelper.setActive(var_8_2.go, true)
+		gohelper.setActive(var_8_2.goRed, var_8_3 == FightEnum.CardColor.Red)
+		gohelper.setActive(var_8_2.goBlue, var_8_3 == FightEnum.CardColor.Blue)
+		gohelper.setActive(var_8_2.goBoth, var_8_3 == FightEnum.CardColor.Both)
 	end
 end
 
-function slot0.resetState(slot0)
-	slot0.animator:Play("rotate_02", 0, 1)
+function var_0_0.resetState(arg_9_0)
+	arg_9_0.animator:Play("rotate_02", 0, 1)
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0.animator:Play(slot1, 0, 0)
+function var_0_0.playAnim(arg_10_0, arg_10_1)
+	arg_10_0.animator:Play(arg_10_1, 0, 0)
 end
 
-function slot0.setAnchorX(slot0, slot1)
-	slot0.recordAnchorX = slot1 or 0
+function var_0_0.setAnchorX(arg_11_0, arg_11_1)
+	arg_11_0.recordAnchorX = arg_11_1 or 0
 
-	if not slot0.loaded then
+	if not arg_11_0.loaded then
 		return
 	end
 
-	recthelper.setAnchorX(slot0.rectTr, slot0.recordAnchorX)
+	recthelper.setAnchorX(arg_11_0.rectTr, arg_11_0.recordAnchorX)
 end
 
-function slot0.setScale(slot0, slot1)
-	slot0.scale = slot1 or 1
+function var_0_0.setScale(arg_12_0, arg_12_1)
+	arg_12_0.scale = arg_12_1 or 1
 
-	if not slot0.loaded then
+	if not arg_12_0.loaded then
 		return
 	end
 
-	transformhelper.setLocalScale(slot0.rectTr, slot0.scale, slot0.scale, slot0.scale)
+	transformhelper.setLocalScale(arg_12_0.rectTr, arg_12_0.scale, arg_12_0.scale, arg_12_0.scale)
 end
 
-function slot0.dispose(slot0)
-	if slot0.LYLoader then
-		slot0.LYLoader:dispose()
+function var_0_0.dispose(arg_13_0)
+	if arg_13_0.LYLoader then
+		arg_13_0.LYLoader:dispose()
 
-		slot0.LYLoader = nil
+		arg_13_0.LYLoader = nil
 	end
 
-	slot0:__onDispose()
+	arg_13_0:__onDispose()
 end
 
-return slot0
+return var_0_0

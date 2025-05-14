@@ -1,56 +1,60 @@
-module("modules.logic.scene.room.comp.RoomSceneInitComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneInitComp", package.seeall)
 
-slot0 = class("RoomSceneInitComp", BaseSceneComp)
+local var_0_0 = class("RoomSceneInitComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._originalCameraTransparencySortModeList = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._originalCameraTransparencySortModeList = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:_setTransparencySortMode()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:_setTransparencySortMode()
 	RoomMapController.instance:initMap()
 	RoomHelper.initSceneRootTrs()
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:_revertTransparencySortMode()
+function var_0_0.onSceneClose(arg_3_0)
+	arg_3_0:_revertTransparencySortMode()
 
 	if GameSceneMgr.instance:getNextSceneType() ~= SceneType.Room and RoomController.instance:isObMode() then
-		-- Nothing
+		-- block empty
 	end
 
 	RoomMapController.instance:clearMap()
 end
 
-function slot0._setTransparencySortMode(slot0)
-	slot0._originalCameraTransparencySortModeList = {}
+function var_0_0._setTransparencySortMode(arg_4_0)
+	arg_4_0._originalCameraTransparencySortModeList = {}
 
-	slot0:_setTransparencySortModeSingleCamera(CameraMgr.instance:getMainCamera())
-	slot0:_setTransparencySortModeSingleCamera(CameraMgr.instance:getUnitCamera())
-	slot0:_setTransparencySortModeSingleCamera(CameraMgr.instance:getOrthCamera())
+	local var_4_0 = CameraMgr.instance:getMainCamera()
+	local var_4_1 = CameraMgr.instance:getUnitCamera()
+	local var_4_2 = CameraMgr.instance:getOrthCamera()
+
+	arg_4_0:_setTransparencySortModeSingleCamera(var_4_0)
+	arg_4_0:_setTransparencySortModeSingleCamera(var_4_1)
+	arg_4_0:_setTransparencySortModeSingleCamera(var_4_2)
 end
 
-function slot0._setTransparencySortModeSingleCamera(slot0, slot1)
-	if not slot1 then
+function var_0_0._setTransparencySortModeSingleCamera(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	table.insert(slot0._originalCameraTransparencySortModeList, {
-		camera = slot1,
-		originalTransparencySortMode = slot1.transparencySortMode
+	table.insert(arg_5_0._originalCameraTransparencySortModeList, {
+		camera = arg_5_1,
+		originalTransparencySortMode = arg_5_1.transparencySortMode
 	})
 
-	slot1.transparencySortMode = UnityEngine.TransparencySortMode.Default
+	arg_5_1.transparencySortMode = UnityEngine.TransparencySortMode.Default
 end
 
-function slot0._revertTransparencySortMode(slot0)
-	if not slot0._originalCameraTransparencySortModeList then
+function var_0_0._revertTransparencySortMode(arg_6_0)
+	if not arg_6_0._originalCameraTransparencySortModeList then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._originalCameraTransparencySortModeList) do
-		slot5.camera.transparencySortMode = slot5.originalTransparencySortMode
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._originalCameraTransparencySortModeList) do
+		iter_6_1.camera.transparencySortMode = iter_6_1.originalTransparencySortMode
 	end
 end
 
-return slot0
+return var_0_0

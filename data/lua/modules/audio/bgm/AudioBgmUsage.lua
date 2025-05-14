@@ -1,32 +1,32 @@
-module("modules.audio.bgm.AudioBgmUsage", package.seeall)
+﻿module("modules.audio.bgm.AudioBgmUsage", package.seeall)
 
-slot0 = class("AudioBgmUsage")
+local var_0_0 = class("AudioBgmUsage")
 
-function slot0.ctor(slot0)
-	slot0.layerList = nil
-	slot0.type = nil
-	slot0.typeParam = nil
-	slot0.queryFunc = nil
-	slot0.queryFuncTarget = nil
-	slot0.clearPauseBgm = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.layerList = nil
+	arg_1_0.type = nil
+	arg_1_0.typeParam = nil
+	arg_1_0.queryFunc = nil
+	arg_1_0.queryFuncTarget = nil
+	arg_1_0.clearPauseBgm = nil
 end
 
-function slot0.containBgm(slot0, slot1)
-	return tabletool.indexOf(slot0.layerList, slot1)
+function var_0_0.containBgm(arg_2_0, arg_2_1)
+	return tabletool.indexOf(arg_2_0.layerList, arg_2_1)
 end
 
-function slot0.setClearPauseBgm(slot0, slot1)
-	slot0.clearPauseBgm = slot1
+function var_0_0.setClearPauseBgm(arg_3_0, arg_3_1)
+	arg_3_0.clearPauseBgm = arg_3_1
 end
 
-function slot0.getBgmLayer(slot0)
-	if #slot0.layerList == 1 then
-		return slot0.layerList[1]
+function var_0_0.getBgmLayer(arg_4_0)
+	if #arg_4_0.layerList == 1 then
+		return arg_4_0.layerList[1]
 	end
 
-	if slot0.queryFunc then
-		return slot0.queryFunc(slot0.queryFuncTarget, slot0)
+	if arg_4_0.queryFunc then
+		return arg_4_0.queryFunc(arg_4_0.queryFuncTarget, arg_4_0)
 	end
 end
 
-return slot0
+return var_0_0

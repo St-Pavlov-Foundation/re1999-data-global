@@ -1,14 +1,14 @@
-module("modules.logic.bgmswitch.config.BGMSwitchConfig", package.seeall)
+﻿module("modules.logic.bgmswitch.config.BGMSwitchConfig", package.seeall)
 
-slot0 = class("BGMSwitchConfig", BaseConfig)
+local var_0_0 = class("BGMSwitchConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._bgmSwitchConfig = nil
-	slot0._bgmTypeConfig = nil
-	slot0._bgmEasterEggConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._bgmSwitchConfig = nil
+	arg_1_0._bgmTypeConfig = nil
+	arg_1_0._bgmEasterEggConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"bgm_switch",
 		"bgm_type",
@@ -16,78 +16,82 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "bgm_switch" then
-		slot0._bgmSwitchConfig = slot2
-	elseif slot1 == "bgm_type" then
-		slot0._bgmTypeConfig = slot2
-	elseif slot1 == "bgm_easteregg" then
-		slot0._bgmEasterEggConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "bgm_switch" then
+		arg_3_0._bgmSwitchConfig = arg_3_2
+	elseif arg_3_1 == "bgm_type" then
+		arg_3_0._bgmTypeConfig = arg_3_2
+	elseif arg_3_1 == "bgm_easteregg" then
+		arg_3_0._bgmEasterEggConfig = arg_3_2
 	end
 end
 
-function slot0.getBGMSwitchCos(slot0)
-	return slot0._bgmSwitchConfig.configDict
+function var_0_0.getBGMSwitchCos(arg_4_0)
+	return arg_4_0._bgmSwitchConfig.configDict
 end
 
-function slot0.getBGMSwitchCO(slot0, slot1)
-	return slot0._bgmSwitchConfig.configDict[slot1]
+function var_0_0.getBGMSwitchCO(arg_5_0, arg_5_1)
+	return arg_5_0._bgmSwitchConfig.configDict[arg_5_1]
 end
 
-function slot0.getBGMSwitchCoByAudioId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._bgmSwitchConfig.configDict) do
-		if slot6.audio == slot1 then
-			return slot6
+function var_0_0.getBGMSwitchCoByAudioId(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._bgmSwitchConfig.configDict) do
+		if iter_6_1.audio == arg_6_1 then
+			return iter_6_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.getBGMTypeCos(slot0)
-	return slot0._bgmTypeConfig.configDict
+function var_0_0.getBGMTypeCos(arg_7_0)
+	return arg_7_0._bgmTypeConfig.configDict
 end
 
-function slot0.getBGMTypeCO(slot0, slot1)
-	return slot0._bgmTypeConfig.configDict[slot1]
+function var_0_0.getBGMTypeCO(arg_8_0, arg_8_1)
+	return arg_8_0._bgmTypeConfig.configDict[arg_8_1]
 end
 
-function slot0.getBgmEasterEggCos(slot0)
-	return slot0._bgmEasterEggConfig.configDict
+function var_0_0.getBgmEasterEggCos(arg_9_0)
+	return arg_9_0._bgmEasterEggConfig.configDict
 end
 
-function slot0.getBgmEasterEggCosByType(slot0, slot1)
-	slot2 = {}
+function var_0_0.getBgmEasterEggCosByType(arg_10_0, arg_10_1)
+	local var_10_0 = {}
 
-	for slot6, slot7 in pairs(slot0._bgmEasterEggConfig.configDict) do
-		if slot7.type == slot1 then
-			table.insert(slot2, slot7)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._bgmEasterEggConfig.configDict) do
+		if iter_10_1.type == arg_10_1 then
+			table.insert(var_10_0, iter_10_1)
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getBgmEasterEggCo(slot0, slot1)
-	return slot0._bgmEasterEggConfig.configDict[slot1]
+function var_0_0.getBgmEasterEggCo(arg_11_0, arg_11_1)
+	return arg_11_0._bgmEasterEggConfig.configDict[arg_11_1]
 end
 
-function slot0.getBgmNames(slot0, slot1)
-	slot2 = {}
+function var_0_0.getBgmNames(arg_12_0, arg_12_1)
+	local var_12_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if uv0.instance:getBGMSwitchCO(slot7) then
-			table.insert(slot2, slot8.audioName)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+		local var_12_1 = var_0_0.instance:getBGMSwitchCO(iter_12_1)
+
+		if var_12_1 then
+			table.insert(var_12_0, var_12_1.audioName)
 		end
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getBgmName(slot0, slot1)
-	return uv0.instance:getBGMSwitchCO(slot1) and slot2.audioName
+function var_0_0.getBgmName(arg_13_0, arg_13_1)
+	local var_13_0 = var_0_0.instance:getBGMSwitchCO(arg_13_1)
+
+	return var_13_0 and var_13_0.audioName
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

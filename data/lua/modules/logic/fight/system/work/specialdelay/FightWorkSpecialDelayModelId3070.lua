@@ -1,45 +1,61 @@
-module("modules.logic.fight.system.work.specialdelay.FightWorkSpecialDelayModelId3070", package.seeall)
+﻿module("modules.logic.fight.system.work.specialdelay.FightWorkSpecialDelayModelId3070", package.seeall)
 
-slot0 = class("FightWorkSpecialDelayModelId3070", UserDataDispose)
+local var_0_0 = class("FightWorkSpecialDelayModelId3070", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._parentClass = slot1
-	slot0._fightStepMO = slot2
+	arg_1_0._parentClass = arg_1_1
+	arg_1_0._fightStepMO = arg_1_2
 
-	slot0:onStart()
+	arg_1_0:onStart()
 end
 
-slot1 = 0.4
-slot2 = 0.45
+local var_0_1 = 0.4
+local var_0_2 = 0.45
 
-function slot0.onStart(slot0)
-	if slot0._fightStepMO.actType == FightEnum.ActType.SKILL and FightHelper.getEntity(slot0._fightStepMO.fromId) and slot1:getMO() then
-		for slot8, slot9 in ipairs(slot0._fightStepMO.actEffectMOs) do
-			if slot9.effectType == FightEnum.EffectType.BUFFADD and slot9.buff and lua_skill_buff.configDict[slot9.buff.buffId] and FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[slot10.typeId] then
-				slot3 = 0 + 1
-				slot4 = nil or tonumber(string.split(lua_skill_bufftype.configDict[slot10.typeId].includeTypes, "#")[2])
+function var_0_0.onStart(arg_2_0)
+	if arg_2_0._fightStepMO.actType == FightEnum.ActType.SKILL then
+		local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+
+		if var_2_0 and var_2_0:getMO() then
+			local var_2_1 = 0
+			local var_2_2
+
+			for iter_2_0, iter_2_1 in ipairs(arg_2_0._fightStepMO.actEffectMOs) do
+				if iter_2_1.effectType == FightEnum.EffectType.BUFFADD and iter_2_1.buff then
+					local var_2_3 = lua_skill_buff.configDict[iter_2_1.buff.buffId]
+
+					if var_2_3 and FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[var_2_3.typeId] then
+						var_2_1 = var_2_1 + 1
+
+						local var_2_4 = lua_skill_bufftype.configDict[var_2_3.typeId]
+
+						var_2_2 = var_2_2 or tonumber(string.split(var_2_4.includeTypes, "#")[2])
+					end
+				end
 			end
-		end
 
-		if slot3 > 0 then
-			TaskDispatcher.runDelay(slot0._delay, slot0, uv0 + uv1 * math.min(slot3, slot4) / FightModel.instance:getSpeed())
+			if var_2_1 > 0 then
+				local var_2_5 = math.min(var_2_1, var_2_2)
 
-			return
+				TaskDispatcher.runDelay(arg_2_0._delay, arg_2_0, var_0_2 + var_0_1 * var_2_5 / FightModel.instance:getSpeed())
+
+				return
+			end
 		end
 	end
 
-	slot0:_delay()
+	arg_2_0:_delay()
 end
 
-function slot0._delay(slot0)
-	slot0._parentClass:_delayDone()
+function var_0_0._delay(arg_3_0)
+	arg_3_0._parentClass:_delayDone()
 end
 
-function slot0.releaseSelf(slot0)
-	TaskDispatcher.cancelTask(slot0._delay, slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delay, arg_4_0)
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

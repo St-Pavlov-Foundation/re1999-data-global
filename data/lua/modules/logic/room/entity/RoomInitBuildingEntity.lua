@@ -1,100 +1,104 @@
-module("modules.logic.room.entity.RoomInitBuildingEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomInitBuildingEntity", package.seeall)
 
-slot0 = class("RoomInitBuildingEntity", RoomBaseEntity)
+local var_0_0 = class("RoomInitBuildingEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.RoomInitBuilding
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.StaticContainerGOKey)
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.StaticContainerGOKey)
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("effect", RoomEffectComp)
 
 	if RoomController.instance:isObMode() then
-		slot0:addComp("collider", RoomColliderComp)
-		slot0:addComp("atmosphere", RoomAtmosphereComp)
-		slot0:addComp("roomGift", RoomGiftActComp)
+		arg_4_0:addComp("collider", RoomColliderComp)
+		arg_4_0:addComp("atmosphere", RoomAtmosphereComp)
+		arg_4_0:addComp("roomGift", RoomGiftActComp)
 	end
 
-	slot0:addComp("nightlight", RoomNightLightComp)
-	slot0:addComp("skin", RoomInitBuildingSkinComp)
-	slot0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
+	arg_4_0:addComp("nightlight", RoomNightLightComp)
+	arg_4_0:addComp("skin", RoomInitBuildingSkinComp)
+	arg_4_0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, slot0._characterListShowChanged, slot0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, slot0._onSwithMode, slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, arg_5_0._characterListShowChanged, arg_5_0)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_5_0._onSwithMode, arg_5_0)
 end
 
-function slot0.refreshBuilding(slot0, slot1, slot2)
-	if string.nilorempty(slot0:_getInitBuildingRes()) then
-		slot0.effect:removeParams({
+function var_0_0.refreshBuilding(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:_getInitBuildingRes()
+
+	if string.nilorempty(var_6_0) then
+		arg_6_0.effect:removeParams({
 			RoomEnum.EffectKey.BuildingGOKey
 		})
 	else
-		slot0.effect:addParams({
+		arg_6_0.effect:addParams({
 			[RoomEnum.EffectKey.BuildingGOKey] = {
 				pathfinding = true,
-				res = slot3,
-				alphaThreshold = slot1,
-				alphaThresholdValue = slot2
+				res = var_6_0,
+				alphaThreshold = arg_6_1,
+				alphaThresholdValue = arg_6_2
 			}
 		})
 	end
 
-	slot0.effect:refreshEffect()
+	arg_6_0.effect:refreshEffect()
 end
 
-function slot0._characterListShowChanged(slot0, slot1)
-	slot0:setEnable(not RoomController.instance:isEditMode() and not slot1)
+function var_0_0._characterListShowChanged(arg_7_0, arg_7_1)
+	arg_7_0:setEnable(not RoomController.instance:isEditMode() and not arg_7_1)
 end
 
-function slot0._onSwithMode(slot0)
-	slot0:setEnable(not RoomController.instance:isEditMode())
+function var_0_0._onSwithMode(arg_8_0)
+	arg_8_0:setEnable(not RoomController.instance:isEditMode())
 end
 
-function slot0.setEnable(slot0, slot1)
-	if slot0.collider then
-		slot0.collider:setEnable(slot1 and true or false)
+function var_0_0.setEnable(arg_9_0, arg_9_1)
+	if arg_9_0.collider then
+		arg_9_0.collider:setEnable(arg_9_1 and true or false)
 	end
 end
 
-function slot0._getInitBuildingRes(slot0)
-	return RoomConfig.instance:getRoomSkinModelPath(RoomSkinModel.instance:getShowSkin(slot0.id)) or RoomScenePreloader.ResInitBuilding
+function var_0_0._getInitBuildingRes(arg_10_0)
+	local var_10_0 = RoomSkinModel.instance:getShowSkin(arg_10_0.id)
+
+	return RoomConfig.instance:getRoomSkinModelPath(var_10_0) or RoomScenePreloader.ResInitBuilding
 end
 
-function slot0.tweenAlphaThreshold(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0.alphaThresholdComp then
+function var_0_0.tweenAlphaThreshold(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	if not arg_11_0.alphaThresholdComp then
 		return
 	end
 
-	slot0.alphaThresholdComp:tweenAlphaThreshold(slot1, slot2, slot3, slot4, slot5)
+	arg_11_0.alphaThresholdComp:tweenAlphaThreshold(arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
 end
 
-function slot0.beforeDestroy(slot0)
-	uv0.super.beforeDestroy(slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, slot0._characterListShowChanged, slot0)
-	RoomController.instance:unregisterCallback(slot0._onSwithMode, slot0)
+function var_0_0.beforeDestroy(arg_12_0)
+	var_0_0.super.beforeDestroy(arg_12_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, arg_12_0._characterListShowChanged, arg_12_0)
+	RoomController.instance:unregisterCallback(arg_12_0._onSwithMode, arg_12_0)
 end
 
-function slot0.getCharacterMeshRendererList(slot0)
-	return slot0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
+function var_0_0.getCharacterMeshRendererList(arg_13_0)
+	return arg_13_0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
 end
 
-return slot0
+return var_0_0

@@ -1,22 +1,22 @@
-module("modules.logic.room.view.common.RoomMaterialTipViewContainer", package.seeall)
+﻿module("modules.logic.room.view.common.RoomMaterialTipViewContainer", package.seeall)
 
-slot0 = class("RoomMaterialTipViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomMaterialTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomMaterialTipView.New())
-	table.insert(slot1, RoomMaterialTipViewBanner.New())
+	table.insert(var_1_0, RoomMaterialTipView.New())
+	table.insert(var_1_0, RoomMaterialTipViewBanner.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0.onContainerOpen(slot0)
+function var_0_0.onContainerOpen(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_open)
 end
 
-return slot0
+return var_0_0

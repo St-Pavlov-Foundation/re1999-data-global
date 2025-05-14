@@ -1,55 +1,57 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelView", package.seeall)
 
-slot0 = class("WuErLiXiLevelView", BaseView)
-slot1 = 464
-slot2 = 0
-slot3 = 4
-slot4 = 0.3
+local var_0_0 = class("WuErLiXiLevelView", BaseView)
+local var_0_1 = 464
+local var_0_2 = 0
+local var_0_3 = 4
+local var_0_4 = 0.3
 
-function slot0.onInitView(slot0)
-	slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0._animEvent = slot0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_Title/#go_time")
-	slot0._txtlimittime = gohelper.findChildText(slot0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	slot0._btnTask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Task")
-	slot0._taskAnim = gohelper.findChild(slot0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	slot0._goTaskReddot = gohelper.findChild(slot0.viewGO, "#btn_Task/#go_reddot")
-	slot0._animTask = gohelper.findChild(slot0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	slot0._goepisodescroll = gohelper.findChild(slot0.viewGO, "#scroll_StateList")
-	slot0._goepisodecontent = gohelper.findChild(slot0.viewGO, "#scroll_StateList/Viewport/Content")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
+	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
+	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
+	arg_1_0._taskAnim = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
+	arg_1_0._goTaskReddot = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/#go_reddot")
+	arg_1_0._animTask = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
+	arg_1_0._goepisodescroll = gohelper.findChild(arg_1_0.viewGO, "#scroll_StateList")
+	arg_1_0._goepisodecontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_StateList/Viewport/Content")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnTask:AddClickListener(slot0._btnTaskOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnTask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnTask:RemoveClickListener()
 end
 
-function slot0._btnTaskOnClick(slot0)
+function var_0_0._btnTaskOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.WuErLiXiTaskView)
 end
 
-function slot0._onEpisodeFinished(slot0)
+function var_0_0._onEpisodeFinished(arg_5_0)
 	if WuErLiXiModel.instance:getNewFinishEpisode() then
-		slot0:_playStoryFinishAnim()
+		arg_5_0:_playStoryFinishAnim()
 	end
 end
 
-function slot0._playStoryFinishAnim(slot0)
-	if WuErLiXiModel.instance:getNewFinishEpisode() then
-		for slot5, slot6 in ipairs(slot0._episodeItems) do
-			if slot6.id == slot1 then
-				slot0._finishEpisodeIndex = slot5
+function var_0_0._playStoryFinishAnim(arg_6_0)
+	local var_6_0 = WuErLiXiModel.instance:getNewFinishEpisode()
 
-				slot6:playFinish()
-				slot6:playStarAnim()
-				TaskDispatcher.runDelay(slot0._finishStoryEnd, slot0, 1.5)
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._episodeItems) do
+			if iter_6_1.id == var_6_0 then
+				arg_6_0._finishEpisodeIndex = iter_6_0
+
+				iter_6_1:playFinish()
+				iter_6_1:playStarAnim()
+				TaskDispatcher.runDelay(arg_6_0._finishStoryEnd, arg_6_0, 1.5)
 
 				break
 			end
@@ -59,120 +61,133 @@ function slot0._playStoryFinishAnim(slot0)
 	end
 end
 
-function slot0._onBackToLevel(slot0)
+function var_0_0._onBackToLevel(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_signal)
-	slot0._anim:Play("back", 0, 0)
-	slot0:_refreshTask()
+	arg_7_0._anim:Play("back", 0, 0)
+	arg_7_0:_refreshTask()
 end
 
-function slot0._refreshTask(slot0)
+function var_0_0._refreshTask(arg_8_0)
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a4WuErLiXiTask, 0) then
-		slot0._taskAnim:Play("loop", 0, 0)
+		arg_8_0._taskAnim:Play("loop", 0, 0)
 	else
-		slot0._taskAnim:Play("idle", 0, 0)
+		arg_8_0._taskAnim:Play("idle", 0, 0)
 	end
 end
 
-function slot0._onCloseTask(slot0)
-	slot0:_refreshTask()
+function var_0_0._onCloseTask(arg_9_0)
+	arg_9_0:_refreshTask()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.EpisodeFinished, slot0._onEpisodeFinished, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.OnBackToLevel, slot0._onBackToLevel, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.OnCloseTask, slot0._onCloseTask, slot0)
+function var_0_0._addEvents(arg_10_0)
+	arg_10_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.EpisodeFinished, arg_10_0._onEpisodeFinished, arg_10_0)
+	arg_10_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.OnBackToLevel, arg_10_0._onBackToLevel, arg_10_0)
+	arg_10_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.OnCloseTask, arg_10_0._onCloseTask, arg_10_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.EpisodeFinished, slot0._onEpisodeFinished, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.OnCloseTask, slot0._onCloseTask, slot0)
+function var_0_0._removeEvents(arg_11_0)
+	arg_11_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.EpisodeFinished, arg_11_0._onEpisodeFinished, arg_11_0)
+	arg_11_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.OnCloseTask, arg_11_0._onCloseTask, arg_11_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
-	slot0.actConfig = ActivityConfig.instance:getActivityCo(slot0.actId)
+function var_0_0._editableInitView(arg_12_0)
+	arg_12_0.actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
+	arg_12_0.actConfig = ActivityConfig.instance:getActivityCo(arg_12_0.actId)
 
-	slot0:_initLevelItems()
-	slot0:_addEvents()
+	arg_12_0:_initLevelItems()
+	arg_12_0:_addEvents()
 end
 
-function slot0.onOpen(slot0)
-	RedDotController.instance:addRedDot(slot0._goTaskReddot, RedDotEnum.DotNode.V2a4WuErLiXiTask)
+function var_0_0.onOpen(arg_13_0)
+	RedDotController.instance:addRedDot(arg_13_0._goTaskReddot, RedDotEnum.DotNode.V2a4WuErLiXiTask)
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_jinru)
-	slot0:_refreshLeftTime()
-	slot0:_refreshTask()
-	TaskDispatcher.runRepeat(slot0._refreshLeftTime, slot0, 1)
+	arg_13_0:_refreshLeftTime()
+	arg_13_0:_refreshTask()
+	TaskDispatcher.runRepeat(arg_13_0._refreshLeftTime, arg_13_0, 1)
 end
 
-function slot0._refreshLeftTime(slot0)
-	slot0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(slot0.actId)
+function var_0_0._refreshLeftTime(arg_14_0)
+	arg_14_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(arg_14_0.actId)
 end
 
-function slot0._initLevelItems(slot0)
-	slot0._episodeItems = {}
+function var_0_0._initLevelItems(arg_15_0)
+	local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes[1]
 
-	for slot6 = 1, #WuErLiXiConfig.instance:getEpisodeCoList(slot0.actId) do
-		slot0._episodeItems[slot6] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goepisodecontent), WuErLiXiLevelItem, slot0)
+	arg_15_0._episodeItems = {}
 
-		slot0._episodeItems[slot6]:setParam(slot2[slot6], slot6, slot0.actId)
+	local var_15_1 = WuErLiXiConfig.instance:getEpisodeCoList(arg_15_0.actId)
 
-		if slot0._episodeItems[slot6]:isUnlock() then
-			slot0._curEpisodeIndex = slot6
+	for iter_15_0 = 1, #var_15_1 do
+		local var_15_2 = arg_15_0:getResInst(var_15_0, arg_15_0._goepisodecontent)
+		local var_15_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_2, WuErLiXiLevelItem, arg_15_0)
+
+		arg_15_0._episodeItems[iter_15_0] = var_15_3
+
+		arg_15_0._episodeItems[iter_15_0]:setParam(var_15_1[iter_15_0], iter_15_0, arg_15_0.actId)
+
+		if arg_15_0._episodeItems[iter_15_0]:isUnlock() then
+			arg_15_0._curEpisodeIndex = iter_15_0
 		end
 	end
 
-	slot0._curEpisodeIndex = WuErLiXiModel.instance:getCurEpisodeIndex() > 0 and slot3 or slot0._curEpisodeIndex
+	local var_15_4 = WuErLiXiModel.instance:getCurEpisodeIndex()
 
-	slot0:_focusLvItem(slot0._curEpisodeIndex)
+	arg_15_0._curEpisodeIndex = var_15_4 > 0 and var_15_4 or arg_15_0._curEpisodeIndex
+
+	arg_15_0:_focusLvItem(arg_15_0._curEpisodeIndex)
 end
 
-function slot0._finishStoryEnd(slot0)
-	if slot0._finishEpisodeIndex == #slot0._episodeItems then
-		slot0._curEpisodeIndex = slot0._finishEpisodeIndex
-		slot0._finishEpisodeIndex = nil
+function var_0_0._finishStoryEnd(arg_16_0)
+	if arg_16_0._finishEpisodeIndex == #arg_16_0._episodeItems then
+		arg_16_0._curEpisodeIndex = arg_16_0._finishEpisodeIndex
+		arg_16_0._finishEpisodeIndex = nil
 	else
-		slot0._curEpisodeIndex = slot0._finishEpisodeIndex + 1
+		arg_16_0._curEpisodeIndex = arg_16_0._finishEpisodeIndex + 1
 
-		slot0:_unlockStory()
+		arg_16_0:_unlockStory()
 	end
 end
 
-function slot0._unlockStory(slot0)
-	slot0._episodeItems[slot0._finishEpisodeIndex + 1]:playUnlock()
-	TaskDispatcher.runDelay(slot0._unlockLvEnd, slot0, 1.5)
+function var_0_0._unlockStory(arg_17_0)
+	arg_17_0._episodeItems[arg_17_0._finishEpisodeIndex + 1]:playUnlock()
+	TaskDispatcher.runDelay(arg_17_0._unlockLvEnd, arg_17_0, 1.5)
 end
 
-function slot0._unlockLvEnd(slot0)
-	slot0._episodeItems[slot0._finishEpisodeIndex + 1]:refreshUI()
+function var_0_0._unlockLvEnd(arg_18_0)
+	arg_18_0._episodeItems[arg_18_0._finishEpisodeIndex + 1]:refreshUI()
 
-	slot0._finishEpisodeIndex = nil
+	arg_18_0._finishEpisodeIndex = nil
 end
 
-function slot0._focusLvItem(slot0, slot1, slot2)
-	if slot2 then
-		ZProj.TweenHelper.DOLocalMoveY(slot0._goepisodecontent.transform, slot1 < uv0 and uv1 or uv1 + (slot1 - uv0) * (uv2 - uv1) / (#WuErLiXiConfig.instance:getEpisodeCoList(VersionActivity2_4Enum.ActivityId.WuErLiXi) - uv0), uv3, slot0._onFocusEnd, slot0, slot1)
+function var_0_0._focusLvItem(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = WuErLiXiConfig.instance:getEpisodeCoList(VersionActivity2_4Enum.ActivityId.WuErLiXi)
+	local var_19_1 = arg_19_1 < var_0_3 and var_0_2 or var_0_2 + (arg_19_1 - var_0_3) * (var_0_1 - var_0_2) / (#var_19_0 - var_0_3)
+
+	if arg_19_2 then
+		ZProj.TweenHelper.DOLocalMoveY(arg_19_0._goepisodecontent.transform, var_19_1, var_0_4, arg_19_0._onFocusEnd, arg_19_0, arg_19_1)
 	else
-		ZProj.TweenHelper.DOLocalMoveY(slot0._goepisodecontent.transform, slot4, uv3)
+		ZProj.TweenHelper.DOLocalMoveY(arg_19_0._goepisodecontent.transform, var_19_1, var_0_4)
 	end
 
-	WuErLiXiModel.instance:setCurEpisodeIndex(slot1)
+	WuErLiXiModel.instance:setCurEpisodeIndex(arg_19_1)
 end
 
-function slot0._onFocusEnd(slot0, slot1)
+function var_0_0._onFocusEnd(arg_20_0, arg_20_1)
+	return
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshLeftTime, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockLvEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._finishStoryEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockStory, slot0)
-	TaskDispatcher.cancelTask(slot0._playStoryFinishAnim, slot0)
+function var_0_0.onClose(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._refreshLeftTime, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._unlockLvEnd, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._finishStoryEnd, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._unlockStory, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._playStoryFinishAnim, arg_21_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0:_removeEvents()
 
-	slot0._episodeItems = nil
+	arg_22_0._episodeItems = nil
 end
 
-return slot0
+return var_0_0

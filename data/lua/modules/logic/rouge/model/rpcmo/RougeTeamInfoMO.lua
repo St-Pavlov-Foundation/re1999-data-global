@@ -1,267 +1,292 @@
-module("modules.logic.rouge.model.rpcmo.RougeTeamInfoMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeTeamInfoMO", package.seeall)
 
-slot0 = pureTable("RougeTeamInfoMO")
+local var_0_0 = pureTable("RougeTeamInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.battleHeroList, slot0.battleHeroMap = GameUtil.rpcInfosToListAndMap(slot1.battleHeroList, RougeBattleHeroMO, "index")
-	slot0.heroLifeList, slot0.heroLifeMap = GameUtil.rpcInfosToListAndMap(slot1.heroLifeList, RougeHeroLifeMO, "heroId")
-	slot0.heroInfoList, slot0.heroInfoMap = GameUtil.rpcInfosToListAndMap(slot1.heroInfoList, RougeHeroInfoMO, "heroId")
-	slot0._assistHeroMO = nil
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.battleHeroList, arg_1_0.battleHeroMap = GameUtil.rpcInfosToListAndMap(arg_1_1.battleHeroList, RougeBattleHeroMO, "index")
+	arg_1_0.heroLifeList, arg_1_0.heroLifeMap = GameUtil.rpcInfosToListAndMap(arg_1_1.heroLifeList, RougeHeroLifeMO, "heroId")
+	arg_1_0.heroInfoList, arg_1_0.heroInfoMap = GameUtil.rpcInfosToListAndMap(arg_1_1.heroInfoList, RougeHeroInfoMO, "heroId")
+	arg_1_0._assistHeroMO = nil
 
-	if slot1:HasField("assistHeroInfo") then
-		slot2 = Season123AssistHeroMO.New()
+	if arg_1_1:HasField("assistHeroInfo") then
+		local var_1_0 = Season123AssistHeroMO.New()
 
-		slot2:init(slot1.assistHeroInfo)
+		var_1_0:init(arg_1_1.assistHeroInfo)
 
-		slot0._assistHeroMO = Season123HeroUtils.createHeroMOByAssistMO(slot2)
+		arg_1_0._assistHeroMO = Season123HeroUtils.createHeroMOByAssistMO(var_1_0)
 
 		if RougeHeroGroupBalanceHelper.getIsBalanceMode() then
-			slot0._assistHeroMO:setOtherPlayerIsOpenTalent(true)
+			arg_1_0._assistHeroMO:setOtherPlayerIsOpenTalent(true)
 		end
 	end
 
-	slot0:_initSupportHeroAndSkill()
-	slot0:_initTeamList()
-	slot0:updateDeadHeroNum()
+	arg_1_0:_initSupportHeroAndSkill()
+	arg_1_0:_initTeamList()
+	arg_1_0:updateDeadHeroNum()
 end
 
-function slot0._initSupportHeroAndSkill(slot0)
-	slot0._supportSkillMap = {}
-	slot0._supportBattleHeroMap = {}
+function var_0_0._initSupportHeroAndSkill(arg_2_0)
+	arg_2_0._supportSkillMap = {}
+	arg_2_0._supportBattleHeroMap = {}
 
-	for slot4, slot5 in ipairs(slot0.battleHeroList) do
-		if slot5.supportHeroId > 0 and slot5.supportHeroSkill > 0 then
-			slot0._supportSkillMap[slot5.supportHeroId] = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(slot5.supportHeroId, nil, slot0:getAssistHeroMo(slot5.supportHeroId)) and slot6[slot5.supportHeroSkill]
-			slot0._supportBattleHeroMap[slot5.index + RougeEnum.FightTeamNormalHeroNum] = {
-				heroId = slot5.supportHeroId
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.battleHeroList) do
+		if iter_2_1.supportHeroId > 0 and iter_2_1.supportHeroSkill > 0 then
+			local var_2_0 = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(iter_2_1.supportHeroId, nil, arg_2_0:getAssistHeroMo(iter_2_1.supportHeroId))
+
+			arg_2_0._supportSkillMap[iter_2_1.supportHeroId] = var_2_0 and var_2_0[iter_2_1.supportHeroSkill]
+			arg_2_0._supportBattleHeroMap[iter_2_1.index + RougeEnum.FightTeamNormalHeroNum] = {
+				heroId = iter_2_1.supportHeroId
 			}
 		end
 	end
 end
 
-function slot0._initTeamList(slot0)
-	slot0._teamMap = {}
-	slot0._teamAssistMap = {}
+function var_0_0._initTeamList(arg_3_0)
+	arg_3_0._teamMap = {}
+	arg_3_0._teamAssistMap = {}
 
-	for slot4, slot5 in ipairs(slot0.battleHeroList) do
-		if slot5.heroId ~= 0 then
-			slot0._teamMap[slot5.heroId] = slot5
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.battleHeroList) do
+		if iter_3_1.heroId ~= 0 then
+			arg_3_0._teamMap[iter_3_1.heroId] = iter_3_1
 		end
 
-		if slot5.supportHeroId ~= 0 then
-			slot0._teamAssistMap[slot5.supportHeroId] = slot5
+		if iter_3_1.supportHeroId ~= 0 then
+			arg_3_0._teamAssistMap[iter_3_1.supportHeroId] = iter_3_1
 		end
 	end
 end
 
-function slot0.getAssistHeroMo(slot0, slot1)
-	if slot1 then
-		if slot0._assistHeroMO and slot0._assistHeroMO.heroId == slot1 then
-			return slot0._assistHeroMO
+function var_0_0.getAssistHeroMo(arg_4_0, arg_4_1)
+	if arg_4_1 then
+		if arg_4_0._assistHeroMO and arg_4_0._assistHeroMO.heroId == arg_4_1 then
+			return arg_4_0._assistHeroMO
 		end
 	else
-		return slot0._assistHeroMO
+		return arg_4_0._assistHeroMO
 	end
 end
 
-function slot0.getAssistHeroMoByUid(slot0, slot1)
-	if slot0._assistHeroMO and slot0._assistHeroMO.uid == slot1 then
-		return slot0._assistHeroMO
+function var_0_0.getAssistHeroMoByUid(arg_5_0, arg_5_1)
+	if arg_5_0._assistHeroMO and arg_5_0._assistHeroMO.uid == arg_5_1 then
+		return arg_5_0._assistHeroMO
 	end
 end
 
-function slot0.isAssistHero(slot0, slot1)
-	return slot0._assistHeroMO and slot0._assistHeroMO.heroId == slot1
+function var_0_0.isAssistHero(arg_6_0, arg_6_1)
+	return arg_6_0._assistHeroMO and arg_6_0._assistHeroMO.heroId == arg_6_1
 end
 
-function slot0.inTeam(slot0, slot1)
-	return slot0._teamMap[slot1] ~= nil
+function var_0_0.inTeam(arg_7_0, arg_7_1)
+	return arg_7_0._teamMap[arg_7_1] ~= nil
 end
 
-function slot0.inTeamAssist(slot0, slot1)
-	return slot0._teamAssistMap[slot1] ~= nil
+function var_0_0.inTeamAssist(arg_8_0, arg_8_1)
+	return arg_8_0._teamAssistMap[arg_8_1] ~= nil
 end
 
-function slot0.getAssistTargetHero(slot0, slot1)
-	return slot0._teamAssistMap and slot0._teamAssistMap[slot1]
+function var_0_0.getAssistTargetHero(arg_9_0, arg_9_1)
+	return arg_9_0._teamAssistMap and arg_9_0._teamAssistMap[arg_9_1]
 end
 
-function slot0.getHeroHp(slot0, slot1)
-	return slot0.heroLifeMap[slot1]
+function var_0_0.getHeroHp(arg_10_0, arg_10_1)
+	return arg_10_0.heroLifeMap[arg_10_1]
 end
 
-function slot0.getSupportSkillStrList(slot0)
-	for slot5 = 1, RougeEnum.FightTeamNormalHeroNum do
-		if slot0.battleHeroMap[slot5] and slot6.supportHeroSkill ~= 0 then
-			-- Nothing
+function var_0_0.getSupportSkillStrList(arg_11_0)
+	local var_11_0 = {}
+
+	for iter_11_0 = 1, RougeEnum.FightTeamNormalHeroNum do
+		local var_11_1 = arg_11_0.battleHeroMap[iter_11_0]
+
+		if var_11_1 and var_11_1.supportHeroSkill ~= 0 then
+			var_11_0[iter_11_0] = string.format("%s#%s", var_11_1.supportHeroId, var_11_1.supportHeroSkill)
 		else
-			slot1[slot5] = ""
+			var_11_0[iter_11_0] = ""
 		end
 	end
 
-	return {
-		[slot5] = string.format("%s#%s", slot6.supportHeroId, slot6.supportHeroSkill)
-	}
+	return var_11_0
 end
 
-function slot0.getSupportSkillIndex(slot0, slot1)
-	if not slot0:getSupportSkill(slot1) then
+function var_0_0.getSupportSkillIndex(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getSupportSkill(arg_12_1)
+
+	if not var_12_0 then
 		return
 	end
 
-	if not SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(slot1) then
+	local var_12_1 = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(arg_12_1)
+
+	if not var_12_1 then
 		return
 	end
 
-	for slot7, slot8 in pairs(slot3) do
-		if slot8 == slot2 then
-			return slot7
+	for iter_12_0, iter_12_1 in pairs(var_12_1) do
+		if iter_12_1 == var_12_0 then
+			return iter_12_0
 		end
 	end
 end
 
-function slot0.getSupportSkill(slot0, slot1)
-	return slot0._supportSkillMap[slot1]
+function var_0_0.getSupportSkill(arg_13_0, arg_13_1)
+	return arg_13_0._supportSkillMap[arg_13_1]
 end
 
-function slot0.setSupportSkill(slot0, slot1, slot2)
-	slot0._supportSkillMap[slot1] = slot2
+function var_0_0.setSupportSkill(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0._supportSkillMap[arg_14_1] = arg_14_2
 end
 
-function slot0.getGroupInfos(slot0)
-	slot2 = {}
+function var_0_0.getGroupInfos(arg_15_0)
+	local var_15_0 = RougeHeroGroupMO.New()
+	local var_15_1 = {}
+	local var_15_2 = {}
 
-	RougeHeroGroupMO.New():setMaxHeroCount(RougeEnum.FightTeamHeroNum)
+	var_15_0:setMaxHeroCount(RougeEnum.FightTeamHeroNum)
 
-	for slot7 = 1, RougeEnum.FightTeamHeroNum do
-		slot8 = slot0.battleHeroMap[slot7] or slot0._supportBattleHeroMap[slot7]
-		slot10 = HeroModel.instance:getByHeroId(slot8 and slot8.heroId or 0)
+	for iter_15_0 = 1, RougeEnum.FightTeamHeroNum do
+		local var_15_3 = arg_15_0.battleHeroMap[iter_15_0] or arg_15_0._supportBattleHeroMap[iter_15_0]
+		local var_15_4 = var_15_3 and var_15_3.heroId or 0
+		local var_15_5 = HeroModel.instance:getByHeroId(var_15_4)
+		local var_15_6 = var_15_3 and var_15_3.equipUid or "0"
 
-		table.insert(slot2, slot10 and slot10.uid or "0")
+		table.insert(var_15_1, var_15_5 and var_15_5.uid or "0")
 
-		if slot7 <= RougeEnum.FightTeamNormalHeroNum then
-			HeroGroupEquipMO.New():init({
-				index = slot7 - 1,
+		if iter_15_0 <= RougeEnum.FightTeamNormalHeroNum then
+			local var_15_7 = HeroGroupEquipMO.New()
+			local var_15_8 = iter_15_0 - 1
+
+			var_15_7:init({
+				index = var_15_8,
 				equipUid = {
-					slot8 and slot8.equipUid or "0"
+					var_15_6
 				}
 			})
+
+			var_15_2[var_15_8] = var_15_7
 		end
 	end
 
-	slot1:init({
+	var_15_0:init({
 		id = 1,
-		heroList = slot2,
-		equips = {
-			[slot13] = slot12
-		}
+		heroList = var_15_1,
+		equips = var_15_2
 	})
 
 	return {
-		slot1
+		var_15_0
 	}
 end
 
-function slot0.getBattleHeroList(slot0)
-	return slot0.battleHeroList
+function var_0_0.getBattleHeroList(arg_16_0)
+	return arg_16_0.battleHeroList
 end
 
-function slot0.updateTeamLife(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0.heroLifeMap[slot6.heroId] then
-			slot7:update(slot6)
+function var_0_0.updateTeamLife(arg_17_0, arg_17_1)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		local var_17_0 = arg_17_0.heroLifeMap[iter_17_1.heroId]
+
+		if var_17_0 then
+			var_17_0:update(iter_17_1)
 		else
-			slot7 = RougeHeroLifeMO.New()
+			local var_17_1 = RougeHeroLifeMO.New()
 
-			slot7:init(slot6)
+			var_17_1:init(iter_17_1)
 
-			slot0.heroLifeMap[slot7.heroId] = slot7
+			arg_17_0.heroLifeMap[var_17_1.heroId] = var_17_1
 
-			table.insert(slot0.heroLifeList, slot7)
+			table.insert(arg_17_0.heroLifeList, var_17_1)
 		end
 	end
 
-	slot0:updateDeadHeroNum()
+	arg_17_0:updateDeadHeroNum()
 end
 
-function slot0.updateExtraHeroInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0.heroInfoMap[slot6.heroId] then
-			slot7:update(slot6)
+function var_0_0.updateExtraHeroInfo(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		local var_18_0 = arg_18_0.heroInfoMap[iter_18_1.heroId]
+
+		if var_18_0 then
+			var_18_0:update(iter_18_1)
 		else
-			slot7 = RougeHeroInfoMO.New()
+			local var_18_1 = RougeHeroInfoMO.New()
 
-			slot7:init(slot6)
+			var_18_1:init(iter_18_1)
 
-			slot0.heroInfoMap[slot7.heroId] = slot7
+			arg_18_0.heroInfoMap[var_18_1.heroId] = var_18_1
 
-			table.insert(slot0.heroInfoList, slot7)
+			table.insert(arg_18_0.heroInfoList, var_18_1)
 		end
 	end
 end
 
-function slot0.updateTeamLifeAndDispatchEvent(slot0, slot1)
-	slot2 = RougeMapEnum.LifeChangeStatus.Idle
+function var_0_0.updateTeamLifeAndDispatchEvent(arg_19_0, arg_19_1)
+	local var_19_0 = RougeMapEnum.LifeChangeStatus.Idle
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0.heroLifeMap[slot7.heroId] then
-			if RougeMapHelper.getLifeChangeStatus(slot8.life, slot7.life) ~= RougeMapEnum.LifeChangeStatus.Idle then
-				slot2 = slot9
+	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+		local var_19_1 = arg_19_0.heroLifeMap[iter_19_1.heroId]
+
+		if var_19_1 then
+			local var_19_2 = RougeMapHelper.getLifeChangeStatus(var_19_1.life, iter_19_1.life)
+
+			if var_19_2 ~= RougeMapEnum.LifeChangeStatus.Idle then
+				var_19_0 = var_19_2
 			end
 
-			slot8:update(slot7)
+			var_19_1:update(iter_19_1)
 		else
-			slot8 = RougeHeroLifeMO.New()
+			local var_19_3 = RougeHeroLifeMO.New()
 
-			slot8:init(slot7)
+			var_19_3:init(iter_19_1)
 
-			slot0.heroLifeMap[slot8.heroId] = slot8
+			arg_19_0.heroLifeMap[var_19_3.heroId] = var_19_3
 
-			table.insert(slot0.heroLifeList, slot8)
+			table.insert(arg_19_0.heroLifeList, var_19_3)
 		end
 	end
 
-	if slot2 ~= RougeMapEnum.LifeChangeStatus.Idle then
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onTeamLifeChange, slot2)
+	if var_19_0 ~= RougeMapEnum.LifeChangeStatus.Idle then
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onTeamLifeChange, var_19_0)
 	end
 
-	slot0:updateDeadHeroNum()
+	arg_19_0:updateDeadHeroNum()
 end
 
-function slot0.getAllHeroCount(slot0)
-	return #slot0.heroLifeList
+function var_0_0.getAllHeroCount(arg_20_0)
+	return #arg_20_0.heroLifeList
 end
 
-function slot0.getAllHeroId(slot0)
-	slot1 = {}
+function var_0_0.getAllHeroId(arg_21_0)
+	local var_21_0 = {}
 
-	if slot0.heroLifeList then
-		for slot5, slot6 in ipairs(slot0.heroLifeList) do
-			table.insert(slot1, slot6.heroId)
+	if arg_21_0.heroLifeList then
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0.heroLifeList) do
+			local var_21_1 = iter_21_1.heroId
+
+			table.insert(var_21_0, var_21_1)
 		end
 	end
 
-	return slot1
+	return var_21_0
 end
 
-function slot0.updateDeadHeroNum(slot0)
-	slot0.deadHeroNum = 0
+function var_0_0.updateDeadHeroNum(arg_22_0)
+	arg_22_0.deadHeroNum = 0
 
-	if slot0.heroLifeList then
-		for slot4, slot5 in ipairs(slot0.heroLifeList) do
-			if slot5.life <= 0 then
-				slot0.deadHeroNum = slot0.deadHeroNum + 1
+	if arg_22_0.heroLifeList then
+		for iter_22_0, iter_22_1 in ipairs(arg_22_0.heroLifeList) do
+			if iter_22_1.life <= 0 then
+				arg_22_0.deadHeroNum = arg_22_0.deadHeroNum + 1
 			end
 		end
 	end
 end
 
-function slot0.getDeadHeroNum(slot0)
-	return slot0.deadHeroNum
+function var_0_0.getDeadHeroNum(arg_23_0)
+	return arg_23_0.deadHeroNum
 end
 
-function slot0.getHeroInfo(slot0, slot1)
-	return slot0.heroInfoMap and slot0.heroInfoMap[slot1]
+function var_0_0.getHeroInfo(arg_24_0, arg_24_1)
+	return arg_24_0.heroInfoMap and arg_24_0.heroInfoMap[arg_24_1]
 end
 
-return slot0
+return var_0_0

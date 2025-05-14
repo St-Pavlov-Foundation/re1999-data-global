@@ -1,163 +1,170 @@
-module("modules.logic.versionactivity2_0.joe.view.ActJoeLevelView", package.seeall)
+﻿module("modules.logic.versionactivity2_0.joe.view.ActJoeLevelView", package.seeall)
 
-slot0 = class("ActJoeLevelView", BaseView)
+local var_0_0 = class("ActJoeLevelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._gostoryPath = gohelper.findChild(slot0.viewGO, "#go_storyPath")
-	slot0._gostoryScroll = gohelper.findChild(slot0.viewGO, "#go_storyPath/#go_storyScroll")
-	slot0._gostoryStages = gohelper.findChild(slot0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	slot0._gofightPath = gohelper.findChild(slot0.viewGO, "#go_fightPath")
-	slot0._gofightScroll = gohelper.findChild(slot0.viewGO, "#go_fightPath/#go_fightScroll")
-	slot0._gofightStages = gohelper.findChild(slot0.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
-	slot0._goTitle = gohelper.findChild(slot0.viewGO, "#go_Title")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#go_Title/#simage_title")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_Title/#go_time")
-	slot0._txtlimittime = gohelper.findChildText(slot0.viewGO, "#go_Title/#go_time/image_LimitTimeBG/#txt_limittime")
-	slot0._btnPlayBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Title/#btn_PlayBtn")
-	slot0._btnStory = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_Story")
-	slot0._goStoryN = gohelper.findChild(slot0._btnStory.gameObject, "go_UnSelected")
-	slot0._goStoryS = gohelper.findChild(slot0._btnStory.gameObject, "go_Selected")
-	slot0._btnFight = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_Fight")
-	slot0._goFightN = gohelper.findChild(slot0._btnFight.gameObject, "go_UnSelected")
-	slot0._goFightS = gohelper.findChild(slot0._btnFight.gameObject, "go_Selected")
-	slot0._btnTask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Task")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0._animEvent = slot0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	slot0._animPath = gohelper.findChild(slot0._gostoryScroll, "path/path_2"):GetComponent(gohelper.Type_Animator)
-	slot0._animTask = gohelper.findChild(slot0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	slot0._scrollStory = gohelper.findChildScrollRect(slot0._gostoryPath, "")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
+	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
+	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	arg_1_0._gofightPath = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath")
+	arg_1_0._gofightScroll = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll")
+	arg_1_0._gofightStages = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
+	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
+	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/image_LimitTimeBG/#txt_limittime")
+	arg_1_0._btnPlayBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Title/#btn_PlayBtn")
+	arg_1_0._btnStory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Story")
+	arg_1_0._goStoryN = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_UnSelected")
+	arg_1_0._goStoryS = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_Selected")
+	arg_1_0._btnFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Fight")
+	arg_1_0._goFightN = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_UnSelected")
+	arg_1_0._goFightS = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_Selected")
+	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+	arg_1_0._animPath = gohelper.findChild(arg_1_0._gostoryScroll, "path/path_2"):GetComponent(gohelper.Type_Animator)
+	arg_1_0._animTask = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
+	arg_1_0._scrollStory = gohelper.findChildScrollRect(arg_1_0._gostoryPath, "")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnPlayBtn:AddClickListener(slot0._btnPlayBtnOnClick, slot0)
-	slot0._btnStory:AddClickListener(slot0._btnStoryOnClick, slot0)
-	slot0._btnFight:AddClickListener(slot0._btnFightOnClick, slot0)
-	slot0._btnTask:AddClickListener(slot0._btnTaskOnClick, slot0)
-	slot0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd, slot0._onStoryOpenEnd, slot0)
-	slot0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnFightOpenEnd, slot0._onFightOpenEnd, slot0)
-	slot0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnGoStoryEnd, slot0._onGoStoryEnd, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnPlayBtn:AddClickListener(arg_2_0._btnPlayBtnOnClick, arg_2_0)
+	arg_2_0._btnStory:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
+	arg_2_0._btnFight:AddClickListener(arg_2_0._btnFightOnClick, arg_2_0)
+	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
+	arg_2_0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd, arg_2_0._onStoryOpenEnd, arg_2_0)
+	arg_2_0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnFightOpenEnd, arg_2_0._onFightOpenEnd, arg_2_0)
+	arg_2_0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnGoStoryEnd, arg_2_0._onGoStoryEnd, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnPlayBtn:RemoveClickListener()
-	slot0._btnStory:RemoveClickListener()
-	slot0._btnFight:RemoveClickListener()
-	slot0._btnTask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnPlayBtn:RemoveClickListener()
+	arg_3_0._btnStory:RemoveClickListener()
+	arg_3_0._btnFight:RemoveClickListener()
+	arg_3_0._btnTask:RemoveClickListener()
 end
 
-function slot0._btnPlayBtnOnClick(slot0)
-	if slot0.actConfig.storyId > 0 then
-		StoryController.instance:playStory(slot0.actConfig.storyId)
+function var_0_0._btnPlayBtnOnClick(arg_4_0)
+	if arg_4_0.actConfig.storyId > 0 then
+		StoryController.instance:playStory(arg_4_0.actConfig.storyId)
 	end
 end
 
-function slot0._btnStoryOnClick(slot0, slot1)
-	if slot0._goStoryS.activeInHierarchy then
+function var_0_0._btnStoryOnClick(arg_5_0, arg_5_1)
+	if arg_5_0._goStoryS.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(slot0._goStoryN, false)
-	gohelper.setActive(slot0._goStoryS, true)
-	gohelper.setActive(slot0._goFightN, true)
-	gohelper.setActive(slot0._goFightS, false)
-	gohelper.setActive(slot0._btnPlayBtn, slot0.actConfig.storyId > 0)
+	gohelper.setActive(arg_5_0._goStoryN, false)
+	gohelper.setActive(arg_5_0._goStoryS, true)
+	gohelper.setActive(arg_5_0._goFightN, true)
+	gohelper.setActive(arg_5_0._goFightS, false)
+	gohelper.setActive(arg_5_0._btnPlayBtn, arg_5_0.actConfig.storyId > 0)
 
-	if slot1 then
-		slot0._anim:Play("openstory", 0, 0)
+	if arg_5_1 then
+		arg_5_0._anim:Play("openstory", 0, 0)
 	else
-		slot0._anim:Play("gostory", 0, 0)
+		arg_5_0._anim:Play("gostory", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_switch)
 	end
 end
 
-function slot0._btnFightOnClick(slot0, slot1)
-	if slot0._goFightS.activeInHierarchy then
+function var_0_0._btnFightOnClick(arg_6_0, arg_6_1)
+	if arg_6_0._goFightS.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(slot0._goStoryN, true)
-	gohelper.setActive(slot0._goStoryS, false)
-	gohelper.setActive(slot0._goFightN, false)
-	gohelper.setActive(slot0._goFightS, true)
-	gohelper.setActive(slot0._btnPlayBtn, false)
+	gohelper.setActive(arg_6_0._goStoryN, true)
+	gohelper.setActive(arg_6_0._goStoryS, false)
+	gohelper.setActive(arg_6_0._goFightN, false)
+	gohelper.setActive(arg_6_0._goFightS, true)
+	gohelper.setActive(arg_6_0._btnPlayBtn, false)
 
-	if slot1 then
-		slot0._anim:Play("openfight", 0, 0)
+	if arg_6_1 then
+		arg_6_0._anim:Play("openfight", 0, 0)
 	else
-		slot0._anim:Play("gofight", 0, 0)
+		arg_6_0._anim:Play("gofight", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_switch)
 	end
 end
 
-function slot0._btnTaskOnClick(slot0)
+function var_0_0._btnTaskOnClick(arg_7_0)
 	ViewMgr.instance:openView(ViewName.ActJoeTaskView)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = VersionActivity2_0Enum.ActivityId.Joe
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._gostoryPath)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.actId = VersionActivity2_0Enum.ActivityId.Joe
+	arg_8_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_8_0._gostoryPath)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_8_0._drag:AddDragBeginListener(arg_8_0._onDragBegin, arg_8_0)
+	arg_8_0._drag:AddDragEndListener(arg_8_0._onDragEnd, arg_8_0)
 
-	slot0._touch = SLFramework.UGUI.UIClickListener.Get(slot0._gostoryPath)
+	arg_8_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_8_0._gostoryPath)
 
-	slot0._touch:AddClickDownListener(slot0._onClickDown, slot0)
+	arg_8_0._touch:AddClickDownListener(arg_8_0._onClickDown, arg_8_0)
 
-	slot0._audioScroll = MonoHelper.addLuaComOnceToGo(slot0._gostoryPath, DungeonMapEpisodeAudio, slot0._scrollStory)
-	slot0.actConfig = ActivityConfig.instance:getActivityCo(slot0.actId)
-	slot1 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
-	slot0._offsetX = (slot1 - -300) / 2
-	slot0.minContentAnchorX = -4660 + slot1
+	arg_8_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_8_0._gostoryPath, DungeonMapEpisodeAudio, arg_8_0._scrollStory)
+	arg_8_0.actConfig = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
 
-	RoleActivityModel.instance:initData(slot0.actId)
-	slot0:_initStageItems()
-	gohelper.setActive(slot0._btnPlayBtn, slot0.actConfig.storyId > 0)
+	local var_8_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+
+	arg_8_0._offsetX = (var_8_0 - -300) / 2
+	arg_8_0.minContentAnchorX = -4660 + var_8_0
+
+	RoleActivityModel.instance:initData(arg_8_0.actId)
+	arg_8_0:_initStageItems()
+	gohelper.setActive(arg_8_0._btnPlayBtn, arg_8_0.actConfig.storyId > 0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoleActivityController.instance, RoleActivityEvent.StoryItemClick, slot0.OnStoryItemClick, slot0)
-	slot0:addEventCb(RoleActivityController.instance, RoleActivityEvent.FightItemClick, slot0.OnFightItemClick, slot0)
-	slot0:addEventCb(RoleActivityController.instance, RoleActivityEvent.TabSwitch, slot0.OnTabSwitch, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.Finish, slot0.OnStoryFinish, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, slot0.OnEndDungeonPush, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0.OnDotChange, slot0)
-	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "#go_reddot"), RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId)
-	slot0:OnDotChange()
-	slot0:_showLeftTime()
-	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 1)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.StoryItemClick, arg_9_0.OnStoryItemClick, arg_9_0)
+	arg_9_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.FightItemClick, arg_9_0.OnFightItemClick, arg_9_0)
+	arg_9_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.TabSwitch, arg_9_0.OnTabSwitch, arg_9_0)
+	arg_9_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_9_0.OnStoryFinish, arg_9_0)
+	arg_9_0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, arg_9_0.OnEndDungeonPush, arg_9_0)
+	arg_9_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_9_0.OnDotChange, arg_9_0)
 
-	if slot0.viewParam and slot0.viewParam.needShowFight then
-		if RoleActivityModel.instance:getEnterFightIndex(slot0.actId) then
-			slot0.latestfightItem = slot2
+	local var_9_0 = gohelper.findChild(arg_9_0._btnTask.gameObject, "#go_reddot")
 
-			for slot6, slot7 in ipairs(slot0.fightItemList) do
-				slot7:refreshSelect(slot2)
+	RedDotController.instance:addRedDot(var_9_0, RedDotEnum.DotNode.V1a6RoleActivityTask, arg_9_0.actId)
+	arg_9_0:OnDotChange()
+	arg_9_0:_showLeftTime()
+	TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 1)
+
+	if arg_9_0.viewParam and arg_9_0.viewParam.needShowFight then
+		local var_9_1 = RoleActivityModel.instance:getEnterFightIndex(arg_9_0.actId)
+
+		if var_9_1 then
+			arg_9_0.latestfightItem = var_9_1
+
+			for iter_9_0, iter_9_1 in ipairs(arg_9_0.fightItemList) do
+				iter_9_1:refreshSelect(var_9_1)
 			end
 		end
 
-		slot0:_btnFightOnClick(true)
-		slot0:_lockScreen(true)
-		TaskDispatcher.runDelay(slot0._delayOpenFight, slot0, 0.3)
+		arg_9_0:_btnFightOnClick(true)
+		arg_9_0:_lockScreen(true)
+		TaskDispatcher.runDelay(arg_9_0._delayOpenFight, arg_9_0, 0.3)
 	else
-		slot0:_btnStoryOnClick(true)
+		arg_9_0:_btnStoryOnClick(true)
 
-		if slot0:_checkFirstEnter() then
-			slot0:_lockScreen(true)
-			slot0.storyItemList[1]:lockStatus()
-			TaskDispatcher.runDelay(slot0._playFirstUnlock, slot0, 0.8)
+		if arg_9_0:_checkFirstEnter() then
+			arg_9_0:_lockScreen(true)
+			arg_9_0.storyItemList[1]:lockStatus()
+			TaskDispatcher.runDelay(arg_9_0._playFirstUnlock, arg_9_0, 0.8)
 		end
 	end
 end
 
-function slot0._checkFirstEnter(slot0)
-	if not slot0.storyItemList[2]:isUnlock() and PlayerPrefsHelper.getNumber("ActJoeFirstEnter", 0) == 0 then
+function var_0_0._checkFirstEnter(arg_10_0)
+	if not arg_10_0.storyItemList[2]:isUnlock() and PlayerPrefsHelper.getNumber("ActJoeFirstEnter", 0) == 0 then
 		PlayerPrefsHelper.setNumber("ActJoeFirstEnter", 1)
 
 		return true
@@ -166,155 +173,176 @@ function slot0._checkFirstEnter(slot0)
 	return false
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._showLeftTime, slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenFight, slot0)
-	TaskDispatcher.cancelTask(slot0._playFirstUnlock, slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenStory, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockStoryEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._finishStoryEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._playPathAnim, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockFightEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockStory, slot0)
-	TaskDispatcher.cancelTask(slot0._starShowEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._playStoryFinishAnim, slot0)
-	slot0:_lockScreen(false)
+function var_0_0.onClose(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._showLeftTime, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._delayOpenFight, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._playFirstUnlock, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._delayOpenStory, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._unlockStoryEnd, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._finishStoryEnd, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._playPathAnim, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._unlockFightEnd, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._unlockStory, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._starShowEnd, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._playStoryFinishAnim, arg_11_0)
+	arg_11_0:_lockScreen(false)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.storyItemList = nil
-	slot0.fightItemList = nil
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0.storyItemList = nil
+	arg_12_0.fightItemList = nil
 
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragEndListener()
+	if arg_12_0._drag then
+		arg_12_0._drag:RemoveDragBeginListener()
+		arg_12_0._drag:RemoveDragEndListener()
 
-		slot0._drag = nil
+		arg_12_0._drag = nil
 	end
 
-	if slot0._touch then
-		slot0._touch:RemoveClickDownListener()
+	if arg_12_0._touch then
+		arg_12_0._touch:RemoveClickDownListener()
 
-		slot0._touch = nil
+		arg_12_0._touch = nil
 	end
 end
 
-function slot0.OnStoryItemClick(slot0, slot1)
-	slot0:_focusStoryItem(slot1, true)
+function var_0_0.OnStoryItemClick(arg_13_0, arg_13_1)
+	arg_13_0:_focusStoryItem(arg_13_1, true)
 end
 
-function slot0.OnFightItemClick(slot0, slot1)
-	if slot0.latestfightItem == slot1 then
+function var_0_0.OnFightItemClick(arg_14_0, arg_14_1)
+	if arg_14_0.latestfightItem == arg_14_1 then
 		return
 	end
 
-	slot0.latestfightItem = slot1
+	arg_14_0.latestfightItem = arg_14_1
 
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.fight_switch)
 
-	for slot5, slot6 in ipairs(slot0.fightItemList) do
-		slot6:refreshSelect(slot1)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.fightItemList) do
+		iter_14_1:refreshSelect(arg_14_1)
 	end
 end
 
-function slot0.OnTabSwitch(slot0, slot1)
-	if slot1 then
-		slot0:_btnFightOnClick()
+function var_0_0.OnTabSwitch(arg_15_0, arg_15_1)
+	if arg_15_1 then
+		arg_15_0:_btnFightOnClick()
 	else
-		slot0:_btnStoryOnClick()
+		arg_15_0:_btnStoryOnClick()
 	end
 end
 
-function slot0.OnStoryFinish(slot0)
-	TaskDispatcher.runDelay(slot0._delayOpenStory, slot0, 0.4)
+function var_0_0.OnStoryFinish(arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0._delayOpenStory, arg_16_0, 0.4)
 end
 
-function slot0.OnEndDungeonPush(slot0)
-	RoleActivityModel.instance:updateData(slot0.actId)
-	TaskDispatcher.runDelay(slot0._playStoryFinishAnim, slot0, 0.73)
+function var_0_0.OnEndDungeonPush(arg_17_0)
+	RoleActivityModel.instance:updateData(arg_17_0.actId)
+	TaskDispatcher.runDelay(arg_17_0._playStoryFinishAnim, arg_17_0, 0.73)
 end
 
-function slot0.OnDotChange(slot0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId) then
-		slot0._animTask:Play("loop")
+function var_0_0.OnDotChange(arg_18_0)
+	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, arg_18_0.actId) then
+		arg_18_0._animTask:Play("loop")
 	else
-		slot0._animTask:Play("idle")
+		arg_18_0._animTask:Play("idle")
 	end
 end
 
-function slot0._onStoryOpenEnd(slot0)
-	slot0:_initPathStatus()
+function var_0_0._onStoryOpenEnd(arg_19_0)
+	arg_19_0:_initPathStatus()
 end
 
-function slot0._onFightOpenEnd(slot0)
-	slot0:_playFightFinishAnim()
+function var_0_0._onFightOpenEnd(arg_20_0)
+	arg_20_0:_playFightFinishAnim()
 end
 
-function slot0._onGoStoryEnd(slot0)
-	slot0:_initPathStatus()
+function var_0_0._onGoStoryEnd(arg_21_0)
+	arg_21_0:_initPathStatus()
 end
 
-function slot0._onDragBegin(slot0)
-	slot0._audioScroll:onDragBegin()
+function var_0_0._onDragBegin(arg_22_0)
+	arg_22_0._audioScroll:onDragBegin()
 end
 
-function slot0._onDragEnd(slot0)
-	slot0._audioScroll:onDragEnd()
+function var_0_0._onDragEnd(arg_23_0)
+	arg_23_0._audioScroll:onDragEnd()
 end
 
-function slot0._onClickDown(slot0)
-	slot0._audioScroll:onClickDown()
+function var_0_0._onClickDown(arg_24_0)
+	arg_24_0._audioScroll:onClickDown()
 end
 
-function slot0._initStageItems(slot0)
-	slot1, slot2 = nil
-	slot0.storyItemList = {}
+function var_0_0._initStageItems(arg_25_0)
+	local var_25_0
+	local var_25_1
+	local var_25_2 = arg_25_0.viewContainer:getSetting().otherRes[1]
 
-	for slot7 = 1, #RoleActivityConfig.instance:getStoryLevelList(slot0.actId) do
-		slot0.storyItemList[slot7] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], gohelper.findChild(slot0._gostoryStages, "stage" .. slot7)), RoleActStoryItem, slot0)
+	arg_25_0.storyItemList = {}
 
-		slot0.storyItemList[slot7]:setParam(slot3[slot7], slot7, slot0.actId)
+	local var_25_3 = RoleActivityConfig.instance:getStoryLevelList(arg_25_0.actId)
+	local var_25_4 = #var_25_3
 
-		if slot0.storyItemList[slot7]:isUnlock() then
-			slot0.latestStoryItem = slot7
+	for iter_25_0 = 1, var_25_4 do
+		local var_25_5 = gohelper.findChild(arg_25_0._gostoryStages, "stage" .. iter_25_0)
+		local var_25_6 = arg_25_0:getResInst(var_25_2, var_25_5)
+		local var_25_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_6, RoleActStoryItem, arg_25_0)
+
+		arg_25_0.storyItemList[iter_25_0] = var_25_7
+
+		arg_25_0.storyItemList[iter_25_0]:setParam(var_25_3[iter_25_0], iter_25_0, arg_25_0.actId)
+
+		if arg_25_0.storyItemList[iter_25_0]:isUnlock() then
+			arg_25_0.latestStoryItem = iter_25_0
 		end
 	end
 
-	slot0:_focusStoryItem(slot0.latestStoryItem)
+	arg_25_0:_focusStoryItem(arg_25_0.latestStoryItem)
 
-	slot0.fightItemList = {}
+	local var_25_8 = arg_25_0.viewContainer:getSetting().otherRes[2]
 
-	for slot8 = 1, #RoleActivityConfig.instance:getBattleLevelList(slot0.actId) / 2 do
-		slot0.fightItemList[slot8] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], gohelper.findChild(slot0._gofightStages, "stage" .. slot8)), RoleActFightItem, slot0)
+	arg_25_0.fightItemList = {}
 
-		slot0.fightItemList[slot8]:setParam(slot4[2 * slot8 - 1], slot8, slot0.actId)
+	local var_25_9 = RoleActivityConfig.instance:getBattleLevelList(arg_25_0.actId)
+	local var_25_10 = #var_25_9 / 2
 
-		if slot0.fightItemList[slot8]:isUnlock() then
-			slot0.latestfightItem = slot8
+	for iter_25_1 = 1, var_25_10 do
+		local var_25_11 = gohelper.findChild(arg_25_0._gofightStages, "stage" .. iter_25_1)
+		local var_25_12 = arg_25_0:getResInst(var_25_8, var_25_11)
+		local var_25_13 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_12, RoleActFightItem, arg_25_0)
+
+		arg_25_0.fightItemList[iter_25_1] = var_25_13
+
+		arg_25_0.fightItemList[iter_25_1]:setParam(var_25_9[2 * iter_25_1 - 1], iter_25_1, arg_25_0.actId)
+
+		if arg_25_0.fightItemList[iter_25_1]:isUnlock() then
+			arg_25_0.latestfightItem = iter_25_1
 		end
 	end
 
-	slot0.fightItemList[slot0.latestfightItem]:refreshSelect()
+	arg_25_0.fightItemList[arg_25_0.latestfightItem]:refreshSelect()
 end
 
-function slot0._playFirstUnlock(slot0)
-	slot0.finishStoryIndex = 0
+function var_0_0._playFirstUnlock(arg_26_0)
+	arg_26_0.finishStoryIndex = 0
 
-	slot0.storyItemList[1]:playUnlock()
-	TaskDispatcher.runDelay(slot0._unlockStoryEnd, slot0, 1.33)
+	arg_26_0.storyItemList[1]:playUnlock()
+	TaskDispatcher.runDelay(arg_26_0._unlockStoryEnd, arg_26_0, 1.33)
 end
 
-function slot0._playStoryFinishAnim(slot0)
-	if RoleActivityModel.instance:getNewFinishStoryLvl() then
-		for slot5, slot6 in ipairs(slot0.storyItemList) do
-			if slot6.id == slot1 then
-				slot0:_lockScreen(true)
+function var_0_0._playStoryFinishAnim(arg_27_0)
+	local var_27_0 = RoleActivityModel.instance:getNewFinishStoryLvl()
 
-				slot0.finishStoryIndex = slot5
+	if var_27_0 then
+		for iter_27_0, iter_27_1 in ipairs(arg_27_0.storyItemList) do
+			if iter_27_1.id == var_27_0 then
+				arg_27_0:_lockScreen(true)
 
-				slot6:playFinish()
-				slot6:playStarAnim()
-				TaskDispatcher.runDelay(slot0._finishStoryEnd, slot0, 1)
+				arg_27_0.finishStoryIndex = iter_27_0
+
+				iter_27_1:playFinish()
+				iter_27_1:playStarAnim()
+				TaskDispatcher.runDelay(arg_27_0._finishStoryEnd, arg_27_0, 1)
 
 				break
 			end
@@ -324,56 +352,60 @@ function slot0._playStoryFinishAnim(slot0)
 	end
 end
 
-function slot0._finishStoryEnd(slot0)
-	if slot0.finishStoryIndex == #slot0.storyItemList then
-		slot0.latestStoryItem = slot0.finishStoryIndex
-		slot0.finishStoryIndex = nil
+function var_0_0._finishStoryEnd(arg_28_0)
+	if arg_28_0.finishStoryIndex == #arg_28_0.storyItemList then
+		arg_28_0.latestStoryItem = arg_28_0.finishStoryIndex
+		arg_28_0.finishStoryIndex = nil
 
-		slot0:_lockScreen(false)
+		arg_28_0:_lockScreen(false)
 	else
-		slot0.latestStoryItem = slot0.finishStoryIndex + 1
+		arg_28_0.latestStoryItem = arg_28_0.finishStoryIndex + 1
 
-		slot0:_playPathAnim()
+		arg_28_0:_playPathAnim()
 	end
 end
 
-function slot0._playPathAnim(slot0)
-	slot0._animPath.speed = 1
+function var_0_0._playPathAnim(arg_29_0)
+	local var_29_0 = "go" .. arg_29_0.finishStoryIndex
 
-	slot0._animPath:Play("go" .. slot0.finishStoryIndex)
-	TaskDispatcher.runDelay(slot0._unlockStory, slot0, 0.33)
+	arg_29_0._animPath.speed = 1
+
+	arg_29_0._animPath:Play(var_29_0)
+	TaskDispatcher.runDelay(arg_29_0._unlockStory, arg_29_0, 0.33)
 end
 
-function slot0._unlockStory(slot0)
-	slot0.storyItemList[slot0.finishStoryIndex + 1]:playUnlock()
-	TaskDispatcher.runDelay(slot0._unlockStoryEnd, slot0, 1.33)
+function var_0_0._unlockStory(arg_30_0)
+	arg_30_0.storyItemList[arg_30_0.finishStoryIndex + 1]:playUnlock()
+	TaskDispatcher.runDelay(arg_30_0._unlockStoryEnd, arg_30_0, 1.33)
 end
 
-function slot0._unlockStoryEnd(slot0)
-	slot0.storyItemList[slot0.finishStoryIndex + 1]:refreshStatus()
+function var_0_0._unlockStoryEnd(arg_31_0)
+	arg_31_0.storyItemList[arg_31_0.finishStoryIndex + 1]:refreshStatus()
 
-	slot0.finishStoryIndex = nil
+	arg_31_0.finishStoryIndex = nil
 
-	slot0:_lockScreen(false)
+	arg_31_0:_lockScreen(false)
 end
 
-function slot0._playFightFinishAnim(slot0)
-	if RoleActivityModel.instance:getNewFinishFightLvl() then
-		RoleActivityModel.instance:updateData(slot0.actId)
+function var_0_0._playFightFinishAnim(arg_32_0)
+	local var_32_0 = RoleActivityModel.instance:getNewFinishFightLvl()
 
-		for slot5, slot6 in ipairs(slot0.fightItemList) do
-			if slot6.id == slot1 then
-				slot0.finishFightIndex = slot5
+	if var_32_0 then
+		RoleActivityModel.instance:updateData(arg_32_0.actId)
 
-				slot6:refreshStar()
-				slot6:playStarAnim(true)
-				TaskDispatcher.runDelay(slot0._starShowEnd, slot0, 0.67)
+		for iter_32_0, iter_32_1 in ipairs(arg_32_0.fightItemList) do
+			if iter_32_1.id == var_32_0 then
+				arg_32_0.finishFightIndex = iter_32_0
+
+				iter_32_1:refreshStar()
+				iter_32_1:playStarAnim(true)
+				TaskDispatcher.runDelay(arg_32_0._starShowEnd, arg_32_0, 0.67)
 
 				break
-			elseif slot6.hardConfig.id == slot1 then
-				slot6:refreshStar()
-				slot6:playStarAnim()
-				slot0:_lockScreen(false)
+			elseif iter_32_1.hardConfig.id == var_32_0 then
+				iter_32_1:refreshStar()
+				iter_32_1:playStarAnim()
+				arg_32_0:_lockScreen(false)
 
 				break
 			end
@@ -384,72 +416,75 @@ function slot0._playFightFinishAnim(slot0)
 		return
 	end
 
-	slot0:_lockScreen(false)
+	arg_32_0:_lockScreen(false)
 end
 
-function slot0._starShowEnd(slot0)
-	slot0.fightItemList[slot0.finishFightIndex]:playHardUnlock()
-	TaskDispatcher.runDelay(slot0._unlockFightEnd, slot0, 1.7)
+function var_0_0._starShowEnd(arg_33_0)
+	arg_33_0.fightItemList[arg_33_0.finishFightIndex]:playHardUnlock()
+	TaskDispatcher.runDelay(arg_33_0._unlockFightEnd, arg_33_0, 1.7)
 
-	if slot0.fightItemList[slot0.finishFightIndex + 1] then
-		slot0.fightItemList[slot0.finishFightIndex + 1]:playUnlock()
+	if arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1] then
+		arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1]:playUnlock()
 	end
 end
 
-function slot0._unlockFightEnd(slot0)
-	slot0.fightItemList[slot0.finishFightIndex]:refreshStatus()
+function var_0_0._unlockFightEnd(arg_34_0)
+	arg_34_0.fightItemList[arg_34_0.finishFightIndex]:refreshStatus()
 
-	if slot0.fightItemList[slot0.finishFightIndex + 1] then
-		slot0.fightItemList[slot0.finishFightIndex + 1]:refreshStatus()
+	if arg_34_0.fightItemList[arg_34_0.finishFightIndex + 1] then
+		arg_34_0.fightItemList[arg_34_0.finishFightIndex + 1]:refreshStatus()
 	end
 
-	slot0.finishFightIndex = nil
+	arg_34_0.finishFightIndex = nil
 
-	slot0:_lockScreen(false)
+	arg_34_0:_lockScreen(false)
 end
 
-function slot0._delayOpenStory(slot0)
-	slot0._anim:Play("openstory", 0, 0)
+function var_0_0._delayOpenStory(arg_35_0)
+	arg_35_0._anim:Play("openstory", 0, 0)
 end
 
-function slot0._delayOpenFight(slot0)
-	slot0._anim:Play("openfight", 0, 0)
+function var_0_0._delayOpenFight(arg_36_0)
+	arg_36_0._anim:Play("openfight", 0, 0)
 end
 
-function slot0._showLeftTime(slot0)
-	slot0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(slot0.actId)
+function var_0_0._showLeftTime(arg_37_0)
+	arg_37_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(arg_37_0.actId)
 end
 
-function slot0._initPathStatus(slot0)
-	if slot0.latestStoryItem > 1 then
-		slot0._animPath:Play("go" .. slot0.latestStoryItem - 1, 0, 1)
+function var_0_0._initPathStatus(arg_38_0)
+	if arg_38_0.latestStoryItem > 1 then
+		arg_38_0._animPath:Play("go" .. arg_38_0.latestStoryItem - 1, 0, 1)
 	else
-		slot0._animPath.speed = 0
+		arg_38_0._animPath.speed = 0
 
-		slot0._animPath:Play("go1", 0, 0)
+		arg_38_0._animPath:Play("go1", 0, 0)
 	end
 end
 
-function slot0._focusStoryItem(slot0, slot1, slot2)
-	if slot0._offsetX - recthelper.getAnchorX(slot0.storyItemList[slot1].transform.parent) > 0 then
-		slot4 = 0
-	elseif slot4 < slot0.minContentAnchorX then
-		slot4 = slot0.minContentAnchorX
+function var_0_0._focusStoryItem(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = recthelper.getAnchorX(arg_39_0.storyItemList[arg_39_1].transform.parent)
+	local var_39_1 = arg_39_0._offsetX - var_39_0
+
+	if var_39_1 > 0 then
+		var_39_1 = 0
+	elseif var_39_1 < arg_39_0.minContentAnchorX then
+		var_39_1 = arg_39_0.minContentAnchorX
 	end
 
-	if slot2 then
-		ZProj.TweenHelper.DOAnchorPosX(slot0._gostoryScroll.transform, slot4, 0.26, slot0._onFocusEnd, slot0, slot1)
+	if arg_39_2 then
+		ZProj.TweenHelper.DOAnchorPosX(arg_39_0._gostoryScroll.transform, var_39_1, 0.26, arg_39_0._onFocusEnd, arg_39_0, arg_39_1)
 	else
-		ZProj.TweenHelper.DOAnchorPosX(slot0._gostoryScroll.transform, slot4, 0.26)
+		ZProj.TweenHelper.DOAnchorPosX(arg_39_0._gostoryScroll.transform, var_39_1, 0.26)
 	end
 end
 
-function slot0._onFocusEnd(slot0, slot1)
-	slot0.storyItemList[slot1]:playStory()
+function var_0_0._onFocusEnd(arg_40_0, arg_40_1)
+	arg_40_0.storyItemList[arg_40_1]:playStory()
 end
 
-function slot0._lockScreen(slot0, slot1)
-	if slot1 then
+function var_0_0._lockScreen(arg_41_0, arg_41_1)
+	if arg_41_1 then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("JoeLock")
 	else
@@ -458,4 +493,4 @@ function slot0._lockScreen(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

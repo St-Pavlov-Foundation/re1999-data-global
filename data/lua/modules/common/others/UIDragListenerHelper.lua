@@ -1,18 +1,20 @@
-module("modules.common.others.UIDragListenerHelper", package.seeall)
+﻿module("modules.common.others.UIDragListenerHelper", package.seeall)
 
-slot0 = class("UIDragListenerHelper", UserDataDispose)
-slot1 = math.pi
-slot2 = 1e-05
-slot3 = math.abs
-slot4 = math.sqrt
-slot5 = math.acos
-slot6 = 180
-slot7 = ZProj.TweenHelper
-slot8 = SLFramework.UGUI.UIDragListener
-slot0.EventBegin = 1
-slot0.EventDragging = 2
-slot0.EventEnd = 3
-slot9 = {
+local var_0_0 = class("UIDragListenerHelper", UserDataDispose)
+local var_0_1 = math.pi
+local var_0_2 = 1e-05
+local var_0_3 = math.abs
+local var_0_4 = math.sqrt
+local var_0_5 = math.acos
+local var_0_6 = 180
+local var_0_7 = ZProj.TweenHelper
+local var_0_8 = SLFramework.UGUI.UIDragListener
+
+var_0_0.EventBegin = 1
+var_0_0.EventDragging = 2
+var_0_0.EventEnd = 3
+
+local var_0_9 = {
 	Down = -1,
 	Up = 1,
 	Right = -1,
@@ -20,328 +22,366 @@ slot9 = {
 	None = 0
 }
 
-function slot10(slot0)
-	return slot0 * uv0 / uv1
+local function var_0_10(arg_1_0)
+	return arg_1_0 * var_0_1 / var_0_6
 end
 
-function slot11(slot0)
-	return uv0 / uv1 * slot0
+local function var_0_11(arg_2_0)
+	return var_0_6 / var_0_1 * arg_2_0
 end
 
-function slot12(slot0)
-	return uv0(slot0) <= uv1
+local function var_0_12(arg_3_0)
+	return var_0_3(arg_3_0) <= var_0_2
 end
 
-function slot13(slot0, slot1)
-	return slot0.x * slot1.x + slot0.y * slot1.y
+local function var_0_13(arg_4_0, arg_4_1)
+	return arg_4_0.x * arg_4_1.x + arg_4_0.y * arg_4_1.y
 end
 
-function slot14(slot0, slot1)
-	return slot0.x * slot1.x + slot0.y * slot1.y + slot0.z * slot1.z
+local function var_0_14(arg_5_0, arg_5_1)
+	return arg_5_0.x * arg_5_1.x + arg_5_0.y * arg_5_1.y + arg_5_0.z * arg_5_1.z
 end
 
-function slot15(slot0, slot1)
-	return Vector3.New(slot0.y * slot1.z - slot0.z * slot1.y, slot0.z * slot1.x - slot0.x * slot1.z, slot0.x * slot1.y - slot0.y * slot1.x)
+local function var_0_15(arg_6_0, arg_6_1)
+	return Vector3.New(arg_6_0.y * arg_6_1.z - arg_6_0.z * arg_6_1.y, arg_6_0.z * arg_6_1.x - arg_6_0.x * arg_6_1.z, arg_6_0.x * arg_6_1.y - arg_6_0.y * arg_6_1.x)
 end
 
-function slot16(slot0, slot1)
-	slot3 = uv0(slot1, slot1)
+local function var_0_16(arg_7_0, arg_7_1)
+	local var_7_0 = var_0_13(arg_7_0, arg_7_0)
+	local var_7_1 = var_0_13(arg_7_1, arg_7_1)
 
-	if uv1(uv0(slot0, slot0)) or uv1(slot3) then
+	if var_0_12(var_7_0) or var_0_12(var_7_1) then
 		return 0
 	end
 
-	return uv3(uv0(slot0, slot1) / uv2(slot2 * slot3))
+	local var_7_2 = var_0_13(arg_7_0, arg_7_1) / var_0_4(var_7_0 * var_7_1)
+
+	return var_0_5(var_7_2)
 end
 
-function slot17(slot0, slot1)
-	slot2 = Mathf.Cos(slot1)
-	slot3 = Mathf.Sin(slot1)
+local function var_0_17(arg_8_0, arg_8_1)
+	local var_8_0 = Mathf.Cos(arg_8_1)
+	local var_8_1 = Mathf.Sin(arg_8_1)
 
-	return Vector2.New(slot0.x * slot2 - slot0.y * slot3, slot0.x * slot3 + slot0.y * slot2)
+	return Vector2.New(arg_8_0.x * var_8_0 - arg_8_0.y * var_8_1, arg_8_0.x * var_8_1 + arg_8_0.y * var_8_0)
 end
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
-	LuaEventSystem.addEventMechanism(slot0)
+function var_0_0.ctor(arg_9_0)
+	arg_9_0:__onInit()
+	LuaEventSystem.addEventMechanism(arg_9_0)
 
-	slot0._dragInfo = {
+	arg_9_0._dragInfo = {
 		delta = {
 			x = 0,
 			y = 0
 		}
 	}
-	slot0._swipeH = uv0.None
-	slot0._swipeV = uv0.None
+	arg_9_0._swipeH = var_0_9.None
+	arg_9_0._swipeV = var_0_9.None
 
-	slot0:clear()
+	arg_9_0:clear()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:release()
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0:release()
+	arg_10_0:__onDispose()
 end
 
-function slot0.create(slot0, slot1, slot2)
-	slot0:release()
+function var_0_0.create(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0:release()
 
-	slot0._transform = slot1.transform
-	slot0._csDragObj = uv0.Get(slot1)
+	arg_11_0._transform = arg_11_1.transform
+	arg_11_0._csDragObj = var_0_8.Get(arg_11_1)
 
-	slot0._csDragObj:AddDragBeginListener(slot0._onDragBegin, slot0, slot2)
-	slot0._csDragObj:AddDragListener(slot0._onDragging, slot0, slot2)
-	slot0._csDragObj:AddDragEndListener(slot0._onDragEnd, slot0, slot2)
+	arg_11_0._csDragObj:AddDragBeginListener(arg_11_0._onDragBegin, arg_11_0, arg_11_2)
+	arg_11_0._csDragObj:AddDragListener(arg_11_0._onDragging, arg_11_0, arg_11_2)
+	arg_11_0._csDragObj:AddDragEndListener(arg_11_0._onDragEnd, arg_11_0, arg_11_2)
 end
 
-function slot0.createByScrollRect(slot0, slot1, slot2)
-	slot0:create(slot1.gameObject, slot2)
+function var_0_0.createByScrollRect(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:create(arg_12_1.gameObject, arg_12_2)
 
-	slot0._scrollRectCmp = slot1
+	arg_12_0._scrollRectCmp = arg_12_1
 end
 
-function slot0.release(slot0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId_DOAnchorPos")
-	slot0:unregisterAllCallback(uv0.EventBegin)
-	slot0:unregisterAllCallback(uv0.EventDragging)
-	slot0:unregisterAllCallback(uv0.EventEnd)
+function var_0_0.release(arg_13_0)
+	GameUtil.onDestroyViewMember_TweenId(arg_13_0, "_tweenId_DOAnchorPos")
+	arg_13_0:unregisterAllCallback(var_0_0.EventBegin)
+	arg_13_0:unregisterAllCallback(var_0_0.EventDragging)
+	arg_13_0:unregisterAllCallback(var_0_0.EventEnd)
 
-	if slot0._csDragObj then
-		slot0._csDragObj:RemoveDragBeginListener()
-		slot0._csDragObj:RemoveDragListener()
-		slot0._csDragObj:RemoveDragEndListener()
+	if arg_13_0._csDragObj then
+		arg_13_0._csDragObj:RemoveDragBeginListener()
+		arg_13_0._csDragObj:RemoveDragListener()
+		arg_13_0._csDragObj:RemoveDragEndListener()
 	end
 
-	slot0._csDragObj = nil
-	slot0._scrollRectCmp = nil
+	arg_13_0._csDragObj = nil
+	arg_13_0._scrollRectCmp = nil
 end
 
-function slot0.clear(slot0)
-	slot1 = slot0._dragInfo
-	slot1.hasBegin = false
-	slot1.isDragging = false
-	slot1.hasEnd = false
+function var_0_0.clear(arg_14_0)
+	local var_14_0 = arg_14_0._dragInfo
+
+	var_14_0.hasBegin = false
+	var_14_0.isDragging = false
+	var_14_0.hasEnd = false
 end
 
-function slot0.dragInfo(slot0)
-	return slot0._dragInfo
+function var_0_0.dragInfo(arg_15_0)
+	return arg_15_0._dragInfo
 end
 
-function slot0.transform(slot0)
-	return slot0._transform
+function var_0_0.transform(arg_16_0)
+	return arg_16_0._transform
 end
 
-function slot0._refreshSwipeDir(slot0)
-	slot1 = slot0._dragInfo
-	slot3 = slot1.delta.y
+function var_0_0._refreshSwipeDir(arg_17_0)
+	local var_17_0 = arg_17_0._dragInfo
+	local var_17_1 = var_17_0.delta.x
+	local var_17_2 = var_17_0.delta.y
 
-	if slot1.delta.x > 0 then
-		slot0._swipeH = uv0.Right
-	elseif slot2 < 0 then
-		slot0._swipeH = uv0.Left
+	if var_17_1 > 0 then
+		arg_17_0._swipeH = var_0_9.Right
+	elseif var_17_1 < 0 then
+		arg_17_0._swipeH = var_0_9.Left
 	else
-		slot0._swipeH = uv0.None
+		arg_17_0._swipeH = var_0_9.None
 	end
 
-	if slot3 < 0 then
-		slot0._swipeV = uv0.Down
-	elseif slot3 > 0 then
-		slot0._swipeV = uv0.Up
+	if var_17_2 < 0 then
+		arg_17_0._swipeV = var_0_9.Down
+	elseif var_17_2 > 0 then
+		arg_17_0._swipeV = var_0_9.Up
 	else
-		slot0._swipeV = uv0.None
+		arg_17_0._swipeV = var_0_9.None
 	end
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0:clear()
+function var_0_0._onDragBegin(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0:clear()
 
-	slot3 = slot0._dragInfo
-	slot3.screenPos = slot2.position
-	slot3.hasBegin = true
-	slot3.isDragging = true
-	slot3.delta = slot2.delta
-	slot3.screenPos_st = slot3.screenPos
+	local var_18_0 = arg_18_0._dragInfo
 
-	slot0:_refreshSwipeDir()
-	slot0:dispatchEvent(uv0.EventBegin, slot0, slot1)
+	var_18_0.screenPos = arg_18_2.position
+	var_18_0.hasBegin = true
+	var_18_0.isDragging = true
+	var_18_0.delta = arg_18_2.delta
+	var_18_0.screenPos_st = var_18_0.screenPos
+
+	arg_18_0:_refreshSwipeDir()
+	arg_18_0:dispatchEvent(var_0_0.EventBegin, arg_18_0, arg_18_1)
 end
 
-function slot0._onDragging(slot0, slot1, slot2)
-	slot3 = slot0._dragInfo
-	slot3.screenPos = slot2.position
-	slot3.isDragging = true
-	slot3.delta = slot2.delta
+function var_0_0._onDragging(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0._dragInfo
 
-	slot0:_refreshSwipeDir()
-	slot0:dispatchEvent(uv0.EventDragging, slot0, slot1)
+	var_19_0.screenPos = arg_19_2.position
+	var_19_0.isDragging = true
+	var_19_0.delta = arg_19_2.delta
+
+	arg_19_0:_refreshSwipeDir()
+	arg_19_0:dispatchEvent(var_0_0.EventDragging, arg_19_0, arg_19_1)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	slot3 = slot0._dragInfo
-	slot3.screenPos = slot2.position
-	slot3.delta = slot2.delta
-	slot3.hasEnd = true
-	slot3.isDragging = false
-	slot3.screenPos_ed = slot3.screenPos
+function var_0_0._onDragEnd(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0._dragInfo
 
-	slot0:dispatchEvent(uv0.EventEnd, slot0, slot1)
+	var_20_0.screenPos = arg_20_2.position
+	var_20_0.delta = arg_20_2.delta
+	var_20_0.hasEnd = true
+	var_20_0.isDragging = false
+	var_20_0.screenPos_ed = var_20_0.screenPos
+
+	arg_20_0:dispatchEvent(var_0_0.EventEnd, arg_20_0, arg_20_1)
 end
 
-function slot0.isStoped(slot0)
-	return slot0._dragInfo.hasEnd == true or slot1.hasEnd == false and slot1.hasBegin == false and slot1.isDragging == false
+function var_0_0.isStoped(arg_21_0)
+	local var_21_0 = arg_21_0._dragInfo
+
+	return var_21_0.hasEnd == true or var_21_0.hasEnd == false and var_21_0.hasBegin == false and var_21_0.isDragging == false
 end
 
-function slot0.isEndedDrag(slot0)
-	return slot0._dragInfo.hasEnd
+function var_0_0.isEndedDrag(arg_22_0)
+	return arg_22_0._dragInfo.hasEnd
 end
 
-function slot0.isDragging(slot0)
-	return slot0._dragInfo.isDragging
+function var_0_0.isDragging(arg_23_0)
+	return arg_23_0._dragInfo.isDragging
 end
 
-function slot0.isSwipeNone(slot0)
-	return slot0._swipeH == uv0.None and slot0._swipeV == uv0.None
+function var_0_0.isSwipeNone(arg_24_0)
+	return arg_24_0._swipeH == var_0_9.None and arg_24_0._swipeV == var_0_9.None
 end
 
-function slot0.isSwipeRight(slot0)
-	return slot0._swipeH == uv0.Right
+function var_0_0.isSwipeRight(arg_25_0)
+	return arg_25_0._swipeH == var_0_9.Right
 end
 
-function slot0.isSwipeLeft(slot0)
-	return slot0._swipeH == uv0.Left
+function var_0_0.isSwipeLeft(arg_26_0)
+	return arg_26_0._swipeH == var_0_9.Left
 end
 
-function slot0.isSwipeUp(slot0)
-	return slot0._swipeV == uv0.Up
+function var_0_0.isSwipeUp(arg_27_0)
+	return arg_27_0._swipeV == var_0_9.Up
 end
 
-function slot0.isSwipeDown(slot0)
-	return slot0._swipeV == uv0.Down
+function var_0_0.isSwipeDown(arg_28_0)
+	return arg_28_0._swipeV == var_0_9.Down
 end
 
-function slot0.isSwipeLT(slot0)
-	return slot0:isSwipeLeft() and slot0:isSwipeUp()
+function var_0_0.isSwipeLT(arg_29_0)
+	return arg_29_0:isSwipeLeft() and arg_29_0:isSwipeUp()
 end
 
-function slot0.isSwipeRT(slot0)
-	return slot0:isSwipeRight() and slot0:isSwipeUp()
+function var_0_0.isSwipeRT(arg_30_0)
+	return arg_30_0:isSwipeRight() and arg_30_0:isSwipeUp()
 end
 
-function slot0.isSwipeLB(slot0)
-	return slot0:isSwipeLeft() and slot0:isSwipeDown()
+function var_0_0.isSwipeLB(arg_31_0)
+	return arg_31_0:isSwipeLeft() and arg_31_0:isSwipeDown()
 end
 
-function slot0.isSwipeRB(slot0)
-	return slot0:isSwipeRight() and slot0:isSwipeDown()
+function var_0_0.isSwipeRB(arg_32_0)
+	return arg_32_0:isSwipeRight() and arg_32_0:isSwipeDown()
 end
 
-function slot0.stopMovement(slot0)
-	slot0._scrollRectCmp:StopMovement()
-	slot0:clear()
+function var_0_0.stopMovement(arg_33_0)
+	arg_33_0._scrollRectCmp:StopMovement()
+	arg_33_0:clear()
 
-	slot0._swipeH = uv0.None
-	slot0._swipeV = uv0.None
+	arg_33_0._swipeH = var_0_9.None
+	arg_33_0._swipeV = var_0_9.None
 end
 
-function slot0.isMoveVerticalMajor(slot0)
-	if slot0:isSwipeNone() then
+function var_0_0.isMoveVerticalMajor(arg_34_0)
+	if arg_34_0:isSwipeNone() then
 		return false
 	end
 
-	slot1 = slot0._dragInfo
+	local var_34_0 = arg_34_0._dragInfo
 
-	return math.abs(slot1.delta.x) < math.abs(slot1.delta.y)
+	return math.abs(var_34_0.delta.x) < math.abs(var_34_0.delta.y)
 end
 
-function slot0.isMoveHorizontalMajor(slot0)
-	if slot0:isSwipeNone() then
+function var_0_0.isMoveHorizontalMajor(arg_35_0)
+	if arg_35_0:isSwipeNone() then
 		return false
 	end
 
-	slot1 = slot0._dragInfo
+	local var_35_0 = arg_35_0._dragInfo
 
-	return math.abs(slot1.delta.y) < math.abs(slot1.delta.x)
+	return math.abs(var_35_0.delta.x) > math.abs(var_35_0.delta.y)
 end
 
-function slot0.tweenToAnchorPos(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot1 = slot1 or slot0._transform
-	slot6, slot7 = recthelper.getAnchor(slot1)
+function var_0_0.tweenToAnchorPos(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4, arg_36_5)
+	arg_36_1 = arg_36_1 or arg_36_0._transform
+	arg_36_3 = arg_36_3 or 0.2
 
-	uv0.KillByObj(slot1)
+	local var_36_0, var_36_1 = recthelper.getAnchor(arg_36_1)
 
-	if math.abs(slot6 - slot2.x) > 10 or math.abs(slot7 - slot2.y) > 10 then
-		GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId_DOAnchorPos")
+	var_0_7.KillByObj(arg_36_1)
 
-		slot0._tweenId_DOAnchorPos = uv0.DOAnchorPos(slot1, slot2.x, slot2.y, slot3 or 0.2, slot4, slot5)
+	if math.abs(var_36_0 - arg_36_2.x) > 10 or math.abs(var_36_1 - arg_36_2.y) > 10 then
+		GameUtil.onDestroyViewMember_TweenId(arg_36_0, "_tweenId_DOAnchorPos")
+
+		arg_36_0._tweenId_DOAnchorPos = var_0_7.DOAnchorPos(arg_36_1, arg_36_2.x, arg_36_2.y, arg_36_3, arg_36_4, arg_36_5)
 	else
-		recthelper.setAnchor(slot1, slot2.x, slot2.y)
+		recthelper.setAnchor(arg_36_1, arg_36_2.x, arg_36_2.y)
 	end
 end
 
-function slot0.tweenToScreenPos(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot1 = slot1 or slot0._transform
+function var_0_0.tweenToScreenPos(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4, arg_37_5)
+	arg_37_1 = arg_37_1 or arg_37_0._transform
+	arg_37_2 = arg_37_2 or arg_37_0._dragInfo.screenPos
 
-	slot0:tweenToAnchorPos(slot1, recthelper.screenPosToAnchorPos(slot2 or slot0._dragInfo.screenPos, slot1.parent), slot3, slot4, slot5)
+	local var_37_0 = recthelper.screenPosToAnchorPos(arg_37_2, arg_37_1.parent)
+
+	arg_37_0:tweenToAnchorPos(arg_37_1, var_37_0, arg_37_3, arg_37_4, arg_37_5)
 end
 
-function slot0.tweenToMousePos(slot0)
-	slot0:tweenToScreenPos(slot0._transform, slot0._dragInfo.screenPos)
+function var_0_0.tweenToMousePos(arg_38_0)
+	local var_38_0 = arg_38_0._dragInfo
+
+	arg_38_0:tweenToScreenPos(arg_38_0._transform, var_38_0.screenPos)
 end
 
-function slot0.tweenToMousePosWithConstrainedDirV2(slot0, slot1, slot2)
-	assert(tonumber(slot1.x) ~= nil and tonumber(slot1.y) ~= nil)
+function var_0_0.tweenToMousePosWithConstrainedDirV2(arg_39_0, arg_39_1, arg_39_2)
+	assert(tonumber(arg_39_1.x) ~= nil and tonumber(arg_39_1.y) ~= nil)
 
-	slot3 = slot0._transform
-	slot5 = recthelper.screenPosToAnchorPos(slot0._dragInfo.screenPos, slot3.parent)
-	slot6, slot7 = recthelper.getAnchor(slot3)
-	slot8 = Vector2.New(slot6, slot7)
-	slot10 = uv0(slot5 - slot8, slot1)
-	slot5.x = slot8.x + slot1.x * slot10
-	slot5.y = slot8.y + slot1.y * slot10
+	local var_39_0 = arg_39_0._transform
+	local var_39_1 = arg_39_0._dragInfo
+	local var_39_2 = recthelper.screenPosToAnchorPos(var_39_1.screenPos, var_39_0.parent)
+	local var_39_3, var_39_4 = recthelper.getAnchor(var_39_0)
+	local var_39_5 = Vector2.New(var_39_3, var_39_4)
+	local var_39_6 = var_39_2 - var_39_5
+	local var_39_7 = var_0_13(var_39_6, arg_39_1)
 
-	if slot2 then
-		slot5 = Vector2.MoveTowards(slot8, slot5, Vector2.Distance(recthelper.rectToRelativeAnchorPos(slot2.position, slot3.parent), slot8))
+	var_39_2.x = var_39_5.x + arg_39_1.x * var_39_7
+	var_39_2.y = var_39_5.y + arg_39_1.y * var_39_7
+
+	if arg_39_2 then
+		local var_39_8 = recthelper.rectToRelativeAnchorPos(arg_39_2.position, var_39_0.parent)
+		local var_39_9 = Vector2.Distance(var_39_8, var_39_5)
+
+		var_39_2 = Vector2.MoveTowards(var_39_5, var_39_2, var_39_9)
 	end
 
-	slot0:tweenToAnchorPos(slot3, slot5)
+	arg_39_0:tweenToAnchorPos(var_39_0, var_39_2)
 end
 
-function slot0.quaternionToMouse(slot0, slot1, slot2)
-	slot2 = slot2 or recthelper.uiPosToScreenPos(slot1)
-	slot3 = slot0._dragInfo
-	slot4 = slot3.screenPos
-	slot6 = slot4 - slot3.delta - slot2
-	slot7 = slot4 - slot2
-	slot11, slot12 = Quaternion.FromToRotation(Vector3.New(slot6.x, slot6.y, 0), Vector3.New(slot7.x, slot7.y, 0)):ToAngleAxis()
-	slot14 = nil
+function var_0_0.quaternionToMouse(arg_40_0, arg_40_1, arg_40_2)
+	arg_40_2 = arg_40_2 or recthelper.uiPosToScreenPos(arg_40_1)
 
-	if slot12.z < 0 then
-		slot14 = true
-	elseif slot13 > 0 then
-		slot14 = false
+	local var_40_0 = arg_40_0._dragInfo
+	local var_40_1 = var_40_0.screenPos
+	local var_40_2 = var_40_1 - var_40_0.delta - arg_40_2
+	local var_40_3 = var_40_1 - arg_40_2
+	local var_40_4 = Vector3.New(var_40_2.x, var_40_2.y, 0)
+	local var_40_5 = Vector3.New(var_40_3.x, var_40_3.y, 0)
+	local var_40_6 = Quaternion.FromToRotation(var_40_4, var_40_5)
+	local var_40_7, var_40_8 = var_40_6:ToAngleAxis()
+	local var_40_9 = var_40_8.z
+	local var_40_10
+
+	if var_40_9 < 0 then
+		var_40_10 = true
+	elseif var_40_9 > 0 then
+		var_40_10 = false
 	end
 
-	return slot10, slot11, slot14
+	return var_40_6, var_40_7, var_40_10
 end
 
-function slot0.rotateZToMousePos(slot0, slot1, slot2)
-	slot3, slot4, slot5 = slot0:quaternionToMouse(slot1, slot2)
-	slot1.rotation = slot1.rotation * slot3
+function var_0_0.rotateZToMousePos(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0, var_41_1, var_41_2 = arg_41_0:quaternionToMouse(arg_41_1, arg_41_2)
 
-	return slot3, slot4, slot5
+	arg_41_1.rotation = arg_41_1.rotation * var_41_0
+
+	return var_41_0, var_41_1, var_41_2
 end
 
-function slot0.rotateZToMousePosWithCenterTrans(slot0, slot1, slot2)
-	slot0:rotateZToMousePos(slot1, recthelper.uiPosToScreenPos(slot2))
+function var_0_0.rotateZToMousePosWithCenterTrans(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = recthelper.uiPosToScreenPos(arg_42_2)
+
+	arg_42_0:rotateZToMousePos(arg_42_1, var_42_0)
 end
 
-function slot0.degreesFromBeginDrag(slot0, slot1, slot2)
-	if not slot0._dragInfo.screenPos_st then
+function var_0_0.degreesFromBeginDrag(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = arg_43_0._dragInfo
+
+	if not var_43_0.screenPos_st then
 		return 0
 	end
 
-	slot2 = slot2 or recthelper.uiPosToScreenPos(slot1 or slot0:transform())
+	arg_43_1 = arg_43_1 or arg_43_0:transform()
+	arg_43_2 = arg_43_2 or recthelper.uiPosToScreenPos(arg_43_1)
 
-	return uv0(uv1(slot3.screenPos_st - slot2, slot3.screenPos - slot2))
+	local var_43_1 = var_43_0.screenPos
+	local var_43_2 = var_43_0.screenPos_st - arg_43_2
+	local var_43_3 = var_43_1 - arg_43_2
+
+	return var_0_11(var_0_16(var_43_2, var_43_3))
 end
 
-return slot0
+return var_0_0

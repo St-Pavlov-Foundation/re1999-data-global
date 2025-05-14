@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_5.act142.view.game.Activity142ResultViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142ResultViewContainer", package.seeall)
 
-slot0 = class("Activity142ResultViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity142ResultViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Activity142ResultView.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,179 +1,199 @@
-module("modules.logic.store.view.recommend.StoreMonthCardView", package.seeall)
+﻿module("modules.logic.store.view.recommend.StoreMonthCardView", package.seeall)
 
-slot0 = class("StoreMonthCardView", StoreRecommendBaseSubView)
+local var_0_0 = class("StoreMonthCardView", StoreRecommendBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._simagegoods = gohelper.findChildSingleImage(slot0.viewGO, "view/#simage_goods")
-	slot0._txtlefttimetips = gohelper.findChildText(slot0.viewGO, "view/#txt_lefttimetips")
-	slot0._txttitle1 = gohelper.findChildText(slot0.viewGO, "view/layout/#txt_title1")
-	slot0._txttitle2 = gohelper.findChildText(slot0.viewGO, "view/layout/#txt_title2")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "view/#txt_dec")
-	slot0._txttitleen = gohelper.findChildText(slot0.viewGO, "view/#txt_titleen")
-	slot0._simageicon1 = gohelper.findChildSingleImage(slot0.viewGO, "view/tips/tips1/#simage_icon1")
-	slot0._txttipnum1 = gohelper.findChildText(slot0.viewGO, "view/tips/tips1/#txt_tipnum1")
-	slot0._simageicon2 = gohelper.findChildSingleImage(slot0.viewGO, "view/tips/tips2/#simage_icon2")
-	slot0._txttipnum2 = gohelper.findChildText(slot0.viewGO, "view/tips/tips2/#txt_tipnum2")
-	slot0._simageicon3 = gohelper.findChildSingleImage(slot0.viewGO, "view/tips/tips3/#simage_icon3")
-	slot0._txttipnum3 = gohelper.findChildText(slot0.viewGO, "view/tips/tips3/#txt_tipnum3")
-	slot0._simageicon4 = gohelper.findChildSingleImage(slot0.viewGO, "view/tips/tips4/#simage_icon1")
-	slot0._txttipnum4 = gohelper.findChildText(slot0.viewGO, "view/tips/tips4/#txt_tipnum1")
-	slot0._golimittime = gohelper.findChild(slot0.viewGO, "view/tips/tips3/#go_limittime")
-	slot0._imglimittime = gohelper.findChildImage(slot0.viewGO, "view/tips/tips3/#go_limittime")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/buy/#btn_buy")
-	slot0._txtcost = gohelper.findChildText(slot0.viewGO, "view/buy/#txt_cost")
-	slot0._txtcosticon = gohelper.findChildText(slot0.viewGO, "view/buy/#txt_cost/costicon")
-	slot0._txtgoodstips = gohelper.findChildText(slot0.viewGO, "view/buy/#txt_goodstips")
-	slot0._gomooncardup = gohelper.findChild(slot0.viewGO, "view/#go_mooncardup")
-	slot0._txtcosthw = gohelper.findChildText(slot0.viewGO, "view/buy/#txt_cost_hw")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagegoods = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_goods")
+	arg_1_0._txtlefttimetips = gohelper.findChildText(arg_1_0.viewGO, "view/#txt_lefttimetips")
+	arg_1_0._txttitle1 = gohelper.findChildText(arg_1_0.viewGO, "view/layout/#txt_title1")
+	arg_1_0._txttitle2 = gohelper.findChildText(arg_1_0.viewGO, "view/layout/#txt_title2")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "view/#txt_dec")
+	arg_1_0._txttitleen = gohelper.findChildText(arg_1_0.viewGO, "view/#txt_titleen")
+	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips1/#simage_icon1")
+	arg_1_0._txttipnum1 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips1/#txt_tipnum1")
+	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips2/#simage_icon2")
+	arg_1_0._txttipnum2 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips2/#txt_tipnum2")
+	arg_1_0._simageicon3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips3/#simage_icon3")
+	arg_1_0._txttipnum3 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips3/#txt_tipnum3")
+	arg_1_0._simageicon4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips4/#simage_icon1")
+	arg_1_0._txttipnum4 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips4/#txt_tipnum1")
+	arg_1_0._golimittime = gohelper.findChild(arg_1_0.viewGO, "view/tips/tips3/#go_limittime")
+	arg_1_0._imglimittime = gohelper.findChildImage(arg_1_0.viewGO, "view/tips/tips3/#go_limittime")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/buy/#btn_buy")
+	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_cost")
+	arg_1_0._txtcosticon = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_cost/costicon")
+	arg_1_0._txtgoodstips = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_goodstips")
+	arg_1_0._gomooncardup = gohelper.findChild(arg_1_0.viewGO, "view/#go_mooncardup")
+	arg_1_0._txtcosthw = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_cost_hw")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btnbuyOnClick(slot0)
+function var_0_0._btnbuyOnClick(arg_4_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "711",
 		[StatEnum.EventProperties.RecommendPageName] = "月历"
 	})
-	slot0.viewContainer.storeView:_refreshTabs(StoreEnum.StoreId.Package, StoreEnum.MonthCardGoodsId)
+	arg_4_0.viewContainer.storeView:_refreshTabs(StoreEnum.StoreId.Package, StoreEnum.MonthCardGoodsId)
 	StoreController.instance:statSwitchStore(StoreEnum.StoreId.Package)
 end
 
-function slot0.onWenHaoClick(slot0)
+function var_0_0.onWenHaoClick(arg_5_0)
 	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.MouthTipsDesc))
 end
 
-function slot0._editableInitView(slot0)
-	slot0.godecorate = gohelper.findChild(slot0.viewGO, "view/decorateicon")
-	slot0.wenhaoClick = gohelper.getClick(slot0.godecorate)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0.godecorate = gohelper.findChild(arg_6_0.viewGO, "view/decorateicon")
+	arg_6_0.wenhaoClick = gohelper.getClick(arg_6_0.godecorate)
 
-	slot0.wenhaoClick:AddClickListener(slot0.onWenHaoClick, slot0)
+	arg_6_0.wenhaoClick:AddClickListener(arg_6_0.onWenHaoClick, arg_6_0)
 
-	slot0._simageBg = gohelper.findChildSingleImage(slot0.viewGO, "view/#simage_bg")
-	slot0._bgClick = gohelper.getClick(slot0._simageBg.gameObject)
+	arg_6_0._simageBg = gohelper.findChildSingleImage(arg_6_0.viewGO, "view/#simage_bg")
+	arg_6_0._bgClick = gohelper.getClick(arg_6_0._simageBg.gameObject)
 
-	gohelper.addUIClickAudio(slot0._bgClick.gameObject, AudioEnum.UI.play_ui_common_pause)
-	slot0._simagegoods:LoadImage(ResUrl.getStoreBottomBgIcon("img_calendar"))
-	slot0._simageBg:LoadImage(ResUrl.getStoreBottomBgIcon("deco"))
-	slot0._bgClick:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, slot0.onMonthCardInfoChange, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0.onDailyRefresh, slot0)
+	gohelper.addUIClickAudio(arg_6_0._bgClick.gameObject, AudioEnum.UI.play_ui_common_pause)
+	arg_6_0._simagegoods:LoadImage(ResUrl.getStoreBottomBgIcon("img_calendar"))
+	arg_6_0._simageBg:LoadImage(ResUrl.getStoreBottomBgIcon("deco"))
+	arg_6_0._bgClick:AddClickListener(arg_6_0._btnbuyOnClick, arg_6_0)
+	arg_6_0:addEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, arg_6_0.onMonthCardInfoChange, arg_6_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_6_0.onDailyRefresh, arg_6_0)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0._txtgoodstips.text = luaLang("storemonthcard_tips")
-	slot0._txtcost.text = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
-	slot0._txtcosticon.text = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
-	slot2, slot3 = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
-	slot4 = ""
+	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
+	arg_6_0._txtgoodstips.text = luaLang("storemonthcard_tips")
+	arg_6_0._txtcost.text = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
+	arg_6_0._txtcosticon.text = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
 
-	if string.nilorempty(PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)) then
-		slot5 = string.reverse(slot3)
-		slot6 = string.len(slot5) - string.find(slot5, "%d") + 1
-		slot0._txtcosthw.text = string.format("%s<size=30>%s</size>", string.sub(slot3, 1, slot6), string.sub(slot3, slot6 + 1, string.len(slot3)))
+	local var_6_0 = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
+	local var_6_1, var_6_2 = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
+	local var_6_3 = ""
+
+	if string.nilorempty(var_6_0) then
+		local var_6_4 = string.reverse(var_6_2)
+		local var_6_5 = string.find(var_6_4, "%d")
+		local var_6_6 = string.len(var_6_4) - var_6_5 + 1
+		local var_6_7 = string.sub(var_6_2, var_6_6 + 1, string.len(var_6_2))
+
+		var_6_2 = string.sub(var_6_2, 1, var_6_6)
+		arg_6_0._txtcosthw.text = string.format("%s<size=30>%s</size>", var_6_2, var_6_7)
 	else
-		slot0._txtcosthw.text = string.format("<size=30>%s</size>%s", slot1, slot3)
+		arg_6_0._txtcosthw.text = string.format("<size=30>%s</size>%s", var_6_0, var_6_2)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.monthCardInfo = StoreModel.instance:getMonthCardInfo()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0.monthCardInfo = StoreModel.instance:getMonthCardInfo()
 
-	slot0:refreshUI()
-	uv0.super.onOpen(slot0)
+	arg_8_0:refreshUI()
+	var_0_0.super.onOpen(arg_8_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshRemainDay()
-	slot0:refreshRewardIcon()
-	gohelper.setActive(slot0._gomooncardup, StoreHelper.checkMonthCardLevelUpTagOpen())
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshRemainDay()
+	arg_9_0:refreshRewardIcon()
+
+	local var_9_0 = StoreHelper.checkMonthCardLevelUpTagOpen()
+
+	gohelper.setActive(arg_9_0._gomooncardup, var_9_0)
 end
 
-function slot0.refreshRemainDay(slot0)
-	if slot0.monthCardInfo ~= nil then
-		if slot0.monthCardInfo:getRemainDay() == StoreEnum.MonthCardStatus.NotPurchase then
-			slot0._txtlefttimetips.text = luaLang("not_purchase")
-		elseif slot1 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
-			slot0._txtlefttimetips.text = luaLang("not_enough_one_day") .. (slot0.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
+function var_0_0.refreshRemainDay(arg_10_0)
+	if arg_10_0.monthCardInfo ~= nil then
+		local var_10_0 = arg_10_0.monthCardInfo:getRemainDay()
+
+		if var_10_0 == StoreEnum.MonthCardStatus.NotPurchase then
+			arg_10_0._txtlefttimetips.text = luaLang("not_purchase")
+		elseif var_10_0 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
+			arg_10_0._txtlefttimetips.text = luaLang("not_enough_one_day") .. (arg_10_0.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
 		else
-			slot0._txtlefttimetips.text = formatLuaLang("remain_day", slot1) .. (slot0.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
+			arg_10_0._txtlefttimetips.text = formatLuaLang("remain_day", var_10_0) .. (arg_10_0.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
 		end
 	else
-		slot0._txtlefttimetips.text = luaLang("not_purchase")
+		arg_10_0._txtlefttimetips.text = luaLang("not_purchase")
 	end
 end
 
-function slot0.refreshRewardIcon(slot0)
-	slot1 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
-	slot2, slot3 = slot0:getIconUrlAndQuantity(string.split(slot1.onceBonus, "|")[1])
-	slot4, slot5 = slot0:getIconUrlAndQuantity(string.split(slot1.onceBonus, "|")[2])
-	slot6, slot7 = slot0:getIconUrlAndQuantity(string.split(slot1.dailyBonus, "|")[1])
-	slot9 = string.split(string.split(slot1.dailyBonus, "|")[2], "#")
-	slot10, slot11 = ItemModel.instance:getItemConfigAndIcon(slot9[1], slot9[2])
-	slot0._txttipnum1.text = luaLang("multiple") .. slot3
+function var_0_0.refreshRewardIcon(arg_11_0)
+	local var_11_0 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
+	local var_11_1, var_11_2 = arg_11_0:getIconUrlAndQuantity(string.split(var_11_0.onceBonus, "|")[1])
+	local var_11_3, var_11_4 = arg_11_0:getIconUrlAndQuantity(string.split(var_11_0.onceBonus, "|")[2])
+	local var_11_5, var_11_6 = arg_11_0:getIconUrlAndQuantity(string.split(var_11_0.dailyBonus, "|")[1])
+	local var_11_7 = string.split(var_11_0.dailyBonus, "|")[2]
+	local var_11_8 = string.split(var_11_7, "#")
+	local var_11_9, var_11_10 = ItemModel.instance:getItemConfigAndIcon(var_11_8[1], var_11_8[2])
 
-	slot0._simageicon1:LoadImage(slot2)
+	arg_11_0._txttipnum1.text = luaLang("multiple") .. var_11_2
 
-	slot0._txttipnum2.text = luaLang("multiple") .. slot7 * 30
+	arg_11_0._simageicon1:LoadImage(var_11_1)
 
-	slot0._simageicon2:LoadImage(slot6)
+	arg_11_0._txttipnum2.text = luaLang("multiple") .. var_11_6 * 30
 
-	slot0._txttipnum3.text = luaLang("multiple") .. slot9[3] * 30
+	arg_11_0._simageicon2:LoadImage(var_11_5)
 
-	slot0._simageicon3:LoadImage(slot11)
+	arg_11_0._txttipnum3.text = luaLang("multiple") .. var_11_8[3] * 30
 
-	slot0._txttipnum4.text = luaLang("multiple") .. slot5
+	arg_11_0._simageicon3:LoadImage(var_11_10)
 
-	slot0._simageicon4:LoadImage(slot4)
-	UISpriteSetMgr.instance:setStoreGoodsSprite(slot0._imglimittime, "img_xianshi2")
-	gohelper.setActive(slot0._golimittime, false)
+	arg_11_0._txttipnum4.text = luaLang("multiple") .. var_11_4
 
-	if slot10.expireTime then
-		gohelper.setActive(slot0._golimittime, true)
+	arg_11_0._simageicon4:LoadImage(var_11_3)
+	UISpriteSetMgr.instance:setStoreGoodsSprite(arg_11_0._imglimittime, "img_xianshi2")
+	gohelper.setActive(arg_11_0._golimittime, false)
+
+	if var_11_9.expireTime then
+		gohelper.setActive(arg_11_0._golimittime, true)
 	end
 end
 
-function slot0.getIconUrlAndQuantity(slot0, slot1)
-	slot2, slot3, slot4 = nil
-	slot5 = string.splitToNumber(slot1, "#")
-	slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot5[1], slot5[2])
+function var_0_0.getIconUrlAndQuantity(arg_12_0, arg_12_1)
+	local var_12_0
+	local var_12_1
+	local var_12_2
+	local var_12_3 = string.splitToNumber(arg_12_1, "#")
+	local var_12_4 = var_12_3[1]
+	local var_12_5 = var_12_3[2]
+	local var_12_6 = var_12_3[3]
+	local var_12_7, var_12_8 = ItemModel.instance:getItemConfigAndIcon(var_12_4, var_12_5)
 
-	return slot7, slot5[3]
+	return var_12_8, var_12_6
 end
 
-function slot0.onMonthCardInfoChange(slot0)
-	slot0.monthCardInfo = StoreModel.instance:getMonthCardInfo()
+function var_0_0.onMonthCardInfoChange(arg_13_0)
+	arg_13_0.monthCardInfo = StoreModel.instance:getMonthCardInfo()
 
-	slot0:refreshRemainDay()
+	arg_13_0:refreshRemainDay()
 end
 
-function slot0.onDailyRefresh(slot0)
+function var_0_0.onDailyRefresh(arg_14_0)
 	ChargeRpc.instance:sendGetMonthCardInfoRequest()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagegoods:UnLoadImage()
-	slot0._simageicon1:UnLoadImage()
-	slot0._simageicon2:UnLoadImage()
-	slot0._simageicon3:UnLoadImage()
-	slot0._simageBg:UnLoadImage()
-	slot0._btnbuy:RemoveClickListener()
-	slot0._bgClick:RemoveClickListener()
-	slot0.wenhaoClick:RemoveClickListener()
-	slot0:removeEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, slot0.onMonthCardInfoChange, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0.onDailyRefresh, slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._simagegoods:UnLoadImage()
+	arg_15_0._simageicon1:UnLoadImage()
+	arg_15_0._simageicon2:UnLoadImage()
+	arg_15_0._simageicon3:UnLoadImage()
+	arg_15_0._simageBg:UnLoadImage()
+	arg_15_0._btnbuy:RemoveClickListener()
+	arg_15_0._bgClick:RemoveClickListener()
+	arg_15_0.wenhaoClick:RemoveClickListener()
+	arg_15_0:removeEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, arg_15_0.onMonthCardInfoChange, arg_15_0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_15_0.onDailyRefresh, arg_15_0)
 end
 
-return slot0
+return var_0_0

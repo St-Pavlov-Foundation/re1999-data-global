@@ -1,153 +1,176 @@
-module("modules.logic.versionactivity1_3.astrology.model.VersionActivity1_3AstrologyModel", package.seeall)
+﻿module("modules.logic.versionactivity1_3.astrology.model.VersionActivity1_3AstrologyModel", package.seeall)
 
-slot0 = class("VersionActivity1_3AstrologyModel", BaseModel)
+local var_0_0 = class("VersionActivity1_3AstrologyModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._planetList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._planetList = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._planetList = {}
-	slot0._rewardList = nil
-	slot0._exchangeList = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._planetList = {}
+	arg_2_0._rewardList = nil
+	arg_2_0._exchangeList = nil
 end
 
-function slot0.initData(slot0)
-	if string.nilorempty(Activity126Model.instance:getStarProgressStr()) then
-		slot1 = Activity126Config.instance:getConst(VersionActivity1_3Enum.ActivityId.Act310, Activity126Enum.constId.initAngle).value2
+function var_0_0.initData(arg_3_0)
+	local var_3_0 = Activity126Model.instance:getStarProgressStr()
+
+	if string.nilorempty(var_3_0) then
+		var_3_0 = Activity126Config.instance:getConst(VersionActivity1_3Enum.ActivityId.Act310, Activity126Enum.constId.initAngle).value2
 	end
 
-	for slot6 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		slot0:_addPlanetData(slot6, string.splitToNumber(slot1, "#")[slot6 - 1] or 0, ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, VersionActivity1_3AstrologyEnum.PlanetItem[slot6]))
+	local var_3_1 = string.splitToNumber(var_3_0, "#")
+
+	for iter_3_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local var_3_2 = VersionActivity1_3AstrologyEnum.PlanetItem[iter_3_0]
+		local var_3_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_3_2)
+
+		arg_3_0:_addPlanetData(iter_3_0, var_3_1[iter_3_0 - 1] or 0, var_3_3)
 	end
 end
 
-function slot0._addPlanetData(slot0, slot1, slot2, slot3)
-	slot4 = slot0._planetList[slot1] or VersionActivity1_3AstrologyPlanetMo.New()
+function var_0_0._addPlanetData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = arg_4_0._planetList[arg_4_1] or VersionActivity1_3AstrologyPlanetMo.New()
 
-	slot4:init({
-		id = slot1,
-		angle = slot2,
-		previewAngle = slot2,
-		num = slot3
+	var_4_0:init({
+		id = arg_4_1,
+		angle = arg_4_2,
+		previewAngle = arg_4_2,
+		num = arg_4_3
 	})
 
-	slot0._planetList[slot1] = slot4
+	arg_4_0._planetList[arg_4_1] = var_4_0
 end
 
-function slot0.getQuadrantResult(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0.getQuadrantResult(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = {}
 
-	for slot6, slot7 in pairs(slot0._planetList) do
-		slot9 = slot1[slot7:getQuadrant()] or {
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._planetList) do
+		local var_5_2 = iter_5_1:getQuadrant()
+		local var_5_3 = var_5_0[var_5_2] or {
 			minId = 100,
 			num = 0,
-			quadrant = slot8,
+			quadrant = var_5_2,
 			planetList = {}
 		}
-		slot9.num = slot9.num + 1
 
-		if slot6 < slot9.minId then
-			slot9.minId = slot6
+		var_5_3.num = var_5_3.num + 1
+
+		if iter_5_0 < var_5_3.minId then
+			var_5_3.minId = iter_5_0
 		end
 
-		slot1[slot8] = slot9
-		slot2[slot6] = slot8
+		var_5_0[var_5_2] = var_5_3
+		var_5_1[iter_5_0] = var_5_2
 	end
 
-	if slot2[VersionActivity1_3AstrologyEnum.Planet.yueliang] == 7 or slot3 == 8 then
-		return slot3
+	local var_5_4 = var_5_1[VersionActivity1_3AstrologyEnum.Planet.yueliang]
+
+	if var_5_4 == 7 or var_5_4 == 8 then
+		return var_5_4
 	end
 
-	slot4 = {}
+	local var_5_5 = {}
 
-	for slot8, slot9 in pairs(slot1) do
-		table.insert(slot4, slot9)
+	for iter_5_2, iter_5_3 in pairs(var_5_0) do
+		table.insert(var_5_5, iter_5_3)
 	end
 
-	table.sort(slot4, slot0._sortResult)
+	table.sort(var_5_5, arg_5_0._sortResult)
 
-	return slot4[1].quadrant
+	return var_5_5[1].quadrant
 end
 
-function slot0._sortResult(slot0, slot1)
-	if slot0.num == slot1.num then
-		return slot0.minId < slot1.minId
+function var_0_0._sortResult(arg_6_0, arg_6_1)
+	if arg_6_0.num == arg_6_1.num then
+		return arg_6_0.minId < arg_6_1.minId
 	end
 
-	return slot1.num < slot0.num
+	return arg_6_0.num > arg_6_1.num
 end
 
-function slot0.generateStarProgressStr(slot0)
-	for slot5 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		slot7 = slot0._planetList[slot5].previewAngle
-		slot1 = (not string.nilorempty(nil) or string.format("%s", slot7)) and string.format("%s#%s", string.format("%s", slot7), slot7)
+function var_0_0.generateStarProgressStr(arg_7_0)
+	local var_7_0
+
+	for iter_7_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local var_7_1 = arg_7_0._planetList[iter_7_0].previewAngle
+
+		if string.nilorempty(var_7_0) then
+			var_7_0 = string.format("%s", var_7_1)
+		else
+			var_7_0 = string.format("%s#%s", var_7_0, var_7_1)
+		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.generateStarProgressCost(slot0)
-	slot1 = {}
+function var_0_0.generateStarProgressCost(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = {}
 
-	for slot6 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		if slot0._planetList[slot6]:getCostNum() > 0 then
-			for slot12 = 1, slot8 do
-				table.insert(slot1, VersionActivity1_3AstrologyEnum.PlanetItem[slot6])
+	for iter_8_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local var_8_2 = arg_8_0._planetList[iter_8_0]:getCostNum()
+
+		if var_8_2 > 0 then
+			var_8_1[iter_8_0] = true
+
+			for iter_8_1 = 1, var_8_2 do
+				table.insert(var_8_0, VersionActivity1_3AstrologyEnum.PlanetItem[iter_8_0])
 			end
 		end
 	end
 
-	return slot1, {
-		[slot6] = true
-	}
+	return var_8_0, var_8_1
 end
 
-function slot0.getPlanetMo(slot0, slot1)
-	return slot0._planetList[slot1]
+function var_0_0.getPlanetMo(arg_9_0, arg_9_1)
+	return arg_9_0._planetList[arg_9_1]
 end
 
-function slot0.hasAdjust(slot0)
-	for slot4, slot5 in pairs(slot0._planetList) do
-		if slot5:hasAdjust() then
+function var_0_0.hasAdjust(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._planetList) do
+		if iter_10_1:hasAdjust() then
 			return true
 		end
 	end
 end
 
-function slot0.isEffectiveAdjust(slot0)
+function var_0_0.isEffectiveAdjust(arg_11_0)
 	if Activity126Model.instance:getStarNum() >= 10 then
 		return false
 	end
 
-	return slot0:hasAdjust()
+	return arg_11_0:hasAdjust()
 end
 
-function slot0.getAdjustNum(slot0)
-	for slot5, slot6 in pairs(slot0._planetList) do
-		slot1 = 0 + slot6:getCostNum()
+function var_0_0.getAdjustNum(arg_12_0)
+	local var_12_0 = 0
+
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._planetList) do
+		var_12_0 = var_12_0 + iter_12_1:getCostNum()
 	end
 
-	return slot1
+	return var_12_0
 end
 
-function slot0.setStarReward(slot0, slot1)
-	slot0._rewardList = slot1
+function var_0_0.setStarReward(arg_13_0, arg_13_1)
+	arg_13_0._rewardList = arg_13_1
 end
 
-function slot0.getStarReward(slot0)
-	return slot0._rewardList
+function var_0_0.getStarReward(arg_14_0)
+	return arg_14_0._rewardList
 end
 
-function slot0.setExchangeList(slot0, slot1)
-	slot0._exchangeList = slot1
+function var_0_0.setExchangeList(arg_15_0, arg_15_1)
+	arg_15_0._exchangeList = arg_15_1
 end
 
-function slot0.getExchangeList(slot0)
-	return slot0._exchangeList
+function var_0_0.getExchangeList(arg_16_0)
+	return arg_16_0._exchangeList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

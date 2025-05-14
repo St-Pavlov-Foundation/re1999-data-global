@@ -1,222 +1,242 @@
-module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipes", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipes", package.seeall)
 
-slot0 = class("ArmPuzzlePipes", BaseView)
+local var_0_0 = class("ArmPuzzlePipes", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "#go_map")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_reset")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreset:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreset:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gomapTrs = slot0._gomap.transform
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gomapTrs = arg_4_0._gomap.transform
 
-	slot0:initConst()
+	arg_4_0:initConst()
 
-	slot0._canTouch = true
-	slot0._btnUIClick = SLFramework.UGUI.UIClickListener.Get(slot0._gomap)
+	arg_4_0._canTouch = true
+	arg_4_0._btnUIClick = SLFramework.UGUI.UIClickListener.Get(arg_4_0._gomap)
 
-	slot0._btnUIClick:AddClickListener(slot0._onbtnUIClick, slot0)
+	arg_4_0._btnUIClick:AddClickListener(arg_4_0._onbtnUIClick, arg_4_0)
 end
 
-function slot0.initConst(slot0)
-	slot0._itemSizeX = 123
-	slot0._itemSizeY = 123
-	slot0._gameWidth, slot0._gameHeight = ArmPuzzlePipeModel.instance:getGameSize()
+function var_0_0.initConst(arg_5_0)
+	arg_5_0._itemSizeX = 123
+	arg_5_0._itemSizeY = 123
+	arg_5_0._gameWidth, arg_5_0._gameHeight = ArmPuzzlePipeModel.instance:getGameSize()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._gridItemDict = {}
-	slot0._gridItemList = {}
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._gridItemDict = {}
+	arg_7_0._gridItemList = {}
 
-	for slot4 = 1, slot0._gameWidth do
-		slot0._gridItemDict[slot4] = slot0._gridItemDict[slot4] or {}
+	for iter_7_0 = 1, arg_7_0._gameWidth do
+		arg_7_0._gridItemDict[iter_7_0] = arg_7_0._gridItemDict[iter_7_0] or {}
 
-		for slot8 = 1, slot0._gameHeight do
-			slot0:addNewItem(slot4, slot8)
+		for iter_7_1 = 1, arg_7_0._gameHeight do
+			arg_7_0:addNewItem(iter_7_0, iter_7_1)
 		end
 	end
 
-	slot0:_refreshEntryItem()
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.GuideClickGrid, slot0._onGuideClickGrid, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, slot0._onPlaceRefreshPipesGrid, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PipeGameClear, slot0._onGameClear, slot0)
+	arg_7_0:_refreshEntryItem()
+	arg_7_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.GuideClickGrid, arg_7_0._onGuideClickGrid, arg_7_0)
+	arg_7_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, arg_7_0._onPlaceRefreshPipesGrid, arg_7_0)
+	arg_7_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PipeGameClear, arg_7_0._onGameClear, arg_7_0)
 end
 
-function slot0._onGuideClickGrid(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "_")
+function var_0_0._onGuideClickGrid(arg_8_0, arg_8_1)
+	local var_8_0 = string.splitToNumber(arg_8_1, "_")
+	local var_8_1 = var_8_0[1]
+	local var_8_2 = var_8_0[2]
 
-	slot0:_onClickGridItem(slot2[1], slot2[2])
+	arg_8_0:_onClickGridItem(var_8_1, var_8_2)
 end
 
-function slot0._onPlaceRefreshPipesGrid(slot0, slot1, slot2)
-	if not ArmPuzzlePipeModel.instance:getData(slot1, slot2) then
+function var_0_0._onPlaceRefreshPipesGrid(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = ArmPuzzlePipeModel.instance:getData(arg_9_1, arg_9_2)
+
+	if not var_9_0 then
 		return
 	end
 
-	ArmPuzzlePipeController.instance:refreshConnection(slot3)
+	ArmPuzzlePipeController.instance:refreshConnection(var_9_0)
 	ArmPuzzlePipeController.instance:updateConnection()
-	slot0:initItem(slot1, slot2)
-	slot0:_refreshConnection()
-	slot0:_refreshEntryItem()
+	arg_9_0:initItem(arg_9_1, arg_9_2)
+	arg_9_0:_refreshConnection()
+	arg_9_0:_refreshEntryItem()
 
-	slot0._canTouch = not ArmPuzzlePipeModel.instance:getGameClear()
+	arg_9_0._canTouch = not ArmPuzzlePipeModel.instance:getGameClear()
 
 	ArmPuzzlePipeController.instance:checkDispatchClear()
 end
 
-function slot0._btnresetOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Va3Act124ResetGame, MsgBoxEnum.BoxType.Yes_No, function ()
-		uv0:_resetGame()
+function var_0_0._btnresetOnClick(arg_10_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.Va3Act124ResetGame, MsgBoxEnum.BoxType.Yes_No, function()
+		arg_10_0:_resetGame()
 	end)
 end
 
-function slot0._resetGame(slot0)
+function var_0_0._resetGame(arg_12_0)
 	Stat1_3Controller.instance:puzzleStatReset()
 	ArmPuzzlePipeController.instance:resetGame()
 
-	for slot4 = 1, slot0._gameWidth do
-		for slot8 = 1, slot0._gameHeight do
-			slot0:initItem(slot4, slot8)
-			slot0:_refreshConnectItem(slot4, slot8)
+	for iter_12_0 = 1, arg_12_0._gameWidth do
+		for iter_12_1 = 1, arg_12_0._gameHeight do
+			arg_12_0:initItem(iter_12_0, iter_12_1)
+			arg_12_0:_refreshConnectItem(iter_12_0, iter_12_1)
 		end
 	end
 
-	slot0:_refreshEntryItem()
+	arg_12_0:_refreshEntryItem()
 
-	slot0._canTouch = not ArmPuzzlePipeModel.instance:getGameClear()
+	arg_12_0._canTouch = not ArmPuzzlePipeModel.instance:getGameClear()
 end
 
-function slot0.addNewItem(slot0, slot1, slot2)
-	slot0:_newPipeItem(slot1, slot2)
-	slot0:initItem(slot1, slot2)
-	slot0:_refreshConnectItem(slot1, slot2)
+function var_0_0.addNewItem(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0:_newPipeItem(arg_13_1, arg_13_2)
+	arg_13_0:initItem(arg_13_1, arg_13_2)
+	arg_13_0:_refreshConnectItem(arg_13_1, arg_13_2)
 end
 
-function slot0._newPipeItem(slot0, slot1, slot2)
-	slot4 = slot0:getResInst(ArmPuzzlePipeItem.prefabPath, slot0._gomap, slot1 .. "_" .. slot2)
-	slot6, slot7 = ArmPuzzlePipeModel.instance:getRelativePosition(slot1, slot2, slot0._itemSizeX, slot0._itemSizeY)
+function var_0_0._newPipeItem(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = ArmPuzzlePipeItem.prefabPath
+	local var_14_1 = arg_14_0:getResInst(var_14_0, arg_14_0._gomap, arg_14_1 .. "_" .. arg_14_2)
+	local var_14_2 = var_14_1.transform
+	local var_14_3, var_14_4 = ArmPuzzlePipeModel.instance:getRelativePosition(arg_14_1, arg_14_2, arg_14_0._itemSizeX, arg_14_0._itemSizeY)
 
-	recthelper.setAnchor(slot4.transform, slot6, slot7)
+	recthelper.setAnchor(var_14_2, var_14_3, var_14_4)
 
-	slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, ArmPuzzlePipeItem)
+	local var_14_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_1, ArmPuzzlePipeItem)
 
-	table.insert(slot0._gridItemList, slot8)
+	table.insert(arg_14_0._gridItemList, var_14_5)
 
-	slot0._gridItemDict[slot1][slot2] = slot8
+	arg_14_0._gridItemDict[arg_14_1][arg_14_2] = var_14_5
 end
 
-function slot0.initItem(slot0, slot1, slot2)
-	slot0._gridItemDict[slot1][slot2]:initItem(ArmPuzzlePipeModel.instance:getData(slot1, slot2))
+function var_0_0.initItem(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = ArmPuzzlePipeModel.instance:getData(arg_15_1, arg_15_2)
+
+	arg_15_0._gridItemDict[arg_15_1][arg_15_2]:initItem(var_15_0)
 end
 
-function slot0._refreshConnectItem(slot0, slot1, slot2)
-	if slot1 > 0 and slot1 <= slot0._gameWidth and slot2 > 0 and slot2 <= slot0._gameHeight then
-		slot0._gridItemDict[slot1][slot2]:initConnectObj(ArmPuzzlePipeModel.instance:getData(slot1, slot2))
+function var_0_0._refreshConnectItem(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 > 0 and arg_16_1 <= arg_16_0._gameWidth and arg_16_2 > 0 and arg_16_2 <= arg_16_0._gameHeight then
+		local var_16_0 = ArmPuzzlePipeModel.instance:getData(arg_16_1, arg_16_2)
+
+		arg_16_0._gridItemDict[arg_16_1][arg_16_2]:initConnectObj(var_16_0)
 	end
 end
 
-function slot0._syncRotation(slot0, slot1, slot2, slot3)
-	if slot3:isEntry() then
+function var_0_0._syncRotation(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_3:isEntry() then
 		return
 	end
 
-	slot0._gridItemDict[slot1][slot2]:syncRotation(slot3)
+	arg_17_0._gridItemDict[arg_17_1][arg_17_2]:syncRotation(arg_17_3)
 end
 
-function slot0._onbtnUIClick(slot0)
-	slot0:_onClickContainer(GamepadController.instance:getMousePosition())
+function var_0_0._onbtnUIClick(arg_18_0)
+	local var_18_0 = GamepadController.instance:getMousePosition()
+
+	arg_18_0:_onClickContainer(var_18_0)
 end
 
-function slot0._onClickContainer(slot0, slot1)
+function var_0_0._onClickContainer(arg_19_0, arg_19_1)
 	if ViewMgr.instance:isOpen(ViewName.GuideView) then
 		return
 	end
 
-	slot2 = recthelper.screenPosToAnchorPos(slot1, slot0._gomapTrs)
-	slot3, slot4 = ArmPuzzlePipeModel.instance:getIndexByTouchPos(slot2.x, slot2.y, slot0._itemSizeX, slot0._itemSizeY)
+	local var_19_0 = recthelper.screenPosToAnchorPos(arg_19_1, arg_19_0._gomapTrs)
+	local var_19_1, var_19_2 = ArmPuzzlePipeModel.instance:getIndexByTouchPos(var_19_0.x, var_19_0.y, arg_19_0._itemSizeX, arg_19_0._itemSizeY)
 
-	if slot3 ~= -1 then
-		slot0:_onClickGridItem(slot3, slot4)
+	if var_19_1 ~= -1 then
+		arg_19_0:_onClickGridItem(var_19_1, var_19_2)
 	end
 end
 
-function slot0.getXYByPostion(slot0, slot1)
-	slot2 = recthelper.screenPosToAnchorPos(slot1, slot0._gomapTrs)
-	slot3, slot4 = ArmPuzzlePipeModel.instance:getIndexByTouchPos(slot2.x, slot2.y, slot0._itemSizeX, slot0._itemSizeY)
+function var_0_0.getXYByPostion(arg_20_0, arg_20_1)
+	local var_20_0 = recthelper.screenPosToAnchorPos(arg_20_1, arg_20_0._gomapTrs)
+	local var_20_1, var_20_2 = ArmPuzzlePipeModel.instance:getIndexByTouchPos(var_20_0.x, var_20_0.y, arg_20_0._itemSizeX, arg_20_0._itemSizeY)
 
-	if slot3 ~= -1 then
-		return slot3, slot4
+	if var_20_1 ~= -1 then
+		return var_20_1, var_20_2
 	end
 end
 
-function slot0._refreshConnection(slot0)
-	for slot4 = 1, slot0._gameWidth do
-		for slot8 = 1, slot0._gameHeight do
-			slot0:_refreshConnectItem(slot4, slot8)
+function var_0_0._refreshConnection(arg_21_0)
+	for iter_21_0 = 1, arg_21_0._gameWidth do
+		for iter_21_1 = 1, arg_21_0._gameHeight do
+			arg_21_0:_refreshConnectItem(iter_21_0, iter_21_1)
 		end
 	end
 end
 
-function slot0._refreshEntryItem(slot0)
-	for slot5, slot6 in pairs(ArmPuzzlePipeModel.instance:getEntryList()) do
-		slot9 = slot0._gridItemDict[slot6.x][slot6.y]
+function var_0_0._refreshEntryItem(arg_22_0)
+	local var_22_0 = ArmPuzzlePipeModel.instance:getEntryList()
 
-		slot9:initItem(slot6)
-		slot9:initConnectObj(slot6)
+	for iter_22_0, iter_22_1 in pairs(var_22_0) do
+		local var_22_1 = iter_22_1.x
+		local var_22_2 = iter_22_1.y
+		local var_22_3 = arg_22_0._gridItemDict[var_22_1][var_22_2]
+
+		var_22_3:initItem(iter_22_1)
+		var_22_3:initConnectObj(iter_22_1)
 	end
 end
 
-function slot0._onClickGridItem(slot0, slot1, slot2)
-	if not slot0._canTouch then
+function var_0_0._onClickGridItem(arg_23_0, arg_23_1, arg_23_2)
+	if not arg_23_0._canTouch then
 		GameFacade.showToast(ToastEnum.Va3Act124GameFinish)
 
 		return
 	end
 
-	if ArmPuzzlePipeModel.instance:getData(slot1, slot2):isEntry() then
+	local var_23_0 = ArmPuzzlePipeModel.instance:getData(arg_23_1, arg_23_2)
+
+	if var_23_0:isEntry() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	ArmPuzzlePipeController.instance:changeDirection(slot1, slot2, true)
+	ArmPuzzlePipeController.instance:changeDirection(arg_23_1, arg_23_2, true)
 	ArmPuzzlePipeController.instance:updateConnection()
-	slot0:_syncRotation(slot1, slot2, slot3)
-	slot0:_refreshConnection()
-	slot0:_refreshEntryItem()
+	arg_23_0:_syncRotation(arg_23_1, arg_23_2, var_23_0)
+	arg_23_0:_refreshConnection()
+	arg_23_0:_refreshEntryItem()
 
-	slot0._canTouch = not ArmPuzzlePipeModel.instance:getGameClear()
+	arg_23_0._canTouch = not ArmPuzzlePipeModel.instance:getGameClear()
 
 	ArmPuzzlePipeController.instance:checkDispatchClear()
 end
 
-function slot0.onClose(slot0)
-	if slot0._btnUIClick then
-		slot0._btnUIClick:RemoveClickListener()
+function var_0_0.onClose(arg_24_0)
+	if arg_24_0._btnUIClick then
+		arg_24_0._btnUIClick:RemoveClickListener()
 
-		slot0._btnUIClick = nil
+		arg_24_0._btnUIClick = nil
 	end
 end
 
-function slot0._onGameClear(slot0)
+function var_0_0._onGameClear(arg_25_0)
 	Stat1_3Controller.instance:puzzleStatSuccess()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_26_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,16 +1,17 @@
-module("modules.logic.fight.view.cardeffect.FightCardChangeMagicEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardChangeMagicEffect", package.seeall)
 
-slot0 = class("FightCardChangeMagicEffect", BaseWork)
+local var_0_0 = class("FightCardChangeMagicEffect", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot0:_playEffects()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0:_playEffects()
 end
 
-function slot0._playEffects(slot0)
-	slot0:onDone(true)
+function var_0_0._playEffects(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

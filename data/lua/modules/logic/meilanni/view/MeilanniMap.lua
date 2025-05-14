@@ -1,288 +1,338 @@
-module("modules.logic.meilanni.view.MeilanniMap", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniMap", package.seeall)
 
-slot0 = class("MeilanniMap", BaseView)
+local var_0_0 = class("MeilanniMap", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_initMap()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:_initMap()
 end
 
-function slot0.setScenePosSafety(slot0, slot1, slot2)
-	if not slot0._sceneTrans then
+function var_0_0.setScenePosSafety(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_0._sceneTrans then
 		return
 	end
 
-	if slot1.x < slot0._mapMinX then
-		slot1.x = slot0._mapMinX
-	elseif slot0._mapMaxX < slot1.x then
-		slot1.x = slot0._mapMaxX
+	if arg_5_1.x < arg_5_0._mapMinX then
+		arg_5_1.x = arg_5_0._mapMinX
+	elseif arg_5_1.x > arg_5_0._mapMaxX then
+		arg_5_1.x = arg_5_0._mapMaxX
 	end
 
-	if slot1.y < slot0._mapMinY then
-		slot1.y = slot0._mapMinY
-	elseif slot0._mapMaxY < slot1.y then
-		slot1.y = slot0._mapMaxY
+	if arg_5_1.y < arg_5_0._mapMinY then
+		arg_5_1.y = arg_5_0._mapMinY
+	elseif arg_5_1.y > arg_5_0._mapMaxY then
+		arg_5_1.y = arg_5_0._mapMaxY
 	end
 
-	if slot2 then
-		ZProj.TweenHelper.DOLocalMove(slot0._sceneTrans, slot1.x, slot1.y, 0, 0.26)
+	if arg_5_2 then
+		ZProj.TweenHelper.DOLocalMove(arg_5_0._sceneTrans, arg_5_1.x, arg_5_1.y, 0, 0.26)
 	else
-		slot0._sceneTrans.localPosition = slot1
+		arg_5_0._sceneTrans.localPosition = arg_5_1
 	end
 end
 
-function slot0._initCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
+function var_0_0._initCamera(arg_6_0)
+	local var_6_0 = CameraMgr.instance:getMainCamera()
 
-	transformhelper.setLocalRotation(slot1.transform, 0, 0, 0)
+	var_6_0.orthographic = true
 
-	slot1.orthographicSize = MeilanniEnum.orthographicSize * GameUtil.getAdapterScale()
+	transformhelper.setLocalRotation(var_6_0.transform, 0, 0, 0)
+
+	local var_6_1 = GameUtil.getAdapterScale()
+
+	var_6_0.orthographicSize = MeilanniEnum.orthographicSize * var_6_1
 end
 
-function slot0._resetCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographicSize = MeilanniEnum.orthographicSize
-	slot1.orthographic = false
+function var_0_0._resetCamera(arg_7_0)
+	local var_7_0 = CameraMgr.instance:getMainCamera()
+
+	var_7_0.orthographicSize = MeilanniEnum.orthographicSize
+	var_7_0.orthographic = false
 end
 
-function slot0._initMap(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("MeilanniMap")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+function var_0_0._initMap(arg_8_0)
+	local var_8_0 = CameraMgr.instance:getMainCameraTrs().parent
+	local var_8_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	arg_8_0._sceneRoot = UnityEngine.GameObject.New("MeilanniMap")
+
+	local var_8_2, var_8_3, var_8_4 = transformhelper.getLocalPos(var_8_0)
+
+	transformhelper.setLocalPos(arg_8_0._sceneRoot.transform, 0, var_8_3, 0)
+	gohelper.addChild(var_8_1, arg_8_0._sceneRoot)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0._showMap(slot0)
-	slot0:_changeMap(slot0._mapInfo:getCurEpisodeInfo().episodeConfig)
+function var_0_0._showMap(arg_10_0)
+	local var_10_0 = arg_10_0._mapInfo:getCurEpisodeInfo().episodeConfig
+
+	arg_10_0:_changeMap(var_10_0)
 end
 
-function slot0._changeMap(slot0, slot1)
-	if slot0._mapCfg == slot1 then
+function var_0_0._changeMap(arg_11_0, arg_11_1)
+	if arg_11_0._mapCfg == arg_11_1 then
 		return
 	end
 
-	if not slot0._oldMapLoader then
-		slot0._oldMapLoader = slot0._mapLoader
-		slot0._oldSceneGo = slot0._sceneGo
-		slot0._oldSceneTrans = slot0._sceneTrans
-	elseif slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if not arg_11_0._oldMapLoader then
+		arg_11_0._oldMapLoader = arg_11_0._mapLoader
+		arg_11_0._oldSceneGo = arg_11_0._sceneGo
+		arg_11_0._oldSceneTrans = arg_11_0._sceneTrans
+	elseif arg_11_0._mapLoader then
+		arg_11_0._mapLoader:dispose()
 
-		slot0._mapLoader = nil
+		arg_11_0._mapLoader = nil
 	end
 
-	slot0._mapCfg = slot1
+	arg_11_0._mapCfg = arg_11_1
 
-	slot0:_loadMap(slot1.res)
+	local var_11_0 = arg_11_1.res
+
+	arg_11_0:_loadMap(var_11_0)
 end
 
-function slot0._loadMap(slot0, slot1)
-	slot0._mapLoader = MultiAbLoader.New()
+function var_0_0._loadMap(arg_12_0, arg_12_1)
+	arg_12_0._mapLoader = MultiAbLoader.New()
 
-	slot0._mapLoader:addPath(slot1)
-	slot0._mapLoader:startLoad(function (slot0)
-		uv0._oldSceneGo = nil
+	arg_12_0._mapLoader:addPath(arg_12_1)
+	arg_12_0._mapLoader:startLoad(function(arg_13_0)
+		local var_13_0 = arg_12_0._oldSceneGo
 
-		uv0:disposeOldMap()
+		arg_12_0._oldSceneGo = nil
 
-		uv0._sceneGo = gohelper.clone(uv0._mapLoader:getAssetItem(uv1):GetResource(uv1), uv0._sceneRoot)
+		arg_12_0:disposeOldMap()
 
-		gohelper.setActive(uv0._sceneGo, true)
+		local var_13_1 = arg_12_0._mapLoader:getAssetItem(arg_12_1):GetResource(arg_12_1)
 
-		uv0._sceneTrans = uv0._sceneGo.transform
+		arg_12_0._sceneGo = gohelper.clone(var_13_1, arg_12_0._sceneRoot)
 
-		uv0:_startFade(uv0._oldSceneGo, uv0._sceneGo)
+		gohelper.setActive(arg_12_0._sceneGo, true)
+
+		arg_12_0._sceneTrans = arg_12_0._sceneGo.transform
+
+		arg_12_0:_startFade(var_13_0, arg_12_0._sceneGo)
 	end)
 end
 
-function slot0._startFade(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._startFade(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_1 then
 		return
 	end
 
-	slot2:GetComponent(typeof(UnityEngine.Animator)).enabled = false
+	arg_14_2:GetComponent(typeof(UnityEngine.Animator)).enabled = false
 
-	gohelper.setAsLastSibling(slot1)
+	gohelper.setAsLastSibling(arg_14_1)
 
-	slot0._oldSceneGoAnim = slot1
-	slot0._newSceneGoAnim = slot2
-	slot0._oldMats = slot0:_collectMats(slot1)
-	slot0._newMats = slot0:_collectMats(slot2)
+	arg_14_0._oldSceneGoAnim = arg_14_1
+	arg_14_0._newSceneGoAnim = arg_14_2
+	arg_14_0._oldMats = arg_14_0:_collectMats(arg_14_1)
+	arg_14_0._newMats = arg_14_0:_collectMats(arg_14_2)
 
-	slot0:_frameUpdateNew(0)
-	slot0:_fadeOld()
-	TaskDispatcher.runDelay(slot0._fadeNew, slot0, 0.5)
+	arg_14_0:_frameUpdateNew(0)
+	arg_14_0:_fadeOld()
+
+	local var_14_0 = 0.5
+
+	TaskDispatcher.runDelay(arg_14_0._fadeNew, arg_14_0, var_14_0)
 end
 
-function slot0._fadeOld(slot0)
-	ZProj.TweenHelper.DOTweenFloat(1, 0, 2, slot0._frameUpdateOld, slot0._fadeInFinishOld, slot0)
+function var_0_0._fadeOld(arg_15_0)
+	local var_15_0 = 1
+	local var_15_1 = 0
+	local var_15_2 = 2
+
+	ZProj.TweenHelper.DOTweenFloat(var_15_0, var_15_1, var_15_2, arg_15_0._frameUpdateOld, arg_15_0._fadeInFinishOld, arg_15_0)
 end
 
-function slot0._fadeNew(slot0)
-	ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, slot0._frameUpdateNew, slot0._fadeInFinishNew, slot0)
+function var_0_0._fadeNew(arg_16_0)
+	local var_16_0 = 0
+	local var_16_1 = 1
+	local var_16_2 = 1.5
+
+	ZProj.TweenHelper.DOTweenFloat(var_16_0, var_16_1, var_16_2, arg_16_0._frameUpdateNew, arg_16_0._fadeInFinishNew, arg_16_0)
 end
 
-function slot0._collectMats(slot0, slot1)
-	slot2 = {}
+function var_0_0._collectMats(arg_17_0, arg_17_1)
+	local var_17_0 = {}
+	local var_17_1 = arg_17_1:GetComponentsInChildren(typeof(UnityEngine.Renderer))
 
-	for slot7 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.Renderer)).Length - 1 do
-		table.insert(slot2, slot3[slot7].material)
+	for iter_17_0 = 0, var_17_1.Length - 1 do
+		local var_17_2 = var_17_1[iter_17_0].material
+
+		table.insert(var_17_0, var_17_2)
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0._updateMatAlpha(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7:HasProperty("_MainCol") then
-			slot8 = slot7:GetColor("_MainCol")
-			slot8.a = slot2
+function var_0_0._updateMatAlpha(arg_18_0, arg_18_1, arg_18_2)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		if iter_18_1:HasProperty("_MainCol") then
+			local var_18_0 = iter_18_1:GetColor("_MainCol")
 
-			slot7:SetColor("_MainCol", slot8)
+			var_18_0.a = arg_18_2
+
+			iter_18_1:SetColor("_MainCol", var_18_0)
 		end
 	end
 end
 
-function slot0._frameUpdateNew(slot0, slot1)
-	slot0:_updateMatAlpha(slot0._newMats, slot1)
+function var_0_0._frameUpdateNew(arg_19_0, arg_19_1)
+	arg_19_0:_updateMatAlpha(arg_19_0._newMats, arg_19_1)
 end
 
-function slot0._fadeInFinishNew(slot0, slot1)
-	slot0:_updateMatAlpha(slot0._newMats, 1)
+function var_0_0._fadeInFinishNew(arg_20_0, arg_20_1)
+	arg_20_0:_updateMatAlpha(arg_20_0._newMats, 1)
 
-	slot0._newSceneGoAnim = nil
+	arg_20_0._newSceneGoAnim = nil
 end
 
-function slot0._frameUpdateOld(slot0, slot1)
-	slot0:_updateMatAlpha(slot0._oldMats, slot1)
+function var_0_0._frameUpdateOld(arg_21_0, arg_21_1)
+	arg_21_0:_updateMatAlpha(arg_21_0._oldMats, arg_21_1)
 end
 
-function slot0._fadeInFinishOld(slot0, slot1)
-	if slot0._oldSceneGoAnim then
-		gohelper.destroy(slot0._oldSceneGoAnim)
+function var_0_0._fadeInFinishOld(arg_22_0, arg_22_1)
+	if arg_22_0._oldSceneGoAnim then
+		gohelper.destroy(arg_22_0._oldSceneGoAnim)
 
-		slot0._oldSceneGoAnim = nil
+		arg_22_0._oldSceneGoAnim = nil
 	end
 end
 
-function slot0._initCanvas(slot0)
-	slot0._sceneCanvasGo = gohelper.clone(slot0._mapLoader:getAssetItem(slot0._canvasUrl):GetResource(slot0._canvasUrl), slot0._sceneGo)
-	slot0._sceneCanvas = slot0._sceneCanvasGo:GetComponent("Canvas")
-	slot0._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
+function var_0_0._initCanvas(arg_23_0)
+	local var_23_0 = arg_23_0._mapLoader:getAssetItem(arg_23_0._canvasUrl):GetResource(arg_23_0._canvasUrl)
+
+	arg_23_0._sceneCanvasGo = gohelper.clone(var_23_0, arg_23_0._sceneGo)
+	arg_23_0._sceneCanvas = arg_23_0._sceneCanvasGo:GetComponent("Canvas")
+	arg_23_0._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
 end
 
-function slot0._initScene(slot0)
-	slot0._mapSize = gohelper.findChild(slot0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
-	slot3 = nil
-	slot5 = ((GameUtil.getAdapterScale() == 1 or ViewMgr.instance:getUILayer(UILayerName.Hud)) and ViewMgr.instance:getUIRoot()).transform:GetWorldCorners()
-	slot6 = slot5[1]
-	slot7 = slot5[3]
-	slot0._viewWidth = math.abs(slot7.x - slot6.x)
-	slot0._viewHeight = math.abs(slot7.y - slot6.y)
-	slot0._mapMinX = slot6.x - (slot0._mapSize.x - slot0._viewWidth)
-	slot0._mapMaxX = slot6.x
-	slot0._mapMinY = slot6.y
-	slot0._mapMaxY = slot6.y + slot0._mapSize.y - slot0._viewHeight
+function var_0_0._initScene(arg_24_0)
+	arg_24_0._mapSize = gohelper.findChild(arg_24_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
 
-	if slot0._oldScenePos then
-		slot0._sceneTrans.localPosition = slot0._oldScenePos
+	local var_24_0
+
+	if GameUtil.getAdapterScale() ~= 1 then
+		var_24_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	else
+		var_24_0 = ViewMgr.instance:getUIRoot()
 	end
 
-	slot0._oldScenePos = nil
+	local var_24_1 = var_24_0.transform:GetWorldCorners()
+	local var_24_2 = var_24_1[1]
+	local var_24_3 = var_24_1[3]
+
+	arg_24_0._viewWidth = math.abs(var_24_3.x - var_24_2.x)
+	arg_24_0._viewHeight = math.abs(var_24_3.y - var_24_2.y)
+	arg_24_0._mapMinX = var_24_2.x - (arg_24_0._mapSize.x - arg_24_0._viewWidth)
+	arg_24_0._mapMaxX = var_24_2.x
+	arg_24_0._mapMinY = var_24_2.y
+	arg_24_0._mapMaxY = var_24_2.y + (arg_24_0._mapSize.y - arg_24_0._viewHeight)
+
+	if arg_24_0._oldScenePos then
+		arg_24_0._sceneTrans.localPosition = arg_24_0._oldScenePos
+	end
+
+	arg_24_0._oldScenePos = nil
 end
 
-function slot0._setInitPos(slot0, slot1)
-	if not slot0._mapCfg then
+function var_0_0._setInitPos(arg_25_0, arg_25_1)
+	if not arg_25_0._mapCfg then
 		return
 	end
 
-	slot3 = string.splitToNumber(slot0._mapCfg.initPos, "#")
+	local var_25_0 = arg_25_0._mapCfg.initPos
+	local var_25_1 = string.splitToNumber(var_25_0, "#")
 
-	slot0:setScenePosSafety(Vector3(slot3[1], slot3[2], 0), slot1)
+	arg_25_0:setScenePosSafety(Vector3(var_25_1[1], var_25_1[2], 0), arg_25_1)
 end
 
-function slot0.disposeOldMap(slot0)
-	if slot0._sceneTrans then
-		slot0._oldScenePos = slot0._sceneTrans.localPosition
+function var_0_0.disposeOldMap(arg_26_0)
+	if arg_26_0._sceneTrans then
+		arg_26_0._oldScenePos = arg_26_0._sceneTrans.localPosition
 	else
-		slot0._oldScenePos = nil
+		arg_26_0._oldScenePos = nil
 	end
 
-	if slot0._oldMapLoader then
-		slot0._oldMapLoader:dispose()
+	if arg_26_0._oldMapLoader then
+		arg_26_0._oldMapLoader:dispose()
 
-		slot0._oldMapLoader = nil
+		arg_26_0._oldMapLoader = nil
 	end
 
-	if slot0._oldSceneGo then
-		gohelper.destroy(slot0._oldSceneGo)
+	if arg_26_0._oldSceneGo then
+		gohelper.destroy(arg_26_0._oldSceneGo)
 
-		slot0._oldSceneGo = nil
-	end
-end
-
-function slot0.onOpen(slot0)
-	slot0._mapId = MeilanniModel.instance:getCurMapId()
-	slot0._mapInfo = MeilanniModel.instance:getMapInfo(slot0._mapId)
-
-	slot0:addEventCb(MainController.instance, MainEvent.OnSceneClose, slot0._onSceneClose, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, slot0._episodeInfoUpdate, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, slot0._resetMap, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:_initCamera()
-	slot0:_showMap()
-end
-
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.DungeonMapView then
-		slot0:_initCamera()
+		arg_26_0._oldSceneGo = nil
 	end
 end
 
-function slot0._resetMap(slot0)
-	slot0:_showMap()
+function var_0_0.onOpen(arg_27_0)
+	arg_27_0._mapId = MeilanniModel.instance:getCurMapId()
+	arg_27_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_27_0._mapId)
+
+	arg_27_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_27_0._onSceneClose, arg_27_0)
+	arg_27_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_27_0._onScreenResize, arg_27_0)
+	arg_27_0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_27_0._episodeInfoUpdate, arg_27_0)
+	arg_27_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_27_0._resetMap, arg_27_0)
+	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_27_0._onCloseView, arg_27_0)
+	arg_27_0:_initCamera()
+	arg_27_0:_showMap()
 end
 
-function slot0._episodeInfoUpdate(slot0)
-	MeilanniAnimationController.instance:addDelayCall(slot0._showMap, slot0, nil, MeilanniEnum.changeMapTime, MeilanniAnimationController.changeMapLayer)
-end
-
-function slot0._onScreenResize(slot0)
-	CameraMgr.instance:getMainCamera().orthographicSize = MeilanniEnum.orthographicSize * GameUtil.getAdapterScale()
-end
-
-function slot0._onSceneClose(slot0)
-end
-
-function slot0.onClose(slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:_resetCamera()
-end
-
-function slot0.onDestroyView(slot0)
-	gohelper.destroy(slot0._sceneRoot)
-	slot0:disposeOldMap()
-
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+function var_0_0._onCloseView(arg_28_0, arg_28_1)
+	if arg_28_1 == ViewName.DungeonMapView then
+		arg_28_0:_initCamera()
 	end
 end
 
-return slot0
+function var_0_0._resetMap(arg_29_0)
+	arg_29_0:_showMap()
+end
+
+function var_0_0._episodeInfoUpdate(arg_30_0)
+	MeilanniAnimationController.instance:addDelayCall(arg_30_0._showMap, arg_30_0, nil, MeilanniEnum.changeMapTime, MeilanniAnimationController.changeMapLayer)
+end
+
+function var_0_0._onScreenResize(arg_31_0)
+	local var_31_0 = CameraMgr.instance:getMainCamera()
+	local var_31_1 = GameUtil.getAdapterScale()
+
+	var_31_0.orthographicSize = MeilanniEnum.orthographicSize * var_31_1
+end
+
+function var_0_0._onSceneClose(arg_32_0)
+	return
+end
+
+function var_0_0.onClose(arg_33_0)
+	arg_33_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_33_0._onCloseView, arg_33_0)
+	arg_33_0:_resetCamera()
+end
+
+function var_0_0.onDestroyView(arg_34_0)
+	gohelper.destroy(arg_34_0._sceneRoot)
+	arg_34_0:disposeOldMap()
+
+	if arg_34_0._mapLoader then
+		arg_34_0._mapLoader:dispose()
+	end
+end
+
+return var_0_0

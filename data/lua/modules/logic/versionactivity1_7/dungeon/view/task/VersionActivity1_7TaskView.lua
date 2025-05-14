@@ -1,69 +1,74 @@
-module("modules.logic.versionactivity1_7.dungeon.view.task.VersionActivity1_7TaskView", package.seeall)
+﻿module("modules.logic.versionactivity1_7.dungeon.view.task.VersionActivity1_7TaskView", package.seeall)
 
-slot0 = class("VersionActivity1_7TaskView", BaseView)
+local var_0_0 = class("VersionActivity1_7TaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageLangTxt = gohelper.findChildSingleImage(slot0.viewGO, "Left/#simage_langtxt")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageLangTxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageFullBG:LoadImage("singlebg/v1a7_mainactivity_singlebg/v1a7_task_fullbg.png")
-	slot0._simageLangTxt:LoadImage("singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_task_title.png")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simageFullBG:LoadImage("singlebg/v1a7_mainactivity_singlebg/v1a7_task_fullbg.png")
+	arg_4_0._simageLangTxt:LoadImage("singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_task_title.png")
 
-	slot0._txtremaintime = gohelper.findChildText(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, slot0._onOpen, slot0)
+	}, arg_6_0._onOpen, arg_6_0)
 end
 
-function slot0._onOpen(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshRight, slot0)
+function var_0_0._onOpen(arg_7_0)
+	arg_7_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_7_0.refreshRight, arg_7_0)
+	arg_7_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_7_0.refreshRight, arg_7_0)
+	arg_7_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_7_0.refreshRight, arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
+	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, TimeUtil.OneMinuteSecond)
 	VersionActivity1_7TaskListModel.instance:initTask()
-	slot0:refreshLeft()
-	slot0:refreshRight()
+	arg_7_0:refreshLeft()
+	arg_7_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshRemainTime()
+function var_0_0.refreshLeft(arg_8_0)
+	arg_8_0:refreshRemainTime()
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot0._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(ActivityModel.instance:getActivityInfo()[VersionActivity1_7Enum.ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now())
+function var_0_0.refreshRemainTime(arg_9_0)
+	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_7Enum.ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
+
+	arg_9_0._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(var_9_0)
 end
 
-function slot0.refreshRight(slot0)
+function var_0_0.refreshRight(arg_10_0)
 	VersionActivity1_7TaskListModel.instance:sortTaskMoList()
 	VersionActivity1_7TaskListModel.instance:refreshList()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0.refreshRemainTime, arg_11_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageFullBG:UnLoadImage()
-	slot0._simageLangTxt:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simageFullBG:UnLoadImage()
+	arg_12_0._simageLangTxt:UnLoadImage()
 end
 
-return slot0
+return var_0_0

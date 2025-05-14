@@ -1,77 +1,90 @@
-module("modules.logic.act189.controller.Activity189Controller", package.seeall)
+﻿module("modules.logic.act189.controller.Activity189Controller", package.seeall)
 
-slot0 = class("Activity189Controller", BaseController)
+local var_0_0 = class("Activity189Controller", BaseController)
 
-function slot0.dispatchEventUpdateActTag(slot0)
+function var_0_0.dispatchEventUpdateActTag(arg_1_0)
+	local var_1_0 = ActivityConfig.instance:getActivityCenterRedDotId(ActivityEnum.ActivityType.Beginner)
+	local var_1_1 = RedDotConfig.instance:getParentRedDotId(var_1_0)
+	local var_1_2 = ActivityConfig.instance:getActivityRedDotId(arg_1_0)
+
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-		[tonumber(RedDotConfig.instance:getParentRedDotId(ActivityConfig.instance:getActivityCenterRedDotId(ActivityEnum.ActivityType.Beginner)))] = true,
-		[tonumber(ActivityConfig.instance:getActivityRedDotId(slot0))] = true
+		[tonumber(var_1_1)] = true,
+		[tonumber(var_1_2)] = true
 	})
 end
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_2_0)
+	arg_2_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-function slot0.sendGetTaskInfoRequest(slot0, slot1, slot2)
+function var_0_0.sendGetTaskInfoRequest(arg_4_0, arg_4_1, arg_4_2)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		Activity189Config.instance:getTaskType()
-	}, slot1, slot2)
+	}, arg_4_1, arg_4_2)
 end
 
-function slot0.sendFinishAllTaskRequest(slot0, slot1, slot2, slot3)
-	TaskRpc.instance:sendFinishAllTaskRequest(Activity189Config.instance:getTaskType(), nil, , slot2, slot3, slot1)
+function var_0_0.sendFinishAllTaskRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	TaskRpc.instance:sendFinishAllTaskRequest(Activity189Config.instance:getTaskType(), nil, nil, arg_5_2, arg_5_3, arg_5_1)
 end
 
-function slot0.sendGetAct189OnceBonusRequest(slot0, slot1)
-	return Activity189Rpc.instance:sendGetAct189OnceBonusRequest(slot1, uv0.dispatchEventUpdateActTag, slot1)
+function var_0_0.sendGetAct189OnceBonusRequest(arg_6_0, arg_6_1)
+	return Activity189Rpc.instance:sendGetAct189OnceBonusRequest(arg_6_1, var_0_0.dispatchEventUpdateActTag, arg_6_1)
 end
 
-function slot0.sendGetAct189InfoRequest(slot0, slot1, slot2, slot3)
-	return Activity189Rpc.instance:sendGetAct189InfoRequest(slot1, slot2, slot3)
+function var_0_0.sendGetAct189InfoRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	return Activity189Rpc.instance:sendGetAct189InfoRequest(arg_7_1, arg_7_2, arg_7_3)
 end
 
-function slot0.sendFinishReadTaskRequest(slot0, slot1)
-	if not slot1 or slot1 == 0 then
+function var_0_0.sendFinishReadTaskRequest(arg_8_0, arg_8_1)
+	if not arg_8_1 or arg_8_1 == 0 then
 		return
 	end
 
-	if not Activity189Config.instance:getTaskCO(slot1) then
+	local var_8_0 = Activity189Config.instance:getTaskCO(arg_8_1)
+
+	if not var_8_0 then
 		return
 	end
 
-	TaskRpc.instance:sendFinishReadTaskRequest(slot1, uv0.dispatchEventUpdateActTag, slot2.activityId)
+	local var_8_1 = var_8_0.activityId
+
+	TaskRpc.instance:sendFinishReadTaskRequest(arg_8_1, var_0_0.dispatchEventUpdateActTag, var_8_1)
 end
 
-slot1 = "ReadTask"
+local var_0_1 = "ReadTask"
 
-function slot0.trySendFinishReadTaskRequest_jump(slot0, slot1)
-	if not Activity189Config.instance:getTaskCO(slot1) then
+function var_0_0.trySendFinishReadTaskRequest_jump(arg_9_0, arg_9_1)
+	local var_9_0 = Activity189Config.instance:getTaskCO(arg_9_1)
+
+	if not var_9_0 then
 		return
 	end
 
-	if slot2.listenerType ~= uv0 then
+	if var_9_0.listenerType ~= var_0_1 then
 		return
 	end
 
-	slot0:sendFinishReadTaskRequest(slot1)
+	arg_9_0:sendFinishReadTaskRequest(arg_9_1)
 end
 
-function slot0.checkRed_Task(slot0)
-	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Activity189Task, 0)
+function var_0_0.checkRed_Task(arg_10_0)
+	local var_10_0 = RedDotEnum.DotNode.Activity189Task
+
+	return RedDotModel.instance:isDotShow(var_10_0, 0)
 end
 
-function slot0.checkActRed(slot0, slot1)
-	if ActivityBeginnerController.instance:checkRedDot(slot1) then
+function var_0_0.checkActRed(arg_11_0, arg_11_1)
+	if ActivityBeginnerController.instance:checkRedDot(arg_11_1) then
 		return true
 	end
 
-	return slot0:checkRed_Task()
+	return arg_11_0:checkRed_Task()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

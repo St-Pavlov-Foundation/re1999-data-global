@@ -1,60 +1,72 @@
-module("modules.logic.gm.view.GMFightEntityAttrItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntityAttrItem", package.seeall)
 
-slot0 = class("GMFightEntityAttrItem", ListScrollCell)
+local var_0_0 = class("GMFightEntityAttrItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._txt_base = gohelper.findChildText(slot1, "base")
-	slot0._txt_fix = gohelper.findChildText(slot1, "fix")
-	slot0._txt_part_fix = gohelper.findChildText(slot1, "partfix")
-	slot0._txt_test = gohelper.findChildText(slot1, "test")
-	slot0._txt_part_test = gohelper.findChildText(slot1, "parttest")
-	slot0._txt_final = gohelper.findChildText(slot1, "final")
-	slot0._txt_base_value = gohelper.findChildText(slot1, "base/value")
-	slot0._txt_fix_value = gohelper.findChildText(slot1, "fix/value")
-	slot0._txt_part_fix_value = gohelper.findChildText(slot1, "partfix/value")
-	slot0._txt_final_value = gohelper.findChildText(slot1, "final/value")
-	slot0._input_test = gohelper.findChildTextMeshInputField(slot1, "test/input")
-	slot0._input_part_test = gohelper.findChildTextMeshInputField(slot1, "parttest/input")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._txt_base = gohelper.findChildText(arg_1_1, "base")
+	arg_1_0._txt_fix = gohelper.findChildText(arg_1_1, "fix")
+	arg_1_0._txt_part_fix = gohelper.findChildText(arg_1_1, "partfix")
+	arg_1_0._txt_test = gohelper.findChildText(arg_1_1, "test")
+	arg_1_0._txt_part_test = gohelper.findChildText(arg_1_1, "parttest")
+	arg_1_0._txt_final = gohelper.findChildText(arg_1_1, "final")
+	arg_1_0._txt_base_value = gohelper.findChildText(arg_1_1, "base/value")
+	arg_1_0._txt_fix_value = gohelper.findChildText(arg_1_1, "fix/value")
+	arg_1_0._txt_part_fix_value = gohelper.findChildText(arg_1_1, "partfix/value")
+	arg_1_0._txt_final_value = gohelper.findChildText(arg_1_1, "final/value")
+	arg_1_0._input_test = gohelper.findChildTextMeshInputField(arg_1_1, "test/input")
+	arg_1_0._input_part_test = gohelper.findChildTextMeshInputField(arg_1_1, "parttest/input")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._input_test:AddOnEndEdit(slot0._onFixEndEdit, slot0)
-	slot0._input_part_test:AddOnEndEdit(slot0._onPartFixEndEdit, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._input_test:AddOnEndEdit(arg_2_0._onFixEndEdit, arg_2_0)
+	arg_2_0._input_part_test:AddOnEndEdit(arg_2_0._onPartFixEndEdit, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._input_test:RemoveOnEndEdit()
-	slot0._input_part_test:RemoveOnEndEdit()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._input_test:RemoveOnEndEdit()
+	arg_3_0._input_part_test:RemoveOnEndEdit()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot3 = lua_character_attribute.configDict[slot1.id] and slot2.name or tostring(slot1.id)
-	slot0._txt_base.text = slot3 .. "基础值"
-	slot0._txt_fix.text = slot3 .. "百分比修正值"
-	slot0._txt_part_fix.text = slot3 .. "固定值修正值"
-	slot0._txt_test.text = "外挂百分比修正值"
-	slot0._txt_part_test.text = "外挂固定值修正值"
-	slot0._txt_final.text = slot3 .. "最终值"
-	slot0._txt_base_value.text = slot1.base
-	slot0._txt_fix_value.text = slot1.add * 0.001
-	slot0._txt_part_fix_value.text = slot1.partAdd
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0._input_test:SetText(slot1.test * 0.001)
-	slot0._input_part_test:SetText(slot1.partTest)
+	local var_4_0 = lua_character_attribute.configDict[arg_4_1.id]
+	local var_4_1 = var_4_0 and var_4_0.name or tostring(arg_4_1.id)
 
-	slot0._txt_final_value.text = slot1.final
+	arg_4_0._txt_base.text = var_4_1 .. "基础值"
+	arg_4_0._txt_fix.text = var_4_1 .. "百分比修正值"
+	arg_4_0._txt_part_fix.text = var_4_1 .. "固定值修正值"
+	arg_4_0._txt_test.text = "外挂百分比修正值"
+	arg_4_0._txt_part_test.text = "外挂固定值修正值"
+	arg_4_0._txt_final.text = var_4_1 .. "最终值"
+	arg_4_0._txt_base_value.text = arg_4_1.base
+	arg_4_0._txt_fix_value.text = arg_4_1.add * 0.001
+	arg_4_0._txt_part_fix_value.text = arg_4_1.partAdd
+
+	arg_4_0._input_test:SetText(arg_4_1.test * 0.001)
+	arg_4_0._input_part_test:SetText(arg_4_1.partTest)
+
+	arg_4_0._txt_final_value.text = arg_4_1.final
 end
 
-function slot0._onFixEndEdit(slot0)
-	GMRpc.instance:sendGMRequest(string.format("fightChangeAttr %s %d %d", tostring(GMFightEntityModel.instance.entityMO.id), slot0._mo.id, math.floor((tonumber(slot0._input_test:GetText()) or 0) * 1000)))
+function var_0_0._onFixEndEdit(arg_5_0)
+	local var_5_0 = arg_5_0._input_test:GetText()
+	local var_5_1 = tonumber(var_5_0) or 0
+	local var_5_2 = math.floor(var_5_1 * 1000)
+	local var_5_3 = GMFightEntityModel.instance.entityMO
+
+	GMRpc.instance:sendGMRequest(string.format("fightChangeAttr %s %d %d", tostring(var_5_3.id), arg_5_0._mo.id, var_5_2))
 	FightRpc.instance:sendGetEntityDetailInfosRequest()
 end
 
-function slot0._onPartFixEndEdit(slot0)
-	GMRpc.instance:sendGMRequest(string.format("fightChangePartAttr %s %d %d", tostring(GMFightEntityModel.instance.entityMO.id), slot0._mo.id, tonumber(slot0._input_part_test:GetText()) or 0))
+function var_0_0._onPartFixEndEdit(arg_6_0)
+	local var_6_0 = arg_6_0._input_part_test:GetText()
+	local var_6_1 = tonumber(var_6_0) or 0
+	local var_6_2 = GMFightEntityModel.instance.entityMO
+
+	GMRpc.instance:sendGMRequest(string.format("fightChangePartAttr %s %d %d", tostring(var_6_2.id), arg_6_0._mo.id, var_6_1))
 	FightRpc.instance:sendGetEntityDetailInfosRequest()
 end
 
-return slot0
+return var_0_0

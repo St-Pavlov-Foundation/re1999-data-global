@@ -1,107 +1,115 @@
-module("modules.logic.weekwalk.view.WeekWalkShallowSettlementView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkShallowSettlementView", package.seeall)
 
-slot0 = class("WeekWalkShallowSettlementView", BaseView)
+local var_0_0 = class("WeekWalkShallowSettlementView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg2")
-	slot0._txtlayer = gohelper.findChildText(slot0.viewGO, "overview/#txt_layer")
-	slot0._txtstarcount = gohelper.findChildText(slot0.viewGO, "overview/#txt_starcount")
-	slot0._scrollrewards = gohelper.findChildScrollRect(slot0.viewGO, "rewards/#scroll_rewards")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "rewards/#scroll_rewards/Viewport/Content/#go_rewarditem")
-	slot0._btnreceive = gohelper.findChildButtonWithAudio(slot0.viewGO, "rewards/#btn_receive")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "rewards/#go_empty")
-	slot0._gohasreceived = gohelper.findChild(slot0.viewGO, "rewards/#go_hasreceived")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
+	arg_1_0._txtlayer = gohelper.findChildText(arg_1_0.viewGO, "overview/#txt_layer")
+	arg_1_0._txtstarcount = gohelper.findChildText(arg_1_0.viewGO, "overview/#txt_starcount")
+	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "rewards/#scroll_rewards")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "rewards/#scroll_rewards/Viewport/Content/#go_rewarditem")
+	arg_1_0._btnreceive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rewards/#btn_receive")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "rewards/#go_empty")
+	arg_1_0._gohasreceived = gohelper.findChild(arg_1_0.viewGO, "rewards/#go_hasreceived")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnreceive:AddClickListener(slot0._btnreceiveOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnreceive:AddClickListener(arg_2_0._btnreceiveOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnreceive:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnreceive:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnreceiveOnClick(slot0)
+function var_0_0._btnreceiveOnClick(arg_5_0)
 	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.WeekWalk, 2)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	slot0._simagebg1:LoadImage(ResUrl.getWeekWalkBg("full/beijing_qian.jpg"))
-	slot0._simagebg2:LoadImage(ResUrl.getWeekWalkBg("qianmian_tcdi.png"))
-	slot0._simagemask:LoadImage(ResUrl.getWeekWalkBg("zhezhao.png"))
+	arg_6_0._simagebg1:LoadImage(ResUrl.getWeekWalkBg("full/beijing_qian.jpg"))
+	arg_6_0._simagebg2:LoadImage(ResUrl.getWeekWalkBg("qianmian_tcdi.png"))
+	arg_6_0._simagemask:LoadImage(ResUrl.getWeekWalkBg("zhezhao.png"))
 
-	slot0._info = WeekWalkModel.instance:getInfo()
+	arg_6_0._info = WeekWalkModel.instance:getInfo()
 
-	if slot0._info.isPopShallowSettle then
-		slot0._info.isPopShallowSettle = false
+	if arg_6_0._info.isPopShallowSettle then
+		arg_6_0._info.isPopShallowSettle = false
 
 		WeekwalkRpc.instance:sendMarkPopShallowSettleRequest()
 	end
 
-	slot0:_setLayerProgress()
-	slot0:_setProgress()
+	arg_6_0:_setLayerProgress()
+	arg_6_0:_setProgress()
 end
 
-function slot0._createItemList(slot0, slot1)
-	if not slot0._itemList then
-		slot0._itemList = slot0:getUserDataTb_()
+function var_0_0._createItemList(arg_7_0, arg_7_1)
+	if not arg_7_0._itemList then
+		arg_7_0._itemList = arg_7_0:getUserDataTb_()
 
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = gohelper.cloneInPlace(slot0._gorewarditem)
+		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+			local var_7_0 = gohelper.cloneInPlace(arg_7_0._gorewarditem)
 
-			gohelper.setActive(slot7, true)
+			gohelper.setActive(var_7_0, true)
 
-			slot8 = IconMgr.instance:getCommonItemIcon(gohelper.findChild(slot7, "go_item"))
+			local var_7_1 = IconMgr.instance:getCommonItemIcon(gohelper.findChild(var_7_0, "go_item"))
 
-			slot8:setMOValue(slot6[1], slot6[2], slot6[3])
-			slot8:isShowCount(true)
-			slot8:setCountFontSize(31)
+			var_7_1:setMOValue(iter_7_1[1], iter_7_1[2], iter_7_1[3])
+			var_7_1:isShowCount(true)
+			var_7_1:setCountFontSize(31)
 
-			slot0._itemList[slot5] = slot7
+			arg_7_0._itemList[iter_7_0] = var_7_0
 		end
 	end
 end
 
-function slot0._setProgress(slot0)
-	slot1, slot2, slot3 = DungeonWeekWalkView.getWeekTaskProgress()
-	slot0._txtstarcount.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkshallowsettlementview_starcount"), {
-		slot1,
-		slot2
-	})
+function var_0_0._setProgress(arg_8_0)
+	local var_8_0, var_8_1, var_8_2 = DungeonWeekWalkView.getWeekTaskProgress()
+	local var_8_3 = {
+		var_8_0,
+		var_8_1
+	}
 
-	slot0:_createItemList(slot3)
+	arg_8_0._txtstarcount.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkshallowsettlementview_starcount"), var_8_3)
 
-	slot5 = #slot3 > 0
+	arg_8_0:_createItemList(var_8_2)
 
-	gohelper.setActive(slot0._goempty, not slot5)
+	local var_8_4 = #var_8_2 > 0
 
-	slot6 = slot0:_isGetAllTask()
+	gohelper.setActive(arg_8_0._goempty, not var_8_4)
 
-	gohelper.setActive(slot0._gohasreceived, slot5 and slot6)
-	gohelper.setActive(slot0._btnreceive, slot5 and not slot6)
+	local var_8_5 = arg_8_0:_isGetAllTask()
 
-	for slot10, slot11 in ipairs(slot0._itemList) do
-		gohelper.setActive(gohelper.findChild(slot11, "go_receive"), slot5 and slot6)
+	gohelper.setActive(arg_8_0._gohasreceived, var_8_4 and var_8_5)
+	gohelper.setActive(arg_8_0._btnreceive, var_8_4 and not var_8_5)
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._itemList) do
+		local var_8_6 = gohelper.findChild(iter_8_1, "go_receive")
+
+		gohelper.setActive(var_8_6, var_8_4 and var_8_5)
 	end
 end
 
-function slot0._isGetAllTask(slot0)
-	for slot5, slot6 in ipairs(WeekWalkTaskListModel.instance:getList()) do
-		if WeekWalkTaskListModel.instance:getTaskMo(slot6.id) and slot7.finishCount <= 0 and slot7.hasFinished then
+function var_0_0._isGetAllTask(arg_9_0)
+	local var_9_0 = WeekWalkTaskListModel.instance:getList()
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_1 = WeekWalkTaskListModel.instance:getTaskMo(iter_9_1.id)
+
+		if var_9_1 and var_9_1.finishCount <= 0 and var_9_1.hasFinished then
 			return false
 		end
 	end
@@ -109,22 +117,28 @@ function slot0._isGetAllTask(slot0)
 	return true
 end
 
-function slot0._setLayerProgress(slot0)
-	slot1, slot2 = slot0:_getLastShallowLayer()
-	slot0._txtlayer.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkshallowsettlementview_layer"), {
-		lua_weekwalk_scene.configDict[slot1.sceneId].name,
-		"0" .. (slot2 and slot2:getNoStarBattleIndex() or 1)
-	})
+function var_0_0._setLayerProgress(arg_10_0)
+	local var_10_0, var_10_1 = arg_10_0:_getLastShallowLayer()
+	local var_10_2 = lua_weekwalk_scene.configDict[var_10_0.sceneId]
+	local var_10_3 = var_10_1 and var_10_1:getNoStarBattleIndex()
+	local var_10_4 = {
+		var_10_2.name,
+		"0" .. (var_10_3 or 1)
+	}
+
+	arg_10_0._txtlayer.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkshallowsettlementview_layer"), var_10_4)
 end
 
-function slot0._getLastShallowLayer(slot0)
-	slot1, slot2 = nil
+function var_0_0._getLastShallowLayer(arg_11_0)
+	local var_11_0
+	local var_11_1
 
-	for slot6, slot7 in ipairs(lua_weekwalk.configList) do
-		if WeekWalkModel.isShallowMap(slot7.id) then
-			slot1 = slot7
+	for iter_11_0, iter_11_1 in ipairs(lua_weekwalk.configList) do
+		if WeekWalkModel.isShallowMap(iter_11_1.id) then
+			var_11_1 = WeekWalkModel.instance:getMapInfo(iter_11_1.id)
+			var_11_0 = iter_11_1
 
-			if not WeekWalkModel.instance:getMapInfo(slot7.id) or slot2.isFinished <= 0 then
+			if not var_11_1 or var_11_1.isFinished <= 0 then
 				break
 			end
 		else
@@ -132,36 +146,37 @@ function slot0._getLastShallowLayer(slot0)
 		end
 	end
 
-	return slot1, slot2
+	return var_11_0, var_11_1
 end
 
-function slot0._onWeekwalkTaskUpdate(slot0)
-	slot0:_setProgress()
+function var_0_0._onWeekwalkTaskUpdate(arg_12_0)
+	arg_12_0:_setProgress()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_13_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_14_0)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_settlement_open)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, slot0._onWeekwalkTaskUpdate, slot0)
+	arg_14_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_14_0._onWeekwalkTaskUpdate, arg_14_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_settlement_close)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.onCloseFinish(slot0)
-	if slot0._info.isPopDeepSettle then
+function var_0_0.onCloseFinish(arg_16_0)
+	if arg_16_0._info.isPopDeepSettle then
 		WeekWalkController.instance:checkOpenWeekWalkDeepLayerNoticeView()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0._simagebg1:UnLoadImage()
+	arg_17_0._simagebg2:UnLoadImage()
+	arg_17_0._simagemask:UnLoadImage()
 end
 
-return slot0
+return var_0_0

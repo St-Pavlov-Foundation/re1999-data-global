@@ -1,126 +1,137 @@
-module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationModel", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationModel", package.seeall)
 
-slot0 = class("HeroInvitationModel", BaseModel)
+local var_0_0 = class("HeroInvitationModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.finalReward = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.finalReward = false
 
-	TaskDispatcher.cancelTask(slot0.checkInvitationTime, slot0)
+	TaskDispatcher.cancelTask(arg_2_0.checkInvitationTime, arg_2_0)
 end
 
-function slot0.onGetHeroInvitationInfoReply(slot0, slot1)
-	slot0:clear()
-	slot0:updateInvitationInfo(slot1.info)
-	TaskDispatcher.cancelTask(slot0.checkInvitationTime, slot0)
-	TaskDispatcher.runRepeat(slot0.checkInvitationTime, slot0, 1)
+function var_0_0.onGetHeroInvitationInfoReply(arg_3_0, arg_3_1)
+	arg_3_0:clear()
+	arg_3_0:updateInvitationInfo(arg_3_1.info)
+	TaskDispatcher.cancelTask(arg_3_0.checkInvitationTime, arg_3_0)
+	TaskDispatcher.runRepeat(arg_3_0.checkInvitationTime, arg_3_0, 1)
 end
 
-function slot0.onGainInviteRewardReply(slot0, slot1)
-	slot0:updateInvitationInfo(slot1.info)
+function var_0_0.onGainInviteRewardReply(arg_4_0, arg_4_1)
+	arg_4_0:updateInvitationInfo(arg_4_1.info)
 end
 
-function slot0.onGainFinalInviteRewardReply(slot0, slot1)
-	slot0:updateInvitationInfo(slot1.info)
+function var_0_0.onGainFinalInviteRewardReply(arg_5_0, arg_5_1)
+	arg_5_0:updateInvitationInfo(arg_5_1.info)
 end
 
-function slot0.updateInvitationInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateInvitationInfo(arg_6_0, arg_6_1)
+	if not arg_6_1 then
 		return
 	end
 
-	if slot1.gainReward then
-		for slot5 = 1, #slot1.gainReward do
-			slot0:getInvitationMoById(slot1.gainReward[slot5]):setGainReward(true)
+	if arg_6_1.gainReward then
+		for iter_6_0 = 1, #arg_6_1.gainReward do
+			arg_6_0:getInvitationMoById(arg_6_1.gainReward[iter_6_0]):setGainReward(true)
 		end
 	end
 
-	slot0.finalReward = slot1.finalReward
+	arg_6_0.finalReward = arg_6_1.finalReward
 end
 
-function slot0.getInvitationMoById(slot0, slot1)
-	if not slot0:getById(slot1) then
-		slot2 = HeroInvitationMo.New()
+function var_0_0.getInvitationMoById(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getById(arg_7_1)
 
-		slot2:init(slot1)
-		slot0:addAtLast(slot2)
+	if not var_7_0 then
+		var_7_0 = HeroInvitationMo.New()
+
+		var_7_0:init(arg_7_1)
+		arg_7_0:addAtLast(var_7_0)
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getInvitationState(slot0, slot1)
-	return slot0:getInvitationMoById(slot1):getInvitationState()
+function var_0_0.getInvitationState(arg_8_0, arg_8_1)
+	return arg_8_0:getInvitationMoById(arg_8_1):getInvitationState()
 end
 
-function slot0.isGainReward(slot0, slot1)
-	return slot0:getInvitationMoById(slot1):isGainReward()
+function var_0_0.isGainReward(arg_9_0, arg_9_1)
+	return arg_9_0:getInvitationMoById(arg_9_1):isGainReward()
 end
 
-function slot0.getInvitationFinishCount(slot0)
-	slot1 = HeroInvitationConfig.instance:getInvitationList()
-	slot2 = #slot1
+function var_0_0.getInvitationFinishCount(arg_10_0)
+	local var_10_0 = HeroInvitationConfig.instance:getInvitationList()
+	local var_10_1 = #var_10_0
+	local var_10_2 = 0
 
-	for slot7, slot8 in ipairs(slot1) do
-		if slot0:getInvitationState(slot8.id) == HeroInvitationEnum.InvitationState.Finish or slot9 == HeroInvitationEnum.InvitationState.CanGet then
-			slot3 = 0 + 1
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		local var_10_3 = arg_10_0:getInvitationState(iter_10_1.id)
+
+		if var_10_3 == HeroInvitationEnum.InvitationState.Finish or var_10_3 == HeroInvitationEnum.InvitationState.CanGet then
+			var_10_2 = var_10_2 + 1
 		end
 	end
 
-	return slot2, slot3
+	return var_10_1, var_10_2
 end
 
-function slot0.getInvitationHasRewardCount(slot0)
-	slot1 = HeroInvitationConfig.instance:getInvitationList()
-	slot2 = #slot1
+function var_0_0.getInvitationHasRewardCount(arg_11_0)
+	local var_11_0 = HeroInvitationConfig.instance:getInvitationList()
+	local var_11_1 = #var_11_0
+	local var_11_2 = 0
 
-	for slot7, slot8 in ipairs(slot1) do
-		if slot0:getInvitationState(slot8.id) == HeroInvitationEnum.InvitationState.Finish then
-			slot3 = 0 + 1
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if arg_11_0:getInvitationState(iter_11_1.id) == HeroInvitationEnum.InvitationState.Finish then
+			var_11_2 = var_11_2 + 1
 		end
 	end
 
-	return slot2, slot3
+	return var_11_1, var_11_2
 end
 
-function slot0.checkInvitationTime(slot0)
-	slot2 = false
+function var_0_0.checkInvitationTime(arg_12_0)
+	local var_12_0 = HeroInvitationConfig.instance:getInvitationList()
+	local var_12_1 = false
 
-	if HeroInvitationConfig.instance:getInvitationList() then
-		slot3, slot4 = nil
+	if var_12_0 then
+		local var_12_2
+		local var_12_3
 
-		for slot8, slot9 in ipairs(slot1) do
-			slot3 = slot0:getInvitationMoById(slot9.id)
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			local var_12_4 = arg_12_0:getInvitationMoById(iter_12_1.id)
+			local var_12_5 = var_12_4:getInvitationState()
 
-			if slot3:getInvitationState() ~= slot3.state then
-				slot3.state = slot4
-				slot2 = true
+			if var_12_5 ~= var_12_4.state then
+				var_12_4.state = var_12_5
+				var_12_1 = true
 			end
 		end
 	end
 
-	if slot2 then
+	if var_12_1 then
 		HeroInvitationController.instance:dispatchEvent(HeroInvitationEvent.StateChange)
 	end
 end
 
-function slot0.getInvitationStateByElementId(slot0, slot1)
-	if not HeroInvitationConfig.instance:getInvitationConfigByElementId(slot1) then
+function var_0_0.getInvitationStateByElementId(arg_13_0, arg_13_1)
+	local var_13_0 = HeroInvitationConfig.instance:getInvitationConfigByElementId(arg_13_1)
+
+	if not var_13_0 then
 		return
 	end
 
-	return slot0:getInvitationState(slot2.id)
+	return arg_13_0:getInvitationState(var_13_0.id)
 end
 
-function slot0.isAllFinish(slot0)
-	slot1, slot2 = slot0:getInvitationFinishCount()
+function var_0_0.isAllFinish(arg_14_0)
+	local var_14_0, var_14_1 = arg_14_0:getInvitationFinishCount()
 
-	return slot1 == slot2
+	return var_14_0 == var_14_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

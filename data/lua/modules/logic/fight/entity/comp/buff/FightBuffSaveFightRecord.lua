@@ -1,23 +1,26 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffSaveFightRecord", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffSaveFightRecord", package.seeall)
 
-slot0 = class("FightBuffSaveFightRecord")
+local var_0_0 = class("FightBuffSaveFightRecord")
 
-function slot0.onBuffStart(slot0, slot1, slot2)
-	if FightStrUtil.instance:getSplitToNumberCache(slot2.actCommonParams, "#") then
-		FightModel.instance:setRoundOffset(tonumber(slot3[2]))
+function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = FightStrUtil.instance:getSplitToNumberCache(arg_1_2.actCommonParams, "#")
+
+	if var_1_0 then
+		FightModel.instance:setRoundOffset(tonumber(var_1_0[2]))
 		FightController.instance:dispatchEvent(FightEvent.RefreshUIRound)
 	end
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_2_0)
+	return
 end
 
-function slot0.onBuffEnd(slot0)
-	slot0:clear()
+function var_0_0.onBuffEnd(arg_3_0)
+	arg_3_0:clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:clear()
+function var_0_0.dispose(arg_4_0)
+	arg_4_0:clear()
 end
 
-return slot0
+return var_0_0

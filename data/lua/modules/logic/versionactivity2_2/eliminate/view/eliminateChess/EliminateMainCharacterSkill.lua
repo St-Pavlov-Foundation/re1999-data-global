@@ -1,154 +1,176 @@
-module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateMainCharacterSkill", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateMainCharacterSkill", package.seeall)
 
-slot0 = class("EliminateMainCharacterSkill", ListScrollCellExtend)
+local var_0_0 = class("EliminateMainCharacterSkill", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gorectMask = gohelper.findChild(slot0.viewGO, "#go_rectMask")
-	slot0._txtskillTipDesc = gohelper.findChildText(slot0.viewGO, "#txt_skillTipDesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorectMask = gohelper.findChild(arg_1_0.viewGO, "#go_rectMask")
+	arg_1_0._txtskillTipDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_skillTipDesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = typeof(ZProj.RectMaskHole)
-slot2 = SLFramework.UGUI.UIClickListener
-slot3 = UnityEngine.EventSystems.EventSystem
+local var_0_1 = typeof(ZProj.RectMaskHole)
+local var_0_2 = SLFramework.UGUI.UIClickListener
+local var_0_3 = UnityEngine.EventSystems.EventSystem
 
-function slot0._editableInitView(slot0)
-	slot0._rectMaskHole = slot0._gorectMask:GetComponent(uv0)
-	slot0._rectMaskHoleTr = slot0._rectMaskHole.transform
-	slot0._rectMaskHole.enableClick = false
-	slot0._rectMaskHole.enableDrag = false
-	slot0._rectMaskHole.enablePress = false
-	slot0._rectMaskHole.enableTargetClick = false
-	slot0._rectMaskClick = uv1.Get(slot0._gorectMask)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._rectMaskHole = arg_4_0._gorectMask:GetComponent(var_0_1)
+	arg_4_0._rectMaskHoleTr = arg_4_0._rectMaskHole.transform
+	arg_4_0._rectMaskHole.enableClick = false
+	arg_4_0._rectMaskHole.enableDrag = false
+	arg_4_0._rectMaskHole.enablePress = false
+	arg_4_0._rectMaskHole.enableTargetClick = false
+	arg_4_0._rectMaskClick = var_0_2.Get(arg_4_0._gorectMask)
 
-	slot0._rectMaskClick:AddClickListener(slot0.onClick, slot0)
+	arg_4_0._rectMaskClick:AddClickListener(arg_4_0.onClick, arg_4_0)
 end
 
-function slot0.onClick(slot0)
-	slot1 = UnityEngine.Input.mousePosition
+function var_0_0.onClick(arg_5_0)
+	local var_5_0 = UnityEngine.Input.mousePosition
 
-	if slot0._pointerEventData == nil then
-		slot0._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(uv0.current)
-		slot0._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
+	if arg_5_0._pointerEventData == nil then
+		arg_5_0._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(var_0_3.current)
+		arg_5_0._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
 	end
 
-	slot0._pointerEventData.position = slot1
+	arg_5_0._pointerEventData.position = var_5_0
 
-	if slot0:isInRect(slot0._pointerEventData) then
-		slot0:checkAndExecute()
+	if arg_5_0:isInRect(arg_5_0._pointerEventData) then
+		arg_5_0:checkAndExecute()
 	else
-		slot0:rectMaskClick()
+		arg_5_0:rectMaskClick()
 	end
 end
 
-function slot0.checkAndExecute(slot0)
-	if slot0._raycastResults == nil then
+function var_0_0.checkAndExecute(arg_6_0)
+	if arg_6_0._raycastResults == nil then
 		return
 	end
 
-	uv0.current:RaycastAll(slot0._pointerEventData, slot0._raycastResults)
+	var_0_3.current:RaycastAll(arg_6_0._pointerEventData, arg_6_0._raycastResults)
 
-	slot1 = slot0._pointerEventData.pointerCurrentRaycast.gameObject
+	local var_6_0 = arg_6_0._pointerEventData.pointerCurrentRaycast.gameObject
 
 	if EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess then
-		slot0._raycastResults:Clear()
+		arg_6_0._raycastResults:Clear()
 	end
 
-	slot4 = slot0._raycastResults:GetEnumerator()
+	local var_6_1 = arg_6_0._raycastResults:GetEnumerator()
 
-	while slot4:MoveNext() do
-		if slot4.Current.gameObject ~= slot1 and slot6 ~= slot0._gorectMask and not gohelper.isNil(slot6:GetComponent(typeof(UnityEngine.UI.Button))) then
-			slot7:OnPointerClick(slot0._pointerEventData)
+	while var_6_1:MoveNext() do
+		local var_6_2 = var_6_1.Current.gameObject
+
+		if var_6_2 ~= var_6_0 and var_6_2 ~= arg_6_0._gorectMask then
+			local var_6_3 = var_6_2:GetComponent(typeof(UnityEngine.UI.Button))
+
+			if not gohelper.isNil(var_6_3) then
+				var_6_3:OnPointerClick(arg_6_0._pointerEventData)
+			end
 		end
 	end
 end
 
-slot4 = Vector2.New(0, 0)
-slot5 = UnityEngine.Rect.New(0, 0, 0, 0)
+local var_0_4 = Vector2.New(0, 0)
+local var_0_5 = UnityEngine.Rect.New(0, 0, 0, 0)
 
-function slot0.isInRect(slot0, slot1)
-	if slot0._size == nil or slot0._center == nil then
+function var_0_0.isInRect(arg_7_0, arg_7_1)
+	if arg_7_0._size == nil or arg_7_0._center == nil then
 		return false
 	end
 
-	slot5 = slot0._size.x or 0
-	slot6 = slot0._size.y or 0
+	local var_7_0 = CameraMgr.instance:getMainCamera()
+	local var_7_1 = arg_7_0._center.x or 0
+	local var_7_2 = arg_7_0._center.y or 0
+	local var_7_3 = arg_7_0._size.x or 0
+	local var_7_4 = arg_7_0._size.y or 0
 
-	uv0:Set((slot0._center.x or 0) - slot5 * 0.5, (slot0._center.y or 0) - slot6 * 0.5, slot5, slot6)
+	var_0_5:Set(var_7_1 - var_7_3 * 0.5, var_7_2 - var_7_4 * 0.5, var_7_3, var_7_4)
 
-	slot7, slot8 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(slot0._rectMaskHoleTr, slot1.position, CameraMgr.instance:getMainCamera(), uv1)
+	local var_7_5, var_7_6 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(arg_7_0._rectMaskHoleTr, arg_7_1.position, var_7_0, var_0_4)
 
-	if slot7 and uv0:Contains(slot8) then
+	if var_7_5 and var_0_5:Contains(var_7_6) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.rectMaskClick(slot0)
-	if slot0._rectMaskClickCb and slot0._rectMaskClickCbTarget then
-		slot0._rectMaskClickCb(slot0._rectMaskClickCbTarget)
+function var_0_0.rectMaskClick(arg_8_0)
+	if arg_8_0._rectMaskClickCb and arg_8_0._rectMaskClickCbTarget then
+		arg_8_0._rectMaskClickCb(arg_8_0._rectMaskClickCbTarget)
 	end
 end
 
-function slot0.setTargetTrAndHoleSize(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._rectMaskHole.size = Vector2(slot2, slot3)
-	slot7 = Vector2(slot5 or 0, slot4 or -30)
-	slot0._center = slot7
-	slot0._size = slot6
+function var_0_0.setTargetTrAndHoleSize(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+	local var_9_0 = Vector2(arg_9_2, arg_9_3)
 
-	slot0._rectMaskHole:SetTarget(slot1, slot7, slot7, nil)
+	arg_9_0._rectMaskHole.size = var_9_0
+	arg_9_4 = arg_9_4 or -30
+	arg_9_5 = arg_9_5 or 0
+
+	local var_9_1 = Vector2(arg_9_5, arg_9_4)
+
+	arg_9_0._center = var_9_1
+	arg_9_0._size = var_9_0
+
+	arg_9_0._rectMaskHole:SetTarget(arg_9_1, var_9_1, var_9_1, nil)
 end
 
-function slot0.setCanvas(slot0, slot1)
-	slot0._rectMaskHole.mainCanvas = slot1
-	slot2 = CameraMgr.instance:getMainCamera()
-	slot0._rectMaskHole.mainCamera = slot2
-	slot0._rectMaskHole.uiCamera = slot2
+function var_0_0.setCanvas(arg_10_0, arg_10_1)
+	arg_10_0._rectMaskHole.mainCanvas = arg_10_1
+
+	local var_10_0 = CameraMgr.instance:getMainCamera()
+
+	arg_10_0._rectMaskHole.mainCamera = var_10_0
+	arg_10_0._rectMaskHole.uiCamera = var_10_0
 end
 
-function slot0.setClickCb(slot0, slot1, slot2)
-	slot0._rectMaskClickCb = slot1
-	slot0._rectMaskClickCbTarget = slot2
+function var_0_0.setClickCb(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._rectMaskClickCb = arg_11_1
+	arg_11_0._rectMaskClickCbTarget = arg_11_2
 end
 
-function slot0.refreshSkillData(slot0)
-	slot0._skillData = EliminateLevelController.instance:getCurSelectSkill()
-	slot0._txtskillTipDesc.text = slot0._skillData:getSkillConfig().skillPrompt
+function var_0_0.refreshSkillData(arg_12_0)
+	arg_12_0._skillData = EliminateLevelController.instance:getCurSelectSkill()
+
+	local var_12_0 = arg_12_0._skillData:getSkillConfig()
+
+	arg_12_0._txtskillTipDesc.text = var_12_0.skillPrompt
 end
 
-function slot0.refreshTeamChessSkillData(slot0)
-	slot0._txtskillTipDesc.text = luaLang("select_skill_target")
+function var_0_0.refreshTeamChessSkillData(arg_13_0)
+	arg_13_0._txtskillTipDesc.text = luaLang("select_skill_target")
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._rectMaskHole then
-		slot0._rectMaskHole:InitPointerLuaFunction(nil, )
+function var_0_0.onDestroyView(arg_14_0)
+	if arg_14_0._rectMaskHole then
+		arg_14_0._rectMaskHole:InitPointerLuaFunction(nil, nil)
 
-		slot0._rectMaskHole = nil
+		arg_14_0._rectMaskHole = nil
 	end
 
-	if slot0._rectMaskClick then
-		slot0._rectMaskClick:RemoveClickListener()
+	if arg_14_0._rectMaskClick then
+		arg_14_0._rectMaskClick:RemoveClickListener()
 
-		slot0._rectMaskClick = nil
-		slot0._pointerEventData = nil
-		slot0._raycastResults = nil
+		arg_14_0._rectMaskClick = nil
+		arg_14_0._pointerEventData = nil
+		arg_14_0._raycastResults = nil
 	end
 
-	slot0._size = nil
-	slot0._center = nil
-	slot0._rectMaskClickCb = nil
-	slot0._rectMaskClickCbTarget = nil
+	arg_14_0._size = nil
+	arg_14_0._center = nil
+	arg_14_0._rectMaskClickCb = nil
+	arg_14_0._rectMaskClickCbTarget = nil
 end
 
-return slot0
+return var_0_0

@@ -1,31 +1,34 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballResWoodEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResWoodEntity", package.seeall)
 
-slot0 = class("PinballResWoodEntity", PinballResEntity)
+local var_0_0 = class("PinballResWoodEntity", PinballResEntity)
 
-function slot0.isBounce(slot0)
+function var_0_0.isBounce(arg_1_0)
 	return false
 end
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	if not PinballEntityMgr.instance:getEntity(slot1) then
+function var_0_0.onHitEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = PinballEntityMgr.instance:getEntity(arg_2_1)
+
+	if not var_2_0 then
 		return
 	end
 
-	slot5.vx = slot5.vx * (1 - slot0.decv)
-	slot5.vy = slot5.vy * (1 - slot0.decv)
+	var_2_0.vx = var_2_0.vx * (1 - arg_2_0.decv)
+	var_2_0.vy = var_2_0.vy * (1 - arg_2_0.decv)
 end
 
-function slot0.onHitCount(slot0)
-	PinballModel.instance:addGameRes(slot0.resType, slot0.resNum)
-	PinballEntityMgr.instance:addNumShow(slot0.resNum, slot0.x + slot0.width, slot0.y + slot0.height)
-	slot0:markDead()
+function var_0_0.onHitCount(arg_3_0)
+	PinballModel.instance:addGameRes(arg_3_0.resType, arg_3_0.resNum)
+	PinballEntityMgr.instance:addNumShow(arg_3_0.resNum, arg_3_0.x + arg_3_0.width, arg_3_0.y + arg_3_0.height)
+	arg_3_0:markDead()
 end
 
-function slot0.onInitByCo(slot0)
-	slot1 = string.splitToNumber(slot0.spData, "#") or {}
-	slot0.resNum = slot1[1] or 0
-	slot0.decv = (slot1[2] or 0) / 1000
-	slot0.decv = Mathf.Clamp(slot0.decv, 0, 1)
+function var_0_0.onInitByCo(arg_4_0)
+	local var_4_0 = string.splitToNumber(arg_4_0.spData, "#") or {}
+
+	arg_4_0.resNum = var_4_0[1] or 0
+	arg_4_0.decv = (var_4_0[2] or 0) / 1000
+	arg_4_0.decv = Mathf.Clamp(arg_4_0.decv, 0, 1)
 end
 
-return slot0
+return var_0_0

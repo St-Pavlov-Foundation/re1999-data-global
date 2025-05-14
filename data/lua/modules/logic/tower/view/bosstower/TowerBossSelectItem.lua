@@ -1,185 +1,201 @@
-module("modules.logic.tower.view.bosstower.TowerBossSelectItem", package.seeall)
+﻿module("modules.logic.tower.view.bosstower.TowerBossSelectItem", package.seeall)
 
-slot0 = class("TowerBossSelectItem", LuaCompBase)
+local var_0_0 = class("TowerBossSelectItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0.txtName = gohelper.findChildTextMesh(slot0.viewGO, "root/namebg/#txt_name")
-	slot0.simageBoss = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_boss")
-	slot0.simageShadow = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_shadow")
-	slot0.goNew = gohelper.findChild(slot0.viewGO, "root/tips/new")
-	slot0.goSp = gohelper.findChild(slot0.viewGO, "root/tips/sp")
-	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "click")
-	slot0.btnDetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_detail")
-	slot0.goTime = gohelper.findChild(slot0.viewGO, "root/timebg")
-	slot0.txtTime = gohelper.findChildTextMesh(slot0.viewGO, "root/timebg/#txt_time")
-	slot0.goLev = gohelper.findChild(slot0.viewGO, "root/level")
-	slot0.txtLev = gohelper.findChildTextMesh(slot0.viewGO, "root/level/levelbg/#txt_level")
-	slot0.spNodeList = slot0:getUserDataTb_()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/namebg/#txt_name")
+	arg_1_0.simageBoss = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_boss")
+	arg_1_0.simageShadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_shadow")
+	arg_1_0.goNew = gohelper.findChild(arg_1_0.viewGO, "root/tips/new")
+	arg_1_0.goSp = gohelper.findChild(arg_1_0.viewGO, "root/tips/sp")
+	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "click")
+	arg_1_0.btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_detail")
+	arg_1_0.goTime = gohelper.findChild(arg_1_0.viewGO, "root/timebg")
+	arg_1_0.txtTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/timebg/#txt_time")
+	arg_1_0.goLev = gohelper.findChild(arg_1_0.viewGO, "root/level")
+	arg_1_0.txtLev = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/level/levelbg/#txt_level")
+	arg_1_0.spNodeList = arg_1_0:getUserDataTb_()
 
-	for slot5 = 1, 3 do
-		slot0.spNodeList[slot5] = gohelper.findChild(slot0.viewGO, string.format("root/level/%s", slot5))
+	for iter_1_0 = 1, 3 do
+		arg_1_0.spNodeList[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, string.format("root/level/%s", iter_1_0))
 	end
 
-	slot0.taskList = {}
+	arg_1_0.taskList = {}
 
-	for slot5 = 1, 4 do
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = gohelper.findChild(slot0.viewGO, string.format("root/progress/%s", slot5))
-		slot6.goLight = gohelper.findChild(slot6.go, "light")
-		slot0.taskList[slot5] = slot6
+	for iter_1_1 = 1, 4 do
+		local var_1_0 = arg_1_0:getUserDataTb_()
+
+		var_1_0.go = gohelper.findChild(arg_1_0.viewGO, string.format("root/progress/%s", iter_1_1))
+		var_1_0.goLight = gohelper.findChild(var_1_0.go, "light")
+		arg_1_0.taskList[iter_1_1] = var_1_0
 	end
 
-	slot0.towerType = TowerEnum.TowerType.Boss
+	arg_1_0.towerType = TowerEnum.TowerType.Boss
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addClickCb(slot0.btnClick, slot0._onBtnClick, slot0)
-	slot0:addClickCb(slot0.btnDetail, slot0._onBtnDetail, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0._onBtnClick, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnDetail, arg_2_0._onBtnDetail, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeClickCb(slot0.btnClick)
-	slot0:removeClickCb(slot0.btnDetail)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0.btnClick)
+	arg_3_0:removeClickCb(arg_3_0.btnDetail)
 end
 
-function slot0._onBtnDetail(slot0)
-	if slot0.towerConfig then
-		TowerController.instance:openAssistBossView(slot0.towerConfig.bossId)
+function var_0_0._onBtnDetail(arg_4_0)
+	if arg_4_0.towerConfig then
+		TowerController.instance:openAssistBossView(arg_4_0.towerConfig.bossId)
 	end
 end
 
-function slot0._onBtnClick(slot0)
-	TowerController.instance:openBossTowerEpisodeView(slot0.towerType, slot0.towerId)
-	slot0:checkClearTag()
+function var_0_0._onBtnClick(arg_5_0)
+	TowerController.instance:openBossTowerEpisodeView(arg_5_0.towerType, arg_5_0.towerId)
+	arg_5_0:checkClearTag()
 end
 
-function slot0.updateItem(slot0, slot1)
-	slot0.towerOpenMo = slot1
-	slot0.towerId = slot1 and slot1.towerId
+function var_0_0.updateItem(arg_6_0, arg_6_1)
+	arg_6_0.towerOpenMo = arg_6_1
+	arg_6_0.towerId = arg_6_1 and arg_6_1.towerId
 
-	if not slot0.towerId then
-		gohelper.setActive(slot0.viewGO, false)
-		slot0:clearTime()
+	if not arg_6_0.towerId then
+		gohelper.setActive(arg_6_0.viewGO, false)
+		arg_6_0:clearTime()
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_6_0.viewGO, true)
 
-	slot0.towerInfo = TowerModel.instance:getTowerInfoById(slot0.towerType, slot0.towerId)
-	slot0.towerConfig = TowerConfig.instance:getBossTowerConfig(slot0.towerId)
-	slot0.bossInfo = TowerAssistBossModel.instance:getById(slot0.towerConfig.bossId)
-	slot0.episodeMo = TowerModel.instance:getEpisodeMoByTowerType(slot0.towerType)
-	slot0.bossConfig = TowerConfig.instance:getAssistBossConfig(slot0.towerConfig.bossId)
-	slot0.txtName.text = slot0.towerConfig.name
+	arg_6_0.towerInfo = TowerModel.instance:getTowerInfoById(arg_6_0.towerType, arg_6_0.towerId)
+	arg_6_0.towerConfig = TowerConfig.instance:getBossTowerConfig(arg_6_0.towerId)
+	arg_6_0.bossInfo = TowerAssistBossModel.instance:getById(arg_6_0.towerConfig.bossId)
+	arg_6_0.episodeMo = TowerModel.instance:getEpisodeMoByTowerType(arg_6_0.towerType)
+	arg_6_0.bossConfig = TowerConfig.instance:getAssistBossConfig(arg_6_0.towerConfig.bossId)
+	arg_6_0.txtName.text = arg_6_0.towerConfig.name
 
-	slot0.simageBoss:LoadImage(slot0.bossConfig.bossPic)
-	slot0.simageShadow:LoadImage(slot0.bossConfig.bossShadowPic)
-	slot0:refreshLev()
-	slot0:refreshTask()
-	slot0:refreshTag()
+	arg_6_0.simageBoss:LoadImage(arg_6_0.bossConfig.bossPic)
+	arg_6_0.simageShadow:LoadImage(arg_6_0.bossConfig.bossShadowPic)
+	arg_6_0:refreshLev()
+	arg_6_0:refreshTask()
+	arg_6_0:refreshTag()
 end
 
-function slot0.refreshLev(slot0)
-	if slot0.bossInfo then
-		gohelper.setActive(slot0.goLev, true)
+function var_0_0.refreshLev(arg_7_0)
+	if arg_7_0.bossInfo then
+		gohelper.setActive(arg_7_0.goLev, true)
 
-		slot0.txtLev.text = slot0.bossInfo.level
+		arg_7_0.txtLev.text = arg_7_0.bossInfo.level
 
-		for slot6, slot7 in pairs(slot0.episodeMo:getSpEpisodes(slot0.towerId)) do
-			if slot0.towerInfo:isLayerPass(slot7, slot0.episodeMo) then
-				slot2 = 0 + 1
+		local var_7_0 = arg_7_0.episodeMo:getSpEpisodes(arg_7_0.towerId)
+		local var_7_1 = 0
+
+		for iter_7_0, iter_7_1 in pairs(var_7_0) do
+			if arg_7_0.towerInfo:isLayerPass(iter_7_1, arg_7_0.episodeMo) then
+				var_7_1 = var_7_1 + 1
 			end
 		end
 
-		for slot6 = 1, #slot0.spNodeList do
-			gohelper.setActive(slot0.spNodeList[slot6], slot6 <= slot2)
+		for iter_7_2 = 1, #arg_7_0.spNodeList do
+			gohelper.setActive(arg_7_0.spNodeList[iter_7_2], iter_7_2 <= var_7_1)
 		end
 	else
-		gohelper.setActive(slot0.goLev, false)
+		gohelper.setActive(arg_7_0.goLev, false)
 	end
 end
 
-function slot0.refreshTask(slot0)
-	slot3 = 0
+function var_0_0.refreshTask(arg_8_0)
+	local var_8_0 = arg_8_0.towerInfo:getTaskGroupId()
+	local var_8_1 = TowerConfig.instance:getTaskListByGroupId(var_8_0)
+	local var_8_2 = 0
 
-	if TowerConfig.instance:getTaskListByGroupId(slot0.towerInfo:getTaskGroupId()) then
-		for slot7, slot8 in pairs(slot2) do
-			if TowerTaskModel.instance:isTaskFinishedById(slot8) then
-				slot3 = slot3 + 1
+	if var_8_1 then
+		for iter_8_0, iter_8_1 in pairs(var_8_1) do
+			if TowerTaskModel.instance:isTaskFinishedById(iter_8_1) then
+				var_8_2 = var_8_2 + 1
 			end
 		end
 	end
 
-	for slot8 = 1, #slot0.taskList do
-		slot9 = slot0.taskList[slot8]
+	local var_8_3 = var_8_1 and #var_8_1 or 0
 
-		if slot8 <= (slot2 and #slot2 or 0) then
-			gohelper.setActive(slot9.go, true)
-			gohelper.setActive(slot9.goLight, slot8 <= slot3)
+	for iter_8_2 = 1, #arg_8_0.taskList do
+		local var_8_4 = arg_8_0.taskList[iter_8_2]
+
+		if iter_8_2 <= var_8_3 then
+			gohelper.setActive(var_8_4.go, true)
+			gohelper.setActive(var_8_4.goLight, iter_8_2 <= var_8_2)
 		else
-			gohelper.setActive(slot9.go, false)
+			gohelper.setActive(var_8_4.go, false)
 		end
 	end
 end
 
-function slot0.refreshTime(slot0, slot1)
-	if slot0.towerId ~= slot1 then
-		slot0:clearTime()
+function var_0_0.refreshTime(arg_9_0, arg_9_1)
+	if arg_9_0.towerId ~= arg_9_1 then
+		arg_9_0:clearTime()
 
 		return
 	end
 
-	gohelper.setActive(slot0.goTime, true)
-	slot0:_refreshTime()
-	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
-	TaskDispatcher.runRepeat(slot0._refreshTime, slot0, 1)
+	gohelper.setActive(arg_9_0.goTime, true)
+	arg_9_0:_refreshTime()
+	TaskDispatcher.cancelTask(arg_9_0._refreshTime, arg_9_0)
+	TaskDispatcher.runRepeat(arg_9_0._refreshTime, arg_9_0, 1)
 end
 
-function slot0._refreshTime(slot0)
-	if (slot0.towerOpenMo and slot0.towerOpenMo.nextTime or 0) * 0.001 - ServerTime.now() > 0 then
-		slot0.txtTime.text = formatLuaLang("towerboss_nexttime", TimeUtil.getFormatTime1(slot3))
+function var_0_0._refreshTime(arg_10_0)
+	local var_10_0 = arg_10_0.towerOpenMo and arg_10_0.towerOpenMo.nextTime or 0
+	local var_10_1 = ServerTime.now()
+	local var_10_2 = var_10_0 * 0.001 - var_10_1
+
+	if var_10_2 > 0 then
+		local var_10_3 = TimeUtil.getFormatTime1(var_10_2)
+
+		arg_10_0.txtTime.text = formatLuaLang("towerboss_nexttime", var_10_3)
 	else
-		slot0:clearTime()
+		arg_10_0:clearTime()
 	end
 end
 
-function slot0.clearTime(slot0)
-	gohelper.setActive(slot0.goTime, false)
-	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
+function var_0_0.clearTime(arg_11_0)
+	gohelper.setActive(arg_11_0.goTime, false)
+	TaskDispatcher.cancelTask(arg_11_0._refreshTime, arg_11_0)
 end
 
-function slot0.refreshTag(slot0)
-	slot2 = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, slot0.towerId, slot0.towerOpenMo, TowerEnum.LockKey) == TowerEnum.LockKey
+function var_0_0.refreshTag(arg_12_0)
+	local var_12_0 = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, arg_12_0.towerId, arg_12_0.towerOpenMo, TowerEnum.LockKey) == TowerEnum.LockKey
 
-	gohelper.setActive(slot0.goNew, slot2)
+	gohelper.setActive(arg_12_0.goNew, var_12_0)
 
-	if slot2 then
-		gohelper.setActive(slot0.goSp, false)
+	if var_12_0 then
+		gohelper.setActive(arg_12_0.goSp, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goSp, slot0.towerInfo:hasNewSpLayer(slot0.towerOpenMo))
+	local var_12_1 = arg_12_0.towerInfo:hasNewSpLayer(arg_12_0.towerOpenMo)
+
+	gohelper.setActive(arg_12_0.goSp, var_12_1)
 end
 
-function slot0.checkClearTag(slot0)
-	if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, slot0.towerId, slot0.towerOpenMo, TowerEnum.LockKey) == TowerEnum.LockKey then
-		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, slot0.towerId, slot0.towerOpenMo, TowerEnum.UnlockKey)
+function var_0_0.checkClearTag(arg_13_0)
+	if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, arg_13_0.towerId, arg_13_0.towerOpenMo, TowerEnum.LockKey) == TowerEnum.LockKey then
+		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossOpen, arg_13_0.towerId, arg_13_0.towerOpenMo, TowerEnum.UnlockKey)
 
 		return
 	end
 
-	if slot0.towerInfo:hasNewSpLayer(slot0.towerOpenMo) then
-		slot0.towerInfo:clearSpLayerNewTag(slot0.towerOpenMo)
+	if arg_13_0.towerInfo:hasNewSpLayer(arg_13_0.towerOpenMo) then
+		arg_13_0.towerInfo:clearSpLayerNewTag(arg_13_0.towerOpenMo)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
-	slot0.simageBoss:UnLoadImage()
-	slot0.simageShadow:UnLoadImage()
+function var_0_0.onDestroy(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._refreshTime, arg_14_0)
+	arg_14_0.simageBoss:UnLoadImage()
+	arg_14_0.simageShadow:UnLoadImage()
 end
 
-return slot0
+return var_0_0

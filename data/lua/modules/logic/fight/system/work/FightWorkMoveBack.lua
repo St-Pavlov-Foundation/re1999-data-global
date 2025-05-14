@@ -1,153 +1,171 @@
-module("modules.logic.fight.system.work.FightWorkMoveBack", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkMoveBack", package.seeall)
 
-slot0 = class("FightWorkMoveBack", FightEffectBase)
+local var_0_0 = class("FightWorkMoveBack", FightEffectBase)
 
-function slot0.ctor(slot0, slot1, slot2)
-	if slot1 then
-		slot1.custom_ingoreParallelSkill = true
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	if arg_1_1 then
+		arg_1_1.custom_ingoreParallelSkill = true
 	end
 
-	uv0.super.ctor(slot0, slot1, slot2)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onStart(slot0)
-	slot0._performanceTime = 0.75 / FightModel.instance:getSpeed()
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._performanceTime = 0.75 / FightModel.instance:getSpeed()
 
-	slot0:com_registTimer(slot0._delayDone, 5)
+	arg_2_0:com_registTimer(arg_2_0._delayDone, 5)
 
-	slot0._flow = FlowParallel.New()
-	slot0._cacheEntityIds = {}
+	arg_2_0._flow = FlowParallel.New()
+	arg_2_0._cacheEntityIds = {}
 
-	if FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) and FightHelper.getEntity(slot1) then
-		slot4 = slot2
+	local var_2_0 = arg_2_0._actEffectMO.targetId
+	local var_2_1 = FightDataHelper.entityMgr:getById(var_2_0)
 
-		if slot3.mover then
-			AudioMgr.instance:trigger(410000089)
+	if var_2_1 then
+		local var_2_2 = FightHelper.getEntity(var_2_0)
 
-			slot5 = 0.5 / FightModel.instance:getSpeed()
-			slot6, slot7, slot8, slot9 = FightHelper.getEntityStandPos(slot4)
-			slot10 = FlowParallel.New()
+		if var_2_2 then
+			local var_2_3 = var_2_1
 
-			slot10:addWork(FunctionWork.New(slot0._playEffect, slot0, slot3))
-			slot10:addWork(TweenWork.New({
-				type = "DOScale",
-				tr = slot3.go.transform,
-				to = slot9,
-				t = slot5,
-				ease = EaseType.InOutQuad
-			}))
-			slot10:addWork(TweenWork.New({
-				from = 0,
-				type = "DOTweenFloat",
-				to = 1,
-				t = slot5,
-				frameCb = slot0._onFloat,
-				cbObj = slot0,
-				param = slot3,
-				ease = EaseType.InOutQuad
-			}))
-			slot10:addWork(TweenWork.New({
-				type = "DOMove",
-				tr = slot3.go.transform,
-				tox = slot6,
-				toy = slot7,
-				toz = slot8,
-				t = slot5,
-				ease = EaseType.InOutQuad
-			}))
-			slot0._flow:addWork(slot10)
-			table.insert(slot0._cacheEntityIds, slot4.id)
-		end
-	end
+			if var_2_2.mover then
+				AudioMgr.instance:trigger(410000089)
 
-	if #string.split(slot0._actEffectMO.reserveStr, "|") > 0 then
-		for slot7, slot8 in ipairs(slot3) do
-			if FightDataHelper.entityMgr:getById(string.split(slot8, "#")[1]) and FightHelper.getEntity(slot10) then
-				slot13 = FlowSequence.New()
+				local var_2_4 = 0.5 / FightModel.instance:getSpeed()
+				local var_2_5, var_2_6, var_2_7, var_2_8 = FightHelper.getEntityStandPos(var_2_3)
+				local var_2_9 = FlowParallel.New()
 
-				slot13:addWork(WorkWaitSeconds.New(0.15 / FightModel.instance:getSpeed()))
-
-				slot14 = FlowParallel.New()
-				slot15, slot16, slot17, slot18 = FightHelper.getEntityStandPos(slot11)
-				slot19 = 0.6 / FightModel.instance:getSpeed()
-
-				slot14:addWork(TweenWork.New({
+				var_2_9:addWork(FunctionWork.New(arg_2_0._playEffect, arg_2_0, var_2_2))
+				var_2_9:addWork(TweenWork.New({
 					type = "DOScale",
-					tr = slot12.go.transform,
-					to = slot18,
-					t = slot19,
+					tr = var_2_2.go.transform,
+					to = var_2_8,
+					t = var_2_4,
 					ease = EaseType.InOutQuad
 				}))
-				slot14:addWork(TweenWork.New({
+				var_2_9:addWork(TweenWork.New({
 					from = 0,
 					type = "DOTweenFloat",
 					to = 1,
-					t = slot19,
-					frameCb = slot0._onFloat,
-					cbObj = slot0,
-					param = slot12,
+					t = var_2_4,
+					frameCb = arg_2_0._onFloat,
+					cbObj = arg_2_0,
+					param = var_2_2,
 					ease = EaseType.InOutQuad
 				}))
-				slot14:addWork(TweenWork.New({
+				var_2_9:addWork(TweenWork.New({
 					type = "DOMove",
-					tr = slot12.go.transform,
-					tox = slot15,
-					toy = slot16,
-					toz = slot17,
-					t = slot19,
+					tr = var_2_2.go.transform,
+					tox = var_2_5,
+					toy = var_2_6,
+					toz = var_2_7,
+					t = var_2_4,
 					ease = EaseType.InOutQuad
 				}))
-				slot13:addWork(slot14)
-				slot0._flow:addWork(slot13)
-				table.insert(slot0._cacheEntityIds, slot11.id)
+				arg_2_0._flow:addWork(var_2_9)
+				table.insert(arg_2_0._cacheEntityIds, var_2_3.id)
 			end
 		end
 	end
 
-	slot0._flow:registerDoneListener(slot0._onFlowDone, slot0)
-	slot0._flow:start()
+	local var_2_10 = string.split(arg_2_0._actEffectMO.reserveStr, "|")
+
+	if #var_2_10 > 0 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_10) do
+			local var_2_11 = string.split(iter_2_1, "#")[1]
+			local var_2_12 = FightDataHelper.entityMgr:getById(var_2_11)
+
+			if var_2_12 then
+				local var_2_13 = FightHelper.getEntity(var_2_11)
+
+				if var_2_13 then
+					local var_2_14 = FlowSequence.New()
+
+					var_2_14:addWork(WorkWaitSeconds.New(0.15 / FightModel.instance:getSpeed()))
+
+					local var_2_15 = FlowParallel.New()
+					local var_2_16, var_2_17, var_2_18, var_2_19 = FightHelper.getEntityStandPos(var_2_12)
+					local var_2_20 = 0.6 / FightModel.instance:getSpeed()
+
+					var_2_15:addWork(TweenWork.New({
+						type = "DOScale",
+						tr = var_2_13.go.transform,
+						to = var_2_19,
+						t = var_2_20,
+						ease = EaseType.InOutQuad
+					}))
+					var_2_15:addWork(TweenWork.New({
+						from = 0,
+						type = "DOTweenFloat",
+						to = 1,
+						t = var_2_20,
+						frameCb = arg_2_0._onFloat,
+						cbObj = arg_2_0,
+						param = var_2_13,
+						ease = EaseType.InOutQuad
+					}))
+					var_2_15:addWork(TweenWork.New({
+						type = "DOMove",
+						tr = var_2_13.go.transform,
+						tox = var_2_16,
+						toy = var_2_17,
+						toz = var_2_18,
+						t = var_2_20,
+						ease = EaseType.InOutQuad
+					}))
+					var_2_14:addWork(var_2_15)
+					arg_2_0._flow:addWork(var_2_14)
+					table.insert(arg_2_0._cacheEntityIds, var_2_12.id)
+				end
+			end
+		end
+	end
+
+	arg_2_0._flow:registerDoneListener(arg_2_0._onFlowDone, arg_2_0)
+	arg_2_0._flow:start()
 end
 
-function slot0._onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0._playEffect(slot0, slot1)
-	if slot1 and slot1.effect then
-		slot2 = slot1.effect:addHangEffect("buff/buff_houtui_jiantou", "mountbody", nil, slot0._performanceTime)
+function var_0_0._playEffect(arg_5_0, arg_5_1)
+	if arg_5_1 and arg_5_1.effect then
+		local var_5_0 = arg_5_1.effect:addHangEffect("buff/buff_houtui_jiantou", "mountbody", nil, arg_5_0._performanceTime)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot2)
-		slot2:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_5_1.id, var_5_0)
+		var_5_0:setLocalPos(0, 0, 0)
 
-		slot2 = slot1.effect:addHangEffect("buff/buff_houtui_tuowei", "mountbody", nil, slot0._performanceTime)
+		local var_5_1 = arg_5_1.effect:addHangEffect("buff/buff_houtui_tuowei", "mountbody", nil, arg_5_0._performanceTime)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot2)
-		slot2:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_5_1.id, var_5_1)
+		var_5_1:setLocalPos(0, 0, 0)
 	end
 end
 
-function slot0._onFloat(slot0, slot1, slot2)
-	if slot2.go then
-		FightController.instance:dispatchEvent(FightEvent.UpdateUIFollower, slot2.id)
+function var_0_0._onFloat(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_2.go then
+		FightController.instance:dispatchEvent(FightEvent.UpdateUIFollower, arg_6_2.id)
 	end
 end
 
-function slot0.clearWork(slot0)
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:stop()
+function var_0_0.clearWork(arg_7_0)
+	if arg_7_0._flow then
+		arg_7_0._flow:unregisterDoneListener(arg_7_0._onFlowDone, arg_7_0)
+		arg_7_0._flow:stop()
 
-		slot0._flow = nil
+		arg_7_0._flow = nil
 	end
 
-	if slot0._cacheEntityIds then
-		for slot4, slot5 in ipairs(slot0._cacheEntityIds) do
-			if FightHelper.getEntity(slot5) and slot6.effect then
-				slot6.effect:refreshAllEffectLabel1()
+	if arg_7_0._cacheEntityIds then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._cacheEntityIds) do
+			local var_7_0 = FightHelper.getEntity(iter_7_1)
+
+			if var_7_0 and var_7_0.effect then
+				var_7_0.effect:refreshAllEffectLabel1()
 			end
 		end
 	end
@@ -155,4 +173,4 @@ function slot0.clearWork(slot0)
 	FightRenderOrderMgr.instance:setSortType(FightEnum.RenderOrderType.StandPos)
 end
 
-return slot0
+return var_0_0

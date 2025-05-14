@@ -1,37 +1,40 @@
-module("modules.logic.character.model.CharacterVoiceModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterVoiceModel", package.seeall)
 
-slot0 = class("CharacterVoiceModel", ListScrollModel)
+local var_0_0 = class("CharacterVoiceModel", ListScrollModel)
 
-function slot0.setVoiceList(slot0, slot1)
-	slot0._moList = {}
+function var_0_0.setVoiceList(arg_1_0, arg_1_1)
+	arg_1_0._moList = {}
 
-	if slot1 then
-		slot0._moList = slot1
+	if arg_1_1 then
+		arg_1_0._moList = arg_1_1
 
-		table.sort(slot0._moList, function (slot0, slot1)
-			if (CharacterDataModel.instance:isCurHeroAudioLocked(slot0.id) and 1 or 0) ~= (CharacterDataModel.instance:isCurHeroAudioLocked(slot1.id) and 1 or 0) then
-				return slot2 < slot3
-			elseif slot0.score ~= slot1.score and slot2 == 1 and slot3 == 1 then
-				return slot0.score < slot1.score
-			elseif slot0.sortId ~= slot1.sortId then
-				return slot0.sortId < slot1.sortId
+		table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
+			local var_2_0 = CharacterDataModel.instance:isCurHeroAudioLocked(arg_2_0.id) and 1 or 0
+			local var_2_1 = CharacterDataModel.instance:isCurHeroAudioLocked(arg_2_1.id) and 1 or 0
+
+			if var_2_0 ~= var_2_1 then
+				return var_2_0 < var_2_1
+			elseif arg_2_0.score ~= arg_2_1.score and var_2_0 == 1 and var_2_1 == 1 then
+				return arg_2_0.score < arg_2_1.score
+			elseif arg_2_0.sortId ~= arg_2_1.sortId then
+				return arg_2_0.sortId < arg_2_1.sortId
 			else
-				return slot0.id < slot1.id
+				return arg_2_0.id < arg_2_1.id
 			end
 		end)
 	end
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-function slot0.setNeedItemAni(slot0, slot1)
-	slot0._needItemAni = slot1
+function var_0_0.setNeedItemAni(arg_3_0, arg_3_1)
+	arg_3_0._needItemAni = arg_3_1
 end
 
-function slot0.isNeedItemAni(slot0)
-	return slot0._needItemAni
+function var_0_0.isNeedItemAni(arg_4_0)
+	return arg_4_0._needItemAni
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

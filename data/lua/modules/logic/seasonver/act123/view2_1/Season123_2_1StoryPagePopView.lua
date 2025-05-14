@@ -1,89 +1,98 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoryPagePopView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoryPagePopView", package.seeall)
 
-slot0 = class("Season123_2_1StoryPagePopView", BaseView)
+local var_0_0 = class("Season123_2_1StoryPagePopView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._godetailPage = gohelper.findChild(slot0.viewGO, "Root/#go_detailPage")
-	slot0._txtdetailTitle = gohelper.findChildText(slot0.viewGO, "Root/#go_detailPage/Left/Title/#txt_detailTitle")
-	slot0._simagePolaroid = gohelper.findChildSingleImage(slot0.viewGO, "Root/#go_detailPage/Left/#simage_Polaroid")
-	slot0._txtdetailPageTitle = gohelper.findChildText(slot0.viewGO, "Root/#go_detailPage/Right/#txt_detailPageTitle")
-	slot0._txtAuthor = gohelper.findChildText(slot0.viewGO, "Root/#go_detailPage/Right/#txt_Author")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "Root/#go_detailPage/Right/#scroll_desc")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "Root/#go_detailPage/Right/#scroll_desc/Viewport/#txt_desc")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "Root/#go_detailPage/Right/#go_arrow")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._godetailPage = gohelper.findChild(arg_1_0.viewGO, "Root/#go_detailPage")
+	arg_1_0._txtdetailTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Left/Title/#txt_detailTitle")
+	arg_1_0._simagePolaroid = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#go_detailPage/Left/#simage_Polaroid")
+	arg_1_0._txtdetailPageTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Right/#txt_detailPageTitle")
+	arg_1_0._txtAuthor = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Right/#txt_Author")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#go_detailPage/Right/#scroll_desc")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Right/#scroll_desc/Viewport/#txt_desc")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "Root/#go_detailPage/Right/#go_arrow")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.transScrollDesc = slot0._scrolldesc.gameObject:GetComponent(gohelper.Type_RectTransform)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.transScrollDesc = arg_5_0._scrolldesc.gameObject:GetComponent(gohelper.Type_RectTransform)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_role_culture_open)
 
-	slot0.actId = slot0.viewParam.actId
-	slot0.stageId = slot0.viewParam.stageId
+	arg_7_0.actId = arg_7_0.viewParam.actId
+	arg_7_0.stageId = arg_7_0.viewParam.stageId
 
-	slot0:refreshDetailPageUI()
-	slot0:fitScrollHeight()
+	arg_7_0:refreshDetailPageUI()
+	arg_7_0:fitScrollHeight()
 end
 
-function slot0.refreshDetailPageUI(slot0)
-	slot1 = Season123Config.instance:getStoryConfig(slot0.actId, slot0.stageId)
-	slot0._txtdetailTitle.text = GameUtil.setFirstStrSize(slot1.title, 80)
+function var_0_0.refreshDetailPageUI(arg_8_0)
+	local var_8_0 = Season123Config.instance:getStoryConfig(arg_8_0.actId, arg_8_0.stageId)
 
-	slot0._simagePolaroid:LoadImage(Season123ViewHelper.getIconUrl("singlebg/%s_season_singlebg/storycover/%s.png", slot1.picture, slot0.actId))
+	arg_8_0._txtdetailTitle.text = GameUtil.setFirstStrSize(var_8_0.title, 80)
 
-	slot0._txtdetailPageTitle.text = slot1.subTitle
-	slot0._txtAuthor.text = slot1.subContent
+	local var_8_1 = Season123ViewHelper.getIconUrl("singlebg/%s_season_singlebg/storycover/%s.png", var_8_0.picture, arg_8_0.actId)
 
-	gohelper.setActive(slot0._txtAuthor.gameObject, not string.nilorempty(slot1.subContent))
-	recthelper.setHeight(slot0._scrolldesc.gameObject.transform, string.nilorempty(slot1.subContent) and 705 or 585)
+	arg_8_0._simagePolaroid:LoadImage(var_8_1)
 
-	slot0._txtdesc.text = slot1.content
+	arg_8_0._txtdetailPageTitle.text = var_8_0.subTitle
+	arg_8_0._txtAuthor.text = var_8_0.subContent
+
+	gohelper.setActive(arg_8_0._txtAuthor.gameObject, not string.nilorempty(var_8_0.subContent))
+	recthelper.setHeight(arg_8_0._scrolldesc.gameObject.transform, string.nilorempty(var_8_0.subContent) and 705 or 585)
+
+	arg_8_0._txtdesc.text = var_8_0.content
 end
 
-slot0.scrollDescHeight = 650
-slot0.maxDescSpacing = 41
-slot0.minDescSpacing = 35
-slot0.minDescFontSize = 27
+var_0_0.scrollDescHeight = 650
+var_0_0.maxDescSpacing = 41
+var_0_0.minDescSpacing = 35
+var_0_0.minDescFontSize = 27
 
-function slot0.fitScrollHeight(slot0)
-	recthelper.setHeight(slot0.transScrollDesc, uv0.scrollDescHeight - (slot0._txtAuthor.preferredHeight - ZProj.GameHelper.GetTmpLineHeight(slot0._txtAuthor, 1)))
-	TaskDispatcher.cancelTask(slot0.setDescSpacing, slot0)
-	TaskDispatcher.runDelay(slot0.setDescSpacing, slot0, 0.01)
+function var_0_0.fitScrollHeight(arg_9_0)
+	local var_9_0 = ZProj.GameHelper.GetTmpLineHeight(arg_9_0._txtAuthor, 1)
+	local var_9_1 = arg_9_0._txtAuthor.preferredHeight - var_9_0
+
+	recthelper.setHeight(arg_9_0.transScrollDesc, var_0_0.scrollDescHeight - var_9_1)
+	TaskDispatcher.cancelTask(arg_9_0.setDescSpacing, arg_9_0)
+	TaskDispatcher.runDelay(arg_9_0.setDescSpacing, arg_9_0, 0.01)
 end
 
-function slot0.setDescSpacing(slot0)
-	slot0._txtdesc.lineSpacing = Mathf.Lerp(uv0.maxDescSpacing, uv0.minDescSpacing, slot0._txtdesc.fontSize - uv0.minDescFontSize)
+function var_0_0.setDescSpacing(arg_10_0)
+	local var_10_0 = Mathf.Lerp(var_0_0.maxDescSpacing, var_0_0.minDescSpacing, arg_10_0._txtdesc.fontSize - var_0_0.minDescFontSize)
+
+	arg_10_0._txtdesc.lineSpacing = var_10_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
 	Season123Controller.instance:dispatchEvent(Season123Event.GuideEntryOtherViewClose)
-	TaskDispatcher.cancelTask(slot0.setDescSpacing, slot0)
+	TaskDispatcher.cancelTask(arg_11_0.setDescSpacing, arg_11_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagePolaroid:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simagePolaroid:UnLoadImage()
 end
 
-return slot0
+return var_0_0

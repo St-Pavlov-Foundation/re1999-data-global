@@ -1,59 +1,70 @@
-module("modules.logic.activity.view.ActivityDoubleFestivalSignView_1_3", package.seeall)
+﻿module("modules.logic.activity.view.ActivityDoubleFestivalSignView_1_3", package.seeall)
 
-slot0 = class("ActivityDoubleFestivalSignView_1_3", Activity101SignViewBase)
+local var_0_0 = class("ActivityDoubleFestivalSignView_1_3", Activity101SignViewBase)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/#txt_LimitTime")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "Root/#scroll_ItemList")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_LimitTime")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageTitle:LoadImage(ResUrl.getActivityLangIcon("v1a3_sign_fulltitle"))
-	slot0._simageFullBG:LoadImage(ResUrl.getActivityBg("v1a3_sign_fullbg"))
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._simageTitle:LoadImage(ResUrl.getActivityLangIcon("v1a3_sign_fulltitle"))
+	arg_2_0._simageFullBG:LoadImage(ResUrl.getActivityBg("v1a3_sign_fullbg"))
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtLimitTime.text = ""
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0._txtLimitTime.text = ""
 
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	slot0:internal_onOpen()
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+	arg_3_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	arg_3_0:internal_onOpen()
+	TaskDispatcher.runRepeat(arg_3_0._refreshTimeTick, arg_3_0, 1)
 end
 
-function slot0.onClose(slot0)
-	slot0._isFirstUpdateScrollPos = nil
+function var_0_0.onClose(arg_4_0)
+	arg_4_0._isFirstUpdateScrollPos = nil
 
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+	TaskDispatcher.cancelTask(arg_4_0._refreshTimeTick, arg_4_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageTitle:UnLoadImage()
-	slot0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0._simageTitle:UnLoadImage()
+	arg_5_0._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_5_0._refreshTimeTick, arg_5_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshList()
-	slot0:_refreshTimeTick()
+function var_0_0.onRefresh(arg_6_0)
+	arg_6_0:_refreshList()
+	arg_6_0:_refreshTimeTick()
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+function var_0_0._refreshTimeTick(arg_7_0)
+	arg_7_0._txtLimitTime.text = arg_7_0:getRemainTimeStr()
 end
 
-function slot0.updateRewardCouldGetHorizontalScrollPixel(slot0)
-	slot1, slot2 = slot0:getRewardCouldGetIndex()
-	slot3 = slot0.viewContainer:getCsListScroll()
-	slot4 = slot0.viewContainer:getListScrollParam()
-	slot3.HorizontalScrollPixel = math.max(0, (slot4.cellWidth + slot4.cellSpaceH) * math.max(0, slot2 <= 4 and slot2 - 4 or 10))
+function var_0_0.updateRewardCouldGetHorizontalScrollPixel(arg_8_0)
+	local var_8_0, var_8_1 = arg_8_0:getRewardCouldGetIndex()
+	local var_8_2 = arg_8_0.viewContainer:getCsListScroll()
+	local var_8_3 = arg_8_0.viewContainer:getListScrollParam()
+	local var_8_4 = var_8_3.cellWidth
+	local var_8_5 = var_8_3.cellSpaceH
 
-	slot3:UpdateCells(false)
+	if var_8_1 <= 4 then
+		var_8_1 = var_8_1 - 4
+	else
+		var_8_1 = 10
+	end
+
+	local var_8_6 = (var_8_4 + var_8_5) * math.max(0, var_8_1)
+
+	var_8_2.HorizontalScrollPixel = math.max(0, var_8_6)
+
+	var_8_2:UpdateCells(false)
 end
 
-return slot0
+return var_0_0

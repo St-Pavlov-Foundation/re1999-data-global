@@ -1,26 +1,26 @@
-module("modules.audio.bgm.AudioBgmData", package.seeall)
+﻿module("modules.audio.bgm.AudioBgmData", package.seeall)
 
-slot0 = class("AudioBgmData")
+local var_0_0 = class("AudioBgmData")
 
-function slot0.ctor(slot0)
-	slot0.layer = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.layer = nil
 
-	slot0:clear()
+	arg_1_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0.playId = 0
-	slot0.stopId = 0
-	slot0.pauseId = nil
-	slot0.resumeId = nil
-	slot0.switchGroup = nil
-	slot0.switchState = nil
+function var_0_0.clear(arg_2_0)
+	arg_2_0.playId = 0
+	arg_2_0.stopId = 0
+	arg_2_0.pauseId = nil
+	arg_2_0.resumeId = nil
+	arg_2_0.switchGroup = nil
+	arg_2_0.switchState = nil
 end
 
-function slot0.setSwitch(slot0)
-	if slot0.switchGroup and slot0.switchState then
-		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(slot0.switchGroup), AudioMgr.instance:getIdFromString(slot0.switchState))
+function var_0_0.setSwitch(arg_3_0)
+	if arg_3_0.switchGroup and arg_3_0.switchState then
+		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(arg_3_0.switchGroup), AudioMgr.instance:getIdFromString(arg_3_0.switchState))
 	end
 end
 
-return slot0
+return var_0_0

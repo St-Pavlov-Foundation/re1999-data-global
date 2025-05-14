@@ -1,28 +1,29 @@
-module("modules.logic.explore.controller.steps.ExploreStepBase", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreStepBase", package.seeall)
 
-slot0 = class("ExploreStepBase")
+local var_0_0 = class("ExploreStepBase")
 
-function slot0.ctor(slot0, slot1)
-	slot0._data = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._data = arg_1_1
 
-	slot0:onInit()
+	arg_1_0:onInit()
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onStart(slot0)
-	slot0:onDone()
+function var_0_0.onStart(arg_3_0)
+	arg_3_0:onDone()
 end
 
-function slot0.onDone(slot0)
-	slot0:onDestory()
+function var_0_0.onDone(arg_4_0)
+	arg_4_0:onDestory()
 
 	return ExploreStepController.instance:onStepEnd()
 end
 
-function slot0.onDestory(slot0)
-	slot0._data = nil
+function var_0_0.onDestory(arg_5_0)
+	arg_5_0._data = nil
 end
 
-return slot0
+return var_0_0

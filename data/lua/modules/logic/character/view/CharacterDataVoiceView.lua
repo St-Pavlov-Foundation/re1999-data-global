@@ -1,395 +1,460 @@
-module("modules.logic.character.view.CharacterDataVoiceView", package.seeall)
+﻿module("modules.logic.character.view.CharacterDataVoiceView", package.seeall)
 
-slot0 = class("CharacterDataVoiceView", BaseView)
-slot1 = "RefreshVoiceListBlock"
+local var_0_0 = class("CharacterDataVoiceView", BaseView)
+local var_0_1 = "RefreshVoiceListBlock"
 
-function slot0._onSpineLoaded_overseas(slot0)
-	if not slot0._uiSpine:isLive2D() then
+function var_0_0._onSpineLoaded_overseas(arg_1_0)
+	if not arg_1_0._uiSpine:isLive2D() then
 		return
 	end
 
-	if not slot0._uiSpine._curModel then
+	local var_1_0 = arg_1_0._uiSpine._curModel
+
+	if not var_1_0 then
 		return
 	end
 
-	slot0._charactercontainerTrans = gohelper.findChild(slot0.viewGO, "content/#simage_characterbg/charactercontainer").transform
-	slot2 = slot0._charactercontainerTrans.localPosition.x
+	arg_1_0._charactercontainerTrans = gohelper.findChild(arg_1_0.viewGO, "content/#simage_characterbg/charactercontainer").transform
 
-	FrameTimerController.onDestroyViewMember(slot0, "_frameTimer")
+	local var_1_1 = arg_1_0._charactercontainerTrans.localPosition.x
 
-	slot0._frameTimer = FrameTimerController.instance:register(function (slot0)
-		slot0:_doProcessEffect()
+	FrameTimerController.onDestroyViewMember(arg_1_0, "_frameTimer")
 
-		if not slot0._uiEffectGos then
+	arg_1_0._frameTimer = FrameTimerController.instance:register(function(arg_2_0)
+		arg_2_0:_doProcessEffect()
+
+		local var_2_0 = arg_2_0._uiEffectGos
+
+		if not var_2_0 then
 			return
 		end
 
-		if math.abs(uv0._charactercontainerTrans.localPosition.x - uv1) <= 0.1 then
+		local var_2_1 = arg_1_0._charactercontainerTrans.localPosition.x
+
+		if math.abs(var_2_1 - var_1_1) <= 0.1 then
 			return
 		end
 
-		uv1 = slot2
+		var_1_1 = var_2_1
 
-		for slot6, slot7 in ipairs(slot1) do
-			transformhelper.setLocalPosXY(slot7.transform, 0, 0)
-			slot0:_adjustPos(slot7, slot7)
+		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+			transformhelper.setLocalPosXY(iter_2_1.transform, 0, 0)
+			arg_2_0:_adjustPos(iter_2_1, iter_2_1)
 
-			slot8 = slot0._uiEffectConfig.scale
+			local var_2_2 = arg_2_0._uiEffectConfig.scale
 
-			transformhelper.setLocalScale(slot7.transform, slot8, slot8, slot8)
+			transformhelper.setLocalScale(iter_2_1.transform, var_2_2, var_2_2, var_2_2)
 		end
-	end, slot1, 8, 5)
+	end, var_1_0, 8, 5)
 
-	slot0._frameTimer:Start()
+	arg_1_0._frameTimer:Start()
 end
 
-function slot0._unloadBnk(slot0)
-	if not slot0._curAudio or slot0._curAudio == 0 then
+function var_0_0._unloadBnk(arg_3_0)
+	if not arg_3_0._curAudio or arg_3_0._curAudio == 0 then
 		return
 	end
 
-	if not AudioConfig.instance:getAudioCOById(slot0._curAudio) then
+	local var_3_0 = AudioConfig.instance:getAudioCOById(arg_3_0._curAudio)
+
+	if not var_3_0 then
 		return
 	end
 
-	if not slot0._willChangeLangId then
+	if not arg_3_0._willChangeLangId then
 		return
 	end
 
-	if LangSettings.shortCut2LangIdxTab[AudioMgr.instance:getLangByAudioId(slot0._curAudio)] ~= slot0._willChangeLangId then
-		ZProj.AudioManager.Instance:UnloadBank(slot1.bankName)
+	local var_3_1 = var_3_0.bankName
+	local var_3_2 = AudioMgr.instance:getLangByAudioId(arg_3_0._curAudio)
+
+	if LangSettings.shortCut2LangIdxTab[var_3_2] ~= arg_3_0._willChangeLangId then
+		ZProj.AudioManager.Instance:UnloadBank(var_3_1)
 		AudioMgr.instance:clearUnusedBanks()
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._simagecentericon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_centericon")
-	slot0._simagelefticon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_lefticon")
-	slot0._simagerighticon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_righticon")
-	slot0._simagerighticon2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_righticon2")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_mask")
-	slot0._simagevoicebg = gohelper.findChildSingleImage(slot0.viewGO, "content/#simage_voicebg")
-	slot0._txtvoicecontent = gohelper.findChildText(slot0.viewGO, "content/#txt_voicecontent")
-	slot0._txtvoiceengcontent = gohelper.findChildText(slot0.viewGO, "content/#txt_voicecontent/#txt_voiceengcontent")
-	slot0._txtcast = gohelper.findChildText(slot0.viewGO, "content/cast/#txt_cast")
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "content/#simage_characterbg/charactercontainer/#go_spine")
-	slot0._dropfilter = gohelper.findChildDropdown(slot0.viewGO, "dropvoicelang")
-	slot0._goDropEffect = gohelper.findChild(slot0.viewGO, "dropvoicelang/eff")
-	slot0._goarrowdown = gohelper.findChild(slot0.viewGO, "dropvoicelang/arrow")
-	slot0._goarrowup = gohelper.findChild(slot0.viewGO, "dropvoicelang/arrowUp")
+function var_0_0.onInitView(arg_4_0)
+	arg_4_0._simagebg = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_bg")
+	arg_4_0._simagecentericon = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_centericon")
+	arg_4_0._simagelefticon = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_lefticon")
+	arg_4_0._simagerighticon = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_righticon")
+	arg_4_0._simagerighticon2 = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_righticon2")
+	arg_4_0._simagemask = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/#simage_mask")
+	arg_4_0._simagevoicebg = gohelper.findChildSingleImage(arg_4_0.viewGO, "content/#simage_voicebg")
+	arg_4_0._txtvoicecontent = gohelper.findChildText(arg_4_0.viewGO, "content/#txt_voicecontent")
+	arg_4_0._txtvoiceengcontent = gohelper.findChildText(arg_4_0.viewGO, "content/#txt_voicecontent/#txt_voiceengcontent")
+	arg_4_0._txtcast = gohelper.findChildText(arg_4_0.viewGO, "content/cast/#txt_cast")
+	arg_4_0._gospine = gohelper.findChild(arg_4_0.viewGO, "content/#simage_characterbg/charactercontainer/#go_spine")
+	arg_4_0._dropfilter = gohelper.findChildDropdown(arg_4_0.viewGO, "dropvoicelang")
+	arg_4_0._goDropEffect = gohelper.findChild(arg_4_0.viewGO, "dropvoicelang/eff")
+	arg_4_0._goarrowdown = gohelper.findChild(arg_4_0.viewGO, "dropvoicelang/arrow")
+	arg_4_0._goarrowup = gohelper.findChild(arg_4_0.viewGO, "dropvoicelang/arrowUp")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_4_0._editableInitView then
+		arg_4_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._dropfilter:AddOnValueChanged(slot0._onDropFilterValueChanged, slot0)
+function var_0_0.addEvents(arg_5_0)
+	arg_5_0._dropfilter:AddOnValueChanged(arg_5_0._onDropFilterValueChanged, arg_5_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._dropfilter:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_6_0)
+	arg_6_0._dropfilter:RemoveOnValueChanged()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scroll = gohelper.findChild(slot0.viewGO, "content/#scroll_vioce"):GetComponent(typeof(ZProj.LimitedScrollRect))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._scroll = gohelper.findChild(arg_7_0.viewGO, "content/#scroll_vioce"):GetComponent(typeof(ZProj.LimitedScrollRect))
 
-	slot0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	slot0._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_2_ciecle.png"))
-	slot0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	slot0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	slot0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
-	slot0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
-	slot0._simagevoicebg:LoadImage(ResUrl.getCharacterDataIcon("bg_yuyingdizidi_035.png"))
+	arg_7_0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	arg_7_0._simagecentericon:LoadImage(ResUrl.getCharacterDataIcon("bg_2_ciecle.png"))
+	arg_7_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	arg_7_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	arg_7_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	arg_7_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
+	arg_7_0._simagevoicebg:LoadImage(ResUrl.getCharacterDataIcon("bg_yuyingdizidi_035.png"))
 
-	slot0._curAudio = 0
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
+	arg_7_0._curAudio = 0
+	arg_7_0._uiSpine = GuiModelAgent.Create(arg_7_0._gospine, true)
 
-	slot0._uiSpine:openBloomView(CharacterVoiceEnum.UIBloomView.CharacterDataView)
-	CharacterController.instance:registerCallback(CharacterEvent.PlayVoice, slot0._onPlayVoice, slot0)
-	CharacterController.instance:registerCallback(CharacterEvent.StopVoice, slot0._onStopVoice, slot0)
+	arg_7_0._uiSpine:openBloomView(CharacterVoiceEnum.UIBloomView.CharacterDataView)
+	CharacterController.instance:registerCallback(CharacterEvent.PlayVoice, arg_7_0._onPlayVoice, arg_7_0)
+	CharacterController.instance:registerCallback(CharacterEvent.StopVoice, arg_7_0._onStopVoice, arg_7_0)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0._onPlayVoice(slot0, slot1)
-	slot0._curAudio = slot1
+function var_0_0._onPlayVoice(arg_8_0, arg_8_1)
+	arg_8_0._curAudio = arg_8_1
 
-	slot0._uiSpine:stopVoice()
-	CharacterDataModel.instance:setCurHeroAudioPlaying(slot1)
+	local var_8_0 = CharacterDataConfig.instance:getCharacterVoiceCO(arg_8_0._heroId, arg_8_0._curAudio)
 
-	if CharacterDataConfig.instance:getCharacterVoiceCO(slot0._heroId, slot0._curAudio).type == CharacterEnum.VoiceType.FightBehit then
-		slot0._uiSpine:setSwitch(AudioMgr.instance:getIdFromString("Hitvoc"), AudioMgr.instance:getIdFromString("Uihitvoc"))
-	elseif slot2.type == CharacterEnum.VoiceType.FightCardStar12 or slot2.type == CharacterEnum.VoiceType.FightCardStar3 or slot2.type == CharacterEnum.VoiceType.FightCardUnique then
-		slot0._uiSpine:setSwitch(AudioMgr.instance:getIdFromString("card_voc"), AudioMgr.instance:getIdFromString("uicardvoc"))
+	arg_8_0._uiSpine:stopVoice()
+	CharacterDataModel.instance:setCurHeroAudioPlaying(arg_8_1)
+
+	if var_8_0.type == CharacterEnum.VoiceType.FightBehit then
+		local var_8_1 = AudioMgr.instance:getIdFromString("Hitvoc")
+		local var_8_2 = AudioMgr.instance:getIdFromString("Uihitvoc")
+
+		arg_8_0._uiSpine:setSwitch(var_8_1, var_8_2)
+	elseif var_8_0.type == CharacterEnum.VoiceType.FightCardStar12 or var_8_0.type == CharacterEnum.VoiceType.FightCardStar3 or var_8_0.type == CharacterEnum.VoiceType.FightCardUnique then
+		local var_8_3 = AudioMgr.instance:getIdFromString("card_voc")
+		local var_8_4 = AudioMgr.instance:getIdFromString("uicardvoc")
+
+		arg_8_0._uiSpine:setSwitch(var_8_3, var_8_4)
 	end
 
-	slot0._uiSpine:playVoice(slot2, function ()
-		CharacterDataModel.instance:setCurHeroAudioFinished(uv0._curAudio)
-		uv0:_refreshVoice()
-	end, slot0._txtvoicecontent, slot0._txtvoiceengcontent)
-	slot0:_refreshVoice()
-	CharacterController.instance:statCharacterData(StatEnum.EventName.PlayerVoice, slot0._heroId, slot1, nil, slot0.viewParam and type(slot0.viewParam) == "table" and slot0.viewParam.fromHandbookView)
-	slot0:_setTextVisible(true)
+	arg_8_0._uiSpine:playVoice(var_8_0, function()
+		CharacterDataModel.instance:setCurHeroAudioFinished(arg_8_0._curAudio)
+		arg_8_0:_refreshVoice()
+	end, arg_8_0._txtvoicecontent, arg_8_0._txtvoiceengcontent)
+	arg_8_0:_refreshVoice()
+
+	local var_8_5 = arg_8_0.viewParam and type(arg_8_0.viewParam) == "table" and arg_8_0.viewParam.fromHandbookView
+
+	CharacterController.instance:statCharacterData(StatEnum.EventName.PlayerVoice, arg_8_0._heroId, arg_8_1, nil, var_8_5)
+	arg_8_0:_setTextVisible(true)
 end
 
-function slot0._setTextVisible(slot0, slot1)
-	gohelper.setActive(slot0._txtvoicecontent.gameObject, slot1)
-	gohelper.setActive(slot0._txtvoiceengcontent.gameObject, (GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN or GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.TW) and slot1)
+function var_0_0._setTextVisible(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._txtvoicecontent.gameObject, arg_10_1)
+
+	local var_10_0 = (GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN or GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.TW) and arg_10_1
+
+	gohelper.setActive(arg_10_0._txtvoiceengcontent.gameObject, var_10_0)
 end
 
-function slot0._onStopVoice(slot0, slot1, slot2)
-	if slot2 then
+function var_0_0._onStopVoice(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_2 then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_Hero_Voc_Bus)
-		slot0:_unloadBnk()
+		arg_11_0:_unloadBnk()
 	end
 
-	CharacterDataModel.instance:setCurHeroAudioFinished(slot1)
-	slot0._uiSpine:stopVoice()
-	slot0:_refreshVoice()
+	CharacterDataModel.instance:setCurHeroAudioFinished(arg_11_1)
+	arg_11_0._uiSpine:stopVoice()
+	arg_11_0:_refreshVoice()
 end
 
-function slot0._disableClipAlpha(slot0)
+function var_0_0._disableClipAlpha(arg_12_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_13_0)
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	slot0._animator:Play("voiceview_in", 0, 0)
+	arg_13_0._animator:Play("voiceview_in", 0, 0)
 	CharacterVoiceModel.instance:setNeedItemAni(true)
-	slot0:_refreshUI()
+	arg_13_0:_refreshUI()
 
-	slot0.filterDropExtend = DropDownExtend.Get(slot0._dropfilter.gameObject)
+	arg_13_0.filterDropExtend = DropDownExtend.Get(arg_13_0._dropfilter.gameObject)
 
-	slot0.filterDropExtend:init(slot0.onFilterDropShow, slot0.onFilterDropHide, slot0)
-	slot0:initLanguageOptions()
+	arg_13_0.filterDropExtend:init(arg_13_0.onFilterDropShow, arg_13_0.onFilterDropHide, arg_13_0)
+	arg_13_0:initLanguageOptions()
 
-	if not slot0._uiSpine then
+	if not arg_13_0._uiSpine then
 		return
 	end
 
-	slot0:_setModelVisible(true)
+	arg_13_0:_setModelVisible(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_voice_open)
 end
 
-function slot0._resetNeedItemAnimState(slot0)
+function var_0_0._resetNeedItemAnimState(arg_14_0)
 	CharacterVoiceModel.instance:setNeedItemAni(false)
 
-	slot0._scroll.vertical = true
+	arg_14_0._scroll.vertical = true
 
-	slot0:_disableClipAlpha()
+	arg_14_0:_disableClipAlpha()
 end
 
-function slot0._refreshUI(slot0)
-	TaskDispatcher.cancelTask(slot0._resetNeedItemAnimState, slot0)
-	TaskDispatcher.runDelay(slot0._resetNeedItemAnimState, slot0, 1.07)
+function var_0_0._refreshUI(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._resetNeedItemAnimState, arg_15_0)
+	TaskDispatcher.runDelay(arg_15_0._resetNeedItemAnimState, arg_15_0, 1.07)
 
-	slot0._scroll.vertical = false
+	arg_15_0._scroll.vertical = false
 
-	slot0:_refreshVoice()
+	arg_15_0:_refreshVoice()
 
-	if slot0._heroId and slot0._heroId == CharacterDataModel.instance:getCurHeroId() then
+	if arg_15_0._heroId and arg_15_0._heroId == CharacterDataModel.instance:getCurHeroId() then
 		return
 	end
 
-	slot0._heroId = CharacterDataModel.instance:getCurHeroId()
-	slot1 = HeroModel.instance:getByHeroId(slot0._heroId).config.signature
+	arg_15_0._heroId = CharacterDataModel.instance:getCurHeroId()
 
-	slot0:_refreshInfo()
-	slot0:_refreshSpine()
+	local var_15_0 = HeroModel.instance:getByHeroId(arg_15_0._heroId).config.signature
+
+	arg_15_0:_refreshInfo()
+	arg_15_0:_refreshSpine()
 end
 
-function slot0._refreshInfo(slot0)
-	slot0._txtcast.text = HeroModel.instance:getByHeroId(slot0._heroId).config.actor
+function var_0_0._refreshInfo(arg_16_0)
+	arg_16_0._txtcast.text = HeroModel.instance:getByHeroId(arg_16_0._heroId).config.actor
 end
 
-function slot0._refreshSpine(slot0)
-	slot0:_setTextVisible(false)
+function var_0_0._refreshSpine(arg_17_0)
+	arg_17_0:_setTextVisible(false)
 
-	slot2 = SkinConfig.instance:getSkinCo(HeroModel.instance:getByHeroId(slot0._heroId).skin)
+	local var_17_0 = HeroModel.instance:getByHeroId(arg_17_0._heroId)
+	local var_17_1 = SkinConfig.instance:getSkinCo(var_17_0.skin)
 
-	slot0._uiSpine:setResPath(slot2, slot0._onSpineLoaded, slot0)
+	arg_17_0._uiSpine:setResPath(var_17_1, arg_17_0._onSpineLoaded, arg_17_0)
 
-	slot4 = nil
-	slot4 = (not string.nilorempty(slot2.characterDataVoiceViewOffset) or SkinConfig.instance:getAfterRelativeOffset(502, SkinConfig.instance:getSkinOffset(slot2.characterViewOffset))) and SkinConfig.instance:getSkinOffset(slot3)
+	local var_17_2 = var_17_1.characterDataVoiceViewOffset
+	local var_17_3
 
-	recthelper.setAnchor(slot0._gospine.transform, slot4[1], slot4[2])
-	transformhelper.setLocalScale(slot0._gospine.transform, slot4[3], slot4[3], slot4[3])
+	if string.nilorempty(var_17_2) then
+		var_17_3 = SkinConfig.instance:getSkinOffset(var_17_1.characterViewOffset)
+		var_17_3 = SkinConfig.instance:getAfterRelativeOffset(502, var_17_3)
+	else
+		var_17_3 = SkinConfig.instance:getSkinOffset(var_17_2)
+	end
+
+	recthelper.setAnchor(arg_17_0._gospine.transform, var_17_3[1], var_17_3[2])
+	transformhelper.setLocalScale(arg_17_0._gospine.transform, var_17_3[3], var_17_3[3], var_17_3[3])
 end
 
-function slot0._onSpineLoaded(slot0)
-	slot0:_onSpineLoaded_overseas()
+function var_0_0._onSpineLoaded(arg_18_0)
+	arg_18_0:_onSpineLoaded_overseas()
 end
 
-function slot0._refreshVoice(slot0)
-	CharacterVoiceModel.instance:setVoiceList(CharacterDataModel.instance:getCurHeroVoices())
+function var_0_0._refreshVoice(arg_19_0)
+	local var_19_0 = CharacterDataModel.instance:getCurHeroVoices()
+
+	CharacterVoiceModel.instance:setVoiceList(var_19_0)
 end
 
-function slot0.initLanguageOptions(slot0)
-	slot0._languageOptions = {
+function var_0_0.initLanguageOptions(arg_20_0)
+	arg_20_0._languageOptions = {
 		LangSettings.en,
 		LangSettings.zh
 	}
-	slot0._languageOptions = {}
+	arg_20_0._languageOptions = {}
 
-	for slot6 = 0, GameConfig:GetSupportedVoiceShortcuts().Length - 1 do
-		if SettingsVoicePackageModel.instance:getPackInfo(slot1[slot6]) and not slot8:needDownload() then
-			table.insert(slot0._languageOptions, LangSettings.shortCut2LangIdxTab[slot7])
+	local var_20_0 = GameConfig:GetSupportedVoiceShortcuts()
+	local var_20_1 = var_20_0.Length
+
+	for iter_20_0 = 0, var_20_1 - 1 do
+		local var_20_2 = var_20_0[iter_20_0]
+		local var_20_3 = SettingsVoicePackageModel.instance:getPackInfo(var_20_2)
+
+		if var_20_3 and not var_20_3:needDownload() then
+			local var_20_4 = LangSettings.shortCut2LangIdxTab[var_20_2]
+
+			table.insert(arg_20_0._languageOptions, var_20_4)
 		end
 	end
 
-	table.sort(slot0._languageOptions, function (slot0, slot1)
-		return slot0 < slot1
+	table.sort(arg_20_0._languageOptions, function(arg_21_0, arg_21_1)
+		return arg_21_0 < arg_21_1
 	end)
 
-	slot0._optionsName = {}
-	slot3 = 1
+	arg_20_0._optionsName = {}
 
-	for slot8, slot9 in ipairs(slot0._languageOptions) do
-		if SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot0._heroId) == slot9 then
-			slot0._curLanguageId = slot9
-			slot3 = slot8
+	local var_20_5 = 1
+	local var_20_6 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_20_0._heroId)
+
+	for iter_20_1, iter_20_2 in ipairs(arg_20_0._languageOptions) do
+		if var_20_6 == iter_20_2 then
+			arg_20_0._curLanguageId = iter_20_2
+			var_20_5 = iter_20_1
 		end
 
-		slot0._optionsName[#slot0._optionsName + 1] = luaLang(LangSettings.shortcutTab[slot9])
+		local var_20_7 = luaLang(LangSettings.shortcutTab[iter_20_2])
+
+		arg_20_0._optionsName[#arg_20_0._optionsName + 1] = var_20_7
 	end
 
-	slot0._dropfilter:ClearOptions()
-	slot0._dropfilter:AddOptions(slot0._optionsName)
-	slot0._dropfilter:SetValue(slot3 - 1)
-	gohelper.setActive(slot0._goarrowup, false)
+	arg_20_0._dropfilter:ClearOptions()
+	arg_20_0._dropfilter:AddOptions(arg_20_0._optionsName)
+	arg_20_0._dropfilter:SetValue(var_20_5 - 1)
+	gohelper.setActive(arg_20_0._goarrowup, false)
 end
 
-function slot0._onDropFilterValueChanged(slot0, slot1)
-	if slot0._languageOptions[slot1 + 1] == slot0._curLanguageId then
+function var_0_0._onDropFilterValueChanged(arg_22_0, arg_22_1)
+	arg_22_1 = arg_22_1 + 1
+
+	if arg_22_0._languageOptions[arg_22_1] == arg_22_0._curLanguageId then
 		return
 	end
 
-	if SettingsVoicePackageModel.instance:getPackInfo(LangSettings.shortcutTab[slot0._languageOptions[slot1]]) and slot3:needDownload() then
+	local var_22_0 = LangSettings.shortcutTab[arg_22_0._languageOptions[arg_22_1]]
+	local var_22_1 = SettingsVoicePackageModel.instance:getPackInfo(var_22_0)
+
+	if var_22_1 and var_22_1:needDownload() then
 		GameFacade.showToast(ToastEnum.CharVoiceLangLost)
 
-		for slot7, slot8 in ipairs(slot0._languageOptions) do
-			if slot8 == slot0._curLanguageId then
-				slot0._dropfilter:SetValue(slot7 - 1)
+		for iter_22_0, iter_22_1 in ipairs(arg_22_0._languageOptions) do
+			if iter_22_1 == arg_22_0._curLanguageId then
+				local var_22_2 = iter_22_0
+
+				arg_22_0._dropfilter:SetValue(var_22_2 - 1)
 			end
 		end
 
 		return
 	end
 
-	if slot0._curAudio and slot0._curAudio ~= 0 then
-		slot0._willChangeLangId = slot0._languageOptions[slot1]
+	if arg_22_0._curAudio and arg_22_0._curAudio ~= 0 then
+		arg_22_0._willChangeLangId = arg_22_0._languageOptions[arg_22_1]
 
-		slot0:_onStopVoice(slot0._curAudio, true)
+		arg_22_0:_onStopVoice(arg_22_0._curAudio, true)
 
-		slot0._willChangeLangId = nil
+		arg_22_0._willChangeLangId = nil
 	end
 
-	slot0._curLanguageId = slot0._languageOptions[slot1]
+	arg_22_0._curLanguageId = arg_22_0._languageOptions[arg_22_1]
 
-	SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(slot0._curLanguageId, slot0._heroId)
+	SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(arg_22_0._curLanguageId, arg_22_0._heroId)
 	CharacterVoiceModel.instance:setNeedItemAni(true)
 	CharacterController.instance:dispatchEvent(CharacterEvent.ChangeVoiceLang)
-	UIBlockMgr.instance:startBlock(uv0)
-	gohelper.setActive(slot0._goDropEffect, false)
-	gohelper.setActive(slot0._goDropEffect, true)
-	TaskDispatcher.runDelay(slot0._refreshVoiceListEnd, slot0, 0.6)
+	UIBlockMgr.instance:startBlock(var_0_1)
+	gohelper.setActive(arg_22_0._goDropEffect, false)
+	gohelper.setActive(arg_22_0._goDropEffect, true)
+	TaskDispatcher.runDelay(arg_22_0._refreshVoiceListEnd, arg_22_0, 0.6)
 end
 
-function slot0.onFilterDropShow(slot0)
+function var_0_0.onFilterDropShow(arg_23_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	slot0._isPopUpFilterList = true
+	arg_23_0._isPopUpFilterList = true
 
-	slot0:refreshFilterDropDownArrow()
+	arg_23_0:refreshFilterDropDownArrow()
 
-	for slot5, slot6 in ipairs(slot0._languageOptions) do
-		if SettingsVoicePackageModel.instance:getPackInfo(LangSettings.shortcutTab[slot6]) and slot10:needDownload() then
-			gohelper.setActive(gohelper.findChild(slot7.gameObject, "#btn_download"), true)
+	local var_23_0 = gohelper.findChild(arg_23_0._dropfilter.gameObject, "Dropdown List/Viewport/Content").transform
 
-			gohelper.findChildText(gohelper.findChild(slot0._dropfilter.gameObject, "Dropdown List/Viewport/Content").transform:GetChild(slot5).gameObject, "Text").alpha = 0.5
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0._languageOptions) do
+		local var_23_1 = var_23_0:GetChild(iter_23_0)
+		local var_23_2 = gohelper.findChildText(var_23_1.gameObject, "Text")
+		local var_23_3 = LangSettings.shortcutTab[iter_23_1]
+		local var_23_4 = SettingsVoicePackageModel.instance:getPackInfo(var_23_3)
+
+		if var_23_4 and var_23_4:needDownload() then
+			local var_23_5 = gohelper.findChild(var_23_1.gameObject, "#btn_download")
+
+			gohelper.setActive(var_23_5, true)
+
+			var_23_2.alpha = 0.5
 		end
 
-		if slot6 == slot0._curLanguageId then
-			slot8.text = string.format("<color=#efb785ff>%s</color>", slot0._optionsName[slot5])
+		if iter_23_1 == arg_23_0._curLanguageId then
+			var_23_2.text = string.format("<color=#efb785ff>%s</color>", arg_23_0._optionsName[iter_23_0])
 		else
-			slot8.text = string.format("<color=#c3beb6ff>%s</color>", slot0._optionsName[slot5])
+			var_23_2.text = string.format("<color=#c3beb6ff>%s</color>", arg_23_0._optionsName[iter_23_0])
 		end
 	end
 end
 
-function slot0.onFilterDropHide(slot0)
+function var_0_0.onFilterDropHide(arg_24_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	slot0._isPopUpFilterList = false
+	arg_24_0._isPopUpFilterList = false
 
-	slot0:refreshFilterDropDownArrow()
+	arg_24_0:refreshFilterDropDownArrow()
 end
 
-function slot0._refreshVoiceListEnd(slot0)
+function var_0_0._refreshVoiceListEnd(arg_25_0)
 	CharacterVoiceModel.instance:setNeedItemAni(false)
-	UIBlockMgr.instance:endBlock(uv0)
+	UIBlockMgr.instance:endBlock(var_0_1)
 end
 
-function slot0.refreshFilterDropDownArrow(slot0)
-	gohelper.setActive(slot0._goarrowdown, not slot0._isPopUpFilterList)
-	gohelper.setActive(slot0._goarrowup, slot0._isPopUpFilterList)
+function var_0_0.refreshFilterDropDownArrow(arg_26_0)
+	gohelper.setActive(arg_26_0._goarrowdown, not arg_26_0._isPopUpFilterList)
+	gohelper.setActive(arg_26_0._goarrowup, arg_26_0._isPopUpFilterList)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_27_0)
+	arg_27_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	FrameTimerController.onDestroyViewMember(slot0, "_frameTimer")
+function var_0_0.onClose(arg_28_0)
+	FrameTimerController.onDestroyViewMember(arg_28_0, "_frameTimer")
 	CharacterVoiceModel.instance:setNeedItemAni(true)
-	UIBlockMgr.instance:endBlock(uv0)
+	UIBlockMgr.instance:endBlock(var_0_1)
 
-	if not slot0._uiSpine then
+	if not arg_28_0._uiSpine then
 		return
 	end
 
-	slot0._uiSpine:stopVoice()
-	slot0:_setModelVisible(false)
+	arg_28_0._uiSpine:stopVoice()
+	arg_28_0:_setModelVisible(false)
 end
 
-function slot0._setModelVisible(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._delaySetModelHide, slot0)
+function var_0_0._setModelVisible(arg_29_0, arg_29_1)
+	TaskDispatcher.cancelTask(arg_29_0._delaySetModelHide, arg_29_0)
 
-	if slot1 then
-		slot0._uiSpine:setLayer(UnityLayer.Unit)
-		slot0._uiSpine:setModelVisible(slot1)
+	if arg_29_1 then
+		arg_29_0._uiSpine:setLayer(UnityLayer.Unit)
+		arg_29_0._uiSpine:setModelVisible(arg_29_1)
 	else
-		slot0._uiSpine:setLayer(UnityLayer.Water)
-		TaskDispatcher.runDelay(slot0._delaySetModelHide, slot0, 1)
+		arg_29_0._uiSpine:setLayer(UnityLayer.Water)
+		TaskDispatcher.runDelay(arg_29_0._delaySetModelHide, arg_29_0, 1)
 	end
 end
 
-function slot0._delaySetModelHide(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:setModelVisible(false)
+function var_0_0._delaySetModelHide(arg_30_0)
+	if arg_30_0._uiSpine then
+		arg_30_0._uiSpine:setModelVisible(false)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._resetNeedItemAnimState, slot0)
-	TaskDispatcher.cancelTask(slot0._refreshVoiceListEnd, slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagecentericon:UnLoadImage()
-	slot0._simagelefticon:UnLoadImage()
-	slot0._simagerighticon:UnLoadImage()
-	slot0._simagerighticon2:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
-	slot0._simagevoicebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0._resetNeedItemAnimState, arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0._refreshVoiceListEnd, arg_31_0)
+	arg_31_0._simagebg:UnLoadImage()
+	arg_31_0._simagecentericon:UnLoadImage()
+	arg_31_0._simagelefticon:UnLoadImage()
+	arg_31_0._simagerighticon:UnLoadImage()
+	arg_31_0._simagerighticon2:UnLoadImage()
+	arg_31_0._simagemask:UnLoadImage()
+	arg_31_0._simagevoicebg:UnLoadImage()
 
-	if slot0._uiSpine then
-		slot0._uiSpine = nil
+	if arg_31_0._uiSpine then
+		arg_31_0._uiSpine = nil
 	end
 
-	CharacterController.instance:unregisterCallback(CharacterEvent.PlayVoice, slot0._onPlayVoice, slot0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.StopVoice, slot0._onStopVoice, slot0)
-	TaskDispatcher.cancelTask(slot0._delaySetModelHide, slot0)
+	CharacterController.instance:unregisterCallback(CharacterEvent.PlayVoice, arg_31_0._onPlayVoice, arg_31_0)
+	CharacterController.instance:unregisterCallback(CharacterEvent.StopVoice, arg_31_0._onStopVoice, arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0._delaySetModelHide, arg_31_0)
 end
 
-return slot0
+return var_0_0

@@ -1,68 +1,69 @@
-module("modules.logic.explore.map.ExploreMapWhirl", package.seeall)
+﻿module("modules.logic.explore.map.ExploreMapWhirl", package.seeall)
 
-slot0 = class("ExploreMapWhirl")
+local var_0_0 = class("ExploreMapWhirl")
 
-function slot0.ctor(slot0)
-	slot0._whirlDict = {}
-	slot0.typeToCls = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._whirlDict = {}
+	arg_1_0.typeToCls = {
 		[ExploreEnum.WhirlType.Rune] = ExploreWhirlRune
 	}
 end
 
-function slot0.init(slot0, slot1)
-	slot0._mapGo = slot1
-	slot0._whirlRoot = gohelper.create3d(slot1, "whirl")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._mapGo = arg_2_1
+	arg_2_0._whirlRoot = gohelper.create3d(arg_2_1, "whirl")
 
-	ExploreController.instance:registerCallback(ExploreEvent.UseItemChanged, slot0._onUseItemChange, slot0)
-	slot0:_onUseItemChange(ExploreModel.instance:getUseItemUid())
+	ExploreController.instance:registerCallback(ExploreEvent.UseItemChanged, arg_2_0._onUseItemChange, arg_2_0)
+	arg_2_0:_onUseItemChange(ExploreModel.instance:getUseItemUid())
 end
 
-function slot0._onUseItemChange(slot0, slot1)
-	if ExploreBackpackModel.instance:getById(slot1) and slot2.config.type == ExploreEnum.BackPackItemType.Rune then
-		slot0:addWhirl(ExploreEnum.WhirlType.Rune)
+function var_0_0._onUseItemChange(arg_3_0, arg_3_1)
+	local var_3_0 = ExploreBackpackModel.instance:getById(arg_3_1)
+
+	if var_3_0 and var_3_0.config.type == ExploreEnum.BackPackItemType.Rune then
+		arg_3_0:addWhirl(ExploreEnum.WhirlType.Rune)
 	else
-		slot0:removeWhirl(ExploreEnum.WhirlType.Rune)
+		arg_3_0:removeWhirl(ExploreEnum.WhirlType.Rune)
 	end
 end
 
-function slot0.addWhirl(slot0, slot1)
-	if slot0._whirlDict[slot1] then
-		return slot0._whirlDict[slot1]
+function var_0_0.addWhirl(arg_4_0, arg_4_1)
+	if arg_4_0._whirlDict[arg_4_1] then
+		return arg_4_0._whirlDict[arg_4_1]
 	end
 
-	slot0._whirlDict[slot1] = (slot0.typeToCls[slot1] or ExploreWhirlBase).New(slot0._whirlRoot, slot1)
+	local var_4_0 = arg_4_0.typeToCls[arg_4_1] or ExploreWhirlBase
 
-	return slot0._whirlDict[slot1]
+	arg_4_0._whirlDict[arg_4_1] = var_4_0.New(arg_4_0._whirlRoot, arg_4_1)
+
+	return arg_4_0._whirlDict[arg_4_1]
 end
 
-function slot0.removeWhirl(slot0, slot1)
-	if slot0._whirlDict[slot1] then
-		slot0._whirlDict[slot1]:destroy()
+function var_0_0.removeWhirl(arg_5_0, arg_5_1)
+	if arg_5_0._whirlDict[arg_5_1] then
+		arg_5_0._whirlDict[arg_5_1]:destroy()
 
-		slot0._whirlDict[slot1] = nil
+		arg_5_0._whirlDict[arg_5_1] = nil
 	end
 end
 
-function slot0.getWhirl(slot0, slot1)
-	return slot0._whirlDict[slot1] or nil
+function var_0_0.getWhirl(arg_6_0, arg_6_1)
+	return arg_6_0._whirlDict[arg_6_1] or nil
 end
 
-function slot0.unloadMap(slot0)
-	slot0:destroy()
+function var_0_0.unloadMap(arg_7_0)
+	arg_7_0:destroy()
 end
 
-function slot0.destroy(slot0)
-	slot4 = slot0._onUseItemChange
-	slot5 = slot0
+function var_0_0.destroy(arg_8_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.UseItemChanged, arg_8_0._onUseItemChange, arg_8_0)
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.UseItemChanged, slot4, slot5)
-
-	for slot4, slot5 in pairs(slot0._whirlDict) do
-		slot5:destroy()
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._whirlDict) do
+		iter_8_1:destroy()
 	end
 
-	slot0._whirlDict = {}
-	slot0._mapGo = nil
+	arg_8_0._whirlDict = {}
+	arg_8_0._mapGo = nil
 end
 
-return slot0
+return var_0_0

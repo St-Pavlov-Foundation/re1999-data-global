@@ -1,20 +1,21 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapActUnitMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapActUnitMo", package.seeall)
 
-slot0 = pureTable("WuErLiXiMapActUnitMo")
+local var_0_0 = pureTable("WuErLiXiMapActUnitMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.type = 0
-	slot0.count = 0
-	slot0.dir = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.type = 0
+	arg_1_0.count = 0
+	arg_1_0.dir = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "#")
-	slot0.type = slot2[1]
-	slot0.count = slot2[2]
-	slot0.dir = slot2[3]
-	slot0.id = slot2[4] or slot2[1]
+function var_0_0.init(arg_2_0, arg_2_1)
+	local var_2_0 = string.splitToNumber(arg_2_1, "#")
+
+	arg_2_0.type = var_2_0[1]
+	arg_2_0.count = var_2_0[2]
+	arg_2_0.dir = var_2_0[3]
+	arg_2_0.id = var_2_0[4] or var_2_0[1]
 end
 
-return slot0
+return var_0_0

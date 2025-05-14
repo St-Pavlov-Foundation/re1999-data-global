@@ -1,120 +1,129 @@
-module("modules.logic.versionactivity2_5.autochess.controller.AutoChessController", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.controller.AutoChessController", package.seeall)
 
-slot0 = class("AutoChessController", BaseController)
+local var_0_0 = class("AutoChessController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.cachePopupViewList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.cachePopupViewList = {}
 end
 
-function slot0.addConstEvents(slot0)
-	slot0:addEventCb(uv0.instance, AutoChessEvent.StartFight, slot0.onStartFight, slot0)
-	slot0:addEventCb(uv0.instance, AutoChessEvent.SkipFight, slot0.recordSkipFight, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	arg_3_0:addEventCb(var_0_0.instance, AutoChessEvent.StartFight, arg_3_0.onStartFight, arg_3_0)
+	arg_3_0:addEventCb(var_0_0.instance, AutoChessEvent.SkipFight, arg_3_0.recordSkipFight, arg_3_0)
 end
 
-function slot0.openMainView(slot0)
+function var_0_0.openMainView(arg_4_0)
 	ViewMgr.instance:openView(ViewName.AutoChessMainView)
 end
 
-function slot0.openLeaderView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.AutoChessLeaderView, slot1)
+function var_0_0.openLeaderView(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.AutoChessLeaderView, arg_5_1)
 end
 
-function slot0.openGameView(slot0)
+function var_0_0.openGameView(arg_6_0)
 	ViewMgr.instance:openView(ViewName.AutoChessGameView)
 end
 
-function slot0.openMallView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.AutoChessMallView, slot1)
+function var_0_0.openMallView(arg_7_0, arg_7_1)
+	ViewMgr.instance:openView(ViewName.AutoChessMallView, arg_7_1)
 
-	slot0.startBuyTime = ServerTime.now()
+	arg_7_0.startBuyTime = ServerTime.now()
 end
 
-function slot0.openResultView(slot0)
+function var_0_0.openResultView(arg_8_0)
 	ViewMgr.instance:openView(ViewName.AutoChessResultView)
 end
 
-function slot0.openCardInfoView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.AutoChessMallInfoView, slot1)
+function var_0_0.openCardInfoView(arg_9_0, arg_9_1)
+	ViewMgr.instance:openView(ViewName.AutoChessMallInfoView, arg_9_1)
 end
 
-function slot0.openLeaderNextView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.AutoChessLeaderNextView, slot1)
+function var_0_0.openLeaderNextView(arg_10_0, arg_10_1)
+	ViewMgr.instance:openView(ViewName.AutoChessLeaderNextView, arg_10_1)
 end
 
-function slot0.startGame(slot0, slot1, slot2)
-	slot4 = Activity182Model.instance:getActMo().gameMoDic[slot1]
+function var_0_0.startGame(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = Activity182Model.instance:getActMo().gameMoDic[arg_11_1]
 
-	if slot1 == AutoChessEnum.ModuleId.PVE then
-		if slot4.episodeId == slot2 then
-			AutoChessRpc.instance:sendAutoChessEnterSceneRequest(slot1, slot2, slot4.selectMasterId)
+	if arg_11_1 == AutoChessEnum.ModuleId.PVE then
+		if var_11_0.episodeId == arg_11_2 then
+			AutoChessRpc.instance:sendAutoChessEnterSceneRequest(arg_11_1, arg_11_2, var_11_0.selectMasterId)
 		else
-			slot0.tempEpisodeId = slot2
+			arg_11_0.tempEpisodeId = arg_11_2
 
-			if slot4.episodeId == 0 then
-				slot0:startPveGame(0, 0)
+			if var_11_0.episodeId == 0 then
+				arg_11_0:startPveGame(0, 0)
 			else
-				GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessChangeEpisode, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, slot0._yesCallback, nil, , slot0)
+				GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessChangeEpisode, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, arg_11_0._yesCallback, nil, nil, arg_11_0)
 			end
 		end
-	elseif slot4.episodeId == 0 then
-		if #slot4.masterIdBox == 0 then
-			slot0.tempEpisodeId = slot2
+	elseif var_11_0.episodeId == 0 then
+		if #var_11_0.masterIdBox == 0 then
+			local var_11_1 = Activity182Model.instance:getCurActId()
 
-			Activity182Rpc.instance:sendGetAct182RandomMasterRequest(Activity182Model.instance:getCurActId())
+			arg_11_0.tempEpisodeId = arg_11_2
+
+			Activity182Rpc.instance:sendGetAct182RandomMasterRequest(var_11_1)
 		else
-			slot0:openLeaderView({
-				episodeId = slot2
+			arg_11_0:openLeaderView({
+				episodeId = arg_11_2
 			})
 		end
 	else
-		AutoChessRpc.instance:sendAutoChessEnterSceneRequest(slot1, slot2, slot4.selectMasterId)
+		AutoChessRpc.instance:sendAutoChessEnterSceneRequest(arg_11_1, arg_11_2, var_11_0.selectMasterId)
 	end
 end
 
-function slot0._yesCallback(slot0)
-	AutoChessRpc.instance:sendAutoChessGiveUpRequest(AutoChessEnum.ModuleId.PVE, slot0.startPveGame, slot0)
+function var_0_0._yesCallback(arg_12_0)
+	AutoChessRpc.instance:sendAutoChessGiveUpRequest(AutoChessEnum.ModuleId.PVE, arg_12_0.startPveGame, arg_12_0)
 end
 
-function slot0.startPveGame(slot0, slot1, slot2)
-	if slot2 == 0 then
-		slot0:openLeaderNextView({
+function var_0_0.startPveGame(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_2 == 0 then
+		local var_13_0 = {
 			moduleId = AutoChessEnum.ModuleId.PVE,
-			episodeId = slot0.tempEpisodeId,
-			leaderId = lua_auto_chess_episode.configDict[slot0.tempEpisodeId].masterId
-		})
+			episodeId = arg_13_0.tempEpisodeId,
+			leaderId = lua_auto_chess_episode.configDict[arg_13_0.tempEpisodeId].masterId
+		}
+
+		arg_13_0:openLeaderNextView(var_13_0)
 	end
 
-	slot0.tempEpisodeId = nil
+	arg_13_0.tempEpisodeId = nil
 end
 
-function slot0.enterGame(slot0, slot1)
-	AutoChessModel.instance:setEpisodeId(slot1)
-	slot0:openGameView()
-	slot0:openMallView({
+function var_0_0.enterGame(arg_14_0, arg_14_1)
+	AutoChessModel.instance:setEpisodeId(arg_14_1)
+	arg_14_0:openGameView()
+	arg_14_0:openMallView({
 		firstOpen = true
 	})
 
-	slot0.startGameTime = ServerTime.now()
+	arg_14_0.startGameTime = ServerTime.now()
 end
 
-function slot0.exitGame(slot0)
-	slot0:statExitGame()
+function var_0_0.exitGame(arg_15_0)
+	arg_15_0:statExitGame()
 
 	AutoChessModel.instance.episodeId = nil
 
 	ViewMgr.instance:closeView(ViewName.AutoChessMallView)
 	ViewMgr.instance:closeView(ViewName.AutoChessGameView)
-	Activity182Rpc.instance:sendGetAct182InfoRequest(Activity182Model.instance:getCurActId())
+
+	local var_15_0 = Activity182Model.instance:getCurActId()
+
+	Activity182Rpc.instance:sendGetAct182InfoRequest(var_15_0)
 end
 
-function slot0.onResultViewClose(slot0)
-	if AutoChessModel.instance.settleData then
-		if slot1.moduleId == AutoChessEnum.ModuleId.PVE then
-			if slot1.isFirstPass then
+function var_0_0.onResultViewClose(arg_16_0)
+	local var_16_0 = AutoChessModel.instance.settleData
+
+	if var_16_0 then
+		if var_16_0.moduleId == AutoChessEnum.ModuleId.PVE then
+			if var_16_0.isFirstPass then
 				ViewMgr.instance:openView(ViewName.AutoChessPveFirstSettleView)
 			else
 				ViewMgr.instance:openView(ViewName.AutoChessPveSettleView)
@@ -125,102 +134,115 @@ function slot0.onResultViewClose(slot0)
 
 		AutoChessModel.instance.resultData = nil
 	else
-		slot0:openMallView()
-		slot0:dispatchEvent(AutoChessEvent.NextRound)
+		arg_16_0:openMallView()
+		arg_16_0:dispatchEvent(AutoChessEvent.NextRound)
 	end
 end
 
-function slot0.onSettleViewClose(slot0)
+function var_0_0.onSettleViewClose(arg_17_0)
 	AutoChessModel.instance.settleData = nil
 
 	if ViewMgr.instance:isOpen(ViewName.AutoChessGameView) then
-		slot0:exitGame()
+		arg_17_0:exitGame()
 	end
 end
 
-function slot0.checkRankUp(slot0)
-	if Activity182Model.instance:getActMo() and slot1.isRankUp then
+function var_0_0.checkRankUp(arg_18_0)
+	local var_18_0 = Activity182Model.instance:getActMo()
+
+	if var_18_0 and var_18_0.isRankUp then
 		ViewMgr.instance:openView(ViewName.AutoChessRankUpView)
 	end
 end
 
-function slot0.onSettleViewClose(slot0)
+function var_0_0.onSettleViewClose(arg_19_0)
 	AutoChessModel.instance.settleData = nil
 
 	if ViewMgr.instance:isOpen(ViewName.AutoChessGameView) then
-		slot0:exitGame()
+		arg_19_0:exitGame()
 	end
 end
 
-function slot0.isClickDisable(slot0, slot1)
-	return not slot0:isOperationEnable(slot1)
+function var_0_0.isClickDisable(arg_20_0, arg_20_1)
+	return not arg_20_0:isOperationEnable(arg_20_1)
 end
 
-function slot0.isDragDisable(slot0, slot1, slot2, slot3)
-	return not slot0:isOperationEnable(slot1, slot2, slot3)
+function var_0_0.isDragDisable(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	return not arg_21_0:isOperationEnable(arg_21_1, arg_21_2, arg_21_3)
 end
 
-function slot0.isRowIndexEnable(slot0, slot1)
-	if tonumber(GuideModel.instance:getFlagValue(GuideModel.instance.GuideFlag.AutoChessSetPlaceIndex)) == nil or slot2 == 0 then
+function var_0_0.isRowIndexEnable(arg_22_0, arg_22_1)
+	local var_22_0 = tonumber(GuideModel.instance:getFlagValue(GuideModel.instance.GuideFlag.AutoChessSetPlaceIndex))
+
+	if var_22_0 == nil or var_22_0 == 0 then
 		return true
 	end
 
-	if slot2 == slot1 == false then
-		if GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessToast) then
-			slot4 = GuideModel.instance:getFlagValue(GuideModel.instance.GuideFlag.AutoChessToast)
-			slot5 = tonumber(slot4)
+	local var_22_1 = var_22_0 == arg_22_1
 
-			if slot4 ~= nil and slot5 ~= nil then
-				GameFacade.showToast(slot5)
+	if var_22_1 == false then
+		if GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessToast) then
+			local var_22_2 = GuideModel.instance:getFlagValue(GuideModel.instance.GuideFlag.AutoChessToast)
+			local var_22_3 = tonumber(var_22_2)
+
+			if var_22_2 ~= nil and var_22_3 ~= nil then
+				GameFacade.showToast(var_22_3)
 			else
 				logError("自走棋引导没有配置限定操作飘字id 弹出保底飘字")
-				slot0:showGuideToast()
+				arg_22_0:showGuideToast()
 			end
 		else
 			logError("自走棋引导没有配置限定操作飘字id 弹出保底飘字")
-			slot0:showGuideToast()
+			arg_22_0:showGuideToast()
 		end
 	end
 
-	return slot3
+	return var_22_1
 end
 
-function slot0.isOperationEnable(slot0, slot1, slot2, slot3)
-	if slot1 == nil then
-		logNormal(string.format("当前是否允许操作：%s", not GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessBanAllOper)))
-	else
-		if slot2 ~= nil then
-			slot2 = tostring(slot2)
-			slot6 = tostring(GuideModel.instance:getFlagValue(slot1))
+function var_0_0.isOperationEnable(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	local var_23_0 = not GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessBanAllOper)
 
-			logNormal(string.format("当前 操作id:%s 参数：%s 是否允许操作：%s", slot1, slot2, GuideModel.instance:isFlagEnable(slot1) and slot6 ~= nil and slot6 == slot2))
+	if arg_23_1 == nil then
+		logNormal(string.format("当前是否允许操作：%s", var_23_0))
+	else
+		local var_23_1 = GuideModel.instance:isFlagEnable(arg_23_1)
+
+		if arg_23_2 ~= nil then
+			arg_23_2 = tostring(arg_23_2)
+
+			local var_23_2 = tostring(GuideModel.instance:getFlagValue(arg_23_1))
+
+			var_23_1 = var_23_1 and var_23_2 ~= nil and var_23_2 == arg_23_2
+
+			logNormal(string.format("当前 操作id:%s 参数：%s 是否允许操作：%s", arg_23_1, arg_23_2, var_23_1))
 		else
-			logNormal(string.format("当前 操作id: %s 是否允许操作：%s", slot1, slot5))
+			logNormal(string.format("当前 操作id: %s 是否允许操作：%s", arg_23_1, var_23_1))
 		end
 
-		slot4 = slot4 or slot5
+		var_23_0 = var_23_0 or var_23_1
 	end
 
-	if slot4 == false then
+	if var_23_0 == false then
 		if GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessToast) then
-			slot5 = GuideModel.instance:getFlagValue(GuideModel.instance.GuideFlag.AutoChessToast)
-			slot6 = tonumber(slot5)
+			local var_23_3 = GuideModel.instance:getFlagValue(GuideModel.instance.GuideFlag.AutoChessToast)
+			local var_23_4 = tonumber(var_23_3)
 
-			if slot5 ~= nil and slot6 ~= nil then
-				GameFacade.showToast(slot6)
+			if var_23_3 ~= nil and var_23_4 ~= nil then
+				GameFacade.showToast(var_23_4)
 			else
 				logError("自走棋引导没有配置限定操作飘字id 弹出保底飘字")
-				slot0:showGuideToast()
+				arg_23_0:showGuideToast()
 			end
 		else
-			slot0:showGuideToast()
+			arg_23_0:showGuideToast()
 		end
 	end
 
-	return slot4
+	return var_23_0
 end
 
-function slot0.showGuideToast(slot0)
+function var_0_0.showGuideToast(arg_24_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessEnableDragFreeChess) then
 		GameFacade.showToast(ToastEnum.AutoChessDragFree)
 	elseif GuideModel.instance:isFlagEnable(GuideModel.instance.GuideFlag.AutoChessEnableExchangeEXP) then
@@ -232,7 +254,7 @@ function slot0.showGuideToast(slot0)
 	end
 end
 
-function slot0.isEnableSale(slot0)
+function var_0_0.isEnableSale(arg_25_0)
 	if not (GuideModel.instance:isStepFinish(25405, 13) or GuideModel.instance:isGuideFinish(25406)) then
 		if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.AutoChessEnableSale) then
 			return true
@@ -246,7 +268,7 @@ function slot0.isEnableSale(slot0)
 	return false
 end
 
-function slot0.isEnableRefresh(slot0)
+function var_0_0.isEnableRefresh(arg_26_0)
 	if not GuideModel.instance:isStepFinish(25409, 3) then
 		GameFacade.showToast(ToastEnum.AutoChessRefreshLock)
 
@@ -256,75 +278,80 @@ function slot0.isEnableRefresh(slot0)
 	return true
 end
 
-function slot0.setGuideEventFlag(slot0, slot1)
-	slot0._curRpcType = slot1
+function var_0_0.setGuideEventFlag(arg_27_0, arg_27_1)
+	arg_27_0._curRpcType = arg_27_1
 end
 
-function slot0.checkGuideEventFlag(slot0)
-	if slot0._curRpcType and slot0._curRpcType == AutoChessEnum.BuildType.Sell then
-		slot0:dispatchEvent(AutoChessEvent.ZSaleChess)
+function var_0_0.checkGuideEventFlag(arg_28_0)
+	if arg_28_0._curRpcType and arg_28_0._curRpcType == AutoChessEnum.BuildType.Sell then
+		arg_28_0:dispatchEvent(AutoChessEvent.ZSaleChess)
 	end
 end
 
-function slot0.onStartFight(slot0)
-	slot1 = AutoChessModel.instance:getChessMo()
+function var_0_0.onStartFight(arg_29_0)
+	local var_29_0 = AutoChessModel.instance:getChessMo()
+	local var_29_1 = ServerTime.now() - arg_29_0.startBuyTime
 
 	StatController.instance:track(StatEnum.EventName.AutoChessFightStart, {
 		[StatEnum.EventProperties.EpisodeId] = tostring(AutoChessModel.instance.episodeId),
-		[StatEnum.EventProperties.RoundNum] = slot1.sceneRound,
-		[StatEnum.EventProperties.OurRemainingHP] = tonumber(slot1.svrFight.mySideMaster.hp),
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - slot0.startBuyTime
+		[StatEnum.EventProperties.RoundNum] = var_29_0.sceneRound,
+		[StatEnum.EventProperties.OurRemainingHP] = tonumber(var_29_0.svrFight.mySideMaster.hp),
+		[StatEnum.EventProperties.UseTime] = var_29_1
 	})
 
-	slot0.startFightTime = ServerTime.now()
+	arg_29_0.startFightTime = ServerTime.now()
 end
 
-function slot0.recordSkipFight(slot0)
-	slot0.skipFight = true
+function var_0_0.recordSkipFight(arg_30_0)
+	arg_30_0.skipFight = true
 end
 
-function slot0.statExitGame(slot0)
-	slot1 = AutoChessModel.instance:getChessMo()
+function var_0_0.statExitGame(arg_31_0)
+	local var_31_0 = AutoChessModel.instance:getChessMo()
+	local var_31_1 = ServerTime.now() - arg_31_0.startGameTime
 
 	StatController.instance:track(StatEnum.EventName.AutoChessSceneExit, {
 		[StatEnum.EventProperties.EpisodeId] = tostring(AutoChessModel.instance.episodeId),
-		[StatEnum.EventProperties.RoundNum] = slot1.sceneRound,
-		[StatEnum.EventProperties.OurRemainingHP] = tonumber(slot1.svrFight.mySideMaster.hp),
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - slot0.startGameTime
+		[StatEnum.EventProperties.RoundNum] = var_31_0.sceneRound,
+		[StatEnum.EventProperties.OurRemainingHP] = tonumber(var_31_0.svrFight.mySideMaster.hp),
+		[StatEnum.EventProperties.UseTime] = var_31_1
 	})
 end
 
-function slot0.statFightEnd(slot0, slot1)
+function var_0_0.statFightEnd(arg_32_0, arg_32_1)
+	local var_32_0 = AutoChessModel.instance:getChessMo()
+	local var_32_1 = ServerTime.now() - arg_32_0.startFightTime
+
 	StatController.instance:track(StatEnum.EventName.AutoChessFightEnd, {
 		[StatEnum.EventProperties.EpisodeId] = tostring(AutoChessModel.instance.episodeId),
-		[StatEnum.EventProperties.RoundNum] = AutoChessModel.instance:getChessMo().sceneRound,
-		[StatEnum.EventProperties.OurRemainingHP] = slot1,
-		[StatEnum.EventProperties.SkipFight] = slot0.skipFight,
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - slot0.startFightTime
+		[StatEnum.EventProperties.RoundNum] = var_32_0.sceneRound,
+		[StatEnum.EventProperties.OurRemainingHP] = arg_32_1,
+		[StatEnum.EventProperties.SkipFight] = arg_32_0.skipFight,
+		[StatEnum.EventProperties.UseTime] = var_32_1
 	})
 
-	slot0.skipFight = nil
+	arg_32_0.skipFight = nil
 end
 
-function slot0.addPopupView(slot0, slot1, slot2)
-	table.insert(slot0.cachePopupViewList, 1, {
-		viewName = slot1,
-		param = slot2
+function var_0_0.addPopupView(arg_33_0, arg_33_1, arg_33_2)
+	table.insert(arg_33_0.cachePopupViewList, 1, {
+		viewName = arg_33_1,
+		param = arg_33_2
 	})
 end
 
-function slot0.popupRewardView(slot0)
-	for slot4, slot5 in ipairs(slot0.cachePopupViewList) do
-		if slot5.viewName == ViewName.CommonPropView then
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, slot5.viewName, slot5.param)
+function var_0_0.popupRewardView(arg_34_0)
+	for iter_34_0, iter_34_1 in ipairs(arg_34_0.cachePopupViewList) do
+		if iter_34_1.viewName == ViewName.CommonPropView then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, iter_34_1.viewName, iter_34_1.param)
 		else
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.GainSkinView, slot5.viewName, slot5.param)
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.GainSkinView, iter_34_1.viewName, iter_34_1.param)
 		end
 	end
 
-	tabletool.clear(slot0.cachePopupViewList)
+	tabletool.clear(arg_34_0.cachePopupViewList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

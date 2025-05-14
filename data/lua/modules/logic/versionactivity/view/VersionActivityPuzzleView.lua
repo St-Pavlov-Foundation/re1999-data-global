@@ -1,306 +1,343 @@
-module("modules.logic.versionactivity.view.VersionActivityPuzzleView", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityPuzzleView", package.seeall)
 
-slot0 = class("VersionActivityPuzzleView", BaseView)
+local var_0_0 = class("VersionActivityPuzzleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goclose = gohelper.findChild(slot0.viewGO, "#go_close")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#simage_bg/#txt_title")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "#simage_bg/Scroll View/Viewport/Content/#txt_info")
-	slot0._gooptions = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_options")
-	slot0._gooptionitem = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_options/#go_optionitem")
-	slot0._goemptyoptionitem = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_options/#go_empty")
-	slot0._godragoptionitem = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_dragoptionitem")
-	slot0._goadsorbrect = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_adsorbrect")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "#go_finish")
-	slot0._txtgamename = gohelper.findChildText(slot0.viewGO, "#simage_bg/#txt_gamename")
-	slot0._txttemp = gohelper.findChildText(slot0.viewGO, "#txt_temp")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goclose = gohelper.findChild(arg_1_0.viewGO, "#go_close")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/#txt_title")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/Scroll View/Viewport/Content/#txt_info")
+	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_options")
+	arg_1_0._gooptionitem = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_options/#go_optionitem")
+	arg_1_0._goemptyoptionitem = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_options/#go_empty")
+	arg_1_0._godragoptionitem = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_dragoptionitem")
+	arg_1_0._goadsorbrect = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_adsorbrect")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
+	arg_1_0._txtgamename = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/#txt_gamename")
+	arg_1_0._txttemp = gohelper.findChildText(arg_1_0.viewGO, "#txt_temp")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot0.GuideBorder = 10
-slot0.FingerAnswerOffsetX = 77
-slot0.FingerAnswerOffsetY = -160
-slot0.FingerOptionOffsetX = 150
-slot0.FingerOptionOffsetY = -250
-slot0.AbsorbOffsetX = 20
-slot0.AbsorbOffsetY = 10
+var_0_0.GuideBorder = 10
+var_0_0.FingerAnswerOffsetX = 77
+var_0_0.FingerAnswerOffsetY = -160
+var_0_0.FingerOptionOffsetX = 150
+var_0_0.FingerOptionOffsetY = -250
+var_0_0.AbsorbOffsetX = 20
+var_0_0.AbsorbOffsetY = 10
 
-function slot0.closeViewOnClick(slot0)
-	slot0:closeThis()
+function var_0_0.closeViewOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.initCharacterWidth(slot0)
-	slot0._txttemp.text = luaLang("lei_mi_te_bei_placeholder")
-	slot0.oneCharacterWidth = slot0._txttemp.preferredWidth
-	slot0._txttemp.text = string.rep(luaLang("lei_mi_te_bei_placeholder"), 2)
-	slot0.intervalX = slot0._txttemp.preferredWidth - 2 * slot0.oneCharacterWidth
+function var_0_0.initCharacterWidth(arg_5_0)
+	arg_5_0._txttemp.text = luaLang("lei_mi_te_bei_placeholder")
+	arg_5_0.oneCharacterWidth = arg_5_0._txttemp.preferredWidth
+	arg_5_0._txttemp.text = string.rep(luaLang("lei_mi_te_bei_placeholder"), 2)
+	arg_5_0.intervalX = arg_5_0._txttemp.preferredWidth - 2 * arg_5_0.oneCharacterWidth
 end
 
-function slot0._editableInitView(slot0)
-	slot0.defaultAnchorPos = Vector2(0, 0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0.defaultAnchorPos = Vector2(0, 0)
 
-	slot0:initCharacterWidth()
+	arg_6_0:initCharacterWidth()
 
-	slot0._goGuide = gohelper.findChild(slot0.viewGO, "guide_activitypuzzle")
+	arg_6_0._goGuide = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle")
 
-	gohelper.setActive(slot0._godragoptionitem, false)
-	gohelper.setActive(slot0._goadsorbrect, false)
+	gohelper.setActive(arg_6_0._godragoptionitem, false)
+	gohelper.setActive(arg_6_0._goadsorbrect, false)
 
-	slot0.goAdsorbSuccess = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_adsorbrect/success")
-	slot0.goAdsorbFail = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_adsorbrect/fail")
+	arg_6_0.goAdsorbSuccess = gohelper.findChild(arg_6_0.viewGO, "#simage_bg/#go_adsorbrect/success")
+	arg_6_0.goAdsorbFail = gohelper.findChild(arg_6_0.viewGO, "#simage_bg/#go_adsorbrect/fail")
 
-	slot0:resetAdsorbEffect()
+	arg_6_0:resetAdsorbEffect()
 
-	slot0.goGuideAnimationContainer = gohelper.findChild(slot0.viewGO, "guide_activitypuzzle/guide1")
-	slot0.goGuideAnimator = slot0.goGuideAnimationContainer:GetComponent(typeof(UnityEngine.Animator))
-	slot0.goAnswerRect = gohelper.findChild(slot0.viewGO, "guide_activitypuzzle/guide1/kuang1")
-	slot0.goOptionRect = gohelper.findChild(slot0.viewGO, "guide_activitypuzzle/guide1/kuang2")
-	slot0.goFinger = gohelper.findChild(slot0.viewGO, "guide_activitypuzzle/guide1/shouzhi")
-	slot0.rectTransformAnswer = slot0.goAnswerRect.transform
-	slot0.rectTransformOption = slot0.goOptionRect.transform
-	slot0.rectTransformFinger = slot0.goFinger.transform
+	arg_6_0.goGuideAnimationContainer = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1")
+	arg_6_0.goGuideAnimator = arg_6_0.goGuideAnimationContainer:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0.goAnswerRect = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1/kuang1")
+	arg_6_0.goOptionRect = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1/kuang2")
+	arg_6_0.goFinger = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1/shouzhi")
+	arg_6_0.rectTransformAnswer = arg_6_0.goAnswerRect.transform
+	arg_6_0.rectTransformOption = arg_6_0.goOptionRect.transform
+	arg_6_0.rectTransformFinger = arg_6_0.goFinger.transform
 
-	slot0:initDragOptionItem()
-	slot0:initTextScrollViewScenePosRect()
-	gohelper.setActive(slot0._gofinish, false)
+	arg_6_0:initDragOptionItem()
+	arg_6_0:initTextScrollViewScenePosRect()
+	gohelper.setActive(arg_6_0._gofinish, false)
 
-	slot0.bgHalfWidth = recthelper.getWidth(slot0._simagebg.transform) / 2
-	slot0.bgHalfHeight = recthelper.getHeight(slot0._simagebg.transform) / 2
-	slot0.closeViewClick = gohelper.getClick(slot0._goclose)
+	arg_6_0.bgHalfWidth = recthelper.getWidth(arg_6_0._simagebg.transform) / 2
+	arg_6_0.bgHalfHeight = recthelper.getHeight(arg_6_0._simagebg.transform) / 2
+	arg_6_0.closeViewClick = gohelper.getClick(arg_6_0._goclose)
 
-	slot0.closeViewClick:AddClickListener(slot0.closeViewOnClick, slot0)
+	arg_6_0.closeViewClick:AddClickListener(arg_6_0.closeViewOnClick, arg_6_0)
 
-	slot0.optionItemList = {}
-	slot0.answerExistOptionItemDict = {}
-	slot0.needAnswerList = {}
-	slot0.answerMatched = false
+	arg_6_0.optionItemList = {}
+	arg_6_0.answerExistOptionItemDict = {}
+	arg_6_0.needAnswerList = {}
+	arg_6_0.answerMatched = false
 end
 
-function slot0.initDragOptionItem(slot0)
-	slot0.dragOptionItem = slot0:getUserDataTb_()
-	slot0.dragOptionItem.go = slot0._godragoptionitem
-	slot0.dragOptionItem.txtInfo = gohelper.findChildText(slot0.dragOptionItem.go, "info")
-	slot0.dragOptionItem.transform = slot0.dragOptionItem.go.transform
+function var_0_0.initDragOptionItem(arg_7_0)
+	arg_7_0.dragOptionItem = arg_7_0:getUserDataTb_()
+	arg_7_0.dragOptionItem.go = arg_7_0._godragoptionitem
+	arg_7_0.dragOptionItem.txtInfo = gohelper.findChildText(arg_7_0.dragOptionItem.go, "info")
+	arg_7_0.dragOptionItem.transform = arg_7_0.dragOptionItem.go.transform
 end
 
-function slot0.initTextScrollViewScenePosRect(slot0)
-	slot0.goScroll = gohelper.findChild(slot0.viewGO, "#simage_bg/Scroll View")
-	slot1 = slot0.goScroll.transform:GetWorldCorners()
-	slot0.textScrollScenePosRect = {
-		slot1[0],
-		slot1[1],
-		slot1[2],
-		slot1[3]
+function var_0_0.initTextScrollViewScenePosRect(arg_8_0)
+	arg_8_0.goScroll = gohelper.findChild(arg_8_0.viewGO, "#simage_bg/Scroll View")
+
+	local var_8_0 = arg_8_0.goScroll.transform:GetWorldCorners()
+	local var_8_1 = var_8_0[0]
+	local var_8_2 = var_8_0[1]
+	local var_8_3 = var_8_0[2]
+	local var_8_4 = var_8_0[3]
+
+	arg_8_0.textScrollScenePosRect = {
+		var_8_1,
+		var_8_2,
+		var_8_3,
+		var_8_4
 	}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.isFinish = slot0.viewParam.isFinish
-	slot0.elementCo = slot0.viewParam.elementCo
-	slot0.puzzleId = tonumber(slot0.elementCo.param)
-	slot0.puzzleConfig = lua_version_activity_puzzle_question.configDict[slot0.puzzleId]
-	slot0._txtgamename.text = slot0.puzzleConfig.tittle
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.isFinish = arg_10_0.viewParam.isFinish
+	arg_10_0.elementCo = arg_10_0.viewParam.elementCo
+	arg_10_0.puzzleId = tonumber(arg_10_0.elementCo.param)
+	arg_10_0.puzzleConfig = lua_version_activity_puzzle_question.configDict[arg_10_0.puzzleId]
+	arg_10_0._txtgamename.text = arg_10_0.puzzleConfig.tittle
 
-	if slot0.puzzleConfig == nil then
-		logError(string.format("not found puzzleId : %s, elementId : %s", slot0.puzzleId, slot0.elementCo.id))
-		slot0:closeThis()
+	if arg_10_0.puzzleConfig == nil then
+		logError(string.format("not found puzzleId : %s, elementId : %s", arg_10_0.puzzleId, arg_10_0.elementCo.id))
+		arg_10_0:closeThis()
 
 		return
 	end
 
-	slot0.options, slot0.maxAnswerLenList = slot0:buildOptions(slot0.puzzleConfig.answer)
-	slot0.halfAnsWerHeight = recthelper.getHeight(slot0._goadsorbrect.transform) * 0.5
+	arg_10_0.options, arg_10_0.maxAnswerLenList = arg_10_0:buildOptions(arg_10_0.puzzleConfig.answer)
+	arg_10_0.halfAnsWerHeight = recthelper.getHeight(arg_10_0._goadsorbrect.transform) * 0.5
 
-	if slot0.isFinish then
-		slot0:refreshFinishStatus()
+	if arg_10_0.isFinish then
+		arg_10_0:refreshFinishStatus()
 	else
-		slot0:refreshNormalStatus()
+		arg_10_0:refreshNormalStatus()
 	end
 end
 
-function slot0.refreshFinishStatus(slot0)
-	if slot0._gofinish:GetComponent(typeof(UnityEngine.Animator)) then
-		slot1.enabled = false
+function var_0_0.refreshFinishStatus(arg_11_0)
+	local var_11_0 = arg_11_0._gofinish:GetComponent(typeof(UnityEngine.Animator))
+
+	if var_11_0 then
+		var_11_0.enabled = false
 	end
 
-	gohelper.setActive(slot0._gofinish, true)
+	gohelper.setActive(arg_11_0._gofinish, true)
 
-	slot0.showText = slot0:buildFinishText(slot0.puzzleConfig.text)
+	arg_11_0.showText = arg_11_0:buildFinishText(arg_11_0.puzzleConfig.text)
 
-	slot0:onTextInfoChange()
-	slot0:refreshOptions()
+	arg_11_0:onTextInfoChange()
+	arg_11_0:refreshOptions()
 end
 
-function slot0.refreshNormalStatus(slot0)
-	slot0.showText = slot0:buildText(slot0.puzzleConfig.text)
+function var_0_0.refreshNormalStatus(arg_12_0)
+	arg_12_0.showText = arg_12_0:buildText(arg_12_0.puzzleConfig.text)
 
-	slot0:onTextInfoChange()
-	slot0:refreshOptions()
-	gohelper.setActive(slot0._goGuide, false)
+	arg_12_0:onTextInfoChange()
+	arg_12_0:refreshOptions()
 
-	if PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.LeiMiTeBeiEnteredPuzzleViewKey), 0) == 0 then
-		UIBlockMgr.instance:startBlock(slot0.viewName .. "PlayGuideAnimation")
-		TaskDispatcher.runDelay(slot0.showGuide, slot0, 0.7)
+	local var_12_0 = PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.LeiMiTeBeiEnteredPuzzleViewKey), 0) == 0
+
+	gohelper.setActive(arg_12_0._goGuide, false)
+
+	if var_12_0 then
+		UIBlockMgr.instance:startBlock(arg_12_0.viewName .. "PlayGuideAnimation")
+		TaskDispatcher.runDelay(arg_12_0.showGuide, arg_12_0, 0.7)
 	end
 end
 
-function slot0.showGuide(slot0)
-	UIBlockMgr.instance:endBlock(slot0.viewName .. "PlayGuideAnimation")
-	gohelper.setActive(slot0._goGuide, true)
+function var_0_0.showGuide(arg_13_0)
+	UIBlockMgr.instance:endBlock(arg_13_0.viewName .. "PlayGuideAnimation")
+	gohelper.setActive(arg_13_0._goGuide, true)
 	PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.LeiMiTeBeiEnteredPuzzleViewKey), 1)
 
-	slot0.guideBlock = gohelper.findChild(slot0.viewGO, "guide_activitypuzzle/guide_block")
-	slot0.guideClick = gohelper.getClick(slot0.guideBlock)
+	arg_13_0.guideBlock = gohelper.findChild(arg_13_0.viewGO, "guide_activitypuzzle/guide_block")
+	arg_13_0.guideClick = gohelper.getClick(arg_13_0.guideBlock)
 
-	slot0.guideClick:AddClickListener(slot0.onClickGuideGo, slot0)
+	arg_13_0.guideClick:AddClickListener(arg_13_0.onClickGuideGo, arg_13_0)
 
-	slot0.guideAnswerAnchor = slot0:getFirstAnswerAnchorPos()
+	arg_13_0.guideAnswerAnchor = arg_13_0:getFirstAnswerAnchorPos()
 
-	recthelper.setWidth(slot0.rectTransformAnswer, slot0:getAnswerWidth(1))
-	recthelper.setAnchor(slot0.rectTransformAnswer, slot0.guideAnswerAnchor.x, slot0.guideAnswerAnchor.y)
+	recthelper.setWidth(arg_13_0.rectTransformAnswer, arg_13_0:getAnswerWidth(1))
+	recthelper.setAnchor(arg_13_0.rectTransformAnswer, arg_13_0.guideAnswerAnchor.x, arg_13_0.guideAnswerAnchor.y)
 
-	slot0.optionAnchor = recthelper.screenPosToAnchorPos(slot0.optionItemList[slot0.firstAnswerIndex]:getScreenPos(), slot0.rectTransformOption.parent)
+	local var_13_0 = arg_13_0.optionItemList[arg_13_0.firstAnswerIndex]:getScreenPos()
 
-	recthelper.setAnchor(slot0.rectTransformOption, slot0.optionAnchor.x, slot0.optionAnchor.y)
-	slot0.goGuideAnimator:Play(UIAnimationName.Open, 0, 0)
-	TaskDispatcher.runDelay(slot0.playGuideAnimation, slot0, 1)
+	arg_13_0.optionAnchor = recthelper.screenPosToAnchorPos(var_13_0, arg_13_0.rectTransformOption.parent)
+
+	recthelper.setAnchor(arg_13_0.rectTransformOption, arg_13_0.optionAnchor.x, arg_13_0.optionAnchor.y)
+	arg_13_0.goGuideAnimator:Play(UIAnimationName.Open, 0, 0)
+	TaskDispatcher.runDelay(arg_13_0.playGuideAnimation, arg_13_0, 1)
 end
 
-function slot0.playGuideAnimation(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.playGuideAnimation(arg_14_0)
+	if arg_14_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_14_0.tweenId)
 	end
 
-	recthelper.setAnchor(slot0.rectTransformFinger, slot0.optionAnchor.x + uv0.FingerOptionOffsetX, slot0.optionAnchor.y + uv0.FingerOptionOffsetY)
+	recthelper.setAnchor(arg_14_0.rectTransformFinger, arg_14_0.optionAnchor.x + var_0_0.FingerOptionOffsetX, arg_14_0.optionAnchor.y + var_0_0.FingerOptionOffsetY)
 
-	slot0.tweenId = ZProj.TweenHelper.DOAnchorPos(slot0.rectTransformFinger, slot0.guideAnswerAnchor.x + uv0.FingerAnswerOffsetX, slot0.guideAnswerAnchor.y + uv0.FingerAnswerOffsetY, 1.667, slot0.playGuideAnimation, slot0)
+	arg_14_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_14_0.rectTransformFinger, arg_14_0.guideAnswerAnchor.x + var_0_0.FingerAnswerOffsetX, arg_14_0.guideAnswerAnchor.y + var_0_0.FingerAnswerOffsetY, 1.667, arg_14_0.playGuideAnimation, arg_14_0)
 
-	slot0.goGuideAnimator:Play(UIAnimationName.Loop, 0, 0)
+	arg_14_0.goGuideAnimator:Play(UIAnimationName.Loop, 0, 0)
 end
 
-function slot0.stopGuideAnimation(slot0)
-	TaskDispatcher.cancelTask(slot0.playGuideAnimation, slot0)
+function var_0_0.stopGuideAnimation(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.playGuideAnimation, arg_15_0)
 
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+	if arg_15_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_15_0.tweenId)
 	end
 
-	slot0.goGuideAnimator.enabled = false
+	arg_15_0.goGuideAnimator.enabled = false
 end
 
-function slot0.onTextInfoChange(slot0)
-	slot0._txtinfo.text = slot0.showText
+function var_0_0.onTextInfoChange(arg_16_0)
+	arg_16_0._txtinfo.text = arg_16_0.showText
 end
 
-function slot0.buildOptions(slot0, slot1)
-	slot3 = nil
-	slot4 = {}
-	slot5 = {}
-	slot9 = "|"
+function var_0_0.buildOptions(arg_17_0, arg_17_1)
+	arg_17_1 = string.trim(arg_17_1)
 
-	for slot9, slot10 in ipairs(string.split(string.trim(slot1), slot9)) do
-		slot2 = Mathf.Max(0, GameUtil.utf8len(string.split(slot10, "#")[2]))
+	local var_17_0 = 0
+	local var_17_1
+	local var_17_2 = {}
+	local var_17_3 = {}
 
-		if slot9 % 4 == 0 then
-			if slot2 % 2 ~= 0 then
-				slot2 = slot2 + 1
+	for iter_17_0, iter_17_1 in ipairs(string.split(arg_17_1, "|")) do
+		local var_17_4 = string.split(iter_17_1, "#")[2]
+
+		var_17_0 = Mathf.Max(var_17_0, GameUtil.utf8len(var_17_4))
+
+		if iter_17_0 % 4 == 0 then
+			if var_17_0 % 2 ~= 0 then
+				var_17_0 = var_17_0 + 1
 			end
 
-			table.insert(slot5, slot2 + 1)
+			var_17_0 = var_17_0 + 1
 
-			slot2 = 0
+			table.insert(var_17_3, var_17_0)
+
+			var_17_0 = 0
 		end
 
-		table.insert(slot4, slot3)
+		table.insert(var_17_2, var_17_4)
 	end
 
-	return slot4, slot5
+	return var_17_2, var_17_3
 end
 
-function slot0.buildText(slot0, slot1)
-	slot0.placeholderDict = {}
+function var_0_0.buildText(arg_18_0, arg_18_1)
+	arg_18_0.placeholderDict = {}
 
-	for slot6 in string.gmatch(slot1, "{(%d+)}") do
-		slot7 = tonumber(slot6)
+	local var_18_0 = 0
 
-		table.insert(slot0.needAnswerList, slot7)
-		slot0:buildPlaceholder(slot7, 0 + 1)
+	for iter_18_0 in string.gmatch(arg_18_1, "{(%d+)}") do
+		local var_18_1 = tonumber(iter_18_0)
 
-		slot1 = string.gsub(slot1, "{(%d+)}", slot0:addUnderlineTag(string.format("<link=%s>%s</link>", "%1", slot0.placeholderDict[slot7])), 1)
+		table.insert(arg_18_0.needAnswerList, var_18_1)
+
+		var_18_0 = var_18_0 + 1
+
+		arg_18_0:buildPlaceholder(var_18_1, var_18_0)
+
+		arg_18_1 = string.gsub(arg_18_1, "{(%d+)}", arg_18_0:addUnderlineTag(string.format("<link=%s>%s</link>", "%1", arg_18_0.placeholderDict[var_18_1])), 1)
 	end
 
-	slot0.firstAnswerIndex = slot0.needAnswerList[1]
+	arg_18_0.firstAnswerIndex = arg_18_0.needAnswerList[1]
 
-	return slot1
+	return arg_18_1
 end
 
-function slot0.buildFinishText(slot0, slot1)
-	for slot5 in string.gmatch(slot1, "{(%d+)}") do
-		slot1 = string.gsub(slot1, "{(%d+)}", slot0:addUnderlineTag(string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, slot0.options[tonumber(slot5)])), 1)
+function var_0_0.buildFinishText(arg_19_0, arg_19_1)
+	for iter_19_0 in string.gmatch(arg_19_1, "{(%d+)}") do
+		iter_19_0 = tonumber(iter_19_0)
+		arg_19_1 = string.gsub(arg_19_1, "{(%d+)}", arg_19_0:addUnderlineTag(string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, arg_19_0.options[iter_19_0])), 1)
 	end
 
-	return slot1
+	return arg_19_1
 end
 
-function slot0.addUnderlineTag(slot0, slot1)
-	return string.format("<u>%s</u>", slot1)
+function var_0_0.addUnderlineTag(arg_20_0, arg_20_1)
+	return string.format("<u>%s</u>", arg_20_1)
 end
 
-function slot0.buildPlaceholder(slot0, slot1, slot2)
-	if slot0.placeholderDict[slot1] then
+function var_0_0.buildPlaceholder(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_0.placeholderDict[arg_21_1] then
 		return
 	end
 
-	slot5 = string.rep(luaLang("lei_mi_te_bei_placeholder"), math.floor((slot0.maxAnswerLenList[slot2] - 1) / 2))
-	slot0.placeholderDict[slot1] = slot5 .. string.format("<sprite name=\"num%s\">", slot2) .. slot5
+	local var_21_0 = arg_21_0.maxAnswerLenList[arg_21_2]
+	local var_21_1 = math.floor((var_21_0 - 1) / 2)
+	local var_21_2 = string.rep(luaLang("lei_mi_te_bei_placeholder"), var_21_1)
+	local var_21_3 = var_21_2
+
+	arg_21_0.placeholderDict[arg_21_1] = var_21_2 .. string.format("<sprite name=\"num%s\">", arg_21_2) .. var_21_3
 end
 
-function slot0.refreshOptions(slot0)
-	slot1 = nil
+function var_0_0.refreshOptions(arg_22_0)
+	local var_22_0
 
-	for slot5, slot6 in ipairs(slot0.options) do
-		if not slot0.optionItemList[slot5] then
-			table.insert(slot0.optionItemList, slot0:createOptionItem())
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.options) do
+		local var_22_1 = arg_22_0.optionItemList[iter_22_0]
+
+		if not var_22_1 then
+			var_22_1 = arg_22_0:createOptionItem()
+
+			table.insert(arg_22_0.optionItemList, var_22_1)
 		end
 
-		slot1:updateInfo(slot6, slot5)
+		var_22_1:updateInfo(iter_22_1, iter_22_0)
 	end
 
-	for slot5 = #slot0.options + 1, #slot0.optionItemList do
-		slot0.optionItemList[slot5]:hide()
+	for iter_22_2 = #arg_22_0.options + 1, #arg_22_0.optionItemList do
+		arg_22_0.optionItemList[iter_22_2]:hide()
 	end
 
-	slot0:refreshEmptyOptionItem()
+	arg_22_0:refreshEmptyOptionItem()
 end
 
-function slot0.createOptionItem(slot0)
-	slot1 = VersionActivityPuzzleOptionItem.New()
+function var_0_0.createOptionItem(arg_23_0)
+	local var_23_0 = VersionActivityPuzzleOptionItem.New()
 
-	slot1:onInitView(gohelper.cloneInPlace(slot0._gooptionitem), slot0)
+	var_23_0:onInitView(gohelper.cloneInPlace(arg_23_0._gooptionitem), arg_23_0)
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.refreshEmptyOptionItem(slot0)
-	if not slot0._emptyOption then
-		slot0._emptyOption = slot0:getUserDataTb_()
+function var_0_0.refreshEmptyOptionItem(arg_24_0)
+	if not arg_24_0._emptyOption then
+		arg_24_0._emptyOption = arg_24_0:getUserDataTb_()
 	end
 
-	slot2 = {
+	local var_24_0 = #arg_24_0._emptyOption
+	local var_24_1 = {
 		6,
 		7,
 		12,
@@ -309,175 +346,209 @@ function slot0.refreshEmptyOptionItem(slot0)
 		19
 	}
 
-	for slot6 = 1, 6 do
-		if #slot0._emptyOption < slot6 then
-			table.insert(slot0._emptyOption, gohelper.cloneInPlace(slot0._goemptyoptionitem))
+	for iter_24_0 = 1, 6 do
+		if var_24_0 < iter_24_0 then
+			local var_24_2 = gohelper.cloneInPlace(arg_24_0._goemptyoptionitem)
+
+			table.insert(arg_24_0._emptyOption, var_24_2)
 		end
 
-		gohelper.setActive(slot0._emptyOption[slot6], true)
+		gohelper.setActive(arg_24_0._emptyOption[iter_24_0], true)
 
-		slot0._emptyOption[slot6].name = "emptyitem_" .. slot6 .. "  " .. slot2[slot6]
+		arg_24_0._emptyOption[iter_24_0].name = "emptyitem_" .. iter_24_0 .. "  " .. var_24_1[iter_24_0]
 
-		gohelper.setSibling(slot0._emptyOption[slot6], slot2[slot6])
+		gohelper.setSibling(arg_24_0._emptyOption[iter_24_0], var_24_1[iter_24_0])
 	end
 end
 
-function slot0.onDragItemDragBegin(slot0, slot1, slot2, slot3)
-	if slot0.complete or slot0.isFinish then
+function var_0_0.onDragItemDragBegin(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	if arg_25_0.complete or arg_25_0.isFinish then
 		return
 	end
 
-	gohelper.setActive(slot0.dragOptionItem.go, true)
+	gohelper.setActive(arg_25_0.dragOptionItem.go, true)
 
-	slot0.dragOptionItem.txtInfo.text = slot2
-	slot0.draggingAnswerIndex = slot3
+	arg_25_0.dragOptionItem.txtInfo.text = arg_25_2
+	arg_25_0.draggingAnswerIndex = arg_25_3
 
-	slot0:changeDragItemAnchor(slot1)
-	slot0:calculateLinksRectAnchor()
-	slot0:resetAdsorbEffect()
+	arg_25_0:changeDragItemAnchor(arg_25_1)
+	arg_25_0:calculateLinksRectAnchor()
+	arg_25_0:resetAdsorbEffect()
 end
 
-function slot0.onDragItemDragging(slot0, slot1)
-	if slot0.complete or slot0.isFinish then
+function var_0_0.onDragItemDragging(arg_26_0, arg_26_1)
+	if arg_26_0.complete or arg_26_0.isFinish then
 		return
 	end
 
-	slot0:changeDragItemAnchor(slot1)
+	arg_26_0:changeDragItemAnchor(arg_26_1)
 end
 
-function slot0.onDragItemDragEnd(slot0, slot1)
-	if slot0.complete or slot0.isFinish then
+function var_0_0.onDragItemDragEnd(arg_27_0, arg_27_1)
+	if arg_27_0.complete or arg_27_0.isFinish then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0.showEndEffect, slot0)
-	slot0:changeDragItemAnchor(slot1)
+	TaskDispatcher.cancelTask(arg_27_0.showEndEffect, arg_27_0)
+	arg_27_0:changeDragItemAnchor(arg_27_1)
 
-	if slot0:getShowAdsorbRectAnswerIndex() > 0 then
-		slot0.hoverAnswerIndex = slot2
+	local var_27_0 = arg_27_0:getShowAdsorbRectAnswerIndex()
 
-		if not slot0.answerExistOptionItemDict[slot2] or slot3.answerIndex ~= slot0.draggingAnswerIndex then
-			if slot3 then
-				slot3:unUse()
+	if var_27_0 > 0 then
+		local var_27_1 = arg_27_0.answerExistOptionItemDict[var_27_0]
+
+		arg_27_0.hoverAnswerIndex = var_27_0
+
+		if not var_27_1 or var_27_1.answerIndex ~= arg_27_0.draggingAnswerIndex then
+			if var_27_1 then
+				var_27_1:unUse()
 			end
 
-			slot0:resetGroupAnswerOption(slot0:getAnswerGroupIndex(slot0.draggingAnswerIndex))
+			arg_27_0:resetGroupAnswerOption(arg_27_0:getAnswerGroupIndex(arg_27_0.draggingAnswerIndex))
 
-			slot0.answerExistOptionItemDict[slot2] = slot0.optionItemList[slot0.draggingAnswerIndex]
-			slot5 = slot0.options[slot0.draggingAnswerIndex]
-			slot6 = nil
+			local var_27_2 = arg_27_0.optionItemList[arg_27_0.draggingAnswerIndex]
 
-			if slot2 == slot0.draggingAnswerIndex then
-				slot4:matchCorrect()
+			arg_27_0.answerExistOptionItemDict[var_27_0] = var_27_2
 
-				slot6 = VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor
+			local var_27_3 = arg_27_0.options[arg_27_0.draggingAnswerIndex]
+			local var_27_4
+
+			if var_27_0 == arg_27_0.draggingAnswerIndex then
+				var_27_2:matchCorrect()
+
+				var_27_4 = VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor
 			else
-				slot4:matchError()
+				var_27_2:matchError()
 
-				slot6 = VersionActivityEnum.PuzzleColorEnum.MatchErrorColor
+				var_27_4 = VersionActivityEnum.PuzzleColorEnum.MatchErrorColor
 			end
 
-			slot0.showText = string.gsub(slot0.showText, string.format("<link=%s>.-</link>", slot2), string.format("<link=%s>%s</link>", slot2, string.format("<color=%s>%s</color>", slot6, slot0:getAnswerText(slot5, slot2))))
+			local var_27_5 = string.format("<color=%s>%s</color>", var_27_4, arg_27_0:getAnswerText(var_27_3, var_27_0))
 
-			slot0:onTextInfoChange()
-			slot0:checkComplete()
-			TaskDispatcher.runDelay(slot0.showEndEffect, slot0, 0.1)
+			arg_27_0.showText = string.gsub(arg_27_0.showText, string.format("<link=%s>.-</link>", var_27_0), string.format("<link=%s>%s</link>", var_27_0, var_27_5))
+
+			arg_27_0:onTextInfoChange()
+			arg_27_0:checkComplete()
+			TaskDispatcher.runDelay(arg_27_0.showEndEffect, arg_27_0, 0.1)
 		end
 	end
 
-	gohelper.setActive(slot0.dragOptionItem.go, false)
+	gohelper.setActive(arg_27_0.dragOptionItem.go, false)
 end
 
-function slot0.showEndEffect(slot0)
-	if not slot0.hoverAnswerIndex or slot0.hoverAnswerIndex <= 0 then
+function var_0_0.showEndEffect(arg_28_0)
+	if not arg_28_0.hoverAnswerIndex or arg_28_0.hoverAnswerIndex <= 0 then
 		return
 	end
 
-	if slot0.hoverAnswerIndex == slot0.draggingAnswerIndex then
+	local var_28_0 = arg_28_0.hoverAnswerIndex == arg_28_0.draggingAnswerIndex
+
+	if var_28_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_decrypt_correct)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_decrypt_incorrect)
 	end
 
-	slot0:calculateLinksRectAnchor()
+	arg_28_0:calculateLinksRectAnchor()
 
-	slot2 = slot0.answerToAnchorPosDict[slot0.hoverAnswerIndex][1]
+	local var_28_1 = arg_28_0.answerToAnchorPosDict[arg_28_0.hoverAnswerIndex][1]
 
-	recthelper.setAnchor(slot0._goadsorbrect.transform, slot2.x, slot2.y)
-	gohelper.setActive(slot0._goadsorbrect, true)
-	gohelper.setActive(slot0.goAdsorbSuccess, slot1)
-	gohelper.setActive(slot0.goAdsorbFail, not slot1)
-	TaskDispatcher.runDelay(slot0.hideAdsorb, slot0, 1)
+	recthelper.setAnchor(arg_28_0._goadsorbrect.transform, var_28_1.x, var_28_1.y)
+	gohelper.setActive(arg_28_0._goadsorbrect, true)
+	gohelper.setActive(arg_28_0.goAdsorbSuccess, var_28_0)
+	gohelper.setActive(arg_28_0.goAdsorbFail, not var_28_0)
+	TaskDispatcher.runDelay(arg_28_0.hideAdsorb, arg_28_0, 1)
 end
 
-function slot0.hideAdsorb(slot0)
-	gohelper.setActive(slot0._goadsorbrect, false)
-	slot0:resetAdsorbEffect()
+function var_0_0.hideAdsorb(arg_29_0)
+	gohelper.setActive(arg_29_0._goadsorbrect, false)
+	arg_29_0:resetAdsorbEffect()
 end
 
-function slot0.resetGroupAnswerOption(slot0, slot1)
-	slot2 = (slot1 - 1) * 4 + 1
-	slot3, slot4 = nil
+function var_0_0.resetGroupAnswerOption(arg_30_0, arg_30_1)
+	local var_30_0 = (arg_30_1 - 1) * 4 + 1
+	local var_30_1
+	local var_30_2
 
-	for slot8 = slot2, slot2 + 3 do
-		if slot0:getBeUsedAnswerByOptionItem(slot0.optionItemList[slot8]) > 0 then
-			slot3:unUse()
+	for iter_30_0 = var_30_0, var_30_0 + 3 do
+		local var_30_3 = arg_30_0.optionItemList[iter_30_0]
+		local var_30_4 = arg_30_0:getBeUsedAnswerByOptionItem(var_30_3)
 
-			slot0.showText = string.gsub(slot0.showText, string.format("<link=%s>.-</link>", slot4), string.format("<link=%s>%s</link>", slot4, slot0.placeholderDict[slot4]))
-			slot0.answerExistOptionItemDict[slot4] = nil
+		if var_30_4 > 0 then
+			var_30_3:unUse()
+
+			arg_30_0.showText = string.gsub(arg_30_0.showText, string.format("<link=%s>.-</link>", var_30_4), string.format("<link=%s>%s</link>", var_30_4, arg_30_0.placeholderDict[var_30_4]))
+			arg_30_0.answerExistOptionItemDict[var_30_4] = nil
 		end
 	end
 end
 
-function slot0.getBeUsedAnswerByOptionItem(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.answerExistOptionItemDict) do
-		if slot6.answerIndex == slot1.answerIndex then
-			return slot5
-		end
-	end
-
-	return -1
-end
-
-function slot0.getAnswerText(slot0, slot1, slot2)
-	if slot0.maxAnswerLenList[slot0:getAnswerGroupIndex(slot2)] - GameUtil.utf8len(slot1) <= 0 then
-		return slot1
-	end
-
-	return string.format("%s%s%s", string.rep("<nbsp>", slot5), slot1, string.rep("<nbsp>", slot5))
-end
-
-function slot0.changeDragItemAnchor(slot0, slot1)
-	slot2 = recthelper.screenPosToAnchorPos(slot1.position, slot0._simagebg.transform)
-	slot4 = slot2.y
-	slot3 = (slot2.x <= 0 or Mathf.Min(slot0.bgHalfWidth + 800, slot3)) and Mathf.Max(-slot0.bgHalfWidth, slot3)
-	slot4 = (slot4 <= 0 or Mathf.Min(slot0.bgHalfHeight, slot4)) and Mathf.Max(-slot0.bgHalfHeight, slot4)
-	slot0.dragOptionAnchor = Vector2.New(slot3, slot4)
-
-	recthelper.setAnchor(slot0.dragOptionItem.transform, slot3, slot4)
-end
-
-function slot0.getDraggingOptionItemBeUsedAnswer(slot0)
-	for slot4, slot5 in pairs(slot0.answerExistOptionItemDict) do
-		if slot0.draggingAnswerIndex == slot5.answerIndex then
-			return slot4
+function var_0_0.getBeUsedAnswerByOptionItem(arg_31_0, arg_31_1)
+	for iter_31_0, iter_31_1 in pairs(arg_31_0.answerExistOptionItemDict) do
+		if iter_31_1.answerIndex == arg_31_1.answerIndex then
+			return iter_31_0
 		end
 	end
 
 	return -1
 end
 
-function slot0.checkComplete(slot0)
-	if slot0:isComplete() then
-		slot0:onComplete()
+function var_0_0.getAnswerText(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = GameUtil.utf8len(arg_32_1)
+	local var_32_1 = arg_32_0.maxAnswerLenList[arg_32_0:getAnswerGroupIndex(arg_32_2)] - var_32_0
+
+	if var_32_1 <= 0 then
+		return arg_32_1
+	end
+
+	return string.format("%s%s%s", string.rep("<nbsp>", var_32_1), arg_32_1, string.rep("<nbsp>", var_32_1))
+end
+
+function var_0_0.changeDragItemAnchor(arg_33_0, arg_33_1)
+	local var_33_0 = recthelper.screenPosToAnchorPos(arg_33_1.position, arg_33_0._simagebg.transform)
+	local var_33_1 = var_33_0.x
+	local var_33_2 = var_33_0.y
+
+	if var_33_1 > 0 then
+		var_33_1 = Mathf.Min(arg_33_0.bgHalfWidth + 800, var_33_1)
+	else
+		var_33_1 = Mathf.Max(-arg_33_0.bgHalfWidth, var_33_1)
+	end
+
+	if var_33_2 > 0 then
+		var_33_2 = Mathf.Min(arg_33_0.bgHalfHeight, var_33_2)
+	else
+		var_33_2 = Mathf.Max(-arg_33_0.bgHalfHeight, var_33_2)
+	end
+
+	arg_33_0.dragOptionAnchor = Vector2.New(var_33_1, var_33_2)
+
+	recthelper.setAnchor(arg_33_0.dragOptionItem.transform, var_33_1, var_33_2)
+end
+
+function var_0_0.getDraggingOptionItemBeUsedAnswer(arg_34_0)
+	for iter_34_0, iter_34_1 in pairs(arg_34_0.answerExistOptionItemDict) do
+		if arg_34_0.draggingAnswerIndex == iter_34_1.answerIndex then
+			return iter_34_0
+		end
+	end
+
+	return -1
+end
+
+function var_0_0.checkComplete(arg_35_0)
+	if arg_35_0:isComplete() then
+		arg_35_0:onComplete()
 	end
 end
 
-function slot0.isComplete(slot0)
-	slot1 = nil
+function var_0_0.isComplete(arg_36_0)
+	local var_36_0
 
-	for slot5, slot6 in pairs(slot0.needAnswerList) do
-		if not slot0.answerExistOptionItemDict[slot6] or slot6 ~= slot1.answerIndex then
+	for iter_36_0, iter_36_1 in pairs(arg_36_0.needAnswerList) do
+		local var_36_1 = arg_36_0.answerExistOptionItemDict[iter_36_1]
+
+		if not var_36_1 or iter_36_1 ~= var_36_1.answerIndex then
 			return false
 		end
 	end
@@ -485,175 +556,212 @@ function slot0.isComplete(slot0)
 	return true
 end
 
-function slot0.onComplete(slot0)
-	slot0.complete = true
+function var_0_0.onComplete(arg_37_0)
+	arg_37_0.complete = true
 
-	DungeonRpc.instance:sendPuzzleFinishRequest(slot0.elementCo.id)
+	DungeonRpc.instance:sendPuzzleFinishRequest(arg_37_0.elementCo.id)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_achievement)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_character)
-	gohelper.setActive(slot0._gofinish, true)
+	gohelper.setActive(arg_37_0._gofinish, true)
 	GameFacade.showToast(ToastEnum.DungeonPuzzle2)
 end
 
-function slot0.onClickGuideGo(slot0)
-	slot0:stopGuideAnimation()
-	gohelper.setActive(slot0._goGuide, false)
-	slot0.guideClick:RemoveClickListener()
+function var_0_0.onClickGuideGo(arg_38_0)
+	arg_38_0:stopGuideAnimation()
+	gohelper.setActive(arg_38_0._goGuide, false)
+	arg_38_0.guideClick:RemoveClickListener()
 
-	slot0.guideClick = nil
+	arg_38_0.guideClick = nil
 end
 
-function slot0.calculateLinksRectAnchor(slot0)
-	slot0.answerToAnchorPosDict = {}
-	slot1 = slot0._txtinfo.transform
-	slot2 = slot0._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
-	slot4 = slot2.textInfo.characterInfo
-	slot5, slot6 = nil
-	slot7 = slot2.textInfo.linkInfo:GetEnumerator()
+function var_0_0.calculateLinksRectAnchor(arg_39_0)
+	arg_39_0.answerToAnchorPosDict = {}
 
-	while slot7:MoveNext() do
-		slot8 = slot7.Current
-		slot10 = slot4[slot8.linkTextfirstCharacterIndex]
+	local var_39_0 = arg_39_0._txtinfo.transform
+	local var_39_1 = arg_39_0._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
+	local var_39_2 = var_39_1.textInfo.linkInfo
+	local var_39_3 = var_39_1.textInfo.characterInfo
+	local var_39_4
+	local var_39_5
+	local var_39_6 = var_39_2:GetEnumerator()
 
-		if slot8.linkTextLength == 1 then
-			slot0:addCenterPos(tonumber(slot8:GetLinkID()), slot1:TransformPoint(Vector3.New(slot10.bottomLeft.x, slot10.descender, 0)), slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot10.ascender, 0)))
-		elseif slot10.lineNumber == slot4[slot8.linkTextfirstCharacterIndex + slot8.linkTextLength - 1].lineNumber then
-			slot0:addCenterPos(slot9, slot5, slot1:TransformPoint(Vector3.New(slot11.topRight.x, slot11.ascender, 0)))
+	while var_39_6:MoveNext() do
+		local var_39_7 = var_39_6.Current
+		local var_39_8 = tonumber(var_39_7:GetLinkID())
+		local var_39_9 = var_39_3[var_39_7.linkTextfirstCharacterIndex]
+		local var_39_10 = var_39_0:TransformPoint(Vector3.New(var_39_9.bottomLeft.x, var_39_9.descender, 0))
+
+		if var_39_7.linkTextLength == 1 then
+			local var_39_11 = var_39_0:TransformPoint(Vector3.New(var_39_9.topRight.x, var_39_9.ascender, 0))
+
+			arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_11)
 		else
-			slot16 = slot10.ascender
-			slot6 = slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot16, 0))
+			local var_39_12 = var_39_3[var_39_7.linkTextfirstCharacterIndex + var_39_7.linkTextLength - 1]
 
-			for slot16 = 1, slot8.linkTextLength - 1 do
-				if slot4[slot8.linkTextfirstCharacterIndex + slot16].lineNumber == slot10.lineNumber then
-					slot6 = slot1:TransformPoint(Vector3.New(slot18.topRight.x, slot18.ascender, 0))
-				else
-					slot0:addCenterPos(slot9, slot5, slot6)
+			if var_39_9.lineNumber == var_39_12.lineNumber then
+				local var_39_13 = var_39_0:TransformPoint(Vector3.New(var_39_12.topRight.x, var_39_12.ascender, 0))
 
-					slot12 = slot19
-					slot5 = slot1:TransformPoint(Vector3.New(slot18.bottomLeft.x, slot18.descender, 0))
-					slot6 = slot1:TransformPoint(Vector3.New(slot18.topRight.x, slot18.ascender, 0))
+				arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_13)
+			else
+				local var_39_14 = var_39_0:TransformPoint(Vector3.New(var_39_9.topRight.x, var_39_9.ascender, 0))
+				local var_39_15 = var_39_9.lineNumber
+
+				for iter_39_0 = 1, var_39_7.linkTextLength - 1 do
+					local var_39_16 = var_39_3[var_39_7.linkTextfirstCharacterIndex + iter_39_0]
+					local var_39_17 = var_39_16.lineNumber
+
+					if var_39_17 == var_39_15 then
+						var_39_14 = var_39_0:TransformPoint(Vector3.New(var_39_16.topRight.x, var_39_16.ascender, 0))
+					else
+						arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_14)
+
+						var_39_15 = var_39_17
+						var_39_10 = var_39_0:TransformPoint(Vector3.New(var_39_16.bottomLeft.x, var_39_16.descender, 0))
+						var_39_14 = var_39_0:TransformPoint(Vector3.New(var_39_16.topRight.x, var_39_16.ascender, 0))
+					end
+				end
+
+				arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_14)
+			end
+		end
+	end
+end
+
+function var_0_0.addCenterPos(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	local var_40_0 = (arg_40_2 + arg_40_3) * 0.5
+
+	if arg_40_0:checkScenePosIsValid(var_40_0) then
+		if not arg_40_0.answerToAnchorPosDict[arg_40_1] then
+			arg_40_0.answerToAnchorPosDict[arg_40_1] = {}
+		end
+
+		table.insert(arg_40_0.answerToAnchorPosDict[arg_40_1], recthelper.worldPosToAnchorPos(var_40_0, arg_40_0._goadsorbrect.transform.parent, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera()))
+	end
+end
+
+function var_0_0.getFirstAnswerAnchorPos(arg_41_0)
+	local var_41_0 = arg_41_0._txtinfo.transform
+	local var_41_1 = arg_41_0._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
+	local var_41_2 = var_41_1.textInfo.linkInfo
+	local var_41_3 = var_41_1.textInfo.characterInfo
+	local var_41_4
+	local var_41_5
+	local var_41_6
+	local var_41_7 = var_41_2:GetEnumerator()
+
+	while var_41_7:MoveNext() do
+		local var_41_8 = var_41_7.Current
+		local var_41_9 = var_41_3[var_41_8.linkTextfirstCharacterIndex]
+		local var_41_10 = var_41_0:TransformPoint(Vector3.New(var_41_9.bottomLeft.x, var_41_9.descender, 0))
+
+		if var_41_8.linkTextLength == 1 then
+			local var_41_11 = var_41_0:TransformPoint(Vector3.New(var_41_9.topRight.x, var_41_9.ascender, 0))
+
+			var_41_6 = arg_41_0:getAnchorPos(var_41_10, var_41_11, arg_41_0.goGuideAnimationContainer.transform)
+		else
+			local var_41_12 = var_41_3[var_41_8.linkTextfirstCharacterIndex + var_41_8.linkTextLength - 1]
+
+			if var_41_9.lineNumber == var_41_12.lineNumber then
+				local var_41_13 = var_41_0:TransformPoint(Vector3.New(var_41_12.topRight.x, var_41_12.ascender, 0))
+
+				var_41_6 = arg_41_0:getAnchorPos(var_41_10, var_41_13, arg_41_0.goGuideAnimationContainer.transform)
+			else
+				local var_41_14 = var_41_0:TransformPoint(Vector3.New(var_41_9.topRight.x, var_41_9.ascender, 0))
+				local var_41_15 = var_41_9.lineNumber
+
+				for iter_41_0 = 1, var_41_8.linkTextLength - 1 do
+					local var_41_16 = var_41_3[var_41_8.linkTextfirstCharacterIndex + iter_41_0]
+
+					if var_41_16.lineNumber == var_41_15 then
+						var_41_14 = var_41_0:TransformPoint(Vector3.New(var_41_16.topRight.x, var_41_16.ascender, 0))
+					else
+						var_41_6 = arg_41_0:getAnchorPos(var_41_10, var_41_14, arg_41_0.goGuideAnimationContainer.transform)
+
+						break
+					end
 				end
 			end
-
-			slot0:addCenterPos(slot9, slot5, slot6)
-		end
-	end
-end
-
-function slot0.addCenterPos(slot0, slot1, slot2, slot3)
-	if slot0:checkScenePosIsValid((slot2 + slot3) * 0.5) then
-		if not slot0.answerToAnchorPosDict[slot1] then
-			slot0.answerToAnchorPosDict[slot1] = {}
 		end
 
-		table.insert(slot0.answerToAnchorPosDict[slot1], recthelper.worldPosToAnchorPos(slot4, slot0._goadsorbrect.transform.parent, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera()))
+		return var_41_6
 	end
+
+	return arg_41_0.defaultAnchorPos
 end
 
-function slot0.getFirstAnswerAnchorPos(slot0)
-	slot1 = slot0._txtinfo.transform
-	slot2 = slot0._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
-	slot4 = slot2.textInfo.characterInfo
-	slot5, slot6, slot7 = nil
-	slot8 = slot2.textInfo.linkInfo:GetEnumerator()
+function var_0_0.getAnchorPos(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
+	local var_42_0 = (arg_42_1 + arg_42_2) * 0.5
 
-	while slot8:MoveNext() do
-		slot9 = slot8.Current
-		slot10 = slot4[slot9.linkTextfirstCharacterIndex]
+	if arg_42_0:checkScenePosIsValid(var_42_0) then
+		return recthelper.worldPosToAnchorPos(var_42_0, arg_42_3, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera())
+	end
 
-		if slot9.linkTextLength == 1 then
-			slot7 = slot0:getAnchorPos(slot1:TransformPoint(Vector3.New(slot10.bottomLeft.x, slot10.descender, 0)), slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot10.ascender, 0)), slot0.goGuideAnimationContainer.transform)
-		elseif slot10.lineNumber == slot4[slot9.linkTextfirstCharacterIndex + slot9.linkTextLength - 1].lineNumber then
-			slot7 = slot0:getAnchorPos(slot5, slot1:TransformPoint(Vector3.New(slot11.topRight.x, slot11.ascender, 0)), slot0.goGuideAnimationContainer.transform)
-		else
-			slot16 = slot10.ascender
-			slot6 = slot1:TransformPoint(Vector3.New(slot10.topRight.x, slot16, 0))
+	return arg_42_0.defaultAnchorPos
+end
 
-			for slot16 = 1, slot9.linkTextLength - 1 do
-				if slot4[slot9.linkTextfirstCharacterIndex + slot16].lineNumber == slot10.lineNumber then
-					slot6 = slot1:TransformPoint(Vector3.New(slot18.topRight.x, slot18.ascender, 0))
-				else
-					slot7 = slot0:getAnchorPos(slot5, slot6, slot0.goGuideAnimationContainer.transform)
+function var_0_0.getShowAdsorbRectAnswerIndex(arg_43_0)
+	local var_43_0 = 0
+	local var_43_1 = 99999
 
-					break
+	for iter_43_0, iter_43_1 in pairs(arg_43_0.answerToAnchorPosDict) do
+		local var_43_2 = arg_43_0:getAnswerWidth(arg_43_0:getAnswerGroupIndex(iter_43_0)) / 2
+
+		for iter_43_2, iter_43_3 in ipairs(iter_43_1) do
+			if arg_43_0.dragOptionAnchor.x >= iter_43_3.x - (var_43_2 + var_0_0.AbsorbOffsetX) and arg_43_0.dragOptionAnchor.x <= iter_43_3.x + (var_43_2 + var_0_0.AbsorbOffsetX) and arg_43_0.dragOptionAnchor.y >= iter_43_3.y - (arg_43_0.halfAnsWerHeight + var_0_0.AbsorbOffsetY) and arg_43_0.dragOptionAnchor.y <= iter_43_3.y + (arg_43_0.halfAnsWerHeight + var_0_0.AbsorbOffsetY) then
+				local var_43_3 = Vector2.Distance(iter_43_3, arg_43_0.dragOptionAnchor)
+
+				if var_43_3 < var_43_1 then
+					var_43_1 = var_43_3
+					var_43_0 = iter_43_0
 				end
 			end
 		end
-
-		return slot7
 	end
 
-	return slot0.defaultAnchorPos
+	return var_43_0
 end
 
-function slot0.getAnchorPos(slot0, slot1, slot2, slot3)
-	if slot0:checkScenePosIsValid((slot1 + slot2) * 0.5) then
-		return recthelper.worldPosToAnchorPos(slot4, slot3, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera())
-	end
-
-	return slot0.defaultAnchorPos
+function var_0_0.checkScenePosIsValid(arg_44_0, arg_44_1)
+	return GameUtil.checkPointInRectangle(arg_44_1, arg_44_0.textScrollScenePosRect[1], arg_44_0.textScrollScenePosRect[2], arg_44_0.textScrollScenePosRect[3], arg_44_0.textScrollScenePosRect[4])
 end
 
-function slot0.getShowAdsorbRectAnswerIndex(slot0)
-	slot1 = 0
-	slot2 = 99999
-
-	for slot6, slot7 in pairs(slot0.answerToAnchorPosDict) do
-		slot12 = slot6
-		slot8 = slot0:getAnswerWidth(slot0:getAnswerGroupIndex(slot12)) / 2
-
-		for slot12, slot13 in ipairs(slot7) do
-			if slot0.dragOptionAnchor.x >= slot13.x - (slot8 + uv0.AbsorbOffsetX) and slot0.dragOptionAnchor.x <= slot13.x + slot8 + uv0.AbsorbOffsetX and slot0.dragOptionAnchor.y >= slot13.y - (slot0.halfAnsWerHeight + uv0.AbsorbOffsetY) and slot0.dragOptionAnchor.y <= slot13.y + slot0.halfAnsWerHeight + uv0.AbsorbOffsetY and Vector2.Distance(slot13, slot0.dragOptionAnchor) < slot2 then
-				slot2 = slot14
-				slot1 = slot6
-			end
-		end
-	end
-
-	return slot1
+function var_0_0.getAnswerGroupIndex(arg_45_0, arg_45_1)
+	return math.ceil(arg_45_1 / 4)
 end
 
-function slot0.checkScenePosIsValid(slot0, slot1)
-	return GameUtil.checkPointInRectangle(slot1, slot0.textScrollScenePosRect[1], slot0.textScrollScenePosRect[2], slot0.textScrollScenePosRect[3], slot0.textScrollScenePosRect[4])
+function var_0_0.resetAdsorbEffect(arg_46_0)
+	gohelper.setActive(arg_46_0.goAdsorbSuccess, false)
+	gohelper.setActive(arg_46_0.goAdsorbFail, false)
 end
 
-function slot0.getAnswerGroupIndex(slot0, slot1)
-	return math.ceil(slot1 / 4)
+function var_0_0.getAnswerWidth(arg_47_0, arg_47_1)
+	local var_47_0 = arg_47_0.maxAnswerLenList[arg_47_1]
+
+	return var_47_0 * arg_47_0.oneCharacterWidth + arg_47_0.intervalX * (var_47_0 - 1) + var_0_0.GuideBorder * 2
 end
 
-function slot0.resetAdsorbEffect(slot0)
-	gohelper.setActive(slot0.goAdsorbSuccess, false)
-	gohelper.setActive(slot0.goAdsorbFail, false)
-end
-
-function slot0.getAnswerWidth(slot0, slot1)
-	slot2 = slot0.maxAnswerLenList[slot1]
-
-	return slot2 * slot0.oneCharacterWidth + slot0.intervalX * (slot2 - 1) + uv0.GuideBorder * 2
-end
-
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_48_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	TaskDispatcher.cancelTask(slot0.showGuide, slot0)
-	TaskDispatcher.cancelTask(slot0.hideAdsorb, slot0)
-	TaskDispatcher.cancelTask(slot0.showEndEffect, slot0)
-	slot0:stopGuideAnimation()
+	TaskDispatcher.cancelTask(arg_48_0.showGuide, arg_48_0)
+	TaskDispatcher.cancelTask(arg_48_0.hideAdsorb, arg_48_0)
+	TaskDispatcher.cancelTask(arg_48_0.showEndEffect, arg_48_0)
+	arg_48_0:stopGuideAnimation()
 
-	if DungeonMapModel.instance:hasMapPuzzleStatus(slot0.elementCo.id) then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, slot0.elementCo.id)
+	if DungeonMapModel.instance:hasMapPuzzleStatus(arg_48_0.elementCo.id) then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, arg_48_0.elementCo.id)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.closeViewClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_49_0)
+	arg_49_0.closeViewClick:RemoveClickListener()
 
-	if slot0.guideClick then
-		slot0.guideClick:RemoveClickListener()
+	if arg_49_0.guideClick then
+		arg_49_0.guideClick:RemoveClickListener()
 	end
 
-	for slot4, slot5 in ipairs(slot0.optionItemList) do
-		slot5:onDestroy()
+	for iter_49_0, iter_49_1 in ipairs(arg_49_0.optionItemList) do
+		iter_49_1:onDestroy()
 	end
 end
 
-return slot0
+return var_0_0

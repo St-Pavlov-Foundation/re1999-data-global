@@ -1,109 +1,109 @@
-module("modules.logic.gm.view.GMSubViewNewFightView", package.seeall)
+﻿module("modules.logic.gm.view.GMSubViewNewFightView", package.seeall)
 
-slot0 = class("GMSubViewNewFightView", GMSubViewBase)
+local var_0_0 = class("GMSubViewNewFightView", GMSubViewBase)
 
-function slot0.ctor(slot0)
-	slot0.tabName = "战斗·新"
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.tabName = "战斗·新"
 end
 
-function slot0.addLineIndex(slot0)
-	slot0.lineIndex = slot0.lineIndex + 1
+function var_0_0.addLineIndex(arg_2_0)
+	arg_2_0.lineIndex = arg_2_0.lineIndex + 1
 end
 
-function slot0.getLineGroup(slot0)
-	return "L" .. slot0.lineIndex
+function var_0_0.getLineGroup(arg_3_0)
+	return "L" .. arg_3_0.lineIndex
 end
 
-function slot0.initViewContent(slot0)
-	if slot0._inited then
+function var_0_0.initViewContent(arg_4_0)
+	if arg_4_0._inited then
 		return
 	end
 
-	GMSubViewBase.initViewContent(slot0)
+	GMSubViewBase.initViewContent(arg_4_0)
 
-	slot0.lineIndex = 0
+	arg_4_0.lineIndex = 0
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0.gmInput = slot0:addInputText(slot0:getLineGroup(), "", "GM 命令 ...", nil, , {
+	arg_4_0.gmInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "GM 命令 ...", nil, nil, {
 		w = 500
 	})
-	slot0.btnSend = slot0:addButton(slot0:getLineGroup(), "发送", slot0.onClickSendBtn, slot0)
+	arg_4_0.btnSend = arg_4_0:addButton(arg_4_0:getLineGroup(), "发送", arg_4_0.onClickSendBtn, arg_4_0)
 
-	slot0:addTitleSplitLine("战前GM")
-	slot0:addLineIndex()
+	arg_4_0:addTitleSplitLine("战前GM")
+	arg_4_0:addLineIndex()
 
-	slot0.battleInput = slot0:addInputText(slot0:getLineGroup(), "", "怪物组/战斗id")
-	slot0.btnEnterFightByMonsterGroupId = slot0:addButton(slot0:getLineGroup(), "进战斗怪物组", slot0.onClickBtnEnterFightByMonsterGroupId, slot0)
-	slot0.btnEnterFightByBattleId = slot0:addButton(slot0:getLineGroup(), "进战斗战斗ID", slot0.onClickBtnEnterFightByBattleId, slot0)
+	arg_4_0.battleInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "怪物组/战斗id")
+	arg_4_0.btnEnterFightByMonsterGroupId = arg_4_0:addButton(arg_4_0:getLineGroup(), "进战斗怪物组", arg_4_0.onClickBtnEnterFightByMonsterGroupId, arg_4_0)
+	arg_4_0.btnEnterFightByBattleId = arg_4_0:addButton(arg_4_0:getLineGroup(), "进战斗战斗ID", arg_4_0.onClickBtnEnterFightByBattleId, arg_4_0)
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0.btnSimulateBattle = slot0:addButton(slot0:getLineGroup(), "战场模拟", slot0.onClickSimulateBattle, slot0)
-	slot0.btnSkillEditor = slot0:addButton(slot0:getLineGroup(), "技能编辑器", slot0.onClickSkillEditor, slot0)
+	arg_4_0.btnSimulateBattle = arg_4_0:addButton(arg_4_0:getLineGroup(), "战场模拟", arg_4_0.onClickSimulateBattle, arg_4_0)
+	arg_4_0.btnSkillEditor = arg_4_0:addButton(arg_4_0:getLineGroup(), "技能编辑器", arg_4_0.onClickSkillEditor, arg_4_0)
 
-	slot0:addTitleSplitLine("战中GM")
-	slot0:addLineIndex()
-	slot0:addFightNumToggle()
-	slot0:addShowFightUIToggle()
+	arg_4_0:addTitleSplitLine("战中GM")
+	arg_4_0:addLineIndex()
+	arg_4_0:addFightNumToggle()
+	arg_4_0:addShowFightUIToggle()
 
-	slot0.btnLockLifeMySide = slot0:addButton(slot0:getLineGroup(), "我方锁血", slot0.onClickLockLifeMySide, slot0)
-	slot0.btnLockLifeEnemySide = slot0:addButton(slot0:getLineGroup(), "敌方锁血", slot0.onClickLockLifeEnemySide, slot0)
+	arg_4_0.btnLockLifeMySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "我方锁血", arg_4_0.onClickLockLifeMySide, arg_4_0)
+	arg_4_0.btnLockLifeEnemySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "敌方锁血", arg_4_0.onClickLockLifeEnemySide, arg_4_0)
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0.btnAddHurtMySide = slot0:addButton(slot0:getLineGroup(), "我方伤害*10", slot0.onClickAddHurtMySide, slot0)
-	slot0.btnAddHurtEnemySide = slot0:addButton(slot0:getLineGroup(), "敌方伤害*10", slot0.onClickAddHurtEnemySide, slot0)
-	slot0.btnReduceDamageMySide = slot0:addButton(slot0:getLineGroup(), "我方承伤/10", slot0.onClickReduceDamageMySide, slot0)
-	slot0.btnReduceDamageEnemySide = slot0:addButton(slot0:getLineGroup(), "敌方承伤/10", slot0.onClickReduceDamageEnemySide, slot0)
+	arg_4_0.btnAddHurtMySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "我方伤害*10", arg_4_0.onClickAddHurtMySide, arg_4_0)
+	arg_4_0.btnAddHurtEnemySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "敌方伤害*10", arg_4_0.onClickAddHurtEnemySide, arg_4_0)
+	arg_4_0.btnReduceDamageMySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "我方承伤/10", arg_4_0.onClickReduceDamageMySide, arg_4_0)
+	arg_4_0.btnReduceDamageEnemySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "敌方承伤/10", arg_4_0.onClickReduceDamageEnemySide, arg_4_0)
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0.costInput = slot0:addInputText(slot0:getLineGroup(), "", "增加cost...")
-	slot0.btnAddCost = slot0:addButton(slot0:getLineGroup(), "增加cost", slot0.onClickAddCost, slot0)
-	slot0.btnAddExPointMySide = slot0:addButton(slot0:getLineGroup(), "获取我方激情", slot0.onClickAddExPointMySide, slot0)
-	slot0.btnAddExPointEnemySide = slot0:addButton(slot0:getLineGroup(), "获取敌方激情", slot0.onClickAddExPointEnemySide, slot0)
+	arg_4_0.costInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "增加cost...")
+	arg_4_0.btnAddCost = arg_4_0:addButton(arg_4_0:getLineGroup(), "增加cost", arg_4_0.onClickAddCost, arg_4_0)
+	arg_4_0.btnAddExPointMySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "获取我方激情", arg_4_0.onClickAddExPointMySide, arg_4_0)
+	arg_4_0.btnAddExPointEnemySide = arg_4_0:addButton(arg_4_0:getLineGroup(), "获取敌方激情", arg_4_0.onClickAddExPointEnemySide, arg_4_0)
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0.btnChangeCard = slot0:addButton(slot0:getLineGroup(), "修改手牌", slot0.onClickChangeCard, slot0)
-	slot0.btnFightGm = slot0:addButton(slot0:getLineGroup(), "战中外挂", slot0.onClickFightGm, slot0)
+	arg_4_0.btnChangeCard = arg_4_0:addButton(arg_4_0:getLineGroup(), "修改手牌", arg_4_0.onClickChangeCard, arg_4_0)
+	arg_4_0.btnFightGm = arg_4_0:addButton(arg_4_0:getLineGroup(), "战中外挂", arg_4_0.onClickFightGm, arg_4_0)
 
-	slot0:addButton(slot0:getLineGroup(), "我方牌库", slot0.onClickMyCardDeck, slot0)
-	slot0:addButton(slot0:getLineGroup(), "敌方牌库", slot0.onClickEnemyCardDeck, slot0)
-	slot0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "我方牌库", arg_4_0.onClickMyCardDeck, arg_4_0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "敌方牌库", arg_4_0.onClickEnemyCardDeck, arg_4_0)
+	arg_4_0:addLineIndex()
 
-	slot0.countASFDInput = slot0:addInputText(slot0:getLineGroup(), "", "奥术飞弹数量...", nil, , {
+	arg_4_0.countASFDInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "奥术飞弹数量...", nil, nil, {
 		fsize = 30,
 		w = 200
 	})
-	slot0.optionStrList = {
+	arg_4_0.optionStrList = {
 		"我方",
 		"敌方"
 	}
-	slot0.optionValueList = {
+	arg_4_0.optionValueList = {
 		FightEnum.EntitySide.MySide,
 		FightEnum.EntitySide.EnemySide
 	}
-	slot0.sideASFDDrop = slot0:addDropDown(slot0:getLineGroup(), "奥术飞弹发射方:", slot0.optionStrList, nil, , {
+	arg_4_0.sideASFDDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "奥术飞弹发射方:", arg_4_0.optionStrList, nil, nil, {
 		fsize = 25,
 		label_w = 100,
 		total_w = 300,
 		drop_w = 200
 	})
-	slot0.toEntityASFDInput = slot0:addInputText(slot0:getLineGroup(), "", "奥术飞弹目标uid...")
-	slot0.btnSendASFD = slot0:addButton(slot0:getLineGroup(), "发射", slot0.onClickSendASFDBtn, slot0)
+	arg_4_0.toEntityASFDInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "奥术飞弹目标uid...")
+	arg_4_0.btnSendASFD = arg_4_0:addButton(arg_4_0:getLineGroup(), "发射", arg_4_0.onClickSendASFDBtn, arg_4_0)
 
-	slot0:getEntityNameList()
-	slot0:getMountList()
-	slot0:addLineIndex()
-	slot0:addLabel(slot0:getLineGroup(), "特效预览：", {
+	arg_4_0:getEntityNameList()
+	arg_4_0:getMountList()
+	arg_4_0:addLineIndex()
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "特效预览：", {
 		fsize = 30,
 		w = 100
 	})
 
-	slot0.effectPath = slot0:addInputText(slot0:getLineGroup(), "", "特效资源名...")
-	slot0.entityDrop = slot0:addDropDown(slot0:getLineGroup(), "挂载对象:", slot0.entityNameList, nil, , {
+	arg_4_0.effectPath = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "特效资源名...")
+	arg_4_0.entityDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "挂载对象:", arg_4_0.entityNameList, nil, nil, {
 		total_w = 400,
 		fsize = 25,
 		drop_w = 300,
@@ -113,7 +113,7 @@ function slot0.initViewContent(slot0)
 			0
 		}
 	})
-	slot0.mountDrop = slot0:addDropDown(slot0:getLineGroup(), "挂载节点:", slot0.mountList, nil, , {
+	arg_4_0.mountDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "挂载节点:", arg_4_0.mountList, nil, nil, {
 		total_w = 400,
 		fsize = 25,
 		drop_w = 300,
@@ -123,289 +123,330 @@ function slot0.initViewContent(slot0)
 			0
 		}
 	})
-	slot0.btnMount = slot0:addButton(slot0:getLineGroup(), "挂载", slot0.onClickBtnMount, slot0)
+	arg_4_0.btnMount = arg_4_0:addButton(arg_4_0:getLineGroup(), "挂载", arg_4_0.onClickBtnMount, arg_4_0)
 
-	slot0:addTitleSplitLine("战中打印")
-	slot0:addLineIndex()
+	arg_4_0:addTitleSplitLine("战中打印")
+	arg_4_0:addLineIndex()
 
-	slot0.btnEnableFightLog = slot0:addButton(slot0:getLineGroup(), "开启战斗打印", slot0.onClickEnableFightLog, slot0)
-	slot0.btnLogAttr = slot0:addButton(slot0:getLineGroup(), "打印当前属性", slot0.onClickLogAttr, slot0)
-	slot0.btnLogBaseAttr = slot0:addButton(slot0:getLineGroup(), "打印基础属性", slot0.onClickLogBaseAttr, slot0)
-	slot0.btnLogLife = slot0:addButton(slot0:getLineGroup(), "打印生命百分比", slot0.onClickLogLife, slot0)
+	arg_4_0.btnEnableFightLog = arg_4_0:addButton(arg_4_0:getLineGroup(), "开启战斗打印", arg_4_0.onClickEnableFightLog, arg_4_0)
+	arg_4_0.btnLogAttr = arg_4_0:addButton(arg_4_0:getLineGroup(), "打印当前属性", arg_4_0.onClickLogAttr, arg_4_0)
+	arg_4_0.btnLogBaseAttr = arg_4_0:addButton(arg_4_0:getLineGroup(), "打印基础属性", arg_4_0.onClickLogBaseAttr, arg_4_0)
+	arg_4_0.btnLogLife = arg_4_0:addButton(arg_4_0:getLineGroup(), "打印生命百分比", arg_4_0.onClickLogLife, arg_4_0)
 end
 
-function slot0.getEntityNameList(slot0)
-	slot0.entityNameList = {}
-	slot0.entityList = {}
+function var_0_0.getEntityNameList(arg_5_0)
+	arg_5_0.entityNameList = {}
+	arg_5_0.entityList = {}
 
-	FightDataHelper.entityMgr:getAllEntityList(slot0.entityList)
+	FightDataHelper.entityMgr:getAllEntityList(arg_5_0.entityList)
 
-	for slot4, slot5 in ipairs(slot0.entityList) do
-		table.insert(slot0.entityNameList, slot5:getCO() and slot6.name or slot5.id)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.entityList) do
+		local var_5_0 = iter_5_1:getCO()
+		local var_5_1 = var_5_0 and var_5_0.name
+
+		var_5_1 = var_5_1 or iter_5_1.id
+
+		table.insert(arg_5_0.entityNameList, var_5_1)
 	end
 end
 
-function slot0.getMountList(slot0)
-	slot0.mountList = {
+function var_0_0.getMountList(arg_6_0)
+	arg_6_0.mountList = {
 		ModuleEnum.SpineHangPointRoot
 	}
 
-	for slot4, slot5 in pairs(ModuleEnum.SpineHangPoint) do
-		table.insert(slot0.mountList, slot5)
+	for iter_6_0, iter_6_1 in pairs(ModuleEnum.SpineHangPoint) do
+		table.insert(arg_6_0.mountList, iter_6_1)
 	end
 end
 
-function slot0.addFightNumToggle(slot0)
-	slot0.showFightNumToggle = slot0:addToggle(slot0:getLineGroup(), "显示战斗数值", slot0.onFightNumToggleValueChange, slot0)
-	slot0.showFightNumToggle.isOn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FightShowFightNum, 1) == 1
+function var_0_0.addFightNumToggle(arg_7_0)
+	arg_7_0.showFightNumToggle = arg_7_0:addToggle(arg_7_0:getLineGroup(), "显示战斗数值", arg_7_0.onFightNumToggleValueChange, arg_7_0)
+	arg_7_0.showFightNumToggle.isOn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FightShowFightNum, 1) == 1
 end
 
-function slot0.addShowFightUIToggle(slot0)
-	slot0.showFightUIToggle = slot0:addToggle(slot0:getLineGroup(), "显示战斗UI", slot0.onFightUIToggleValueChange, slot0)
-	slot0.showFightUIToggle.isOn = true
+function var_0_0.addShowFightUIToggle(arg_8_0)
+	arg_8_0.showFightUIToggle = arg_8_0:addToggle(arg_8_0:getLineGroup(), "显示战斗UI", arg_8_0.onFightUIToggleValueChange, arg_8_0)
+	arg_8_0.showFightUIToggle.isOn = true
 end
 
-function slot0.onClickMyCardDeck(slot0)
+function var_0_0.onClickMyCardDeck(arg_9_0)
 	FightRpc.instance:sendGetFightCardDeckDetailInfoRequest(FightRpc.DeckInfoRequestType.MySide)
 end
 
-function slot0.onClickEnemyCardDeck(slot0)
+function var_0_0.onClickEnemyCardDeck(arg_10_0)
 	FightRpc.instance:sendGetFightCardDeckDetailInfoRequest(FightRpc.DeckInfoRequestType.EnemySide)
 end
 
-function slot0.onClickSendBtn(slot0)
-	if string.nilorempty(slot0.gmInput:GetText()) then
+function var_0_0.onClickSendBtn(arg_11_0)
+	local var_11_0 = arg_11_0.gmInput:GetText()
+
+	if string.nilorempty(var_11_0) then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(slot1)
+	GMRpc.instance:sendGMRequest(var_11_0)
 end
 
-function slot0.onClickBtnEnterFightByMonsterGroupId(slot0)
-	if not string.nilorempty(slot0.battleInput:GetText()) and #string.splitToNumber(slot1, "#") > 0 then
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot1)
-		HeroGroupModel.instance:setParam(nil, , )
+function var_0_0.onClickBtnEnterFightByMonsterGroupId(arg_12_0)
+	local var_12_0 = arg_12_0.battleInput:GetText()
 
-		if not HeroGroupModel.instance:getCurGroupMO() then
-			logError("current HeroGroupMO is nil")
-			GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
+	if not string.nilorempty(var_12_0) then
+		local var_12_1 = string.splitToNumber(var_12_0, "#")
+
+		if #var_12_1 > 0 then
+			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_12_0)
+			HeroGroupModel.instance:setParam(nil, nil, nil)
+
+			local var_12_2 = HeroGroupModel.instance:getCurGroupMO()
+
+			if not var_12_2 then
+				logError("current HeroGroupMO is nil")
+				GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
+
+				return
+			end
+
+			local var_12_3, var_12_4 = var_12_2:getMainList()
+			local var_12_5, var_12_6 = var_12_2:getSubList()
+			local var_12_7 = var_12_2:getAllHeroEquips()
+
+			arg_12_0:closeThis()
+
+			local var_12_8 = FightParam.New()
+
+			var_12_8.monsterGroupIds = var_12_1
+			var_12_8.isTestFight = true
+
+			var_12_8:setSceneLevel(10601)
+			var_12_8:setMySide(var_12_2.clothId, var_12_3, var_12_5, var_12_7)
+			FightModel.instance:setFightParam(var_12_8)
+			FightController.instance:sendTestFight(var_12_8)
 
 			return
 		end
-
-		slot4, slot5 = slot3:getMainList()
-		slot6, slot7 = slot3:getSubList()
-
-		slot0:closeThis()
-
-		slot9 = FightParam.New()
-		slot9.monsterGroupIds = slot2
-		slot9.isTestFight = true
-
-		slot9:setSceneLevel(10601)
-		slot9:setMySide(slot3.clothId, slot4, slot6, slot3:getAllHeroEquips())
-		FightModel.instance:setFightParam(slot9)
-		FightController.instance:sendTestFight(slot9)
-
-		return
 	end
 end
 
-function slot0.onClickBtnEnterFightByBattleId(slot0)
-	if not (tonumber(slot0.battleInput:GetText()) and lua_battle.configDict[slot2]) then
-		slot4 = string.format("没有找到战斗id ：%s 对应的配置", slot2)
+function var_0_0.onClickBtnEnterFightByBattleId(arg_13_0)
+	local var_13_0 = arg_13_0.battleInput:GetText()
+	local var_13_1 = tonumber(var_13_0)
 
-		logError(slot4)
-		ToastController.instance:showToastWithString(slot4)
+	if not (var_13_1 and lua_battle.configDict[var_13_1]) then
+		local var_13_2 = string.format("没有找到战斗id ：%s 对应的配置", var_13_1)
+
+		logError(var_13_2)
+		ToastController.instance:showToastWithString(var_13_2)
 
 		return
 	end
 
-	slot4 = nil
+	local var_13_3
 
-	for slot8, slot9 in ipairs(lua_episode.configList) do
-		if slot9.battleId == slot2 or slot9.firstBattleId == slot2 then
-			slot4 = slot9
+	for iter_13_0, iter_13_1 in ipairs(lua_episode.configList) do
+		if iter_13_1.battleId == var_13_1 or iter_13_1.firstBattleId == var_13_1 then
+			var_13_3 = iter_13_1
 
 			break
 		end
 	end
 
-	if not slot4 then
+	if not var_13_3 then
 		logError("没有找到战斗id对应的关卡id")
 		ToastController.instance:showToastWithString("没有找到战斗id对应的关卡id")
 
 		return
 	end
 
-	slot5 = FightController.instance:setFightParamByBattleId(slot2)
+	local var_13_4 = FightController.instance:setFightParamByBattleId(var_13_1)
 
-	HeroGroupModel.instance:setParam(slot2, nil, )
+	HeroGroupModel.instance:setParam(var_13_1, nil, nil)
 
-	if not HeroGroupModel.instance:getCurGroupMO() then
+	local var_13_5 = HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_13_5 then
 		logError("current HeroGroupMO is nil")
 		GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 		return
 	end
 
-	slot7, slot8 = slot6:getMainList()
-	slot9, slot10 = slot6:getSubList()
+	local var_13_6, var_13_7 = var_13_5:getMainList()
+	local var_13_8, var_13_9 = var_13_5:getSubList()
+	local var_13_10 = var_13_5:getAllHeroEquips()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, slot1)
-	slot0:closeThis()
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_13_0)
+	arg_13_0:closeThis()
 
-	slot5.episodeId = slot4.id
-	FightResultModel.instance.episodeId = slot4.id
+	var_13_4.episodeId = var_13_3.id
+	FightResultModel.instance.episodeId = var_13_3.id
 
-	DungeonModel.instance:SetSendChapterEpisodeId(slot4.chapterId, slot4.id)
-	slot5:setMySide(slot6.clothId, slot7, slot9, slot6:getAllHeroEquips())
-	FightController.instance:sendTestFightId(slot5)
+	DungeonModel.instance:SetSendChapterEpisodeId(var_13_3.chapterId, var_13_3.id)
+	var_13_4:setMySide(var_13_5.clothId, var_13_6, var_13_8, var_13_10)
+	FightController.instance:sendTestFightId(var_13_4)
 end
 
-function slot0.onClickSimulateBattle(slot0)
-	slot0:closeThis()
+function var_0_0.onClickSimulateBattle(arg_14_0)
+	arg_14_0:closeThis()
 	ViewMgr.instance:openView(ViewName.GMFightSimulateView)
 end
 
-function slot0.onClickSkillEditor(slot0)
+function var_0_0.onClickSkillEditor(arg_15_0)
 	SkillEditorMgr.instance:start()
 end
 
-function slot0.onFightNumToggleValueChange(slot0)
-	slot1 = slot0.showFightNumToggle.isOn
+function var_0_0.onFightNumToggleValueChange(arg_16_0)
+	local var_16_0 = arg_16_0.showFightNumToggle.isOn
 
-	FightFloatMgr.instance:setCanShowFightNumUI(slot1)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FightShowFightNum, slot1 and 1 or 0)
+	FightFloatMgr.instance:setCanShowFightNumUI(var_16_0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FightShowFightNum, var_16_0 and 1 or 0)
 end
 
-function slot0.onFightUIToggleValueChange(slot0)
-	for slot5, slot6 in ipairs(GMFightShowState.getList()) do
-		GMFightShowState.setStatus(slot6.valueKey, true)
+function var_0_0.onFightUIToggleValueChange(arg_17_0)
+	local var_17_0 = GMFightShowState.getList()
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		GMFightShowState.setStatus(iter_17_1.valueKey, true)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.GMHideFightView)
 end
 
-function slot0.onClickLockLifeMySide(slot0)
+function var_0_0.onClickLockLifeMySide(arg_18_0)
 	GMRpc.instance:sendGMRequest("fight lockLife 0")
 end
 
-function slot0.onClickLockLifeEnemySide(slot0)
+function var_0_0.onClickLockLifeEnemySide(arg_19_0)
 	GMRpc.instance:sendGMRequest("fight lockLife 1")
 end
 
-function slot0.onClickAddHurtMySide(slot0)
+function var_0_0.onClickAddHurtMySide(arg_20_0)
 	GMRpc.instance:sendGMRequest("fight addHurt 0")
 end
 
-function slot0.onClickAddHurtEnemySide(slot0)
+function var_0_0.onClickAddHurtEnemySide(arg_21_0)
 	GMRpc.instance:sendGMRequest("fight addHurt 1")
 end
 
-function slot0.onClickReduceDamageMySide(slot0)
+function var_0_0.onClickReduceDamageMySide(arg_22_0)
 	GMRpc.instance:sendGMRequest("fight reduceDamage 0")
 end
 
-function slot0.onClickReduceDamageEnemySide(slot0)
+function var_0_0.onClickReduceDamageEnemySide(arg_23_0)
 	GMRpc.instance:sendGMRequest("fight reduceDamage 1")
 end
 
-function slot0.onClickAddCost(slot0)
-	if string.nilorempty(slot0.costInput:GetText()) then
+function var_0_0.onClickAddCost(arg_24_0)
+	local var_24_0 = arg_24_0.costInput:GetText()
+
+	if string.nilorempty(var_24_0) then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(string.format("fight addPower %s 0", slot1))
+	GMRpc.instance:sendGMRequest(string.format("fight addPower %s 0", var_24_0))
 end
 
-function slot0.onClickAddExPointMySide(slot0)
+function var_0_0.onClickAddExPointMySide(arg_25_0)
 	GMRpc.instance:sendGMRequest("fight addExpoint 5 0")
 end
 
-function slot0.onClickAddExPointEnemySide(slot0)
+function var_0_0.onClickAddExPointEnemySide(arg_26_0)
 	GMRpc.instance:sendGMRequest("fight addExpoint 5 1")
 end
 
-function slot0.onClickChangeCard(slot0)
+function var_0_0.onClickChangeCard(arg_27_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		slot0:closeThis()
+		arg_27_0:closeThis()
 		ViewMgr.instance:openView(ViewName.GMResetCardsView)
 	else
 		GameFacade.showToast(ToastEnum.IconId, "not in fight")
 	end
 end
 
-function slot0.onClickFightGm(slot0)
-	slot0:closeThis()
+function var_0_0.onClickFightGm(arg_28_0)
+	arg_28_0:closeThis()
 	ViewMgr.instance:openView(ViewName.GMFightEntityView)
 end
 
-function slot0.onClickEnableFightLog(slot0)
+function var_0_0.onClickEnableFightLog(arg_29_0)
 	GMRpc.instance:sendGMRequest("fight log 2")
 end
 
-function slot0.onClickLogAttr(slot0)
+function var_0_0.onClickLogAttr(arg_30_0)
 	GMRpc.instance:sendGMRequest("fight printAttrWithCompute")
 end
 
-function slot0.onClickLogBaseAttr(slot0)
+function var_0_0.onClickLogBaseAttr(arg_31_0)
 	GMRpc.instance:sendGMRequest("fight printAttr")
 end
 
-function slot0.onClickLogLife(slot0)
+function var_0_0.onClickLogLife(arg_32_0)
 	GMRpc.instance:sendGMRequest("fight printLife")
 end
 
-function slot0.onClickSendASFDBtn(slot0)
-	slot1 = tonumber(slot0.countASFDInput:GetText()) or 1
-	slot3 = slot0.optionValueList[slot0.sideASFDDrop:GetValue() + 1]
+function var_0_0.onClickSendASFDBtn(arg_33_0)
+	local var_33_0 = tonumber(arg_33_0.countASFDInput:GetText()) or 1
+	local var_33_1 = arg_33_0.sideASFDDrop:GetValue() + 1
+	local var_33_2 = arg_33_0.optionValueList[var_33_1]
+	local var_33_3 = arg_33_0.toEntityASFDInput:GetText()
 
-	if not FightHelper.getEntity(slot0.toEntityASFDInput:GetText()) then
-		slot6 = nil
-		slot6 = (slot3 ~= FightEnum.TeamType.MySide or FightDataHelper.entityMgr:getEnemyNormalList()) and FightDataHelper.entityMgr:getMyNormalList()
-		slot4 = slot6 and slot6[1] and slot6[1].id
-		slot5 = FightHelper.getEntity(slot4)
+	if not FightHelper.getEntity(var_33_3) then
+		local var_33_4
 
-		if not slot4 then
+		if var_33_2 == FightEnum.TeamType.MySide then
+			var_33_4 = FightDataHelper.entityMgr:getEnemyNormalList()
+		else
+			var_33_4 = FightDataHelper.entityMgr:getMyNormalList()
+		end
+
+		var_33_3 = var_33_4 and var_33_4[1] and var_33_4[1].id
+
+		local var_33_5 = FightHelper.getEntity(var_33_3)
+
+		if not var_33_3 then
 			ToastController.instance:showToastWithString("没有找到奥术飞弹目标实体")
 
 			return
 		end
 	end
 
-	for slot11 = 1, slot1 do
-		slot12 = FightStepMO.New()
+	local var_33_6 = FightDataHelper.entityMgr:getASFDEntityMo(var_33_2) or arg_33_0:createASFDEmitter(var_33_2)
+	local var_33_7 = {}
 
-		slot12:init({
+	for iter_33_0 = 1, var_33_0 do
+		local var_33_8 = FightStepMO.New()
+
+		var_33_8:init({
 			cardIndex = 1,
 			actType = 1,
-			fromId = (FightDataHelper.entityMgr:getASFDEntityMo(slot3) or slot0:createASFDEmitter(slot3)).id,
-			toId = slot4,
+			fromId = var_33_6.id,
+			toId = var_33_3,
 			actId = FightASFDConfig.instance.skillId,
 			actEffect = {}
 		})
-		table.insert({}, slot12)
+		table.insert(var_33_7, var_33_8)
 	end
 
-	if slot0.asfdSequence then
-		slot0.asfdSequence:stop()
+	if arg_33_0.asfdSequence then
+		arg_33_0.asfdSequence:stop()
 	end
 
-	slot0.asfdSequence = FlowSequence.New()
+	arg_33_0.asfdSequence = FlowSequence.New()
 
-	for slot11, slot12 in ipairs(slot7) do
-		slot0.asfdSequence:addWork(FightASFDFlow.New(slot12, slot7[slot11 + 1], slot11))
+	for iter_33_1, iter_33_2 in ipairs(var_33_7) do
+		local var_33_9 = FightASFDFlow.New(iter_33_2, var_33_7[iter_33_1 + 1], iter_33_1)
+
+		arg_33_0.asfdSequence:addWork(var_33_9)
 	end
 
-	slot0.asfdSequence:start()
-	slot0:closeThis()
+	arg_33_0.asfdSequence:start()
+	arg_33_0:closeThis()
 end
 
-function slot0.createASFDEmitter(slot0, slot1)
-	slot2 = FightEntityMO.New()
+function var_0_0.createASFDEmitter(arg_34_0, arg_34_1)
+	local var_34_0 = FightEntityMO.New()
 
-	slot2:init({
+	var_34_0:init({
 		skin = 0,
 		exSkillLevel = 0,
 		userId = 0,
@@ -420,9 +461,9 @@ function slot0.createASFDEmitter(slot0, slot1)
 		exPoint = 0,
 		shieldValue = 0,
 		modelId = 0,
-		uid = slot1 == FightEnum.TeamType.MySide and "99998" or "-99998",
+		uid = arg_34_1 == FightEnum.TeamType.MySide and "99998" or "-99998",
 		entityType = FightEnum.EntityType.ASFDEmitter,
-		side = slot1,
+		side = arg_34_1,
 		attr = {
 			defense = 0,
 			multiHpNum = 0,
@@ -440,35 +481,47 @@ function slot0.createASFDEmitter(slot0, slot1)
 		SummonedList = {}
 	})
 
-	slot2.side = slot1
-	slot2 = FightDataHelper.entityMgr:addEntityMO(slot2)
+	var_34_0.side = arg_34_1
 
-	table.insert(FightDataHelper.entityMgr:getOriginASFDEmitterList(slot2.side), slot2)
-	(GameSceneMgr.instance:getCurScene() and slot4.entityMgr):addASFDUnit()
+	local var_34_1 = FightDataHelper.entityMgr:addEntityMO(var_34_0)
+	local var_34_2 = FightDataHelper.entityMgr:getOriginASFDEmitterList(var_34_1.side)
 
-	return slot2
+	table.insert(var_34_2, var_34_1)
+
+	local var_34_3 = GameSceneMgr.instance:getCurScene()
+
+	;(var_34_3 and var_34_3.entityMgr):addASFDUnit()
+
+	return var_34_1
 end
 
-function slot0.onClickBtnMount(slot0)
-	slot2 = slot0.entityDrop:GetValue() + 1
-	slot3 = slot0.mountDrop:GetValue() + 1
+function var_0_0.onClickBtnMount(arg_35_0)
+	local var_35_0 = arg_35_0.effectPath:GetText()
+	local var_35_1 = arg_35_0.entityDrop:GetValue() + 1
+	local var_35_2 = arg_35_0.mountDrop:GetValue() + 1
 
-	if string.nilorempty(slot0.effectPath:GetText()) then
+	if string.nilorempty(var_35_0) then
 		ToastController.instance:showToastWithString("特效资源名 不能为空 ！")
 
 		return
 	end
 
-	if not (slot0.entityList[slot2] and FightHelper.getEntity(slot4.id)) then
+	local var_35_3 = arg_35_0.entityList[var_35_1]
+	local var_35_4 = var_35_3 and FightHelper.getEntity(var_35_3.id)
+
+	if not var_35_4 then
 		ToastController.instance:showToastWithString("没有找到对应 entity 实体 ！")
 
 		return
 	end
 
-	if slot5.effect:addHangEffect(slot1, slot0.mountList[slot3]) then
-		slot7:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot5.id, slot7)
+	local var_35_5 = arg_35_0.mountList[var_35_2]
+	local var_35_6 = var_35_4.effect:addHangEffect(var_35_0, var_35_5)
+
+	if var_35_6 then
+		var_35_6:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(var_35_4.id, var_35_6)
 	end
 end
 
-return slot0
+return var_0_0

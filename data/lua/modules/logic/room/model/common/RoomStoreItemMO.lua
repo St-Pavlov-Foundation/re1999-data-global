@@ -1,89 +1,96 @@
-module("modules.logic.room.model.common.RoomStoreItemMO", package.seeall)
+﻿module("modules.logic.room.model.common.RoomStoreItemMO", package.seeall)
 
-slot0 = pureTable("RoomStoreItemMO")
+local var_0_0 = pureTable("RoomStoreItemMO")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.id = slot1
-	slot0.itemId = slot1
-	slot0.itemNum = slot3 or 0
-	slot0.materialType = slot2
-	slot0._costId = slot4
-	slot0.belongStoreId = slot5.belongStoreId
-	slot0.storeGoodsMO = slot5
-	slot0.themeId = RoomConfig.instance:getThemeIdByItem(slot1, slot2)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0.id = arg_1_1
+	arg_1_0.itemId = arg_1_1
+	arg_1_0.itemNum = arg_1_3 or 0
+	arg_1_0.materialType = arg_1_2
+	arg_1_0._costId = arg_1_4
+	arg_1_0.belongStoreId = arg_1_5.belongStoreId
+	arg_1_0.storeGoodsMO = arg_1_5
+	arg_1_0.themeId = RoomConfig.instance:getThemeIdByItem(arg_1_1, arg_1_2)
 end
 
-function slot0.getNeedNum(slot0)
-	if slot0.materialType == MaterialEnum.MaterialType.BlockPackage or slot0.materialType == MaterialEnum.MaterialType.SpecialBlock then
+function var_0_0.getNeedNum(arg_2_0)
+	if arg_2_0.materialType == MaterialEnum.MaterialType.BlockPackage or arg_2_0.materialType == MaterialEnum.MaterialType.SpecialBlock then
 		return 1
 	end
 
-	if slot0:getItemConfig() and slot1.numLimit and slot1.numLimit > 0 then
-		return slot1.numLimit
+	local var_2_0 = arg_2_0:getItemConfig()
+
+	if var_2_0 and var_2_0.numLimit and var_2_0.numLimit > 0 then
+		return var_2_0.numLimit
 	end
 
 	return 9999
 end
 
-function slot0.getItemQuantity(slot0)
-	return ItemModel.instance:getItemQuantity(slot0.materialType, slot0.id) or 0
+function var_0_0.getItemQuantity(arg_3_0)
+	return ItemModel.instance:getItemQuantity(arg_3_0.materialType, arg_3_0.id) or 0
 end
 
-function slot0.getItemConfig(slot0)
-	return ItemModel.instance:getItemConfig(slot0.materialType, slot0.id)
+function var_0_0.getItemConfig(arg_4_0)
+	return ItemModel.instance:getItemConfig(arg_4_0.materialType, arg_4_0.id)
 end
 
-function slot0.getTotalPriceByCostId(slot0, slot1)
-	if not slot0:getCostById(slot1) then
-		logNormal(string.format("RoomStoreItemMO costId:%s itemId:%s", slot1, slot0.id))
+function var_0_0.getTotalPriceByCostId(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getCostById(arg_5_1)
+
+	if not var_5_0 then
+		logNormal(string.format("RoomStoreItemMO costId:%s itemId:%s", arg_5_1, arg_5_0.id))
 
 		return 0
 	end
 
-	return slot0:getCanBuyNum() * slot2.price
+	return arg_5_0:getCanBuyNum() * var_5_0.price
 end
 
-function slot0.getCanBuyNum(slot0)
-	if slot0:getNeedNum() <= slot0:getItemQuantity() then
+function var_0_0.getCanBuyNum(arg_6_0)
+	local var_6_0 = arg_6_0:getNeedNum()
+	local var_6_1 = arg_6_0:getItemQuantity()
+
+	if var_6_0 <= var_6_1 then
 		return 0
 	end
 
-	return math.min(slot1 - slot2, slot0.itemNum)
+	return (math.min(var_6_0 - var_6_1, arg_6_0.itemNum))
 end
 
-function slot0.addCost(slot0, slot1, slot2, slot3, slot4)
-	slot0._costs = slot0._costs or {}
-	slot0._costs[slot1] = {
-		costId = slot1,
-		itemId = slot2,
-		itemType = slot3,
-		price = slot4
+function var_0_0.addCost(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	arg_7_0._costs = arg_7_0._costs or {}
+	arg_7_0._costs[arg_7_1] = {
+		costId = arg_7_1,
+		itemId = arg_7_2,
+		itemType = arg_7_3,
+		price = arg_7_4
 	}
 end
 
-function slot0.getCostById(slot0, slot1)
-	return slot0._costs and slot0._costs[slot1]
+function var_0_0.getCostById(arg_8_0, arg_8_1)
+	return arg_8_0._costs and arg_8_0._costs[arg_8_1]
 end
 
-function slot0.getStoreGoodsMO(slot0)
-	return slot0.storeGoodsMO
+function var_0_0.getStoreGoodsMO(arg_9_0)
+	return arg_9_0.storeGoodsMO
 end
 
-function slot0.checkShowTicket(slot0)
-	if slot0.storeGoodsMO.belongStoreId == StoreEnum.SubRoomOld or slot0.storeGoodsMO.belongStoreId == StoreEnum.SubRoomNew then
-		if slot0.materialType ~= MaterialEnum.MaterialType.BlockPackage and slot0.materialType ~= MaterialEnum.MaterialType.Building then
+function var_0_0.checkShowTicket(arg_10_0)
+	if arg_10_0.storeGoodsMO.belongStoreId == StoreEnum.SubRoomOld or arg_10_0.storeGoodsMO.belongStoreId == StoreEnum.SubRoomNew then
+		if arg_10_0.materialType ~= MaterialEnum.MaterialType.BlockPackage and arg_10_0.materialType ~= MaterialEnum.MaterialType.Building then
 			return false
 		end
 
-		if not string.nilorempty(slot0.storeGoodsMO.config.nameEn) then
+		if not string.nilorempty(arg_10_0.storeGoodsMO.config.nameEn) then
 			return
 		end
 
-		if slot0:getItemConfig().rare <= 3 then
+		if arg_10_0:getItemConfig().rare <= 3 then
 			if ItemModel.instance:getItemCount(StoreEnum.NormalRoomTicket) > 0 or ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
 				return true
 			end
-		elseif slot0:getItemConfig().rare <= 5 and ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
+		elseif arg_10_0:getItemConfig().rare <= 5 and ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
 			return true
 		end
 	end
@@ -91,16 +98,16 @@ function slot0.checkShowTicket(slot0)
 	return false
 end
 
-function slot0.getTicketId(slot0)
-	if slot0:getItemConfig().rare <= 3 then
+function var_0_0.getTicketId(arg_11_0)
+	if arg_11_0:getItemConfig().rare <= 3 then
 		if ItemModel.instance:getItemCount(StoreEnum.NormalRoomTicket) > 0 then
 			return StoreEnum.NormalRoomTicket
 		elseif ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
 			return StoreEnum.TopRoomTicket
 		end
-	elseif slot0:getItemConfig().rare <= 5 and ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
+	elseif arg_11_0:getItemConfig().rare <= 5 and ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
 		return StoreEnum.TopRoomTicket
 	end
 end
 
-return slot0
+return var_0_0

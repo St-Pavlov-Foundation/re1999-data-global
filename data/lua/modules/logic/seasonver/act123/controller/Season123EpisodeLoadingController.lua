@@ -1,16 +1,16 @@
-module("modules.logic.seasonver.act123.controller.Season123EpisodeLoadingController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EpisodeLoadingController", package.seeall)
 
-slot0 = class("Season123EpisodeLoadingController", BaseController)
+local var_0_0 = class("Season123EpisodeLoadingController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3)
-	Season123EpisodeLoadingModel.instance:init(slot1, slot2, slot3)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	Season123EpisodeLoadingModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
 	Season123EpisodeLoadingModel.instance:release()
 end
 
-function slot0.openEpisodeDetailView(slot0)
+function var_0_0.openEpisodeDetailView(arg_3_0)
 	ViewMgr.instance:openView(Season123Controller.instance:getEpisodeMarketViewName(), {
 		actId = Season123EpisodeLoadingModel.instance.activityId,
 		stage = Season123EpisodeLoadingModel.instance.stage,
@@ -18,6 +18,6 @@ function slot0.openEpisodeDetailView(slot0)
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

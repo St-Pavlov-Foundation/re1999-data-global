@@ -1,120 +1,128 @@
-module("modules.logic.meilanni.model.MeilanniMapInfoMO", package.seeall)
+﻿module("modules.logic.meilanni.model.MeilanniMapInfoMO", package.seeall)
 
-slot0 = pureTable("MeilanniMapInfoMO")
+local var_0_0 = pureTable("MeilanniMapInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.mapId = slot1.mapId
-	slot0.mapConfig = lua_activity108_map.configDict[slot0.mapId]
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.mapId = arg_1_1.mapId
+	arg_1_0.mapConfig = lua_activity108_map.configDict[arg_1_0.mapId]
 
-	slot0:_initEpisodeInfos(slot1)
+	arg_1_0:_initEpisodeInfos(arg_1_1)
 
-	slot0.score = slot1.score
-	slot0.highestScore = slot1.highestScore
-	slot0.getRewardIds = slot1.getRewardIds
-	slot0.isFinish = slot1.isFinish
-	slot0.totalCount = slot1.totalCount
+	arg_1_0.score = arg_1_1.score
+	arg_1_0.highestScore = arg_1_1.highestScore
+	arg_1_0.getRewardIds = arg_1_1.getRewardIds
+	arg_1_0.isFinish = arg_1_1.isFinish
+	arg_1_0.totalCount = arg_1_1.totalCount
 
-	slot0:updateExcludeRules(slot1)
+	arg_1_0:updateExcludeRules(arg_1_1)
 end
 
-function slot0.getExcludeRules(slot0)
-	return slot0.excludeRules
+function var_0_0.getExcludeRules(arg_2_0)
+	return arg_2_0.excludeRules
 end
 
-function slot0.updateExcludeRules(slot0, slot1)
-	slot0.excludeRules = {}
-	slot0.excludeRulesMap = {}
-	slot0._excludeThreat = 0
+function var_0_0.updateExcludeRules(arg_3_0, arg_3_1)
+	arg_3_0.excludeRules = {}
+	arg_3_0.excludeRulesMap = {}
+	arg_3_0._excludeThreat = 0
 
-	for slot5, slot6 in ipairs(slot1.excludeRules) do
-		if lua_activity108_rule.configDict[slot6] then
-			slot8 = tonumber(slot7.rules)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.excludeRules) do
+		local var_3_0 = lua_activity108_rule.configDict[iter_3_1]
 
-			table.insert(slot0.excludeRules, slot8)
+		if var_3_0 then
+			local var_3_1 = tonumber(var_3_0.rules)
 
-			slot0.excludeRulesMap[slot8] = slot7
-			slot0._excludeThreat = slot0._excludeThreat + slot7.threat
+			table.insert(arg_3_0.excludeRules, var_3_1)
+
+			arg_3_0.excludeRulesMap[var_3_1] = var_3_0
+			arg_3_0._excludeThreat = arg_3_0._excludeThreat + var_3_0.threat
 		end
 	end
 end
 
-function slot0.isExcludeRule(slot0, slot1)
-	return slot0.excludeRulesMap[slot1]
+function var_0_0.isExcludeRule(arg_4_0, arg_4_1)
+	return arg_4_0.excludeRulesMap[arg_4_1]
 end
 
-function slot0.getThreat(slot0)
-	return math.max(slot0.mapConfig.threat - slot0._excludeThreat, 0)
+function var_0_0.getThreat(arg_5_0)
+	local var_5_0 = arg_5_0.mapConfig.threat
+
+	return math.max(var_5_0 - arg_5_0._excludeThreat, 0)
 end
 
-function slot0.getMaxScore(slot0)
-	return slot0.highestScore
+function var_0_0.getMaxScore(arg_6_0)
+	return arg_6_0.highestScore
 end
 
-function slot0._initEpisodeInfos(slot0, slot1)
-	slot0.episodeInfos = {}
-	slot0._episodeInfoMap = {}
+function var_0_0._initEpisodeInfos(arg_7_0, arg_7_1)
+	arg_7_0.episodeInfos = {}
+	arg_7_0._episodeInfoMap = {}
 
-	for slot5, slot6 in ipairs(slot1.episodeInfos) do
-		slot7 = EpisodeInfoMO.New()
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1.episodeInfos) do
+		local var_7_0 = EpisodeInfoMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.episodeInfos, slot7)
+		var_7_0:init(iter_7_1)
+		table.insert(arg_7_0.episodeInfos, var_7_0)
 
-		slot0._episodeInfoMap[slot7.episodeId] = slot7
+		arg_7_0._episodeInfoMap[var_7_0.episodeId] = var_7_0
 	end
 end
 
-function slot0.updateEpisodeInfo(slot0, slot1)
-	if not slot0._episodeInfoMap[slot1.episodeId] then
-		slot2 = EpisodeInfoMO.New()
+function var_0_0.updateEpisodeInfo(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._episodeInfoMap[arg_8_1.episodeId]
 
-		slot2:init(slot1)
-		table.insert(slot0.episodeInfos, slot2)
+	if not var_8_0 then
+		var_8_0 = EpisodeInfoMO.New()
 
-		slot0._episodeInfoMap[slot2.episodeId] = slot2
+		var_8_0:init(arg_8_1)
+		table.insert(arg_8_0.episodeInfos, var_8_0)
+
+		arg_8_0._episodeInfoMap[var_8_0.episodeId] = var_8_0
 	else
-		slot2:init(slot1)
+		var_8_0:init(arg_8_1)
 	end
 end
 
-function slot0.getEpisodeInfo(slot0, slot1)
-	return slot0._episodeInfoMap[slot1]
+function var_0_0.getEpisodeInfo(arg_9_0, arg_9_1)
+	return arg_9_0._episodeInfoMap[arg_9_1]
 end
 
-function slot0.getCurEpisodeInfo(slot0)
-	return slot0.episodeInfos[#slot0.episodeInfos]
+function var_0_0.getCurEpisodeInfo(arg_10_0)
+	return arg_10_0.episodeInfos[#arg_10_0.episodeInfos]
 end
 
-function slot0.checkFinish(slot0)
-	return slot0.isFinish and slot0:getCurEpisodeInfo().confirm
+function var_0_0.checkFinish(arg_11_0)
+	return arg_11_0.isFinish and arg_11_0:getCurEpisodeInfo().confirm
 end
 
-function slot0.getEventInfo(slot0, slot1)
-	return slot0:getCurEpisodeInfo():getEventInfo(slot1)
+function var_0_0.getEventInfo(arg_12_0, arg_12_1)
+	return arg_12_0:getCurEpisodeInfo():getEventInfo(arg_12_1)
 end
 
-function slot0.getEpisodeByBattleId(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.episodeInfos) do
-		if slot6:getEventByBattleId(slot1) then
-			return slot6
+function var_0_0.getEpisodeByBattleId(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.episodeInfos) do
+		if iter_13_1:getEventByBattleId(arg_13_1) then
+			return iter_13_1
 		end
 	end
 end
 
-function slot0.isGetReward(slot0, slot1)
-	return tabletool.indexOf(slot0.getRewardIds, slot1)
+function var_0_0.isGetReward(arg_14_0, arg_14_1)
+	return tabletool.indexOf(arg_14_0.getRewardIds, arg_14_1)
 end
 
-function slot0.getTotalCostAP(slot0)
-	if not slot0._episodeInfoMap then
+function var_0_0.getTotalCostAP(arg_15_0)
+	if not arg_15_0._episodeInfoMap then
 		return 0
 	end
 
-	for slot5, slot6 in pairs(slot0._episodeInfoMap) do
-		slot1 = 0 + MeilanniConfig.instance:getEpisodeConfig(slot5).actpoint - slot6.leftActPoint
+	local var_15_0 = 0
+
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._episodeInfoMap) do
+		var_15_0 = var_15_0 + MeilanniConfig.instance:getEpisodeConfig(iter_15_0).actpoint - iter_15_1.leftActPoint
 	end
 
-	return slot1
+	return var_15_0
 end
 
-return slot0
+return var_0_0

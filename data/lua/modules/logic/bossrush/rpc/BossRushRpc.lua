@@ -1,79 +1,89 @@
-module("modules.logic.bossrush.rpc.BossRushRpc", package.seeall)
+﻿module("modules.logic.bossrush.rpc.BossRushRpc", package.seeall)
 
-slot0 = class("BossRushRpc", Activity128Rpc)
+local var_0_0 = class("BossRushRpc", Activity128Rpc)
 
-function slot0.ctor(slot0)
-	Activity128Rpc.instance = slot0
+function var_0_0.ctor(arg_1_0)
+	Activity128Rpc.instance = arg_1_0
 end
 
-function slot1(slot0, slot1)
-	if not BossRushConfig.instance:checkActivityId(slot1.activityId) then
+local function var_0_1(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.activityId
+
+	if not BossRushConfig.instance:checkActivityId(var_2_0) then
 		return false
 	end
 
-	if slot0 ~= 0 then
+	if arg_2_0 ~= 0 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.sendGet128InfosRequest(slot0, slot1, slot2)
-	Activity128Rpc.sendGet128InfosRequest(slot0, BossRushConfig.instance:getActivityId(), slot1, slot2)
+function var_0_0.sendGet128InfosRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = BossRushConfig.instance:getActivityId()
+
+	Activity128Rpc.sendGet128InfosRequest(arg_3_0, var_3_0, arg_3_1, arg_3_2)
 end
 
-function slot0.sendAct128GetTotalRewardsRequest(slot0, slot1)
-	Activity128Rpc.sendAct128GetTotalRewardsRequest(slot0, BossRushConfig.instance:getActivityId(), slot1)
+function var_0_0.sendAct128GetTotalRewardsRequest(arg_4_0, arg_4_1)
+	local var_4_0 = BossRushConfig.instance:getActivityId()
+
+	Activity128Rpc.sendAct128GetTotalRewardsRequest(arg_4_0, var_4_0, arg_4_1)
 end
 
-function slot0.sendAct128DoublePointRequest(slot0, slot1)
-	Activity128Rpc.sendAct128DoublePointRequest(slot0, BossRushConfig.instance:getActivityId(), slot1)
+function var_0_0.sendAct128DoublePointRequest(arg_5_0, arg_5_1)
+	local var_5_0 = BossRushConfig.instance:getActivityId()
+
+	Activity128Rpc.sendAct128DoublePointRequest(arg_5_0, var_5_0, arg_5_1)
 end
 
-function slot0.sendAct128GetTotalSingleRewardRequest(slot0, slot1, slot2)
-	Activity128Rpc.sendAct128GetTotalSingleRewardRequest(slot0, BossRushConfig.instance:getActivityId(), slot1, slot2)
+function var_0_0.sendAct128GetTotalSingleRewardRequest(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = BossRushConfig.instance:getActivityId()
+
+	Activity128Rpc.sendAct128GetTotalSingleRewardRequest(arg_6_0, var_6_0, arg_6_1, arg_6_2)
 end
 
-function slot0._onReceiveGet128InfosReply(slot0, slot1, slot2)
-	if not uv0(slot1, slot2) then
+function var_0_0._onReceiveGet128InfosReply(arg_7_0, arg_7_1, arg_7_2)
+	if not var_0_1(arg_7_1, arg_7_2) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveGet128InfosReply(slot2)
+	BossRushModel.instance:onReceiveGet128InfosReply(arg_7_2)
 end
 
-function slot0._onReceiveAct128GetTotalRewardsReply(slot0, slot1, slot2)
-	if not uv0(slot1, slot2) then
+function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_8_0, arg_8_1, arg_8_2)
+	if not var_0_1(arg_8_1, arg_8_2) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128GetTotalRewardsReply(slot2)
+	BossRushModel.instance:onReceiveAct128GetTotalRewardsReply(arg_8_2)
 end
 
-function slot0._onReceiveAct128DoublePointReply(slot0, slot1, slot2)
-	if not uv0(slot1, slot2) then
+function var_0_0._onReceiveAct128DoublePointReply(arg_9_0, arg_9_1, arg_9_2)
+	if not var_0_1(arg_9_1, arg_9_2) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128DoublePointReply(slot2)
+	BossRushModel.instance:onReceiveAct128DoublePointReply(arg_9_2)
 end
 
-function slot0._onReceiveAct128InfoUpdatePush(slot0, slot1, slot2)
-	if not uv0(slot1, slot2) then
+function var_0_0._onReceiveAct128InfoUpdatePush(arg_10_0, arg_10_1, arg_10_2)
+	if not var_0_1(arg_10_1, arg_10_2) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128InfoUpdatePush(slot2)
+	BossRushModel.instance:onReceiveAct128InfoUpdatePush(arg_10_2)
 end
 
-function slot0._onReceiveAct128GetTotalSingleRewardReply(slot0, slot1, slot2)
-	if not uv0(slot1, slot2) then
+function var_0_0._onReceiveAct128GetTotalSingleRewardReply(arg_11_0, arg_11_1, arg_11_2)
+	if not var_0_1(arg_11_1, arg_11_2) then
 		return
 	end
 
-	BossRushModel.instance:onReceiveAct128SingleRewardReply(slot2)
+	BossRushModel.instance:onReceiveAct128SingleRewardReply(arg_11_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

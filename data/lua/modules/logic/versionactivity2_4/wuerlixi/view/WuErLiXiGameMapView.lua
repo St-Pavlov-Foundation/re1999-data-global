@@ -1,392 +1,427 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapView", package.seeall)
 
-slot0 = class("WuErLiXiGameMapView", BaseView)
+local var_0_0 = class("WuErLiXiGameMapView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomaproot = gohelper.findChild(slot0.viewGO, "#go_maproot")
-	slot0._gonodes = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_nodes")
-	slot0._gonodeitem = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_nodes/#scroll_node/viewport/content/#go_nodeitem")
-	slot0._gorays = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_ray")
-	slot0._gorayitem = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_ray/#go_rayitem")
-	slot0._gounits = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_units")
-	slot0._gounititem = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_units/#go_unititem")
-	slot0._godragitem = gohelper.findChild(slot0.viewGO, "#go_dragitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomaproot = gohelper.findChild(arg_1_0.viewGO, "#go_maproot")
+	arg_1_0._gonodes = gohelper.findChild(arg_1_0.viewGO, "#go_maproot/#go_nodes")
+	arg_1_0._gonodeitem = gohelper.findChild(arg_1_0.viewGO, "#go_maproot/#go_nodes/#scroll_node/viewport/content/#go_nodeitem")
+	arg_1_0._gorays = gohelper.findChild(arg_1_0.viewGO, "#go_maproot/#go_ray")
+	arg_1_0._gorayitem = gohelper.findChild(arg_1_0.viewGO, "#go_maproot/#go_ray/#go_rayitem")
+	arg_1_0._gounits = gohelper.findChild(arg_1_0.viewGO, "#go_maproot/#go_units")
+	arg_1_0._gounititem = gohelper.findChild(arg_1_0.viewGO, "#go_maproot/#go_units/#go_unititem")
+	arg_1_0._godragitem = gohelper.findChild(arg_1_0.viewGO, "#go_dragitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_maproot/#go_nodes/#scroll_node/viewport/content")
-	slot0._grid = slot0._gocontent:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gocontent = gohelper.findChild(arg_4_0.viewGO, "#go_maproot/#go_nodes/#scroll_node/viewport/content")
+	arg_4_0._grid = arg_4_0._gocontent:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
 
-	slot0:_addEvents()
+	arg_4_0:_addEvents()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.ActUnitDragEnd, slot0._onActUnitDragEnd, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitDragEnd, slot0._onNodeUnitDragEnd, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.UnitDraging, slot0._onUnitDraging, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeClicked, slot0._onNodeChange, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, slot0._onMapReset, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.StartGuideDragUnit, slot0._startGuideDragUnit, slot0)
+function var_0_0._addEvents(arg_5_0)
+	arg_5_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.ActUnitDragEnd, arg_5_0._onActUnitDragEnd, arg_5_0)
+	arg_5_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitDragEnd, arg_5_0._onNodeUnitDragEnd, arg_5_0)
+	arg_5_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.UnitDraging, arg_5_0._onUnitDraging, arg_5_0)
+	arg_5_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeClicked, arg_5_0._onNodeChange, arg_5_0)
+	arg_5_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, arg_5_0._onMapReset, arg_5_0)
+	arg_5_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.StartGuideDragUnit, arg_5_0._startGuideDragUnit, arg_5_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.ActUnitDragEnd, slot0._onActUnitDragEnd, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitDragEnd, slot0._onNodeUnitDragEnd, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.UnitDraging, slot0._onUnitDraging, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeClicked, slot0._onNodeChange, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, slot0._onMapReset, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.StartGuideDragUnit, slot0._startGuideDragUnit, slot0)
+function var_0_0._removeEvents(arg_6_0)
+	arg_6_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.ActUnitDragEnd, arg_6_0._onActUnitDragEnd, arg_6_0)
+	arg_6_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitDragEnd, arg_6_0._onNodeUnitDragEnd, arg_6_0)
+	arg_6_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.UnitDraging, arg_6_0._onUnitDraging, arg_6_0)
+	arg_6_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeClicked, arg_6_0._onNodeChange, arg_6_0)
+	arg_6_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, arg_6_0._onMapReset, arg_6_0)
+	arg_6_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.StartGuideDragUnit, arg_6_0._startGuideDragUnit, arg_6_0)
 end
 
-function slot0._startGuideDragUnit(slot0, slot1)
-	if slot0._dragEffectLoader then
-		slot0._dragEffectLoader:dispose()
+function var_0_0._startGuideDragUnit(arg_7_0, arg_7_1)
+	if arg_7_0._dragEffectLoader then
+		arg_7_0._dragEffectLoader:dispose()
 
-		slot0._dragEffectLoader = nil
+		arg_7_0._dragEffectLoader = nil
 	end
 
-	slot2 = tonumber(slot1) == 1
+	local var_7_0 = tonumber(arg_7_1) == 1
 
-	gohelper.setActive(slot0._goblock, slot2)
+	gohelper.setActive(arg_7_0._goblock, var_7_0)
 
-	if slot2 then
-		slot0._dragEffectLoader = PrefabInstantiate.Create(slot0.viewGO)
+	if var_7_0 then
+		arg_7_0._dragEffectLoader = PrefabInstantiate.Create(arg_7_0.viewGO)
 
-		slot0._dragEffectLoader:startLoad("ui/viewres/guide/guide_wuerlixi.prefab", slot0._onDragEffectLoaded, slot0)
+		arg_7_0._dragEffectLoader:startLoad("ui/viewres/guide/guide_wuerlixi.prefab", arg_7_0._onDragEffectLoaded, arg_7_0)
 	end
 end
 
-function slot0._onDragEffectLoaded(slot0)
-	gohelper.setActive(gohelper.findChild(slot0._dragEffectLoader:getInstGO(), "guide1").gameObject, true)
+function var_0_0._onDragEffectLoaded(arg_8_0)
+	local var_8_0 = arg_8_0._dragEffectLoader:getInstGO()
+
+	gohelper.setActive(gohelper.findChild(var_8_0, "guide1").gameObject, true)
 end
 
-function slot0._onNodeUnitDragEnd(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._nodeItems) do
-		for slot11, slot12 in pairs(slot7) do
-			slot12:showHightLight(false)
-			slot12:showPlaceable(false)
-			slot12:showUnplace(false)
+function var_0_0._onNodeUnitDragEnd(arg_9_0, arg_9_1, arg_9_2)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._nodeItems) do
+		for iter_9_2, iter_9_3 in pairs(iter_9_1) do
+			iter_9_3:showHightLight(false)
+			iter_9_3:showPlaceable(false)
+			iter_9_3:showUnplace(false)
 		end
 	end
 
-	slot3 = slot0._nodeItems[slot2.y][slot2.x]:getNodeMo()
+	local var_9_0 = arg_9_0._nodeItems[arg_9_2.y][arg_9_2.x]:getNodeMo()
+	local var_9_1 = arg_9_2.unitType
+	local var_9_2 = arg_9_2.dir
+	local var_9_3 = arg_9_0:_getTargetNodeItems(arg_9_1, var_9_1, var_9_2)
 
-	if not slot0:_getTargetNodeItems(slot1, slot2.unitType, slot2.dir) or #slot6 < 1 then
-		WuErLiXiMapModel.instance:addOperation(slot2.id, slot4, slot3.x, slot3.y, "Null", "Null")
+	if not var_9_3 or #var_9_3 < 1 then
+		WuErLiXiMapModel.instance:addOperation(arg_9_2.id, var_9_1, var_9_0.x, var_9_0.y, "Null", "Null")
 		WuErLiXiMapModel.instance:clearSelectUnit()
-		slot0._unitItems[slot2.y][slot2.x]:destroy()
+		arg_9_0._unitItems[arg_9_2.y][arg_9_2.x]:destroy()
 
-		slot0._unitItems[slot2.y][slot2.x] = nil
+		arg_9_0._unitItems[arg_9_2.y][arg_9_2.x] = nil
 
-		WuErLiXiMapModel.instance:clearNodeUnit(slot3)
+		WuErLiXiMapModel.instance:clearNodeUnit(var_9_0)
 		WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeUnitPlaceBack)
-		slot0:_refreshMap()
+		arg_9_0:_refreshMap()
 
 		return
-	elseif slot2.unitType == WuErLiXiEnum.UnitType.SignalMulti and #slot6 < 3 then
-		return
-	end
-
-	slot7 = true
-
-	for slot11, slot12 in pairs(slot6) do
-		if WuErLiXiMapModel.instance:isNodeHasUnit(slot12:getNodeMo()) and (slot12:getNodeMo():getNodeUnit().x ~= slot2.x or slot13.y ~= slot2.y) then
-			slot7 = false
-		end
-	end
-
-	if not slot7 then
+	elseif arg_9_2.unitType == WuErLiXiEnum.UnitType.SignalMulti and #var_9_3 < 3 then
 		return
 	end
 
-	if slot6[1]:getNodeMo().x == slot3.x and slot8.y == slot3.y then
-		return
-	end
+	local var_9_4 = true
 
-	slot0._unitItems[slot2.y][slot2.x]:destroy()
+	for iter_9_4, iter_9_5 in pairs(var_9_3) do
+		if WuErLiXiMapModel.instance:isNodeHasUnit(iter_9_5:getNodeMo()) then
+			local var_9_5 = iter_9_5:getNodeMo():getNodeUnit()
 
-	slot0._unitItems[slot2.y][slot2.x] = nil
-	slot9 = false
-
-	WuErLiXiMapModel.instance:addOperation(slot2.id, slot4, slot3.x, slot3.y, slot8.x, slot8.y)
-
-	slot11 = slot8:getNodeRay()
-
-	if not WuErLiXiMapModel.instance:isKeyActiveSelf(slot2.id, slot8) and slot3:getNodeRay() and slot2.unitType == WuErLiXiEnum.UnitType.Key then
-		if slot11 then
-			if slot11.rayType == WuErLiXiEnum.RayType.SwitchSignal then
-				slot9 = true
-			end
-		elseif slot10 then
-			if (slot10.rayDir == WuErLiXiEnum.Dir.Up or slot10.rayDir == WuErLiXiEnum.Dir.Down) and slot3.x == slot8.x and slot3.y ~= slot8.y and not WuErLiXiMapModel.instance:hasBlockRayUnit(slot3, slot8, slot10.rayType, slot10.rayDir) then
-				slot9 = true
-			end
-
-			if (slot10.rayDir == WuErLiXiEnum.Dir.Left or slot10.rayDir == WuErLiXiEnum.Dir.Right) and slot3.y == slot8.y and slot3.x ~= slot8.x and not WuErLiXiMapModel.instance:hasBlockRayUnit(slot3, slot8, slot10.rayType, slot10.rayDir) then
-				slot9 = true
+			if var_9_5.x ~= arg_9_2.x or var_9_5.y ~= arg_9_2.y then
+				var_9_4 = false
 			end
 		end
 	end
 
-	WuErLiXiMapModel.instance:clearNodeUnit(slot3, slot9)
-	WuErLiXiMapModel.instance:setNodeUnitByUnitMo(slot8, slot2, slot9)
+	if not var_9_4 then
+		return
+	end
+
+	local var_9_6 = var_9_3[1]:getNodeMo()
+
+	if var_9_6.x == var_9_0.x and var_9_6.y == var_9_0.y then
+		return
+	end
+
+	arg_9_0._unitItems[arg_9_2.y][arg_9_2.x]:destroy()
+
+	arg_9_0._unitItems[arg_9_2.y][arg_9_2.x] = nil
+
+	local var_9_7 = false
+
+	WuErLiXiMapModel.instance:addOperation(arg_9_2.id, var_9_1, var_9_0.x, var_9_0.y, var_9_6.x, var_9_6.y)
+
+	local var_9_8 = var_9_0:getNodeRay()
+	local var_9_9 = var_9_6:getNodeRay()
+
+	if not WuErLiXiMapModel.instance:isKeyActiveSelf(arg_9_2.id, var_9_6) and var_9_8 and arg_9_2.unitType == WuErLiXiEnum.UnitType.Key then
+		if var_9_9 then
+			if var_9_9.rayType == WuErLiXiEnum.RayType.SwitchSignal then
+				var_9_7 = true
+			end
+		elseif var_9_8 then
+			if (var_9_8.rayDir == WuErLiXiEnum.Dir.Up or var_9_8.rayDir == WuErLiXiEnum.Dir.Down) and var_9_0.x == var_9_6.x and var_9_0.y ~= var_9_6.y and not WuErLiXiMapModel.instance:hasBlockRayUnit(var_9_0, var_9_6, var_9_8.rayType, var_9_8.rayDir) then
+				var_9_7 = true
+			end
+
+			if (var_9_8.rayDir == WuErLiXiEnum.Dir.Left or var_9_8.rayDir == WuErLiXiEnum.Dir.Right) and var_9_0.y == var_9_6.y and var_9_0.x ~= var_9_6.x and not WuErLiXiMapModel.instance:hasBlockRayUnit(var_9_0, var_9_6, var_9_8.rayType, var_9_8.rayDir) then
+				var_9_7 = true
+			end
+		end
+	end
+
+	WuErLiXiMapModel.instance:clearNodeUnit(var_9_0, var_9_7)
+	WuErLiXiMapModel.instance:setNodeUnitByUnitMo(var_9_6, arg_9_2, var_9_7)
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.PutUnitGuideFinish)
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeUnitPlaced)
-	slot0:_refreshMap()
+	arg_9_0:_refreshMap()
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_put)
 
-	slot0._targetUnitItem = slot0._unitItems[slot8.y][slot8.x]
+	arg_9_0._targetUnitItem = arg_9_0._unitItems[var_9_6.y][var_9_6.x]
 
-	slot0._targetUnitItem:showPut(true)
-	TaskDispatcher.runDelay(slot0._resetShowPut, slot0, 0.7)
+	arg_9_0._targetUnitItem:showPut(true)
+	TaskDispatcher.runDelay(arg_9_0._resetShowPut, arg_9_0, 0.7)
 end
 
-function slot0._resetShowPut(slot0)
-	if slot0._targetUnitItem then
-		slot0._targetUnitItem:showPut(false)
+function var_0_0._resetShowPut(arg_10_0)
+	if arg_10_0._targetUnitItem then
+		arg_10_0._targetUnitItem:showPut(false)
 
-		slot0._targetUnitItem = nil
+		arg_10_0._targetUnitItem = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._resetShowPut, slot0)
+	TaskDispatcher.cancelTask(arg_10_0._resetShowPut, arg_10_0)
 end
 
-function slot0._onActUnitDragEnd(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._nodeItems) do
-		for slot11, slot12 in pairs(slot7) do
-			slot12:showPlaceable(false)
-			slot12:showHightLight(false)
-			slot12:showUnplace(false)
+function var_0_0._onActUnitDragEnd(arg_11_0, arg_11_1, arg_11_2)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._nodeItems) do
+		for iter_11_2, iter_11_3 in pairs(iter_11_1) do
+			iter_11_3:showPlaceable(false)
+			iter_11_3:showHightLight(false)
+			iter_11_3:showUnplace(false)
 		end
 	end
 
-	if not slot0:_getTargetNodeItems(slot1, slot2.type, slot2.dir) or #slot5 < 1 then
+	local var_11_0 = arg_11_2.type
+	local var_11_1 = arg_11_2.dir
+	local var_11_2 = arg_11_0:_getTargetNodeItems(arg_11_1, var_11_0, var_11_1)
+
+	if not var_11_2 or #var_11_2 < 1 then
 		return
 	end
 
-	slot6 = true
+	local var_11_3 = true
 
-	for slot10, slot11 in pairs(slot5) do
-		if WuErLiXiMapModel.instance:isNodeHasUnit(slot11:getNodeMo()) then
-			slot6 = false
+	for iter_11_4, iter_11_5 in pairs(var_11_2) do
+		local var_11_4 = iter_11_5:getNodeMo()
+
+		if WuErLiXiMapModel.instance:isNodeHasUnit(var_11_4) then
+			var_11_3 = false
 		end
 	end
 
-	if not slot6 then
+	if not var_11_3 then
 		return
 	end
 
-	WuErLiXiMapModel.instance:setNodeUnitByActUnitMo(slot5[1]:getNodeMo(), slot2)
+	WuErLiXiMapModel.instance:setNodeUnitByActUnitMo(var_11_2[1]:getNodeMo(), arg_11_2)
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.PutUnitGuideFinish)
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeUnitPlaced)
-	slot0:_refreshMap()
+	arg_11_0:_refreshMap()
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_put)
 
-	slot7 = slot5[1]:getNodeMo()
+	local var_11_5 = var_11_2[1]:getNodeMo()
 
-	WuErLiXiMapModel.instance:addOperation(slot2.id, slot3, "Null", "Null", slot7.x, slot7.y)
+	WuErLiXiMapModel.instance:addOperation(arg_11_2.id, var_11_0, "Null", "Null", var_11_5.x, var_11_5.y)
 
-	slot0._targetUnitItem = slot0._unitItems[slot7.y][slot7.x]
+	arg_11_0._targetUnitItem = arg_11_0._unitItems[var_11_5.y][var_11_5.x]
 
-	slot0._targetUnitItem:showPut(true)
-	TaskDispatcher.runDelay(slot0._resetShowPut, slot0, 0.7)
+	arg_11_0._targetUnitItem:showPut(true)
+	TaskDispatcher.runDelay(arg_11_0._resetShowPut, arg_11_0, 0.7)
 end
 
-function slot0._onUnitDraging(slot0, slot1, slot2, slot3)
-	slot0:_resetShowPut()
+function var_0_0._onUnitDraging(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_0:_resetShowPut()
 
-	for slot7, slot8 in pairs(slot0._nodeItems) do
-		for slot12, slot13 in pairs(slot8) do
-			slot13:showHightLight(true)
-			slot13:showUnplace(false)
-			slot13:showPlaceable(false)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._nodeItems) do
+		for iter_12_2, iter_12_3 in pairs(iter_12_1) do
+			iter_12_3:showHightLight(true)
+			iter_12_3:showUnplace(false)
+			iter_12_3:showPlaceable(false)
 		end
 	end
 
-	if not slot0:_getTargetNodeItems(slot1, slot3, slot2.dir or slot2:getNodeUnit().dir) or #slot5 < 1 then
+	local var_12_0 = arg_12_2.dir or arg_12_2:getNodeUnit().dir
+	local var_12_1 = arg_12_0:_getTargetNodeItems(arg_12_1, arg_12_3, var_12_0)
+
+	if not var_12_1 or #var_12_1 < 1 then
 		return
 	end
 
-	for slot9, slot10 in pairs(slot5) do
-		slot11 = slot10:getNodeMo()
-		slot12 = WuErLiXiMapModel.instance:isNodeHasUnit(slot11)
-		slot13 = slot11:getNodeUnit()
-		slot14 = slot2.x and slot13 and slot2.x == slot13.x and slot2.y == slot13.y
+	for iter_12_4, iter_12_5 in pairs(var_12_1) do
+		local var_12_2 = iter_12_5:getNodeMo()
+		local var_12_3 = WuErLiXiMapModel.instance:isNodeHasUnit(var_12_2)
+		local var_12_4 = var_12_2:getNodeUnit()
+		local var_12_5 = arg_12_2.x and var_12_4 and arg_12_2.x == var_12_4.x and arg_12_2.y == var_12_4.y
 
-		slot10:showUnplace(slot12 and not slot14)
-		slot10:showPlaceable(not slot12 or slot14)
+		iter_12_5:showUnplace(var_12_3 and not var_12_5)
+		iter_12_5:showPlaceable(not var_12_3 or var_12_5)
 	end
 end
 
-function slot0._getTargetNodeItems(slot0, slot1, slot2, slot3)
-	slot4 = WuErLiXiMapModel.instance:getMapLineCount()
-	slot5 = WuErLiXiMapModel.instance:getMapRowCount()
-	slot6 = {}
+function var_0_0._getTargetNodeItems(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = WuErLiXiMapModel.instance:getMapLineCount()
+	local var_13_1 = WuErLiXiMapModel.instance:getMapRowCount()
+	local var_13_2 = {}
 
-	for slot10, slot11 in pairs(slot0._nodeItems) do
-		for slot15, slot16 in pairs(slot11) do
-			if math.abs(recthelper.screenPosToAnchorPos(slot1, slot16.go.transform).x) * 2 <= recthelper.getWidth(slot16.go.transform) and math.abs(slot18.y) * 2 <= recthelper.getHeight(slot16.go.transform) then
-				table.insert(slot6, slot16)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._nodeItems) do
+		for iter_13_2, iter_13_3 in pairs(iter_13_1) do
+			local var_13_3 = iter_13_3.go.transform
+			local var_13_4 = recthelper.screenPosToAnchorPos(arg_13_1, var_13_3)
 
-				slot19 = slot16:getNodeMo()
+			if math.abs(var_13_4.x) * 2 <= recthelper.getWidth(iter_13_3.go.transform) and math.abs(var_13_4.y) * 2 <= recthelper.getHeight(iter_13_3.go.transform) then
+				table.insert(var_13_2, iter_13_3)
 
-				if slot2 == WuErLiXiEnum.UnitType.SignalMulti then
-					if slot3 == WuErLiXiEnum.Dir.Up or slot3 == WuErLiXiEnum.Dir.Down then
-						if slot19.x > 1 then
-							table.insert(slot6, slot0._nodeItems[slot19.y][slot19.x - 1])
+				local var_13_5 = iter_13_3:getNodeMo()
+
+				if arg_13_2 == WuErLiXiEnum.UnitType.SignalMulti then
+					if arg_13_3 == WuErLiXiEnum.Dir.Up or arg_13_3 == WuErLiXiEnum.Dir.Down then
+						if var_13_5.x > 1 then
+							table.insert(var_13_2, arg_13_0._nodeItems[var_13_5.y][var_13_5.x - 1])
 						end
 
-						if slot19.x < slot5 then
-							table.insert(slot6, slot0._nodeItems[slot19.y][slot19.x + 1])
+						if var_13_1 > var_13_5.x then
+							table.insert(var_13_2, arg_13_0._nodeItems[var_13_5.y][var_13_5.x + 1])
 						end
 					else
-						if slot19.y > 1 then
-							table.insert(slot6, slot0._nodeItems[slot19.y - 1][slot19.x])
+						if var_13_5.y > 1 then
+							table.insert(var_13_2, arg_13_0._nodeItems[var_13_5.y - 1][var_13_5.x])
 						end
 
-						if slot19.y < slot4 then
-							table.insert(slot6, slot0._nodeItems[slot19.y + 1][slot19.x])
+						if var_13_0 > var_13_5.y then
+							table.insert(var_13_2, arg_13_0._nodeItems[var_13_5.y + 1][var_13_5.x])
 						end
 					end
 				end
 
-				return slot6
+				return var_13_2
 			end
 		end
 	end
 
-	return slot6
+	return var_13_2
 end
 
-function slot0._onNodeChange(slot0)
-	slot0:_refreshMap()
+function var_0_0._onNodeChange(arg_14_0)
+	arg_14_0:_refreshMap()
 end
 
-function slot0._checkMapSuccess(slot0)
-	if not WuErLiXiMapModel.instance:isAllSignalEndActive(slot0._mapId) then
+function var_0_0._checkMapSuccess(arg_15_0)
+	if not WuErLiXiMapModel.instance:isAllSignalEndActive(arg_15_0._mapId) then
 		return
 	end
 
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.MapConnectSuccess)
 end
 
-function slot0._onMapReset(slot0)
-	slot0:_refreshMap()
+function var_0_0._onMapReset(arg_16_0)
+	arg_16_0:_refreshMap()
 end
 
-function slot0.onOpen(slot0)
-	slot0._actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
-	slot0._mapId = WuErLiXiConfig.instance:getEpisodeCo(slot0._actId, slot0.viewParam.episodeId).mapId
-	slot0._mapMo = WuErLiXiMapModel.instance:getMap(slot0._mapId)
-	slot0._nodeItems = {}
-	slot0._rayItems = {}
-	slot0._unitItems = {}
+function var_0_0.onOpen(arg_17_0)
+	arg_17_0._actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
+	arg_17_0._mapId = WuErLiXiConfig.instance:getEpisodeCo(arg_17_0._actId, arg_17_0.viewParam.episodeId).mapId
+	arg_17_0._mapMo = WuErLiXiMapModel.instance:getMap(arg_17_0._mapId)
+	arg_17_0._nodeItems = {}
+	arg_17_0._rayItems = {}
+	arg_17_0._unitItems = {}
 
-	slot0:_refreshMap()
+	arg_17_0:_refreshMap()
 end
 
-function slot0._refreshMap(slot0)
+function var_0_0._refreshMap(arg_18_0)
 	WuErLiXiMapModel.instance:setMapData()
-	slot0:_refreshNodes()
-	slot0:_refreshRays()
-	slot0:_checkMapSuccess()
+	arg_18_0:_refreshNodes()
+	arg_18_0:_refreshRays()
+	arg_18_0:_checkMapSuccess()
 end
 
-function slot0._refreshNodes(slot0)
-	slot1 = WuErLiXiMapModel.instance:getMapRowCount(slot0._mapId)
+function var_0_0._refreshNodes(arg_19_0)
+	local var_19_0 = WuErLiXiMapModel.instance:getMapRowCount(arg_19_0._mapId)
+	local var_19_1 = WuErLiXiMapModel.instance:getMapNodes(arg_19_0._mapId)
 
-	for slot6, slot7 in pairs(WuErLiXiMapModel.instance:getMapNodes(slot0._mapId)) do
-		for slot11, slot12 in pairs(slot7) do
-			if not slot0._nodeItems[slot12.y] then
-				slot0._nodeItems[slot12.y] = {}
+	for iter_19_0, iter_19_1 in pairs(var_19_1) do
+		for iter_19_2, iter_19_3 in pairs(iter_19_1) do
+			if not arg_19_0._nodeItems[iter_19_3.y] then
+				arg_19_0._nodeItems[iter_19_3.y] = {}
 			end
 
-			if not slot0._nodeItems[slot12.y][slot12.x] then
-				slot0._nodeItems[slot12.y][slot12.x] = WuErLiXiGameMapNodeItem.New()
+			if not arg_19_0._nodeItems[iter_19_3.y][iter_19_3.x] then
+				arg_19_0._nodeItems[iter_19_3.y][iter_19_3.x] = WuErLiXiGameMapNodeItem.New()
 
-				slot0._nodeItems[slot12.y][slot12.x]:init(gohelper.cloneInPlace(slot0._gonodeitem))
+				local var_19_2 = gohelper.cloneInPlace(arg_19_0._gonodeitem)
+
+				arg_19_0._nodeItems[iter_19_3.y][iter_19_3.x]:init(var_19_2)
 			end
 
-			slot0._nodeItems[slot12.y][slot12.x]:setItem(slot12)
+			arg_19_0._nodeItems[iter_19_3.y][iter_19_3.x]:setItem(iter_19_3)
 
-			if slot12.unit and slot12.x == slot12.unit.x and slot12.y == slot12.unit.y then
-				if not slot0._unitItems[slot12.y] then
-					slot0._unitItems[slot12.y] = {}
+			if iter_19_3.unit and iter_19_3.x == iter_19_3.unit.x and iter_19_3.y == iter_19_3.unit.y then
+				if not arg_19_0._unitItems[iter_19_3.y] then
+					arg_19_0._unitItems[iter_19_3.y] = {}
 				end
 
-				if not slot0._unitItems[slot12.y][slot12.x] then
-					slot0._unitItems[slot12.y][slot12.x] = WuErLiXiGameMapUnitItem.New()
+				if not arg_19_0._unitItems[iter_19_3.y][iter_19_3.x] then
+					arg_19_0._unitItems[iter_19_3.y][iter_19_3.x] = WuErLiXiGameMapUnitItem.New()
 
-					slot0._unitItems[slot12.y][slot12.x]:init(gohelper.cloneInPlace(slot0._gounititem), slot0._godragitem)
+					local var_19_3 = gohelper.cloneInPlace(arg_19_0._gounititem)
+
+					arg_19_0._unitItems[iter_19_3.y][iter_19_3.x]:init(var_19_3, arg_19_0._godragitem)
 				end
 
-				slot0._unitItems[slot12.y][slot12.x]:setItem(slot12.unit, slot0._nodeItems[slot12.y][slot12.x])
-			elseif slot0._unitItems[slot12.y] and slot0._unitItems[slot12.y][slot12.x] then
-				slot0._unitItems[slot12.y][slot12.x]:destroy()
+				arg_19_0._unitItems[iter_19_3.y][iter_19_3.x]:setItem(iter_19_3.unit, arg_19_0._nodeItems[iter_19_3.y][iter_19_3.x])
+			elseif arg_19_0._unitItems[iter_19_3.y] and arg_19_0._unitItems[iter_19_3.y][iter_19_3.x] then
+				arg_19_0._unitItems[iter_19_3.y][iter_19_3.x]:destroy()
 
-				slot0._unitItems[slot12.y][slot12.x] = nil
+				arg_19_0._unitItems[iter_19_3.y][iter_19_3.x] = nil
 			end
 		end
 	end
 
-	slot0._grid.constraintCount = slot1
+	arg_19_0._grid.constraintCount = var_19_0
 end
 
-function slot0._refreshRays(slot0)
-	slot1 = {}
+function var_0_0._refreshRays(arg_20_0)
+	local var_20_0 = {}
+	local var_20_1 = WuErLiXiMapModel.instance:getMapRays(arg_20_0._mapId)
 
-	for slot6, slot7 in pairs(WuErLiXiMapModel.instance:getMapRays(slot0._mapId)) do
-		if not slot0._rayItems[slot6] then
-			slot0._rayItems[slot6] = WuErLiXiGameMapRayItem.New()
+	for iter_20_0, iter_20_1 in pairs(var_20_1) do
+		if not arg_20_0._rayItems[iter_20_0] then
+			arg_20_0._rayItems[iter_20_0] = WuErLiXiGameMapRayItem.New()
 
-			slot0._rayItems[slot6]:init(gohelper.cloneInPlace(slot0._gorayitem))
-			slot0._rayItems[slot6]:setItem(slot7, slot0._nodeItems[slot7.startPos[2]][slot7.startPos[1]], slot0._nodeItems[slot7.endPos[2]][slot7.endPos[1]])
+			local var_20_2 = gohelper.cloneInPlace(arg_20_0._gorayitem)
+
+			arg_20_0._rayItems[iter_20_0]:init(var_20_2)
+			arg_20_0._rayItems[iter_20_0]:setItem(iter_20_1, arg_20_0._nodeItems[iter_20_1.startPos[2]][iter_20_1.startPos[1]], arg_20_0._nodeItems[iter_20_1.endPos[2]][iter_20_1.endPos[1]])
 		else
-			slot0._rayItems[slot6]:resetItem(slot7, slot0._nodeItems[slot7.endPos[2]][slot7.endPos[1]])
+			arg_20_0._rayItems[iter_20_0]:resetItem(iter_20_1, arg_20_0._nodeItems[iter_20_1.endPos[2]][iter_20_1.endPos[1]])
 		end
 
-		slot1[slot6] = true
+		var_20_0[iter_20_0] = true
 	end
 
-	for slot6, slot7 in pairs(slot0._rayItems) do
-		if not slot1[slot6] then
-			slot7:hide()
-		end
-	end
-end
-
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshRaysAndUnits, slot0)
-end
-
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
-
-	for slot4, slot5 in pairs(slot0._unitItems) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10:destroy()
-		end
-	end
-
-	for slot4, slot5 in pairs(slot0._rayItems) do
-		slot5:destroy()
-	end
-
-	for slot4, slot5 in pairs(slot0._nodeItems) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10:destroy()
+	for iter_20_2, iter_20_3 in pairs(arg_20_0._rayItems) do
+		if not var_20_0[iter_20_2] then
+			iter_20_3:hide()
 		end
 	end
 end
 
-return slot0
+function var_0_0.onClose(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._refreshRaysAndUnits, arg_21_0)
+end
+
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0:_removeEvents()
+
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._unitItems) do
+		for iter_22_2, iter_22_3 in pairs(iter_22_1) do
+			iter_22_3:destroy()
+		end
+	end
+
+	for iter_22_4, iter_22_5 in pairs(arg_22_0._rayItems) do
+		iter_22_5:destroy()
+	end
+
+	for iter_22_6, iter_22_7 in pairs(arg_22_0._nodeItems) do
+		for iter_22_8, iter_22_9 in pairs(iter_22_7) do
+			iter_22_9:destroy()
+		end
+	end
+end
+
+return var_0_0

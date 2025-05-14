@@ -1,53 +1,62 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotCollectionBagController", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotCollectionBagController", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionBagController", BaseController)
-slot1 = 1
+local var_0_0 = class("V1a6_CachotCollectionBagController", BaseController)
+local var_0_1 = 1
 
-function slot0.onOpenView(slot0)
-	V1a6_CachotCollectionEnchantController.instance:registerCallback(V1a6_CachotEvent.OnSelectEnchantCollection, slot0.onEnchantViewSelectCollection, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateCollectionsInfo, slot0.onCollectionDataUpdate, slot0)
+function var_0_0.onOpenView(arg_1_0)
+	V1a6_CachotCollectionEnchantController.instance:registerCallback(V1a6_CachotEvent.OnSelectEnchantCollection, arg_1_0.onEnchantViewSelectCollection, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateCollectionsInfo, arg_1_0.onCollectionDataUpdate, arg_1_0)
 	V1a6_CachotCollectionBagListModel.instance:onInitData()
-	slot0:onSelectBagItemByIndex(uv0)
+	arg_1_0:onSelectBagItemByIndex(var_0_1)
 end
 
-function slot0.onCloseView(slot0)
-	V1a6_CachotCollectionEnchantController.instance:unregisterCallback(V1a6_CachotEvent.OnSelectEnchantCollection, slot0.onEnchantViewSelectCollection, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateCollectionsInfo, slot0.onCollectionDataUpdate, slot0)
+function var_0_0.onCloseView(arg_2_0)
+	V1a6_CachotCollectionEnchantController.instance:unregisterCallback(V1a6_CachotEvent.OnSelectEnchantCollection, arg_2_0.onEnchantViewSelectCollection, arg_2_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateCollectionsInfo, arg_2_0.onCollectionDataUpdate, arg_2_0)
 end
 
-function slot0.onCollectionDataUpdate(slot0)
+function var_0_0.onCollectionDataUpdate(arg_3_0)
 	V1a6_CachotCollectionBagListModel.instance:onCollectionDataUpdate()
-	slot0:notifyViewUpdate()
+	arg_3_0:notifyViewUpdate()
 end
 
-function slot0.onSelectBagItemByIndex(slot0, slot1)
-	V1a6_CachotCollectionBagListModel.instance:selectCell(slot1, true)
-	slot0:notifyViewUpdate(V1a6_CachotCollectionBagListModel.instance:getByIndex(slot1) and slot2.id)
+function var_0_0.onSelectBagItemByIndex(arg_4_0, arg_4_1)
+	V1a6_CachotCollectionBagListModel.instance:selectCell(arg_4_1, true)
+
+	local var_4_0 = V1a6_CachotCollectionBagListModel.instance:getByIndex(arg_4_1)
+	local var_4_1 = var_4_0 and var_4_0.id
+
+	arg_4_0:notifyViewUpdate(var_4_1)
 end
 
-function slot0.onSelectBagItemById(slot0, slot1)
-	V1a6_CachotCollectionBagListModel.instance:selectCell(V1a6_CachotCollectionBagListModel.instance:getIndex(V1a6_CachotCollectionBagListModel.instance:getById(slot1)), true)
-	slot0:notifyViewUpdate(slot1)
+function var_0_0.onSelectBagItemById(arg_5_0, arg_5_1)
+	local var_5_0 = V1a6_CachotCollectionBagListModel.instance:getById(arg_5_1)
+	local var_5_1 = V1a6_CachotCollectionBagListModel.instance:getIndex(var_5_0)
+
+	V1a6_CachotCollectionBagListModel.instance:selectCell(var_5_1, true)
+	arg_5_0:notifyViewUpdate(arg_5_1)
 end
 
-function slot0.onEnchantViewSelectCollection(slot0, slot1)
-	slot0:onSelectBagItemById(slot1)
+function var_0_0.onEnchantViewSelectCollection(arg_6_0, arg_6_1)
+	arg_6_0:onSelectBagItemById(arg_6_1)
 end
 
-function slot0.notifyViewUpdate(slot0, slot1)
-	slot0:dispatchEvent(V1a6_CachotEvent.OnSelectBagCollection, slot1)
+function var_0_0.notifyViewUpdate(arg_7_0, arg_7_1)
+	arg_7_0:dispatchEvent(V1a6_CachotEvent.OnSelectBagCollection, arg_7_1)
 end
 
-function slot0.moveCollectionWithHole2TopAndSelect(slot0)
-	if V1a6_CachotCollectionBagListModel.instance:moveCollectionWithHole2Top() then
-		slot0:onSelectBagItemByIndex(uv0)
+function var_0_0.moveCollectionWithHole2TopAndSelect(arg_8_0)
+	local var_8_0 = V1a6_CachotCollectionBagListModel.instance:moveCollectionWithHole2Top()
+
+	if var_8_0 then
+		arg_8_0:onSelectBagItemByIndex(var_0_1)
 	end
 
-	return slot1
+	return var_8_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

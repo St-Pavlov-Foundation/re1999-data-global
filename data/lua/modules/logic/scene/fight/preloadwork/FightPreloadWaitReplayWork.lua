@@ -1,25 +1,27 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadWaitReplayWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadWaitReplayWork", package.seeall)
 
-slot0 = class("FightPreloadWaitReplayWork", BaseWork)
+local var_0_0 = class("FightPreloadWaitReplayWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	if FightModel.instance:getFightParam() and slot2.isReplay then
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = FightModel.instance:getFightParam()
+
+	if var_1_0 and var_1_0.isReplay then
 		if FightReplayModel.instance:isReplay() then
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		else
-			FightController.instance:registerCallback(FightEvent.StartReplay, slot0._onStartReplay, slot0)
+			FightController.instance:registerCallback(FightEvent.StartReplay, arg_1_0._onStartReplay, arg_1_0)
 		end
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onStartReplay(slot0)
-	slot0:onDone(true)
+function var_0_0._onStartReplay(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.StartReplay, slot0._onStartReplay, slot0)
+function var_0_0.clearWork(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.StartReplay, arg_3_0._onStartReplay, arg_3_0)
 end
 
-return slot0
+return var_0_0

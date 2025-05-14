@@ -1,10 +1,11 @@
-module("modules.logic.prototest.model.ProtoFileHelper", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoFileHelper", package.seeall)
 
-slot0 = _M
-slot0.DirPath = SLFramework.FrameworkSettings.StreamingAssetsPath .. "/prototest/"
+local var_0_0 = _M
 
-function slot0.getFullPathByFileName(slot0)
-	return uv0.DirPath .. slot0 .. ".json"
+var_0_0.DirPath = SLFramework.FrameworkSettings.StreamingAssetsPath .. "/prototest/"
+
+function var_0_0.getFullPathByFileName(arg_1_0)
+	return var_0_0.DirPath .. arg_1_0 .. ".json"
 end
 
-return slot0
+return var_0_0

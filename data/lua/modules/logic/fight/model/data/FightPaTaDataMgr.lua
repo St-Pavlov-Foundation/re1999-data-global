@@ -1,153 +1,166 @@
-module("modules.logic.fight.model.data.FightPaTaDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightPaTaDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightPaTaDataMgr")
+local var_0_0 = FightDataClass("FightPaTaDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0.bossInfoList = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.bossInfoList = {}
 end
 
-function slot0.sortSkillInfo(slot0, slot1)
-	return slot0.powerLow < slot1.powerLow
+function var_0_0.sortSkillInfo(arg_2_0, arg_2_1)
+	return arg_2_0.powerLow < arg_2_1.powerLow
 end
 
-function slot0.updateData(slot0, slot1)
-	if not slot1.attacker:HasField("assistBossInfo") then
+function var_0_0.updateData(arg_3_0, arg_3_1)
+	if not arg_3_1.attacker:HasField("assistBossInfo") then
 		return
 	end
 
-	slot2 = slot1.attacker.assistBossInfo
-	slot0.currCd = slot2.currCd
-	slot0.cfgCd = slot2.cdCfg
-	slot0.formId = slot2.formId
-	slot0.roundUseLimit = slot2.roundUseLimit
-	slot0.exceedUseFree = slot2.exceedUseFree
-	slot0.params = slot2.params
-	slot0.preUsePower = 0
-	slot0.preCostCd = 0
-	slot0.useCardCount = 0
+	local var_3_0 = arg_3_1.attacker.assistBossInfo
 
-	slot0:updateSkill(slot2.skills)
+	arg_3_0.currCd = var_3_0.currCd
+	arg_3_0.cfgCd = var_3_0.cdCfg
+	arg_3_0.formId = var_3_0.formId
+	arg_3_0.roundUseLimit = var_3_0.roundUseLimit
+	arg_3_0.exceedUseFree = var_3_0.exceedUseFree
+	arg_3_0.params = var_3_0.params
+	arg_3_0.preUsePower = 0
+	arg_3_0.preCostCd = 0
+	arg_3_0.useCardCount = 0
+
+	arg_3_0:updateSkill(var_3_0.skills)
 end
 
-function slot0.switchBossSkill(slot0, slot1)
-	if not slot1 then
+function var_0_0.switchBossSkill(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot0.currCd = slot1.currCd
-	slot0.cfgCd = slot1.cdCfg
-	slot0.formId = slot1.formId
+	arg_4_0.currCd = arg_4_1.currCd
+	arg_4_0.cfgCd = arg_4_1.cdCfg
+	arg_4_0.formId = arg_4_1.formId
 
-	slot0:updateSkill(slot1.skills)
+	arg_4_0:updateSkill(arg_4_1.skills)
 end
 
-function slot0.updateSkill(slot0, slot1)
-	tabletool.clear(slot0.bossInfoList)
+function var_0_0.updateSkill(arg_5_0, arg_5_1)
+	tabletool.clear(arg_5_0.bossInfoList)
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = FightAssistBossSkillInfoMo.New()
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = FightAssistBossSkillInfoMo.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.bossInfoList, slot7)
+		var_5_0:init(iter_5_1)
+		table.insert(arg_5_0.bossInfoList, var_5_0)
 	end
 
-	table.sort(slot0.bossInfoList, uv0.sortSkillInfo)
+	table.sort(arg_5_0.bossInfoList, var_0_0.sortSkillInfo)
 end
 
-function slot0.changeScore(slot0, slot1)
-	slot0.score = slot0.score and slot0.score + slot1 or slot1
+function var_0_0.changeScore(arg_6_0, arg_6_1)
+	arg_6_0.score = arg_6_0.score and arg_6_0.score + arg_6_1 or arg_6_1
 end
 
-function slot0.getScore(slot0)
-	return slot0.score
+function var_0_0.getScore(arg_7_0)
+	return arg_7_0.score
 end
 
-function slot0.hadCD(slot0)
-	return slot0.cfgCd and slot0.cfgCd > 0
+function var_0_0.hadCD(arg_8_0)
+	return arg_8_0.cfgCd and arg_8_0.cfgCd > 0
 end
 
-function slot0.getCurCD(slot0)
-	return slot0.currCd + slot0.preCostCd
+function var_0_0.getCurCD(arg_9_0)
+	return arg_9_0.currCd + arg_9_0.preCostCd
 end
 
-function slot0.setCurrCD(slot0, slot1)
-	slot0.currCd = tonumber(slot1)
+function var_0_0.setCurrCD(arg_10_0, arg_10_1)
+	arg_10_0.currCd = tonumber(arg_10_1)
 end
 
-function slot0.getFromId(slot0)
-	return slot0.formId + 1
+function var_0_0.getFromId(arg_11_0)
+	return arg_11_0.formId + 1
 end
 
-function slot0.getAssistBossPower(slot0)
-	slot2 = slot0:getAssistBossMo() and slot1:getPowerInfo(FightEnum.PowerType.AssistBoss)
+function var_0_0.getAssistBossPower(arg_12_0)
+	local var_12_0 = arg_12_0:getAssistBossMo()
+	local var_12_1 = var_12_0 and var_12_0:getPowerInfo(FightEnum.PowerType.AssistBoss)
+	local var_12_2 = var_12_1 and var_12_1.num or 0
+	local var_12_3 = var_12_1 and var_12_1.max or 0
 
-	return (slot2 and slot2.num or 0) - slot0.preUsePower, slot2 and slot2.max or 0
+	return var_12_2 - arg_12_0.preUsePower, var_12_3
 end
 
-function slot0.getAssistBossServerPower(slot0)
-	slot2 = slot0:getAssistBossMo() and slot1:getPowerInfo(FightEnum.PowerType.AssistBoss)
+function var_0_0.getAssistBossServerPower(arg_13_0)
+	local var_13_0 = arg_13_0:getAssistBossMo()
+	local var_13_1 = var_13_0 and var_13_0:getPowerInfo(FightEnum.PowerType.AssistBoss)
+	local var_13_2 = var_13_1 and var_13_1.num or 0
+	local var_13_3 = var_13_1 and var_13_1.max or 0
 
-	return slot2 and slot2.num or 0, slot2 and slot2.max or 0
+	return var_13_2, var_13_3
 end
 
-function slot0.getAssistBossMo(slot0)
-	return slot0.dataMgr.entityMgr:getAssistBoss()
+function var_0_0.getAssistBossMo(arg_14_0)
+	return arg_14_0.dataMgr.entityMgr:getAssistBoss()
 end
 
-function slot0.playAssistBossSkill(slot0, slot1)
-	slot0.preUsePower = slot0.preUsePower + slot0:getNeedPower(slot1)
-	slot0.useCardCount = slot0.useCardCount + 1
-	slot0.preCostCd = slot0.preCostCd + slot0.cfgCd
+function var_0_0.playAssistBossSkill(arg_15_0, arg_15_1)
+	arg_15_0.preUsePower = arg_15_0.preUsePower + arg_15_0:getNeedPower(arg_15_1)
+	arg_15_0.useCardCount = arg_15_0.useCardCount + 1
+	arg_15_0.preCostCd = arg_15_0.preCostCd + arg_15_0.cfgCd
 end
 
-function slot0.getNeedPower(slot0, slot1)
-	if slot0.exceedUseFree ~= 0 and slot0.exceedUseFree <= slot0.useCardCount then
+function var_0_0.getNeedPower(arg_16_0, arg_16_1)
+	if arg_16_0.exceedUseFree ~= 0 and arg_16_0.useCardCount >= arg_16_0.exceedUseFree then
 		return 0
 	end
 
-	return slot1.needPower
+	return arg_16_1.needPower
 end
 
-function slot0.playAssistBossSkillBySkillId(slot0, slot1)
-	for slot5 = #slot0.bossInfoList, 1, -1 do
-		if slot0.bossInfoList[slot5].skillId == slot1 then
-			slot0:playAssistBossSkill(slot6)
+function var_0_0.playAssistBossSkillBySkillId(arg_17_0, arg_17_1)
+	for iter_17_0 = #arg_17_0.bossInfoList, 1, -1 do
+		local var_17_0 = arg_17_0.bossInfoList[iter_17_0]
+
+		if var_17_0.skillId == arg_17_1 then
+			arg_17_0:playAssistBossSkill(var_17_0)
 
 			return
 		end
 	end
 end
 
-function slot0.resetOp(slot0)
-	slot0.preUsePower = 0
-	slot0.useCardCount = 0
-	slot0.preCostCd = 0
+function var_0_0.resetOp(arg_18_0)
+	arg_18_0.preUsePower = 0
+	arg_18_0.useCardCount = 0
+	arg_18_0.preCostCd = 0
 end
 
-function slot0.canUseSkill(slot0)
-	if slot0.roundUseLimit ~= 0 then
-		return slot0.useCardCount < slot0.roundUseLimit
+function var_0_0.canUseSkill(arg_19_0)
+	if arg_19_0.roundUseLimit ~= 0 then
+		return arg_19_0.useCardCount < arg_19_0.roundUseLimit
 	end
 
-	return slot0.useCardCount < (lua_tower_const.configDict[115] and tonumber(slot1.value) or 20)
+	local var_19_0 = lua_tower_const.configDict[115]
+
+	return (var_19_0 and tonumber(var_19_0.value) or 20) > arg_19_0.useCardCount
 end
 
-function slot0.getCurUseSkillInfo(slot0)
-	slot1 = slot0:getAssistBossPower()
+function var_0_0.getCurUseSkillInfo(arg_20_0)
+	local var_20_0 = arg_20_0:getAssistBossPower()
 
-	for slot5 = #slot0.bossInfoList, 1, -1 do
-		if slot0.bossInfoList[slot5].powerLow <= slot1 and slot0:getNeedPower(slot6) <= slot1 then
-			return slot6
+	for iter_20_0 = #arg_20_0.bossInfoList, 1, -1 do
+		local var_20_1 = arg_20_0.bossInfoList[iter_20_0]
+
+		if var_20_0 >= var_20_1.powerLow and var_20_0 >= arg_20_0:getNeedPower(var_20_1) then
+			return var_20_1
 		end
 	end
 end
 
-function slot0.getUseCardCount(slot0)
-	return slot0.useCardCount
+function var_0_0.getUseCardCount(arg_21_0)
+	return arg_21_0.useCardCount
 end
 
-function slot0.getBossSkillInfoList(slot0)
-	return slot0.bossInfoList
+function var_0_0.getBossSkillInfoList(arg_22_0)
+	return arg_22_0.bossInfoList
 end
 
-return slot0
+return var_0_0

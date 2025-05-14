@@ -1,37 +1,41 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDieStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDieStep", package.seeall)
 
-slot0 = class("TianShiNaNaDieStep", TianShiNaNaStepBase)
+local var_0_0 = class("TianShiNaNaDieStep", TianShiNaNaStepBase)
 
-function slot0.onStart(slot0, slot1)
-	if not TianShiNaNaModel.instance:getHeroMo() then
-		slot0:_delayDone()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = TianShiNaNaModel.instance:getHeroMo()
+
+	if not var_1_0 then
+		arg_1_0:_delayDone()
 
 		return
 	end
 
-	if not TianShiNaNaEntityMgr.instance:getEntity(slot2.co.id) then
-		slot0:_delayDone()
+	local var_1_1 = TianShiNaNaEntityMgr.instance:getEntity(var_1_0.co.id)
+
+	if not var_1_1 then
+		arg_1_0:_delayDone()
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_death)
-	slot3:playCloseAnim()
+	var_1_1:playCloseAnim()
 	UIBlockMgr.instance:startBlock("TianShiNaNaDieStep")
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 1)
+	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 1)
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_2_0)
 	ViewMgr.instance:openView(ViewName.TianShiNaNaResultView, {
 		isWin = false,
-		reason = slot0._data.reason
+		reason = arg_2_0._data.reason
 	})
-	slot0:onDone(false)
+	arg_2_0:onDone(false)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
 	UIBlockMgr.instance:endBlock("TianShiNaNaDieStep")
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
 end
 
-return slot0
+return var_0_0

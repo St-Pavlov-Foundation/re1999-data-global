@@ -1,209 +1,253 @@
-module("modules.logic.weekwalk.model.WeekWalkTaskListModel", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekWalkTaskListModel", package.seeall)
 
-slot0 = class("WeekWalkTaskListModel", ListScrollModel)
+local var_0_0 = class("WeekWalkTaskListModel", ListScrollModel)
 
-function slot0.setTaskRewardList(slot0, slot1)
-	slot0._rewardList = slot1
+function var_0_0.setTaskRewardList(arg_1_0, arg_1_1)
+	arg_1_0._rewardList = arg_1_1
 end
 
-function slot0.getTaskRewardList(slot0)
-	return slot0._rewardList
+function var_0_0.getTaskRewardList(arg_2_0)
+	return arg_2_0._rewardList
 end
 
-function slot0.getLayerTaskMapId(slot0)
-	return slot0._layerTaskMapId
+function var_0_0.getLayerTaskMapId(arg_3_0)
+	return arg_3_0._layerTaskMapId
 end
 
-function slot0.getSortIndex(slot0, slot1)
-	return slot0._sortMap[slot1] or 0
+function var_0_0.getSortIndex(arg_4_0, arg_4_1)
+	return arg_4_0._sortMap[arg_4_1] or 0
 end
 
-function slot0._canGet(slot0, slot1)
-	if uv0.instance:getTaskMo(slot1) then
-		if slot2.hasFinished and not (lua_task_weekwalk.configDict[slot1].maxFinishCount <= slot2.finishCount) then
+function var_0_0._canGet(arg_5_0, arg_5_1)
+	local var_5_0 = var_0_0.instance:getTaskMo(arg_5_1)
+
+	if var_5_0 then
+		local var_5_1 = lua_task_weekwalk.configDict[arg_5_1]
+		local var_5_2 = var_5_0.finishCount >= var_5_1.maxFinishCount
+
+		if var_5_0.hasFinished and not var_5_2 then
 			return true
 		end
 	end
 end
 
-function slot0.getCanGetList(slot0)
-	slot1 = {}
+function var_0_0.getCanGetList(arg_6_0)
+	local var_6_0 = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if slot6.id and slot0:_canGet(slot6.id) then
-			table.insert(slot1, slot6.id)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0:getList()) do
+		if iter_6_1.id and arg_6_0:_canGet(iter_6_1.id) then
+			table.insert(var_6_0, iter_6_1.id)
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.checkPeriods(slot0, slot1)
-	if string.nilorempty(slot1.periods) then
+function var_0_0.checkPeriods(arg_7_0, arg_7_1)
+	if string.nilorempty(arg_7_1.periods) then
 		return true
 	end
 
-	return WeekWalkModel.instance:getInfo() and (string.splitToNumber(slot1.periods, "#")[1] or 0) <= slot5.issueId and slot5.issueId <= (slot2[2] or 0)
+	local var_7_0 = string.splitToNumber(arg_7_1.periods, "#")
+	local var_7_1 = var_7_0[1] or 0
+	local var_7_2 = var_7_0[2] or 0
+	local var_7_3 = WeekWalkModel.instance:getInfo()
+
+	return var_7_3 and var_7_1 <= var_7_3.issueId and var_7_2 >= var_7_3.issueId
 end
 
-function slot0.showLayerTaskList(slot0, slot1, slot2)
-	slot0._layerTaskMapId = slot2
-	slot3 = {}
-	slot0._sortMap = {}
-	slot4 = 1
-	slot7 = tostring(lua_weekwalk.configDict[slot2].layer)
+function var_0_0.showLayerTaskList(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._layerTaskMapId = arg_8_2
 
-	for slot12, slot13 in ipairs(TaskConfig.instance:getWeekWalkTaskList(slot1)) do
-		if (slot13.listenerParam == slot7 or slot13.listenerType == "WeekwalkBattle" and string.find(slot13.listenerParam, slot7)) and slot0:checkPeriods(slot13) then
-			table.insert(slot3, slot13)
+	local var_8_0 = {}
 
-			slot0._sortMap[slot13] = slot4
-			slot4 = slot4 + 1
+	arg_8_0._sortMap = {}
 
-			if slot0:_canGet(slot13.id) then
-				slot5 = 0 + 1
+	local var_8_1 = 1
+	local var_8_2 = 0
+	local var_8_3 = lua_weekwalk.configDict[arg_8_2]
+	local var_8_4 = tostring(var_8_3.layer)
+	local var_8_5 = TaskConfig.instance:getWeekWalkTaskList(arg_8_1)
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_5) do
+		if (iter_8_1.listenerParam == var_8_4 or iter_8_1.listenerType == "WeekwalkBattle" and string.find(iter_8_1.listenerParam, var_8_4)) and arg_8_0:checkPeriods(iter_8_1) then
+			table.insert(var_8_0, iter_8_1)
+
+			arg_8_0._sortMap[iter_8_1] = var_8_1
+			var_8_1 = var_8_1 + 1
+
+			if arg_8_0:_canGet(iter_8_1.id) then
+				var_8_2 = var_8_2 + 1
 			end
 		end
 	end
 
-	table.sort(slot3, slot0._sort)
+	table.sort(var_8_0, arg_8_0._sort)
 
-	if slot5 > 1 then
-		table.insert(slot3, 1, {
+	if var_8_2 > 1 then
+		table.insert(var_8_0, 1, {
 			id = 0,
 			isGetAll = true,
-			minTypeId = slot1
+			minTypeId = arg_8_1
 		})
 	end
 
-	table.insert(slot3, {
+	local var_8_6 = {
 		isDirtyData = true
-	})
-	slot0:setList(slot3)
+	}
+
+	table.insert(var_8_0, var_8_6)
+	arg_8_0:setList(var_8_0)
 end
 
-function slot0.showTaskList(slot0, slot1, slot2)
-	uv0._mapId = tostring(slot2)
+function var_0_0.showTaskList(arg_9_0, arg_9_1, arg_9_2)
+	var_0_0._mapId = tostring(arg_9_2)
 
-	table.sort(TaskConfig.instance:getWeekWalkTaskList(slot1), slot0._sort)
+	local var_9_0 = TaskConfig.instance:getWeekWalkTaskList(arg_9_1)
 
-	if slot0:canGetRewardNum(slot1) > 1 then
-		table.insert({}, 1, {
+	table.sort(var_9_0, arg_9_0._sort)
+
+	local var_9_1 = {}
+
+	if arg_9_0:canGetRewardNum(arg_9_1) > 1 then
+		table.insert(var_9_1, 1, {
 			id = 0,
 			isGetAll = true,
-			minTypeId = slot1
+			minTypeId = arg_9_1
 		})
 	end
 
-	for slot9, slot10 in ipairs(slot3) do
-		table.insert(slot4, slot10)
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		table.insert(var_9_1, iter_9_1)
 	end
 
-	table.insert(slot4, {
+	local var_9_2 = {
 		isDirtyData = true
-	})
-	slot0:setList(slot4)
+	}
+
+	table.insert(var_9_1, var_9_2)
+	arg_9_0:setList(var_9_1)
 end
 
-function slot0.canGetRewardNum(slot0, slot1, slot2)
-	slot3 = TaskConfig.instance:getWeekWalkTaskList(slot1)
-	slot4 = 0
-	slot5 = 0
-	slot6 = nil
+function var_0_0.canGetRewardNum(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = TaskConfig.instance:getWeekWalkTaskList(arg_10_1)
+	local var_10_1 = 0
+	local var_10_2 = 0
+	local var_10_3
 
-	if slot2 then
-		slot6 = tostring(lua_weekwalk.configDict[slot2].layer)
+	if arg_10_2 then
+		local var_10_4 = lua_weekwalk.configDict[arg_10_2]
+
+		var_10_3 = tostring(var_10_4.layer)
 	end
 
-	for slot10, slot11 in ipairs(slot3) do
-		if uv0.instance:getTaskMo(slot11.id) then
-			slot14 = lua_task_weekwalk.configDict[slot11.id].maxFinishCount <= slot12.finishCount
-			slot15 = slot12.hasFinished
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		local var_10_5 = var_0_0.instance:getTaskMo(iter_10_1.id)
 
-			if (not slot6 or slot11.listenerParam == slot6 or slot11.listenerType == "WeekwalkBattle" and string.find(slot11.listenerParam, slot6)) and slot0:checkPeriods(slot11) then
-				if not slot14 then
-					slot5 = slot5 + 1
+		if var_10_5 then
+			local var_10_6 = lua_task_weekwalk.configDict[iter_10_1.id]
+			local var_10_7 = var_10_5.finishCount >= var_10_6.maxFinishCount
+			local var_10_8 = var_10_5.hasFinished
+
+			if (not var_10_3 or iter_10_1.listenerParam == var_10_3 or iter_10_1.listenerType == "WeekwalkBattle" and string.find(iter_10_1.listenerParam, var_10_3)) and arg_10_0:checkPeriods(iter_10_1) then
+				if not var_10_7 then
+					var_10_2 = var_10_2 + 1
 				end
 
-				if slot15 and not slot14 then
-					slot4 = slot4 + 1
+				if var_10_8 and not var_10_7 then
+					var_10_1 = var_10_1 + 1
 				end
 			end
 		end
 	end
 
-	return slot4, slot5
+	return var_10_1, var_10_2
 end
 
-function slot0.canGetReward(slot0, slot1)
-	for slot6, slot7 in ipairs(TaskConfig.instance:getWeekWalkTaskList(slot1)) do
-		if not uv0.instance:getTaskMo(slot7.id) then
+function var_0_0.canGetReward(arg_11_0, arg_11_1)
+	local var_11_0 = TaskConfig.instance:getWeekWalkTaskList(arg_11_1)
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = var_0_0.instance:getTaskMo(iter_11_1.id)
+
+		if not var_11_1 then
 			return false
 		end
 
-		if slot8.hasFinished and not (lua_task_weekwalk.configDict[slot7.id].maxFinishCount <= slot8.finishCount) then
+		local var_11_2 = lua_task_weekwalk.configDict[iter_11_1.id]
+		local var_11_3 = var_11_1.finishCount >= var_11_2.maxFinishCount
+
+		if var_11_1.hasFinished and not var_11_3 then
 			return true
 		end
 	end
 end
 
-function slot0._sort(slot0, slot1)
-	slot3 = uv0.instance:_taskStatus(slot1)
-	slot5 = slot1.listenerParam == uv0._mapId
+function var_0_0._sort(arg_12_0, arg_12_1)
+	local var_12_0 = var_0_0.instance:_taskStatus(arg_12_0)
+	local var_12_1 = var_0_0.instance:_taskStatus(arg_12_1)
+	local var_12_2 = arg_12_0.listenerParam == var_0_0._mapId
+	local var_12_3 = arg_12_1.listenerParam == var_0_0._mapId
 
-	if slot0.listenerParam == uv0._mapId and not slot5 and uv0.instance:_taskStatus(slot0) ~= 3 then
+	if var_12_2 and not var_12_3 and var_12_0 ~= 3 then
 		return true
 	end
 
-	if not slot4 and slot5 and slot3 ~= 3 then
+	if not var_12_2 and var_12_3 and var_12_1 ~= 3 then
 		return false
 	end
 
-	if slot2 ~= slot3 then
-		return slot2 < slot3
+	if var_12_0 ~= var_12_1 then
+		return var_12_0 < var_12_1
 	end
 
-	return slot0.id < slot1.id
+	return arg_12_0.id < arg_12_1.id
 end
 
-function slot0._taskStatus(slot0, slot1)
-	slot3 = lua_task_weekwalk.configDict[slot1.id]
+function var_0_0._taskStatus(arg_13_0, arg_13_1)
+	local var_13_0 = var_0_0.instance:getTaskMo(arg_13_1.id)
+	local var_13_1 = lua_task_weekwalk.configDict[arg_13_1.id]
 
-	if not uv0.instance:getTaskMo(slot1.id) or not slot3 then
+	if not var_13_0 or not var_13_1 then
 		return 2
 	end
 
-	slot5 = slot2.hasFinished
+	local var_13_2 = var_13_0.finishCount >= var_13_1.maxFinishCount
+	local var_13_3 = var_13_0.hasFinished
 
-	if slot3.maxFinishCount <= slot2.finishCount then
+	if var_13_2 then
 		return 3
-	elseif slot5 then
+	elseif var_13_3 then
 		return 1
 	end
 
 	return 2
 end
 
-function slot0.hasFinished(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if uv0.instance:getTaskMo(slot6.id) and slot7.hasFinished then
+function var_0_0.hasFinished(arg_14_0)
+	local var_14_0 = arg_14_0:getList()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_1 = var_0_0.instance:getTaskMo(iter_14_1.id)
+
+		if var_14_1 and var_14_1.hasFinished then
 			return true
 		end
 	end
 end
 
-function slot0.updateTaskList(slot0)
-	slot0._taskList = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.WeekWalk)
+function var_0_0.updateTaskList(arg_15_0)
+	arg_15_0._taskList = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.WeekWalk)
 end
 
-function slot0.hasTaskList(slot0)
-	return slot0._taskList
+function var_0_0.hasTaskList(arg_16_0)
+	return arg_16_0._taskList
 end
 
-function slot0.getTaskMo(slot0, slot1)
-	return slot0._taskList and slot0._taskList[slot1]
+function var_0_0.getTaskMo(arg_17_0, arg_17_1)
+	return arg_17_0._taskList and arg_17_0._taskList[arg_17_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.activity.model.ActivityNoviceSignItemListModel", package.seeall)
+﻿module("modules.logic.activity.model.ActivityNoviceSignItemListModel", package.seeall)
 
-slot0 = class("ActivityNoviceSignItemListModel", ListScrollModel)
+local var_0_0 = class("ActivityNoviceSignItemListModel", ListScrollModel)
 
-function slot0.setDayList(slot0, slot1)
-	slot0._moList = slot1 and slot1 or {}
+function var_0_0.setDayList(arg_1_0, arg_1_1)
+	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

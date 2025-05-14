@@ -1,16 +1,19 @@
-module("modules.logic.fight.system.work.FightWorkEntitySync", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEntitySync", package.seeall)
 
-slot0 = class("FightWorkEntitySync", FightEffectBase)
+local var_0_0 = class("FightWorkEntitySync", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if slot0._actEffectMO.entityMO then
-		slot0:com_sendFightEvent(FightEvent.EntitySync, slot1.id)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.entityMO
+
+	if var_1_0 then
+		arg_1_0:com_sendFightEvent(FightEvent.EntitySync, var_1_0.id)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

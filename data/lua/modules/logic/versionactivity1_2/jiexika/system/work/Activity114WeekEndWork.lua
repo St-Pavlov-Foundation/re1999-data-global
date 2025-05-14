@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114WeekEndWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114WeekEndWork", package.seeall)
 
-slot0 = class("Activity114WeekEndWork", Activity114OpenViewWork)
+local var_0_0 = class("Activity114WeekEndWork", Activity114OpenViewWork)
 
-function slot0.onStart(slot0, slot1)
-	slot0._viewName = ViewName.Activity114ScoreReportView
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0._viewName = ViewName.Activity114ScoreReportView
 
-	uv0.super.onStart(slot0, slot1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 end
 
-return slot0
+return var_0_0

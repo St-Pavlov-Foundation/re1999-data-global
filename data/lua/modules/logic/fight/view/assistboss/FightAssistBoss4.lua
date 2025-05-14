@@ -1,206 +1,233 @@
-module("modules.logic.fight.view.assistboss.FightAssistBoss4", package.seeall)
+﻿module("modules.logic.fight.view.assistboss.FightAssistBoss4", package.seeall)
 
-slot0 = class("FightAssistBoss4", FightAssistBossBase)
+local var_0_0 = class("FightAssistBoss4", FightAssistBossBase)
 
-function slot0.setPrefabPath(slot0)
-	slot0.prefabPath = "ui/viewres/assistboss/boss4.prefab"
+function var_0_0.setPrefabPath(arg_1_0)
+	arg_1_0.prefabPath = "ui/viewres/assistboss/boss4.prefab"
 end
 
-function slot0.initView(slot0)
-	uv0.super.initView(slot0)
+function var_0_0.initView(arg_2_0)
+	var_0_0.super.initView(arg_2_0)
 
-	slot0.goCanUseFrame = gohelper.findChild(slot0.viewGo, "head/canuse_frame")
-	slot0.goBg = gohelper.findChild(slot0.viewGo, "head/bg")
-	slot0.pointList = {}
+	arg_2_0.goCanUseFrame = gohelper.findChild(arg_2_0.viewGo, "head/canuse_frame")
+	arg_2_0.goBg = gohelper.findChild(arg_2_0.viewGo, "head/bg")
+	arg_2_0.pointList = {}
 
-	slot0:createPointItem(gohelper.findChild(slot0.viewGo, "head/point1"))
-	slot0:createPointItem(gohelper.findChild(slot0.viewGo, "head/point2"))
-	slot0:createPointItem(gohelper.findChild(slot0.viewGo, "head/point3"))
+	arg_2_0:createPointItem(gohelper.findChild(arg_2_0.viewGo, "head/point1"))
+	arg_2_0:createPointItem(gohelper.findChild(arg_2_0.viewGo, "head/point2"))
+	arg_2_0:createPointItem(gohelper.findChild(arg_2_0.viewGo, "head/point3"))
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0.onBuffUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, slot0.onMySideRoundEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.StageChanged, slot0.stageChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0.onSkillPlayFinish, slot0)
+function var_0_0.addEvents(arg_3_0)
+	var_0_0.super.addEvents(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0.onBuffUpdate, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_3_0.onMySideRoundEnd, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0.stageChange, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_3_0.onSkillPlayFinish, arg_3_0)
 end
 
-function slot0.createPointItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goUsing = gohelper.findChild(slot1, "canuse")
-	slot2.goOver = gohelper.findChild(slot1, "over")
-	slot2.energyImage = gohelper.findChildImage(slot1, "energybg/energy")
-	slot2.goFull = gohelper.findChild(slot1, "full")
-	slot2.energyImage.fillAmount = 0
+function var_0_0.createPointItem(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getUserDataTb_()
 
-	table.insert(slot0.pointList, slot2)
-	slot0:resetPointItem(slot2)
+	var_4_0.go = arg_4_1
+	var_4_0.goUsing = gohelper.findChild(arg_4_1, "canuse")
+	var_4_0.goOver = gohelper.findChild(arg_4_1, "over")
+	var_4_0.energyImage = gohelper.findChildImage(arg_4_1, "energybg/energy")
+	var_4_0.goFull = gohelper.findChild(arg_4_1, "full")
+	var_4_0.energyImage.fillAmount = 0
 
-	return slot2
+	table.insert(arg_4_0.pointList, var_4_0)
+	arg_4_0:resetPointItem(var_4_0)
+
+	return var_4_0
 end
 
-function slot0.resetPointItem(slot0, slot1)
-	gohelper.setActive(slot1.goFull, false)
-	gohelper.setActive(slot1.goUsing, false)
-	gohelper.setActive(slot1.goOver, false)
+function var_0_0.resetPointItem(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_1.goFull, false)
+	gohelper.setActive(arg_5_1.goUsing, false)
+	gohelper.setActive(arg_5_1.goOver, false)
 end
 
-function slot0.refreshPower(slot0)
-	slot0:killTween()
+function var_0_0.refreshPower(arg_6_0)
+	arg_6_0:killTween()
 
-	slot1, slot2 = FightDataHelper.paTaMgr:getAssistBossServerPower()
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot0:getBeforePowerRate(), slot1 / slot2, FightAssistBossBase.Duration, slot0.onBoss4FrameCallback, slot0.onTweenDone, slot0, nil, EaseType.Linear)
+	local var_6_0, var_6_1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local var_6_2 = arg_6_0:getBeforePowerRate()
+	local var_6_3 = var_6_0 / var_6_1
 
-	slot0:refreshOver()
-	slot0:refreshUsing()
-	slot0:refreshHeadImageColor()
-	slot0:refreshCanUse()
+	arg_6_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_6_2, var_6_3, FightAssistBossBase.Duration, arg_6_0.onBoss4FrameCallback, arg_6_0.onTweenDone, arg_6_0, nil, EaseType.Linear)
+
+	arg_6_0:refreshOver()
+	arg_6_0:refreshUsing()
+	arg_6_0:refreshHeadImageColor()
+	arg_6_0:refreshCanUse()
 end
 
-function slot0.getBeforePowerRate(slot0)
-	return 0 + slot0.pointList[1].energyImage.fillAmount / 2 + slot0.pointList[2].energyImage.fillAmount / 2
+function var_0_0.getBeforePowerRate(arg_7_0)
+	return 0 + arg_7_0.pointList[1].energyImage.fillAmount / 2 + arg_7_0.pointList[2].energyImage.fillAmount / 2
 end
 
-function slot0.onBoss4FrameCallback(slot0, slot1)
-	slot2 = nil
+function var_0_0.onBoss4FrameCallback(arg_8_0, arg_8_1)
+	local var_8_0
 
-	if slot1 <= 0.5 then
-		slot2 = 1
+	if arg_8_1 <= 0.5 then
+		var_8_0 = 1
 	else
-		slot2 = 2
-		slot1 = slot1 - 0.5
+		var_8_0 = 2
+		arg_8_1 = arg_8_1 - 0.5
 	end
 
-	slot1 = slot1 * 2
-	slot3 = slot0.pointList[slot2]
-	slot3.energyImage.fillAmount = slot1
+	arg_8_1 = arg_8_1 * 2
 
-	gohelper.setActive(slot3.goFull, slot1 >= 1)
+	local var_8_1 = arg_8_0.pointList[var_8_0]
+
+	var_8_1.energyImage.fillAmount = arg_8_1
+
+	gohelper.setActive(var_8_1.goFull, arg_8_1 >= 1)
 end
 
-function slot0.onTweenDone(slot0)
-	slot1, slot2 = FightDataHelper.paTaMgr:getAssistBossServerPower()
-	slot3 = slot1 / slot2
-	slot4 = slot3 <= 0.5 and slot3 * 2 or 1
-	slot0.pointList[1].energyImage.fillAmount = slot4
+function var_0_0.onTweenDone(arg_9_0)
+	local var_9_0, var_9_1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local var_9_2 = var_9_0 / var_9_1
+	local var_9_3 = var_9_2
 
-	gohelper.setActive(slot0.pointList[1].goFull, slot4 >= 1)
+	if var_9_2 <= 0.5 then
+		var_9_3 = var_9_3 * 2
+	else
+		var_9_3 = 1
+	end
 
-	slot4 = (slot3 - 0.5) * 2
-	slot0.pointList[2].energyImage.fillAmount = math.max(slot4, 0)
+	arg_9_0.pointList[1].energyImage.fillAmount = var_9_3
 
-	gohelper.setActive(slot0.pointList[2].goFull, slot4 >= 1)
+	gohelper.setActive(arg_9_0.pointList[1].goFull, var_9_3 >= 1)
+
+	local var_9_4 = (var_9_2 - 0.5) * 2
+
+	arg_9_0.pointList[2].energyImage.fillAmount = math.max(var_9_4, 0)
+
+	gohelper.setActive(arg_9_0.pointList[2].goFull, var_9_4 >= 1)
 end
 
-function slot0.refreshOver(slot0)
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot6.goOver, slot0:checkIsOver())
+function var_0_0.refreshOver(arg_10_0)
+	local var_10_0 = arg_10_0:checkIsOver()
+
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.pointList) do
+		gohelper.setActive(iter_10_1.goOver, var_10_0)
 	end
 end
 
-function slot0.refreshUsing(slot0)
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot6.goUsing, slot5 <= FightDataHelper.paTaMgr:getUseCardCount())
+function var_0_0.refreshUsing(arg_11_0)
+	local var_11_0 = FightDataHelper.paTaMgr:getUseCardCount()
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.pointList) do
+		gohelper.setActive(iter_11_1.goUsing, iter_11_0 <= var_11_0)
 	end
 end
 
-slot0.OverColor = Color(0.7058823529411765, 0.7058823529411765, 0.7058823529411765)
+var_0_0.OverColor = Color(0.7058823529411765, 0.7058823529411765, 0.7058823529411765)
 
-function slot0.refreshHeadImageColor(slot0)
-	slot1 = slot0:checkIsOver()
+function var_0_0.refreshHeadImageColor(arg_12_0)
+	local var_12_0 = arg_12_0:checkIsOver()
 
-	ZProj.UGUIHelper.SetGrayscale(slot0.goBg, slot1)
+	ZProj.UGUIHelper.SetGrayscale(arg_12_0.goBg, var_12_0)
 
-	slot0.headImage.color = slot1 and uv0.OverColor or Color.white
+	arg_12_0.headImage.color = var_12_0 and var_0_0.OverColor or Color.white
 end
 
-function slot0.refreshCanUse(slot0)
-	gohelper.setActive(slot0.goCanUseFrame, slot0:canUseSkill() ~= nil)
+function var_0_0.refreshCanUse(arg_13_0)
+	gohelper.setActive(arg_13_0.goCanUseFrame, arg_13_0:canUseSkill() ~= nil)
 end
 
-function slot0.canUseSkill(slot0)
-	if not uv0.super.canUseSkill(slot0) then
+function var_0_0.canUseSkill(arg_14_0)
+	local var_14_0 = var_0_0.super.canUseSkill(arg_14_0)
+
+	if not var_14_0 then
 		return
 	end
 
-	if slot0:checkIsOver() then
+	if arg_14_0:checkIsOver() then
 		return
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.refreshCD(slot0)
+function var_0_0.refreshCD(arg_15_0)
+	return
 end
 
-slot0.OverBuffId = 12410011
+var_0_0.OverBuffId = 12410011
 
-function slot0.checkIsOver(slot0)
-	return FightDataHelper.entityMgr:getAssistBoss() and slot1:hasBuffId(uv0.OverBuffId)
+function var_0_0.checkIsOver(arg_16_0)
+	local var_16_0 = FightDataHelper.entityMgr:getAssistBoss()
+
+	return var_16_0 and var_16_0:hasBuffId(var_0_0.OverBuffId)
 end
 
-function slot0.onBuffUpdate(slot0, slot1, slot2, slot3, slot4)
-	if not FightDataHelper.entityMgr:getAssistBoss() then
+function var_0_0.onBuffUpdate(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = FightDataHelper.entityMgr:getAssistBoss()
+
+	if not var_17_0 then
 		return
 	end
 
-	if slot5.uid ~= slot1 then
+	if var_17_0.uid ~= arg_17_1 then
 		return
 	end
 
-	slot0:refreshOver()
-	slot0:refreshHeadImageColor()
-	slot0:refreshCanUse()
+	arg_17_0:refreshOver()
+	arg_17_0:refreshHeadImageColor()
+	arg_17_0:refreshCanUse()
 
-	if slot2 == FightEnum.EffectType.BUFFADD and slot3 == uv0.OverBuffId then
+	if arg_17_2 == FightEnum.EffectType.BUFFADD and arg_17_3 == var_0_0.OverBuffId then
 		AudioMgr.instance:trigger(20247004)
 	end
 end
 
-function slot0.refreshSpecialPoint(slot0)
-	slot1 = slot0.pointList[3]
+function var_0_0.refreshSpecialPoint(arg_18_0)
+	local var_18_0 = arg_18_0.pointList[3]
 
-	if slot0:checkIsOver() then
-		gohelper.setActive(slot1.goOver, true)
-		gohelper.setActive(slot1.goFull, false)
+	if arg_18_0:checkIsOver() then
+		gohelper.setActive(var_18_0.goOver, true)
+		gohelper.setActive(var_18_0.goFull, false)
 
-		slot1.energyImage.fillAmount = 0
+		var_18_0.energyImage.fillAmount = 0
 
 		return
 	end
 
-	slot2, slot3 = FightDataHelper.paTaMgr:getAssistBossServerPower()
-	slot4 = slot2 == slot3
-	slot1.energyImage.fillAmount = slot4 and 1 or 0
+	local var_18_1, var_18_2 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local var_18_3 = var_18_1 == var_18_2
 
-	gohelper.setActive(slot1.goFull, slot4)
-	gohelper.setActive(slot1.goOver, false)
+	var_18_0.energyImage.fillAmount = var_18_3 and 1 or 0
+
+	gohelper.setActive(var_18_0.goFull, var_18_3)
+	gohelper.setActive(var_18_0.goOver, false)
 end
 
-function slot0.onSkillPlayFinish(slot0, slot1, slot2, slot3, slot4)
-	slot6 = FightDataHelper.paTaMgr:getBossSkillInfoList() and slot5[3]
+function var_0_0.onSkillPlayFinish(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	local var_19_0 = FightDataHelper.paTaMgr:getBossSkillInfoList()
+	local var_19_1 = var_19_0 and var_19_0[3]
 
-	if (slot6 and slot6.skillId) == slot2 then
-		slot0:refreshSpecialPoint()
+	if (var_19_1 and var_19_1.skillId) == arg_19_2 then
+		arg_19_0:refreshSpecialPoint()
 	end
 end
 
-function slot0.stageChange(slot0)
+function var_0_0.stageChange(arg_20_0)
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
-		slot0:refreshSpecialPoint()
+		arg_20_0:refreshSpecialPoint()
 	end
 end
 
-function slot0.onMySideRoundEnd(slot0)
-	return slot0:refreshSpecialPoint()
+function var_0_0.onMySideRoundEnd(arg_21_0)
+	return arg_21_0:refreshSpecialPoint()
 end
 
-function slot0.playAssistBossCard(slot0)
-	if uv0.super.playAssistBossCard(slot0) then
+function var_0_0.playAssistBossCard(arg_22_0)
+	if var_0_0.super.playAssistBossCard(arg_22_0) then
 		AudioMgr.instance:trigger(20247003)
 	end
 end
 
-return slot0
+return var_0_0

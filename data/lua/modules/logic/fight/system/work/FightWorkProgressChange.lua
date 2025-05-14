@@ -1,24 +1,25 @@
-module("modules.logic.fight.system.work.FightWorkProgressChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkProgressChange", package.seeall)
 
-slot0 = class("FightWorkProgressChange", FightEffectBase)
+local var_0_0 = class("FightWorkProgressChange", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0._oldValue = FightDataHelper.fieldMgr.progress
+function var_0_0.beforePlayEffectData(arg_1_0)
+	arg_1_0._oldValue = FightDataHelper.fieldMgr.progress
 end
 
-function slot0.onStart(slot0)
-	slot0:com_sendMsg(FightMsgId.FightProgressValueChange)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:com_sendMsg(FightMsgId.FightProgressValueChange)
 
-	slot0._maxValue = FightDataHelper.fieldMgr.progressMax
+	arg_2_0._maxValue = FightDataHelper.fieldMgr.progressMax
 
-	if slot0._oldValue < slot0._maxValue and slot0._maxValue <= FightDataHelper.fieldMgr.progress then
-		slot0:com_registTimer(slot0._delayAfterPerformance, 0.25 / FightModel.instance:getUISpeed())
+	if arg_2_0._oldValue < arg_2_0._maxValue and FightDataHelper.fieldMgr.progress >= arg_2_0._maxValue then
+		arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 0.25 / FightModel.instance:getUISpeed())
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

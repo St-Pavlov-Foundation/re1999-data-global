@@ -1,7 +1,8 @@
-module("modules.logic.task.defines.TaskEnum", package.seeall)
+﻿module("modules.logic.task.defines.TaskEnum", package.seeall)
 
-slot0 = _M
-slot0.TaskType = {
+local var_0_0 = _M
+
+var_0_0.TaskType = {
 	RoleAiZiLa = 26,
 	Activity145 = 28,
 	Activity133 = 23,
@@ -49,10 +50,10 @@ slot0.TaskType = {
 	Activity122 = 17,
 	Weekly = 2
 }
-slot0.TaskMinType = {
+var_0_0.TaskMinType = {
 	Novice = 1,
 	Stationary = 2,
 	GrowBack = 3
 }
 
-return slot0
+return var_0_0

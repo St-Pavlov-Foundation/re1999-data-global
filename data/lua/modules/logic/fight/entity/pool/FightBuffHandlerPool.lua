@@ -1,53 +1,57 @@
-module("modules.logic.fight.entity.pool.FightBuffHandlerPool", package.seeall)
+﻿module("modules.logic.fight.entity.pool.FightBuffHandlerPool", package.seeall)
 
-slot0 = class("FightBuffHandlerPool")
-slot1 = {}
+local var_0_0 = class("FightBuffHandlerPool")
+local var_0_1 = {}
 
-function slot0.getHandlerInst(slot0, slot1)
-	if not slot0 then
+function var_0_0.getHandlerInst(arg_1_0, arg_1_1)
+	if not arg_1_0 then
 		logError("param of \"type\" = nil")
 	end
 
-	if not slot1 then
+	if not arg_1_1 then
 		logError("param of \"typeCls\" = nil")
 	end
 
-	if not uv0[slot0] then
-		uv0[slot0] = LuaObjPool.New(32, function ()
-			if uv0 then
-				if uv0.New then
-					return uv0.New()
+	local var_1_0 = var_0_1[arg_1_0]
+
+	if not var_1_0 then
+		var_1_0 = LuaObjPool.New(32, function()
+			if arg_1_1 then
+				if arg_1_1.New then
+					return arg_1_1.New()
 				else
-					logError("FightTLEvent class.ctor is nil: " .. uv1)
+					logError("FightTLEvent class.ctor is nil: " .. arg_1_0)
 				end
 			else
-				logError("FightTLEvent class is nil: " .. uv1)
+				logError("FightTLEvent class is nil: " .. arg_1_0)
 			end
 
 			return FightBuffHandler.New()
-		end, uv1._releaseFunc, uv1._resetFunc)
+		end, var_0_0._releaseFunc, var_0_0._resetFunc)
+		var_0_1[arg_1_0] = var_1_0
 	end
 
-	slot3 = slot2:getObject()
-	slot3.type = slot0
+	local var_1_1 = var_1_0:getObject()
 
-	return slot3
+	var_1_1.type = arg_1_0
+
+	return var_1_1
 end
 
-function slot0.putHandlerInst(slot0)
-	uv0[slot0.type]:putObject(slot0)
+function var_0_0.putHandlerInst(arg_3_0)
+	var_0_1[arg_3_0.type]:putObject(arg_3_0)
 end
 
-function slot0._releaseFunc(slot0)
-	if slot0.dispose then
-		slot0:dispose()
-	end
-end
-
-function slot0._resetFunc(slot0)
-	if slot0.reset then
-		slot0:reset()
+function var_0_0._releaseFunc(arg_4_0)
+	if arg_4_0.dispose then
+		arg_4_0:dispose()
 	end
 end
 
-return slot0
+function var_0_0._resetFunc(arg_5_0)
+	if arg_5_0.reset then
+		arg_5_0:reset()
+	end
+end
+
+return var_0_0

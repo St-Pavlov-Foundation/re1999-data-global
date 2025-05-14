@@ -1,40 +1,47 @@
-module("modules.configs.JsonToLuaParser", package.seeall)
+﻿module("modules.configs.JsonToLuaParser", package.seeall)
 
 return {
-	parse = function (slot0, slot1, slot2, slot3)
-		slot4 = {}
+	parse = function(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+		local var_1_0 = {}
+		local var_1_1 = arg_1_0
+		local var_1_2 = {
+			__index = function(arg_2_0, arg_2_1)
+				local var_2_0 = arg_1_1[arg_2_1]
+				local var_2_1 = rawget(arg_2_0, var_2_0)
 
-		for slot10, slot11 in ipairs(slot0) do
-			slot12 = slot11.name
-
-			setmetatable(slot11, {
-				__index = function (slot0, slot1)
-					slot3 = rawget(slot0, uv0[slot1])
-
-					if uv1 and uv1[slot1] then
-						return lang(slot3)
-					end
-
-					return slot3
-				end,
-				__newindex = function (slot0, slot1, slot2)
-					logError("Can't modify config field: " .. slot1)
+				if arg_1_3 and arg_1_3[arg_2_1] then
+					return lang(var_2_1)
 				end
-			})
 
-			for slot17, slot18 in ipairs(slot2) do
-				if slot17 == #slot2 then
-					slot4[slot11[slot18]] = slot11
+				return var_2_1
+			end,
+			__newindex = function(arg_3_0, arg_3_1, arg_3_2)
+				logError("Can't modify config field: " .. arg_3_1)
+			end
+		}
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			local var_1_3 = iter_1_1.name
+
+			setmetatable(iter_1_1, var_1_2)
+
+			local var_1_4 = var_1_0
+
+			for iter_1_2, iter_1_3 in ipairs(arg_1_2) do
+				local var_1_5 = iter_1_1[iter_1_3]
+
+				if iter_1_2 == #arg_1_2 then
+					var_1_4[var_1_5] = iter_1_1
 				else
-					if not slot13[slot19] then
-						slot13[slot19] = {}
+					if not var_1_4[var_1_5] then
+						var_1_4[var_1_5] = {}
 					end
 
-					slot13 = slot13[slot19]
+					var_1_4 = var_1_4[var_1_5]
 				end
 			end
 		end
 
-		return slot5, slot4
+		return var_1_1, var_1_0
 	end
 }

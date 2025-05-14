@@ -1,79 +1,87 @@
-module("modules.logic.versionactivity1_4.act131.model.Activity131LogListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act131.model.Activity131LogListModel", package.seeall)
 
-slot0 = class("Activity131LogListModel", MixScrollModel)
+local var_0_0 = class("Activity131LogListModel", MixScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._infos = nil
+	arg_1_0._infos = nil
 end
 
-function slot0.setLogList(slot0, slot1)
-	slot0._infos = {}
-	slot2 = {}
+function var_0_0.setLogList(arg_2_0, arg_2_1)
+	arg_2_0._infos = {}
 
-	if slot1 then
-		slot0._infos = slot1
+	local var_2_0 = {}
 
-		for slot6, slot7 in ipairs(slot1) do
-			slot8 = Activity131LogMo.New()
+	if arg_2_1 then
+		arg_2_0._infos = arg_2_1
 
-			slot8:init(slot7.speaker, slot7.content, tonumber(string.split(slot7.param, "#")[2]))
-			table.insert(slot2, slot8)
+		for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+			local var_2_1 = Activity131LogMo.New()
+			local var_2_2 = string.split(iter_2_1.param, "#")
+			local var_2_3 = tonumber(var_2_2[2])
+
+			var_2_1:init(iter_2_1.speaker, iter_2_1.content, var_2_3)
+			table.insert(var_2_0, var_2_1)
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.getInfoList(slot0, slot1)
-	if not slot0._infos or #slot0._infos <= 0 then
-		return {}
+function var_0_0.getInfoList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+
+	if not arg_3_0._infos or #arg_3_0._infos <= 0 then
+		return var_3_0
 	end
 
-	slot4 = 0
-	slot5 = nil
+	local var_3_1 = gohelper.findChildText(arg_3_1, "Viewport/logcontent/storylogitem/go_normal/txt_content")
+	local var_3_2 = 0
+	local var_3_3
 
-	for slot9, slot10 in ipairs(slot0._infos) do
-		slot11 = 0
-		slot11 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(gohelper.findChildText(slot1, "Viewport/logcontent/storylogitem/go_normal/txt_content"), GameUtil.filterRichText(slot10.content)) + 13.96
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._infos) do
+		local var_3_4 = 0
+		local var_3_5 = GameUtil.filterRichText(iter_3_1.content)
+		local var_3_6 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(var_3_1, var_3_5) + 13.96
+		local var_3_7
 
-		if slot5 and slot10.speaker == slot5.speaker then
-			slot4 = 1
+		if var_3_3 and iter_3_1.speaker == var_3_3.speaker then
+			var_3_7 = 1
 		else
-			if slot9 > 1 then
-				slot2[slot9 - 1].lineLength = slot2[slot9 - 1].lineLength + 40
+			if iter_3_0 > 1 then
+				var_3_0[iter_3_0 - 1].lineLength = var_3_0[iter_3_0 - 1].lineLength + 40
 			end
 
-			slot4 = 0
+			var_3_7 = 0
 		end
 
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot4, slot11, nil))
+		table.insert(var_3_0, SLFramework.UGUI.MixCellInfo.New(var_3_7, var_3_6, nil))
 
-		slot5 = slot10
+		var_3_3 = iter_3_1
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.clearData(slot0)
-	slot0._infos = nil
+function var_0_0.clearData(arg_4_0)
+	arg_4_0._infos = nil
 end
 
-function slot0.setPlayingLogAudio(slot0, slot1)
-	slot0._playingId = slot1
+function var_0_0.setPlayingLogAudio(arg_5_0, arg_5_1)
+	arg_5_0._playingId = arg_5_1
 end
 
-function slot0.setPlayingLogAudioFinished(slot0, slot1)
-	if slot0._playingId == slot1 then
-		slot0._playingId = 0
+function var_0_0.setPlayingLogAudioFinished(arg_6_0, arg_6_1)
+	if arg_6_0._playingId == arg_6_1 then
+		arg_6_0._playingId = 0
 	end
 end
 
-function slot0.getPlayingLogAudioId(slot0)
-	return slot0._playingId
+function var_0_0.getPlayingLogAudioId(arg_7_0)
+	return arg_7_0._playingId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

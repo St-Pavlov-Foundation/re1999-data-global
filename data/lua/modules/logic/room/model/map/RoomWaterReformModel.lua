@@ -1,162 +1,182 @@
-module("modules.logic.room.model.map.RoomWaterReformModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomWaterReformModel", package.seeall)
 
-slot0 = class("RoomWaterReformModel", BaseModel)
+local var_0_0 = class("RoomWaterReformModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._waterAreaMo = nil
-	slot0._isWaterReform = false
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._waterAreaMo = nil
+	arg_4_0._isWaterReform = false
 
-	slot0:setSelectWaterArea()
-	slot0:clearChangeWaterTypeDict()
+	arg_4_0:setSelectWaterArea()
+	arg_4_0:clearChangeWaterTypeDict()
 end
 
-function slot0.clearChangeWaterTypeDict(slot0)
-	slot0._changeWaterTypeDict = {}
+function var_0_0.clearChangeWaterTypeDict(arg_5_0)
+	arg_5_0._changeWaterTypeDict = {}
 end
 
-function slot0.initWaterArea(slot0)
-	slot0:setSelectWaterArea()
+function var_0_0.initWaterArea(arg_6_0)
+	arg_6_0:setSelectWaterArea()
 
-	slot1 = RoomResourceEnum.ResourceId.River
-	slot0._waterAreaMo = RoomResourceHelper.getResourcePointAreaMODict(nil, {
-		slot1
-	}, true)[slot1]
+	local var_6_0 = RoomResourceEnum.ResourceId.River
+
+	arg_6_0._waterAreaMo = RoomResourceHelper.getResourcePointAreaMODict(nil, {
+		var_6_0
+	}, true)[var_6_0]
 end
 
-function slot0.recordChangeWaterType(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.recordChangeWaterType(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 or not arg_7_2 then
 		return
 	end
 
-	if not slot0._changeWaterTypeDict then
-		slot0:clearChangeWaterTypeDict()
+	if not arg_7_0._changeWaterTypeDict then
+		arg_7_0:clearChangeWaterTypeDict()
 	end
 
-	slot0._changeWaterTypeDict[slot1] = slot2
+	arg_7_0._changeWaterTypeDict[arg_7_1] = arg_7_2
 end
 
-function slot0.clearChangeWaterRecord(slot0, slot1)
-	if not slot1 or not slot0._changeWaterTypeDict then
+function var_0_0.clearChangeWaterRecord(arg_8_0, arg_8_1)
+	if not arg_8_1 or not arg_8_0._changeWaterTypeDict then
 		return
 	end
 
-	slot0._changeWaterTypeDict[slot1] = nil
+	arg_8_0._changeWaterTypeDict[arg_8_1] = nil
 end
 
-function slot0.hasChangedWaterType(slot0)
-	return slot0:getRecordChangeWaterType() and next(slot1)
+function var_0_0.hasChangedWaterType(arg_9_0)
+	local var_9_0 = arg_9_0:getRecordChangeWaterType()
+
+	return var_9_0 and next(var_9_0)
 end
 
-function slot0.resetChangeWaterType(slot0)
-	if not slot0._changeWaterTypeDict then
+function var_0_0.resetChangeWaterType(arg_10_0)
+	if not arg_10_0._changeWaterTypeDict then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0._changeWaterTypeDict) do
-		if RoomMapBlockModel.instance:getFullBlockMOById(slot4) then
-			slot6:setTempWaterType()
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._changeWaterTypeDict) do
+		local var_10_0 = RoomMapBlockModel.instance:getFullBlockMOById(iter_10_0)
+
+		if var_10_0 then
+			var_10_0:setTempWaterType()
 		end
 	end
 
-	slot0:clearChangeWaterTypeDict()
+	arg_10_0:clearChangeWaterTypeDict()
 end
 
-function slot0.isWaterReform(slot0)
-	return slot0._isWaterReform
+function var_0_0.isWaterReform(arg_11_0)
+	return arg_11_0._isWaterReform
 end
 
-function slot0.hasSelectWaterArea(slot0)
-	return slot0._selectAreaId and true or false
+function var_0_0.hasSelectWaterArea(arg_12_0)
+	return arg_12_0._selectAreaId and true or false
 end
 
-function slot0.getSelectWaterBlockMoList(slot0)
-	if not slot0:hasSelectWaterArea() then
-		return {}
+function var_0_0.getSelectWaterBlockMoList(arg_13_0)
+	local var_13_0 = {}
+
+	if not arg_13_0:hasSelectWaterArea() then
+		return var_13_0
 	end
 
-	slot3 = {}
-	slot4 = slot0._waterAreaMo and slot0._waterAreaMo:findeArea()
+	local var_13_1 = {}
+	local var_13_2 = arg_13_0._waterAreaMo and arg_13_0._waterAreaMo:findeArea()
+	local var_13_3 = var_13_2 and var_13_2[arg_13_0._selectAreaId]
 
-	if slot4 and slot4[slot0._selectAreaId] then
-		for slot9, slot10 in ipairs(slot5) do
-			slot12 = slot10.y
+	if var_13_3 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_3) do
+			local var_13_4 = iter_13_1.x
+			local var_13_5 = iter_13_1.y
 
-			if not slot3[slot10.x] or not slot3[slot11][slot12] then
-				slot1[#slot1 + 1] = RoomMapBlockModel.instance:getBlockMO(slot11, slot12)
-				slot3[slot11] = slot3[slot11] or {}
-				slot3[slot11][slot12] = true
+			if not var_13_1[var_13_4] or not var_13_1[var_13_4][var_13_5] then
+				local var_13_6 = RoomMapBlockModel.instance:getBlockMO(var_13_4, var_13_5)
+
+				var_13_0[#var_13_0 + 1] = var_13_6
+				var_13_1[var_13_4] = var_13_1[var_13_4] or {}
+				var_13_1[var_13_4][var_13_5] = true
 			end
 		end
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.getWaterAreaId(slot0, slot1, slot2, slot3)
-	return slot0._waterAreaMo:getAreaIdByXYD(slot1, slot2, slot3)
+function var_0_0.getWaterAreaId(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	return (arg_14_0._waterAreaMo:getAreaIdByXYD(arg_14_1, arg_14_2, arg_14_3))
 end
 
-function slot0.getWaterAreaList(slot0)
-	return slot0._waterAreaMo and slot0._waterAreaMo:findeArea() or {}
+function var_0_0.getWaterAreaList(arg_15_0)
+	return arg_15_0._waterAreaMo and arg_15_0._waterAreaMo:findeArea() or {}
 end
 
-function slot0.getSelectWaterResourcePointList(slot0)
-	return slot0:getWaterAreaList()[slot0._selectAreaId]
+function var_0_0.getSelectWaterResourcePointList(arg_16_0)
+	return arg_16_0:getWaterAreaList()[arg_16_0._selectAreaId]
 end
 
-function slot0.isBlockInSelect(slot0, slot1)
-	if not slot1 or not slot1:hasRiver() or not slot0:hasSelectWaterArea() or not slot0:isWaterReform() then
-		return false
+function var_0_0.isBlockInSelect(arg_17_0, arg_17_1)
+	local var_17_0 = false
+	local var_17_1 = arg_17_0:hasSelectWaterArea()
+	local var_17_2 = arg_17_0:isWaterReform()
+
+	if not (arg_17_1 and arg_17_1:hasRiver()) or not var_17_1 or not var_17_2 then
+		return var_17_0
 	end
 
-	for slot10, slot11 in ipairs(slot0:getSelectWaterBlockMoList()) do
-		if slot11.id == slot1.id then
+	local var_17_3 = arg_17_0:getSelectWaterBlockMoList()
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_3) do
+		var_17_0 = iter_17_1.id == arg_17_1.id
+
+		if var_17_0 then
 			break
 		end
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.getSelectAreaId(slot0)
-	return slot0._selectAreaId
+function var_0_0.getSelectAreaId(arg_18_0)
+	return arg_18_0._selectAreaId
 end
 
-function slot0.getRecordChangeWaterType(slot0)
-	return slot0._changeWaterTypeDict
+function var_0_0.getRecordChangeWaterType(arg_19_0)
+	return arg_19_0._changeWaterTypeDict
 end
 
-function slot0.isUnlockWaterReform(slot0, slot1)
-	slot2 = true
+function var_0_0.isUnlockWaterReform(arg_20_0, arg_20_1)
+	local var_20_0 = true
+	local var_20_1 = RoomConfig.instance:getWaterReformItemId(arg_20_1)
 
-	if RoomConfig.instance:getWaterReformItemId(slot1) and slot3 ~= 0 then
-		slot2 = ItemModel.instance:getItemCount(slot3) > 0
+	if var_20_1 and var_20_1 ~= 0 then
+		var_20_0 = ItemModel.instance:getItemCount(var_20_1) > 0
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.setWaterReform(slot0, slot1)
-	slot0._isWaterReform = slot1 == true
+function var_0_0.setWaterReform(arg_21_0, arg_21_1)
+	arg_21_0._isWaterReform = arg_21_1 == true
 end
 
-function slot0.setSelectWaterArea(slot0, slot1)
-	slot0._selectAreaId = slot1
+function var_0_0.setSelectWaterArea(arg_22_0, arg_22_1)
+	arg_22_0._selectAreaId = arg_22_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

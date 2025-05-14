@@ -1,76 +1,90 @@
-module("modules.logic.scene.fight.comp.FightSceneTriggerSceneAnimatorComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneTriggerSceneAnimatorComp", package.seeall)
 
-slot0 = class("FightSceneTriggerSceneAnimatorComp", BaseSceneComp)
+local var_0_0 = class("FightSceneTriggerSceneAnimatorComp", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._activeState = true
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._activeState = true
 
-	FightController.instance:registerCallback(FightEvent.TriggerSceneAnimator, slot0._onTriggerSceneAnimator, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+	FightController.instance:registerCallback(FightEvent.TriggerSceneAnimator, arg_1_0._onTriggerSceneAnimator, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._onRestartStageBefore, arg_1_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_1_0._onLevelLoaded, arg_1_0)
 
-	slot0._cacheAni = {}
+	arg_1_0._cacheAni = {}
 end
 
-function slot0._onLevelLoaded(slot0)
-	slot0._fightScene = GameSceneMgr.instance:getCurScene()
-	slot0.listenClass = gohelper.onceAddComponent(slot0._fightScene.level:getSceneGo(), typeof(ZProj.FightSceneActiveState))
+function var_0_0._onLevelLoaded(arg_2_0)
+	arg_2_0._fightScene = GameSceneMgr.instance:getCurScene()
+
+	local var_2_0 = arg_2_0._fightScene.level:getSceneGo()
+
+	arg_2_0.listenClass = gohelper.onceAddComponent(var_2_0, typeof(ZProj.FightSceneActiveState))
 
 	if BootNativeUtil.isWindows() and GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High then
-		RenderPipelineSetting.AddRCASSceneCompoment(slot1)
+		RenderPipelineSetting.AddRCASSceneCompoment(var_2_0)
 	end
 
-	slot0.listenClass:releaseCallback()
-	slot0.listenClass:setCallback(slot0._onSceneStateChange, slot0)
+	arg_2_0.listenClass:releaseCallback()
+	arg_2_0.listenClass:setCallback(arg_2_0._onSceneStateChange, arg_2_0)
 end
 
-function slot0._onTriggerSceneAnimator(slot0, slot1)
-	slot0._fightScene = slot0._fightScene or GameSceneMgr.instance:getCurScene()
+function var_0_0._onTriggerSceneAnimator(arg_3_0, arg_3_1)
+	arg_3_0._fightScene = arg_3_0._fightScene or GameSceneMgr.instance:getCurScene()
 
-	if slot0._fightScene and gohelper.findChildComponent(slot0._fightScene.level:getSceneGo(), slot1.param1, typeof(UnityEngine.Animator)) then
-		slot3.speed = FightModel.instance:getSpeed()
+	if arg_3_0._fightScene then
+		local var_3_0 = arg_3_0._fightScene.level:getSceneGo()
+		local var_3_1 = gohelper.findChildComponent(var_3_0, arg_3_1.param1, typeof(UnityEngine.Animator))
 
-		slot3:Play(slot1.param2, 0, 0)
+		if var_3_1 then
+			var_3_1.speed = FightModel.instance:getSpeed()
 
-		slot0._cacheAni[slot1.param1] = slot1.param2
+			var_3_1:Play(arg_3_1.param2, 0, 0)
+
+			arg_3_0._cacheAni[arg_3_1.param1] = arg_3_1.param2
+		end
 	end
 end
 
-function slot0._onSceneStateChange(slot0, slot1)
-	FightController.instance:dispatchEvent(FightEvent.ChangeSceneVisible, slot1)
+function var_0_0._onSceneStateChange(arg_4_0, arg_4_1)
+	FightController.instance:dispatchEvent(FightEvent.ChangeSceneVisible, arg_4_1)
 
-	if slot0._fightScene and not gohelper.isNil(slot0._fightScene.level:getSceneGo()) and slot0._activeState ~= slot1 then
-		slot0._activeState = slot1
+	if arg_4_0._fightScene then
+		local var_4_0 = arg_4_0._fightScene.level:getSceneGo()
 
-		if slot0._activeState then
-			for slot6, slot7 in pairs(slot0._cacheAni) do
-				if gohelper.findChildComponent(slot2, slot6, typeof(UnityEngine.Animator)) then
-					slot8.speed = FightModel.instance:getSpeed()
+		if not gohelper.isNil(var_4_0) and arg_4_0._activeState ~= arg_4_1 then
+			arg_4_0._activeState = arg_4_1
 
-					slot8:Play(slot7 .. "_idle", 0, 0)
+			if arg_4_0._activeState then
+				for iter_4_0, iter_4_1 in pairs(arg_4_0._cacheAni) do
+					local var_4_1 = gohelper.findChildComponent(var_4_0, iter_4_0, typeof(UnityEngine.Animator))
+
+					if var_4_1 then
+						var_4_1.speed = FightModel.instance:getSpeed()
+
+						var_4_1:Play(iter_4_1 .. "_idle", 0, 0)
+					end
 				end
 			end
 		end
 	end
 end
 
-function slot0._onRestartStageBefore(slot0)
-	slot0._activeState = true
-	slot0._cacheAni = {}
+function var_0_0._onRestartStageBefore(arg_5_0)
+	arg_5_0._activeState = true
+	arg_5_0._cacheAni = {}
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	if slot0.listenClass then
-		slot0.listenClass:releaseCallback()
+function var_0_0.onSceneClose(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0.listenClass then
+		arg_6_0.listenClass:releaseCallback()
 
-		slot0.listenClass = nil
+		arg_6_0.listenClass = nil
 	end
 
-	slot0._cacheAni = nil
+	arg_6_0._cacheAni = nil
 
-	FightController.instance:unregisterCallback(FightEvent.TriggerSceneAnimator, slot0._onTriggerSceneAnimator, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+	FightController.instance:unregisterCallback(FightEvent.TriggerSceneAnimator, arg_6_0._onTriggerSceneAnimator, arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_6_0._onRestartStageBefore, arg_6_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_6_0._onLevelLoaded, arg_6_0)
 end
 
-return slot0
+return var_0_0

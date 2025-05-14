@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity1_4.act131.view.Activity131BattleViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act131.view.Activity131BattleViewContainer", package.seeall)
 
-slot0 = class("Activity131BattleViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity131BattleViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Activity131BattleView.New())
+	table.insert(var_1_0, Activity131BattleView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

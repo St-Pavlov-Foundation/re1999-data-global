@@ -1,129 +1,137 @@
-module("modules.logic.explore.model.ExploreBackpackModel", package.seeall)
+﻿module("modules.logic.explore.model.ExploreBackpackModel", package.seeall)
 
-slot0 = class("ExploreBackpackModel", ListScrollModel)
+local var_0_0 = class("ExploreBackpackModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.clearData(slot0)
-	slot0.stackableDic = {}
+function var_0_0.clearData(arg_3_0)
+	arg_3_0.stackableDic = {}
 
-	slot0:clear()
+	arg_3_0:clear()
 end
 
-function slot0.refresh(slot0)
-	slot0:clear()
-	BackpackModel.instance:setBackpackItemList(BackpackModel.instance:getBackpackList())
+function var_0_0.refresh(arg_4_0)
+	arg_4_0:clear()
 
-	slot2 = {}
+	local var_4_0 = BackpackModel.instance:getBackpackList()
 
-	for slot6, slot7 in pairs(BackpackModel.instance:getBackpackItemList()) do
-		if slot7.subType == 15 then
-			table.insert(slot2, slot7)
+	BackpackModel.instance:setBackpackItemList(var_4_0)
+
+	local var_4_1 = {}
+
+	for iter_4_0, iter_4_1 in pairs(BackpackModel.instance:getBackpackItemList()) do
+		if iter_4_1.subType == 15 then
+			table.insert(var_4_1, iter_4_1)
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_4_0:setList(var_4_1)
 
-	return slot2
+	return var_4_1
 end
 
-function slot0.updateItems(slot0, slot1, slot2)
-	if slot2 or not slot0.stackableDic then
-		slot0:clear()
+function var_0_0.updateItems(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_2 or not arg_5_0.stackableDic then
+		arg_5_0:clear()
 
-		slot0.stackableDic = {}
+		arg_5_0.stackableDic = {}
 	end
 
-	slot3 = false
-	slot4 = slot0:getList()
+	local var_5_0 = false
+	local var_5_1 = arg_5_0:getList()
 
-	for slot8, slot9 in ipairs(slot1) do
-		slot10 = slot0:getById(slot9.uid)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_2 = arg_5_0:getById(iter_5_1.uid)
+		local var_5_3 = ExploreConfig.instance:isStackableItem(iter_5_1.itemId)
 
-		if ExploreConfig.instance:isStackableItem(slot9.itemId) then
-			slot10 = slot0.stackableDic[slot9.itemId]
+		if var_5_3 then
+			var_5_2 = arg_5_0.stackableDic[iter_5_1.itemId]
 		end
 
-		if not slot10 then
-			if slot9.quantity > 0 then
-				slot12 = ExploreBackpackItemMO.New()
+		if not var_5_2 then
+			if iter_5_1.quantity > 0 then
+				local var_5_4 = ExploreBackpackItemMO.New()
 
-				slot12:init(slot9)
+				var_5_4:init(iter_5_1)
 
-				slot12.quantity = slot9.quantity
+				var_5_4.quantity = iter_5_1.quantity
 
-				table.insert(slot4, slot12)
+				table.insert(var_5_1, var_5_4)
 
-				slot0.stackableDic[slot12.itemId] = slot12
+				arg_5_0.stackableDic[var_5_4.itemId] = var_5_4
 			end
 		else
-			if slot11 then
-				slot10:updateStackable(slot9)
+			if var_5_3 then
+				var_5_2:updateStackable(iter_5_1)
 			else
-				slot10.quantity = slot9.quantity
-				slot10.status = slot9.status
+				var_5_2.quantity = iter_5_1.quantity
+				var_5_2.status = iter_5_1.status
 			end
 
-			if slot10.quantity == 0 then
-				slot0:removeItem(slot10)
+			if var_5_2.quantity == 0 then
+				arg_5_0:removeItem(var_5_2)
 			end
 
-			if slot10.itemEffect == ExploreEnum.ItemEffect.Active then
-				slot3 = true
+			if var_5_2.itemEffect == ExploreEnum.ItemEffect.Active then
+				var_5_0 = true
 			end
 		end
 
 		ExploreSimpleModel.instance:setShowBag()
 	end
 
-	slot5 = ExploreController.instance:getMap()
+	local var_5_5 = ExploreController.instance:getMap()
 
-	if slot3 and slot5 then
-		slot5:checkAllRuneTrigger()
+	if var_5_0 and var_5_5 then
+		var_5_5:checkAllRuneTrigger()
 	end
 
-	slot0:setList(slot4)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, slot0._mo)
+	arg_5_0:setList(var_5_1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, arg_5_0._mo)
 end
 
-function slot0.getItemMoByEffect(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.itemEffect == slot1 then
-			return slot7
+function var_0_0.getItemMoByEffect(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1.itemEffect == arg_6_1 then
+			return iter_6_1
 		end
 	end
 end
 
-function slot0.addItem(slot0, slot1, slot2, slot3)
-	slot0:addAtLast({
-		type = slot1,
-		id = slot2,
-		num = slot3
+function var_0_0.addItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0:addAtLast({
+		type = arg_7_1,
+		id = arg_7_2,
+		num = arg_7_3
 	})
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, slot0._mo)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, arg_7_0._mo)
 end
 
-function slot0.removeItem(slot0, slot1)
-	slot0.stackableDic[slot1.itemId] = nil
+function var_0_0.removeItem(arg_8_0, arg_8_1)
+	arg_8_0.stackableDic[arg_8_1.itemId] = nil
 
-	slot0:remove(slot1)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, slot0._mo)
+	arg_8_0:remove(arg_8_1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnItemChange, arg_8_0._mo)
 end
 
-function slot0.getItem(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.itemId == slot1 then
-			return slot7
+function var_0_0.getItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getList()
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1.itemId == arg_9_1 then
+			return iter_9_1
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

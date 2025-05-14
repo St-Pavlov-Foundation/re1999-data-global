@@ -1,48 +1,54 @@
-module("modules.logic.rouge.dlc.101.view.RougeDangerousView", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeDangerousView", package.seeall)
 
-slot0 = class("RougeDangerousView", BaseView)
-slot0.OpenViewDuration = 2.5
+local var_0_0 = class("RougeDangerousView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagedecbg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_decbg1")
-	slot0._simagedecbg2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_decbg2")
-	slot0._simagedecbg3 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_decbg3")
-	slot0._simagedecbg4 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_decbg4")
-	slot0._simagedecbg5 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_decbg5")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#simage_title")
+var_0_0.OpenViewDuration = 2.5
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagedecbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decbg1")
+	arg_1_0._simagedecbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decbg2")
+	arg_1_0._simagedecbg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decbg3")
+	arg_1_0._simagedecbg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decbg4")
+	arg_1_0._simagedecbg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decbg5")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_delay2CloseView()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:_delay2CloseView()
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenRougeDangerousView)
 end
 
-function slot0._delay2CloseView(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, uv0.OpenViewDuration)
+function var_0_0._delay2CloseView(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.closeThis, arg_7_0)
+	TaskDispatcher.runDelay(arg_7_0.closeThis, arg_7_0, var_0_0.OpenViewDuration)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0.closeThis, arg_9_0)
 end
 
-return slot0
+return var_0_0

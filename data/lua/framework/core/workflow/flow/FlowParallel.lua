@@ -1,109 +1,109 @@
-module("modules.core.workflow.flow.FlowParallel", package.seeall)
+﻿module("modules.core.workflow.flow.FlowParallel", package.seeall)
 
-slot0 = class("FlowParallel", BaseFlow)
+local var_0_0 = class("FlowParallel", BaseFlow)
 
-function slot0.ctor(slot0)
-	slot0._workList = {}
-	slot0._doneCount = 0
-	slot0._succCount = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._workList = {}
+	arg_1_0._doneCount = 0
+	arg_1_0._succCount = 0
 end
 
-function slot0.addWork(slot0, slot1)
-	uv0.super.addWork(slot0, slot1)
-	table.insert(slot0._workList, slot1)
+function var_0_0.addWork(arg_2_0, arg_2_1)
+	var_0_0.super.addWork(arg_2_0, arg_2_1)
+	table.insert(arg_2_0._workList, arg_2_1)
 end
 
-function slot0.onWorkDone(slot0, slot1)
-	slot0._doneCount = slot0._doneCount + 1
+function var_0_0.onWorkDone(arg_3_0, arg_3_1)
+	arg_3_0._doneCount = arg_3_0._doneCount + 1
 
-	if slot1.isSuccess then
-		slot0._succCount = slot0._succCount + 1
+	if arg_3_1.isSuccess then
+		arg_3_0._succCount = arg_3_0._succCount + 1
 	end
 
-	slot1:onResetInternal()
+	arg_3_1:onResetInternal()
 
-	if slot0._doneCount == #slot0._workList then
-		if slot0._doneCount == slot0._succCount then
-			return slot0:onDone(true)
+	if arg_3_0._doneCount == #arg_3_0._workList then
+		if arg_3_0._doneCount == arg_3_0._succCount then
+			return arg_3_0:onDone(true)
 		else
-			return slot0:onDone(false)
+			return arg_3_0:onDone(false)
 		end
 	end
 end
 
-function slot0.getWorkList(slot0)
-	return slot0._workList
+function var_0_0.getWorkList(arg_4_0)
+	return arg_4_0._workList
 end
 
-function slot0.onStartInternal(slot0, slot1)
-	uv0.super.onStartInternal(slot0, slot1)
+function var_0_0.onStartInternal(arg_5_0, arg_5_1)
+	var_0_0.super.onStartInternal(arg_5_0, arg_5_1)
 
-	if #slot0._workList == 0 then
-		slot0:onDone(true)
+	if #arg_5_0._workList == 0 then
+		arg_5_0:onDone(true)
 
 		return
 	end
 
-	slot0._doneCount = 0
-	slot0._succCount = 0
+	arg_5_0._doneCount = 0
+	arg_5_0._succCount = 0
 
-	for slot5, slot6 in ipairs(slot0._workList) do
-		slot6:onStartInternal(slot1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._workList) do
+		iter_5_1:onStartInternal(arg_5_1)
 	end
 end
 
-function slot0.onStopInternal(slot0)
-	uv0.super.onStopInternal(slot0)
+function var_0_0.onStopInternal(arg_6_0)
+	var_0_0.super.onStopInternal(arg_6_0)
 
-	for slot4, slot5 in ipairs(slot0._workList) do
-		if slot5.status == WorkStatus.Running then
-			slot5:onStopInternal()
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._workList) do
+		if iter_6_1.status == WorkStatus.Running then
+			iter_6_1:onStopInternal()
 		end
 	end
 end
 
-function slot0.onResumeInternal(slot0)
-	uv0.super.onResumeInternal(slot0)
+function var_0_0.onResumeInternal(arg_7_0)
+	var_0_0.super.onResumeInternal(arg_7_0)
 
-	for slot4, slot5 in ipairs(slot0._workList) do
-		if slot5.status == WorkStatus.Stopped then
-			slot5:onResumeInternal()
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._workList) do
+		if iter_7_1.status == WorkStatus.Stopped then
+			iter_7_1:onResumeInternal()
 		end
 	end
 end
 
-function slot0.onResetInternal(slot0)
-	uv0.super.onResetInternal(slot0)
+function var_0_0.onResetInternal(arg_8_0)
+	var_0_0.super.onResetInternal(arg_8_0)
 
-	if slot0.status == WorkStatus.Running or slot0.status == WorkStatus.Stopped then
-		for slot4, slot5 in ipairs(slot0._workList) do
-			if slot5.status == WorkStatus.Running or slot5.status == WorkStatus.Stopped then
-				slot5:onResetInternal()
+	if arg_8_0.status == WorkStatus.Running or arg_8_0.status == WorkStatus.Stopped then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._workList) do
+			if iter_8_1.status == WorkStatus.Running or iter_8_1.status == WorkStatus.Stopped then
+				iter_8_1:onResetInternal()
 			end
 		end
 	end
 
-	slot0._doneCount = 0
-	slot0._succCount = 0
+	arg_8_0._doneCount = 0
+	arg_8_0._succCount = 0
 end
 
-function slot0.onDestroyInternal(slot0)
-	uv0.super.onDestroyInternal(slot0)
+function var_0_0.onDestroyInternal(arg_9_0)
+	var_0_0.super.onDestroyInternal(arg_9_0)
 
-	if not slot0._workList then
+	if not arg_9_0._workList then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._workList) do
-		slot5:onStopInternal()
-		slot5:onResetInternal()
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._workList) do
+		iter_9_1:onStopInternal()
+		iter_9_1:onResetInternal()
 	end
 
-	for slot4, slot5 in ipairs(slot0._workList) do
-		slot5:onDestroyInternal()
+	for iter_9_2, iter_9_3 in ipairs(arg_9_0._workList) do
+		iter_9_3:onDestroyInternal()
 	end
 
-	slot0._workList = nil
+	arg_9_0._workList = nil
 end
 
-return slot0
+return var_0_0

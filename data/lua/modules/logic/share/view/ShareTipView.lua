@@ -1,96 +1,98 @@
-module("modules.logic.share.view.ShareTipView", package.seeall)
+﻿module("modules.logic.share.view.ShareTipView", package.seeall)
 
-slot0 = class("ShareTipView", BaseView)
+local var_0_0 = class("ShareTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btn_close")
-	slot0._gorawImage = gohelper.findChild(slot0.viewGO, "bg/#go_rawImage")
-	slot0._btnshare = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#go_rawImage/#btn_share")
-	slot0._simagelogo = gohelper.findChildSingleImage(slot0.viewGO, "#simage_logo")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_close")
+	arg_1_0._gorawImage = gohelper.findChild(arg_1_0.viewGO, "bg/#go_rawImage")
+	arg_1_0._btnshare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#go_rawImage/#btn_share")
+	arg_1_0._simagelogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_logo")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnshare:AddClickListener(slot0._btnshareOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnshare:AddClickListener(arg_2_0._btnshareOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnshare:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnshare:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnshareOnClick(slot0)
-	if not slot0._viewOpen then
+function var_0_0._btnshareOnClick(arg_5_0)
+	if not arg_5_0._viewOpen then
 		return
 	end
 
-	slot0._openShareEditor = true
+	arg_5_0._openShareEditor = true
 
-	slot0:closeThis()
-	ShareController.instance:openShareEditorView(slot0._texture)
+	arg_5_0:closeThis()
+	ShareController.instance:openShareEditorView(arg_5_0._texture)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._bgGO = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._bgTr = slot0._bgGO.transform
-	slot0._touchGO = gohelper.findChild(slot0.viewGO, "touch")
-	slot0._touch = TouchEventMgrHepler.getTouchEventMgr(slot0._touchGO)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._bgGO = gohelper.findChild(arg_6_0.viewGO, "bg")
+	arg_6_0._bgTr = arg_6_0._bgGO.transform
+	arg_6_0._touchGO = gohelper.findChild(arg_6_0.viewGO, "touch")
+	arg_6_0._touch = TouchEventMgrHepler.getTouchEventMgr(arg_6_0._touchGO)
 
-	slot0._touch:SetIgnoreUI(true)
-	slot0._touch:SetOnlyTouch(true)
-	slot0._touch:SetOnTouchDownCb(slot0._onTouch, slot0)
+	arg_6_0._touch:SetIgnoreUI(true)
+	arg_6_0._touch:SetOnlyTouch(true)
+	arg_6_0._touch:SetOnTouchDownCb(arg_6_0._onTouch, arg_6_0)
 
-	slot0._viewOpen = false
+	arg_6_0._viewOpen = false
 end
 
-function slot0._onTouch(slot0, slot1)
-	if recthelper.getWidth(slot0._bgTr) < math.abs(recthelper.screenPosToAnchorPos(slot1, slot0._bgTr).x) or recthelper.getHeight(slot0._bgTr) < math.abs(slot2.y) then
-		slot0:closeThis()
+function var_0_0._onTouch(arg_7_0, arg_7_1)
+	local var_7_0 = recthelper.screenPosToAnchorPos(arg_7_1, arg_7_0._bgTr)
+
+	if math.abs(var_7_0.x) > recthelper.getWidth(arg_7_0._bgTr) or math.abs(var_7_0.y) > recthelper.getHeight(arg_7_0._bgTr) then
+		arg_7_0:closeThis()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0._viewOpen = true
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._viewOpen = true
 
-	slot0:_refreshUI()
+	arg_9_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot0._texture = slot0.viewParam
-	gohelper.onceAddComponent(slot0._gorawImage, gohelper.Type_RawImage).texture = slot0._texture
+function var_0_0._refreshUI(arg_10_0)
+	arg_10_0._texture = arg_10_0.viewParam
+	gohelper.onceAddComponent(arg_10_0._gorawImage, gohelper.Type_RawImage).texture = arg_10_0._texture
 
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, 3)
+	TaskDispatcher.cancelTask(arg_10_0.closeThis, arg_10_0)
+	TaskDispatcher.runDelay(arg_10_0.closeThis, arg_10_0, 3)
 end
 
-function slot0.onClose(slot0)
-	slot0._viewOpen = false
+function var_0_0.onClose(arg_11_0)
+	arg_11_0._viewOpen = false
 
-	if not slot0._openShareEditor then
-		UnityEngine.Object.Destroy(slot0._texture)
+	if not arg_11_0._openShareEditor then
+		UnityEngine.Object.Destroy(arg_11_0._texture)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.closeThis, arg_12_0)
 
-	if slot0._touch then
-		TouchEventMgrHepler.remove(slot0._touch)
+	if arg_12_0._touch then
+		TouchEventMgrHepler.remove(arg_12_0._touch)
 
-		slot0._touch = nil
+		arg_12_0._touch = nil
 	end
 end
 
-return slot0
+return var_0_0

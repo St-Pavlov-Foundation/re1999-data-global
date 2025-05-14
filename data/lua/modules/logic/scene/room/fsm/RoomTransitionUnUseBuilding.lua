@@ -1,42 +1,49 @@
-module("modules.logic.scene.room.fsm.RoomTransitionUnUseBuilding", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionUnUseBuilding", package.seeall)
 
-slot0 = class("RoomTransitionUnUseBuilding", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionUnUseBuilding", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot3 = RoomMapBuildingModel.instance:getTempBuildingMO()
-	slot4 = {}
-	slot5 = {}
-	slot6 = nil
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	for slot10 = 1, #slot0._param.buildingInfos do
-		if slot0._scene.buildingmgr:getBuildingEntity(slot2[slot10].uid, SceneTag.RoomBuilding) then
-			slot11:refreshRotation()
-			slot11:refreshBuilding()
-			slot0._scene.buildingmgr:destroyBuilding(slot11)
+	local var_3_0 = arg_3_0._param.buildingInfos
+	local var_3_1 = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local var_3_2 = {}
+	local var_3_3 = {}
+	local var_3_4
 
-			if slot11:getMO() then
-				RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(slot12.buildingId, slot12.hexPoint, slot12.rotate)
-				RoomCharacterController.instance:interruptInteraction(slot12:getCurrentInteractionId())
+	for iter_3_0 = 1, #var_3_0 do
+		local var_3_5 = arg_3_0._scene.buildingmgr:getBuildingEntity(var_3_0[iter_3_0].uid, SceneTag.RoomBuilding)
+
+		if var_3_5 then
+			var_3_5:refreshRotation()
+			var_3_5:refreshBuilding()
+
+			local var_3_6 = var_3_5:getMO()
+
+			arg_3_0._scene.buildingmgr:destroyBuilding(var_3_5)
+
+			if var_3_6 then
+				RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(var_3_6.buildingId, var_3_6.hexPoint, var_3_6.rotate)
+				RoomCharacterController.instance:interruptInteraction(var_3_6:getCurrentInteractionId())
 			end
 
-			RoomMapBuildingModel.instance:removeBuildingMO(slot12)
+			RoomMapBuildingModel.instance:removeBuildingMO(var_3_6)
 
-			if slot3 and slot3.id == slot11.id then
+			if var_3_1 and var_3_1.id == var_3_5.id then
 				RoomMapBuildingModel.instance:removeTempBuildingMO()
 			end
 		end
 	end
 
-	slot0:onDone()
+	arg_3_0:onDone()
 	RoomMapBuildingModel.instance:refreshAllOccupyDict()
 	RoomBuildingController.instance:cancelPressBuilding()
 	RoomResourceModel.instance:clearLightResourcePoint()
@@ -47,23 +54,28 @@ function slot0.onStart(slot0, slot1)
 	RoomBuildingController.instance:refreshBuildingOccupy()
 end
 
-function slot0._addBlockEntityList(slot0, slot1, slot2)
-	slot1 = slot1 or {}
-	slot3 = nil
+function var_0_0._addBlockEntityList(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_1 = arg_4_1 or {}
 
-	for slot7 = 1, #slot2 do
-		if not tabletool.indexOf(slot1, slot2[slot7]) then
-			table.insert(slot1, slot3)
+	local var_4_0
+
+	for iter_4_0 = 1, #arg_4_2 do
+		local var_4_1 = arg_4_2[iter_4_0]
+
+		if not tabletool.indexOf(arg_4_1, var_4_1) then
+			table.insert(arg_4_1, var_4_1)
 		end
 	end
 
-	return slot1
+	return arg_4_1
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_5_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

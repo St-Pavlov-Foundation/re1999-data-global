@@ -1,182 +1,204 @@
-module("modules.logic.explore.model.ExploreMapModel", package.seeall)
+﻿module("modules.logic.explore.model.ExploreMapModel", package.seeall)
 
-slot0 = class("ExploreMapModel", BaseModel)
-slot1 = {}
+local var_0_0 = class("ExploreMapModel", BaseModel)
+local var_0_1 = {}
 
-function slot0.createUnitMO(slot0, slot1)
-	slot2 = nil
+function var_0_0.createUnitMO(arg_1_0, arg_1_1)
+	local var_1_0
+	local var_1_1 = arg_1_1[2]
 
-	if not uv0[slot1[2]] then
-		if ExploreEnum.ItemTypeToName[slot3] then
-			slot2 = _G[string.format("Explore%sUnitMO", ExploreEnum.ItemTypeToName[slot3])] or _G[string.format("Explore%sMO", ExploreEnum.ItemTypeToName[slot3])]
+	if not var_0_1[var_1_1] then
+		if ExploreEnum.ItemTypeToName[var_1_1] then
+			var_1_0 = _G[string.format("Explore%sUnitMO", ExploreEnum.ItemTypeToName[var_1_1])] or _G[string.format("Explore%sMO", ExploreEnum.ItemTypeToName[var_1_1])]
 		end
 
-		uv0[slot3] = slot2 or ExploreBaseUnitMO
+		var_1_0 = var_1_0 or ExploreBaseUnitMO
+		var_0_1[var_1_1] = var_1_0
 	else
-		slot2 = uv0[slot3]
+		var_1_0 = var_0_1[var_1_1]
 	end
 
-	slot4 = slot2.New()
+	local var_1_2 = var_1_0.New()
 
-	slot4:init(slot1)
+	var_1_2:init(arg_1_1)
 
-	return slot4
+	return var_1_2
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-function slot0.updatHeroPos(slot0, slot1, slot2, slot3)
-	slot0.posx = slot1
-	slot0.posy = slot2
-	slot0.dir = slot3
+function var_0_0.updatHeroPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0.posx = arg_4_1
+	arg_4_0.posy = arg_4_2
+	arg_4_0.dir = arg_4_3
 end
 
-function slot0.getHeroPos(slot0)
-	return slot0.posx or 0, slot0.posy or 0
+function var_0_0.getHeroPos(arg_5_0)
+	return arg_5_0.posx or 0, arg_5_0.posy or 0
 end
 
-function slot0.getHeroDir(slot0)
-	return slot0.dir or 0
+function var_0_0.getHeroDir(arg_6_0)
+	return arg_6_0.dir or 0
 end
 
-function slot0.initMapData(slot0, slot1, slot2)
-	slot0._lightNodeDic = {}
-	slot0._lightNodeShowDic = {}
-	slot0._boundNodeShowDic = {}
-	slot0._nodeDic = {}
-	slot0._mapAreaDic = {}
-	slot0._unitDic = {}
-	slot0._areaUnitDic = {}
-	slot0._mapIconDict = {}
-	slot0._mapIconDictById = {}
-	slot0.outLineCount = 0
-	slot0.nowMapRotate = 0
-	slot0._isShowReset = false
-	slot3, slot4, slot5, slot6 = nil
+function var_0_0.initMapData(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._lightNodeDic = {}
+	arg_7_0._lightNodeShowDic = {}
+	arg_7_0._boundNodeShowDic = {}
+	arg_7_0._nodeDic = {}
+	arg_7_0._mapAreaDic = {}
+	arg_7_0._unitDic = {}
+	arg_7_0._areaUnitDic = {}
+	arg_7_0._mapIconDict = {}
+	arg_7_0._mapIconDictById = {}
+	arg_7_0.outLineCount = 0
+	arg_7_0.nowMapRotate = 0
+	arg_7_0._isShowReset = false
 
-	for slot10, slot11 in ipairs(slot1[1]) do
-		slot12 = ExploreNode.New(slot11)
-		slot3 = slot3 and math.min(slot3, slot11[1]) or slot11[1]
-		slot4 = slot4 and math.max(slot4, slot11[1]) or slot11[1]
-		slot5 = slot5 and math.min(slot5, slot11[2]) or slot11[2]
-		slot6 = slot6 and math.max(slot6, slot11[2]) or slot11[2]
-		slot0._nodeDic[slot12.walkableKey] = slot12
+	local var_7_0
+	local var_7_1
+	local var_7_2
+	local var_7_3
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1[1]) do
+		local var_7_4 = ExploreNode.New(iter_7_1)
+
+		var_7_0 = var_7_0 and math.min(var_7_0, iter_7_1[1]) or iter_7_1[1]
+		var_7_1 = var_7_1 and math.max(var_7_1, iter_7_1[1]) or iter_7_1[1]
+		var_7_2 = var_7_2 and math.min(var_7_2, iter_7_1[2]) or iter_7_1[2]
+		var_7_3 = var_7_3 and math.max(var_7_3, iter_7_1[2]) or iter_7_1[2]
+		arg_7_0._nodeDic[var_7_4.walkableKey] = var_7_4
 	end
 
-	slot10 = slot5
-	slot11 = slot6
-	slot0.mapBound = Vector4(slot3, slot4, slot10, slot11)
+	arg_7_0.mapBound = Vector4(var_7_0, var_7_1, var_7_2, var_7_3)
 
-	for slot10, slot11 in ipairs(slot1) do
-		if slot10 > 1 then
-			slot12 = ExploreMapAreaMO.New()
+	for iter_7_2, iter_7_3 in ipairs(arg_7_1) do
+		if iter_7_2 > 1 then
+			local var_7_5 = ExploreMapAreaMO.New()
 
-			slot12:init(slot11)
+			var_7_5:init(iter_7_3)
 
-			slot0._mapAreaDic[slot12.id] = slot12
+			arg_7_0._mapAreaDic[var_7_5.id] = var_7_5
 		end
 	end
 
-	for slot12, slot13 in string.gmatch(slot0.moveNodes or "", "(-?%d+)#(-?%d+)") do
-		slot0:setNodeLightXY(tonumber(slot12), tonumber(slot13))
+	local var_7_6 = arg_7_0.moveNodes or ""
+	local var_7_7 = "(-?%d+)#(-?%d+)"
+
+	for iter_7_4, iter_7_5 in string.gmatch(var_7_6, var_7_7) do
+		iter_7_4 = tonumber(iter_7_4)
+		iter_7_5 = tonumber(iter_7_5)
+
+		arg_7_0:setNodeLightXY(iter_7_4, iter_7_5)
 	end
 
-	slot0:_checkNodeBound()
+	arg_7_0:_checkNodeBound()
 
-	for slot12, slot13 in pairs(slot0._mapAreaDic) do
-		slot0:updateAreaInfo(slot13)
+	for iter_7_6, iter_7_7 in pairs(arg_7_0._mapAreaDic) do
+		arg_7_0:updateAreaInfo(iter_7_7)
 	end
 end
 
-function slot0.updateAreaInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.unitList) do
-		slot0:addUnitMO(slot6)
+function var_0_0.updateAreaInfo(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1.unitList) do
+		arg_8_0:addUnitMO(iter_8_1)
 
-		if (slot6.type == ExploreEnum.ItemType.Ice or slot6.type == ExploreEnum.ItemType.Obstacle) and slot0._nodeDic[ExploreHelper.getKey(slot6.nodePos)] then
-			if slot6.type == ExploreEnum.ItemType.Ice then
-				slot8:setNodeType(ExploreEnum.NodeType.Ice)
-			elseif slot6.type == ExploreEnum.ItemType.Obstacle then
-				slot8:setNodeType(ExploreEnum.NodeType.Obstacle)
+		if iter_8_1.type == ExploreEnum.ItemType.Ice or iter_8_1.type == ExploreEnum.ItemType.Obstacle then
+			local var_8_0 = ExploreHelper.getKey(iter_8_1.nodePos)
+			local var_8_1 = arg_8_0._nodeDic[var_8_0]
+
+			if var_8_1 then
+				if iter_8_1.type == ExploreEnum.ItemType.Ice then
+					var_8_1:setNodeType(ExploreEnum.NodeType.Ice)
+				elseif iter_8_1.type == ExploreEnum.ItemType.Obstacle then
+					var_8_1:setNodeType(ExploreEnum.NodeType.Obstacle)
+				end
 			end
 		end
 	end
 end
 
-function slot0.setSmallMapIconById(slot0, slot1, slot2, slot3)
-	if slot0._mapIconDictById[slot1] == slot3 then
+function var_0_0.setSmallMapIconById(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_0._mapIconDictById[arg_9_1] == arg_9_3 then
 		return
 	end
 
-	slot0._mapIconDictById[slot1] = slot3
+	arg_9_0._mapIconDictById[arg_9_1] = arg_9_3
 
-	slot0:setSmallMapIcon(slot2, slot3)
+	arg_9_0:setSmallMapIcon(arg_9_2, arg_9_3)
 end
 
-function slot0.setSmallMapIcon(slot0, slot1, slot2)
-	if slot0._mapIconDict[slot1] == slot2 then
+function var_0_0.setSmallMapIcon(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_0._mapIconDict[arg_10_1] == arg_10_2 then
 		return
 	end
 
-	slot0._mapIconDict[slot1] = slot2
+	arg_10_0._mapIconDict[arg_10_1] = arg_10_2
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.UnitOutlineChange, slot1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.UnitOutlineChange, arg_10_1)
 end
 
-function slot0.getSmallMapIcon(slot0, slot1)
-	return slot0._mapIconDict[slot1]
+function var_0_0.getSmallMapIcon(arg_11_0, arg_11_1)
+	return arg_11_0._mapIconDict[arg_11_1]
 end
 
-function slot0.getNodeDic(slot0)
-	return slot0._nodeDic
+function var_0_0.getNodeDic(arg_12_0)
+	return arg_12_0._nodeDic
 end
 
-function slot0.getNode(slot0, slot1)
-	if not slot0._nodeDic then
+function var_0_0.getNode(arg_13_0, arg_13_1)
+	if not arg_13_0._nodeDic then
 		return
 	end
 
-	return slot0._nodeDic[slot1]
+	return arg_13_0._nodeDic[arg_13_1]
 end
 
-function slot0.getNodeIsShow(slot0, slot1)
-	return slot0._lightNodeShowDic[slot1] and slot0:getNodeIsOpen(slot1)
+function var_0_0.getNodeIsShow(arg_14_0, arg_14_1)
+	return arg_14_0._lightNodeShowDic[arg_14_1] and arg_14_0:getNodeIsOpen(arg_14_1)
 end
 
-function slot0.getNodeIsBound(slot0, slot1)
-	return slot0:getNodeBoundType(slot1) and slot0:getNodeIsOpen(slot1)
+function var_0_0.getNodeIsBound(arg_15_0, arg_15_1)
+	return arg_15_0:getNodeBoundType(arg_15_1) and arg_15_0:getNodeIsOpen(arg_15_1)
 end
 
-function slot0.getNodeBoundType(slot0, slot1)
-	return slot0._boundNodeShowDic[slot1]
+function var_0_0.getNodeBoundType(arg_16_0, arg_16_1)
+	return arg_16_0._boundNodeShowDic[arg_16_1]
 end
 
-function slot0.getNodeIsOpen(slot0, slot1)
-	if slot0:getNode(slot1) and ExploreModel.instance:isAreaShow(slot2.areaId) then
+function var_0_0.getNodeIsOpen(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:getNode(arg_17_1)
+
+	if var_17_0 and ExploreModel.instance:isAreaShow(var_17_0.areaId) then
 		return true
 	else
 		return false
 	end
 end
 
-function slot0.getNodeCanWalk(slot0, slot1)
-	if slot0:getNode(slot1) and ExploreModel.instance:isAreaShow(slot2.areaId) and slot2:isWalkable() then
+function var_0_0.getNodeCanWalk(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0:getNode(arg_18_1)
+
+	if var_18_0 and ExploreModel.instance:isAreaShow(var_18_0.areaId) and var_18_0:isWalkable() then
 		return true
 	else
 		return false
 	end
 end
 
-function slot0.setIsShowResetBtn(slot0, slot1)
-	if slot0._isShowReset ~= slot1 then
-		slot0._isShowReset = slot1
+function var_0_0.setIsShowResetBtn(arg_19_0, arg_19_1)
+	if arg_19_0._isShowReset ~= arg_19_1 then
+		arg_19_0._isShowReset = arg_19_1
 
 		ExploreController.instance:dispatchEvent(ExploreEvent.ShowResetChange)
 
-		if not slot1 and ExploreModel.instance.isShowingResetBoxMessage then
+		if not arg_19_1 and ExploreModel.instance.isShowingResetBoxMessage then
 			ExploreModel.instance.isShowingResetBoxMessage = false
 
 			ViewMgr.instance:closeView(ViewName.MessageBoxView)
@@ -184,175 +206,200 @@ function slot0.setIsShowResetBtn(slot0, slot1)
 	end
 end
 
-function slot0.getIsShowResetBtn(slot0)
-	return slot0._isShowReset
+function var_0_0.getIsShowResetBtn(arg_20_0)
+	return arg_20_0._isShowReset
 end
 
-function slot0.updateNodeHeight(slot0, slot1, slot2)
-	if slot0:getNode(slot1) then
-		slot3.height = slot2
+function var_0_0.updateNodeHeight(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0:getNode(arg_21_1)
+
+	if var_21_0 then
+		var_21_0.height = arg_21_2
 	end
 end
 
-function slot0.updateNodeOpenKey(slot0, slot1, slot2, slot3, slot4)
-	if slot0:getNode(slot1) then
-		slot5:updateOpenKey(slot2, slot3)
+function var_0_0.updateNodeOpenKey(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	local var_22_0 = arg_22_0:getNode(arg_22_1)
 
-		if slot4 and slot5:isWalkable() ~= slot5:isWalkable() then
+	if var_22_0 then
+		local var_22_1 = var_22_0:isWalkable()
+
+		var_22_0:updateOpenKey(arg_22_2, arg_22_3)
+
+		local var_22_2 = var_22_0:isWalkable()
+
+		if arg_22_4 and var_22_1 ~= var_22_2 then
 			ExploreController.instance:dispatchEvent(ExploreEvent.OnNodeChange)
 		end
 	else
-		logError("nodeKey not find:" .. slot1)
+		logError("nodeKey not find:" .. arg_22_1)
 	end
 end
 
-function slot0.updateNodeCanPassItem(slot0, slot1, slot2)
-	if slot0:getNode(slot1) then
-		slot3:setCanPassItem(slot2)
+function var_0_0.updateNodeCanPassItem(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = arg_23_0:getNode(arg_23_1)
+
+	if var_23_0 then
+		var_23_0:setCanPassItem(arg_23_2)
 	else
-		logError("nodeKey not find:" .. slot1)
+		logError("nodeKey not find:" .. arg_23_1)
 	end
 end
 
-function slot0.getUnitDic(slot0)
-	return slot0._unitDic
+function var_0_0.getUnitDic(arg_24_0)
+	return arg_24_0._unitDic
 end
 
-function slot0.getMapAreaDic(slot0)
-	return slot0._mapAreaDic
+function var_0_0.getMapAreaDic(arg_25_0)
+	return arg_25_0._mapAreaDic
 end
 
-function slot0.getAreaAllUnit(slot0, slot1)
-	return slot0:getMapAreaMO(slot1) and slot2.unitList or {}
+function var_0_0.getAreaAllUnit(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getMapAreaMO(arg_26_1)
+
+	return var_26_0 and var_26_0.unitList or {}
 end
 
-function slot0.getMapAreaMO(slot0, slot1)
-	return slot0._mapAreaDic[slot1]
+function var_0_0.getMapAreaMO(arg_27_0, arg_27_1)
+	return arg_27_0._mapAreaDic[arg_27_1]
 end
 
-function slot0.addUnitMO(slot0, slot1)
-	slot0._unitDic[slot1.id] = slot1
+function var_0_0.addUnitMO(arg_28_0, arg_28_1)
+	arg_28_0._unitDic[arg_28_1.id] = arg_28_1
 end
 
-function slot0.getUnitMO(slot0, slot1)
-	return slot0._unitDic[slot1]
+function var_0_0.getUnitMO(arg_29_0, arg_29_1)
+	return arg_29_0._unitDic[arg_29_1]
 end
 
-function slot0.removeUnit(slot0, slot1)
+function var_0_0.removeUnit(arg_30_0, arg_30_1)
+	return
 end
 
-function slot0.getExploreProgress(slot0)
-	slot1 = {
-		[slot8] = 0
-	}
-	slot2 = {
-		[slot8] = 0
-	}
-	slot3 = 0
-	slot4 = 0
+function var_0_0.getExploreProgress(arg_31_0)
+	local var_31_0 = {}
+	local var_31_1 = {}
+	local var_31_2 = 0
+	local var_31_3 = 0
 
-	for slot8, slot9 in pairs(ExploreEnum.ProgressType) do
-		-- Nothing
+	for iter_31_0, iter_31_1 in pairs(ExploreEnum.ProgressType) do
+		var_31_1[iter_31_0] = 0
+		var_31_0[iter_31_0] = 0
 	end
 
-	for slot8, slot9 in pairs(slot0._unitDic) do
-		if ExploreEnum.ProgressType[slot9.type] then
-			if slot9:isInteractDone() then
-				slot1[slot10] = slot1[slot10] + 1
-				slot4 = slot4 + 1
+	for iter_31_2, iter_31_3 in pairs(arg_31_0._unitDic) do
+		local var_31_4 = iter_31_3.type
+
+		if ExploreEnum.ProgressType[var_31_4] then
+			if iter_31_3:isInteractDone() then
+				var_31_0[var_31_4] = var_31_0[var_31_4] + 1
+				var_31_3 = var_31_3 + 1
 			end
 
-			slot2[slot10] = slot2[slot10] + 1
-			slot3 = slot3 + 1
+			var_31_1[var_31_4] = var_31_1[var_31_4] + 1
+			var_31_2 = var_31_2 + 1
 		end
 	end
 
-	return slot2, slot1, slot3, slot4
+	return var_31_1, var_31_0, var_31_2, var_31_3
 end
 
-function slot0.setNodeLightXY(slot0, slot1, slot2, slot3)
-	if slot0._lightNodeDic[ExploreHelper.getKeyXY(slot1, slot2)] then
+function var_0_0.setNodeLightXY(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	local var_32_0 = ExploreHelper.getKeyXY(arg_32_1, arg_32_2)
+
+	if arg_32_0._lightNodeDic[var_32_0] then
 		return
 	end
 
-	slot0._lightNodeDic[slot4] = true
+	arg_32_0._lightNodeDic[var_32_0] = true
 
-	for slot8 = -4, 4 do
-		for slot12 = -4, 4 do
-			slot13 = ExploreHelper.getKeyXY(slot1 + slot8, slot2 + slot12)
-			slot0._boundNodeShowDic[slot13] = nil
-			slot0._lightNodeShowDic[slot13] = true
+	for iter_32_0 = -4, 4 do
+		for iter_32_1 = -4, 4 do
+			local var_32_1 = ExploreHelper.getKeyXY(arg_32_1 + iter_32_0, arg_32_2 + iter_32_1)
+
+			arg_32_0._boundNodeShowDic[var_32_1] = nil
+			arg_32_0._lightNodeShowDic[var_32_1] = true
 		end
 	end
 
-	if slot3 then
-		slot0:_checkNodeBound()
+	if arg_32_3 then
+		arg_32_0:_checkNodeBound()
 	end
 end
 
-function slot0._checkNodeBound(slot0)
-	slot1 = false
+function var_0_0._checkNodeBound(arg_33_0)
+	local var_33_0 = false
 
-	for slot5, slot6 in pairs(slot0._nodeDic) do
-		if not slot0._lightNodeShowDic[slot5] then
-			if slot0:getNodeIsShow(ExploreHelper.getKeyXY(slot6.pos.x - 1, slot6.pos.y)) and slot0:getNodeIsShow(ExploreHelper.getKeyXY(slot6.pos.x + 1, slot6.pos.y)) or slot0:getNodeIsShow(ExploreHelper.getKeyXY(slot6.pos.x, slot6.pos.y + 1)) and slot0:getNodeIsShow(ExploreHelper.getKeyXY(slot6.pos.x, slot6.pos.y - 1)) then
-				slot1 = true
-				slot0._lightNodeShowDic[slot5] = true
-				slot0._boundNodeShowDic[slot5] = nil
+	for iter_33_0, iter_33_1 in pairs(arg_33_0._nodeDic) do
+		if not arg_33_0._lightNodeShowDic[iter_33_0] then
+			local var_33_1 = ExploreHelper.getKeyXY(iter_33_1.pos.x - 1, iter_33_1.pos.y)
+			local var_33_2 = ExploreHelper.getKeyXY(iter_33_1.pos.x + 1, iter_33_1.pos.y)
+			local var_33_3 = ExploreHelper.getKeyXY(iter_33_1.pos.x, iter_33_1.pos.y + 1)
+			local var_33_4 = ExploreHelper.getKeyXY(iter_33_1.pos.x, iter_33_1.pos.y - 1)
+			local var_33_5 = arg_33_0:getNodeIsShow(var_33_1)
+			local var_33_6 = arg_33_0:getNodeIsShow(var_33_2)
+			local var_33_7 = arg_33_0:getNodeIsShow(var_33_3)
+			local var_33_8 = arg_33_0:getNodeIsShow(var_33_4)
+
+			if var_33_5 and var_33_6 or var_33_7 and var_33_8 then
+				var_33_0 = true
+				arg_33_0._lightNodeShowDic[iter_33_0] = true
+				arg_33_0._boundNodeShowDic[iter_33_0] = nil
 
 				break
-			elseif slot11 or slot12 or slot13 or slot14 then
-				slot0._boundNodeShowDic[slot5] = nil
-				slot15 = 0
+			elseif var_33_5 or var_33_6 or var_33_7 or var_33_8 then
+				arg_33_0._boundNodeShowDic[iter_33_0] = nil
 
-				if slot11 and slot13 then
-					slot15 = 1
-				elseif slot11 and slot14 then
-					slot15 = 2
-				elseif slot12 and slot13 then
-					slot15 = 3
-				elseif slot12 and slot14 then
-					slot15 = 4
-				elseif slot11 then
-					slot15 = 5
-				elseif slot12 then
-					slot15 = 6
-				elseif slot13 then
-					slot15 = 7
-				elseif slot14 then
-					slot15 = 8
+				local var_33_9 = 0
+
+				if var_33_5 and var_33_7 then
+					var_33_9 = 1
+				elseif var_33_5 and var_33_8 then
+					var_33_9 = 2
+				elseif var_33_6 and var_33_7 then
+					var_33_9 = 3
+				elseif var_33_6 and var_33_8 then
+					var_33_9 = 4
+				elseif var_33_5 then
+					var_33_9 = 5
+				elseif var_33_6 then
+					var_33_9 = 6
+				elseif var_33_7 then
+					var_33_9 = 7
+				elseif var_33_8 then
+					var_33_9 = 8
 				end
 
-				slot0._boundNodeShowDic[slot5] = slot15
+				arg_33_0._boundNodeShowDic[iter_33_0] = var_33_9
 			end
 		end
 	end
 
-	if slot1 then
-		slot0:_checkNodeBound()
+	if var_33_0 then
+		arg_33_0:_checkNodeBound()
 	end
 end
 
-function slot0.setNodeLight(slot0, slot1)
-	slot0:setNodeLightXY(slot1.x, slot1.y, true)
+function var_0_0.setNodeLight(arg_34_0, arg_34_1)
+	arg_34_0:setNodeLightXY(arg_34_1.x, arg_34_1.y, true)
 end
 
-function slot0.changeOutlineNum(slot0, slot1)
-	slot0.outLineCount = slot0.outLineCount + slot1
-	RenderPipelineSetting.selectedOutlineToggle = slot0.outLineCount > 0
+function var_0_0.changeOutlineNum(arg_35_0, arg_35_1)
+	arg_35_0.outLineCount = arg_35_0.outLineCount + arg_35_1
+	RenderPipelineSetting.selectedOutlineToggle = arg_35_0.outLineCount > 0
 end
 
-function slot0.clear(slot0)
-	slot0._nodeDic = nil
-	slot0._unitDic = nil
-	slot0._mapAreaDic = nil
-	slot0._lightNodeDic = nil
-	slot0._lightNodeShowDic = nil
-	slot0._boundNodeShowDic = nil
-	slot0.moveNodes = nil
-	slot0.outLineCount = 0
+function var_0_0.clear(arg_36_0)
+	arg_36_0._nodeDic = nil
+	arg_36_0._unitDic = nil
+	arg_36_0._mapAreaDic = nil
+	arg_36_0._lightNodeDic = nil
+	arg_36_0._lightNodeShowDic = nil
+	arg_36_0._boundNodeShowDic = nil
+	arg_36_0.moveNodes = nil
+	arg_36_0.outLineCount = 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

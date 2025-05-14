@@ -1,284 +1,317 @@
-module("projbooter.hotupdate.HotUpdateMgr", package.seeall)
+﻿module("projbooter.hotupdate.HotUpdateMgr", package.seeall)
 
-slot0 = class("HotUpdateMgr")
-slot0.FailAlertCount = 4
+local var_0_0 = class("HotUpdateMgr")
 
-function slot0.ctor(slot0)
-	slot0._eventMgr = SLFramework.GameUpdate.HotUpdateEvent
-	slot0._eventMgrInst = SLFramework.GameUpdate.HotUpdateEvent.Instance
-	slot0._started = false
-	slot0._useBackupUrl = false
+var_0_0.FailAlertCount = 4
+
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._eventMgr = SLFramework.GameUpdate.HotUpdateEvent
+	arg_1_0._eventMgrInst = SLFramework.GameUpdate.HotUpdateEvent.Instance
+	arg_1_0._started = false
+	arg_1_0._useBackupUrl = false
 end
 
-function slot0.getUseBackup(slot0)
-	return slot0._useBackupUrl
+function var_0_0.getUseBackup(arg_2_0)
+	return arg_2_0._useBackupUrl
 end
 
-function slot0.inverseUseBackup(slot0)
-	slot0._useBackupUrl = not slot0._useBackupUrl
+function var_0_0.inverseUseBackup(arg_3_0)
+	arg_3_0._useBackupUrl = not arg_3_0._useBackupUrl
 end
 
-function slot0.getFailCount(slot0)
-	return slot0._failCount or 0
+function var_0_0.getFailCount(arg_4_0)
+	return arg_4_0._failCount or 0
 end
 
-function slot0.resetFailCount(slot0)
-	slot0._failCount = 0
-	slot0._failAlertCount = 0
+function var_0_0.resetFailCount(arg_5_0)
+	arg_5_0._failCount = 0
+	arg_5_0._failAlertCount = 0
 end
 
-function slot0.incFailCount(slot0)
-	slot0._failCount = slot0._failCount and slot0._failCount + 1 or 1
-	slot0._failAlertCount = slot0._failAlertCount and slot0._failAlertCount + 1 or 1
+function var_0_0.incFailCount(arg_6_0)
+	arg_6_0._failCount = arg_6_0._failCount and arg_6_0._failCount + 1 or 1
+	arg_6_0._failAlertCount = arg_6_0._failAlertCount and arg_6_0._failAlertCount + 1 or 1
 end
 
-function slot0.getFailAlertCount(slot0)
-	return slot0._failAlertCount or 0
+function var_0_0.getFailAlertCount(arg_7_0)
+	return arg_7_0._failAlertCount or 0
 end
 
-function slot0.resetFailAlertCount(slot0)
-	slot0._failAlertCount = 0
+function var_0_0.resetFailAlertCount(arg_8_0)
+	arg_8_0._failAlertCount = 0
 end
 
-function slot0.isFailNeedAlert(slot0)
-	return uv0.FailAlertCount <= slot0._failAlertCount
+function var_0_0.isFailNeedAlert(arg_9_0)
+	return arg_9_0._failAlertCount >= var_0_0.FailAlertCount
 end
 
-function slot0.hideConnectTips(slot0)
+function var_0_0.hideConnectTips(arg_10_0)
 	BootLoadingView.instance:hide()
 end
 
-function slot0.showConnectTips(slot0)
+function var_0_0.showConnectTips(arg_11_0)
 	if BootVoiceView.instance:isShow() then
 		BootVoiceView.instance:updateTips()
 		BootLoadingView.instance:hide()
-	elseif slot0:getFailAlertCount() > 0 then
-		BootLoadingView.instance:showMsg(string.format(booterLang("network_reconnect"), tostring(slot0:getFailAlertCount())), "")
+	elseif arg_11_0:getFailAlertCount() > 0 then
+		local var_11_0 = string.format(booterLang("network_reconnect"), tostring(arg_11_0:getFailAlertCount()))
+
+		BootLoadingView.instance:showMsg(var_11_0, "")
 	else
-		BootLoadingView.instance:showMsg(string.format(booterLang("network_connecting")), "")
+		local var_11_1 = string.format(booterLang("network_connecting"))
+
+		BootLoadingView.instance:showMsg(var_11_1, "")
 	end
 end
 
-function slot0.initStatHotUpdatePer(slot0)
-	slot0._statHotUpdatePerList = {
-		{
-			0,
-			SDKDataTrackMgr.EventName.hotupdate_0_20
-		},
-		{
-			0.21,
-			SDKDataTrackMgr.EventName.hotupdate_21_40
-		},
-		{
-			0.41,
-			SDKDataTrackMgr.EventName.hotupdate_41_60
-		},
-		{
-			0.61,
-			SDKDataTrackMgr.EventName.hotupdate_61_80
-		},
-		{
-			0.81,
-			SDKDataTrackMgr.EventName.hotupdate_81_100
-		}
+function var_0_0.initStatHotUpdatePer(arg_12_0)
+	arg_12_0._statHotUpdatePerList = {}
+	arg_12_0._statHotUpdatePerList[1] = {
+		0,
+		SDKDataTrackMgr.EventName.hotupdate_0_20
 	}
-	slot0._statHotUpdatePerNum = 5
-	slot0._nowStatHotUpdatePerIndex = 1
+	arg_12_0._statHotUpdatePerList[2] = {
+		0.21,
+		SDKDataTrackMgr.EventName.hotupdate_21_40
+	}
+	arg_12_0._statHotUpdatePerList[3] = {
+		0.41,
+		SDKDataTrackMgr.EventName.hotupdate_41_60
+	}
+	arg_12_0._statHotUpdatePerList[4] = {
+		0.61,
+		SDKDataTrackMgr.EventName.hotupdate_61_80
+	}
+	arg_12_0._statHotUpdatePerList[5] = {
+		0.81,
+		SDKDataTrackMgr.EventName.hotupdate_81_100
+	}
+	arg_12_0._statHotUpdatePerNum = 5
+	arg_12_0._nowStatHotUpdatePerIndex = 1
 end
 
-function slot0.start(slot0, slot1, slot2, slot3, slot4)
-	slot0:initStatHotUpdatePer()
+function var_0_0.start(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	arg_13_0:initStatHotUpdatePer()
 
-	slot0._onFinishCb = slot1
-	slot0._onFinishObj = slot2
-	slot0._onDownloadSuccCb = slot3
-	slot0._onDownloadSuccObj = slot4
+	arg_13_0._onFinishCb = arg_13_1
+	arg_13_0._onFinishObj = arg_13_2
+	arg_13_0._onDownloadSuccCb = arg_13_3
+	arg_13_0._onDownloadSuccObj = arg_13_4
 
 	if GameResMgr.IsFromEditorDir then
-		-- Nothing
+		-- block empty
 	end
 
-	slot0._started = true
+	arg_13_0._started = true
 
-	slot0:resetFailCount()
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.GetRemoteVersionFail, slot0._onGetRemoteVersionFail, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.GetRemoteVersionSuccess, slot0._onGetRemoteVersionSuccess, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.GetUpdateManifestFail, slot0._onGetUpdateResInfoFail, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.GetUpdateManifestSuccess, slot0._onGetUpdateResInfoSuccess, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.NeedInstallNewPackage, slot0._onNeedInstallNewPackage, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.StartHotUpdateNotify, slot0._onStartHotUpdateNotify, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.HotUpdateDownloadProgress, slot0._onHotUpdateDownloadProgress, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.HotUpdateDownloadFail, slot0._onHotUpdateDownloadFail, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.DownloadDiskFull, slot0._onDownloadDiskFull, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.HotUpdateDownloadSuccess, slot0._onHotUpdateDownloadSuccess, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.StartUnzipNotify, slot0._onStartUnzipNotify, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.DiskSpaceNotEnough, slot0._onDiskSpaceNotEnough, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.UnzipProgress, slot0._onUnzipProgress, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.UnzipFail, slot0._onUnzipFail, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.UnzipSuccess, slot0._onUnzipSuccess, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.HotUpdateComplete, slot0._onHotUpdateComplete, slot0)
+	arg_13_0:resetFailCount()
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.GetRemoteVersionFail, arg_13_0._onGetRemoteVersionFail, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.GetRemoteVersionSuccess, arg_13_0._onGetRemoteVersionSuccess, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.GetUpdateManifestFail, arg_13_0._onGetUpdateResInfoFail, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.GetUpdateManifestSuccess, arg_13_0._onGetUpdateResInfoSuccess, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.NeedInstallNewPackage, arg_13_0._onNeedInstallNewPackage, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.StartHotUpdateNotify, arg_13_0._onStartHotUpdateNotify, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.HotUpdateDownloadProgress, arg_13_0._onHotUpdateDownloadProgress, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.HotUpdateDownloadFail, arg_13_0._onHotUpdateDownloadFail, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.DownloadDiskFull, arg_13_0._onDownloadDiskFull, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.HotUpdateDownloadSuccess, arg_13_0._onHotUpdateDownloadSuccess, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.StartUnzipNotify, arg_13_0._onStartUnzipNotify, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.DiskSpaceNotEnough, arg_13_0._onDiskSpaceNotEnough, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.UnzipProgress, arg_13_0._onUnzipProgress, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.UnzipFail, arg_13_0._onUnzipFail, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.UnzipSuccess, arg_13_0._onUnzipSuccess, arg_13_0)
+	arg_13_0._eventMgrInst:AddLuaLisenter(arg_13_0._eventMgr.HotUpdateComplete, arg_13_0._onHotUpdateComplete, arg_13_0)
 
-	slot5 = slot0:getDomainUrl()
-	slot6 = SDKMgr.instance:getGameId()
-	slot7 = SLFramework.FrameworkSettings.CurPlatform
+	local var_13_0 = arg_13_0:getDomainUrl()
+	local var_13_1 = SDKMgr.instance:getGameId()
+	local var_13_2 = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot7 = 2
+		var_13_2 = 2
 	end
 
-	slot0:statStartUpdate()
+	local var_13_3 = SDKMgr.instance:getChannelId()
+	local var_13_4 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
+	local var_13_5 = tonumber(BootNativeUtil.getAppVersion())
+	local var_13_6 = BootNativeUtil.getPackageName()
+	local var_13_7 = SDKMgr.instance:getSubChannelId()
+
+	arg_13_0:statStartUpdate()
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_check)
-	slot0._eventMgrInst:StartUpdate(slot5, slot6, slot7, SDKMgr.instance:getChannelId(), GameChannelConfig.getServerType(), SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr, tonumber(BootNativeUtil.getAppVersion()), BootNativeUtil.getPackageName(), SDKMgr.instance:getSubChannelId())
+
+	local var_13_8 = GameChannelConfig.getServerType()
+
+	arg_13_0._eventMgrInst:StartUpdate(var_13_0, var_13_1, var_13_2, var_13_3, var_13_8, var_13_4, var_13_5, var_13_6, var_13_7)
 end
 
-function slot0.stop(slot0)
-	slot0._eventMgrInst:StopUpdate()
+function var_0_0.stop(arg_14_0)
+	arg_14_0._eventMgrInst:StopUpdate()
 end
 
-function slot0.getDomainUrl(slot0)
-	slot1, slot2 = GameUrlConfig.getHotUpdateUrl()
+function var_0_0.getDomainUrl(arg_15_0)
+	local var_15_0, var_15_1 = GameUrlConfig.getHotUpdateUrl()
 
-	return slot0:getUseBackup() and slot2 or slot1
+	return arg_15_0:getUseBackup() and var_15_1 or var_15_0
 end
 
-function slot0._onFinish(slot0)
-	if not slot0._onFinishCb then
+function var_0_0._onFinish(arg_16_0)
+	if not arg_16_0._onFinishCb then
 		return
 	end
 
-	if slot0._started then
-		slot0._eventMgrInst:ClearLuaListener()
+	if arg_16_0._started then
+		arg_16_0._eventMgrInst:ClearLuaListener()
 	end
 
-	slot0._onFinishCb(slot0._onFinishObj)
+	arg_16_0._onFinishCb(arg_16_0._onFinishObj)
 
-	slot0._started = false
+	arg_16_0._started = false
 
-	if slot0._audioInited then
+	if arg_16_0._audioInited then
 		BootAudioMgr.instance:dispose()
 	end
 end
 
-function slot0._initAudio(slot0)
-	slot0._audioInited = true
+function var_0_0._initAudio(arg_17_0)
+	arg_17_0._audioInited = true
 
-	BootAudioMgr.instance:init(slot0._onAudioInited, slot0)
+	BootAudioMgr.instance:init(arg_17_0._onAudioInited, arg_17_0)
 end
 
-function slot0._onAudioInited(slot0)
+function var_0_0._onAudioInited(arg_18_0)
 	logNormal("启动音效初始化成功！")
 end
 
-function slot0._onGetRemoteVersionFail(slot0, slot1, slot2, slot3)
-	logWarn("HotUpdateMgr:_onGetRemoteVersionFail, 获取版本失败, error = " .. slot1)
-	slot0:inverseUseBackup()
-	slot0._eventMgrInst:ChangeGetInfoDomainUrl(slot0:getDomainUrl())
-	slot0:incFailCount()
+function var_0_0._onGetRemoteVersionFail(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	logWarn("HotUpdateMgr:_onGetRemoteVersionFail, 获取版本失败, error = " .. arg_19_1)
+	arg_19_0:inverseUseBackup()
 
-	if slot0:isFailNeedAlert() then
-		slot0:resetFailAlertCount()
-		BootMsgBox.instance:show({
+	local var_19_0 = arg_19_0:getDomainUrl()
+
+	arg_19_0._eventMgrInst:ChangeGetInfoDomainUrl(var_19_0)
+	arg_19_0:incFailCount()
+
+	if arg_19_0:isFailNeedAlert() then
+		arg_19_0:resetFailAlertCount()
+
+		local var_19_1 = {
 			title = booterLang("hotupdate"),
-			content = booterLang("error_request_version") .. slot1,
+			content = booterLang("error_request_version") .. arg_19_1,
 			leftMsg = booterLang("exit"),
-			leftCb = slot0._quitGame,
-			leftCbObj = slot0,
+			leftCb = arg_19_0._quitGame,
+			leftCbObj = arg_19_0,
 			rightMsg = booterLang("retry"),
-			rightCb = slot0._retryGetVersion,
-			rightCbObj = slot0
-		})
-		slot0:hideConnectTips()
+			rightCb = arg_19_0._retryGetVersion,
+			rightCbObj = arg_19_0
+		}
+
+		BootMsgBox.instance:show(var_19_1)
+		arg_19_0:hideConnectTips()
 	else
 		logNormal("HotUpdateMgr 静默重试获取版本！")
-		slot0._eventMgrInst:DoRetryAction()
-		slot0:showConnectTips()
+		arg_19_0._eventMgrInst:DoRetryAction()
+		arg_19_0:showConnectTips()
 	end
 
-	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.fail, slot3, slot2, slot1)
+	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.fail, arg_19_3, arg_19_2, arg_19_1)
 end
 
-function slot0._quitGame(slot0)
+function var_0_0._quitGame(arg_20_0)
 	logNormal("HotUpdateMgr:_quitGame, 退出游戏！")
 	ProjBooter.instance:quitGame()
 end
 
-function slot0._retryGetVersion(slot0)
+function var_0_0._retryGetVersion(arg_21_0)
 	logNormal("HotUpdateMgr:_retryGetVersion, 重试获取版本！")
-	slot0._eventMgrInst:DoRetryAction()
-	slot0:showConnectTips()
+	arg_21_0._eventMgrInst:DoRetryAction()
+	arg_21_0:showConnectTips()
 end
 
-function slot0._onGetRemoteVersionSuccess(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0:hideConnectTips()
-	SDKDataTrackMgr.instance:trackDomainFailCount("scene_hotupdate_versioncheck", slot0:getDomainUrl(), slot0:getFailCount())
-	slot0:resetFailCount()
+function var_0_0._onGetRemoteVersionSuccess(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5)
+	arg_22_0:hideConnectTips()
+
+	local var_22_0 = arg_22_0:getDomainUrl()
+
+	SDKDataTrackMgr.instance:trackDomainFailCount("scene_hotupdate_versioncheck", var_22_0, arg_22_0:getFailCount())
+	arg_22_0:resetFailCount()
 	logNormal("HotUpdateMgr:_onGetRemoteVersionSuccess ！")
 
-	slot0.shouldHotUpdate = SLFramework.GameUpdate.HotUpdateInfoMgr.ShouldHotUpdate
+	arg_22_0.shouldHotUpdate = SLFramework.GameUpdate.HotUpdateInfoMgr.ShouldHotUpdate
 
-	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.success, slot5)
+	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.success, arg_22_5)
 end
 
-function slot0._onGetUpdateResInfoFail(slot0, slot1, slot2, slot3)
-	logWarn("HotUpdateMgr:_onGetUpdateResInfoFail, 获取更新资源信息失败, error = " .. slot1)
-	slot0:inverseUseBackup()
-	slot0._eventMgrInst:ChangeGetInfoDomainUrl(slot0:getDomainUrl())
-	slot0:incFailCount()
+function var_0_0._onGetUpdateResInfoFail(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	logWarn("HotUpdateMgr:_onGetUpdateResInfoFail, 获取更新资源信息失败, error = " .. arg_23_1)
+	arg_23_0:inverseUseBackup()
 
-	if slot0:isFailNeedAlert() then
-		slot0:resetFailAlertCount()
-		BootMsgBox.instance:show({
+	local var_23_0 = arg_23_0:getDomainUrl()
+
+	arg_23_0._eventMgrInst:ChangeGetInfoDomainUrl(var_23_0)
+	arg_23_0:incFailCount()
+
+	if arg_23_0:isFailNeedAlert() then
+		arg_23_0:resetFailAlertCount()
+
+		local var_23_1 = {
 			title = booterLang("hotupdate"),
-			content = booterLang("error_request_update") .. slot1,
+			content = booterLang("error_request_update") .. arg_23_1,
 			leftMsg = booterLang("exit"),
-			leftCb = slot0._quitGame,
-			leftCbObj = slot0,
+			leftCb = arg_23_0._quitGame,
+			leftCbObj = arg_23_0,
 			rightMsg = booterLang("retry"),
-			rightCb = slot0._retryGetUpdateManifest,
-			rightCbObj = slot0
-		})
-		slot0:hideConnectTips()
+			rightCb = arg_23_0._retryGetUpdateManifest,
+			rightCbObj = arg_23_0
+		}
+
+		BootMsgBox.instance:show(var_23_1)
+		arg_23_0:hideConnectTips()
 	else
 		logNormal("HotUpdateMgr 静默重试获取更新资源信息！")
-		slot0._eventMgrInst:DoRetryAction()
-		slot0:showConnectTips()
+		arg_23_0._eventMgrInst:DoRetryAction()
+		arg_23_0:showConnectTips()
 	end
 
-	SDKDataTrackMgr.instance:trackHotUpdateResourceEvent(SDKDataTrackMgr.RequestResult.fail, slot3, slot2, slot1)
+	SDKDataTrackMgr.instance:trackHotUpdateResourceEvent(SDKDataTrackMgr.RequestResult.fail, arg_23_3, arg_23_2, arg_23_1)
 end
 
-function slot0._retryGetUpdateManifest(slot0)
+function var_0_0._retryGetUpdateManifest(arg_24_0)
 	logNormal("HotUpdateMgr:_retryGetUpdateManifest, 重试获取更新信息失败！")
-	slot0._eventMgrInst:DoRetryAction()
-	slot0:showConnectTips()
+	arg_24_0._eventMgrInst:DoRetryAction()
+	arg_24_0:showConnectTips()
 end
 
-function slot0._onGetUpdateResInfoSuccess(slot0, slot1, slot2)
-	slot0:hideConnectTips()
-	SDKDataTrackMgr.instance:trackDomainFailCount("scene_hotupdate_srcrequest", slot0:getDomainUrl(), slot0:getFailCount())
-	slot0:resetFailCount()
-	logNormal("HotUpdateMgr:_onGetUpdateResInfoSuccess targetVersion = ", slot1)
-	SDKDataTrackMgr.instance:trackHotUpdateResourceEvent(SDKDataTrackMgr.RequestResult.success, slot2)
+function var_0_0._onGetUpdateResInfoSuccess(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0:hideConnectTips()
+
+	local var_25_0 = arg_25_0:getDomainUrl()
+
+	SDKDataTrackMgr.instance:trackDomainFailCount("scene_hotupdate_srcrequest", var_25_0, arg_25_0:getFailCount())
+	arg_25_0:resetFailCount()
+	logNormal("HotUpdateMgr:_onGetUpdateResInfoSuccess targetVersion = ", arg_25_1)
+	SDKDataTrackMgr.instance:trackHotUpdateResourceEvent(SDKDataTrackMgr.RequestResult.success, arg_25_2)
 end
 
-function slot0._onNeedInstallNewPackage(slot0, slot1)
-	logNormal("HotUpdateMgr:_onNeedInstallNewPackage, 需要整包更新！appUrl = " .. slot1)
+function var_0_0._onNeedInstallNewPackage(arg_26_0, arg_26_1)
+	logNormal("HotUpdateMgr:_onNeedInstallNewPackage, 需要整包更新！appUrl = " .. arg_26_1)
 
-	slot0._appUrl = slot1
+	arg_26_0._appUrl = arg_26_1
 
-	BootMsgBox.instance:show({
+	local var_26_0 = {
 		title = booterLang("hotupdate"),
 		content = booterLang("need_update_package"),
 		leftMsg = booterLang("exit"),
-		leftCb = slot0._quitGame,
-		leftCbObj = slot0,
+		leftCb = arg_26_0._quitGame,
+		leftCbObj = arg_26_0,
 		rightMsg = booterLang("download"),
-		rightCb = slot0._gotoDownloadPackage,
-		rightCbObj = slot0
-	})
+		rightCb = arg_26_0._gotoDownloadPackage,
+		rightCbObj = arg_26_0
+	}
+
+	BootMsgBox.instance:show(var_26_0)
 end
 
-function slot0._taptapUpdateGame()
+function var_0_0._taptapUpdateGame()
 	if BootNativeUtil.isAndroid() and tostring(SDKMgr.instance:getSubChannelId()) == "1001" then
 		SDKNativeUtil.updateGame()
 
@@ -286,12 +319,12 @@ function slot0._taptapUpdateGame()
 	end
 end
 
-function slot0._gotoDownloadPackage(slot0)
-	logNormal("HotUpdateMgr:_gotoDownloadPackage, 打开下载Url = " .. slot0._appUrl)
+function var_0_0._gotoDownloadPackage(arg_28_0)
+	logNormal("HotUpdateMgr:_gotoDownloadPackage, 打开下载Url = " .. arg_28_0._appUrl)
 
-	if uv0._taptapUpdateGame() then
-		Timer.New(function ()
-			uv0:_onNeedInstallNewPackage(uv0._appUrl)
+	if var_0_0._taptapUpdateGame() then
+		Timer.New(function()
+			arg_28_0:_onNeedInstallNewPackage(arg_28_0._appUrl)
 		end, 0.1):Start()
 
 		return
@@ -303,342 +336,393 @@ function slot0._gotoDownloadPackage(slot0)
 		return
 	end
 
-	if string.nilorempty(slot0._appUrl) == false then
+	if string.nilorempty(arg_28_0._appUrl) == false then
 		if not BootNativeUtil.isIOS() then
-			UnityEngine.Application.OpenURL(slot0._appUrl)
+			UnityEngine.Application.OpenURL(arg_28_0._appUrl)
 		else
-			ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", cjson.encode({
+			local var_28_0 = {
 				deepLink = "",
-				url = slot0._appUrl
-			}))
+				url = arg_28_0._appUrl
+			}
+			local var_28_1 = cjson.encode(var_28_0)
+
+			ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", var_28_1)
 		end
 	end
 
 	if BootNativeUtil.isAndroid() or BootNativeUtil.isIOS() then
-		Timer.New(function ()
-			uv0:_onNeedInstallNewPackage(uv0._appUrl)
+		Timer.New(function()
+			arg_28_0:_onNeedInstallNewPackage(arg_28_0._appUrl)
 		end, 0.1):Start()
 	else
 		ProjBooter.instance:quitGame()
 	end
 end
 
-function slot0._onStartHotUpdateNotify(slot0, slot1, slot2)
-	slot0._hasHotUpdate = true
-	slot1 = tonumber(tostring(slot1))
-	slot2 = tonumber(tostring(slot2))
+function var_0_0._onStartHotUpdateNotify(arg_31_0, arg_31_1, arg_31_2)
+	arg_31_0._hasHotUpdate = true
+	arg_31_1 = tonumber(tostring(arg_31_1))
+	arg_31_2 = tonumber(tostring(arg_31_2))
 
-	logNormal("HotUpdateMgr:_onStartHotUpdateNotify, 热更新 curSize = " .. slot1 .. " allSize = " .. slot2)
-	slot0:_showConfirmUpdateSize(slot2, slot1, slot0._startDownload)
-	slot0:_initAudio()
+	logNormal("HotUpdateMgr:_onStartHotUpdateNotify, 热更新 curSize = " .. arg_31_1 .. " allSize = " .. arg_31_2)
+	arg_31_0:_showConfirmUpdateSize(arg_31_2, arg_31_1, arg_31_0._startDownload)
+	arg_31_0:_initAudio()
 end
 
-function slot0._startDownload(slot0)
+function var_0_0._startDownload(arg_32_0)
 	logNormal("HotUpdateMgr:_startDownload, 开始下载！")
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_download)
-	SLFramework.GameUpdate.HotUpdate.Instance:SetUseReserveDomain(slot0:getUseBackup())
-	slot0._eventMgrInst:DoRetryAction()
+	SLFramework.GameUpdate.HotUpdate.Instance:SetUseReserveDomain(arg_32_0:getUseBackup())
+	arg_32_0._eventMgrInst:DoRetryAction()
 end
 
-function slot0._onHotUpdateDownloadProgress(slot0, slot1, slot2)
-	slot1 = tonumber(tostring(slot1))
-	slot2 = tonumber(tostring(slot2))
-	slot3 = not slot0._prevSize or slot1 ~= slot0._prevSize
-	slot0._prevSize = slot1
+function var_0_0._onHotUpdateDownloadProgress(arg_33_0, arg_33_1, arg_33_2)
+	arg_33_1 = tonumber(tostring(arg_33_1))
+	arg_33_2 = tonumber(tostring(arg_33_2))
 
-	if slot0:getFailCount() > 0 and slot3 then
-		SDKDataTrackMgr.instance:trackDomainFailCount("scene_hotupdate_srcdownload", slot0:getDomainUrl(), slot0:getFailCount())
-		slot0:resetFailCount()
+	local var_33_0 = not arg_33_0._prevSize or arg_33_1 ~= arg_33_0._prevSize
+
+	arg_33_0._prevSize = arg_33_1
+
+	if arg_33_0:getFailCount() > 0 and var_33_0 then
+		local var_33_1 = arg_33_0:getDomainUrl()
+
+		SDKDataTrackMgr.instance:trackDomainFailCount("scene_hotupdate_srcdownload", var_33_1, arg_33_0:getFailCount())
+		arg_33_0:resetFailCount()
 	end
 
-	logNormal("HotUpdateMgr:_onHotUpdateDownloadProgress, 下载进度 curSize = " .. slot1 .. " allSize = " .. slot2)
+	logNormal("HotUpdateMgr:_onHotUpdateDownloadProgress, 下载进度 curSize = " .. arg_33_1 .. " allSize = " .. arg_33_2)
 
-	slot4 = slot1 / slot2
-	slot5 = slot0:_fixSizeMB(slot2)
-	slot1 = slot0:_fixSizeStr(slot1)
-	slot2 = slot0:_fixSizeStr(slot2)
-	slot6 = nil
+	local var_33_2 = arg_33_1 / arg_33_2
+	local var_33_3 = arg_33_0:_fixSizeMB(arg_33_2)
 
-	if slot3 then
-		BootLoadingView.instance:show(slot4, (UnityEngine.Application.internetReachability ~= UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork or string.format(booterLang("download_info_wifi"), slot1, slot2)) and string.format(booterLang("download_info"), slot1, slot2))
+	arg_33_1 = arg_33_0:_fixSizeStr(arg_33_1)
+	arg_33_2 = arg_33_0:_fixSizeStr(arg_33_2)
+
+	local var_33_4
+
+	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
+		var_33_4 = string.format(booterLang("download_info_wifi"), arg_33_1, arg_33_2)
+	else
+		var_33_4 = string.format(booterLang("download_info"), arg_33_1, arg_33_2)
 	end
 
-	slot0:statHotUpdate(slot4, slot5)
+	if var_33_0 then
+		BootLoadingView.instance:show(var_33_2, var_33_4)
+	end
+
+	arg_33_0:statHotUpdate(var_33_2, var_33_3)
 end
 
-function slot0._setUseReserveDomain(slot0)
+function var_0_0._setUseReserveDomain(arg_34_0)
 	require("tolua.reflection")
 	tolua.loadassembly("Assembly-CSharp")
-	tolua.getfield(typeof(SLFramework.GameUpdate.HotUpdate), "_useReserveDomain", 36):Set(SLFramework.GameUpdate.HotUpdate.Instance, slot0:getUseBackup())
+
+	local var_34_0 = typeof(SLFramework.GameUpdate.HotUpdate)
+
+	tolua.getfield(var_34_0, "_useReserveDomain", 36):Set(SLFramework.GameUpdate.HotUpdate.Instance, arg_34_0:getUseBackup())
 end
 
-function slot0._onHotUpdateDownloadFail(slot0, slot1, slot2)
-	if slot1 == SLFramework.GameUpdate.FailError.MD5CheckError then
-		slot0:_checkSendFullPonitStat()
+function var_0_0._onHotUpdateDownloadFail(arg_35_0, arg_35_1, arg_35_2)
+	if arg_35_1 == SLFramework.GameUpdate.FailError.MD5CheckError then
+		arg_35_0:_checkSendFullPonitStat()
 	end
 
-	slot0:inverseUseBackup()
-	slot0:_setUseReserveDomain()
-	slot0:incFailCount()
+	arg_35_0:inverseUseBackup()
+	arg_35_0:_setUseReserveDomain()
+	arg_35_0:incFailCount()
 
-	if slot0:isFailNeedAlert() then
-		slot0:resetFailAlertCount()
-		BootMsgBox.instance:show({
+	if arg_35_0:isFailNeedAlert() then
+		arg_35_0:resetFailAlertCount()
+
+		local var_35_0 = {
 			title = booterLang("hotupdate"),
-			content = slot0:_getDownloadFailedTip(slot1, slot2),
+			content = arg_35_0:_getDownloadFailedTip(arg_35_1, arg_35_2),
 			leftMsg = booterLang("exit"),
-			leftCb = slot0._quitGame,
-			leftCbObj = slot0,
+			leftCb = arg_35_0._quitGame,
+			leftCbObj = arg_35_0,
 			rightMsg = booterLang("retry"),
-			rightCb = slot0._retryDownload,
-			rightCbObj = slot0
-		})
+			rightCb = arg_35_0._retryDownload,
+			rightCbObj = arg_35_0
+		}
+
+		BootMsgBox.instance:show(var_35_0)
 	else
 		logNormal("HotUpdateMgr 静默重试下载！")
-		slot0._eventMgrInst:DoRetryAction()
-		slot0:showConnectTips()
+		arg_35_0._eventMgrInst:DoRetryAction()
+		arg_35_0:showConnectTips()
 	end
 end
 
-function slot0._onDownloadDiskFull(slot0)
-	BootMsgBox.instance:show({
+function var_0_0._onDownloadDiskFull(arg_36_0)
+	local var_36_0 = {
 		title = booterLang("hotupdate"),
 		content = booterLang("download_fail_no_enough_disk"),
 		leftMsg = booterLang("exit"),
-		leftCb = slot0._quitGame,
-		leftCbObj = slot0,
+		leftCb = arg_36_0._quitGame,
+		leftCbObj = arg_36_0,
 		rightMsg = booterLang("retry"),
-		rightCb = slot0._retryDownload,
-		rightCbObj = slot0
-	})
+		rightCb = arg_36_0._retryDownload,
+		rightCbObj = arg_36_0
+	}
+
+	BootMsgBox.instance:show(var_36_0)
 end
 
-function slot0._retryDownload(slot0)
+function var_0_0._retryDownload(arg_37_0)
 	logNormal("HotUpdateMgr:_retryDownload, 重试下载！")
-	slot0._eventMgrInst:DoRetryAction()
-	slot0:showConnectTips()
+	arg_37_0._eventMgrInst:DoRetryAction()
+	arg_37_0:showConnectTips()
 end
 
-function slot0._getDownloadFailedTip(slot0, slot1, slot2)
-	if slot1 == SLFramework.GameUpdate.FailError.DownloadErrer then
+function var_0_0._getDownloadFailedTip(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = SLFramework.GameUpdate.FailError
+
+	if arg_38_1 == var_38_0.DownloadErrer then
 		return booterLang("download_fail_download_error")
-	elseif slot1 == slot3.NotFound then
+	elseif arg_38_1 == var_38_0.NotFound then
 		return booterLang("download_fail_not_found")
-	elseif slot1 == slot3.ServerPause then
+	elseif arg_38_1 == var_38_0.ServerPause then
 		return booterLang("download_fail_server_pause")
-	elseif slot1 == slot3.TimeOut then
+	elseif arg_38_1 == var_38_0.TimeOut then
 		return booterLang("download_fail_time_out")
-	elseif slot1 == slot3.NoEnoughDisk then
+	elseif arg_38_1 == var_38_0.NoEnoughDisk then
 		return booterLang("download_fail_no_enough_disk")
-	elseif slot1 == slot3.MD5CheckError then
-		SDKDataTrackMgr.instance:trackHotupdateFilesCheckEvent(SDKDataTrackMgr.Result.fail, slot2)
+	elseif arg_38_1 == var_38_0.MD5CheckError then
+		SDKDataTrackMgr.instance:trackHotupdateFilesCheckEvent(SDKDataTrackMgr.Result.fail, arg_38_2)
 
 		return booterLang("download_fail_md5_check_error")
 	else
-		return booterLang("download_fail_other") .. tostring(slot2)
+		return booterLang("download_fail_other") .. tostring(arg_38_2)
 	end
 end
 
-function slot0._onHotUpdateDownloadSuccess(slot0)
+function var_0_0._onHotUpdateDownloadSuccess(arg_39_0)
 	logNormal("下载热更新资源包完成，开始解压所有资源包！")
 	SDKDataTrackMgr.instance:trackHotupdateFilesCheckEvent(SDKDataTrackMgr.Result.success)
 	SDKDataTrackMgr.instance:trackMediaEvent(SDKDataTrackMgr.MediaEvent.game_source_completed)
-	slot0:_checkSendFullPonitStat()
+	arg_39_0:_checkSendFullPonitStat()
 	SDKDataTrackMgr.instance:trackHotupdateFilesCheckEvent(SDKDataTrackMgr.Result.success)
 
-	if slot0._onDownloadSuccCb then
-		slot0._onDownloadSuccCb(slot0._onDownloadSuccObj)
+	if arg_39_0._onDownloadSuccCb then
+		arg_39_0._onDownloadSuccCb(arg_39_0._onDownloadSuccObj)
 	end
 end
 
-function slot0._onStartUnzipNotify(slot0)
+function var_0_0._onStartUnzipNotify(arg_40_0)
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.unzip_start)
 	BootLoadingView.instance:show(0.05, booterLang("unpacking"))
 end
 
-function slot0._onDiskSpaceNotEnough(slot0)
+function var_0_0._onDiskSpaceNotEnough(arg_41_0)
 	logNormal("解压所有资源包遇到错误，设备磁盘空间不足！")
-	BootMsgBox.instance:show({
+
+	local var_41_0 = {
 		title = booterLang("hotupdate"),
 		content = booterLang("unpack_error"),
 		leftMsg = booterLang("exit"),
-		leftCb = slot0._quitGame,
-		leftCbObj = slot0,
-		rightMsg = nil
-	})
+		leftCb = arg_41_0._quitGame,
+		leftCbObj = arg_41_0
+	}
+
+	var_41_0.rightMsg = nil
+
+	BootMsgBox.instance:show(var_41_0)
 end
 
-function slot0._onUnzipProgress(slot0, slot1)
-	logNormal("正在解压资源包，请稍后... progress = " .. slot1)
+function var_0_0._onUnzipProgress(arg_42_0, arg_42_1)
+	logNormal("正在解压资源包，请稍后... progress = " .. arg_42_1)
 
-	if tostring(slot1) == "nan" then
+	if tostring(arg_42_1) == "nan" then
 		return
 	end
 
-	BootLoadingView.instance:show(slot1, booterLang("unpacking"))
+	BootLoadingView.instance:show(arg_42_1, booterLang("unpacking"))
 end
 
-function slot0._onUnzipFail(slot0, slot1)
+function var_0_0._onUnzipFail(arg_43_0, arg_43_1)
 	logNormal("解压所有资源包遇到错误，解压失败！")
 
-	slot2 = {
+	local var_43_0 = {
 		title = booterLang("hotupdate"),
-		content = slot0:_getUnzipFailedTip(slot1),
+		content = arg_43_0:_getUnzipFailedTip(arg_43_1),
 		leftMsg = booterLang("exit"),
-		leftCb = slot0._quitGame,
-		leftCbObj = slot0,
+		leftCb = arg_43_0._quitGame,
+		leftCbObj = arg_43_0,
 		rightMsg = booterLang("retry"),
-		rightCb = slot0._retryUnzipFile,
-		rightCbObj = slot0
+		rightCb = arg_43_0._retryUnzipFile,
+		rightCbObj = arg_43_0
 	}
 
-	BootMsgBox.instance:show(slot2)
-	SDKDataTrackMgr.instance:trackUnzipFinishEvent(SDKDataTrackMgr.Result.fail, slot2.content)
+	BootMsgBox.instance:show(var_43_0)
+	SDKDataTrackMgr.instance:trackUnzipFinishEvent(SDKDataTrackMgr.Result.fail, var_43_0.content)
 end
 
-function slot0._retryUnzipFile(slot0)
+function var_0_0._retryUnzipFile(arg_44_0)
 	logNormal("HotUpdateMgr:_retryUnzipFile, 重试解压资源包！")
-	slot0._eventMgrInst:DoRetryAction()
+	arg_44_0._eventMgrInst:DoRetryAction()
 end
 
-function slot0._getUnzipFailedTip(slot0, slot1)
-	if slot1 == SLFramework.GameUpdate.UnzipStatus.Running then
+function var_0_0._getUnzipFailedTip(arg_45_0, arg_45_1)
+	local var_45_0 = SLFramework.GameUpdate.UnzipStatus
+
+	if arg_45_1 == var_45_0.Running then
 		return booterLang("unpack_error_running")
-	elseif slot1 == slot2.Done then
+	elseif arg_45_1 == var_45_0.Done then
 		return booterLang("unpack_error_done")
-	elseif slot1 == slot2.FileNotFound then
+	elseif arg_45_1 == var_45_0.FileNotFound then
 		return booterLang("unpack_error_file_not_found")
-	elseif slot1 == slot2.NotEnoughSpace then
+	elseif arg_45_1 == var_45_0.NotEnoughSpace then
 		return booterLang("unpack_error_not_enough_space")
-	elseif slot1 == slot2.ThreadAbort then
+	elseif arg_45_1 == var_45_0.ThreadAbort then
 		return booterLang("unpack_error_thread_abort")
-	elseif slot1 == slot2.Exception then
+	elseif arg_45_1 == var_45_0.Exception then
 		return booterLang("unpack_error_exception")
 	else
 		return booterLang("unpack_error_unknown")
 	end
 end
 
-function slot0._onUnzipSuccess(slot0)
+function var_0_0._onUnzipSuccess(arg_46_0)
 	SDKDataTrackMgr.instance:trackUnzipFinishEvent(SDKDataTrackMgr.Result.success)
 	BootLoadingView.instance:show(1, booterLang("unpack_done"))
 end
 
-function slot0.hasHotUpdate(slot0)
-	return slot0._hasHotUpdate
+function var_0_0.hasHotUpdate(arg_47_0)
+	return arg_47_0._hasHotUpdate
 end
 
-function slot0._onHotUpdateComplete(slot0)
-	if slot0._hasHotUpdate then
-		slot0:_onFinish()
+function var_0_0._onHotUpdateComplete(arg_48_0)
+	if arg_48_0._hasHotUpdate then
+		arg_48_0:_onFinish()
 	else
-		slot0:_showConfirmUpdateSize(0, 0, slot0._onFinish)
+		arg_48_0:_showConfirmUpdateSize(0, 0, arg_48_0._onFinish)
 	end
 end
 
-function slot0._showConfirmUpdateSize(slot0, slot1, slot2, slot3)
+function var_0_0._showConfirmUpdateSize(arg_49_0, arg_49_1, arg_49_2, arg_49_3)
+	local var_49_0 = HotUpdateVoiceMgr.instance:getTotalSize()
+	local var_49_1 = HotUpdateVoiceMgr.instance:getNeedDownloadSize()
+	local var_49_2 = arg_49_1 - arg_49_2
+	local var_49_3 = var_49_1 + var_49_2
+
 	if not BootVoiceView.instance:isFirstDownloadDone() and not VersionValidator.instance:isInReviewing() then
-		if HotUpdateVoiceMgr.instance:getNeedDownloadSize() + slot1 - slot2 > 0 or #BootVoiceView.instance:getDownloadChoices() > 0 and HotUpdateVoiceMgr.instance:getTotalSize() == 0 then
-			BootVoiceView.instance:showDownloadSize(slot6, slot3, slot0)
+		local var_49_4 = BootVoiceView.instance:getDownloadChoices()
+
+		if var_49_3 > 0 or #var_49_4 > 0 and var_49_0 == 0 then
+			BootVoiceView.instance:showDownloadSize(var_49_2, arg_49_3, arg_49_0)
 		else
 			BootVoiceView.instance:hide()
-			slot3(slot0)
+			arg_49_3(arg_49_0)
 		end
-	elseif slot7 > 0 then
+	elseif var_49_3 > 0 then
 		if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
 			BootVoiceView.instance:hide()
-			slot3(slot0)
+			arg_49_3(arg_49_0)
 		else
-			BootMsgBox.instance:show({
-				title = booterLang("hotupdate"),
-				content = string.format(slot2 == 0 and booterLang("hotupdate_info") or booterLang("hotupdate_continue_info"), slot0:_fixSizeStr(slot7)),
-				leftMsg = booterLang("exit"),
-				leftCb = slot0._quitGame,
-				leftCbObj = slot0,
-				rightMsg = slot2 == 0 and booterLang("download") or booterLang("continue_download"),
-				rightCb = slot3,
-				rightCbObj = slot0
-			})
+			local var_49_5 = arg_49_0:_fixSizeStr(var_49_3)
+			local var_49_6 = {
+				title = booterLang("hotupdate")
+			}
+			local var_49_7 = arg_49_2 == 0 and booterLang("hotupdate_info") or booterLang("hotupdate_continue_info")
+
+			var_49_6.content = string.format(var_49_7, var_49_5)
+			var_49_6.leftMsg = booterLang("exit")
+			var_49_6.leftCb = arg_49_0._quitGame
+			var_49_6.leftCbObj = arg_49_0
+			var_49_6.rightMsg = arg_49_2 == 0 and booterLang("download") or booterLang("continue_download")
+			var_49_6.rightCb = arg_49_3
+			var_49_6.rightCbObj = arg_49_0
+
+			BootMsgBox.instance:show(var_49_6)
 		end
 	else
 		BootVoiceView.instance:hide()
-		slot3(slot0)
+		arg_49_3(arg_49_0)
 	end
 end
 
-function slot0.statStartUpdate(slot0)
-	slot0._statNextPoint = 0
-	slot0._statAllSize = 0
+function var_0_0.statStartUpdate(arg_50_0)
+	arg_50_0._statNextPoint = 0
+	arg_50_0._statAllSize = 0
 end
 
-function slot0.statHotUpdate(slot0, slot1, slot2)
-	for slot6 = slot0._nowStatHotUpdatePerIndex, slot0._statHotUpdatePerNum do
-		if slot0._statHotUpdatePerList[slot6][1] <= slot1 then
-			SDKDataTrackMgr.instance:track(slot7[2])
+function var_0_0.statHotUpdate(arg_51_0, arg_51_1, arg_51_2)
+	for iter_51_0 = arg_51_0._nowStatHotUpdatePerIndex, arg_51_0._statHotUpdatePerNum do
+		local var_51_0 = arg_51_0._statHotUpdatePerList[iter_51_0]
 
-			slot0._nowStatHotUpdatePerIndex = slot6 + 1
+		if arg_51_1 >= var_51_0[1] then
+			SDKDataTrackMgr.instance:track(var_51_0[2])
+
+			arg_51_0._nowStatHotUpdatePerIndex = iter_51_0 + 1
 		else
 			break
 		end
 	end
 
-	if not slot0._statNextPoint then
+	if not arg_51_0._statNextPoint then
 		return
 	end
 
-	slot0._statAllSize = slot2
+	arg_51_0._statAllSize = arg_51_2
 
-	if slot0._statNextPoint <= slot1 then
+	if arg_51_1 >= arg_51_0._statNextPoint then
 		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.HotUpdate, {
-			[SDKDataTrackMgr.EventProperties.UpdateAmount] = slot2,
-			[SDKDataTrackMgr.EventProperties.UpdatePercentage] = tostring(slot0._statNextPoint)
+			[SDKDataTrackMgr.EventProperties.UpdateAmount] = arg_51_2,
+			[SDKDataTrackMgr.EventProperties.UpdatePercentage] = tostring(arg_51_0._statNextPoint)
 		})
 
-		slot0._statNextPoint = slot0._statNextPoint + 0.5
+		arg_51_0._statNextPoint = arg_51_0._statNextPoint + 0.5
 	end
 end
 
-function slot0._checkSendFullPonitStat(slot0)
-	if slot0._statNextPoint and slot0._statNextPoint < 1.5 and slot0._statAllSize and slot0._statAllSize ~= 0 then
-		slot0._statNextPoint = 1
+function var_0_0._checkSendFullPonitStat(arg_52_0)
+	if arg_52_0._statNextPoint and arg_52_0._statNextPoint < 1.5 and arg_52_0._statAllSize and arg_52_0._statAllSize ~= 0 then
+		arg_52_0._statNextPoint = 1
 
-		slot0:statHotUpdate(1, slot0._statAllSize)
+		arg_52_0:statHotUpdate(1, arg_52_0._statAllSize)
 	end
 end
 
-function slot0._fixSizeStr(slot0, slot1)
-	return uv0.fixSizeStr(slot1)
+function var_0_0._fixSizeStr(arg_53_0, arg_53_1)
+	return var_0_0.fixSizeStr(arg_53_1)
 end
 
-function slot0._fixSizeMB(slot0, slot1)
-	return uv0.fixSizeMB(slot1)
+function var_0_0._fixSizeMB(arg_54_0, arg_54_1)
+	return var_0_0.fixSizeMB(arg_54_1)
 end
 
-slot0.MB_SIZE = 1048576
-slot0.KB_SIZE = 1024
+var_0_0.MB_SIZE = 1048576
+var_0_0.KB_SIZE = 1024
 
-function slot0.fixSizeStr(slot0)
-	slot2 = "MB"
+function var_0_0.fixSizeStr(arg_55_0)
+	local var_55_0 = arg_55_0 / var_0_0.MB_SIZE
+	local var_55_1 = "MB"
 
-	if slot0 / uv0.MB_SIZE < 1 then
-		slot2 = "KB"
+	if var_55_0 < 1 then
+		var_55_0 = arg_55_0 / var_0_0.KB_SIZE
+		var_55_1 = "KB"
 
-		if slot0 / uv0.KB_SIZE < 0.01 then
-			slot1 = 0.01
+		if var_55_0 < 0.01 then
+			var_55_0 = 0.01
 		end
 	end
 
-	return string.format("%.2f %s", slot1 - slot1 % 0.01, slot2)
+	local var_55_2 = var_55_0 - var_55_0 % 0.01
+
+	return string.format("%.2f %s", var_55_2, var_55_1)
 end
 
-function slot0.fixSizeMB(slot0)
-	if slot0 / uv0.MB_SIZE < 0.001 then
+function var_0_0.fixSizeMB(arg_56_0)
+	local var_56_0 = arg_56_0 / var_0_0.MB_SIZE
+
+	if var_56_0 < 0.001 then
 		return 0.001
 	end
 
-	return slot1 - slot1 % 0.001
+	return var_56_0 - var_56_0 % 0.001
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,37 +1,37 @@
-module("modules.logic.gm.model.GMResetCardsModel", package.seeall)
+﻿module("modules.logic.gm.model.GMResetCardsModel", package.seeall)
 
-slot0 = class("GMResetCardsModel", BaseModel)
+local var_0_0 = class("GMResetCardsModel", BaseModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._model1 = ListScrollModel.New()
-	slot0._model2 = ListScrollModel.New()
+	arg_1_0._model1 = ListScrollModel.New()
+	arg_1_0._model2 = ListScrollModel.New()
 end
 
-function slot0.onInit(slot0)
-	slot0._model1:onInit()
-	slot0._model2:onInit()
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._model1:onInit()
+	arg_2_0._model2:onInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._model1:reInit()
-	slot0._model2:reInit()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0._model1:reInit()
+	arg_3_0._model2:reInit()
 end
 
-function slot0.clear(slot0)
-	slot0._model1:clear()
-	slot0._model2:clear()
+function var_0_0.clear(arg_4_0)
+	arg_4_0._model1:clear()
+	arg_4_0._model2:clear()
 end
 
-function slot0.getModel1(slot0)
-	return slot0._model1
+function var_0_0.getModel1(arg_5_0)
+	return arg_5_0._model1
 end
 
-function slot0.getModel2(slot0)
-	return slot0._model2
+function var_0_0.getModel2(arg_6_0)
+	return arg_6_0._model2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

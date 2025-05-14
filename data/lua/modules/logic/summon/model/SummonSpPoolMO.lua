@@ -1,51 +1,55 @@
-module("modules.logic.summon.model.SummonSpPoolMO", package.seeall)
+﻿module("modules.logic.summon.model.SummonSpPoolMO", package.seeall)
 
-slot0 = pureTable("SummonSpPoolMO", SummonCustomPickMO)
+local var_0_0 = pureTable("SummonSpPoolMO", SummonCustomPickMO)
 
-function slot0.ctor(slot0)
-	slot0.type = 0
-	slot0.openTime = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.type = 0
+	arg_1_0.openTime = 0
 
-	SummonCustomPickMO.ctor(slot0)
+	SummonCustomPickMO.ctor(arg_1_0)
 end
 
-function slot0.isValid(slot0)
-	return slot0.type ~= 0
+function var_0_0.isValid(arg_2_0)
+	return arg_2_0.type ~= 0
 end
 
-function slot0.update(slot0, slot1)
-	SummonCustomPickMO.update(slot0, slot1)
+function var_0_0.update(arg_3_0, arg_3_1)
+	SummonCustomPickMO.update(arg_3_0, arg_3_1)
 
-	slot0.type = slot1.type
-	slot0.openTime = tonumber(slot1.openTime) or 0
+	arg_3_0.type = arg_3_1.type
+	arg_3_0.openTime = tonumber(arg_3_1.openTime) or 0
 end
 
-function slot0.isOpening(slot0)
-	if not slot0:isValid() then
+function var_0_0.isOpening(arg_4_0)
+	if not arg_4_0:isValid() then
 		return nil
 	end
 
-	return slot0:onlineTs() <= ServerTime.now() and slot1 <= slot0:offlineTs()
+	local var_4_0 = ServerTime.now()
+
+	return var_4_0 >= arg_4_0:onlineTs() and var_4_0 <= arg_4_0:offlineTs()
 end
 
-function slot0.onlineTs(slot0)
-	return slot0.openTime / 1000
+function var_0_0.onlineTs(arg_5_0)
+	return arg_5_0.openTime / 1000
 end
 
-function slot0.offlineTs(slot0)
-	if slot0:onlineTs() <= 0 then
+function var_0_0.offlineTs(arg_6_0)
+	if arg_6_0:onlineTs() <= 0 then
 		return 0
 	end
 
-	if SummonConfig.instance:getDurationByPoolType(slot0.type) <= 0 then
+	local var_6_0 = SummonConfig.instance:getDurationByPoolType(arg_6_0.type)
+
+	if var_6_0 <= 0 then
 		return 0
 	end
 
-	return slot0:onlineTs() + slot1
+	return arg_6_0:onlineTs() + var_6_0
 end
 
-function slot0.onOffTimestamp(slot0)
-	return slot0:onlineTs(), slot0:offlineTs()
+function var_0_0.onOffTimestamp(arg_7_0)
+	return arg_7_0:onlineTs(), arg_7_0:offlineTs()
 end
 
-return slot0
+return var_0_0

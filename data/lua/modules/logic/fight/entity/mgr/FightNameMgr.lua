@@ -1,115 +1,133 @@
-module("modules.logic.fight.entity.mgr.FightNameMgr", package.seeall)
+﻿module("modules.logic.fight.entity.mgr.FightNameMgr", package.seeall)
 
-slot0 = class("FightNameMgr")
+local var_0_0 = class("FightNameMgr")
 
-function slot0.ctor(slot0)
-	slot0._hasReplaceNameBar = nil
-	slot0._nameParent = nil
-	slot0._fightNameUIList = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._hasReplaceNameBar = nil
+	arg_1_0._nameParent = nil
+	arg_1_0._fightNameUIList = nil
 end
 
-function slot0.init(slot0)
-	slot0._nameParent = gohelper.create2d(slot0:getHudGO(), "NameBar")
-	slot0._fightNameUIList = {}
+function var_0_0.init(arg_2_0)
+	local var_2_0 = arg_2_0:getHudGO()
+
+	arg_2_0._nameParent = gohelper.create2d(var_2_0, "NameBar")
+	arg_2_0._fightNameUIList = {}
 end
 
-function slot0.getHudGO(slot0)
+function var_0_0.getHudGO(arg_3_0)
 	return ViewMgr.instance:getUILayer(UILayerName.Hud)
 end
 
-function slot0.dispose(slot0)
-	slot0._hasReplaceNameBar = nil
+function var_0_0.dispose(arg_4_0)
+	arg_4_0._hasReplaceNameBar = nil
 
-	if slot0._nameParent then
-		gohelper.destroy(slot0._nameParent)
+	if arg_4_0._nameParent then
+		gohelper.destroy(arg_4_0._nameParent)
 
-		slot0._nameParent = nil
+		arg_4_0._nameParent = nil
 	end
 
-	slot0._fightNameUIList = {}
+	arg_4_0._fightNameUIList = {}
 
-	TaskDispatcher.cancelTask(slot0._delayAdujstUISibling, slot0)
+	TaskDispatcher.cancelTask(arg_4_0._delayAdujstUISibling, arg_4_0)
 end
 
-function slot0.onRestartStage(slot0)
-	slot0._fightNameUIList = {}
+function var_0_0.onRestartStage(arg_5_0)
+	arg_5_0._fightNameUIList = {}
 
-	TaskDispatcher.cancelTask(slot0._delayAdujstUISibling, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._delayAdujstUISibling, arg_5_0)
 end
 
-function slot0.getNameParent(slot0)
-	return slot0._nameParent
+function var_0_0.getNameParent(arg_6_0)
+	return arg_6_0._nameParent
 end
 
-function slot0.register(slot0, slot1)
-	table.insert(slot0._fightNameUIList, slot1)
-	TaskDispatcher.cancelTask(slot0._delayAdujstUISibling, slot0)
-	TaskDispatcher.runDelay(slot0._delayAdujstUISibling, slot0, 1)
-	slot0:_replaceNameBar()
+function var_0_0.register(arg_7_0, arg_7_1)
+	table.insert(arg_7_0._fightNameUIList, arg_7_1)
+	TaskDispatcher.cancelTask(arg_7_0._delayAdujstUISibling, arg_7_0)
+	TaskDispatcher.runDelay(arg_7_0._delayAdujstUISibling, arg_7_0, 1)
+	arg_7_0:_replaceNameBar()
 end
 
-function slot0.unregister(slot0, slot1)
-	tabletool.removeValue(slot0._fightNameUIList, slot1)
+function var_0_0.unregister(arg_8_0, arg_8_1)
+	tabletool.removeValue(arg_8_0._fightNameUIList, arg_8_1)
 end
 
-function slot0._replaceNameBar(slot0)
-	if slot0._hasReplaceNameBar or #slot0._fightNameUIList == 0 then
+function var_0_0._replaceNameBar(arg_9_0)
+	if arg_9_0._hasReplaceNameBar or #arg_9_0._fightNameUIList == 0 then
 		return
 	end
 
-	if gohelper.isNil(slot0._fightNameUIList[1]:getUIGO()) then
+	local var_9_0 = arg_9_0._fightNameUIList[1]:getUIGO()
+
+	if gohelper.isNil(var_9_0) then
 		return
 	end
 
-	slot0._hasReplaceNameBar = true
+	arg_9_0._hasReplaceNameBar = true
 
-	if gohelper.isNil(gohelper.findChild(slot2, "NameBar")) then
+	local var_9_1 = gohelper.findChild(var_9_0, "NameBar")
+
+	if gohelper.isNil(var_9_1) then
 		return
 	end
 
-	slot5 = gohelper.clone(slot3, slot0:getHudGO(), "NameBar")
+	local var_9_2 = arg_9_0:getHudGO()
+	local var_9_3 = gohelper.clone(var_9_1, var_9_2, "NameBar")
 
-	if gohelper.isNil(slot0._nameParent) or gohelper.isNil(slot5) then
+	if gohelper.isNil(arg_9_0._nameParent) or gohelper.isNil(var_9_3) then
 		return
 	end
 
-	for slot12 = slot0._nameParent.transform.childCount - 1, 0, -1 do
-		if not gohelper.isNil(slot6:GetChild(slot12)) then
-			slot13:SetParent(slot5.transform, false)
+	local var_9_4 = arg_9_0._nameParent.transform
+	local var_9_5 = var_9_3.transform
+
+	for iter_9_0 = var_9_4.childCount - 1, 0, -1 do
+		local var_9_6 = var_9_4:GetChild(iter_9_0)
+
+		if not gohelper.isNil(var_9_6) then
+			var_9_6:SetParent(var_9_5, false)
 		end
 	end
 
-	gohelper.setSiblingAfter(slot5, slot0._nameParent)
-	gohelper.destroy(slot0._nameParent)
+	gohelper.setSiblingAfter(var_9_3, arg_9_0._nameParent)
+	gohelper.destroy(arg_9_0._nameParent)
 
-	slot0._nameParent = slot5
+	arg_9_0._nameParent = var_9_3
 
-	gohelper.setActive(slot0._nameParent, true)
+	gohelper.setActive(arg_9_0._nameParent, true)
 end
 
-function slot0._delayAdujstUISibling(slot0)
-	slot0:_replaceNameBar()
+function var_0_0._delayAdujstUISibling(arg_10_0)
+	arg_10_0:_replaceNameBar()
 
-	if #slot0._fightNameUIList <= 1 then
+	if #arg_10_0._fightNameUIList <= 1 then
 		return
 	end
 
-	table.sort(slot0._fightNameUIList, function (slot0, slot1)
-		if slot0.entity.go.transform.position.z ~= slot1.entity.go.transform.position.z then
-			return slot3.z < slot2.z
-		elseif slot2.x ~= slot3.x then
-			return math.abs(slot3.x) < math.abs(slot2.x)
+	table.sort(arg_10_0._fightNameUIList, function(arg_11_0, arg_11_1)
+		local var_11_0 = arg_11_0.entity.go.transform.position
+		local var_11_1 = arg_11_1.entity.go.transform.position
+
+		if var_11_0.z ~= var_11_1.z then
+			return var_11_0.z > var_11_1.z
+		elseif var_11_0.x ~= var_11_1.x then
+			return math.abs(var_11_0.x) > math.abs(var_11_1.x)
 		else
-			return slot1.entity.id < slot0.entity.id
+			return arg_11_0.entity.id > arg_11_1.entity.id
 		end
 	end)
-	gohelper.setAsFirstSibling(slot0._fightNameUIList[1]:getGO())
+	gohelper.setAsFirstSibling(arg_10_0._fightNameUIList[1]:getGO())
 
-	for slot4 = 2, #slot0._fightNameUIList do
-		gohelper.setSiblingAfter(slot0._fightNameUIList[slot4]:getGO(), slot0._fightNameUIList[slot4 - 1]:getGO())
+	for iter_10_0 = 2, #arg_10_0._fightNameUIList do
+		local var_10_0 = arg_10_0._fightNameUIList[iter_10_0]
+		local var_10_1 = arg_10_0._fightNameUIList[iter_10_0 - 1]
+
+		gohelper.setSiblingAfter(var_10_0:getGO(), var_10_1:getGO())
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,18 +1,18 @@
-module("modules.logic.dungeon.config.RoleStoryConfig", package.seeall)
+﻿module("modules.logic.dungeon.config.RoleStoryConfig", package.seeall)
 
-slot0 = class("RoleStoryConfig", BaseConfig)
+local var_0_0 = class("RoleStoryConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._roleStoryConfig = nil
-	slot0._roleStoryScoreDict = {}
-	slot0._roleStoryRewardDict = {}
-	slot0._roleStoryRewardConfig = nil
-	slot0._roleStoryDispatchDict = {}
-	slot0._roleStoryDispatchConfig = nil
-	slot0._roleStoryDispatchTalkConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._roleStoryConfig = nil
+	arg_1_0._roleStoryScoreDict = {}
+	arg_1_0._roleStoryRewardDict = {}
+	arg_1_0._roleStoryRewardConfig = nil
+	arg_1_0._roleStoryDispatchDict = {}
+	arg_1_0._roleStoryDispatchConfig = nil
+	arg_1_0._roleStoryDispatchTalkConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"hero_story",
 		"hero_story_score",
@@ -22,129 +22,132 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "hero_story" then
-		slot0._roleStoryConfig = slot2
-	elseif slot1 == "hero_story_score" then
-		slot0._roleStoryScoreDict = {}
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "hero_story" then
+		arg_3_0._roleStoryConfig = arg_3_2
+	elseif arg_3_1 == "hero_story_score" then
+		arg_3_0._roleStoryScoreDict = {}
 
-		for slot6, slot7 in ipairs(slot2.configList) do
-			if not slot0._roleStoryScoreDict[slot7.storyId] then
-				slot0._roleStoryScoreDict[slot7.storyId] = {}
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
+			if not arg_3_0._roleStoryScoreDict[iter_3_1.storyId] then
+				arg_3_0._roleStoryScoreDict[iter_3_1.storyId] = {}
 			end
 
-			slot8 = string.splitToNumber(slot7.wave, "#")
+			local var_3_0 = string.splitToNumber(iter_3_1.wave, "#")
 
-			if slot8[#slot8] then
-				table.insert(slot0._roleStoryScoreDict[slot7.storyId], {
-					wave = slot8[#slot8],
-					score = slot7.score
+			if var_3_0[#var_3_0] then
+				table.insert(arg_3_0._roleStoryScoreDict[iter_3_1.storyId], {
+					wave = var_3_0[#var_3_0],
+					score = iter_3_1.score
 				})
 			end
 		end
 
-		for slot6, slot7 in pairs(slot0._roleStoryScoreDict) do
-			table.sort(slot7, SortUtil.keyLower("wave"))
+		for iter_3_2, iter_3_3 in pairs(arg_3_0._roleStoryScoreDict) do
+			table.sort(iter_3_3, SortUtil.keyLower("wave"))
 		end
-	elseif slot1 == "hero_story_score_reward" then
-		slot0._roleStoryRewardDict = {}
+	elseif arg_3_1 == "hero_story_score_reward" then
+		arg_3_0._roleStoryRewardDict = {}
 
-		for slot6, slot7 in ipairs(slot2.configList) do
-			if not slot0._roleStoryRewardDict[slot7.storyId] then
-				slot0._roleStoryRewardDict[slot7.storyId] = {}
+		for iter_3_4, iter_3_5 in ipairs(arg_3_2.configList) do
+			if not arg_3_0._roleStoryRewardDict[iter_3_5.storyId] then
+				arg_3_0._roleStoryRewardDict[iter_3_5.storyId] = {}
 			end
 
-			table.insert(slot0._roleStoryRewardDict[slot7.storyId], slot7)
+			table.insert(arg_3_0._roleStoryRewardDict[iter_3_5.storyId], iter_3_5)
 		end
 
-		for slot6, slot7 in pairs(slot0._roleStoryRewardDict) do
-			table.sort(slot7, SortUtil.keyLower("score"))
+		for iter_3_6, iter_3_7 in pairs(arg_3_0._roleStoryRewardDict) do
+			table.sort(iter_3_7, SortUtil.keyLower("score"))
 		end
 
-		slot0._roleStoryRewardConfig = slot2
-	elseif slot1 == "hero_story_dispatch" then
-		slot0._roleStoryDispatchDict = {}
+		arg_3_0._roleStoryRewardConfig = arg_3_2
+	elseif arg_3_1 == "hero_story_dispatch" then
+		arg_3_0._roleStoryDispatchDict = {}
 
-		for slot6, slot7 in ipairs(slot2.configList) do
-			if not slot0._roleStoryDispatchDict[slot7.heroStoryId] then
-				slot0._roleStoryDispatchDict[slot7.heroStoryId] = {}
+		for iter_3_8, iter_3_9 in ipairs(arg_3_2.configList) do
+			if not arg_3_0._roleStoryDispatchDict[iter_3_9.heroStoryId] then
+				arg_3_0._roleStoryDispatchDict[iter_3_9.heroStoryId] = {}
 			end
 
-			if not slot0._roleStoryDispatchDict[slot7.heroStoryId][slot7.type] then
-				slot0._roleStoryDispatchDict[slot7.heroStoryId][slot7.type] = {}
+			if not arg_3_0._roleStoryDispatchDict[iter_3_9.heroStoryId][iter_3_9.type] then
+				arg_3_0._roleStoryDispatchDict[iter_3_9.heroStoryId][iter_3_9.type] = {}
 			end
 
-			table.insert(slot0._roleStoryDispatchDict[slot7.heroStoryId][slot7.type], slot7)
+			table.insert(arg_3_0._roleStoryDispatchDict[iter_3_9.heroStoryId][iter_3_9.type], iter_3_9)
 		end
 
-		for slot6, slot7 in pairs(slot0._roleStoryDispatchDict) do
-			for slot11, slot12 in pairs(slot7) do
-				table.sort(slot12, SortUtil.keyLower("id"))
+		for iter_3_10, iter_3_11 in pairs(arg_3_0._roleStoryDispatchDict) do
+			for iter_3_12, iter_3_13 in pairs(iter_3_11) do
+				table.sort(iter_3_13, SortUtil.keyLower("id"))
 			end
 		end
 
-		slot0._roleStoryDispatchConfig = slot2
-	elseif slot1 == "hero_story_dispatch_talk" then
-		slot0._roleStoryDispatchTalkConfig = slot2
+		arg_3_0._roleStoryDispatchConfig = arg_3_2
+	elseif arg_3_1 == "hero_story_dispatch_talk" then
+		arg_3_0._roleStoryDispatchTalkConfig = arg_3_2
 	end
 end
 
-function slot0.getStoryList(slot0)
-	return slot0._roleStoryConfig.configList
+function var_0_0.getStoryList(arg_4_0)
+	return arg_4_0._roleStoryConfig.configList
 end
 
-function slot0.getStoryById(slot0, slot1)
-	return slot0._roleStoryConfig.configDict[slot1]
+function var_0_0.getStoryById(arg_5_0, arg_5_1)
+	return arg_5_0._roleStoryConfig.configDict[arg_5_1]
 end
 
-function slot0.getScoreConfig(slot0, slot1)
-	return slot0._roleStoryScoreDict[slot1]
+function var_0_0.getScoreConfig(arg_6_0, arg_6_1)
+	return arg_6_0._roleStoryScoreDict[arg_6_1]
 end
 
-function slot0.getRewardList(slot0, slot1)
-	return slot0._roleStoryRewardDict[slot1]
+function var_0_0.getRewardList(arg_7_0, arg_7_1)
+	return arg_7_0._roleStoryRewardDict[arg_7_1]
 end
 
-function slot0.getRewardConfig(slot0, slot1)
-	return slot0._roleStoryRewardConfig.configDict[slot1]
+function var_0_0.getRewardConfig(arg_8_0, arg_8_1)
+	return arg_8_0._roleStoryRewardConfig.configDict[arg_8_1]
 end
 
-function slot0.getStoryIdByActivityId(slot0, slot1)
-	slot3 = 0
+function var_0_0.getStoryIdByActivityId(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getStoryList()
+	local var_9_1 = 0
 
-	for slot7, slot8 in pairs(slot0:getStoryList()) do
-		if slot8.activityId == slot1 then
-			slot3 = slot8.id
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		if iter_9_1.activityId == arg_9_1 then
+			var_9_1 = iter_9_1.id
 
 			break
 		end
 	end
 
-	return slot3
+	return var_9_1
 end
 
-function slot0.getStoryIdByChapterId(slot0, slot1)
-	if slot0:getStoryList() then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.chapterId == slot1 then
-				return slot7.id
+function var_0_0.getStoryIdByChapterId(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getStoryList()
+
+	if var_10_0 then
+		for iter_10_0, iter_10_1 in pairs(var_10_0) do
+			if iter_10_1.chapterId == arg_10_1 then
+				return iter_10_1.id
 			end
 		end
 	end
 end
 
-function slot0.getDispatchList(slot0, slot1, slot2)
-	return slot0._roleStoryDispatchDict[slot1] and slot0._roleStoryDispatchDict[slot1][slot2]
+function var_0_0.getDispatchList(arg_11_0, arg_11_1, arg_11_2)
+	return arg_11_0._roleStoryDispatchDict[arg_11_1] and arg_11_0._roleStoryDispatchDict[arg_11_1][arg_11_2]
 end
 
-function slot0.getDispatchConfig(slot0, slot1)
-	return slot0._roleStoryDispatchConfig.configDict[slot1]
+function var_0_0.getDispatchConfig(arg_12_0, arg_12_1)
+	return arg_12_0._roleStoryDispatchConfig.configDict[arg_12_1]
 end
 
-function slot0.getTalkConfig(slot0, slot1)
-	return slot0._roleStoryDispatchTalkConfig.configDict[slot1]
+function var_0_0.getTalkConfig(arg_13_0, arg_13_1)
+	return arg_13_0._roleStoryDispatchTalkConfig.configDict[arg_13_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

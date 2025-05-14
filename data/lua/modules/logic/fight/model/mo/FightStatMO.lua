@@ -1,20 +1,22 @@
-module("modules.logic.fight.model.mo.FightStatMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightStatMO", package.seeall)
 
-slot0 = pureTable("FightStatMO")
+local var_0_0 = pureTable("FightStatMO")
 
-function slot0.init(slot0, slot1)
-	slot0.entityId = slot1.heroUid
-	slot0.harm = tonumber(slot1.harm)
-	slot0.hurt = tonumber(slot1.hurt)
-	slot0.heal = tonumber(slot1.heal)
-	slot0.cards = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.entityId = arg_1_1.heroUid
+	arg_1_0.harm = tonumber(arg_1_1.harm)
+	arg_1_0.hurt = tonumber(arg_1_1.hurt)
+	arg_1_0.heal = tonumber(arg_1_1.heal)
+	arg_1_0.cards = {}
 
-	for slot5, slot6 in ipairs(slot1.cards) do
-		table.insert(slot0.cards, {
-			skillId = slot6.skillId,
-			useCount = slot6.useCount
-		})
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.cards) do
+		local var_1_0 = {
+			skillId = iter_1_1.skillId,
+			useCount = iter_1_1.useCount
+		}
+
+		table.insert(arg_1_0.cards, var_1_0)
 	end
 end
 
-return slot0
+return var_0_0

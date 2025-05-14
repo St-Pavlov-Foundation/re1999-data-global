@@ -1,35 +1,37 @@
-module("modules.logic.weather.eggs.SceneEggLightModeAnimShow", package.seeall)
+﻿module("modules.logic.weather.eggs.SceneEggLightModeAnimShow", package.seeall)
 
-slot0 = class("SceneEggLightModeAnimShow", SceneBaseEgg)
+local var_0_0 = class("SceneEggLightModeAnimShow", SceneBaseEgg)
 
-function slot0._onInit(slot0)
-	slot0._animNameList = string.split(slot0._eggConfig.actionParams, "#")
+function var_0_0._onInit(arg_1_0)
+	arg_1_0._animNameList = string.split(arg_1_0._eggConfig.actionParams, "#")
 
-	slot0:setGoListVisible(false)
+	arg_1_0:setGoListVisible(false)
 end
 
-function slot0._onEnable(slot0)
-	if not slot0._lightMode then
+function var_0_0._onEnable(arg_2_0)
+	if not arg_2_0._lightMode then
 		return
 	end
 
-	if not slot0._animNameList[slot0._lightMode] then
+	local var_2_0 = arg_2_0._animNameList[arg_2_0._lightMode]
+
+	if not var_2_0 then
 		return
 	end
 
-	slot0:playAnim(slot1)
+	arg_2_0:playAnim(var_2_0)
 end
 
-function slot0._onDisable(slot0)
-	slot0:setGoListVisible(false)
+function var_0_0._onDisable(arg_3_0)
+	arg_3_0:setGoListVisible(false)
 end
 
-function slot0._onReportChange(slot0, slot1)
-	if not slot1 then
+function var_0_0._onReportChange(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot0._lightMode = slot1.lightMode
+	arg_4_0._lightMode = arg_4_1.lightMode
 end
 
-return slot0
+return var_0_0

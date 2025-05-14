@@ -1,52 +1,55 @@
-module("modules.logic.versionactivity1_2.dreamtail.config.Activity119Config", package.seeall)
+﻿module("modules.logic.versionactivity1_2.dreamtail.config.Activity119Config", package.seeall)
 
-slot0 = class("Activity119Config", BaseConfig)
+local var_0_0 = class("Activity119Config", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"activity119_episode",
 		"activity119_task"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0.onInit(slot0)
-	slot0._dict = nil
+function var_0_0.onInit(arg_3_0)
+	arg_3_0._dict = nil
 end
 
-function slot0.getConfig(slot0, slot1, slot2)
-	if not slot0._dict then
-		slot0._dict = {}
+function var_0_0.getConfig(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._dict then
+		arg_4_0._dict = {}
 
-		for slot6, slot7 in ipairs(lua_activity119_episode.configList) do
-			if not slot0._dict[slot7.activityId] then
-				slot0._dict[slot7.activityId] = {}
+		for iter_4_0, iter_4_1 in ipairs(lua_activity119_episode.configList) do
+			if not arg_4_0._dict[iter_4_1.activityId] then
+				arg_4_0._dict[iter_4_1.activityId] = {}
 			end
 
-			if not slot0._dict[slot7.activityId][slot7.tabId] then
-				slot0._dict[slot7.activityId][slot7.tabId] = {
+			if not arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId] then
+				arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId] = {
 					taskList = {},
-					tabId = slot7.tabId
+					tabId = iter_4_1.tabId
 				}
 			end
 
-			if DungeonConfig.instance:getChapterCO(DungeonConfig.instance:getEpisodeCO(slot7.id).chapterId).type == DungeonEnum.ChapterType.DreamTailHard then
-				slot0._dict[slot7.activityId][slot7.tabId].hardCO = slot7
+			local var_4_0 = DungeonConfig.instance:getEpisodeCO(iter_4_1.id)
+
+			if DungeonConfig.instance:getChapterCO(var_4_0.chapterId).type == DungeonEnum.ChapterType.DreamTailHard then
+				arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId].hardCO = iter_4_1
 			else
-				slot0._dict[slot7.activityId][slot7.tabId].normalCO = slot7
+				arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId].normalCO = iter_4_1
 			end
 		end
 
-		for slot6, slot7 in ipairs(lua_activity119_task.configList) do
-			slot0._dict[slot7.activityId][slot7.tabId].taskList[slot7.sort] = slot7
+		for iter_4_2, iter_4_3 in ipairs(lua_activity119_task.configList) do
+			arg_4_0._dict[iter_4_3.activityId][iter_4_3.tabId].taskList[iter_4_3.sort] = iter_4_3
 		end
 	end
 
-	return slot0._dict[slot1][slot2]
+	return arg_4_0._dict[arg_4_1][arg_4_2]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

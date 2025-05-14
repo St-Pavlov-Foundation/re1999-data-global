@@ -1,129 +1,145 @@
-module("modules.logic.scene.fight.comp.FightSceneCardCameraComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneCardCameraComp", package.seeall)
 
-slot0 = class("FightSceneCardCameraComp", BaseSceneComp)
+local var_0_0 = class("FightSceneCardCameraComp", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._stopCameraAnim, slot0)
-	FightController.instance:registerCallback(FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd, slot0)
-	FightController.instance:registerCallback(FightEvent.SkillEditorPlayCardCameraAni, slot0._onSkillEditorPlayCardCameraAni, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_1_0._onLevelLoaded, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._stopCameraAnim, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.ChangeWaveEnd, arg_1_0._onChangeWaveEnd, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.SkillEditorPlayCardCameraAni, arg_1_0._onSkillEditorPlayCardCameraAni, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._stopCameraAnim, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd, slot0)
-	FightController.instance:unregisterCallback(FightEvent.SkillEditorPlayCardCameraAni, slot0._onSkillEditorPlayCardCameraAni, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_2_0._stopCameraAnim, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.ChangeWaveEnd, arg_2_0._onChangeWaveEnd, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.SkillEditorPlayCardCameraAni, arg_2_0._onSkillEditorPlayCardCameraAni, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 
-	if slot0._multiLoader then
-		slot0._multiLoader:dispose()
+	if arg_2_0._multiLoader then
+		arg_2_0._multiLoader:dispose()
 
-		slot0._multiLoader = nil
+		arg_2_0._multiLoader = nil
 	end
 
-	if slot0._editorLoader then
-		slot0._editorLoader:dispose()
+	if arg_2_0._editorLoader then
+		arg_2_0._editorLoader:dispose()
 
-		slot0._editorLoader = nil
+		arg_2_0._editorLoader = nil
 	end
 
-	slot0._cardCameraName = nil
-	slot0._path = nil
-	slot0._waveId = nil
-	slot0._animatorInst = nil
+	arg_2_0._cardCameraName = nil
+	arg_2_0._path = nil
+	arg_2_0._waveId = nil
+	arg_2_0._animatorInst = nil
 
-	if slot0._isPlaying then
-		slot0._isPlaying = false
-		slot3 = CameraMgr.instance:getCameraRootAnimator()
-		slot3.enabled = false
-		slot3.runtimeAnimatorController = nil
+	if arg_2_0._isPlaying then
+		arg_2_0._isPlaying = false
+
+		local var_2_0 = CameraMgr.instance:getCameraRootAnimator()
+
+		var_2_0.enabled = false
+		var_2_0.runtimeAnimatorController = nil
 	end
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0._onLevelLoaded(arg_3_0, arg_3_1)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
 
-	if slot0:_getCameraName(slot1, FightModel.instance:getCurWaveId()) ~= slot0._cardCameraName then
-		slot0._cardCameraName = slot3
+	local var_3_0 = FightModel.instance:getCurWaveId()
+	local var_3_1 = arg_3_0:_getCameraName(arg_3_1, var_3_0)
 
-		if slot3 ~= "" and slot3 ~= "1" then
-			slot0:_loadAnimRes()
+	if var_3_1 ~= arg_3_0._cardCameraName then
+		arg_3_0._cardCameraName = var_3_1
+
+		if var_3_1 ~= "" and var_3_1 ~= "1" then
+			arg_3_0:_loadAnimRes()
 		else
-			slot0:_stopCameraAnim()
-			slot0:_clearAnimRes()
+			arg_3_0:_stopCameraAnim()
+			arg_3_0:_clearAnimRes()
 		end
 	end
 end
 
-function slot0._onChangeWaveEnd(slot0)
-	slot0._waveId = FightModel.instance:getCurWaveId()
+function var_0_0._onChangeWaveEnd(arg_4_0)
+	local var_4_0 = GameSceneMgr.instance:getCurLevelId()
 
-	if slot0:_getCameraName(GameSceneMgr.instance:getCurLevelId(), slot0._waveId) ~= slot0._cardCameraName then
-		slot0._cardCameraName = slot2
+	arg_4_0._waveId = FightModel.instance:getCurWaveId()
 
-		if slot2 ~= "" and slot2 ~= "1" then
-			slot0:_loadAnimRes()
+	local var_4_1 = arg_4_0:_getCameraName(var_4_0, arg_4_0._waveId)
+
+	if var_4_1 ~= arg_4_0._cardCameraName then
+		arg_4_0._cardCameraName = var_4_1
+
+		if var_4_1 ~= "" and var_4_1 ~= "1" then
+			arg_4_0:_loadAnimRes()
 		else
-			slot0:_stopCameraAnim()
-			slot0:_clearAnimRes()
+			arg_4_0:_stopCameraAnim()
+			arg_4_0:_clearAnimRes()
 		end
 	end
 end
 
-function slot0._getCameraName(slot0, slot1, slot2)
-	slot4 = FightModel.instance:getFightParam() and slot3.monsterGroupIds and slot3.monsterGroupIds[slot2]
-	slot5 = slot4 and lua_monster_group.configDict[slot4]
-	slot6 = slot5 and slot5.stanceId
-	slot7 = slot6 and lua_stance.configDict[slot6]
+function var_0_0._getCameraName(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = FightModel.instance:getFightParam()
+	local var_5_1 = var_5_0 and var_5_0.monsterGroupIds and var_5_0.monsterGroupIds[arg_5_2]
+	local var_5_2 = var_5_1 and lua_monster_group.configDict[var_5_1]
+	local var_5_3 = var_5_2 and var_5_2.stanceId
+	local var_5_4 = var_5_3 and lua_stance.configDict[var_5_3]
+	local var_5_5 = var_5_4 and var_5_4.cardCamera
 
-	if not string.nilorempty(slot7 and slot7.cardCamera) then
-		return slot8
+	if not string.nilorempty(var_5_5) then
+		return var_5_5
 	end
 
-	slot9 = slot3 and lua_battle.configDict[slot3.battleId]
-	slot10 = slot9 and FightStrUtil.instance:getSplitToNumberCache(slot9.myStance, "#")
-	slot11 = slot10 and (slot10[slot2] or slot10[#slot10])
-	slot12 = slot11 and lua_stance.configDict[slot11]
+	local var_5_6 = var_5_0 and lua_battle.configDict[var_5_0.battleId]
+	local var_5_7 = var_5_6 and FightStrUtil.instance:getSplitToNumberCache(var_5_6.myStance, "#")
+	local var_5_8 = var_5_7 and (var_5_7[arg_5_2] or var_5_7[#var_5_7])
+	local var_5_9 = var_5_8 and lua_stance.configDict[var_5_8]
+	local var_5_10 = var_5_9 and var_5_9.cardCamera
 
-	if not string.nilorempty(slot12 and slot12.cardCamera) then
-		return slot13
+	if not string.nilorempty(var_5_10) then
+		return var_5_10
 	end
 
-	return lua_scene_level.configDict[slot1] and slot14.cardCamera
+	local var_5_11 = lua_scene_level.configDict[arg_5_1]
+
+	return var_5_11 and var_5_11.cardCamera
 end
 
-function slot0._loadAnimRes(slot0)
-	if not string.nilorempty(slot0._cardCameraName) then
-		if "scenes/dynamic/scene_anim/" .. slot0._cardCameraName .. ".controller" == slot0._path then
+function var_0_0._loadAnimRes(arg_6_0)
+	if not string.nilorempty(arg_6_0._cardCameraName) then
+		local var_6_0 = "scenes/dynamic/scene_anim/" .. arg_6_0._cardCameraName .. ".controller"
+
+		if var_6_0 == arg_6_0._path then
 			return
 		end
 
-		if slot0._multiLoader then
-			slot0._multiLoader:dispose()
+		if arg_6_0._multiLoader then
+			arg_6_0._multiLoader:dispose()
 		end
 
-		slot0._path = slot1
-		slot0._multiLoader = MultiAbLoader.New()
+		arg_6_0._path = var_6_0
+		arg_6_0._multiLoader = MultiAbLoader.New()
 
-		slot0._multiLoader:addPath(slot0._path)
-		slot0._multiLoader:startLoad(slot0._onResLoadCallback, slot0)
+		arg_6_0._multiLoader:addPath(arg_6_0._path)
+		arg_6_0._multiLoader:startLoad(arg_6_0._onResLoadCallback, arg_6_0)
 	end
 end
 
-function slot0._onResLoadCallback(slot0, slot1)
-	slot0._animatorInst = slot0._multiLoader:getFirstAssetItem():GetResource(slot0._path)
+function var_0_0._onResLoadCallback(arg_7_0, arg_7_1)
+	arg_7_0._animatorInst = arg_7_0._multiLoader:getFirstAssetItem():GetResource(arg_7_0._path)
 
-	slot0:_onStageChange(FightModel.instance:getCurStage())
+	arg_7_0:_onStageChange(FightModel.instance:getCurStage())
 end
 
-function slot0._onStageChange(slot0, slot1)
-	if slot0._isPlaying then
+function var_0_0._onStageChange(arg_8_0, arg_8_1)
+	if arg_8_0._isPlaying then
 		return
 	end
 
@@ -131,102 +147,114 @@ function slot0._onStageChange(slot0, slot1)
 		return
 	end
 
-	if slot0._animatorInst and slot1 == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
+	if arg_8_0._animatorInst and arg_8_1 == FightEnum.Stage.Card or arg_8_1 == FightEnum.Stage.AutoCard then
 		GameSceneMgr.instance:getCurScene().camera:switchNextVirtualCamera()
-		slot0:_playCameraAnim()
+		arg_8_0:_playCameraAnim()
 	end
 end
 
-function slot0._playCameraAnim(slot0)
-	slot0._isPlaying = true
-	slot1 = CameraMgr.instance:getCameraRootAnimator()
-	slot1.enabled = true
-	slot1.runtimeAnimatorController = nil
-	slot1.runtimeAnimatorController = slot0._animatorInst
-	slot1.speed = 1 / Time.timeScale
+function var_0_0._playCameraAnim(arg_9_0)
+	arg_9_0._isPlaying = true
+
+	local var_9_0 = CameraMgr.instance:getCameraRootAnimator()
+
+	var_9_0.enabled = true
+	var_9_0.runtimeAnimatorController = nil
+	var_9_0.runtimeAnimatorController = arg_9_0._animatorInst
+	var_9_0.speed = 1 / Time.timeScale
 end
 
-function slot0.isPlaying(slot0)
-	return slot0._isPlaying
+function var_0_0.isPlaying(arg_10_0)
+	return arg_10_0._isPlaying
 end
 
-function slot0.stop(slot0)
-	slot0._isPlaying = false
+function var_0_0.stop(arg_11_0)
+	arg_11_0._isPlaying = false
 end
 
-function slot0._clearAnimRes(slot0)
-	slot0._animatorInst = nil
+function var_0_0._clearAnimRes(arg_12_0)
+	arg_12_0._animatorInst = nil
 
-	if slot0._multiLoader then
-		slot0._multiLoader:dispose()
+	if arg_12_0._multiLoader then
+		arg_12_0._multiLoader:dispose()
 
-		slot0._multiLoader = nil
+		arg_12_0._multiLoader = nil
 	end
 end
 
-function slot0._stopCameraAnim(slot0)
-	if not slot0._animatorInst then
+function var_0_0._stopCameraAnim(arg_13_0)
+	if not arg_13_0._animatorInst then
 		return
 	end
 
-	slot0._isPlaying = false
-	slot1 = GameSceneMgr.instance:getCurScene().camera
-	slot2 = slot1:getCurVirtualCamera(1)
-	slot3 = slot1:getCurVirtualCamera(2)
-	slot6 = gohelper.findChild(slot2.transform.parent.gameObject, "Follower" .. string.sub(slot2.name, string.len(slot2.name)))
-	slot7 = gohelper.findChild(slot3.transform.parent.gameObject, "Follower" .. string.sub(slot3.name, string.len(slot3.name)))
-	slot8, slot9, slot10 = transformhelper.getPos(slot6.transform)
-	slot11, slot12, slot13 = transformhelper.getPos(slot7.transform)
-	slot14 = CameraMgr.instance:getCameraRootAnimator()
-	slot14.enabled = false
-	slot14.runtimeAnimatorController = nil
+	arg_13_0._isPlaying = false
 
-	transformhelper.setPos(slot6.transform, 0, slot9, slot10)
-	transformhelper.setPos(slot7.transform, 0, slot12, slot13)
+	local var_13_0 = GameSceneMgr.instance:getCurScene().camera
+	local var_13_1 = var_13_0:getCurVirtualCamera(1)
+	local var_13_2 = var_13_0:getCurVirtualCamera(2)
+	local var_13_3 = "Follower" .. string.sub(var_13_1.name, string.len(var_13_1.name))
+	local var_13_4 = "Follower" .. string.sub(var_13_2.name, string.len(var_13_2.name))
+	local var_13_5 = gohelper.findChild(var_13_1.transform.parent.gameObject, var_13_3)
+	local var_13_6 = gohelper.findChild(var_13_2.transform.parent.gameObject, var_13_4)
+	local var_13_7, var_13_8, var_13_9 = transformhelper.getPos(var_13_5.transform)
+	local var_13_10, var_13_11, var_13_12 = transformhelper.getPos(var_13_6.transform)
+	local var_13_13 = CameraMgr.instance:getCameraRootAnimator()
+
+	var_13_13.enabled = false
+	var_13_13.runtimeAnimatorController = nil
+
+	transformhelper.setPos(var_13_5.transform, 0, var_13_8, var_13_9)
+	transformhelper.setPos(var_13_6.transform, 0, var_13_11, var_13_12)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.FightFocusView then
-		slot0:_stopCameraAnim()
+function var_0_0._onOpenView(arg_14_0, arg_14_1)
+	if arg_14_1 == ViewName.FightFocusView then
+		arg_14_0:_stopCameraAnim()
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.FightFocusView then
+function var_0_0._onCloseView(arg_15_0, arg_15_1)
+	if arg_15_1 == ViewName.FightFocusView then
 		if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 			return
 		end
 
-		slot0:_playCameraAnim()
+		arg_15_0:_playCameraAnim()
 	end
 end
 
-function slot0._onSkillEditorPlayCardCameraAni(slot0, slot1)
-	if slot1 then
-		if slot0:_getCameraName(GameSceneMgr.instance:getCurLevelId(), FightModel.instance:getCurWaveId()) ~= slot0._cardCameraName and slot4 ~= "" and slot4 ~= "1" then
-			if slot0._editorLoader then
-				slot0._editorLoader:dispose()
+function var_0_0._onSkillEditorPlayCardCameraAni(arg_16_0, arg_16_1)
+	if arg_16_1 then
+		local var_16_0 = GameSceneMgr.instance:getCurLevelId()
+		local var_16_1 = FightModel.instance:getCurWaveId()
+		local var_16_2 = arg_16_0:_getCameraName(var_16_0, var_16_1)
 
-				slot0._editorLoader = nil
+		if var_16_2 ~= arg_16_0._cardCameraName and var_16_2 ~= "" and var_16_2 ~= "1" then
+			if arg_16_0._editorLoader then
+				arg_16_0._editorLoader:dispose()
+
+				arg_16_0._editorLoader = nil
 			end
 
-			slot0._editorLoader = MultiAbLoader.New()
+			local var_16_3 = "scenes/dynamic/scene_anim/" .. var_16_2 .. ".controller"
 
-			slot0._editorLoader:addPath("scenes/dynamic/scene_anim/" .. slot4 .. ".controller")
-			slot0._editorLoader:startLoad(slot0._onEditorLoaderFinish, slot0)
+			arg_16_0._editorLoader = MultiAbLoader.New()
+
+			arg_16_0._editorLoader:addPath(var_16_3)
+			arg_16_0._editorLoader:startLoad(arg_16_0._onEditorLoaderFinish, arg_16_0)
 		else
-			slot0:_playCameraAnim()
+			arg_16_0:_playCameraAnim()
 		end
 	else
-		slot0:_stopCameraAnim()
+		arg_16_0:_stopCameraAnim()
 	end
 end
 
-function slot0._onEditorLoaderFinish(slot0)
-	slot0._animatorInst = slot0._editorLoader:getFirstAssetItem():GetResource(slot0._path)
+function var_0_0._onEditorLoaderFinish(arg_17_0)
+	arg_17_0._animatorInst = arg_17_0._editorLoader:getFirstAssetItem():GetResource(arg_17_0._path)
 
 	GameSceneMgr.instance:getCurScene().camera:switchNextVirtualCamera()
-	slot0:_playCameraAnim()
+	arg_17_0:_playCameraAnim()
 end
 
-return slot0
+return var_0_0

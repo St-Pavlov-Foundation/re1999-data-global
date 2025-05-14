@@ -1,4 +1,4 @@
-return {
+﻿return {
 	gameConfig = {
 		sceneScale = 1.5,
 		playerForward = 1

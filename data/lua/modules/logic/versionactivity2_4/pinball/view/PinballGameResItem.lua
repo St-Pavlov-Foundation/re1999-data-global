@@ -1,61 +1,63 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballGameResItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballGameResItem", package.seeall)
 
-slot0 = class("PinballGameResItem", LuaCompBase)
+local var_0_0 = class("PinballGameResItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._txtNum = gohelper.findChildTextMesh(slot1, "#txt_num")
-	slot0._imageicon = gohelper.findChildImage(slot1, "#image_icon")
-	slot0._imageiconbg = gohelper.findChildImage(slot1, "#image_iconbg")
-	slot0._imageball = gohelper.findChildImage(slot1, "#image_ball")
-	slot0._anim = gohelper.findChildAnim(slot1, "")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "#txt_num")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "#image_icon")
+	arg_1_0._imageiconbg = gohelper.findChildImage(arg_1_1, "#image_iconbg")
+	arg_1_0._imageball = gohelper.findChildImage(arg_1_1, "#image_ball")
+	arg_1_0._anim = gohelper.findChildAnim(arg_1_1, "")
 end
 
-function slot0.addEventListeners(slot0)
-	PinballController.instance:registerCallback(PinballEvent.GameResChange, slot0._refreshUI, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	PinballController.instance:registerCallback(PinballEvent.GameResChange, arg_2_0._refreshUI, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	PinballController.instance:unregisterCallback(PinballEvent.GameResChange, slot0._refreshUI, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	PinballController.instance:unregisterCallback(PinballEvent.GameResChange, arg_3_0._refreshUI, arg_3_0)
 end
 
-slot1 = {
+local var_0_1 = {
 	[PinballEnum.ResType.Wood] = "v2a4_tutushizi_resourcebg_1",
 	[PinballEnum.ResType.Mine] = "v2a4_tutushizi_resourcebg_3",
 	[PinballEnum.ResType.Stone] = "v2a4_tutushizi_resourcebg_2",
 	[PinballEnum.ResType.Food] = "v2a4_tutushizi_resourcebg_4"
 }
-slot2 = {
+local var_0_2 = {
 	[PinballEnum.ResType.Wood] = "v2a4_tutushizi_smallball_3",
 	[PinballEnum.ResType.Mine] = "v2a4_tutushizi_smallball_1",
 	[PinballEnum.ResType.Stone] = "v2a4_tutushizi_smallball_4",
 	[PinballEnum.ResType.Food] = "v2a4_tutushizi_smallball_2"
 }
 
-function slot0.setData(slot0, slot1)
-	slot0._resType = slot1
+function var_0_0.setData(arg_4_0, arg_4_1)
+	arg_4_0._resType = arg_4_1
 
-	slot0:_refreshUI()
+	arg_4_0:_refreshUI()
 
-	if not lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot0._resType] then
+	local var_4_0 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_4_0._resType]
+
+	if not var_4_0 then
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(slot0._imageicon, slot2.icon)
-	UISpriteSetMgr.instance:setAct178Sprite(slot0._imageiconbg, uv0[slot0._resType])
-	UISpriteSetMgr.instance:setAct178Sprite(slot0._imageball, uv1[slot0._resType])
+	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageicon, var_4_0.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageiconbg, var_0_1[arg_4_0._resType])
+	UISpriteSetMgr.instance:setAct178Sprite(arg_4_0._imageball, var_0_2[arg_4_0._resType])
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = PinballModel.instance:getGameRes(slot0._resType)
+function var_0_0._refreshUI(arg_5_0)
+	local var_5_0 = PinballModel.instance:getGameRes(arg_5_0._resType)
 
-	if slot0._cacheNum and slot0._cacheNum < slot1 and (not slot0._playAnimDt or UnityEngine.Time.realtimeSinceStartup - slot0._playAnimDt > 2) then
-		slot0._anim:Play("refresh", 0, 0)
+	if arg_5_0._cacheNum and var_5_0 > arg_5_0._cacheNum and (not arg_5_0._playAnimDt or UnityEngine.Time.realtimeSinceStartup - arg_5_0._playAnimDt > 2) then
+		arg_5_0._anim:Play("refresh", 0, 0)
 
-		slot0._playAnimDt = UnityEngine.Time.realtimeSinceStartup
+		arg_5_0._playAnimDt = UnityEngine.Time.realtimeSinceStartup
 	end
 
-	slot0._cacheNum = slot1
-	slot0._txtNum.text = slot1
+	arg_5_0._cacheNum = var_5_0
+	arg_5_0._txtNum.text = var_5_0
 end
 
-return slot0
+return var_0_0

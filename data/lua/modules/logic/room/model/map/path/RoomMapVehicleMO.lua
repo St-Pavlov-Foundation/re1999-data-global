@@ -1,23 +1,23 @@
-module("modules.logic.room.model.map.path.RoomMapVehicleMO", package.seeall)
+﻿module("modules.logic.room.model.map.path.RoomMapVehicleMO", package.seeall)
 
-slot0 = pureTable("RoomMapVehicleMO")
+local var_0_0 = pureTable("RoomMapVehicleMO")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.id = slot1
-	slot0.vehicleId = slot3
-	slot0.resourceId = slot2.resourceId
-	slot0.resId = slot2.resourceId
-	slot0.pathPlanMO = slot2
-	slot0.config = RoomConfig.instance:getVehicleConfig(slot3)
-	slot0._areaNodeList = {}
-	slot0._initAreaNodeList = {}
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0.id = arg_1_1
+	arg_1_0.vehicleId = arg_1_3
+	arg_1_0.resourceId = arg_1_2.resourceId
+	arg_1_0.resId = arg_1_2.resourceId
+	arg_1_0.pathPlanMO = arg_1_2
+	arg_1_0.config = RoomConfig.instance:getVehicleConfig(arg_1_3)
+	arg_1_0._areaNodeList = {}
+	arg_1_0._initAreaNodeList = {}
 
-	tabletool.addValues(slot0._initAreaNodeList, slot4)
+	tabletool.addValues(arg_1_0._initAreaNodeList, arg_1_4)
 
-	slot0.startMO = slot0._initAreaNodeList[1] or slot0:_findMaxNodeNum(slot2:getNodeList())
-	slot0.curPathNodeMO = slot0.startMO
-	slot0.enterDirection = 4
-	slot0.moveOffsetDirs = {
+	arg_1_0.startMO = arg_1_0._initAreaNodeList[1] or arg_1_0:_findMaxNodeNum(arg_1_2:getNodeList())
+	arg_1_0.curPathNodeMO = arg_1_0.startMO
+	arg_1_0.enterDirection = 4
+	arg_1_0.moveOffsetDirs = {
 		3,
 		4,
 		2,
@@ -25,243 +25,275 @@ function slot0.init(slot0, slot1, slot2, slot3, slot4)
 		1,
 		0
 	}
-	slot0.mapHexPointDic = slot0:_getHexPiontDic(slot2:getNodeList())
-	slot0._areaNodeNum = math.max(1, #slot0._initAreaNodeList)
-	slot0._recentHistoryNum = 10
-	slot0._recentHistory = {}
-	slot0.vehicleType = 0
-	slot0.ownerType = 0
-	slot0.owerId = 0
-	slot0._replaceType = RoomVehicleEnum.ReplaceType.None
+	arg_1_0.mapHexPointDic = arg_1_0:_getHexPiontDic(arg_1_2:getNodeList())
+	arg_1_0._areaNodeNum = math.max(1, #arg_1_0._initAreaNodeList)
+	arg_1_0._recentHistoryNum = 10
+	arg_1_0._recentHistory = {}
+	arg_1_0.vehicleType = 0
+	arg_1_0.ownerType = 0
+	arg_1_0.owerId = 0
+	arg_1_0._replaceType = RoomVehicleEnum.ReplaceType.None
 
-	if not slot0.config then
-		logError(string.format("找不到交通工具配置,id:%s ", slot0.vehicleId))
+	if not arg_1_0.config then
+		logError(string.format("找不到交通工具配置,id:%s ", arg_1_0.vehicleId))
 	end
 
-	if #slot0._initAreaNodeList > 1 then
-		for slot8 = #slot0._initAreaNodeList, 1, -1 do
-			slot0:moveToNode(slot0._initAreaNodeList[slot8], slot0.enterDirection)
+	if #arg_1_0._initAreaNodeList > 1 then
+		for iter_1_0 = #arg_1_0._initAreaNodeList, 1, -1 do
+			arg_1_0:moveToNode(arg_1_0._initAreaNodeList[iter_1_0], arg_1_0.enterDirection)
 		end
 	else
-		slot0:moveToNode(slot0.startMO, slot0.enterDirection)
+		arg_1_0:moveToNode(arg_1_0.startMO, arg_1_0.enterDirection)
 	end
 end
 
-function slot0.setReplaceType(slot0, slot1)
-	if slot0.ownerType == RoomVehicleEnum.OwnerType.TransportSite then
-		slot0._replaceType = slot1
+function var_0_0.setReplaceType(arg_2_0, arg_2_1)
+	if arg_2_0.ownerType == RoomVehicleEnum.OwnerType.TransportSite then
+		arg_2_0._replaceType = arg_2_1
 	else
-		slot0._replaceType = RoomVehicleEnum.ReplaceType.None
+		arg_2_0._replaceType = RoomVehicleEnum.ReplaceType.None
 	end
 end
 
-function slot0.getReplaceDefideCfg(slot0)
-	if slot0.ownerType == RoomVehicleEnum.OwnerType.TransportSite then
-		slot0:_initReplaceDefideCfg()
+function var_0_0.getReplaceDefideCfg(arg_3_0)
+	if arg_3_0.ownerType == RoomVehicleEnum.OwnerType.TransportSite then
+		arg_3_0:_initReplaceDefideCfg()
 
-		return slot0._replacConfigMap[slot0._replaceType] or slot0.config
+		return arg_3_0._replacConfigMap[arg_3_0._replaceType] or arg_3_0.config
 	end
 
-	return slot0.config
+	return arg_3_0.config
 end
 
-function slot0._initReplaceDefideCfg(slot0)
-	if slot0._replacConfigMap and slot0._lasetDefideId == slot0.vehicleId then
+function var_0_0._initReplaceDefideCfg(arg_4_0)
+	if arg_4_0._replacConfigMap and arg_4_0._lasetDefideId == arg_4_0.vehicleId then
 		return
 	end
 
-	slot0._replacConfigMap = {}
+	arg_4_0._replacConfigMap = {}
 
-	if not slot0.config or string.nilorempty(slot0.config.replaceConditionStr) then
+	if not arg_4_0.config or string.nilorempty(arg_4_0.config.replaceConditionStr) then
 		return
 	end
 
-	for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.config.replaceConditionStr, true)) do
-		if slot6 and #slot6 > 1 and RoomConfig.instance:getVehicleConfig(slot6[2]) then
-			slot0._replacConfigMap[slot6[1]] = slot7
+	local var_4_0 = GameUtil.splitString2(arg_4_0.config.replaceConditionStr, true)
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if iter_4_1 and #iter_4_1 > 1 then
+			local var_4_1 = RoomConfig.instance:getVehicleConfig(iter_4_1[2])
+
+			if var_4_1 then
+				arg_4_0._replacConfigMap[iter_4_1[1]] = var_4_1
+			end
 		end
 	end
 end
 
-function slot0._findSideNode(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6:isSideNode() then
-			return slot6
+function var_0_0._findSideNode(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		if iter_5_1:isSideNode() then
+			return iter_5_1
 		end
 	end
 
-	return slot1[1]
+	return arg_5_1[1]
 end
 
-function slot0._findMaxNodeNum(slot0, slot1)
-	slot2, slot3 = nil
+function var_0_0._findMaxNodeNum(arg_6_0, arg_6_1)
+	local var_6_0
+	local var_6_1
 
-	for slot7, slot8 in ipairs(slot1) do
-		if not slot8.hasBuilding and (slot2 == nil or slot2.connectNodeNum < slot8.connectNodeNum) then
-			slot2 = slot8
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		if not iter_6_1.hasBuilding and (var_6_0 == nil or var_6_0.connectNodeNum < iter_6_1.connectNodeNum) then
+			var_6_0 = iter_6_1
 		end
 
-		if slot8:isSideNode() and (slot3 == nil or slot3.connectNodeNum < slot8.connectNodeNum) then
-			slot3 = slot8
+		if iter_6_1:isSideNode() and (var_6_1 == nil or var_6_1.connectNodeNum < iter_6_1.connectNodeNum) then
+			var_6_1 = iter_6_1
 		end
 	end
 
-	return slot2 or slot3 or slot1[1]
+	return var_6_0 or var_6_1 or arg_6_1[1]
 end
 
-function slot0._getHexPiontDic(slot0, slot1)
-	slot2 = {}
+function var_0_0._getHexPiontDic(arg_7_0, arg_7_1)
+	local var_7_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot2[slot7.hexPoint.x] == nil then
-			slot2[slot7.hexPoint.x] = {}
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_1 = var_7_0[iter_7_1.hexPoint.x]
+
+		if var_7_1 == nil then
+			var_7_1 = {}
+			var_7_0[iter_7_1.hexPoint.x] = var_7_1
 		end
 
-		slot8[slot7.hexPoint.y] = 0
+		var_7_1[iter_7_1.hexPoint.y] = 0
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.resetHistory(slot0)
-	for slot5, slot6 in pairs(slot0.mapHexPointDic) do
-		for slot10, slot11 in pairs(slot6) do
-			slot6[slot10] = 0
+function var_0_0.resetHistory(arg_8_0)
+	local var_8_0 = arg_8_0.mapHexPointDic
+
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
+			iter_8_1[iter_8_2] = 0
 		end
 	end
 end
 
-function slot0.getHistoryCount(slot0, slot1, slot2)
-	return slot0.mapHexPointDic[slot1] and slot0.mapHexPointDic[slot1][slot2] or 0
+function var_0_0.getHistoryCount(arg_9_0, arg_9_1, arg_9_2)
+	return arg_9_0.mapHexPointDic[arg_9_1] and arg_9_0.mapHexPointDic[arg_9_1][arg_9_2] or 0
 end
 
-function slot0.setHistoryCount(slot0, slot1, slot2, slot3)
-	if not slot0.mapHexPointDic[slot1] then
-		slot0.mapHexPointDic[slot1] = {}
+function var_0_0.setHistoryCount(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if not arg_10_0.mapHexPointDic[arg_10_1] then
+		arg_10_0.mapHexPointDic[arg_10_1] = {}
 	end
 
-	slot0.mapHexPointDic[slot1][slot2] = slot3
+	arg_10_0.mapHexPointDic[arg_10_1][arg_10_2] = arg_10_3
 end
 
-function slot0._isNextStar(slot0)
-	if slot0.curPathNodeMO.hexPoint == slot0.startMO.hexPoint and slot0:getHistoryCount(slot1.hexPoint.x, slot1.hexPoint.y) >= 5 then
+function var_0_0._isNextStar(arg_11_0)
+	local var_11_0 = arg_11_0.curPathNodeMO
+
+	if var_11_0.hexPoint == arg_11_0.startMO.hexPoint and arg_11_0:getHistoryCount(var_11_0.hexPoint.x, var_11_0.hexPoint.y) >= 5 then
 		return true
 	end
 
-	slot2 = false
+	local var_11_1 = false
 
-	for slot6 = 1, 6 do
-		if slot1:getConnctNode(slot6) and slot0:getHistoryCount(slot7.hexPoint.x, slot7.hexPoint.y) >= 5 then
-			slot2 = true
+	for iter_11_0 = 1, 6 do
+		local var_11_2 = var_11_0:getConnctNode(iter_11_0)
+
+		if var_11_2 and arg_11_0:getHistoryCount(var_11_2.hexPoint.x, var_11_2.hexPoint.y) >= 5 then
+			var_11_1 = true
 		end
 	end
 
-	return slot2
+	return var_11_1
 end
 
-function slot0.getCurNode(slot0)
-	return slot0.curPathNodeMO
+function var_0_0.getCurNode(arg_12_0)
+	return arg_12_0.curPathNodeMO
 end
 
-function slot0.findNextWeightNode(slot0)
-	slot1 = slot0.curPathNodeMO
-	slot2 = slot0.enterDirection or 4
-	slot5 = slot2
-	slot6 = slot2
+function var_0_0.findNextWeightNode(arg_13_0)
+	local var_13_0 = arg_13_0.curPathNodeMO
+	local var_13_1 = arg_13_0.enterDirection or 4
+	local var_13_2
+	local var_13_3 = 0
+	local var_13_4 = var_13_1
+	local var_13_5 = var_13_1
+	local var_13_6 = 0
 
-	for slot11 = 1, #slot0.moveOffsetDirs do
-		if slot1:getConnctNode((slot2 + slot0.moveOffsetDirs[slot11] - 1) % 6 + 1) then
-			slot7 = 0 + 1
+	for iter_13_0 = 1, #arg_13_0.moveOffsetDirs do
+		local var_13_7 = (var_13_1 + arg_13_0.moveOffsetDirs[iter_13_0] - 1) % 6 + 1
+		local var_13_8 = var_13_0:getConnctNode(var_13_7)
 
-			if 0 < slot0:_getWeight(slot13, slot11) or nil == nil then
-				slot3 = slot13
-				slot4 = slot14
-				slot6 = slot12
-				slot5 = slot1:getConnectDirection(slot12)
+		if var_13_8 then
+			var_13_6 = var_13_6 + 1
+
+			local var_13_9 = arg_13_0:_getWeight(var_13_8, iter_13_0)
+
+			if var_13_3 < var_13_9 or var_13_2 == nil then
+				var_13_2 = var_13_8
+				var_13_3 = var_13_9
+				var_13_5 = var_13_7
+				var_13_4 = var_13_0:getConnectDirection(var_13_7)
 			end
 		end
 	end
 
-	return slot3 or slot1, slot5, slot6
+	return var_13_2 or var_13_0, var_13_4, var_13_5
 end
 
-function slot0.moveToNode(slot0, slot1, slot2, slot3)
-	if slot1 then
-		if slot1:isEndNode() then
-			slot4 = slot0:getHistoryCount(slot1.hexPoint.x, slot1.hexPoint.y) + 1 + 1
+function var_0_0.moveToNode(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if arg_14_1 then
+		local var_14_0 = arg_14_0:getHistoryCount(arg_14_1.hexPoint.x, arg_14_1.hexPoint.y) + 1
+
+		if arg_14_1:isEndNode() then
+			var_14_0 = var_14_0 + 1
 		end
 
-		slot0:setHistoryCount(slot1.hexPoint.x, slot1.hexPoint.y, slot4)
+		arg_14_0:setHistoryCount(arg_14_1.hexPoint.x, arg_14_1.hexPoint.y, var_14_0)
 
-		if slot3 ~= true then
-			slot0.enterDirection = slot2
-			slot0.curPathNodeMO = slot1
+		if arg_14_3 ~= true then
+			arg_14_0.enterDirection = arg_14_2
+			arg_14_0.curPathNodeMO = arg_14_1
 
-			slot0:_addAreaNode(slot1)
+			arg_14_0:_addAreaNode(arg_14_1)
 		end
 
-		slot0:_addRecentHistory(slot1.id)
+		arg_14_0:_addRecentHistory(arg_14_1.id)
 	end
 
-	return slot0.curPathNodeMO
+	return arg_14_0.curPathNodeMO
 end
 
-function slot0._getWeight(slot0, slot1, slot2)
-	if slot1:isSideNode() then
-		slot3 = (7 - slot2) * 30 - slot0:getHistoryCount(slot1.hexPoint.x, slot1.hexPoint.y) * 200 + 1000
+function var_0_0._getWeight(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = (7 - arg_15_2) * 30 - arg_15_0:getHistoryCount(arg_15_1.hexPoint.x, arg_15_1.hexPoint.y) * 200
+
+	if arg_15_1:isSideNode() then
+		var_15_0 = var_15_0 + 1000
 	end
 
-	if slot0:_getRecentHistoryIndexOf(slot1.id) then
-		slot3 = slot3 - slot5 * 1000
+	local var_15_1 = arg_15_0:_getRecentHistoryIndexOf(arg_15_1.id)
+
+	if var_15_1 then
+		var_15_0 = var_15_0 - var_15_1 * 1000
 	end
 
-	return slot3
+	return var_15_0
 end
 
-function slot0._addRecentHistory(slot0, slot1)
-	table.insert(slot0._recentHistory, slot1)
+function var_0_0._addRecentHistory(arg_16_0, arg_16_1)
+	table.insert(arg_16_0._recentHistory, arg_16_1)
 
-	if slot0._recentHistoryNum < #slot0._recentHistory then
-		table.remove(slot0._recentHistory, 1)
+	if #arg_16_0._recentHistory > arg_16_0._recentHistoryNum then
+		table.remove(arg_16_0._recentHistory, 1)
 	end
 end
 
-function slot0._getRecentHistoryIndexOf(slot0, slot1)
-	for slot5 = #slot0._recentHistory, 1, -1 do
-		if slot0._recentHistory[slot5] == slot1 then
-			return slot5
+function var_0_0._getRecentHistoryIndexOf(arg_17_0, arg_17_1)
+	for iter_17_0 = #arg_17_0._recentHistory, 1, -1 do
+		if arg_17_0._recentHistory[iter_17_0] == arg_17_1 then
+			return iter_17_0
 		end
 	end
 end
 
-function slot0.findEndDir(slot0, slot1, slot2)
-	if not slot1 then
-		return slot2
+function var_0_0.findEndDir(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_1 then
+		return arg_18_2
 	end
 
-	for slot6 = 1, #slot0.moveOffsetDirs do
-		if tabletool.indexOf(slot1.directionList, (slot2 + slot0.moveOffsetDirs[slot6] - 1) % 6 + 1) then
-			return slot7
+	for iter_18_0 = 1, #arg_18_0.moveOffsetDirs do
+		local var_18_0 = (arg_18_2 + arg_18_0.moveOffsetDirs[iter_18_0] - 1) % 6 + 1
+
+		if tabletool.indexOf(arg_18_1.directionList, var_18_0) then
+			return var_18_0
 		end
 	end
 
-	return slot2
+	return arg_18_2
 end
 
-function slot0._addAreaNode(slot0, slot1)
-	table.insert(slot0._areaNodeList, 1, slot1)
+function var_0_0._addAreaNode(arg_19_0, arg_19_1)
+	table.insert(arg_19_0._areaNodeList, 1, arg_19_1)
 
-	while slot0._areaNodeNum < #slot0._areaNodeList do
-		table.remove(slot0._areaNodeList, #slot0._areaNodeList)
+	while #arg_19_0._areaNodeList > arg_19_0._areaNodeNum do
+		table.remove(arg_19_0._areaNodeList, #arg_19_0._areaNodeList)
 	end
 end
 
-function slot0.getAreaNode(slot0)
-	return slot0._areaNodeList
+function var_0_0.getAreaNode(arg_20_0)
+	return arg_20_0._areaNodeList
 end
 
-function slot0.getInitAreaNode(slot0)
-	return slot0._initAreaNodeList
+function var_0_0.getInitAreaNode(arg_21_0)
+	return arg_21_0._initAreaNodeList
 end
 
-return slot0
+return var_0_0

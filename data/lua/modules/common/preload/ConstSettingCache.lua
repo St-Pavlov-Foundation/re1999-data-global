@@ -1,12 +1,13 @@
-module("modules.common.preload.ConstSettingCache", package.seeall)
+﻿module("modules.common.preload.ConstSettingCache", package.seeall)
 
-slot0 = class("ConstSettingCache")
+local var_0_0 = class("ConstSettingCache")
 
-function slot0.ctor(slot0)
-	slot0._resPath = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._resPath = {}
 end
 
-function slot0.init(slot0, slot1, slot2)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-return slot0
+return var_0_0

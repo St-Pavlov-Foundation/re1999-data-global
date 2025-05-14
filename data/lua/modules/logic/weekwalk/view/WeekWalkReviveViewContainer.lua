@@ -1,11 +1,11 @@
-module("modules.logic.weekwalk.view.WeekWalkReviveViewContainer", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkReviveViewContainer", package.seeall)
 
-slot0 = class("WeekWalkReviveViewContainer", BaseViewContainer)
+local var_0_0 = class("WeekWalkReviveViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		WeekWalkReviveView.New()
 	}
 end
 
-return slot0
+return var_0_0

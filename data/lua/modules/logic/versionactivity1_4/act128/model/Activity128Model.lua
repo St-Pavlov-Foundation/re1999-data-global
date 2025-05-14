@@ -1,220 +1,250 @@
-module("modules.logic.versionactivity1_4.act128.model.Activity128Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act128.model.Activity128Model", package.seeall)
 
-slot0 = class("Activity128Model", BaseModel)
+local var_0_0 = class("Activity128Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.__activityId = false
-	slot0.__config = false
-	slot0.__stageInfos = {}
-	slot0.__stageHasGetBonusIds = {}
-	slot0._layer4Score = {}
-	slot0._layer4HighestScore = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.__activityId = false
+	arg_2_0.__config = false
+	arg_2_0.__stageInfos = {}
+	arg_2_0.__stageHasGetBonusIds = {}
+	arg_2_0._layer4Score = {}
+	arg_2_0._layer4HighestScore = {}
 end
 
-function slot0._internal_set_activity(slot0, slot1)
-	slot0.__activityId = slot1
+function var_0_0._internal_set_activity(arg_3_0, arg_3_1)
+	arg_3_0.__activityId = arg_3_1
 end
 
-function slot0._internal_set_config(slot0, slot1)
-	assert(isTypeOf(slot1, Activity128Config), debug.traceback())
+function var_0_0._internal_set_config(arg_4_0, arg_4_1)
+	assert(isTypeOf(arg_4_1, Activity128Config), debug.traceback())
 
-	slot0.__config = slot1
+	arg_4_0.__config = arg_4_1
 end
 
-function slot0.getConfig(slot0)
-	return assert(slot0.__config, "pleaes call self:_internal_set_config(config) first")
+function var_0_0.getConfig(arg_5_0)
+	return assert(arg_5_0.__config, "pleaes call self:_internal_set_config(config) first")
 end
 
-function slot0.getActivityId(slot0)
-	return slot0.__activityId
+function var_0_0.getActivityId(arg_6_0)
+	return arg_6_0.__activityId
 end
 
-function slot0.getStageInfo(slot0, slot1)
-	return slot0.__stageInfos[slot1]
+function var_0_0.getStageInfo(arg_7_0, arg_7_1)
+	return arg_7_0.__stageInfos[arg_7_1]
 end
 
-function slot0.hasPassLevel(slot0, slot1, slot2)
-	return DungeonModel.instance:hasPassLevel(slot0.__config:getDungeonEpisodeId(slot1, slot2))
+function var_0_0.hasPassLevel(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0.__config:getDungeonEpisodeId(arg_8_1, arg_8_2)
+
+	return DungeonModel.instance:hasPassLevel(var_8_0)
 end
 
-function slot0.isBossLayerOpen(slot0, slot1, slot2)
-	if not slot0:isBossOnline(slot1) then
+function var_0_0.isBossLayerOpen(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0:isBossOnline(arg_9_1) then
 		return false
 	end
 
-	if slot2 <= 1 then
+	if arg_9_2 <= 1 then
 		return true
 	end
 
-	return slot0:hasPassLevel(slot1, slot2 - 1)
+	return arg_9_0:hasPassLevel(arg_9_1, arg_9_2 - 1)
 end
 
-function slot0.hasGetBonusIds(slot0, slot1, slot2)
-	if type(slot0.__stageHasGetBonusIds[slot1]) ~= "table" then
+function var_0_0.hasGetBonusIds(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0.__stageHasGetBonusIds[arg_10_1]
+
+	if type(var_10_0) ~= "table" then
 		return false
 	end
 
-	return slot3[slot2] and true or false
+	return var_10_0[arg_10_2] and true or false
 end
 
-function slot0.getTaskMoList(slot0)
-	return TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity128, slot0.__activityId)
+function var_0_0.getTaskMoList(arg_11_0)
+	return TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity128, arg_11_0.__activityId)
 end
 
-function slot0.getHighestPoint(slot0, slot1)
-	return slot0:getStageInfo(slot1) and slot2.highestPoint or 0
+function var_0_0.getHighestPoint(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getStageInfo(arg_12_1)
+
+	return var_12_0 and var_12_0.highestPoint or 0
 end
 
-function slot0.setHighestPoint(slot0, slot1, slot2, slot3)
-	if type(slot2) ~= "number" then
+function var_0_0.setHighestPoint(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if type(arg_13_2) ~= "number" then
 		return
 	end
 
-	if not slot0:getStageInfo(slot1)[slot1] then
+	local var_13_0 = arg_13_0:getStageInfo(arg_13_1)
+
+	if not var_13_0[arg_13_1] then
 		return
 	end
 
-	if slot3 then
-		slot2 = GameUtil.clamp(slot2, 0, slot0.__config:getStageCOMaxPoints(slot1))
+	if arg_13_3 then
+		arg_13_2 = GameUtil.clamp(arg_13_2, 0, arg_13_0.__config:getStageCOMaxPoints(arg_13_1))
 	end
 
-	slot4.highestPoint = math.max(slot0:getHighestPoint(slot1), slot2)
+	var_13_0.highestPoint = math.max(arg_13_0:getHighestPoint(arg_13_1), arg_13_2)
 end
 
-function slot0.getTotalPoint(slot0, slot1)
-	return slot0:getStageInfo(slot1) and slot2.totalPoint or 0
+function var_0_0.getTotalPoint(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getStageInfo(arg_14_1)
+
+	return var_14_0 and var_14_0.totalPoint or 0
 end
 
-function slot0.setTotalPoint(slot0, slot1, slot2)
-	if type(slot2) ~= "number" then
+function var_0_0.setTotalPoint(arg_15_0, arg_15_1, arg_15_2)
+	if type(arg_15_2) ~= "number" then
 		return
 	end
 
-	if not slot0:getStageInfo(slot1)[slot1] then
+	local var_15_0 = arg_15_0:getStageInfo(arg_15_1)
+
+	if not var_15_0[arg_15_1] then
 		return
 	end
 
-	slot3.totalPoint = math.max(slot0:getTotalPoint(slot1), slot2)
+	var_15_0.totalPoint = math.max(arg_15_0:getTotalPoint(arg_15_1), arg_15_2)
 end
 
-function slot0.getStageOpenServerTime(slot0, slot1)
-	return slot0:getRealStartTimeStamp() + ((slot0.__config:getEpisodeCOOpenDay(slot1) or 1) - 1) * 86400
+function var_0_0.getStageOpenServerTime(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.__config:getEpisodeCOOpenDay(arg_16_1) or 1
+
+	return arg_16_0:getRealStartTimeStamp() + (var_16_0 - 1) * 86400
 end
 
-function slot0.getActMO(slot0)
-	return ActivityModel.instance:getActMO(slot0.__activityId)
+function var_0_0.getActMO(arg_17_0)
+	return ActivityModel.instance:getActMO(arg_17_0.__activityId)
 end
 
-function slot0.isActOnLine(slot0)
-	return ActivityHelper.getActivityStatus(slot0.__activityId, true) == ActivityEnum.ActivityStatus.Normal
+function var_0_0.isActOnLine(arg_18_0)
+	return ActivityHelper.getActivityStatus(arg_18_0.__activityId, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-function slot0.getRealStartTimeStamp(slot0)
-	return slot0:getActMO():getRealStartTimeStamp()
+function var_0_0.getRealStartTimeStamp(arg_19_0)
+	return arg_19_0:getActMO():getRealStartTimeStamp()
 end
 
-function slot0.getRealEndTimeStamp(slot0)
-	return slot0:getActMO():getRealEndTimeStamp()
+function var_0_0.getRealEndTimeStamp(arg_20_0)
+	return arg_20_0:getActMO():getRealEndTimeStamp()
 end
 
-function slot0.getRemainTimeStr(slot0)
-	slot1 = ActivityModel.instance:getRemainTimeSec(slot0.__activityId)
+function var_0_0.getRemainTimeStr(arg_21_0)
+	local var_21_0 = ActivityModel.instance:getRemainTimeSec(arg_21_0.__activityId)
 
-	if not slot0.__config then
+	if not arg_21_0.__config then
 		return
 	end
 
-	return slot0.__config:getRemainTimeStrWithFmt(slot1)
+	return arg_21_0.__config:getRemainTimeStrWithFmt(var_21_0)
 end
 
-function slot0.isBossOnline(slot0, slot1)
-	return slot0:getStageOpenServerTime(slot1) <= ServerTime.now()
+function var_0_0.isBossOnline(arg_22_0, arg_22_1)
+	return ServerTime.now() >= arg_22_0:getStageOpenServerTime(arg_22_1)
 end
 
-function slot0._updateHasGetBonusIds(slot0, slot1, slot2)
-	slot0.__stageHasGetBonusIds[slot1] = {}
+function var_0_0._updateHasGetBonusIds(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0.__stageHasGetBonusIds[arg_23_1] = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot0.__stageHasGetBonusIds[slot1][slot8] = true
+	local var_23_0 = arg_23_0.__stageHasGetBonusIds[arg_23_1]
+
+	for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
+		var_23_0[iter_23_1] = true
 	end
 end
 
-function slot0._updateSingleHasGetBonusIds(slot0, slot1, slot2)
-	if not slot0.__stageHasGetBonusIds[slot1] then
-		slot0.__stageHasGetBonusIds[slot1] = {}
+function var_0_0._updateSingleHasGetBonusIds(arg_24_0, arg_24_1, arg_24_2)
+	if not arg_24_0.__stageHasGetBonusIds[arg_24_1] then
+		arg_24_0.__stageHasGetBonusIds[arg_24_1] = {}
 	end
 
-	slot0.__stageHasGetBonusIds[slot1][slot2] = true
+	arg_24_0.__stageHasGetBonusIds[arg_24_1][arg_24_2] = true
 end
 
-function slot0._updateAll(slot0, slot1)
-	slot0._activityId = slot1.activityId
+function var_0_0._updateAll(arg_25_0, arg_25_1)
+	arg_25_0._activityId = arg_25_1.activityId
 
-	for slot5, slot6 in ipairs(slot1.bossDetail) do
-		slot7 = slot6.bossId
-		slot0.__stageInfos[slot7] = slot6
+	for iter_25_0, iter_25_1 in ipairs(arg_25_1.bossDetail) do
+		local var_25_0 = iter_25_1.bossId
 
-		slot0:_updateHasGetBonusIds(slot7, slot6.hasGetBonusIds)
-		slot0:_setLayer4Score(slot6.bossId, slot6 and slot6.layer4TotalPoint or 0)
-		slot0:_setLayer4HightScore(slot6.bossId, slot6 and slot6.layer4HighestPoint or 0)
+		arg_25_0.__stageInfos[var_25_0] = iter_25_1
+
+		arg_25_0:_updateHasGetBonusIds(var_25_0, iter_25_1.hasGetBonusIds)
+		arg_25_0:_setLayer4Score(iter_25_1.bossId, iter_25_1 and iter_25_1.layer4TotalPoint or 0)
+		arg_25_0:_setLayer4HightScore(iter_25_1.bossId, iter_25_1 and iter_25_1.layer4HighestPoint or 0)
 	end
 end
 
-function slot0.onReceiveGet128InfosReply(slot0, slot1)
-	slot0:_updateAll(slot1)
-	slot0:_onReceiveGet128InfosReply(slot1)
+function var_0_0.onReceiveGet128InfosReply(arg_26_0, arg_26_1)
+	arg_26_0:_updateAll(arg_26_1)
+	arg_26_0:_onReceiveGet128InfosReply(arg_26_1)
 end
 
-function slot0._setLayer4Score(slot0, slot1, slot2)
-	slot0._layer4Score[slot1] = tonumber(slot2)
+function var_0_0._setLayer4Score(arg_27_0, arg_27_1, arg_27_2)
+	arg_27_0._layer4Score[arg_27_1] = tonumber(arg_27_2)
 end
 
-function slot0.getLayer4CurScore(slot0, slot1)
-	return slot0._layer4Score[slot1] or 0
+function var_0_0.getLayer4CurScore(arg_28_0, arg_28_1)
+	return arg_28_0._layer4Score[arg_28_1] or 0
 end
 
-function slot0._setLayer4HightScore(slot0, slot1, slot2)
-	slot0._layer4HighestScore[slot1] = tonumber(slot2)
+function var_0_0._setLayer4HightScore(arg_29_0, arg_29_1, arg_29_2)
+	arg_29_0._layer4HighestScore[arg_29_1] = tonumber(arg_29_2)
 end
 
-function slot0.getLayer4HightScore(slot0, slot1)
-	return slot0._layer4HighestScore[slot1] or 0
+function var_0_0.getLayer4HightScore(arg_30_0, arg_30_1)
+	return arg_30_0._layer4HighestScore[arg_30_1] or 0
 end
 
-function slot0.onReceiveAct128GetTotalRewardsReply(slot0, slot1)
-	slot0:_updateHasGetBonusIds(slot1.bossId, slot1.hasGetBonusIds)
-	slot0:_onReceiveAct128GetTotalRewardsReply(slot1)
+function var_0_0.onReceiveAct128GetTotalRewardsReply(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_1.bossId
+	local var_31_1 = arg_31_1.hasGetBonusIds
+
+	arg_31_0:_updateHasGetBonusIds(var_31_0, var_31_1)
+	arg_31_0:_onReceiveAct128GetTotalRewardsReply(arg_31_1)
 end
 
-function slot0.onReceiveAct128SingleRewardReply(slot0, slot1)
-	slot0:_updateSingleHasGetBonusIds(slot1.bossId, slot1.rewardId)
-	slot0:_onReceiveAct128SingleRewardReply(slot1)
+function var_0_0.onReceiveAct128SingleRewardReply(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_1.bossId
+	local var_32_1 = arg_32_1.rewardId
+
+	arg_32_0:_updateSingleHasGetBonusIds(var_32_0, var_32_1)
+	arg_32_0:_onReceiveAct128SingleRewardReply(arg_32_1)
 end
 
-function slot0.onReceiveAct128DoublePointReply(slot0, slot1)
-	slot5 = slot0:getStageInfo(slot1.bossId)
-	slot5.doubleNum = slot1.doubleNum
-	slot5.totalPoint = slot1.totalPoint
+function var_0_0.onReceiveAct128DoublePointReply(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_1.bossId
+	local var_33_1 = arg_33_1.doubleNum
+	local var_33_2 = arg_33_1.totalPoint
+	local var_33_3 = arg_33_0:getStageInfo(var_33_0)
 
-	slot0:_onReceiveAct128DoublePointReply(slot1)
+	var_33_3.doubleNum = var_33_1
+	var_33_3.totalPoint = var_33_2
+
+	arg_33_0:_onReceiveAct128DoublePointReply(arg_33_1)
 end
 
-function slot0.onReceiveAct128InfoUpdatePush(slot0, slot1)
-	slot0:_updateAll(slot1)
-	slot0:_onReceiveAct128InfoUpdatePush(slot1)
+function var_0_0.onReceiveAct128InfoUpdatePush(arg_34_0, arg_34_1)
+	arg_34_0:_updateAll(arg_34_1)
+	arg_34_0:_onReceiveAct128InfoUpdatePush(arg_34_1)
 end
 
-function slot0._onReceiveGet128InfosReply(slot0, slot1)
+function var_0_0._onReceiveGet128InfosReply(arg_35_0, arg_35_1)
+	return
 end
 
-function slot0._onReceiveAct128GetTotalRewardsReply(slot0, slot1)
+function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_36_0, arg_36_1)
+	return
 end
 
-function slot0._onReceiveAct128DoublePointReply(slot0, slot1)
+function var_0_0._onReceiveAct128DoublePointReply(arg_37_0, arg_37_1)
+	return
 end
 
-return slot0
+return var_0_0

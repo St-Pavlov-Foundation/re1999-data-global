@@ -1,207 +1,219 @@
-module("modules.logic.fight.FightBaseClass", package.seeall)
+﻿module("modules.logic.fight.FightBaseClass", package.seeall)
 
-slot0 = class("FightBaseClass", FightBaseCoreClass)
+local var_0_0 = class("FightBaseClass", FightBaseCoreClass)
 
-function slot0.onConstructor(slot0)
-	slot0.USER_DATA_LIST = {}
-	slot0.MY_COMPONENT_DIC = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.USER_DATA_LIST = {}
+	arg_1_0.MY_COMPONENT_DIC = {}
 end
 
-function slot0.onAwake(slot0, ...)
+function var_0_0.onAwake(arg_2_0, ...)
+	return
 end
 
-function slot0.releaseSelf(slot0)
+function var_0_0.releaseSelf(arg_3_0)
+	return
 end
 
-function slot0.onDestructor(slot0)
-	for slot5 = #slot0.USER_DATA_LIST, 1, -1 do
-		for slot10 in pairs(slot1[slot5]) do
-			rawset(slot6, slot10, nil)
+function var_0_0.onDestructor(arg_4_0)
+	local var_4_0 = arg_4_0.USER_DATA_LIST
+
+	for iter_4_0 = #var_4_0, 1, -1 do
+		local var_4_1 = var_4_0[iter_4_0]
+
+		for iter_4_1 in pairs(var_4_1) do
+			rawset(var_4_1, iter_4_1, nil)
 		end
 
-		rawset(slot1, slot5, nil)
+		rawset(var_4_0, iter_4_0, nil)
 	end
 
-	for slot5, slot6 in pairs(slot0) do
-		if type(slot6) == "userdata" then
-			rawset(slot0, slot5, nil)
+	for iter_4_2, iter_4_3 in pairs(arg_4_0) do
+		if type(iter_4_3) == "userdata" then
+			rawset(arg_4_0, iter_4_2, nil)
 		end
 	end
 
-	slot0.USER_DATA_LIST = nil
-	slot0.MY_COMPONENT_DIC = nil
+	arg_4_0.USER_DATA_LIST = nil
+	arg_4_0.MY_COMPONENT_DIC = nil
 end
 
-function slot0.onDestructorFinish(slot0)
+function var_0_0.onDestructorFinish(arg_5_0)
+	return
 end
 
-function slot0.newUserDataTable(slot0)
-	if slot0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用注册table的方法,请检查代码,类名:" .. slot0.__cname)
+function var_0_0.newUserDataTable(arg_6_0)
+	if arg_6_0.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用注册table的方法,请检查代码,类名:" .. arg_6_0.__cname)
 	end
 
-	slot1 = {}
+	local var_6_0 = {}
 
-	table.insert(slot0.USER_DATA_LIST, slot1)
+	table.insert(arg_6_0.USER_DATA_LIST, var_6_0)
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.getUserDataTb_(slot0)
-	return slot0:newUserDataTable()
+function var_0_0.getUserDataTb_(arg_7_0)
+	return arg_7_0:newUserDataTable()
 end
 
-function slot0.getComponent(slot0, slot1)
-	if slot0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用了获取组件的方法,请检查代码,类名:" .. slot0.__cname)
+function var_0_0.getComponent(arg_8_0, arg_8_1)
+	if arg_8_0.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了获取组件的方法,请检查代码,类名:" .. arg_8_0.__cname)
 	end
 
-	if slot0.MY_COMPONENT_DIC[slot1.__cname] then
-		return slot0.MY_COMPONENT_DIC[slot2]
+	local var_8_0 = arg_8_1.__cname
+
+	if arg_8_0.MY_COMPONENT_DIC[var_8_0] then
+		return arg_8_0.MY_COMPONENT_DIC[var_8_0]
 	end
 
-	slot3 = slot0:addComponent(slot1)
-	slot0.MY_COMPONENT_DIC[slot2] = slot3
+	local var_8_1 = arg_8_0:addComponent(arg_8_1)
 
-	return slot3
+	arg_8_0.MY_COMPONENT_DIC[var_8_0] = var_8_1
+
+	return var_8_1
 end
 
-function slot0.killMyComponent(slot0, slot1)
-	if not slot1 then
+function var_0_0.killMyComponent(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return
 	end
 
-	if slot0.MY_COMPONENT_DIC[slot1.__cname] then
-		slot0.MY_COMPONENT_DIC[slot2]:disposeSelf()
+	local var_9_0 = arg_9_1.__cname
 
-		slot0.MY_COMPONENT_DIC[slot2] = nil
+	if arg_9_0.MY_COMPONENT_DIC[var_9_0] then
+		arg_9_0.MY_COMPONENT_DIC[var_9_0]:disposeSelf()
+
+		arg_9_0.MY_COMPONENT_DIC[var_9_0] = nil
 	end
 end
 
-function slot0.com_loadAsset(slot0, slot1, slot2, slot3)
-	slot0:getComponent(FightLoaderComponent):loadAsset(slot1, slot2, slot0, slot3)
+function var_0_0.com_loadAsset(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0:getComponent(FightLoaderComponent):loadAsset(arg_10_1, arg_10_2, arg_10_0, arg_10_3)
 end
 
-function slot0.com_loadListAsset(slot0, slot1, slot2, slot3, slot4)
-	slot0:getComponent(FightLoaderComponent):loadListAsset(slot1, slot2, slot3, slot0, slot4)
+function var_0_0.com_loadListAsset(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	arg_11_0:getComponent(FightLoaderComponent):loadListAsset(arg_11_1, arg_11_2, arg_11_3, arg_11_0, arg_11_4)
 end
 
-function slot0.com_registFlowSequence(slot0)
-	return slot0:com_registCustomFlow(FightWorkFlowSequence)
+function var_0_0.com_registFlowSequence(arg_12_0)
+	return arg_12_0:com_registCustomFlow(FightWorkFlowSequence)
 end
 
-function slot0.com_registFlowParallel(slot0)
-	return slot0:com_registCustomFlow(FightWorkFlowParallel)
+function var_0_0.com_registFlowParallel(arg_13_0)
+	return arg_13_0:com_registCustomFlow(FightWorkFlowParallel)
 end
 
-function slot0.com_registCustomFlow(slot0, slot1)
-	return slot0:getComponent(FightFlowComponent):registCustomFlow(slot1)
+function var_0_0.com_registCustomFlow(arg_14_0, arg_14_1)
+	return arg_14_0:getComponent(FightFlowComponent):registCustomFlow(arg_14_1)
 end
 
-function slot0.com_registWork(slot0, slot1, ...)
-	return slot0:getComponent(FightWorkComponent):registWork(slot1, ...)
+function var_0_0.com_registWork(arg_15_0, arg_15_1, ...)
+	return arg_15_0:getComponent(FightWorkComponent):registWork(arg_15_1, ...)
 end
 
-function slot0.com_playWork(slot0, slot1, ...)
-	slot0:getComponent(FightWorkComponent):playWork(slot1, ...)
+function var_0_0.com_playWork(arg_16_0, arg_16_1, ...)
+	arg_16_0:getComponent(FightWorkComponent):playWork(arg_16_1, ...)
 end
 
-function slot0.com_cancelTimer(slot0, slot1)
-	if not slot1 then
+function var_0_0.com_cancelTimer(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	slot1.isDone = true
+	arg_17_1.isDone = true
 end
 
-function slot0.com_registTimer(slot0, slot1, slot2, slot3)
-	return slot0:com_registRepeatTimer(slot1, slot2, 1, slot3)
+function var_0_0.com_registTimer(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	return arg_18_0:com_registRepeatTimer(arg_18_1, arg_18_2, 1, arg_18_3)
 end
 
-function slot0.com_registRepeatTimer(slot0, slot1, slot2, slot3, slot4)
-	return slot0:getComponent(FightTimerComponent):registRepeatTimer(slot1, slot0, slot2, slot3, slot4)
+function var_0_0.com_registRepeatTimer(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	return arg_19_0:getComponent(FightTimerComponent):registRepeatTimer(arg_19_1, arg_19_0, arg_19_2, arg_19_3, arg_19_4)
 end
 
-function slot0.com_registSingleTimer(slot0, slot1, slot2, slot3, slot4)
-	return slot0:getComponent(FightTimerComponent):registSingleTimer(slot1, slot2, slot0, slot3, 1, slot4)
+function var_0_0.com_registSingleTimer(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
+	return arg_20_0:getComponent(FightTimerComponent):registSingleTimer(arg_20_1, arg_20_2, arg_20_0, arg_20_3, 1, arg_20_4)
 end
 
-function slot0.com_restartTimer(slot0, slot1, slot2, slot3)
-	return slot0:com_restartRepeatTimer(slot1, slot2, 1, slot3)
+function var_0_0.com_restartTimer(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	return arg_21_0:com_restartRepeatTimer(arg_21_1, arg_21_2, 1, arg_21_3)
 end
 
-function slot0.com_restartRepeatTimer(slot0, slot1, slot2, slot3, slot4)
-	if not slot1.isDone then
-		slot1:restart(slot2, slot3, slot4)
+function var_0_0.com_restartRepeatTimer(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	if not arg_22_1.isDone then
+		arg_22_1:restart(arg_22_2, arg_22_3, arg_22_4)
 
 		return
 	end
 
-	return slot0:getComponent(FightTimerComponent):restartRepeatTimer(slot1, slot2, slot3, slot4)
+	return arg_22_0:getComponent(FightTimerComponent):restartRepeatTimer(arg_22_1, arg_22_2, arg_22_3, arg_22_4)
 end
 
-function slot0.com_registFightEvent(slot0, slot1, slot2, slot3)
-	slot0:com_registEvent(FightController.instance, slot1, slot2, slot3)
+function var_0_0.com_registFightEvent(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	arg_23_0:com_registEvent(FightController.instance, arg_23_1, arg_23_2, arg_23_3)
 end
 
-function slot0.com_registEvent(slot0, slot1, slot2, slot3, slot4)
-	slot0:getComponent(FightEventComponent):registEvent(slot1, slot2, slot3, slot0, slot4)
+function var_0_0.com_registEvent(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+	arg_24_0:getComponent(FightEventComponent):registEvent(arg_24_1, arg_24_2, arg_24_3, arg_24_0, arg_24_4)
 end
 
-function slot0.com_cancelFightEvent(slot0, slot1, slot2)
-	slot0:com_cancelEvent(FightController.instance, slot1, slot2)
+function var_0_0.com_cancelFightEvent(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0:com_cancelEvent(FightController.instance, arg_25_1, arg_25_2)
 end
 
-function slot0.com_cancelEvent(slot0, slot1, slot2, slot3)
-	slot0:getComponent(FightEventComponent):cancelEvent(slot1, slot2, slot3, slot0)
+function var_0_0.com_cancelEvent(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	arg_26_0:getComponent(FightEventComponent):cancelEvent(arg_26_1, arg_26_2, arg_26_3, arg_26_0)
 end
 
-function slot0.com_lockEvent(slot0)
-	slot0:getComponent(FightEventComponent):lockEvent()
+function var_0_0.com_lockEvent(arg_27_0)
+	arg_27_0:getComponent(FightEventComponent):lockEvent()
 end
 
-function slot0.com_unlockEvent(slot0)
-	slot0:getComponent(FightEventComponent):unlockEvent()
+function var_0_0.com_unlockEvent(arg_28_0)
+	arg_28_0:getComponent(FightEventComponent):unlockEvent()
 end
 
-function slot0.com_sendFightEvent(slot0, slot1, ...)
-	FightController.instance:dispatchEvent(slot1, ...)
+function var_0_0.com_sendFightEvent(arg_29_0, arg_29_1, ...)
+	FightController.instance:dispatchEvent(arg_29_1, ...)
 end
 
-function slot0.com_sendEvent(slot0, slot1, slot2, ...)
-	slot1:dispatchEvent(slot2, ...)
+function var_0_0.com_sendEvent(arg_30_0, arg_30_1, arg_30_2, ...)
+	arg_30_1:dispatchEvent(arg_30_2, ...)
 end
 
-function slot0.com_registMsg(slot0, slot1, slot2)
-	return slot0:getComponent(FightMsgComponent):registMsg(slot1, slot2, slot0)
+function var_0_0.com_registMsg(arg_31_0, arg_31_1, arg_31_2)
+	return arg_31_0:getComponent(FightMsgComponent):registMsg(arg_31_1, arg_31_2, arg_31_0)
 end
 
-function slot0.com_removeMsg(slot0, slot1)
-	return slot0:getComponent(FightMsgComponent):removeMsg(slot1)
+function var_0_0.com_removeMsg(arg_32_0, arg_32_1)
+	return arg_32_0:getComponent(FightMsgComponent):removeMsg(arg_32_1)
 end
 
-function slot0.com_sendMsg(slot0, slot1, ...)
-	return FightMsgMgr.sendMsg(slot1, ...)
+function var_0_0.com_sendMsg(arg_33_0, arg_33_1, ...)
+	return FightMsgMgr.sendMsg(arg_33_1, ...)
 end
 
-function slot0.com_replyMsg(slot0, slot1, slot2)
-	return FightMsgMgr.replyMsg(slot1, slot2)
+function var_0_0.com_replyMsg(arg_34_0, arg_34_1, arg_34_2)
+	return FightMsgMgr.replyMsg(arg_34_1, arg_34_2)
 end
 
-function slot0.com_lockMsg(slot0)
-	return slot0:getComponent(FightMsgComponent):lockMsg()
+function var_0_0.com_lockMsg(arg_35_0)
+	return arg_35_0:getComponent(FightMsgComponent):lockMsg()
 end
 
-function slot0.com_unlockMsg(slot0)
-	return slot0:getComponent(FightMsgComponent):unlockMsg()
+function var_0_0.com_unlockMsg(arg_36_0)
+	return arg_36_0:getComponent(FightMsgComponent):unlockMsg()
 end
 
-function slot0.com_registUpdate(slot0, slot1, slot2)
-	return slot0:getComponent(FightUpdateComponent):registUpdate(slot1, slot0, slot2)
+function var_0_0.com_registUpdate(arg_37_0, arg_37_1, arg_37_2)
+	return arg_37_0:getComponent(FightUpdateComponent):registUpdate(arg_37_1, arg_37_0, arg_37_2)
 end
 
-function slot0.com_cancelUpdate(slot0, slot1)
-	return slot0:getComponent(FightUpdateComponent):cancelUpdate(slot1)
+function var_0_0.com_cancelUpdate(arg_38_0, arg_38_1)
+	return arg_38_0:getComponent(FightUpdateComponent):cancelUpdate(arg_38_1)
 end
 
-return slot0
+return var_0_0

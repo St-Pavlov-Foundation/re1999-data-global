@@ -1,84 +1,90 @@
-module("modules.logic.act189.config.ShortenActConfig", package.seeall)
+﻿module("modules.logic.act189.config.ShortenActConfig", package.seeall)
 
-slot0 = string.format
-slot1 = table.insert
-slot2 = class("ShortenActConfig", BaseConfig)
+local var_0_0 = string.format
+local var_0_1 = table.insert
+local var_0_2 = class("ShortenActConfig", BaseConfig)
 
-function slot2.reqConfigNames(slot0)
+function var_0_2.reqConfigNames(arg_1_0)
 	return {
 		"activity189_shortenact",
 		"activity189_shortenact_style"
 	}
 end
 
-function slot2.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity189_shortenact" then
-		slot0:__init_activity189_shortenact(slot2)
+function var_0_2.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == "activity189_shortenact" then
+		arg_2_0:__init_activity189_shortenact(arg_2_2)
 	end
 end
 
-function slot2.__init_activity189_shortenact(slot0, slot1)
-	slot2 = nil
+function var_0_2.__init_activity189_shortenact(arg_3_0, arg_3_1)
+	local var_3_0
 
 	if isDebugBuild then
-		slot2 = ConfigsCheckerMgr.instance:createStrBuf(uv0("[logError] 189_运营改版活动.xlsx.xlsx - export_版本缩期活动_设置"))
+		local var_3_1 = var_0_0("[logError] 189_运营改版活动.xlsx.xlsx - export_版本缩期活动_设置")
+
+		var_3_0 = ConfigsCheckerMgr.instance:createStrBuf(var_3_1)
 	end
 
-	for slot7, slot8 in ipairs(slot1.configList) do
-		if slot8.version == GameBranchMgr.instance:VHyphenA() then
-			slot0._setting = slot8
+	local var_3_2 = GameBranchMgr.instance:VHyphenA()
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.configList) do
+		if iter_3_1.version == var_3_2 then
+			arg_3_0._setting = iter_3_1
 
 			return
 		end
 	end
 
 	if isDebugBuild then
-		slot2:appendLine(uv0("%s版本未上线版本缩期运营活动", slot3))
-		slot2:logWarnIfGot()
+		var_3_0:appendLine(var_0_0("%s版本未上线版本缩期运营活动", var_3_2))
+		var_3_0:logWarnIfGot()
 	end
 
-	slot0._setting = {
+	arg_3_0._setting = {
 		activityId = 12607,
 		style = 1
 	}
 end
 
-function slot2.getSettingId(slot0)
-	return slot0._setting.settingId
+function var_0_2.getSettingId(arg_4_0)
+	return arg_4_0._setting.settingId
 end
 
-function slot2.getSettingCO(slot0)
-	return Activity189Config.instance:getSettingCO(slot0:getSettingId())
+function var_0_2.getSettingCO(arg_5_0)
+	return Activity189Config.instance:getSettingCO(arg_5_0:getSettingId())
 end
 
-function slot2.getActivityId(slot0)
-	if slot0._setting.activityId then
-		return slot1
+function var_0_2.getActivityId(arg_6_0)
+	local var_6_0 = arg_6_0._setting.activityId
+
+	if var_6_0 then
+		return var_6_0
 	end
 
-	return slot0:getSettingCO().activityId
+	return arg_6_0:getSettingCO().activityId
 end
 
-function slot2.getStyleCO(slot0)
-	return lua_activity189_shortenact_style.configDict[slot0._setting.style]
+function var_0_2.getStyleCO(arg_7_0)
+	return lua_activity189_shortenact_style.configDict[arg_7_0._setting.style]
 end
 
-function slot2.getBonusList(slot0)
-	return Activity189Config.instance:getBonusList(slot0:getSettingId())
+function var_0_2.getBonusList(arg_8_0)
+	return Activity189Config.instance:getBonusList(arg_8_0:getSettingId())
 end
 
-function slot2.getTaskCO_ReadTask(slot0)
-	return Activity189Config.instance:getTaskCO_ReadTask(slot0:getActivityId())
+function var_0_2.getTaskCO_ReadTask(arg_9_0)
+	return Activity189Config.instance:getTaskCO_ReadTask(arg_9_0:getActivityId())
 end
 
-function slot2.getTaskCO_ReadTask_Tag(slot0, slot1)
-	return Activity189Config.instance:getTaskCO_ReadTask_Tag(slot0:getActivityId(), slot1)
+function var_0_2.getTaskCO_ReadTask_Tag(arg_10_0, arg_10_1)
+	return Activity189Config.instance:getTaskCO_ReadTask_Tag(arg_10_0:getActivityId(), arg_10_1)
 end
 
-function slot2.getTaskCO_ReadTask_Tag_TaskId(slot0, slot1, slot2)
-	return Activity189Config.instance:getTaskCO_ReadTask_Tag(slot0:getActivityId(), slot1, slot2)
+function var_0_2.getTaskCO_ReadTask_Tag_TaskId(arg_11_0, arg_11_1, arg_11_2)
+	return Activity189Config.instance:getTaskCO_ReadTask_Tag(arg_11_0:getActivityId(), arg_11_1, arg_11_2)
 end
 
-slot2.instance = slot2.New()
+var_0_2.instance = var_0_2.New()
 
-return slot2
+return var_0_2

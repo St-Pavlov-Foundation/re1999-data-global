@@ -1,130 +1,134 @@
-module("framework.core.workflow.work.BaseWork", package.seeall)
+﻿module("framework.core.workflow.work.BaseWork", package.seeall)
 
-slot0 = class("BaseWork")
-slot1 = "done"
+local var_0_0 = class("BaseWork")
+local var_0_1 = "done"
 
-function slot0.initInternal(slot0)
-	slot0.context = nil
-	slot0.root = nil
-	slot0.parent = nil
-	slot0.isSuccess = false
-	slot0.status = WorkStatus.Init
-	slot0.flowName = nil
+function var_0_0.initInternal(arg_1_0)
+	arg_1_0.context = nil
+	arg_1_0.root = nil
+	arg_1_0.parent = nil
+	arg_1_0.isSuccess = false
+	arg_1_0.status = WorkStatus.Init
+	arg_1_0.flowName = nil
 end
 
-function slot0.setRootInternal(slot0, slot1)
-	slot0.root = slot1
+function var_0_0.setRootInternal(arg_2_0, arg_2_1)
+	arg_2_0.root = arg_2_1
 end
 
-function slot0.setParentInternal(slot0, slot1)
-	slot0.parent = slot1
+function var_0_0.setParentInternal(arg_3_0, arg_3_1)
+	arg_3_0.parent = arg_3_1
 end
 
-function slot0.onStartInternal(slot0, slot1)
-	slot0.context = slot1
-	slot0.status = WorkStatus.Running
+function var_0_0.onStartInternal(arg_4_0, arg_4_1)
+	arg_4_0.context = arg_4_1
+	arg_4_0.status = WorkStatus.Running
 
-	return slot0:onStart(slot1)
+	return arg_4_0:onStart(arg_4_1)
 end
 
-function slot0.onStopInternal(slot0)
-	slot0.status = WorkStatus.Stopped
+function var_0_0.onStopInternal(arg_5_0)
+	arg_5_0.status = WorkStatus.Stopped
 
-	slot0:onStop()
+	arg_5_0:onStop()
 end
 
-function slot0.onResumeInternal(slot0)
-	slot0.status = WorkStatus.Running
+function var_0_0.onResumeInternal(arg_6_0)
+	arg_6_0.status = WorkStatus.Running
 
-	slot0:onResume()
+	arg_6_0:onResume()
 end
 
-function slot0.onResetInternal(slot0)
-	slot0.status = WorkStatus.Init
+function var_0_0.onResetInternal(arg_7_0)
+	arg_7_0.status = WorkStatus.Init
 
-	slot0:onReset()
+	arg_7_0:onReset()
 end
 
-function slot0.onDestroyInternal(slot0)
-	slot0:onDestroy()
+function var_0_0.onDestroyInternal(arg_8_0)
+	arg_8_0:onDestroy()
 
-	slot0.context = nil
-	slot0.parent = nil
+	arg_8_0.context = nil
+	arg_8_0.parent = nil
 end
 
-function slot0.onDone(slot0, slot1)
-	slot0.isSuccess = slot1
-	slot0.status = WorkStatus.Done
+function var_0_0.onDone(arg_9_0, arg_9_1)
+	arg_9_0.isSuccess = arg_9_1
+	arg_9_0.status = WorkStatus.Done
 
-	if slot0.beforeClearWork then
-		slot0:beforeClearWork()
+	if arg_9_0.beforeClearWork then
+		arg_9_0:beforeClearWork()
 	end
 
-	slot0:clearWork()
+	arg_9_0:clearWork()
 
-	if slot0.parent then
-		if slot0._dispatcher then
-			slot0.parent:onWorkDone(slot0)
+	if arg_9_0.parent then
+		if arg_9_0._dispatcher then
+			arg_9_0.parent:onWorkDone(arg_9_0)
 		else
-			return slot0.parent:onWorkDone(slot0)
+			return arg_9_0.parent:onWorkDone(arg_9_0)
 		end
 	end
 
-	if slot0._dispatcher then
-		slot0._dispatcher:dispatchEvent(uv0, slot1)
+	if arg_9_0._dispatcher then
+		arg_9_0._dispatcher:dispatchEvent(var_0_1, arg_9_1)
 	end
 end
 
-function slot0.registerDoneListener(slot0, slot1, slot2)
-	if not slot0._dispatcher then
-		slot0._dispatcher = {}
+function var_0_0.registerDoneListener(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_0._dispatcher then
+		arg_10_0._dispatcher = {}
 
-		LuaEventSystem.addEventMechanism(slot0._dispatcher)
+		LuaEventSystem.addEventMechanism(arg_10_0._dispatcher)
 	end
 
-	slot0._dispatcher:registerCallback(uv0, slot1, slot2)
+	arg_10_0._dispatcher:registerCallback(var_0_1, arg_10_1, arg_10_2)
 end
 
-function slot0.unregisterDoneListener(slot0, slot1, slot2)
-	if slot0._dispatcher then
-		slot0._dispatcher:unregisterCallback(uv0, slot1, slot2)
+function var_0_0.unregisterDoneListener(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_0._dispatcher then
+		arg_11_0._dispatcher:unregisterCallback(var_0_1, arg_11_1, arg_11_2)
 	end
 end
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_12_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_13_0, arg_13_1)
+	return
 end
 
-function slot0.onStop(slot0)
-	if slot0.beforeClearWork then
-		slot0:beforeClearWork()
+function var_0_0.onStop(arg_14_0)
+	if arg_14_0.beforeClearWork then
+		arg_14_0:beforeClearWork()
 	end
 
-	slot0:clearWork()
+	arg_14_0:clearWork()
 end
 
-function slot0.onResume(slot0)
+function var_0_0.onResume(arg_15_0)
+	return
 end
 
-function slot0.onReset(slot0)
-	if slot0.beforeClearWork then
-		slot0:beforeClearWork()
+function var_0_0.onReset(arg_16_0)
+	if arg_16_0.beforeClearWork then
+		arg_16_0:beforeClearWork()
 	end
 
-	slot0:clearWork()
+	arg_16_0:clearWork()
 end
 
-function slot0.onDestroy(slot0)
-	if slot0.beforeClearWork then
-		slot0:beforeClearWork()
+function var_0_0.onDestroy(arg_17_0)
+	if arg_17_0.beforeClearWork then
+		arg_17_0:beforeClearWork()
 	end
 
-	slot0:clearWork()
+	arg_17_0:clearWork()
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_18_0)
+	return
 end
 
-return slot0
+return var_0_0

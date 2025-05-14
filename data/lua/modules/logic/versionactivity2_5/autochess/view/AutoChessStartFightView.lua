@@ -1,28 +1,32 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessStartFightView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessStartFightView", package.seeall)
 
-slot0 = class("AutoChessStartFightView", BaseView)
+local var_0_0 = class("AutoChessStartFightView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._onEscapeBtnClick(slot0)
+function var_0_0._onEscapeBtnClick(arg_2_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	NavigateMgr.instance:addEscape(ViewName.AutoChessStartFightView, slot0._onEscapeBtnClick, slot0)
+function var_0_0._editableInitView(arg_3_0)
+	NavigateMgr.instance:addEscape(ViewName.AutoChessStartFightView, arg_3_0._onEscapeBtnClick, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString("autochess"), AudioMgr.instance:getIdFromString("battle"))
+function var_0_0.onOpen(arg_4_0)
+	local var_4_0 = AudioMgr.instance:getIdFromString("autochess")
+	local var_4_1 = AudioMgr.instance:getIdFromString("battle")
+
+	AudioMgr.instance:setSwitch(var_4_0, var_4_1)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_battle_enter)
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_4_0.closeThis, arg_4_0, 1.5)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.closeThis, arg_5_0)
 end
 
-return slot0
+return var_0_0

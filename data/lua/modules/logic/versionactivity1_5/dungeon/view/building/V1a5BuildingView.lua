@@ -1,48 +1,50 @@
-module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingView", package.seeall)
 
-slot0 = class("V1a5BuildingView", BaseView)
+local var_0_0 = class("V1a5BuildingView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageRightMask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG/#simage_RightMask")
-	slot0._simageRightMask2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG/#simage_RightMask2")
-	slot0._simageUpMask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_UpMask")
-	slot0._simageUpMask2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG/#simage_UpMask2")
-	slot0._simageMask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_Mask")
-	slot0._gopointitem1 = gohelper.findChild(slot0.viewGO, "Left/point_container/#go_pointitem1")
-	slot0._gopointitem2 = gohelper.findChild(slot0.viewGO, "Left/point_container/#go_pointitem2")
-	slot0._gopointitem3 = gohelper.findChild(slot0.viewGO, "Left/point_container/#go_pointitem3")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "Left/#scroll_desc")
-	slot0._gobuildskillitem = gohelper.findChild(slot0.viewGO, "Left/#scroll_desc/Viewport/Content/#go_buildskillitem")
-	slot0._goArrow = gohelper.findChild(slot0.viewGO, "Left/#go_Arrow")
-	slot0._gobuilditem = gohelper.findChild(slot0.viewGO, "Right/#go_builditem")
-	slot0.slider = gohelper.findChildSlider(slot0.viewGO, "Right/Slider/Slider")
-	slot0._txtSchedule = gohelper.findChildText(slot0.viewGO, "Right/Slider/Schedule/#txt_Schedule")
-	slot0._simageIcon = gohelper.findChildSingleImage(slot0.viewGO, "Right/Slider/Prop/#simage_Icon")
-	slot0.rewardEffect = gohelper.findChild(slot0.viewGO, "Right/Slider/Prop/#effect")
-	slot0._txtNum = gohelper.findChildText(slot0.viewGO, "Right/Slider/Prop/#txt_Num")
-	slot0._goHasGainedReward = gohelper.findChild(slot0.viewGO, "Right/Slider/Prop/#go_hasget")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageRightMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG/#simage_RightMask")
+	arg_1_0._simageRightMask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG/#simage_RightMask2")
+	arg_1_0._simageUpMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_UpMask")
+	arg_1_0._simageUpMask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG/#simage_UpMask2")
+	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Mask")
+	arg_1_0._gopointitem1 = gohelper.findChild(arg_1_0.viewGO, "Left/point_container/#go_pointitem1")
+	arg_1_0._gopointitem2 = gohelper.findChild(arg_1_0.viewGO, "Left/point_container/#go_pointitem2")
+	arg_1_0._gopointitem3 = gohelper.findChild(arg_1_0.viewGO, "Left/point_container/#go_pointitem3")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_desc")
+	arg_1_0._gobuildskillitem = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_desc/Viewport/Content/#go_buildskillitem")
+	arg_1_0._goArrow = gohelper.findChild(arg_1_0.viewGO, "Left/#go_Arrow")
+	arg_1_0._gobuilditem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_builditem")
+	arg_1_0.slider = gohelper.findChildSlider(arg_1_0.viewGO, "Right/Slider/Slider")
+	arg_1_0._txtSchedule = gohelper.findChildText(arg_1_0.viewGO, "Right/Slider/Schedule/#txt_Schedule")
+	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/Slider/Prop/#simage_Icon")
+	arg_1_0.rewardEffect = gohelper.findChild(arg_1_0.viewGO, "Right/Slider/Prop/#effect")
+	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Right/Slider/Prop/#txt_Num")
+	arg_1_0._goHasGainedReward = gohelper.findChild(arg_1_0.viewGO, "Right/Slider/Prop/#go_hasget")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickReward(slot0)
+function var_0_0.onClickReward(arg_4_0)
 	if VersionActivity1_5BuildModel.instance.hasGainedReward then
-		MaterialTipController.instance:showMaterialInfo(slot0.rewardType, slot0.rewardId)
+		MaterialTipController.instance:showMaterialInfo(arg_4_0.rewardType, arg_4_0.rewardId)
 
 		return
 	end
 
 	if VersionActivity1_5BuildModel.instance:getHadBuildCount() < 6 then
-		MaterialTipController.instance:showMaterialInfo(slot0.rewardType, slot0.rewardId)
+		MaterialTipController.instance:showMaterialInfo(arg_4_0.rewardType, arg_4_0.rewardId)
 
 		return
 	end
@@ -50,466 +52,497 @@ function slot0.onClickReward(slot0)
 	VersionActivity1_5DungeonRpc.instance:sendAct140GainProgressRewardRequest()
 end
 
-function slot0.initBuildItem(slot0)
-	slot0.buildItemList = {}
+function var_0_0.initBuildItem(arg_5_0)
+	arg_5_0.buildItemList = {}
 
-	for slot4 = 1, VersionActivity1_5DungeonEnum.BuildCount do
-		slot0:createBuildItem(slot4)
+	for iter_5_0 = 1, VersionActivity1_5DungeonEnum.BuildCount do
+		arg_5_0:createBuildItem(iter_5_0)
 	end
 end
 
-function slot0.initSliderPointItem(slot0)
-	slot0.sliderPointItemList = {}
+function var_0_0.initSliderPointItem(arg_6_0)
+	arg_6_0.sliderPointItemList = {}
 
-	for slot4 = 1, 5 do
-		table.insert(slot0.sliderPointItemList, slot0:createSliderPointItem(slot4))
+	for iter_6_0 = 1, 5 do
+		table.insert(arg_6_0.sliderPointItemList, arg_6_0:createSliderPointItem(iter_6_0))
 	end
 end
 
-function slot0.initBuildImageItem(slot0)
-	slot0.buildImageList = slot0:getUserDataTb_()
+function var_0_0.initBuildImageItem(arg_7_0)
+	arg_7_0.buildImageList = arg_7_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		table.insert(slot0.buildImageList, gohelper.findChildImage(slot0.viewGO, "#simage_FullBG/#image_build" .. slot4))
+	for iter_7_0 = 1, 3 do
+		table.insert(arg_7_0.buildImageList, gohelper.findChildImage(arg_7_0.viewGO, "#simage_FullBG/#image_build" .. iter_7_0))
 	end
 end
 
-function slot0.initPointItem(slot0)
-	slot0.pointItemList = {}
+function var_0_0.initPointItem(arg_8_0)
+	arg_8_0.pointItemList = {}
 
-	table.insert(slot0.pointItemList, slot0:createPointItem(slot0._gopointitem1))
-	table.insert(slot0.pointItemList, slot0:createPointItem(slot0._gopointitem2))
-	table.insert(slot0.pointItemList, slot0:createPointItem(slot0._gopointitem3))
+	table.insert(arg_8_0.pointItemList, arg_8_0:createPointItem(arg_8_0._gopointitem1))
+	table.insert(arg_8_0.pointItemList, arg_8_0:createPointItem(arg_8_0._gopointitem2))
+	table.insert(arg_8_0.pointItemList, arg_8_0:createPointItem(arg_8_0._gopointitem3))
 end
 
-function slot0.createPointItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.image = slot1:GetComponent(gohelper.Type_Image)
-	slot2.effectGo1 = gohelper.findChild(slot1, "#effect_green")
-	slot2.effectGo2 = gohelper.findChild(slot1, "#effect_yellow")
+function var_0_0.createPointItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	return slot2
+	var_9_0.image = arg_9_1:GetComponent(gohelper.Type_Image)
+	var_9_0.effectGo1 = gohelper.findChild(arg_9_1, "#effect_green")
+	var_9_0.effectGo2 = gohelper.findChild(arg_9_1, "#effect_yellow")
+
+	return var_9_0
 end
 
-function slot0.onScrollValueChanged(slot0)
-	gohelper.setActive(slot0._goArrow, slot0._scrolldesc.verticalNormalizedPosition >= 0.01)
+function var_0_0.onScrollValueChanged(arg_10_0)
+	gohelper.setActive(arg_10_0._goArrow, arg_10_0._scrolldesc.verticalNormalizedPosition >= 0.01)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageFullBG:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_fullbg"))
-	slot0._simageMask:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask"))
-	slot0._simageRightMask:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
-	slot0._simageRightMask2:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
-	slot0._simageUpMask:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
-	slot0._simageUpMask2:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._simageFullBG:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_fullbg"))
+	arg_11_0._simageMask:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask"))
+	arg_11_0._simageRightMask:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
+	arg_11_0._simageRightMask2:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
+	arg_11_0._simageUpMask:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
+	arg_11_0._simageUpMask2:LoadImage(ResUrl.getV1a5BuildSingleBg("v1a5_building_mask4"))
 
-	slot0.goLeft = gohelper.findChild(slot0.viewGO, "Left")
-	slot0.goRight = gohelper.findChild(slot0.viewGO, "Right")
-	slot0.goBackBtn = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
-	slot0.bgRectTr = gohelper.findChildComponent(slot0.viewGO, "#simage_FullBG", gohelper.Type_RectTransform)
-	slot0.goMask = gohelper.findChild(slot0.viewGO, "#simage_Mask")
+	arg_11_0.goLeft = gohelper.findChild(arg_11_0.viewGO, "Left")
+	arg_11_0.goRight = gohelper.findChild(arg_11_0.viewGO, "Right")
+	arg_11_0.goBackBtn = gohelper.findChild(arg_11_0.viewGO, "#go_BackBtns")
+	arg_11_0.bgRectTr = gohelper.findChildComponent(arg_11_0.viewGO, "#simage_FullBG", gohelper.Type_RectTransform)
+	arg_11_0.goMask = gohelper.findChild(arg_11_0.viewGO, "#simage_Mask")
 
-	slot0._scrolldesc:AddOnValueChanged(slot0.onScrollValueChanged, slot0)
-	gohelper.setActive(slot0._gobuilditem, false)
+	arg_11_0._scrolldesc:AddOnValueChanged(arg_11_0.onScrollValueChanged, arg_11_0)
+	gohelper.setActive(arg_11_0._gobuilditem, false)
 
-	slot0.rewardClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "Right/Slider/Prop/#simage_Icon")
+	arg_11_0.rewardClick = gohelper.findChildClickWithDefaultAudio(arg_11_0.viewGO, "Right/Slider/Prop/#simage_Icon")
 
-	slot0.rewardClick:AddClickListener(slot0.onClickReward, slot0)
+	arg_11_0.rewardClick:AddClickListener(arg_11_0.onClickReward, arg_11_0)
 
-	gohelper.findChildText(slot0.viewGO, "Left/#scroll_desc/Viewport/Content/#go_buildskillitem/image_EffectBG/#txt_buildname").text = luaLang("p_versionactivity_1_5_build_base_skill_effect_name")
-	gohelper.findChildText(slot0.viewGO, "Left/#scroll_desc/Viewport/Content/#go_buildskillitem/#txt_buildskilldesc").text = luaLang("p_versionactivity_1_5_build_base_skill_effect_desc")
-	slot0.skillItemDict = {}
+	local var_11_0 = gohelper.findChildText(arg_11_0.viewGO, "Left/#scroll_desc/Viewport/Content/#go_buildskillitem/image_EffectBG/#txt_buildname")
+	local var_11_1 = gohelper.findChildText(arg_11_0.viewGO, "Left/#scroll_desc/Viewport/Content/#go_buildskillitem/#txt_buildskilldesc")
 
-	slot0:initPointItem()
-	slot0:initBuildItem()
-	slot0:initBuildImageItem()
-	slot0:initSliderPointItem()
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateBuildInfo, slot0.onUpdateBuildInfo, slot0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateSelectBuild, slot0.onUpdateSelectBuild, slot0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnSwitchSelectGroupBuild, slot0.onSwitchSelectGroupBuild, slot0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateGainedBuildReward, slot0.onUpdateGainedBuildReward, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
+	var_11_0.text = luaLang("p_versionactivity_1_5_build_base_skill_effect_name")
+	var_11_1.text = luaLang("p_versionactivity_1_5_build_base_skill_effect_desc")
+	arg_11_0.skillItemDict = {}
+
+	arg_11_0:initPointItem()
+	arg_11_0:initBuildItem()
+	arg_11_0:initBuildImageItem()
+	arg_11_0:initSliderPointItem()
+	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_11_0.onOpenView, arg_11_0)
+	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_11_0.onCloseView, arg_11_0)
+	arg_11_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateBuildInfo, arg_11_0.onUpdateBuildInfo, arg_11_0)
+	arg_11_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateSelectBuild, arg_11_0.onUpdateSelectBuild, arg_11_0)
+	arg_11_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnSwitchSelectGroupBuild, arg_11_0.onSwitchSelectGroupBuild, arg_11_0)
+	arg_11_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateGainedBuildReward, arg_11_0.onUpdateGainedBuildReward, arg_11_0)
+	arg_11_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_11_0.closeThis, arg_11_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.selectTypeList = VersionActivity1_5BuildModel.instance:getSelectTypeList()
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0.selectTypeList = VersionActivity1_5BuildModel.instance:getSelectTypeList()
 
-	slot0.slider:SetValue(VersionActivity1_5BuildModel.instance:getHadBuildCount())
-	slot0:showUI()
-	slot0:refreshUI()
-	slot0:onScrollValueChanged()
+	arg_13_0.slider:SetValue(VersionActivity1_5BuildModel.instance:getHadBuildCount())
+	arg_13_0:showUI()
+	arg_13_0:refreshUI()
+	arg_13_0:onScrollValueChanged()
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_14_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshLeft()
-	slot0:refreshRight()
+function var_0_0.refreshUI(arg_15_0)
+	arg_15_0:refreshLeft()
+	arg_15_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshPoint()
-	slot0:refreshBuildSkill()
+function var_0_0.refreshLeft(arg_16_0)
+	arg_16_0:refreshPoint()
+	arg_16_0:refreshBuildSkill()
 end
 
-function slot0.refreshRight(slot0)
-	slot0:refreshBuildIcon()
-	slot0:refreshSlider()
-	slot0:refreshReward()
-	slot0:refreshRewardEffect()
-	slot0:refreshBuildImage()
+function var_0_0.refreshRight(arg_17_0)
+	arg_17_0:refreshBuildIcon()
+	arg_17_0:refreshSlider()
+	arg_17_0:refreshReward()
+	arg_17_0:refreshRewardEffect()
+	arg_17_0:refreshBuildImage()
 end
 
-function slot0.refreshPoint(slot0)
-	for slot4 = 1, VersionActivity1_5DungeonEnum.BuildCount do
-		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(slot0.pointItemList[slot4].image, VersionActivity1_5DungeonEnum.BuildType2SmallImage[slot0.selectTypeList[slot4]])
+function var_0_0.refreshPoint(arg_18_0)
+	for iter_18_0 = 1, VersionActivity1_5DungeonEnum.BuildCount do
+		local var_18_0 = arg_18_0.selectTypeList[iter_18_0]
+
+		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(arg_18_0.pointItemList[iter_18_0].image, VersionActivity1_5DungeonEnum.BuildType2SmallImage[var_18_0])
 	end
 end
 
-function slot0.refreshBuildSkill(slot0)
-	for slot4, slot5 in ipairs(slot0.selectTypeList) do
-		if slot5 ~= VersionActivity1_5DungeonEnum.BuildType.None then
-			slot6 = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(slot4, slot5)
-			slot7 = slot0.skillItemDict[slot4] or slot0:createSkillItem(slot4)
-			slot7.txtbuildname.text = VersionActivity1_5BuildModel.getTextByType(slot5, slot6.name)
-			slot7.txtbuildnameEn.text = slot6.nameEn
-			slot7.txtbuildskilldesc.text = VersionActivity1_5BuildModel.getTextByType(slot5, slot6.skilldesc)
+function var_0_0.refreshBuildSkill(arg_19_0)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.selectTypeList) do
+		if iter_19_1 ~= VersionActivity1_5DungeonEnum.BuildType.None then
+			local var_19_0 = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(iter_19_0, iter_19_1)
+			local var_19_1 = arg_19_0.skillItemDict[iter_19_0] or arg_19_0:createSkillItem(iter_19_0)
 
-			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(slot7.imagebuildnamebg, VersionActivity1_5DungeonEnum.BuildType2TitleBgImage[slot5])
+			var_19_1.txtbuildname.text = VersionActivity1_5BuildModel.getTextByType(iter_19_1, var_19_0.name)
+			var_19_1.txtbuildnameEn.text = var_19_0.nameEn
+			var_19_1.txtbuildskilldesc.text = VersionActivity1_5BuildModel.getTextByType(iter_19_1, var_19_0.skilldesc)
+
+			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(var_19_1.imagebuildnamebg, VersionActivity1_5DungeonEnum.BuildType2TitleBgImage[iter_19_1])
 		end
 	end
 end
 
-function slot0.createSkillItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0._gobuildskillitem)
-	slot2.imagebuildnamebg = gohelper.findChildImage(slot2.go, "image_EffectBG/")
-	slot2.txtbuildname = gohelper.findChildText(slot2.go, "image_EffectBG/#txt_buildname")
-	slot2.txtbuildnameEn = gohelper.findChildText(slot2.go, "Line/#txt_En")
-	slot2.txtbuildskilldesc = gohelper.findChildText(slot2.go, "#txt_buildskilldesc")
-	slot0.skillItemDict[slot1] = slot2
+function var_0_0.createSkillItem(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:getUserDataTb_()
 
-	return slot2
+	var_20_0.go = gohelper.cloneInPlace(arg_20_0._gobuildskillitem)
+	var_20_0.imagebuildnamebg = gohelper.findChildImage(var_20_0.go, "image_EffectBG/")
+	var_20_0.txtbuildname = gohelper.findChildText(var_20_0.go, "image_EffectBG/#txt_buildname")
+	var_20_0.txtbuildnameEn = gohelper.findChildText(var_20_0.go, "Line/#txt_En")
+	var_20_0.txtbuildskilldesc = gohelper.findChildText(var_20_0.go, "#txt_buildskilldesc")
+	arg_20_0.skillItemDict[arg_20_1] = var_20_0
+
+	return var_20_0
 end
 
-function slot0.refreshBuildIcon(slot0)
-	for slot4, slot5 in ipairs(slot0.buildItemList) do
-		slot6 = VersionActivity1_5BuildModel.instance:getBuildCoByGroupIndex(slot4) or VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(slot4, 1)
-		slot7 = string.splitToNumber(slot6.pos, "#")
+function var_0_0.refreshBuildIcon(arg_21_0)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.buildItemList) do
+		local var_21_0 = VersionActivity1_5BuildModel.instance:getBuildCoByGroupIndex(iter_21_0) or VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(iter_21_0, 1)
+		local var_21_1 = string.splitToNumber(var_21_0.pos, "#")
 
-		recthelper.setAnchor(slot5.rectTr, slot7[1], slot7[2])
+		recthelper.setAnchor(iter_21_1.rectTr, var_21_1[1], var_21_1[2])
 
-		slot9 = VersionActivity1_5BuildModel.instance:getCanBuildCount(slot6.group) > 0
+		local var_21_2 = VersionActivity1_5BuildModel.instance:getCanBuildCount(var_21_0.group)
+		local var_21_3 = var_21_2 > 0
 
-		gohelper.setActive(slot5.goTips, not slot9)
-		gohelper.setActive(slot5.goBuildName, slot9)
+		gohelper.setActive(iter_21_1.goTips, not var_21_3)
+		gohelper.setActive(iter_21_1.goBuildName, var_21_3)
 
-		slot10 = 2 - slot8
-		slot5.txtCanBuild.text = string.format(luaLang("v1a5_builde_can_build"), slot10)
+		local var_21_4 = 2 - var_21_2
 
-		gohelper.setActive(slot5.goCanBuild, slot10 > 0)
-		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(slot5.bgImage, VersionActivity1_5DungeonEnum.BuildType2Image[VersionActivity1_5BuildModel.instance:getSelectType(slot4)])
-		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(slot5.buildIconImage, slot6.icon)
+		iter_21_1.txtCanBuild.text = string.format(luaLang("v1a5_builde_can_build"), var_21_4)
 
-		if slot9 then
-			slot5.txtBuildName.text = slot6.name
+		gohelper.setActive(iter_21_1.goCanBuild, var_21_4 > 0)
+
+		local var_21_5 = VersionActivity1_5BuildModel.instance:getSelectType(iter_21_0)
+
+		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(iter_21_1.bgImage, VersionActivity1_5DungeonEnum.BuildType2Image[var_21_5])
+		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(iter_21_1.buildIconImage, var_21_0.icon)
+
+		if var_21_3 then
+			iter_21_1.txtBuildName.text = var_21_0.name
 		end
 	end
 end
 
-function slot0.createBuildItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.groupIndex = slot1
-	slot2.go = gohelper.cloneInPlace(slot0._gobuilditem)
+function var_0_0.createBuildItem(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getUserDataTb_()
 
-	gohelper.setActive(slot2.go, true)
+	var_22_0.groupIndex = arg_22_1
+	var_22_0.go = gohelper.cloneInPlace(arg_22_0._gobuilditem)
 
-	slot2.rectTr = slot2.go:GetComponent(gohelper.Type_RectTransform)
-	slot2.bgImage = gohelper.findChildImage(slot2.go, "Totem/#image_TotemBG")
-	slot2.buildIconImage = gohelper.findChildImage(slot2.go, "Totem/#image_TotemBG/#image_TotemIcon")
-	slot2.goCanBuild = gohelper.findChild(slot2.go, "#go_CanBuild")
-	slot2.txtCanBuild = gohelper.findChildText(slot2.go, "#go_CanBuild/#txt_CanBuild")
-	slot2.goBuildName = gohelper.findChild(slot2.go, "#go_Name")
-	slot2.txtBuildName = gohelper.findChildText(slot2.go, "#go_Name/#txt_BuildName")
-	slot2.goTips = gohelper.findChild(slot2.go, "#go_Tips")
-	slot2.goClick = gohelper.findChildClickWithDefaultAudio(slot2.go, "clickarea")
+	gohelper.setActive(var_22_0.go, true)
 
-	slot2.goClick:AddClickListener(slot0.onClickBuild, slot0, slot2)
-	table.insert(slot0.buildItemList, slot2)
+	var_22_0.rectTr = var_22_0.go:GetComponent(gohelper.Type_RectTransform)
+	var_22_0.bgImage = gohelper.findChildImage(var_22_0.go, "Totem/#image_TotemBG")
+	var_22_0.buildIconImage = gohelper.findChildImage(var_22_0.go, "Totem/#image_TotemBG/#image_TotemIcon")
+	var_22_0.goCanBuild = gohelper.findChild(var_22_0.go, "#go_CanBuild")
+	var_22_0.txtCanBuild = gohelper.findChildText(var_22_0.go, "#go_CanBuild/#txt_CanBuild")
+	var_22_0.goBuildName = gohelper.findChild(var_22_0.go, "#go_Name")
+	var_22_0.txtBuildName = gohelper.findChildText(var_22_0.go, "#go_Name/#txt_BuildName")
+	var_22_0.goTips = gohelper.findChild(var_22_0.go, "#go_Tips")
+	var_22_0.goClick = gohelper.findChildClickWithDefaultAudio(var_22_0.go, "clickarea")
 
-	return slot2
+	var_22_0.goClick:AddClickListener(arg_22_0.onClickBuild, arg_22_0, var_22_0)
+	table.insert(arg_22_0.buildItemList, var_22_0)
+
+	return var_22_0
 end
 
-function slot0.createSliderPointItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.findChild(slot0.viewGO, "Right/Slider/Layout/Point" .. slot1)
-	slot2.goNormal = gohelper.findChild(slot2.go, "image_PointBG")
-	slot2.goFinish = gohelper.findChild(slot2.go, "image_PointFG")
+function var_0_0.createSliderPointItem(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getUserDataTb_()
 
-	return slot2
+	var_23_0.go = gohelper.findChild(arg_23_0.viewGO, "Right/Slider/Layout/Point" .. arg_23_1)
+	var_23_0.goNormal = gohelper.findChild(var_23_0.go, "image_PointBG")
+	var_23_0.goFinish = gohelper.findChild(var_23_0.go, "image_PointFG")
+
+	return var_23_0
 end
 
-function slot0.refreshReward(slot0)
-	slot1, slot2, slot0._txtNum.text = VersionActivity1_5DungeonConfig.instance:getBuildReward()
-	slot4, slot5 = ItemModel.instance:getItemConfigAndIcon(slot1, slot2)
+function var_0_0.refreshReward(arg_24_0)
+	local var_24_0, var_24_1, var_24_2 = VersionActivity1_5DungeonConfig.instance:getBuildReward()
+	local var_24_3, var_24_4 = ItemModel.instance:getItemConfigAndIcon(var_24_0, var_24_1)
 
-	slot0._simageIcon:LoadImage(slot5)
+	arg_24_0._simageIcon:LoadImage(var_24_4)
 
-	slot0.rewardId = slot2
-	slot0.rewardType = slot1
+	arg_24_0._txtNum.text = var_24_2
+	arg_24_0.rewardType, arg_24_0.rewardId = var_24_0, var_24_1
 
-	gohelper.setActive(slot0._goHasGainedReward, VersionActivity1_5BuildModel.instance.hasGainedReward)
+	gohelper.setActive(arg_24_0._goHasGainedReward, VersionActivity1_5BuildModel.instance.hasGainedReward)
 end
 
-function slot0.refreshRewardEffect(slot0)
+function var_0_0.refreshRewardEffect(arg_25_0)
 	if VersionActivity1_5BuildModel.instance.hasGainedReward then
-		gohelper.setActive(slot0.rewardEffect, false)
+		gohelper.setActive(arg_25_0.rewardEffect, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.rewardEffect, VersionActivity1_5BuildModel.instance:getHadBuildCount() == 6)
+	local var_25_0 = VersionActivity1_5BuildModel.instance:getHadBuildCount()
+
+	gohelper.setActive(arg_25_0.rewardEffect, var_25_0 == 6)
 end
 
-function slot0.refreshSlider(slot0)
-	slot1 = VersionActivity1_5BuildModel.instance:getHadBuildCount()
+function var_0_0.refreshSlider(arg_26_0)
+	local var_26_0 = VersionActivity1_5BuildModel.instance:getHadBuildCount()
 
-	for slot5 = 1, 5 do
-		slot6 = slot0.sliderPointItemList[slot5]
-		slot7 = slot5 <= slot1
+	for iter_26_0 = 1, 5 do
+		local var_26_1 = arg_26_0.sliderPointItemList[iter_26_0]
+		local var_26_2 = iter_26_0 <= var_26_0
 
-		gohelper.setActive(slot6.goNormal, not slot7)
-		gohelper.setActive(slot6.goFinish, slot7)
+		gohelper.setActive(var_26_1.goNormal, not var_26_2)
+		gohelper.setActive(var_26_1.goFinish, var_26_2)
 	end
 
-	slot0._txtSchedule.text = Mathf.Ceil(slot1 / 6 * 100) .. "%"
+	arg_26_0._txtSchedule.text = Mathf.Ceil(var_26_0 / 6 * 100) .. "%"
 end
 
-function slot0.refreshBuildImage(slot0)
-	for slot4, slot5 in ipairs(slot0.buildImageList) do
-		if VersionActivity1_5DungeonEnum.BuildType.None == VersionActivity1_5BuildModel.instance:getSelectType(slot4) then
-			gohelper.setActive(slot5.gameObject, false)
+function var_0_0.refreshBuildImage(arg_27_0)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0.buildImageList) do
+		local var_27_0 = VersionActivity1_5BuildModel.instance:getSelectType(iter_27_0)
+
+		if VersionActivity1_5DungeonEnum.BuildType.None == var_27_0 then
+			gohelper.setActive(iter_27_1.gameObject, false)
 		else
-			gohelper.setActive(slot5.gameObject, true)
-			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(slot5, VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(slot4, slot6).previewImg)
+			local var_27_1 = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(iter_27_0, var_27_0)
+
+			gohelper.setActive(iter_27_1.gameObject, true)
+			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(iter_27_1, var_27_1.previewImg)
 		end
 	end
 end
 
-function slot0.onUpdateGainedBuildReward(slot0)
-	gohelper.setActive(slot0._goHasGainedReward, VersionActivity1_5BuildModel.instance.hasGainedReward)
-	slot0:refreshRewardEffect()
+function var_0_0.onUpdateGainedBuildReward(arg_28_0)
+	gohelper.setActive(arg_28_0._goHasGainedReward, VersionActivity1_5BuildModel.instance.hasGainedReward)
+	arg_28_0:refreshRewardEffect()
 end
 
-function slot0.onClickBuild(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.pointItemList) do
-		gohelper.setActive(slot6.effectGo1, false)
-		gohelper.setActive(slot6.effectGo2, false)
+function var_0_0.onClickBuild(arg_29_0, arg_29_1)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_0.pointItemList) do
+		gohelper.setActive(iter_29_1.effectGo1, false)
+		gohelper.setActive(iter_29_1.effectGo2, false)
 	end
 
-	slot0.focusBuildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(slot1.groupIndex, 1)
-	slot0.preSelectTypeList = tabletool.copy(VersionActivity1_5BuildModel.instance:getSelectTypeList())
-	slot0.preHadBuildCount = VersionActivity1_5BuildModel.instance:getHadBuildCount()
+	arg_29_0.focusBuildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(arg_29_1.groupIndex, 1)
+	arg_29_0.preSelectTypeList = tabletool.copy(VersionActivity1_5BuildModel.instance:getSelectTypeList())
+	arg_29_0.preHadBuildCount = VersionActivity1_5BuildModel.instance:getHadBuildCount()
 
 	ViewMgr.instance:openView(ViewName.V1a5BuildingDetailView, {
-		groupIndex = slot1.groupIndex
+		groupIndex = arg_29_1.groupIndex
 	})
 end
 
-function slot0.onOpenView(slot0, slot1)
-	if slot1 ~= ViewName.V1a5BuildingDetailView then
+function var_0_0.onOpenView(arg_30_0, arg_30_1)
+	if arg_30_1 ~= ViewName.V1a5BuildingDetailView then
 		return
 	end
 
-	slot0:hideUI()
-	slot0:playFocusAnim()
+	arg_30_0:hideUI()
+	arg_30_0:playFocusAnim()
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot1 ~= ViewName.V1a5BuildingDetailView then
+function var_0_0.onCloseView(arg_31_0, arg_31_1)
+	if arg_31_1 ~= ViewName.V1a5BuildingDetailView then
 		return
 	end
 
-	slot0:playRevertAnim(slot0.onRevertAnimDone)
+	arg_31_0:playRevertAnim(arg_31_0.onRevertAnimDone)
 end
 
-function slot0.showUI(slot0)
-	gohelper.setActive(slot0.goLeft, true)
-	gohelper.setActive(slot0.goRight, true)
-	gohelper.setActive(slot0.goBackBtn, true)
-	gohelper.setActive(slot0.goMask, true)
+function var_0_0.showUI(arg_32_0)
+	gohelper.setActive(arg_32_0.goLeft, true)
+	gohelper.setActive(arg_32_0.goRight, true)
+	gohelper.setActive(arg_32_0.goBackBtn, true)
+	gohelper.setActive(arg_32_0.goMask, true)
 end
 
-function slot0.hideUI(slot0)
-	gohelper.setActive(slot0.goLeft, false)
-	gohelper.setActive(slot0.goRight, false)
-	gohelper.setActive(slot0.goBackBtn, false)
-	gohelper.setActive(slot0.goMask, false)
+function var_0_0.hideUI(arg_33_0)
+	gohelper.setActive(arg_33_0.goLeft, false)
+	gohelper.setActive(arg_33_0.goRight, false)
+	gohelper.setActive(arg_33_0.goBackBtn, false)
+	gohelper.setActive(arg_33_0.goMask, false)
 end
 
-function slot0.playFocusAnim(slot0, slot1)
-	slot0:killAnim()
+function var_0_0.playFocusAnim(arg_34_0, arg_34_1)
+	arg_34_0:killAnim()
 
-	slot0.finishCallback = slot1
-	slot0.startAnchorX = 0
-	slot0.startAnchorY = 0
-	slot0.targetAnchorX = slot0.focusBuildCo.focusPosX
-	slot0.targetAnchorY = slot0.focusBuildCo.focusPosY
-	slot0.startScale = 1
-	slot0.targetScale = VersionActivity1_5DungeonEnum.BuildMaxScale
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, VersionActivity1_5DungeonEnum.BuildFocusAnimTime, slot0.frameCall, slot0.finishCall, slot0)
+	arg_34_0.finishCallback = arg_34_1
+	arg_34_0.startAnchorX = 0
+	arg_34_0.startAnchorY = 0
+	arg_34_0.targetAnchorX = arg_34_0.focusBuildCo.focusPosX
+	arg_34_0.targetAnchorY = arg_34_0.focusBuildCo.focusPosY
+	arg_34_0.startScale = 1
+	arg_34_0.targetScale = VersionActivity1_5DungeonEnum.BuildMaxScale
+	arg_34_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, VersionActivity1_5DungeonEnum.BuildFocusAnimTime, arg_34_0.frameCall, arg_34_0.finishCall, arg_34_0)
 end
 
-function slot0.playRevertAnim(slot0, slot1)
-	slot0:killAnim()
+function var_0_0.playRevertAnim(arg_35_0, arg_35_1)
+	arg_35_0:killAnim()
 
-	slot0.finishCallback = slot1
-	slot0.startAnchorX = slot0.focusBuildCo.focusPosX
-	slot0.startAnchorY = slot0.focusBuildCo.focusPosY
-	slot0.targetAnchorX = 0
-	slot0.targetAnchorY = 0
-	slot0.startScale = VersionActivity1_5DungeonEnum.BuildMaxScale
-	slot0.targetScale = 1
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, VersionActivity1_5DungeonEnum.BuildFocusAnimTime, slot0.frameCall, slot0.finishCall, slot0)
+	arg_35_0.finishCallback = arg_35_1
+	arg_35_0.startAnchorX = arg_35_0.focusBuildCo.focusPosX
+	arg_35_0.startAnchorY = arg_35_0.focusBuildCo.focusPosY
+	arg_35_0.targetAnchorX = 0
+	arg_35_0.targetAnchorY = 0
+	arg_35_0.startScale = VersionActivity1_5DungeonEnum.BuildMaxScale
+	arg_35_0.targetScale = 1
+	arg_35_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, VersionActivity1_5DungeonEnum.BuildFocusAnimTime, arg_35_0.frameCall, arg_35_0.finishCall, arg_35_0)
 end
 
-function slot0.frameCall(slot0, slot1)
-	slot4 = Mathf.Lerp(slot0.startScale, slot0.targetScale, slot1)
+function var_0_0.frameCall(arg_36_0, arg_36_1)
+	local var_36_0 = Mathf.Lerp(arg_36_0.startAnchorX, arg_36_0.targetAnchorX, arg_36_1)
+	local var_36_1 = Mathf.Lerp(arg_36_0.startAnchorY, arg_36_0.targetAnchorY, arg_36_1)
+	local var_36_2 = Mathf.Lerp(arg_36_0.startScale, arg_36_0.targetScale, arg_36_1)
 
-	recthelper.setAnchor(slot0.bgRectTr, Mathf.Lerp(slot0.startAnchorX, slot0.targetAnchorX, slot1), Mathf.Lerp(slot0.startAnchorY, slot0.targetAnchorY, slot1))
-	transformhelper.setLocalScale(slot0.bgRectTr, slot4, slot4, slot4)
+	recthelper.setAnchor(arg_36_0.bgRectTr, var_36_0, var_36_1)
+	transformhelper.setLocalScale(arg_36_0.bgRectTr, var_36_2, var_36_2, var_36_2)
 end
 
-function slot0.finishCall(slot0)
-	recthelper.setAnchor(slot0.bgRectTr, slot0.targetAnchorX, slot0.targetAnchorY)
-	transformhelper.setLocalScale(slot0.bgRectTr, slot0.targetScale, slot0.targetScale, slot0.targetScale)
+function var_0_0.finishCall(arg_37_0)
+	recthelper.setAnchor(arg_37_0.bgRectTr, arg_37_0.targetAnchorX, arg_37_0.targetAnchorY)
+	transformhelper.setLocalScale(arg_37_0.bgRectTr, arg_37_0.targetScale, arg_37_0.targetScale, arg_37_0.targetScale)
 
-	if slot0.finishCallback then
-		slot0:finishCallback()
+	if arg_37_0.finishCallback then
+		arg_37_0:finishCallback()
 
-		slot0.finishCallback = nil
+		arg_37_0.finishCallback = nil
 	end
 end
 
-function slot0.killAnim(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.killAnim(arg_38_0)
+	if arg_38_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_38_0.tweenId)
 	end
 
-	slot0.finishCallback = nil
+	arg_38_0.finishCallback = nil
 end
 
-function slot0.onRevertAnimDone(slot0)
-	slot0:showUI()
-	slot0:playPointAnimation()
-	slot0:playSliderAnimation()
+function var_0_0.onRevertAnimDone(arg_39_0)
+	arg_39_0:showUI()
+	arg_39_0:playPointAnimation()
+	arg_39_0:playSliderAnimation()
 end
 
-function slot0.onUpdateBuildInfo(slot0)
-	slot0:refreshLeft()
-	slot0:playPointAnimation()
-	slot0:playSliderAnimation()
-	slot0:refreshBuildImage()
-	slot0:refreshSlider()
-	slot0:refreshRewardEffect()
-	slot0:refreshBuildIcon()
+function var_0_0.onUpdateBuildInfo(arg_40_0)
+	arg_40_0:refreshLeft()
+	arg_40_0:playPointAnimation()
+	arg_40_0:playSliderAnimation()
+	arg_40_0:refreshBuildImage()
+	arg_40_0:refreshSlider()
+	arg_40_0:refreshRewardEffect()
+	arg_40_0:refreshBuildIcon()
 end
 
-function slot0.onUpdateSelectBuild(slot0)
-	slot0:refreshLeft()
-	slot0:playPointAnimation()
-	slot0:refreshBuildIcon()
-	slot0:refreshBuildImage()
+function var_0_0.onUpdateSelectBuild(arg_41_0)
+	arg_41_0:refreshLeft()
+	arg_41_0:playPointAnimation()
+	arg_41_0:refreshBuildIcon()
+	arg_41_0:refreshBuildImage()
 end
 
-function slot0.playPointAnimation(slot0)
+function var_0_0.playPointAnimation(arg_42_0)
 	if ViewMgr.instance:isOpen(ViewName.V1a5BuildingDetailView) then
 		return
 	end
 
-	if not slot0.preSelectTypeList then
+	if not arg_42_0.preSelectTypeList then
 		return
 	end
 
-	for slot5, slot6 in ipairs(VersionActivity1_5BuildModel.instance:getSelectTypeList()) do
-		if slot6 ~= slot0.preSelectTypeList[slot5] then
-			if slot6 == VersionActivity1_5DungeonEnum.BuildType.First then
-				gohelper.setActive(slot0.pointItemList[slot5].effectGo1, true)
+	local var_42_0 = VersionActivity1_5BuildModel.instance:getSelectTypeList()
+
+	for iter_42_0, iter_42_1 in ipairs(var_42_0) do
+		if iter_42_1 ~= arg_42_0.preSelectTypeList[iter_42_0] then
+			local var_42_1 = arg_42_0.pointItemList[iter_42_0]
+
+			if iter_42_1 == VersionActivity1_5DungeonEnum.BuildType.First then
+				gohelper.setActive(var_42_1.effectGo1, true)
 			else
-				gohelper.setActive(slot7.effectGo2, true)
+				gohelper.setActive(var_42_1.effectGo2, true)
 			end
 		end
 	end
 
-	slot0.preSelectTypeList = nil
+	arg_42_0.preSelectTypeList = nil
 end
 
-function slot0.playSliderAnimation(slot0)
+function var_0_0.playSliderAnimation(arg_43_0)
 	if ViewMgr.instance:isOpen(ViewName.V1a5BuildingDetailView) then
 		return
 	end
 
-	if slot0.preHadBuildCount == VersionActivity1_5BuildModel.instance:getHadBuildCount() then
+	local var_43_0 = VersionActivity1_5BuildModel.instance:getHadBuildCount()
+
+	if arg_43_0.preHadBuildCount == var_43_0 then
 		return
 	end
 
-	if slot0.sliderTweenId then
-		ZProj.TweenHelper.KillById(slot0.sliderTweenId)
+	if arg_43_0.sliderTweenId then
+		ZProj.TweenHelper.KillById(arg_43_0.sliderTweenId)
 	end
 
-	slot0.sliderTweenId = ZProj.TweenHelper.DOTweenFloat(slot0.preHadBuildCount, slot1, VersionActivity1_5DungeonEnum.SliderAnimTime, slot0.sliderFrameCall, nil, slot0)
+	arg_43_0.sliderTweenId = ZProj.TweenHelper.DOTweenFloat(arg_43_0.preHadBuildCount, var_43_0, VersionActivity1_5DungeonEnum.SliderAnimTime, arg_43_0.sliderFrameCall, nil, arg_43_0)
 end
 
-function slot0.sliderFrameCall(slot0, slot1)
-	slot0.slider:SetValue(slot1)
+function var_0_0.sliderFrameCall(arg_44_0, arg_44_1)
+	arg_44_0.slider:SetValue(arg_44_1)
 end
 
-function slot0.onSwitchSelectGroupBuild(slot0, slot1)
-	slot0:killAnim()
+function var_0_0.onSwitchSelectGroupBuild(arg_45_0, arg_45_1)
+	arg_45_0:killAnim()
 
-	slot0.focusBuildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(slot1, 1)
-	slot0.startAnchorX, slot0.startAnchorY = recthelper.getAnchor(slot0.bgRectTr)
-	slot0.targetAnchorX = slot0.focusBuildCo.focusPosX
-	slot0.targetAnchorY = slot0.focusBuildCo.focusPosY
-	slot0.startScale = transformhelper.getLocalScale(slot0.bgRectTr)
-	slot0.targetScale = VersionActivity1_5DungeonEnum.BuildMaxScale
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, VersionActivity1_5DungeonEnum.BuildFocusAnimTime, slot0.frameCall, slot0.finishCall, slot0)
+	arg_45_0.focusBuildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(arg_45_1, 1)
+	arg_45_0.startAnchorX, arg_45_0.startAnchorY = recthelper.getAnchor(arg_45_0.bgRectTr)
+	arg_45_0.targetAnchorX = arg_45_0.focusBuildCo.focusPosX
+	arg_45_0.targetAnchorY = arg_45_0.focusBuildCo.focusPosY
+	arg_45_0.startScale = transformhelper.getLocalScale(arg_45_0.bgRectTr)
+	arg_45_0.targetScale = VersionActivity1_5DungeonEnum.BuildMaxScale
+	arg_45_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, VersionActivity1_5DungeonEnum.BuildFocusAnimTime, arg_45_0.frameCall, arg_45_0.finishCall, arg_45_0)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	slot0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateBuildInfo, slot0.onUpdateBuildInfo, slot0)
-	slot0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateSelectBuild, slot0.onUpdateSelectBuild, slot0)
-	slot0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnSwitchSelectGroupBuild, slot0.onSwitchSelectGroupBuild, slot0)
-	slot0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateGainedBuildReward, slot0.onUpdateGainedBuildReward, slot0)
-	slot0:killAnim()
+function var_0_0.onClose(arg_46_0)
+	arg_46_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_46_0.onOpenView, arg_46_0)
+	arg_46_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_46_0.onCloseView, arg_46_0)
+	arg_46_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateBuildInfo, arg_46_0.onUpdateBuildInfo, arg_46_0)
+	arg_46_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateSelectBuild, arg_46_0.onUpdateSelectBuild, arg_46_0)
+	arg_46_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnSwitchSelectGroupBuild, arg_46_0.onSwitchSelectGroupBuild, arg_46_0)
+	arg_46_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateGainedBuildReward, arg_46_0.onUpdateGainedBuildReward, arg_46_0)
+	arg_46_0:killAnim()
 
-	if slot0.sliderTweenId then
-		ZProj.TweenHelper.KillById(slot0.sliderTweenId)
+	if arg_46_0.sliderTweenId then
+		ZProj.TweenHelper.KillById(arg_46_0.sliderTweenId)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageFullBG:UnLoadImage()
-	slot0._simageMask:UnLoadImage()
-	slot0._simageRightMask:UnLoadImage()
-	slot0._simageRightMask2:UnLoadImage()
-	slot0._simageUpMask:UnLoadImage()
-	slot0._simageUpMask2:UnLoadImage()
+function var_0_0.onDestroyView(arg_47_0)
+	arg_47_0._simageFullBG:UnLoadImage()
+	arg_47_0._simageMask:UnLoadImage()
+	arg_47_0._simageRightMask:UnLoadImage()
+	arg_47_0._simageRightMask2:UnLoadImage()
+	arg_47_0._simageUpMask:UnLoadImage()
+	arg_47_0._simageUpMask2:UnLoadImage()
 
-	for slot4, slot5 in ipairs(slot0.buildItemList) do
-		slot5.goClick:RemoveClickListener()
+	for iter_47_0, iter_47_1 in ipairs(arg_47_0.buildItemList) do
+		iter_47_1.goClick:RemoveClickListener()
 	end
 
-	slot0._scrolldesc:RemoveOnValueChanged()
-	slot0.rewardClick:RemoveClickListener()
+	arg_47_0._scrolldesc:RemoveOnValueChanged()
+	arg_47_0.rewardClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

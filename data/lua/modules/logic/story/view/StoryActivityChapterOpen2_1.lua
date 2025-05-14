@@ -1,163 +1,194 @@
-module("modules.logic.story.view.StoryActivityChapterOpen2_1", package.seeall)
+﻿module("modules.logic.story.view.StoryActivityChapterOpen2_1", package.seeall)
 
-slot0 = class("StoryActivityChapterOpen2_1", StoryActivityChapterBase)
+local var_0_0 = class("StoryActivityChapterOpen2_1", StoryActivityChapterBase)
 
-function slot0.onCtor(slot0)
-	slot0.assetPath = "ui/viewres/story/v2a1/storyactivitychapteropen.prefab"
+function var_0_0.onCtor(arg_1_0)
+	arg_1_0.assetPath = "ui/viewres/story/v2a1/storyactivitychapteropen.prefab"
 end
 
-function slot0.onInitView(slot0)
-	slot0._goVideo = gohelper.findChild(slot0.viewGO, "#go_video")
-	slot0._goMaskBg = gohelper.findChild(slot0.viewGO, "#maskBg")
-	slot0._goBg = gohelper.findChild(slot0.viewGO, "#go_bg")
-	slot0._simageSection = gohelper.findChildSingleImage(slot0._goBg, "#simage_Section")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0._goBg, "#simage_Title")
-	slot0._simageTitleen = gohelper.findChildSingleImage(slot0._goBg, "#simage_Titleen")
-	slot0._simageTitleBg = gohelper.findChildSingleImage(slot0._goBg, "#simage_titleBg")
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._simageBg = gohelper.findChildSingleImage(slot0._goBg, "image_BG")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._goVideo = gohelper.findChild(arg_2_0.viewGO, "#go_video")
+	arg_2_0._goMaskBg = gohelper.findChild(arg_2_0.viewGO, "#maskBg")
+	arg_2_0._goBg = gohelper.findChild(arg_2_0.viewGO, "#go_bg")
+	arg_2_0._simageSection = gohelper.findChildSingleImage(arg_2_0._goBg, "#simage_Section")
+	arg_2_0._simageTitle = gohelper.findChildSingleImage(arg_2_0._goBg, "#simage_Title")
+	arg_2_0._simageTitleen = gohelper.findChildSingleImage(arg_2_0._goBg, "#simage_Titleen")
+	arg_2_0._simageTitleBg = gohelper.findChildSingleImage(arg_2_0._goBg, "#simage_titleBg")
+	arg_2_0._anim = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._simageBg = gohelper.findChildSingleImage(arg_2_0._goBg, "image_BG")
 end
 
-function slot0.onUpdateView(slot0)
-	gohelper.setActive(slot0.viewGO, false)
-	TaskDispatcher.runDelay(slot0.play, slot0, 2)
+function var_0_0.onUpdateView(arg_3_0)
+	gohelper.setActive(arg_3_0.viewGO, false)
+	TaskDispatcher.runDelay(arg_3_0.play, arg_3_0, 2)
 end
 
-function slot0.play(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0.play(arg_4_0)
+	gohelper.setActive(arg_4_0.viewGO, true)
 
-	slot4 = slot2[2] or 1
+	local var_4_0 = arg_4_0.data
+	local var_4_1 = string.splitToNumber(var_4_0.navigateChapterEn, "#")
+	local var_4_2 = var_4_1[1] or 1
+	local var_4_3 = var_4_1[2] or 1
 
-	gohelper.setActive(slot0._goMaskBg, true)
+	gohelper.setActive(arg_4_0._goMaskBg, true)
 
-	slot5 = StoryConfig.instance:getActivityOpenConfig(string.splitToNumber(slot0.data.navigateChapterEn, "#")[1] or 1, slot4)
+	local var_4_4 = StoryConfig.instance:getActivityOpenConfig(var_4_2, var_4_3)
+	local var_4_5 = string.format("section_%s", var_4_4.labelRes)
+	local var_4_6 = string.format("title_%s", var_4_3)
+	local var_4_7 = string.format("titleen_%s", var_4_3)
 
-	slot0._simageSection:LoadImage(slot0:getLangResBg(string.format("section_%s", slot5.labelRes)), slot0.onSectionLoaded, slot0)
-	slot0._simageTitle:LoadImage(slot0:getLangResBg(string.format("title_%s", slot4)), slot0.onTitleLoaded, slot0)
-	slot0._simageTitleen:LoadImage(slot0:getLangResBg(string.format("titleen_%s", slot4)), slot0.onTitleenLoaded, slot0)
+	arg_4_0._simageSection:LoadImage(arg_4_0:getLangResBg(var_4_5), arg_4_0.onSectionLoaded, arg_4_0)
+	arg_4_0._simageTitle:LoadImage(arg_4_0:getLangResBg(var_4_6), arg_4_0.onTitleLoaded, arg_4_0)
+	arg_4_0._simageTitleen:LoadImage(arg_4_0:getLangResBg(var_4_7), arg_4_0.onTitleenLoaded, arg_4_0)
 
-	slot10 = "arttext_4"
+	local var_4_8 = GameUtil.utf8len(var_4_4.title)
+	local var_4_9 = "arttext_4"
 
-	if GameUtil.utf8len(slot5.title) < 3 then
-		slot10 = "arttext_1"
-	elseif slot9 < 5 then
-		slot10 = "arttext_2"
-	elseif slot9 < 7 then
-		slot10 = "arttext_3"
+	if var_4_8 < 3 then
+		var_4_9 = "arttext_1"
+	elseif var_4_8 < 5 then
+		var_4_9 = "arttext_2"
+	elseif var_4_8 < 7 then
+		var_4_9 = "arttext_3"
 	end
 
-	slot0._simageTitleBg:LoadImage(string.format("singlebg/v2a1_opening_singlebg/%s.png", slot10))
+	arg_4_0._simageTitleBg:LoadImage(string.format("singlebg/v2a1_opening_singlebg/%s.png", var_4_9))
 
-	slot0._anim.speed = 0
+	arg_4_0._anim.speed = 0
 
-	gohelper.setActive(slot0._simageBg.gameObject, false)
-	slot0:playVideo()
+	gohelper.setActive(arg_4_0._simageBg.gameObject, false)
+	arg_4_0:playVideo()
 end
 
-function slot0.playVideo(slot0)
-	slot3 = string.splitToNumber(slot0.data.navigateChapterEn, "#")[1] or 1
-	slot5 = slot0:getVideoName(slot2[2] or 1)
+function var_0_0.playVideo(arg_5_0)
+	local var_5_0 = arg_5_0.data
+	local var_5_1 = string.splitToNumber(var_5_0.navigateChapterEn, "#")
 
-	if not slot0._videoItem then
-		slot0._videoItem = StoryActivityVideoItem.New(slot0._goVideo)
+	if not var_5_1[1] then
+		local var_5_2 = 1
 	end
 
-	slot0._videoItem:playVideo(slot5, {
+	local var_5_3 = var_5_1[2] or 1
+	local var_5_4 = arg_5_0:getVideoName(var_5_3)
+
+	if not arg_5_0._videoItem then
+		arg_5_0._videoItem = StoryActivityVideoItem.New(arg_5_0._goVideo)
+	end
+
+	local var_5_5 = arg_5_0:getAudioId(var_5_3)
+	local var_5_6 = {
 		loop = false,
 		audioNoStopByFinish = true,
-		audioId = slot0:getAudioId(slot4),
-		startCallback = slot0.onVideoStart,
-		startCallbackObj = slot0
-	})
+		audioId = var_5_5,
+		startCallback = arg_5_0.onVideoStart,
+		startCallbackObj = arg_5_0
+	}
+
+	arg_5_0._videoItem:playVideo(var_5_4, var_5_6)
 end
 
-function slot0.onVideoStart(slot0)
-	slot0._anim.speed = 1
-	slot3 = string.splitToNumber(slot0.data.navigateChapterEn, "#")[1] or 1
+function var_0_0.onVideoStart(arg_6_0)
+	arg_6_0._anim.speed = 1
 
-	if (slot2[2] or 1) == 1 then
-		slot0._anim:Play("open", 0, 0)
+	local var_6_0 = arg_6_0.data
+	local var_6_1 = string.splitToNumber(var_6_0.navigateChapterEn, "#")
+	local var_6_2 = var_6_1[1] or 1
+	local var_6_3 = var_6_1[2] or 1
+
+	if var_6_3 == 1 then
+		arg_6_0._anim:Play("open", 0, 0)
 	else
-		slot0._anim:Play("open1", 0, 0)
+		arg_6_0._anim:Play("open1", 0, 0)
 	end
 
-	gohelper.setActive(slot0._simageBg.gameObject, true)
-	slot0._simageBg:LoadImage(StoryConfig.instance:getActivityOpenConfig(slot3, slot4).storyBg, slot0.onBgLoaded, slot0)
+	local var_6_4 = StoryConfig.instance:getActivityOpenConfig(var_6_2, var_6_3)
+
+	gohelper.setActive(arg_6_0._simageBg.gameObject, true)
+	arg_6_0._simageBg:LoadImage(var_6_4.storyBg, arg_6_0.onBgLoaded, arg_6_0)
 end
 
-function slot0.onSectionLoaded(slot0)
-	if gohelper.findChildImage(slot0._goBg, "#simage_Section") then
-		slot1:SetNativeSize()
-	end
-end
+function var_0_0.onSectionLoaded(arg_7_0)
+	local var_7_0 = gohelper.findChildImage(arg_7_0._goBg, "#simage_Section")
 
-function slot0.onTitleLoaded(slot0)
-	if gohelper.findChildImage(slot0._goBg, "#simage_Title") then
-		slot1:SetNativeSize()
-	end
-end
-
-function slot0.onTitleenLoaded(slot0)
-	if gohelper.findChildImage(slot0._goBg, "#simage_Titleen") then
-		slot1:SetNativeSize()
+	if var_7_0 then
+		var_7_0:SetNativeSize()
 	end
 end
 
-function slot0.onBgLoaded(slot0)
-	if gohelper.findChildImage(slot0._goBg, "image_BG") then
-		slot1:SetNativeSize()
+function var_0_0.onTitleLoaded(arg_8_0)
+	local var_8_0 = gohelper.findChildImage(arg_8_0._goBg, "#simage_Title")
+
+	if var_8_0 then
+		var_8_0:SetNativeSize()
 	end
 end
 
-function slot0.getLangResBg(slot0, slot1)
-	return string.format("singlebg_lang/txt_v2a1_opening_singlebg/%s.png", slot1)
+function var_0_0.onTitleenLoaded(arg_9_0)
+	local var_9_0 = gohelper.findChildImage(arg_9_0._goBg, "#simage_Titleen")
+
+	if var_9_0 then
+		var_9_0:SetNativeSize()
+	end
 end
 
-function slot0.getVideoName(slot0, slot1)
-	return slot1 == 1 and "2_1_opening_1"
+function var_0_0.onBgLoaded(arg_10_0)
+	local var_10_0 = gohelper.findChildImage(arg_10_0._goBg, "image_BG")
+
+	if var_10_0 then
+		var_10_0:SetNativeSize()
+	end
 end
 
-function slot0.getAudioId(slot0, slot1)
-	return slot1 == 1 and AudioEnum.Story.play_activitysfx_wangshi_chapter_open or AudioEnum.Story.play_activitysfx_wangshi_subsection_open
+function var_0_0.getLangResBg(arg_11_0, arg_11_1)
+	return string.format("singlebg_lang/txt_v2a1_opening_singlebg/%s.png", arg_11_1)
 end
 
-function slot0.onHide(slot0)
-	if slot0._videoItem then
-		slot0._videoItem:onVideoOut()
-	end
-
-	TaskDispatcher.cancelTask(slot0.play, slot0)
+function var_0_0.getVideoName(arg_12_0, arg_12_1)
+	return arg_12_1 == 1 and "2_1_opening_1"
 end
 
-function slot0.onDestory(slot0)
-	if slot0._videoItem then
-		slot0._videoItem:onDestroy()
-
-		slot0._videoItem = nil
-	end
-
-	if slot0._simageTitle then
-		slot0._simageTitle:UnLoadImage()
-	end
-
-	if slot0._simageName then
-		slot0._simageName:UnLoadImage()
-	end
-
-	if slot0._simageTitleBg then
-		slot0._simageTitleBg:UnLoadImage()
-	end
-
-	if slot0._simageBg then
-		slot0._simageBg:UnLoadImage()
-	end
-
-	if slot0._simageTitleen then
-		slot0._simageTitleen:UnLoadImage()
-	end
-
-	TaskDispatcher.cancelTask(slot0.play, slot0)
-	uv0.super.onDestory(slot0)
+function var_0_0.getAudioId(arg_13_0, arg_13_1)
+	return arg_13_1 == 1 and AudioEnum.Story.play_activitysfx_wangshi_chapter_open or AudioEnum.Story.play_activitysfx_wangshi_subsection_open
 end
 
-return slot0
+function var_0_0.onHide(arg_14_0)
+	if arg_14_0._videoItem then
+		arg_14_0._videoItem:onVideoOut()
+	end
+
+	TaskDispatcher.cancelTask(arg_14_0.play, arg_14_0)
+end
+
+function var_0_0.onDestory(arg_15_0)
+	if arg_15_0._videoItem then
+		arg_15_0._videoItem:onDestroy()
+
+		arg_15_0._videoItem = nil
+	end
+
+	if arg_15_0._simageTitle then
+		arg_15_0._simageTitle:UnLoadImage()
+	end
+
+	if arg_15_0._simageName then
+		arg_15_0._simageName:UnLoadImage()
+	end
+
+	if arg_15_0._simageTitleBg then
+		arg_15_0._simageTitleBg:UnLoadImage()
+	end
+
+	if arg_15_0._simageBg then
+		arg_15_0._simageBg:UnLoadImage()
+	end
+
+	if arg_15_0._simageTitleen then
+		arg_15_0._simageTitleen:UnLoadImage()
+	end
+
+	TaskDispatcher.cancelTask(arg_15_0.play, arg_15_0)
+	var_0_0.super.onDestory(arg_15_0)
+end
+
+return var_0_0

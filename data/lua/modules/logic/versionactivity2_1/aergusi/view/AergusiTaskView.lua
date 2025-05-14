@@ -1,86 +1,90 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiTaskView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiTaskView", package.seeall)
 
-slot0 = class("AergusiTaskView", BaseView)
+local var_0_0 = class("AergusiTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simagelangtxt = gohelper.findChildSingleImage(slot0.viewGO, "Left/#simage_langtxt")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0._scrollTaskList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_TaskList")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._scrollTaskList.gameObject)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._scrollTaskList.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_4_0._drag:AddDragBeginListener(arg_4_0._onDragBegin, arg_4_0)
+	arg_4_0._drag:AddDragEndListener(arg_4_0._onDragEnd, arg_4_0)
 end
 
-function slot0._onDragBegin(slot0)
+function var_0_0._onDragBegin(arg_5_0)
 	AergusiTaskListModel.instance:setAniDisable(true)
 end
 
-function slot0._onDragEnd(slot0)
+function var_0_0._onDragEnd(arg_6_0)
 	AergusiTaskListModel.instance:setAniDisable(false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	AergusiTaskListModel.instance:init(VersionActivity2_1Enum.ActivityId.Aergusi)
-	slot0:_addEvents()
-	TaskDispatcher.runRepeat(slot0._refreshDeadline, slot0, TimeUtil.OneMinuteSecond)
-	slot0:_refreshDeadline()
+	arg_8_0:_addEvents()
+	TaskDispatcher.runRepeat(arg_8_0._refreshDeadline, arg_8_0, TimeUtil.OneMinuteSecond)
+	arg_8_0:_refreshDeadline()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._oneClaimReward, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
+function var_0_0._addEvents(arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_9_0._oneClaimReward, arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_9_0._onFinishTask, arg_9_0)
 end
 
-function slot0._oneClaimReward(slot0)
-	slot0:_refreshItems()
+function var_0_0._oneClaimReward(arg_10_0)
+	arg_10_0:_refreshItems()
 end
 
-function slot0._onFinishTask(slot0, slot1)
-	slot0:_refreshItems()
+function var_0_0._onFinishTask(arg_11_0, arg_11_1)
+	arg_11_0:_refreshItems()
 end
 
-function slot0._refreshDeadline(slot0)
-	slot0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_1Enum.ActivityId.Aergusi)
+function var_0_0._refreshDeadline(arg_12_0)
+	arg_12_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_1Enum.ActivityId.Aergusi)
 end
 
-function slot0._refreshItems(slot0)
-	slot1 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity163)
+function var_0_0._refreshItems(arg_13_0)
+	local var_13_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity163)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._oneClaimReward, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
+function var_0_0._removeEvents(arg_15_0)
+	arg_15_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_15_0._oneClaimReward, arg_15_0)
+	arg_15_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_15_0._onFinishTask, arg_15_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0:_removeEvents()
-	TaskDispatcher.cancelTask(slot0._refreshDeadline, slot0)
-	slot0._simageFullBG:UnLoadImage()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0._drag:RemoveDragBeginListener()
+	arg_16_0._drag:RemoveDragEndListener()
+	arg_16_0:_removeEvents()
+	TaskDispatcher.cancelTask(arg_16_0._refreshDeadline, arg_16_0)
+	arg_16_0._simageFullBG:UnLoadImage()
 end
 
-return slot0
+return var_0_0

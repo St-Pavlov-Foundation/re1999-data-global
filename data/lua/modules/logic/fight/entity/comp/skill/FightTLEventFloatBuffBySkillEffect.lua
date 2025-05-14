@@ -1,74 +1,94 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventFloatBuffBySkillEffect", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventFloatBuffBySkillEffect", package.seeall)
 
-slot0 = class("FightTLEventFloatBuffBySkillEffect")
+local var_0_0 = class("FightTLEventFloatBuffBySkillEffect")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0.fightStepMO = slot1
-	slot0.buffId = FightTLHelper.getNumberParam(slot3[1])
-	slot5 = slot1.actId and lua_skill.configDict[slot4]
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.fightStepMO = arg_1_1
+	arg_1_0.buffId = FightTLHelper.getNumberParam(arg_1_3[1])
 
-	if not (slot5 and lua_skill_effect.configDict[slot5.skillEffect]) then
+	local var_1_0 = arg_1_1.actId
+	local var_1_1 = var_1_0 and lua_skill.configDict[var_1_0]
+	local var_1_2 = var_1_1 and lua_skill_effect.configDict[var_1_1.skillEffect]
+
+	if not var_1_2 then
 		return
 	end
 
-	slot7 = 0
+	local var_1_3 = 0
 
-	for slot11 = 1, FightEnum.MaxBehavior do
-		if string.nilorempty(slot6["behavior" .. slot11]) then
+	for iter_1_0 = 1, FightEnum.MaxBehavior do
+		local var_1_4 = var_1_2["behavior" .. iter_1_0]
+
+		if string.nilorempty(var_1_4) then
 			break
 		end
 
-		if slot0:getHandle(lua_skill_behavior.configDict[FightStrUtil.instance:getSplitToNumberCache(slot12, "#")[1]] and slot14.type) then
-			slot7 = slot16(slot0, slot13)
+		local var_1_5 = FightStrUtil.instance:getSplitToNumberCache(var_1_4, "#")
+		local var_1_6 = lua_skill_behavior.configDict[var_1_5[1]]
+		local var_1_7 = var_1_6 and var_1_6.type
+		local var_1_8 = arg_1_0:getHandle(var_1_7)
+
+		if var_1_8 then
+			var_1_3 = var_1_8(arg_1_0, var_1_5)
 
 			break
 		end
 	end
 
-	if slot7 < 1 then
+	if var_1_3 < 1 then
 		return
 	end
 
-	slot0:floatBuff(slot7)
+	arg_1_0:floatBuff(var_1_3)
 end
 
-function slot0.getHandle(slot0, slot1)
-	if not uv0.SkillEffectHandleDict then
-		uv0.SkillEffectHandleDict = {
-			AddBuff = slot0.getAddBuffFloatCount
+function var_0_0.getHandle(arg_2_0, arg_2_1)
+	if not var_0_0.SkillEffectHandleDict then
+		var_0_0.SkillEffectHandleDict = {
+			AddBuff = arg_2_0.getAddBuffFloatCount
 		}
 	end
 
-	return slot1 and uv0.SkillEffectHandleDict[slot1]
+	return arg_2_1 and var_0_0.SkillEffectHandleDict[arg_2_1]
 end
 
-function slot0.floatBuff(slot0, slot1)
-	for slot8, slot9 in ipairs(slot0.fightStepMO.actEffectMOs) do
-		if not slot9:isDone() and slot0.fightStepMO.toId == slot9.targetId and slot9.effectType == FightEnum.EffectType.BUFFADD and slot9.effectNum == slot0.buffId then
-			FightSkillBuffMgr.instance:playSkillBuff(slot0.fightStepMO, slot9)
-			FightDataHelper.playEffectData(slot9)
+function var_0_0.floatBuff(arg_3_0, arg_3_1)
+	local var_3_0 = FightEnum.EffectType.BUFFADD
+	local var_3_1 = arg_3_0.fightStepMO.toId
+	local var_3_2 = 0
 
-			if slot1 <= 0 + 1 then
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.fightStepMO.actEffectMOs) do
+		if not iter_3_1:isDone() and var_3_1 == iter_3_1.targetId and iter_3_1.effectType == var_3_0 and iter_3_1.effectNum == arg_3_0.buffId then
+			var_3_2 = var_3_2 + 1
+
+			FightSkillBuffMgr.instance:playSkillBuff(arg_3_0.fightStepMO, iter_3_1)
+			FightDataHelper.playEffectData(iter_3_1)
+
+			if arg_3_1 <= var_3_2 then
 				return
 			end
 		end
 	end
 end
 
-function slot0.getAddBuffFloatCount(slot0, slot1)
-	return slot1 and slot1[3] or 1
+function var_0_0.getAddBuffFloatCount(arg_4_0, arg_4_1)
+	return arg_4_1 and arg_4_1[3] or 1
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_5_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_6_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_7_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,157 +1,168 @@
-module("modules.logic.rouge.dlc.101.model.rpcmo.RougeLimiterClientMO", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeLimiterClientMO", package.seeall)
 
-slot0 = pureTable("RougeLimiterClientMO")
+local var_0_0 = pureTable("RougeLimiterClientMO")
 
-function slot0.init(slot0, slot1)
-	slot0:_onGetLimitIds(slot1.limitIds)
-	slot0:_onGetLimitBuffIds(slot1.limitBuffIds)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:_onGetLimitIds(arg_1_1.limitIds)
+	arg_1_0:_onGetLimitBuffIds(arg_1_1.limitBuffIds)
 end
 
-function slot0._onGetLimitIds(slot0, slot1)
-	slot0._limitIds = {}
-	slot0._limitIdMap = {}
-	slot0._limitGroupMap = {}
+function var_0_0._onGetLimitIds(arg_2_0, arg_2_1)
+	arg_2_0._limitIds = {}
+	arg_2_0._limitIdMap = {}
+	arg_2_0._limitGroupMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:_onGetLimitId(slot6)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		arg_2_0:_onGetLimitId(iter_2_1)
 	end
 end
 
-function slot0._onGetLimitId(slot0, slot1)
-	if not slot0._limitIdMap[slot1] then
-		slot0._limitIdMap[slot1] = true
-		slot0._limitGroupMap[RougeDLCConfig101.instance:getLimiterCo(slot1) and slot2.group] = slot1
+function var_0_0._onGetLimitId(arg_3_0, arg_3_1)
+	if not arg_3_0._limitIdMap[arg_3_1] then
+		local var_3_0 = RougeDLCConfig101.instance:getLimiterCo(arg_3_1)
+		local var_3_1 = var_3_0 and var_3_0.group
 
-		table.insert(slot0._limitIds, slot1)
+		arg_3_0._limitIdMap[arg_3_1] = true
+		arg_3_0._limitGroupMap[var_3_1] = arg_3_1
+
+		table.insert(arg_3_0._limitIds, arg_3_1)
 	end
 end
 
-function slot0._onRemoveLimitId(slot0, slot1)
-	if slot0._limitIdMap[slot1] then
-		slot0._limitIdMap[slot1] = nil
-		slot0._limitGroupMap[RougeDLCConfig101.instance:getLimiterCo(slot1) and slot2.group] = nil
+function var_0_0._onRemoveLimitId(arg_4_0, arg_4_1)
+	if arg_4_0._limitIdMap[arg_4_1] then
+		local var_4_0 = RougeDLCConfig101.instance:getLimiterCo(arg_4_1)
+		local var_4_1 = var_4_0 and var_4_0.group
 
-		tabletool.removeValue(slot0._limitIds, slot1)
+		arg_4_0._limitIdMap[arg_4_1] = nil
+		arg_4_0._limitGroupMap[var_4_1] = nil
+
+		tabletool.removeValue(arg_4_0._limitIds, arg_4_1)
 	end
 end
 
-function slot0._onGetLimitBuffIds(slot0, slot1)
-	slot0._limitBuffIds = {}
-	slot0._limitBuffIdMap = {}
-	slot0._limitBuffTypeMap = {}
+function var_0_0._onGetLimitBuffIds(arg_5_0, arg_5_1)
+	arg_5_0._limitBuffIds = {}
+	arg_5_0._limitBuffIdMap = {}
+	arg_5_0._limitBuffTypeMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:_onGetLimitBuffId(slot6)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		arg_5_0:_onGetLimitBuffId(iter_5_1)
 	end
 end
 
-function slot0._onGetLimitBuffId(slot0, slot1)
-	if not slot0._limitBuffIdMap[slot1] then
-		slot3 = RougeDLCConfig101.instance:getLimiterBuffCo(slot1).buffType
+function var_0_0._onGetLimitBuffId(arg_6_0, arg_6_1)
+	if not arg_6_0._limitBuffIdMap[arg_6_1] then
+		local var_6_0 = RougeDLCConfig101.instance:getLimiterBuffCo(arg_6_1).buffType
 
-		slot0:removeLimitBuffByType(slot3)
+		arg_6_0:removeLimitBuffByType(var_6_0)
 
-		slot0._limitBuffIdMap[slot1] = true
-		slot0._limitBuffTypeMap[slot3] = slot1
+		arg_6_0._limitBuffIdMap[arg_6_1] = true
+		arg_6_0._limitBuffTypeMap[var_6_0] = arg_6_1
 
-		table.insert(slot0._limitBuffIds, slot1)
+		table.insert(arg_6_0._limitBuffIds, arg_6_1)
 	end
 end
 
-function slot0._onRemoveLimitBuffId(slot0, slot1)
-	if slot0._limitBuffIdMap[slot1] then
-		slot0._limitBuffIdMap[slot1] = nil
-		slot0._limitBuffTypeMap[RougeDLCConfig101.instance:getLimiterBuffCo(slot1).buffType] = nil
+function var_0_0._onRemoveLimitBuffId(arg_7_0, arg_7_1)
+	if arg_7_0._limitBuffIdMap[arg_7_1] then
+		local var_7_0 = RougeDLCConfig101.instance:getLimiterBuffCo(arg_7_1).buffType
 
-		tabletool.removeValue(slot0._limitBuffIds, slot1)
+		arg_7_0._limitBuffIdMap[arg_7_1] = nil
+		arg_7_0._limitBuffTypeMap[var_7_0] = nil
+
+		tabletool.removeValue(arg_7_0._limitBuffIds, arg_7_1)
 	end
 end
 
-function slot0.removeLimitBuffByType(slot0, slot1)
-	slot0:_onRemoveLimitBuffId(slot0:getLimitBuffIdByType(slot1))
+function var_0_0.removeLimitBuffByType(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getLimitBuffIdByType(arg_8_1)
+
+	arg_8_0:_onRemoveLimitBuffId(var_8_0)
 end
 
-function slot0.getLimitBuffIdByType(slot0, slot1)
-	return slot0._limitBuffTypeMap and slot0._limitBuffTypeMap[slot1]
+function var_0_0.getLimitBuffIdByType(arg_9_0, arg_9_1)
+	return arg_9_0._limitBuffTypeMap and arg_9_0._limitBuffTypeMap[arg_9_1]
 end
 
-function slot0.getLimitBuffIds(slot0)
-	return slot0._limitBuffIds
+function var_0_0.getLimitBuffIds(arg_10_0)
+	return arg_10_0._limitBuffIds
 end
 
-function slot0.getLimitBuffIdsAndSortByType(slot0)
-	slot1 = {}
+function var_0_0.getLimitBuffIdsAndSortByType(arg_11_0)
+	local var_11_0 = {}
 
-	tabletool.addValues(slot1, slot0._limitBuffIds)
-	table.sort(slot1, uv0._sortLimitBuffIdByType)
+	tabletool.addValues(var_11_0, arg_11_0._limitBuffIds)
+	table.sort(var_11_0, var_0_0._sortLimitBuffIdByType)
 
-	return slot1
+	return var_11_0
 end
 
-function slot0._sortLimitBuffIdByType(slot0, slot1)
-	slot3 = RougeDLCConfig101.instance:getLimiterBuffCo(slot1)
+function var_0_0._sortLimitBuffIdByType(arg_12_0, arg_12_1)
+	local var_12_0 = RougeDLCConfig101.instance:getLimiterBuffCo(arg_12_0)
+	local var_12_1 = RougeDLCConfig101.instance:getLimiterBuffCo(arg_12_1)
 
-	if RougeDLCConfig101.instance:getLimiterBuffCo(slot0) and slot3 and slot2.buffType ~= slot3.buffType then
-		return slot2.buffType < slot3.buffType
+	if var_12_0 and var_12_1 and var_12_0.buffType ~= var_12_1.buffType then
+		return var_12_0.buffType < var_12_1.buffType
 	end
 
-	return slot2.id < slot3.id
+	return var_12_0.id < var_12_1.id
 end
 
-function slot0.getLimitBuffIdMap(slot0)
-	return slot0._limitBuffIdMap
+function var_0_0.getLimitBuffIdMap(arg_13_0)
+	return arg_13_0._limitBuffIdMap
 end
 
-function slot0.getLimitIds(slot0)
-	return slot0._limitIds
+function var_0_0.getLimitIds(arg_14_0)
+	return arg_14_0._limitIds
 end
 
-function slot0.getLimitIdMap(slot0)
-	return slot0._limitIdMap
+function var_0_0.getLimitIdMap(arg_15_0)
+	return arg_15_0._limitIdMap
 end
 
-function slot0.getLimitIdInGroup(slot0, slot1)
-	return slot0._limitGroupMap and slot0._limitGroupMap[slot1]
+function var_0_0.getLimitIdInGroup(arg_16_0, arg_16_1)
+	return arg_16_0._limitGroupMap and arg_16_0._limitGroupMap[arg_16_1]
 end
 
-function slot0.isSelectBuff(slot0, slot1)
-	return slot0._limitBuffIdMap and slot0._limitBuffIdMap[slot1] ~= nil
+function var_0_0.isSelectBuff(arg_17_0, arg_17_1)
+	return arg_17_0._limitBuffIdMap and arg_17_0._limitBuffIdMap[arg_17_1] ~= nil
 end
 
-function slot0.isSelectDebuff(slot0, slot1)
-	return slot0._limitIdMap and slot0._limitIdMap[slot1] ~= nil
+function var_0_0.isSelectDebuff(arg_18_0, arg_18_1)
+	return arg_18_0._limitIdMap and arg_18_0._limitIdMap[arg_18_1] ~= nil
 end
 
-function slot0.selectLimit(slot0, slot1, slot2)
-	if not RougeDLCConfig101.instance:getLimiterCo(slot1) then
+function var_0_0.selectLimit(arg_19_0, arg_19_1, arg_19_2)
+	if not RougeDLCConfig101.instance:getLimiterCo(arg_19_1) then
 		return
 	end
 
-	if slot2 then
-		slot0:_onGetLimitId(slot1)
+	if arg_19_2 then
+		arg_19_0:_onGetLimitId(arg_19_1)
 	else
-		slot0:_onRemoveLimitId(slot1)
+		arg_19_0:_onRemoveLimitId(arg_19_1)
 	end
 end
 
-function slot0.selectLimitBuff(slot0, slot1, slot2)
-	if not RougeDLCConfig101.instance:getLimiterBuffCo(slot1) then
+function var_0_0.selectLimitBuff(arg_20_0, arg_20_1, arg_20_2)
+	if not RougeDLCConfig101.instance:getLimiterBuffCo(arg_20_1) then
 		return
 	end
 
-	if slot2 then
-		slot0:_onGetLimitBuffId(slot1)
+	if arg_20_2 then
+		arg_20_0:_onGetLimitBuffId(arg_20_1)
 	else
-		slot0:_onRemoveLimitBuffId(slot1)
+		arg_20_0:_onRemoveLimitBuffId(arg_20_1)
 	end
 end
 
-function slot0.clearAllLimitIds(slot0)
-	slot0:_onGetLimitIds({})
+function var_0_0.clearAllLimitIds(arg_21_0)
+	arg_21_0:_onGetLimitIds({})
 end
 
-function slot0.clearAllLimitBuffIds(slot0)
-	slot0:_onGetLimitBuffIds({})
+function var_0_0.clearAllLimitBuffIds(arg_22_0)
+	arg_22_0:_onGetLimitBuffIds({})
 end
 
-return slot0
+return var_0_0

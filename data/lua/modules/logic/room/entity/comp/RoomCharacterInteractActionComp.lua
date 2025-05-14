@@ -1,296 +1,326 @@
-module("modules.logic.room.entity.comp.RoomCharacterInteractActionComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCharacterInteractActionComp", package.seeall)
 
-slot0 = class("RoomCharacterInteractActionComp", LuaCompBase)
+local var_0_0 = class("RoomCharacterInteractActionComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._scene = RoomCameraController.instance:getRoomScene()
-	slot0._followPathData = RoomVehicleFollowPathData.New(3)
-	slot0._roomVectorPool = RoomVectorPool.instance
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._scene = RoomCameraController.instance:getRoomScene()
+	arg_1_0._followPathData = RoomVehicleFollowPathData.New(3)
+	arg_1_0._roomVectorPool = RoomVectorPool.instance
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._scene = RoomCameraController.instance:getRoomScene()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._scene = RoomCameraController.instance:getRoomScene()
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
-	slot0:endIneract()
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0:removeEventListeners()
+	arg_5_0:endIneract()
 end
 
-function slot0.startMove(slot0)
+function var_0_0.startMove(arg_6_0)
+	return
 end
 
-function slot0._findPath(slot0, slot1, slot2, slot3)
-	slot0._moveToHeroPointName = slot3
+function var_0_0._findPath(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0._moveToHeroPointName = arg_7_3
 
-	if ZProj.AStarPathBridge.HasPossiblePath(slot1, slot2, slot0.entity.charactermove:getSeeker():GetTag()) then
-		slot0._scene.path:tryGetPath(slot0.entity:getMO(), slot1, slot2, slot0._onPathCall, slot0)
+	local var_7_0 = arg_7_0.entity.charactermove:getSeeker()
+
+	if ZProj.AStarPathBridge.HasPossiblePath(arg_7_1, arg_7_2, var_7_0:GetTag()) then
+		arg_7_0._scene.path:tryGetPath(arg_7_0.entity:getMO(), arg_7_1, arg_7_2, arg_7_0._onPathCall, arg_7_0)
 
 		return
 	else
-		slot0:_tryPlacePointByName(slot0._moveToHeroPointName)
+		arg_7_0:_tryPlacePointByName(arg_7_0._moveToHeroPointName)
 	end
 end
 
-function slot0._onPathCall(slot0, slot1, slot2, slot3, slot4)
-	if not slot3 then
-		slot0:_setPathDataPosList(slot0._roomVectorPool:packPosList(slot2))
+function var_0_0._onPathCall(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	if not arg_8_3 then
+		local var_8_0 = arg_8_0._roomVectorPool:packPosList(arg_8_2)
+
+		arg_8_0:_setPathDataPosList(var_8_0)
 	else
-		slot0:_setPathDataPosList(nil)
-		logNormal("Room pathfinding Error : " .. tostring(slot4))
+		arg_8_0:_setPathDataPosList(nil)
+		logNormal("Room pathfinding Error : " .. tostring(arg_8_4))
 	end
 
-	if slot0._followPathData:getPosCount() > 0 then
-		slot0:_killTween()
+	if arg_8_0._followPathData:getPosCount() > 0 then
+		local var_8_1 = arg_8_0.entity:getMO():getMoveSpeed() * 0.2
 
-		slot0._moveFromPosition = slot0._followPathData:getFirstPos()
-		slot0._tweenMoveId = slot0._scene.tween:tweenFloat(0, 1, slot0._followPathData:getPathDistance() / (slot0.entity:getMO():getMoveSpeed() * 0.2), slot0._frameMoveCallback, slot0._finishMoveCallback, slot0)
+		arg_8_0:_killTween()
 
-		slot0:_clearResetXYZ()
+		local var_8_2 = arg_8_0._followPathData:getPathDistance() / var_8_1
+
+		arg_8_0._moveFromPosition = arg_8_0._followPathData:getFirstPos()
+		arg_8_0._tweenMoveId = arg_8_0._scene.tween:tweenFloat(0, 1, var_8_2, arg_8_0._frameMoveCallback, arg_8_0._finishMoveCallback, arg_8_0)
+
+		arg_8_0:_clearResetXYZ()
 	else
-		slot0:_tryPlacePointByName(slot0._moveToHeroPointName)
+		arg_8_0:_tryPlacePointByName(arg_8_0._moveToHeroPointName)
 	end
 end
 
-function slot0._setPathDataPosList(slot0, slot1)
-	if slot0._followPathData:getPosCount() > 0 then
-		for slot6, slot7 in ipairs(slot0._followPathData._pathPosList) do
-			slot0._roomVectorPool:recycle(slot7)
+function var_0_0._setPathDataPosList(arg_9_0, arg_9_1)
+	if arg_9_0._followPathData:getPosCount() > 0 then
+		local var_9_0 = arg_9_0._followPathData._pathPosList
+
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			arg_9_0._roomVectorPool:recycle(iter_9_1)
 		end
 
-		slot0._followPathData:clear()
+		arg_9_0._followPathData:clear()
 	end
 
-	if slot1 and #slot1 > 0 then
-		for slot5 = #slot1, 1, -1 do
-			slot0._followPathData:addPathPos(slot1[slot5])
+	if arg_9_1 and #arg_9_1 > 0 then
+		for iter_9_2 = #arg_9_1, 1, -1 do
+			arg_9_0._followPathData:addPathPos(arg_9_1[iter_9_2])
 		end
 	end
 end
 
-function slot0._killTween(slot0)
-	if slot0._tweenMoveId then
-		slot0._scene.tween:killById(slot0._tweenMoveId)
+function var_0_0._killTween(arg_10_0)
+	if arg_10_0._tweenMoveId then
+		arg_10_0._scene.tween:killById(arg_10_0._tweenMoveId)
 
-		slot0._tweenMoveId = nil
+		arg_10_0._tweenMoveId = nil
 	end
 end
 
-function slot0._framePointCallback(slot0, slot1, slot2)
-	if not slot0._buildingEntity.interactComp:getPointGOTrsByName(slot0._interactHeroPointName) then
+function var_0_0._framePointCallback(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0._buildingEntity.interactComp:getPointGOTrsByName(arg_11_0._interactHeroPointName)
+
+	if not var_11_0 then
 		return
 	end
 
-	slot0._isUpdatePointPiont = true
-	slot4, slot5, slot6 = transformhelper.getPos(slot3)
+	arg_11_0._isUpdatePointPiont = true
 
-	slot0.entity:setLocalPos(slot4, slot5, slot6)
+	local var_11_1, var_11_2, var_11_3 = transformhelper.getPos(var_11_0)
+
+	arg_11_0.entity:setLocalPos(var_11_1, var_11_2, var_11_3)
 end
 
-function slot0._frameMoveCallback(slot0, slot1, slot2)
-	slot4 = slot0._followPathData:getPosByDistance(slot0._followPathData:getPathDistance() * slot1)
-	slot0._moveFromPosition = slot4
+function var_0_0._frameMoveCallback(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._followPathData:getPathDistance() * arg_12_1
+	local var_12_1 = arg_12_0._followPathData:getPosByDistance(var_12_0)
+	local var_12_2 = arg_12_0._moveFromPosition
 
-	slot0.entity.charactermove:forcePositionAndLookDir(slot4, slot0.entity.charactermove:getMoveToLookDirByPos(slot0._moveFromPosition, slot4), RoomCharacterEnum.CharacterMoveState.Move)
-	slot0:_setMOPosXYZ(slot4.x, slot4.y, slot4.z)
+	arg_12_0._moveFromPosition = var_12_1
+
+	arg_12_0.entity.charactermove:forcePositionAndLookDir(var_12_1, arg_12_0.entity.charactermove:getMoveToLookDirByPos(var_12_2, var_12_1), RoomCharacterEnum.CharacterMoveState.Move)
+	arg_12_0:_setMOPosXYZ(var_12_1.x, var_12_1.y, var_12_1.z)
 end
 
-function slot0._finishMoveCallback(slot0, slot1, slot2)
-	slot0.entity.charactermove:clearForcePositionAndLookDir()
-	slot0.entity.characterspine:changeMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+function var_0_0._finishMoveCallback(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0.entity.charactermove:clearForcePositionAndLookDir()
+	arg_13_0.entity.characterspine:changeMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 end
 
-function slot0._finishCallback(slot0, slot1, slot2)
+function var_0_0._finishCallback(arg_14_0, arg_14_1, arg_14_2)
+	return
 end
 
-function slot0.startInteract(slot0, slot1, slot2, slot3)
-	slot0._siteId = slot2
-	slot0._buildingUid = slot1
-	slot0._buildingEntity = slot0._scene.buildingmgr:getBuildingEntity(slot1)
-	slot0._buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(slot1)
-	slot0._interactHeroPointName = RoomEnum.EntityChildKey.CritterPointList[slot2]
-	slot0._interactStartPointName = RoomEnum.EntityChildKey.InteractStartPointList[slot2]
-	slot0._interactBuildingMO = slot0._buildingMO:getInteractMO()
-	slot0._isFindPath = slot0._interactBuildingMO:isFindPath()
-	slot0._showTime = slot3
+function var_0_0.startInteract(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_0._siteId = arg_15_2
+	arg_15_0._buildingUid = arg_15_1
+	arg_15_0._buildingEntity = arg_15_0._scene.buildingmgr:getBuildingEntity(arg_15_1)
+	arg_15_0._buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(arg_15_1)
+	arg_15_0._interactHeroPointName = RoomEnum.EntityChildKey.CritterPointList[arg_15_2]
+	arg_15_0._interactStartPointName = RoomEnum.EntityChildKey.InteractStartPointList[arg_15_2]
+	arg_15_0._interactBuildingMO = arg_15_0._buildingMO:getInteractMO()
+	arg_15_0._isFindPath = arg_15_0._interactBuildingMO:isFindPath()
+	arg_15_0._showTime = arg_15_3
 
-	if not slot0._resetPosX then
-		slot4, slot5, slot6 = slot0.entity:getLocalPosXYZ()
+	if not arg_15_0._resetPosX then
+		local var_15_0, var_15_1, var_15_2 = arg_15_0.entity:getLocalPosXYZ()
 
-		slot0:_setResetXYZ(slot4, slot5, slot6)
+		arg_15_0:_setResetXYZ(var_15_0, var_15_1, var_15_2)
 	end
 
-	slot4 = math.random() * 0.5
-	slot0._characterMO = slot0.entity:getMO()
+	local var_15_3 = math.random() * 0.5
 
-	if slot0._characterMO then
-		slot0._characterMO:setLockTime(slot3 + slot4)
-		slot0._characterMO:setIsFreeze(true)
+	arg_15_0._characterMO = arg_15_0.entity:getMO()
+
+	if arg_15_0._characterMO then
+		arg_15_0._characterMO:setLockTime(arg_15_3 + var_15_3)
+		arg_15_0._characterMO:setIsFreeze(true)
 	end
 
-	slot0:_killTween()
-	slot0:_stopFinishTask()
-	slot0:_startFinishTask(slot3 + slot4 + 0.1)
-	TaskDispatcher.cancelTask(slot0._onStartInteract, slot0)
-	TaskDispatcher.runDelay(slot0._onStartInteract, slot0, slot4)
+	arg_15_0:_killTween()
+	arg_15_0:_stopFinishTask()
+	arg_15_0:_startFinishTask(arg_15_3 + var_15_3 + 0.1)
+	TaskDispatcher.cancelTask(arg_15_0._onStartInteract, arg_15_0)
+	TaskDispatcher.runDelay(arg_15_0._onStartInteract, arg_15_0, var_15_3)
 end
 
-function slot0._onStartInteract(slot0)
-	if slot0._isFindPath then
-		slot1, slot2, slot3 = slot0:_getPosXYZByPointName(slot0._interactStartPointName)
-		slot4, slot5, slot6 = slot0:_getPosXYZByPointName(slot0._interactHeroPointName)
+function var_0_0._onStartInteract(arg_16_0)
+	if arg_16_0._isFindPath then
+		local var_16_0, var_16_1, var_16_2 = arg_16_0:_getPosXYZByPointName(arg_16_0._interactStartPointName)
+		local var_16_3, var_16_4, var_16_5 = arg_16_0:_getPosXYZByPointName(arg_16_0._interactHeroPointName)
 
-		if slot1 and slot4 then
-			slot0:_tryPlacePointByName(slot0._interactStartPointName)
-			slot0:_findPath(Vector3(slot1, slot2, slot3), Vector3(slot4, slot5, slot6), slot0._interactHeroPointName)
+		if var_16_0 and var_16_3 then
+			arg_16_0:_tryPlacePointByName(arg_16_0._interactStartPointName)
+			arg_16_0:_findPath(Vector3(var_16_0, var_16_1, var_16_2), Vector3(var_16_3, var_16_4, var_16_5), arg_16_0._interactHeroPointName)
 		else
-			slot0:_tryPlacePointByName(slot0._interactHeroPointName)
+			arg_16_0:_tryPlacePointByName(arg_16_0._interactHeroPointName)
 		end
 	else
-		slot0:_tryPlacePointByName(slot0._interactHeroPointName)
+		arg_16_0:_tryPlacePointByName(arg_16_0._interactHeroPointName)
 
-		slot0._tweenMoveId = slot0._scene.tween:tweenFloat(0, 1, slot0._showTime, slot0._framePointCallback, slot0._finishCallback, slot0)
+		arg_16_0._tweenMoveId = arg_16_0._scene.tween:tweenFloat(0, 1, arg_16_0._showTime, arg_16_0._framePointCallback, arg_16_0._finishCallback, arg_16_0)
 	end
 end
 
-function slot0.endIneract(slot0)
-	slot0._buildingUid = nil
-	slot0._buildingEntity = nil
+function var_0_0.endIneract(arg_17_0)
+	arg_17_0._buildingUid = nil
+	arg_17_0._buildingEntity = nil
 
-	if slot0._characterMO then
-		slot0._characterMO:setIsFreeze(false)
+	if arg_17_0._characterMO then
+		arg_17_0._characterMO:setIsFreeze(false)
 	end
 
-	slot0:_resetMOPosXYZ()
-	slot0:_killTween()
-	slot0:_stopFinishTask()
-	slot0:_clearResetXYZ()
-	TaskDispatcher.cancelTask(slot0._onStartInteract, slot0)
+	arg_17_0:_resetMOPosXYZ()
+	arg_17_0:_killTween()
+	arg_17_0:_stopFinishTask()
+	arg_17_0:_clearResetXYZ()
+	TaskDispatcher.cancelTask(arg_17_0._onStartInteract, arg_17_0)
 end
 
-function slot0._clearResetXYZ(slot0)
-	slot0:_setResetXYZ(nil, , )
+function var_0_0._clearResetXYZ(arg_18_0)
+	arg_18_0:_setResetXYZ(nil, nil, nil)
 end
 
-function slot0._setResetXYZ(slot0, slot1, slot2, slot3)
-	slot0._resetPosZ = slot3
-	slot0._resetPosY = slot2
-	slot0._resetPosX = slot1
+function var_0_0._setResetXYZ(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	arg_19_0._resetPosX, arg_19_0._resetPosY, arg_19_0._resetPosZ = arg_19_1, arg_19_2, arg_19_3
 end
 
-function slot0._resetMOPosXYZ(slot0)
-	if slot0._resetPosX then
-		slot0:_setMOPosXYZ(slot0._resetPosX, slot0._resetPosY, slot0._resetPosZ)
+function var_0_0._resetMOPosXYZ(arg_20_0)
+	if arg_20_0._resetPosX then
+		arg_20_0:_setMOPosXYZ(arg_20_0._resetPosX, arg_20_0._resetPosY, arg_20_0._resetPosZ)
 	end
 
-	slot0:_clearResetXYZ()
+	arg_20_0:_clearResetXYZ()
 end
 
-function slot0._setMOPosXYZ(slot0, slot1, slot2, slot3)
-	if slot0._characterMO then
-		slot0._characterMO:setPositionXYZ(slot1, slot2, slot3)
+function var_0_0._setMOPosXYZ(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	if arg_21_0._characterMO then
+		arg_21_0._characterMO:setPositionXYZ(arg_21_1, arg_21_2, arg_21_3)
 	end
 end
 
-function slot0._stopFinishTask(slot0)
-	if slot0._isHasInteractFinishTask then
-		slot0._isHasInteractFinishTask = false
+function var_0_0._stopFinishTask(arg_22_0)
+	if arg_22_0._isHasInteractFinishTask then
+		arg_22_0._isHasInteractFinishTask = false
 
-		TaskDispatcher.cancelTask(slot0._onIneractFinish, slot0)
+		TaskDispatcher.cancelTask(arg_22_0._onIneractFinish, arg_22_0)
 	end
 end
 
-function slot0._startFinishTask(slot0, slot1)
-	if not slot0._isHasInteractFinishTask then
-		slot0._isHasInteractFinishTask = true
+function var_0_0._startFinishTask(arg_23_0, arg_23_1)
+	if not arg_23_0._isHasInteractFinishTask then
+		arg_23_0._isHasInteractFinishTask = true
 
-		TaskDispatcher.runDelay(slot0._onIneractFinish, slot0, slot1)
+		TaskDispatcher.runDelay(arg_23_0._onIneractFinish, arg_23_0, arg_23_1)
 	end
 end
 
-function slot0._onIneractFinish(slot0)
-	slot0._isHasInteractFinishTask = false
+function var_0_0._onIneractFinish(arg_24_0)
+	arg_24_0._isHasInteractFinishTask = false
 
-	slot0:_killTween()
-	slot0:_resetMOPosXYZ()
+	arg_24_0:_killTween()
+	arg_24_0:_resetMOPosXYZ()
 
-	if slot0._isFindPath then
-		slot1, slot2, slot3 = transformhelper.getPos(slot0.entity.goTrs)
-		slot4, slot5, slot6 = slot0:_getPosXYZByPointName(slot0._interactStartPointName)
+	if arg_24_0._isFindPath then
+		local var_24_0, var_24_1, var_24_2 = transformhelper.getPos(arg_24_0.entity.goTrs)
+		local var_24_3, var_24_4, var_24_5 = arg_24_0:_getPosXYZByPointName(arg_24_0._interactStartPointName)
 
-		if slot1 and slot4 then
-			slot0:_findPath(Vector3(slot1, slot2, slot3), Vector3(slot4, slot5, slot6), slot0._interactStartPointName)
+		if var_24_0 and var_24_3 then
+			arg_24_0:_findPath(Vector3(var_24_0, var_24_1, var_24_2), Vector3(var_24_3, var_24_4, var_24_5), arg_24_0._interactStartPointName)
 		else
-			slot0:_tryPlacePointByName(slot0._interactStartPointName, true)
+			arg_24_0:_tryPlacePointByName(arg_24_0._interactStartPointName, true)
 		end
 	else
-		slot0:_tryPlacePointByName(slot0._interactStartPointName, true)
+		arg_24_0:_tryPlacePointByName(arg_24_0._interactStartPointName, true)
 	end
 
-	if slot0._characterMO then
-		slot0._characterMO:setIsFreeze(false)
+	if arg_24_0._characterMO then
+		arg_24_0._characterMO:setIsFreeze(false)
 	end
 end
 
-function slot0.getIneractBuildingUid(slot0)
-	return slot0._buildingUid
+function var_0_0.getIneractBuildingUid(arg_25_0)
+	return arg_25_0._buildingUid
 end
 
-function slot0._getPosXYZByPointName(slot0, slot1)
-	if not slot0._buildingEntity then
+function var_0_0._getPosXYZByPointName(arg_26_0, arg_26_1)
+	if not arg_26_0._buildingEntity then
 		return
 	end
 
-	if not slot0._buildingEntity.interactComp:getPointGOTrsByName(slot1) then
+	local var_26_0 = arg_26_0._buildingEntity.interactComp:getPointGOTrsByName(arg_26_1)
+
+	if not var_26_0 then
 		return
 	end
 
-	return transformhelper.getPos(slot2)
+	return transformhelper.getPos(var_26_0)
 end
 
-function slot0._tryPlacePointByName(slot0, slot1, slot2)
-	slot3, slot4, slot5 = slot0:_getPosXYZByPointName(slot1)
+function var_0_0._tryPlacePointByName(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0, var_27_1, var_27_2 = arg_27_0:_getPosXYZByPointName(arg_27_1)
 
-	if not slot3 then
+	if not var_27_0 then
 		return
 	end
 
-	if slot2 ~= true then
-		slot0:_setMOPosXYZ(slot3, slot4, slot5)
+	if arg_27_2 ~= true then
+		arg_27_0:_setMOPosXYZ(var_27_0, var_27_1, var_27_2)
 	end
 
-	slot0._toPosition = Vector3(slot3, slot4, slot5)
-	slot0._playingAnimName = "out"
+	arg_27_0._toPosition = Vector3(var_27_0, var_27_1, var_27_2)
+	arg_27_0._playingAnimName = "out"
 
-	slot0:_playPlaceEffect(slot3, slot4, slot5, slot0._scene.camera:getCameraRotate() * Mathf.Rad2Deg, "left")
-	slot0.entity.characterspine:playAnim(RoomScenePreloader.ResAnim.PlaceCharacter, slot0._playingAnimName, 0, slot0._moveEntity, slot0)
-	slot0.entity.charactermove:forcePositionAndLookDir(slot0._toPosition, slot0.entity.characterspine:getLookDir(), RoomCharacterEnum.CharacterMoveState.Move)
+	local var_27_3 = arg_27_0.entity.characterspine:getLookDir()
+	local var_27_4 = arg_27_0._scene.camera:getCameraRotate() * Mathf.Rad2Deg
+
+	arg_27_0:_playPlaceEffect(var_27_0, var_27_1, var_27_2, var_27_4, "left")
+	arg_27_0.entity.characterspine:playAnim(RoomScenePreloader.ResAnim.PlaceCharacter, arg_27_0._playingAnimName, 0, arg_27_0._moveEntity, arg_27_0)
+	arg_27_0.entity.charactermove:forcePositionAndLookDir(arg_27_0._toPosition, var_27_3, RoomCharacterEnum.CharacterMoveState.Move)
 end
 
-function slot0._moveEntity(slot0)
-	slot0.entity.charactermove:clearForcePositionAndLookDir()
-	slot0.entity.characterspine:changeMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+function var_0_0._moveEntity(arg_28_0)
+	arg_28_0.entity.charactermove:clearForcePositionAndLookDir()
+	arg_28_0.entity.characterspine:changeMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 end
 
-function slot0._playPlaceEffect(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0._scene.go:spawnEffect(RoomScenePreloader.ResEffectPlaceCharacter, nil, "placeCharacterEffect", nil, 2) then
-		slot7 = slot6.transform
+function var_0_0._playPlaceEffect(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
+	local var_29_0 = arg_29_0._scene.go:spawnEffect(RoomScenePreloader.ResEffectPlaceCharacter, nil, "placeCharacterEffect", nil, 2)
 
-		transformhelper.setPos(slot7, slot1, slot2, slot3)
-		transformhelper.setLocalRotation(slot7, 0, slot4, 0)
+	if var_29_0 then
+		local var_29_1 = var_29_0.transform
 
-		if not string.nilorempty(slot5) and gohelper.findChildComponent(slot6, "anim", RoomEnum.ComponentType.Animator) then
-			slot8:Play(slot5)
+		transformhelper.setPos(var_29_1, arg_29_1, arg_29_2, arg_29_3)
+		transformhelper.setLocalRotation(var_29_1, 0, arg_29_4, 0)
+
+		if not string.nilorempty(arg_29_5) then
+			local var_29_2 = gohelper.findChildComponent(var_29_0, "anim", RoomEnum.ComponentType.Animator)
+
+			if var_29_2 then
+				var_29_2:Play(arg_29_5)
+			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

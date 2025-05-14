@@ -1,32 +1,32 @@
-module("modules.logic.room.view.RoomSceneTaskDetailViewContainer", package.seeall)
+﻿module("modules.logic.room.view.RoomSceneTaskDetailViewContainer", package.seeall)
 
-slot0 = class("RoomSceneTaskDetailViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomSceneTaskDetailViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomSceneTaskDetailView.New())
-	table.insert(slot1, RoomViewTopRight.New())
+	table.insert(var_1_0, RoomSceneTaskDetailView.New())
+	table.insert(var_1_0, RoomViewTopRight.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-return slot0
+return var_0_0

@@ -1,106 +1,115 @@
-module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5RevivalTaskModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5RevivalTaskModel", package.seeall)
 
-slot0 = class("VersionActivity1_5RevivalTaskModel", BaseModel)
+local var_0_0 = class("VersionActivity1_5RevivalTaskModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0.playedIdList = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.playedIdList = nil
 end
 
-function slot0.updateExploreTaskInfo(slot0, slot1)
-	slot0.heroTaskMoList = slot0.heroTaskMoList or {}
+function var_0_0.updateExploreTaskInfo(arg_3_0, arg_3_1)
+	arg_3_0.heroTaskMoList = arg_3_0.heroTaskMoList or {}
 
 	if not DungeonModel.instance:hasPassLevelAndStory(VersionActivity1_5DungeonConfig.instance.exploreTaskUnlockEpisodeId) then
 		return
 	end
 
-	if not slot0:getTaskMo(VersionActivity1_5DungeonEnum.ExploreTaskId) then
-		slot2 = VersionActivity1_5HeroTaskMo.New()
+	local var_3_0 = arg_3_0:getTaskMo(VersionActivity1_5DungeonEnum.ExploreTaskId)
 
-		slot2:initByCo({
+	if not var_3_0 then
+		var_3_0 = VersionActivity1_5HeroTaskMo.New()
+
+		var_3_0:initByCo({
 			id = VersionActivity1_5DungeonEnum.ExploreTaskId,
 			preEpisodeId = VersionActivity1_5DungeonConfig.instance:getExploreUnlockEpisodeId(),
 			toastId = VersionActivity1_5DungeonConfig.instance.exploreTaskLockToastId
 		})
-		table.insert(slot0.heroTaskMoList, slot2)
+		table.insert(arg_3_0.heroTaskMoList, var_3_0)
 	end
 
-	slot2:updateGainedReward(slot1)
+	var_3_0:updateGainedReward(arg_3_1)
 end
 
-function slot0.updateHeroTaskInfos(slot0, slot1)
-	slot0.heroTaskMoList = slot0.heroTaskMoList or {}
+function var_0_0.updateHeroTaskInfos(arg_4_0, arg_4_1)
+	arg_4_0.heroTaskMoList = arg_4_0.heroTaskMoList or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0:getTaskMo(slot6.id) then
-			slot7 = VersionActivity1_5HeroTaskMo.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_0 = arg_4_0:getTaskMo(iter_4_1.id)
 
-			slot7:initById(slot6.id)
-			table.insert(slot0.heroTaskMoList, slot7)
+		if not var_4_0 then
+			var_4_0 = VersionActivity1_5HeroTaskMo.New()
+
+			var_4_0:initById(iter_4_1.id)
+			table.insert(arg_4_0.heroTaskMoList, var_4_0)
 		end
 
-		slot7:updateGainedReward(slot6.gainedReward)
-		slot7:updateSubHeroTaskGainedReward(slot6.gainedSubTaskIds)
+		var_4_0:updateGainedReward(iter_4_1.gainedReward)
+		var_4_0:updateSubHeroTaskGainedReward(iter_4_1.gainedSubTaskIds)
 	end
 end
 
-function slot0.getTaskMoList(slot0)
-	return slot0.heroTaskMoList
+function var_0_0.getTaskMoList(arg_5_0)
+	return arg_5_0.heroTaskMoList
 end
 
-function slot0.getTaskMo(slot0, slot1)
-	if not slot0.heroTaskMoList then
+function var_0_0.getTaskMo(arg_6_0, arg_6_1)
+	if not arg_6_0.heroTaskMoList then
 		return nil
 	end
 
-	for slot5, slot6 in ipairs(slot0.heroTaskMoList) do
-		if slot6.id == slot1 then
-			return slot6
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.heroTaskMoList) do
+		if iter_6_1.id == arg_6_1 then
+			return iter_6_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.setSelectHeroTaskId(slot0, slot1)
-	if slot1 == slot0.selectTaskId then
+function var_0_0.setSelectHeroTaskId(arg_7_0, arg_7_1)
+	if arg_7_1 == arg_7_0.selectTaskId then
 		return
 	end
 
-	slot0.selectTaskId = slot1
+	arg_7_0.selectTaskId = arg_7_1
 
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.SelectHeroTaskTabChange)
 end
 
-function slot0.getSelectHeroTaskId(slot0)
-	return slot0.selectTaskId
+function var_0_0.getSelectHeroTaskId(arg_8_0)
+	return arg_8_0.selectTaskId
 end
 
-function slot0.getSubHeroTaskStatus(slot0, slot1)
-	if slot0:checkSubHeroTaskGainedReward(slot1) then
+function var_0_0.getSubHeroTaskStatus(arg_9_0, arg_9_1)
+	if arg_9_0:checkSubHeroTaskGainedReward(arg_9_1) then
 		return VersionActivity1_5DungeonEnum.SubHeroTaskStatus.GainedReward
 	end
 
-	if slot0:checkSubHeroTaskIsFinish(slot1) then
+	if arg_9_0:checkSubHeroTaskIsFinish(arg_9_1) then
 		return VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished
 	end
 
-	if slot0:checkSubHeroTaskIsUnlock(slot1) then
+	if arg_9_0:checkSubHeroTaskIsUnlock(arg_9_1) then
 		return VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal
 	end
 
 	return VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock
 end
 
-function slot0.checkSubHeroTaskGainedReward(slot0, slot1)
-	return slot0:getTaskMo(slot1.taskId) and slot2:subTaskIsGainedReward(slot1.id)
+function var_0_0.checkSubHeroTaskGainedReward(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getTaskMo(arg_10_1.taskId)
+
+	return var_10_0 and var_10_0:subTaskIsGainedReward(arg_10_1.id)
 end
 
-function slot0.checkSubHeroTaskIsFinish(slot0, slot1)
-	for slot6, slot7 in ipairs(string.splitToNumber(slot1.elementIds, "#")) do
-		if not DungeonMapModel.instance:elementIsFinished(slot7) then
+function var_0_0.checkSubHeroTaskIsFinish(arg_11_0, arg_11_1)
+	local var_11_0 = string.splitToNumber(arg_11_1.elementIds, "#")
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_11_1) then
 			return false
 		end
 	end
@@ -108,29 +117,35 @@ function slot0.checkSubHeroTaskIsFinish(slot0, slot1)
 	return true
 end
 
-function slot0.checkSubHeroTaskIsUnlock(slot0, slot1)
-	if slot1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishElement then
-		return slot0:_checkFinishElement(tonumber(slot1.unlockParam))
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishEpisode then
-		return slot0:_checkFinishEpisode(tonumber(slot2))
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishSubHeroTask then
-		return slot0:_checkFinishSubTask(tonumber(slot2))
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishElementAndEpisode then
-		return slot0:_checkFinishElement(string.splitToNumber(slot2, "#")[1]) and slot0:_checkFinishEpisode(slot3[2])
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishSubHeroTaskAndEpisode then
-		return slot0:_checkFinishSubTask(string.splitToNumber(slot2, "#")[1]) and slot0:_checkFinishEpisode(slot3[2])
+function var_0_0.checkSubHeroTaskIsUnlock(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.unlockParam
+
+	if arg_12_1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishElement then
+		return arg_12_0:_checkFinishElement(tonumber(var_12_0))
+	elseif arg_12_1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishEpisode then
+		return arg_12_0:_checkFinishEpisode(tonumber(var_12_0))
+	elseif arg_12_1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishSubHeroTask then
+		return arg_12_0:_checkFinishSubTask(tonumber(var_12_0))
+	elseif arg_12_1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishElementAndEpisode then
+		local var_12_1 = string.splitToNumber(var_12_0, "#")
+
+		return arg_12_0:_checkFinishElement(var_12_1[1]) and arg_12_0:_checkFinishEpisode(var_12_1[2])
+	elseif arg_12_1.unlockType == VersionActivity1_5DungeonEnum.SubHeroTaskUnLockType.FinishSubHeroTaskAndEpisode then
+		local var_12_2 = string.splitToNumber(var_12_0, "#")
+
+		return arg_12_0:_checkFinishSubTask(var_12_2[1]) and arg_12_0:_checkFinishEpisode(var_12_2[2])
 	else
 		return true
 	end
 end
 
-function slot0._checkFinishElement(slot0, slot1)
-	return DungeonMapModel.instance:elementIsFinished(slot1)
+function var_0_0._checkFinishElement(arg_13_0, arg_13_1)
+	return DungeonMapModel.instance:elementIsFinished(arg_13_1)
 end
 
-function slot0._checkFinishAnyOneElement(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0:_checkFinishElement(slot6) then
+function var_0_0._checkFinishAnyOneElement(arg_14_0, arg_14_1)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		if arg_14_0:_checkFinishElement(iter_14_1) then
 			return true
 		end
 	end
@@ -138,56 +153,64 @@ function slot0._checkFinishAnyOneElement(slot0, slot1)
 	return false
 end
 
-function slot0._checkFinishEpisode(slot0, slot1)
-	return DungeonModel.instance:getEpisodeInfo(slot1) and DungeonEnum.StarType.Normal <= slot2.star
+function var_0_0._checkFinishEpisode(arg_15_0, arg_15_1)
+	local var_15_0 = DungeonModel.instance:getEpisodeInfo(arg_15_1)
+
+	return var_15_0 and var_15_0.star >= DungeonEnum.StarType.Normal
 end
 
-function slot0._checkFinishSubTask(slot0, slot1)
-	return lua_act139_sub_hero_task.configDict[slot1] and VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished <= slot0:getSubHeroTaskStatus(slot2)
+function var_0_0._checkFinishSubTask(arg_16_0, arg_16_1)
+	local var_16_0 = lua_act139_sub_hero_task.configDict[arg_16_1]
+
+	return var_16_0 and arg_16_0:getSubHeroTaskStatus(var_16_0) >= VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished
 end
 
-function slot0.gainedExploreTaskReward(slot0)
-	slot0:getTaskMo(VersionActivity1_5DungeonEnum.ExploreTaskId):updateGainedReward(true)
+function var_0_0.gainedExploreTaskReward(arg_17_0)
+	arg_17_0:getTaskMo(VersionActivity1_5DungeonEnum.ExploreTaskId):updateGainedReward(true)
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnGainedExploreReward)
 end
 
-function slot0.gainedHeroTaskReward(slot0, slot1)
-	slot0:getTaskMo(slot1):updateGainedReward(true)
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnGainedHeroTaskReward, slot1)
+function var_0_0.gainedHeroTaskReward(arg_18_0, arg_18_1)
+	arg_18_0:getTaskMo(arg_18_1):updateGainedReward(true)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnGainedHeroTaskReward, arg_18_1)
 end
 
-function slot0.gainedSubTaskReward(slot0, slot1)
-	slot0:getTaskMo(lua_act139_sub_hero_task.configDict[slot1].taskId):gainedSubHeroTaskId(slot1)
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward, slot1)
+function var_0_0.gainedSubTaskReward(arg_19_0, arg_19_1)
+	local var_19_0 = lua_act139_sub_hero_task.configDict[arg_19_1]
+
+	arg_19_0:getTaskMo(var_19_0.taskId):gainedSubHeroTaskId(arg_19_1)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward, arg_19_1)
 end
 
-function slot0.checkExploreTaskGainedTotalReward(slot0)
-	return slot0:getTaskMo(VersionActivity1_5DungeonEnum.ExploreTaskId) and slot1.gainedReward
+function var_0_0.checkExploreTaskGainedTotalReward(arg_20_0)
+	local var_20_0 = arg_20_0:getTaskMo(VersionActivity1_5DungeonEnum.ExploreTaskId)
+
+	return var_20_0 and var_20_0.gainedReward
 end
 
-function slot0.getExploreTaskStatus(slot0, slot1)
-	if not slot0:checkExploreTaskUnlock(slot1) then
+function var_0_0.getExploreTaskStatus(arg_21_0, arg_21_1)
+	if not arg_21_0:checkExploreTaskUnlock(arg_21_1) then
 		return VersionActivity1_5DungeonEnum.ExploreTaskStatus.Lock
 	end
 
-	if slot0:checkExploreTaskRunning(slot1) then
+	if arg_21_0:checkExploreTaskRunning(arg_21_1) then
 		return VersionActivity1_5DungeonEnum.ExploreTaskStatus.Running
 	end
 
-	if slot0:checkExploreTaskGainedReward(slot1) then
+	if arg_21_0:checkExploreTaskGainedReward(arg_21_1) then
 		return VersionActivity1_5DungeonEnum.ExploreTaskStatus.GainedReward
 	end
 
-	if slot0:checkExploreTaskFinish(slot1) then
+	if arg_21_0:checkExploreTaskFinish(arg_21_1) then
 		return VersionActivity1_5DungeonEnum.ExploreTaskStatus.Finished
 	end
 
 	return VersionActivity1_5DungeonEnum.ExploreTaskStatus.Normal
 end
 
-function slot0.checkExploreTaskGainedReward(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.elementList) do
-		if not DungeonMapModel.instance:elementIsFinished(slot6) then
+function var_0_0.checkExploreTaskGainedReward(arg_22_0, arg_22_1)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_1.elementList) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_22_1) then
 			return false
 		end
 	end
@@ -195,121 +218,147 @@ function slot0.checkExploreTaskGainedReward(slot0, slot1)
 	return true
 end
 
-function slot0.checkExploreTaskFinish(slot0, slot1)
-	slot2 = slot1.elementList[1]
+function var_0_0.checkExploreTaskFinish(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_1.elementList[1]
 
-	if slot1.type == VersionActivity1_5DungeonEnum.ExploreTaskType.Dispatch then
-		return VersionActivity1_5DungeonModel.instance:getDispatchMoByElementId(slot2) and slot3:isFinish()
+	if arg_23_1.type == VersionActivity1_5DungeonEnum.ExploreTaskType.Dispatch then
+		local var_23_1 = VersionActivity1_5DungeonModel.instance:getDispatchMoByElementId(var_23_0)
+
+		return var_23_1 and var_23_1:isFinish()
 	end
 
-	return DungeonModel.instance:hasPassLevel(tonumber(lua_chapter_map_element.configDict[slot2].param))
+	local var_23_2 = lua_chapter_map_element.configDict[var_23_0]
+	local var_23_3 = tonumber(var_23_2.param)
+
+	return DungeonModel.instance:hasPassLevel(var_23_3)
 end
 
-function slot0.checkExploreTaskRunning(slot0, slot1)
-	if slot1.type == VersionActivity1_5DungeonEnum.ExploreTaskType.Fight then
+function var_0_0.checkExploreTaskRunning(arg_24_0, arg_24_1)
+	if arg_24_1.type == VersionActivity1_5DungeonEnum.ExploreTaskType.Fight then
 		return false
 	end
 
-	return VersionActivity1_5DungeonModel.instance:getDispatchMoByElementId(slot1.elementList[1]) and slot3:isRunning()
+	local var_24_0 = arg_24_1.elementList[1]
+	local var_24_1 = VersionActivity1_5DungeonModel.instance:getDispatchMoByElementId(var_24_0)
+
+	return var_24_1 and var_24_1:isRunning()
 end
 
-function slot0.checkExploreTaskUnlock(slot0, slot1)
-	if slot1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishElement then
-		return slot0:_checkFinishElement(tonumber(slot1.unlockParam))
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishEpisode then
-		return slot0:_checkFinishEpisode(tonumber(slot1.unlockParam))
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishElementAndEpisode then
-		return slot0:_checkFinishElement(string.splitToNumber(slot1.unlockParam, "#")[1]) and slot0:_checkFinishEpisode(slot2[2])
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishAnyOneElement then
-		return slot0:_checkFinishAnyOneElement(string.splitToNumber(slot1.unlockParam, "#"))
-	elseif slot1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishEpisodeAndAnyOneElement then
-		return slot0:_checkFinishEpisode(tonumber(string.split(slot1.unlockParam, "#")[1])) and slot0:_checkFinishAnyOneElement(string.splitToNumber(slot2[2], "|"))
+function var_0_0.checkExploreTaskUnlock(arg_25_0, arg_25_1)
+	if arg_25_1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishElement then
+		return arg_25_0:_checkFinishElement(tonumber(arg_25_1.unlockParam))
+	elseif arg_25_1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishEpisode then
+		return arg_25_0:_checkFinishEpisode(tonumber(arg_25_1.unlockParam))
+	elseif arg_25_1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishElementAndEpisode then
+		local var_25_0 = string.splitToNumber(arg_25_1.unlockParam, "#")
+
+		return arg_25_0:_checkFinishElement(var_25_0[1]) and arg_25_0:_checkFinishEpisode(var_25_0[2])
+	elseif arg_25_1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishAnyOneElement then
+		local var_25_1 = string.splitToNumber(arg_25_1.unlockParam, "#")
+
+		return arg_25_0:_checkFinishAnyOneElement(var_25_1)
+	elseif arg_25_1.unlockType == VersionActivity1_5DungeonEnum.ExploreTaskUnLockType.FinishEpisodeAndAnyOneElement then
+		local var_25_2 = string.split(arg_25_1.unlockParam, "#")
+
+		return arg_25_0:_checkFinishEpisode(tonumber(var_25_2[1])) and arg_25_0:_checkFinishAnyOneElement(string.splitToNumber(var_25_2[2], "|"))
 	else
 		return true
 	end
 end
 
-function slot0.clear(slot0)
-	slot0.heroTaskMoList = nil
+function var_0_0.clear(arg_26_0)
+	arg_26_0.heroTaskMoList = nil
 
-	slot0:clearSelectTaskId()
+	arg_26_0:clearSelectTaskId()
 end
 
-function slot0.clearSelectTaskId(slot0)
-	slot0.selectTaskId = nil
+function var_0_0.clearSelectTaskId(arg_27_0)
+	arg_27_0.selectTaskId = nil
 end
 
-function slot0.checkIsPlayedUnlockAnimation(slot0, slot1)
-	slot0:initPlayedUnlockDict()
+function var_0_0.checkIsPlayedUnlockAnimation(arg_28_0, arg_28_1)
+	arg_28_0:initPlayedUnlockDict()
 
-	return tabletool.indexOf(slot0.playedIdList, slot1)
+	return tabletool.indexOf(arg_28_0.playedIdList, arg_28_1)
 end
 
-function slot0.playedUnlockAnimation(slot0, slot1)
-	slot0:initPlayedUnlockDict()
+function var_0_0.playedUnlockAnimation(arg_29_0, arg_29_1)
+	arg_29_0:initPlayedUnlockDict()
 
-	if tabletool.indexOf(slot0.playedIdList, slot1) then
+	if tabletool.indexOf(arg_29_0.playedIdList, arg_29_1) then
 		return
 	end
 
-	table.insert(slot0.playedIdList, slot1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_5RevivalTaskUnlockKey), table.concat(slot0.playedIdList, "|"))
+	table.insert(arg_29_0.playedIdList, arg_29_1)
+
+	local var_29_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_5RevivalTaskUnlockKey)
+
+	PlayerPrefsHelper.setString(var_29_0, table.concat(arg_29_0.playedIdList, "|"))
 end
 
-function slot0.initPlayedUnlockDict(slot0)
-	if not slot0.playedIdList then
-		slot0.playedIdList = {}
-		slot0.playedIdList = string.splitToNumber(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_5RevivalTaskUnlockKey), ""), "|")
+function var_0_0.initPlayedUnlockDict(arg_30_0)
+	if not arg_30_0.playedIdList then
+		arg_30_0.playedIdList = {}
+
+		local var_30_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_5RevivalTaskUnlockKey)
+
+		arg_30_0.playedIdList = string.splitToNumber(PlayerPrefsHelper.getString(var_30_0, ""), "|")
 	end
 end
 
-function slot0.checkNeedShowElementRedDot(slot0)
-	if slot0.preCalculateFrame == Time.frameCount then
-		return slot0.isShowElementRedDot
+function var_0_0.checkNeedShowElementRedDot(arg_31_0)
+	if arg_31_0.preCalculateFrame == Time.frameCount then
+		return arg_31_0.isShowElementRedDot
 	end
 
-	slot0.preCalculateFrame = Time.frameCount
-	slot0.isShowElementRedDot = false
+	arg_31_0.preCalculateFrame = Time.frameCount
+	arg_31_0.isShowElementRedDot = false
 
-	for slot5, slot6 in ipairs(VersionActivity1_5DungeonConfig.instance:getExploreTaskList()) do
-		for slot10, slot11 in ipairs(slot6.elementList) do
-			if not DungeonMapModel.instance:elementIsFinished(slot11) then
-				slot14 = false
+	local var_31_0 = VersionActivity1_5DungeonConfig.instance:getExploreTaskList()
 
-				if DungeonConfig.instance:getChapterMapElement(slot11).type == DungeonEnum.ElementType.Fight then
-					slot14 = DungeonModel.instance:hasPassLevel(tonumber(slot12.param))
-				elseif slot13 == DungeonEnum.ElementType.EnterDialogue then
-					slot14 = DialogueModel.instance:isFinishDialogue(tonumber(slot12.param))
-				elseif slot13 == DungeonEnum.ElementType.EnterDispatch then
-					slot14 = VersionActivity1_5DungeonModel.instance:getDispatchMo(tonumber(slot12.param)) and slot15:isFinish()
+	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
+		for iter_31_2, iter_31_3 in ipairs(iter_31_1.elementList) do
+			if not DungeonMapModel.instance:elementIsFinished(iter_31_3) then
+				local var_31_1 = DungeonConfig.instance:getChapterMapElement(iter_31_3)
+				local var_31_2 = var_31_1.type
+				local var_31_3 = false
+
+				if var_31_2 == DungeonEnum.ElementType.Fight then
+					var_31_3 = DungeonModel.instance:hasPassLevel(tonumber(var_31_1.param))
+				elseif var_31_2 == DungeonEnum.ElementType.EnterDialogue then
+					var_31_3 = DialogueModel.instance:isFinishDialogue(tonumber(var_31_1.param))
+				elseif var_31_2 == DungeonEnum.ElementType.EnterDispatch then
+					local var_31_4 = VersionActivity1_5DungeonModel.instance:getDispatchMo(tonumber(var_31_1.param))
+
+					var_31_3 = var_31_4 and var_31_4:isFinish()
 				end
 
-				if slot14 then
-					slot0.isShowElementRedDot = true
+				if var_31_3 then
+					arg_31_0.isShowElementRedDot = true
 
 					if SLFramework.FrameworkSettings.IsEditor then
-						logNormal("need show element reddot, id : " .. tostring(slot11))
+						logNormal("need show element reddot, id : " .. tostring(iter_31_3))
 					end
 
-					return slot0.isShowElementRedDot
+					return arg_31_0.isShowElementRedDot
 				end
 			end
 		end
 	end
 
-	return slot0.isShowElementRedDot
+	return arg_31_0.isShowElementRedDot
 end
 
-function slot0.setIsPlayingOpenAnim(slot0, slot1)
-	slot0.isPlayingOpenAnim = slot1
+function var_0_0.setIsPlayingOpenAnim(arg_32_0, arg_32_1)
+	arg_32_0.isPlayingOpenAnim = arg_32_1
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OpenAnimPlayingStatusChange, slot0.isPlayingOpenAnim)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OpenAnimPlayingStatusChange, arg_32_0.isPlayingOpenAnim)
 end
 
-function slot0.getIsPlayingOpenAnim(slot0)
-	return slot0.isPlayingOpenAnim
+function var_0_0.getIsPlayingOpenAnim(arg_33_0)
+	return arg_33_0.isPlayingOpenAnim
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

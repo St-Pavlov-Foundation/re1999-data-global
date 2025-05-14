@@ -1,42 +1,44 @@
-module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillMOBase", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillMOBase", package.seeall)
 
-slot0 = class("CharacterSkillMOBase")
+local var_0_0 = class("CharacterSkillMOBase")
 
-function slot0.init(slot0, slot1)
-	slot0._skillId = slot1
-	slot0._releaseParam = ""
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._skillId = arg_1_1
+	arg_1_0._releaseParam = ""
 end
 
-function slot0.getSkillConfig(slot0)
-	return lua_character_skill.configDict[slot0._skillId]
+function var_0_0.getSkillConfig(arg_2_0)
+	return lua_character_skill.configDict[arg_2_0._skillId]
 end
 
-function slot0.getCost(slot0)
-	return slot0:getSkillConfig().cost
+function var_0_0.getCost(arg_3_0)
+	return arg_3_0:getSkillConfig().cost
 end
 
-function slot0.getReleaseParam(slot0)
-	return slot0._releaseParam
+function var_0_0.getReleaseParam(arg_4_0)
+	return arg_4_0._releaseParam
 end
 
-function slot0.setSkillParam(slot0, ...)
+function var_0_0.setSkillParam(arg_5_0, ...)
+	return
 end
 
-function slot0.playAction(slot0, slot1, slot2)
-	if slot1 then
-		slot1(slot2)
+function var_0_0.playAction(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 then
+		arg_6_1(arg_6_2)
 	end
 end
 
-function slot0.cancelRelease(slot0)
+function var_0_0.cancelRelease(arg_7_0)
+	return
 end
 
-function slot0.getEffectRound(slot0)
+function var_0_0.getEffectRound(arg_8_0)
 	return EliminateEnum.RoundType.Match3Chess
 end
 
-function slot0.canRelease(slot0)
+function var_0_0.canRelease(arg_9_0)
 	return true
 end
 
-return slot0
+return var_0_0

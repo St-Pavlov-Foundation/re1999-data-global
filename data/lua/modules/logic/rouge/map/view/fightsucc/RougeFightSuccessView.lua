@@ -1,333 +1,389 @@
-module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessView", package.seeall)
+﻿module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessView", package.seeall)
 
-slot0 = class("RougeFightSuccessView", BaseView)
+local var_0_0 = class("RougeFightSuccessView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gospineContainer = gohelper.findChild(slot0.viewGO, "left/#go_spineContainer")
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "left/#go_spineContainer/#go_spine")
-	slot0._txtsayCn = gohelper.findChildText(slot0.viewGO, "left/#txt_sayCn")
-	slot0._txtsayEn = gohelper.findChildText(slot0.viewGO, "left/SayEn/#txt_sayEn")
-	slot0._btndata = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_data")
-	slot0._txtepisodeNameEn = gohelper.findChildText(slot0.viewGO, "right/#txt_episodeNameEn")
-	slot0._txtepisodeName = gohelper.findChildText(slot0.viewGO, "right/#txt_episodeName")
-	slot0._txtexp = gohelper.findChildText(slot0.viewGO, "right/rouge/exp/#txt_exp")
-	slot0._sliderprogress = gohelper.findChildSlider(slot0.viewGO, "right/rouge/exp/#slider_progress")
-	slot0._txtaddexp = gohelper.findChildText(slot0.viewGO, "right/rouge/exp/#slider_progress/#txt_addexp")
-	slot0._imageAddExp = gohelper.findChildImage(slot0.viewGO, "right/rouge/exp/#slider_progress/#image_addexp")
-	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "right/rouge/exp/#txt_lv")
-	slot0._imagefaction = gohelper.findChildImage(slot0.viewGO, "right/rouge/exp/faction/#image_faction")
-	slot0._goheroitem = gohelper.findChild(slot0.viewGO, "right/rouge/role/layout/#go_heroitem")
-	slot0._sliderhp = gohelper.findChildSlider(slot0.viewGO, "right/rouge/role/layout/heroitem/#slider_hp")
-	slot0._simagerolehead = gohelper.findChildSingleImage(slot0.viewGO, "right/rouge/role/layout/heroitem/hero/#simage_rolehead")
-	slot0._godead = gohelper.findChild(slot0.viewGO, "right/rouge/role/layout/heroitem/#go_dead")
-	slot0._txtcollectionnum = gohelper.findChildText(slot0.viewGO, "right/rouge/reward/collection/#txt_collectionnum")
-	slot0._txtcoinnum = gohelper.findChildText(slot0.viewGO, "right/rouge/reward/coin/#txt_coinnum")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gospineContainer = gohelper.findChild(arg_1_0.viewGO, "left/#go_spineContainer")
+	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "left/#go_spineContainer/#go_spine")
+	arg_1_0._txtsayCn = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_sayCn")
+	arg_1_0._txtsayEn = gohelper.findChildText(arg_1_0.viewGO, "left/SayEn/#txt_sayEn")
+	arg_1_0._btndata = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_data")
+	arg_1_0._txtepisodeNameEn = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_episodeNameEn")
+	arg_1_0._txtepisodeName = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_episodeName")
+	arg_1_0._txtexp = gohelper.findChildText(arg_1_0.viewGO, "right/rouge/exp/#txt_exp")
+	arg_1_0._sliderprogress = gohelper.findChildSlider(arg_1_0.viewGO, "right/rouge/exp/#slider_progress")
+	arg_1_0._txtaddexp = gohelper.findChildText(arg_1_0.viewGO, "right/rouge/exp/#slider_progress/#txt_addexp")
+	arg_1_0._imageAddExp = gohelper.findChildImage(arg_1_0.viewGO, "right/rouge/exp/#slider_progress/#image_addexp")
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "right/rouge/exp/#txt_lv")
+	arg_1_0._imagefaction = gohelper.findChildImage(arg_1_0.viewGO, "right/rouge/exp/faction/#image_faction")
+	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "right/rouge/role/layout/#go_heroitem")
+	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_0.viewGO, "right/rouge/role/layout/heroitem/#slider_hp")
+	arg_1_0._simagerolehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/rouge/role/layout/heroitem/hero/#simage_rolehead")
+	arg_1_0._godead = gohelper.findChild(arg_1_0.viewGO, "right/rouge/role/layout/heroitem/#go_dead")
+	arg_1_0._txtcollectionnum = gohelper.findChildText(arg_1_0.viewGO, "right/rouge/reward/collection/#txt_collectionnum")
+	arg_1_0._txtcoinnum = gohelper.findChildText(arg_1_0.viewGO, "right/rouge/reward/coin/#txt_coinnum")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btndata:AddClickListener(slot0._btndataOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btndata:AddClickListener(arg_2_0._btndataOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btndata:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btndata:RemoveClickListener()
 end
 
-function slot0._btndataOnClick(slot0)
+function var_0_0._btndataOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.rectTrImageAddExp = slot0._imageAddExp:GetComponent(gohelper.Type_RectTransform)
-	slot0.sliderRectTr = slot0._sliderprogress:GetComponent(gohelper.Type_RectTransform)
-	slot0.sliderWidth = recthelper.getWidth(slot0.sliderRectTr)
-	slot0.bgClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "bg")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.rectTrImageAddExp = arg_5_0._imageAddExp:GetComponent(gohelper.Type_RectTransform)
+	arg_5_0.sliderRectTr = arg_5_0._sliderprogress:GetComponent(gohelper.Type_RectTransform)
+	arg_5_0.sliderWidth = recthelper.getWidth(arg_5_0.sliderRectTr)
+	arg_5_0.bgClick = gohelper.findChildClickWithDefaultAudio(arg_5_0.viewGO, "bg")
 
-	slot0.bgClick:AddClickListener(slot0.onClickBg, slot0)
+	arg_5_0.bgClick:AddClickListener(arg_5_0.onClickBg, arg_5_0)
 
-	slot0.spineTr = slot0._gospine.transform
-	slot0._txtsayCn.text = ""
-	slot0._txtsayEn.text = ""
+	arg_5_0.spineTr = arg_5_0._gospine.transform
+	arg_5_0._txtsayCn.text = ""
+	arg_5_0._txtsayEn.text = ""
 
-	gohelper.setActive(slot0._goheroitem, false)
+	gohelper.setActive(arg_5_0._goheroitem, false)
 end
 
-function slot0.onClickBg(slot0)
-	if slot0.uiSpine then
-		slot0.uiSpine:stopVoice()
+function var_0_0.onClickBg(arg_6_0)
+	if arg_6_0.uiSpine then
+		arg_6_0.uiSpine:stopVoice()
 	end
 
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshLeft()
-	slot0:refreshRight()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:refreshLeft()
+	arg_8_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshSpine()
+function var_0_0.refreshLeft(arg_9_0)
+	arg_9_0:refreshSpine()
 end
 
-function slot0.refreshRight(slot0)
-	slot0:refreshEpisodeInfo()
-	slot0:refreshRougeInfo()
+function var_0_0.refreshRight(arg_10_0)
+	arg_10_0:refreshEpisodeInfo()
+	arg_10_0:refreshRougeInfo()
 end
 
-function slot0.refreshSpine(slot0)
-	slot1 = slot0:getRandomEntityMo()
-	slot0.skinCO = slot0:getSkinCo(slot1)
-	slot0.randomHeroId = slot1.modelId
-	slot0.randomSkinId = slot1.skin
-	slot0.spineLoaded = false
-	slot0.uiSpine = GuiModelAgent.Create(slot0._gospine, true)
+function var_0_0.refreshSpine(arg_11_0)
+	local var_11_0 = arg_11_0:getRandomEntityMo()
 
-	slot0.uiSpine:useRT()
-	slot0.uiSpine:setImgPos(0)
-	slot0.uiSpine:setResPath(slot0.skinCO, slot0.onSpineLoaded, slot0)
+	arg_11_0.skinCO = arg_11_0:getSkinCo(var_11_0)
+	arg_11_0.randomHeroId = var_11_0.modelId
+	arg_11_0.randomSkinId = var_11_0.skin
+	arg_11_0.spineLoaded = false
+	arg_11_0.uiSpine = GuiModelAgent.Create(arg_11_0._gospine, true)
+
+	arg_11_0.uiSpine:useRT()
+	arg_11_0.uiSpine:setImgPos(0)
+	arg_11_0.uiSpine:setResPath(arg_11_0.skinCO, arg_11_0.onSpineLoaded, arg_11_0)
 end
 
-function slot0.onSpineLoaded(slot0)
-	if slot0.closeed then
+function var_0_0.onSpineLoaded(arg_12_0)
+	if arg_12_0.closeed then
 		return
 	end
 
-	slot0.spineLoaded = true
+	arg_12_0.spineLoaded = true
 
-	slot0.uiSpine:setUIMask(true)
-	slot0.uiSpine:setAllLayer(UnityLayer.UI)
-	slot0:playSpineVoice()
-	slot0:setSkinOffset()
+	arg_12_0.uiSpine:setUIMask(true)
+	arg_12_0.uiSpine:setAllLayer(UnityLayer.UI)
+	arg_12_0:playSpineVoice()
+	arg_12_0:setSkinOffset()
 end
 
-function slot0.setSkinOffset(slot0)
-	slot1, slot2 = SkinConfig.instance:getSkinOffset(slot0.skinCO.fightSuccViewOffset)
+function var_0_0.setSkinOffset(arg_13_0)
+	local var_13_0, var_13_1 = SkinConfig.instance:getSkinOffset(arg_13_0.skinCO.fightSuccViewOffset)
 
-	if slot2 then
-		slot3, _ = SkinConfig.instance:getSkinOffset(slot0.skinCO.characterViewOffset)
-		slot1 = SkinConfig.instance:getAfterRelativeOffset(504, slot3)
+	if var_13_1 then
+		var_13_0, _ = SkinConfig.instance:getSkinOffset(arg_13_0.skinCO.characterViewOffset)
+		var_13_0 = SkinConfig.instance:getAfterRelativeOffset(504, var_13_0)
 	end
 
-	slot3 = tonumber(slot1[3])
+	local var_13_2 = tonumber(var_13_0[3])
+	local var_13_3 = tonumber(var_13_0[1])
+	local var_13_4 = tonumber(var_13_0[2])
 
-	recthelper.setAnchor(slot0.spineTr, tonumber(slot1[1]), tonumber(slot1[2]))
-	transformhelper.setLocalScale(slot0.spineTr, slot3, slot3, slot3)
+	recthelper.setAnchor(arg_13_0.spineTr, var_13_3, var_13_4)
+	transformhelper.setLocalScale(arg_13_0.spineTr, var_13_2, var_13_2, var_13_2)
 end
 
-function slot0.playSpineVoice(slot0)
-	if (HeroModel.instance:getVoiceConfig(slot0.randomHeroId, CharacterEnum.VoiceType.FightResult, nil, slot0.randomSkinId) or FightAudioMgr.instance:_getHeroVoiceCOs(slot0.randomHeroId, CharacterEnum.VoiceType.FightResult, slot0.randomSkinId)) and #slot1 > 0 then
-		slot0.uiSpine:playVoice(slot1[1], nil, slot0._txtsayCn, slot0._txtsayEn)
+function var_0_0.playSpineVoice(arg_14_0)
+	local var_14_0 = HeroModel.instance:getVoiceConfig(arg_14_0.randomHeroId, CharacterEnum.VoiceType.FightResult, nil, arg_14_0.randomSkinId) or FightAudioMgr.instance:_getHeroVoiceCOs(arg_14_0.randomHeroId, CharacterEnum.VoiceType.FightResult, arg_14_0.randomSkinId)
+
+	if var_14_0 and #var_14_0 > 0 then
+		local var_14_1 = var_14_0[1]
+
+		arg_14_0.uiSpine:playVoice(var_14_1, nil, arg_14_0._txtsayCn, arg_14_0._txtsayEn)
 	end
 end
 
-function slot0.getRandomEntityMo(slot0)
-	slot4 = {}
+function var_0_0.getRandomEntityMo(arg_15_0)
+	local var_15_0 = FightDataHelper.entityMgr:getMyNormalList()
+	local var_15_1 = FightDataHelper.entityMgr:getMySubList()
+	local var_15_2 = FightDataHelper.entityMgr:getMyDeadList()
+	local var_15_3 = {}
 
-	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMyNormalList())
-	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMySubList())
-	tabletool.addValues(slot4, FightDataHelper.entityMgr:getMyDeadList())
+	tabletool.addValues(var_15_3, var_15_0)
+	tabletool.addValues(var_15_3, var_15_1)
+	tabletool.addValues(var_15_3, var_15_2)
 
-	for slot8 = #slot4, 1, -1 do
-		if not slot0:getSkinCo(slot4[slot8]) then
-			table.remove(slot4, slot8)
+	for iter_15_0 = #var_15_3, 1, -1 do
+		local var_15_4 = var_15_3[iter_15_0]
+
+		if not arg_15_0:getSkinCo(var_15_4) then
+			table.remove(var_15_3, iter_15_0)
 		end
 	end
 
-	slot5 = {}
+	local var_15_5 = {}
 
-	tabletool.addValues(slot5, slot4)
+	tabletool.addValues(var_15_5, var_15_3)
 
-	for slot9 = #slot5, 1, -1 do
-		if FightAudioMgr.instance:_getHeroVoiceCOs(slot4[slot9].modelId, CharacterEnum.VoiceType.FightResult) and #slot11 > 0 then
-			if slot10:isMonster() then
-				table.remove(slot5, slot9)
+	for iter_15_1 = #var_15_5, 1, -1 do
+		local var_15_6 = var_15_3[iter_15_1]
+		local var_15_7 = FightAudioMgr.instance:_getHeroVoiceCOs(var_15_6.modelId, CharacterEnum.VoiceType.FightResult)
+
+		if var_15_7 and #var_15_7 > 0 then
+			if var_15_6:isMonster() then
+				table.remove(var_15_5, iter_15_1)
 			end
 		else
-			table.remove(slot5, slot9)
+			table.remove(var_15_5, iter_15_1)
 		end
 	end
 
-	if #slot5 > 0 then
-		return slot5[math.random(#slot5)]
-	elseif #slot4 > 0 then
-		return slot4[math.random(#slot4)]
+	if #var_15_5 > 0 then
+		return var_15_5[math.random(#var_15_5)]
+	elseif #var_15_3 > 0 then
+		return var_15_3[math.random(#var_15_3)]
 	else
 		logError("没有角色")
 	end
 end
 
-function slot0.getSkinCo(slot0, slot1)
-	if FightConfig.instance:getSkinCO(slot1.skin) and not string.nilorempty(slot2.verticalDrawing) or slot2 and not string.nilorempty(slot2.live2d) then
-		return slot2
+function var_0_0.getSkinCo(arg_16_0, arg_16_1)
+	local var_16_0 = FightConfig.instance:getSkinCO(arg_16_1.skin)
+	local var_16_1 = var_16_0 and not string.nilorempty(var_16_0.verticalDrawing)
+	local var_16_2 = var_16_0 and not string.nilorempty(var_16_0.live2d)
+
+	if var_16_1 or var_16_2 then
+		return var_16_0
 	end
 end
 
-function slot0.refreshEpisodeInfo(slot0)
-	slot2 = DungeonConfig.instance:getEpisodeCO(FightResultModel.instance.episodeId)
-	slot0._txtepisodeNameEn.text = slot2.name_En
-	slot0._txtepisodeName.text = slot2.name
+function var_0_0.refreshEpisodeInfo(arg_17_0)
+	local var_17_0 = FightResultModel.instance.episodeId
+	local var_17_1 = DungeonConfig.instance:getEpisodeCO(var_17_0)
+
+	arg_17_0._txtepisodeNameEn.text = var_17_1.name_En
+	arg_17_0._txtepisodeName.text = var_17_1.name
 end
 
-function slot0.refreshRougeInfo(slot0)
-	slot0.fightResultInfo = RougeModel.instance:getFightResultInfo()
-	slot0.rougeInfo = RougeModel.instance:getRougeInfo()
-	slot0.season = slot0.rougeInfo.season
+function var_0_0.refreshRougeInfo(arg_18_0)
+	arg_18_0.fightResultInfo = RougeModel.instance:getFightResultInfo()
+	arg_18_0.rougeInfo = RougeModel.instance:getRougeInfo()
+	arg_18_0.season = arg_18_0.rougeInfo.season
 
-	slot0:refreshStyle()
-	slot0:refreshLv()
-	slot0:refreshHero()
-	slot0:refreshDrop()
+	arg_18_0:refreshStyle()
+	arg_18_0:refreshLv()
+	arg_18_0:refreshHero()
+	arg_18_0:refreshDrop()
 end
 
-function slot0.refreshStyle(slot0)
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0._imagefaction, string.format("%s_light", lua_rouge_style.configDict[slot0.season][slot0.rougeInfo.style].icon))
+function var_0_0.refreshStyle(arg_19_0)
+	local var_19_0 = arg_19_0.rougeInfo.style
+	local var_19_1 = lua_rouge_style.configDict[arg_19_0.season][var_19_0]
+
+	UISpriteSetMgr.instance:setRouge2Sprite(arg_19_0._imagefaction, string.format("%s_light", var_19_1.icon))
 end
 
-function slot0.refreshLv(slot0)
-	slot2 = slot0.rougeInfo.teamExp
-	slot3 = slot0.fightResultInfo.addExp
+function var_0_0.refreshLv(arg_20_0)
+	local var_20_0 = arg_20_0.rougeInfo.teamLevel
+	local var_20_1 = arg_20_0.rougeInfo.teamExp
+	local var_20_2 = arg_20_0.fightResultInfo.addExp
+	local var_20_3 = lua_rouge_level.configDict[arg_20_0.season][var_20_0 + 1]
 
-	if not lua_rouge_level.configDict[slot0.season][slot0.rougeInfo.teamLevel + 1] then
-		gohelper.setActive(slot0._txtaddexp.gameObject, false)
+	if not var_20_3 then
+		gohelper.setActive(arg_20_0._txtaddexp.gameObject, false)
 
-		slot5 = lua_rouge_level.configDict[slot0.season][slot1].exp
+		var_20_3 = lua_rouge_level.configDict[arg_20_0.season][var_20_0]
 
-		slot0:_refreshLv(slot1, slot5, slot5)
-		slot0._sliderprogress:SetValue(1)
-		recthelper.setWidth(slot0.rectTrImageAddExp, 0)
+		local var_20_4 = var_20_3.exp
+
+		arg_20_0:_refreshLv(var_20_0, var_20_4, var_20_4)
+		arg_20_0._sliderprogress:SetValue(1)
+		recthelper.setWidth(arg_20_0.rectTrImageAddExp, 0)
 
 		return
 	end
 
-	gohelper.setActive(slot0._txtaddexp.gameObject, true)
+	gohelper.setActive(arg_20_0._txtaddexp.gameObject, true)
 
-	slot5 = slot4.exp
+	local var_20_5 = var_20_3.exp
 
-	slot0:_refreshLv(slot1, slot3, slot5)
-	slot0._sliderprogress:SetValue(slot2 / slot5)
-	recthelper.setWidth(slot0.rectTrImageAddExp, 0)
+	arg_20_0:_refreshLv(var_20_0, var_20_2, var_20_5)
+	arg_20_0._sliderprogress:SetValue(var_20_1 / var_20_5)
+	recthelper.setWidth(arg_20_0.rectTrImageAddExp, 0)
 
-	slot0._txtaddexp.text = "+" .. slot3
-	slot0.startLv = slot1
-	slot0.curExp = slot2
-	slot0.addExp = slot3
+	arg_20_0._txtaddexp.text = "+" .. var_20_2
+	arg_20_0.startLv = var_20_0
+	arg_20_0.curExp = var_20_1
+	arg_20_0.addExp = var_20_2
 
-	TaskDispatcher.runDelay(slot0.playAnim, slot0, RougeMapEnum.WaitSuccAnimDuration)
+	TaskDispatcher.runDelay(arg_20_0.playAnim, arg_20_0, RougeMapEnum.WaitSuccAnimDuration)
 end
 
-function slot0.playAnim(slot0)
-	slot0.endLv, slot2, slot3, slot0.newCurExp, slot0.nextLvNeedExp = slot0:calculateParam(slot0.startLv, slot0.curExp, slot0.addExp)
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot2, slot3, RougeMapEnum.ExpAddDuration, slot0.onFrame, slot0.doneCallback, slot0)
+function var_0_0.playAnim(arg_21_0)
+	local var_21_0, var_21_1, var_21_2, var_21_3, var_21_4 = arg_21_0:calculateParam(arg_21_0.startLv, arg_21_0.curExp, arg_21_0.addExp)
+
+	arg_21_0.endLv = var_21_0
+	arg_21_0.newCurExp = var_21_3
+	arg_21_0.nextLvNeedExp = var_21_4
+	arg_21_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_21_1, var_21_2, RougeMapEnum.ExpAddDuration, arg_21_0.onFrame, arg_21_0.doneCallback, arg_21_0)
 end
 
-function slot0.onFrame(slot0, slot1)
-	slot2 = Mathf.Floor(slot1)
-	slot4 = lua_rouge_level.configDict[slot0.season][slot2 + 1].exp
+function var_0_0.onFrame(arg_22_0, arg_22_1)
+	local var_22_0 = Mathf.Floor(arg_22_1)
+	local var_22_1 = lua_rouge_level.configDict[arg_22_0.season][var_22_0 + 1].exp
+	local var_22_2 = arg_22_1 - var_22_0
+	local var_22_3 = Mathf.Ceil(var_22_2 * var_22_1)
 
-	slot0:_refreshLv(slot2, Mathf.Ceil((slot1 - slot2) * slot4), slot4)
+	arg_22_0:_refreshLv(var_22_0, var_22_3, var_22_1)
 
-	if slot2 ~= slot0.startLv then
-		slot0._sliderprogress:SetValue(0)
+	if var_22_0 ~= arg_22_0.startLv then
+		arg_22_0._sliderprogress:SetValue(0)
 	end
 
-	recthelper.setWidth(slot0.rectTrImageAddExp, slot5 * slot0.sliderWidth)
+	recthelper.setWidth(arg_22_0.rectTrImageAddExp, var_22_2 * arg_22_0.sliderWidth)
 end
 
-function slot0.doneCallback(slot0)
-	slot0:_refreshLv(slot0.endLv, slot0.newCurExp, slot0.nextLvNeedExp)
-	recthelper.setWidth(slot0.rectTrImageAddExp, slot0.newCurExp / slot0.nextLvNeedExp * slot0.sliderWidth)
+function var_0_0.doneCallback(arg_23_0)
+	arg_23_0:_refreshLv(arg_23_0.endLv, arg_23_0.newCurExp, arg_23_0.nextLvNeedExp)
 
-	slot0.tweenId = nil
+	local var_23_0 = arg_23_0.newCurExp / arg_23_0.nextLvNeedExp
+
+	recthelper.setWidth(arg_23_0.rectTrImageAddExp, var_23_0 * arg_23_0.sliderWidth)
+
+	arg_23_0.tweenId = nil
 end
 
-function slot0._refreshLv(slot0, slot1, slot2, slot3)
-	slot0._txtlv.text = "Lv." .. slot1
-	slot0._txtexp.text = string.format("%s/%s", slot2, slot3)
+function var_0_0._refreshLv(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	arg_24_0._txtlv.text = "Lv." .. arg_24_1
+	arg_24_0._txtexp.text = string.format("%s/%s", arg_24_2, arg_24_3)
 end
 
-function slot0.calculateParam(slot0, slot1, slot2, slot3)
-	slot6 = lua_rouge_level.configDict[slot0.season][slot1 + 1].exp
-	slot7, slot8, slot9 = nil
+function var_0_0.calculateParam(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = arg_25_1 + 1
+	local var_25_1 = lua_rouge_level.configDict[arg_25_0.season][var_25_0]
+	local var_25_2 = var_25_1.exp
+	local var_25_3
+	local var_25_4
+	local var_25_5
+	local var_25_6 = arg_25_1 + arg_25_2 / var_25_2
+	local var_25_7 = arg_25_3 + arg_25_2
 
-	if slot6 > slot3 + slot2 then
-		return slot1, slot1 + slot2 / slot6, slot1 + slot9 / slot6, slot9, slot6
+	if var_25_7 < var_25_2 then
+		local var_25_8 = arg_25_1 + var_25_7 / var_25_2
+
+		return arg_25_1, var_25_6, var_25_8, var_25_7, var_25_2
 	end
 
-	if slot9 == slot6 then
-		if not lua_rouge_level.configDict[slot0.season][slot4 + 1] then
-			return slot1 + 1, slot7, slot4 - 0.01, slot5.exp, slot5.exp
+	if var_25_7 == var_25_2 then
+		local var_25_9 = lua_rouge_level.configDict[arg_25_0.season][var_25_0 + 1]
+
+		if not var_25_9 then
+			return arg_25_1 + 1, var_25_6, var_25_0 - 0.01, var_25_1.exp, var_25_1.exp
 		else
-			return slot1 + 1, slot7, slot4, 0, slot10.exp
+			return arg_25_1 + 1, var_25_6, var_25_0, 0, var_25_9.exp
 		end
 	end
 
-	slot1 = slot1 + 1
-	slot3 = slot3 - (slot6 - slot2)
+	arg_25_1 = arg_25_1 + 1
+	arg_25_3 = arg_25_3 - (var_25_2 - arg_25_2)
 
-	while slot3 > 0 do
-		if not lua_rouge_level.configDict[slot0.season][slot1 + 1] then
-			return slot1, slot7, slot1 - 0.01, slot6, slot6
+	while arg_25_3 > 0 do
+		local var_25_10 = lua_rouge_level.configDict[arg_25_0.season][arg_25_1 + 1]
+
+		if not var_25_10 then
+			return arg_25_1, var_25_6, arg_25_1 - 0.01, var_25_2, var_25_2
 		end
 
-		if slot3 < slot10.exp then
-			return slot1, slot7, slot1 + slot3 / slot6, slot3, slot6
-		elseif slot3 == slot6 then
-			if not lua_rouge_level.configDict[slot0.season][slot1 + 2] then
-				return slot1 + 1, slot7, slot1 + 1 - 0.01, slot6, slot6
+		var_25_2 = var_25_10.exp
+
+		if arg_25_3 < var_25_2 then
+			return arg_25_1, var_25_6, arg_25_1 + arg_25_3 / var_25_2, arg_25_3, var_25_2
+		elseif arg_25_3 == var_25_2 then
+			local var_25_11 = lua_rouge_level.configDict[arg_25_0.season][arg_25_1 + 2]
+
+			if not var_25_11 then
+				return arg_25_1 + 1, var_25_6, arg_25_1 + 1 - 0.01, var_25_2, var_25_2
 			else
-				return slot1 + 1, slot7, slot1 + 1, 0, slot10.exp
+				return arg_25_1 + 1, var_25_6, arg_25_1 + 1, 0, var_25_11.exp
 			end
 		else
-			slot3 = slot3 - slot6
-			slot1 = slot1 + 1
+			arg_25_3 = arg_25_3 - var_25_2
+			arg_25_1 = arg_25_1 + 1
 		end
 	end
 
 	logError("Something unexpected has happened")
 
-	return slot1, slot7, slot1, slot3, slot6
+	return arg_25_1, var_25_6, arg_25_1, arg_25_3, var_25_2
 end
 
-function slot0.refreshHero(slot0)
-	for slot4, slot5 in ipairs(slot0.fightResultInfo.battleHeroList) do
-		if slot5.heroId ~= 0 then
-			MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._goheroitem), RougeFightSuccessHeroItem):refreshHero(slot5)
+function var_0_0.refreshHero(arg_26_0)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0.fightResultInfo.battleHeroList) do
+		if iter_26_1.heroId ~= 0 then
+			local var_26_0 = gohelper.cloneInPlace(arg_26_0._goheroitem)
+
+			MonoHelper.addNoUpdateLuaComOnceToGo(var_26_0, RougeFightSuccessHeroItem):refreshHero(iter_26_1)
 		end
 	end
 end
 
-function slot0.refreshDrop(slot0)
-	slot0._txtcollectionnum.text = slot0.fightResultInfo.dropSelectNum
-	slot0._txtcoinnum.text = slot0.fightResultInfo.addCoin
+function var_0_0.refreshDrop(arg_27_0)
+	arg_27_0._txtcollectionnum.text = arg_27_0.fightResultInfo.dropSelectNum
+	arg_27_0._txtcoinnum.text = arg_27_0.fightResultInfo.addCoin
 
-	TaskDispatcher.runDelay(slot0.playRewardAudio, slot0, RougeMapEnum.WaitSuccPlayAudioDuration)
+	TaskDispatcher.runDelay(arg_27_0.playRewardAudio, arg_27_0, RougeMapEnum.WaitSuccPlayAudioDuration)
 end
 
-function slot0.playRewardAudio(slot0)
+function var_0_0.playRewardAudio(arg_28_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.FightSuccReward)
 end
 
-function slot0.onClose(slot0)
-	slot0.closeed = true
+function var_0_0.onClose(arg_29_0)
+	arg_29_0.closeed = true
 
-	TaskDispatcher.cancelTask(slot0.playAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.playRewardAudio, slot0)
+	TaskDispatcher.cancelTask(arg_29_0.playAnim, arg_29_0)
+	TaskDispatcher.cancelTask(arg_29_0.playRewardAudio, arg_29_0)
 
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+	if arg_29_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_29_0.tweenId)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.OnResultViewClose)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.bgClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_30_0)
+	arg_30_0.bgClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

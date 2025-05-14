@@ -1,61 +1,66 @@
-module("modules.logic.fight.system.work.asfd.FightASFDFlow", package.seeall)
+﻿module("modules.logic.fight.system.work.asfd.FightASFDFlow", package.seeall)
 
-slot0 = class("FightASFDFlow", BaseFlow)
-slot0.DelayWaitTime = 61
+local var_0_0 = class("FightASFDFlow", BaseFlow)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.stepMo = slot1
-	slot0.curIndex = slot3
-	slot0._sequence = FlowSequence.New()
+var_0_0.DelayWaitTime = 61
 
-	slot0._sequence:addWork(FightWorkCreateASFDEmitter.New(slot1))
-	FlowSequence.New():addWork(FightWorkMissileASFD.New(slot1, slot0.curIndex))
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.stepMo = arg_1_1
+	arg_1_0.curIndex = arg_1_3
+	arg_1_0._sequence = FlowSequence.New()
 
-	slot5 = FlowParallel.New()
+	arg_1_0._sequence:addWork(FightWorkCreateASFDEmitter.New(arg_1_1))
 
-	if slot0:checkNeedAddWaitDoneWork(slot2) then
-		slot4:addWork(FightWorkMissileASFDDone.New(slot1))
-		slot5:addWork(FightWorkWaitASFDArrivedDone.New(slot1))
+	local var_1_0 = FlowSequence.New()
+
+	var_1_0:addWork(FightWorkMissileASFD.New(arg_1_1, arg_1_0.curIndex))
+
+	local var_1_1 = FlowParallel.New()
+	local var_1_2 = arg_1_0:checkNeedAddWaitDoneWork(arg_1_2)
+
+	if var_1_2 then
+		var_1_0:addWork(FightWorkMissileASFDDone.New(arg_1_1))
+		var_1_1:addWork(FightWorkWaitASFDArrivedDone.New(arg_1_1))
 	end
 
-	slot5:addWork(slot4)
-	slot0._sequence:addWork(slot5)
-	slot0._sequence:addWork(FightWorkASFDEffectFlow.New(slot1))
+	var_1_1:addWork(var_1_0)
+	arg_1_0._sequence:addWork(var_1_1)
+	arg_1_0._sequence:addWork(FightWorkASFDEffectFlow.New(arg_1_1))
 
-	if slot6 then
-		slot0._sequence:addWork(FightWorkASFDDone.New(slot1))
+	if var_1_2 then
+		arg_1_0._sequence:addWork(FightWorkASFDDone.New(arg_1_1))
 	else
-		slot0._sequence:addWork(FightWorkASFDContinueDone.New(slot1))
+		arg_1_0._sequence:addWork(FightWorkASFDContinueDone.New(arg_1_1))
 	end
 end
 
-function slot0.checkNeedAddWaitDoneWork(slot0, slot1)
-	if slot0:checkHasMonsterChangeEffectType(slot0.stepMo) then
+function var_0_0.checkNeedAddWaitDoneWork(arg_2_0, arg_2_1)
+	if arg_2_0:checkHasMonsterChangeEffectType(arg_2_0.stepMo) then
 		return true
 	end
 
-	if not slot1 then
+	if not arg_2_1 then
 		return true
 	end
 
-	if not FightHelper.isASFDSkill(slot1.actId) then
+	if not FightHelper.isASFDSkill(arg_2_1.actId) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.checkHasMonsterChangeEffectType(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkHasMonsterChangeEffectType(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return false
 	end
 
-	for slot5, slot6 in ipairs(slot1.actEffectMOs) do
-		if slot6.effectType == FightEnum.EffectType.MONSTERCHANGE then
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffectMOs) do
+		if iter_3_1.effectType == FightEnum.EffectType.MONSTERCHANGE then
 			return true
 		end
 
-		if slot6.effectType == FightEnum.EffectType.FIGHTSTEP and slot0:checkHasMonsterChangeEffectType(slot6.cus_stepMO) then
+		if iter_3_1.effectType == FightEnum.EffectType.FIGHTSTEP and arg_3_0:checkHasMonsterChangeEffectType(iter_3_1.cus_stepMO) then
 			return true
 		end
 	end
@@ -63,41 +68,41 @@ function slot0.checkHasMonsterChangeEffectType(slot0, slot1)
 	return false
 end
 
-function slot0.onStart(slot0)
-	slot0._sequence:registerDoneListener(slot0._flowDone, slot0)
-	slot0._sequence:start()
+function var_0_0.onStart(arg_4_0)
+	arg_4_0._sequence:registerDoneListener(arg_4_0._flowDone, arg_4_0)
+	arg_4_0._sequence:start()
 end
 
-function slot0.hasDone(slot0)
-	return not slot0._sequence or slot0._sequence.status ~= WorkStatus.Running
+function var_0_0.hasDone(arg_5_0)
+	return not arg_5_0._sequence or arg_5_0._sequence.status ~= WorkStatus.Running
 end
 
-function slot0.stopSkillFlow(slot0)
-	if slot0._sequence and slot0._sequence.status == WorkStatus.Running then
-		slot0._sequence:stop()
-		slot0._sequence:unregisterDoneListener(slot0._flowDone, slot0)
+function var_0_0.stopSkillFlow(arg_6_0)
+	if arg_6_0._sequence and arg_6_0._sequence.status == WorkStatus.Running then
+		arg_6_0._sequence:stop()
+		arg_6_0._sequence:unregisterDoneListener(arg_6_0._flowDone, arg_6_0)
 
-		slot0._sequence = nil
+		arg_6_0._sequence = nil
 	end
 end
 
-function slot0._flowDone(slot0)
-	if slot0._sequence then
-		slot0._sequence:unregisterDoneListener(slot0._flowDone, slot0)
+function var_0_0._flowDone(arg_7_0)
+	if arg_7_0._sequence then
+		arg_7_0._sequence:unregisterDoneListener(arg_7_0._flowDone, arg_7_0)
 
-		slot0._sequence = nil
+		arg_7_0._sequence = nil
 	end
 
-	slot0:onDone(true)
+	arg_7_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._sequence then
-		slot0._sequence:stop()
-		slot0._sequence:unregisterDoneListener(slot0._flowDone, slot0)
+function var_0_0.clearWork(arg_8_0)
+	if arg_8_0._sequence then
+		arg_8_0._sequence:stop()
+		arg_8_0._sequence:unregisterDoneListener(arg_8_0._flowDone, arg_8_0)
 
-		slot0._sequence = nil
+		arg_8_0._sequence = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,79 +1,83 @@
-module("modules.logic.achievement.view.AchievementToastItem", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementToastItem", package.seeall)
 
-slot0 = class("AchievementToastItem", UserDataDispose)
+local var_0_0 = class("AchievementToastItem", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._toastItem = slot1
-	slot0._toastParams = slot2
-	slot0._achievementRootGO = slot0._toastItem:getToastRootByType(ToastItem.ToastType.Achievement)
+	arg_1_0._toastItem = arg_1_1
+	arg_1_0._toastParams = arg_1_2
+	arg_1_0._achievementRootGO = arg_1_0._toastItem:getToastRootByType(ToastItem.ToastType.Achievement)
 
-	slot0:_onUpdate()
+	arg_1_0:_onUpdate()
 end
 
-slot0.ToastGOName = "achievementToastItem"
+var_0_0.ToastGOName = "achievementToastItem"
 
-function slot0._onUpdate(slot0)
-	slot0.viewGO = gohelper.findChild(slot0._achievementRootGO, uv0.ToastGOName)
+function var_0_0._onUpdate(arg_2_0)
+	arg_2_0.viewGO = gohelper.findChild(arg_2_0._achievementRootGO, var_0_0.ToastGOName)
 
-	if not slot0.viewGO then
-		if AchievementToastController.instance:tryGetToastAsset() then
-			slot0.viewGO = gohelper.clone(slot1, slot0._achievementRootGO, uv0.ToastGOName)
+	if not arg_2_0.viewGO then
+		local var_2_0 = AchievementToastController.instance:tryGetToastAsset()
+
+		if var_2_0 then
+			arg_2_0.viewGO = gohelper.clone(var_2_0, arg_2_0._achievementRootGO, var_0_0.ToastGOName)
 		else
-			slot0._toastLoader = slot0._toastLoader or MultiAbLoader.New()
+			arg_2_0._toastLoader = arg_2_0._toastLoader or MultiAbLoader.New()
 
-			slot0._toastLoader:addPath(AchievementEnum.AchievementToastPath)
-			slot0._toastLoader:startLoad(slot0._onToastLoadedCallBack, slot0)
+			arg_2_0._toastLoader:addPath(AchievementEnum.AchievementToastPath)
+			arg_2_0._toastLoader:startLoad(arg_2_0._onToastLoadedCallBack, arg_2_0)
 		end
 	end
 
-	if slot0.viewGO then
-		slot0:initComponents()
-		slot0:refreshUI()
+	if arg_2_0.viewGO then
+		arg_2_0:initComponents()
+		arg_2_0:refreshUI()
 	end
 end
 
-function slot0._onToastLoadedCallBack(slot0, slot1)
-	slot0.viewGO = gohelper.findChild(slot0._achievementRootGO, uv0.ToastGOName)
+function var_0_0._onToastLoadedCallBack(arg_3_0, arg_3_1)
+	arg_3_0.viewGO = gohelper.findChild(arg_3_0._achievementRootGO, var_0_0.ToastGOName)
 
-	if not slot0.viewGO then
-		slot0.viewGO = gohelper.clone(slot1:getAssetItem(AchievementEnum.AchievementToastPath):GetResource(AchievementEnum.AchievementToastPath), slot0._achievementRootGO, uv0.ToastGOName)
+	if not arg_3_0.viewGO then
+		local var_3_0 = arg_3_1:getAssetItem(AchievementEnum.AchievementToastPath):GetResource(AchievementEnum.AchievementToastPath)
+
+		arg_3_0.viewGO = gohelper.clone(var_3_0, arg_3_0._achievementRootGO, var_0_0.ToastGOName)
 	end
 
-	slot0:initComponents()
-	slot0:refreshUI()
+	arg_3_0:initComponents()
+	arg_3_0:refreshUI()
 end
 
-function slot0.initComponents(slot0)
-	if slot0.viewGO then
-		slot0._txtAchievement = gohelper.findChildText(slot0.viewGO, "Tips/#txt_Achievement")
-		slot0._simageAssessIcon = gohelper.findChildSingleImage(slot0.viewGO, "Tips/#simage_AssessIcon")
+function var_0_0.initComponents(arg_4_0)
+	if arg_4_0.viewGO then
+		arg_4_0._txtAchievement = gohelper.findChildText(arg_4_0.viewGO, "Tips/#txt_Achievement")
+		arg_4_0._simageAssessIcon = gohelper.findChildSingleImage(arg_4_0.viewGO, "Tips/#simage_AssessIcon")
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtAchievement.text = tostring(slot0._toastParams.toastTip)
+function var_0_0.refreshUI(arg_5_0)
+	arg_5_0._txtAchievement.text = tostring(arg_5_0._toastParams.toastTip)
 
-	slot0._simageAssessIcon:LoadImage(slot0._toastParams.icon)
-	slot0._toastItem:setToastType(ToastItem.ToastType.Achievement)
+	arg_5_0._simageAssessIcon:LoadImage(arg_5_0._toastParams.icon)
+	arg_5_0._toastItem:setToastType(ToastItem.ToastType.Achievement)
 end
 
-function slot0.dispose(slot0)
-	if slot0._toastLoader then
-		slot0._toastLoader:dispose()
+function var_0_0.dispose(arg_6_0)
+	if arg_6_0._toastLoader then
+		arg_6_0._toastLoader:dispose()
 
-		slot0._toastLoader = nil
+		arg_6_0._toastLoader = nil
 	end
 
-	if slot0._simageAssessIcon then
-		slot0._simageAssessIcon:UnLoadImage()
+	if arg_6_0._simageAssessIcon then
+		arg_6_0._simageAssessIcon:UnLoadImage()
 	end
 
-	slot0._toastItem = nil
-	slot0._toastParams = nil
+	arg_6_0._toastItem = nil
+	arg_6_0._toastParams = nil
 
-	slot0:__onDispose()
+	arg_6_0:__onDispose()
 end
 
-return slot0
+return var_0_0

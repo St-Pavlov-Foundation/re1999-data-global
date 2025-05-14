@@ -1,9 +1,10 @@
-module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabEnum", package.seeall)
+﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabEnum", package.seeall)
 
-slot0 = _M
-slot0.ActTabFlag = {
+local var_0_0 = _M
+
+var_0_0.ActTabFlag = {
 	ShowNewStage = 1,
 	ShowNewAct = 0
 }
 
-return slot0
+return var_0_0

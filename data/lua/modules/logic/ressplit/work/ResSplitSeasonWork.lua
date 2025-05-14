@@ -1,39 +1,44 @@
-module("modules.logic.ressplit.work.ResSplitSeasonWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitSeasonWork", package.seeall)
 
-slot0 = class("ResSplitSeasonWork", BaseWork)
+local var_0_0 = class("ResSplitSeasonWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	for slot5, slot6 in pairs(ResSplitModel.instance.includeSeasonDic) do
-		slot8 = SeasonConfig.instance:getSeasonRetailCos(slot5)
-		slot9 = SeasonConfig.instance:getSeasonSpecialCos(slot5)
-		slot10 = {
-			[slot15.episodeId] = true
-		}
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	for iter_1_0, iter_1_1 in pairs(ResSplitModel.instance.includeSeasonDic) do
+		local var_1_0 = SeasonConfig.instance:getSeasonEpisodeCos(iter_1_0)
+		local var_1_1 = SeasonConfig.instance:getSeasonRetailCos(iter_1_0)
+		local var_1_2 = SeasonConfig.instance:getSeasonSpecialCos(iter_1_0)
+		local var_1_3 = {}
 
-		for slot14, slot15 in pairs(SeasonConfig.instance:getSeasonEpisodeCos(slot5)) do
-			ResSplitModel.instance:addIncludeStory(slot15.afterStoryId)
+		for iter_1_2, iter_1_3 in pairs(var_1_0) do
+			var_1_3[iter_1_3.episodeId] = true
+
+			ResSplitModel.instance:addIncludeStory(iter_1_3.afterStoryId)
 		end
 
-		for slot14, slot15 in pairs(slot8) do
-			for slot20, slot21 in pairs(string.splitToNumber(slot15.retailEpisodeIdPool, "#")) do
-				slot10[slot21] = true
+		for iter_1_4, iter_1_5 in pairs(var_1_1) do
+			local var_1_4 = string.splitToNumber(iter_1_5.retailEpisodeIdPool, "#")
+
+			for iter_1_6, iter_1_7 in pairs(var_1_4) do
+				var_1_3[iter_1_7] = true
 			end
 		end
 
-		for slot14, slot15 in pairs(slot9) do
-			slot10[slot15.episodeId] = true
+		for iter_1_8, iter_1_9 in pairs(var_1_2) do
+			var_1_3[iter_1_9.episodeId] = true
 		end
 
-		for slot14, slot15 in pairs(slot10) do
-			ResSplitHelper.addEpisodeRes(slot14)
+		for iter_1_10, iter_1_11 in pairs(var_1_3) do
+			ResSplitHelper.addEpisodeRes(iter_1_10)
 		end
 
-		for slot15, slot16 in ipairs(SeasonConfig.instance:getStoryIds(slot5)) do
-			ResSplitModel.instance:addIncludeStory(slot16)
+		local var_1_5 = SeasonConfig.instance:getStoryIds(iter_1_0)
+
+		for iter_1_12, iter_1_13 in ipairs(var_1_5) do
+			ResSplitModel.instance:addIncludeStory(iter_1_13)
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

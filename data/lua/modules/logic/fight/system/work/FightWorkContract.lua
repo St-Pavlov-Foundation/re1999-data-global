@@ -1,14 +1,16 @@
-module("modules.logic.fight.system.work.FightWorkContract", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkContract", package.seeall)
 
-slot0 = class("FightWorkContract", FightEffectBase)
+local var_0_0 = class("FightWorkContract", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) then
-		slot1:clearNotifyBindContract()
-		FightModel.instance:setContractEntityUid(slot1.uid)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightDataHelper.entityMgr:getById(arg_1_0._actEffectMO.targetId)
+
+	if var_1_0 then
+		var_1_0:clearNotifyBindContract()
+		FightModel.instance:setContractEntityUid(var_1_0.uid)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

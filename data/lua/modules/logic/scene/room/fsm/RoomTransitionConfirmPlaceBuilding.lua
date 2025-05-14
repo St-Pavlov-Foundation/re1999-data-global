@@ -1,45 +1,50 @@
-module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceBuilding", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceBuilding", package.seeall)
 
-slot0 = class("RoomTransitionConfirmPlaceBuilding", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionConfirmPlaceBuilding", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot2 = slot0._param.buildingInfo
-	slot3 = slot0._param.tempBuildingMO
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(slot3.buildingId, slot3.hexPoint, slot3.rotate)
+	local var_3_0 = arg_3_0._param.buildingInfo
+	local var_3_1 = arg_3_0._param.tempBuildingMO
 
-	if slot0._scene.buildingmgr:getBuildingEntity(slot3.id, SceneTag.RoomBuilding) then
-		slot0._scene.buildingmgr:moveTo(slot4, slot3.hexPoint)
-		slot4:refreshBuilding()
-		slot4:refreshRotation()
-		slot4:playSmokeEffect()
+	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(var_3_1.buildingId, var_3_1.hexPoint, var_3_1.rotate)
+
+	local var_3_2 = arg_3_0._scene.buildingmgr:getBuildingEntity(var_3_1.id, SceneTag.RoomBuilding)
+
+	if var_3_2 then
+		arg_3_0._scene.buildingmgr:moveTo(var_3_2, var_3_1.hexPoint)
+		var_3_2:refreshBuilding()
+		var_3_2:refreshRotation()
+		var_3_2:playSmokeEffect()
 	end
 
 	RoomBuildingController.instance:cancelPressBuilding()
 	RoomResourceModel.instance:clearLightResourcePoint()
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, slot3.id)
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_3_1.id)
 	RoomShowBuildingListModel.instance:clearSelect()
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.ConfirmBuilding, slot2.defineId)
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.ConfirmBuilding, var_3_0.defineId)
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshResourceUIShow)
-	slot0:onDone()
+	arg_3_0:onDone()
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingCanConfirm)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_board_fix)
 	RoomBuildingController.instance:refreshBuildingOccupy()
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_4_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

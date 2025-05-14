@@ -1,103 +1,120 @@
-module("modules.logic.room.model.map.RoomMapHexPointModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomMapHexPointModel", package.seeall)
 
-slot0 = class("RoomMapHexPointModel", BaseModel)
+local var_0_0 = class("RoomMapHexPointModel", BaseModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._rangeHexPointsDict = {}
-	slot0._zeroList = {}
-	slot0._hexPointDict = {}
-	slot0._hexPointList = {}
-	slot0._indexDict = {}
-	slot0._rangesHexPointsDic = {}
-	slot0._outIndex2HexDict = {}
+	arg_1_0._rangeHexPointsDict = {}
+	arg_1_0._zeroList = {}
+	arg_1_0._hexPointDict = {}
+	arg_1_0._hexPointList = {}
+	arg_1_0._indexDict = {}
+	arg_1_0._rangesHexPointsDic = {}
+	arg_1_0._outIndex2HexDict = {}
 end
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_4_0)
+	var_0_0.super.clear(arg_4_0)
+	arg_4_0:_clearData()
 end
 
-function slot0._clearData(slot0)
+function var_0_0._clearData(arg_5_0)
+	return
 end
 
-function slot0.init(slot0)
-	slot2 = HexPoint(0, 0)
-	slot0._zeroList = {
-		slot2
+function var_0_0.init(arg_6_0)
+	local var_6_0 = CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius) or 10
+	local var_6_1 = HexPoint(0, 0)
+
+	arg_6_0._zeroList = {
+		var_6_1
 	}
-	slot0._hexPointList = {
-		slot2
+	arg_6_0._hexPointList = {
+		var_6_1
 	}
-	slot3 = slot0._rangesHexPointsDic
 
-	for slot7 = 1, CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius) or 10 do
-		if not slot3[slot7] then
-			slot3[slot7] = slot2:getOnRanges(slot7)
+	local var_6_2 = arg_6_0._rangesHexPointsDic
+
+	for iter_6_0 = 1, var_6_0 do
+		local var_6_3 = var_6_2[iter_6_0]
+
+		if not var_6_3 then
+			var_6_3 = var_6_1:getOnRanges(iter_6_0)
+			var_6_2[iter_6_0] = var_6_3
 		end
 
-		tabletool.addValues(slot0._hexPointList, slot8)
+		tabletool.addValues(arg_6_0._hexPointList, var_6_3)
 	end
 
-	slot0._hexPointDict = {}
-	slot0._indexDict = {}
+	arg_6_0._hexPointDict = {}
+	arg_6_0._indexDict = {}
 
-	for slot7, slot8 in ipairs(slot0._hexPointList) do
-		slot0:_add2KeyValue(slot0._hexPointDict, slot8.x, slot8.y, slot8)
-		slot0:_add2KeyValue(slot0._indexDict, slot8.x, slot8.y, slot7)
+	for iter_6_1, iter_6_2 in ipairs(arg_6_0._hexPointList) do
+		arg_6_0:_add2KeyValue(arg_6_0._hexPointDict, iter_6_2.x, iter_6_2.y, iter_6_2)
+		arg_6_0:_add2KeyValue(arg_6_0._indexDict, iter_6_2.x, iter_6_2.y, iter_6_1)
 	end
 end
 
-function slot0.getIndex(slot0, slot1, slot2)
-	if not slot0:_get2KeyValue(slot0._indexDict, slot1, slot2) then
-		slot0:_add2KeyValue(slot0._indexDict, slot1, slot2, HexMath.hexXYToSpiralIndex(slot1, slot2))
+function var_0_0.getIndex(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0:_get2KeyValue(arg_7_0._indexDict, arg_7_1, arg_7_2)
+
+	if not var_7_0 then
+		var_7_0 = HexMath.hexXYToSpiralIndex(arg_7_1, arg_7_2)
+
+		arg_7_0:_add2KeyValue(arg_7_0._indexDict, arg_7_1, arg_7_2, var_7_0)
 	end
 
-	return slot3
+	return var_7_0
 end
 
-function slot0.getHexPoint(slot0, slot1, slot2)
-	if not slot0:_get2KeyValue(slot0._hexPointDict, slot1, slot2) then
-		slot0:_add2KeyValue(slot0._hexPointDict, slot1, slot2, HexPoint(slot1, slot2))
+function var_0_0.getHexPoint(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0:_get2KeyValue(arg_8_0._hexPointDict, arg_8_1, arg_8_2)
+
+	if not var_8_0 then
+		var_8_0 = HexPoint(arg_8_1, arg_8_2)
+
+		arg_8_0:_add2KeyValue(arg_8_0._hexPointDict, arg_8_1, arg_8_2, var_8_0)
 	end
 
-	return slot3
+	return var_8_0
 end
 
-function slot0.getHexPointByIndex(slot0, slot1)
-	return slot0._hexPointList[slot1]
+function var_0_0.getHexPointByIndex(arg_9_0, arg_9_1)
+	return arg_9_0._hexPointList[arg_9_1]
 end
 
-function slot0.getHexPointList(slot0)
-	return slot0._hexPointList
+function var_0_0.getHexPointList(arg_10_0)
+	return arg_10_0._hexPointList
 end
 
-function slot0.getOnRangeHexPointList(slot0, slot1)
-	if slot1 < 1 then
-		return slot0._zeroList
+function var_0_0.getOnRangeHexPointList(arg_11_0, arg_11_1)
+	if arg_11_1 < 1 then
+		return arg_11_0._zeroList
 	end
 
-	return slot0._rangesHexPointsDic[slot1]
+	return arg_11_0._rangesHexPointsDic[arg_11_1]
 end
 
-function slot0._add2KeyValue(slot0, slot1, slot2, slot3, slot4)
-	slot1[slot2] = slot1[slot2] or {}
-	slot1[slot2][slot3] = slot4
+function var_0_0._add2KeyValue(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	arg_12_1[arg_12_2] = arg_12_1[arg_12_2] or {}
+	arg_12_1[arg_12_2][arg_12_3] = arg_12_4
 end
 
-function slot0._get2KeyValue(slot0, slot1, slot2, slot3)
-	return slot1[slot2] and slot4[slot3]
+function var_0_0._get2KeyValue(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = arg_13_1[arg_13_2]
+
+	return var_13_0 and var_13_0[arg_13_3]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

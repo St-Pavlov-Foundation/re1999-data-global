@@ -1,84 +1,92 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaEntityMgr", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.TianShiNaNaEntityMgr", package.seeall)
 
-slot0 = class("TianShiNaNaEntityMgr")
+local var_0_0 = class("TianShiNaNaEntityMgr")
 
-function slot0.ctor(slot0)
-	slot0._entitys = {}
-	slot0._nodes = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._entitys = {}
+	arg_1_0._nodes = {}
 end
 
-function slot0.addEntity(slot0, slot1, slot2)
-	if slot0._entitys[slot1.co.id] then
-		slot3:reAdd()
+function var_0_0.addEntity(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_0._entitys[arg_2_1.co.id]
 
-		return slot3
+	if var_2_0 then
+		var_2_0:reAdd()
+
+		return var_2_0
 	end
 
-	if not TianShiNaNaModel.instance.mapCo:getNodeCo(slot1.x, slot1.y) or slot4:isCollapse() then
+	local var_2_1 = TianShiNaNaModel.instance.mapCo:getNodeCo(arg_2_1.x, arg_2_1.y)
+
+	if not var_2_1 or var_2_1:isCollapse() then
 		return nil
 	end
 
-	slot6 = TianShiNaNaEnum.UnitTypeToName[slot1.co.unitType] or ""
-	slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.create3d(slot2, slot6 .. slot1.co.id), _G[string.format("TianShiNaNa%sEntity", slot6)] or TianShiNaNaUnitEntityBase)
+	local var_2_2 = arg_2_1.co.unitType
+	local var_2_3 = TianShiNaNaEnum.UnitTypeToName[var_2_2] or ""
+	local var_2_4 = _G[string.format("TianShiNaNa%sEntity", var_2_3)] or TianShiNaNaUnitEntityBase
+	local var_2_5 = gohelper.create3d(arg_2_2, var_2_3 .. arg_2_1.co.id)
+	local var_2_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_5, var_2_4)
 
-	slot3:updateMo(slot1)
+	var_2_6:updateMo(arg_2_1)
 
-	slot0._entitys[slot1.co.id] = slot3
+	arg_2_0._entitys[arg_2_1.co.id] = var_2_6
 
-	return slot3
+	return var_2_6
 end
 
-function slot0.getEntity(slot0, slot1)
-	return slot0._entitys[slot1]
+function var_0_0.getEntity(arg_3_0, arg_3_1)
+	return arg_3_0._entitys[arg_3_1]
 end
 
-function slot0.removeEntity(slot0, slot1)
-	if slot0._entitys[slot1] then
-		slot0._entitys[slot1]:dispose()
+function var_0_0.removeEntity(arg_4_0, arg_4_1)
+	if arg_4_0._entitys[arg_4_1] then
+		arg_4_0._entitys[arg_4_1]:dispose()
 
-		slot0._entitys[slot1] = nil
+		arg_4_0._entitys[arg_4_1] = nil
 	end
 end
 
-function slot0.addNode(slot0, slot1, slot2)
-	if string.nilorempty(slot1.nodePath) then
+function var_0_0.addNode(arg_5_0, arg_5_1, arg_5_2)
+	if string.nilorempty(arg_5_1.nodePath) then
 		return
 	end
 
-	if slot0._nodes[slot1] then
-		return slot0._nodes[slot1]
+	if arg_5_0._nodes[arg_5_1] then
+		return arg_5_0._nodes[arg_5_1]
 	end
 
-	slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.create3d(slot2, string.format("%d_%d", slot1.x, slot1.y)), TianShiNaNaNodeEntity)
+	local var_5_0 = gohelper.create3d(arg_5_2, string.format("%d_%d", arg_5_1.x, arg_5_1.y))
+	local var_5_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, TianShiNaNaNodeEntity)
 
-	slot4:updateCo(slot1)
+	var_5_1:updateCo(arg_5_1)
 
-	slot0._nodes[slot1] = slot4
+	arg_5_0._nodes[arg_5_1] = var_5_1
 
-	return slot4
+	return var_5_1
 end
 
-function slot0.removeNode(slot0, slot1)
-	if slot0._nodes[slot1] then
-		slot0._nodes[slot1]:dispose()
+function var_0_0.removeNode(arg_6_0, arg_6_1)
+	if arg_6_0._nodes[arg_6_1] then
+		arg_6_0._nodes[arg_6_1]:dispose()
 
-		slot0._nodes[slot1] = nil
+		arg_6_0._nodes[arg_6_1] = nil
 	end
 end
 
-function slot0.clear(slot0)
-	for slot4, slot5 in pairs(slot0._entitys) do
-		slot5:dispose()
+function var_0_0.clear(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._entitys) do
+		iter_7_1:dispose()
 	end
 
-	for slot4, slot5 in pairs(slot0._nodes) do
-		slot5:dispose()
+	for iter_7_2, iter_7_3 in pairs(arg_7_0._nodes) do
+		iter_7_3:dispose()
 	end
 
-	slot0._entitys = {}
-	slot0._nodes = {}
+	arg_7_0._entitys = {}
+	arg_7_0._nodes = {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,17 +1,17 @@
-module("modules.logic.fight.model.data.FightCacheFightDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightCacheFightDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightCacheFightDataMgr")
+local var_0_0 = FightDataClass("FightCacheFightDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0.cache = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.cache = {}
 end
 
-function slot0.cacheFightWavePush(slot0, slot1)
-	table.insert(slot0.cache, slot1)
+function var_0_0.cacheFightWavePush(arg_2_0, arg_2_1)
+	table.insert(arg_2_0.cache, arg_2_1)
 end
 
-function slot0.getAndRemove(slot0)
-	return table.remove(slot0.cache, 1)
+function var_0_0.getAndRemove(arg_3_0)
+	return table.remove(arg_3_0.cache, 1)
 end
 
-return slot0
+return var_0_0

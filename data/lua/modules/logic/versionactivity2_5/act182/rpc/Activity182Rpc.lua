@@ -1,61 +1,64 @@
-module("modules.logic.versionactivity2_5.act182.rpc.Activity182Rpc", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act182.rpc.Activity182Rpc", package.seeall)
 
-slot0 = class("Activity182Rpc", BaseRpc)
+local var_0_0 = class("Activity182Rpc", BaseRpc)
 
-function slot0.sendGetAct182InfoRequest(slot0, slot1)
-	slot2 = Activity182Module_pb.GetAct182InfoRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct182InfoRequest(arg_1_0, arg_1_1)
+	local var_1_0 = Activity182Module_pb.GetAct182InfoRequest()
 
-	slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGetAct182InfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct182InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	Activity182Model.instance:setActInfo(slot2.act182Info)
+	Activity182Model.instance:setActInfo(arg_2_2.act182Info)
 end
 
-function slot0.onReceiveAct182InfoPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct182InfoPush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	Activity182Model.instance:setActInfo(slot2.act182Info)
+	Activity182Model.instance:setActInfo(arg_3_2.act182Info)
 end
 
-function slot0.sendGetAct182RandomMasterRequest(slot0, slot1)
-	slot2 = Activity182Module_pb.GetAct182RandomMasterRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct182RandomMasterRequest(arg_4_0, arg_4_1)
+	local var_4_0 = Activity182Module_pb.GetAct182RandomMasterRequest()
 
-	slot0:sendMsg(slot2)
+	var_4_0.activityId = arg_4_1
+
+	arg_4_0:sendMsg(var_4_0)
 end
 
-function slot0.onReceiveGetAct182RandomMasterReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct182RandomMasterReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	Activity182Model.instance:getActMo(slot2.activityId):updateMasterIdBox(slot2.masterId)
+	Activity182Model.instance:getActMo(arg_5_2.activityId):updateMasterIdBox(arg_5_2.masterId)
 	Activity182Controller.instance:dispatchEvent(Activity182Event.RandomMasterReply)
 end
 
-function slot0.sendAct182RefreshMasterRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity182Module_pb.Act182RefreshMasterRequest()
-	slot4.activityId = slot1
+function var_0_0.sendAct182RefreshMasterRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = Activity182Module_pb.Act182RefreshMasterRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_6_0.activityId = arg_6_1
+
+	arg_6_0:sendMsg(var_6_0, arg_6_2, arg_6_3)
 end
 
-function slot0.onReceiveAct182RefreshMasterReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct182RefreshMasterReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	Activity182Model.instance:getActMo(slot2.activityId):updateMasterIdBox(slot2.masterId, true)
+	Activity182Model.instance:getActMo(arg_7_2.activityId):updateMasterIdBox(arg_7_2.masterId, true)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

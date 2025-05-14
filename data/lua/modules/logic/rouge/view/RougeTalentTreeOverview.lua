@@ -1,160 +1,195 @@
-module("modules.logic.rouge.view.RougeTalentTreeOverview", package.seeall)
+﻿module("modules.logic.rouge.view.RougeTalentTreeOverview", package.seeall)
 
-slot0 = class("RougeTalentTreeOverview", BaseView)
+local var_0_0 = class("RougeTalentTreeOverview", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_desc")
-	slot0._goattribute = gohelper.findChild(slot0.viewGO, "#scroll_desc/Viewport/Content/base/#go_attribute/attribute")
-	slot0._gotalentitem = gohelper.findChild(slot0.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem")
-	slot0._godetails = gohelper.findChild(slot0.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem/#go_details")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_arrow")
-	slot0._attributeItemList = {}
-	slot0._talentItemList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
+	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/base/#go_attribute/attribute")
+	arg_1_0._gotalentitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem")
+	arg_1_0._godetails = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/Viewport/Content/talent/#go_talentitem/#go_details")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+	arg_1_0._attributeItemList = {}
+	arg_1_0._talentItemList = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
-	for slot4, slot5 in pairs(slot0._talentItemList) do
-		if slot5 and slot5.btn then
-			slot5.btn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._talentItemList) do
+		if iter_3_1 and iter_3_1.btn then
+			iter_3_1.btn:RemoveClickListener()
 		end
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._season = RougeOutsideModel.instance:season()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._season = RougeOutsideModel.instance:season()
 
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenTalentOverView)
 
-	slot0._attributeMo, slot0._showMo = RougeTalentModel.instance:calculateTalent()
+	arg_6_0._attributeMo, arg_6_0._showMo = RougeTalentModel.instance:calculateTalent()
 
-	if not slot0._showMo and not slot0._attributeMo then
-		gohelper.setActive(slot0._goempty, true)
-		gohelper.setActive(slot0._scrolldesc.gameObject, false)
+	if not arg_6_0._showMo and not arg_6_0._attributeMo then
+		gohelper.setActive(arg_6_0._goempty, true)
+		gohelper.setActive(arg_6_0._scrolldesc.gameObject, false)
 
 		return
 	else
-		gohelper.setActive(slot0._goempty, false)
-		gohelper.setActive(slot0._scrolldesc.gameObject, true)
+		gohelper.setActive(arg_6_0._goempty, false)
+		gohelper.setActive(arg_6_0._scrolldesc.gameObject, true)
 	end
 
-	if next(slot0._showMo) then
-		for slot4, slot5 in pairs(slot0._showMo) do
-			if not slot0._talentItemList[slot4] then
-				slot6 = slot0:getUserDataTb_()
-				slot7 = gohelper.cloneInPlace(slot0._gotalentitem, slot4)
-				slot6.go = slot7
-				slot6.name = gohelper.findChildText(slot7, "info/img_titleline/#txt_talenname")
-				slot6.icon = gohelper.findChildImage(slot7, "info/img_titleline/#image_icon")
-				slot6.btn = gohelper.findChildButton(slot7, "info/#btn_arrow")
-				slot6.gobtnopen = gohelper.findChild(slot7, "info/#btn_arrow/open")
-				slot6.gobtnclose = gohelper.findChild(slot7, "info/#btn_arrow/close")
-				slot6.isopen = false
-				slot6.details = {}
+	if next(arg_6_0._showMo) then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._showMo) do
+			local var_6_0 = arg_6_0._talentItemList[iter_6_0]
 
-				for slot16, slot17 in pairs(slot5) do
-					slot18 = slot0:getUserDataTb_()
-					slot19 = gohelper.clone(slot0._godetails, slot7, slot17)
-					slot18.go = slot19
+			if not var_6_0 then
+				var_6_0 = arg_6_0:getUserDataTb_()
 
-					gohelper.setActive(slot19, false)
+				local var_6_1 = gohelper.cloneInPlace(arg_6_0._gotalentitem, iter_6_0)
+				local var_6_2 = gohelper.findChildText(var_6_1, "info/img_titleline/#txt_talenname")
+				local var_6_3 = gohelper.findChildImage(var_6_1, "info/img_titleline/#image_icon")
+				local var_6_4 = gohelper.findChildButton(var_6_1, "info/#btn_arrow")
+				local var_6_5 = gohelper.findChild(var_6_1, "info/#btn_arrow/open")
+				local var_6_6 = gohelper.findChild(var_6_1, "info/#btn_arrow/close")
 
-					slot18.gotalentdesc = gohelper.findChild(slot19, "#txt_unlockdec")
-					slot18.txttalentdesc = gohelper.findChildText(slot19, "#txt_unlockdec")
-					slot18.goUnlockdesc = gohelper.findChild(slot19, "#txt_talentdec")
-					slot18.txtUnlockdesc = gohelper.findChildText(slot19, "#txt_talentdec")
-					slot21 = RougeTalentConfig.instance:getBranchConfigByID(slot0._season, slot17).isOrigin == 1
+				var_6_0.go = var_6_1
+				var_6_0.name = var_6_2
+				var_6_0.icon = var_6_3
+				var_6_0.btn = var_6_4
+				var_6_0.gobtnopen = var_6_5
+				var_6_0.gobtnclose = var_6_6
+				var_6_0.isopen = false
+				var_6_0.details = {}
 
-					gohelper.setActive(slot18.gotalentdesc, not slot21)
-					gohelper.setActive(slot18.goUnlockdesc, slot21)
+				for iter_6_2, iter_6_3 in pairs(iter_6_1) do
+					local var_6_7 = arg_6_0:getUserDataTb_()
+					local var_6_8 = gohelper.clone(arg_6_0._godetails, var_6_1, iter_6_3)
 
-					slot18.txttalentdesc.text = slot20.desc
-					slot18.txtUnlockdesc.text = slot20.desc
-					slot6.details[slot17] = slot18
+					var_6_7.go = var_6_8
+
+					gohelper.setActive(var_6_8, false)
+
+					var_6_7.gotalentdesc = gohelper.findChild(var_6_8, "#txt_unlockdec")
+					var_6_7.txttalentdesc = gohelper.findChildText(var_6_8, "#txt_unlockdec")
+					var_6_7.goUnlockdesc = gohelper.findChild(var_6_8, "#txt_talentdec")
+					var_6_7.txtUnlockdesc = gohelper.findChildText(var_6_8, "#txt_talentdec")
+
+					local var_6_9 = RougeTalentConfig.instance:getBranchConfigByID(arg_6_0._season, iter_6_3)
+					local var_6_10 = var_6_9.isOrigin == 1
+
+					gohelper.setActive(var_6_7.gotalentdesc, not var_6_10)
+					gohelper.setActive(var_6_7.goUnlockdesc, var_6_10)
+
+					var_6_7.txttalentdesc.text = var_6_9.desc
+					var_6_7.txtUnlockdesc.text = var_6_9.desc
+					var_6_0.details[iter_6_3] = var_6_7
 				end
 
-				gohelper.setActive(slot11, false)
-				gohelper.setActive(slot12, true)
-				slot6.btn:AddClickListener(function ()
-					uv0.isopen = not uv0.isopen
+				local function var_6_11()
+					var_6_0.isopen = not var_6_0.isopen
 
-					if next(uv0.details) then
-						for slot3, slot4 in pairs(uv0.details) do
-							gohelper.setActive(slot4.go, uv0.isopen)
+					if next(var_6_0.details) then
+						for iter_7_0, iter_7_1 in pairs(var_6_0.details) do
+							local var_7_0 = iter_7_1.go
+
+							gohelper.setActive(var_7_0, var_6_0.isopen)
 						end
 					end
 
-					gohelper.setActive(uv1, uv0.isopen)
-					gohelper.setActive(uv2, not uv0.isopen)
+					gohelper.setActive(var_6_5, var_6_0.isopen)
+					gohelper.setActive(var_6_6, not var_6_0.isopen)
 					AudioMgr.instance:trigger(AudioEnum.UI.ClickOverBranch)
-				end, slot0)
-				gohelper.setActive(slot7, true)
-
-				slot0._talentItemList[slot4] = slot6
-			end
-
-			slot7 = RougeTalentConfig.instance:getConfigByTalent(slot0._season, slot4)
-			slot6.name.text = slot7.name
-
-			UISpriteSetMgr.instance:setRougeSprite(slot6.icon, slot7.icon)
-		end
-	end
-
-	if #slot0._attributeMo > 0 then
-		for slot4, slot5 in ipairs(slot0._attributeMo) do
-			if not slot0._attributeItemList[slot4] then
-				slot6 = slot0:getUserDataTb_()
-				slot7 = gohelper.cloneInPlace(slot0._goattribute, slot4)
-				slot6.go = slot7
-				slot6.rate = gohelper.findChildText(slot7, "txt_attribute")
-				slot6.name = gohelper.findChildText(slot7, "name")
-				slot6.icon = gohelper.findChildImage(slot7, "icon")
-
-				gohelper.setActive(slot7, true)
-				gohelper.setActive(gohelper.findChild(slot7, "bg"), math.ceil(slot4 / 2) % 2 ~= 0)
-				table.insert(slot0._attributeItemList, slot6)
-			end
-
-			if slot5.ismul then
-				slot6.rate.text = slot5.isattribute and "+" .. slot5.rate * 0.1 .. "%" or "+" .. slot5.rate .. "%"
-			else
-				slot6.rate.text = "+" .. slot5.rate
-			end
-
-			if slot5.isattribute then
-				if slot5.id == 215 or slot5.id == 216 then
-					UISpriteSetMgr.instance:setCommonSprite(slot6.icon, slot5.icon)
 				end
 
-				UISpriteSetMgr.instance:setCommonSprite(slot6.icon, slot5.icon)
-			else
-				UISpriteSetMgr.instance:setRougeSprite(slot6.icon, slot5.icon)
+				gohelper.setActive(var_6_5, false)
+				gohelper.setActive(var_6_6, true)
+				var_6_0.btn:AddClickListener(var_6_11, arg_6_0)
+				gohelper.setActive(var_6_1, true)
+
+				arg_6_0._talentItemList[iter_6_0] = var_6_0
 			end
 
-			slot6.name.text = slot5.name
+			local var_6_12 = RougeTalentConfig.instance:getConfigByTalent(arg_6_0._season, iter_6_0)
+
+			var_6_0.name.text = var_6_12.name
+
+			UISpriteSetMgr.instance:setRougeSprite(var_6_0.icon, var_6_12.icon)
+		end
+	end
+
+	if #arg_6_0._attributeMo > 0 then
+		for iter_6_4, iter_6_5 in ipairs(arg_6_0._attributeMo) do
+			local var_6_13 = arg_6_0._attributeItemList[iter_6_4]
+
+			if not var_6_13 then
+				var_6_13 = arg_6_0:getUserDataTb_()
+
+				local var_6_14 = gohelper.cloneInPlace(arg_6_0._goattribute, iter_6_4)
+				local var_6_15 = gohelper.findChildImage(var_6_14, "icon")
+				local var_6_16 = gohelper.findChildText(var_6_14, "txt_attribute")
+				local var_6_17 = gohelper.findChildText(var_6_14, "name")
+				local var_6_18 = gohelper.findChild(var_6_14, "bg")
+
+				var_6_13.go = var_6_14
+				var_6_13.rate = var_6_16
+				var_6_13.name = var_6_17
+				var_6_13.icon = var_6_15
+
+				local var_6_19 = math.ceil(iter_6_4 / 2) % 2 ~= 0
+
+				gohelper.setActive(var_6_14, true)
+				gohelper.setActive(var_6_18, var_6_19)
+				table.insert(arg_6_0._attributeItemList, var_6_13)
+			end
+
+			if iter_6_5.ismul then
+				local var_6_20 = "+" .. iter_6_5.rate * 0.1 .. "%"
+				local var_6_21 = "+" .. iter_6_5.rate .. "%"
+
+				var_6_13.rate.text = iter_6_5.isattribute and var_6_20 or var_6_21
+			else
+				var_6_13.rate.text = "+" .. iter_6_5.rate
+			end
+
+			if iter_6_5.isattribute then
+				if iter_6_5.id == 215 or iter_6_5.id == 216 then
+					UISpriteSetMgr.instance:setCommonSprite(var_6_13.icon, iter_6_5.icon)
+				end
+
+				UISpriteSetMgr.instance:setCommonSprite(var_6_13.icon, iter_6_5.icon)
+			else
+				UISpriteSetMgr.instance:setRougeSprite(var_6_13.icon, iter_6_5.icon)
+			end
+
+			var_6_13.name.text = iter_6_5.name
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

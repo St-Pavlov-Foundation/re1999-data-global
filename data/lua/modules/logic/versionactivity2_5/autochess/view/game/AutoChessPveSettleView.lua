@@ -1,66 +1,74 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessPveSettleView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessPveSettleView", package.seeall)
 
-slot0 = class("AutoChessPveSettleView", BaseView)
+local var_0_0 = class("AutoChessPveSettleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goSuccess = gohelper.findChild(slot0.viewGO, "#go_Success")
-	slot0._goFail = gohelper.findChild(slot0.viewGO, "#go_Fail")
-	slot0._btnRestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_Restart")
-	slot0._btnExit = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_Exit")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goSuccess = gohelper.findChild(arg_1_0.viewGO, "#go_Success")
+	arg_1_0._goFail = gohelper.findChild(arg_1_0.viewGO, "#go_Fail")
+	arg_1_0._btnRestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_Restart")
+	arg_1_0._btnExit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_Exit")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnRestart:AddClickListener(slot0._btnRestartOnClick, slot0)
-	slot0._btnExit:AddClickListener(slot0._btnExitOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnRestart:AddClickListener(arg_2_0._btnRestartOnClick, arg_2_0)
+	arg_2_0._btnExit:AddClickListener(arg_2_0._btnExitOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnRestart:RemoveClickListener()
-	slot0._btnExit:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnRestart:RemoveClickListener()
+	arg_3_0._btnExit:RemoveClickListener()
 end
 
-function slot0._onEscBtnClick(slot0)
+function var_0_0._onEscBtnClick(arg_4_0)
+	return
 end
 
-function slot0._btnRestartOnClick(slot0)
-	slot0.restart = true
+function var_0_0._btnRestartOnClick(arg_5_0)
+	arg_5_0.restart = true
 
-	slot0:closeThis()
+	arg_5_0:closeThis()
 end
 
-function slot0._btnExitOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnExitOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	NavigateMgr.instance:addEscape(ViewName.AutoChessPveSettleView, slot0._onEscBtnClick, slot0)
+function var_0_0._editableInitView(arg_7_0)
+	NavigateMgr.instance:addEscape(ViewName.AutoChessPveSettleView, arg_7_0._onEscBtnClick, arg_7_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if AutoChessModel.instance.settleData then
-		gohelper.setActive(slot0._goSuccess, tonumber(slot1.remainingHp) ~= 0)
-		gohelper.setActive(slot0._goFail, tonumber(slot1.remainingHp) == 0)
+function var_0_0.onOpen(arg_9_0)
+	local var_9_0 = AutoChessModel.instance.settleData
+
+	if var_9_0 then
+		gohelper.setActive(arg_9_0._goSuccess, tonumber(var_9_0.remainingHp) ~= 0)
+		gohelper.setActive(arg_9_0._goFail, tonumber(var_9_0.remainingHp) == 0)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot1 = AutoChessModel.instance.episodeId
+function var_0_0.onClose(arg_10_0)
+	local var_10_0 = AutoChessModel.instance.episodeId
 
 	AutoChessController.instance:onSettleViewClose()
 
-	if slot0.restart then
-		AutoChessRpc.instance:sendAutoChessEnterSceneRequest(AutoChessEnum.ModuleId.PVE, slot1, lua_auto_chess_episode.configDict[slot1].masterId)
+	if arg_10_0.restart then
+		local var_10_1 = AutoChessEnum.ModuleId.PVE
+		local var_10_2 = lua_auto_chess_episode.configDict[var_10_0].masterId
+
+		AutoChessRpc.instance:sendAutoChessEnterSceneRequest(var_10_1, var_10_0, var_10_2)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

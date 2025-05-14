@@ -1,41 +1,47 @@
-module("modules.logic.teach.controller.TeachNoteController", package.seeall)
+﻿module("modules.logic.teach.controller.TeachNoteController", package.seeall)
 
-slot0 = class("TeachNoteController", BaseController)
+local var_0_0 = class("TeachNoteController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.enterTeachNoteView(slot0, slot1, slot2)
-	TeachNoteModel.instance:setJumpEnter(slot2)
+function var_0_0.enterTeachNoteView(arg_5_0, arg_5_1, arg_5_2)
+	TeachNoteModel.instance:setJumpEnter(arg_5_2)
 
-	if not slot2 then
+	if not arg_5_2 then
 		TeachNoteModel.instance:setJumpEpisodeId(nil)
 	end
 
-	ViewMgr.instance:openView(ViewName.TeachNoteView, {
-		isJump = slot2,
-		episodeId = slot1
-	})
+	local var_5_0 = {
+		isJump = arg_5_2,
+		episodeId = arg_5_1
+	}
+
+	ViewMgr.instance:openView(ViewName.TeachNoteView, var_5_0)
 
 	return ViewName.TeachNoteView
 end
 
-function slot0.enterTeachNoteDetailView(slot0, slot1)
+function var_0_0.enterTeachNoteDetailView(arg_6_0, arg_6_1)
 	TeachNoteModel.instance:setJumpEnter(false)
-	ViewMgr.instance:openView(ViewName.TeachNoteDetailView, slot1)
+	ViewMgr.instance:openView(ViewName.TeachNoteDetailView, arg_6_1)
 
 	return ViewName.TeachNoteDetailView
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

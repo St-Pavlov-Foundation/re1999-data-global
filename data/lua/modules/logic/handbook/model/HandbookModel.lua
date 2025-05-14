@@ -1,159 +1,188 @@
-module("modules.logic.handbook.model.HandbookModel", package.seeall)
+﻿module("modules.logic.handbook.model.HandbookModel", package.seeall)
 
-slot0 = class("HandbookModel", BaseModel)
+local var_0_0 = class("HandbookModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._cgReadDict = {}
-	slot0._fragmentDict = {}
-	slot0._characterReadDict = {}
-	slot0._equipDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._cgReadDict = {}
+	arg_1_0._fragmentDict = {}
+	arg_1_0._characterReadDict = {}
+	arg_1_0._equipDict = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._cgReadDict = {}
-	slot0._fragmentDict = {}
-	slot0._characterReadDict = {}
-	slot0._equipDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._cgReadDict = {}
+	arg_2_0._fragmentDict = {}
+	arg_2_0._characterReadDict = {}
+	arg_2_0._equipDict = {}
 end
 
-function slot0.setReadInfos(slot0, slot1)
-	slot0._cgReadDict = {}
+function var_0_0.setReadInfos(arg_3_0, arg_3_1)
+	arg_3_0._cgReadDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:setReadInfo(slot6)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		arg_3_0:setReadInfo(iter_3_1)
 	end
 end
 
-function slot0.setReadInfo(slot0, slot1)
-	if slot1.type == HandbookEnum.Type.CG then
-		if slot1.isRead then
-			slot0._cgReadDict[slot1.id] = true
-		elseif slot0._cgReadDict[slot1.id] then
-			slot0._cgReadDict[slot1.id] = nil
+function var_0_0.setReadInfo(arg_4_0, arg_4_1)
+	if arg_4_1.type == HandbookEnum.Type.CG then
+		if arg_4_1.isRead then
+			arg_4_0._cgReadDict[arg_4_1.id] = true
+		elseif arg_4_0._cgReadDict[arg_4_1.id] then
+			arg_4_0._cgReadDict[arg_4_1.id] = nil
 		end
-	elseif slot1.type == HandbookEnum.Type.Character then
-		if slot1.isRead then
-			slot0._characterReadDict[slot1.id] = true
+	elseif arg_4_1.type == HandbookEnum.Type.Character then
+		if arg_4_1.isRead then
+			arg_4_0._characterReadDict[arg_4_1.id] = true
 		end
-	elseif slot1.type == HandbookEnum.Type.Equip then
-		if not lua_handbook_equip.configDict[slot1.id] then
-			logError(string.format("handbook equip not found id : %s config", slot1.id))
+	elseif arg_4_1.type == HandbookEnum.Type.Equip then
+		local var_4_0 = lua_handbook_equip.configDict[arg_4_1.id]
+
+		if not var_4_0 then
+			logError(string.format("handbook equip not found id : %s config", arg_4_1.id))
 
 			return
 		end
 
-		slot0._equipDict[slot2.equipId] = true
+		arg_4_0._equipDict[var_4_0.equipId] = true
 	end
 end
 
-function slot0.setFragmentInfo(slot0, slot1)
-	slot0._fragmentDict = {}
+function var_0_0.setFragmentInfo(arg_5_0, arg_5_1)
+	arg_5_0._fragmentDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if lua_chapter_map_element.configDict[slot6.element] and slot7.fragment ~= 0 then
-			slot8 = {}
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = lua_chapter_map_element.configDict[iter_5_1.element]
 
-			for slot12, slot13 in ipairs(slot6.dialogIds) do
-				table.insert(slot8, slot13)
+		if var_5_0 and var_5_0.fragment ~= 0 then
+			local var_5_1 = {}
+
+			for iter_5_2, iter_5_3 in ipairs(iter_5_1.dialogIds) do
+				table.insert(var_5_1, iter_5_3)
 			end
 
-			slot0._fragmentDict[slot7.fragment] = slot8
+			arg_5_0._fragmentDict[var_5_0.fragment] = var_5_1
 		end
 	end
 end
 
-function slot0.isRead(slot0, slot1, slot2)
-	if slot1 == HandbookEnum.Type.CG then
-		return slot0._cgReadDict[slot2]
-	elseif slot1 == HandbookEnum.Type.Character then
-		return slot0._characterReadDict[slot2]
+function var_0_0.isRead(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == HandbookEnum.Type.CG then
+		return arg_6_0._cgReadDict[arg_6_2]
+	elseif arg_6_1 == HandbookEnum.Type.Character then
+		return arg_6_0._characterReadDict[arg_6_2]
 	end
 
 	return false
 end
 
-function slot0.isCGUnlock(slot0, slot1)
-	return HandbookConfig.instance:getCGConfig(slot1).episodeId == 0 or DungeonModel.instance:hasPassLevelAndStory(slot3)
+function var_0_0.isCGUnlock(arg_7_0, arg_7_1)
+	local var_7_0 = HandbookConfig.instance:getCGConfig(arg_7_1).episodeId
+
+	return var_7_0 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_7_0)
 end
 
-function slot0.getCGUnlockCount(slot0, slot1, slot2)
-	for slot8, slot9 in ipairs(HandbookConfig.instance:getCGList(slot2)) do
-		if (not slot1 or slot9.storyChapterId == slot1) and uv0.instance:isCGUnlock(slot9.id) then
-			slot3 = 0 + 1
+function var_0_0.getCGUnlockCount(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = 0
+	local var_8_1 = HandbookConfig.instance:getCGList(arg_8_2)
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		if (not arg_8_1 or iter_8_1.storyChapterId == arg_8_1) and var_0_0.instance:isCGUnlock(iter_8_1.id) then
+			var_8_0 = var_8_0 + 1
 		end
 	end
 
-	return slot3
+	return var_8_0
 end
 
-function slot0.getCGUnlockIndex(slot0, slot1, slot2)
-	for slot8, slot9 in ipairs(HandbookConfig.instance:getCGList(slot2)) do
-		if slot9.id == slot1 then
-			return 1
+function var_0_0.getCGUnlockIndex(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = 1
+	local var_9_1 = HandbookConfig.instance:getCGList(arg_9_2)
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if iter_9_1.id == arg_9_1 then
+			return var_9_0
 		end
 
-		if uv0.instance:isCGUnlock(slot9.id) then
-			slot3 = slot3 + 1
+		if var_0_0.instance:isCGUnlock(iter_9_1.id) then
+			var_9_0 = var_9_0 + 1
 		end
 	end
 end
 
-function slot0.getNextCG(slot0, slot1, slot2)
-	for slot8 = HandbookConfig.instance:getCGIndex(slot1, slot2) + 1, #HandbookConfig.instance:getCGList(slot2) do
-		if slot0:isCGUnlock(slot4[slot8].id) then
-			return slot9
+function var_0_0.getNextCG(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = HandbookConfig.instance:getCGIndex(arg_10_1, arg_10_2)
+	local var_10_1 = HandbookConfig.instance:getCGList(arg_10_2)
+
+	for iter_10_0 = var_10_0 + 1, #var_10_1 do
+		local var_10_2 = var_10_1[iter_10_0]
+
+		if arg_10_0:isCGUnlock(var_10_2.id) then
+			return var_10_2
 		end
 	end
 
-	for slot8 = 1, slot3 - 1 do
-		if slot0:isCGUnlock(slot4[slot8].id) then
-			return slot9
-		end
-	end
+	for iter_10_1 = 1, var_10_0 - 1 do
+		local var_10_3 = var_10_1[iter_10_1]
 
-	return nil
-end
-
-function slot0.getPrevCG(slot0, slot1, slot2)
-	slot4 = HandbookConfig.instance:getCGList(slot2)
-
-	for slot8 = HandbookConfig.instance:getCGIndex(slot1, slot2) - 1, 1, -1 do
-		if slot0:isCGUnlock(slot4[slot8].id) then
-			return slot9
-		end
-	end
-
-	for slot8 = #slot4, slot3 + 1, -1 do
-		if slot0:isCGUnlock(slot4[slot8].id) then
-			return slot9
+		if arg_10_0:isCGUnlock(var_10_3.id) then
+			return var_10_3
 		end
 	end
 
 	return nil
 end
 
-function slot0.isStoryGroupUnlock(slot0, slot1)
-	return HandbookConfig.instance:getStoryGroupConfig(slot1).episodeId == 0 or DungeonModel.instance:hasPassLevelAndStory(slot3)
-end
+function var_0_0.getPrevCG(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = HandbookConfig.instance:getCGIndex(arg_11_1, arg_11_2)
+	local var_11_1 = HandbookConfig.instance:getCGList(arg_11_2)
 
-function slot0.getStoryGroupUnlockCount(slot0, slot1)
-	for slot7, slot8 in ipairs(HandbookConfig.instance:getStoryGroupList()) do
-		if (not slot1 or slot8.storyChapterId == slot1) and uv0.instance:isStoryGroupUnlock(slot8.id) then
-			slot2 = 0 + 1
+	for iter_11_0 = var_11_0 - 1, 1, -1 do
+		local var_11_2 = var_11_1[iter_11_0]
+
+		if arg_11_0:isCGUnlock(var_11_2.id) then
+			return var_11_2
 		end
 	end
 
-	return slot2
+	for iter_11_1 = #var_11_1, var_11_0 + 1, -1 do
+		local var_11_3 = var_11_1[iter_11_1]
+
+		if arg_11_0:isCGUnlock(var_11_3.id) then
+			return var_11_3
+		end
+	end
+
+	return nil
 end
 
-function slot0.getFragmentDialogIdList(slot0, slot1)
-	return slot0._fragmentDict[slot1]
+function var_0_0.isStoryGroupUnlock(arg_12_0, arg_12_1)
+	local var_12_0 = HandbookConfig.instance:getStoryGroupConfig(arg_12_1).episodeId
+
+	return var_12_0 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_12_0)
 end
 
-function slot0.haveEquip(slot0, slot1)
-	return slot0._equipDict[slot1]
+function var_0_0.getStoryGroupUnlockCount(arg_13_0, arg_13_1)
+	local var_13_0 = 0
+	local var_13_1 = HandbookConfig.instance:getStoryGroupList()
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		if (not arg_13_1 or iter_13_1.storyChapterId == arg_13_1) and var_0_0.instance:isStoryGroupUnlock(iter_13_1.id) then
+			var_13_0 = var_13_0 + 1
+		end
+	end
+
+	return var_13_0
 end
 
-slot0.instance = slot0.New()
+function var_0_0.getFragmentDialogIdList(arg_14_0, arg_14_1)
+	return arg_14_0._fragmentDict[arg_14_1]
+end
 
-return slot0
+function var_0_0.haveEquip(arg_15_0, arg_15_1)
+	return arg_15_0._equipDict[arg_15_1]
+end
+
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

@@ -1,70 +1,71 @@
-module("modules.logic.guide.view.GuideMaskView", package.seeall)
+﻿module("modules.logic.guide.view.GuideMaskView", package.seeall)
 
-slot0 = class("GuideMaskView", BaseView)
+local var_0_0 = class("GuideMaskView", BaseView)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._typeGOs = nil
-	slot0._csGuideMaskHoles = nil
-	slot0._holeImgs = nil
-	slot0._cacheHoleImgs = nil
-	slot0._exceptionClickCount = 0
+	arg_1_0._typeGOs = nil
+	arg_1_0._csGuideMaskHoles = nil
+	arg_1_0._holeImgs = nil
+	arg_1_0._cacheHoleImgs = nil
+	arg_1_0._exceptionClickCount = 0
 end
 
-function slot0.onInitView(slot0)
-	slot0._typeGOs = slot0:getUserDataTb_()
-	slot0._csGuideMaskHoles = slot0:getUserDataTb_()
-	slot0._holeImgs = slot0:getUserDataTb_()
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._typeGOs = arg_2_0:getUserDataTb_()
+	arg_2_0._csGuideMaskHoles = arg_2_0:getUserDataTb_()
+	arg_2_0._holeImgs = arg_2_0:getUserDataTb_()
 
-	for slot4 = 1, GuideEnum.uiTypeMaxCount do
-		slot0._typeGOs[slot4] = gohelper.findChild(slot0.viewGO, "type" .. slot4)
+	for iter_2_0 = 1, GuideEnum.uiTypeMaxCount do
+		arg_2_0._typeGOs[iter_2_0] = gohelper.findChild(arg_2_0.viewGO, "type" .. iter_2_0)
 
-		if slot0._typeGOs[slot4] then
-			slot5 = slot0._typeGOs[slot4]:GetComponent("GuideMaskHole")
-			slot0._csGuideMaskHoles[slot4] = slot5
+		if arg_2_0._typeGOs[iter_2_0] then
+			local var_2_0 = arg_2_0._typeGOs[iter_2_0]:GetComponent("GuideMaskHole")
 
-			if slot5 then
-				slot5.mainCamera = CameraMgr.instance:getMainCamera()
-				slot5.uiCamera = CameraMgr.instance:getUICamera()
-				slot5.mainCanvas = ViewMgr.instance:getUICanvas()
-				slot0._holeImgs[slot4] = gohelper.findChildImage(slot0._typeGOs[slot4], "Image")
+			arg_2_0._csGuideMaskHoles[iter_2_0] = var_2_0
+
+			if var_2_0 then
+				var_2_0.mainCamera = CameraMgr.instance:getMainCamera()
+				var_2_0.uiCamera = CameraMgr.instance:getUICamera()
+				var_2_0.mainCanvas = ViewMgr.instance:getUICanvas()
+				arg_2_0._holeImgs[iter_2_0] = gohelper.findChildImage(arg_2_0._typeGOs[iter_2_0], "Image")
 			end
 		end
 	end
 
-	slot0._maskComponent = MonoHelper.addLuaComOnceToGo(slot0.viewGO, GuideMaskItem, slot0)
-	slot0._cacheHoleImgs = slot0:getUserDataTb_()
-	slot0._otherMasksTypeGo = gohelper.findChild(slot0.viewGO, "otherMasks/type_go")
-	slot0._mainMaskMat = gohelper.findChildImage(slot0.viewGO, "otherMasks/main_mask").material
-	slot0._otherMaskMat = gohelper.findChildImage(slot0.viewGO, "otherMasks/other_mask").material
+	arg_2_0._maskComponent = MonoHelper.addLuaComOnceToGo(arg_2_0.viewGO, GuideMaskItem, arg_2_0)
+	arg_2_0._cacheHoleImgs = arg_2_0:getUserDataTb_()
+	arg_2_0._otherMasksTypeGo = gohelper.findChild(arg_2_0.viewGO, "otherMasks/type_go")
+	arg_2_0._mainMaskMat = gohelper.findChildImage(arg_2_0.viewGO, "otherMasks/main_mask").material
+	arg_2_0._otherMaskMat = gohelper.findChildImage(arg_2_0.viewGO, "otherMasks/other_mask").material
 end
 
-function slot0.onOpen(slot0)
-	slot0:_onOpenUpdateUI()
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0:_onOpenUpdateUI()
 
-	slot0._exceptionClickCount = 0
+	arg_3_0._exceptionClickCount = 0
 
-	slot0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, slot0._updateUI, slot0)
-	NavigateMgr.instance:addSpace(ViewName.GuideView, slot0._onSpaceBtnClick, slot0)
+	arg_3_0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_3_0._updateUI, arg_3_0)
+	NavigateMgr.instance:addSpace(ViewName.GuideView, arg_3_0._onSpaceBtnClick, arg_3_0)
 end
 
-function slot0.onClose(slot0)
-	slot0._exceptionClickCount = 0
+function var_0_0.onClose(arg_4_0)
+	arg_4_0._exceptionClickCount = 0
 
-	slot0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, slot0._updateUI, slot0)
+	arg_4_0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_4_0._updateUI, arg_4_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_onOpenUpdateUI()
+function var_0_0.onUpdateParam(arg_5_0)
+	arg_5_0:_onOpenUpdateUI()
 end
 
-function slot0._onSpaceBtnClick(slot0)
-	if not slot0.viewParam then
+function var_0_0._onSpaceBtnClick(arg_6_0)
+	if not arg_6_0.viewParam then
 		return
 	end
 
-	if slot0.viewParam.enableSpaceBtn then
+	if arg_6_0.viewParam.enableSpaceBtn then
 		GuideViewMgr.instance:disableHoleClick()
 		GuideViewMgr.instance:onClickCallback(true)
 		GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, true)
@@ -73,100 +74,112 @@ function slot0._onSpaceBtnClick(slot0)
 	GuideController.instance:dispatchEvent(GuideEvent.OnClickSpace)
 end
 
-function slot0.getUiInfo(slot0)
-	if not slot0.viewParam then
+function var_0_0.getUiInfo(arg_7_0)
+	if not arg_7_0.viewParam then
 		return
 	end
 
-	return slot0.viewParam.uiInfo
+	return arg_7_0.viewParam.uiInfo
 end
 
-function slot0._onOpenUpdateUI(slot0)
-	if not slot0.viewParam or not slot0.viewParam.uiInfo then
+function var_0_0._onOpenUpdateUI(arg_8_0)
+	if not arg_8_0.viewParam or not arg_8_0.viewParam.uiInfo then
 		return
 	end
 
-	slot1 = slot0.viewParam.uiInfo
+	local var_8_0 = arg_8_0.viewParam.uiInfo
 
-	if slot0._prevUIInfo and slot0._prevUIInfo.stepId and (slot1.guideId ~= slot0._prevUIInfo.guideId or GuideConfig.instance:getNextStepId(slot0._prevUIInfo.guideId, slot0._prevUIInfo.stepId) ~= slot1.stepId) then
-		slot0._prevUIInfo = nil
+	if arg_8_0._prevUIInfo and arg_8_0._prevUIInfo.stepId and (var_8_0.guideId ~= arg_8_0._prevUIInfo.guideId or GuideConfig.instance:getNextStepId(arg_8_0._prevUIInfo.guideId, arg_8_0._prevUIInfo.stepId) ~= var_8_0.stepId) then
+		arg_8_0._prevUIInfo = nil
 	end
 
-	slot0.viewParam.maskChangeAlpha = slot0._prevUIInfo and slot0._prevUIInfo.maskAlpha ~= slot1.maskAlpha
+	arg_8_0.viewParam.maskChangeAlpha = arg_8_0._prevUIInfo and arg_8_0._prevUIInfo.maskAlpha ~= var_8_0.maskAlpha
 
-	slot0._maskComponent:setPrevUIInfo(slot0._prevUIInfo)
-	slot0:_updateUI()
+	arg_8_0._maskComponent:setPrevUIInfo(arg_8_0._prevUIInfo)
+	arg_8_0:_updateUI()
 
-	slot0._prevUIInfo = slot1
+	arg_8_0._prevUIInfo = var_8_0
 end
 
-function slot0._updateUI(slot0)
-	slot0:_updateMainMask()
-	slot0:_updateOtherMasks()
+function var_0_0._updateUI(arg_9_0)
+	arg_9_0:_updateMainMask()
+	arg_9_0:_updateOtherMasks()
 end
 
-function slot0._updateMainMask(slot0)
-	if not slot0.viewParam or not slot0.viewParam.uiInfo then
+function var_0_0._updateMainMask(arg_10_0)
+	if not arg_10_0.viewParam or not arg_10_0.viewParam.uiInfo then
 		return
 	end
 
-	slot0._uiType = slot0.viewParam.uiInfo.uiType
-	slot1 = slot0._typeGOs[slot0._uiType]
+	arg_10_0._uiType = arg_10_0.viewParam.uiInfo.uiType
 
-	for slot5, slot6 in ipairs(slot0._typeGOs) do
-		gohelper.setActive(slot6, slot5 == slot0._uiType)
+	local var_10_0 = arg_10_0._typeGOs[arg_10_0._uiType]
+
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._typeGOs) do
+		gohelper.setActive(iter_10_1, iter_10_0 == arg_10_0._uiType)
 	end
 
-	slot2 = slot0.viewParam
+	local var_10_1 = arg_10_0.viewParam
+	local var_10_2 = arg_10_0._csGuideMaskHoles[arg_10_0._uiType]
 
-	if slot0._csGuideMaskHoles[slot0._uiType] then
-		slot3.raycastTarget = not slot0.viewParam.hasAnyTouchAction
-		slot3.material = slot0._mainMaskMat
+	if var_10_2 then
+		var_10_2.raycastTarget = not arg_10_0.viewParam.hasAnyTouchAction
+		var_10_2.material = arg_10_0._mainMaskMat
 	end
 
-	slot0._maskComponent:updateUI(slot0.viewGO, slot2, slot3, slot0._holeImgs[slot0._uiType], slot1)
+	arg_10_0._maskComponent:updateUI(arg_10_0.viewGO, var_10_1, var_10_2, arg_10_0._holeImgs[arg_10_0._uiType], var_10_0)
 end
 
-function slot0._updateOtherMasks(slot0)
-	if not slot0.viewParam then
+function var_0_0._updateOtherMasks(arg_11_0)
+	if not arg_11_0.viewParam then
 		return
 	end
 
-	slot1 = {}
+	local var_11_0 = {}
 
-	if slot0.viewParam.otherMasks then
-		for slot5, slot6 in ipairs(slot0.viewParam.otherMasks) do
-			slot6.showMask = slot0.viewParam.showMask
+	if arg_11_0.viewParam.otherMasks then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0.viewParam.otherMasks) do
+			iter_11_1.showMask = arg_11_0.viewParam.showMask
 
-			if slot0:_getHoleImg(slot6.uiInfo.uiType, slot6) then
-				slot8.material = slot0._otherMaskMat
+			local var_11_1 = iter_11_1.uiInfo.uiType
+			local var_11_2 = arg_11_0:_getHoleImg(var_11_1, iter_11_1)
 
-				MonoHelper.addLuaComOnceToGo(slot8.gameObject, GuideMaskItem, slot0):updateUI(slot0.viewGO, slot6, nil, slot8)
+			if var_11_2 then
+				var_11_2.material = arg_11_0._otherMaskMat
 
-				slot1[slot6] = true
+				MonoHelper.addLuaComOnceToGo(var_11_2.gameObject, GuideMaskItem, arg_11_0):updateUI(arg_11_0.viewGO, iter_11_1, nil, var_11_2)
+
+				var_11_0[iter_11_1] = true
 			end
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0._cacheHoleImgs) do
-		if not slot1[slot5] then
-			gohelper.destroy(slot6.transform.parent.gameObject)
+	for iter_11_2, iter_11_3 in pairs(arg_11_0._cacheHoleImgs) do
+		if not var_11_0[iter_11_2] then
+			gohelper.destroy(iter_11_3.transform.parent.gameObject)
 
-			slot0._cacheHoleImgs[slot5] = nil
+			arg_11_0._cacheHoleImgs[iter_11_2] = nil
 		end
 	end
 end
 
-function slot0._getHoleImg(slot0, slot1, slot2)
-	if not slot0._cacheHoleImgs[slot2] then
-		if not slot0._holeImgs[slot1] then
+function var_0_0._getHoleImg(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._cacheHoleImgs[arg_12_2]
+
+	if not var_12_0 then
+		local var_12_1 = arg_12_0._holeImgs[arg_12_1]
+
+		if not var_12_1 then
 			return
 		end
 
-		slot0._cacheHoleImgs[slot2] = gohelper.clone(slot4.gameObject, gohelper.cloneInPlace(slot0._otherMasksTypeGo, tostring(slot1)), "Image"):GetComponent(gohelper.Type_Image)
+		local var_12_2 = gohelper.cloneInPlace(arg_12_0._otherMasksTypeGo, tostring(arg_12_1))
+
+		var_12_0 = gohelper.clone(var_12_1.gameObject, var_12_2, "Image"):GetComponent(gohelper.Type_Image)
+		arg_12_0._cacheHoleImgs[arg_12_2] = var_12_0
 	end
 
-	return slot3
+	return var_12_0
 end
 
-return slot0
+return var_0_0

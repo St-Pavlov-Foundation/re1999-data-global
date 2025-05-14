@@ -1,120 +1,124 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1CelebrityCardItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1CelebrityCardItem", package.seeall)
 
-slot0 = class("Season123_2_1CelebrityCardItem", LuaCompBase)
-slot0.AssetPath = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+local var_0_0 = class("Season123_2_1CelebrityCardItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.go = slot1
-	slot0._equipId = slot2
-	slot0._showTag = false
-	slot0._showNewFlag = slot3 and slot3.showNewFlag
-	slot0._showNewFlag2 = slot3 and slot3.showNewFlag2
-	slot0._targetFlagUIScale = slot3 and slot3.targetFlagUIScale
-	slot0._targetFlagUIPosX = slot3 and slot3.targetFlagUIPosX
-	slot0._targetFlagUIPosY = slot3 and slot3.targetFlagUIPosY
-	slot0._noClick = slot3 and slot3.noClick
-	slot0._gorares = {}
-	slot0._gocarditem = gohelper.create2d(slot0.go, "cardItem")
-	slot0._resLoader = PrefabInstantiate.Create(slot0._gocarditem)
+var_0_0.AssetPath = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
 
-	slot0._resLoader:startLoad(uv0.AssetPath, slot0.handleCardLoaded, slot0)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.go = arg_1_1
+	arg_1_0._equipId = arg_1_2
+
+	local var_1_0 = var_0_0.AssetPath
+
+	arg_1_0._showTag = false
+	arg_1_0._showNewFlag = arg_1_3 and arg_1_3.showNewFlag
+	arg_1_0._showNewFlag2 = arg_1_3 and arg_1_3.showNewFlag2
+	arg_1_0._targetFlagUIScale = arg_1_3 and arg_1_3.targetFlagUIScale
+	arg_1_0._targetFlagUIPosX = arg_1_3 and arg_1_3.targetFlagUIPosX
+	arg_1_0._targetFlagUIPosY = arg_1_3 and arg_1_3.targetFlagUIPosY
+	arg_1_0._noClick = arg_1_3 and arg_1_3.noClick
+	arg_1_0._gorares = {}
+	arg_1_0._gocarditem = gohelper.create2d(arg_1_0.go, "cardItem")
+	arg_1_0._resLoader = PrefabInstantiate.Create(arg_1_0._gocarditem)
+
+	arg_1_0._resLoader:startLoad(var_1_0, arg_1_0.handleCardLoaded, arg_1_0)
 end
 
-function slot0.handleCardLoaded(slot0)
-	slot0._cardGo = slot0._resLoader:getInstGO()
-	slot0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._cardGo, Season123_2_1CelebrityCardEquip)
+function var_0_0.handleCardLoaded(arg_2_0)
+	arg_2_0._cardGo = arg_2_0._resLoader:getInstGO()
+	arg_2_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._cardGo, Season123_2_1CelebrityCardEquip)
 
-	if not slot0._noClick then
-		slot0._icon:setClickCall(slot0.onBtnClick, slot0)
+	if not arg_2_0._noClick then
+		arg_2_0._icon:setClickCall(arg_2_0.onBtnClick, arg_2_0)
 	end
 
-	slot0:refreshItem()
+	arg_2_0:refreshItem()
 end
 
-function slot0.onBtnClick(slot0)
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, slot0._equipId)
+function var_0_0.onBtnClick(arg_3_0)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, arg_3_0._equipId)
 end
 
-function slot0.refreshItem(slot0)
-	slot0._icon:updateData(slot0._equipId)
-	slot0._icon:setShowTag(slot0._showTag)
-	slot0._icon:setShowNewFlag(slot0._showNewFlag)
-	slot0._icon:setShowNewFlag2(slot0._showNewFlag2)
-	slot0._icon:setFlagUIScale(slot0._targetFlagUIScale)
-	slot0._icon:setFlagUIPos(slot0._targetFlagUIPosX, slot0._targetFlagUIPosY)
-	slot0._icon:setColorDark(slot0._colorDarkEnable)
+function var_0_0.refreshItem(arg_4_0)
+	arg_4_0._icon:updateData(arg_4_0._equipId)
+	arg_4_0._icon:setShowTag(arg_4_0._showTag)
+	arg_4_0._icon:setShowNewFlag(arg_4_0._showNewFlag)
+	arg_4_0._icon:setShowNewFlag2(arg_4_0._showNewFlag2)
+	arg_4_0._icon:setFlagUIScale(arg_4_0._targetFlagUIScale)
+	arg_4_0._icon:setFlagUIPos(arg_4_0._targetFlagUIPosX, arg_4_0._targetFlagUIPosY)
+	arg_4_0._icon:setColorDark(arg_4_0._colorDarkEnable)
 end
 
-function slot0.showTag(slot0, slot1)
-	slot0._showTag = slot1
+function var_0_0.showTag(arg_5_0, arg_5_1)
+	arg_5_0._showTag = arg_5_1
 
-	if slot0._icon then
-		slot0._icon:setShowTag(slot1)
-	end
-end
-
-function slot0.showProbability(slot0, slot1)
-	slot0._showTag = slot1
-
-	if slot0._icon then
-		slot0._icon:setShowProbability(slot1)
+	if arg_5_0._icon then
+		arg_5_0._icon:setShowTag(arg_5_1)
 	end
 end
 
-function slot0.showNewFlag(slot0, slot1)
-	slot0._showNewFlag = slot1
+function var_0_0.showProbability(arg_6_0, arg_6_1)
+	arg_6_0._showTag = arg_6_1
 
-	if slot0._icon then
-		slot0._icon:setShowNewFlag(slot1)
+	if arg_6_0._icon then
+		arg_6_0._icon:setShowProbability(arg_6_1)
 	end
 end
 
-function slot0.showNewFlag2(slot0, slot1)
-	slot0._showNewFlag2 = slot1
+function var_0_0.showNewFlag(arg_7_0, arg_7_1)
+	arg_7_0._showNewFlag = arg_7_1
 
-	if slot0._icon then
-		slot0._icon:setShowNewFlag2(slot1)
+	if arg_7_0._icon then
+		arg_7_0._icon:setShowNewFlag(arg_7_1)
 	end
 end
 
-function slot0.reset(slot0, slot1)
-	slot0._equipId = slot1
+function var_0_0.showNewFlag2(arg_8_0, arg_8_1)
+	arg_8_0._showNewFlag2 = arg_8_1
 
-	if slot0._cardGo then
-		slot0:refreshItem()
+	if arg_8_0._icon then
+		arg_8_0._icon:setShowNewFlag2(arg_8_1)
 	end
 end
 
-function slot0.setColorDark(slot0, slot1)
-	slot0._colorDarkEnable = slot1
+function var_0_0.reset(arg_9_0, arg_9_1)
+	arg_9_0._equipId = arg_9_1
 
-	if slot0._icon then
-		slot0._icon:setColorDark(slot1)
+	if arg_9_0._cardGo then
+		arg_9_0:refreshItem()
 	end
 end
 
-function slot0.destroy(slot0)
-	if slot0._icon then
-		slot0._icon:disposeUI()
+function var_0_0.setColorDark(arg_10_0, arg_10_1)
+	arg_10_0._colorDarkEnable = arg_10_1
 
-		slot0._icon = nil
-	end
-
-	if slot0._gocarditem then
-		gohelper.destroy(slot0._gocarditem)
-
-		slot0._gocarditem = nil
-	end
-
-	if slot0._cardGo then
-		slot0._cardGo = nil
-	end
-
-	if slot0._resloader then
-		slot0._resloader:dispose()
-
-		slot0._resloader = nil
+	if arg_10_0._icon then
+		arg_10_0._icon:setColorDark(arg_10_1)
 	end
 end
 
-return slot0
+function var_0_0.destroy(arg_11_0)
+	if arg_11_0._icon then
+		arg_11_0._icon:disposeUI()
+
+		arg_11_0._icon = nil
+	end
+
+	if arg_11_0._gocarditem then
+		gohelper.destroy(arg_11_0._gocarditem)
+
+		arg_11_0._gocarditem = nil
+	end
+
+	if arg_11_0._cardGo then
+		arg_11_0._cardGo = nil
+	end
+
+	if arg_11_0._resloader then
+		arg_11_0._resloader:dispose()
+
+		arg_11_0._resloader = nil
+	end
+end
+
+return var_0_0

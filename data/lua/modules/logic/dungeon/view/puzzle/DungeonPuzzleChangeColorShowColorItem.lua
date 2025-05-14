@@ -1,21 +1,23 @@
-module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorShowColorItem", package.seeall)
+﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorShowColorItem", package.seeall)
 
-slot0 = class("DungeonPuzzleChangeColorShowColorItem", LuaCompBase)
+local var_0_0 = class("DungeonPuzzleChangeColorShowColorItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.go = slot1
-	slot0.id = slot2
-	slot0._image = slot1:GetComponent(gohelper.Type_Image)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.go = arg_1_1
+	arg_1_0.id = arg_1_2
+	arg_1_0._image = arg_1_1:GetComponent(gohelper.Type_Image)
 
-	slot0:setItem()
+	arg_1_0:setItem()
 end
 
-function slot0.setItem(slot0)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._image, DungeonConfig.instance:getDecryptChangeColorColorCo(slot0.id).colorvalue)
+function var_0_0.setItem(arg_2_0)
+	local var_2_0 = DungeonConfig.instance:getDecryptChangeColorColorCo(arg_2_0.id).colorvalue
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._image, var_2_0)
 end
 
-function slot0.onDestroy(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.onDestroy(arg_3_0)
+	gohelper.destroy(arg_3_0.go)
 end
 
-return slot0
+return var_0_0

@@ -1,21 +1,21 @@
-module("modules.logic.critter.model.info.CritterAttributeMO", package.seeall)
+﻿module("modules.logic.critter.model.info.CritterAttributeMO", package.seeall)
 
-slot0 = pureTable("CritterAttributeMO")
-slot1 = {}
+local var_0_0 = pureTable("CritterAttributeMO")
+local var_0_1 = {}
 
-function slot0.init(slot0, slot1)
-	slot1 = slot1 or uv0
-	slot0.attributeId = slot1.attributeId or 0
-	slot0.value = slot1.value and math.floor(slot1.value / 10000) or 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_1 = arg_1_1 or var_0_1
+	arg_1_0.attributeId = arg_1_1.attributeId or 0
+	arg_1_0.value = arg_1_1.value and math.floor(arg_1_1.value / 10000) or 0
 end
 
-function slot0.setAttr(slot0, slot1, slot2)
-	slot0.attributeId = slot1
-	slot0.value = slot2
+function var_0_0.setAttr(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.attributeId = arg_2_1
+	arg_2_0.value = arg_2_2
 end
 
-function slot0.getValueNum(slot0)
-	return slot0.value
+function var_0_0.getValueNum(arg_3_0)
+	return arg_3_0.value
 end
 
-return slot0
+return var_0_0

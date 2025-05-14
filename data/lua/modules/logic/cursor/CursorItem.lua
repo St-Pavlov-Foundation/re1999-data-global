@@ -1,44 +1,52 @@
-module("modules.logic.cursor.CursorItem", package.seeall)
+﻿module("modules.logic.cursor.CursorItem", package.seeall)
 
-slot0 = class("CursorItem", LuaCompBase)
-slot0.Cursor = UnityEngine.Cursor
-slot0.Cursor = UnityEngine.Cursor
+local var_0_0 = class("CursorItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+var_0_0.Cursor = UnityEngine.Cursor
+var_0_0.Cursor = UnityEngine.Cursor
 
-	slot0._adaptionLayerGo = ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp)
-	slot0._adaptionLayerTrans = slot0._adaptionLayerGo.transform
-	slot0._go = slot1
-	slot0._visible = false
-	uv0.Cursor.visible = true
-	slot0._resLoader = PrefabInstantiate.Create(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._resLoader:startLoad("ui/viewres/gamepad/gamepadpointer.prefab", slot0._onResLoaded, slot0)
+	arg_1_0._adaptionLayerGo = ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp)
+	arg_1_0._adaptionLayerTrans = arg_1_0._adaptionLayerGo.transform
+	arg_1_0._go = arg_1_1
+	arg_1_0._visible = false
+	var_0_0.Cursor.visible = true
+	arg_1_0._resLoader = PrefabInstantiate.Create(arg_1_1)
 
-	slot0._trans = slot1.transform
+	arg_1_0._resLoader:startLoad("ui/viewres/gamepad/gamepadpointer.prefab", arg_1_0._onResLoaded, arg_1_0)
 
-	slot0:onUpdate()
+	arg_1_0._trans = arg_1_1.transform
+
+	arg_1_0:onUpdate()
 end
 
-function slot0._onResLoaded(slot0)
+function var_0_0._onResLoaded(arg_2_0)
 	ZenFulcrum.EmbeddedBrowser.CursorRendererOS.cursorNormallyVisible = false
-	uv0.Cursor.visible = false
-	slot0._curorGo = slot0._resLoader:getInstGO()
+	var_0_0.Cursor.visible = false
+	arg_2_0._curorGo = arg_2_0._resLoader:getInstGO()
 
-	gohelper.setActive(slot0._curorGo, slot0._visible)
+	gohelper.setActive(arg_2_0._curorGo, arg_2_0._visible)
 end
 
-function slot0.onUpdate(slot0)
-	if uv0.Cursor.visible == slot0._visible then
-		slot0._visible = uv0.Cursor.visible == false
+function var_0_0.onUpdate(arg_3_0)
+	if var_0_0.Cursor.visible == arg_3_0._visible then
+		arg_3_0._visible = var_0_0.Cursor.visible == false
 
-		gohelper.setActive(slot0._curorGo, slot0._visible)
+		gohelper.setActive(arg_3_0._curorGo, arg_3_0._visible)
 	end
 
-	if slot0._visible and CameraMgr.instance:getMainCamera() then
-		recthelper.setAnchor(slot0._trans, recthelper.getWidth(slot0._adaptionLayerTrans) * (UnityEngine.Input.mousePosition.x / UnityEngine.Screen.width - 0.5), recthelper.getHeight(slot0._adaptionLayerTrans) * (UnityEngine.Input.mousePosition.y / UnityEngine.Screen.height - 0.5))
+	if arg_3_0._visible and CameraMgr.instance:getMainCamera() then
+		local var_3_0 = recthelper.getWidth(arg_3_0._adaptionLayerTrans)
+		local var_3_1 = recthelper.getHeight(arg_3_0._adaptionLayerTrans)
+		local var_3_2 = UnityEngine.Screen.width
+		local var_3_3 = UnityEngine.Screen.height
+		local var_3_4 = UnityEngine.Input.mousePosition.x / var_3_2 - 0.5
+		local var_3_5 = UnityEngine.Input.mousePosition.y / var_3_3 - 0.5
+
+		recthelper.setAnchor(arg_3_0._trans, var_3_0 * var_3_4, var_3_1 * var_3_5)
 	end
 end
 
-return slot0
+return var_0_0

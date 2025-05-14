@@ -1,178 +1,203 @@
-module("modules.logic.room.model.map.RoomShowBuildingListModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomShowBuildingListModel", package.seeall)
 
-slot0 = class("RoomShowBuildingListModel", ListScrollModel)
+local var_0_0 = class("RoomShowBuildingListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0:clearMapData()
-	slot0:clearFilterData()
+function var_0_0._clearData(arg_4_0)
+	arg_4_0:clearMapData()
+	arg_4_0:clearFilterData()
 end
 
-function slot0.clearMapData(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clearMapData(arg_5_0)
+	var_0_0.super.clear(arg_5_0)
 
-	slot0._selectBuildingUid = nil
+	arg_5_0._selectBuildingUid = nil
 end
 
-function slot0.clearFilterData(slot0)
-	slot0._filterTypeList = {}
-	slot0._filterOccupyIdList = {}
-	slot0._filerUseList = {}
-	slot0._filterResIdList = {}
-	slot0._isRareDown = true
+function var_0_0.clearFilterData(arg_6_0)
+	arg_6_0._filterTypeList = {}
+	arg_6_0._filterOccupyIdList = {}
+	arg_6_0._filerUseList = {}
+	arg_6_0._filterResIdList = {}
+	arg_6_0._isRareDown = true
 end
 
-function slot0.getEmptyCount(slot0)
-	if not slot0._emptyCount then
+function var_0_0.getEmptyCount(arg_7_0)
+	if not arg_7_0._emptyCount then
 		return 0
 	end
 
-	return slot0._emptyCount
+	return arg_7_0._emptyCount
 end
 
-function slot0.setShowBuildingList(slot0)
-	slot1 = {}
-	slot2 = {}
-	slot3 = {}
-	slot4 = {
-		[slot11.buildingId or slot11.defineId] = true
-	}
-	slot6 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function var_0_0.setShowBuildingList(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = {}
+	local var_8_2 = {}
+	local var_8_3 = {}
+	local var_8_4 = RoomModel.instance:getBuildingInfoList()
+	local var_8_5 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	for slot10 = 1, #RoomModel.instance:getBuildingInfoList() do
-		slot12 = RoomMapBuildingModel.instance:getBuildingMOById(slot5[slot10].uid) and true or false
+	for iter_8_0 = 1, #var_8_4 do
+		local var_8_6 = var_8_4[iter_8_0]
+		local var_8_7 = RoomMapBuildingModel.instance:getBuildingMOById(var_8_6.uid) and true or false
+		local var_8_8 = var_8_6.buildingId or var_8_6.defineId
 
-		if slot6 and slot6.id == slot11.uid then
-			slot12 = true
+		var_8_3[var_8_8] = true
 
-			if RoomInventoryBuildingModel.instance:getBuildingMOById(slot11.uid) then
-				slot12 = false
+		if var_8_5 and var_8_5.id == var_8_6.uid then
+			var_8_7 = true
+
+			if RoomInventoryBuildingModel.instance:getBuildingMOById(var_8_6.uid) then
+				var_8_7 = false
 			end
 		end
 
-		if slot0:_checkInfoShow(slot13, slot12) then
-			if not (slot12 and slot3[slot11.uid] or not slot12 and slot2[slot13]) then
-				slot15 = RoomShowBuildingMO.New()
+		if arg_8_0:_checkInfoShow(var_8_8, var_8_7) then
+			local var_8_9 = var_8_6.uid
+			local var_8_10 = var_8_7 and var_8_2[var_8_9] or not var_8_7 and var_8_1[var_8_8]
 
-				slot15:init(slot11)
-				table.insert(slot1, slot15)
+			if not var_8_10 then
+				var_8_10 = RoomShowBuildingMO.New()
 
-				if not slot12 then
-					slot2[slot13] = slot15
+				var_8_10:init(var_8_6)
+				table.insert(var_8_0, var_8_10)
+
+				if not var_8_7 then
+					var_8_1[var_8_8] = var_8_10
 				end
 
-				slot3[slot14] = slot15
+				var_8_2[var_8_9] = var_8_10
 			end
 
-			slot15.use = slot12
+			var_8_10.use = var_8_7
 
-			slot15:add(slot11.uid, slot11.level)
+			var_8_10:add(var_8_6.uid, var_8_6.level)
 		end
 	end
 
-	slot8 = RoomConfig.instance:getBuildingConfigList()
-	slot9 = {
+	local var_8_11 = lua_manufacture_building.configList
+	local var_8_12 = RoomConfig.instance:getBuildingConfigList()
+	local var_8_13 = {
 		use = false,
 		isNeedToBuy = true
 	}
-	slot10 = ManufactureModel.instance:getTradeLevel()
+	local var_8_14 = ManufactureModel.instance:getTradeLevel()
 
-	for slot14 = 1, #lua_manufacture_building.configList do
-		if RoomConfig.instance:getBuildingConfig(slot7[slot14].id) and slot10 and slot15.placeTradeLevel <= slot10 and slot15.placeNoCost ~= 1 and not slot4[slot16] then
-			slot4[slot16] = true
+	for iter_8_1 = 1, #var_8_11 do
+		local var_8_15 = var_8_11[iter_8_1]
+		local var_8_16 = var_8_15.id
 
-			if slot0:_checkInfoShow(slot16, slot9.use) then
-				slot9.uid = -slot16
-				slot9.buildingId = slot16
-				slot18 = RoomShowBuildingMO.New()
-				slot9.isBuyNoCost = slot15.placeNoCost == 1
+		if RoomConfig.instance:getBuildingConfig(var_8_16) and var_8_14 and var_8_14 >= var_8_15.placeTradeLevel and var_8_15.placeNoCost ~= 1 and not var_8_3[var_8_16] then
+			var_8_3[var_8_16] = true
 
-				slot18:init(slot9)
-				slot18:add(slot9.uid, 0)
-				table.insert(slot1, slot18)
+			if arg_8_0:_checkInfoShow(var_8_16, var_8_13.use) then
+				var_8_13.uid = -var_8_16
+				var_8_13.buildingId = var_8_16
+
+				local var_8_17 = RoomShowBuildingMO.New()
+
+				var_8_13.isBuyNoCost = var_8_15.placeNoCost == 1
+
+				var_8_17:init(var_8_13)
+				var_8_17:add(var_8_13.uid, 0)
+				table.insert(var_8_0, var_8_17)
 			end
 		end
 	end
 
-	table.sort(slot1, slot0._sortFunction)
+	table.sort(var_8_0, arg_8_0._sortFunction)
 
-	slot0._emptyCount = 0
+	arg_8_0._emptyCount = 0
 
-	for slot14 = #slot1 + 1, 4 do
-		slot15 = RoomShowBuildingMO.New()
-		slot15.id = -slot14
-		slot0._emptyCount = slot0._emptyCount + 1
+	for iter_8_2 = #var_8_0 + 1, 4 do
+		local var_8_18 = RoomShowBuildingMO.New()
 
-		table.insert(slot1, 1, slot15)
+		var_8_18.id = -iter_8_2
+		arg_8_0._emptyCount = arg_8_0._emptyCount + 1
+
+		table.insert(var_8_0, 1, var_8_18)
 	end
 
-	slot0:setList(slot1)
+	arg_8_0:setList(var_8_0)
 	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingListOnDataChanged)
-	slot0:_refreshSelect()
+	arg_8_0:_refreshSelect()
 end
 
-function slot0.setItemAnchorX(slot0, slot1)
-	slot0._itemAnchorX = slot1 or 0
+function var_0_0.setItemAnchorX(arg_9_0, arg_9_1)
+	arg_9_0._itemAnchorX = arg_9_1 or 0
 end
 
-function slot0.getItemAnchorX(slot0)
-	return slot0._itemAnchorX or 0
+function var_0_0.getItemAnchorX(arg_10_0)
+	return arg_10_0._itemAnchorX or 0
 end
 
-function slot0._checkInfoShow(slot0, slot1, slot2)
-	if not slot0:isFilterUseEmpty() and not slot0:isFilterUse(slot2 and 1 or 0) then
+function var_0_0._checkInfoShow(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0:isFilterUseEmpty() and not arg_11_0:isFilterUse(arg_11_2 and 1 or 0) then
 		return false
 	end
 
-	if not RoomConfig.instance:getBuildingConfig(slot1) or slot3.buildingType == RoomBuildingEnum.BuildingType.Transport then
+	local var_11_0 = RoomConfig.instance:getBuildingConfig(arg_11_1)
+
+	if not var_11_0 or var_11_0.buildingType == RoomBuildingEnum.BuildingType.Transport then
 		return false
 	end
 
-	if not slot0:isFilterOccupyIdEmpty() then
-		if not slot3 or not slot0:isFilterOccupy(RoomConfig.instance:getBuildingAreaConfig(slot3.areaId).occupy) then
+	if not arg_11_0:isFilterOccupyIdEmpty() then
+		local var_11_1 = RoomConfig.instance:getBuildingAreaConfig(var_11_0.areaId)
+
+		if not var_11_0 or not arg_11_0:isFilterOccupy(var_11_1.occupy) then
 			return false
 		end
 	end
 
-	if not slot0:isFilterTypeEmpty() and (not slot3 or not slot0:isFilterType(slot3.buildingType)) then
+	if not arg_11_0:isFilterTypeEmpty() and (not var_11_0 or not arg_11_0:isFilterType(var_11_0.buildingType)) then
 		return false
 	end
 
-	if not slot0:_isEmptyList(slot0._filterResIdList) and not slot0:_checkResource(slot1) and not slot0:_checkPlaceBuilding(slot1) then
+	if not arg_11_0:_isEmptyList(arg_11_0._filterResIdList) and not arg_11_0:_checkResource(arg_11_1) and not arg_11_0:_checkPlaceBuilding(arg_11_1) then
 		return false
 	end
 
-	if not slot0:_checkTheme(slot1) then
-		return false
-	end
-
-	return true
-end
-
-function slot0._checkTheme(slot0, slot1)
-	if not RoomThemeFilterListModel.instance:getIsAll() and slot2:getSelectCount() > 0 and not slot2:isSelectById(RoomConfig.instance:getThemeIdByItem(slot1, MaterialEnum.MaterialType.Building)) then
+	if not arg_11_0:_checkTheme(arg_11_1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0._checkResource(slot0, slot1)
-	if RoomBuildingHelper.getCostResource(slot1) then
-		for slot6 = 1, #slot2 do
-			if slot0:isFilterType(slot2[slot6]) then
+function var_0_0._checkTheme(arg_12_0, arg_12_1)
+	local var_12_0 = RoomThemeFilterListModel.instance
+
+	if not var_12_0:getIsAll() and var_12_0:getSelectCount() > 0 then
+		local var_12_1 = RoomConfig.instance:getThemeIdByItem(arg_12_1, MaterialEnum.MaterialType.Building)
+
+		if not var_12_0:isSelectById(var_12_1) then
+			return false
+		end
+	end
+
+	return true
+end
+
+function var_0_0._checkResource(arg_13_0, arg_13_1)
+	local var_13_0 = RoomBuildingHelper.getCostResource(arg_13_1)
+
+	if var_13_0 then
+		for iter_13_0 = 1, #var_13_0 do
+			if arg_13_0:isFilterType(var_13_0[iter_13_0]) then
 				return true
 			end
 		end
@@ -181,10 +206,16 @@ function slot0._checkResource(slot0, slot1)
 	return false
 end
 
-function slot0._checkPlaceBuilding(slot0, slot1)
-	if slot0._filterCostResList and #slot2 > 0 then
-		for slot7 = 1, #slot2 do
-			if RoomConfig.instance:getResourceParam(slot2[slot7]) and slot8.placeBuilding and tabletool.indexOf(slot8.placeBuilding, slot1) then
+function var_0_0._checkPlaceBuilding(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._filterCostResList
+
+	if var_14_0 and #var_14_0 > 0 then
+		local var_14_1 = RoomConfig.instance
+
+		for iter_14_0 = 1, #var_14_0 do
+			local var_14_2 = var_14_1:getResourceParam(var_14_0[iter_14_0])
+
+			if var_14_2 and var_14_2.placeBuilding and tabletool.indexOf(var_14_2.placeBuilding, arg_14_1) then
 				return true
 			end
 		end
@@ -193,188 +224,189 @@ function slot0._checkPlaceBuilding(slot0, slot1)
 	return false
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if slot0.isNeedToBuy ~= slot1.isNeedToBuy then
-		if slot0.isNeedToBuy then
+function var_0_0._sortFunction(arg_15_0, arg_15_1)
+	if arg_15_0.isNeedToBuy ~= arg_15_1.isNeedToBuy then
+		if arg_15_0.isNeedToBuy then
 			return true
 		end
 
 		return false
 	end
 
-	if slot0.use and not slot1.use then
+	if arg_15_0.use and not arg_15_1.use then
 		return false
-	elseif not slot0.use and slot1.use then
+	elseif not arg_15_0.use and arg_15_1.use then
 		return true
 	end
 
-	if slot0:isDecoration() and not slot1:isDecoration() then
+	if arg_15_0:isDecoration() and not arg_15_1:isDecoration() then
 		return false
-	elseif not slot0:isDecoration() and slot1:isDecoration() then
+	elseif not arg_15_0:isDecoration() and arg_15_1:isDecoration() then
 		return true
 	end
 
-	if slot0.config.rare ~= slot1.config.rare then
-		if uv0.instance:isRareDown() then
-			return slot1.config.rare < slot0.config.rare
+	if arg_15_0.config.rare ~= arg_15_1.config.rare then
+		if var_0_0.instance:isRareDown() then
+			return arg_15_0.config.rare > arg_15_1.config.rare
 		else
-			return slot0.config.rare < slot1.config.rare
+			return arg_15_0.config.rare < arg_15_1.config.rare
 		end
 	end
 
-	if slot0.config.id ~= slot1.config.id then
-		return slot0.config.id < slot1.config.id
+	if arg_15_0.config.id ~= arg_15_1.config.id then
+		return arg_15_0.config.id < arg_15_1.config.id
 	end
 
-	return slot0.id < slot1.id
+	return arg_15_0.id < arg_15_1.id
 end
 
-function slot0.setRareDown(slot0, slot1)
-	slot0._isRareDown = slot1
+function var_0_0.setRareDown(arg_16_0, arg_16_1)
+	arg_16_0._isRareDown = arg_16_1
 end
 
-function slot0.isRareDown(slot0)
-	return slot0._isRareDown
+function var_0_0.isRareDown(arg_17_0)
+	return arg_17_0._isRareDown
 end
 
-function slot0.setFilterType(slot0, slot1)
-	slot0._filterTypeList = {}
+function var_0_0.setFilterType(arg_18_0, arg_18_1)
+	arg_18_0._filterTypeList = {}
 
-	slot0:_setList(slot0._filterTypeList, slot1)
+	arg_18_0:_setList(arg_18_0._filterTypeList, arg_18_1)
 end
 
-function slot0.addFilterType(slot0, slot1)
-	slot0:_addListValue(slot0._filterTypeList, slot1)
+function var_0_0.addFilterType(arg_19_0, arg_19_1)
+	arg_19_0:_addListValue(arg_19_0._filterTypeList, arg_19_1)
 end
 
-function slot0.removeFilterType(slot0, slot1)
-	slot0:_removeListValue(slot0._filterTypeList, slot1)
+function var_0_0.removeFilterType(arg_20_0, arg_20_1)
+	arg_20_0:_removeListValue(arg_20_0._filterTypeList, arg_20_1)
 end
 
-function slot0.isFilterType(slot0, slot1)
-	return slot0:_isListValue(slot0._filterTypeList, slot1)
+function var_0_0.isFilterType(arg_21_0, arg_21_1)
+	return arg_21_0:_isListValue(arg_21_0._filterTypeList, arg_21_1)
 end
 
-function slot0.isFilterTypeEmpty(slot0)
-	return slot0:_isEmptyList(slot0._filterTypeList)
+function var_0_0.isFilterTypeEmpty(arg_22_0)
+	return arg_22_0:_isEmptyList(arg_22_0._filterTypeList)
 end
 
-function slot0.setFilterOccupy(slot0, slot1)
-	slot0._filterOccupyIdList = {}
+function var_0_0.setFilterOccupy(arg_23_0, arg_23_1)
+	arg_23_0._filterOccupyIdList = {}
 
-	slot0:_setList(slot0._filterOccupyIdList, slot1)
+	arg_23_0:_setList(arg_23_0._filterOccupyIdList, arg_23_1)
 end
 
-function slot0.addFilterOccupy(slot0, slot1)
-	slot0:_addListValue(slot0._filterOccupyIdList, slot1)
+function var_0_0.addFilterOccupy(arg_24_0, arg_24_1)
+	arg_24_0:_addListValue(arg_24_0._filterOccupyIdList, arg_24_1)
 end
 
-function slot0.removeFilterOccupy(slot0, slot1)
-	slot0:_removeListValue(slot0._filterOccupyIdList, slot1)
+function var_0_0.removeFilterOccupy(arg_25_0, arg_25_1)
+	arg_25_0:_removeListValue(arg_25_0._filterOccupyIdList, arg_25_1)
 end
 
-function slot0.isFilterOccupy(slot0, slot1)
-	return slot0:_isListValue(slot0._filterOccupyIdList, slot1)
+function var_0_0.isFilterOccupy(arg_26_0, arg_26_1)
+	return arg_26_0:_isListValue(arg_26_0._filterOccupyIdList, arg_26_1)
 end
 
-function slot0.isFilterOccupyIdEmpty(slot0)
-	return slot0:_isEmptyList(slot0._filterOccupyIdList)
+function var_0_0.isFilterOccupyIdEmpty(arg_27_0)
+	return arg_27_0:_isEmptyList(arg_27_0._filterOccupyIdList)
 end
 
-function slot0.setFilterUse(slot0, slot1)
-	slot0._filerUseList = {}
+function var_0_0.setFilterUse(arg_28_0, arg_28_1)
+	arg_28_0._filerUseList = {}
 
-	slot0:_setList(slot0._filerUseList, slot1)
+	arg_28_0:_setList(arg_28_0._filerUseList, arg_28_1)
 end
 
-function slot0.addFilterUse(slot0, slot1)
-	slot0:_addListValue(slot0._filerUseList, slot1)
+function var_0_0.addFilterUse(arg_29_0, arg_29_1)
+	arg_29_0:_addListValue(arg_29_0._filerUseList, arg_29_1)
 end
 
-function slot0.removeFilterUse(slot0, slot1)
-	slot0:_removeListValue(slot0._filerUseList, slot1)
+function var_0_0.removeFilterUse(arg_30_0, arg_30_1)
+	arg_30_0:_removeListValue(arg_30_0._filerUseList, arg_30_1)
 end
 
-function slot0.isFilterUse(slot0, slot1)
-	return slot0:_isListValue(slot0._filerUseList, slot1)
+function var_0_0.isFilterUse(arg_31_0, arg_31_1)
+	return arg_31_0:_isListValue(arg_31_0._filerUseList, arg_31_1)
 end
 
-function slot0.isFilterUseEmpty(slot0)
-	return slot0._filerUseList == nil or #slot0._filerUseList == 0
+function var_0_0.isFilterUseEmpty(arg_32_0)
+	return arg_32_0._filerUseList == nil or #arg_32_0._filerUseList == 0
 end
 
-function slot0._setList(slot0, slot1, slot2)
-	tabletool.addValues(slot1, slot2)
+function var_0_0._setList(arg_33_0, arg_33_1, arg_33_2)
+	tabletool.addValues(arg_33_1, arg_33_2)
 end
 
-function slot0._isListValue(slot0, slot1, slot2)
-	if slot2 and tabletool.indexOf(slot1, slot2) then
+function var_0_0._isListValue(arg_34_0, arg_34_1, arg_34_2)
+	if arg_34_2 and tabletool.indexOf(arg_34_1, arg_34_2) then
 		return true
 	end
 
 	return false
 end
 
-function slot0._addListValue(slot0, slot1, slot2)
-	if slot2 == nil then
+function var_0_0._addListValue(arg_35_0, arg_35_1, arg_35_2)
+	if arg_35_2 == nil then
 		return
 	end
 
-	if slot1 and not tabletool.indexOf(slot1, slot2) then
-		table.insert(slot1, slot2)
+	if arg_35_1 and not tabletool.indexOf(arg_35_1, arg_35_2) then
+		table.insert(arg_35_1, arg_35_2)
 	end
 end
 
-function slot0._removeListValue(slot0, slot1, slot2)
-	if slot2 == nil then
+function var_0_0._removeListValue(arg_36_0, arg_36_1, arg_36_2)
+	if arg_36_2 == nil then
 		return
 	end
 
-	tabletool.removeValue(slot1, slot2)
+	tabletool.removeValue(arg_36_1, arg_36_2)
 end
 
-function slot0._isEmptyList(slot0, slot1)
-	return slot1 == nil or #slot1 < 1
+function var_0_0._isEmptyList(arg_37_0, arg_37_1)
+	return arg_37_1 == nil or #arg_37_1 < 1
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.clearSelect(arg_38_0)
+	for iter_38_0, iter_38_1 in ipairs(arg_38_0._scrollViews) do
+		iter_38_1:setSelect(nil)
 	end
 
-	slot0._selectBuildingUid = nil
+	arg_38_0._selectBuildingUid = nil
 end
 
-function slot0._refreshSelect(slot0)
-	slot1 = nil
+function var_0_0._refreshSelect(arg_39_0)
+	local var_39_0
+	local var_39_1 = arg_39_0:getList()
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.id == slot0._selectBuildingUid then
-			slot1 = slot7
+	for iter_39_0, iter_39_1 in ipairs(var_39_1) do
+		if iter_39_1.id == arg_39_0._selectBuildingUid then
+			var_39_0 = iter_39_1
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._scrollViews) do
-		slot7:setSelect(slot1)
+	for iter_39_2, iter_39_3 in ipairs(arg_39_0._scrollViews) do
+		iter_39_3:setSelect(var_39_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectBuildingUid = slot1
+function var_0_0.setSelect(arg_40_0, arg_40_1)
+	arg_40_0._selectBuildingUid = arg_40_1
 
-	slot0:_refreshSelect()
+	arg_40_0:_refreshSelect()
 end
 
-function slot0.initShowBuilding(slot0)
-	slot0:setShowBuildingList()
+function var_0_0.initShowBuilding(arg_41_0)
+	arg_41_0:setShowBuildingList()
 end
 
-function slot0.initFilter(slot0)
-	slot0:setFilterType()
-	slot0:setFilterOccupy()
-	slot0:setFilterUse()
+function var_0_0.initFilter(arg_42_0)
+	arg_42_0:setFilterType()
+	arg_42_0:setFilterOccupy()
+	arg_42_0:setFilterUse()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,68 +1,76 @@
-module("modules.logic.season.model.Activity104EquipTagModel", package.seeall)
+﻿module("modules.logic.season.model.Activity104EquipTagModel", package.seeall)
 
-slot0 = class("Activity104EquipTagModel", BaseModel)
-slot0.NoTagId = -1
+local var_0_0 = class("Activity104EquipTagModel", BaseModel)
 
-function slot0.clear(slot0)
-	slot0._desc2IdMap = nil
-	slot0._optionsList = nil
-	slot0._curTag = nil
-	slot0._curTagStr = nil
+var_0_0.NoTagId = -1
+
+function var_0_0.clear(arg_1_0)
+	arg_1_0._desc2IdMap = nil
+	arg_1_0._optionsList = nil
+	arg_1_0._curTag = nil
+	arg_1_0._curTagStr = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0._curTag = uv0.NoTagId
-	slot0._curTagStr = tostring(slot0._curTag)
-	slot0.activityId = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._curTag = var_0_0.NoTagId
+	arg_2_0._curTagStr = tostring(arg_2_0._curTag)
+	arg_2_0.activityId = arg_2_1
 
-	slot0:initConfig()
+	arg_2_0:initConfig()
 end
 
-function slot0.initConfig(slot0)
-	slot0._index2IdMap = {}
-	slot0._optionsList = {}
-	slot0._index2IdMap[0] = uv0.NoTagId
+function var_0_0.initConfig(arg_3_0)
+	local var_3_0 = SeasonConfig.instance:getSeasonTagDict(arg_3_0.activityId)
 
-	table.insert(slot0._optionsList, luaLang("common_all"))
+	arg_3_0._index2IdMap = {}
+	arg_3_0._optionsList = {}
 
-	slot3 = {}
+	local var_3_1 = luaLang("common_all")
 
-	if SeasonConfig.instance:getSeasonTagDict(slot0.activityId) then
-		for slot7, slot8 in pairs(slot1) do
-			table.insert(slot3, slot8)
+	arg_3_0._index2IdMap[0] = var_0_0.NoTagId
+
+	table.insert(arg_3_0._optionsList, var_3_1)
+
+	local var_3_2 = {}
+
+	if var_3_0 then
+		for iter_3_0, iter_3_1 in pairs(var_3_0) do
+			table.insert(var_3_2, iter_3_1)
 		end
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		return slot0.order < slot1.order
+	table.sort(var_3_2, function(arg_4_0, arg_4_1)
+		return arg_4_0.order < arg_4_1.order
 	end)
 
-	slot4 = 1
+	local var_3_3 = 1
 
-	for slot8, slot9 in ipairs(slot3) do
-		slot0._index2IdMap[slot4] = slot9.id
+	for iter_3_2, iter_3_3 in ipairs(var_3_2) do
+		arg_3_0._index2IdMap[var_3_3] = iter_3_3.id
 
-		table.insert(slot0._optionsList, slot9.desc)
+		table.insert(arg_3_0._optionsList, iter_3_3.desc)
 
-		slot4 = slot4 + 1
+		var_3_3 = var_3_3 + 1
 	end
 end
 
-function slot0.getOptions(slot0)
-	return slot0._optionsList
+function var_0_0.getOptions(arg_5_0)
+	return arg_5_0._optionsList
 end
 
-function slot0.getSelectIdByIndex(slot0, slot1)
-	return slot0._index2IdMap[slot1]
+function var_0_0.getSelectIdByIndex(arg_6_0, arg_6_1)
+	return arg_6_0._index2IdMap[arg_6_1]
 end
 
-function slot0.isCardNeedShow(slot0, slot1)
-	if slot0._curTag == uv0.NoTagId or not slot0._curTag then
+function var_0_0.isCardNeedShow(arg_7_0, arg_7_1)
+	if arg_7_0._curTag == var_0_0.NoTagId or not arg_7_0._curTag then
 		return true
 	end
 
-	for slot6, slot7 in pairs(string.split(slot1, "#")) do
-		if slot0._curTagStr == slot7 then
+	local var_7_0 = string.split(arg_7_1, "#")
+
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		if arg_7_0._curTagStr == iter_7_1 then
 			return true
 		end
 	end
@@ -70,17 +78,19 @@ function slot0.isCardNeedShow(slot0, slot1)
 	return false
 end
 
-function slot0.selectTagIndex(slot0, slot1)
-	if slot0:getSelectIdByIndex(slot1) ~= nil then
-		slot0._curTag = slot2
-		slot0._curTagStr = tostring(slot0._curTag)
+function var_0_0.selectTagIndex(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getSelectIdByIndex(arg_8_1)
+
+	if var_8_0 ~= nil then
+		arg_8_0._curTag = var_8_0
+		arg_8_0._curTagStr = tostring(arg_8_0._curTag)
 	else
-		logNormal("tagIndex = " .. tostring(slot1) .. " not found!")
+		logNormal("tagIndex = " .. tostring(arg_8_1) .. " not found!")
 	end
 end
 
-function slot0.getCurTagId(slot0)
-	return slot0._curTag
+function var_0_0.getCurTagId(arg_9_0)
+	return arg_9_0._curTag
 end
 
-return slot0
+return var_0_0

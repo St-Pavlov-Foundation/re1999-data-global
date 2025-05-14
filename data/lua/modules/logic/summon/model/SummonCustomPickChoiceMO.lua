@@ -1,40 +1,49 @@
-module("modules.logic.summon.model.SummonCustomPickChoiceMO", package.seeall)
+﻿module("modules.logic.summon.model.SummonCustomPickChoiceMO", package.seeall)
 
-slot0 = pureTable("SummonCustomPickChoiceMO")
+local var_0_0 = pureTable("SummonCustomPickChoiceMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.ownNum = 0
-	slot0.exSkillLevel = 0
-	slot0.rank = 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.ownNum = 0
+	arg_1_0.exSkillLevel = 0
+	arg_1_0.rank = 0
 
-	slot0:initSkillLevel()
+	arg_1_0:initSkillLevel()
 end
 
-function slot0.initSkillLevel(slot0)
-	slot2 = 0
+function var_0_0.initSkillLevel(arg_2_0)
+	local var_2_0 = HeroConfig.instance:getHeroCO(arg_2_0.id)
+	local var_2_1 = 0
+	local var_2_2 = var_2_0.duplicateItem
 
-	if not string.nilorempty(HeroConfig.instance:getHeroCO(slot0.id).duplicateItem) and string.split(slot3, "|")[1] then
-		slot6 = string.splitToNumber(slot5, "#")
-		slot2 = ItemModel.instance:getItemQuantity(slot6[1], slot6[2])
+	if not string.nilorempty(var_2_2) then
+		local var_2_3 = string.split(var_2_2, "|")[1]
+
+		if var_2_3 then
+			local var_2_4 = string.splitToNumber(var_2_3, "#")
+
+			var_2_1 = ItemModel.instance:getItemQuantity(var_2_4[1], var_2_4[2])
+		end
 	end
 
-	slot0.ownNum = 0
-	slot0.exSkillLevel = 0
+	local var_2_5 = HeroModel.instance:getByHeroId(arg_2_0.id)
 
-	if HeroModel.instance:getByHeroId(slot0.id) then
-		slot0.exSkillLevel = slot4.exSkillLevel
-		slot0.ownNum = slot0.exSkillLevel + 1 + slot2
-		slot0.rank = slot4.rank
+	arg_2_0.ownNum = 0
+	arg_2_0.exSkillLevel = 0
+
+	if var_2_5 then
+		arg_2_0.exSkillLevel = var_2_5.exSkillLevel
+		arg_2_0.ownNum = arg_2_0.exSkillLevel + 1 + var_2_1
+		arg_2_0.rank = var_2_5.rank
 	end
 end
 
-function slot0.hasHero(slot0)
-	return slot0.ownNum > 0
+function var_0_0.hasHero(arg_3_0)
+	return arg_3_0.ownNum > 0
 end
 
-function slot0.getSkillLevel(slot0)
-	return slot0.exSkillLevel
+function var_0_0.getSkillLevel(arg_4_0)
+	return arg_4_0.exSkillLevel
 end
 
-return slot0
+return var_0_0

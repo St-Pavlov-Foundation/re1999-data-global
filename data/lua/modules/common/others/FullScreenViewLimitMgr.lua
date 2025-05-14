@@ -1,35 +1,38 @@
-module("modules.common.others.FullScreenViewLimitMgr", package.seeall)
+﻿module("modules.common.others.FullScreenViewLimitMgr", package.seeall)
 
-slot0 = class("FullScreenViewLimitMgr")
-slot0.enableLimit = true
-slot0.limitCount = 5
+local var_0_0 = class("FullScreenViewLimitMgr")
 
-function slot0.ctor(slot0)
+var_0_0.enableLimit = true
+var_0_0.limitCount = 5
+
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullView, slot0)
+function var_0_0.init(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenFullViewFinish, arg_2_0._onOpenFullView, arg_2_0)
 end
 
-function slot0._onOpenFullView(slot0, slot1)
-	if not uv0.enableLimit then
+function var_0_0._onOpenFullView(arg_3_0, arg_3_1)
+	if not var_0_0.enableLimit then
 		return
 	end
 
-	slot2 = 0
+	local var_3_0 = 0
+	local var_3_1 = ViewMgr.instance:getOpenViewNameList()
 
-	for slot7 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if ViewMgr.instance:isFull(slot3[slot7]) then
-			if uv0.limitCount <= slot2 then
-				logNormal("全屏界面数量超出限制, 关闭界面: " .. slot3[slot7])
-				ViewMgr.instance:closeView(slot3[slot7])
+	for iter_3_0 = #var_3_1, 1, -1 do
+		if ViewMgr.instance:isFull(var_3_1[iter_3_0]) then
+			if var_3_0 >= var_0_0.limitCount then
+				logNormal("全屏界面数量超出限制, 关闭界面: " .. var_3_1[iter_3_0])
+				ViewMgr.instance:closeView(var_3_1[iter_3_0])
 			end
 
-			slot2 = slot2 + 1
+			var_3_0 = var_3_0 + 1
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,42 +1,49 @@
-module("modules.logic.room.controller.RoomBackpackController", package.seeall)
+﻿module("modules.logic.room.controller.RoomBackpackController", package.seeall)
 
-slot0 = class("RoomBackpackController", BaseController)
+local var_0_0 = class("RoomBackpackController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	return
 end
 
-function slot0.clickCritterRareSort(slot0, slot1)
-	RoomBackpackCritterListModel.instance:setIsSortByRareAscend(not RoomBackpackCritterListModel.instance:getIsSortByRareAscend())
-	slot0:refreshCritterBackpackList(slot1)
+function var_0_0.clickCritterRareSort(arg_4_0, arg_4_1)
+	local var_4_0 = RoomBackpackCritterListModel.instance:getIsSortByRareAscend()
+
+	RoomBackpackCritterListModel.instance:setIsSortByRareAscend(not var_4_0)
+	arg_4_0:refreshCritterBackpackList(arg_4_1)
 end
 
-function slot0.selectMatureFilterType(slot0, slot1, slot2)
-	if RoomBackpackCritterListModel.instance:getMatureFilterType() and slot3 == slot1 then
+function var_0_0.selectMatureFilterType(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = RoomBackpackCritterListModel.instance:getMatureFilterType()
+
+	if var_5_0 and var_5_0 == arg_5_1 then
 		return
 	end
 
-	RoomBackpackCritterListModel.instance:setMatureFilterType(slot1)
-	slot0:refreshCritterBackpackList(slot2)
+	RoomBackpackCritterListModel.instance:setMatureFilterType(arg_5_1)
+	arg_5_0:refreshCritterBackpackList(arg_5_2)
 end
 
-function slot0.refreshCritterBackpackList(slot0, slot1)
-	RoomBackpackCritterListModel.instance:setBackpackCritterList(slot1)
+function var_0_0.refreshCritterBackpackList(arg_6_0, arg_6_1)
+	RoomBackpackCritterListModel.instance:setBackpackCritterList(arg_6_1)
 end
 
-function slot0.openCritterDecomposeView(slot0)
+function var_0_0.openCritterDecomposeView(arg_7_0)
 	ViewMgr.instance:openView(ViewName.RoomCritterDecomposeView)
 end
 
-function slot0.refreshPropBackpackList(slot0)
+function var_0_0.refreshPropBackpackList(arg_8_0)
 	RoomBackpackPropListModel.instance:setBackpackPropList()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

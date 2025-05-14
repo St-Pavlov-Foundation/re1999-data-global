@@ -1,52 +1,54 @@
-module("modules.logic.rouge.map.view.map.RougeMapInputView", package.seeall)
+﻿module("modules.logic.rouge.map.view.map.RougeMapInputView", package.seeall)
 
-slot0 = class("RougeMapInputView", BaseView)
+local var_0_0 = class("RougeMapInputView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goFullScreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goFullScreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0.goFullScreen)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.click = gohelper.getClickWithDefaultAudio(arg_4_0.goFullScreen)
 
-	slot0.click:AddClickListener(slot0.onClickMap, slot0)
+	arg_4_0.click:AddClickListener(arg_4_0.onClickMap, arg_4_0)
 
-	slot0.trFullScreen = slot0.goFullScreen:GetComponent(gohelper.Type_RectTransform)
-	slot0.mapComp = RougeMapController.instance:getMapComp()
+	arg_4_0.trFullScreen = arg_4_0.goFullScreen:GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.mapComp = RougeMapController.instance:getMapComp()
 
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onLoadMapDone, slot0.onLoadMapDone, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onBeforeChangeMapInfo, slot0.onBeforeChangeMapInfo, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onLoadMapDone, arg_4_0.onLoadMapDone, arg_4_0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onBeforeChangeMapInfo, arg_4_0.onBeforeChangeMapInfo, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
 end
 
-function slot0.onBeforeChangeMapInfo(slot0)
-	slot0.mapComp = nil
+function var_0_0.onBeforeChangeMapInfo(arg_5_0)
+	arg_5_0.mapComp = nil
 end
 
-function slot0.onLoadMapDone(slot0)
-	slot0.mapComp = RougeMapController.instance:getMapComp()
+function var_0_0.onLoadMapDone(arg_6_0)
+	arg_6_0.mapComp = RougeMapController.instance:getMapComp()
 end
 
-function slot0.onClickMap(slot0, slot1, slot2)
-	if not slot0.mapComp then
+function var_0_0.onClickMap(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0.mapComp then
 		return
 	end
 
-	slot3, slot4 = recthelper.screenPosToAnchorPos2(slot2, slot0.trFullScreen)
+	local var_7_0, var_7_1 = recthelper.screenPosToAnchorPos2(arg_7_2, arg_7_0.trFullScreen)
 
-	for slot8, slot9 in ipairs(slot0.mapComp:getMapItemList()) do
-		if slot9:checkInClickArea(slot3, slot4, slot0.trFullScreen) then
-			slot9:onClick()
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.mapComp:getMapItemList()) do
+		if iter_7_1:checkInClickArea(var_7_0, var_7_1, arg_7_0.trFullScreen) then
+			iter_7_1:onClick()
 
 			return
 		end
@@ -55,16 +57,16 @@ function slot0.onClickMap(slot0, slot1, slot2)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectNode, nil)
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot1 == ViewName.RougeMapChoiceView then
+function var_0_0.onCloseView(arg_8_0, arg_8_1)
+	if arg_8_1 == ViewName.RougeMapChoiceView then
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectNode, nil)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0.click:RemoveClickListener()
+function var_0_0.onClose(arg_9_0)
+	arg_9_0.click:RemoveClickListener()
 
-	slot0.click = nil
+	arg_9_0.click = nil
 end
 
-return slot0
+return var_0_0

@@ -1,21 +1,22 @@
-module("modules.logic.login.controller.work.LogoutVoicePackageDonwloadWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LogoutVoicePackageDonwloadWork", package.seeall)
 
-slot0 = class("LogoutVoicePackageDonwloadWork", BaseWork)
+local var_0_0 = class("LogoutVoicePackageDonwloadWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
-	if slot1.isVoicePackageDonwload then
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if arg_2_1.isVoicePackageDonwload then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.CloseLoading)
-		SettingsVoicePackageController.instance:initData(slot0.onVoicePackageLoadDone, slot0)
+		SettingsVoicePackageController.instance:initData(arg_2_0.onVoicePackageLoadDone, arg_2_0)
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.onVoicePackageLoadDone(slot0)
-	slot0:onDone(true)
+function var_0_0.onVoicePackageLoadDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

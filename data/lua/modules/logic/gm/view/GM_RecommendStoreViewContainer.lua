@@ -1,243 +1,281 @@
-module("modules.logic.gm.view.GM_RecommendStoreViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GM_RecommendStoreViewContainer", package.seeall)
 
-slot0 = class("GM_RecommendStoreViewContainer", BaseViewContainer)
+local var_0_0 = class("GM_RecommendStoreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		GM_RecommendStoreView.New()
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	ViewMgr.instance:closeView(slot0.viewName)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	ViewMgr.instance:closeView(arg_2_0.viewName)
 end
 
-function slot1(slot0)
-	return function (slot0)
-		slot1 = StoreModel.instance:getRecommendSecondTabs(StoreEnum.RecommendStore, true)
-		slot2 = {
-			[slot7] = true
-		}
+local function var_0_1(arg_3_0)
+	return function(arg_4_0)
+		local var_4_0 = StoreModel.instance:getRecommendSecondTabs(StoreEnum.RecommendStore, true)
+		local var_4_1 = {}
 
-		for slot6, slot7 in ipairs(uv0) do
-			-- Nothing
+		for iter_4_0, iter_4_1 in ipairs(arg_3_0) do
+			var_4_1[iter_4_1] = true
 		end
 
-		slot3, slot4 = StoreHelper.getRecommendStoreSecondTabConfig()
-		slot5 = {}
+		local var_4_2, var_4_3 = StoreHelper.getRecommendStoreSecondTabConfig()
+		local var_4_4 = {}
 
-		for slot9, slot10 in ipairs(slot1) do
-			if slot2[slot10.id] then
-				table.insert(slot5, slot10)
+		for iter_4_2, iter_4_3 in ipairs(var_4_0) do
+			if var_4_1[iter_4_3.id] then
+				table.insert(var_4_4, iter_4_3)
 			end
 		end
 
-		table.sort(slot5, function (slot0, slot1)
-			return uv0:_tabSortFunction(slot0, slot1)
+		table.sort(var_4_4, function(arg_5_0, arg_5_1)
+			return arg_4_0:_tabSortFunction(arg_5_0, arg_5_1)
 		end)
 
-		slot6 = false
+		local var_4_5 = false
 
-		for slot10, slot11 in ipairs(slot5) do
-			if slot11.id == slot0._selectSecondTabId then
-				slot6 = true
+		for iter_4_4, iter_4_5 in ipairs(var_4_4) do
+			if iter_4_5.id == arg_4_0._selectSecondTabId then
+				var_4_5 = true
 
 				break
 			end
 		end
 
-		if not slot6 then
-			slot0._selectSecondTabId = slot5[1].id
+		if not var_4_5 then
+			arg_4_0._selectSecondTabId = var_4_4[1].id
 		end
 
-		slot7 = {}
+		local var_4_6 = {}
 
-		for slot11 = 1, #slot5 do
-			slot0:_refreshSecondTabs(slot11, slot5[slot11])
-			gohelper.setActive(slot0._categoryItemContainer[slot11].go, true)
-			gohelper.setActive(slot0._categoryItemContainer[slot11].sliderGo, true)
+		for iter_4_6 = 1, #var_4_4 do
+			arg_4_0:_refreshSecondTabs(iter_4_6, var_4_4[iter_4_6])
+			gohelper.setActive(arg_4_0._categoryItemContainer[iter_4_6].go, true)
+			gohelper.setActive(arg_4_0._categoryItemContainer[iter_4_6].sliderGo, true)
 
-			if slot0._categoryItemContainer[slot11].go.transform.rect.width > 0 then
-				slot13 = slot12
-				slot14 = 0
+			local var_4_7 = arg_4_0._categoryItemContainer[iter_4_6].go.transform.rect.width
 
-				if slot11 > 1 and slot0._categoryItemContainer[slot11 - 1] and slot7[slot11 - 1] and slot7[slot11 - 1].totalWidth then
-					slot14 = -(slot7[slot11 - 1].totalWidth + slot12) + slot0._categoryscroll.transform.rect.width
+			if var_4_7 > 0 then
+				local var_4_8 = var_4_7
+				local var_4_9 = 0
+
+				if iter_4_6 > 1 and arg_4_0._categoryItemContainer[iter_4_6 - 1] and var_4_6[iter_4_6 - 1] and var_4_6[iter_4_6 - 1].totalWidth then
+					var_4_8 = var_4_6[iter_4_6 - 1].totalWidth + var_4_7
+
+					local var_4_10 = arg_4_0._categoryscroll.transform.rect.width
+
+					var_4_9 = -var_4_8 + var_4_10
 				end
 
-				slot7[slot11] = {
-					width = slot12,
-					totalWidth = slot13,
-					pos = Mathf.Min(slot14, 0)
+				var_4_6[iter_4_6] = {
+					width = var_4_7,
+					totalWidth = var_4_8,
+					pos = Mathf.Min(var_4_9, 0)
 				}
 			end
 		end
 
-		gohelper.setActive(slot0._categoryItemContainer[#slot5].go_line, false)
+		gohelper.setActive(arg_4_0._categoryItemContainer[#var_4_4].go_line, false)
 
-		for slot11 = #slot5 + 1, #slot0._categoryItemContainer do
-			gohelper.setActive(slot0._categoryItemContainer[slot11].go, false)
-			gohelper.setActive(slot0._categoryItemContainer[slot11].sliderGo, false)
+		for iter_4_7 = #var_4_4 + 1, #arg_4_0._categoryItemContainer do
+			gohelper.setActive(arg_4_0._categoryItemContainer[iter_4_7].go, false)
+			gohelper.setActive(arg_4_0._categoryItemContainer[iter_4_7].sliderGo, false)
 		end
 
-		if slot7 and slot7[slot0._nowIndex] and slot7[slot0._nowIndex].pos then
-			recthelper.setAnchorX(slot0._categorycontentTrans, slot7[slot0._nowIndex].pos)
-		else
-			slot8 = -300 * (slot0._nowIndex - 5) - 50
+		if var_4_6 and var_4_6[arg_4_0._nowIndex] and var_4_6[arg_4_0._nowIndex].pos then
+			local var_4_11 = var_4_6[arg_4_0._nowIndex].pos
 
-			if recthelper.getAnchorX(slot0._categorycontentTrans) < -300 * (slot0._nowIndex - 1) then
-				recthelper.setAnchorX(slot0._categorycontentTrans, slot9)
-			elseif slot8 < slot10 then
-				recthelper.setAnchorX(slot0._categorycontentTrans, slot8)
+			recthelper.setAnchorX(arg_4_0._categorycontentTrans, var_4_11)
+		else
+			local var_4_12 = -300 * (arg_4_0._nowIndex - 5) - 50
+			local var_4_13 = -300 * (arg_4_0._nowIndex - 1)
+			local var_4_14 = recthelper.getAnchorX(arg_4_0._categorycontentTrans)
+
+			if var_4_14 < var_4_13 then
+				recthelper.setAnchorX(arg_4_0._categorycontentTrans, var_4_13)
+			elseif var_4_12 < var_4_14 then
+				recthelper.setAnchorX(arg_4_0._categorycontentTrans, var_4_12)
 			end
 		end
 
-		slot0:_onRefreshRedDot()
+		arg_4_0:_onRefreshRedDot()
 
-		return slot4
+		return var_4_3
 	end
 end
 
-function slot2(slot0, slot1)
-	RecommendStoreView._refreshTabsItem = slot0 and uv0(slot1) or GMMinusModel.instance:getConst("GM_RecommendStoreViewContainer_Func_refreshTabsItem")
+local function var_0_2(arg_6_0, arg_6_1)
+	RecommendStoreView._refreshTabsItem = arg_6_0 and var_0_1(arg_6_1) or GMMinusModel.instance:getConst("GM_RecommendStoreViewContainer_Func_refreshTabsItem")
 end
 
-function slot3()
-	return function (slot0, slot1, slot2)
+local function var_0_3()
+	return function(arg_8_0, arg_8_1, arg_8_2)
 		if false then
-			TaskDispatcher.cancelTask(slot0._toNextTab, slot0)
-			TaskDispatcher.runDelay(slot0._toNextTab, slot0, RecommendStoreView.AutoToNextTime)
+			TaskDispatcher.cancelTask(arg_8_0._toNextTab, arg_8_0)
+			TaskDispatcher.runDelay(arg_8_0._toNextTab, arg_8_0, RecommendStoreView.AutoToNextTime)
 		end
 
-		slot3 = slot0._selectSecondTabId
-		slot4 = slot0._selectThirdTabId
-		slot0._selectSecondTabId = slot1
-		slot0._selectThirdTabId = 0
-		slot6 = StoreConfig.instance:getTabConfig(slot0._selectSecondTabId)
-		slot7 = StoreConfig.instance:getTabConfig(slot0.viewContainer:getSelectFirstTabId())
+		local var_8_0 = arg_8_0._selectSecondTabId
+		local var_8_1 = arg_8_0._selectThirdTabId
 
-		if StoreConfig.instance:getTabConfig(slot0._selectThirdTabId) and not string.nilorempty(slot5.showCost) then
-			slot0.viewContainer:setCurrencyType(slot5.showCost)
-		elseif slot6 and not string.nilorempty(slot6.showCost) then
-			slot0.viewContainer:setCurrencyType(slot6.showCost)
-		elseif slot7 and not string.nilorempty(slot7.showCost) then
-			slot0.viewContainer:setCurrencyType(slot7.showCost)
+		arg_8_0._selectSecondTabId = arg_8_1
+		arg_8_0._selectThirdTabId = 0
+
+		local var_8_2 = StoreConfig.instance:getTabConfig(arg_8_0._selectThirdTabId)
+		local var_8_3 = StoreConfig.instance:getTabConfig(arg_8_0._selectSecondTabId)
+		local var_8_4 = StoreConfig.instance:getTabConfig(arg_8_0.viewContainer:getSelectFirstTabId())
+
+		if var_8_2 and not string.nilorempty(var_8_2.showCost) then
+			arg_8_0.viewContainer:setCurrencyType(var_8_2.showCost)
+		elseif var_8_3 and not string.nilorempty(var_8_3.showCost) then
+			arg_8_0.viewContainer:setCurrencyType(var_8_3.showCost)
+		elseif var_8_4 and not string.nilorempty(var_8_4.showCost) then
+			arg_8_0.viewContainer:setCurrencyType(var_8_4.showCost)
 		else
-			slot0.viewContainer:setCurrencyType(nil)
+			arg_8_0.viewContainer:setCurrencyType(nil)
 		end
 
-		if not slot2 and slot3 == slot0._selectSecondTabId and slot4 == slot0._selectThirdTabId then
+		if not arg_8_2 and var_8_0 == arg_8_0._selectSecondTabId and var_8_1 == arg_8_0._selectThirdTabId then
 			return
 		end
 
-		if #slot0:_refreshTabsItem() > 0 then
-			StoreRpc.instance:sendGetStoreInfosRequest(slot8)
+		local var_8_5 = arg_8_0:_refreshTabsItem()
+
+		if #var_8_5 > 0 then
+			StoreRpc.instance:sendGetStoreInfosRequest(var_8_5)
 		end
 
-		slot0:refreshRightPage()
+		arg_8_0:refreshRightPage()
 	end
 end
 
-function slot4(slot0)
-	RecommendStoreView._refreshTabs = slot0 and uv0() or GMMinusModel.instance:getConst("GM_RecommendStoreViewContainer_Func_refreshTabs")
-	RecommendStoreView._onSetVisibleInternal = slot0 and function ()
+local function var_0_4(arg_9_0)
+	RecommendStoreView._refreshTabs = arg_9_0 and var_0_3() or GMMinusModel.instance:getConst("GM_RecommendStoreViewContainer_Func_refreshTabs")
+	RecommendStoreView._onSetVisibleInternal = arg_9_0 and function()
+		return
 	end or GMMinusModel.instance:getConst("GM_RecommendStoreViewContainer_Func_onSetVisibleInternal")
-	RecommendStoreView._onSetAutoToNextPage = slot0 and function ()
+	RecommendStoreView._onSetAutoToNextPage = arg_9_0 and function()
+		return
 	end or GMMinusModel.instance:getConst("GM_RecommendStoreViewContainer_Func_onSetAutoToNextPage")
 end
 
-function slot5()
-	function RecommendStoreView._btngmOnClick(slot0)
+local function var_0_5()
+	function RecommendStoreView._btngmOnClick(arg_13_0)
 		ViewMgr.instance:openView(ViewName.GM_RecommendStoreView)
 	end
 
-	function RecommendStoreView._showAllBannerUpdate(slot0, slot1)
-		slot2 = {}
+	function RecommendStoreView._showAllBannerUpdate(arg_14_0, arg_14_1)
+		local var_14_0 = {}
 
-		if slot1 then
-			slot3, slot4 = StoreHelper.getRecommendStoreSecondTabConfig()
+		if arg_14_1 then
+			local var_14_1, var_14_2 = StoreHelper.getRecommendStoreSecondTabConfig()
 
-			table.sort(slot3, function (slot0, slot1)
-				return uv0:_tabSortFunction(slot0, slot1)
+			table.sort(var_14_1, function(arg_15_0, arg_15_1)
+				return arg_14_0:_tabSortFunction(arg_15_0, arg_15_1)
 			end)
 
-			for slot9 = 1, #slot3 do
-				slot2[#slot2 + 1] = slot3[slot9].id
+			local var_14_3 = {}
+
+			for iter_14_0 = 1, #var_14_1 do
+				local var_14_4 = var_14_1[iter_14_0].id
+
+				var_14_0[#var_14_0 + 1] = var_14_4
+				var_14_3[var_14_4] = true
 			end
 
-			GMMinusModel.instance:setFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", {
-				[slot11] = true
-			})
+			GMMinusModel.instance:setFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", var_14_3)
 
-			slot6 = ServerTime.now()
+			local var_14_5 = ServerTime.now()
 
-			for slot10, slot11 in ipairs(lua_store_recommend.configList) do
-				slot13 = slot11.offlineTime
-				slot14, slot15 = nil
+			for iter_14_1, iter_14_2 in ipairs(lua_store_recommend.configList) do
+				local var_14_6 = iter_14_2.onlineTime
+				local var_14_7 = iter_14_2.offlineTime
+				local var_14_8
+				local var_14_9
 
-				if slot6 <= (string.nilorempty(slot11.onlineTime) and slot6 or TimeUtil.stringToTimestamp(slot12)) and slot6 <= (string.nilorempty(slot13) and slot6 or TimeUtil.stringToTimestamp(slot13)) then
-					slot2[#slot2 + 1] = slot11.id
+				if string.nilorempty(var_14_6) then
+					var_14_8 = var_14_5
+				else
+					var_14_8 = TimeUtil.stringToTimestamp(var_14_6)
+				end
+
+				if string.nilorempty(var_14_7) then
+					var_14_9 = var_14_5
+				else
+					var_14_9 = TimeUtil.stringToTimestamp(var_14_7)
+				end
+
+				if var_14_5 <= var_14_8 and var_14_5 <= var_14_9 then
+					var_14_0[#var_14_0 + 1] = iter_14_2.id
 				end
 			end
 		end
 
-		uv0(slot1, slot2)
-		slot0:_refreshTabsItem()
+		var_0_2(arg_14_1, var_14_0)
+		arg_14_0:_refreshTabsItem()
 	end
 
-	function RecommendStoreView._showAllTabIdUpdate(slot0)
-		slot0:_refreshTabsItem()
+	function RecommendStoreView._showAllTabIdUpdate(arg_16_0)
+		arg_16_0:_refreshTabsItem()
 	end
 
-	function RecommendStoreView._stopBannerLoopAnimUpdate(slot0, slot1)
-		if slot1 then
-			TaskDispatcher.cancelTask(slot0._toNextTab, slot0)
-			TaskDispatcher.cancelTask(slot0._onSwitchCloseAnimDone, slot0)
+	function RecommendStoreView._stopBannerLoopAnimUpdate(arg_17_0, arg_17_1)
+		if arg_17_1 then
+			TaskDispatcher.cancelTask(arg_17_0._toNextTab, arg_17_0)
+			TaskDispatcher.cancelTask(arg_17_0._onSwitchCloseAnimDone, arg_17_0)
 		end
 
-		uv0(slot1)
+		var_0_4(arg_17_1)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_18_0)
 	GMMinusModel.instance:setConst("GM_RecommendStoreViewContainer_Func_refreshTabsItem", RecommendStoreView._refreshTabsItem)
 	GMMinusModel.instance:setConst("GM_RecommendStoreViewContainer_Func_refreshTabs", RecommendStoreView._refreshTabs)
 	GMMinusModel.instance:setConst("GM_RecommendStoreViewContainer_Func_onSetVisibleInternal", RecommendStoreView._onSetVisibleInternal)
 	GMMinusModel.instance:setConst("GM_RecommendStoreViewContainer_Func_onSetAutoToNextPage", RecommendStoreView._onSetAutoToNextPage)
-	uv0()
+	var_0_5()
 end
 
-function slot0.onOpen(slot0)
-	TaskDispatcher.cancelTask(slot0._onSwitchCloseAnimDone, slot0)
-	TaskDispatcher.cancelTask(slot0._toNextTab, slot0)
-	TaskDispatcher.runDelay(slot0._toNextTab, slot0, RecommendStoreView.AutoToNextTime)
-	slot0:_showAllBannerUpdate(GM_RecommendStoreView.s_ShowAllBanner)
-	slot0:_stopBannerLoopAnimUpdate(GM_RecommendStoreView.s_StopBannerLoopAnim)
+function var_0_0.onOpen(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._onSwitchCloseAnimDone, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._toNextTab, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0._toNextTab, arg_19_0, RecommendStoreView.AutoToNextTime)
+	arg_19_0:_showAllBannerUpdate(GM_RecommendStoreView.s_ShowAllBanner)
+	arg_19_0:_stopBannerLoopAnimUpdate(GM_RecommendStoreView.s_StopBannerLoopAnim)
 end
 
-function slot0.addEvents(slot0)
-	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, slot0._showAllBannerUpdate, slot0)
-	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, slot0._showAllTabIdUpdate, slot0)
-	GMController.instance:registerCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, slot0._stopBannerLoopAnimUpdate, slot0)
+function var_0_0.addEvents(arg_20_0)
+	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, arg_20_0._showAllBannerUpdate, arg_20_0)
+	GMController.instance:registerCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, arg_20_0._showAllTabIdUpdate, arg_20_0)
+	GMController.instance:registerCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, arg_20_0._stopBannerLoopAnimUpdate, arg_20_0)
 end
 
-function slot0.removeEvents(slot0)
-	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, slot0._showAllBannerUpdate, slot0)
-	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, slot0._showAllTabIdUpdate, slot0)
-	GMController.instance:unregisterCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, slot0._stopBannerLoopAnimUpdate, slot0)
+function var_0_0.removeEvents(arg_21_0)
+	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllBannerUpdate, arg_21_0._showAllBannerUpdate, arg_21_0)
+	GMController.instance:unregisterCallback(GMEvent.RecommendStore_ShowAllTabIdUpdate, arg_21_0._showAllTabIdUpdate, arg_21_0)
+	GMController.instance:unregisterCallback(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, arg_21_0._stopBannerLoopAnimUpdate, arg_21_0)
 end
 
-function slot0._refreshSecondTabs(slot0, slot1, slot2)
-	slot3 = slot0._categoryItemContainer[slot1]
-	slot4 = slot2.id
-	slot5 = slot2.name
+function var_0_0._refreshSecondTabs(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = arg_22_0._categoryItemContainer[arg_22_1]
+	local var_22_1 = arg_22_2.id
+	local var_22_2 = arg_22_2.name
 
 	if GM_RecommendStoreView.s_ShowAllTabId then
-		slot5 = (not GM_RecommendStoreView.s_ShowAllBanner or GMMinusModel.instance:getFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", {})[slot4] or string.format("%s\n<color=#00FF00>%s (New)</color>", slot5, slot4)) and string.format("%s\n%s", slot5, slot4)
+		local var_22_3 = GMMinusModel.instance:getFirstLogin("GM_RecommendStoreViewContainer_lastOpenedTabIdSet", {})
+
+		if GM_RecommendStoreView.s_ShowAllBanner and not var_22_3[var_22_1] then
+			var_22_2 = string.format("%s\n<color=#00FF00>%s (New)</color>", var_22_2, var_22_1)
+		else
+			var_22_2 = string.format("%s\n%s", var_22_2, var_22_1)
+		end
 	end
 
-	slot3.txt_itemcn1.text = slot5
-	slot3.txt_itemcn2.text = slot5
+	var_22_0.txt_itemcn1.text = var_22_2
+	var_22_0.txt_itemcn2.text = var_22_2
 end
 
-return slot0
+return var_0_0

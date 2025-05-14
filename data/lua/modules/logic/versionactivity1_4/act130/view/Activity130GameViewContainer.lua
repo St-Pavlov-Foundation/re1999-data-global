@@ -1,53 +1,54 @@
-module("modules.logic.versionactivity1_4.act130.view.Activity130GameViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.view.Activity130GameViewContainer", package.seeall)
 
-slot0 = class("Activity130GameViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity130GameViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._act130GameView = Activity130GameView.New()
-	slot0._act130MapView = Activity130Map.New()
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._act130GameView = Activity130GameView.New()
+	arg_1_0._act130MapView = Activity130Map.New()
 
-	table.insert(slot1, slot0._act130GameView)
-	table.insert(slot1, slot0._act130MapView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_topbtns"))
+	local var_1_0 = {}
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._act130GameView)
+	table.insert(var_1_0, arg_1_0._act130MapView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topbtns"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0._navigateButtonView:setOverrideClose(slot0._overrideCloseFunc, slot0)
+		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	StatActivity130Controller.instance:statStart()
 end
 
-function slot0._overrideCloseFunc(slot0)
-	slot0._act130GameView._viewAnim:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(slot0._doClose, slot0, 0.167)
+function var_0_0._overrideCloseFunc(arg_4_0)
+	arg_4_0._act130GameView._viewAnim:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(arg_4_0._doClose, arg_4_0, 0.167)
 end
 
-function slot0._doClose(slot0)
-	slot0:closeThis()
+function var_0_0._doClose(arg_5_0)
+	arg_5_0:closeThis()
 	Activity130Controller.instance:dispatchEvent(Activity130Event.BackToLevelView, true)
 end
 
-function slot0.onContainerClose(slot0)
+function var_0_0.onContainerClose(arg_6_0)
 	StatActivity130Controller.instance:statAbort()
 	Role37PuzzleModel.instance:clear()
 	PuzzleRecordListModel.instance:clearRecord()
 end
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.fight.model.mo.FightHeroAttribute", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightHeroAttribute", package.seeall)
 
-slot0 = pureTable("FightHeroAttribute")
+local var_0_0 = pureTable("FightHeroAttribute")
 
-function slot0.init(slot0, slot1)
-	slot0.hp = slot1.hp
-	slot0.attack = slot1.attack
-	slot0.defense = slot1.defense
-	slot0.crit = slot1.crit
-	slot0.crit_damage = slot1.crit_damage
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.hp = arg_1_1.hp
+	arg_1_0.attack = arg_1_1.attack
+	arg_1_0.defense = arg_1_1.defense
+	arg_1_0.crit = arg_1_1.crit
+	arg_1_0.crit_damage = arg_1_1.crit_damage
 end
 
-return slot0
+return var_0_0

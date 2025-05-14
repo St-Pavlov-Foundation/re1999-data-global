@@ -1,102 +1,112 @@
-module("modules.logic.character.view.CharacterTalentChessFilterItem", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentChessFilterItem", package.seeall)
 
-slot0 = class("CharacterTalentChessFilterItem", ListScrollCellExtend)
+local var_0_0 = class("CharacterTalentChessFilterItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0._golocked = gohelper.findChild(slot0.viewGO, "#go_locked")
-	slot0._gousing = gohelper.findChild(slot0.viewGO, "#go_using")
-	slot0._txtstylename = gohelper.findChildText(slot0.viewGO, "layout/#txt_stylename")
-	slot0._gocareer = gohelper.findChild(slot0.viewGO, "layout/#go_career")
-	slot0._txtlabel = gohelper.findChildText(slot0.viewGO, "layout/#go_career/#txt_label")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#go_locked")
+	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "#go_using")
+	arg_1_0._txtstylename = gohelper.findChildText(arg_1_0.viewGO, "layout/#txt_stylename")
+	arg_1_0._gocareer = gohelper.findChild(arg_1_0.viewGO, "layout/#go_career")
+	arg_1_0._txtlabel = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_career/#txt_label")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	TalentStyleModel.instance:UseStyle(slot0._heroId, slot0._mo)
+function var_0_0._btnclickOnClick(arg_4_0)
+	TalentStyleModel.instance:UseStyle(arg_4_0._heroId, arg_4_0._mo)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._styleslot = gohelper.findChildImage(slot0.viewGO, "layout/slot")
-	slot0._styleicon = gohelper.findChildImage(slot0.viewGO, "layout/slot/icon")
-	slot0._styleglow = gohelper.findChildImage(slot0.viewGO, "layout/slot/glow")
-	slot0._unlock = gohelper.findChild(slot0.viewGO, "unlock")
-	slot0._layoutCanvasGroup = gohelper.findChild(slot0.viewGO, "layout"):GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._styleslot = gohelper.findChildImage(arg_5_0.viewGO, "layout/slot")
+	arg_5_0._styleicon = gohelper.findChildImage(arg_5_0.viewGO, "layout/slot/icon")
+	arg_5_0._styleglow = gohelper.findChildImage(arg_5_0.viewGO, "layout/slot/glow")
+	arg_5_0._unlock = gohelper.findChild(arg_5_0.viewGO, "unlock")
+	arg_5_0._layoutCanvasGroup = gohelper.findChild(arg_5_0.viewGO, "layout"):GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._heroId = TalentStyleModel.instance._heroId
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
+	arg_8_0._heroId = TalentStyleModel.instance._heroId
 
-	slot0:refreshItem()
+	arg_8_0:refreshItem()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.hideUnlockAnim, slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.hideUnlockAnim, arg_10_0)
 end
 
-function slot0.showItemState(slot0)
-	gohelper.setActive(slot0._goselect, slot0._mo._isUnlock and slot0._mo._isSelect)
-	gohelper.setActive(slot0._gousing, slot0._mo._isUnlock and slot0._mo._isUse)
-	gohelper.setActive(slot0._golocked, not slot0._mo._isUnlock)
+function var_0_0.showItemState(arg_11_0)
+	gohelper.setActive(arg_11_0._goselect, arg_11_0._mo._isUnlock and arg_11_0._mo._isSelect)
+	gohelper.setActive(arg_11_0._gousing, arg_11_0._mo._isUnlock and arg_11_0._mo._isUse)
+	gohelper.setActive(arg_11_0._golocked, not arg_11_0._mo._isUnlock)
 
-	if slot0._mo._isUnlock then
-		if slot0._mo._styleId ~= 0 and TalentStyleModel.instance:isPlayAnim(slot0._heroId, slot1) then
-			slot0._isPlayAnim = true
+	if arg_11_0._mo._isUnlock then
+		local var_11_0 = arg_11_0._mo._styleId
 
-			gohelper.setActive(slot0._unlock, true)
-			TalentStyleModel.instance:setPlayAnim(slot0._heroId, slot1)
-			TaskDispatcher.runDelay(slot0.hideUnlockAnim, slot0, 0.5)
+		if var_11_0 ~= 0 and TalentStyleModel.instance:isPlayAnim(arg_11_0._heroId, var_11_0) then
+			arg_11_0._isPlayAnim = true
+
+			gohelper.setActive(arg_11_0._unlock, true)
+			TalentStyleModel.instance:setPlayAnim(arg_11_0._heroId, var_11_0)
+			TaskDispatcher.runDelay(arg_11_0.hideUnlockAnim, arg_11_0, 0.5)
 		end
-	elseif not slot0._isPlayAnim then
-		slot0:hideUnlockAnim()
+	elseif not arg_11_0._isPlayAnim then
+		arg_11_0:hideUnlockAnim()
 	end
 
-	slot0._layoutCanvasGroup.alpha = slot0._mo._isUnlock and 1 or 0.5
+	arg_11_0._layoutCanvasGroup.alpha = arg_11_0._mo._isUnlock and 1 or 0.5
 end
 
-function slot0.hideUnlockAnim(slot0)
-	gohelper.setActive(slot0._unlock, false)
+function var_0_0.hideUnlockAnim(arg_12_0)
+	gohelper.setActive(arg_12_0._unlock, false)
 
-	slot0._isPlayAnim = false
+	arg_12_0._isPlayAnim = false
 end
 
-function slot0.refreshItem(slot0)
-	slot1, slot2 = slot0._mo:getStyleTagIcon()
-	slot0._txtstylename.text, slot0._txtlabel.text = slot0._mo:getStyleTag()
+function var_0_0.refreshItem(arg_13_0)
+	local var_13_0, var_13_1 = arg_13_0._mo:getStyleTagIcon()
+	local var_13_2, var_13_3 = arg_13_0._mo:getStyleTag()
 
-	UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._styleslot, slot2, true)
+	arg_13_0._txtstylename.text = var_13_2
+	arg_13_0._txtlabel.text = var_13_3
 
-	if slot0._mo._isUse then
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._styleicon, slot1, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._styleglow, slot1, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(arg_13_0._styleslot, var_13_1, true)
+
+	local var_13_4 = arg_13_0._mo._isUse
+
+	if var_13_4 then
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_13_0._styleicon, var_13_0, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_13_0._styleglow, var_13_0, true)
 	end
 
-	slot0._styleicon.enabled = slot5
-	slot0._styleglow.enabled = slot5
+	arg_13_0._styleicon.enabled = var_13_4
+	arg_13_0._styleglow.enabled = var_13_4
 
-	slot0:showItemState()
+	arg_13_0:showItemState()
 end
 
-return slot0
+return var_0_0

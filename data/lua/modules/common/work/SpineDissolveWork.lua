@@ -1,7 +1,7 @@
-module("modules.common.work.SpineDissolveWork", package.seeall)
+﻿module("modules.common.work.SpineDissolveWork", package.seeall)
 
-slot0 = class("SpineDissolveWork", BaseWork)
-slot1 = {
+local var_0_0 = class("SpineDissolveWork", BaseWork)
+local var_0_1 = {
 	[FightEnum.DissolveType.Player] = {
 		duration = 1.67,
 		path = FightPreloadOthersWork.die_player
@@ -20,126 +20,150 @@ slot1 = {
 	}
 }
 
-function slot0.onStart(slot0, slot1)
-	slot0.context = slot1
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0.context = arg_1_1
 
-	if string.nilorempty(lua_skin_spine_action.configDict[slot0.context.dissolveEntity:getMO().skin] and slot2.die and slot2.die.dieAnim) then
-		slot0:_playDissolve()
+	local var_1_0 = lua_skin_spine_action.configDict[arg_1_0.context.dissolveEntity:getMO().skin]
+	local var_1_1 = var_1_0 and var_1_0.die and var_1_0.die.dieAnim
+
+	if string.nilorempty(var_1_1) then
+		arg_1_0:_playDissolve()
 	else
-		slot0._ani_path = slot3
-		slot0._animationLoader = MultiAbLoader.New()
+		arg_1_0._ani_path = var_1_1
+		arg_1_0._animationLoader = MultiAbLoader.New()
 
-		slot0._animationLoader:addPath(FightHelper.getEntityAniPath(slot3))
-		slot0._animationLoader:startLoad(slot0._onAnimationLoaded, slot0)
+		arg_1_0._animationLoader:addPath(FightHelper.getEntityAniPath(var_1_1))
+		arg_1_0._animationLoader:startLoad(arg_1_0._onAnimationLoaded, arg_1_0)
 	end
 end
 
-function slot0._onAnimationLoaded(slot0)
-	slot1 = slot0._animationLoader:getFirstAssetItem():GetResource(ResUrl.getEntityAnim(slot0._ani_path))
-	slot1.legacy = true
-	slot0._animStateName = slot1.name
-	slot0._animCompList = {}
-	slot3 = gohelper.onceAddComponent(slot0.context.dissolveEntity.spine:getSpineGO(), typeof(UnityEngine.Animation))
+function var_0_0._onAnimationLoaded(arg_2_0)
+	local var_2_0 = arg_2_0._animationLoader:getFirstAssetItem():GetResource(ResUrl.getEntityAnim(arg_2_0._ani_path))
 
-	table.insert(slot0._animCompList, slot3)
+	var_2_0.legacy = true
+	arg_2_0._animStateName = var_2_0.name
+	arg_2_0._animCompList = {}
 
-	slot3.enabled = true
-	slot3.clip = slot1
+	local var_2_1 = arg_2_0.context.dissolveEntity
+	local var_2_2 = gohelper.onceAddComponent(var_2_1.spine:getSpineGO(), typeof(UnityEngine.Animation))
 
-	slot3:AddClip(slot1, slot0._animStateName)
+	table.insert(arg_2_0._animCompList, var_2_2)
 
-	if slot3.this:get(slot0._animStateName) then
-		slot4.speed = FightModel.instance:getSpeed()
+	var_2_2.enabled = true
+	var_2_2.clip = var_2_0
+
+	var_2_2:AddClip(var_2_0, arg_2_0._animStateName)
+
+	local var_2_3 = var_2_2.this:get(arg_2_0._animStateName)
+
+	if var_2_3 then
+		var_2_3.speed = FightModel.instance:getSpeed()
 	end
 
-	slot3:Play()
-	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)
-	TaskDispatcher.runDelay(slot0._afterPlayDissolve, slot0, slot1.length / FightModel.instance:getSpeed())
+	var_2_2:Play()
+	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, arg_2_0._onUpdateSpeed, arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._afterPlayDissolve, arg_2_0, var_2_0.length / FightModel.instance:getSpeed())
 end
 
-function slot0._onUpdateSpeed(slot0)
-	for slot4, slot5 in ipairs(slot0._animCompList) do
-		if slot5.this:get(slot0._animStateName) then
-			slot6.speed = FightModel.instance:getSpeed()
+function var_0_0._onUpdateSpeed(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._animCompList) do
+		local var_3_0 = iter_3_1.this:get(arg_3_0._animStateName)
+
+		if var_3_0 then
+			var_3_0.speed = FightModel.instance:getSpeed()
 		end
 	end
 end
 
-function slot0._clearAnim(slot0)
-	if slot0._animCompList then
-		for slot4, slot5 in ipairs(slot0._animCompList) do
-			if not gohelper.isNil(slot5) then
-				if slot5:GetClip(slot0._animStateName) then
-					slot5:RemoveClip(slot0._animStateName)
+function var_0_0._clearAnim(arg_4_0)
+	if arg_4_0._animCompList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._animCompList) do
+			if not gohelper.isNil(iter_4_1) then
+				if iter_4_1:GetClip(arg_4_0._animStateName) then
+					iter_4_1:RemoveClip(arg_4_0._animStateName)
 				end
 
-				if slot5.clip and slot5.clip.name == slot0._animStateName then
-					slot5.clip = nil
+				if iter_4_1.clip and iter_4_1.clip.name == arg_4_0._animStateName then
+					iter_4_1.clip = nil
 				end
 
-				slot5.enabled = false
+				iter_4_1.enabled = false
 			end
 		end
 
-		slot0._animCompList = nil
+		arg_4_0._animCompList = nil
 	end
 end
 
-function slot0._playDissolve(slot0)
-	if uv0[slot0.context.dissolveType] and slot1.path then
-		if FightPreloadController.instance:getFightAssetItem(slot2) then
-			slot0:_reallyPlayDissolve(slot3)
-		else
-			slot0._animatorLoader = MultiAbLoader.New()
+function var_0_0._playDissolve(arg_5_0)
+	local var_5_0 = var_0_1[arg_5_0.context.dissolveType]
+	local var_5_1 = var_5_0 and var_5_0.path
 
-			slot0._animatorLoader:addPath(slot2)
-			slot0._animatorLoader:startLoad(slot0._onAnimatorLoaded, slot0)
+	if var_5_1 then
+		local var_5_2 = FightPreloadController.instance:getFightAssetItem(var_5_1)
+
+		if var_5_2 then
+			arg_5_0:_reallyPlayDissolve(var_5_2)
+		else
+			arg_5_0._animatorLoader = MultiAbLoader.New()
+
+			arg_5_0._animatorLoader:addPath(var_5_1)
+			arg_5_0._animatorLoader:startLoad(arg_5_0._onAnimatorLoaded, arg_5_0)
 		end
 	else
-		logError(slot0.context.dissolveEntity:getMO():getEntityName() .. "没有配置死亡消融动画 type = " .. (slot0.context.dissolveType or "nil"))
+		logError(arg_5_0.context.dissolveEntity:getMO():getEntityName() .. "没有配置死亡消融动画 type = " .. (arg_5_0.context.dissolveType or "nil"))
 	end
 end
 
-function slot0._onAnimatorLoaded(slot0)
-	slot0:_reallyPlayDissolve(slot0._animatorLoader:getFirstAssetItem())
+function var_0_0._onAnimatorLoaded(arg_6_0)
+	local var_6_0 = arg_6_0._animatorLoader:getFirstAssetItem()
+
+	arg_6_0:_reallyPlayDissolve(var_6_0)
 end
 
-function slot0._reallyPlayDissolve(slot0, slot1)
-	if not (slot0.context.dissolveEntity and slot0.context.dissolveEntity.spine and slot0.context.dissolveEntity.spine:getSpineGO()) then
-		slot0:_afterPlayDissolve()
+function var_0_0._reallyPlayDissolve(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.context.dissolveEntity and arg_7_0.context.dissolveEntity.spine and arg_7_0.context.dissolveEntity.spine:getSpineGO()
+
+	if not var_7_0 then
+		arg_7_0:_afterPlayDissolve()
 
 		return
 	end
 
-	slot4 = gohelper.onceAddComponent(slot2, typeof(UnityEngine.Animator))
-	slot4.enabled = true
-	slot4.runtimeAnimatorController = slot1:GetResource()
-	slot4.speed = FightModel.instance:getSpeed()
+	local var_7_1 = arg_7_1:GetResource()
+	local var_7_2 = gohelper.onceAddComponent(var_7_0, typeof(UnityEngine.Animator))
 
-	TaskDispatcher.runDelay(slot0._afterPlayDissolve, slot0, (uv0[slot0.context.dissolveType] and slot5.duration or 1.67) / FightModel.instance:getSpeed())
+	var_7_2.enabled = true
+	var_7_2.runtimeAnimatorController = var_7_1
+	var_7_2.speed = FightModel.instance:getSpeed()
+
+	local var_7_3 = var_0_1[arg_7_0.context.dissolveType]
+	local var_7_4 = var_7_3 and var_7_3.duration or 1.67
+
+	TaskDispatcher.runDelay(arg_7_0._afterPlayDissolve, arg_7_0, var_7_4 / FightModel.instance:getSpeed())
 end
 
-function slot0._afterPlayDissolve(slot0)
-	slot0:_clearAnim()
-	slot0:onDone(true)
+function var_0_0._afterPlayDissolve(arg_8_0)
+	arg_8_0:_clearAnim()
+	arg_8_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)
-	slot0:_clearAnim()
-	TaskDispatcher.cancelTask(slot0._afterPlayDissolve, slot0)
+function var_0_0.clearWork(arg_9_0)
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_9_0._onUpdateSpeed, arg_9_0)
+	arg_9_0:_clearAnim()
+	TaskDispatcher.cancelTask(arg_9_0._afterPlayDissolve, arg_9_0)
 
-	if slot0._animationLoader then
-		slot0._animationLoader:dispose()
+	if arg_9_0._animationLoader then
+		arg_9_0._animationLoader:dispose()
 
-		slot0._animationLoader = nil
+		arg_9_0._animationLoader = nil
 	end
 
-	if slot0._animatorLoader then
-		slot0._animatorLoader:dispose()
+	if arg_9_0._animatorLoader then
+		arg_9_0._animatorLoader:dispose()
 
-		slot0._animatorLoader = nil
+		arg_9_0._animatorLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

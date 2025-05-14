@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity2_4.pinball.model.PinballMapCo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.model.PinballMapCo", package.seeall)
 
-slot0 = pureTable("PinballMapCo")
+local var_0_0 = pureTable("PinballMapCo")
 
-function slot0.init(slot0, slot1)
-	slot0.units = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.units = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.units[slot5] = PinballUnitCo.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		arg_1_0.units[iter_1_0] = PinballUnitCo.New()
 
-		slot0.units[slot5]:init(slot6)
+		arg_1_0.units[iter_1_0]:init(iter_1_1)
 	end
 end
 
-return slot0
+return var_0_0

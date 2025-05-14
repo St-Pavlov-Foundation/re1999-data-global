@@ -1,176 +1,243 @@
-module("modules.logic.room.utils.RoomResHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomResHelper", package.seeall)
 
-return {
-	getMapBlockResPath = function (slot0, slot1, slot2)
-		if slot0 == RoomResourceEnum.ResourceId.None or slot0 == RoomResourceEnum.ResourceId.Empty then
+local var_0_0 = {
+	getMapBlockResPath = function(arg_1_0, arg_1_1, arg_1_2)
+		if arg_1_0 == RoomResourceEnum.ResourceId.None or arg_1_0 == RoomResourceEnum.ResourceId.Empty then
 			return nil
 		end
 
-		slot3 = RoomResourceEnum.ResourceRes[slot0]
+		local var_1_0 = RoomResourceEnum.ResourceRes[arg_1_0]
 
-		if slot0 == RoomResourceEnum.ResourceId.River then
-			slot2 = slot2 or 0
-			slot4 = ResUrl.getRoomRes(string.format("%s/%s/%s", slot3, slot2 + 1, slot1))
-			slot5 = ResUrl.getRoomResAB(string.format("%s/%s", slot3, slot2 + 1))
+		if arg_1_0 == RoomResourceEnum.ResourceId.River then
+			arg_1_2 = arg_1_2 or 0
+
+			local var_1_1 = ResUrl.getRoomRes(string.format("%s/%s/%s", var_1_0, arg_1_2 + 1, arg_1_1))
+			local var_1_2 = ResUrl.getRoomResAB(string.format("%s/%s", var_1_0, arg_1_2 + 1))
 
 			if GameResMgr.IsFromEditorDir then
-				slot5 = ResUrl.getRoomRes(string.format("%s/%s/%s", slot3, slot2 + 1, slot1))
+				var_1_2 = ResUrl.getRoomRes(string.format("%s/%s/%s", var_1_0, arg_1_2 + 1, arg_1_1))
 			end
 
-			return slot4, slot5
+			return var_1_1, var_1_2
 		end
 
 		return nil
 	end,
-	getMapRiverFloorResPath = function (slot0, slot1)
-		slot1 = slot1 or 0
-		slot2 = ResUrl.getRoomRes(string.format("heliu_floor/%s/%s", slot1 + 1, slot0))
-		slot3 = ResUrl.getRoomResAB(string.format("heliu_floor/%s", slot1 + 1))
+	getMapRiverFloorResPath = function(arg_2_0, arg_2_1)
+		arg_2_1 = arg_2_1 or 0
+
+		local var_2_0 = ResUrl.getRoomRes(string.format("heliu_floor/%s/%s", arg_2_1 + 1, arg_2_0))
+		local var_2_1 = ResUrl.getRoomResAB(string.format("heliu_floor/%s", arg_2_1 + 1))
 
 		if GameResMgr.IsFromEditorDir then
-			slot3 = slot2
+			var_2_1 = var_2_0
 		end
 
-		return slot2, slot3
+		return var_2_0, var_2_1
 	end,
-	getBlockPath = function (slot0)
-		return string.format("room/block/%s", RoomConfig.instance:getBlockDefineConfig(slot0) and slot1.prefabPath or RoomResourceEnum.EmptyPrefabPath)
-	end,
-	getBlockABPath = function (slot0)
-		if GameResMgr.IsFromEditorDir then
-			return uv0.getBlockPath(slot0)
-		else
-			return string.format("room/block/%s", string.split(RoomConfig.instance:getBlockDefineConfig(slot0) and slot1.prefabPath or RoomResourceEnum.EmptyPrefabPath, "/")[1])
-		end
-	end,
-	getBlockLandPath = function (slot0, slot1)
-		if not uv0._DefaultBlockLandDict then
-			uv0._DefaultBlockLandDict = {}
-			uv0._ReplaceBlockLandDict = {}
+	getBlockPath = function(arg_3_0)
+		local var_3_0 = RoomConfig.instance:getBlockDefineConfig(arg_3_0)
+		local var_3_1 = var_3_0 and var_3_0.prefabPath or RoomResourceEnum.EmptyPrefabPath
 
-			for slot5, slot6 in ipairs(lua_block.propertyList.blockType) do
-				slot7 = nil
-				slot7 = slot6 + 2 < 10 and "0" .. slot8 or slot8
-				uv0._DefaultBlockLandDict[slot6] = string.format("scenes/m_s07_xiaowu/prefab/ground/floor/%s.prefab", slot7)
-				uv0._ReplaceBlockLandDict[slot6] = string.format("scenes/m_s07_xiaowu/prefab/ground/floor/%sb.prefab", slot7)
-			end
-
-			uv0._DefaultBlockLandDict[0] = RoomScenePreloader.DefaultLand
-			uv0._ReplaceBlockLandDict[0] = RoomScenePreloader.ReplaceLand
-		end
-
-		slot2 = slot1 and uv0._ReplaceBlockLandDict or uv0._DefaultBlockLandDict
-
-		return slot2[slot0] or slot2[0], slot2[slot0] or slot2[0]
-	end,
-	_TransportPathDict = {},
-	getTransportPathPath = function (slot0, slot1)
-		if not uv0._TransportPathDict[slot1 or RoomTransportPathEnum.StyleId.Normal] then
-			for slot6, slot7 in pairs(RoomTransportPathEnum.PathLineType) do
-				-- Nothing
-			end
-
-			uv0._TransportPathDict[slot1] = {
-				[slot7] = string.format("scenes/m_s07_xiaowu/prefab/transport/%s/%s.prefab", slot1, RoomTransportPathEnum.PathLineTypeRes[slot7])
-			}
-		end
-
-		return slot2[slot0]
-	end,
-	getCharacterCameraAnimPath = function (slot0)
-		if string.nilorempty(slot0) then
-			return nil
-		end
-
-		return string.format("effects/animation/room/%s.controller", slot0)
-	end,
-	getCharacterCameraAnimABPath = function (slot0)
-		if string.nilorempty(slot0) then
-			return nil
-		end
-
-		if GameResMgr.IsFromEditorDir then
-			return uv0.getCharacterCameraAnimPath(slot0)
-		else
-			return "effects/animation/room"
-		end
-	end,
-	getCharacterEffectPath = function (slot0)
-		if string.nilorempty(slot0) then
-			return nil
-		end
-
-		return string.format("scenes/m_s07_xiaowu/prefab/vx/%s.prefab", slot0)
-	end,
-	getCharacterEffectABPath = function (slot0)
-		return uv0.getCharacterEffectPath(slot0)
-	end,
-	getWaterPath = function ()
-		return ResUrl.getRoomRes("ground/water/water")
-	end,
-	getBuildingPath = function (slot0, slot1)
-		slot2 = RoomConfig.instance:getBuildingConfig(slot0)
-		slot3 = slot2.path
-
-		if slot2.canLevelUp and slot1 and RoomConfig.instance:getLevelGroupConfig(slot0, slot1) and not string.nilorempty(slot4.path) then
-			slot3 = slot4.path
-		end
-
-		return ResUrl.getRoomRes(slot3)
-	end,
-	getVehiclePath = function (slot0)
-		return ResUrl.getRoomRes(RoomConfig.instance:getVehicleConfig(slot0).path)
-	end,
-	getPartPathList = function (slot0, slot1)
-		if slot1 < 0 then
-			return {}
-		end
-
-		if not RoomConfig.instance:getLevelGroupConfig(slot0, slot1) then
-			return slot2
-		end
-
-		if string.nilorempty(slot3.modulePart) then
-			return slot2
-		end
-
-		for slot8, slot9 in ipairs(string.split(slot4, "#")) do
-			table.insert(slot2, ResUrl.getRoomRes(string.format("jianzhu/%s", slot9)))
-		end
-
-		return slot2
-	end,
-	getCritterPath = function (slot0)
-		slot1 = nil
-
-		if CritterConfig.instance:getCritterSkinCfg(slot0, true) then
-			slot1 = ResUrl.getSpineBxhyPrefab(slot2.spine)
-		end
-
-		return slot1
-	end,
-	getCharacterPath = function (slot0)
-		return ResUrl.getSpineBxhyPrefab(SkinConfig.instance:getSkinCo(slot0).spine)
-	end,
-	getAnimalPath = function (slot0)
-		return ResUrl.getSpineBxhyPrefab(SkinConfig.instance:getSkinCo(slot0).alternateSpine)
-	end,
-	getCritterUIPath = function (slot0)
-		return ResUrl.getSpineUIBxhyPrefab(CritterConfig.instance:getCritterSkinCfg(slot0).spine)
-	end,
-	getBlockName = function (slot0)
-		return string.format("%s_%s", slot0.x, slot0.y)
-	end,
-	getResourcePointName = function (slot0)
-		return string.format("%s_%s_%s", slot0.x, slot0.y, slot0.direction)
-	end,
-	getIndexByResId = function (slot0)
-		for slot6 = 1, #RoomResourceEnum.ResourceList do
-			if slot1[slot6] == slot0 then
-				return slot6
-			end
-		end
-
-		return -1
+		return string.format("room/block/%s", var_3_1)
 	end
 }
+
+function var_0_0.getBlockABPath(arg_4_0)
+	if GameResMgr.IsFromEditorDir then
+		return var_0_0.getBlockPath(arg_4_0)
+	else
+		local var_4_0 = RoomConfig.instance:getBlockDefineConfig(arg_4_0)
+		local var_4_1 = var_4_0 and var_4_0.prefabPath or RoomResourceEnum.EmptyPrefabPath
+		local var_4_2 = string.split(var_4_1, "/")[1]
+
+		return string.format("room/block/%s", var_4_2)
+	end
+end
+
+function var_0_0.getBlockLandPath(arg_5_0, arg_5_1)
+	if not var_0_0._DefaultBlockLandDict then
+		var_0_0._DefaultBlockLandDict = {}
+		var_0_0._ReplaceBlockLandDict = {}
+
+		for iter_5_0, iter_5_1 in ipairs(lua_block.propertyList.blockType) do
+			local var_5_0
+			local var_5_1 = iter_5_1 + 2
+
+			if var_5_1 < 10 then
+				var_5_0 = "0" .. var_5_1
+			else
+				var_5_0 = var_5_1
+			end
+
+			var_0_0._DefaultBlockLandDict[iter_5_1] = string.format("scenes/m_s07_xiaowu/prefab/ground/floor/%s.prefab", var_5_0)
+			var_0_0._ReplaceBlockLandDict[iter_5_1] = string.format("scenes/m_s07_xiaowu/prefab/ground/floor/%sb.prefab", var_5_0)
+		end
+
+		var_0_0._DefaultBlockLandDict[0] = RoomScenePreloader.DefaultLand
+		var_0_0._ReplaceBlockLandDict[0] = RoomScenePreloader.ReplaceLand
+	end
+
+	local var_5_2 = arg_5_1 and var_0_0._ReplaceBlockLandDict or var_0_0._DefaultBlockLandDict
+
+	return var_5_2[arg_5_0] or var_5_2[0], var_5_2[arg_5_0] or var_5_2[0]
+end
+
+var_0_0._TransportPathDict = {}
+
+function var_0_0.getTransportPathPath(arg_6_0, arg_6_1)
+	arg_6_1 = arg_6_1 or RoomTransportPathEnum.StyleId.Normal
+
+	local var_6_0 = var_0_0._TransportPathDict[arg_6_1]
+
+	if not var_6_0 then
+		var_6_0 = {}
+
+		for iter_6_0, iter_6_1 in pairs(RoomTransportPathEnum.PathLineType) do
+			local var_6_1 = RoomTransportPathEnum.PathLineTypeRes[iter_6_1]
+
+			var_6_0[iter_6_1] = string.format("scenes/m_s07_xiaowu/prefab/transport/%s/%s.prefab", arg_6_1, var_6_1)
+		end
+
+		var_0_0._TransportPathDict[arg_6_1] = var_6_0
+	end
+
+	return var_6_0[arg_6_0]
+end
+
+function var_0_0.getCharacterCameraAnimPath(arg_7_0)
+	if string.nilorempty(arg_7_0) then
+		return nil
+	end
+
+	return string.format("effects/animation/room/%s.controller", arg_7_0)
+end
+
+function var_0_0.getCharacterCameraAnimABPath(arg_8_0)
+	if string.nilorempty(arg_8_0) then
+		return nil
+	end
+
+	if GameResMgr.IsFromEditorDir then
+		return var_0_0.getCharacterCameraAnimPath(arg_8_0)
+	else
+		return "effects/animation/room"
+	end
+end
+
+function var_0_0.getCharacterEffectPath(arg_9_0)
+	if string.nilorempty(arg_9_0) then
+		return nil
+	end
+
+	return string.format("scenes/m_s07_xiaowu/prefab/vx/%s.prefab", arg_9_0)
+end
+
+function var_0_0.getCharacterEffectABPath(arg_10_0)
+	return var_0_0.getCharacterEffectPath(arg_10_0)
+end
+
+function var_0_0.getWaterPath()
+	return ResUrl.getRoomRes("ground/water/water")
+end
+
+function var_0_0.getBuildingPath(arg_12_0, arg_12_1)
+	local var_12_0 = RoomConfig.instance:getBuildingConfig(arg_12_0)
+	local var_12_1 = var_12_0.path
+
+	if var_12_0.canLevelUp and arg_12_1 then
+		local var_12_2 = RoomConfig.instance:getLevelGroupConfig(arg_12_0, arg_12_1)
+
+		if var_12_2 and not string.nilorempty(var_12_2.path) then
+			var_12_1 = var_12_2.path
+		end
+	end
+
+	return (ResUrl.getRoomRes(var_12_1))
+end
+
+function var_0_0.getVehiclePath(arg_13_0)
+	local var_13_0 = RoomConfig.instance:getVehicleConfig(arg_13_0).path
+
+	return (ResUrl.getRoomRes(var_13_0))
+end
+
+function var_0_0.getPartPathList(arg_14_0, arg_14_1)
+	local var_14_0 = {}
+
+	if arg_14_1 < 0 then
+		return var_14_0
+	end
+
+	local var_14_1 = RoomConfig.instance:getLevelGroupConfig(arg_14_0, arg_14_1)
+
+	if not var_14_1 then
+		return var_14_0
+	end
+
+	local var_14_2 = var_14_1.modulePart
+
+	if string.nilorempty(var_14_2) then
+		return var_14_0
+	end
+
+	local var_14_3 = string.split(var_14_2, "#")
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_3) do
+		table.insert(var_14_0, ResUrl.getRoomRes(string.format("jianzhu/%s", iter_14_1)))
+	end
+
+	return var_14_0
+end
+
+function var_0_0.getCritterPath(arg_15_0)
+	local var_15_0
+	local var_15_1 = CritterConfig.instance:getCritterSkinCfg(arg_15_0, true)
+
+	if var_15_1 then
+		var_15_0 = ResUrl.getSpineBxhyPrefab(var_15_1.spine)
+	end
+
+	return var_15_0
+end
+
+function var_0_0.getCharacterPath(arg_16_0)
+	local var_16_0 = SkinConfig.instance:getSkinCo(arg_16_0).spine
+
+	return ResUrl.getSpineBxhyPrefab(var_16_0)
+end
+
+function var_0_0.getAnimalPath(arg_17_0)
+	local var_17_0 = SkinConfig.instance:getSkinCo(arg_17_0).alternateSpine
+
+	return ResUrl.getSpineBxhyPrefab(var_17_0)
+end
+
+function var_0_0.getCritterUIPath(arg_18_0)
+	local var_18_0 = CritterConfig.instance:getCritterSkinCfg(arg_18_0).spine
+
+	return ResUrl.getSpineUIBxhyPrefab(var_18_0)
+end
+
+function var_0_0.getBlockName(arg_19_0)
+	return string.format("%s_%s", arg_19_0.x, arg_19_0.y)
+end
+
+function var_0_0.getResourcePointName(arg_20_0)
+	return string.format("%s_%s_%s", arg_20_0.x, arg_20_0.y, arg_20_0.direction)
+end
+
+function var_0_0.getIndexByResId(arg_21_0)
+	local var_21_0 = RoomResourceEnum.ResourceList
+	local var_21_1 = #var_21_0
+
+	for iter_21_0 = 1, var_21_1 do
+		if var_21_0[iter_21_0] == arg_21_0 then
+			return iter_21_0
+		end
+	end
+
+	return -1
+end
+
+return var_0_0

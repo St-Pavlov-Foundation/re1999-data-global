@@ -1,117 +1,133 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameStateView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameStateView", package.seeall)
 
-slot0 = class("AiZiLaGameStateView", BaseView)
+local var_0_0 = class("AiZiLaGameStateView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnfullClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_fullClose")
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_PanelBG")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "#txt_Title")
-	slot0._gostateItem = gohelper.findChild(slot0.viewGO, "#go_stateItem")
-	slot0._goState = gohelper.findChild(slot0.viewGO, "#go_stateItem/#go_State")
-	slot0._goeffdown = gohelper.findChild(slot0.viewGO, "#go_stateItem/#go_State/#go_effdown")
-	slot0._goeffup = gohelper.findChild(slot0.viewGO, "#go_stateItem/#go_State/#go_effup")
-	slot0._txteffDesc = gohelper.findChildText(slot0.viewGO, "#go_stateItem/#go_State/#txt_effDesc")
-	slot0._scrollequip = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_equip")
-	slot0._goEquip = gohelper.findChild(slot0.viewGO, "#scroll_equip/Viewport/Content/#go_Equip")
-	slot0._goequipState = gohelper.findChild(slot0.viewGO, "#scroll_equip/Viewport/Content/#go_equipState")
-	slot0._goEffect = gohelper.findChild(slot0.viewGO, "#scroll_equip/Viewport/Content/#go_Effect")
-	slot0._gogameState = gohelper.findChild(slot0.viewGO, "#scroll_equip/Viewport/Content/#go_gameState")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnfullClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_fullClose")
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_Title")
+	arg_1_0._gostateItem = gohelper.findChild(arg_1_0.viewGO, "#go_stateItem")
+	arg_1_0._goState = gohelper.findChild(arg_1_0.viewGO, "#go_stateItem/#go_State")
+	arg_1_0._goeffdown = gohelper.findChild(arg_1_0.viewGO, "#go_stateItem/#go_State/#go_effdown")
+	arg_1_0._goeffup = gohelper.findChild(arg_1_0.viewGO, "#go_stateItem/#go_State/#go_effup")
+	arg_1_0._txteffDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_stateItem/#go_State/#txt_effDesc")
+	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_equip")
+	arg_1_0._goEquip = gohelper.findChild(arg_1_0.viewGO, "#scroll_equip/Viewport/Content/#go_Equip")
+	arg_1_0._goequipState = gohelper.findChild(arg_1_0.viewGO, "#scroll_equip/Viewport/Content/#go_equipState")
+	arg_1_0._goEffect = gohelper.findChild(arg_1_0.viewGO, "#scroll_equip/Viewport/Content/#go_Effect")
+	arg_1_0._gogameState = gohelper.findChild(arg_1_0.viewGO, "#scroll_equip/Viewport/Content/#go_gameState")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfullClose:AddClickListener(slot0._btnfullCloseOnClick, slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfullClose:AddClickListener(arg_2_0._btnfullCloseOnClick, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfullClose:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfullClose:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnfullCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnfullCloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	transformhelper.setLocalPos(slot0._gostateItem.transform, 0, 0, 0)
-	gohelper.setActive(slot0._gostateItem, false)
+function var_0_0._editableInitView(arg_6_0)
+	transformhelper.setLocalPos(arg_6_0._gostateItem.transform, 0, 0, 0)
+	gohelper.setActive(arg_6_0._gostateItem, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewContainer then
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0.closeThis, slot0)
+function var_0_0.onOpen(arg_8_0)
+	if arg_8_0.viewContainer then
+		NavigateMgr.instance:addEscape(arg_8_0.viewContainer.viewName, arg_8_0.closeThis, arg_8_0)
 	end
 
-	slot0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, slot0.closeThis, slot0)
-	slot0:refreshUI()
+	arg_8_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, arg_8_0.closeThis, arg_8_0)
+	arg_8_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = slot0:_getGameStateDataList()
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = arg_11_0:_getEquipStateDataList()
+	local var_11_1 = arg_11_0:_getGameStateDataList()
 
-	gohelper.setActive(slot0._goEquip, slot0:_getEquipStateDataList() and #slot1 > 0)
-	gohelper.setActive(slot0._goEffect, slot2 and #slot2 > 0)
-	gohelper.CreateObjList(slot0, slot0._onEquipStateItem, slot1, slot0._goequipState, slot0._gostateItem, AiZiLaGameStateItem)
-	gohelper.CreateObjList(slot0, slot0._onGameStateItem, slot2, slot0._gogameState, slot0._gostateItem, AiZiLaGameStateItem)
+	gohelper.setActive(arg_11_0._goEquip, var_11_0 and #var_11_0 > 0)
+	gohelper.setActive(arg_11_0._goEffect, var_11_1 and #var_11_1 > 0)
+	gohelper.CreateObjList(arg_11_0, arg_11_0._onEquipStateItem, var_11_0, arg_11_0._goequipState, arg_11_0._gostateItem, AiZiLaGameStateItem)
+	gohelper.CreateObjList(arg_11_0, arg_11_0._onGameStateItem, var_11_1, arg_11_0._gogameState, arg_11_0._gostateItem, AiZiLaGameStateItem)
 end
 
-function slot0._getEquipStateDataList(slot0)
-	slot1 = {}
+function var_0_0._getEquipStateDataList(arg_12_0)
+	local var_12_0 = {}
 
-	tabletool.addValues(slot1, AiZiLaModel.instance:getEquipMOList())
+	tabletool.addValues(var_12_0, AiZiLaModel.instance:getEquipMOList())
 
-	return slot1
+	return var_12_0
 end
 
-function slot0._getGameStateDataList(slot0)
-	slot1 = {}
+function var_0_0._getGameStateDataList(arg_13_0)
+	local var_13_0 = {}
+	local var_13_1 = AiZiLaGameModel.instance:getBuffIdList() or {}
+	local var_13_2 = AiZiLaGameModel.instance:getActivityID()
+	local var_13_3 = AiZiLaConfig.instance
 
-	for slot8, slot9 in ipairs(AiZiLaGameModel.instance:getBuffIdList() or {}) do
-		if AiZiLaConfig.instance:getBuffCo(AiZiLaGameModel.instance:getActivityID(), slot9) then
-			table.insert(slot1, slot10)
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		local var_13_4 = var_13_3:getBuffCo(var_13_2, iter_13_1)
+
+		if var_13_4 then
+			table.insert(var_13_0, var_13_4)
 		else
-			logError(string.format("[export_状态] buff配置找不到。 activityId:%s buffId:%s", slot3, slot9))
+			logError(string.format("[export_状态] buff配置找不到。 activityId:%s buffId:%s", var_13_2, iter_13_1))
 		end
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0._onEquipStateItem(slot0, slot1, slot2, slot3)
-	if slot2:getConfig() then
-		slot1:setStateStr(GameUtil.getSubPlaceholderLuaLang(luaLang("v1a5_aizila_role_state_effect_desc"), {
-			slot5.name,
-			slot5.effectDesc
-		}))
+function var_0_0._onEquipStateItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = arg_14_2:getConfig()
+
+	if var_14_0 then
+		local var_14_1 = {
+			var_14_0.name,
+			var_14_0.effectDesc
+		}
+		local var_14_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a5_aizila_role_state_effect_desc"), var_14_1)
+
+		arg_14_1:setStateStr(var_14_2)
 	end
 
-	slot1:setShowUp(true)
+	arg_14_1:setShowUp(true)
 end
 
-function slot0._onGameStateItem(slot0, slot1, slot2, slot3)
-	if slot2 then
-		slot1:setStateStr(slot4.effectDesc)
-		slot1:setShowUp(slot4.reduction ~= 1)
+function var_0_0._onGameStateItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = arg_15_2
+
+	if var_15_0 then
+		arg_15_1:setStateStr(var_15_0.effectDesc)
+		arg_15_1:setShowUp(var_15_0.reduction ~= 1)
 	end
 end
 
-return slot0
+return var_0_0

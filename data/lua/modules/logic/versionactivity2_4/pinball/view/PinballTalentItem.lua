@@ -1,109 +1,121 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballTalentItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballTalentItem", package.seeall)
 
-slot0 = class("PinballTalentItem", LuaCompBase)
+local var_0_0 = class("PinballTalentItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._imageicon = gohelper.findChildImage(slot1, "#image_icon")
-	slot0._imageiconbg_select = gohelper.findChildImage(slot1, "#image_iconbg_select")
-	slot0._imageiconbg_unselect = gohelper.findChildImage(slot1, "#image_iconbg_unselect")
-	slot0._effect = gohelper.findChild(slot1, "vx_upgrade")
-	slot0._red = gohelper.findChild(slot1, "go_reddot")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "#image_icon")
+	arg_1_0._imageiconbg_select = gohelper.findChildImage(arg_1_1, "#image_iconbg_select")
+	arg_1_0._imageiconbg_unselect = gohelper.findChildImage(arg_1_1, "#image_iconbg_unselect")
+	arg_1_0._effect = gohelper.findChild(arg_1_1, "vx_upgrade")
+	arg_1_0._red = gohelper.findChild(arg_1_1, "go_reddot")
 end
 
-function slot0.addEventListeners(slot0)
-	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, slot0._refreshUI, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, arg_2_0._refreshUI, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, slot0._refreshUI, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, arg_3_0._refreshUI, arg_3_0)
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0._data = slot1
-	slot0._buildingCo = slot2
+function var_0_0.setData(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._data = arg_4_1
+	arg_4_0._buildingCo = arg_4_2
 end
 
-function slot0.onLearn(slot0)
-	gohelper.setActive(slot0._effect, false)
-	gohelper.setActive(slot0._effect, true)
+function var_0_0.onLearn(arg_5_0)
+	gohelper.setActive(arg_5_0._effect, false)
+	gohelper.setActive(arg_5_0._effect, true)
 end
 
-function slot0._refreshUI(slot0)
-	slot0:setSelect(false)
+function var_0_0._refreshUI(arg_6_0)
+	arg_6_0:setSelect(false)
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot3 = slot0:canActive2()
-	slot5 = ""
+function var_0_0.setSelect(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:isActive()
+	local var_7_1 = arg_7_0:canActive2()
+	local var_7_2 = arg_7_0._data.isBig
+	local var_7_3 = ""
 
-	if slot1 and slot0:isActive() and slot0._data.isBig then
-		slot5 = "v2a4_tutushizi_talenbg1_1"
-	elseif slot1 and not slot2 and slot3 and slot4 then
-		slot5 = "v2a4_tutushizi_talenbg1_2"
-	elseif slot1 and not slot2 and not slot3 and slot4 then
-		slot5 = "v2a4_tutushizi_talenbg1_0"
-	elseif not slot1 and slot2 and slot4 then
-		slot5 = "v2a4_tutushizi_talenbg1_3"
-	elseif not slot1 and not slot2 and slot3 and slot4 then
-		slot5 = "v2a4_tutushizi_talenbg1_4"
-	elseif not slot1 and not slot2 and not slot3 and slot4 then
-		slot5 = "v2a4_tutushizi_talenbg1_5"
-	elseif slot1 and slot2 and not slot4 then
-		slot5 = "v2a4_tutushizi_talenbg2_1"
-	elseif slot1 and not slot2 and slot3 and not slot4 then
-		slot5 = "v2a4_tutushizi_talenbg2_2"
-	elseif slot1 and not slot2 and not slot3 and not slot4 then
-		slot5 = "v2a4_tutushizi_talenbg2_0"
-	elseif not slot1 and slot2 and not slot4 then
-		slot5 = "v2a4_tutushizi_talenbg2_3"
-	elseif not slot1 and not slot2 and slot3 and not slot4 then
-		slot5 = "v2a4_tutushizi_talenbg2_4"
-	elseif not slot1 and not slot2 and not slot3 and not slot4 then
-		slot5 = "v2a4_tutushizi_talenbg2_5"
+	if arg_7_1 and var_7_0 and var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg1_1"
+	elseif arg_7_1 and not var_7_0 and var_7_1 and var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg1_2"
+	elseif arg_7_1 and not var_7_0 and not var_7_1 and var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg1_0"
+	elseif not arg_7_1 and var_7_0 and var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg1_3"
+	elseif not arg_7_1 and not var_7_0 and var_7_1 and var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg1_4"
+	elseif not arg_7_1 and not var_7_0 and not var_7_1 and var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg1_5"
+	elseif arg_7_1 and var_7_0 and not var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg2_1"
+	elseif arg_7_1 and not var_7_0 and var_7_1 and not var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg2_2"
+	elseif arg_7_1 and not var_7_0 and not var_7_1 and not var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg2_0"
+	elseif not arg_7_1 and var_7_0 and not var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg2_3"
+	elseif not arg_7_1 and not var_7_0 and var_7_1 and not var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg2_4"
+	elseif not arg_7_1 and not var_7_0 and not var_7_1 and not var_7_2 then
+		var_7_3 = "v2a4_tutushizi_talenbg2_5"
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(slot0._imageicon, slot0._data.icon)
-	UISpriteSetMgr.instance:setAct178Sprite(slot0._imageiconbg_select, slot5)
-	UISpriteSetMgr.instance:setAct178Sprite(slot0._imageiconbg_unselect, slot5)
-	gohelper.setActive(slot0._imageiconbg_select, slot1)
-	gohelper.setActive(slot0._imageiconbg_unselect, not slot1)
-	gohelper.setActive(slot0._red, slot3)
+	UISpriteSetMgr.instance:setAct178Sprite(arg_7_0._imageicon, arg_7_0._data.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(arg_7_0._imageiconbg_select, var_7_3)
+	UISpriteSetMgr.instance:setAct178Sprite(arg_7_0._imageiconbg_unselect, var_7_3)
+	gohelper.setActive(arg_7_0._imageiconbg_select, arg_7_1)
+	gohelper.setActive(arg_7_0._imageiconbg_unselect, not arg_7_1)
+	gohelper.setActive(arg_7_0._red, var_7_1)
 end
 
-function slot0.isActive(slot0)
-	if not slot0._data then
+function var_0_0.isActive(arg_8_0)
+	if not arg_8_0._data then
 		return false
 	end
 
-	return PinballModel.instance:getTalentMo(slot0._data.id) and true or false
+	return PinballModel.instance:getTalentMo(arg_8_0._data.id) and true or false
 end
 
-function slot0.canActive(slot0)
-	for slot5, slot6 in pairs(string.splitToNumber(slot0._data.condition, "#") or {}) do
-		if not PinballModel.instance:getTalentMo(slot6) then
+function var_0_0.canActive(arg_9_0)
+	local var_9_0 = string.splitToNumber(arg_9_0._data.condition, "#") or {}
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		if not PinballModel.instance:getTalentMo(iter_9_1) then
 			return false
 		end
 	end
 
-	if PinballModel.instance:getBuildingInfoById(slot0._buildingCo.id) and slot4.level < slot0._data.needLv then
+	local var_9_1 = arg_9_0._buildingCo
+	local var_9_2 = arg_9_0._data.needLv
+	local var_9_3 = PinballModel.instance:getBuildingInfoById(var_9_1.id)
+
+	if var_9_3 and var_9_2 > var_9_3.level then
 		return false
 	end
 
 	return true
 end
 
-function slot0.canActive2(slot0)
-	if slot0:isActive() then
+function var_0_0.canActive2(arg_10_0)
+	if arg_10_0:isActive() then
 		return false
 	end
 
-	if not slot0:canActive() then
+	if not arg_10_0:canActive() then
 		return false
 	end
 
-	if not string.nilorempty(slot0._data.cost) then
-		for slot6, slot7 in pairs(GameUtil.splitString2(slot1, true)) do
-			if PinballModel.instance:getResNum(slot7[1]) < slot7[2] then
+	local var_10_0 = arg_10_0._data.cost
+
+	if not string.nilorempty(var_10_0) then
+		local var_10_1 = GameUtil.splitString2(var_10_0, true)
+
+		for iter_10_0, iter_10_1 in pairs(var_10_1) do
+			if iter_10_1[2] > PinballModel.instance:getResNum(iter_10_1[1]) then
 				return false
 			end
 		end
@@ -112,4 +124,4 @@ function slot0.canActive2(slot0)
 	return true
 end
 
-return slot0
+return var_0_0

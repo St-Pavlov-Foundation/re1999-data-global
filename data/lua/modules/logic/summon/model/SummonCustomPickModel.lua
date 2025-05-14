@@ -1,37 +1,46 @@
-module("modules.logic.summon.model.SummonCustomPickModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonCustomPickModel", package.seeall)
 
-slot0 = class("SummonCustomPickModel", BaseModel)
+local var_0_0 = class("SummonCustomPickModel", BaseModel)
 
-function slot0.isCustomPickOver(slot0, slot1)
-	if SummonMainModel.instance:getPoolServerMO(slot1) and slot2.customPickMO then
-		return slot2.customPickMO:isPicked(slot1)
+function var_0_0.isCustomPickOver(arg_1_0, arg_1_1)
+	local var_1_0 = SummonMainModel.instance:getPoolServerMO(arg_1_1)
+
+	if var_1_0 and var_1_0.customPickMO then
+		return var_1_0.customPickMO:isPicked(arg_1_1)
 	end
 
 	return false
 end
 
-function slot0.isHaveFirstSSR(slot0, slot1)
-	if SummonMainModel.instance:getPoolServerMO(slot1) and slot2.customPickMO then
-		return slot2.customPickMO:isHaveFirstSSR()
+function var_0_0.isHaveFirstSSR(arg_2_0, arg_2_1)
+	local var_2_0 = SummonMainModel.instance:getPoolServerMO(arg_2_1)
+
+	if var_2_0 and var_2_0.customPickMO then
+		return var_2_0.customPickMO:isHaveFirstSSR()
 	end
 
 	return false
 end
 
-function slot0.getMaxSelectCount(slot0, slot1)
-	slot3 = -1
+function var_0_0.getMaxSelectCount(arg_3_0, arg_3_1)
+	local var_3_0 = SummonConfig.instance:getSummonPool(arg_3_1)
+	local var_3_1 = -1
 
-	if SummonConfig.instance:getSummonPool(slot1) then
-		if slot2.type == SummonEnum.Type.StrongCustomOnePick then
-			slot3 = 1
-		elseif string.split(slot2.param, "|") and #slot4 > 0 then
-			slot3 = tonumber(slot4[1]) or 0
+	if var_3_0 then
+		if var_3_0.type == SummonEnum.Type.StrongCustomOnePick then
+			var_3_1 = 1
+		else
+			local var_3_2 = string.split(var_3_0.param, "|")
+
+			if var_3_2 and #var_3_2 > 0 then
+				var_3_1 = tonumber(var_3_2[1]) or 0
+			end
 		end
 	end
 
-	return slot3
+	return var_3_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

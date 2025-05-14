@@ -1,7 +1,7 @@
-module("modules.logic.battlepass.view.BPFaceView", package.seeall)
+﻿module("modules.logic.battlepass.view.BPFaceView", package.seeall)
 
-slot0 = class("BPFaceView", BaseView)
-slot1 = {
+local var_0_0 = class("BPFaceView", BaseView)
+local var_0_1 = {
 	Idle = 1,
 	CardAnimIdle = 3,
 	FinalIdle = 5,
@@ -9,119 +9,127 @@ slot1 = {
 	TweenAnim = 4
 }
 
-function slot0.onInitView(slot0)
-	slot0._anim = gohelper.findChildAnim(slot0.viewGO, "")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "main/#simage_fullbg/icon/#btn_close")
-	slot0._btnCloseBg = gohelper.findChildButtonWithAudio(slot0.viewGO, "main/#btn_closeBg")
-	slot0._btnStart = gohelper.findChildButtonWithAudio(slot0.viewGO, "main/#btn_start")
-	slot0._simagesignature = gohelper.findChildSingleImage(slot0.viewGO, "main/desc/#simage_signature")
-	slot0._txtskinname = gohelper.findChildTextMesh(slot0.viewGO, "main/desc/#txt_skinname")
-	slot0._txtname = gohelper.findChildTextMesh(slot0.viewGO, "main/desc/#txt_skinname/#txt_name")
-	slot0._txtnameEn = gohelper.findChildTextMesh(slot0.viewGO, "main/desc/#txt_skinname/#txt_name/#txt_enname")
-	slot0._btnClickCard = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_fullclick")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#simage_fullbg/icon/#btn_close")
+	arg_1_0._btnCloseBg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#btn_closeBg")
+	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/#btn_start")
+	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "main/desc/#simage_signature")
+	arg_1_0._txtskinname = gohelper.findChildTextMesh(arg_1_0.viewGO, "main/desc/#txt_skinname")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "main/desc/#txt_skinname/#txt_name")
+	arg_1_0._txtnameEn = gohelper.findChildTextMesh(arg_1_0.viewGO, "main/desc/#txt_skinname/#txt_name/#txt_enname")
+	arg_1_0._btnClickCard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_fullclick")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.onBtnCloseClick, slot0, BpEnum.ButtonName.Close)
-	slot0._btnCloseBg:AddClickListener(slot0.onBtnCloseClick, slot0, BpEnum.ButtonName.CloseBg)
-	slot0._btnStart:AddClickListener(slot0._openBpView, slot0)
-	slot0._btnClickCard:AddClickListener(slot0._onClickCard, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.onBtnCloseClick, arg_2_0, BpEnum.ButtonName.Close)
+	arg_2_0._btnCloseBg:AddClickListener(arg_2_0.onBtnCloseClick, arg_2_0, BpEnum.ButtonName.CloseBg)
+	arg_2_0._btnStart:AddClickListener(arg_2_0._openBpView, arg_2_0)
+	arg_2_0._btnClickCard:AddClickListener(arg_2_0._onClickCard, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnCloseBg:RemoveClickListener()
-	slot0._btnStart:RemoveClickListener()
-	slot0._btnClickCard:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onViewClose, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnCloseBg:RemoveClickListener()
+	arg_3_0._btnStart:RemoveClickListener()
+	arg_3_0._btnClickCard:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onViewClose, arg_3_0)
 end
 
-function slot0._openBpView(slot0)
-	if not slot0:canClickClose() then
+function var_0_0._openBpView(arg_4_0)
+	if not arg_4_0:canClickClose() then
 		return
 	end
 
-	slot0:statData(BpEnum.ButtonName.Goto)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onViewClose, slot0)
-	BpController.instance:openBattlePassView(nil, , true)
+	arg_4_0:statData(BpEnum.ButtonName.Goto)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_4_0._onViewClose, arg_4_0)
+	BpController.instance:openBattlePassView(nil, nil, true)
 end
 
-function slot0.onClickModalMask(slot0)
-	if not slot0:canClickClose() then
+function var_0_0.onClickModalMask(arg_5_0)
+	if not arg_5_0:canClickClose() then
 		return
 	end
 
-	slot0:onBtnCloseClick(BpEnum.ButtonName.CloseBg)
+	arg_5_0:onBtnCloseClick(BpEnum.ButtonName.CloseBg)
 end
 
-function slot0._onClickCard(slot0)
-	if slot0._statu == uv0.Idle then
-		slot0._statu = uv0.OpenCardAnim
+function var_0_0._onClickCard(arg_6_0)
+	if arg_6_0._statu == var_0_1.Idle then
+		arg_6_0._statu = var_0_1.OpenCardAnim
 
-		TaskDispatcher.runDelay(slot0._delayPlayAudio, slot0, 1.5)
-		slot0._anim:Play("tarot_click", 0, 0)
+		TaskDispatcher.runDelay(arg_6_0._delayPlayAudio, arg_6_0, 1.5)
+		arg_6_0._anim:Play("tarot_click", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum2_6.BP.FaceView)
-	elseif slot0._statu == uv0.CardAnimIdle then
-		slot0._statu = uv0.TweenAnim
+	elseif arg_6_0._statu == var_0_1.CardAnimIdle then
+		arg_6_0._statu = var_0_1.TweenAnim
 
-		slot0._anim:Play("tarot_click1", 0, 0)
+		arg_6_0._anim:Play("tarot_click1", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_yuanxiao_switch)
-		TaskDispatcher.runDelay(slot0._delayFinishAnim, slot0, 1)
+		TaskDispatcher.runDelay(arg_6_0._delayFinishAnim, arg_6_0, 1)
 	end
 end
 
-function slot0.canClickClose(slot0)
-	return slot0._statu == uv0.FinalIdle
+function var_0_0.canClickClose(arg_7_0)
+	return arg_7_0._statu == var_0_1.FinalIdle
 end
 
-function slot0._delayPlayAudio(slot0)
-	slot0._statu = uv0.CardAnimIdle
+function var_0_0._delayPlayAudio(arg_8_0)
+	arg_8_0._statu = var_0_1.CardAnimIdle
 end
 
-function slot0._delayFinishAnim(slot0)
-	slot0._statu = uv0.FinalIdle
+function var_0_0._delayFinishAnim(arg_9_0)
+	arg_9_0._statu = var_0_1.FinalIdle
 
-	gohelper.setActive(slot0._btnClickCard, false)
+	gohelper.setActive(arg_9_0._btnClickCard, false)
 end
 
-function slot0.onBtnCloseClick(slot0, slot1)
-	if not slot0:canClickClose() then
+function var_0_0.onBtnCloseClick(arg_10_0, arg_10_1)
+	if not arg_10_0:canClickClose() then
 		return
 	end
 
-	slot0:statData(slot1)
-	slot0:closeThis()
+	arg_10_0:statData(arg_10_1)
+	arg_10_0:closeThis()
 end
 
-function slot0._onViewClose(slot0, slot1)
-	if slot1 == ViewName.BpView then
-		slot0:closeThis()
+function var_0_0._onViewClose(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.BpView then
+		arg_11_0:closeThis()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._statu = uv0.Idle
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._statu = var_0_1.Idle
 
-	if BpConfig.instance:getBpCO(BpModel.instance.id) then
-		slot0._txtskinname.text = slot1.bpSkinDesc
-		slot0._txtname.text = slot1.bpSkinNametxt
-		slot0._txtnameEn.text = slot1.bpSkinEnNametxt
+	local var_12_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-		slot0._simagesignature:LoadImage(ResUrl.getSignature(lua_character.configDict[lua_skin.configDict[BpConfig.instance:getCurSkinId(BpModel.instance.id)].characterId].signature))
+	if var_12_0 then
+		arg_12_0._txtskinname.text = var_12_0.bpSkinDesc
+		arg_12_0._txtname.text = var_12_0.bpSkinNametxt
+		arg_12_0._txtnameEn.text = var_12_0.bpSkinEnNametxt
+
+		local var_12_1 = BpConfig.instance:getCurSkinId(BpModel.instance.id)
+		local var_12_2 = lua_skin.configDict[var_12_1].characterId
+		local var_12_3 = lua_character.configDict[var_12_2]
+
+		arg_12_0._simagesignature:LoadImage(ResUrl.getSignature(var_12_3.signature))
 	end
 
-	PlayerPrefsHelper.setString(string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId), tostring(BpModel.instance.id))
+	local var_12_4 = string.format("%s#%s#%s", PlayerPrefsKey.FirstShowPatFace, "BPFace", PlayerModel.instance:getPlayinfo().userId)
+
+	PlayerPrefsHelper.setString(var_12_4, tostring(BpModel.instance.id))
 end
 
-function slot0.statData(slot0, slot1)
+function var_0_0.statData(arg_13_0, arg_13_1)
 	StatController.instance:track(StatEnum.EventName.BP_Click_Face_Slapping, {
-		[StatEnum.EventProperties.BP_Button_Name] = slot1
+		[StatEnum.EventProperties.BP_Button_Name] = arg_13_1
 	})
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayFinishAnim, slot0)
-	TaskDispatcher.cancelTask(slot0._delayPlayAudio, slot0)
+function var_0_0.onClose(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._delayFinishAnim, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._delayPlayAudio, arg_14_0)
 end
 
-return slot0
+return var_0_0

@@ -1,136 +1,160 @@
-module("modules.logic.room.entity.comp.base.RoomBaseSpineEffectComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.base.RoomBaseSpineEffectComp", package.seeall)
 
-slot0 = class("RoomBaseSpineEffectComp", LuaCompBase)
+local var_0_0 = class("RoomBaseSpineEffectComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._isHasEffectGODict = {}
-	slot0._prefabNameDict = {}
-	slot0._animNameDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._isHasEffectGODict = {}
+	arg_1_0._prefabNameDict = {}
+	arg_1_0._animNameDict = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._effectCfgList = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._effectCfgList = {}
 
-	tabletool.addValues(slot0._effectCfgList, slot0:getEffectCfgList())
-	slot0:onInit()
+	local var_2_0 = arg_2_0:getEffectCfgList()
+
+	tabletool.addValues(arg_2_0._effectCfgList, var_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0._logNotPoint(slot0, slot1)
+function var_0_0._logNotPoint(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0._logResError(slot0, slot1)
+function var_0_0._logResError(arg_4_0, arg_4_1)
+	return
 end
 
-function slot0.getEffectCfgList(slot0)
+function var_0_0.getEffectCfgList(arg_5_0)
 	return nil
 end
 
-function slot0.getSpineComp(slot0)
+function var_0_0.getSpineComp(arg_6_0)
 	return nil
 end
 
-function slot0.onPlayShowEffect(slot0, slot1, slot2, slot3)
+function var_0_0.onPlayShowEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	return
 end
 
-function slot0.addResToLoader(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._effectCfgList) do
-		slot1:addPath(slot0:_getEffecResAb(slot6.effectRes))
+function var_0_0.addResToLoader(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._effectCfgList) do
+		arg_8_1:addPath(arg_8_0:_getEffecResAb(iter_8_1.effectRes))
 	end
 end
 
-function slot0._getEffecRes(slot0, slot1)
-	return RoomResHelper.getCharacterEffectPath(slot1)
+function var_0_0._getEffecRes(arg_9_0, arg_9_1)
+	return RoomResHelper.getCharacterEffectPath(arg_9_1)
 end
 
-function slot0._getEffecResAb(slot0, slot1)
-	return RoomResHelper.getCharacterEffectABPath(slot1)
+function var_0_0._getEffecResAb(arg_10_0, arg_10_1)
+	return RoomResHelper.getCharacterEffectABPath(arg_10_1)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_11_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_12_0)
+	return
 end
 
-function slot0.isHasEffectGO(slot0, slot1)
-	if slot0._isHasEffectGODict[slot1] then
+function var_0_0.isHasEffectGO(arg_13_0, arg_13_1)
+	if arg_13_0._isHasEffectGODict[arg_13_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.play(slot0, slot1)
-	slot0._curAnimState = slot1
+function var_0_0.play(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._isHasEffectGODict[arg_14_0._curAnimState] or arg_14_0._isHasEffectGODict[arg_14_1]
 
-	if slot0._isHasEffectGODict[slot0._curAnimState] or slot0._isHasEffectGODict[slot1] then
-		for slot6, slot7 in pairs(slot0._animEffectGODic) do
-			gohelper.setActive(slot7, false)
+	arg_14_0._curAnimState = arg_14_1
 
-			if slot0._animNameDict[slot6] == slot1 then
-				gohelper.setActive(slot7, true)
-				slot0:onPlayShowEffect(slot1, slot7, slot6)
+	if var_14_0 then
+		for iter_14_0, iter_14_1 in pairs(arg_14_0._animEffectGODic) do
+			gohelper.setActive(iter_14_1, false)
+
+			if arg_14_0._animNameDict[iter_14_0] == arg_14_1 then
+				gohelper.setActive(iter_14_1, true)
+				arg_14_0:onPlayShowEffect(arg_14_1, iter_14_1, iter_14_0)
 			end
 		end
 	end
 end
 
-function slot0.spawnEffect(slot0, slot1)
-	slot3 = slot0:getSpineComp() and slot2:getSpineGO()
-	slot0._animEffectGODic = slot0._animEffectGODic or {}
-	slot0._prefabNameDict = slot0._prefabNameDict or {}
-	slot0._isHasEffectGODict = slot0._isHasEffectGODict or {}
-	slot0._animNameDict = slot0._animNameDict or {}
+function var_0_0.spawnEffect(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getSpineComp()
+	local var_15_1 = var_15_0 and var_15_0:getSpineGO()
 
-	for slot7, slot8 in ipairs(slot0._effectCfgList) do
-		if gohelper.isNil(slot0._animEffectGODic[slot8.id]) then
-			slot12 = true
+	arg_15_0._animEffectGODic = arg_15_0._animEffectGODic or {}
+	arg_15_0._prefabNameDict = arg_15_0._prefabNameDict or {}
+	arg_15_0._isHasEffectGODict = arg_15_0._isHasEffectGODict or {}
+	arg_15_0._animNameDict = arg_15_0._animNameDict or {}
 
-			if slot1:getAssetItem(slot0:_getEffecResAb(slot8.effectRes)) and slot11:GetResource(slot0:_getEffecRes(slot8.effectRes)) then
-				slot12 = false
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._effectCfgList) do
+		local var_15_2 = iter_15_1.id
 
-				if gohelper.isNil(gohelper.findChild(slot3, RoomCharacterHelper.getSpinePointPath(slot8.point))) then
-					slot0:_logNotPoint(slot8)
+		if gohelper.isNil(arg_15_0._animEffectGODic[var_15_2]) then
+			local var_15_3 = arg_15_0:_getEffecResAb(iter_15_1.effectRes)
+			local var_15_4 = arg_15_1:getAssetItem(var_15_3)
+			local var_15_5 = true
 
-					slot16 = slot3 or slot0.entity.containerGO
+			if var_15_4 then
+				local var_15_6 = arg_15_0:_getEffecRes(iter_15_1.effectRes)
+				local var_15_7 = var_15_4:GetResource(var_15_6)
+
+				if var_15_7 then
+					var_15_5 = false
+
+					local var_15_8 = RoomCharacterHelper.getSpinePointPath(iter_15_1.point)
+					local var_15_9 = gohelper.findChild(var_15_1, var_15_8)
+
+					if gohelper.isNil(var_15_9) then
+						arg_15_0:_logNotPoint(iter_15_1)
+
+						var_15_9 = var_15_1 or arg_15_0.entity.containerGO
+					end
+
+					local var_15_10 = var_15_7.name
+					local var_15_11 = gohelper.clone(var_15_7, var_15_9, var_15_10)
+
+					arg_15_0._animNameDict[var_15_2] = iter_15_1.animName
+					arg_15_0._animEffectGODic[var_15_2] = var_15_11
+					arg_15_0._prefabNameDict[var_15_2] = var_15_10
+					arg_15_0._isHasEffectGODict[iter_15_1.animName] = true
+
+					gohelper.setActive(var_15_11, false)
 				end
-
-				slot17 = slot14.name
-				slot18 = gohelper.clone(slot14, slot16, slot17)
-				slot0._animNameDict[slot9] = slot8.animName
-				slot0._animEffectGODic[slot9] = slot18
-				slot0._prefabNameDict[slot9] = slot17
-				slot0._isHasEffectGODict[slot8.animName] = true
-
-				gohelper.setActive(slot18, false)
 			end
 
-			if slot12 then
-				slot0:_logResError(slot8)
+			if var_15_5 then
+				arg_15_0:_logResError(iter_15_1)
 			end
 		end
 	end
 end
 
-function slot0.clearEffect(slot0)
-	if slot0._animEffectGODic then
-		for slot4, slot5 in pairs(slot0._animEffectGODic) do
-			rawset(slot0._animEffectGODic, slot4, nil)
-			gohelper.destroy(slot5)
+function var_0_0.clearEffect(arg_16_0)
+	if arg_16_0._animEffectGODic then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0._animEffectGODic) do
+			rawset(arg_16_0._animEffectGODic, iter_16_0, nil)
+			gohelper.destroy(iter_16_1)
 		end
 
-		slot0._animEffectGODic = nil
-		slot0._isHasEffectGODict = {}
-		slot0._prefabNameDict = {}
-		slot0._animNameDict = {}
+		arg_16_0._animEffectGODic = nil
+		arg_16_0._isHasEffectGODict = {}
+		arg_16_0._prefabNameDict = {}
+		arg_16_0._animNameDict = {}
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
-	slot0:clearEffect()
+function var_0_0.beforeDestroy(arg_17_0)
+	arg_17_0:removeEventListeners()
+	arg_17_0:clearEffect()
 end
 
-return slot0
+return var_0_0

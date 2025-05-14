@@ -1,15 +1,16 @@
-module("modules.logic.room.mgr.RoomEditorMgr", package.seeall)
+﻿module("modules.logic.room.mgr.RoomEditorMgr", package.seeall)
 
-slot0 = class("RoomEditorMgr")
+local var_0_0 = class("RoomEditorMgr")
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
 	RoomController.instance:setEditorMode(true)
 	ViewMgr.instance:openView(ViewName.RoomDebugEntranceView)
 end
 
-function slot0.exit(slot0)
+function var_0_0.exit(arg_2_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

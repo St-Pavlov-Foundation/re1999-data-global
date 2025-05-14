@@ -1,353 +1,387 @@
-module("modules.logic.gm.view.profiler.LuaProfilerController", package.seeall)
+﻿module("modules.logic.gm.view.profiler.LuaProfilerController", package.seeall)
 
-slot0 = class("LuaProfilerController")
-slot1 = {
+local var_0_0 = class("LuaProfilerController")
+local var_0_1 = {
 	Ready = 0,
 	Running = 1
 }
-slot2 = {
+local var_0_2 = {
 	"LuaProfilerController",
 	"GM"
 }
 
-function slot0.ctor(slot0)
-	slot0._funMemoryState = uv0.Ready
-	slot0._luaMemoryState = uv0.Ready
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._funMemoryState = var_0_1.Ready
+	arg_1_0._luaMemoryState = var_0_1.Ready
 end
 
-slot3 = 0
-slot4 = {}
-slot5 = 0
-slot6 = 0
+local var_0_3 = 0
+local var_0_4 = {}
+local var_0_5 = 0
+local var_0_6 = 0
 
-function slot0.luaFunMemoryCalBegin(slot0)
-	if slot0._funMemoryState ~= uv0.Ready then
+function var_0_0.luaFunMemoryCalBegin(arg_2_0)
+	if arg_2_0._funMemoryState ~= var_0_1.Ready then
 		return
 	end
 
-	slot0._funMemoryState = uv0.Running
-	uv1 = os.time()
+	arg_2_0._funMemoryState = var_0_1.Running
+	var_0_5 = os.time()
 
-	uv2.SC_StartRecordAlloc(false)
+	var_0_0.SC_StartRecordAlloc(false)
 end
 
-function slot0.luaFunMemoryCalEnd(slot0)
-	if slot0._funMemoryState ~= uv0.Running then
+function var_0_0.luaFunMemoryCalEnd(arg_3_0)
+	if arg_3_0._funMemoryState ~= var_0_1.Running then
 		return
 	end
 
-	uv1.SC_StopRecordAllocAndDumpStat(uv1.getFileName("luaFunMemory"))
+	local var_3_0 = var_0_0.getFileName("luaFunMemory")
 
-	slot0._funMemoryState = uv0.Ready
+	var_0_0.SC_StopRecordAllocAndDumpStat(var_3_0)
+
+	arg_3_0._funMemoryState = var_0_1.Ready
 end
 
-function slot0.luaMemoryCalBegin(slot0)
-	if slot0._luaMemoryState ~= uv0.Ready then
+function var_0_0.luaMemoryCalBegin(arg_4_0)
+	if arg_4_0._luaMemoryState ~= var_0_1.Ready then
 		return
 	end
 
-	slot0._luaMemoryState = uv0.Running
-	uv1 = os.time()
+	arg_4_0._luaMemoryState = var_0_1.Running
+	var_0_6 = os.time()
 
-	TaskDispatcher.runRepeat(slot0._calLuaMemory, slot0, 1)
+	TaskDispatcher.runRepeat(arg_4_0._calLuaMemory, arg_4_0, 1)
 end
 
-function slot0.luaMemoryCalEnd(slot0)
-	if slot0._luaMemoryState ~= uv0.Running then
+function var_0_0.luaMemoryCalEnd(arg_5_0)
+	if arg_5_0._luaMemoryState ~= var_0_1.Running then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._calLuaMemory, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._calLuaMemory, arg_5_0)
 
-	slot2 = "" .. "Lua内存统计时间：" .. os.time() - uv1 .. "s\n" .. "----------------------\n" .. "占用最大内存：" .. uv2 .. "\n"
+	local var_5_0 = os.time() - var_0_6
+	local var_5_1 = (("" .. "Lua内存统计时间：" .. var_5_0 .. "s\n") .. "----------------------\n") .. "占用最大内存：" .. var_0_3 .. "\n"
 
-	if #uv3 > 0 then
-		for slot6, slot7 in ipairs(uv3) do
-			slot7.memory = slot7.memory / 1024
+	if #var_0_4 > 0 then
+		for iter_5_0, iter_5_1 in ipairs(var_0_4) do
+			iter_5_1.memory = iter_5_1.memory / 1024
 		end
 
-		slot3, slot4 = slot0:getMemoryPeakValue(uv3)
+		local var_5_2, var_5_3 = arg_5_0:getMemoryPeakValue(var_0_4)
 
-		if #slot3 > 0 and #slot4 > 0 and #slot3 >= #slot4 then
-			for slot8 = 1, #slot3 do
-				if slot4[slot8] then
-					slot2 = slot2 .. "Lua GC消耗：\n" .. "GC 耗时：" .. slot4[slot8].time - slot3[slot8].time .. "s, 释放内存：" .. slot3[slot8].memory .. "-->" .. slot4[slot8].memory .. "MB\n"
+		if #var_5_2 > 0 and #var_5_3 > 0 and #var_5_2 >= #var_5_3 then
+			var_5_1 = var_5_1 .. "Lua GC消耗：\n"
+
+			for iter_5_2 = 1, #var_5_2 do
+				if var_5_3[iter_5_2] then
+					var_5_1 = var_5_1 .. "GC 耗时：" .. var_5_3[iter_5_2].time - var_5_2[iter_5_2].time .. "s, 释放内存：" .. var_5_2[iter_5_2].memory .. "-->" .. var_5_3[iter_5_2].memory .. "MB\n"
 				end
 			end
 		end
 
-		for slot8, slot9 in ipairs(uv3) do
-			slot2 = slot2 .. "Lua内存占用统计：\n" .. slot9.time .. " : " .. slot9.memory .. "MB\n"
+		var_5_1 = var_5_1 .. "Lua内存占用统计：\n"
+
+		for iter_5_3, iter_5_4 in ipairs(var_0_4) do
+			var_5_1 = var_5_1 .. iter_5_4.time .. " : " .. iter_5_4.memory .. "MB\n"
 		end
 	end
 
-	SLFramework.FileHelper.WriteTextToPath(uv4.getFileName("luaMemory"), slot2)
+	SLFramework.FileHelper.WriteTextToPath(var_0_0.getFileName("luaMemory"), var_5_1)
 
-	uv3 = {}
-	uv2 = 0
-	slot0._luaMemoryState = uv0.Ready
+	var_0_4 = {}
+	var_0_3 = 0
+	arg_5_0._luaMemoryState = var_0_1.Ready
 end
 
-function slot0.getFileName(slot0)
-	slot2 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/luaMemoryTest/" .. slot0 .. os.time()
-	slot2 = slot0 == "luaMemory" and slot2 .. ".log" or slot2 .. ".csv"
+function var_0_0.getFileName(arg_6_0)
+	local var_6_0 = os.time()
+	local var_6_1 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/luaMemoryTest/" .. arg_6_0 .. var_6_0
 
-	print("filePath:" .. slot2)
+	if arg_6_0 == "luaMemory" then
+		var_6_1 = var_6_1 .. ".log"
+	else
+		var_6_1 = var_6_1 .. ".csv"
+	end
 
-	return slot2
+	print("filePath:" .. var_6_1)
+
+	return var_6_1
 end
 
-function slot0._calLuaMemory(slot0)
-	slot1 = collectgarbage("count")
-	uv0[#uv0 + 1] = {
+function var_0_0._calLuaMemory(arg_7_0)
+	local var_7_0 = collectgarbage("count")
+
+	var_0_4[#var_0_4 + 1] = {
 		time = os.time(),
-		memory = slot1
+		memory = var_7_0
 	}
 
-	if uv1 < slot1 then
-		uv1 = slot1
+	if var_7_0 > var_0_3 then
+		var_0_3 = var_7_0
 	end
 end
 
-function slot7(slot0, slot1, slot2)
-	slot4 = nil
+local function var_0_7(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_2
+	local var_8_1
 
-	for slot8 = 1, #slot0 do
-		if slot0[slot8][slot1] and slot2 < slot9[slot1] then
-			slot3 = slot9[slot1]
-			slot4 = slot9
+	for iter_8_0 = 1, #arg_8_0 do
+		local var_8_2 = arg_8_0[iter_8_0]
+
+		if var_8_2[arg_8_1] and var_8_0 < var_8_2[arg_8_1] then
+			var_8_0 = var_8_2[arg_8_1]
+			var_8_1 = var_8_2
 		end
 
-		if slot4 ~= nil and slot9[slot1] < slot3 then
-			return slot8, slot4
+		if var_8_1 ~= nil and var_8_0 > var_8_2[arg_8_1] then
+			return iter_8_0, var_8_1
 		end
 	end
 
-	return #slot0, slot4
+	return #arg_8_0, var_8_1
 end
 
-function slot8(slot0, slot1, slot2)
-	slot4 = nil
+local function var_0_8(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_2
+	local var_9_1
 
-	for slot8 = 1, #slot0 do
-		if slot0[slot8][slot1] and slot9[slot1] < slot2 then
-			slot3 = slot9[slot1]
-			slot4 = slot9
+	for iter_9_0 = 1, #arg_9_0 do
+		local var_9_2 = arg_9_0[iter_9_0]
+
+		if var_9_2[arg_9_1] and var_9_0 > var_9_2[arg_9_1] then
+			var_9_0 = var_9_2[arg_9_1]
+			var_9_1 = var_9_2
 		end
 
-		if slot4 ~= nil and slot3 < slot9[slot1] then
-			return slot8, slot4
+		if var_9_1 ~= nil and var_9_0 < var_9_2[arg_9_1] then
+			return iter_9_0, var_9_1
 		end
 	end
 
-	return #slot0, slot4
+	return #arg_9_0, var_9_1
 end
 
-function slot9(slot0, slot1, slot2)
-	slot3 = {}
+local function var_0_9(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = {}
 
-	if slot1 <= 1 then
-		slot1 = 1
+	arg_10_1 = arg_10_1 <= 1 and 1 or arg_10_1
+
+	for iter_10_0 = arg_10_1, arg_10_2 do
+		var_10_0[#var_10_0 + 1] = arg_10_0[iter_10_0]
 	end
 
-	for slot7 = slot1, slot2 do
-		slot3[#slot3 + 1] = slot0[slot7]
-	end
-
-	return slot3
+	return var_10_0
 end
 
-function slot0.getMemoryPeakValue(slot0, slot1)
-	slot2 = true
-	slot3 = {}
-	slot4 = {}
+function var_0_0.getMemoryPeakValue(arg_11_0, arg_11_1)
+	local var_11_0 = true
+	local var_11_1 = {}
+	local var_11_2 = {}
+	local var_11_3 = 1
 
-	while 1 < #slot1 do
-		if slot2 then
-			slot7, slot8 = uv0(uv1(slot1, slot5, #slot1), "memory", #slot4 > 0 and slot4[#slot4].memory or 0)
-			slot5 = slot7 + slot5 - 1
-			slot2 = false
+	while var_11_3 < #arg_11_1 do
+		if var_11_0 then
+			local var_11_4 = #var_11_2 > 0 and var_11_2[#var_11_2].memory or 0
+			local var_11_5, var_11_6 = var_0_7(var_0_9(arg_11_1, var_11_3, #arg_11_1), "memory", var_11_4)
 
-			if slot8 then
-				slot3[#slot3 + 1] = slot8
+			var_11_3 = var_11_5 + var_11_3 - 1
+			var_11_0 = false
+
+			if var_11_6 then
+				var_11_1[#var_11_1 + 1] = var_11_6
 			end
 		else
-			slot7, slot8 = uv2(uv1(slot1, slot5, #slot1), "memory", #slot3 > 0 and slot3[#slot3].memory or 0)
-			slot5 = slot7 + slot5 - 1
-			slot2 = true
+			local var_11_7 = #var_11_1 > 0 and var_11_1[#var_11_1].memory or 0
+			local var_11_8, var_11_9 = var_0_8(var_0_9(arg_11_1, var_11_3, #arg_11_1), "memory", var_11_7)
 
-			if slot8 then
-				slot4[#slot4 + 1] = slot8
+			var_11_3 = var_11_8 + var_11_3 - 1
+			var_11_0 = true
+
+			if var_11_9 then
+				var_11_2[#var_11_2 + 1] = var_11_9
 			end
 		end
 	end
 
-	return slot3, slot4
+	return var_11_1, var_11_2
 end
 
-slot10 = {}
-slot11 = 0
-slot12 = true
+local var_0_10 = {}
+local var_0_11 = 0
+local var_0_12 = true
 
-function slot13(slot0, slot1)
-	if collectgarbage("count") - uv0 <= 1e-06 then
-		uv0 = collectgarbage("count")
+local function var_0_13(arg_12_0, arg_12_1)
+	local var_12_0 = collectgarbage("count") - var_0_11
+
+	if var_12_0 <= 1e-06 then
+		var_0_11 = collectgarbage("count")
 
 		return
 	end
 
-	for slot7 = 1, #uv1 do
-		if string.find(debug.getinfo(2, "S").source, uv1[slot7]) then
-			uv0 = collectgarbage("count")
+	local var_12_1 = debug.getinfo(2, "S").source
+
+	for iter_12_0 = 1, #var_0_2 do
+		if string.find(var_12_1, var_0_2[iter_12_0]) then
+			var_0_11 = collectgarbage("count")
 
 			return
 		end
 	end
 
-	if uv2 then
-		slot3 = string.format("%s__%d", slot3, slot1 - 1)
+	if var_0_12 then
+		var_12_1 = string.format("%s__%d", var_12_1, arg_12_1 - 1)
 	end
 
-	if not uv3[slot3] then
-		uv3[slot3] = {
-			slot3,
+	local var_12_2 = var_0_10[var_12_1]
+
+	if not var_12_2 then
+		var_0_10[var_12_1] = {
+			var_12_1,
 			1,
-			slot2
+			var_12_0
 		}
 	else
-		slot4[2] = slot4[2] + 1
-		slot4[3] = slot4[3] + slot2
+		var_12_2[2] = var_12_2[2] + 1
+		var_12_2[3] = var_12_2[3] + var_12_0
 	end
 
-	uv0 = collectgarbage("count")
+	var_0_11 = collectgarbage("count")
 end
 
-function slot0.SC_StartRecordAlloc(slot0)
+function var_0_0.SC_StartRecordAlloc(arg_13_0)
 	if debug.gethook() then
-		uv0.SC_StopRecordAllocAndDumpStat()
+		var_0_0.SC_StopRecordAllocAndDumpStat()
 
 		return
 	end
 
-	uv1 = {}
-	uv2 = collectgarbage("count")
-	uv3 = not slot0
+	var_0_10 = {}
+	var_0_11 = collectgarbage("count")
+	var_0_12 = not arg_13_0
 
-	debug.sethook(uv4, "l")
+	debug.sethook(var_0_13, "l")
 end
 
-function slot0.SC_StopRecordAllocAndDumpStat(slot0)
+function var_0_0.SC_StopRecordAllocAndDumpStat(arg_14_0)
 	debug.sethook()
 
-	if not uv0 then
+	if not var_0_10 then
 		return
 	end
 
-	slot1 = {}
+	local var_14_0 = {}
 
-	for slot5, slot6 in pairs(uv0) do
-		table.insert(slot1, slot6)
+	for iter_14_0, iter_14_1 in pairs(var_0_10) do
+		table.insert(var_14_0, iter_14_1)
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot1[3] < slot0[3]
+	table.sort(var_14_0, function(arg_15_0, arg_15_1)
+		return arg_15_0[3] > arg_15_1[3]
 	end)
 
-	if not io.open(slot0 or "memAlloc.csv", "w") then
-		logError("can't open file:", slot0)
+	arg_14_0 = arg_14_0 or "memAlloc.csv"
+
+	local var_14_1 = io.open(arg_14_0, "w")
+
+	if not var_14_1 then
+		logError("can't open file:", arg_14_0)
 
 		return
 	end
 
-	slot7 = os.time() - uv1
-	slot8 = " s \n"
+	local var_14_2 = os.time() - var_0_5
 
-	slot2:write("collectTotalTime:" .. slot7 .. slot8)
-	slot2:write("fileLine, count, mem K, avg K\n")
+	var_14_1:write("collectTotalTime:" .. var_14_2 .. " s \n")
+	var_14_1:write("fileLine, count, mem K, avg K\n")
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot2:write(string.format("%s, %d, %f, %f\n", slot8[1], slot8[2], slot8[3], slot8[3] / slot8[2]))
+	for iter_14_2, iter_14_3 in ipairs(var_14_0) do
+		var_14_1:write(string.format("%s, %d, %f, %f\n", iter_14_3[1], iter_14_3[2], iter_14_3[3], iter_14_3[3] / iter_14_3[2]))
 	end
 
-	slot2:close()
+	var_14_1:close()
 
-	uv0 = nil
+	var_0_10 = nil
 end
 
-slot14 = {}
-slot15 = false
-slot16 = 0
+local var_0_14 = {}
+local var_0_15 = false
+local var_0_16 = 0
 
-function slot0.collectEventIsOpen(slot0)
-	return uv0
+function var_0_0.collectEventIsOpen(arg_16_0)
+	return var_0_15
 end
 
-function slot0.collectEventParams(slot0, slot1, slot2, slot3)
-	if not uv0 then
+function var_0_0.collectEventParams(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if not var_0_15 then
 		return
 	end
 
-	if not uv1 then
-		uv1 = {}
+	if not var_0_14 then
+		var_0_14 = {}
 	end
 
-	slot4 = {}
+	local var_17_0 = {}
 
-	if slot2 then
-		for slot8 = 1, #slot2 do
-			table.insert(slot4, type(slot2[slot8]))
+	if arg_17_2 then
+		for iter_17_0 = 1, #arg_17_2 do
+			table.insert(var_17_0, type(arg_17_2[iter_17_0]))
 		end
 	end
 
-	if not uv1[slot1 .. (slot2 and #slot2 or 0)] then
-		uv1[slot6] = {
+	local var_17_1 = arg_17_2 and #arg_17_2 or 0
+	local var_17_2 = arg_17_1 .. var_17_1
+
+	if not var_0_14[var_17_2] then
+		var_0_14[var_17_2] = {
 			dispatchCount = 0,
-			cbObjName = slot3,
-			eventName = slot1,
-			paramsCount = slot5,
-			paramTypes = slot4
+			cbObjName = arg_17_3,
+			eventName = arg_17_1,
+			paramsCount = var_17_1,
+			paramTypes = var_17_0
 		}
 	end
 
-	uv1[slot6].dispatchCount = uv1[slot6].dispatchCount + 1
+	var_0_14[var_17_2].dispatchCount = var_0_14[var_17_2].dispatchCount + 1
 end
 
-function slot0.collectEventParamsState(slot0)
-	uv0 = not uv0
+function var_0_0.collectEventParamsState(arg_18_0)
+	var_0_15 = not var_0_15
 
-	if not uv0 then
-		slot0:dumpEventInfos()
+	if not var_0_15 then
+		arg_18_0:dumpEventInfos()
 
-		uv1 = {}
+		var_0_14 = {}
 	else
-		uv2 = os.time()
+		var_0_16 = os.time()
 	end
 end
 
-function slot0.dumpEventInfos(slot0)
-	if not io.open(slot0.getFileName("eventInfos"), "w") then
-		logError("can't open file:", slot1)
+function var_0_0.dumpEventInfos(arg_19_0)
+	local var_19_0 = arg_19_0.getFileName("eventInfos")
+	local var_19_1 = io.open(var_19_0, "w")
+
+	if not var_19_1 then
+		logError("can't open file:", var_19_0)
 
 		return
 	end
 
-	table.sort(uv0, function (slot0, slot1)
-		return slot1.dispatchCount < slot0.dispatchCount
+	table.sort(var_0_14, function(arg_20_0, arg_20_1)
+		return arg_20_0.dispatchCount > arg_20_1.dispatchCount
 	end)
+	var_19_1:write("collectTotalTime:" .. os.time() - var_0_16 .. " s \n")
+	var_19_1:write("cbObjName, eventName, paramsCount, paramTypes, dispatchCount\n")
 
-	slot6 = os.time() - uv1
-	slot7 = " s \n"
-
-	slot2:write("collectTotalTime:" .. slot6 .. slot7)
-	slot2:write("cbObjName, eventName, paramsCount, paramTypes, dispatchCount\n")
-
-	for slot6, slot7 in pairs(uv0) do
-		slot2:write(string.format("%s, %s, %d, %s, %d\n", slot7.cbObjName, slot7.eventName, slot7.paramsCount, table.concat(slot7.paramTypes, "|"), slot7.dispatchCount))
+	for iter_19_0, iter_19_1 in pairs(var_0_14) do
+		var_19_1:write(string.format("%s, %s, %d, %s, %d\n", iter_19_1.cbObjName, iter_19_1.eventName, iter_19_1.paramsCount, table.concat(iter_19_1.paramTypes, "|"), iter_19_1.dispatchCount))
 	end
 
-	slot2:close()
+	var_19_1:close()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,82 +1,88 @@
-module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordTabItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordTabItem", package.seeall)
 
-slot0 = class("AiZiLaRecordTabItem", ListScrollCellExtend)
+local var_0_0 = class("AiZiLaRecordTabItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goLocked = gohelper.findChild(slot0.viewGO, "#go_Locked")
-	slot0._txtLockedTitle = gohelper.findChildText(slot0.viewGO, "#go_Locked/image_Locked/#txt_LockedTitle")
-	slot0._goUnSelected = gohelper.findChild(slot0.viewGO, "#go_UnSelected")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "#go_UnSelected/image_UnSelected/#txt_Title")
-	slot0._goSelected = gohelper.findChild(slot0.viewGO, "#go_Selected")
-	slot0._txtSelectTitle = gohelper.findChildText(slot0.viewGO, "#go_Selected/image_Selected/#txt_SelectTitle")
-	slot0._btnTabClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_TabClick")
-	slot0._goredPoint = gohelper.findChild(slot0.viewGO, "#go_redPoint")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
+	arg_1_0._txtLockedTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_Locked/image_Locked/#txt_LockedTitle")
+	arg_1_0._goUnSelected = gohelper.findChild(arg_1_0.viewGO, "#go_UnSelected")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_UnSelected/image_UnSelected/#txt_Title")
+	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
+	arg_1_0._txtSelectTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_Selected/image_Selected/#txt_SelectTitle")
+	arg_1_0._btnTabClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_TabClick")
+	arg_1_0._goredPoint = gohelper.findChild(arg_1_0.viewGO, "#go_redPoint")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnTabClick:AddClickListener(slot0._btnTabClickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnTabClick:AddClickListener(arg_2_0._btnTabClickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnTabClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnTabClick:RemoveClickListener()
 end
 
-function slot0._btnTabClickOnClick(slot0)
-	if slot0._isUnLock and slot0._mo then
-		AiZiLaController.instance:dispatchEvent(AiZiLaEvent.UISelectRecordTabItem, slot0._mo.id)
+function var_0_0._btnTabClickOnClick(arg_4_0)
+	if arg_4_0._isUnLock and arg_4_0._mo then
+		AiZiLaController.instance:dispatchEvent(AiZiLaEvent.UISelectRecordTabItem, arg_4_0._mo.id)
 	else
 		GameFacade.showToast(ToastEnum.V1a5AiZiLaRecordNotOpen)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1 and true or false
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	arg_9_0._isSelect = arg_9_1 and true or false
 
-	gohelper.setActive(slot0._goLocked, not slot0._isUnLock)
-	gohelper.setActive(slot0._goUnSelected, slot0._isUnLock and not slot0._isSelect)
-	gohelper.setActive(slot0._goSelected, slot0._isUnLock and slot0._isSelect)
+	gohelper.setActive(arg_9_0._goLocked, not arg_9_0._isUnLock)
+	gohelper.setActive(arg_9_0._goUnSelected, arg_9_0._isUnLock and not arg_9_0._isSelect)
+	gohelper.setActive(arg_9_0._goSelected, arg_9_0._isUnLock and arg_9_0._isSelect)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0._isUnLock = true
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = arg_11_0._mo
 
-	if not slot0._mo then
+	arg_11_0._isUnLock = true
+
+	if not var_11_0 then
 		return
 	end
 
-	slot2 = slot1.config.name
+	local var_11_1 = var_11_0.config.name
 
-	if not slot1:isUnLock() then
-		slot2 = luaLang("v1a5_aizila_unknown_question_mark")
+	if not var_11_0:isUnLock() then
+		var_11_1 = luaLang("v1a5_aizila_unknown_question_mark")
 	end
 
-	slot0._txtTitle.text = slot2
-	slot0._txtSelectTitle.text = slot2
+	arg_11_0._txtTitle.text = var_11_1
+	arg_11_0._txtSelectTitle.text = var_11_1
 
-	RedDotController.instance:addRedDot(slot0._goredPoint, RedDotEnum.DotNode.V1a5AiZiLaRecordNew, slot1:getRedUid())
-	slot0:onSelect(slot0._isSelect)
+	RedDotController.instance:addRedDot(arg_11_0._goredPoint, RedDotEnum.DotNode.V1a5AiZiLaRecordNew, var_11_0:getRedUid())
+	arg_11_0:onSelect(arg_11_0._isSelect)
 end
 
-return slot0
+return var_0_0

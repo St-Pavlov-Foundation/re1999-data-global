@@ -1,32 +1,32 @@
-module("modules.logic.summon.view.luckybag.SummonLuckyBagChoiceItem", package.seeall)
+﻿module("modules.logic.summon.view.luckybag.SummonLuckyBagChoiceItem", package.seeall)
 
-slot0 = class("SummonLuckyBagChoiceItem", ListScrollCell)
+local var_0_0 = class("SummonLuckyBagChoiceItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._goclick = gohelper.findChild(slot0._go, "go_click")
-	slot0._btnClick = gohelper.findChildClickWithAudio(slot0._go, "go_click", AudioEnum.UI.UI_vertical_first_tabs_click)
-	slot0._goSelected = gohelper.findChild(slot0._go, "select")
-	slot0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(slot0._goclick)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._goclick = gohelper.findChild(arg_1_0._go, "go_click")
+	arg_1_0._btnClick = gohelper.findChildClickWithAudio(arg_1_0._go, "go_click", AudioEnum.UI.UI_vertical_first_tabs_click)
+	arg_1_0._goSelected = gohelper.findChild(arg_1_0._go, "select")
+	arg_1_0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._goclick)
 
-	slot0._btnLongPress:SetLongPressTime({
+	arg_1_0._btnLongPress:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	slot0._imagerare = gohelper.findChildImage(slot0._go, "role/rare")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0._go, "role/heroicon")
-	slot0._imagecareer = gohelper.findChildImage(slot0._go, "role/career")
-	slot0._txtname = gohelper.findChildText(slot0._go, "role/name")
-	slot0._goexskill = gohelper.findChild(slot1, "role/#go_exskill")
-	slot0._imageexskill = gohelper.findChildImage(slot1, "role/#go_exskill/#image_exskill")
-	slot0._goRank = gohelper.findChild(slot1, "role/Rank")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0._go, "role/rare")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0._go, "role/heroicon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0._go, "role/career")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0._go, "role/name")
+	arg_1_0._goexskill = gohelper.findChild(arg_1_1, "role/#go_exskill")
+	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_1, "role/#go_exskill/#image_exskill")
+	arg_1_0._goRank = gohelper.findChild(arg_1_1, "role/Rank")
 
-	gohelper.setActive(slot0._goRank, false)
-	slot0:addEvents()
+	gohelper.setActive(arg_1_0._goRank, false)
+	arg_1_0:addEvents()
 end
 
-slot0.exSkillFillAmount = {
+var_0_0.exSkillFillAmount = {
 	0.2,
 	0.4,
 	0.6,
@@ -34,30 +34,30 @@ slot0.exSkillFillAmount = {
 	1
 }
 
-function slot0.addEvents(slot0)
-	slot0._btnClick:AddClickListener(slot0.onClickSelf, slot0)
-	slot0._btnLongPress:AddLongPressListener(slot0._onLongClickItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
+	arg_2_0._btnLongPress:AddLongPressListener(arg_2_0._onLongClickItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClick:RemoveClickListener()
-	slot0._btnLongPress:RemoveLongPressListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClick:RemoveClickListener()
+	arg_3_0._btnLongPress:RemoveLongPressListener()
 end
 
-function slot0._onLongClickItem(slot0)
-	if not slot0._mo then
+function var_0_0._onLongClickItem(arg_4_0)
+	if not arg_4_0._mo then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_action_explore)
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
 		showHome = false,
-		heroId = slot0._mo.id
+		heroId = arg_4_0._mo.id
 	})
 end
 
-function slot0.onClickSelf(slot0)
-	logNormal("onClickChoice id = " .. tostring(slot0._mo.id))
+function var_0_0.onClickSelf(arg_5_0)
+	logNormal("onClickChoice id = " .. tostring(arg_5_0._mo.id))
 
 	if SummonLuckyBagChoiceController.instance:isLuckyBagOpened() then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagAlreadyReceive)
@@ -65,64 +65,70 @@ function slot0.onClickSelf(slot0)
 		return
 	end
 
-	SummonLuckyBagChoiceController.instance:setSelect(slot0._mo.id)
+	SummonLuckyBagChoiceController.instance:setSelect(arg_5_0._mo.id)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	slot0:refreshUI()
-	slot0:refreshSelect()
+	arg_6_0:refreshUI()
+	arg_6_0:refreshSelect()
 end
 
-function slot0.refreshUI(slot0)
-	if not HeroConfig.instance:getHeroCO(slot0._mo.id) then
-		logError("SummonLuckyBagChoiceItem.onUpdateMO error, heroConfig is nil, id:" .. tostring(slot0._mo.id))
+function var_0_0.refreshUI(arg_7_0)
+	local var_7_0 = HeroConfig.instance:getHeroCO(arg_7_0._mo.id)
+
+	if not var_7_0 then
+		logError("SummonLuckyBagChoiceItem.onUpdateMO error, heroConfig is nil, id:" .. tostring(arg_7_0._mo.id))
 
 		return
 	end
 
-	slot0:refreshBaseInfo(slot1)
-	slot0:refreshExSkill()
+	arg_7_0:refreshBaseInfo(var_7_0)
+	arg_7_0:refreshExSkill()
 end
 
-function slot0.refreshBaseInfo(slot0, slot1)
-	if not SkinConfig.instance:getSkinCo(slot1.skinId) then
-		logError("SummonLuckyBagChoiceItem.onUpdateMO error, skinCfg is nil, id:" .. tostring(slot1.skinId))
+function var_0_0.refreshBaseInfo(arg_8_0, arg_8_1)
+	local var_8_0 = SkinConfig.instance:getSkinCo(arg_8_1.skinId)
+
+	if not var_8_0 then
+		logError("SummonLuckyBagChoiceItem.onUpdateMO error, skinCfg is nil, id:" .. tostring(arg_8_1.skinId))
 
 		return
 	end
 
-	slot0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(slot2.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. slot1.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[slot1.rare]))
+	arg_8_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(var_8_0.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer, "lssx_" .. arg_8_1.career)
+	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[arg_8_1.rare]))
 
-	slot0._txtname.text = slot1.name
+	arg_8_0._txtname.text = arg_8_1.name
 end
 
-function slot0.refreshExSkill(slot0)
-	if not slot0._mo:hasHero() or slot0._mo:getSkillLevel() <= 0 then
-		gohelper.setActive(slot0._goexskill, false)
+function var_0_0.refreshExSkill(arg_9_0)
+	if not arg_9_0._mo:hasHero() or arg_9_0._mo:getSkillLevel() <= 0 then
+		gohelper.setActive(arg_9_0._goexskill, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goexskill, true)
+	gohelper.setActive(arg_9_0._goexskill, true)
 
-	slot0._imageexskill.fillAmount = uv0.exSkillFillAmount[slot0._mo:getSkillLevel()] or 1
+	arg_9_0._imageexskill.fillAmount = var_0_0.exSkillFillAmount[arg_9_0._mo:getSkillLevel()] or 1
 end
 
-function slot0.refreshSelect(slot0)
-	gohelper.setActive(slot0._goSelected, slot0._mo.id == SummonLuckyBagChoiceListModel.instance:getSelectId())
+function var_0_0.refreshSelect(arg_10_0)
+	local var_10_0 = arg_10_0._mo.id == SummonLuckyBagChoiceListModel.instance:getSelectId()
+
+	gohelper.setActive(arg_10_0._goSelected, var_10_0)
 end
 
-function slot0.onDestroy(slot0)
-	if not slot0._isDisposed then
-		slot0._simageicon:UnLoadImage()
-		slot0:removeEvents()
+function var_0_0.onDestroy(arg_11_0)
+	if not arg_11_0._isDisposed then
+		arg_11_0._simageicon:UnLoadImage()
+		arg_11_0:removeEvents()
 
-		slot0._isDisposed = true
+		arg_11_0._isDisposed = true
 	end
 end
 
-return slot0
+return var_0_0

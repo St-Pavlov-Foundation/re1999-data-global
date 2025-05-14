@@ -1,147 +1,161 @@
-module("modules.logic.summon.comp.SummonDrawEquipComp", package.seeall)
+﻿module("modules.logic.summon.comp.SummonDrawEquipComp", package.seeall)
 
-slot0 = class("SummonDrawEquipComp", LuaCompBase)
+local var_0_0 = class("SummonDrawEquipComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._rootGO = gohelper.findChild(slot1, "anim")
-	slot0._goLed = gohelper.findChild(slot1, "anim/StandStill/Obj-Plant/erjiguan")
-	slot0._tfLed = slot0._goLed.transform
-	slot0._animLed = slot0._goLed:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goLedOne = gohelper.findChild(slot0._goLed, "diode_b")
-	slot0._goLedTen = gohelper.findChild(slot0._goLed, "diode_a")
-	slot0._fadingFactor = 1
-	slot0._toZeroSpeed = 0.007
-	slot0._targetLedPosY = -1.51
-	slot0._finished = true
-	slot0._curProgress = 0
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._rootGO = gohelper.findChild(arg_1_1, "anim")
+	arg_1_0._goLed = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/erjiguan")
+	arg_1_0._tfLed = arg_1_0._goLed.transform
+	arg_1_0._animLed = arg_1_0._goLed:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goLedOne = gohelper.findChild(arg_1_0._goLed, "diode_b")
+	arg_1_0._goLedTen = gohelper.findChild(arg_1_0._goLed, "diode_a")
+	arg_1_0._fadingFactor = 1
+	arg_1_0._toZeroSpeed = 0.007
+	arg_1_0._targetLedPosY = -1.51
+	arg_1_0._finished = true
+	arg_1_0._curProgress = 0
 
-	slot0:onCreate()
+	arg_1_0:onCreate()
 end
 
-function slot0.onCreate(slot0)
+function var_0_0.onCreate(arg_2_0)
+	return
 end
 
-function slot0.onUpdate(slot0)
-	if slot0._finished then
+function var_0_0.onUpdate(arg_3_0)
+	if arg_3_0._finished then
 		return
 	end
 
-	if slot0._updateSpeed ~= 0 then
-		slot0._curProgress = slot0._curProgress + slot0._updateSpeed
+	if arg_3_0._updateSpeed ~= 0 then
+		arg_3_0._curProgress = arg_3_0._curProgress + arg_3_0._updateSpeed
 
-		if slot0._curProgress < 0 then
-			slot0._curProgress = 0
-		elseif slot0._curProgress > 1 then
-			slot0._curProgress = 1
+		if arg_3_0._curProgress < 0 then
+			arg_3_0._curProgress = 0
+		elseif arg_3_0._curProgress > 1 then
+			arg_3_0._curProgress = 1
 		end
 
-		slot0:updateForEffect()
-		slot0:updateForSpeedFading()
-		slot0:updateForFinishCheck()
+		arg_3_0:updateForEffect()
+		arg_3_0:updateForSpeedFading()
+		arg_3_0:updateForFinishCheck()
 	end
 end
 
-function slot0.applySpeed(slot0)
-	slot1 = -slot0._deltaDistance * 0.003
-	slot2 = math.abs(slot1)
+function var_0_0.applySpeed(arg_4_0)
+	local var_4_0 = -arg_4_0._deltaDistance * 0.003
+	local var_4_1 = math.abs(var_4_0)
+	local var_4_2 = var_4_0 / var_4_1
+	local var_4_3 = 0.1
 
-	return slot2 > 0.1 and slot1 / slot2 * slot4 or slot1
+	return var_4_3 < var_4_1 and var_4_2 * var_4_3 or var_4_0
 end
 
-function slot0.updateForEffect(slot0)
-	if slot0._tfLed and slot0._ledPosY then
-		slot3, slot4, slot5 = transformhelper.getLocalPos(slot0._rootGO.transform)
+function var_0_0.updateForEffect(arg_5_0)
+	local var_5_0 = arg_5_0._curProgress
 
-		transformhelper.setLocalPos(slot0._tfLed, slot3, slot0._ledPosY + (slot0._targetLedPosY - slot0._ledPosY) * slot0._curProgress, slot5)
+	if arg_5_0._tfLed and arg_5_0._ledPosY then
+		local var_5_1 = arg_5_0._ledPosY + (arg_5_0._targetLedPosY - arg_5_0._ledPosY) * var_5_0
+		local var_5_2, var_5_3, var_5_4 = transformhelper.getLocalPos(arg_5_0._rootGO.transform)
+
+		transformhelper.setLocalPos(arg_5_0._tfLed, var_5_2, var_5_1, var_5_4)
 	end
 end
 
-function slot0.updateForSpeedFading(slot0)
-	if slot0._updateSpeed < slot0._toZeroSpeed then
-		slot0._updateSpeed = 0
+function var_0_0.updateForSpeedFading(arg_6_0)
+	if arg_6_0._updateSpeed < arg_6_0._toZeroSpeed then
+		arg_6_0._updateSpeed = 0
 	else
-		slot0._updateSpeed = slot0._updateSpeed * slot0._fadingFactor
+		arg_6_0._updateSpeed = arg_6_0._updateSpeed * arg_6_0._fadingFactor
 	end
 end
 
-function slot0.updateForFinishCheck(slot0)
-	if slot0._curProgress >= 1 then
-		slot0:_completeDraw()
+function var_0_0.updateForFinishCheck(arg_7_0)
+	if arg_7_0._curProgress >= 1 then
+		arg_7_0:_completeDraw()
 	end
 end
 
-function slot0.resetDraw(slot0, slot1, slot2)
-	slot0._rare = slot1
-	slot0._curProgress = 0
-	slot0._updateSpeed = 0
-	slot0._deltaDistance = 0
-	slot0._finished = false
-	slot0._isTen = slot2
+function var_0_0.resetDraw(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._rare = arg_8_1
+	arg_8_0._curProgress = 0
+	arg_8_0._updateSpeed = 0
+	arg_8_0._deltaDistance = 0
+	arg_8_0._finished = false
+	arg_8_0._isTen = arg_8_2
 
-	slot0:updateForEffect()
-	slot0:resetLedFloat()
+	arg_8_0:updateForEffect()
+	arg_8_0:resetLedFloat()
 end
 
-function slot0.skip(slot0)
-	slot0._curProgress = 0
-	slot0._updateSpeed = 0
-	slot0._deltaDistance = 0
-	slot0._finished = false
+function var_0_0.skip(arg_9_0)
+	arg_9_0._curProgress = 0
+	arg_9_0._updateSpeed = 0
+	arg_9_0._deltaDistance = 0
+	arg_9_0._finished = false
 end
 
-function slot0.setEffect(slot0, slot1)
-	slot0._curProgress = math.min(math.max(1 - slot1, 0), 1)
+function var_0_0.setEffect(arg_10_0, arg_10_1)
+	arg_10_0._curProgress = math.min(math.max(1 - arg_10_1, 0), 1)
 
-	slot0:updateForEffect()
+	arg_10_0:updateForEffect()
 end
 
-function slot0.resetLedFloat(slot0)
-	gohelper.setActive(slot0._isTen and slot0._goLedTen or slot0._goLedOne, false)
-	gohelper.setActive(slot0._isTen and slot0._goLedOne or slot0._goLedTen, false)
+function var_0_0.resetLedFloat(arg_11_0)
+	local var_11_0 = arg_11_0._isTen and arg_11_0._goLedTen or arg_11_0._goLedOne
+	local var_11_1 = arg_11_0._isTen and arg_11_0._goLedOne or arg_11_0._goLedTen
 
-	if not gohelper.isNil(slot0._animLed) then
-		slot0._animLed.enabled = true
+	gohelper.setActive(var_11_0, false)
+	gohelper.setActive(var_11_1, false)
+
+	if not gohelper.isNil(arg_11_0._animLed) then
+		arg_11_0._animLed.enabled = true
 	end
 
-	if not gohelper.isNil(slot0._tfLed) then
-		slot3, slot0._ledPosY = transformhelper.getLocalPos(slot0._tfLed)
+	if not gohelper.isNil(arg_11_0._tfLed) then
+		local var_11_2, var_11_3 = transformhelper.getLocalPos(arg_11_0._tfLed)
+
+		arg_11_0._ledPosY = var_11_3
 	end
 end
 
-function slot0.startDrag(slot0)
-	if not gohelper.isNil(slot0._tfLed) then
-		slot1, slot0._ledPosY = transformhelper.getLocalPos(slot0._tfLed)
+function var_0_0.startDrag(arg_12_0)
+	if not gohelper.isNil(arg_12_0._tfLed) then
+		local var_12_0, var_12_1 = transformhelper.getLocalPos(arg_12_0._tfLed)
+
+		arg_12_0._ledPosY = var_12_1
 	end
 
-	if not gohelper.isNil(slot0._animLed) then
-		slot0._animLed.enabled = false
+	if not gohelper.isNil(arg_12_0._animLed) then
+		arg_12_0._animLed.enabled = false
 	end
 
-	slot0._fadingFactor = 0.1
+	arg_12_0._fadingFactor = 0.1
 end
 
-function slot0.updateDistance(slot0, slot1)
-	slot0._deltaDistance = slot1
-	slot0._updateSpeed = slot0:applySpeed()
+function var_0_0.updateDistance(arg_13_0, arg_13_1)
+	arg_13_0._deltaDistance = arg_13_1
+	arg_13_0._updateSpeed = arg_13_0:applySpeed()
 end
 
-function slot0.endDrag(slot0)
-	slot0._updateSpeed = 0.1
-	slot0._fadingFactor = 1.1
+function var_0_0.endDrag(arg_14_0)
+	arg_14_0._updateSpeed = 0.1
+	arg_14_0._fadingFactor = 1.1
 end
 
-function slot0._completeDraw(slot0)
-	if slot0._finished then
+function var_0_0._completeDraw(arg_15_0)
+	if arg_15_0._finished then
 		return
 	end
 
-	slot0._finished = true
-	slot0._updateSpeed = 0
+	arg_15_0._finished = true
+	arg_15_0._updateSpeed = 0
 
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonDraw)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

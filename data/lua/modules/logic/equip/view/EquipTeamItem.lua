@@ -1,75 +1,85 @@
-module("modules.logic.equip.view.EquipTeamItem", package.seeall)
+﻿module("modules.logic.equip.view.EquipTeamItem", package.seeall)
 
-slot0 = class("EquipTeamItem", CharacterEquipItem)
+local var_0_0 = class("EquipTeamItem", CharacterEquipItem)
 
-function slot0._editableInitView(slot0)
-	slot0._click = gohelper.getClickWithAudio(slot0.viewGO)
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._click = gohelper.getClickWithAudio(arg_1_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._setSelected, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, slot0._setSelected, slot0)
+	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
+	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_1_0._setSelected, arg_1_0)
+	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, arg_1_0._setSelected, arg_1_0)
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_2_0)
+	local var_2_0 = EquipTeamListModel.instance:getEquipTeamPos(arg_2_0._mo.uid)
+
 	EquipController.instance:openEquipTeamShowView({
-		slot0._mo.uid,
-		EquipTeamListModel.instance:getEquipTeamPos(slot0._mo.uid) == EquipTeamListModel.instance:getCurPosIndex()
+		arg_2_0._mo.uid,
+		var_2_0 == EquipTeamListModel.instance:getCurPosIndex()
 	})
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	slot0._view:selectCell(slot0._index, true)
+	arg_2_0._view:selectCell(arg_2_0._index, true)
 end
 
-function slot0._showHeroIcon(slot0, slot1, slot2)
-	slot0._commonEquipIcon._goinuse:SetActive(true)
+function var_0_0._showHeroIcon(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._commonEquipIcon._goinuse:SetActive(true)
 
-	if slot2:getHeroByIndex(slot1 + 1) then
-		if not HeroModel.instance:getById(slot3) then
+	local var_3_0 = arg_3_2:getHeroByIndex(arg_3_1 + 1)
+
+	if var_3_0 then
+		local var_3_1 = HeroModel.instance:getById(var_3_0)
+
+		if not var_3_1 then
 			return
 		end
 
-		if not slot0._heroicon then
-			slot0._heroicon = IconMgr.instance:getCommonHeroIcon(slot0._commonEquipIcon._goinuse)
+		if not arg_3_0._heroicon then
+			arg_3_0._heroicon = IconMgr.instance:getCommonHeroIcon(arg_3_0._commonEquipIcon._goinuse)
 
-			slot0._heroicon:isShowStar(false)
-			slot0._heroicon:isShowBreak(false)
-			slot0._heroicon:isShowRare(false)
-			slot0._heroicon:setMaskVisible(false)
-			slot0._heroicon:setLvVisible(false)
-			slot0._heroicon:isShowCareerIcon(false)
-			slot0._heroicon:isShowRareIcon(false)
-			slot0._heroicon:setScale(0.27)
-			slot0._heroicon:setAnchor(-53.7, 3)
+			arg_3_0._heroicon:isShowStar(false)
+			arg_3_0._heroicon:isShowBreak(false)
+			arg_3_0._heroicon:isShowRare(false)
+			arg_3_0._heroicon:setMaskVisible(false)
+			arg_3_0._heroicon:setLvVisible(false)
+			arg_3_0._heroicon:isShowCareerIcon(false)
+			arg_3_0._heroicon:isShowRareIcon(false)
+			arg_3_0._heroicon:setScale(0.27)
+			arg_3_0._heroicon:setAnchor(-53.7, 3)
 		end
 
-		slot0._heroicon:onUpdateMO(slot4)
-		gohelper.setActive(slot0._heroicon.go, true)
+		arg_3_0._heroicon:onUpdateMO(var_3_1)
+		gohelper.setActive(arg_3_0._heroicon.go, true)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._commonEquipIcon:onSelect(slot1)
+function var_0_0.onSelect(arg_4_0, arg_4_1)
+	arg_4_0._commonEquipIcon:onSelect(arg_4_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	var_0_0.super.onUpdateMO(arg_5_0, arg_5_1)
 
-	if slot0._heroicon then
-		gohelper.setActive(slot0._heroicon.go, false)
+	if arg_5_0._heroicon then
+		gohelper.setActive(arg_5_0._heroicon.go, false)
 	end
 
-	slot0._commonEquipIcon._goinuse:SetActive(false)
-	slot0._commonEquipIcon._gointeam:SetActive(false)
-	slot0._commonEquipIcon:isShowEquipSkillCarrerIcon(true)
-	slot0._commonEquipIcon:setSelectUIVisible(true)
+	arg_5_0._commonEquipIcon._goinuse:SetActive(false)
+	arg_5_0._commonEquipIcon._gointeam:SetActive(false)
+	arg_5_0._commonEquipIcon:isShowEquipSkillCarrerIcon(true)
+	arg_5_0._commonEquipIcon:setSelectUIVisible(true)
 
-	if not HeroGroupModel.instance:getCurGroupMO() then
+	local var_5_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_5_0 then
 		return
 	end
 
-	for slot7, slot8 in pairs(slot2:getAllPosEquips()) do
-		for slot12, slot13 in pairs(slot8.equipUid) do
-			if slot13 == slot0._mo.uid then
-				slot0:_showHeroIcon(slot7, slot2)
+	local var_5_1 = var_5_0:getAllPosEquips()
+
+	for iter_5_0, iter_5_1 in pairs(var_5_1) do
+		for iter_5_2, iter_5_3 in pairs(iter_5_1.equipUid) do
+			if iter_5_3 == arg_5_0._mo.uid then
+				arg_5_0:_showHeroIcon(iter_5_0, var_5_0)
 
 				return
 			end
@@ -77,16 +87,16 @@ function slot0.onUpdateMO(slot0, slot1)
 	end
 end
 
-function slot0._setSelected(slot0, slot1, slot2)
-	if slot1 ~= ViewName.EquipTeamShowView then
+function var_0_0._setSelected(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= ViewName.EquipTeamShowView then
 		return
 	end
 
-	if slot0._mo.uid ~= slot2[1] then
+	if arg_6_0._mo.uid ~= arg_6_2[1] then
 		return
 	end
 
-	slot0._view:selectCell(slot2[2] and slot0._index or 1, true)
+	arg_6_0._view:selectCell(arg_6_2[2] and arg_6_0._index or 1, true)
 end
 
-return slot0
+return var_0_0

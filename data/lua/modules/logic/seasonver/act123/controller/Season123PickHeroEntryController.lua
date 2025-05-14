@@ -1,130 +1,148 @@
-module("modules.logic.seasonver.act123.controller.Season123PickHeroEntryController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123PickHeroEntryController", package.seeall)
 
-slot0 = class("Season123PickHeroEntryController", BaseController)
+local var_0_0 = class("Season123PickHeroEntryController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3, slot4)
-	Season123PickHeroEntryModel.instance:init(slot1, slot2)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	Season123PickHeroEntryModel.instance:init(arg_1_1, arg_1_2)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
 	Season123PickHeroEntryModel.instance:release()
 end
 
-function slot0.openPickHeroView(slot0, slot1)
-	slot2 = nil
+function var_0_0.openPickHeroView(arg_3_0, arg_3_1)
+	local var_3_0
 
-	if slot1 and Season123PickHeroEntryModel.instance:getByIndex(slot1) and slot3.heroMO then
-		slot2 = slot3.heroMO.uid
+	if arg_3_1 then
+		local var_3_1 = Season123PickHeroEntryModel.instance:getByIndex(arg_3_1)
+
+		if var_3_1 and var_3_1.heroMO then
+			var_3_0 = var_3_1.heroMO.uid
+		end
 	end
 
 	ViewMgr.instance:openView(Season123Controller.instance:getPickHeroViewName(), {
 		actId = Season123PickHeroEntryModel.instance.activityId,
 		stage = Season123PickHeroEntryModel.instance.stage,
-		finishCall = slot0.handlePickOver,
-		finishCallObj = slot0,
+		finishCall = arg_3_0.handlePickOver,
+		finishCallObj = arg_3_0,
 		entryMOList = Season123PickHeroEntryModel.instance:getList(),
-		selectHeroUid = slot2
+		selectHeroUid = var_3_0
 	})
 end
 
-function slot0.openPickSupportView(slot0, slot1)
-	slot3 = nil
+function var_0_0.openPickSupportView(arg_4_0, arg_4_1)
+	local var_4_0 = Season123PickHeroEntryModel.instance:getSupportPosMO()
+	local var_4_1
 
-	if Season123PickHeroEntryModel.instance:getSupportPosMO() and slot2.isSupport then
-		slot3 = slot2.heroUid
+	if var_4_0 and var_4_0.isSupport then
+		local var_4_2 = var_4_0.heroUid
 	end
 
-	if slot1 and Season123PickAssistController.instance:checkCanRefresh() then
-		slot0.tmpIsRecordRefreshTime = true
+	local var_4_3 = Season123PickAssistController.instance:checkCanRefresh()
 
-		DungeonRpc.instance:sendRefreshAssistRequest(DungeonEnum.AssistType.Season123, slot0._openPickSupportViewAfterRpc, slot0)
+	if arg_4_1 and var_4_3 then
+		arg_4_0.tmpIsRecordRefreshTime = true
+
+		DungeonRpc.instance:sendRefreshAssistRequest(DungeonEnum.AssistType.Season123, arg_4_0._openPickSupportViewAfterRpc, arg_4_0)
 	else
-		slot0:_openPickSupportViewAfterRpc()
+		arg_4_0:_openPickSupportViewAfterRpc()
 	end
 end
 
-function slot0._openPickSupportViewAfterRpc(slot0, slot1, slot2, slot3)
-	if slot0.tmpIsRecordRefreshTime then
+function var_0_0._openPickSupportViewAfterRpc(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_0.tmpIsRecordRefreshTime then
 		Season123PickAssistController.instance:recordAssistRefreshTime()
 	end
 
-	slot0.tmpIsRecordRefreshTime = nil
+	arg_5_0.tmpIsRecordRefreshTime = nil
 
 	ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, 1)
 	ViewMgr.instance:openView(Season123Controller.instance:getPickAssistViewName(), {
 		actId = Season123PickHeroEntryModel.instance.activityId,
-		finishCall = slot0.handlePickSupport,
-		finishCallObj = slot0,
+		finishCall = arg_5_0.handlePickSupport,
+		finishCallObj = arg_5_0,
 		selectedHeroUid = Season123PickHeroEntryModel.instance:getSupporterHeroUid()
 	})
 end
 
-function slot0.cancelSupport(slot0)
-	if Season123PickHeroEntryModel.instance:getSupportPosMO() and slot1.isSupport then
-		slot1:setEmpty()
+function var_0_0.cancelSupport(arg_6_0)
+	local var_6_0 = Season123PickHeroEntryModel.instance:getSupportPosMO()
+
+	if var_6_0 and var_6_0.isSupport then
+		var_6_0:setEmpty()
 	end
 
-	slot0:notifyView()
+	arg_6_0:notifyView()
 	Season123PickHeroEntryModel.instance:clearLastSupportHero()
 end
 
-function slot0.selectMainEquips(slot0, slot1)
-	ViewMgr.instance:openView(Season123Controller.instance:getEquipHeroViewName(), {
+function var_0_0.selectMainEquips(arg_7_0, arg_7_1)
+	local var_7_0 = Season123Controller.instance:getEquipHeroViewName()
+
+	ViewMgr.instance:openView(var_7_0, {
 		actId = Season123PickHeroEntryModel.instance.activityId,
 		stage = Season123PickHeroEntryModel.instance.stage,
-		slot = slot1,
-		callback = slot0.handleSelectMainCard,
-		callbackObj = slot0,
+		slot = arg_7_1,
+		callback = arg_7_0.handleSelectMainCard,
+		callbackObj = arg_7_0,
 		equipUidList = Season123PickHeroEntryModel.instance:getMainCardList()
 	})
 end
 
-function slot0.handlePickOver(slot0, slot1)
-	Season123PickHeroEntryModel.instance:savePickHeroDatas(slot1)
-	slot0:notifyView()
+function var_0_0.handlePickOver(arg_8_0, arg_8_1)
+	Season123PickHeroEntryModel.instance:savePickHeroDatas(arg_8_1)
+	arg_8_0:notifyView()
 end
 
-function slot0.handlePickSupport(slot0, slot1)
-	Season123PickHeroEntryModel.instance:setPickAssistData(slot1)
-	slot0:notifyView()
+function var_0_0.handlePickSupport(arg_9_0, arg_9_1)
+	Season123PickHeroEntryModel.instance:setPickAssistData(arg_9_1)
+	arg_9_0:notifyView()
 end
 
-function slot0.handleSelectMainCard(slot0, slot1)
-	Season123PickHeroEntryModel.instance:setMainEquips(slot1)
-	slot0:notifyView()
+function var_0_0.handleSelectMainCard(arg_10_0, arg_10_1)
+	Season123PickHeroEntryModel.instance:setMainEquips(arg_10_1)
+	arg_10_0:notifyView()
 end
 
-function slot0.sendEnterStage(slot0)
-	slot2 = Season123PickHeroEntryModel.instance:getLimitCount()
+function var_0_0.sendEnterStage(arg_11_0)
+	local var_11_0 = Season123PickHeroEntryModel.instance:getSelectCount()
+	local var_11_1 = Season123PickHeroEntryModel.instance:getLimitCount()
 
-	if Season123PickHeroEntryModel.instance:getSelectCount() < 1 then
-		logNormal(string.format("hero count not fit : %s/%s", slot1, slot2))
+	if var_11_0 < 1 then
+		logNormal(string.format("hero count not fit : %s/%s", var_11_0, var_11_1))
 		GameFacade.showToast(ToastEnum.Season123PickHeroCountErr)
 
 		return
 	end
 
-	if slot1 < slot2 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Season123MemberNotEnough, MsgBoxEnum.BoxType.Yes_No, slot0.confirmSendEnterStage, nil, , slot0)
+	if var_11_0 < var_11_1 then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Season123MemberNotEnough, MsgBoxEnum.BoxType.Yes_No, arg_11_0.confirmSendEnterStage, nil, nil, arg_11_0)
 
 		return
 	end
 
-	Activity123Rpc.instance:sendAct123EnterStageRequest(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage, Season123PickHeroEntryModel.instance:getHeroUidList(), Season123PickHeroEntryModel.instance:getMainCardList())
+	local var_11_2 = Season123PickHeroEntryModel.instance:getHeroUidList()
+	local var_11_3 = Season123PickHeroEntryModel.instance:getMainCardList()
+
+	Activity123Rpc.instance:sendAct123EnterStageRequest(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage, var_11_2, var_11_3)
 	Season123PickHeroEntryModel.instance:flushSelectionToLocal()
 	Season123ShowHeroModel.instance:clearPlayHeroDieAnim(Season123PickHeroEntryModel.instance.stage)
 end
 
-function slot0.confirmSendEnterStage(slot0)
-	Activity123Rpc.instance:sendAct123EnterStageRequest(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage, Season123PickHeroEntryModel.instance:getHeroUidList(), Season123PickHeroEntryModel.instance:getMainCardList())
+function var_0_0.confirmSendEnterStage(arg_12_0)
+	local var_12_0 = Season123PickHeroEntryModel.instance:getHeroUidList()
+	local var_12_1 = Season123PickHeroEntryModel.instance:getMainCardList()
+
+	Activity123Rpc.instance:sendAct123EnterStageRequest(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage, var_12_0, var_12_1)
 	Season123PickHeroEntryModel.instance:flushSelectionToLocal()
 	Season123ShowHeroModel.instance:clearPlayHeroDieAnim(Season123PickHeroEntryModel.instance.stage)
 end
 
-function slot0.notifyView(slot0)
+function var_0_0.notifyView(arg_13_0)
 	Season123Controller.instance:dispatchEvent(Season123Event.PickEntryRefresh)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

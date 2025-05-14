@@ -1,22 +1,22 @@
-module("modules.logic.voyage.view.VoyagePopupRewardViewContainer", package.seeall)
+﻿module("modules.logic.voyage.view.VoyagePopupRewardViewContainer", package.seeall)
 
-slot0 = class("VoyagePopupRewardViewContainer", BaseViewContainer)
+local var_0_0 = class("VoyagePopupRewardViewContainer", BaseViewContainer)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.BeforeOpenView, slot0._beforeOpenView, slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.BeforeOpenView, arg_1_0._beforeOpenView, arg_1_0)
 end
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_2_0)
 	return {
 		VoyagePopupRewardView.New()
 	}
 end
 
-function slot0._beforeOpenView(slot0, slot1, slot2)
-	if slot1 == ViewName.VoyagePopupRewardView and slot2 and slot2.openFromGuide then
-		-- Nothing
+function var_0_0._beforeOpenView(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == ViewName.VoyagePopupRewardView and arg_3_2 and arg_3_2.openFromGuide then
+		-- block empty
 	end
 end
 
-return slot0
+return var_0_0

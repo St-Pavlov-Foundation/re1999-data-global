@@ -1,99 +1,103 @@
-module("modules.ugui.dropdown.DropDownExtend", package.seeall)
+﻿module("modules.ugui.dropdown.DropDownExtend", package.seeall)
 
-slot0 = class("DropDownExtend", UserDataDispose)
+local var_0_0 = class("DropDownExtend", UserDataDispose)
 
-function slot0.Get(slot0)
-	return uv0.New(slot0)
+function var_0_0.Get(arg_1_0)
+	return var_0_0.New(arg_1_0)
 end
 
-slot0.DropListName = "Dropdown List"
+var_0_0.DropListName = "Dropdown List"
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_2_0, arg_2_1)
+	arg_2_0:__onInit()
 
-	slot0.goDrop = slot1
+	arg_2_0.goDrop = arg_2_1
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.onDropShowCb = slot1
-	slot0.onDropHideCb = slot2
-	slot0.cbObj = slot3
+function var_0_0.init(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0.onDropShowCb = arg_3_1
+	arg_3_0.onDropHideCb = arg_3_2
+	arg_3_0.cbObj = arg_3_3
 
-	slot0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, slot0._onTouchUp, slot0)
+	arg_3_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_3_0._onTouchUp, arg_3_0)
 end
 
-function slot0.addEventsListener(slot0)
-	GameObjectLiveMgr.instance:registerCallback(GameObjectLiveEvent.OnStart, slot0.triggerShow, slot0)
-	GameObjectLiveMgr.instance:registerCallback(GameObjectLiveEvent.OnDestroy, slot0.OnDropListDestroy, slot0)
+function var_0_0.addEventsListener(arg_4_0)
+	GameObjectLiveMgr.instance:registerCallback(GameObjectLiveEvent.OnStart, arg_4_0.triggerShow, arg_4_0)
+	GameObjectLiveMgr.instance:registerCallback(GameObjectLiveEvent.OnDestroy, arg_4_0.OnDropListDestroy, arg_4_0)
 end
 
-function slot0.removeEventsListener(slot0)
-	GameObjectLiveMgr.instance:unregisterCallback(GameObjectLiveEvent.OnStart, slot0.triggerShow, slot0)
-	GameObjectLiveMgr.instance:unregisterCallback(GameObjectLiveEvent.OnDestroy, slot0.OnDropListDestroy, slot0)
+function var_0_0.removeEventsListener(arg_5_0)
+	GameObjectLiveMgr.instance:unregisterCallback(GameObjectLiveEvent.OnStart, arg_5_0.triggerShow, arg_5_0)
+	GameObjectLiveMgr.instance:unregisterCallback(GameObjectLiveEvent.OnDestroy, arg_5_0.OnDropListDestroy, arg_5_0)
 end
 
-function slot0._onTouchUp(slot0)
-	slot0:addLiveComp(gohelper.findChild(slot0.goDrop, uv0.DropListName))
+function var_0_0._onTouchUp(arg_6_0)
+	local var_6_0 = gohelper.findChild(arg_6_0.goDrop, var_0_0.DropListName)
+
+	arg_6_0:addLiveComp(var_6_0)
 end
 
-function slot0.addLiveComp(slot0, slot1)
-	if slot1 == slot0.dropList then
+function var_0_0.addLiveComp(arg_7_0, arg_7_1)
+	if arg_7_1 == arg_7_0.dropList then
 		return
 	end
 
-	slot0.dropList = slot1
+	arg_7_0.dropList = arg_7_1
 
-	if not gohelper.isNil(slot0.dropList) then
-		slot0:addEventsListener()
+	if not gohelper.isNil(arg_7_0.dropList) then
+		arg_7_0:addEventsListener()
 
-		slot0.liveComp = MonoHelper.addLuaComOnceToGo(slot0.dropList, GameObjectLiveEventComp)
+		arg_7_0.liveComp = MonoHelper.addLuaComOnceToGo(arg_7_0.dropList, GameObjectLiveEventComp)
 	end
 end
 
-function slot0.OnDropListDestroy(slot0, slot1)
-	if slot0.dropList ~= slot1 then
+function var_0_0.OnDropListDestroy(arg_8_0, arg_8_1)
+	if arg_8_0.dropList ~= arg_8_1 then
 		return
 	end
 
-	slot0.liveComp = nil
+	arg_8_0.liveComp = nil
 
-	slot0:removeEventsListener()
-	TaskDispatcher.runDelay(slot0.afterDestroyDelay, slot0, 0.01)
+	arg_8_0:removeEventsListener()
+	TaskDispatcher.runDelay(arg_8_0.afterDestroyDelay, arg_8_0, 0.01)
 end
 
-function slot0.afterDestroyDelay(slot0)
-	if gohelper.isNil(gohelper.findChild(slot0.goDrop, uv0.DropListName)) then
-		slot0:triggerHide()
+function var_0_0.afterDestroyDelay(arg_9_0)
+	local var_9_0 = gohelper.findChild(arg_9_0.goDrop, var_0_0.DropListName)
+
+	if gohelper.isNil(var_9_0) then
+		arg_9_0:triggerHide()
 
 		return
 	end
 
-	slot0:addLiveComp(slot1)
+	arg_9_0:addLiveComp(var_9_0)
 end
 
-function slot0.triggerHide(slot0)
-	if slot0.onDropHideCb then
-		slot0.onDropHideCb(slot0.cbObj)
+function var_0_0.triggerHide(arg_10_0)
+	if arg_10_0.onDropHideCb then
+		arg_10_0.onDropHideCb(arg_10_0.cbObj)
 	end
 end
 
-function slot0.triggerShow(slot0, slot1)
-	if slot0.dropList ~= slot1 then
+function var_0_0.triggerShow(arg_11_0, arg_11_1)
+	if arg_11_0.dropList ~= arg_11_1 then
 		return
 	end
 
-	if slot0.onDropShowCb then
-		slot0.onDropShowCb(slot0.cbObj)
+	if arg_11_0.onDropShowCb then
+		arg_11_0.onDropShowCb(arg_11_0.cbObj)
 	end
 end
 
-function slot0.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0.afterDestroyDelay, slot0)
+function var_0_0.dispose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.afterDestroyDelay, arg_12_0)
 
-	slot0.liveComp = nil
+	arg_12_0.liveComp = nil
 
-	slot0:removeEventsListener()
-	slot0:__onDispose()
+	arg_12_0:removeEventsListener()
+	arg_12_0:__onDispose()
 end
 
-return slot0
+return var_0_0

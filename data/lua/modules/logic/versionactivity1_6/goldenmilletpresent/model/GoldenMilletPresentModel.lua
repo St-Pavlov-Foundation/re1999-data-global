@@ -1,33 +1,40 @@
-module("modules.logic.versionactivity1_6.goldenmilletpresent.model.GoldenMilletPresentModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.model.GoldenMilletPresentModel", package.seeall)
 
-slot0 = class("GoldenMilletPresentModel", BaseModel)
+local var_0_0 = class("GoldenMilletPresentModel", BaseModel)
 
-function slot0.getGoldenMilletPresentActId(slot0)
+function var_0_0.getGoldenMilletPresentActId(arg_1_0)
 	return ActivityEnum.Activity.V2a5_GoldenMilletPresent
 end
 
-function slot0.isGoldenMilletPresentOpen(slot0, slot1)
-	if not ActivityType101Model.instance:isOpen(slot0:getGoldenMilletPresentActId()) and slot1 then
+function var_0_0.isGoldenMilletPresentOpen(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getGoldenMilletPresentActId()
+	local var_2_1 = ActivityType101Model.instance:isOpen(var_2_0)
+
+	if not var_2_1 and arg_2_1 then
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 
-	return slot3
+	return var_2_1
 end
 
-function slot0.haveReceivedSkin(slot0)
-	return not ActivityType101Model.instance:isType101RewardCouldGet(slot0:getGoldenMilletPresentActId(), GoldenMilletEnum.REWARD_INDEX)
+function var_0_0.haveReceivedSkin(arg_3_0)
+	local var_3_0 = arg_3_0:getGoldenMilletPresentActId()
+
+	return not ActivityType101Model.instance:isType101RewardCouldGet(var_3_0, GoldenMilletEnum.REWARD_INDEX)
 end
 
-function slot0.isShowRedDot(slot0)
-	slot1 = false
+function var_0_0.isShowRedDot(arg_4_0)
+	local var_4_0 = false
 
-	if slot0:isGoldenMilletPresentOpen() then
-		slot1 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot0:getGoldenMilletPresentActId())
+	if arg_4_0:isGoldenMilletPresentOpen() then
+		local var_4_1 = arg_4_0:getGoldenMilletPresentActId()
+
+		var_4_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_4_1)
 	end
 
-	return slot1
+	return var_4_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

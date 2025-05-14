@@ -1,291 +1,311 @@
-module("modules.logic.fight.system.work.FightWorkChangeHero", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeHero", package.seeall)
 
-slot0 = class("FightWorkChangeHero", FightEffectBase)
+local var_0_0 = class("FightWorkChangeHero", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if FightModel.instance:getVersion() < 4 then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if not slot0._actEffectMO.entityMO then
-		slot0:onDone(true)
+	if not arg_1_0._actEffectMO.entityMO then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0:com_registTimer(slot0._delayDone, 5)
+	arg_1_0:com_registTimer(arg_1_0._delayDone, 5)
 
-	slot0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	slot0._targetId = slot0._actEffectMO.targetId
-	slot0._targetEntity = FightHelper.getEntity(slot0._targetId)
+	arg_1_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	arg_1_0._targetId = arg_1_0._actEffectMO.targetId
+	arg_1_0._targetEntity = FightHelper.getEntity(arg_1_0._targetId)
 
-	if FightEntityDataHelper.isPlayerUid(slot0._targetId) then
-		slot0._targetEntity = nil
+	if FightEntityDataHelper.isPlayerUid(arg_1_0._targetId) then
+		arg_1_0._targetEntity = nil
 	end
 
-	slot0._changedId = slot0._actEffectMO.entityMO.id
-	slot0._changedSubEntity = FightHelper.getEntity(slot0._changedId)
-	slot0._changedEntityMO = FightDataHelper.entityMgr:getById(slot0._changedId)
+	arg_1_0._changedId = arg_1_0._actEffectMO.entityMO.id
+	arg_1_0._changedSubEntity = FightHelper.getEntity(arg_1_0._changedId)
+	arg_1_0._changedEntityMO = FightDataHelper.entityMgr:getById(arg_1_0._changedId)
 
-	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, slot0._targetId, slot0._changedId)
+	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, arg_1_0._targetId, arg_1_0._changedId)
 
-	slot0._seasonUseChangeHero = FightModel.instance:isSeason2() and slot0._actEffectMO.configEffect == 1
+	arg_1_0._seasonUseChangeHero = FightModel.instance:isSeason2() and arg_1_0._actEffectMO.configEffect == 1
 
-	if slot0._changedEntityMO.side == FightEnum.EntitySide.MySide then
-		if slot0._seasonUseChangeHero then
-			slot0:_startChangeHero()
-		elseif slot0._changedSubEntity and slot0._changedSubEntity.spine:getSpineGO() ~= nil then
-			slot0:_startChangeHero()
+	if arg_1_0._changedEntityMO.side == FightEnum.EntitySide.MySide then
+		if arg_1_0._seasonUseChangeHero then
+			arg_1_0:_startChangeHero()
+		elseif arg_1_0._changedSubEntity and arg_1_0._changedSubEntity.spine:getSpineGO() ~= nil then
+			arg_1_0:_startChangeHero()
 		else
-			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
+			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSubSpineLoaded, arg_1_0)
 
-			slot0._toBuildSubId = slot0._changedEntityMO.id
+			arg_1_0._toBuildSubId = arg_1_0._changedEntityMO.id
 
-			if not slot0._changedSubEntity and slot0._entityMgr:buildSubSpine(slot0._changedEntityMO) and lua_stance.configDict[FightHelper.getEntityStanceId(slot0._changedEntityMO)] then
-				transformhelper.setLocalPos(slot2.go.transform, slot3.subPos1[1] or 0, slot4[2] or 0, slot4[3] or 0)
+			if not arg_1_0._changedSubEntity then
+				local var_1_0 = arg_1_0._entityMgr:buildSubSpine(arg_1_0._changedEntityMO)
+
+				if var_1_0 then
+					local var_1_1 = lua_stance.configDict[FightHelper.getEntityStanceId(arg_1_0._changedEntityMO)]
+
+					if var_1_1 then
+						local var_1_2 = var_1_1.subPos1
+
+						transformhelper.setLocalPos(var_1_0.go.transform, var_1_2[1] or 0, var_1_2[2] or 0, var_1_2[3] or 0)
+					end
+				end
 			end
 		end
 	else
-		slot0:_startChangeHero()
+		arg_1_0:_startChangeHero()
 	end
 end
 
-function slot0._startChangeHero(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnStartChangeEntity, slot0._changedEntityMO)
+function var_0_0._startChangeHero(arg_2_0)
+	FightController.instance:dispatchEvent(FightEvent.OnStartChangeEntity, arg_2_0._changedEntityMO)
 
-	if slot0._targetEntity then
-		if slot0._targetEntity.spineRenderer then
-			slot0._targetEntity.spineRenderer:setAlpha(0, 0.4 / FightModel.instance:getSpeed())
+	if arg_2_0._targetEntity then
+		local var_2_0 = FightModel.instance:getSpeed()
 
-			slot2 = "always/ui_renwuxiaoshi"
-			slot3 = nil
+		if arg_2_0._targetEntity.spineRenderer then
+			arg_2_0._targetEntity.spineRenderer:setAlpha(0, 0.4 / var_2_0)
 
-			if slot0._actEffectMO.configEffect == 1 then
-				slot2 = "buff/buff_huanren"
-				slot3 = ModuleEnum.SpineHangPoint.mountmiddle
+			local var_2_1 = "always/ui_renwuxiaoshi"
+			local var_2_2
+
+			if arg_2_0._actEffectMO.configEffect == 1 then
+				var_2_1 = "buff/buff_huanren"
+				var_2_2 = ModuleEnum.SpineHangPoint.mountmiddle
 			end
 
-			if not slot0._seasonUseChangeHero then
-				slot4 = slot0._targetEntity.effect:addHangEffect(slot2, slot3)
+			if not arg_2_0._seasonUseChangeHero then
+				local var_2_3 = arg_2_0._targetEntity.effect:addHangEffect(var_2_1, var_2_2)
 
-				slot4:setLocalPos(0, 0, 0)
-				FightRenderOrderMgr.instance:onAddEffectWrap(slot0._targetEntity.id, slot4)
+				var_2_3:setLocalPos(0, 0, 0)
+				FightRenderOrderMgr.instance:onAddEffectWrap(arg_2_0._targetEntity.id, var_2_3)
 			end
 		end
 
 		if FightModel.instance:isSeason2() then
-			slot0:_targetEntityQuitFinish()
+			arg_2_0:_targetEntityQuitFinish()
 			AudioMgr.instance:trigger(410000103)
 		else
-			TaskDispatcher.runDelay(slot0._targetEntityQuitFinish, slot0, 0.4 / slot1)
+			TaskDispatcher.runDelay(arg_2_0._targetEntityQuitFinish, arg_2_0, 0.4 / var_2_0)
 		end
 	else
-		slot0:_targetEntityQuitFinish()
+		arg_2_0:_targetEntityQuitFinish()
 	end
 end
 
-function slot0._targetEntityQuitFinish(slot0)
-	if slot0._targetEntity then
-		slot0._entityMgr:removeUnit(slot0._targetEntity:getTag(), slot0._targetEntity.id)
+function var_0_0._targetEntityQuitFinish(arg_3_0)
+	if arg_3_0._targetEntity then
+		arg_3_0._entityMgr:removeUnit(arg_3_0._targetEntity:getTag(), arg_3_0._targetEntity.id)
 	end
 
-	if slot0._changedEntityMO.side == FightEnum.EntitySide.MySide and not slot0._seasonUseChangeHero then
-		slot0:_playJumpTimeline()
+	if arg_3_0._changedEntityMO.side == FightEnum.EntitySide.MySide and not arg_3_0._seasonUseChangeHero then
+		arg_3_0:_playJumpTimeline()
 	else
-		slot0:_entityEnter()
+		arg_3_0:_entityEnter()
 	end
 end
 
-function slot0._playJumpTimeline(slot0)
-	slot1, slot2, slot3 = FightHelper.getEntityStandPos(slot0._changedEntityMO)
-	slot4 = {
+function var_0_0._playJumpTimeline(arg_4_0)
+	local var_4_0, var_4_1, var_4_2 = FightHelper.getEntityStandPos(arg_4_0._changedEntityMO)
+	local var_4_3 = {
 		actId = 0,
 		customType = "change_hero",
 		actEffectMOs = {
 			{
-				targetId = slot0._targetId
+				targetId = arg_4_0._targetId
 			}
 		},
 		actEffect = {},
-		fromId = slot0._changedId,
-		toId = slot0._targetId,
+		fromId = arg_4_0._changedId,
+		toId = arg_4_0._targetId,
 		actType = FightEnum.ActType.SKILL,
-		forcePosX = slot1,
-		forcePosY = slot2,
-		forcePosZ = slot3
+		forcePosX = var_4_0,
+		forcePosY = var_4_1,
+		forcePosZ = var_4_2
 	}
-	slot5 = nil
+	local var_4_4
+	local var_4_5 = SkinConfig.instance:getSkinCo(arg_4_0._changedEntityMO.skin)
 
-	if SkinConfig.instance:getSkinCo(slot0._changedEntityMO.skin) and not string.nilorempty(slot6.alternateSpineJump) then
-		slot5 = slot6.alternateSpineJump
+	if var_4_5 and not string.nilorempty(var_4_5.alternateSpineJump) then
+		var_4_4 = var_4_5.alternateSpineJump
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_4_0._onSkillPlayStart, arg_4_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
 
-	slot0._subEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildTempSceneEntity("tibushangzhen" .. slot0._changedEntityMO.id)
-	uv0.playingChangeHero = true
+	arg_4_0._subEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildTempSceneEntity("tibushangzhen" .. arg_4_0._changedEntityMO.id)
+	var_0_0.playingChangeHero = true
 
-	slot0._subEntity.skill:playTimeline(slot5 or "change_hero_common", slot4)
+	arg_4_0._subEntity.skill:playTimeline(var_4_4 or "change_hero_common", var_4_3)
 end
 
-function slot0._removeSubEntity(slot0)
-	if slot0._changedSubEntity and slot0._changedSubEntity.go then
-		slot0._entityMgr:destroyUnit(slot0._changedSubEntity)
+function var_0_0._removeSubEntity(arg_5_0)
+	if arg_5_0._changedSubEntity and arg_5_0._changedSubEntity.go then
+		arg_5_0._entityMgr:destroyUnit(arg_5_0._changedSubEntity)
 
-		slot0._changedSubEntity = nil
-	end
-end
-
-function slot0._onSkillPlayFinish(slot0, slot1)
-	if slot1 == slot0._subEntity then
-		slot0:_removeSubEntity()
+		arg_5_0._changedSubEntity = nil
 	end
 end
 
-function slot0._onSkillPlayStart(slot0, slot1)
-	if slot1 == slot0._subEntity then
-		slot0._timeline_duration = slot1.skill and slot1.skill:getCurTimelineDuration()
-
-		TaskDispatcher.runDelay(slot0._entityEnter, slot0, slot0._timeline_duration * 0.8)
+function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1)
+	if arg_6_1 == arg_6_0._subEntity then
+		arg_6_0:_removeSubEntity()
 	end
 end
 
-function slot0._entityEnter(slot0)
-	if slot0._changedSubEntity then
-		if slot0._timeline_duration then
-			slot0._changedSubEntity:setAlpha(0, slot0._timeline_duration * 0.2 / FightModel.instance:getSpeed())
+function var_0_0._onSkillPlayStart(arg_7_0, arg_7_1)
+	if arg_7_1 == arg_7_0._subEntity then
+		arg_7_0._timeline_duration = arg_7_1.skill and arg_7_1.skill:getCurTimelineDuration()
 
-			slot0._need_invoke_remove_sub_entity = true
+		TaskDispatcher.runDelay(arg_7_0._entityEnter, arg_7_0, arg_7_0._timeline_duration * 0.8)
+	end
+end
 
-			slot0._entityMgr:removeUnitData(slot0._changedSubEntity:getTag(), slot0._changedSubEntity.id)
+function var_0_0._entityEnter(arg_8_0)
+	if arg_8_0._changedSubEntity then
+		if arg_8_0._timeline_duration then
+			local var_8_0 = arg_8_0._timeline_duration * 0.2 / FightModel.instance:getSpeed()
+
+			arg_8_0._changedSubEntity:setAlpha(0, var_8_0)
+
+			arg_8_0._need_invoke_remove_sub_entity = true
+
+			arg_8_0._entityMgr:removeUnitData(arg_8_0._changedSubEntity:getTag(), arg_8_0._changedSubEntity.id)
 		else
-			slot0._entityMgr:removeUnit(slot0._changedSubEntity:getTag(), slot0._changedSubEntity.id)
+			arg_8_0._entityMgr:removeUnit(arg_8_0._changedSubEntity:getTag(), arg_8_0._changedSubEntity.id)
 		end
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onEnterEntitySpineLoadFinish, slot0)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_8_0._onEnterEntitySpineLoadFinish, arg_8_0)
 
-	slot0._newEntity = slot0._entityMgr:buildSpine(slot0._changedEntityMO)
+	arg_8_0._newEntity = arg_8_0._entityMgr:buildSpine(arg_8_0._changedEntityMO)
 end
 
-function slot0._onEnterEntitySpineLoadFinish(slot0, slot1)
-	if slot1.unitSpawn.id == slot0._changedEntityMO.id then
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onEnterEntitySpineLoadFinish, slot0)
+function var_0_0._onEnterEntitySpineLoadFinish(arg_9_0, arg_9_1)
+	if arg_9_1.unitSpawn.id == arg_9_0._changedEntityMO.id then
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_9_0._onEnterEntitySpineLoadFinish, arg_9_0)
 
-		slot2 = slot0._entityMgr:getEntity(slot0._changedEntityMO.id)
+		local var_9_0 = arg_9_0._entityMgr:getEntity(arg_9_0._changedEntityMO.id)
 
-		if slot0._seasonUseChangeHero then
-			if slot2 then
-				slot2:resetEntity()
+		if arg_9_0._seasonUseChangeHero then
+			if var_9_0 then
+				var_9_0:resetEntity()
 			end
 
-			slot0:_onEntityBornDone()
+			arg_9_0:_onEntityBornDone()
 
-			slot3 = "always/ui_renwuxiaoshi"
-			slot4 = nil
+			local var_9_1 = "always/ui_renwuxiaoshi"
+			local var_9_2
 
-			if slot0._actEffectMO.configEffect == 1 then
-				slot3 = "buff/buff_huanren"
-				slot4 = ModuleEnum.SpineHangPoint.mountmiddle
+			if arg_9_0._actEffectMO.configEffect == 1 then
+				var_9_1 = "buff/buff_huanren"
+				var_9_2 = ModuleEnum.SpineHangPoint.mountmiddle
 			end
 
-			slot5 = slot2.effect:addHangEffect(slot3, slot4, nil, 2)
+			local var_9_3 = var_9_0.effect:addHangEffect(var_9_1, var_9_2, nil, 2)
 
-			slot5:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot2.id, slot5)
+			var_9_3:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(var_9_0.id, var_9_3)
 
-			if slot2 and slot2.buff then
-				xpcall(slot6.dealStartBuff, __G__TRACKBACK__, slot6)
+			local var_9_4 = var_9_0 and var_9_0.buff
+
+			if var_9_4 then
+				xpcall(var_9_4.dealStartBuff, __G__TRACKBACK__, var_9_4)
 			end
 
 			return
 		end
 
-		slot0._work = FightWorkStartBornNormal.New(slot2, false)
+		arg_9_0._work = FightWorkStartBornNormal.New(var_9_0, false)
 
-		slot0._work:registerDoneListener(slot0._onEntityBornDone, slot0)
-		slot0._work:onStart()
+		arg_9_0._work:registerDoneListener(arg_9_0._onEntityBornDone, arg_9_0)
+		arg_9_0._work:onStart()
 
-		if slot2:isMySide() then
-			FightAudioMgr.instance:playHeroVoiceRandom(slot0._changedEntityMO.modelId, CharacterEnum.VoiceType.EnterFight)
+		if var_9_0:isMySide() then
+			FightAudioMgr.instance:playHeroVoiceRandom(arg_9_0._changedEntityMO.modelId, CharacterEnum.VoiceType.EnterFight)
 		end
 	end
 end
 
-function slot0.sortSubList()
+function var_0_0.sortSubList()
+	return
 end
 
-function slot0._onEntityBornDone(slot0)
-	if slot0._work then
-		slot0._work:unregisterDoneListener(slot0._onEntityBornDone, slot0)
+function var_0_0._onEntityBornDone(arg_11_0)
+	if arg_11_0._work then
+		arg_11_0._work:unregisterDoneListener(arg_11_0._onEntityBornDone, arg_11_0)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, slot0._newEntity)
+	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, arg_11_0._newEntity)
 	GameSceneMgr.instance:getCurScene().entityMgr:showSubEntity()
-	slot0:onDone(true)
+	arg_11_0:onDone(true)
 end
 
-function slot0._onSubSpineLoaded(slot0, slot1)
-	if slot1.unitSpawn.id == slot0._toBuildSubId then
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
+function var_0_0._onSubSpineLoaded(arg_12_0, arg_12_1)
+	if arg_12_1.unitSpawn.id == arg_12_0._toBuildSubId then
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_12_0._onSubSpineLoaded, arg_12_0)
 
-		slot0._changedSubEntity = FightHelper.getEntity(slot0._changedId)
+		arg_12_0._changedSubEntity = FightHelper.getEntity(arg_12_0._changedId)
 
-		slot0:_startChangeHero()
+		arg_12_0:_startChangeHero()
 	end
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_13_0)
 	logError("换人超时")
-	slot0:onDone(true)
+	arg_13_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	uv0.playingChangeHero = false
+function var_0_0.clearWork(arg_14_0)
+	var_0_0.playingChangeHero = false
 
-	if slot0._subEntity then
-		if GameSceneMgr.instance:getCurScene().entityMgr then
-			slot1:removeUnit(slot0._subEntity:getTag(), slot0._subEntity.id)
+	if arg_14_0._subEntity then
+		local var_14_0 = GameSceneMgr.instance:getCurScene().entityMgr
+
+		if var_14_0 then
+			var_14_0:removeUnit(arg_14_0._subEntity:getTag(), arg_14_0._subEntity.id)
 		end
 
-		slot0._subEntity = nil
+		arg_14_0._subEntity = nil
 	end
 
-	if slot0._need_invoke_remove_sub_entity then
-		slot0:_removeSubEntity()
+	if arg_14_0._need_invoke_remove_sub_entity then
+		arg_14_0:_removeSubEntity()
 	end
 
-	TaskDispatcher.cancelTask(slot0._targetEntityQuitFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._entityEnter, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onNextSubSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onEnterEntitySpineLoadFinish, slot0)
+	TaskDispatcher.cancelTask(arg_14_0._targetEntityQuitFinish, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._entityEnter, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_14_0._onSubSpineLoaded, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_14_0._onSkillPlayStart, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_14_0._onSkillPlayFinish, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_14_0._onNextSubSpineLoaded, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_14_0._onEnterEntitySpineLoadFinish, arg_14_0)
 
-	slot0._fightStepMO = nil
+	arg_14_0._fightStepMO = nil
 
-	if slot0._work then
-		slot0._work:unregisterDoneListener(slot0._onEntityBornDone, slot0)
-		slot0._work:onStop()
+	if arg_14_0._work then
+		arg_14_0._work:unregisterDoneListener(arg_14_0._onEntityBornDone, arg_14_0)
+		arg_14_0._work:onStop()
 
-		slot0._work = nil
+		arg_14_0._work = nil
 	end
 
-	slot0._timeline_duration = nil
+	arg_14_0._timeline_duration = nil
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._nextSubBornFlow then
-		slot0._nextSubBornFlow:stop()
+function var_0_0.onDestroy(arg_15_0)
+	if arg_15_0._nextSubBornFlow then
+		arg_15_0._nextSubBornFlow:stop()
 
-		slot0._nextSubBornFlow = nil
+		arg_15_0._nextSubBornFlow = nil
 	end
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_15_0)
 end
 
-return slot0
+return var_0_0

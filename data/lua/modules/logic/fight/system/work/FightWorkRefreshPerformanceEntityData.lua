@@ -1,55 +1,59 @@
-module("modules.logic.fight.system.work.FightWorkRefreshPerformanceEntityData", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRefreshPerformanceEntityData", package.seeall)
 
-slot0 = class("FightWorkRefreshPerformanceEntityData", FightWorkItem)
+local var_0_0 = class("FightWorkRefreshPerformanceEntityData", FightWorkItem)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if FightModel.instance:isFinish() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if FightReplayModel.instance:isReplay() then
 		if FightModel.instance:getVersion() >= 4 then
-			slot0:_refreshPerformanceData()
+			arg_1_0:_refreshPerformanceData()
 		end
 
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot0:_refreshPerformanceData(true)
+		arg_1_0:_refreshPerformanceData(true)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0._refreshPerformanceData(slot0)
-	for slot5, slot6 in pairs(FightLocalDataMgr.instance.entityMgr:getAllEntityMO()) do
-		if not slot6:isStatusDead() then
-			slot7 = slot6.id
+function var_0_0._refreshPerformanceData(arg_2_0)
+	local var_2_0 = FightLocalDataMgr.instance.entityMgr:getAllEntityMO()
 
-			FightEntityDataHelper.copyEntityMO(slot6, FightDataHelper.entityMgr:getById(slot7))
-			FightController.instance:dispatchEvent(FightEvent.CoverPerformanceEntityData, slot7)
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		if not iter_2_1:isStatusDead() then
+			local var_2_1 = iter_2_1.id
+			local var_2_2 = FightDataHelper.entityMgr:getById(var_2_1)
+
+			FightEntityDataHelper.copyEntityMO(iter_2_1, var_2_2)
+			FightController.instance:dispatchEvent(FightEvent.CoverPerformanceEntityData, var_2_1)
 		end
 	end
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

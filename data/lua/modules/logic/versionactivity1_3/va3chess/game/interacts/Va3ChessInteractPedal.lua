@@ -1,51 +1,57 @@
-module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPedal", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPedal", package.seeall)
 
-slot0 = class("Va3ChessInteractPedal", Va3ChessInteractBase)
-slot1 = 0
-slot2 = 1
-slot3 = {
+local var_0_0 = class("Va3ChessInteractPedal", Va3ChessInteractBase)
+local var_0_1 = 0
+local var_0_2 = 1
+local var_0_3 = {
 	Down = "donw",
 	Up = "up",
 	DownIdle = "down_idle",
 	UpIdle = "up_idle"
 }
 
-function slot0.refreshPedalStatus(slot0)
-	if slot0._isPress == ((slot0._target.originData:getPedalStatusInDataField() or uv0) == uv1) then
+function var_0_0.refreshPedalStatus(arg_1_0)
+	local var_1_0 = (arg_1_0._target.originData:getPedalStatusInDataField() or var_0_1) == var_0_2
+
+	if arg_1_0._isPress == var_1_0 then
 		return
 	end
 
-	slot0._isPress = slot2
+	arg_1_0._isPress = var_1_0
 
-	if slot0._isPress then
-		slot0:playAnima(uv2.Down, 0, 0)
+	if arg_1_0._isPress then
+		arg_1_0:playAnima(var_0_3.Down, 0, 0)
 	else
-		slot0:playAnima(uv2.Up, 0, 0)
+		arg_1_0:playAnima(var_0_3.Up, 0, 0)
 	end
 end
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_2_0)
+	var_0_0.super.onAvatarLoaded(arg_2_0)
 
-	if not slot0._target.avatar.loader then
+	local var_2_0 = arg_2_0._target.avatar.loader
+
+	if not var_2_0 then
 		return
 	end
 
-	if not gohelper.isNil(slot1:getInstGO()) then
-		slot0._animSelf = slot2:GetComponent(typeof(UnityEngine.Animator))
+	local var_2_1 = var_2_0:getInstGO()
+
+	if not gohelper.isNil(var_2_1) then
+		arg_2_0._animSelf = var_2_1:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot0:playAnima(uv1.UpIdle, 0, 1)
+	arg_2_0:playAnima(var_0_3.UpIdle, 0, 1)
 end
 
-function slot0.playAnima(slot0, slot1, ...)
-	if slot0._animSelf then
-		slot0._animSelf:Play(slot1, ...)
+function var_0_0.playAnima(arg_3_0, arg_3_1, ...)
+	if arg_3_0._animSelf then
+		arg_3_0._animSelf:Play(arg_3_1, ...)
 	end
 end
 
-function slot0.dispose(slot0)
-	uv0.super.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	var_0_0.super.dispose(arg_4_0)
 end
 
-return slot0
+return var_0_0

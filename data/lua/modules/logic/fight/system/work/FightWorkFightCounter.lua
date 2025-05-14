@@ -1,21 +1,25 @@
-module("modules.logic.fight.system.work.FightWorkFightCounter", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFightCounter", package.seeall)
 
-slot0 = class("FightWorkFightCounter", FightEffectBase)
+local var_0_0 = class("FightWorkFightCounter", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot2 = FightHelper.getEntity(slot0._actEffectMO.targetId)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_1 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
 
-	if slot0._actEffectMO.effectNum == 13 and slot2 then
-		FightFloatMgr.instance:float(slot2.id, FightEnum.FloatType.buff, GameUtil.getSubPlaceholderLuaLang(luaLang("fight_counter_float13"), {
+	if var_1_0 == 13 and var_1_1 then
+		local var_1_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("fight_counter_float13"), {
 			luaLang("multiple"),
-			slot0._actEffectMO.configEffect
-		}), 1)
+			arg_1_0._actEffectMO.configEffect
+		})
+
+		FightFloatMgr.instance:float(var_1_1.id, FightEnum.FloatType.buff, var_1_2, 1)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

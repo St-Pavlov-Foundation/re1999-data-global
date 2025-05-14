@@ -1,44 +1,46 @@
-module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessPieceMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessPieceMO", package.seeall)
 
-slot0 = class("WarChessPieceMO")
+local var_0_0 = class("WarChessPieceMO")
 
-function slot0.init(slot0, slot1)
-	slot0.uid = slot1.uid
-	slot0.id = slot1.id
-	slot0.battle = slot1.battle
-	slot0.teamType = slot1.teamType
-	slot0.displacementState = slot1.displacementState
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.uid = arg_1_1.uid
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.battle = arg_1_1.battle
+	arg_1_0.teamType = arg_1_1.teamType
+	arg_1_0.displacementState = arg_1_1.displacementState
 
-	if slot1.skill then
-		slot0.skill = GameUtil.rpcInfosToList(slot1.skill, WarChessPieceSkillMO)
+	if arg_1_1.skill then
+		arg_1_0.skill = GameUtil.rpcInfosToList(arg_1_1.skill, WarChessPieceSkillMO)
 	end
 end
 
-function slot0.updatePower(slot0, slot1)
-	slot0.battle = math.max(slot0.battle + slot1, 0)
+function var_0_0.updatePower(arg_2_0, arg_2_1)
+	arg_2_0.battle = math.max(arg_2_0.battle + arg_2_1, 0)
 end
 
-function slot0.updateDisplacementState(slot0, slot1)
-	slot0.displacementState = slot1
+function var_0_0.updateDisplacementState(arg_3_0, arg_3_1)
+	arg_3_0.displacementState = arg_3_1
 end
 
-function slot0.canActiveMove(slot0)
-	if slot0.displacementState then
-		slot1 = EliminateLevelModel.instance:getRoundNumber()
-		slot2 = slot0.displacementState.totalUseCountLimit
-		slot3 = slot0.displacementState.totalUseCount
-		slot4 = slot0.displacementState.effectRound
-		slot5 = 0
+function var_0_0.canActiveMove(arg_4_0)
+	if arg_4_0.displacementState then
+		local var_4_0 = EliminateLevelModel.instance:getRoundNumber()
+		local var_4_1 = arg_4_0.displacementState.totalUseCountLimit
+		local var_4_2 = arg_4_0.displacementState.totalUseCount
+		local var_4_3 = arg_4_0.displacementState.effectRound
+		local var_4_4 = 0
 
-		if slot0.displacementState.roundUseCount then
-			for slot9, slot10 in ipairs(slot0.displacementState.roundUseCount) do
-				if slot10.round == slot1 then
-					slot5 = slot10.count
+		if arg_4_0.displacementState.roundUseCount then
+			for iter_4_0, iter_4_1 in ipairs(arg_4_0.displacementState.roundUseCount) do
+				if iter_4_1.round == var_4_0 then
+					var_4_4 = iter_4_1.count
 				end
 			end
 		end
 
-		if slot4 <= slot1 and slot5 < slot0.displacementState.perRoundUseCountLimit and slot3 < slot2 then
+		local var_4_5 = arg_4_0.displacementState.perRoundUseCountLimit
+
+		if var_4_3 <= var_4_0 and var_4_4 < var_4_5 and var_4_2 < var_4_1 then
 			return true
 		end
 	end
@@ -46,18 +48,20 @@ function slot0.canActiveMove(slot0)
 	return false
 end
 
-function slot0.getDisplacementState(slot0)
-	return slot0.displacementState
+function var_0_0.getDisplacementState(arg_5_0)
+	return arg_5_0.displacementState
 end
 
-function slot0.updateSkillGrowUp(slot0, slot1, slot2)
-	if slot0.skill == nil then
+function var_0_0.updateSkillGrowUp(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0.skill == nil then
 		return false
 	end
 
-	for slot6 = 1, #slot0.skill do
-		if slot0.skill[slot6].id == slot1 then
-			slot7:updateSkillGrowUp(slot2)
+	for iter_6_0 = 1, #arg_6_0.skill do
+		local var_6_0 = arg_6_0.skill[iter_6_0]
+
+		if var_6_0.id == arg_6_1 then
+			var_6_0:updateSkillGrowUp(arg_6_2)
 
 			return true
 		end
@@ -66,46 +70,48 @@ function slot0.updateSkillGrowUp(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.getSkill(slot0, slot1)
-	if slot0.skill == nil then
+function var_0_0.getSkill(arg_7_0, arg_7_1)
+	if arg_7_0.skill == nil then
 		return nil
 	end
 
-	for slot5 = 1, #slot0.skill do
-		if slot0.skill[slot5].id == slot1 then
-			return slot6
+	for iter_7_0 = 1, #arg_7_0.skill do
+		local var_7_0 = arg_7_0.skill[iter_7_0]
+
+		if var_7_0.id == arg_7_1 then
+			return var_7_0
 		end
 	end
 
 	return nil
 end
 
-function slot0.getActiveSkill(slot0)
-	if slot0.skill ~= nil and #slot0.skill > 0 then
-		return slot0.skill[1]
+function var_0_0.getActiveSkill(arg_8_0)
+	if arg_8_0.skill ~= nil and #arg_8_0.skill > 0 then
+		return arg_8_0.skill[1]
 	end
 end
 
-function slot0.diffData(slot0, slot1)
-	slot2 = true
+function var_0_0.diffData(arg_9_0, arg_9_1)
+	local var_9_0 = true
 
-	if slot0.battle ~= slot1.battle then
-		slot2 = false
+	if arg_9_0.battle ~= arg_9_1.battle then
+		var_9_0 = false
 	end
 
-	if slot0.teamType ~= slot1.teamType then
-		slot2 = false
+	if arg_9_0.teamType ~= arg_9_1.teamType then
+		var_9_0 = false
 	end
 
-	if slot0.uid ~= slot1.uid then
-		slot2 = false
+	if arg_9_0.uid ~= arg_9_1.uid then
+		var_9_0 = false
 	end
 
-	if slot0.id ~= slot1.id then
-		slot2 = false
+	if arg_9_0.id ~= arg_9_1.id then
+		var_9_0 = false
 	end
 
-	return slot2
+	return var_9_0
 end
 
-return slot0
+return var_0_0

@@ -1,19 +1,22 @@
-module("modules.logic.ressplit.work.ResSplitRoleStoryWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitRoleStoryWork", package.seeall)
 
-slot0 = class("ResSplitRoleStoryWork", BaseWork)
+local var_0_0 = class("ResSplitRoleStoryWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot3 = {}
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = ResSplitConfig.instance:getAppIncludeConfig()
+	local var_1_1 = {}
 
-	for slot7, slot8 in pairs(ResSplitConfig.instance:getAppIncludeConfig()) do
-		if slot8.heroStoryIds then
-			for slot12, slot13 in pairs(slot8.heroStoryIds) do
-				ResSplitModel.instance:addIncludeChapter(RoleStoryConfig.instance:getStoryById(slot13).chapterId)
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		if iter_1_1.heroStoryIds then
+			for iter_1_2, iter_1_3 in pairs(iter_1_1.heroStoryIds) do
+				local var_1_2 = RoleStoryConfig.instance:getStoryById(iter_1_3)
+
+				ResSplitModel.instance:addIncludeChapter(var_1_2.chapterId)
 			end
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

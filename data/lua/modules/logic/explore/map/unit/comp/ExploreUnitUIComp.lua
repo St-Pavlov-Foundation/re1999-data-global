@@ -1,54 +1,54 @@
-module("modules.logic.explore.map.unit.comp.ExploreUnitUIComp", package.seeall)
+﻿module("modules.logic.explore.map.unit.comp.ExploreUnitUIComp", package.seeall)
 
-slot0 = class("ExploreUnitUIComp", LuaCompBase)
+local var_0_0 = class("ExploreUnitUIComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.unit = slot1
-	slot0.uiDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.unit = arg_1_1
+	arg_1_0.uiDict = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 end
 
-function slot0.setup(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.uiDict) do
-		slot6:setTarget(slot1)
+function var_0_0.setup(arg_3_0, arg_3_1)
+	for iter_3_0, iter_3_1 in pairs(arg_3_0.uiDict) do
+		iter_3_1:setTarget(arg_3_1)
 	end
 end
 
-function slot0.addUI(slot0, slot1)
-	if not slot0.uiDict[slot1.__cname] then
-		slot0.uiDict[slot1.__cname] = slot1.New(slot0.unit)
+function var_0_0.addUI(arg_4_0, arg_4_1)
+	if not arg_4_0.uiDict[arg_4_1.__cname] then
+		arg_4_0.uiDict[arg_4_1.__cname] = arg_4_1.New(arg_4_0.unit)
 	end
 
-	return slot0.uiDict[slot1.__cname]
+	return arg_4_0.uiDict[arg_4_1.__cname]
 end
 
-function slot0.removeUI(slot0, slot1)
-	if slot0.uiDict[slot1.__cname] then
-		slot0.uiDict[slot1.__cname]:tryDispose()
+function var_0_0.removeUI(arg_5_0, arg_5_1)
+	if arg_5_0.uiDict[arg_5_1.__cname] then
+		arg_5_0.uiDict[arg_5_1.__cname]:tryDispose()
 
-		slot0.uiDict[slot1.__cname] = nil
+		arg_5_0.uiDict[arg_5_1.__cname] = nil
 	end
 end
 
-function slot0.clear(slot0)
-	if slot0.uiDict then
-		for slot4, slot5 in pairs(slot0.uiDict) do
-			slot5:setTarget(slot0.go)
+function var_0_0.clear(arg_6_0)
+	if arg_6_0.uiDict then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0.uiDict) do
+			iter_6_1:setTarget(arg_6_0.go)
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in pairs(slot0.uiDict) do
-		slot5:tryDispose()
+function var_0_0.onDestroy(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.uiDict) do
+		iter_7_1:tryDispose()
 	end
 
-	slot0.uiDict = nil
-	slot0.unit = nil
-	slot0.go = nil
+	arg_7_0.uiDict = nil
+	arg_7_0.unit = nil
+	arg_7_0.go = nil
 end
 
-return slot0
+return var_0_0

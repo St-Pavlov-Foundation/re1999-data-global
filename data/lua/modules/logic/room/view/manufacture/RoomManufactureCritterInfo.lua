@@ -1,151 +1,160 @@
-module("modules.logic.room.view.manufacture.RoomManufactureCritterInfo", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureCritterInfo", package.seeall)
 
-slot0 = class("RoomManufactureCritterInfo", LuaCompBase)
-slot1 = "critterInfo"
+local var_0_0 = class("RoomManufactureCritterInfo", LuaCompBase)
+local var_0_1 = "critterInfo"
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gohas = gohelper.findChild(slot0.go, "#go_has")
-	slot0._gocrittericon = gohelper.findChild(slot0.go, "#go_has/#go_critterIcon")
-	slot0._gonone = gohelper.findChild(slot0.go, "#go_none")
-	slot0._goselected = gohelper.findChild(slot0.go, "#go_selected")
-	slot0._btnclick = gohelper.findChildClickWithDefaultAudio(slot0.go, "#btn_click")
-	slot0._goplaceEff = gohelper.findChild(slot0.go, "#add")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gohas = gohelper.findChild(arg_1_0.go, "#go_has")
+	arg_1_0._gocrittericon = gohelper.findChild(arg_1_0.go, "#go_has/#go_critterIcon")
+	arg_1_0._gonone = gohelper.findChild(arg_1_0.go, "#go_none")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.go, "#go_selected")
+	arg_1_0._btnclick = gohelper.findChildClickWithDefaultAudio(arg_1_0.go, "#btn_click")
+	arg_1_0._goplaceEff = gohelper.findChild(arg_1_0.go, "#add")
 
-	slot0:reset()
+	arg_1_0:reset()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._onClick, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, slot0._onChangeSelectedCritterSlotItem, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, slot0._onCritterWorkInfoChange, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, slot0._onAddCritter, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_2_0._onChangeSelectedCritterSlotItem, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, arg_2_0._onCritterWorkInfoChange, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, arg_2_0._onAddCritter, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, slot0._onChangeSelectedCritterSlotItem, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, slot0._onCritterWorkInfoChange, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, slot0._onAddCritter, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_3_0._onChangeSelectedCritterSlotItem, arg_3_0)
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.CritterWorkInfoChange, arg_3_0._onCritterWorkInfoChange, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, arg_3_0._onAddCritter, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
 end
 
-function slot0._onClick(slot0)
-	slot1 = slot0:getViewBuilding()
+function var_0_0._onClick(arg_4_0)
+	local var_4_0 = arg_4_0:getViewBuilding()
 
-	if slot0.parent and slot0.parent.setViewBuildingUid then
-		slot0.parent:setViewBuildingUid()
+	if arg_4_0.parent and arg_4_0.parent.setViewBuildingUid then
+		arg_4_0.parent:setViewBuildingUid()
 	end
 
-	ManufactureController.instance:clickCritterSlotItem(slot1, slot0.critterSlotId)
+	ManufactureController.instance:clickCritterSlotItem(var_4_0, arg_4_0.critterSlotId)
 end
 
-function slot0._onChangeSelectedCritterSlotItem(slot0)
-	slot0:refreshSelected()
+function var_0_0._onChangeSelectedCritterSlotItem(arg_5_0)
+	arg_5_0:refreshSelected()
 end
 
-function slot0._onCritterWorkInfoChange(slot0)
-	slot0:setCritter()
-	slot0:refresh()
+function var_0_0._onCritterWorkInfoChange(arg_6_0)
+	arg_6_0:setCritter()
+	arg_6_0:refresh()
 end
 
-function slot0._onAddCritter(slot0, slot1, slot2)
-	if not slot1 or slot2 then
+function var_0_0._onAddCritter(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 or arg_7_2 then
 		return
 	end
 
-	if slot1[slot0:getViewBuilding()] and slot1[slot3][slot0.critterSlotId] then
-		slot0:playPlaceCritterEff()
+	local var_7_0 = arg_7_0:getViewBuilding()
+
+	if arg_7_1[var_7_0] and arg_7_1[var_7_0][arg_7_0.critterSlotId] then
+		arg_7_0:playPlaceCritterEff()
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.RoomCritterOneKeyView and slot0._playEffWaitCloseView then
-		slot0:playPlaceCritterEff()
+function var_0_0._onCloseView(arg_8_0, arg_8_1)
+	if arg_8_1 == ViewName.RoomCritterOneKeyView and arg_8_0._playEffWaitCloseView then
+		arg_8_0:playPlaceCritterEff()
 	end
 end
 
-function slot0.getViewBuilding(slot0)
-	slot1, slot2 = nil
+function var_0_0.getViewBuilding(arg_9_0)
+	local var_9_0
+	local var_9_1
 
-	if slot0.parent then
-		slot1, slot2 = slot0.parent:getViewBuilding()
+	if arg_9_0.parent then
+		var_9_0, var_9_1 = arg_9_0.parent:getViewBuilding()
 	end
 
-	return slot1, slot2
+	return var_9_0, var_9_1
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	slot0.critterSlotId = slot1
-	slot0.index = slot2
-	slot0.parent = slot3
-	slot0._playEffWaitCloseView = false
-	slot0.go.name = string.format("id-%s_i-%s", slot0.critterSlotId, slot0.index)
+function var_0_0.setData(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0.critterSlotId = arg_10_1
+	arg_10_0.index = arg_10_2
+	arg_10_0.parent = arg_10_3
+	arg_10_0._playEffWaitCloseView = false
 
-	slot0:setCritter()
-	slot0:refresh()
-	gohelper.setActive(slot0._goplaceEff, false)
-	gohelper.setActive(slot0.go, true)
+	local var_10_0 = string.format("id-%s_i-%s", arg_10_0.critterSlotId, arg_10_0.index)
+
+	arg_10_0.go.name = var_10_0
+
+	arg_10_0:setCritter()
+	arg_10_0:refresh()
+	gohelper.setActive(arg_10_0._goplaceEff, false)
+	gohelper.setActive(arg_10_0.go, true)
 end
 
-function slot0.setCritter(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
+function var_0_0.setCritter(arg_11_0)
+	local var_11_0, var_11_1 = arg_11_0:getViewBuilding()
+	local var_11_2 = var_11_1 and var_11_1:getWorkingCritter(arg_11_0.critterSlotId)
 
-	if slot2 and slot2:getWorkingCritter(slot0.critterSlotId) then
-		if not slot0.critterIcon then
-			slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocrittericon)
+	if var_11_2 then
+		if not arg_11_0.critterIcon then
+			arg_11_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_11_0._gocrittericon)
 		end
 
-		slot0.critterIcon:setMOValue(slot3)
-		slot0.critterIcon:showMood()
+		arg_11_0.critterIcon:setMOValue(var_11_2)
+		arg_11_0.critterIcon:showMood()
 	end
 
-	gohelper.setActive(slot0._gohas, slot3)
-	gohelper.setActive(slot0._gonone, not slot3)
+	gohelper.setActive(arg_11_0._gohas, var_11_2)
+	gohelper.setActive(arg_11_0._gonone, not var_11_2)
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshSelected()
+function var_0_0.refresh(arg_12_0)
+	arg_12_0:refreshSelected()
 end
 
-function slot0.refreshSelected(slot0)
-	slot1 = false
+function var_0_0.refreshSelected(arg_13_0)
+	local var_13_0 = false
 
-	if slot0.critterSlotId then
-		slot3, slot4 = ManufactureModel.instance:getSelectedCritterSlot()
+	if arg_13_0.critterSlotId then
+		local var_13_1 = arg_13_0:getViewBuilding()
+		local var_13_2, var_13_3 = ManufactureModel.instance:getSelectedCritterSlot()
 
-		if slot0:getViewBuilding() and slot2 == slot3 then
-			slot1 = true
+		if var_13_1 and var_13_1 == var_13_2 then
+			var_13_0 = true
 		end
 	end
 
-	gohelper.setActive(slot0._goselected, slot1)
+	gohelper.setActive(arg_13_0._goselected, var_13_0)
 end
 
-function slot0.playPlaceCritterEff(slot0)
+function var_0_0.playPlaceCritterEff(arg_14_0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterOneKeyView) then
-		slot0._playEffWaitCloseView = true
+		arg_14_0._playEffWaitCloseView = true
 	else
-		gohelper.setActive(slot0._goplaceEff, false)
-		gohelper.setActive(slot0._goplaceEff, true)
+		gohelper.setActive(arg_14_0._goplaceEff, false)
+		gohelper.setActive(arg_14_0._goplaceEff, true)
 
-		slot0._playEffWaitCloseView = false
+		arg_14_0._playEffWaitCloseView = false
 	end
 end
 
-function slot0.reset(slot0)
-	slot0.critterSlotId = nil
-	slot0.index = nil
-	slot0.parent = nil
-	slot0.go.name = uv0
-	slot0._playEffWaitCloseView = false
+function var_0_0.reset(arg_15_0)
+	arg_15_0.critterSlotId = nil
+	arg_15_0.index = nil
+	arg_15_0.parent = nil
+	arg_15_0.go.name = var_0_1
+	arg_15_0._playEffWaitCloseView = false
 
-	gohelper.setActive(slot0._goplaceEff, false)
-	gohelper.setActive(slot0.go, false)
+	gohelper.setActive(arg_15_0._goplaceEff, false)
+	gohelper.setActive(arg_15_0.go, false)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

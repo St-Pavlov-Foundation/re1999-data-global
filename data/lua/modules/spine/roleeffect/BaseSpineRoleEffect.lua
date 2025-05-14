@@ -1,21 +1,25 @@
-module("modules.spine.roleeffect.BaseSpineRoleEffect", package.seeall)
+﻿module("modules.spine.roleeffect.BaseSpineRoleEffect", package.seeall)
 
-slot0 = class("BaseSpineRoleEffect")
+local var_0_0 = class("BaseSpineRoleEffect")
 
-function slot0.setSpine(slot0, slot1)
-	slot0._spine = slot1
+function var_0_0.setSpine(arg_1_0, arg_1_1)
+	arg_1_0._spine = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.showBodyEffect(slot0, slot1, slot2, slot3)
+function var_0_0.showBodyEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	return
 end
 
-function slot0.playBodyEffect(slot0, slot1, slot2, slot3)
+function var_0_0.playBodyEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

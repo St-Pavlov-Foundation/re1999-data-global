@@ -1,44 +1,46 @@
-module("modules.logic.room.view.record.RoomTradeTaskItem", package.seeall)
+﻿module("modules.logic.room.view.record.RoomTradeTaskItem", package.seeall)
 
-slot0 = class("RoomTradeTaskItem", ListScrollCellExtend)
+local var_0_0 = class("RoomTradeTaskItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#image_icon")
-	slot0._txttask = gohelper.findChildText(slot0.viewGO, "#txt_task")
-	slot0._gofinish1 = gohelper.findChild(slot0.viewGO, "#txt_task/#go_finish1")
-	slot0._txttaskprogress = gohelper.findChildText(slot0.viewGO, "#txt_taskprogress")
-	slot0._gofinish2 = gohelper.findChild(slot0.viewGO, "#go_finish2")
-	slot0._gojump = gohelper.findChild(slot0.viewGO, "#go_jump")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_jump/#btn_jump")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
+	arg_1_0._txttask = gohelper.findChildText(arg_1_0.viewGO, "#txt_task")
+	arg_1_0._gofinish1 = gohelper.findChild(arg_1_0.viewGO, "#txt_task/#go_finish1")
+	arg_1_0._txttaskprogress = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskprogress")
+	arg_1_0._gofinish2 = gohelper.findChild(arg_1_0.viewGO, "#go_finish2")
+	arg_1_0._gojump = gohelper.findChild(arg_1_0.viewGO, "#go_jump")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_jump/#btn_jump")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnjump:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnjump:RemoveClickListener()
 end
 
-function slot0._btnjumpOnClick(slot0)
-	if slot0._mo then
-		RoomJumpController.instance:jumpFormTaskView(slot0._mo.co.jumpId)
+function var_0_0._btnjumpOnClick(arg_4_0)
+	if arg_4_0._mo then
+		local var_4_0 = arg_4_0._mo.co.jumpId
+
+		RoomJumpController.instance:jumpFormTaskView(var_4_0)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtLineHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(slot0._txttask, " ")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._txtLineHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_5_0._txttask, " ")
 end
 
-function slot0.activeGo(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.activeGo(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0.viewGO, arg_6_1)
 end
 
-slot1 = {
+local var_0_1 = {
 	offest = 50,
 	height = 100,
 	descWidthMax = 556,
@@ -47,82 +49,96 @@ slot1 = {
 	width = 662
 }
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 
-	if slot1 then
-		if slot1.co then
-			slot2 = slot1.co.desc
-			slot7 = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("room_trade_progress"), slot1.co.maxProgress <= slot1.progress and "#000000" or "#A75A29", slot3, slot4)
+	if arg_7_1 then
+		if arg_7_1.co then
+			local var_7_0 = arg_7_1.co.desc
+			local var_7_1 = arg_7_1.progress
+			local var_7_2 = arg_7_1.co.maxProgress
+			local var_7_3 = luaLang("room_trade_progress")
+			local var_7_4 = var_7_2 <= var_7_1 and "#000000" or "#A75A29"
+			local var_7_5 = GameUtil.getSubPlaceholderLuaLangThreeParam(var_7_3, var_7_4, var_7_1, var_7_2)
 
-			slot0:_setItemHeight(slot2, slot7)
+			arg_7_0:_setItemHeight(var_7_0, var_7_5)
 
-			slot0._txttask.text = slot2
-			slot0._txttaskprogress.text = slot7
+			arg_7_0._txttask.text = var_7_0
+			arg_7_0._txttaskprogress.text = var_7_5
 		end
 
-		slot0:_refreshFinish()
+		arg_7_0:_refreshFinish()
 	end
 end
 
-function slot0._setItemHeight(slot0, slot1, slot2)
-	slot3 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0._txttask, slot1)
-	slot4 = 100
+function var_0_0._setItemHeight(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_8_0._txttask, arg_8_1)
+	local var_8_1 = 100
 
-	if not slot0._mo.hasFinish then
-		slot4 = math.min(SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0._txttaskprogress, slot2), uv0.progressWidthMax)
+	if not arg_8_0._mo.hasFinish then
+		local var_8_2 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_8_0._txttaskprogress, arg_8_2)
+
+		var_8_1 = math.min(var_8_2, var_0_1.progressWidthMax)
 	end
 
-	slot5 = slot0._txtLineHeight
-	slot6 = uv0.width - slot4
+	local var_8_3 = arg_8_0._txtLineHeight
+	local var_8_4 = var_0_1.width - var_8_1
 
-	recthelper.setWidth(slot0._txttask.transform, slot6)
+	recthelper.setWidth(arg_8_0._txttask.transform, var_8_4)
 
-	if slot6 < slot3 then
-		slot5 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(slot0._txttask, slot1)
+	if var_8_4 < var_8_0 then
+		var_8_3 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_8_0._txttask, arg_8_1)
 	end
 
-	recthelper.setWidth(slot0._txttaskprogress.transform, slot4)
-	recthelper.setHeight(slot0._txttaskprogress.transform, slot0._txtLineHeight)
-	recthelper.setHeight(slot0._txttask.transform, slot5)
-	recthelper.setHeight(slot0.viewGO.transform, slot5 + uv0.offest)
+	recthelper.setWidth(arg_8_0._txttaskprogress.transform, var_8_1)
+	recthelper.setHeight(arg_8_0._txttaskprogress.transform, arg_8_0._txtLineHeight)
+	recthelper.setHeight(arg_8_0._txttask.transform, var_8_3)
+	recthelper.setHeight(arg_8_0.viewGO.transform, var_8_3 + var_0_1.offest)
 end
 
-function slot0.getNextItemAnchorY(slot0, slot1)
-	slot1 = slot1 < 0 and slot1 + uv0.spacing or -uv0.spacing
+function var_0_0.getNextItemAnchorY(arg_9_0, arg_9_1)
+	if arg_9_1 < 0 then
+		arg_9_1 = arg_9_1 + var_0_1.spacing
+	else
+		arg_9_1 = -var_0_1.spacing
+	end
 
-	recthelper.setAnchorY(slot0.viewGO.transform, slot1)
+	recthelper.setAnchorY(arg_9_0.viewGO.transform, arg_9_1)
 
-	return slot1 - recthelper.getHeight(slot0.viewGO.transform)
+	return arg_9_1 - recthelper.getHeight(arg_9_0.viewGO.transform)
 end
 
-function slot0._refreshFinish(slot0)
-	if slot0._mo.hasFinish then
-		if slot0._mo.new then
-			slot0:playFinishAnim()
+function var_0_0._refreshFinish(arg_10_0)
+	if arg_10_0._mo.hasFinish then
+		if arg_10_0._mo.new then
+			arg_10_0:playFinishAnim()
 		else
-			slot0:_activeFinishTask(true)
+			arg_10_0:_activeFinishTask(true)
 		end
 	else
-		slot0:_activeFinishTask(false)
+		arg_10_0:_activeFinishTask(false)
 	end
 end
 
-function slot0.playFinishAnim(slot0)
-	slot0:_activeFinishTask(true)
+function var_0_0.playFinishAnim(arg_11_0)
+	arg_11_0:_activeFinishTask(true)
 end
 
-function slot0._activeFinishTask(slot0, slot1)
-	for slot5 = 1, 2 do
-		gohelper.setActive(slot0["_gofinish" .. slot5], slot1)
+function var_0_0._activeFinishTask(arg_12_0, arg_12_1)
+	for iter_12_0 = 1, 2 do
+		gohelper.setActive(arg_12_0["_gofinish" .. iter_12_0], arg_12_1)
 	end
 
-	slot2 = slot0._txttask.color
-	slot0._txttask.color = Color(slot2.r, slot2.b, slot2.g, slot1 and 0.5 or 1)
+	local var_12_0 = arg_12_0._txttask.color
 
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imageicon, slot1 and "room_task_point2" or "room_task_point1")
-	gohelper.setActive(slot0._txttaskprogress.gameObject, not slot1)
-	gohelper.setActive(slot0._gojump.gameObject, not string.nilorempty(slot0._mo.co.jumpId) and not slot1)
+	arg_12_0._txttask.color = Color(var_12_0.r, var_12_0.b, var_12_0.g, arg_12_1 and 0.5 or 1)
+
+	UISpriteSetMgr.instance:setCritterSprite(arg_12_0._imageicon, arg_12_1 and "room_task_point2" or "room_task_point1")
+	gohelper.setActive(arg_12_0._txttaskprogress.gameObject, not arg_12_1)
+
+	local var_12_1 = not string.nilorempty(arg_12_0._mo.co.jumpId) and not arg_12_1
+
+	gohelper.setActive(arg_12_0._gojump.gameObject, var_12_1)
 end
 
-return slot0
+return var_0_0

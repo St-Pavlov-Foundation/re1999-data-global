@@ -1,12 +1,12 @@
-module("modules.logic.versionactivity2_4.music.model.Act179EpisodeMO", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.model.Act179EpisodeMO", package.seeall)
 
-slot0 = pureTable("Act179EpisodeMO")
+local var_0_0 = pureTable("Act179EpisodeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.isFinished = slot1.isFinished
-	slot0.highScore = slot1.highScore
-	slot0.config = Activity179Config.instance:getEpisodeConfig(slot0.episodeId)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.episodeId = arg_1_1.episodeId
+	arg_1_0.isFinished = arg_1_1.isFinished
+	arg_1_0.highScore = arg_1_1.highScore
+	arg_1_0.config = Activity179Config.instance:getEpisodeConfig(arg_1_0.episodeId)
 end
 
-return slot0
+return var_0_0

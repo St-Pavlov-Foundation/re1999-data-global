@@ -1,41 +1,41 @@
-module("modules.logic.seasonver.act123.view2_0.Season123_2_0StoryViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0StoryViewContainer", package.seeall)
 
-slot0 = class("Season123_2_0StoryViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_2_0StoryViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123_2_0StoryView.New(),
 		TabViewGroup.New(1, "#go_LeftTop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0._navigateButtonView:setOverrideClose(slot0._overrideCloseFunc, slot0)
+		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0._overrideCloseFunc(slot0)
-	slot0._views[1]._animView:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(slot0._doCloseView, slot0, 0.333)
+function var_0_0._overrideCloseFunc(arg_3_0)
+	arg_3_0._views[1]._animView:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(arg_3_0._doCloseView, arg_3_0, 0.333)
 end
 
-function slot0._doCloseView(slot0)
-	slot0:closeThis()
+function var_0_0._doCloseView(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onContainerDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._doCloseView, slot0)
+function var_0_0.onContainerDestroy(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._doCloseView, arg_5_0)
 end
 
-return slot0
+return var_0_0

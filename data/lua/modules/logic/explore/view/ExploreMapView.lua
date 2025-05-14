@@ -1,148 +1,164 @@
-module("modules.logic.explore.view.ExploreMapView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreMapView", package.seeall)
 
-slot0 = class("ExploreMapView", BaseView)
-slot1 = 0.5
-slot2 = 1.5
+local var_0_0 = class("ExploreMapView", BaseView)
+local var_0_1 = 0.5
+local var_0_2 = 1.5
 
-function slot0.onInitView(slot0)
-	slot0._btnclose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1")
-	slot0._btnclose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close2")
-	slot0._mapContainer = gohelper.findChild(slot0.viewGO, "container/#go_map").transform
-	slot0._mapScrollRect = gohelper.findChild(slot0.viewGO, "container")
-	slot0._mapItem = gohelper.findChild(slot0.viewGO, "container/#go_map/mapitems/#go_mapitem")
-	slot0._heroItem = gohelper.findChild(slot0.viewGO, "container/#go_map/#go_hero").transform
-	slot0._txtmapname = gohelper.findChildTextMesh(slot0.viewGO, "top/#txt_mapname")
-	slot0._txtmapnameen = gohelper.findChildTextMesh(slot0.viewGO, "top/#txt_mapname/#txt_mapnameen")
-	slot0._slider = gohelper.findChildSlider(slot0.viewGO, "Right/#go_mapSlider")
-	slot0._gocategory = gohelper.findChild(slot0.viewGO, "#scroll_category")
-	slot0._gocategoryParent = gohelper.findChild(slot0.viewGO, "#scroll_category/Viewport/Content")
-	slot0._gocategoryItem = gohelper.findChild(slot0.viewGO, "#scroll_category/Viewport/Content/#go_categoryitem")
-	slot0._btnCategory = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_tushi")
-	slot0._gocategoryon = gohelper.findChild(slot0.viewGO, "Left/#btn_tushi/icon_on")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
+	arg_1_0._mapContainer = gohelper.findChild(arg_1_0.viewGO, "container/#go_map").transform
+	arg_1_0._mapScrollRect = gohelper.findChild(arg_1_0.viewGO, "container")
+	arg_1_0._mapItem = gohelper.findChild(arg_1_0.viewGO, "container/#go_map/mapitems/#go_mapitem")
+	arg_1_0._heroItem = gohelper.findChild(arg_1_0.viewGO, "container/#go_map/#go_hero").transform
+	arg_1_0._txtmapname = gohelper.findChildTextMesh(arg_1_0.viewGO, "top/#txt_mapname")
+	arg_1_0._txtmapnameen = gohelper.findChildTextMesh(arg_1_0.viewGO, "top/#txt_mapname/#txt_mapnameen")
+	arg_1_0._slider = gohelper.findChildSlider(arg_1_0.viewGO, "Right/#go_mapSlider")
+	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#scroll_category")
+	arg_1_0._gocategoryParent = gohelper.findChild(arg_1_0.viewGO, "#scroll_category/Viewport/Content")
+	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_category/Viewport/Content/#go_categoryitem")
+	arg_1_0._btnCategory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_tushi")
+	arg_1_0._gocategoryon = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_tushi/icon_on")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose1:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnclose2:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnCategory:AddClickListener(slot0.showHideCategory, slot0)
-	slot0._slider:AddOnValueChanged(slot0.onSliderValueChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, slot0.applyRolePos, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, slot0.applyRolePos, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterNodeChange, slot0.onRoleNodeChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.UnitOutlineChange, slot0.outlineChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose1:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnclose2:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnCategory:AddClickListener(arg_2_0.showHideCategory, arg_2_0)
+	arg_2_0._slider:AddOnValueChanged(arg_2_0.onSliderValueChange, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, arg_2_0.applyRolePos, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, arg_2_0.applyRolePos, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterNodeChange, arg_2_0.onRoleNodeChange, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.UnitOutlineChange, arg_2_0.outlineChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose1:RemoveClickListener()
-	slot0._btnclose2:RemoveClickListener()
-	slot0._btnCategory:RemoveClickListener()
-	slot0._slider:RemoveOnValueChanged()
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, slot0.applyRolePos, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, slot0.applyRolePos, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterNodeChange, slot0.onRoleNodeChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.UnitOutlineChange, slot0.outlineChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose1:RemoveClickListener()
+	arg_3_0._btnclose2:RemoveClickListener()
+	arg_3_0._btnCategory:RemoveClickListener()
+	arg_3_0._slider:RemoveOnValueChanged()
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, arg_3_0.applyRolePos, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, arg_3_0.applyRolePos, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterNodeChange, arg_3_0.onRoleNodeChange, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.UnitOutlineChange, arg_3_0.outlineChange, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(slot0._mapContainer.gameObject)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_4_0._mapContainer.gameObject)
 
-	slot0._touchEventMgr:SetIgnoreUI(true)
-	slot0._touchEventMgr:SetScrollWheelCb(slot0.onMouseScrollWheelChange, slot0)
+	arg_4_0._touchEventMgr:SetIgnoreUI(true)
+	arg_4_0._touchEventMgr:SetScrollWheelCb(arg_4_0.onMouseScrollWheelChange, arg_4_0)
 
 	if BootNativeUtil.isMobilePlayer() then
-		TaskDispatcher.runRepeat(slot0._checkMultDrag, slot0, 0, -1)
+		TaskDispatcher.runRepeat(arg_4_0._checkMultDrag, arg_4_0, 0, -1)
 	end
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._mapContainer.gameObject)
+	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._mapContainer.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
+	arg_4_0._drag:AddDragBeginListener(arg_4_0._onDragBegin, arg_4_0)
+	arg_4_0._drag:AddDragEndListener(arg_4_0._onDragEnd, arg_4_0)
+	arg_4_0._drag:AddDragListener(arg_4_0._onDrag, arg_4_0)
 end
 
-function slot0.showHideCategory(slot0)
-	slot1 = not slot0._gocategory.activeSelf
+function var_0_0.showHideCategory(arg_5_0)
+	local var_5_0 = not arg_5_0._gocategory.activeSelf
 
-	gohelper.setActive(slot0._gocategory, slot1)
-	gohelper.setActive(slot0._gocategoryon, slot1)
+	gohelper.setActive(arg_5_0._gocategory, var_5_0)
+	gohelper.setActive(arg_5_0._gocategoryon, var_5_0)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_level_unlock)
-	gohelper.setActive(slot0._mapItem, false)
+	gohelper.setActive(arg_6_0._mapItem, false)
 
-	slot2 = ExploreModel.instance:getMapId() and ExploreConfig.instance:getMapIdConfig(slot1)
+	local var_6_0 = ExploreModel.instance:getMapId()
+	local var_6_1 = var_6_0 and ExploreConfig.instance:getMapIdConfig(var_6_0)
+	local var_6_2 = var_6_1 and lua_episode.configDict[var_6_1.episodeId]
 
-	if slot2 and lua_episode.configDict[slot2.episodeId] then
-		slot0._txtmapname.text = slot3.name
-		slot0._txtmapnameen.text = slot3.name_En
+	if var_6_2 then
+		arg_6_0._txtmapname.text = var_6_2.name
+		arg_6_0._txtmapnameen.text = var_6_2.name_En
 	end
 
-	slot0._mapItems = {}
-	slot0._containWidth = recthelper.getWidth(slot0._mapScrollRect.transform)
-	slot0._containHeight = recthelper.getHeight(slot0._mapScrollRect.transform)
-	slot0._itemWidth = recthelper.getWidth(slot0._mapItem.transform)
-	slot0._itemHeight = recthelper.getHeight(slot0._mapItem.transform)
-	slot4 = ExploreMapModel.instance.mapBound
-	slot0._mapWidth = (slot4.y - slot4.x + 1) * slot0._itemWidth
-	slot0._mapHeight = (slot4.w - slot4.z + 1) * slot0._itemHeight
+	arg_6_0._mapItems = {}
+	arg_6_0._containWidth = recthelper.getWidth(arg_6_0._mapScrollRect.transform)
+	arg_6_0._containHeight = recthelper.getHeight(arg_6_0._mapScrollRect.transform)
+	arg_6_0._itemWidth = recthelper.getWidth(arg_6_0._mapItem.transform)
+	arg_6_0._itemHeight = recthelper.getHeight(arg_6_0._mapItem.transform)
 
-	recthelper.setWidth(slot0._mapContainer, slot0._mapWidth)
-	recthelper.setHeight(slot0._mapContainer, slot0._mapHeight)
+	local var_6_3 = ExploreMapModel.instance.mapBound
 
-	slot0._hero = ExploreController.instance:getMap():getHero()
-	slot5 = slot0._hero:getPos()
-	slot0._offsetX = slot4.x
-	slot0._offsetY = slot4.z
-	slot6 = (slot5.x - slot0._offsetX - 0.5) * slot0._itemWidth
-	slot7 = (slot5.z - slot0._offsetY - 0.5) * slot0._itemHeight
+	arg_6_0._mapWidth = (var_6_3.y - var_6_3.x + 1) * arg_6_0._itemWidth
+	arg_6_0._mapHeight = (var_6_3.w - var_6_3.z + 1) * arg_6_0._itemHeight
 
-	transformhelper.setLocalPosXY(slot0._heroItem, slot6, slot7)
-	transformhelper.setLocalPosXY(slot0._mapContainer, -(slot6 + slot0._itemWidth / 2), -(slot7 + slot0._itemHeight / 2))
+	recthelper.setWidth(arg_6_0._mapContainer, arg_6_0._mapWidth)
+	recthelper.setHeight(arg_6_0._mapContainer, arg_6_0._mapHeight)
 
-	slot0._scale = 1
+	arg_6_0._hero = ExploreController.instance:getMap():getHero()
 
-	slot0._slider:SetValue((1 - uv0) / (uv1 - uv0))
-	slot0:calcBound()
-	gohelper.setActive(slot0._gocategory, false)
-	gohelper.setActive(slot0._gocategoryon, false)
+	local var_6_4 = arg_6_0._hero:getPos()
 
-	slot11 = slot2 and slot2.signsId or ""
-	slot11 = {}
+	arg_6_0._offsetX = var_6_3.x
+	arg_6_0._offsetY = var_6_3.z
 
-	if string.splitToNumber(slot11, "#") then
-		for slot15, slot16 in ipairs(slot10) do
-			table.insert(slot11, lua_explore_signs.configDict[slot16])
+	local var_6_5 = (var_6_4.x - arg_6_0._offsetX - 0.5) * arg_6_0._itemWidth
+	local var_6_6 = (var_6_4.z - arg_6_0._offsetY - 0.5) * arg_6_0._itemHeight
+
+	transformhelper.setLocalPosXY(arg_6_0._heroItem, var_6_5, var_6_6)
+
+	local var_6_7 = var_6_5 + arg_6_0._itemWidth / 2
+	local var_6_8 = var_6_6 + arg_6_0._itemHeight / 2
+
+	transformhelper.setLocalPosXY(arg_6_0._mapContainer, -var_6_7, -var_6_8)
+
+	arg_6_0._scale = 1
+
+	arg_6_0._slider:SetValue((1 - var_0_1) / (var_0_2 - var_0_1))
+	arg_6_0:calcBound()
+	gohelper.setActive(arg_6_0._gocategory, false)
+	gohelper.setActive(arg_6_0._gocategoryon, false)
+
+	local var_6_9 = string.splitToNumber(var_6_1 and var_6_1.signsId or "", "#")
+	local var_6_10 = {}
+
+	if var_6_9 then
+		for iter_6_0, iter_6_1 in ipairs(var_6_9) do
+			local var_6_11 = lua_explore_signs.configDict[iter_6_1]
+
+			table.insert(var_6_10, var_6_11)
 		end
 	end
 
-	gohelper.CreateObjList(slot0, slot0.onCategoryItem, slot11, slot0._gocategoryParent, slot0._gocategoryItem)
+	gohelper.CreateObjList(arg_6_0, arg_6_0.onCategoryItem, var_6_10, arg_6_0._gocategoryParent, arg_6_0._gocategoryItem)
 end
 
-function slot0.onCategoryItem(slot0, slot1, slot2, slot3)
-	gohelper.findChildTextMesh(slot1, "#txt_name").text = slot2.desc
+function var_0_0.onCategoryItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = gohelper.findChildTextMesh(arg_7_1, "#txt_name")
+	local var_7_1 = gohelper.findChildImage(arg_7_1, "#txt_name/icon")
 
-	UISpriteSetMgr.instance:setExploreSprite(gohelper.findChildImage(slot1, "#txt_name/icon"), slot2.icon)
+	var_7_0.text = arg_7_2.desc
+
+	UISpriteSetMgr.instance:setExploreSprite(var_7_1, arg_7_2.icon)
 end
 
-function slot0.onSliderValueChange(slot0)
-	slot0:setScale(uv0 + (uv1 - uv0) * slot0._slider:GetValue(), true)
+function var_0_0.onSliderValueChange(arg_8_0)
+	arg_8_0:setScale(var_0_1 + (var_0_2 - var_0_1) * arg_8_0._slider:GetValue(), true)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0.startDragPos = slot2.position
+function var_0_0._onDragBegin(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.startDragPos = arg_9_2.position
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	slot0.startDragPos = nil
+function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0.startDragPos = nil
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0.startDragPos then
+function var_0_0._onDrag(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0.startDragPos then
 		return
 	end
 
@@ -150,196 +166,216 @@ function slot0._onDrag(slot0, slot1, slot2)
 		return
 	end
 
-	slot3, slot4 = transformhelper.getLocalPos(slot0._mapContainer)
-	slot5 = slot2.position
-	slot0.startDragPos = slot5
+	local var_11_0, var_11_1 = transformhelper.getLocalPos(arg_11_0._mapContainer)
+	local var_11_2 = arg_11_2.position
+	local var_11_3 = var_11_0 + var_11_2.x - arg_11_0.startDragPos.x
+	local var_11_4 = var_11_1 + var_11_2.y - arg_11_0.startDragPos.y
 
-	transformhelper.setLocalPosXY(slot0._mapContainer, slot3 + slot5.x - slot0.startDragPos.x, slot4 + slot5.y - slot0.startDragPos.y)
-	slot0:calcBound()
+	arg_11_0.startDragPos = var_11_2
+
+	transformhelper.setLocalPosXY(arg_11_0._mapContainer, var_11_3, var_11_4)
+	arg_11_0:calcBound()
 end
 
-function slot0._checkMultDrag(slot0)
+function var_0_0._checkMultDrag(arg_12_0)
 	if UnityEngine.Input.touchCount ~= 2 then
 		return
 	end
 
-	slot2 = UnityEngine.Input.GetTouch(0)
-	slot3 = slot2.position
-	slot5 = UnityEngine.Input.GetTouch(1)
-	slot6 = slot5.position
+	local var_12_0 = UnityEngine.Input.GetTouch(0)
+	local var_12_1 = var_12_0.position
+	local var_12_2 = var_12_0.deltaPosition
+	local var_12_3 = UnityEngine.Input.GetTouch(1)
+	local var_12_4 = var_12_3.position
+	local var_12_5 = var_12_3.deltaPosition
 
-	if (slot2.phase == TouchPhase.Moved or slot2.phase == TouchPhase.Stationary) and (slot5.phase == TouchPhase.Moved or slot5.phase == TouchPhase.Stationary) then
-		slot8 = slot3 - slot2.deltaPosition
-		slot9 = slot6 - slot5.deltaPosition
+	if (var_12_0.phase == TouchPhase.Moved or var_12_0.phase == TouchPhase.Stationary) and (var_12_3.phase == TouchPhase.Moved or var_12_3.phase == TouchPhase.Stationary) then
+		local var_12_6 = var_12_1 - var_12_2
+		local var_12_7 = var_12_4 - var_12_5
 
-		if Vector2.Distance(slot3, slot6) < 5 or Vector2.Distance(slot8, slot9) < 5 then
+		if Vector2.Distance(var_12_1, var_12_4) < 5 or Vector2.Distance(var_12_6, var_12_7) < 5 then
 			return
 		end
 
-		slot0:setScale((0.005 * (Vector2.Distance(slot3, slot6) - Vector2.Distance(slot8, slot9)) + 1) * slot0._scale)
+		local var_12_8 = Vector2.Distance(var_12_6, var_12_7)
+		local var_12_9 = (0.005 * (Vector2.Distance(var_12_1, var_12_4) - var_12_8) + 1) * arg_12_0._scale
+
+		arg_12_0:setScale(var_12_9)
 	end
 end
 
-function slot0.onScaleHandler(slot0, slot1)
-	slot0.startDragPos = nil
+function var_0_0.onScaleHandler(arg_13_0, arg_13_1)
+	arg_13_0.startDragPos = nil
 
-	slot0:setScale(slot0._scale * (1 + (slot1 and 0.1 or -0.1)))
+	arg_13_0:setScale(arg_13_0._scale * (1 + (arg_13_1 and 0.1 or -0.1)))
 end
 
-function slot0.onMouseScrollWheelChange(slot0, slot1)
-	slot0:setScale(slot0._scale * (1 + slot1))
+function var_0_0.onMouseScrollWheelChange(arg_14_0, arg_14_1)
+	arg_14_0:setScale(arg_14_0._scale * (1 + arg_14_1))
 end
 
-function slot0.setScale(slot0, slot1, slot2)
-	if Mathf.Clamp(slot1, uv0, uv1) == slot0._scale then
+function var_0_0.setScale(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_1 = Mathf.Clamp(arg_15_1, var_0_1, var_0_2)
+
+	if arg_15_1 == arg_15_0._scale then
 		return
 	end
 
-	if not slot2 then
-		slot0._slider:SetValue((slot1 - uv0) / (uv1 - uv0))
+	if not arg_15_2 then
+		arg_15_0._slider:SetValue((arg_15_1 - var_0_1) / (var_0_2 - var_0_1))
 	end
 
-	slot3, slot4 = transformhelper.getLocalPos(slot0._mapContainer)
-	slot0._scale = slot1
-	slot9 = 1
+	local var_15_0, var_15_1 = transformhelper.getLocalPos(arg_15_0._mapContainer)
+	local var_15_2 = var_15_0 / arg_15_0._scale * arg_15_1
+	local var_15_3 = var_15_1 / arg_15_0._scale * arg_15_1
 
-	transformhelper.setLocalScale(slot0._mapContainer, slot0._scale, slot0._scale, slot9)
+	arg_15_0._scale = arg_15_1
 
-	slot8 = slot4 / slot0._scale * slot1
+	transformhelper.setLocalScale(arg_15_0._mapContainer, arg_15_0._scale, arg_15_0._scale, 1)
+	transformhelper.setLocalPosXY(arg_15_0._mapContainer, var_15_2, var_15_3)
 
-	transformhelper.setLocalPosXY(slot0._mapContainer, slot3 / slot0._scale * slot1, slot8)
-
-	for slot8, slot9 in pairs(slot0._mapItems) do
-		slot9:setScale(1 / slot0._scale)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._mapItems) do
+		iter_15_1:setScale(1 / arg_15_0._scale)
 	end
 
-	slot0:calcBound()
+	arg_15_0:calcBound()
 end
 
-function slot0.applyRolePos(slot0)
-	if not slot0._hero then
+function var_0_0.applyRolePos(arg_16_0)
+	if not arg_16_0._hero then
 		return
 	end
 
-	slot1 = slot0._hero:getPos()
+	local var_16_0 = arg_16_0._hero:getPos()
+	local var_16_1 = (var_16_0.x - arg_16_0._offsetX - 0.5) * arg_16_0._itemWidth
+	local var_16_2 = (var_16_0.z - arg_16_0._offsetY - 0.5) * arg_16_0._itemHeight
 
-	transformhelper.setLocalPosXY(slot0._heroItem, (slot1.x - slot0._offsetX - 0.5) * slot0._itemWidth, (slot1.z - slot0._offsetY - 0.5) * slot0._itemHeight)
+	transformhelper.setLocalPosXY(arg_16_0._heroItem, var_16_1, var_16_2)
 end
 
-function slot0.onRoleNodeChange(slot0)
-	slot0._fromX = nil
+function var_0_0.onRoleNodeChange(arg_17_0)
+	arg_17_0._fromX = nil
 
-	slot0:calcBound()
+	arg_17_0:calcBound()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._checkMultDrag, slot0)
+function var_0_0.onClose(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._checkMultDrag, arg_18_0)
 
-	slot0._hero = nil
+	arg_18_0._hero = nil
 end
 
-function slot0.calcBound(slot0)
-	slot1, slot2 = transformhelper.getLocalPos(slot0._mapContainer)
+function var_0_0.calcBound(arg_19_0)
+	local var_19_0, var_19_1 = transformhelper.getLocalPos(arg_19_0._mapContainer)
+	local var_19_2 = math.floor((-var_19_0 - arg_19_0._containWidth / 2) / arg_19_0._itemWidth / arg_19_0._scale)
+	local var_19_3 = math.ceil((-var_19_0 + arg_19_0._containWidth / 2) / arg_19_0._itemWidth / arg_19_0._scale)
+	local var_19_4 = math.floor((-var_19_1 - arg_19_0._containHeight / 2) / arg_19_0._itemHeight / arg_19_0._scale)
+	local var_19_5 = math.ceil((-var_19_1 + arg_19_0._containHeight / 2) / arg_19_0._itemHeight / arg_19_0._scale)
 
-	slot0:showMapItem(math.floor((-slot1 - slot0._containWidth / 2) / slot0._itemWidth / slot0._scale) + slot0._offsetX, math.floor((-slot2 - slot0._containHeight / 2) / slot0._itemHeight / slot0._scale) + slot0._offsetY, math.ceil((-slot1 + slot0._containWidth / 2) / slot0._itemWidth / slot0._scale) + slot0._offsetX, math.ceil((-slot2 + slot0._containHeight / 2) / slot0._itemHeight / slot0._scale) + slot0._offsetY)
+	arg_19_0:showMapItem(var_19_2 + arg_19_0._offsetX, var_19_4 + arg_19_0._offsetY, var_19_3 + arg_19_0._offsetX, var_19_5 + arg_19_0._offsetY)
 end
 
-function slot0.showMapItem(slot0, slot1, slot2, slot3, slot4)
-	if slot0._fromX == slot1 and slot0._fromY == slot2 and slot0._toX == slot3 and slot0._toY == slot4 then
+function var_0_0.showMapItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
+	if arg_20_0._fromX == arg_20_1 and arg_20_0._fromY == arg_20_2 and arg_20_0._toX == arg_20_3 and arg_20_0._toY == arg_20_4 then
 		return
 	end
 
-	slot0._toY = slot4
-	slot0._toX = slot3
-	slot0._fromY = slot2
-	slot0._fromX = slot1
-	slot5 = {}
+	arg_20_0._fromX, arg_20_0._fromY, arg_20_0._toX, arg_20_0._toY = arg_20_1, arg_20_2, arg_20_3, arg_20_4
 
-	for slot9 = slot1, slot3 do
-		for slot13 = slot2, slot4 do
-			if not slot0._mapItems[ExploreHelper.getKeyXY(slot9, slot13)] and (ExploreMapModel.instance:getNodeIsShow(slot14) or ExploreMapModel.instance:getNodeIsBound(slot14)) then
-				gohelper.setActive(gohelper.cloneInPlace(slot0._mapItem), true)
+	local var_20_0 = {}
 
-				slot18 = ExploreHelper.getKeyXY(slot9 + 1, slot13)
-				slot19 = ExploreHelper.getKeyXY(slot9, slot13 + 1)
-				slot20 = ExploreHelper.getKeyXY(slot9, slot13 - 1)
+	for iter_20_0 = arg_20_1, arg_20_3 do
+		for iter_20_1 = arg_20_2, arg_20_4 do
+			local var_20_1 = ExploreHelper.getKeyXY(iter_20_0, iter_20_1)
 
-				if ({
-					bound = ExploreMapModel.instance:getNodeBoundType(slot14),
-					left = not ExploreMapModel.instance:getNodeIsShow(ExploreHelper.getKeyXY(slot9 - 1, slot13)) and not ExploreMapModel.instance:getNodeIsBound(slot17),
-					right = not ExploreMapModel.instance:getNodeIsShow(slot18) and not ExploreMapModel.instance:getNodeIsBound(slot18),
-					top = not ExploreMapModel.instance:getNodeIsShow(slot19) and not ExploreMapModel.instance:getNodeIsBound(slot19),
-					bottom = not ExploreMapModel.instance:getNodeIsShow(slot20) and not ExploreMapModel.instance:getNodeIsBound(slot20)
-				}).bound then
-					slot16.left = slot16.left and (slot16.bound == 7 or slot16.bound == 8)
-					slot16.right = slot16.right and (slot16.bound == 7 or slot16.bound == 8)
-					slot16.top = slot16.top and (slot16.bound == 5 or slot16.bound == 6)
-					slot16.bottom = slot16.bottom and (slot16.bound == 5 or slot16.bound == 6)
+			if not arg_20_0._mapItems[var_20_1] and (ExploreMapModel.instance:getNodeIsShow(var_20_1) or ExploreMapModel.instance:getNodeIsBound(var_20_1)) then
+				local var_20_2 = gohelper.cloneInPlace(arg_20_0._mapItem)
+
+				gohelper.setActive(var_20_2, true)
+
+				local var_20_3 = {}
+				local var_20_4 = ExploreHelper.getKeyXY(iter_20_0 - 1, iter_20_1)
+				local var_20_5 = ExploreHelper.getKeyXY(iter_20_0 + 1, iter_20_1)
+				local var_20_6 = ExploreHelper.getKeyXY(iter_20_0, iter_20_1 + 1)
+				local var_20_7 = ExploreHelper.getKeyXY(iter_20_0, iter_20_1 - 1)
+
+				var_20_3.bound = ExploreMapModel.instance:getNodeBoundType(var_20_1)
+				var_20_3.left = not ExploreMapModel.instance:getNodeIsShow(var_20_4) and not ExploreMapModel.instance:getNodeIsBound(var_20_4)
+				var_20_3.right = not ExploreMapModel.instance:getNodeIsShow(var_20_5) and not ExploreMapModel.instance:getNodeIsBound(var_20_5)
+				var_20_3.top = not ExploreMapModel.instance:getNodeIsShow(var_20_6) and not ExploreMapModel.instance:getNodeIsBound(var_20_6)
+				var_20_3.bottom = not ExploreMapModel.instance:getNodeIsShow(var_20_7) and not ExploreMapModel.instance:getNodeIsBound(var_20_7)
+
+				if var_20_3.bound then
+					var_20_3.left = var_20_3.left and (var_20_3.bound == 7 or var_20_3.bound == 8)
+					var_20_3.right = var_20_3.right and (var_20_3.bound == 7 or var_20_3.bound == 8)
+					var_20_3.top = var_20_3.top and (var_20_3.bound == 5 or var_20_3.bound == 6)
+					var_20_3.bottom = var_20_3.bottom and (var_20_3.bound == 5 or var_20_3.bound == 6)
 				end
 
-				slot16.posY = (slot13 - slot0._offsetY) * slot0._itemHeight
-				slot16.posX = (slot9 - slot0._offsetX) * slot0._itemWidth
-				slot16.key = slot14
-				slot0._mapItems[slot14] = MonoHelper.addNoUpdateLuaComOnceToGo(slot15, ExploreMapItem, slot16)
+				var_20_3.posX, var_20_3.posY = (iter_20_0 - arg_20_0._offsetX) * arg_20_0._itemWidth, (iter_20_1 - arg_20_0._offsetY) * arg_20_0._itemHeight
+				var_20_3.key = var_20_1
+				arg_20_0._mapItems[var_20_1] = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_2, ExploreMapItem, var_20_3)
 
-				slot0._mapItems[slot14]:setScale(1 / slot0._scale)
+				arg_20_0._mapItems[var_20_1]:setScale(1 / arg_20_0._scale)
 
-				if slot0._mapItems[slot17] then
-					slot0._mapItems[slot17]._mo.right = false
-					slot5[slot17] = true
+				if arg_20_0._mapItems[var_20_4] then
+					arg_20_0._mapItems[var_20_4]._mo.right = false
+					var_20_0[var_20_4] = true
 				end
 
-				if slot0._mapItems[slot18] then
-					slot0._mapItems[slot18]._mo.left = false
-					slot5[slot18] = true
+				if arg_20_0._mapItems[var_20_5] then
+					arg_20_0._mapItems[var_20_5]._mo.left = false
+					var_20_0[var_20_5] = true
 				end
 
-				if slot0._mapItems[slot19] then
-					slot0._mapItems[slot19]._mo.bottom = false
-					slot5[slot19] = true
+				if arg_20_0._mapItems[var_20_6] then
+					arg_20_0._mapItems[var_20_6]._mo.bottom = false
+					var_20_0[var_20_6] = true
 				end
 
-				if slot0._mapItems[slot20] then
-					slot0._mapItems[slot20]._mo.top = false
-					slot5[slot20] = true
+				if arg_20_0._mapItems[var_20_7] then
+					arg_20_0._mapItems[var_20_7]._mo.top = false
+					var_20_0[var_20_7] = true
 				end
-			elseif slot0._mapItems[slot14] and slot0._mapItems[slot14]._mo.bound ~= ExploreMapModel.instance:getNodeBoundType(slot14) then
-				slot16 = ExploreHelper.getKeyXY(slot9 + 1, slot13)
-				slot17 = ExploreHelper.getKeyXY(slot9, slot13 + 1)
-				slot18 = ExploreHelper.getKeyXY(slot9, slot13 - 1)
-				slot19 = slot0._mapItems[slot14]._mo
-				slot19.left = not ExploreMapModel.instance:getNodeIsShow(ExploreHelper.getKeyXY(slot9 - 1, slot13)) and not ExploreMapModel.instance:getNodeIsBound(slot15)
-				slot19.right = not ExploreMapModel.instance:getNodeIsShow(slot16) and not ExploreMapModel.instance:getNodeIsBound(slot16)
-				slot19.top = not ExploreMapModel.instance:getNodeIsShow(slot17) and not ExploreMapModel.instance:getNodeIsBound(slot17)
-				slot19.bottom = not ExploreMapModel.instance:getNodeIsShow(slot18) and not ExploreMapModel.instance:getNodeIsBound(slot18)
-				slot19.bound = ExploreMapModel.instance:getNodeBoundType(slot14)
+			elseif arg_20_0._mapItems[var_20_1] and arg_20_0._mapItems[var_20_1]._mo.bound ~= ExploreMapModel.instance:getNodeBoundType(var_20_1) then
+				local var_20_8 = ExploreHelper.getKeyXY(iter_20_0 - 1, iter_20_1)
+				local var_20_9 = ExploreHelper.getKeyXY(iter_20_0 + 1, iter_20_1)
+				local var_20_10 = ExploreHelper.getKeyXY(iter_20_0, iter_20_1 + 1)
+				local var_20_11 = ExploreHelper.getKeyXY(iter_20_0, iter_20_1 - 1)
+				local var_20_12 = arg_20_0._mapItems[var_20_1]._mo
 
-				slot0._mapItems[slot14]:updateMo(slot19)
+				var_20_12.left = not ExploreMapModel.instance:getNodeIsShow(var_20_8) and not ExploreMapModel.instance:getNodeIsBound(var_20_8)
+				var_20_12.right = not ExploreMapModel.instance:getNodeIsShow(var_20_9) and not ExploreMapModel.instance:getNodeIsBound(var_20_9)
+				var_20_12.top = not ExploreMapModel.instance:getNodeIsShow(var_20_10) and not ExploreMapModel.instance:getNodeIsBound(var_20_10)
+				var_20_12.bottom = not ExploreMapModel.instance:getNodeIsShow(var_20_11) and not ExploreMapModel.instance:getNodeIsBound(var_20_11)
+				var_20_12.bound = ExploreMapModel.instance:getNodeBoundType(var_20_1)
+
+				arg_20_0._mapItems[var_20_1]:updateMo(var_20_12)
 			end
 		end
 	end
 
-	for slot9 in pairs(slot5) do
-		slot0._mapItems[slot9]:updateMo(slot0._mapItems[slot9]._mo)
+	for iter_20_2 in pairs(var_20_0) do
+		arg_20_0._mapItems[iter_20_2]:updateMo(arg_20_0._mapItems[iter_20_2]._mo)
 	end
 end
 
-function slot0.outlineChange(slot0, slot1)
-	if slot0._mapItems[slot1] then
-		slot0._mapItems[slot1]:updateOutLineIcon()
+function var_0_0.outlineChange(arg_21_0, arg_21_1)
+	if arg_21_0._mapItems[arg_21_1] then
+		arg_21_0._mapItems[arg_21_1]:updateOutLineIcon()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._touchEventMgr then
-		TouchEventMgrHepler.remove(slot0._touchEventMgr)
+function var_0_0.onDestroyView(arg_22_0)
+	if arg_22_0._touchEventMgr then
+		TouchEventMgrHepler.remove(arg_22_0._touchEventMgr)
 
-		slot0._touchEventMgr = nil
+		arg_22_0._touchEventMgr = nil
 	end
 
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragEndListener()
+	arg_22_0._drag:RemoveDragBeginListener()
+	arg_22_0._drag:RemoveDragListener()
+	arg_22_0._drag:RemoveDragEndListener()
 end
 
-return slot0
+return var_0_0

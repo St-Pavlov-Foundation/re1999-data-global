@@ -1,98 +1,111 @@
-module("modules.logic.activity.view.V2a3_Special_SignItem", package.seeall)
+﻿module("modules.logic.activity.view.V2a3_Special_SignItem", package.seeall)
 
-slot0 = class("V2a3_Special_SignItem", LinkageActivity_Page2RewardBase)
+local var_0_0 = class("V2a3_Special_SignItem", LinkageActivity_Page2RewardBase)
 
-function slot0.onInitView(slot0)
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "icon/#txt_num")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "icon/#simage_icon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "icon/#txt_num")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "icon/#simage_icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = string.split
+local var_0_1 = string.split
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	var_0_0.super.onDestroyView(arg_5_0)
 end
 
-function slot0._editableAddEvents(slot0)
-	uv0.super._editableInitView(slot0)
-	slot0._click:AddClickListener(slot0._onClick, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._OnOpenView, slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	var_0_0.super._editableInitView(arg_6_0)
+	arg_6_0._click:AddClickListener(arg_6_0._onClick, arg_6_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_6_0._OnOpenView, arg_6_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._click:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._OnOpenView, slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	arg_7_0._click:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_7_0._OnOpenView, arg_7_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageiconImg = gohelper.findChildImage(slot0._simageicon.gameObject, "")
-	slot0._bgImg = gohelper.findChildImage(slot0.viewGO, "icon/bg")
-	slot0._go_nextday = gohelper.findChild(slot0.viewGO, "go_nextday")
-	slot0._goCanGet = gohelper.findChild(slot0.viewGO, "go_canget")
-	slot0._goGet = gohelper.findChild(slot0.viewGO, "go_hasget")
-	slot0._click = gohelper.getClick(gohelper.findChild(slot0.viewGO, "clickarea"))
-	slot0._txtnum.text = ""
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._simageiconImg = gohelper.findChildImage(arg_8_0._simageicon.gameObject, "")
+	arg_8_0._bgImg = gohelper.findChildImage(arg_8_0.viewGO, "icon/bg")
+	arg_8_0._go_nextday = gohelper.findChild(arg_8_0.viewGO, "go_nextday")
+	arg_8_0._goCanGet = gohelper.findChild(arg_8_0.viewGO, "go_canget")
+	arg_8_0._goGet = gohelper.findChild(arg_8_0.viewGO, "go_hasget")
+	arg_8_0._click = gohelper.getClick(gohelper.findChild(arg_8_0.viewGO, "clickarea"))
+	arg_8_0._txtnum.text = ""
 
-	slot0:setActive_goGet(false)
-	slot0:setActive_goCanGet(false)
+	arg_8_0:setActive_goGet(false)
+	arg_8_0:setActive_goCanGet(false)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	var_0_0.super.onUpdateMO(arg_9_0, arg_9_1)
 
-	slot3 = slot0:isType101RewardGet() and "#808080" or "#ffffff"
+	local var_9_0 = arg_9_0:isType101RewardGet()
+	local var_9_1 = var_9_0 and "#808080" or "#ffffff"
+	local var_9_2 = arg_9_0:getNorSignActivityCo()
+	local var_9_3 = arg_9_0._index
+	local var_9_4 = var_0_1(var_9_2.bonus, "|")
+	local var_9_5 = #var_9_4
 
-	assert(#uv1(slot0:getNorSignActivityCo().bonus, "|") == 1, string.format("[V2a3_Special_SignItem] rewardCount=%s", tostring(slot7)))
+	assert(var_9_5 == 1, string.format("[V2a3_Special_SignItem] rewardCount=%s", tostring(var_9_5)))
 
-	slot8 = string.splitToNumber(slot6[1], "#")
-	slot1._itemCo = slot8
+	local var_9_6 = string.splitToNumber(var_9_4[1], "#")
 
-	GameUtil.loadSImage(slot0._simageicon, slot0:_assetGetViewContainer():getItemIconResUrl(slot8[1], slot8[2]))
-	UIColorHelper.set(slot0._simageiconImg, slot3)
-	UIColorHelper.set(slot0._bgImg, slot3)
+	arg_9_1._itemCo = var_9_6
 
-	slot0._txtnum.text = luaLang("multiple") .. slot8[3]
+	local var_9_7 = arg_9_0:_assetGetViewContainer():getItemIconResUrl(var_9_6[1], var_9_6[2])
 
-	slot0:setActive_goGet(slot2)
-	slot0:setActive_goCanGet(slot0:isType101RewardCouldGet())
-	slot0:setActive_goTmr(slot0:getType101LoginCount() + 1 == slot0._index)
+	GameUtil.loadSImage(arg_9_0._simageicon, var_9_7)
+	UIColorHelper.set(arg_9_0._simageiconImg, var_9_1)
+	UIColorHelper.set(arg_9_0._bgImg, var_9_1)
+
+	arg_9_0._txtnum.text = luaLang("multiple") .. var_9_6[3]
+
+	arg_9_0:setActive_goGet(var_9_0)
+	arg_9_0:setActive_goCanGet(arg_9_0:isType101RewardCouldGet())
+
+	local var_9_8 = arg_9_0:getType101LoginCount()
+
+	arg_9_0:setActive_goTmr(var_9_8 + 1 == var_9_3)
 end
 
-function slot0.setActive_goCanGet(slot0, slot1)
-	gohelper.setActive(slot0._goCanGet, slot1)
+function var_0_0.setActive_goCanGet(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._goCanGet, arg_10_1)
 end
 
-function slot0.setActive_goGet(slot0, slot1)
-	gohelper.setActive(slot0._goGet, slot1)
+function var_0_0.setActive_goGet(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._goGet, arg_11_1)
 end
 
-function slot0.setActive_goTmr(slot0, slot1)
-	gohelper.setActive(slot0._go_nextday, slot1)
+function var_0_0.setActive_goTmr(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._go_nextday, arg_12_1)
 end
 
-function slot0._onClick(slot0)
-	if not slot0:isActOnLine() then
+function var_0_0._onClick(arg_13_0)
+	if not arg_13_0:isActOnLine() then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	if slot0:isType101RewardCouldGet() then
-		slot0:sendGet101BonusRequest()
+	if arg_13_0:isType101RewardCouldGet() then
+		arg_13_0:sendGet101BonusRequest()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tags_2000013)
 
 		return
@@ -100,15 +113,15 @@ function slot0._onClick(slot0)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_25050217)
 
-	slot3 = slot0._mo._itemCo
+	local var_13_0 = arg_13_0._mo._itemCo
 
-	MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2])
+	MaterialTipController.instance:showMaterialInfo(var_13_0[1], var_13_0[2])
 end
 
-function slot0._OnOpenView(slot0, slot1)
-	if slot1 == ViewName.RoomBlockPackageGetView then
+function var_0_0._OnOpenView(arg_14_0, arg_14_1)
+	if arg_14_1 == ViewName.RoomBlockPackageGetView then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shenghuo_building_collect_20234002)
 	end
 end
 
-return slot0
+return var_0_0

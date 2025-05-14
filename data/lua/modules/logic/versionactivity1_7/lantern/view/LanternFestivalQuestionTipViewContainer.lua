@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalQuestionTipViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalQuestionTipViewContainer", package.seeall)
 
-slot0 = class("LanternFestivalQuestionTipViewContainer", BaseViewContainer)
+local var_0_0 = class("LanternFestivalQuestionTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		LanternFestivalQuestionTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

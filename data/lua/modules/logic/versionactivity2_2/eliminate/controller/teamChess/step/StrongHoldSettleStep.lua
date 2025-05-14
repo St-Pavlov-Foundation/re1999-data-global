@@ -1,43 +1,47 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.StrongHoldSettleStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.StrongHoldSettleStep", package.seeall)
 
-slot0 = class("StrongHoldSettleStep", EliminateTeamChessStepBase)
+local var_0_0 = class("StrongHoldSettleStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data
-	slot2 = slot1.strongholdId
-	slot3 = slot1.state
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
+	local var_1_1 = var_1_0.strongholdId
+	local var_1_2 = var_1_0.state
 
-	TeamChessUnitEntityMgr.instance:cacheEntityShowMode(slot2)
-	EliminateTeamChessModel.instance:strongHoldSettle(slot2, slot3)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.StrongHoldSettle, slot2, slot3)
+	TeamChessUnitEntityMgr.instance:cacheEntityShowMode(var_1_1)
+	EliminateTeamChessModel.instance:strongHoldSettle(var_1_1, var_1_2)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.StrongHoldSettle, var_1_1, var_1_2)
 
-	slot4 = ""
+	local var_1_3 = ""
 
-	if EliminateTeamChessEnum.StrongHoldState.enemySide == slot3 then
-		slot4 = tostring(EliminateTeamChessEnum.TeamChessTeamType.enemy)
+	if EliminateTeamChessEnum.StrongHoldState.enemySide == var_1_2 then
+		var_1_3 = tostring(EliminateTeamChessEnum.TeamChessTeamType.enemy)
 	end
 
-	if EliminateTeamChessEnum.StrongHoldState.mySide == slot3 then
-		slot4 = tostring(EliminateTeamChessEnum.TeamChessTeamType.player)
+	if EliminateTeamChessEnum.StrongHoldState.mySide == var_1_2 then
+		var_1_3 = tostring(EliminateTeamChessEnum.TeamChessTeamType.player)
 	end
 
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.SettleAndToHaveDamage, slot4)
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.SettleAndToHaveDamage, var_1_3)
 
-	slot5 = EliminateTeamChessModel.instance:getStronghold(slot2)
+	local var_1_4 = EliminateTeamChessModel.instance:getStronghold(var_1_1)
+	local var_1_5 = var_1_4:getPlayerSoliderCount()
+	local var_1_6 = var_1_4:getEnemySoliderCount()
+	local var_1_7 = 0
 
-	if slot5:getPlayerSoliderCount() > 0 or slot5:getEnemySoliderCount() > 0 then
-		slot8 = 0 + EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime + EliminateTeamChessEnum.StrongHoldBattleVxTime
+	if var_1_5 > 0 or var_1_6 > 0 then
+		var_1_7 = var_1_7 + EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime
+		var_1_7 = var_1_7 + EliminateTeamChessEnum.StrongHoldBattleVxTime
 	end
 
-	if slot5.enemyScore ~= slot5.myScore then
-		slot8 = slot8 + math.max(EliminateTeamChessEnum.teamChessWinOpenTime, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
+	if var_1_4.enemyScore ~= var_1_4.myScore then
+		var_1_7 = var_1_7 + math.max(EliminateTeamChessEnum.teamChessWinOpenTime, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
 	end
 
-	if slot8 > 0 then
-		TaskDispatcher.runDelay(slot0._onDone, slot0, slot8)
+	if var_1_7 > 0 then
+		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_7)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

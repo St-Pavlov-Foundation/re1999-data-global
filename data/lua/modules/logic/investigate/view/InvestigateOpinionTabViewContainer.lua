@@ -1,97 +1,97 @@
-module("modules.logic.investigate.view.InvestigateOpinionTabViewContainer", package.seeall)
+﻿module("modules.logic.investigate.view.InvestigateOpinionTabViewContainer", package.seeall)
 
-slot0 = class("InvestigateOpinionTabViewContainer", BaseViewContainer)
+local var_0_0 = class("InvestigateOpinionTabViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, InvestigateOpinionTabView.New())
-	table.insert(slot1, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(var_1_0, InvestigateOpinionTabView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
 
-	slot0._tabViewGroupFit = TabViewGroupFit.New(2, "root/#go_container")
+	arg_1_0._tabViewGroupFit = TabViewGroupFit.New(2, "root/#go_container")
 
-	slot0._tabViewGroupFit:keepCloseVisible(true)
-	slot0._tabViewGroupFit:setTabCloseFinishCallback(slot0._onTabCloseFinish, slot0)
-	slot0._tabViewGroupFit:setTabOpenFinishCallback(slot0._onTabOpenFinish, slot0)
-	table.insert(slot1, slot0._tabViewGroupFit)
+	arg_1_0._tabViewGroupFit:keepCloseVisible(true)
+	arg_1_0._tabViewGroupFit:setTabCloseFinishCallback(arg_1_0._onTabCloseFinish, arg_1_0)
+	arg_1_0._tabViewGroupFit:setTabOpenFinishCallback(arg_1_0._onTabOpenFinish, arg_1_0)
+	table.insert(var_1_0, arg_1_0._tabViewGroupFit)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 
-	if slot1 == 2 then
-		slot0._commonView = InvestigateOpinionCommonView.New()
-		slot0._commonExtendView = InvestigateOpinionCommonView.New()
+	if arg_2_1 == 2 then
+		arg_2_0._commonView = InvestigateOpinionCommonView.New()
+		arg_2_0._commonExtendView = InvestigateOpinionCommonView.New()
 
-		slot0._commonExtendView:setInExtendView(true)
+		arg_2_0._commonExtendView:setInExtendView(true)
 
-		slot0._opinionView = InvestigateOpinionView.New()
-		slot0._opinionExtendView = InvestigateOpinionExtendView.New()
+		arg_2_0._opinionView = InvestigateOpinionView.New()
+		arg_2_0._opinionExtendView = InvestigateOpinionExtendView.New()
 
 		return {
 			MultiView.New({
-				slot0._commonView,
-				slot0._opinionView
+				arg_2_0._commonView,
+				arg_2_0._opinionView
 			}),
 			MultiView.New({
-				slot0._commonExtendView,
-				slot0._opinionExtendView
+				arg_2_0._commonExtendView,
+				arg_2_0._opinionExtendView
 			})
 		}
 	end
 end
 
-function slot0.getCurTabId(slot0)
-	return slot0._tabViewGroupFit:getCurTabId()
+function var_0_0.getCurTabId(arg_3_0)
+	return arg_3_0._tabViewGroupFit:getCurTabId()
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.switchTab(arg_4_0, arg_4_1)
+	arg_4_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_4_1)
 end
 
-function slot0._onTabCloseFinish(slot0, slot1, slot2)
-	slot0._closeTabId = slot1
+function var_0_0._onTabCloseFinish(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._closeTabId = arg_5_1
 
-	slot0._tabViewGroupFit:setTabAlpha(slot1, 1)
+	arg_5_0._tabViewGroupFit:setTabAlpha(arg_5_1, 1)
 end
 
-function slot0._onTabOpenFinish(slot0, slot1, slot2, slot3)
-	slot0._openTabId = slot1
+function var_0_0._onTabOpenFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._openTabId = arg_6_1
 
-	if slot0._closeTabId == slot0._openTabId then
+	if arg_6_0._closeTabId == arg_6_0._openTabId then
 		return
 	end
 
-	if slot1 == 1 then
-		gohelper.setAsFirstSibling(slot2.viewGO)
+	if arg_6_1 == 1 then
+		gohelper.setAsFirstSibling(arg_6_2.viewGO)
 
-		if slot0._closeTabId then
-			slot0._opinionExtendView:playAnim("gone", slot0._onAnimDone, slot0)
+		if arg_6_0._closeTabId then
+			arg_6_0._opinionExtendView:playAnim("gone", arg_6_0._onAnimDone, arg_6_0)
 		end
 	else
-		gohelper.setAsLastSibling(slot2.viewGO)
-		slot0._opinionExtendView:playAnim("into", slot0._onAnimDone, slot0)
+		gohelper.setAsLastSibling(arg_6_2.viewGO)
+		arg_6_0._opinionExtendView:playAnim("into", arg_6_0._onAnimDone, arg_6_0)
 	end
 end
 
-function slot0._onAnimDone(slot0)
-	if slot0._openTabId == 1 then
-		slot0._tabViewGroupFit:setTabAlpha(2, 0)
+function var_0_0._onAnimDone(arg_7_0)
+	if arg_7_0._openTabId == 1 then
+		arg_7_0._tabViewGroupFit:setTabAlpha(2, 0)
 	else
-		slot0._tabViewGroupFit:setTabAlpha(1, 0)
+		arg_7_0._tabViewGroupFit:setTabAlpha(1, 0)
 	end
 end
 
-return slot0
+return var_0_0

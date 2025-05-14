@@ -1,139 +1,166 @@
-module("modules.logic.toast.view.ToastView", package.seeall)
+﻿module("modules.logic.toast.view.ToastView", package.seeall)
 
-slot0 = class("ToastView", BaseView)
-slot1 = 10000
+local var_0_0 = class("ToastView", BaseView)
+local var_0_1 = 10000
 
-function slot0.onInitView(slot0)
-	slot0._gotemplate = gohelper.findChild(slot0.viewGO, "#go_template")
-	slot0._gopoint = gohelper.findChild(slot0.viewGO, "#go_point")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_template")
+	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "#go_point")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._usingList = {}
-	slot0._freeList = {}
-	slot0._cacheMsgList = {}
-	slot0._maxCount = 4
-	slot0.space = 5
-	slot0._showNextToastInterval = 0.1
-	slot0.hadTask = false
-	slot1 = slot0._gotemplate.transform
-	slot0._itemHeight = recthelper.getHeight(slot1)
-	slot0._itemWidth = recthelper.getWidth(slot1)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._usingList = {}
+	arg_4_0._freeList = {}
+	arg_4_0._cacheMsgList = {}
+	arg_4_0._maxCount = 4
+	arg_4_0.space = 5
+	arg_4_0._showNextToastInterval = 0.1
+	arg_4_0.hadTask = false
 
-	slot0:_initExpandedSpace()
-	recthelper.setAnchor(slot0._gotemplate.transform, uv0, uv0)
+	local var_4_0 = arg_4_0._gotemplate.transform
+
+	arg_4_0._itemHeight = recthelper.getHeight(var_4_0)
+	arg_4_0._itemWidth = recthelper.getWidth(var_4_0)
+
+	arg_4_0:_initExpandedSpace()
+	recthelper.setAnchor(arg_4_0._gotemplate.transform, var_0_1, var_0_1)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addToastMsg(slot0.viewParam)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addToastMsg(arg_7_0.viewParam)
 
-	slot1 = ToastController.instance._msgList
+	local var_7_0 = ToastController.instance._msgList
 
-	while #slot1 > 0 do
-		slot0:addToastMsg(table.remove(slot1, 1))
+	while #var_7_0 > 0 do
+		arg_7_0:addToastMsg(table.remove(var_7_0, 1))
 	end
 
-	slot0:addEventCb(ToastController.instance, ToastEvent.ShowToast, slot0.addToastMsg, slot0)
-	slot0:addEventCb(ToastController.instance, ToastEvent.RecycleToast, slot0._doRecycleAnimation, slot0)
+	arg_7_0:addEventCb(ToastController.instance, ToastEvent.ShowToast, arg_7_0.addToastMsg, arg_7_0)
+	arg_7_0:addEventCb(ToastController.instance, ToastEvent.RecycleToast, arg_7_0._doRecycleAnimation, arg_7_0)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(ToastController.instance, ToastEvent.ShowToast, slot0.addToastMsg, slot0)
-	slot0:removeEventCb(ToastController.instance, ToastEvent.RecycleToast, slot0._doRecycleAnimation, slot0)
-	TaskDispatcher.cancelTask(slot0._showToast, slot0)
+function var_0_0.onClose(arg_8_0)
+	arg_8_0:removeEventCb(ToastController.instance, ToastEvent.ShowToast, arg_8_0.addToastMsg, arg_8_0)
+	arg_8_0:removeEventCb(ToastController.instance, ToastEvent.RecycleToast, arg_8_0._doRecycleAnimation, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._showToast, arg_8_0)
 
-	slot0.hadTask = false
+	arg_8_0.hadTask = false
 end
 
-function slot0.addToastMsg(slot0, slot1)
-	table.insert(slot0._cacheMsgList, slot1)
+function var_0_0.addToastMsg(arg_9_0, arg_9_1)
+	table.insert(arg_9_0._cacheMsgList, arg_9_1)
 
-	if not slot0.hadTask then
-		slot0:_showToast()
-		TaskDispatcher.runRepeat(slot0._showToast, slot0, slot0._showNextToastInterval)
+	if not arg_9_0.hadTask then
+		arg_9_0:_showToast()
+		TaskDispatcher.runRepeat(arg_9_0._showToast, arg_9_0, arg_9_0._showNextToastInterval)
 
-		slot0.hadTask = true
+		arg_9_0.hadTask = true
 	end
 end
 
-function slot0._showToast(slot0)
-	if not table.remove(slot0._cacheMsgList, 1) then
-		TaskDispatcher.cancelTask(slot0._showToast, slot0)
+function var_0_0._showToast(arg_10_0)
+	local var_10_0 = table.remove(arg_10_0._cacheMsgList, 1)
 
-		slot0.hadTask = false
+	if not var_10_0 then
+		TaskDispatcher.cancelTask(arg_10_0._showToast, arg_10_0)
+
+		arg_10_0.hadTask = false
 
 		return
 	end
 
-	slot2 = table.remove(slot0._freeList, 1) or MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gotemplate, slot0._gopoint), ToastItem)
-	slot3 = nil
+	local var_10_1 = table.remove(arg_10_0._freeList, 1)
 
-	if slot0._maxCount <= #slot0._usingList then
-		slot0:_doRecycleAnimation(slot0._usingList[1], true)
+	if not var_10_1 then
+		local var_10_2 = gohelper.clone(arg_10_0._gotemplate, arg_10_0._gopoint)
+
+		var_10_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_2, ToastItem)
 	end
 
-	table.insert(slot0._usingList, slot2)
-	slot2:setMsg(slot1)
-	slot2:appearAnimation(slot1)
-	slot0:_refreshAllItemsAnimation()
-end
+	local var_10_3
 
-function slot0._doRecycleAnimation(slot0, slot1, slot2)
-	if tabletool.indexOf(slot0._usingList, slot1) then
-		table.remove(slot0._usingList, slot3)
+	if #arg_10_0._usingList >= arg_10_0._maxCount then
+		local var_10_4 = arg_10_0._usingList[1]
+
+		arg_10_0:_doRecycleAnimation(var_10_4, true)
 	end
 
-	slot1:clearAllTask()
-	slot1:quitAnimation(slot0._recycleToast, slot0)
+	table.insert(arg_10_0._usingList, var_10_1)
+	var_10_1:setMsg(var_10_0)
+	var_10_1:appearAnimation(var_10_0)
+	arg_10_0:_refreshAllItemsAnimation()
 end
 
-function slot0._recycleToast(slot0, slot1)
-	slot1:reset()
-	table.insert(slot0._freeList, slot1)
+function var_0_0._doRecycleAnimation(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = tabletool.indexOf(arg_11_0._usingList, arg_11_1)
+
+	if var_11_0 then
+		table.remove(arg_11_0._usingList, var_11_0)
+	end
+
+	arg_11_1:clearAllTask()
+	arg_11_1:quitAnimation(arg_11_0._recycleToast, arg_11_0)
 end
 
-function slot0._refreshAllItemsAnimation(slot0)
-	slot1 = 0
-	slot0._preAnchorY = 0
+function var_0_0._recycleToast(arg_12_0, arg_12_1)
+	arg_12_1:reset()
+	table.insert(arg_12_0._freeList, arg_12_1)
+end
 
-	for slot5 = 1, #slot0._usingList do
-		if slot5 > 1 then
-			slot1 = slot0._preAnchorY - slot6 - (slot0._templateMinHeight < slot0._usingList[slot5 - 1]:getToastItemHeight() and slot0._templateMinHeight < slot0._usingList[slot5]:getToastItemHeight() and slot0._spaceWhenExpanded or slot0.space)
+function var_0_0._refreshAllItemsAnimation(arg_13_0)
+	local var_13_0 = 0
+
+	arg_13_0._preAnchorY = 0
+
+	for iter_13_0 = 1, #arg_13_0._usingList do
+		if iter_13_0 > 1 then
+			local var_13_1 = arg_13_0._usingList[iter_13_0 - 1]:getToastItemHeight()
+			local var_13_2 = arg_13_0._usingList[iter_13_0]:getToastItemHeight()
+			local var_13_3 = var_13_1 > arg_13_0._templateMinHeight and var_13_2 > arg_13_0._templateMinHeight and arg_13_0._spaceWhenExpanded or arg_13_0.space
+
+			var_13_0 = arg_13_0._preAnchorY - var_13_1 - var_13_3
 		end
 
-		slot0._preAnchorY = slot1
+		arg_13_0._preAnchorY = var_13_0
 
-		if slot5 == #slot0._usingList then
-			recthelper.setAnchorY(slot0._usingList[slot5].tr, slot1)
+		if iter_13_0 == #arg_13_0._usingList then
+			recthelper.setAnchorY(arg_13_0._usingList[iter_13_0].tr, var_13_0)
 		else
-			slot0._usingList[slot5]:upAnimation(slot1)
+			arg_13_0._usingList[iter_13_0]:upAnimation(var_13_0)
 		end
 	end
 end
 
-function slot0._initExpandedSpace(slot0)
-	slot0._spaceWhenExpanded = slot0.space
-	slot0._templateMinHeight = slot0._gotemplate:GetComponent(typeof(UnityEngine.UI.LayoutElement)).minHeight
+function var_0_0._initExpandedSpace(arg_14_0)
+	local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "#go_template/#go_normal/bg").transform
+	local var_14_1 = arg_14_0._gotemplate:GetComponent(typeof(UnityEngine.UI.LayoutElement))
 
-	if gohelper.findChild(slot0.viewGO, "#go_template/#go_normal/bg").transform.anchorMin.y == 0 and slot1.anchorMax.y == 1 then
-		slot0._spaceWhenExpanded = (slot1.offsetMax.y - slot1.offsetMin.y) * 0.5
+	arg_14_0._spaceWhenExpanded = arg_14_0.space
+	arg_14_0._templateMinHeight = var_14_1.minHeight
+
+	if var_14_0.anchorMin.y == 0 and var_14_0.anchorMax.y == 1 then
+		arg_14_0._spaceWhenExpanded = (var_14_0.offsetMax.y - var_14_0.offsetMin.y) * 0.5
 	end
 end
 
-return slot0
+return var_0_0

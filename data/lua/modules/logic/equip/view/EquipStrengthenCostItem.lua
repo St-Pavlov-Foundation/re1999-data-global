@@ -1,59 +1,63 @@
-module("modules.logic.equip.view.EquipStrengthenCostItem", package.seeall)
+﻿module("modules.logic.equip.view.EquipStrengthenCostItem", package.seeall)
 
-slot0 = class("EquipStrengthenCostItem", BaseChildView)
+local var_0_0 = class("EquipStrengthenCostItem", BaseChildView)
 
-function slot0.onInitView(slot0)
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_item")
-	slot0._goblank = gohelper.findChild(slot0.viewGO, "#go_blank")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
+	arg_1_0._goblank = gohelper.findChild(arg_1_0.viewGO, "#go_blank")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._click = gohelper.getClickWithAudio(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._click = gohelper.getClickWithAudio(arg_4_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_4_0._click:AddClickListener(arg_4_0._onClick, arg_4_0)
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_5_0)
 	EquipController.instance:openEquipChooseView()
 end
 
-function slot0.onUpdateParam(slot0)
-	if not slot0.viewParam then
-		slot0._goblank:SetActive(true)
-		slot0._goitem:SetActive(false)
+function var_0_0.onUpdateParam(arg_6_0)
+	if not arg_6_0.viewParam then
+		arg_6_0._goblank:SetActive(true)
+		arg_6_0._goitem:SetActive(false)
 
 		return
 	end
 
-	slot0._goblank:SetActive(false)
-	slot0._goitem:SetActive(true)
+	arg_6_0._goblank:SetActive(false)
+	arg_6_0._goitem:SetActive(true)
 
-	if not slot0._itemIcon then
-		slot0._itemIcon = IconMgr.instance:getCommonEquipIcon(slot0._goitem)
+	if not arg_6_0._itemIcon then
+		arg_6_0._itemIcon = IconMgr.instance:getCommonEquipIcon(arg_6_0._goitem)
 	end
 
-	slot0._itemIcon:setEquipMO(slot0.viewParam)
-	slot0._itemIcon:showLevel()
+	arg_6_0._itemIcon:setEquipMO(arg_6_0.viewParam)
+	arg_6_0._itemIcon:showLevel()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._click:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

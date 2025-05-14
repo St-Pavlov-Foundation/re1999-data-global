@@ -1,90 +1,93 @@
-module("modules.logic.fight.controller.FightRoundPreloadController", package.seeall)
+﻿module("modules.logic.fight.controller.FightRoundPreloadController", package.seeall)
 
-slot0 = class("FightRoundPreloadController", BaseController)
+local var_0_0 = class("FightRoundPreloadController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._roundPreloadSequence = FlowSequence.New()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._roundPreloadSequence = FlowSequence.New()
 
-	slot0._roundPreloadSequence:addWork(FightRoundPreloadTimelineWork.New())
-	slot0._roundPreloadSequence:addWork(FightPreloadTimelineRefWork.New())
-	slot0._roundPreloadSequence:addWork(FightRoundPreloadEffectWork.New())
+	arg_1_0._roundPreloadSequence:addWork(FightRoundPreloadTimelineWork.New())
+	arg_1_0._roundPreloadSequence:addWork(FightPreloadTimelineRefWork.New())
+	arg_1_0._roundPreloadSequence:addWork(FightRoundPreloadEffectWork.New())
 
-	slot0._monsterPreloadSequence = FlowSequence.New()
+	arg_1_0._monsterPreloadSequence = FlowSequence.New()
 
-	slot0._monsterPreloadSequence:addWork(FightRoundPreloadMonsterWork.New())
+	arg_1_0._monsterPreloadSequence:addWork(FightRoundPreloadMonsterWork.New())
 
-	slot0._context = {
-		callback = slot0._onPreloadOneFinish,
-		callbackObj = slot0
+	arg_1_0._context = {
+		callback = arg_1_0._onPreloadOneFinish,
+		callbackObj = arg_1_0
 	}
 end
 
-function slot0.addConstEvents(slot0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
 end
 
-function slot0.reInit(slot0)
-	slot0:dispose()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:dispose()
 end
 
-function slot0._onStageChange(slot0, slot1)
-	if slot1 == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
-		slot0:preload()
-	elseif slot1 == FightEnum.Stage.Play then
-		if slot0._monsterPreloadSequence and slot0._monsterPreloadSequence.status == WorkStatus.Running then
-			slot0._monsterPreloadSequence:stop()
+function var_0_0._onStageChange(arg_4_0, arg_4_1)
+	if arg_4_1 == FightEnum.Stage.Card or arg_4_1 == FightEnum.Stage.AutoCard then
+		arg_4_0:preload()
+	elseif arg_4_1 == FightEnum.Stage.Play then
+		if arg_4_0._monsterPreloadSequence and arg_4_0._monsterPreloadSequence.status == WorkStatus.Running then
+			arg_4_0._monsterPreloadSequence:stop()
 		end
 
-		slot0._monsterPreloadSequence:start(slot0._context)
+		arg_4_0._monsterPreloadSequence:start(arg_4_0._context)
 	end
 end
 
-function slot0.preload(slot0)
-	slot0._assetItemDict = slot0._assetItemDict or slot0:getUserDataTb_()
+function var_0_0.preload(arg_5_0)
+	arg_5_0._assetItemDict = arg_5_0._assetItemDict or arg_5_0:getUserDataTb_()
 
-	if slot0._roundPreloadSequence and slot0._roundPreloadSequence.status == WorkStatus.Running then
-		slot0._roundPreloadSequence:stop()
+	if arg_5_0._roundPreloadSequence and arg_5_0._roundPreloadSequence.status == WorkStatus.Running then
+		arg_5_0._roundPreloadSequence:stop()
 	end
 
-	slot0._roundPreloadSequence:registerDoneListener(slot0._onPreloadDone, slot0)
-	slot0._roundPreloadSequence:start(slot0._context)
+	arg_5_0._roundPreloadSequence:registerDoneListener(arg_5_0._onPreloadDone, arg_5_0)
+	arg_5_0._roundPreloadSequence:start(arg_5_0._context)
 end
 
-function slot0.dispose(slot0)
-	slot0._battleId = nil
+function var_0_0.dispose(arg_6_0)
+	arg_6_0._battleId = nil
 
-	slot0._roundPreloadSequence:stop()
-	slot0._monsterPreloadSequence:stop()
+	arg_6_0._roundPreloadSequence:stop()
+	arg_6_0._monsterPreloadSequence:stop()
 
-	if slot0._assetItemDict then
-		for slot4, slot5 in pairs(slot0._assetItemDict) do
-			slot5:Release()
+	if arg_6_0._assetItemDict then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._assetItemDict) do
+			iter_6_1:Release()
 
-			slot0._assetItemDict[slot4] = nil
+			arg_6_0._assetItemDict[iter_6_0] = nil
 		end
 
-		slot0._assetItemDict = nil
+		arg_6_0._assetItemDict = nil
 	end
 
-	slot0._context.timelineDict = nil
-	slot0._context.timelineUrlDict = nil
-	slot0._context.timelineSkinDict = nil
+	arg_6_0._context.timelineDict = nil
+	arg_6_0._context.timelineUrlDict = nil
+	arg_6_0._context.timelineSkinDict = nil
 
-	slot0._roundPreloadSequence:unregisterDoneListener(slot0._onPreloadDone, slot0)
-	slot0:__onDispose()
+	arg_6_0._roundPreloadSequence:unregisterDoneListener(arg_6_0._onPreloadDone, arg_6_0)
+	arg_6_0:__onDispose()
 end
 
-function slot0._onPreloadDone(slot0)
+function var_0_0._onPreloadDone(arg_7_0)
+	return
 end
 
-function slot0._onPreloadOneFinish(slot0, slot1)
-	if not slot0._assetItemDict[slot1.ResPath] then
-		slot0._assetItemDict[slot2] = slot1
+function var_0_0._onPreloadOneFinish(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.ResPath
 
-		slot1:Retain()
+	if not arg_8_0._assetItemDict[var_8_0] then
+		arg_8_0._assetItemDict[var_8_0] = arg_8_1
+
+		arg_8_1:Retain()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

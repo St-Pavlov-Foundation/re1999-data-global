@@ -1,139 +1,157 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamItemListView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamItemListView", package.seeall)
 
-slot0 = class("V1a6_CachotTeamItemListView", BaseView)
+local var_0_0 = class("V1a6_CachotTeamItemListView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gopresetcontent = gohelper.findChild(slot0.viewGO, "#go_tipswindow/left/scroll_view/Viewport/#go_presetcontent")
-	slot0._gopreparecontent = gohelper.findChild(slot0.viewGO, "#go_tipswindow/right/scroll_view/Viewport/#go_preparecontent")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gopresetcontent = gohelper.findChild(arg_1_0.viewGO, "#go_tipswindow/left/scroll_view/Viewport/#go_presetcontent")
+	arg_1_0._gopreparecontent = gohelper.findChild(arg_1_0.viewGO, "#go_tipswindow/right/scroll_view/Viewport/#go_preparecontent")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._initPresetItemList(slot0)
-	if slot0._presetItemList then
+function var_0_0._initPresetItemList(arg_5_0)
+	if arg_5_0._presetItemList then
 		return
 	end
 
-	slot0._presetItemList = slot0:getUserDataTb_()
+	arg_5_0._presetItemList = arg_5_0:getUserDataTb_()
 
-	for slot5 = 1, V1a6_CachotEnum.HeroCountInGroup do
-		slot7 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gopresetcontent, "item" .. tostring(slot5)), V1a6_CachotTeamItem)
-		slot0._presetItemList[slot5] = slot7
+	local var_5_0 = arg_5_0.viewContainer:getSetting().otherRes[1]
 
-		slot7:setInteractable(slot0._isInitSelect)
-		slot7:setHpVisible(not slot0._isInitSelect)
+	for iter_5_0 = 1, V1a6_CachotEnum.HeroCountInGroup do
+		local var_5_1 = arg_5_0:getResInst(var_5_0, arg_5_0._gopresetcontent, "item" .. tostring(iter_5_0))
+		local var_5_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, V1a6_CachotTeamItem)
+
+		arg_5_0._presetItemList[iter_5_0] = var_5_2
+
+		var_5_2:setInteractable(arg_5_0._isInitSelect)
+		var_5_2:setHpVisible(not arg_5_0._isInitSelect)
 	end
 end
 
-function slot0._initPrepareItemList(slot0)
-	if slot0._prepareItemList then
+function var_0_0._initPrepareItemList(arg_6_0)
+	if arg_6_0._prepareItemList then
 		return
 	end
 
-	slot0._prepareItemList = slot0:getUserDataTb_()
-	slot2 = V1a6_CachotTeamModel.instance:getPrepareNum()
+	arg_6_0._prepareItemList = arg_6_0:getUserDataTb_()
 
-	for slot6 = 1, 4 do
-		slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._gopreparecontent, "item" .. tostring(slot6)), V1a6_CachotTeamPrepareItem)
-		slot0._prepareItemList[slot6] = slot8
+	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
+	local var_6_1 = V1a6_CachotTeamModel.instance:getPrepareNum()
 
-		slot8:setInteractable(slot0._isInitSelect and slot6 <= slot2)
-		slot8:setHpVisible(not slot0._isInitSelect)
+	for iter_6_0 = 1, 4 do
+		local var_6_2 = arg_6_0:getResInst(var_6_0, arg_6_0._gopreparecontent, "item" .. tostring(iter_6_0))
+		local var_6_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_2, V1a6_CachotTeamPrepareItem)
 
-		if slot2 < slot6 then
-			slot8:showNone()
+		arg_6_0._prepareItemList[iter_6_0] = var_6_3
+
+		var_6_3:setInteractable(arg_6_0._isInitSelect and iter_6_0 <= var_6_1)
+		var_6_3:setHpVisible(not arg_6_0._isInitSelect)
+
+		if var_6_1 < iter_6_0 then
+			var_6_3:showNone()
 		end
 	end
 end
 
-function slot0._initParams(slot0)
-	slot0._isInitSelect = slot0.viewParam and slot0.viewParam.isInitSelect
+function var_0_0._initParams(arg_7_0)
+	arg_7_0._isInitSelect = arg_7_0.viewParam and arg_7_0.viewParam.isInitSelect
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initParams()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:_initParams()
 
-	if slot0._isInitSelect then
-		slot0:_initModel()
+	if arg_8_0._isInitSelect then
+		arg_8_0:_initModel()
 	end
 
-	slot0:_initPresetItemList()
-	slot0:_initPrepareItemList()
-	slot0:_updatePresetAndPrepare()
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._modifyHeroGroup, slot0)
+	arg_8_0:_initPresetItemList()
+	arg_8_0:_initPrepareItemList()
+	arg_8_0:_updatePresetAndPrepare()
+	arg_8_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_8_0._modifyHeroGroup, arg_8_0)
 end
 
-function slot0._modifyHeroGroup(slot0)
-	slot0._isModify = true
+function var_0_0._modifyHeroGroup(arg_9_0)
+	arg_9_0._isModify = true
 
-	slot0:_updatePresetAndPrepare()
+	arg_9_0:_updatePresetAndPrepare()
 
-	slot0._isModify = false
+	arg_9_0._isModify = false
 end
 
-function slot0._updatePresetAndPrepare(slot0)
+function var_0_0._updatePresetAndPrepare(arg_10_0)
 	V1a6_CachotTeamModel.instance:clearSeatInfos()
-	slot0:_updatePresetItemList()
-	slot0:_updatePrepareItemList()
+	arg_10_0:_updatePresetItemList()
+	arg_10_0:_updatePrepareItemList()
 end
 
-function slot0._initModel(slot0)
-	slot3, slot4 = V1a6_CachotModel.instance:getRogueStateInfo():getLastGroupInfo(V1a6_CachotTeamModel.instance:getPrepareNum())
-	slot5 = V1a6_CachotHeroGroupMO.New()
+function var_0_0._initModel(arg_11_0)
+	local var_11_0 = V1a6_CachotTeamModel.instance:getPrepareNum()
+	local var_11_1, var_11_2 = V1a6_CachotModel.instance:getRogueStateInfo():getLastGroupInfo(var_11_0)
+	local var_11_3 = V1a6_CachotHeroGroupMO.New()
 
-	slot5:setMaxHeroCount(V1a6_CachotEnum.InitTeamMaxHeroCountInGroup)
-	slot5:init({
-		groupId = 1,
-		heroList = slot3,
-		equips = slot4
+	var_11_3:setMaxHeroCount(V1a6_CachotEnum.InitTeamMaxHeroCountInGroup)
+
+	local var_11_4 = 1
+
+	var_11_3:init({
+		groupId = var_11_4,
+		heroList = var_11_1,
+		equips = var_11_2
 	})
 	V1a6_CachotHeroSingleGroupModel.instance:setMaxHeroCount(V1a6_CachotEnum.InitTeamMaxHeroCountInGroup)
-	V1a6_CachotHeroSingleGroupModel.instance:setSingleGroup(slot5)
+	V1a6_CachotHeroSingleGroupModel.instance:setSingleGroup(var_11_3)
 end
 
-function slot0._updatePresetItemList(slot0)
-	for slot4, slot5 in ipairs(slot0._presetItemList) do
-		slot6 = V1a6_CachotHeroSingleGroupModel.instance:getById(slot4)
+function var_0_0._updatePresetItemList(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._presetItemList) do
+		local var_12_0 = V1a6_CachotHeroSingleGroupModel.instance:getById(iter_12_0)
 
-		V1a6_CachotTeamModel.instance:setSeatInfo(slot4, V1a6_CachotTeamModel.instance:getInitSeatLevel(slot4), slot6)
+		V1a6_CachotTeamModel.instance:setSeatInfo(iter_12_0, V1a6_CachotTeamModel.instance:getInitSeatLevel(iter_12_0), var_12_0)
 
-		slot7 = slot6:getHeroMO()
+		local var_12_1 = var_12_0:getHeroMO()
 
-		if slot0._isModify and slot7 and slot5:getHeroMo() ~= slot7 then
-			slot5:showSelectEffect()
+		if arg_12_0._isModify and var_12_1 and iter_12_1:getHeroMo() ~= var_12_1 then
+			iter_12_1:showSelectEffect()
 		end
 
-		slot5:onUpdateMO(slot6)
+		iter_12_1:onUpdateMO(var_12_0)
 	end
 end
 
-function slot0._updatePrepareItemList(slot0)
-	for slot4, slot5 in ipairs(slot0._prepareItemList) do
-		slot7 = V1a6_CachotHeroSingleGroupModel.instance:getById(slot4 + V1a6_CachotEnum.HeroCountInGroup):getHeroMO()
+function var_0_0._updatePrepareItemList(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._prepareItemList) do
+		local var_13_0 = V1a6_CachotHeroSingleGroupModel.instance:getById(iter_13_0 + V1a6_CachotEnum.HeroCountInGroup)
+		local var_13_1 = var_13_0:getHeroMO()
 
-		if slot0._isModify and slot7 and slot5:getHeroMo() ~= slot7 then
-			slot5:showSelectEffect()
+		if arg_13_0._isModify and var_13_1 and iter_13_1:getHeroMo() ~= var_13_1 then
+			iter_13_1:showSelectEffect()
 		end
 
-		slot5:onUpdateMO(slot6)
+		iter_13_1:onUpdateMO(var_13_0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,176 +1,189 @@
-module("modules.logic.gm.model.GMFightEntityModel", package.seeall)
+﻿module("modules.logic.gm.model.GMFightEntityModel", package.seeall)
 
-slot0 = class("GMFightEntityModel", ListScrollModel)
+local var_0_0 = class("GMFightEntityModel", ListScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.entityMO = nil
-	slot0.buffModel = ListScrollModel.New()
-	slot0.skillModel = ListScrollModel.New()
-	slot0.attrModel = ListScrollModel.New()
+	arg_1_0.entityMO = nil
+	arg_1_0.buffModel = ListScrollModel.New()
+	arg_1_0.skillModel = ListScrollModel.New()
+	arg_1_0.attrModel = ListScrollModel.New()
 end
 
-function slot0.onOpen(slot0)
-	slot1 = {}
+function var_0_0.onOpen(arg_2_0)
+	local var_2_0 = {}
 
-	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, slot1, true)
-	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.MySide, slot1, true)
-	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide, slot1, true)
-	FightDataHelper.entityMgr:getMyPlayerList(slot1, true)
+	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide, var_2_0, true)
+	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.MySide, var_2_0, true)
+	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide, var_2_0, true)
+	FightDataHelper.entityMgr:getMyPlayerList(var_2_0, true)
 
-	if FightDataHelper.entityMgr:getAssistBoss() then
-		table.insert(slot1, slot2)
+	local var_2_1 = FightDataHelper.entityMgr:getAssistBoss()
+
+	if var_2_1 then
+		table.insert(var_2_0, var_2_1)
 	end
 
-	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide) then
-		table.insert(slot1, slot3)
+	local var_2_2 = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.MySide)
+
+	if var_2_2 then
+		table.insert(var_2_0, var_2_2)
 	end
 
-	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, slot1, true)
-	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, slot1, true)
-	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, slot1, true)
-	FightDataHelper.entityMgr:getEnemyPlayerList(slot1, true)
+	FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.EnemySide, var_2_0, true)
+	FightDataHelper.entityMgr:getSubList(FightEnum.EntitySide.EnemySide, var_2_0, true)
+	FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.EnemySide, var_2_0, true)
+	FightDataHelper.entityMgr:getEnemyPlayerList(var_2_0, true)
 
-	if FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide) then
-		table.insert(slot1, slot3)
+	local var_2_3 = FightDataHelper.entityMgr:getASFDEntityMo(FightEnum.EntitySide.EnemySide)
+
+	if var_2_3 then
+		table.insert(var_2_0, var_2_3)
 	end
 
-	slot0:setList(slot1)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0._addList(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2:getList()) do
-		table.insert(slot1, slot7)
+function var_0_0._addList(arg_3_0, arg_3_1, arg_3_2)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_2:getList()) do
+		table.insert(arg_3_1, iter_3_1)
 	end
 end
 
-function slot0.setEntityMO(slot0, slot1)
-	slot0.entityMO = slot1
+function var_0_0.setEntityMO(arg_4_0, arg_4_1)
+	arg_4_0.entityMO = arg_4_1
 
-	slot0.buffModel:setList(slot1:getBuffList())
+	arg_4_0.buffModel:setList(arg_4_1:getBuffList())
 
-	slot2 = {}
+	local var_4_0 = {}
 
-	for slot6, slot7 in ipairs(slot1.skillList) do
-		if lua_skill.configDict[slot7] then
-			table.insert(slot2, slot8)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.skillList) do
+		local var_4_1 = lua_skill.configDict[iter_4_1]
+
+		if var_4_1 then
+			table.insert(var_4_0, var_4_1)
 		end
 	end
 
-	slot0.skillModel:setList(slot2)
-	slot0:setEntityDetailInfo(slot1)
+	arg_4_0.skillModel:setList(var_4_0)
+	arg_4_0:setEntityDetailInfo(arg_4_1)
 end
 
-function slot0.onGetSingleEntityInfo(slot0, slot1)
-	slot0:setEntityMO(slot0.entityMO)
+function var_0_0.onGetSingleEntityInfo(arg_5_0, arg_5_1)
+	arg_5_0:setEntityMO(arg_5_0.entityMO)
 end
 
-function slot0.onGetEntityDetailInfos(slot0, slot1)
-	slot0._attrEntityList = {}
-	slot0._attrEntityDict = {}
+function var_0_0.onGetEntityDetailInfos(arg_6_0, arg_6_1)
+	arg_6_0._attrEntityList = {}
+	arg_6_0._attrEntityDict = {}
 
-	for slot5, slot6 in ipairs(slot1.teamAInfos) do
-		table.insert(slot0._attrEntityList, slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1.teamAInfos) do
+		table.insert(arg_6_0._attrEntityList, iter_6_1)
 
-		slot0._attrEntityDict[slot6.info.uid] = slot6
+		arg_6_0._attrEntityDict[iter_6_1.info.uid] = iter_6_1
 	end
 
-	for slot5, slot6 in ipairs(slot1.teamBInfos) do
-		table.insert(slot0._attrEntityList, slot6)
+	for iter_6_2, iter_6_3 in ipairs(arg_6_1.teamBInfos) do
+		table.insert(arg_6_0._attrEntityList, iter_6_3)
 
-		slot0._attrEntityDict[slot6.info.uid] = slot6
+		arg_6_0._attrEntityDict[iter_6_3.info.uid] = iter_6_3
 	end
 
-	slot0:setEntityDetailInfo(slot0.entityMO)
+	arg_6_0:setEntityDetailInfo(arg_6_0.entityMO)
 end
 
-function slot0.setEntityDetailInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.setEntityDetailInfo(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	if not slot0._attrEntityDict[slot1.id] then
+	local var_7_0 = arg_7_0._attrEntityDict[arg_7_1.id]
+
+	if not var_7_0 then
 		return
 	end
 
-	slot3 = slot2.info.attr
-	slot4 = slot2.exAttr
-	slot5 = slot2.spAttr
-	slot6 = slot2.addAttrPer
-	slot7 = slot2.addExAttr
-	slot8 = slot2.addSpAttr
-	slot9 = slot2.testAddAttrPer
-	slot10 = slot2.testAddExAttr
-	slot11 = slot2.testAddSpAttr
-	slot12 = slot2.partAttrBase
-	slot13 = slot2.partExAttr
-	slot14 = slot2.partSpAttr
-	slot15 = slot2.testPartAttrBase
-	slot16 = slot2.testPartExAttr
-	slot17 = slot2.testPartSpAttr
-	slot18 = slot2.finalAttrBase
-	slot19 = slot2.finalExAttr
-	slot20 = slot2.finalSpAttr
-	slot21 = {}
+	local var_7_1 = var_7_0.info.attr
+	local var_7_2 = var_7_0.exAttr
+	local var_7_3 = var_7_0.spAttr
+	local var_7_4 = var_7_0.addAttrPer
+	local var_7_5 = var_7_0.addExAttr
+	local var_7_6 = var_7_0.addSpAttr
+	local var_7_7 = var_7_0.testAddAttrPer
+	local var_7_8 = var_7_0.testAddExAttr
+	local var_7_9 = var_7_0.testAddSpAttr
+	local var_7_10 = var_7_0.partAttrBase
+	local var_7_11 = var_7_0.partExAttr
+	local var_7_12 = var_7_0.partSpAttr
+	local var_7_13 = var_7_0.testPartAttrBase
+	local var_7_14 = var_7_0.testPartExAttr
+	local var_7_15 = var_7_0.testPartSpAttr
+	local var_7_16 = var_7_0.finalAttrBase
+	local var_7_17 = var_7_0.finalExAttr
+	local var_7_18 = var_7_0.finalSpAttr
+	local var_7_19 = {}
 
-	table.insert(slot21, slot0:getAttrMo(101, slot3.hp, slot6.hp, slot9.hp, slot12.hp, slot15.hp, slot18.hp))
-	table.insert(slot21, slot0:getAttrMo(102, slot3.attack, slot6.attack, slot9.attack, slot12.attack, slot15.attack, slot18.attack))
-	table.insert(slot21, slot0:getAttrMo(103, slot3.defense, slot6.defense, slot9.defense, slot12.defense, slot15.defense, slot18.defense))
-	table.insert(slot21, slot0:getAttrMo(104, slot3.mdefense, slot6.mdefense, slot9.mdefense, slot12.mdefense, slot15.mdefense, slot18.mdefense))
-	table.insert(slot21, slot0:getAttrMo(105, slot3.technic, slot6.technic, slot9.technic, slot12.technic, slot15.technic, slot18.technic))
-	table.insert(slot21, slot0:getAttrMo(201, slot4.cri, slot7.cri, slot10.cri, slot13.cri, slot16.cri, slot19.cri))
-	table.insert(slot21, slot0:getAttrMo(202, slot4.recri, slot7.recri, slot10.recri, slot13.recri, slot16.recri, slot19.recri))
-	table.insert(slot21, slot0:getAttrMo(203, slot4.criDmg, slot7.criDmg, slot10.criDmg, slot13.criDmg, slot16.criDmg, slot19.criDmg))
-	table.insert(slot21, slot0:getAttrMo(204, slot4.criDef, slot7.criDef, slot10.criDef, slot13.criDef, slot16.criDef, slot19.criDef))
-	table.insert(slot21, slot0:getAttrMo(205, slot4.addDmg, slot7.addDmg, slot10.addDmg, slot13.addDmg, slot16.addDmg, slot19.addDmg))
-	table.insert(slot21, slot0:getAttrMo(206, slot4.dropDmg, slot7.dropDmg, slot10.dropDmg, slot13.dropDmg, slot16.dropDmg, slot19.dropDmg))
-	table.insert(slot21, slot0:getAttrMo(207, slot5.finalAddDmg, slot8.finalAddDmg, slot11.finalAddDmg, slot14.finalAddDmg, slot17.finalAddDmg, slot20.finalAddDmg))
-	table.insert(slot21, slot0:getAttrMo(208, slot5.finalDropDmg, slot8.finalDropDmg, slot11.finalDropDmg, slot14.finalDropDmg, slot17.finalDropDmg, slot20.dropDmg))
-	table.insert(slot21, slot0:getAttrMo(209, slot5.revive, slot8.revive, slot11.revive, slot14.revive, slot17.revive, slot20.revive))
-	table.insert(slot21, slot0:getAttrMo(210, slot5.absorb, slot8.absorb, slot11.absorb, slot14.absorb, slot17.absorb, slot20.absorb))
-	table.insert(slot21, slot0:getAttrMo(211, slot5.clutch, slot8.clutch, slot11.clutch, slot14.clutch, slot17.clutch, slot20.clutch))
-	table.insert(slot21, slot0:getAttrMo(212, slot5.heal, slot8.heal, slot11.heal, slot14.heal, slot17.heal, slot20.heal))
-	table.insert(slot21, slot0:getAttrMo(213, slot5.defenseIgnore, slot8.defenseIgnore, slot11.defenseIgnore, slot14.defenseIgnore, slot17.defenseIgnore, slot20.defenseIgnore))
-	table.insert(slot21, slot0:getAttrMo(214, slot5.normalSkillRate, slot8.normalSkillRate, slot11.normalSkillRate, slot14.normalSkillRate, slot17.normalSkillRate, slot20.normalSkillRate))
-	table.insert(slot21, slot0:getAttrMo(215, slot5.playAddRate, slot8.playAddRate, slot11.playAddRate, slot14.playAddRate, slot17.playAddRate, slot20.playAddRate))
-	table.insert(slot21, slot0:getAttrMo(216, slot5.playDropRate, slot8.playDropRate, slot11.playDropRate, slot14.playDropRate, slot17.playDropRate, slot20.playDropRate))
-	table.insert(slot21, slot0:getAttrMo(401, slot5.dizzyResistances, slot8.dizzyResistances, slot11.dizzyResistances, slot14.dizzyResistances, slot17.dizzyResistances, slot20.dizzyResistances))
-	table.insert(slot21, slot0:getAttrMo(402, slot5.sleepResistances, slot8.sleepResistances, slot11.sleepResistances, slot14.sleepResistances, slot17.sleepResistances, slot20.sleepResistances))
-	table.insert(slot21, slot0:getAttrMo(403, slot5.petrifiedResistances, slot8.petrifiedResistances, slot11.petrifiedResistances, slot14.petrifiedResistances, slot17.petrifiedResistances, slot20.petrifiedResistances))
-	table.insert(slot21, slot0:getAttrMo(404, slot5.frozenResistances, slot8.frozenResistances, slot11.frozenResistances, slot14.frozenResistances, slot17.frozenResistances, slot20.frozenResistances))
-	table.insert(slot21, slot0:getAttrMo(405, slot5.disarmResistances, slot8.disarmResistances, slot11.disarmResistances, slot14.disarmResistances, slot17.disarmResistances, slot20.disarmResistances))
-	table.insert(slot21, slot0:getAttrMo(406, slot5.forbidResistances, slot8.forbidResistances, slot11.forbidResistances, slot14.forbidResistances, slot17.forbidResistances, slot20.forbidResistances))
-	table.insert(slot21, slot0:getAttrMo(407, slot5.sealResistances, slot8.sealResistances, slot11.sealResistances, slot14.sealResistances, slot17.sealResistances, slot20.sealResistances))
-	table.insert(slot21, slot0:getAttrMo(408, slot5.cantGetExskillResistances, slot8.cantGetExskillResistances, slot11.cantGetExskillResistances, slot14.cantGetExskillResistances, slot17.cantGetExskillResistances, slot20.cantGetExskillResistances))
-	table.insert(slot21, slot0:getAttrMo(409, slot5.delExPointResistances, slot8.delExPointResistances, slot11.delExPointResistances, slot14.delExPointResistances, slot17.delExPointResistances, slot20.delExPointResistances))
-	table.insert(slot21, slot0:getAttrMo(410, slot5.stressUpResistances, slot8.stressUpResistances, slot11.stressUpResistances, slot14.stressUpResistances, slot17.stressUpResistances, slot20.stressUpResistances))
-	table.insert(slot21, slot0:getAttrMo(411, slot5.charmResistances, slot8.charmResistances, slot11.charmResistances, slot14.charmResistances, slot17.charmResistances, slot20.charmResistances))
-	table.insert(slot21, slot0:getAttrMo(501, slot5.controlResilience, slot8.controlResilience, slot11.controlResilience, slot14.controlResilience, slot17.controlResilience, slot20.controlResilience))
-	table.insert(slot21, slot0:getAttrMo(502, slot5.delExPointResilience, slot8.delExPointResilience, slot11.delExPointResilience, slot14.delExPointResilience, slot17.delExPointResilience, slot20.delExPointResilience))
-	table.insert(slot21, slot0:getAttrMo(503, slot5.stressUpResilience, slot8.stressUpResilience, slot11.stressUpResilience, slot14.stressUpResilience, slot17.stressUpResilience, slot20.stressUpResilience))
-	slot0.attrModel:setList(slot21)
+	table.insert(var_7_19, arg_7_0:getAttrMo(101, var_7_1.hp, var_7_4.hp, var_7_7.hp, var_7_10.hp, var_7_13.hp, var_7_16.hp))
+	table.insert(var_7_19, arg_7_0:getAttrMo(102, var_7_1.attack, var_7_4.attack, var_7_7.attack, var_7_10.attack, var_7_13.attack, var_7_16.attack))
+	table.insert(var_7_19, arg_7_0:getAttrMo(103, var_7_1.defense, var_7_4.defense, var_7_7.defense, var_7_10.defense, var_7_13.defense, var_7_16.defense))
+	table.insert(var_7_19, arg_7_0:getAttrMo(104, var_7_1.mdefense, var_7_4.mdefense, var_7_7.mdefense, var_7_10.mdefense, var_7_13.mdefense, var_7_16.mdefense))
+	table.insert(var_7_19, arg_7_0:getAttrMo(105, var_7_1.technic, var_7_4.technic, var_7_7.technic, var_7_10.technic, var_7_13.technic, var_7_16.technic))
+	table.insert(var_7_19, arg_7_0:getAttrMo(201, var_7_2.cri, var_7_5.cri, var_7_8.cri, var_7_11.cri, var_7_14.cri, var_7_17.cri))
+	table.insert(var_7_19, arg_7_0:getAttrMo(202, var_7_2.recri, var_7_5.recri, var_7_8.recri, var_7_11.recri, var_7_14.recri, var_7_17.recri))
+	table.insert(var_7_19, arg_7_0:getAttrMo(203, var_7_2.criDmg, var_7_5.criDmg, var_7_8.criDmg, var_7_11.criDmg, var_7_14.criDmg, var_7_17.criDmg))
+	table.insert(var_7_19, arg_7_0:getAttrMo(204, var_7_2.criDef, var_7_5.criDef, var_7_8.criDef, var_7_11.criDef, var_7_14.criDef, var_7_17.criDef))
+	table.insert(var_7_19, arg_7_0:getAttrMo(205, var_7_2.addDmg, var_7_5.addDmg, var_7_8.addDmg, var_7_11.addDmg, var_7_14.addDmg, var_7_17.addDmg))
+	table.insert(var_7_19, arg_7_0:getAttrMo(206, var_7_2.dropDmg, var_7_5.dropDmg, var_7_8.dropDmg, var_7_11.dropDmg, var_7_14.dropDmg, var_7_17.dropDmg))
+	table.insert(var_7_19, arg_7_0:getAttrMo(207, var_7_3.finalAddDmg, var_7_6.finalAddDmg, var_7_9.finalAddDmg, var_7_12.finalAddDmg, var_7_15.finalAddDmg, var_7_18.finalAddDmg))
+	table.insert(var_7_19, arg_7_0:getAttrMo(208, var_7_3.finalDropDmg, var_7_6.finalDropDmg, var_7_9.finalDropDmg, var_7_12.finalDropDmg, var_7_15.finalDropDmg, var_7_18.dropDmg))
+	table.insert(var_7_19, arg_7_0:getAttrMo(209, var_7_3.revive, var_7_6.revive, var_7_9.revive, var_7_12.revive, var_7_15.revive, var_7_18.revive))
+	table.insert(var_7_19, arg_7_0:getAttrMo(210, var_7_3.absorb, var_7_6.absorb, var_7_9.absorb, var_7_12.absorb, var_7_15.absorb, var_7_18.absorb))
+	table.insert(var_7_19, arg_7_0:getAttrMo(211, var_7_3.clutch, var_7_6.clutch, var_7_9.clutch, var_7_12.clutch, var_7_15.clutch, var_7_18.clutch))
+	table.insert(var_7_19, arg_7_0:getAttrMo(212, var_7_3.heal, var_7_6.heal, var_7_9.heal, var_7_12.heal, var_7_15.heal, var_7_18.heal))
+	table.insert(var_7_19, arg_7_0:getAttrMo(213, var_7_3.defenseIgnore, var_7_6.defenseIgnore, var_7_9.defenseIgnore, var_7_12.defenseIgnore, var_7_15.defenseIgnore, var_7_18.defenseIgnore))
+	table.insert(var_7_19, arg_7_0:getAttrMo(214, var_7_3.normalSkillRate, var_7_6.normalSkillRate, var_7_9.normalSkillRate, var_7_12.normalSkillRate, var_7_15.normalSkillRate, var_7_18.normalSkillRate))
+	table.insert(var_7_19, arg_7_0:getAttrMo(215, var_7_3.playAddRate, var_7_6.playAddRate, var_7_9.playAddRate, var_7_12.playAddRate, var_7_15.playAddRate, var_7_18.playAddRate))
+	table.insert(var_7_19, arg_7_0:getAttrMo(216, var_7_3.playDropRate, var_7_6.playDropRate, var_7_9.playDropRate, var_7_12.playDropRate, var_7_15.playDropRate, var_7_18.playDropRate))
+	table.insert(var_7_19, arg_7_0:getAttrMo(401, var_7_3.dizzyResistances, var_7_6.dizzyResistances, var_7_9.dizzyResistances, var_7_12.dizzyResistances, var_7_15.dizzyResistances, var_7_18.dizzyResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(402, var_7_3.sleepResistances, var_7_6.sleepResistances, var_7_9.sleepResistances, var_7_12.sleepResistances, var_7_15.sleepResistances, var_7_18.sleepResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(403, var_7_3.petrifiedResistances, var_7_6.petrifiedResistances, var_7_9.petrifiedResistances, var_7_12.petrifiedResistances, var_7_15.petrifiedResistances, var_7_18.petrifiedResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(404, var_7_3.frozenResistances, var_7_6.frozenResistances, var_7_9.frozenResistances, var_7_12.frozenResistances, var_7_15.frozenResistances, var_7_18.frozenResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(405, var_7_3.disarmResistances, var_7_6.disarmResistances, var_7_9.disarmResistances, var_7_12.disarmResistances, var_7_15.disarmResistances, var_7_18.disarmResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(406, var_7_3.forbidResistances, var_7_6.forbidResistances, var_7_9.forbidResistances, var_7_12.forbidResistances, var_7_15.forbidResistances, var_7_18.forbidResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(407, var_7_3.sealResistances, var_7_6.sealResistances, var_7_9.sealResistances, var_7_12.sealResistances, var_7_15.sealResistances, var_7_18.sealResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(408, var_7_3.cantGetExskillResistances, var_7_6.cantGetExskillResistances, var_7_9.cantGetExskillResistances, var_7_12.cantGetExskillResistances, var_7_15.cantGetExskillResistances, var_7_18.cantGetExskillResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(409, var_7_3.delExPointResistances, var_7_6.delExPointResistances, var_7_9.delExPointResistances, var_7_12.delExPointResistances, var_7_15.delExPointResistances, var_7_18.delExPointResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(410, var_7_3.stressUpResistances, var_7_6.stressUpResistances, var_7_9.stressUpResistances, var_7_12.stressUpResistances, var_7_15.stressUpResistances, var_7_18.stressUpResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(411, var_7_3.charmResistances, var_7_6.charmResistances, var_7_9.charmResistances, var_7_12.charmResistances, var_7_15.charmResistances, var_7_18.charmResistances))
+	table.insert(var_7_19, arg_7_0:getAttrMo(501, var_7_3.controlResilience, var_7_6.controlResilience, var_7_9.controlResilience, var_7_12.controlResilience, var_7_15.controlResilience, var_7_18.controlResilience))
+	table.insert(var_7_19, arg_7_0:getAttrMo(502, var_7_3.delExPointResilience, var_7_6.delExPointResilience, var_7_9.delExPointResilience, var_7_12.delExPointResilience, var_7_15.delExPointResilience, var_7_18.delExPointResilience))
+	table.insert(var_7_19, arg_7_0:getAttrMo(503, var_7_3.stressUpResilience, var_7_6.stressUpResilience, var_7_9.stressUpResilience, var_7_12.stressUpResilience, var_7_15.stressUpResilience, var_7_18.stressUpResilience))
+	arg_7_0.attrModel:setList(var_7_19)
 end
 
-function slot0.getAttrMo(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0.attrPool = slot0.attrPool or {}
+function var_0_0.getAttrMo(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
+	arg_8_0.attrPool = arg_8_0.attrPool or {}
 
-	if not slot0.attrPool[slot1] then
-		slot0.attrPool[slot1] = {
-			id = slot1
+	local var_8_0 = arg_8_0.attrPool[arg_8_1]
+
+	if not var_8_0 then
+		var_8_0 = {
+			id = arg_8_1
 		}
+		arg_8_0.attrPool[arg_8_1] = var_8_0
 	end
 
-	slot8.base = slot2
-	slot8.add = slot3
-	slot8.test = slot4
-	slot8.partAdd = slot5
-	slot8.partTest = slot6
-	slot8.final = slot7
+	var_8_0.base = arg_8_2
+	var_8_0.add = arg_8_3
+	var_8_0.test = arg_8_4
+	var_8_0.partAdd = arg_8_5
+	var_8_0.partTest = arg_8_6
+	var_8_0.final = arg_8_7
 
-	return slot8
+	return var_8_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

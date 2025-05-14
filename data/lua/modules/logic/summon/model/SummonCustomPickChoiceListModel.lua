@@ -1,24 +1,24 @@
-module("modules.logic.summon.model.SummonCustomPickChoiceListModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonCustomPickChoiceListModel", package.seeall)
 
-slot0 = class("SummonCustomPickChoiceListModel", ListScrollModel)
+local var_0_0 = class("SummonCustomPickChoiceListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.initDatas(slot0, slot1)
-	slot0._poolId = slot1
-	slot0._selectIdList = {}
-	slot0._selectIdMap = {}
+function var_0_0.initDatas(arg_3_0, arg_3_1)
+	arg_3_0._poolId = arg_3_1
+	arg_3_0._selectIdList = {}
+	arg_3_0._selectIdMap = {}
 
-	slot0:initList()
+	arg_3_0:initList()
 end
 
-slot0.SkillLevel2Order = {
+var_0_0.SkillLevel2Order = {
 	[0] = 50,
 	40,
 	30,
@@ -27,103 +27,121 @@ slot0.SkillLevel2Order = {
 	60
 }
 
-function slot1(slot0, slot1)
-	if HeroModel.instance:getByHeroId(slot0.id) ~= nil ~= (HeroModel.instance:getByHeroId(slot1.id) ~= nil) then
-		return slot5
+local function var_0_1(arg_4_0, arg_4_1)
+	local var_4_0 = HeroModel.instance:getByHeroId(arg_4_0.id)
+	local var_4_1 = HeroModel.instance:getByHeroId(arg_4_1.id)
+	local var_4_2 = var_4_0 ~= nil
+	local var_4_3 = var_4_1 ~= nil
+
+	if var_4_2 ~= var_4_3 then
+		return var_4_3
 	end
 
-	if (slot2 and slot2.exSkillLevel or -1) ~= (slot3 and slot3.exSkillLevel or -1) then
-		return (uv0.SkillLevel2Order[slot6] or 999) < (uv0.SkillLevel2Order[slot7] or 999)
+	local var_4_4 = var_4_0 and var_4_0.exSkillLevel or -1
+	local var_4_5 = var_4_1 and var_4_1.exSkillLevel or -1
+
+	if var_4_4 ~= var_4_5 then
+		return (var_0_0.SkillLevel2Order[var_4_4] or 999) < (var_0_0.SkillLevel2Order[var_4_5] or 999)
 	end
 
-	return slot1.id < slot0.id
+	return arg_4_0.id > arg_4_1.id
 end
 
-function slot0.initList(slot0)
-	slot0.noGainList = {}
-	slot0.ownList = {}
+function var_0_0.initList(arg_5_0)
+	local var_5_0 = arg_5_0:getCharIdList()
 
-	for slot5, slot6 in ipairs(slot0:getCharIdList()) do
-		slot7 = SummonCustomPickChoiceMO.New()
+	arg_5_0.noGainList = {}
+	arg_5_0.ownList = {}
 
-		slot7:init(slot6)
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		local var_5_1 = SummonCustomPickChoiceMO.New()
 
-		if slot7:hasHero() then
-			table.insert(slot0.ownList, slot7)
+		var_5_1:init(iter_5_1)
+
+		if var_5_1:hasHero() then
+			table.insert(arg_5_0.ownList, var_5_1)
 		else
-			table.insert(slot0.noGainList, slot7)
+			table.insert(arg_5_0.noGainList, var_5_1)
 		end
 	end
 
-	table.sort(slot0.ownList, uv0)
-	table.sort(slot0.noGainList, uv0)
+	table.sort(arg_5_0.ownList, var_0_1)
+	table.sort(arg_5_0.noGainList, var_0_1)
 end
 
-function slot0.setSelectId(slot0, slot1)
-	if not slot0._selectIdList then
+function var_0_0.setSelectId(arg_6_0, arg_6_1)
+	if not arg_6_0._selectIdList then
 		return
 	end
 
-	if slot0._selectIdMap[slot1] then
-		slot0._selectIdMap[slot1] = nil
+	if arg_6_0._selectIdMap[arg_6_1] then
+		arg_6_0._selectIdMap[arg_6_1] = nil
 
-		tabletool.removeValue(slot0._selectIdList, slot1)
+		tabletool.removeValue(arg_6_0._selectIdList, arg_6_1)
 	else
-		slot0._selectIdMap[slot1] = true
+		arg_6_0._selectIdMap[arg_6_1] = true
 
-		table.insert(slot0._selectIdList, slot1)
+		table.insert(arg_6_0._selectIdList, arg_6_1)
 	end
 end
 
-function slot0.clearSelectIds(slot0)
-	slot0._selectIdMap = {}
-	slot0._selectIdList = {}
+function var_0_0.clearSelectIds(arg_7_0)
+	arg_7_0._selectIdMap = {}
+	arg_7_0._selectIdList = {}
 end
 
-function slot0.getSelectIds(slot0)
-	return slot0._selectIdList
+function var_0_0.getSelectIds(arg_8_0)
+	return arg_8_0._selectIdList
 end
 
-function slot0.getMaxSelectCount(slot0)
-	return SummonCustomPickModel.instance:getMaxSelectCount(slot0._poolId)
+function var_0_0.getMaxSelectCount(arg_9_0)
+	return SummonCustomPickModel.instance:getMaxSelectCount(arg_9_0._poolId)
 end
 
-function slot0.getSelectCount(slot0)
-	if slot0._selectIdList then
-		return #slot0._selectIdList
+function var_0_0.getSelectCount(arg_10_0)
+	if arg_10_0._selectIdList then
+		return #arg_10_0._selectIdList
 	end
 
 	return 0
 end
 
-function slot0.isHeroIdSelected(slot0, slot1)
-	if slot0._selectIdMap then
-		return slot0._selectIdMap[slot1] ~= nil
+function var_0_0.isHeroIdSelected(arg_11_0, arg_11_1)
+	if arg_11_0._selectIdMap then
+		return arg_11_0._selectIdMap[arg_11_1] ~= nil
 	end
 
 	return false
 end
 
-function slot0.getPoolId(slot0)
-	return slot0._poolId
+function var_0_0.getPoolId(arg_12_0)
+	return arg_12_0._poolId
 end
 
-function slot0.getPoolType(slot0)
-	return SummonConfig.instance:getSummonPool(slot0._poolId).type or SummonEnum.Type.Normal
+function var_0_0.getPoolType(arg_13_0)
+	return SummonConfig.instance:getSummonPool(arg_13_0._poolId).type or SummonEnum.Type.Normal
 end
 
-function slot0.getCharIdList(slot0)
-	if SummonConfig.instance:getSummonPool(slot0._poolId).type == SummonEnum.Type.StrongCustomOnePick then
-		return string.splitToNumber(slot1.param, "#")
+function var_0_0.getCharIdList(arg_14_0)
+	local var_14_0 = SummonConfig.instance:getSummonPool(arg_14_0._poolId)
+
+	if var_14_0.type == SummonEnum.Type.StrongCustomOnePick then
+		local var_14_1 = var_14_0.param
+
+		return (string.splitToNumber(var_14_1, "#"))
 	end
 
-	if SummonConfig.instance:getSummon(slot0._poolId) then
-		return string.splitToNumber(slot2[SummonEnum.CustomPickRare].summonId, "#")
+	local var_14_2 = SummonConfig.instance:getSummon(arg_14_0._poolId)
+
+	if var_14_2 then
+		local var_14_3 = var_14_2[SummonEnum.CustomPickRare].summonId
+
+		return (string.splitToNumber(var_14_3, "#"))
 	end
 
 	return {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,384 +1,442 @@
-module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6DungeonBossView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6DungeonBossView", package.seeall)
 
-slot0 = class("VersionActivity1_6DungeonBossView", BaseView)
-slot1 = 5
-slot2 = VersionActivity1_6DungeonEnum.bossMaxOrder
-slot3 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "UnlockBossEpisode_"
-slot4 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "GotMaxScore_"
-slot5 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "FirstPassBoss_"
+local var_0_0 = class("VersionActivity1_6DungeonBossView", BaseView)
+local var_0_1 = 5
+local var_0_2 = VersionActivity1_6DungeonEnum.bossMaxOrder
+local var_0_3 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "UnlockBossEpisode_"
+local var_0_4 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "GotMaxScore_"
+local var_0_5 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "FirstPassBoss_"
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._goNormalBG = gohelper.findChild(slot0.viewGO, "Left/#simage_NormalBG")
-	slot0._goHardBG = gohelper.findChild(slot0.viewGO, "Left/#simage_HardBG")
-	slot0._goNormalTitleBG = gohelper.findChild(slot0.viewGO, "Left/Title/image_NormalTitleBG")
-	slot0._goHardTitleBG = gohelper.findChild(slot0.viewGO, "Left/Title/image_HardTitleBG")
-	slot0._goLvNormalBG = gohelper.findChild(slot0.viewGO, "Left/Lv/image_LvNormalBG")
-	slot0._goLvHardBG = gohelper.findChild(slot0.viewGO, "Left/Lv/image_LvHardBG")
-	slot0._goBosslv = gohelper.findChild(slot0.viewGO, "Left/Lv")
-	slot0._txtBosslv = gohelper.findChildText(slot0.viewGO, "Left/Lv/#txt_Lv")
-	slot0._txtTipsNum = gohelper.findChildText(slot0.viewGO, "Left/Lv/Tips/#txt_TipsNum")
-	slot0._btnPreLv = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Lv/#btn_Left")
-	slot0._imagePreLv = gohelper.findChildImage(slot0.viewGO, "Left/Lv/#btn_Left")
-	slot0._goBtnPreLv = gohelper.findChild(slot0.viewGO, "Left/Lv/#btn_Left")
-	slot0._btnNextLv = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Lv/#btn_Right")
-	slot0._imageNextLv = gohelper.findChildImage(slot0.viewGO, "Left/Lv/#btn_Right")
-	slot0._goBtnNextLv = gohelper.findChild(slot0.viewGO, "Left/Lv/#btn_Right")
-	slot0._goBtnNextLvLock = gohelper.findChild(slot0.viewGO, "Left/Lv/#txt_Lv/#btn_Lock")
-	slot0._txtScoreNum = gohelper.findChildText(slot0.viewGO, "Left/Score/txt_ScoreNum")
-	slot0._goMaxScoreTips = gohelper.findChild(slot0.viewGO, "Left/Score/txt_ScoreNum/#go_ScoreTips")
-	slot0._btnInfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Title/#btn_Info")
-	slot0._btnScoreDetailInfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Score/#btn_Score")
-	slot0._btnCloseScoreDetailInfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Score/#btn_Score/image_ScoreTipsBG/#btn_tipsClose")
-	slot0._goScoreDetailTips = gohelper.findChild(slot0.viewGO, "Left/Score/#btn_Score/image_ScoreTipsBG")
-	slot0._btnLock = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Lv/#txt_Lv/#btn_Lock")
-	slot0._goBtnReward = gohelper.findChild(slot0.viewGO, "Right/#btn_Reward")
-	slot0._btnReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Reward")
-	slot0._btnCloseReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Reward/RewardTips/#btn_closeReawrds")
-	slot0._goRewardTips = gohelper.findChild(slot0.viewGO, "Right/#btn_Reward/RewardTips")
-	slot0._goRewards = gohelper.findChild(slot0.viewGO, "Right/#btn_Reward/RewardTips/#scroll_Rewards/Viewport/#go_rewards")
-	slot0._btnEnterNormal = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_EnterNormal")
-	slot0._btnEnterHard = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_EnterHard")
-	slot0._goEnterNormalLocked = gohelper.findChild(slot0.viewGO, "Right/#btn_EnterNormalLocked")
-	slot0._goEnterHardLocked = gohelper.findChild(slot0.viewGO, "Right/#btn_EnterHardLocked")
-	slot0._btnSchedule = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/Reward/image_RewardBG")
-	slot0._redDotSchedule = gohelper.findChild(slot0.viewGO, "Right/Reward/#go_reddot")
-	slot0._imageScoreProgress = gohelper.findChildImage(slot0.viewGO, "Right/Reward/image_RewardSlider")
-	slot0._rewardEffect = gohelper.findChild(slot0.viewGO, "Right/Reward/vx_collect")
-	slot0._rewardEffectAnimator = slot0._rewardEffect:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Left/#simage_NormalBG")
+	arg_1_0._goHardBG = gohelper.findChild(arg_1_0.viewGO, "Left/#simage_HardBG")
+	arg_1_0._goNormalTitleBG = gohelper.findChild(arg_1_0.viewGO, "Left/Title/image_NormalTitleBG")
+	arg_1_0._goHardTitleBG = gohelper.findChild(arg_1_0.viewGO, "Left/Title/image_HardTitleBG")
+	arg_1_0._goLvNormalBG = gohelper.findChild(arg_1_0.viewGO, "Left/Lv/image_LvNormalBG")
+	arg_1_0._goLvHardBG = gohelper.findChild(arg_1_0.viewGO, "Left/Lv/image_LvHardBG")
+	arg_1_0._goBosslv = gohelper.findChild(arg_1_0.viewGO, "Left/Lv")
+	arg_1_0._txtBosslv = gohelper.findChildText(arg_1_0.viewGO, "Left/Lv/#txt_Lv")
+	arg_1_0._txtTipsNum = gohelper.findChildText(arg_1_0.viewGO, "Left/Lv/Tips/#txt_TipsNum")
+	arg_1_0._btnPreLv = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Lv/#btn_Left")
+	arg_1_0._imagePreLv = gohelper.findChildImage(arg_1_0.viewGO, "Left/Lv/#btn_Left")
+	arg_1_0._goBtnPreLv = gohelper.findChild(arg_1_0.viewGO, "Left/Lv/#btn_Left")
+	arg_1_0._btnNextLv = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Lv/#btn_Right")
+	arg_1_0._imageNextLv = gohelper.findChildImage(arg_1_0.viewGO, "Left/Lv/#btn_Right")
+	arg_1_0._goBtnNextLv = gohelper.findChild(arg_1_0.viewGO, "Left/Lv/#btn_Right")
+	arg_1_0._goBtnNextLvLock = gohelper.findChild(arg_1_0.viewGO, "Left/Lv/#txt_Lv/#btn_Lock")
+	arg_1_0._txtScoreNum = gohelper.findChildText(arg_1_0.viewGO, "Left/Score/txt_ScoreNum")
+	arg_1_0._goMaxScoreTips = gohelper.findChild(arg_1_0.viewGO, "Left/Score/txt_ScoreNum/#go_ScoreTips")
+	arg_1_0._btnInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Title/#btn_Info")
+	arg_1_0._btnScoreDetailInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Score/#btn_Score")
+	arg_1_0._btnCloseScoreDetailInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Score/#btn_Score/image_ScoreTipsBG/#btn_tipsClose")
+	arg_1_0._goScoreDetailTips = gohelper.findChild(arg_1_0.viewGO, "Left/Score/#btn_Score/image_ScoreTipsBG")
+	arg_1_0._btnLock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Lv/#txt_Lv/#btn_Lock")
+	arg_1_0._goBtnReward = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Reward")
+	arg_1_0._btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Reward")
+	arg_1_0._btnCloseReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Reward/RewardTips/#btn_closeReawrds")
+	arg_1_0._goRewardTips = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Reward/RewardTips")
+	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Reward/RewardTips/#scroll_Rewards/Viewport/#go_rewards")
+	arg_1_0._btnEnterNormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_EnterNormal")
+	arg_1_0._btnEnterHard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_EnterHard")
+	arg_1_0._goEnterNormalLocked = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_EnterNormalLocked")
+	arg_1_0._goEnterHardLocked = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_EnterHardLocked")
+	arg_1_0._btnSchedule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Reward/image_RewardBG")
+	arg_1_0._redDotSchedule = gohelper.findChild(arg_1_0.viewGO, "Right/Reward/#go_reddot")
+	arg_1_0._imageScoreProgress = gohelper.findChildImage(arg_1_0.viewGO, "Right/Reward/image_RewardSlider")
+	arg_1_0._rewardEffect = gohelper.findChild(arg_1_0.viewGO, "Right/Reward/vx_collect")
+	arg_1_0._rewardEffectAnimator = arg_1_0._rewardEffect:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnPreLv:AddClickListener(slot0._preLvclick, slot0)
-	slot0._btnNextLv:AddClickListener(slot0._nextLvclick, slot0)
-	slot0._btnLock:AddClickListener(slot0._lockLvclick, slot0)
-	slot0._btnReward:AddClickListener(slot0._onClickRewardBtn, slot0)
-	slot0._btnCloseReward:AddClickListener(slot0._onClicClosekRewardBtn, slot0)
-	slot0._btnEnterHard:AddClickListener(slot0._enterFightClick, slot0)
-	slot0._btnEnterNormal:AddClickListener(slot0._enterFightClick, slot0)
-	slot0._btnSchedule:AddClickListener(slot0._btnScheduleOnClick, slot0)
-	slot0._btnInfo:AddClickListener(slot0._btnInfoOnClick, slot0)
-	slot0._btnScoreDetailInfo:AddClickListener(slot0._btnScoreDetailOnClick, slot0)
-	slot0._btnCloseScoreDetailInfo:AddClickListener(slot0._btnCloseScoreDetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnPreLv:AddClickListener(arg_2_0._preLvclick, arg_2_0)
+	arg_2_0._btnNextLv:AddClickListener(arg_2_0._nextLvclick, arg_2_0)
+	arg_2_0._btnLock:AddClickListener(arg_2_0._lockLvclick, arg_2_0)
+	arg_2_0._btnReward:AddClickListener(arg_2_0._onClickRewardBtn, arg_2_0)
+	arg_2_0._btnCloseReward:AddClickListener(arg_2_0._onClicClosekRewardBtn, arg_2_0)
+	arg_2_0._btnEnterHard:AddClickListener(arg_2_0._enterFightClick, arg_2_0)
+	arg_2_0._btnEnterNormal:AddClickListener(arg_2_0._enterFightClick, arg_2_0)
+	arg_2_0._btnSchedule:AddClickListener(arg_2_0._btnScheduleOnClick, arg_2_0)
+	arg_2_0._btnInfo:AddClickListener(arg_2_0._btnInfoOnClick, arg_2_0)
+	arg_2_0._btnScoreDetailInfo:AddClickListener(arg_2_0._btnScoreDetailOnClick, arg_2_0)
+	arg_2_0._btnCloseScoreDetailInfo:AddClickListener(arg_2_0._btnCloseScoreDetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnPreLv:RemoveClickListener()
-	slot0._btnNextLv:RemoveClickListener()
-	slot0._btnLock:RemoveClickListener()
-	slot0._btnReward:RemoveClickListener()
-	slot0._btnCloseReward:RemoveClickListener()
-	slot0._btnEnterNormal:RemoveClickListener()
-	slot0._btnEnterHard:RemoveClickListener()
-	slot0._btnSchedule:RemoveClickListener()
-	slot0._btnInfo:RemoveClickListener()
-	slot0._btnScoreDetailInfo:RemoveClickListener()
-	slot0._btnCloseScoreDetailInfo:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnPreLv:RemoveClickListener()
+	arg_3_0._btnNextLv:RemoveClickListener()
+	arg_3_0._btnLock:RemoveClickListener()
+	arg_3_0._btnReward:RemoveClickListener()
+	arg_3_0._btnCloseReward:RemoveClickListener()
+	arg_3_0._btnEnterNormal:RemoveClickListener()
+	arg_3_0._btnEnterHard:RemoveClickListener()
+	arg_3_0._btnSchedule:RemoveClickListener()
+	arg_3_0._btnInfo:RemoveClickListener()
+	arg_3_0._btnScoreDetailInfo:RemoveClickListener()
+	arg_3_0._btnCloseScoreDetailInfo:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot2, slot3 = VersionActivity1_6DungeonBossModel.instance:getMaxOrderMo()
-	slot6 = VersionActivity1_6DungeonBossModel.instance:getAct149MoByEpisodeId(DungeonModel.instance.lastSendEpisodeId)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = VersionActivity1_6DungeonBossModel.instance
+	local var_6_1, var_6_2 = var_6_0:getMaxOrderMo()
+	local var_6_3 = arg_6_0.viewParam and arg_6_0.viewParam.toPreEpisode
+	local var_6_4 = DungeonModel.instance.lastSendEpisodeId
+	local var_6_5 = VersionActivity1_6DungeonBossModel.instance:getAct149MoByEpisodeId(var_6_4)
 
-	if slot0.viewParam and slot0.viewParam.toPreEpisode and slot6 then
-		slot0._curBossEpisodeMo = slot6
-		slot0._curBossEpisodeOrder = slot6.cfg.order
+	if var_6_3 and var_6_5 then
+		arg_6_0._curBossEpisodeMo = var_6_5
+		arg_6_0._curBossEpisodeOrder = var_6_5.cfg.order
 	else
-		slot0._curBossEpisodeMo = slot2
-		slot0._curBossEpisodeOrder = slot3
+		arg_6_0._curBossEpisodeMo = var_6_1
+		arg_6_0._curBossEpisodeOrder = var_6_2
 	end
 
-	slot0._curBossCfg = slot1:getAct149EpisodeCfgIdByOrder(slot0._curBossEpisodeOrder)
-	slot0._curMaxOrder = slot3
-	slot0._lvIcons = slot0:getUserDataTb_()
+	arg_6_0._curBossCfg = var_6_0:getAct149EpisodeCfgIdByOrder(arg_6_0._curBossEpisodeOrder)
+	arg_6_0._curMaxOrder = var_6_2
+	arg_6_0._lvIcons = arg_6_0:getUserDataTb_()
 
-	for slot10 = 1, uv0 do
-		slot0._lvIcons[slot10] = gohelper.findChild(slot0.viewGO, "Left/Lv/#txt_Lv/image_Lv" .. slot10)
+	for iter_6_0 = 1, var_0_1 do
+		local var_6_6 = gohelper.findChild(arg_6_0.viewGO, "Left/Lv/#txt_Lv/image_Lv" .. iter_6_0)
+
+		arg_6_0._lvIcons[iter_6_0] = var_6_6
 	end
 
-	gohelper.setActive(slot0._goRewardTips, false)
-	gohelper.setActive(slot0._goScoreDetailTips, false)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0:addEventCb(VersionActivity1_6DungeonController.instance, VersionActivity1_6DungeonEvent.DungeonBossInfoUpdated, slot0._onDungeonBossInfoUpdated, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
-	RedDotController.instance:addRedDot(slot0._redDotSchedule, RedDotEnum.DotNode.V1a6DungeonBossReward)
+	gohelper.setActive(arg_6_0._goRewardTips, false)
+	gohelper.setActive(arg_6_0._goScoreDetailTips, false)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_6_0._onDailyRefresh, arg_6_0)
+	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, VersionActivity1_6DungeonEvent.DungeonBossInfoUpdated, arg_6_0._onDungeonBossInfoUpdated, arg_6_0)
+	arg_6_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_6_0.closeThis, arg_6_0)
+	RedDotController.instance:addRedDot(arg_6_0._redDotSchedule, RedDotEnum.DotNode.V1a6DungeonBossReward)
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonBossViewAmbient)
-	slot0:_refreshUI()
+	arg_7_0:_refreshUI()
 
-	if slot0.viewParam and slot0.viewParam.showDailyBonus then
-		slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onDailyBonusViewCloase, slot0)
+	if arg_7_0.viewParam and arg_7_0.viewParam.showDailyBonus then
+		arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_7_0._onDailyBonusViewCloase, arg_7_0)
 	else
-		slot0:_playAnimations()
-		slot0:dispatchGuideEvent()
+		arg_7_0:_playAnimations()
+		arg_7_0:dispatchGuideEvent()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonBossViewStopAmbient)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_8_0._onDailyRefresh, arg_8_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshBossLvArea()
-	slot0:_refreshScoreArea()
-	slot0:_refreshScoreBtn()
-	slot0:_refreshRuleView()
-	slot0:_refreshRewardArea()
-	slot0:_refreshBtnState()
+function var_0_0._refreshUI(arg_10_0)
+	arg_10_0:_refreshBossLvArea()
+	arg_10_0:_refreshScoreArea()
+	arg_10_0:_refreshScoreBtn()
+	arg_10_0:_refreshRuleView()
+	arg_10_0:_refreshRewardArea()
+	arg_10_0:_refreshBtnState()
 end
 
-function slot0._refreshUIOnBossChange(slot0)
-	slot0:_refreshBossLvArea()
-	slot0:_refreshRuleView()
-	slot0:_refreshBtnState()
-	slot0:_playAnimations()
+function var_0_0._refreshUIOnBossChange(arg_11_0)
+	arg_11_0:_refreshBossLvArea()
+	arg_11_0:_refreshRuleView()
+	arg_11_0:_refreshBtnState()
+	arg_11_0:_playAnimations()
 end
 
-function slot0._refreshBossLvArea(slot0)
-	slot0._txtBosslv.text = "Lv." .. slot0._curBossEpisodeOrder
+function var_0_0._refreshBossLvArea(arg_12_0)
+	local var_12_0 = arg_12_0._curBossEpisodeOrder
 
-	for slot5 = 1, uv0 do
-		if slot0._lvIcons[slot5] then
-			gohelper.setActive(slot6, slot5 == slot1 and slot0._curBossEpisodeMo ~= nil)
+	arg_12_0._txtBosslv.text = "Lv." .. var_12_0
+
+	for iter_12_0 = 1, var_0_1 do
+		local var_12_1 = arg_12_0._lvIcons[iter_12_0]
+
+		if var_12_1 then
+			gohelper.setActive(var_12_1, iter_12_0 == var_12_0 and arg_12_0._curBossEpisodeMo ~= nil)
 		end
 	end
 
-	slot0._txtTipsNum.text = math.floor(slot0._curBossCfg.multi * 100) .. "%"
+	local var_12_2 = math.floor(arg_12_0._curBossCfg.multi * 100)
 
-	gohelper.setActive(slot0._goBtnNextLv, true)
-	gohelper.setActive(slot0._goBtnPreLv, true)
-	gohelper.setActive(slot0._goBtnNextLvLock, false)
+	arg_12_0._txtTipsNum.text = var_12_2 .. "%"
 
-	slot3 = slot0._curBossEpisodeOrder == uv1
+	gohelper.setActive(arg_12_0._goBtnNextLv, true)
+	gohelper.setActive(arg_12_0._goBtnPreLv, true)
+	gohelper.setActive(arg_12_0._goBtnNextLvLock, false)
 
-	ZProj.UGUIHelper.SetColorAlpha(slot0._imageNextLv, slot3 and 0.5 or 1)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._imagePreLv, slot0._curBossEpisodeOrder == 1 and 0.5 or 1)
-	gohelper.setActive(slot0._goNormalBG, not slot3)
-	gohelper.setActive(slot0._goHardBG, slot3)
-	gohelper.setActive(slot0._goLvNormalBG, not slot3)
-	gohelper.setActive(slot0._goLvHardBG, slot3)
-	gohelper.setActive(slot0._goNormalTitleBG, not slot3)
-	gohelper.setActive(slot0._goHardTitleBG, slot3)
+	local var_12_3 = arg_12_0._curBossEpisodeOrder == var_0_2
+
+	ZProj.UGUIHelper.SetColorAlpha(arg_12_0._imageNextLv, var_12_3 and 0.5 or 1)
+	ZProj.UGUIHelper.SetColorAlpha(arg_12_0._imagePreLv, arg_12_0._curBossEpisodeOrder == 1 and 0.5 or 1)
+	gohelper.setActive(arg_12_0._goNormalBG, not var_12_3)
+	gohelper.setActive(arg_12_0._goHardBG, var_12_3)
+	gohelper.setActive(arg_12_0._goLvNormalBG, not var_12_3)
+	gohelper.setActive(arg_12_0._goLvHardBG, var_12_3)
+	gohelper.setActive(arg_12_0._goNormalTitleBG, not var_12_3)
+	gohelper.setActive(arg_12_0._goHardTitleBG, var_12_3)
 end
 
-function slot0._refreshBtnState(slot0)
-	slot1 = slot0._curBossEpisodeMo ~= nil
+function var_0_0._refreshBtnState(arg_13_0)
+	local var_13_0 = arg_13_0._curBossEpisodeMo ~= nil
 
-	gohelper.setActive(slot0._btnEnterNormal.gameObject, slot1)
-	gohelper.setActive(slot0._btnEnterHard.gameObject, slot1)
-	gohelper.setActive(slot0._goEnterNormalLocked, not slot1)
-	gohelper.setActive(slot0._goEnterHardLocked, not slot1)
+	gohelper.setActive(arg_13_0._btnEnterNormal.gameObject, var_13_0)
+	gohelper.setActive(arg_13_0._btnEnterHard.gameObject, var_13_0)
+	gohelper.setActive(arg_13_0._goEnterNormalLocked, not var_13_0)
+	gohelper.setActive(arg_13_0._goEnterHardLocked, not var_13_0)
 end
 
-function slot0._refreshScoreArea(slot0)
-	slot1 = VersionActivity1_6DungeonBossModel.instance:getCurMaxScore()
-	slot0._txtScoreNum.text = slot1
+function var_0_0._refreshScoreArea(arg_14_0)
+	local var_14_0 = VersionActivity1_6DungeonBossModel.instance:getCurMaxScore()
 
-	gohelper.setActive(slot0._goBtnReward, not slot1 or slot1 == 0)
-	gohelper.setActive(slot0._goMaxScoreTips, slot1 == Activity149Config.instance:getEpisodeMaxScore(slot0._curBossCfg.id, VersionActivity1_6Enum.ActivityId.DungeonBossRush))
+	arg_14_0._txtScoreNum.text = var_14_0
+
+	gohelper.setActive(arg_14_0._goBtnReward, not var_14_0 or var_14_0 == 0)
+
+	local var_14_1 = Activity149Config.instance:getEpisodeMaxScore(arg_14_0._curBossCfg.id, VersionActivity1_6Enum.ActivityId.DungeonBossRush)
+
+	gohelper.setActive(arg_14_0._goMaxScoreTips, var_14_0 == var_14_1)
 end
 
-function slot0._refreshScoreBtn(slot0)
-	slot0._imageScoreProgress.fillAmount = VersionActivity1_6DungeonBossModel.instance:getTotalScore() / (1 * Activity149Config.instance:getBossRewardMaxScore())
+function var_0_0._refreshScoreBtn(arg_15_0)
+	local var_15_0 = VersionActivity1_6DungeonBossModel.instance:getTotalScore()
+	local var_15_1 = Activity149Config.instance:getBossRewardMaxScore()
+
+	arg_15_0._imageScoreProgress.fillAmount = var_15_0 / (1 * var_15_1)
 end
 
-function slot0._refreshRuleView(slot0)
-	slot1 = slot0._curBossCfg.id
-	slot3 = nil
+function var_0_0._refreshRuleView(arg_16_0)
+	local var_16_0 = arg_16_0._curBossCfg.id
+	local var_16_1 = arg_16_0._curBossCfg
+	local var_16_2
+	local var_16_3 = VersionActivity1_6DungeonBossModel.instance
 
-	if slot0._curBossCfg.order == uv0 and not VersionActivity1_6DungeonBossModel.instance:isLastBossEpisode() then
-		slot3 = Activity149Config.instance:getDungeonEpisodeCfg(Activity149Config.instance:getNextBossEpisodeCfgById(slot2.id).id).battleId
+	if var_16_1.order == var_0_1 and not var_16_3:isLastBossEpisode() then
+		local var_16_4 = Activity149Config.instance:getNextBossEpisodeCfgById(var_16_1.id)
+
+		var_16_2 = Activity149Config.instance:getDungeonEpisodeCfg(var_16_4.id).battleId
 	end
 
-	slot0.viewContainer:getBossRuleView():refreshUI(Activity149Config.instance:getDungeonEpisodeCfg(slot1).battleId, slot3)
+	local var_16_5 = Activity149Config.instance:getDungeonEpisodeCfg(var_16_0).battleId
+
+	arg_16_0.viewContainer:getBossRuleView():refreshUI(var_16_5, var_16_2)
 end
 
-function slot0._refreshRewardArea(slot0)
-	IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onRewardItemShow, ItemModel.instance:getItemDataListByConfigStr(Activity149Config.instance:getAct149ConstValue(2)), slot0._goRewards)
+function var_0_0._refreshRewardArea(arg_17_0)
+	local var_17_0 = 2
+	local var_17_1 = Activity149Config.instance:getAct149ConstValue(var_17_0)
+	local var_17_2 = ItemModel.instance:getItemDataListByConfigStr(var_17_1)
+
+	IconMgr.instance:getCommonPropItemIconList(arg_17_0, arg_17_0._onRewardItemShow, var_17_2, arg_17_0._goRewards)
 end
 
-function slot0._onRewardItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:setConsume(true)
-	slot1:showStackableNum2()
-	slot1:isShowEffect(true)
-	slot1:setAutoPlay(true)
-	slot1:setCountFontSize(48)
+function var_0_0._onRewardItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	arg_18_1:onUpdateMO(arg_18_2)
+	arg_18_1:setConsume(true)
+	arg_18_1:showStackableNum2()
+	arg_18_1:isShowEffect(true)
+	arg_18_1:setAutoPlay(true)
+	arg_18_1:setCountFontSize(48)
 end
 
-function slot0._onDailyRefresh(slot0)
+function var_0_0._onDailyRefresh(arg_19_0)
 	if ActivityHelper.getActivityStatus(VersionActivity1_6Enum.ActivityId.DungeonBossRush) == ActivityEnum.ActivityStatus.Normal then
 		VersionActivity1_6DungeonRpc.instance:sendGet149InfoRequest()
 	end
 end
 
-function slot0._onDungeonBossInfoUpdated(slot0)
-	slot1 = VersionActivity1_6DungeonBossModel.instance
-	slot2, slot0._curMaxOrder = slot1:getMaxOrderMo()
-	slot0._curBossCfg = slot1:getAct149EpisodeCfgIdByOrder(slot0._curBossEpisodeOrder)
-	slot0._curBossEpisodeMo = slot1:getAct149MoByOrder(slot0._curBossEpisodeOrder)
+function var_0_0._onDungeonBossInfoUpdated(arg_20_0)
+	local var_20_0 = VersionActivity1_6DungeonBossModel.instance
+	local var_20_1, var_20_2 = var_20_0:getMaxOrderMo()
 
-	slot0:_refreshUI()
-	slot0:_playAnimations()
-	slot0:_showUnlockAnimation()
-	slot0:dispatchGuideEvent()
+	arg_20_0._curMaxOrder = var_20_2
+	arg_20_0._curBossCfg = var_20_0:getAct149EpisodeCfgIdByOrder(arg_20_0._curBossEpisodeOrder)
+	arg_20_0._curBossEpisodeMo = var_20_0:getAct149MoByOrder(arg_20_0._curBossEpisodeOrder)
+
+	arg_20_0:_refreshUI()
+	arg_20_0:_playAnimations()
+	arg_20_0:_showUnlockAnimation()
+	arg_20_0:dispatchGuideEvent()
 end
 
-function slot0._onDailyBonusViewCloase(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		slot0:_playAnimations()
+function var_0_0._onDailyBonusViewCloase(arg_21_0, arg_21_1)
+	if arg_21_1 == ViewName.CommonPropView then
+		arg_21_0:_playAnimations()
 	end
 end
 
-function slot0.dispatchGuideEvent(slot0)
-	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.DungeonBossOrder, slot0._curMaxOrder)
+function var_0_0.dispatchGuideEvent(arg_22_0)
+	local var_22_0 = arg_22_0._curMaxOrder
+
+	VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.DungeonBossOrder, var_22_0)
 end
 
-function slot0._enterFightClick(slot0)
-	if slot0._curBossEpisodeMo then
-		VersionActivity1_6DungeonController.instance:enterBossFightScene(slot0._curBossCfg.id)
+function var_0_0._enterFightClick(arg_23_0)
+	if arg_23_0._curBossEpisodeMo then
+		VersionActivity1_6DungeonController.instance:enterBossFightScene(arg_23_0._curBossCfg.id)
 	end
 end
 
-function slot0._btnScheduleOnClick(slot0)
+function var_0_0._btnScheduleOnClick(arg_24_0)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_6_BossScheduleView)
 end
 
-function slot0._preLvclick(slot0)
-	if slot0._curBossEpisodeOrder <= 1 then
+function var_0_0._preLvclick(arg_25_0)
+	if arg_25_0._curBossEpisodeOrder <= 1 then
 		return
 	end
 
-	slot0._curBossEpisodeOrder = slot0._curBossEpisodeOrder - 1
-	slot1 = VersionActivity1_6DungeonBossModel.instance
-	slot0._curBossCfg = slot1:getAct149EpisodeCfgIdByOrder(slot0._curBossEpisodeOrder)
-	slot0._curBossEpisodeMo = slot1:getAct149MoByOrder(slot0._curBossEpisodeOrder)
+	arg_25_0._curBossEpisodeOrder = arg_25_0._curBossEpisodeOrder - 1
 
-	slot0:_refreshUIOnBossChange()
+	local var_25_0 = VersionActivity1_6DungeonBossModel.instance
+
+	arg_25_0._curBossCfg = var_25_0:getAct149EpisodeCfgIdByOrder(arg_25_0._curBossEpisodeOrder)
+	arg_25_0._curBossEpisodeMo = var_25_0:getAct149MoByOrder(arg_25_0._curBossEpisodeOrder)
+
+	arg_25_0:_refreshUIOnBossChange()
 end
 
-function slot0._nextLvclick(slot0)
-	if VersionActivity1_6DungeonEnum.bossMaxOrder <= slot0._curBossEpisodeOrder then
+function var_0_0._nextLvclick(arg_26_0)
+	if arg_26_0._curBossEpisodeOrder >= VersionActivity1_6DungeonEnum.bossMaxOrder then
 		return
 	end
 
-	slot0._curBossEpisodeOrder = slot0._curBossEpisodeOrder + 1
-	slot1 = VersionActivity1_6DungeonBossModel.instance
-	slot0._curBossCfg = slot1:getAct149EpisodeCfgIdByOrder(slot0._curBossEpisodeOrder)
-	slot0._curBossEpisodeMo = slot1:getAct149MoByOrder(slot0._curBossEpisodeOrder)
+	arg_26_0._curBossEpisodeOrder = arg_26_0._curBossEpisodeOrder + 1
 
-	slot0:_refreshUIOnBossChange()
+	local var_26_0 = VersionActivity1_6DungeonBossModel.instance
+
+	arg_26_0._curBossCfg = var_26_0:getAct149EpisodeCfgIdByOrder(arg_26_0._curBossEpisodeOrder)
+	arg_26_0._curBossEpisodeMo = var_26_0:getAct149MoByOrder(arg_26_0._curBossEpisodeOrder)
+
+	arg_26_0:_refreshUIOnBossChange()
 end
 
-function slot0._lockLvclick(slot0)
-	slot0._curBossCfg = VersionActivity1_6DungeonBossModel.instance:getAct149EpisodeCfgIdByOrder(slot0._curBossEpisodeOrder)
-	slot0._curBossEpisodeMo = VersionActivity1_6DungeonBossModel.instance:getAct149MoByOrder(slot0._curBossEpisodeOrder)
+function var_0_0._lockLvclick(arg_27_0)
+	arg_27_0._curBossCfg = VersionActivity1_6DungeonBossModel.instance:getAct149EpisodeCfgIdByOrder(arg_27_0._curBossEpisodeOrder)
+	arg_27_0._curBossEpisodeMo = VersionActivity1_6DungeonBossModel.instance:getAct149MoByOrder(arg_27_0._curBossEpisodeOrder)
 
-	if DungeonModel.instance:getEpisodeInfo(slot0._curBossCfg.episodeId) and slot2.star > 0 then
+	local var_27_0 = DungeonModel.instance:getEpisodeInfo(arg_27_0._curBossCfg.episodeId)
+
+	if var_27_0 and var_27_0.star > 0 then
 		GameFacade.showToast(ToastEnum.Act1_6DungeonToast60205)
 	else
 		GameFacade.showToast(ToastEnum.Act1_6DungeonToast60204)
 	end
 end
 
-function slot0._onClickRewardBtn(slot0)
-	gohelper.setActive(slot0._goRewardTips, true)
+function var_0_0._onClickRewardBtn(arg_28_0)
+	gohelper.setActive(arg_28_0._goRewardTips, true)
 end
 
-function slot0._onClicClosekRewardBtn(slot0)
-	gohelper.setActive(slot0._goRewardTips, false)
+function var_0_0._onClicClosekRewardBtn(arg_29_0)
+	gohelper.setActive(arg_29_0._goRewardTips, false)
 end
 
-function slot0._btnInfoOnClick(slot0)
-	slot1 = slot0._curBossCfg and DungeonConfig.instance:getEpisodeCO(slot0._curBossCfg.episodeId)
+function var_0_0._btnInfoOnClick(arg_30_0)
+	local var_30_0 = arg_30_0._curBossCfg and DungeonConfig.instance:getEpisodeCO(arg_30_0._curBossCfg.episodeId)
+	local var_30_1 = var_30_0 and var_30_0.battleId
 
-	if slot1 and slot1.battleId then
-		EnemyInfoController.instance:openEnemyInfoViewByBattleId(slot2)
+	if var_30_1 then
+		EnemyInfoController.instance:openEnemyInfoViewByBattleId(var_30_1)
 	end
 end
 
-function slot0._btnScoreDetailOnClick(slot0)
-	gohelper.setActive(slot0._goScoreDetailTips, true)
+function var_0_0._btnScoreDetailOnClick(arg_31_0)
+	gohelper.setActive(arg_31_0._goScoreDetailTips, true)
 end
 
-function slot0._btnCloseScoreDetailOnClick(slot0)
-	gohelper.setActive(slot0._goScoreDetailTips, false)
+function var_0_0._btnCloseScoreDetailOnClick(arg_32_0)
+	gohelper.setActive(arg_32_0._goScoreDetailTips, false)
 end
 
-function slot0._playAnimations(slot0)
-	slot0:_showUnlockAnimation()
-	slot0:_showTodayMaxScoreAnimation()
+function var_0_0._playAnimations(arg_33_0)
+	arg_33_0:_showUnlockAnimation()
+	arg_33_0:_showTodayMaxScoreAnimation()
 
-	if not slot0:_showFirstPassBossAnimation() then
-		slot0:_showGotScroeAnimation()
+	if not arg_33_0:_showFirstPassBossAnimation() then
+		arg_33_0:_showGotScroeAnimation()
 	else
 		VersionActivity1_6DungeonBossModel.instance:applyPreScoreToCurScore()
 	end
 end
 
-function slot0._showUnlockAnimation(slot0)
-	if slot0._curBossEpisodeMo ~= nil and PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(uv0 .. slot0._curBossEpisodeOrder)) ~= 1 then
-		PlayerPrefsHelper.setNumber(slot4, 1)
-		slot0._goBosslv:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Unlock, 0, 0)
+function var_0_0._showUnlockAnimation(arg_34_0)
+	local var_34_0 = arg_34_0._curBossEpisodeOrder
+	local var_34_1 = arg_34_0._curBossEpisodeMo ~= nil
+	local var_34_2 = var_0_3 .. var_34_0
+	local var_34_3 = PlayerModel.instance:getPlayerPrefsKey(var_34_2)
+	local var_34_4 = PlayerPrefsHelper.getNumber(var_34_3)
+
+	if var_34_1 and var_34_4 ~= 1 then
+		PlayerPrefsHelper.setNumber(var_34_3, 1)
+		arg_34_0._goBosslv:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Unlock, 0, 0)
 	end
 end
 
-function slot0._showTodayMaxScoreAnimation(slot0)
-	slot1 = slot0._curBossEpisodeOrder
-	slot2 = VersionActivity1_6DungeonBossModel.instance
+function var_0_0._showTodayMaxScoreAnimation(arg_35_0)
+	local var_35_0 = arg_35_0._curBossEpisodeOrder
+	local var_35_1 = VersionActivity1_6DungeonBossModel.instance
 
-	if not (VersionActivity1_6DungeonBossModel.instance:getCurMaxScore() == Activity149Config.instance:getEpisodeMaxScore(slot0._curBossCfg.id, VersionActivity1_6Enum.ActivityId.DungeonBossRush)) then
+	if not (VersionActivity1_6DungeonBossModel.instance:getCurMaxScore() == Activity149Config.instance:getEpisodeMaxScore(arg_35_0._curBossCfg.id, VersionActivity1_6Enum.ActivityId.DungeonBossRush)) then
 		return
 	end
 
-	if not (PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(uv0 .. slot1)) == 1) then
-		PlayerPrefsHelper.setNumber(slot7, 1)
+	local var_35_2 = var_0_4 .. var_35_0
+	local var_35_3 = PlayerModel.instance:getPlayerPrefsKey(var_35_2)
 
-		slot10 = gohelper.findChild(slot0.viewGO, "Left/Score/vx_highscore")
+	if not (PlayerPrefsHelper.getNumber(var_35_3) == 1) then
+		PlayerPrefsHelper.setNumber(var_35_3, 1)
 
-		gohelper.setActive(slot10, false)
-		gohelper.setActive(slot10, true)
+		local var_35_4 = gohelper.findChild(arg_35_0.viewGO, "Left/Score/vx_highscore")
+
+		gohelper.setActive(var_35_4, false)
+		gohelper.setActive(var_35_4, true)
 	end
 end
 
-function slot0._showFirstPassBossAnimation(slot0)
-	if not VersionActivity1_6DungeonBossModel.instance:checkEpisodePassedByOrder(slot0._curBossEpisodeOrder) then
+function var_0_0._showFirstPassBossAnimation(arg_36_0)
+	local var_36_0 = arg_36_0._curBossEpisodeOrder
+
+	if not VersionActivity1_6DungeonBossModel.instance:checkEpisodePassedByOrder(var_36_0) then
 		return
 	end
 
-	if not (PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(uv0 .. slot1)) == 1) then
-		PlayerPrefsHelper.setNumber(slot5, 1)
-		gohelper.setActive(slot0._rewardEffect, true)
-		slot0._rewardEffectAnimator:Play(UIAnimationName.Finish .. 1, 0, 0)
+	local var_36_1 = var_0_5 .. var_36_0
+	local var_36_2 = PlayerModel.instance:getPlayerPrefsKey(var_36_1)
+
+	if not (PlayerPrefsHelper.getNumber(var_36_2) == 1) then
+		PlayerPrefsHelper.setNumber(var_36_2, 1)
+		gohelper.setActive(arg_36_0._rewardEffect, true)
+		arg_36_0._rewardEffectAnimator:Play(UIAnimationName.Finish .. 1, 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonBossViewGetScore)
 
 		return true
 	end
 end
 
-function slot0._showGotScroeAnimation(slot0)
-	if VersionActivity1_6DungeonBossModel.instance:HasGotHigherScore() then
-		slot1:applyPreScoreToCurScore()
-		gohelper.setActive(slot0._rewardEffect, true)
-		slot0._rewardEffectAnimator:Play(UIAnimationName.Finish .. 2, 0, 0)
+function var_0_0._showGotScroeAnimation(arg_37_0)
+	local var_37_0 = VersionActivity1_6DungeonBossModel.instance
+
+	if var_37_0:HasGotHigherScore() then
+		var_37_0:applyPreScoreToCurScore()
+		gohelper.setActive(arg_37_0._rewardEffect, true)
+		arg_37_0._rewardEffectAnimator:Play(UIAnimationName.Finish .. 2, 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonBossViewGetScore)
 	end
 end
 
-return slot0
+return var_0_0

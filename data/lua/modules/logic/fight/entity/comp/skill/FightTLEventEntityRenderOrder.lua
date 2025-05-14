@@ -1,21 +1,27 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityRenderOrder", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityRenderOrder", package.seeall)
 
-slot0 = class("FightTLEventEntityRenderOrder")
+local var_0_0 = class("FightTLEventEntityRenderOrder")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0:_setRenderOrder(slot6, tonumber(slot3[1]) or -1)
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = tonumber(arg_1_3[1]) or -1
+	local var_1_1 = tonumber(arg_1_3[2]) or -1
+	local var_1_2 = FightHelper.getEntity(arg_1_1.fromId)
+	local var_1_3 = var_1_2:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+	local var_1_4 = FightHelper.getSideEntitys(var_1_3, true)
 
-	for slot12, slot13 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide, true)) do
-		slot0:_setRenderOrder(slot13, tonumber(slot3[2]) or -1)
+	arg_1_0:_setRenderOrder(var_1_2, var_1_0)
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_4) do
+		arg_1_0:_setRenderOrder(iter_1_1, var_1_1)
 	end
 
 	FightRenderOrderMgr.instance:refreshRenderOrder()
 end
 
-function slot0._setRenderOrder(slot0, slot1, slot2)
-	if slot2 ~= -1 then
-		FightRenderOrderMgr.instance:setOrder(slot1.id, slot2)
+function var_0_0._setRenderOrder(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 ~= -1 then
+		FightRenderOrderMgr.instance:setOrder(arg_2_1.id, arg_2_2)
 	end
 end
 
-return slot0
+return var_0_0

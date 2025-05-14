@@ -1,118 +1,125 @@
-module("modules.logic.main.controller.work.ActivityRoleSignWorkBase", package.seeall)
+﻿module("modules.logic.main.controller.work.ActivityRoleSignWorkBase", package.seeall)
 
-slot0 = class("ActivityRoleSignWorkBase", BaseWork)
-slot1 = 0
+local var_0_0 = class("ActivityRoleSignWorkBase", BaseWork)
+local var_0_1 = 0
 
-function slot2(slot0)
-	if not slot0._viewNames then
-		slot0._viewNames = assert(slot0:onGetViewNames())
+local function var_0_2(arg_1_0)
+	if not arg_1_0._viewNames then
+		arg_1_0._viewNames = assert(arg_1_0:onGetViewNames())
 	end
 end
 
-function slot3(slot0)
-	if not slot0._actIds then
-		slot0._actIds = assert(slot0:onGetActIds())
+local function var_0_3(arg_2_0)
+	if not arg_2_0._actIds then
+		arg_2_0._actIds = assert(arg_2_0:onGetActIds())
 	end
 end
 
-function slot0.onStart(slot0)
-	uv0(slot0)
-	uv1(slot0)
+function var_0_0.onStart(arg_3_0)
+	var_0_2(arg_3_0)
+	var_0_3(arg_3_0)
 
-	uv2 = 0
+	var_0_1 = 0
 
-	if slot0:_isExistGuide() then
-		slot0:_endBlock()
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, slot0._work, slot0)
+	if arg_3_0:_isExistGuide() then
+		arg_3_0:_endBlock()
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_3_0._work, arg_3_0)
 	else
-		slot0:_work()
+		arg_3_0:_work()
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshNorSignActivity, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0._refreshNorSignActivity, arg_3_0)
 end
 
-function slot0._refreshNorSignActivity(slot0)
-	slot2 = slot0._viewName
+function var_0_0._refreshNorSignActivity(arg_4_0)
+	local var_4_0 = arg_4_0._actId
+	local var_4_1 = arg_4_0._viewName
 
-	if not slot0._actId then
+	if not var_4_0 then
 		return
 	end
 
-	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot1) then
-		if ViewMgr.instance:isOpen(slot2) then
+	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_4_0) then
+		if ViewMgr.instance:isOpen(var_4_1) then
 			return
 		end
 
-		slot0:_work()
+		arg_4_0:_work()
 
 		return
 	end
 
-	ViewMgr.instance:openView(slot2, {
-		actId = slot1
-	})
+	local var_4_2 = {
+		actId = var_4_0
+	}
+
+	ViewMgr.instance:openView(var_4_1, var_4_2)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 ~= slot0._viewName then
+function var_0_0._onCloseViewFinish(arg_5_0, arg_5_1)
+	if arg_5_1 ~= arg_5_0._viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(slot0._viewName) then
+	if ViewMgr.instance:isOpen(arg_5_0._viewName) then
 		return
 	end
 
-	slot0:_work()
+	arg_5_0:_work()
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 ~= slot0._viewName then
+function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
+	if arg_6_1 ~= arg_6_0._viewName then
 		return
 	end
 
-	slot0:_endBlock()
+	arg_6_0:_endBlock()
 end
 
-function slot0.clearWork(slot0)
-	slot0:_endBlock()
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._work, slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshNorSignActivity, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.clearWork(arg_7_0)
+	arg_7_0:_endBlock()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_7_0._work, arg_7_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_7_0._refreshNorSignActivity, arg_7_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0._onOpenViewFinish, arg_7_0)
 
-	slot0._actId = nil
-	slot0._viewName = nil
+	arg_7_0._actId = nil
+	arg_7_0._viewName = nil
 end
 
-function slot0._pop(slot0)
-	uv0 = uv0 + 1
+function var_0_0._pop(arg_8_0)
+	var_0_1 = var_0_1 + 1
 
-	return slot0._actIds[uv0], slot0._viewNames[uv0]
+	local var_8_0 = arg_8_0._viewNames[var_0_1]
+
+	return arg_8_0._actIds[var_0_1], var_8_0
 end
 
-function slot0._work(slot0)
-	slot0:_startBlock()
+function var_0_0._work(arg_9_0)
+	arg_9_0:_startBlock()
 
-	slot0._actId, slot0._viewName = slot0:_pop()
+	arg_9_0._actId, arg_9_0._viewName = arg_9_0:_pop()
 
-	if not slot0._actId then
-		slot0:onDone(true)
+	local var_9_0 = arg_9_0._actId
+
+	if not var_9_0 then
+		arg_9_0:onDone(true)
 
 		return
 	end
 
-	if ActivityType101Model.instance:isOpen(slot1) then
-		Activity101Rpc.instance:sendGet101InfosRequest(slot1)
+	if ActivityType101Model.instance:isOpen(var_9_0) then
+		Activity101Rpc.instance:sendGet101InfosRequest(var_9_0)
 
 		return
 	end
 
-	slot0:_work()
+	arg_9_0:_work()
 end
 
-function slot0._isExistGuide(slot0)
+function var_0_0._isExistGuide(arg_10_0)
 	if GuideModel.instance:isDoingClickGuide() and not GuideController.instance:isForbidGuides() then
 		return true
 	end
@@ -124,32 +131,32 @@ function slot0._isExistGuide(slot0)
 	return false
 end
 
-function slot0._endBlock(slot0)
-	if not slot0:_isBlock() then
+function var_0_0._endBlock(arg_11_0)
+	if not arg_11_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function slot0._startBlock(slot0)
-	if slot0:_isBlock() then
+function var_0_0._startBlock(arg_12_0)
+	if arg_12_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function slot0._isBlock(slot0)
+function var_0_0._isBlock(arg_13_0)
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function slot0.onGetViewNames(slot0)
+function var_0_0.onGetViewNames(arg_14_0)
 	assert(false, "please override this function")
 end
 
-function slot0.onGetActIds(slot0)
+function var_0_0.onGetActIds(arg_15_0)
 	assert(false, "please override this function")
 end
 
-return slot0
+return var_0_0

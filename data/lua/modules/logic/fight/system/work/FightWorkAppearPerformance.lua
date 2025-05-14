@@ -1,45 +1,48 @@
-module("modules.logic.fight.system.work.FightWorkAppearPerformance", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkAppearPerformance", package.seeall)
 
-slot0 = class("FightWorkAppearPerformance", BaseWork)
+local var_0_0 = class("FightWorkAppearPerformance", BaseWork)
 
-function slot0.onStart(slot0)
-	slot0._flow = FlowSequence.New()
+function var_0_0.onStart(arg_1_0)
+	arg_1_0._flow = FlowSequence.New()
 
-	slot0._flow:addWork(FightWorkAppearTimeline.New())
+	arg_1_0._flow:addWork(FightWorkAppearTimeline.New())
 
-	slot1, slot2 = FightWorkAppearTimeline.hasAppearTimeline()
-	slot4 = FightHelper.getEntity(slot2) and slot3:getMO()
+	local var_1_0, var_1_1 = FightWorkAppearTimeline.hasAppearTimeline()
+	local var_1_2 = FightHelper.getEntity(var_1_1)
+	local var_1_3 = var_1_2 and var_1_2:getMO()
 
-	if slot1 and slot4 then
-		slot0._flow:addWork(FunctionWork.New(function ()
-			for slot4, slot5 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
-				if slot5.nameUI then
-					slot5.nameUI:setActive(false)
+	if var_1_0 and var_1_3 then
+		arg_1_0._flow:addWork(FunctionWork.New(function()
+			local var_2_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+
+			for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+				if iter_2_1.nameUI then
+					iter_2_1.nameUI:setActive(false)
 				end
 
-				if slot5.setAlpha then
-					slot5:setAlpha(0, 0)
+				if iter_2_1.setAlpha then
+					iter_2_1:setAlpha(0, 0)
 				end
 			end
 		end))
-		slot0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterAppearTimeline, slot4.modelId))
+		arg_1_0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterAppearTimeline, var_1_3.modelId))
 	end
 
-	slot0._flow:registerDoneListener(slot0._onFlowDone, slot0)
-	slot0._flow:start()
+	arg_1_0._flow:registerDoneListener(arg_1_0._onFlowDone, arg_1_0)
+	arg_1_0._flow:start()
 end
 
-function slot0._onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:stop()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._flow then
+		arg_4_0._flow:unregisterDoneListener(arg_4_0._onFlowDone, arg_4_0)
+		arg_4_0._flow:stop()
 
-		slot0._flow = nil
+		arg_4_0._flow = nil
 	end
 end
 
-return slot0
+return var_0_0

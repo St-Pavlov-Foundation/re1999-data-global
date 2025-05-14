@@ -1,45 +1,53 @@
-module("modules.logic.fight.fightcomponent.FightLongPressComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightLongPressComponent", package.seeall)
 
-slot0 = class("FightLongPressComponent", FightBaseClass)
+local var_0_0 = class("FightLongPressComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._longPressArr = {
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._longPressArr = {
 		0.5,
 		99999
 	}
-	slot0._pressDic = {}
+	arg_1_0._pressDic = {}
 end
 
-function slot0.registLongPress(slot0, slot1, slot2, slot3, slot4)
-	slot0._pressDic[slot1:GetInstanceID()] = slot1
+function var_0_0.registLongPress(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = arg_2_1:GetInstanceID()
 
-	slot1:SetLongPressTime(slot0._longPressArr)
-	slot1:AddLongPressListener(slot2, slot3, slot4)
+	arg_2_0._pressDic[var_2_0] = arg_2_1
+
+	arg_2_1:SetLongPressTime(arg_2_0._longPressArr)
+	arg_2_1:AddLongPressListener(arg_2_2, arg_2_3, arg_2_4)
 end
 
-function slot0.registHover(slot0, slot1, slot2, slot3)
-	slot0._pressDic[slot1:GetInstanceID()] = slot1
+function var_0_0.registHover(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_1:GetInstanceID()
 
-	slot1:AddHoverListener(slot2, slot3)
+	arg_3_0._pressDic[var_3_0] = arg_3_1
+
+	arg_3_1:AddHoverListener(arg_3_2, arg_3_3)
 end
 
-function slot0.removeLongPress(slot0, slot1)
-	if slot0._pressDic[slot1:GetInstanceID()] then
-		slot0._pressDic[slot2]:RemoveLongPressListener()
+function var_0_0.removeLongPress(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1:GetInstanceID()
+
+	if arg_4_0._pressDic[var_4_0] then
+		arg_4_0._pressDic[var_4_0]:RemoveLongPressListener()
 	end
 end
 
-function slot0.removeHover(slot0, slot1)
-	if slot0._pressDic[slot1:GetInstanceID()] then
-		slot0._pressDic[slot2]:RemoveHoverListener()
+function var_0_0.removeHover(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1:GetInstanceID()
+
+	if arg_5_0._pressDic[var_5_0] then
+		arg_5_0._pressDic[var_5_0]:RemoveHoverListener()
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4, slot5 in pairs(slot0._pressDic) do
-		slot5:RemoveLongPressListener()
-		slot5:RemoveHoverListener()
+function var_0_0.onDestructor(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._pressDic) do
+		iter_6_1:RemoveLongPressListener()
+		iter_6_1:RemoveHoverListener()
 	end
 end
 
-return slot0
+return var_0_0

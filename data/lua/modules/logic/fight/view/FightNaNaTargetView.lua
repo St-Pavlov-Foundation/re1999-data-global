@@ -1,194 +1,223 @@
-module("modules.logic.fight.view.FightNaNaTargetView", package.seeall)
+﻿module("modules.logic.fight.view.FightNaNaTargetView", package.seeall)
 
-slot0 = class("FightNaNaTargetView", BaseView)
+local var_0_0 = class("FightNaNaTargetView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goUnSelected = gohelper.findChild(slot0.viewGO, "#go_UnSelected")
-	slot0._goSelected = gohelper.findChild(slot0.viewGO, "#go_Selected")
-	slot0._goItemGroup = gohelper.findChild(slot0.viewGO, "#go_itemgroup")
-	slot0._txtSkillName = gohelper.findChildText(slot0.viewGO, "#go_Selected/#txt_SkillName")
-	slot0._txtSkillDescr = gohelper.findChildText(slot0.viewGO, "#go_Selected/#txt_SkillDescr")
-	slot0._btnSign = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Sign")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goUnSelected = gohelper.findChild(arg_1_0.viewGO, "#go_UnSelected")
+	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
+	arg_1_0._goItemGroup = gohelper.findChild(arg_1_0.viewGO, "#go_itemgroup")
+	arg_1_0._txtSkillName = gohelper.findChildText(arg_1_0.viewGO, "#go_Selected/#txt_SkillName")
+	arg_1_0._txtSkillDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_Selected/#txt_SkillDescr")
+	arg_1_0._btnSign = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Sign")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnSign:AddClickListener(slot0._btnSignOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnSign:AddClickListener(arg_2_0._btnSignOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnSign:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnSign:RemoveClickListener()
 end
 
-function slot0._btnSignOnClick(slot0)
-	if slot0.curSelectEntity == 0 then
+function var_0_0._btnSignOnClick(arg_4_0)
+	if arg_4_0.curSelectEntity == 0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(20220174)
-	FightRpc.instance:sendUseClothSkillRequest(0, slot0.nanaEntityId, slot0.curSelectEntity, FightEnum.ClothSkillType.Contract)
+	FightRpc.instance:sendUseClothSkillRequest(0, arg_4_0.nanaEntityId, arg_4_0.curSelectEntity, FightEnum.ClothSkillType.Contract)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goBtnSign = slot0._btnSign.gameObject
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.goBtnSign = arg_5_0._btnSign.gameObject
 
-	gohelper.setActive(slot0.goBtnSign, false)
+	gohelper.setActive(arg_5_0.goBtnSign, false)
 
-	slot0.itemPrefab = slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes[1])
-	slot0.itemList = {}
+	local var_5_0 = arg_5_0.viewContainer:getSetting().otherRes[1]
 
-	slot0:initCareerBindBuff()
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0.blockEsc)
-	slot0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, slot0.onStartPlayClothSkill, slot0, LuaEventSystem.High)
-	slot0:addEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, slot0.closeThis, slot0, LuaEventSystem.High)
+	arg_5_0.itemPrefab = arg_5_0.viewContainer:getRes(var_5_0)
+	arg_5_0.itemList = {}
+
+	arg_5_0:initCareerBindBuff()
+	NavigateMgr.instance:addEscape(arg_5_0.viewName, arg_5_0.blockEsc)
+	arg_5_0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, arg_5_0.onStartPlayClothSkill, arg_5_0, LuaEventSystem.High)
+	arg_5_0:addEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, arg_5_0.closeThis, arg_5_0, LuaEventSystem.High)
 end
 
-function slot0.blockEsc()
+function var_0_0.blockEsc()
+	return
 end
 
-function slot0.onStartPlayClothSkill(slot0)
-	slot0:closeThis()
+function var_0_0.onStartPlayClothSkill(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	AudioMgr.instance:trigger(20220172)
 
-	slot0.curSelectEntity = 0
-	slot0.entityIdList = FightModel.instance.canContractList
-	slot0.nanaEntityId = FightModel.instance.notifyEntityId
-	slot0.nanaExSkillLv = FightDataHelper.entityMgr:getById(slot0.nanaEntityId) and slot1.exSkillLevel or 0
+	arg_8_0.curSelectEntity = 0
+	arg_8_0.entityIdList = FightModel.instance.canContractList
+	arg_8_0.nanaEntityId = FightModel.instance.notifyEntityId
 
-	table.sort(slot0.entityIdList, uv0.sortEntityId)
+	local var_8_0 = FightDataHelper.entityMgr:getById(arg_8_0.nanaEntityId)
 
-	for slot5, slot6 in ipairs(slot0.entityIdList) do
-		slot0:addItem(slot6)
+	arg_8_0.nanaExSkillLv = var_8_0 and var_8_0.exSkillLevel or 0
+
+	table.sort(arg_8_0.entityIdList, var_0_0.sortEntityId)
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.entityIdList) do
+		arg_8_0:addItem(iter_8_1)
 	end
 
-	slot0:refreshSelect()
-	FightModel.instance:setNotifyContractInfo(nil, )
+	arg_8_0:refreshSelect()
+	FightModel.instance:setNotifyContractInfo(nil, nil)
 end
 
-function slot0.sortEntityId(slot0, slot1)
-	if not FightDataHelper.entityMgr:getById(slot0) then
+function var_0_0.sortEntityId(arg_9_0, arg_9_1)
+	local var_9_0 = FightDataHelper.entityMgr:getById(arg_9_0)
+
+	if not var_9_0 then
 		return false
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot1) then
+	local var_9_1 = FightDataHelper.entityMgr:getById(arg_9_1)
+
+	if not var_9_1 then
 		return false
 	end
 
-	return slot2.position < slot3.position
+	return var_9_0.position < var_9_1.position
 end
 
-function slot0.initCareerBindBuff(slot0)
-	slot0.careerDict = {}
+function var_0_0.initCareerBindBuff(arg_10_0)
+	local var_10_0 = lua_fight_const.configDict[31].value
+	local var_10_1 = FightStrUtil.instance:getSplitCache(var_10_0, "|")
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitCache(lua_fight_const.configDict[31].value, "|")) do
-		slot8 = string.split(slot7, "%")
-		slot9 = tonumber(slot8[1])
-		slot13 = ","
+	arg_10_0.careerDict = {}
 
-		for slot13, slot14 in ipairs(string.split(slot8[2], slot13)) do
-			slot15 = string.splitToNumber(slot14, ":")
-			slot17 = slot15[2]
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		local var_10_2 = string.split(iter_10_1, "%")
+		local var_10_3 = tonumber(var_10_2[1])
 
-			if not slot0.careerDict[slot15[1]] then
-				slot0.careerDict[slot16] = {}
+		for iter_10_2, iter_10_3 in ipairs(string.split(var_10_2[2], ",")) do
+			local var_10_4 = string.splitToNumber(iter_10_3, ":")
+			local var_10_5 = var_10_4[1]
+			local var_10_6 = var_10_4[2]
+			local var_10_7 = arg_10_0.careerDict[var_10_5]
+
+			if not var_10_7 then
+				var_10_7 = {}
+				arg_10_0.careerDict[var_10_5] = var_10_7
 			end
 
-			slot18[slot9] = slot17
+			var_10_7[var_10_3] = var_10_6
 		end
 	end
 end
 
-function slot0.addItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.clone(slot0.itemPrefab, slot0._goItemGroup)
-	slot2.goSelect = gohelper.findChild(slot2.go, "#go_SelectedFrame")
-	slot2.simageIcon = gohelper.findChildSingleImage(slot2.go, "icon")
-	slot2.imageCareer = gohelper.findChildImage(slot2.go, "#image_Attr")
+function var_0_0.addItem(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getUserDataTb_()
 
-	if FightDataHelper.entityMgr:getById(slot1) then
-		slot2.simageIcon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot3.skin) and slot4.retangleIcon))
+	var_11_0.go = gohelper.clone(arg_11_0.itemPrefab, arg_11_0._goItemGroup)
+	var_11_0.goSelect = gohelper.findChild(var_11_0.go, "#go_SelectedFrame")
+	var_11_0.simageIcon = gohelper.findChildSingleImage(var_11_0.go, "icon")
+	var_11_0.imageCareer = gohelper.findChildImage(var_11_0.go, "#image_Attr")
+
+	local var_11_1 = FightDataHelper.entityMgr:getById(arg_11_1)
+
+	if var_11_1 then
+		local var_11_2 = FightConfig.instance:getSkinCO(var_11_1.skin)
+
+		var_11_0.simageIcon:LoadImage(ResUrl.getHeadIconSmall(var_11_2 and var_11_2.retangleIcon))
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(slot2.imageCareer, "lssx_" .. slot3.career)
+	local var_11_3 = var_11_1.career
 
-	slot2.uid = slot1
-	slot2.click = gohelper.getClickWithDefaultAudio(slot2.go)
+	UISpriteSetMgr.instance:setCommonSprite(var_11_0.imageCareer, "lssx_" .. var_11_3)
 
-	slot2.click:AddClickListener(slot0.onClickItem, slot0, slot1)
-	table.insert(slot0.itemList, slot2)
+	var_11_0.uid = arg_11_1
+	var_11_0.click = gohelper.getClickWithDefaultAudio(var_11_0.go)
+
+	var_11_0.click:AddClickListener(arg_11_0.onClickItem, arg_11_0, arg_11_1)
+	table.insert(arg_11_0.itemList, var_11_0)
 end
 
-function slot0.onClickItem(slot0, slot1)
-	if slot1 == slot0.curSelectEntity then
+function var_0_0.onClickItem(arg_12_0, arg_12_1)
+	if arg_12_1 == arg_12_0.curSelectEntity then
 		return
 	end
 
 	AudioMgr.instance:trigger(20220173)
 
-	slot0.curSelectEntity = slot1
+	arg_12_0.curSelectEntity = arg_12_1
 
-	slot0:refreshSelect()
+	arg_12_0:refreshSelect()
 end
 
-function slot0.refreshSelect(slot0)
-	gohelper.setActive(slot0.goBtnSign, slot0.curSelectEntity ~= 0)
-	slot0:refreshSelectStatus()
-	slot0:refreshSelectText()
+function var_0_0.refreshSelect(arg_13_0)
+	gohelper.setActive(arg_13_0.goBtnSign, arg_13_0.curSelectEntity ~= 0)
+	arg_13_0:refreshSelectStatus()
+	arg_13_0:refreshSelectText()
 end
 
-function slot0.refreshSelectStatus(slot0)
-	for slot4, slot5 in ipairs(slot0.itemList) do
-		gohelper.setActive(slot5.goSelect, slot5.uid == slot0.curSelectEntity)
+function var_0_0.refreshSelectStatus(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.itemList) do
+		local var_14_0 = iter_14_1.uid == arg_14_0.curSelectEntity
+
+		gohelper.setActive(iter_14_1.goSelect, var_14_0)
 	end
 end
 
-function slot0.refreshSelectText(slot0)
-	slot1 = slot0.curSelectEntity ~= 0
+function var_0_0.refreshSelectText(arg_15_0)
+	local var_15_0 = arg_15_0.curSelectEntity ~= 0
 
-	gohelper.setActive(slot0._goSelected, slot1)
-	gohelper.setActive(slot0._goUnSelected, not slot1)
+	gohelper.setActive(arg_15_0._goSelected, var_15_0)
+	gohelper.setActive(arg_15_0._goUnSelected, not var_15_0)
 
-	if slot1 then
-		slot0:refreshBuffText()
+	if var_15_0 then
+		arg_15_0:refreshBuffText()
 	end
 end
 
-function slot0.refreshBuffText(slot0)
-	if not FightDataHelper.entityMgr:getById(slot0.curSelectEntity) then
-		logError("没找到entityMo : " .. tostring(slot0.curSelectEntity))
+function var_0_0.refreshBuffText(arg_16_0)
+	local var_16_0 = FightDataHelper.entityMgr:getById(arg_16_0.curSelectEntity)
+
+	if not var_16_0 then
+		logError("没找到entityMo : " .. tostring(arg_16_0.curSelectEntity))
 
 		return
 	end
 
-	slot4 = slot1.career and (slot0.careerDict[slot0.nanaExSkillLv] or slot0.careerDict[0])[slot3]
+	local var_16_1 = arg_16_0.careerDict[arg_16_0.nanaExSkillLv] or arg_16_0.careerDict[0]
+	local var_16_2 = var_16_0.career
+	local var_16_3 = var_16_2 and var_16_1[var_16_2]
+	local var_16_4 = var_16_3 and lua_skill_buff.configDict[var_16_3]
 
-	if not (slot4 and lua_skill_buff.configDict[slot4]) then
-		logError("没找到buffCo : " .. tostring(slot4))
+	if not var_16_4 then
+		logError("没找到buffCo : " .. tostring(var_16_3))
 
 		return
 	end
 
-	slot0._txtSkillName.text = slot5.name
-	slot0._txtSkillDescr.text = slot5.desc
+	arg_16_0._txtSkillName.text = var_16_4.name
+	arg_16_0._txtSkillDescr.text = var_16_4.desc
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
 	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.BindContract)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.itemList) do
-		slot5.simageIcon:UnLoadImage()
-		slot5.click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.itemList) do
+		iter_18_1.simageIcon:UnLoadImage()
+		iter_18_1.click:RemoveClickListener()
 	end
 
-	slot0.itemList = nil
+	arg_18_0.itemList = nil
 end
 
-return slot0
+return var_0_0

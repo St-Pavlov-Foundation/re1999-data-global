@@ -1,23 +1,19 @@
-module("modules.logic.dungeon.model.DungeonPuzzleMazeDrawMO", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonPuzzleMazeDrawMO", package.seeall)
 
-slot0 = pureTable("DungeonPuzzleMazeDrawMO")
+local var_0_0 = pureTable("DungeonPuzzleMazeDrawMO")
 
-function slot0.initByPos(slot0, slot1, slot2, slot3, slot4)
-	slot0.y = slot2
-	slot0.x = slot1
-	slot0.objType = slot3
-	slot0.val = slot4 or 0
-	slot0.isPos = true
+function var_0_0.initByPos(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0.x, arg_1_0.y = arg_1_1, arg_1_2
+	arg_1_0.objType = arg_1_3
+	arg_1_0.val = arg_1_4 or 0
+	arg_1_0.isPos = true
 end
 
-function slot0.initByLine(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.y2 = slot4
-	slot0.x2 = slot3
-	slot0.y1 = slot2
-	slot0.x1 = slot1
-	slot0.objType = slot5
-	slot0.val = slot6 or 0
-	slot0.isPos = false
+function var_0_0.initByLine(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
+	arg_2_0.x1, arg_2_0.y1, arg_2_0.x2, arg_2_0.y2 = arg_2_1, arg_2_2, arg_2_3, arg_2_4
+	arg_2_0.objType = arg_2_5
+	arg_2_0.val = arg_2_6 or 0
+	arg_2_0.isPos = false
 end
 
-return slot0
+return var_0_0

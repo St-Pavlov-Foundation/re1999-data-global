@@ -1,60 +1,60 @@
-module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072", package.seeall)
 
-slot0 = class("FightEntitySpecialSpine3072", UserDataDispose)
+local var_0_0 = class("FightEntitySpecialSpine3072", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._entity = slot1
-	slot0._maskEffect = FightEntitySpecialSpine3072_Mask.New(slot1)
+	arg_1_0._entity = arg_1_1
+	arg_1_0._maskEffect = FightEntitySpecialSpine3072_Mask.New(arg_1_1)
 end
 
-function slot0.playAnim(slot0, slot1, slot2, slot3)
-	slot0._maskEffect:playAnim(slot1, slot2, slot3)
+function var_0_0.playAnim(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._maskEffect:playAnim(arg_2_1, arg_2_2, arg_2_3)
 end
 
-function slot0.setFreeze(slot0, slot1)
-	slot0._maskEffect:setFreeze(slot1)
+function var_0_0.setFreeze(arg_3_0, arg_3_1)
+	arg_3_0._maskEffect:setFreeze(arg_3_1)
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	slot0._maskEffect:setTimeScale(slot1)
+function var_0_0.setTimeScale(arg_4_0, arg_4_1)
+	arg_4_0._maskEffect:setTimeScale(arg_4_1)
 end
 
-function slot0.setLayer(slot0, slot1, slot2)
-	slot0._maskEffect:setLayer(slot1, slot2)
+function var_0_0.setLayer(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._maskEffect:setLayer(arg_5_1, arg_5_2)
 end
 
-function slot0.setRenderOrder(slot0, slot1, slot2)
-	slot0._maskEffect:setRenderOrder(slot1, slot2)
+function var_0_0.setRenderOrder(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._maskEffect:setRenderOrder(arg_6_1, arg_6_2)
 end
 
-function slot0.changeLookDir(slot0, slot1)
-	slot0._maskEffect:changeLookDir(slot1)
+function var_0_0.changeLookDir(arg_7_0, arg_7_1)
+	arg_7_0._maskEffect:changeLookDir(arg_7_1)
 end
 
-function slot0._changeLookDir(slot0)
-	slot0._maskEffect:_changeLookDir()
+function var_0_0._changeLookDir(arg_8_0)
+	arg_8_0._maskEffect:_changeLookDir()
 end
 
-function slot0.setActive(slot0, slot1)
-	slot0._maskEffect:setActive(slot1)
+function var_0_0.setActive(arg_9_0, arg_9_1)
+	arg_9_0._maskEffect:setActive(arg_9_1)
 end
 
-function slot0.setAnimation(slot0, slot1, slot2, slot3)
-	slot0._maskEffect:setAnimation(slot1, slot2, slot3)
+function var_0_0.setAnimation(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0._maskEffect:setAnimation(arg_10_1, arg_10_2, arg_10_3)
 end
 
-function slot0.releaseSelf(slot0)
-	if slot0._maskEffect then
-		slot0._maskEffect:releaseSelf()
+function var_0_0.releaseSelf(arg_11_0)
+	if arg_11_0._maskEffect then
+		arg_11_0._maskEffect:releaseSelf()
 
-		slot0._maskEffect = nil
+		arg_11_0._maskEffect = nil
 	end
 
-	slot0._entity = nil
+	arg_11_0._entity = nil
 
-	slot0:__onDispose()
+	arg_11_0:__onDispose()
 end
 
-return slot0
+return var_0_0

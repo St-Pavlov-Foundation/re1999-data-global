@@ -1,8 +1,9 @@
-module("modules.logic.versionactivity1_3.astrology.controller.VersionActivity1_3AstrologyEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_3.astrology.controller.VersionActivity1_3AstrologyEvent", package.seeall)
 
-slot0 = _M
-slot0.selectPlanetItem = 1
-slot0.adjustPreviewAngle = 2
-slot0.guideOnAstrologyBtnShow = 99
+local var_0_0 = _M
 
-return slot0
+var_0_0.selectPlanetItem = 1
+var_0_0.adjustPreviewAngle = 2
+var_0_0.guideOnAstrologyBtnShow = 99
+
+return var_0_0

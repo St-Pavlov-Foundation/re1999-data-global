@@ -1,59 +1,61 @@
-module("modules.logic.fight.view.FightSimplePolarizationLevelView", package.seeall)
+﻿module("modules.logic.fight.view.FightSimplePolarizationLevelView", package.seeall)
 
-slot0 = class("FightSimplePolarizationLevelView", FightBaseView)
+local var_0_0 = class("FightSimplePolarizationLevelView", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._click = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#btn_level")
-	slot0._nameText = gohelper.findChildText(slot0.viewGO, "name")
-	slot0._levelText = gohelper.findChildText(slot0.viewGO, "level")
-	slot0._tips = gohelper.findChild(slot0.viewGO, "#go_leveltip")
-	slot0._btnClose = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_leveltip/#btn_close")
-	slot0._title = gohelper.findChildText(slot0.viewGO, "#go_leveltip/bg/#txt_title")
-	slot0._desc = gohelper.findChildText(slot0.viewGO, "#go_leveltip/bg/#txt_dec")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_level")
+	arg_1_0._nameText = gohelper.findChildText(arg_1_0.viewGO, "name")
+	arg_1_0._levelText = gohelper.findChildText(arg_1_0.viewGO, "level")
+	arg_1_0._tips = gohelper.findChild(arg_1_0.viewGO, "#go_leveltip")
+	arg_1_0._btnClose = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_leveltip/#btn_close")
+	arg_1_0._title = gohelper.findChildText(arg_1_0.viewGO, "#go_leveltip/bg/#txt_title")
+	arg_1_0._desc = gohelper.findChildText(arg_1_0.viewGO, "#go_leveltip/bg/#txt_dec")
 end
 
-function slot0.addEvents(slot0)
-	slot0:com_registClick(slot0._click, slot0._onClick)
-	slot0:com_registClick(slot0._btnClose, slot0._onBtnClose)
-	slot0:com_registMsg(FightMsgId.RefreshSimplePolarizationLevel, slot0._onRefreshSimplePolarizationLevel)
-	slot0:com_registFightEvent(FightEvent.TouchFightViewScreen, slot0._onTouchFightViewScreen)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:com_registClick(arg_2_0._click, arg_2_0._onClick)
+	arg_2_0:com_registClick(arg_2_0._btnClose, arg_2_0._onBtnClose)
+	arg_2_0:com_registMsg(FightMsgId.RefreshSimplePolarizationLevel, arg_2_0._onRefreshSimplePolarizationLevel)
+	arg_2_0:com_registFightEvent(FightEvent.TouchFightViewScreen, arg_2_0._onTouchFightViewScreen)
 end
 
-function slot0._onTouchFightViewScreen(slot0)
-	gohelper.setActive(slot0._tips, false)
+function var_0_0._onTouchFightViewScreen(arg_3_0)
+	gohelper.setActive(arg_3_0._tips, false)
 end
 
-function slot0._onBtnClose(slot0)
-	gohelper.setActive(slot0._tips, false)
+function var_0_0._onBtnClose(arg_4_0)
+	gohelper.setActive(arg_4_0._tips, false)
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_5_0)
 	if FightDataHelper.stageMgr:inReplay() then
 		return
 	end
 
-	gohelper.setActive(slot0._tips, true)
+	gohelper.setActive(arg_5_0._tips, true)
 end
 
-function slot0._onRefreshSimplePolarizationLevel(slot0)
-	slot0:_refreshUI()
+function var_0_0._onRefreshSimplePolarizationLevel(arg_6_0)
+	arg_6_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = FightDataHelper.tempMgr.simplePolarizationLevel or 0
-	slot0._levelText.text = "LV." .. slot1
+function var_0_0._refreshUI(arg_8_0)
+	local var_8_0 = FightDataHelper.tempMgr.simplePolarizationLevel or 0
+	local var_8_1 = lua_simple_polarization.configDict[var_8_0]
 
-	if lua_simple_polarization.configDict[slot1] then
-		slot0._nameText.text = slot2.name
-		slot0._title.text = slot2.name
-		slot0._desc.text = HeroSkillModel.instance:skillDesToSpot(slot2.desc, "#c56131", "#7c93ad")
+	arg_8_0._levelText.text = "LV." .. var_8_0
+
+	if var_8_1 then
+		arg_8_0._nameText.text = var_8_1.name
+		arg_8_0._title.text = var_8_1.name
+		arg_8_0._desc.text = HeroSkillModel.instance:skillDesToSpot(var_8_1.desc, "#c56131", "#7c93ad")
 	else
-		logError("减震表找不到等级:" .. slot1)
+		logError("减震表找不到等级:" .. var_8_0)
 	end
 end
 
-return slot0
+return var_0_0

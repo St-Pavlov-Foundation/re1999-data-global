@@ -1,63 +1,65 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_Assess_Score", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_Assess_Score", package.seeall)
 
-slot0 = class("V1a4_BossRush_Assess_Score", V1a4_BossRush_AssessIcon)
+local var_0_0 = class("V1a4_BossRush_Assess_Score", V1a4_BossRush_AssessIcon)
 
-function slot0.init(slot0, slot1)
-	V1a4_BossRush_AssessIcon.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	V1a4_BossRush_AssessIcon.init(arg_1_0, arg_1_1)
 
-	slot0._txtScoreNum = gohelper.findChildText(slot1, "Score/#txt_ScoreNum")
-	slot0._txtScoreTran = gohelper.findChild(slot1, "Score/#txt_Score").transform
-	slot0._newRecordTran = gohelper.findChild(slot1, "Score/#txt_ScoreNum/NewRecord").transform
-	slot0.vxassess = {
-		[BossRushEnum.ScoreLevel.S] = gohelper.findChild(slot0._imageAssessIcon.gameObject, "vx_s"),
-		[BossRushEnum.ScoreLevel.S_A] = gohelper.findChild(slot0._imageAssessIcon.gameObject, "vx_ss"),
-		[BossRushEnum.ScoreLevel.S_AA] = gohelper.findChild(slot0._imageAssessIcon.gameObject, "vx_sss")
+	arg_1_0._txtScoreNum = gohelper.findChildText(arg_1_1, "Score/#txt_ScoreNum")
+	arg_1_0._txtScoreTran = gohelper.findChild(arg_1_1, "Score/#txt_Score").transform
+	arg_1_0._newRecordTran = gohelper.findChild(arg_1_1, "Score/#txt_ScoreNum/NewRecord").transform
+	arg_1_0.vxassess = {
+		[BossRushEnum.ScoreLevel.S] = gohelper.findChild(arg_1_0._imageAssessIcon.gameObject, "vx_s"),
+		[BossRushEnum.ScoreLevel.S_A] = gohelper.findChild(arg_1_0._imageAssessIcon.gameObject, "vx_ss"),
+		[BossRushEnum.ScoreLevel.S_AA] = gohelper.findChild(arg_1_0._imageAssessIcon.gameObject, "vx_sss")
 	}
 
-	slot0:setActiveNewRecord(false)
-	slot0:showVX(false)
+	arg_1_0:setActiveNewRecord(false)
+	arg_1_0:showVX(false)
 
-	slot0._txtScoreNum.text = ""
+	arg_1_0._txtScoreNum.text = ""
 end
 
-function slot0.setActiveDesc(slot0, slot1)
-	GameUtil.setActive01(slot0._txtScoreTran, slot1)
+function var_0_0.setActiveDesc(arg_2_0, arg_2_1)
+	GameUtil.setActive01(arg_2_0._txtScoreTran, arg_2_1)
 end
 
-function slot0.setActiveNewRecord(slot0, slot1)
-	GameUtil.setActive01(slot0._newRecordTran, slot1)
+function var_0_0.setActiveNewRecord(arg_3_0, arg_3_1)
+	GameUtil.setActive01(arg_3_0._newRecordTran, arg_3_1)
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	V1a4_BossRush_AssessIcon.setData(slot0, slot1, slot2, slot3)
+function var_0_0.setData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	V1a4_BossRush_AssessIcon.setData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 
-	slot4, slot5 = BossRushConfig.instance:getAssessSpriteName(slot1, slot2, slot3)
-	slot0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(slot2)
+	local var_4_0, var_4_1 = BossRushConfig.instance:getAssessSpriteName(arg_4_1, arg_4_2, arg_4_3)
 
-	slot0:showVX(slot5)
+	arg_4_0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(arg_4_2)
 
-	if slot5 > 0 then
+	arg_4_0:showVX(var_4_1)
+
+	if var_4_1 > 0 then
 		AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.play_ui_settleaccounts_resources_rare)
 	end
 end
 
-function slot0.setData_ResultView(slot0, slot1, slot2, slot3)
-	slot0:setData(slot1, slot2, slot3)
+function var_0_0.setData_ResultView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0:setData(arg_5_1, arg_5_2, arg_5_3)
 
-	slot4, slot5 = BossRushConfig.instance:getAssessSpriteName(slot1, slot2, slot3)
+	local var_5_0, var_5_1 = BossRushConfig.instance:getAssessSpriteName(arg_5_1, arg_5_2, arg_5_3)
 
-	if slot5 > 0 then
+	if var_5_1 > 0 then
 		AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.play_ui_settleaccounts_resources)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_6_0)
+	return
 end
 
-function slot0.showVX(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.vxassess) do
-		gohelper.setActive(slot6, slot1 == slot5)
+function var_0_0.showVX(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.vxassess) do
+		gohelper.setActive(iter_7_1, arg_7_1 == iter_7_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,184 +1,207 @@
-module("modules.logic.commonbufftip.CommonBuffTipView", package.seeall)
+﻿module("modules.logic.commonbufftip.CommonBuffTipView", package.seeall)
 
-slot0 = class("CommonBuffTipView", BaseView)
+local var_0_0 = class("CommonBuffTipView", BaseView)
 
-function slot0._refreshScrollHeight(slot0)
-	recthelper.setHeight(slot0.rectTrScrollTip, math.min(slot0.maxHeight, recthelper.getHeight(slot0.rectTrContent)))
+function var_0_0._refreshScrollHeight(arg_1_0)
+	local var_1_0 = recthelper.getHeight(arg_1_0.rectTrContent)
+	local var_1_1 = math.min(arg_1_0.maxHeight, var_1_0)
+
+	recthelper.setHeight(arg_1_0.rectTrScrollTip, var_1_1)
 end
 
-function slot0.onInitView(slot0)
-	slot0.goclose = gohelper.findChild(slot0.viewGO, "#go_close")
-	slot0.goscrolltip = gohelper.findChild(slot0.viewGO, "#scroll_tip")
-	slot0.gocontent = gohelper.findChild(slot0.viewGO, "#scroll_tip/Viewport/Content")
-	slot0.gotipitem = gohelper.findChild(slot0.viewGO, "#scroll_tip/Viewport/Content/#go_tipitem")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0.goclose = gohelper.findChild(arg_2_0.viewGO, "#go_close")
+	arg_2_0.goscrolltip = gohelper.findChild(arg_2_0.viewGO, "#scroll_tip")
+	arg_2_0.gocontent = gohelper.findChild(arg_2_0.viewGO, "#scroll_tip/Viewport/Content")
+	arg_2_0.gotipitem = gohelper.findChild(arg_2_0.viewGO, "#scroll_tip/Viewport/Content/#go_tipitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_3_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.effectTipItemList = {}
-	slot0.effectTipItemPool = {}
-	slot0.addEffectIdDict = {}
-	slot0.rectTrScrollTip = slot0.goscrolltip:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrViewGo = slot0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrContent = slot0.gocontent:GetComponent(gohelper.Type_RectTransform)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.effectTipItemList = {}
+	arg_5_0.effectTipItemPool = {}
+	arg_5_0.addEffectIdDict = {}
+	arg_5_0.rectTrScrollTip = arg_5_0.goscrolltip:GetComponent(gohelper.Type_RectTransform)
+	arg_5_0.rectTrViewGo = arg_5_0.viewGO:GetComponent(gohelper.Type_RectTransform)
+	arg_5_0.rectTrContent = arg_5_0.gocontent:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(slot0.gotipitem, false)
+	gohelper.setActive(arg_5_0.gotipitem, false)
 
-	slot0.closeClick = gohelper.getClickWithDefaultAudio(slot0.goclose)
+	arg_5_0.closeClick = gohelper.getClickWithDefaultAudio(arg_5_0.goclose)
 
-	slot0.closeClick:AddClickListener(slot0.closeThis, slot0)
+	arg_5_0.closeClick:AddClickListener(arg_5_0.closeThis, arg_5_0)
 
-	slot0.scrollTip = SLFramework.UGUI.ScrollRectWrap.Get(slot0.goscrolltip)
+	arg_5_0.scrollTip = SLFramework.UGUI.ScrollRectWrap.Get(arg_5_0.goscrolltip)
 end
 
-function slot0.setIsShowUI(slot0, slot1)
-	if not slot1 then
-		slot0:closeThis()
+function var_0_0.setIsShowUI(arg_6_0, arg_6_1)
+	if not arg_6_1 then
+		arg_6_0:closeThis()
 	end
 end
 
-function slot0.initViewParam(slot0)
-	slot0.effectId = slot0.viewParam.effectId
-	slot0.scrollAnchorPos = slot0.viewParam.scrollAnchorPos
-	slot0.pivot = slot0.viewParam.pivot
-	slot0.clickPosition = slot0.viewParam.clickPosition
-	slot0.setScrollPosCallback = slot0.viewParam.setScrollPosCallback
-	slot0.setScrollPosCallbackObj = slot0.viewParam.setScrollPosCallbackObj
+function var_0_0.initViewParam(arg_7_0)
+	arg_7_0.effectId = arg_7_0.viewParam.effectId
+	arg_7_0.scrollAnchorPos = arg_7_0.viewParam.scrollAnchorPos
+	arg_7_0.pivot = arg_7_0.viewParam.pivot
+	arg_7_0.clickPosition = arg_7_0.viewParam.clickPosition
+	arg_7_0.setScrollPosCallback = arg_7_0.viewParam.setScrollPosCallback
+	arg_7_0.setScrollPosCallbackObj = arg_7_0.viewParam.setScrollPosCallbackObj
 end
 
-function slot0.onOpen(slot0)
-	slot0:initViewParam()
-	slot0:setScrollPos()
-	slot0:calculateMaxHeight()
-	slot0:addBuffTip(slot0.effectId)
-	slot0:addEventCb(FightController.instance, FightEvent.SetIsShowUI, slot0.setIsShowUI, slot0)
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:initViewParam()
+	arg_8_0:setScrollPos()
+	arg_8_0:calculateMaxHeight()
+	arg_8_0:addBuffTip(arg_8_0.effectId)
+	arg_8_0:addEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_8_0.setIsShowUI, arg_8_0)
 end
 
-function slot0.setScrollPos(slot0)
-	if slot0.setScrollPosCallback then
-		slot0.setScrollPosCallback(slot0.setScrollPosCallbackObj, slot0.rectTrViewGo, slot0.rectTrScrollTip)
+function var_0_0.setScrollPos(arg_9_0)
+	if arg_9_0.setScrollPosCallback then
+		arg_9_0.setScrollPosCallback(arg_9_0.setScrollPosCallbackObj, arg_9_0.rectTrViewGo, arg_9_0.rectTrScrollTip)
 
 		return
 	end
 
-	if slot0.scrollAnchorPos then
-		slot0.rectTrScrollTip.pivot = slot0.pivot
+	if arg_9_0.scrollAnchorPos then
+		arg_9_0.rectTrScrollTip.pivot = arg_9_0.pivot
 
-		recthelper.setAnchor(slot0.rectTrScrollTip, slot0.scrollAnchorPos.x, slot0.scrollAnchorPos.y)
-
-		return
-	end
-
-	slot0.rectTrScrollTip.pivot = GameUtil.checkClickPositionInRight(slot0.clickPosition) and CommonBuffTipEnum.Pivot.Right or CommonBuffTipEnum.Pivot.Left
-	slot2, slot3 = recthelper.screenPosToAnchorPos2(slot0.clickPosition, slot0.rectTrViewGo)
-
-	recthelper.setAnchor(slot0.rectTrScrollTip, slot1 and slot2 - CommonBuffTipEnum.DefaultInterval or slot2 + CommonBuffTipEnum.DefaultInterval, slot3 + CommonBuffTipEnum.DefaultInterval)
-end
-
-function slot0.calculateMaxHeight(slot0)
-	slot0.maxHeight = recthelper.getHeight(slot0.rectTrViewGo) / 2 + recthelper.getAnchorY(slot0.rectTrScrollTip) - CommonBuffTipEnum.BottomMargin
-
-	if slot0.rectTrScrollTip.pivot.y == 0 then
-		slot0.maxHeight = slot1 / 2 - slot2 - CommonBuffTipEnum.BottomMargin
-	end
-end
-
-function slot0.addBuffTip(slot0, slot1)
-	if slot0.addEffectIdDict[tonumber(slot1)] then
-		return
-	end
-
-	if not lua_skill_eff_desc.configDict[slot2] then
-		logError("not found skill_eff_desc , id : " .. tostring(slot1))
+		recthelper.setAnchor(arg_9_0.rectTrScrollTip, arg_9_0.scrollAnchorPos.x, arg_9_0.scrollAnchorPos.y)
 
 		return
 	end
 
-	slot0.addEffectIdDict[slot2] = true
-	slot4 = slot0:getTipItem()
+	local var_9_0 = GameUtil.checkClickPositionInRight(arg_9_0.clickPosition)
 
-	table.insert(slot0.effectTipItemList, slot4)
-	gohelper.setActive(slot4.go, true)
-	gohelper.setAsLastSibling(slot4.go)
+	arg_9_0.rectTrScrollTip.pivot = var_9_0 and CommonBuffTipEnum.Pivot.Right or CommonBuffTipEnum.Pivot.Left
 
-	slot5 = slot3.name
-	slot4.txtName.text = SkillHelper.removeRichTag(slot5)
-	slot4.txtDesc.text = SkillHelper.getSkillDesc(nil, slot3)
-	slot8 = not string.nilorempty(CommonBuffTipController.instance:getBuffTagName(slot5))
+	local var_9_1, var_9_2 = recthelper.screenPosToAnchorPos2(arg_9_0.clickPosition, arg_9_0.rectTrViewGo)
 
-	gohelper.setActive(slot4.goTag, slot8)
+	var_9_1 = var_9_0 and var_9_1 - CommonBuffTipEnum.DefaultInterval or var_9_1 + CommonBuffTipEnum.DefaultInterval
 
-	if slot8 then
-		slot4.txtTag.text = slot7
+	recthelper.setAnchor(arg_9_0.rectTrScrollTip, var_9_1, var_9_2 + CommonBuffTipEnum.DefaultInterval)
+end
+
+function var_0_0.calculateMaxHeight(arg_10_0)
+	local var_10_0 = recthelper.getHeight(arg_10_0.rectTrViewGo)
+	local var_10_1 = recthelper.getAnchorY(arg_10_0.rectTrScrollTip)
+
+	arg_10_0.maxHeight = var_10_0 / 2 + var_10_1 - CommonBuffTipEnum.BottomMargin
+
+	if arg_10_0.rectTrScrollTip.pivot.y == 0 then
+		arg_10_0.maxHeight = var_10_0 / 2 - var_10_1 - CommonBuffTipEnum.BottomMargin
+	end
+end
+
+function var_0_0.addBuffTip(arg_11_0, arg_11_1)
+	local var_11_0 = tonumber(arg_11_1)
+
+	if arg_11_0.addEffectIdDict[var_11_0] then
+		return
 	end
 
-	slot0:refreshScrollHeight()
-end
+	local var_11_1 = lua_skill_eff_desc.configDict[var_11_0]
 
-function slot0.refreshScrollHeight(slot0)
-	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
+	if not var_11_1 then
+		logError("not found skill_eff_desc , id : " .. tostring(arg_11_1))
 
-	slot0._fTimer = FrameTimerController.instance:register(slot0._refreshScrollHeight, slot0, 1)
-
-	slot0._fTimer:Start()
-end
-
-function slot0.getTipItem(slot0)
-	if #slot0.effectTipItemPool > 0 then
-		return table.remove(slot0.effectTipItemPool)
+		return
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0.gotipitem)
-	slot1.txtName = gohelper.findChildText(slot1.go, "title/txt_name")
-	slot1.txtDesc = gohelper.findChildText(slot1.go, "txt_desc")
-	slot1.goTag = gohelper.findChild(slot1.go, "title/txt_name/go_tag")
-	slot1.txtTag = gohelper.findChildText(slot1.go, "title/txt_name/go_tag/bg/txt_tagname")
+	arg_11_0.addEffectIdDict[var_11_0] = true
 
-	SkillHelper.addHyperLinkClick(slot1.txtDesc, slot0.onClickHyperLinkText, slot0)
+	local var_11_2 = arg_11_0:getTipItem()
 
-	return slot1
-end
+	table.insert(arg_11_0.effectTipItemList, var_11_2)
+	gohelper.setActive(var_11_2.go, true)
+	gohelper.setAsLastSibling(var_11_2.go)
 
-function slot0.onClickHyperLinkText(slot0, slot1, slot2)
-	slot0:addBuffTip(slot1)
-end
+	local var_11_3 = var_11_1.name
+	local var_11_4 = SkillHelper.removeRichTag(var_11_3)
 
-function slot0.recycleTipItem(slot0, slot1)
-	gohelper.setActive(slot1.go, false)
-	table.insert(slot0.effectTipItemPool, slot1)
-end
+	var_11_2.txtName.text = var_11_4
+	var_11_2.txtDesc.text = SkillHelper.getSkillDesc(nil, var_11_1)
 
-function slot0.recycleAllTipItem(slot0)
-	for slot4, slot5 in ipairs(slot0.effectTipItemList) do
-		gohelper.setActive(slot5.go, false)
-		table.insert(slot0.effectTipItemPool, slot5)
+	local var_11_5 = CommonBuffTipController.instance:getBuffTagName(var_11_3)
+	local var_11_6 = not string.nilorempty(var_11_5)
+
+	gohelper.setActive(var_11_2.goTag, var_11_6)
+
+	if var_11_6 then
+		var_11_2.txtTag.text = var_11_5
 	end
 
-	tabletool.clear(slot0.effectTipItemList)
+	arg_11_0:refreshScrollHeight()
 end
 
-function slot0.onClose(slot0)
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
-	tabletool.clear(slot0.addEffectIdDict)
-	slot0:recycleAllTipItem()
-	slot0:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, slot0.setIsShowUI, slot0)
+function var_0_0.refreshScrollHeight(arg_12_0)
+	ZProj.UGUIHelper.RebuildLayout(arg_12_0.rectTrContent)
+	FrameTimerController.onDestroyViewMember(arg_12_0, "_fTimer")
+
+	arg_12_0._fTimer = FrameTimerController.instance:register(arg_12_0._refreshScrollHeight, arg_12_0, 1)
+
+	arg_12_0._fTimer:Start()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.closeClick:RemoveClickListener()
+function var_0_0.getTipItem(arg_13_0)
+	if #arg_13_0.effectTipItemPool > 0 then
+		return table.remove(arg_13_0.effectTipItemPool)
+	end
 
-	slot0.closeClick = nil
+	local var_13_0 = arg_13_0:getUserDataTb_()
+
+	var_13_0.go = gohelper.cloneInPlace(arg_13_0.gotipitem)
+	var_13_0.txtName = gohelper.findChildText(var_13_0.go, "title/txt_name")
+	var_13_0.txtDesc = gohelper.findChildText(var_13_0.go, "txt_desc")
+	var_13_0.goTag = gohelper.findChild(var_13_0.go, "title/txt_name/go_tag")
+	var_13_0.txtTag = gohelper.findChildText(var_13_0.go, "title/txt_name/go_tag/bg/txt_tagname")
+
+	SkillHelper.addHyperLinkClick(var_13_0.txtDesc, arg_13_0.onClickHyperLinkText, arg_13_0)
+
+	return var_13_0
 end
 
-return slot0
+function var_0_0.onClickHyperLinkText(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0:addBuffTip(arg_14_1)
+end
+
+function var_0_0.recycleTipItem(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_1.go, false)
+	table.insert(arg_15_0.effectTipItemPool, arg_15_1)
+end
+
+function var_0_0.recycleAllTipItem(arg_16_0)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0.effectTipItemList) do
+		gohelper.setActive(iter_16_1.go, false)
+		table.insert(arg_16_0.effectTipItemPool, iter_16_1)
+	end
+
+	tabletool.clear(arg_16_0.effectTipItemList)
+end
+
+function var_0_0.onClose(arg_17_0)
+	FrameTimerController.onDestroyViewMember(arg_17_0, "_fTimer")
+	tabletool.clear(arg_17_0.addEffectIdDict)
+	arg_17_0:recycleAllTipItem()
+	arg_17_0:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_17_0.setIsShowUI, arg_17_0)
+end
+
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0.closeClick:RemoveClickListener()
+
+	arg_18_0.closeClick = nil
+end
+
+return var_0_0

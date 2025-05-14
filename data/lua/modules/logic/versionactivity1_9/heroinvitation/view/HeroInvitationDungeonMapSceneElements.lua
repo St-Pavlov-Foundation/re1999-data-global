@@ -1,310 +1,351 @@
-module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapSceneElements", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapSceneElements", package.seeall)
 
-slot0 = class("HeroInvitationDungeonMapSceneElements", DungeonMapSceneElements)
+local var_0_0 = class("HeroInvitationDungeonMapSceneElements", DungeonMapSceneElements)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0.goItem = gohelper.findChild(slot0.viewGO, "#go_arrow/#go_item")
-	slot0.allFinish = HeroInvitationModel.instance:isAllFinish()
+	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "#go_arrow/#go_item")
+	arg_1_0.allFinish = HeroInvitationModel.instance:isAllFinish()
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.StateChange, slot0.updateState, slot0)
-	slot0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, slot0.updateHeroInvitation, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.StateChange, arg_2_0.updateState, arg_2_0)
+	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, arg_2_0.updateHeroInvitation, arg_2_0)
 end
 
-function slot0.updateState(slot0)
-	if slot0._mapCfg then
-		slot0:_showElements(slot0._mapCfg.id)
+function var_0_0.updateState(arg_3_0)
+	if arg_3_0._mapCfg then
+		arg_3_0:_showElements(arg_3_0._mapCfg.id)
 	end
 end
 
-function slot0.updateHeroInvitation(slot0)
-	if HeroInvitationModel.instance:isAllFinish() == slot0.allFinish then
+function var_0_0.updateHeroInvitation(arg_4_0)
+	if HeroInvitationModel.instance:isAllFinish() == arg_4_0.allFinish then
 		return
 	end
 
-	if slot0._mapCfg then
-		slot0:_showElements(slot0._mapCfg.id)
+	if arg_4_0._mapCfg then
+		arg_4_0:_showElements(arg_4_0._mapCfg.id)
 	end
 end
 
-function slot0._addElement(slot0, slot1)
-	slot4 = false
+function var_0_0._addElement(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.id
+	local var_5_1 = arg_5_0._elementList[var_5_0]
+	local var_5_2 = false
 
-	if not slot0._elementList[slot1.id] then
-		slot5 = UnityEngine.GameObject.New(tostring(slot2))
+	if not var_5_1 then
+		local var_5_3 = UnityEngine.GameObject.New(tostring(var_5_0))
 
-		gohelper.addChild(slot0._elementRoot, slot5)
+		gohelper.addChild(arg_5_0._elementRoot, var_5_3)
 
-		slot0._elementList[slot2] = MonoHelper.addLuaComOnceToGo(slot5, HeroInvitationDungeonMapElement, {
-			slot1,
-			slot0._mapScene,
-			slot0
+		var_5_1 = MonoHelper.addLuaComOnceToGo(var_5_3, HeroInvitationDungeonMapElement, {
+			arg_5_1,
+			arg_5_0._mapScene,
+			arg_5_0
 		})
-		slot4 = true
+		arg_5_0._elementList[var_5_0] = var_5_1
+		var_5_2 = true
 	end
 
-	if slot3:showArrow() then
-		slot0:createArrowItem(slot2)
-		slot0:_updateArrow(slot3)
+	if var_5_1:showArrow() then
+		arg_5_0:createArrowItem(var_5_0)
+		arg_5_0:_updateArrow(var_5_1)
 	end
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnElementAdd, slot2)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnElementAdd, var_5_0)
 
-	if slot0._inRemoveElementId == slot2 then
-		slot3:setWenHaoGoVisible(true)
-		slot0:_removeElement(slot2)
+	if arg_5_0._inRemoveElementId == var_5_0 then
+		var_5_1:setWenHaoGoVisible(true)
+		arg_5_0:_removeElement(var_5_0)
 	else
-		slot3:setWenHaoGoVisible(slot0.allFinish or not DungeonMapModel.instance:elementIsFinished(slot2))
+		local var_5_4 = DungeonMapModel.instance:elementIsFinished(var_5_0)
 
-		if not slot4 and slot0.allFinish then
-			slot3:setWenHaoAnim(DungeonMapElement.InAnimName)
+		var_5_1:setWenHaoGoVisible(arg_5_0.allFinish or not var_5_4)
+
+		if not var_5_2 and arg_5_0.allFinish then
+			var_5_1:setWenHaoAnim(DungeonMapElement.InAnimName)
 		end
 	end
 end
 
-function slot0._getElements(slot0, slot1)
-	slot0.allFinish = HeroInvitationModel.instance:isAllFinish()
-	slot3 = {}
+function var_0_0._getElements(arg_6_0, arg_6_1)
+	local var_6_0 = DungeonConfig.instance:getMapElements(arg_6_1)
 
-	if DungeonConfig.instance:getMapElements(slot1) then
-		for slot7, slot8 in ipairs(slot2) do
-			if HeroInvitationModel.instance:getInvitationStateByElementId(slot8.id) ~= HeroInvitationEnum.InvitationState.TimeLocked and slot9 ~= HeroInvitationEnum.InvitationState.ElementLocked and (slot0.allFinish or DungeonMapModel.instance:getElementById(slot8.id) or DungeonMapModel.instance:elementIsFinished(slot8.id)) then
-				table.insert(slot3, slot8)
+	arg_6_0.allFinish = HeroInvitationModel.instance:isAllFinish()
+
+	local var_6_1 = {}
+
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+			local var_6_2 = HeroInvitationModel.instance:getInvitationStateByElementId(iter_6_1.id)
+
+			if var_6_2 ~= HeroInvitationEnum.InvitationState.TimeLocked and var_6_2 ~= HeroInvitationEnum.InvitationState.ElementLocked and (arg_6_0.allFinish or DungeonMapModel.instance:getElementById(iter_6_1.id) or DungeonMapModel.instance:elementIsFinished(iter_6_1.id)) then
+				table.insert(var_6_1, iter_6_1)
 			end
 		end
 	end
 
-	return slot3
+	return var_6_1
 end
 
-function slot0._removeElement(slot0, slot1)
-	if not slot0._elementList[slot1] then
-		slot0._inRemoveElementId = slot1
+function var_0_0._removeElement(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._elementList[arg_7_1]
+
+	if not var_7_0 then
+		arg_7_0._inRemoveElementId = arg_7_1
 
 		return
 	end
 
 	DungeonMapModel.instance.directFocusElement = true
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, slot1)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, arg_7_1)
 
 	DungeonMapModel.instance.directFocusElement = false
-	slot0._inRemoveElementId = nil
-	slot0._inRemoveElement = true
+	arg_7_0._inRemoveElementId = nil
+	arg_7_0._inRemoveElement = true
 
-	if slot2 then
-		slot2:setFinishAndDotDestroy()
+	if var_7_0 then
+		var_7_0:setFinishAndDotDestroy()
 	end
 
-	if slot0._arrowList[slot1] then
-		slot0:destoryArrowItem(slot3)
+	local var_7_1 = arg_7_0._arrowList[arg_7_1]
 
-		slot0._arrowList[slot1] = nil
-	end
-end
+	if var_7_1 then
+		arg_7_0:destoryArrowItem(var_7_1)
 
-function slot0.onRemoveElementFinish(slot0)
-	slot0._inRemoveElement = false
-
-	if slot0._mapCfg then
-		slot0:_showElements(slot0._mapCfg.id)
+		arg_7_0._arrowList[arg_7_1] = nil
 	end
 end
 
-function slot0._showElements(slot0, slot1)
-	if slot0._inRemoveElement then
+function var_0_0.onRemoveElementFinish(arg_8_0)
+	arg_8_0._inRemoveElement = false
+
+	if arg_8_0._mapCfg then
+		arg_8_0:_showElements(arg_8_0._mapCfg.id)
+	end
+end
+
+function var_0_0._showElements(arg_9_0, arg_9_1)
+	if arg_9_0._inRemoveElement then
 		return
 	end
 
-	if gohelper.isNil(slot0._sceneGo) or slot0._lockShowElementAnim then
+	if gohelper.isNil(arg_9_0._sceneGo) or arg_9_0._lockShowElementAnim then
 		return
 	end
 
-	if slot0._inRemoveElementId then
-		slot3 = {}
-		slot4 = {}
+	if arg_9_0._inRemoveElementId then
+		local var_9_0 = arg_9_0:_getElements(arg_9_1)
+		local var_9_1 = {}
+		local var_9_2 = {}
 
-		for slot8, slot9 in ipairs(slot0:_getElements(slot1)) do
-			if slot9.id <= slot0._inRemoveElementId then
-				if slot9.showCamera == 1 and not slot0._skipShowElementAnim and slot0._forceShowElementAnim then
-					table.insert(slot3, slot9.id)
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			if iter_9_1.id <= arg_9_0._inRemoveElementId then
+				if iter_9_1.showCamera == 1 and not arg_9_0._skipShowElementAnim and arg_9_0._forceShowElementAnim then
+					table.insert(var_9_1, iter_9_1.id)
 				else
-					table.insert(slot4, slot9)
+					table.insert(var_9_2, iter_9_1)
 				end
 			end
 		end
 
-		slot0:_showElementAnim(slot3, slot4)
+		arg_9_0:_showElementAnim(var_9_1, var_9_2)
 	else
-		slot3 = DungeonMapModel.instance:getNewElements()
-		slot4 = {}
-		slot5 = {}
+		local var_9_3 = arg_9_0:_getElements(arg_9_1)
+		local var_9_4 = DungeonMapModel.instance:getNewElements()
+		local var_9_5 = {}
+		local var_9_6 = {}
 
-		for slot9, slot10 in ipairs(slot0:_getElements(slot1)) do
-			if slot10.showCamera == 1 and not slot0._skipShowElementAnim and (slot3 and tabletool.indexOf(slot3, slot10.id) or slot0._forceShowElementAnim) then
-				table.insert(slot4, slot10.id)
+		for iter_9_2, iter_9_3 in ipairs(var_9_3) do
+			if iter_9_3.showCamera == 1 and not arg_9_0._skipShowElementAnim and (var_9_4 and tabletool.indexOf(var_9_4, iter_9_3.id) or arg_9_0._forceShowElementAnim) then
+				table.insert(var_9_5, iter_9_3.id)
 			else
-				table.insert(slot5, slot10)
+				table.insert(var_9_6, iter_9_3)
 			end
 		end
 
-		slot0:_showElementAnim(slot4, slot5)
+		arg_9_0:_showElementAnim(var_9_5, var_9_6)
 		DungeonMapModel.instance:clearNewElements()
 	end
 end
 
-function slot0.clickElement(slot0, slot1)
-	if slot0:_isShowElementAnim() then
+function var_0_0.clickElement(arg_10_0, arg_10_1)
+	if arg_10_0:_isShowElementAnim() then
 		return
 	end
 
-	if not slot0._elementList[tonumber(slot1)] then
+	local var_10_0 = arg_10_0._elementList[tonumber(arg_10_1)]
+
+	if not var_10_0 then
 		return
 	end
 
-	slot3 = slot2._config
+	local var_10_1 = var_10_0._config
 
-	slot0:_focusElementById(slot3.id)
+	arg_10_0:_focusElementById(var_10_1.id)
 
-	if DungeonMapModel.instance:elementIsFinished(slot3.id) then
-		StoryController.instance:playStory(HeroInvitationConfig.instance:getInvitationConfigByElementId(slot3.id).restoryId, {
-			blur = true,
-			hideStartAndEndDark = true
-		})
+	local var_10_2 = HeroInvitationConfig.instance:getInvitationConfigByElementId(var_10_1.id)
+
+	if DungeonMapModel.instance:elementIsFinished(var_10_1.id) then
+		local var_10_3 = var_10_2.restoryId
+		local var_10_4 = {}
+
+		var_10_4.blur = true
+		var_10_4.hideStartAndEndDark = true
+
+		StoryController.instance:playStory(var_10_3, var_10_4)
 	else
-		StoryController.instance:playStory(slot4.storyId, {
-			blur = true,
-			hideStartAndEndDark = true
-		}, function ()
-			DungeonRpc.instance:sendMapElementRequest(uv0.id)
+		local var_10_5 = var_10_2.storyId
+		local var_10_6 = {}
+
+		var_10_6.blur = true
+		var_10_6.hideStartAndEndDark = true
+
+		StoryController.instance:playStory(var_10_5, var_10_6, function()
+			DungeonRpc.instance:sendMapElementRequest(var_10_1.id)
 		end)
 	end
 end
 
-function slot0.hideMapHeroIcon(slot0)
-	for slot4, slot5 in pairs(slot0._arrowList) do
-		slot0:destoryArrowItem(slot5)
+function var_0_0.hideMapHeroIcon(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._arrowList) do
+		arg_12_0:destoryArrowItem(iter_12_1)
 	end
 
-	slot0._arrowList = slot0:getUserDataTb_()
+	arg_12_0._arrowList = arg_12_0:getUserDataTb_()
 end
 
-function slot0.createArrowItem(slot0, slot1)
-	if slot0._arrowList[slot1] then
-		return slot0._arrowList[slot1]
+function var_0_0.createArrowItem(arg_13_0, arg_13_1)
+	if arg_13_0._arrowList[arg_13_1] then
+		return arg_13_0._arrowList[arg_13_1]
 	end
 
-	slot2 = slot0:getUserDataTb_()
-	slot2.elementId = slot1
-	slot2.go = gohelper.cloneInPlace(slot0.goItem, tostring(slot1))
+	local var_13_0 = arg_13_0:getUserDataTb_()
 
-	gohelper.setActive(slot2.go, false)
+	var_13_0.elementId = arg_13_1
+	var_13_0.go = gohelper.cloneInPlace(arg_13_0.goItem, tostring(arg_13_1))
 
-	slot2.arrowGO = gohelper.findChild(slot2.go, "arrow")
-	slot2.rotationTrans = slot2.arrowGO.transform
-	slot2.goHeroIcon = gohelper.findChild(slot2.go, "heroicon")
-	slot2.heroHeadImage = gohelper.findChildSingleImage(slot2.go, "heroicon/#simage_herohead")
-	slot2.click = gohelper.getClickWithDefaultAudio(slot2.heroHeadImage.gameObject)
+	gohelper.setActive(var_13_0.go, false)
 
-	slot2.click:AddClickListener(slot0.onClickHeroHeadIcon, slot0, slot2)
+	var_13_0.arrowGO = gohelper.findChild(var_13_0.go, "arrow")
+	var_13_0.rotationTrans = var_13_0.arrowGO.transform
+	var_13_0.goHeroIcon = gohelper.findChild(var_13_0.go, "heroicon")
+	var_13_0.heroHeadImage = gohelper.findChildSingleImage(var_13_0.go, "heroicon/#simage_herohead")
+	var_13_0.click = gohelper.getClickWithDefaultAudio(var_13_0.heroHeadImage.gameObject)
 
-	slot3, slot4, slot5 = transformhelper.getLocalRotation(slot2.rotationTrans)
-	slot2.initRotation = {
-		slot3,
-		slot4,
-		slot5
+	var_13_0.click:AddClickListener(arg_13_0.onClickHeroHeadIcon, arg_13_0, var_13_0)
+
+	local var_13_1, var_13_2, var_13_3 = transformhelper.getLocalRotation(var_13_0.rotationTrans)
+
+	var_13_0.initRotation = {
+		var_13_1,
+		var_13_2,
+		var_13_3
 	}
-	slot0._arrowList[slot1] = slot2
+	arg_13_0._arrowList[arg_13_1] = var_13_0
 
-	slot2.heroHeadImage:LoadImage(ResUrl.getHeadIconSmall(HeroInvitationConfig.instance:getInvitationConfigByElementId(slot1).head))
+	local var_13_4 = HeroInvitationConfig.instance:getInvitationConfigByElementId(arg_13_1)
 
-	return slot2
+	var_13_0.heroHeadImage:LoadImage(ResUrl.getHeadIconSmall(var_13_4.head))
+
+	return var_13_0
 end
 
-function slot0.destoryArrowItem(slot0, slot1)
-	if not slot1 then
+function var_0_0.destoryArrowItem(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	slot1.click:RemoveClickListener()
-	slot1.heroHeadImage:UnLoadImage()
-	gohelper.destroy(slot1.go)
+	arg_14_1.click:RemoveClickListener()
+	arg_14_1.heroHeadImage:UnLoadImage()
+	gohelper.destroy(arg_14_1.go)
 end
 
-function slot0.onClickHeroHeadIcon(slot0, slot1)
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, slot1.elementId)
+function var_0_0.onClickHeroHeadIcon(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.elementId
+
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, var_15_0)
 end
 
-function slot0._updateArrow(slot0, slot1)
-	if not slot1:showArrow() then
+function var_0_0._updateArrow(arg_16_0, arg_16_1)
+	if not arg_16_1:showArrow() then
 		return
 	end
 
-	slot4 = CameraMgr.instance:getMainCamera():WorldToViewportPoint(slot1._transform.position)
-	slot6 = slot4.y
-	slot7 = DungeonMapModel.instance:elementIsFinished(slot1:getElementId())
-	slot8 = slot4.x >= 0 and slot5 <= 1 and slot6 >= 0 and slot6 <= 1
+	local var_16_0 = arg_16_1._transform
+	local var_16_1 = CameraMgr.instance:getMainCamera():WorldToViewportPoint(var_16_0.position)
+	local var_16_2 = var_16_1.x
+	local var_16_3 = var_16_1.y
+	local var_16_4 = DungeonMapModel.instance:elementIsFinished(arg_16_1:getElementId())
+	local var_16_5 = var_16_2 >= 0 and var_16_2 <= 1 and var_16_3 >= 0 and var_16_3 <= 1
+	local var_16_6 = arg_16_0._arrowList[arg_16_1:getElementId()]
 
-	if not slot0._arrowList[slot1:getElementId()] then
+	if not var_16_6 then
 		return
 	end
 
-	gohelper.setActive(slot9.go, not slot7 and not slot8)
+	gohelper.setActive(var_16_6.go, not var_16_4 and not var_16_5)
 
-	if slot8 or slot7 then
+	if var_16_5 or var_16_4 then
 		return
 	end
 
-	slot10 = math.max(0.05, math.min(slot5, 0.95))
+	local var_16_7 = math.max(0.05, math.min(var_16_2, 0.95))
+	local var_16_8 = math.max(0.1, math.min(var_16_3, 0.9))
 
-	if math.max(0.1, math.min(slot6, 0.9)) > 0.85 and slot10 < 0.15 then
-		slot11 = 0.85
+	if var_16_8 > 0.85 and var_16_7 < 0.15 then
+		var_16_8 = 0.85
 	end
 
-	recthelper.setAnchor(slot9.go.transform, recthelper.getWidth(slot0._goarrow.transform) * (slot10 - 0.5), recthelper.getHeight(slot0._goarrow.transform) * (slot11 - 0.5))
+	local var_16_9 = recthelper.getWidth(arg_16_0._goarrow.transform)
+	local var_16_10 = recthelper.getHeight(arg_16_0._goarrow.transform)
 
-	slot14 = slot9.initRotation
+	recthelper.setAnchor(var_16_6.go.transform, var_16_9 * (var_16_7 - 0.5), var_16_10 * (var_16_8 - 0.5))
 
-	if slot5 >= 0 and slot5 <= 1 then
-		if slot6 < 0 then
-			transformhelper.setLocalRotation(slot9.rotationTrans, slot14[1], slot14[2], 180)
+	local var_16_11 = var_16_6.initRotation
+
+	if var_16_2 >= 0 and var_16_2 <= 1 then
+		if var_16_3 < 0 then
+			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 180)
 
 			return
-		elseif slot6 > 1 then
-			transformhelper.setLocalRotation(slot9.rotationTrans, slot14[1], slot14[2], 0)
+		elseif var_16_3 > 1 then
+			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 0)
 
 			return
 		end
 	end
 
-	if slot6 >= 0 and slot6 <= 1 then
-		if slot5 < 0 then
-			transformhelper.setLocalRotation(slot9.rotationTrans, slot14[1], slot14[2], 90)
+	if var_16_3 >= 0 and var_16_3 <= 1 then
+		if var_16_2 < 0 then
+			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 90)
 
 			return
-		elseif slot5 > 1 then
-			transformhelper.setLocalRotation(slot9.rotationTrans, slot14[1], slot14[2], 270)
+		elseif var_16_2 > 1 then
+			transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], 270)
 
 			return
 		end
 	end
 
-	transformhelper.setLocalRotation(slot9.rotationTrans, slot14[1], slot14[2], Mathf.Deg(Mathf.Atan2(slot6, slot5)) - 90)
+	local var_16_12 = Mathf.Deg(Mathf.Atan2(var_16_3, var_16_2)) - 90
+
+	transformhelper.setLocalRotation(var_16_6.rotationTrans, var_16_11[1], var_16_11[2], var_16_12)
 end
 
-function slot0._disposeOldMap(slot0)
-	for slot4, slot5 in pairs(slot0._elementList) do
-		slot5:onDestroy()
+function var_0_0._disposeOldMap(arg_17_0)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._elementList) do
+		iter_17_1:onDestroy()
 	end
 
-	slot0._elementList = slot0:getUserDataTb_()
+	arg_17_0._elementList = arg_17_0:getUserDataTb_()
 
-	slot0:hideMapHeroIcon()
-	slot0:_stopShowSequence()
+	arg_17_0:hideMapHeroIcon()
+	arg_17_0:_stopShowSequence()
 end
 
-return slot0
+return var_0_0

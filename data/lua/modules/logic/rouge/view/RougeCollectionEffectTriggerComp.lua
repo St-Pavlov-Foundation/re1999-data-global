@@ -1,402 +1,437 @@
-module("modules.logic.rouge.view.RougeCollectionEffectTriggerComp", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionEffectTriggerComp", package.seeall)
 
-slot0 = class("RougeCollectionEffectTriggerComp", BaseView)
+local var_0_0 = class("RougeCollectionEffectTriggerComp", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, slot0.placeCollection2SlotAreaSucc, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, arg_4_0.placeCollection2SlotAreaSucc, arg_4_0)
 
-	slot0._poolComp = slot0.viewContainer:getRougePoolComp()
-	slot0._effectTab = slot0:getUserDataTb_()
-	slot0._collectionMap = slot0:getUserDataTb_()
+	arg_4_0._poolComp = arg_4_0.viewContainer:getRougePoolComp()
+	arg_4_0._effectTab = arg_4_0:getUserDataTb_()
+	arg_4_0._collectionMap = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_5_0)
 	if not RougeCollectionModel.instance:checkHasTmpTriggerEffectInfo() then
 		return
 	end
 
-	slot0:init()
+	arg_5_0:init()
 end
 
-slot1 = 2
+local var_0_1 = 2
 
-function slot0.placeCollection2SlotAreaSucc(slot0, slot1)
-	if not slot1 then
+function var_0_0.placeCollection2SlotAreaSucc(arg_6_0, arg_6_1)
+	if not arg_6_1 then
 		return
 	end
 
-	slot2 = slot1.id
-	slot3 = slot1:getCenterSlotPos()
-	slot6 = RougeCollectionConfig.instance:getRotateEditorParam(slot1.cfgId, slot1:getRotation(), RougeEnum.CollectionEditorParamType.Effect)
-	slot7 = FlowSequence.New()
+	local var_6_0 = arg_6_1.id
+	local var_6_1 = arg_6_1:getCenterSlotPos()
+	local var_6_2 = arg_6_1:getRotation()
+	local var_6_3 = arg_6_1.cfgId
+	local var_6_4 = RougeCollectionConfig.instance:getRotateEditorParam(var_6_3, var_6_2, RougeEnum.CollectionEditorParamType.Effect)
+	local var_6_5 = FlowSequence.New()
 
-	slot7:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1, RougeEnum.CollectionArtType.Place)
-		uv0:recycleEffectGOs(uv1, RougeEnum.CollectionArtType.Effect)
+	var_6_5:addWork(FunctionWork.New(function()
+		arg_6_0:recycleEffectGOs(var_6_0, RougeEnum.CollectionArtType.Place)
+		arg_6_0:recycleEffectGOs(var_6_0, RougeEnum.CollectionArtType.Effect)
 	end))
-	slot7:addWork(FunctionWork.New(slot0.shapeTriggerForeachCollectionCells, slot0, slot1))
-	slot7:addWork(FunctionWork.New(function ()
-		uv0:playCellEffect(uv1, uv2, uv3, RougeEnum.CollectionArtType.Effect)
+	var_6_5:addWork(FunctionWork.New(arg_6_0.shapeTriggerForeachCollectionCells, arg_6_0, arg_6_1))
+	var_6_5:addWork(FunctionWork.New(function()
+		arg_6_0:playCellEffect(var_6_0, var_6_4, var_6_1, RougeEnum.CollectionArtType.Effect)
 	end))
-	slot7:addWork(WorkWaitSeconds.New(uv0))
-	slot7:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1, RougeEnum.CollectionArtType.Place)
-		uv0:recycleEffectGOs(uv1, RougeEnum.CollectionArtType.Effect)
+	var_6_5:addWork(WorkWaitSeconds.New(var_0_1))
+	var_6_5:addWork(FunctionWork.New(function()
+		arg_6_0:recycleEffectGOs(var_6_0, RougeEnum.CollectionArtType.Place)
+		arg_6_0:recycleEffectGOs(var_6_0, RougeEnum.CollectionArtType.Effect)
 	end))
-	slot7:start()
+	var_6_5:start()
 end
 
-function slot0.shapeTriggerForeachCollectionCells(slot0, slot1)
-	RougeCollectionHelper.foreachCollectionCells(slot1, slot0.collectionCellsEffectExcuteFunc, slot0, RougeEnum.CollectionArtType.Place)
+function var_0_0.shapeTriggerForeachCollectionCells(arg_10_0, arg_10_1)
+	RougeCollectionHelper.foreachCollectionCells(arg_10_1, arg_10_0.collectionCellsEffectExcuteFunc, arg_10_0, RougeEnum.CollectionArtType.Place)
 end
 
-function slot0.playCellEffect(slot0, slot1, slot2, slot3, slot4)
-	slot8 = slot4
+function var_0_0.playCellEffect(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	arg_11_0:recycleEffectGOs(arg_11_1, arg_11_4)
 
-	slot0:recycleEffectGOs(slot1, slot8)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
+		local var_11_0 = RougeCollectionHelper.getCollectionCellSlotPos(arg_11_3, iter_11_1)
 
-	for slot8, slot9 in ipairs(slot2) do
-		slot0:playSlotCellEffect(slot1, RougeCollectionHelper.getCollectionCellSlotPos(slot3, slot9), slot4)
+		arg_11_0:playSlotCellEffect(arg_11_1, var_11_0, arg_11_4)
 	end
 end
 
-function slot0.recycleEffectGOs(slot0, slot1, slot2)
-	if slot0._effectTab and slot0._effectTab[slot1] and slot3[slot2] then
-		for slot8 = #slot3[slot2], 1, -1 do
-			slot0._poolComp:recycleEffectItem(slot2, slot3[slot2][slot8])
-			table.remove(slot3[slot2], slot8)
+function var_0_0.recycleEffectGOs(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._effectTab and arg_12_0._effectTab[arg_12_1]
+
+	if var_12_0 and var_12_0[arg_12_2] then
+		for iter_12_0 = #var_12_0[arg_12_2], 1, -1 do
+			local var_12_1 = var_12_0[arg_12_2][iter_12_0]
+
+			arg_12_0._poolComp:recycleEffectItem(arg_12_2, var_12_1)
+			table.remove(var_12_0[arg_12_2], iter_12_0)
 		end
 	end
 end
 
-function slot0.checkIsSlotPosInSlotArea(slot0, slot1, slot2)
-	slot3 = RougeCollectionModel.instance:getCurSlotAreaSize()
+function var_0_0.checkIsSlotPosInSlotArea(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = RougeCollectionModel.instance:getCurSlotAreaSize()
 
-	if slot1 >= 0 and slot1 < slot3.col and slot2 >= 0 and slot2 < slot3.row then
+	if arg_13_1 >= 0 and arg_13_1 < var_13_0.col and arg_13_2 >= 0 and arg_13_2 < var_13_0.row then
 		return true
 	end
 end
 
-slot2 = 1.5
+local var_0_2 = 1.5
 
-function slot0.init(slot0)
-	if not RougeCollectionModel.instance:getTmpCollectionTriggerEffectInfo() then
+function var_0_0.init(arg_14_0)
+	local var_14_0 = RougeCollectionModel.instance:getTmpCollectionTriggerEffectInfo()
+
+	if not var_14_0 then
 		return
 	end
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("RougeCollectionEffectTriggerComp_PlayEffect")
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:excuteActiveEffect(slot6)
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		arg_14_0:excuteActiveEffect(iter_14_1)
 	end
 
-	TaskDispatcher.cancelTask(slot0._endUIBlock, slot0)
-	TaskDispatcher.runDelay(slot0._endUIBlock, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_14_0._endUIBlock, arg_14_0)
+	TaskDispatcher.runDelay(arg_14_0._endUIBlock, arg_14_0, var_0_2)
 end
 
-function slot0._endUIBlock(slot0)
+function var_0_0._endUIBlock(arg_15_0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("RougeCollectionEffectTriggerComp_PlayEffect")
 end
 
-function slot0.excuteActiveEffect(slot0, slot1)
-	slot0:executeEffectCmd(slot1, slot1.showType)
+function var_0_0.excuteActiveEffect(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.showType
+
+	arg_16_0:executeEffectCmd(arg_16_1, var_16_0)
 end
 
-function slot0.executeEffectCmd(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.executeEffectCmd(arg_17_0, arg_17_1, arg_17_2)
+	if not arg_17_1 then
 		return
 	end
 
-	if not slot0:tryGetExecuteEffectFunc(slot2) then
-		logError(string.format("无法找到肉鸽造物效果表现执行方法,效果id = %s, 造物uid = %s", slot2, slot1.trigger.id))
+	local var_17_0 = arg_17_0:tryGetExecuteEffectFunc(arg_17_2)
+
+	if not var_17_0 then
+		logError(string.format("无法找到肉鸽造物效果表现执行方法,效果id = %s, 造物uid = %s", arg_17_2, arg_17_1.trigger.id))
 
 		return
 	end
 
-	slot3(slot0, slot1)
+	var_17_0(arg_17_0, arg_17_1)
 end
 
-function slot0.tryGetExecuteEffectFunc(slot0, slot1)
-	if not slot0._effectExcuteFuncTab then
-		slot0._effectExcuteFuncTab = {
-			[RougeEnum.EffectTriggerType.Engulf] = slot0.engulfEffectFunc,
-			[RougeEnum.EffectTriggerType.LevelUp] = slot0.levelUpEffectFunc
+function var_0_0.tryGetExecuteEffectFunc(arg_18_0, arg_18_1)
+	if not arg_18_0._effectExcuteFuncTab then
+		arg_18_0._effectExcuteFuncTab = {
+			[RougeEnum.EffectTriggerType.Engulf] = arg_18_0.engulfEffectFunc,
+			[RougeEnum.EffectTriggerType.LevelUp] = arg_18_0.levelUpEffectFunc
 		}
 	end
 
-	return slot0._effectExcuteFuncTab[slot1]
+	return arg_18_0._effectExcuteFuncTab[arg_18_1]
 end
 
-function slot0.levelUpEffectFunc(slot0, slot1)
-	slot3 = slot1.trigger
+function var_0_0.levelUpEffectFunc(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_1.removeCollections
+	local var_19_1 = arg_19_1.trigger
 
-	if slot1.removeCollections then
-		for slot7, slot8 in ipairs(slot2) do
-			slot0:levelupEffectCollectionFunc(slot3, slot8)
+	if var_19_0 then
+		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+			arg_19_0:levelupEffectCollectionFunc(var_19_1, iter_19_1)
 		end
 	end
 end
 
-function slot0.levelupEffectCollectionFunc(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.levelupEffectCollectionFunc(arg_20_0, arg_20_1, arg_20_2)
+	if not arg_20_1 or not arg_20_2 then
 		return
 	end
 
-	slot3, slot4 = RougeCollectionHelper.getTwoCollectionConnectCell(slot1, slot2)
+	local var_20_0, var_20_1 = RougeCollectionHelper.getTwoCollectionConnectCell(arg_20_1, arg_20_2)
 
-	if not slot3 or not slot4 then
+	if not var_20_0 or not var_20_1 then
 		return
 	end
 
-	slot5 = FlowSequence.New()
-	slot6 = FlowParallel.New()
+	local var_20_2 = FlowSequence.New()
+	local var_20_3 = FlowParallel.New()
 
-	slot6:addWork(FunctionWork.New(slot0.levelupTriggerForeachCollectionCells, slot0, slot1))
-	slot6:addWork(FunctionWork.New(slot0.levelupTriggerForeachCollectionCells, slot0, slot2))
-	slot6:addWork(FunctionWork.New(function ()
-		uv0:drawTriggerLine(uv1, uv2, RougeEnum.CollectionArtType.LevelUPTrigger2)
+	var_20_3:addWork(FunctionWork.New(arg_20_0.levelupTriggerForeachCollectionCells, arg_20_0, arg_20_1))
+	var_20_3:addWork(FunctionWork.New(arg_20_0.levelupTriggerForeachCollectionCells, arg_20_0, arg_20_2))
+	var_20_3:addWork(FunctionWork.New(function()
+		arg_20_0:drawTriggerLine(arg_20_1, arg_20_2, RougeEnum.CollectionArtType.LevelUPTrigger2)
 	end))
-	slot5:addWork(slot6)
-	slot5:addWork(WorkWaitSeconds.New(uv0))
-	slot5:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1.id, RougeEnum.CollectionArtType.LevelUPTrigger1)
+	var_20_2:addWork(var_20_3)
+	var_20_2:addWork(WorkWaitSeconds.New(var_0_2))
+	var_20_2:addWork(FunctionWork.New(function()
+		arg_20_0:recycleEffectGOs(arg_20_1.id, RougeEnum.CollectionArtType.LevelUPTrigger1)
 	end))
-	slot5:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1.id, RougeEnum.CollectionArtType.LevelUPTrigger1)
+	var_20_2:addWork(FunctionWork.New(function()
+		arg_20_0:recycleEffectGOs(arg_20_2.id, RougeEnum.CollectionArtType.LevelUPTrigger1)
 	end))
-	slot5:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1.id, RougeEnum.CollectionArtType.LevelUPTrigger2)
+	var_20_2:addWork(FunctionWork.New(function()
+		arg_20_0:recycleEffectGOs(arg_20_1.id, RougeEnum.CollectionArtType.LevelUPTrigger2)
 	end))
-	slot5:start()
+	var_20_2:start()
 end
 
-function slot0.levelupTriggerForeachCollectionCells(slot0, slot1)
-	RougeCollectionHelper.foreachCollectionCells(slot1, slot0.collectionCellsEffectExcuteFunc, slot0, RougeEnum.CollectionArtType.LevelUPTrigger1)
+function var_0_0.levelupTriggerForeachCollectionCells(arg_25_0, arg_25_1)
+	RougeCollectionHelper.foreachCollectionCells(arg_25_1, arg_25_0.collectionCellsEffectExcuteFunc, arg_25_0, RougeEnum.CollectionArtType.LevelUPTrigger1)
 end
 
-function slot0.collectionCellsEffectExcuteFunc(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot1:getLeftTopPos()
+function var_0_0.collectionCellsEffectExcuteFunc(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
+	local var_26_0 = arg_26_1:getLeftTopPos()
+	local var_26_1 = Vector2(var_26_0.x + arg_26_3 - 1, var_26_0.y + arg_26_2 - 1)
 
-	slot0:playSlotCellEffect(slot1.id, Vector2(slot5.x + slot3 - 1, slot5.y + slot2 - 1), slot4)
+	arg_26_0:playSlotCellEffect(arg_26_1.id, var_26_1, arg_26_4)
 end
 
-function slot0.drawTriggerLine(slot0, slot1, slot2, slot3)
-	slot4, slot5 = RougeCollectionHelper.getTwoCollectionConnectCell(slot1, slot2)
+function var_0_0.drawTriggerLine(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0, var_27_1 = RougeCollectionHelper.getTwoCollectionConnectCell(arg_27_1, arg_27_2)
 
-	if not slot4 or not slot5 then
+	if not var_27_0 or not var_27_1 then
 		return
 	end
 
-	slot7, slot8 = RougeCollectionHelper.slotPos2AnchorPos(slot4)
-	slot9 = slot0:getAndSaveEffectItem(slot1.id, slot3)
+	local var_27_2 = arg_27_0:getDrawLineDirection(var_27_0, var_27_1)
+	local var_27_3, var_27_4 = RougeCollectionHelper.slotPos2AnchorPos(var_27_0)
+	local var_27_5 = arg_27_0:getAndSaveEffectItem(arg_27_1.id, arg_27_3)
 
-	recthelper.setAnchor(slot9.transform, slot7, slot8)
-	gohelper.setActive(slot9.gameObject, true)
-	slot0:setLineDirection(slot9, slot0:getDrawLineDirection(slot4, slot5))
+	recthelper.setAnchor(var_27_5.transform, var_27_3, var_27_4)
+	gohelper.setActive(var_27_5.gameObject, true)
+	arg_27_0:setLineDirection(var_27_5, var_27_2)
 end
 
-function slot0.getDrawLineDirection(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.getDrawLineDirection(arg_28_0, arg_28_1, arg_28_2)
+	if not arg_28_1 or not arg_28_2 then
 		return
 	end
 
-	if slot1.y < slot2.y then
+	if arg_28_2.y > arg_28_1.y then
 		return RougeEnum.SlotCellDirection.Bottom
-	elseif slot2.y < slot1.y then
+	elseif arg_28_2.y < arg_28_1.y then
 		return RougeEnum.SlotCellDirection.Top
-	elseif slot1.x < slot2.x then
+	elseif arg_28_2.x > arg_28_1.x then
 		return RougeEnum.SlotCellDirection.Right
 	else
 		return RougeEnum.SlotCellDirection.Left
 	end
 end
 
-function slot0.setLineDirection(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.setLineDirection(arg_29_0, arg_29_1, arg_29_2)
+	if not arg_29_1 then
 		return
 	end
 
-	for slot7 = slot1.transform.childCount, 1, -1 do
-		gohelper.setActive(slot1.transform:GetChild(slot7 - 1).gameObject, false)
+	for iter_29_0 = arg_29_1.transform.childCount, 1, -1 do
+		gohelper.setActive(arg_29_1.transform:GetChild(iter_29_0 - 1).gameObject, false)
 	end
 
-	slot4 = nil
+	local var_29_0
 
-	if (slot2 ~= RougeEnum.SlotCellDirection.Left or slot1.transform:Find("left")) and (slot2 ~= RougeEnum.SlotCellDirection.Right or slot1.transform:Find("right")) and (slot2 ~= RougeEnum.SlotCellDirection.Top or slot1.transform:Find("top")) and slot1.transform:Find("down") then
-		gohelper.setActive(slot4.gameObject, true)
+	if arg_29_2 == RougeEnum.SlotCellDirection.Left then
+		var_29_0 = arg_29_1.transform:Find("left")
+	elseif arg_29_2 == RougeEnum.SlotCellDirection.Right then
+		var_29_0 = arg_29_1.transform:Find("right")
+	elseif arg_29_2 == RougeEnum.SlotCellDirection.Top then
+		var_29_0 = arg_29_1.transform:Find("top")
+	else
+		var_29_0 = arg_29_1.transform:Find("down")
+	end
+
+	if var_29_0 then
+		gohelper.setActive(var_29_0.gameObject, true)
 	end
 end
 
-function slot0.playSlotCellEffect(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 or not slot3 then
+function var_0_0.playSlotCellEffect(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	if not arg_30_1 or not arg_30_2 or not arg_30_3 then
 		return
 	end
 
-	if not slot0:checkIsSlotPosInSlotArea(slot2.x, slot2.y) then
+	if not arg_30_0:checkIsSlotPosInSlotArea(arg_30_2.x, arg_30_2.y) then
 		return
 	end
 
-	slot5 = slot0:getAndSaveEffectItem(slot1, slot3)
-	slot6, slot7 = RougeCollectionHelper.slotPos2AnchorPos(slot2)
+	local var_30_0 = arg_30_0:getAndSaveEffectItem(arg_30_1, arg_30_3)
+	local var_30_1, var_30_2 = RougeCollectionHelper.slotPos2AnchorPos(arg_30_2)
 
-	gohelper.setActive(slot5, true)
-	recthelper.setAnchor(slot5.transform, slot6, slot7)
+	gohelper.setActive(var_30_0, true)
+	recthelper.setAnchor(var_30_0.transform, var_30_1, var_30_2)
 end
 
-function slot0.getAndSaveEffectItem(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.getAndSaveEffectItem(arg_31_0, arg_31_1, arg_31_2)
+	if not arg_31_1 or not arg_31_2 then
 		return
 	end
 
-	slot3 = slot0._poolComp:getEffectItem(slot2)
-	slot4 = slot0._effectTab and slot0._effectTab[slot1]
+	local var_31_0 = arg_31_0._poolComp:getEffectItem(arg_31_2)
+	local var_31_1 = arg_31_0._effectTab and arg_31_0._effectTab[arg_31_1]
 
-	if not (slot4 and slot4[slot2]) then
-		slot0._effectTab = slot0._effectTab or slot0:getUserDataTb_()
-		slot0._effectTab[slot1] = slot0._effectTab[slot1] or slot0:getUserDataTb_()
-		slot0._effectTab[slot1][slot2] = slot0:getUserDataTb_()
+	if not (var_31_1 and var_31_1[arg_31_2]) then
+		arg_31_0._effectTab = arg_31_0._effectTab or arg_31_0:getUserDataTb_()
+		arg_31_0._effectTab[arg_31_1] = arg_31_0._effectTab[arg_31_1] or arg_31_0:getUserDataTb_()
+		arg_31_0._effectTab[arg_31_1][arg_31_2] = arg_31_0:getUserDataTb_()
 	end
 
-	table.insert(slot0._effectTab[slot1][slot2], slot3)
+	table.insert(arg_31_0._effectTab[arg_31_1][arg_31_2], var_31_0)
 
-	return slot3
+	return var_31_0
 end
 
-function slot0.setCollectionsVisible(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.setCollectionsVisible(arg_32_0, arg_32_1, arg_32_2)
+	if not arg_32_1 then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot1) do
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.SetCollectionVisible, slot7, slot2)
+	for iter_32_0, iter_32_1 in pairs(arg_32_1) do
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.SetCollectionVisible, iter_32_1, arg_32_2)
 	end
 end
 
-function slot0.getOrCreateTmpCollection(slot0, slot1)
-	if not slot0._collectionMap[slot1.id] then
-		slot2 = slot0._poolComp:getCollectionItem(RougeCollectionDragItem.__cname)
+function var_0_0.getOrCreateTmpCollection(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0._collectionMap[arg_33_1.id]
 
-		slot2:onUpdateMO(slot1)
-		slot2:setShapeCellsVisible(false)
-		slot2:setHoleToolVisible(true)
-		slot2:setShowTypeFlagVisible(true)
+	if not var_33_0 then
+		var_33_0 = arg_33_0._poolComp:getCollectionItem(RougeCollectionDragItem.__cname)
 
-		slot0._collectionMap[slot1.id] = slot2
+		var_33_0:onUpdateMO(arg_33_1)
+		var_33_0:setShapeCellsVisible(false)
+		var_33_0:setHoleToolVisible(true)
+		var_33_0:setShowTypeFlagVisible(true)
+
+		arg_33_0._collectionMap[arg_33_1.id] = var_33_0
 	end
 
-	return slot2
+	return var_33_0
 end
 
-function slot0.resetTmpCollection(slot0, slot1)
-	if not slot0._collectionMap[slot1] then
+function var_0_0.resetTmpCollection(arg_34_0, arg_34_1)
+	local var_34_0 = arg_34_0._collectionMap[arg_34_1]
+
+	if not var_34_0 then
 		return
 	end
 
-	slot2:reset()
+	var_34_0:reset()
 end
 
-function slot0.engulfEffectFunc(slot0, slot1)
-	slot3 = slot1.trigger
+function var_0_0.engulfEffectFunc(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_1.removeCollections
+	local var_35_1 = arg_35_1.trigger
 
-	if slot1.removeCollections then
-		for slot7, slot8 in ipairs(slot2) do
-			slot0:engulfEffectCollectionFunc(slot3, slot8)
+	if var_35_0 then
+		for iter_35_0, iter_35_1 in ipairs(var_35_0) do
+			arg_35_0:engulfEffectCollectionFunc(var_35_1, iter_35_1)
 		end
 	end
 end
 
-function slot0.engulfEffectCollectionFunc(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.engulfEffectCollectionFunc(arg_36_0, arg_36_1, arg_36_2)
+	if not arg_36_1 or not arg_36_2 then
 		return
 	end
 
-	slot3, slot4 = RougeCollectionHelper.getTwoCollectionConnectCell(slot1, slot2)
+	local var_36_0, var_36_1 = RougeCollectionHelper.getTwoCollectionConnectCell(arg_36_1, arg_36_2)
 
-	if not slot3 or not slot4 then
+	if not var_36_0 or not var_36_1 then
 		return
 	end
 
-	slot5 = FlowSequence.New()
-	slot6 = FlowParallel.New()
+	local var_36_2 = FlowSequence.New()
+	local var_36_3 = FlowParallel.New()
 
-	slot6:addWork(FunctionWork.New(slot0.engulfTriggerForeachCollectionCells, slot0, slot1))
-	slot6:addWork(FunctionWork.New(slot0.engulfTriggerForeachCollectionCells, slot0, slot2))
-	slot6:addWork(FunctionWork.New(function ()
-		uv0:playEngulfCollection(uv1, uv2)
+	var_36_3:addWork(FunctionWork.New(arg_36_0.engulfTriggerForeachCollectionCells, arg_36_0, arg_36_1))
+	var_36_3:addWork(FunctionWork.New(arg_36_0.engulfTriggerForeachCollectionCells, arg_36_0, arg_36_2))
+	var_36_3:addWork(FunctionWork.New(function()
+		arg_36_0:playEngulfCollection(arg_36_2, arg_36_1)
 	end))
-	slot6:addWork(FunctionWork.New(function ()
-		uv0:drawTriggerLine(uv1, uv2, RougeEnum.CollectionArtType.EngulfTrigger2)
+	var_36_3:addWork(FunctionWork.New(function()
+		arg_36_0:drawTriggerLine(arg_36_2, arg_36_1, RougeEnum.CollectionArtType.EngulfTrigger2)
 	end))
-	slot5:addWork(slot6)
-	slot5:addWork(WorkWaitSeconds.New(uv0))
-	slot5:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1.id, RougeEnum.CollectionArtType.EngulfTrigger1)
+	var_36_2:addWork(var_36_3)
+	var_36_2:addWork(WorkWaitSeconds.New(var_0_2))
+	var_36_2:addWork(FunctionWork.New(function()
+		arg_36_0:recycleEffectGOs(arg_36_1.id, RougeEnum.CollectionArtType.EngulfTrigger1)
 	end))
-	slot5:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1.id, RougeEnum.CollectionArtType.EngulfTrigger1)
+	var_36_2:addWork(FunctionWork.New(function()
+		arg_36_0:recycleEffectGOs(arg_36_2.id, RougeEnum.CollectionArtType.EngulfTrigger1)
 	end))
-	slot5:addWork(FunctionWork.New(function ()
-		uv0:recycleEffectGOs(uv1.id, RougeEnum.CollectionArtType.EngulfTrigger2)
+	var_36_2:addWork(FunctionWork.New(function()
+		arg_36_0:recycleEffectGOs(arg_36_2.id, RougeEnum.CollectionArtType.EngulfTrigger2)
 	end))
-	slot5:addWork(FunctionWork.New(slot0.resetTmpCollection, slot0, slot2.id))
-	slot5:start()
+	var_36_2:addWork(FunctionWork.New(arg_36_0.resetTmpCollection, arg_36_0, arg_36_2.id))
+	var_36_2:start()
 end
 
-function slot0.engulfTriggerForeachCollectionCells(slot0, slot1)
-	RougeCollectionHelper.foreachCollectionCells(slot1, slot0.collectionCellsEffectExcuteFunc, slot0, RougeEnum.CollectionArtType.EngulfTrigger1)
+function var_0_0.engulfTriggerForeachCollectionCells(arg_42_0, arg_42_1)
+	RougeCollectionHelper.foreachCollectionCells(arg_42_1, arg_42_0.collectionCellsEffectExcuteFunc, arg_42_0, RougeEnum.CollectionArtType.EngulfTrigger1)
 end
 
-function slot0.playEngulfCollection(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.playEngulfCollection(arg_43_0, arg_43_1, arg_43_2)
+	if not arg_43_1 or not arg_43_2 then
 		return
 	end
 
-	slot3 = slot0:getOrCreateTmpCollection(slot1)
-	slot4, slot5 = RougeCollectionHelper.getTwoCollectionConnectCell(slot1, slot2)
+	local var_43_0 = arg_43_0:getOrCreateTmpCollection(arg_43_1)
+	local var_43_1, var_43_2 = RougeCollectionHelper.getTwoCollectionConnectCell(arg_43_1, arg_43_2)
 
-	if not slot4 or not slot5 then
+	if not var_43_1 or not var_43_2 then
 		return
 	end
 
-	slot3:playAnim(slot0:getEngulfCollectionAnimStateName(slot0:getDrawLineDirection(slot4, slot5)))
-	slot3:setCollectionInteractable(false)
+	local var_43_3 = arg_43_0:getDrawLineDirection(var_43_1, var_43_2)
+	local var_43_4 = arg_43_0:getEngulfCollectionAnimStateName(var_43_3)
+
+	var_43_0:playAnim(var_43_4)
+	var_43_0:setCollectionInteractable(false)
 end
 
-function slot0.getEngulfCollectionAnimStateName(slot0, slot1)
-	slot2 = "default"
+function var_0_0.getEngulfCollectionAnimStateName(arg_44_0, arg_44_1)
+	local var_44_0 = "default"
 
-	return slot1 == RougeEnum.SlotCellDirection.Left and "left" or slot1 == RougeEnum.SlotCellDirection.Right and "right" or slot1 == RougeEnum.SlotCellDirection.Top and "top" or "down"
+	return arg_44_1 == RougeEnum.SlotCellDirection.Left and "left" or arg_44_1 == RougeEnum.SlotCellDirection.Right and "right" or arg_44_1 == RougeEnum.SlotCellDirection.Top and "top" or "down"
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_45_0)
 	RougeCollectionModel.instance:clearTmpCollectionTriggerEffectInfo()
-	slot0:_endUIBlock()
+	arg_45_0:_endUIBlock()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._collectionMap then
-		for slot4, slot5 in pairs(slot0._collectionMap) do
-			slot5:destroy()
+function var_0_0.onDestroyView(arg_46_0)
+	if arg_46_0._collectionMap then
+		for iter_46_0, iter_46_1 in pairs(arg_46_0._collectionMap) do
+			iter_46_1:destroy()
 		end
 	end
 
-	slot0._poolComp = nil
+	arg_46_0._poolComp = nil
 
-	TaskDispatcher.cancelTask(slot0._endUIBlock, slot0)
+	TaskDispatcher.cancelTask(arg_46_0._endUIBlock, arg_46_0)
 end
 
-return slot0
+return var_0_0

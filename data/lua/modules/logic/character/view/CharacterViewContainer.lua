@@ -1,67 +1,68 @@
-module("modules.logic.character.view.CharacterViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterViewContainer", package.seeall)
 
-slot0 = class("CharacterViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._equipView = CharacterDefaultEquipView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, CharacterView.New())
-	table.insert(slot1, slot0._equipView)
-	table.insert(slot1, CharacterSpineGCView.New())
-	table.insert(slot1, CommonRainEffectView.New("anim/bgcanvas/#go_glowcontainer"))
+	arg_1_0._equipView = CharacterDefaultEquipView.New()
 
-	slot0.helpShowView = HelpShowView.New()
+	table.insert(var_1_0, CharacterView.New())
+	table.insert(var_1_0, arg_1_0._equipView)
+	table.insert(var_1_0, CharacterSpineGCView.New())
+	table.insert(var_1_0, CommonRainEffectView.New("anim/bgcanvas/#go_glowcontainer"))
 
-	table.insert(slot1, slot0.helpShowView)
+	arg_1_0.helpShowView = HelpShowView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.helpShowView)
+
+	return var_1_0
 end
 
-function slot0.getEquipView(slot0)
-	return slot0._equipView
+function var_0_0.getEquipView(arg_2_0)
+	return arg_2_0._equipView
 end
 
-function slot0.playOpenTransition(slot0)
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
+function var_0_0.playOpenTransition(arg_3_0)
+	arg_3_0:_cancelBlock()
+	arg_3_0:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(slot0.viewGO):Play(UIAnimationName.Open, slot0.onOpenAnimDone, slot0)
-	slot0:startViewOpenBlock()
+	ZProj.ProjAnimatorPlayer.Get(arg_3_0.viewGO):Play(UIAnimationName.Open, arg_3_0.onOpenAnimDone, arg_3_0)
+	arg_3_0:startViewOpenBlock()
 end
 
-function slot0.onOpenAnimDone(slot0)
+function var_0_0.onOpenAnimDone(arg_4_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	slot0:onPlayOpenTransitionFinish()
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
+	arg_4_0:onPlayOpenTransitionFinish()
+	arg_4_0:_cancelBlock()
+	arg_4_0:_stopOpenCloseAnim()
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
+function var_0_0.playCloseTransition(arg_5_0)
+	arg_5_0:_cancelBlock()
+	arg_5_0:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(slot0.viewGO):Play(UIAnimationName.Close, slot0.onCloseAnimDone, slot0)
-	slot0:startViewCloseBlock()
+	ZProj.ProjAnimatorPlayer.Get(arg_5_0.viewGO):Play(UIAnimationName.Close, arg_5_0.onCloseAnimDone, arg_5_0)
+	arg_5_0:startViewCloseBlock()
 end
 
-function slot0.onCloseAnimDone(slot0)
+function var_0_0.onCloseAnimDone(arg_6_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	slot0:onPlayCloseTransitionFinish()
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
+	arg_6_0:onPlayCloseTransitionFinish()
+	arg_6_0:_cancelBlock()
+	arg_6_0:_stopOpenCloseAnim()
 end
 
-function slot0.setIsOwnHero(slot0, slot1)
-	if slot1 then
-		slot0._isOwnHero = slot1.isOwnHero
+function var_0_0.setIsOwnHero(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		arg_7_0._isOwnHero = arg_7_1.isOwnHero
 	else
-		slot0._isOwnHero = true
+		arg_7_0._isOwnHero = true
 	end
 end
 
-function slot0.isOwnHero(slot0)
-	return slot0._isOwnHero
+function var_0_0.isOwnHero(arg_8_0)
+	return arg_8_0._isOwnHero
 end
 
-return slot0
+return var_0_0

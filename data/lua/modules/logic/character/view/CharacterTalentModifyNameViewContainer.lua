@@ -1,19 +1,19 @@
-module("modules.logic.character.view.CharacterTalentModifyNameViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentModifyNameViewContainer", package.seeall)
 
-slot0 = class("CharacterTalentModifyNameViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterTalentModifyNameViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		CharacterTalentModifyNameView.New()
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0.playOpenTransition(slot0)
-	slot0:onPlayOpenTransitionFinish()
+function var_0_0.playOpenTransition(arg_3_0)
+	arg_3_0:onPlayOpenTransitionFinish()
 end
 
-return slot0
+return var_0_0

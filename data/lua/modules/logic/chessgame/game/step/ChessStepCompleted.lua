@@ -1,20 +1,22 @@
-module("modules.logic.chessgame.game.step.ChessStepCompleted", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepCompleted", package.seeall)
 
-slot0 = class("ChessStepCompleted", BaseWork)
+local var_0_0 = class("ChessStepCompleted", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	if ChessGameInteractModel.instance:getInteractById(slot0.originData.interactId) then
-		slot1.isFinish = true
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = ChessGameInteractModel.instance:getInteractById(arg_2_0.originData.interactId)
+
+	if var_2_0 then
+		var_2_0.isFinish = true
 
 		ChessGameController.instance.interactsMgr:getMainPlayer():getHandler():calCanWalkArea()
 		ChessGameInteractModel.instance:setInteractFinishMap()
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

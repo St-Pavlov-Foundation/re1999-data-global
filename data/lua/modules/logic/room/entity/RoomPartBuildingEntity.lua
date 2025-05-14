@@ -1,251 +1,269 @@
-module("modules.logic.room.entity.RoomPartBuildingEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomPartBuildingEntity", package.seeall)
 
-slot0 = class("RoomPartBuildingEntity", RoomBaseEntity)
+local var_0_0 = class("RoomPartBuildingEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
-	slot0._isWorking = nil
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
+	arg_1_0._isWorking = nil
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.RoomPartBuilding
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = slot0.containerGO
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = arg_3_0.containerGO
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
 
-	slot0:_refreshWorkingState()
+	arg_3_0:_refreshWorkingState()
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("effect", RoomEffectComp)
 
 	if RoomController.instance:isObMode() then
-		slot0:addComp("collider", RoomColliderComp)
-		slot0:addComp("atmosphere", RoomAtmosphereComp)
+		arg_4_0:addComp("collider", RoomColliderComp)
+		arg_4_0:addComp("atmosphere", RoomAtmosphereComp)
 	end
 
-	slot0:addComp("nightlight", RoomNightLightComp)
-	slot0:addComp("skin", RoomInitBuildingSkinComp)
-	slot0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
+	arg_4_0:addComp("nightlight", RoomNightLightComp)
+	arg_4_0:addComp("skin", RoomInitBuildingSkinComp)
+	arg_4_0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, slot0.refreshBuilding, slot0)
-	RoomController.instance:registerCallback(RoomEvent.ProduceLineLevelUp, slot0.refreshBuilding, slot0)
-	RoomController.instance:registerCallback(RoomEvent.UpdateProduceLineData, slot0._refreshWorkingState, slot0)
-	RoomController.instance:registerCallback(RoomEvent.OnLateInitDone, slot0._onLateInitDone, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, slot0._characterListShowChanged, slot0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, slot0._onSwithMode, slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
+	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, arg_5_0.refreshBuilding, arg_5_0)
+	RoomController.instance:registerCallback(RoomEvent.ProduceLineLevelUp, arg_5_0.refreshBuilding, arg_5_0)
+	RoomController.instance:registerCallback(RoomEvent.UpdateProduceLineData, arg_5_0._refreshWorkingState, arg_5_0)
+	RoomController.instance:registerCallback(RoomEvent.OnLateInitDone, arg_5_0._onLateInitDone, arg_5_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, arg_5_0._characterListShowChanged, arg_5_0)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_5_0._onSwithMode, arg_5_0)
 end
 
-function slot0._onLateInitDone(slot0)
-	slot0._lateInitDone = true
+function var_0_0._onLateInitDone(arg_6_0)
+	arg_6_0._lateInitDone = true
 
-	slot0:_refreshAudio()
+	arg_6_0:_refreshAudio()
 end
 
-function slot0.refreshBuilding(slot0, slot1, slot2)
-	if string.nilorempty(slot0:_getPartBuildingRes()) then
-		slot0.effect:removeParams({
+function var_0_0.refreshBuilding(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0:_getPartBuildingRes()
+
+	if string.nilorempty(var_7_0) then
+		arg_7_0.effect:removeParams({
 			RoomEnum.EffectKey.BuildingGOKey
 		})
 	else
-		slot0.effect:addParams({
+		arg_7_0.effect:addParams({
 			[RoomEnum.EffectKey.BuildingGOKey] = {
 				pathfinding = true,
-				res = slot3,
-				alphaThreshold = slot1,
-				alphaThresholdValue = slot2
+				res = var_7_0,
+				alphaThreshold = arg_7_1,
+				alphaThresholdValue = arg_7_2
 			}
 		})
 	end
 
-	slot0.effect:refreshEffect()
-	slot0:_refreshMaxLevel()
-	slot0:_refreshAudio()
+	arg_7_0.effect:refreshEffect()
+	arg_7_0:_refreshMaxLevel()
+	arg_7_0:_refreshAudio()
 end
 
-function slot0._levelUp(slot0)
-	slot0:refreshBuilding()
+function var_0_0._levelUp(arg_8_0)
+	arg_8_0:refreshBuilding()
 end
 
-function slot0.onEffectRebuild(slot0)
-	slot0:_refreshWorkingEffect()
-	slot0:_refreshAudio()
+function var_0_0.onEffectRebuild(arg_9_0)
+	arg_9_0:_refreshWorkingEffect()
+	arg_9_0:_refreshAudio()
 end
 
-function slot0.tweenAlphaThreshold(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0.alphaThresholdComp then
+function var_0_0.tweenAlphaThreshold(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
+	if not arg_10_0.alphaThresholdComp then
 		return
 	end
 
-	slot0.alphaThresholdComp:tweenAlphaThreshold(slot1, slot2, slot3, slot4, slot5)
+	arg_10_0.alphaThresholdComp:tweenAlphaThreshold(arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
 end
 
-function slot0._characterListShowChanged(slot0, slot1)
-	slot0:setEnable(not RoomController.instance:isEditMode() and not slot1)
+function var_0_0._characterListShowChanged(arg_11_0, arg_11_1)
+	arg_11_0:setEnable(not RoomController.instance:isEditMode() and not arg_11_1)
 end
 
-function slot0._onSwithMode(slot0)
-	slot0:setEnable(not RoomController.instance:isEditMode())
+function var_0_0._onSwithMode(arg_12_0)
+	arg_12_0:setEnable(not RoomController.instance:isEditMode())
 end
 
-function slot0.setEnable(slot0, slot1)
-	if slot0.collider then
-		slot0.collider:setEnable(slot1 and true or false)
+function var_0_0.setEnable(arg_13_0, arg_13_1)
+	if arg_13_0.collider then
+		arg_13_0.collider:setEnable(arg_13_1 and true or false)
 	end
 end
 
-function slot0._getPartBuildingRes(slot0)
-	slot1 = nil
+function var_0_0._getPartBuildingRes(arg_14_0)
+	local var_14_0
+	local var_14_1 = RoomSkinModel.instance:getShowSkin(arg_14_0.id)
 
-	return (not RoomSkinModel.instance:isDefaultRoomSkin(slot0.id, RoomSkinModel.instance:getShowSkin(slot0.id)) or RoomInitBuildingHelper.getModelPath(slot0.id)) and (RoomConfig.instance:getRoomSkinModelPath(slot2) or RoomSkinModel.instance:getEquipRoomSkin(slot0.id))
-end
-
-function slot0._refreshWorkingState(slot0)
-	slot1 = RoomProductionHelper.isPartWorking(slot0.id)
-
-	if slot0._isWorking == false and slot1 == true then
-		slot0:_playChangeAudio()
+	if RoomSkinModel.instance:isDefaultRoomSkin(arg_14_0.id, var_14_1) then
+		var_14_0 = RoomInitBuildingHelper.getModelPath(arg_14_0.id)
+	else
+		var_14_0 = RoomConfig.instance:getRoomSkinModelPath(var_14_1) or RoomSkinModel.instance:getEquipRoomSkin(arg_14_0.id)
 	end
 
-	slot0._isWorking = slot1
-
-	slot0:_refreshWorkingEffect()
-	slot0:_refreshAudio()
+	return var_14_0
 end
 
-function slot0._playChangeAudio(slot0)
-	if RoomConfig.instance:getProductionPartConfig(slot0.id).changeAudio ~= 0 then
-		AudioMgr.instance:trigger(slot1.changeAudio, slot0.go)
+function var_0_0._refreshWorkingState(arg_15_0)
+	local var_15_0 = RoomProductionHelper.isPartWorking(arg_15_0.id)
+
+	if arg_15_0._isWorking == false and var_15_0 == true then
+		arg_15_0:_playChangeAudio()
 	end
+
+	arg_15_0._isWorking = var_15_0
+
+	arg_15_0:_refreshWorkingEffect()
+	arg_15_0:_refreshAudio()
 end
 
-function slot0._refreshWorkingEffect(slot0)
-	slot2 = slot0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, RoomEnum.EffectPath.PartFullPath)
+function var_0_0._playChangeAudio(arg_16_0)
+	local var_16_0 = RoomConfig.instance:getProductionPartConfig(arg_16_0.id)
 
-	if slot0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, RoomEnum.EffectPath.PartWorkingPath) then
-		gohelper.setActive(slot1, slot0._isWorking)
-	end
-
-	if slot2 then
-		gohelper.setActive(slot2, not slot0._isWorking)
+	if var_16_0.changeAudio ~= 0 then
+		AudioMgr.instance:trigger(var_16_0.changeAudio, arg_16_0.go)
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, slot0.refreshBuilding, slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.ProduceLineLevelUp, slot0.refreshBuilding, slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, slot0._refreshWorkingState, slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnLateInitDone, slot0._onLateInitDone, slot0)
+function var_0_0._refreshWorkingEffect(arg_17_0)
+	local var_17_0 = arg_17_0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, RoomEnum.EffectPath.PartWorkingPath)
+	local var_17_1 = arg_17_0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, RoomEnum.EffectPath.PartFullPath)
 
-	slot5 = slot0
+	if var_17_0 then
+		gohelper.setActive(var_17_0, arg_17_0._isWorking)
+	end
 
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, slot0._characterListShowChanged, slot5)
+	if var_17_1 then
+		gohelper.setActive(var_17_1, not arg_17_0._isWorking)
+	end
+end
 
-	slot4 = slot0
+function var_0_0.beforeDestroy(arg_18_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, arg_18_0.refreshBuilding, arg_18_0)
+	RoomController.instance:unregisterCallback(RoomEvent.ProduceLineLevelUp, arg_18_0.refreshBuilding, arg_18_0)
+	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, arg_18_0._refreshWorkingState, arg_18_0)
+	RoomController.instance:unregisterCallback(RoomEvent.OnLateInitDone, arg_18_0._onLateInitDone, arg_18_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, arg_18_0._characterListShowChanged, arg_18_0)
+	RoomController.instance:unregisterCallback(arg_18_0._onSwithMode, arg_18_0)
 
-	RoomController.instance:unregisterCallback(slot0._onSwithMode, slot4)
-
-	for slot4, slot5 in ipairs(slot0._compList) do
-		if slot5.beforeDestroy then
-			slot5:beforeDestroy()
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0._compList) do
+		if iter_18_1.beforeDestroy then
+			iter_18_1:beforeDestroy()
 		end
 	end
 
-	slot0._lateInitDone = nil
+	arg_18_0._lateInitDone = nil
 
-	slot0:_stopAudio()
+	arg_18_0:_stopAudio()
 end
 
-function slot0.getCharacterMeshRendererList(slot0)
-	return slot0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
+function var_0_0.getCharacterMeshRendererList(arg_19_0)
+	return arg_19_0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
 end
 
-function slot0._refreshMaxLevel(slot0)
-	if not RoomConfig.instance:getProductionPartConfig(slot0.id) then
-		slot0._maxLevel = 0
+function var_0_0._refreshMaxLevel(arg_20_0)
+	local var_20_0 = RoomConfig.instance:getProductionPartConfig(arg_20_0.id)
+
+	if not var_20_0 then
+		arg_20_0._maxLevel = 0
 
 		return
 	end
 
-	slot3 = 0
+	local var_20_1 = var_20_0.productionLines
+	local var_20_2 = 0
 
-	for slot7, slot8 in ipairs(slot1.productionLines) do
-		slot9 = 0
+	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
+		local var_20_3 = 0
 
 		if RoomController.instance:isVisitMode() then
-			slot9 = RoomMapModel.instance:getOtherLineLevelDict()[slot8] or 0
+			var_20_3 = RoomMapModel.instance:getOtherLineLevelDict()[iter_20_1] or 0
 		elseif RoomController.instance:isDebugMode() then
-			slot3 = 1
+			var_20_2 = 1
 
 			break
 		else
-			slot9 = RoomProductionModel.instance:getLineMO(slot8) and slot10.level or 0
+			local var_20_4 = RoomProductionModel.instance:getLineMO(iter_20_1)
+
+			var_20_3 = var_20_4 and var_20_4.level or 0
 		end
 
-		if slot3 < slot9 then
-			slot3 = slot9
+		if var_20_2 < var_20_3 then
+			var_20_2 = var_20_3
 		end
 	end
 
-	slot0._maxLevel = slot3
+	arg_20_0._maxLevel = var_20_2
 end
 
-function slot0._refreshAudio(slot0)
-	if not slot0._lateInitDone then
+function var_0_0._refreshAudio(arg_21_0)
+	if not arg_21_0._lateInitDone then
 		return
 	end
 
-	if string.nilorempty(slot0:_getPartBuildingRes()) then
-		slot0:_stopAudio()
+	local var_21_0 = arg_21_0:_getPartBuildingRes()
 
-		return
-	end
-
-	if not slot0._maxLevel or slot0._maxLevel <= 0 then
-		slot0:_stopAudio()
+	if string.nilorempty(var_21_0) then
+		arg_21_0:_stopAudio()
 
 		return
 	end
 
-	slot2 = ZProj.AudioEmitter.Get(slot0.go)
+	if not arg_21_0._maxLevel or arg_21_0._maxLevel <= 0 then
+		arg_21_0:_stopAudio()
 
-	if RoomConfig.instance:getProductionPartConfig(slot0.id).audio ~= 0 then
-		if slot0._audioId ~= slot3.audio then
-			slot2:Emitter(slot3.audio)
+		return
+	end
 
-			slot0._audioId = slot3.audio
+	local var_21_1 = ZProj.AudioEmitter.Get(arg_21_0.go)
+	local var_21_2 = RoomConfig.instance:getProductionPartConfig(arg_21_0.id)
+
+	if var_21_2.audio ~= 0 then
+		if arg_21_0._audioId ~= var_21_2.audio then
+			var_21_1:Emitter(var_21_2.audio)
+
+			arg_21_0._audioId = var_21_2.audio
 		end
 
-		if slot2.playingId > 0 then
-			slot4 = 0
+		if var_21_1.playingId > 0 then
+			local var_21_3 = 0
 
-			if slot0._isWorking then
-				slot4 = RoomProductionHelper.getSkinLevel(slot0.id, slot0._maxLevel)
+			if arg_21_0._isWorking then
+				var_21_3 = RoomProductionHelper.getSkinLevel(arg_21_0.id, arg_21_0._maxLevel)
 			end
 
-			AudioMgr.instance:setRTPCValueByPlayingID(AudioMgr.instance:getIdFromString(AudioEnum.RoomRTPC.HomePivotRank), math.min(slot4, 3), slot2.playingId)
+			local var_21_4 = math.min(var_21_3, 3)
+
+			AudioMgr.instance:setRTPCValueByPlayingID(AudioMgr.instance:getIdFromString(AudioEnum.RoomRTPC.HomePivotRank), var_21_4, var_21_1.playingId)
 		end
 	end
 end
 
-function slot0._stopAudio(slot0)
-	if ZProj.AudioEmitter.Get(slot0.go).playingId > 0 then
-		AudioMgr.instance:stopPlayingID(slot1.playingId)
+function var_0_0._stopAudio(arg_22_0)
+	local var_22_0 = ZProj.AudioEmitter.Get(arg_22_0.go)
+
+	if var_22_0.playingId > 0 then
+		AudioMgr.instance:stopPlayingID(var_22_0.playingId)
 	end
 
-	slot0._audioId = nil
+	arg_22_0._audioId = nil
 end
 
-return slot0
+return var_0_0

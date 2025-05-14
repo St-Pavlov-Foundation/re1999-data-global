@@ -1,28 +1,29 @@
-module("modules.logic.sdk.config.SDKLongchengChannelEventEnum", package.seeall)
+﻿module("modules.logic.sdk.config.SDKLongchengChannelEventEnum", package.seeall)
 
-slot0 = _M
-slot0.EpisodePass = {}
-slot0.PlayerLevelUp = {
-	[5.0] = "stdlevel"
+local var_0_0 = _M
+
+var_0_0.EpisodePass = {}
+var_0_0.PlayerLevelUp = {
+	[5] = "stdlevel"
 }
-slot0.FirstSummon = "stdhour1"
-slot0.FirstPurchase = "firstpurchase"
-slot0.GetMaxRareHero = "stdhour3"
-slot0.FirstBuyPower = "stdexhausted"
-slot0.FirstExchangeDiamond = "stdlackofdiamonds"
-slot0.AppReviewePisodeId = 10115
-slot0.Purchase = {}
-slot0.DailyTaskActive = {}
-slot0.TotalChargeAmount = {}
-slot0.ConsumeItem = {}
-slot0.Summon = {
-	[100.0] = "stdstaminapurchase"
+var_0_0.FirstSummon = "stdhour1"
+var_0_0.FirstPurchase = "firstpurchase"
+var_0_0.GetMaxRareHero = "stdhour3"
+var_0_0.FirstBuyPower = "stdexhausted"
+var_0_0.FirstExchangeDiamond = "stdlackofdiamonds"
+var_0_0.AppReviewePisodeId = 10115
+var_0_0.Purchase = {}
+var_0_0.DailyTaskActive = {}
+var_0_0.TotalChargeAmount = {}
+var_0_0.ConsumeItem = {}
+var_0_0.Summon = {
+	[100] = "stdstaminapurchase"
 }
-slot0.HeroRankUp = {
+var_0_0.HeroRankUp = {
 	nil,
 	"stdrechargeprompt",
 	"stdrecharge",
 	"stdmonthly"
 }
 
-return slot0
+return var_0_0

@@ -1,10 +1,12 @@
-module("modules.logic.store.model.StoreModel", package.seeall)
+﻿module("modules.logic.store.model.StoreModel", package.seeall)
 
-slot0 = class("StoreModel", BaseModel)
+local var_0_0 = class("StoreModel", BaseModel)
 
-function slot0.isRedTabReadOnceClient(slot0, slot1)
-	if slot1 == StoreEnum.StoreId.EventPackage and not StoreController.instance:getIsOpenedEventPackage() then
-		if not uv0.instance:getPackageGoodValidList(slot1) or #slot2 == 0 then
+function var_0_0.isRedTabReadOnceClient(arg_1_0, arg_1_1)
+	if arg_1_1 == StoreEnum.StoreId.EventPackage and not StoreController.instance:getIsOpenedEventPackage() then
+		local var_1_0 = var_0_0.instance:getPackageGoodValidList(arg_1_1)
+
+		if not var_1_0 or #var_1_0 == 0 then
 			return false
 		end
 
@@ -14,427 +16,481 @@ function slot0.isRedTabReadOnceClient(slot0, slot1)
 	return false
 end
 
-function slot0.onInit(slot0)
-	slot0._storeMODict = {}
-	slot0._chargeStoreDic = {}
-	slot0._allPackageDic = {}
-	slot0._chargePackageStoreDic = {}
-	slot0._versionChargePackageDict = {}
-	slot0._onceTimeChargePackageDict = {}
-	slot0._eventChargePackageDict = {}
-	slot0._recommendPackageList = {}
-	slot0._packageType2GoodsDict = {
-		[StoreEnum.StoreId.VersionPackage] = slot0._versionChargePackageDict,
-		[StoreEnum.StoreId.OneTimePackage] = slot0._onceTimeChargePackageDict,
-		[StoreEnum.StoreId.NormalPackage] = slot0._chargePackageStoreDic,
-		[StoreEnum.StoreId.EventPackage] = slot0._eventChargePackageDict
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._storeMODict = {}
+	arg_2_0._chargeStoreDic = {}
+	arg_2_0._allPackageDic = {}
+	arg_2_0._chargePackageStoreDic = {}
+	arg_2_0._versionChargePackageDict = {}
+	arg_2_0._onceTimeChargePackageDict = {}
+	arg_2_0._eventChargePackageDict = {}
+	arg_2_0._recommendPackageList = {}
+	arg_2_0._packageType2GoodsDict = {
+		[StoreEnum.StoreId.VersionPackage] = arg_2_0._versionChargePackageDict,
+		[StoreEnum.StoreId.OneTimePackage] = arg_2_0._onceTimeChargePackageDict,
+		[StoreEnum.StoreId.NormalPackage] = arg_2_0._chargePackageStoreDic,
+		[StoreEnum.StoreId.EventPackage] = arg_2_0._eventChargePackageDict
 	}
-	slot0._curPackageStore = StoreEnum.StoreId.NormalPackage
-	slot0.monthCardInfo = nil
-	slot0._packageStoreRpcLeftNum = 0
+	arg_2_0._curPackageStore = StoreEnum.StoreId.NormalPackage
+	arg_2_0.monthCardInfo = nil
+	arg_2_0._packageStoreRpcLeftNum = 0
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:onInit()
 end
 
-function slot0.getStoreInfosReply(slot0, slot1)
-	if slot1.storeInfos and #slot2 > 0 then
-		for slot6, slot7 in ipairs(slot2) do
-			slot8 = StoreMO.New()
+function var_0_0.getStoreInfosReply(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.storeInfos
 
-			slot8:init(slot7)
+	if var_4_0 and #var_4_0 > 0 then
+		for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+			local var_4_1 = StoreMO.New()
 
-			slot0._storeMODict[slot8.id] = slot8
+			var_4_1:init(iter_4_1)
 
-			if StoreConfig.instance:getTabConfig(slot8.id) and slot9.belongFirstTab == StoreEnum.StoreId.Package then
-				if slot0:getCurPackageStore() ~= 0 and slot10 == slot8.id then
-					slot0:updatePackageStoreList(slot8.id)
+			arg_4_0._storeMODict[var_4_1.id] = var_4_1
+
+			local var_4_2 = StoreConfig.instance:getTabConfig(var_4_1.id)
+
+			if var_4_2 and var_4_2.belongFirstTab == StoreEnum.StoreId.Package then
+				local var_4_3 = arg_4_0:getCurPackageStore()
+
+				if var_4_3 ~= 0 and var_4_3 == var_4_1.id then
+					arg_4_0:updatePackageStoreList(var_4_1.id)
 				end
-			elseif slot8.id == StoreEnum.StoreId.Skin then
-				StoreClothesGoodsItemListModel.instance:setMOList(slot8:getGoodsList())
+			elseif var_4_1.id == StoreEnum.StoreId.Skin then
+				StoreClothesGoodsItemListModel.instance:setMOList(var_4_1:getGoodsList())
 			end
 		end
 	end
 end
 
-function slot0.buyGoodsReply(slot0, slot1)
-	if slot0._storeMODict[slot1.storeId] then
-		slot2:buyGoodsReply(slot1.goodsId, slot1.num)
+function var_0_0.buyGoodsReply(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._storeMODict[arg_5_1.storeId]
+
+	if var_5_0 then
+		var_5_0:buyGoodsReply(arg_5_1.goodsId, arg_5_1.num)
 	end
 end
 
-function slot0.initChargeInfo(slot0, slot1)
-	slot0._chargeStoreDic = {}
-	slot0._allPackageDic = {}
-	slot0._chargePackageStoreDic = {}
-	slot0._versionChargePackageDict = {}
-	slot0._onceTimeChargePackageDict = {}
-	slot0._skinChargeDict = {}
-	slot0._recommendPackageList = {}
-	slot0._packageType2GoodsDict = {
-		[StoreEnum.StoreId.VersionPackage] = slot0._versionChargePackageDict,
-		[StoreEnum.StoreId.OneTimePackage] = slot0._onceTimeChargePackageDict,
-		[StoreEnum.StoreId.NormalPackage] = slot0._chargePackageStoreDic,
-		[StoreEnum.StoreId.RecommendPackage] = slot0._recommendPackageList,
-		[StoreEnum.StoreId.EventPackage] = slot0._eventChargePackageDict
+function var_0_0.initChargeInfo(arg_6_0, arg_6_1)
+	arg_6_0._chargeStoreDic = {}
+	arg_6_0._allPackageDic = {}
+	arg_6_0._chargePackageStoreDic = {}
+	arg_6_0._versionChargePackageDict = {}
+	arg_6_0._onceTimeChargePackageDict = {}
+	arg_6_0._skinChargeDict = {}
+	arg_6_0._recommendPackageList = {}
+	arg_6_0._packageType2GoodsDict = {
+		[StoreEnum.StoreId.VersionPackage] = arg_6_0._versionChargePackageDict,
+		[StoreEnum.StoreId.OneTimePackage] = arg_6_0._onceTimeChargePackageDict,
+		[StoreEnum.StoreId.NormalPackage] = arg_6_0._chargePackageStoreDic,
+		[StoreEnum.StoreId.RecommendPackage] = arg_6_0._recommendPackageList,
+		[StoreEnum.StoreId.EventPackage] = arg_6_0._eventChargePackageDict
 	}
-	slot2 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		if StoreConfig.instance:getChargeGoodsConfig(slot7.id, true) then
-			if slot8.belongStoreId == StoreEnum.StoreId.Charge or slot8.belongStoreId == StoreEnum.StoreId.PubbleCharge or slot8.belongStoreId == StoreEnum.StoreId.GlowCharge then
-				slot9 = StoreChargeGoodsMO.New()
+	local var_6_0 = {}
 
-				slot9:init(StoreEnum.StoreId.Charge, slot7)
+	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
+		local var_6_1 = StoreConfig.instance:getChargeGoodsConfig(iter_6_1.id, true)
 
-				slot0._chargeStoreDic[slot7.id] = slot9
-			elseif slot8.belongStoreId == StoreEnum.StoreId.Skin then
-				table.insert(slot2, slot7)
+		if var_6_1 then
+			if var_6_1.belongStoreId == StoreEnum.StoreId.Charge or var_6_1.belongStoreId == StoreEnum.StoreId.PubbleCharge or var_6_1.belongStoreId == StoreEnum.StoreId.GlowCharge then
+				local var_6_2 = StoreChargeGoodsMO.New()
+
+				var_6_2:init(StoreEnum.StoreId.Charge, iter_6_1)
+
+				arg_6_0._chargeStoreDic[iter_6_1.id] = var_6_2
+			elseif var_6_1.belongStoreId == StoreEnum.StoreId.Skin then
+				table.insert(var_6_0, iter_6_1)
 			else
-				slot9 = StorePackageGoodsMO.New()
+				local var_6_3 = StorePackageGoodsMO.New()
 
-				slot9:initCharge(slot8.belongStoreId, slot7)
+				var_6_3:initCharge(var_6_1.belongStoreId, iter_6_1)
 
-				slot0._allPackageDic[slot7.id] = slot9
+				arg_6_0._allPackageDic[iter_6_1.id] = var_6_3
 
-				if slot8.belongStoreId == StoreEnum.StoreId.NormalPackage then
-					slot0._chargePackageStoreDic[slot7.id] = slot9
-				elseif slot8.belongStoreId == StoreEnum.StoreId.VersionPackage then
-					slot0._versionChargePackageDict[slot7.id] = slot9
-				elseif slot8.belongStoreId == StoreEnum.StoreId.OneTimePackage then
-					slot0._onceTimeChargePackageDict[slot7.id] = slot9
-				elseif slot8.belongStoreId == StoreEnum.StoreId.EventPackage then
-					slot0._eventChargePackageDict[slot7.id] = slot9
+				if var_6_1.belongStoreId == StoreEnum.StoreId.NormalPackage then
+					arg_6_0._chargePackageStoreDic[iter_6_1.id] = var_6_3
+				elseif var_6_1.belongStoreId == StoreEnum.StoreId.VersionPackage then
+					arg_6_0._versionChargePackageDict[iter_6_1.id] = var_6_3
+				elseif var_6_1.belongStoreId == StoreEnum.StoreId.OneTimePackage then
+					arg_6_0._onceTimeChargePackageDict[iter_6_1.id] = var_6_3
+				elseif var_6_1.belongStoreId == StoreEnum.StoreId.EventPackage then
+					arg_6_0._eventChargePackageDict[iter_6_1.id] = var_6_3
 				end
 			end
 		end
 	end
 
-	slot0:_updateSkinChargePackage(slot2)
-	slot0:updatePackageStoreList(slot0._curPackageStore)
+	arg_6_0:_updateSkinChargePackage(var_6_0)
+	arg_6_0:updatePackageStoreList(arg_6_0._curPackageStore)
 end
 
-function slot0._updateSkinChargePackage(slot0, slot1)
-	if not slot0._skinChargeDict then
-		slot0._skinChargeDict = {}
+function var_0_0._updateSkinChargePackage(arg_7_0, arg_7_1)
+	if not arg_7_0._skinChargeDict then
+		arg_7_0._skinChargeDict = {}
 	end
 
-	for slot5, slot6 in ipairs(slot1 or {}) do
-		slot0:_addSkinChargePackage(slot6)
+	arg_7_1 = arg_7_1 or {}
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		arg_7_0:_addSkinChargePackage(iter_7_1)
 	end
 
 	StoreController.instance:dispatchEvent(StoreEvent.SkinChargePackageUpdate)
 end
 
-function slot0._addSkinChargePackage(slot0, slot1)
-	if not slot0._skinChargeDict then
-		slot0._skinChargeDict = {}
+function var_0_0._addSkinChargePackage(arg_8_0, arg_8_1)
+	if not arg_8_0._skinChargeDict then
+		arg_8_0._skinChargeDict = {}
 	end
 
-	slot2 = StoreSkinChargeMo.New()
+	local var_8_0 = StoreSkinChargeMo.New()
 
-	slot2:init(StoreEnum.StoreId.Skin, slot1)
+	var_8_0:init(StoreEnum.StoreId.Skin, arg_8_1)
 
-	slot0._skinChargeDict[slot1.id] = slot2
+	arg_8_0._skinChargeDict[arg_8_1.id] = var_8_0
 end
 
-function slot0.chargeOrderComplete(slot0, slot1)
-	slot0.updateChargeStore = false
+function var_0_0.chargeOrderComplete(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._chargeStoreDic[arg_9_1]
 
-	if slot0._chargeStoreDic[slot1] == nil then
-		if slot1 == StoreEnum.LittleMonthCardGoodsId then
-			slot2 = slot0._allPackageDic[slot1]
+	arg_9_0.updateChargeStore = false
+
+	if var_9_0 == nil then
+		if arg_9_1 == StoreEnum.LittleMonthCardGoodsId then
+			var_9_0 = arg_9_0._allPackageDic[arg_9_1]
 		else
-			slot2 = slot0._chargePackageStoreDic[slot1] or slot0._versionChargePackageDict[slot1] or slot0._onceTimeChargePackageDict[slot1]
+			var_9_0 = arg_9_0._chargePackageStoreDic[arg_9_1] or arg_9_0._versionChargePackageDict[arg_9_1] or arg_9_0._onceTimeChargePackageDict[arg_9_1]
 		end
 	else
-		slot0.updateChargeStore = true
+		arg_9_0.updateChargeStore = true
 	end
 
-	if slot2 then
-		slot2.buyCount = slot2.buyCount + 1
+	if var_9_0 then
+		var_9_0.buyCount = var_9_0.buyCount + 1
 
-		if slot2.config.id == StoreEnum.MonthCardGoodsId or slot3 == StoreEnum.LittleMonthCardGoodsId or slot3 == StoreEnum.SeasonCardGoodsId then
-			ChargeRpc.instance:sendGetMonthCardInfoRequest(slot0.updateGoodsInfo, slot0)
+		local var_9_1 = var_9_0.config.id
+
+		if var_9_1 == StoreEnum.MonthCardGoodsId or var_9_1 == StoreEnum.LittleMonthCardGoodsId or var_9_1 == StoreEnum.SeasonCardGoodsId then
+			ChargeRpc.instance:sendGetMonthCardInfoRequest(arg_9_0.updateGoodsInfo, arg_9_0)
 		else
-			slot0:updateGoodsInfo()
+			arg_9_0:updateGoodsInfo()
 		end
 	end
 end
 
-function slot0.updateGoodsInfo(slot0)
-	if slot0.updateChargeStore then
-		StoreChargeGoodsItemListModel.instance:setMOList(slot0._chargeStoreDic, slot0:getCurChargetStoreId())
+function var_0_0.updateGoodsInfo(arg_10_0)
+	if arg_10_0.updateChargeStore then
+		local var_10_0 = arg_10_0:getCurChargetStoreId()
+
+		StoreChargeGoodsItemListModel.instance:setMOList(arg_10_0._chargeStoreDic, var_10_0)
 	else
-		slot0:updatePackageStoreList(slot0._curPackageStore)
+		arg_10_0:updatePackageStoreList(arg_10_0._curPackageStore)
 	end
 end
 
-function slot0.getCurChargetStoreId(slot0)
-	return slot0._curChargeStoreId or 0
+function var_0_0.getCurChargetStoreId(arg_11_0)
+	return arg_11_0._curChargeStoreId or 0
 end
 
-function slot0.setCurChargeStoreId(slot0, slot1)
-	slot0._curChargeStoreId = slot1
+function var_0_0.setCurChargeStoreId(arg_12_0, arg_12_1)
+	arg_12_0._curChargeStoreId = arg_12_1
 end
 
-function slot0.setCurPackageStore(slot0, slot1)
-	slot0._curPackageStore = slot1
+function var_0_0.setCurPackageStore(arg_13_0, arg_13_1)
+	arg_13_0._curPackageStore = arg_13_1
 end
 
-function slot0.getCurPackageStore(slot0)
-	return slot0._curPackageStore or 0
+function var_0_0.getCurPackageStore(arg_14_0)
+	return arg_14_0._curPackageStore or 0
 end
 
-function slot0.setPackageStoreRpcNum(slot0, slot1)
-	slot0._packageStoreRpcLeftNum = slot1
+function var_0_0.setPackageStoreRpcNum(arg_15_0, arg_15_1)
+	arg_15_0._packageStoreRpcLeftNum = arg_15_1
 end
 
-function slot0.setCurBuyPackageId(slot0, slot1)
-	slot0._curBuyPackageId = slot1
+function var_0_0.setCurBuyPackageId(arg_16_0, arg_16_1)
+	arg_16_0._curBuyPackageId = arg_16_1
 end
 
-function slot0.getCurBuyPackageId(slot0)
-	return slot0._curBuyPackageId
+function var_0_0.getCurBuyPackageId(arg_17_0)
+	return arg_17_0._curBuyPackageId
 end
 
-function slot0.updatePackageStoreList(slot0, slot1)
-	slot2 = slot1 or StoreEnum.StoreId.Package
-	slot0._packageStoreRpcLeftNum = slot0._packageStoreRpcLeftNum - 1
+function var_0_0.updatePackageStoreList(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_1 or StoreEnum.StoreId.Package
 
-	if slot0._packageStoreRpcLeftNum < 1 then
-		if not slot1 or slot1 == StoreEnum.StoreId.RecommendPackage then
-			StorePackageGoodsItemListModel.instance:setMOList(nil, slot0:getRecommendPackageList(true))
+	arg_18_0._packageStoreRpcLeftNum = arg_18_0._packageStoreRpcLeftNum - 1
+
+	if arg_18_0._packageStoreRpcLeftNum < 1 then
+		if not arg_18_1 or arg_18_1 == StoreEnum.StoreId.RecommendPackage then
+			local var_18_1 = arg_18_0:getRecommendPackageList(true)
+
+			StorePackageGoodsItemListModel.instance:setMOList(nil, var_18_1)
 		else
-			StorePackageGoodsItemListModel.instance:setMOList(slot0:getStoreMO(slot2), slot0._packageType2GoodsDict[slot1])
+			local var_18_2 = arg_18_0._packageType2GoodsDict[arg_18_1]
+
+			StorePackageGoodsItemListModel.instance:setMOList(arg_18_0:getStoreMO(var_18_0), var_18_2)
 		end
 
 		StoreController.instance:dispatchEvent(StoreEvent.UpdatePackageStore)
 	end
 end
 
-function slot0.getStoreMO(slot0, slot1)
-	return slot0._storeMODict[slot1]
+function var_0_0.getStoreMO(arg_19_0, arg_19_1)
+	return arg_19_0._storeMODict[arg_19_1]
 end
 
-function slot0.getGoodsMO(slot0, slot1)
-	if slot0._allPackageDic[slot1] then
-		return slot0._allPackageDic[slot1]
+function var_0_0.getGoodsMO(arg_20_0, arg_20_1)
+	if arg_20_0._allPackageDic[arg_20_1] then
+		return arg_20_0._allPackageDic[arg_20_1]
 	else
-		for slot5, slot6 in pairs(slot0._storeMODict) do
-			if slot6:getGoodsMO(slot1) then
-				return slot7
+		for iter_20_0, iter_20_1 in pairs(arg_20_0._storeMODict) do
+			local var_20_0 = iter_20_1:getGoodsMO(arg_20_1)
+
+			if var_20_0 then
+				return var_20_0
 			end
 		end
 	end
 end
 
-function slot0.getChargeGoods(slot0)
-	return slot0._chargeStoreDic
+function var_0_0.getChargeGoods(arg_21_0)
+	return arg_21_0._chargeStoreDic
 end
 
-function slot0.getChargeGoodsMo(slot0, slot1)
-	return slot0._chargeStoreDic[slot1]
+function var_0_0.getChargeGoodsMo(arg_22_0, arg_22_1)
+	return arg_22_0._chargeStoreDic[arg_22_1]
 end
 
-function slot0.isStoreSkinChargePackageValid(slot0, slot1)
-	slot2 = false
+function var_0_0.isStoreSkinChargePackageValid(arg_23_0, arg_23_1)
+	local var_23_0 = false
+	local var_23_1 = StoreConfig.instance:getSkinChargeGoodsId(arg_23_1)
 
-	if slot0._skinChargeDict and slot0._skinChargeDict[StoreConfig.instance:getSkinChargeGoodsId(slot1)] then
-		slot2 = true
+	if arg_23_0._skinChargeDict and arg_23_0._skinChargeDict[var_23_1] then
+		var_23_0 = true
 	end
 
-	return slot2
+	return var_23_0
 end
 
-function slot0.getRecommendPackageList(slot0, slot1)
-	if not slot1 then
-		return slot0._recommendPackageList
+function var_0_0.getRecommendPackageList(arg_24_0, arg_24_1)
+	if not arg_24_1 then
+		return arg_24_0._recommendPackageList
 	end
 
-	slot0._recommendPackageList = {}
+	arg_24_0._recommendPackageList = {}
 
-	if (CommonConfig.instance:getConstNum(ConstEnum.RecommendStoreCount) or 5) == 0 then
-		return slot0._recommendPackageList
+	local var_24_0 = CommonConfig.instance:getConstNum(ConstEnum.RecommendStoreCount) or 5
+
+	if var_24_0 == 0 then
+		return arg_24_0._recommendPackageList
 	end
 
-	slot3 = {}
-	slot5 = slot0:getPackageGoodList(StoreEnum.StoreId.OneTimePackage)
-	slot6 = slot0:getPackageGoodList(StoreEnum.StoreId.NormalPackage)
-	slot7 = slot0:getPackageGoodList(StoreEnum.StoreId.EventPackage)
+	local var_24_1 = {}
+	local var_24_2 = arg_24_0:getPackageGoodList(StoreEnum.StoreId.VersionPackage)
+	local var_24_3 = arg_24_0:getPackageGoodList(StoreEnum.StoreId.OneTimePackage)
+	local var_24_4 = arg_24_0:getPackageGoodList(StoreEnum.StoreId.NormalPackage)
+	local var_24_5 = arg_24_0:getPackageGoodList(StoreEnum.StoreId.EventPackage)
 
-	for slot11, slot12 in pairs(slot0:getPackageGoodList(StoreEnum.StoreId.VersionPackage)) do
-		slot3[#slot3 + 1] = slot12
+	for iter_24_0, iter_24_1 in pairs(var_24_2) do
+		var_24_1[#var_24_1 + 1] = iter_24_1
 	end
 
-	for slot11, slot12 in pairs(slot5) do
-		slot3[#slot3 + 1] = slot12
+	for iter_24_2, iter_24_3 in pairs(var_24_3) do
+		var_24_1[#var_24_1 + 1] = iter_24_3
 	end
 
-	for slot11, slot12 in pairs(slot6) do
-		slot3[#slot3 + 1] = slot12
+	for iter_24_4, iter_24_5 in pairs(var_24_4) do
+		var_24_1[#var_24_1 + 1] = iter_24_5
 	end
 
-	for slot11, slot12 in pairs(slot7) do
-		slot3[#slot3 + 1] = slot12
+	for iter_24_6, iter_24_7 in pairs(var_24_5) do
+		var_24_1[#var_24_1 + 1] = iter_24_7
 	end
 
-	if #slot3 > 1 then
-		table.sort(slot3, slot0._packageSortFunction)
+	if #var_24_1 > 1 then
+		table.sort(var_24_1, arg_24_0._packageSortFunction)
 	end
 
-	slot8 = 1
+	local var_24_6 = 1
 
-	for slot12 = 1, #slot3 do
-		slot13 = slot3[slot12]
+	for iter_24_8 = 1, #var_24_1 do
+		local var_24_7 = var_24_1[iter_24_8]
 
-		if slot0:checkShowInRecommand(slot13, slot13.isChargeGoods) then
-			slot0._recommendPackageList[slot8] = slot13
+		if arg_24_0:checkShowInRecommand(var_24_7, var_24_7.isChargeGoods) then
+			arg_24_0._recommendPackageList[var_24_6] = var_24_7
 
-			if slot8 == slot2 then
+			if var_24_6 == var_24_0 then
 				break
 			end
 
-			slot8 = slot8 + 1
+			var_24_6 = var_24_6 + 1
 		end
 	end
 
-	return slot0._recommendPackageList
+	return arg_24_0._recommendPackageList
 end
 
-function slot0.isGoodInRecommendList(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getRecommendPackageList(false)) do
-		if slot7.goodsId == slot1 then
+function var_0_0.isGoodInRecommendList(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0:getRecommendPackageList(false)
+
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		if iter_25_1.goodsId == arg_25_1 then
 			return true
 		end
 	end
 end
 
-function slot0.getPackageGoodList(slot0, slot1)
-	slot2 = {
-		[slot8.id] = slot8
-	}
+function var_0_0.getPackageGoodList(arg_26_0, arg_26_1)
+	local var_26_0 = {}
+	local var_26_1 = arg_26_0._packageType2GoodsDict[arg_26_1]
 
-	for slot7, slot8 in pairs(slot0._packageType2GoodsDict[slot1]) do
-		-- Nothing
+	for iter_26_0, iter_26_1 in pairs(var_26_1) do
+		var_26_0[iter_26_1.id] = iter_26_1
 	end
 
-	if slot0:getStoreMO(slot1) then
-		for slot9, slot10 in pairs(slot4:getGoodsList()) do
-			slot11 = StorePackageGoodsMO.New()
+	local var_26_2 = arg_26_0:getStoreMO(arg_26_1)
 
-			slot11:init(slot1, slot10.goodsId, slot10.buyCount, slot10.offlineTime)
+	if var_26_2 then
+		local var_26_3 = var_26_2:getGoodsList()
 
-			slot2[slot10.goodsId] = slot11
+		for iter_26_2, iter_26_3 in pairs(var_26_3) do
+			local var_26_4 = StorePackageGoodsMO.New()
+
+			var_26_4:init(arg_26_1, iter_26_3.goodsId, iter_26_3.buyCount, iter_26_3.offlineTime)
+
+			var_26_0[iter_26_3.goodsId] = var_26_4
 		end
 	end
 
-	return slot2
+	return var_26_0
 end
 
-function slot0.getPackageGoodValidList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getPackageGoodValidList(arg_27_0, arg_27_1)
+	local var_27_0 = {}
 
-	if slot1 == StoreEnum.StoreId.RecommendPackage then
-		slot2 = slot0:getRecommendPackageList(true)
+	if arg_27_1 == StoreEnum.StoreId.RecommendPackage then
+		var_27_0 = arg_27_0:getRecommendPackageList(true)
 	else
-		for slot7, slot8 in pairs(slot0:getPackageGoodList(slot1)) do
-			if slot0:checkValid(slot8, slot8.isChargeGoods) then
-				slot2[#slot2 + 1] = slot8
+		local var_27_1 = arg_27_0:getPackageGoodList(arg_27_1)
+
+		for iter_27_0, iter_27_1 in pairs(var_27_1) do
+			if arg_27_0:checkValid(iter_27_1, iter_27_1.isChargeGoods) then
+				var_27_0[#var_27_0 + 1] = iter_27_1
 			end
 		end
 	end
 
-	return slot2
+	return var_27_0
 end
 
-function slot0.checkValid(slot0, slot1, slot2)
-	slot2 = slot2 or false
-	slot3 = true
+function var_0_0.checkValid(arg_28_0, arg_28_1, arg_28_2)
+	arg_28_2 = arg_28_2 or false
 
-	if slot1:isSoldOut() then
-		if slot2 and slot1.refreshTime == StoreEnum.ChargeRefreshTime.Forever then
-			slot3 = false
+	local var_28_0 = true
+
+	if arg_28_1:isSoldOut() then
+		if arg_28_2 and arg_28_1.refreshTime == StoreEnum.ChargeRefreshTime.Forever then
+			var_28_0 = false
 		end
 
-		if slot2 == false and slot1.config.refreshTime == StoreEnum.RefreshTime.Forever then
-			slot3 = false
+		if arg_28_2 == false and arg_28_1.config.refreshTime == StoreEnum.RefreshTime.Forever then
+			var_28_0 = false
 		end
 	end
 
-	return slot3 and slot0:checkPreGoodsId(slot1.config.preGoodsId)
+	var_28_0 = var_28_0 and arg_28_0:checkPreGoodsId(arg_28_1.config.preGoodsId)
+
+	return var_28_0
 end
 
-function slot0.checkShowInRecommand(slot0, slot1, slot2)
-	if slot1.config.notShowInRecommend then
+function var_0_0.checkShowInRecommand(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_1.config.notShowInRecommend then
 		return false
 	end
 
-	if slot1.config.id == StoreEnum.MonthCardGoodsId then
-		if not slot0:hasPurchaseMonthCard() then
+	if arg_29_1.config.id == StoreEnum.MonthCardGoodsId then
+		if not arg_29_0:hasPurchaseMonthCard() then
 			return true
 		else
-			return not uv0.instance:IsMonthCardDaysEnough()
+			return not var_0_0.instance:IsMonthCardDaysEnough()
 		end
 	end
 
-	slot2 = slot2 or false
-	slot3 = true
+	arg_29_2 = arg_29_2 or false
 
-	if slot1:isSoldOut() then
-		slot3 = false
+	local var_29_0 = true
+
+	if arg_29_1:isSoldOut() then
+		var_29_0 = false
 	end
 
-	return slot3 and slot0:checkPreGoodsId(slot1.config.preGoodsId)
+	var_29_0 = var_29_0 and arg_29_0:checkPreGoodsId(arg_29_1.config.preGoodsId)
+
+	return var_29_0
 end
 
-function slot0.checkPreGoodsId(slot0, slot1)
-	if slot1 == 0 then
+function var_0_0.checkPreGoodsId(arg_30_0, arg_30_1)
+	if arg_30_1 == 0 then
 		return true
 	end
 
-	return slot0:getGoodsMO(slot1) and slot2:isSoldOut()
+	local var_30_0 = arg_30_0:getGoodsMO(arg_30_1)
+
+	return var_30_0 and var_30_0:isSoldOut()
 end
 
-function slot0.getBuyCount(slot0, slot1, slot2)
-	if not slot0._storeMODict[slot1] then
+function var_0_0.getBuyCount(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0._storeMODict[arg_31_1]
+
+	if not var_31_0 then
 		return 0
 	end
 
-	return slot3:getBuyCount(slot2)
+	return var_31_0:getBuyCount(arg_31_2)
 end
 
-function slot0.isTabMainRedDotShow(slot0, slot1)
-	slot2 = slot0:getAllRedDotInfo()
+function var_0_0.isTabMainRedDotShow(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_0:getAllRedDotInfo()
 
-	if slot1 == StoreEnum.StoreId.Package and slot0:isRedTabReadOnceClient(StoreEnum.StoreId.EventPackage) then
+	if arg_32_1 == StoreEnum.StoreId.Package and arg_32_0:isRedTabReadOnceClient(StoreEnum.StoreId.EventPackage) then
 		return true
 	end
 
-	if slot2 then
-		for slot6, slot7 in pairs(slot2) do
-			slot8 = nil
-			slot9 = false
+	if var_32_0 then
+		for iter_32_0, iter_32_1 in pairs(var_32_0) do
+			local var_32_1
+			local var_32_2 = false
+			local var_32_3 = arg_32_0:getGoodsMO(iter_32_1.uid)
 
-			if slot0:getGoodsMO(slot7.uid) then
-				slot8 = StoreConfig.instance:getTabConfig(slot10.belongStoreId)
+			if var_32_3 then
+				var_32_1 = StoreConfig.instance:getTabConfig(var_32_3.belongStoreId)
 			else
-				slot8 = StoreConfig.instance:getTabConfig(slot7.uid)
-				slot9 = true
+				var_32_1 = StoreConfig.instance:getTabConfig(iter_32_1.uid)
+				var_32_2 = true
 			end
 
-			if slot8 then
-				if slot8.belongFirstTab == 0 and slot8.belongSecondTab ~= 0 then
-					slot11 = StoreConfig.instance:getTabConfig(slot12).belongFirstTab
+			if var_32_1 then
+				local var_32_4 = var_32_1.belongFirstTab
+
+				if var_32_4 == 0 then
+					local var_32_5 = var_32_1.belongSecondTab
+
+					if var_32_5 ~= 0 then
+						var_32_4 = StoreConfig.instance:getTabConfig(var_32_5).belongFirstTab
+					end
 				end
 
-				if slot11 == 0 then
-					slot11 = slot8.id
+				if var_32_4 == 0 then
+					var_32_4 = var_32_1.id
 				end
 
-				if slot7.value > 0 and slot1 == slot11 then
-					return true, slot9
+				if iter_32_1.value > 0 and arg_32_1 == var_32_4 then
+					return true, var_32_2
 				end
 			end
 		end
@@ -443,18 +499,31 @@ function slot0.isTabMainRedDotShow(slot0, slot1)
 	return false
 end
 
-function slot0.isTabFirstRedDotShow(slot0, slot1)
-	if slot0:getAllRedDotInfo() then
-		for slot6, slot7 in pairs(slot2) do
-			if slot0:getGoodsMO(slot7.uid) then
-				if slot1 == StoreEnum.StoreId.RecommendPackage and slot0:isGoodInRecommendList(slot8.goodsId) and not (slot8.refreshTime == StoreEnum.ChargeRefreshTime.Week) and not (slot8.refreshTime == StoreEnum.ChargeRefreshTime.Month) then
+function var_0_0.isTabFirstRedDotShow(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0:getAllRedDotInfo()
+
+	if var_33_0 then
+		for iter_33_0, iter_33_1 in pairs(var_33_0) do
+			local var_33_1 = arg_33_0:getGoodsMO(iter_33_1.uid)
+
+			if var_33_1 then
+				local var_33_2 = var_33_1.goodsId
+				local var_33_3 = arg_33_1 == StoreEnum.StoreId.RecommendPackage
+				local var_33_4 = var_33_1.refreshTime == StoreEnum.ChargeRefreshTime.Month
+				local var_33_5 = var_33_1.refreshTime == StoreEnum.ChargeRefreshTime.Week
+
+				if var_33_3 and arg_33_0:isGoodInRecommendList(var_33_2) and not var_33_5 and not var_33_4 then
 					return true
-				elseif slot7.value > 0 and slot1 == StoreConfig.instance:getTabConfig(slot8.belongStoreId).belongSecondTab then
-					return true
+				else
+					local var_33_6 = StoreConfig.instance:getTabConfig(var_33_1.belongStoreId).belongSecondTab
+
+					if iter_33_1.value > 0 and arg_33_1 == var_33_6 then
+						return true
+					end
 				end
 			end
 
-			if slot7.value > 0 and slot7.uid == slot1 then
+			if iter_33_1.value > 0 and iter_33_1.uid == arg_33_1 then
 				return true, true
 			end
 		end
@@ -463,10 +532,14 @@ function slot0.isTabFirstRedDotShow(slot0, slot1)
 	return false
 end
 
-function slot0.isTabSecondRedDotShow(slot0, slot1)
-	if slot0:getAllRedDotInfo() then
-		for slot6, slot7 in pairs(slot2) do
-			if slot0:getGoodsMO(slot7.uid) and slot7.value > 0 and slot1 == slot8.belongStoreId then
+function var_0_0.isTabSecondRedDotShow(arg_34_0, arg_34_1)
+	local var_34_0 = arg_34_0:getAllRedDotInfo()
+
+	if var_34_0 then
+		for iter_34_0, iter_34_1 in pairs(var_34_0) do
+			local var_34_1 = arg_34_0:getGoodsMO(iter_34_1.uid)
+
+			if var_34_1 and iter_34_1.value > 0 and arg_34_1 == var_34_1.belongStoreId then
 				return true
 			end
 		end
@@ -475,19 +548,23 @@ function slot0.isTabSecondRedDotShow(slot0, slot1)
 	return false
 end
 
-function slot0.isPackageStoreTabRedDotShow(slot0, slot1)
-	slot2 = slot0:getAllRedDotInfo()
+function var_0_0.isPackageStoreTabRedDotShow(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0:getAllRedDotInfo()
 
-	if slot0:isRedTabReadOnceClient(slot1) then
+	if arg_35_0:isRedTabReadOnceClient(arg_35_1) then
 		return true
 	end
 
-	if slot2 then
-		for slot6, slot7 in pairs(slot2) do
-			if slot0:getGoodsMO(slot7.uid) then
-				if slot1 == StoreEnum.StoreId.RecommendPackage and slot0:isGoodInRecommendList(slot8.goodsId) then
+	if var_35_0 then
+		for iter_35_0, iter_35_1 in pairs(var_35_0) do
+			local var_35_1 = arg_35_0:getGoodsMO(iter_35_1.uid)
+
+			if var_35_1 then
+				local var_35_2 = var_35_1.goodsId
+
+				if arg_35_1 == StoreEnum.StoreId.RecommendPackage and arg_35_0:isGoodInRecommendList(var_35_2) then
 					return true
-				elseif slot7.value > 0 and slot1 == slot8.belongStoreId then
+				elseif iter_35_1.value > 0 and arg_35_1 == var_35_1.belongStoreId then
 					return true
 				end
 			end
@@ -497,43 +574,48 @@ function slot0.isPackageStoreTabRedDotShow(slot0, slot1)
 	return false
 end
 
-function slot0.getAllRedDotInfo(slot0)
-	slot2 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreGoodsRead)
-	slot3 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreChargeGoodsRead)
-	slot4 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.V1a6FurnaceTreasure)
-	slot5 = {}
+function var_0_0.getAllRedDotInfo(arg_36_0)
+	local var_36_0 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreTab)
+	local var_36_1 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreGoodsRead)
+	local var_36_2 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreChargeGoodsRead)
+	local var_36_3 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.V1a6FurnaceTreasure)
+	local var_36_4 = {}
 
-	if RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreTab) then
-		for slot9, slot10 in pairs(slot1.infos) do
-			table.insert(slot5, slot10)
+	if var_36_0 then
+		for iter_36_0, iter_36_1 in pairs(var_36_0.infos) do
+			table.insert(var_36_4, iter_36_1)
 		end
 	end
 
-	if slot2 then
-		for slot9, slot10 in pairs(slot2.infos) do
-			table.insert(slot5, slot10)
+	if var_36_1 then
+		for iter_36_2, iter_36_3 in pairs(var_36_1.infos) do
+			table.insert(var_36_4, iter_36_3)
 		end
 	end
 
-	if slot3 then
-		for slot9, slot10 in pairs(slot3.infos) do
-			table.insert(slot5, slot10)
+	if var_36_2 then
+		for iter_36_4, iter_36_5 in pairs(var_36_2.infos) do
+			table.insert(var_36_4, iter_36_5)
 		end
 	end
 
-	if slot4 then
-		for slot9, slot10 in pairs(slot4.infos) do
-			table.insert(slot5, slot10)
+	if var_36_3 then
+		for iter_36_6, iter_36_7 in pairs(var_36_3.infos) do
+			table.insert(var_36_4, iter_36_7)
 		end
 	end
 
-	return slot5
+	return var_36_4
 end
 
-function slot0.isGoodsItemRedDotShow(slot0, slot1)
-	if RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreTab) then
-		for slot7, slot8 in pairs(slot2.infos) do
-			if slot8.uid == slot1 and slot8.value > 0 then
+function var_0_0.isGoodsItemRedDotShow(arg_37_0, arg_37_1)
+	local var_37_0 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreTab)
+
+	if var_37_0 then
+		local var_37_1 = var_37_0.infos
+
+		for iter_37_0, iter_37_1 in pairs(var_37_1) do
+			if iter_37_1.uid == arg_37_1 and iter_37_1.value > 0 then
 				return true
 			end
 		end
@@ -542,11 +624,19 @@ function slot0.isGoodsItemRedDotShow(slot0, slot1)
 	return false
 end
 
-function slot0.isStoreTabLock(slot0, slot1)
-	if StoreConfig.instance:getStoreConfig(slot1) and slot2.needClearStore > 0 then
-		for slot7, slot8 in pairs(slot0._storeMODict[slot2.needClearStore].goodsInfos) do
-			if slot8.goodsId and StoreConfig.instance:getGoodsConfig(slot8.goodsId) and slot8.buyCount < slot9.maxBuyCount then
-				return true
+function var_0_0.isStoreTabLock(arg_38_0, arg_38_1)
+	local var_38_0 = StoreConfig.instance:getStoreConfig(arg_38_1)
+
+	if var_38_0 and var_38_0.needClearStore > 0 then
+		local var_38_1 = arg_38_0._storeMODict[var_38_0.needClearStore].goodsInfos
+
+		for iter_38_0, iter_38_1 in pairs(var_38_1) do
+			if iter_38_1.goodsId then
+				local var_38_2 = StoreConfig.instance:getGoodsConfig(iter_38_1.goodsId)
+
+				if var_38_2 and iter_38_1.buyCount < var_38_2.maxBuyCount then
+					return true
+				end
 			end
 		end
 	end
@@ -554,121 +644,135 @@ function slot0.isStoreTabLock(slot0, slot1)
 	return false
 end
 
-function slot0.getFirstTabs(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getFirstTabs(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = {}
 
-	for slot7, slot8 in ipairs(lua_store_entrance.configList) do
-		if not StoreConfig.instance:hasTab(slot8.belongFirstTab) and not StoreConfig.instance:hasTab(slot8.belongSecondTab) then
-			slot9 = LuaUtil.tableContains(StoreEnum.BossRushStore, slot8.id)
+	for iter_39_0, iter_39_1 in ipairs(lua_store_entrance.configList) do
+		if not StoreConfig.instance:hasTab(iter_39_1.belongFirstTab) and not StoreConfig.instance:hasTab(iter_39_1.belongSecondTab) then
+			local var_39_1 = LuaUtil.tableContains(StoreEnum.BossRushStore, iter_39_1.id)
 
-			if slot8.id == StoreEnum.StoreId.DecorateStore and #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.NewDecorateStore) == 0 and #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.OldDecorateStore) == 0 then
-				slot9 = true
+			if iter_39_1.id == StoreEnum.StoreId.DecorateStore and #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.NewDecorateStore) == 0 and #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.OldDecorateStore) == 0 then
+				var_39_1 = true
 			end
 
-			if not slot9 and (not slot1 or slot0:isTabOpen(slot8.id)) then
-				table.insert(slot3, slot8)
+			if not var_39_1 and (not arg_39_1 or arg_39_0:isTabOpen(iter_39_1.id)) then
+				table.insert(var_39_0, iter_39_1)
 			end
 		end
 	end
 
-	if slot2 and #slot3 > 1 then
-		table.sort(slot3, slot0._tabSortFunction)
+	if arg_39_2 and #var_39_0 > 1 then
+		table.sort(var_39_0, arg_39_0._tabSortFunction)
 	end
 
-	return slot3
+	return var_39_0
 end
 
-function slot0.getSecondTabs(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0.getSecondTabs(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	local var_40_0 = {}
 
-	for slot8, slot9 in ipairs(lua_store_entrance.configList) do
-		if StoreConfig.instance:hasTab(slot9.belongFirstTab) and slot9.belongFirstTab == slot1 and (not slot2 or slot0:isTabOpen(slot9.id)) then
-			table.insert(slot4, slot9)
+	for iter_40_0, iter_40_1 in ipairs(lua_store_entrance.configList) do
+		if StoreConfig.instance:hasTab(iter_40_1.belongFirstTab) and iter_40_1.belongFirstTab == arg_40_1 and (not arg_40_2 or arg_40_0:isTabOpen(iter_40_1.id)) then
+			table.insert(var_40_0, iter_40_1)
 		end
 	end
 
-	if slot3 and #slot4 > 1 then
-		table.sort(slot4, slot0._tabSortFunction)
+	if arg_40_3 and #var_40_0 > 1 then
+		table.sort(var_40_0, arg_40_0._tabSortFunction)
 	end
 
-	return slot4
+	return var_40_0
 end
 
-function slot0.getRecommendSecondTabs(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(lua_store_entrance.configList) do
-		if StoreConfig.instance:hasTab(slot8.belongFirstTab) and slot8.belongFirstTab == slot1 and (not slot2 or slot0:isTabOpen(slot8.id)) then
-			table.insert({}, slot8)
+function var_0_0.getRecommendSecondTabs(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = {}
+
+	for iter_41_0, iter_41_1 in ipairs(lua_store_entrance.configList) do
+		if StoreConfig.instance:hasTab(iter_41_1.belongFirstTab) and iter_41_1.belongFirstTab == arg_41_1 and (not arg_41_2 or arg_41_0:isTabOpen(iter_41_1.id)) then
+			table.insert(var_41_0, iter_41_1)
 		end
 	end
 
-	for slot7, slot8 in ipairs(lua_store_recommend.configList) do
-		if slot8.type == 0 then
-			table.insert(slot3, slot8)
+	for iter_41_2, iter_41_3 in ipairs(lua_store_recommend.configList) do
+		if iter_41_3.type == 0 then
+			table.insert(var_41_0, iter_41_3)
 		end
 	end
 
-	return slot3
+	return var_41_0
 end
 
-function slot0.getThirdTabs(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0.getThirdTabs(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
+	local var_42_0 = {}
 
-	for slot8, slot9 in ipairs(lua_store_entrance.configList) do
-		if StoreConfig.instance:hasTab(slot9.belongSecondTab) and slot9.belongSecondTab == slot1 and (not slot2 or slot0:isTabOpen(slot9.id)) then
-			table.insert(slot4, slot9)
+	for iter_42_0, iter_42_1 in ipairs(lua_store_entrance.configList) do
+		if StoreConfig.instance:hasTab(iter_42_1.belongSecondTab) and iter_42_1.belongSecondTab == arg_42_1 and (not arg_42_2 or arg_42_0:isTabOpen(iter_42_1.id)) then
+			table.insert(var_42_0, iter_42_1)
 		end
 	end
 
-	if slot3 and #slot4 > 1 then
-		table.sort(slot4, slot0._tabSortFunction)
+	if arg_42_3 and #var_42_0 > 1 then
+		table.sort(var_42_0, arg_42_0._tabSortFunction)
 	end
 
-	return slot4
+	return var_42_0
 end
 
-function slot0.isTabOpen(slot0, slot1)
-	if StoreConfig.instance:getTabConfig(slot1) then
-		if slot2.openId and slot2.openId ~= 0 and not OpenModel.instance:isFunctionUnlock(slot2.openId) then
+function var_0_0.isTabOpen(arg_43_0, arg_43_1)
+	local var_43_0 = StoreConfig.instance:getTabConfig(arg_43_1)
+
+	if var_43_0 then
+		if var_43_0.openId and var_43_0.openId ~= 0 and not OpenModel.instance:isFunctionUnlock(var_43_0.openId) then
 			return false
 		end
 
-		if slot2.openHideId and slot2.openHideId ~= 0 and OpenModel.instance:isFunctionUnlock(slot2.openHideId) then
+		if var_43_0.openHideId and var_43_0.openHideId ~= 0 and OpenModel.instance:isFunctionUnlock(var_43_0.openHideId) then
 			return false
 		end
 
-		slot3, slot4 = nil
+		local var_43_1
+		local var_43_2
 
-		if not string.nilorempty(slot2.openTime) then
-			slot3 = TimeUtil.stringToTimestamp(slot2.openTime)
+		if not string.nilorempty(var_43_0.openTime) then
+			var_43_1 = TimeUtil.stringToTimestamp(var_43_0.openTime)
 		end
 
-		if not string.nilorempty(slot2.endTime) then
-			slot4 = TimeUtil.stringToTimestamp(slot2.endTime)
+		if not string.nilorempty(var_43_0.endTime) then
+			var_43_2 = TimeUtil.stringToTimestamp(var_43_0.endTime)
 		end
 
-		if string.nilorempty(slot2.openTime) and string.nilorempty(slot2.endTime) then
-			-- Nothing
-		elseif string.nilorempty(slot2.endTime) then
-			if ServerTime.now() <= slot3 then
+		if string.nilorempty(var_43_0.openTime) and string.nilorempty(var_43_0.endTime) then
+			-- block empty
+		elseif string.nilorempty(var_43_0.endTime) then
+			if var_43_1 >= ServerTime.now() then
 				return false
 			end
-		elseif string.nilorempty(slot2.openTime) then
-			if slot4 <= ServerTime.now() then
+		elseif string.nilorempty(var_43_0.openTime) then
+			if var_43_2 <= ServerTime.now() then
 				return false
 			end
-		elseif StoreConfig.instance:getOpenTimeDiff(slot3, slot4, ServerTime.now()) <= 0 then
+		else
+			local var_43_3 = var_43_1
+			local var_43_4 = var_43_2
+
+			if StoreConfig.instance:getOpenTimeDiff(var_43_3, var_43_4, ServerTime.now()) <= 0 then
+				return false
+			end
+		end
+
+		if var_43_0.storeId == StoreEnum.StoreId.Package and GameFacade.isKOLTest() then
 			return false
 		end
 
-		if slot2.storeId == StoreEnum.StoreId.Package and GameFacade.isKOLTest() then
-			return false
-		end
+		if StoreConfig.instance:getTabHierarchy(var_43_0.id) == 2 then
+			if var_43_0.storeId and var_43_0.storeId ~= 0 then
+				return true
+			else
+				local var_43_5 = arg_43_0:getThirdTabs(var_43_0.id, true, false)
 
-		if StoreConfig.instance:getTabHierarchy(slot2.id) == 2 then
-			if slot2.storeId and slot2.storeId ~= 0 then
-				return true
-			elseif slot0:getThirdTabs(slot2.id, true, false) and #slot5 > 0 then
-				return true
+				if var_43_5 and #var_43_5 > 0 then
+					return true
+				end
 			end
 		else
 			return true
@@ -678,136 +782,168 @@ function slot0.isTabOpen(slot0, slot1)
 	return false
 end
 
-function slot0._tabSortFunction(slot0, slot1)
-	return slot1.order < slot0.order
+function var_0_0._tabSortFunction(arg_44_0, arg_44_1)
+	return arg_44_0.order > arg_44_1.order
 end
 
-function slot0._packageSortFunction(slot0, slot1)
-	return slot0.config.order < slot1.config.order
+function var_0_0._packageSortFunction(arg_45_0, arg_45_1)
+	local var_45_0 = arg_45_0.config
+	local var_45_1 = arg_45_1.config
+
+	return var_45_0.order < var_45_1.order
 end
 
-function slot0.jumpTabIdToSelectTabId(slot0, slot1)
-	slot2 = 0
-	slot3 = 0
-	slot4 = 0
+function var_0_0.jumpTabIdToSelectTabId(arg_46_0, arg_46_1)
+	local var_46_0 = 0
+	local var_46_1 = 0
+	local var_46_2 = 0
+	local var_46_3 = StoreConfig.instance:getTabHierarchy(arg_46_1)
 
-	if StoreConfig.instance:getTabHierarchy(slot1) == 3 then
-		slot2 = StoreConfig.instance:getTabConfig(StoreConfig.instance:getTabConfig(slot1) and slot6.belongSecondTab or 0) and slot7.belongFirstTab or 0
-	elseif slot5 == 2 then
-		if slot0:getThirdTabs(slot1, true, true) and #slot6 > 0 then
-			slot4 = slot6[1].id
+	if var_46_3 == 3 then
+		var_46_2 = arg_46_1
+
+		local var_46_4 = StoreConfig.instance:getTabConfig(var_46_2)
+
+		var_46_1 = var_46_4 and var_46_4.belongSecondTab or 0
+
+		local var_46_5 = StoreConfig.instance:getTabConfig(var_46_1)
+
+		var_46_0 = var_46_5 and var_46_5.belongFirstTab or 0
+	elseif var_46_3 == 2 then
+		var_46_1 = arg_46_1
+
+		local var_46_6 = arg_46_0:getThirdTabs(var_46_1, true, true)
+
+		if var_46_6 and #var_46_6 > 0 then
+			var_46_2 = var_46_6[1].id
 		end
 
-		slot2 = StoreConfig.instance:getTabConfig(slot3) and slot7.belongFirstTab or 0
+		local var_46_7 = StoreConfig.instance:getTabConfig(var_46_1)
+
+		var_46_0 = var_46_7 and var_46_7.belongFirstTab or 0
 	else
-		slot2 = slot1
-		slot6 = slot0:getSecondTabs(slot2, true, true)
+		var_46_0 = arg_46_1
 
-		if slot2 == StoreEnum.StoreId.Package then
-			for slot10 = 1, #slot6 do
-				if #slot0:getPackageGoodValidList(slot6[slot10].id) > 0 then
-					slot3 = slot6[slot10].id
+		local var_46_8 = arg_46_0:getSecondTabs(var_46_0, true, true)
 
-					break
-				end
-			end
-
-			slot4 = 0
-		elseif slot2 == StoreEnum.StoreId.DecorateStore then
-			for slot10 = 1, #slot6 do
-				if #DecorateStoreModel.instance:getDecorateGoodList(slot6[slot10].id) > 0 then
-					slot3 = slot6[slot10].id
+		if var_46_0 == StoreEnum.StoreId.Package then
+			for iter_46_0 = 1, #var_46_8 do
+				if #arg_46_0:getPackageGoodValidList(var_46_8[iter_46_0].id) > 0 then
+					var_46_1 = var_46_8[iter_46_0].id
 
 					break
 				end
 			end
 
-			slot4 = 0
-		elseif slot6 and #slot6 > 0 then
-			if slot0:getThirdTabs(slot6[1].id, true, true) and #slot7 > 0 then
-				slot4 = slot7[1].id
+			var_46_2 = 0
+		elseif var_46_0 == StoreEnum.StoreId.DecorateStore then
+			for iter_46_1 = 1, #var_46_8 do
+				if #DecorateStoreModel.instance:getDecorateGoodList(var_46_8[iter_46_1].id) > 0 then
+					var_46_1 = var_46_8[iter_46_1].id
+
+					break
+				end
+			end
+
+			var_46_2 = 0
+		elseif var_46_8 and #var_46_8 > 0 then
+			var_46_1 = var_46_8[1].id
+
+			local var_46_9 = arg_46_0:getThirdTabs(var_46_1, true, true)
+
+			if var_46_9 and #var_46_9 > 0 then
+				var_46_2 = var_46_9[1].id
 			end
 		else
-			slot3 = slot2
+			var_46_1 = var_46_0
 		end
 	end
 
-	return slot2, slot3, slot4
+	return var_46_0, var_46_1, var_46_2
 end
 
-function slot0.jumpTabIdToStoreId(slot0, slot1)
-	slot2 = 0
-	slot3, slot4, slot5 = slot0:jumpTabIdToSelectTabId(slot1)
-	slot7 = StoreConfig.instance:getTabConfig(slot4)
-	slot8 = StoreConfig.instance:getTabConfig(slot3)
+function var_0_0.jumpTabIdToStoreId(arg_47_0, arg_47_1)
+	local var_47_0 = 0
+	local var_47_1, var_47_2, var_47_3 = arg_47_0:jumpTabIdToSelectTabId(arg_47_1)
+	local var_47_4 = StoreConfig.instance:getTabConfig(var_47_3)
+	local var_47_5 = StoreConfig.instance:getTabConfig(var_47_2)
+	local var_47_6 = StoreConfig.instance:getTabConfig(var_47_1)
+	local var_47_7 = var_47_4 and var_47_4.storeId or 0
 
-	if (StoreConfig.instance:getTabConfig(slot5) and slot6.storeId or 0) == 0 then
-		slot2 = slot7 and slot7.storeId or 0
+	if var_47_7 == 0 then
+		var_47_7 = var_47_5 and var_47_5.storeId or 0
 	end
 
-	if slot2 == 0 then
-		slot2 = slot8 and slot8.storeId or 0
+	if var_47_7 == 0 then
+		var_47_7 = var_47_6 and var_47_6.storeId or 0
 	end
 
-	return slot2
+	return var_47_7
 end
 
-function slot0.updateMonthCardInfo(slot0, slot1)
-	if slot1 then
-		if slot0.monthCardInfo then
-			slot0.monthCardInfo:update(slot1)
+function var_0_0.updateMonthCardInfo(arg_48_0, arg_48_1)
+	if arg_48_1 then
+		if arg_48_0.monthCardInfo then
+			arg_48_0.monthCardInfo:update(arg_48_1)
 		else
-			slot0.monthCardInfo = StoreMonthCardInfoMO.New()
+			arg_48_0.monthCardInfo = StoreMonthCardInfoMO.New()
 
-			slot0.monthCardInfo:init(slot1)
+			arg_48_0.monthCardInfo:init(arg_48_1)
 		end
 	end
 end
 
-function slot0.getMonthCardInfo(slot0)
-	return slot0.monthCardInfo
+function var_0_0.getMonthCardInfo(arg_49_0)
+	return arg_49_0.monthCardInfo
 end
 
-function slot0.hasPurchaseMonthCard(slot0)
-	return slot0.monthCardInfo ~= nil
+function var_0_0.hasPurchaseMonthCard(arg_50_0)
+	return arg_50_0.monthCardInfo ~= nil
 end
 
-function slot0.IsMonthCardDaysEnough(slot0)
-	slot1 = false
+function var_0_0.IsMonthCardDaysEnough(arg_51_0)
+	local var_51_0 = false
 
-	if slot0:hasPurchaseMonthCard() then
-		slot1 = CommonConfig.instance:getConstNum(ConstEnum.MonthCardPurchaseRemindDay) < slot0:getMonthCardInfo():getRemainDay()
+	if arg_51_0:hasPurchaseMonthCard() then
+		var_51_0 = arg_51_0:getMonthCardInfo():getRemainDay() > CommonConfig.instance:getConstNum(ConstEnum.MonthCardPurchaseRemindDay)
 	end
 
-	return slot1
+	return var_51_0
 end
 
-function slot0.getCostStr(slot0, slot1)
-	return "", slot1
+function var_0_0.getCostStr(arg_52_0, arg_52_1)
+	return "", arg_52_1
 end
 
-function slot0.getCostSymbolAndPrice(slot0, slot1)
-	slot3, slot4 = PayModel.instance:getProductOriginPriceNum(slot1)
-	slot5 = ""
+function var_0_0.getCostSymbolAndPrice(arg_53_0, arg_53_1)
+	local var_53_0 = PayModel.instance:getProductOriginPriceSymbol(arg_53_1)
+	local var_53_1, var_53_2 = PayModel.instance:getProductOriginPriceNum(arg_53_1)
+	local var_53_3 = ""
 
-	if string.nilorempty(PayModel.instance:getProductOriginPriceSymbol(slot1)) then
-		slot6 = string.reverse(slot4)
-		slot7 = string.len(slot6) - string.find(slot6, "%d") + 1
-		slot5 = string.sub(slot4, slot7 + 1, string.len(slot4))
-		slot4 = string.sub(slot4, 1, slot7)
+	if string.nilorempty(var_53_0) then
+		local var_53_4 = string.reverse(var_53_2)
+		local var_53_5 = string.find(var_53_4, "%d")
+		local var_53_6 = string.len(var_53_4) - var_53_5 + 1
+
+		var_53_3 = string.sub(var_53_2, var_53_6 + 1, string.len(var_53_2))
+		var_53_2 = string.sub(var_53_2, 1, var_53_6)
 	end
 
-	return slot2, slot4, slot5
+	return var_53_0, var_53_2, var_53_3
 end
 
-function slot0.storeId2PackageGoodMoList(slot0, slot1)
-	return slot0._packageType2GoodsDict[slot1] or {}
+function var_0_0.storeId2PackageGoodMoList(arg_54_0, arg_54_1)
+	return arg_54_0._packageType2GoodsDict[arg_54_1] or {}
 end
 
-function slot0.checkTabShowNewTag(slot0, slot1)
-	if slot0:getStoreMO(slot1) then
-		for slot7, slot8 in pairs(slot2:getGoodsList()) do
-			if slot8:needShowNew() then
+function var_0_0.checkTabShowNewTag(arg_55_0, arg_55_1)
+	local var_55_0 = arg_55_0:getStoreMO(arg_55_1)
+
+	if var_55_0 then
+		local var_55_1 = var_55_0:getGoodsList()
+
+		for iter_55_0, iter_55_1 in pairs(var_55_1) do
+			if iter_55_1:needShowNew() then
 				return true
 			end
 		end
@@ -816,87 +952,124 @@ function slot0.checkTabShowNewTag(slot0, slot1)
 	return false
 end
 
-function slot0.setNewRedDotKey(slot0, slot1)
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.StoreViewShowNew .. slot1, slot1)
+function var_0_0.setNewRedDotKey(arg_56_0, arg_56_1)
+	local var_56_0 = PlayerPrefsKey.StoreViewShowNew .. arg_56_1
+
+	GameUtil.playerPrefsSetStringByUserId(var_56_0, arg_56_1)
 end
 
-function slot0.checkShowNewRedDot(slot0, slot1)
-	if GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.StoreViewShowNew .. slot1, nil) then
+function var_0_0.checkShowNewRedDot(arg_57_0, arg_57_1)
+	local var_57_0 = PlayerPrefsKey.StoreViewShowNew .. arg_57_1
+
+	if GameUtil.playerPrefsGetStringByUserId(var_57_0, nil) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.isSkinGoodsCanRepeatBuy(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.isSkinGoodsCanRepeatBuy(arg_58_0, arg_58_1, arg_58_2)
+	local var_58_0 = arg_58_1
+
+	if not var_58_0 then
 		return false
 	end
 
-	slot4 = slot2 == nil
+	local var_58_1 = arg_58_2 == nil
 
-	if slot2 == nil then
-		slot2 = string.splitToNumber(slot3.config.product, "#")[2]
+	if arg_58_2 == nil then
+		arg_58_2 = string.splitToNumber(var_58_0.config.product, "#")[2]
 	end
 
-	if not SkinConfig.instance:getSkinCo(slot2) then
+	local var_58_2 = SkinConfig.instance:getSkinCo(arg_58_2)
+
+	if not var_58_2 then
 		return false
 	end
 
-	slot6 = slot3.config.storeId
+	local var_58_3 = var_58_0.config.storeId
+	local var_58_4 = var_58_2.unavailableStore
 
-	if not string.nilorempty(slot5.unavailableStore) then
-		for slot12, slot13 in ipairs(string.split(slot7, "#") or {}) do
-			if slot6 == slot13 then
+	if not string.nilorempty(var_58_4) then
+		local var_58_5 = string.split(var_58_4, "#")
+
+		for iter_58_0, iter_58_1 in ipairs(var_58_5 or {}) do
+			if var_58_3 == iter_58_1 then
 				return false
 			end
 		end
 	end
 
-	if string.nilorempty(slot5.repeatBuyTime) then
+	if string.nilorempty(var_58_2.repeatBuyTime) then
 		return false
 	end
 
-	if TimeUtil.stringToTimestamp(slot5.repeatBuyTime) < ServerTime.now() then
+	if ServerTime.now() > TimeUtil.stringToTimestamp(var_58_2.repeatBuyTime) then
 		return false
 	end
 
-	if not slot3:isSoldOut() and slot4 and StoreConfig.instance:getSkinChargeGoodsId(slot2) then
-		slot10 = slot0._skinChargeDict[slot11] and slot12:isSoldOut()
+	local var_58_6 = var_58_0:isSoldOut()
+
+	if not var_58_6 and var_58_1 then
+		local var_58_7 = StoreConfig.instance:getSkinChargeGoodsId(arg_58_2)
+
+		if var_58_7 then
+			local var_58_8 = arg_58_0._skinChargeDict[var_58_7]
+
+			var_58_6 = var_58_8 and var_58_8:isSoldOut()
+		end
 	end
 
-	return HeroModel.instance:checkHasSkin(slot2) and not slot10
+	return HeroModel.instance:checkHasSkin(arg_58_2) and not var_58_6
 end
 
-function slot0.isSkinCanShowMessageBox(slot0, slot1)
-	if not slot1 then
+function var_0_0.isSkinCanShowMessageBox(arg_59_0, arg_59_1)
+	if not arg_59_1 then
 		return
 	end
 
-	if not lua_skin.configDict[slot1] then
+	local var_59_0 = lua_skin.configDict[arg_59_1]
+
+	if not var_59_0 then
 		return
 	end
 
-	if not string.nilorempty(slot2.repeatBuyTime) and TimeUtil.stringToTimestamp(slot2.repeatBuyTime) < ServerTime.now() then
+	local var_59_1 = ServerTime.now()
+
+	if not string.nilorempty(var_59_0.repeatBuyTime) and var_59_1 > TimeUtil.stringToTimestamp(var_59_0.repeatBuyTime) then
 		return
 	end
 
-	if slot2.skinStoreId == 0 then
+	local var_59_2 = var_59_0.skinStoreId
+
+	if var_59_2 == 0 then
 		return
 	end
 
-	if not slot0:getGoodsMO(slot4) then
+	local var_59_3 = arg_59_0:getGoodsMO(var_59_2)
+
+	if not var_59_3 then
 		return
 	end
 
-	if slot6.isOnline and (string.nilorempty(slot5.config.onlineTime) and slot3 or TimeUtil.stringToTimestamp(slot6.onlineTime) - ServerTime.clientToServerOffset()) <= slot3 and slot3 <= (string.nilorempty(slot6.offlineTime) and slot3 or TimeUtil.stringToTimestamp(slot6.offlineTime) - ServerTime.clientToServerOffset()) and not slot5:isSoldOut() and not (tabletool.indexOf(string.splitToNumber(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SkinCanShowMessageBox, ""), "#"), slot1) ~= nil) then
-		table.insert(slot12, slot1)
-		GameUtil.playerPrefsSetStringByUserId(slot10, table.concat(slot12, "#"))
+	local var_59_4 = var_59_3.config
+	local var_59_5 = string.nilorempty(var_59_4.onlineTime) and var_59_1 or TimeUtil.stringToTimestamp(var_59_4.onlineTime) - ServerTime.clientToServerOffset()
+	local var_59_6 = string.nilorempty(var_59_4.offlineTime) and var_59_1 or TimeUtil.stringToTimestamp(var_59_4.offlineTime) - ServerTime.clientToServerOffset()
 
-		return true
+	if var_59_4.isOnline and var_59_5 <= var_59_1 and var_59_1 <= var_59_6 and not var_59_3:isSoldOut() then
+		local var_59_7 = PlayerPrefsKey.SkinCanShowMessageBox
+		local var_59_8 = GameUtil.playerPrefsGetStringByUserId(var_59_7, "")
+		local var_59_9 = string.splitToNumber(var_59_8, "#")
+
+		if not (tabletool.indexOf(var_59_9, arg_59_1) ~= nil) then
+			table.insert(var_59_9, arg_59_1)
+			GameUtil.playerPrefsSetStringByUserId(var_59_7, table.concat(var_59_9, "#"))
+
+			return true
+		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

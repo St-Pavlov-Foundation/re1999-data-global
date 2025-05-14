@@ -1,161 +1,161 @@
-module("modules.logic.rouge.view.RougeFactionItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionItem", package.seeall)
 
-slot0 = class("RougeFactionItem", RougeSimpleItemBase)
-slot1 = SLFramework.AnimatorPlayer
+local var_0_0 = class("RougeFactionItem", RougeSimpleItemBase)
+local var_0_1 = SLFramework.AnimatorPlayer
 
-function slot0.ctor(slot0, slot1)
-	RougeSimpleItemBase.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	RougeSimpleItemBase.ctor(arg_1_0, arg_1_1)
 
-	slot0._staticData.parentScrollViewGo = slot1.baseViewContainer:getScrollViewGo()
-	slot0._staticData.startViewAllInfo = RougeController.instance:getStartViewAllInfo()
-	slot0._selected = RougeFactionItemSelected.New(slot0)
-	slot0._unSelected = RougeFactionItemUnselected.New(slot0)
-	slot0._locked = RougeFactionItemLocked.New(slot0)
+	arg_1_0._staticData.parentScrollViewGo = arg_1_1.baseViewContainer:getScrollViewGo()
+	arg_1_0._staticData.startViewAllInfo = RougeController.instance:getStartViewAllInfo()
+	arg_1_0._selected = RougeFactionItemSelected.New(arg_1_0)
+	arg_1_0._unSelected = RougeFactionItemUnselected.New(arg_1_0)
+	arg_1_0._locked = RougeFactionItemLocked.New(arg_1_0)
 end
 
-function slot0._editableInitView(slot0)
-	RougeSimpleItemBase._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	RougeSimpleItemBase._editableInitView(arg_2_0)
 
-	slot0._animatorPlayer = uv0.Get(slot0.viewGO)
-	slot0._animSelf = slot0._animatorPlayer.animator
+	arg_2_0._animatorPlayer = var_0_1.Get(arg_2_0.viewGO)
+	arg_2_0._animSelf = arg_2_0._animatorPlayer.animator
 
-	slot0._selected:init(gohelper.findChild(slot0.viewGO, "Select"))
-	slot0._unSelected:init(gohelper.findChild(slot0.viewGO, "Unselect"))
-	slot0._locked:init(gohelper.findChild(slot0.viewGO, "Locked"))
-	slot0._selected:setActive(false)
-	slot0._unSelected:setActive(false)
-	slot0._locked:setActive(false)
+	arg_2_0._selected:init(gohelper.findChild(arg_2_0.viewGO, "Select"))
+	arg_2_0._unSelected:init(gohelper.findChild(arg_2_0.viewGO, "Unselect"))
+	arg_2_0._locked:init(gohelper.findChild(arg_2_0.viewGO, "Locked"))
+	arg_2_0._selected:setActive(false)
+	arg_2_0._unSelected:setActive(false)
+	arg_2_0._locked:setActive(false)
 end
 
-function slot0.onDestroyView(slot0)
-	RougeSimpleItemBase.onDestroyView(slot0)
-	GameUtil.onDestroyViewMember(slot0, "_selected")
-	GameUtil.onDestroyViewMember(slot0, "_unSelected")
-	GameUtil.onDestroyViewMember(slot0, "_locked")
+function var_0_0.onDestroyView(arg_3_0)
+	RougeSimpleItemBase.onDestroyView(arg_3_0)
+	GameUtil.onDestroyViewMember(arg_3_0, "_selected")
+	GameUtil.onDestroyViewMember(arg_3_0, "_unSelected")
+	GameUtil.onDestroyViewMember(arg_3_0, "_locked")
 end
 
-function slot0.setSelected(slot0, slot1)
-	if not slot0:isUnLocked() then
+function var_0_0.setSelected(arg_4_0, arg_4_1)
+	if not arg_4_0:isUnLocked() then
 		return
 	end
 
-	RougeSimpleItemBase.setSelected(slot0, slot1)
+	RougeSimpleItemBase.setSelected(arg_4_0, arg_4_1)
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._staticData.isSelected = slot1
+function var_0_0.onSelect(arg_5_0, arg_5_1)
+	arg_5_0._staticData.isSelected = arg_5_1
 
-	slot0._selected:setActive(slot1)
-	slot0._unSelected:setActive(not slot1)
+	arg_5_0._selected:setActive(arg_5_1)
+	arg_5_0._unSelected:setActive(not arg_5_1)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._mo = slot1
-	slot0._isUnLocked = slot1.isUnLocked
+function var_0_0.setData(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
+	arg_6_0._isUnLocked = arg_6_1.isUnLocked
 
-	slot0._selected:setData(slot1)
-	slot0._unSelected:setData(slot1)
-	slot0._locked:setData(slot1)
+	arg_6_0._selected:setData(arg_6_1)
+	arg_6_0._unSelected:setData(arg_6_1)
+	arg_6_0._locked:setData(arg_6_1)
 
-	slot2 = slot0:isSelected()
+	local var_6_0 = arg_6_0:isSelected()
 
-	if slot0:isUnLocked() then
-		slot0._selected:setActive(slot2)
-		slot0._unSelected:setActive(not slot2)
-		slot0._locked:setActive(false)
+	if arg_6_0:isUnLocked() then
+		arg_6_0._selected:setActive(var_6_0)
+		arg_6_0._unSelected:setActive(not var_6_0)
+		arg_6_0._locked:setActive(false)
 	else
-		slot0._locked:setActive(true)
+		arg_6_0._locked:setActive(true)
 	end
 end
 
-function slot0.isUnLocked(slot0)
-	return slot0._mo.isUnLocked
+function var_0_0.isUnLocked(arg_7_0)
+	return arg_7_0._mo.isUnLocked
 end
 
-function slot0.style(slot0)
-	return slot0._mo.styleCO.id
+function var_0_0.style(arg_8_0)
+	return arg_8_0._mo.styleCO.id
 end
 
-function slot0.difficulty(slot0)
-	return slot0:parent():_difficulty()
+function var_0_0.difficulty(arg_9_0)
+	return arg_9_0:parent():_difficulty()
 end
 
-function slot0.setIsLocked(slot0, slot1, slot2)
-	slot0._locked:setActive(slot1)
+function var_0_0.setIsLocked(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._locked:setActive(arg_10_1)
 
-	if not slot2 then
-		slot0:playIdle()
-		slot0:onSelect(slot0._staticData.isSelected)
+	if not arg_10_2 then
+		arg_10_0:playIdle()
+		arg_10_0:onSelect(arg_10_0._staticData.isSelected)
 	end
 end
 
-function slot0.playOpen(slot0, slot1)
-	if slot1 == true then
-		slot0._isNewUnlockAnim = true
+function var_0_0.playOpen(arg_11_0, arg_11_1)
+	if arg_11_1 == true then
+		arg_11_0._isNewUnlockAnim = true
 
-		slot0:setIsLocked(true, true)
+		arg_11_0:setIsLocked(true, true)
 	end
 
-	slot0:_playAnim(UIAnimationName.Open, slot0._onOpenEnd, slot0)
+	arg_11_0:_playAnim(UIAnimationName.Open, arg_11_0._onOpenEnd, arg_11_0)
 end
 
-function slot0.playIdle(slot0)
-	slot0._animSelf.enabled = true
+function var_0_0.playIdle(arg_12_0)
+	arg_12_0._animSelf.enabled = true
 
-	slot0._animSelf:Play(UIAnimationName.Open, 0, 1)
+	arg_12_0._animSelf:Play(UIAnimationName.Open, 0, 1)
 end
 
-function slot0.playClose(slot0)
-	slot0:_playAnim(UIAnimationName.Close, slot0._onCloseEnd, slot0)
+function var_0_0.playClose(arg_13_0)
+	arg_13_0:_playAnim(UIAnimationName.Close, arg_13_0._onCloseEnd, arg_13_0)
 end
 
-function slot0.setOnOpenEndCb(slot0, slot1)
-	slot0._onOpenEndCb = slot1
+function var_0_0.setOnOpenEndCb(arg_14_0, arg_14_1)
+	arg_14_0._onOpenEndCb = arg_14_1
 end
 
-function slot0._onOpenEnd(slot0)
-	if slot0._onOpenEndCb then
-		slot0._onOpenEndCb()
+function var_0_0._onOpenEnd(arg_15_0)
+	if arg_15_0._onOpenEndCb then
+		arg_15_0._onOpenEndCb()
 
-		slot0._onOpenEndCb = nil
+		arg_15_0._onOpenEndCb = nil
 	end
 
-	if slot0._isNewUnlockAnim then
-		slot0:_playAnim(UIAnimationName.Unlock, slot0._onUnlockEnd, slot0)
+	if arg_15_0._isNewUnlockAnim then
+		arg_15_0:_playAnim(UIAnimationName.Unlock, arg_15_0._onUnlockEnd, arg_15_0)
 
-		slot0._isNewUnlockAnim = nil
-	end
-end
-
-function slot0.setOnCloseEndCb(slot0, slot1)
-	slot0._onCloseEndCb = slot1
-end
-
-function slot0._onCloseEnd(slot0)
-	if slot0._onCloseEndCb then
-		slot0._onCloseEndCb()
-
-		slot0._onCloseEndCb = nil
+		arg_15_0._isNewUnlockAnim = nil
 	end
 end
 
-function slot0.setOnUnlockEndCb(slot0, slot1)
-	slot0._onUnlockEndCb = slot1
+function var_0_0.setOnCloseEndCb(arg_16_0, arg_16_1)
+	arg_16_0._onCloseEndCb = arg_16_1
 end
 
-function slot0._onUnlockEnd(slot0)
-	if slot0._onUnlockEndCb then
-		slot0._onUnlockEndCb()
+function var_0_0._onCloseEnd(arg_17_0)
+	if arg_17_0._onCloseEndCb then
+		arg_17_0._onCloseEndCb()
 
-		slot0._onUnlockEndCb = nil
+		arg_17_0._onCloseEndCb = nil
+	end
+end
+
+function var_0_0.setOnUnlockEndCb(arg_18_0, arg_18_1)
+	arg_18_0._onUnlockEndCb = arg_18_1
+end
+
+function var_0_0._onUnlockEnd(arg_19_0)
+	if arg_19_0._onUnlockEndCb then
+		arg_19_0._onUnlockEndCb()
+
+		arg_19_0._onUnlockEndCb = nil
 	end
 
-	slot0:setIsLocked(false)
-	slot0:onSelect(slot0._staticData.isSelected)
+	arg_19_0:setIsLocked(false)
+	arg_19_0:onSelect(arg_19_0._staticData.isSelected)
 end
 
-function slot0._playAnim(slot0, slot1, slot2, slot3)
-	slot0._animatorPlayer:Play(slot1, slot2, slot3)
+function var_0_0._playAnim(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	arg_20_0._animatorPlayer:Play(arg_20_1, arg_20_2, arg_20_3)
 end
 
-return slot0
+return var_0_0

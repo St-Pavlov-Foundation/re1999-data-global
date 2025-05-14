@@ -1,106 +1,110 @@
-module("modules.logic.pushbox.view.PushBoxView", package.seeall)
+﻿module("modules.logic.pushbox.view.PushBoxView", package.seeall)
 
-slot0 = class("PushBoxView", BaseView)
+local var_0_0 = class("PushBoxView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._btnup = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_up")
-	slot0._btndown = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_down")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_left")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_right")
-	slot0._btnrevertoperation = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_revert_operation")
-	slot0._btnrevertgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_revert_game")
-	slot0._btntaskreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_task_reward")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._btnup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_up")
+	arg_1_0._btndown = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_down")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_left")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_right")
+	arg_1_0._btnrevertoperation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_revert_operation")
+	arg_1_0._btnrevertgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_revert_game")
+	arg_1_0._btntaskreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task_reward")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnup:AddClickListener(slot0._btnupOnClick, slot0)
-	slot0._btndown:AddClickListener(slot0._btndownOnClick, slot0)
-	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
-	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
-	slot0._btnrevertoperation:AddClickListener(slot0._btnrevertoperationOnClick, slot0)
-	slot0._btnrevertgame:AddClickListener(slot0._btnrevertgameOnClick, slot0)
-	slot0._btntaskreward:AddClickListener(slot0._btntaskrewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnup:AddClickListener(arg_2_0._btnupOnClick, arg_2_0)
+	arg_2_0._btndown:AddClickListener(arg_2_0._btndownOnClick, arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
+	arg_2_0._btnrevertoperation:AddClickListener(arg_2_0._btnrevertoperationOnClick, arg_2_0)
+	arg_2_0._btnrevertgame:AddClickListener(arg_2_0._btnrevertgameOnClick, arg_2_0)
+	arg_2_0._btntaskreward:AddClickListener(arg_2_0._btntaskrewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnup:RemoveClickListener()
-	slot0._btndown:RemoveClickListener()
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
-	slot0._btnrevertoperation:RemoveClickListener()
-	slot0._btnrevertgame:RemoveClickListener()
-	slot0._btntaskreward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnup:RemoveClickListener()
+	arg_3_0._btndown:RemoveClickListener()
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
+	arg_3_0._btnrevertoperation:RemoveClickListener()
+	arg_3_0._btnrevertgame:RemoveClickListener()
+	arg_3_0._btntaskreward:RemoveClickListener()
 end
 
-function slot0._btnrevertoperationOnClick(slot0)
-	slot0._game_mgr:revertStep()
+function var_0_0._btnrevertoperationOnClick(arg_4_0)
+	arg_4_0._game_mgr:revertStep()
 end
 
-function slot0._btnrevertgameOnClick(slot0)
-	slot0._game_mgr:revertGame()
+function var_0_0._btnrevertgameOnClick(arg_5_0)
+	arg_5_0._game_mgr:revertGame()
 end
 
-function slot0._btntaskrewardOnClick(slot0)
+function var_0_0._btntaskrewardOnClick(arg_6_0)
 	PushBoxRpc.instance:sendReceiveTaskRewardRequest(nil, 1)
 end
 
-function slot0._btnupOnClick(slot0)
-	slot0:_walk(PushBoxGameMgr.Direction.Up)
+function var_0_0._btnupOnClick(arg_7_0)
+	arg_7_0:_walk(PushBoxGameMgr.Direction.Up)
 end
 
-function slot0._btndownOnClick(slot0)
-	slot0:_walk(PushBoxGameMgr.Direction.Down)
+function var_0_0._btndownOnClick(arg_8_0)
+	arg_8_0:_walk(PushBoxGameMgr.Direction.Down)
 end
 
-function slot0._btnleftOnClick(slot0)
-	slot0:_walk(PushBoxGameMgr.Direction.Left)
+function var_0_0._btnleftOnClick(arg_9_0)
+	arg_9_0:_walk(PushBoxGameMgr.Direction.Left)
 end
 
-function slot0._btnrightOnClick(slot0)
-	slot0:_walk(PushBoxGameMgr.Direction.Right)
+function var_0_0._btnrightOnClick(arg_10_0)
+	arg_10_0:_walk(PushBoxGameMgr.Direction.Right)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_11_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.viewContainer._navigateButtonView:setOverrideClose(slot0._onNavigateCloseCallback, slot0)
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0.viewContainer._navigateButtonView:setOverrideClose(arg_13_0._onNavigateCloseCallback, arg_13_0)
 
-	slot0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	arg_13_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
 
-	slot0._game_mgr:startGame(1)
+	arg_13_0._game_mgr:startGame(1)
 end
 
-function slot0._onNavigateCloseCallback(slot0)
-	slot0.viewContainer._navigateButtonView:setOverrideClose(nil, )
-	slot0:closeThis()
+function var_0_0._onNavigateCloseCallback(arg_14_0)
+	arg_14_0.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
+	arg_14_0:closeThis()
 	MainController.instance:enterMainScene()
 end
 
-function slot0._walk(slot0, slot1)
-	if not slot0._last_time then
-		slot0._last_time = Time.time
-	elseif Time.time - slot0._last_time < 0.2 then
+function var_0_0._walk(arg_15_0, arg_15_1)
+	if not arg_15_0._last_time then
+		arg_15_0._last_time = Time.time
+	elseif Time.time - arg_15_0._last_time < 0.2 then
 		return
 	end
 
-	slot0._last_time = Time.time
+	arg_15_0._last_time = Time.time
 
-	slot0._game_mgr:_onMove(slot1)
+	arg_15_0._game_mgr:_onMove(arg_15_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

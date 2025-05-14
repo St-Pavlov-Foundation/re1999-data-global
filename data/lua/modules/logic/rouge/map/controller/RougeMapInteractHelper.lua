@@ -1,190 +1,227 @@
-module("modules.logic.rouge.map.controller.RougeMapInteractHelper", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougeMapInteractHelper", package.seeall)
 
-slot0 = class("RougeMapInteractHelper")
+local var_0_0 = class("RougeMapInteractHelper")
 
-function slot0.triggerInteractive()
-	if string.nilorempty(RougeMapModel.instance:getCurInteractive()) then
+function var_0_0.triggerInteractive()
+	local var_1_0 = RougeMapModel.instance:getCurInteractive()
+
+	if string.nilorempty(var_1_0) then
 		return
 	end
 
-	slot1 = string.splitToNumber(slot0, "#")
-	slot3 = slot1[2]
+	local var_1_1 = string.splitToNumber(var_1_0, "#")
+	local var_1_2 = var_1_1[1]
+	local var_1_3 = var_1_1[2]
 
-	uv0._initInteractHandle()
+	var_0_0._initInteractHandle()
 
-	if not uv0.handleDict[slot1[1]] then
-		logError("not found interact type .. " .. tostring(slot2))
+	local var_1_4 = var_0_0.handleDict[var_1_2]
+
+	if not var_1_4 then
+		logError("not found interact type .. " .. tostring(var_1_2))
 
 		return
 	end
 
-	slot4(slot3)
+	var_1_4(var_1_3)
 end
 
-function slot0._initInteractHandle()
-	if not uv0.handleDict then
-		uv0.handleDict = {
-			[RougeMapEnum.InteractType.Drop] = uv0.handleDrop,
-			[RougeMapEnum.InteractType.LossCollection] = uv0.handleLoss,
-			[RougeMapEnum.InteractType.ReturnBlood] = uv0.handleReturnBlood,
-			[RougeMapEnum.InteractType.Resurgence] = uv0.handleResurgence,
-			[RougeMapEnum.InteractType.Recruit] = uv0.handleRecruit,
-			[RougeMapEnum.InteractType.DropGroup] = uv0.handleDropGroup,
-			[RougeMapEnum.InteractType.LossAndCopy] = uv0.handleLossAndCopy,
-			[RougeMapEnum.InteractType.LossAssignCollection] = uv0.handleLossAssignCollection,
-			[RougeMapEnum.InteractType.LossNotUniqueCollection] = uv0.handleLossNotUniqueCollection,
-			[RougeMapEnum.InteractType.StorageCollection] = uv0.handleStorageCollection,
-			[RougeMapEnum.InteractType.LossCoin] = uv0.handleLossCoin,
-			[RougeMapEnum.InteractType.AdvanceDrop] = uv0.handleAdvanceDrop,
-			[RougeMapEnum.InteractType.LevelUpSp] = uv0.handleLevelUpSpCollection,
-			[RougeMapEnum.InteractType.LossSpCollection] = uv0.handleLossSpCollection
+function var_0_0._initInteractHandle()
+	if not var_0_0.handleDict then
+		var_0_0.handleDict = {
+			[RougeMapEnum.InteractType.Drop] = var_0_0.handleDrop,
+			[RougeMapEnum.InteractType.LossCollection] = var_0_0.handleLoss,
+			[RougeMapEnum.InteractType.ReturnBlood] = var_0_0.handleReturnBlood,
+			[RougeMapEnum.InteractType.Resurgence] = var_0_0.handleResurgence,
+			[RougeMapEnum.InteractType.Recruit] = var_0_0.handleRecruit,
+			[RougeMapEnum.InteractType.DropGroup] = var_0_0.handleDropGroup,
+			[RougeMapEnum.InteractType.LossAndCopy] = var_0_0.handleLossAndCopy,
+			[RougeMapEnum.InteractType.LossAssignCollection] = var_0_0.handleLossAssignCollection,
+			[RougeMapEnum.InteractType.LossNotUniqueCollection] = var_0_0.handleLossNotUniqueCollection,
+			[RougeMapEnum.InteractType.StorageCollection] = var_0_0.handleStorageCollection,
+			[RougeMapEnum.InteractType.LossCoin] = var_0_0.handleLossCoin,
+			[RougeMapEnum.InteractType.AdvanceDrop] = var_0_0.handleAdvanceDrop,
+			[RougeMapEnum.InteractType.LevelUpSp] = var_0_0.handleLevelUpSpCollection,
+			[RougeMapEnum.InteractType.LossSpCollection] = var_0_0.handleLossSpCollection
 		}
 	end
 end
 
-function slot0.handleDrop(slot0)
+function var_0_0.handleDrop(arg_3_0)
 	logWarn("触发掉落")
 
-	slot1 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_3_0 = RougeMapModel.instance:getCurInteractiveJson()
 
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionDropView, {
 		viewEnum = RougeMapEnum.CollectionDropViewEnum.Select,
-		collectionList = slot1.dropCollectList,
-		canSelectCount = slot1.dropSelectNum,
-		dropRandomNum = slot1.dropRandomNum
+		collectionList = var_3_0.dropCollectList,
+		canSelectCount = var_3_0.dropSelectNum,
+		dropRandomNum = var_3_0.dropRandomNum
 	})
 end
 
-function slot0.handleLoss()
+function var_0_0.handleLoss()
 	logWarn("触发丢弃")
+
+	local var_4_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_4_1 = RougeMapModel.instance:getCurInteractType()
+
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionAbandonView, {
 		lossType = RougeMapEnum.LossType.Abandon,
-		lostNum = RougeMapModel.instance:getCurInteractiveJson().lostNum,
-		filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType())
+		lostNum = var_4_0.lostNum,
+		filterUnique = RougeMapHelper.checkNeedFilterUnique(var_4_1)
 	})
 end
 
-function slot0.handleReturnBlood()
+function var_0_0.handleReturnBlood()
 	logWarn("触发回血")
-	RougePopController.instance:addPopViewWithOpenFunc(ViewName.RougeTeamView, RougeController.openRougeTeamTreatView, RougeController.instance, RougeController.instance:createTeamViewParam(RougeMapModel.instance:getCurInteractiveJson().healNum, uv0.onSelectReturnBloodHero))
+
+	local var_5_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_5_1 = RougeController.instance:createTeamViewParam(var_5_0.healNum, var_0_0.onSelectReturnBloodHero)
+
+	RougePopController.instance:addPopViewWithOpenFunc(ViewName.RougeTeamView, RougeController.openRougeTeamTreatView, RougeController.instance, var_5_1)
 end
 
-function slot0.onSelectReturnBloodHero(slot0, slot1)
-	if not slot1 or #slot1 == 0 then
+function var_0_0.onSelectReturnBloodHero(arg_6_0, arg_6_1)
+	if not arg_6_1 or #arg_6_1 == 0 then
 		return
 	end
 
-	RougeRpc.instance:sendRougeSelectHealRequest(slot1)
+	RougeRpc.instance:sendRougeSelectHealRequest(arg_6_1)
 end
 
-function slot0.handleRecruit()
+function var_0_0.handleRecruit()
 	logWarn("触发招募")
-	RougePopController.instance:addPopViewWithOpenFunc(ViewName.RougeHeroGroupEditView, RougeController.openSelectHero, RougeController.instance, uv0._selectHeroHandler)
+	RougePopController.instance:addPopViewWithOpenFunc(ViewName.RougeHeroGroupEditView, RougeController.openSelectHero, RougeController.instance, var_0_0._selectHeroHandler)
 end
 
-function slot0._selectHeroHandler(slot0, slot1)
-	if not slot1 or #slot1 == 0 then
+function var_0_0._selectHeroHandler(arg_8_0, arg_8_1)
+	if not arg_8_1 or #arg_8_1 == 0 then
 		RougeRpc.instance:sendRougeRecruitHeroRequest(nil)
 
 		return
 	end
 
-	RougeRpc.instance:sendRougeRecruitHeroRequest(slot1)
+	RougeRpc.instance:sendRougeRecruitHeroRequest(arg_8_1)
 end
 
-function slot0.handleResurgence()
+function var_0_0.handleResurgence()
 	logWarn("触发复活")
-	RougePopController.instance:addPopViewWithOpenFunc(ViewName.RougeTeamView, RougeController.openRougeTeamReviveView, RougeController.instance, RougeController.instance:createTeamViewParam(RougeMapModel.instance:getCurInteractiveJson().reviveNum, uv0.onSelectReviveHero))
+
+	local var_9_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_9_1 = RougeController.instance:createTeamViewParam(var_9_0.reviveNum, var_0_0.onSelectReviveHero)
+
+	RougePopController.instance:addPopViewWithOpenFunc(ViewName.RougeTeamView, RougeController.openRougeTeamReviveView, RougeController.instance, var_9_1)
 end
 
-function slot0.onSelectReviveHero(slot0, slot1)
-	if not slot1 or #slot1 == 0 then
+function var_0_0.onSelectReviveHero(arg_10_0, arg_10_1)
+	if not arg_10_1 or #arg_10_1 == 0 then
 		return
 	end
 
-	RougeRpc.instance:sendRougeSelectReviveRequest(slot1)
+	RougeRpc.instance:sendRougeSelectReviveRequest(arg_10_1)
 end
 
-function slot0.handleDropGroup()
+function var_0_0.handleDropGroup()
 	logWarn("触发掉落组")
 
-	slot0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_11_0 = RougeMapModel.instance:getCurInteractiveJson()
 
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionDropView, {
 		viewEnum = RougeMapEnum.CollectionDropViewEnum.Select,
-		collectionList = slot0.dropCollectList,
-		canSelectCount = slot0.dropSelectNum,
-		dropRandomNum = slot0.dropRandomNum
+		collectionList = var_11_0.dropCollectList,
+		canSelectCount = var_11_0.dropSelectNum,
+		dropRandomNum = var_11_0.dropRandomNum
 	})
 end
 
-function slot0.handleLossAndCopy()
+function var_0_0.handleLossAndCopy()
 	logNormal("损失造物并复制")
+
+	local var_12_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_12_1 = RougeMapModel.instance:getCurInteractType()
+
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionAbandonView, {
 		lossType = RougeMapEnum.LossType.Copy,
-		lostNum = RougeMapModel.instance:getCurInteractiveJson().lostNum,
-		filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType())
+		lostNum = var_12_0.lostNum,
+		filterUnique = RougeMapHelper.checkNeedFilterUnique(var_12_1)
 	})
 end
 
-function slot0.handleLossAssignCollection()
+function var_0_0.handleLossAssignCollection()
 	logNormal("损失指定造物")
 end
 
-function slot0.handleLossNotUniqueCollection()
+function var_0_0.handleLossNotUniqueCollection()
 	logNormal("损失非唯一造物")
+
+	local var_14_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_14_1 = RougeMapModel.instance:getCurInteractType()
+
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionAbandonView, {
 		lossType = RougeMapEnum.LossType.Copy,
-		lostNum = RougeMapModel.instance:getCurInteractiveJson().lostNum,
-		filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType())
+		lostNum = var_14_0.lostNum,
+		filterUnique = RougeMapHelper.checkNeedFilterUnique(var_14_1)
 	})
 end
 
-function slot0.handleStorageCollection()
+function var_0_0.handleStorageCollection()
 	logNormal("存储造物")
+
+	local var_15_0 = RougeMapModel.instance:getCurInteractiveJson()
+
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionStorageView, {
-		lossCount = RougeMapModel.instance:getCurInteractiveJson().lostNum
+		lossCount = var_15_0.lostNum
 	})
 end
 
-function slot0.handleLossCoin()
+function var_0_0.handleLossCoin()
 	logNormal("损失金币")
 end
 
-function slot0.handleAdvanceDrop(slot0)
+function var_0_0.handleAdvanceDrop(arg_17_0)
 	logNormal("高级掉落")
 
-	slot1 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_17_0 = RougeMapModel.instance:getCurInteractiveJson()
 
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionDropView, {
 		viewEnum = RougeMapEnum.CollectionDropViewEnum.Select,
-		collectionList = slot1.dropCollectList,
-		canSelectCount = slot1.dropSelectNum,
-		dropRandomNum = slot1.dropRandomNum
+		collectionList = var_17_0.dropCollectList,
+		canSelectCount = var_17_0.dropSelectNum,
+		dropRandomNum = var_17_0.dropRandomNum
 	})
 end
 
-function slot0.handleLevelUpSpCollection()
+function var_0_0.handleLevelUpSpCollection()
 	logNormal("专武升级")
+
+	local var_18_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local var_18_1 = RougeMapModel.instance:getCurInteractType()
+
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionLevelUpView, {
 		closeBtnVisible = false,
-		maxLevelUpNum = RougeMapModel.instance:getCurInteractiveJson().collectionLevelUpNum,
-		filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType())
+		maxLevelUpNum = var_18_0.collectionLevelUpNum,
+		filterUnique = RougeMapHelper.checkNeedFilterUnique(var_18_1)
 	})
 end
 
-function slot0.handleLossSpCollection(slot0)
-	if slot0 == 1 then
+function var_0_0.handleLossSpCollection(arg_19_0)
+	if arg_19_0 == 1 then
 		logNormal("丢弃专武")
+
+		local var_19_0 = RougeMapModel.instance:getCurInteractiveJson()
+		local var_19_1 = RougeMapModel.instance:getCurInteractType()
+		local var_19_2 = RougeDLCModel102.instance:getAllSpCollections()
+
 		RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionAbandonView, {
 			lossType = RougeMapEnum.LossType.AbandonSp,
-			lostNum = RougeMapModel.instance:getCurInteractiveJson().lostNum,
-			filterUnique = RougeMapHelper.checkNeedFilterUnique(RougeMapModel.instance:getCurInteractType()),
-			collections = RougeDLCModel102.instance:getAllSpCollections()
+			lostNum = var_19_0.lostNum,
+			filterUnique = RougeMapHelper.checkNeedFilterUnique(var_19_1),
+			collections = var_19_2
 		})
-	elseif slot0 == 2 then
+	elseif arg_19_0 == 2 then
 		logNormal("获得丢弃专武")
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,63 +1,64 @@
-module("modules.logic.dialogue.view.items.DialogueOptionItem", package.seeall)
+﻿module("modules.logic.dialogue.view.items.DialogueOptionItem", package.seeall)
 
-slot0 = class("DialogueOptionItem", DialogueItem)
+local var_0_0 = class("DialogueOptionItem", DialogueItem)
 
-function slot0.initView(slot0)
-	slot0.goOptionItem = gohelper.findChild(slot0.go, "#go_suboptionitem")
+function var_0_0.initView(arg_1_0)
+	arg_1_0.goOptionItem = gohelper.findChild(arg_1_0.go, "#go_suboptionitem")
 
-	gohelper.setActive(slot0.goOptionItem, false)
+	gohelper.setActive(arg_1_0.goOptionItem, false)
 
-	slot0.optionList = GameUtil.splitString2(slot0.stepCo.content, false)
-	slot0.optionItemList = {}
-	slot0.handled = false
+	arg_1_0.optionList = GameUtil.splitString2(arg_1_0.stepCo.content, false)
+	arg_1_0.optionItemList = {}
+	arg_1_0.handled = false
 end
 
-function slot0.refresh(slot0)
-	for slot4, slot5 in ipairs(slot0.optionList) do
-		slot0:createOption(slot5[1], tonumber(slot5[2]))
+function var_0_0.refresh(arg_2_0)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.optionList) do
+		arg_2_0:createOption(iter_2_1[1], tonumber(iter_2_1[2]))
 	end
 end
 
-function slot0.createOption(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.go = gohelper.cloneInPlace(slot0.goOptionItem)
-	slot3.btn = gohelper.findChildButton(slot3.go, "#btn_suboption")
-	slot3.txtOption = gohelper.findChildText(slot3.go, "#btn_suboption/#txt_suboption")
-	slot3.txtOption.text = slot1
-	slot3.goBtn = slot3.btn.gameObject
+function var_0_0.createOption(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0:getUserDataTb_()
 
-	slot3.btn:AddClickListener(slot0.onClickOption, slot0, slot2)
+	var_3_0.go = gohelper.cloneInPlace(arg_3_0.goOptionItem)
+	var_3_0.btn = gohelper.findChildButton(var_3_0.go, "#btn_suboption")
+	var_3_0.txtOption = gohelper.findChildText(var_3_0.go, "#btn_suboption/#txt_suboption")
+	var_3_0.txtOption.text = arg_3_1
+	var_3_0.goBtn = var_3_0.btn.gameObject
 
-	slot3.jumpStepId = slot2
+	var_3_0.btn:AddClickListener(arg_3_0.onClickOption, arg_3_0, arg_3_2)
 
-	gohelper.setActive(slot3.go, true)
-	table.insert(slot0.optionItemList, slot3)
+	var_3_0.jumpStepId = arg_3_2
+
+	gohelper.setActive(var_3_0.go, true)
+	table.insert(arg_3_0.optionItemList, var_3_0)
 end
 
-function slot0.onClickOption(slot0, slot1)
-	if slot0.handled then
+function var_0_0.onClickOption(arg_4_0, arg_4_1)
+	if arg_4_0.handled then
 		return
 	end
 
-	slot0.handled = true
+	arg_4_0.handled = true
 
-	for slot5, slot6 in ipairs(slot0.optionItemList) do
-		ZProj.UGUIHelper.SetGrayscale(slot6.goBtn, slot1 ~= slot6.jumpStepId)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.optionItemList) do
+		ZProj.UGUIHelper.SetGrayscale(iter_4_1.goBtn, arg_4_1 ~= iter_4_1.jumpStepId)
 	end
 
-	DialogueController.instance:dispatchEvent(DialogueEvent.OnClickOption, slot1)
+	DialogueController.instance:dispatchEvent(DialogueEvent.OnClickOption, arg_4_1)
 end
 
-function slot0.calculateHeight(slot0)
-	ZProj.UGUIHelper.RebuildLayout(slot0.go.transform)
+function var_0_0.calculateHeight(arg_5_0)
+	ZProj.UGUIHelper.RebuildLayout(arg_5_0.go.transform)
 
-	slot0.height = recthelper.getHeight(slot0.go.transform)
+	arg_5_0.height = recthelper.getHeight(arg_5_0.go.transform)
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in ipairs(slot0.optionItemList) do
-		slot5.btn:RemoveClickListener()
+function var_0_0.onDestroy(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.optionItemList) do
+		iter_6_1.btn:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,134 +1,145 @@
-module("modules.logic.room.entity.RoomBuildingOccupyEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomBuildingOccupyEntity", package.seeall)
 
-slot0 = class("RoomBuildingOccupyEntity", RoomBaseEntity)
+local var_0_0 = class("RoomBuildingOccupyEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.Untagged
 end
 
-function slot0.init(slot0, slot1)
-	slot0.goTrs = slot1.transform
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.StaticContainerGOKey)
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.goTrs = arg_3_1.transform
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.StaticContainerGOKey)
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("effect", RoomEffectComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
 end
 
-function slot0.onEffectRebuild(slot0)
+function var_0_0.onEffectRebuild(arg_6_0)
+	return
 end
 
-function slot0._isShowNeighbor(slot0, slot1, slot2)
-	if RoomMapBuildingModel.instance:getTempBuildingParam(slot1, slot2) then
+function var_0_0._isShowNeighbor(arg_7_0, arg_7_1, arg_7_2)
+	if RoomMapBuildingModel.instance:getTempBuildingParam(arg_7_1, arg_7_2) then
 		return false
 	end
 
 	return true
 end
 
-function slot0._getContainerGO(slot0, slot1)
-	if slot1 then
-		return slot0.containerGO
+function var_0_0._getContainerGO(arg_8_0, arg_8_1)
+	if arg_8_1 then
+		return arg_8_0.containerGO
 	end
 
-	return slot0.staticContainerGO
+	return arg_8_0.staticContainerGO
 end
 
-function slot0._refreshNeighbor(slot0, slot1, slot2, slot3)
-	for slot8 = 1, 6 do
-		slot9 = HexPoint.directions[slot8]
-		slot11 = (slot1 and RoomEnum.EffectKey.BuildingOccupyCanSideKeys or RoomEnum.EffectKey.BuildingOccupyNotSideKeys)[slot8]
+function var_0_0._refreshNeighbor(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = arg_9_1 and RoomEnum.EffectKey.BuildingOccupyCanSideKeys or RoomEnum.EffectKey.BuildingOccupyNotSideKeys
 
-		if slot0:_isShowNeighbor(slot9.x + slot3.x, slot9.y + slot3.y) and not slot0.effect:isHasEffectGOByKey(slot11) then
-			slot0.effect:addParams({
-				[slot11] = {
-					res = slot1 and RoomScenePreloader.ResEffectF or RoomScenePreloader.ResEffectE,
-					containerGO = slot0:_getContainerGO(slot1),
-					localRotation = Vector3(0, (slot8 - 1 + 3) * 60, 0)
+	for iter_9_0 = 1, 6 do
+		local var_9_1 = HexPoint.directions[iter_9_0]
+		local var_9_2 = arg_9_0:_isShowNeighbor(var_9_1.x + arg_9_3.x, var_9_1.y + arg_9_3.y)
+		local var_9_3 = var_9_0[iter_9_0]
+
+		if var_9_2 and not arg_9_0.effect:isHasEffectGOByKey(var_9_3) then
+			arg_9_0.effect:addParams({
+				[var_9_3] = {
+					res = arg_9_1 and RoomScenePreloader.ResEffectF or RoomScenePreloader.ResEffectE,
+					containerGO = arg_9_0:_getContainerGO(arg_9_1),
+					localRotation = Vector3(0, (iter_9_0 - 1 + 3) * 60, 0)
 				}
 			})
 		end
 
-		slot0.effect:setActiveByKey(slot11, slot10)
+		arg_9_0.effect:setActiveByKey(var_9_3, var_9_2)
 	end
 end
 
-function slot0._refreshOccupy(slot0, slot1)
-	if not slot0.effect:isHasKey(slot1 and RoomEnum.EffectKey.BuildingOccupyCanJudgeKey or RoomEnum.EffectKey.BuildingOccupyNotJudgeKey) then
-		slot0.effect:addParams({
-			[slot2] = {
-				res = slot1 and RoomScenePreloader.ResEffectD01 or RoomScenePreloader.ResEffectD02,
-				containerGO = slot0:_getContainerGO(slot1)
+function var_0_0._refreshOccupy(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1 and RoomEnum.EffectKey.BuildingOccupyCanJudgeKey or RoomEnum.EffectKey.BuildingOccupyNotJudgeKey
+
+	if not arg_10_0.effect:isHasKey(var_10_0) then
+		arg_10_0.effect:addParams({
+			[var_10_0] = {
+				res = arg_10_1 and RoomScenePreloader.ResEffectD01 or RoomScenePreloader.ResEffectD02,
+				containerGO = arg_10_0:_getContainerGO(arg_10_1)
 			}
 		})
 	end
 end
 
-function slot0._isJudge(slot0, slot1, slot2, slot3)
-	if slot3 == false then
+function var_0_0._isJudge(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_3 == false then
 		return false
 	end
 
-	if RoomMapBlockModel.instance:getBlockMO(slot1, slot2) then
-		return RoomBuildingHelper.isJudge(slot4.hexPoint, slot4.id)
+	local var_11_0 = RoomMapBlockModel.instance:getBlockMO(arg_11_1, arg_11_2)
+
+	if var_11_0 then
+		return RoomBuildingHelper.isJudge(var_11_0.hexPoint, var_11_0.id)
 	end
 
 	return false
 end
 
-function slot0.refreshTempOccupy(slot0)
-	slot2 = false
+function var_0_0.refreshTempOccupy(arg_12_0)
+	local var_12_0 = arg_12_0:getBuildingParam()
+	local var_12_1 = false
 
-	if slot0:getBuildingParam() then
-		slot2 = RoomMapBuildingModel.instance:isTempOccupy(slot1.hexPoint)
+	if var_12_0 then
+		var_12_1 = RoomMapBuildingModel.instance:isTempOccupy(var_12_0.hexPoint)
 	end
 
-	if slot2 then
-		if slot0._lastIsJudge ~= slot0:_isJudge(slot1.hexPoint.x, slot1.hexPoint.y, slot1.checkBuildingAreaSuccess) then
-			slot0._lastIsJudge = slot3
+	if var_12_1 then
+		local var_12_2 = arg_12_0:_isJudge(var_12_0.hexPoint.x, var_12_0.hexPoint.y, var_12_0.checkBuildingAreaSuccess)
 
-			gohelper.setActive(slot0.containerGO, slot3)
-			gohelper.setActive(slot0.staticContainerGO, not slot3)
+		if arg_12_0._lastIsJudge ~= var_12_2 then
+			arg_12_0._lastIsJudge = var_12_2
+
+			gohelper.setActive(arg_12_0.containerGO, var_12_2)
+			gohelper.setActive(arg_12_0.staticContainerGO, not var_12_2)
 		end
 
-		slot0:_refreshNeighbor(slot3, slot1.blockRotate, slot1.hexPoint)
-		slot0:_refreshOccupy(slot3)
+		arg_12_0:_refreshNeighbor(var_12_2, var_12_0.blockRotate, var_12_0.hexPoint)
+		arg_12_0:_refreshOccupy(var_12_2)
 
-		slot4 = HexMath.hexToPosition(slot1.hexPoint, RoomBlockEnum.BlockSize)
+		local var_12_3 = HexMath.hexToPosition(var_12_0.hexPoint, RoomBlockEnum.BlockSize)
 
-		transformhelper.setLocalPos(slot0.goTrs, slot4.x, 0, slot4.y)
-	elseif slot0._lastIsJudge ~= nil then
-		slot0._lastIsJudge = nil
+		transformhelper.setLocalPos(arg_12_0.goTrs, var_12_3.x, 0, var_12_3.y)
+	elseif arg_12_0._lastIsJudge ~= nil then
+		arg_12_0._lastIsJudge = nil
 
-		gohelper.setActive(slot0.containerGO, false)
-		gohelper.setActive(slot0.staticContainerGO, false)
+		gohelper.setActive(arg_12_0.containerGO, false)
+		gohelper.setActive(arg_12_0.staticContainerGO, false)
 	end
 
-	slot0.effect:refreshEffect()
+	arg_12_0.effect:refreshEffect()
 end
 
-function slot0.getBuildingParam(slot0)
-	return RoomMapBuildingModel.instance:getTempBuildingParamByPointIndex(slot0.id)
+function var_0_0.getBuildingParam(arg_13_0)
+	return RoomMapBuildingModel.instance:getTempBuildingParamByPointIndex(arg_13_0.id)
 end
 
-function slot0.getMO(slot0)
+function var_0_0.getMO(arg_14_0)
 	return RoomMapBuildingModel.instance:getTempBuildingMO()
 end
 
-return slot0
+return var_0_0

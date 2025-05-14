@@ -1,20 +1,22 @@
-module("modules.logic.social.config.SocialConfig", package.seeall)
+﻿module("modules.logic.social.config.SocialConfig", package.seeall)
 
-slot0 = class("SocialConfig", BaseConfig)
+local var_0_0 = class("SocialConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"chat_check"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot0.getSocialMessageFields(slot0)
+function var_0_0.getSocialMessageFields(arg_4_0)
 	return {
 		portrait = 5,
 		recipientId = 9,
@@ -30,51 +32,75 @@ function slot0.getSocialMessageFields(slot0)
 	}
 end
 
-function slot0.getMessageUnreadKey(slot0)
-	return string.format("%s&userId=%s", PlayerPrefsKey.SocialMessageUnread, PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getMessageUnreadKey(arg_5_0)
+	local var_5_0 = PlayerModel.instance:getPlayinfo()
+
+	return (string.format("%s&userId=%s", PlayerPrefsKey.SocialMessageUnread, var_5_0.userId))
 end
 
-function slot0.getSocialMessagesKey(slot0, slot1, slot2)
-	return string.format("%s&userId=%s&channelType=%s&id=%s", PlayerPrefsKey.SocialMessage, PlayerModel.instance:getPlayinfo().userId, slot1, slot2)
+function var_0_0.getSocialMessagesKey(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = PlayerModel.instance:getPlayinfo()
+
+	return (string.format("%s&userId=%s&channelType=%s&id=%s", PlayerPrefsKey.SocialMessage, var_6_0.userId, arg_6_1, arg_6_2))
 end
 
-function slot0.getStatusText(slot0, slot1)
-	if tonumber(slot1) == 0 then
+function var_0_0.getStatusText(arg_7_0, arg_7_1)
+	arg_7_1 = tonumber(arg_7_1)
+
+	if arg_7_1 == 0 then
 		return luaLang("social_online")
-	elseif math.floor((ServerTime.now() - slot1 / 1000) / TimeUtil.OneDaySecond) >= 1 then
-		return string.format(luaLang("time_lastday"), slot3)
 	else
-		return string.format(luaLang("time_lasthour"), math.max(1, math.floor(slot2 / TimeUtil.OneHourSecond)))
+		local var_7_0 = ServerTime.now() - arg_7_1 / 1000
+		local var_7_1 = math.floor(var_7_0 / TimeUtil.OneDaySecond)
+
+		if var_7_1 >= 1 then
+			return string.format(luaLang("time_lastday"), var_7_1)
+		else
+			local var_7_2 = math.max(1, math.floor(var_7_0 / TimeUtil.OneHourSecond))
+
+			return string.format(luaLang("time_lasthour"), var_7_2)
+		end
 	end
 end
 
-function slot0.getRequestTimeText(slot0, slot1)
-	if tonumber(slot1) / 1000 == 0 then
+function var_0_0.getRequestTimeText(arg_8_0, arg_8_1)
+	arg_8_1 = tonumber(arg_8_1)
+	arg_8_1 = arg_8_1 / 1000
+
+	if arg_8_1 == 0 then
 		return string.format("<color=#008c00>%s</color>", luaLang("social_recent"))
-	elseif ServerTime.now() - slot1 < TimeUtil.OneHourSecond then
-		return string.format("<color=#008c00>%s</color>", luaLang("social_recent"))
-	elseif slot3 < TimeUtil.OneDaySecond then
-		return string.format(luaLang("time_lasthour"), math.max(math.floor(slot3 / TimeUtil.OneHourSecond), 1))
 	else
-		return string.format(luaLang("time_lastday"), math.floor(slot3 / TimeUtil.OneDaySecond))
+		local var_8_0 = ServerTime.now() - arg_8_1
+
+		if var_8_0 < TimeUtil.OneHourSecond then
+			return string.format("<color=#008c00>%s</color>", luaLang("social_recent"))
+		elseif var_8_0 < TimeUtil.OneDaySecond then
+			local var_8_1 = var_8_0 / TimeUtil.OneHourSecond
+
+			return string.format(luaLang("time_lasthour"), math.max(math.floor(var_8_1), 1))
+		else
+			local var_8_2 = var_8_0 / TimeUtil.OneDaySecond
+
+			return string.format(luaLang("time_lastday"), math.floor(var_8_2))
+		end
 	end
 end
 
-function slot0.getMaxFriendsCount(slot0)
+function var_0_0.getMaxFriendsCount(arg_9_0)
 	return CommonConfig.instance:getConstNum(ConstEnum.SocialMaxFriendsCount)
 end
 
-function slot0.getMaxRequestCount(slot0)
+function var_0_0.getMaxRequestCount(arg_10_0)
 	return CommonConfig.instance:getConstNum(ConstEnum.SocialMaxRequestCount)
 end
 
-function slot0.getMaxBlackListCount(slot0)
+function var_0_0.getMaxBlackListCount(arg_11_0)
 	return CommonConfig.instance:getConstNum(ConstEnum.SocialMaxBlackListCount)
 end
 
-function slot0.isMsgViolation(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_chat_check.configList) do
-		if string.find(slot1, slot6.value, 1, true) then
+function var_0_0.isMsgViolation(arg_12_0, arg_12_1)
+	for iter_12_0, iter_12_1 in ipairs(lua_chat_check.configList) do
+		if string.find(arg_12_1, iter_12_1.value, 1, true) then
 			return true
 		end
 	end
@@ -82,6 +108,6 @@ function slot0.isMsgViolation(slot0, slot1)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

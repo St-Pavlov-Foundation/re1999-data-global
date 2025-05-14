@@ -1,142 +1,153 @@
-module("modules.logic.character.view.CharacterBackpackCardListItem", package.seeall)
+﻿module("modules.logic.character.view.CharacterBackpackCardListItem", package.seeall)
 
-slot0 = class("CharacterBackpackCardListItem", ListScrollCell)
-slot0.PressColor = GameUtil.parseColor("#C8C8C8")
+local var_0_0 = class("CharacterBackpackCardListItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._heroGO = slot1
-	slot0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._heroGO, CommonHeroItem)
+var_0_0.PressColor = GameUtil.parseColor("#C8C8C8")
 
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
-	slot0._heroItem:addClickDownListener(slot0._onItemClickDown, slot0)
-	slot0._heroItem:addClickUpListener(slot0._onItemClickUp, slot0)
-	slot0:_initObj()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._heroGO = arg_1_1
+	arg_1_0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._heroGO, CommonHeroItem)
+
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+	arg_1_0._heroItem:addClickDownListener(arg_1_0._onItemClickDown, arg_1_0)
+	arg_1_0._heroItem:addClickUpListener(arg_1_0._onItemClickUp, arg_1_0)
+	arg_1_0:_initObj()
 end
 
-function slot0._initObj(slot0)
-	slot0._animator = slot0._heroGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initObj(arg_2_0)
+	arg_2_0._animator = arg_2_0._heroGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, slot0._refreshRedDot, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, arg_3_0._refreshRedDot, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, slot0._refreshRedDot, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, arg_4_0._refreshRedDot, arg_4_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0._heroItem:onUpdateMO(slot1)
-	slot0:_refreshRedDot()
+	arg_5_0._heroItem:onUpdateMO(arg_5_1)
+	arg_5_0:_refreshRedDot()
 
-	if slot0._heroItemContainer then
-		slot0._heroItemContainer.spines = nil
+	if arg_5_0._heroItemContainer then
+		arg_5_0._heroItemContainer.spines = nil
 	end
 end
 
-function slot0._refreshRedDot(slot0)
-	if CharacterModel.instance:isHeroCouldExskillUp(slot0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(slot0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(slot0._mo.heroId) or slot0:_isShowDestinyReddot() then
-		slot0._heroItem:setRedDotShow(true)
+function var_0_0._refreshRedDot(arg_6_0)
+	if CharacterModel.instance:isHeroCouldExskillUp(arg_6_0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(arg_6_0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(arg_6_0._mo.heroId) or arg_6_0:_isShowDestinyReddot() then
+		arg_6_0._heroItem:setRedDotShow(true)
 	else
-		slot0._heroItem:setRedDotShow(false)
+		arg_6_0._heroItem:setRedDotShow(false)
 	end
 end
 
-function slot0._onrefreshItem(slot0)
+function var_0_0._onrefreshItem(arg_7_0)
+	return
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	CharacterController.instance:openCharacterView(slot0._mo)
+	CharacterController.instance:openCharacterView(arg_8_0._mo)
 
-	if slot0:_isShowDestinyReddot() then
-		HeroRpc.instance:setHeroRedDotReadRequest(slot0._mo.heroId, 1)
+	if arg_8_0:_isShowDestinyReddot() then
+		HeroRpc.instance:setHeroRedDotReadRequest(arg_8_0._mo.heroId, 1)
 	end
 end
 
-function slot0._onItemClickDown(slot0)
-	slot0:_setHeroItemPressState(true)
+function var_0_0._onItemClickDown(arg_9_0)
+	arg_9_0:_setHeroItemPressState(true)
 end
 
-function slot0._onItemClickUp(slot0)
-	slot0:_setHeroItemPressState(false)
+function var_0_0._onItemClickUp(arg_10_0)
+	arg_10_0:_setHeroItemPressState(false)
 end
 
-function slot0._setHeroItemPressState(slot0, slot1)
-	if not slot0._heroItemContainer then
-		slot0._heroItemContainer = slot0:getUserDataTb_()
-		slot2 = slot0._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
-		slot0._heroItemContainer.images = slot2
-		slot0._heroItemContainer.tmps = slot0._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
-		slot0._heroItemContainer.compColor = {}
-		slot4 = slot2:GetEnumerator()
+function var_0_0._setHeroItemPressState(arg_11_0, arg_11_1)
+	if not arg_11_0._heroItemContainer then
+		arg_11_0._heroItemContainer = arg_11_0:getUserDataTb_()
 
-		while slot4:MoveNext() do
-			slot0._heroItemContainer.compColor[slot4.Current] = slot4.Current.color
+		local var_11_0 = arg_11_0._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
+
+		arg_11_0._heroItemContainer.images = var_11_0
+
+		local var_11_1 = arg_11_0._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+
+		arg_11_0._heroItemContainer.tmps = var_11_1
+		arg_11_0._heroItemContainer.compColor = {}
+
+		local var_11_2 = var_11_0:GetEnumerator()
+
+		while var_11_2:MoveNext() do
+			arg_11_0._heroItemContainer.compColor[var_11_2.Current] = var_11_2.Current.color
 		end
 
-		slot4 = slot3:GetEnumerator()
+		local var_11_3 = var_11_1:GetEnumerator()
 
-		while slot4:MoveNext() do
-			slot0._heroItemContainer.compColor[slot4.Current] = slot4.Current.color
-		end
-	end
-
-	if not slot0._heroItemContainer.spines then
-		slot2 = slot0._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
-		slot0._heroItemContainer.spines = slot2
-		slot3 = slot2:GetEnumerator()
-
-		while slot3:MoveNext() do
-			slot0._heroItemContainer.compColor[slot3.Current] = slot3.Current.color
+		while var_11_3:MoveNext() do
+			arg_11_0._heroItemContainer.compColor[var_11_3.Current] = var_11_3.Current.color
 		end
 	end
 
-	if slot0._heroItemContainer then
-		slot0:_setUIPressState(slot0._heroItemContainer.images, slot1, slot0._heroItemContainer.compColor)
-		slot0:_setUIPressState(slot0._heroItemContainer.tmps, slot1, slot0._heroItemContainer.compColor)
-		slot0:_setUIPressState(slot0._heroItemContainer.spines, slot1, slot0._heroItemContainer.compColor)
+	if not arg_11_0._heroItemContainer.spines then
+		local var_11_4 = arg_11_0._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
+
+		arg_11_0._heroItemContainer.spines = var_11_4
+
+		local var_11_5 = var_11_4:GetEnumerator()
+
+		while var_11_5:MoveNext() do
+			arg_11_0._heroItemContainer.compColor[var_11_5.Current] = var_11_5.Current.color
+		end
+	end
+
+	if arg_11_0._heroItemContainer then
+		arg_11_0:_setUIPressState(arg_11_0._heroItemContainer.images, arg_11_1, arg_11_0._heroItemContainer.compColor)
+		arg_11_0:_setUIPressState(arg_11_0._heroItemContainer.tmps, arg_11_1, arg_11_0._heroItemContainer.compColor)
+		arg_11_0:_setUIPressState(arg_11_0._heroItemContainer.spines, arg_11_1, arg_11_0._heroItemContainer.compColor)
 	end
 end
 
-function slot0._setUIPressState(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0._setUIPressState(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if not arg_12_1 then
 		return
 	end
 
-	slot4 = slot1:GetEnumerator()
+	local var_12_0 = arg_12_1:GetEnumerator()
 
-	while slot4:MoveNext() do
-		slot5 = nil
+	while var_12_0:MoveNext() do
+		local var_12_1
 
-		if slot2 then
-			(slot3 and slot3[slot4.Current] * 0.7 or uv0.PressColor).a = slot4.Current.color.a
+		if arg_12_2 then
+			var_12_1 = arg_12_3 and arg_12_3[var_12_0.Current] * 0.7 or var_0_0.PressColor
+			var_12_1.a = var_12_0.Current.color.a
 		else
-			slot5 = slot3 and slot3[slot4.Current] or Color.white
+			var_12_1 = arg_12_3 and arg_12_3[var_12_0.Current] or Color.white
 		end
 
-		slot4.Current.color = slot5
+		var_12_0.Current.color = var_12_1
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._heroItem then
-		slot0._heroItem:onDestroy()
+function var_0_0.onDestroy(arg_13_0)
+	if arg_13_0._heroItem then
+		arg_13_0._heroItem:onDestroy()
 
-		slot0._heroItem = nil
+		arg_13_0._heroItem = nil
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_14_0)
+	return arg_14_0._animator
 end
 
-function slot0._isShowDestinyReddot(slot0)
-	if slot0._mo and slot0._mo.destinyStoneMo then
-		return slot0._mo:isCanOpenDestinySystem() and slot0._mo.destinyStoneMo:getRedDot() < 1
+function var_0_0._isShowDestinyReddot(arg_15_0)
+	if arg_15_0._mo and arg_15_0._mo.destinyStoneMo then
+		return arg_15_0._mo:isCanOpenDestinySystem() and arg_15_0._mo.destinyStoneMo:getRedDot() < 1
 	end
 end
 
-return slot0
+return var_0_0

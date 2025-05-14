@@ -1,65 +1,65 @@
-module("modules.logic.fight.system.work.FightWorkFlowParallel", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFlowParallel", package.seeall)
 
-slot0 = class("FightWorkFlowParallel", FightWorkFlowBase)
+local var_0_0 = class("FightWorkFlowParallel", FightWorkFlowBase)
 
-function slot0.onConstructor(slot0)
-	slot0._workList = {}
-	slot0._finishCount = 0
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._workList = {}
+	arg_1_0._finishCount = 0
 end
 
-function slot0.registWork(slot0, slot1, ...)
-	slot2 = slot0:newClass(slot1, ...)
+function var_0_0.registWork(arg_2_0, arg_2_1, ...)
+	local var_2_0 = arg_2_0:newClass(arg_2_1, ...)
 
-	table.insert(slot0._workList, slot2)
+	table.insert(arg_2_0._workList, var_2_0)
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.addWork(slot0, slot1)
-	if not slot1 then
+function var_0_0.addWork(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	table.insert(slot0._workList, slot1)
+	table.insert(arg_3_0._workList, arg_3_1)
 end
 
-function slot0.listen2Work(slot0, slot1)
-	return slot0:registWork(FightWorkListen2WorkDone, slot1)
+function var_0_0.listen2Work(arg_4_0, arg_4_1)
+	return arg_4_0:registWork(FightWorkListen2WorkDone, arg_4_1)
 end
 
-function slot0.onStart(slot0)
-	slot0:cancelFightWorkSafeTimer()
+function var_0_0.onStart(arg_5_0)
+	arg_5_0:cancelFightWorkSafeTimer()
 
-	if #slot0._workList == 0 then
-		return slot0:onDone(true)
+	if #arg_5_0._workList == 0 then
+		return arg_5_0:onDone(true)
 	else
-		for slot4, slot5 in ipairs(slot0._workList) do
-			if slot5.WORKFINISHED or slot5.IS_DISPOSED then
-				slot0._finishCount = slot0._finishCount + 1
-			elseif not slot5.STARTED then
-				slot5:registFinishCallback(slot0.onWorkItemDone, slot0, slot5)
-				slot5:start(slot0.context)
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._workList) do
+			if iter_5_1.WORKFINISHED or iter_5_1.IS_DISPOSED then
+				arg_5_0._finishCount = arg_5_0._finishCount + 1
+			elseif not iter_5_1.STARTED then
+				iter_5_1:registFinishCallback(arg_5_0.onWorkItemDone, arg_5_0, iter_5_1)
+				iter_5_1:start(arg_5_0.context)
 			end
 		end
 
-		if not slot0.IS_DISPOSED and slot0._finishCount == #slot0._workList then
-			return slot0:onDone(true)
+		if not arg_5_0.IS_DISPOSED and arg_5_0._finishCount == #arg_5_0._workList then
+			return arg_5_0:onDone(true)
 		end
 	end
 end
 
-function slot0.onWorkItemDone(slot0, slot1)
-	slot0._finishCount = slot0._finishCount + 1
+function var_0_0.onWorkItemDone(arg_6_0, arg_6_1)
+	arg_6_0._finishCount = arg_6_0._finishCount + 1
 
-	if slot0._finishCount == #slot0._workList then
-		return slot0:onDone(true)
+	if arg_6_0._finishCount == #arg_6_0._workList then
+		return arg_6_0:onDone(true)
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4 = #slot0._workList, 1, -1 do
-		slot0._workList[slot4]:disposeSelf()
+function var_0_0.onDestructor(arg_7_0)
+	for iter_7_0 = #arg_7_0._workList, 1, -1 do
+		arg_7_0._workList[iter_7_0]:disposeSelf()
 	end
 end
 
-return slot0
+return var_0_0

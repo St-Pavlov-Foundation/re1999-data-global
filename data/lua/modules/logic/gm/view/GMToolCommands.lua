@@ -1,175 +1,203 @@
-slot1 = false
-slot2 = ""
-slot3 = {
+﻿local var_0_0 = {}
+local var_0_1 = false
+local var_0_2 = ""
+local var_0_3 = {
 	"boxlang",
 	"showui"
 }
 
-function slot4(slot0)
-	function SettingsModel.initResolutionRationDataList(slot0)
+function var_0_0._callByPerfix(arg_1_0, arg_1_1)
+	if not var_0_2:find(arg_1_0) then
+		return
+	end
+
+	local var_1_0 = tostring(arg_1_1:sub(#arg_1_0 + 1))
+	local var_1_1 = string.trim(var_1_0)
+
+	var_0_0[arg_1_0](var_1_1)
+end
+
+function var_0_0.sendGM(arg_2_0)
+	arg_2_0 = string.trim(arg_2_0)
+
+	if string.nilorempty(arg_2_0) then
+		return
+	end
+
+	var_0_1 = false
+	var_0_2 = string.lower(arg_2_0)
+
+	for iter_2_0, iter_2_1 in ipairs(var_0_3) do
+		var_0_0._callByPerfix(iter_2_1, arg_2_0)
+
+		if var_0_1 then
+			break
+		end
+	end
+
+	return var_0_1
+end
+
+function var_0_0.boxlang(arg_3_0)
+	local var_3_0 = string.split(arg_3_0, " ")
+	local var_3_1 = ""
+	local var_3_2 = ""
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		if not string.nilorempty(iter_3_1) then
+			local var_3_3
+
+			if iter_3_1:find("language_") then
+				var_3_3 = LangConfig.instance:getLangTxt(nil, iter_3_1)
+			else
+				var_3_3 = luaLang(iter_3_1)
+			end
+
+			if var_3_1 ~= "" then
+				var_3_1 = var_3_1 .. "\n"
+			end
+
+			if var_3_2 ~= "" then
+				var_3_2 = var_3_2 .. "\n"
+			end
+
+			var_3_1 = var_3_1 .. var_3_3
+			var_3_2 = var_3_2 .. string.format("%s\n\t%s", iter_3_1, var_3_3)
+		end
+	end
+
+	if not string.nilorempty(var_3_1) then
+		var_3_2 = "\n" .. var_3_2
+
+		MessageBoxController.instance:showMsgBoxByStr(var_3_1, MsgBoxEnum.BoxType.Yes, function()
+			logNormal(var_3_2)
+		end, nil)
+
+		var_0_1 = true
+	end
+end
+
+local function var_0_4(arg_5_0)
+	function SettingsModel.initResolutionRationDataList(arg_6_0)
 		SettingsModel.instance:initRateAndSystemSize()
 
-		slot1 = uv0.skipIndex
-		slot0._resolutionRatioDataList = {}
-		slot3 = UnityEngine.Screen.currentResolution.width
+		local var_6_0 = arg_5_0.skipIndex
 
-		if slot0._resolutionRatioDataList and #slot0._resolutionRatioDataList >= 1 and slot0._resolutionRatioDataList[1] == slot3 then
+		arg_6_0._resolutionRatioDataList = {}
+
+		local var_6_1 = UnityEngine.Screen.currentResolution.width
+
+		if arg_6_0._resolutionRatioDataList and #arg_6_0._resolutionRatioDataList >= 1 and arg_6_0._resolutionRatioDataList[1] == var_6_1 then
 			return
 		end
 
-		slot8 = math.floor(slot3 / slot0._curRate)
-		slot9 = true
+		local var_6_2 = math.floor(var_6_1 / arg_6_0._curRate)
 
-		slot0:_appendResolutionData(slot3, slot8, slot9)
+		arg_6_0:_appendResolutionData(var_6_1, var_6_2, true)
 
-		for slot8, slot9 in ipairs(SettingsModel.ResolutionRatioWidthList) do
-			if slot1 < slot8 then
-				slot0:_appendResolutionData(slot9, math.floor(slot9 / slot0._curRate), false)
+		for iter_6_0, iter_6_1 in ipairs(SettingsModel.ResolutionRatioWidthList) do
+			if var_6_0 < iter_6_0 then
+				local var_6_3 = math.floor(iter_6_1 / arg_6_0._curRate)
+
+				arg_6_0:_appendResolutionData(iter_6_1, var_6_3, false)
 			end
 		end
 
-		slot5, slot6 = slot0:getCurrentDropDownIndex()
+		local var_6_4, var_6_5 = arg_6_0:getCurrentDropDownIndex()
 
-		if slot6 then
-			slot7, slot8, slot9 = slot0:getCurrentResolutionWHAndIsFull()
+		if var_6_5 then
+			local var_6_6, var_6_7, var_6_8 = arg_6_0:getCurrentResolutionWHAndIsFull()
 
-			slot0:_appendResolutionData(slot7, slot8, slot9)
+			arg_6_0:_appendResolutionData(var_6_6, var_6_7, var_6_8)
 		end
 	end
 end
 
-function slot5()
-	function SettingsGraphicsView._editableInitView(slot0)
-		slot0:_refreshDropdownList()
-		gohelper.setActive(slot0._drop.gameObject, true)
-		gohelper.setActive(slot0._goscreen.gameObject, true)
-		gohelper.setActive(slot0._goenergy.gameObject, false)
+local function var_0_5()
+	function SettingsGraphicsView._editableInitView(arg_8_0)
+		arg_8_0:_refreshDropdownList()
+		gohelper.setActive(arg_8_0._drop.gameObject, true)
+		gohelper.setActive(arg_8_0._goscreen.gameObject, true)
+		gohelper.setActive(arg_8_0._goenergy.gameObject, false)
 
 		if SDKNativeUtil.isShowShareButton() then
-			gohelper.setActive(slot0._goscreenshot, true)
+			gohelper.setActive(arg_8_0._goscreenshot, true)
 		else
-			gohelper.setActive(slot0._goscreenshot, false)
+			gohelper.setActive(arg_8_0._goscreenshot, false)
 		end
 
-		gohelper.addUIClickAudio(slot0._btnframerateswitch.gameObject, AudioEnum.UI.UI_Mission_switch)
+		gohelper.addUIClickAudio(arg_8_0._btnframerateswitch.gameObject, AudioEnum.UI.UI_Mission_switch)
 	end
+end
+
+function var_0_0.showui(arg_9_0)
+	local var_9_0 = false
+	local var_9_1 = string.split(arg_9_0, " ")
+	local var_9_2 = var_9_1[1]
+
+	if not var_9_2 then
+		return
+	end
+
+	local var_9_3 = ViewName[var_9_2]
+
+	if not var_9_3 then
+		logNormal("no define ViewName." .. var_9_2)
+
+		return
+	end
+
+	local var_9_4
+
+	if var_9_3 == ViewName.SettingsPCSystemView or var_9_3 == ViewName.SettingsView then
+		local var_9_5 = var_9_1[2]
+		local var_9_6 = 0
+
+		if var_9_5 then
+			local var_9_7 = string.lower(var_9_5)
+
+			if var_9_7 == "8k" then
+				var_9_6 = 1
+			elseif var_9_7 == "4k" then
+				var_9_6 = 2
+			elseif var_9_7 == "2k" then
+				var_9_6 = 3
+			elseif var_9_7 == "1k" then
+				var_9_6 = 4
+			else
+				logNormal("not support " .. var_9_7)
+			end
+		end
+
+		local var_9_8 = {
+			skipIndex = var_9_6
+		}
+
+		var_0_4(var_9_8)
+
+		function SettingsModel.setResolutionRatio()
+			return
+		end
+	end
+
+	if var_9_3 == ViewName.SettingsView then
+		var_9_0 = true
+
+		function BootNativeUtil.isWindows()
+			return true
+		end
+
+		var_0_5()
+		SettingsController.instance:openView()
+	end
+
+	if not var_9_0 then
+		ViewMgr.instance:openView(var_9_3, var_9_4)
+	end
+
+	var_0_1 = true
 end
 
 require("modules/logic/gm/GMTool")
 
-return {
-	_callByPerfix = function (slot0, slot1)
-		if not uv0:find(slot0) then
-			return
-		end
-
-		uv1[slot0](string.trim(tostring(slot1:sub(#slot0 + 1))))
-	end,
-	sendGM = function (slot0)
-		if string.nilorempty(string.trim(slot0)) then
-			return
-		end
-
-		uv0 = false
-		uv1 = string.lower(slot0)
-
-		for slot4, slot5 in ipairs(uv2) do
-			uv3._callByPerfix(slot5, slot0)
-
-			if uv0 then
-				break
-			end
-		end
-
-		return uv0
-	end,
-	boxlang = function (slot0)
-		slot2 = ""
-		slot3 = ""
-
-		for slot7, slot8 in ipairs(string.split(slot0, " ")) do
-			if not string.nilorempty(slot8) then
-				slot9 = nil
-				slot9 = (not slot8:find("language_") or LangConfig.instance:getLangTxt(nil, slot8)) and luaLang(slot8)
-
-				if slot2 ~= "" then
-					slot2 = slot2 .. "\n"
-				end
-
-				if slot3 ~= "" then
-					slot3 = slot3 .. "\n"
-				end
-
-				slot2 = slot2 .. slot9
-				slot3 = slot3 .. string.format("%s\n\t%s", slot8, slot9)
-			end
-		end
-
-		if not string.nilorempty(slot2) then
-			slot3 = "\n" .. slot3
-
-			MessageBoxController.instance:showMsgBoxByStr(slot2, MsgBoxEnum.BoxType.Yes, function ()
-				logNormal(uv0)
-			end, nil)
-
-			uv0 = true
-		end
-	end,
-	showui = function (slot0)
-		slot1 = false
-
-		if not string.split(slot0, " ")[1] then
-			return
-		end
-
-		if not ViewName[slot3] then
-			logNormal("no define ViewName." .. slot3)
-
-			return
-		end
-
-		slot5 = nil
-
-		if slot4 == ViewName.SettingsPCSystemView or slot4 == ViewName.SettingsView then
-			slot7 = 0
-
-			if slot2[2] then
-				if string.lower(slot6) == "8k" then
-					slot7 = 1
-				elseif slot6 == "4k" then
-					slot7 = 2
-				elseif slot6 == "2k" then
-					slot7 = 3
-				elseif slot6 == "1k" then
-					slot7 = 4
-				else
-					logNormal("not support " .. slot6)
-				end
-			end
-
-			uv0({
-				skipIndex = slot7
-			})
-
-			function SettingsModel.setResolutionRatio()
-			end
-		end
-
-		if slot4 == ViewName.SettingsView then
-			slot1 = true
-
-			function BootNativeUtil.isWindows()
-				return true
-			end
-
-			uv1()
-			SettingsController.instance:openView()
-		end
-
-		if not slot1 then
-			ViewMgr.instance:openView(slot4, slot5)
-		end
-
-		uv2 = true
-	end
-}
+return var_0_0

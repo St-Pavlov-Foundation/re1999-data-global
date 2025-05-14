@@ -1,12 +1,12 @@
-module("modules.logic.tower.config.TowerConfig", package.seeall)
+﻿module("modules.logic.tower.config.TowerConfig", package.seeall)
 
-slot0 = class("TowerConfig", BaseConfig)
+local var_0_0 = class("TowerConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.TowerConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.TowerConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"tower_const",
 		"tower_permanent_time",
@@ -25,433 +25,496 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("on%sLoaded", slot1)] then
-		slot4(slot0, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("on%sLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_2)
 	end
 end
 
-function slot0.ontower_assist_attributeLoaded(slot0, slot1)
-	slot0.towerAssistAttrbuteConfig = slot1
+function var_0_0.ontower_assist_attributeLoaded(arg_4_0, arg_4_1)
+	arg_4_0.towerAssistAttrbuteConfig = arg_4_1
 end
 
-function slot0.ontower_limited_episodeLoaded(slot0, slot1)
-	slot0.towerLimitedEpisodeConfig = slot1
+function var_0_0.ontower_limited_episodeLoaded(arg_5_0, arg_5_1)
+	arg_5_0.towerLimitedEpisodeConfig = arg_5_1
 
-	slot0:buildTowerLimitedTimeCo()
+	arg_5_0:buildTowerLimitedTimeCo()
 end
 
-function slot0.buildTowerLimitedTimeCo(slot0)
-	slot0.limitEpisodeCoMap = {}
+function var_0_0.buildTowerLimitedTimeCo(arg_6_0)
+	arg_6_0.limitEpisodeCoMap = {}
 
-	for slot5, slot6 in ipairs(slot0.towerLimitedEpisodeConfig.configList) do
-		if not slot0.limitEpisodeCoMap[slot6.season] then
-			slot0.limitEpisodeCoMap[slot6.season] = {}
+	local var_6_0 = arg_6_0.towerLimitedEpisodeConfig.configList
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = arg_6_0.limitEpisodeCoMap[iter_6_1.season]
+
+		if not var_6_1 then
+			var_6_1 = {}
+			arg_6_0.limitEpisodeCoMap[iter_6_1.season] = var_6_1
 		end
 
-		if not slot7[slot6.entrance] then
-			slot7[slot6.entrance] = {}
+		if not var_6_1[iter_6_1.entrance] then
+			var_6_1[iter_6_1.entrance] = {}
 		end
 
-		table.insert(slot7[slot6.entrance], slot6)
+		table.insert(var_6_1[iter_6_1.entrance], iter_6_1)
 	end
 end
 
-function slot0.ontower_limited_timeLoaded(slot0, slot1)
-	slot0.towerLimitedTimeConfig = slot1
+function var_0_0.ontower_limited_timeLoaded(arg_7_0, arg_7_1)
+	arg_7_0.towerLimitedTimeConfig = arg_7_1
 end
 
-function slot0.ontower_taskLoaded(slot0, slot1)
-	slot0.taskConfig = slot1
+function var_0_0.ontower_taskLoaded(arg_8_0, arg_8_1)
+	arg_8_0.taskConfig = arg_8_1
 end
 
-function slot0.ontower_boss_timeLoaded(slot0, slot1)
-	slot0.bossTimeConfig = slot1
+function var_0_0.ontower_boss_timeLoaded(arg_9_0, arg_9_1)
+	arg_9_0.bossTimeConfig = arg_9_1
 end
 
-function slot0.ontower_constLoaded(slot0, slot1)
-	slot0.towerConstConfig = slot1
+function var_0_0.ontower_constLoaded(arg_10_0, arg_10_1)
+	arg_10_0.towerConstConfig = arg_10_1
 end
 
-function slot0.ontower_bossLoaded(slot0, slot1)
-	slot0.bossTowerConfig = slot1
+function var_0_0.ontower_bossLoaded(arg_11_0, arg_11_1)
+	arg_11_0.bossTowerConfig = arg_11_1
 end
 
-function slot0.ontower_boss_episodeLoaded(slot0, slot1)
-	slot0.bossTowerEpisodeConfig = slot1
+function var_0_0.ontower_boss_episodeLoaded(arg_12_0, arg_12_1)
+	arg_12_0.bossTowerEpisodeConfig = arg_12_1
 end
 
-function slot0.ontower_assist_talentLoaded(slot0, slot1)
-	slot0.assistTalentConfig = slot1
+function var_0_0.ontower_assist_talentLoaded(arg_13_0, arg_13_1)
+	arg_13_0.assistTalentConfig = arg_13_1
 end
 
-function slot0.ontower_permanent_timeLoaded(slot0, slot1)
-	slot0.towerPermanentTimeConfig = slot1
+function var_0_0.ontower_permanent_timeLoaded(arg_14_0, arg_14_1)
+	arg_14_0.towerPermanentTimeConfig = arg_14_1
 end
 
-function slot0.ontower_assist_bossLoaded(slot0, slot1)
-	slot0.towerAssistBossConfig = slot1
+function var_0_0.ontower_assist_bossLoaded(arg_15_0, arg_15_1)
+	arg_15_0.towerAssistBossConfig = arg_15_1
 end
 
-function slot0.ontower_assist_developLoaded(slot0, slot1)
-	slot0.towerAssistDevelopConfig = slot1
+function var_0_0.ontower_assist_developLoaded(arg_16_0, arg_16_1)
+	arg_16_0.towerAssistDevelopConfig = arg_16_1
 end
 
-function slot0.ontower_permanent_episodeLoaded(slot0, slot1)
-	slot0.towerPermanentEpisodeConfig = slot1
+function var_0_0.ontower_permanent_episodeLoaded(arg_17_0, arg_17_1)
+	arg_17_0.towerPermanentEpisodeConfig = arg_17_1
 
-	slot0:buildPermanentEpisodeList()
+	arg_17_0:buildPermanentEpisodeList()
 end
 
-function slot0.buildPermanentEpisodeList(slot0)
-	slot0.permanentEpisodeList = {}
+function var_0_0.buildPermanentEpisodeList(arg_18_0)
+	arg_18_0.permanentEpisodeList = {}
 
-	for slot4, slot5 in ipairs(slot0.towerPermanentEpisodeConfig.configList) do
-		if not slot0.permanentEpisodeList[slot5.stageId] then
-			slot0.permanentEpisodeList[slot5.stageId] = {}
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.towerPermanentEpisodeConfig.configList) do
+		if not arg_18_0.permanentEpisodeList[iter_18_1.stageId] then
+			arg_18_0.permanentEpisodeList[iter_18_1.stageId] = {}
 		end
 
-		table.insert(slot0.permanentEpisodeList[slot5.stageId], slot5)
+		table.insert(arg_18_0.permanentEpisodeList[iter_18_1.stageId], iter_18_1)
 	end
 
-	for slot4, slot5 in pairs(slot0.permanentEpisodeList) do
-		table.sort(slot5, function (slot0, slot1)
-			return slot0.layerId < slot1.layerId
+	for iter_18_2, iter_18_3 in pairs(arg_18_0.permanentEpisodeList) do
+		table.sort(iter_18_3, function(arg_19_0, arg_19_1)
+			return arg_19_0.layerId < arg_19_1.layerId
 		end)
 	end
 end
 
-function slot0.ontower_mop_upLoaded(slot0, slot1)
-	slot0.towerMopUpConfig = slot1
+function var_0_0.ontower_mop_upLoaded(arg_20_0, arg_20_1)
+	arg_20_0.towerMopUpConfig = arg_20_1
 end
 
-function slot0.getBossTimeTowerConfig(slot0, slot1, slot2)
-	return slot0.bossTimeConfig.configDict[slot1] and slot3[slot2]
+function var_0_0.getBossTimeTowerConfig(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0.bossTimeConfig.configDict[arg_21_1]
+
+	return var_21_0 and var_21_0[arg_21_2]
 end
 
-function slot0.getAssistTalentConfig(slot0)
-	return slot0.assistTalentConfig
+function var_0_0.getAssistTalentConfig(arg_22_0)
+	return arg_22_0.assistTalentConfig
 end
 
-function slot0.getBossTowerConfig(slot0, slot1)
-	return slot0.bossTowerConfig.configDict[slot1]
+function var_0_0.getBossTowerConfig(arg_23_0, arg_23_1)
+	return arg_23_0.bossTowerConfig.configDict[arg_23_1]
 end
 
-function slot0.getPermanentEpisodeCo(slot0, slot1)
-	return slot0.towerPermanentEpisodeConfig.configDict[slot1]
+function var_0_0.getPermanentEpisodeCo(arg_24_0, arg_24_1)
+	return arg_24_0.towerPermanentEpisodeConfig.configDict[arg_24_1]
 end
 
-function slot0.getPermanentEpisodeStageCoList(slot0, slot1)
-	return slot0.permanentEpisodeList[slot1]
+function var_0_0.getPermanentEpisodeStageCoList(arg_25_0, arg_25_1)
+	return arg_25_0.permanentEpisodeList[arg_25_1]
 end
 
-function slot0.getPermanentEpisodeLayerCo(slot0, slot1, slot2)
-	if not slot0:getPermanentEpisodeStageCoList(slot1) or tabletool.len(slot3) == 0 then
-		logError("该阶段数据不存在，请检查: stageId:" .. tostring(slot1))
+function var_0_0.getPermanentEpisodeLayerCo(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_0:getPermanentEpisodeStageCoList(arg_26_1)
+
+	if not var_26_0 or tabletool.len(var_26_0) == 0 then
+		logError("该阶段数据不存在，请检查: stageId:" .. tostring(arg_26_1))
 
 		return
 	end
 
-	return slot3[slot2]
+	return var_26_0[arg_26_2]
 end
 
-function slot0.getTowerPermanentTimeCo(slot0, slot1)
-	return slot0.towerPermanentTimeConfig.configDict[slot1]
+function var_0_0.getTowerPermanentTimeCo(arg_27_0, arg_27_1)
+	return arg_27_0.towerPermanentTimeConfig.configDict[arg_27_1]
 end
 
-function slot0.getTowerPermanentTimeCoList(slot0)
-	return slot0.towerPermanentTimeConfig.configList
+function var_0_0.getTowerPermanentTimeCoList(arg_28_0)
+	return arg_28_0.towerPermanentTimeConfig.configList
 end
 
-function slot0.getAssistBossList(slot0)
-	return slot0.towerAssistBossConfig.configList
+function var_0_0.getAssistBossList(arg_29_0)
+	return arg_29_0.towerAssistBossConfig.configList
 end
 
-function slot0.getAssistBossConfig(slot0, slot1)
-	return slot0.towerAssistBossConfig.configDict[slot1]
+function var_0_0.getAssistBossConfig(arg_30_0, arg_30_1)
+	return arg_30_0.towerAssistBossConfig.configDict[arg_30_1]
 end
 
-function slot0.getAssistDevelopConfig(slot0, slot1, slot2)
-	return slot0.towerAssistDevelopConfig.configDict[slot1] and slot3[slot2]
+function var_0_0.getAssistDevelopConfig(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0.towerAssistDevelopConfig.configDict[arg_31_1]
+
+	return var_31_0 and var_31_0[arg_31_2]
 end
 
-function slot0.getAssistBossMaxLev(slot0, slot1)
-	if not slot0._bossLevDict then
-		slot0._bossLevDict = {}
+function var_0_0.getAssistBossMaxLev(arg_32_0, arg_32_1)
+	if not arg_32_0._bossLevDict then
+		arg_32_0._bossLevDict = {}
 	end
 
-	if not slot0._bossLevDict[slot1] then
-		for slot7, slot8 in pairs(slot0.towerAssistDevelopConfig.configDict[slot1]) do
-			if 0 < slot7 then
-				slot2 = slot7
+	if not arg_32_0._bossLevDict[arg_32_1] then
+		local var_32_0 = 0
+		local var_32_1 = arg_32_0.towerAssistDevelopConfig.configDict[arg_32_1]
+
+		for iter_32_0, iter_32_1 in pairs(var_32_1) do
+			if var_32_0 < iter_32_0 then
+				var_32_0 = iter_32_0
 			end
 		end
 
-		slot0._bossLevDict[slot1] = slot2
+		arg_32_0._bossLevDict[arg_32_1] = var_32_0
 	end
 
-	return slot0._bossLevDict[slot1]
+	return arg_32_0._bossLevDict[arg_32_1]
 end
 
-function slot0.getMaxMopUpConfigByLayerId(slot0, slot1)
-	slot3 = nil
+function var_0_0.getMaxMopUpConfigByLayerId(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0.towerMopUpConfig.configList
+	local var_33_1
 
-	for slot7, slot8 in ipairs(slot0.towerMopUpConfig.configList) do
-		if slot8.layerNum <= slot1 then
-			slot3 = slot8
+	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
+		if arg_33_1 >= iter_33_1.layerNum then
+			var_33_1 = iter_33_1
 		else
 			break
 		end
 	end
 
-	return slot3
+	return var_33_1
 end
 
-function slot0.getTowerMopUpCo(slot0, slot1)
-	return slot0.towerMopUpConfig.configDict[slot1]
+function var_0_0.getTowerMopUpCo(arg_34_0, arg_34_1)
+	return arg_34_0.towerMopUpConfig.configDict[arg_34_1]
 end
 
-function slot0.getTowerConstConfig(slot0, slot1)
-	return slot0.towerConstConfig.configDict[slot1] and slot0.towerConstConfig.configDict[slot1].value
+function var_0_0.getTowerConstConfig(arg_35_0, arg_35_1)
+	return arg_35_0.towerConstConfig.configDict[arg_35_1] and arg_35_0.towerConstConfig.configDict[arg_35_1].value
 end
 
-function slot0.getTowerMopUpCoList(slot0)
-	return slot0.towerMopUpConfig.configList
+function var_0_0.getTowerMopUpCoList(arg_36_0)
+	return arg_36_0.towerMopUpConfig.configList
 end
 
-function slot0.getBossTowerIdByEpisodeId(slot0, slot1)
-	if slot0._episodeId2BossTowerIdDict == nil then
-		slot0._episodeId2BossTowerIdDict = {}
+function var_0_0.getBossTowerIdByEpisodeId(arg_37_0, arg_37_1)
+	if arg_37_0._episodeId2BossTowerIdDict == nil then
+		arg_37_0._episodeId2BossTowerIdDict = {}
 
-		for slot6, slot7 in ipairs(slot0.bossTowerEpisodeConfig.configList) do
-			slot0._episodeId2BossTowerIdDict[slot7.episodeId] = slot7.towerId
+		local var_37_0 = arg_37_0.bossTowerEpisodeConfig.configList
+
+		for iter_37_0, iter_37_1 in ipairs(var_37_0) do
+			arg_37_0._episodeId2BossTowerIdDict[iter_37_1.episodeId] = iter_37_1.towerId
 		end
 	end
 
-	return slot0._episodeId2BossTowerIdDict[slot1]
+	return arg_37_0._episodeId2BossTowerIdDict[arg_37_1]
 end
 
-function slot0.getBossTowerEpisodeConfig(slot0, slot1, slot2)
-	return slot0.bossTowerEpisodeConfig.configDict[slot1][slot2]
+function var_0_0.getBossTowerEpisodeConfig(arg_38_0, arg_38_1, arg_38_2)
+	return arg_38_0.bossTowerEpisodeConfig.configDict[arg_38_1][arg_38_2]
 end
 
-function slot0.getBossTowerEpisodeCoList(slot0, slot1)
-	slot2 = slot0.bossTowerEpisodeConfig.configDict[slot1]
+function var_0_0.getBossTowerEpisodeCoList(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0.bossTowerEpisodeConfig.configDict[arg_39_1]
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.layerId < slot1.layerId
+	table.sort(var_39_0, function(arg_40_0, arg_40_1)
+		return arg_40_0.layerId < arg_40_1.layerId
 	end)
 
-	return slot2
+	return var_39_0
 end
 
-function slot0.getTaskListByGroupId(slot0, slot1)
-	if slot0._groupId2TaskListDict == nil then
-		slot0._groupId2TaskListDict = {}
+function var_0_0.getTaskListByGroupId(arg_41_0, arg_41_1)
+	if arg_41_0._groupId2TaskListDict == nil then
+		arg_41_0._groupId2TaskListDict = {}
 
-		for slot6, slot7 in ipairs(slot0.taskConfig.configList) do
-			if not slot0._groupId2TaskListDict[slot7.taskGroupId] then
-				slot0._groupId2TaskListDict[slot7.taskGroupId] = {}
+		local var_41_0 = arg_41_0.taskConfig.configList
+
+		for iter_41_0, iter_41_1 in ipairs(var_41_0) do
+			if not arg_41_0._groupId2TaskListDict[iter_41_1.taskGroupId] then
+				arg_41_0._groupId2TaskListDict[iter_41_1.taskGroupId] = {}
 			end
 
-			table.insert(slot0._groupId2TaskListDict[slot7.taskGroupId], slot7.id)
+			table.insert(arg_41_0._groupId2TaskListDict[iter_41_1.taskGroupId], iter_41_1.id)
 		end
 	end
 
-	return slot0._groupId2TaskListDict[slot1]
+	return arg_41_0._groupId2TaskListDict[arg_41_1]
 end
 
-function slot0.getTowerBossTimeCoByTaskGroupId(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0.bossTimeConfig.configList) do
-		if slot7.taskGroupId == slot1 then
-			return slot7
-		end
-	end
-end
+function var_0_0.getTowerBossTimeCoByTaskGroupId(arg_42_0, arg_42_1)
+	local var_42_0 = arg_42_0.bossTimeConfig.configList
 
-function slot0.getTowerLimitedCoByTaskGroupId(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getAllTowerLimitedTimeCoList()) do
-		if slot7.taskGroupId == slot1 then
-			return slot7
+	for iter_42_0, iter_42_1 in ipairs(var_42_0) do
+		if iter_42_1.taskGroupId == arg_42_1 then
+			return iter_42_1
 		end
 	end
 end
 
-function slot0.getAllTowerLimitedTimeCoList(slot0)
-	return slot0.towerLimitedTimeConfig.configList
-end
+function var_0_0.getTowerLimitedCoByTaskGroupId(arg_43_0, arg_43_1)
+	local var_43_0 = arg_43_0:getAllTowerLimitedTimeCoList()
 
-function slot0.getTowerLimitedTimeCo(slot0, slot1)
-	return slot0.towerLimitedTimeConfig.configDict[slot1]
-end
-
-function slot0.getTowerTaskConfig(slot0, slot1)
-	return slot0.taskConfig.configDict[slot1]
-end
-
-function slot0.getTowerLimitedTimeCoList(slot0, slot1, slot2)
-	return slot0.limitEpisodeCoMap[slot1] and slot0.limitEpisodeCoMap[slot1][slot2]
-end
-
-function slot0.getTowerLimitedTimeCoByEpisodeId(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in ipairs(slot0:getTowerLimitedTimeCoList(slot1, slot2)) do
-		if slot9.episodeId == slot3 then
-			return slot9
+	for iter_43_0, iter_43_1 in ipairs(var_43_0) do
+		if iter_43_1.taskGroupId == arg_43_1 then
+			return iter_43_1
 		end
 	end
 end
 
-function slot0.getTowerLimitedTimeCoByDifficulty(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in ipairs(slot0:getTowerLimitedTimeCoList(slot1, slot2)) do
-		if slot9.difficulty == slot3 then
-			return slot9
+function var_0_0.getAllTowerLimitedTimeCoList(arg_44_0)
+	return arg_44_0.towerLimitedTimeConfig.configList
+end
+
+function var_0_0.getTowerLimitedTimeCo(arg_45_0, arg_45_1)
+	return arg_45_0.towerLimitedTimeConfig.configDict[arg_45_1]
+end
+
+function var_0_0.getTowerTaskConfig(arg_46_0, arg_46_1)
+	return arg_46_0.taskConfig.configDict[arg_46_1]
+end
+
+function var_0_0.getTowerLimitedTimeCoList(arg_47_0, arg_47_1, arg_47_2)
+	return arg_47_0.limitEpisodeCoMap[arg_47_1] and arg_47_0.limitEpisodeCoMap[arg_47_1][arg_47_2]
+end
+
+function var_0_0.getTowerLimitedTimeCoByEpisodeId(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
+	local var_48_0 = arg_48_0:getTowerLimitedTimeCoList(arg_48_1, arg_48_2)
+
+	for iter_48_0, iter_48_1 in ipairs(var_48_0) do
+		if iter_48_1.episodeId == arg_48_3 then
+			return iter_48_1
 		end
 	end
 end
 
-function slot0.getPassiveSKills(slot0, slot1)
-	if slot0.bossPassiveSkillDict == nil then
-		slot0.bossPassiveSkillDict = {}
+function var_0_0.getTowerLimitedTimeCoByDifficulty(arg_49_0, arg_49_1, arg_49_2, arg_49_3)
+	local var_49_0 = arg_49_0:getTowerLimitedTimeCoList(arg_49_1, arg_49_2)
+
+	for iter_49_0, iter_49_1 in ipairs(var_49_0) do
+		if iter_49_1.difficulty == arg_49_3 then
+			return iter_49_1
+		end
+	end
+end
+
+function var_0_0.getPassiveSKills(arg_50_0, arg_50_1)
+	if arg_50_0.bossPassiveSkillDict == nil then
+		arg_50_0.bossPassiveSkillDict = {}
 	end
 
-	if not slot0.bossPassiveSkillDict[slot1] then
-		slot0.bossPassiveSkillDict[slot1] = {}
+	if not arg_50_0.bossPassiveSkillDict[arg_50_1] then
+		local var_50_0 = var_0_0.instance:getAssistBossConfig(arg_50_1)
 
-		table.insert(slot0.bossPassiveSkillDict[slot1], string.splitToNumber(uv0.instance:getAssistBossConfig(slot1).passiveSkills, "#"))
-		slot0:getPassiveSkillActiveLev(slot1, 0)
+		arg_50_0.bossPassiveSkillDict[arg_50_1] = {}
 
-		slot5 = {}
+		local var_50_1 = string.splitToNumber(var_50_0.passiveSkills, "#")
 
-		for slot9, slot10 in pairs(slot0.bossPassiveSkillLevDict[slot1]) do
-			table.insert(slot5, {
-				skillId = slot9,
-				lev = slot10
+		table.insert(arg_50_0.bossPassiveSkillDict[arg_50_1], var_50_1)
+		arg_50_0:getPassiveSkillActiveLev(arg_50_1, 0)
+
+		local var_50_2 = arg_50_0.bossPassiveSkillLevDict[arg_50_1]
+		local var_50_3 = {}
+
+		for iter_50_0, iter_50_1 in pairs(var_50_2) do
+			table.insert(var_50_3, {
+				skillId = iter_50_0,
+				lev = iter_50_1
 			})
 		end
 
-		if #slot5 > 1 then
-			table.sort(slot5, SortUtil.keyLower("lev"))
+		if #var_50_3 > 1 then
+			table.sort(var_50_3, SortUtil.keyLower("lev"))
 		end
 
-		for slot9, slot10 in ipairs(slot5) do
-			table.insert(slot0.bossPassiveSkillDict[slot1], {
-				slot10.skillId
+		for iter_50_2, iter_50_3 in ipairs(var_50_3) do
+			table.insert(arg_50_0.bossPassiveSkillDict[arg_50_1], {
+				iter_50_3.skillId
 			})
 		end
 	end
 
-	return slot0.bossPassiveSkillDict[slot1]
+	return arg_50_0.bossPassiveSkillDict[arg_50_1]
 end
 
-function slot0.getPassiveSkillActiveLev(slot0, slot1, slot2)
-	if slot0.bossPassiveSkillLevDict == nil then
-		slot0.bossPassiveSkillLevDict = {}
+function var_0_0.getPassiveSkillActiveLev(arg_51_0, arg_51_1, arg_51_2)
+	if arg_51_0.bossPassiveSkillLevDict == nil then
+		arg_51_0.bossPassiveSkillLevDict = {}
 	end
 
-	if not slot0.bossPassiveSkillLevDict[slot1] then
-		slot0.bossPassiveSkillLevDict[slot1] = {}
+	if not arg_51_0.bossPassiveSkillLevDict[arg_51_1] then
+		arg_51_0.bossPassiveSkillLevDict[arg_51_1] = {}
 
-		if slot0.towerAssistDevelopConfig.configDict[slot1] then
-			slot5 = slot3[1]
+		local var_51_0 = arg_51_0.towerAssistDevelopConfig.configDict[arg_51_1]
 
-			while slot5 do
-				if not string.nilorempty(slot5.passiveSkills) then
-					for slot10, slot11 in ipairs(string.splitToNumber(slot5.passiveSkills, "#")) do
-						slot0.bossPassiveSkillLevDict[slot1][slot11] = slot4
+		if var_51_0 then
+			local var_51_1 = 1
+			local var_51_2 = var_51_0[var_51_1]
+
+			while var_51_2 do
+				if not string.nilorempty(var_51_2.passiveSkills) then
+					local var_51_3 = string.splitToNumber(var_51_2.passiveSkills, "#")
+
+					for iter_51_0, iter_51_1 in ipairs(var_51_3) do
+						arg_51_0.bossPassiveSkillLevDict[arg_51_1][iter_51_1] = var_51_1
 					end
 				end
 
-				if not string.nilorempty(slot5.extraRule) then
-					for slot10, slot11 in ipairs(GameUtil.splitString2(slot5.extraRule, true)) do
-						slot0.bossPassiveSkillLevDict[slot1][slot11[2]] = slot4
+				if not string.nilorempty(var_51_2.extraRule) then
+					local var_51_4 = GameUtil.splitString2(var_51_2.extraRule, true)
+
+					for iter_51_2, iter_51_3 in ipairs(var_51_4) do
+						arg_51_0.bossPassiveSkillLevDict[arg_51_1][iter_51_3[2]] = var_51_1
 					end
 				end
 
-				slot5 = slot3[slot4 + 1]
+				var_51_1 = var_51_1 + 1
+				var_51_2 = var_51_0[var_51_1]
 			end
 		end
 	end
 
-	return slot0.bossPassiveSkillLevDict[slot1][slot2] or 0
+	return arg_51_0.bossPassiveSkillLevDict[arg_51_1][arg_51_2] or 0
 end
 
-function slot0.isSkillActive(slot0, slot1, slot2, slot3)
-	return slot0:getPassiveSkillActiveLev(slot1, slot2) <= slot3
+function var_0_0.isSkillActive(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
+	return arg_52_3 >= arg_52_0:getPassiveSkillActiveLev(arg_52_1, arg_52_2)
 end
 
-function slot0.getAssistAttribute(slot0, slot1, slot2)
-	return slot0.towerAssistAttrbuteConfig.configDict[slot1] and slot3[slot2]
+function var_0_0.getAssistAttribute(arg_53_0, arg_53_1, arg_53_2)
+	local var_53_0 = arg_53_0.towerAssistAttrbuteConfig.configDict[arg_53_1]
+
+	return var_53_0 and var_53_0[arg_53_2]
 end
 
-function slot0.getBossAddAttr(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.getBossAddAttr(arg_54_0, arg_54_1, arg_54_2)
+	local var_54_0 = arg_54_0:getBossAddAttrDict(arg_54_1, arg_54_2)
+	local var_54_1 = {}
 
-	for slot8, slot9 in pairs(slot0:getBossAddAttrDict(slot1, slot2)) do
-		table.insert(slot4, {
-			key = slot8,
-			val = slot9
+	for iter_54_0, iter_54_1 in pairs(var_54_0) do
+		table.insert(var_54_1, {
+			key = iter_54_0,
+			val = iter_54_1
 		})
 	end
 
-	if #slot4 > 0 then
-		table.sort(slot4, SortUtil.keyLower("key"))
+	if #var_54_1 > 0 then
+		table.sort(var_54_1, SortUtil.keyLower("key"))
 	end
 
-	return slot4
+	return var_54_1
 end
 
-function slot0.getBossAddAttrDict(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.getBossAddAttrDict(arg_55_0, arg_55_1, arg_55_2)
+	local var_55_0 = arg_55_2 or 0
+	local var_55_1 = {}
 
-	for slot8 = 1, slot2 or 0 do
-		if uv0.instance:getAssistDevelopConfig(slot1, slot8) and GameUtil.splitString2(slot9.attribute, true) then
-			for slot14, slot15 in pairs(slot10) do
-				if slot4[slot15[1]] == nil then
-					slot4[slot15[1]] = slot15[2]
-				else
-					slot4[slot15[1]] = slot4[slot15[1]] + slot15[2]
+	for iter_55_0 = 1, var_55_0 do
+		local var_55_2 = var_0_0.instance:getAssistDevelopConfig(arg_55_1, iter_55_0)
+
+		if var_55_2 then
+			local var_55_3 = GameUtil.splitString2(var_55_2.attribute, true)
+
+			if var_55_3 then
+				for iter_55_1, iter_55_2 in pairs(var_55_3) do
+					if var_55_1[iter_55_2[1]] == nil then
+						var_55_1[iter_55_2[1]] = iter_55_2[2]
+					else
+						var_55_1[iter_55_2[1]] = var_55_1[iter_55_2[1]] + iter_55_2[2]
+					end
 				end
 			end
 		end
 	end
 
-	return slot4
+	return var_55_1
 end
 
-function slot0.getHeroGroupAddAttr(slot0, slot1, slot2, slot3)
-	slot4 = uv0.instance:getAssistAttribute(slot1, slot2)
-	slot6 = {}
+function var_0_0.getHeroGroupAddAttr(arg_56_0, arg_56_1, arg_56_2, arg_56_3)
+	local var_56_0 = var_0_0.instance:getAssistAttribute(arg_56_1, arg_56_2)
+	local var_56_1 = arg_56_0:getBossAddAttrDict(arg_56_1, arg_56_3)
+	local var_56_2 = {}
 
-	for slot10, slot11 in pairs(TowerEnum.AttrKey) do
-		slot14 = slot4 and slot4[slot11]
+	for iter_56_0, iter_56_1 in pairs(TowerEnum.AttrKey) do
+		local var_56_3 = TowerEnum.AttrKey2AttrId[iter_56_1]
+		local var_56_4 = var_56_1[var_56_3] or 0
+		local var_56_5 = var_56_0 and var_56_0[iter_56_1]
 
-		if (slot0:getBossAddAttrDict(slot1, slot3)[TowerEnum.AttrKey2AttrId[slot11]] or 0) > 0 or slot14 ~= nil then
-			table.insert(slot6, {
-				key = slot12,
-				val = slot14,
-				add = slot13,
-				upAttr = TowerEnum.UpAttrId[slot11] ~= nil
+		if var_56_4 > 0 or var_56_5 ~= nil then
+			table.insert(var_56_2, {
+				key = var_56_3,
+				val = var_56_5,
+				add = var_56_4,
+				upAttr = TowerEnum.UpAttrId[iter_56_1] ~= nil
 			})
 		end
 	end
 
-	if #slot6 > 0 then
-		table.sort(slot6, SortUtil.keyLower("key"))
+	if #var_56_2 > 0 then
+		table.sort(var_56_2, SortUtil.keyLower("key"))
 	end
 
-	return slot6
+	return var_56_2
 end
 
-function slot0.getLimitEpisodeConfig(slot0, slot1, slot2)
-	return slot0.towerLimitedEpisodeConfig.configDict[slot1] and slot3[slot2]
+function var_0_0.getLimitEpisodeConfig(arg_57_0, arg_57_1, arg_57_2)
+	local var_57_0 = arg_57_0.towerLimitedEpisodeConfig.configDict[arg_57_1]
+
+	return var_57_0 and var_57_0[arg_57_2]
 end
 
-function slot0.setTalentImg(slot0, slot1, slot2, slot3)
-	slot4 = nil
+function var_0_0.setTalentImg(arg_58_0, arg_58_1, arg_58_2, arg_58_3)
+	local var_58_0
 
-	UISpriteSetMgr.instance:setTowerSprite(slot1, (slot2.isBigNode ~= 1 or string.format("towertalent_branchbigskill_%s", slot2.nodeType)) and string.format("towertalent_branchskill_%s", slot2.nodeType), slot3)
+	if arg_58_2.isBigNode == 1 then
+		var_58_0 = string.format("towertalent_branchbigskill_%s", arg_58_2.nodeType)
+	else
+		var_58_0 = string.format("towertalent_branchskill_%s", arg_58_2.nodeType)
+	end
+
+	UISpriteSetMgr.instance:setTowerSprite(arg_58_1, var_58_0, arg_58_3)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

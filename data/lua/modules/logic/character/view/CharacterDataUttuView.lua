@@ -1,96 +1,101 @@
-module("modules.logic.character.view.CharacterDataUttuView", package.seeall)
+﻿module("modules.logic.character.view.CharacterDataUttuView", package.seeall)
 
-slot0 = class("CharacterDataUttuView", BaseView)
+local var_0_0 = class("CharacterDataUttuView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simageredcircle1 = gohelper.findChildSingleImage(slot0.viewGO, "contentview/viewport/content/uttu1/icon/#simage_redcircle1")
-	slot0._simageline = gohelper.findChildSingleImage(slot0.viewGO, "contentview/viewport/content/uttu2/icon/#simage_line")
-	slot0._txtcontent1 = gohelper.findChildText(slot0.viewGO, "contentview/viewport/content/uttu2/txt/#txt_content1")
-	slot0._txtcontent2 = gohelper.findChildText(slot0.viewGO, "contentview/viewport/content/uttu2/txt/#txt_content2")
-	slot0._txtcontent3 = gohelper.findChildText(slot0.viewGO, "contentview/viewport/content/uttu3/txt/#txt_content3")
-	slot0._gosign = gohelper.findChild(slot0.viewGO, "contentview/viewport/content/uttu3/icon/qianming/#go_sign")
-	slot0._goexplain = gohelper.findChild(slot0.viewGO, "contentview/viewport/content/uttu3/icon/shouming/#go_explain")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simageredcircle1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "contentview/viewport/content/uttu1/icon/#simage_redcircle1")
+	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "contentview/viewport/content/uttu2/icon/#simage_line")
+	arg_1_0._txtcontent1 = gohelper.findChildText(arg_1_0.viewGO, "contentview/viewport/content/uttu2/txt/#txt_content1")
+	arg_1_0._txtcontent2 = gohelper.findChildText(arg_1_0.viewGO, "contentview/viewport/content/uttu2/txt/#txt_content2")
+	arg_1_0._txtcontent3 = gohelper.findChildText(arg_1_0.viewGO, "contentview/viewport/content/uttu3/txt/#txt_content3")
+	arg_1_0._gosign = gohelper.findChild(arg_1_0.viewGO, "contentview/viewport/content/uttu3/icon/qianming/#go_sign")
+	arg_1_0._goexplain = gohelper.findChild(arg_1_0.viewGO, "contentview/viewport/content/uttu3/icon/shouming/#go_explain")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gosign, false)
-	gohelper.setActive(slot0._goexplain, false)
-	slot0._simagebg:LoadImage(ResUrl.getCharacterDataIcon("full/bg.png"))
-	slot0._simageredcircle1:LoadImage(ResUrl.getCharacterDataIcon("quan1.png"))
-	slot0._simageline:LoadImage(ResUrl.getCharacterDataIcon("fengexian.png"))
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._gosign, false)
+	gohelper.setActive(arg_4_0._goexplain, false)
+	arg_4_0._simagebg:LoadImage(ResUrl.getCharacterDataIcon("full/bg.png"))
+	arg_4_0._simageredcircle1:LoadImage(ResUrl.getCharacterDataIcon("quan1.png"))
+	arg_4_0._simageline:LoadImage(ResUrl.getCharacterDataIcon("fengexian.png"))
 
-	slot0._scrollbar = gohelper.findChildScrollbar(slot0.viewGO, "contentview/contentscrollbar")
+	arg_4_0._scrollbar = gohelper.findChildScrollbar(arg_4_0.viewGO, "contentview/contentscrollbar")
 
-	slot0._scrollbar:AddOnValueChanged(slot0._onValueChanged, slot0)
+	arg_4_0._scrollbar:AddOnValueChanged(arg_4_0._onValueChanged, arg_4_0)
 
-	slot0._contentEffect1 = gohelper.onceAddComponent(slot0._txtcontent1.gameObject, typeof(ZProj.TMPEffect))
-	slot0._contentEffect2 = gohelper.onceAddComponent(slot0._txtcontent2.gameObject, typeof(ZProj.TMPEffect))
-	slot0._contentEffect3 = gohelper.onceAddComponent(slot0._txtcontent3.gameObject, typeof(ZProj.TMPEffect))
-	slot0._maxValue = 0
-	slot0._content1LineCount = slot0._txtcontent1:GetTextInfo(slot0._txtcontent1.text).lineCount
-	slot0._content2LineCount = slot0._txtcontent2:GetTextInfo(slot0._txtcontent2.text).lineCount
-	slot0._content3LineCount = slot0._txtcontent3:GetTextInfo(slot0._txtcontent3.text).lineCount
+	arg_4_0._contentEffect1 = gohelper.onceAddComponent(arg_4_0._txtcontent1.gameObject, typeof(ZProj.TMPEffect))
+	arg_4_0._contentEffect2 = gohelper.onceAddComponent(arg_4_0._txtcontent2.gameObject, typeof(ZProj.TMPEffect))
+	arg_4_0._contentEffect3 = gohelper.onceAddComponent(arg_4_0._txtcontent3.gameObject, typeof(ZProj.TMPEffect))
+	arg_4_0._maxValue = 0
+	arg_4_0._content1LineCount = arg_4_0._txtcontent1:GetTextInfo(arg_4_0._txtcontent1.text).lineCount
+	arg_4_0._content2LineCount = arg_4_0._txtcontent2:GetTextInfo(arg_4_0._txtcontent2.text).lineCount
+	arg_4_0._content3LineCount = arg_4_0._txtcontent3:GetTextInfo(arg_4_0._txtcontent3.text).lineCount
 end
 
-function slot0._onValueChanged(slot0, slot1)
-	slot0._maxValue = slot0._maxValue > 1 - slot1 and slot0._maxValue or 1 - slot1
+function var_0_0._onValueChanged(arg_5_0, arg_5_1)
+	arg_5_0._maxValue = arg_5_0._maxValue > 1 - arg_5_1 and arg_5_0._maxValue or 1 - arg_5_1
 
-	if slot1 < 0.1 then
-		gohelper.setActive(slot0._goexplain, true)
+	if arg_5_1 < 0.1 then
+		gohelper.setActive(arg_5_0._goexplain, true)
 	end
 
-	if slot1 < 0.01 then
-		gohelper.setActive(slot0._gosign, true)
+	if arg_5_1 < 0.01 then
+		gohelper.setActive(arg_5_0._gosign, true)
 	end
 
-	if slot0._content1LineCount == 0 then
-		slot0._content1LineCount = slot0._txtcontent1:GetTextInfo(slot0._txtcontent1.text).lineCount
-		slot0._content2LineCount = slot0._txtcontent2:GetTextInfo(slot0._txtcontent2.text).lineCount
-		slot0._content3LineCount = slot0._txtcontent3:GetTextInfo(slot0._txtcontent3.text).lineCount
+	if arg_5_0._content1LineCount == 0 then
+		arg_5_0._content1LineCount = arg_5_0._txtcontent1:GetTextInfo(arg_5_0._txtcontent1.text).lineCount
+		arg_5_0._content2LineCount = arg_5_0._txtcontent2:GetTextInfo(arg_5_0._txtcontent2.text).lineCount
+		arg_5_0._content3LineCount = arg_5_0._txtcontent3:GetTextInfo(arg_5_0._txtcontent3.text).lineCount
 	end
 
-	if slot0._maxValue > 0.1 then
-		slot0._contentEffect1.line = slot0._content1LineCount * 6 * (slot0._maxValue - 0.1)
+	if arg_5_0._maxValue > 0.1 then
+		arg_5_0._contentEffect1.line = arg_5_0._content1LineCount * 6 * (arg_5_0._maxValue - 0.1)
 	end
 
-	if slot0._maxValue > 0.3 then
-		slot0._contentEffect2.line = slot0._content2LineCount * 6 * (slot0._maxValue - 0.3)
+	if arg_5_0._maxValue > 0.3 then
+		arg_5_0._contentEffect2.line = arg_5_0._content2LineCount * 6 * (arg_5_0._maxValue - 0.3)
 	end
 
-	if slot0._maxValue > 0.56 then
-		slot0._contentEffect3.line = slot0._content3LineCount * 6 * (slot0._maxValue - 0.56)
+	if arg_5_0._maxValue > 0.56 then
+		arg_5_0._contentEffect3.line = arg_5_0._content3LineCount * 6 * (arg_5_0._maxValue - 0.56)
 	end
 
-	slot0._contentEffect1:ForceUpdate()
-	slot0._contentEffect2:ForceUpdate()
-	slot0._contentEffect3:ForceUpdate()
+	arg_5_0._contentEffect1:ForceUpdate()
+	arg_5_0._contentEffect2:ForceUpdate()
+	arg_5_0._contentEffect3:ForceUpdate()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._scrollbar:RemoveOnValueChanged()
-	slot0._simagebg:UnLoadImage()
-	slot0._simageredcircle1:UnLoadImage()
-	slot0._simageline:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._scrollbar:RemoveOnValueChanged()
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0._simageredcircle1:UnLoadImage()
+	arg_9_0._simageline:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,155 +1,184 @@
-module("modules.logic.critter.view.RoomCritterFilterView", package.seeall)
+﻿module("modules.logic.critter.view.RoomCritterFilterView", package.seeall)
 
-slot0 = class("RoomCritterFilterView", BaseView)
+local var_0_0 = class("RoomCritterFilterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclosefilterview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content")
-	slot0._gofilterCategoryItem = gohelper.findChild(slot0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/filterTypeItem")
-	slot0._btnok = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_searchfilter/container/#btn_ok")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_searchfilter/container/#btn_reset")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content")
+	arg_1_0._gofilterCategoryItem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/filterTypeItem")
+	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_ok")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_reset")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclosefilterview:AddClickListener(slot0._btnclosefilterviewOnClick, slot0)
-	slot0._btnok:AddClickListener(slot0._btnokOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btnclosefilterviewOnClick, arg_2_0)
+	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclosefilterview:RemoveClickListener()
-	slot0._btnok:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclosefilterview:RemoveClickListener()
+	arg_3_0._btnok:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
 
-	for slot4, slot5 in pairs(slot0.filterCategoryItemDict) do
-		for slot9, slot10 in pairs(slot5.tagItemDict) do
-			slot10.btnClick:RemoveClickListener()
+	for iter_3_0, iter_3_1 in pairs(arg_3_0.filterCategoryItemDict) do
+		for iter_3_2, iter_3_3 in pairs(iter_3_1.tagItemDict) do
+			iter_3_3.btnClick:RemoveClickListener()
 		end
 	end
 end
 
-function slot0._btnclosefilterviewOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnclosefilterviewOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnokOnClick(slot0)
-	CritterFilterModel.instance:applyMO(slot0.filterMO)
-	slot0:closeThis()
+function var_0_0._btnokOnClick(arg_5_0)
+	CritterFilterModel.instance:applyMO(arg_5_0.filterMO)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnresetOnClick(slot0)
-	slot0.filterMO:reset()
-	slot0:refresh()
+function var_0_0._btnresetOnClick(arg_6_0)
+	arg_6_0.filterMO:reset()
+	arg_6_0:refresh()
 end
 
-function slot0.onClickTagItem(slot0, slot1)
-	if slot0:isSelectTag(slot1.filterType, slot1.tagId) then
-		slot0.filterMO:unselectedTag(slot2, slot3)
+function var_0_0.onClickTagItem(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1.filterType
+	local var_7_1 = arg_7_1.tagId
+
+	if arg_7_0:isSelectTag(var_7_0, var_7_1) then
+		arg_7_0.filterMO:unselectedTag(var_7_0, var_7_1)
 	else
-		slot0.filterMO:selectedTag(slot2, slot3)
+		arg_7_0.filterMO:selectedTag(var_7_0, var_7_1)
 	end
 
-	slot0:refreshTag(slot1)
+	arg_7_0:refreshTag(arg_7_1)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0.filterTypeList = slot0.viewParam.filterTypeList
-	slot0.parentViewName = slot0.viewParam.viewName
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0.filterTypeList = arg_9_0.viewParam.filterTypeList
+	arg_9_0.parentViewName = arg_9_0.viewParam.viewName
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:onUpdateParam()
 
-	slot0.filterCategoryItemDict = {}
-	slot0.filterMO = CritterFilterModel.instance:getFilterMO(slot0.parentViewName, true):clone()
+	arg_10_0.filterCategoryItemDict = {}
+	arg_10_0.filterMO = CritterFilterModel.instance:getFilterMO(arg_10_0.parentViewName, true):clone()
 
-	gohelper.CreateObjList(slot0, slot0._onSetFilterCategoryItem, slot0.filterTypeList, slot0._gocontent, slot0._gofilterCategoryItem)
-	slot0:refresh()
+	gohelper.CreateObjList(arg_10_0, arg_10_0._onSetFilterCategoryItem, arg_10_0.filterTypeList, arg_10_0._gocontent, arg_10_0._gofilterCategoryItem)
+	arg_10_0:refresh()
 end
 
-function slot0._onSetFilterCategoryItem(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot4.go = slot1
-	slot4.filterType = slot2
-	slot5 = CritterConfig.instance:getCritterFilterTypeCfg(slot2, true)
-	gohelper.findChildText(slot4.go, "title/dmgTypeCn").text = slot5.name
-	gohelper.findChildText(slot4.go, "title/dmgTypeCn/dmgTypeEn").text = slot5.nameEn
-	slot8 = gohelper.findChild(slot4.go, "layout")
+function var_0_0._onSetFilterCategoryItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = arg_11_0:getUserDataTb_()
 
-	gohelper.setActive(gohelper.findChild(slot4.go, "layout/#go_tabItem1"), false)
-	gohelper.setActive(gohelper.findChild(slot4.go, "layout/#go_tabItem2"), false)
+	var_11_0.go = arg_11_1
+	var_11_0.filterType = arg_11_2
 
-	slot4.tagItemDict = {}
+	local var_11_1 = CritterConfig.instance:getCritterFilterTypeCfg(arg_11_2, true)
+	local var_11_2 = gohelper.findChildText(var_11_0.go, "title/dmgTypeCn")
+	local var_11_3 = gohelper.findChildText(var_11_0.go, "title/dmgTypeCn/dmgTypeEn")
 
-	for slot15, slot16 in ipairs(CritterConfig.instance:getCritterTabDataList(slot4.filterType)) do
-		slot17 = slot16.filterTab
-		slot18 = slot9
+	var_11_2.text = var_11_1.name
+	var_11_3.text = var_11_1.nameEn
 
-		if not string.nilorempty(slot16.icon) then
-			slot18 = slot10
+	local var_11_4 = gohelper.findChild(var_11_0.go, "layout")
+	local var_11_5 = gohelper.findChild(var_11_0.go, "layout/#go_tabItem1")
+	local var_11_6 = gohelper.findChild(var_11_0.go, "layout/#go_tabItem2")
+
+	gohelper.setActive(var_11_5, false)
+	gohelper.setActive(var_11_6, false)
+
+	var_11_0.tagItemDict = {}
+
+	local var_11_7 = CritterConfig.instance:getCritterTabDataList(var_11_0.filterType)
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_7) do
+		local var_11_8 = iter_11_1.filterTab
+		local var_11_9 = var_11_5
+
+		if not string.nilorempty(iter_11_1.icon) then
+			var_11_9 = var_11_6
 		end
 
-		slot4.tagItemDict[slot17] = slot0:getTagItem(slot16, gohelper.clone(slot18, slot8, slot17), slot4.filterType)
+		local var_11_10 = gohelper.clone(var_11_9, var_11_4, var_11_8)
+		local var_11_11 = arg_11_0:getTagItem(iter_11_1, var_11_10, var_11_0.filterType)
+
+		var_11_0.tagItemDict[var_11_8] = var_11_11
 	end
 
-	slot0.filterCategoryItemDict[slot2] = slot4
+	arg_11_0.filterCategoryItemDict[arg_11_2] = var_11_0
 end
 
-function slot0.getTagItem(slot0, slot1, slot2, slot3)
-	slot4 = slot1.name
-	slot6 = slot0:getUserDataTb_()
-	slot6.go = slot2
-	slot6.tagId = slot1.filterTab
-	slot6.filterType = slot3
-	slot6.gounselected = gohelper.findChild(slot6.go, "unselected")
-	slot6.goselected = gohelper.findChild(slot6.go, "selected")
-	slot6.btnClick = gohelper.findChildClickWithAudio(slot6.go, "click", AudioEnum.UI.UI_Common_Click)
+function var_0_0.getTagItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_1.name
+	local var_12_1 = arg_12_1.icon
+	local var_12_2 = arg_12_0:getUserDataTb_()
 
-	slot6.btnClick:AddClickListener(slot0.onClickTagItem, slot0, slot6)
+	var_12_2.go = arg_12_2
+	var_12_2.tagId = arg_12_1.filterTab
+	var_12_2.filterType = arg_12_3
+	var_12_2.gounselected = gohelper.findChild(var_12_2.go, "unselected")
+	var_12_2.goselected = gohelper.findChild(var_12_2.go, "selected")
+	var_12_2.btnClick = gohelper.findChildClickWithAudio(var_12_2.go, "click", AudioEnum.UI.UI_Common_Click)
 
-	gohelper.findChildText(slot6.go, "unselected/info1").text = slot4
-	gohelper.findChildText(slot6.go, "selected/info2").text = slot4
+	var_12_2.btnClick:AddClickListener(arg_12_0.onClickTagItem, arg_12_0, var_12_2)
 
-	if not string.nilorempty(slot1.icon) then
-		UISpriteSetMgr.instance:setCritterSprite(gohelper.findChildImage(slot6.go, "unselected/#image_icon"), slot5)
-		UISpriteSetMgr.instance:setCritterSprite(gohelper.findChildImage(slot6.go, "selected/#image_icon"), slot5)
+	local var_12_3 = gohelper.findChildText(var_12_2.go, "unselected/info1")
+	local var_12_4 = gohelper.findChildText(var_12_2.go, "selected/info2")
+
+	var_12_3.text = var_12_0
+	var_12_4.text = var_12_0
+
+	if not string.nilorempty(var_12_1) then
+		local var_12_5 = gohelper.findChildImage(var_12_2.go, "unselected/#image_icon")
+		local var_12_6 = gohelper.findChildImage(var_12_2.go, "selected/#image_icon")
+
+		UISpriteSetMgr.instance:setCritterSprite(var_12_5, var_12_1)
+		UISpriteSetMgr.instance:setCritterSprite(var_12_6, var_12_1)
 	end
 
-	gohelper.setActive(slot6.go, true)
+	gohelper.setActive(var_12_2.go, true)
 
-	return slot6
+	return var_12_2
 end
 
-function slot0.refresh(slot0)
-	for slot4, slot5 in pairs(slot0.filterCategoryItemDict) do
-		for slot9, slot10 in pairs(slot5.tagItemDict) do
-			slot0:refreshTag(slot10)
+function var_0_0.refresh(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.filterCategoryItemDict) do
+		for iter_13_2, iter_13_3 in pairs(iter_13_1.tagItemDict) do
+			arg_13_0:refreshTag(iter_13_3)
 		end
 	end
 end
 
-function slot0.refreshTag(slot0, slot1)
-	slot4 = slot0:isSelectTag(slot1.filterType, slot1.tagId)
+function var_0_0.refreshTag(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.filterType
+	local var_14_1 = arg_14_1.tagId
+	local var_14_2 = arg_14_0:isSelectTag(var_14_0, var_14_1)
 
-	gohelper.setActive(slot1.goselected, slot4)
-	gohelper.setActive(slot1.gounselected, not slot4)
+	gohelper.setActive(arg_14_1.goselected, var_14_2)
+	gohelper.setActive(arg_14_1.gounselected, not var_14_2)
 end
 
-function slot0.isSelectTag(slot0, slot1, slot2)
-	return slot0.filterMO:isSelectedTag(slot1, slot2)
+function var_0_0.isSelectTag(arg_15_0, arg_15_1, arg_15_2)
+	return (arg_15_0.filterMO:isSelectedTag(arg_15_1, arg_15_2))
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

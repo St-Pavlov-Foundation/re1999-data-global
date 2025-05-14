@@ -1,89 +1,96 @@
-module("modules.logic.versionactivity.view.VersionActivityDungeonMapSceneElements", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapSceneElements", package.seeall)
 
-slot0 = class("VersionActivityDungeonMapSceneElements", DungeonMapSceneElements)
+local var_0_0 = class("VersionActivityDungeonMapSceneElements", DungeonMapSceneElements)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0.finishElementList = {}
+	arg_1_0.finishElementList = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0.activityDungeonMo = slot0.viewContainer.versionActivityDungeonBaseMo
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0.activityDungeonMo = arg_2_0.viewContainer.versionActivityDungeonBaseMo
 
-	uv0.super.onOpen(slot0)
-	slot0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, slot0.onModeChange, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnInitElements, slot0._initElements, slot0)
+	var_0_0.super.onOpen(arg_2_0)
+	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0, LuaEventSystem.Low)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnInitElements, arg_2_0._initElements, arg_2_0)
 end
 
-function slot0.onModeChange(slot0)
-	for slot5, slot6 in pairs(slot0._elementList) do
-		if slot0.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story then
-			slot6:show()
+function var_0_0.onModeChange(arg_3_0)
+	local var_3_0 = arg_3_0.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story
+
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._elementList) do
+		if var_3_0 then
+			iter_3_1:show()
 		else
-			slot6:hide()
+			iter_3_1:hide()
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0.finishElementList) do
-		if slot1 then
-			slot6:show()
+	for iter_3_2, iter_3_3 in pairs(arg_3_0.finishElementList) do
+		if var_3_0 then
+			iter_3_3:show()
 		else
-			slot6:hide()
+			iter_3_3:hide()
 		end
 	end
 end
 
-function slot0._removeElement(slot0, slot1)
-	if not slot0:canShow(DungeonConfig.instance:getChapterMapElement(slot1)) then
-		uv0.super._removeElement(slot0, slot1)
+function var_0_0._removeElement(arg_4_0, arg_4_1)
+	local var_4_0 = DungeonConfig.instance:getChapterMapElement(arg_4_1)
+
+	if not arg_4_0:canShow(var_4_0) then
+		var_0_0.super._removeElement(arg_4_0, arg_4_1)
 
 		return
 	end
 
-	slot3 = slot0._elementList[slot1]
-	slot4 = slot3._go
+	local var_4_1 = arg_4_0._elementList[arg_4_1]
+	local var_4_2 = var_4_1._go
 
-	slot3:setFinishAndDotDestroy()
+	var_4_1:setFinishAndDotDestroy()
 
-	slot0._elementList[slot1] = nil
+	arg_4_0._elementList[arg_4_1] = nil
 
-	if slot0._arrowList[slot1] then
-		slot5.arrowClick:RemoveClickListener()
+	local var_4_3 = arg_4_0._arrowList[arg_4_1]
 
-		slot0._arrowList[slot1] = nil
+	if var_4_3 then
+		var_4_3.arrowClick:RemoveClickListener()
 
-		gohelper.destroy(slot5.go)
+		arg_4_0._arrowList[arg_4_1] = nil
+
+		gohelper.destroy(var_4_3.go)
 	end
 
-	slot0:addFinishElement(DungeonConfig.instance:getChapterMapElement(slot1), slot4)
+	arg_4_0:addFinishElement(DungeonConfig.instance:getChapterMapElement(arg_4_1), var_4_2)
 end
 
-function slot0._showElements(slot0, slot1)
-	if slot0.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+function var_0_0._showElements(arg_5_0, arg_5_1)
+	if arg_5_0.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
 		return
 	end
 
-	if not DungeonModel.instance:hasPassLevelAndStory(slot0.activityDungeonMo.episodeId) then
+	if not DungeonModel.instance:hasPassLevelAndStory(arg_5_0.activityDungeonMo.episodeId) then
 		return
 	end
 
-	uv0.super._showElements(slot0, slot1)
+	var_0_0.super._showElements(arg_5_0, arg_5_1)
 
-	slot2 = DungeonMapModel.instance:getElements(slot1)
+	local var_5_0 = DungeonMapModel.instance:getElements(arg_5_1)
+	local var_5_1 = DungeonConfig.instance:getMapElements(arg_5_1)
 
-	if DungeonConfig.instance:getMapElements(slot1) then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot0:canShow(slot8) and not slot0:inNotFinishElementList(slot8.id, slot2) then
-				slot0:addFinishElement(slot8)
+	if var_5_1 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			if arg_5_0:canShow(iter_5_1) and not arg_5_0:inNotFinishElementList(iter_5_1.id, var_5_0) then
+				arg_5_0:addFinishElement(iter_5_1)
 			end
 		end
 	end
 end
 
-function slot0.inNotFinishElementList(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if slot7.id == slot1 then
+function var_0_0.inNotFinishElementList(arg_6_0, arg_6_1, arg_6_2)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
+		if iter_6_1.id == arg_6_1 then
 			return true
 		end
 	end
@@ -91,43 +98,49 @@ function slot0.inNotFinishElementList(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.addFinishElement(slot0, slot1, slot2)
-	if slot0.finishElementList[slot1.id] then
+function var_0_0.addFinishElement(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0.finishElementList[arg_7_1.id] then
 		return
 	end
 
-	if not slot2 then
-		gohelper.addChild(slot0._elementRoot, UnityEngine.GameObject.New(tostring(slot1.id)))
+	local var_7_0 = arg_7_2
+
+	if not var_7_0 then
+		var_7_0 = UnityEngine.GameObject.New(tostring(arg_7_1.id))
+
+		gohelper.addChild(arg_7_0._elementRoot, var_7_0)
 	end
 
-	slot0.finishElementList[slot1.id] = MonoHelper.addLuaComOnceToGo(slot3, DungeonMapFinishElement, {
-		slot1,
-		slot0._mapScene,
-		slot0,
-		slot2
+	local var_7_1 = MonoHelper.addLuaComOnceToGo(var_7_0, DungeonMapFinishElement, {
+		arg_7_1,
+		arg_7_0._mapScene,
+		arg_7_0,
+		arg_7_2
 	})
+
+	arg_7_0.finishElementList[arg_7_1.id] = var_7_1
 end
 
-function slot0.canShow(slot0, slot1)
-	return slot1.type == DungeonEnum.ElementType.PuzzleGame or slot1.type == DungeonEnum.ElementType.None
+function var_0_0.canShow(arg_8_0, arg_8_1)
+	return arg_8_1.type == DungeonEnum.ElementType.PuzzleGame or arg_8_1.type == DungeonEnum.ElementType.None
 end
 
-function slot0._disposeScene(slot0)
-	uv0.super._disposeScene(slot0)
-	slot0:disposeFinishElements()
+function var_0_0._disposeScene(arg_9_0)
+	var_0_0.super._disposeScene(arg_9_0)
+	arg_9_0:disposeFinishElements()
 end
 
-function slot0._disposeOldMap(slot0)
-	uv0.super._disposeOldMap(slot0)
-	slot0:disposeFinishElements()
+function var_0_0._disposeOldMap(arg_10_0)
+	var_0_0.super._disposeOldMap(arg_10_0)
+	arg_10_0:disposeFinishElements()
 end
 
-function slot0.disposeFinishElements(slot0)
-	for slot4, slot5 in pairs(slot0.finishElementList) do
-		slot5:onDestroy()
+function var_0_0.disposeFinishElements(arg_11_0)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0.finishElementList) do
+		iter_11_1:onDestroy()
 	end
 
-	slot0.finishElementList = {}
+	arg_11_0.finishElementList = {}
 end
 
-return slot0
+return var_0_0

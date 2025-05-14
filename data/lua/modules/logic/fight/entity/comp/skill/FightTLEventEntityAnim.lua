@@ -1,229 +1,274 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityAnim", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityAnim", package.seeall)
 
-slot0 = class("FightTLEventEntityAnim")
+local var_0_0 = class("FightTLEventEntityAnim")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._targetEntitys = nil
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_3[1]
 
-	if slot3[1] == "1" then
-		slot0._targetEntitys = {}
+	arg_1_0._targetEntitys = nil
 
-		table.insert(slot0._targetEntitys, FightHelper.getEntity(slot1.fromId))
-	elseif slot4 == "2" then
-		slot0._targetEntitys = FightHelper.getSkillTargetEntitys(slot1)
-	elseif slot4 == "3" then
-		slot0._targetEntitys = {}
+	if var_1_0 == "1" then
+		arg_1_0._targetEntitys = {}
 
-		table.insert(slot0._targetEntitys, FightHelper.getEntity(slot1.toId))
-	elseif slot4 == "4" then
-		slot0._targetEntitys = FightHelper.getSkillTargetEntitys(slot1)
+		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
+	elseif var_1_0 == "2" then
+		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
+	elseif var_1_0 == "3" then
+		arg_1_0._targetEntitys = {}
 
-		tabletool.removeValue(slot0._targetEntitys, FightHelper.getEntity(slot1.fromId))
-	elseif not string.nilorempty(slot4) then
-		if GameSceneMgr.instance:getCurScene().entityMgr:getUnit(SceneTag.UnitNpc, slot1.stepUid .. "_" .. slot4) then
-			slot0._targetEntitys = {}
+		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.toId))
+	elseif var_1_0 == "4" then
+		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
 
-			table.insert(slot0._targetEntitys, slot7)
+		tabletool.removeValue(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
+	elseif not string.nilorempty(var_1_0) then
+		local var_1_1 = GameSceneMgr.instance:getCurScene().entityMgr
+		local var_1_2 = arg_1_1.stepUid .. "_" .. var_1_0
+		local var_1_3 = var_1_1:getUnit(SceneTag.UnitNpc, var_1_2)
+
+		if var_1_3 then
+			arg_1_0._targetEntitys = {}
+
+			table.insert(arg_1_0._targetEntitys, var_1_3)
 		else
-			logError("找不到实体, id: " .. tostring(slot6))
+			logError("找不到实体, id: " .. tostring(var_1_2))
 
 			return
 		end
 	end
 
-	slot0.setAnimEntityList = {}
-	slot0._ani_path = nil
-	slot0._leftPath = nil
-	slot0._rightPath = nil
-	slot0._loader = MultiAbLoader.New()
-	slot0._revertSpinePosAndColor = slot3[5] == "1"
+	arg_1_0.setAnimEntityList = {}
+	arg_1_0._ani_path = nil
+	arg_1_0._leftPath = nil
+	arg_1_0._rightPath = nil
+	arg_1_0._loader = MultiAbLoader.New()
+	arg_1_0._revertSpinePosAndColor = arg_1_3[5] == "1"
 
-	if not string.nilorempty(slot3[2]) then
-		slot0._ani_path = slot5
+	local var_1_4 = arg_1_3[2]
 
-		slot0._loader:addPath(FightHelper.getEntityAniPath(slot5))
+	if not string.nilorempty(var_1_4) then
+		arg_1_0._ani_path = var_1_4
+
+		arg_1_0._loader:addPath(FightHelper.getEntityAniPath(var_1_4))
 	end
 
-	if not string.nilorempty(slot3[3]) then
-		slot0._leftPath = slot5
+	local var_1_5 = arg_1_3[3]
 
-		slot0._loader:addPath(FightHelper.getEntityAniPath(slot5))
+	if not string.nilorempty(var_1_5) then
+		arg_1_0._leftPath = var_1_5
+
+		arg_1_0._loader:addPath(FightHelper.getEntityAniPath(var_1_5))
 	end
 
-	if not string.nilorempty(slot3[4]) then
-		slot0._rightPath = slot5
+	local var_1_6 = arg_1_3[4]
 
-		slot0._loader:addPath(FightHelper.getEntityAniPath(slot5))
+	if not string.nilorempty(var_1_6) then
+		arg_1_0._rightPath = var_1_6
+
+		arg_1_0._loader:addPath(FightHelper.getEntityAniPath(var_1_6))
 	end
 
-	if #slot0._loader._pathList > 0 then
-		slot0._loader:startLoad(slot0._onLoaded, slot0)
+	if #arg_1_0._loader._pathList > 0 then
+		arg_1_0._loader:startLoad(arg_1_0._onLoaded, arg_1_0)
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_onFinish()
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	arg_2_0:_onFinish()
 end
 
-function slot0._onLoaded(slot0, slot1)
-	if not slot0._targetEntitys then
+function var_0_0._onLoaded(arg_3_0, arg_3_1)
+	if not arg_3_0._targetEntitys then
 		return
 	end
 
-	slot2 = {
-		[FightEnum.EntitySide.EnemySide] = slot5
-	}
-	slot3 = {
-		[FightEnum.EntitySide.EnemySide] = slot0._leftPath
-	}
+	local var_3_0 = {}
+	local var_3_1 = {}
 
-	if slot0._leftPath and slot0._loader:getAssetItem(FightHelper.getEntityAniPath(slot0._leftPath)) and slot4:GetResource(ResUrl.getEntityAnim(slot0._leftPath)) then
-		slot5.legacy = true
-	end
+	if arg_3_0._leftPath then
+		local var_3_2 = arg_3_0._loader:getAssetItem(FightHelper.getEntityAniPath(arg_3_0._leftPath))
 
-	if slot0._rightPath and slot0._loader:getAssetItem(FightHelper.getEntityAniPath(slot0._rightPath)) and slot4:GetResource(ResUrl.getEntityAnim(slot0._rightPath)) then
-		slot2[FightEnum.EntitySide.MySide] = slot5
-		slot3[FightEnum.EntitySide.MySide] = slot0._rightPath
-		slot5.legacy = true
-	end
+		if var_3_2 then
+			local var_3_3 = var_3_2:GetResource(ResUrl.getEntityAnim(arg_3_0._leftPath))
 
-	slot4 = nil
-
-	if slot0._ani_path and slot0._loader:getAssetItem(FightHelper.getEntityAniPath(slot0._ani_path)) and slot5:GetResource(ResUrl.getEntityAnim(slot0._ani_path)) then
-		slot4.legacy = true
-	end
-
-	slot0._animStateName = {}
-	slot0._animCompList = {}
-
-	for slot8, slot9 in ipairs(slot0._targetEntitys) do
-		if not tabletool.indexOf(slot0.setAnimEntityList, slot9.id) and slot9.spine then
-			if slot9.spine:getSpineGO() then
-				slot12 = slot3[slot9:getSide()] or slot0._ani_path
-
-				if slot2[slot9:getSide()] or slot4 then
-					slot13 = gohelper.onceAddComponent(slot10, typeof(UnityEngine.Animation))
-
-					table.insert(slot0._animCompList, slot13)
-					table.insert(slot0._animStateName, slot12)
-
-					slot13.enabled = true
-					slot13.clip = slot11
-
-					slot13:AddClip(slot11, slot12)
-
-					if slot13.this:get(slot12) then
-						slot14.speed = FightModel.instance:getSpeed()
-					end
-
-					slot13:Play()
-					table.insert(slot0.setAnimEntityList, slot9.id)
-					FightController.instance:dispatchEvent(FightEvent.TimelinePlayEntityAni, slot9.id, true)
-				end
-			else
-				slot0.waitSpineList = slot0.waitSpineList or {}
-
-				table.insert(slot0.waitSpineList, slot9.spine)
-				FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0.onSpineLoaded, slot0)
+			if var_3_3 then
+				var_3_0[FightEnum.EntitySide.EnemySide] = var_3_3
+				var_3_1[FightEnum.EntitySide.EnemySide] = arg_3_0._leftPath
+				var_3_3.legacy = true
 			end
 		end
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)
+	if arg_3_0._rightPath then
+		local var_3_4 = arg_3_0._loader:getAssetItem(FightHelper.getEntityAniPath(arg_3_0._rightPath))
+
+		if var_3_4 then
+			local var_3_5 = var_3_4:GetResource(ResUrl.getEntityAnim(arg_3_0._rightPath))
+
+			if var_3_5 then
+				var_3_0[FightEnum.EntitySide.MySide] = var_3_5
+				var_3_1[FightEnum.EntitySide.MySide] = arg_3_0._rightPath
+				var_3_5.legacy = true
+			end
+		end
+	end
+
+	local var_3_6
+
+	if arg_3_0._ani_path then
+		local var_3_7 = arg_3_0._loader:getAssetItem(FightHelper.getEntityAniPath(arg_3_0._ani_path))
+
+		if var_3_7 then
+			var_3_6 = var_3_7:GetResource(ResUrl.getEntityAnim(arg_3_0._ani_path))
+
+			if var_3_6 then
+				var_3_6.legacy = true
+			end
+		end
+	end
+
+	arg_3_0._animStateName = {}
+	arg_3_0._animCompList = {}
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._targetEntitys) do
+		if not tabletool.indexOf(arg_3_0.setAnimEntityList, iter_3_1.id) and iter_3_1.spine then
+			local var_3_8 = iter_3_1.spine:getSpineGO()
+
+			if var_3_8 then
+				local var_3_9 = var_3_0[iter_3_1:getSide()] or var_3_6
+				local var_3_10 = var_3_1[iter_3_1:getSide()] or arg_3_0._ani_path
+
+				if var_3_9 then
+					local var_3_11 = gohelper.onceAddComponent(var_3_8, typeof(UnityEngine.Animation))
+
+					table.insert(arg_3_0._animCompList, var_3_11)
+					table.insert(arg_3_0._animStateName, var_3_10)
+
+					var_3_11.enabled = true
+					var_3_11.clip = var_3_9
+
+					var_3_11:AddClip(var_3_9, var_3_10)
+
+					local var_3_12 = var_3_11.this:get(var_3_10)
+
+					if var_3_12 then
+						var_3_12.speed = FightModel.instance:getSpeed()
+					end
+
+					var_3_11:Play()
+					table.insert(arg_3_0.setAnimEntityList, iter_3_1.id)
+					FightController.instance:dispatchEvent(FightEvent.TimelinePlayEntityAni, iter_3_1.id, true)
+				end
+			else
+				arg_3_0.waitSpineList = arg_3_0.waitSpineList or {}
+
+				table.insert(arg_3_0.waitSpineList, iter_3_1.spine)
+				FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_3_0.onSpineLoaded, arg_3_0)
+			end
+		end
+	end
+
+	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, arg_3_0._onUpdateSpeed, arg_3_0)
 end
 
-function slot0.onSpineLoaded(slot0, slot1)
-	if not slot0.waitSpineList then
+function var_0_0.onSpineLoaded(arg_4_0, arg_4_1)
+	if not arg_4_0.waitSpineList then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0.waitSpineList) do
-		if slot6 == slot1 then
-			slot0:_onLoaded()
-			table.remove(slot0.waitSpineList, slot5)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.waitSpineList) do
+		if iter_4_1 == arg_4_1 then
+			arg_4_0:_onLoaded()
+			table.remove(arg_4_0.waitSpineList, iter_4_0)
 
 			break
 		end
 	end
 
-	if #slot0.waitSpineList < 1 then
-		slot0:clearWaitSpine()
+	if #arg_4_0.waitSpineList < 1 then
+		arg_4_0:clearWaitSpine()
 	end
 end
 
-function slot0._onUpdateSpeed(slot0)
-	for slot4, slot5 in ipairs(slot0._animCompList) do
-		if slot5.this:get(slot0._animStateName[slot4]) then
-			slot6.speed = FightModel.instance:getSpeed()
+function var_0_0._onUpdateSpeed(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._animCompList) do
+		local var_5_0 = iter_5_1.this:get(arg_5_0._animStateName[iter_5_0])
+
+		if var_5_0 then
+			var_5_0.speed = FightModel.instance:getSpeed()
 		end
 	end
 end
 
-function slot0._onFinish(slot0)
-	slot0:dispose()
+function var_0_0._onFinish(arg_6_0)
+	arg_6_0:dispose()
 end
 
-function slot0.reset(slot0)
-	slot0:dispose()
+function var_0_0.reset(arg_7_0)
+	arg_7_0:dispose()
 end
 
-function slot0.dispose(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)
-	slot0:_clearLoader()
-	slot0:_clearAnim()
-	slot0:_resetEntitys()
-	slot0:clearWaitSpine()
+function var_0_0.dispose(arg_8_0)
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_8_0._onUpdateSpeed, arg_8_0)
+	arg_8_0:_clearLoader()
+	arg_8_0:_clearAnim()
+	arg_8_0:_resetEntitys()
+	arg_8_0:clearWaitSpine()
 end
 
-function slot0._clearAnim(slot0)
-	if slot0._animCompList then
-		for slot4, slot5 in ipairs(slot0._animCompList) do
-			if not gohelper.isNil(slot5) then
-				if slot5:GetClip(slot0._animStateName[slot4]) then
-					slot5:RemoveClip(slot6)
+function var_0_0._clearAnim(arg_9_0)
+	if arg_9_0._animCompList then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0._animCompList) do
+			if not gohelper.isNil(iter_9_1) then
+				local var_9_0 = arg_9_0._animStateName[iter_9_0]
+
+				if iter_9_1:GetClip(var_9_0) then
+					iter_9_1:RemoveClip(var_9_0)
 				end
 
-				if slot5.clip and slot5.clip.name == slot6 then
-					slot5.clip = nil
+				if iter_9_1.clip and iter_9_1.clip.name == var_9_0 then
+					iter_9_1.clip = nil
 				end
 
-				slot5.enabled = false
+				iter_9_1.enabled = false
 			end
 		end
 
-		tabletool.clear(slot0._animCompList)
+		tabletool.clear(arg_9_0._animCompList)
 
-		slot0._animCompList = nil
+		arg_9_0._animCompList = nil
 	end
 end
 
-function slot0._resetEntitys(slot0)
-	if slot0._targetEntitys then
-		for slot4, slot5 in ipairs(slot0._targetEntitys) do
-			ZProj.CharacterSetVariantHelper.Disable(slot5.spine and slot5.spine:getSpineGO())
-			FightController.instance:dispatchEvent(FightEvent.TimelinePlayEntityAni, slot5.id, false)
+function var_0_0._resetEntitys(arg_10_0)
+	if arg_10_0._targetEntitys then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0._targetEntitys) do
+			local var_10_0 = iter_10_1.spine and iter_10_1.spine:getSpineGO()
 
-			if slot0._revertSpinePosAndColor then
-				transformhelper.setLocalPos(slot6.transform, 0, 0, 0)
+			ZProj.CharacterSetVariantHelper.Disable(var_10_0)
+			FightController.instance:dispatchEvent(FightEvent.TimelinePlayEntityAni, iter_10_1.id, false)
+
+			if arg_10_0._revertSpinePosAndColor then
+				transformhelper.setLocalPos(var_10_0.transform, 0, 0, 0)
 			end
 		end
 	end
 
-	slot0._targetEntitys = nil
+	arg_10_0._targetEntitys = nil
 end
 
-function slot0._clearLoader(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0._clearLoader(arg_11_0)
+	if arg_11_0._loader then
+		arg_11_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_11_0._loader = nil
 	end
 end
 
-function slot0.clearWaitSpine(slot0)
-	slot0.waitSpineList = nil
+function var_0_0.clearWaitSpine(arg_12_0)
+	arg_12_0.waitSpineList = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0.onSpineLoaded, slot0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_12_0.onSpineLoaded, arg_12_0)
 end
 
-return slot0
+return var_0_0

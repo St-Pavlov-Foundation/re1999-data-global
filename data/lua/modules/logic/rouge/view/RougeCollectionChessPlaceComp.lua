@@ -1,311 +1,373 @@
-module("modules.logic.rouge.view.RougeCollectionChessPlaceComp", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionChessPlaceComp", package.seeall)
 
-slot0 = class("RougeCollectionChessPlaceComp", BaseView)
+local var_0_0 = class("RougeCollectionChessPlaceComp", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclosetipArea = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btn_closetipArea")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gochessContainer = gohelper.findChild(slot0.viewGO, "chessboard/#go_chessContainer")
-	slot0._gomeshContainer = gohelper.findChild(slot0.viewGO, "chessboard/#go_meshContainer")
-	slot0._gomeshItem = gohelper.findChild(slot0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
-	slot0._godragContainer = gohelper.findChild(slot0.viewGO, "chessboard/#go_dragContainer")
-	slot0._gocellModel = gohelper.findChild(slot0.viewGO, "chessboard/#go_cellModel")
-	slot0._gochessitem = gohelper.findChild(slot0.viewGO, "chessboard/#go_dragAnchor/#go_dragContainer/#go_chessitem")
-	slot0._goraychessitem = gohelper.findChild(slot0.viewGO, "chessboard/#go_raychessitem")
-	slot0._goblock = gohelper.findChild(slot0.viewGO, "#go_block")
-	slot0._scrollbag = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_bag")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_bag/Viewport/#go_Content")
-	slot0._gocollectionItem = gohelper.findChild(slot0.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_tip")
-	slot0._gosingleTipsContent = gohelper.findChild(slot0.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
-	slot0._gosingleAttributeItem = gohelper.findChild(slot0.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclosetipArea = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_closetipArea")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gochessContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_chessContainer")
+	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer")
+	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
+	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer")
+	arg_1_0._gocellModel = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_cellModel")
+	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor/#go_dragContainer/#go_chessitem")
+	arg_1_0._goraychessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_raychessitem")
+	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
+	arg_1_0._scrollbag = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_bag")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content")
+	arg_1_0._gocollectionItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
+	arg_1_0._gosingleTipsContent = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
+	arg_1_0._gosingleAttributeItem = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Start2CheckAndPlace, slot0.try2PlaceCollection, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, slot0.placeCollection2SlotAreaWithAudio, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnBeginDragCollection, slot0._onBeginDragCollection, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, slot0.deleteSlotCollection, slot0)
-	slot0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, slot0.updateEnchantInfo, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, slot0.placeCollection2OriginPos, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Start2CheckAndPlace, arg_4_0.try2PlaceCollection, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, arg_4_0.placeCollection2SlotAreaWithAudio, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnBeginDragCollection, arg_4_0._onBeginDragCollection, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, arg_4_0.deleteSlotCollection, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, arg_4_0.updateEnchantInfo, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, arg_4_0.placeCollection2OriginPos, arg_4_0)
 
-	slot0._poolComp = slot0.viewContainer:getRougePoolComp()
-	slot0._placeCollectionMap = slot0:getUserDataTb_()
-	slot0._placeHoleIndexMap = {}
+	arg_4_0._poolComp = arg_4_0.viewContainer:getRougePoolComp()
+	arg_4_0._placeCollectionMap = arg_4_0:getUserDataTb_()
+	arg_4_0._placeHoleIndexMap = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0:placeAllBagCollections()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:placeAllBagCollections()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.placeAllBagCollections(slot0)
-	if RougeCollectionModel.instance:getSlotAreaCollection() then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0:placeCollection2SlotArea(slot6)
+function var_0_0.placeAllBagCollections(arg_7_0)
+	local var_7_0 = RougeCollectionModel.instance:getSlotAreaCollection()
+
+	if var_7_0 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			arg_7_0:placeCollection2SlotArea(iter_7_1)
 		end
 	end
 end
 
-function slot0.placeCollection2SlotAreaWithAudio(slot0, slot1)
-	slot0:placeCollection2SlotArea(slot1)
+function var_0_0.placeCollection2SlotAreaWithAudio(arg_8_0, arg_8_1)
+	arg_8_0:placeCollection2SlotArea(arg_8_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.PlaceSlotCollection)
 end
 
-function slot0.placeCollection2SlotArea(slot0, slot1)
-	if not slot1 then
+function var_0_0.placeCollection2SlotArea(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return
 	end
 
-	slot0:revertErrorCollection(slot1.id)
+	arg_9_0:revertErrorCollection(arg_9_1.id)
 
-	slot2 = slot0:getOrCreateCollectionItem(slot1.id)
+	local var_9_0 = arg_9_0:getOrCreateCollectionItem(arg_9_1.id)
 
-	slot2:onUpdateMO(slot1)
-	slot2:setHoleToolVisible(true)
-	slot2:setShowTypeFlagVisible(true)
-	slot2:setParent(slot0._gocellModel.transform, false)
+	var_9_0:onUpdateMO(arg_9_1)
+	var_9_0:setHoleToolVisible(true)
+	var_9_0:setShowTypeFlagVisible(true)
+	var_9_0:setParent(arg_9_0._gocellModel.transform, false)
 end
 
-function slot0.getOrCreateCollectionItem(slot0, slot1)
-	if not slot0._placeCollectionMap[slot1] then
-		slot0._placeCollectionMap[slot1] = slot0._poolComp:getCollectionItem(RougeCollectionDragItem.__cname)
+function var_0_0.getOrCreateCollectionItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._placeCollectionMap[arg_10_1]
+
+	if not var_10_0 then
+		var_10_0 = arg_10_0._poolComp:getCollectionItem(RougeCollectionDragItem.__cname)
+		arg_10_0._placeCollectionMap[arg_10_1] = var_10_0
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0._onBeginDragCollection(slot0, slot1)
-	slot2 = slot1 and slot1.id
+function var_0_0._onBeginDragCollection(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1 and arg_11_1.id
 
-	slot0:revertErrorCollection(slot2)
+	arg_11_0:revertErrorCollection(var_11_0)
 
-	if slot0._placeCollectionMap[slot2] then
-		slot3:setItemVisible(false)
-	end
-end
+	local var_11_1 = arg_11_0._placeCollectionMap[var_11_0]
 
-function slot0.revertErrorCollection(slot0, slot1)
-	if slot0._errorItemId and slot0._errorItemId > 0 and slot0._errorItemId ~= slot1 then
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, slot0._errorItemId)
-
-		slot0._errorItemId = nil
+	if var_11_1 then
+		var_11_1:setItemVisible(false)
 	end
 end
 
-function slot0.try2PlaceCollection(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.revertErrorCollection(arg_12_0, arg_12_1)
+	if arg_12_0._errorItemId and arg_12_0._errorItemId > 0 and arg_12_0._errorItemId ~= arg_12_1 then
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, arg_12_0._errorItemId)
+
+		arg_12_0._errorItemId = nil
+	end
+end
+
+function var_0_0.try2PlaceCollection(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_1 then
 		return
 	end
 
-	slot0:revertErrorCollection(slot1.id)
+	arg_13_0:revertErrorCollection(arg_13_1.id)
 
-	slot3 = slot1.cfgId
-	slot4 = slot1:getCenterSlotPos()
-	slot8 = RougeCollectionHelper.isUnremovableCollection(slot3)
+	local var_13_0 = arg_13_1.cfgId
+	local var_13_1 = arg_13_1:getCenterSlotPos()
+	local var_13_2 = arg_13_1:getRotation()
+	local var_13_3 = arg_13_1:getLeftTopPos()
+	local var_13_4 = RougeCollectionHelper.checkIsCollectionSlotArea(var_13_0, var_13_3, var_13_2)
+	local var_13_5 = RougeCollectionHelper.isUnremovableCollection(var_13_0)
 
-	if not RougeCollectionHelper.checkIsCollectionSlotArea(slot3, slot1:getLeftTopPos(), slot1:getRotation()) then
-		if slot8 then
-			GameFacade.showToast(ToastEnum.RougeUnRemovableCollection, RougeCollectionConfig.instance:getCollectionName(slot3))
-			RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, slot1.id)
+	if not var_13_4 then
+		if var_13_5 then
+			local var_13_6 = RougeCollectionConfig.instance:getCollectionName(var_13_0)
+
+			GameFacade.showToast(ToastEnum.RougeUnRemovableCollection, var_13_6)
+			RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, arg_13_1.id)
 		else
-			slot0:removeCollectionFromSlotArea(slot1)
+			arg_13_0:removeCollectionFromSlotArea(arg_13_1)
 		end
 
 		return
 	end
 
-	if RougeCollectionConfig.instance:getCollectionCfg(slot3) and slot9.type == RougeEnum.CollectionType.Enchant and not slot8 and slot0:tryPlaceEnchant2Collection(RougeCollectionModel.instance:getSlotFilledCollectionId(slot4.x, slot4.y), slot1.id) then
-		return
+	local var_13_7 = RougeCollectionConfig.instance:getCollectionCfg(var_13_0)
+
+	if var_13_7 and var_13_7.type == RougeEnum.CollectionType.Enchant and not var_13_5 then
+		local var_13_8 = RougeCollectionModel.instance:getSlotFilledCollectionId(var_13_1.x, var_13_1.y)
+
+		if arg_13_0:tryPlaceEnchant2Collection(var_13_8, arg_13_1.id) then
+			return
+		end
 	end
 
-	if slot0:checkHasSpace2Place(slot1, slot4, slot5) then
-		RougeCollectionChessController.instance:placeCollection2SlotArea(slot1.id, slot6, slot5)
+	if arg_13_0:checkHasSpace2Place(arg_13_1, var_13_1, var_13_2) then
+		RougeCollectionChessController.instance:placeCollection2SlotArea(arg_13_1.id, var_13_3, var_13_2)
 	else
-		slot12 = slot0:getOrCreateCollectionItem(slot1.id)
+		local var_13_9 = arg_13_0:getOrCreateCollectionItem(arg_13_1.id)
 
-		slot12:onUpdateMO(slot1)
-		slot12:setShapeCellsVisible(true)
-		slot12:setSelectFrameVisible(true)
-		slot12:setParent(slot0._gocellModel.transform, false)
+		var_13_9:onUpdateMO(arg_13_1)
+		var_13_9:setShapeCellsVisible(true)
+		var_13_9:setSelectFrameVisible(true)
+		var_13_9:setParent(arg_13_0._gocellModel.transform, false)
 
-		slot0._errorItemId = slot1.id
+		arg_13_0._errorItemId = arg_13_1.id
 
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.NullSpace2PlaceCollection, slot1)
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.NullSpace2PlaceCollection, arg_13_1)
 	end
 end
 
-function slot0.placeCollection2OriginPos(slot0, slot1, slot2)
-	slot4 = RougeCollectionModel.instance:getCollectionByUid(slot1)
+function var_0_0.placeCollection2OriginPos(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_0._placeCollectionMap[arg_14_1]
+	local var_14_1 = RougeCollectionModel.instance:getCollectionByUid(arg_14_1)
 
-	if slot0._placeCollectionMap[slot1] and slot4 then
-		if RougeCollectionModel.instance:isCollectionPlaceInSlotArea(slot1) and not slot2 then
-			slot3:onUpdateMO(slot4)
-			slot3:setShapeCellsVisible(false)
+	if var_14_0 and var_14_1 then
+		if RougeCollectionModel.instance:isCollectionPlaceInSlotArea(arg_14_1) and not arg_14_2 then
+			var_14_0:onUpdateMO(var_14_1)
+			var_14_0:setShapeCellsVisible(false)
 		else
-			slot0._poolComp:recycleCollectionItem(RougeCollectionDragItem.__cname, slot3)
+			arg_14_0._poolComp:recycleCollectionItem(RougeCollectionDragItem.__cname, var_14_0)
 
-			slot0._placeCollectionMap[slot1] = nil
+			arg_14_0._placeCollectionMap[arg_14_1] = nil
 		end
 	end
 end
 
-function slot0.checkHasSpace2Place(slot0, slot1, slot2, slot3)
-	slot4 = true
+function var_0_0.checkHasSpace2Place(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = true
 
-	if slot1 and RougeCollectionConfig.instance:getRotateEditorParam(slot1:getCollectionCfgId(), slot3, RougeEnum.CollectionEditorParamType.Shape) then
-		for slot10, slot11 in ipairs(slot6) do
-			slot12 = slot11.x + slot2.x
-			slot13 = slot2.y - slot11.y
+	if arg_15_1 then
+		local var_15_1 = arg_15_1:getCollectionCfgId()
+		local var_15_2 = RougeCollectionConfig.instance:getRotateEditorParam(var_15_1, arg_15_3, RougeEnum.CollectionEditorParamType.Shape)
 
-			if not slot0:isInSlotAreaSize(slot12, slot13) or RougeCollectionModel.instance:getSlotFilledCollectionId(slot12, slot13) and slot15 > 0 and slot15 ~= slot1.id then
-				slot4 = false
+		if var_15_2 then
+			for iter_15_0, iter_15_1 in ipairs(var_15_2) do
+				local var_15_3 = iter_15_1.x + arg_15_2.x
+				local var_15_4 = arg_15_2.y - iter_15_1.y
+				local var_15_5 = arg_15_0:isInSlotAreaSize(var_15_3, var_15_4)
+				local var_15_6 = RougeCollectionModel.instance:getSlotFilledCollectionId(var_15_3, var_15_4)
+				local var_15_7 = var_15_6 and var_15_6 > 0 and var_15_6 ~= arg_15_1.id
 
-				break
+				if not var_15_5 or var_15_7 then
+					var_15_0 = false
+
+					break
+				end
 			end
 		end
 	end
 
-	return slot4
+	return var_15_0
 end
 
-function slot0.isInSlotAreaSize(slot0, slot1, slot2)
-	slot3 = RougeCollectionModel.instance:getCurSlotAreaSize()
+function var_0_0.isInSlotAreaSize(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = RougeCollectionModel.instance:getCurSlotAreaSize()
 
-	if slot1 >= 0 and slot1 < slot3.row and slot2 >= 0 and slot2 < slot3.col then
+	if arg_16_1 >= 0 and arg_16_1 < var_16_0.row and arg_16_2 >= 0 and arg_16_2 < var_16_0.col then
 		return true
 	end
 end
 
-function slot0.removeCollectionFromSlotArea(slot0, slot1)
-	if not slot1 then
+function var_0_0.removeCollectionFromSlotArea(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	if RougeCollectionModel.instance:isCollectionPlaceInSlotArea(slot1:getCollectionId()) then
+	local var_17_0 = arg_17_1:getCollectionId()
+
+	if RougeCollectionModel.instance:isCollectionPlaceInSlotArea(var_17_0) then
 		RougeCollectionChessController.instance:deselectCollection()
-		RougeCollectionChessController.instance:removeCollectionFromSlotArea(slot2)
+		RougeCollectionChessController.instance:removeCollectionFromSlotArea(var_17_0)
 	end
 
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, slot2, true)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, var_17_0, true)
 end
 
-function slot0.tryPlaceEnchant2Collection(slot0, slot1, slot2)
-	if not RougeCollectionModel.instance:getCollectionByUid(slot1) or not slot2 or slot1 == slot2 then
+function var_0_0.tryPlaceEnchant2Collection(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = RougeCollectionModel.instance:getCollectionByUid(arg_18_1)
+
+	if not var_18_0 or not arg_18_2 or arg_18_1 == arg_18_2 then
 		return
 	end
 
-	if not RougeCollectionConfig.instance:getCollectionCfg(slot3.cfgId) then
+	local var_18_1 = RougeCollectionConfig.instance:getCollectionCfg(var_18_0.cfgId)
+
+	if not var_18_1 then
 		return
 	end
 
-	if slot4.type == RougeEnum.CollectionType.Enchant or (slot4.holeNum or 0) <= 0 then
+	local var_18_2 = var_18_1.type == RougeEnum.CollectionType.Enchant
+	local var_18_3 = var_18_1.holeNum or 0
+
+	if var_18_2 or var_18_3 <= 0 then
 		return
 	end
 
-	if slot0:getCollectionNextPlaceHole(slot1) and slot7 > 0 then
+	local var_18_4 = arg_18_0:getCollectionNextPlaceHole(arg_18_1)
+
+	if var_18_4 and var_18_4 > 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.CollectionEnchant)
-		RougeCollectionEnchantController.instance:trySendRogueCollectionEnchantRequest(slot1, slot2, slot7)
-		slot0:updateCollectionNextPlaceHole(slot1)
+		RougeCollectionEnchantController.instance:trySendRogueCollectionEnchantRequest(arg_18_1, arg_18_2, var_18_4)
+		arg_18_0:updateCollectionNextPlaceHole(arg_18_1)
 
 		return true
 	end
 end
 
-function slot0.deleteSlotCollection(slot0, slot1)
-	if slot0._placeCollectionMap and slot0._placeCollectionMap[slot1] then
-		slot0._poolComp:recycleCollectionItem(RougeCollectionDragItem.__cname, slot2)
+function var_0_0.deleteSlotCollection(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0._placeCollectionMap and arg_19_0._placeCollectionMap[arg_19_1]
 
-		slot0._placeCollectionMap[slot1] = nil
+	if var_19_0 then
+		arg_19_0._poolComp:recycleCollectionItem(RougeCollectionDragItem.__cname, var_19_0)
+
+		arg_19_0._placeCollectionMap[arg_19_1] = nil
 	end
 
-	if slot0._placeHoleIndexMap and slot0._placeHoleIndexMap[slot1] then
-		slot0._placeHoleIndexMap[slot1] = nil
+	if arg_19_0._placeHoleIndexMap and arg_19_0._placeHoleIndexMap[arg_19_1] then
+		arg_19_0._placeHoleIndexMap[arg_19_1] = nil
 	end
 end
 
-function slot0.updateEnchantInfo(slot0, slot1)
-	if not RougeCollectionModel.instance:getCollectionByUid(slot1) then
+function var_0_0.updateEnchantInfo(arg_20_0, arg_20_1)
+	local var_20_0 = RougeCollectionModel.instance:getCollectionByUid(arg_20_1)
+
+	if not var_20_0 then
 		return
 	end
 
-	if not slot2:getAllEnchantId() then
+	local var_20_1 = var_20_0:getAllEnchantId()
+
+	if not var_20_1 then
 		return
 	end
 
-	for slot7, slot8 in pairs(slot3) do
-		if slot0._placeCollectionMap and slot0._placeCollectionMap[slot8] then
-			slot0._poolComp:recycleCollectionItem(RougeCollectionDragItem.__cname, slot9)
+	for iter_20_0, iter_20_1 in pairs(var_20_1) do
+		local var_20_2 = arg_20_0._placeCollectionMap and arg_20_0._placeCollectionMap[iter_20_1]
 
-			slot0._placeCollectionMap[slot8] = nil
+		if var_20_2 then
+			arg_20_0._poolComp:recycleCollectionItem(RougeCollectionDragItem.__cname, var_20_2)
+
+			arg_20_0._placeCollectionMap[iter_20_1] = nil
 		end
 	end
 end
 
-function slot0.getPlaceCollectionItem(slot0, slot1)
-	return slot0._placeCollectionMap and slot0._placeCollectionMap[slot1]
+function var_0_0.getPlaceCollectionItem(arg_21_0, arg_21_1)
+	return arg_21_0._placeCollectionMap and arg_21_0._placeCollectionMap[arg_21_1]
 end
 
-function slot0.getCollectionNextPlaceHole(slot0, slot1)
-	if not RougeCollectionModel.instance:getCollectionByUid(slot1) then
+function var_0_0.getCollectionNextPlaceHole(arg_22_0, arg_22_1)
+	local var_22_0 = RougeCollectionModel.instance:getCollectionByUid(arg_22_1)
+
+	if not var_22_0 then
 		return
 	end
 
-	slot3 = nil
+	local var_22_1
+	local var_22_2 = var_22_0:getAllEnchantId()
 
-	if slot2:getAllEnchantId() then
-		for slot8, slot9 in ipairs(slot4) do
-			if not slot2:isEnchant(slot8) then
-				slot3 = slot8
+	if var_22_2 then
+		for iter_22_0, iter_22_1 in ipairs(var_22_2) do
+			if not var_22_0:isEnchant(iter_22_0) then
+				var_22_1 = iter_22_0
 
 				break
 			end
 		end
 	end
 
-	slot3 = slot3 or slot0._placeHoleIndexMap[slot1] or 1
-	slot0._placeHoleIndexMap[slot1] = slot3
+	var_22_1 = var_22_1 or arg_22_0._placeHoleIndexMap[arg_22_1] or 1
+	arg_22_0._placeHoleIndexMap[arg_22_1] = var_22_1
 
-	return slot3
+	return var_22_1
 end
 
-function slot0.updateCollectionNextPlaceHole(slot0, slot1)
-	if not RougeCollectionModel.instance:getCollectionByUid(slot1) then
+function var_0_0.updateCollectionNextPlaceHole(arg_23_0, arg_23_1)
+	local var_23_0 = RougeCollectionModel.instance:getCollectionByUid(arg_23_1)
+
+	if not var_23_0 then
 		return
 	end
 
-	if slot0._placeHoleIndexMap[slot1] then
-		if (slot3 + 1) % (RougeCollectionConfig.instance:getCollectionCfg(slot2.cfgId) and slot5.holeNum or 0) <= 0 then
-			slot3 = slot6
+	local var_23_1 = arg_23_0._placeHoleIndexMap[arg_23_1]
+
+	if var_23_1 then
+		local var_23_2 = var_23_0.cfgId
+		local var_23_3 = RougeCollectionConfig.instance:getCollectionCfg(var_23_2)
+		local var_23_4 = var_23_3 and var_23_3.holeNum or 0
+		local var_23_5 = (var_23_1 + 1) % var_23_4
+
+		if var_23_5 <= 0 then
+			var_23_5 = var_23_4
 		end
 
-		slot0._placeHoleIndexMap[slot1] = slot3
+		arg_23_0._placeHoleIndexMap[arg_23_1] = var_23_5
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_24_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._poolComp = nil
+function var_0_0.onDestroyView(arg_25_0)
+	arg_25_0._poolComp = nil
 
-	if slot0._placeCollectionMap then
-		for slot4, slot5 in pairs(slot0._placeCollectionMap) do
-			slot5:destroy()
+	if arg_25_0._placeCollectionMap then
+		for iter_25_0, iter_25_1 in pairs(arg_25_0._placeCollectionMap) do
+			iter_25_1:destroy()
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,115 +1,120 @@
-module("modules.logic.voyage.view.VoyagePopupRewardView", package.seeall)
+﻿module("modules.logic.voyage.view.VoyagePopupRewardView", package.seeall)
 
-slot0 = class("VoyagePopupRewardView", BaseView)
+local var_0_0 = class("VoyagePopupRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goclickmask = gohelper.findChild(slot0.viewGO, "Root/#go_clickmask")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_bg")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "Root/desc_scroll/viewport/#txt_title")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "Root/reward_scroll/viewport/content/#go_normal")
-	slot0._imagenum = gohelper.findChildImage(slot0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#image_num")
-	slot0._goimgall = gohelper.findChild(slot0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#go_imgall")
-	slot0._txttaskdesc = gohelper.findChildText(slot0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#txt_taskdesc")
-	slot0._goRewards = gohelper.findChild(slot0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/scroll_Rewards/Viewport/#go_Rewards")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/#btn_jump")
-	slot0._gomail = gohelper.findChild(slot0.viewGO, "Root/#btn_jump/#go_mail")
-	slot0._godungeon = gohelper.findChild(slot0.viewGO, "Root/#btn_jump/#go_dungeon")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goclickmask = gohelper.findChild(arg_1_0.viewGO, "Root/#go_clickmask")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_bg")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Root/desc_scroll/viewport/#txt_title")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal")
+	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#image_num")
+	arg_1_0._goimgall = gohelper.findChild(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#go_imgall")
+	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/#txt_taskdesc")
+	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "Root/reward_scroll/viewport/content/#go_normal/scroll_Rewards/Viewport/#go_Rewards")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_jump")
+	arg_1_0._gomail = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_jump/#go_mail")
+	arg_1_0._godungeon = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_jump/#go_dungeon")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnjump:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnjump:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btnjumpOnClick(slot0)
+function var_0_0._btnjumpOnClick(arg_4_0)
 	VoyageController.instance:jump()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addClickCb(gohelper.getClick(slot0._goclickmask), slot0.closeThis, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:addClickCb(gohelper.getClick(arg_6_0._goclickmask), arg_6_0.closeThis, arg_6_0)
 
-	slot0._txttitle.text = VoyageConfig.instance:getTitle()
+	arg_6_0._txttitle.text = VoyageConfig.instance:getTitle()
 
-	gohelper.setActive(slot0._gomail, false)
-	gohelper.setActive(slot0._godungeon, false)
+	gohelper.setActive(arg_6_0._gomail, false)
+	gohelper.setActive(arg_6_0._godungeon, false)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refresh()
-	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001UpdatePush, slot0._refresh, slot0)
-	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, slot0._refresh, slot0)
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:_refresh()
+	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001UpdatePush, arg_8_0._refresh, arg_8_0)
+	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, arg_8_0._refresh, arg_8_0)
 end
 
-function slot0.onClose(slot0)
-	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, slot0._refresh, slot0)
-	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001UpdatePush, slot0._refresh, slot0)
+function var_0_0.onClose(arg_9_0)
+	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, arg_9_0._refresh, arg_9_0)
+	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001UpdatePush, arg_9_0._refresh, arg_9_0)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_itemList")
+function var_0_0.onDestroyView(arg_10_0)
+	GameUtil.onDestroyViewMemberList(arg_10_0, "_itemList")
 end
 
-function slot0._createOrRefreshList(slot0)
-	slot0:_createItemList()
+function var_0_0._createOrRefreshList(arg_11_0)
+	arg_11_0:_createItemList()
 
-	for slot4, slot5 in pairs(slot0._itemList) do
-		slot5:onRefresh()
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._itemList) do
+		iter_11_1:onRefresh()
 	end
 end
 
-function slot0._createItemList(slot0)
-	if slot0._itemList then
+function var_0_0._createItemList(arg_12_0)
+	if arg_12_0._itemList then
 		return
 	end
 
-	slot0._itemList = {}
+	arg_12_0._itemList = {}
 
-	gohelper.setActive(slot0._gonormal, true)
+	gohelper.setActive(arg_12_0._gonormal, true)
 
-	for slot5, slot6 in ipairs(VoyageConfig.instance:getTaskList()) do
-		slot7 = slot0:_createItem(VoyagePopupRewardViewItem)
-		slot7._index = slot5
-		slot7._view = slot0
+	local var_12_0 = VoyageConfig.instance:getTaskList()
 
-		slot7:onUpdateMO(slot6)
-		table.insert(slot0._itemList, slot7)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_1 = arg_12_0:_createItem(VoyagePopupRewardViewItem)
+
+		var_12_1._index = iter_12_0
+		var_12_1._view = arg_12_0
+
+		var_12_1:onUpdateMO(iter_12_1)
+		table.insert(arg_12_0._itemList, var_12_1)
 	end
 
-	gohelper.setActive(slot0._gonormal, false)
+	gohelper.setActive(arg_12_0._gonormal, false)
 end
 
-function slot0._refresh(slot0)
-	slot0:_createOrRefreshList()
-	slot0:_refreshJumpBtn()
+function var_0_0._refresh(arg_13_0)
+	arg_13_0:_createOrRefreshList()
+	arg_13_0:_refreshJumpBtn()
 end
 
-function slot0._createItem(slot0, slot1)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._gonormal, slot1.__name), slot1)
+function var_0_0._createItem(arg_14_0, arg_14_1)
+	local var_14_0 = gohelper.cloneInPlace(arg_14_0._gonormal, arg_14_1.__name)
+
+	return MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0, arg_14_1)
 end
 
-function slot0._refreshJumpBtn(slot0)
-	slot1 = VoyageModel.instance:hasAnyRewardAvailable()
+function var_0_0._refreshJumpBtn(arg_15_0)
+	local var_15_0 = VoyageModel.instance:hasAnyRewardAvailable()
 
-	gohelper.setActive(slot0._gomail, slot1)
-	gohelper.setActive(slot0._godungeon, not slot1)
+	gohelper.setActive(arg_15_0._gomail, var_15_0)
+	gohelper.setActive(arg_15_0._godungeon, not var_15_0)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.video.view.FullScreenVideoViewContainer", package.seeall)
+﻿module("modules.logic.video.view.FullScreenVideoViewContainer", package.seeall)
 
-slot0 = class("FullScreenVideoViewContainer", BaseViewContainer)
+local var_0_0 = class("FullScreenVideoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FullScreenVideoView.New()
 	}
 end
 
-return slot0
+return var_0_0

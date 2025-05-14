@@ -1,26 +1,26 @@
-module("modules.logic.herogroup.model.HeroGroupEquipMO", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupEquipMO", package.seeall)
 
-slot0 = pureTable("HeroGroupEquipMO")
+local var_0_0 = pureTable("HeroGroupEquipMO")
 
-function slot0.init(slot0, slot1)
-	slot0.index = slot1.index
-	slot0.equipUid = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.index = arg_1_1.index
+	arg_1_0.equipUid = {}
 
-	for slot5 = 1, 1 do
-		table.insert(slot0.equipUid, "0")
+	for iter_1_0 = 1, 1 do
+		table.insert(arg_1_0.equipUid, "0")
 	end
 
-	if not slot1.equipUid then
+	if not arg_1_1.equipUid then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1.equipUid) do
-		if slot5 > 1 then
+	for iter_1_1, iter_1_2 in ipairs(arg_1_1.equipUid) do
+		if iter_1_1 > 1 then
 			break
 		end
 
-		slot0.equipUid[slot5] = slot6
+		arg_1_0.equipUid[iter_1_1] = iter_1_2
 	end
 end
 
-return slot0
+return var_0_0

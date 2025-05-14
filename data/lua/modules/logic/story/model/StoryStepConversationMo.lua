@@ -1,10 +1,10 @@
-module("modules.logic.story.model.StoryStepConversationMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepConversationMo", package.seeall)
 
-slot0 = pureTable("StoryStepConversationMo")
+local var_0_0 = pureTable("StoryStepConversationMo")
 
-function slot0.ctor(slot0)
-	slot0.type = 0
-	slot0.delayTimes = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.type = 0
+	arg_1_0.delayTimes = {
 		1,
 		1,
 		1,
@@ -14,10 +14,10 @@ function slot0.ctor(slot0)
 		1,
 		1
 	}
-	slot0.isAuto = false
-	slot0.effType = 0
-	slot0.effLv = 0
-	slot0.effDelayTimes = {
+	arg_1_0.isAuto = false
+	arg_1_0.effType = 0
+	arg_1_0.effLv = 0
+	arg_1_0.effDelayTimes = {
 		0,
 		0,
 		0,
@@ -27,7 +27,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effTimes = {
+	arg_1_0.effTimes = {
 		0,
 		0,
 		0,
@@ -37,11 +37,11 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effRate = 1
-	slot0.showList = {}
-	slot0.nameShow = false
-	slot0.nameEnShow = false
-	slot0.heroNames = {
+	arg_1_0.effRate = 1
+	arg_1_0.showList = {}
+	arg_1_0.nameShow = false
+	arg_1_0.nameEnShow = false
+	arg_1_0.heroNames = {
 		"",
 		"",
 		"",
@@ -51,10 +51,10 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.iconShow = false
-	slot0.heroIcon = ""
-	slot0.audios = {}
-	slot0.audioDelayTimes = {
+	arg_1_0.iconShow = false
+	arg_1_0.heroIcon = ""
+	arg_1_0.audios = {}
+	arg_1_0.audioDelayTimes = {
 		0,
 		0,
 		0,
@@ -64,7 +64,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.diaTexts = {
+	arg_1_0.diaTexts = {
 		"",
 		"",
 		"",
@@ -74,7 +74,7 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.showTimes = {
+	arg_1_0.showTimes = {
 		0,
 		0,
 		0,
@@ -84,7 +84,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.keepTimes = {
+	arg_1_0.keepTimes = {
 		1.5,
 		1.5,
 		1.5,
@@ -96,34 +96,39 @@ function slot0.ctor(slot0)
 	}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.type = slot1[1]
-	slot0.delayTimes = slot1[2]
-	slot0.isAuto = slot1[3]
-	slot0.effType = slot1[4]
-	slot0.effLv = slot1[5]
-	slot0.effDelayTimes = slot1[6]
-	slot0.effTimes = slot1[7]
-	slot0.effRate = slot1[8]
-	slot0.showList = slot1[9]
-	slot0.nameShow = slot1[10]
-	slot0.nameEnShow = slot1[11]
-	slot0.heroNames = slot1[12]
-	slot0.iconShow = slot1[13]
-	slot0.heroIcon = slot1[14]
-	slot0.audios = string.split(slot1[15], "#")[1] == "" and {
-		0
-	} or string.splitToNumber(slot2[1], "&")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.type = arg_2_1[1]
+	arg_2_0.delayTimes = arg_2_1[2]
+	arg_2_0.isAuto = arg_2_1[3]
+	arg_2_0.effType = arg_2_1[4]
+	arg_2_0.effLv = arg_2_1[5]
+	arg_2_0.effDelayTimes = arg_2_1[6]
+	arg_2_0.effTimes = arg_2_1[7]
+	arg_2_0.effRate = arg_2_1[8]
+	arg_2_0.showList = arg_2_1[9]
+	arg_2_0.nameShow = arg_2_1[10]
+	arg_2_0.nameEnShow = arg_2_1[11]
+	arg_2_0.heroNames = arg_2_1[12]
+	arg_2_0.iconShow = arg_2_1[13]
+	arg_2_0.heroIcon = arg_2_1[14]
 
-	if slot2[2] then
-		for slot7 = 1, #string.splitToNumber(slot2[2], "|") do
-			slot0.audioDelayTimes[slot7] = slot3[slot7]
+	local var_2_0 = string.split(arg_2_1[15], "#")
+
+	arg_2_0.audios = var_2_0[1] == "" and {
+		0
+	} or string.splitToNumber(var_2_0[1], "&")
+
+	if var_2_0[2] then
+		local var_2_1 = string.splitToNumber(var_2_0[2], "|")
+
+		for iter_2_0 = 1, #var_2_1 do
+			arg_2_0.audioDelayTimes[iter_2_0] = var_2_1[iter_2_0]
 		end
 	end
 
-	slot0.diaTexts = slot1[16]
-	slot0.showTimes = slot1[17]
-	slot0.keepTimes = slot1[18]
+	arg_2_0.diaTexts = arg_2_1[16]
+	arg_2_0.showTimes = arg_2_1[17]
+	arg_2_0.keepTimes = arg_2_1[18]
 end
 
-return slot0
+return var_0_0

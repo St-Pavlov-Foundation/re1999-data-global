@@ -1,31 +1,40 @@
-module("modules.logic.room.model.common.RoomSkinMO", package.seeall)
+﻿module("modules.logic.room.model.common.RoomSkinMO", package.seeall)
 
-slot0 = pureTable("RoomSkinMO")
+local var_0_0 = pureTable("RoomSkinMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
 end
 
-function slot0.setIsEquipped(slot0, slot1)
-	slot0._isEquipped = slot1
+function var_0_0.setIsEquipped(arg_2_0, arg_2_1)
+	arg_2_0._isEquipped = arg_2_1
 end
 
-function slot0.getId(slot0)
-	return slot0.id
+function var_0_0.getId(arg_3_0)
+	return arg_3_0.id
 end
 
-function slot0.getBelongPartId(slot0)
-	return RoomConfig.instance:getBelongPart(slot0.id)
+function var_0_0.getBelongPartId(arg_4_0)
+	local var_4_0 = arg_4_0.id
+
+	return (RoomConfig.instance:getBelongPart(var_4_0))
 end
 
-function slot0.isUnlock(slot0)
-	slot1 = false
+function var_0_0.isUnlock(arg_5_0)
+	local var_5_0 = false
+	local var_5_1 = RoomConfig.instance:getRoomSkinUnlockItemId(arg_5_0.id)
 
-	return RoomConfig.instance:getRoomSkinUnlockItemId(slot0.id) and slot2 ~= 0 and ItemModel.instance:getItemCount(slot2) > 0 or true
+	if var_5_1 and var_5_1 ~= 0 then
+		var_5_0 = ItemModel.instance:getItemCount(var_5_1) > 0
+	else
+		var_5_0 = true
+	end
+
+	return var_5_0
 end
 
-function slot0.isEquipped(slot0)
-	return slot0._isEquipped
+function var_0_0.isEquipped(arg_6_0)
+	return arg_6_0._isEquipped
 end
 
-return slot0
+return var_0_0

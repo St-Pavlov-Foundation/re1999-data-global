@@ -1,82 +1,100 @@
-module("modules.logic.activity.controller.chessmap.interacts.ActivityChessInteractBase", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.interacts.ActivityChessInteractBase", package.seeall)
 
-slot0 = class("ActivityChessInteractBase")
+local var_0_0 = class("ActivityChessInteractBase")
 
-function slot0.init(slot0, slot1)
-	slot0._target = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._target = arg_1_1
 end
 
-function slot0.onSelectCall(slot0)
+function var_0_0.onSelectCall(arg_2_0)
+	return
 end
 
-function slot0.onCancelSelect(slot0)
+function var_0_0.onCancelSelect(arg_3_0)
+	return
 end
 
-function slot0.onSelectPos(slot0, slot1, slot2)
+function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
+	return
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3, slot4)
-	if slot0._target.avatar then
-		slot0._target.originData.posX = slot1
-		slot0._target.originData.posY = slot2
-		slot7, slot8, slot9 = ActivityChessGameController.instance:calcTilePosInScene(slot1, slot2, slot0._target.avatar.order)
+function var_0_0.moveTo(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	if arg_5_0._target.avatar then
+		local var_5_0 = arg_5_0._target.originData.posX
+		local var_5_1 = arg_5_0._target.originData.posY
 
-		slot0:killMoveTween()
+		arg_5_0._target.originData.posX = arg_5_1
+		arg_5_0._target.originData.posY = arg_5_2
 
-		slot0._moveCallback = slot3
-		slot0._moveCallbackObj = slot4
-		slot0._tweenIdMoveScene = ZProj.TweenHelper.DOLocalMove(slot0._target.avatar.sceneTf, slot7, slot8, slot9, 0.3, slot0.onMoveCompleted, slot0, nil, EaseType.Linear)
+		local var_5_2, var_5_3, var_5_4 = ActivityChessGameController.instance:calcTilePosInScene(arg_5_1, arg_5_2, arg_5_0._target.avatar.order)
+		local var_5_5 = arg_5_0._target.avatar
 
-		slot0:faceTo(ActivityChessMapUtils.ToDirection(slot0._target.originData.posX, slot0._target.originData.posY, slot1, slot2))
-	elseif slot3 then
-		slot3(slot4)
+		arg_5_0:killMoveTween()
+
+		arg_5_0._moveCallback = arg_5_3
+		arg_5_0._moveCallbackObj = arg_5_4
+		arg_5_0._tweenIdMoveScene = ZProj.TweenHelper.DOLocalMove(var_5_5.sceneTf, var_5_2, var_5_3, var_5_4, 0.3, arg_5_0.onMoveCompleted, arg_5_0, nil, EaseType.Linear)
+
+		local var_5_6 = ActivityChessMapUtils.ToDirection(var_5_0, var_5_1, arg_5_1, arg_5_2)
+
+		arg_5_0:faceTo(var_5_6)
+	elseif arg_5_3 then
+		arg_5_3(arg_5_4)
 	end
 end
 
-function slot0.faceTo(slot0, slot1)
-	slot0._curDir = slot1
+function var_0_0.faceTo(arg_6_0, arg_6_1)
+	arg_6_0._curDir = arg_6_1
 
-	if slot0._target.avatar then
-		if not ActivityChessInteractObject.DirectionSet[slot0._curDir] then
+	if arg_6_0._target.avatar then
+		if not ActivityChessInteractObject.DirectionSet[arg_6_0._curDir] then
 			return
 		end
 
-		for slot5, slot6 in ipairs(ActivityChessInteractObject.DirectionList) do
-			if not gohelper.isNil(slot0._target.avatar["goFaceTo" .. slot6]) then
-				gohelper.setActive(slot7, slot1 == slot6)
+		for iter_6_0, iter_6_1 in ipairs(ActivityChessInteractObject.DirectionList) do
+			local var_6_0 = arg_6_0._target.avatar["goFaceTo" .. iter_6_1]
+
+			if not gohelper.isNil(var_6_0) then
+				gohelper.setActive(var_6_0, arg_6_1 == iter_6_1)
 			end
 		end
 	end
 end
 
-function slot0.onMoveCompleted(slot0)
-	if slot0._moveCallback then
-		slot0._moveCallback = nil
-		slot0._moveCallbackObj = nil
+function var_0_0.onMoveCompleted(arg_7_0)
+	if arg_7_0._moveCallback then
+		local var_7_0 = arg_7_0._moveCallback
+		local var_7_1 = arg_7_0._moveCallbackObj
 
-		slot0._moveCallback(slot0._moveCallbackObj)
+		arg_7_0._moveCallback = nil
+		arg_7_0._moveCallbackObj = nil
+
+		var_7_0(var_7_1)
 	end
 end
 
-function slot0.onDrawAlert(slot0, slot1)
+function var_0_0.onDrawAlert(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
-	if (slot0._curDir or slot0._target.originData.direction) ~= nil and slot1 ~= 0 then
-		slot0:faceTo(slot1)
+function var_0_0.onAvatarLoaded(arg_9_0)
+	local var_9_0 = arg_9_0._curDir or arg_9_0._target.originData.direction
+
+	if var_9_0 ~= nil and var_9_0 ~= 0 then
+		arg_9_0:faceTo(var_9_0)
 	end
 end
 
-function slot0.killMoveTween(slot0)
-	if slot0._tweenIdMoveScene then
-		ZProj.TweenHelper.KillById(slot0._tweenIdMoveScene)
+function var_0_0.killMoveTween(arg_10_0)
+	if arg_10_0._tweenIdMoveScene then
+		ZProj.TweenHelper.KillById(arg_10_0._tweenIdMoveScene)
 
-		slot0._tweenIdMoveScene = nil
+		arg_10_0._tweenIdMoveScene = nil
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0:killMoveTween()
+function var_0_0.dispose(arg_11_0)
+	arg_11_0:killMoveTween()
 end
 
-return slot0
+return var_0_0

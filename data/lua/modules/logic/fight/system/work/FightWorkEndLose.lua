@@ -1,15 +1,17 @@
-module("modules.logic.fight.system.work.FightWorkEndLose", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEndLose", package.seeall)
 
-slot0 = class("FightWorkEndLose", BaseWork)
+local var_0_0 = class("FightWorkEndLose", BaseWork)
 
-function slot0.onStart(slot0)
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitys()) do
-		if slot6.nameUI then
-			slot6.nameUI:setActive(false)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightHelper.getAllEntitys()
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		if iter_1_1.nameUI then
+			iter_1_1.nameUI:setActive(false)
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

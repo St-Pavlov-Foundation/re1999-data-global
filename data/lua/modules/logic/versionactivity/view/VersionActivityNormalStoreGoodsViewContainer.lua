@@ -1,30 +1,30 @@
-module("modules.logic.versionactivity.view.VersionActivityNormalStoreGoodsViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityNormalStoreGoodsViewContainer", package.seeall)
 
-slot0 = class("VersionActivityNormalStoreGoodsViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivityNormalStoreGoodsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		TabViewGroup.New(1, "#go_topright"),
 		VersionActivityNormalStoreGoodsView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot2 = CurrencyEnum.CurrencyType.LeiMiTeBei
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = CurrencyEnum.CurrencyType.LeiMiTeBei
 
-	if slot0.viewParam then
-		slot2 = string.splitToNumber(slot0.viewParam.cost, "#")[2]
+	if arg_2_0.viewParam then
+		var_2_0 = string.splitToNumber(arg_2_0.viewParam.cost, "#")[2]
 	end
 
 	return {
 		CurrencyView.New({
-			slot2
+			var_2_0
 		})
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-return slot0
+return var_0_0

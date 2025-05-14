@@ -1,33 +1,38 @@
-module("modules.logic.voice.view.VoiceChooseItem", package.seeall)
+﻿module("modules.logic.voice.view.VoiceChooseItem", package.seeall)
 
-slot0 = class("VoiceChooseItem", ListScrollCell)
+local var_0_0 = class("VoiceChooseItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._goSelect = gohelper.findChild(slot1, "#go_selected")
-	slot0._txtTitle = gohelper.findChildText(slot1, "#txt_title")
-	slot0._txtDec = gohelper.findChildText(slot1, "#txt_dec")
-	slot0._click = gohelper.getClick(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._goSelect = gohelper.findChild(arg_1_1, "#go_selected")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_1, "#txt_title")
+	arg_1_0._txtDec = gohelper.findChildText(arg_1_1, "#txt_dec")
+	arg_1_0._click = gohelper.getClick(arg_1_1)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	gohelper.setActive(slot0._goSelect, slot0._mo.choose)
+	gohelper.setActive(arg_4_0._goSelect, arg_4_0._mo.choose)
 
-	slot0._txtTitle.text = luaLang("langtype_" .. slot0._mo.lang)
-	slot0._txtDec.text = SettingsConfig.instance:getVoiceTips(slot0._mo.lang)
+	local var_4_0 = "langtype_" .. arg_4_0._mo.lang
+
+	arg_4_0._txtTitle.text = luaLang(var_4_0)
+
+	local var_4_1 = SettingsConfig.instance:getVoiceTips(arg_4_0._mo.lang)
+
+	arg_4_0._txtDec.text = var_4_1
 end
 
-function slot0._onClickThis(slot0)
-	VoiceChooseModel.instance:choose(slot0._mo.lang)
+function var_0_0._onClickThis(arg_5_0)
+	VoiceChooseModel.instance:choose(arg_5_0._mo.lang)
 end
 
-return slot0
+return var_0_0

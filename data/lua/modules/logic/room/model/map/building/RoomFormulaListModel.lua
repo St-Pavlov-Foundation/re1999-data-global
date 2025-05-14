@@ -1,450 +1,504 @@
-module("modules.logic.room.model.map.building.RoomFormulaListModel", package.seeall)
+﻿module("modules.logic.room.model.map.building.RoomFormulaListModel", package.seeall)
 
-slot0 = class("RoomFormulaListModel", ListScrollModel)
-slot1 = true
-slot0.FormulaItemAnimationName = {
+local var_0_0 = class("RoomFormulaListModel", ListScrollModel)
+local var_0_1 = true
+
+var_0_0.FormulaItemAnimationName = {
 	collapse = "collapse",
 	unfold = "unfold",
 	idle = "idle"
 }
-slot0.ANIMATION_WAIT_TIME = 0.15
-slot0.SET_DATA_WAIT_TIME = 0.01
+var_0_0.ANIMATION_WAIT_TIME = 0.15
+var_0_0.SET_DATA_WAIT_TIME = 0.01
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	slot0:_clearData()
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	arg_3_0:_clearData()
+	var_0_0.super.clear(arg_3_0)
 end
 
-function slot0._clearData(slot0)
-	slot0._formulaShowType = nil
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._formulaShowType = nil
 
-	slot0:resetSelectFormulaStrId()
-	slot0:resetIsInList()
+	arg_4_0:resetSelectFormulaStrId()
+	arg_4_0:resetIsInList()
 end
 
-function slot0.isSelectedFormula(slot0, slot1)
-	if not slot1 then
+function var_0_0.isSelectedFormula(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return false
 	end
 
-	return slot1 == slot0:getSelectFormulaStrId()
+	return arg_5_1 == arg_5_0:getSelectFormulaStrId()
 end
 
-function slot0.changeSelectFormulaToTopLevel(slot0)
-	if not slot0:getSelectFormulaStrId() then
+function var_0_0.changeSelectFormulaToTopLevel(arg_6_0)
+	local var_6_0 = arg_6_0:getSelectFormulaStrId()
+
+	if not var_6_0 then
 		return
 	end
 
-	if uv0.instance:getSelectFormulaMo():getFormulaTreeLevel() == RoomFormulaModel.DEFAULT_TREE_LEVEL then
+	local var_6_1 = var_0_0.instance:getSelectFormulaMo()
+
+	if var_6_1:getFormulaTreeLevel() == RoomFormulaModel.DEFAULT_TREE_LEVEL then
 		return
 	end
 
-	slot5 = RoomFormulaModel.instance:getFormulaMo(RoomProductionHelper.getTopLevelFormulaStrId(slot1))
+	local var_6_2 = RoomProductionHelper.getTopLevelFormulaStrId(var_6_0)
+	local var_6_3 = RoomFormulaModel.instance:getFormulaMo(var_6_2)
 
-	if slot2 and slot5 then
-		slot5:setFormulaCombineCount(slot2:getFormulaCombineCount())
-		slot0:setSelectFormulaStrId(slot4)
+	if var_6_1 and var_6_3 then
+		local var_6_4 = var_6_1:getFormulaCombineCount()
+
+		var_6_3:setFormulaCombineCount(var_6_4)
+		arg_6_0:setSelectFormulaStrId(var_6_2)
 		RoomMapController.instance:dispatchEvent(RoomEvent.ChangeSelectFormulaToTopLevel)
 	end
 end
 
-function slot0.setFormulaList(slot0, slot1)
-	slot0:resetAllShowFormulaIsExpandTree()
+function var_0_0.setFormulaList(arg_7_0, arg_7_1)
+	arg_7_0:resetAllShowFormulaIsExpandTree()
 
-	slot2 = {}
+	local var_7_0 = {}
+	local var_7_1 = RoomFormulaModel.instance:getTopTreeLevelFormulaMoList(arg_7_0._formulaShowType)
 
-	for slot7, slot8 in ipairs(RoomFormulaModel.instance:getTopTreeLevelFormulaMoList(slot0._formulaShowType)) do
-		table.insert(slot2, slot8)
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		table.insert(var_7_0, iter_7_1)
 	end
 
-	slot0.level = slot1
+	arg_7_0.level = arg_7_1
 
-	table.sort(slot2, slot0._sortFunction)
-	slot0:setList(slot0:listAddTreeFormula(slot2))
+	table.sort(var_7_0, arg_7_0._sortFunction)
+
+	local var_7_2 = arg_7_0:listAddTreeFormula(var_7_0)
+
+	arg_7_0:setList(var_7_2)
 end
 
-function slot0._sortFunction(slot0, slot1)
-	slot2 = uv0.instance:getOrder()
-	slot3 = uv0.instance.level
-	slot4, slot5, slot6, slot7 = RoomProductionHelper.isFormulaUnlock(slot0.config.id, slot3)
-	slot8, slot9, slot10, slot11 = RoomProductionHelper.isFormulaUnlock(slot1.config.id, slot3)
+function var_0_0._sortFunction(arg_8_0, arg_8_1)
+	local var_8_0 = var_0_0.instance:getOrder()
+	local var_8_1 = var_0_0.instance.level
+	local var_8_2, var_8_3, var_8_4, var_8_5 = RoomProductionHelper.isFormulaUnlock(arg_8_0.config.id, var_8_1)
+	local var_8_6, var_8_7, var_8_8, var_8_9 = RoomProductionHelper.isFormulaUnlock(arg_8_1.config.id, var_8_1)
 
-	if slot4 and not slot8 then
+	if var_8_2 and not var_8_6 then
 		return true
-	elseif not slot4 and slot8 then
+	elseif not var_8_2 and var_8_6 then
 		return false
 	end
 
-	if slot4 and slot8 then
-		if slot2 == RoomBuildingEnum.FormulaOrderType.RareUp and slot0.config.rare ~= slot1.config.rare then
-			return slot0.config.rare < slot1.config.rare
-		elseif slot2 == RoomBuildingEnum.FormulaOrderType.RareDown and slot0.config.rare ~= slot1.config.rare then
-			return slot1.config.rare < slot0.config.rare
-		elseif slot2 == RoomBuildingEnum.FormulaOrderType.CostTimeUp and slot0.config.costTime ~= slot1.config.costTime then
-			return slot0.config.costTime < slot1.config.costTime
-		elseif slot2 == RoomBuildingEnum.FormulaOrderType.CostTimeDown and slot0.config.costTime ~= slot1.config.costTime then
-			return slot1.config.costTime < slot0.config.costTime
-		elseif slot2 == RoomBuildingEnum.FormulaOrderType.OrderUp and slot0.config.order ~= slot1.config.order then
-			return slot0.config.order < slot1.config.order
-		elseif slot2 == RoomBuildingEnum.FormulaOrderType.OrderDown and slot0.config.order ~= slot1.config.order then
-			return slot1.config.order < slot0.config.order
+	if var_8_2 and var_8_6 then
+		if var_8_0 == RoomBuildingEnum.FormulaOrderType.RareUp and arg_8_0.config.rare ~= arg_8_1.config.rare then
+			return arg_8_0.config.rare < arg_8_1.config.rare
+		elseif var_8_0 == RoomBuildingEnum.FormulaOrderType.RareDown and arg_8_0.config.rare ~= arg_8_1.config.rare then
+			return arg_8_0.config.rare > arg_8_1.config.rare
+		elseif var_8_0 == RoomBuildingEnum.FormulaOrderType.CostTimeUp and arg_8_0.config.costTime ~= arg_8_1.config.costTime then
+			return arg_8_0.config.costTime < arg_8_1.config.costTime
+		elseif var_8_0 == RoomBuildingEnum.FormulaOrderType.CostTimeDown and arg_8_0.config.costTime ~= arg_8_1.config.costTime then
+			return arg_8_0.config.costTime > arg_8_1.config.costTime
+		elseif var_8_0 == RoomBuildingEnum.FormulaOrderType.OrderUp and arg_8_0.config.order ~= arg_8_1.config.order then
+			return arg_8_0.config.order < arg_8_1.config.order
+		elseif var_8_0 == RoomBuildingEnum.FormulaOrderType.OrderDown and arg_8_0.config.order ~= arg_8_1.config.order then
+			return arg_8_0.config.order > arg_8_1.config.order
 		end
-	elseif not slot4 and not slot8 then
-		if slot6 and not slot10 then
+	elseif not var_8_2 and not var_8_6 then
+		if var_8_4 and not var_8_8 then
 			return false
-		elseif not slot6 and slot10 then
+		elseif not var_8_4 and var_8_8 then
 			return true
-		elseif slot6 and slot10 then
-			if slot6 ~= slot10 then
-				return slot6 < slot10
+		elseif var_8_4 and var_8_8 then
+			if var_8_4 ~= var_8_8 then
+				return var_8_4 < var_8_8
 			end
 
-			if slot7 and not slot11 then
+			if var_8_5 and not var_8_9 then
 				return false
-			elseif not slot7 and slot11 then
+			elseif not var_8_5 and var_8_9 then
 				return true
 			end
 		end
 	end
 
-	if slot0.config.order ~= slot1.config.order then
-		return slot0.config.order < slot1.config.order
+	if arg_8_0.config.order ~= arg_8_1.config.order then
+		return arg_8_0.config.order < arg_8_1.config.order
 	end
 
-	return slot0.id < slot1.id
+	return arg_8_0.id < arg_8_1.id
 end
 
-function slot0.expandOrHideTreeFormulaList(slot0, slot1, slot2)
-	if not slot0.isInList then
-		return false
+function var_0_0.expandOrHideTreeFormulaList(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = false
+
+	if not arg_9_0.isInList then
+		return var_9_0
 	end
 
-	slot4 = slot0:getSelectFormulaStrId()
+	local var_9_1 = arg_9_0:getSelectFormulaStrId()
 
-	if not slot1 then
-		slot0:expandTreeFormulaList()
+	if not arg_9_1 then
+		arg_9_0:expandTreeFormulaList()
 
-		return slot3
+		return var_9_0
 	end
 
-	if slot2 then
-		slot5 = nil
+	if arg_9_2 then
+		local var_9_2
 
-		if string.nilorempty(slot4) then
-			slot5 = slot0:getFormulaListAfterHideTree(RoomFormulaModel.DEFAULT_TREE_LEVEL)
+		if string.nilorempty(var_9_1) then
+			var_9_2 = arg_9_0:getFormulaListAfterHideTree(RoomFormulaModel.DEFAULT_TREE_LEVEL)
 		else
-			if not slot0:getSelectFormulaMo() then
-				return slot3
+			local var_9_3 = arg_9_0:getSelectFormulaMo()
+
+			if not var_9_3 then
+				return var_9_0
 			end
 
-			slot5 = slot0:getFormulaListAfterHideTree(slot6:getFormulaTreeLevel() + 1)
+			local var_9_4 = var_9_3:getFormulaTreeLevel()
+
+			var_9_2 = arg_9_0:getFormulaListAfterHideTree(var_9_4 + 1)
 		end
 
-		TaskDispatcher.runDelay(function ()
-			uv0:setList(uv1)
-		end, nil, uv0.ANIMATION_WAIT_TIME)
+		TaskDispatcher.runDelay(function()
+			arg_9_0:setList(var_9_2)
+		end, nil, var_0_0.ANIMATION_WAIT_TIME)
 
-		return true
-	end
-
-	if not slot0:getSelectFormulaMo() then
-		return slot3
-	end
-
-	if slot5:getIsExpandTree() then
-		slot0:onModelUpdate()
+		var_9_0 = true
 	else
-		slot8 = slot0:getFormulaListAfterHideTree(slot5:getFormulaTreeLevel())
+		local var_9_5 = arg_9_0:getSelectFormulaMo()
 
-		TaskDispatcher.runDelay(function ()
-			uv0:expandTreeFormulaList(uv1)
-		end, nil, uv0.ANIMATION_WAIT_TIME)
+		if not var_9_5 then
+			return var_9_0
+		end
 
-		slot3 = true
-	end
-end
+		if var_9_5:getIsExpandTree() then
+			arg_9_0:onModelUpdate()
+		else
+			local var_9_6 = var_9_5:getFormulaTreeLevel()
+			local var_9_7 = arg_9_0:getFormulaListAfterHideTree(var_9_6)
 
-function slot0.expandTreeFormulaList(slot0, slot1)
-	slot3, slot4 = slot0:listAddTreeFormula(slot1 or slot0:getList(), true)
+			TaskDispatcher.runDelay(function()
+				arg_9_0:expandTreeFormulaList(var_9_7)
+			end, nil, var_0_0.ANIMATION_WAIT_TIME)
 
-	slot0:setList(slot3)
-	TaskDispatcher.runDelay(function ()
-		RoomMapController.instance:dispatchEvent(RoomEvent.PlayFormulaAnimation, uv0, uv1.FormulaItemAnimationName.unfold)
-	end, nil, uv0.SET_DATA_WAIT_TIME)
-end
-
-function slot0.getFormulaListAfterHideTree(slot0, slot1)
-	slot2 = slot0:getList()
-
-	if RoomFormulaModel.MAX_FORMULA_TREE_LEVEL < slot1 then
-		return slot2
+			var_9_0 = true
+		end
 	end
 
-	slot4 = {}
+	return var_9_0
+end
 
-	for slot8, slot9 in ipairs(slot2) do
-		if slot1 <= slot9:getFormulaTreeLevel() then
-			slot9:setIsExpandTree(false)
+function var_0_0.expandTreeFormulaList(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1 or arg_12_0:getList()
+	local var_12_1, var_12_2 = arg_12_0:listAddTreeFormula(var_12_0, true)
 
-			if slot1 < slot10 then
-				-- Nothing
+	arg_12_0:setList(var_12_1)
+	TaskDispatcher.runDelay(function()
+		RoomMapController.instance:dispatchEvent(RoomEvent.PlayFormulaAnimation, var_12_2, var_0_0.FormulaItemAnimationName.unfold)
+	end, nil, var_0_0.SET_DATA_WAIT_TIME)
+end
+
+function var_0_0.getFormulaListAfterHideTree(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getList()
+
+	if arg_14_1 > RoomFormulaModel.MAX_FORMULA_TREE_LEVEL then
+		return var_14_0
+	end
+
+	local var_14_1 = {}
+	local var_14_2 = {}
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_3 = iter_14_1:getFormulaTreeLevel()
+
+		if arg_14_1 <= var_14_3 then
+			iter_14_1:setIsExpandTree(false)
+
+			if arg_14_1 < var_14_3 then
+				var_14_1[iter_14_1:getId()] = true
 			end
 		end
 
-		if slot10 <= slot1 then
-			table.insert(slot4, slot9)
+		if var_14_3 <= arg_14_1 then
+			table.insert(var_14_2, iter_14_1)
 		end
 	end
 
-	RoomMapController.instance:dispatchEvent(RoomEvent.PlayFormulaAnimation, {
-		[slot9:getId()] = true
-	}, uv0.FormulaItemAnimationName.collapse)
+	RoomMapController.instance:dispatchEvent(RoomEvent.PlayFormulaAnimation, var_14_1, var_0_0.FormulaItemAnimationName.collapse)
 
-	return slot4
+	return var_14_2
 end
 
-function slot0.listAddTreeFormula(slot0, slot1, slot2)
-	if not slot0:getSelectFormulaStrId() or not slot0:getIsInList() then
-		return slot1, {}
+function var_0_0.listAddTreeFormula(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = {}
+	local var_15_1 = arg_15_0:getIsInList()
+	local var_15_2 = arg_15_0:getSelectFormulaStrId()
+
+	if not var_15_2 or not var_15_1 then
+		return arg_15_1, var_15_0
 	end
 
-	slot6, slot7 = nil
+	local var_15_3
+	local var_15_4
 
-	for slot11, slot12 in ipairs(slot1) do
-		if slot12:getId() == slot5 then
-			slot6 = slot11
-			slot7 = slot12
+	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
+		if iter_15_1:getId() == var_15_2 then
+			var_15_3 = iter_15_0
+			var_15_4 = iter_15_1
 
 			break
 		end
 	end
 
-	if not slot6 or not slot7 then
-		if slot2 then
-			logError("RoomFormulaListModel:listAddTreeFormula error,can't find select formula,id:" .. (slot0._selectFormulaStrId or "nil"))
+	if not var_15_3 or not var_15_4 then
+		if arg_15_2 then
+			logError("RoomFormulaListModel:listAddTreeFormula error,can't find select formula,id:" .. (arg_15_0._selectFormulaStrId or "nil"))
 		end
 
-		return slot1, slot3
+		return arg_15_1, var_15_0
 	end
 
-	for slot12 = 1, slot6 do
-		table.insert({}, slot1[slot12])
+	local var_15_5 = {}
+
+	for iter_15_2 = 1, var_15_3 do
+		table.insert(var_15_5, arg_15_1[iter_15_2])
 	end
 
-	for slot14 = 1, #slot0:_getTreeLevelFormulaList(slot7:getId()) do
-		slot15 = slot10[slot14]
-		slot3[slot15:getId()] = true
+	local var_15_6 = var_15_4:getId()
+	local var_15_7 = arg_15_0:_getTreeLevelFormulaList(var_15_6)
 
-		table.insert(slot8, slot15)
+	for iter_15_3 = 1, #var_15_7 do
+		local var_15_8 = var_15_7[iter_15_3]
+
+		var_15_0[var_15_8:getId()] = true
+
+		table.insert(var_15_5, var_15_8)
 	end
 
-	for slot14 = slot6 + 1, #slot1 do
-		table.insert(slot8, slot1[slot14])
+	for iter_15_4 = var_15_3 + 1, #arg_15_1 do
+		table.insert(var_15_5, arg_15_1[iter_15_4])
 	end
 
-	slot7:setIsExpandTree(true)
+	var_15_4:setIsExpandTree(true)
 
-	return slot8, slot3
+	return var_15_5, var_15_0
 end
 
-function slot0._getTreeLevelFormulaList(slot0, slot1)
-	if not slot1 then
-		return {}
+function var_0_0._getTreeLevelFormulaList(arg_16_0, arg_16_1)
+	local var_16_0 = {}
+
+	if not arg_16_1 then
+		return var_16_0
 	end
 
-	slot3, slot4 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(slot1)
+	local var_16_1, var_16_2 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(arg_16_1)
+	local var_16_3 = var_16_2 + 1
 
-	if RoomFormulaModel.MAX_FORMULA_TREE_LEVEL < slot4 + 1 then
-		return slot2
+	if var_16_3 > RoomFormulaModel.MAX_FORMULA_TREE_LEVEL then
+		return var_16_0
 	end
 
-	slot6 = RoomProductionHelper.getCostMaterialFormulaList(slot3)
+	local var_16_4 = RoomProductionHelper.getCostMaterialFormulaList(var_16_1)
+	local var_16_5 = #var_16_4
 
-	for slot11, slot12 in ipairs(slot6) do
-		if slot12 and slot12 ~= 0 then
-			slot14 = RoomProductionHelper.getFormulaStrUID(slot12, slot5)
+	for iter_16_0, iter_16_1 in ipairs(var_16_4) do
+		if iter_16_1 and iter_16_1 ~= 0 then
+			local var_16_6 = iter_16_0 == var_16_5
+			local var_16_7 = RoomProductionHelper.getFormulaStrUID(iter_16_1, var_16_3)
+			local var_16_8 = {
+				id = var_16_7,
+				isLast = var_16_6,
+				parentStrId = arg_16_1
+			}
+			local var_16_9 = RoomFormulaModel.instance:getFormulaMoWithInfo(var_16_7, var_16_8)
 
-			if RoomFormulaModel.instance:getFormulaMoWithInfo(slot14, {
-				id = slot14,
-				isLast = slot11 == #slot6,
-				parentStrId = slot1
-			}) then
-				table.insert(slot2, slot16)
+			if var_16_9 then
+				table.insert(var_16_0, var_16_9)
 			end
 		end
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.setSelectFormulaStrId(slot0, slot1)
-	slot2 = nil
+function var_0_0.setSelectFormulaStrId(arg_17_0, arg_17_1)
+	local var_17_0
+	local var_17_1 = arg_17_0:getTopExpandFormulaStrId()
 
-	if slot0:getTopExpandFormulaStrId() and slot3 ~= slot1 then
-		slot2 = RoomFormulaModel.instance:getFormulaMo(slot3, true)
+	if var_17_1 and var_17_1 ~= arg_17_1 then
+		var_17_0 = RoomFormulaModel.instance:getFormulaMo(var_17_1, true)
 	end
 
-	if slot1 then
-		slot4, slot5 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(slot1)
+	if arg_17_1 then
+		local var_17_2, var_17_3 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(arg_17_1)
 
-		if slot4 and slot4 ~= 0 then
-			if slot5 == RoomFormulaModel.DEFAULT_TREE_LEVEL then
-				if slot2 then
-					slot2:resetFormulaCombineCount()
+		if var_17_2 and var_17_2 ~= 0 then
+			if var_17_3 == RoomFormulaModel.DEFAULT_TREE_LEVEL then
+				if var_17_0 then
+					var_17_0:resetFormulaCombineCount()
 				end
 
-				slot0:setTopExpandFormulaStrId(slot1)
+				arg_17_0:setTopExpandFormulaStrId(arg_17_1)
 			end
 
-			slot0._selectFormulaStrId = slot1
+			arg_17_0._selectFormulaStrId = arg_17_1
 		end
 	else
-		slot0._selectFormulaStrId = nil
+		arg_17_0._selectFormulaStrId = nil
 
-		slot0:resetTopExpandFormulaStrId()
+		arg_17_0:resetTopExpandFormulaStrId()
 
-		if slot2 then
-			slot2:resetFormulaCombineCount()
+		if var_17_0 then
+			var_17_0:resetFormulaCombineCount()
 		end
 	end
 end
 
-function slot0.setFormulaShowType(slot0, slot1)
-	slot0._formulaShowType = slot1
+function var_0_0.setFormulaShowType(arg_18_0, arg_18_1)
+	arg_18_0._formulaShowType = arg_18_1
 end
 
-function slot0.setOrder(slot0, slot1)
-	slot0._order = slot1
+function var_0_0.setOrder(arg_19_0, arg_19_1)
+	arg_19_0._order = arg_19_1
 end
 
-function slot0.setTopExpandFormulaStrId(slot0, slot1)
-	if slot1 then
-		slot2, slot3 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(slot1)
+function var_0_0.setTopExpandFormulaStrId(arg_20_0, arg_20_1)
+	if arg_20_1 then
+		local var_20_0, var_20_1 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(arg_20_1)
 
-		if slot3 == RoomFormulaModel.DEFAULT_TREE_LEVEL then
-			slot0._topExpandFormulaStrId = slot1
+		if var_20_1 == RoomFormulaModel.DEFAULT_TREE_LEVEL then
+			arg_20_0._topExpandFormulaStrId = arg_20_1
 		else
-			logError("RoomFormulaListModel:setTopExpandFormulaStrId error,id:" .. slot1 .. "isn't top formula")
+			logError("RoomFormulaListModel:setTopExpandFormulaStrId error,id:" .. arg_20_1 .. "isn't top formula")
 		end
 	else
-		slot0._topExpandFormulaStrId = nil
+		arg_20_0._topExpandFormulaStrId = nil
 	end
 end
 
-function slot0.setIsInList(slot0, slot1)
-	slot0.isInList = slot1
+function var_0_0.setIsInList(arg_21_0, arg_21_1)
+	arg_21_0.isInList = arg_21_1
 end
 
-function slot0.resetSelectFormulaStrId(slot0)
-	slot0:setSelectFormulaStrId()
+function var_0_0.resetSelectFormulaStrId(arg_22_0)
+	arg_22_0:setSelectFormulaStrId()
 end
 
-function slot0.resetAllShowFormulaIsExpandTree(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		slot6:resetIsExpandTree()
+function var_0_0.resetAllShowFormulaIsExpandTree(arg_23_0)
+	local var_23_0 = arg_23_0:getList()
+
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		iter_23_1:resetIsExpandTree()
 	end
 end
 
-function slot0.resetIsInList(slot0)
-	slot0:setIsInList(uv0)
+function var_0_0.resetIsInList(arg_24_0)
+	arg_24_0:setIsInList(var_0_1)
 end
 
-function slot0.resetTopExpandFormulaStrId(slot0)
-	slot0:setTopExpandFormulaStrId()
+function var_0_0.resetTopExpandFormulaStrId(arg_25_0)
+	arg_25_0:setTopExpandFormulaStrId()
 end
 
-function slot0.getSelectFormulaStrId(slot0)
-	return slot0._selectFormulaStrId
+function var_0_0.getSelectFormulaStrId(arg_26_0)
+	return arg_26_0._selectFormulaStrId
 end
 
-function slot0.getSelectFormulaId(slot0)
-	slot1 = 0
+function var_0_0.getSelectFormulaId(arg_27_0)
+	local var_27_0 = 0
 
-	if slot0:getSelectFormulaStrId() then
-		slot1 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(slot0._selectFormulaStrId)
+	if arg_27_0:getSelectFormulaStrId() then
+		var_27_0 = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(arg_27_0._selectFormulaStrId)
 	end
 
-	return slot1
+	return var_27_0
 end
 
-function slot0.getSelectFormulaMo(slot0)
-	if slot0:getSelectFormulaStrId() then
-		return RoomFormulaModel.instance:getFormulaMo(slot1)
+function var_0_0.getSelectFormulaMo(arg_28_0)
+	local var_28_0 = arg_28_0:getSelectFormulaStrId()
+
+	if var_28_0 then
+		return RoomFormulaModel.instance:getFormulaMo(var_28_0)
 	end
 end
 
-function slot0.getOrder(slot0)
-	return slot0._order
+function var_0_0.getOrder(arg_29_0)
+	return arg_29_0._order
 end
 
-function slot0.getTopExpandFormulaStrId(slot0)
-	return slot0._topExpandFormulaStrId
+function var_0_0.getTopExpandFormulaStrId(arg_30_0)
+	return arg_30_0._topExpandFormulaStrId
 end
 
-function slot0.getIsInList(slot0)
-	if slot0.isInList == nil then
-		slot0:resetIsInList()
+function var_0_0.getIsInList(arg_31_0)
+	if arg_31_0.isInList == nil then
+		arg_31_0:resetIsInList()
 	end
 
-	return slot0.isInList
+	return arg_31_0.isInList
 end
 
-function slot0.getSelectFormulaCombineCount(slot0)
-	slot1 = 0
+function var_0_0.getSelectFormulaCombineCount(arg_32_0)
+	local var_32_0 = 0
+	local var_32_1 = arg_32_0:getSelectFormulaMo()
 
-	if slot0:getSelectFormulaMo() then
-		slot1 = slot2:getFormulaCombineCount()
+	if var_32_1 then
+		var_32_0 = var_32_1:getFormulaCombineCount()
 	end
 
-	return slot1
+	return var_32_0
 end
 
-function slot0.getSelectFormulaStrIdIndex(slot0)
-	slot1 = 0
+function var_0_0.getSelectFormulaStrIdIndex(arg_33_0)
+	local var_33_0 = 0
+	local var_33_1 = arg_33_0:getSelectFormulaStrId()
+	local var_33_2 = arg_33_0:getList()
 
-	for slot7, slot8 in ipairs(slot0:getList()) do
-		if slot8:getId() == slot0:getSelectFormulaStrId() then
-			slot1 = slot7
+	for iter_33_0, iter_33_1 in ipairs(var_33_2) do
+		if iter_33_1:getId() == var_33_1 then
+			var_33_0 = iter_33_0
 
 			break
 		end
 	end
 
-	return slot1
+	return var_33_0
 end
 
-function slot0.refreshRankDiff(slot0)
-	slot0._idIdxList = {}
+function var_0_0.refreshRankDiff(arg_34_0)
+	arg_34_0._idIdxList = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		table.insert(slot0._idIdxList, slot6.id)
+	local var_34_0 = arg_34_0:getList()
+
+	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+		table.insert(arg_34_0._idIdxList, iter_34_1.id)
 	end
 end
 
-function slot0.clearRankDiff(slot0)
-	slot0._idIdxList = nil
+function var_0_0.clearRankDiff(arg_35_0)
+	arg_35_0._idIdxList = nil
 end
 
-function slot0.getRankDiff(slot0, slot1)
-	if slot0._idIdxList and slot1 then
-		slot3 = slot0:getIndex(slot1)
+function var_0_0.getRankDiff(arg_36_0, arg_36_1)
+	if arg_36_0._idIdxList and arg_36_1 then
+		local var_36_0 = tabletool.indexOf(arg_36_0._idIdxList, arg_36_1.id)
+		local var_36_1 = arg_36_0:getIndex(arg_36_1)
 
-		if tabletool.indexOf(slot0._idIdxList, slot1.id) and slot3 then
-			return slot3 - slot2
+		if var_36_0 and var_36_1 then
+			return var_36_1 - var_36_0
 		end
 	end
 
 	return 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

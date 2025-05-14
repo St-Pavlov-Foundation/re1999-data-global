@@ -1,47 +1,55 @@
-module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsPaperView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsPaperView", package.seeall)
 
-slot0 = class("SportsNewsPaperView", BaseView)
+local var_0_0 = class("SportsNewsPaperView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "#txt_content")
-	slot0._btnstartbtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_startbtn")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#txt_content")
+	arg_1_0._btnstartbtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_startbtn")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstartbtn:AddClickListener(slot0._btnstartbtnOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstartbtn:AddClickListener(arg_2_0._btnstartbtnOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstartbtn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstartbtn:RemoveClickListener()
 end
 
-function slot0._btnstartbtnOnClick(slot0)
-	PlayerPrefsHelper.setString(SportsNewsModel.instance:getFirstHelpKey(slot0.viewParam.actId), "watched")
-	slot0:closeThis()
+function var_0_0._btnstartbtnOnClick(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam.actId
+	local var_4_1 = SportsNewsModel.instance:getFirstHelpKey(var_4_0)
+
+	PlayerPrefsHelper.setString(var_4_1, "watched")
+	arg_4_0:closeThis()
 	HelpController.instance:showHelp(HelpEnum.HelpId.SportsNews)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

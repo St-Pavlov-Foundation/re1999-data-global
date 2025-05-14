@@ -1,95 +1,112 @@
-module("modules.spine.LightSpine", package.seeall)
+﻿module("modules.spine.LightSpine", package.seeall)
 
-slot0 = class("LightSpine", BaseSpine)
-slot0.TypeSkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
-slot0.TypeSpineAnimationEvent = typeof(ZProj.SpineAnimationEvent)
+local var_0_0 = class("LightSpine", BaseSpine)
 
-function slot0.Create(slot0, slot1)
-	slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
-	slot2._isStory = slot1
+var_0_0.TypeSkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
+var_0_0.TypeSpineAnimationEvent = typeof(ZProj.SpineAnimationEvent)
 
-	return slot2
+function var_0_0.Create(arg_1_0, arg_1_1)
+	local var_1_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+
+	var_1_0._isStory = arg_1_1
+
+	return var_1_0
 end
 
-function slot0._onResLoaded(slot0)
-	slot0._sharedMaterials = nil
-	slot0._retryGetSharedMats = 0
+function var_0_0._onResLoaded(arg_2_0)
+	arg_2_0._sharedMaterials = nil
+	arg_2_0._retryGetSharedMats = 0
 
-	uv0.super._onResLoaded(slot0)
+	var_0_0.super._onResLoaded(arg_2_0)
 end
 
-function slot0.getBoundsMinMaxPos(slot0)
-	slot2 = slot0:getRenderer().bounds
+function var_0_0.getBoundsMinMaxPos(arg_3_0)
+	local var_3_0 = arg_3_0:getRenderer().bounds
 
-	return slot2.min, slot2.max
+	return var_3_0.min, var_3_0.max
 end
 
-function slot0.initSkeletonComponent(slot0)
-	slot0._skeletonComponent = slot0._spineGo:GetComponent(uv0.TypeSkeletonAnimation)
+function var_0_0.initSkeletonComponent(arg_4_0)
+	arg_4_0._skeletonComponent = arg_4_0._spineGo:GetComponent(var_0_0.TypeSkeletonAnimation)
 
-	slot0._skeletonComponent:Initialize(false)
+	arg_4_0._skeletonComponent:Initialize(false)
 
-	slot0._skeletonComponent.freeze = slot0._bFreeze
-	slot0._animationEvent = uv0.TypeSpineAnimationEvent
-	slot0._mountroot = gohelper.findChild(slot0._spineGo, "mountroot")
+	arg_4_0._skeletonComponent.freeze = arg_4_0._bFreeze
+	arg_4_0._animationEvent = var_0_0.TypeSpineAnimationEvent
+	arg_4_0._mountroot = gohelper.findChild(arg_4_0._spineGo, "mountroot")
 end
 
-function slot0.changeRenderQueue(slot0, slot1)
+function var_0_0.changeRenderQueue(arg_5_0, arg_5_1)
+	return
 end
 
-function slot0.setStencilRef(slot0, slot1)
-	if gohelper.isNil(slot0._spineGo) then
+function var_0_0.setStencilRef(arg_6_0, arg_6_1)
+	if gohelper.isNil(arg_6_0._spineGo) then
 		return
 	end
 
-	for slot7 = 0, slot0:getSharedMats().Length - 1 do
-		slot2[slot7]:SetFloat(ShaderPropertyId.Stencil, slot1)
+	local var_6_0 = arg_6_0:getSharedMats()
+	local var_6_1 = var_6_0.Length
+
+	for iter_6_0 = 0, var_6_1 - 1 do
+		var_6_0[iter_6_0]:SetFloat(ShaderPropertyId.Stencil, arg_6_1)
 	end
 
-	if slot0._mountroot then
-		gohelper.setActive(slot0._mountroot, slot1 == 0)
+	if arg_6_0._mountroot then
+		gohelper.setActive(arg_6_0._mountroot, arg_6_1 == 0)
 	end
 end
 
-function slot0.setStencilValues(slot0, slot1, slot2, slot3)
-	if gohelper.isNil(slot0._spineGo) then
+function var_0_0.setStencilValues(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if gohelper.isNil(arg_7_0._spineGo) then
 		return
 	end
 
-	for slot9 = 0, slot0:getSharedMats().Length - 1 do
-		slot10 = slot4[slot9]
+	local var_7_0 = arg_7_0:getSharedMats()
+	local var_7_1 = var_7_0.Length
 
-		slot10:SetFloat(ShaderPropertyId.Stencil, slot1)
-		slot10:SetFloat(ShaderPropertyId.StencilComp, slot2)
-		slot10:SetFloat(ShaderPropertyId.StencilOp, slot3)
+	for iter_7_0 = 0, var_7_1 - 1 do
+		local var_7_2 = var_7_0[iter_7_0]
+
+		var_7_2:SetFloat(ShaderPropertyId.Stencil, arg_7_1)
+		var_7_2:SetFloat(ShaderPropertyId.StencilComp, arg_7_2)
+		var_7_2:SetFloat(ShaderPropertyId.StencilOp, arg_7_3)
 	end
 end
 
-function slot0.getSharedMats(slot0)
-	if not slot0._sharedMaterials then
-		slot0._sharedMaterials = slot0:getRenderer().sharedMaterials
-	elseif slot0._retryGetSharedMats and slot0._retryGetSharedMats <= 6 then
-		slot0._retryGetSharedMats = slot0._retryGetSharedMats + 1
-		slot0._sharedMaterials = slot0:getRenderer().sharedMaterials
+function var_0_0.getSharedMats(arg_8_0)
+	if not arg_8_0._sharedMaterials then
+		arg_8_0._sharedMaterials = arg_8_0:getRenderer().sharedMaterials
+	elseif arg_8_0._retryGetSharedMats and arg_8_0._retryGetSharedMats <= 6 then
+		arg_8_0._retryGetSharedMats = arg_8_0._retryGetSharedMats + 1
+		arg_8_0._sharedMaterials = arg_8_0:getRenderer().sharedMaterials
 
-		if slot0._sharedMaterials.Length > 1 then
-			slot0._retryGetSharedMats = nil
+		if arg_8_0._sharedMaterials.Length > 1 then
+			arg_8_0._retryGetSharedMats = nil
 		end
 	end
 
-	return slot0._sharedMaterials
+	return arg_8_0._sharedMaterials
 end
 
-function slot0.setMainColor(slot0, slot1)
-	for slot7 = 0, slot0:getSharedMats().Length - 1 do
-		MaterialUtil.setMainColor(slot2[slot7], slot1)
+function var_0_0.setMainColor(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getSharedMats()
+	local var_9_1 = var_9_0.Length
+
+	for iter_9_0 = 0, var_9_1 - 1 do
+		local var_9_2 = var_9_0[iter_9_0]
+
+		MaterialUtil.setMainColor(var_9_2, arg_9_1)
 	end
 end
 
-function slot0.setLumFactor(slot0, slot1)
-	for slot7 = 0, slot0:getSharedMats().Length - 1 do
-		slot2[slot7]:SetFloat(ShaderPropertyId.LumFactor, slot1)
+function var_0_0.setLumFactor(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getSharedMats()
+	local var_10_1 = var_10_0.Length
+
+	for iter_10_0 = 0, var_10_1 - 1 do
+		var_10_0[iter_10_0]:SetFloat(ShaderPropertyId.LumFactor, arg_10_1)
 	end
 end
 
-return slot0
+return var_0_0

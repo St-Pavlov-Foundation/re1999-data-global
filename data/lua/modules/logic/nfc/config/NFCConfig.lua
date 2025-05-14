@@ -1,26 +1,27 @@
-module("modules.logic.nfc.config.NFCConfig", package.seeall)
+﻿module("modules.logic.nfc.config.NFCConfig", package.seeall)
 
-slot0 = class("NFCConfig", BaseConfig)
+local var_0_0 = class("NFCConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"nfc_recognize"
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "nfc_recognize" then
-		slot0._nfcRecognizeConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "nfc_recognize" then
+		arg_3_0._nfcRecognizeConfig = arg_3_2
 	end
 end
 
-function slot0.getNFCRecognizeCo(slot0, slot1)
-	return slot0._nfcRecognizeConfig.configDict[slot1]
+function var_0_0.getNFCRecognizeCo(arg_4_0, arg_4_1)
+	return arg_4_0._nfcRecognizeConfig.configDict[arg_4_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

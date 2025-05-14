@@ -1,62 +1,70 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeMapLine", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeMapLine", package.seeall)
 
-slot0 = class("PuzzleMazeMapLine", PuzzleMazeBaseLine)
-slot0.SwitchOffIconUrl = "duandian_1"
+local var_0_0 = class("PuzzleMazeMapLine", PuzzleMazeBaseLine)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1)
+var_0_0.SwitchOffIconUrl = "duandian_1"
 
-	slot0._fillOrigin_left = slot2
-	slot0._fillOrigin_right = slot3
-	slot0._width, slot0._height = PuzzleMazeDrawModel.instance:getUIGridSize()
-	slot0._gomap = gohelper.findChild(slot0.go, "#go_map")
-	slot0._gopath = gohelper.findChild(slot0.go, "#go_path")
-	slot0._goswitch = gohelper.findChild(slot0.go, "#go_map/#go_switch")
-	slot0._imageindex = gohelper.findChildImage(slot0.go, "#go_map/#go_switch/#image_index")
-	slot0._imagecontent = gohelper.findChildImage(slot0.go, "#go_map/#go_switch/#image_content")
-	slot0._switchAnim = gohelper.findChildComponent(slot0.go, "#go_map/#go_switch", gohelper.Type_Animator)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	gohelper.setActive(slot0._gomap, true)
-	gohelper.setActive(slot0._gopath, false)
+	arg_1_0._fillOrigin_left = arg_1_2
+	arg_1_0._fillOrigin_right = arg_1_3
+	arg_1_0._width, arg_1_0._height = PuzzleMazeDrawModel.instance:getUIGridSize()
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.go, "#go_map")
+	arg_1_0._gopath = gohelper.findChild(arg_1_0.go, "#go_path")
+	arg_1_0._goswitch = gohelper.findChild(arg_1_0.go, "#go_map/#go_switch")
+	arg_1_0._imageindex = gohelper.findChildImage(arg_1_0.go, "#go_map/#go_switch/#image_index")
+	arg_1_0._imagecontent = gohelper.findChildImage(arg_1_0.go, "#go_map/#go_switch/#image_content")
+	arg_1_0._switchAnim = gohelper.findChildComponent(arg_1_0.go, "#go_map/#go_switch", gohelper.Type_Animator)
+
+	gohelper.setActive(arg_1_0._gomap, true)
+	gohelper.setActive(arg_1_0._gopath, false)
 end
 
-function slot0.onInit(slot0, slot1, slot2, slot3, slot4)
-	uv0.super.onInit(slot0, slot1, slot2, slot3, slot4)
-	slot0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.SwitchLineState, slot0.onSwitchLine, slot0)
+function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	var_0_0.super.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.SwitchLineState, arg_2_0.onSwitchLine, arg_2_0)
 
-	slot5, slot6 = PuzzleMazeDrawModel.instance:getLineAnchor(slot1, slot2, slot3, slot4)
+	local var_2_0, var_2_1 = PuzzleMazeDrawModel.instance:getLineAnchor(arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 
-	recthelper.setAnchor(slot0.go.transform, slot5, slot6)
-	slot0:_setIcon()
+	recthelper.setAnchor(arg_2_0.go.transform, var_2_0, var_2_1)
+	arg_2_0:_setIcon()
 end
 
-function slot0._setIcon(slot0)
-	slot3 = slot1 == PuzzleEnum.LineState.Switch_On
+function var_0_0._setIcon(arg_3_0)
+	local var_3_0 = PuzzleMazeDrawModel.instance:getMapLineState(arg_3_0.x1, arg_3_0.y1, arg_3_0.x2, arg_3_0.y2)
+	local var_3_1 = var_3_0 == PuzzleEnum.LineState.Switch_Off
+	local var_3_2 = var_3_0 == PuzzleEnum.LineState.Switch_On
 
-	if PuzzleMazeDrawModel.instance:getMapLineState(slot0.x1, slot0.y1, slot0.x2, slot0.y2) == PuzzleEnum.LineState.Switch_Off then
-		slot5 = PuzzleMazeDrawModel.instance:getInteractLineCtrl(slot0.x1, slot0.y1, slot0.x2, slot0.y2) and slot4.group
+	if var_3_1 then
+		local var_3_3 = PuzzleMazeDrawModel.instance:getInteractLineCtrl(arg_3_0.x1, arg_3_0.y1, arg_3_0.x2, arg_3_0.y2)
+		local var_3_4 = var_3_3 and var_3_3.group
+		local var_3_5 = var_3_4 and PuzzleEnum.InteractIndexIcon[var_3_4]
 
-		if slot5 and PuzzleEnum.InteractIndexIcon[slot5] then
-			UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(slot0._imageindex, slot6)
+		if var_3_5 then
+			UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(arg_3_0._imageindex, var_3_5)
 		end
 
-		UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(slot0._imagecontent, uv0.SwitchOffIconUrl)
+		UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(arg_3_0._imagecontent, var_0_0.SwitchOffIconUrl)
 	end
 
-	if slot2 or slot3 then
-		gohelper.setActive(slot0._goswitch, true)
-		slot0._switchAnim:Play(slot2 and "none" or "disappear", 0, 0)
+	if var_3_1 or var_3_2 then
+		gohelper.setActive(arg_3_0._goswitch, true)
+
+		local var_3_6 = var_3_1 and "none" or "disappear"
+
+		arg_3_0._switchAnim:Play(var_3_6, 0, 0)
 	else
-		gohelper.setActive(slot0._goswitch, false)
+		gohelper.setActive(arg_3_0._goswitch, false)
 	end
 end
 
-function slot0.onSwitchLine(slot0, slot1, slot2, slot3, slot4)
-	if slot1 ~= slot0.x1 or slot2 ~= slot0.y1 or slot0.x2 ~= slot3 or slot0.y2 ~= slot4 then
+function var_0_0.onSwitchLine(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	if arg_4_1 ~= arg_4_0.x1 or arg_4_2 ~= arg_4_0.y1 or arg_4_0.x2 ~= arg_4_3 or arg_4_0.y2 ~= arg_4_4 then
 		return
 	end
 
-	slot0:_setIcon()
+	arg_4_0:_setIcon()
 end
 
-return slot0
+return var_0_0

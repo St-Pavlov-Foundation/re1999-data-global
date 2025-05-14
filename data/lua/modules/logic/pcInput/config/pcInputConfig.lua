@@ -1,8 +1,8 @@
-module("modules.logic.pcInput.config.pcInputConfig", package.seeall)
+﻿module("modules.logic.pcInput.config.pcInputConfig", package.seeall)
 
-slot0 = class("pcInputConfig", BaseConfig)
+local var_0_0 = class("pcInputConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"key_binding",
 		"key_block",
@@ -10,32 +10,32 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "key_binding" then
-		slot0.key_binding = slot2
+function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == "key_binding" then
+		arg_2_0.key_binding = arg_2_2
 	end
 
-	if slot1 == "key_block" then
-		slot0.key_block = slot2
+	if arg_2_1 == "key_block" then
+		arg_2_0.key_block = arg_2_2
 	end
 
-	if slot1 == "key_name_replace" then
-		slot0.key_name_replace = slot2
+	if arg_2_1 == "key_name_replace" then
+		arg_2_0.key_name_replace = arg_2_2
 	end
 end
 
-function slot0.getKeyBinding(slot0)
-	return slot0.key_binding.configDict
+function var_0_0.getKeyBinding(arg_3_0)
+	return arg_3_0.key_binding.configDict
 end
 
-function slot0.getKeyBlock(slot0)
-	return slot0.key_block.configDict
+function var_0_0.getKeyBlock(arg_4_0)
+	return arg_4_0.key_block.configDict
 end
 
-function slot0.getKeyNameReplace(slot0)
-	return slot0.key_name_replace.configDict
+function var_0_0.getKeyNameReplace(arg_5_0)
+	return arg_5_0.key_name_replace.configDict
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

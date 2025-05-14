@@ -1,80 +1,83 @@
-module("modules.logic.scene.cachot.comp.CachotEventComp", package.seeall)
+﻿module("modules.logic.scene.cachot.comp.CachotEventComp", package.seeall)
 
-slot0 = class("CachotEventComp", BaseSceneComp)
+local var_0_0 = class("CachotEventComp", BaseSceneComp)
 
-function slot0.init(slot0)
-	slot0._isShowEvents = true
-	slot0._eventItems = {}
-	slot0._preloadComp = slot0:getCurScene().preloader
-	slot0._levelComp = slot0:getCurScene().level
+function var_0_0.init(arg_1_0)
+	arg_1_0._isShowEvents = true
+	arg_1_0._eventItems = {}
+	arg_1_0._preloadComp = arg_1_0:getCurScene().preloader
+	arg_1_0._levelComp = arg_1_0:getCurScene().level
 
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChangeBegin, slot0._clearEvents, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.TriggerEvent, slot0._clearEvents, slot0)
-	slot0._levelComp:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0.onSceneLevelLoaded, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._checkHaveViewOpen, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._checkHaveViewOpen, slot0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChangeBegin, arg_1_0._clearEvents, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.TriggerEvent, arg_1_0._clearEvents, arg_1_0)
+	arg_1_0._levelComp:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_1_0.onSceneLevelLoaded, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._checkHaveViewOpen, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._checkHaveViewOpen, arg_1_0)
 
-	if slot0._levelComp:getSceneGo() then
-		slot0:onSceneLevelLoaded()
+	if arg_1_0._levelComp:getSceneGo() then
+		arg_1_0:onSceneLevelLoaded()
 	end
 end
 
-function slot0._checkHaveViewOpen(slot0)
-	slot1 = ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView, {
+function var_0_0._checkHaveViewOpen(arg_2_0)
+	local var_2_0 = ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView, {
 		ViewName.GuideView,
 		ViewName.GuideView2,
 		ViewName.GuideStepEditor
 	})
 
 	if PopupController.instance:getPopupCount() > 0 then
-		slot1 = false
+		var_2_0 = false
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.LoadingView) or ViewMgr.instance:isOpen(ViewName.V1a6_CachotLoadingView) or ViewMgr.instance:isOpen(ViewName.V1a6_CachotLayerChangeView) then
-		slot1 = false
+		var_2_0 = false
 	end
 
-	if slot0._isShowEvents ~= slot1 then
-		slot0._isShowEvents = slot1
+	if arg_2_0._isShowEvents ~= var_2_0 then
+		arg_2_0._isShowEvents = var_2_0
 
-		for slot5, slot6 in pairs(slot0._eventItems) do
-			gohelper.setActive(slot6.go, slot1)
+		for iter_2_0, iter_2_1 in pairs(arg_2_0._eventItems) do
+			gohelper.setActive(iter_2_1.go, var_2_0)
 		end
 	end
 end
 
-function slot0._clearEvents(slot0)
-	for slot4, slot5 in pairs(slot0._eventItems) do
-		gohelper.destroy(slot5.go)
+function var_0_0._clearEvents(arg_3_0)
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._eventItems) do
+		gohelper.destroy(iter_3_1.go)
 	end
 
-	slot0._eventItems = {}
+	arg_3_0._eventItems = {}
 end
 
-function slot0.onSceneLevelLoaded(slot0)
-	slot0:_checkHaveViewOpen()
+function var_0_0.onSceneLevelLoaded(arg_4_0)
+	arg_4_0:_checkHaveViewOpen()
 
-	for slot5 = 1, #V1a6_CachotRoomModel.instance:getRoomEventMos() do
-		slot6 = slot1[slot5]
-		slot8 = slot0._preloadComp:getResInst(CachotScenePreloader.EventItem, slot0._levelComp:getEventTr(slot6.index).gameObject)
+	local var_4_0 = V1a6_CachotRoomModel.instance:getRoomEventMos()
 
-		gohelper.removeEffectNode(slot8)
+	for iter_4_0 = 1, #var_4_0 do
+		local var_4_1 = var_4_0[iter_4_0]
+		local var_4_2 = arg_4_0._levelComp:getEventTr(var_4_1.index).gameObject
+		local var_4_3 = arg_4_0._preloadComp:getResInst(CachotScenePreloader.EventItem, var_4_2)
 
-		slot0._eventItems[slot5] = MonoHelper.addNoUpdateLuaComOnceToGo(slot8, CachotEventItem)
+		gohelper.removeEffectNode(var_4_3)
 
-		slot0._eventItems[slot5]:updateMo(slot6)
-		gohelper.setActive(slot8, slot0._isShowEvents)
+		arg_4_0._eventItems[iter_4_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_3, CachotEventItem)
+
+		arg_4_0._eventItems[iter_4_0]:updateMo(var_4_1)
+		gohelper.setActive(var_4_3, arg_4_0._isShowEvents)
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._eventItems = {}
+function var_0_0.onSceneClose(arg_5_0)
+	arg_5_0._eventItems = {}
 
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomChangeBegin, slot0._clearEvents, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.TriggerEvent, slot0._clearEvents, slot0)
-	slot0._levelComp:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0.onSceneLevelLoaded, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._checkHaveViewOpen, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._checkHaveViewOpen, slot0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomChangeBegin, arg_5_0._clearEvents, arg_5_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.TriggerEvent, arg_5_0._clearEvents, arg_5_0)
+	arg_5_0._levelComp:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_5_0.onSceneLevelLoaded, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_5_0._checkHaveViewOpen, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_5_0._checkHaveViewOpen, arg_5_0)
 end
 
-return slot0
+return var_0_0

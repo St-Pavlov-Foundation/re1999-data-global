@@ -1,119 +1,125 @@
-module("modules.logic.versionactivity1_3.chess.controller.Activity1_3ChessController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.controller.Activity1_3ChessController", package.seeall)
 
-slot0 = class("Activity1_3ChessController", BaseController)
+local var_0_0 = class("Activity1_3ChessController", BaseController)
 
-function slot0.openMapView(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.openMapView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity122
 	})
-	Activity122Rpc.instance:sendGetActInfoRequest(VersionActivity1_3Enum.ActivityId.Act304, function ()
+	Activity122Rpc.instance:sendGetActInfoRequest(VersionActivity1_3Enum.ActivityId.Act304, function()
 		ViewMgr.instance:openView(ViewName.Activity1_3ChessMapView, {
-			chapterId = uv0
+			chapterId = arg_1_1
 		}, true)
 
-		if uv1 then
-			uv1(uv2, uv3)
+		if arg_1_2 then
+			arg_1_2(arg_1_3, arg_1_4)
 		end
 	end)
 end
 
-function slot0.openStoryView(slot0, slot1)
-	if Activity122Model.instance:isEpisodeClear(slot1) then
+function var_0_0.openStoryView(arg_3_0, arg_3_1)
+	if Activity122Model.instance:isEpisodeClear(arg_3_1) then
 		ViewMgr.instance:openView(ViewName.Activity1_3ChessStoryView, {
 			actId = VersionActivity1_3Enum.ActivityId.Act304,
-			episodeId = slot1
+			episodeId = arg_3_1
 		})
 	end
 end
 
-function slot0.requestEnterChessGame(slot0, slot1, slot2)
+function var_0_0.requestEnterChessGame(arg_4_0, arg_4_1, arg_4_2)
 	Va3ChessGameModel.instance:clearLastMapRound()
 
-	slot0._isEnterPassedEpisode = Activity122Model.instance:isEpisodeClear(slot1)
+	arg_4_0._isEnterPassedEpisode = Activity122Model.instance:isEpisodeClear(arg_4_1)
 
 	Va3ChessModel.instance:setActId(VersionActivity1_3Enum.ActivityId.Act304)
-	Activity122Model.instance:setCurEpisodeId(slot1)
-	slot0:dispatchEvent(Activity1_3ChessEvent.BeginEnterChessGame, slot1)
+	Activity122Model.instance:setCurEpisodeId(arg_4_1)
+	arg_4_0:dispatchEvent(Activity1_3ChessEvent.BeginEnterChessGame, arg_4_1)
 	Stat1_3Controller.instance:bristleStatStart()
 	UIBlockMgr.instance:startBlock(Activity1_3ChessEnum.UIBlockKey)
 
-	if slot2 then
-		slot0._enterEpisodeId = slot1
+	if arg_4_2 then
+		arg_4_0._enterEpisodeId = arg_4_1
 
-		TaskDispatcher.runDelay(slot0.delayRequestEnterChessGame, slot0, slot2)
+		TaskDispatcher.runDelay(arg_4_0.delayRequestEnterChessGame, arg_4_0, arg_4_2)
 	else
-		Va3ChessController.instance:startNewEpisode(slot1, slot0._afterEnterGame, slot0, ViewName.Activity1_3ChessGameView)
+		Va3ChessController.instance:startNewEpisode(arg_4_1, arg_4_0._afterEnterGame, arg_4_0, ViewName.Activity1_3ChessGameView)
 	end
 end
 
-function slot0.delayRequestEnterChessGame(slot0)
-	TaskDispatcher.cancelTask(slot0.delayRequestEnterChessGame, slot0)
-	Va3ChessController.instance:startNewEpisode(slot0._enterEpisodeId, slot0._afterEnterGame, slot0, ViewName.Activity1_3ChessGameView)
+function var_0_0.delayRequestEnterChessGame(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.delayRequestEnterChessGame, arg_5_0)
+	Va3ChessController.instance:startNewEpisode(arg_5_0._enterEpisodeId, arg_5_0._afterEnterGame, arg_5_0, ViewName.Activity1_3ChessGameView)
 end
 
-function slot0.beginResetChessGame(slot0, slot1, slot2, slot3)
+function var_0_0.beginResetChessGame(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	Va3ChessGameModel.instance:clearLastMapRound()
 	Va3ChessModel.instance:setActId(VersionActivity1_3Enum.ActivityId.Act304)
 
-	slot0._enterChessCallback = slot2
-	slot0._enterChessCallbackObj = slot3
-	slot0._resetChessGame = true
+	arg_6_0._enterChessCallback = arg_6_2
+	arg_6_0._enterChessCallbackObj = arg_6_3
+	arg_6_0._resetChessGame = true
 
-	Va3ChessController.instance:startResetEpisode(slot1, slot0._afterEnterGame, slot0, ViewName.Activity1_3ChessGameView)
+	Va3ChessController.instance:startResetEpisode(arg_6_1, arg_6_0._afterEnterGame, arg_6_0, ViewName.Activity1_3ChessGameView)
 end
 
-function slot0._afterEnterGame(slot0)
+function var_0_0._afterEnterGame(arg_7_0)
 	UIBlockMgr.instance:endBlock(Activity1_3ChessEnum.UIBlockKey)
 
-	slot1 = Va3ChessModel.instance:getEpisodeId()
+	local var_7_0 = Va3ChessModel.instance:getEpisodeId()
 
-	if slot0._enterChessCallback then
-		slot0._enterChessCallback(slot0._enterChessCallbackObj)
+	if arg_7_0._enterChessCallback then
+		arg_7_0._enterChessCallback(arg_7_0._enterChessCallbackObj)
 
-		slot0._enterChessCallback = nil
-		slot0._enterChessCallbackObj = nil
+		arg_7_0._enterChessCallback = nil
+		arg_7_0._enterChessCallbackObj = nil
 	end
 
-	if slot0._resetChessGame then
-		slot0:dispatchEvent(Activity1_3ChessEvent.AfterResetChessGame)
+	if arg_7_0._resetChessGame then
+		arg_7_0:dispatchEvent(Activity1_3ChessEvent.AfterResetChessGame)
 
-		slot0._resetChessGame = nil
+		arg_7_0._resetChessGame = nil
 	end
 end
 
-function slot0.requestReadChessGame(slot0, slot1, slot2, slot3)
-	slot0._readChessCallback = slot2
-	slot0._readChessCallbackObj = slot3
+function var_0_0.requestReadChessGame(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0._readChessCallback = arg_8_2
+	arg_8_0._readChessCallbackObj = arg_8_3
 
-	Activity122Rpc.instance:sendAct122CheckPointRequest(slot1, true, slot0._readCallback, slot0)
+	Activity122Rpc.instance:sendAct122CheckPointRequest(arg_8_1, true, arg_8_0._readCallback, arg_8_0)
 end
 
-function slot0.requestBackChessGame(slot0, slot1)
-	Activity122Rpc.instance:sendAct122CheckPointRequest(slot1, false, slot0._readCallback, slot0)
+function var_0_0.requestBackChessGame(arg_9_0, arg_9_1)
+	Activity122Rpc.instance:sendAct122CheckPointRequest(arg_9_1, false, arg_9_0._readCallback, arg_9_0)
 end
 
-function slot0._readCallback(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		slot4 = slot3.map
-		slot6 = slot3.activityId
+function var_0_0._readCallback(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if arg_10_2 == 0 then
+		local var_10_0 = arg_10_3.map
+		local var_10_1 = var_10_0.mapId
+		local var_10_2 = arg_10_3.activityId
 
-		Va3ChessController.instance:initMapData(slot6, slot4)
-		Va3ChessGameController.instance:enterChessGame(slot6, slot4.mapId, ViewName.Activity1_3ChessGameView)
+		Va3ChessController.instance:initMapData(var_10_2, var_10_0)
+		Va3ChessGameController.instance:enterChessGame(var_10_2, var_10_1, ViewName.Activity1_3ChessGameView)
 	end
 
-	if slot0._readChessCallback then
-		slot0._readChessCallback(slot0._readChessCallbackObj)
+	if arg_10_0._readChessCallback then
+		arg_10_0._readChessCallback(arg_10_0._readChessCallbackObj)
 
-		slot0._readChessCallback = nil
-		slot0._readChessCallbackObj = nil
+		arg_10_0._readChessCallback = nil
+		arg_10_0._readChessCallbackObj = nil
 	end
 
-	slot0:dispatchEvent(Activity1_3ChessEvent.OnReadChessGame)
+	arg_10_0:dispatchEvent(Activity1_3ChessEvent.OnReadChessGame)
 end
 
-function slot0.isEpisodeOpen(slot0, slot1)
-	for slot7 = 1, #Activity122Config.instance:getEpisodeList(VersionActivity1_3Enum.ActivityId.Act304) do
-		if slot3[slot7].id == slot1 and uv0.isOpenDay(slot8.id) and (slot8.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(slot8.id) or Activity122Model.instance:isEpisodeClear(slot8.preEpisode)) then
+function var_0_0.isEpisodeOpen(arg_11_0, arg_11_1)
+	local var_11_0 = VersionActivity1_3Enum.ActivityId.Act304
+	local var_11_1 = Activity122Config.instance:getEpisodeList(var_11_0)
+
+	for iter_11_0 = 1, #var_11_1 do
+		local var_11_2 = var_11_1[iter_11_0]
+
+		if var_11_2.id == arg_11_1 and var_0_0.isOpenDay(var_11_2.id) and (var_11_2.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(var_11_2.id) or Activity122Model.instance:isEpisodeClear(var_11_2.preEpisode)) then
 			return true
 		end
 	end
@@ -121,9 +127,14 @@ function slot0.isEpisodeOpen(slot0, slot1)
 	return false
 end
 
-function slot0.checkEpisodeIsOpenByChapterId(slot0, slot1)
-	for slot7 = 1, #Activity122Config.instance:getEpisodeList(VersionActivity1_3Enum.ActivityId.Act304) do
-		if slot3[slot7].chapterId == slot1 and uv0.isOpenDay(slot8.id) and (slot8.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(slot8.id) or Activity122Model.instance:isEpisodeClear(slot8.preEpisode)) then
+function var_0_0.checkEpisodeIsOpenByChapterId(arg_12_0, arg_12_1)
+	local var_12_0 = VersionActivity1_3Enum.ActivityId.Act304
+	local var_12_1 = Activity122Config.instance:getEpisodeList(var_12_0)
+
+	for iter_12_0 = 1, #var_12_1 do
+		local var_12_2 = var_12_1[iter_12_0]
+
+		if var_12_2.chapterId == arg_12_1 and var_0_0.isOpenDay(var_12_2.id) and (var_12_2.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(var_12_2.id) or Activity122Model.instance:isEpisodeClear(var_12_2.preEpisode)) then
 			return true
 		end
 	end
@@ -131,13 +142,17 @@ function slot0.checkEpisodeIsOpenByChapterId(slot0, slot1)
 	return false
 end
 
-function slot0.isOpenDay(slot0)
-	slot1 = VersionActivity1_3Enum.ActivityId.Act304
-	slot3 = Activity122Config.instance:getEpisodeCo(slot1, slot0)
+function var_0_0.isOpenDay(arg_13_0)
+	local var_13_0 = VersionActivity1_3Enum.ActivityId.Act304
+	local var_13_1 = ActivityModel.instance:getActMO(var_13_0)
+	local var_13_2 = Activity122Config.instance:getEpisodeCo(var_13_0, arg_13_0)
 
-	if ActivityModel.instance:getActMO(slot1) and slot3 then
-		if ServerTime.now() < slot2:getRealStartTimeStamp() + (slot3.openDay - 1) * 24 * 60 * 60 then
-			return false, slot4 - slot5
+	if var_13_1 and var_13_2 then
+		local var_13_3 = var_13_1:getRealStartTimeStamp() + (var_13_2.openDay - 1) * 24 * 60 * 60
+		local var_13_4 = ServerTime.now()
+
+		if var_13_4 < var_13_3 then
+			return false, var_13_3 - var_13_4
 		end
 	else
 		return false, -1
@@ -146,100 +161,121 @@ function slot0.isOpenDay(slot0)
 	return true
 end
 
-function slot0.isChapterOpen(slot0, slot1)
-	if not uv0.getFristEpisodeCoByChapterId(slot1) then
+function var_0_0.isChapterOpen(arg_14_0, arg_14_1)
+	local var_14_0 = var_0_0.getFristEpisodeCoByChapterId(arg_14_1)
+
+	if not var_14_0 then
 		return false, -1
 	end
 
-	if Activity122Model.instance:isEpisodeClear(slot2.id) then
+	if Activity122Model.instance:isEpisodeClear(var_14_0.id) then
 		return true
 	end
 
-	slot3, slot4 = uv0.isOpenDay(slot2.id)
+	local var_14_1, var_14_2 = var_0_0.isOpenDay(var_14_0.id)
 
-	return slot3 and Activity122Model.instance:isEpisodeClear(slot2.preEpisode), slot4 or 0
+	return var_14_1 and Activity122Model.instance:isEpisodeClear(var_14_0.preEpisode), var_14_2 or 0
 end
 
-function slot0.getFristEpisodeCoByChapterId(slot0)
-	return Activity122Config.instance:getChapterEpisodeList(VersionActivity1_3Enum.ActivityId.Act304, slot0) and slot2[1]
+function var_0_0.getFristEpisodeCoByChapterId(arg_15_0)
+	local var_15_0 = VersionActivity1_3Enum.ActivityId.Act304
+	local var_15_1 = Activity122Config.instance:getChapterEpisodeList(var_15_0, arg_15_0)
+
+	return var_15_1 and var_15_1[1]
 end
 
-function slot0.isEnterPassedEpisode(slot0)
-	return slot0._isEnterPassedEpisode
+function var_0_0.isEnterPassedEpisode(arg_16_0)
+	return arg_16_0._isEnterPassedEpisode
 end
 
-function slot0.getLimitTimeStr()
-	if ActivityModel.instance:getActMO(VersionActivity1_3Enum.ActivityId.Act304) then
-		return string.format(luaLang("activity_warmup_remain_time"), slot0:getRemainTimeStr())
+function var_0_0.getLimitTimeStr()
+	local var_17_0 = ActivityModel.instance:getActMO(VersionActivity1_3Enum.ActivityId.Act304)
+
+	if var_17_0 then
+		return string.format(luaLang("activity_warmup_remain_time"), var_17_0:getRemainTimeStr())
 	end
 
 	return string.format(luaLang("activity_warmup_remain_time"), "0")
 end
 
-function slot0.setReviewStory(slot0, slot1)
-	slot0._isReviewStory = slot1
+function var_0_0.setReviewStory(arg_18_0, arg_18_1)
+	arg_18_0._isReviewStory = arg_18_1
 end
 
-function slot0.isReviewStory(slot0)
-	return slot0._isReviewStory
+function var_0_0.isReviewStory(arg_19_0)
+	return arg_19_0._isReviewStory
 end
 
-function slot0.getCurChessMapCfg()
-	return Activity122Config.instance:getMapCo(Va3ChessGameModel.instance:getActId(), Va3ChessGameModel.instance:getMapId())
+function var_0_0.getCurChessMapCfg()
+	local var_20_0 = Va3ChessGameModel.instance:getActId()
+	local var_20_1 = Va3ChessGameModel.instance:getMapId()
+
+	return (Activity122Config.instance:getMapCo(var_20_0, var_20_1))
 end
 
-slot1 = -100
+local var_0_1 = -100
 
-function slot0.delayRequestGetReward(slot0, slot1, slot2)
-	if slot0._taskMO == nil and slot2 then
-		slot0._taskMO = slot2
+function var_0_0.delayRequestGetReward(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_0._taskMO == nil and arg_21_2 then
+		arg_21_0._taskMO = arg_21_2
 
-		TaskDispatcher.runDelay(slot0.requestGetReward, slot0, slot1)
+		TaskDispatcher.runDelay(arg_21_0.requestGetReward, arg_21_0, arg_21_1)
 	end
 end
 
-function slot0.requestGetReward(slot0)
-	if slot0._taskMO == nil then
+function var_0_0.requestGetReward(arg_22_0)
+	if arg_22_0._taskMO == nil then
 		return
 	end
 
-	if slot0._taskMO.id == uv0 then
+	if arg_22_0._taskMO.id == var_0_1 then
 		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity122)
-	elseif slot0._taskMO:haveRewardToGet() then
-		TaskRpc.instance:sendFinishTaskRequest(slot0._taskMO.id)
+	elseif arg_22_0._taskMO:haveRewardToGet() then
+		TaskRpc.instance:sendFinishTaskRequest(arg_22_0._taskMO.id)
 	end
 
-	slot0._taskMO = nil
+	arg_22_0._taskMO = nil
 end
 
-function slot0.dispatchAllTaskItemGotReward(slot0)
-	uv0.instance:dispatchEvent(Activity1_3ChessEvent.OneClickClaimReward)
+function var_0_0.dispatchAllTaskItemGotReward(arg_23_0)
+	var_0_0.instance:dispatchEvent(Activity1_3ChessEvent.OneClickClaimReward)
 end
 
-function slot0.showToastByEpsodeId(slot0, slot1, slot2)
-	if not Activity122Config.instance:getEpisodeCo(VersionActivity1_3Enum.ActivityId.Act304, slot1) then
-		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity1_3Enum.ActivityId.Act304, slot1))
+function var_0_0.showToastByEpsodeId(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = VersionActivity1_3Enum.ActivityId.Act304
+	local var_24_1 = Activity122Config.instance:getEpisodeCo(var_24_0, arg_24_1)
+
+	if not var_24_1 then
+		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity1_3Enum.ActivityId.Act304, arg_24_1))
 
 		return
 	end
 
-	slot5, slot6 = uv0.isOpenDay(slot4.id)
+	local var_24_2, var_24_3 = var_0_0.isOpenDay(var_24_1.id)
 
-	if not slot5 then
-		GameFacade.showToast(slot2 and ToastEnum.Va3Act120ChapterNotOpenTime or ToastEnum.Va3Act120EpisodeNotOpenTime)
+	if not var_24_2 then
+		GameFacade.showToast(arg_24_2 and ToastEnum.Va3Act120ChapterNotOpenTime or ToastEnum.Va3Act120EpisodeNotOpenTime)
 
 		return
 	end
 
-	if not (slot4.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(slot4.preEpisode)) then
-		GameFacade.showToast(ToastEnum.Va3Act124PreEpisodeNotOpen, Activity122Config.instance:getEpisodeCo(slot4.activityId, slot4.preEpisode) and slot8.name or slot4.preEpisode)
+	if not (var_24_1.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(var_24_1.preEpisode)) then
+		local var_24_4 = Activity122Config.instance:getEpisodeCo(var_24_1.activityId, var_24_1.preEpisode)
+
+		GameFacade.showToast(ToastEnum.Va3Act124PreEpisodeNotOpen, var_24_4 and var_24_4.name or var_24_1.preEpisode)
 	end
 end
 
-function slot0.checkHasReward(slot0)
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity122) ~= nil then
-		for slot6, slot7 in ipairs(Activity122Config.instance:getTaskByActId(Va3ChessEnum.ActivityId.Act122)) do
-			if slot1[slot7.id] and slot8.hasFinished and slot8.finishCount == 0 then
+function var_0_0.checkHasReward(arg_25_0)
+	local var_25_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity122)
+
+	if var_25_0 ~= nil then
+		local var_25_1 = Activity122Config.instance:getTaskByActId(Va3ChessEnum.ActivityId.Act122)
+
+		for iter_25_0, iter_25_1 in ipairs(var_25_1) do
+			local var_25_2 = var_25_0[iter_25_1.id]
+
+			if var_25_2 and var_25_2.hasFinished and var_25_2.finishCount == 0 then
 				return true
 			end
 		end
@@ -248,6 +284,6 @@ function slot0.checkHasReward(slot0)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

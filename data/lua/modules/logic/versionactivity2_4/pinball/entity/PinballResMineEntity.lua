@@ -1,39 +1,43 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballResMineEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResMineEntity", package.seeall)
 
-slot0 = class("PinballResMineEntity", PinballResEntity)
+local var_0_0 = class("PinballResMineEntity", PinballResEntity)
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	if not PinballEntityMgr.instance:getEntity(slot1) then
+function var_0_0.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	local var_1_0 = PinballEntityMgr.instance:getEntity(arg_1_1)
+
+	if not var_1_0 then
 		return
 	end
 
-	if slot5:isResType() then
-		slot5:doHit(1)
+	if var_1_0:isResType() then
+		var_1_0:doHit(1)
 	end
 end
 
-function slot0.onHitCount(slot0, slot1)
-	slot0.totalHitCount = slot0.totalHitCount - (slot1 or 1)
+function var_0_0.onHitCount(arg_2_0, arg_2_1)
+	arg_2_1 = arg_2_1 or 1
+	arg_2_0.totalHitCount = arg_2_0.totalHitCount - arg_2_1
 
-	if slot0.linkEntity then
-		slot0.linkEntity.totalHitCount = slot0.linkEntity.totalHitCount - slot1
+	if arg_2_0.linkEntity then
+		arg_2_0.linkEntity.totalHitCount = arg_2_0.linkEntity.totalHitCount - arg_2_1
 	end
 
-	if slot0.totalHitCount <= 0 then
-		PinballModel.instance:addGameRes(slot0.resType, slot0.resNum)
-		PinballEntityMgr.instance:addNumShow(slot0.resNum, slot0.x + slot0.width, slot0.y + slot0.height)
-		PinballEntityMgr.instance:removeEntity(slot0.id)
+	if arg_2_0.totalHitCount <= 0 then
+		PinballModel.instance:addGameRes(arg_2_0.resType, arg_2_0.resNum)
+		PinballEntityMgr.instance:addNumShow(arg_2_0.resNum, arg_2_0.x + arg_2_0.width, arg_2_0.y + arg_2_0.height)
+		PinballEntityMgr.instance:removeEntity(arg_2_0.id)
 	end
 end
 
-function slot0.onCreateLinkEntity(slot0, slot1)
-	slot1.totalHitCount = slot0.totalHitCount
+function var_0_0.onCreateLinkEntity(arg_3_0, arg_3_1)
+	arg_3_1.totalHitCount = arg_3_0.totalHitCount
 end
 
-function slot0.onInitByCo(slot0)
-	slot1 = string.splitToNumber(slot0.spData, "#") or {}
-	slot0.totalHitCount = slot1[1] or 0
-	slot0.resNum = slot1[2] or 0
+function var_0_0.onInitByCo(arg_4_0)
+	local var_4_0 = string.splitToNumber(arg_4_0.spData, "#") or {}
+
+	arg_4_0.totalHitCount = var_4_0[1] or 0
+	arg_4_0.resNum = var_4_0[2] or 0
 end
 
-return slot0
+return var_0_0

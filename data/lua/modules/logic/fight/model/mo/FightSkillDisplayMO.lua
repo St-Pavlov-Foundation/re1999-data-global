@@ -1,12 +1,12 @@
-module("modules.logic.fight.model.mo.FightSkillDisplayMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightSkillDisplayMO", package.seeall)
 
-slot0 = pureTable("FightSkillDisplayMO")
+local var_0_0 = pureTable("FightSkillDisplayMO")
 
-function slot0.ctor(slot0)
-	slot0.entityId = nil
-	slot0.skillId = nil
-	slot0.targetId = nil
-	slot0.isCopyCard = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.entityId = nil
+	arg_1_0.skillId = nil
+	arg_1_0.targetId = nil
+	arg_1_0.isCopyCard = nil
 end
 
-return slot0
+return var_0_0

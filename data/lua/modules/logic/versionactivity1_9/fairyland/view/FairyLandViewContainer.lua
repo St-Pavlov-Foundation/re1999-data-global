@@ -1,53 +1,53 @@
-module("modules.logic.versionactivity1_9.fairyland.view.FairyLandViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandViewContainer", package.seeall)
 
-slot0 = class("FairyLandViewContainer", BaseViewContainer)
+local var_0_0 = class("FairyLandViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, FairyLandPuzzles.New())
-	table.insert(slot1, FairyLandView.New())
+	table.insert(var_1_0, FairyLandPuzzles.New())
+	table.insert(var_1_0, FairyLandView.New())
 
-	slot0.elements = FairyLandElements.New()
+	arg_1_0.elements = FairyLandElements.New()
 
-	table.insert(slot1, slot0.elements)
-	table.insert(slot1, FairyLandStairs.New())
+	table.insert(var_1_0, arg_1_0.elements)
+	table.insert(var_1_0, FairyLandStairs.New())
 
-	slot0.scene = FairyLandScene.New()
+	arg_1_0.scene = FairyLandScene.New()
 
-	table.insert(slot1, slot0.scene)
-	table.insert(slot1, FairyLandDialogView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_LeftTop"))
+	table.insert(var_1_0, arg_1_0.scene)
+	table.insert(var_1_0, FairyLandDialogView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_LeftTop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.getElement(slot0, slot1)
-	if slot0.elements then
-		return slot0.elements:getElementByType(slot1)
+function var_0_0.getElement(arg_3_0, arg_3_1)
+	if arg_3_0.elements then
+		return arg_3_0.elements:getElementByType(arg_3_1)
 	end
 end
 
-function slot0._setVisible(slot0, slot1)
-	uv0.super._setVisible(slot0, slot1)
+function var_0_0._setVisible(arg_4_0, arg_4_1)
+	var_0_0.super._setVisible(arg_4_0, arg_4_1)
 
-	if slot0.scene then
-		slot0.scene:setSceneVisible(slot1)
+	if arg_4_0.scene then
+		arg_4_0.scene:setSceneVisible(arg_4_1)
 	end
 end
 
-return slot0
+return var_0_0

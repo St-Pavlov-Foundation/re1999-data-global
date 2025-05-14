@@ -1,96 +1,101 @@
-module("modules.logic.versionactivity1_5.peaceulu.rpc.PeaceUluRpc", package.seeall)
+﻿module("modules.logic.versionactivity1_5.peaceulu.rpc.PeaceUluRpc", package.seeall)
 
-slot0 = class("PeaceUluRpc", BaseRpc)
+local var_0_0 = class("PeaceUluRpc", BaseRpc)
 
-function slot0.sendGet145InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity145Module_pb.Get145InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet145InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity145Module_pb.Get145InfosRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet145InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet145InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	PeaceUluModel.instance:setActivityInfo(slot2.act145Info)
+	PeaceUluModel.instance:setActivityInfo(arg_2_2.act145Info)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.OnUpdateInfo)
 end
 
-function slot0.onReceiveAct145InfoUpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct145InfoUpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	PeaceUluModel.instance:setActivityInfo(slot2.act145Info)
+	PeaceUluModel.instance:setActivityInfo(arg_3_2.act145Info)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.OnUpdateInfo)
 end
 
-function slot0.sendAct145RemoveTaskRequest(slot0, slot1, slot2)
-	slot3 = Activity145Module_pb.Act145RemoveTaskRequest()
-	slot3.activityId = slot1
-	slot3.taskId = slot2
+function var_0_0.sendAct145RemoveTaskRequest(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = Activity145Module_pb.Act145RemoveTaskRequest()
 
-	slot0:sendMsg(slot3)
+	var_4_0.activityId = arg_4_1
+	var_4_0.taskId = arg_4_2
+
+	arg_4_0:sendMsg(var_4_0)
 end
 
-function slot0.onReceiveAct145RemoveTaskReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct145RemoveTaskReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	PeaceUluModel.instance:onGetRemoveTask(slot2)
+	PeaceUluModel.instance:onGetRemoveTask(arg_5_2)
 end
 
-function slot0.sendAct145GameRequest(slot0, slot1, slot2)
-	slot3 = Activity145Module_pb.Act145GameRequest()
-	slot3.activityId = slot1
-	slot3.content = slot2
+function var_0_0.sendAct145GameRequest(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = Activity145Module_pb.Act145GameRequest()
 
-	slot0:sendMsg(slot3)
+	var_6_0.activityId = arg_6_1
+	var_6_0.content = arg_6_2
+
+	arg_6_0:sendMsg(var_6_0)
 end
 
-function slot0.onReceiveAct145GameReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct145GameReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	PeaceUluModel.instance:onGetGameResult(slot2)
+	PeaceUluModel.instance:onGetGameResult(arg_7_2)
 end
 
-function slot0.sendAct145GetRewardsRequest(slot0, slot1)
-	slot2 = Activity145Module_pb.Act145GetRewardsRequest()
-	slot2.activityId = slot1
+function var_0_0.sendAct145GetRewardsRequest(arg_8_0, arg_8_1)
+	local var_8_0 = Activity145Module_pb.Act145GetRewardsRequest()
 
-	slot0:sendMsg(slot2)
+	var_8_0.activityId = arg_8_1
+
+	arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceiveAct145GetRewardsReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct145GetRewardsReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	PeaceUluModel.instance:onUpdateReward(slot2)
+	PeaceUluModel.instance:onUpdateReward(arg_9_2)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.OnUpdateInfo)
 end
 
-function slot0.sendAct145ClearGameRecordRequest(slot0, slot1)
-	slot2 = Activity145Module_pb.Act145ClearGameRecordRequest()
-	slot2.activityId = slot1
+function var_0_0.sendAct145ClearGameRecordRequest(arg_10_0, arg_10_1)
+	local var_10_0 = Activity145Module_pb.Act145ClearGameRecordRequest()
 
-	slot0:sendMsg(slot2)
+	var_10_0.activityId = arg_10_1
+
+	arg_10_0:sendMsg(var_10_0)
 end
 
-function slot0.onReceiveAct145ClearGameRecordReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct145ClearGameRecordReply(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	PeaceUluModel.instance:setActivityInfo(slot2.act145Info)
+	PeaceUluModel.instance:setActivityInfo(arg_11_2.act145Info)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.OnUpdateInfo)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

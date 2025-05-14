@@ -1,26 +1,27 @@
-module("modules.logic.lifecircle.view.LifeCircleRewardViewContainer", package.seeall)
+﻿module("modules.logic.lifecircle.view.LifeCircleRewardViewContainer", package.seeall)
 
-slot0 = class("LifeCircleRewardViewContainer", BaseViewContainer)
+local var_0_0 = class("LifeCircleRewardViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_Reward/#scroll_Reward"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = CommonPropListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 270
-	slot1.cellHeight = 250
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 30
-	slot1.startSpace = 0
-	slot1.endSpace = 56
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#go_Reward/#scroll_Reward"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = CommonPropListItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 5
+	var_1_0.cellWidth = 270
+	var_1_0.cellHeight = 250
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 30
+	var_1_0.startSpace = 0
+	var_1_0.endSpace = 56
 
 	return {
-		LuaListScrollView.New(CommonPropListModel.instance, slot1),
+		LuaListScrollView.New(CommonPropListModel.instance, var_1_0),
 		LifeCircleRewardView.New()
 	}
 end
 
-return slot0
+return var_0_0

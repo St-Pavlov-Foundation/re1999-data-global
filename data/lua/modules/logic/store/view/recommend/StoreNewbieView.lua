@@ -1,52 +1,62 @@
-module("modules.logic.store.view.recommend.StoreNewbieView", package.seeall)
+﻿module("modules.logic.store.view.recommend.StoreNewbieView", package.seeall)
 
-slot0 = class("StoreNewbieView", StoreRecommendBaseSubView)
+local var_0_0 = class("StoreNewbieView", StoreRecommendBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "recommend/#simage_bg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "recommend/#simage_bg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btn:AddClickListener(slot0._onClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btn:AddClickListener(arg_2_0._onClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btn:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("firstchargeview/bg"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("firstchargeview/bg"))
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(gohelper.findChild(slot0.viewGO, "recommend"))
-	slot0._btn = gohelper.getClickWithAudio(slot0.viewGO)
-	slot0._txticon = gohelper.findChildText(slot0.viewGO, "recommend/#simage_bg/#txt_num/#txt_icon")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "recommend/#simage_bg/#txt_num")
-	slot0._txticon.text = PayModel.instance:getProductOriginPriceSymbol(610002)
-	slot0._txtnum.text = PayModel.instance:getProductOriginPriceNum(610002)
-	slot0._txtnum = gohelper.getDynamicSizeText(slot0._txtnum.gameObject)
-	slot0._txtnum.maxIteration = 3
-	slot0._txticon.text = ""
-	slot3, slot4 = PayModel.instance:getProductOriginPriceNum(610002)
-	slot5 = ""
+	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if string.nilorempty(PayModel.instance:getProductOriginPriceSymbol(610002)) then
-		slot6 = string.reverse(slot4)
-		slot7 = string.len(slot6) - string.find(slot6, "%d") + 1
-		slot0._txtnum.text = string.format("%s<size=100>%s</size>", string.sub(slot4, 1, slot7), string.sub(slot4, slot7 + 1, string.len(slot4)))
+	local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "recommend")
+
+	arg_4_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(var_4_0)
+	arg_4_0._btn = gohelper.getClickWithAudio(arg_4_0.viewGO)
+	arg_4_0._txticon = gohelper.findChildText(arg_4_0.viewGO, "recommend/#simage_bg/#txt_num/#txt_icon")
+	arg_4_0._txtnum = gohelper.findChildText(arg_4_0.viewGO, "recommend/#simage_bg/#txt_num")
+	arg_4_0._txticon.text = PayModel.instance:getProductOriginPriceSymbol(610002)
+	arg_4_0._txtnum.text = PayModel.instance:getProductOriginPriceNum(610002)
+	arg_4_0._txtnum = gohelper.getDynamicSizeText(arg_4_0._txtnum.gameObject)
+	arg_4_0._txtnum.maxIteration = 3
+	arg_4_0._txticon.text = ""
+
+	local var_4_1 = PayModel.instance:getProductOriginPriceSymbol(610002)
+	local var_4_2, var_4_3 = PayModel.instance:getProductOriginPriceNum(610002)
+	local var_4_4 = ""
+
+	if string.nilorempty(var_4_1) then
+		local var_4_5 = string.reverse(var_4_3)
+		local var_4_6 = string.find(var_4_5, "%d")
+		local var_4_7 = string.len(var_4_5) - var_4_6 + 1
+		local var_4_8 = string.sub(var_4_3, var_4_7 + 1, string.len(var_4_3))
+
+		var_4_3 = string.sub(var_4_3, 1, var_4_7)
+		arg_4_0._txtnum.text = string.format("%s<size=100>%s</size>", var_4_3, var_4_8)
 	else
-		slot0._txtnum.text = string.format("<size=100>%s</size>%s", slot2, slot4)
+		arg_4_0._txtnum.text = string.format("<size=100>%s</size>%s", var_4_1, var_4_3)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_6_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "712",
@@ -56,8 +66,8 @@ function slot0._onClick(slot0)
 	AudioMgr.instance:trigger(2000001)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

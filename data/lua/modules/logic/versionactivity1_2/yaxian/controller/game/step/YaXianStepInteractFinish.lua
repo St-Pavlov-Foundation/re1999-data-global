@@ -1,11 +1,13 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepInteractFinish", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepInteractFinish", package.seeall)
 
-slot0 = class("YaXianStepInteractFinish", YaXianStepBase)
+local var_0_0 = class("YaXianStepInteractFinish", YaXianStepBase)
 
-function slot0.start(slot0)
-	YaXianGameModel.instance:addFinishInteract(slot0.originData.id)
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+
+	YaXianGameModel.instance:addFinishInteract(var_1_0)
 	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnInteractFinish)
-	slot0:finish()
+	arg_1_0:finish()
 end
 
-return slot0
+return var_0_0

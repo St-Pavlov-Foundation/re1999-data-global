@@ -1,44 +1,49 @@
-module("modules.logic.fight.model.data.FightHandCardDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightHandCardDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightHandCardDataMgr")
+local var_0_0 = FightDataClass("FightHandCardDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0.handCard = {}
-	slot0.originCard = {}
-	slot0.redealCard = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.handCard = {}
+	arg_1_0.originCard = {}
+	arg_1_0.redealCard = {}
 end
 
-function slot0.setOriginCard(slot0)
-	FightDataHelper.coverData(slot0.handCard, slot0.originCard)
+function var_0_0.setOriginCard(arg_2_0)
+	FightDataHelper.coverData(arg_2_0.handCard, arg_2_0.originCard)
 end
 
-function slot0.updateHandCardByProto(slot0, slot1)
-	FightDataHelper.coverData(FightCardDataHelper.newCardList(slot1), slot0.handCard)
+function var_0_0.updateHandCardByProto(arg_3_0, arg_3_1)
+	local var_3_0 = FightCardDataHelper.newCardList(arg_3_1)
+
+	FightDataHelper.coverData(var_3_0, arg_3_0.handCard)
 end
 
-function slot0.cacheDistributeCard(slot0, slot1)
-	slot0.beforeCards1 = FightCardDataHelper.newCardList(slot1.beforeCards1)
-	slot0.teamACards1 = FightCardDataHelper.newCardList(slot1.teamACards1)
-	slot0.beforeCards2 = FightCardDataHelper.newCardList(slot1.beforeCards2)
-	slot0.teamACards2 = FightCardDataHelper.newCardList(slot1.teamACards2)
+function var_0_0.cacheDistributeCard(arg_4_0, arg_4_1)
+	arg_4_0.beforeCards1 = FightCardDataHelper.newCardList(arg_4_1.beforeCards1)
+	arg_4_0.teamACards1 = FightCardDataHelper.newCardList(arg_4_1.teamACards1)
+	arg_4_0.beforeCards2 = FightCardDataHelper.newCardList(arg_4_1.beforeCards2)
+	arg_4_0.teamACards2 = FightCardDataHelper.newCardList(arg_4_1.teamACards2)
 end
 
-function slot0.cacheRedealCard(slot0, slot1)
-	table.insert(slot0.redealCard, FightCardDataHelper.newCardList(slot1))
+function var_0_0.cacheRedealCard(arg_5_0, arg_5_1)
+	table.insert(arg_5_0.redealCard, FightCardDataHelper.newCardList(arg_5_1))
 end
 
-function slot0.getRedealCard(slot0)
-	return table.remove(slot0.redealCard, 1)
+function var_0_0.getRedealCard(arg_6_0)
+	return table.remove(arg_6_0.redealCard, 1)
 end
 
-function slot0.getHandCard(slot0)
-	return slot0.handCard
+function var_0_0.getHandCard(arg_7_0)
+	return arg_7_0.handCard
 end
 
-function slot0.distribute(slot0, slot1, slot2)
-	FightDataHelper.coverData(slot1, slot0.handCard)
-	tabletool.addValues(slot0.handCard, FightDataHelper.coverData(slot2))
-	FightCardDataHelper.combineCardListForLocal(slot0.handCard)
+function var_0_0.distribute(arg_8_0, arg_8_1, arg_8_2)
+	FightDataHelper.coverData(arg_8_1, arg_8_0.handCard)
+
+	arg_8_2 = FightDataHelper.coverData(arg_8_2)
+
+	tabletool.addValues(arg_8_0.handCard, arg_8_2)
+	FightCardDataHelper.combineCardListForLocal(arg_8_0.handCard)
 end
 
-return slot0
+return var_0_0

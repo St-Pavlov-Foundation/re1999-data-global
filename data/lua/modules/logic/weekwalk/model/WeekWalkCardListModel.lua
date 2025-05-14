@@ -1,39 +1,50 @@
-module("modules.logic.weekwalk.model.WeekWalkCardListModel", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekWalkCardListModel", package.seeall)
 
-slot0 = class("WeekWalkCardListModel", ListScrollModel)
+local var_0_0 = class("WeekWalkCardListModel", ListScrollModel)
 
-function slot0.verifyCondition(slot0, slot1)
-	slot6 = 0
-	slot7 = 0
-	slot8 = 0
+function var_0_0.verifyCondition(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1
+	local var_1_1 = lua_weekwalk_buff.configDict[var_1_0]
+	local var_1_2 = tonumber(var_1_1.param)
+	local var_1_3 = lua_weekwalk_pray.configDict[var_1_2]
+	local var_1_4 = 0
+	local var_1_5 = 0
+	local var_1_6 = 0
+	local var_1_7 = GameUtil.splitString2(var_1_3.sacrificeLimit, true, "|", "#")
 
-	if GameUtil.splitString2(lua_weekwalk_pray.configDict[tonumber(lua_weekwalk_buff.configDict[slot1].param)].sacrificeLimit, true, "|", "#") then
-		for slot13, slot14 in ipairs(slot9) do
-			if slot14[1] == 1 then
-				slot7 = slot14[2]
-			elseif slot15 == 2 then
-				slot6 = slot16
-			elseif slot15 == 3 then
-				slot8 = slot16
+	if var_1_7 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_7) do
+			local var_1_8 = iter_1_1[1]
+			local var_1_9 = iter_1_1[2]
+
+			if var_1_8 == 1 then
+				var_1_5 = var_1_9
+			elseif var_1_8 == 2 then
+				var_1_4 = var_1_9
+			elseif var_1_8 == 3 then
+				var_1_6 = var_1_9
 			end
 		end
 	end
 
-	slot10 = slot5.blessingLimit == "1"
+	local var_1_10 = var_1_3.blessingLimit == "1"
+	local var_1_11 = arg_1_0:_verify(var_1_5, var_1_4, nil, nil, var_1_6)
 
-	if not slot0:_verify(slot7, slot6, nil, , slot8) then
+	if not var_1_11 then
 		GameFacade.showToast(ToastEnum.WeekWalkCardNoHero)
 
 		return false
 	end
 
-	slot12 = slot7
+	local var_1_12 = var_1_5
 
-	if slot8 ~= 0 then
-		slot12 = HeroConfig.instance:getHeroCO(slot8).career
+	if var_1_6 ~= 0 then
+		var_1_12 = HeroConfig.instance:getHeroCO(var_1_6).career
 	end
 
-	if not slot0:_verify(slot10 and slot12 or 0, 0, slot11, nil, 0) then
+	local var_1_13 = var_1_10 and var_1_12 or 0
+
+	if not arg_1_0:_verify(var_1_13, 0, var_1_11, nil, 0) then
 		GameFacade.showToast(ToastEnum.WeekWalkCardNoHero)
 
 		return false
@@ -42,62 +53,71 @@ function slot0.verifyCondition(slot0, slot1)
 	return true
 end
 
-function slot0._verify(slot0, slot1, slot2, slot3, slot4, slot5)
-	for slot11, slot12 in ipairs(HeroModel.instance:getList()) do
-		if slot2 <= slot12.level and (slot5 == 0 or slot12.heroId == slot5) and WeekWalkModel.instance:getInfo():getHeroHp(slot12.heroId) > 0 and (slot1 == 0 or slot1 == slot12.config.career) and slot12 ~= slot3 and slot12 ~= slot4 then
-			return slot12
+function var_0_0._verify(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
+	local var_2_0 = HeroModel.instance:getList()
+	local var_2_1 = WeekWalkModel.instance:getInfo()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		if arg_2_2 <= iter_2_1.level and (arg_2_5 == 0 or iter_2_1.heroId == arg_2_5) and var_2_1:getHeroHp(iter_2_1.heroId) > 0 and (arg_2_1 == 0 or arg_2_1 == iter_2_1.config.career) and iter_2_1 ~= arg_2_3 and iter_2_1 ~= arg_2_4 then
+			return iter_2_1
 		end
 	end
 end
 
-function slot0.setCardList(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = WeekWalkModel.instance:getInfo()
-	slot7 = slot0:getCardList(slot1, slot2, slot3, slot4, slot5)
+function var_0_0.setCardList(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = WeekWalkModel.instance:getInfo()
+	local var_3_1 = arg_3_0:getCardList(arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
 
-	table.sort(slot7, function (slot0, slot1)
-		if (uv0:getHeroHp(slot0.heroId) <= 0 and 0 or 1) ~= (uv0:getHeroHp(slot1.heroId) <= 0 and 0 or 1) then
-			return slot3 < slot2
-		elseif slot0.level ~= slot1.level then
-			return slot1.level < slot0.level
-		elseif slot0.config.rare ~= slot1.config.rare then
-			return slot1.config.rare < slot0.config.rare
-		elseif slot0.createTime ~= slot1.createTime then
-			return slot0.createTime <= slot1.createTime
+	table.sort(var_3_1, function(arg_4_0, arg_4_1)
+		local var_4_0 = var_3_0:getHeroHp(arg_4_0.heroId) <= 0 and 0 or 1
+		local var_4_1 = var_3_0:getHeroHp(arg_4_1.heroId) <= 0 and 0 or 1
+
+		if var_4_0 ~= var_4_1 then
+			return var_4_1 < var_4_0
+		elseif arg_4_0.level ~= arg_4_1.level then
+			return arg_4_0.level > arg_4_1.level
+		elseif arg_4_0.config.rare ~= arg_4_1.config.rare then
+			return arg_4_0.config.rare > arg_4_1.config.rare
+		elseif arg_4_0.createTime ~= arg_4_1.createTime then
+			return arg_4_0.createTime <= arg_4_1.createTime
 		end
 
-		return slot1.heroId < slot0.heroId
+		return arg_4_0.heroId > arg_4_1.heroId
 	end)
-	slot0:setList(slot7)
+	arg_3_0:setList(var_3_1)
 end
 
-function slot0.getCardList(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot8 = {}
+function var_0_0.getCardList(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+	local var_5_0 = WeekWalkModel.instance:getInfo()
+	local var_5_1 = HeroModel.instance:getList()
+	local var_5_2 = {}
 
-	for slot12, slot13 in ipairs(HeroModel.instance:getList()) do
-		if slot2 <= slot13.level and (slot5 == 0 or slot13.heroId == slot5) and WeekWalkModel.instance:getInfo():getHeroHp(slot13.heroId) > 0 and (slot1 == 0 or slot1 == slot13.config.career) and slot13 ~= slot3 and slot13 ~= slot4 then
-			table.insert(slot8, slot13)
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		if arg_5_2 <= iter_5_1.level and (arg_5_5 == 0 or iter_5_1.heroId == arg_5_5) and var_5_0:getHeroHp(iter_5_1.heroId) > 0 and (arg_5_1 == 0 or arg_5_1 == iter_5_1.config.career) and iter_5_1 ~= arg_5_3 and iter_5_1 ~= arg_5_4 then
+			table.insert(var_5_2, iter_5_1)
 		end
 	end
 
-	return slot8
+	return var_5_2
 end
 
-function slot0.setCharacterList(slot0, slot1)
-	slot3 = {}
-	slot4 = {}
+function var_0_0.setCharacterList(arg_6_0, arg_6_1)
+	local var_6_0 = WeekWalkModel.instance:getInfo()
+	local var_6_1 = {}
+	local var_6_2 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		if WeekWalkModel.instance:getInfo():getHeroHp(slot9.heroId) <= 0 then
-			table.insert(slot4, slot9)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		if var_6_0:getHeroHp(iter_6_1.heroId) <= 0 then
+			table.insert(var_6_2, iter_6_1)
 		else
-			table.insert(slot3, slot9)
+			table.insert(var_6_1, iter_6_1)
 		end
 	end
 
-	tabletool.addValues(slot3, slot4)
-	slot0:setList(slot3)
+	tabletool.addValues(var_6_1, var_6_2)
+	arg_6_0:setList(var_6_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

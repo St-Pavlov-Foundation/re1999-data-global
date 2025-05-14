@@ -1,62 +1,64 @@
-module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelViewContainer", package.seeall)
 
-slot0 = class("LoperaLevelViewContainer", BaseViewContainer)
-slot1 = 0.35
+local var_0_0 = class("LoperaLevelViewContainer", BaseViewContainer)
+local var_0_1 = 0.35
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		LoperaLevelView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot2:setOverrideClose(slot0._overrideCloseAction, slot0)
-		slot2:setOverrideHome(slot0._overrideClickHome, slot0)
+		var_2_0:setOverrideClose(arg_2_0._overrideCloseAction, arg_2_0)
+		var_2_0:setOverrideHome(arg_2_0._overrideClickHome, arg_2_0)
 
 		return {
-			slot2
+			var_2_0
 		}
 	end
 end
 
-function slot0._overrideCloseAction(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, slot0._playAniAndClose, nil, , slot0)
+function var_0_0._overrideCloseAction(arg_3_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_3_0._playAniAndClose, nil, nil, arg_3_0)
 end
 
-function slot0._overrideClickHome(slot0)
+function var_0_0._overrideClickHome(arg_4_0)
 	LoperaController.instance:sendStatOnHomeClick()
 	NavigateButtonsView.homeClick()
 end
 
-function slot0._playAniAndClose(slot0)
-	if not slot0._anim then
-		slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._playAniAndClose(arg_5_0)
+	if not arg_5_0._anim then
+		arg_5_0._anim = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot0._anim:Play("out", 0, 0)
+	arg_5_0._anim:Play("out", 0, 0)
 	LoperaController.instance:abortEpisode()
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, uv0)
+	TaskDispatcher.runDelay(arg_5_0.closeThis, arg_5_0, var_0_1)
 end
 
-function slot0.defaultOverrideCloseCheck(slot0, slot1, slot2)
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, function ()
+function var_0_0.defaultOverrideCloseCheck(arg_6_0, arg_6_1, arg_6_2)
+	local function var_6_0()
 		LoperaController.instance:abortEpisode()
-		uv0(uv1)
-	end)
+		arg_6_1(arg_6_2)
+	end
+
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, var_6_0)
 
 	return false
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_8_0, arg_8_1)
+	var_0_0.super.setVisibleInternal(arg_8_0, arg_8_1)
 end
 
-return slot0
+return var_0_0

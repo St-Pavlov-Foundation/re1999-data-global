@@ -1,55 +1,59 @@
-module("modules.logic.explore.controller.steps.ExploreSuccessStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreSuccessStep", package.seeall)
 
-slot0 = class("ExploreSuccessStep", ExploreStepBase)
+local var_0_0 = class("ExploreSuccessStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	ExploreRpc.instance:sendGetExploreSimpleInfoRequest()
 	GameSceneMgr.instance:getCurScene().stat:onTriggerExit(ExploreController.instance:getMap():getUnitByType(ExploreEnum.ItemType.Exit).id)
 	ExploreModel.instance:addChallengeCount()
 
-	slot1 = ExploreController.instance:getMap()
-	slot2 = slot1:getUnitByType(ExploreEnum.ItemType.Exit)
-	slot3 = slot1:getHero()
+	local var_1_0 = ExploreController.instance:getMap()
+	local var_1_1 = var_1_0:getUnitByType(ExploreEnum.ItemType.Exit)
+	local var_1_2 = var_1_0:getHero()
 
-	slot3:onCheckDir(slot3.nodePos, slot2.nodePos)
-	slot3:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Finish, true)
+	var_1_2:onCheckDir(var_1_2.nodePos, var_1_1.nodePos)
+	var_1_2:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Finish, true)
 	UIBlockMgrExtend.instance.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("ExploreSuccessStep")
 
-	slot4 = (slot2:getPos() - slot3:getPos()):SetNormalize():Mul(1.3):Add(slot3:getPos())
-	slot4.y = slot4.y + 0.25
+	local var_1_3 = (var_1_1:getPos() - var_1_2:getPos()):SetNormalize():Mul(1.3):Add(var_1_2:getPos())
 
-	slot3:setTrOffset(nil, slot4, 2, nil, , EaseType.InOutSine)
-	TaskDispatcher.runDelay(slot0.showFinishView, slot0, 2.3)
+	var_1_3.y = var_1_3.y + 0.25
+
+	var_1_2:setTrOffset(nil, var_1_3, 2, nil, nil, EaseType.InOutSine)
+	TaskDispatcher.runDelay(arg_1_0.showFinishView, arg_1_0, 2.3)
 end
 
-function slot0.showFinishView(slot0)
-	ViewMgr.instance:openView(ViewName.ExploreFinishView, slot0._data)
-	slot0:onDone()
+function var_0_0.showFinishView(arg_2_0)
+	ViewMgr.instance:openView(ViewName.ExploreFinishView, arg_2_0._data)
+	arg_2_0:onDone()
 
-	slot1 = ExploreModel.instance:getMapId()
-	slot3 = false
+	local var_2_0 = ExploreModel.instance:getMapId()
+	local var_2_1 = DungeonConfig.instance:getExploreChapterList()
+	local var_2_2 = false
 
-	for slot7 = 1, #DungeonConfig.instance:getExploreChapterList() do
-		for slot12 = 1, #DungeonConfig.instance:getChapterEpisodeCOList(slot2[slot7].id) do
-			slot13 = lua_explore_scene.configDict[slot2[slot7].id][slot8[slot12].id]
+	for iter_2_0 = 1, #var_2_1 do
+		local var_2_3 = DungeonConfig.instance:getChapterEpisodeCOList(var_2_1[iter_2_0].id)
 
-			if slot3 then
-				if not ExploreSimpleModel.instance:getEpisodeIsShowUnlock(slot13.chapterId, slot13.episodeId) then
-					ExploreSimpleModel.instance:setLastSelectMap(slot13.chapterId, slot13.episodeId)
+		for iter_2_1 = 1, #var_2_3 do
+			local var_2_4 = lua_explore_scene.configDict[var_2_1[iter_2_0].id][var_2_3[iter_2_1].id]
+
+			if var_2_2 then
+				if not ExploreSimpleModel.instance:getEpisodeIsShowUnlock(var_2_4.chapterId, var_2_4.episodeId) then
+					ExploreSimpleModel.instance:setLastSelectMap(var_2_4.chapterId, var_2_4.episodeId)
 				end
 
 				return
-			elseif slot13.id == slot1 then
-				slot3 = true
+			elseif var_2_4.id == var_2_0 then
+				var_2_2 = true
 			end
 		end
 	end
 end
 
-function slot0.onDestory(slot0)
+function var_0_0.onDestory(arg_3_0)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("ExploreSuccessStep")
 end
 
-return slot0
+return var_0_0

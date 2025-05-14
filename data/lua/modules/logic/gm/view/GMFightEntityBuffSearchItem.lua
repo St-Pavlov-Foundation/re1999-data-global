@@ -1,39 +1,39 @@
-module("modules.logic.gm.view.GMFightEntityBuffSearchItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntityBuffSearchItem", package.seeall)
 
-slot0 = class("GMFightEntityBuffSearchItem", ListScrollCell)
+local var_0_0 = class("GMFightEntityBuffSearchItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._mo = nil
-	slot0._itemClick = SLFramework.UGUI.UIClickListener.Get(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._mo = nil
+	arg_1_0._itemClick = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
 
-	slot0._itemClick:AddClickListener(slot0._onClickItem, slot0)
+	arg_1_0._itemClick:AddClickListener(arg_1_0._onClickItem, arg_1_0)
 
-	slot0._img1 = gohelper.findChildImage(slot1, "img1")
-	slot0._img2 = gohelper.findChildImage(slot1, "img2")
-	slot0._txtName = gohelper.findChildText(slot1, "txtName")
-	slot0._txtId = gohelper.findChildText(slot1, "txtId")
+	arg_1_0._img1 = gohelper.findChildImage(arg_1_1, "img1")
+	arg_1_0._img2 = gohelper.findChildImage(arg_1_1, "img2")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "txtName")
+	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "txtId")
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1
 
-	gohelper.setActive(slot0._img1.gameObject, slot1.id % 2 == 1)
-	gohelper.setActive(slot0._img2.gameObject, slot1.id % 2 == 0)
+	gohelper.setActive(arg_2_0._img1.gameObject, arg_2_1.id % 2 == 1)
+	gohelper.setActive(arg_2_0._img2.gameObject, arg_2_1.id % 2 == 0)
 
-	slot0._txtName.text = slot0._mo.name
-	slot0._txtId.text = slot0._mo.buffId
+	arg_2_0._txtName.text = arg_2_0._mo.name
+	arg_2_0._txtId.text = arg_2_0._mo.buffId
 end
 
-function slot0._onClickItem(slot0)
-	GMController.instance:dispatchEvent(GMFightEntityBuffView.ClickSearchItem, slot0._mo)
+function var_0_0._onClickItem(arg_3_0)
+	GMController.instance:dispatchEvent(GMFightEntityBuffView.ClickSearchItem, arg_3_0._mo)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._itemClick then
-		slot0._itemClick:RemoveClickListener()
+function var_0_0.onDestroy(arg_4_0)
+	if arg_4_0._itemClick then
+		arg_4_0._itemClick:RemoveClickListener()
 
-		slot0._itemClick = nil
+		arg_4_0._itemClick = nil
 	end
 end
 
-return slot0
+return var_0_0

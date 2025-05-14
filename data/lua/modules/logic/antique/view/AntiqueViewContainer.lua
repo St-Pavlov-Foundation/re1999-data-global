@@ -1,26 +1,26 @@
-module("modules.logic.antique.view.AntiqueViewContainer", package.seeall)
+﻿module("modules.logic.antique.view.AntiqueViewContainer", package.seeall)
 
-slot0 = class("AntiqueViewContainer", BaseViewContainer)
+local var_0_0 = class("AntiqueViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		AntiqueView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
 	end
 end
 
-return slot0
+return var_0_0

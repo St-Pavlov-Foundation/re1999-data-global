@@ -1,287 +1,304 @@
-module("modules.logic.dungeon.model.RoleStoryDispatchHeroListModel", package.seeall)
+﻿module("modules.logic.dungeon.model.RoleStoryDispatchHeroListModel", package.seeall)
 
-slot0 = class("RoleStoryDispatchHeroListModel", ListScrollModel)
+local var_0_0 = class("RoleStoryDispatchHeroListModel", ListScrollModel)
 
-function slot0.onOpenDispatchView(slot0, slot1, slot2)
-	slot0.storyMo = slot1
-	slot0.dispatchMo = slot2
-	slot0.maxSelectCount = slot2.config.count
+function var_0_0.onOpenDispatchView(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.storyMo = arg_1_1
+	arg_1_0.dispatchMo = arg_1_2
+	arg_1_0.maxSelectCount = arg_1_2.config.count
 
-	slot0:refreshEffectHero()
-	slot0:initHeroList()
+	arg_1_0:refreshEffectHero()
+	arg_1_0:initHeroList()
 end
 
-function slot0.canShowTalk(slot0, slot1)
-	if not slot1 then
+function var_0_0.canShowTalk(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return false
 	end
 
-	if not tonumber(slot1.heroid) and not 0 or slot2 == 0 then
+	local var_2_0 = tonumber(arg_2_1.heroid) or 0
+
+	if not var_2_0 or var_2_0 == 0 then
 		return true
 	end
 
-	return slot0:getSelectedIndex(slot2) ~= nil
+	return arg_2_0:getSelectedIndex(var_2_0) ~= nil
 end
 
-function slot0.refreshEffectHero(slot0)
-	slot0.effectHeroDict = slot0.dispatchMo:getEffectHeros()
+function var_0_0.refreshEffectHero(arg_3_0)
+	arg_3_0.effectHeroDict = arg_3_0.dispatchMo:getEffectHeros()
 end
 
-function slot0.isEffectHero(slot0, slot1)
-	return slot0.effectHeroDict[slot1]
+function var_0_0.isEffectHero(arg_4_0, arg_4_1)
+	return arg_4_0.effectHeroDict[arg_4_1]
 end
 
-function slot0.refreshHero(slot0)
-	slot0:resortHeroList()
-	slot0:setList(slot0.heroList)
+function var_0_0.refreshHero(arg_5_0)
+	arg_5_0:resortHeroList()
+	arg_5_0:setList(arg_5_0.heroList)
 end
 
-function slot0.resortHeroList(slot0)
-	table.sort(slot0.heroList, uv0._sortFunc)
+function var_0_0.resortHeroList(arg_6_0)
+	table.sort(arg_6_0.heroList, var_0_0._sortFunc)
 end
 
-function slot0._sortFunc(slot0, slot1)
-	if slot0:isDispatched() ~= slot1:isDispatched() then
-		return slot3
+function var_0_0._sortFunc(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:isDispatched()
+	local var_7_1 = arg_7_1:isDispatched()
+
+	if var_7_0 ~= var_7_1 then
+		return var_7_1
 	end
 
-	if slot0:isEffectHero() ~= slot1:isEffectHero() then
-		return slot4
+	local var_7_2 = arg_7_0:isEffectHero()
+
+	if var_7_2 ~= arg_7_1:isEffectHero() then
+		return var_7_2
 	end
 
-	if slot0.rare ~= slot1.rare then
-		return slot1.rare < slot0.rare
+	if arg_7_0.rare ~= arg_7_1.rare then
+		return arg_7_0.rare > arg_7_1.rare
 	end
 
-	if slot0.level ~= slot1.level then
-		return slot1.level < slot0.level
+	if arg_7_0.level ~= arg_7_1.level then
+		return arg_7_0.level > arg_7_1.level
 	end
 
-	return slot1.heroId < slot0.heroId
+	return arg_7_0.heroId > arg_7_1.heroId
 end
 
-function slot0.initHeroList(slot0)
-	if slot0.heroList then
+function var_0_0.initHeroList(arg_8_0)
+	if arg_8_0.heroList then
 		return
 	end
 
-	slot0.heroList = {}
-	slot0.heroDict = {}
+	arg_8_0.heroList = {}
+	arg_8_0.heroDict = {}
 
-	for slot4, slot5 in ipairs(HeroModel.instance:getList()) do
-		if not slot0.heroDict[slot5.heroId] then
-			slot6 = RoleStoryDispatchHeroMo.New()
+	for iter_8_0, iter_8_1 in ipairs(HeroModel.instance:getList()) do
+		if not arg_8_0.heroDict[iter_8_1.heroId] then
+			local var_8_0 = RoleStoryDispatchHeroMo.New()
 
-			slot6:init(slot5, slot0.storyMo.id, slot0:isEffectHero(slot5.heroId))
-			table.insert(slot0.heroList, slot6)
+			var_8_0:init(iter_8_1, arg_8_0.storyMo.id, arg_8_0:isEffectHero(iter_8_1.heroId))
+			table.insert(arg_8_0.heroList, var_8_0)
 
-			slot0.heroDict[slot6.heroId] = slot6
+			arg_8_0.heroDict[var_8_0.heroId] = var_8_0
 		end
 	end
 end
 
-function slot0.initSelectedHeroList(slot0, slot1)
-	slot0.selectedHeroList = {}
-	slot0.selectedHeroIndexDict = {}
+function var_0_0.initSelectedHeroList(arg_9_0, arg_9_1)
+	arg_9_0.selectedHeroList = {}
+	arg_9_0.selectedHeroIndexDict = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot0:getDispatchHeroMo(slot6) then
-				table.insert(slot0.selectedHeroList, slot7)
+	if arg_9_1 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+			local var_9_0 = arg_9_0:getDispatchHeroMo(iter_9_1)
 
-				slot0.selectedHeroIndexDict[slot6] = slot5
+			if var_9_0 then
+				table.insert(arg_9_0.selectedHeroList, var_9_0)
+
+				arg_9_0.selectedHeroIndexDict[iter_9_1] = iter_9_0
 			else
-				logError("not found dispatched hero id : " .. tostring(slot6))
+				logError("not found dispatched hero id : " .. tostring(iter_9_1))
 			end
 		end
 	end
 end
 
-function slot0.sendDispatch(slot0)
-	if not slot0.storyMo or not slot0.dispatchMo then
+function var_0_0.sendDispatch(arg_10_0)
+	if not arg_10_0.storyMo or not arg_10_0.dispatchMo then
 		return
 	end
 
-	if slot0.dispatchMo:getDispatchState() ~= RoleStoryEnum.DispatchState.Normal then
+	if arg_10_0.dispatchMo:getDispatchState() ~= RoleStoryEnum.DispatchState.Normal then
 		return
 	end
 
-	slot4 = {}
+	local var_10_0 = GameUtil.splitString2(arg_10_0.dispatchMo.config.consume, true)
+	local var_10_1 = 1
+	local var_10_2 = {}
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0.dispatchMo.config.consume, true)) do
-		table.insert(slot4, {
-			type = slot9[1],
-			id = slot9[2],
-			quantity = slot9[3] * 1
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		table.insert(var_10_2, {
+			type = iter_10_1[1],
+			id = iter_10_1[2],
+			quantity = iter_10_1[3] * var_10_1
 		})
 	end
 
-	slot5, slot6, slot7 = ItemModel.instance:hasEnoughItems(slot4)
+	local var_10_3, var_10_4, var_10_5 = ItemModel.instance:hasEnoughItems(var_10_2)
 
-	if not slot6 then
+	if not var_10_4 then
 		if RoleStoryModel.instance:checkTodayCanExchange() then
-			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough1, slot7, slot5)
+			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough1, var_10_5, var_10_3)
 		else
-			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough2, slot7, slot5)
+			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough2, var_10_5, var_10_3)
 		end
 
 		return
 	end
 
-	if #slot0:getDispatchHeros() ~= slot0.maxSelectCount then
+	local var_10_6 = arg_10_0:getDispatchHeros()
+
+	if #var_10_6 ~= arg_10_0.maxSelectCount then
 		GameFacade.showToast(ToastEnum.RoleStoryDispatchLessMinHero)
 
 		return
 	end
 
-	for slot13, slot14 in ipairs(slot8) do
-		table.insert({}, slot14.heroId)
+	local var_10_7 = {}
+
+	for iter_10_2, iter_10_3 in ipairs(var_10_6) do
+		table.insert(var_10_7, iter_10_3.heroId)
 	end
 
-	if slot0.storyMo:isScoreFull() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoleStoryDispatchTips, MsgBoxEnum.BoxType.Yes_No, function ()
-			HeroStoryRpc.instance:sendHeroStoryDispatchRequest(uv0.storyMo.id, uv0.dispatchMo.id, uv1)
+	if arg_10_0.storyMo:isScoreFull() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoleStoryDispatchTips, MsgBoxEnum.BoxType.Yes_No, function()
+			HeroStoryRpc.instance:sendHeroStoryDispatchRequest(arg_10_0.storyMo.id, arg_10_0.dispatchMo.id, var_10_7)
 		end)
 
 		return
 	end
 
-	HeroStoryRpc.instance:sendHeroStoryDispatchRequest(slot0.storyMo.id, slot0.dispatchMo.id, slot9)
+	HeroStoryRpc.instance:sendHeroStoryDispatchRequest(arg_10_0.storyMo.id, arg_10_0.dispatchMo.id, var_10_7)
 end
 
-function slot0.isEnoughHeroCount(slot0)
-	return slot0.maxSelectCount <= #slot0:getDispatchHeros()
+function var_0_0.isEnoughHeroCount(arg_12_0)
+	return #arg_12_0:getDispatchHeros() >= arg_12_0.maxSelectCount
 end
 
-function slot0.sendReset(slot0)
-	if not slot0.storyMo or not slot0.dispatchMo then
+function var_0_0.sendReset(arg_13_0)
+	if not arg_13_0.storyMo or not arg_13_0.dispatchMo then
 		return
 	end
 
-	if slot0.dispatchMo:getDispatchState() ~= RoleStoryEnum.DispatchState.Dispatching then
+	if arg_13_0.dispatchMo:getDispatchState() ~= RoleStoryEnum.DispatchState.Dispatching then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.RoleStoryDispatchResetTips, MsgBoxEnum.BoxType.Yes_No, function ()
-		if uv0.dispatchMo:getDispatchState() == RoleStoryEnum.DispatchState.Dispatching then
-			HeroStoryRpc.instance:sendHeroStoryDispatchResetRequest(uv0.storyMo.id, uv0.dispatchMo.id)
+	GameFacade.showMessageBox(MessageBoxIdDefine.RoleStoryDispatchResetTips, MsgBoxEnum.BoxType.Yes_No, function()
+		if arg_13_0.dispatchMo:getDispatchState() == RoleStoryEnum.DispatchState.Dispatching then
+			HeroStoryRpc.instance:sendHeroStoryDispatchResetRequest(arg_13_0.storyMo.id, arg_13_0.dispatchMo.id)
 		end
 	end)
 end
 
-function slot0.sendGetReward(slot0)
-	if not slot0.storyMo or not slot0.dispatchMo then
+function var_0_0.sendGetReward(arg_15_0)
+	if not arg_15_0.storyMo or not arg_15_0.dispatchMo then
 		return
 	end
 
-	if slot0.dispatchMo:getDispatchState() ~= RoleStoryEnum.DispatchState.Canget then
+	if arg_15_0.dispatchMo:getDispatchState() ~= RoleStoryEnum.DispatchState.Canget then
 		return
 	end
 
-	if slot0.storyMo:isScoreFull() then
+	if arg_15_0.storyMo:isScoreFull() then
 		GameFacade.showToast(ToastEnum.RoleStoryDispatchRewardTips)
 	end
 
-	HeroStoryRpc.instance:sendHeroStoryDispatchCompleteRequest(slot0.storyMo.id, slot0.dispatchMo.id)
+	HeroStoryRpc.instance:sendHeroStoryDispatchCompleteRequest(arg_15_0.storyMo.id, arg_15_0.dispatchMo.id)
 end
 
-function slot0.clickHeroMo(slot0, slot1)
-	if not slot1 then
+function var_0_0.clickHeroMo(arg_16_0, arg_16_1)
+	if not arg_16_1 then
 		return
 	end
 
-	if slot1:isDispatched() then
+	if arg_16_1:isDispatched() then
 		GameFacade.showToast(ToastEnum.RoleStoryDispatchSelectTips)
 
 		return
 	end
 
-	if slot0.selectedHeroIndexDict[slot1.heroId] then
-		slot0:deselectMo(slot1)
+	if arg_16_0.selectedHeroIndexDict[arg_16_1.heroId] then
+		arg_16_0:deselectMo(arg_16_1)
 	else
-		slot0:selectMo(slot1)
+		arg_16_0:selectMo(arg_16_1)
 	end
 end
 
-function slot0.selectMo(slot0, slot1)
-	if not slot1 then
+function var_0_0.selectMo(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	if slot0.selectedHeroIndexDict[slot1.heroId] then
+	if arg_17_0.selectedHeroIndexDict[arg_17_1.heroId] then
 		return
 	end
 
-	if #slot0.selectedHeroList == slot0.maxSelectCount then
+	if #arg_17_0.selectedHeroList == arg_17_0.maxSelectCount then
 		return
 	end
 
-	table.insert(slot0.selectedHeroList, slot1)
+	table.insert(arg_17_0.selectedHeroList, arg_17_1)
 
-	slot0.selectedHeroIndexDict[slot1.heroId] = #slot0.selectedHeroList
+	arg_17_0.selectedHeroIndexDict[arg_17_1.heroId] = #arg_17_0.selectedHeroList
 
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ChangeSelectedHero)
 end
 
-function slot0.deselectMo(slot0, slot1)
-	if not slot1 then
+function var_0_0.deselectMo(arg_18_0, arg_18_1)
+	if not arg_18_1 then
 		return
 	end
 
-	if not slot0.selectedHeroIndexDict[slot1.heroId] then
+	local var_18_0 = arg_18_0.selectedHeroIndexDict[arg_18_1.heroId]
+
+	if not var_18_0 then
 		return
 	end
 
-	table.remove(slot0.selectedHeroList, slot2)
+	table.remove(arg_18_0.selectedHeroList, var_18_0)
 
-	slot0.selectedHeroIndexDict[slot1.heroId] = nil
+	arg_18_0.selectedHeroIndexDict[arg_18_1.heroId] = nil
 
-	for slot6, slot7 in ipairs(slot0.selectedHeroList) do
-		slot0.selectedHeroIndexDict[slot7.heroId] = slot6
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.selectedHeroList) do
+		arg_18_0.selectedHeroIndexDict[iter_18_1.heroId] = iter_18_0
 	end
 
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ChangeSelectedHero)
 end
 
-function slot0.getDispatchHeroMo(slot0, slot1)
-	return slot0.heroDict[slot1]
+function var_0_0.getDispatchHeroMo(arg_19_0, arg_19_1)
+	return arg_19_0.heroDict[arg_19_1]
 end
 
-function slot0.getSelectedIndex(slot0, slot1)
-	return slot0.selectedHeroIndexDict[slot1]
+function var_0_0.getSelectedIndex(arg_20_0, arg_20_1)
+	return arg_20_0.selectedHeroIndexDict[arg_20_1]
 end
 
-function slot0.getDispatchHeros(slot0)
-	return slot0.selectedHeroList
+function var_0_0.getDispatchHeros(arg_21_0)
+	return arg_21_0.selectedHeroList
 end
 
-function slot0.getDispatchHeroIndexDict(slot0)
-	return slot0.selectedHeroIndexDict
+function var_0_0.getDispatchHeroIndexDict(arg_22_0)
+	return arg_22_0.selectedHeroIndexDict
 end
 
-function slot0.resetSelectHeroList(slot0)
-	slot0.selectedHeroList = {}
-	slot0.selectedHeroIndexDict = {}
+function var_0_0.resetSelectHeroList(arg_23_0)
+	arg_23_0.selectedHeroList = {}
+	arg_23_0.selectedHeroIndexDict = {}
 end
 
-function slot0.onCloseDispatchView(slot0)
-	slot0:clear()
+function var_0_0.onCloseDispatchView(arg_24_0)
+	arg_24_0:clear()
 end
 
-function slot0.clearSelectedHeroList(slot0)
-	slot0.selectedHeroList = nil
-	slot0.selectedHeroIndexDict = nil
+function var_0_0.clearSelectedHeroList(arg_25_0)
+	arg_25_0.selectedHeroList = nil
+	arg_25_0.selectedHeroIndexDict = nil
 end
 
-function slot0.clear(slot0)
-	slot0:clearSelectedHeroList()
+function var_0_0.clear(arg_26_0)
+	arg_26_0:clearSelectedHeroList()
 
-	slot0.heroList = nil
-	slot0.heroDict = nil
+	arg_26_0.heroList = nil
+	arg_26_0.heroDict = nil
 
-	uv0.super.clear(slot0)
+	var_0_0.super.clear(arg_26_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

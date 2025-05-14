@@ -1,240 +1,255 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryItem", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryItem", package.seeall)
 
-slot0 = class("RoleStoryItem", ListScrollCellExtend)
+local var_0_0 = class("RoleStoryItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0.root = gohelper.findChild(slot0.viewGO, "Root")
-	slot0.mainAnim = slot0.root:GetComponent(typeof(UnityEngine.Animator))
-	slot0.btnClick = gohelper.findButtonWithAudio(slot0.root)
-	slot0.simagePhoto = gohelper.findChildSingleImage(slot0.root, "#simage_Photo")
-	slot0.goNewTag = gohelper.findChild(slot0.root, "#image_NewTag")
-	slot0.txtName = gohelper.findChildTextMesh(slot0.root, "Name/image_NameBG/#txt_Name")
-	slot0.slider = gohelper.findChildSlider(slot0.root, "Info/Slider")
-	slot0.txtScheduleNum = gohelper.findChildTextMesh(slot0.root, "Info/#txt_ScheduleNum")
-	slot0.btnReward = gohelper.findChildButtonWithAudio(slot0.root, "Info/btnReward")
-	slot0.imgReward = gohelper.findChildImage(slot0.root, "Info/btnReward/#image_Reward")
-	slot0.aniReward = slot0.imgReward.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	slot0.goCanGet = gohelper.findChild(slot0.root, "#go_CanGet")
-	slot0.goCompleted = gohelper.findChild(slot0.root, "#go_Completed")
-	slot0.completedAnim = slot0.goCompleted:GetComponent(typeof(UnityEngine.Animator))
-	slot0.txtState = gohelper.findChildTextMesh(slot0.root, "Info/#txt_State")
-	slot0.goLock = gohelper.findChild(slot0.root, "#go_Locked")
-	slot0.imgPropItem = gohelper.findChildImage(slot0.root, "#go_Locked/image_LockedTextBG/#image_PropItem")
-	slot0.txtPropNum = gohelper.findChildTextMesh(slot0.root, "#go_Locked/image_LockedTextBG/#txt_PropNum")
-	slot0.goRedDot = gohelper.findChild(slot0.root, "Info/#go_Reddot")
-	slot0.txtLocked = gohelper.findChildTextMesh(slot0.root, "#go_Locked/image_LockedBG/txt_Locked")
-	slot0.txtLockedEn = gohelper.findChildTextMesh(slot0.root, "#go_Locked/image_LockedBG/txt_LockedEn")
-	slot0.goRewardPanel = gohelper.findChild(slot0.root, "Info/#go_RewardPanel")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.root = gohelper.findChild(arg_1_0.viewGO, "Root")
+	arg_1_0.mainAnim = arg_1_0.root:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.root)
+	arg_1_0.simagePhoto = gohelper.findChildSingleImage(arg_1_0.root, "#simage_Photo")
+	arg_1_0.goNewTag = gohelper.findChild(arg_1_0.root, "#image_NewTag")
+	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.root, "Name/image_NameBG/#txt_Name")
+	arg_1_0.slider = gohelper.findChildSlider(arg_1_0.root, "Info/Slider")
+	arg_1_0.txtScheduleNum = gohelper.findChildTextMesh(arg_1_0.root, "Info/#txt_ScheduleNum")
+	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0.root, "Info/btnReward")
+	arg_1_0.imgReward = gohelper.findChildImage(arg_1_0.root, "Info/btnReward/#image_Reward")
+	arg_1_0.aniReward = arg_1_0.imgReward.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.goCanGet = gohelper.findChild(arg_1_0.root, "#go_CanGet")
+	arg_1_0.goCompleted = gohelper.findChild(arg_1_0.root, "#go_Completed")
+	arg_1_0.completedAnim = arg_1_0.goCompleted:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.txtState = gohelper.findChildTextMesh(arg_1_0.root, "Info/#txt_State")
+	arg_1_0.goLock = gohelper.findChild(arg_1_0.root, "#go_Locked")
+	arg_1_0.imgPropItem = gohelper.findChildImage(arg_1_0.root, "#go_Locked/image_LockedTextBG/#image_PropItem")
+	arg_1_0.txtPropNum = gohelper.findChildTextMesh(arg_1_0.root, "#go_Locked/image_LockedTextBG/#txt_PropNum")
+	arg_1_0.goRedDot = gohelper.findChild(arg_1_0.root, "Info/#go_Reddot")
+	arg_1_0.txtLocked = gohelper.findChildTextMesh(arg_1_0.root, "#go_Locked/image_LockedBG/txt_Locked")
+	arg_1_0.txtLockedEn = gohelper.findChildTextMesh(arg_1_0.root, "#go_Locked/image_LockedBG/txt_LockedEn")
+	arg_1_0.goRewardPanel = gohelper.findChild(arg_1_0.root, "Info/#go_RewardPanel")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0.btnReward:AddClickListener(slot0.onClickReward, slot0)
-	slot0.btnClick:AddClickListener(slot0.onClickItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0.btnReward:AddClickListener(arg_2_0.onClickReward, arg_2_0)
+	arg_2_0.btnClick:AddClickListener(arg_2_0.onClickItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.btnReward:RemoveClickListener()
-	slot0.btnClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0.btnReward:RemoveClickListener()
+	arg_3_0.btnClick:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	gohelper.setActive(slot0.goNewTag, RoleStoryModel.instance:isNewStory(slot1.id))
-	slot0:refreshPhoto()
-	slot0:refreshName()
-	slot0:refreshProgress()
-	slot0:refreshState()
-	slot0:refreshRedDot()
-	RoleStoryModel.instance:setStoryNewTag(slot1.id, false)
+	gohelper.setActive(arg_5_0.goNewTag, RoleStoryModel.instance:isNewStory(arg_5_1.id))
+	arg_5_0:refreshPhoto()
+	arg_5_0:refreshName()
+	arg_5_0:refreshProgress()
+	arg_5_0:refreshState()
+	arg_5_0:refreshRedDot()
+	RoleStoryModel.instance:setStoryNewTag(arg_5_1.id, false)
 end
 
-function slot0.refreshPhoto(slot0)
-	slot0.simagePhoto:LoadImage(ResUrl.getRoleStoryPhotoIcon(slot0._mo.cfg.photo))
+function var_0_0.refreshPhoto(arg_6_0)
+	local var_6_0 = arg_6_0._mo.cfg.photo
+
+	arg_6_0.simagePhoto:LoadImage(ResUrl.getRoleStoryPhotoIcon(var_6_0))
 end
 
-function slot0.refreshName(slot0)
-	slot0.txtName.text = slot0._mo.cfg.heroName
+function var_0_0.refreshName(arg_7_0)
+	arg_7_0.txtName.text = arg_7_0._mo.cfg.heroName
 end
 
-function slot0.refreshImageReward(slot0, slot1)
-	gohelper.setActive(slot0.goCanGet, slot1 ~= 1)
-	gohelper.setActive(slot0.goCompleted, slot1 ~= 1)
+function var_0_0.refreshImageReward(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0.goCanGet, arg_8_1 ~= 1)
+	gohelper.setActive(arg_8_0.goCompleted, arg_8_1 ~= 1)
 
-	if slot1 ~= 1 then
-		if slot1 == 2 and RoleStoryModel.instance:isFinishTweenUnplay(slot0._mo.id) then
-			slot0.completedAnim:Play("open", 0, 0)
+	if arg_8_1 ~= 1 then
+		if arg_8_1 == 2 and RoleStoryModel.instance:isFinishTweenUnplay(arg_8_0._mo.id) then
+			arg_8_0.completedAnim:Play("open", 0, 0)
 		else
-			slot0.completedAnim:Play("idle")
+			arg_8_0.completedAnim:Play("idle")
 		end
 	end
 
-	UISpriteSetMgr.instance:setUiFBSprite(slot0.imgReward, string.format("rolestory_rewardbtn%s", slot1), true)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_8_0.imgReward, string.format("rolestory_rewardbtn%s", arg_8_1), true)
 
-	if slot1 == 2 then
-		slot0.aniReward:Play("loop")
+	if arg_8_1 == 2 then
+		arg_8_0.aniReward:Play("loop")
 	else
-		slot0.aniReward:Play("idle")
+		arg_8_0.aniReward:Play("idle")
 	end
 end
 
-function slot0.refreshTxtState(slot0, slot1)
-	slot0.txtState.text = luaLang(string.format("rolestoryrewardstate_%s", slot1))
+function var_0_0.refreshTxtState(arg_9_0, arg_9_1)
+	arg_9_0.txtState.text = luaLang(string.format("rolestoryrewardstate_%s", arg_9_1))
 end
 
-function slot0.refreshProgress(slot0)
-	if slot0._mo.maxProgress <= slot0._mo.progress then
-		slot0.txtScheduleNum.text = string.format("<color=#cc5b17>%s/%s</color>", slot0._mo.progress, slot0._mo.maxProgress)
+function var_0_0.refreshProgress(arg_10_0)
+	if arg_10_0._mo.progress >= arg_10_0._mo.maxProgress then
+		arg_10_0.txtScheduleNum.text = string.format("<color=#cc5b17>%s/%s</color>", arg_10_0._mo.progress, arg_10_0._mo.maxProgress)
 	else
-		slot0.txtScheduleNum.text = string.format("%s/<color=#cc5b17>%s</color>", slot0._mo.progress, slot0._mo.maxProgress)
+		arg_10_0.txtScheduleNum.text = string.format("%s/<color=#cc5b17>%s</color>", arg_10_0._mo.progress, arg_10_0._mo.maxProgress)
 	end
 
-	slot0.slider:SetValue(slot0._mo.progress / math.max(slot0._mo.maxProgress, 1))
+	local var_10_0 = math.max(arg_10_0._mo.maxProgress, 1)
+
+	arg_10_0.slider:SetValue(arg_10_0._mo.progress / var_10_0)
 end
 
-function slot0.refreshState(slot0)
-	if not slot0._mo.hasUnlock then
-		slot0:refreshImageReward(1)
-		slot0:refreshTxtState(1)
-		slot0:refreshUnlock(false)
+function var_0_0.refreshState(arg_11_0)
+	if not arg_11_0._mo.hasUnlock then
+		arg_11_0:refreshImageReward(1)
+		arg_11_0:refreshTxtState(1)
+		arg_11_0:refreshUnlock(false)
 
 		return
 	end
 
-	slot0:refreshUnlock(true)
+	arg_11_0:refreshUnlock(true)
 
-	if slot0._mo.getReward then
-		slot0:refreshImageReward(3)
-		slot0:refreshTxtState(3)
-
-		return
-	end
-
-	slot0:refreshTxtState(2)
-
-	if slot0._mo.maxProgress <= slot0._mo.progress then
-		slot0:refreshImageReward(2)
+	if arg_11_0._mo.getReward then
+		arg_11_0:refreshImageReward(3)
+		arg_11_0:refreshTxtState(3)
 
 		return
 	end
 
-	slot0:refreshImageReward(1)
+	arg_11_0:refreshTxtState(2)
+
+	if arg_11_0._mo.progress >= arg_11_0._mo.maxProgress then
+		arg_11_0:refreshImageReward(2)
+
+		return
+	end
+
+	arg_11_0:refreshImageReward(1)
 end
 
-function slot0.refreshUnlock(slot0, slot1)
-	gohelper.setActive(slot0.goLock, not slot1)
+function var_0_0.refreshUnlock(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0.goLock, not arg_12_1)
 
-	if not slot1 then
-		slot2, slot3, slot4 = slot0._mo:getCost()
+	if not arg_12_1 then
+		local var_12_0, var_12_1, var_12_2 = arg_12_0._mo:getCost()
+		local var_12_3 = CurrencyConfig.instance:getCurrencyCo(var_12_1)
+		local var_12_4 = string.format("%s_1", var_12_3 and var_12_3.icon)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0.imgPropItem, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(slot3) and slot5.icon))
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_12_0.imgPropItem, var_12_4)
 
-		if ItemModel.instance:getItemQuantity(slot2, slot3) < slot8 then
-			slot0.txtPropNum.text = string.format(string.format("<color=#d97373>%s</color>/%s", slot7, slot4 == 0 and string.format("<color=#65b96f>%s</color>", slot8) or tostring(slot8)))
+		local var_12_5 = ItemModel.instance:getItemQuantity(var_12_0, var_12_1)
+		local var_12_6 = var_12_2
+		local var_12_7 = var_12_6 == 0 and string.format("<color=#65b96f>%s</color>", var_12_6) or tostring(var_12_6)
+
+		if var_12_5 < var_12_6 then
+			arg_12_0.txtPropNum.text = string.format(string.format("<color=#d97373>%s</color>/%s", var_12_5, var_12_7))
 		else
-			slot0.txtPropNum.text = string.format(string.format("%s/%s", slot7, slot9))
+			arg_12_0.txtPropNum.text = string.format(string.format("%s/%s", var_12_5, var_12_7))
 		end
 
-		slot0.txtLocked.text = slot8 == 0 and luaLang("first_time_free") or luaLang("unlock")
-		slot0.txtLockedEn.text = slot8 == 0 and "1st Time Free" or "UNLOCK"
+		arg_12_0.txtLocked.text = var_12_6 == 0 and luaLang("first_time_free") or luaLang("unlock")
+		arg_12_0.txtLockedEn.text = var_12_6 == 0 and "1st Time Free" or "UNLOCK"
 	end
 
-	if slot1 and RoleStoryModel.instance:isUnlockingStory(slot0._mo.id) then
+	if arg_12_1 and RoleStoryModel.instance:isUnlockingStory(arg_12_0._mo.id) then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoin_chapter_unlock)
-		slot0.mainAnim:Play("unlock")
-	elseif slot0._view.isFirst then
-		slot0.mainAnim:Play("open")
+		arg_12_0.mainAnim:Play("unlock")
+	elseif arg_12_0._view.isFirst then
+		arg_12_0.mainAnim:Play("open")
 	else
-		slot0.mainAnim:Play("idle")
+		arg_12_0.mainAnim:Play("idle")
 	end
 end
 
-function slot0.onClickReward(slot0)
-	if not slot0._mo then
+function var_0_0.onClickReward(arg_13_0)
+	if not arg_13_0._mo then
 		return
 	end
 
-	if slot0._mo.progress < slot0._mo.maxProgress or slot0._mo.getReward then
-		slot0:showReward()
+	if arg_13_0._mo.progress < arg_13_0._mo.maxProgress or arg_13_0._mo.getReward then
+		arg_13_0:showReward()
 
 		return
 	end
 
-	HeroStoryRpc.instance:sendGetHeroStoryBonusRequest(slot0._mo.id)
+	HeroStoryRpc.instance:sendGetHeroStoryBonusRequest(arg_13_0._mo.id)
 end
 
-function slot0.onClickItem(slot0)
-	if not slot0._mo then
+function var_0_0.onClickItem(arg_14_0)
+	if not arg_14_0._mo then
 		return
 	end
 
-	if slot0._mo.hasUnlock then
-		RoleStoryController.instance:enterRoleStoryChapter(slot0._mo.id)
+	if arg_14_0._mo.hasUnlock then
+		RoleStoryController.instance:enterRoleStoryChapter(arg_14_0._mo.id)
 	else
-		slot1, slot2, slot3 = slot0._mo:getCost()
+		local var_14_0, var_14_1, var_14_2 = arg_14_0._mo:getCost()
 
-		if slot3 > 0 then
-			GameFacade.showMessageBox(MessageBoxIdDefine.RoleStoryUnlockTips, MsgBoxEnum.BoxType.Yes_No, slot0._unlockCallback, nil, , slot0, nil, , slot3, ItemModel.instance:getItemConfig(slot1, slot2) and slot5.name, slot0._mo.cfg.heroName)
+		if var_14_2 > 0 then
+			local var_14_3 = arg_14_0._mo.cfg.heroName
+			local var_14_4 = ItemModel.instance:getItemConfig(var_14_0, var_14_1)
+			local var_14_5 = var_14_4 and var_14_4.name
+
+			GameFacade.showMessageBox(MessageBoxIdDefine.RoleStoryUnlockTips, MsgBoxEnum.BoxType.Yes_No, arg_14_0._unlockCallback, nil, nil, arg_14_0, nil, nil, var_14_2, var_14_5, var_14_3)
 		else
-			slot0:_unlockCallback()
+			arg_14_0:_unlockCallback()
 		end
 	end
 end
 
-function slot0._unlockCallback(slot0)
-	if not slot0._mo or slot0._mo.hasUnlock then
+function var_0_0._unlockCallback(arg_15_0)
+	if not arg_15_0._mo or arg_15_0._mo.hasUnlock then
 		return
 	end
 
-	slot1, slot2, slot3 = slot0._mo:getCost()
-	slot4 = {}
+	local var_15_0, var_15_1, var_15_2 = arg_15_0._mo:getCost()
+	local var_15_3 = {}
 
-	table.insert(slot4, {
-		type = slot1,
-		id = slot2,
-		quantity = slot3
+	table.insert(var_15_3, {
+		type = var_15_0,
+		id = var_15_1,
+		quantity = var_15_2
 	})
 
-	slot5, slot6, slot7 = ItemModel.instance:hasEnoughItems(slot4)
+	local var_15_4, var_15_5, var_15_6 = ItemModel.instance:hasEnoughItems(var_15_3)
 
-	if not slot6 then
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, slot7, slot5)
+	if not var_15_5 then
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_15_6, var_15_4)
 
 		return
 	end
 
-	HeroStoryRpc.instance:sendUnlocHeroStoryRequest(slot0._mo.id)
+	HeroStoryRpc.instance:sendUnlocHeroStoryRequest(arg_15_0._mo.id)
 end
 
-function slot0.refreshRedDot(slot0)
-	slot1 = false
+function var_0_0.refreshRedDot(arg_16_0)
+	local var_16_0 = false
 
-	if slot0._mo and not slot0._mo.getReward and slot0._mo.maxProgress <= slot0._mo.progress then
-		slot1 = true
+	if arg_16_0._mo and not arg_16_0._mo.getReward and arg_16_0._mo.progress >= arg_16_0._mo.maxProgress then
+		var_16_0 = true
 	end
 
-	gohelper.setActive(slot0.goRedDot, slot1)
+	gohelper.setActive(arg_16_0.goRedDot, var_16_0)
 end
 
-function slot0.showReward(slot0)
-	slot1, slot2, slot3 = transformhelper.getPos(slot0.goRewardPanel.transform)
+function var_0_0.showReward(arg_17_0)
+	local var_17_0, var_17_1, var_17_2 = transformhelper.getPos(arg_17_0.goRewardPanel.transform)
 
-	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.OnClickRoleStoryReward, slot0._mo, slot1, slot2, slot3)
+	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.OnClickRoleStoryReward, arg_17_0._mo, var_17_0, var_17_1, var_17_2)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.simagePhoto then
-		slot0.simagePhoto:UnLoadImage()
+function var_0_0.onDestroyView(arg_18_0)
+	if arg_18_0.simagePhoto then
+		arg_18_0.simagePhoto:UnLoadImage()
 
-		slot0.simagePhoto = nil
+		arg_18_0.simagePhoto = nil
 	end
 end
 
-return slot0
+return var_0_0

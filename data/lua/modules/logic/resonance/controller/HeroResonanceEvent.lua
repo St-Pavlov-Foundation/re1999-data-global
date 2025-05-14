@@ -1,7 +1,9 @@
-module("modules.logic.resonance.controller.HeroResonanceEvent", package.seeall)
+﻿module("modules.logic.resonance.controller.HeroResonanceEvent", package.seeall)
 
-return {
-	RefreshCubeList = 1,
-	playBackAni = 2,
-	UseShareCode = 101
-}
+local var_0_0 = {}
+
+var_0_0.RefreshCubeList = 1
+var_0_0.playBackAni = 2
+var_0_0.UseShareCode = 101
+
+return var_0_0

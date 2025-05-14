@@ -1,11 +1,11 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1DecomposeFilterViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1DecomposeFilterViewContainer", package.seeall)
 
-slot0 = class("Season123_2_1DecomposeFilterViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_2_1DecomposeFilterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123_2_1DecomposeFilterView.New()
 	}
 end
 
-return slot0
+return var_0_0

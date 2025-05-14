@@ -1,37 +1,43 @@
-module("modules.logic.toughbattle.rpc.SiegeBattleRpc", package.seeall)
+﻿module("modules.logic.toughbattle.rpc.SiegeBattleRpc", package.seeall)
 
-slot0 = class("SiegeBattleRpc", BaseRpc)
+local var_0_0 = class("SiegeBattleRpc", BaseRpc)
 
-function slot0.sendGetSiegeBattleInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(SiegeBattleModule_pb.GetSiegeBattleInfoRequest(), slot1, slot2)
+function var_0_0.sendGetSiegeBattleInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = SiegeBattleModule_pb.GetSiegeBattleInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetSiegeBattleInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ToughBattleModel.instance:onGetStoryInfo(slot2.info)
+function var_0_0.onReceiveGetSiegeBattleInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		ToughBattleModel.instance:onGetStoryInfo(arg_2_2.info)
 	end
 end
 
-function slot0.sendStartSiegeBattleRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(SiegeBattleModule_pb.StartSiegeBattleRequest(), slot1, slot2)
+function var_0_0.sendStartSiegeBattleRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = SiegeBattleModule_pb.StartSiegeBattleRequest()
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_1, arg_3_2)
 end
 
-function slot0.onReceiveStartSiegeBattleReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ToughBattleModel.instance:onGetStoryInfo(slot2.info)
+function var_0_0.onReceiveStartSiegeBattleReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		ToughBattleModel.instance:onGetStoryInfo(arg_4_2.info)
 	end
 end
 
-function slot0.sendAbandonSiegeBattleRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(SiegeBattleModule_pb.AbandonSiegeBattleRequest(), slot1, slot2)
+function var_0_0.sendAbandonSiegeBattleRequest(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = SiegeBattleModule_pb.AbandonSiegeBattleRequest()
+
+	return arg_5_0:sendMsg(var_5_0, arg_5_1, arg_5_2)
 end
 
-function slot0.onReceiveAbandonSiegeBattleReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ToughBattleModel.instance:onGetStoryInfo(slot2.info)
+function var_0_0.onReceiveAbandonSiegeBattleReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
+		ToughBattleModel.instance:onGetStoryInfo(arg_6_2.info)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

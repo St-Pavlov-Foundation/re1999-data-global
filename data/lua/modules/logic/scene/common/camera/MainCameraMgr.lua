@@ -1,93 +1,102 @@
-module("modules.logic.scene.common.camera.MainCameraMgr", package.seeall)
+﻿module("modules.logic.scene.common.camera.MainCameraMgr", package.seeall)
 
-slot0 = class("MainCameraMgr")
+local var_0_0 = class("MainCameraMgr")
 
-function slot0.ctor(slot0)
-	slot0._viewList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._viewList = {}
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._onScreenResize, arg_1_0)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	slot0:_checkCamera()
+function var_0_0._onOpenView(arg_2_0, arg_2_1)
+	arg_2_0:_checkCamera()
 end
 
-function slot0._onCloseView(slot0, slot1)
-	slot0:_setCamera(slot1, false)
+function var_0_0._onCloseView(arg_3_0, arg_3_1)
+	arg_3_0:_setCamera(arg_3_1, false)
 
-	slot0._viewList[slot1] = nil
+	arg_3_0._viewList[arg_3_1] = nil
 
-	slot0:_checkCamera()
+	arg_3_0:_checkCamera()
 end
 
-function slot0._onScreenResize(slot0)
-	slot0:_checkCamera()
+function var_0_0._onScreenResize(arg_4_0)
+	arg_4_0:_checkCamera()
 end
 
-function slot0.addView(slot0, slot1, slot2, slot3, slot4)
-	slot0._viewList[slot1] = {
-		setCallback = slot2,
-		resetCallback = slot3,
-		target = slot4
+function var_0_0.addView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	arg_5_0._viewList[arg_5_1] = {
+		setCallback = arg_5_2,
+		resetCallback = arg_5_3,
+		target = arg_5_4
 	}
 
-	slot0:_checkCamera()
+	arg_5_0:_checkCamera()
 end
 
-function slot0._checkCamera(slot0)
-	if slot0:_getTopViewCamera() then
-		slot0:_setCamera(slot1, true)
+function var_0_0._checkCamera(arg_6_0)
+	local var_6_0 = arg_6_0:_getTopViewCamera()
+
+	if var_6_0 then
+		arg_6_0:_setCamera(var_6_0, true)
 	end
 end
 
-function slot0._setCamera(slot0, slot1, slot2)
-	if slot0._isLock then
+function var_0_0._setCamera(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0._isLock then
 		return
 	end
 
-	if not slot0._viewList[slot1] then
+	local var_7_0 = arg_7_0._viewList[arg_7_1]
+
+	if not var_7_0 then
 		return
 	end
 
-	if slot2 then
-		if slot3.setCallback then
-			slot3.setCallback(slot3.target)
+	if arg_7_2 then
+		if var_7_0.setCallback then
+			var_7_0.setCallback(var_7_0.target)
 		end
 	else
-		slot0:_resetCamera()
+		arg_7_0:_resetCamera()
 
-		if slot3.resetCallback then
-			slot3.resetCallback(slot3.target)
+		if var_7_0.resetCallback then
+			var_7_0.resetCallback(var_7_0.target)
 		end
 	end
 end
 
-function slot0._resetCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographicSize = 5
-	slot1.orthographic = false
+function var_0_0._resetCamera(arg_8_0)
+	local var_8_0 = CameraMgr.instance:getMainCamera()
 
-	transformhelper.setLocalPos(slot1.transform, 0, 0, 0)
+	var_8_0.orthographicSize = 5
+	var_8_0.orthographic = false
+
+	transformhelper.setLocalPos(var_8_0.transform, 0, 0, 0)
 end
 
-function slot0._getTopViewCamera(slot0)
-	for slot5 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if slot0._viewList[slot1[slot5]] then
-			return slot6
+function var_0_0._getTopViewCamera(arg_9_0)
+	local var_9_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_9_0 = #var_9_0, 1, -1 do
+		local var_9_1 = var_9_0[iter_9_0]
+
+		if arg_9_0._viewList[var_9_1] then
+			return var_9_1
 		end
 	end
 end
 
-function slot0.setLock(slot0, slot1)
-	slot0._isLock = slot1
+function var_0_0.setLock(arg_10_0, arg_10_1)
+	arg_10_0._isLock = arg_10_1
 
-	if not slot1 then
-		slot0:_checkCamera()
+	if not arg_10_1 then
+		arg_10_0:_checkCamera()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

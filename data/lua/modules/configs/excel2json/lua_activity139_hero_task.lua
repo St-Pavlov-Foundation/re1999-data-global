@@ -1,22 +1,23 @@
-module("modules.configs.excel2json.lua_activity139_hero_task", package.seeall)
+﻿module("modules.configs.excel2json.lua_activity139_hero_task", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	ringIds = 4,
 	heroId = 3,
 	id = 1,
 	finalReward = 5,
 	activityId = 2
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	ringIds = 1,
 	finalReward = 2
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

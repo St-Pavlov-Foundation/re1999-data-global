@@ -1,11 +1,13 @@
-module("modules.logic.chessgame.game.event.ChessStateLock", package.seeall)
+﻿module("modules.logic.chessgame.game.event.ChessStateLock", package.seeall)
 
-slot0 = class("ChessStateLock", ChessStateBase)
+local var_0_0 = class("ChessStateLock", ChessStateBase)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
+	return
 end
 
-function slot0.onClickPos(slot0, slot1, slot2, slot3)
+function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	return
 end
 
-return slot0
+return var_0_0

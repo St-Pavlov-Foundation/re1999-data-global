@@ -1,11 +1,11 @@
-module("modules.logic.season.view1_6.Season1_6CelebrityCardTipViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_6.Season1_6CelebrityCardTipViewContainer", package.seeall)
 
-slot0 = class("Season1_6CelebrityCardTipViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_6CelebrityCardTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season1_6CelebrityCardTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

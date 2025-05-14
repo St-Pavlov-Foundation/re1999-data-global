@@ -1,103 +1,106 @@
-module("modules.logic.social.view.SocialBlackListItem", package.seeall)
+﻿module("modules.logic.social.view.SocialBlackListItem", package.seeall)
 
-slot0 = class("SocialBlackListItem", ListScrollCellExtend)
+local var_0_0 = class("SocialBlackListItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goplayericon = gohelper.findChild(slot0.viewGO, "#go_playericon")
-	slot0._goskinbg = gohelper.findChild(slot0.viewGO, "#go_skinbg")
-	slot0._imagebg = gohelper.findChildImage(slot0.viewGO, "bg")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txtstatus = gohelper.findChildText(slot0.viewGO, "status/#txt_status")
-	slot0._txtofflinetime = gohelper.findChildText(slot0.viewGO, "status/#txt_offlinetime")
-	slot0._btnremove = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_remove")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "#go_playericon")
+	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "#go_skinbg")
+	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "bg")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtstatus = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_status")
+	arg_1_0._txtofflinetime = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_offlinetime")
+	arg_1_0._btnremove = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_remove")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnremove:AddClickListener(slot0._btnremoveOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnremove:AddClickListener(arg_2_0._btnremoveOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnremove:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnremove:RemoveClickListener()
 end
 
-function slot0._btnremoveOnClick(slot0)
-	FriendRpc.instance:sendRemoveBlacklistRequest(slot0._mo.userId)
+function var_0_0._btnremoveOnClick(arg_4_0)
+	FriendRpc.instance:sendRemoveBlacklistRequest(arg_4_0._mo.userId)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._playericon = IconMgr.instance:getCommonPlayerIcon(slot0._goplayericon)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_5_0._goplayericon)
 end
 
-function slot0._refreshUI(slot0)
-	slot0._playericon:onUpdateMO(slot0._mo)
-	slot0._playericon:setShowLevel(true)
+function var_0_0._refreshUI(arg_6_0)
+	arg_6_0._playericon:onUpdateMO(arg_6_0._mo)
+	arg_6_0._playericon:setShowLevel(true)
 
-	slot0._txtname.text = slot0._mo.name
+	arg_6_0._txtname.text = arg_6_0._mo.name
 
-	gohelper.setActive(slot0._txtstatus.gameObject, tonumber(slot0._mo.time) == 0)
-	gohelper.setActive(slot0._txtofflinetime.gameObject, tonumber(slot0._mo.time) ~= 0)
+	gohelper.setActive(arg_6_0._txtstatus.gameObject, tonumber(arg_6_0._mo.time) == 0)
+	gohelper.setActive(arg_6_0._txtofflinetime.gameObject, tonumber(arg_6_0._mo.time) ~= 0)
 
-	if tonumber(slot0._mo.time) ~= 0 then
-		slot0._txtofflinetime.text = SocialConfig.instance:getStatusText(slot0._mo.time)
+	if tonumber(arg_6_0._mo.time) ~= 0 then
+		arg_6_0._txtofflinetime.text = SocialConfig.instance:getStatusText(arg_6_0._mo.time)
 	end
 
-	slot0._txtstatus.text = luaLang("social_online")
+	arg_6_0._txtstatus.text = luaLang("social_online")
 
-	slot0:_loadBg()
+	arg_6_0:_loadBg()
 end
 
-function slot0._loadBg(slot0)
-	if not slot0._mo.bg or slot0._mo.bg == 0 then
-		slot0._hasSkin = false
+function var_0_0._loadBg(arg_7_0)
+	if not arg_7_0._mo.bg or arg_7_0._mo.bg == 0 then
+		arg_7_0._hasSkin = false
 	else
-		slot0._hasSkin = true
+		arg_7_0._hasSkin = true
 
-		if not slot0.lastskinId or slot0.lastskinId ~= slot0._mo.bg then
-			slot0._skinPath = string.format("ui/viewres/social/socialblacklistitem_bg_%s.prefab", slot0._mo.bg)
+		if not arg_7_0.lastskinId or arg_7_0.lastskinId ~= arg_7_0._mo.bg then
+			arg_7_0._skinPath = string.format("ui/viewres/social/socialblacklistitem_bg_%s.prefab", arg_7_0._mo.bg)
 
-			slot0:_disposeBg()
+			arg_7_0:_disposeBg()
 
-			slot0._loader = MultiAbLoader.New()
+			arg_7_0._loader = MultiAbLoader.New()
 
-			slot0._loader:addPath(slot0._skinPath)
-			slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+			arg_7_0._loader:addPath(arg_7_0._skinPath)
+			arg_7_0._loader:startLoad(arg_7_0._onLoadFinish, arg_7_0)
 		end
 	end
 
-	gohelper.setActive(slot0._imagebg.gameObject, not slot0._hasSkin)
-	gohelper.setActive(slot0._goskinbg, slot0._hasSkin)
+	gohelper.setActive(arg_7_0._imagebg.gameObject, not arg_7_0._hasSkin)
+	gohelper.setActive(arg_7_0._goskinbg, arg_7_0._hasSkin)
 end
 
-function slot0._disposeBg(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0._disposeBg(arg_8_0)
+	if arg_8_0._loader then
+		arg_8_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_8_0._loader = nil
 	end
 
-	if slot0._goskinEffect then
-		gohelper.destroy(slot0._goskinEffect)
+	if arg_8_0._goskinEffect then
+		gohelper.destroy(arg_8_0._goskinEffect)
 
-		slot0._goskinEffect = nil
+		arg_8_0._goskinEffect = nil
 	end
 end
 
-function slot0._onLoadFinish(slot0)
-	slot0._goskinEffect = gohelper.clone(slot0._loader:getAssetItem(slot0._skinPath):GetResource(slot0._skinPath), slot0._goskinbg)
-	slot0.lastskinId = slot0._mo.bg
+function var_0_0._onLoadFinish(arg_9_0)
+	local var_9_0 = arg_9_0._loader:getAssetItem(arg_9_0._skinPath):GetResource(arg_9_0._skinPath)
+
+	arg_9_0._goskinEffect = gohelper.clone(var_9_0, arg_9_0._goskinbg)
+	arg_9_0.lastskinId = arg_9_0._mo.bg
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._mo = arg_10_1
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

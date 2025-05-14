@@ -1,133 +1,145 @@
-module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalItem", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalItem", package.seeall)
 
-slot0 = class("LanternFestivalItem", ListScrollCell)
+local var_0_0 = class("LanternFestivalItem", ListScrollCell)
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.viewGO = slot1
-	slot0._index = slot2
-	slot0._puzzleId = slot3
-	slot0._goNormalBG = gohelper.findChild(slot0.viewGO, "Root/#go_NormalBG")
-	slot0._goSelectedBG = gohelper.findChild(slot0.viewGO, "Root/#go_SelectedBG")
-	slot0._txtDay = gohelper.findChildText(slot0.viewGO, "Root/#txt_Day")
-	slot0._txtDayEn = gohelper.findChildText(slot0.viewGO, "Root/#txt_DayEn")
-	slot0._goFinishedImg = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedImg")
-	slot0._goTomorrowTag = gohelper.findChild(slot0.viewGO, "Root/#go_TomorrowTag")
-	slot0._goitem1 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item1")
-	slot0._goitem2 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item2")
-	slot0._goIcon1 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item2/#go_Icon1")
-	slot0._goIcon2 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item2/#go_Icon2")
-	slot0._txtName = gohelper.findChildText(slot0.viewGO, "Root/#txt_Name")
-	slot0._goFinishedBG = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedBG")
-	slot0._goTick1 = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedBG/#go_Tick1")
-	slot0._goTick2 = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedBG/#go_Tick2")
-	slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0._itemClick = gohelper.getClickWithAudio(slot0._goSelectedBG)
-	slot0._itemClick1 = gohelper.getClickWithAudio(slot0._goFinishedImg)
-	slot0._itemClick2 = gohelper.getClickWithAudio(slot0._goNormalBG)
-	slot0._itemAnimator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._index = arg_1_2
+	arg_1_0._puzzleId = arg_1_3
+	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_NormalBG")
+	arg_1_0._goSelectedBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_SelectedBG")
+	arg_1_0._txtDay = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Day")
+	arg_1_0._txtDayEn = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_DayEn")
+	arg_1_0._goFinishedImg = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedImg")
+	arg_1_0._goTomorrowTag = gohelper.findChild(arg_1_0.viewGO, "Root/#go_TomorrowTag")
+	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item1")
+	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2")
+	arg_1_0._goIcon1 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2/#go_Icon1")
+	arg_1_0._goIcon2 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2/#go_Icon2")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Name")
+	arg_1_0._goFinishedBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG")
+	arg_1_0._goTick1 = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG/#go_Tick1")
+	arg_1_0._goTick2 = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG/#go_Tick2")
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0._goSelectedBG)
+	arg_1_0._itemClick1 = gohelper.getClickWithAudio(arg_1_0._goFinishedImg)
+	arg_1_0._itemClick2 = gohelper.getClickWithAudio(arg_1_0._goNormalBG)
+	arg_1_0._itemAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot0.viewGO, false)
-	TaskDispatcher.runDelay(slot0._playOpen, slot0, 0.03 * slot0._index)
+	gohelper.setActive(arg_1_0.viewGO, false)
+	TaskDispatcher.runDelay(arg_1_0._playOpen, arg_1_0, 0.03 * arg_1_0._index)
 
-	slot0._itemList = {}
-	slot0._item = IconMgr.instance:getCommonPropItemIcon(slot0._goitem1)
+	arg_1_0._itemList = {}
+	arg_1_0._item = IconMgr.instance:getCommonPropItemIcon(arg_1_0._goitem1)
 
-	slot0:_editableAddEvents()
-	slot0:refresh(slot2, slot3)
+	arg_1_0:_editableAddEvents()
+	arg_1_0:refresh(arg_1_2, arg_1_3)
 end
 
-function slot0._playOpen(slot0)
-	gohelper.setActive(slot0.viewGO, true)
-	slot0._itemAnimator:Play("open", 0, 0)
+function var_0_0._playOpen(arg_2_0)
+	gohelper.setActive(arg_2_0.viewGO, true)
+	arg_2_0._itemAnimator:Play("open", 0, 0)
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
-	slot0._itemClick1:AddClickListener(slot0._onItemClick, slot0)
-	slot0._itemClick2:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0._editableAddEvents(arg_3_0)
+	arg_3_0._itemClick:AddClickListener(arg_3_0._onItemClick, arg_3_0)
+	arg_3_0._itemClick1:AddClickListener(arg_3_0._onItemClick, arg_3_0)
+	arg_3_0._itemClick2:AddClickListener(arg_3_0._onItemClick, arg_3_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._itemClick:RemoveClickListener()
-	slot0._itemClick1:RemoveClickListener()
-	slot0._itemClick2:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_4_0)
+	arg_4_0._itemClick:RemoveClickListener()
+	arg_4_0._itemClick1:RemoveClickListener()
+	arg_4_0._itemClick2:RemoveClickListener()
 end
 
-function slot0._onItemClick(slot0)
-	if not LanternFestivalModel.instance:isPuzzleUnlock(slot0._puzzleId) then
+function var_0_0._onItemClick(arg_5_0)
+	if not LanternFestivalModel.instance:isPuzzleUnlock(arg_5_0._puzzleId) then
 		return
 	end
 
+	local var_5_0 = {
+		puzzleId = arg_5_0._puzzleId,
+		day = arg_5_0._index
+	}
+
 	LanternFestivalController.instance:dispatchEvent(LanternFestivalEvent.SelectPuzzleItem)
-	LanternFestivalController.instance:openQuestionTipView({
-		puzzleId = slot0._puzzleId,
-		day = slot0._index
-	})
+	LanternFestivalController.instance:openQuestionTipView(var_5_0)
 end
 
-function slot0.refresh(slot0, slot1, slot2)
-	slot0._index = slot1
-	slot0._puzzleId = slot2
-	slot3 = LanternFestivalModel.instance:isPuzzleGiftGet(slot0._puzzleId)
+function var_0_0.refresh(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._index = arg_6_1
+	arg_6_0._puzzleId = arg_6_2
 
-	gohelper.setActive(slot0._goFinishedImg, slot3)
+	local var_6_0 = LanternFestivalModel.instance:isPuzzleGiftGet(arg_6_0._puzzleId)
 
-	slot4 = not slot3 and LanternFestivalModel.instance:isPuzzleUnlock(slot0._puzzleId)
-	slot5 = LanternFestivalModel.instance:getLoginCount()
-	slot10 = #string.split(LanternFestivalConfig.instance:getAct154Co(ActivityEnum.Activity.LanternFestival, slot1).bonus, "|") == 1
+	gohelper.setActive(arg_6_0._goFinishedImg, var_6_0)
 
-	gohelper.setActive(slot0._goitem1, slot10)
-	gohelper.setActive(slot0._goTick1, slot10)
-	gohelper.setActive(slot0._goitem2, not slot10)
-	gohelper.setActive(slot0._goTick2, not slot10)
+	local var_6_1 = not var_6_0 and LanternFestivalModel.instance:isPuzzleUnlock(arg_6_0._puzzleId)
+	local var_6_2 = LanternFestivalModel.instance:getLoginCount()
+	local var_6_3 = ActivityEnum.Activity.LanternFestival
+	local var_6_4 = LanternFestivalConfig.instance:getAct154Co(var_6_3, arg_6_1)
+	local var_6_5 = string.split(var_6_4.bonus, "|")
+	local var_6_6 = #var_6_5
+	local var_6_7 = var_6_6 == 1
 
-	slot0._txtName.text = ""
+	gohelper.setActive(arg_6_0._goitem1, var_6_7)
+	gohelper.setActive(arg_6_0._goTick1, var_6_7)
+	gohelper.setActive(arg_6_0._goitem2, not var_6_7)
+	gohelper.setActive(arg_6_0._goTick2, not var_6_7)
 
-	for slot14 = 1, slot9 do
-		slot15 = string.splitToNumber(slot8[slot14], "#")
+	arg_6_0._txtName.text = ""
 
-		if not slot0._itemList[slot14] then
-			table.insert(slot0._itemList, IconMgr.instance:getCommonPropItemIcon(slot0["_goIcon" .. slot14]))
+	for iter_6_0 = 1, var_6_6 do
+		local var_6_8 = string.splitToNumber(var_6_5[iter_6_0], "#")
+		local var_6_9 = arg_6_0._itemList[iter_6_0]
+
+		if not var_6_9 then
+			var_6_9 = IconMgr.instance:getCommonPropItemIcon(arg_6_0["_goIcon" .. iter_6_0])
+
+			table.insert(arg_6_0._itemList, var_6_9)
 		end
 
-		slot0:_refreshRewardItem(slot16, slot15)
+		arg_6_0:_refreshRewardItem(var_6_9, var_6_8)
 
-		if slot14 == 1 then
-			slot0:_refreshRewardItem(slot0._item, slot15)
+		if iter_6_0 == 1 then
+			arg_6_0:_refreshRewardItem(arg_6_0._item, var_6_8)
 
-			if slot10 then
-				slot0._txtName.text = ItemModel.instance:getItemConfig(slot15[1], slot15[2]).name
+			if var_6_7 then
+				local var_6_10 = ItemModel.instance:getItemConfig(var_6_8[1], var_6_8[2])
+
+				arg_6_0._txtName.text = var_6_10.name
 			end
 		end
 	end
 
-	slot0._txtDay.text = string.format("%02d", slot1)
-	slot0._txtDayEn.text = string.format("DAY\n%s", GameUtil.getEnglishNumber(slot1))
+	arg_6_0._txtDay.text = string.format("%02d", arg_6_1)
+	arg_6_0._txtDayEn.text = string.format("DAY\n%s", GameUtil.getEnglishNumber(arg_6_1))
 
-	gohelper.setActive(slot0._goSelectedBG, slot4)
-	gohelper.setActive(slot0._goTomorrowTag, slot1 == slot5 + 1)
-	gohelper.setActive(slot0._goFinishedBG, slot3)
+	gohelper.setActive(arg_6_0._goSelectedBG, var_6_1)
+	gohelper.setActive(arg_6_0._goTomorrowTag, arg_6_1 == var_6_2 + 1)
+	gohelper.setActive(arg_6_0._goFinishedBG, var_6_0)
 end
 
-function slot0._refreshRewardItem(slot0, slot1, slot2)
-	slot1:setMOValue(slot2[1], slot2[2], slot2[3])
-	slot1:setCountFontSize(46)
-	slot1:setHideLvAndBreakFlag(true)
-	slot1:hideEquipLvAndBreak(true)
-	slot1:customOnClickCallback(function ()
-		if not LanternFestivalModel.instance:isPuzzleGiftGet(uv0._puzzleId) and LanternFestivalModel.instance:isPuzzleUnlock(uv0._puzzleId) then
-			uv0:_onItemClick()
+function var_0_0._refreshRewardItem(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_1:setMOValue(arg_7_2[1], arg_7_2[2], arg_7_2[3])
+	arg_7_1:setCountFontSize(46)
+	arg_7_1:setHideLvAndBreakFlag(true)
+	arg_7_1:hideEquipLvAndBreak(true)
+	arg_7_1:customOnClickCallback(function()
+		if not LanternFestivalModel.instance:isPuzzleGiftGet(arg_7_0._puzzleId) and LanternFestivalModel.instance:isPuzzleUnlock(arg_7_0._puzzleId) then
+			arg_7_0:_onItemClick()
 
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(uv1[1], uv1[2])
+		MaterialTipController.instance:showMaterialInfo(arg_7_2[1], arg_7_2[2])
 	end)
 end
 
-function slot0.destroy(slot0)
-	TaskDispatcher.cancelTask(slot0._playOpen, slot0)
-	slot0:_editableRemoveEvents()
+function var_0_0.destroy(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._playOpen, arg_9_0)
+	arg_9_0:_editableRemoveEvents()
 end
 
-return slot0
+return var_0_0

@@ -1,34 +1,36 @@
-module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaPlayerEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaPlayerEntity", package.seeall)
 
-slot0 = class("TianShiNaNaPlayerEntity", TianShiNaNaUnitEntityBase)
+local var_0_0 = class("TianShiNaNaPlayerEntity", TianShiNaNaUnitEntityBase)
 
-function slot0.onMoving(slot0)
-	if not slot0.trans then
+function var_0_0.onMoving(arg_1_0)
+	if not arg_1_0.trans then
 		return
 	end
 
-	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.PlayerMove, slot0:getLocalPos())
+	local var_1_0 = arg_1_0:getLocalPos()
+
+	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.PlayerMove, var_1_0)
 end
 
-function slot0.updatePosAndDir(slot0)
-	uv0.super.updatePosAndDir(slot0)
-	slot0:onMoving()
+function var_0_0.updatePosAndDir(arg_2_0)
+	var_0_0.super.updatePosAndDir(arg_2_0)
+	arg_2_0:onMoving()
 end
 
-function slot0.onResLoaded(slot0)
-	slot0._anim = slot0._resGo:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onResLoaded(arg_3_0)
+	arg_3_0._anim = arg_3_0._resGo:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.reAdd(slot0)
-	if slot0._anim then
-		slot0._anim:Play("open", 0, 1)
+function var_0_0.reAdd(arg_4_0)
+	if arg_4_0._anim then
+		arg_4_0._anim:Play("open", 0, 1)
 	end
 end
 
-function slot0.playCloseAnim(slot0)
-	if slot0._anim then
-		slot0._anim:Play("close", 0, 0)
+function var_0_0.playCloseAnim(arg_5_0)
+	if arg_5_0._anim then
+		arg_5_0._anim:Play("close", 0, 0)
 	end
 end
 
-return slot0
+return var_0_0

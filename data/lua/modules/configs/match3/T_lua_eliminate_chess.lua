@@ -1,4 +1,4 @@
-return {
+﻿return {
 	{
 		strId = "blue",
 		id = 1,

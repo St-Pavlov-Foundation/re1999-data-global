@@ -1,209 +1,226 @@
-module("modules.logic.versionactivity1_2.yaxian.model.YaXianModel", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.model.YaXianModel", package.seeall)
 
-slot0 = class("YaXianModel", BaseModel)
+local var_0_0 = class("YaXianModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.actId = nil
-	slot0.hasGetBonusIdDict = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.actId = nil
+	arg_1_0.hasGetBonusIdDict = nil
 end
 
-function slot0.reInit(slot0)
-	slot0.actId = nil
-	slot0.hasGetBonusIdDict = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.actId = nil
+	arg_2_0.hasGetBonusIdDict = nil
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.actId = slot1.activityId
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0.actId = arg_3_1.activityId
 
-	slot0:updateGetBonusId(slot1.hasGetBonusIds)
-	slot0:updateEpisodeInfo(slot1.episodes)
+	arg_3_0:updateGetBonusId(arg_3_1.hasGetBonusIds)
+	arg_3_0:updateEpisodeInfo(arg_3_1.episodes)
 
-	if slot1:HasField("map") then
-		slot0:updateCurrentMapInfo(slot1.map)
+	if arg_3_1:HasField("map") then
+		arg_3_0:updateCurrentMapInfo(arg_3_1.map)
 	else
-		slot0.currentMapMo = nil
+		arg_3_0.currentMapMo = nil
 	end
 end
 
-function slot0.updateCurrentMapInfo(slot0, slot1)
-	slot0.currentMapMo = YaXianMapMo.New()
+function var_0_0.updateCurrentMapInfo(arg_4_0, arg_4_1)
+	arg_4_0.currentMapMo = YaXianMapMo.New()
 
-	slot0.currentMapMo:init(slot0.actId, slot1)
+	arg_4_0.currentMapMo:init(arg_4_0.actId, arg_4_1)
 end
 
-function slot0.getCurrentMapInfo(slot0)
-	return slot0.currentMapMo
+function var_0_0.getCurrentMapInfo(arg_5_0)
+	return arg_5_0.currentMapMo
 end
 
-function slot0.sortEpisodeMoFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortEpisodeMoFunc(arg_6_0, arg_6_1)
+	return arg_6_0.id < arg_6_1.id
 end
 
-function slot0.updateEpisodeInfo(slot0, slot1)
-	slot0.episodeList = slot0.episodeList or {}
-	slot0.chapterId2EpisodeListDict = slot0.chapterId2EpisodeListDict or {}
+function var_0_0.updateEpisodeInfo(arg_7_0, arg_7_1)
+	arg_7_0.episodeList = arg_7_0.episodeList or {}
+	arg_7_0.chapterId2EpisodeListDict = arg_7_0.chapterId2EpisodeListDict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0:getEpisodeMo(slot6.id) then
-			slot7:updateData(slot6)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_0 = arg_7_0:getEpisodeMo(iter_7_1.id)
+
+		if var_7_0 then
+			var_7_0:updateData(iter_7_1)
 		else
-			slot7 = YaXianEpisodeMo.New()
+			local var_7_1 = YaXianEpisodeMo.New()
 
-			slot7:init(slot0.actId, slot6)
-			slot0:addToChapterId2EpisodeListDict(slot7)
-			table.insert(slot0.episodeList, slot7)
+			var_7_1:init(arg_7_0.actId, iter_7_1)
+			arg_7_0:addToChapterId2EpisodeListDict(var_7_1)
+			table.insert(arg_7_0.episodeList, var_7_1)
 		end
 	end
 
-	table.sort(slot0.episodeList, uv0.sortEpisodeMoFunc)
+	table.sort(arg_7_0.episodeList, var_0_0.sortEpisodeMoFunc)
 
-	for slot5, slot6 in pairs(slot0.chapterId2EpisodeListDict) do
-		table.sort(slot6, uv0.sortEpisodeMoFunc)
+	for iter_7_2, iter_7_3 in pairs(arg_7_0.chapterId2EpisodeListDict) do
+		table.sort(iter_7_3, var_0_0.sortEpisodeMoFunc)
 	end
 
-	slot0:updateScore()
-	slot0:calculateLastCanFightEpisodeMo()
-	slot0:updateTrialMaxTemplateId()
+	arg_7_0:updateScore()
+	arg_7_0:calculateLastCanFightEpisodeMo()
+	arg_7_0:updateTrialMaxTemplateId()
 	YaXianController.instance:dispatchEvent(YaXianEvent.OnUpdateEpisodeInfo)
 end
 
-function slot0.addToChapterId2EpisodeListDict(slot0, slot1)
-	if not slot0.chapterId2EpisodeListDict[slot1.config.chapterId] then
-		slot0.chapterId2EpisodeListDict[slot2] = {}
+function var_0_0.addToChapterId2EpisodeListDict(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.config.chapterId
+
+	if not arg_8_0.chapterId2EpisodeListDict[var_8_0] then
+		arg_8_0.chapterId2EpisodeListDict[var_8_0] = {}
 	end
 
-	table.insert(slot0.chapterId2EpisodeListDict[slot2], slot1)
+	table.insert(arg_8_0.chapterId2EpisodeListDict[var_8_0], arg_8_1)
 end
 
-function slot0.calculateLastCanFightEpisodeMo(slot0)
-	for slot4, slot5 in ipairs(slot0.episodeList) do
-		if slot5.star == 0 then
-			slot0.lastCanFightEpisodeMo = slot5
+function var_0_0.calculateLastCanFightEpisodeMo(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.episodeList) do
+		if iter_9_1.star == 0 then
+			arg_9_0.lastCanFightEpisodeMo = iter_9_1
 
 			return
 		end
 	end
 
-	slot0.lastCanFightEpisodeMo = slot0.episodeList[#slot0.episodeList]
+	arg_9_0.lastCanFightEpisodeMo = arg_9_0.episodeList[#arg_9_0.episodeList]
 end
 
-function slot0.getLastCanFightEpisodeMo(slot0, slot1)
-	if not slot1 then
-		return slot0.lastCanFightEpisodeMo
+function var_0_0.getLastCanFightEpisodeMo(arg_10_0, arg_10_1)
+	if not arg_10_1 then
+		return arg_10_0.lastCanFightEpisodeMo
 	end
 
-	slot3 = nil
+	local var_10_0 = arg_10_0.chapterId2EpisodeListDict[arg_10_1]
+	local var_10_1
 
-	for slot7 = #slot0.chapterId2EpisodeListDict[slot1], 1, -1 do
-		if slot2[slot7].star == 0 then
-			slot3 = slot8
-		elseif slot3 then
-			return slot3
+	for iter_10_0 = #var_10_0, 1, -1 do
+		local var_10_2 = var_10_0[iter_10_0]
+
+		if var_10_2.star == 0 then
+			var_10_1 = var_10_2
+		elseif var_10_1 then
+			return var_10_1
 		else
-			return slot8
+			return var_10_2
 		end
 	end
 
-	return slot3
+	return var_10_1
 end
 
-function slot0.getEpisodeMo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.episodeList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.getEpisodeMo(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.episodeList) do
+		if iter_11_1.id == arg_11_1 then
+			return iter_11_1
 		end
 	end
 end
 
-function slot0.getEpisodeList(slot0, slot1)
-	return slot0.chapterId2EpisodeListDict[slot1]
+function var_0_0.getEpisodeList(arg_12_0, arg_12_1)
+	return arg_12_0.chapterId2EpisodeListDict[arg_12_1]
 end
 
-function slot0.getChapterFirstEpisodeMo(slot0, slot1)
-	return slot0:getEpisodeList(slot1) and slot2[1]
+function var_0_0.getChapterFirstEpisodeMo(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getEpisodeList(arg_13_1)
+
+	return var_13_0 and var_13_0[1]
 end
 
-function slot0.chapterIsUnlock(slot0, slot1)
-	return slot0:getEpisodeList(slot1) and slot2[1].id <= slot0:getLastCanFightEpisodeMo().id
+function var_0_0.chapterIsUnlock(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getEpisodeList(arg_14_1)
+
+	return var_14_0 and arg_14_0:getLastCanFightEpisodeMo().id >= var_14_0[1].id
 end
 
-function slot0.getScore(slot0)
-	return slot0.score or 0
+function var_0_0.getScore(arg_15_0)
+	return arg_15_0.score or 0
 end
 
-function slot0.updateGetBonusId(slot0, slot1)
-	slot0.hasGetBonusIdDict = {}
+function var_0_0.updateGetBonusId(arg_16_0, arg_16_1)
+	arg_16_0.hasGetBonusIdDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.hasGetBonusIdDict[slot6] = true
+	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
+		arg_16_0.hasGetBonusIdDict[iter_16_1] = true
 	end
 
 	YaXianController.instance:dispatchEvent(YaXianEvent.OnUpdateBonus)
 end
 
-function slot0.hasGetBonus(slot0, slot1)
-	return slot0.hasGetBonusIdDict[slot1]
+function var_0_0.hasGetBonus(arg_17_0, arg_17_1)
+	return arg_17_0.hasGetBonusIdDict[arg_17_1]
 end
 
-function slot0.updateScore(slot0)
-	slot0.score = 0
+function var_0_0.updateScore(arg_18_0)
+	arg_18_0.score = 0
 
-	for slot4, slot5 in ipairs(slot0.episodeList) do
-		slot0.score = slot0.score + slot5.star
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.episodeList) do
+		arg_18_0.score = arg_18_0.score + iter_18_1.star
 	end
 end
 
-function slot0.updateTrialMaxTemplateId(slot0)
-	slot0.maxTrialTemplateId = 1
+function var_0_0.updateTrialMaxTemplateId(arg_19_0)
+	arg_19_0.maxTrialTemplateId = 1
 
-	for slot4, slot5 in ipairs(slot0.episodeList) do
-		if slot5.star > 0 and slot0.maxTrialTemplateId < slot5.config.trialTemplate then
-			slot0.maxTrialTemplateId = slot5.config.trialTemplate
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.episodeList) do
+		if iter_19_1.star > 0 and iter_19_1.config.trialTemplate > arg_19_0.maxTrialTemplateId then
+			arg_19_0.maxTrialTemplateId = iter_19_1.config.trialTemplate
 		end
 	end
 end
 
-function slot0.getMaxTrialTemplateId(slot0)
-	return slot0.maxTrialTemplateId
+function var_0_0.getMaxTrialTemplateId(arg_20_0)
+	return arg_20_0.maxTrialTemplateId
 end
 
-function slot0.getHeroIdAndSkinId(slot0)
-	slot1 = lua_hero_trial.configDict[YaXianEnum.HeroTrialId][slot0.maxTrialTemplateId]
+function var_0_0.getHeroIdAndSkinId(arg_21_0)
+	local var_21_0 = lua_hero_trial.configDict[YaXianEnum.HeroTrialId][arg_21_0.maxTrialTemplateId]
 
-	return slot1.heroId, slot1.skin
+	return var_21_0.heroId, var_21_0.skin
 end
 
-function slot0.hadTooth(slot0, slot1)
-	if slot1 == 0 then
+function var_0_0.hadTooth(arg_22_0, arg_22_1)
+	if arg_22_1 == 0 then
 		return true
 	end
 
-	if not YaXianConfig.instance:getToothUnlockEpisode(slot1) then
+	local var_22_0 = YaXianConfig.instance:getToothUnlockEpisode(arg_22_1)
+
+	if not var_22_0 then
 		logError("ya xian tooth unlock episode id not exist")
 
 		return true
 	end
 
-	if not slot0:getEpisodeMo(slot2) then
+	local var_22_1 = arg_22_0:getEpisodeMo(var_22_0)
+
+	if not var_22_1 then
 		return false
 	end
 
-	return slot3.star > 0
+	return var_22_1.star > 0
 end
 
-function slot0.getHadToothCount(slot0)
-	for slot5, slot6 in ipairs(lua_activity115_tooth.configList) do
-		if slot0:hadTooth(slot6.id) then
-			slot1 = 0 + 1
+function var_0_0.getHadToothCount(arg_23_0)
+	local var_23_0 = 0
+
+	for iter_23_0, iter_23_1 in ipairs(lua_activity115_tooth.configList) do
+		if arg_23_0:hadTooth(iter_23_1.id) then
+			var_23_0 = var_23_0 + 1
 		end
 	end
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.isFirstEpisode(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.chapterId2EpisodeListDict) do
-		if slot6[1].id == slot1 then
+function var_0_0.isFirstEpisode(arg_24_0, arg_24_1)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0.chapterId2EpisodeListDict) do
+		if iter_24_1[1].id == arg_24_1 then
 			return true
 		end
 	end
@@ -211,16 +228,16 @@ function slot0.isFirstEpisode(slot0, slot1)
 	return false
 end
 
-function slot0.setPlayingClickAnimation(slot0, slot1)
-	slot0.isPlayingClickAnimation = slot1
+function var_0_0.setPlayingClickAnimation(arg_25_0, arg_25_1)
+	arg_25_0.isPlayingClickAnimation = arg_25_1
 
 	YaXianController.instance:dispatchEvent(YaXianEvent.OnPlayingClickAnimationValueChange)
 end
 
-function slot0.checkIsPlayingClickAnimation(slot0)
-	return slot0.isPlayingClickAnimation
+function var_0_0.checkIsPlayingClickAnimation(arg_26_0)
+	return arg_26_0.isPlayingClickAnimation
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

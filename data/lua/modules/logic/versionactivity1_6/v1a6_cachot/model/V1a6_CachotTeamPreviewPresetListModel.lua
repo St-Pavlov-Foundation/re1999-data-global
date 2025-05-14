@@ -1,29 +1,35 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotTeamPreviewPresetListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotTeamPreviewPresetListModel", package.seeall)
 
-slot0 = class("V1a6_CachotTeamPreviewPresetListModel")
+local var_0_0 = class("V1a6_CachotTeamPreviewPresetListModel")
 
-function slot0.getEquip(slot0, slot1)
-	return slot0._equipMap[slot1]
+function var_0_0.getEquip(arg_1_0, arg_1_1)
+	return arg_1_0._equipMap[arg_1_1]
 end
 
-function slot0.initList(slot0)
-	slot2 = V1a6_CachotModel.instance:getRogueInfo().teamInfo
-	slot0._equipMap = {}
-	slot5 = {}
+function var_0_0.initList(arg_2_0)
+	local var_2_0 = V1a6_CachotModel.instance:getRogueInfo().teamInfo
+	local var_2_1 = var_2_0:getGroupHeros()
+	local var_2_2 = var_2_0:getGroupEquips()
 
-	for slot9 = 1, V1a6_CachotEnum.HeroCountInGroup do
-		slot10 = slot2:getGroupHeros()[slot9] or HeroSingleGroupMO.New()
+	arg_2_0._equipMap = {}
 
-		table.insert(slot5, slot10)
+	local var_2_3 = {}
 
-		slot0._equipMap[slot10] = slot2:getGroupEquips()[slot9]
+	for iter_2_0 = 1, V1a6_CachotEnum.HeroCountInGroup do
+		local var_2_4 = var_2_1[iter_2_0] or HeroSingleGroupMO.New()
 
-		V1a6_CachotTeamModel.instance:setSeatInfo(slot9, V1a6_CachotTeamModel.instance:getSeatLevel(slot9), slot10)
+		table.insert(var_2_3, var_2_4)
+
+		local var_2_5 = var_2_2[iter_2_0]
+
+		arg_2_0._equipMap[var_2_4] = var_2_5
+
+		V1a6_CachotTeamModel.instance:setSeatInfo(iter_2_0, V1a6_CachotTeamModel.instance:getSeatLevel(iter_2_0), var_2_4)
 	end
 
-	return slot5
+	return var_2_3
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

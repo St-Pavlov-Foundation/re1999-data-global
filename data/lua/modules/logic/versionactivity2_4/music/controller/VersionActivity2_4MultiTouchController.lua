@@ -1,44 +1,48 @@
-module("modules.logic.versionactivity2_4.music.controller.VersionActivity2_4MultiTouchController", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.controller.VersionActivity2_4MultiTouchController", package.seeall)
 
-slot0 = class("VersionActivity2_4MultiTouchController", BaseController)
+local var_0_0 = class("VersionActivity2_4MultiTouchController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.isMobilePlayer()
+function var_0_0.isMobilePlayer()
 	return BootNativeUtil.isMobilePlayer()
 end
 
-function slot0.addTouch(slot0, slot1)
-	if not uv0.isMobilePlayer() then
+function var_0_0.addTouch(arg_6_0, arg_6_1)
+	if not var_0_0.isMobilePlayer() then
 		return
 	end
 
-	if slot0._touchList then
-		table.insert(slot0._touchList, slot1)
+	if arg_6_0._touchList then
+		table.insert(arg_6_0._touchList, arg_6_1)
 	else
 		logError("addTouch touchList is nil")
 	end
 end
 
-function slot0.removeTouch(slot0, slot1)
-	if not uv0.isMobilePlayer() then
+function var_0_0.removeTouch(arg_7_0, arg_7_1)
+	if not var_0_0.isMobilePlayer() then
 		return
 	end
 
-	if slot0._touchList then
-		for slot5, slot6 in ipairs(slot0._touchList) do
-			if slot6 == slot1 then
-				table.remove(slot0._touchList, slot5)
+	if arg_7_0._touchList then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._touchList) do
+			if iter_7_1 == arg_7_1 then
+				table.remove(arg_7_0._touchList, iter_7_0)
 
 				break
 			end
@@ -46,72 +50,84 @@ function slot0.removeTouch(slot0, slot1)
 	end
 end
 
-function slot0.startMultiTouch(slot0, slot1)
-	if not uv0.isMobilePlayer() then
+function var_0_0.startMultiTouch(arg_8_0, arg_8_1)
+	if not var_0_0.isMobilePlayer() then
 		return
 	end
 
-	slot0._touchList = {}
-	slot0._touchCount = 5
-	slot0._viewName = slot1
+	arg_8_0._touchList = {}
+	arg_8_0._touchCount = 5
+	arg_8_0._viewName = arg_8_1
 
-	TaskDispatcher.cancelTask(slot0._frameHandler, slot0)
-	TaskDispatcher.runRepeat(slot0._frameHandler, slot0, 0)
+	TaskDispatcher.cancelTask(arg_8_0._frameHandler, arg_8_0)
+	TaskDispatcher.runRepeat(arg_8_0._frameHandler, arg_8_0, 0)
 end
 
-function slot0._frameHandler(slot0)
-	if not slot0._touchList then
+function var_0_0._frameHandler(arg_9_0)
+	if not arg_9_0._touchList then
 		return
 	end
 
-	for slot6 = 1, math.min(UnityEngine.Input.touchCount, slot0._touchCount) do
-		if UnityEngine.Input.GetTouch(slot6 - 1).phase == TouchPhase.Began then
-			if true and not ViewHelper.instance:checkViewOnTheTop(slot0._viewName) then
+	local var_9_0 = true
+	local var_9_1 = UnityEngine.Input.touchCount
+	local var_9_2 = math.min(var_9_1, arg_9_0._touchCount)
+
+	for iter_9_0 = 1, var_9_2 do
+		local var_9_3 = iter_9_0 - 1
+		local var_9_4 = UnityEngine.Input.GetTouch(var_9_3)
+
+		if var_9_4.phase == TouchPhase.Began then
+			if var_9_0 and not ViewHelper.instance:checkViewOnTheTop(arg_9_0._viewName) then
 				return
 			end
 
-			slot1 = false
+			var_9_0 = false
 
-			slot0:_checkTouch(slot8.position)
+			local var_9_5 = var_9_4.position
+
+			arg_9_0:_checkTouch(var_9_5)
 		end
 	end
 end
 
-function slot0._checkTouch(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._touchList) do
-		if slot6:canTouch() and uv0.isTouchOverGo(slot6.go, slot1) then
-			slot6:touchDown()
+function var_0_0._checkTouch(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._touchList) do
+		if iter_10_1:canTouch() and var_0_0.isTouchOverGo(iter_10_1.go, arg_10_1) then
+			iter_10_1:touchDown()
 
 			break
 		end
 	end
 end
 
-function slot0.isTouchOverGo(slot0, slot1)
-	if not slot0 or not slot1 then
+function var_0_0.isTouchOverGo(arg_11_0, arg_11_1)
+	if not arg_11_0 or not arg_11_1 then
 		return false
 	end
 
-	slot2 = slot0.transform
-	slot4 = recthelper.getHeight(slot2)
+	local var_11_0 = arg_11_0.transform
+	local var_11_1 = recthelper.getWidth(var_11_0)
+	local var_11_2 = recthelper.getHeight(var_11_0)
+	local var_11_3 = recthelper.screenPosToAnchorPos(arg_11_1, var_11_0)
+	local var_11_4 = var_11_0.pivot
 
-	if recthelper.screenPosToAnchorPos(slot1, slot2).x >= -recthelper.getWidth(slot2) * slot2.pivot.x and slot5.x <= slot3 * (1 - slot6.x) and slot5.y <= slot4 * slot6.x and slot5.y >= -slot4 * (1 - slot6.x) then
+	if var_11_3.x >= -var_11_1 * var_11_4.x and var_11_3.x <= var_11_1 * (1 - var_11_4.x) and var_11_3.y <= var_11_2 * var_11_4.x and var_11_3.y >= -var_11_2 * (1 - var_11_4.x) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.endMultiTouch(slot0)
-	if not uv0.isMobilePlayer() then
+function var_0_0.endMultiTouch(arg_12_0)
+	if not var_0_0.isMobilePlayer() then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._frameHandler, slot0)
+	TaskDispatcher.cancelTask(arg_12_0._frameHandler, arg_12_0)
 
-	slot0._touchList = nil
+	arg_12_0._touchList = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

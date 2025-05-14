@@ -1,6 +1,6 @@
-module("modules.logic.turnback.define.TurnbackEnum", package.seeall)
+﻿module("modules.logic.turnback.define.TurnbackEnum", package.seeall)
 
-return {
+local var_0_0 = {
 	ActivityId = {
 		SignIn = 101,
 		NewSignIn = 106,
@@ -67,15 +67,18 @@ return {
 		eFun = 2,
 		Global = 1,
 		KO = 3
-	},
-	TaskGetAnimTime = 0.5,
-	TaskMaskTime = 0.65,
-	TaskGetBonusAnimTime = 1.367,
-	BonusPointIcon = 31,
-	RefreshCd = 10,
-	FirstSearchTask = 180035,
-	LastSearchTask = 180037,
-	Level2Count = 3,
-	Level3Count = 1,
-	ReadTaskId = 180013
+	}
 }
+
+var_0_0.TaskGetAnimTime = 0.5
+var_0_0.TaskMaskTime = 0.65
+var_0_0.TaskGetBonusAnimTime = 1.367
+var_0_0.BonusPointIcon = 31
+var_0_0.RefreshCd = 10
+var_0_0.FirstSearchTask = 180035
+var_0_0.LastSearchTask = 180037
+var_0_0.Level2Count = 3
+var_0_0.Level3Count = 1
+var_0_0.ReadTaskId = 180013
+
+return var_0_0

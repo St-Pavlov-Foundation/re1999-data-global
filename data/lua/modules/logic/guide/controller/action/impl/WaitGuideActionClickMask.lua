@@ -1,65 +1,69 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionClickMask", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionClickMask", package.seeall)
 
-slot0 = class("WaitGuideActionClickMask", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionClickMask", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._beforeClickWaitSecond = #string.split(slot3, "#") >= 1 and tonumber(slot4[1]) or 0
-	slot0._afterClickWaitSecond = #slot4 >= 2 and tonumber(slot4[2]) or 0
-	slot0._isForceGuide = GuideConfig.instance:getStepCO(slot1, slot2).notForce == 0
-	slot0._alpha = nil
+	local var_1_0 = string.split(arg_1_3, "#")
 
-	if #slot4 >= 3 then
-		slot0._alpha = tonumber(slot4[3])
+	arg_1_0._beforeClickWaitSecond = #var_1_0 >= 1 and tonumber(var_1_0[1]) or 0
+	arg_1_0._afterClickWaitSecond = #var_1_0 >= 2 and tonumber(var_1_0[2]) or 0
+	arg_1_0._isForceGuide = GuideConfig.instance:getStepCO(arg_1_1, arg_1_2).notForce == 0
+	arg_1_0._alpha = nil
+
+	if #var_1_0 >= 3 then
+		arg_1_0._alpha = tonumber(var_1_0[3])
 	end
 
-	slot0._goPath = GuideModel.instance:getStepGOPath(slot1, slot2)
+	arg_1_0._goPath = GuideModel.instance:getStepGOPath(arg_1_1, arg_1_2)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	if slot0._beforeClickWaitSecond > 0 then
+	if arg_2_0._beforeClickWaitSecond > 0 then
 		GuideViewMgr.instance:disableHoleClick()
-		TaskDispatcher.runDelay(slot0._onDelayStart, slot0, slot0._beforeClickWaitSecond)
+		TaskDispatcher.runDelay(arg_2_0._onDelayStart, arg_2_0, arg_2_0._beforeClickWaitSecond)
 	else
-		slot0:_onDelayStart()
+		arg_2_0:_onDelayStart()
 	end
 end
 
-function slot0.clearWork(slot0)
-	GuideViewMgr.instance:setHoleClickCallback(nil, )
-	TaskDispatcher.cancelTask(slot0._onDelayStart, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayDone, slot0)
+function var_0_0.clearWork(arg_3_0)
+	GuideViewMgr.instance:setHoleClickCallback(nil, nil)
+	TaskDispatcher.cancelTask(arg_3_0._onDelayStart, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._onDelayDone, arg_3_0)
 end
 
-function slot0._onClickTarget(slot0, slot1)
-	if slot1 or not slot0._isForceGuide then
+function var_0_0._onClickTarget(arg_4_0, arg_4_1)
+	if arg_4_1 or not arg_4_0._isForceGuide then
 		GuideViewMgr.instance:disableHoleClick()
-		GuideViewMgr.instance:setHoleClickCallback(nil, )
+		GuideViewMgr.instance:setHoleClickCallback(nil, nil)
 
-		slot0._isInside = slot1
+		arg_4_0._isInside = arg_4_1
 
-		TaskDispatcher.runDelay(slot0._onDelayDone, slot0, slot0._afterClickWaitSecond + 0.01)
+		TaskDispatcher.runDelay(arg_4_0._onDelayDone, arg_4_0, arg_4_0._afterClickWaitSecond + 0.01)
 	end
 end
 
-function slot0._onDelayStart(slot0)
-	if slot0._alpha or slot0._isForceGuide == false and 0 or nil then
-		GuideViewMgr.instance:setMaskAlpha(slot1)
+function var_0_0._onDelayStart(arg_5_0)
+	local var_5_0 = arg_5_0._alpha or arg_5_0._isForceGuide == false and 0 or nil
+
+	if var_5_0 then
+		GuideViewMgr.instance:setMaskAlpha(var_5_0)
 	end
 
 	GuideViewMgr.instance:enableHoleClick()
-	GuideViewMgr.instance:setHoleClickCallback(slot0._onClickTarget, slot0)
+	GuideViewMgr.instance:setHoleClickCallback(arg_5_0._onClickTarget, arg_5_0)
 end
 
-function slot0._onDelayDone(slot0)
-	if slot0._isInside then
-		slot0:onDone(true)
-	elseif not slot0._isForceGuide then
-		GuideController.instance:oneKeyFinishGuide(slot0.guideId, false)
+function var_0_0._onDelayDone(arg_6_0)
+	if arg_6_0._isInside then
+		arg_6_0:onDone(true)
+	elseif not arg_6_0._isForceGuide then
+		GuideController.instance:oneKeyFinishGuide(arg_6_0.guideId, false)
 	end
 end
 
-return slot0
+return var_0_0

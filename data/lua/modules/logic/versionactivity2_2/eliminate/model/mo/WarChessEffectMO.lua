@@ -1,59 +1,67 @@
-module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessEffectMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessEffectMO", package.seeall)
 
-slot0 = class("WarChessEffectMO")
+local var_0_0 = class("WarChessEffectMO")
 
-function slot0.init(slot0, slot1)
-	slot0.effectType = slot1.effectType
-	slot0.effectNum = slot1.effectNum
-	slot0.targetId = slot1.targetId
-	slot0.extraData = slot1.extraData
-	slot0.chessPiece = slot1.chessPiece
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.effectType = arg_1_1.effectType
+	arg_1_0.effectNum = arg_1_1.effectNum
+	arg_1_0.targetId = arg_1_1.targetId
+	arg_1_0.extraData = arg_1_1.extraData
+	arg_1_0.chessPiece = arg_1_1.chessPiece
 
-	if slot1.nextFightStep then
-		slot0.nextFightStep = WarChessStepMO.New()
+	if arg_1_1.nextFightStep then
+		arg_1_0.nextFightStep = WarChessStepMO.New()
 
-		slot0.nextFightStep:init(slot1.nextFightStep)
+		arg_1_0.nextFightStep:init(arg_1_1.nextFightStep)
 	end
 end
 
-function slot0.buildStep(slot0, slot1)
-	slot2 = {}
+function var_0_0.buildStep(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	if slot1.actionType == EliminateTeamChessEnum.StepActionType.chessSkill then
-		slot0.reasonId = slot1.reasonId
+	if arg_2_1.actionType == EliminateTeamChessEnum.StepActionType.chessSkill then
+		arg_2_0.reasonId = arg_2_1.reasonId
 	end
 
-	if slot0.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-		slot3 = {
-			uid = slot0.targetId,
-			effectType = EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect,
-			vxEffectType = EliminateTeamChessEnum.VxEffectType.PowerDown
-		}
+	if arg_2_0.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+		local var_2_1 = {}
+		local var_2_2 = tonumber(arg_2_0.effectNum)
 
-		if tonumber(slot0.effectNum) < 0 then
-			-- Nothing
+		var_2_1.uid = arg_2_0.targetId
+		var_2_1.effectType = EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect
+
+		if var_2_2 < 0 then
+			var_2_1.vxEffectType = EliminateTeamChessEnum.VxEffectType.PowerDown
 		else
-			slot3.vxEffectType = EliminateTeamChessEnum.VxEffectType.PowerUp
+			var_2_1.vxEffectType = EliminateTeamChessEnum.VxEffectType.PowerUp
 		end
 
-		slot3.time = EliminateTeamChessEnum.VxEffectTypePlayTime[slot3.vxEffectType]
+		var_2_1.time = EliminateTeamChessEnum.VxEffectTypePlayTime[var_2_1.vxEffectType]
 
-		if slot1.actionType == EliminateTeamChessEnum.StepActionType.chessSkill and slot1.reasonId ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(slot5)) then
-			slot3.time = EliminateTeamChessEnum.teamChessGrowUpToChangePowerStepTime
+		if arg_2_1.actionType == EliminateTeamChessEnum.StepActionType.chessSkill then
+			local var_2_3 = arg_2_1.reasonId
+
+			if var_2_3 ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(var_2_3)) then
+				var_2_1.time = EliminateTeamChessEnum.teamChessGrowUpToChangePowerStepTime
+			end
 		end
 
-		slot2[#slot2 + 1] = EliminateTeamChessStepUtil.createStep(slot3)
+		local var_2_4 = EliminateTeamChessStepUtil.createStep(var_2_1)
+
+		var_2_0[#var_2_0 + 1] = var_2_4
 	end
 
-	if slot0.effectType ~= EliminateTeamChessEnum.StepWorkType.effectNestStruct then
-		slot2[#slot2 + 1] = EliminateTeamChessStepUtil.createStep(slot0)
+	if arg_2_0.effectType ~= EliminateTeamChessEnum.StepWorkType.effectNestStruct then
+		local var_2_5 = EliminateTeamChessStepUtil.createStep(arg_2_0)
+
+		var_2_0[#var_2_0 + 1] = var_2_5
 	end
 
-	if slot0.nextFightStep ~= nil then
-		return slot2, slot0.nextFightStep:buildSteps()
+	if arg_2_0.nextFightStep ~= nil then
+		return var_2_0, arg_2_0.nextFightStep:buildSteps()
 	end
 
-	return slot2, nil
+	return var_2_0, nil
 end
 
-return slot0
+return var_0_0

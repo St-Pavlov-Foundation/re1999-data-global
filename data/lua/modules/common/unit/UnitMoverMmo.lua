@@ -1,233 +1,264 @@
-module("modules.common.unit.UnitMoverMmo", package.seeall)
+﻿module("modules.common.unit.UnitMoverMmo", package.seeall)
 
-slot0 = class("UnitMoverMmo", LuaCompBase)
+local var_0_0 = class("UnitMoverMmo", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._speed = 0
-	slot0._speedX = 0
-	slot0._speedY = 0
-	slot0._speedZ = 0
-	slot0._posX = 0
-	slot0._posY = 0
-	slot0._posZ = 0
-	slot0._wpPool = LuaObjPool.New(100, function ()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._speed = 0
+	arg_1_0._speedX = 0
+	arg_1_0._speedY = 0
+	arg_1_0._speedZ = 0
+	arg_1_0._posX = 0
+	arg_1_0._posY = 0
+	arg_1_0._posZ = 0
+	arg_1_0._wpPool = LuaObjPool.New(100, function()
 		return {}
-	end, function (slot0)
-	end, function (slot0)
+	end, function(arg_3_0)
+		return
+	end, function(arg_4_0)
+		return
 	end)
-	slot0._wayPoints = {}
-	slot0._curWayPoint = nil
-	slot0._accerationTime = 0
-	slot0._startMoveTime = 0
+	arg_1_0._wayPoints = {}
+	arg_1_0._curWayPoint = nil
+	arg_1_0._accerationTime = 0
+	arg_1_0._startMoveTime = 0
 
-	LuaEventSystem.addEventMechanism(slot0)
+	LuaEventSystem.addEventMechanism(arg_1_0)
 end
 
-function slot0.simpleMove(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0:setSpeed(math.sqrt((slot1 - slot4)^2 + (slot2 - slot5)^2 + (slot3 - slot6)^2) > 0 and slot8 / slot7 or 100000000)
-	slot0:setPosDirectly(slot1, slot2, slot3)
-	slot0:addWayPoint(slot4, slot5, slot6)
+function var_0_0.simpleMove(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7)
+	local var_5_0 = math.sqrt((arg_5_1 - arg_5_4)^2 + (arg_5_2 - arg_5_5)^2 + (arg_5_3 - arg_5_6)^2)
+	local var_5_1 = var_5_0 > 0 and var_5_0 / arg_5_7 or 100000000
+
+	arg_5_0:setSpeed(var_5_1)
+	arg_5_0:setPosDirectly(arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0:addWayPoint(arg_5_4, arg_5_5, arg_5_6)
 end
 
-function slot0.setPosDirectly(slot0, slot1, slot2, slot3)
-	slot0:clearWayPoints()
+function var_0_0.setPosDirectly(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0:clearWayPoints()
 
-	slot0._posX = slot1
-	slot0._posY = slot2
-	slot0._posZ = slot3
+	arg_6_0._posX = arg_6_1
+	arg_6_0._posY = arg_6_2
+	arg_6_0._posZ = arg_6_3
 
-	slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
+	arg_6_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_6_0)
 end
 
-function slot0.getCurWayPoint(slot0)
-	return slot0._curWayPoint
+function var_0_0.getCurWayPoint(arg_7_0)
+	return arg_7_0._curWayPoint
 end
 
-function slot0.getPos(slot0)
-	return slot0._posX, slot0._posY, slot0._posZ
+function var_0_0.getPos(arg_8_0)
+	return arg_8_0._posX, arg_8_0._posY, arg_8_0._posZ
 end
 
-function slot0.setSpeed(slot0, slot1)
-	slot0._speed = slot1
+function var_0_0.setSpeed(arg_9_0, arg_9_1)
+	arg_9_0._speed = arg_9_1
 
-	if not slot0._curWayPoint then
-		slot0._speedX = 0
-		slot0._speedY = 0
-		slot0._speedZ = 0
+	if not arg_9_0._curWayPoint then
+		arg_9_0._speedX = 0
+		arg_9_0._speedY = 0
+		arg_9_0._speedZ = 0
 	else
-		slot2 = slot0._curWayPoint.x - slot0._posX
-		slot3 = slot0._curWayPoint.y - slot0._posY
-		slot4 = slot0._curWayPoint.z - slot0._posZ
-		slot5 = math.sqrt(slot2 * slot2 + slot3 * slot3 + slot4 * slot4)
-		slot0._speedX = slot2 / slot5 * slot0._speed
-		slot0._speedY = slot3 / slot5 * slot0._speed
-		slot0._speedZ = slot4 / slot5 * slot0._speed
+		local var_9_0 = arg_9_0._curWayPoint.x - arg_9_0._posX
+		local var_9_1 = arg_9_0._curWayPoint.y - arg_9_0._posY
+		local var_9_2 = arg_9_0._curWayPoint.z - arg_9_0._posZ
+		local var_9_3 = math.sqrt(var_9_0 * var_9_0 + var_9_1 * var_9_1 + var_9_2 * var_9_2)
+		local var_9_4 = var_9_0 / var_9_3
+		local var_9_5 = var_9_1 / var_9_3
+		local var_9_6 = var_9_2 / var_9_3
+
+		arg_9_0._speedX = var_9_4 * arg_9_0._speed
+		arg_9_0._speedY = var_9_5 * arg_9_0._speed
+		arg_9_0._speedZ = var_9_6 * arg_9_0._speed
 	end
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	if slot1 > 0 then
-		slot0:setSpeed(slot0._speed * slot1)
+function var_0_0.setTimeScale(arg_10_0, arg_10_1)
+	if arg_10_1 > 0 then
+		arg_10_0:setSpeed(arg_10_0._speed * arg_10_1)
 	else
-		logError("argument illegal, timeScale = " .. slot1)
+		logError("argument illegal, timeScale = " .. arg_10_1)
 	end
 end
 
-function slot0.setAccelerationTime(slot0, slot1)
-	slot0._accerationTime = slot1
+function var_0_0.setAccelerationTime(arg_11_0, arg_11_1)
+	arg_11_0._accerationTime = arg_11_1
 end
 
-function slot0.getAccelerationTime(slot0)
-	return slot0._accerationTime
+function var_0_0.getAccelerationTime(arg_12_0)
+	return arg_12_0._accerationTime
 end
 
-function slot0.setWayPoint(slot0, slot1, slot2, slot3)
-	if not slot0._wayPoints then
+function var_0_0.setWayPoint(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if not arg_13_0._wayPoints then
 		return
 	end
 
-	for slot8 = 1, #slot0._wayPoints do
-		slot0._wpPool:putObject(slot0._wayPoints[slot8])
+	local var_13_0 = #arg_13_0._wayPoints
 
-		slot0._wayPoints[slot8] = nil
+	for iter_13_0 = 1, var_13_0 do
+		arg_13_0._wpPool:putObject(arg_13_0._wayPoints[iter_13_0])
+
+		arg_13_0._wayPoints[iter_13_0] = nil
 	end
 
-	slot5 = slot0._wpPool:getObject()
-	slot5.x = slot1
-	slot5.y = slot2
-	slot5.z = slot3
+	local var_13_1 = arg_13_0._wpPool:getObject()
 
-	slot0:_setNewWayPoint(slot5)
+	var_13_1.x = arg_13_1
+	var_13_1.y = arg_13_2
+	var_13_1.z = arg_13_3
+
+	arg_13_0:_setNewWayPoint(var_13_1)
 end
 
-function slot0.addWayPoint(slot0, slot1, slot2, slot3, slot4)
-	if slot0._posX == slot1 and slot0._posY == slot2 and slot0._posZ == slot3 then
-		if not slot0._curWayPoint then
+function var_0_0.addWayPoint(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	if arg_14_0._posX == arg_14_1 and arg_14_0._posY == arg_14_2 and arg_14_0._posZ == arg_14_3 then
+		if not arg_14_0._curWayPoint then
 			return
-		elseif slot0._curWayPoint.x == slot1 and slot0._curWayPoint.y == slot2 and slot0._curWayPoint.z == slot3 then
+		elseif arg_14_0._curWayPoint.x == arg_14_1 and arg_14_0._curWayPoint.y == arg_14_2 and arg_14_0._curWayPoint.z == arg_14_3 then
 			return
 		end
 	end
 
-	slot5 = slot0._wpPool:getObject()
-	slot5.x = slot1
-	slot5.y = slot2
-	slot5.z = slot3
+	local var_14_0 = arg_14_0._wpPool:getObject()
 
-	if slot4 then
-		slot6 = 0
+	var_14_0.x = arg_14_1
+	var_14_0.y = arg_14_2
+	var_14_0.z = arg_14_3
 
-		if slot0._curWayPoint and slot0._curWayPoint[1] then
-			slot7 = slot0._curWayPoint[#slot0._curWayPoint]
-			slot6 = math.sqrt((slot7.x - slot1)^2 + (slot7.y - slot2)^2 + (slot7.z - slot3)^2)
+	if arg_14_4 then
+		local var_14_1 = 0
+
+		if arg_14_0._curWayPoint and arg_14_0._curWayPoint[1] then
+			local var_14_2 = arg_14_0._curWayPoint[#arg_14_0._curWayPoint]
+
+			var_14_1 = math.sqrt((var_14_2.x - arg_14_1)^2 + (var_14_2.y - arg_14_2)^2 + (var_14_2.z - arg_14_3)^2)
 		else
-			slot6 = math.sqrt((slot0._posX - slot1)^2 + (slot0._posY - slot2)^2 + (slot0._posZ - slot3)^2)
+			var_14_1 = math.sqrt((arg_14_0._posX - arg_14_1)^2 + (arg_14_0._posY - arg_14_2)^2 + (arg_14_0._posZ - arg_14_3)^2)
 		end
 
-		slot5.speed = slot6 > 0 and slot6 / slot4 or 100000000
+		var_14_0.speed = var_14_1 > 0 and var_14_1 / arg_14_4 or 100000000
 	end
 
-	if not slot0._curWayPoint then
-		slot0:_setNewWayPoint(slot5)
+	if not arg_14_0._curWayPoint then
+		arg_14_0:_setNewWayPoint(var_14_0)
 	else
-		table.insert(slot0._wayPoints, slot5)
+		table.insert(arg_14_0._wayPoints, var_14_0)
 	end
 end
 
-function slot0.clearWayPoints(slot0)
-	for slot5 = 1, #slot0._wayPoints do
-		slot0._wpPool:putObject(slot0._wayPoints[slot5])
+function var_0_0.clearWayPoints(arg_15_0)
+	local var_15_0 = #arg_15_0._wayPoints
 
-		slot0._wayPoints[slot5] = nil
+	for iter_15_0 = 1, var_15_0 do
+		arg_15_0._wpPool:putObject(arg_15_0._wayPoints[iter_15_0])
+
+		arg_15_0._wayPoints[iter_15_0] = nil
 	end
 
-	if slot0._curWayPoint then
-		slot0:_setNewWayPoint(nil)
-		slot0:dispatchEvent(UnitMoveEvent.Interrupt, slot0)
+	if arg_15_0._curWayPoint then
+		arg_15_0:_setNewWayPoint(nil)
+		arg_15_0:dispatchEvent(UnitMoveEvent.Interrupt, arg_15_0)
 	end
 end
 
-function slot0._setNewWayPoint(slot0, slot1)
-	slot2 = false
+function var_0_0._setNewWayPoint(arg_16_0, arg_16_1)
+	local var_16_0 = false
 
-	if slot0._curWayPoint then
-		slot0._wpPool:putObject(slot0._curWayPoint)
-	elseif slot1 then
-		slot2 = true
+	if arg_16_0._curWayPoint then
+		arg_16_0._wpPool:putObject(arg_16_0._curWayPoint)
+	elseif arg_16_1 then
+		var_16_0 = true
 	end
 
-	slot0._curWayPoint = slot1
+	arg_16_0._curWayPoint = arg_16_1
 
-	if not slot0._curWayPoint then
-		slot0._speedX = 0
-		slot0._speedY = 0
-		slot0._speedZ = 0
+	if not arg_16_0._curWayPoint then
+		arg_16_0._speedX = 0
+		arg_16_0._speedY = 0
+		arg_16_0._speedZ = 0
 	else
-		if slot1.speed then
-			slot0._speed = slot1.speed
+		if arg_16_1.speed then
+			arg_16_0._speed = arg_16_1.speed
 		end
 
-		slot3 = slot0._curWayPoint.x - slot0._posX
-		slot4 = slot0._curWayPoint.y - slot0._posY
-		slot5 = slot0._curWayPoint.z - slot0._posZ
-		slot6 = math.sqrt(slot3 * slot3 + slot4 * slot4 + slot5 * slot5)
-		slot0._speedX = slot3 / slot6 * slot0._speed
-		slot0._speedY = slot4 / slot6 * slot0._speed
-		slot0._speedZ = slot5 / slot6 * slot0._speed
+		local var_16_1 = arg_16_0._curWayPoint.x - arg_16_0._posX
+		local var_16_2 = arg_16_0._curWayPoint.y - arg_16_0._posY
+		local var_16_3 = arg_16_0._curWayPoint.z - arg_16_0._posZ
+		local var_16_4 = math.sqrt(var_16_1 * var_16_1 + var_16_2 * var_16_2 + var_16_3 * var_16_3)
+		local var_16_5 = var_16_1 / var_16_4
+		local var_16_6 = var_16_2 / var_16_4
+		local var_16_7 = var_16_3 / var_16_4
+
+		arg_16_0._speedX = var_16_5 * arg_16_0._speed
+		arg_16_0._speedY = var_16_6 * arg_16_0._speed
+		arg_16_0._speedZ = var_16_7 * arg_16_0._speed
 	end
 
-	if slot2 then
-		slot0._startMoveTime = Time.time
+	if var_16_0 then
+		arg_16_0._startMoveTime = Time.time
 
-		slot0:dispatchEvent(UnitMoveEvent.StartMove, slot0)
+		arg_16_0:dispatchEvent(UnitMoveEvent.StartMove, arg_16_0)
 	end
 end
 
-function slot0.onUpdate(slot0)
-	if slot0._curWayPoint then
-		if slot0._accerationTime > 0 and Time.time - slot0._startMoveTime < slot0._accerationTime then
-			slot1 = Time.deltaTime * slot2 / slot0._accerationTime
+function var_0_0.onUpdate(arg_17_0)
+	if arg_17_0._curWayPoint then
+		local var_17_0 = Time.deltaTime
+
+		if arg_17_0._accerationTime > 0 then
+			local var_17_1 = Time.time - arg_17_0._startMoveTime
+
+			if var_17_1 < arg_17_0._accerationTime then
+				var_17_0 = var_17_0 * (var_17_1 / arg_17_0._accerationTime)
+			end
 		end
 
-		slot5 = slot0._posX + slot0._speedX * slot1 - slot0._posX
-		slot6 = slot0._posY + slot0._speedY * slot1 - slot0._posY
-		slot7 = slot0._posZ + slot0._speedZ * slot1 - slot0._posZ
-		slot8 = slot0._curWayPoint.x - slot0._posX
-		slot9 = slot0._curWayPoint.y - slot0._posY
-		slot10 = slot0._curWayPoint.z - slot0._posZ
+		local var_17_2 = arg_17_0._posX + arg_17_0._speedX * var_17_0
+		local var_17_3 = arg_17_0._posY + arg_17_0._speedY * var_17_0
+		local var_17_4 = arg_17_0._posZ + arg_17_0._speedZ * var_17_0
+		local var_17_5 = var_17_2 - arg_17_0._posX
+		local var_17_6 = var_17_3 - arg_17_0._posY
+		local var_17_7 = var_17_4 - arg_17_0._posZ
+		local var_17_8 = arg_17_0._curWayPoint.x - arg_17_0._posX
+		local var_17_9 = arg_17_0._curWayPoint.y - arg_17_0._posY
+		local var_17_10 = arg_17_0._curWayPoint.z - arg_17_0._posZ
 
-		if slot5 * slot5 + slot6 * slot6 + slot7 * slot7 >= slot8 * slot8 + slot9 * slot9 + slot10 * slot10 then
-			slot0._posX = slot0._curWayPoint.x
-			slot0._posY = slot0._curWayPoint.y
-			slot0._posZ = slot0._curWayPoint.z
+		if var_17_5 * var_17_5 + var_17_6 * var_17_6 + var_17_7 * var_17_7 >= var_17_8 * var_17_8 + var_17_9 * var_17_9 + var_17_10 * var_17_10 then
+			arg_17_0._posX = arg_17_0._curWayPoint.x
+			arg_17_0._posY = arg_17_0._curWayPoint.y
+			arg_17_0._posZ = arg_17_0._curWayPoint.z
 
-			slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
-			slot0:dispatchEvent(UnitMoveEvent.PassWayPoint, slot0._posX, slot0._posY, slot0._posZ)
+			arg_17_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_17_0)
+			arg_17_0:dispatchEvent(UnitMoveEvent.PassWayPoint, arg_17_0._posX, arg_17_0._posY, arg_17_0._posZ)
 
-			if #slot0._wayPoints > 0 then
-				table.remove(slot0._wayPoints, 1)
-				slot0:_setNewWayPoint(slot0._wayPoints[1])
+			if #arg_17_0._wayPoints > 0 then
+				local var_17_11 = arg_17_0._wayPoints[1]
+
+				table.remove(arg_17_0._wayPoints, 1)
+				arg_17_0:_setNewWayPoint(var_17_11)
 			else
-				slot0:_setNewWayPoint(nil)
-				slot0:dispatchEvent(UnitMoveEvent.Arrive, slot0)
+				arg_17_0:_setNewWayPoint(nil)
+				arg_17_0:dispatchEvent(UnitMoveEvent.Arrive, arg_17_0)
 			end
 		else
-			slot0._posX = slot2
-			slot0._posY = slot3
-			slot0._posZ = slot4
+			arg_17_0._posX = var_17_2
+			arg_17_0._posY = var_17_3
+			arg_17_0._posZ = var_17_4
 
-			slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
+			arg_17_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_17_0)
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clearWayPoints()
-	slot0._wpPool:dispose()
+function var_0_0.onDestroy(arg_18_0)
+	arg_18_0:clearWayPoints()
+	arg_18_0._wpPool:dispose()
 
-	slot0._wpPool = nil
-	slot0._wayPoints = nil
-	slot0._curWayPoint = nil
+	arg_18_0._wpPool = nil
+	arg_18_0._wayPoints = nil
+	arg_18_0._curWayPoint = nil
 end
 
-return slot0
+return var_0_0

@@ -1,109 +1,111 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballGameBallItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballGameBallItem", package.seeall)
 
-slot0 = class("PinballGameBallItem", LuaCompBase)
+local var_0_0 = class("PinballGameBallItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._root = gohelper.findChild(slot1, "drag_root")
-	slot0._imageicon = gohelper.findChildImage(slot1, "drag_root/#image_icon")
-	slot0.trans = slot0._root.transform
-	slot0._click = gohelper.findChildClickWithDefaultAudio(slot0._root, "")
-	slot0._outParent = slot1.transform.parent.parent
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._root = gohelper.findChild(arg_1_1, "drag_root")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "drag_root/#image_icon")
+	arg_1_0.trans = arg_1_0._root.transform
+	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_0._root, "")
+	arg_1_0._outParent = arg_1_1.transform.parent.parent
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
-	CommonDragHelper.instance:registerDragObj(slot0._root, slot0._onBeginDrag, nil, slot0._onEndDrag, slot0._check, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+	CommonDragHelper.instance:registerDragObj(arg_2_0._root, arg_2_0._onBeginDrag, nil, arg_2_0._onEndDrag, arg_2_0._check, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
-	CommonDragHelper.instance:unregisterDragObj(slot0._root)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	CommonDragHelper.instance:unregisterDragObj(arg_3_0._root)
 end
 
-function slot0._onBeginDrag(slot0)
-	slot0.trans:SetParent(slot0._outParent)
-	CommonDragHelper.instance:refreshParent(slot0._root)
+function var_0_0._onBeginDrag(arg_4_0)
+	arg_4_0.trans:SetParent(arg_4_0._outParent)
+	CommonDragHelper.instance:refreshParent(arg_4_0._root)
 
-	slot0._isDrag = true
+	arg_4_0._isDrag = true
 end
 
-function slot0._onEndDrag(slot0, slot1, slot2)
-	slot0.trans:SetParent(slot0.go.transform)
-	CommonDragHelper.instance:refreshParent(slot0._root)
+function var_0_0._onEndDrag(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.trans:SetParent(arg_5_0.go.transform)
+	CommonDragHelper.instance:refreshParent(arg_5_0._root)
 
-	slot0._isDrag = false
+	arg_5_0._isDrag = false
 
-	PinballController.instance:dispatchEvent(PinballEvent.DragMarblesEnd, slot0._index)
+	PinballController.instance:dispatchEvent(PinballEvent.DragMarblesEnd, arg_5_0._index)
 end
 
-function slot0._onClickThis(slot0)
-	if slot0._isDrag then
+function var_0_0._onClickThis(arg_6_0)
+	if arg_6_0._isDrag then
 		return
 	end
 
-	if slot0._curResType == 0 then
+	if arg_6_0._curResType == 0 then
 		return
 	end
 
-	PinballController.instance:dispatchEvent(PinballEvent.ClickMarbles, slot0._index)
+	PinballController.instance:dispatchEvent(PinballEvent.ClickMarbles, arg_6_0._index)
 end
 
-function slot0._check(slot0)
-	return slot0._curResType == 0 or not slot0._canDrag or PinballHelper.isBanOper()
+function var_0_0._check(arg_7_0)
+	return arg_7_0._curResType == 0 or not arg_7_0._canDrag or PinballHelper.isBanOper()
 end
 
-function slot0.setInfo(slot0, slot1, slot2, slot3)
-	slot0._index = slot2
-	slot0._curResType = slot1
-	slot0._canDrag = slot3
+function var_0_0.setInfo(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0._index = arg_8_2
+	arg_8_0._curResType = arg_8_1
+	arg_8_0._canDrag = arg_8_3
 
-	if slot1 > 0 then
-		UISpriteSetMgr.instance:setAct178Sprite(slot0._imageicon, lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot1].icon, true)
-		ZProj.UGUIHelper.SetColorAlpha(slot0._imageicon, slot3 and 1 or 0.5)
+	if arg_8_1 > 0 then
+		local var_8_0 = lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_8_1]
+
+		UISpriteSetMgr.instance:setAct178Sprite(arg_8_0._imageicon, var_8_0.icon, true)
+		ZProj.UGUIHelper.SetColorAlpha(arg_8_0._imageicon, arg_8_3 and 1 or 0.5)
 	end
 
-	gohelper.setActive(slot0._root, slot1 > 0)
-	ZProj.TweenHelper.KillByObj(slot0.trans)
-	transformhelper.setLocalPos(slot0.trans, 0, 0, 0)
+	gohelper.setActive(arg_8_0._root, arg_8_1 > 0)
+	ZProj.TweenHelper.KillByObj(arg_8_0.trans)
+	transformhelper.setLocalPos(arg_8_0.trans, 0, 0, 0)
 end
 
-function slot0.getIndex(slot0)
-	return slot0._index
+function var_0_0.getIndex(arg_9_0)
+	return arg_9_0._index
 end
 
-function slot0.isMouseOver(slot0)
-	if slot0._curResType == 0 then
+function var_0_0.isMouseOver(arg_10_0)
+	if arg_10_0._curResType == 0 then
 		return false
 	end
 
-	if not slot0._canDrag then
+	if not arg_10_0._canDrag then
 		return false
 	end
 
-	return gohelper.isMouseOverGo(slot0.go)
+	return gohelper.isMouseOverGo(arg_10_0.go)
 end
 
-function slot0.getRootPos(slot0)
-	return Vector3(transformhelper.getPos(slot0.go.transform))
+function var_0_0.getRootPos(arg_11_0)
+	return Vector3(transformhelper.getPos(arg_11_0.go.transform))
 end
 
-function slot0.moveBack(slot0)
+function var_0_0.moveBack(arg_12_0)
 	UIBlockMgr.instance:startBlock("PinballGameBallItem_moveBack")
-	ZProj.TweenHelper.DOLocalMove(slot0.trans, 0, 0, 0, 0.2, slot0.onMoveBackEnd, slot0)
+	ZProj.TweenHelper.DOLocalMove(arg_12_0.trans, 0, 0, 0, 0.2, arg_12_0.onMoveBackEnd, arg_12_0)
 end
 
-function slot0.onMoveBackEnd(slot0)
+function var_0_0.onMoveBackEnd(arg_13_0)
 	UIBlockMgr.instance:endBlock("PinballGameBallItem_moveBack")
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3)
-	ZProj.TweenHelper.DOMove(slot0.trans, slot1.x, slot1.y, slot1.z, 0.2, slot2, slot3)
+function var_0_0.moveTo(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	ZProj.TweenHelper.DOMove(arg_14_0.trans, arg_14_1.x, arg_14_1.y, arg_14_1.z, 0.2, arg_14_2, arg_14_3)
 end
 
-function slot0.onDestroy(slot0)
-	ZProj.TweenHelper.KillByObj(slot0.trans)
+function var_0_0.onDestroy(arg_15_0)
+	ZProj.TweenHelper.KillByObj(arg_15_0.trans)
 	UIBlockMgr.instance:endBlock("PinballGameBallItem_moveBack")
 end
 
-return slot0
+return var_0_0

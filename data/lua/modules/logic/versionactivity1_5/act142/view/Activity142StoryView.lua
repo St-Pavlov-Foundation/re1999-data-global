@@ -1,38 +1,42 @@
-module("modules.logic.versionactivity1_5.act142.view.Activity142StoryView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.view.Activity142StoryView", package.seeall)
 
-slot0 = class("Activity142StoryView", BaseView)
+local var_0_0 = class("Activity142StoryView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollChapterList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_storylist")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#simage_blackbg/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_storylist")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#simage_blackbg/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	Activity142StoryListModel.instance:init(slot0.viewParam.actId, slot0.viewParam.episodeId)
+function var_0_0.onOpen(arg_6_0)
+	Activity142StoryListModel.instance:init(arg_6_0.viewParam.actId, arg_6_0.viewParam.episodeId)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

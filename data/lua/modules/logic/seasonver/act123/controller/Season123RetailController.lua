@@ -1,53 +1,66 @@
-module("modules.logic.seasonver.act123.controller.Season123RetailController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123RetailController", package.seeall)
 
-slot0 = class("Season123RetailController", BaseController)
+local var_0_0 = class("Season123RetailController", BaseController)
 
-function slot0.onOpenView(slot0, slot1)
-	Season123Controller.instance:registerCallback(Season123Event.StartEnterBattle, slot0.handleStartEnterBattle, slot0)
-	Season123RetailModel.instance:init(slot1)
+function var_0_0.onOpenView(arg_1_0, arg_1_1)
+	Season123Controller.instance:registerCallback(Season123Event.StartEnterBattle, arg_1_0.handleStartEnterBattle, arg_1_0)
+	Season123RetailModel.instance:init(arg_1_1)
 end
 
-function slot0.onCloseView(slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.StartEnterBattle, slot0.handleStartEnterBattle, slot0)
+function var_0_0.onCloseView(arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.StartEnterBattle, arg_2_0.handleStartEnterBattle, arg_2_0)
 	Season123RetailModel.instance:release()
 end
 
-function slot0.enterRetailFightScene(slot0)
-	if Season123RetailModel.instance:getUTTUTicketNum() <= 0 then
-		if CurrencyConfig.instance:getCurrencyCo(Season123Config.instance:getEquipItemCoin(Season123RetailModel.instance.activityId, Activity123Enum.Const.UttuTicketsCoin)) then
-			GameFacade.showToast(ToastEnum.NotEnoughId, slot4.name)
+function var_0_0.enterRetailFightScene(arg_3_0)
+	local var_3_0 = Season123RetailModel.instance:getUTTUTicketNum()
+	local var_3_1 = Season123RetailModel.instance.activityId
+
+	if var_3_0 <= 0 then
+		local var_3_2 = Season123Config.instance:getEquipItemCoin(var_3_1, Activity123Enum.Const.UttuTicketsCoin)
+		local var_3_3 = CurrencyConfig.instance:getCurrencyCo(var_3_2)
+
+		if var_3_3 then
+			GameFacade.showToast(ToastEnum.NotEnoughId, var_3_3.name)
 		end
 
 		return
 	end
 
-	if Season123RetailModel.instance:getEpisodeId() then
+	local var_3_4 = Season123RetailModel.instance:getEpisodeId()
+
+	if var_3_4 then
 		Season123EpisodeDetailModel.instance.lastSendEpisodeCfg = Season123RetailModel.instance.episodeCO
 
-		slot0:startBattle(slot2, slot3)
+		arg_3_0:startBattle(var_3_1, var_3_4)
 	end
 end
 
-function slot0.startBattle(slot0, slot1, slot2)
-	logNormal(string.format("startBattle with actId = %s, episodeId = %s", slot1, slot2))
-	Season123Model.instance:setBattleContext(slot1, nil, , slot2)
-	DungeonFightController.instance:enterSeasonFight(DungeonConfig.instance:getEpisodeCO(slot2).chapterId, slot2)
+function var_0_0.startBattle(arg_4_0, arg_4_1, arg_4_2)
+	logNormal(string.format("startBattle with actId = %s, episodeId = %s", arg_4_1, arg_4_2))
+
+	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_2)
+
+	Season123Model.instance:setBattleContext(arg_4_1, nil, nil, arg_4_2)
+	DungeonFightController.instance:enterSeasonFight(var_4_0.chapterId, arg_4_2)
 end
 
-function slot0.handleStartEnterBattle(slot0, slot1)
+function var_0_0.handleStartEnterBattle(arg_5_0, arg_5_1)
 	if not Season123RetailModel.instance.lastSendEpisodeCfg then
 		return
 	end
 
-	slot4 = slot1.layer
+	local var_5_0 = Season123RetailModel.instance.lastSendEpisodeCfg
+	local var_5_1 = arg_5_1.actId
+	local var_5_2 = arg_5_1.layer
 
-	if Season123RetailModel.instance.lastSendEpisodeCfg and slot1.actId == Season123RetailModel.instance.activityId then
-		DungeonFightController.instance:enterSeasonFight(slot2.chapterId, slot2.id)
+	if var_5_0 and var_5_1 == Season123RetailModel.instance.activityId then
+		DungeonFightController.instance:enterSeasonFight(var_5_0.chapterId, var_5_0.id)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

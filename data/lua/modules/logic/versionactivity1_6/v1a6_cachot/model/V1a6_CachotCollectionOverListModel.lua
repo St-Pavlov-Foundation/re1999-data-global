@@ -1,42 +1,46 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionOverListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionOverListModel", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionOverListModel", ListScrollModel)
+local var_0_0 = class("V1a6_CachotCollectionOverListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._collectionList = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._collectionList = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.onInitData(slot0)
-	slot0._collectionList = {}
+function var_0_0.onInitData(arg_3_0)
+	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo()
+	local var_3_1 = var_3_0 and var_3_0.collections
 
-	if V1a6_CachotModel.instance:getRogueInfo() and slot1.collections then
-		for slot6, slot7 in ipairs(slot2) do
-			table.insert(slot0._collectionList, slot7)
+	arg_3_0._collectionList = {}
+
+	if var_3_1 then
+		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+			table.insert(arg_3_0._collectionList, iter_3_1)
 		end
 	end
 
-	table.sort(slot0._collectionList, slot0.sortFunc)
-	slot0:setList(slot0._collectionList)
+	table.sort(arg_3_0._collectionList, arg_3_0.sortFunc)
+	arg_3_0:setList(arg_3_0._collectionList)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	slot3 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot1.cfgId)
+function var_0_0.sortFunc(arg_4_0, arg_4_1)
+	local var_4_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_4_0.cfgId)
+	local var_4_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_4_1.cfgId)
 
-	if V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot0.cfgId) and slot3 and slot2.type ~= slot3.type then
-		return slot2.type < slot3.type
+	if var_4_0 and var_4_1 and var_4_0.type ~= var_4_1.type then
+		return var_4_0.type < var_4_1.type
 	end
 
-	return slot1.id < slot0.id
+	return arg_4_0.id > arg_4_1.id
 end
 
-function slot0.isBagEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBagEmpty(arg_5_0)
+	return arg_5_0:getCount() <= 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

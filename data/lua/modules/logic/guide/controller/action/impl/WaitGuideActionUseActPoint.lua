@@ -1,24 +1,24 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionUseActPoint", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionUseActPoint", package.seeall)
 
-slot0 = class("WaitGuideActionUseActPoint", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionUseActPoint", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	FightController.instance:registerCallback(FightEvent.OnMoveHandCard, slot0._OnMoveHandCard, slot0)
-	FightController.instance:registerCallback(FightEvent.OnPlayHandCard, slot0._OnPlayHandCard, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	FightController.instance:registerCallback(FightEvent.OnMoveHandCard, arg_1_0._OnMoveHandCard, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnPlayHandCard, arg_1_0._OnPlayHandCard, arg_1_0)
 end
 
-function slot0._OnPlayHandCard(slot0)
-	slot0:onDone(true)
+function var_0_0._OnPlayHandCard(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0._OnMoveHandCard(slot0)
-	slot0:onDone(true)
+function var_0_0._OnMoveHandCard(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnMoveHandCard, slot0._OnMoveHandCard, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnPlayHandCard, slot0._OnPlayHandCard, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnMoveHandCard, arg_4_0._OnMoveHandCard, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnPlayHandCard, arg_4_0._OnPlayHandCard, arg_4_0)
 end
 
-return slot0
+return var_0_0

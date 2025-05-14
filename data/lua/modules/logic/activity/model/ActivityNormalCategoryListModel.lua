@@ -1,16 +1,16 @@
-module("modules.logic.activity.model.ActivityNormalCategoryListModel", package.seeall)
+﻿module("modules.logic.activity.model.ActivityNormalCategoryListModel", package.seeall)
 
-slot0 = class("ActivityNormalCategoryListModel", ListScrollModel)
+local var_0_0 = class("ActivityNormalCategoryListModel", ListScrollModel)
 
-function slot0.setCategoryList(slot0, slot1)
-	slot0._moList = slot1 and slot1 or {}
+function var_0_0.setCategoryList(arg_1_0, arg_1_1)
+	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
 
-	table.sort(slot0._moList, function (slot0, slot1)
-		return slot0.co.displayPriority < slot1.co.displayPriority
+	table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
+		return arg_2_0.co.displayPriority < arg_2_1.co.displayPriority
 	end)
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

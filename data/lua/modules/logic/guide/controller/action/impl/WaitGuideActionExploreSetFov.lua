@@ -1,47 +1,51 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreSetFov", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreSetFov", package.seeall)
 
-slot0 = class("WaitGuideActionExploreSetFov", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionExploreSetFov", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	slot3 = string.splitToNumber(slot0.actionParam, "#")[1] or 35
-	slot4 = slot2[2] or 0
-	slot5 = slot2[3] or EaseType.Linear
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+	local var_1_1 = var_1_0[1] or 35
+	local var_1_2 = var_1_0[2] or 0
+	local var_1_3 = var_1_0[3] or EaseType.Linear
+	local var_1_4 = GameSceneMgr.instance:getCurScene().camera
 
-	if not GameSceneMgr.instance:getCurScene().camera or not isTypeOf(slot6, ExploreSceneCameraComp) then
-		slot0:onDone(true)
+	if not var_1_4 or not isTypeOf(var_1_4, ExploreSceneCameraComp) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if slot4 > 0 then
-		slot6:setEaseTime(slot4)
-		slot6:setEaseType(slot5)
-		slot6:setFov(slot3)
-		TaskDispatcher.runDelay(slot0.onCameraChangeDone, slot0, slot4)
+	if var_1_2 > 0 then
+		var_1_4:setEaseTime(var_1_2)
+		var_1_4:setEaseType(var_1_3)
+		var_1_4:setFov(var_1_1)
+		TaskDispatcher.runDelay(arg_1_0.onCameraChangeDone, arg_1_0, var_1_2)
 	else
-		slot6:setFov(slot3)
-		slot6:applyDirectly()
-		slot0:onDone(true)
+		var_1_4:setFov(var_1_1)
+		var_1_4:applyDirectly()
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0.onCameraChangeDone(slot0)
-	slot0:resetCameraParam()
-	slot0:onDone(true)
+function var_0_0.onCameraChangeDone(arg_2_0)
+	arg_2_0:resetCameraParam()
+	arg_2_0:onDone(true)
 end
 
-function slot0.resetCameraParam(slot0)
-	if not GameSceneMgr.instance:getCurScene().camera or not isTypeOf(slot1, ExploreSceneCameraComp) then
+function var_0_0.resetCameraParam(arg_3_0)
+	local var_3_0 = GameSceneMgr.instance:getCurScene().camera
+
+	if not var_3_0 or not isTypeOf(var_3_0, ExploreSceneCameraComp) then
 		return
 	end
 
-	slot1:setEaseTime(ExploreConstValue.CameraTraceTime)
-	slot1:setEaseType(EaseType.Linear)
+	var_3_0:setEaseTime(ExploreConstValue.CameraTraceTime)
+	var_3_0:setEaseType(EaseType.Linear)
 end
 
-function slot0.clearWork(slot0)
-	slot0:resetCameraParam()
-	TaskDispatcher.cancelTask(slot0.onCameraChangeDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	arg_4_0:resetCameraParam()
+	TaskDispatcher.cancelTask(arg_4_0.onCameraChangeDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

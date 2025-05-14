@@ -1,441 +1,486 @@
-module("modules.logic.fight.model.mo.FightEntityMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightEntityMO", package.seeall)
 
-slot0 = pureTable("FightEntityMO")
+local var_0_0 = pureTable("FightEntityMO")
 
 if SLFramework.FrameworkSettings.IsEditor then
-	function slot0.__newindex(slot0, slot1, slot2)
-		if type(slot2) == "userdata" or type(slot2) == "function" then
-			error("pureTable instance object field not support userdata or function,key=" .. slot1)
+	function var_0_0.__newindex(arg_1_0, arg_1_1, arg_1_2)
+		if type(arg_1_2) == "userdata" or type(arg_1_2) == "function" then
+			error("pureTable instance object field not support userdata or function,key=" .. arg_1_1)
 		else
-			if type(slot2) == "table" and slot2._cached_byte_size then
+			if type(arg_1_2) == "table" and arg_1_2._cached_byte_size then
 				logError("entityMO不可以直接引用protobuf数据,请构建一个数据")
 			end
 
-			rawset(slot0, slot1, slot2)
+			rawset(arg_1_0, arg_1_1, arg_1_2)
 		end
 	end
 end
 
-function slot0.ctor(slot0)
-	slot0.buffDic = {}
-	slot0.playCardExPoint = 0
-	slot0.moveCardExPoint = 0
-	slot0.skillList = {}
-	slot0.skillId2Lv = {}
-	slot0.skillNextLvId = {}
-	slot0.skillPrevLvId = {}
-	slot0.skillGroup1 = {}
-	slot0.skillGroup2 = {}
+function var_0_0.ctor(arg_2_0)
+	arg_2_0.buffDic = {}
+	arg_2_0.playCardExPoint = 0
+	arg_2_0.moveCardExPoint = 0
+	arg_2_0.skillList = {}
+	arg_2_0.skillId2Lv = {}
+	arg_2_0.skillNextLvId = {}
+	arg_2_0.skillPrevLvId = {}
+	arg_2_0.skillGroup1 = {}
+	arg_2_0.skillGroup2 = {}
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._playCardAddExpoint = 1
-	slot0._moveCardAddExpoint = 1
-	slot0._combineCardAddExpoint = 1
-	slot0.expointMaxAdd = slot1.expointMaxAdd
-	slot0.exSkillPointChange = slot1.exSkillPointChange or 0
-	slot0.id = slot1.uid
-	slot0.uid = slot1.uid
-	slot0.modelId = slot1.modelId
-	slot0.skin = FightHelper.processEntitySkin(slot1.skin, slot1.uid)
-	slot0.originSkin = slot0.skin
-	slot0.position = slot1.position
-	slot0.entityType = slot1.entityType
-	slot0.userId = slot1.userId
+function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._playCardAddExpoint = 1
+	arg_3_0._moveCardAddExpoint = 1
+	arg_3_0._combineCardAddExpoint = 1
+	arg_3_0.expointMaxAdd = arg_3_1.expointMaxAdd
+	arg_3_0.exSkillPointChange = arg_3_1.exSkillPointChange or 0
+	arg_3_0.id = arg_3_1.uid
+	arg_3_0.uid = arg_3_1.uid
+	arg_3_0.modelId = arg_3_1.modelId
+	arg_3_0.skin = FightHelper.processEntitySkin(arg_3_1.skin, arg_3_1.uid)
+	arg_3_0.originSkin = arg_3_0.skin
+	arg_3_0.position = arg_3_1.position
+	arg_3_0.entityType = arg_3_1.entityType
+	arg_3_0.userId = arg_3_1.userId
 
-	slot0:setExPoint(slot1.exPoint)
+	arg_3_0:setExPoint(arg_3_1.exPoint)
 
-	slot0.level = slot1.level
-	slot0.currentHp = slot1.currentHp
-	slot0.attrMO = slot0:_buildAttr(slot1.attr)
+	arg_3_0.level = arg_3_1.level
+	arg_3_0.currentHp = arg_3_1.currentHp
+	arg_3_0.attrMO = arg_3_0:_buildAttr(arg_3_1.attr)
 
-	slot0:_buildBuffs(slot1.buffs)
-	slot0:_buildSkills(slot1)
+	arg_3_0:_buildBuffs(arg_3_1.buffs)
+	arg_3_0:_buildSkills(arg_3_1)
 
-	slot0.shieldValue = slot1.shieldValue
-	slot0.equipUid = slot1.equipUid
-	slot0.trialId = slot1.trialId
+	arg_3_0.shieldValue = arg_3_1.shieldValue
+	arg_3_0.equipUid = arg_3_1.equipUid
+	arg_3_0.trialId = arg_3_1.trialId
 
-	if slot1.trialEquip then
-		slot0.trialEquip = {
-			equipUid = slot1.trialEquip.equipUid,
-			equipId = slot1.trialEquip.equipId,
-			equipLv = slot1.trialEquip.equipLv,
-			refineLv = slot1.trialEquip.refineLv
-		}
+	if arg_3_1.trialEquip then
+		arg_3_0.trialEquip = {}
+		arg_3_0.trialEquip.equipUid = arg_3_1.trialEquip.equipUid
+		arg_3_0.trialEquip.equipId = arg_3_1.trialEquip.equipId
+		arg_3_0.trialEquip.equipLv = arg_3_1.trialEquip.equipLv
+		arg_3_0.trialEquip.refineLv = arg_3_1.trialEquip.refineLv
 	else
-		slot0.trialEquip = nil
+		arg_3_0.trialEquip = nil
 	end
 
-	slot0.exSkillLevel = slot1.exSkillLevel
+	arg_3_0.exSkillLevel = arg_3_1.exSkillLevel
 
 	if FightModel.instance:getVersion() >= 1 then
-		slot0.side = slot1.teamType == FightEnum.TeamType.MySide and FightEnum.EntitySide.MySide or FightEnum.EntitySide.EnemySide
+		arg_3_0.side = arg_3_1.teamType == FightEnum.TeamType.MySide and FightEnum.EntitySide.MySide or FightEnum.EntitySide.EnemySide
 	else
-		slot0.side = slot2
+		arg_3_0.side = arg_3_2
 	end
 
-	slot0:setPowerInfos(slot1.powerInfos)
-	slot0:buildSummonedInfo(slot1.SummonedList)
+	arg_3_0:setPowerInfos(arg_3_1.powerInfos)
+	arg_3_0:buildSummonedInfo(arg_3_1.SummonedList)
 
-	slot0.teamType = slot1.teamType
+	arg_3_0.teamType = arg_3_1.teamType
 
-	slot0:buildEnhanceInfoBox(slot1.enhanceInfoBox)
+	arg_3_0:buildEnhanceInfoBox(arg_3_1.enhanceInfoBox)
 
-	slot0.career = slot1.career
+	arg_3_0.career = arg_3_1.career
 
-	slot0:updateStoredExPoint()
+	arg_3_0:updateStoredExPoint()
 
-	slot0.status = slot1.status
-	slot0.guard = slot1.guard
-	slot0.subCd = slot1.subCd
+	arg_3_0.status = arg_3_1.status
+	arg_3_0.guard = arg_3_1.guard
+	arg_3_0.subCd = arg_3_1.subCd
 end
 
-function slot0._buildAttr(slot0, slot1)
-	slot2 = slot0.attrMO or HeroAttributeMO.New()
+function var_0_0._buildAttr(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.attrMO or HeroAttributeMO.New()
 
-	slot2:init(slot1)
+	var_4_0:init(arg_4_1)
 
-	return slot2
+	return var_4_0
 end
 
-function slot0._buildBuffs(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = FightBuffMO.New()
+function var_0_0._buildBuffs(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = FightBuffMO.New()
 
-		slot7:init(slot6, slot0.id)
+		var_5_0:init(iter_5_1, arg_5_0.id)
 
-		slot0.buffDic[slot7.uid] = slot7
+		arg_5_0.buffDic[var_5_0.uid] = var_5_0
 	end
 
-	slot0:_dealBuffFeature()
+	arg_5_0:_dealBuffFeature()
 end
 
-function slot0._buildSkills(slot0, slot1)
-	slot0.skillList = {}
-	slot0.skillId2Lv = {}
-	slot0.skillNextLvId = {}
-	slot0.skillPrevLvId = {}
-	slot0.passiveSkillDic = {}
-	slot0.skillGroup1 = {}
-	slot0.skillGroup2 = {}
+function var_0_0._buildSkills(arg_6_0, arg_6_1)
+	arg_6_0.skillList = {}
+	arg_6_0.skillId2Lv = {}
+	arg_6_0.skillNextLvId = {}
+	arg_6_0.skillPrevLvId = {}
+	arg_6_0.passiveSkillDic = {}
+	arg_6_0.skillGroup1 = {}
+	arg_6_0.skillGroup2 = {}
 
-	for slot5, slot6 in ipairs(slot1.skillGroup1) do
-		table.insert(slot0.skillList, slot6)
-		table.insert(slot0.skillGroup1, slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1.skillGroup1) do
+		table.insert(arg_6_0.skillList, iter_6_1)
+		table.insert(arg_6_0.skillGroup1, iter_6_1)
 
-		slot0.skillId2Lv[slot6] = slot5
-		slot0.skillNextLvId[slot6] = slot1.skillGroup1[slot5 + 1]
-		slot0.skillPrevLvId[slot6] = slot1.skillGroup1[slot5 - 1]
+		arg_6_0.skillId2Lv[iter_6_1] = iter_6_0
+		arg_6_0.skillNextLvId[iter_6_1] = arg_6_1.skillGroup1[iter_6_0 + 1]
+		arg_6_0.skillPrevLvId[iter_6_1] = arg_6_1.skillGroup1[iter_6_0 - 1]
 	end
 
-	for slot5, slot6 in ipairs(slot1.skillGroup2) do
-		table.insert(slot0.skillList, slot6)
-		table.insert(slot0.skillGroup2, slot6)
+	for iter_6_2, iter_6_3 in ipairs(arg_6_1.skillGroup2) do
+		table.insert(arg_6_0.skillList, iter_6_3)
+		table.insert(arg_6_0.skillGroup2, iter_6_3)
 
-		slot0.skillId2Lv[slot6] = slot5
-		slot0.skillNextLvId[slot6] = slot1.skillGroup2[slot5 + 1]
-		slot0.skillPrevLvId[slot6] = slot1.skillGroup2[slot5 - 1]
+		arg_6_0.skillId2Lv[iter_6_3] = iter_6_2
+		arg_6_0.skillNextLvId[iter_6_3] = arg_6_1.skillGroup2[iter_6_2 + 1]
+		arg_6_0.skillPrevLvId[iter_6_3] = arg_6_1.skillGroup2[iter_6_2 - 1]
 	end
 
-	for slot5, slot6 in ipairs(slot1.passiveSkill) do
-		table.insert(slot0.skillList, slot6)
+	for iter_6_4, iter_6_5 in ipairs(arg_6_1.passiveSkill) do
+		table.insert(arg_6_0.skillList, iter_6_5)
 
-		slot0.passiveSkillDic[slot6] = true
+		arg_6_0.passiveSkillDic[iter_6_5] = true
 	end
 
-	table.insert(slot0.skillList, slot1.exSkill)
+	table.insert(arg_6_0.skillList, arg_6_1.exSkill)
 
-	slot0.skillId2Lv[slot1.exSkill] = 4
-	slot0.exSkill = slot1.exSkill
+	arg_6_0.skillId2Lv[arg_6_1.exSkill] = 4
+	arg_6_0.exSkill = arg_6_1.exSkill
 end
 
-function slot0.addPassiveSkill(slot0, slot1)
-	if slot0.passiveSkillDic then
-		slot0.passiveSkillDic[slot1] = true
+function var_0_0.addPassiveSkill(arg_7_0, arg_7_1)
+	if arg_7_0.passiveSkillDic then
+		arg_7_0.passiveSkillDic[arg_7_1] = true
 	end
 
-	if slot0.skillList and not tabletool.indexOf(slot0.skillList, slot1) then
-		table.insert(slot0.skillList, slot1)
-	end
-end
-
-function slot0.removePassiveSkill(slot0, slot1)
-	if slot0.passiveSkillDic then
-		slot0.passiveSkillDic[slot1] = nil
-	end
-
-	if slot0.skillList then
-		tabletool.removeValue(slot0.skillList, slot1)
+	if arg_7_0.skillList and not tabletool.indexOf(arg_7_0.skillList, arg_7_1) then
+		table.insert(arg_7_0.skillList, arg_7_1)
 	end
 end
 
-function slot0.isPassiveSkill(slot0, slot1)
-	return slot0.passiveSkillDic and slot0.passiveSkillDic[slot1]
-end
-
-function slot0.hasSkill(slot0, slot1)
-	return slot0.skillId2Lv[slot1] ~= nil
-end
-
-function slot0.getSkillLv(slot0, slot1)
-	return slot0.skillId2Lv[slot1] or FightConfig.instance:getSkillLv(slot1)
-end
-
-function slot0.getSkillNextLvId(slot0, slot1)
-	return slot0.skillNextLvId[slot1] or FightHelper.processNextSkillId(slot1) or FightConfig.instance:getSkillNextLvId(slot1)
-end
-
-function slot0.getSkillPrevLvId(slot0, slot1)
-	return slot0.skillPrevLvId[slot1] or FightConfig.instance:getSkillPrevLvId(slot1)
-end
-
-function slot0.isUniqueSkill(slot0, slot1)
-	return slot0.skillId2Lv[slot1] == FightEnum.UniqueSkillCardLv or FightConfig.instance:isUniqueSkill(slot1)
-end
-
-function slot0.isActiveSkill(slot0, slot1)
-	return slot0.skillId2Lv[slot1] ~= nil or FightConfig.instance:isActiveSkill(slot1)
-end
-
-function slot0.getBuffList(slot0, slot1)
-	slot2 = slot1 or {}
-
-	for slot6, slot7 in pairs(slot0.buffDic) do
-		table.insert(slot2, slot7)
+function var_0_0.removePassiveSkill(arg_8_0, arg_8_1)
+	if arg_8_0.passiveSkillDic then
+		arg_8_0.passiveSkillDic[arg_8_1] = nil
 	end
 
-	return slot2
+	if arg_8_0.skillList then
+		tabletool.removeValue(arg_8_0.skillList, arg_8_1)
+	end
 end
 
-function slot0.getBuffDic(slot0)
-	return slot0.buffDic
+function var_0_0.isPassiveSkill(arg_9_0, arg_9_1)
+	return arg_9_0.passiveSkillDic and arg_9_0.passiveSkillDic[arg_9_1]
 end
 
-function slot0.addBuff(slot0, slot1)
-	if not slot0.buffDic[slot1.uid] then
-		slot2 = FightBuffMO.New()
+function var_0_0.hasSkill(arg_10_0, arg_10_1)
+	return arg_10_0.skillId2Lv[arg_10_1] ~= nil
+end
 
-		slot2:init(slot1, slot0.id)
+function var_0_0.getSkillLv(arg_11_0, arg_11_1)
+	return arg_11_0.skillId2Lv[arg_11_1] or FightConfig.instance:getSkillLv(arg_11_1)
+end
 
-		slot0.buffDic[slot1.uid] = slot2
+function var_0_0.getSkillNextLvId(arg_12_0, arg_12_1)
+	return arg_12_0.skillNextLvId[arg_12_1] or FightHelper.processNextSkillId(arg_12_1) or FightConfig.instance:getSkillNextLvId(arg_12_1)
+end
 
-		slot0:_dealBuffFeature()
+function var_0_0.getSkillPrevLvId(arg_13_0, arg_13_1)
+	return arg_13_0.skillPrevLvId[arg_13_1] or FightConfig.instance:getSkillPrevLvId(arg_13_1)
+end
+
+function var_0_0.isUniqueSkill(arg_14_0, arg_14_1)
+	return arg_14_0.skillId2Lv[arg_14_1] == FightEnum.UniqueSkillCardLv or FightConfig.instance:isUniqueSkill(arg_14_1)
+end
+
+function var_0_0.isActiveSkill(arg_15_0, arg_15_1)
+	return arg_15_0.skillId2Lv[arg_15_1] ~= nil or FightConfig.instance:isActiveSkill(arg_15_1)
+end
+
+function var_0_0.getBuffList(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1 or {}
+
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.buffDic) do
+		table.insert(var_16_0, iter_16_1)
+	end
+
+	return var_16_0
+end
+
+function var_0_0.getBuffDic(arg_17_0)
+	return arg_17_0.buffDic
+end
+
+function var_0_0.addBuff(arg_18_0, arg_18_1)
+	if not arg_18_0.buffDic[arg_18_1.uid] then
+		local var_18_0 = FightBuffMO.New()
+
+		var_18_0:init(arg_18_1, arg_18_0.id)
+
+		arg_18_0.buffDic[arg_18_1.uid] = var_18_0
+
+		arg_18_0:_dealBuffFeature()
 
 		return true
 	end
 end
 
-function slot0.delBuff(slot0, slot1)
-	if slot0.buffDic[slot1] then
-		slot0.buffDic[slot1] = nil
+function var_0_0.delBuff(arg_19_0, arg_19_1)
+	if arg_19_0.buffDic[arg_19_1] then
+		arg_19_0.buffDic[arg_19_1] = nil
 
-		slot0:_dealBuffFeature()
+		arg_19_0:_dealBuffFeature()
 	end
 end
 
-function slot0.updateBuff(slot0, slot1)
-	if slot0.buffDic[slot1.uid] then
-		slot0.buffDic[slot1.uid]:init(slot1, slot0.id)
+function var_0_0.updateBuff(arg_20_0, arg_20_1)
+	if arg_20_0.buffDic[arg_20_1.uid] then
+		arg_20_0.buffDic[arg_20_1.uid]:init(arg_20_1, arg_20_0.id)
 	end
 end
 
-function slot0.getBuffMO(slot0, slot1)
-	return slot0.buffDic[slot1]
+function var_0_0.getBuffMO(arg_21_0, arg_21_1)
+	return arg_21_0.buffDic[arg_21_1]
 end
 
-function slot0.clearAllBuff(slot0)
-	tabletool.clear(slot0.buffDic)
+function var_0_0.clearAllBuff(arg_22_0)
+	tabletool.clear(arg_22_0.buffDic)
 end
 
-function slot0.getEntityName(slot0)
-	return slot0:getCO() and slot1.name or "nil"
+function var_0_0.getEntityName(arg_23_0)
+	local var_23_0 = arg_23_0:getCO()
+
+	return var_23_0 and var_23_0.name or "nil"
 end
 
-function slot0.getIdName(slot0)
-	return string.format("%s_%d", slot0.side == FightEnum.EntitySide.MySide and FightEnum.EntityGOName.MySide or FightEnum.EntityGOName.EnemySide, slot0.position)
+function var_0_0.getIdName(arg_24_0)
+	local var_24_0 = arg_24_0.side == FightEnum.EntitySide.MySide and FightEnum.EntityGOName.MySide or FightEnum.EntityGOName.EnemySide
+
+	return string.format("%s_%d", var_24_0, arg_24_0.position)
 end
 
-function slot0.getCO(slot0)
-	if slot0:isCharacter() then
-		return lua_character.configDict[slot0.modelId]
-	elseif slot0:isMonster() then
-		return lua_monster.configDict[slot0.modelId]
-	elseif slot0:isAssistBoss() then
-		return lua_tower_assist_boss.configDict[slot0.modelId]
-	elseif slot0:isASFDEmitter() then
-		return FightASFDConfig.instance:getASFDEmitterConfig(slot0.side)
+function var_0_0.getCO(arg_25_0)
+	if arg_25_0:isCharacter() then
+		return lua_character.configDict[arg_25_0.modelId]
+	elseif arg_25_0:isMonster() then
+		return lua_monster.configDict[arg_25_0.modelId]
+	elseif arg_25_0:isAssistBoss() then
+		return lua_tower_assist_boss.configDict[arg_25_0.modelId]
+	elseif arg_25_0:isASFDEmitter() then
+		return FightASFDConfig.instance:getASFDEmitterConfig(arg_25_0.side)
 	end
 
-	return lua_character.configDict[slot0.modelId] or lua_monster.configDict[slot0.modelId]
+	return lua_character.configDict[arg_25_0.modelId] or lua_monster.configDict[arg_25_0.modelId]
 end
 
-function slot0.isCharacter(slot0)
-	return slot0.entityType == FightEnum.EntityType.Character
+function var_0_0.isCharacter(arg_26_0)
+	return arg_26_0.entityType == FightEnum.EntityType.Character
 end
 
-function slot0.isMonster(slot0)
-	return slot0.entityType == FightEnum.EntityType.Monster
+function var_0_0.isMonster(arg_27_0)
+	return arg_27_0.entityType == FightEnum.EntityType.Monster
 end
 
-function slot0.isAssistBoss(slot0)
-	return slot0.entityType == FightEnum.EntityType.AssistBoss
+function var_0_0.isAssistBoss(arg_28_0)
+	return arg_28_0.entityType == FightEnum.EntityType.AssistBoss
 end
 
-function slot0.isASFDEmitter(slot0)
-	return slot0.entityType == FightEnum.EntityType.ASFDEmitter
+function var_0_0.isASFDEmitter(arg_29_0)
+	return arg_29_0.entityType == FightEnum.EntityType.ASFDEmitter
 end
 
-function slot0.getSpineSkinCO(slot0)
-	slot1 = slot0.skin or lua_character.configDict[slot0.modelId] and slot2.skinId or lua_monster.configDict[slot0.modelId] and slot2.skinId
+function var_0_0.getSpineSkinCO(arg_30_0)
+	local var_30_0 = arg_30_0.skin
 
-	if FightConfig.instance:getSkinCO(slot0.skin) then
-		return slot2
+	if not var_30_0 then
+		local var_30_1 = lua_character.configDict[arg_30_0.modelId]
+
+		var_30_0 = var_30_1 and var_30_1.skinId
+	end
+
+	if not var_30_0 then
+		local var_30_2 = lua_monster.configDict[arg_30_0.modelId]
+		local var_30_3
+
+		var_30_3 = var_30_2 and var_30_2.skinId
+	end
+
+	local var_30_4 = FightConfig.instance:getSkinCO(arg_30_0.skin)
+
+	if var_30_4 then
+		return var_30_4
 	else
-		if FightEntityDataHelper.isPlayerUid(slot0.id) then
+		if FightEntityDataHelper.isPlayerUid(arg_30_0.id) then
 			return
 		end
 
-		logError("skin not exist: " .. slot0.skin .. " modelId: " .. slot0.modelId)
+		logError("skin not exist: " .. arg_30_0.skin .. " modelId: " .. arg_30_0.modelId)
 	end
 end
 
-function slot0.resetSimulateExPoint(slot0)
-	slot0.playCardExPoint = 0
-	slot0.moveCardExPoint = 0
+function var_0_0.resetSimulateExPoint(arg_31_0)
+	arg_31_0.playCardExPoint = 0
+	arg_31_0.moveCardExPoint = 0
 end
 
-function slot0.applyMoveCardExPoint(slot0)
-	slot0.moveCardExPoint = 0
-	slot0.playCardExPoint = 0
+function var_0_0.applyMoveCardExPoint(arg_32_0)
+	arg_32_0.moveCardExPoint = 0
+	arg_32_0.playCardExPoint = 0
 end
 
-function slot0.getExPoint(slot0)
-	return slot0.exPoint
+function var_0_0.getExPoint(arg_33_0)
+	return arg_33_0.exPoint
 end
 
-function slot0.setExPoint(slot0, slot1)
-	slot0.exPoint = slot1
+function var_0_0.setExPoint(arg_34_0, arg_34_1)
+	arg_34_0.exPoint = arg_34_1
 end
 
-function slot0.changeExpointMaxAdd(slot0, slot1)
-	slot0.expointMaxAdd = slot0.expointMaxAdd or 0
-	slot0.expointMaxAdd = slot0.expointMaxAdd + slot1
+function var_0_0.changeExpointMaxAdd(arg_35_0, arg_35_1)
+	arg_35_0.expointMaxAdd = arg_35_0.expointMaxAdd or 0
+	arg_35_0.expointMaxAdd = arg_35_0.expointMaxAdd + arg_35_1
 end
 
-function slot0.getMaxExPoint(slot0)
-	if not slot0:getCO() then
+function var_0_0.getMaxExPoint(arg_36_0)
+	local var_36_0 = arg_36_0:getCO()
+
+	if not var_36_0 then
 		return 0
 	end
 
-	return slot1.uniqueSkill_point + slot0:getExpointMaxAddNum()
+	return var_36_0.uniqueSkill_point + arg_36_0:getExpointMaxAddNum()
 end
 
-function slot0.getExpointMaxAddNum(slot0)
-	return slot0.expointMaxAdd or 0
+function var_0_0.getExpointMaxAddNum(arg_37_0)
+	return arg_37_0.expointMaxAdd or 0
 end
 
-function slot0.changeServerUniqueCost(slot0, slot1)
-	slot0.exSkillPointChange = slot0:getExpointCostOffsetNum() + slot1
+function var_0_0.changeServerUniqueCost(arg_38_0, arg_38_1)
+	arg_38_0.exSkillPointChange = arg_38_0:getExpointCostOffsetNum() + arg_38_1
 end
 
-function slot0.getUniqueSkillPoint(slot0)
-	for slot4, slot5 in pairs(slot0.buffDic) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot5.buffId) then
-			for slot11, slot12 in ipairs(slot7) do
-				if slot12[1] == FightEnum.BuffActId.ExSkillNoConsumption then
+function var_0_0.getUniqueSkillPoint(arg_39_0)
+	for iter_39_0, iter_39_1 in pairs(arg_39_0.buffDic) do
+		local var_39_0 = iter_39_1.buffId
+		local var_39_1 = arg_39_0:getFeaturesSplitInfoByBuffId(var_39_0)
+
+		if var_39_1 then
+			for iter_39_2, iter_39_3 in ipairs(var_39_1) do
+				if iter_39_3[1] == FightEnum.BuffActId.ExSkillNoConsumption then
 					return 0
 				end
 			end
 		end
 	end
 
-	return slot0:getCO().uniqueSkill_point + slot0:getExpointCostOffsetNum()
+	return arg_39_0:getCO().uniqueSkill_point + arg_39_0:getExpointCostOffsetNum()
 end
 
-function slot0.getExpointCostOffsetNum(slot0)
-	return slot0.exSkillPointChange or 0
+function var_0_0.getExpointCostOffsetNum(arg_40_0)
+	return arg_40_0.exSkillPointChange or 0
 end
 
-function slot0.getPreviewExPoint(slot0)
-	return slot0.exPoint + slot0.moveCardExPoint + slot0.playCardExPoint - FightHelper.getPredeductionExpoint(slot0.id)
+function var_0_0.getPreviewExPoint(arg_41_0)
+	return arg_41_0.exPoint + arg_41_0.moveCardExPoint + arg_41_0.playCardExPoint - FightHelper.getPredeductionExpoint(arg_41_0.id)
 end
 
-function slot0.onPlayCardExPoint(slot0, slot1)
-	if not slot0:isUniqueSkill(slot1) and slot0:getPreviewExPoint() < slot0:getMaxExPoint() then
-		slot0.playCardExPoint = slot0.playCardExPoint + slot0._playCardAddExpoint
+function var_0_0.onPlayCardExPoint(arg_42_0, arg_42_1)
+	if not arg_42_0:isUniqueSkill(arg_42_1) then
+		local var_42_0 = arg_42_0:getMaxExPoint()
 
-		if slot2 < slot0:getPreviewExPoint() then
-			slot0.playCardExPoint = slot0.playCardExPoint - (slot0:getPreviewExPoint() - slot2)
+		if var_42_0 > arg_42_0:getPreviewExPoint() then
+			arg_42_0.playCardExPoint = arg_42_0.playCardExPoint + arg_42_0._playCardAddExpoint
+
+			if var_42_0 < arg_42_0:getPreviewExPoint() then
+				arg_42_0.playCardExPoint = arg_42_0.playCardExPoint - (arg_42_0:getPreviewExPoint() - var_42_0)
+			end
 		end
 	end
 end
 
-function slot0.onMoveCardExPoint(slot0, slot1)
-	if slot0:getPreviewExPoint() < slot0:getMaxExPoint() then
-		slot0.moveCardExPoint = slot0.moveCardExPoint + (slot1 and slot0._moveCardAddExpoint or slot0._combineCardAddExpoint)
+function var_0_0.onMoveCardExPoint(arg_43_0, arg_43_1)
+	local var_43_0 = arg_43_1 and arg_43_0._moveCardAddExpoint or arg_43_0._combineCardAddExpoint
+	local var_43_1 = arg_43_0:getMaxExPoint()
 
-		if slot3 < slot0:getPreviewExPoint() then
-			slot0.moveCardExPoint = slot0.moveCardExPoint - (slot0:getPreviewExPoint() - slot3)
+	if var_43_1 > arg_43_0:getPreviewExPoint() then
+		arg_43_0.moveCardExPoint = arg_43_0.moveCardExPoint + var_43_0
+
+		if var_43_1 < arg_43_0:getPreviewExPoint() then
+			arg_43_0.moveCardExPoint = arg_43_0.moveCardExPoint - (arg_43_0:getPreviewExPoint() - var_43_1)
 		end
 	end
 end
 
-function slot0._dealBuffFeature(slot0)
-	slot0._playCardAddExpoint = 1
-	slot0._moveCardAddExpoint = 1
-	slot0._combineCardAddExpoint = 1
+function var_0_0._dealBuffFeature(arg_44_0)
+	arg_44_0._playCardAddExpoint = 1
+	arg_44_0._moveCardAddExpoint = 1
+	arg_44_0._combineCardAddExpoint = 1
 
-	for slot4, slot5 in pairs(slot0.buffDic) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot5.buffId) then
-			for slot11, slot12 in ipairs(slot7) do
-				if slot12[1] == 606 then
-					slot0._combineCardAddExpoint = slot0._combineCardAddExpoint + slot12[2]
-				elseif slot12[1] == 607 then
-					slot0._moveCardAddExpoint = slot0._moveCardAddExpoint + slot12[2]
-				elseif slot12[1] == 603 then
-					slot0._playCardAddExpoint = 0
-					slot0._combineCardAddExpoint = 0
-					slot0._moveCardAddExpoint = 0
+	for iter_44_0, iter_44_1 in pairs(arg_44_0.buffDic) do
+		local var_44_0 = iter_44_1.buffId
+		local var_44_1 = arg_44_0:getFeaturesSplitInfoByBuffId(var_44_0)
+
+		if var_44_1 then
+			for iter_44_2, iter_44_3 in ipairs(var_44_1) do
+				if iter_44_3[1] == 606 then
+					arg_44_0._combineCardAddExpoint = arg_44_0._combineCardAddExpoint + iter_44_3[2]
+				elseif iter_44_3[1] == 607 then
+					arg_44_0._moveCardAddExpoint = arg_44_0._moveCardAddExpoint + iter_44_3[2]
+				elseif iter_44_3[1] == 603 then
+					arg_44_0._playCardAddExpoint = 0
+					arg_44_0._combineCardAddExpoint = 0
+					arg_44_0._moveCardAddExpoint = 0
 
 					return
-				elseif slot12[1] == 845 then
-					slot0._playCardAddExpoint = slot0._playCardAddExpoint + slot12[2]
+				elseif iter_44_3[1] == 845 then
+					arg_44_0._playCardAddExpoint = arg_44_0._playCardAddExpoint + iter_44_3[2]
 				end
 			end
 		end
 	end
 end
 
-function slot0.getCombineCardAddExPoint(slot0)
-	return slot0._combineCardAddExpoint
+function var_0_0.getCombineCardAddExPoint(arg_45_0)
+	return arg_45_0._combineCardAddExpoint
 end
 
-function slot0.getMoveCardAddExPoint(slot0)
-	return slot0._moveCardAddExpoint
+function var_0_0.getMoveCardAddExPoint(arg_46_0)
+	return arg_46_0._moveCardAddExpoint
 end
 
-function slot0.getPlayCardAddExPoint(slot0)
-	return slot0._playCardAddExpoint
+function var_0_0.getPlayCardAddExPoint(arg_47_0)
+	return arg_47_0._playCardAddExpoint
 end
 
-function slot0.getFeaturesSplitInfoByBuffId(slot0, slot1)
-	if not slot0.buffFeaturesSplit then
-		slot0.buffFeaturesSplit = {}
+function var_0_0.getFeaturesSplitInfoByBuffId(arg_48_0, arg_48_1)
+	if not arg_48_0.buffFeaturesSplit then
+		arg_48_0.buffFeaturesSplit = {}
 	end
 
-	if not slot0.buffFeaturesSplit[slot1] and not string.nilorempty(lua_skill_buff.configDict[slot1] and slot2.features) then
-		slot0.buffFeaturesSplit[slot1] = FightStrUtil.instance:getSplitString2Cache(slot3, true)
+	if not arg_48_0.buffFeaturesSplit[arg_48_1] then
+		local var_48_0 = lua_skill_buff.configDict[arg_48_1]
+		local var_48_1 = var_48_0 and var_48_0.features
+
+		if not string.nilorempty(var_48_1) then
+			local var_48_2 = FightStrUtil.instance:getSplitString2Cache(var_48_1, true)
+
+			arg_48_0.buffFeaturesSplit[arg_48_1] = var_48_2
+		end
 	end
 
-	return slot0.buffFeaturesSplit[slot1]
+	return arg_48_0.buffFeaturesSplit[arg_48_1]
 end
 
-function slot0.hasBuffFeature(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.buffDic) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
-			for slot12, slot13 in ipairs(slot8) do
-				if lua_buff_act.configDict[slot13[1]] and slot14.type == slot1 then
+function var_0_0.hasBuffFeature(arg_49_0, arg_49_1)
+	for iter_49_0, iter_49_1 in pairs(arg_49_0.buffDic) do
+		local var_49_0 = iter_49_1.buffId
+		local var_49_1 = arg_49_0:getFeaturesSplitInfoByBuffId(var_49_0)
+
+		if var_49_1 then
+			for iter_49_2, iter_49_3 in ipairs(var_49_1) do
+				local var_49_2 = lua_buff_act.configDict[iter_49_3[1]]
+
+				if var_49_2 and var_49_2.type == arg_49_1 then
 					return true
 				end
 			end
@@ -443,11 +488,14 @@ function slot0.hasBuffFeature(slot0, slot1)
 	end
 end
 
-function slot0.hasBuffActId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.buffDic) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot6.buffId) then
-			for slot12, slot13 in ipairs(slot8) do
-				if slot13[1] == slot1 then
+function var_0_0.hasBuffActId(arg_50_0, arg_50_1)
+	for iter_50_0, iter_50_1 in pairs(arg_50_0.buffDic) do
+		local var_50_0 = iter_50_1.buffId
+		local var_50_1 = arg_50_0:getFeaturesSplitInfoByBuffId(var_50_0)
+
+		if var_50_1 then
+			for iter_50_2, iter_50_3 in ipairs(var_50_1) do
+				if iter_50_3[1] == arg_50_1 then
 					return true
 				end
 			end
@@ -455,247 +503,277 @@ function slot0.hasBuffActId(slot0, slot1)
 	end
 end
 
-function slot0.hasBuffTypeId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.buffDic) do
-		if slot6:getCO() and slot7.typeId == slot1 then
+function var_0_0.hasBuffTypeId(arg_51_0, arg_51_1)
+	for iter_51_0, iter_51_1 in pairs(arg_51_0.buffDic) do
+		local var_51_0 = iter_51_1:getCO()
+
+		if var_51_0 and var_51_0.typeId == arg_51_1 then
 			return true
 		end
 	end
 end
 
-function slot0.hasBuffId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.buffDic) do
-		if slot6.buffId == slot1 then
+function var_0_0.hasBuffId(arg_52_0, arg_52_1)
+	for iter_52_0, iter_52_1 in pairs(arg_52_0.buffDic) do
+		if iter_52_1.buffId == arg_52_1 then
 			return true
 		end
 	end
 end
 
-function slot0.setHp(slot0, slot1)
-	if slot0:isASFDEmitter() then
-		return slot0:setASFDEmitterHp(slot1)
+function var_0_0.setHp(arg_53_0, arg_53_1)
+	if arg_53_0:isASFDEmitter() then
+		return arg_53_0:setASFDEmitterHp(arg_53_1)
 	end
 
-	slot0:defaultSetHp(slot1)
+	arg_53_0:defaultSetHp(arg_53_1)
 end
 
-function slot0.defaultSetHp(slot0, slot1)
-	if slot1 < 0 then
-		slot1 = 0
+function var_0_0.defaultSetHp(arg_54_0, arg_54_1)
+	if arg_54_1 < 0 then
+		arg_54_1 = 0
 	end
 
-	if slot0.attrMO.hp < slot1 then
-		slot1 = slot0.attrMO.hp
+	if arg_54_1 > arg_54_0.attrMO.hp then
+		arg_54_1 = arg_54_0.attrMO.hp
 	end
 
-	slot0.currentHp = slot1
+	arg_54_0.currentHp = arg_54_1
 end
 
-function slot0.setASFDEmitterHp(slot0, slot1)
-	if slot1 < 0 then
-		slot1 = 0
+function var_0_0.setASFDEmitterHp(arg_55_0, arg_55_1)
+	if arg_55_1 < 0 then
+		arg_55_1 = 0
 	end
 
-	slot0.currentHp = slot1
+	arg_55_0.currentHp = arg_55_1
 end
 
-function slot0.setShield(slot0, slot1)
-	slot0.shieldValue = slot1
+function var_0_0.setShield(arg_56_0, arg_56_1)
+	arg_56_0.shieldValue = arg_56_1
 end
 
-function slot0.onChangeHero(slot0)
-	tabletool.clear(slot0.buffDic)
-	slot0:_dealBuffFeature()
-	slot0:setShield(0)
+function var_0_0.onChangeHero(arg_57_0)
+	tabletool.clear(arg_57_0.buffDic)
+	arg_57_0:_dealBuffFeature()
+	arg_57_0:setShield(0)
 end
 
-function slot0.setPowerInfos(slot0, slot1)
-	slot0._powerInfos = {}
+function var_0_0.setPowerInfos(arg_58_0, arg_58_1)
+	arg_58_0._powerInfos = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:refreshPowerInfo(slot6)
-	end
-end
-
-function slot0.refreshPowerInfo(slot0, slot1)
-	slot2 = slot0._powerInfos[slot1.powerId] or {}
-	slot2.powerId = slot1.powerId
-	slot2.num = slot1.num
-	slot2.max = slot1.max
-	slot0._powerInfos[slot1.powerId] = slot2
-end
-
-function slot0.getPowerInfos(slot0)
-	return slot0._powerInfos or {}
-end
-
-function slot0.getPowerInfo(slot0, slot1)
-	return slot0._powerInfos and slot0._powerInfos[slot1]
-end
-
-function slot0.hasStress(slot0)
-	slot1 = slot0._powerInfos and slot0._powerInfos[FightEnum.PowerType.Stress]
-
-	return slot1 and slot1.max > 0
-end
-
-function slot0.changePowerMax(slot0, slot1, slot2)
-	if slot0._powerInfos and slot0._powerInfos[slot1] then
-		slot0._powerInfos[slot1].max = slot0._powerInfos[slot1].max + slot2
+	for iter_58_0, iter_58_1 in ipairs(arg_58_1) do
+		arg_58_0:refreshPowerInfo(iter_58_1)
 	end
 end
 
-function slot0.buildSummonedInfo(slot0, slot1)
-	slot0.summonedInfo = slot0.summonedInfo or FightEntitySummonedInfo.New()
+function var_0_0.refreshPowerInfo(arg_59_0, arg_59_1)
+	local var_59_0 = arg_59_0._powerInfos[arg_59_1.powerId] or {}
 
-	slot0.summonedInfo:init(slot1)
-
-	return slot0.summonedInfo
+	var_59_0.powerId = arg_59_1.powerId
+	var_59_0.num = arg_59_1.num
+	var_59_0.max = arg_59_1.max
+	arg_59_0._powerInfos[arg_59_1.powerId] = var_59_0
 end
 
-function slot0.getSummonedInfo(slot0)
-	slot0.summonedInfo = slot0.summonedInfo or FightEntitySummonedInfo.New()
-
-	return slot0.summonedInfo
+function var_0_0.getPowerInfos(arg_60_0)
+	return arg_60_0._powerInfos or {}
 end
 
-function slot0.buildEnhanceInfoBox(slot0, slot1)
-	slot0.canUpgradeIds = {}
-	slot0.upgradedOptions = {}
+function var_0_0.getPowerInfo(arg_61_0, arg_61_1)
+	return arg_61_0._powerInfos and arg_61_0._powerInfos[arg_61_1]
+end
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1.canUpgradeIds) do
-			slot0.canUpgradeIds[slot6] = slot6
+function var_0_0.hasStress(arg_62_0)
+	local var_62_0 = arg_62_0._powerInfos and arg_62_0._powerInfos[FightEnum.PowerType.Stress]
+
+	return var_62_0 and var_62_0.max > 0
+end
+
+function var_0_0.changePowerMax(arg_63_0, arg_63_1, arg_63_2)
+	if arg_63_0._powerInfos and arg_63_0._powerInfos[arg_63_1] then
+		arg_63_0._powerInfos[arg_63_1].max = arg_63_0._powerInfos[arg_63_1].max + arg_63_2
+	end
+end
+
+function var_0_0.buildSummonedInfo(arg_64_0, arg_64_1)
+	arg_64_0.summonedInfo = arg_64_0.summonedInfo or FightEntitySummonedInfo.New()
+
+	arg_64_0.summonedInfo:init(arg_64_1)
+
+	return arg_64_0.summonedInfo
+end
+
+function var_0_0.getSummonedInfo(arg_65_0)
+	arg_65_0.summonedInfo = arg_65_0.summonedInfo or FightEntitySummonedInfo.New()
+
+	return arg_65_0.summonedInfo
+end
+
+function var_0_0.buildEnhanceInfoBox(arg_66_0, arg_66_1)
+	arg_66_0.canUpgradeIds = {}
+	arg_66_0.upgradedOptions = {}
+
+	if arg_66_1 then
+		for iter_66_0, iter_66_1 in ipairs(arg_66_1.canUpgradeIds) do
+			arg_66_0.canUpgradeIds[iter_66_1] = iter_66_1
 		end
 
-		for slot5, slot6 in ipairs(slot1.upgradedOptions) do
-			slot0.upgradedOptions[slot6] = slot6
-		end
-	end
-end
-
-function slot0.getTrialAttrCo(slot0)
-	if not slot0.trialId or slot0.trialId <= 0 then
-		return
-	end
-
-	if not lua_hero_trial.configDict[slot0.trialId][0] then
-		return
-	end
-
-	if slot1.attrId <= 0 then
-		return
-	end
-
-	return lua_hero_trial_attr.configDict[slot1.attrId]
-end
-
-function slot0.updateStoredExPoint(slot0)
-	slot0.storedExPoint = 0
-
-	for slot4, slot5 in ipairs(slot0:getBuffList()) do
-		if not string.nilorempty(slot5.actCommonParams) and (lua_buff_act.configDict[FightStrUtil.instance:getSplitToNumberCache(slot6, "#")[1]] and slot9.type) == FightEnum.BuffType_ExPointOverflowBank then
-			slot0.storedExPoint = slot0.storedExPoint + slot7[2]
+		for iter_66_2, iter_66_3 in ipairs(arg_66_1.upgradedOptions) do
+			arg_66_0.upgradedOptions[iter_66_3] = iter_66_3
 		end
 	end
 end
 
-function slot0.setStoredExPoint(slot0, slot1)
-	slot0.storedExPoint = slot1
+function var_0_0.getTrialAttrCo(arg_67_0)
+	if not arg_67_0.trialId or arg_67_0.trialId <= 0 then
+		return
+	end
+
+	local var_67_0 = lua_hero_trial.configDict[arg_67_0.trialId][0]
+
+	if not var_67_0 then
+		return
+	end
+
+	if var_67_0.attrId <= 0 then
+		return
+	end
+
+	return lua_hero_trial_attr.configDict[var_67_0.attrId]
 end
 
-function slot0.changeStoredExPoint(slot0, slot1)
-	slot0.storedExPoint = slot0.storedExPoint + slot1
+function var_0_0.updateStoredExPoint(arg_68_0)
+	arg_68_0.storedExPoint = 0
+
+	for iter_68_0, iter_68_1 in ipairs(arg_68_0:getBuffList()) do
+		local var_68_0 = iter_68_1.actCommonParams
+
+		if not string.nilorempty(var_68_0) then
+			local var_68_1 = FightStrUtil.instance:getSplitToNumberCache(var_68_0, "#")
+			local var_68_2 = var_68_1[1]
+			local var_68_3 = lua_buff_act.configDict[var_68_2]
+
+			if (var_68_3 and var_68_3.type) == FightEnum.BuffType_ExPointOverflowBank then
+				arg_68_0.storedExPoint = arg_68_0.storedExPoint + var_68_1[2]
+			end
+		end
+	end
 end
 
-function slot0.getStoredExPoint(slot0)
-	return slot0.storedExPoint
+function var_0_0.setStoredExPoint(arg_69_0, arg_69_1)
+	arg_69_0.storedExPoint = arg_69_1
 end
 
-function slot0.hadStoredExPoint(slot0)
-	return slot0.storedExPoint > 0
+function var_0_0.changeStoredExPoint(arg_70_0, arg_70_1)
+	arg_70_0.storedExPoint = arg_70_0.storedExPoint + arg_70_1
 end
 
-function slot0.getResistanceDict(slot0)
-	slot0.resistanceDict = slot0.resistanceDict or {}
+function var_0_0.getStoredExPoint(arg_71_0)
+	return arg_71_0.storedExPoint
+end
 
-	tabletool.clear(slot0.resistanceDict)
+function var_0_0.hadStoredExPoint(arg_72_0)
+	return arg_72_0.storedExPoint > 0
+end
 
-	if FightModel.instance:getSpAttributeMo(slot0.uid) then
-		for slot5, slot6 in pairs(FightEnum.ResistanceKeyToSpAttributeMoField) do
-			if slot1[slot6] and slot7 > 0 then
-				slot0.resistanceDict[slot5] = slot7
+function var_0_0.getResistanceDict(arg_73_0)
+	arg_73_0.resistanceDict = arg_73_0.resistanceDict or {}
+
+	tabletool.clear(arg_73_0.resistanceDict)
+
+	local var_73_0 = FightModel.instance:getSpAttributeMo(arg_73_0.uid)
+
+	if var_73_0 then
+		for iter_73_0, iter_73_1 in pairs(FightEnum.ResistanceKeyToSpAttributeMoField) do
+			local var_73_1 = var_73_0[iter_73_1]
+
+			if var_73_1 and var_73_1 > 0 then
+				arg_73_0.resistanceDict[iter_73_0] = var_73_1
 			end
 		end
 	end
 
-	return slot0.resistanceDict
+	return arg_73_0.resistanceDict
 end
 
-function slot0.isFullResistance(slot0, slot1)
-	if not FightModel.instance:getSpAttributeMo(slot0.uid) then
+function var_0_0.isFullResistance(arg_74_0, arg_74_1)
+	local var_74_0 = FightModel.instance:getSpAttributeMo(arg_74_0.uid)
+
+	if not var_74_0 then
 		return false
 	end
 
-	if not slot2[slot1] then
-		logError(string.format("%s 不存在 %s 的sp attr", slot0:getEntityName(), slot1))
+	local var_74_1 = var_74_0[arg_74_1]
 
-		return false
-	end
-
-	return slot3 >= 1000
-end
-
-function slot0.isPartResistance(slot0, slot1)
-	if not FightModel.instance:getSpAttributeMo(slot0.uid) then
-		return false
-	end
-
-	if not slot2[slot1] then
-		logError(string.format("%s 不存在 %s 的sp attr", slot0:getEntityName(), slot1))
+	if not var_74_1 then
+		logError(string.format("%s 不存在 %s 的sp attr", arg_74_0:getEntityName(), arg_74_1))
 
 		return false
 	end
 
-	return slot3 > 0
+	return var_74_1 >= 1000
 end
 
-function slot0.setNotifyBindContract(slot0)
-	slot0.notifyBindContract = true
-end
+function var_0_0.isPartResistance(arg_75_0, arg_75_1)
+	local var_75_0 = FightModel.instance:getSpAttributeMo(arg_75_0.uid)
 
-function slot0.clearNotifyBindContract(slot0)
-	slot0.notifyBindContract = nil
-end
-
-function slot0.isStatusDead(slot0)
-	return slot0.status == FightEnum.EntityStatus.Dead
-end
-
-function slot0.setDead(slot0)
-	slot0.status = FightEnum.EntityStatus.Dead
-end
-
-function slot0.getCareer(slot0)
-	if slot0:isASFDEmitter() then
-		return slot0:getASFDCareer()
+	if not var_75_0 then
+		return false
 	end
 
-	return slot0.career
+	local var_75_1 = var_75_0[arg_75_1]
+
+	if not var_75_1 then
+		logError(string.format("%s 不存在 %s 的sp attr", arg_75_0:getEntityName(), arg_75_1))
+
+		return false
+	end
+
+	return var_75_1 > 0
 end
 
-function slot0.getASFDCareer(slot0)
-	for slot4, slot5 in pairs(slot0.buffDic) do
-		if slot0:getFeaturesSplitInfoByBuffId(slot5.buffId) then
-			for slot11, slot12 in ipairs(slot7) do
-				if lua_buff_act.configDict[slot12[1]] and slot13.type == FightEnum.BuffType_EmitterCareerChange then
-					return tonumber(slot12[2])
+function var_0_0.setNotifyBindContract(arg_76_0)
+	arg_76_0.notifyBindContract = true
+end
+
+function var_0_0.clearNotifyBindContract(arg_77_0)
+	arg_77_0.notifyBindContract = nil
+end
+
+function var_0_0.isStatusDead(arg_78_0)
+	return arg_78_0.status == FightEnum.EntityStatus.Dead
+end
+
+function var_0_0.setDead(arg_79_0)
+	arg_79_0.status = FightEnum.EntityStatus.Dead
+end
+
+function var_0_0.getCareer(arg_80_0)
+	if arg_80_0:isASFDEmitter() then
+		return arg_80_0:getASFDCareer()
+	end
+
+	return arg_80_0.career
+end
+
+function var_0_0.getASFDCareer(arg_81_0)
+	for iter_81_0, iter_81_1 in pairs(arg_81_0.buffDic) do
+		local var_81_0 = iter_81_1.buffId
+		local var_81_1 = arg_81_0:getFeaturesSplitInfoByBuffId(var_81_0)
+
+		if var_81_1 then
+			for iter_81_2, iter_81_3 in ipairs(var_81_1) do
+				local var_81_2 = lua_buff_act.configDict[iter_81_3[1]]
+
+				if var_81_2 and var_81_2.type == FightEnum.BuffType_EmitterCareerChange then
+					return tonumber(iter_81_3[2])
 				end
 			end
 		end
 	end
 
-	return slot0.career
+	return arg_81_0.career
 end
 
-return slot0
+return var_0_0

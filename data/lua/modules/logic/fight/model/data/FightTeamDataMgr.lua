@@ -1,34 +1,34 @@
-module("modules.logic.fight.model.data.FightTeamDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightTeamDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightTeamDataMgr")
+local var_0_0 = FightDataClass("FightTeamDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0.myData = {}
-	slot0.enemyData = {}
-	slot0[FightEnum.TeamType.MySide] = slot0.myData
-	slot0[FightEnum.TeamType.EnemySide] = slot0.enemyData
-	slot0.myCardHeatOffset = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.myData = {}
+	arg_1_0.enemyData = {}
+	arg_1_0[FightEnum.TeamType.MySide] = arg_1_0.myData
+	arg_1_0[FightEnum.TeamType.EnemySide] = arg_1_0.enemyData
+	arg_1_0.myCardHeatOffset = {}
 end
 
-function slot0.clearClientSimulationData(slot0)
-	slot0.myCardHeatOffset = {}
+function var_0_0.clearClientSimulationData(arg_2_0)
+	arg_2_0.myCardHeatOffset = {}
 end
 
-function slot0.onCancelOperation(slot0)
-	slot0:clearClientSimulationData()
+function var_0_0.onCancelOperation(arg_3_0)
+	arg_3_0:clearClientSimulationData()
 end
 
-function slot0.onStageChanged(slot0)
-	slot0:clearClientSimulationData()
+function var_0_0.onStageChanged(arg_4_0)
+	arg_4_0:clearClientSimulationData()
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0:refreshTeamDataByProto(slot1.attacker, slot0.myData)
-	slot0:refreshTeamDataByProto(slot1.defender, slot0.enemyData)
+function var_0_0.updateData(arg_5_0, arg_5_1)
+	arg_5_0:refreshTeamDataByProto(arg_5_1.attacker, arg_5_0.myData)
+	arg_5_0:refreshTeamDataByProto(arg_5_1.defender, arg_5_0.enemyData)
 end
 
-function slot0.refreshTeamDataByProto(slot0, slot1, slot2)
-	slot2.cardHeat = FightDataHelper.coverData(FightDataCardHeatInfo.New(slot1.cardHeat), slot2.cardHeat)
+function var_0_0.refreshTeamDataByProto(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_2.cardHeat = FightDataHelper.coverData(FightDataCardHeatInfo.New(arg_6_1.cardHeat), arg_6_2.cardHeat)
 end
 
-return slot0
+return var_0_0

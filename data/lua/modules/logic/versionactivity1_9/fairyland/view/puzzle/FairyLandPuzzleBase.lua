@@ -1,172 +1,182 @@
-module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzleBase", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzleBase", package.seeall)
 
-slot0 = class("FairyLandPuzzleBase", UserDataDispose)
+local var_0_0 = class("FairyLandPuzzleBase", UserDataDispose)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.config = slot1.config
-	slot0.viewGO = slot1.viewGO
+	arg_1_0.config = arg_1_1.config
+	arg_1_0.viewGO = arg_1_1.viewGO
 
-	slot0:onInitView()
-	slot0:start()
+	arg_1_0:onInitView()
+	arg_1_0:start()
 
-	if FairyLandModel.instance:isPassPuzzle(slot0.config.id) then
-		if not FairyLandModel.instance:isFinishDialog(slot0.config.successTalkId) then
-			slot0:playSuccessTalk()
-		elseif not FairyLandModel.instance:isFinishDialog(slot0.config.storyTalkId) then
-			slot0:playStoryTalk()
+	if FairyLandModel.instance:isPassPuzzle(arg_1_0.config.id) then
+		if not FairyLandModel.instance:isFinishDialog(arg_1_0.config.successTalkId) then
+			arg_1_0:playSuccessTalk()
+		elseif not FairyLandModel.instance:isFinishDialog(arg_1_0.config.storyTalkId) then
+			arg_1_0:playStoryTalk()
 		end
-	elseif not FairyLandModel.instance:isFinishDialog(slot0.config.afterTalkId) then
-		slot0:playAfterTalk()
+	elseif not FairyLandModel.instance:isFinishDialog(arg_1_0.config.afterTalkId) then
+		arg_1_0:playAfterTalk()
 	end
 end
 
-function slot0.start(slot0)
-	slot0:onStart()
+function var_0_0.start(arg_2_0)
+	arg_2_0:onStart()
 end
 
-function slot0.refresh(slot0, slot1)
-	slot0.config = slot1
+function var_0_0.refresh(arg_3_0, arg_3_1)
+	arg_3_0.config = arg_3_1
 
-	slot0:onRefreshView()
+	arg_3_0:onRefreshView()
 end
 
-function slot0.destory(slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsTalk, slot0)
-	slot0:onDestroyView()
-	slot0:__onDispose()
+function var_0_0.destory(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.playTipsAnim, arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.playTipsTalk, arg_4_0)
+	arg_4_0:onDestroyView()
+	arg_4_0:__onDispose()
 end
 
-function slot0.stopCheckTips(slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsTalk, slot0)
+function var_0_0.stopCheckTips(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.playTipsAnim, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.playTipsTalk, arg_5_0)
 end
 
-function slot0.startCheckTips(slot0)
-	slot0:startCheckAnim()
-	slot0:startCheckTalk()
+function var_0_0.startCheckTips(arg_6_0)
+	arg_6_0:startCheckAnim()
+	arg_6_0:startCheckTalk()
 end
 
-function slot0.startCheckAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsAnim, slot0)
+function var_0_0.startCheckAnim(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.playTipsAnim, arg_7_0)
 
-	if not FairyLandModel.instance:isFinishDialog(slot0.config.afterTalkId) then
+	if not FairyLandModel.instance:isFinishDialog(arg_7_0.config.afterTalkId) then
 		return
 	end
 
-	if FairyLandModel.instance:isPassPuzzle(slot0.config.id) then
+	if FairyLandModel.instance:isPassPuzzle(arg_7_0.config.id) then
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0.playTipsAnim, slot0, 4)
+	TaskDispatcher.runDelay(arg_7_0.playTipsAnim, arg_7_0, 4)
 end
 
-function slot0.startCheckTalk(slot0)
-	TaskDispatcher.cancelTask(slot0.playTipsTalk, slot0)
+function var_0_0.startCheckTalk(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.playTipsTalk, arg_8_0)
 
-	if not FairyLandModel.instance:isFinishDialog(slot0.config.afterTalkId) then
+	if not FairyLandModel.instance:isFinishDialog(arg_8_0.config.afterTalkId) then
 		return
 	end
 
-	if FairyLandModel.instance:isPassPuzzle(slot0.config.id) then
+	if FairyLandModel.instance:isPassPuzzle(arg_8_0.config.id) then
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0.playTipsTalk, slot0, 5)
+	TaskDispatcher.runDelay(arg_8_0.playTipsTalk, arg_8_0, 5)
 end
 
-function slot0.playAfterTalk(slot0)
-	slot0:playTalk(slot0.config.afterTalkId, slot0.startCheckTips, slot0)
+function var_0_0.playAfterTalk(arg_9_0)
+	arg_9_0:playTalk(arg_9_0.config.afterTalkId, arg_9_0.startCheckTips, arg_9_0)
 end
 
-function slot0.playSuccessTalk(slot0)
-	slot0:stopCheckTips()
+function var_0_0.playSuccessTalk(arg_10_0)
+	arg_10_0:stopCheckTips()
 
-	if not FairyLandModel.instance:isPassPuzzle(slot0.config.id) then
-		FairyLandRpc.instance:sendResolvePuzzleRequest(slot0.config.id, slot0.config.answer)
+	if not FairyLandModel.instance:isPassPuzzle(arg_10_0.config.id) then
+		FairyLandRpc.instance:sendResolvePuzzleRequest(arg_10_0.config.id, arg_10_0.config.answer)
 	end
 
-	slot0:playTalk(slot0.config.successTalkId, slot0.openCompleteView, slot0)
+	arg_10_0:playTalk(arg_10_0.config.successTalkId, arg_10_0.openCompleteView, arg_10_0)
 end
 
-function slot0.playErrorTalk(slot0)
-	slot0:stopCheckTips()
-	slot0:playTalk(slot0.config.errorTalkId, slot0.startCheckTips, slot0, true)
+function var_0_0.playErrorTalk(arg_11_0)
+	arg_11_0:stopCheckTips()
+	arg_11_0:playTalk(arg_11_0.config.errorTalkId, arg_11_0.startCheckTips, arg_11_0, true)
 end
 
-function slot0.playTipsTalk(slot0)
-	slot0:playTalk(slot0.config.tipsTalkId, slot0.startCheckTalk, slot0, true)
+function var_0_0.playTipsTalk(arg_12_0)
+	arg_12_0:playTalk(arg_12_0.config.tipsTalkId, arg_12_0.startCheckTalk, arg_12_0, true)
 end
 
-function slot0.playTipsAnim(slot0)
-	if not slot0.tipAnim then
+function var_0_0.playTipsAnim(arg_13_0)
+	if not arg_13_0.tipAnim then
 		return
 	end
 
-	slot0.tipAnim:Stop()
+	arg_13_0.tipAnim:Stop()
 
-	if not slot0.tipAnim.isActiveAndEnabled then
+	if not arg_13_0.tipAnim.isActiveAndEnabled then
 		return
 	end
 
-	slot0.tipAnim:Play("open", slot0.startCheckAnim, slot0)
+	arg_13_0.tipAnim:Play("open", arg_13_0.startCheckAnim, arg_13_0)
 end
 
-function slot0.playStoryTalk(slot0)
-	if FairyLandModel.instance:isPassPuzzle(slot0.config.id) then
-		if slot0.config.storyTalkId == 0 then
+function var_0_0.playStoryTalk(arg_14_0)
+	if FairyLandModel.instance:isPassPuzzle(arg_14_0.config.id) then
+		if arg_14_0.config.storyTalkId == 0 then
 			return
 		end
 
-		if not FairyLandModel.instance:isFinishDialog(slot0.config.storyTalkId) then
-			FairyLandController.instance:openDialogView({
-				dialogId = slot0.config.storyTalkId,
+		if not FairyLandModel.instance:isFinishDialog(arg_14_0.config.storyTalkId) then
+			local var_14_0 = {
+				dialogId = arg_14_0.config.storyTalkId,
 				dialogType = FairyLandEnum.DialogType.Option
-			})
+			}
+
+			FairyLandController.instance:openDialogView(var_14_0)
 		end
 	end
 end
 
-function slot0.openCompleteView(slot0)
-	if FairyLandModel.instance:getDialogElement(slot0.config.elementId) then
-		slot1:setFinish()
+function var_0_0.openCompleteView(arg_15_0)
+	local var_15_0 = FairyLandModel.instance:getDialogElement(arg_15_0.config.elementId)
+
+	if var_15_0 then
+		var_15_0:setFinish()
 	end
 
-	FairyLandController.instance:openCompleteView(slot0.config.id, slot0.playStoryTalk, slot0)
+	FairyLandController.instance:openCompleteView(arg_15_0.config.id, arg_15_0.playStoryTalk, arg_15_0)
 end
 
-function slot0.playTalk(slot0, slot1, slot2, slot3, slot4, slot5)
+function var_0_0.playTalk(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
 	if ViewMgr.instance:isOpen(ViewName.FairyLandCompleteView) then
 		return
 	end
 
-	if slot1 > 0 and (slot4 or not FairyLandModel.instance:isFinishDialog(slot1)) then
-		FairyLandController.instance:openDialogView({
-			dialogId = slot1,
+	if arg_16_1 > 0 and (arg_16_4 or not FairyLandModel.instance:isFinishDialog(arg_16_1)) then
+		local var_16_0 = {
+			dialogId = arg_16_1,
 			dialogType = FairyLandEnum.DialogType.Bubble,
 			leftElement = FairyLandModel.instance:getDialogElement(),
-			rightElement = FairyLandModel.instance:getDialogElement(slot0.config.elementId),
-			callback = slot2,
-			callbackObj = slot3,
-			noTween = slot5
-		})
-	elseif slot2 then
-		slot2(slot3)
+			rightElement = FairyLandModel.instance:getDialogElement(arg_16_0.config.elementId),
+			callback = arg_16_2,
+			callbackObj = arg_16_3,
+			noTween = arg_16_5
+		}
+
+		FairyLandController.instance:openDialogView(var_16_0)
+	elseif arg_16_2 then
+		arg_16_2(arg_16_3)
 	end
 end
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_17_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_18_0)
+	return
 end
 
-function slot0.onRefreshView(slot0)
+function var_0_0.onRefreshView(arg_19_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

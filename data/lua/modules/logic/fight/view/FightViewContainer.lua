@@ -1,46 +1,50 @@
-module("modules.logic.fight.view.FightViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightViewContainer", package.seeall)
 
-slot0 = class("FightViewContainer", BaseViewContainer)
-slot0.hanCardClass = FightViewHandCard
-slot0.operationClass = FightViewPlayCard
-slot0.playCardClass = FightViewWaitingAreaVersion1
+local var_0_0 = class("FightViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "root/#scroll_effecttips"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "root/#scroll_effecttips/Viewport/#go_item"
-	slot1.cellClass = FightViewTechniqueCell
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 150
-	slot1.cellHeight = 145
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 25.1
-	slot1.startSpace = 0
-	slot0.fightView = FightView.New()
-	slot0.fightViewHandCard = uv0.hanCardClass.New()
-	slot0.fightViewPlayCard = uv0.operationClass.New()
-	slot0.waitingArea = nil
+var_0_0.hanCardClass = FightViewHandCard
+var_0_0.operationClass = FightViewPlayCard
+var_0_0.playCardClass = FightViewWaitingAreaVersion1
 
-	if FightModel.instance:getVersion() and slot2 >= 1 then
-		slot0.waitingArea = uv0.playCardClass.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "root/#scroll_effecttips"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "root/#scroll_effecttips/Viewport/#go_item"
+	var_1_0.cellClass = FightViewTechniqueCell
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 150
+	var_1_0.cellHeight = 145
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 25.1
+	var_1_0.startSpace = 0
+	arg_1_0.fightView = FightView.New()
+	arg_1_0.fightViewHandCard = var_0_0.hanCardClass.New()
+	arg_1_0.fightViewPlayCard = var_0_0.operationClass.New()
+	arg_1_0.waitingArea = nil
+
+	local var_1_1 = FightModel.instance:getVersion()
+
+	if var_1_1 and var_1_1 >= 1 then
+		arg_1_0.waitingArea = var_0_0.playCardClass.New()
 	else
-		slot0.waitingArea = FightViewWaitingArea.New()
+		arg_1_0.waitingArea = FightViewWaitingArea.New()
 	end
 
-	slot3 = {
-		slot0.fightView,
+	local var_1_2 = {
+		arg_1_0.fightView,
 		FightViewPartVisible.New(),
-		slot0.fightViewHandCard,
-		slot0.fightViewPlayCard,
+		arg_1_0.fightViewHandCard,
+		arg_1_0.fightViewPlayCard,
 		FightViewExPoint.New(),
-		slot0.waitingArea,
+		arg_1_0.waitingArea,
 		FightViewClothSkillMgrView.New(),
 		FightViewTips.New(),
 		FightViewSkillFrame.New(),
 		FightViewTechnique.New(),
-		LuaListScrollView.New(FightViewTechniqueListModel.instance, slot1),
+		LuaListScrollView.New(FightViewTechniqueListModel.instance, var_1_0),
 		FightViewDialog.New(),
 		FightViewEnemyCard.New(),
 		FightHideUIView.New(),
@@ -59,28 +63,30 @@ function slot0.buildViews(slot0)
 		FightViewRedAndBlueArea.New()
 	}
 
-	table.insert(slot3, FightViewBossHpMgr.New())
-	table.insert(slot3, FightViewMgr.New())
+	table.insert(var_1_2, FightViewBossHpMgr.New())
+	table.insert(var_1_2, FightViewMgr.New())
 
-	return slot3
+	return var_1_2
 end
 
-function slot0.openFightFocusView(slot0)
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and slot1.type == DungeonEnum.EpisodeType.Cachot then
-		slot2 = V1a6_CachotHeroGroupController.instance
+function var_0_0.openFightFocusView(arg_2_0)
+	local var_2_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Cachot then
+		local var_2_1 = V1a6_CachotHeroGroupController.instance
 
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = V1a6_CachotHeroGroupModel.instance:getCurGroupMO(),
 			setEquipInfo = {
-				slot2.getFightFocusEquipInfo,
-				slot2
+				var_2_1.getFightFocusEquipInfo,
+				var_2_1
 			}
 		})
 
 		return
 	end
 
-	if slot1 and slot1.type == DungeonEnum.EpisodeType.Rouge then
+	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Rouge then
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = RougeHeroGroupModel.instance:getCurGroupMO(),
 			balanceHelper = RougeHeroGroupBalanceHelper
@@ -92,4 +98,4 @@ function slot0.openFightFocusView(slot0)
 	ViewMgr.instance:openView(ViewName.FightFocusView)
 end
 
-return slot0
+return var_0_0

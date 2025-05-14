@@ -1,15 +1,16 @@
-module("modules.logic.fight.model.data.FightParamData", package.seeall)
+﻿module("modules.logic.fight.model.data.FightParamData", package.seeall)
 
-slot0 = FightDataClass("FightParamData")
-slot0.ParamKey = {
+local var_0_0 = FightDataClass("FightParamData")
+
+var_0_0.ParamKey = {
 	ProgressSkill = 1,
 	ProgressId = 2
 }
 
-function slot0.onConstructor(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0[slot6.key] = slot6.value
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		arg_1_0[iter_1_1.key] = iter_1_1.value
 	end
 end
 
-return slot0
+return var_0_0

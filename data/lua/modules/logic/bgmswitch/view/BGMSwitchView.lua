@@ -1,92 +1,98 @@
-module("modules.logic.bgmswitch.view.BGMSwitchView", package.seeall)
+﻿module("modules.logic.bgmswitch.view.BGMSwitchView", package.seeall)
 
-slot0 = class("BGMSwitchView", BaseView)
-slot1 = {
+local var_0_0 = class("BGMSwitchView", BaseView)
+local var_0_1 = {
 	"singlebg/bgmtoggle_singlebg/bg_beijing.png",
 	"singlebg/bgmtoggle_singlebg/bg_beijingyintian.png",
 	"singlebg/bgmtoggle_singlebg/bg_beijingxiyang.png",
 	"singlebg/bgmtoggle_singlebg/bg_beijingwanshang.png"
 }
 
-function slot0.onInitView(slot0)
-	slot0._gomechine = gohelper.findChild(slot0.viewGO, "#go_mechine")
-	slot0._gomusics = gohelper.findChild(slot0.viewGO, "#go_musics")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomechine = gohelper.findChild(arg_1_0.viewGO, "#go_mechine")
+	arg_1_0._gomusics = gohelper.findChild(arg_1_0.viewGO, "#go_musics")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(WeatherController.instance, WeatherEvent.WeatherChanged, slot0._updateBg, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(WeatherController.instance, WeatherEvent.WeatherChanged, arg_2_0._updateBg, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(WeatherController.instance, WeatherEvent.WeatherChanged, slot0._updateBg, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(WeatherController.instance, WeatherEvent.WeatherChanged, arg_3_0._updateBg, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._viewAnim = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0:_updateBg()
+	arg_4_0:_updateBg()
 end
 
-function slot0._updateBg(slot0)
-	slot1, slot2 = WeatherController.instance:getCurrReport()
+function var_0_0._updateBg(arg_5_0)
+	local var_5_0, var_5_1 = WeatherController.instance:getCurrReport()
+	local var_5_2 = var_5_0 and var_5_0.lightMode or 1
 
-	if (slot1 and slot1.lightMode or 1) <= #uv0 then
-		slot0._simagebg:LoadImage(uv0[slot3])
+	if var_5_2 <= #var_0_1 then
+		arg_5_0._simagebg:LoadImage(var_0_1[var_5_2])
 	else
 		logError("天气光照索引大于背景图数量")
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.viewParam
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam
 
-	if slot0.viewParam then
-		if slot0.viewParam == true then
-			slot0._viewAnim:Play("thumbnail", 0, 0)
-		elseif slot1.isGuide then
-			slot0:_initCamera()
+	if arg_7_0.viewParam then
+		if arg_7_0.viewParam == true then
+			arg_7_0._viewAnim:Play("thumbnail", 0, 0)
+		elseif var_7_0.isGuide then
+			arg_7_0:_initCamera()
 			MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, true)
-			gohelper.setActive(slot0._viewGO, false)
+			gohelper.setActive(arg_7_0._viewGO, false)
 		end
 	else
-		slot0:_initCamera()
+		arg_7_0:_initCamera()
 	end
 
 	BGMSwitchAudioTrigger.play_ui_replay_open()
 end
 
-function slot0._initCamera(slot0)
-	slot0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	slot0._cameraAnimator.enabled = true
-	slot0._cameraTrace = CameraMgr.instance:getCameraTrace()
-	slot0._cameraTrace.enabled = true
-	slot0._cameraAnimator.runtimeAnimatorController = slot0.viewContainer._abLoader:getAssetItem(slot0.viewContainer:getSetting().otherRes[1]):GetResource()
+function var_0_0._initCamera(arg_8_0)
+	arg_8_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	arg_8_0._cameraAnimator.enabled = true
+	arg_8_0._cameraTrace = CameraMgr.instance:getCameraTrace()
+	arg_8_0._cameraTrace.enabled = true
 
-	slot0._cameraAnimator:Play("bgm_open", 0, 0)
-	slot0._viewAnim:Play("open", 0, 0)
+	local var_8_0 = arg_8_0.viewContainer:getSetting().otherRes[1]
+	local var_8_1 = arg_8_0.viewContainer._abLoader:getAssetItem(var_8_0):GetResource()
+
+	arg_8_0._cameraAnimator.runtimeAnimatorController = var_8_1
+
+	arg_8_0._cameraAnimator:Play("bgm_open", 0, 0)
+	arg_8_0._viewAnim:Play("open", 0, 0)
 end
 
-function slot0.onClose(slot0)
-	slot0._viewAnim:Play("close", 0, 0)
+function var_0_0.onClose(arg_9_0)
+	arg_9_0._viewAnim:Play("close", 0, 0)
 
-	if not slot0.viewParam then
-		slot0._cameraAnimator:Play("bgm_close")
+	if not arg_9_0.viewParam then
+		arg_9_0._cameraAnimator:Play("bgm_close")
 		MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, true)
 	end
 
 	BGMSwitchAudioTrigger.play_ui_replay_close()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

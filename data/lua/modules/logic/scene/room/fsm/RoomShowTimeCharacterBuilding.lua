@@ -1,36 +1,40 @@
-module("modules.logic.scene.room.fsm.RoomShowTimeCharacterBuilding", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomShowTimeCharacterBuilding", package.seeall)
 
-slot0 = class("RoomShowTimeCharacterBuilding", JompFSMBaseTransition)
+local var_0_0 = class("RoomShowTimeCharacterBuilding", JompFSMBaseTransition)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
+	return
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._interationId = slot1.id
-	slot0._actionDict = slot0._actionDict or {}
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._interationId = arg_3_1.id
+	arg_3_0._actionDict = arg_3_0._actionDict or {}
 
-	if not slot0._actionDict[slot0._interationId] then
-		slot0._actionDict[slot0._interationId] = RoomActionShowTimeCharacterBuilding.New(slot0)
+	local var_3_0 = arg_3_0._actionDict[arg_3_0._interationId]
+
+	if not var_3_0 then
+		var_3_0 = RoomActionShowTimeCharacterBuilding.New(arg_3_0)
+		arg_3_0._actionDict[arg_3_0._interationId] = var_3_0
 	end
 
-	slot2:start(slot1)
-	slot0:onDone()
+	var_3_0:start(arg_3_1)
+	arg_3_0:onDone()
 end
 
-function slot0.endState(slot0)
-	slot0.fsm:endTransition(slot0.fromStateName)
+function var_0_0.endState(arg_4_0)
+	arg_4_0.fsm:endTransition(arg_4_0.fromStateName)
 end
 
-function slot0.stop(slot0)
-	slot0:endState()
+function var_0_0.stop(arg_5_0)
+	arg_5_0:endState()
 end
 
-function slot0.clear(slot0)
-	slot0:endState()
+function var_0_0.clear(arg_6_0)
+	arg_6_0:endState()
 end
 
-return slot0
+return var_0_0

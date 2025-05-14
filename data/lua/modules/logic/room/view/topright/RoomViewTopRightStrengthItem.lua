@@ -1,45 +1,49 @@
-module("modules.logic.room.view.topright.RoomViewTopRightStrengthItem", package.seeall)
+﻿module("modules.logic.room.view.topright.RoomViewTopRightStrengthItem", package.seeall)
 
-slot0 = class("RoomViewTopRightStrengthItem", RoomViewTopRightBaseItem)
+local var_0_0 = class("RoomViewTopRightStrengthItem", RoomViewTopRightBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 end
 
-function slot0._customOnInit(slot0)
-	slot0._strengthId = slot0._param.strengthId
-	slot0._strengthShowType = slot0._param.strengthShowType or 0
-	slot0._resourceItem.simageicon = gohelper.findChildSingleImage(slot0._resourceItem.go, "icon")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._strengthId = arg_2_0._param.strengthId
+	arg_2_0._strengthShowType = arg_2_0._param.strengthShowType or 0
+	arg_2_0._resourceItem.simageicon = gohelper.findChildSingleImage(arg_2_0._resourceItem.go, "icon")
 
-	slot0._resourceItem.simageicon:LoadImage(ItemModel.instance:getItemSmallIcon(slot0._strengthId))
-	slot0:_setShow(true)
+	local var_2_0 = ItemModel.instance:getItemSmallIcon(arg_2_0._strengthId)
+
+	arg_2_0._resourceItem.simageicon:LoadImage(var_2_0)
+	arg_2_0:_setShow(true)
 end
 
-function slot0._onClick(slot0)
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Item, slot0._strengthId, nil, , , , true)
+function var_0_0._onClick(arg_3_0)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Item, arg_3_0._strengthId, nil, nil, nil, nil, true)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.ConfirmBuilding, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.UnUseBuilding, slot0._refreshUI, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.UpdateBuildingLocalLevels, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.UpdateBuildingLevels, slot0._refreshUI, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refreshUI, slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0:addEventCb(RoomBuildingController.instance, RoomEvent.ConfirmBuilding, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(RoomBuildingController.instance, RoomEvent.UnUseBuilding, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(RoomBuildingController.instance, RoomEvent.UpdateBuildingLocalLevels, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(RoomBuildingController.instance, RoomEvent.UpdateBuildingLevels, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_4_0._refreshUI, arg_4_0)
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot0._strengthId)
-	slot0._resourceItem.txtquantity.text = string.format("%s/%s", GameUtil.numberDisplay(slot1), GameUtil.numberDisplay(slot1))
+function var_0_0._refreshUI(arg_6_0)
+	local var_6_0 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, arg_6_0._strengthId)
 
-	gohelper.setActive(slot0._resourceItem.go, slot0._strengthShowType ~= 1 or slot1 > 0)
+	arg_6_0._resourceItem.txtquantity.text = string.format("%s/%s", GameUtil.numberDisplay(var_6_0), GameUtil.numberDisplay(var_6_0))
+
+	gohelper.setActive(arg_6_0._resourceItem.go, arg_6_0._strengthShowType ~= 1 or var_6_0 > 0)
 end
 
-function slot0._customOnDestory(slot0)
-	slot0._resourceItem.simageicon:UnLoadImage()
+function var_0_0._customOnDestory(arg_7_0)
+	arg_7_0._resourceItem.simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

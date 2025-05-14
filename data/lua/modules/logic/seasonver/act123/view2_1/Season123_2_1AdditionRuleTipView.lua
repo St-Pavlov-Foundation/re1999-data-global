@@ -1,74 +1,80 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1AdditionRuleTipView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1AdditionRuleTipView", package.seeall)
 
-slot0 = class("Season123_2_1AdditionRuleTipView", BaseView)
+local var_0_0 = class("Season123_2_1AdditionRuleTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "content/layout/#go_ruleitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._itemList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_ruleitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._itemList = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot4 = {}
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam.actId
+	local var_5_1 = arg_5_0.viewParam.stage
+	local var_5_2 = Season123Config.instance:getRuleTips(var_5_0, var_5_1)
+	local var_5_3 = {}
 
-	for slot8, slot9 in pairs(Season123Config.instance:getRuleTips(slot0.viewParam.actId, slot0.viewParam.stage)) do
-		table.insert(slot4, slot8)
+	for iter_5_0, iter_5_1 in pairs(var_5_2) do
+		table.insert(var_5_3, iter_5_0)
 	end
 
-	slot8 = #slot0._itemList
+	for iter_5_2 = 1, math.max(#var_5_3, #arg_5_0._itemList) do
+		local var_5_4 = arg_5_0:getOrCreateItem(iter_5_2)
 
-	for slot8 = 1, math.max(#slot4, slot8) do
-		slot0:updateItem(slot0:getOrCreateItem(slot8), slot4[slot8])
+		arg_5_0:updateItem(var_5_4, var_5_3[iter_5_2])
 	end
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0.closeThis, slot0)
+	NavigateMgr.instance:addEscape(arg_5_0.viewName, arg_5_0.closeThis, arg_5_0)
 end
 
-function slot0.getOrCreateItem(slot0, slot1)
-	if not slot0._itemList[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goitem, "item" .. tostring(slot1))
-		slot2.icon = gohelper.findChildImage(slot2.go, "mask/icon")
-		slot2.txtTag = gohelper.findChildTextMesh(slot2.go, "mask/scroll_tag/Viewport/Content/tag")
-		slot0._itemList[slot1] = slot2
+function var_0_0.getOrCreateItem(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._itemList[arg_6_1]
+
+	if not var_6_0 then
+		var_6_0 = arg_6_0:getUserDataTb_()
+		var_6_0.go = gohelper.cloneInPlace(arg_6_0._goitem, "item" .. tostring(arg_6_1))
+		var_6_0.icon = gohelper.findChildImage(var_6_0.go, "mask/icon")
+		var_6_0.txtTag = gohelper.findChildTextMesh(var_6_0.go, "mask/scroll_tag/Viewport/Content/tag")
+		arg_6_0._itemList[arg_6_1] = var_6_0
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.updateItem(slot0, slot1, slot2)
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.updateItem(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_2 then
+		gohelper.setActive(arg_7_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(arg_7_1.go, true)
 
-	slot3 = lua_rule.configDict[slot2]
+	local var_7_0 = lua_rule.configDict[arg_7_2]
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot1.icon, slot3.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_7_1.icon, var_7_0.icon)
 
-	slot1.txtTag.text = slot3.desc
+	arg_7_1.txtTag.text = var_7_0.desc
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

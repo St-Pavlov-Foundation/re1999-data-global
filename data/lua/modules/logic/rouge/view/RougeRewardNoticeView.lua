@@ -1,141 +1,157 @@
-module("modules.logic.rouge.view.RougeRewardNoticeView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeRewardNoticeView", package.seeall)
 
-slot0 = class("RougeRewardNoticeView", BaseView)
+local var_0_0 = class("RougeRewardNoticeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_ItemList")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_ItemList/Viewport/Content")
-	slot0._goItem = gohelper.findChild(slot0.viewGO, "#scroll_ItemList/Viewport/Content/#go_Item")
-	slot0._itemList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ItemList")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_ItemList/Viewport/Content")
+	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_ItemList/Viewport/Content/#go_Item")
+	arg_1_0._itemList = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0._initView(slot0)
-	slot0._season = RougeOutsideModel.instance:season()
+function var_0_0._initView(arg_6_0)
+	arg_6_0._season = RougeOutsideModel.instance:season()
 
-	for slot5, slot6 in pairs(RougeRewardConfig.instance:getBigRewardToStage()) do
-		slot7 = slot6[1]
+	local var_6_0 = RougeRewardConfig.instance:getBigRewardToStage()
 
-		if slot0._itemList[slot5] == nil then
-			slot8 = slot0:getUserDataTb_()
-			slot9 = gohelper.cloneInPlace(slot0._goItem, "rewarditem" .. slot5)
-			slot8.go = slot9
-			slot8.co = slot7
-			slot8.index = slot5
-			slot8.txtNum = gohelper.findChildText(slot9, "#txt_Num")
-			slot8.txtItem = gohelper.findChildText(slot9, "#txt_Item")
-			slot8.goGet = gohelper.findChild(slot9, "#go_Get")
-			slot8.goUnGetBg = gohelper.findChild(slot9, "image_ItemIconBG2")
-			slot8.goLockMask = gohelper.findChild(slot9, "#go_LockMask")
-			slot8.goUnlockItem = gohelper.findChild(slot9, "#go_UnlockItem")
-			slot8.imageItemIcon = gohelper.findChildImage(slot9, "#image_ItemIcon")
-			slot8.goNextUnlock = gohelper.findChild(slot9, "#go_nextUnlock")
-			slot8.btn = gohelper.findChildButton(slot9, "btn")
+	for iter_6_0, iter_6_1 in pairs(var_6_0) do
+		local var_6_1 = iter_6_1[1]
+		local var_6_2 = arg_6_0._itemList[iter_6_0]
 
-			slot8.btn:AddClickListener(slot0._btnclickOnClick, slot0, slot8)
+		if var_6_2 == nil then
+			var_6_2 = arg_6_0:getUserDataTb_()
 
-			slot8.animator = slot9:GetComponent(typeof(UnityEngine.Animator))
-			slot8.layoutindex = math.ceil(slot8.index / 3)
+			local var_6_3 = gohelper.cloneInPlace(arg_6_0._goItem, "rewarditem" .. iter_6_0)
 
-			table.insert(slot0._itemList, slot8)
+			var_6_2.go = var_6_3
+			var_6_2.co = var_6_1
+			var_6_2.index = iter_6_0
+			var_6_2.txtNum = gohelper.findChildText(var_6_3, "#txt_Num")
+			var_6_2.txtItem = gohelper.findChildText(var_6_3, "#txt_Item")
+			var_6_2.goGet = gohelper.findChild(var_6_3, "#go_Get")
+			var_6_2.goUnGetBg = gohelper.findChild(var_6_3, "image_ItemIconBG2")
+			var_6_2.goLockMask = gohelper.findChild(var_6_3, "#go_LockMask")
+			var_6_2.goUnlockItem = gohelper.findChild(var_6_3, "#go_UnlockItem")
+			var_6_2.imageItemIcon = gohelper.findChildImage(var_6_3, "#image_ItemIcon")
+			var_6_2.goNextUnlock = gohelper.findChild(var_6_3, "#go_nextUnlock")
+			var_6_2.btn = gohelper.findChildButton(var_6_3, "btn")
+
+			var_6_2.btn:AddClickListener(arg_6_0._btnclickOnClick, arg_6_0, var_6_2)
+
+			var_6_2.animator = var_6_3:GetComponent(typeof(UnityEngine.Animator))
+			var_6_2.layoutindex = math.ceil(var_6_2.index / 3)
+
+			table.insert(arg_6_0._itemList, var_6_2)
 		end
 
-		if math.floor(slot7.bigRewardId / 10) > 0 then
-			slot8.txtNum.text = slot7.bigRewardId
+		if math.floor(var_6_1.bigRewardId / 10) > 0 then
+			var_6_2.txtNum.text = var_6_1.bigRewardId
 		else
-			slot8.txtNum.text = string.format("0%d", slot7.bigRewardId)
+			var_6_2.txtNum.text = string.format("0%d", var_6_1.bigRewardId)
 		end
 
-		slot8.txtItem.text = slot7.name
+		var_6_2.txtItem.text = var_6_1.name
 
-		if not string.nilorempty(slot7.icon) then
-			UISpriteSetMgr.instance:setRouge5Sprite(slot8.imageItemIcon, slot7.icon)
+		if not string.nilorempty(var_6_1.icon) then
+			UISpriteSetMgr.instance:setRouge5Sprite(var_6_2.imageItemIcon, var_6_1.icon)
 		end
 
-		slot9 = RougeRewardModel.instance:checShowBigRewardGot(slot7.bigRewardId)
+		local var_6_4 = RougeRewardModel.instance:checShowBigRewardGot(var_6_1.bigRewardId)
 
-		gohelper.setActive(slot8.goGet, slot9)
-		gohelper.setActive(slot8.goUnGetBg, not slot9)
+		gohelper.setActive(var_6_2.goGet, var_6_4)
+		gohelper.setActive(var_6_2.goUnGetBg, not var_6_4)
 
-		slot10 = RougeRewardModel.instance:isStageOpen(slot7.stage)
+		local var_6_5 = RougeRewardModel.instance:isStageOpen(var_6_1.stage)
 
-		gohelper.setActive(slot8.goLockMask, not slot10)
-		gohelper.setActive(slot8.goUnlockItem, not slot10)
-		gohelper.setActive(slot8.imageItemIcon.gameObject, slot10)
-		gohelper.setActive(slot8.btn, slot10)
+		gohelper.setActive(var_6_2.goLockMask, not var_6_5)
+		gohelper.setActive(var_6_2.goUnlockItem, not var_6_5)
+		gohelper.setActive(var_6_2.imageItemIcon.gameObject, var_6_5)
+		gohelper.setActive(var_6_2.btn, var_6_5)
 
-		slot8.txtItem.text = slot10 and slot7.name or slot7.lockName
+		var_6_2.txtItem.text = var_6_5 and var_6_1.name or var_6_1.lockName
 
-		gohelper.setActive(slot8.goNextUnlock, RougeRewardModel.instance:isShowNextStageTag(slot7.stage))
+		local var_6_6 = RougeRewardModel.instance:isShowNextStageTag(var_6_1.stage)
+
+		gohelper.setActive(var_6_2.goNextUnlock, var_6_6)
 	end
 end
 
-function slot0._btnclickOnClick(slot0, slot1)
-	slot0:_jumpToTargetReward(slot1.index)
+function var_0_0._btnclickOnClick(arg_7_0, arg_7_1)
+	arg_7_0:_jumpToTargetReward(arg_7_1.index)
 end
 
-function slot0._jumpToTargetReward(slot0, slot1)
-	slot0:closeThis()
-	RougeController.instance:dispatchEvent(RougeEvent.OnClickBigReward, slot1)
+function var_0_0._jumpToTargetReward(arg_8_0, arg_8_1)
+	arg_8_0:closeThis()
+	RougeController.instance:dispatchEvent(RougeEvent.OnClickBigReward, arg_8_1)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	RougeRewardModel.instance:setNextUnlockStage()
-	slot0:_initView()
-	slot0:_openAnim()
+	arg_9_0:_initView()
+	arg_9_0:_openAnim()
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenRewardNoticeView)
 end
 
-function slot0._openAnim(slot0)
-	function slot0._playAnim()
-		if not uv0.viewContainer or not uv0.viewContainer._isVisible then
+function var_0_0._openAnim(arg_10_0)
+	function arg_10_0._playAnim()
+		if not arg_10_0.viewContainer or not arg_10_0.viewContainer._isVisible then
 			return
 		end
 
-		TaskDispatcher.cancelTask(uv0._playAnim, uv0)
+		TaskDispatcher.cancelTask(arg_10_0._playAnim, arg_10_0)
 
-		function uv0.playfunc(slot0)
-			if not uv0.viewContainer or not uv0.viewContainer._isVisible then
+		function arg_10_0.playfunc(arg_12_0)
+			if not arg_10_0.viewContainer or not arg_10_0.viewContainer._isVisible then
 				return
 			end
 
-			TaskDispatcher.cancelTask(uv0.playfunc, slot0)
-			gohelper.setActive(slot0.go, true)
-			slot0.animator:Update(0)
-			slot0.animator:Play("in", 0, 0)
+			TaskDispatcher.cancelTask(arg_10_0.playfunc, arg_12_0)
+			gohelper.setActive(arg_12_0.go, true)
+			arg_12_0.animator:Update(0)
+			arg_12_0.animator:Play("in", 0, 0)
 		end
 
-		for slot3, slot4 in pairs(uv0._itemList) do
-			TaskDispatcher.runDelay(uv0.playfunc, slot4, slot4.layoutindex * 0.06)
+		for iter_11_0, iter_11_1 in pairs(arg_10_0._itemList) do
+			local var_11_0 = iter_11_1.layoutindex * 0.06
+
+			TaskDispatcher.runDelay(arg_10_0.playfunc, iter_11_1, var_11_0)
 		end
 	end
 
-	TaskDispatcher.runDelay(slot0._playAnim, slot0, 0.1)
+	local var_10_0 = 0.1
+
+	TaskDispatcher.runDelay(arg_10_0._playAnim, arg_10_0, var_10_0)
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in ipairs(slot0._itemList) do
-		slot5.btn:RemoveClickListener()
+function var_0_0.onClose(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._itemList) do
+		iter_13_1.btn:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,42 +1,50 @@
-module("modules.logic.tipdialog.config.TipDialogConfig", package.seeall)
+﻿module("modules.logic.tipdialog.config.TipDialogConfig", package.seeall)
 
-slot0 = class("TipDialogConfig", BaseConfig)
+local var_0_0 = class("TipDialogConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"tip_dialog"
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "tip_dialog" then
-		slot0:_initDialog()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "tip_dialog" then
+		arg_3_0:_initDialog()
 	end
 end
 
-function slot0._initDialog(slot0)
-	slot0._dialogList = {}
-	slot1 = nil
+function var_0_0._initDialog(arg_4_0)
+	arg_4_0._dialogList = {}
 
-	for slot6, slot7 in ipairs(lua_tip_dialog.configList) do
-		if not slot0._dialogList[slot7.id] then
-			slot1 = "0"
-			slot0._dialogList[slot7.id] = {}
+	local var_4_0
+	local var_4_1 = "0"
+
+	for iter_4_0, iter_4_1 in ipairs(lua_tip_dialog.configList) do
+		local var_4_2 = arg_4_0._dialogList[iter_4_1.id]
+
+		if not var_4_2 then
+			var_4_2 = {}
+			var_4_0 = var_4_1
+			arg_4_0._dialogList[iter_4_1.id] = var_4_2
 		end
 
-		slot8[slot1] = slot8[slot1] or {}
+		var_4_2[var_4_0] = var_4_2[var_4_0] or {}
 
-		table.insert(slot8[slot1], slot7)
+		table.insert(var_4_2[var_4_0], iter_4_1)
 	end
 end
 
-function slot0.getDialog(slot0, slot1, slot2)
-	return slot0._dialogList[slot1] and slot3[slot2]
+function var_0_0.getDialog(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0._dialogList[arg_5_1]
+
+	return var_5_0 and var_5_0[arg_5_2]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

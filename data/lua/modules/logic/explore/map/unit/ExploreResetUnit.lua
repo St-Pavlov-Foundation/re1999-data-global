@@ -1,44 +1,44 @@
-module("modules.logic.explore.map.unit.ExploreResetUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreResetUnit", package.seeall)
 
-slot0 = class("ExploreResetUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreResetUnit", ExploreBaseDisplayUnit)
 
-function slot0.onRoleEnter(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0.onRoleEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if not arg_1_2 then
 		return
 	end
 
-	if not slot3:isRole() then
+	if not arg_1_3:isRole() then
 		return
 	end
 
-	if slot3:isMoving() then
-		slot3:stopMoving()
+	if arg_1_3:isMoving() then
+		arg_1_3:stopMoving()
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.HeroAnim)
-		ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, slot0.beginTrigger, slot0)
+		ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, arg_1_0.beginTrigger, arg_1_0)
 	else
-		TaskDispatcher.runDelay(slot0.beginTrigger, slot0, 0)
+		TaskDispatcher.runDelay(arg_1_0.beginTrigger, arg_1_0, 0)
 	end
 
-	slot0.animComp:playAnim(ExploreAnimEnum.AnimName.nToA)
+	arg_1_0.animComp:playAnim(ExploreAnimEnum.AnimName.nToA)
 end
 
-function slot0.onRoleLeave(slot0, slot1, slot2, slot3)
-	if not slot3:isRole() then
+function var_0_0.onRoleLeave(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if not arg_2_3:isRole() then
 		return
 	end
 
-	slot0.animComp:playAnim(ExploreAnimEnum.AnimName.aToN)
+	arg_2_0.animComp:playAnim(ExploreAnimEnum.AnimName.aToN)
 end
 
-function slot0.beginTrigger(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, slot0.beginTrigger, slot0)
-	ExploreHeroResetFlow.instance:begin(slot0.id)
+function var_0_0.beginTrigger(arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_3_0.beginTrigger, arg_3_0)
+	ExploreHeroResetFlow.instance:begin(arg_3_0.id)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.beginTrigger, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, slot0.beginTrigger, slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.beginTrigger, arg_4_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_4_0.beginTrigger, arg_4_0)
+	var_0_0.super.onDestroy(arg_4_0)
 end
 
-return slot0
+return var_0_0

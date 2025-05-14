@@ -1,223 +1,240 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186GameDialogueView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameDialogueView", package.seeall)
 
-slot0 = class("Activity186GameDialogueView", BaseView)
+local var_0_0 = class("Activity186GameDialogueView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goRight = gohelper.findChild(slot0.viewGO, "root/right")
-	slot0.rightAnim = slot0.goRight:GetComponent(gohelper.Type_Animator)
-	slot0.txtDesc = gohelper.findChildTextMesh(slot0.viewGO, "root/right/desc")
-	slot0.txtContent = gohelper.findChildTextMesh(slot0.viewGO, "root/#goRole/bottom/#txt_Dialouge")
-	slot0.options = {}
-	slot0.btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/#btn_close")
-	slot0.goOptions = gohelper.findChild(slot0.viewGO, "root/right/options")
-	slot0.goRewards = gohelper.findChild(slot0.viewGO, "root/right/rewards")
-	slot0.goReward1 = gohelper.findChild(slot0.viewGO, "root/right/rewards/reward1")
-	slot0.txtRewardNum1 = gohelper.findChildTextMesh(slot0.viewGO, "root/right/rewards/reward1/#txt_num")
-	slot0.goReward2 = gohelper.findChild(slot0.viewGO, "root/right/rewards/reward2")
-	slot0.simageReward2 = gohelper.findChildSingleImage(slot0.viewGO, "root/right/rewards/reward2/icon")
-	slot0.txtRewardNum2 = gohelper.findChildTextMesh(slot0.viewGO, "root/right/rewards/reward2/#txt_num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goRight = gohelper.findChild(arg_1_0.viewGO, "root/right")
+	arg_1_0.rightAnim = arg_1_0.goRight:GetComponent(gohelper.Type_Animator)
+	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/desc")
+	arg_1_0.txtContent = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#goRole/bottom/#txt_Dialouge")
+	arg_1_0.options = {}
+	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#btn_close")
+	arg_1_0.goOptions = gohelper.findChild(arg_1_0.viewGO, "root/right/options")
+	arg_1_0.goRewards = gohelper.findChild(arg_1_0.viewGO, "root/right/rewards")
+	arg_1_0.goReward1 = gohelper.findChild(arg_1_0.viewGO, "root/right/rewards/reward1")
+	arg_1_0.txtRewardNum1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/rewards/reward1/#txt_num")
+	arg_1_0.goReward2 = gohelper.findChild(arg_1_0.viewGO, "root/right/rewards/reward2")
+	arg_1_0.simageReward2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/rewards/reward2/icon")
+	arg_1_0.txtRewardNum2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/rewards/reward2/#txt_num")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClose, slot0.onClickBtnClose, slot0)
-	slot0:addEventCb(Activity186Controller.instance, Activity186Event.FinishGame, slot0.onFinishGame, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickBtnClose, arg_2_0)
+	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.FinishGame, arg_2_0.onFinishGame, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onClickBtnClose(slot0)
-	slot0:closeThis()
+function var_0_0.onClickBtnClose(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0.onClickOption(slot0, slot1)
-	if slot0.gameStatus ~= Activity186Enum.GameStatus.Playing then
+function var_0_0.onClickOption(arg_6_0, arg_6_1)
+	if arg_6_0.gameStatus ~= Activity186Enum.GameStatus.Playing then
 		return
 	end
 
-	if slot0._selectIndex ~= slot1 then
-		slot0._selectIndex = slot1
+	if arg_6_0._selectIndex ~= arg_6_1 then
+		arg_6_0._selectIndex = arg_6_1
 
-		slot0:updateSelect()
+		arg_6_0:updateSelect()
 	end
 
-	if not slot0.questionConfig then
+	if not arg_6_0.questionConfig then
 		return
 	end
 
-	if slot0.questionConfig["rewardId" .. slot1] == 0 then
+	local var_6_0 = arg_6_0.questionConfig["rewardId" .. arg_6_1]
+
+	if var_6_0 == 0 then
 		return
 	end
 
-	slot0.txtDesc.text = slot0.questionConfig["feedback" .. slot1]
-	slot0.txtContent.text = slot0.questionConfig.hanzhangline4
+	arg_6_0.txtDesc.text = arg_6_0.questionConfig["feedback" .. arg_6_1]
+	arg_6_0.txtContent.text = arg_6_0.questionConfig.hanzhangline4
 
-	slot0:showResult(slot2)
-	Activity186Rpc.instance:sendFinishAct186ATypeGameRequest(slot0.actId, slot0.gameId, slot2)
+	arg_6_0:showResult(var_6_0)
+	Activity186Rpc.instance:sendFinishAct186ATypeGameRequest(arg_6_0.actId, arg_6_0.gameId, var_6_0)
 end
 
-function slot0.onFinishGame(slot0)
-	slot0:checkGameNotOnline()
+function var_0_0.onFinishGame(arg_7_0)
+	arg_7_0:checkGameNotOnline()
 end
 
-function slot0.checkGameNotOnline(slot0)
-	if not Activity186Model.instance:getById(slot0.actId) then
+function var_0_0.checkGameNotOnline(arg_8_0)
+	local var_8_0 = Activity186Model.instance:getById(arg_8_0.actId)
+
+	if not var_8_0 then
 		return
 	end
 
-	if not slot1:getGameInfo(slot0.gameId) then
+	if not var_8_0:getGameInfo(arg_8_0.gameId) then
 		return
 	end
 
-	if not slot1:isGameOnline(slot0.gameId) then
-		slot0:closeThis()
+	if not var_8_0:isGameOnline(arg_8_0.gameId) then
+		arg_8_0:closeThis()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0:refreshParam()
+	arg_9_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:refreshParam()
+	arg_10_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.actId = slot0.viewParam.activityId
-	slot0.gameId = slot0.viewParam.gameId
-	slot0.gameStatus = slot0.viewParam.gameStatus
+function var_0_0.refreshParam(arg_11_0)
+	arg_11_0.actId = arg_11_0.viewParam.activityId
+	arg_11_0.gameId = arg_11_0.viewParam.gameId
+	arg_11_0.gameStatus = arg_11_0.viewParam.gameStatus
 end
 
-function slot0.refreshView(slot0)
-	if slot0.gameStatus == Activity186Enum.GameStatus.Playing then
-		slot0:_showDeadline()
-		slot0.rightAnim:Play("open")
+function var_0_0.refreshView(arg_12_0)
+	if arg_12_0.gameStatus == Activity186Enum.GameStatus.Playing then
+		arg_12_0:_showDeadline()
+		arg_12_0.rightAnim:Play("open")
 
-		slot2 = Activity186Model.instance:getById(slot0.actId):getQuestionConfig(slot0.gameId)
-		slot0.questionConfig = slot2
-		slot0.txtDesc.text = slot2.question
+		local var_12_0 = Activity186Model.instance:getById(arg_12_0.actId):getQuestionConfig(arg_12_0.gameId)
+
+		arg_12_0.questionConfig = var_12_0
+		arg_12_0.txtDesc.text = var_12_0.question
 
 		AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_mln_unlock)
-		slot0:updateOptions(slot2)
+		arg_12_0:updateOptions(var_12_0)
 	end
 end
 
-function slot0.updateOptions(slot0, slot1)
-	for slot5 = 1, 3 do
-		slot0:updateOption(slot5, slot1)
+function var_0_0.updateOptions(arg_13_0, arg_13_1)
+	for iter_13_0 = 1, 3 do
+		arg_13_0:updateOption(iter_13_0, arg_13_1)
 	end
 
-	slot0:updateSelect()
+	arg_13_0:updateSelect()
 end
 
-function slot0.updateSelect(slot0)
-	for slot4 = 1, 3 do
-		gohelper.setActive(slot0:getOrCreateOption(slot4).goNormal, slot0._selectIndex ~= slot4)
-		gohelper.setActive(slot5.goSelect, slot0._selectIndex == slot4)
+function var_0_0.updateSelect(arg_14_0)
+	for iter_14_0 = 1, 3 do
+		local var_14_0 = arg_14_0:getOrCreateOption(iter_14_0)
+
+		gohelper.setActive(var_14_0.goNormal, arg_14_0._selectIndex ~= iter_14_0)
+		gohelper.setActive(var_14_0.goSelect, arg_14_0._selectIndex == iter_14_0)
 	end
 end
 
-function slot0.updateOption(slot0, slot1, slot2)
-	slot3 = slot0:getOrCreateOption(slot1)
+function var_0_0.updateOption(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getOrCreateOption(arg_15_1)
+	local var_15_1 = arg_15_2["answer" .. arg_15_1]
 
-	if string.nilorempty(slot2["answer" .. slot1]) then
-		gohelper.setActive(slot3.go, false)
+	if string.nilorempty(var_15_1) then
+		gohelper.setActive(var_15_0.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_15_0.go, true)
 
-	slot3.txtNormal.text = slot4
-	slot3.txtSelect.text = slot4
+	var_15_0.txtNormal.text = var_15_1
+	var_15_0.txtSelect.text = var_15_1
 end
 
-function slot0.getOrCreateOption(slot0, slot1)
-	if not slot0.options[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.findChild(slot0.viewGO, "root/right/options/item" .. slot1)
-		slot2.goNormal = gohelper.findChild(slot2.go, "normal")
-		slot2.goSelect = gohelper.findChild(slot2.go, "select")
-		slot2.txtNormal = gohelper.findChildTextMesh(slot2.goNormal, "#txt_dec")
-		slot2.txtSelect = gohelper.findChildTextMesh(slot2.goSelect, "#txt_dec")
-		slot2.btn = gohelper.findButtonWithAudio(slot2.go)
+function var_0_0.getOrCreateOption(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.options[arg_16_1]
 
-		slot2.btn:AddClickListener(slot0.onClickOption, slot0, slot1)
+	if not var_16_0 then
+		var_16_0 = arg_16_0:getUserDataTb_()
+		var_16_0.go = gohelper.findChild(arg_16_0.viewGO, "root/right/options/item" .. arg_16_1)
+		var_16_0.goNormal = gohelper.findChild(var_16_0.go, "normal")
+		var_16_0.goSelect = gohelper.findChild(var_16_0.go, "select")
+		var_16_0.txtNormal = gohelper.findChildTextMesh(var_16_0.goNormal, "#txt_dec")
+		var_16_0.txtSelect = gohelper.findChildTextMesh(var_16_0.goSelect, "#txt_dec")
+		var_16_0.btn = gohelper.findButtonWithAudio(var_16_0.go)
 
-		slot0.options[slot1] = slot2
+		var_16_0.btn:AddClickListener(arg_16_0.onClickOption, arg_16_0, arg_16_1)
+
+		arg_16_0.options[arg_16_1] = var_16_0
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.showResult(slot0, slot1)
-	slot0.gameStatus = Activity186Enum.GameStatus.Result
+function var_0_0.showResult(arg_17_0, arg_17_1)
+	arg_17_0.gameStatus = Activity186Enum.GameStatus.Result
 
-	slot0.rightAnim:Play("finish")
-	slot0:refreshReward(Activity186Config.instance:getGameRewardConfig(1, slot1).bonus)
+	arg_17_0.rightAnim:Play("finish")
+
+	local var_17_0 = Activity186Config.instance:getGameRewardConfig(1, arg_17_1)
+
+	arg_17_0:refreshReward(var_17_0.bonus)
 end
 
-function slot0.refreshReward(slot0, slot1)
-	slot3 = {}
+function var_0_0.refreshReward(arg_18_0, arg_18_1)
+	local var_18_0 = GameUtil.splitString2(arg_18_1, true)
+	local var_18_1 = {}
 
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, true)) do
-		if slot8[1] ~= 26 then
-			table.insert(slot3, slot8)
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		if iter_18_1[1] ~= 26 then
+			table.insert(var_18_1, iter_18_1)
 		end
 	end
 
-	slot5 = slot3[2]
+	local var_18_2 = var_18_1[1]
+	local var_18_3 = var_18_1[2]
 
-	if slot3[1] then
-		slot0.txtRewardNum1.text = string.format("×%s", slot4[3])
+	if var_18_2 then
+		arg_18_0.txtRewardNum1.text = string.format("×%s", var_18_2[3])
 
-		gohelper.setActive(slot0.goReward1, true)
+		gohelper.setActive(arg_18_0.goReward1, true)
 	else
-		gohelper.setActive(slot0.goReward1, false)
+		gohelper.setActive(arg_18_0.goReward1, false)
 	end
 
-	if slot5 then
-		gohelper.setActive(slot0.goReward2, true)
+	if var_18_3 then
+		gohelper.setActive(arg_18_0.goReward2, true)
 
-		slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot5[1], slot5[2], true)
+		local var_18_4, var_18_5 = ItemModel.instance:getItemConfigAndIcon(var_18_3[1], var_18_3[2], true)
 
-		slot0.simageReward2:LoadImage(slot7)
+		arg_18_0.simageReward2:LoadImage(var_18_5)
 
-		slot0.txtRewardNum2.text = string.format("×%s", slot5[3])
+		arg_18_0.txtRewardNum2.text = string.format("×%s", var_18_3[3])
 	else
-		gohelper.setActive(slot0.goReward2, false)
+		gohelper.setActive(arg_18_0.goReward2, false)
 	end
 end
 
-function slot0._showDeadline(slot0)
-	slot0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
+function var_0_0._showDeadline(arg_19_0)
+	arg_19_0:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(arg_19_0._onRefreshDeadline, arg_19_0)
+	TaskDispatcher.runRepeat(arg_19_0._onRefreshDeadline, arg_19_0, 1)
 end
 
-function slot0._onRefreshDeadline(slot0)
-	slot0:checkGameNotOnline()
+function var_0_0._onRefreshDeadline(arg_20_0)
+	arg_20_0:checkGameNotOnline()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onClose(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._onRefreshDeadline, arg_21_0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onDestroyView(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._onRefreshDeadline, arg_22_0)
 
-	for slot4, slot5 in ipairs(slot0.options) do
-		slot5.btn:RemoveClickListener()
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.options) do
+		iter_22_1.btn:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

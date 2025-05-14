@@ -1,118 +1,145 @@
-module("modules.logic.fight.system.work.FightBuffTriggerEffect", package.seeall)
+﻿module("modules.logic.fight.system.work.FightBuffTriggerEffect", package.seeall)
 
-slot0 = class("FightBuffTriggerEffect", FightEffectBase)
-slot1 = 2
-slot2 = 2
+local var_0_0 = class("FightBuffTriggerEffect", FightEffectBase)
+local var_0_1 = 2
+local var_0_2 = 2
 
-function slot0.onStart(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+
+	if not var_1_0 then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if lua_skill_buff.configDict[slot0._actEffectMO.effectNum] and FightHelper.shouUIPoisoningEffect(slot2.id) and slot1.nameUI and slot1.nameUI.showPoisoningEffect then
-		slot1.nameUI:showPoisoningEffect(slot2)
+	local var_1_1 = lua_skill_buff.configDict[arg_1_0._actEffectMO.effectNum]
+
+	if var_1_1 and FightHelper.shouUIPoisoningEffect(var_1_1.id) and var_1_0.nameUI and var_1_0.nameUI.showPoisoningEffect then
+		var_1_0.nameUI:showPoisoningEffect(var_1_1)
 	end
 
-	slot3, slot4, slot5 = slot0:_getBuffTriggerParam(slot2, slot1)
+	local var_1_2, var_1_3, var_1_4 = arg_1_0:_getBuffTriggerParam(var_1_1, var_1_0)
 
-	if slot3 ~= "0" and not string.nilorempty(slot3) then
-		slot0._effectWrap = nil
+	if var_1_2 ~= "0" and not string.nilorempty(var_1_2) then
+		local var_1_5 = var_1_0:getSide()
+		local var_1_6 = "buff/" .. var_1_2
 
-		if not string.nilorempty(slot4) then
-			slot0._effectWrap = slot1.effect:addHangEffect("buff/" .. slot3, slot4, slot1:getSide())
+		arg_1_0._effectWrap = nil
 
-			slot0._effectWrap:setLocalPos(0, 0, 0)
+		if not string.nilorempty(var_1_3) then
+			arg_1_0._effectWrap = var_1_0.effect:addHangEffect(var_1_6, var_1_3, var_1_5)
+
+			arg_1_0._effectWrap:setLocalPos(0, 0, 0)
 		else
-			slot0._effectWrap = slot1.effect:addGlobalEffect(slot7, slot6)
-			slot8, slot9, slot10 = transformhelper.getPos(slot1.go.transform)
+			arg_1_0._effectWrap = var_1_0.effect:addGlobalEffect(var_1_6, var_1_5)
 
-			slot0._effectWrap:setWorldPos(slot8, slot9, slot10)
+			local var_1_7, var_1_8, var_1_9 = transformhelper.getPos(var_1_0.go.transform)
+
+			arg_1_0._effectWrap:setWorldPos(var_1_7, var_1_8, var_1_9)
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot0._effectWrap)
-		TaskDispatcher.runDelay(slot0._onTickCheckRemoveEffect, slot0, uv0 / FightModel.instance:getSpeed())
+		FightRenderOrderMgr.instance:onAddEffectWrap(var_1_0.id, arg_1_0._effectWrap)
+		TaskDispatcher.runDelay(arg_1_0._onTickCheckRemoveEffect, arg_1_0, var_0_1 / FightModel.instance:getSpeed())
 	end
 
-	if slot5 and slot5 > 0 then
-		FightAudioMgr.instance:playAudio(slot5)
+	if var_1_4 and var_1_4 > 0 then
+		FightAudioMgr.instance:playAudio(var_1_4)
 	end
 
-	slot0._animationName = slot2 and slot2.triggerAnimationName
-	slot0._animationName = FightHelper.processEntityActionName(slot1, slot0._animationName)
+	arg_1_0._animationName = var_1_1 and var_1_1.triggerAnimationName
+	arg_1_0._animationName = FightHelper.processEntityActionName(var_1_0, arg_1_0._animationName)
 
-	if not string.nilorempty(slot0._animationName) and slot1.spine:hasAnimation(slot0._animationName) then
-		slot0._hasPlayAnim = true
+	if not string.nilorempty(arg_1_0._animationName) and var_1_0.spine:hasAnimation(arg_1_0._animationName) then
+		arg_1_0._hasPlayAnim = true
 
-		slot1.spine:addAnimEventCallback(slot0._onAnimEvent, slot0)
-		slot1.spine:play(slot0._animationName, false, true, true)
-		TaskDispatcher.runDelay(slot0._onTickCheckRemoveAnim, slot0, uv1 / FightModel.instance:getSpeed())
+		var_1_0.spine:addAnimEventCallback(arg_1_0._onAnimEvent, arg_1_0)
+		var_1_0.spine:play(arg_1_0._animationName, false, true, true)
+		TaskDispatcher.runDelay(arg_1_0._onTickCheckRemoveAnim, arg_1_0, var_0_2 / FightModel.instance:getSpeed())
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0._getBuffTriggerParam(slot0, slot1, slot2)
-	slot4 = slot1 and slot1.triggerEffectHangPoint
-	slot5 = slot1 and slot1.triggerAudio
+function var_0_0._getBuffTriggerParam(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_1 and arg_2_1.triggerEffect
+	local var_2_1 = arg_2_1 and arg_2_1.triggerEffectHangPoint
+	local var_2_2 = arg_2_1 and arg_2_1.triggerAudio
 
-	if (string.nilorempty(slot1 and slot1.triggerEffect) or slot3 == "0") and lua_buff_act.configDict[slot0._actEffectMO.buffActId] and not string.nilorempty(slot6.effect) then
-		if slot6.effect ~= "0" and not string.nilorempty(slot7) then
-			return slot7, slot6.effectHangPoint, slot6.audioId
+	if string.nilorempty(var_2_0) or var_2_0 == "0" then
+		local var_2_3 = lua_buff_act.configDict[arg_2_0._actEffectMO.buffActId]
+
+		if var_2_3 and not string.nilorempty(var_2_3.effect) then
+			local var_2_4 = var_2_3.effect
+			local var_2_5 = var_2_3.effectHangPoint
+			local var_2_6 = var_2_3.audioId
+
+			if var_2_4 ~= "0" and not string.nilorempty(var_2_4) then
+				return var_2_4, var_2_5, var_2_6
+			end
 		end
 	end
 
-	if slot1 then
-		slot3 = FightHelper.processBuffEffectPath(slot3, slot2, slot1.id, "triggerEffect")
+	if arg_2_1 then
+		var_2_0 = FightHelper.processBuffEffectPath(var_2_0, arg_2_2, arg_2_1.id, "triggerEffect")
 	end
 
-	return slot3, slot4, slot5
+	return var_2_0, var_2_1, var_2_2
 end
 
-function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
-	if slot1 == slot0._animationName and slot2 == SpineAnimEvent.ActionComplete and FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot4.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
+function var_0_0._onAnimEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 == arg_3_0._animationName and arg_3_2 == SpineAnimEvent.ActionComplete then
+		local var_3_0 = FightHelper.getEntity(arg_3_0._actEffectMO.targetId)
 
-		if not FightSkillMgr.instance:isEntityPlayingTimeline(slot4.id) then
-			slot4:resetAnimState()
+		if var_3_0 then
+			var_3_0.spine:removeAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
+
+			if not FightSkillMgr.instance:isEntityPlayingTimeline(var_3_0.id) then
+				var_3_0:resetAnimState()
+			end
 		end
 	end
 end
 
-function slot0._onTickCheckRemoveEffect(slot0)
+function var_0_0._onTickCheckRemoveEffect(arg_4_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return
 	end
 
-	slot1 = FightHelper.getEntity(slot0._actEffectMO.targetId)
+	local var_4_0 = FightHelper.getEntity(arg_4_0._actEffectMO.targetId)
 
-	if slot0._effectWrap and slot1 then
-		slot1.effect:removeEffect(slot0._effectWrap)
+	if arg_4_0._effectWrap and var_4_0 then
+		var_4_0.effect:removeEffect(arg_4_0._effectWrap)
 
-		slot0._effectWrap = nil
+		arg_4_0._effectWrap = nil
 	end
 end
 
-function slot0._onTickCheckRemoveAnim(slot0)
+function var_0_0._onTickCheckRemoveAnim(arg_5_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return
 	end
 
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot1.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
+	local var_5_0 = FightHelper.getEntity(arg_5_0._actEffectMO.targetId)
+
+	if var_5_0 then
+		var_5_0.spine:removeAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._onTickCheckRemoveEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._onTickCheckRemoveAnim, slot0)
+function var_0_0.onDestroy(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._onTickCheckRemoveEffect, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._onTickCheckRemoveAnim, arg_6_0)
 
-	if slot0._hasPlayAnim and FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot1.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
+	if arg_6_0._hasPlayAnim then
+		local var_6_0 = FightHelper.getEntity(arg_6_0._actEffectMO.targetId)
+
+		if var_6_0 then
+			var_6_0.spine:removeAnimEventCallback(arg_6_0._onAnimEvent, arg_6_0)
+		end
 	end
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_6_0)
 end
 
-return slot0
+return var_0_0

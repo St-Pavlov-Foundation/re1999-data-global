@@ -1,37 +1,37 @@
-module("modules.logic.scene.fight.comp.FightSceneFightStatusComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneFightStatusComp", package.seeall)
 
-slot0 = class("FightSceneFightStatusComp", BaseSceneComp)
+local var_0_0 = class("FightSceneFightStatusComp", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, slot0._onRoundSequenceStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	FightController.instance:registerCallback(FightEvent.FightDialogEnd, slot0._onFightDialogEnd, slot0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._pushEndFight, slot0)
-	FightController.instance:registerCallback(FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, arg_2_0._onRoundSequenceStart, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStageBefore, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.FightDialogEnd, arg_2_0._onFightDialogEnd, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_2_0._pushEndFight, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ForceUpdatePerformanceData, arg_2_0._onForceUpdatePerformanceData, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 end
 
-function slot0._onLevelLoaded(slot0)
-	slot0._fightScene = GameSceneMgr.instance:getCurScene()
-	slot0._sceneObj = slot0._fightScene.level:getSceneGo()
+function var_0_0._onLevelLoaded(arg_3_0)
+	arg_3_0._fightScene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._sceneObj = arg_3_0._fightScene.level:getSceneGo()
 end
 
-function slot0._onFightDialogEnd(slot0)
-	slot0:_clearTab()
+function var_0_0._onFightDialogEnd(arg_4_0)
+	arg_4_0:_clearTab()
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.StoryView then
-		slot0:_clearTab()
+function var_0_0._onCloseView(arg_5_0, arg_5_1)
+	if arg_5_1 == ViewName.StoryView then
+		arg_5_0:_clearTab()
 	end
 end
 
-function slot0._checkFunc(slot0)
+function var_0_0._checkFunc(arg_6_0)
 	if FightViewDialog.playingDialog then
 		return
 	end
@@ -40,82 +40,95 @@ function slot0._checkFunc(slot0)
 		return
 	end
 
-	slot1 = true
-	slot0._hpDic = slot0._hpDic or {}
-	slot0._expointDic = slot0._expointDic or {}
-	slot0._buffCount = slot0._buffCount or {}
+	local var_6_0 = true
 
-	for slot6, slot7 in ipairs(FightHelper.getAllEntitys()) do
-		slot8 = slot7.id
+	arg_6_0._hpDic = arg_6_0._hpDic or {}
+	arg_6_0._expointDic = arg_6_0._expointDic or {}
+	arg_6_0._buffCount = arg_6_0._buffCount or {}
 
-		if slot7:getMO() then
-			if slot0._hpDic[slot8] ~= slot9.currentHp then
-				slot1 = false
-				slot0._hpDic[slot8] = slot10
+	local var_6_1 = FightHelper.getAllEntitys()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		local var_6_2 = iter_6_1.id
+		local var_6_3 = iter_6_1:getMO()
+
+		if var_6_3 then
+			local var_6_4 = var_6_3.currentHp
+
+			if arg_6_0._hpDic[var_6_2] ~= var_6_4 then
+				var_6_0 = false
+				arg_6_0._hpDic[var_6_2] = var_6_4
 			end
 
-			if slot0._expointDic[slot8] ~= slot9:getExPoint() then
-				slot1 = false
-				slot0._expointDic[slot8] = slot11
+			local var_6_5 = var_6_3:getExPoint()
+
+			if arg_6_0._expointDic[var_6_2] ~= var_6_5 then
+				var_6_0 = false
+				arg_6_0._expointDic[var_6_2] = var_6_5
 			end
 
-			if slot0._buffCount[slot8] ~= (slot9:getBuffList() and #slot12 or 0) then
-				slot1 = false
-				slot0._buffCount[slot8] = slot13
+			local var_6_6 = var_6_3:getBuffList()
+			local var_6_7 = var_6_6 and #var_6_6 or 0
+
+			if arg_6_0._buffCount[var_6_2] ~= var_6_7 then
+				var_6_0 = false
+				arg_6_0._buffCount[var_6_2] = var_6_7
 			end
 		end
 	end
 
-	if slot1 then
+	if var_6_0 then
 		logError("场上角色数据一分钟没有变化了,可能卡住了")
 		FightMsgMgr.sendMsg(FightMsgId.MaybeCrashed)
-		slot0:_releaseTimer()
+		arg_6_0:_releaseTimer()
 	end
 end
 
-function slot0._onRoundSequenceStart(slot0)
-	TaskDispatcher.runRepeat(slot0._checkFunc, slot0, 60)
+function var_0_0._onRoundSequenceStart(arg_7_0)
+	TaskDispatcher.runRepeat(arg_7_0._checkFunc, arg_7_0, 60)
 end
 
-function slot0._onRoundSequenceFinish(slot0)
-	slot0:_releaseTimer()
+function var_0_0._onRoundSequenceFinish(arg_8_0)
+	arg_8_0:_releaseTimer()
 end
 
-function slot0._onRestartStageBefore(slot0)
-	slot0:_releaseTimer()
+function var_0_0._onRestartStageBefore(arg_9_0)
+	arg_9_0:_releaseTimer()
 end
 
-function slot0._releaseTimer(slot0)
-	TaskDispatcher.cancelTask(slot0._checkFunc, slot0)
-	slot0:_clearTab()
+function var_0_0._releaseTimer(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._checkFunc, arg_10_0)
+	arg_10_0:_clearTab()
 end
 
-function slot0._pushEndFight(slot0)
-	slot0:_releaseTimer()
+function var_0_0._pushEndFight(arg_11_0)
+	arg_11_0:_releaseTimer()
 end
 
-function slot0._clearTab(slot0)
-	slot0._hpDic = nil
-	slot0._expointDic = nil
-	slot0._buffCount = nil
+function var_0_0._clearTab(arg_12_0)
+	arg_12_0._hpDic = nil
+	arg_12_0._expointDic = nil
+	arg_12_0._buffCount = nil
 end
 
-function slot0._onForceUpdatePerformanceData(slot0, slot1)
-	if FightHelper.getEntity(slot1) and slot2.buff then
-		slot2.buff:releaseAllBuff()
-		slot2.buff:dealStartBuff()
+function var_0_0._onForceUpdatePerformanceData(arg_13_0, arg_13_1)
+	local var_13_0 = FightHelper.getEntity(arg_13_1)
+
+	if var_13_0 and var_13_0.buff then
+		var_13_0.buff:releaseAllBuff()
+		var_13_0.buff:dealStartBuff()
 	end
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	slot0:_releaseTimer()
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, slot0._onRoundSequenceStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, slot0._onFightDialogEnd, slot0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, slot0._pushEndFight, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onSceneClose(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0:_releaseTimer()
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, arg_14_0._onRoundSequenceStart, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_14_0._onRoundSequenceFinish, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_14_0._onRestartStageBefore, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_14_0._onFightDialogEnd, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_14_0._pushEndFight, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.ForceUpdatePerformanceData, arg_14_0._onForceUpdatePerformanceData, arg_14_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_14_0._onCloseView, arg_14_0)
 end
 
-return slot0
+return var_0_0

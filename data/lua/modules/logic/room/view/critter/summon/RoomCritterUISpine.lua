@@ -1,64 +1,69 @@
-module("modules.logic.room.view.critter.summon.RoomCritterUISpine", package.seeall)
+﻿module("modules.logic.room.view.critter.summon.RoomCritterUISpine", package.seeall)
 
-slot0 = class("RoomCritterUISpine", LuaCompBase)
+local var_0_0 = class("RoomCritterUISpine", LuaCompBase)
 
-function slot0.Create(slot0)
-	slot1 = nil
+function var_0_0.Create(arg_1_0)
+	local var_1_0
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
+	return (MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0))
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1
 end
 
-function slot0._getSpine(slot0)
-	if not slot0._spine then
-		slot0._spine = GuiSpine.Create(slot0._go)
+function var_0_0._getSpine(arg_3_0)
+	if not arg_3_0._spine then
+		arg_3_0._spine = GuiSpine.Create(arg_3_0._go)
 	end
 
-	return slot0._spine
+	return arg_3_0._spine
 end
 
-function slot0.resetTransform(slot0)
-	if not slot0._spine then
+function var_0_0.resetTransform(arg_4_0)
+	if not arg_4_0._spine then
 		return
 	end
 
-	if gohelper.isNil(slot0._spine._spineGo) then
+	local var_4_0 = arg_4_0._spine._spineGo
+
+	if gohelper.isNil(var_4_0) then
 		return
 	end
 
-	recthelper.setAnchor(slot1.transform, 0, 0)
-	transformhelper.setLocalScale(slot1.transform, 1, 1, 1)
+	recthelper.setAnchor(var_4_0.transform, 0, 0)
+	transformhelper.setLocalScale(var_4_0.transform, 1, 1, 1)
 end
 
-function slot0.setResPath(slot0, slot1, slot2, slot3)
-	slot0._curModel = slot0:_getSpine()
+function var_0_0.setResPath(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_1:getSkinId()
+	local var_5_1 = RoomResHelper.getCritterUIPath(var_5_0)
 
-	slot0._curModel:setHeroId(slot1.id)
-	slot0._curModel:showModel()
-	slot0._curModel:setResPath(RoomResHelper.getCritterUIPath(slot1:getSkinId()), function ()
-		uv0:resetTransform()
+	arg_5_0._curModel = arg_5_0:_getSpine()
 
-		if uv1 then
-			uv1(uv2)
+	arg_5_0._curModel:setHeroId(arg_5_1.id)
+	arg_5_0._curModel:showModel()
+	arg_5_0._curModel:setResPath(var_5_1, function()
+		arg_5_0:resetTransform()
+
+		if arg_5_2 then
+			arg_5_2(arg_5_3)
 		end
-	end, slot0, true)
+	end, arg_5_0, true)
 end
 
-function slot0.stopVoice(slot0)
-	if slot0._spine then
-		slot0._spine:stopVoice()
+function var_0_0.stopVoice(arg_7_0)
+	if arg_7_0._spine then
+		arg_7_0._spine:stopVoice()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._spine then
-		slot0._spine:stopVoice()
+function var_0_0.onDestroyView(arg_8_0)
+	if arg_8_0._spine then
+		arg_8_0._spine:stopVoice()
 
-		slot0._spine = nil
+		arg_8_0._spine = nil
 	end
 end
 
-return slot0
+return var_0_0

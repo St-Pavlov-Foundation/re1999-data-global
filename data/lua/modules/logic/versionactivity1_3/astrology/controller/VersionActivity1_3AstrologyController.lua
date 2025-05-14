@@ -1,37 +1,42 @@
-module("modules.logic.versionactivity1_3.astrology.controller.VersionActivity1_3AstrologyController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.astrology.controller.VersionActivity1_3AstrologyController", package.seeall)
 
-slot0 = class("VersionActivity1_3AstrologyController", BaseController)
+local var_0_0 = class("VersionActivity1_3AstrologyController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.openVersionActivity1_3AstrologyView(slot0)
-	if Activity126Model.instance:receiveHoroscope() and slot2 > 0 then
-		({
-			defaultTabIds = {
-				[2.0] = 1
-			}
-		}).defaultTabIds[3] = 2
+function var_0_0.openVersionActivity1_3AstrologyView(arg_3_0)
+	local var_3_0 = {
+		defaultTabIds = {
+			[2] = 1
+		}
+	}
+	local var_3_1 = Activity126Model.instance:receiveHoroscope()
+
+	if var_3_1 and var_3_1 > 0 then
+		var_3_0.defaultTabIds[3] = 2
 	else
-		slot1.defaultTabIds[3] = 1
+		var_3_0.defaultTabIds[3] = 1
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_3AstrologyView, slot1)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_3AstrologyView, var_3_0)
 end
 
-function slot0.openVersionActivity1_3AstrologySuccessView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.VersionActivity1_3AstrologySuccessView, slot1, slot2)
+function var_0_0.openVersionActivity1_3AstrologySuccessView(arg_4_0, arg_4_1, arg_4_2)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_3AstrologySuccessView, arg_4_1, arg_4_2)
 end
 
-function slot0.openVersionActivity1_3AstrologyPropView(slot0, slot1)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.VersionActivity1_3AstrologyPropView, slot1)
+function var_0_0.openVersionActivity1_3AstrologyPropView(arg_5_0, arg_5_1)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.VersionActivity1_3AstrologyPropView, arg_5_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

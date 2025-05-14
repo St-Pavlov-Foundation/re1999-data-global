@@ -1,23 +1,27 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventMarkSceneDefaultRoot", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventMarkSceneDefaultRoot", package.seeall)
 
-slot0 = class("FightTLEventMarkSceneDefaultRoot")
+local var_0_0 = class("FightTLEventMarkSceneDefaultRoot")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	uv0.sceneId = GameSceneMgr.instance:getCurSceneId()
-	uv0.levelId = GameSceneMgr.instance:getCurLevelId()
-	uv0.rootName = slot3[1]
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.sceneId = GameSceneMgr.instance:getCurSceneId()
+	var_0_0.levelId = GameSceneMgr.instance:getCurLevelId()
+	var_0_0.rootName = arg_1_3[1]
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_2_0)
+	return
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_4_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

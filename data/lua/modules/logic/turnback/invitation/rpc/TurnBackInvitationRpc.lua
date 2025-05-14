@@ -1,20 +1,22 @@
-module("modules.logic.turnback.invitation.rpc.TurnBackInvitationRpc", package.seeall)
+﻿module("modules.logic.turnback.invitation.rpc.TurnBackInvitationRpc", package.seeall)
 
-slot0 = class("TurnBackInvitationRpc", BaseRpc)
-slot0.instance = slot0.New()
+local var_0_0 = class("TurnBackInvitationRpc", BaseRpc)
 
-function slot0.sendGet171InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity171Module_pb.Get171InfoRequest()
-	slot4.activityId = slot1
+var_0_0.instance = var_0_0.New()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+function var_0_0.sendGet171InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity171Module_pb.Get171InfoRequest()
+
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet171InfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		TurnBackInvitationModel.instance:setActivityInfo(slot2)
+function var_0_0.onReceiveGet171InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		TurnBackInvitationModel.instance:setActivityInfo(arg_2_2)
 		TurnBackInvitationController.instance:dispatchEvent(TurnBackInvitationEvent.OnGetInfoSuccess)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,44 +1,45 @@
-module("modules.logic.versionactivity1_9.heroinvitation.config.HeroInvitationConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.config.HeroInvitationConfig", package.seeall)
 
-slot0 = class("HeroInvitationConfig", BaseConfig)
+local var_0_0 = class("HeroInvitationConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"hero_invitation"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "hero_invitation" then
-		slot0._roleStoryConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "hero_invitation" then
+		arg_3_0._roleStoryConfig = arg_3_2
 
-		slot0:initHeroInvitation()
+		arg_3_0:initHeroInvitation()
 	end
 end
 
-function slot0.initHeroInvitation(slot0)
-	slot0._elementDict = {}
+function var_0_0.initHeroInvitation(arg_4_0)
+	arg_4_0._elementDict = {}
 
-	for slot4, slot5 in ipairs(slot0._roleStoryConfig.configList) do
-		slot0._elementDict[slot5.elementId] = slot5
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._roleStoryConfig.configList) do
+		arg_4_0._elementDict[iter_4_1.elementId] = iter_4_1
 	end
 end
 
-function slot0.getInvitationConfig(slot0, slot1)
-	return slot0._roleStoryConfig.configDict[slot1]
+function var_0_0.getInvitationConfig(arg_5_0, arg_5_1)
+	return arg_5_0._roleStoryConfig.configDict[arg_5_1]
 end
 
-function slot0.getInvitationList(slot0)
-	return slot0._roleStoryConfig.configList
+function var_0_0.getInvitationList(arg_6_0)
+	return arg_6_0._roleStoryConfig.configList
 end
 
-function slot0.getInvitationConfigByElementId(slot0, slot1)
-	return slot0._elementDict[slot1]
+function var_0_0.getInvitationConfigByElementId(arg_7_0, arg_7_1)
+	return arg_7_0._elementDict[arg_7_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

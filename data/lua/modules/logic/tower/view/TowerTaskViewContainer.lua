@@ -1,53 +1,55 @@
-module("modules.logic.tower.view.TowerTaskViewContainer", package.seeall)
+﻿module("modules.logic.tower.view.TowerTaskViewContainer", package.seeall)
 
-slot0 = class("TowerTaskViewContainer", BaseViewContainer)
+local var_0_0 = class("TowerTaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	slot0:buildScrollViews()
-	table.insert(slot1, slot0.scrollView)
-	table.insert(slot1, TowerTaskView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_lefttop"))
+	arg_1_0:buildScrollViews()
+	table.insert(var_1_0, arg_1_0.scrollView)
+	table.insert(var_1_0, TowerTaskView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.buildScrollViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "Right/#scroll_taskList"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = TowerTaskItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1160
-	slot1.cellHeight = 165
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 0
-	slot1.frameUpdateMs = 100
+function var_0_0.buildScrollViews(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
 
-	for slot6 = 1, 6 do
+	var_3_0.scrollGOPath = "Right/#scroll_taskList"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+	var_3_0.cellClass = TowerTaskItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirV
+	var_3_0.lineCount = 1
+	var_3_0.cellWidth = 1160
+	var_3_0.cellHeight = 165
+	var_3_0.cellSpaceH = 0
+	var_3_0.cellSpaceV = 0
+	var_3_0.startSpace = 0
+	var_3_0.frameUpdateMs = 100
+
+	local var_3_1 = {}
+
+	for iter_3_0 = 1, 6 do
+		var_3_1[iter_3_0] = (iter_3_0 - 1) * 0.06
 	end
 
-	slot0.scrollView = LuaListScrollViewWithAnimator.New(TowerTaskModel.instance, slot1, {
-		[slot6] = (slot6 - 1) * 0.06
-	})
+	arg_3_0.scrollView = LuaListScrollViewWithAnimator.New(TowerTaskModel.instance, var_3_0, var_3_1)
 end
 
-return slot0
+return var_0_0

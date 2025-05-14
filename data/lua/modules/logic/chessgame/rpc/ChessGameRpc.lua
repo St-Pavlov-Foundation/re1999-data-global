@@ -1,6 +1,7 @@
-module("modules.logic.chessgame.rpc.ChessGameRpc", package.seeall)
+﻿module("modules.logic.chessgame.rpc.ChessGameRpc", package.seeall)
 
-slot0 = class("ChessGameRpc", BaseRpc)
-slot0.instance = slot0.New()
+local var_0_0 = class("ChessGameRpc", BaseRpc)
 
-return slot0
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

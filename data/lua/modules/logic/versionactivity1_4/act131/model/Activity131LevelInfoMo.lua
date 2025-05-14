@@ -1,52 +1,52 @@
-module("modules.logic.versionactivity1_4.act131.model.Activity131LevelInfoMo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act131.model.Activity131LevelInfoMo", package.seeall)
 
-slot0 = pureTable("Activity131LevelInfoMo")
+local var_0_0 = pureTable("Activity131LevelInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.episodeId = 0
-	slot0.state = 0
-	slot0.progress = 0
-	slot0.act131Elements = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.episodeId = 0
+	arg_1_0.state = 0
+	arg_1_0.progress = 0
+	arg_1_0.act131Elements = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.state = slot1.state
-	slot0.progress = slot1.progress
-	slot0.act131Elements = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.episodeId = arg_2_1.episodeId
+	arg_2_0.state = arg_2_1.state
+	arg_2_0.progress = arg_2_1.progress
+	arg_2_0.act131Elements = {}
 
-	for slot5, slot6 in ipairs(slot1.act131Elements) do
-		slot7 = Activity131ElementMo.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.act131Elements) do
+		local var_2_0 = Activity131ElementMo.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.act131Elements, slot7)
+		var_2_0:init(iter_2_1)
+		table.insert(arg_2_0.act131Elements, var_2_0)
 	end
 
-	table.sort(slot0.act131Elements, uv0.sortById)
+	table.sort(arg_2_0.act131Elements, var_0_0.sortById)
 end
 
-function slot0.updateInfo(slot0, slot1)
-	if slot0.state ~= slot1.state then
-		slot0.state = slot1.state
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	if arg_3_0.state ~= arg_3_1.state then
+		arg_3_0.state = arg_3_1.state
 
-		Activity131Controller.instance:dispatchEvent(Activity131Event.FirstFinish, slot1.episodeId)
+		Activity131Controller.instance:dispatchEvent(Activity131Event.FirstFinish, arg_3_1.episodeId)
 	end
 
-	slot0.progress = slot1.progress
-	slot0.act131Elements = {}
+	arg_3_0.progress = arg_3_1.progress
+	arg_3_0.act131Elements = {}
 
-	for slot5, slot6 in ipairs(slot1.act131Elements) do
-		slot7 = Activity131ElementMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.act131Elements) do
+		local var_3_0 = Activity131ElementMo.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.act131Elements, slot7)
+		var_3_0:init(iter_3_1)
+		table.insert(arg_3_0.act131Elements, var_3_0)
 	end
 
-	table.sort(slot0.act131Elements, uv0.sortById)
+	table.sort(arg_3_0.act131Elements, var_0_0.sortById)
 end
 
-function slot0.sortById(slot0, slot1)
-	return slot0.elementId < slot1.elementId
+function var_0_0.sortById(arg_4_0, arg_4_1)
+	return arg_4_0.elementId < arg_4_1.elementId
 end
 
-return slot0
+return var_0_0

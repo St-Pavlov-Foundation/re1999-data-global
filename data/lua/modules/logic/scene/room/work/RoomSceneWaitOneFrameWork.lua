@@ -1,23 +1,23 @@
-module("modules.logic.scene.room.work.RoomSceneWaitOneFrameWork", package.seeall)
+﻿module("modules.logic.scene.room.work.RoomSceneWaitOneFrameWork", package.seeall)
 
-slot0 = class("RoomSceneWaitOneFrameWork", BaseWork)
+local var_0_0 = class("RoomSceneWaitOneFrameWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._scene = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._scene = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._oneFrame, slot0, 0)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._oneFrame, arg_2_0, 0)
 end
 
-function slot0._oneFrame(slot0)
-	slot0._scene = nil
+function var_0_0._oneFrame(arg_3_0)
+	arg_3_0._scene = nil
 
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	slot0._scene = nil
+function var_0_0.clearWork(arg_4_0)
+	arg_4_0._scene = nil
 end
 
-return slot0
+return var_0_0

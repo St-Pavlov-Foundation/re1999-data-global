@@ -1,24 +1,27 @@
-module("modules.logic.fight.system.work.FightWorkEffectDeadPerformance", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectDeadPerformance", package.seeall)
 
-slot0 = class("FightWorkEffectDeadPerformance", FightEffectBase)
+local var_0_0 = class("FightWorkEffectDeadPerformance", FightEffectBase)
 
-function slot0.onAwake(slot0, slot1, slot2, slot3)
-	slot0._fightStepMO = slot1
-	slot0._actEffectMO = slot2
-	slot0._waitForLastHit = slot3
+function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._actEffectMO = arg_1_2
+	arg_1_0._waitForLastHit = arg_1_3
 end
 
-function slot0.onStart(slot0)
-	slot0:com_registWorkDoneFlowSequence():addWork(Work2FightWork.New(FightWorkEffectDeadNew, slot0._fightStepMO, slot0._actEffectMO, slot0._waitForLastHit))
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = arg_2_0:com_registWorkDoneFlowSequence()
 
-	if FightModel.instance:getVersion() < 1 and slot0._actEffectMO and slot0._actEffectMO.targetId then
-		slot1:addWork(Work2FightWork.New(FightWorkDissolveCardForDeadVersion0, slot0._actEffectMO))
+	var_2_0:addWork(Work2FightWork.New(FightWorkEffectDeadNew, arg_2_0._fightStepMO, arg_2_0._actEffectMO, arg_2_0._waitForLastHit))
+
+	if FightModel.instance:getVersion() < 1 and arg_2_0._actEffectMO and arg_2_0._actEffectMO.targetId then
+		var_2_0:addWork(Work2FightWork.New(FightWorkDissolveCardForDeadVersion0, arg_2_0._actEffectMO))
 	end
 
-	slot1:start()
+	var_2_0:start()
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

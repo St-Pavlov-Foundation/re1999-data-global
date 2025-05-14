@@ -1,17 +1,17 @@
-module("modules.logic.explore.view.ExploreBlackView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBlackView", package.seeall)
 
-slot0 = class("ExploreBlackView", BaseView)
+local var_0_0 = class("ExploreBlackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onOpenFinish(slot0)
-	if slot0._has_onOpen then
-		slot0.anim.enabled = true
+function var_0_0.onOpenFinish(arg_2_0)
+	if arg_2_0._has_onOpen then
+		arg_2_0.anim.enabled = true
 
-		slot0.anim:Play("loop", 0, 0)
+		arg_2_0.anim:Play("loop", 0, 0)
 	end
 end
 
-return slot0
+return var_0_0

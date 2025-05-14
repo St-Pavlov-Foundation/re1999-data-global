@@ -1,91 +1,104 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueEventMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueEventMO", package.seeall)
 
-slot0 = pureTable("RogueEventMO")
+local var_0_0 = pureTable("RogueEventMO")
 
-function slot0.init(slot0, slot1)
-	slot0.eventId = slot1.eventId
-	slot0.status = slot1.status
-	slot0.eventData = slot1.eventData
-	slot0.option = slot1.option
-	slot0._eventJsonData = nil
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.eventId = arg_1_1.eventId
+	arg_1_0.status = arg_1_1.status
+	arg_1_0.eventData = arg_1_1.eventData
+	arg_1_0.option = arg_1_1.option
+	arg_1_0._eventJsonData = nil
 end
 
-function slot0.getEventCo(slot0)
-	if not slot0.co then
-		slot0.co = lua_rogue_event.configDict[slot0.eventId]
+function var_0_0.getEventCo(arg_2_0)
+	if not arg_2_0.co then
+		arg_2_0.co = lua_rogue_event.configDict[arg_2_0.eventId]
 	end
 
-	return slot0.co
+	return arg_2_0.co
 end
 
-function slot0.getBattleData(slot0)
-	if not slot0:getEventCo() or slot1.type ~= V1a6_CachotEnum.EventType.Battle then
+function var_0_0.getBattleData(arg_3_0)
+	local var_3_0 = arg_3_0:getEventCo()
+
+	if not var_3_0 or var_3_0.type ~= V1a6_CachotEnum.EventType.Battle then
 		return
 	end
 
-	return slot0:_getJsonData()
+	return arg_3_0:_getJsonData()
 end
 
-function slot0._getJsonData(slot0)
-	if not slot0._eventJsonData then
-		if string.nilorempty(slot0.eventData) then
-			slot0._eventJsonData = {}
+function var_0_0._getJsonData(arg_4_0)
+	if not arg_4_0._eventJsonData then
+		if string.nilorempty(arg_4_0.eventData) then
+			arg_4_0._eventJsonData = {}
 		else
-			slot0._eventJsonData = cjson.decode(slot0.eventData)
+			arg_4_0._eventJsonData = cjson.decode(arg_4_0.eventData)
 		end
 	end
 
-	return slot0._eventJsonData
+	return arg_4_0._eventJsonData
 end
 
-function slot0.isBattleSuccess(slot0)
-	if not slot0:getBattleData() then
+function var_0_0.isBattleSuccess(arg_5_0)
+	local var_5_0 = arg_5_0:getBattleData()
+
+	if not var_5_0 then
 		return false
 	end
 
-	return slot1.status == 1
+	return var_5_0.status == 1
 end
 
-function slot0.getRetries(slot0)
-	if not slot0:getBattleData() then
+function var_0_0.getRetries(arg_6_0)
+	local var_6_0 = arg_6_0:getBattleData()
+
+	if not var_6_0 then
 		return 0
 	end
 
-	return slot1.retries or 0
+	return var_6_0.retries or 0
 end
 
-function slot0.getDropList(slot0)
-	if slot0.status == V1a6_CachotEnum.EventStatus.Finish then
+function var_0_0.getDropList(arg_7_0)
+	if arg_7_0.status == V1a6_CachotEnum.EventStatus.Finish then
 		return
 	end
 
-	if not slot0:_getJsonData() then
+	local var_7_0 = arg_7_0:_getJsonData()
+
+	if not var_7_0 then
 		return
 	end
 
-	if slot1.status == 1 then
-		if string.nilorempty(slot1.drop) then
+	if var_7_0.status == 1 then
+		if string.nilorempty(var_7_0.drop) then
 			return {}
 		end
 
-		slot2 = {}
+		local var_7_1 = {}
+		local var_7_2 = cjson.decode(var_7_0.drop)
 
-		for slot7, slot8 in ipairs(cjson.decode(slot1.drop)) do
-			if slot8.status == 0 then
-				slot9 = false
+		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+			if iter_7_1.status == 0 then
+				local var_7_3 = false
 
-				if slot8.type == "EVENT" and lua_rogue_event.configDict[slot8.value] and slot10.type == V1a6_CachotEnum.EventType.ChoiceSelect then
-					slot9 = true
+				if iter_7_1.type == "EVENT" then
+					local var_7_4 = lua_rogue_event.configDict[iter_7_1.value]
+
+					if var_7_4 and var_7_4.type == V1a6_CachotEnum.EventType.ChoiceSelect then
+						var_7_3 = true
+					end
 				end
 
-				if not slot9 then
-					table.insert(slot2, slot8)
+				if not var_7_3 then
+					table.insert(var_7_1, iter_7_1)
 				end
 			end
 		end
 
-		return slot2
+		return var_7_1
 	end
 end
 
-return slot0
+return var_0_0

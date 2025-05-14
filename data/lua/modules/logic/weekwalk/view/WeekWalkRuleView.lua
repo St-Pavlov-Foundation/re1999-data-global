@@ -1,143 +1,178 @@
-module("modules.logic.weekwalk.view.WeekWalkRuleView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkRuleView", package.seeall)
 
-slot0 = class("WeekWalkRuleView", BaseView)
+local var_0_0 = class("WeekWalkRuleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_icon")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "rule/#go_ruleitem")
-	slot0._goruleDescList = gohelper.findChild(slot0.viewGO, "rule/#go_ruleDescList")
-	slot0._btnclose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close2")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gotxt = gohelper.findChild(slot0.viewGO, "#go_txt")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
+	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "rule/#go_ruleitem")
+	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0.viewGO, "rule/#go_ruleDescList")
+	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gotxt = gohelper.findChild(arg_1_0.viewGO, "#go_txt")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclose2:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclose2:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnclose2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnclose2:RemoveClickListener()
 end
 
-slot0.NeedIgnoreLang = {
+var_0_0.NeedIgnoreLang = {
 	"zh",
 	"tw"
 }
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._childGoList = slot0:getUserDataTb_()
-	slot0._rulesimagelineList = slot0:getUserDataTb_()
-	slot0._info = WeekWalkModel.instance:getInfo()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._childGoList = arg_5_0:getUserDataTb_()
+	arg_5_0._rulesimagelineList = arg_5_0:getUserDataTb_()
+	arg_5_0._info = WeekWalkModel.instance:getInfo()
 
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/guize_beijing.jpg"))
+	arg_5_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/guize_beijing.jpg"))
 end
 
-function slot0.onUpdateParam(slot0)
-	if slot0._rulesimagelineList then
-		for slot4, slot5 in pairs(slot0._rulesimagelineList) do
-			rawset(slot0._rulesimagelineList, slot4, nil)
+function var_0_0.onUpdateParam(arg_6_0)
+	if arg_6_0._rulesimagelineList then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._rulesimagelineList) do
+			rawset(arg_6_0._rulesimagelineList, iter_6_0, nil)
 		end
 	end
 
-	if slot0._childGoList then
-		for slot4, slot5 in pairs(slot0._childGoList) do
-			gohelper.destroy(slot5)
-			rawset(slot0._childGoList, slot4, nil)
+	if arg_6_0._childGoList then
+		for iter_6_2, iter_6_3 in pairs(arg_6_0._childGoList) do
+			gohelper.destroy(iter_6_3)
+			rawset(arg_6_0._childGoList, iter_6_2, nil)
 		end
 	end
 
-	slot0:_refreshView()
+	arg_6_0:_refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshView()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:_refreshView()
 end
 
-function slot0._refreshView(slot0)
-	slot1 = nil
+function var_0_0._refreshView(arg_8_0)
+	local var_8_0
 
-	if slot0.viewParam then
-		slot1 = slot0.viewParam.issueId
-	elseif slot0._info then
-		slot1 = slot0._info.issueId
+	if arg_8_0.viewParam then
+		var_8_0 = arg_8_0.viewParam.issueId
+	elseif arg_8_0._info then
+		var_8_0 = arg_8_0._info.issueId
 	end
 
-	if not slot1 then
+	if not var_8_0 then
 		logError("WeekWalkRuleView._refreshView, issueId can not be nil!")
 
 		return
 	end
 
-	slot3 = lua_weekwalk_rule.configDict[slot1].isCn == 1
+	local var_8_1 = lua_weekwalk_rule.configDict[var_8_0]
+	local var_8_2
 
-	slot0._simageicon:LoadImage(ResUrl.getWeekWalkBg("rule/" .. slot2.icon .. ".png"))
+	var_8_2 = var_8_1.isCn == 1
 
-	for slot8, slot9 in pairs(lua_weekwalk_rule.configDict) do
-		if gohelper.findChild(slot0._gotxt, "#go_txt" .. slot9.id) then
-			gohelper.setActive(slot10, slot9.id == slot1)
+	local var_8_3 = ResUrl.getWeekWalkBg("rule/" .. var_8_1.icon .. ".png")
+
+	arg_8_0._simageicon:LoadImage(var_8_3)
+
+	for iter_8_0, iter_8_1 in pairs(lua_weekwalk_rule.configDict) do
+		local var_8_4 = gohelper.findChild(arg_8_0._gotxt, "#go_txt" .. iter_8_1.id)
+
+		if var_8_4 then
+			gohelper.setActive(var_8_4, iter_8_1.id == var_8_0)
 		end
 	end
 
-	if string.nilorempty(slot2.additionRule) then
+	local var_8_5 = var_8_1.additionRule
+
+	if string.nilorempty(var_8_5) then
 		return
 	end
 
-	slot10 = "#"
+	local var_8_6 = GameUtil.splitString2(var_8_5, true, "|", "#")
 
-	for slot10, slot11 in ipairs(GameUtil.splitString2(slot5, true, "|", slot10)) do
-		if lua_rule.configDict[slot11[2]] then
-			slot0:_setRuleDescItem(slot14, slot11[1])
+	for iter_8_2, iter_8_3 in ipairs(var_8_6) do
+		local var_8_7 = iter_8_3[1]
+		local var_8_8 = iter_8_3[2]
+		local var_8_9 = lua_rule.configDict[var_8_8]
+
+		if var_8_9 then
+			arg_8_0:_setRuleDescItem(var_8_9, var_8_7)
 		end
 
-		if slot10 == #slot6 then
-			gohelper.setActive(slot0._rulesimagelineList[slot10], false)
+		if iter_8_2 == #var_8_6 then
+			gohelper.setActive(arg_8_0._rulesimagelineList[iter_8_2], false)
 		end
 	end
 end
 
-function slot0._addRuleItem(slot0, slot1, slot2)
-	slot3 = gohelper.clone(slot0._goruletemp, slot0._gorulelist, slot1.id)
+function var_0_0._addRuleItem(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = gohelper.clone(arg_9_0._goruletemp, arg_9_0._gorulelist, arg_9_1.id)
 
-	table.insert(slot0._childGoList, slot3)
-	gohelper.setActive(slot3, true)
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot3, "#image_tagicon"), "wz_" .. slot2)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot3, ""), slot1.icon)
+	table.insert(arg_9_0._childGoList, var_9_0)
+	gohelper.setActive(var_9_0, true)
+
+	local var_9_1 = gohelper.findChildImage(var_9_0, "#image_tagicon")
+
+	UISpriteSetMgr.instance:setCommonSprite(var_9_1, "wz_" .. arg_9_2)
+
+	local var_9_2 = gohelper.findChildImage(var_9_0, "")
+
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_9_2, arg_9_1.icon)
 end
 
-function slot0._setRuleDescItem(slot0, slot1, slot2)
-	slot3 = {
+function var_0_0._setRuleDescItem(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = {
 		"#BDF291",
 		"#D05B4C",
 		"#C7b376"
 	}
-	slot4 = gohelper.clone(slot0._goruleitem, slot0._goruleDescList, slot1.id)
+	local var_10_1 = gohelper.clone(arg_10_0._goruleitem, arg_10_0._goruleDescList, arg_10_1.id)
 
-	table.insert(slot0._childGoList, slot4)
-	gohelper.setActive(slot4, true)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot4, "icon"), slot1.icon)
-	table.insert(slot0._rulesimagelineList, gohelper.findChild(slot4, "line"))
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot4, "tag"), "wz_" .. slot2)
+	table.insert(arg_10_0._childGoList, var_10_1)
+	gohelper.setActive(var_10_1, true)
 
-	gohelper.findChildText(slot4, "desc").text = SkillConfig.instance:fmtTagDescColor(luaLang("dungeon_add_rule_target_" .. slot2), string.gsub(slot1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>") .. ("\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot1.desc, slot3[1])), slot3[slot2])
+	local var_10_2 = gohelper.findChildImage(var_10_1, "icon")
+
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_10_2, arg_10_1.icon)
+
+	local var_10_3 = gohelper.findChild(var_10_1, "line")
+
+	table.insert(arg_10_0._rulesimagelineList, var_10_3)
+
+	local var_10_4 = gohelper.findChildImage(var_10_1, "tag")
+
+	UISpriteSetMgr.instance:setCommonSprite(var_10_4, "wz_" .. arg_10_2)
+
+	local var_10_5 = gohelper.findChildText(var_10_1, "desc")
+	local var_10_6 = string.gsub(arg_10_1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>")
+	local var_10_7 = "\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(arg_10_1.desc, var_10_0[1])
+	local var_10_8 = luaLang("dungeon_add_rule_target_" .. arg_10_2)
+	local var_10_9 = var_10_0[arg_10_2]
+
+	var_10_5.text = SkillConfig.instance:fmtTagDescColor(var_10_8, var_10_6 .. var_10_7, var_10_9)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simagebg:UnLoadImage()
+	arg_12_0._simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

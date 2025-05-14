@@ -1,28 +1,30 @@
-module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardViewContainer", package.seeall)
 
-slot0 = class("VersionActivity2_3NewCultivationGiftRewardViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity2_3NewCultivationGiftRewardViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_reward"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#scroll_reward/viewport/content/#go_rewarditem"
-	slot1.cellClass = VersionActivity2_3NewCultivationRewardItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 6
-	slot1.cellWidth = 250
-	slot1.cellHeight = 250
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 20
-	slot1.endSpace = 10
-	slot1.minUpdateCountInFrame = 100
-	slot2 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	table.insert(slot2, VersionActivity2_3NewCultivationGiftRewardView.New())
-	table.insert(slot2, LuaListScrollView.New(VersionActivity2_3NewCultivationGiftRewardListModel.instance, slot1))
+	var_1_0.scrollGOPath = "#scroll_reward"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "#scroll_reward/viewport/content/#go_rewarditem"
+	var_1_0.cellClass = VersionActivity2_3NewCultivationRewardItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 6
+	var_1_0.cellWidth = 250
+	var_1_0.cellHeight = 250
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 20
+	var_1_0.endSpace = 10
+	var_1_0.minUpdateCountInFrame = 100
 
-	return slot2
+	local var_1_1 = {}
+
+	table.insert(var_1_1, VersionActivity2_3NewCultivationGiftRewardView.New())
+	table.insert(var_1_1, LuaListScrollView.New(VersionActivity2_3NewCultivationGiftRewardListModel.instance, var_1_0))
+
+	return var_1_1
 end
 
-return slot0
+return var_0_0

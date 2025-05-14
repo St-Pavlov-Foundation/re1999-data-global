@@ -1,68 +1,72 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballBagItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballBagItem", package.seeall)
 
-slot0 = class("PinballBagItem", LuaCompBase)
+local var_0_0 = class("PinballBagItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._click = gohelper.findChildClickWithDefaultAudio(slot1, "")
-	slot0._txtNum = gohelper.findChildTextMesh(slot1, "#txt_num")
-	slot0._imageicon = gohelper.findChildImage(slot1, "#image_icon")
-	slot0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_1, "")
+	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "#txt_num")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "#image_icon")
+	arg_1_0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_1)
 
-	slot0._btnLongPress:SetLongPressTime({
+	arg_1_0._btnLongPress:SetLongPressTime({
 		0.5,
 		99999
 	})
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClick, slot0)
-	slot0._btnLongPress:AddLongPressListener(slot0._onLongClickItem, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
+	arg_2_0._btnLongPress:AddLongPressListener(arg_2_0._onLongClickItem, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
-	slot0._btnLongPress:RemoveLongPressListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	arg_3_0._btnLongPress:RemoveLongPressListener()
 end
 
-function slot0._onClick(slot0)
-	if slot0._curNum <= 0 then
+function var_0_0._onClick(arg_4_0)
+	if arg_4_0._curNum <= 0 then
 		return
 	end
 
-	if slot0._canPlaceNum <= 0 then
+	if arg_4_0._canPlaceNum <= 0 then
 		return
 	end
 
-	PinballController.instance:dispatchEvent(PinballEvent.ClickBagItem, slot0._resType)
+	PinballController.instance:dispatchEvent(PinballEvent.ClickBagItem, arg_4_0._resType)
 end
 
-function slot0._onLongClickItem(slot0)
-	slot1 = slot0._imageicon.transform
-	slot3 = slot1.position
-	slot3.x = slot3.x + recthelper.getWidth(slot1) / 2 * slot1.lossyScale.x
+function var_0_0._onLongClickItem(arg_5_0)
+	local var_5_0 = arg_5_0._imageicon.transform
+	local var_5_1 = var_5_0.lossyScale
+	local var_5_2 = var_5_0.position
+	local var_5_3 = recthelper.getWidth(var_5_0)
+
+	var_5_2.x = var_5_2.x + var_5_3 / 2 * var_5_1.x
 
 	ViewMgr.instance:openView(ViewName.PinballCurrencyTipView, {
 		isMarbals = true,
 		arrow = "TR",
-		type = slot0._resType,
-		pos = slot3
+		type = arg_5_0._resType,
+		pos = var_5_2
 	})
 end
 
-function slot0.setInfo(slot0, slot1, slot2, slot3)
-	slot0._resType = slot1 or slot0._resType
-	slot0._curNum = slot2 or slot0._curNum
-	slot0._canPlaceNum = slot3
+function var_0_0.setInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._resType = arg_6_1 or arg_6_0._resType
+	arg_6_0._curNum = arg_6_2 or arg_6_0._curNum
+	arg_6_0._canPlaceNum = arg_6_3
 
-	if slot0._resType > 0 then
-		slot5 = slot2 > 0 and slot3 > 0 and 1 or 0.5
+	if arg_6_0._resType > 0 then
+		local var_6_0 = lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_6_0._resType]
+		local var_6_1 = arg_6_2 > 0 and arg_6_3 > 0 and 1 or 0.5
 
-		UISpriteSetMgr.instance:setAct178Sprite(slot0._imageicon, lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot0._resType].icon, true, slot5)
-		ZProj.UGUIHelper.SetColorAlpha(slot0._imageicon, slot5)
+		UISpriteSetMgr.instance:setAct178Sprite(arg_6_0._imageicon, var_6_0.icon, true, var_6_1)
+		ZProj.UGUIHelper.SetColorAlpha(arg_6_0._imageicon, var_6_1)
 	end
 
-	slot0._txtNum.text = slot0._curNum
+	arg_6_0._txtNum.text = arg_6_0._curNum
 end
 
-return slot0
+return var_0_0

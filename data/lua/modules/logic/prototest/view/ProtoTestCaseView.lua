@@ -1,74 +1,80 @@
-module("modules.logic.prototest.view.ProtoTestCaseView", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoTestCaseView", package.seeall)
 
-slot0 = class("ProtoTestCaseView", BaseView)
+local var_0_0 = class("ProtoTestCaseView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnRecord = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_testcase/Panel_oprator/Btn_record")
-	slot0._btnStop = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_testcase/Panel_oprator/Btn_stop")
-	slot0._btnClear = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_testcase/Panel_oprator/Btn_clear")
-	slot0._btnSendAll = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_testcase/Panel_oprator/Btn_SendAll")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnRecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_record")
+	arg_1_0._btnStop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_stop")
+	arg_1_0._btnClear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_clear")
+	arg_1_0._btnSendAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_SendAll")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnRecord:AddClickListener(slot0._onClickBtnRecord, slot0)
-	slot0._btnStop:AddClickListener(slot0._onClickBtnStop, slot0)
-	slot0._btnClear:AddClickListener(slot0._onClickBtnClear, slot0)
-	slot0._btnSendAll:AddClickListener(slot0._onClickBtnSendAll, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnRecord:AddClickListener(arg_2_0._onClickBtnRecord, arg_2_0)
+	arg_2_0._btnStop:AddClickListener(arg_2_0._onClickBtnStop, arg_2_0)
+	arg_2_0._btnClear:AddClickListener(arg_2_0._onClickBtnClear, arg_2_0)
+	arg_2_0._btnSendAll:AddClickListener(arg_2_0._onClickBtnSendAll, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnRecord:RemoveClickListener()
-	slot0._btnStop:RemoveClickListener()
-	slot0._btnClear:RemoveClickListener()
-	slot0._btnSendAll:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0._onFrameSendProto, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnRecord:RemoveClickListener()
+	arg_3_0._btnStop:RemoveClickListener()
+	arg_3_0._btnClear:RemoveClickListener()
+	arg_3_0._btnSendAll:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_3_0._onFrameSendProto, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateRecordBtn()
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:_updateRecordBtn()
 end
 
-function slot0._updateRecordBtn(slot0)
-	slot1 = ProtoTestMgr.instance:isRecording()
+function var_0_0._updateRecordBtn(arg_5_0)
+	local var_5_0 = ProtoTestMgr.instance:isRecording()
 
-	gohelper.setActive(slot0._btnRecord.gameObject, not slot1)
-	gohelper.setActive(slot0._btnStop.gameObject, slot1)
+	gohelper.setActive(arg_5_0._btnRecord.gameObject, not var_5_0)
+	gohelper.setActive(arg_5_0._btnStop.gameObject, var_5_0)
 end
 
-function slot0._onClickBtnRecord(slot0)
+function var_0_0._onClickBtnRecord(arg_6_0)
 	ProtoTestMgr.instance:startRecord()
-	slot0:_updateRecordBtn()
+	arg_6_0:_updateRecordBtn()
 end
 
-function slot0._onClickBtnStop(slot0)
+function var_0_0._onClickBtnStop(arg_7_0)
 	ProtoTestMgr.instance:endRecord()
-	slot0:_updateRecordBtn()
+	arg_7_0:_updateRecordBtn()
 end
 
-function slot0._onClickBtnClear(slot0)
+function var_0_0._onClickBtnClear(arg_8_0)
 	ProtoTestCaseModel.instance:clear()
 end
 
-function slot0._onClickBtnSendAll(slot0)
-	slot0._toSendProtoList = {}
+function var_0_0._onClickBtnSendAll(arg_9_0)
+	local var_9_0 = ProtoTestCaseModel.instance:getList()
 
-	for slot5, slot6 in ipairs(ProtoTestCaseModel.instance:getList()) do
-		table.insert(slot0._toSendProtoList, slot6:buildProtoMsg())
+	arg_9_0._toSendProtoList = {}
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_1 = iter_9_1:buildProtoMsg()
+
+		table.insert(arg_9_0._toSendProtoList, var_9_1)
 	end
 
-	TaskDispatcher.runRepeat(slot0._onFrameSendProto, slot0, 0.033)
+	TaskDispatcher.runRepeat(arg_9_0._onFrameSendProto, arg_9_0, 0.033)
 end
 
-function slot0._onFrameSendProto(slot0)
-	if slot0._toSendProtoList and #slot0._toSendProtoList > 0 then
-		LuaSocketMgr.instance:sendMsg(table.remove(slot0._toSendProtoList, 1))
+function var_0_0._onFrameSendProto(arg_10_0)
+	if arg_10_0._toSendProtoList and #arg_10_0._toSendProtoList > 0 then
+		local var_10_0 = table.remove(arg_10_0._toSendProtoList, 1)
+
+		LuaSocketMgr.instance:sendMsg(var_10_0)
 	end
 
-	if not slot0._toSendProtoList or #slot0._toSendProtoList == 0 then
-		slot0._toSendProtoList = nil
+	if not arg_10_0._toSendProtoList or #arg_10_0._toSendProtoList == 0 then
+		arg_10_0._toSendProtoList = nil
 
-		TaskDispatcher.cancelTask(slot0._onFrameSendProto, slot0)
+		TaskDispatcher.cancelTask(arg_10_0._onFrameSendProto, arg_10_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,258 +1,277 @@
-module("modules.logic.bgmswitch.controller.BGMSwitchController", package.seeall)
+﻿module("modules.logic.bgmswitch.controller.BGMSwitchController", package.seeall)
 
-slot0 = class("BGMSwitchController", BaseController)
+local var_0_0 = class("BGMSwitchController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._hasStopMainBgm = nil
-	slot0._bgmProgress = BGMSwitchProgress.New()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._hasStopMainBgm = nil
+	arg_1_0._bgmProgress = BGMSwitchProgress.New()
 end
 
-function slot0.reInit(slot0)
-	slot0._hasStopMainBgm = nil
-	slot0._ppk = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._hasStopMainBgm = nil
+	arg_2_0._ppk = nil
 
-	TaskDispatcher.cancelTask(slot0._delayStartAll, slot0)
+	TaskDispatcher.cancelTask(arg_2_0._delayStartAll, arg_2_0)
 end
 
-function slot0.addConstEvents(slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._onEnterScene, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.ExitScene, slot0._onExistScene, slot0)
-	StoryController.instance:registerCallback(StoryEvent.Start, slot0._onStoryStart, slot0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, slot0._onStoryFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseView, slot0)
-	AudioMgr.instance:registerCallback(AudioMgr.Evt_Trigger, slot0._onTriggerEvent, slot0)
-	slot0:registerCallback(BGMSwitchEvent.SwitchGearByGuide, slot0._switchGearByGuide, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_3_0._onEnterScene, arg_3_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.ExitScene, arg_3_0._onExistScene, arg_3_0)
+	StoryController.instance:registerCallback(StoryEvent.Start, arg_3_0._onStoryStart, arg_3_0)
+	StoryController.instance:registerCallback(StoryEvent.Finish, arg_3_0._onStoryFinish, arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseView, arg_3_0)
+	AudioMgr.instance:registerCallback(AudioMgr.Evt_Trigger, arg_3_0._onTriggerEvent, arg_3_0)
+	arg_3_0:registerCallback(BGMSwitchEvent.SwitchGearByGuide, arg_3_0._switchGearByGuide, arg_3_0)
 end
 
-function slot0._isPlayableView(slot0)
-	slot1 = ViewMgr.instance:getOpenViewNameList()
+function var_0_0._isPlayableView(arg_4_0)
+	local var_4_0 = ViewMgr.instance:getOpenViewNameList()
 
-	if slot1[#slot1] == ViewName.MainSwitchView then
+	if var_4_0[#var_4_0] == ViewName.MainSwitchView then
 		return true
 	end
 
 	return NavigateMgr.instance:isMainViewInTop()
 end
 
-function slot0._onEnterScene(slot0, slot1, slot2)
-	if slot1 == SceneType.Main and LoginController.instance:isEnteredGame() and slot0:_isPlayableView() then
-		slot0:checkStartAll()
+function var_0_0._onEnterScene(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == SceneType.Main and LoginController.instance:isEnteredGame() and arg_5_0:_isPlayableView() then
+		arg_5_0:checkStartAll()
 	end
 end
 
-function slot0._onExistScene(slot0, slot1, slot2, slot3)
-	if slot1 == SceneType.Main then
+function var_0_0._onExistScene(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_1 == SceneType.Main then
 		AudioMgr.instance:trigger(AudioEnum.UI.Pause_MainMusic)
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_Replay_Noise_Daytime)
 
-		slot0._hasStopMainBgm = true
+		arg_6_0._hasStopMainBgm = true
 	end
 end
 
-function slot0._onStoryStart(slot0)
-	TaskDispatcher.cancelTask(slot0._delayStartAll, slot0)
-	slot0:checkStopAll()
+function var_0_0._onStoryStart(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0._delayStartAll, arg_7_0)
+	arg_7_0:checkStopAll()
 end
 
-function slot0._onStoryFinish(slot0)
-	slot0:checkStartAll()
+function var_0_0._onStoryFinish(arg_8_0)
+	arg_8_0:checkStartAll()
 end
 
-slot1 = nil
+local var_0_1
 
-function slot0._onOpenView(slot0, slot1)
-	if not uv0 then
-		uv0 = {
+function var_0_0._onOpenView(arg_9_0, arg_9_1)
+	if not var_0_1 then
+		var_0_1 = {
 			[ViewName.WeekWalkView] = true
 		}
 	end
 
-	if uv0[slot1] then
-		slot0:checkStopAll()
+	if var_0_1[arg_9_1] then
+		arg_9_0:checkStopAll()
 	end
 
-	if slot0:_isPlayableView() then
-		slot0:checkStartAll()
-	end
-end
-
-function slot0._onCloseView(slot0)
-	if slot0:_isPlayableView() then
-		TaskDispatcher.runDelay(slot0._onCloseViewCheckAgain, slot0, 0.1)
+	if arg_9_0:_isPlayableView() then
+		arg_9_0:checkStartAll()
 	end
 end
 
-function slot0._onCloseViewCheckAgain(slot0)
-	if slot0:_isPlayableView() then
-		slot0:checkStartAll()
+function var_0_0._onCloseView(arg_10_0)
+	if arg_10_0:_isPlayableView() then
+		TaskDispatcher.runDelay(arg_10_0._onCloseViewCheckAgain, arg_10_0, 0.1)
 	end
 end
 
-slot2 = {
+function var_0_0._onCloseViewCheckAgain(arg_11_0)
+	if arg_11_0:_isPlayableView() then
+		arg_11_0:checkStartAll()
+	end
+end
+
+local var_0_2 = {
 	[AudioEnum.Bgm.Stop_LeiMiTeBeiBgm] = true
 }
 
-function slot0._onTriggerEvent(slot0, slot1)
-	if uv0[slot1] then
-		slot0:checkStopAll()
+function var_0_0._onTriggerEvent(arg_12_0, arg_12_1)
+	if var_0_2[arg_12_1] then
+		arg_12_0:checkStopAll()
 	end
 end
 
-function slot0.checkStopAll(slot0)
+function var_0_0.checkStopAll(arg_13_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 		AudioMgr.instance:trigger(AudioEnum.UI.Pause_MainMusic)
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_Replay_Noise_Daytime)
 		WeatherController.instance:stopWeatherAudio()
 
-		slot0._hasStopMainBgm = true
+		arg_13_0._hasStopMainBgm = true
 
-		slot0._bgmProgress:stopMainBgm()
+		arg_13_0._bgmProgress:stopMainBgm()
 	end
 end
 
-function slot0.checkStartAll(slot0)
-	TaskDispatcher.runDelay(slot0._delayStartAll, slot0, 0.1)
+function var_0_0.checkStartAll(arg_14_0)
+	TaskDispatcher.runDelay(arg_14_0._delayStartAll, arg_14_0, 0.1)
 end
 
-function slot0._delayStartAll(slot0)
-	if slot0._hasStopMainBgm and GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
-		slot0._hasStopMainBgm = nil
+function var_0_0._delayStartAll(arg_15_0)
+	local var_15_0 = GameSceneMgr.instance:getCurSceneType() == SceneType.Main
 
-		slot0:checkStartMainBGM(true)
+	if arg_15_0._hasStopMainBgm and var_15_0 then
+		arg_15_0._hasStopMainBgm = nil
+
+		arg_15_0:checkStartMainBGM(true)
 		WeatherController.instance:playWeatherAudio()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Replay_Noise_Daytime)
 	end
 end
 
-function slot0.startAllOnLogin(slot0)
+function var_0_0.startAllOnLogin(arg_16_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
-		BGMSwitchModel.instance:setMechineGear(BGMSwitchModel.instance:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear))
-		slot0:checkStartMainBGM(true)
+		local var_16_0 = BGMSwitchModel.instance:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear)
+
+		BGMSwitchModel.instance:setMechineGear(var_16_0)
+		arg_16_0:checkStartMainBGM(true)
 		WeatherController.instance:playWeatherAudio()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_Replay_Noise_Daytime)
 	end
 end
 
-function slot0.checkStartMainBGM(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._delayStartAll, slot0)
+function var_0_0.checkStartMainBGM(arg_17_0, arg_17_1)
+	TaskDispatcher.cancelTask(arg_17_0._delayStartAll, arg_17_0)
 
-	slot2 = slot0:getBgmAudioId()
+	local var_17_0 = arg_17_0:getBgmAudioId()
 
-	if not slot1 and slot2 == slot0._mainAudioId then
+	if not arg_17_1 and var_17_0 == arg_17_0._mainAudioId then
 		return
 	end
 
-	if slot2 then
-		slot0:playMainBgm(slot2, slot1, true)
+	if var_17_0 then
+		arg_17_0:playMainBgm(var_17_0, arg_17_1, true)
 	end
 
 	if isDebugBuild then
-		slot6 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot0._preAudioId)
-
-		logNormal("track checkStartMainBGM: " .. cjson.encode({
-			[StatEnum.EventProperties.AudioId] = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot2) and tostring(slot5.id) or nil,
-			[StatEnum.EventProperties.AudioName] = slot5 and slot5.audioName or nil,
-			[StatEnum.EventProperties.BeforeSwitchAudio] = slot6 and slot6.audioName or nil,
+		local var_17_1 = BGMSwitchModel.instance:getBGMPlayMode()
+		local var_17_2 = BGMSwitchModel.instance:getCurrentServerUsingBgmList()
+		local var_17_3 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(var_17_0)
+		local var_17_4 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(arg_17_0._preAudioId)
+		local var_17_5 = {
+			[StatEnum.EventProperties.AudioId] = var_17_3 and tostring(var_17_3.id) or nil,
+			[StatEnum.EventProperties.AudioName] = var_17_3 and var_17_3.audioName or nil,
+			[StatEnum.EventProperties.BeforeSwitchAudio] = var_17_4 and var_17_4.audioName or nil,
 			[StatEnum.EventProperties.OperationType] = "background bgm auto next",
-			[StatEnum.EventProperties.PlayMode] = BGMSwitchModel.instance:getBGMPlayMode() == BGMSwitchEnum.PlayMode.Random and "Random" or "LoopOne",
-			[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(BGMSwitchModel.instance:getCurrentServerUsingBgmList())
-		}))
+			[StatEnum.EventProperties.PlayMode] = var_17_1 == BGMSwitchEnum.PlayMode.Random and "Random" or "LoopOne",
+			[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(var_17_2)
+		}
+
+		logNormal("track checkStartMainBGM: " .. cjson.encode(var_17_5))
 	end
 end
 
-function slot0.playMainBgm(slot0, slot1, slot2, slot3)
-	if not slot2 and slot1 == slot0._mainAudioId then
+function var_0_0.playMainBgm(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if not arg_18_2 and arg_18_1 == arg_18_0._mainAudioId then
 		return
 	end
 
-	slot0._mainAudioId = slot1
+	arg_18_0._mainAudioId = arg_18_1
 
 	if not BGMSwitchModel.instance:machineGearIsNeedPlayBgm() then
 		return
 	end
 
-	slot0:stopMainBgm()
-	uv0.instance:resumeMainBgm()
+	arg_18_0:stopMainBgm()
+	var_0_0.instance:resumeMainBgm()
 
-	if slot0._preAudioId ~= nil and slot0._preAudioId ~= slot1 and slot3 and slot0._playingId and BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot0._preAudioId) and slot4.isNonLoop == 1 then
-		AudioMgr.instance:stopPlayingID(slot0._playingId)
+	if arg_18_0._preAudioId ~= nil and arg_18_0._preAudioId ~= arg_18_1 and arg_18_3 and arg_18_0._playingId then
+		local var_18_0 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(arg_18_0._preAudioId)
+
+		if var_18_0 and var_18_0.isNonLoop == 1 then
+			AudioMgr.instance:stopPlayingID(arg_18_0._playingId)
+		end
 	end
 
-	slot0._playingId = AudioMgr.instance:triggerEx(slot1, bit.bor(AkCallbackEnum.Type.AK_EnableGetSourcePlayPosition, AkCallbackEnum.Type.AK_Duration), nil)
-	slot0._preAudioId = slot1
+	arg_18_0._playingId = AudioMgr.instance:triggerEx(arg_18_1, bit.bor(AkCallbackEnum.Type.AK_EnableGetSourcePlayPosition, AkCallbackEnum.Type.AK_Duration), nil)
+	arg_18_0._preAudioId = arg_18_1
 
-	slot0._bgmProgress:playMainBgm(slot1)
-	slot0:dispatchEvent(BGMSwitchEvent.OnPlayMainBgm, slot1)
+	arg_18_0._bgmProgress:playMainBgm(arg_18_1)
+	arg_18_0:dispatchEvent(BGMSwitchEvent.OnPlayMainBgm, arg_18_1)
 end
 
-function slot0.getPlayingId(slot0)
-	return slot0._playingId
+function var_0_0.getPlayingId(arg_19_0)
+	return arg_19_0._playingId
 end
 
-function slot0.getMainBgmAudioId(slot0)
-	return slot0._mainAudioId
+function var_0_0.getMainBgmAudioId(arg_20_0)
+	return arg_20_0._mainAudioId
 end
 
-function slot0.stopMainBgm(slot0)
+function var_0_0.stopMainBgm(arg_21_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Replay_Mainmusic1_9)
-	slot0._bgmProgress:stopMainBgm()
+	arg_21_0._bgmProgress:stopMainBgm()
 end
 
-function slot0.pauseMainBgm(slot0)
+function var_0_0.pauseMainBgm(arg_22_0)
 	AudioBgmManager.instance:stopBgm(AudioBgmEnum.Layer.Main)
 end
 
-function slot0.resumeMainBgm(slot0)
+function var_0_0.resumeMainBgm(arg_23_0)
 	AudioBgmManager.instance:playBgm(AudioBgmEnum.Layer.Main)
 end
 
-function slot0.backMainBgm(slot0)
+function var_0_0.backMainBgm(arg_24_0)
 	if BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId then
 		return
 	end
 
-	if slot0:getBgmAudioId() and slot0._preAudioId ~= slot1 then
-		slot0:playMainBgm(slot1, true, true)
+	local var_24_0 = arg_24_0:getBgmAudioId()
+
+	if var_24_0 and arg_24_0._preAudioId ~= var_24_0 then
+		arg_24_0:playMainBgm(var_24_0, true, true)
 	end
 end
 
-function slot0.getBgmAudioId(slot0)
+function var_0_0.getBgmAudioId(arg_25_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch) then
-		if BGMSwitchModel.instance:isRandomBgmId(BGMSwitchModel.instance:getUsedBgmIdFromServer()) then
-			slot2 = BGMSwitchModel.instance:nextBgm(1, true)
+		local var_25_0 = BGMSwitchModel.instance:getUsedBgmIdFromServer()
+
+		if BGMSwitchModel.instance:isRandomBgmId(var_25_0) then
+			var_25_0 = BGMSwitchModel.instance:nextBgm(1, true)
 		end
 
-		return BGMSwitchConfig.instance:getBGMSwitchCO(slot2) and slot3.audio or AudioEnum.UI.Play_Replay_Music_Daytime
+		local var_25_1 = BGMSwitchConfig.instance:getBGMSwitchCO(var_25_0)
+
+		return var_25_1 and var_25_1.audio or AudioEnum.UI.Play_Replay_Music_Daytime
 	end
 
 	return AudioEnum.UI.Play_Replay_Music_Daytime
 end
 
-function slot0.getProgress(slot0)
-	return slot0._bgmProgress:getProgress()
+function var_0_0.getProgress(arg_26_0)
+	return arg_26_0._bgmProgress:getProgress()
 end
 
-function slot0.openBGMSwitchView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.BGMSwitchView, slot1)
+function var_0_0.openBGMSwitchView(arg_27_0, arg_27_1)
+	ViewMgr.instance:openView(ViewName.BGMSwitchView, arg_27_1)
 end
 
-function slot0.openBGMSwitchMusicFilterView(slot0)
+function var_0_0.openBGMSwitchMusicFilterView(arg_28_0)
 	ViewMgr.instance:openView(ViewName.BGMSwitchMusicFilterView)
 end
 
-function slot0._switchGearByGuide(slot0, slot1)
-	slot2 = BGMSwitchModel.instance:getMechineGear()
+function var_0_0._switchGearByGuide(arg_29_0, arg_29_1)
+	local var_29_0 = BGMSwitchModel.instance:getMechineGear()
+	local var_29_1 = tonumber(arg_29_1)
 
-	if tonumber(slot1) == BGMSwitchEnum.Gear.OFF then
-		slot0:stopMainBgm()
+	if var_29_1 == BGMSwitchEnum.Gear.OFF then
+		arg_29_0:stopMainBgm()
 	end
 
-	BGMSwitchModel.instance:setMechineGear(slot3)
-	slot0:dispatchEvent(BGMSwitchEvent.SelectPlayGear)
+	BGMSwitchModel.instance:setMechineGear(var_29_1)
+	arg_29_0:dispatchEvent(BGMSwitchEvent.SelectPlayGear)
 end
 
-function slot0.hasBgmRedDot(slot0)
+function var_0_0.hasBgmRedDot(arg_30_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch) then
 		return false
 	end
@@ -261,25 +280,29 @@ function slot0.hasBgmRedDot(slot0)
 		return true
 	end
 
-	if BGMSwitchModel.instance:getUnReadCount() == 0 then
+	local var_30_0 = BGMSwitchModel.instance:getUnReadCount()
+
+	if var_30_0 == 0 then
 		return false
 	end
 
-	if not PlayerPrefsHelper.getNumber(slot0:getPlayerPrefKey(), nil) then
+	local var_30_1 = PlayerPrefsHelper.getNumber(arg_30_0:getPlayerPrefKey(), nil)
+
+	if not var_30_1 then
 		return true
 	end
 
-	return slot4 < slot3
+	return var_30_1 < var_30_0
 end
 
-function slot0.getPlayerPrefKey(slot0)
-	if not slot0._ppk then
-		slot0._ppk = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.MainBgmUnreadCount)
+function var_0_0.getPlayerPrefKey(arg_31_0)
+	if not arg_31_0._ppk then
+		arg_31_0._ppk = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.MainBgmUnreadCount)
 	end
 
-	return slot0._ppk
+	return arg_31_0._ppk
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

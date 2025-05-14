@@ -1,19 +1,19 @@
-module("modules.logic.fight.FightUpdateItem", package.seeall)
+﻿module("modules.logic.fight.FightUpdateItem", package.seeall)
 
-slot0 = class("FightUpdateItem")
+local var_0_0 = class("FightUpdateItem")
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.func = slot1
-	slot0.handle = slot2
-	slot0.param = slot3
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.func = arg_1_1
+	arg_1_0.handle = arg_1_2
+	arg_1_0.param = arg_1_3
 end
 
-function slot0.update(slot0, slot1)
-	if slot0.isDone then
+function var_0_0.update(arg_2_0, arg_2_1)
+	if arg_2_0.isDone then
 		return
 	end
 
-	xpcall(slot0.func, __G__TRACKBACK__, slot0.handle, slot1, slot0.param)
+	xpcall(arg_2_0.func, __G__TRACKBACK__, arg_2_0.handle, arg_2_1, arg_2_0.param)
 end
 
-return slot0
+return var_0_0

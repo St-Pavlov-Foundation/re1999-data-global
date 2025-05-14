@@ -1,26 +1,38 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventPlaySceneAnimator", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlaySceneAnimator", package.seeall)
 
-slot0 = class("FightTLEventPlaySceneAnimator")
+local var_0_0 = class("FightTLEventPlaySceneAnimator")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if GameSceneMgr.instance:getCurScene() and gohelper.findChildComponent(slot6.level:getSceneGo(), slot3[1], typeof(UnityEngine.Animator)) then
-		slot8.speed = FightModel.instance:getSpeed()
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_3[1]
+	local var_1_1 = arg_1_3[2]
+	local var_1_2 = GameSceneMgr.instance:getCurScene()
 
-		if slot3[3] == "1" then
-			SLFramework.AnimatorPlayer.Get(slot8.gameObject):Play(slot3[2], nil, )
-		else
-			slot8:Play(slot5, 0, 0)
+	if var_1_2 then
+		local var_1_3 = var_1_2.level:getSceneGo()
+		local var_1_4 = gohelper.findChildComponent(var_1_3, var_1_0, typeof(UnityEngine.Animator))
+
+		if var_1_4 then
+			var_1_4.speed = FightModel.instance:getSpeed()
+
+			if arg_1_3[3] == "1" then
+				SLFramework.AnimatorPlayer.Get(var_1_4.gameObject):Play(var_1_1, nil, nil)
+			else
+				var_1_4:Play(var_1_1, 0, 0)
+			end
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_3_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

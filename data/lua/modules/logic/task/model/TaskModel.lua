@@ -1,323 +1,391 @@
-module("modules.logic.task.model.TaskModel", package.seeall)
+﻿module("modules.logic.task.model.TaskModel", package.seeall)
 
-slot0 = class("TaskModel", BaseModel)
+local var_0_0 = class("TaskModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._taskMODict = {}
-	slot0._taskActivityMODict = {}
-	slot0._newTaskIdDict = {}
-	slot0._curStage = 0
-	slot0._taskList = {}
-	slot0._hasTaskNoviceStageReward = false
-	slot0._noviceTaskHeroParam = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._taskMODict = {}
+	arg_2_0._taskActivityMODict = {}
+	arg_2_0._newTaskIdDict = {}
+	arg_2_0._curStage = 0
+	arg_2_0._taskList = {}
+	arg_2_0._hasTaskNoviceStageReward = false
+	arg_2_0._noviceTaskHeroParam = nil
 end
 
-function slot0.setHasTaskNoviceStageReward(slot0, slot1)
-	slot0._hasTaskNoviceStageReward = slot1
+function var_0_0.setHasTaskNoviceStageReward(arg_3_0, arg_3_1)
+	arg_3_0._hasTaskNoviceStageReward = arg_3_1
 end
 
-function slot0.couldGetTaskNoviceStageReward(slot0)
-	return slot0._hasTaskNoviceStageReward
+function var_0_0.couldGetTaskNoviceStageReward(arg_4_0)
+	return arg_4_0._hasTaskNoviceStageReward
 end
 
-function slot0.setTaskNoviceStageHeroParam(slot0, slot1)
-	slot0._noviceTaskHeroParam = slot1
+function var_0_0.setTaskNoviceStageHeroParam(arg_5_0, arg_5_1)
+	arg_5_0._noviceTaskHeroParam = arg_5_1
 end
 
-function slot0.getTaskNoviceStageParam(slot0)
-	return slot0._noviceTaskHeroParam
+function var_0_0.getTaskNoviceStageParam(arg_6_0)
+	return arg_6_0._noviceTaskHeroParam
 end
 
-function slot0.getTaskById(slot0, slot1)
-	return slot0._taskList[slot1]
+function var_0_0.getTaskById(arg_7_0, arg_7_1)
+	return arg_7_0._taskList[arg_7_1]
 end
 
-function slot0.getTaskMoList(slot0, slot1, slot2)
-	if not slot0:getAllUnlockTasks(slot1) then
-		return {}
+function var_0_0.getTaskMoList(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = {}
+	local var_8_1 = arg_8_0:getAllUnlockTasks(arg_8_1)
+
+	if not var_8_1 then
+		return var_8_0
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		if slot9.config and slot9.config.activityId == slot2 then
-			table.insert(slot3, slot9)
+	for iter_8_0, iter_8_1 in pairs(var_8_1) do
+		if iter_8_1.config and iter_8_1.config.activityId == arg_8_2 then
+			table.insert(var_8_0, iter_8_1)
 		end
 	end
 
-	return slot3
+	return var_8_0
 end
 
-function slot0.getRefreshCount(slot0)
-	return slot0._selectCount
+function var_0_0.getRefreshCount(arg_9_0)
+	return arg_9_0._selectCount
 end
 
-function slot0.setRefreshCount(slot0, slot1)
-	slot0._selectCount = slot1
+function var_0_0.setRefreshCount(arg_10_0, arg_10_1)
+	arg_10_0._selectCount = arg_10_1
 end
 
-function slot0.setTaskMOList(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		slot0._taskMODict[slot7] = {}
+function var_0_0.setTaskMOList(arg_11_0, arg_11_1, arg_11_2)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
+		arg_11_0._taskMODict[iter_11_1] = {}
 	end
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			TaskMo.New():init(slot7, slot0:getTaskConfig(slot7.type, slot7.id))
+	if arg_11_1 then
+		for iter_11_2, iter_11_3 in ipairs(arg_11_1) do
+			local var_11_0 = arg_11_0:getTaskConfig(iter_11_3.type, iter_11_3.id)
+			local var_11_1 = TaskMo.New()
 
-			if not slot0._taskMODict[slot7.type] then
-				slot0._taskMODict[slot7.type] = {}
+			var_11_1:init(iter_11_3, var_11_0)
+
+			if not arg_11_0._taskMODict[iter_11_3.type] then
+				arg_11_0._taskMODict[iter_11_3.type] = {}
 			end
 
-			slot0._taskMODict[slot7.type][slot7.id] = slot9
-			slot0._taskList[slot7.id] = slot9
+			arg_11_0._taskMODict[iter_11_3.type][iter_11_3.id] = var_11_1
+			arg_11_0._taskList[iter_11_3.id] = var_11_1
 		end
 	end
 end
 
-function slot0.onTaskMOChange(slot0, slot1)
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			if not (slot0._taskMODict[slot6.type] and slot0._taskMODict[slot6.type][slot6.id] or nil) then
-				TaskMo.New():init(slot6, slot0:getTaskConfig(slot6.type, slot6.id))
+function var_0_0.onTaskMOChange(arg_12_0, arg_12_1)
+	if arg_12_1 then
+		for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+			local var_12_0 = arg_12_0._taskMODict[iter_12_1.type] and arg_12_0._taskMODict[iter_12_1.type][iter_12_1.id] or nil
 
-				if not slot0._taskMODict[slot6.type] then
-					slot0._taskMODict[slot6.type] = {}
+			if not var_12_0 then
+				local var_12_1 = arg_12_0:getTaskConfig(iter_12_1.type, iter_12_1.id)
+				local var_12_2 = TaskMo.New()
+
+				var_12_2:init(iter_12_1, var_12_1)
+
+				if not arg_12_0._taskMODict[iter_12_1.type] then
+					arg_12_0._taskMODict[iter_12_1.type] = {}
 				end
 
-				slot0._taskMODict[slot6.type][slot6.id] = slot9
-				slot0._taskList[slot6.id] = slot9
-				slot0._newTaskIdDict[slot6.id] = true
+				arg_12_0._taskMODict[iter_12_1.type][iter_12_1.id] = var_12_2
+				arg_12_0._taskList[iter_12_1.id] = var_12_2
+				arg_12_0._newTaskIdDict[iter_12_1.id] = true
 			else
-				slot7:update(slot6)
+				var_12_0:update(iter_12_1)
 			end
 		end
 	end
 end
 
-function slot0.getTaskConfig(slot0, slot1, slot2)
-	if TaskConfigGetDefine.instance:getTaskConfigFunc(slot1) then
-		return slot3(slot2)
+function var_0_0.getTaskConfig(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = TaskConfigGetDefine.instance:getTaskConfigFunc(arg_13_1)
+
+	if var_13_0 then
+		return var_13_0(arg_13_2)
 	end
 end
 
-function slot0.isTaskFinish(slot0, slot1, slot2)
-	if not slot0._taskMODict[slot1] then
+function var_0_0.isTaskFinish(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_0._taskMODict[arg_14_1]
+
+	if not var_14_0 then
 		return false
 	end
 
-	if not slot3[slot2] then
+	local var_14_1 = var_14_0[arg_14_2]
+
+	if not var_14_1 then
 		return false
 	end
 
-	return slot4:isClaimed()
+	return var_14_1:isClaimed()
 end
 
-function slot0.taskHasFinished(slot0, slot1, slot2)
-	if not slot0._taskMODict[slot1] then
+function var_0_0.taskHasFinished(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0._taskMODict[arg_15_1]
+
+	if not var_15_0 then
 		return false
 	end
 
-	if not slot3[slot2] then
+	local var_15_1 = var_15_0[arg_15_2]
+
+	if not var_15_1 then
 		return false
 	end
 
-	return slot4:isFinished()
+	return var_15_1:isFinished()
 end
 
-function slot0.isTaskUnlock(slot0, slot1, slot2)
-	if not slot0._taskMODict[slot1] then
+function var_0_0.isTaskUnlock(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0._taskMODict[arg_16_1]
+
+	if not var_16_0 then
 		return false
 	end
 
-	if not slot3[slot2] then
+	local var_16_1 = var_16_0[arg_16_2]
+
+	if not var_16_1 then
 		return false
 	end
 
-	return slot4.id == slot2
+	return var_16_1.id == arg_16_2
 end
 
-function slot0.getAllUnlockTasks(slot0, slot1)
-	return slot0._taskMODict[slot1] or {}
+function var_0_0.getAllUnlockTasks(arg_17_0, arg_17_1)
+	return arg_17_0._taskMODict[arg_17_1] or {}
 end
 
-function slot0.setTaskActivityMOList(slot0, slot1)
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			if not slot0._taskActivityMODict[slot6.typeId] then
-				slot8 = nil
-				slot7 = TaskActivityMo.New()
+function var_0_0.setTaskActivityMOList(arg_18_0, arg_18_1)
+	if arg_18_1 then
+		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+			local var_18_0 = arg_18_0._taskActivityMODict[iter_18_1.typeId]
 
-				slot7:init(slot6, (slot6.defineId + 1 > 5 or TaskConfig.instance:gettaskactivitybonusCO(slot6.typeId, slot6.defineId + 1)) and TaskConfig.instance:gettaskactivitybonusCO(slot6.typeId, slot6.defineId))
+			if not var_18_0 then
+				local var_18_1
 
-				slot0._taskActivityMODict[slot6.typeId] = slot7
-			else
-				slot7:update(slot6)
-			end
-		end
-	end
-end
-
-function slot0.onTaskActivityMOChange(slot0, slot1)
-	if slot1 then
-		slot2 = nil
-
-		for slot6, slot7 in ipairs(slot1) do
-			if not slot0._taskActivityMODict[slot7.typeId] then
-				slot9 = nil
-				slot10 = TaskActivityMo.New()
-
-				if ((slot7.defineId + 1 > 5 or TaskConfig.instance:gettaskactivitybonusCO(slot7.typeId, slot7.defineId + 1)) and TaskConfig.instance:gettaskactivitybonusCO(slot7.typeId, slot7.defineId)) ~= nil then
-					slot10:init(slot7, slot9)
+				if iter_18_1.defineId + 1 <= 5 then
+					var_18_1 = TaskConfig.instance:gettaskactivitybonusCO(iter_18_1.typeId, iter_18_1.defineId + 1)
+				else
+					var_18_1 = TaskConfig.instance:gettaskactivitybonusCO(iter_18_1.typeId, iter_18_1.defineId)
 				end
 
-				table.insert(slot2 or {}, slot10)
+				var_18_0 = TaskActivityMo.New()
 
-				slot0._taskActivityMODict[slot7.typeId] = slot10
+				var_18_0:init(iter_18_1, var_18_1)
+
+				arg_18_0._taskActivityMODict[iter_18_1.typeId] = var_18_0
 			else
-				slot8:update(slot7)
+				var_18_0:update(iter_18_1)
 			end
 		end
 	end
 end
 
-function slot0.deleteTask(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		for slot10, slot11 in pairs(slot0._taskMODict) do
-			slot0._taskMODict[slot10][slot6] = nil
+function var_0_0.onTaskActivityMOChange(arg_19_0, arg_19_1)
+	if arg_19_1 then
+		local var_19_0
+
+		for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+			local var_19_1 = arg_19_0._taskActivityMODict[iter_19_1.typeId]
+
+			if not var_19_1 then
+				local var_19_2
+
+				if iter_19_1.defineId + 1 <= 5 then
+					var_19_2 = TaskConfig.instance:gettaskactivitybonusCO(iter_19_1.typeId, iter_19_1.defineId + 1)
+				else
+					var_19_2 = TaskConfig.instance:gettaskactivitybonusCO(iter_19_1.typeId, iter_19_1.defineId)
+				end
+
+				local var_19_3 = TaskActivityMo.New()
+
+				if var_19_2 ~= nil then
+					var_19_3:init(iter_19_1, var_19_2)
+				end
+
+				var_19_0 = var_19_0 or {}
+
+				table.insert(var_19_0, var_19_3)
+
+				arg_19_0._taskActivityMODict[iter_19_1.typeId] = var_19_3
+			else
+				var_19_1:update(iter_19_1)
+			end
 		end
 	end
 end
 
-function slot0.clearNewTaskIds(slot0)
-	slot0._newTaskIdDict = {}
+function var_0_0.deleteTask(arg_20_0, arg_20_1)
+	for iter_20_0, iter_20_1 in pairs(arg_20_1) do
+		for iter_20_2, iter_20_3 in pairs(arg_20_0._taskMODict) do
+			arg_20_0._taskMODict[iter_20_2][iter_20_1] = nil
+		end
+	end
 end
 
-function slot0.getNewTaskIds(slot0)
-	return slot0._newTaskIdDict
+function var_0_0.clearNewTaskIds(arg_21_0)
+	arg_21_0._newTaskIdDict = {}
 end
 
-function slot0.getTaskActivityMO(slot0, slot1)
-	return slot0._taskActivityMODict[slot1]
+function var_0_0.getNewTaskIds(arg_22_0)
+	return arg_22_0._newTaskIdDict
 end
 
-function slot0.getNoviceTaskCurStage(slot0)
-	if slot0._curStage == 0 then
-		slot0._curStage = slot0:getNoviceTaskMaxUnlockStage()
+function var_0_0.getTaskActivityMO(arg_23_0, arg_23_1)
+	return arg_23_0._taskActivityMODict[arg_23_1]
+end
+
+function var_0_0.getNoviceTaskCurStage(arg_24_0)
+	if arg_24_0._curStage == 0 then
+		arg_24_0._curStage = arg_24_0:getNoviceTaskMaxUnlockStage()
 	end
 
-	return slot0._curStage
+	return arg_24_0._curStage
 end
 
-function slot0.setNoviceTaskCurStage(slot0, slot1)
-	slot0._curStage = slot1
+function var_0_0.setNoviceTaskCurStage(arg_25_0, arg_25_1)
+	arg_25_0._curStage = arg_25_1
 end
 
-function slot0.setNoviceTaskCurSelectStage(slot0, slot1)
-	slot0._curSelectStage = slot1
+function var_0_0.setNoviceTaskCurSelectStage(arg_26_0, arg_26_1)
+	arg_26_0._curSelectStage = arg_26_1
 end
 
-function slot0.getNoviceTaskCurSelectStage(slot0)
-	return slot0._curSelectStage or slot0:getNoviceTaskCurStage()
+function var_0_0.getNoviceTaskCurSelectStage(arg_27_0)
+	return arg_27_0._curSelectStage or arg_27_0:getNoviceTaskCurStage()
 end
 
-function slot0.getStageRewardGetIndex(slot0)
-	return slot0._taskActivityMODict[TaskEnum.TaskType.Novice].defineId
+function var_0_0.getStageRewardGetIndex(arg_28_0)
+	return arg_28_0._taskActivityMODict[TaskEnum.TaskType.Novice].defineId
 end
 
-function slot0.getNoviceTaskMaxUnlockStage(slot0)
-	slot1 = 0
+function var_0_0.getNoviceTaskMaxUnlockStage(arg_29_0)
+	local var_29_0 = 0
 
-	if slot0._taskMODict[TaskEnum.TaskType.Novice] then
-		for slot5, slot6 in pairs(slot0._taskMODict[TaskEnum.TaskType.Novice]) do
-			if slot6.config.minTypeId == TaskEnum.TaskMinType.Novice and slot1 < TaskConfig.instance:gettaskNoviceConfig(slot6.id).stage and slot6.config.chapter == 0 then
-				slot1 = slot7
+	if arg_29_0._taskMODict[TaskEnum.TaskType.Novice] then
+		for iter_29_0, iter_29_1 in pairs(arg_29_0._taskMODict[TaskEnum.TaskType.Novice]) do
+			if iter_29_1.config.minTypeId == TaskEnum.TaskMinType.Novice then
+				local var_29_1 = TaskConfig.instance:gettaskNoviceConfig(iter_29_1.id).stage
+
+				if var_29_0 < var_29_1 and iter_29_1.config.chapter == 0 then
+					var_29_0 = var_29_1
+				end
 			end
 		end
 	end
 
-	return slot1
+	return var_29_0
 end
 
-function slot0.getCurStageActDotGetNum(slot0)
-	if slot0:getNoviceTaskCurStage() == slot0:getMaxStage(TaskEnum.TaskType.Novice) and slot0._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue == slot0:getAllTaskTotalActDot() then
-		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, slot2).needActivity
+function var_0_0.getCurStageActDotGetNum(arg_30_0)
+	local var_30_0 = arg_30_0:getNoviceTaskCurStage()
+	local var_30_1 = arg_30_0:getMaxStage(TaskEnum.TaskType.Novice)
+
+	if var_30_0 == var_30_1 and arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue == arg_30_0:getAllTaskTotalActDot() then
+		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, var_30_1).needActivity
 	end
 
-	if not slot0._taskActivityMODict[TaskEnum.TaskType.Novice] then
+	if not arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice] then
 		return 0
 	end
 
-	return slot0._taskActivityMODict[TaskEnum.TaskType.Novice].value - slot0._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue
+	return arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice].value - arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue
 end
 
-function slot0.getStageActDotGetNum(slot0, slot1)
-	if slot0:getNoviceTaskCurStage() < slot1 then
+function var_0_0.getStageActDotGetNum(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0:getNoviceTaskCurStage()
+
+	if var_31_0 < arg_31_1 then
 		return 0
 	end
 
-	if slot1 < slot2 then
-		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, slot1).needActivity
+	if arg_31_1 < var_31_0 then
+		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, arg_31_1).needActivity
 	end
 
-	return slot0:getCurStageActDotGetNum()
+	return arg_31_0:getCurStageActDotGetNum()
 end
 
-function slot0.getAllTaskTotalActDot(slot0)
-	for slot6, slot7 in pairs(TaskConfig.instance:gettaskNoviceConfigs()) do
-		slot1 = 0 + slot7.activity
+function var_0_0.getAllTaskTotalActDot(arg_32_0)
+	local var_32_0 = 0
+	local var_32_1 = TaskConfig.instance:gettaskNoviceConfigs()
+
+	for iter_32_0, iter_32_1 in pairs(var_32_1) do
+		var_32_0 = var_32_0 + iter_32_1.activity
 	end
 
-	return slot1
+	return var_32_0
 end
 
-function slot0.getCurStageMaxActDot(slot0)
-	return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, slot0._curStage) and slot1.needActivity or 0
+function var_0_0.getCurStageMaxActDot(arg_33_0)
+	local var_33_0 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, arg_33_0._curStage)
+
+	return var_33_0 and var_33_0.needActivity or 0
 end
 
-function slot0.getStageMaxActDot(slot0, slot1)
-	return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, slot1) and slot2.needActivity or 0
+function var_0_0.getStageMaxActDot(arg_34_0, arg_34_1)
+	local var_34_0 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, arg_34_1)
+
+	return var_34_0 and var_34_0.needActivity or 0
 end
 
-function slot0.getMaxStage(slot0, slot1)
-	for slot8, slot9 in pairs(TaskConfig.instance:getTaskActivityBonusConfig(slot1)) do
-		if (VersionValidator.instance:isInReviewing() and slot9.hideInVerifing == true) == false and 1 < slot9.id then
-			slot2 = slot9.id
+function var_0_0.getMaxStage(arg_35_0, arg_35_1)
+	local var_35_0 = 1
+	local var_35_1 = TaskConfig.instance:getTaskActivityBonusConfig(arg_35_1)
+	local var_35_2 = VersionValidator.instance:isInReviewing()
+
+	for iter_35_0, iter_35_1 in pairs(var_35_1) do
+		if (var_35_2 and iter_35_1.hideInVerifing == true) == false and var_35_0 < iter_35_1.id then
+			var_35_0 = iter_35_1.id
 		end
 	end
 
-	return slot2
+	return var_35_0
 end
 
-function slot0.getCurStageAllLockTaskIds(slot0)
-	slot1 = {}
+function var_0_0.getCurStageAllLockTaskIds(arg_36_0)
+	local var_36_0 = {}
+	local var_36_1 = TaskConfig.instance:gettaskNoviceConfigs()
 
-	for slot6, slot7 in pairs(TaskConfig.instance:gettaskNoviceConfigs()) do
-		if slot7.stage == slot0._curStage and slot7.minTypeId == 1 and slot7.chapter == 0 and not slot0:isTaskUnlock(TaskEnum.TaskType.Novice, slot7.id) then
-			table.insert(slot1, slot7.id)
+	for iter_36_0, iter_36_1 in pairs(var_36_1) do
+		if iter_36_1.stage == arg_36_0._curStage and iter_36_1.minTypeId == 1 and iter_36_1.chapter == 0 and not arg_36_0:isTaskUnlock(TaskEnum.TaskType.Novice, iter_36_1.id) then
+			table.insert(var_36_0, iter_36_1.id)
 		end
 	end
 
-	return slot1
+	return var_36_0
 end
 
-function slot0.getAllRewardUnreceivedTasks(slot0, slot1)
-	slot2 = {}
+function var_0_0.getAllRewardUnreceivedTasks(arg_37_0, arg_37_1)
+	local var_37_0 = {}
 
-	for slot6, slot7 in pairs(slot0._taskMODict[slot1]) do
-		if slot7:isClaimable() then
-			table.insert(slot2, slot7)
+	for iter_37_0, iter_37_1 in pairs(arg_37_0._taskMODict[arg_37_1]) do
+		if iter_37_1:isClaimable() then
+			table.insert(var_37_0, iter_37_1)
 		end
 	end
 
-	return slot2
+	return var_37_0
 end
 
-function slot0.isTypeAllTaskFinished(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getAllUnlockTasks(slot1)) do
-		if not slot0:isTaskFinish(slot1, slot7.id) then
+function var_0_0.isTypeAllTaskFinished(arg_38_0, arg_38_1)
+	local var_38_0 = arg_38_0:getAllUnlockTasks(arg_38_1)
+
+	for iter_38_0, iter_38_1 in pairs(var_38_0) do
+		if not arg_38_0:isTaskFinish(arg_38_1, iter_38_1.id) then
 			return false
 		end
 	end
@@ -325,34 +393,44 @@ function slot0.isTypeAllTaskFinished(slot0, slot1)
 	return true
 end
 
-function slot0.isAllRewardGet(slot0, slot1)
-	slot3 = uv0.instance:getTaskActivityMO(slot1)
+function var_0_0.isAllRewardGet(arg_39_0, arg_39_1)
+	local var_39_0 = TaskConfig.instance:getTaskActivityBonusConfig(arg_39_1)
+	local var_39_1 = var_0_0.instance:getTaskActivityMO(arg_39_1)
+	local var_39_2 = 0
 
-	for slot8 = 1, #TaskConfig.instance:getTaskActivityBonusConfig(slot1) do
-		slot4 = 0 + slot2[slot8].needActivity
+	for iter_39_0 = 1, #var_39_0 do
+		var_39_2 = var_39_2 + var_39_0[iter_39_0].needActivity
 	end
 
-	return slot4 <= slot3.value
+	return var_39_2 <= var_39_1.value
 end
 
-function slot0.isFinishAllNoviceTask(slot0)
-	return slot2 == slot0:getMaxStage(TaskEnum.TaskType.Novice) and (slot0:getNoviceTaskCurStage() < slot0:getNoviceTaskMaxUnlockStage() and true or slot0:getCurStageMaxActDot() <= slot0:getCurStageActDotGetNum()) and slot0:isTypeAllTaskFinished(TaskEnum.TaskType.Novice)
+function var_0_0.isFinishAllNoviceTask(arg_40_0)
+	local var_40_0 = arg_40_0:getMaxStage(TaskEnum.TaskType.Novice)
+	local var_40_1 = arg_40_0:getNoviceTaskCurStage()
+	local var_40_2 = arg_40_0:getCurStageMaxActDot()
+	local var_40_3 = arg_40_0:getNoviceTaskMaxUnlockStage()
+	local var_40_4 = arg_40_0:getCurStageActDotGetNum()
+	local var_40_5 = var_40_1 < var_40_3 and true or var_40_2 <= var_40_4
+
+	return var_40_1 == var_40_0 and var_40_5 and arg_40_0:isTypeAllTaskFinished(TaskEnum.TaskType.Novice)
 end
 
-function slot0.getTaskTypeExpireTime(slot0, slot1)
-	slot2 = 0
+function var_0_0.getTaskTypeExpireTime(arg_41_0, arg_41_1)
+	local var_41_0 = 0
+	local var_41_1 = arg_41_0:getAllUnlockTasks(arg_41_1)
 
-	for slot7, slot8 in pairs(slot0:getAllUnlockTasks(slot1)) do
-		if slot8.expiryTime > 0 then
-			slot2 = slot8.expiryTime
+	for iter_41_0, iter_41_1 in pairs(var_41_1) do
+		if iter_41_1.expiryTime > 0 then
+			var_41_0 = iter_41_1.expiryTime
 
 			break
 		end
 	end
 
-	return slot2
+	return var_41_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

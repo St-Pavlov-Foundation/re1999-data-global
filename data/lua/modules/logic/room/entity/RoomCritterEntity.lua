@@ -1,247 +1,277 @@
-module("modules.logic.room.entity.RoomCritterEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomCritterEntity", package.seeall)
 
-slot0 = class("RoomCritterEntity", RoomBaseEntity)
+local var_0_0 = class("RoomCritterEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.RoomCharacter
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = slot0.containerGO
-	slot0.containerGOTrs = slot0.containerGO.transform
-	slot0.goTrs = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = arg_3_0.containerGO
+	arg_3_0.containerGOTrs = arg_3_0.containerGO.transform
+	arg_3_0.goTrs = arg_3_1.transform
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
 
 	if RoomController.instance:isObMode() then
-		slot0.effect:addParams({
+		arg_3_0.effect:addParams({
 			[RoomEnum.EffectKey.BuildingGOKey] = {
 				res = RoomScenePreloader.ResCharacterClickHelper
 			}
 		})
-		slot0.effect:refreshEffect()
+		arg_3_0.effect:refreshEffect()
 	end
 
-	slot0.isPressing = false
-	slot0.__willDestroy = false
+	arg_3_0.isPressing = false
+	arg_3_0.__willDestroy = false
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
-	slot0:addComp("critterspineeffect", RoomCritterSpineEffectComp)
-	slot0:addComp("critterspine", RoomCritterSpineComp)
-	slot0:addComp("critterfollower", RoomCritterFollowerComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("effect", RoomEffectComp)
+	arg_4_0:addComp("critterspineeffect", RoomCritterSpineEffectComp)
+	arg_4_0:addComp("critterspine", RoomCritterSpineComp)
+	arg_4_0:addComp("critterfollower", RoomCritterFollowerComp)
 
 	if RoomController.instance:isObMode() then
-		slot0:addComp("collider", RoomColliderComp)
+		arg_4_0:addComp("collider", RoomColliderComp)
 	end
 
-	slot0:addComp("eventiconComp", RoomCritterEventItemComp)
+	arg_4_0:addComp("eventiconComp", RoomCritterEventItemComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
 end
 
-function slot0.setLocalPos(slot0, slot1, slot2, slot3, slot4)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0.setLocalPos(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	if arg_6_0._tweenId then
+		arg_6_0._scene.tween:killById(arg_6_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_6_0._tweenId = nil
 	end
 
-	if slot4 then
-		slot5 = slot0.go.transform.localPosition
-		slot0._tweenId = slot0._scene.tween:tweenFloat(0, 1, 0.05, slot0._frameCallback, slot0._finishCallback, slot0, {
-			originalX = slot5.x,
-			originalY = slot5.y,
-			originalZ = slot5.z,
-			x = slot1,
-			y = slot2,
-			z = slot3
+	if arg_6_4 then
+		local var_6_0 = arg_6_0.go.transform.localPosition
+
+		arg_6_0._tweenId = arg_6_0._scene.tween:tweenFloat(0, 1, 0.05, arg_6_0._frameCallback, arg_6_0._finishCallback, arg_6_0, {
+			originalX = var_6_0.x,
+			originalY = var_6_0.y,
+			originalZ = var_6_0.z,
+			x = arg_6_1,
+			y = arg_6_2,
+			z = arg_6_3
 		})
 	else
-		transformhelper.setLocalPos(slot0.go.transform, slot1, slot2, slot3)
+		transformhelper.setLocalPos(arg_6_0.go.transform, arg_6_1, arg_6_2, arg_6_3)
 	end
 
-	if slot0.critterspine then
-		slot0.critterspine:characterPosChanged()
+	if arg_6_0.critterspine then
+		arg_6_0.critterspine:characterPosChanged()
 	end
 end
 
-function slot0._frameCallback(slot0, slot1, slot2)
-	transformhelper.setLocalPos(slot0.go.transform, slot2.originalX + (slot2.x - slot2.originalX) * slot1, slot2.originalY + (slot2.y - slot2.originalY) * slot1, slot2.originalZ + (slot2.z - slot2.originalZ) * slot1)
+function var_0_0._frameCallback(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_2.originalX + (arg_7_2.x - arg_7_2.originalX) * arg_7_1
+	local var_7_1 = arg_7_2.originalY + (arg_7_2.y - arg_7_2.originalY) * arg_7_1
+	local var_7_2 = arg_7_2.originalZ + (arg_7_2.z - arg_7_2.originalZ) * arg_7_1
+
+	transformhelper.setLocalPos(arg_7_0.go.transform, var_7_0, var_7_1, var_7_2)
 end
 
-function slot0._finishCallback(slot0, slot1)
-	transformhelper.setLocalPos(slot0.go.transform, slot1.x, slot1.y, slot1.z)
+function var_0_0._finishCallback(arg_8_0, arg_8_1)
+	transformhelper.setLocalPos(arg_8_0.go.transform, arg_8_1.x, arg_8_1.y, arg_8_1.z)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_9_0)
+	arg_9_0.__willDestroy = true
 
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+	if arg_9_0._tweenId then
+		arg_9_0._scene.tween:killById(arg_9_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_9_0._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._pressingEffectDelayDestroy, slot0)
-	uv0.super.beforeDestroy(slot0)
+	TaskDispatcher.cancelTask(arg_9_0._pressingEffectDelayDestroy, arg_9_0)
+	var_0_0.super.beforeDestroy(arg_9_0)
 end
 
-function slot0.playConfirmEffect(slot0)
-	slot0.effect:addParams({
+function var_0_0.playConfirmEffect(arg_10_0)
+	arg_10_0.effect:addParams({
 		[RoomEnum.EffectKey.ConfirmCharacterEffectKey] = {
 			res = RoomScenePreloader.ResEffectConfirmCharacter,
-			containerGO = slot0.staticContainerGO
+			containerGO = arg_10_0.staticContainerGO
 		}
 	}, 2)
-	slot0.effect:refreshEffect()
+	arg_10_0.effect:refreshEffect()
 end
 
-function slot0.playClickEffect(slot0)
-	slot0.effect:addParams({
+function var_0_0.playClickEffect(arg_11_0)
+	arg_11_0.effect:addParams({
 		[RoomEnum.EffectKey.ConfirmCharacterEffectKey] = {
 			res = RoomScenePreloader.ResCharacterClickEffect,
-			containerGO = slot0.staticContainerGO
+			containerGO = arg_11_0.staticContainerGO
 		}
 	}, 1)
-	slot0.effect:refreshEffect()
+	arg_11_0.effect:refreshEffect()
 end
 
-function slot0.playCommonInteractionEff(slot0, slot1, slot2)
-	if slot0.__willDestroy then
+function var_0_0.playCommonInteractionEff(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_0.__willDestroy then
 		return
 	end
 
-	if not CritterConfig.instance:getCritterCommonInteractionEffCfg(slot1) then
+	local var_12_0 = CritterConfig.instance:getCritterCommonInteractionEffCfg(arg_12_1)
+
+	if not var_12_0 then
 		return
 	end
 
-	slot4 = slot3.effectKey
-	slot5 = RoomResHelper.getCharacterEffectABPath(slot3.effectRes)
+	local var_12_1 = var_12_0.effectKey
+	local var_12_2 = RoomResHelper.getCharacterEffectABPath(var_12_0.effectRes)
+	local var_12_3 = arg_12_0.critterspine and arg_12_0.critterspine:getSpineGO()
 
-	if gohelper.isNil(slot0.critterspine and slot0.critterspine:getSpineGO()) then
+	if gohelper.isNil(var_12_3) then
 		return
 	end
 
-	if gohelper.isNil(gohelper.findChild(slot6, RoomCharacterHelper.getSpinePointPath(slot3.point))) then
-		slot8 = slot0.containerGO
+	local var_12_4 = RoomCharacterHelper.getSpinePointPath(var_12_0.point)
+	local var_12_5 = gohelper.findChild(var_12_3, var_12_4)
 
-		logError(string.format(" RoomCritterEntity:playCommonInteractionEff error, no point, critterUid:%s, pointPath:%s", slot0.entityId, slot7))
+	if gohelper.isNil(var_12_5) then
+		var_12_5 = arg_12_0.containerGO
+
+		logError(string.format(" RoomCritterEntity:playCommonInteractionEff error, no point, critterUid:%s, pointPath:%s", arg_12_0.entityId, var_12_4))
 	end
 
-	slot0.effect:addParams({
-		[slot4] = {
-			res = slot5,
-			containerGO = slot8
+	arg_12_0.effect:addParams({
+		[var_12_1] = {
+			res = var_12_2,
+			containerGO = var_12_5
 		}
-	}, slot2)
-	slot0.effect:refreshEffect()
+	}, arg_12_2)
+	arg_12_0.effect:refreshEffect()
 end
 
-function slot0.stopCommonInteractionEff(slot0, slot1)
-	if slot0.__willDestroy then
+function var_0_0.stopCommonInteractionEff(arg_13_0, arg_13_1)
+	if arg_13_0.__willDestroy then
 		return
 	end
 
-	if not CritterConfig.instance:getCritterCommonInteractionEffCfg(slot1) then
+	local var_13_0 = CritterConfig.instance:getCritterCommonInteractionEffCfg(arg_13_1)
+
+	if not var_13_0 then
 		return
 	end
 
-	slot0.effect:removeParams({
-		slot2.effectKey
+	local var_13_1 = var_13_0.effectKey
+
+	arg_13_0.effect:removeParams({
+		var_13_1
 	})
-	slot0.effect:refreshEffect()
+	arg_13_0.effect:refreshEffect()
 end
 
-function slot0.stopAllCommonInteractionEff(slot0)
-	if slot0.__willDestroy then
+function var_0_0.stopAllCommonInteractionEff(arg_14_0)
+	if arg_14_0.__willDestroy then
 		return
 	end
 
-	slot0.effect:removeParams(CritterConfig.instance:getAllCritterCommonInteractionEffKeyList())
-	slot0.effect:refreshEffect()
+	local var_14_0 = CritterConfig.instance:getAllCritterCommonInteractionEffKeyList()
+
+	arg_14_0.effect:removeParams(var_14_0)
+	arg_14_0.effect:refreshEffect()
 end
 
-function slot0.tweenUp(slot0)
-	TaskDispatcher.cancelTask(slot0._pressingEffectDelayDestroy, slot0)
+function var_0_0.tweenUp(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._pressingEffectDelayDestroy, arg_15_0)
 
-	slot0.isPressing = true
+	arg_15_0.isPressing = true
 
-	slot0.critterspine:updateAlpha()
+	arg_15_0.critterspine:updateAlpha()
 
-	slot1 = nil
+	local var_15_0
+	local var_15_1 = arg_15_0:getMO()
 
-	if slot0:getMO() and slot2:isRestingCritter() then
-		slot1 = Vector3.one * CritterEnum.CritterPressingEffectScaleInSeatSlot
+	if var_15_1 and var_15_1:isRestingCritter() then
+		var_15_0 = Vector3.one * CritterEnum.CritterPressingEffectScaleInSeatSlot
 	end
 
-	slot0.effect:addParams({
+	arg_15_0.effect:addParams({
 		[RoomEnum.EffectKey.PressingEffectKey] = {
 			res = RoomScenePreloader.ResEffectPressingCharacter,
-			containerGO = slot0.staticContainerGO,
-			localScale = slot1
+			containerGO = arg_15_0.staticContainerGO,
+			localScale = var_15_0
 		}
 	})
-	slot0.effect:refreshEffect()
+	arg_15_0.effect:refreshEffect()
 
-	if slot0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey) and slot4:GetComponent(typeof(UnityEngine.Animator)) then
-		slot5:Play("open", 0, 0)
+	local var_15_2 = arg_15_0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey)
+
+	if var_15_2 then
+		local var_15_3 = var_15_2:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_15_3 then
+			var_15_3:Play("open", 0, 0)
+		end
 	end
 
-	if slot0.critterspine then
-		slot0.critterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "up")
+	if arg_15_0.critterspine then
+		arg_15_0.critterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "up")
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_role_drag)
 end
 
-function slot0.tweenDown(slot0)
-	slot0.isPressing = false
+function var_0_0.tweenDown(arg_16_0)
+	arg_16_0.isPressing = false
 
-	slot0.critterspine:updateAlpha()
+	arg_16_0.critterspine:updateAlpha()
 
-	if slot0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey) and slot1:GetComponent(typeof(UnityEngine.Animator)) then
-		slot2:Play("close", 0, 0)
+	local var_16_0 = arg_16_0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey)
+
+	if var_16_0 then
+		local var_16_1 = var_16_0:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_16_1 then
+			var_16_1:Play("close", 0, 0)
+		end
 	end
 
-	if slot0.critterspine then
-		slot0.critterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "down", 0, slot0._downDone, slot0)
+	if arg_16_0.critterspine then
+		arg_16_0.critterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "down", 0, arg_16_0._downDone, arg_16_0)
 	end
 
-	TaskDispatcher.runDelay(slot0._pressingEffectDelayDestroy, slot0, 2)
+	TaskDispatcher.runDelay(arg_16_0._pressingEffectDelayDestroy, arg_16_0, 2)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_role_put)
 end
 
-function slot0._downDone(slot0)
-	if slot0.critterspine then
-		slot0.critterspine:clearAnim()
+function var_0_0._downDone(arg_17_0)
+	if arg_17_0.critterspine then
+		arg_17_0.critterspine:clearAnim()
 	end
 end
 
-function slot0._pressingEffectDelayDestroy(slot0)
-	slot0.effect:removeParams({
+function var_0_0._pressingEffectDelayDestroy(arg_18_0)
+	arg_18_0.effect:removeParams({
 		RoomEnum.EffectKey.PressingEffectKey
 	})
-	slot0.effect:refreshEffect()
+	arg_18_0.effect:refreshEffect()
 end
 
-function slot0.getMO(slot0)
-	slot0._mo = RoomCritterModel.instance:getCritterMOById(slot0.id) or slot0._mo
+function var_0_0.getMO(arg_19_0)
+	arg_19_0._mo = RoomCritterModel.instance:getCritterMOById(arg_19_0.id) or arg_19_0._mo
 
-	return slot0._mo
+	return arg_19_0._mo
 end
 
-return slot0
+return var_0_0

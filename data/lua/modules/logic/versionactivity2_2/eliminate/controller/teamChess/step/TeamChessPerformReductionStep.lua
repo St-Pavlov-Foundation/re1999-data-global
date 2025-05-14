@@ -1,37 +1,40 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPerformReductionStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPerformReductionStep", package.seeall)
 
-slot0 = class("TeamChessPerformReductionStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessPerformReductionStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.StrongHoldPerformReduction)
 	TeamChessUnitEntityMgr.instance:restoreEntityShowMode()
 
-	for slot6, slot7 in pairs(EliminateTeamChessModel.instance:getStrongholds()) do
-		slot2 = 0 + slot7:getPlayerSoliderCount()
+	local var_1_0 = EliminateTeamChessModel.instance:getStrongholds()
+	local var_1_1 = 0
+
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		var_1_1 = var_1_1 + iter_1_1:getPlayerSoliderCount()
 	end
 
-	slot3 = EliminateLevelModel.instance:getLevelId()
+	local var_1_2 = EliminateLevelModel.instance:getLevelId()
 
-	if slot2 > 0 then
+	if var_1_1 > 0 then
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamSettleEndAndIsHavePlayerSolider)
 	end
 
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamSettleEndAndPlayerSoliderCount, string.format("%s_%s", slot3, slot2))
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamSettleEndAndPlayerSoliderCount, string.format("%s_%s", var_1_2, var_1_1))
 
 	if GuideModel.instance:isGuideRunning(22011) or GuideModel.instance:isGuideRunning(22012) then
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, slot0._gudieEnd, slot0)
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_1_0._gudieEnd, arg_1_0)
 	else
-		TaskDispatcher.runDelay(slot0._onDone, slot0, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
+		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessUpdateActiveMoveStepTime)
 	end
 end
 
-function slot0._gudieEnd(slot0, slot1)
-	if slot1 ~= 22011 and slot1 ~= 22012 then
+function var_0_0._gudieEnd(arg_2_0, arg_2_1)
+	if arg_2_1 ~= 22011 and arg_2_1 ~= 22012 then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._gudieEnd, slot0)
-	slot0:_onDone(true)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_2_0._gudieEnd, arg_2_0)
+	arg_2_0:_onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,75 +1,85 @@
-module("modules.logic.mainsceneswitch.model.MainSceneSwitchModel", package.seeall)
+﻿module("modules.logic.mainsceneswitch.model.MainSceneSwitchModel", package.seeall)
 
-slot0 = class("MainSceneSwitchModel", BaseModel)
+local var_0_0 = class("MainSceneSwitchModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._sceneId = nil
-	slot0._sceneConfig = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._sceneId = nil
+	arg_2_0._sceneConfig = nil
 end
 
-function slot0.initSceneId(slot0)
-	if slot0._sceneId then
+function var_0_0.initSceneId(arg_3_0)
+	if arg_3_0._sceneId then
 		return
 	end
 
-	slot0:updateSceneIdByItemId(tonumber(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainSceneSkin)) or 0)
+	local var_3_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainSceneSkin)
+	local var_3_1 = tonumber(var_3_0) or 0
 
-	if slot0._sceneId then
-		MainSceneSwitchController.closeSceneReddot(slot0._sceneId)
+	arg_3_0:updateSceneIdByItemId(var_3_1)
+
+	if arg_3_0._sceneId then
+		MainSceneSwitchController.closeSceneReddot(arg_3_0._sceneId)
 	end
 end
 
-function slot0.updateSceneIdByItemId(slot0, slot1)
-	slot0:setCurSceneId(MainSceneSwitchConfig.instance:getConfigByItemId(slot1) and slot2.id or MainSceneSwitchConfig.instance:getDefaultSceneId())
+function var_0_0.updateSceneIdByItemId(arg_4_0, arg_4_1)
+	local var_4_0 = MainSceneSwitchConfig.instance:getConfigByItemId(arg_4_1)
+	local var_4_1 = var_4_0 and var_4_0.id or MainSceneSwitchConfig.instance:getDefaultSceneId()
+
+	arg_4_0:setCurSceneId(var_4_1)
 end
 
-function slot0.getCurSceneId(slot0)
-	return slot0._sceneId
+function var_0_0.getCurSceneId(arg_5_0)
+	return arg_5_0._sceneId
 end
 
-function slot0.setCurSceneId(slot0, slot1)
-	slot0._sceneId = slot1
-	slot0._sceneConfig = lua_scene_switch.configDict[slot0._sceneId]
+function var_0_0.setCurSceneId(arg_6_0, arg_6_1)
+	arg_6_0._sceneId = arg_6_1
+	arg_6_0._sceneConfig = lua_scene_switch.configDict[arg_6_0._sceneId]
 
-	if not slot0._sceneConfig then
-		slot0._sceneId = MainSceneSwitchConfig.instance:getDefaultSceneId()
-		slot0._sceneConfig = lua_scene_switch.configDict[slot0._sceneId]
+	if not arg_6_0._sceneConfig then
+		arg_6_0._sceneId = MainSceneSwitchConfig.instance:getDefaultSceneId()
+		arg_6_0._sceneConfig = lua_scene_switch.configDict[arg_6_0._sceneId]
 	end
 end
 
-function slot0.getCurSceneResName(slot0)
-	return slot0._sceneConfig and slot0._sceneConfig.resName
+function var_0_0.getCurSceneResName(arg_7_0)
+	return arg_7_0._sceneConfig and arg_7_0._sceneConfig.resName
 end
 
-function slot0.getSceneStatus(slot0)
-	if not lua_scene_switch.configDict[slot0] then
+function var_0_0.getSceneStatus(arg_8_0)
+	local var_8_0 = lua_scene_switch.configDict[arg_8_0]
+
+	if not var_8_0 then
 		return MainSceneSwitchEnum.SceneStutas.Lock
 	end
 
-	if slot1.defaultUnlock == 1 then
+	if var_8_0.defaultUnlock == 1 then
 		return MainSceneSwitchEnum.SceneStutas.Unlock
 	end
 
-	if ItemModel.instance:getItemCount(slot1.itemId) > 0 then
+	if ItemModel.instance:getItemCount(var_8_0.itemId) > 0 then
 		return MainSceneSwitchEnum.SceneStutas.Unlock
 	end
 
-	if uv0.canJump(slot1.itemId) then
+	if var_0_0.canJump(var_8_0.itemId) then
 		return MainSceneSwitchEnum.SceneStutas.LockCanGet
 	end
 
 	return MainSceneSwitchEnum.SceneStutas.Lock
 end
 
-function slot0.canJump(slot0)
-	for slot5, slot6 in ipairs(MainSceneSwitchConfig.instance:getItemSource(slot0)) do
-		slot7, slot8 = uv0._getCantJump(slot6)
+function var_0_0.canJump(arg_9_0)
+	local var_9_0 = MainSceneSwitchConfig.instance:getItemSource(arg_9_0)
 
-		if not slot7 then
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_1, var_9_2 = var_0_0._getCantJump(iter_9_1)
+
+		if not var_9_1 then
 			return true
 		end
 	end
@@ -77,18 +87,21 @@ function slot0.canJump(slot0)
 	return false
 end
 
-function slot0._getCantJump(slot0)
-	slot2, slot3 = nil
+function var_0_0._getCantJump(arg_10_0)
+	local var_10_0 = JumpController.instance:isJumpOpen(arg_10_0.sourceId)
+	local var_10_1
+	local var_10_2
+	local var_10_3 = JumpConfig.instance:getJumpConfig(arg_10_0.sourceId)
 
-	if not JumpController.instance:isJumpOpen(slot0.sourceId) then
-		slot2, slot3 = OpenHelper.getToastIdAndParam(JumpConfig.instance:getJumpConfig(slot0.sourceId).openId)
+	if not var_10_0 then
+		var_10_1, var_10_2 = OpenHelper.getToastIdAndParam(var_10_3.openId)
 	else
-		slot2, slot3 = JumpController.instance:cantJump(slot4.param)
+		var_10_1, var_10_2 = JumpController.instance:cantJump(var_10_3.param)
 	end
 
-	return slot2, slot3
+	return var_10_1, var_10_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

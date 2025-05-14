@@ -1,134 +1,138 @@
-module("modules.logic.summon.view.SummonHeroDetailView", package.seeall)
+﻿module("modules.logic.summon.view.SummonHeroDetailView", package.seeall)
 
-slot0 = class("SummonHeroDetailView", BaseView)
+local var_0_0 = class("SummonHeroDetailView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._simageredlight = gohelper.findChildSingleImage(slot0.viewGO, "bg/lightcontainer/#simage_redlight")
-	slot0._gocharacterinfo = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo")
-	slot0._imagedmgtype = gohelper.findChildImage(slot0.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
-	slot0._imagecareericon = gohelper.findChildImage(slot0.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
-	slot0._txtnameen = gohelper.findChildText(slot0.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
-	slot0._gospecialitem = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem")
-	slot0._gofourword = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem/#go_fourword")
-	slot0._gothreeword = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem/#go_threeword")
-	slot0._gotwoword = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem/#go_twoword")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "characterinfo/#go_characterinfo/level/#txt_level")
-	slot0._goskill = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/#go_skill")
-	slot0._btnexskill = gohelper.findChildButtonWithAudio(slot0.viewGO, "characterinfo/#go_characterinfo/exskill/#btn_exskill")
-	slot0._txtpassivename = gohelper.findChildText(slot0.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
-	slot0._gopassiveskills = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
-	slot0._btnpassiveskill = gohelper.findChildButtonWithAudio(slot0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
-	slot0._btnattribute = gohelper.findChildButtonWithAudio(slot0.viewGO, "characterinfo/#go_characterinfo/attribute/#btn_attribute")
-	slot0._goattribute = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
-	slot0._simagecharacter = gohelper.findChildSingleImage(slot0.viewGO, "charactercontainer/#simage_character")
-	slot0._gostarList = gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/#go_starList")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
+	arg_1_0._simageredlight = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/lightcontainer/#simage_redlight")
+	arg_1_0._gocharacterinfo = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo")
+	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
+	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
+	arg_1_0._gospecialitem = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem")
+	arg_1_0._gofourword = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem/#go_fourword")
+	arg_1_0._gothreeword = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem/#go_threeword")
+	arg_1_0._gotwoword = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem/#go_twoword")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#txt_level")
+	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_skill")
+	arg_1_0._btnexskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/exskill/#btn_exskill")
+	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
+	arg_1_0._gopassiveskills = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
+	arg_1_0._btnpassiveskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
+	arg_1_0._btnattribute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#btn_attribute")
+	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
+	arg_1_0._simagecharacter = gohelper.findChildSingleImage(arg_1_0.viewGO, "charactercontainer/#simage_character")
+	arg_1_0._gostarList = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_starList")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnpassiveskill:AddClickListener(slot0._btnpassiveskillOnClick, slot0)
-	slot0._btnattribute:AddClickListener(slot0._btnattributeOnClick, slot0)
-	slot0._btnexskill:AddClickListener(slot0._btnexskillOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnpassiveskill:AddClickListener(arg_2_0._btnpassiveskillOnClick, arg_2_0)
+	arg_2_0._btnattribute:AddClickListener(arg_2_0._btnattributeOnClick, arg_2_0)
+	arg_2_0._btnexskill:AddClickListener(arg_2_0._btnexskillOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnpassiveskill:RemoveClickListener()
-	slot0._btnattribute:RemoveClickListener()
-	slot0._btnexskill:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnpassiveskill:RemoveClickListener()
+	arg_3_0._btnattribute:RemoveClickListener()
+	arg_3_0._btnexskill:RemoveClickListener()
 end
 
-slot0.HpAttrId = 101
-slot0.AttackAttrId = 102
-slot0.DefenseAttrId = 103
-slot0.MdefenseAttrId = 104
-slot0.TechnicAttrId = 105
+var_0_0.HpAttrId = 101
+var_0_0.AttackAttrId = 102
+var_0_0.DefenseAttrId = 103
+var_0_0.MdefenseAttrId = 104
+var_0_0.TechnicAttrId = 105
 
-function slot0._btnpassiveskillOnClick(slot0)
-	CharacterController.instance:openCharacterTipView({
-		tag = "passiveskill",
-		heroid = slot0._heroId,
-		tipPos = Vector2.New(909, -13.8),
-		anchorParams = {
-			Vector2.New(0, 0.5),
-			Vector2.New(0, 0.5)
-		},
-		buffTipsX = 1666,
-		showAttributeOption = CharacterEnum.showAttributeOption.ShowMin
-	})
+function var_0_0._btnpassiveskillOnClick(arg_4_0)
+	local var_4_0 = {}
+
+	var_4_0.tag = "passiveskill"
+	var_4_0.heroid = arg_4_0._heroId
+	var_4_0.tipPos = Vector2.New(909, -13.8)
+	var_4_0.anchorParams = {
+		Vector2.New(0, 0.5),
+		Vector2.New(0, 0.5)
+	}
+	var_4_0.buffTipsX = 1666
+	var_4_0.showAttributeOption = CharacterEnum.showAttributeOption.ShowMin
+
+	CharacterController.instance:openCharacterTipView(var_4_0)
 end
 
-function slot0._btnattributeOnClick(slot0)
-	CharacterController.instance:openCharacterTipView({
-		tag = "attribute",
-		heroid = slot0._heroId,
-		showAttributeOption = CharacterEnum.showAttributeOption.ShowMin
-	})
+function var_0_0._btnattributeOnClick(arg_5_0)
+	local var_5_0 = {}
+
+	var_5_0.tag = "attribute"
+	var_5_0.heroid = arg_5_0._heroId
+	var_5_0.showAttributeOption = CharacterEnum.showAttributeOption.ShowMin
+
+	CharacterController.instance:openCharacterTipView(var_5_0)
 end
 
-function slot0._btnexskillOnClick(slot0)
+function var_0_0._btnexskillOnClick(arg_6_0)
 	CharacterController.instance:openCharacterExSkillView({
 		fromHeroDetailView = true,
-		heroId = slot0._heroId,
+		heroId = arg_6_0._heroId,
 		showAttributeOption = CharacterEnum.showAttributeOption.ShowMin
 	})
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
 
-	slot0._imagecharacter = gohelper.findChildImage(slot0.viewGO, "charactercontainer/#simage_character")
-	slot0._careerGOs = {}
+	arg_7_0._imagecharacter = gohelper.findChildImage(arg_7_0.viewGO, "charactercontainer/#simage_character")
+	arg_7_0._careerGOs = {}
 
-	gohelper.setActive(slot0._gospecialitem, false)
+	gohelper.setActive(arg_7_0._gospecialitem, false)
+	arg_7_0._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
 
-	slot4 = "guang_027"
-
-	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg(slot4))
-
-	for slot4 = 1, 6 do
-		slot0["_gostar" .. slot4] = gohelper.findChild(slot0._gostarList, "star" .. slot4)
+	for iter_7_0 = 1, 6 do
+		arg_7_0["_gostar" .. iter_7_0] = gohelper.findChild(arg_7_0._gostarList, "star" .. iter_7_0)
 	end
 
-	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, CharacterSkillContainer)
-	slot0._attributevalues = {}
+	arg_7_0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._goskill, CharacterSkillContainer)
+	arg_7_0._attributevalues = {}
 
-	for slot4 = 1, 5 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.value = gohelper.findChildText(slot0._goattribute, "attribute" .. tostring(slot4) .. "/txt_attribute")
-		slot5.name = gohelper.findChildText(slot0._goattribute, "attribute" .. tostring(slot4) .. "/name")
-		slot5.icon = gohelper.findChildImage(slot0._goattribute, "attribute" .. tostring(slot4) .. "/icon")
-		slot5.rate = gohelper.findChildImage(slot0._goattribute, "attribute" .. tostring(slot4) .. "/rate")
+	for iter_7_1 = 1, 5 do
+		local var_7_0 = arg_7_0:getUserDataTb_()
 
-		gohelper.setActive(slot5.rate.gameObject, false)
+		var_7_0.value = gohelper.findChildText(arg_7_0._goattribute, "attribute" .. tostring(iter_7_1) .. "/txt_attribute")
+		var_7_0.name = gohelper.findChildText(arg_7_0._goattribute, "attribute" .. tostring(iter_7_1) .. "/name")
+		var_7_0.icon = gohelper.findChildImage(arg_7_0._goattribute, "attribute" .. tostring(iter_7_1) .. "/icon")
+		var_7_0.rate = gohelper.findChildImage(arg_7_0._goattribute, "attribute" .. tostring(iter_7_1) .. "/rate")
 
-		slot0._attributevalues[slot4] = slot5
+		gohelper.setActive(var_7_0.rate.gameObject, false)
+
+		arg_7_0._attributevalues[iter_7_1] = var_7_0
 	end
 
-	slot0._passiveskillGOs = {}
+	arg_7_0._passiveskillGOs = {}
 
-	for slot4 = 1, 3 do
-		table.insert(slot0._passiveskillGOs, gohelper.findChild(slot0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills/passiveskill" .. slot4))
+	for iter_7_2 = 1, 3 do
+		local var_7_1 = gohelper.findChild(arg_7_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills/passiveskill" .. iter_7_2)
+
+		table.insert(arg_7_0._passiveskillGOs, var_7_1)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshHero(slot0._heroId)
-	slot0:_refreshSkin(slot0._skinId)
+function var_0_0._refreshUI(arg_8_0)
+	arg_8_0:_refreshHero(arg_8_0._heroId)
+	arg_8_0:_refreshSkin(arg_8_0._skinId)
 end
 
-function slot0._getSkinId(slot0)
-	for slot5 = CharacterModel.instance:getMaxRank(slot0._heroId), 1, -1 do
-		slot10 = "#"
+function var_0_0._getSkinId(arg_9_0)
+	for iter_9_0 = CharacterModel.instance:getMaxRank(arg_9_0._heroId), 1, -1 do
+		local var_9_0 = GameUtil.splitString2(SkillConfig.instance:getherorankCO(arg_9_0._heroId, iter_9_0).effect, true, "|", "#")
 
-		for slot10, slot11 in pairs(GameUtil.splitString2(SkillConfig.instance:getherorankCO(slot0._heroId, slot5).effect, true, "|", slot10)) do
-			if tonumber(slot11[1]) == 3 then
-				return tonumber(slot11[2])
+		for iter_9_1, iter_9_2 in pairs(var_9_0) do
+			if tonumber(iter_9_2[1]) == 3 then
+				return tonumber(iter_9_2[2])
 			end
 		end
 	end
@@ -136,222 +140,252 @@ function slot0._getSkinId(slot0)
 	return nil
 end
 
-function slot0._refreshHero(slot0, slot1)
-	slot2 = HeroConfig.instance:getHeroCO(slot1)
+function var_0_0._refreshHero(arg_10_0, arg_10_1)
+	local var_10_0 = HeroConfig.instance:getHeroCO(arg_10_1)
 
-	for slot6 = 1, 6 do
-		gohelper.setActive(slot0["_gostar" .. slot6], slot6 <= CharacterEnum.Star[slot2.rare])
+	for iter_10_0 = 1, 6 do
+		gohelper.setActive(arg_10_0["_gostar" .. iter_10_0], iter_10_0 <= CharacterEnum.Star[var_10_0.rare])
 	end
 
-	slot0._txtname.text = slot2.name
-	slot0._txtnameen.text = slot2.nameEng
+	arg_10_0._txtname.text = var_10_0.name
+	arg_10_0._txtnameen.text = var_10_0.nameEng
 
-	UISpriteSetMgr.instance:setCharactergetSprite(slot0._imagecareericon, "charactercareer" .. tostring(slot2.career))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagedmgtype, "dmgtype" .. tostring(slot2.dmgType))
+	UISpriteSetMgr.instance:setCharactergetSprite(arg_10_0._imagecareericon, "charactercareer" .. tostring(var_10_0.career))
+	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagedmgtype, "dmgtype" .. tostring(var_10_0.dmgType))
 
-	slot5 = HeroConfig.instance:getShowLevel(CharacterModel.instance:getrankEffects(slot1, CharacterModel.instance:getMaxRank(slot1))[1])
-	slot0._txtlevel.text = string.format("%d/%d", slot5, slot5)
+	local var_10_1 = CharacterModel.instance:getMaxRank(arg_10_1)
+	local var_10_2 = CharacterModel.instance:getrankEffects(arg_10_1, var_10_1)[1]
+	local var_10_3 = HeroConfig.instance:getShowLevel(var_10_2)
 
-	slot0:_refreshSpecial(slot1, slot2)
-	slot0:_refreshSkill(slot1)
-	slot0:_refreshPassiveSkill(slot1, slot2)
-	slot0:_refreshAttribute(slot1, slot2)
+	arg_10_0._txtlevel.text = string.format("%d/%d", var_10_3, var_10_3)
+
+	arg_10_0:_refreshSpecial(arg_10_1, var_10_0)
+	arg_10_0:_refreshSkill(arg_10_1)
+	arg_10_0:_refreshPassiveSkill(arg_10_1, var_10_0)
+	arg_10_0:_refreshAttribute(arg_10_1, var_10_0)
 end
 
-function slot0._refreshSpecial(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0._refreshSpecial(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = {}
 
-	if not string.nilorempty(slot2.battleTag) then
-		slot3 = string.split(slot2.battleTag, "#")
+	if not string.nilorempty(arg_11_2.battleTag) then
+		var_11_0 = string.split(arg_11_2.battleTag, "#")
 	end
 
-	for slot7 = 1, #slot3 do
-		if not slot0._careerGOs[slot7] then
-			slot8 = slot0:getUserDataTb_()
-			slot8.go = gohelper.cloneInPlace(slot0._gospecialitem, "item" .. slot7)
-			slot8.textfour = gohelper.findChildText(slot8.go, "#go_fourword/name")
-			slot8.textthree = gohelper.findChildText(slot8.go, "#go_threeword/name")
-			slot8.texttwo = gohelper.findChildText(slot8.go, "#go_twoword/name")
-			slot8.containerfour = gohelper.findChild(slot8.go, "#go_fourword")
-			slot8.containerthree = gohelper.findChild(slot8.go, "#go_threeword")
-			slot8.containertwo = gohelper.findChild(slot8.go, "#go_twoword")
+	for iter_11_0 = 1, #var_11_0 do
+		local var_11_1 = arg_11_0._careerGOs[iter_11_0]
 
-			table.insert(slot0._careerGOs, slot8)
+		if not var_11_1 then
+			var_11_1 = arg_11_0:getUserDataTb_()
+			var_11_1.go = gohelper.cloneInPlace(arg_11_0._gospecialitem, "item" .. iter_11_0)
+			var_11_1.textfour = gohelper.findChildText(var_11_1.go, "#go_fourword/name")
+			var_11_1.textthree = gohelper.findChildText(var_11_1.go, "#go_threeword/name")
+			var_11_1.texttwo = gohelper.findChildText(var_11_1.go, "#go_twoword/name")
+			var_11_1.containerfour = gohelper.findChild(var_11_1.go, "#go_fourword")
+			var_11_1.containerthree = gohelper.findChild(var_11_1.go, "#go_threeword")
+			var_11_1.containertwo = gohelper.findChild(var_11_1.go, "#go_twoword")
+
+			table.insert(arg_11_0._careerGOs, var_11_1)
 		end
 
-		gohelper.setActive(slot8.containertwo, GameUtil.utf8len(HeroConfig.instance:getBattleTagConfigCO(slot3[slot7]).tagName) <= 2)
-		gohelper.setActive(slot8.containerthree, slot10 == 3)
-		gohelper.setActive(slot8.containerfour, slot10 >= 4)
+		local var_11_2 = HeroConfig.instance:getBattleTagConfigCO(var_11_0[iter_11_0]).tagName
+		local var_11_3 = GameUtil.utf8len(var_11_2)
 
-		if slot10 <= 2 then
-			slot8.texttwo.text = slot9
-		elseif slot10 == 3 then
-			slot8.textthree.text = slot9
+		gohelper.setActive(var_11_1.containertwo, var_11_3 <= 2)
+		gohelper.setActive(var_11_1.containerthree, var_11_3 == 3)
+		gohelper.setActive(var_11_1.containerfour, var_11_3 >= 4)
+
+		if var_11_3 <= 2 then
+			var_11_1.texttwo.text = var_11_2
+		elseif var_11_3 == 3 then
+			var_11_1.textthree.text = var_11_2
 		else
-			slot8.textfour.text = slot9
+			var_11_1.textfour.text = var_11_2
 		end
 
-		gohelper.setActive(slot8.go, true)
+		gohelper.setActive(var_11_1.go, true)
 	end
 
-	for slot7 = #slot3 + 1, #slot0._careerGOs do
-		gohelper.setActive(slot0._careerGOs[slot7].go, false)
-	end
-end
-
-function slot0._refreshSkill(slot0, slot1)
-	slot0._skillContainer:onUpdateMO(slot1, CharacterEnum.showAttributeOption.ShowMin)
-end
-
-function slot0._refreshPassiveSkill(slot0, slot1, slot2)
-	if not lua_skill.configDict[SkillConfig.instance:getpassiveskillsCO(slot1)[1].skillPassive] then
-		logError("找不到角色被动技能, skillId: " .. tostring(slot5))
-	end
-
-	slot0._txtpassivename.text = slot6.name
-
-	for slot10 = 1, #slot0._passiveskillGOs do
-		gohelper.setActive(slot0._passiveskillGOs[slot10], slot10 <= #slot3)
+	for iter_11_1 = #var_11_0 + 1, #arg_11_0._careerGOs do
+		gohelper.setActive(arg_11_0._careerGOs[iter_11_1].go, false)
 	end
 end
 
-function slot0._refreshAttribute(slot0, slot1, slot2)
-	slot3 = {
-		uv0.HpAttrId,
-		uv0.DefenseAttrId,
-		uv0.TechnicAttrId,
-		uv0.MdefenseAttrId,
-		uv0.AttackAttrId
+function var_0_0._refreshSkill(arg_12_0, arg_12_1)
+	arg_12_0._skillContainer:onUpdateMO(arg_12_1, CharacterEnum.showAttributeOption.ShowMin)
+end
+
+function var_0_0._refreshPassiveSkill(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = SkillConfig.instance:getpassiveskillsCO(arg_13_1)
+	local var_13_1 = var_13_0[1].skillPassive
+	local var_13_2 = lua_skill.configDict[var_13_1]
+
+	if not var_13_2 then
+		logError("找不到角色被动技能, skillId: " .. tostring(var_13_1))
+	end
+
+	arg_13_0._txtpassivename.text = var_13_2.name
+
+	for iter_13_0 = 1, #arg_13_0._passiveskillGOs do
+		gohelper.setActive(arg_13_0._passiveskillGOs[iter_13_0], iter_13_0 <= #var_13_0)
+	end
+end
+
+function var_0_0._refreshAttribute(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = {
+		var_0_0.HpAttrId,
+		var_0_0.DefenseAttrId,
+		var_0_0.TechnicAttrId,
+		var_0_0.MdefenseAttrId,
+		var_0_0.AttackAttrId
 	}
 
-	for slot7 = 1, 5 do
-		slot0._attributevalues[slot7].name.text = HeroConfig.instance:getHeroAttributeCO(slot3[slot7]).name
+	for iter_14_0 = 1, 5 do
+		local var_14_1 = HeroConfig.instance:getHeroAttributeCO(var_14_0[iter_14_0])
 
-		CharacterController.instance:SetAttriIcon(slot0._attributevalues[slot7].icon, slot3[slot7], GameUtil.parseColor("#9b795e"))
+		arg_14_0._attributevalues[iter_14_0].name.text = var_14_1.name
+
+		CharacterController.instance:SetAttriIcon(arg_14_0._attributevalues[iter_14_0].icon, var_14_0[iter_14_0], GameUtil.parseColor("#9b795e"))
 	end
 
-	slot4 = SkillConfig.instance:getherolevelCO(slot1, 1)
-	slot0._attributevalues[1].value.text = slot4.hp
-	slot0._attributevalues[2].value.text = slot4.def
-	slot0._attributevalues[3].value.text = slot4.technic
-	slot0._attributevalues[4].value.text = slot4.mdef
-	slot0._attributevalues[5].value.text = slot4.atk
+	local var_14_2 = SkillConfig.instance:getherolevelCO(arg_14_1, 1)
+	local var_14_3 = var_14_2.hp
+	local var_14_4 = var_14_2.atk
+	local var_14_5 = var_14_2.def
+	local var_14_6 = var_14_2.mdef
+	local var_14_7 = var_14_2.technic
+
+	arg_14_0._attributevalues[1].value.text = var_14_3
+	arg_14_0._attributevalues[2].value.text = var_14_5
+	arg_14_0._attributevalues[3].value.text = var_14_7
+	arg_14_0._attributevalues[4].value.text = var_14_6
+	arg_14_0._attributevalues[5].value.text = var_14_4
 end
 
-function slot0._getLevel1Atrributes(slot0)
-	slot2 = SkillConfig.instance:getherolevelCO(slot0._heroId, 1)
+function var_0_0._getLevel1Atrributes(arg_15_0)
+	local var_15_0 = 1
+	local var_15_1 = SkillConfig.instance:getherolevelCO(arg_15_0._heroId, var_15_0)
 
 	return {
-		[uv0.HpAttrId] = slot2.hp,
-		[uv0.AttackAttrId] = slot2.atk,
-		[uv0.DefenseAttrId] = slot2.def,
-		[uv0.MdefenseAttrId] = slot2.mdef,
-		[uv0.TechnicAttrId] = slot2.technic
+		[var_0_0.HpAttrId] = var_15_1.hp,
+		[var_0_0.AttackAttrId] = var_15_1.atk,
+		[var_0_0.DefenseAttrId] = var_15_1.def,
+		[var_0_0.MdefenseAttrId] = var_15_1.mdef,
+		[var_0_0.TechnicAttrId] = var_15_1.technic
 	}
 end
 
-function slot0._getAttributeRates(slot0, slot1)
-	slot2 = SkillConfig.instance:getGrowCo()
-	slot3 = {
-		[uv0.HpAttrId] = {},
-		[uv0.AttackAttrId] = {},
-		[uv0.DefenseAttrId] = {},
-		[uv0.MdefenseAttrId] = {},
-		[uv0.TechnicAttrId] = {}
+function var_0_0._getAttributeRates(arg_16_0, arg_16_1)
+	local var_16_0 = SkillConfig.instance:getGrowCo()
+	local var_16_1 = {
+		[var_0_0.HpAttrId] = {},
+		[var_0_0.AttackAttrId] = {},
+		[var_0_0.DefenseAttrId] = {},
+		[var_0_0.MdefenseAttrId] = {},
+		[var_0_0.TechnicAttrId] = {}
 	}
 
-	for slot7 = 1, 8 do
-		table.insert(slot3[uv0.AttackAttrId], slot2[slot7].atk)
-		table.insert(slot3[uv0.HpAttrId], slot2[slot7].hp)
-		table.insert(slot3[uv0.DefenseAttrId], slot2[slot7].def)
-		table.insert(slot3[uv0.MdefenseAttrId], slot2[slot7].mdef)
-		table.insert(slot3[uv0.TechnicAttrId], slot2[slot7].technic)
+	for iter_16_0 = 1, 8 do
+		table.insert(var_16_1[var_0_0.AttackAttrId], var_16_0[iter_16_0].atk)
+		table.insert(var_16_1[var_0_0.HpAttrId], var_16_0[iter_16_0].hp)
+		table.insert(var_16_1[var_0_0.DefenseAttrId], var_16_0[iter_16_0].def)
+		table.insert(var_16_1[var_0_0.MdefenseAttrId], var_16_0[iter_16_0].mdef)
+		table.insert(var_16_1[var_0_0.TechnicAttrId], var_16_0[iter_16_0].technic)
 	end
 
 	return {
-		[uv0.HpAttrId] = slot0:_countRate(slot1[uv0.HpAttrId], slot3[uv0.HpAttrId], 8),
-		[uv0.AttackAttrId] = slot0:_countRate(slot1[uv0.AttackAttrId], slot3[uv0.AttackAttrId], 8),
-		[uv0.DefenseAttrId] = slot0:_countRate(slot1[uv0.DefenseAttrId], slot3[uv0.DefenseAttrId], 8),
-		[uv0.MdefenseAttrId] = slot0:_countRate(slot1[uv0.MdefenseAttrId], slot3[uv0.MdefenseAttrId], 8),
-		[uv0.TechnicAttrId] = slot0:_countRate(slot1[uv0.TechnicAttrId], slot3[uv0.TechnicAttrId], 8)
+		[var_0_0.HpAttrId] = arg_16_0:_countRate(arg_16_1[var_0_0.HpAttrId], var_16_1[var_0_0.HpAttrId], 8),
+		[var_0_0.AttackAttrId] = arg_16_0:_countRate(arg_16_1[var_0_0.AttackAttrId], var_16_1[var_0_0.AttackAttrId], 8),
+		[var_0_0.DefenseAttrId] = arg_16_0:_countRate(arg_16_1[var_0_0.DefenseAttrId], var_16_1[var_0_0.DefenseAttrId], 8),
+		[var_0_0.MdefenseAttrId] = arg_16_0:_countRate(arg_16_1[var_0_0.MdefenseAttrId], var_16_1[var_0_0.MdefenseAttrId], 8),
+		[var_0_0.TechnicAttrId] = arg_16_0:_countRate(arg_16_1[var_0_0.TechnicAttrId], var_16_1[var_0_0.TechnicAttrId], 8)
 	}
 end
 
-function slot0._countRate(slot0, slot1, slot2, slot3)
-	for slot7 = 1, slot3 - 1 do
-		if slot1 < slot2[slot7 + 1] then
-			return slot7
+function var_0_0._countRate(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	for iter_17_0 = 1, arg_17_3 - 1 do
+		if arg_17_1 < arg_17_2[iter_17_0 + 1] then
+			return iter_17_0
 		end
 	end
 
-	return slot3
+	return arg_17_3
 end
 
-function slot0._refreshSkin(slot0, slot1)
-	if not SkinConfig.instance:getSkinCo(slot1) then
-		logError("没有找到配置, skinId: " .. tostring(slot1))
+function var_0_0._refreshSkin(arg_18_0, arg_18_1)
+	local var_18_0 = SkinConfig.instance:getSkinCo(arg_18_1)
+
+	if not var_18_0 then
+		logError("没有找到配置, skinId: " .. tostring(arg_18_1))
 
 		return
 	end
 
-	slot3 = SkinConfig.instance:getSkinOffset(slot2.haloOffset)
-	slot6 = tonumber(slot3[3])
+	local var_18_1 = SkinConfig.instance:getSkinOffset(var_18_0.haloOffset)
+	local var_18_2 = tonumber(var_18_1[1])
+	local var_18_3 = tonumber(var_18_1[2])
+	local var_18_4 = tonumber(var_18_1[3])
 
-	recthelper.setAnchor(slot0._simageredlight.transform, tonumber(slot3[1]), tonumber(slot3[2]))
-	transformhelper.setLocalScale(slot0._simageredlight.transform, slot6, slot6, slot6)
+	recthelper.setAnchor(arg_18_0._simageredlight.transform, var_18_2, var_18_3)
+	transformhelper.setLocalScale(arg_18_0._simageredlight.transform, var_18_4, var_18_4, var_18_4)
 
-	slot0._skinConfig = slot2
+	arg_18_0._skinConfig = var_18_0
 
-	slot0._simagecharacter:LoadImage(ResUrl.getHeadIconImg(slot2.drawing), slot0._onImageLoaded, slot0)
+	arg_18_0._simagecharacter:LoadImage(ResUrl.getHeadIconImg(var_18_0.drawing), arg_18_0._onImageLoaded, arg_18_0)
 
-	if slot0._skinColorStr then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imagecharacter, slot0._skinColorStr)
+	if arg_18_0._skinColorStr then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_18_0._imagecharacter, arg_18_0._skinColorStr)
 	end
 end
 
-function slot0._onImageLoaded(slot0)
-	ZProj.UGUIHelper.SetImageSize(slot0._simagecharacter.gameObject)
+function var_0_0._onImageLoaded(arg_19_0)
+	ZProj.UGUIHelper.SetImageSize(arg_19_0._simagecharacter.gameObject)
 
-	slot1 = SkinConfig.instance:getSkinOffset(slot0._skinConfig.summonHeroViewOffset)
+	local var_19_0 = SkinConfig.instance:getSkinOffset(arg_19_0._skinConfig.summonHeroViewOffset)
 
-	recthelper.setAnchor(slot0._simagecharacter.transform.parent, slot1[1], slot1[2])
-	transformhelper.setLocalScale(slot0._simagecharacter.transform.parent, slot1[3], slot1[3], slot1[3])
+	recthelper.setAnchor(arg_19_0._simagecharacter.transform.parent, var_19_0[1], var_19_0[2])
+	transformhelper.setLocalScale(arg_19_0._simagecharacter.transform.parent, var_19_0[3], var_19_0[3], var_19_0[3])
 end
 
-function slot0._initViewParam(slot0)
-	slot0._characterDetailId = slot0.viewParam.id
-	slot0._heroId = slot0.viewParam.heroId
-	slot0._skinId = slot0.viewParam.skinId
-	slot0._skinColorStr = slot0.viewParam.skinColorStr or "#FFFFFF"
+function var_0_0._initViewParam(arg_20_0)
+	arg_20_0._characterDetailId = arg_20_0.viewParam.id
+	arg_20_0._heroId = arg_20_0.viewParam.heroId
+	arg_20_0._skinId = arg_20_0.viewParam.skinId
+	arg_20_0._skinColorStr = arg_20_0.viewParam.skinColorStr or "#FFFFFF"
 
-	if slot0._skinId == nil then
-		if slot0._heroId then
-			slot0._skinId = slot0:_getSkinId() or HeroConfig.instance:getHeroCO(slot0._heroId).skinId
+	if arg_20_0._skinId == nil then
+		if arg_20_0._heroId then
+			local var_20_0 = HeroConfig.instance:getHeroCO(arg_20_0._heroId)
+
+			arg_20_0._skinId = arg_20_0:_getSkinId() or var_20_0.skinId
 		end
 
-		if slot0._characterDetailId then
-			slot0._heroId = SummonConfig.instance:getCharacterDetailConfig(slot0._characterDetailId).heroId
-			slot0._skinId = slot0:_getSkinId() or slot1.skinId
+		if arg_20_0._characterDetailId then
+			local var_20_1 = SummonConfig.instance:getCharacterDetailConfig(arg_20_0._characterDetailId)
+
+			arg_20_0._heroId = var_20_1.heroId
+			arg_20_0._skinId = arg_20_0:_getSkinId() or var_20_1.skinId
 		end
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_initViewParam()
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_21_0)
+	arg_21_0:_initViewParam()
+	arg_21_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initViewParam()
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_22_0)
+	arg_22_0:_initViewParam()
+	arg_22_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_23_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageredlight:UnLoadImage()
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_24_0)
+	arg_24_0._simageredlight:UnLoadImage()
+	arg_24_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

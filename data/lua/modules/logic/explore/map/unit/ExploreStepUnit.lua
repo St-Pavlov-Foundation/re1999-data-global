@@ -1,24 +1,25 @@
-module("modules.logic.explore.map.unit.ExploreStepUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreStepUnit", package.seeall)
 
-slot0 = class("ExploreStepUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreStepUnit", ExploreBaseDisplayUnit)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onRoleEnter(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0.onRoleEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if not arg_2_2 then
 		return
 	end
 
-	if not slot0:canTrigger() then
+	if not arg_2_0:canTrigger() then
 		return
 	end
 
-	if not slot3:isRole() then
+	if not arg_2_3:isRole() then
 		return
 	end
 
-	slot0:tryTrigger()
+	arg_2_0:tryTrigger()
 end
 
-return slot0
+return var_0_0

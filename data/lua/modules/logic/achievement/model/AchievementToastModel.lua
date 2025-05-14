@@ -1,69 +1,74 @@
-module("modules.logic.achievement.model.AchievementToastModel", package.seeall)
+﻿module("modules.logic.achievement.model.AchievementToastModel", package.seeall)
 
-slot0 = class("AchievementToastModel", BaseModel)
+local var_0_0 = class("AchievementToastModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._waitToastList = {}
-	slot0._groupUnlockToastMap = {}
-	slot0._groupFinishedToastMap = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._waitToastList = {}
+	arg_1_0._groupUnlockToastMap = {}
+	arg_1_0._groupFinishedToastMap = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:release()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:release()
 end
 
-function slot0.release(slot0)
-	slot0._waitToastList = nil
-	slot0._groupUnlockToastMap = nil
-	slot0._groupFinishedToastMap = nil
+function var_0_0.release(arg_3_0)
+	arg_3_0._waitToastList = nil
+	arg_3_0._groupUnlockToastMap = nil
+	arg_3_0._groupFinishedToastMap = nil
 end
 
-function slot0.updateNeedPushToast(slot0, slot1)
-	slot0._waitToastList = slot0._waitToastList or {}
-	slot0._waitToastMap = slot0._waitToastMap or {}
-	slot0._groupUnlockToastMap = slot0._groupUnlockToastMap or {}
-	slot0._groupFinishedToastMap = slot0._groupFinishedToastMap or {}
+function var_0_0.updateNeedPushToast(arg_4_0, arg_4_1)
+	arg_4_0._waitToastList = arg_4_0._waitToastList or {}
+	arg_4_0._waitToastMap = arg_4_0._waitToastMap or {}
+	arg_4_0._groupUnlockToastMap = arg_4_0._groupUnlockToastMap or {}
+	arg_4_0._groupFinishedToastMap = arg_4_0._groupFinishedToastMap or {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot6 and slot6.new then
-				slot0:checkTaskSatify(slot6.id)
+	if arg_4_1 then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+			local var_4_0 = iter_4_1.id
+
+			if iter_4_1 and iter_4_1.new then
+				arg_4_0:checkTaskSatify(var_4_0)
 			end
 		end
 	end
 end
 
-function slot0.checkTaskSatify(slot0, slot1)
-	slot3 = slot0:getToastTypeList()
+function var_0_0.checkTaskSatify(arg_5_0, arg_5_1)
+	local var_5_0 = AchievementConfig.instance:getTask(arg_5_1)
+	local var_5_1 = arg_5_0:getToastTypeList()
 
-	if AchievementConfig.instance:getTask(slot1) and slot3 then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot0:getToastCheckFunction(slot8) and slot9(slot0, slot2) then
-				table.insert(slot0._waitToastList, {
-					taskId = slot1,
-					toastType = slot7
+	if var_5_0 and var_5_1 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			local var_5_2 = arg_5_0:getToastCheckFunction(iter_5_1)
+
+			if var_5_2 and var_5_2(arg_5_0, var_5_0) then
+				table.insert(arg_5_0._waitToastList, {
+					taskId = arg_5_1,
+					toastType = iter_5_0
 				})
 			end
 		end
 	end
 end
 
-function slot0.getToastCheckFunction(slot0, slot1)
-	if not slot0._toastCheckFuncTab then
-		slot0._toastCheckFuncTab = {
-			[AchievementEnum.ToastType.TaskFinished] = slot0.checkIsTaskFinished,
-			[AchievementEnum.ToastType.GroupUnlocked] = slot0.checkGroupUnlocked,
-			[AchievementEnum.ToastType.GroupUpgrade] = slot0.checkGroupUpgrade,
-			[AchievementEnum.ToastType.GroupFinished] = slot0.checkIsGroupFinished
+function var_0_0.getToastCheckFunction(arg_6_0, arg_6_1)
+	if not arg_6_0._toastCheckFuncTab then
+		arg_6_0._toastCheckFuncTab = {
+			[AchievementEnum.ToastType.TaskFinished] = arg_6_0.checkIsTaskFinished,
+			[AchievementEnum.ToastType.GroupUnlocked] = arg_6_0.checkGroupUnlocked,
+			[AchievementEnum.ToastType.GroupUpgrade] = arg_6_0.checkGroupUpgrade,
+			[AchievementEnum.ToastType.GroupFinished] = arg_6_0.checkIsGroupFinished
 		}
 	end
 
-	return slot0._toastCheckFuncTab[slot1]
+	return arg_6_0._toastCheckFuncTab[arg_6_1]
 end
 
-function slot0.getToastTypeList(slot0)
-	if not slot0._toastTypeList then
-		slot0._toastTypeList = {
+function var_0_0.getToastTypeList(arg_7_0)
+	if not arg_7_0._toastTypeList then
+		arg_7_0._toastTypeList = {
 			AchievementEnum.ToastType.TaskFinished,
 			AchievementEnum.ToastType.GroupUnlocked,
 			AchievementEnum.ToastType.GroupUpgrade,
@@ -71,53 +76,68 @@ function slot0.getToastTypeList(slot0)
 		}
 	end
 
-	return slot0._toastTypeList
+	return arg_7_0._toastTypeList
 end
 
-function slot0.checkIsTaskFinished(slot0, slot1)
-	return AchievementModel.instance:isAchievementTaskFinished(slot1.id)
+function var_0_0.checkIsTaskFinished(arg_8_0, arg_8_1)
+	return AchievementModel.instance:isAchievementTaskFinished(arg_8_1.id)
 end
 
-function slot0.checkGroupUnlocked(slot0, slot1)
-	slot2 = false
-	slot5 = AchievementConfig.instance:getAchievement(slot1.achievementId) and slot4.groupId
+function var_0_0.checkGroupUnlocked(arg_9_0, arg_9_1)
+	local var_9_0 = false
+	local var_9_1 = AchievementModel.instance:isAchievementTaskFinished(arg_9_1.id)
+	local var_9_2 = AchievementConfig.instance:getAchievement(arg_9_1.achievementId)
+	local var_9_3 = var_9_2 and var_9_2.groupId
 
-	if AchievementModel.instance:isAchievementTaskFinished(slot1.id) and slot5 and slot5 ~= 0 and not slot0._groupUnlockToastMap[slot5] and (AchievementModel.instance:getGroupFinishTaskList(slot5) and #slot6 or 0) <= 1 then
-		slot2 = true
-		slot0._groupUnlockToastMap[slot5] = true
+	if var_9_1 and var_9_3 and var_9_3 ~= 0 and not arg_9_0._groupUnlockToastMap[var_9_3] then
+		local var_9_4 = AchievementModel.instance:getGroupFinishTaskList(var_9_3)
+
+		if (var_9_4 and #var_9_4 or 0) <= 1 then
+			var_9_0 = true
+			arg_9_0._groupUnlockToastMap[var_9_3] = true
+		end
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.checkGroupUpgrade(slot0, slot1)
-	slot3 = false
+function var_0_0.checkGroupUpgrade(arg_10_0, arg_10_1)
+	local var_10_0 = AchievementConfig.instance:getAchievement(arg_10_1.achievementId)
+	local var_10_1 = false
 
-	if AchievementConfig.instance:getAchievement(slot1.achievementId) and slot2.groupId ~= 0 then
-		slot3 = AchievementConfig.instance:getGroup(slot2.groupId) and slot4.unLockAchievement == slot1.id
+	if var_10_0 and var_10_0.groupId ~= 0 then
+		local var_10_2 = AchievementConfig.instance:getGroup(var_10_0.groupId)
+
+		var_10_1 = var_10_2 and var_10_2.unLockAchievement == arg_10_1.id
 	end
 
-	return slot3
+	return var_10_1
 end
 
-function slot0.checkIsGroupFinished(slot0, slot1)
-	slot3 = false
+function var_0_0.checkIsGroupFinished(arg_11_0, arg_11_1)
+	local var_11_0 = AchievementConfig.instance:getAchievement(arg_11_1.achievementId)
+	local var_11_1 = false
+	local var_11_2 = var_11_0 and var_11_0.groupId
 
-	if AchievementConfig.instance:getAchievement(slot1.achievementId) and slot2.groupId and slot4 ~= 0 and not slot0._groupFinishedToastMap[slot4] and AchievementModel.instance:isGroupFinished(slot2.groupId) then
-		slot0._groupFinishedToastMap[slot4] = true
+	if var_11_2 and var_11_2 ~= 0 and not arg_11_0._groupFinishedToastMap[var_11_2] then
+		var_11_1 = AchievementModel.instance:isGroupFinished(var_11_0.groupId)
+
+		if var_11_1 then
+			arg_11_0._groupFinishedToastMap[var_11_2] = true
+		end
 	end
 
-	return slot3
+	return var_11_1
 end
 
-function slot0.getWaitToastList(slot0)
-	return slot0._waitToastList
+function var_0_0.getWaitToastList(arg_12_0)
+	return arg_12_0._waitToastList
 end
 
-function slot0.onToastFinished(slot0)
-	slot0._waitToastList = nil
+function var_0_0.onToastFinished(arg_13_0)
+	arg_13_0._waitToastList = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

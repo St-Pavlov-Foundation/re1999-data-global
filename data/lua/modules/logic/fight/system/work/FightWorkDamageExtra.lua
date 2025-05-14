@@ -1,33 +1,33 @@
-module("modules.logic.fight.system.work.FightWorkDamageExtra", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDamageExtra", package.seeall)
 
-slot0 = class("FightWorkDamageExtra", FightEffectBase)
+local var_0_0 = class("FightWorkDamageExtra", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0._flow = FlowParallel.New()
+function var_0_0.onStart(arg_1_0)
+	arg_1_0._flow = FlowParallel.New()
 
-	slot0._flow:addWork(FunctionWork.New(slot0._resignDone, slot0))
-	slot0._flow:addWork(FightWork2Work.New(FightWorkEffectDamage, slot0._fightStepMO, slot0._actEffectMO))
-	slot0._flow:addWork(FunctionWork.New(slot0._resignDone, slot0))
-	slot0._flow:addWork(FightWork2Work.New(FightBuffTriggerEffect, slot0._fightStepMO, slot0._actEffectMO))
-	slot0._flow:registerDoneListener(slot0._onFlowDone, slot0)
-	slot0._flow:start()
+	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._resignDone, arg_1_0))
+	arg_1_0._flow:addWork(FightWork2Work.New(FightWorkEffectDamage, arg_1_0._fightStepMO, arg_1_0._actEffectMO))
+	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._resignDone, arg_1_0))
+	arg_1_0._flow:addWork(FightWork2Work.New(FightBuffTriggerEffect, arg_1_0._fightStepMO, arg_1_0._actEffectMO))
+	arg_1_0._flow:registerDoneListener(arg_1_0._onFlowDone, arg_1_0)
+	arg_1_0._flow:start()
 end
 
-function slot0._resignDone(slot0)
-	slot0._actEffectMO:revertDone()
+function var_0_0._resignDone(arg_2_0)
+	arg_2_0._actEffectMO:revertDone()
 end
 
-function slot0._onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:stop()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._flow then
+		arg_4_0._flow:unregisterDoneListener(arg_4_0._onFlowDone, arg_4_0)
+		arg_4_0._flow:stop()
 
-		slot0._flow = nil
+		arg_4_0._flow = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,40 +1,46 @@
-module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5DungeonModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5DungeonModel", package.seeall)
 
-slot0 = class("VersionActivity1_5DungeonModel", BaseModel)
+local var_0_0 = class("VersionActivity1_5DungeonModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.init(slot0)
-	slot0.dispatchInfoDict = {}
-	slot0.elementId2DispatchMoDict = {}
-	slot0.dispatchedHeroDict = {}
-	slot0.needCheckDispatchInfoList = {}
+function var_0_0.init(arg_3_0)
+	arg_3_0.dispatchInfoDict = {}
+	arg_3_0.elementId2DispatchMoDict = {}
+	arg_3_0.dispatchedHeroDict = {}
+	arg_3_0.needCheckDispatchInfoList = {}
 end
 
-function slot0.checkDispatchFinish(slot0)
-	if #slot0.needCheckDispatchInfoList <= 0 then
+function var_0_0.checkDispatchFinish(arg_4_0)
+	local var_4_0 = #arg_4_0.needCheckDispatchInfoList
+
+	if var_4_0 <= 0 then
 		return
 	end
 
-	slot2 = false
+	local var_4_1 = false
 
-	for slot6 = slot1, 1, -1 do
-		if slot0.needCheckDispatchInfoList[slot6]:isFinish() then
-			slot2 = true
+	for iter_4_0 = var_4_0, 1, -1 do
+		local var_4_2 = arg_4_0.needCheckDispatchInfoList[iter_4_0]
 
-			for slot11, slot12 in ipairs(slot7.heroIdList) do
-				slot0.dispatchedHeroDict[slot12] = nil
+		if var_4_2:isFinish() then
+			var_4_1 = true
+
+			for iter_4_1, iter_4_2 in ipairs(var_4_2.heroIdList) do
+				arg_4_0.dispatchedHeroDict[iter_4_2] = nil
 			end
 
-			table.remove(slot0.needCheckDispatchInfoList, slot6)
+			table.remove(arg_4_0.needCheckDispatchInfoList, iter_4_0)
 		end
 	end
 
-	if slot2 then
+	if var_4_1 then
 		VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnDispatchFinish)
 		RedDotRpc.instance:sendGetRedDotInfosRequest({
 			RedDotEnum.DotNode.V1a5DungeonExploreTask
@@ -42,129 +48,145 @@ function slot0.checkDispatchFinish(slot0)
 	end
 end
 
-function slot0.addDispatchInfos(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.dispatchInfoDict[slot6.id] then
-			slot7 = VersionActivity1_5DispatchMo.New()
+function var_0_0.addDispatchInfos(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = arg_5_0.dispatchInfoDict[iter_5_1.id]
 
-			slot7:init(slot6)
+		if not var_5_0 then
+			var_5_0 = VersionActivity1_5DispatchMo.New()
 
-			slot0.dispatchInfoDict[slot6.id] = slot7
+			var_5_0:init(iter_5_1)
+
+			arg_5_0.dispatchInfoDict[iter_5_1.id] = var_5_0
 		else
-			slot7:update(slot6)
+			var_5_0:update(iter_5_1)
 		end
 
-		if slot7:isRunning() then
-			for slot11, slot12 in ipairs(slot6.heroIds) do
-				slot0.dispatchedHeroDict[slot12] = true
+		if var_5_0:isRunning() then
+			for iter_5_2, iter_5_3 in ipairs(iter_5_1.heroIds) do
+				arg_5_0.dispatchedHeroDict[iter_5_3] = true
 			end
 
-			table.insert(slot0.needCheckDispatchInfoList, slot7)
+			table.insert(arg_5_0.needCheckDispatchInfoList, var_5_0)
 		end
 	end
 end
 
-function slot0.addOneDispatchInfo(slot0, slot1, slot2, slot3)
-	slot4 = VersionActivity1_5DispatchMo.New()
+function var_0_0.addOneDispatchInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = VersionActivity1_5DispatchMo.New()
 
-	slot4:init({
-		id = slot1,
-		endTime = slot2,
-		heroIds = slot3
+	var_6_0:init({
+		id = arg_6_1,
+		endTime = arg_6_2,
+		heroIds = arg_6_3
 	})
 
-	slot0.dispatchInfoDict[slot1] = slot4
+	arg_6_0.dispatchInfoDict[arg_6_1] = var_6_0
 
-	if slot4:isRunning() then
-		for slot8, slot9 in ipairs(slot3) do
-			slot0.dispatchedHeroDict[slot9] = true
+	if var_6_0:isRunning() then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_3) do
+			arg_6_0.dispatchedHeroDict[iter_6_1] = true
 		end
 
-		table.insert(slot0.needCheckDispatchInfoList, slot4)
+		table.insert(arg_6_0.needCheckDispatchInfoList, var_6_0)
 	end
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.AddDispatchInfo, slot1)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.AddDispatchInfo, arg_6_1)
 end
 
-function slot0.removeOneDispatchInfo(slot0, slot1)
-	slot0.dispatchInfoDict[slot1] = nil
+function var_0_0.removeOneDispatchInfo(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.dispatchInfoDict[arg_7_1]
 
-	for slot6, slot7 in ipairs(slot0.dispatchInfoDict[slot1].heroIdList) do
-		slot0.dispatchedHeroDict[slot7] = nil
+	arg_7_0.dispatchInfoDict[arg_7_1] = nil
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0.heroIdList) do
+		arg_7_0.dispatchedHeroDict[iter_7_1] = nil
 	end
 
-	tabletool.removeValue(slot0.needCheckDispatchInfoList, slot2)
+	tabletool.removeValue(arg_7_0.needCheckDispatchInfoList, var_7_0)
 
-	for slot6, slot7 in pairs(slot0.elementId2DispatchMoDict) do
-		if slot7.id == slot1 then
-			slot0.elementId2DispatchMoDict[slot6] = nil
+	for iter_7_2, iter_7_3 in pairs(arg_7_0.elementId2DispatchMoDict) do
+		if iter_7_3.id == arg_7_1 then
+			arg_7_0.elementId2DispatchMoDict[iter_7_2] = nil
 
 			break
 		end
 	end
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.RemoveDispatchInfo, slot1)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.RemoveDispatchInfo, arg_7_1)
 end
 
-function slot0.getDispatchMo(slot0, slot1)
-	return slot0.dispatchInfoDict[slot1]
+function var_0_0.getDispatchMo(arg_8_0, arg_8_1)
+	return arg_8_0.dispatchInfoDict[arg_8_1]
 end
 
-function slot0.getDispatchStatus(slot0, slot1)
-	if not slot0.dispatchInfoDict[slot1] then
+function var_0_0.getDispatchStatus(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0.dispatchInfoDict[arg_9_1]
+
+	if not var_9_0 then
 		return VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch
-	elseif slot2:isFinish() then
+	elseif var_9_0:isFinish() then
 		return VersionActivity1_5DungeonEnum.DispatchStatus.Finished
 	else
 		return VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching
 	end
 end
 
-function slot0.isDispatched(slot0, slot1)
-	return slot0.dispatchedHeroDict[slot1]
+function var_0_0.isDispatched(arg_10_0, arg_10_1)
+	return arg_10_0.dispatchedHeroDict[arg_10_1]
 end
 
-function slot0.getElementCoList(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0.getElementCoList(arg_11_0, arg_11_1)
+	local var_11_0 = {}
+	local var_11_1 = {}
+	local var_11_2 = DungeonMapModel.instance:getAllElements()
 
-	for slot8, slot9 in pairs(DungeonMapModel.instance:getAllElements()) do
-		if lua_chapter_map.configDict[DungeonConfig.instance:getChapterMapElement(slot9).mapId] and slot11.chapterId == VersionActivity1_5DungeonEnum.DungeonChapterId.Story then
-			if lua_activity11502_episode_element.configDict[slot10.id] and not string.nilorempty(slot12.mapIds) then
-				if tabletool.indexOf(string.splitToNumber(slot12.mapIds, "#"), slot1) then
-					table.insert(slot3, slot10)
+	for iter_11_0, iter_11_1 in pairs(var_11_2) do
+		local var_11_3 = DungeonConfig.instance:getChapterMapElement(iter_11_1)
+		local var_11_4 = lua_chapter_map.configDict[var_11_3.mapId]
+
+		if var_11_4 and var_11_4.chapterId == VersionActivity1_5DungeonEnum.DungeonChapterId.Story then
+			local var_11_5 = lua_activity11502_episode_element.configDict[var_11_3.id]
+
+			if var_11_5 and not string.nilorempty(var_11_5.mapIds) then
+				local var_11_6 = string.splitToNumber(var_11_5.mapIds, "#")
+
+				if tabletool.indexOf(var_11_6, arg_11_1) then
+					table.insert(var_11_1, var_11_3)
 				end
-			elseif slot1 == slot10.mapId then
-				table.insert(slot2, slot10)
+			elseif arg_11_1 == var_11_3.mapId then
+				table.insert(var_11_0, var_11_3)
 			end
 		end
 	end
 
-	return slot2, slot3
+	return var_11_0, var_11_1
 end
 
-function slot0.getDispatchMoByElementId(slot0, slot1)
-	if slot0.elementId2DispatchMoDict[slot1] then
-		return slot2
+function var_0_0.getDispatchMoByElementId(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.elementId2DispatchMoDict[arg_12_1]
+
+	if var_12_0 then
+		return var_12_0
 	end
 
-	for slot6, slot7 in pairs(slot0.dispatchInfoDict) do
-		if slot7.config.elementId == slot1 then
-			slot0.elementId2DispatchMoDict[slot1] = slot7
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.dispatchInfoDict) do
+		if iter_12_1.config.elementId == arg_12_1 then
+			arg_12_0.elementId2DispatchMoDict[arg_12_1] = iter_12_1
 
-			return slot7
+			return iter_12_1
 		end
 	end
 end
 
-function slot0.setShowInteractView(slot0, slot1)
-	slot0.isShowInteractView = slot1
+function var_0_0.setShowInteractView(arg_13_0, arg_13_1)
+	arg_13_0.isShowInteractView = arg_13_1
 end
 
-function slot0.checkIsShowInteractView(slot0)
-	return slot0.isShowInteractView
+function var_0_0.checkIsShowInteractView(arg_14_0)
+	return arg_14_0.isShowInteractView
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

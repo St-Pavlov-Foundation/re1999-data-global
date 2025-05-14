@@ -1,28 +1,30 @@
-module("modules.logic.versionactivity1_3.va3chess.controller.Va3ChessViewController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.controller.Va3ChessViewController", package.seeall)
 
-slot0 = class("Va3ChessViewController", BaseController)
+local var_0_0 = class("Va3ChessViewController", BaseController)
 
-function slot0._initResisterFunc(slot0)
-	slot0._viewTypeFuncDict = {
-		[Va3ChessEnum.ViewType.Reward] = slot0:_registerRewardViewFunc()
+function var_0_0._initResisterFunc(arg_1_0)
+	arg_1_0._viewTypeFuncDict = {
+		[Va3ChessEnum.ViewType.Reward] = arg_1_0:_registerRewardViewFunc()
 	}
 end
 
-function slot0._registerRewardViewFunc(slot0)
+function var_0_0._registerRewardViewFunc(arg_2_0)
 	return {
-		[Va3ChessEnum.ActivityId.Act142] = function (slot0, slot1)
-			ViewMgr.instance:openView(ViewName.Activity142GetCollectionView, slot1)
+		[Va3ChessEnum.ActivityId.Act142] = function(arg_3_0, arg_3_1)
+			ViewMgr.instance:openView(ViewName.Activity142GetCollectionView, arg_3_1)
 		end
 	}
 end
 
-function slot0._openView(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0._viewTypeFuncDict then
-		slot0:_initResisterFunc()
+function var_0_0._openView(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
+	if not arg_4_0._viewTypeFuncDict then
+		arg_4_0:_initResisterFunc()
 	end
 
-	if slot0._viewTypeFuncDict[slot1][slot2] then
-		slot7[slot2](slot3, slot4, slot5, slot6)
+	local var_4_0 = arg_4_0._viewTypeFuncDict[arg_4_1]
+
+	if var_4_0[arg_4_2] then
+		var_4_0[arg_4_2](arg_4_3, arg_4_4, arg_4_5, arg_4_6)
 
 		return true
 	end
@@ -30,10 +32,10 @@ function slot0._openView(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 	return false
 end
 
-function slot0.openRewardView(slot0, slot1, slot2, slot3)
-	return slot0:_openView(Va3ChessEnum.ViewType.Reward, slot1, slot2, slot3)
+function var_0_0.openRewardView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	return arg_5_0:_openView(Va3ChessEnum.ViewType.Reward, arg_5_1, arg_5_2, arg_5_3)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,713 +1,817 @@
-module("modules.logic.bossrush.model.BossRushRedModel", package.seeall)
+﻿module("modules.logic.bossrush.model.BossRushRedModel", package.seeall)
 
-slot0 = class("BossRushRedModel", BaseModel)
-slot1 = tostring
-slot2 = next
-slot3 = table.insert
-slot4 = RedDotEnum.DotNode
-slot5 = "BossRushRed|"
-slot6 = 0
-slot7 = -11235
-slot8 = 0
+local var_0_0 = class("BossRushRedModel", BaseModel)
+local var_0_1 = tostring
+local var_0_2 = next
+local var_0_3 = table.insert
+local var_0_4 = RedDotEnum.DotNode
+local var_0_5 = "BossRushRed|"
+local var_0_6 = 0
+local var_0_7 = -11235
+local var_0_8 = 0
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0:_stopTick()
-	FrameTimerController.onDestroyViewMember(slot0, "_flushCacheFrameTimer")
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_stopTick()
+	FrameTimerController.onDestroyViewMember(arg_2_0, "_flushCacheFrameTimer")
 
-	slot0._unlockBossIdList = {}
-	slot0._delayNeedUpdateDictList = {}
-	slot0._delayUpdateRedValueList = {}
-	slot0._flushDataFrameTimer = nil
+	arg_2_0._unlockBossIdList = {}
+	arg_2_0._delayNeedUpdateDictList = {}
+	arg_2_0._delayUpdateRedValueList = {}
+	arg_2_0._flushDataFrameTimer = nil
 end
 
-function slot0._getConfig(slot0)
+function var_0_0._getConfig(arg_3_0)
 	return BossRushModel.instance:getConfig()
 end
 
-function slot0._getActivityId(slot0)
+function var_0_0._getActivityId(arg_4_0)
 	return BossRushConfig.instance:getActivityId()
 end
 
-function slot0._getRedDotGroup(slot0, slot1)
-	return RedDotModel.instance:getRedDotInfo(slot1)
+function var_0_0._getRedDotGroup(arg_5_0, arg_5_1)
+	return RedDotModel.instance:getRedDotInfo(arg_5_1)
 end
 
-function slot0._getRedDotGroupItem(slot0, slot1, slot2)
-	if not slot0:_getRedDotGroup(slot1) then
-		logWarn("[BossRushRedModel] _getRedDotGroupItem: defineId=" .. uv0(slot1) .. " uid=" .. uv0(slot2))
+function var_0_0._getRedDotGroupItem(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:_getRedDotGroup(arg_6_1)
+
+	if not var_6_0 then
+		logWarn("[BossRushRedModel] _getRedDotGroupItem: defineId=" .. var_0_1(arg_6_1) .. " uid=" .. var_0_1(arg_6_2))
 
 		return
 	end
 
-	return slot3.infos[slot2]
+	return var_6_0.infos[arg_6_2]
 end
 
-function slot0._getDisplayValue(slot0, slot1, slot2)
-	if not slot2 or not slot1 then
-		return uv0
+function var_0_0._getDisplayValue(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_2 or not arg_7_1 then
+		return var_0_8
 	end
 
-	if not slot0:_getRedDotGroup(slot1) then
-		return uv0
+	if not arg_7_0:_getRedDotGroup(arg_7_1) then
+		return var_0_8
 	end
 
-	if not slot0:_getRedDotGroupItem(slot1, slot2) then
-		return uv0
+	local var_7_0 = arg_7_0:_getRedDotGroupItem(arg_7_1, arg_7_2)
+
+	if not var_7_0 then
+		return var_0_8
 	end
 
-	return slot4.value, true
+	return var_7_0.value, true
 end
 
-function slot0._getDisplayValueByDSL(slot0, slot1, slot2, slot3)
-	return slot0:_getDisplayValue(slot1, slot0:getUId(slot1, slot2, slot3))
+function var_0_0._getDisplayValueByDSL(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_0:getUId(arg_8_1, arg_8_2, arg_8_3)
+
+	return arg_8_0:_getDisplayValue(arg_8_1, var_8_0)
 end
 
-function slot0._createByDU(slot0, slot1, slot2)
+function var_0_0._createByDU(arg_9_0, arg_9_1, arg_9_2)
 	return {
-		id = slot1,
-		uid = slot2,
-		value = slot0:_getSavedValue(slot1, slot2)
+		id = arg_9_1,
+		uid = arg_9_2,
+		value = arg_9_0:_getSavedValue(arg_9_1, arg_9_2)
 	}
 end
 
-function slot0._createByDSL(slot0, slot1, slot2, slot3)
-	return slot0:_createByDU(slot1, slot0:getUId(slot1, slot2, slot3))
+function var_0_0._createByDSL(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = arg_10_0:getUId(arg_10_1, arg_10_2, arg_10_3)
+
+	return arg_10_0:_createByDU(arg_10_1, var_10_0)
 end
 
-function slot0._getDUByDSL(slot0, slot1, slot2, slot3)
-	return slot1, slot0:getUId(slot1, slot2, slot3)
+function var_0_0._getDUByDSL(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = arg_11_0:getUId(arg_11_1, arg_11_2, arg_11_3)
+
+	return arg_11_1, var_11_0
 end
 
-function slot0._getSavedValue(slot0, slot1, slot2)
-	slot4 = slot0:_get(slot1, slot2, slot0:getDefaultValue(slot1))
+function var_0_0._getSavedValue(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getDefaultValue(arg_12_1)
+	local var_12_1 = arg_12_0:_get(arg_12_1, arg_12_2, var_12_0)
+	local var_12_2 = arg_12_0:_isSValueValid(var_12_1)
 
-	return slot4, slot0:_isSValueValid(slot4)
+	return var_12_1, var_12_2
 end
 
-function slot0._getSavedValueByDSL(slot0, slot1, slot2, slot3)
-	return slot0:_getSavedValue(slot1, slot0:getUId(slot1, slot2, slot3))
+function var_0_0._getSavedValueByDSL(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = arg_13_0:getUId(arg_13_1, arg_13_2, arg_13_3)
+
+	return arg_13_0:_getSavedValue(arg_13_1, var_13_0)
 end
 
-function slot0._getDUSValueByDSL(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUId(slot1, slot2, slot3)
-	slot5, slot6 = slot0:_getSavedValue(slot1, slot4)
+function var_0_0._getDUSValueByDSL(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = arg_14_0:getUId(arg_14_1, arg_14_2, arg_14_3)
+	local var_14_1, var_14_2 = arg_14_0:_getSavedValue(arg_14_1, var_14_0)
 
-	return slot1, slot4, slot5, slot6
+	return arg_14_1, var_14_0, var_14_1, var_14_2
 end
 
-function slot0._getValue(slot0, slot1, slot2)
-	slot3 = slot0:_getSavedValue(slot1, slot2)
-	slot5, slot6 = slot0:_getDisplayValue(slot1, slot2)
+function var_0_0._getValue(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:_getSavedValue(arg_15_1, arg_15_2)
+	local var_15_1 = arg_15_0:_isSValueValid(var_15_0)
+	local var_15_2, var_15_3 = arg_15_0:_getDisplayValue(arg_15_1, arg_15_2)
 
-	return slot0:_isSValueValid(slot3), slot3, slot5, slot6
+	return var_15_1, var_15_0, var_15_2, var_15_3
 end
 
-function slot0._getValueByDSL(slot0, slot1, slot2, slot3)
-	return slot0:_getValue(slot1, slot0:getUId(slot1, slot2, slot3))
+function var_0_0._getValueByDSL(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_0:getUId(arg_16_1, arg_16_2, arg_16_3)
+
+	return arg_16_0:_getValue(arg_16_1, var_16_0)
 end
 
-function slot0._startFlushData(slot0)
-	if math.max(tabletool.len(slot0._delayUpdateRedValueList), tabletool.len(slot0._delayNeedUpdateDictList)) == 0 then
+function var_0_0._startFlushData(arg_17_0)
+	local var_17_0 = math.max(tabletool.len(arg_17_0._delayUpdateRedValueList), tabletool.len(arg_17_0._delayNeedUpdateDictList))
+
+	if var_17_0 == 0 then
 		return
 	end
 
-	FrameTimerController.onDestroyViewMember(slot0, "_flushDataFrameTimer")
+	FrameTimerController.onDestroyViewMember(arg_17_0, "_flushDataFrameTimer")
 
-	slot0._flushDataFrameTimer = FrameTimerController.instance:register(slot0._tryFlushDatas, slot0, 3, slot1)
+	arg_17_0._flushDataFrameTimer = FrameTimerController.instance:register(arg_17_0._tryFlushDatas, arg_17_0, 3, var_17_0)
 
-	slot0._flushDataFrameTimer:Start()
+	arg_17_0._flushDataFrameTimer:Start()
 end
 
-function slot0._onTick(slot0)
-	if not uv0(slot0._unlockBossIdList) then
-		slot0:_stopTick()
+function var_0_0._onTick(arg_18_0)
+	local var_18_0 = arg_18_0._unlockBossIdList
+
+	if not var_0_2(var_18_0) then
+		arg_18_0:_stopTick()
 
 		return
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		if BossRushModel.instance:isBossOnline(slot6) then
-			slot1[slot5] = nil
+	for iter_18_0, iter_18_1 in pairs(var_18_0) do
+		if BossRushModel.instance:isBossOnline(iter_18_1) then
+			var_18_0[iter_18_0] = nil
 
-			slot0:setIsNewUnlockStage(slot6, true)
-			slot0:setIsNewUnlockStageLayer(slot6, 1, true)
+			arg_18_0:setIsNewUnlockStage(iter_18_1, true)
+			arg_18_0:setIsNewUnlockStageLayer(iter_18_1, 1, true)
 		end
 	end
 end
 
-function slot0._initRootRed(slot0, slot1)
-	uv0(slot1, slot0:_createByDSL(uv1.BossRushEnter))
-	uv0(slot1, slot0:_createByDSL(uv1.BossRushOpen))
+function var_0_0._initRootRed(arg_19_0, arg_19_1)
+	var_0_3(arg_19_1, arg_19_0:_createByDSL(var_0_4.BossRushEnter))
+	var_0_3(arg_19_1, arg_19_0:_createByDSL(var_0_4.BossRushOpen))
 end
 
-function slot0._initBossRed(slot0, slot1)
-	for slot7, slot8 in pairs(slot0:_getConfig():getStages()) do
-		slot9 = slot8.stage
+function var_0_0._initBossRed(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:_getConfig()
+	local var_20_1 = var_20_0:getStages()
 
-		uv0(slot1, slot0:_createByDSL(uv1.BossRushBoss, slot9))
-		uv0(slot1, slot0:_createByDSL(uv1.BossRushNewBoss, slot9))
+	for iter_20_0, iter_20_1 in pairs(var_20_1) do
+		local var_20_2 = iter_20_1.stage
+		local var_20_3 = var_20_0:getEpisodeStages(var_20_2)
 
-		slot14 = slot0
-		slot15 = uv1.BossRushBossReward
+		var_0_3(arg_20_1, arg_20_0:_createByDSL(var_0_4.BossRushBoss, var_20_2))
+		var_0_3(arg_20_1, arg_20_0:_createByDSL(var_0_4.BossRushNewBoss, var_20_2))
+		var_0_3(arg_20_1, arg_20_0:_createByDSL(var_0_4.BossRushBossReward, var_20_2))
 
-		uv0(slot1, slot0._createByDSL(slot14, slot15, slot9))
+		for iter_20_2, iter_20_3 in pairs(var_20_3) do
+			local var_20_4 = iter_20_3.layer
 
-		for slot14, slot15 in pairs(slot2:getEpisodeStages(slot9)) do
-			uv0(slot1, slot0:_createByDSL(uv1.BossRushNewLayer, slot9, slot15.layer))
+			var_0_3(arg_20_1, arg_20_0:_createByDSL(var_0_4.BossRushNewLayer, var_20_2, var_20_4))
 		end
 	end
 end
 
-function slot0._isSValueValid(slot0, slot1)
-	assert(type(slot1) == "number")
+function var_0_0._isSValueValid(arg_21_0, arg_21_1)
+	assert(type(arg_21_1) == "number")
 
-	return slot1 ~= uv0
+	return arg_21_1 ~= var_0_7
 end
 
-function slot0._modifyOrMakeRedDotGroupItem(slot0, slot1, slot2, slot3, slot4)
-	assert(type(slot3) == "number")
+function var_0_0._modifyOrMakeRedDotGroupItem(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	assert(type(arg_22_3) == "number")
 
-	slot5, slot6 = slot0:_getDisplayValue(slot1, slot2)
+	local var_22_0, var_22_1 = arg_22_0:_getDisplayValue(arg_22_1, arg_22_2)
 
-	if slot5 == slot3 then
+	if var_22_0 == arg_22_3 then
 		return
 	end
 
-	if not slot0:_getRedDotGroupItem(slot1, slot2) then
-		slot6 = false
+	local var_22_2 = arg_22_0:_getRedDotGroupItem(arg_22_1, arg_22_2)
+
+	if not var_22_2 then
+		var_22_1 = false
 	end
 
-	if slot6 then
-		slot7:reset({
-			ext = slot7.ext,
-			time = slot7.time,
-			value = slot3
+	if var_22_1 then
+		var_22_2:reset({
+			ext = var_22_2.ext,
+			time = var_22_2.time,
+			value = arg_22_3
 		})
 	else
 		RedDotRpc.instance:clientAddRedDotGroupList({
 			{
-				id = slot1,
-				uid = slot2,
-				value = slot3
+				id = arg_22_1,
+				uid = arg_22_2,
+				value = arg_22_3
 			}
 		})
 	end
 
-	if slot4 then
-		slot0:_trySave(slot1, slot2, uv0)
+	if arg_22_4 then
+		arg_22_0:_trySave(arg_22_1, arg_22_2, var_0_7)
 	else
-		slot0:_trySave(slot1, slot2, slot3)
+		arg_22_0:_trySave(arg_22_1, arg_22_2, arg_22_3)
 	end
 
 	return true
 end
 
-function slot0._calcAssociateRedDots(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(RedDotModel.instance:_getAssociateRedDots(slot2) or {}) do
-		slot1[slot8] = true
+function var_0_0._calcAssociateRedDots(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = RedDotModel.instance:_getAssociateRedDots(arg_23_2)
+
+	for iter_23_0, iter_23_1 in pairs(var_23_0 or {}) do
+		arg_23_1[iter_23_1] = true
 	end
 end
 
-function slot0._tryShowRedDotGroupItem(slot0, slot1, slot2, slot3, slot4)
-	if slot0:_modifyOrMakeRedDotGroupItem(slot1, slot2, slot3 and 1 or 0, slot4) then
-		slot6 = {
-			[uv0] = true
+function var_0_0._tryShowRedDotGroupItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+	local var_24_0 = arg_24_3 and 1 or 0
+
+	if arg_24_0:_modifyOrMakeRedDotGroupItem(arg_24_1, arg_24_2, var_24_0, arg_24_4) then
+		local var_24_1 = {
+			[var_0_7] = true
 		}
 
-		slot0:_calcAssociateRedDots(slot6, slot1)
-		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, slot6)
+		arg_24_0:_calcAssociateRedDots(var_24_1, arg_24_1)
+		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_24_1)
 	end
 end
 
-function slot0._refreshReward(slot0, slot1, slot2)
-	slot3, slot4 = slot0:_getDUByDSL(uv0.BossRushBossReward, slot2)
-	slot5, slot6 = slot0:_getDisplayValueByDSL(uv0.BossRushBossSchedule, slot2)
-	slot7, slot8 = slot0:_getDisplayValueByDSL(uv0.BossRushBossAchievement, slot2)
+function var_0_0._refreshReward(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0, var_25_1 = arg_25_0:_getDUByDSL(var_0_4.BossRushBossReward, arg_25_2)
+	local var_25_2, var_25_3 = arg_25_0:_getDisplayValueByDSL(var_0_4.BossRushBossSchedule, arg_25_2)
+	local var_25_4, var_25_5 = arg_25_0:_getDisplayValueByDSL(var_0_4.BossRushBossAchievement, arg_25_2)
+	local var_25_6 = 0
 
-	if slot6 then
-		slot9 = 0 + slot5
+	if var_25_3 then
+		var_25_6 = var_25_6 + var_25_2
 	end
 
-	if slot8 then
-		slot9 = slot9 + slot7
+	if var_25_5 then
+		var_25_6 = var_25_6 + var_25_4
 	end
 
-	if slot0:_modifyOrMakeRedDotGroupItem(slot3, slot4, slot9) then
-		slot1[slot3] = true
-	end
-end
-
-function slot0._refreshNewBoss(slot0, slot1, slot2)
-	slot3, slot4, slot5, slot6 = slot0:_getDUSValueByDSL(uv0.BossRushNewBoss, slot2)
-
-	if slot0:_modifyOrMakeRedDotGroupItem(slot3, slot4, slot6 and slot5 or 0) then
-		slot1[slot3] = true
+	if arg_25_0:_modifyOrMakeRedDotGroupItem(var_25_0, var_25_1, var_25_6) then
+		arg_25_1[var_25_0] = true
 	end
 end
 
-function slot0._refreshNewLayer(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6, slot7 = slot0:_getDUSValueByDSL(uv0.BossRushNewLayer, slot2, slot3)
+function var_0_0._refreshNewBoss(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0, var_26_1, var_26_2, var_26_3 = arg_26_0:_getDUSValueByDSL(var_0_4.BossRushNewBoss, arg_26_2)
 
-	if slot0:_modifyOrMakeRedDotGroupItem(slot4, slot5, slot7 and slot6 or 0) then
-		slot1[slot4] = true
+	var_26_2 = var_26_3 and var_26_2 or 0
+
+	if arg_26_0:_modifyOrMakeRedDotGroupItem(var_26_0, var_26_1, var_26_2) then
+		arg_26_1[var_26_0] = true
 	end
 end
 
-function slot0.refreshAllStageLayerUnlockState(slot0)
-	for slot6, slot7 in pairs(slot0:_getConfig():getStages()) do
-		for slot12, slot13 in pairs(BossRushModel.instance:getStageLayersInfo(slot6)) do
-			slot15, slot16, slot17, slot18 = slot0:_getDUSValueByDSL(uv0.BossRushNewLayer, slot6, slot12)
+function var_0_0._refreshNewLayer(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0, var_27_1, var_27_2, var_27_3 = arg_27_0:_getDUSValueByDSL(var_0_4.BossRushNewLayer, arg_27_2, arg_27_3)
 
-			if not slot18 then
-				if slot13.isOpen then
-					slot0:setIsNewUnlockStageLayer(slot6, slot12, true)
+	var_27_2 = var_27_3 and var_27_2 or 0
+
+	if arg_27_0:_modifyOrMakeRedDotGroupItem(var_27_0, var_27_1, var_27_2) then
+		arg_27_1[var_27_0] = true
+	end
+end
+
+function var_0_0.refreshAllStageLayerUnlockState(arg_28_0)
+	local var_28_0 = arg_28_0:_getConfig():getStages()
+
+	for iter_28_0, iter_28_1 in pairs(var_28_0) do
+		local var_28_1 = BossRushModel.instance:getStageLayersInfo(iter_28_0)
+
+		for iter_28_2, iter_28_3 in pairs(var_28_1) do
+			local var_28_2 = iter_28_3.isOpen
+			local var_28_3, var_28_4, var_28_5, var_28_6 = arg_28_0:_getDUSValueByDSL(var_0_4.BossRushNewLayer, iter_28_0, iter_28_2)
+
+			if not var_28_6 then
+				if var_28_2 then
+					arg_28_0:setIsNewUnlockStageLayer(iter_28_0, iter_28_2, true)
 				end
-			elseif not slot14 and slot17 >= 1 then
-				slot0:setIsNewUnlockStageLayer(slot6, slot12, false, true)
+			elseif not var_28_2 and var_28_5 >= 1 then
+				arg_28_0:setIsNewUnlockStageLayer(iter_28_0, iter_28_2, false, true)
 			end
 		end
 	end
 end
 
-function slot0._refreshOpen(slot0, slot1)
-	slot2, slot3, slot4, slot5 = slot0:_getDUSValueByDSL(uv0.BossRushOpen)
+function var_0_0._refreshOpen(arg_29_0, arg_29_1)
+	local var_29_0, var_29_1, var_29_2, var_29_3 = arg_29_0:_getDUSValueByDSL(var_0_4.BossRushOpen)
 
-	if slot0:_modifyOrMakeRedDotGroupItem(slot2, slot3, slot5 and slot4 or 0) then
-		slot1[slot2] = true
+	var_29_2 = var_29_3 and var_29_2 or 0
+
+	if arg_29_0:_modifyOrMakeRedDotGroupItem(var_29_0, var_29_1, var_29_2) then
+		arg_29_1[var_29_0] = true
 	end
 end
 
-function slot0._refreshBoss(slot0, slot1, slot2)
-	slot3, slot4 = slot0:_getDUByDSL(uv0.BossRushBoss, slot2)
-	slot7, slot8 = slot0:_getSavedValueByDSL(uv0.BossRushNewBoss, slot2)
-	slot9, slot10 = slot0:_getDisplayValueByDSL(uv0.BossRushBossReward, slot2)
+function var_0_0._refreshBoss(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0, var_30_1 = arg_30_0:_getDUByDSL(var_0_4.BossRushBoss, arg_30_2)
+	local var_30_2 = arg_30_0:_getConfig():getEpisodeStages(arg_30_2)
+	local var_30_3, var_30_4 = arg_30_0:_getSavedValueByDSL(var_0_4.BossRushNewBoss, arg_30_2)
+	local var_30_5, var_30_6 = arg_30_0:_getDisplayValueByDSL(var_0_4.BossRushBossReward, arg_30_2)
+	local var_30_7 = 0
 
-	for slot15, slot16 in pairs(slot0:_getConfig():getEpisodeStages(slot2)) do
-		slot18, slot19 = slot0:_getSavedValueByDSL(uv0.BossRushNewLayer, slot2, slot16.layer)
+	for iter_30_0, iter_30_1 in pairs(var_30_2) do
+		local var_30_8 = iter_30_1.layer
+		local var_30_9, var_30_10 = arg_30_0:_getSavedValueByDSL(var_0_4.BossRushNewLayer, arg_30_2, var_30_8)
 
-		if slot19 then
-			slot11 = 0 + slot18
+		if var_30_10 then
+			var_30_7 = var_30_7 + var_30_9
 		end
 	end
 
-	if slot8 then
-		slot12 = slot11 + slot7
+	local var_30_11 = var_30_7
+
+	if var_30_4 then
+		var_30_11 = var_30_11 + var_30_3
 	end
 
-	if slot10 then
-		slot12 = slot12 + slot9
+	if var_30_6 then
+		var_30_11 = var_30_11 + var_30_5
 	end
 
-	if slot0:_modifyOrMakeRedDotGroupItem(slot3, slot4, slot12) then
-		slot1[slot3] = true
+	if arg_30_0:_modifyOrMakeRedDotGroupItem(var_30_0, var_30_1, var_30_11) then
+		arg_30_1[var_30_0] = true
 	end
 end
 
-function slot0._refreshRootInner(slot0, slot1)
-	slot2, slot3 = slot0:_getDUByDSL(uv0.BossRushEnter)
-	slot6, slot7 = slot0:_getSavedValueByDSL(uv0.BossRushOpen)
+function var_0_0._refreshRootInner(arg_31_0, arg_31_1)
+	local var_31_0, var_31_1 = arg_31_0:_getDUByDSL(var_0_4.BossRushEnter)
+	local var_31_2 = arg_31_0:_getConfig():getStages()
+	local var_31_3, var_31_4 = arg_31_0:_getSavedValueByDSL(var_0_4.BossRushOpen)
+	local var_31_5 = 0
 
-	for slot12, slot13 in pairs(slot0:_getConfig():getStages()) do
-		slot15, slot16 = slot0:_getDisplayValueByDSL(uv0.BossRushBoss, slot13.stage)
+	for iter_31_0, iter_31_1 in pairs(var_31_2) do
+		local var_31_6 = iter_31_1.stage
+		local var_31_7, var_31_8 = arg_31_0:_getDisplayValueByDSL(var_0_4.BossRushBoss, var_31_6)
 
-		if slot16 then
-			slot8 = 0 + slot15
+		if var_31_8 then
+			var_31_5 = var_31_5 + var_31_7
 		end
 	end
 
-	if slot7 then
-		slot9 = slot8 + slot6
+	local var_31_9 = var_31_5
+
+	if var_31_4 then
+		var_31_9 = var_31_9 + var_31_3
 	end
 
-	if slot0:_modifyOrMakeRedDotGroupItem(slot2, slot3, slot9) then
-		slot1[slot2] = true
+	if arg_31_0:_modifyOrMakeRedDotGroupItem(var_31_0, var_31_1, var_31_9) then
+		arg_31_1[var_31_0] = true
 	end
 end
 
-function slot0._refreshRoot(slot0)
-	slot3 = {}
+function var_0_0._refreshRoot(arg_32_0)
+	local var_32_0 = arg_32_0:_getConfig()
+	local var_32_1 = var_32_0:getStages()
+	local var_32_2 = {}
 
-	for slot7, slot8 in pairs(slot0:_getConfig():getStages()) do
-		slot9 = slot8.stage
+	for iter_32_0, iter_32_1 in pairs(var_32_1) do
+		local var_32_3 = iter_32_1.stage
 
-		slot0:_refreshNewBoss(slot3, slot9)
+		arg_32_0:_refreshNewBoss(var_32_2, var_32_3)
 
-		for slot14, slot15 in pairs(slot1:getEpisodeStages(slot9)) do
-			slot0:_refreshNewLayer(slot3, slot9, slot15.layer)
+		local var_32_4 = var_32_0:getEpisodeStages(var_32_3)
+
+		for iter_32_2, iter_32_3 in pairs(var_32_4) do
+			local var_32_5 = iter_32_3.layer
+
+			arg_32_0:_refreshNewLayer(var_32_2, var_32_3, var_32_5)
 		end
 
-		slot0:_refreshReward(slot3, slot9)
-		slot0:_refreshBoss(slot3, slot9)
+		arg_32_0:_refreshReward(var_32_2, var_32_3)
+		arg_32_0:_refreshBoss(var_32_2, var_32_3)
 	end
 
-	slot0:_refreshOpen(slot3)
-	slot0:_refreshRootInner(slot3)
+	arg_32_0:_refreshOpen(var_32_2)
+	arg_32_0:_refreshRootInner(var_32_2)
 
-	return slot3
+	return var_32_2
 end
 
-function slot0._getPrefsKey(slot0, slot1, slot2)
-	slot3 = slot0:_getActivityId()
+function var_0_0._getPrefsKey(arg_33_0, arg_33_1, arg_33_2)
+	local var_33_0 = arg_33_0:_getActivityId()
 
-	if not slot2 then
-		return uv0 .. uv1(slot3) .. uv1(slot1)
+	if not arg_33_2 then
+		return var_0_5 .. var_0_1(var_33_0) .. var_0_1(arg_33_1)
 	end
 
-	return uv0 .. uv1(slot3) .. uv1(slot1) .. "|" .. uv1(slot2)
+	return var_0_5 .. var_0_1(var_33_0) .. var_0_1(arg_33_1) .. "|" .. var_0_1(arg_33_2)
 end
 
-function slot0._save(slot0, slot1, slot2, slot3)
-	GameUtil.playerPrefsSetNumberByUserId(slot0:_getPrefsKey(slot1, slot2), slot3)
+function var_0_0._save(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
+	local var_34_0 = arg_34_0:_getPrefsKey(arg_34_1, arg_34_2)
+
+	GameUtil.playerPrefsSetNumberByUserId(var_34_0, arg_34_3)
 end
 
-function slot0._get(slot0, slot1, slot2, slot3)
-	return GameUtil.playerPrefsGetNumberByUserId(slot0:_getPrefsKey(slot1, slot2), slot3 or slot0:getDefaultValue(slot1))
+function var_0_0._get(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	arg_35_3 = arg_35_3 or arg_35_0:getDefaultValue(arg_35_1)
+
+	local var_35_0 = arg_35_0:_getPrefsKey(arg_35_1, arg_35_2)
+
+	return GameUtil.playerPrefsGetNumberByUserId(var_35_0, arg_35_3)
 end
 
-function slot0._appendRefreshRedDict(slot0, slot1)
-	if type(slot1) ~= "table" then
+function var_0_0._appendRefreshRedDict(arg_36_0, arg_36_1)
+	if type(arg_36_1) ~= "table" then
 		return
 	end
 
-	table.insert(slot0._delayNeedUpdateDictList, slot1)
+	table.insert(arg_36_0._delayNeedUpdateDictList, arg_36_1)
 end
 
-function slot0._waitWarmUpOrJustRun(slot0, slot1, ...)
-	if slot0:_isWarmUp() then
-		table.insert(slot0._delayUpdateRedValueList, {
-			callback = slot1,
-			args = {
-				...
-			}
+function var_0_0._waitWarmUpOrJustRun(arg_37_0, arg_37_1, ...)
+	if arg_37_0:_isWarmUp() then
+		local var_37_0 = {
+			...
+		}
+
+		table.insert(arg_37_0._delayUpdateRedValueList, {
+			callback = arg_37_1,
+			args = var_37_0
 		})
 
 		return
 	end
 
-	slot1(...)
+	arg_37_1(...)
 end
 
-function slot0._tryRunRedDicts(slot0)
-	if #slot0._delayNeedUpdateDictList == 0 then
+function var_0_0._tryRunRedDicts(arg_38_0)
+	local var_38_0 = arg_38_0._delayNeedUpdateDictList
+
+	if #var_38_0 == 0 then
 		return true
 	end
 
-	slot0:updateRelateDotInfo(table.remove(slot1))
+	local var_38_1 = table.remove(var_38_0)
+
+	arg_38_0:updateRelateDotInfo(var_38_1)
 
 	return false
 end
 
-function slot0._tryRunValueSetterCallbacks(slot0)
-	if #slot0._delayUpdateRedValueList == 0 then
+function var_0_0._tryRunValueSetterCallbacks(arg_39_0)
+	local var_39_0 = arg_39_0._delayUpdateRedValueList
+
+	if #var_39_0 == 0 then
 		return true
 	end
 
-	slot2 = table.remove(slot1)
+	local var_39_1 = table.remove(var_39_0)
+	local var_39_2 = var_39_1.callback
+	local var_39_3 = var_39_1.args
 
-	slot2.callback(unpack(slot2.args))
+	var_39_2(unpack(var_39_3))
 
 	return false
 end
 
-function slot0._tryFlushDatas(slot0)
-	return slot0:_tryRunRedDicts() or slot0:_tryRunValueSetterCallbacks()
+function var_0_0._tryFlushDatas(arg_40_0)
+	local var_40_0 = arg_40_0:_tryRunRedDicts()
+	local var_40_1 = arg_40_0:_tryRunValueSetterCallbacks()
+
+	return var_40_0 or var_40_1
 end
 
-function slot0._isWarmUp(slot0)
-	return slot0:_getRedDotGroup(uv0.BossRushEnter) == nil
+function var_0_0._isWarmUp(arg_41_0)
+	return arg_41_0:_getRedDotGroup(var_0_4.BossRushEnter) == nil
 end
 
-function slot0.isInitReady(slot0)
+function var_0_0.isInitReady(arg_42_0)
 	return BossRushModel.instance:isActOnLine()
 end
 
-function slot0._stopTick(slot0)
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
+function var_0_0._stopTick(arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._onTick, arg_43_0)
 end
 
-function slot0._startTick(slot0)
-	slot0:_stopTick()
+function var_0_0._startTick(arg_44_0)
+	arg_44_0:_stopTick()
 
-	slot3 = {}
+	local var_44_0 = arg_44_0:_getConfig():getStages()
+	local var_44_1 = {}
 
-	for slot7, slot8 in pairs(slot0:_getConfig():getStages()) do
-		if not BossRushModel.instance:isBossOnline(slot8.stage) then
-			slot3[#slot3 + 1] = slot9
+	for iter_44_0, iter_44_1 in pairs(var_44_0) do
+		local var_44_2 = iter_44_1.stage
+
+		if not BossRushModel.instance:isBossOnline(var_44_2) then
+			var_44_1[#var_44_1 + 1] = var_44_2
 		end
 	end
 
-	slot0._unlockBossIdList = slot3
+	arg_44_0._unlockBossIdList = var_44_1
 
-	if #slot3 > 0 then
-		TaskDispatcher.runRepeat(slot0._onTick, slot0, 1)
+	if #var_44_1 > 0 then
+		TaskDispatcher.runRepeat(arg_44_0._onTick, arg_44_0, 1)
 	end
 end
 
-function slot0._tryUpdateMissingRed(slot0)
-	slot2 = slot0:_getConfig():getStages()
-	slot5, slot6, slot7, slot8 = slot0:_getDUSValueByDSL(uv0.BossRushOpen)
+function var_0_0._tryUpdateMissingRed(arg_45_0)
+	local var_45_0 = arg_45_0:_getConfig()
+	local var_45_1 = var_45_0:getStages()
+	local var_45_2 = BossRushModel.instance:getActivityId()
+	local var_45_3 = ActivityModel.instance:isActOnLine(var_45_2)
+	local var_45_4, var_45_5, var_45_6, var_45_7 = arg_45_0:_getDUSValueByDSL(var_0_4.BossRushOpen)
 
-	if not slot8 then
-		if ActivityModel.instance:isActOnLine(BossRushModel.instance:getActivityId()) then
-			slot0:setIsOpenActivity(true)
+	if not var_45_7 then
+		if var_45_3 then
+			arg_45_0:setIsOpenActivity(true)
 		end
-	elseif not slot4 and slot7 == 1 then
-		slot0:setIsOpenActivity(false, true)
+	elseif not var_45_3 and var_45_6 == 1 then
+		arg_45_0:setIsOpenActivity(false, true)
 	end
 
-	for slot12, slot13 in pairs(slot2) do
-		slot14 = slot13.stage
-		slot16, slot17, slot18, slot19 = slot0:_getDUSValueByDSL(uv0.BossRushNewBoss, slot14)
+	for iter_45_0, iter_45_1 in pairs(var_45_1) do
+		local var_45_8 = iter_45_1.stage
+		local var_45_9 = BossRushModel.instance:isBossOnline(var_45_8)
+		local var_45_10, var_45_11, var_45_12, var_45_13 = arg_45_0:_getDUSValueByDSL(var_0_4.BossRushNewBoss, var_45_8)
 
-		if not slot19 then
-			if BossRushModel.instance:isBossOnline(slot14) then
-				slot0:setIsNewUnlockStage(slot14, true)
+		if not var_45_13 then
+			if var_45_9 then
+				arg_45_0:setIsNewUnlockStage(var_45_8, true)
 			end
-		elseif not slot15 and slot18 >= 1 then
-			slot0:setIsNewUnlockStage(slot14, false, true)
+		elseif not var_45_9 and var_45_12 >= 1 then
+			arg_45_0:setIsNewUnlockStage(var_45_8, false, true)
 		end
 
-		for slot24, slot25 in pairs(slot1:getEpisodeStages(slot14)) do
-			slot26 = slot25.layer
-			slot28, slot29, slot30, slot31 = slot0:_getDUSValueByDSL(uv0.BossRushNewLayer, slot14, slot26)
+		local var_45_14 = var_45_0:getEpisodeStages(var_45_8)
 
-			if not slot31 then
-				if slot15 and BossRushModel.instance:isBossLayerOpen(slot14, slot26) or false then
-					slot0:setIsNewUnlockStageLayer(slot14, slot26, true)
+		for iter_45_2, iter_45_3 in pairs(var_45_14) do
+			local var_45_15 = iter_45_3.layer
+			local var_45_16 = var_45_9 and BossRushModel.instance:isBossLayerOpen(var_45_8, var_45_15) or false
+			local var_45_17, var_45_18, var_45_19, var_45_20 = arg_45_0:_getDUSValueByDSL(var_0_4.BossRushNewLayer, var_45_8, var_45_15)
+
+			if not var_45_20 then
+				if var_45_16 then
+					arg_45_0:setIsNewUnlockStageLayer(var_45_8, var_45_15, true)
 				end
-			elseif not slot27 and slot30 >= 1 then
-				slot0:setIsNewUnlockStageLayer(slot14, slot26, false, true)
+			elseif not var_45_16 and var_45_19 >= 1 then
+				arg_45_0:setIsNewUnlockStageLayer(var_45_8, var_45_15, false, true)
 			end
 		end
 	end
 end
 
-function slot0._flushCache(slot0)
-	slot0:_startFlushData()
-	slot0:_tryUpdateMissingRed()
-	slot0:_startTick()
+function var_0_0._flushCache(arg_46_0)
+	arg_46_0:_startFlushData()
+	arg_46_0:_tryUpdateMissingRed()
+	arg_46_0:_startTick()
 end
 
-function slot0.refreshClientCharacterDot(slot0)
-	if not slot0:isInitReady() then
+function var_0_0.refreshClientCharacterDot(arg_47_0)
+	if not arg_47_0:isInitReady() then
 		return
 	end
 
-	if not slot0:_isWarmUp() then
+	if not arg_47_0:_isWarmUp() then
 		return
 	end
 
-	slot1 = {}
+	local var_47_0 = {}
 
-	slot0:_initRootRed(slot1)
-	slot0:_initBossRed(slot1)
+	arg_47_0:_initRootRed(var_47_0)
+	arg_47_0:_initBossRed(var_47_0)
 
-	slot2 = {}
+	local var_47_1 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0:_isSValueValid(slot7.value) then
-			uv0(slot2, slot7)
+	for iter_47_0, iter_47_1 in ipairs(var_47_0) do
+		if arg_47_0:_isSValueValid(iter_47_1.value) then
+			var_0_3(var_47_1, iter_47_1)
 		end
 	end
 
-	RedDotRpc.instance:clientAddRedDotGroupList(slot2)
+	RedDotRpc.instance:clientAddRedDotGroupList(var_47_1)
 end
 
-function slot0.updateRelateDotInfo(slot0, slot1)
-	if slot0:_isWarmUp() then
-		slot0:_appendRefreshRedDict(slot1)
+function var_0_0.updateRelateDotInfo(arg_48_0, arg_48_1)
+	if arg_48_0:_isWarmUp() then
+		arg_48_0:_appendRefreshRedDict(arg_48_1)
 
 		return
 	end
 
-	if not slot1 then
+	if not arg_48_1 then
 		return
 	end
 
-	if not slot1[uv0.BossRushEnter] then
+	if not arg_48_1[var_0_4.BossRushEnter] then
 		return
 	end
 
-	slot2 = slot0:_refreshRoot()
+	local var_48_0 = arg_48_0:_refreshRoot()
 
-	if not slot0._flushCacheFrameTimer then
-		slot0._flushCacheFrameTimer = FrameTimerController.instance:register(slot0._flushCache, slot0)
+	if not arg_48_0._flushCacheFrameTimer then
+		arg_48_0._flushCacheFrameTimer = FrameTimerController.instance:register(arg_48_0._flushCache, arg_48_0)
 
-		slot0._flushCacheFrameTimer:Start()
+		arg_48_0._flushCacheFrameTimer:Start()
 	end
 
-	if not uv1(slot2) then
+	if not var_0_2(var_48_0) then
 		return
 	end
 
-	if slot1[uv2] then
+	if arg_48_1[var_0_7] then
 		return
 	end
 
-	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, slot2)
+	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_48_0)
 end
 
-function slot0.getUId(slot0, slot1, slot2, slot3)
-	if uv0.BossRushNewLayer == slot1 then
-		return slot2 * 1000 + slot3
+function var_0_0.getUId(arg_49_0, arg_49_1, arg_49_2, arg_49_3)
+	if var_0_4.BossRushNewLayer == arg_49_1 then
+		return arg_49_2 * 1000 + arg_49_3
 	end
 
-	return slot2 or uv1
+	return arg_49_2 or var_0_6
 end
 
-function slot0.getDefaultValue(slot0, slot1)
-	if slot1 == uv0.BossRushOpen or slot1 == uv0.BossRushNewBoss or slot1 == uv0.BossRushNewLayer then
-		return uv1
+function var_0_0.getDefaultValue(arg_50_0, arg_50_1)
+	if arg_50_1 == var_0_4.BossRushOpen or arg_50_1 == var_0_4.BossRushNewBoss or arg_50_1 == var_0_4.BossRushNewLayer then
+		return var_0_7
 	end
 
 	return 0
 end
 
-function slot0._trySave(slot0, slot1, slot2, slot3)
-	if slot1 == uv0.BossRushBossReward or slot1 == uv0.BossRushBossSchedule or slot1 == uv0.BossRushBossAchievement then
+function var_0_0._trySave(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
+	if arg_51_1 == var_0_4.BossRushBossReward or arg_51_1 == var_0_4.BossRushBossSchedule or arg_51_1 == var_0_4.BossRushBossAchievement then
 		return
 	end
 
-	slot4, slot6 = slot0:_getValue(slot1, slot2)
+	local var_51_0, var_51_1 = arg_51_0:_getValue(arg_51_1, arg_51_2)
+	local var_51_2 = var_51_1
 
-	if slot4 then
-		slot6 = slot3
-	elseif slot3 > 0 then
-		slot6 = slot3
+	if var_51_0 then
+		var_51_2 = arg_51_3
+	elseif arg_51_3 > 0 then
+		var_51_2 = arg_51_3
 	end
 
-	if slot5 ~= slot6 then
-		slot0:_save(slot1, slot2, slot6)
+	if var_51_1 ~= var_51_2 then
+		arg_51_0:_save(arg_51_1, arg_51_2, var_51_2)
 	end
 end
 
-function slot0.setIsOpenActivity(slot0, slot1, slot2)
-	slot3, slot4 = slot0:_getDUByDSL(uv0.BossRushOpen)
+function var_0_0.setIsOpenActivity(arg_52_0, arg_52_1, arg_52_2)
+	local var_52_0, var_52_1 = arg_52_0:_getDUByDSL(var_0_4.BossRushOpen)
 
-	slot0:_waitWarmUpOrJustRun(slot0._tryShowRedDotGroupItem, slot0, slot3, slot4, slot1, slot2)
+	arg_52_0:_waitWarmUpOrJustRun(arg_52_0._tryShowRedDotGroupItem, arg_52_0, var_52_0, var_52_1, arg_52_1, arg_52_2)
 end
 
-function slot0.setIsNewUnlockStage(slot0, slot1, slot2, slot3)
-	slot4, slot5 = slot0:_getDUByDSL(uv0.BossRushNewBoss, slot1)
+function var_0_0.setIsNewUnlockStage(arg_53_0, arg_53_1, arg_53_2, arg_53_3)
+	local var_53_0, var_53_1 = arg_53_0:_getDUByDSL(var_0_4.BossRushNewBoss, arg_53_1)
 
-	slot0:_waitWarmUpOrJustRun(slot0._tryShowRedDotGroupItem, slot0, slot4, slot5, slot2, slot3)
+	arg_53_0:_waitWarmUpOrJustRun(arg_53_0._tryShowRedDotGroupItem, arg_53_0, var_53_0, var_53_1, arg_53_2, arg_53_3)
 end
 
-function slot0.setIsNewUnlockStageLayer(slot0, slot1, slot2, slot3, slot4)
-	slot5, slot6 = slot0:_getDUByDSL(uv0.BossRushNewLayer, slot1, slot2)
+function var_0_0.setIsNewUnlockStageLayer(arg_54_0, arg_54_1, arg_54_2, arg_54_3, arg_54_4)
+	local var_54_0, var_54_1 = arg_54_0:_getDUByDSL(var_0_4.BossRushNewLayer, arg_54_1, arg_54_2)
 
-	slot0:_waitWarmUpOrJustRun(slot0._tryShowRedDotGroupItem, slot0, slot5, slot6, slot3, slot4)
+	arg_54_0:_waitWarmUpOrJustRun(arg_54_0._tryShowRedDotGroupItem, arg_54_0, var_54_0, var_54_1, arg_54_3, arg_54_4)
 end
 
-function slot0.getIsNewUnlockStage(slot0, slot1)
-	return slot0:checkIsShow(uv0.BossRushNewBoss, slot1)
+function var_0_0.getIsNewUnlockStage(arg_55_0, arg_55_1)
+	return arg_55_0:checkIsShow(var_0_4.BossRushNewBoss, arg_55_1)
 end
 
-function slot0.getIsNewUnlockStageLayer(slot0, slot1, slot2)
-	return slot0:checkIsShow(uv0.BossRushNewLayer, slot1, slot2)
+function var_0_0.getIsNewUnlockStageLayer(arg_56_0, arg_56_1, arg_56_2)
+	return arg_56_0:checkIsShow(var_0_4.BossRushNewLayer, arg_56_1, arg_56_2)
 end
 
-function slot0.checkIsShow(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6 = slot0:_getValueByDSL(slot1, slot2, slot3)
+function var_0_0.checkIsShow(arg_57_0, arg_57_1, arg_57_2, arg_57_3)
+	local var_57_0, var_57_1, var_57_2 = arg_57_0:_getValueByDSL(arg_57_1, arg_57_2, arg_57_3)
 
-	return slot4 and slot5 >= 1 or slot6 >= 1
+	return var_57_0 and var_57_1 >= 1 or var_57_2 >= 1
 end
 
-slot9, slot10, slot11 = nil
+local var_0_9
+local var_0_10
+local var_0_11
 
-function slot0._printerWarmUp(slot0)
-	if not uv0 then
-		uv0 = {}
+function var_0_0._printerWarmUp(arg_58_0)
+	if not var_0_9 then
+		var_0_9 = {}
 
-		for slot4, slot5 in pairs(RedDotEnum.DotNode) do
-			uv0[slot5] = slot4
+		for iter_58_0, iter_58_1 in pairs(RedDotEnum.DotNode) do
+			var_0_9[iter_58_1] = iter_58_0
 		end
 	end
 
-	if not uv1 then
-		uv1 = getGlobal("ddd") or SLFramework.SLLogger.Log
+	if not var_0_10 then
+		var_0_10 = getGlobal("ddd") or SLFramework.SLLogger.Log
 	end
 
-	if not uv2 and PlayerModel.instance:getMyUserId() and slot1 ~= 0 then
-		uv2 = slot1
+	if not var_0_11 then
+		local var_58_0 = PlayerModel.instance:getMyUserId()
+
+		if var_58_0 and var_58_0 ~= 0 then
+			var_0_11 = var_58_0
+		end
 	end
 end
 
-function slot0._print(slot0, slot1)
+function var_0_0._print(arg_59_0, arg_59_1)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	if not slot1 then
+	if not arg_59_1 then
 		return
 	end
 
-	slot0:_printerWarmUp()
-	assert(uv0[slot1], "defineId = " .. slot1)
+	arg_59_0:_printerWarmUp()
+	assert(var_0_9[arg_59_1], "defineId = " .. arg_59_1)
 
-	function RedDotGroupMo.tostring(slot0)
-		slot1 = slot0.id
-		slot5 = true
+	function RedDotGroupMo.tostring(arg_60_0)
+		local var_60_0 = arg_60_0.id
+		local var_60_1 = arg_60_0.infos
+		local var_60_2 = var_0_9[var_60_0]
+		local var_60_3 = string.format("%s(%s):", var_60_2, var_0_1(var_60_0))
+		local var_60_4 = true
 
-		for slot9, slot10 in pairs(slot0.infos) do
-			if slot9 ~= 0 then
-				slot4 = string.format("%s\n\tuid: %s (%s)", string.format("%s(%s):", uv0[slot1], uv1(slot1)), uv1(slot9), uv1(slot10.value))
-				slot5 = false
+		for iter_60_0, iter_60_1 in pairs(var_60_1) do
+			if iter_60_0 ~= 0 then
+				local var_60_5 = iter_60_1.value
+
+				var_60_3 = string.format("%s\n\tuid: %s (%s)", var_60_3, var_0_1(iter_60_0), var_0_1(var_60_5))
+				var_60_4 = false
 			end
 		end
 
-		if slot5 then
-			slot4 = slot4 .. " empty"
+		if var_60_4 then
+			var_60_3 = var_60_3 .. " empty"
 		end
 
-		return slot4
+		return var_60_3
 	end
 
-	if not RedDotModel.instance:getRedDotInfo(slot1) then
-		uv2(uv0[slot1] .. ": null")
+	local var_59_0 = RedDotModel.instance:getRedDotInfo(arg_59_1)
+
+	if not var_59_0 then
+		var_0_10(var_0_9[arg_59_1] .. ": null")
 
 		return
 	end
 
-	uv2(slot2:tostring())
+	var_0_10(var_59_0:tostring())
 end
 
-function slot0.logDalayInfo(slot0)
-	slot0:_printerWarmUp()
-	uv0("#_delayNeedUpdateDictList=" .. uv1(#slot0._delayNeedUpdateDictList))
-	uv0("#_delayUpdateRedValueList=" .. uv1(#slot0._delayUpdateRedValueList))
+function var_0_0.logDalayInfo(arg_61_0)
+	arg_61_0:_printerWarmUp()
+	var_0_10("#_delayNeedUpdateDictList=" .. var_0_1(#arg_61_0._delayNeedUpdateDictList))
+	var_0_10("#_delayUpdateRedValueList=" .. var_0_1(#arg_61_0._delayUpdateRedValueList))
 end
 
-function slot0._delete(slot0, slot1, slot2)
-	slot3 = slot0:_getPrefsKey(slot1, slot2)
+function var_0_0._delete(arg_62_0, arg_62_1, arg_62_2)
+	local var_62_0 = arg_62_0:_getPrefsKey(arg_62_1, arg_62_2)
+	local var_62_1 = PlayerModel.instance:getMyUserId()
 
-	if not PlayerModel.instance:getMyUserId() or slot5 == 0 then
-		slot5 = uv0
+	if not var_62_1 or var_62_1 == 0 then
+		var_62_1 = var_0_11
 	end
 
-	if not slot5 then
+	if not var_62_1 then
 		return
 	end
 
-	slot0:_printerWarmUp()
+	arg_62_0:_printerWarmUp()
 
-	if PlayerPrefsHelper.hasKey(slot3 .. "#" .. uv1(slot5)) then
-		PlayerPrefsHelper.deleteKey(slot6)
+	local var_62_2 = var_62_0 .. "#" .. var_0_1(var_62_1)
 
-		return slot3
+	if PlayerPrefsHelper.hasKey(var_62_2) then
+		PlayerPrefsHelper.deleteKey(var_62_2)
+
+		return var_62_0
 	end
 
-	uv2("_delete no existed prefsKey!!", slot6)
+	var_0_10("_delete no existed prefsKey!!", var_62_2)
 end
 
-function slot0._deleteByDSL(slot0, slot1, slot2, slot3)
-	slot4, slot5 = slot0:_getDUByDSL(slot1, slot2, slot3)
+function var_0_0._deleteByDSL(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
+	local var_63_0, var_63_1 = arg_63_0:_getDUByDSL(arg_63_1, arg_63_2, arg_63_3)
+	local var_63_2 = arg_63_0:_delete(var_63_0, var_63_1)
 
-	if not slot0:_delete(slot4, slot5) then
+	if not var_63_2 then
 		return
 	end
 
@@ -715,48 +819,51 @@ function slot0._deleteByDSL(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	if not slot4 then
+	if not var_63_0 then
 		return
 	end
 
-	slot0:_printerWarmUp()
+	arg_63_0:_printerWarmUp()
 
-	slot7 = "deleted " .. uv0(slot6)
+	local var_63_3 = "deleted " .. var_0_1(var_63_2)
+	local var_63_4 = ""
 
-	if slot2 and slot3 then
-		slot8 = "" .. string.format("bossid: %s, layer: %s", slot2, slot3)
-	elseif slot2 then
-		slot8 = slot8 .. string.format("bossid: %s", slot2)
+	if arg_63_2 and arg_63_3 then
+		var_63_4 = var_63_4 .. string.format("bossid: %s, layer: %s", arg_63_2, arg_63_3)
+	elseif arg_63_2 then
+		var_63_4 = var_63_4 .. string.format("bossid: %s", arg_63_2)
 	end
 
-	uv1(slot7 .. ": " .. slot8)
+	local var_63_5 = var_63_3 .. ": " .. var_63_4
+
+	var_0_10(var_63_5)
 end
 
-function slot0._reload(slot0)
-	if not slot0:isInitReady() then
+function var_0_0._reload(arg_64_0)
+	if not arg_64_0:isInitReady() then
 		return
 	end
 
-	slot0:_printerWarmUp()
-	slot0:reInit()
+	arg_64_0:_printerWarmUp()
+	arg_64_0:reInit()
 
-	slot1 = {}
+	local var_64_0 = {}
 
-	slot0:_initRootRed(slot1)
-	slot0:_initBossRed(slot1)
+	arg_64_0:_initRootRed(var_64_0)
+	arg_64_0:_initBossRed(var_64_0)
 
-	slot2 = {}
+	local var_64_1 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0:_isSValueValid(slot7.value) then
-			uv0(slot2, slot7)
+	for iter_64_0, iter_64_1 in ipairs(var_64_0) do
+		if arg_64_0:_isSValueValid(iter_64_1.value) then
+			var_0_3(var_64_1, iter_64_1)
 		end
 	end
 
-	RedDotRpc.instance:clientAddRedDotGroupList(slot2, true)
-	uv1("<color=#00FF00>reload BossRushRedModel finished!!</color>")
+	RedDotRpc.instance:clientAddRedDotGroupList(var_64_1, true)
+	var_0_10("<color=#00FF00>reload BossRushRedModel finished!!</color>")
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

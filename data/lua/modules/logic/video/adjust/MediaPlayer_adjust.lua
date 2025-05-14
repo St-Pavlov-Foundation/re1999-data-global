@@ -1,10 +1,11 @@
-module("modules.logic.video.adjust.MediaPlayer_adjust", package.seeall)
+﻿module("modules.logic.video.adjust.MediaPlayer_adjust", package.seeall)
 
-slot0 = class("MediaPlayer_adjust")
+local var_0_0 = class("MediaPlayer_adjust")
 
-function slot0.CloseMedia(slot0)
+function var_0_0.CloseMedia(arg_1_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

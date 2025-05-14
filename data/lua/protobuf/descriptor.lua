@@ -1,4 +1,4 @@
-module("protobuf.descriptor")
+﻿module("protobuf.descriptor")
 
 FieldDescriptor = {
 	MAX_CPPTYPE = 10,

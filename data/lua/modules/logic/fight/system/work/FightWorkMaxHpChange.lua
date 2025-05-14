@@ -1,42 +1,43 @@
-module("modules.logic.fight.system.work.FightWorkMaxHpChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkMaxHpChange", package.seeall)
 
-slot0 = class("FightWorkMaxHpChange", FightEffectBase)
+local var_0_0 = class("FightWorkMaxHpChange", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:_startChangeMaxHp()
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:_startChangeMaxHp()
 end
 
-function slot0.beforePlayEffectData(slot0)
-	slot0._entityId = slot0._actEffectMO.targetId
-	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
-	slot0._oldValue = slot0._entityMO and slot0._entityMO.attrMO.hp
+function var_0_0.beforePlayEffectData(arg_2_0)
+	arg_2_0._entityId = arg_2_0._actEffectMO.targetId
+	arg_2_0._entityMO = FightDataHelper.entityMgr:getById(arg_2_0._entityId)
+	arg_2_0._oldValue = arg_2_0._entityMO and arg_2_0._entityMO.attrMO.hp
 end
 
-function slot0._startChangeMaxHp(slot0)
-	if not FightHelper.getEntity(slot0._entityId) then
-		slot0:onDone(true)
+function var_0_0._startChangeMaxHp(arg_3_0)
+	if not FightHelper.getEntity(arg_3_0._entityId) then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	if not slot0._entityMO then
-		slot0:onDone(true)
+	if not arg_3_0._entityMO then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	slot0._newValue = slot0._entityMO and slot0._entityMO.attrMO.hp
+	arg_3_0._newValue = arg_3_0._entityMO and arg_3_0._entityMO.attrMO.hp
 
-	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, slot0._actEffectMO.targetId, slot0._oldValue, slot0._newValue)
-	slot0:_onDone()
+	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, arg_3_0._actEffectMO.targetId, arg_3_0._oldValue, arg_3_0._newValue)
+	arg_3_0:_onDone()
 end
 
-function slot0._onDone(slot0)
-	slot0:clearWork()
-	slot0:onDone(true)
+function var_0_0._onDone(arg_4_0)
+	arg_4_0:clearWork()
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

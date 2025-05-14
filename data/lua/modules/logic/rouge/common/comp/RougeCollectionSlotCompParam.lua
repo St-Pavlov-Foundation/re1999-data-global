@@ -1,20 +1,20 @@
-module("modules.logic.rouge.common.comp.RougeCollectionSlotCompParam", package.seeall)
+﻿module("modules.logic.rouge.common.comp.RougeCollectionSlotCompParam", package.seeall)
 
-slot0 = pureTable("RougeCollectionSlotCompParam")
+local var_0_0 = pureTable("RougeCollectionSlotCompParam")
 
-function slot0.ctor(slot0)
-	slot0.cellWidth = 20
-	slot0.cellHeight = 20
-	slot0.isNeedShowIcon = false
-	slot0.cellLineNameMap = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.cellWidth = 20
+	arg_1_0.cellHeight = 20
+	arg_1_0.isNeedShowIcon = false
+	arg_1_0.cellLineNameMap = {
 		[RougeEnum.LineState.Grey] = "rouge_bagline_yellow",
 		[RougeEnum.LineState.Green] = "rouge_bagline_green"
 	}
-	slot0.cls = RougeCollectionCompCellItem
+	arg_1_0.cls = RougeCollectionCompCellItem
 end
 
-function slot0.getLine(slot0, slot1)
-	return slot0.cellLineNameMap and slot0.cellLineNameMap[slot1]
+function var_0_0.getLine(arg_2_0, arg_2_1)
+	return arg_2_0.cellLineNameMap and arg_2_0.cellLineNameMap[arg_2_1]
 end
 
-return slot0
+return var_0_0

@@ -1,162 +1,182 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174HeroItem", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174HeroItem", package.seeall)
 
-slot0 = class("Act174HeroItem", LuaCompBase)
+local var_0_0 = class("Act174HeroItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._teamView = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._teamView = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._goHero = gohelper.findChild(slot1, "go_Hero")
-	slot0._heroIcon = gohelper.findChildSingleImage(slot1, "go_Hero/image_Hero")
-	slot0._heroQuality = gohelper.findChildImage(slot1, "go_Hero/image_quality")
-	slot0._heroCareer = gohelper.findChildImage(slot1, "go_Hero/image_Career")
-	slot0._goEquip = gohelper.findChild(slot1, "go_Equip")
-	slot0._skillIcon = gohelper.findChildSingleImage(slot1, "go_Equip/skill/image_Skill")
-	slot0._collectionIcon = gohelper.findChildSingleImage(slot1, "go_Equip/collection/image_Collection")
-	slot0._goEmptyCollection = gohelper.findChild(slot1, "go_Equip/collection/empty")
-	slot0._goEmpty = gohelper.findChild(slot1, "go_Empty")
-	slot0._txtNum = gohelper.findChildText(slot1, "Index/txt_Num")
-	slot0._goLock = gohelper.findChild(slot1, "go_Lock")
-	slot0.btnClick = gohelper.findButtonWithAudio(slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1
+	arg_2_0._goHero = gohelper.findChild(arg_2_1, "go_Hero")
+	arg_2_0._heroIcon = gohelper.findChildSingleImage(arg_2_1, "go_Hero/image_Hero")
+	arg_2_0._heroQuality = gohelper.findChildImage(arg_2_1, "go_Hero/image_quality")
+	arg_2_0._heroCareer = gohelper.findChildImage(arg_2_1, "go_Hero/image_Career")
+	arg_2_0._goEquip = gohelper.findChild(arg_2_1, "go_Equip")
+	arg_2_0._skillIcon = gohelper.findChildSingleImage(arg_2_1, "go_Equip/skill/image_Skill")
+	arg_2_0._collectionIcon = gohelper.findChildSingleImage(arg_2_1, "go_Equip/collection/image_Collection")
+	arg_2_0._goEmptyCollection = gohelper.findChild(arg_2_1, "go_Equip/collection/empty")
+	arg_2_0._goEmpty = gohelper.findChild(arg_2_1, "go_Empty")
+	arg_2_0._txtNum = gohelper.findChildText(arg_2_1, "Index/txt_Num")
+	arg_2_0._goLock = gohelper.findChild(arg_2_1, "go_Lock")
+	arg_2_0.btnClick = gohelper.findButtonWithAudio(arg_2_1)
 
-	CommonDragHelper.instance:registerDragObj(slot1, slot0.beginDrag, nil, slot0.endDrag, slot0.checkDrag, slot0)
-	gohelper.setActive(slot0._goEmpty, true)
-	gohelper.setActive(slot0._goHero, false)
+	CommonDragHelper.instance:registerDragObj(arg_2_1, arg_2_0.beginDrag, nil, arg_2_0.endDrag, arg_2_0.checkDrag, arg_2_0)
+	gohelper.setActive(arg_2_0._goEmpty, true)
+	gohelper.setActive(arg_2_0._goHero, false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0.btnClick:AddClickListener(slot0.onClick, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0.btnClick:AddClickListener(arg_3_0.onClick, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0.btnClick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0.btnClick:RemoveClickListener()
 end
 
-function slot0.onDestroy(slot0)
-	slot0._heroIcon:UnLoadImage()
-	slot0._skillIcon:UnLoadImage()
-	slot0._collectionIcon:UnLoadImage()
-	CommonDragHelper.instance:unregisterDragObj(slot0._go)
+function var_0_0.onDestroy(arg_5_0)
+	arg_5_0._heroIcon:UnLoadImage()
+	arg_5_0._skillIcon:UnLoadImage()
+	arg_5_0._collectionIcon:UnLoadImage()
+	CommonDragHelper.instance:unregisterDragObj(arg_5_0._go)
 end
 
-function slot0.onClick(slot0)
-	if slot0.tweenId or slot0.isDraging then
+function var_0_0.onClick(arg_6_0)
+	if arg_6_0.tweenId or arg_6_0.isDraging then
 		return
 	end
 
-	slot0._teamView:clickHero(slot0._index)
+	arg_6_0._teamView:clickHero(arg_6_0._index)
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0._index = slot1
-	slot2, slot0._txtNum.text = Activity174Helper.CalculateRowColumn(slot1)
+function var_0_0.setIndex(arg_7_0, arg_7_1)
+	arg_7_0._index = arg_7_1
 
-	gohelper.setActive(slot0._goLock, slot0._teamView.unLockTeamCnt < slot2)
-	gohelper.setActive(slot0._goEquip, slot2 <= slot4)
+	local var_7_0, var_7_1 = Activity174Helper.CalculateRowColumn(arg_7_1)
+
+	arg_7_0._txtNum.text = var_7_1
+
+	local var_7_2 = arg_7_0._teamView.unLockTeamCnt
+
+	gohelper.setActive(arg_7_0._goLock, var_7_2 < var_7_0)
+	gohelper.setActive(arg_7_0._goEquip, var_7_0 <= var_7_2)
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	slot0._heroId = slot1
-	slot0._itemId = slot2
-	slot0._skillIndex = slot3
+function var_0_0.setData(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0._heroId = arg_8_1
+	arg_8_0._itemId = arg_8_2
+	arg_8_0._skillIndex = arg_8_3
 
-	if slot1 then
-		slot4 = Activity174Config.instance:getRoleCo(slot1)
+	if arg_8_1 then
+		local var_8_0 = Activity174Config.instance:getRoleCo(arg_8_1)
+		local var_8_1 = ResUrl.getHeadIconMiddle(var_8_0.skinId)
 
-		slot0._heroIcon:LoadImage(ResUrl.getHeadIconMiddle(slot4.skinId))
-		UISpriteSetMgr.instance:setAct174Sprite(slot0._heroQuality, "act174_ready_rolebg_" .. slot4.rare)
-		UISpriteSetMgr.instance:setCommonSprite(slot0._heroCareer, "lssx_" .. slot4.career)
+		arg_8_0._heroIcon:LoadImage(var_8_1)
+		UISpriteSetMgr.instance:setAct174Sprite(arg_8_0._heroQuality, "act174_ready_rolebg_" .. var_8_0.rare)
+		UISpriteSetMgr.instance:setCommonSprite(arg_8_0._heroCareer, "lssx_" .. var_8_0.career)
 	end
 
-	if slot2 then
-		slot0._collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(lua_activity174_collection.configDict[slot2].icon))
+	if arg_8_2 then
+		local var_8_2 = lua_activity174_collection.configDict[arg_8_2]
+
+		arg_8_0._collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(var_8_2.icon))
 	end
 
-	if slot3 then
-		slot0._skillIcon:LoadImage(ResUrl.getSkillIcon(lua_skill.configDict[Activity174Config.instance:getHeroSkillIdDic(slot0._heroId, true)[slot3]].icon))
+	if arg_8_3 then
+		local var_8_3 = Activity174Config.instance:getHeroSkillIdDic(arg_8_0._heroId, true)[arg_8_3]
+		local var_8_4 = lua_skill.configDict[var_8_3]
+
+		arg_8_0._skillIcon:LoadImage(ResUrl.getSkillIcon(var_8_4.icon))
 	end
 
-	gohelper.setActive(slot0._goHero, slot1)
-	gohelper.setActive(slot0._collectionIcon, slot2)
-	gohelper.setActive(slot0._goEmptyCollection, not slot2)
-	gohelper.setActive(slot0._skillIcon, slot3)
-	gohelper.setActive(slot0._goEmpty, not slot1 and not slot2)
+	gohelper.setActive(arg_8_0._goHero, arg_8_1)
+	gohelper.setActive(arg_8_0._collectionIcon, arg_8_2)
+	gohelper.setActive(arg_8_0._goEmptyCollection, not arg_8_2)
+	gohelper.setActive(arg_8_0._skillIcon, arg_8_3)
+	gohelper.setActive(arg_8_0._goEmpty, not arg_8_1 and not arg_8_2)
 end
 
-function slot0.activeEquip(slot0, slot1)
-	gohelper.setActive(slot0._goEquip, slot1)
+function var_0_0.activeEquip(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0._goEquip, arg_9_1)
 end
 
-function slot0.beginDrag(slot0)
-	gohelper.setAsLastSibling(slot0._go)
+function var_0_0.beginDrag(arg_10_0)
+	gohelper.setAsLastSibling(arg_10_0._go)
 
-	slot0.isDraging = true
+	arg_10_0.isDraging = true
 end
 
-function slot0.endDrag(slot0, slot1, slot2)
-	slot0.isDraging = false
+function var_0_0.endDrag(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0.isDraging = false
 
-	if not slot0:findTarget(slot2.position) then
-		slot6, slot7 = recthelper.getAnchor(slot0._teamView.frameTrList[slot0._index])
+	local var_11_0 = arg_11_2.position
+	local var_11_1 = arg_11_0:findTarget(var_11_0)
 
-		slot0:setToPos(slot0._go.transform, Vector2(slot6, slot7), true, slot0.tweenCallback, slot0)
-		slot0._teamView:UnInstallHero(slot0._index)
+	if not var_11_1 then
+		local var_11_2 = arg_11_0._teamView.frameTrList[arg_11_0._index]
+		local var_11_3, var_11_4 = recthelper.getAnchor(var_11_2)
+
+		arg_11_0:setToPos(arg_11_0._go.transform, Vector2(var_11_3, var_11_4), true, arg_11_0.tweenCallback, arg_11_0)
+		arg_11_0._teamView:UnInstallHero(arg_11_0._index)
 	else
-		slot6, slot7 = recthelper.getAnchor(slot0._teamView.frameTrList[slot4._index])
+		local var_11_5 = arg_11_0._teamView.frameTrList[var_11_1._index]
+		local var_11_6, var_11_7 = recthelper.getAnchor(var_11_5)
 
-		slot0:setToPos(slot0._go.transform, Vector2(slot6, slot7), true, slot0.tweenCallback, slot0)
+		arg_11_0:setToPos(arg_11_0._go.transform, Vector2(var_11_6, var_11_7), true, arg_11_0.tweenCallback, arg_11_0)
 
-		if slot4 ~= slot0 then
-			slot9, slot10 = recthelper.getAnchor(slot0._teamView.frameTrList[slot0._index])
+		if var_11_1 ~= arg_11_0 then
+			local var_11_8 = arg_11_0._teamView.frameTrList[arg_11_0._index]
+			local var_11_9, var_11_10 = recthelper.getAnchor(var_11_8)
 
-			slot0:setToPos(slot4._go.transform, Vector2(slot9, slot10), true, function ()
-				uv0._teamView:exchangeHeroItem(uv0._index, uv1._index)
-			end, slot0)
+			arg_11_0:setToPos(var_11_1._go.transform, Vector2(var_11_9, var_11_10), true, function()
+				arg_11_0._teamView:exchangeHeroItem(arg_11_0._index, var_11_1._index)
+			end, arg_11_0)
 		end
 	end
 end
 
-function slot0.checkDrag(slot0)
-	if slot0._heroId and slot0._heroId ~= 0 then
+function var_0_0.checkDrag(arg_13_0)
+	if arg_13_0._heroId and arg_13_0._heroId ~= 0 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.findTarget(slot0, slot1)
-	for slot5 = 1, slot0._teamView.unLockTeamCnt * 4 do
-		slot6 = slot0._teamView.frameTrList[slot5]
-		slot8, slot9 = recthelper.getAnchor(slot6)
+function var_0_0.findTarget(arg_14_0, arg_14_1)
+	for iter_14_0 = 1, arg_14_0._teamView.unLockTeamCnt * 4 do
+		local var_14_0 = arg_14_0._teamView.frameTrList[iter_14_0]
+		local var_14_1 = arg_14_0._teamView.heroItemList[iter_14_0]
+		local var_14_2, var_14_3 = recthelper.getAnchor(var_14_0)
+		local var_14_4 = var_14_0.parent
+		local var_14_5 = recthelper.screenPosToAnchorPos(arg_14_1, var_14_4)
 
-		if math.abs(recthelper.screenPosToAnchorPos(slot1, slot6.parent).x - slot8) * 2 < recthelper.getWidth(slot6) and math.abs(slot11.y - slot9) * 2 < recthelper.getHeight(slot6) then
-			return slot0._teamView.heroItemList[slot5] or nil
+		if math.abs(var_14_5.x - var_14_2) * 2 < recthelper.getWidth(var_14_0) and math.abs(var_14_5.y - var_14_3) * 2 < recthelper.getHeight(var_14_0) then
+			return var_14_1 or nil
 		end
 	end
 
 	return nil
 end
 
-function slot0.setToPos(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot3 then
+function var_0_0.setToPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	if arg_15_3 then
 		CommonDragHelper.instance:setGlobalEnabled(false)
 
-		slot0.tweenId = ZProj.TweenHelper.DOAnchorPos(slot1, slot2.x, slot2.y, 0.2, slot4, slot5)
+		arg_15_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_15_1, arg_15_2.x, arg_15_2.y, 0.2, arg_15_4, arg_15_5)
 	else
-		recthelper.setAnchor(slot1, slot2.x, slot2.y)
+		recthelper.setAnchor(arg_15_1, arg_15_2.x, arg_15_2.y)
 
-		if slot4 then
-			slot4(slot5)
+		if arg_15_4 then
+			arg_15_4(arg_15_5)
 		end
 	end
 end
 
-function slot0.tweenCallback(slot0)
-	slot0.tweenId = nil
+function var_0_0.tweenCallback(arg_16_0)
+	arg_16_0.tweenId = nil
 
 	CommonDragHelper.instance:setGlobalEnabled(true)
 end
 
-return slot0
+return var_0_0

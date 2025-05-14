@@ -1,50 +1,55 @@
-module("modules.logic.video.adjust.AvProUGUIPlayer_adjust", package.seeall)
+﻿module("modules.logic.video.adjust.AvProUGUIPlayer_adjust", package.seeall)
 
-slot0 = class("AvProUGUIPlayer_adjust")
+local var_0_0 = class("AvProUGUIPlayer_adjust")
 
-function slot0.Play(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._cb = slot4
-	slot0._cbObj = slot5
+function var_0_0.Play(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0._cb = arg_1_4
+	arg_1_0._cbObj = arg_1_5
 
-	TaskDispatcher.runDelay(slot0._finishedPlaying, slot0, 2)
+	TaskDispatcher.runDelay(arg_1_0._finishedPlaying, arg_1_0, 2)
 end
 
-function slot0._finishedPlaying(slot0)
-	if slot0._cb then
-		slot0._cb(slot0._cbObj, "", AvProEnum.PlayerStatus.FinishedPlaying, 0)
+function var_0_0._finishedPlaying(arg_2_0)
+	if arg_2_0._cb then
+		arg_2_0._cb(arg_2_0._cbObj, "", AvProEnum.PlayerStatus.FinishedPlaying, 0)
 	end
 end
 
-function slot0.AddDisplayUGUI(slot0)
+function var_0_0.AddDisplayUGUI(arg_3_0)
+	return
 end
 
-function slot0.SetEventListener(slot0)
+function var_0_0.SetEventListener(arg_4_0)
+	return
 end
 
-function slot0.LoadMedia(slot0)
+function var_0_0.LoadMedia(arg_5_0)
+	return
 end
 
-function slot0.Stop(slot0)
+function var_0_0.Stop(arg_6_0)
+	return
 end
 
-function slot0.Clear(slot0)
-	slot0._cb = nil
-	slot0._cbObj = nil
+function var_0_0.Clear(arg_7_0)
+	arg_7_0._cb = nil
+	arg_7_0._cbObj = nil
 
-	TaskDispatcher.cancelTask(slot0._finishedPlaying)
+	TaskDispatcher.cancelTask(arg_7_0._finishedPlaying)
 end
 
-function slot0.IsPlaying(slot0)
+function var_0_0.IsPlaying(arg_8_0)
 	return false
 end
 
-function slot0.CanPlay(slot0)
+function var_0_0.CanPlay(arg_9_0)
 	return false
 end
 
-function slot0.Rewind(slot0)
+function var_0_0.Rewind(arg_10_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

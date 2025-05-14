@@ -1,633 +1,681 @@
-module("modules.logic.room.controller.RoomController", package.seeall)
+﻿module("modules.logic.room.controller.RoomController", package.seeall)
 
-slot0 = class("RoomController", BaseController)
+local var_0_0 = class("RoomController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:_clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clear()
 
-	slot0._showChangeNotOpenToastDic = {
+	arg_1_0._showChangeNotOpenToastDic = {
 		[MaterialEnum.MaterialType.Building] = RoomEnum.Toast.RoomLockMaterialChangeTip,
 		[MaterialEnum.MaterialType.BlockPackage] = RoomEnum.Toast.RoomLockMaterialChangeTip,
 		[MaterialEnum.MaterialType.SpecialBlock] = RoomEnum.Toast.RoomLockMaterialChangeTip
 	}
 end
 
-function slot0.reInit(slot0)
-	slot0:_clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clear()
 end
 
-function slot0._clear(slot0)
-	slot0.rotateSpeed = 1
-	slot0.moveSpeed = 1
-	slot0.scaleSpeed = 1
-	slot0.touchMoveSpeed = 1
+function var_0_0._clear(arg_3_0)
+	arg_3_0.rotateSpeed = 1
+	arg_3_0.moveSpeed = 1
+	arg_3_0.scaleSpeed = 1
+	arg_3_0.touchMoveSpeed = 1
 
-	TaskDispatcher.cancelTask(slot0._delaySwitchScene, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._delaySwitchScene, arg_3_0)
 
-	slot0._isEditorMode = false
-	slot0._isReset = false
+	arg_3_0._isEditorMode = false
+	arg_3_0._isReset = false
 end
 
-function slot0.addConstEvents(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onOnCloseViewFinish, slot0)
-	slot0:addEventCb(slot0, RoomEvent.OnSwitchModeDone, slot0._onOnSwitchModeDone, slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_4_0._onOnCloseViewFinish, arg_4_0)
+	arg_4_0:addEventCb(arg_4_0, RoomEvent.OnSwitchModeDone, arg_4_0._onOnSwitchModeDone, arg_4_0)
 end
 
-function slot0._onOnCloseViewFinish(slot0, slot1, slot2)
-	if slot1 == ViewName.CommonPropView then
-		slot0:checkThemeCollerctFullReward()
+function var_0_0._onOnCloseViewFinish(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == ViewName.CommonPropView then
+		arg_5_0:checkThemeCollerctFullReward()
 	end
 end
 
-function slot0._onOnSwitchModeDone(slot0)
+function var_0_0._onOnSwitchModeDone(arg_6_0)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.CloseLoading)
 end
 
-function slot0.sendInitRoomObInfo(slot0)
-	RoomRpc.instance:sendGetRoomObInfoRequest(true, slot0._onInitObInfoReply, slot0)
+function var_0_0.sendInitRoomObInfo(arg_7_0)
+	RoomRpc.instance:sendGetRoomObInfoRequest(true, arg_7_0._onInitObInfoReply, arg_7_0)
 end
 
-function slot0._onInitObInfoReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 and slot3.needBlockData == true then
+function var_0_0._onInitObInfoReply(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if arg_8_2 == 0 and arg_8_3.needBlockData == true then
 		RoomLayoutController.instance:sendGetRoomPlanInfoRpc()
-		RoomModel.instance:setObInfo(slot3)
+		RoomModel.instance:setObInfo(arg_8_3)
 	end
 end
 
-function slot0.setEditorMode(slot0, slot1)
-	slot0._isEditorMode = slot1
+function var_0_0.setEditorMode(arg_9_0, arg_9_1)
+	arg_9_0._isEditorMode = arg_9_1
 end
 
-function slot0.isEditorMode(slot0)
-	return slot0._isEditorMode
+function var_0_0.isEditorMode(arg_10_0)
+	return arg_10_0._isEditorMode
 end
 
-function slot0.isRoomScene(slot0)
+function var_0_0.isRoomScene(arg_11_0)
 	return GameSceneMgr.instance:getCurSceneType() == SceneType.Room
 end
 
-function slot0.isEditMode(slot0)
+function var_0_0.isEditMode(arg_12_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.Edit
 end
 
-function slot0.isObMode(slot0)
+function var_0_0.isObMode(arg_13_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.Ob
 end
 
-function slot0.isVisitMode(slot0)
-	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.Visit or slot1 == RoomEnum.GameMode.VisitShare
+function var_0_0.isVisitMode(arg_14_0)
+	local var_14_0 = RoomModel.instance:getGameMode()
+
+	return var_14_0 == RoomEnum.GameMode.Visit or var_14_0 == RoomEnum.GameMode.VisitShare
 end
 
-function slot0.isVisitShareMode(slot0)
+function var_0_0.isVisitShareMode(arg_15_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.VisitShare
 end
 
-function slot0.isDebugMode(slot0)
+function var_0_0.isDebugMode(arg_16_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.DebugNormal or RoomModel.instance:getGameMode() == RoomEnum.GameMode.DebugInit or RoomModel.instance:getGameMode() == RoomEnum.GameMode.DebugPackage
 end
 
-function slot0.isDebugNormalMode(slot0)
+function var_0_0.isDebugNormalMode(arg_17_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.DebugNormal
 end
 
-function slot0.isDebugInitMode(slot0)
+function var_0_0.isDebugInitMode(arg_18_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.DebugInit
 end
 
-function slot0.isDebugPackageMode(slot0)
+function var_0_0.isDebugPackageMode(arg_19_0)
 	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.DebugPackage
 end
 
-function slot0.getDebugParam(slot0)
+function var_0_0.getDebugParam(arg_20_0)
 	return RoomModel.instance:getDebugParam()
 end
 
-function slot0.getOpenViews(slot0)
-	return slot0._openViews
+function var_0_0.getOpenViews(arg_21_0)
+	return arg_21_0._openViews
 end
 
-function slot0.enterRoom(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
+function var_0_0.enterRoom(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5, arg_22_6, arg_22_7)
 	RoomHelper.logStart("开始进入小屋")
-	slot0:_startEnterRoomBlock()
+	arg_22_0:_startEnterRoomBlock()
 
-	slot0._forceStart = slot6
-	slot0._isReset = slot7
-	slot0._openViews = {}
+	arg_22_0._forceStart = arg_22_6
+	arg_22_0._isReset = arg_22_7
+	arg_22_0._openViews = {}
 
-	tabletool.addValues(slot0._openViews, slot5)
+	tabletool.addValues(arg_22_0._openViews, arg_22_5)
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and uv0.instance:isObMode() then
-		-- Nothing
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and var_0_0.instance:isObMode() then
+		-- block empty
 	end
 
-	RoomModel.instance:setGameMode(slot1)
+	RoomModel.instance:setGameMode(arg_22_1)
 
-	if not slot0:isDebugMode() and (RoomLayoutModel.instance:isNeedRpcGet() or slot0:isObMode()) then
+	if not arg_22_0:isDebugMode() and (RoomLayoutModel.instance:isNeedRpcGet() or arg_22_0:isObMode()) then
 		RoomLayoutController.instance:sendGetRoomPlanInfoRpc()
 	end
 
-	if slot0:_getEnterRoonFuncByGameMode(slot1) then
-		slot8(slot0, slot2, slot3, slot4)
+	local var_22_0 = arg_22_0:_getEnterRoonFuncByGameMode(arg_22_1)
+
+	if var_22_0 then
+		var_22_0(arg_22_0, arg_22_2, arg_22_3, arg_22_4)
 	else
-		logError(string.format("can not find enter room function by gameModel:%s", slot1))
+		logError(string.format("can not find enter room function by gameModel:%s", arg_22_1))
 	end
 end
 
-slot0.ENTER_ROOM_BLOCK_KEY = "RoomController_ENTER_ROOM_BLOCK_KEY"
+var_0_0.ENTER_ROOM_BLOCK_KEY = "RoomController_ENTER_ROOM_BLOCK_KEY"
 
-function slot0._startEnterRoomBlock(slot0)
-	UIBlockMgr.instance:startBlock(uv0.ENTER_ROOM_BLOCK_KEY)
-	TaskDispatcher.cancelTask(slot0._endEnterRoomBlock, slot0)
-	TaskDispatcher.runDelay(slot0._endEnterRoomBlock, slot0, 10)
+function var_0_0._startEnterRoomBlock(arg_23_0)
+	UIBlockMgr.instance:startBlock(var_0_0.ENTER_ROOM_BLOCK_KEY)
+	TaskDispatcher.cancelTask(arg_23_0._endEnterRoomBlock, arg_23_0)
+	TaskDispatcher.runDelay(arg_23_0._endEnterRoomBlock, arg_23_0, 10)
 end
 
-function slot0._endEnterRoomBlock(slot0)
-	TaskDispatcher.cancelTask(slot0._endEnterRoomBlock, slot0)
-	UIBlockMgr.instance:endBlock(uv0.ENTER_ROOM_BLOCK_KEY)
+function var_0_0._endEnterRoomBlock(arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._endEnterRoomBlock, arg_24_0)
+	UIBlockMgr.instance:endBlock(var_0_0.ENTER_ROOM_BLOCK_KEY)
 end
 
-function slot0._getEnterRoonFuncByGameMode(slot0, slot1)
-	if not slot0._enterRoomFuncMap then
-		slot0._enterRoomFuncMap = {
-			[RoomEnum.GameMode.Ob] = slot0._enterRoomObOrEdit,
-			[RoomEnum.GameMode.Edit] = slot0._enterRoomObOrEdit,
-			[RoomEnum.GameMode.Visit] = slot0._enterRoomVisit,
-			[RoomEnum.GameMode.VisitShare] = slot0._enterRoomVisitShare,
-			[RoomEnum.GameMode.DebugNormal] = slot0._enterRoomDebugNormal,
-			[RoomEnum.GameMode.DebugInit] = slot0._enterRoomDebugInit,
-			[RoomEnum.GameMode.DebugPackage] = slot0._enterRoomDebugPackage
+function var_0_0._getEnterRoonFuncByGameMode(arg_25_0, arg_25_1)
+	if not arg_25_0._enterRoomFuncMap then
+		arg_25_0._enterRoomFuncMap = {
+			[RoomEnum.GameMode.Ob] = arg_25_0._enterRoomObOrEdit,
+			[RoomEnum.GameMode.Edit] = arg_25_0._enterRoomObOrEdit,
+			[RoomEnum.GameMode.Visit] = arg_25_0._enterRoomVisit,
+			[RoomEnum.GameMode.VisitShare] = arg_25_0._enterRoomVisitShare,
+			[RoomEnum.GameMode.DebugNormal] = arg_25_0._enterRoomDebugNormal,
+			[RoomEnum.GameMode.DebugInit] = arg_25_0._enterRoomDebugInit,
+			[RoomEnum.GameMode.DebugPackage] = arg_25_0._enterRoomDebugPackage
 		}
 	end
 
-	return slot0._enterRoomFuncMap[slot1]
+	return arg_25_0._enterRoomFuncMap[arg_25_1]
 end
 
-function slot0._enterRoomObOrEdit(slot0, slot1, slot2, slot3)
-	if GameSceneMgr.instance:getCurScene() and slot4.fsm then
-		if RoomMapBlockModel.instance:getBackBlockModel() and slot5:getCount() > 0 then
-			slot4.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+function var_0_0._enterRoomObOrEdit(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_26_0 and var_26_0.fsm then
+		local var_26_1 = RoomMapBlockModel.instance:getBackBlockModel()
+
+		if var_26_1 and var_26_1:getCount() > 0 then
+			var_26_0.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
 		end
 
 		if RoomMapBlockModel.instance:getTempBlockMO() then
-			slot4.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
+			var_26_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
 		end
 
 		if RoomMapBuildingModel.instance:getTempBuildingMO() then
-			slot4.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBuilding)
+			var_26_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBuilding)
 		end
 	end
 
-	RoomModel.instance:setEnterParam(slot3)
+	RoomModel.instance:setEnterParam(arg_26_3)
 
-	slot0._editInfoReady = false
-	slot0._obInfoReady = false
+	arg_26_0._editInfoReady = false
+	arg_26_0._obInfoReady = false
 
-	if slot1 or RoomModel.instance:getGameMode() == RoomEnum.GameMode.Ob then
-		slot0._editInfoReady = true
+	local var_26_2 = RoomModel.instance:getGameMode()
 
-		if slot1 then
-			RoomModel.instance:setEditInfo(slot1)
+	if arg_26_1 or var_26_2 == RoomEnum.GameMode.Ob then
+		arg_26_0._editInfoReady = true
+
+		if arg_26_1 then
+			RoomModel.instance:setEditInfo(arg_26_1)
 		end
 	end
 
-	if slot2 then
-		slot0._obInfoReady = true
+	if arg_26_2 then
+		arg_26_0._obInfoReady = true
 
-		RoomModel.instance:setObInfo(slot2)
+		RoomModel.instance:setObInfo(arg_26_2)
 		RoomLayoutController.instance:updateObInfo()
 	end
 
-	if not slot0._editInfoReady then
-		RoomRpc.instance:sendGetRoomInfoRequest(slot0.getRoomInfoReply, slot0)
+	if not arg_26_0._editInfoReady then
+		RoomRpc.instance:sendGetRoomInfoRequest(arg_26_0.getRoomInfoReply, arg_26_0)
 	end
 
-	if not slot0._obInfoReady then
-		RoomRpc.instance:sendGetRoomObInfoRequest(true, slot0.getRoomObInfoReply, slot0)
+	if not arg_26_0._obInfoReady then
+		RoomRpc.instance:sendGetRoomObInfoRequest(true, arg_26_0.getRoomObInfoReply, arg_26_0)
 	end
 
 	RoomGiftController.instance:getAct159Info()
 	ManufactureController.instance:getManufactureServerInfo()
-	slot0:_checkInfo()
+	arg_26_0:_checkInfo()
 end
 
-function slot0._enterRoomVisit(slot0, slot1, slot2, slot3)
-	RoomModel.instance:setVisitParam(slot3)
+function var_0_0._enterRoomVisit(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	RoomModel.instance:setVisitParam(arg_27_3)
 
-	slot0._obInfoReady = false
-	slot0._editInfoReady = true
+	arg_27_0._obInfoReady = false
+	arg_27_0._editInfoReady = true
 
-	RoomRpc.instance:sendGetOtherRoomObInfoRequest(slot3.userId, slot0.getOtherRoomObInfoReply, slot0)
+	local var_27_0 = arg_27_3.userId
+
+	RoomRpc.instance:sendGetOtherRoomObInfoRequest(var_27_0, arg_27_0.getOtherRoomObInfoReply, arg_27_0)
 end
 
-function slot0._enterRoomVisitShare(slot0, slot1, slot2, slot3)
-	slot0._obInfoReady = false
-	slot0._editInfoReady = true
-	slot0._isVisitCompareInfo = RoomLayoutHelper.checkVisitParamCoppare(slot3)
+function var_0_0._enterRoomVisitShare(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	arg_28_0._obInfoReady = false
+	arg_28_0._editInfoReady = true
+	arg_28_0._isVisitCompareInfo = RoomLayoutHelper.checkVisitParamCoppare(arg_28_3)
 
-	if slot2 and slot2.shareCode == slot3.shareCode and slot2.shareUserId == slot3.userId then
-		slot0:getGetRoomShareReply(nil, 0, slot2)
+	if arg_28_2 and arg_28_2.shareCode == arg_28_3.shareCode and arg_28_2.shareUserId == arg_28_3.userId then
+		arg_28_0:getGetRoomShareReply(nil, 0, arg_28_2)
 	else
-		RoomRpc.instance:sendGetRoomShareRequest(slot3.shareCode, slot0.getGetRoomShareReply, slot0)
+		local var_28_0 = arg_28_3.shareCode
+
+		RoomRpc.instance:sendGetRoomShareRequest(var_28_0, arg_28_0.getGetRoomShareReply, arg_28_0)
 	end
 end
 
-function slot0._enterRoomDebugNormal(slot0, slot1, slot2, slot3)
-	RoomModel.instance:setEditInfo(RoomDebugController.instance:getDebugMapInfo())
+function var_0_0._enterRoomDebugNormal(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	local var_29_0 = RoomDebugController.instance:getDebugMapInfo()
+
+	RoomModel.instance:setEditInfo(var_29_0)
 	RoomModel.instance:setObInfo(nil)
-	slot0:_enterScene()
+	arg_29_0:_enterScene()
 end
 
-function slot0._enterRoomDebugInit(slot0, slot1, slot2, slot3)
-	RoomModel.instance:setDebugParam(slot3)
-	RoomDebugController.instance:getDebugInitMapInfo(slot3, slot0._onEnterRoomDebugParam, slot0)
+function var_0_0._enterRoomDebugInit(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	RoomModel.instance:setDebugParam(arg_30_3)
+	RoomDebugController.instance:getDebugInitMapInfo(arg_30_3, arg_30_0._onEnterRoomDebugParam, arg_30_0)
 end
 
-function slot0._enterRoomDebugPackage(slot0, slot1, slot2, slot3)
-	RoomModel.instance:setDebugParam(slot3)
-	RoomDebugController.instance:getDebugPackageMapInfo(slot3, slot0._onEnterRoomDebugParam, slot0)
+function var_0_0._enterRoomDebugPackage(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	RoomModel.instance:setDebugParam(arg_31_3)
+	RoomDebugController.instance:getDebugPackageMapInfo(arg_31_3, arg_31_0._onEnterRoomDebugParam, arg_31_0)
 end
 
-function slot0._onEnterRoomDebugParam(slot0, slot1)
-	RoomModel.instance:setEditInfo(slot1)
+function var_0_0._onEnterRoomDebugParam(arg_32_0, arg_32_1)
+	RoomModel.instance:setEditInfo(arg_32_1)
 	RoomModel.instance:setObInfo(nil)
-	slot0:_enterScene()
+	arg_32_0:_enterScene()
 end
 
-function slot0.leaveRoom(slot0)
+function var_0_0.leaveRoom(arg_33_0)
 	RoomMapController.instance:statRoomEnd()
 	MainController.instance:enterMainScene()
 end
 
-function slot0.getRoomInfoReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0.getRoomInfoReply(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
+	if arg_34_2 == 0 then
 		RoomHelper.logElapse("获取小屋协议完成")
-		RoomModel.instance:setEditInfo(slot3)
+		RoomModel.instance:setEditInfo(arg_34_3)
 
-		slot0._editInfoReady = true
+		arg_34_0._editInfoReady = true
 
-		slot0:_checkInfo()
+		arg_34_0:_checkInfo()
 	else
-		slot0:_endEnterRoomBlock()
+		arg_34_0:_endEnterRoomBlock()
 	end
 end
 
-function slot0.getRoomObInfoReply(slot0, slot1, slot2, slot3)
-	slot0:_roomXObInfoReply(slot1, slot2, slot3, RoomEnum.GameMode.Ob)
+function var_0_0.getRoomObInfoReply(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	arg_35_0:_roomXObInfoReply(arg_35_1, arg_35_2, arg_35_3, RoomEnum.GameMode.Ob)
 end
 
-function slot0.getOtherRoomObInfoReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 and not string.nilorempty(slot3.shareCode) then
-		RoomModel.instance:setInfoByMode(slot3, RoomEnum.GameMode.Visit)
-		RoomRpc.instance:sendGetRoomShareRequest(slot3.shareCode, slot0._onGetOtherToShareCodeReply, slot0)
+function var_0_0.getOtherRoomObInfoReply(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	if arg_36_2 == 0 and not string.nilorempty(arg_36_3.shareCode) then
+		RoomModel.instance:setInfoByMode(arg_36_3, RoomEnum.GameMode.Visit)
+		RoomRpc.instance:sendGetRoomShareRequest(arg_36_3.shareCode, arg_36_0._onGetOtherToShareCodeReply, arg_36_0)
 	else
-		slot0:_roomXObInfoReply(slot1, slot2, slot3, RoomEnum.GameMode.Visit)
+		arg_36_0:_roomXObInfoReply(arg_36_1, arg_36_2, arg_36_3, RoomEnum.GameMode.Visit)
 	end
 end
 
-function slot0._onGetOtherToShareCodeReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._onGetOtherToShareCodeReply(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	if arg_37_2 == 0 then
 		RoomModel.instance:setGameMode(RoomEnum.GameMode.VisitShare)
-		slot0:getGetRoomShareReply(slot1, slot2, slot3)
+		arg_37_0:getGetRoomShareReply(arg_37_1, arg_37_2, arg_37_3)
 	else
-		slot0:_roomXObInfoReply(slot1, 0, RoomModel.instance:getInfoByMode(RoomEnum.GameMode.Visit), RoomEnum.GameMode.Visit)
+		arg_37_0:_roomXObInfoReply(arg_37_1, 0, RoomModel.instance:getInfoByMode(RoomEnum.GameMode.Visit), RoomEnum.GameMode.Visit)
 	end
 end
 
-function slot0.getGetRoomShareReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		if slot0._isVisitCompareInfo then
-			-- Nothing
+function var_0_0.getGetRoomShareReply(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	if arg_38_2 == 0 then
+		local var_38_0 = {
+			userId = arg_38_3.shareUserId,
+			shareCode = arg_38_3.shareCode,
+			nickName = arg_38_3.nickName,
+			portrait = arg_38_3.portrait,
+			useCount = arg_38_3.useCount,
+			roomPlanName = arg_38_3.roomPlanName
+		}
+
+		if arg_38_0._isVisitCompareInfo then
+			var_38_0.isCompareInfo = true
 		end
 
-		RoomModel.instance:setVisitParam({
-			userId = slot3.shareUserId,
-			shareCode = slot3.shareCode,
-			nickName = slot3.nickName,
-			portrait = slot3.portrait,
-			useCount = slot3.useCount,
-			roomPlanName = slot3.roomPlanName,
-			isCompareInfo = true
-		})
+		RoomModel.instance:setVisitParam(var_38_0)
 	end
 
-	slot0:_roomXObInfoReply(slot1, slot2, slot3, RoomEnum.GameMode.VisitShare)
+	arg_38_0:_roomXObInfoReply(arg_38_1, arg_38_2, arg_38_3, RoomEnum.GameMode.VisitShare)
 end
 
-function slot0._roomXObInfoReply(slot0, slot1, slot2, slot3, slot4)
-	if slot2 == 0 then
+function var_0_0._roomXObInfoReply(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4)
+	if arg_39_2 == 0 then
 		RoomHelper.logElapse("获取小屋 ob协议完成")
-		RoomModel.instance:setInfoByMode(slot3, slot4)
+		RoomModel.instance:setInfoByMode(arg_39_3, arg_39_4)
 
-		slot0._obInfoReady = true
+		arg_39_0._obInfoReady = true
 
-		slot0:_checkInfo()
+		arg_39_0:_checkInfo()
 	else
-		slot0:_endEnterRoomBlock()
+		arg_39_0:_endEnterRoomBlock()
 	end
 end
 
-function slot0.blockPackageGainPush(slot0, slot1)
-	RoomModel.instance:blockPackageGainPush(slot1)
+function var_0_0.blockPackageGainPush(arg_40_0, arg_40_1)
+	RoomModel.instance:blockPackageGainPush(arg_40_1)
 
-	if slot0:isEditMode() then
-		RoomInventoryBlockModel.instance:addBlockPackageList(slot1.blockPackages)
+	if arg_40_0:isEditMode() then
+		RoomInventoryBlockModel.instance:addBlockPackageList(arg_40_1.blockPackages)
 	end
 end
 
-function slot0.gainSpecialBlockPush(slot0, slot1)
-	RoomModel.instance:addSpecialBlockIds(slot1.specialBlocks)
+function var_0_0.gainSpecialBlockPush(arg_41_0, arg_41_1)
+	RoomModel.instance:addSpecialBlockIds(arg_41_1.specialBlocks)
 
-	if slot0:isEditMode() then
-		RoomInventoryBlockModel.instance:addSpecialBlockIds(slot1.specialBlocks)
+	if arg_41_0:isEditMode() then
+		RoomInventoryBlockModel.instance:addSpecialBlockIds(arg_41_1.specialBlocks)
 	end
 end
 
-function slot0.getBlockPackageInfoReply(slot0, slot1)
-	RoomModel.instance:setBlockPackageIds(slot1.blockPackageIds)
-	RoomModel.instance:setSpecialBlockInfoList(slot1.specialBlocks)
+function var_0_0.getBlockPackageInfoReply(arg_42_0, arg_42_1)
+	RoomModel.instance:setBlockPackageIds(arg_42_1.blockPackageIds)
+	RoomModel.instance:setSpecialBlockInfoList(arg_42_1.specialBlocks)
 end
 
-function slot0.getBuildingInfoReply(slot0, slot1)
-	RoomModel.instance:setBuildingInfos(slot1.buildingInfos)
+function var_0_0.getBuildingInfoReply(arg_43_0, arg_43_1)
+	RoomModel.instance:setBuildingInfos(arg_43_1.buildingInfos)
 end
 
-function slot0.getRoomThemeCollectionBonusReply(slot0, slot1)
-	RoomModel.instance:addGetThemeRewardId(slot1.id)
-	slot0:dispatchEvent(RoomEvent.UpdateRoomThemeReward, slot1.id)
+function var_0_0.getRoomThemeCollectionBonusReply(arg_44_0, arg_44_1)
+	RoomModel.instance:addGetThemeRewardId(arg_44_1.id)
+	arg_44_0:dispatchEvent(RoomEvent.UpdateRoomThemeReward, arg_44_1.id)
 end
 
-function slot0.checkThemeCollerctFullReward(slot0)
-	if RoomModel.instance:findHasGetThemeRewardThemeId() and not ViewMgr.instance:isOpen(ViewName.RoomThemeTipView) then
+function var_0_0.checkThemeCollerctFullReward(arg_45_0)
+	local var_45_0 = RoomModel.instance:findHasGetThemeRewardThemeId()
+
+	if var_45_0 and not ViewMgr.instance:isOpen(ViewName.RoomThemeTipView) then
 		ViewMgr.instance:openView(ViewName.RoomThemeTipView, {
 			type = MaterialEnum.MaterialType.RoomTheme,
-			id = slot1
+			id = var_45_0
 		})
 	end
 end
 
-function slot0._checkInfo(slot0)
-	if slot0._editInfoReady and slot0._obInfoReady then
+function var_0_0._checkInfo(arg_46_0)
+	if arg_46_0._editInfoReady and arg_46_0._obInfoReady then
 		RoomHelper.logElapse("开始加载小屋场景")
-		slot0:_enterScene()
+		arg_46_0:_enterScene()
 	end
 end
 
-function slot0._enterScene(slot0)
+function var_0_0._enterScene(arg_47_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		slot0:_switchScene()
-		slot0:_endEnterRoomBlock()
+		arg_47_0:_switchScene()
+		arg_47_0:_endEnterRoomBlock()
 	else
-		GameSceneMgr.instance:startSceneDefaultLevel(SceneType.Room, RoomEnum.RoomSceneId, slot0._forceStart)
-		TaskDispatcher.runDelay(slot0._nextFrameStartPreload, slot0, 0.01)
+		GameSceneMgr.instance:startSceneDefaultLevel(SceneType.Room, RoomEnum.RoomSceneId, arg_47_0._forceStart)
+		TaskDispatcher.runDelay(arg_47_0._nextFrameStartPreload, arg_47_0, 0.01)
 	end
 end
 
-function slot0._nextFrameStartPreload(slot0)
+function var_0_0._nextFrameStartPreload(arg_48_0)
 	RoomPreloadMgr.instance:startPreload()
-	slot0:_endEnterRoomBlock()
+	arg_48_0:_endEnterRoomBlock()
 end
 
-function slot0._switchScene(slot0)
+function var_0_0._switchScene(arg_49_0)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingRoomView)
 	GameSceneMgr.instance:showLoading(SceneType.Room)
-	TaskDispatcher.runDelay(slot0._delaySwitchScene, slot0, 2)
-	slot0:dispatchEvent(RoomEvent.SwitchScene)
+	TaskDispatcher.runDelay(arg_49_0._delaySwitchScene, arg_49_0, 2)
+	arg_49_0:dispatchEvent(RoomEvent.SwitchScene)
 
-	if uv0.instance:isObMode() then
-		GameSceneMgr.instance:getCurScene().camera:playCameraAnim("in_show")
-	elseif uv0.instance:isEditMode() then
-		slot1.camera:playCameraAnim("in_edit")
+	local var_49_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_0_0.instance:isObMode() then
+		var_49_0.camera:playCameraAnim("in_show")
+	elseif var_0_0.instance:isEditMode() then
+		var_49_0.camera:playCameraAnim("in_edit")
 	end
 end
 
-function slot0._delaySwitchScene(slot0)
+function var_0_0._delaySwitchScene(arg_50_0)
 	GameSceneMgr.instance:getScene(SceneType.Room).director:switchMode()
 end
 
-function slot0.MaterialChangeByRoomProductLine(slot0, slot1)
-	slot4 = RoomEnum.Toast.MaterialChangeByRoomProductLine_Base
+function var_0_0.MaterialChangeByRoomProductLine(arg_51_0, arg_51_1)
+	local var_51_0 = RoomMapModel.instance:getAllBuildDegree()
+	local var_51_1 = RoomConfig.instance:getBuildBonusByBuildDegree(var_51_0) / 10
+	local var_51_2 = RoomEnum.Toast.MaterialChangeByRoomProductLine_Base
 
-	if RoomConfig.instance:getBuildBonusByBuildDegree(RoomMapModel.instance:getAllBuildDegree()) / 10 > 0 then
-		slot4 = RoomEnum.Toast.MaterialChangeByRoomProductLine
+	if var_51_1 > 0 then
+		var_51_2 = RoomEnum.Toast.MaterialChangeByRoomProductLine
 	else
-		slot3 = nil
+		var_51_1 = nil
 	end
 
-	for slot8, slot9 in ipairs(slot1) do
+	for iter_51_0, iter_51_1 in ipairs(arg_51_1) do
+		local var_51_3 = ResUrl.getPropItemIcon(iter_51_1.materilId)
+		local var_51_4 = ItemModel.instance:getItemConfig(iter_51_1.materilType, iter_51_1.materilId)
+
 		if LangSettings.instance:isEn() then
-			ToastController.instance:showToastWithIcon(slot4, ResUrl.getPropItemIcon(slot9.materilId), string.format("%s +%d", ItemModel.instance:getItemConfig(slot9.materilType, slot9.materilId).name, slot9.quantity), slot3)
+			ToastController.instance:showToastWithIcon(var_51_2, var_51_3, string.format("%s +%d", var_51_4.name, iter_51_1.quantity), var_51_1)
 		else
-			ToastController.instance:showToastWithIcon(slot4, slot10, string.format("%s+%d", slot11.name, slot9.quantity), slot3)
+			ToastController.instance:showToastWithIcon(var_51_2, var_51_3, string.format("%s+%d", var_51_4.name, iter_51_1.quantity), var_51_1)
 		end
 	end
 end
 
-function slot0.exitRoom(slot0, slot1)
-	if slot0:isEditorMode() then
+function var_0_0.exitRoom(arg_52_0, arg_52_1)
+	if arg_52_0:isEditorMode() then
 		GameSceneMgr.instance:closeScene()
 		ViewMgr.instance:openView(ViewName.RoomDebugEntranceView)
-	elseif slot0:isEditMode() then
-		slot2 = {
-			isFromEditMode = true,
-			isConfirm = true
+	elseif arg_52_0:isEditMode() then
+		local var_52_0 = {
+			isFromEditMode = true
 		}
 
 		if RoomMapController.instance:isHasConfirmOp() then
-			-- Nothing
+			var_52_0.isConfirm = true
 		end
 
 		if RoomMapController.instance:isNeedConfirmRoom() then
-			slot2.isConfirm = true
-			slot2.isHomeClick = slot1
+			var_52_0.isConfirm = true
+			var_52_0.isHomeClick = arg_52_1
 
-			RoomMapController.instance:confirmRoom(slot0._confirmRoomCallback, slot0, slot2)
+			RoomMapController.instance:confirmRoom(arg_52_0._confirmRoomCallback, arg_52_0, var_52_0)
 		else
 			RoomShowBuildingListModel.instance:clearFilterData()
 			RoomThemeFilterListModel.instance:clearFilterData()
 
-			if slot1 then
-				slot0:leaveRoom()
+			if arg_52_1 then
+				arg_52_0:leaveRoom()
 			else
-				slot0:enterRoom(RoomEnum.GameMode.Ob, nil, , slot2)
+				arg_52_0:enterRoom(RoomEnum.GameMode.Ob, nil, nil, var_52_0)
 			end
 		end
-	elseif slot1 then
-		slot0:leaveRoom()
-	elseif slot0:isVisitShareMode() then
-		slot0:enterRoom(RoomEnum.GameMode.Ob, nil, , , , , true)
+	elseif arg_52_1 then
+		arg_52_0:leaveRoom()
+	elseif arg_52_0:isVisitShareMode() then
+		arg_52_0:enterRoom(RoomEnum.GameMode.Ob, nil, nil, nil, nil, nil, true)
 	else
-		slot0:leaveRoom()
+		arg_52_0:leaveRoom()
 
-		if slot0:isVisitMode() then
+		if arg_52_0:isVisitMode() then
 			JumpController.instance:jump(JumpEnum.JumpView.SocialView)
 		end
 	end
 end
 
-function slot0._confirmRoomCallback(slot0, slot1)
+function var_0_0._confirmRoomCallback(arg_53_0, arg_53_1)
 	RoomShowBuildingListModel.instance:clearFilterData()
 
-	if slot1.isHomeClick then
-		slot0:leaveRoom()
+	if arg_53_1.isHomeClick then
+		arg_53_0:leaveRoom()
 	else
-		slot0:enterRoom(RoomEnum.GameMode.Ob, nil, , slot1)
+		arg_53_0:enterRoom(RoomEnum.GameMode.Ob, nil, nil, arg_53_1)
 	end
 end
 
-function slot0.isReset(slot0)
-	return slot0._isReset
+function var_0_0.isReset(arg_54_0)
+	return arg_54_0._isReset
 end
 
-function slot0.openStoreGoodsTipView(slot0, slot1)
+function var_0_0.openStoreGoodsTipView(arg_55_0, arg_55_1)
 	ViewMgr.instance:openView(ViewName.RoomStoreGoodsTipView, {
-		storeGoodsMO = slot1
+		storeGoodsMO = arg_55_1
 	})
 end
 
-function slot0.openThemeFilterView(slot0, slot1, slot2)
+function var_0_0.openThemeFilterView(arg_56_0, arg_56_1, arg_56_2)
 	ViewMgr.instance:openView(ViewName.RoomThemeFilterView, {
-		isBottom = slot1,
-		posX = slot2
+		isBottom = arg_56_1,
+		posX = arg_56_2
 	})
 end
 
-function slot0.popUpRoomBlockPackageView(slot0, slot1)
-	if not slot1 then
+function var_0_0.popUpRoomBlockPackageView(arg_57_0, arg_57_1)
+	if not arg_57_1 then
 		return
 	end
 
-	slot0:_showPopupViewChange(slot1)
-	slot0:_showTipsMaterialChange(slot1)
+	arg_57_0:_showPopupViewChange(arg_57_1)
+	arg_57_0:_showTipsMaterialChange(arg_57_1)
 end
 
-function slot0._showPopupViewChange(slot0, slot1)
-	slot4 = slot1
-	slot5 = RoomConfig.instance
+function var_0_0._showPopupViewChange(arg_58_0, arg_58_1)
+	local var_58_0 = RoomStoreOrderModel.instance:getMOByList(arg_58_1)
+	local var_58_1 = {}
+	local var_58_2 = arg_58_1
+	local var_58_3 = RoomConfig.instance
 
-	if RoomStoreOrderModel.instance:getMOByList(slot1) then
-		RoomStoreOrderModel.instance:remove(slot2)
+	if var_58_0 then
+		RoomStoreOrderModel.instance:remove(var_58_0)
 
-		if slot2.themeId then
-			slot9 = slot2.themeId
-
-			table.insert({}, {
+		if var_58_0.themeId then
+			table.insert(var_58_1, {
 				itemType = MaterialEnum.MaterialType.RoomTheme,
-				itemId = slot9
+				itemId = var_58_0.themeId
 			})
 
-			for slot9, slot10 in ipairs(slot1) do
-				if slot2.themeId ~= slot5:getThemeIdByItem(slot10.materilId, slot10.materilType) then
-					table.insert({}, slot10)
+			var_58_2 = {}
+
+			for iter_58_0, iter_58_1 in ipairs(arg_58_1) do
+				local var_58_4 = var_58_3:getThemeIdByItem(iter_58_1.materilId, iter_58_1.materilType)
+
+				if var_58_0.themeId ~= var_58_4 then
+					table.insert(var_58_2, iter_58_1)
 				end
 			end
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot4) do
-		if slot10.materilType == MaterialEnum.MaterialType.BlockPackage and slot5:getBlockPackageConfig(slot10.materilId) and not string.nilorempty(slot11.rewardIcon) and slot0:_containRare(CommonConfig.instance:getConstStr(ConstEnum.RoomBlockPackageGetRare), slot11.rare) then
-			table.insert(slot3, {
-				itemType = MaterialEnum.MaterialType.BlockPackage,
-				itemId = slot10.materilId
-			})
+	for iter_58_2, iter_58_3 in ipairs(var_58_2) do
+		if iter_58_3.materilType == MaterialEnum.MaterialType.BlockPackage then
+			local var_58_5 = var_58_3:getBlockPackageConfig(iter_58_3.materilId)
+
+			if var_58_5 and not string.nilorempty(var_58_5.rewardIcon) and arg_58_0:_containRare(CommonConfig.instance:getConstStr(ConstEnum.RoomBlockPackageGetRare), var_58_5.rare) then
+				table.insert(var_58_1, {
+					itemType = MaterialEnum.MaterialType.BlockPackage,
+					itemId = iter_58_3.materilId
+				})
+			end
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot4) do
-		if slot10.materilType == MaterialEnum.MaterialType.Building and slot5:getBuildingConfig(slot10.materilId) and not string.nilorempty(slot11.rewardIcon) and slot0:_containRare(CommonConfig.instance:getConstStr(ConstEnum.RoomBuildingGetRare), slot11.rare) then
-			table.insert(slot3, {
-				itemType = MaterialEnum.MaterialType.Building,
-				itemId = slot10.materilId,
-				roomBuildingLevel = slot10.roomBuildingLevel
-			})
+	for iter_58_4, iter_58_5 in ipairs(var_58_2) do
+		if iter_58_5.materilType == MaterialEnum.MaterialType.Building then
+			local var_58_6 = var_58_3:getBuildingConfig(iter_58_5.materilId)
+
+			if var_58_6 and not string.nilorempty(var_58_6.rewardIcon) and arg_58_0:_containRare(CommonConfig.instance:getConstStr(ConstEnum.RoomBuildingGetRare), var_58_6.rare) then
+				table.insert(var_58_1, {
+					itemType = MaterialEnum.MaterialType.Building,
+					itemId = iter_58_5.materilId,
+					roomBuildingLevel = iter_58_5.roomBuildingLevel
+				})
+			end
 		end
 	end
 
-	if #slot3 > 0 then
+	if #var_58_1 > 0 then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.RoomBlockPackageGetView, ViewName.RoomBlockPackageGetView, {
-			itemList = slot3
+			itemList = var_58_1
 		})
 	end
 end
 
-function slot0._showTipsMaterialChange(slot0, slot1)
-	for slot6 = 1, #slot1 do
-		slot7 = slot1[slot6]
+function var_0_0._showTipsMaterialChange(arg_59_0, arg_59_1)
+	local var_59_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room)
 
-		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room) then
-			if slot7.materilType == MaterialEnum.MaterialType.SpecialBlock and RoomConfig.instance:getBlock(slot7.materilId) then
-				slot10 = RoomConfig.instance:getBlockPackageConfig(slot8.packageId)
+	for iter_59_0 = 1, #arg_59_1 do
+		local var_59_1 = arg_59_1[iter_59_0]
 
-				ToastController.instance:showToast(RoomEnum.Toast.SpecialBlockGain, RoomConfig.instance:getSpecialBlockConfig(slot7.materilId) and slot9.name or slot7.materilId, slot10 and slot10.name or slot8.packageId)
+		if var_59_0 then
+			if var_59_1.materilType == MaterialEnum.MaterialType.SpecialBlock then
+				local var_59_2 = RoomConfig.instance:getBlock(var_59_1.materilId)
+
+				if var_59_2 then
+					local var_59_3 = RoomConfig.instance:getSpecialBlockConfig(var_59_1.materilId)
+					local var_59_4 = RoomConfig.instance:getBlockPackageConfig(var_59_2.packageId)
+
+					ToastController.instance:showToast(RoomEnum.Toast.SpecialBlockGain, var_59_3 and var_59_3.name or var_59_1.materilId, var_59_4 and var_59_4.name or var_59_2.packageId)
+				end
 			end
-		elseif slot0._showChangeNotOpenToastDic and slot0._showChangeNotOpenToastDic[slot7.materilType] then
-			ToastController.instance:showToast(slot0._showChangeNotOpenToastDic[slot7.materilType], ItemModel.instance:getItemConfig(slot7.materilType, slot7.materilId) and slot8.name or slot7.materilId)
+		elseif arg_59_0._showChangeNotOpenToastDic and arg_59_0._showChangeNotOpenToastDic[var_59_1.materilType] then
+			local var_59_5 = ItemModel.instance:getItemConfig(var_59_1.materilType, var_59_1.materilId)
+
+			ToastController.instance:showToast(arg_59_0._showChangeNotOpenToastDic[var_59_1.materilType], var_59_5 and var_59_5.name or var_59_1.materilId)
 		end
 	end
 end
 
-function slot0.showInteractionRewardToast(slot0, slot1)
-	if not slot1 then
+function var_0_0.showInteractionRewardToast(arg_60_0, arg_60_1)
+	if not arg_60_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7, slot8 = ItemModel.instance:getItemConfigAndIcon(slot6.materilType, slot6.materilId)
+	for iter_60_0, iter_60_1 in ipairs(arg_60_1) do
+		local var_60_0, var_60_1 = ItemModel.instance:getItemConfigAndIcon(iter_60_1.materilType, iter_60_1.materilId)
 
-		if slot7 then
-			GameFacade.showToastWithIcon(ToastEnum.RoomRewardToast, slot8, slot7.name, slot6.quantity)
+		if var_60_0 then
+			GameFacade.showToastWithIcon(ToastEnum.RoomRewardToast, var_60_1, var_60_0.name, iter_60_1.quantity)
 		end
 	end
 end
 
-function slot0.homeClick(slot0)
+function var_0_0.homeClick(arg_61_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)
 
 		return
 	end
 
-	uv0.instance:exitRoom(true)
+	var_0_0.instance:exitRoom(true)
 end
 
-function slot0._containRare(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0._containRare(arg_62_0, arg_62_1, arg_62_2)
+	if string.nilorempty(arg_62_1) then
 		return false
 	end
 
-	return tabletool.indexOf(string.splitToNumber(slot1, "#"), slot2)
+	local var_62_0 = string.splitToNumber(arg_62_1, "#")
+
+	return tabletool.indexOf(var_62_0, arg_62_2)
 end
 
-function slot0.popUpSourceView(slot0, slot1)
-	slot2 = false
-	slot3 = false
-	slot4 = false
+function var_0_0.popUpSourceView(arg_63_0, arg_63_1)
+	local var_63_0 = false
+	local var_63_1 = false
+	local var_63_2 = false
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9.viewName == ViewName.RoomInitBuildingView then
-			slot3 = true
-		elseif slot9.viewName == ViewName.RoomFormulaView then
-			slot2 = true
-		elseif slot9.viewName == ViewName.RoomProductLineLevelUpView then
-			slot4 = true
+	for iter_63_0, iter_63_1 in ipairs(arg_63_1) do
+		if iter_63_1.viewName == ViewName.RoomInitBuildingView then
+			var_63_1 = true
+		elseif iter_63_1.viewName == ViewName.RoomFormulaView then
+			var_63_0 = true
+		elseif iter_63_1.viewName == ViewName.RoomProductLineLevelUpView then
+			var_63_2 = true
 		end
 	end
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9.viewName == ViewName.RoomInitBuildingView then
-			slot9.viewParam = slot9.viewParam or {}
-			slot9.viewParam.showFormulaView = slot2 and slot4 == false
+	for iter_63_2, iter_63_3 in ipairs(arg_63_1) do
+		if iter_63_3.viewName == ViewName.RoomInitBuildingView then
+			iter_63_3.viewParam = iter_63_3.viewParam or {}
+			iter_63_3.viewParam.showFormulaView = var_63_0 and var_63_2 == false
 
-			if uv0.instance:isRoomScene() then
-				RoomMapController.instance:openRoomInitBuildingView(0, slot9.viewParam)
+			if var_0_0.instance:isRoomScene() then
+				RoomMapController.instance:openRoomInitBuildingView(0, iter_63_3.viewParam)
 			else
 				RoomMapController.instance:openFormulaItemBuildingViewOutSide()
 			end
-		elseif slot9.viewName == ViewName.RoomFormulaView and (not slot3 or slot4) then
-			ViewMgr.instance:openView(slot9.viewName, slot9.viewParam)
+		elseif iter_63_3.viewName == ViewName.RoomFormulaView and (not var_63_1 or var_63_2) then
+			ViewMgr.instance:openView(iter_63_3.viewName, iter_63_3.viewParam)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

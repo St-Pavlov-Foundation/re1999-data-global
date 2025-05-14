@@ -1,60 +1,64 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGamePackView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGamePackView", package.seeall)
 
-slot0 = class("AiZiLaGamePackView", BaseView)
+local var_0_0 = class("AiZiLaGamePackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnfullClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_fullClose")
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_PanelBG")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "#txt_Title")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
-	slot0._scrollItems = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_Items")
-	slot0._goEmpty = gohelper.findChild(slot0.viewGO, "#go_Empty")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnfullClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_fullClose")
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_Title")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	arg_1_0._scrollItems = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Items")
+	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_Empty")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfullClose:AddClickListener(slot0._btnfullCloseOnClick, slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfullClose:AddClickListener(arg_2_0._btnfullCloseOnClick, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfullClose:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfullClose:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnfullCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnfullCloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, slot0.closeThis, slot0)
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, arg_8_0.closeThis, arg_8_0)
 
-	if slot0.viewContainer then
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0.closeThis, slot0)
+	if arg_8_0.viewContainer then
+		NavigateMgr.instance:addEscape(arg_8_0.viewContainer.viewName, arg_8_0.closeThis, arg_8_0)
 	end
 
 	AiZiLaGamePackListModel.instance:init()
-	gohelper.setActive(slot0._goEmpty, AiZiLaGamePackListModel.instance:getCount() < 1)
+	gohelper.setActive(arg_8_0._goEmpty, AiZiLaGamePackListModel.instance:getCount() < 1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.FightWorkChangeRound", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeRound", package.seeall)
 
-slot0 = class("FightWorkChangeRound", FightEffectBase)
+local var_0_0 = class("FightWorkChangeRound", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if FightModel.instance:getVersion() < 3 then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
@@ -13,16 +13,19 @@ function slot0.onStart(slot0)
 
 	FightController.instance:dispatchEvent(FightEvent.ChangeRound)
 
-	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getMySubList()) do
-		slot7.subCd = 0
+	local var_1_0 = FightDataHelper.entityMgr:getMySubList()
 
-		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, slot7.uid)
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		iter_1_1.subCd = 0
+
+		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, iter_1_1.uid)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

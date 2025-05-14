@@ -1,114 +1,128 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiEnterView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiEnterView", package.seeall)
 
-slot0 = class("AergusiEnterView", VersionActivityEnterBaseSubView)
+local var_0_0 = class("AergusiEnterView", VersionActivityEnterBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Right/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Right/#txt_Descr")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	slot0._btnEnter = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Enter")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "Right/#btn_Enter/#go_reddot")
-	slot0._btnLocked = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Locked")
-	slot0._txtUnLocked = gohelper.findChildText(slot0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
-	slot0._goTry = gohelper.findChild(slot0.viewGO, "Right/#go_Try")
-	slot0._goTips = gohelper.findChild(slot0.viewGO, "Right/#go_Try/#go_Tips")
-	slot0._simageReward = gohelper.findChildSingleImage(slot0.viewGO, "Right/#go_Try/#go_Tips/#simage_Reward")
-	slot0._btnTrial = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_Try/image_TryBtn")
-	slot0._txtNum = gohelper.findChildTextMesh(slot0.viewGO, "Right/#go_Try/#go_Tips/#txt_Num")
-	slot0._btnItem = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_Try/#go_Tips/#btn_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Descr")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
+	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
+	arg_1_0._txtUnLocked = gohelper.findChildText(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+	arg_1_0._goTry = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Try")
+	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Try/#go_Tips")
+	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#simage_Reward")
+	arg_1_0._btnTrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/image_TryBtn")
+	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#txt_Num")
+	arg_1_0._btnItem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#btn_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnEnter:AddClickListener(slot0._btnEnterOnClick, slot0)
-	slot0._btnLocked:AddClickListener(slot0._btnLockedOnClick, slot0)
-	slot0._btnTrial:AddClickListener(slot0._btnTrailOnClick, slot0)
-	slot0._btnItem:AddClickListener(slot0._btnItemOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
+	arg_2_0._btnLocked:AddClickListener(arg_2_0._btnLockedOnClick, arg_2_0)
+	arg_2_0._btnTrial:AddClickListener(arg_2_0._btnTrailOnClick, arg_2_0)
+	arg_2_0._btnItem:AddClickListener(arg_2_0._btnItemOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnEnter:RemoveClickListener()
-	slot0._btnLocked:RemoveClickListener()
-	slot0._btnTrial:RemoveClickListener()
-	slot0._btnItem:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnEnter:RemoveClickListener()
+	arg_3_0._btnLocked:RemoveClickListener()
+	arg_3_0._btnTrial:RemoveClickListener()
+	arg_3_0._btnItem:RemoveClickListener()
 end
 
-function slot0._btnEnterOnClick(slot0)
+function var_0_0._btnEnterOnClick(arg_4_0)
 	AergusiController.instance:openAergusiLevelView()
 end
 
-function slot0._btnLockedOnClick(slot0)
-	slot1, slot2 = OpenHelper.getToastIdAndParam(slot0.actCo.openId)
+function var_0_0._btnLockedOnClick(arg_5_0)
+	local var_5_0, var_5_1 = OpenHelper.getToastIdAndParam(arg_5_0.actCo.openId)
 
-	if slot1 and slot1 ~= 0 then
-		GameFacade.showToastWithTableParam(slot1, slot2)
+	if var_5_0 and var_5_0 ~= 0 then
+		GameFacade.showToastWithTableParam(var_5_0, var_5_1)
 	end
 end
 
-function slot0._btnTrailOnClick(slot0)
+function var_0_0._btnTrailOnClick(arg_6_0)
 	if ActivityHelper.getActivityStatus(VersionActivity2_1Enum.ActivityId.Aergusi) == ActivityEnum.ActivityStatus.Normal then
-		if slot0.actCo.tryoutEpisode <= 0 then
+		local var_6_0 = arg_6_0.actCo.tryoutEpisode
+
+		if var_6_0 <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		DungeonFightController.instance:enterFight(DungeonConfig.instance:getEpisodeCO(slot1).chapterId, slot1)
+		local var_6_1 = DungeonConfig.instance:getEpisodeCO(var_6_0)
+
+		DungeonFightController.instance:enterFight(var_6_1.chapterId, var_6_0)
 	else
-		slot0:_clickLock()
+		arg_6_0:_clickLock()
 	end
 end
 
-function slot0._btnItemOnClick(slot0)
+function var_0_0._btnItemOnClick(arg_7_0)
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.FreeDiamondCoupon, false, nil, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_1Enum.ActivityId.Aergusi)
-	slot0._txtDescr.text = slot0.actCo.actDesc
-	slot2 = 0
-	slot3 = false
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_1Enum.ActivityId.Aergusi)
+	arg_8_0._txtDescr.text = arg_8_0.actCo.actDesc
 
-	if slot0.actCo.tryoutEpisode > 0 then
-		slot2 = DungeonModel.instance:getEpisodeFirstBonus(slot1)[1] and slot4[1][3] or 0
+	local var_8_0 = arg_8_0.actCo.tryoutEpisode
+	local var_8_1 = 0
+	local var_8_2 = false
+
+	if var_8_0 > 0 then
+		local var_8_3 = DungeonModel.instance:getEpisodeFirstBonus(var_8_0)
+
+		var_8_1 = var_8_3[1] and var_8_3[1][3] or 0
 	end
 
-	slot0._txtNum.text = slot2
+	arg_8_0._txtNum.text = var_8_1
 
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.V2a1AergusiTaskRed, VersionActivity2_1Enum.ActivityId.Aergusi)
+	RedDotController.instance:addRedDot(arg_8_0._goreddot, RedDotEnum.DotNode.V2a1AergusiTaskRed, VersionActivity2_1Enum.ActivityId.Aergusi)
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	slot0:_refreshTime()
+function var_0_0.onOpen(arg_9_0)
+	var_0_0.super.onOpen(arg_9_0)
+	arg_9_0:_refreshTime()
 end
 
-function slot0.onClose(slot0)
-	uv0.super.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	var_0_0.super.onClose(arg_10_0)
 end
 
-function slot0.everySecondCall(slot0)
-	slot0:_refreshTime()
+function var_0_0.everySecondCall(arg_11_0)
+	arg_11_0:_refreshTime()
 end
 
-function slot0._refreshTime(slot0)
-	if ActivityModel.instance:getActivityInfo()[VersionActivity2_1Enum.ActivityId.Aergusi] then
-		gohelper.setActive(slot0._txtLimitTime.gameObject, slot1:getRealEndTimeStamp() - ServerTime.now() > 0)
+function var_0_0._refreshTime(arg_12_0)
+	local var_12_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_1Enum.ActivityId.Aergusi]
 
-		if slot2 > 0 then
-			slot0._txtLimitTime.text = TimeUtil.SecondToActivityTimeFormat(slot2)
+	if var_12_0 then
+		local var_12_1 = var_12_0:getRealEndTimeStamp() - ServerTime.now()
+
+		gohelper.setActive(arg_12_0._txtLimitTime.gameObject, var_12_1 > 0)
+
+		if var_12_1 > 0 then
+			local var_12_2 = TimeUtil.SecondToActivityTimeFormat(var_12_1)
+
+			arg_12_0._txtLimitTime.text = var_12_2
 		end
 
-		slot3 = ActivityHelper.getActivityStatus(VersionActivity2_1Enum.ActivityId.Aergusi) ~= ActivityEnum.ActivityStatus.Normal
+		local var_12_3 = ActivityHelper.getActivityStatus(VersionActivity2_1Enum.ActivityId.Aergusi) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(slot0._btnEnter, not slot3)
-		gohelper.setActive(slot0._btnLocked, slot3)
+		gohelper.setActive(arg_12_0._btnEnter, not var_12_3)
+		gohelper.setActive(arg_12_0._btnLocked, var_12_3)
 	end
 end
 
-return slot0
+return var_0_0

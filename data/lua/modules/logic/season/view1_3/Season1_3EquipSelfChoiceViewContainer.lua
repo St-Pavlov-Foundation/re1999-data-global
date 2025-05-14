@@ -1,34 +1,36 @@
-module("modules.logic.season.view1_3.Season1_3EquipSelfChoiceViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_3.Season1_3EquipSelfChoiceViewContainer", package.seeall)
 
-slot0 = class("Season1_3EquipSelfChoiceViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_3EquipSelfChoiceViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot2 = Season1_3EquipTagSelect.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = arg_1_0:createEquipItemsParam()
+	local var_1_1 = Season1_3EquipTagSelect.New()
 
-	slot2:init(Activity104EquipSelfChoiceController.instance, "root/#drop_filter", "#433834")
+	var_1_1:init(Activity104EquipSelfChoiceController.instance, "root/#drop_filter", "#433834")
 
 	return {
 		Season1_3EquipSelfChoiceView.New(),
-		slot2,
-		LuaListScrollView.New(Activity104SelfChoiceListModel.instance, slot0:createEquipItemsParam())
+		var_1_1,
+		LuaListScrollView.New(Activity104SelfChoiceListModel.instance, var_1_0)
 	}
 end
 
-function slot0.createEquipItemsParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "root/mask/#scroll_item"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = Season1_3EquipSelfChoiceItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 180
-	slot1.cellHeight = 235
-	slot1.cellSpaceH = 7.4
-	slot1.cellSpaceV = 32.5
-	slot1.startSpace = 56
+function var_0_0.createEquipItemsParam(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	return slot1
+	var_2_0.scrollGOPath = "root/mask/#scroll_item"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+	var_2_0.cellClass = Season1_3EquipSelfChoiceItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+	var_2_0.lineCount = 5
+	var_2_0.cellWidth = 180
+	var_2_0.cellHeight = 235
+	var_2_0.cellSpaceH = 7.4
+	var_2_0.cellSpaceV = 32.5
+	var_2_0.startSpace = 56
+
+	return var_2_0
 end
 
-return slot0
+return var_0_0

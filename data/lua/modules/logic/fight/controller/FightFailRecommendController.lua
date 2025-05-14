@@ -1,78 +1,108 @@
-module("modules.logic.fight.controller.FightFailRecommendController", package.seeall)
+﻿module("modules.logic.fight.controller.FightFailRecommendController", package.seeall)
 
-slot0 = class("FightFailRecommendController", BaseController)
-slot1 = 2
+local var_0_0 = class("FightFailRecommendController", BaseController)
+local var_0_1 = 2
 
-function slot0.addConstEvents(slot0)
-	FightController.instance:registerCallback(FightEvent.RespBeginFight, slot0._respBeginFight, slot0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._pushEndFight, slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, arg_1_0._respBeginFight, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_1_0._pushEndFight, arg_1_0)
 end
 
-function slot0.onClickRecommend(slot0)
-	PlayerPrefsHelper.deleteKey(slot0:_getKey())
+function var_0_0.onClickRecommend(arg_2_0)
+	local var_2_0 = arg_2_0:_getKey()
+
+	PlayerPrefsHelper.deleteKey(var_2_0)
 end
 
-function slot0.needShowRecommend(slot0, slot1)
-	if not string.splitToNumber(PlayerPrefsHelper.getString(slot0:_getKey(), ""), "#") or not slot4[1] or slot5 ~= slot1 then
+function var_0_0.needShowRecommend(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:_getKey()
+	local var_3_1 = PlayerPrefsHelper.getString(var_3_0, "")
+	local var_3_2 = string.splitToNumber(var_3_1, "#")
+	local var_3_3 = var_3_2 and var_3_2[1]
+
+	if not var_3_3 or var_3_3 ~= arg_3_1 then
 		return false
 	end
 
-	slot6 = slot4 and slot4[2]
+	local var_3_4 = var_3_2 and var_3_2[2]
 
-	return slot6 and uv0 <= slot6
+	return var_3_4 and var_3_4 >= var_0_1
 end
 
-function slot0._respBeginFight(slot0)
-	slot0._isReplay = FightModel.instance:getFightParam() and slot1.isReplay
+function var_0_0._respBeginFight(arg_4_0)
+	local var_4_0 = FightModel.instance:getFightParam()
 
-	if slot0._isReplay then
+	arg_4_0._isReplay = var_4_0 and var_4_0.isReplay
+
+	if arg_4_0._isReplay then
 		return
 	end
 
-	if string.splitToNumber(PlayerPrefsHelper.getString(slot0:_getKey(), ""), "#") and slot5[1] and (slot1 and slot1.episodeId) ~= slot6 then
-		PlayerPrefsHelper.deleteKey(slot3)
+	local var_4_1 = var_4_0 and var_4_0.episodeId
+	local var_4_2 = arg_4_0:_getKey()
+	local var_4_3 = PlayerPrefsHelper.getString(var_4_2, "")
+	local var_4_4 = string.splitToNumber(var_4_3, "#")
+	local var_4_5 = var_4_4 and var_4_4[1]
+
+	if var_4_5 and var_4_1 ~= var_4_5 then
+		PlayerPrefsHelper.deleteKey(var_4_2)
 	end
 end
 
-function slot0._pushEndFight(slot0)
-	slot0._isReplay = FightModel.instance:getFightParam() and slot1.isReplay
+function var_0_0._pushEndFight(arg_5_0)
+	local var_5_0 = FightModel.instance:getFightParam()
 
-	if slot0._isReplay then
-		slot0._isReplay = nil
+	arg_5_0._isReplay = var_5_0 and var_5_0.isReplay
+
+	if arg_5_0._isReplay then
+		arg_5_0._isReplay = nil
 
 		return
 	end
 
-	slot4 = slot0:_getKey()
+	local var_5_1 = FightModel.instance:getRecordMO()
+	local var_5_2 = var_5_1 and var_5_1.fightResult ~= FightEnum.FightResult.Succ
+	local var_5_3 = arg_5_0:_getKey()
 
-	if FightModel.instance:getRecordMO() and slot2.fightResult ~= FightEnum.FightResult.Succ then
-		slot5 = nil
+	if var_5_2 then
+		local var_5_4
+		local var_5_5 = FightModel.instance:getFightParam()
+		local var_5_6 = var_5_5 and var_5_5.episodeId
 
-		if not (FightModel.instance:getFightParam() and slot6.episodeId) and not (FightModel.instance:getFightReason() and slot7.episodeId) then
-			return
+		if not var_5_6 then
+			local var_5_7 = FightModel.instance:getFightReason()
+
+			var_5_6 = var_5_7 and var_5_7.episodeId
+
+			if not var_5_6 then
+				return
+			end
 		end
 
-		slot10 = slot8 and slot8[2]
+		local var_5_8 = PlayerPrefsHelper.getString(var_5_3, "")
+		local var_5_9 = string.splitToNumber(var_5_8, "#")
+		local var_5_10 = var_5_9 and var_5_9[1]
+		local var_5_11 = var_5_9 and var_5_9[2]
 
-		if string.splitToNumber(PlayerPrefsHelper.getString(slot4, ""), "#") and slot8[1] and slot9 == slot5 then
-			slot10 = slot10 and slot10 + 1 or 1
+		if var_5_10 and var_5_10 == var_5_6 then
+			var_5_11 = var_5_11 and var_5_11 + 1 or 1
 		else
-			slot9 = slot5
-			slot10 = 1
+			var_5_10 = var_5_6
+			var_5_11 = 1
 		end
 
-		if slot9 then
-			PlayerPrefsHelper.setString(slot4, slot9 .. "#" .. slot10)
+		if var_5_10 then
+			PlayerPrefsHelper.setString(var_5_3, var_5_10 .. "#" .. var_5_11)
 		end
 	else
-		PlayerPrefsHelper.deleteKey(slot4)
+		PlayerPrefsHelper.deleteKey(var_5_3)
 	end
 end
 
-function slot0._getKey(slot0)
+function var_0_0._getKey(arg_6_0)
 	return PlayerModel.instance:getMyUserId() .. "_" .. PlayerPrefsKey.FightFailEpisode
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

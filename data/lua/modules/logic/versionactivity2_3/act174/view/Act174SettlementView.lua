@@ -1,127 +1,150 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174SettlementView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174SettlementView", package.seeall)
 
-slot0 = class("Act174SettlementView", BaseView)
+local var_0_0 = class("Act174SettlementView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtWinCnt = gohelper.findChildText(slot0.viewGO, "Right/fight/#txt_WinCnt")
-	slot0._txtLoseCnt = gohelper.findChildText(slot0.viewGO, "Right/fight/#txt_LoseCnt")
-	slot0._gobadgeItem = gohelper.findChild(slot0.viewGO, "Right/badge/layout/#go_badgeItem")
-	slot0._txtScore = gohelper.findChildText(slot0.viewGO, "Right/score/#txt_Score")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtWinCnt = gohelper.findChildText(arg_1_0.viewGO, "Right/fight/#txt_WinCnt")
+	arg_1_0._txtLoseCnt = gohelper.findChildText(arg_1_0.viewGO, "Right/fight/#txt_LoseCnt")
+	arg_1_0._gobadgeItem = gohelper.findChild(arg_1_0.viewGO, "Right/badge/layout/#go_badgeItem")
+	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "Right/score/#txt_Score")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.animEvent = slot0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.animEvent = arg_5_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
 
-	slot0.animEvent:AddEventListener("PlayBadgeAnim", slot0.playBadgeAnim, slot0)
+	arg_5_0.animEvent:AddEventListener("PlayBadgeAnim", arg_5_0.playBadgeAnim, arg_5_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actInfo = Activity174Model.instance:getActInfo()
-	slot0.gameInfo = slot0.actInfo:getGameInfo()
-	slot0.gameEndInfo = slot0.actInfo:getGameEndInfo()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.actInfo = Activity174Model.instance:getActInfo()
+	arg_7_0.gameInfo = arg_7_0.actInfo:getGameInfo()
+	arg_7_0.gameEndInfo = arg_7_0.actInfo:getGameEndInfo()
 
-	slot0:refreshLeft()
-	slot0:refreshRight()
+	arg_7_0:refreshLeft()
+	arg_7_0:refreshRight()
 	AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shenghuo_dqq_fight_end)
 end
 
-function slot0.onClose(slot0)
-	if slot0.gameEndInfo and slot0.gameEndInfo.gainScore ~= 0 then
-		slot1 = MaterialDataMO.New()
+function var_0_0.onClose(arg_8_0)
+	if arg_8_0.gameEndInfo and arg_8_0.gameEndInfo.gainScore ~= 0 then
+		local var_8_0 = MaterialDataMO.New()
 
-		slot1:initValue(2, 2302, slot0.gameEndInfo.gainScore)
+		var_8_0:initValue(2, 2302, arg_8_0.gameEndInfo.gainScore)
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, {
-			slot1
+			var_8_0
 		})
 	end
 
-	slot0.actInfo:clearEndInfo()
+	arg_8_0.actInfo:clearEndInfo()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.animEvent:RemoveEventListener("PlayBadgeAnim")
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0.animEvent:RemoveEventListener("PlayBadgeAnim")
 end
 
-function slot0.refreshLeft(slot0)
-	slot2 = gohelper.findChild(slot0.viewGO, "Left/Group/playergroup")
+function var_0_0.refreshLeft(arg_10_0)
+	local var_10_0 = arg_10_0.actInfo:getGameInfo():getTeamMoList()
+	local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "Left/Group/playergroup")
 
-	if slot0.actInfo:getGameInfo():getTeamMoList() then
-		for slot6, slot7 in ipairs(slot1) do
-			slot13 = "act174_ready_num_0" .. slot7.index
+	if var_10_0 then
+		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+			local var_10_2 = gohelper.cloneInPlace(var_10_1)
+			local var_10_3 = gohelper.findChildImage(var_10_2, "numbg/image_Num")
 
-			UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(gohelper.cloneInPlace(slot2), "numbg/image_Num"), slot13)
+			UISpriteSetMgr.instance:setAct174Sprite(var_10_3, "act174_ready_num_0" .. iter_10_1.index)
 
-			for slot13 = 1, 4 do
-				slot16 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(Activity174Enum.PrefabPath.BattleHero, slot8), Act174BattleHeroItem)
+			for iter_10_2 = 1, 4 do
+				local var_10_4 = Activity174Helper.MatchKeyInArray(iter_10_1.battleHeroInfo, iter_10_2, "index")
+				local var_10_5 = arg_10_0:getResInst(Activity174Enum.PrefabPath.BattleHero, var_10_2)
+				local var_10_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_5, Act174BattleHeroItem)
 
-				slot16:setIndex(slot13)
-				slot16:setData(Activity174Helper.MatchKeyInArray(slot7.battleHeroInfo, slot13, "index"), slot7.index, false)
+				var_10_6:setIndex(iter_10_2)
+				var_10_6:setData(var_10_4, iter_10_1.index, false)
 			end
 		end
 	end
 
-	gohelper.setActive(slot2, false)
+	gohelper.setActive(var_10_1, false)
 end
 
-function slot0.refreshRight(slot0)
-	slot0._txtLoseCnt.text = slot0.gameEndInfo.winNum
-	slot0._txtWinCnt.text = slot0.gameEndInfo.loseNum
+function var_0_0.refreshRight(arg_11_0)
+	arg_11_0._txtLoseCnt.text = arg_11_0.gameEndInfo.winNum
+	arg_11_0._txtWinCnt.text = arg_11_0.gameEndInfo.loseNum
 
-	slot0:initBadge()
+	arg_11_0:initBadge()
 
-	slot0._txtScore.text = slot0.gameEndInfo.gainScore
+	arg_11_0._txtScore.text = arg_11_0.gameEndInfo.gainScore
 end
 
-function slot0.initBadge(slot0)
-	slot0.badgeItemList = {}
+function var_0_0.initBadge(arg_12_0)
+	arg_12_0.badgeItemList = {}
 
-	for slot6, slot7 in ipairs(slot0.actInfo:getBadgeMoList()) do
-		slot9 = gohelper.cloneInPlace(slot0._gobadgeItem)
-		slot0:getUserDataTb_().Icon = gohelper.findChildSingleImage(slot9, "root/image_icon")
-		slot11 = gohelper.findChildText(slot9, "root/txt_score")
-		gohelper.findChildText(slot9, "root/txt_num").text = slot7.count
+	local var_12_0 = arg_12_0.actInfo:getBadgeScoreChangeDic()
+	local var_12_1 = arg_12_0.actInfo:getBadgeMoList()
 
-		if slot0.actInfo:getBadgeScoreChangeDic()[slot7.id] and slot12 ~= 0 then
-			slot11.text = "+" .. slot12
+	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+		local var_12_2 = arg_12_0:getUserDataTb_()
+		local var_12_3 = gohelper.cloneInPlace(arg_12_0._gobadgeItem)
+
+		var_12_2.Icon = gohelper.findChildSingleImage(var_12_3, "root/image_icon")
+
+		local var_12_4 = gohelper.findChildText(var_12_3, "root/txt_num")
+		local var_12_5 = gohelper.findChildText(var_12_3, "root/txt_score")
+
+		var_12_4.text = iter_12_1.count
+
+		local var_12_6 = var_12_0[iter_12_1.id]
+
+		if var_12_6 and var_12_6 ~= 0 then
+			var_12_5.text = "+" .. var_12_6
 		end
 
-		gohelper.setActive(slot11, slot12 ~= 0)
-		slot8.Icon:LoadImage(ResUrl.getAct174BadgeIcon(slot7.config.icon, slot7:getState()))
+		gohelper.setActive(var_12_5, var_12_6 ~= 0)
 
-		slot8.anim = slot9:GetComponent(gohelper.Type_Animator)
-		slot8.id = slot7.id
-		slot0.badgeItemList[#slot0.badgeItemList] = slot8
+		local var_12_7 = iter_12_1:getState()
+		local var_12_8 = ResUrl.getAct174BadgeIcon(iter_12_1.config.icon, var_12_7)
+
+		var_12_2.Icon:LoadImage(var_12_8)
+
+		var_12_2.anim = var_12_3:GetComponent(gohelper.Type_Animator)
+		var_12_2.id = iter_12_1.id
+		arg_12_0.badgeItemList[#arg_12_0.badgeItemList] = var_12_2
 	end
 
-	gohelper.setActive(slot0._gobadgeItem, false)
+	gohelper.setActive(arg_12_0._gobadgeItem, false)
 end
 
-function slot0.playBadgeAnim(slot0)
-	for slot5, slot6 in ipairs(slot0.badgeItemList) do
-		if slot0.actInfo:getBadgeScoreChangeDic()[slot6.id] and slot7 ~= 0 then
-			slot6.anim:Play("refresh")
+function var_0_0.playBadgeAnim(arg_13_0)
+	local var_13_0 = arg_13_0.actInfo:getBadgeScoreChangeDic()
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.badgeItemList) do
+		local var_13_1 = var_13_0[iter_13_1.id]
+
+		if var_13_1 and var_13_1 ~= 0 then
+			iter_13_1.anim:Play("refresh")
 		end
 	end
 end
 
-return slot0
+return var_0_0

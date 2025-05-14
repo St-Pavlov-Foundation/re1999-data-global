@@ -1,145 +1,159 @@
-module("modules.logic.versionactivity2_3.act174.model.Activity174Model", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.model.Activity174Model", package.seeall)
 
-slot0 = class("Activity174Model", BaseModel)
+local var_0_0 = class("Activity174Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.actInfoDic = {}
-	slot0.turnShowUnlockTeamTipDict = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.actInfoDic = {}
+	arg_2_0.turnShowUnlockTeamTipDict = nil
 end
 
-function slot0.getCurActId(slot0)
-	return slot0.curActId
+function var_0_0.getCurActId(arg_3_0)
+	return arg_3_0.curActId
 end
 
-function slot0.getActInfo(slot0, slot1)
-	if not slot0.actInfoDic[slot1 or slot0:getCurActId()] then
-		logError("actInfo not exist" .. slot1)
+function var_0_0.getActInfo(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1 or arg_4_0:getCurActId()
+	local var_4_1 = arg_4_0.actInfoDic[var_4_0]
+
+	if not var_4_1 then
+		logError("actInfo not exist" .. arg_4_1)
 	end
 
-	return slot3
+	return var_4_1
 end
 
-function slot0.setActInfo(slot0, slot1, slot2)
-	if not slot0.actInfoDic[slot1] then
-		slot0.actInfoDic[slot1] = Act174MO.New()
+function var_0_0.setActInfo(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_0.actInfoDic[arg_5_1] then
+		local var_5_0 = Act174MO.New()
+
+		arg_5_0.actInfoDic[arg_5_1] = var_5_0
 	end
 
-	slot0.actInfoDic[slot1]:initBadgeInfo(slot1)
-	slot0.actInfoDic[slot1]:init(slot2)
+	arg_5_0.actInfoDic[arg_5_1]:initBadgeInfo(arg_5_1)
+	arg_5_0.actInfoDic[arg_5_1]:init(arg_5_2)
 
-	slot0.curActId = slot1
+	arg_5_0.curActId = arg_5_1
 end
 
-function slot0.updateGameInfo(slot0, slot1, slot2, slot3)
-	slot0:getActInfo(slot1):updateGameInfo(slot2, slot3)
+function var_0_0.updateGameInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0:getActInfo(arg_6_1):updateGameInfo(arg_6_2, arg_6_3)
 	Activity174Controller.instance:dispatchEvent(Activity174Event.UpdateGameInfo)
 end
 
-function slot0.updateShopInfo(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getActInfo(slot1)
+function var_0_0.updateShopInfo(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_0:getActInfo(arg_7_1)
 
-	slot4:updateShopInfo(slot2)
+	var_7_0:updateShopInfo(arg_7_2)
 
-	slot4.gameInfo.coin = slot3
+	var_7_0.gameInfo.coin = arg_7_3
 end
 
-function slot0.updateTeamInfo(slot0, slot1, slot2)
-	slot0:getActInfo(slot1):updateTeamInfo(slot2)
+function var_0_0.updateTeamInfo(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0:getActInfo(arg_8_1):updateTeamInfo(arg_8_2)
 end
 
-function slot0.updateIsBet(slot0, slot1, slot2)
-	slot0:getActInfo(slot1):updateIsBet(slot2)
+function var_0_0.updateIsBet(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0:getActInfo(arg_9_1):updateIsBet(arg_9_2)
 end
 
-function slot0.endGameReply(slot0, slot1, slot2)
-	slot3 = slot0:getActInfo(slot1)
-	slot3.gameInfo.state = Activity174Enum.GameState.None
+function var_0_0.endGameReply(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:getActInfo(arg_10_1)
 
-	slot3:setEndInfo(slot2)
+	var_10_0.gameInfo.state = Activity174Enum.GameState.None
+
+	var_10_0:setEndInfo(arg_10_2)
 	Activity174Controller.instance:dispatchEvent(Activity174Event.EndGame)
 end
 
-function slot0.triggerEffectPush(slot0, slot1, slot2, slot3)
-	slot0:getActInfo(slot1):triggerEffectPush(slot2, slot3)
+function var_0_0.triggerEffectPush(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	arg_11_0:getActInfo(arg_11_1):triggerEffectPush(arg_11_2, arg_11_3)
 end
 
-function slot0.initUnlockNewTeamTipCache(slot0)
-	if slot0.turnShowUnlockTeamTipDict then
+function var_0_0.initUnlockNewTeamTipCache(arg_12_0)
+	if arg_12_0.turnShowUnlockTeamTipDict then
 		return
 	end
 
-	if not string.nilorempty(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.DouQuQuHasUnlockNewTeam, "")) then
-		slot0.turnShowUnlockTeamTipDict = cjson.decode(slot1)
+	local var_12_0 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.DouQuQuHasUnlockNewTeam, "")
+
+	if not string.nilorempty(var_12_0) then
+		arg_12_0.turnShowUnlockTeamTipDict = cjson.decode(var_12_0)
 	end
 
-	slot0.turnShowUnlockTeamTipDict = slot0.turnShowUnlockTeamTipDict or {}
+	arg_12_0.turnShowUnlockTeamTipDict = arg_12_0.turnShowUnlockTeamTipDict or {}
 end
 
-function slot0.clearUnlockNewTeamTipCache(slot0)
-	slot0.turnShowUnlockTeamTipDict = nil
+function var_0_0.clearUnlockNewTeamTipCache(arg_13_0)
+	arg_13_0.turnShowUnlockTeamTipDict = nil
 
 	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.DouQuQuHasUnlockNewTeam, "")
 end
 
-function slot0.setHasShowUnlockNewTeamTip(slot0, slot1)
-	slot0:initUnlockNewTeamTipCache()
+function var_0_0.setHasShowUnlockNewTeamTip(arg_14_0, arg_14_1)
+	arg_14_0:initUnlockNewTeamTipCache()
 
-	slot0.turnShowUnlockTeamTipDict[tostring(slot1)] = true
+	arg_14_0.turnShowUnlockTeamTipDict[tostring(arg_14_1)] = true
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.DouQuQuHasUnlockNewTeam, cjson.encode(slot0.turnShowUnlockTeamTipDict) or "")
+	local var_14_0 = cjson.encode(arg_14_0.turnShowUnlockTeamTipDict) or ""
+
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.DouQuQuHasUnlockNewTeam, var_14_0)
 end
 
-function slot0.getIsShowUnlockNewTeamTip(slot0, slot1)
-	slot2 = false
+function var_0_0.getIsShowUnlockNewTeamTip(arg_15_0, arg_15_1)
+	local var_15_0 = false
 
-	if Activity174Config.instance:isUnlockNewTeamTurn(slot1) then
-		slot0:initUnlockNewTeamTipCache()
+	if Activity174Config.instance:isUnlockNewTeamTurn(arg_15_1) then
+		arg_15_0:initUnlockNewTeamTipCache()
 
-		slot2 = not slot0.turnShowUnlockTeamTipDict[tostring(slot1)]
+		var_15_0 = not arg_15_0.turnShowUnlockTeamTipDict[tostring(arg_15_1)]
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.geAttackStatisticsByServerData(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.geAttackStatisticsByServerData(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_1 then
 		return
 	end
 
-	slot3 = {}
+	local var_16_0 = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		if slot2[slot8.heroUid] then
-			slot10 = {
-				heroUid = slot8.heroUid,
-				harm = slot8.harm,
-				hurt = slot8.hurt,
-				heal = slot8.heal
+	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
+		local var_16_1 = arg_16_2[iter_16_1.heroUid]
+
+		if var_16_1 then
+			local var_16_2 = {
+				heroUid = iter_16_1.heroUid,
+				harm = iter_16_1.harm,
+				hurt = iter_16_1.hurt,
+				heal = iter_16_1.heal
 			}
+			local var_16_3 = {}
 
-			for slot15, slot16 in ipairs(slot8.cards) do
-				-- Nothing
+			for iter_16_2, iter_16_3 in ipairs(iter_16_1.cards) do
+				var_16_3[iter_16_2] = {
+					skillId = iter_16_3.skillId,
+					useCount = iter_16_3.useCount
+				}
 			end
 
-			slot10.cards = {
-				[slot15] = {
-					skillId = slot16.skillId,
-					useCount = slot16.useCount
-				}
-			}
-			slot10.getBuffs = slot8.getBuffs
-			slot10.entityMO = Activity174Helper.getEmptyFightEntityMO(slot10.heroUid, Activity174Config.instance:getRoleCoByHeroId(slot9))
-			slot3[slot7] = slot10
+			var_16_2.cards = var_16_3
+			var_16_2.getBuffs = iter_16_1.getBuffs
+
+			local var_16_4 = Activity174Config.instance:getRoleCoByHeroId(var_16_1)
+
+			var_16_2.entityMO = Activity174Helper.getEmptyFightEntityMO(var_16_2.heroUid, var_16_4)
+			var_16_0[iter_16_0] = var_16_2
 		end
 	end
 
-	return slot3
+	return var_16_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

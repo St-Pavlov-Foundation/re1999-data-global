@@ -1,17 +1,19 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.MainCharacterPowerChangeStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.MainCharacterPowerChangeStep", package.seeall)
 
-slot0 = class("MainCharacterPowerChangeStep", EliminateTeamChessStepBase)
+local var_0_0 = class("MainCharacterPowerChangeStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	if slot0._data.diffValue == nil or slot1.teamType == nil then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
+
+	if var_1_0.diffValue == nil or var_1_0.teamType == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	EliminateTeamChessModel.instance:updateMainCharacterPower(slot1.teamType, slot1.diffValue)
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.MainCharacterPowerChange, slot1.teamType, slot1.diffValue)
-	TaskDispatcher.runDelay(slot0._onDone, slot0, EliminateTeamChessEnum.addResourceTipTime)
+	EliminateTeamChessModel.instance:updateMainCharacterPower(var_1_0.teamType, var_1_0.diffValue)
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.MainCharacterPowerChange, var_1_0.teamType, var_1_0.diffValue)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.addResourceTipTime)
 end
 
-return slot0
+return var_0_0

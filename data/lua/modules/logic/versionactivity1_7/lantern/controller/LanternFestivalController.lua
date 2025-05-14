@@ -1,33 +1,34 @@
-module("modules.logic.versionactivity1_7.lantern.controller.LanternFestivalController", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.controller.LanternFestivalController", package.seeall)
 
-slot0 = class("LanternFestivalController", BaseController)
+local var_0_0 = class("LanternFestivalController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, slot0._checkActivityInfo, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._checkActivityInfo, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0._checkActivityInfo, arg_3_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._checkActivityInfo, arg_3_0)
 end
 
-function slot0._checkActivityInfo(slot0)
+function var_0_0._checkActivityInfo(arg_4_0)
 	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.LanternFestival) then
 		Activity154Rpc.instance:sendGet154InfosRequest(ActivityEnum.Activity.LanternFestival)
 	end
 end
 
-function slot0.openQuestionTipView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.LanternFestivalQuestionTipView, slot1)
+function var_0_0.openQuestionTipView(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.LanternFestivalQuestionTipView, arg_5_1)
 end
 
-function slot0.openLanternFestivalView(slot0)
+function var_0_0.openLanternFestivalView(arg_6_0)
 	ViewMgr.instance:openView(ViewName.LanternFestivalView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

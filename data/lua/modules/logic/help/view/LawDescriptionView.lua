@@ -1,56 +1,60 @@
-module("modules.logic.help.view.LawDescriptionView", package.seeall)
+﻿module("modules.logic.help.view.LawDescriptionView", package.seeall)
 
-slot0 = class("LawDescriptionView", BaseView)
+local var_0_0 = class("LawDescriptionView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageblur = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blur")
-	slot0._simagetop = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_top")
-	slot0._simagebottom = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bottom")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "title/#txt_title")
-	slot0._txttext = gohelper.findChildText(slot0.viewGO, "scroll/viewport/#txt_text")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
+	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_top")
+	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bottom")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_title")
+	arg_1_0._txttext = gohelper.findChildText(arg_1_0.viewGO, "scroll/viewport/#txt_text")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_6_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot2 = HelpConfig.instance:getHelpPageCo(slot0.viewParam.id)
-	slot0._txttitle.text = slot2.title
-	slot0._txttext.text = slot2.text
+function var_0_0.onOpen(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam.id
+	local var_8_1 = HelpConfig.instance:getHelpPageCo(var_8_0)
+
+	arg_8_0._txttitle.text = var_8_1.title
+	arg_8_0._txttext.text = var_8_1.text
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetop:UnLoadImage()
-	slot0._simagebottom:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagetop:UnLoadImage()
+	arg_10_0._simagebottom:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,54 +1,57 @@
-module("modules.logic.versionactivity1_2.dreamtail.view.Activity119TrialHeroItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.dreamtail.view.Activity119TrialHeroItem", package.seeall)
 
-slot0 = class("Activity119TrialHeroItem")
+local var_0_0 = class("Activity119TrialHeroItem")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.go = slot1
-	slot0.index = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.go = arg_1_1
+	arg_1_0.index = arg_1_2
 
-	slot0:onInitView()
-	slot0:addEvents()
+	arg_1_0:onInitView()
+	arg_1_0:addEvents()
 end
 
-function slot0.onInitView(slot0)
-	slot0._btn = gohelper.findButtonWithAudio(slot0.go)
-	slot0._quality = gohelper.findChildImage(slot0.go, "quality")
-	slot0._career = gohelper.findChildImage(slot0.go, "career")
-	slot0._icon = gohelper.findChildSingleImage(slot0.go, "mask/icon")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._btn = gohelper.findButtonWithAudio(arg_2_0.go)
+	arg_2_0._quality = gohelper.findChildImage(arg_2_0.go, "quality")
+	arg_2_0._career = gohelper.findChildImage(arg_2_0.go, "career")
+	arg_2_0._icon = gohelper.findChildSingleImage(arg_2_0.go, "mask/icon")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btn:AddClickListener(slot0.onClickHero, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btn:AddClickListener(arg_3_0.onClickHero, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btn:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btn:RemoveClickListener()
 end
 
-function slot0.updateMO(slot0)
-	slot1 = HeroGroupTrialModel.instance:getByIndex(slot0.index)
-	slot0._mo = slot1
+function var_0_0.updateMO(arg_5_0)
+	local var_5_0 = HeroGroupTrialModel.instance:getByIndex(arg_5_0.index)
 
-	slot0._icon:LoadImage(ResUrl.getRoomHeadIcon(SkinConfig.instance:getSkinCo(slot1.config.skinId).headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._quality, "bgequip" .. tostring(ItemEnum.Color[slot1.config.rare]))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._career, "lssx_" .. tostring(slot1.config.career))
+	arg_5_0._mo = var_5_0
+
+	local var_5_1 = SkinConfig.instance:getSkinCo(var_5_0.config.skinId)
+
+	arg_5_0._icon:LoadImage(ResUrl.getRoomHeadIcon(var_5_1.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(arg_5_0._quality, "bgequip" .. tostring(ItemEnum.Color[var_5_0.config.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(arg_5_0._career, "lssx_" .. tostring(var_5_0.config.career))
 end
 
-function slot0.onClickHero(slot0)
+function var_0_0.onClickHero(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesgo)
-	CharacterController.instance:openCharacterView(slot0._mo, HeroGroupTrialModel.instance:getList())
+	CharacterController.instance:openCharacterView(arg_6_0._mo, HeroGroupTrialModel.instance:getList())
 end
 
-function slot0.dispose(slot0)
-	slot0:removeEvents()
+function var_0_0.dispose(arg_7_0)
+	arg_7_0:removeEvents()
 
-	slot0.go = nil
-	slot0.index = nil
-	slot0._quality = nil
+	arg_7_0.go = nil
+	arg_7_0.index = nil
+	arg_7_0._quality = nil
 
-	slot0._icon:UnLoadImage()
+	arg_7_0._icon:UnLoadImage()
 
-	slot0._icon = nil
+	arg_7_0._icon = nil
 end
 
-return slot0
+return var_0_0

@@ -1,26 +1,26 @@
-module("modules.logic.backpack.model.ItemInsightMo", package.seeall)
+﻿module("modules.logic.backpack.model.ItemInsightMo", package.seeall)
 
-slot0 = pureTable("ItemInsightMo")
+local var_0_0 = pureTable("ItemInsightMo")
 
-function slot0.ctor(slot0)
-	slot0.insightId = 0
-	slot0.uid = 0
-	slot0.quantity = 0
-	slot0.expireTime = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.insightId = 0
+	arg_1_0.uid = 0
+	arg_1_0.quantity = 0
+	arg_1_0.expireTime = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.insightId = tonumber(slot1.itemId)
-	slot0.uid = tonumber(slot1.uid)
-	slot0.quantity = tonumber(slot1.quantity)
-	slot0.expireTime = slot1.expireTime
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.insightId = tonumber(arg_2_1.itemId)
+	arg_2_0.uid = tonumber(arg_2_1.uid)
+	arg_2_0.quantity = tonumber(arg_2_1.quantity)
+	arg_2_0.expireTime = arg_2_1.expireTime
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.insightId = tonumber(slot1.itemId)
-	slot0.uid = tonumber(slot1.uid)
-	slot0.quantity = tonumber(slot1.quantity)
-	slot0.expireTime = slot1.expireTime
+function var_0_0.reset(arg_3_0, arg_3_1)
+	arg_3_0.insightId = tonumber(arg_3_1.itemId)
+	arg_3_0.uid = tonumber(arg_3_1.uid)
+	arg_3_0.quantity = tonumber(arg_3_1.quantity)
+	arg_3_0.expireTime = arg_3_1.expireTime
 end
 
-return slot0
+return var_0_0

@@ -1,64 +1,70 @@
-module("modules.common.activity.ActivityLiveMgr", package.seeall)
+﻿module("modules.common.activity.ActivityLiveMgr", package.seeall)
 
-slot0 = class("ActivityLiveMgr")
+local var_0_0 = class("ActivityLiveMgr")
 
-function slot0.init(slot0)
-	slot0:initActivityMgrList()
-	slot0:addConstEvents()
+function var_0_0.init(arg_1_0)
+	arg_1_0:initActivityMgrList()
+	arg_1_0:addConstEvents()
 end
 
-function slot0.getLiveMgrVersion(slot0)
-	for slot4, slot5 in ipairs(slot0.actMgrInstanceList) do
-		return string.gsub(slot5.__cname, "ActivityLiveMgr", "")
+function var_0_0.getLiveMgrVersion(arg_2_0)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.actMgrInstanceList) do
+		local var_2_0 = iter_2_1.__cname
+
+		return string.gsub(var_2_0, "ActivityLiveMgr", "")
 	end
 end
 
-function slot0.initActivityMgrList(slot0)
-	slot0.actMgrInstanceList = {
+function var_0_0.initActivityMgrList(arg_3_0)
+	arg_3_0.actMgrInstanceList = {
 		ActivityLiveMgr2_5.instance
 	}
-	slot0.actId2ViewList = {}
+	arg_3_0.actId2ViewList = {}
 
-	for slot4, slot5 in ipairs(slot0.actMgrInstanceList) do
-		slot5:init()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.actMgrInstanceList) do
+		iter_3_1:init()
 
-		for slot9, slot10 in pairs(slot5:getActId2ViewList()) do
-			if slot0.actId2ViewList[slot9] then
+		for iter_3_2, iter_3_3 in pairs(iter_3_1:getActId2ViewList()) do
+			if arg_3_0.actId2ViewList[iter_3_2] then
 				logWarn(string.format("act : %s config multiple, please check!"))
 			end
 
-			slot0.actId2ViewList[slot9] = slot10
+			arg_3_0.actId2ViewList[iter_3_2] = iter_3_3
 		end
 	end
 end
 
-function slot0.addConstEvents(slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, slot0.checkActivity, slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_4_0.checkActivity, arg_4_0)
 end
 
-function slot0.checkActivity(slot0, slot1)
-	if string.nilorempty(slot1) or slot1 == 0 then
-		for slot5, slot6 in pairs(slot0.actId2ViewList) do
-			if slot0:checkOneActivityIsEnd(slot5) then
+function var_0_0.checkActivity(arg_5_0, arg_5_1)
+	if string.nilorempty(arg_5_1) or arg_5_1 == 0 then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0.actId2ViewList) do
+			if arg_5_0:checkOneActivityIsEnd(iter_5_0) then
 				return
 			end
 		end
 	end
 
-	slot0:checkOneActivityIsEnd(slot1)
+	arg_5_0:checkOneActivityIsEnd(arg_5_1)
 end
 
-function slot0.checkOneActivityIsEnd(slot0, slot1)
-	if string.nilorempty(slot1) or slot1 == 0 then
+function var_0_0.checkOneActivityIsEnd(arg_6_0, arg_6_1)
+	if string.nilorempty(arg_6_1) or arg_6_1 == 0 then
 		return false
 	end
 
-	if ActivityHelper.getActivityStatus(slot1) ~= ActivityEnum.ActivityStatus.Normal and slot0.actId2ViewList[slot1] then
-		for slot7, slot8 in ipairs(slot3) do
-			if ViewMgr.instance:isOpen(slot8) then
-				MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, uv0.yesCallback)
+	if ActivityHelper.getActivityStatus(arg_6_1) ~= ActivityEnum.ActivityStatus.Normal then
+		local var_6_0 = arg_6_0.actId2ViewList[arg_6_1]
 
-				return true
+		if var_6_0 then
+			for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+				if ViewMgr.instance:isOpen(iter_6_1) then
+					MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, var_0_0.yesCallback)
+
+					return true
+				end
 			end
 		end
 	end
@@ -66,11 +72,11 @@ function slot0.checkOneActivityIsEnd(slot0, slot1)
 	return false
 end
 
-function slot0.yesCallback()
+function var_0_0.yesCallback()
 	ActivityController.instance:dispatchEvent(ActivityEvent.CheckGuideOnEndActivity)
 	NavigateButtonsView.homeClick()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

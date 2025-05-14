@@ -1,63 +1,73 @@
-module("modules.logic.versionactivity1_6.v1a6_panelsign.view.V1a6_Role_PanelSignView_ActCenterItemBtn", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_panelsign.view.V1a6_Role_PanelSignView_ActCenterItemBtn", package.seeall)
 
-slot0 = class("V1a6_Role_PanelSignView_ActCenterItemBtn", ActCenterItemBase)
+local var_0_0 = class("V1a6_Role_PanelSignView_ActCenterItemBtn", ActCenterItemBase)
 
-function slot0.onInit(slot0, slot1)
+function var_0_0.onInit(arg_1_0, arg_1_1)
+	return
 end
 
-function slot0.onAddEvent(slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshRedDot, slot0)
+function var_0_0.onAddEvent(arg_2_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0._refreshRedDot, arg_2_0)
 end
 
-function slot0.onRemoveEvent(slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshRedDot, slot0)
+function var_0_0.onRemoveEvent(arg_3_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0._refreshRedDot, arg_3_0)
 end
 
-function slot0.onClick(slot0)
-	if ViewMgr.instance:isOpen(slot0:_viewNameAndParam()) then
+function var_0_0.onClick(arg_4_0)
+	local var_4_0 = arg_4_0:_viewNameAndParam()
+
+	if ViewMgr.instance:isOpen(var_4_0) then
 		return
 	end
 
-	Activity101Rpc.instance:sendGet101InfosRequest(slot0:_actId(), slot0._onReceiveGet101InfosReply, slot0)
+	local var_4_1 = arg_4_0:_actId()
+
+	Activity101Rpc.instance:sendGet101InfosRequest(var_4_1, arg_4_0._onReceiveGet101InfosReply, arg_4_0)
 end
 
-function slot0._onReceiveGet101InfosReply(slot0, slot1, slot2)
-	if slot2 == 0 then
-		slot3, slot4 = slot0:_viewNameAndParam()
+function var_0_0._onReceiveGet101InfosReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_2 == 0 then
+		local var_5_0, var_5_1 = arg_5_0:_viewNameAndParam()
 
-		ViewMgr.instance:openView(slot3, slot4)
+		ViewMgr.instance:openView(var_5_0, var_5_1)
 	else
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 end
 
-function slot0._viewNameAndParam(slot0)
-	slot1 = slot0:getCustomData()
+function var_0_0._viewNameAndParam(arg_6_0)
+	local var_6_0 = arg_6_0:getCustomData()
+	local var_6_1 = var_6_0.viewParam
 
-	return slot1.viewName, slot1.viewParam
+	return var_6_0.viewName, var_6_1
 end
 
-function slot0._actId(slot0)
-	return slot0:getCustomData().viewParam.actId
+function var_0_0._actId(arg_7_0)
+	return arg_7_0:getCustomData().viewParam.actId
 end
 
-function slot0._tryInit(slot0)
-	if not ActivityType101Model.instance:isInit(slot0:_actId()) then
-		Activity101Rpc.instance:sendGet101InfosRequest(slot1)
+function var_0_0._tryInit(arg_8_0)
+	local var_8_0 = arg_8_0:_actId()
+
+	if not ActivityType101Model.instance:isInit(var_8_0) then
+		Activity101Rpc.instance:sendGet101InfosRequest(var_8_0)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:_tryInit()
-	slot0:_addNotEventRedDot(slot0._checkRed, slot0)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:_tryInit()
+	arg_9_0:_addNotEventRedDot(arg_9_0._checkRed, arg_9_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_setMainSprite("v1a6_act_icon3")
+function var_0_0.onRefresh(arg_10_0)
+	arg_10_0:_setMainSprite("v1a6_act_icon3")
 end
 
-function slot0._checkRed(slot0)
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot0:_actId()) and true or false
+function var_0_0._checkRed(arg_11_0)
+	local var_11_0 = arg_11_0:_actId()
+
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_11_0) and true or false
 end
 
-return slot0
+return var_0_0

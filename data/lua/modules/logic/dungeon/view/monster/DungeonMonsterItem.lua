@@ -1,57 +1,63 @@
-module("modules.logic.dungeon.view.monster.DungeonMonsterItem", package.seeall)
+﻿module("modules.logic.dungeon.view.monster.DungeonMonsterItem", package.seeall)
 
-slot0 = class("DungeonMonsterItem", ListScrollCellExtend)
+local var_0_0 = class("DungeonMonsterItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btncategoryOnClick(slot0)
-	slot0._view:selectCell(slot0._index, true)
+function var_0_0._btncategoryOnClick(arg_4_0)
+	arg_4_0._view:selectCell(arg_4_0._index, true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._singleImage = gohelper.findChildImage(slot0.viewGO, "image")
-	slot0._quality = gohelper.findChildImage(slot0.viewGO, "quality")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_selected")
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._singleImage.gameObject)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._singleImage = gohelper.findChildImage(arg_5_0.viewGO, "image")
+	arg_5_0._quality = gohelper.findChildImage(arg_5_0.viewGO, "quality")
+	arg_5_0._goselected = gohelper.findChild(arg_5_0.viewGO, "#go_selected")
+	arg_5_0._click = SLFramework.UGUI.UIClickListener.Get(arg_5_0._singleImage.gameObject)
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._click:AddClickListener(slot0._btncategoryOnClick, slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	arg_6_0._click:AddClickListener(arg_6_0._btncategoryOnClick, arg_6_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_7_0)
+	arg_7_0._click:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	if FightConfig.instance:getSkinCO(slot0._mo.config.skinId) and slot2.headIcon or nil then
-		gohelper.getSingleImage(slot0._singleImage.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot3))
+	local var_8_0 = FightConfig.instance:getSkinCO(arg_8_0._mo.config.skinId)
+	local var_8_1 = var_8_0 and var_8_0.headIcon or nil
+
+	if var_8_1 then
+		gohelper.getSingleImage(arg_8_0._singleImage.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_8_1))
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._quality, "bp_quality_01")
+	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._quality, "bp_quality_01")
 end
 
-function slot0.onSelect(slot0, slot1)
-	if slot1 then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeMonster, slot0._mo.config)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	if arg_9_1 then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeMonster, arg_9_0._mo.config)
 	end
 
-	slot0._goselected:SetActive(slot1)
+	arg_9_0._goselected:SetActive(arg_9_1)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

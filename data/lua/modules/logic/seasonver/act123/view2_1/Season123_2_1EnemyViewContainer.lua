@@ -1,8 +1,8 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1EnemyViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1EnemyViewContainer", package.seeall)
 
-slot0 = class("Season123_2_1EnemyViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_2_1EnemyViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123_2_1EnemyView.New(),
 		Season123_2_1EnemyTabList.New(),
@@ -11,21 +11,22 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
+function var_0_0.onContainerOpenFinish(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

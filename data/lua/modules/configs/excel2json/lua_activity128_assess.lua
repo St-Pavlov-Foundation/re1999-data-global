@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_activity128_assess", package.seeall)
+﻿module("modules.configs.excel2json.lua_activity128_assess", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	spriteName = 3,
 	needPointBoss1 = 4,
 	mainBg = 8,
@@ -11,13 +12,13 @@ slot1 = {
 	needPointBoss3 = 6,
 	level = 1
 }
-slot2 = {
+local var_0_2 = {
 	"level"
 }
-slot3 = {}
+local var_0_3 = {}
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

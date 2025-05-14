@@ -1,277 +1,310 @@
-module("modules.logic.dungeon.view.DungeonWeekWalkView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonWeekWalkView", package.seeall)
 
-slot0 = class("DungeonWeekWalkView", BaseView)
+local var_0_0 = class("DungeonWeekWalkView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "anim/rewards/#go_empty")
-	slot0._gohasrewards = gohelper.findChild(slot0.viewGO, "anim/rewards/#go_hasrewards")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "anim/rewards/#go_hasrewards/Scroll View/Viewport/#go_rewards")
-	slot0._btnshop = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/#btn_shop")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/#btn_start")
-	slot0._simageline = gohelper.findChildSingleImage(slot0.viewGO, "anim/#simage_line")
-	slot0._goeasy = gohelper.findChild(slot0.viewGO, "anim/map/scenetype/#go_easy")
-	slot0._gohard = gohelper.findChild(slot0.viewGO, "anim/map/scenetype/#go_hard")
-	slot0._txtscenetype = gohelper.findChildText(slot0.viewGO, "anim/map/scenetype/#txt_scenetype")
-	slot0._txtcurprogress = gohelper.findChildText(slot0.viewGO, "anim/map/#txt_curprogress")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/#btn_reward")
-	slot0._golingqu = gohelper.findChild(slot0.viewGO, "anim/#btn_reward/#go_lingqu")
-	slot0._gorewardredpoint = gohelper.findChild(slot0.viewGO, "anim/#btn_reward/#go_rewardredpoint")
-	slot0._txttaskprogress = gohelper.findChildText(slot0.viewGO, "anim/#btn_reward/#txt_taskprogress")
-	slot0._txtmaptaskprogress = gohelper.findChildText(slot0.viewGO, "anim/#txt_maptaskprogress")
-	slot0._gomapprogressitem = gohelper.findChild(slot0.viewGO, "anim/mapprogresslist/#go_mapprogressitem")
-	slot0._txtresettime = gohelper.findChildText(slot0.viewGO, "anim/#txt_resettime")
-	slot0._simagebgimgnext = gohelper.findChildSingleImage(slot0.viewGO, "transition/ani/#simage_bgimg_next")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "anim/rewards/#go_empty")
+	arg_1_0._gohasrewards = gohelper.findChild(arg_1_0.viewGO, "anim/rewards/#go_hasrewards")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "anim/rewards/#go_hasrewards/Scroll View/Viewport/#go_rewards")
+	arg_1_0._btnshop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_shop")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_start")
+	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#simage_line")
+	arg_1_0._goeasy = gohelper.findChild(arg_1_0.viewGO, "anim/map/scenetype/#go_easy")
+	arg_1_0._gohard = gohelper.findChild(arg_1_0.viewGO, "anim/map/scenetype/#go_hard")
+	arg_1_0._txtscenetype = gohelper.findChildText(arg_1_0.viewGO, "anim/map/scenetype/#txt_scenetype")
+	arg_1_0._txtcurprogress = gohelper.findChildText(arg_1_0.viewGO, "anim/map/#txt_curprogress")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_reward")
+	arg_1_0._golingqu = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_reward/#go_lingqu")
+	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_reward/#go_rewardredpoint")
+	arg_1_0._txttaskprogress = gohelper.findChildText(arg_1_0.viewGO, "anim/#btn_reward/#txt_taskprogress")
+	arg_1_0._txtmaptaskprogress = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_maptaskprogress")
+	arg_1_0._gomapprogressitem = gohelper.findChild(arg_1_0.viewGO, "anim/mapprogresslist/#go_mapprogressitem")
+	arg_1_0._txtresettime = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_resettime")
+	arg_1_0._simagebgimgnext = gohelper.findChildSingleImage(arg_1_0.viewGO, "transition/ani/#simage_bgimg_next")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnshop:AddClickListener(slot0._btnshopOnClick, slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnshop:AddClickListener(arg_2_0._btnshopOnClick, arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnshop:RemoveClickListener()
-	slot0._btnstart:RemoveClickListener()
-	slot0._btnreward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnshop:RemoveClickListener()
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btnreward:RemoveClickListener()
 end
 
-function slot0._btnrewardOnClick(slot0)
+function var_0_0._btnrewardOnClick(arg_4_0)
 	WeekWalkController.instance:openWeekWalkRewardView()
 end
 
-function slot0._btnshopOnClick(slot0)
+function var_0_0._btnshopOnClick(arg_5_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Bank) then
-		slot0:_openStoreView()
+		arg_5_0:_openStoreView()
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Bank))
 	end
 end
 
-function slot0._updateTaskStatus(slot0)
-	slot1 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
+function var_0_0._updateTaskStatus(arg_6_0)
+	local var_6_0 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
 
-	gohelper.setActive(slot0._golingqu, slot1)
-	gohelper.setActive(slot0._gorewardredpoint, slot1)
+	gohelper.setActive(arg_6_0._golingqu, var_6_0)
+	gohelper.setActive(arg_6_0._gorewardredpoint, var_6_0)
 end
 
-function slot0._openStoreView(slot0)
+function var_0_0._openStoreView(arg_7_0)
 	StoreController.instance:openStoreView(StoreEnum.WeekWalkTabId)
 end
 
-function slot0._btnstartOnClick(slot0)
-	slot0:openWeekWalkView()
+function var_0_0._btnstartOnClick(arg_8_0)
+	arg_8_0:openWeekWalkView()
 end
 
-function slot0._initImgs(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#bg")
-	slot0._simagexingdian1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#xingdian1")
-	slot0._simagexingdian2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#xingdian2")
-	slot0._simagerightdownglow = gohelper.findChildSingleImage(slot0.viewGO, "bg/#rightdown_glow")
-	slot0._simagecentertopglow = gohelper.findChildSingleImage(slot0.viewGO, "bg/#centertop_glow")
-	slot0._simagelefttopglow = gohelper.findChildSingleImage(slot0.viewGO, "bg/#lefttop_glow")
-	slot0._simagelefttopglow2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#lefttop_glow2")
-	slot0._simageleftdownglow = gohelper.findChildSingleImage(slot0.viewGO, "bg/#leftdown_glow")
-	slot0._simagerihtttopglow = gohelper.findChildSingleImage(slot0.viewGO, "bg/#rihtttop_glow")
-	slot0._simagerihtttopblack = gohelper.findChildSingleImage(slot0.viewGO, "bg/#rihtttop_black")
-	slot0._simagecenterdown = gohelper.findChildSingleImage(slot0.viewGO, "bg/#centerdown")
+function var_0_0._initImgs(arg_9_0)
+	arg_9_0._simagebg = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#bg")
+	arg_9_0._simagexingdian1 = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#xingdian1")
+	arg_9_0._simagexingdian2 = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#xingdian2")
+	arg_9_0._simagerightdownglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#rightdown_glow")
+	arg_9_0._simagecentertopglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#centertop_glow")
+	arg_9_0._simagelefttopglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#lefttop_glow")
+	arg_9_0._simagelefttopglow2 = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#lefttop_glow2")
+	arg_9_0._simageleftdownglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#leftdown_glow")
+	arg_9_0._simagerihtttopglow = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#rihtttop_glow")
+	arg_9_0._simagerihtttopblack = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#rihtttop_black")
+	arg_9_0._simagecenterdown = gohelper.findChildSingleImage(arg_9_0.viewGO, "bg/#centerdown")
 
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
-	slot0._simagexingdian1:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
-	slot0._simagexingdian2:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
-	slot0._simagerightdownglow:LoadImage(ResUrl.getWeekWalkBg("rightdown_glow.png"))
-	slot0._simagecentertopglow:LoadImage(ResUrl.getWeekWalkBg("centertop_hlow.png"))
-	slot0._simagelefttopglow:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow.png"))
-	slot0._simagelefttopglow2:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow2.png"))
-	slot0._simageleftdownglow:LoadImage(ResUrl.getWeekWalkBg("leftdown_glow.png"))
-	slot0._simagerihtttopglow:LoadImage(ResUrl.getWeekWalkBg("righttop_glow.png"))
-	slot0._simagerihtttopblack:LoadImage(ResUrl.getWeekWalkBg("leftdown_black.png"))
-	slot0._simagecenterdown:LoadImage(ResUrl.getWeekWalkBg("centerdown.png"))
-	slot0._simagebgimgnext:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
+	arg_9_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
+	arg_9_0._simagexingdian1:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
+	arg_9_0._simagexingdian2:LoadImage(ResUrl.getWeekWalkBg("xingdian.png"))
+	arg_9_0._simagerightdownglow:LoadImage(ResUrl.getWeekWalkBg("rightdown_glow.png"))
+	arg_9_0._simagecentertopglow:LoadImage(ResUrl.getWeekWalkBg("centertop_hlow.png"))
+	arg_9_0._simagelefttopglow:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow.png"))
+	arg_9_0._simagelefttopglow2:LoadImage(ResUrl.getWeekWalkBg("lefttop_glow2.png"))
+	arg_9_0._simageleftdownglow:LoadImage(ResUrl.getWeekWalkBg("leftdown_glow.png"))
+	arg_9_0._simagerihtttopglow:LoadImage(ResUrl.getWeekWalkBg("righttop_glow.png"))
+	arg_9_0._simagerihtttopblack:LoadImage(ResUrl.getWeekWalkBg("leftdown_black.png"))
+	arg_9_0._simagecenterdown:LoadImage(ResUrl.getWeekWalkBg("centerdown.png"))
+	arg_9_0._simagebgimgnext:LoadImage(ResUrl.getWeekWalkBg("full/weekwalkbg.jpg"))
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_10_0)
 	WeekWalkController.instance:requestTask()
-	slot0:_showBonus()
-	slot0:_updateTaskStatus()
-	slot0:_showDeadline()
+	arg_10_0:_showBonus()
+	arg_10_0:_updateTaskStatus()
+	arg_10_0:_showDeadline()
 	WeekWalkController.instance:startCheckTime()
-	slot0:_initImgs()
+	arg_10_0:_initImgs()
 
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_10_0._viewAnim = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
-	slot0:_showProgress()
-	gohelper.addUIClickAudio(slot0._btnstart.gameObject, AudioEnum.WeekWalk.play_artificial_ui_entrance)
-	gohelper.addUIClickAudio(slot0._btnreward.gameObject, AudioEnum.WeekWalk.play_artificial_ui_taskopen)
-	gohelper.addUIClickAudio(slot0._btnshop.gameObject, AudioEnum.UI.play_ui_checkpoint_sources_open)
-	slot0:_initOnOpen()
+	arg_10_0._simageline:LoadImage(ResUrl.getWeekWalkBg("hw2.png"))
+	arg_10_0:_showProgress()
+	gohelper.addUIClickAudio(arg_10_0._btnstart.gameObject, AudioEnum.WeekWalk.play_artificial_ui_entrance)
+	gohelper.addUIClickAudio(arg_10_0._btnreward.gameObject, AudioEnum.WeekWalk.play_artificial_ui_taskopen)
+	gohelper.addUIClickAudio(arg_10_0._btnshop.gameObject, AudioEnum.UI.play_ui_checkpoint_sources_open)
+	arg_10_0:_initOnOpen()
 end
 
-function slot0._updateDegrade(slot0)
-	gohelper.setActive(slot0._btndegrade.gameObject, WeekWalkModel.instance:getLevel() >= 2 and WeekWalkModel.instance:getChangeLevel() <= 0)
+function var_0_0._updateDegrade(arg_11_0)
+	local var_11_0 = WeekWalkModel.instance:getLevel()
+	local var_11_1 = WeekWalkModel.instance:getChangeLevel()
+
+	gohelper.setActive(arg_11_0._btndegrade.gameObject, var_11_0 >= 2 and var_11_1 <= 0)
 end
 
-function slot0._showProgress(slot0)
-	slot2, slot3 = WeekWalkModel.instance:getInfo():getNotFinishedMap()
-	slot4 = lua_weekwalk_scene.configDict[slot2.sceneId]
-	slot0._txtcurprogress.text = string.format(LangSettings.instance:getCurLangShortcut() == "en" and "[%s]" or "【%s】", slot4.battleName)
-	slot0._txtscenetype.text = string.format("%s %s", slot4.typeName, slot4.name)
+function var_0_0._showProgress(arg_12_0)
+	local var_12_0 = WeekWalkModel.instance:getInfo()
+	local var_12_1, var_12_2 = var_12_0:getNotFinishedMap()
+	local var_12_3 = lua_weekwalk_scene.configDict[var_12_1.sceneId]
+	local var_12_4 = LangSettings.instance:getCurLangShortcut() == "en" and "[%s]" or "【%s】"
 
-	if slot2 then
-		slot7, slot8 = slot2:getCurStarInfo()
-		slot0._txtmaptaskprogress.text = string.format("%s/%s", slot7, slot8)
+	arg_12_0._txtcurprogress.text = string.format(var_12_4, var_12_3.battleName)
+	arg_12_0._txtscenetype.text = string.format("%s %s", var_12_3.typeName, var_12_3.name)
+
+	if var_12_1 then
+		local var_12_5, var_12_6 = var_12_1:getCurStarInfo()
+
+		arg_12_0._txtmaptaskprogress.text = string.format("%s/%s", var_12_5, var_12_6)
 	else
-		slot0._txtmaptaskprogress.text = "0/10"
+		arg_12_0._txtmaptaskprogress.text = "0/10"
 	end
 
-	slot7 = WeekWalkModel.isShallowMap(slot2.sceneId)
+	local var_12_7 = WeekWalkModel.isShallowMap(var_12_1.sceneId)
 
-	gohelper.setActive(slot0._goeasy, slot7)
-	gohelper.setActive(slot0._gohard, not slot7)
+	gohelper.setActive(arg_12_0._goeasy, var_12_7)
+	gohelper.setActive(arg_12_0._gohard, not var_12_7)
 
-	slot0._mapFinishItemTab = slot0._mapFinishItemTab or slot0:getUserDataTb_()
-	slot8 = slot1:getMapInfos()
-	slot9 = 1
-	slot10 = 10
+	arg_12_0._mapFinishItemTab = arg_12_0._mapFinishItemTab or arg_12_0:getUserDataTb_()
 
-	if not slot7 then
-		slot9 = 11
-		slot10 = 16
+	local var_12_8 = var_12_0:getMapInfos()
+	local var_12_9 = 1
+	local var_12_10 = 10
+
+	if not var_12_7 then
+		var_12_9 = 11
+		var_12_10 = 16
 	end
 
-	for slot14, slot15 in pairs(slot0._mapFinishItemTab) do
-		gohelper.setActive(slot15, false)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._mapFinishItemTab) do
+		gohelper.setActive(iter_12_1, false)
 	end
 
-	for slot14 = slot9, slot10 do
-		if not slot0._mapFinishItemTab[slot14] then
-			slot0._mapFinishItemTab[slot14] = gohelper.cloneInPlace(slot0._gomapprogressitem, "item_" .. slot14)
+	for iter_12_2 = var_12_9, var_12_10 do
+		local var_12_11 = arg_12_0._mapFinishItemTab[iter_12_2]
+
+		if not var_12_11 then
+			var_12_11 = gohelper.cloneInPlace(arg_12_0._gomapprogressitem, "item_" .. iter_12_2)
+			arg_12_0._mapFinishItemTab[iter_12_2] = var_12_11
 		end
 
-		gohelper.setActive(slot15, true)
-		gohelper.setActive(gohelper.findChild(slot15, "finish"), slot8[slot14] and slot17.isFinished > 0)
+		gohelper.setActive(var_12_11, true)
 
-		slot19 = gohelper.findChildImage(slot15, "unfinish")
-		slot20 = gohelper.findChildImage(slot15, "finish")
+		local var_12_12 = gohelper.findChild(var_12_11, "finish")
+		local var_12_13 = var_12_8[iter_12_2]
+		local var_12_14 = var_12_13 and var_12_13.isFinished > 0
+
+		gohelper.setActive(var_12_12, var_12_14)
+
+		local var_12_15 = gohelper.findChildImage(var_12_11, "unfinish")
+		local var_12_16 = gohelper.findChildImage(var_12_11, "finish")
 
 		if not UISpriteSetMgr.instance:getWeekWalkSpriteSetUnit() then
-			slot0:_setImgAlpha(slot19, 0)
-			slot0:_setImgAlpha(slot20, 0)
+			arg_12_0:_setImgAlpha(var_12_15, 0)
+			arg_12_0:_setImgAlpha(var_12_16, 0)
 		end
 
-		UISpriteSetMgr.instance:setWeekWalkSprite(slot19, slot7 and "btn_dian2" or "btn_dian4", true, 1)
-		UISpriteSetMgr.instance:setWeekWalkSprite(slot20, slot7 and "btn_dian1" or "btn_dian3", true, 1)
-		gohelper.setActive(gohelper.findChild(slot15, "finish_light_deepdream01"), not slot7 and slot18)
-		gohelper.setActive(gohelper.findChild(slot15, "finish_light"), slot7 and slot18)
+		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_15, var_12_7 and "btn_dian2" or "btn_dian4", true, 1)
+		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_16, var_12_7 and "btn_dian1" or "btn_dian3", true, 1)
+		gohelper.setActive(gohelper.findChild(var_12_11, "finish_light_deepdream01"), not var_12_7 and var_12_14)
+		gohelper.setActive(gohelper.findChild(var_12_11, "finish_light"), var_12_7 and var_12_14)
 	end
 end
 
-function slot0._setImgAlpha(slot0, slot1, slot2)
-	slot3 = slot1.color
-	slot3.a = slot2
-	slot1.color = slot3
+function var_0_0._setImgAlpha(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_1.color
+
+	var_13_0.a = arg_13_2
+	arg_13_1.color = var_13_0
 end
 
-function slot0.getWeekTaskProgress()
-	slot0 = 0
-	slot1 = 0
-	slot2 = {}
+function var_0_0.getWeekTaskProgress()
+	local var_14_0 = 0
+	local var_14_1 = 0
+	local var_14_2 = {}
 
 	WeekWalkTaskListModel.instance:showTaskList(WeekWalkEnum.TaskType.Week)
 
-	for slot7, slot8 in ipairs(WeekWalkTaskListModel.instance:getList()) do
-		if WeekWalkTaskListModel.instance:getTaskMo(slot8.id) and (slot9.finishCount > 0 or slot9.hasFinished) then
-			slot14 = "#"
+	local var_14_3 = WeekWalkTaskListModel.instance:getList()
 
-			for slot14, slot15 in ipairs(GameUtil.splitString2(slot8.bonus, true, "|", slot14)) do
-				slot18 = slot15[3]
+	for iter_14_0, iter_14_1 in ipairs(var_14_3) do
+		local var_14_4 = WeekWalkTaskListModel.instance:getTaskMo(iter_14_1.id)
 
-				if not slot2[string.format("%s_%s", slot15[1], slot15[2])] then
-					slot2[slot19] = slot15
+		if var_14_4 and (var_14_4.finishCount > 0 or var_14_4.hasFinished) then
+			local var_14_5 = GameUtil.splitString2(iter_14_1.bonus, true, "|", "#")
+
+			for iter_14_2, iter_14_3 in ipairs(var_14_5) do
+				local var_14_6 = iter_14_3[1]
+				local var_14_7 = iter_14_3[2]
+				local var_14_8 = iter_14_3[3]
+				local var_14_9 = string.format("%s_%s", var_14_6, var_14_7)
+				local var_14_10 = var_14_2[var_14_9]
+
+				if not var_14_10 then
+					var_14_2[var_14_9] = iter_14_3
 				else
-					slot20[3] = slot20[3] + slot18
-					slot2[slot19] = slot20
+					var_14_10[3] = var_14_10[3] + var_14_8
+					var_14_2[var_14_9] = var_14_10
 				end
 			end
 		end
 
-		if slot9 then
-			slot0 = math.max(slot9.progress or 0, slot0)
+		if var_14_4 then
+			var_14_0 = math.max(var_14_4.progress or 0, var_14_0)
 		end
 
-		if lua_task_weekwalk.configDict[slot8.id] then
-			slot1 = math.max(slot10.maxProgress or 0, slot1)
+		local var_14_11 = lua_task_weekwalk.configDict[iter_14_1.id]
+
+		if var_14_11 then
+			var_14_1 = math.max(var_14_11.maxProgress or 0, var_14_1)
 		end
 	end
 
-	slot4 = {}
+	local var_14_12 = {}
 
-	for slot8, slot9 in pairs(slot2) do
-		table.insert(slot4, slot9)
+	for iter_14_4, iter_14_5 in pairs(var_14_2) do
+		table.insert(var_14_12, iter_14_5)
 	end
 
-	table.sort(slot4, uv0._sort)
+	table.sort(var_14_12, var_0_0._sort)
 
-	return slot0, slot1, slot4
+	return var_14_0, var_14_1, var_14_12
 end
 
-function slot0._sort(slot0, slot1)
-	if ItemModel.instance:getItemConfig(slot0[1], slot0[2]).rare ~= ItemModel.instance:getItemConfig(slot1[1], slot1[2]).rare then
-		return slot3.rare < slot2.rare
+function var_0_0._sort(arg_15_0, arg_15_1)
+	local var_15_0 = ItemModel.instance:getItemConfig(arg_15_0[1], arg_15_0[2])
+	local var_15_1 = ItemModel.instance:getItemConfig(arg_15_1[1], arg_15_1[2])
+
+	if var_15_0.rare ~= var_15_1.rare then
+		return var_15_0.rare > var_15_1.rare
 	end
 
-	return slot1[3] < slot0[3]
+	return arg_15_0[3] > arg_15_1[3]
 end
 
-function slot0._showBonus(slot0)
+function var_0_0._showBonus(arg_16_0)
 	if not WeekWalkTaskListModel.instance:hasTaskList() then
 		return
 	end
 
-	slot7, slot8, slot3 = uv0.getWeekTaskProgress()
-	slot0._txttaskprogress.text = string.format("%s/%s", slot7, slot8)
+	local var_16_0, var_16_1, var_16_2 = var_0_0.getWeekTaskProgress()
 
-	gohelper.destroyAllChildren(slot0._gorewards)
+	arg_16_0._txttaskprogress.text = string.format("%s/%s", var_16_0, var_16_1)
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot9 = IconMgr.instance:getCommonItemIcon(slot0._gorewards)
+	gohelper.destroyAllChildren(arg_16_0._gorewards)
 
-		slot9:setMOValue(slot8[1], slot8[2], slot8[3])
-		slot9:isShowCount(true)
-		slot9:setCountFontSize(31)
+	for iter_16_0, iter_16_1 in ipairs(var_16_2) do
+		local var_16_3 = IconMgr.instance:getCommonItemIcon(arg_16_0._gorewards)
+
+		var_16_3:setMOValue(iter_16_1[1], iter_16_1[2], iter_16_1[3])
+		var_16_3:isShowCount(true)
+		var_16_3:setCountFontSize(31)
 	end
 
-	slot4 = #slot3 > 0
+	local var_16_4 = #var_16_2 > 0
 
-	gohelper.setActive(slot0._goempty, not slot4)
-	gohelper.setActive(slot0._gohasrewards, slot4)
+	gohelper.setActive(arg_16_0._goempty, not var_16_4)
+	gohelper.setActive(arg_16_0._gohasrewards, var_16_4)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
+function var_0_0.onUpdateParam(arg_17_0)
+	arg_17_0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
 end
 
-function slot0.onShow(slot0)
-	slot0.viewContainer:setNavigateButtonViewHelpId()
-	slot0:_showWeekWalkSettlementView()
+function var_0_0.onShow(arg_18_0)
+	arg_18_0.viewContainer:setNavigateButtonViewHelpId()
+	arg_18_0:_showWeekWalkSettlementView()
 
-	if slot0._bgmId then
+	if arg_18_0._bgmId then
 		return
 	end
 end
 
-function slot0._onFinishGuide(slot0, slot1)
-	if slot1 == 501 then
-		slot0:_showWeekWalkSettlementView()
+function var_0_0._onFinishGuide(arg_19_0, arg_19_1)
+	if arg_19_1 == 501 then
+		arg_19_0:_showWeekWalkSettlementView()
 	end
 end
 
-function slot0._showWeekWalkSettlementView(slot0)
-	if GameGlobalMgr.instance:getLoadingState() and slot1:getLoadingViewName() then
+function var_0_0._showWeekWalkSettlementView(arg_20_0)
+	local var_20_0 = GameGlobalMgr.instance:getLoadingState()
+
+	if var_20_0 and var_20_0:getLoadingViewName() then
 		return
 	end
 
@@ -285,166 +318,179 @@ function slot0._showWeekWalkSettlementView(slot0)
 		return
 	end
 
-	if WeekWalkModel.instance:getInfo().isPopShallowSettle then
+	local var_20_1 = WeekWalkModel.instance:getInfo()
+
+	if var_20_1.isPopShallowSettle then
 		WeekWalkController.instance:openWeekWalkShallowSettlementView()
 
 		return
 	end
 
-	if slot2.isPopDeepSettle then
+	if var_20_1.isPopDeepSettle then
 		WeekWalkController.instance:checkOpenWeekWalkDeepLayerNoticeView()
 
 		return
 	end
 end
 
-function slot0.onHide(slot0)
-	slot0.viewContainer:resetNavigateButtonViewHelpId()
+function var_0_0.onHide(arg_21_0)
+	arg_21_0.viewContainer:resetNavigateButtonViewHelpId()
 end
 
-function slot0.onOpen(slot0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0._refreshHelpFunc, slot0._refreshTarget)
-	slot0:onShow()
+function var_0_0.onOpen(arg_22_0)
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_22_0._refreshHelpFunc, arg_22_0._refreshTarget)
+	arg_22_0:onShow()
 end
 
-function slot0._showDeadline(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0._showDeadline(arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._onRefreshDeadline, arg_23_0)
 
-	slot0._endTime = WeekWalkController.getTaskEndTime(WeekWalkEnum.TaskType.Week)
+	arg_23_0._endTime = WeekWalkController.getTaskEndTime(WeekWalkEnum.TaskType.Week)
 
-	if not slot0._endTime then
+	if not arg_23_0._endTime then
 		return
 	end
 
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
-	slot0:_onRefreshDeadline()
+	TaskDispatcher.runRepeat(arg_23_0._onRefreshDeadline, arg_23_0, 1)
+	arg_23_0:_onRefreshDeadline()
 end
 
-function slot0._onRefreshDeadline(slot0)
-	if slot0._endTime - ServerTime.now() <= 0 then
+function var_0_0._onRefreshDeadline(arg_24_0)
+	local var_24_0 = arg_24_0._endTime - ServerTime.now()
+
+	if var_24_0 <= 0 then
 		WeekWalkController.instance:requestTask(true)
-		TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+		TaskDispatcher.cancelTask(arg_24_0._onRefreshDeadline, arg_24_0)
 	end
 
-	slot2, slot3 = TimeUtil.secondToRoughTime2(math.floor(slot1))
-	slot0._txtresettime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeonweekwalkview_resettime"), {
-		slot2,
-		slot3
-	})
+	local var_24_1, var_24_2 = TimeUtil.secondToRoughTime2(math.floor(var_24_0))
+	local var_24_3 = {
+		var_24_1,
+		var_24_2
+	}
+
+	arg_24_0._txtresettime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeonweekwalkview_resettime"), var_24_3)
 end
 
-function slot0._onGetInfo(slot0)
-	slot0:_showDeadline()
+function var_0_0._onGetInfo(arg_25_0)
+	arg_25_0:_showDeadline()
 end
 
-function slot0._onWeekwalkTaskUpdate(slot0)
+function var_0_0._onWeekwalkTaskUpdate(arg_26_0)
 	if ViewMgr.instance:isOpen(ViewName.WeekWalkRewardView) or ViewMgr.instance:isOpen(ViewName.WeekWalkLayerRewardView) then
 		return
 	end
 
-	slot0:_updateTaskStatus()
-	slot0:_showBonus()
-	slot0:_showDeadline()
+	arg_26_0:_updateTaskStatus()
+	arg_26_0:_showBonus()
+	arg_26_0:_showDeadline()
 end
 
-function slot0._initOnOpen(slot0)
-	slot1 = slot0.viewContainer._navigateButtonView
-	slot0._refreshHelpFunc = slot1.showHelpBtnIcon
-	slot0._refreshTarget = slot1
+function var_0_0._initOnOpen(arg_27_0)
+	local var_27_0 = arg_27_0.viewContainer._navigateButtonView
 
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, slot0._OnSelectLevel, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, slot0._onWeekwalkTaskUpdate, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, slot0._onGetInfo, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
+	arg_27_0._refreshHelpFunc = var_27_0.showHelpBtnIcon
+	arg_27_0._refreshTarget = var_27_0
+
+	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, arg_27_0._OnSelectLevel, arg_27_0)
+	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_27_0._onCloseView, arg_27_0, LuaEventSystem.Low)
+	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_27_0._onOpenView, arg_27_0, LuaEventSystem.Low)
+	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_27_0._onOpenViewFinish, arg_27_0, LuaEventSystem.Low)
+	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_27_0._onWeekwalkTaskUpdate, arg_27_0)
+	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_27_0._onGetInfo, arg_27_0)
+	arg_27_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_27_0._onFinishGuide, arg_27_0)
 end
 
-function slot0._OnSelectLevel(slot0)
-	slot0._dropLevel.dropDown.enabled = false
+function var_0_0._OnSelectLevel(arg_28_0)
+	arg_28_0._dropLevel.dropDown.enabled = false
 
 	if WeekWalkModel.instance:getChangeLevel() > 0 then
 		return
 	end
 
-	slot0:openWeekWalkView()
+	arg_28_0:openWeekWalkView()
 end
 
-function slot0.openWeekWalkView(slot0)
-	module_views_preloader.WeekWalkLayerViewPreload(function ()
-		uv0:delayOpenWeekWalkView()
+function var_0_0.openWeekWalkView(arg_29_0)
+	module_views_preloader.WeekWalkLayerViewPreload(function()
+		arg_29_0:delayOpenWeekWalkView()
 	end)
 end
 
-function slot0.delayOpenWeekWalkView(slot0)
+function var_0_0.delayOpenWeekWalkView(arg_31_0)
 	WeekWalkController.instance:openWeekWalkLayerView()
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.WeekWalkLayerView or slot1 == ViewName.StoreView then
-		gohelper.setActive(gohelper.findChild(ViewMgr.instance:getContainer(ViewName.DungeonView).viewGO, "top_left"), true)
+function var_0_0._onOpenViewFinish(arg_32_0, arg_32_1)
+	if arg_32_1 == ViewName.WeekWalkLayerView or arg_32_1 == ViewName.StoreView then
+		local var_32_0 = ViewMgr.instance:getContainer(ViewName.DungeonView)
+		local var_32_1 = gohelper.findChild(var_32_0.viewGO, "top_left")
+
+		gohelper.setActive(var_32_1, true)
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.WeekWalkLayerView then
-		-- Nothing
+function var_0_0._onOpenView(arg_33_0, arg_33_1)
+	if arg_33_1 == ViewName.WeekWalkLayerView then
+		-- block empty
 	end
 
-	if slot1 == ViewName.WeekWalkLayerView or slot1 == ViewName.StoreView then
-		slot0._viewAnim:Play("dungeonweekwalk_out", 0, 0)
+	if arg_33_1 == ViewName.WeekWalkLayerView or arg_33_1 == ViewName.StoreView then
+		arg_33_0._viewAnim:Play("dungeonweekwalk_out", 0, 0)
 
-		slot2 = ViewMgr.instance:getContainer(ViewName.DungeonView)
+		local var_33_0 = ViewMgr.instance:getContainer(ViewName.DungeonView)
 
-		gohelper.setAsLastSibling(slot2.viewGO)
-		gohelper.setActive(gohelper.findChild(slot2.viewGO, "top_left"), false)
-	end
-end
+		gohelper.setAsLastSibling(var_33_0.viewGO)
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.WeekWalkLayerView then
-		slot0:_showProgress()
-		slot0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
-	elseif slot1 == ViewName.StoreView then
-		slot0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
-	elseif slot1 == ViewName.WeekWalkRewardView then
-		slot0:_onWeekwalkTaskUpdate()
+		local var_33_1 = gohelper.findChild(var_33_0.viewGO, "top_left")
+
+		gohelper.setActive(var_33_1, false)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:onHide()
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0._refreshHelpFunc, slot0._refreshTarget)
+function var_0_0._onCloseView(arg_34_0, arg_34_1)
+	if arg_34_1 == ViewName.WeekWalkLayerView then
+		arg_34_0:_showProgress()
+		arg_34_0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
+	elseif arg_34_1 == ViewName.StoreView then
+		arg_34_0._viewAnim:Play("dungeonweekwalk_in", 0, 0)
+	elseif arg_34_1 == ViewName.WeekWalkRewardView then
+		arg_34_0:_onWeekwalkTaskUpdate()
+	end
 end
 
-function slot0._clearOnDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.delayOpenWeekWalkView, slot0)
-	TaskDispatcher.cancelTask(slot0._openStoreView, slot0)
-	slot0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, slot0._OnSelectLevel, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0, LuaEventSystem.Low)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0, LuaEventSystem.Low)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0, LuaEventSystem.Low)
-	slot0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, slot0._onWeekwalkTaskUpdate, slot0)
-	slot0:removeEventCb(GuideController.instance, GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onClose(arg_35_0)
+	arg_35_0:onHide()
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_35_0._refreshHelpFunc, arg_35_0._refreshTarget)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clearOnDestroy()
-	slot0._simagebg:UnLoadImage()
-	slot0._simageline:UnLoadImage()
-	slot0._simagexingdian1:UnLoadImage()
-	slot0._simagexingdian2:UnLoadImage()
-	slot0._simagerightdownglow:UnLoadImage()
-	slot0._simagecentertopglow:UnLoadImage()
-	slot0._simagelefttopglow:UnLoadImage()
-	slot0._simagelefttopglow2:UnLoadImage()
-	slot0._simageleftdownglow:UnLoadImage()
-	slot0._simagerihtttopglow:UnLoadImage()
-	slot0._simagerihtttopblack:UnLoadImage()
-	slot0._simagecenterdown:UnLoadImage()
-	slot0._simagebgimgnext:UnLoadImage()
+function var_0_0._clearOnDestroy(arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0.delayOpenWeekWalkView, arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0._openStoreView, arg_36_0)
+	arg_36_0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectLevel, arg_36_0._OnSelectLevel, arg_36_0)
+	arg_36_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_36_0._onCloseView, arg_36_0, LuaEventSystem.Low)
+	arg_36_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_36_0._onOpenView, arg_36_0, LuaEventSystem.Low)
+	arg_36_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_36_0._onOpenViewFinish, arg_36_0, LuaEventSystem.Low)
+	arg_36_0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_36_0._onWeekwalkTaskUpdate, arg_36_0)
+	arg_36_0:removeEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_36_0._onFinishGuide, arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0._onRefreshDeadline, arg_36_0)
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_37_0)
+	arg_37_0:_clearOnDestroy()
+	arg_37_0._simagebg:UnLoadImage()
+	arg_37_0._simageline:UnLoadImage()
+	arg_37_0._simagexingdian1:UnLoadImage()
+	arg_37_0._simagexingdian2:UnLoadImage()
+	arg_37_0._simagerightdownglow:UnLoadImage()
+	arg_37_0._simagecentertopglow:UnLoadImage()
+	arg_37_0._simagelefttopglow:UnLoadImage()
+	arg_37_0._simagelefttopglow2:UnLoadImage()
+	arg_37_0._simageleftdownglow:UnLoadImage()
+	arg_37_0._simagerihtttopglow:UnLoadImage()
+	arg_37_0._simagerihtttopblack:UnLoadImage()
+	arg_37_0._simagecenterdown:UnLoadImage()
+	arg_37_0._simagebgimgnext:UnLoadImage()
+end
+
+return var_0_0

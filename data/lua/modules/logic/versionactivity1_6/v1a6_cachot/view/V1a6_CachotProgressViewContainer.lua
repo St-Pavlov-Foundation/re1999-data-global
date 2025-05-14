@@ -1,31 +1,33 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotProgressViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotProgressViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._scrollParam = slot0:getMixContentParam()
-	slot0._scrollView = LuaMixScrollView.New(V1a6_CachotProgressListModel.instance, slot0._scrollParam)
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._scrollParam = arg_1_0:getMixContentParam()
+	arg_1_0._scrollView = LuaMixScrollView.New(V1a6_CachotProgressListModel.instance, arg_1_0._scrollParam)
 
 	return {
 		V1a6_CachotProgressView.New(),
-		slot0._scrollView
+		arg_1_0._scrollView
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.getMixContentParam(slot0)
-	slot1 = MixScrollParam.New()
-	slot1.scrollGOPath = "Left/#go_progress/#scroll_view"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = V1a6_CachotProgressItem
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.startSpace = 2.5
-	slot1.endSpace = 50
+function var_0_0.getMixContentParam(arg_3_0)
+	local var_3_0 = MixScrollParam.New()
 
-	return slot1
+	var_3_0.scrollGOPath = "Left/#go_progress/#scroll_view"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+	var_3_0.cellClass = V1a6_CachotProgressItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirH
+	var_3_0.startSpace = 2.5
+	var_3_0.endSpace = 50
+
+	return var_3_0
 end
 
-return slot0
+return var_0_0

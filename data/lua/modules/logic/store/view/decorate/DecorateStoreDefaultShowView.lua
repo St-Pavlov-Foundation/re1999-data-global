@@ -1,69 +1,76 @@
-module("modules.logic.store.view.decorate.DecorateStoreDefaultShowView", package.seeall)
+﻿module("modules.logic.store.view.decorate.DecorateStoreDefaultShowView", package.seeall)
 
-slot0 = class("DecorateStoreDefaultShowView", BaseView)
+local var_0_0 = class("DecorateStoreDefaultShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_bg")
-	slot0._goview = gohelper.findChild(slot0.viewGO, "#go_view")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
+	arg_1_0._goview = gohelper.findChild(arg_1_0.viewGO, "#go_view")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.viewParam.bg.transform:SetParent(slot0._gobg.transform, false)
-	slot0.viewParam.contentBg.transform:SetParent(slot0._goview.transform, false)
-	slot0:_openPlayerCard()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.viewParam.bg.transform:SetParent(arg_7_0._gobg.transform, false)
+	arg_7_0.viewParam.contentBg.transform:SetParent(arg_7_0._goview.transform, false)
+	arg_7_0:_openPlayerCard()
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj, slot0.viewParam)
+function var_0_0.onClose(arg_8_0)
+	if arg_8_0.viewParam.callback then
+		arg_8_0.viewParam.callback(arg_8_0.viewParam.callbackObj, arg_8_0.viewParam)
 
-		slot0.viewParam.callback = nil
+		arg_8_0.viewParam.callback = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._bgGo then
-		gohelper.destroy(slot0._bgGo)
+function var_0_0.onDestroyView(arg_9_0)
+	if arg_9_0._bgGo then
+		gohelper.destroy(arg_9_0._bgGo)
 
-		slot0._bgGo = nil
+		arg_9_0._bgGo = nil
 	end
 
-	if slot0._viewGo then
-		gohelper.destroy(slot0._viewGo)
+	if arg_9_0._viewGo then
+		gohelper.destroy(arg_9_0._viewGo)
 
-		slot0._viewGo = nil
-	end
-end
-
-function slot0._openPlayerCard(slot0)
-	if slot0.viewParam.viewCls and gohelper.findChild(slot0.viewParam.contentBg, "#go_typebg5/" .. slot0.viewParam.viewCls.viewGO.name) then
-		slot0.playerCardView = MonoHelper.addNoUpdateLuaComOnceToGo(slot2, StorePlayerCardView)
-
-		slot0.playerCardView:onShowDecorateStoreDefault()
+		arg_9_0._viewGo = nil
 	end
 end
 
-return slot0
+function var_0_0._openPlayerCard(arg_10_0)
+	if arg_10_0.viewParam.viewCls then
+		local var_10_0 = arg_10_0.viewParam.viewCls.viewGO.name
+		local var_10_1 = gohelper.findChild(arg_10_0.viewParam.contentBg, "#go_typebg5/" .. var_10_0)
+
+		if var_10_1 then
+			arg_10_0.playerCardView = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_1, StorePlayerCardView)
+
+			arg_10_0.playerCardView:onShowDecorateStoreDefault()
+		end
+	end
+end
+
+return var_0_0

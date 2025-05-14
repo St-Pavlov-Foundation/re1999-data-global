@@ -1,27 +1,27 @@
-module("modules.logic.rouge.model.RougeNewReddotNOMO", package.seeall)
+﻿module("modules.logic.rouge.model.RougeNewReddotNOMO", package.seeall)
 
-slot0 = pureTable("RougeNewReddotNOMO")
+local var_0_0 = pureTable("RougeNewReddotNOMO")
 
-function slot0.init(slot0, slot1)
-	slot0.type = slot1.type
-	slot0.idNum = #slot1.ids
-	slot0.idMap = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.type = arg_1_1.type
+	arg_1_0.idNum = #arg_1_1.ids
+	arg_1_0.idMap = {}
 
-	for slot5, slot6 in ipairs(slot1.ids) do
-		slot0.idMap[slot6] = slot6
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.ids) do
+		arg_1_0.idMap[iter_1_1] = iter_1_1
 	end
 end
 
-function slot0.removeId(slot0, slot1)
-	if slot1 == 0 then
-		slot0.idMap = {}
-		slot0.idNum = 0
+function var_0_0.removeId(arg_2_0, arg_2_1)
+	if arg_2_1 == 0 then
+		arg_2_0.idMap = {}
+		arg_2_0.idNum = 0
 	end
 
-	if slot0.idMap[slot1] then
-		slot0.idMap[slot1] = nil
-		slot0.idNum = slot0.idNum - 1
+	if arg_2_0.idMap[arg_2_1] then
+		arg_2_0.idMap[arg_2_1] = nil
+		arg_2_0.idNum = arg_2_0.idNum - 1
 	end
 end
 
-return slot0
+return var_0_0

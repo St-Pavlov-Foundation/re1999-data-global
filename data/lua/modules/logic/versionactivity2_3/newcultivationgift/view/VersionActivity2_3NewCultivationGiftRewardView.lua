@@ -1,35 +1,37 @@
-module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardView", package.seeall)
 
-slot0 = class("VersionActivity2_3NewCultivationGiftRewardView", BaseView)
+local var_0_0 = class("VersionActivity2_3NewCultivationGiftRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._simagedecbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg/#simage_decbg")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_reward")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "#scroll_reward/viewport/content/#go_rewarditem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._simagedecbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#simage_decbg")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/viewport/content/#go_rewarditem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

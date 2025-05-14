@@ -1,245 +1,260 @@
-module("modules.logic.explore.map.unit.Explore3DRoleBase", package.seeall)
+﻿module("modules.logic.explore.map.unit.Explore3DRoleBase", package.seeall)
 
-slot0 = class("Explore3DRoleBase", ExploreBaseMoveUnit)
+local var_0_0 = class("Explore3DRoleBase", ExploreBaseMoveUnit)
 
-function slot0.onInit(slot0)
-	slot0._offsetPos = Vector3(0.5, 0, 0.5)
-	slot0._angle = Vector3(0, 0, 0)
-	slot0._walkDistance = 0
-	slot0.dir = 270
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._offsetPos = Vector3(0.5, 0, 0.5)
+	arg_1_0._angle = Vector3(0, 0, 0)
+	arg_1_0._walkDistance = 0
+	arg_1_0.dir = 270
 end
 
-function slot0.isRole(slot0)
+function var_0_0.isRole(arg_2_0)
 	return true
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("animComp", ExploreRoleAnimComp)
-	slot0:addComp("animEffectComp", ExploreRoleAnimEffectComp)
-	slot0:addComp("uiComp", ExploreUnitUIComp)
+function var_0_0.initComponents(arg_3_0)
+	arg_3_0:addComp("animComp", ExploreRoleAnimComp)
+	arg_3_0:addComp("animEffectComp", ExploreRoleAnimEffectComp)
+	arg_3_0:addComp("uiComp", ExploreUnitUIComp)
 end
 
-function slot0.playAnim(slot0, slot1)
-	uv0.super.playAnim(slot0, slot1)
+function var_0_0.playAnim(arg_4_0, arg_4_1)
+	var_0_0.super.playAnim(arg_4_0, arg_4_1)
 
-	slot0._cacheAnimName = slot1
+	arg_4_0._cacheAnimName = arg_4_1
 end
 
-function slot0.setBool(slot0, slot1, slot2)
-	slot0.animComp:setBool(slot1, slot2)
+function var_0_0.setBool(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.animComp:setBool(arg_5_1, arg_5_2)
 end
 
-function slot0.setFloat(slot0, slot1, slot2)
-	slot0.animComp:setFloat(slot1, slot2)
+function var_0_0.setFloat(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.animComp:setFloat(arg_6_1, arg_6_2)
 end
 
-function slot0.setMoveState(slot0, slot1)
-	slot0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveState, slot1)
+function var_0_0.setMoveState(arg_7_0, arg_7_1)
+	arg_7_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveState, arg_7_1)
 end
 
-function slot0.getHeroStatus(slot0)
-	return slot0._curStatus or ExploreAnimEnum.RoleAnimStatus.None
+function var_0_0.getHeroStatus(arg_8_0)
+	return arg_8_0._curStatus or ExploreAnimEnum.RoleAnimStatus.None
 end
 
-function slot0.setHeroStatus(slot0, slot1, slot2, slot3)
-	if slot1 == slot0._curStatus and slot1 ~= ExploreAnimEnum.RoleAnimStatus.None then
-		slot0.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
+function var_0_0.setHeroStatus(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_1 == arg_9_0._curStatus and arg_9_1 ~= ExploreAnimEnum.RoleAnimStatus.None then
+		arg_9_0.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
 	end
 
-	slot0._curStatus = slot1
+	arg_9_0._curStatus = arg_9_1
 
-	slot0.animEffectComp:setStatus(slot1)
-	TaskDispatcher.cancelTask(slot0.delaySetNormalStatus, slot0)
+	arg_9_0.animEffectComp:setStatus(arg_9_1)
+	TaskDispatcher.cancelTask(arg_9_0.delaySetNormalStatus, arg_9_0)
 
-	if slot0._statusControl then
+	if arg_9_0._statusControl then
 		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.HeroAnim)
 
-		slot0._statusControl = nil
+		arg_9_0._statusControl = nil
 	end
 
-	slot4 = nil
+	local var_9_0
 
-	if slot2 then
-		slot4 = ExploreAnimEnum.RoleAnimLen[slot1]
+	if arg_9_2 then
+		var_9_0 = ExploreAnimEnum.RoleAnimLen[arg_9_1]
 	end
 
-	if slot4 and slot4 > 0 then
-		TaskDispatcher.runDelay(slot0.delaySetNormalStatus, slot0, slot4)
+	if var_9_0 and var_9_0 > 0 then
+		TaskDispatcher.runDelay(arg_9_0.delaySetNormalStatus, arg_9_0, var_9_0)
 	end
 
-	slot0._statusControl = slot3
+	arg_9_0._statusControl = arg_9_3
 
-	if slot3 then
+	if arg_9_3 then
 		PopupController.instance:setPause("ExploreHeroLock", true)
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.HeroAnim)
 	end
 
-	slot0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, slot1)
+	arg_9_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, arg_9_1)
 end
 
-function slot0.delaySetNormalStatus(slot0)
-	slot0._curStatus = ExploreAnimEnum.RoleAnimStatus.None
+function var_0_0.delaySetNormalStatus(arg_10_0)
+	arg_10_0._curStatus = ExploreAnimEnum.RoleAnimStatus.None
 
-	slot0.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
-	slot0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, ExploreAnimEnum.RoleAnimStatus.None)
+	arg_10_0.animEffectComp:setStatus(ExploreAnimEnum.RoleAnimStatus.None)
+	arg_10_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.Status, ExploreAnimEnum.RoleAnimStatus.None)
 
-	if slot0._statusControl then
+	if arg_10_0._statusControl then
 		PopupController.instance:setPause("ExploreHeroLock", false)
 		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.HeroAnim)
 
-		slot0._statusControl = nil
+		arg_10_0._statusControl = nil
 	end
 end
 
-function slot0.moveSpeed(slot0)
-	slot1 = ExploreAnimEnum.RoleSpeed.run
+function var_0_0.moveSpeed(arg_11_0)
+	local var_11_0 = ExploreAnimEnum.RoleSpeed.run
 
 	if ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.MoveUnit then
-		slot1 = ExploreAnimEnum.RoleSpeed.walk
+		var_11_0 = ExploreAnimEnum.RoleSpeed.walk
 	end
 
-	slot0:setMoveSpeed(slot1)
+	arg_11_0:setMoveSpeed(var_11_0)
 
-	return slot1
+	return var_11_0
 end
 
-function slot0.setMoveSpeed(slot0, slot1)
-	slot2 = ExploreAnimEnum.RoleMoveState.Idle
+function var_0_0.setMoveSpeed(arg_12_0, arg_12_1)
+	local var_12_0 = ExploreAnimEnum.RoleMoveState.Idle
 
-	if ((slot1 ~= 0 or ExploreAnimEnum.RoleMoveState.Idle) and ExploreAnimEnum.RoleMoveState.Move) == ExploreAnimEnum.RoleMoveState.Move or not slot0._tarUnitMO or slot0._tarUnitMO.type ~= ExploreEnum.ItemType.PipePot then
-		TaskDispatcher.cancelTask(slot0._delaySetIdle, slot0)
-		slot0:setMoveState(slot2)
+	if arg_12_1 == 0 then
+		var_12_0 = ExploreAnimEnum.RoleMoveState.Idle
 	else
-		TaskDispatcher.runDelay(slot0._delaySetIdle, slot0, 0.2)
+		var_12_0 = ExploreAnimEnum.RoleMoveState.Move
+	end
+
+	if var_12_0 == ExploreAnimEnum.RoleMoveState.Move or not arg_12_0._tarUnitMO or arg_12_0._tarUnitMO.type ~= ExploreEnum.ItemType.PipePot then
+		TaskDispatcher.cancelTask(arg_12_0._delaySetIdle, arg_12_0)
+		arg_12_0:setMoveState(var_12_0)
+	else
+		TaskDispatcher.runDelay(arg_12_0._delaySetIdle, arg_12_0, 0.2)
 	end
 end
 
-function slot0._delaySetIdle(slot0)
-	slot0:setMoveState(ExploreAnimEnum.RoleMoveState.Idle)
+function var_0_0._delaySetIdle(arg_13_0)
+	arg_13_0:setMoveState(ExploreAnimEnum.RoleMoveState.Idle)
 end
 
-function slot0._endMove(slot0, ...)
-	slot0:setMoveSpeed(0)
-	uv0.super._endMove(slot0, ...)
+function var_0_0._endMove(arg_14_0, ...)
+	arg_14_0:setMoveSpeed(0)
+	var_0_0.super._endMove(arg_14_0, ...)
 end
 
-function slot0.stopMoving(slot0, slot1)
-	if slot1 then
-		slot0:setMoveSpeed(0)
+function var_0_0.stopMoving(arg_15_0, arg_15_1)
+	if arg_15_1 then
+		arg_15_0:setMoveSpeed(0)
 	end
 
-	return uv0.super.stopMoving(slot0, slot1)
+	return var_0_0.super.stopMoving(arg_15_0, arg_15_1)
 end
 
-function slot0.onDirChange(slot0, slot1)
-	slot0:setRotate(0, slot0.dir, 0)
+function var_0_0.onDirChange(arg_16_0, arg_16_1)
+	arg_16_0:setRotate(0, arg_16_0.dir, 0)
 end
 
-function slot0.onCheckDir(slot0, slot1, slot2)
-	if not ExploreHelper.isPosEqual(slot1, slot2) then
-		if slot2.x == slot1.x then
-			if slot1.y < slot2.y then
-				slot0.dir = 0
+function var_0_0.onCheckDir(arg_17_0, arg_17_1, arg_17_2)
+	if not ExploreHelper.isPosEqual(arg_17_1, arg_17_2) then
+		if arg_17_2.x == arg_17_1.x then
+			if arg_17_2.y > arg_17_1.y then
+				arg_17_0.dir = 0
 			else
-				slot0.dir = 180
+				arg_17_0.dir = 180
 			end
-		elseif slot2.x < slot1.x then
-			slot0.dir = 270
+		elseif arg_17_2.x < arg_17_1.x then
+			arg_17_0.dir = 270
 		else
-			slot0.dir = 90
+			arg_17_0.dir = 90
 		end
 	end
 
-	slot0.dir = slot0._lockDir or slot0.dir
+	arg_17_0.dir = arg_17_0._lockDir or arg_17_0.dir
 
-	slot0:onDirChange()
+	arg_17_0:onDirChange()
 end
 
-function slot0.onCheckDirByPos(slot0, slot1, slot2)
-	if slot1:Equals(slot2) then
+function var_0_0.onCheckDirByPos(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1:Equals(arg_18_2) then
 		return
 	end
 
-	slot0:setRotate(0, slot0._lockDir or math.deg(math.atan2(slot2.x - slot1.x, slot2.z - slot1.z)), 0)
+	local var_18_0 = arg_18_2.x - arg_18_1.x
+	local var_18_1 = arg_18_2.z - arg_18_1.z
+	local var_18_2 = math.deg(math.atan2(var_18_0, var_18_1))
+
+	var_18_2 = arg_18_0._lockDir or var_18_2
+
+	arg_18_0:setRotate(0, var_18_2, 0)
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	slot0:playAnim(slot0._cacheAnimName or ExploreAnimEnum.RoleAnimName.idle)
+function var_0_0._onSpineLoaded(arg_19_0, arg_19_1)
+	arg_19_0:playAnim(arg_19_0._cacheAnimName or ExploreAnimEnum.RoleAnimName.idle)
 
-	if slot0._callback then
-		if slot0._callbackObj then
-			slot0._callback(slot0._callbackObj, slot1, slot0)
+	if arg_19_0._callback then
+		if arg_19_0._callbackObj then
+			arg_19_0._callback(arg_19_0._callbackObj, arg_19_1, arg_19_0)
 		else
-			slot0._callback(slot1, slot0)
+			arg_19_0._callback(arg_19_1, arg_19_0)
 		end
 	end
 
-	slot0:setRotate(slot0._angle.x, slot0._angle.y, slot0._angle.z)
+	arg_19_0:setRotate(arg_19_0._angle.x, arg_19_0._angle.y, arg_19_0._angle.z)
 
-	slot0._callback = nil
-	slot0._callbackObj = nil
+	arg_19_0._callback = nil
+	arg_19_0._callbackObj = nil
 end
 
-function slot0.setRotate(slot0, slot1, slot2, slot3)
-	slot0._angle.x = slot1
-	slot0._angle.y = slot2
-	slot0._angle.z = slot3
+function var_0_0.setRotate(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	arg_20_0._angle.x = arg_20_1
+	arg_20_0._angle.y = arg_20_2
+	arg_20_0._angle.z = arg_20_3
 
-	if slot0._displayTr then
-		transformhelper.setLocalRotation(slot0._displayTr, slot0._angle.x, slot0._angle.y, slot0._angle.z)
+	if arg_20_0._displayTr then
+		transformhelper.setLocalRotation(arg_20_0._displayTr, arg_20_0._angle.x, arg_20_0._angle.y, arg_20_0._angle.z)
 	end
 end
 
-function slot0.setTrOffset(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0._displayTr then
+function var_0_0.setTrOffset(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5, arg_21_6)
+	if not arg_21_0._displayTr then
 		return
 	end
 
-	if slot1 then
-		slot0:setRotate(0, slot1, 0)
+	if arg_21_1 then
+		arg_21_0:setRotate(0, arg_21_1, 0)
 	end
 
-	if slot0._tweenMoveId then
-		ZProj.TweenHelper.KillById(slot0._tweenMoveId)
+	if arg_21_0._tweenMoveId then
+		ZProj.TweenHelper.KillById(arg_21_0._tweenMoveId)
 	end
 
-	TaskDispatcher.runRepeat(slot0.onTweenMoving, slot0, 0, -1)
+	TaskDispatcher.runRepeat(arg_21_0.onTweenMoving, arg_21_0, 0, -1)
 
-	slot0._tweenMoveEndCb = slot4
-	slot0._tweenMoveEndCbObj = slot5
-	slot0._tweenMoveId = ZProj.TweenHelper.DOMove(slot0._displayTr, slot2.x, slot2.y, slot2.z, slot3 or 0.3, slot0.onTweenMoveEnd, slot0, nil, slot6 or EaseType.Linear)
+	arg_21_0._tweenMoveEndCb = arg_21_4
+	arg_21_0._tweenMoveEndCbObj = arg_21_5
+	arg_21_0._tweenMoveId = ZProj.TweenHelper.DOMove(arg_21_0._displayTr, arg_21_2.x, arg_21_2.y, arg_21_2.z, arg_21_3 or 0.3, arg_21_0.onTweenMoveEnd, arg_21_0, nil, arg_21_6 or EaseType.Linear)
 end
 
-function slot0.onTweenMoving(slot0)
-	ExploreController.instance:dispatchEvent(ExploreEvent.HeroTweenDisTr, slot0._displayTr.position)
+function var_0_0.onTweenMoving(arg_22_0)
+	ExploreController.instance:dispatchEvent(ExploreEvent.HeroTweenDisTr, arg_22_0._displayTr.position)
 end
 
-function slot0.onTweenMoveEnd(slot0)
-	slot0._tweenMoveId = nil
+function var_0_0.onTweenMoveEnd(arg_23_0)
+	arg_23_0._tweenMoveId = nil
 
-	TaskDispatcher.cancelTask(slot0.onTweenMoving, slot0)
+	TaskDispatcher.cancelTask(arg_23_0.onTweenMoving, arg_23_0)
 
-	slot0._tweenMoveEndCb = nil
-	slot0._tweenMoveEndCbObj = nil
+	local var_23_0 = arg_23_0._tweenMoveEndCb
+	local var_23_1 = arg_23_0._tweenMoveEndCbObj
 
-	if slot0._tweenMoveEndCb then
-		slot1(slot0._tweenMoveEndCbObj)
+	arg_23_0._tweenMoveEndCb = nil
+	arg_23_0._tweenMoveEndCbObj = nil
+
+	if var_23_0 then
+		var_23_0(var_23_1)
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_24_0)
 	PopupController.instance:setPause("ExploreHeroLock", false)
-	TaskDispatcher.cancelTask(slot0._delaySetIdle, slot0)
-	TaskDispatcher.cancelTask(slot0.onTweenMoving, slot0)
+	TaskDispatcher.cancelTask(arg_24_0._delaySetIdle, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0.onTweenMoving, arg_24_0)
 
-	if slot0._tweenMoveId then
-		ZProj.TweenHelper.KillById(slot0._tweenMoveId)
+	if arg_24_0._tweenMoveId then
+		ZProj.TweenHelper.KillById(arg_24_0._tweenMoveId)
 
-		slot0._tweenMoveId = nil
+		arg_24_0._tweenMoveId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.delaySetNormalStatus, slot0)
-	uv0.super.onDestroy(slot0)
+	TaskDispatcher.cancelTask(arg_24_0.delaySetNormalStatus, arg_24_0)
+	var_0_0.super.onDestroy(arg_24_0)
 end
 
-return slot0
+return var_0_0

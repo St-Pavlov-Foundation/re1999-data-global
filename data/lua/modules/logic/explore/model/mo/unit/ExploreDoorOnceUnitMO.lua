@@ -1,9 +1,9 @@
-module("modules.logic.explore.model.mo.unit.ExploreDoorOnceUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreDoorOnceUnitMO", package.seeall)
 
-slot0 = class("ExploreDoorOnceUnitMO", ExploreDoorUnitMO)
+local var_0_0 = class("ExploreDoorOnceUnitMO", ExploreDoorUnitMO)
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_1_0)
 	return ExploreDoorOnceUnit
 end
 
-return slot0
+return var_0_0

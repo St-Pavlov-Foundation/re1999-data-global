@@ -1,280 +1,321 @@
-module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiView", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiView", package.seeall)
 
-slot0 = class("VersionActivity2_0DungeonGraffitiView", BaseView)
+local var_0_0 = class("VersionActivity2_0DungeonGraffitiView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._scrollgraffiti = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_graffiti")
-	slot0._gograffitiContent = gohelper.findChild(slot0.viewGO, "#scroll_graffiti/Viewport/#go_graffitiContent")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "rewardInfo/#btn_reward")
-	slot0._txtrewardState = gohelper.findChildText(slot0.viewGO, "rewardInfo/#btn_reward/#txt_rewardstate")
-	slot0._btnrewardIcon = gohelper.findChildButtonWithAudio(slot0.viewGO, "rewardInfo/finalreward/#btn_rewardicon")
-	slot0._imagerewardrare = gohelper.findChildImage(slot0.viewGO, "rewardInfo/finalreward/#image_rewardrare")
-	slot0._simagerewardicon = gohelper.findChildSingleImage(slot0.viewGO, "rewardInfo/finalreward/#simage_rewardicon")
-	slot0._txtrewardnum = gohelper.findChildText(slot0.viewGO, "rewardInfo/finalreward/#txt_rewardnum")
-	slot0._gorewardhasget = gohelper.findChild(slot0.viewGO, "rewardInfo/finalreward/#go_rewardhasget")
-	slot0._imageprogress = gohelper.findChildImage(slot0.viewGO, "rewardInfo/#btn_reward/progressbar/#image_progress")
-	slot0._txtprogress = gohelper.findChildText(slot0.viewGO, "rewardInfo/#btn_reward/#txt_progress")
-	slot0._btnrightjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_rightjump")
-	slot0._btnleftjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_leftjump")
-	slot0._gorewardwindow = gohelper.findChild(slot0.viewGO, "#go_rewardwindow")
-	slot0._gorewardReddot = gohelper.findChild(slot0.viewGO, "rewardInfo/#btn_reward/#go_RedDot")
-	slot0._goCangetEffect = gohelper.findChild(slot0.viewGO, "rewardInfo/finalreward/#receive")
-	slot0._goCloseRewardWindow = gohelper.findChild(slot0.viewGO, "#go_rewardwindow/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._scrollgraffiti = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_graffiti")
+	arg_1_0._gograffitiContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_graffiti/Viewport/#go_graffitiContent")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rewardInfo/#btn_reward")
+	arg_1_0._txtrewardState = gohelper.findChildText(arg_1_0.viewGO, "rewardInfo/#btn_reward/#txt_rewardstate")
+	arg_1_0._btnrewardIcon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rewardInfo/finalreward/#btn_rewardicon")
+	arg_1_0._imagerewardrare = gohelper.findChildImage(arg_1_0.viewGO, "rewardInfo/finalreward/#image_rewardrare")
+	arg_1_0._simagerewardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "rewardInfo/finalreward/#simage_rewardicon")
+	arg_1_0._txtrewardnum = gohelper.findChildText(arg_1_0.viewGO, "rewardInfo/finalreward/#txt_rewardnum")
+	arg_1_0._gorewardhasget = gohelper.findChild(arg_1_0.viewGO, "rewardInfo/finalreward/#go_rewardhasget")
+	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "rewardInfo/#btn_reward/progressbar/#image_progress")
+	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "rewardInfo/#btn_reward/#txt_progress")
+	arg_1_0._btnrightjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rightjump")
+	arg_1_0._btnleftjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_leftjump")
+	arg_1_0._gorewardwindow = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow")
+	arg_1_0._gorewardReddot = gohelper.findChild(arg_1_0.viewGO, "rewardInfo/#btn_reward/#go_RedDot")
+	arg_1_0._goCangetEffect = gohelper.findChild(arg_1_0.viewGO, "rewardInfo/finalreward/#receive")
+	arg_1_0._goCloseRewardWindow = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0._btnrewardIcon:AddClickListener(slot0._btnrewardIconOnClick, slot0)
-	slot0._btnrightjump:AddClickListener(slot0._btnrightjumpOnClick, slot0)
-	slot0._btnleftjump:AddClickListener(slot0._btnleftjumpOnClick, slot0)
-	slot0._scrollgraffiti:AddOnValueChanged(slot0.refreshJumpBtnShow, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity161Controller.instance, Activity161Event.RefreshGraffitiView, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, slot0.refreshReward, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0._btnrewardIcon:AddClickListener(arg_2_0._btnrewardIconOnClick, arg_2_0)
+	arg_2_0._btnrightjump:AddClickListener(arg_2_0._btnrightjumpOnClick, arg_2_0)
+	arg_2_0._btnleftjump:AddClickListener(arg_2_0._btnleftjumpOnClick, arg_2_0)
+	arg_2_0._scrollgraffiti:AddOnValueChanged(arg_2_0.refreshJumpBtnShow, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.RefreshGraffitiView, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, arg_2_0.refreshReward, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreward:RemoveClickListener()
-	slot0._btnrewardIcon:RemoveClickListener()
-	slot0._btnrightjump:RemoveClickListener()
-	slot0._btnleftjump:RemoveClickListener()
-	slot0._scrollgraffiti:RemoveOnValueChanged()
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity161Controller.instance, Activity161Event.RefreshGraffitiView, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, slot0.refreshReward, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0._btnrewardIcon:RemoveClickListener()
+	arg_3_0._btnrightjump:RemoveClickListener()
+	arg_3_0._btnleftjump:RemoveClickListener()
+	arg_3_0._scrollgraffiti:RemoveOnValueChanged()
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.RefreshGraffitiView, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, arg_3_0.refreshReward, arg_3_0)
 end
 
-slot0.clickLeftJump = 0
-slot0.clickRightJump = 1
+var_0_0.clickLeftJump = 0
+var_0_0.clickRightJump = 1
 
-function slot0._btnrewardOnClick(slot0)
-	gohelper.setActive(slot0._gorewardwindow, true)
-	gohelper.setActive(slot0._goCloseRewardWindow, true)
+function var_0_0._btnrewardOnClick(arg_4_0)
+	gohelper.setActive(arg_4_0._gorewardwindow, true)
+	gohelper.setActive(arg_4_0._goCloseRewardWindow, true)
 
-	slot0.ishaveUnGetReward, slot0.canGetRewardList = Activity161Model.instance:ishaveUnGetReward()
+	arg_4_0.ishaveUnGetReward, arg_4_0.canGetRewardList = Activity161Model.instance:ishaveUnGetReward()
 
-	if slot0.ishaveUnGetReward then
-		TaskDispatcher.runDelay(slot0.showGetRewardEffect, slot0, 0.5)
+	if arg_4_0.ishaveUnGetReward then
+		TaskDispatcher.runDelay(arg_4_0.showGetRewardEffect, arg_4_0, 0.5)
 		UIBlockMgr.instance:startBlock("GraffitiRewardViewPlayHasGetEffect")
 	end
 end
 
-function slot0.showGetRewardEffect(slot0)
-	Activity161Controller.instance:dispatchEvent(Activity161Event.PlayGraffitiRewardGetAnim, slot0.canGetRewardList)
+function var_0_0.showGetRewardEffect(arg_5_0)
+	Activity161Controller.instance:dispatchEvent(Activity161Event.PlayGraffitiRewardGetAnim, arg_5_0.canGetRewardList)
 end
 
-function slot0._btnrewardIconOnClick(slot0)
+function var_0_0._btnrewardIconOnClick(arg_6_0)
+	return
 end
 
-function slot0._btnrightjumpOnClick(slot0)
-	slot0:moveToNeedUnlockPicture(uv0.clickRightJump)
+function var_0_0._btnrightjumpOnClick(arg_7_0)
+	arg_7_0:moveToNeedUnlockPicture(var_0_0.clickRightJump)
 end
 
-function slot0._btnleftjumpOnClick(slot0)
-	slot0:moveToNeedUnlockPicture(uv0.clickLeftJump)
+function var_0_0._btnleftjumpOnClick(arg_8_0)
+	arg_8_0:moveToNeedUnlockPicture(var_0_0.clickLeftJump)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._btnleftjump.gameObject, false)
-	gohelper.setActive(slot0._btnrightjump.gameObject, false)
+function var_0_0._editableInitView(arg_9_0)
+	gohelper.setActive(arg_9_0._btnleftjump.gameObject, false)
+	gohelper.setActive(arg_9_0._btnrightjump.gameObject, false)
 
-	slot0.screenWidth = gohelper.getUIScreenWidth()
-	slot0._transGraffitiContent = slot0._gograffitiContent:GetComponent(gohelper.Type_RectTransform)
-	slot0.scrollGraffitiRect = slot0._scrollgraffiti.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
-	slot0._contentWidth = recthelper.getWidth(slot0._transGraffitiContent)
-	slot0.maxScrollPos = slot0._contentWidth - slot0.screenWidth
-	slot0.jumpLeftElementId = 0
-	slot0.jumpRightElementId = 0
-	slot0.graffitiItemPath = slot0.viewContainer:getSetting().otherRes[1]
-	slot0.unlockStateTab = slot0:getUserDataTb_()
-	slot0.saveUnlockStateTab = slot0:getUserDataTb_()
-	slot0.materialTab = slot0:getUserDataTb_()
-	slot0.picturesTab = slot0:getUserDataTb_()
+	arg_9_0.screenWidth = gohelper.getUIScreenWidth()
+	arg_9_0._transGraffitiContent = arg_9_0._gograffitiContent:GetComponent(gohelper.Type_RectTransform)
+	arg_9_0.scrollGraffitiRect = arg_9_0._scrollgraffiti.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	arg_9_0._contentWidth = recthelper.getWidth(arg_9_0._transGraffitiContent)
+	arg_9_0.maxScrollPos = arg_9_0._contentWidth - arg_9_0.screenWidth
+	arg_9_0.jumpLeftElementId = 0
+	arg_9_0.jumpRightElementId = 0
+	arg_9_0.graffitiItemPath = arg_9_0.viewContainer:getSetting().otherRes[1]
+	arg_9_0.unlockStateTab = arg_9_0:getUserDataTb_()
+	arg_9_0.saveUnlockStateTab = arg_9_0:getUserDataTb_()
+	arg_9_0.materialTab = arg_9_0:getUserDataTb_()
+	arg_9_0.picturesTab = arg_9_0:getUserDataTb_()
 
-	RedDotController.instance:addRedDot(slot0._gorewardReddot, RedDotEnum.DotNode.V2a0GraffitiReward, Activity161Model.instance:getActId())
+	RedDotController.instance:addRedDot(arg_9_0._gorewardReddot, RedDotEnum.DotNode.V2a0GraffitiReward, Activity161Model.instance:getActId())
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.graffitiCount = Activity161Config.instance:getGraffitiCount(slot0.actId)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.actId = arg_10_0.viewParam.actId
+	arg_10_0.graffitiCount = Activity161Config.instance:getGraffitiCount(arg_10_0.actId)
 
-	slot0:loadGraffitiMaterial()
-	slot0:refreshUI()
-	slot0:refreshUnlockState()
-	slot0:moveToFirstCanDrawGraffiti()
+	arg_10_0:loadGraffitiMaterial()
+	arg_10_0:refreshUI()
+	arg_10_0:refreshUnlockState()
+	arg_10_0:moveToFirstCanDrawGraffiti()
 end
 
-function slot0.loadGraffitiMaterial(slot0)
-	table.insert(slot0.materialTab, slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes[2]))
-	table.insert(slot0.materialTab, slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes[3]))
+function var_0_0.loadGraffitiMaterial(arg_11_0)
+	local var_11_0 = arg_11_0.viewContainer:getSetting().otherRes[2]
+	local var_11_1 = arg_11_0.viewContainer:getSetting().otherRes[3]
+	local var_11_2 = arg_11_0.viewContainer:getRes(var_11_0)
+	local var_11_3 = arg_11_0.viewContainer:getRes(var_11_1)
+
+	table.insert(arg_11_0.materialTab, var_11_2)
+	table.insert(arg_11_0.materialTab, var_11_3)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:initPictures()
-	slot0:refreshReward()
-	slot0:refreshJumpBtnShow()
+function var_0_0.refreshUI(arg_12_0)
+	arg_12_0:initPictures()
+	arg_12_0:refreshReward()
+	arg_12_0:refreshJumpBtnShow()
 end
 
-function slot0.initPictures(slot0)
-	for slot5, slot6 in pairs(Activity161Config.instance.graffitiPicList) do
-		if not slot0.picturesTab[slot6.elementId] then
-			slot7 = {
-				go = gohelper.findChild(slot0.viewGO, "#scroll_graffiti/Viewport/#go_graffitiContent/#go_picture" .. slot5)
+function var_0_0.initPictures(arg_13_0)
+	local var_13_0 = Activity161Config.instance.graffitiPicList
+
+	for iter_13_0, iter_13_1 in pairs(var_13_0) do
+		local var_13_1 = arg_13_0.picturesTab[iter_13_1.elementId]
+
+		if not var_13_1 then
+			var_13_1 = {
+				go = gohelper.findChild(arg_13_0.viewGO, "#scroll_graffiti/Viewport/#go_graffitiContent/#go_picture" .. iter_13_0)
 			}
-			slot7.itemGO = slot0.viewContainer:getResInst(slot0.graffitiItemPath, slot7.go)
-			slot7.item = MonoHelper.addNoUpdateLuaComOnceToGo(slot7.itemGO, VersionActivity2_0DungeonGraffitiItem)
-			slot7.rect = slot7.go:GetComponent(gohelper.Type_RectTransform)
-			slot7.width = recthelper.getWidth(slot7.rect)
-			slot7.anchorX = recthelper.getAnchorX(slot7.rect)
-			slot7.config = slot6
-			slot7.index = slot5
-			slot0.picturesTab[slot6.elementId] = slot7
+			var_13_1.itemGO = arg_13_0.viewContainer:getResInst(arg_13_0.graffitiItemPath, var_13_1.go)
+			var_13_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1.itemGO, VersionActivity2_0DungeonGraffitiItem)
+			var_13_1.rect = var_13_1.go:GetComponent(gohelper.Type_RectTransform)
+			var_13_1.width = recthelper.getWidth(var_13_1.rect)
+			var_13_1.anchorX = recthelper.getAnchorX(var_13_1.rect)
+			var_13_1.config = iter_13_1
+			var_13_1.index = iter_13_0
+			arg_13_0.picturesTab[iter_13_1.elementId] = var_13_1
 
-			slot7.item:initData(slot0.actId, slot6.elementId, slot0.materialTab)
+			var_13_1.item:initData(arg_13_0.actId, iter_13_1.elementId, arg_13_0.materialTab)
 		end
 
-		slot7.mo = Activity161Model.instance.graffitiInfoMap[slot6.elementId]
-		slot0.unlockStateTab[slot6.elementId] = Activity161Model.instance:isUnlockState(slot7.mo)
+		var_13_1.mo = Activity161Model.instance.graffitiInfoMap[iter_13_1.elementId]
+		arg_13_0.unlockStateTab[iter_13_1.elementId] = Activity161Model.instance:isUnlockState(var_13_1.mo)
 
-		slot7.item:refreshItem()
+		var_13_1.item:refreshItem()
 	end
 end
 
-function slot0.moveToNeedUnlockPicture(slot0, slot1)
-	if slot1 == uv0.clickRightJump then
-		recthelper.setAnchorX(slot0._transGraffitiContent, -Mathf.Min(slot0.maxScrollPos, slot0.picturesTab[slot0.jumpRightElementId].anchorX + slot0.picturesTab[slot0.jumpRightElementId].width / 2 - slot0.screenWidth / 2))
+function var_0_0.moveToNeedUnlockPicture(arg_14_0, arg_14_1)
+	if arg_14_1 == var_0_0.clickRightJump then
+		local var_14_0 = arg_14_0.picturesTab[arg_14_0.jumpRightElementId].anchorX + arg_14_0.picturesTab[arg_14_0.jumpRightElementId].width / 2 - arg_14_0.screenWidth / 2
+		local var_14_1 = Mathf.Min(arg_14_0.maxScrollPos, var_14_0)
+
+		recthelper.setAnchorX(arg_14_0._transGraffitiContent, -var_14_1)
 	else
-		recthelper.setAnchorX(slot0._transGraffitiContent, -Mathf.Max(0, slot0.picturesTab[slot0.jumpLeftElementId].anchorX + slot0.picturesTab[slot0.jumpLeftElementId].width / 2 - slot0.screenWidth / 2))
+		local var_14_2 = arg_14_0.picturesTab[arg_14_0.jumpLeftElementId].anchorX + arg_14_0.picturesTab[arg_14_0.jumpLeftElementId].width / 2 - arg_14_0.screenWidth / 2
+		local var_14_3 = Mathf.Max(0, var_14_2)
+
+		recthelper.setAnchorX(arg_14_0._transGraffitiContent, -var_14_3)
 	end
 
-	slot0.scrollGraffitiRect.velocity = Vector2(0, 0)
+	arg_14_0.scrollGraffitiRect.velocity = Vector2(0, 0)
 end
 
-function slot0.moveToFirstCanDrawGraffiti(slot0)
-	slot0.curCanDrawItems = Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.Normal)
+function var_0_0.moveToFirstCanDrawGraffiti(arg_15_0)
+	arg_15_0.curCanDrawItems = Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.Normal)
 
-	if #slot0.curCanDrawItems > 0 then
-		for slot5 = 1, #slot0.curCanDrawItems do
-			slot6 = slot0.curCanDrawItems[slot5].id
-			slot1 = Mathf.Min(slot0.maxScrollPos, slot0.picturesTab[slot6].anchorX - slot0.screenWidth / 2 + slot0.picturesTab[slot6].width / 2)
+	if #arg_15_0.curCanDrawItems > 0 then
+		local var_15_0 = arg_15_0.maxScrollPos
+
+		for iter_15_0 = 1, #arg_15_0.curCanDrawItems do
+			local var_15_1 = arg_15_0.curCanDrawItems[iter_15_0].id
+			local var_15_2 = arg_15_0.picturesTab[var_15_1].anchorX - arg_15_0.screenWidth / 2 + arg_15_0.picturesTab[var_15_1].width / 2
+
+			var_15_0 = Mathf.Min(var_15_0, var_15_2)
 		end
 
-		recthelper.setAnchorX(slot0._transGraffitiContent, -slot1)
+		recthelper.setAnchorX(arg_15_0._transGraffitiContent, -var_15_0)
 	end
 end
 
-function slot0.refreshJumpBtnShow(slot0)
-	slot0.curNeedUnlockItems = Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.ToUnlock)
-	slot0.jumpRightElementId = 0
-	slot0.jumpLeftElementId = 0
+function var_0_0.refreshJumpBtnShow(arg_16_0)
+	local var_16_0 = -recthelper.getAnchorX(arg_16_0._transGraffitiContent)
 
-	for slot5 = 1, #slot0.curNeedUnlockItems do
-		slot6 = slot0.curNeedUnlockItems[slot5].id
+	arg_16_0.curNeedUnlockItems = Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.ToUnlock)
+	arg_16_0.jumpRightElementId = 0
+	arg_16_0.jumpLeftElementId = 0
 
-		if Mathf.Abs(slot0.picturesTab[slot6].anchorX - -recthelper.getAnchorX(slot0._transGraffitiContent)) > slot0.screenWidth - slot0.picturesTab[slot6].width / 3 and slot7 > 0 then
-			slot0.jumpRightElementId = slot0.jumpRightElementId == 0 and slot6 or Mathf.Min(slot0.jumpRightElementId, slot6)
-		elseif Mathf.Abs(slot7) > slot0.picturesTab[slot6].width * 2 / 3 and slot7 < 0 then
-			slot0.jumpLeftElementId = slot0.jumpLeftElementId == 0 and slot6 or Mathf.Max(slot0.jumpLeftElementId, slot6)
+	for iter_16_0 = 1, #arg_16_0.curNeedUnlockItems do
+		local var_16_1 = arg_16_0.curNeedUnlockItems[iter_16_0].id
+		local var_16_2 = arg_16_0.picturesTab[var_16_1].anchorX - var_16_0
+
+		if Mathf.Abs(var_16_2) > arg_16_0.screenWidth - arg_16_0.picturesTab[var_16_1].width / 3 and var_16_2 > 0 then
+			arg_16_0.jumpRightElementId = arg_16_0.jumpRightElementId == 0 and var_16_1 or Mathf.Min(arg_16_0.jumpRightElementId, var_16_1)
+		elseif Mathf.Abs(var_16_2) > arg_16_0.picturesTab[var_16_1].width * 2 / 3 and var_16_2 < 0 then
+			arg_16_0.jumpLeftElementId = arg_16_0.jumpLeftElementId == 0 and var_16_1 or Mathf.Max(arg_16_0.jumpLeftElementId, var_16_1)
 		end
 	end
 
-	gohelper.setActive(slot0._btnleftjump.gameObject, slot0.jumpLeftElementId ~= 0)
-	gohelper.setActive(slot0._btnrightjump.gameObject, slot0.jumpRightElementId ~= 0)
+	gohelper.setActive(arg_16_0._btnleftjump.gameObject, arg_16_0.jumpLeftElementId ~= 0)
+	gohelper.setActive(arg_16_0._btnrightjump.gameObject, arg_16_0.jumpRightElementId ~= 0)
 end
 
-function slot0.refreshReward(slot0)
-	slot1, slot2 = Activity161Config.instance:getFinalReward(slot0.actId)
-	slot0.finalRewardType = slot2[1]
-	slot0.finalRewardId = slot2[2]
-	slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot0.finalRewardType, slot0.finalRewardId, true)
+function var_0_0.refreshReward(arg_17_0)
+	local var_17_0, var_17_1 = Activity161Config.instance:getFinalReward(arg_17_0.actId)
 
-	slot0._simagerewardicon:LoadImage(slot4)
-	gohelper.setActive(slot0._imagerewardrare.gameObject, slot3.rare > 0)
+	arg_17_0.finalRewardType = var_17_1[1]
+	arg_17_0.finalRewardId = var_17_1[2]
 
-	slot0._txtrewardnum.text = luaLang("multiple") .. slot2[3]
-	slot6 = Activity161Config.instance:getAllRewardCos(slot0.actId)
+	local var_17_2, var_17_3 = ItemModel.instance:getItemConfigAndIcon(arg_17_0.finalRewardType, arg_17_0.finalRewardId, true)
 
-	if Activity161Model.instance:getCurPaintedNum() == slot6[#slot6].paintedNum then
-		slot0._txtprogress.text = string.format("<color=#fe864c>%s/%s</color>", slot5, slot7)
-	elseif slot5 == 0 then
-		slot0._txtprogress.text = string.format("%s/%s", slot5, slot7)
+	arg_17_0._simagerewardicon:LoadImage(var_17_3)
+	gohelper.setActive(arg_17_0._imagerewardrare.gameObject, var_17_2.rare > 0)
+
+	arg_17_0._txtrewardnum.text = luaLang("multiple") .. var_17_1[3]
+
+	local var_17_4 = Activity161Model.instance:getCurPaintedNum()
+	local var_17_5 = Activity161Config.instance:getAllRewardCos(arg_17_0.actId)
+	local var_17_6 = var_17_5[#var_17_5].paintedNum
+
+	if var_17_4 == var_17_6 then
+		arg_17_0._txtprogress.text = string.format("<color=#fe864c>%s/%s</color>", var_17_4, var_17_6)
+	elseif var_17_4 == 0 then
+		arg_17_0._txtprogress.text = string.format("%s/%s", var_17_4, var_17_6)
 	else
-		slot0._txtprogress.text = string.format("<color=#fe864c>%s</color>/%s", slot5, slot7)
+		arg_17_0._txtprogress.text = string.format("<color=#fe864c>%s</color>/%s", var_17_4, var_17_6)
 	end
 
-	slot0._imageprogress.fillAmount = slot5 / slot7
-	slot0._txtrewardState.text = Activity161Model.instance:getFinalRewardHasGetState() and luaLang("graffiti_rewardhasget") or luaLang("graffiti_rewardprogress")
-	slot8 = Activity161Model.instance:ishaveUnGetReward()
+	arg_17_0._imageprogress.fillAmount = var_17_4 / var_17_6
+	arg_17_0._txtrewardState.text = Activity161Model.instance:getFinalRewardHasGetState() and luaLang("graffiti_rewardhasget") or luaLang("graffiti_rewardprogress")
 
-	gohelper.setActive(slot0._goCangetEffect, false)
+	local var_17_7 = Activity161Model.instance:ishaveUnGetReward()
+
+	gohelper.setActive(arg_17_0._goCangetEffect, false)
 end
 
-function slot0.getCurRewardCanGetStage(slot0)
-	slot1 = 0
+function var_0_0.getCurRewardCanGetStage(arg_18_0)
+	local var_18_0 = 0
+	local var_18_1 = GameUtil.getTabLen(Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.IsFinished))
+	local var_18_2 = Activity161Config.instance:getAllRewardCos(arg_18_0.actId)
 
-	for slot7, slot8 in pairs(Activity161Config.instance:getAllRewardCos(slot0.actId)) do
-		if slot8.paintedNum <= GameUtil.getTabLen(Activity161Model.instance:getItemsByState(Activity161Enum.graffitiState.IsFinished)) then
-			slot1 = slot7
+	for iter_18_0, iter_18_1 in pairs(var_18_2) do
+		if var_18_1 >= iter_18_1.paintedNum then
+			var_18_0 = iter_18_0
 		end
 	end
 
-	return slot1
+	return var_18_0
 end
 
-function slot0.refreshUnlockState(slot0)
-	slot2 = {}
+function var_0_0.refreshUnlockState(arg_19_0)
+	local var_19_0 = PlayerPrefsHelper.getString(arg_19_0:getLocalKey(), "")
+	local var_19_1 = {}
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(slot0:getLocalKey(), "")) then
-		for slot6, slot7 in ipairs(cjson.decode(slot1)) do
-			slot8 = string.split(slot7, "|")
-			slot0.saveUnlockStateTab[tonumber(slot8[1])] = tonumber(slot8[2])
+	if not string.nilorempty(var_19_0) then
+		local var_19_2 = cjson.decode(var_19_0)
+
+		for iter_19_0, iter_19_1 in ipairs(var_19_2) do
+			local var_19_3 = string.split(iter_19_1, "|")
+			local var_19_4 = tonumber(var_19_3[1])
+			local var_19_5 = tonumber(var_19_3[2])
+
+			arg_19_0.saveUnlockStateTab[var_19_4] = var_19_5
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0.picturesTab) do
-		if GameUtil.getTabLen(slot0.saveUnlockStateTab) == 0 then
-			slot7.item:refreshUnlockState(false)
+	for iter_19_2, iter_19_3 in pairs(arg_19_0.picturesTab) do
+		if GameUtil.getTabLen(arg_19_0.saveUnlockStateTab) == 0 then
+			iter_19_3.item:refreshUnlockState(false)
 		else
-			slot7.item:refreshUnlockState(slot0.saveUnlockStateTab[slot6])
+			local var_19_6 = arg_19_0.saveUnlockStateTab[iter_19_2]
+
+			iter_19_3.item:refreshUnlockState(var_19_6)
 		end
 	end
 
-	slot0:saveUnlockState()
+	arg_19_0:saveUnlockState()
 end
 
-function slot0.getLocalKey(slot0)
-	return "DungeonGraffitiUnlock" .. "#" .. tostring(slot0.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getLocalKey(arg_20_0)
+	return "DungeonGraffitiUnlock" .. "#" .. tostring(arg_20_0.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-function slot0.saveUnlockState(slot0)
-	slot1 = {}
+function var_0_0.saveUnlockState(arg_21_0)
+	local var_21_0 = {}
 
-	for slot5, slot6 in pairs(slot0.unlockStateTab) do
-		table.insert(slot1, string.format("%s|%s", slot5, slot6))
+	for iter_21_0, iter_21_1 in pairs(arg_21_0.unlockStateTab) do
+		local var_21_1 = string.format("%s|%s", iter_21_0, iter_21_1)
+
+		table.insert(var_21_0, var_21_1)
 	end
 
-	PlayerPrefsHelper.setString(slot0:getLocalKey(), cjson.encode(slot1))
+	PlayerPrefsHelper.setString(arg_21_0:getLocalKey(), cjson.encode(var_21_0))
 end
 
-function slot0.onClose(slot0)
-	slot0:saveUnlockState()
-	TaskDispatcher.cancelTask(slot0.showGetRewardEffect, slot0)
+function var_0_0.onClose(arg_22_0)
+	arg_22_0:saveUnlockState()
+	TaskDispatcher.cancelTask(arg_22_0.showGetRewardEffect, arg_22_0)
 	UIBlockMgr.instance:endBlock("GraffitiRewardViewPlayHasGetEffect")
 
-	if slot0.loader then
-		slot0.loader:dispose()
+	if arg_22_0.loader then
+		arg_22_0.loader:dispose()
 
-		slot0.loader = nil
+		arg_22_0.loader = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagerewardicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_23_0)
+	arg_23_0._simagerewardicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,91 +1,98 @@
-module("modules.logic.herogroup.view.HeroGroupFightViewContainer", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupFightViewContainer", package.seeall)
 
-slot0 = class("HeroGroupFightViewContainer", BaseViewContainer)
+local var_0_0 = class("HeroGroupFightViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	slot0:defineFightView()
-	slot0:addFirstViews(slot1)
-	slot0:addCommonViews(slot1)
-	slot0:addLastViews(slot1)
+	arg_1_0:defineFightView()
+	arg_1_0:addFirstViews(var_1_0)
+	arg_1_0:addCommonViews(var_1_0)
+	arg_1_0:addLastViews(var_1_0)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.addFirstViews(slot0, slot1)
-	table.insert(slot1, HeroGroupFightCleanView.New())
+function var_0_0.addFirstViews(arg_2_0, arg_2_1)
+	table.insert(arg_2_1, HeroGroupFightCleanView.New())
 end
 
-function slot0.defineFightView(slot0)
-	slot0._heroGroupFightView = HeroGroupFightView.New()
-	slot0._heroGroupFightListView = HeroGroupListView.New()
+function var_0_0.defineFightView(arg_3_0)
+	arg_3_0._heroGroupFightView = HeroGroupFightView.New()
+	arg_3_0._heroGroupFightListView = HeroGroupListView.New()
 end
 
-function slot0.addCommonViews(slot0, slot1)
-	table.insert(slot1, slot0._heroGroupFightView)
-	table.insert(slot1, HeroGroupAnimView.New())
-	table.insert(slot1, slot0._heroGroupFightListView.New())
-	table.insert(slot1, HeroGroupFightViewLevel.New())
-	table.insert(slot1, HeroGroupFightViewRule.New())
-	table.insert(slot1, HeroGroupInfoScrollView.New())
-	table.insert(slot1, CheckActivityEndView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_righttop/#go_power"))
+function var_0_0.addCommonViews(arg_4_0, arg_4_1)
+	table.insert(arg_4_1, arg_4_0._heroGroupFightView)
+	table.insert(arg_4_1, HeroGroupAnimView.New())
+	table.insert(arg_4_1, arg_4_0._heroGroupFightListView.New())
+	table.insert(arg_4_1, HeroGroupFightViewLevel.New())
+	table.insert(arg_4_1, HeroGroupFightViewRule.New())
+	table.insert(arg_4_1, HeroGroupInfoScrollView.New())
+	table.insert(arg_4_1, CheckActivityEndView.New())
+	table.insert(arg_4_1, TabViewGroup.New(1, "#go_container/btnContain/commonBtns"))
+	table.insert(arg_4_1, TabViewGroup.New(2, "#go_righttop/#go_power"))
 end
 
-function slot0.addLastViews(slot0, slot1)
+function var_0_0.addLastViews(arg_5_0, arg_5_1)
+	return
 end
 
-function slot0.getHeroGroupFightView(slot0)
-	return slot0._heroGroupFightView
+function var_0_0.getHeroGroupFightView(arg_6_0)
+	return arg_6_0._heroGroupFightView
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_7_0, arg_7_1)
+	if arg_7_1 == 1 then
+		local var_7_0 = arg_7_0:getHelpId()
+
+		arg_7_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
-			slot0:getHelpId() ~= nil
-		}, slot2, slot0._closeCallback, nil, , slot0)
+			var_7_0 ~= nil
+		}, var_7_0, arg_7_0._closeCallback, nil, nil, arg_7_0)
 
-		slot0._navigateButtonsView:setCloseCheck(slot0.defaultOverrideCloseCheck, slot0)
+		arg_7_0._navigateButtonsView:setCloseCheck(arg_7_0.defaultOverrideCloseCheck, arg_7_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_7_0._navigateButtonsView
 		}
-	elseif slot1 == 2 then
+	elseif arg_7_1 == 2 then
+		local var_7_1 = CurrencyEnum.CurrencyType
+
 		return {
 			CurrencyView.New({
-				CurrencyEnum.CurrencyType.Power
+				var_7_1.Power
 			})
 		}
 	end
 end
 
-function slot0.getHelpId(slot0)
-	slot1 = nil
-	slot5 = DungeonConfig.instance:getChapterCO(DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId).chapterId).type == DungeonEnum.ChapterType.Hard
-	slot6 = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideNormal)
-	slot7 = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideHard)
+function var_0_0.getHelpId(arg_8_0)
+	local var_8_0
+	local var_8_1 = HeroGroupModel.instance.episodeId
+	local var_8_2 = DungeonConfig.instance:getEpisodeCO(var_8_1)
+	local var_8_3 = DungeonConfig.instance:getChapterCO(var_8_2.chapterId).type == DungeonEnum.ChapterType.Hard
+	local var_8_4 = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideNormal)
+	local var_8_5 = CommonConfig.instance:getConstNum(ConstEnum.HeroGroupGuideHard)
 
 	if HeroGroupBalanceHelper.getIsBalanceMode() then
 		return HelpEnum.HelpId.Balance
 	end
 
-	if slot5 then
-		if GuideModel.instance:isGuideFinish(slot7) and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.HeroGroupHard) then
-			slot1 = HelpEnum.HelpId.HeroGroupHard
+	if var_8_3 then
+		if GuideModel.instance:isGuideFinish(var_8_5) and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.HeroGroupHard) then
+			var_8_0 = HelpEnum.HelpId.HeroGroupHard
 		end
-	elseif GuideModel.instance:isGuideFinish(slot6) and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.HeroGroupNormal) then
-		slot1 = HelpEnum.HelpId.HeroGroupNormal
+	elseif GuideModel.instance:isGuideFinish(var_8_4) and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.HeroGroupNormal) then
+		var_8_0 = HelpEnum.HelpId.HeroGroupNormal
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0._closeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._closeCallback(arg_9_0)
+	arg_9_0:closeThis()
 
 	if ToughBattleController.instance:checkIsToughBattle() then
 		ToughBattleController.instance:enterToughBattle(true)
@@ -93,25 +100,27 @@ function slot0._closeCallback(slot0)
 		return
 	end
 
-	if slot0:handleVersionActivityCloseCall() then
+	if arg_9_0:handleVersionActivityCloseCall() then
 		return
 	end
 
-	if DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId).type == DungeonEnum.EpisodeType.Explore then
+	local var_9_0 = HeroGroupModel.instance.episodeId
+
+	if DungeonConfig.instance:getEpisodeCO(var_9_0).type == DungeonEnum.EpisodeType.Explore then
 		ExploreController.instance:enterExploreScene()
 	else
 		MainController.instance:enterMainScene(true, false)
 
 		if TeachNoteModel.instance:isJumpEnter() then
 			TeachNoteModel.instance:setJumpEnter(false)
-			TeachNoteController.instance:enterTeachNoteView(slot1, true)
+			TeachNoteController.instance:enterTeachNoteView(var_9_0, true)
 
 			DungeonModel.instance.curSendEpisodeId = nil
 		end
 	end
 end
 
-function slot0.handleVersionActivityCloseCall(slot0)
+function var_0_0.handleVersionActivityCloseCall(arg_10_0)
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -119,13 +128,15 @@ function slot0.handleVersionActivityCloseCall(slot0)
 	end
 end
 
-function slot0.setNavigateOverrideClose(slot0, slot1, slot2)
-	slot0._navigateButtonsView:setOverrideClose(slot1, slot2)
+function var_0_0.setNavigateOverrideClose(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._navigateButtonsView:setOverrideClose(arg_11_1, arg_11_2)
 end
 
-function slot0.defaultOverrideCloseCheck(slot0, slot1, slot2)
-	if DungeonConfig.instance:getChapterCO(DungeonModel.instance.curSendChapterId).actId == VersionActivityEnum.ActivityId.Act109 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, slot1, nil, , slot2)
+function var_0_0.defaultOverrideCloseCheck(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = DungeonModel.instance.curSendChapterId
+
+	if DungeonConfig.instance:getChapterCO(var_12_0).actId == VersionActivityEnum.ActivityId.Act109 then
+		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_12_1, nil, nil, arg_12_2)
 
 		return false
 	end
@@ -133,20 +144,20 @@ function slot0.defaultOverrideCloseCheck(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.onContainerInit(slot0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0.refreshHelpBtnIcon, slot0)
+function var_0_0.onContainerInit(arg_13_0)
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_13_0.refreshHelpBtnIcon, arg_13_0)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonsView:resetOnCloseViewAudio(AudioEnum.UI.UI_Team_close)
+function var_0_0.onContainerOpenFinish(arg_14_0)
+	arg_14_0._navigateButtonsView:resetOnCloseViewAudio(AudioEnum.UI.UI_Team_close)
 end
 
-function slot0.onContainerDestroy(slot0)
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0.refreshHelpBtnIcon, slot0)
+function var_0_0.onContainerDestroy(arg_15_0)
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_15_0.refreshHelpBtnIcon, arg_15_0)
 end
 
-function slot0.refreshHelpBtnIcon(slot0)
-	slot0._navigateButtonsView:changerHelpId(slot0:getHelpId())
+function var_0_0.refreshHelpBtnIcon(arg_16_0)
+	arg_16_0._navigateButtonsView:changerHelpId(arg_16_0:getHelpId())
 end
 
-return slot0
+return var_0_0

@@ -1,144 +1,151 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonBaseGroupItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonBaseGroupItem", package.seeall)
 
-slot0 = class("Act183DungeonBaseGroupItem", LuaCompBase)
+local var_0_0 = class("Act183DungeonBaseGroupItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._goselect = gohelper.findChild(slot0.go, "go_select")
-	slot0._txtselecttitle = gohelper.findChildText(slot0.go, "go_select/txt_title")
-	slot0._gounselect = gohelper.findChild(slot0.go, "go_unselect")
-	slot0._txtunselecttitle = gohelper.findChildText(slot0.go, "go_unselect/txt_title")
-	slot0._golock = gohelper.findChild(slot0.go, "go_lock")
-	slot0._imagelockicon = gohelper.findChildImage(slot0.go, "go_lock/icon")
-	slot0._txtlocktitle = gohelper.findChildText(slot0.go, "go_lock/txt_title")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.go, "btn_click")
-	slot0._imageselect = gohelper.findChildImage(slot0.go, "go_select/image_Selected")
-	slot0._imageunselect = gohelper.findChildImage(slot0.go, "go_unselect/image_UnSelected")
-	slot0._imagelock = gohelper.findChildImage(slot0.go, "go_lock/image_Locked")
-	slot0._gofinished = gohelper.findChild(slot0.go, "go_finished")
-	slot0._goselect_normaleffect = gohelper.findChild(slot0.go, "go_select/vx_normal")
-	slot0._goselect_hardeffect = gohelper.findChild(slot0.go, "go_select/vx_hard")
-	slot0._animfinish = gohelper.onceAddComponent(slot0._gofinished, gohelper.Type_Animator)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.go, "go_select")
+	arg_1_0._txtselecttitle = gohelper.findChildText(arg_1_0.go, "go_select/txt_title")
+	arg_1_0._gounselect = gohelper.findChild(arg_1_0.go, "go_unselect")
+	arg_1_0._txtunselecttitle = gohelper.findChildText(arg_1_0.go, "go_unselect/txt_title")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.go, "go_lock")
+	arg_1_0._imagelockicon = gohelper.findChildImage(arg_1_0.go, "go_lock/icon")
+	arg_1_0._txtlocktitle = gohelper.findChildText(arg_1_0.go, "go_lock/txt_title")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click")
+	arg_1_0._imageselect = gohelper.findChildImage(arg_1_0.go, "go_select/image_Selected")
+	arg_1_0._imageunselect = gohelper.findChildImage(arg_1_0.go, "go_unselect/image_UnSelected")
+	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.go, "go_lock/image_Locked")
+	arg_1_0._gofinished = gohelper.findChild(arg_1_0.go, "go_finished")
+	arg_1_0._goselect_normaleffect = gohelper.findChild(arg_1_0.go, "go_select/vx_normal")
+	arg_1_0._goselect_hardeffect = gohelper.findChild(arg_1_0.go, "go_select/vx_hard")
+	arg_1_0._animfinish = gohelper.onceAddComponent(arg_1_0._gofinished, gohelper.Type_Animator)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnClickSwitchGroup, slot0._onClickSwitchGroup, slot0)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnGroupAllTaskFinished, slot0._onGroupAllTaskFinished, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnClickSwitchGroup, arg_2_0._onClickSwitchGroup, arg_2_0)
+	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnGroupAllTaskFinished, arg_2_0._onGroupAllTaskFinished, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if not slot0._isUnlock then
+function var_0_0._btnclickOnClick(arg_4_0)
+	if not arg_4_0._isUnlock then
 		GameFacade.showToast(ToastEnum.Act183GroupNotOpen)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goselect_normaleffect, slot0._groupType ~= Act183Enum.GroupType.HardMain)
-	gohelper.setActive(slot0._goselect_hardeffect, slot0._groupType == Act183Enum.GroupType.HardMain)
+	gohelper.setActive(arg_4_0._goselect_normaleffect, arg_4_0._groupType ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(arg_4_0._goselect_hardeffect, arg_4_0._groupType == Act183Enum.GroupType.HardMain)
 
-	if slot0._groupType ~= Act183Enum.GroupType.Daily then
-		Act183Helper.saveLastEnterMainGroupTypeInLocal(Act183Model.instance:getActivityId(), slot0._groupType)
+	if arg_4_0._groupType ~= Act183Enum.GroupType.Daily then
+		local var_4_0 = Act183Model.instance:getActivityId()
+
+		Act183Helper.saveLastEnterMainGroupTypeInLocal(var_4_0, arg_4_0._groupType)
 	end
 
-	Act183Controller.instance:dispatchEvent(Act183Event.OnClickSwitchGroup, slot0._groupId)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnClickSwitchGroup, arg_4_0._groupId)
 end
 
-function slot0._onClickSwitchGroup(slot0, slot1)
-	slot0:onSelect(slot0._groupId == slot1)
+function var_0_0._onClickSwitchGroup(arg_5_0, arg_5_1)
+	arg_5_0:onSelect(arg_5_0._groupId == arg_5_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0._groupMo = slot1
-	slot0._groupId = slot1:getGroupId()
-	slot0._groupType = slot1:getGroupType()
-	slot0._status = slot1:getStatus()
-	slot0._index = slot2
-	slot0._isUnlock = slot0._status ~= Act183Enum.GroupStatus.Locked
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._groupMo = arg_6_1
+	arg_6_0._groupId = arg_6_1:getGroupId()
+	arg_6_0._groupType = arg_6_1:getGroupType()
+	arg_6_0._status = arg_6_1:getStatus()
+	arg_6_0._index = arg_6_2
+	arg_6_0._isUnlock = arg_6_0._status ~= Act183Enum.GroupStatus.Locked
 
-	gohelper.setActive(slot0.go, true)
-	gohelper.setActive(slot0._golock, not slot0._isUnlock)
-	slot0:refreshTitleAndBg()
-	slot0:refreshGroupTaskProgress()
+	gohelper.setActive(arg_6_0.go, true)
+	gohelper.setActive(arg_6_0._golock, not arg_6_0._isUnlock)
+	arg_6_0:refreshTitleAndBg()
+	arg_6_0:refreshGroupTaskProgress()
 end
 
-function slot0.refreshTitleAndBg(slot0)
-	slot1 = ""
-	slot2 = "#E1E1E1"
-	slot3 = "#969696"
-	slot4 = ""
-	slot5 = ""
+function var_0_0.refreshTitleAndBg(arg_7_0)
+	local var_7_0 = ""
+	local var_7_1 = "#E1E1E1"
+	local var_7_2 = "#969696"
+	local var_7_3 = ""
+	local var_7_4 = ""
+	local var_7_5
 
-	if slot0._groupType == Act183Enum.GroupType.NormalMain then
-		slot1 = luaLang("act183dungeonview_normalmainepisode")
-		slot4 = "v2a5_challenge_dungeon_normaltabselected"
-		slot5 = "v2a5_challenge_dungeon_normaltabunselected"
-	elseif slot0._groupType == Act183Enum.GroupType.HardMain then
-		slot1 = luaLang("act183dungeonview_hardmainepisode")
-		slot2 = "#C04E40"
-		slot3 = "#C04E40"
-		slot4 = "v2a5_challenge_dungeon_hardtabselected"
-		slot5 = "v2a5_challenge_dungeon_hardtabunselected"
+	if arg_7_0._groupType == Act183Enum.GroupType.NormalMain then
+		var_7_0 = luaLang("act183dungeonview_normalmainepisode")
+		var_7_3 = "v2a5_challenge_dungeon_normaltabselected"
+		var_7_5 = "v2a5_challenge_dungeon_normaltabunselected"
+	elseif arg_7_0._groupType == Act183Enum.GroupType.HardMain then
+		var_7_0 = luaLang("act183dungeonview_hardmainepisode")
+		var_7_1 = "#C04E40"
+		var_7_2 = "#C04E40"
+		var_7_3 = "v2a5_challenge_dungeon_hardtabselected"
+		var_7_5 = "v2a5_challenge_dungeon_hardtabunselected"
 	else
-		slot1 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act183dungeonview_dailyepisode"), GameUtil.getRomanNums(slot0._index))
-		slot4 = "v2a5_challenge_dungeon_dailytabselected"
-		slot5 = "v2a5_challenge_dungeon_dailytabunselected"
+		var_7_0 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act183dungeonview_dailyepisode"), GameUtil.getRomanNums(arg_7_0._index))
+		var_7_3 = "v2a5_challenge_dungeon_dailytabselected"
+		var_7_5 = "v2a5_challenge_dungeon_dailytabunselected"
 	end
 
-	slot0._txtselecttitle.text = slot1
-	slot0._txtunselecttitle.text = slot1
-	slot0._txtlocktitle.text = slot1
+	arg_7_0._txtselecttitle.text = var_7_0
+	arg_7_0._txtunselecttitle.text = var_7_0
+	arg_7_0._txtlocktitle.text = var_7_0
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtselecttitle, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtunselecttitle, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagelockicon, slot3)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._txtselecttitle, 1)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._txtunselecttitle, 0.5)
-	UISpriteSetMgr.instance:setChallengeSprite(slot0._imageselect, slot4)
-	UISpriteSetMgr.instance:setChallengeSprite(slot0._imageunselect, slot5)
-	UISpriteSetMgr.instance:setChallengeSprite(slot0._imagelock, slot5)
-	gohelper.setActive(slot0._goselect_normaleffect, slot0._groupType ~= Act183Enum.GroupType.HardMain)
-	gohelper.setActive(slot0._goselect_hardeffect, slot0._groupType == Act183Enum.GroupType.HardMain)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._txtselecttitle, var_7_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._txtunselecttitle, var_7_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._imagelockicon, var_7_2)
+	ZProj.UGUIHelper.SetColorAlpha(arg_7_0._txtselecttitle, 1)
+	ZProj.UGUIHelper.SetColorAlpha(arg_7_0._txtunselecttitle, 0.5)
+	UISpriteSetMgr.instance:setChallengeSprite(arg_7_0._imageselect, var_7_3)
+	UISpriteSetMgr.instance:setChallengeSprite(arg_7_0._imageunselect, var_7_5)
+	UISpriteSetMgr.instance:setChallengeSprite(arg_7_0._imagelock, var_7_5)
+	gohelper.setActive(arg_7_0._goselect_normaleffect, arg_7_0._groupType ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(arg_7_0._goselect_hardeffect, arg_7_0._groupType == Act183Enum.GroupType.HardMain)
 end
 
-function slot0._onFinishTask(slot0)
-	slot0:refreshGroupTaskProgress()
+function var_0_0._onFinishTask(arg_8_0)
+	arg_8_0:refreshGroupTaskProgress()
 end
 
-function slot0.refreshGroupTaskProgress(slot0)
-	slot1, slot2 = Act183Helper.getGroupEpisodeTaskProgress(slot0._groupId)
+function var_0_0.refreshGroupTaskProgress(arg_9_0)
+	local var_9_0, var_9_1 = Act183Helper.getGroupEpisodeTaskProgress(arg_9_0._groupId)
+	local var_9_2 = var_9_0 <= var_9_1
 
-	gohelper.setActive(slot0._gofinished, slot1 <= slot2)
+	gohelper.setActive(arg_9_0._gofinished, var_9_2)
 end
 
-function slot0._onGroupAllTaskFinished(slot0, slot1)
-	if slot0._groupId ~= slot1 then
+function var_0_0._onGroupAllTaskFinished(arg_10_0, arg_10_1)
+	if arg_10_0._groupId ~= arg_10_1 then
 		return
 	end
 
-	slot0._animfinish:Play("in", 0, 0)
+	arg_10_0._animfinish:Play("in", 0, 0)
 end
 
-function slot0.onUnlock(slot0)
+function var_0_0.onUnlock(arg_11_0)
+	return
 end
 
-function slot0.onLocked(slot0)
+function var_0_0.onLocked(arg_12_0)
+	return
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot0._isUnlock and slot1)
-	gohelper.setActive(slot0._gounselect, slot0._isUnlock and not slot1)
+function var_0_0.onSelect(arg_13_0, arg_13_1)
+	gohelper.setActive(arg_13_0._goselect, arg_13_0._isUnlock and arg_13_1)
+	gohelper.setActive(arg_13_0._gounselect, arg_13_0._isUnlock and not arg_13_1)
 end
 
-function slot0.getHeight(slot0)
-	return recthelper.getHeight(slot0.go.transform)
+function var_0_0.getHeight(arg_14_0)
+	return recthelper.getHeight(arg_14_0.go.transform)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

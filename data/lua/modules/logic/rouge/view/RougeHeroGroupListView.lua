@@ -1,646 +1,721 @@
-module("modules.logic.rouge.view.RougeHeroGroupListView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeHeroGroupListView", package.seeall)
 
-slot0 = class("RougeHeroGroupListView", BaseView)
+local var_0_0 = class("RougeHeroGroupListView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.heroContainer = gohelper.findChild(slot0.viewGO, "herogroupcontain/area")
-	slot0._goheroitem = gohelper.findChild(slot0.viewGO, "herogroupcontain/hero/heroitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.heroContainer = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/area")
+	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero/heroitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot2 = lua_battle.configDict[HeroGroupModel.instance.battleId]
-	slot0._playerMax = slot2.playerMax
-	slot0._roleNum = slot2.roleNum
-	slot0._heroItemList = {}
-	slot0._heroItemDrag = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_2_0)
+	local var_2_0 = HeroGroupModel.instance.battleId
+	local var_2_1 = lua_battle.configDict[var_2_0]
 
-	gohelper.setActive(slot0._goheroitem, false)
-	gohelper.setActive(slot0._goaidheroitem, false)
+	arg_2_0._playerMax = var_2_1.playerMax
+	arg_2_0._roleNum = var_2_1.roleNum
+	arg_2_0._heroItemList = {}
+	arg_2_0._heroItemDrag = arg_2_0:getUserDataTb_()
 
-	slot0.heroPosTrList = slot0:getUserDataTb_()
-	slot0._heroItemPosList = slot0:getUserDataTb_()
+	gohelper.setActive(arg_2_0._goheroitem, false)
+	gohelper.setActive(arg_2_0._goaidheroitem, false)
 
-	for slot6 = 1, 4 do
-		slot9 = gohelper.cloneInPlace(slot0._goheroitem, "item" .. slot6)
-		slot10 = MonoHelper.addNoUpdateLuaComOnceToGo(slot9, RougeHeroGroupHeroItem, slot0)
+	arg_2_0.heroPosTrList = arg_2_0:getUserDataTb_()
+	arg_2_0._heroItemPosList = arg_2_0:getUserDataTb_()
 
-		slot10:setIndex(slot6)
-		table.insert(slot0.heroPosTrList, gohelper.findChild(slot0.heroContainer, "pos" .. slot6 .. "/container").transform)
-		table.insert(slot0._heroItemList, slot10)
-		gohelper.setActive(slot9, true)
+	for iter_2_0 = 1, 4 do
+		local var_2_2 = gohelper.findChild(arg_2_0.heroContainer, "pos" .. iter_2_0 .. "/container").transform
+		local var_2_3 = gohelper.cloneInPlace(arg_2_0._goheroitem, "item" .. iter_2_0)
+		local var_2_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_3, RougeHeroGroupHeroItem, arg_2_0)
+
+		var_2_4:setIndex(iter_2_0)
+		table.insert(arg_2_0.heroPosTrList, var_2_2)
+		table.insert(arg_2_0._heroItemList, var_2_4)
+		gohelper.setActive(var_2_3, true)
 	end
 
-	for slot6 = 1, ModuleEnum.MaxHeroCountInGroup do
-		slot7 = slot0._heroItemList[slot6]
+	for iter_2_1 = 1, ModuleEnum.MaxHeroCountInGroup do
+		local var_2_5 = arg_2_0._heroItemList[iter_2_1]
 
-		slot0:_setHeroItemPos(slot7, slot6)
-		table.insert(slot0._heroItemPosList, slot7.go.transform)
-		slot7:setParent(slot0.heroPosTrList[slot6])
-		table.insert(slot0._heroItemDrag, SLFramework.UGUI.UIDragListener.Get(slot7.go))
+		arg_2_0:_setHeroItemPos(var_2_5, iter_2_1)
+		table.insert(arg_2_0._heroItemPosList, var_2_5.go.transform)
+		var_2_5:setParent(arg_2_0.heroPosTrList[iter_2_1])
+
+		local var_2_6 = SLFramework.UGUI.UIDragListener.Get(var_2_5.go)
+
+		table.insert(arg_2_0._heroItemDrag, var_2_6)
 	end
 
-	slot0._bgList = slot0:getUserDataTb_()
-	slot0._orderList = slot0:getUserDataTb_()
+	arg_2_0._bgList = arg_2_0:getUserDataTb_()
+	arg_2_0._orderList = arg_2_0:getUserDataTb_()
 
-	if HeroGroupModel.instance:getBattleRoleNum() then
-		slot3 = math.min(slot4, HeroGroupModel.instance:positionOpenCount())
+	local var_2_7 = HeroGroupModel.instance:positionOpenCount()
+	local var_2_8 = HeroGroupModel.instance:getBattleRoleNum()
+
+	if var_2_8 then
+		var_2_7 = math.min(var_2_8, var_2_7)
 	end
 
-	slot0._openCount = math.min(slot0._playerMax, slot3)
+	local var_2_9 = math.min(arg_2_0._playerMax, var_2_7)
 
-	for slot8 = 1, 4 do
-		table.insert(slot0._bgList, gohelper.findChild(slot0.viewGO, "herogroupcontain/hero/bg" .. slot8 .. "/bg"))
+	arg_2_0._openCount = var_2_9
 
-		slot10 = gohelper.findChildTextMesh(slot0.viewGO, "herogroupcontain/hero/bg" .. slot8 .. "/bg/#txt_order")
-		slot10.text = slot8 <= slot3 and tostring(slot8) or ""
+	for iter_2_2 = 1, 4 do
+		local var_2_10 = gohelper.findChild(arg_2_0.viewGO, "herogroupcontain/hero/bg" .. iter_2_2 .. "/bg")
 
-		table.insert(slot0._orderList, slot10)
+		table.insert(arg_2_0._bgList, var_2_10)
+
+		local var_2_11 = gohelper.findChildTextMesh(arg_2_0.viewGO, "herogroupcontain/hero/bg" .. iter_2_2 .. "/bg/#txt_order")
+
+		var_2_11.text = iter_2_2 <= var_2_9 and tostring(iter_2_2) or ""
+
+		table.insert(arg_2_0._orderList, var_2_11)
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCreateHeroItemDone)
-	HeroGroupModel.instance:setHeroGroupItemPos(slot0._heroItemPosList)
+	HeroGroupModel.instance:setHeroGroupItemPos(arg_2_0._heroItemPosList)
 end
 
-function slot0.addEvents(slot0)
-	for slot4, slot5 in ipairs(slot0._heroItemDrag) do
-		slot5:AddDragBeginListener(slot0._onBeginDrag, slot0, slot4)
-		slot5:AddDragListener(slot0._onDrag, slot0, slot4)
-		slot5:AddDragEndListener(slot0._onEndDrag, slot0, slot4)
+function var_0_0.addEvents(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._heroItemDrag) do
+		iter_3_1:AddDragBeginListener(arg_3_0._onBeginDrag, arg_3_0, iter_3_0)
+		iter_3_1:AddDragListener(arg_3_0._onDrag, arg_3_0, iter_3_0)
+		iter_3_1:AddDragEndListener(arg_3_0._onEndDrag, arg_3_0, iter_3_0)
 	end
 
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, slot0._updateHeroList, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, slot0._updateHeroList, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, slot0._updateHeroList, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, slot0._updateHeroList, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, slot0._updateHeroList, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0._updateHeroList, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._updateHeroList, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0._updateHeroList, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, slot0._checkRestrictHeroAndWeekWalk, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0._checkRestrictHeroAndWeekWalk, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenSizeChange, slot0)
+	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_3_0._updateHeroList, arg_3_0)
+	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_3_0._checkRestrictHeroAndWeekWalk, arg_3_0)
+	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_3_0._checkRestrictHeroAndWeekWalk, arg_3_0)
+	arg_3_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenSizeChange, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	for slot4, slot5 in ipairs(slot0._heroItemDrag) do
-		slot5:RemoveDragBeginListener()
-		slot5:RemoveDragListener()
-		slot5:RemoveDragEndListener()
+function var_0_0.removeEvents(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._heroItemDrag) do
+		iter_4_1:RemoveDragBeginListener()
+		iter_4_1:RemoveDragListener()
+		iter_4_1:RemoveDragEndListener()
 	end
 
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0._updateHeroList, slot0)
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenSizeChange, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, slot0._checkRestrictHeroAndWeekWalk, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0._checkRestrictHeroAndWeekWalk, slot0)
+	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_4_0._updateHeroList, arg_4_0)
+	arg_4_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenSizeChange, arg_4_0)
+	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_4_0._checkRestrictHeroAndWeekWalk, arg_4_0)
+	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_4_0._checkRestrictHeroAndWeekWalk, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0._isOpen = true
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0._isOpen = true
 
-	slot0:_updateHeroList()
-	slot0:_playOpenAnimation()
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, slot0._onHeroGroupExit, slot0)
+	arg_5_0:_updateHeroList()
+	arg_5_0:_playOpenAnimation()
+	arg_5_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, arg_5_0._onHeroGroupExit, arg_5_0)
 end
 
-function slot0._playOpenAnimation(slot0)
-	for slot4, slot5 in ipairs(slot0.heroPosTrList) do
-		if slot5 then
-			slot6 = slot5.gameObject:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._playOpenAnimation(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.heroPosTrList) do
+		if iter_6_1 then
+			local var_6_0 = iter_6_1.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-			slot6:Play(UIAnimationName.Open)
-			slot6:Update(0)
+			var_6_0:Play(UIAnimationName.Open)
+			var_6_0:Update(0)
 
-			slot6.speed = 1
+			var_6_0.speed = 1
 		end
 	end
 
-	for slot4, slot5 in ipairs(slot0._heroItemList) do
-		if slot5 then
-			slot6 = slot5.anim
+	for iter_6_2, iter_6_3 in ipairs(arg_6_0._heroItemList) do
+		if iter_6_3 then
+			local var_6_1 = iter_6_3.anim
 
-			slot6:Play(UIAnimationName.Open)
-			slot6:Update(0)
+			var_6_1:Play(UIAnimationName.Open)
+			var_6_1:Update(0)
 
-			slot6.speed = 1
+			var_6_1.speed = 1
 		end
 	end
 
-	for slot4, slot5 in ipairs(slot0._bgList) do
-		if slot5 then
-			slot6 = slot5:GetComponent(typeof(UnityEngine.Animator))
+	for iter_6_4, iter_6_5 in ipairs(arg_6_0._bgList) do
+		if iter_6_5 then
+			local var_6_2 = iter_6_5:GetComponent(typeof(UnityEngine.Animator))
 
-			slot6:Play(UIAnimationName.Open)
-			slot6:Update(0)
+			var_6_2:Play(UIAnimationName.Open)
+			var_6_2:Update(0)
 
-			slot6.speed = 1
+			var_6_2.speed = 1
 		end
 	end
 
-	slot0:_checkRestrictHeroAndWeekWalk()
+	arg_6_0:_checkRestrictHeroAndWeekWalk()
 end
 
-function slot0._checkRestrictHeroAndWeekWalk(slot0)
-	slot0:_checkDead()
+function var_0_0._checkRestrictHeroAndWeekWalk(arg_7_0)
+	arg_7_0:_checkDead()
 end
 
-function slot0._checkDead(slot0)
-	for slot6 = 1, RougeEnum.FightTeamHeroNum do
-		if RougeHeroSingleGroupModel.instance:getById(slot6) and slot7:getHeroMO() and RougeModel.instance:getTeamInfo():getHeroHp(slot8.heroId) and slot9.life <= 0 then
-			-- Nothing
+function var_0_0._checkDead(arg_8_0)
+	local var_8_0 = RougeModel.instance:getTeamInfo()
+	local var_8_1 = {}
+
+	for iter_8_0 = 1, RougeEnum.FightTeamHeroNum do
+		local var_8_2 = RougeHeroSingleGroupModel.instance:getById(iter_8_0)
+
+		if var_8_2 then
+			local var_8_3 = var_8_2:getHeroMO()
+
+			if var_8_3 then
+				local var_8_4 = var_8_0:getHeroHp(var_8_3.heroId)
+
+				if var_8_4 and var_8_4.life <= 0 then
+					var_8_1[var_8_2.heroUid] = true
+				end
+			end
 		end
 	end
 
-	if tabletool.len({
-		[slot7.heroUid] = true
-	}) <= 0 then
+	if tabletool.len(var_8_1) <= 0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._heroItemList) do
-		slot7:playRestrictAnimation(slot2)
+	for iter_8_1, iter_8_2 in ipairs(arg_8_0._heroItemList) do
+		iter_8_2:playRestrictAnimation(var_8_1)
 	end
 
-	if tabletool.len(slot2) <= 0 then
-		slot0:_saveAfterRemoveDead()
+	if tabletool.len(var_8_1) <= 0 then
+		arg_8_0:_saveAfterRemoveDead()
 
 		return
 	end
 
-	slot0.needRemoveHeroUidDict = slot2
+	arg_8_0.needRemoveHeroUidDict = var_8_1
 
 	UIBlockMgr.instance:startBlock("removeRestrictHero")
-	TaskDispatcher.runDelay(slot0._removeDeadHero, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_8_0._removeDeadHero, arg_8_0, 1.5)
 end
 
-function slot0._removeDeadHero(slot0)
+function var_0_0._removeDeadHero(arg_9_0)
 	UIBlockMgr.instance:endBlock("removeRestrictHero")
 
-	if not slot0.needRemoveHeroUidDict then
+	if not arg_9_0.needRemoveHeroUidDict then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0.needRemoveHeroUidDict) do
-		RougeHeroSingleGroupModel.instance:remove(slot4)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0.needRemoveHeroUidDict) do
+		RougeHeroSingleGroupModel.instance:remove(iter_9_0)
 	end
 
-	slot0:_saveAfterRemoveDead()
+	arg_9_0:_saveAfterRemoveDead()
 end
 
-function slot0._saveAfterRemoveDead(slot0)
+function var_0_0._saveAfterRemoveDead(arg_10_0)
 	RougeHeroGroupModel.instance:replaceSingleGroup()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	RougeHeroGroupModel.instance:rougeSaveCurGroup()
 end
 
-function slot0._checkRestrictHero(slot0)
-	for slot5 = 1, 4 do
-		if RougeHeroSingleGroupModel.instance:getById(slot5) and HeroGroupModel.instance:isRestrict(slot6.heroUid) then
-			-- Nothing
+function var_0_0._checkRestrictHero(arg_11_0)
+	local var_11_0 = {}
+
+	for iter_11_0 = 1, 4 do
+		local var_11_1 = RougeHeroSingleGroupModel.instance:getById(iter_11_0)
+
+		if var_11_1 and HeroGroupModel.instance:isRestrict(var_11_1.heroUid) then
+			var_11_0[var_11_1.heroUid] = true
 		end
 	end
 
-	if tabletool.len({
-		[slot6.heroUid] = true
-	}) <= 0 then
+	if tabletool.len(var_11_0) <= 0 then
 		return
 	end
 
-	if not string.nilorempty(HeroGroupModel.instance:getCurrentBattleConfig() and slot2.restrictReason) then
-		ToastController.instance:showToastWithString(slot3)
+	local var_11_2 = HeroGroupModel.instance:getCurrentBattleConfig()
+	local var_11_3 = var_11_2 and var_11_2.restrictReason
+
+	if not string.nilorempty(var_11_3) then
+		ToastController.instance:showToastWithString(var_11_3)
 	end
 
-	for slot7, slot8 in ipairs(slot0._heroItemList) do
-		slot8:playRestrictAnimation(slot1)
+	for iter_11_1, iter_11_2 in ipairs(arg_11_0._heroItemList) do
+		iter_11_2:playRestrictAnimation(var_11_0)
 	end
 
-	slot0.needRemoveHeroUidDict = slot1
+	arg_11_0.needRemoveHeroUidDict = var_11_0
 
 	UIBlockMgr.instance:startBlock("removeRestrictHero")
-	TaskDispatcher.runDelay(slot0._removeRestrictHero, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_11_0._removeRestrictHero, arg_11_0, 1.5)
 end
 
-function slot0._removeRestrictHero(slot0)
+function var_0_0._removeRestrictHero(arg_12_0)
 	UIBlockMgr.instance:endBlock("removeRestrictHero")
 
-	if not slot0.needRemoveHeroUidDict then
+	if not arg_12_0.needRemoveHeroUidDict then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0.needRemoveHeroUidDict) do
-		RougeHeroSingleGroupModel.instance:remove(slot4)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.needRemoveHeroUidDict) do
+		RougeHeroSingleGroupModel.instance:remove(iter_12_0)
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function slot0._onHeroGroupExit(slot0)
+function var_0_0._onHeroGroupExit(arg_13_0)
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Formation_Cardsdisappear)
 
-	if slot0._openTweenIdList then
-		for slot4, slot5 in ipairs(slot0._openTweenIdList) do
-			ZProj.TweenHelper.KillById(slot5)
+	if arg_13_0._openTweenIdList then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_0._openTweenIdList) do
+			ZProj.TweenHelper.KillById(iter_13_1)
 		end
 	end
 
-	slot0._closeTweenIdList = {}
+	arg_13_0._closeTweenIdList = {}
 
-	for slot4 = 1, 4 do
-		table.insert(slot0._closeTweenIdList, ZProj.TweenHelper.DOTweenFloat(0, 1, 0.03 * (4 - slot4), nil, slot0._closeTweenFinish, slot0, slot4, EaseType.Linear))
+	for iter_13_2 = 1, 4 do
+		local var_13_0 = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.03 * (4 - iter_13_2), nil, arg_13_0._closeTweenFinish, arg_13_0, iter_13_2, EaseType.Linear)
+
+		table.insert(arg_13_0._closeTweenIdList, var_13_0)
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupExitEffect)
-	ViewMgr.instance:closeView(slot0.viewContainer:getHeroGroupFightView().viewName, false, false)
+
+	local var_13_1 = arg_13_0.viewContainer:getHeroGroupFightView()
+
+	ViewMgr.instance:closeView(var_13_1.viewName, false, false)
 end
 
-function slot0._closeTweenFinish(slot0, slot1)
-	if slot0.heroPosTrList[slot1] then
-		slot3 = slot2.gameObject:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._closeTweenFinish(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.heroPosTrList[arg_14_1]
 
-		slot3:Play(UIAnimationName.Close)
+	if var_14_0 then
+		local var_14_1 = var_14_0.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-		slot3.speed = 1
+		var_14_1:Play(UIAnimationName.Close)
+
+		var_14_1.speed = 1
 	end
 
-	if slot0._heroItemList[slot1] then
-		slot4 = slot3.anim
+	local var_14_2 = arg_14_0._heroItemList[arg_14_1]
 
-		slot4:Play(UIAnimationName.Close)
+	if var_14_2 then
+		local var_14_3 = var_14_2.anim
 
-		slot4.speed = 1
-		slot4 = slot3.anim2
+		var_14_3:Play(UIAnimationName.Close)
 
-		slot4:Play(UIAnimationName.Close)
+		var_14_3.speed = 1
 
-		slot4.speed = 1
+		local var_14_4 = var_14_2.anim2
+
+		var_14_4:Play(UIAnimationName.Close)
+
+		var_14_4.speed = 1
 	end
 
-	if slot0._bgList[slot1] then
-		slot5 = slot4:GetComponent(typeof(UnityEngine.Animator))
+	local var_14_5 = arg_14_0._bgList[arg_14_1]
 
-		slot5:Play(UIAnimationName.Close)
+	if var_14_5 then
+		local var_14_6 = var_14_5:GetComponent(typeof(UnityEngine.Animator))
 
-		slot5.speed = 1
+		var_14_6:Play(UIAnimationName.Close)
+
+		var_14_6.speed = 1
 	end
 end
 
-function slot0._isCurEpisodeTeachNote(slot0)
+function var_0_0._isCurEpisodeTeachNote(arg_15_0)
 	return true
 end
 
-function slot0._isAct114Battle(slot0)
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId).type == DungeonEnum.EpisodeType.Jiexika then
+function var_0_0._isAct114Battle(arg_16_0)
+	local var_16_0 = DungeonModel.instance.curSendEpisodeId
+
+	if DungeonConfig.instance:getEpisodeCO(var_16_0).type == DungeonEnum.EpisodeType.Jiexika then
 		return true
 	end
 end
 
-function slot0.canDrag(slot0, slot1, slot2)
+function var_0_0.canDrag(arg_17_0, arg_17_1, arg_17_2)
 	if RougeHeroGroupModel.instance:getCurGroupMO().isReplay then
 		return false
 	end
 
-	if slot0._heroItemList[slot1].isAid and slot0:_isCurEpisodeTeachNote() then
+	local var_17_0 = arg_17_1
+	local var_17_1 = arg_17_0._heroItemList[var_17_0]
+
+	if var_17_1.isAid and arg_17_0:_isCurEpisodeTeachNote() then
 		return false
 	end
 
-	if slot4.isAid and slot0:_isAct114Battle() then
+	if var_17_1.isAid and arg_17_0:_isAct114Battle() then
 		return false
 	end
 
-	if slot4.isTrialLock then
+	if var_17_1.isTrialLock then
 		return false
 	end
 
-	if not slot2 and (slot4.mo:isEmpty() or slot4.mo.aid == -1 or HeroGroupModel.instance:positionOpenCount() < slot1) then
+	if not arg_17_2 and (var_17_1.mo:isEmpty() or var_17_1.mo.aid == -1 or arg_17_1 > HeroGroupModel.instance:positionOpenCount()) then
 		return false
 	end
 
 	return true
 end
 
-function slot0._onBeginDrag(slot0, slot1, slot2)
-	if slot0._tweening then
+function var_0_0._onBeginDrag(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_0._tweening then
 		return
 	end
 
-	if not slot0:canDrag(slot1) then
+	if not arg_18_0:canDrag(arg_18_1) then
 		return
 	end
 
-	if slot0._nowDragingIndex then
+	if arg_18_0._nowDragingIndex then
 		return
 	end
 
-	if slot1 <= slot0._openCount then
-		slot0._orderList[slot1].text = slot1
+	if arg_18_1 <= arg_18_0._openCount then
+		arg_18_0._orderList[arg_18_1].text = arg_18_1
 	end
 
-	slot0._nowDragingIndex = slot1
-	slot3 = slot0._heroItemList[slot1]
+	arg_18_0._nowDragingIndex = arg_18_1
 
-	for slot7, slot8 in ipairs(slot0._heroItemList) do
-		slot8:onItemBeginDrag(slot1)
+	local var_18_0 = arg_18_0._heroItemList[arg_18_1]
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0._heroItemList) do
+		iter_18_1:onItemBeginDrag(arg_18_1)
 	end
 
-	for slot7, slot8 in ipairs(slot0._heroItemList) do
-		slot8:flowOriginParent()
+	for iter_18_2, iter_18_3 in ipairs(arg_18_0._heroItemList) do
+		iter_18_3:flowOriginParent()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_raise)
-	gohelper.setAsLastSibling(slot3.go)
-	slot0:_tweenToPos(slot3, recthelper.screenPosToAnchorPos(slot2.position, slot0.heroContainer.transform))
+	gohelper.setAsLastSibling(var_18_0.go)
+
+	local var_18_1 = recthelper.screenPosToAnchorPos(arg_18_2.position, arg_18_0.heroContainer.transform)
+
+	arg_18_0:_tweenToPos(var_18_0, var_18_1)
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0:canDrag(slot1) then
-		if slot0._heroItemList[slot1].isTrialLock then
+function var_0_0._onDrag(arg_19_0, arg_19_1, arg_19_2)
+	if not arg_19_0:canDrag(arg_19_1) then
+		if arg_19_0._heroItemList[arg_19_1].isTrialLock then
 			GameFacade.showToast(ToastEnum.TrialCantChangePos)
 		end
 
 		return
 	end
 
-	if slot0._nowDragingIndex ~= slot1 then
+	if arg_19_0._nowDragingIndex ~= arg_19_1 then
 		return
 	end
 
-	slot0:_tweenToPos(slot0._heroItemList[slot1], recthelper.screenPosToAnchorPos(slot2.position, slot0.heroContainer.transform))
+	local var_19_0 = arg_19_0._heroItemList[arg_19_1]
+	local var_19_1 = recthelper.screenPosToAnchorPos(arg_19_2.position, arg_19_0.heroContainer.transform)
+
+	arg_19_0:_tweenToPos(var_19_0, var_19_1)
 end
 
-function slot0._onEndDrag(slot0, slot1, slot2)
-	if not slot0:canDrag(slot1) then
+function var_0_0._onEndDrag(arg_20_0, arg_20_1, arg_20_2)
+	if not arg_20_0:canDrag(arg_20_1) then
 		return
 	end
 
-	if slot0._nowDragingIndex ~= slot1 then
+	if arg_20_0._nowDragingIndex ~= arg_20_1 then
 		return
 	end
 
-	slot0._nowDragingIndex = nil
-	slot3 = slot0:_calcIndex(slot2.position)
-	slot4 = slot0._heroItemList[slot1]
+	arg_20_0._nowDragingIndex = nil
 
-	for slot9, slot10 in ipairs(slot0._heroItemList) do
-		slot10:onItemEndDrag(slot1, slot3)
+	local var_20_0 = arg_20_0:_calcIndex(arg_20_2.position)
+	local var_20_1 = arg_20_0._heroItemList[arg_20_1]
+	local var_20_2 = arg_20_1
+
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0._heroItemList) do
+		iter_20_1:onItemEndDrag(var_20_2, var_20_0)
 	end
 
-	slot0:_setDragEnabled(false)
+	arg_20_0:_setDragEnabled(false)
 
-	function slot6(slot0, slot1)
-		for slot5, slot6 in ipairs(slot0._heroItemList) do
-			slot6:onItemCompleteDrag(uv0, uv1, slot1)
+	local function var_20_3(arg_21_0, arg_21_1)
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0._heroItemList) do
+			iter_21_1:onItemCompleteDrag(var_20_2, var_20_0, arg_21_1)
 		end
 
-		slot0:_setDragEnabled(true)
+		arg_21_0:_setDragEnabled(true)
 
-		for slot5, slot6 in ipairs(slot0._heroItemList) do
-			slot6:flowCurrentParent()
+		for iter_21_2, iter_21_3 in ipairs(arg_21_0._heroItemList) do
+			iter_21_3:flowCurrentParent()
 		end
 	end
 
-	if slot3 == slot1 or slot3 <= 0 then
-		slot0._orderList[slot1].text = ""
+	if var_20_0 == arg_20_1 or var_20_0 <= 0 then
+		arg_20_0._orderList[arg_20_1].text = ""
 	end
 
-	if slot3 <= 0 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_20_0 <= 0 then
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 
 		return
 	end
 
-	if not slot0:canDrag(slot3, true) then
-		if slot0._heroItemList[slot3] and slot7.isTrialLock then
+	if not arg_20_0:canDrag(var_20_0, true) then
+		local var_20_4 = arg_20_0._heroItemList[var_20_0]
+
+		if var_20_4 and var_20_4.isTrialLock then
 			GameFacade.showToast(ToastEnum.TrialCantChangePos)
 		end
 
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 
 		return
 	end
 
-	if slot3 <= 0 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_20_0 <= 0 then
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 
 		return
 	end
 
-	slot8 = HeroGroupModel.instance.battleId and lua_battle.configDict[slot7]
+	local var_20_5 = HeroGroupModel.instance.battleId
+	local var_20_6 = var_20_5 and lua_battle.configDict[var_20_5]
 
-	if HeroGroupModel.instance:positionOpenCount() < slot3 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_20_0 > HeroGroupModel.instance:positionOpenCount() then
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 
-		slot9, slot10 = HeroGroupModel.instance:getPositionLockDesc(slot3)
+		local var_20_7, var_20_8 = HeroGroupModel.instance:getPositionLockDesc(var_20_0)
 
-		GameFacade.showToast(slot9, slot10)
+		GameFacade.showToast(var_20_7, var_20_8)
 
 		return
 	end
 
-	if HeroGroupModel.instance:getBattleRoleNum() and slot9 < slot3 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	local var_20_9 = HeroGroupModel.instance:getBattleRoleNum()
+
+	if var_20_9 and var_20_9 < var_20_0 then
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 		GameFacade.showToast(ToastEnum.HeroGroupRoleNum)
 
 		return
 	end
 
-	if slot8 and slot4.mo.aid and slot8.playerMax < slot3 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_20_6 and var_20_1.mo.aid and var_20_0 > var_20_6.playerMax then
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 		GameFacade.showToast(ToastEnum.HeroGroupPlayerMax)
 
 		return
 	end
 
-	if slot0._heroItemList[slot3].mo.aid then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	local var_20_10 = arg_20_0._heroItemList[var_20_0]
+
+	if var_20_10.mo.aid then
+		arg_20_0:_setHeroItemPos(var_20_1, var_20_2, true, var_20_3, arg_20_0)
 
 		return
 	end
 
-	if slot5 ~= slot3 then
+	if var_20_2 ~= var_20_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_release)
 	end
 
-	gohelper.setAsLastSibling(slot10.go)
-	gohelper.setAsLastSibling(slot4.go)
-	slot10:flowOriginParent()
+	gohelper.setAsLastSibling(var_20_10.go)
+	gohelper.setAsLastSibling(var_20_1.go)
+	var_20_10:flowOriginParent()
 
-	slot0._tweenId = slot0:_setHeroItemPos(slot10, slot5, true)
+	arg_20_0._tweenId = arg_20_0:_setHeroItemPos(var_20_10, var_20_2, true)
 
-	slot0:_setHeroItemPos(slot4, slot3, true, function ()
-		if uv0._tweenId then
-			ZProj.TweenHelper.KillById(uv0._tweenId)
+	arg_20_0:_setHeroItemPos(var_20_1, var_20_0, true, function()
+		if arg_20_0._tweenId then
+			ZProj.TweenHelper.KillById(arg_20_0._tweenId)
 		end
 
-		for slot3, slot4 in ipairs(uv0._heroItemList) do
-			uv0:_setHeroItemPos(slot4, slot3)
+		for iter_22_0, iter_22_1 in ipairs(arg_20_0._heroItemList) do
+			arg_20_0:_setHeroItemPos(iter_22_1, iter_22_0)
 		end
 
-		uv1(uv0, true)
+		var_20_3(arg_20_0, true)
 
-		slot0 = RougeHeroGroupModel.instance:getCurGroupMO()
-		slot1 = uv2.mo.id - 1
-		slot2 = uv3.mo.id - 1
-		slot0.equips[slot1].equipUid = {
-			slot0:getPosEquips(slot2).equipUid[1]
+		local var_22_0 = RougeHeroGroupModel.instance:getCurGroupMO()
+		local var_22_1 = var_20_1.mo.id - 1
+		local var_22_2 = var_20_10.mo.id - 1
+		local var_22_3 = var_22_0:getPosEquips(var_22_1).equipUid[1]
+		local var_22_4 = var_22_0:getPosEquips(var_22_2).equipUid[1]
+
+		var_22_0.equips[var_22_1].equipUid = {
+			var_22_4
 		}
-		slot0.equips[slot2].equipUid = {
-			slot0:getPosEquips(slot1).equipUid[1]
+		var_22_0.equips[var_22_2].equipUid = {
+			var_22_3
 		}
 
-		RougeHeroSingleGroupModel.instance:swap(uv4, uv5)
+		RougeHeroSingleGroupModel.instance:swap(var_20_2, var_20_0)
+		RougeHeroSingleGroupModel.instance:swap(var_20_2 + RougeEnum.FightTeamNormalHeroNum, var_20_0 + RougeEnum.FightTeamNormalHeroNum)
 
-		slot9 = RougeEnum.FightTeamNormalHeroNum
+		local var_22_5 = RougeHeroSingleGroupModel.instance:getHeroUids()
 
-		RougeHeroSingleGroupModel.instance:swap(uv4 + RougeEnum.FightTeamNormalHeroNum, uv5 + slot9)
-
-		for slot9, slot10 in ipairs(slot0.heroList) do
-			if RougeHeroSingleGroupModel.instance:getHeroUids()[slot9] ~= slot10 then
+		for iter_22_2, iter_22_3 in ipairs(var_22_0.heroList) do
+			if var_22_5[iter_22_2] ~= iter_22_3 then
 				RougeHeroGroupModel.instance:replaceSingleGroup()
 				HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 				RougeHeroGroupModel.instance:saveCurGroupData()
 				RougeHeroGroupModel.instance:rougeSaveCurGroup()
-				uv0:_updateHeroList()
+				arg_20_0:_updateHeroList()
 
 				break
 			end
 		end
-	end, slot0)
+	end, arg_20_0)
 end
 
-function slot0._setHeroItemPos(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot7 = recthelper.rectToRelativeAnchorPos(slot0.heroPosTrList[slot2].position, slot0.heroContainer.transform)
+function var_0_0._setHeroItemPos(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
+	local var_23_0 = arg_23_0.heroPosTrList[arg_23_2]
+	local var_23_1 = recthelper.rectToRelativeAnchorPos(var_23_0.position, arg_23_0.heroContainer.transform)
 
-	if slot1 then
-		slot1:resetEquipPos()
+	if arg_23_1 then
+		arg_23_1:resetEquipPos()
 	end
 
-	if slot3 then
-		return ZProj.TweenHelper.DOAnchorPos(slot1.go.transform, slot7.x, slot7.y, 0.2, slot4, slot5)
+	if arg_23_3 then
+		return ZProj.TweenHelper.DOAnchorPos(arg_23_1.go.transform, var_23_1.x, var_23_1.y, 0.2, arg_23_4, arg_23_5)
 	else
-		recthelper.setAnchor(slot1.go.transform, slot7.x, slot7.y)
+		recthelper.setAnchor(arg_23_1.go.transform, var_23_1.x, var_23_1.y)
 
-		if slot4 then
-			slot4(slot5)
+		if arg_23_4 then
+			arg_23_4(arg_23_5)
 		end
 	end
 end
 
-function slot0._tweenToPos(slot0, slot1, slot2)
-	slot3, slot4 = recthelper.getAnchor(slot1.go.transform)
+function var_0_0._tweenToPos(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0, var_24_1 = recthelper.getAnchor(arg_24_1.go.transform)
 
-	if math.abs(slot3 - slot2.x) > 10 or math.abs(slot4 - slot2.y) > 10 then
-		ZProj.TweenHelper.DOAnchorPos(slot1.go.transform, slot2.x, slot2.y, 0.2)
+	if math.abs(var_24_0 - arg_24_2.x) > 10 or math.abs(var_24_1 - arg_24_2.y) > 10 then
+		ZProj.TweenHelper.DOAnchorPos(arg_24_1.go.transform, arg_24_2.x, arg_24_2.y, 0.2)
 	else
-		recthelper.setAnchor(slot1.go.transform, slot2.x, slot2.y)
+		recthelper.setAnchor(arg_24_1.go.transform, arg_24_2.x, arg_24_2.y)
 	end
 end
 
-function slot0._setDragEnabled(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._heroItemDrag) do
-		slot6.enabled = slot1
+function var_0_0._setDragEnabled(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_0._heroItemDrag) do
+		iter_25_1.enabled = arg_25_1
 	end
 end
 
-function slot0._updateHeroList(slot0)
-	slot2 = slot0.viewContainer:getHeroGroupFightView():isReplayMode()
+function var_0_0._updateHeroList(arg_26_0)
+	local var_26_0 = arg_26_0.viewContainer:getHeroGroupFightView():isReplayMode()
 
-	for slot6, slot7 in ipairs(slot0._heroItemList) do
-		slot7:onUpdateMO(RougeHeroSingleGroupModel.instance:getById(slot6))
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0._heroItemList) do
+		local var_26_1 = RougeHeroSingleGroupModel.instance:getById(iter_26_0)
 
-		if not slot0._nowDragingIndex and slot6 <= slot0._openCount then
-			slot0._orderList[slot6].text = slot8:isEmpty() and slot6 or ""
+		iter_26_1:onUpdateMO(var_26_1)
+
+		if not arg_26_0._nowDragingIndex and iter_26_0 <= arg_26_0._openCount then
+			arg_26_0._orderList[iter_26_0].text = var_26_1:isEmpty() and iter_26_0 or ""
 		end
 
-		if not slot7.isLock and not RougeHeroSingleGroupModel.instance:isTemp() and not slot2 and slot0._isOpen then
-			if slot6 == 3 then
+		if not iter_26_1.isLock and not RougeHeroSingleGroupModel.instance:isTemp() and not var_26_0 and arg_26_0._isOpen then
+			if iter_26_0 == 3 then
 				HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnThirdPosOpen)
-			elseif slot6 == 4 then
+			elseif iter_26_0 == 4 then
 				HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnFourthPosOpen)
 			end
 		end
 	end
 end
 
-function slot0._checkWeekWalkCd(slot0)
-	slot1 = {}
+function var_0_0._checkWeekWalkCd(arg_27_0)
+	local var_27_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._heroItemList) do
-		if slot6:checkWeekWalkCd() then
-			table.insert(slot1, slot7)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0._heroItemList) do
+		local var_27_1 = iter_27_1:checkWeekWalkCd()
+
+		if var_27_1 then
+			table.insert(var_27_0, var_27_1)
 		end
 	end
 
-	if #slot1 == 0 then
+	if #var_27_0 == 0 then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("removeWeekWalkInCdHero")
 
-	slot0._heroInCdList = slot1
+	arg_27_0._heroInCdList = var_27_0
 
-	TaskDispatcher.runDelay(slot0._removeWeekWalkInCdHero, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_27_0._removeWeekWalkInCdHero, arg_27_0, 1.5)
 end
 
-function slot0._removeWeekWalkInCdHero(slot0)
+function var_0_0._removeWeekWalkInCdHero(arg_28_0)
 	UIBlockMgr.instance:endBlock("removeWeekWalkInCdHero")
 
-	if not slot0._heroInCdList then
+	if not arg_28_0._heroInCdList then
 		return
 	end
 
-	slot0._heroInCdList = nil
+	local var_28_0 = arg_28_0._heroInCdList
 
-	for slot5, slot6 in ipairs(slot0._heroInCdList) do
-		RougeHeroSingleGroupModel.instance:remove(slot6)
+	arg_28_0._heroInCdList = nil
+
+	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+		RougeHeroSingleGroupModel.instance:remove(iter_28_1)
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function slot0._calcIndex(slot0, slot1)
-	for slot5 = 1, 4 do
-		slot6 = slot0.heroPosTrList[slot5].parent
+function var_0_0._calcIndex(arg_29_0, arg_29_1)
+	for iter_29_0 = 1, 4 do
+		local var_29_0 = arg_29_0.heroPosTrList[iter_29_0].parent
+		local var_29_1 = recthelper.screenPosToAnchorPos(arg_29_1, var_29_0)
 
-		if math.abs(recthelper.screenPosToAnchorPos(slot1, slot6).x) * 2 < recthelper.getWidth(slot6) and math.abs(slot7.y) * 2 < recthelper.getHeight(slot6) then
-			return slot5
+		if math.abs(var_29_1.x) * 2 < recthelper.getWidth(var_29_0) and math.abs(var_29_1.y) * 2 < recthelper.getHeight(var_29_0) then
+			return iter_29_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
-	TaskDispatcher.cancelTask(slot0._removeWeekWalkInCdHero, slot0)
+function var_0_0.onDestroyView(arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0.closeThis, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._removeWeekWalkInCdHero, arg_30_0)
 	UIBlockMgr.instance:endBlock("removeWeekWalkInCdHero")
 
-	if slot0._openTweenIdList then
-		for slot4, slot5 in ipairs(slot0._openTweenIdList) do
-			ZProj.TweenHelper.KillById(slot5)
+	if arg_30_0._openTweenIdList then
+		for iter_30_0, iter_30_1 in ipairs(arg_30_0._openTweenIdList) do
+			ZProj.TweenHelper.KillById(iter_30_1)
 		end
 	end
 
-	if slot0._closeTweenIdList then
-		for slot4, slot5 in ipairs(slot0._closeTweenIdList) do
-			ZProj.TweenHelper.KillById(slot5)
+	if arg_30_0._closeTweenIdList then
+		for iter_30_2, iter_30_3 in ipairs(arg_30_0._closeTweenIdList) do
+			ZProj.TweenHelper.KillById(iter_30_3)
 		end
 	end
 end
 
-function slot0._onScreenSizeChange(slot0)
-	for slot4 = 1, ModuleEnum.MaxHeroCountInGroup do
-		slot0:_setHeroItemPos(slot0._heroItemList[slot4], slot4)
+function var_0_0._onScreenSizeChange(arg_31_0)
+	for iter_31_0 = 1, ModuleEnum.MaxHeroCountInGroup do
+		local var_31_0 = arg_31_0._heroItemList[iter_31_0]
+
+		arg_31_0:_setHeroItemPos(var_31_0, iter_31_0)
 	end
 end
 
-return slot0
+return var_0_0

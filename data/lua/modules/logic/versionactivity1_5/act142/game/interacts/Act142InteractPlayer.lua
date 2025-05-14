@@ -1,179 +1,226 @@
-module("modules.logic.versionactivity1_5.act142.game.interacts.Act142InteractPlayer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.game.interacts.Act142InteractPlayer", package.seeall)
 
-slot0 = class("Act142InteractPlayer", Va3ChessInteractBase)
+local var_0_0 = class("Act142InteractPlayer", Va3ChessInteractBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._fireBallTweenMoveId = nil
-	slot0._isFiring = false
+	arg_1_0._fireBallTweenMoveId = nil
+	arg_1_0._isFiring = false
 end
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_2_0)
+	var_0_0.super.onAvatarLoaded(arg_2_0)
 
-	if not slot0._target.avatar.loader then
+	local var_2_0 = arg_2_0._target.avatar.loader
+
+	if not var_2_0 then
 		return
 	end
 
-	if not gohelper.isNil(slot1:getInstGO()) then
-		gohelper.setActive(gohelper.findChild(slot2, "fireball"), true)
+	local var_2_1 = var_2_0:getInstGO()
 
-		for slot7 = 1, Activity142Enum.MAX_FIRE_BALL_NUM do
-			if not gohelper.isNil(gohelper.findChild(slot2, "fireball/fireball" .. slot7)) then
-				slot0._target.avatar["goFireBall" .. slot7] = slot9
+	if not gohelper.isNil(var_2_1) then
+		local var_2_2 = gohelper.findChild(var_2_1, "fireball")
 
-				gohelper.setActive(slot9, false)
+		gohelper.setActive(var_2_2, true)
+
+		for iter_2_0 = 1, Activity142Enum.MAX_FIRE_BALL_NUM do
+			local var_2_3 = "goFireBall" .. iter_2_0
+			local var_2_4 = gohelper.findChild(var_2_1, "fireball/fireball" .. iter_2_0)
+
+			if not gohelper.isNil(var_2_4) then
+				arg_2_0._target.avatar[var_2_3] = var_2_4
+
+				gohelper.setActive(var_2_4, false)
 			end
 		end
 
-		slot0._animSelf = slot2:GetComponent(Va3ChessEnum.ComponentType.Animator)
+		arg_2_0._animSelf = var_2_1:GetComponent(Va3ChessEnum.ComponentType.Animator)
 
-		if slot0._animSelf and Va3ChessGameModel.instance:getObjectDataById(slot0._target.id) and slot4:getHaveBornEff() then
-			slot0._animSelf:Play(Activity142Enum.SWITCH_OPEN_ANIM, 0, 0)
-			slot4:setHaveBornEff(false)
+		if arg_2_0._animSelf then
+			local var_2_5 = Va3ChessGameModel.instance:getObjectDataById(arg_2_0._target.id)
+
+			if var_2_5 and var_2_5:getHaveBornEff() then
+				arg_2_0._animSelf:Play(Activity142Enum.SWITCH_OPEN_ANIM, 0, 0)
+				var_2_5:setHaveBornEff(false)
+			end
 		end
 	end
 
-	slot0:updateFireBallCount()
-	loadAbAsset(Va3ChessEnum.Bullet.FireBall.path, false, slot0._onLoadFireBallBulletComplete, slot0)
+	arg_2_0:updateFireBallCount()
+	loadAbAsset(Va3ChessEnum.Bullet.FireBall.path, false, arg_2_0._onLoadFireBallBulletComplete, arg_2_0)
 end
 
-function slot0.onSelected(slot0)
+function var_0_0.onSelected(arg_3_0)
 	Va3ChessGameController.instance:setClickStatus(Va3ChessEnum.SelectPosStatus.SelectObjWaitPos)
 
-	slot1 = slot0._target.originData.posX
-	slot2 = slot0._target.originData.posY
-	slot3 = {
+	local var_3_0 = arg_3_0._target.originData.posX
+	local var_3_1 = arg_3_0._target.originData.posY
+	local var_3_2 = {
 		visible = true,
 		posXList = {},
 		posYList = {},
-		selfPosX = slot1,
-		selfPosY = slot2,
+		selfPosX = var_3_0,
+		selfPosY = var_3_1,
 		selectType = Va3ChessEnum.ChessSelectType.Normal
 	}
 
-	slot0:insertPosToList(slot1 + 1, slot2, slot3.posXList, slot3.posYList)
-	slot0:insertPosToList(slot1 - 1, slot2, slot3.posXList, slot3.posYList)
-	slot0:insertPosToList(slot1, slot2 + 1, slot3.posXList, slot3.posYList)
-	slot0:insertPosToList(slot1, slot2 - 1, slot3.posXList, slot3.posYList)
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.SetNeedChooseDirectionVisible, slot3)
+	arg_3_0:insertPosToList(var_3_0 + 1, var_3_1, var_3_2.posXList, var_3_2.posYList)
+	arg_3_0:insertPosToList(var_3_0 - 1, var_3_1, var_3_2.posXList, var_3_2.posYList)
+	arg_3_0:insertPosToList(var_3_0, var_3_1 + 1, var_3_2.posXList, var_3_2.posYList)
+	arg_3_0:insertPosToList(var_3_0, var_3_1 - 1, var_3_2.posXList, var_3_2.posYList)
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.SetNeedChooseDirectionVisible, var_3_2)
 end
 
-function slot0.insertPosToList(slot0, slot1, slot2, slot3, slot4)
-	if Va3ChessGameController.instance:posCanWalk(slot1, slot2, Va3ChessMapUtils.ToDirection(slot0._target.originData.posX, slot0._target.originData.posY, slot1, slot2), slot0._target.objType) then
-		table.insert(slot3, slot1)
-		table.insert(slot4, slot2)
+function var_0_0.insertPosToList(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local var_4_0 = arg_4_0._target.originData.posX
+	local var_4_1 = arg_4_0._target.originData.posY
+	local var_4_2 = Va3ChessMapUtils.ToDirection(var_4_0, var_4_1, arg_4_1, arg_4_2)
+
+	if Va3ChessGameController.instance:posCanWalk(arg_4_1, arg_4_2, var_4_2, arg_4_0._target.objType) then
+		table.insert(arg_4_3, arg_4_1)
+		table.insert(arg_4_4, arg_4_2)
 	end
 end
 
-function slot0.onCancelSelect(slot0)
+function var_0_0.onCancelSelect(arg_5_0)
 	Va3ChessGameController.instance:setClickStatus(Va3ChessEnum.SelectPosStatus.None)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.SetNeedChooseDirectionVisible, {
 		visible = false
 	})
 end
 
-function slot0.onSelectPos(slot0, slot1, slot2)
-	slot3, slot4 = slot0:isCanFire(slot1, slot2)
+function var_0_0.onSelectPos(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0, var_6_1 = arg_6_0:isCanFire(arg_6_1, arg_6_2)
 
-	if slot3 and slot4 then
-		slot0:requestFire(slot1, slot2, slot4)
+	if var_6_0 and var_6_1 then
+		arg_6_0:requestFire(arg_6_1, arg_6_2, var_6_1)
 	else
-		slot0:requestBeginRound(slot1, slot2)
+		arg_6_0:requestBeginRound(arg_6_1, arg_6_2)
 	end
 end
 
-function slot0.requestBeginRound(slot0, slot1, slot2)
-	slot3 = slot0._target.originData.posX
-	slot4 = slot0._target.originData.posY
+function var_0_0.requestBeginRound(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0._target.originData.posX
+	local var_7_1 = arg_7_0._target.originData.posY
 
-	if not Activity142Helper.isSurroundPlayer(slot1, slot2) then
+	if not Activity142Helper.isSurroundPlayer(arg_7_1, arg_7_2) then
 		GameFacade.showToast(ToastEnum.ChessCanNotMoveHere)
 
 		return
 	end
 
-	if not Va3ChessGameController.instance:posCanWalk(slot1, slot2, Va3ChessMapUtils.ToDirection(slot3, slot4, slot1, slot2), slot0._target.objType) then
+	local var_7_2 = Va3ChessMapUtils.ToDirection(var_7_0, var_7_1, arg_7_1, arg_7_2)
+
+	if not Va3ChessGameController.instance:posCanWalk(arg_7_1, arg_7_2, var_7_2, arg_7_0._target.objType) then
 		GameFacade.showToast(ToastEnum.ChessCanNotMoveHere)
 
 		return
 	end
 
-	Va3ChessGameModel.instance:appendOpt({
-		id = slot0._target.originData.id,
-		dir = Va3ChessMapUtils.ToDirection(slot3, slot4, slot1, slot2)
-	})
-	Va3ChessRpcController.instance:sendActBeginRoundRequest(Va3ChessGameModel.instance:getActId(), Va3ChessGameModel.instance:getOptList(), slot0.onMoveSuccess, slot0)
+	local var_7_3 = {
+		id = arg_7_0._target.originData.id,
+		dir = Va3ChessMapUtils.ToDirection(var_7_0, var_7_1, arg_7_1, arg_7_2)
+	}
+
+	Va3ChessGameModel.instance:appendOpt(var_7_3)
+
+	local var_7_4 = Va3ChessGameModel.instance:getActId()
+	local var_7_5 = Va3ChessGameModel.instance:getOptList()
+
+	Va3ChessRpcController.instance:sendActBeginRoundRequest(var_7_4, var_7_5, arg_7_0.onMoveSuccess, arg_7_0)
 	Va3ChessGameController.instance:saveTempSelectObj()
 	Va3ChessGameController.instance:setSelectObj(nil)
 
-	if Va3ChessGameController.instance.event then
-		slot11:setLockEvent()
+	local var_7_6 = Va3ChessGameController.instance.event
+
+	if var_7_6 then
+		var_7_6:setLockEvent()
 	end
 end
 
-function slot0.updateFireBallCount(slot0)
-	for slot5 = 1, Activity142Enum.MAX_FIRE_BALL_NUM do
-		if not gohelper.isNil(slot0._target.avatar["goFireBall" .. slot5]) then
-			gohelper.setActive(slot7, slot5 <= Va3ChessGameModel.instance:getFireBallCount())
+function var_0_0.updateFireBallCount(arg_8_0)
+	local var_8_0 = Va3ChessGameModel.instance:getFireBallCount()
+
+	for iter_8_0 = 1, Activity142Enum.MAX_FIRE_BALL_NUM do
+		local var_8_1 = "goFireBall" .. iter_8_0
+		local var_8_2 = arg_8_0._target.avatar[var_8_1]
+
+		if not gohelper.isNil(var_8_2) then
+			gohelper.setActive(var_8_2, iter_8_0 <= var_8_0)
 		end
 	end
 end
 
-function slot0._onLoadFireBallBulletComplete(slot0, slot1)
-	if slot1 and slot1.IsLoadSuccess then
-		slot2 = nil
+function var_0_0._onLoadFireBallBulletComplete(arg_9_0, arg_9_1)
+	if arg_9_1 and arg_9_1.IsLoadSuccess then
+		local var_9_0
+		local var_9_1 = arg_9_0._target:tryGetSceneGO()
 
-		if not gohelper.isNil(slot0._target:tryGetSceneGO()) then
-			slot2 = slot3.transform.parent and slot4.parent.gameObject or nil
+		if not gohelper.isNil(var_9_1) then
+			local var_9_2 = var_9_1.transform
+
+			var_9_0 = var_9_2.parent and var_9_2.parent.gameObject or nil
 		end
 
-		if slot0._fireBallBulletAssetItem then
-			slot0._fireBallBulletAssetItem:Release()
+		if arg_9_0._fireBallBulletAssetItem then
+			arg_9_0._fireBallBulletAssetItem:Release()
 		end
 
-		slot0._fireBallBulletAssetItem = slot1
+		arg_9_0._fireBallBulletAssetItem = arg_9_1
 
-		slot0._fireBallBulletAssetItem:Retain()
+		arg_9_0._fireBallBulletAssetItem:Retain()
 
-		if not gohelper.isNil(gohelper.clone(slot0._fireBallBulletAssetItem:GetResource(Va3ChessEnum.Bullet.FireBall.path), slot2)) then
-			slot0.fireBallBulletItem = {
-				go = slot4,
-				dir2GO = {}
-			}
+		local var_9_3 = gohelper.clone(arg_9_0._fireBallBulletAssetItem:GetResource(Va3ChessEnum.Bullet.FireBall.path), var_9_0)
 
-			for slot8, slot9 in pairs(Va3ChessEnum.Direction) do
-				slot0.fireBallBulletItem.dir2GO[slot9] = gohelper.findChild(slot0.fireBallBulletItem.go, string.format("dir_%s", slot9))
+		if not gohelper.isNil(var_9_3) then
+			arg_9_0.fireBallBulletItem = {}
+			arg_9_0.fireBallBulletItem.go = var_9_3
+			arg_9_0.fireBallBulletItem.dir2GO = {}
+
+			for iter_9_0, iter_9_1 in pairs(Va3ChessEnum.Direction) do
+				local var_9_4 = gohelper.findChild(arg_9_0.fireBallBulletItem.go, string.format("dir_%s", iter_9_1))
+
+				arg_9_0.fireBallBulletItem.dir2GO[iter_9_1] = var_9_4
 			end
 
-			slot0:_setFireBallDirGOActive()
+			arg_9_0:_setFireBallDirGOActive()
 
-			slot0.fireBallBulletItem.hitEffect = gohelper.findChild(slot0.fireBallBulletItem.go, "vx_fire_hit")
+			arg_9_0.fireBallBulletItem.hitEffect = gohelper.findChild(arg_9_0.fireBallBulletItem.go, "vx_fire_hit")
 
-			gohelper.setActive(slot0.fireBallBulletItem.hitEffect, false)
+			gohelper.setActive(arg_9_0.fireBallBulletItem.hitEffect, false)
 		else
 			logError("Act142InteractPlayer._onLoadFireBallBulletComplete error, get bulletGO fail")
 		end
 	end
 end
 
-function slot0.isCanFire(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.isCanFire(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = false
+	local var_10_1
 
-	if slot0._isFiring then
-		return slot3, nil
+	if arg_10_0._isFiring then
+		return var_10_0, var_10_1
 	end
 
-	slot5, slot6 = Va3ChessGameController.instance:searchInteractByPos(slot1, slot2, Activity142Helper.filterCanFireKill)
-	slot7 = nil
-	slot7 = slot5 == 1 and slot6 or slot6 and slot6[1] or nil
+	local var_10_2, var_10_3 = Va3ChessGameController.instance:searchInteractByPos(arg_10_1, arg_10_2, Activity142Helper.filterCanFireKill)
+	local var_10_4
 
-	return slot3, Activity142Helper.isCanFireKill(slot7) and slot7.id or nil
+	if var_10_2 == 1 then
+		var_10_4 = var_10_3
+	else
+		var_10_4 = var_10_3 and var_10_3[1] or nil
+	end
+
+	local var_10_5 = Activity142Helper.isCanFireKill(var_10_4)
+	local var_10_6 = var_10_5 and var_10_4.id or nil
+
+	return var_10_5, var_10_6
 end
 
-function slot0.requestFire(slot0, slot1, slot2, slot3)
-	if slot0._isFiring then
+function var_0_0.requestFire(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_0._isFiring then
 		logError("Act142InteractPlayer:requestFire error, cannot repeat fire")
 
 		return
@@ -185,134 +232,162 @@ function slot0.requestFire(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	Activity142Rpc.instance:sendAct142UseFireballRequest(Activity142Model.instance:getActivityId(), slot0._target.originData.posX, slot0._target.originData.posY, slot1, slot2, slot3, slot0.playFireBallTween, slot0)
+	local var_11_0 = Activity142Model.instance:getActivityId()
+	local var_11_1 = arg_11_0._target.originData.posX
+	local var_11_2 = arg_11_0._target.originData.posY
+
+	Activity142Rpc.instance:sendAct142UseFireballRequest(var_11_0, var_11_1, var_11_2, arg_11_1, arg_11_2, arg_11_3, arg_11_0.playFireBallTween, arg_11_0)
 end
 
-function slot0.playFireBallTween(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 or string.nilorempty(slot3.useFireball) then
+function var_0_0.playFireBallTween(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if arg_12_2 ~= 0 or string.nilorempty(arg_12_3.useFireball) then
 		return
 	end
 
-	slot0:updateFireBallCount()
+	arg_12_0:updateFireBallCount()
 
-	if not cjson.decode(slot3.useFireball) then
+	local var_12_0 = cjson.decode(arg_12_3.useFireball)
+
+	if not var_12_0 then
 		return
 	end
 
-	if not slot4.targetId or slot5 <= 0 then
+	local var_12_1 = var_12_0.targetId
+
+	if not var_12_1 or var_12_1 <= 0 then
 		return
 	end
 
-	if not slot0.fireBallBulletItem or gohelper.isNil(slot0.fireBallBulletItem.go) then
+	if not arg_12_0.fireBallBulletItem or gohelper.isNil(arg_12_0.fireBallBulletItem.go) then
 		return
 	end
 
-	slot6 = slot4.x1 or 0
-	slot7 = slot4.y1 or 0
-	slot10, slot11 = Va3ChessGameModel.instance:getGameSize()
+	local var_12_2 = var_12_0.x1 or 0
+	local var_12_3 = var_12_0.y1 or 0
+	local var_12_4 = var_12_0.x2 or 0
+	local var_12_5 = var_12_0.y2 or 0
+	local var_12_6, var_12_7 = Va3ChessGameModel.instance:getGameSize()
+	local var_12_8 = Mathf.Clamp(var_12_4, 0, var_12_6 - 1)
+	local var_12_9 = Mathf.Clamp(var_12_5, 0, var_12_7 - 1)
+	local var_12_10 = Va3ChessMapUtils.ToDirection(var_12_2, var_12_3, var_12_8, var_12_9)
 
-	slot0:_setFireBallDirGOActive(Va3ChessMapUtils.ToDirection(slot6, slot7, Mathf.Clamp(slot4.x2 or 0, 0, slot10 - 1), Mathf.Clamp(slot4.y2 or 0, 0, slot11 - 1)))
+	arg_12_0:_setFireBallDirGOActive(var_12_10)
 
-	slot14, slot15, slot16 = Va3ChessGameController.instance:calcTilePosInScene(slot6, slot7)
+	local var_12_11 = arg_12_0.fireBallBulletItem.go.transform
+	local var_12_12, var_12_13, var_12_14 = Va3ChessGameController.instance:calcTilePosInScene(var_12_2, var_12_3)
 
-	transformhelper.setLocalPos(slot0.fireBallBulletItem.go.transform, slot14, slot15, slot16)
+	transformhelper.setLocalPos(var_12_11, var_12_12, var_12_13, var_12_14)
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.FIRING_BALL)
 
-	slot0._tmpTargetId = slot5
+	arg_12_0._tmpTargetId = var_12_1
 
-	if slot4.pedalObjectId and slot17 > 0 then
-		slot0._tmpPedalId = slot17
-		slot0._tmpPedalStatus = slot4.pedalStatus
+	local var_12_15 = var_12_0.pedalObjectId
+
+	if var_12_15 and var_12_15 > 0 then
+		arg_12_0._tmpPedalId = var_12_15
+		arg_12_0._tmpPedalStatus = var_12_0.pedalStatus
 	end
 
-	slot0._isFiring = true
-	slot19, slot20, slot21 = Va3ChessGameController.instance:calcTilePosInScene(slot8, slot9)
-	slot0._fireBallTweenMoveId = ZProj.TweenHelper.DOLocalMove(slot13, slot19, slot20, slot21, Va3ChessMapUtils.calBulletFlyTime(Va3ChessEnum.Bullet.FireBall.speed, slot6, slot7, slot8, slot9), slot0.onFireBallTweenComplete, slot0, nil, EaseType.Linear)
+	arg_12_0._isFiring = true
+
+	local var_12_16 = Va3ChessMapUtils.calBulletFlyTime(Va3ChessEnum.Bullet.FireBall.speed, var_12_2, var_12_3, var_12_8, var_12_9)
+	local var_12_17, var_12_18, var_12_19 = Va3ChessGameController.instance:calcTilePosInScene(var_12_8, var_12_9)
+
+	arg_12_0._fireBallTweenMoveId = ZProj.TweenHelper.DOLocalMove(var_12_11, var_12_17, var_12_18, var_12_19, var_12_16, arg_12_0.onFireBallTweenComplete, arg_12_0, nil, EaseType.Linear)
 
 	AudioMgr.instance:trigger(AudioEnum.chess_activity142.FireBall)
 end
 
-function slot0._setFireBallDirGOActive(slot0, slot1)
-	if not slot0.fireBallBulletItem or not slot0.fireBallBulletItem.dir2GO then
+function var_0_0._setFireBallDirGOActive(arg_13_0, arg_13_1)
+	if not arg_13_0.fireBallBulletItem or not arg_13_0.fireBallBulletItem.dir2GO then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0.fireBallBulletItem.dir2GO) do
-		gohelper.setActive(slot6, slot5 == slot1)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.fireBallBulletItem.dir2GO) do
+		gohelper.setActive(iter_13_1, iter_13_0 == arg_13_1)
 	end
 end
 
-function slot0.onFireBallTweenComplete(slot0)
-	slot0._fireBallTweenMoveId = nil
+function var_0_0.onFireBallTweenComplete(arg_14_0)
+	arg_14_0._fireBallTweenMoveId = nil
 
-	if Va3ChessGameController.instance.event then
-		if slot0._tmpTargetId then
-			slot1:insertStep({
-				param = string.format("{\"stepType\":%s,\"id\":%s,\"reason\":%s,\"refreshAllKillEff\":%s}", Va3ChessEnum.GameStepType.DeleteObject, slot0._tmpTargetId, Va3ChessEnum.DeleteReason.FireBall, 1)
-			})
-			slot1:insertStep({
-				param = string.format("{\"stepType\":%s,\"id\":%s}", Va3ChessEnum.GameStepType.InteractFinish, slot0._tmpTargetId)
-			})
-			gohelper.setActive(slot0.fireBallBulletItem.hitEffect, false)
-			gohelper.setActive(slot0.fireBallBulletItem.hitEffect, true)
+	local var_14_0 = Va3ChessGameController.instance.event
+
+	if var_14_0 then
+		if arg_14_0._tmpTargetId then
+			local var_14_1 = {
+				param = string.format("{\"stepType\":%s,\"id\":%s,\"reason\":%s,\"refreshAllKillEff\":%s}", Va3ChessEnum.GameStepType.DeleteObject, arg_14_0._tmpTargetId, Va3ChessEnum.DeleteReason.FireBall, 1)
+			}
+
+			var_14_0:insertStep(var_14_1)
+
+			local var_14_2 = {
+				param = string.format("{\"stepType\":%s,\"id\":%s}", Va3ChessEnum.GameStepType.InteractFinish, arg_14_0._tmpTargetId)
+			}
+
+			var_14_0:insertStep(var_14_2)
+			gohelper.setActive(arg_14_0.fireBallBulletItem.hitEffect, false)
+			gohelper.setActive(arg_14_0.fireBallBulletItem.hitEffect, true)
 			AudioMgr.instance:trigger(AudioEnum.chess_activity142.MonsterBeHit)
 		end
 
-		if slot0._tmpPedalId then
-			slot1:insertStep({
-				param = string.format("{\"stepType\":%s,\"id\":%s,\"pedalStatus\":%s}", Va3ChessEnum.GameStepType.RefreshPedalStatus, slot0._tmpPedalId, slot0._tmpPedalStatus)
-			})
+		if arg_14_0._tmpPedalId then
+			local var_14_3 = {
+				param = string.format("{\"stepType\":%s,\"id\":%s,\"pedalStatus\":%s}", Va3ChessEnum.GameStepType.RefreshPedalStatus, arg_14_0._tmpPedalId, arg_14_0._tmpPedalStatus)
+			}
+
+			var_14_0:insertStep(var_14_3)
 		end
 	end
 
-	slot0:_setFireBallDirGOActive()
+	arg_14_0:_setFireBallDirGOActive()
 
-	slot0._isFiring = false
-	slot0._tmpTargetId = nil
-	slot0._tmpPedalId = nil
-	slot0._tmpPedalStatus = nil
+	arg_14_0._isFiring = false
+	arg_14_0._tmpTargetId = nil
+	arg_14_0._tmpPedalId = nil
+	arg_14_0._tmpPedalStatus = nil
 
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.FIRING_BALL)
 end
 
-function slot0.dispose(slot0)
-	if slot0._fireBallBulletAssetItem then
-		slot0._fireBallBulletAssetItem:Release()
+function var_0_0.dispose(arg_15_0)
+	if arg_15_0._fireBallBulletAssetItem then
+		arg_15_0._fireBallBulletAssetItem:Release()
 
-		slot0._fireBallBulletAssetItem = nil
+		arg_15_0._fireBallBulletAssetItem = nil
 	end
 
-	if slot0._fireBallTweenMoveId then
-		ZProj.TweenHelper.KillById(slot0._fireBallTweenMoveId)
+	if arg_15_0._fireBallTweenMoveId then
+		ZProj.TweenHelper.KillById(arg_15_0._fireBallTweenMoveId)
 
-		slot0._fireBallTweenMoveId = nil
+		arg_15_0._fireBallTweenMoveId = nil
 	end
 
-	slot0:onFireBallTweenComplete()
+	arg_15_0:onFireBallTweenComplete()
 
-	if slot0.fireBallBulletItem then
-		if slot0.fireBallBulletItem.dir2GO then
-			for slot4, slot5 in pairs(slot0.fireBallBulletItem.dir2GO) do
-				slot5 = nil
+	if arg_15_0.fireBallBulletItem then
+		if arg_15_0.fireBallBulletItem.dir2GO then
+			for iter_15_0, iter_15_1 in pairs(arg_15_0.fireBallBulletItem.dir2GO) do
+				iter_15_1 = nil
 			end
 
-			slot0.fireBallBulletItem.dir2GO = nil
+			arg_15_0.fireBallBulletItem.dir2GO = nil
 		end
 
-		slot0.fireBallBulletItem.hitEffect = nil
+		arg_15_0.fireBallBulletItem.hitEffect = nil
 
-		gohelper.destroy(slot0.fireBallBulletItem.go)
+		gohelper.destroy(arg_15_0.fireBallBulletItem.go)
 
-		slot0.fireBallBulletItem.go = nil
+		arg_15_0.fireBallBulletItem.go = nil
 	end
 
-	slot0.fireBallBulletItem = {}
-	slot0._isFiring = false
-	slot0._tmpTargetId = nil
-	slot0._tmpPedalId = nil
-	slot0._tmpPedalStatus = nil
+	arg_15_0.fireBallBulletItem = {}
+	arg_15_0._isFiring = false
+	arg_15_0._tmpTargetId = nil
+	arg_15_0._tmpPedalId = nil
+	arg_15_0._tmpPedalStatus = nil
 
-	uv0.super.dispose(slot0)
+	var_0_0.super.dispose(arg_15_0)
 end
 
-return slot0
+return var_0_0

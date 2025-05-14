@@ -1,125 +1,148 @@
-module("modules.logic.room.controller.RoomInformController", package.seeall)
+﻿module("modules.logic.room.controller.RoomInformController", package.seeall)
 
-slot0 = class("RoomInformController", BaseController)
+local var_0_0 = class("RoomInformController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-slot0.SCREEN_CAPTURE_BLOCK_KEY = "RoomInformController.SCREEN_CAPTURE_BLOCK_KEY"
+var_0_0.SCREEN_CAPTURE_BLOCK_KEY = "RoomInformController.SCREEN_CAPTURE_BLOCK_KEY"
 
-function slot0.openShareTipView(slot0, slot1, slot2)
-	if slot0._viewOpenParams then
+function var_0_0.openShareTipView(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._viewOpenParams then
 		return
 	end
 
-	UIBlockMgr.instance:startBlock(uv0.SCREEN_CAPTURE_BLOCK_KEY)
+	UIBlockMgr.instance:startBlock(var_0_0.SCREEN_CAPTURE_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	slot0._viewOpenParams = {
-		playerMO = slot1,
-		shareCode = slot2
+	arg_4_0._viewOpenParams = {
+		playerMO = arg_4_1,
+		shareCode = arg_4_2
 	}
 
-	if GameSceneMgr.instance:getCurScene() and slot3.camera and slot3.camera:getCameraState() ~= RoomEnum.CameraState.OverlookAll then
-		slot3.camera:switchCameraState(RoomEnum.CameraState.OverlookAll, {
+	local var_4_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_4_0 and var_4_0.camera and var_4_0.camera:getCameraState() ~= RoomEnum.CameraState.OverlookAll then
+		var_4_0.camera:switchCameraState(RoomEnum.CameraState.OverlookAll, {
 			zoom = 1
-		}, nil, slot0._screenCapture, slot0)
+		}, nil, arg_4_0._screenCapture, arg_4_0)
 	else
-		slot0:_screenCapture()
+		arg_4_0:_screenCapture()
 	end
 end
 
-function slot0._screenCapture(slot0)
-	ZProj.ScreenCaptureUtil.Instance:ReadScreenPixelsAsTexture(nil, slot0._onOpenInformView, slot0)
+function var_0_0._screenCapture(arg_5_0)
+	ZProj.ScreenCaptureUtil.Instance:ReadScreenPixelsAsTexture(nil, arg_5_0._onOpenInformView, arg_5_0)
 end
 
-function slot0._onOpenInformView(slot0, slot1)
-	UIBlockMgr.instance:endBlock(uv0.SCREEN_CAPTURE_BLOCK_KEY)
+function var_0_0._onOpenInformView(arg_6_0, arg_6_1)
+	UIBlockMgr.instance:endBlock(var_0_0.SCREEN_CAPTURE_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	slot0._viewOpenParams = nil
-	slot0._viewOpenParams.texture2d = slot1
-	slot3 = {}
+	local var_6_0 = arg_6_0._viewOpenParams
 
-	if not string.nilorempty(CommonConfig.instance:getConstStr(ConstEnum.RoomInformTypeTitles)) then
-		for slot9, slot10 in ipairs(string.split(slot4, "#") or {}) do
-			table.insert(slot3, {
-				id = slot9,
-				desc = slot10
+	arg_6_0._viewOpenParams = nil
+	var_6_0.texture2d = arg_6_1
+
+	local var_6_1 = {}
+	local var_6_2 = CommonConfig.instance:getConstStr(ConstEnum.RoomInformTypeTitles)
+
+	if not string.nilorempty(var_6_2) then
+		local var_6_3 = string.split(var_6_2, "#") or {}
+
+		for iter_6_0, iter_6_1 in ipairs(var_6_3) do
+			table.insert(var_6_1, {
+				id = iter_6_0,
+				desc = iter_6_1
 			})
 		end
 	end
 
-	RoomReportTypeListModel.instance:initType(slot3)
-	ViewMgr.instance:openView(ViewName.RoomInformPlayerView, slot2)
+	RoomReportTypeListModel.instance:initType(var_6_1)
+	ViewMgr.instance:openView(ViewName.RoomInformPlayerView, var_6_0)
 end
 
-slot0.SEND_REPORT_ROOM_BLOCK_KEY = "RoomInformController.SEND_REPORT_ROOM_BLOCK_KEY"
+var_0_0.SEND_REPORT_ROOM_BLOCK_KEY = "RoomInformController.SEND_REPORT_ROOM_BLOCK_KEY"
 
-function slot0.sendReportRoom(slot0, slot1, slot2, slot3, slot4)
-	UIBlockMgr.instance:startBlock(uv0.SEND_REPORT_ROOM_BLOCK_KEY)
-	RoomRpc.instance:sendReportRoomRequest(slot1, slot2, slot3, slot4, slot0._onReportRoomReply, slot0)
+function var_0_0.sendReportRoom(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	UIBlockMgr.instance:startBlock(var_0_0.SEND_REPORT_ROOM_BLOCK_KEY)
+	RoomRpc.instance:sendReportRoomRequest(arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_0._onReportRoomReply, arg_7_0)
 end
 
-function slot0._onReportRoomReply(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:endBlock(uv0.SEND_REPORT_ROOM_BLOCK_KEY)
+function var_0_0._onReportRoomReply(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	UIBlockMgr.instance:endBlock(var_0_0.SEND_REPORT_ROOM_BLOCK_KEY)
 
-	if slot2 == 0 then
-		RoomController.instance:dispatchEvent(RoomEvent.InformSuccessReply, slot3.token)
+	if arg_8_2 == 0 then
+		RoomController.instance:dispatchEvent(RoomEvent.InformSuccessReply, arg_8_3.token)
 	end
 end
 
-function slot0.uploadImage(slot0, slot1, slot2)
-	slot5 = string.format("%s/%s", slot0:getHttpLoginUrl(), "roomreportpicture")
-	slot7 = UnityEngine.WWWForm.New()
+function var_0_0.uploadImage(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = UnityEngine.ImageConversion.EncodeToJPG(arg_9_1, 25)
+	local var_9_1 = arg_9_0:getHttpLoginUrl()
+	local var_9_2 = string.format("%s/%s", var_9_1, "roomreportpicture")
+	local var_9_3
+	local var_9_4 = UnityEngine.WWWForm.New()
 
-	slot7:AddField("token", slot2)
-	slot7:AddBinaryData("fileData", UnityEngine.ImageConversion.EncodeToJPG(slot1, 25))
-	SLFramework.SLWebRequest.Instance:PostWWWForm(slot5, slot7, nil, slot0._onUploadImageResponse, slot0)
-	logNormal(slot5)
+	var_9_4:AddField("token", arg_9_2)
+	var_9_4:AddBinaryData("fileData", var_9_0)
+	SLFramework.SLWebRequest.Instance:PostWWWForm(var_9_2, var_9_4, var_9_3, arg_9_0._onUploadImageResponse, arg_9_0)
+	logNormal(var_9_2)
 end
 
-function slot0._onUploadImageResponse(slot0, slot1, slot2)
-	if not slot1 or string.nilorempty(slot2) then
+function var_0_0._onUploadImageResponse(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_1 or string.nilorempty(arg_10_2) then
 		logNormal(string.format("上传图片失败"))
 	else
-		logNormal(slot2)
+		logNormal(arg_10_2)
 	end
 end
 
-function slot0.getHttpLoginUrl(slot0)
-	slot1 = nil
+function var_0_0.getHttpLoginUrl(arg_11_0)
+	local var_11_0
+	local var_11_1 = UrlConfig.getConfig().login
 
-	if type(UrlConfig.getConfig().login) == "table" then
-		if not slot2[tostring(SDKMgr.instance:getChannelId()) or "100"] then
-			for slot7, slot8 in pairs(slot2) do
-				logError(string.format("httpLoginUrl not exist, channelId=%s\nuse %s:%s", slot3, slot7, slot8 or "nil"))
+	if type(var_11_1) == "table" then
+		local var_11_2 = tostring(SDKMgr.instance:getChannelId()) or "100"
+
+		var_11_0 = var_11_1[var_11_2]
+
+		if not var_11_0 then
+			for iter_11_0, iter_11_1 in pairs(var_11_1) do
+				var_11_0 = iter_11_1
+
+				logError(string.format("httpLoginUrl not exist, channelId=%s\nuse %s:%s", var_11_2, iter_11_0, var_11_0 or "nil"))
 
 				break
 			end
 		end
 	else
-		slot1 = slot2
+		var_11_0 = var_11_1
 	end
 
-	return slot1
+	return var_11_0
 end
 
-function slot0._saveImage(slot0, slot1)
-	slot3 = System.DateTime.Now
-	slot5 = System.IO.Path.Combine(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot"), string.format("room_screenshot_%s%s%s_%s%s%s%s.jpg", slot3.Year, slot3.Month, slot3.Day, slot3.Hour, slot3.Minute, slot3.Second, slot3.Millisecond))
+function var_0_0._saveImage(arg_12_0, arg_12_1)
+	local var_12_0 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot")
+	local var_12_1 = System.DateTime.Now
+	local var_12_2 = string.format("room_screenshot_%s%s%s_%s%s%s%s.jpg", var_12_1.Year, var_12_1.Month, var_12_1.Day, var_12_1.Hour, var_12_1.Minute, var_12_1.Second, var_12_1.Millisecond)
+	local var_12_3 = System.IO.Path.Combine(var_12_0, var_12_2)
 
-	SLFramework.FileHelper.WriteAllBytesToPath(slot5, slot1)
+	SLFramework.FileHelper.WriteAllBytesToPath(var_12_3, arg_12_1)
 
-	return slot5
+	return var_12_3
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

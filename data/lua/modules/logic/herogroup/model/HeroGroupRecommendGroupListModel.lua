@@ -1,41 +1,42 @@
-module("modules.logic.herogroup.model.HeroGroupRecommendGroupListModel", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupRecommendGroupListModel", package.seeall)
 
-slot0 = class("HeroGroupRecommendGroupListModel", ListScrollModel)
+local var_0_0 = class("HeroGroupRecommendGroupListModel", ListScrollModel)
 
-function slot0.setGroupList(slot0, slot1)
-	slot0:setCurrentShowRecommendGroupMoId(slot1)
+function var_0_0.setGroupList(arg_1_0, arg_1_1)
+	arg_1_0:setCurrentShowRecommendGroupMoId(arg_1_1)
 
-	slot3 = {}
+	local var_1_0 = arg_1_1.heroRecommendInfos
+	local var_1_1 = {}
 
-	for slot7, slot8 in ipairs(slot1.heroRecommendInfos) do
-		slot9 = HeroGroupRecommendGroupMO.New()
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_2 = HeroGroupRecommendGroupMO.New()
 
-		slot9:init(slot8)
-		table.insert(slot3, slot9)
+		var_1_2:init(iter_1_1)
+		table.insert(var_1_1, var_1_2)
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		return slot1.rate < slot0.rate
+	table.sort(var_1_1, function(arg_2_0, arg_2_1)
+		return arg_2_0.rate > arg_2_1.rate
 	end)
 
-	for slot7 = #slot2 + 1, 5 do
-		slot8 = HeroGroupRecommendGroupMO.New()
+	for iter_1_2 = #var_1_0 + 1, 5 do
+		local var_1_3 = HeroGroupRecommendGroupMO.New()
 
-		slot8:init()
-		table.insert(slot3, slot8)
+		var_1_3:init()
+		table.insert(var_1_1, var_1_3)
 	end
 
-	slot0:setList(slot3)
+	arg_1_0:setList(var_1_1)
 end
 
-function slot0.setCurrentShowRecommendGroupMoId(slot0, slot1)
-	slot0.showGroupId = slot1.id
+function var_0_0.setCurrentShowRecommendGroupMoId(arg_3_0, arg_3_1)
+	arg_3_0.showGroupId = arg_3_1.id
 end
 
-function slot0.isShowSampleMo(slot0, slot1)
-	return slot0.showGroupId == slot1.id
+function var_0_0.isShowSampleMo(arg_4_0, arg_4_1)
+	return arg_4_0.showGroupId == arg_4_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

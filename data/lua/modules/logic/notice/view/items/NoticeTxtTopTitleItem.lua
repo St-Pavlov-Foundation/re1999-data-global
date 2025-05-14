@@ -1,22 +1,24 @@
-module("modules.logic.notice.view.items.NoticeTxtTopTitleItem", package.seeall)
+﻿module("modules.logic.notice.view.items.NoticeTxtTopTitleItem", package.seeall)
 
-slot0 = class("NoticeTxtTopTitleItem", NoticeContentBaseItem)
+local var_0_0 = class("NoticeTxtTopTitleItem", NoticeContentBaseItem)
 
-function slot0.init(slot0, slot1, slot2)
-	uv0.super.init(slot0, slot1, slot2)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
 
-	slot0.goTopTitle = gohelper.findChild(slot1, "#go_topTitle")
-	slot0.txtTopTitle = gohelper.findChildText(slot1, "#go_topTitle/#txt_title")
+	arg_1_0.goTopTitle = gohelper.findChild(arg_1_1, "#go_topTitle")
+	arg_1_0.txtTopTitle = gohelper.findChildText(arg_1_1, "#go_topTitle/#txt_title")
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.goTopTitle, true)
+function var_0_0.show(arg_2_0)
+	gohelper.setActive(arg_2_0.goTopTitle, true)
 
-	slot0.txtTopTitle.text = "<line-indent=-5>" .. slot0.mo.content
+	local var_2_0 = arg_2_0.mo.content
+
+	arg_2_0.txtTopTitle.text = "<line-indent=-5>" .. var_2_0
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.goTopTitle, false)
+function var_0_0.hide(arg_3_0)
+	gohelper.setActive(arg_3_0.goTopTitle, false)
 end
 
-return slot0
+return var_0_0

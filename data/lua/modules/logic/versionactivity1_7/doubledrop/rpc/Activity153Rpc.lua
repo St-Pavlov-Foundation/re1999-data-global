@@ -1,30 +1,31 @@
-module("modules.logic.versionactivity1_7.doubledrop.rpc.Activity153Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_7.doubledrop.rpc.Activity153Rpc", package.seeall)
 
-slot0 = class("Activity153Rpc", BaseRpc)
+local var_0_0 = class("Activity153Rpc", BaseRpc)
 
-function slot0.sendGet153InfosRequest(slot0, slot1)
-	slot2 = Activity153Module_pb.Get153InfosRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGet153InfosRequest(arg_1_0, arg_1_1)
+	local var_1_0 = Activity153Module_pb.Get153InfosRequest()
 
-	slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGet153InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet153InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	DoubleDropModel.instance:setActivity153Infos(slot2)
+	DoubleDropModel.instance:setActivity153Infos(arg_2_2)
 end
 
-function slot0.onReceiveAct153CountChangePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct153CountChangePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	DoubleDropModel.instance:setActivity153Infos(slot2)
+	DoubleDropModel.instance:setActivity153Infos(arg_3_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

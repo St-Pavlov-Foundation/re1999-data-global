@@ -1,134 +1,147 @@
-module("modules.logic.weather.controller.WeatherEggContainerComp", package.seeall)
+﻿module("modules.logic.weather.controller.WeatherEggContainerComp", package.seeall)
 
-slot0 = class("WeatherEggContainerComp")
+local var_0_0 = class("WeatherEggContainerComp")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onSceneHide(slot0)
-	TaskDispatcher.cancelTask(slot0._switchEgg, slot0)
+function var_0_0.onSceneHide(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._switchEgg, arg_2_0)
 
-	for slot4, slot5 in ipairs(slot0._serialEggList) do
-		slot5:onDisable()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._serialEggList) do
+		iter_2_1:onDisable()
 	end
 
-	for slot4, slot5 in ipairs(slot0._parallelEggList) do
-		slot5:onDisable()
-	end
-end
-
-function slot0.onSceneShow(slot0)
-	for slot4, slot5 in ipairs(slot0._parallelEggList) do
-		slot5:onEnable()
-	end
-
-	slot0:_startTimer()
-end
-
-function slot0.onReportChange(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._serialEggList) do
-		slot6:onReportChange(slot1)
-	end
-
-	for slot5, slot6 in ipairs(slot0._parallelEggList) do
-		slot6:onReportChange(slot1)
+	for iter_2_2, iter_2_3 in ipairs(arg_2_0._parallelEggList) do
+		iter_2_3:onDisable()
 	end
 end
 
-function slot0.onInit(slot0, slot1, slot2)
-	slot0._context = {
-		isMainScene = slot2
+function var_0_0.onSceneShow(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._parallelEggList) do
+		iter_3_1:onEnable()
+	end
+
+	arg_3_0:_startTimer()
+end
+
+function var_0_0.onReportChange(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._serialEggList) do
+		iter_4_1:onReportChange(arg_4_1)
+	end
+
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0._parallelEggList) do
+		iter_4_3:onReportChange(arg_4_1)
+	end
+end
+
+function var_0_0.onInit(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._context = {
+		isMainScene = arg_5_2
 	}
-	slot0._sceneId = slot1
-	slot3 = lua_scene_switch.configDict[slot1]
-	slot0._eggList = slot3.eggList
-	slot0._eggSwitchTime = slot3.eggSwitchTime
-	slot0._serialEggList = {}
-	slot0._parallelEggList = {}
-	slot0._index = 0
+	arg_5_0._sceneId = arg_5_1
+
+	local var_5_0 = lua_scene_switch.configDict[arg_5_1]
+
+	arg_5_0._eggList = var_5_0.eggList
+	arg_5_0._eggSwitchTime = var_5_0.eggSwitchTime
+	arg_5_0._serialEggList = {}
+	arg_5_0._parallelEggList = {}
+	arg_5_0._index = 0
 end
 
-function slot0._startTimer(slot0)
-	TaskDispatcher.cancelTask(slot0._switchEgg, slot0)
+function var_0_0._startTimer(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._switchEgg, arg_6_0)
 
-	if #slot0._serialEggList > 0 then
-		slot0._time = slot0._time or Time.time
+	if #arg_6_0._serialEggList > 0 then
+		arg_6_0._time = arg_6_0._time or Time.time
 
-		TaskDispatcher.runRepeat(slot0._switchEgg, slot0, 0)
+		TaskDispatcher.runRepeat(arg_6_0._switchEgg, arg_6_0, 0)
 	end
 end
 
-function slot0._switchEgg(slot0)
-	if not slot0._time or Time.time - slot0._time <= slot0._eggSwitchTime then
+function var_0_0._switchEgg(arg_7_0)
+	if not arg_7_0._time or Time.time - arg_7_0._time <= arg_7_0._eggSwitchTime then
 		return
 	end
 
-	slot0._time = Time.time
+	arg_7_0._time = Time.time
 
-	if slot0._serialEggList[slot0._index] then
-		slot1:onDisable()
+	local var_7_0 = arg_7_0._serialEggList[arg_7_0._index]
+
+	if var_7_0 then
+		var_7_0:onDisable()
 	end
 
-	if slot0._serialEggList[slot0:getNextIndex()] then
-		slot3:onEnable()
+	local var_7_1 = arg_7_0:getNextIndex()
+	local var_7_2 = arg_7_0._serialEggList[var_7_1]
+
+	if var_7_2 then
+		var_7_2:onEnable()
 	end
 end
 
-function slot0.getNextIndex(slot0)
-	slot0._index = slot0._index + 1
+function var_0_0.getNextIndex(arg_8_0)
+	arg_8_0._index = arg_8_0._index + 1
 
-	if slot0._index > #slot0._serialEggList then
-		slot0._index = 1
+	if arg_8_0._index > #arg_8_0._serialEggList then
+		arg_8_0._index = 1
 	end
 
-	return slot0._index
+	return arg_8_0._index
 end
 
-function slot0.getSceneNode(slot0, slot1)
-	return gohelper.findChild(slot0._sceneGo, slot1)
+function var_0_0.getSceneNode(arg_9_0, arg_9_1)
+	return gohelper.findChild(arg_9_0._sceneGo, arg_9_1)
 end
 
-function slot0.getGoList(slot0, slot1)
-	for slot6, slot7 in ipairs(string.split(slot1, "|")) do
-		slot8 = slot0:getSceneNode(slot7)
-		slot2[slot6] = slot8
+function var_0_0.getGoList(arg_10_0, arg_10_1)
+	local var_10_0 = string.split(arg_10_1, "|")
 
-		if not slot8 then
-			logError(string.format("WeatherEggContainerComp can not find go by path:%s", slot7))
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		local var_10_1 = arg_10_0:getSceneNode(iter_10_1)
+
+		var_10_0[iter_10_0] = var_10_1
+
+		if not var_10_1 then
+			logError(string.format("WeatherEggContainerComp can not find go by path:%s", iter_10_1))
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.initSceneGo(slot0, slot1)
-	slot0._sceneGo = slot1
+function var_0_0.initSceneGo(arg_11_0, arg_11_1)
+	arg_11_0._sceneGo = arg_11_1
 
-	for slot5, slot6 in ipairs(slot0._eggList) do
-		slot7 = lua_scene_eggs.configDict[slot6]
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._eggList) do
+		local var_11_0 = lua_scene_eggs.configDict[iter_11_1]
+		local var_11_1 = _G[var_11_0.actionClass].New()
+		local var_11_2 = arg_11_0:getGoList(var_11_0.path)
 
-		_G[slot7.actionClass].New():init(slot0._sceneGo, slot0:getGoList(slot7.path), slot7, slot0._context)
+		var_11_1:init(arg_11_0._sceneGo, var_11_2, var_11_0, arg_11_0._context)
 
-		if slot7.parallel == 1 then
-			table.insert(slot0._parallelEggList, slot9)
+		if var_11_0.parallel == 1 then
+			table.insert(arg_11_0._parallelEggList, var_11_1)
 		else
-			table.insert(slot0._serialEggList, slot9)
+			table.insert(arg_11_0._serialEggList, var_11_1)
 		end
 	end
 
-	slot0:_startTimer()
+	arg_11_0:_startTimer()
 end
 
-function slot0.onSceneClose(slot0)
-	TaskDispatcher.cancelTask(slot0._switchEgg, slot0)
+function var_0_0.onSceneClose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._switchEgg, arg_12_0)
 
-	for slot4, slot5 in ipairs(slot0._serialEggList) do
-		slot5:onSceneClose()
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._serialEggList) do
+		iter_12_1:onSceneClose()
 	end
 
-	for slot4, slot5 in ipairs(slot0._parallelEggList) do
-		slot5:onSceneClose()
+	for iter_12_2, iter_12_3 in ipairs(arg_12_0._parallelEggList) do
+		iter_12_3:onSceneClose()
 	end
 end
 
-return slot0
+return var_0_0

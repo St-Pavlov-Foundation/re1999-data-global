@@ -1,43 +1,47 @@
-module("modules.logic.herogroup.model.HeroGroupRecommendGroupMO", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupRecommendGroupMO", package.seeall)
 
-slot0 = pureTable("HeroGroupRecommendGroupMO")
+local var_0_0 = pureTable("HeroGroupRecommendGroupMO")
 
-function slot0.init(slot0, slot1)
-	if not slot1 or not slot1.rate then
-		slot0.isEmpty = true
+function var_0_0.init(arg_1_0, arg_1_1)
+	if not arg_1_1 or not arg_1_1.rate then
+		arg_1_0.isEmpty = true
 
 		return
 	end
 
-	slot0.heroIdList = {}
-	slot0.levels = {}
-	slot0.heroDataList = {}
+	arg_1_0.heroIdList = {}
+	arg_1_0.levels = {}
+	arg_1_0.heroDataList = {}
 
-	for slot5, slot6 in ipairs(slot1.heroIds) do
-		if slot6 > 0 then
-			table.insert(slot0.heroDataList, {
-				heroId = slot6,
-				level = slot1.levels[slot5]
-			})
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.heroIds) do
+		if iter_1_1 > 0 then
+			local var_1_0 = {
+				heroId = iter_1_1,
+				level = arg_1_1.levels[iter_1_0]
+			}
+
+			table.insert(arg_1_0.heroDataList, var_1_0)
 		end
 	end
 
-	slot0.aidDict = {}
+	arg_1_0.aidDict = {}
 
-	for slot5, slot6 in ipairs(slot1.subHeroIds) do
-		if slot6 > 0 then
-			table.insert(slot0.heroDataList, {
-				heroId = slot6,
-				level = slot1.levels[#slot1.heroIds + slot5]
-			})
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1.subHeroIds) do
+		if iter_1_3 > 0 then
+			local var_1_1 = {
+				heroId = iter_1_3,
+				level = arg_1_1.levels[#arg_1_1.heroIds + iter_1_2]
+			}
 
-			slot0.aidDict[slot6] = true
+			table.insert(arg_1_0.heroDataList, var_1_1)
+
+			arg_1_0.aidDict[iter_1_3] = true
 		end
 	end
 
-	slot0.cloth = slot1.cloth
-	slot0.rate = slot1.rate
-	slot0.assistBossId = slot1.assistBossId
+	arg_1_0.cloth = arg_1_1.cloth
+	arg_1_0.rate = arg_1_1.rate
+	arg_1_0.assistBossId = arg_1_1.assistBossId
 end
 
-return slot0
+return var_0_0

@@ -1,58 +1,79 @@
-module("modules.logic.versionactivity2_1.lanshoupa.helper.LanShouPaHelper", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.helper.LanShouPaHelper", package.seeall)
 
-return {
-	getLimitTimeStr = function ()
-		if not ActivityModel.instance:getActMO(VersionActivity2_1Enum.ActivityId.LanShouPa) then
+local var_0_0 = {
+	getLimitTimeStr = function()
+		local var_1_0 = ActivityModel.instance:getActMO(VersionActivity2_1Enum.ActivityId.LanShouPa)
+
+		if not var_1_0 then
 			return ""
 		end
 
-		if slot0:getRealEndTimeStamp() - ServerTime.now() > 0 then
-			return TimeUtil.SecondToActivityTimeFormat(slot1)
+		local var_1_1 = var_1_0:getRealEndTimeStamp() - ServerTime.now()
+
+		if var_1_1 > 0 then
+			return TimeUtil.SecondToActivityTimeFormat(var_1_1)
 		end
 
 		return ""
 	end,
-	isOpenDay = function (slot0)
-		slot1 = VersionActivity2_1Enum.ActivityId.LanShouPa
-		slot3 = Activity164Config.instance:getEpisodeCo(slot1, slot0)
+	isOpenDay = function(arg_2_0)
+		local var_2_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
+		local var_2_1 = ActivityModel.instance:getActMO(var_2_0)
+		local var_2_2 = Activity164Config.instance:getEpisodeCo(var_2_0, arg_2_0)
 
-		if ActivityModel.instance:getActMO(slot1) and slot3 then
-			slot7 = math.max(slot2:getRealStartTimeStamp() + (slot3.openDay - 1) * 24 * 60 * 60 - ServerTime.now(), 0)
+		if var_2_1 and var_2_2 then
+			local var_2_3 = var_2_1:getRealStartTimeStamp() + (var_2_2.openDay - 1) * 24 * 60 * 60
+			local var_2_4 = ServerTime.now()
+			local var_2_5 = var_2_2.preEpisode == 0 or Activity164Model.instance:isEpisodeClear(var_2_2.preEpisode)
+			local var_2_6 = math.max(var_2_3 - var_2_4, 0)
 
-			if slot3.preEpisode ~= 0 and not Activity164Model.instance:isEpisodeClear(slot3.preEpisode) or slot7 > 0 then
-				return false, slot7
+			if not var_2_5 or var_2_6 > 0 then
+				return false, var_2_6
 			end
 		else
-			if not slot3 then
-				logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", slot1, slot0))
+			if not var_2_2 then
+				logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", var_2_0, arg_2_0))
 			end
 
 			return false, -1
 		end
 
 		return true
-	end,
-	isOpenChapterDay = function (slot0)
-		if not uv0.getFristEpisodeCoByChapterId(slot0) then
-			return false, -1
-		end
-
-		return uv0.isOpenDay(slot1.id)
-	end,
-	getFristEpisodeCoByChapterId = function (slot0)
-		return Activity164Config.instance:getChapterEpisodeList(VersionActivity2_1Enum.ActivityId.LanShouPa, slot0) and slot2[1]
-	end,
-	showToastByEpsodeId = function (slot0, slot1)
-		if not Activity164Config.instance:getEpisodeCo(VersionActivity2_1Enum.ActivityId.LanShouPa, slot0) then
-			logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity2_1Enum.ActivityId.LanShouPa, slot0))
-
-			return
-		end
-
-		slot4, slot5 = uv0.isOpenDay(slot3.id)
-
-		if not slot4 then
-			slot6 = slot3.preEpisode == 0 and Activity164Model.instance:isEpisodeClear(slot3.preEpisode) or Activity164Config.instance:getEpisodeCo(slot3.activityId, slot3.preEpisode)
-		end
 	end
 }
+
+function var_0_0.isOpenChapterDay(arg_3_0)
+	local var_3_0 = var_0_0.getFristEpisodeCoByChapterId(arg_3_0)
+
+	if not var_3_0 then
+		return false, -1
+	end
+
+	return var_0_0.isOpenDay(var_3_0.id)
+end
+
+function var_0_0.getFristEpisodeCoByChapterId(arg_4_0)
+	local var_4_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
+	local var_4_1 = Activity164Config.instance:getChapterEpisodeList(var_4_0, arg_4_0)
+
+	return var_4_1 and var_4_1[1]
+end
+
+function var_0_0.showToastByEpsodeId(arg_5_0, arg_5_1)
+	local var_5_0 = VersionActivity2_1Enum.ActivityId.LanShouPa
+	local var_5_1 = Activity164Config.instance:getEpisodeCo(var_5_0, arg_5_0)
+
+	if not var_5_1 then
+		logNormal(string.format("can not find v1a3 activity episodeCfg. actId:%s episodeId:%s", VersionActivity2_1Enum.ActivityId.LanShouPa, arg_5_0))
+
+		return
+	end
+
+	local var_5_2, var_5_3 = var_0_0.isOpenDay(var_5_1.id)
+
+	if not var_5_2 and (var_5_1.preEpisode ~= 0 or not Activity164Model.instance:isEpisodeClear(var_5_1.preEpisode)) then
+		local var_5_4 = Activity164Config.instance:getEpisodeCo(var_5_1.activityId, var_5_1.preEpisode)
+	end
+end
+
+return var_0_0

@@ -1,24 +1,29 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPreviewPrepareItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPreviewPrepareItem", package.seeall)
 
-slot0 = class("V1a6_CachotTeamPreviewPrepareItem", V1a6_CachotTeamPrepareItem)
+local var_0_0 = class("V1a6_CachotTeamPreviewPrepareItem", V1a6_CachotTeamPrepareItem)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 end
 
-function slot0._getEquipMO(slot0)
+function var_0_0._getEquipMO(arg_2_0)
+	return
 end
 
-function slot0.showNone(slot0)
-	gohelper.setActive(slot0._gorole, false)
-	gohelper.setActive(slot0._goheart, false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg_normal"), false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg_none"), true)
+function var_0_0.showNone(arg_3_0)
+	gohelper.setActive(arg_3_0._gorole, false)
+	gohelper.setActive(arg_3_0._goheart, false)
+
+	local var_3_0 = gohelper.findChild(arg_3_0.viewGO, "bg_normal")
+	local var_3_1 = gohelper.findChild(arg_3_0.viewGO, "bg_none")
+
+	gohelper.setActive(var_3_0, false)
+	gohelper.setActive(var_3_1, true)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
-	slot0:_updateHp()
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	var_0_0.super.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0:_updateHp()
 end
 
-return slot0
+return var_0_0

@@ -1,92 +1,95 @@
-module("modules.logic.store.view.ChargeStoreGoodsView", package.seeall)
+﻿module("modules.logic.store.view.ChargeStoreGoodsView", package.seeall)
 
-slot0 = class("ChargeStoreGoodsView", BaseView)
+local var_0_0 = class("ChargeStoreGoodsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_leftbg")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_rightbg")
-	slot0._txtsalePrice = gohelper.findChildText(slot0.viewGO, "buy/cost/#txt_salePrice")
-	slot0._txtgoodsNameCn = gohelper.findChildText(slot0.viewGO, "propinfo/#txt_goodsNameCn")
-	slot0._txtgoodsNameEn = gohelper.findChildText(slot0.viewGO, "propinfo/#txt_goodsNameEn")
-	slot0._txtgoodsDesc = gohelper.findChildText(slot0.viewGO, "propinfo/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	slot0._txtgoodsHave = gohelper.findChildText(slot0.viewGO, "propinfo/#txt_goodsHave")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "propinfo/#go_item")
-	slot0._txtitemcount = gohelper.findChildText(slot0.viewGO, "propinfo/#go_item/#txt_itemcount")
-	slot0._txtvalue = gohelper.findChildText(slot0.viewGO, "buy/valuebg/#txt_value")
-	slot0._btncharge = gohelper.findChildButtonWithAudio(slot0.viewGO, "buy/#btn_charge")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "propinfo/#btn_click")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "propinfo/#simage_icon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
+	arg_1_0._txtsalePrice = gohelper.findChildText(arg_1_0.viewGO, "buy/cost/#txt_salePrice")
+	arg_1_0._txtgoodsNameCn = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#txt_goodsNameCn")
+	arg_1_0._txtgoodsNameEn = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#txt_goodsNameEn")
+	arg_1_0._txtgoodsDesc = gohelper.findChildText(arg_1_0.viewGO, "propinfo/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	arg_1_0._txtgoodsHave = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#txt_goodsHave")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "propinfo/#go_item")
+	arg_1_0._txtitemcount = gohelper.findChildText(arg_1_0.viewGO, "propinfo/#go_item/#txt_itemcount")
+	arg_1_0._txtvalue = gohelper.findChildText(arg_1_0.viewGO, "buy/valuebg/#txt_value")
+	arg_1_0._btncharge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "buy/#btn_charge")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "propinfo/#btn_click")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "propinfo/#simage_icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncharge:AddClickListener(slot0._btnchargeOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncharge:AddClickListener(arg_2_0._btnchargeOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncharge:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncharge:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	MaterialTipController.instance:showMaterialInfo(slot0._itemType, slot0._itemId)
+function var_0_0._btnclickOnClick(arg_4_0)
+	MaterialTipController.instance:showMaterialInfo(arg_4_0._itemType, arg_4_0._itemId)
 end
 
-function slot0._btnchargeOnClick(slot0)
+function var_0_0._btnchargeOnClick(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_payment_click)
-	PayController.instance:startPay(slot0._mo.id)
+	PayController.instance:startPay(arg_5_0._mo.id)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageleftbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_1"))
-	slot0._simagerightbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_2"))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simageleftbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_1"))
+	arg_6_0._simagerightbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_2"))
 end
 
-function slot0._refreshUI(slot0)
-	slot2 = string.splitToNumber(slot0._mo.config.product, "#")
-	slot0._itemType = slot2[1]
-	slot0._itemId = slot2[2]
-	slot0._itemQuantity = slot2[3]
-	slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot0._itemType, slot0._itemId, true)
+function var_0_0._refreshUI(arg_7_0)
+	local var_7_0 = arg_7_0._mo.config.product
+	local var_7_1 = string.splitToNumber(var_7_0, "#")
 
-	slot0._simageicon:LoadImage(slot4)
-	gohelper.setActive(slot0._goitem, slot0._itemQuantity > 1)
+	arg_7_0._itemType = var_7_1[1]
+	arg_7_0._itemId = var_7_1[2]
+	arg_7_0._itemQuantity = var_7_1[3]
 
-	slot0._txtitemcount.text = GameUtil.numberDisplay(slot0._itemQuantity)
-	slot0._txtgoodsNameCn.text = slot3.name
-	slot0._txtgoodsDesc.text = slot3.useDesc
-	slot0._txtsalePrice.text = string.format("%s%s", StoreModel.instance:getCostStr(slot0._mo.config.price))
+	local var_7_2, var_7_3 = ItemModel.instance:getItemConfigAndIcon(arg_7_0._itemType, arg_7_0._itemId, true)
+
+	arg_7_0._simageicon:LoadImage(var_7_3)
+	gohelper.setActive(arg_7_0._goitem, arg_7_0._itemQuantity > 1)
+
+	arg_7_0._txtitemcount.text = GameUtil.numberDisplay(arg_7_0._itemQuantity)
+	arg_7_0._txtgoodsNameCn.text = var_7_2.name
+	arg_7_0._txtgoodsDesc.text = var_7_2.useDesc
+	arg_7_0._txtsalePrice.text = string.format("%s%s", StoreModel.instance:getCostStr(arg_7_0._mo.config.price))
 end
 
-function slot0.onOpen(slot0)
-	slot0._mo = slot0.viewParam
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._mo = arg_8_0.viewParam
 
-	slot0:addEventCb(PayController.instance, PayEvent.PayFinished, slot0._payFinished, slot0)
-	slot0:_refreshUI()
+	arg_8_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_8_0._payFinished, arg_8_0)
+	arg_8_0:_refreshUI()
 end
 
-function slot0._payFinished(slot0)
-	slot0:closeThis()
+function var_0_0._payFinished(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(PayController.instance, PayEvent.PayFinished, slot0._payFinished, slot0)
+function var_0_0.onClose(arg_10_0)
+	arg_10_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_10_0._payFinished, arg_10_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._mo = slot0.viewParam
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0._mo = arg_11_0.viewParam
 
-	slot0:_refreshUI()
+	arg_11_0:_refreshUI()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simageleftbg:UnLoadImage()
+	arg_12_0._simagerightbg:UnLoadImage()
+	arg_12_0._simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

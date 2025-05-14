@@ -1,26 +1,27 @@
-module("modules.logic.rouge.map.work.WaitPopViewDoneWork", package.seeall)
+﻿module("modules.logic.rouge.map.work.WaitPopViewDoneWork", package.seeall)
 
-slot0 = class("WaitPopViewDoneWork", BaseWork)
+local var_0_0 = class("WaitPopViewDoneWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if not RougePopController.instance:hadPopView() then
-		return slot0:onDone(true)
+		return arg_2_0:onDone(true)
 	end
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onPopViewDone, slot0.onPopViewDone, slot0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onPopViewDone, arg_2_0.onPopViewDone, arg_2_0)
 	RougePopController.instance:tryPopView()
 end
 
-function slot0.onPopViewDone(slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPopViewDone, slot0.onPopViewDone, slot0)
-	slot0:onDone(true)
+function var_0_0.onPopViewDone(arg_3_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPopViewDone, arg_3_0.onPopViewDone, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPopViewDone, slot0.onPopViewDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPopViewDone, arg_4_0.onPopViewDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

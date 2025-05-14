@@ -1,15 +1,15 @@
-module("modules.logic.character.model.HeroSpecialAttributeMO", package.seeall)
+﻿module("modules.logic.character.model.HeroSpecialAttributeMO", package.seeall)
 
-slot0 = pureTable("HeroSpecialAttributeMO")
+local var_0_0 = pureTable("HeroSpecialAttributeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.revive = slot1.revive
-	slot0.heal = slot1.heal
-	slot0.absorb = slot1.absorb
-	slot0.defenseIgnore = slot1.defenseIgnore
-	slot0.clutch = slot1.clutch
-	slot0.finalAddDmg = slot1.finalAddDmg
-	slot0.finalDropDmg = slot1.finalDropDmg
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.revive = arg_1_1.revive
+	arg_1_0.heal = arg_1_1.heal
+	arg_1_0.absorb = arg_1_1.absorb
+	arg_1_0.defenseIgnore = arg_1_1.defenseIgnore
+	arg_1_0.clutch = arg_1_1.clutch
+	arg_1_0.finalAddDmg = arg_1_1.finalAddDmg
+	arg_1_0.finalDropDmg = arg_1_1.finalDropDmg
 end
 
-return slot0
+return var_0_0

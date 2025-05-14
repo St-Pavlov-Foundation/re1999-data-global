@@ -1,69 +1,74 @@
-module("modules.logic.fight.view.indicator.FightSuccIndicator", package.seeall)
+﻿module("modules.logic.fight.view.indicator.FightSuccIndicator", package.seeall)
 
-slot0 = class("FightSuccIndicator", FightIndicatorBaseView)
-slot1 = "ui/viewres/versionactivity_1_2/versionactivity_1_2_successitem.prefab"
+local var_0_0 = class("FightSuccIndicator", FightIndicatorBaseView)
+local var_0_1 = "ui/viewres/versionactivity_1_2/versionactivity_1_2_successitem.prefab"
 
-function slot0.initView(slot0, slot1, slot2, slot3)
-	uv0.super.initView(slot0, slot1, slot2, slot3)
+function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0.goSuccContainer = gohelper.findChild(slot0.goIndicatorRoot, "success_indicator")
+	arg_1_0.goSuccContainer = gohelper.findChild(arg_1_0.goIndicatorRoot, "success_indicator")
 end
 
-function slot0.startLoadPrefab(slot0)
-	gohelper.setActive(slot0.goSuccContainer, true)
+function var_0_0.startLoadPrefab(arg_2_0)
+	gohelper.setActive(arg_2_0.goSuccContainer, true)
 
-	slot0.loader = PrefabInstantiate.Create(slot0.goSuccContainer)
+	arg_2_0.loader = PrefabInstantiate.Create(arg_2_0.goSuccContainer)
 
-	slot0.loader:startLoad(uv0, slot0.onLoadCallback, slot0)
+	arg_2_0.loader:startLoad(var_0_1, arg_2_0.onLoadCallback, arg_2_0)
 end
 
-function slot0.onLoadCallback(slot0)
-	slot0.loadDone = true
-	slot0.instanceGo = slot0.loader:getInstGO()
-	slot0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.instanceGo)
-	slot0.txtIndicatorProcess = gohelper.findChildText(slot0.instanceGo, "txt_itemProcess")
-	slot0.txtIndicatorProcess.text = string.format("%d/%d", FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId), slot0.totalIndicatorNum)
+function var_0_0.onLoadCallback(arg_3_0)
+	arg_3_0.loadDone = true
+	arg_3_0.instanceGo = arg_3_0.loader:getInstGO()
+	arg_3_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_3_0.instanceGo)
+	arg_3_0.txtIndicatorProcess = gohelper.findChildText(arg_3_0.instanceGo, "txt_itemProcess")
+
+	local var_3_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_3_0.indicatorId)
+
+	arg_3_0.txtIndicatorProcess.text = string.format("%d/%d", var_3_0, arg_3_0.totalIndicatorNum)
 end
 
-function slot0.onIndicatorChange(slot0)
-	if not slot0.loadDone then
+function var_0_0.onIndicatorChange(arg_4_0)
+	if not arg_4_0.loadDone then
 		return
 	end
 
-	slot0:updateUI()
+	arg_4_0:updateUI()
 end
 
-function slot0.updateUI(slot0)
-	if not slot0.loadDone then
+function var_0_0.updateUI(arg_5_0)
+	if not arg_5_0.loadDone then
 		return
 	end
 
-	slot0.txtIndicatorProcess.text = string.format("%d/%d", FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId), slot0.totalIndicatorNum)
+	local var_5_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_5_0.indicatorId)
+
+	arg_5_0.txtIndicatorProcess.text = string.format("%d/%d", var_5_0, arg_5_0.totalIndicatorNum)
 
 	FightModel.instance:setWaitIndicatorAnimation(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_triumph_dreamepilogue_collect)
-	slot0.animatorPlayer:Play("add", slot0.onAddAnimationDone, slot0)
+	arg_5_0.animatorPlayer:Play("add", arg_5_0.onAddAnimationDone, arg_5_0)
 end
 
-function slot0.onAddAnimationDone(slot0)
-	if FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId) == slot0.totalIndicatorNum then
+function var_0_0.onAddAnimationDone(arg_6_0)
+	if FightDataHelper.fieldMgr:getIndicatorNum(arg_6_0.indicatorId) == arg_6_0.totalIndicatorNum then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_triumph_dreamepilogue_achieve)
-		slot0.animatorPlayer:Play("finish", slot0.onFinishAnimationDone, slot0)
+		arg_6_0.animatorPlayer:Play("finish", arg_6_0.onFinishAnimationDone, arg_6_0)
 	else
 		FightController.instance:dispatchEvent(FightEvent.OnIndicatorAnimationDone)
 	end
 end
 
-function slot0.onFinishAnimationDone(slot0)
+function var_0_0.onFinishAnimationDone(arg_7_0)
 	FightController.instance:dispatchEvent(FightEvent.OnIndicatorAnimationDone)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0.loader then
-		slot0.loader:dispose()
+function var_0_0.onDestroy(arg_8_0)
+	if arg_8_0.loader then
+		arg_8_0.loader:dispose()
 	end
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_8_0)
 end
 
-return slot0
+return var_0_0

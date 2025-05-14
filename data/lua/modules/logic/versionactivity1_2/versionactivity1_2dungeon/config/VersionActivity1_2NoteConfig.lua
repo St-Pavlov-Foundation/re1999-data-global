@@ -1,11 +1,12 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.config.VersionActivity1_2NoteConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.config.VersionActivity1_2NoteConfig", package.seeall)
 
-slot0 = class("VersionActivity1_2NoteConfig", BaseConfig)
+local var_0_0 = class("VersionActivity1_2NoteConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity121_note",
 		"activity121_story",
@@ -13,53 +14,53 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity121_note" then
-		slot0:_initNoteConfig()
-	elseif slot1 == "activity121_story" then
-		slot0:_initStoryConfig()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity121_note" then
+		arg_3_0:_initNoteConfig()
+	elseif arg_3_1 == "activity121_story" then
+		arg_3_0:_initStoryConfig()
 	end
 end
 
-function slot0._initNoteConfig(slot0)
-	slot0._episodeId2Config = {}
-	slot0._noteCount = 0
+function var_0_0._initNoteConfig(arg_4_0)
+	arg_4_0._episodeId2Config = {}
+	arg_4_0._noteCount = 0
 
-	for slot4, slot5 in ipairs(lua_activity121_note.configList) do
-		if not slot0._episodeId2Config[slot5.episodeId] then
-			slot0._episodeId2Config[slot5.episodeId] = {}
+	for iter_4_0, iter_4_1 in ipairs(lua_activity121_note.configList) do
+		if not arg_4_0._episodeId2Config[iter_4_1.episodeId] then
+			arg_4_0._episodeId2Config[iter_4_1.episodeId] = {}
 		end
 
-		table.insert(slot0._episodeId2Config[slot5.episodeId], slot5)
+		table.insert(arg_4_0._episodeId2Config[iter_4_1.episodeId], iter_4_1)
 
-		slot0._noteCount = slot0._noteCount + 1
+		arg_4_0._noteCount = arg_4_0._noteCount + 1
 	end
 end
 
-function slot0.getConfigList(slot0, slot1)
-	return slot0._episodeId2Config and slot0._episodeId2Config[slot1]
+function var_0_0.getConfigList(arg_5_0, arg_5_1)
+	return arg_5_0._episodeId2Config and arg_5_0._episodeId2Config[arg_5_1]
 end
 
-function slot0._initStoryConfig(slot0)
-	slot0._storyList = {}
+function var_0_0._initStoryConfig(arg_6_0)
+	arg_6_0._storyList = {}
 
-	for slot4, slot5 in ipairs(lua_activity121_story.configList) do
-		slot0._storyList[slot5.id] = slot5
+	for iter_6_0, iter_6_1 in ipairs(lua_activity121_story.configList) do
+		arg_6_0._storyList[iter_6_1.id] = iter_6_1
 	end
 
-	table.sort(slot0._storyList, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(arg_6_0._storyList, function(arg_7_0, arg_7_1)
+		return arg_7_0.id < arg_7_1.id
 	end)
 end
 
-function slot0.getStoryList(slot0)
-	return slot0._storyList
+function var_0_0.getStoryList(arg_8_0)
+	return arg_8_0._storyList
 end
 
-function slot0.getAllNoteCount(slot0)
-	return slot0._noteCount
+function var_0_0.getAllNoteCount(arg_9_0)
+	return arg_9_0._noteCount
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

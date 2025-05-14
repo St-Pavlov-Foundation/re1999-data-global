@@ -1,14 +1,15 @@
-module("modules.logic.seasonver.act123.controller.Season123EntryOverviewController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EntryOverviewController", package.seeall)
 
-slot0 = class("Season123EntryOverviewController", BaseController)
+local var_0_0 = class("Season123EntryOverviewController", BaseController)
 
-function slot0.onOpenView(slot0, slot1)
-	Season123EntryOverviewModel.instance:init(slot1)
+function var_0_0.onOpenView(arg_1_0, arg_1_1)
+	Season123EntryOverviewModel.instance:init(arg_1_1)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

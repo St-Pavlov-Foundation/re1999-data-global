@@ -1,22 +1,25 @@
-module("modules.logic.room.model.map.building.RoomFormulaMsgBoxModel", package.seeall)
+﻿module("modules.logic.room.model.map.building.RoomFormulaMsgBoxModel", package.seeall)
 
-slot0 = class("RoomFormulaMsgBoxModel", ListScrollModel)
+local var_0_0 = class("RoomFormulaMsgBoxModel", ListScrollModel)
 
-function slot0.setCostItemList(slot0, slot1)
-	table.sort(slot1, function (slot0, slot1)
-		if slot0.type ~= slot1.type then
-			return slot1.type == MaterialEnum.MaterialType.Currency
+function var_0_0.setCostItemList(arg_1_0, arg_1_1)
+	table.sort(arg_1_1, function(arg_2_0, arg_2_1)
+		if arg_2_0.type ~= arg_2_1.type then
+			return arg_2_1.type == MaterialEnum.MaterialType.Currency
 		end
 
-		if ItemModel.instance:getItemConfig(slot0.type, slot0.id).rare ~= ItemModel.instance:getItemConfig(slot1.type, slot1.id).rare then
-			return slot3.rare < slot2.rare
-		elseif slot0.id ~= slot1.id then
-			return slot0.id < slot1.id
+		local var_2_0 = ItemModel.instance:getItemConfig(arg_2_0.type, arg_2_0.id)
+		local var_2_1 = ItemModel.instance:getItemConfig(arg_2_1.type, arg_2_1.id)
+
+		if var_2_0.rare ~= var_2_1.rare then
+			return var_2_0.rare > var_2_1.rare
+		elseif arg_2_0.id ~= arg_2_1.id then
+			return arg_2_0.id < arg_2_1.id
 		end
 	end)
-	slot0:setList(slot1)
+	arg_1_0:setList(arg_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

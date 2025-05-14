@@ -1,65 +1,77 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessRankUpView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessRankUpView", package.seeall)
 
-slot0 = class("AutoChessRankUpView", BaseView)
+local var_0_0 = class("AutoChessRankUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goBadgeRoot = gohelper.findChild(slot0.viewGO, "#go_BadgeRoot")
-	slot0._goReward = gohelper.findChild(slot0.viewGO, "root/#go_Reward")
-	slot0._goRewardItem = gohelper.findChild(slot0.viewGO, "root/#go_Reward/reward/#go_RewardItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goBadgeRoot = gohelper.findChild(arg_1_0.viewGO, "#go_BadgeRoot")
+	arg_1_0._goReward = gohelper.findChild(arg_1_0.viewGO, "root/#go_Reward")
+	arg_1_0._goRewardItem = gohelper.findChild(arg_1_0.viewGO, "root/#go_Reward/reward/#go_RewardItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
 
-	slot0.actMo = Activity182Model.instance:getActMo()
+	arg_7_0.actMo = Activity182Model.instance:getActMo()
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.BadgeItemPath, slot0._goBadgeRoot), AutoChessBadgeItem):setData(slot0.actMo.rank, slot0.actMo.score, AutoChessBadgeItem.ShowType.RankUpView)
+	local var_7_0 = arg_7_0:getResInst(AutoChessEnum.BadgeItemPath, arg_7_0._goBadgeRoot)
 
-	if slot0.actMo.newRankUp then
-		if lua_auto_chess_rank.configDict[slot0.actMo.activityId][slot0.actMo.rank] then
-			for slot8, slot9 in ipairs(DungeonConfig.instance:getRewardItems(slot3.reward)) do
-				slot11 = IconMgr.instance:getCommonItemIcon(gohelper.cloneInPlace(slot0._goRewardItem, slot8))
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, AutoChessBadgeItem):setData(arg_7_0.actMo.rank, arg_7_0.actMo.score, AutoChessBadgeItem.ShowType.RankUpView)
 
-				gohelper.setAsFirstSibling(slot11.go)
-				slot11:setMOValue(slot9[1], slot9[2], slot9[3], nil, true)
-				slot11:setCountFontSize(32)
+	if arg_7_0.actMo.newRankUp then
+		local var_7_1 = lua_auto_chess_rank.configDict[arg_7_0.actMo.activityId][arg_7_0.actMo.rank]
+
+		if var_7_1 then
+			local var_7_2 = DungeonConfig.instance:getRewardItems(var_7_1.reward)
+
+			for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+				local var_7_3 = gohelper.cloneInPlace(arg_7_0._goRewardItem, iter_7_0)
+				local var_7_4 = IconMgr.instance:getCommonItemIcon(var_7_3)
+
+				gohelper.setAsFirstSibling(var_7_4.go)
+				var_7_4:setMOValue(iter_7_1[1], iter_7_1[2], iter_7_1[3], nil, true)
+				var_7_4:setCountFontSize(32)
 			end
 
-			gohelper.setActive(slot0.goReward, #slot4 ~= 0)
+			gohelper.setActive(arg_7_0.goReward, #var_7_2 ~= 0)
 		end
 	else
-		gohelper.setActive(slot0.goReward, false)
+		gohelper.setActive(arg_7_0.goReward, false)
 	end
 
-	gohelper.setActive(slot0._goRewardItem, false)
+	gohelper.setActive(arg_7_0._goRewardItem, false)
 end
 
-function slot0.onClose(slot0)
-	slot0.actMo:clearRankUpMark()
+function var_0_0.onClose(arg_8_0)
+	arg_8_0.actMo:clearRankUpMark()
 	AutoChessController.instance:popupRewardView()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

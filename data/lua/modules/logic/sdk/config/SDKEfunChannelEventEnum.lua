@@ -1,13 +1,14 @@
-module("modules.logic.sdk.config.SDKEfunChannelEventEnum", package.seeall)
+﻿module("modules.logic.sdk.config.SDKEfunChannelEventEnum", package.seeall)
 
-slot0 = _M
-slot0.EpisodePass = {
-	[10103.0] = "finish_chap1.4",
-	[10106.0] = "finish_chap1.7",
-	[110101.0] = "finish_fight1",
-	[10101.0] = "finish_chap1.1"
+local var_0_0 = _M
+
+var_0_0.EpisodePass = {
+	[10103] = "finish_chap1.4",
+	[10106] = "finish_chap1.7",
+	[110101] = "finish_fight1",
+	[10101] = "finish_chap1.1"
 }
-slot0.PlayerLevelUp = {
+var_0_0.PlayerLevelUp = {
 	"upgradeRole_l1",
 	"upgradeRole_l2",
 	"upgradeRole_l3",
@@ -23,29 +24,29 @@ slot0.PlayerLevelUp = {
 	nil,
 	nil,
 	"upgradeRole_l15",
-	[20.0] = "upgradeRole_l20"
+	[20] = "upgradeRole_l20"
 }
-slot0.FirstSummon = "first_1draw"
-slot0.FirstPurchase = "firstpurchase"
-slot0.NickName = "name"
-slot0.Purchase = {
-	[710001.0] = "BattlePass1",
-	[610001.0] = "monthcard"
+var_0_0.FirstSummon = "first_1draw"
+var_0_0.FirstPurchase = "firstpurchase"
+var_0_0.NickName = "name"
+var_0_0.Purchase = {
+	[710001] = "BattlePass1",
+	[610001] = "monthcard"
 }
-slot0.TotalChargeAmount = {
-	[999.0] = "rev9.99",
-	[99.0] = "rev0.99",
-	[9999.0] = "rev99.99",
-	[4999.0] = "rev49.99",
-	[2999.0] = "rev29.99"
+var_0_0.TotalChargeAmount = {
+	[999] = "rev9.99",
+	[99] = "rev0.99",
+	[9999] = "rev99.99",
+	[4999] = "rev49.99",
+	[2999] = "rev29.99"
 }
-slot0.ConsumeItem = {}
-slot0.Summon = {
-	[10.0] = "first_10draws"
+var_0_0.ConsumeItem = {}
+var_0_0.Summon = {
+	[10] = "first_10draws"
 }
-slot0.DailyTaskActive = {
-	[16.0] = "daily_18"
+var_0_0.DailyTaskActive = {
+	[16] = "daily_18"
 }
-slot0.HeroRankUp = {}
+var_0_0.HeroRankUp = {}
 
-return slot0
+return var_0_0

@@ -1,52 +1,52 @@
-module("modules.logic.fight.entity.comp.FightTotalDamageComp", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightTotalDamageComp", package.seeall)
 
-slot0 = class("FightTotalDamageComp", LuaCompBase)
+local var_0_0 = class("FightTotalDamageComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._damageDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._damageDict = {}
 end
 
-function slot0.init(slot0, slot1)
-	FightController.instance:registerCallback(FightEvent.OnDamageTotal, slot0._onDamageTotal, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
+function var_0_0.init(arg_2_0, arg_2_1)
+	FightController.instance:registerCallback(FightEvent.OnDamageTotal, arg_2_0._onDamageTotal, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnDamageTotal, slot0._onDamageTotal, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._showTotalFloat, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnDamageTotal, arg_3_0._onDamageTotal, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._showTotalFloat, arg_3_0)
 end
 
-function slot0._onDamageTotal(slot0, slot1, slot2, slot3, slot4)
-	if slot2 == slot0.entity and slot3 and slot3 > 0 then
-		slot0._damageDict[slot1] = slot0._damageDict[slot1] or {}
+function var_0_0._onDamageTotal(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	if arg_4_2 == arg_4_0.entity and arg_4_3 and arg_4_3 > 0 then
+		arg_4_0._damageDict[arg_4_1] = arg_4_0._damageDict[arg_4_1] or {}
 
-		table.insert(slot0._damageDict[slot1], slot3)
+		table.insert(arg_4_0._damageDict[arg_4_1], arg_4_3)
 
-		if slot4 then
-			slot0._damageDict[slot1].showTotal = true
-			slot0._damageDict[slot1].fromId = slot1.fromId
+		if arg_4_4 then
+			arg_4_0._damageDict[arg_4_1].showTotal = true
+			arg_4_0._damageDict[arg_4_1].fromId = arg_4_1.fromId
 
-			TaskDispatcher.runDelay(slot0._showTotalFloat, slot0, 0.6)
+			TaskDispatcher.runDelay(arg_4_0._showTotalFloat, arg_4_0, 0.6)
 		end
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
-	if slot1 ~= slot0.entity and slot3.actType == FightEnum.ActType.SKILL then
-		TaskDispatcher.cancelTask(slot0._showTotalFloat, slot0)
+function var_0_0._onSkillPlayFinish(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_1 ~= arg_5_0.entity and arg_5_3.actType == FightEnum.ActType.SKILL then
+		TaskDispatcher.cancelTask(arg_5_0._showTotalFloat, arg_5_0)
 
-		if slot0._damageDict[slot3] then
-			slot0._damageDict[slot3].showTotal = true
-			slot0._damageDict[slot3].fromId = slot3.fromId
+		if arg_5_0._damageDict[arg_5_3] then
+			arg_5_0._damageDict[arg_5_3].showTotal = true
+			arg_5_0._damageDict[arg_5_3].fromId = arg_5_3.fromId
 		end
 
-		slot0:_showTotalFloat()
+		arg_5_0:_showTotalFloat()
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
 	[FightEnum.EffectType.ORIGINDAMAGE] = true,
@@ -54,30 +54,38 @@ slot1 = {
 	[FightEnum.EffectType.ADDITIONALDAMAGE] = true,
 	[FightEnum.EffectType.ADDITIONALDAMAGECRIT] = true
 }
-slot2 = {
+local var_0_2 = {
 	[FightEnum.EffectType.SHIELD] = true,
 	[FightEnum.EffectType.SHIELDDEL] = true
 }
 
-function slot0._showTotalFloat(slot0)
-	for slot4, slot5 in pairs(slot0._damageDict) do
-		if slot5.showTotal and #slot5 > 1 then
-			slot6 = false
-			slot7 = 0
+function var_0_0._showTotalFloat(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._damageDict) do
+		if iter_6_1.showTotal and #iter_6_1 > 1 then
+			local var_6_0 = false
+			local var_6_1 = 0
 
-			for slot11, slot12 in ipairs(slot4.actEffectMOs) do
-				if slot12.targetId == slot0.entity.id and FightTLEventDefHit.originHitEffectType[slot12.effectType] then
-					slot6 = true
+			for iter_6_2, iter_6_3 in ipairs(iter_6_0.actEffectMOs) do
+				if iter_6_3.targetId == arg_6_0.entity.id then
+					local var_6_2 = iter_6_3.effectType
+
+					if FightTLEventDefHit.originHitEffectType[var_6_2] then
+						var_6_0 = true
+					end
 				end
 			end
 
-			for slot11, slot12 in ipairs(slot4.actEffectMOs) do
-				if slot12.targetId == slot0.entity.id then
-					if uv0[slot12.effectType] then
-						slot7 = slot7 + slot12.effectNum
-					elseif uv1[slot13] then
-						for slot17, slot18 in ipairs(slot5) do
-							slot7 = 0 + slot18
+			for iter_6_4, iter_6_5 in ipairs(iter_6_0.actEffectMOs) do
+				if iter_6_5.targetId == arg_6_0.entity.id then
+					local var_6_3 = iter_6_5.effectType
+
+					if var_0_1[var_6_3] then
+						var_6_1 = var_6_1 + iter_6_5.effectNum
+					elseif var_0_2[var_6_3] then
+						var_6_1 = 0
+
+						for iter_6_6, iter_6_7 in ipairs(iter_6_1) do
+							var_6_1 = var_6_1 + iter_6_7
 						end
 
 						break
@@ -85,24 +93,27 @@ function slot0._showTotalFloat(slot0)
 				end
 			end
 
-			if slot7 > 0 then
-				if slot0._fixedPos then
-					-- Nothing
+			if var_6_1 > 0 then
+				local var_6_4 = {
+					fromId = iter_6_1.fromId,
+					defenderId = arg_6_0.entity.id
+				}
+
+				if arg_6_0._fixedPos then
+					var_6_4.pos_x = arg_6_0._fixedPos[1]
+					var_6_4.pos_y = arg_6_0._fixedPos[2]
 				end
 
-				FightFloatMgr.instance:float(slot0.entity.id, slot6 and FightEnum.FloatType.total_origin or FightEnum.FloatType.total, slot7, {
-					fromId = slot5.fromId,
-					defenderId = slot0.entity.id,
-					pos_x = slot0._fixedPos[1],
-					pos_y = slot0._fixedPos[2]
-				})
+				local var_6_5 = var_6_0 and FightEnum.FloatType.total_origin or FightEnum.FloatType.total
+
+				FightFloatMgr.instance:float(arg_6_0.entity.id, var_6_5, var_6_1, var_6_4)
 			end
 		end
 
-		if slot5.showTotal then
-			slot0._damageDict[slot4] = nil
+		if iter_6_1.showTotal then
+			arg_6_0._damageDict[iter_6_0] = nil
 		end
 	end
 end
 
-return slot0
+return var_0_0

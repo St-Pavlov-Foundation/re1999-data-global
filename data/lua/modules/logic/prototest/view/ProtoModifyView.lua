@@ -1,156 +1,173 @@
-module("modules.logic.prototest.view.ProtoModifyView", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoModifyView", package.seeall)
 
-slot0 = class("ProtoModifyView", BaseView)
+local var_0_0 = class("ProtoModifyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnBack1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "paramlistpanel/btnBack")
-	slot0._btnBack2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "modifyparampanel/btnBack")
-	slot0._btnSave = gohelper.findChildButtonWithAudio(slot0.viewGO, "modifyparampanel/panel/Btn_save")
-	slot0._listPanel = gohelper.findChild(slot0.viewGO, "paramlistpanel")
-	slot0._modifyPanel = gohelper.findChild(slot0.viewGO, "modifyparampanel")
-	slot0._txtTitle1 = gohelper.findChildText(slot0.viewGO, "paramlistpanel/txtTitle")
-	slot0._txtTitle2 = gohelper.findChildText(slot0.viewGO, "modifyparampanel/txtTitle")
-	slot0._txtParam = gohelper.findChildText(slot0.viewGO, "modifyparampanel/panel/txtParam")
-	slot0._inputValue = gohelper.findChildTextMeshInputField(slot0.viewGO, "modifyparampanel/panel/inputValue")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnBack1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "paramlistpanel/btnBack")
+	arg_1_0._btnBack2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "modifyparampanel/btnBack")
+	arg_1_0._btnSave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "modifyparampanel/panel/Btn_save")
+	arg_1_0._listPanel = gohelper.findChild(arg_1_0.viewGO, "paramlistpanel")
+	arg_1_0._modifyPanel = gohelper.findChild(arg_1_0.viewGO, "modifyparampanel")
+	arg_1_0._txtTitle1 = gohelper.findChildText(arg_1_0.viewGO, "paramlistpanel/txtTitle")
+	arg_1_0._txtTitle2 = gohelper.findChildText(arg_1_0.viewGO, "modifyparampanel/txtTitle")
+	arg_1_0._txtParam = gohelper.findChildText(arg_1_0.viewGO, "modifyparampanel/panel/txtParam")
+	arg_1_0._inputValue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "modifyparampanel/panel/inputValue")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnBack1:AddClickListener(slot0._onClickBack, slot0)
-	slot0._btnBack2:AddClickListener(slot0._closeModify, slot0)
-	slot0._btnSave:AddClickListener(slot0._onClickSave, slot0)
-	ProtoTestMgr.instance:registerCallback(ProtoEnum.OnClickModifyItem, slot0._enterModifyItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnBack1:AddClickListener(arg_2_0._onClickBack, arg_2_0)
+	arg_2_0._btnBack2:AddClickListener(arg_2_0._closeModify, arg_2_0)
+	arg_2_0._btnSave:AddClickListener(arg_2_0._onClickSave, arg_2_0)
+	ProtoTestMgr.instance:registerCallback(ProtoEnum.OnClickModifyItem, arg_2_0._enterModifyItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnBack1:RemoveClickListener()
-	slot0._btnBack2:RemoveClickListener()
-	slot0._btnSave:RemoveClickListener()
-	ProtoTestMgr.instance:unregisterCallback(ProtoEnum.OnClickModifyItem, slot0._enterModifyItem, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnBack1:RemoveClickListener()
+	arg_3_0._btnBack2:RemoveClickListener()
+	arg_3_0._btnSave:RemoveClickListener()
+	ProtoTestMgr.instance:unregisterCallback(ProtoEnum.OnClickModifyItem, arg_3_0._enterModifyItem, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	slot2 = slot0.viewParam.paramId
+function var_0_0.onOpen(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam.protoMO
+	local var_4_1 = arg_4_0.viewParam.paramId
 
-	if slot0.viewParam.protoMO then
-		ProtoModifyModel.instance:enterProto(slot1)
+	if var_4_0 then
+		ProtoModifyModel.instance:enterProto(var_4_0)
 
-		if slot2 then
-			slot0:_enterModifyItem(slot2)
+		if var_4_1 then
+			arg_4_0:_enterModifyItem(var_4_1)
 		else
-			slot0:_updateTitle()
+			arg_4_0:_updateTitle()
 		end
 	end
 end
 
-function slot0._enterModifyItem(slot0, slot1)
-	ProtoModifyModel.instance:enterParam(slot1)
+function var_0_0._enterModifyItem(arg_5_0, arg_5_1)
+	ProtoModifyModel.instance:enterParam(arg_5_1)
 
-	slot2 = ProtoModifyModel.instance:getLastMO()
+	local var_5_0 = ProtoModifyModel.instance:getLastMO()
+	local var_5_1 = var_5_0:isRepeated()
+	local var_5_2 = var_5_0:isProtoType()
 
-	if slot2:isRepeated() or slot2:isProtoType() then
-		gohelper.setActive(slot0._listPanel, true)
-		gohelper.setActive(slot0._modifyPanel, false)
+	if var_5_1 or var_5_2 then
+		gohelper.setActive(arg_5_0._listPanel, true)
+		gohelper.setActive(arg_5_0._modifyPanel, false)
 	else
-		if type(slot2.value) == "boolean" or type(slot5) == "number" then
-			slot5 = tostring(slot5) or slot5
+		local var_5_3 = var_5_0.value
+
+		var_5_3 = (type(var_5_3) == "boolean" or type(var_5_3) == "number") and tostring(var_5_3) or var_5_3
+
+		arg_5_0._inputValue:SetText(var_5_3)
+		gohelper.setActive(arg_5_0._listPanel, false)
+		gohelper.setActive(arg_5_0._modifyPanel, true)
+	end
+
+	arg_5_0:_updateTitle()
+end
+
+function var_0_0._updateTitle(arg_6_0)
+	local var_6_0 = ProtoModifyModel.instance:getProtoMO()
+	local var_6_1 = ProtoModifyModel.instance:getDepthParamMOs()
+	local var_6_2 = ProtoModifyModel.instance:getLastMO()
+	local var_6_3 = var_6_0.struct
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		if iter_6_1.repeated then
+			var_6_3 = var_6_3 .. "[" .. iter_6_1.key .. "]"
+		else
+			var_6_3 = var_6_3 .. " - " .. iter_6_1.key
 		end
-
-		slot0._inputValue:SetText(slot5)
-		gohelper.setActive(slot0._listPanel, false)
-		gohelper.setActive(slot0._modifyPanel, true)
 	end
 
-	slot0:_updateTitle()
-end
+	arg_6_0._txtTitle1.text = var_6_3
+	arg_6_0._txtTitle2.text = var_6_3
 
-function slot0._updateTitle(slot0)
-	slot3 = ProtoModifyModel.instance:getLastMO()
-	slot4 = ProtoModifyModel.instance:getProtoMO().struct
+	if isTypeOf(var_6_2, ProtoTestCaseParamMO) then
+		local var_6_4 = ProtoEnum.LabelType[var_6_2.pLabel]
+		local var_6_5 = var_6_2.pType == ProtoEnum.ParamType.proto and var_6_2.struct or ProtoEnum.ParamType[var_6_2.pType]
 
-	for slot8, slot9 in ipairs(ProtoModifyModel.instance:getDepthParamMOs()) do
-		slot4 = slot9.repeated and slot4 .. "[" .. slot9.key .. "]" or slot4 .. "[" .. slot9.key .. "]" .. " - " .. slot9.key
-	end
-
-	slot0._txtTitle1.text = slot4
-	slot0._txtTitle2.text = slot4
-
-	if isTypeOf(slot3, ProtoTestCaseParamMO) then
-		slot0._txtParam.text = ProtoEnum.LabelType[slot3.pLabel] .. " - " .. (slot3.pType == ProtoEnum.ParamType.proto and slot3.struct or ProtoEnum.ParamType[slot3.pType])
+		arg_6_0._txtParam.text = var_6_4 .. " - " .. var_6_5
 	end
 end
 
-function slot0._updateList(slot0)
+function var_0_0._updateList(arg_7_0)
 	ProtoModifyModel.instance:onModelUpdate()
 	ProtoTestCaseModel.instance:onModelUpdate()
 end
 
-function slot0._onClickBack(slot0)
+function var_0_0._onClickBack(arg_8_0)
 	if ProtoModifyModel.instance:isRoot() then
-		slot0:closeThis()
+		arg_8_0:closeThis()
 	else
-		slot0:_closeModify()
+		arg_8_0:_closeModify()
 	end
 end
 
-function slot0._closeModify(slot0)
+function var_0_0._closeModify(arg_9_0)
 	ProtoModifyModel.instance:exitParam()
-	gohelper.setActive(slot0._listPanel, true)
-	gohelper.setActive(slot0._modifyPanel, false)
-	slot0:_updateTitle()
+	gohelper.setActive(arg_9_0._listPanel, true)
+	gohelper.setActive(arg_9_0._modifyPanel, false)
+	arg_9_0:_updateTitle()
 end
 
-function slot0._onClickSave(slot0)
-	if ProtoModifyModel.instance:getLastMO().pType ~= ProtoEnum.ParamType.string and string.nilorempty(slot0._inputValue:GetText()) and not slot1:isOptional() then
+function var_0_0._onClickSave(arg_10_0)
+	local var_10_0 = ProtoModifyModel.instance:getLastMO()
+	local var_10_1 = arg_10_0._inputValue:GetText()
+
+	if var_10_0.pType ~= ProtoEnum.ParamType.string and string.nilorempty(var_10_1) and not var_10_0:isOptional() then
 		GameFacade.showToast(ToastEnum.ProtoModifyNotString)
 
 		return
 	end
 
-	if slot1.pType == ProtoEnum.ParamType.int32 or slot1.pType == ProtoEnum.ParamType.uint32 then
-		if not tonumber(slot2) then
+	if var_10_0.pType == ProtoEnum.ParamType.int32 or var_10_0.pType == ProtoEnum.ParamType.uint32 then
+		local var_10_2 = tonumber(var_10_1)
+
+		if not var_10_2 then
 			GameFacade.showToast(ToastEnum.ProtoModifyNotValue)
 
 			return
 		end
 
-		slot1.value = slot3
-	elseif slot1.pType == ProtoEnum.ParamType.int64 or slot1.pType == ProtoEnum.ParamType.uint64 then
-		if not string.nilorempty(slot2) and not tonumber(slot2) then
+		var_10_0.value = var_10_2
+	elseif var_10_0.pType == ProtoEnum.ParamType.int64 or var_10_0.pType == ProtoEnum.ParamType.uint64 then
+		if not string.nilorempty(var_10_1) and not tonumber(var_10_1) then
 			GameFacade.showToast(ToastEnum.ProtoModifyNotValue)
 
 			return
 		end
 
-		slot1.value = not string.nilorempty(slot2) and slot2 or nil
-	elseif slot1.pType == ProtoEnum.ParamType.bool then
-		slot4 = ({
+		var_10_0.value = not string.nilorempty(var_10_1) and var_10_1 or nil
+	elseif var_10_0.pType == ProtoEnum.ParamType.bool then
+		local var_10_3 = ({
 			["0"] = false,
 			["false"] = false,
 			["1"] = true,
 			["true"] = true
-		})[string.lower(slot2)]
+		})[string.lower(var_10_1)]
 
-		if not slot1:isOptional() and slot4 == nil then
+		if not var_10_0:isOptional() and var_10_3 == nil then
 			GameFacade.showToast(ToastEnum.ProtoModifyIsNil)
 
 			return
 		end
 
-		slot1.value = slot4
+		var_10_0.value = var_10_3
 	else
-		slot1.value = slot2
+		var_10_0.value = var_10_1
 	end
 
-	slot0:_closeModify()
-	slot0:_updateList()
+	arg_10_0:_closeModify()
+	arg_10_0:_updateList()
 end
 
-function slot0.onClickModalMask(slot0)
-	if slot0._modifyPanel.activeInHierarchy then
-		slot0:_closeModify()
+function var_0_0.onClickModalMask(arg_11_0)
+	if arg_11_0._modifyPanel.activeInHierarchy then
+		arg_11_0:_closeModify()
 	else
-		slot0:_onClickBack()
+		arg_11_0:_onClickBack()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,131 +1,140 @@
-module("modules.logic.fight.view.FightEnemyActionCardItem", package.seeall)
+﻿module("modules.logic.fight.view.FightEnemyActionCardItem", package.seeall)
 
-slot0 = class("FightEnemyActionCardItem", UserDataDispose)
+local var_0_0 = class("FightEnemyActionCardItem", UserDataDispose)
 
-function slot0.get(slot0, slot1)
-	slot2 = uv0.New()
+function var_0_0.get(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_0.New()
 
-	slot2:init(slot0, slot1)
+	var_1_0:init(arg_1_0, arg_1_1)
 
-	return slot2
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1, slot2)
-	uv0.super.__onInit(slot0)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	var_0_0.super.__onInit(arg_2_0)
 
-	slot0.goCard = slot1
-	slot0.tr = slot1.transform
-	slot0.cardMo = slot2
-	slot0.skillId = slot2.skillId
-	slot0.entityId = slot2.uid
-	slot0.entityMo = FightDataHelper.entityMgr:getById(slot0.entityId)
-	slot0.skillCo = lua_skill.configDict[slot0.skillId]
-	slot6 = slot0.skillId
-	slot0.skillCardLv = FightCardModel.instance:getSkillLv(slot0.entityId, slot6)
-	slot0.lvGoList = slot0:getUserDataTb_()
-	slot0.lvImgIconList = slot0:getUserDataTb_()
-	slot0.lvImgCompList = slot0:getUserDataTb_()
-	slot0.starItemCanvasList = slot0:getUserDataTb_()
+	arg_2_0.goCard = arg_2_1
+	arg_2_0.tr = arg_2_1.transform
+	arg_2_0.cardMo = arg_2_2
+	arg_2_0.skillId = arg_2_2.skillId
+	arg_2_0.entityId = arg_2_2.uid
+	arg_2_0.entityMo = FightDataHelper.entityMgr:getById(arg_2_0.entityId)
+	arg_2_0.skillCo = lua_skill.configDict[arg_2_0.skillId]
+	arg_2_0.skillCardLv = FightCardModel.instance:getSkillLv(arg_2_0.entityId, arg_2_0.skillId)
+	arg_2_0.lvGoList = arg_2_0:getUserDataTb_()
+	arg_2_0.lvImgIconList = arg_2_0:getUserDataTb_()
+	arg_2_0.lvImgCompList = arg_2_0:getUserDataTb_()
+	arg_2_0.starItemCanvasList = arg_2_0:getUserDataTb_()
 
-	for slot6 = 1, 4 do
-		slot7 = gohelper.findChild(slot0.goCard, "lv" .. slot6)
+	for iter_2_0 = 1, 4 do
+		local var_2_0 = gohelper.findChild(arg_2_0.goCard, "lv" .. iter_2_0)
+		local var_2_1 = gohelper.findChildSingleImage(var_2_0, "imgIcon")
+		local var_2_2 = gohelper.findChildImage(var_2_0, "imgIcon")
 
-		gohelper.setActive(slot7, true)
-		table.insert(slot0.lvGoList, slot7)
-		table.insert(slot0.lvImgIconList, gohelper.findChildSingleImage(slot7, "imgIcon"))
-		table.insert(slot0.lvImgCompList, gohelper.findChildImage(slot7, "imgIcon"))
+		gohelper.setActive(var_2_0, true)
+		table.insert(arg_2_0.lvGoList, var_2_0)
+		table.insert(arg_2_0.lvImgIconList, var_2_1)
+		table.insert(arg_2_0.lvImgCompList, var_2_2)
 	end
 
-	slot0.goTag = gohelper.findChild(slot0.goCard, "tag")
-	slot0.tagPosList = {}
+	arg_2_0.goTag = gohelper.findChild(arg_2_0.goCard, "tag")
+	arg_2_0.tagPosList = {}
 
-	for slot6 = 1, 4 do
-		slot7, slot8 = recthelper.getAnchor(gohelper.findChild(slot0.goCard, "tag/pos" .. slot6).transform)
-		slot0.tagPosList[slot6] = {
-			slot7,
-			slot8
+	for iter_2_1 = 1, 4 do
+		local var_2_3, var_2_4 = recthelper.getAnchor(gohelper.findChild(arg_2_0.goCard, "tag/pos" .. iter_2_1).transform)
+
+		arg_2_0.tagPosList[iter_2_1] = {
+			var_2_3,
+			var_2_4
 		}
 	end
 
-	slot0.tagRootTr = gohelper.findChild(slot0.goCard, "tag/tag").transform
-	slot0.tagIcon = gohelper.findChildSingleImage(slot0.goCard, "tag/tag/tagIcon")
-	slot0.starGo = gohelper.findChild(slot0.goCard, "star")
-	slot6 = UnityEngine.CanvasGroup
-	slot0.starCanvas = gohelper.onceAddComponent(slot0.starGo, typeof(slot6))
-	slot0.innerStartGoList = slot0:getUserDataTb_()
-	slot0.innerStartCanvasList = slot0:getUserDataTb_()
+	arg_2_0.tagRootTr = gohelper.findChild(arg_2_0.goCard, "tag/tag").transform
+	arg_2_0.tagIcon = gohelper.findChildSingleImage(arg_2_0.goCard, "tag/tag/tagIcon")
+	arg_2_0.starGo = gohelper.findChild(arg_2_0.goCard, "star")
+	arg_2_0.starCanvas = gohelper.onceAddComponent(arg_2_0.starGo, typeof(UnityEngine.CanvasGroup))
+	arg_2_0.innerStartGoList = arg_2_0:getUserDataTb_()
+	arg_2_0.innerStartCanvasList = arg_2_0:getUserDataTb_()
 
-	for slot6 = 1, FightEnum.MaxSkillCardLv do
-		slot7 = gohelper.findChild(slot0.goCard, "star/star" .. slot6)
+	for iter_2_2 = 1, FightEnum.MaxSkillCardLv do
+		local var_2_5 = gohelper.findChild(arg_2_0.goCard, "star/star" .. iter_2_2)
 
-		table.insert(slot0.innerStartGoList, slot7)
-		table.insert(slot0.innerStartCanvasList, gohelper.onceAddComponent(slot7, typeof(UnityEngine.CanvasGroup)))
+		table.insert(arg_2_0.innerStartGoList, var_2_5)
+		table.insert(arg_2_0.innerStartCanvasList, gohelper.onceAddComponent(var_2_5, typeof(UnityEngine.CanvasGroup)))
 	end
 
-	slot0:hideOther()
+	arg_2_0:hideOther()
 end
 
-function slot0.hideOther(slot0)
-	if gohelper.onceAddComponent(slot0.goCard, typeof(UnityEngine.Animator)) then
-		slot1.enabled = false
+function var_0_0.hideOther(arg_3_0)
+	local var_3_0 = gohelper.onceAddComponent(arg_3_0.goCard, typeof(UnityEngine.Animator))
+
+	if var_3_0 then
+		var_3_0.enabled = false
 	end
 
-	for slot6 = 1, slot0.tr.childCount do
-		gohelper.setActive(slot0.tr:GetChild(slot6 - 1).gameObject, false)
+	local var_3_1 = arg_3_0.tr.childCount
+
+	for iter_3_0 = 1, var_3_1 do
+		local var_3_2 = arg_3_0.tr:GetChild(iter_3_0 - 1)
+
+		gohelper.setActive(var_3_2.gameObject, false)
 	end
 end
 
-function slot0.refreshCard(slot0)
-	for slot4, slot5 in ipairs(slot0.lvGoList) do
-		gohelper.setActive(slot5, true)
-		gohelper.setActiveCanvasGroup(slot5, slot0.skillCardLv == slot4)
+function var_0_0.refreshCard(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.lvGoList) do
+		gohelper.setActive(iter_4_1, true)
+		gohelper.setActiveCanvasGroup(iter_4_1, arg_4_0.skillCardLv == iter_4_0)
 	end
 
-	slot1 = ResUrl.getSkillIcon(slot0.skillCo.icon)
+	local var_4_0 = ResUrl.getSkillIcon(arg_4_0.skillCo.icon)
 
-	for slot5, slot6 in ipairs(slot0.lvImgIconList) do
-		if gohelper.isNil(slot0.lvImgCompList[slot5].sprite) then
-			slot6:UnLoadImage()
-		elseif slot6.curImageUrl ~= slot1 then
-			slot6:UnLoadImage()
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0.lvImgIconList) do
+		if gohelper.isNil(arg_4_0.lvImgCompList[iter_4_2].sprite) then
+			iter_4_3:UnLoadImage()
+		elseif iter_4_3.curImageUrl ~= var_4_0 then
+			iter_4_3:UnLoadImage()
 		end
 
-		slot6:LoadImage(slot1)
+		iter_4_3:LoadImage(var_4_0)
 	end
 
-	gohelper.setActive(slot0.starGo, slot0.skillCardLv < FightEnum.UniqueSkillCardLv)
+	gohelper.setActive(arg_4_0.starGo, arg_4_0.skillCardLv < FightEnum.UniqueSkillCardLv)
 
-	slot0.starCanvas.alpha = 1
+	arg_4_0.starCanvas.alpha = 1
 
-	for slot5, slot6 in ipairs(slot0.innerStartGoList) do
-		gohelper.setActive(slot6, slot5 == slot0.skillCardLv)
+	for iter_4_4, iter_4_5 in ipairs(arg_4_0.innerStartGoList) do
+		gohelper.setActive(iter_4_5, iter_4_4 == arg_4_0.skillCardLv)
 
-		if slot0.innerStartCanvasList[slot5] then
-			slot0.innerStartCanvasList[slot5].alpha = 1
+		if arg_4_0.innerStartCanvasList[iter_4_4] then
+			arg_4_0.innerStartCanvasList[iter_4_4].alpha = 1
 		end
 	end
 
-	gohelper.setActive(slot0.goTag, true)
-	slot0.tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot0.skillCo.showTag))
+	gohelper.setActive(arg_4_0.goTag, true)
+	arg_4_0.tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. arg_4_0.skillCo.showTag))
 
-	if slot0.tagPosList[slot0.skillCardLv] then
-		recthelper.setAnchor(slot0.tagRootTr, slot2[1], slot2[2])
+	local var_4_1 = arg_4_0.tagPosList[arg_4_0.skillCardLv]
+
+	if var_4_1 then
+		recthelper.setAnchor(arg_4_0.tagRootTr, var_4_1[1], var_4_1[2])
 	end
 
-	gohelper.setActive(slot0.tagIcon.gameObject, slot0.skillCardLv < FightEnum.UniqueSkillCardLv)
+	gohelper.setActive(arg_4_0.tagIcon.gameObject, arg_4_0.skillCardLv < FightEnum.UniqueSkillCardLv)
 end
 
-function slot0.refreshSelect(slot0, slot1)
-	slot0.select = slot1
+function var_0_0.refreshSelect(arg_5_0, arg_5_1)
+	arg_5_0.select = arg_5_1
 end
 
-function slot0.destroy(slot0)
-	for slot4, slot5 in ipairs(slot0.lvImgIconList) do
-		slot5:UnLoadImage()
+function var_0_0.destroy(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.lvImgIconList) do
+		iter_6_1:UnLoadImage()
 	end
 
-	slot0.tagIcon:UnLoadImage()
-	uv0.super.__onDispose(slot0)
+	arg_6_0.tagIcon:UnLoadImage()
+	var_0_0.super.__onDispose(arg_6_0)
 end
 
-return slot0
+return var_0_0

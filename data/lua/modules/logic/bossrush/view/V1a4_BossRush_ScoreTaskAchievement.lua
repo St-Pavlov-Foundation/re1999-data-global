@@ -1,92 +1,100 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_ScoreTaskAchievement", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_ScoreTaskAchievement", package.seeall)
 
-slot0 = class("V1a4_BossRush_ScoreTaskAchievement", BaseView)
+local var_0_0 = class("V1a4_BossRush_ScoreTaskAchievement", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._goAssessIcon = gohelper.findChild(slot0.viewGO, "Left/#go_AssessIcon")
-	slot0._txtScoreNum = gohelper.findChildText(slot0.viewGO, "Left/Score/#txt_ScoreNum")
-	slot0._scrollScoreList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_ScoreList")
-	slot0._goBlock = gohelper.findChild(slot0.viewGO, "#go_Block")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._goAssessIcon = gohelper.findChild(arg_1_0.viewGO, "Left/#go_AssessIcon")
+	arg_1_0._txtScoreNum = gohelper.findChildText(arg_1_0.viewGO, "Left/Score/#txt_ScoreNum")
+	arg_1_0._scrollScoreList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ScoreList")
+	arg_1_0._goBlock = gohelper.findChild(arg_1_0.viewGO, "#go_Block")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtScoreNum.text = ""
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._txtScoreNum.text = ""
 
-	slot0._simageFullBG:LoadImage(ResUrl.getV1a4BossRushSinglebg("v1a4_bossrush_score_fullbg"))
-	slot0:_initAssessIcon()
+	arg_4_0._simageFullBG:LoadImage(ResUrl.getV1a4BossRushSinglebg("v1a4_bossrush_score_fullbg"))
+	arg_4_0:_initAssessIcon()
 end
 
-function slot0._initAssessIcon(slot0)
-	slot1 = V1a4_BossRush_Task_AssessIcon
-	slot0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_achievement_assessicon, slot0._goAssessIcon, slot1.__cname), slot1)
+function var_0_0._initAssessIcon(arg_5_0)
+	local var_5_0 = V1a4_BossRush_Task_AssessIcon
+	local var_5_1 = arg_5_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_achievement_assessicon, arg_5_0._goAssessIcon, var_5_0.__cname)
+
+	arg_5_0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, var_5_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:setActiveBlock(false)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:setActiveBlock(false)
 
-	slot0._isStartBlockOnce = nil
-	slot0._isEndBlockOnce = nil
+	arg_7_0._isStartBlockOnce = nil
+	arg_7_0._isEndBlockOnce = nil
 
 	V1a4_BossRush_ScoreTaskAchievementListModel.instance:setStaticData(false)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, slot0._refreshRight, slot0)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_7_0._refreshRight, arg_7_0)
 	BossRushController.instance:sendGetTaskInfoRequest()
-	slot0:_refreshLeft()
+	arg_7_0:_refreshLeft()
 end
 
-function slot0.onClose(slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, slot0._refreshRight, slot0)
+function var_0_0.onClose(arg_8_0)
+	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, arg_8_0._refreshRight, arg_8_0)
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshLeft()
-	slot0:_refreshRight()
+function var_0_0._refresh(arg_9_0)
+	arg_9_0:_refreshLeft()
+	arg_9_0:_refreshRight()
 end
 
-function slot0._refreshLeft(slot0)
-	slot2 = slot0.viewParam.stage
-	slot3 = BossRushModel.instance:getHighestPoint(slot2)
+function var_0_0._refreshLeft(arg_10_0)
+	local var_10_0 = arg_10_0.viewParam.stage
+	local var_10_1 = BossRushModel.instance:getHighestPoint(var_10_0)
 
-	slot0._assessIcon:setData(slot2, slot3)
+	arg_10_0._assessIcon:setData(var_10_0, var_10_1)
 
-	slot0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(slot3)
+	arg_10_0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(var_10_1)
 end
 
-function slot0._refreshRight(slot0)
-	V1a4_BossRush_ScoreTaskAchievementListModel.instance:setList(BossRushModel.instance:getTaskMoListByStage(slot0.viewParam.stage))
+function var_0_0._refreshRight(arg_11_0)
+	local var_11_0 = arg_11_0.viewParam.stage
+	local var_11_1 = BossRushModel.instance:getTaskMoListByStage(var_11_0)
+
+	V1a4_BossRush_ScoreTaskAchievementListModel.instance:setList(var_11_1)
 end
 
-function slot0.setActiveBlock(slot0, slot1, slot2)
-	if slot2 then
-		if slot1 then
-			if slot0._isStartBlockOnce then
+function var_0_0.setActiveBlock(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_2 then
+		if arg_12_1 then
+			if arg_12_0._isStartBlockOnce then
 				return
 			end
 
-			slot0._isStartBlockOnce = true
+			arg_12_0._isStartBlockOnce = true
 		else
-			if slot0._isEndBlockOnce then
+			if arg_12_0._isEndBlockOnce then
 				return
 			end
 
-			slot0._isEndBlockOnce = true
+			arg_12_0._isEndBlockOnce = true
 		end
 	end
 
-	gohelper.setActive(slot0._goBlock, slot1)
+	gohelper.setActive(arg_12_0._goBlock, arg_12_1)
 end
 
-return slot0
+return var_0_0

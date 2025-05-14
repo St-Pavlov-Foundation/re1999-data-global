@@ -1,18 +1,18 @@
-module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleResultViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleResultViewContainer", package.seeall)
 
-slot0 = class("Role37PuzzleResultViewContainer", BaseViewContainer)
+local var_0_0 = class("Role37PuzzleResultViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Role37PuzzleResultView.New())
+	table.insert(var_1_0, Role37PuzzleResultView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

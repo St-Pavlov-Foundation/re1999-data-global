@@ -1,22 +1,26 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerElementFinish", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerElementFinish", package.seeall)
 
-slot0 = class("GuideTriggerElementFinish", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerElementFinish", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateMapElementState, slot0._OnUpdateMapElementState, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateMapElementState, arg_1_0._OnUpdateMapElementState, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	if DungeonConfig.instance:getChapterMapElement(tonumber(slot2)) and slot5.mapId == tonumber(slot1) and DungeonMapModel.instance:elementIsFinished(slot3) then
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = tonumber(arg_2_2)
+	local var_2_1 = tonumber(arg_2_1)
+	local var_2_2 = DungeonConfig.instance:getChapterMapElement(var_2_0)
+
+	if var_2_2 and var_2_2.mapId == var_2_1 and DungeonMapModel.instance:elementIsFinished(var_2_0) then
 		return true
 	end
 
 	return false
 end
 
-function slot0._OnUpdateMapElementState(slot0, slot1)
-	slot0:checkStartGuide(slot1)
+function var_0_0._OnUpdateMapElementState(arg_3_0, arg_3_1)
+	arg_3_0:checkStartGuide(arg_3_1)
 end
 
-return slot0
+return var_0_0

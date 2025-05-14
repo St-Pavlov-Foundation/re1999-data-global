@@ -1,19 +1,20 @@
-module("modules.logic.fight.system.work.FightWorkRestartBefore", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRestartBefore", package.seeall)
 
-slot0 = class("FightWorkRestartBefore", BaseWork)
+local var_0_0 = class("FightWorkRestartBefore", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, slot0._onDestroyViewFinish, slot0)
+function var_0_0.onStart(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, arg_2_0._onDestroyViewFinish, arg_2_0)
 	GameSceneMgr.instance:getCurScene().view:onSceneClose()
 	GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
 end
 
-function slot0._onDestroyViewFinish(slot0, slot1)
-	if slot1 == ViewName.FightView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.DestroyViewFinish, slot0._onDestroyViewFinish, slot0)
+function var_0_0._onDestroyViewFinish(arg_3_0, arg_3_1)
+	if arg_3_1 == ViewName.FightView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.DestroyViewFinish, arg_3_0._onDestroyViewFinish, arg_3_0)
 
 		FightDataHelper.tempMgr.simplePolarizationLevel = nil
 
@@ -23,11 +24,11 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 		FightController.instance:dispatchEvent(FightEvent.OnEndFightForGuide)
 		FightController.instance:dispatchEvent(FightEvent.OnRestartStageBefore)
 
-		slot2 = GameSceneMgr.instance:getCurScene()
+		local var_3_0 = GameSceneMgr.instance:getCurScene()
 
-		slot2.entityMgr:removeAllUnits()
-		slot2.director:registRespBeginFight()
-		slot2.bgm:resumeBgm()
+		var_3_0.entityMgr:removeAllUnits()
+		var_3_0.director:registRespBeginFight()
+		var_3_0.bgm:resumeBgm()
 		FightSkillMgr.instance:dispose()
 		FightSystem.instance:dispose()
 		FightNameMgr.instance:onRestartStage()
@@ -35,9 +36,9 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 
 		FightRoundSequence.roundTempData = {}
 
-		slot2.camera:enablePostProcessSmooth(false)
-		slot2.camera:resetParam()
-		slot2.camera:setSceneCameraOffset()
+		var_3_0.camera:enablePostProcessSmooth(false)
+		var_3_0.camera:resetParam()
+		var_3_0.camera:setSceneCameraOffset()
 
 		FightModel.instance._curRoundId = 1
 
@@ -45,9 +46,9 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 		FightController.instance:dispatchEvent(FightEvent.OnRestartFightDisposeDone)
 		gohelper.setActiveCanvasGroup(ViewMgr.instance:getUILayer(UILayerName.Hud), false)
 
-		if slot0.context and slot0.context.noReloadScene then
-			slot0:_correctRootState()
-			slot0:onDone(true)
+		if arg_3_0.context and arg_3_0.context.noReloadScene then
+			arg_3_0:_correctRootState()
+			arg_3_0:onDone(true)
 
 			return
 		end
@@ -55,57 +56,70 @@ function slot0._onDestroyViewFinish(slot0, slot1)
 		if GameSceneMgr.instance:getCurLevelId() ~= FightModel.instance:getFightParam():getSceneLevel(1) then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView)
 			GameSceneMgr.instance:showLoading(SceneType.Fight)
-			TaskDispatcher.runDelay(slot0._delayDone, slot0, 5)
-			TaskDispatcher.runDelay(slot0._startLoadLevel, slot0, 0.25)
+			TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 5)
+			TaskDispatcher.runDelay(arg_3_0._startLoadLevel, arg_3_0, 0.25)
 
-			slot0._loadTime = Time.time
+			arg_3_0._loadTime = Time.time
 		else
-			slot0:_correctRootState()
-			slot0:onDone(true)
+			arg_3_0:_correctRootState()
+			arg_3_0:onDone(true)
 		end
 	end
 end
 
-function slot0._correctRootState(slot0)
-	if GameSceneMgr.instance:getCurSceneId() == FightTLEventMarkSceneDefaultRoot.sceneId and GameSceneMgr.instance:getCurLevelId() == FightTLEventMarkSceneDefaultRoot.levelId and GameSceneMgr.instance:getCurScene() and slot1.level:getSceneGo() then
-		for slot7 = 0, slot2.transform.childCount - 1 do
-			slot8 = slot2.transform:GetChild(slot7)
+function var_0_0._correctRootState(arg_4_0)
+	if GameSceneMgr.instance:getCurSceneId() == FightTLEventMarkSceneDefaultRoot.sceneId and GameSceneMgr.instance:getCurLevelId() == FightTLEventMarkSceneDefaultRoot.levelId then
+		local var_4_0 = GameSceneMgr.instance:getCurScene()
 
-			gohelper.setActive(slot8.gameObject, slot8.name == FightTLEventMarkSceneDefaultRoot.rootName)
+		if var_4_0 then
+			local var_4_1 = var_4_0.level:getSceneGo()
+
+			if var_4_1 then
+				local var_4_2 = var_4_1.transform.childCount
+
+				for iter_4_0 = 0, var_4_2 - 1 do
+					local var_4_3 = var_4_1.transform:GetChild(iter_4_0)
+
+					gohelper.setActive(var_4_3.gameObject, var_4_3.name == FightTLEventMarkSceneDefaultRoot.rootName)
+				end
+			end
 		end
 	end
 end
 
-function slot0._startLoadLevel(slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0._startLoadLevel(arg_5_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_5_0._onLevelLoaded, arg_5_0)
 
-	slot1 = GameSceneMgr.instance:getScene(SceneType.Fight)
+	local var_5_0 = GameSceneMgr.instance:getScene(SceneType.Fight)
+	local var_5_1 = FightModel.instance:getFightParam():getSceneLevel(1)
 
-	slot1.level:onSceneStart(slot1.level._sceneId, FightModel.instance:getFightParam():getSceneLevel(1))
+	var_5_0.level:onSceneStart(var_5_0.level._sceneId, var_5_1)
 end
 
-function slot0._onLevelLoaded(slot0)
-	if 0.5 - (Time.time - slot0._loadTime) <= 0 then
-		slot0:onDone(true)
+function var_0_0._onLevelLoaded(arg_6_0)
+	local var_6_0 = 0.5 - (Time.time - arg_6_0._loadTime)
+
+	if var_6_0 <= 0 then
+		arg_6_0:onDone(true)
 	else
-		TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, slot2)
+		TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
+		TaskDispatcher.runDelay(arg_6_0._delayDone, arg_6_0, var_6_0)
 	end
 
 	GameSceneMgr.instance:getCurScene().camera:setSceneCameraOffset()
 end
 
-function slot0._delayDone(slot0)
-	slot1 = GameSceneMgr.instance:getCurScene()
+function var_0_0._delayDone(arg_7_0)
+	local var_7_0 = GameSceneMgr.instance:getCurScene()
 
-	slot0:onDone(true)
+	arg_7_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_8_0)
 	GameSceneMgr.instance:hideLoading()
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	TaskDispatcher.cancelTask(slot0._startLoadLevel, slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._delayDone, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._startLoadLevel, arg_8_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_8_0._onLevelLoaded, arg_8_0)
 end
 
-return slot0
+return var_0_0

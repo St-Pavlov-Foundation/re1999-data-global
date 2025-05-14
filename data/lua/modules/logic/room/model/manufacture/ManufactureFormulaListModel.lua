@@ -1,56 +1,80 @@
-module("modules.logic.room.model.manufacture.ManufactureFormulaListModel", package.seeall)
+﻿module("modules.logic.room.model.manufacture.ManufactureFormulaListModel", package.seeall)
 
-slot0 = class("ManufactureFormulaListModel", ListScrollModel)
-slot1 = 1
-slot2 = 200
-slot3 = 2
-slot4 = 262
+local var_0_0 = class("ManufactureFormulaListModel", ListScrollModel)
+local var_0_1 = 1
+local var_0_2 = 200
+local var_0_3 = 2
+local var_0_4 = 262
 
-function slot0.sortFormula(slot0, slot1)
-	if ManufactureConfig.instance:getItemId(slot0.id) ~= ManufactureConfig.instance:getItemId(slot1.id) then
-		return slot4 < slot5
+function var_0_0.sortFormula(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0.id
+	local var_1_1 = arg_1_1.id
+	local var_1_2 = ManufactureConfig.instance:getItemId(var_1_0)
+	local var_1_3 = ManufactureConfig.instance:getItemId(var_1_1)
+
+	if var_1_2 ~= var_1_3 then
+		return var_1_2 < var_1_3
 	end
 
-	if ManufactureConfig.instance:getUnitCount(slot2) ~= ManufactureConfig.instance:getUnitCount(slot3) then
-		return slot6 < slot7
+	local var_1_4 = ManufactureConfig.instance:getUnitCount(var_1_0)
+	local var_1_5 = ManufactureConfig.instance:getUnitCount(var_1_1)
+
+	if var_1_4 ~= var_1_5 then
+		return var_1_4 < var_1_5
 	end
 
-	return slot2 < slot3
+	return var_1_0 < var_1_1
 end
 
-function slot0.setManufactureFormulaItemList(slot0, slot1)
-	slot2 = {}
-	slot0._isNoMat = true
+function var_0_0.setManufactureFormulaItemList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-		slot0._isNoMat = RoomConfig.instance:getBuildingType(slot3.buildingId) == RoomBuildingEnum.BuildingType.Collect
+	arg_2_0._isNoMat = true
 
-		for slot11, slot12 in ipairs(ManufactureConfig.instance:getAllManufactureItems(slot4)) do
-			if ManufactureConfig.instance:getManufactureItemNeedLevel(slot4, slot12) <= slot3:getLevel() then
-				slot2[#slot2 + 1] = {
-					id = slot12,
-					buildingUid = slot1
+	local var_2_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_2_1)
+
+	if var_2_1 then
+		local var_2_2 = var_2_1.buildingId
+
+		arg_2_0._isNoMat = RoomConfig.instance:getBuildingType(var_2_2) == RoomBuildingEnum.BuildingType.Collect
+
+		local var_2_3 = var_2_1:getLevel()
+		local var_2_4 = ManufactureConfig.instance:getAllManufactureItems(var_2_2)
+
+		for iter_2_0, iter_2_1 in ipairs(var_2_4) do
+			if var_2_3 >= ManufactureConfig.instance:getManufactureItemNeedLevel(var_2_2, iter_2_1) then
+				local var_2_5 = {
+					id = iter_2_1,
+					buildingUid = arg_2_1
 				}
+
+				var_2_0[#var_2_0 + 1] = var_2_5
 			end
 		end
 	end
 
-	table.sort(slot2, slot0.sortFormula)
-	slot0:setList(slot2)
+	table.sort(var_2_0, arg_2_0.sortFormula)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.getInfoList(slot0, slot1)
-	if not slot0:getList() or #slot3 <= 0 then
-		return {}
+function var_0_0.getInfoList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+	local var_3_1 = arg_3_0:getList()
+
+	if not var_3_1 or #var_3_1 <= 0 then
+		return var_3_0
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot0._isNoMat and uv0 or uv1, slot0._isNoMat and uv2 or uv3, nil))
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		local var_3_2 = arg_3_0._isNoMat and var_0_1 or var_0_3
+		local var_3_3 = arg_3_0._isNoMat and var_0_2 or var_0_4
+
+		table.insert(var_3_0, SLFramework.UGUI.MixCellInfo.New(var_3_2, var_3_3, nil))
 	end
 
-	return slot2
+	return var_3_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

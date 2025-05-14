@@ -1,218 +1,253 @@
-module("modules.logic.seasonver.act123.model.Season123PickHeroEntryModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123PickHeroEntryModel", package.seeall)
 
-slot0 = class("Season123PickHeroEntryModel", BaseModel)
+local var_0_0 = class("Season123PickHeroEntryModel", BaseModel)
 
-function slot0.release(slot0)
-	slot0:clear()
+function var_0_0.release(arg_1_0)
+	arg_1_0:clear()
 
-	slot0._supportPosMO = nil
-	slot0.stage = nil
-	slot0._equipIdList = nil
-	slot0._lastHeroList = nil
+	arg_1_0._supportPosMO = nil
+	arg_1_0.stage = nil
+	arg_1_0._equipIdList = nil
+	arg_1_0._lastHeroList = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.activityId = slot1
-	slot0.stage = slot2
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.stage = arg_2_2
 
-	slot0:initDatas()
-	slot0:initFromLocal()
-	slot0:clearLastSupportHero()
+	arg_2_0:initDatas()
+	arg_2_0:initFromLocal()
+	arg_2_0:clearLastSupportHero()
 end
 
-function slot0.initDatas(slot0)
-	slot1 = {}
+function var_0_0.initDatas(arg_3_0)
+	local var_3_0 = {}
 
-	for slot5 = 1, Activity123Enum.PickHeroCount do
-		table.insert(slot1, Season123PickHeroEntryMO.New(slot5))
+	for iter_3_0 = 1, Activity123Enum.PickHeroCount do
+		local var_3_1 = Season123PickHeroEntryMO.New(iter_3_0)
 
-		if slot5 == Activity123Enum.SupportPosIndex then
-			slot0._supportPosMO = slot6
+		table.insert(var_3_0, var_3_1)
+
+		if iter_3_0 == Activity123Enum.SupportPosIndex then
+			arg_3_0._supportPosMO = var_3_1
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0.initFromLocal(slot0)
-	for slot5 = 1, #slot0:readSelectionFromLocal() do
-		slot0:getByIndex(slot5):updateByHeroMO(HeroModel.instance:getById(slot1[slot5]), false)
+function var_0_0.initFromLocal(arg_4_0)
+	local var_4_0 = arg_4_0:readSelectionFromLocal()
+
+	for iter_4_0 = 1, #var_4_0 do
+		local var_4_1 = arg_4_0:getByIndex(iter_4_0)
+		local var_4_2 = HeroModel.instance:getById(var_4_0[iter_4_0])
+
+		var_4_1:updateByHeroMO(var_4_2, false)
 	end
 end
 
-function slot0.savePickHeroDatas(slot0, slot1)
-	if not slot0._supportPosMO then
+function var_0_0.savePickHeroDatas(arg_5_0, arg_5_1)
+	if not arg_5_0._supportPosMO then
 		return
 	end
 
-	for slot5 = 1, Activity123Enum.PickHeroCount do
-		slot6 = slot1[slot5]
+	for iter_5_0 = 1, Activity123Enum.PickHeroCount do
+		local var_5_0 = arg_5_1[iter_5_0]
+		local var_5_1 = arg_5_0:getByIndex(iter_5_0)
 
-		if slot0:getByIndex(slot5) == nil then
-			logError("Season123PickHeroEntryModel entryMO is nil : " .. tostring(slot5))
+		if var_5_1 == nil then
+			logError("Season123PickHeroEntryModel entryMO is nil : " .. tostring(iter_5_0))
 
 			return
 		end
 
-		if slot6 then
-			if slot0._supportPosMO.isSupport and slot6.heroId == slot0._supportPosMO.heroId then
-				slot0._supportPosMO:setEmpty()
+		if var_5_0 then
+			if arg_5_0._supportPosMO.isSupport and var_5_0.heroId == arg_5_0._supportPosMO.heroId then
+				arg_5_0._supportPosMO:setEmpty()
 			end
 
-			slot7:updateByPickMO(slot6)
-		elseif not slot7.isSupport then
-			slot7:setEmpty()
+			var_5_1:updateByPickMO(var_5_0)
+		elseif not var_5_1.isSupport then
+			var_5_1:setEmpty()
 		end
 	end
 end
 
-function slot0.setPickAssistData(slot0, slot1)
-	if not slot0._supportPosMO then
+function var_0_0.setPickAssistData(arg_6_0, arg_6_1)
+	if not arg_6_0._supportPosMO then
 		return
 	end
 
-	if slot1 == nil then
-		if not slot0._supportPosMO:getIsEmpty() and slot0._supportPosMO.isSupport then
-			slot0._supportPosMO:setEmpty()
+	if arg_6_1 == nil then
+		if not arg_6_0._supportPosMO:getIsEmpty() and arg_6_0._supportPosMO.isSupport then
+			arg_6_0._supportPosMO:setEmpty()
 		end
 	else
-		for slot6 = 1, Activity123Enum.PickHeroCount do
-			slot7 = slot0:getList()[slot6]
+		local var_6_0 = arg_6_0:getList()
 
-			if slot1.heroMO and slot1.heroMO.heroId == slot7.heroId then
-				slot7:setEmpty()
+		for iter_6_0 = 1, Activity123Enum.PickHeroCount do
+			local var_6_1 = var_6_0[iter_6_0]
+
+			if arg_6_1.heroMO and arg_6_1.heroMO.heroId == var_6_1.heroId then
+				var_6_1:setEmpty()
 			end
 		end
 
-		slot0._supportPosMO:updateByPickAssistMO(slot1)
+		arg_6_0._supportPosMO:updateByPickAssistMO(arg_6_1)
 	end
 end
 
-function slot0.setMainEquips(slot0, slot1)
-	slot0._equipIdList = slot1
+function var_0_0.setMainEquips(arg_7_0, arg_7_1)
+	arg_7_0._equipIdList = arg_7_1
 end
 
-function slot0.getSupportPosMO(slot0)
-	return slot0._supportPosMO
+function var_0_0.getSupportPosMO(arg_8_0)
+	return arg_8_0._supportPosMO
 end
 
-function slot0.getSupporterHeroUid(slot0)
-	if slot0._supportPosMO and slot0._supportPosMO.isSupport and not slot0._supportPosMO:getIsEmpty() then
-		return slot0._supportPosMO.heroUid
+function var_0_0.getSupporterHeroUid(arg_9_0)
+	if arg_9_0._supportPosMO and arg_9_0._supportPosMO.isSupport and not arg_9_0._supportPosMO:getIsEmpty() then
+		return arg_9_0._supportPosMO.heroUid
 	end
 end
 
-function slot0.getSelectCount(slot0)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if not slot7:getIsEmpty() then
-			slot1 = 0 + 1
+function var_0_0.getSelectCount(arg_10_0)
+	local var_10_0 = 0
+	local var_10_1 = arg_10_0:getList()
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		if not iter_10_1:getIsEmpty() then
+			var_10_0 = var_10_0 + 1
 		end
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.getLimitCount(slot0)
+function var_0_0.getLimitCount(arg_11_0)
 	return Activity123Enum.PickHeroCount
 end
 
-function slot0.getHeroUidList(slot0)
-	slot2 = {}
+function var_0_0.getHeroUidList(arg_12_0)
+	local var_12_0 = arg_12_0:getList()
+	local var_12_1 = {}
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		table.insert(slot2, slot7.heroUid)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		table.insert(var_12_1, iter_12_1.heroUid)
 	end
 
-	return slot2
+	return var_12_1
 end
 
-function slot0.getMainCardList(slot0)
-	return slot0._equipIdList
+function var_0_0.getMainCardList(arg_13_0)
+	return arg_13_0._equipIdList
 end
 
-function slot0.getMainCardItemMO(slot0, slot1)
-	if slot0._equipIdList and slot0._equipIdList[slot1] and slot2 ~= Activity123Enum.EmptyUid then
-		if not Season123Model.instance:getActInfo(slot0.activityId) then
-			return
-		end
+function var_0_0.getMainCardItemMO(arg_14_0, arg_14_1)
+	if arg_14_0._equipIdList then
+		local var_14_0 = arg_14_0._equipIdList[arg_14_1]
 
-		return slot3:getItemMO(slot2)
-	end
-end
+		if var_14_0 and var_14_0 ~= Activity123Enum.EmptyUid then
+			local var_14_1 = Season123Model.instance:getActInfo(arg_14_0.activityId)
 
-function slot0.flushSelectionToLocal(slot0)
-	slot2 = {}
+			if not var_14_1 then
+				return
+			end
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if not slot7:getIsEmpty() and not slot7.isSupport then
-			table.insert(slot2, slot7.heroUid)
+			return (var_14_1:getItemMO(var_14_0))
 		end
 	end
-
-	PlayerPrefsHelper.setString(slot0:getLocalKey(), cjson.encode(slot2))
 end
 
-function slot0.readSelectionFromLocal(slot0)
-	slot1 = nil
+function var_0_0.flushSelectionToLocal(arg_15_0)
+	local var_15_0 = arg_15_0:getList()
+	local var_15_1 = {}
 
-	return (string.nilorempty(PlayerPrefsHelper.getString(slot0:getLocalKey(), "")) or cjson.decode(slot2)) and {}
-end
-
-function slot0.getLocalKey(slot0)
-	return PlayerPrefsKey.Season123PickHeroList .. "#" .. tostring(slot0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
-end
-
-function slot0.getCutHeroList(slot0)
-	slot1 = slot0._lastHeroList or slot0:readSelectionFromLocal()
-	slot3 = {}
-
-	for slot7 = 1, #slot1 do
-		if HeroModel.instance:getById(slot1[slot7]) then
-			table.insert({}, slot8.heroId)
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		if not iter_15_1:getIsEmpty() and not iter_15_1.isSupport then
+			table.insert(var_15_1, iter_15_1.heroUid)
 		end
 	end
 
-	for slot7 = 1, Activity123Enum.PickHeroCount do
-		if slot0:getByIndex(slot7) and not slot8:getIsEmpty() then
-			if slot8.isSupport then
-				if slot0._lastSupportHeroId ~= slot8.heroId then
-					table.insert(slot3, slot7)
+	PlayerPrefsHelper.setString(arg_15_0:getLocalKey(), cjson.encode(var_15_1))
+end
+
+function var_0_0.readSelectionFromLocal(arg_16_0)
+	local var_16_0
+	local var_16_1 = PlayerPrefsHelper.getString(arg_16_0:getLocalKey(), "")
+
+	if not string.nilorempty(var_16_1) then
+		var_16_0 = cjson.decode(var_16_1)
+	else
+		var_16_0 = {}
+	end
+
+	return var_16_0
+end
+
+function var_0_0.getLocalKey(arg_17_0)
+	return PlayerPrefsKey.Season123PickHeroList .. "#" .. tostring(arg_17_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+end
+
+function var_0_0.getCutHeroList(arg_18_0)
+	local var_18_0 = arg_18_0._lastHeroList or arg_18_0:readSelectionFromLocal()
+	local var_18_1 = {}
+	local var_18_2 = {}
+
+	for iter_18_0 = 1, #var_18_0 do
+		local var_18_3 = HeroModel.instance:getById(var_18_0[iter_18_0])
+
+		if var_18_3 then
+			table.insert(var_18_1, var_18_3.heroId)
+		end
+	end
+
+	for iter_18_1 = 1, Activity123Enum.PickHeroCount do
+		local var_18_4 = arg_18_0:getByIndex(iter_18_1)
+
+		if var_18_4 and not var_18_4:getIsEmpty() then
+			if var_18_4.isSupport then
+				if arg_18_0._lastSupportHeroId ~= var_18_4.heroId then
+					table.insert(var_18_2, iter_18_1)
 				end
-			elseif slot2 then
-				if not LuaUtil.tableContains(slot2, slot8.heroId) then
-					table.insert(slot3, slot7)
+			elseif var_18_1 then
+				if not LuaUtil.tableContains(var_18_1, var_18_4.heroId) then
+					table.insert(var_18_2, iter_18_1)
 				end
 			else
-				table.insert(slot3, slot7)
+				table.insert(var_18_2, iter_18_1)
 			end
 		end
 	end
 
-	return slot3
+	return var_18_2
 end
 
-function slot0.refeshLastHeroList(slot0)
-	slot0._lastHeroList = {}
+function var_0_0.refeshLastHeroList(arg_19_0)
+	local var_19_0 = arg_19_0:getList()
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if not slot6:getIsEmpty() then
-			table.insert(slot0._lastHeroList, slot6.heroUid)
+	arg_19_0._lastHeroList = {}
+
+	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+		if not iter_19_1:getIsEmpty() then
+			table.insert(arg_19_0._lastHeroList, iter_19_1.heroUid)
 		end
 
-		if slot6.isSupport then
-			if slot6:getIsEmpty() then
-				slot0:clearLastSupportHero()
+		if iter_19_1.isSupport then
+			if iter_19_1:getIsEmpty() then
+				arg_19_0:clearLastSupportHero()
 			else
-				slot0._lastSupportHeroId = slot6.heroId
+				arg_19_0._lastSupportHeroId = iter_19_1.heroId
 			end
 		end
 	end
 end
 
-function slot0.clearLastSupportHero(slot0)
-	slot0._lastSupportHeroId = nil
+function var_0_0.clearLastSupportHero(arg_20_0)
+	arg_20_0._lastSupportHeroId = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

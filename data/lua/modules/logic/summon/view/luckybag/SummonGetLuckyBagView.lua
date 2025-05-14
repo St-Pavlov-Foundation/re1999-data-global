@@ -1,53 +1,60 @@
-module("modules.logic.summon.view.luckybag.SummonGetLuckyBagView", package.seeall)
+﻿module("modules.logic.summon.view.luckybag.SummonGetLuckyBagView", package.seeall)
 
-slot0 = class("SummonGetLuckyBagView", BaseView)
+local var_0_0 = class("SummonGetLuckyBagView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "content/#go_collection/txt_name")
-	slot0._txtnameen = gohelper.findChildText(slot0.viewGO, "content/#go_collection/en")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "content/#go_collection/#simage_icon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "content/#go_collection/txt_name")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "content/#go_collection/en")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#go_collection/#simage_icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._bgClick = gohelper.getClick(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._bgClick = gohelper.getClick(arg_4_0.viewGO)
 
-	slot0._bgClick:AddClickListener(slot0._onClickBG, slot0)
+	arg_4_0._bgClick:AddClickListener(arg_4_0._onClickBG, arg_4_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._bgClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0._bgClick:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	logNormal("SummonGetLuckyBagView onOpen")
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_wulu_lucky_bag_gain)
-	slot0:refreshView()
+	arg_6_0:refreshView()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshView(slot0)
-	if SummonConfig.instance:getLuckyBag(slot0.viewParam.poolId, slot0.viewParam.luckyBagId) then
-		slot0._txtname.text = slot3.name
-		slot0._txtnameen.text = slot3.nameEn or ""
+function var_0_0.refreshView(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam.poolId
+	local var_8_1 = arg_8_0.viewParam.luckyBagId
+	local var_8_2 = SummonConfig.instance:getLuckyBag(var_8_0, var_8_1)
 
-		slot0._simageicon:LoadImage(ResUrl.getSummonCoverBg(slot3.icon))
+	if var_8_2 then
+		arg_8_0._txtname.text = var_8_2.name
+		arg_8_0._txtnameen.text = var_8_2.nameEn or ""
+
+		arg_8_0._simageicon:LoadImage(ResUrl.getSummonCoverBg(var_8_2.icon))
 	end
 end
 
-function slot0._onClickBG(slot0)
-	slot0:closeThis()
+function var_0_0._onClickBG(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-return slot0
+return var_0_0

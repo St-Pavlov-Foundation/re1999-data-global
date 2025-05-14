@@ -1,61 +1,66 @@
-module("modules.logic.rouge.view.RougeCollectionOverViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionOverViewContainer", package.seeall)
 
-slot0 = class("RougeCollectionOverViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeCollectionOverViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._scrollView = slot0:buildScrollView()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._scrollView = arg_1_0:buildScrollView()
 
 	return {
 		TabViewGroup.New(1, "#go_lefttop"),
 		TabViewGroup.New(2, "#go_rougemapdetailcontainer"),
 		RougeCollectionOverView.New(),
-		slot0._scrollView
+		arg_1_0._scrollView
 	}
 end
 
-slot1 = 0.06
+local var_0_1 = 0.06
 
-function slot0.buildScrollView(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_view"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#scroll_view/Viewport/Content/#go_collectionitem"
-	slot1.cellClass = RougeCollectionOverListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 3
-	slot1.cellWidth = 620
-	slot1.cellHeight = 190
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = -6
-	slot1.startSpace = 0
-	slot1.endSpace = 0
-	slot2 = {}
+function var_0_0.buildScrollView(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	for slot7 = 1, 5 do
-		for slot11 = 1, slot1.lineCount do
-			slot2[(slot7 - 1) * slot1.lineCount + slot11] = slot7 * uv0
+	var_2_0.scrollGOPath = "#scroll_view"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_2_0.prefabUrl = "#scroll_view/Viewport/Content/#go_collectionitem"
+	var_2_0.cellClass = RougeCollectionOverListItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+	var_2_0.lineCount = 3
+	var_2_0.cellWidth = 620
+	var_2_0.cellHeight = 190
+	var_2_0.cellSpaceH = 0
+	var_2_0.cellSpaceV = -6
+	var_2_0.startSpace = 0
+	var_2_0.endSpace = 0
+
+	local var_2_1 = {}
+	local var_2_2 = 5
+
+	for iter_2_0 = 1, var_2_2 do
+		for iter_2_1 = 1, var_2_0.lineCount do
+			local var_2_3 = iter_2_0 * var_0_1
+
+			var_2_1[(iter_2_0 - 1) * var_2_0.lineCount + iter_2_1] = var_2_3
 		end
 	end
 
-	return LuaListScrollViewWithAnimator.New(RougeCollectionOverListModel.instance, slot1, slot2)
+	return (LuaListScrollViewWithAnimator.New(RougeCollectionOverListModel.instance, var_2_0, var_2_1))
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_3_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
+	elseif arg_3_1 == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-return slot0
+return var_0_0

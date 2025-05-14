@@ -1,53 +1,53 @@
-module("modules.logic.room.view.transport.RoomTransportPathFailTips", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportPathFailTips", package.seeall)
 
-slot0 = class("RoomTransportPathFailTips", BaseView)
+local var_0_0 = class("RoomTransportPathFailTips", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._btntips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_content/#btn_tips")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_content/expand/#btn_close")
-	slot0._scrolldec = gohelper.findChildScrollRect(slot0.viewGO, "#go_content/expand/bg/#scroll_dec")
-	slot0._godecitem = gohelper.findChild(slot0.viewGO, "#go_content/expand/bg/#scroll_dec/viewport/content/#go_decitem")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "#go_content/expand/bg/#scroll_dec/viewport/content/#go_decitem/#txt_dec")
-	slot0._txtfailcount = gohelper.findChildText(slot0.viewGO, "#go_content/#txt_failcount")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._btntips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_tips")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/expand/#btn_close")
+	arg_1_0._scrolldec = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/expand/bg/#scroll_dec")
+	arg_1_0._godecitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/expand/bg/#scroll_dec/viewport/content/#go_decitem")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#go_content/expand/bg/#scroll_dec/viewport/content/#go_decitem/#txt_dec")
+	arg_1_0._txtfailcount = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_failcount")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntips:AddClickListener(slot0._btntipsOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntips:AddClickListener(arg_2_0._btntipsOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntips:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntips:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btntipsOnClick(slot0)
-	slot0._isShow = true
+function var_0_0._btntipsOnClick(arg_4_0)
+	arg_4_0._isShow = true
 
-	gohelper.setActive(slot0._goexpand, true)
-	gohelper.setActive(slot0._btntips, false)
-	slot0._animatorPlayer:Play(UIAnimationName.Open, slot0._animDone, slot0)
+	gohelper.setActive(arg_4_0._goexpand, true)
+	gohelper.setActive(arg_4_0._btntips, false)
+	arg_4_0._animatorPlayer:Play(UIAnimationName.Open, arg_4_0._animDone, arg_4_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0._isShow = false
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0._isShow = false
 
-	slot0._animatorPlayer:Play(UIAnimationName.Close, slot0._animDone, slot0)
+	arg_5_0._animatorPlayer:Play(UIAnimationName.Close, arg_5_0._animDone, arg_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goexpand = gohelper.findChild(slot0.viewGO, "#go_content/expand")
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._goexpand = gohelper.findChild(arg_6_0.viewGO, "#go_content/expand")
 
-	gohelper.setActive(slot0._goexpand, false)
+	gohelper.setActive(arg_6_0._goexpand, false)
 
-	slot0._isShow = false
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0._goexpand)
-	slot0._slotDataList = {
+	arg_6_0._isShow = false
+	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0._goexpand)
+	arg_6_0._slotDataList = {
 		{
 			slotType = RoomBuildingEnum.BuildingType.Collect
 		},
@@ -58,77 +58,95 @@ function slot0._editableInitView(slot0)
 			slotType = RoomBuildingEnum.BuildingType.Manufacture
 		}
 	}
-	slot4 = slot0._godecitem
-	slot0._tbItemList = {
-		slot0:_createTB(slot4)
+	arg_6_0._tbItemList = {
+		arg_6_0:_createTB(arg_6_0._godecitem)
 	}
 
-	for slot4 = 1, #slot0._slotDataList do
-		if slot0._tbItemList[slot4] == nil then
-			table.insert(slot0._tbItemList, slot0:_createTB(gohelper.cloneInPlace(slot0._godecitem)))
+	for iter_6_0 = 1, #arg_6_0._slotDataList do
+		local var_6_0 = arg_6_0._tbItemList[iter_6_0]
+
+		if var_6_0 == nil then
+			local var_6_1 = gohelper.cloneInPlace(arg_6_0._godecitem)
+
+			var_6_0 = arg_6_0:_createTB(var_6_1)
+
+			table.insert(arg_6_0._tbItemList, var_6_0)
 		end
 
-		slot5.dataMO = slot0._slotDataList[slot4]
-		slot5._txtdec.text = luaLang(RoomTransportPathEnum.TipLang[slot5.dataMO.slotType])
+		var_6_0.dataMO = arg_6_0._slotDataList[iter_6_0]
+
+		local var_6_2 = RoomTransportPathEnum.TipLang[var_6_0.dataMO.slotType]
+
+		var_6_0._txtdec.text = luaLang(var_6_2)
 	end
 end
 
-function slot0._animDone(slot0)
-	if not slot0._isShow then
-		gohelper.setActive(slot0._goexpand, false)
-		gohelper.setActive(slot0._btntips, true)
+function var_0_0._animDone(arg_7_0)
+	if not arg_7_0._isShow then
+		gohelper.setActive(arg_7_0._goexpand, false)
+		gohelper.setActive(arg_7_0._btntips, true)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathLineChanged, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathLineChanged, arg_9_0.refreshUI, arg_9_0)
+	arg_9_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	if slot0._lastFailCount ~= RoomMapTransportPathModel.instance:getLinkFailCount() then
-		slot0._lastFailCount = slot2
+function var_0_0.refreshUI(arg_12_0)
+	local var_12_0 = RoomMapTransportPathModel.instance:getLinkFailCount()
 
-		gohelper.setActive(slot0._gocontent, slot2 > 0)
+	if arg_12_0._lastFailCount ~= var_12_0 then
+		arg_12_0._lastFailCount = var_12_0
 
-		slot0._txtfailcount.text = slot2
+		gohelper.setActive(arg_12_0._gocontent, var_12_0 > 0)
+
+		arg_12_0._txtfailcount.text = var_12_0
 	end
 
-	if slot2 > 0 then
-		slot0:_refreshItemTbList()
+	if var_12_0 > 0 then
+		arg_12_0:_refreshItemTbList()
 	end
 end
 
-function slot0._refreshItemTbList(slot0)
-	for slot5 = 1, #slot0._tbItemList do
-		slot7, slot8 = RoomTransportHelper.getSiteFromToByType(slot0._tbItemList[slot5].dataMO.slotType)
-		slot10 = true
+function var_0_0._refreshItemTbList(arg_13_0)
+	local var_13_0 = RoomMapTransportPathModel.instance
 
-		if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot7, slot8) and slot9:isLinkFinish() then
-			slot10 = false
+	for iter_13_0 = 1, #arg_13_0._tbItemList do
+		local var_13_1 = arg_13_0._tbItemList[iter_13_0]
+		local var_13_2, var_13_3 = RoomTransportHelper.getSiteFromToByType(var_13_1.dataMO.slotType)
+		local var_13_4 = var_13_0:getTransportPathMOBy2Type(var_13_2, var_13_3)
+		local var_13_5 = true
+
+		if var_13_4 and var_13_4:isLinkFinish() then
+			var_13_5 = false
 		end
 
-		gohelper.setActive(slot6.go, slot10)
+		gohelper.setActive(var_13_1.go, var_13_5)
 	end
 end
 
-function slot0._createTB(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2._txtdec = gohelper.findChildText(slot1, "#txt_dec")
+function var_0_0._createTB(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getUserDataTb_()
 
-	return slot2
+	var_14_0.go = arg_14_1
+	var_14_0._txtdec = gohelper.findChildText(arg_14_1, "#txt_dec")
+
+	return var_14_0
 end
 
-slot0.prefabPath = "ui/viewres/room/transport/roomtransportpathfailtips.prefab"
+var_0_0.prefabPath = "ui/viewres/room/transport/roomtransportpathfailtips.prefab"
 
-return slot0
+return var_0_0

@@ -1,65 +1,73 @@
-module("modules.logic.rouge.model.RougeCollectionCompositeListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionCompositeListModel", package.seeall)
 
-slot0 = class("RougeCollectionCompositeListModel", ListScrollModel)
+local var_0_0 = class("RougeCollectionCompositeListModel", ListScrollModel)
 
-function slot0.onInitData(slot0, slot1, slot2)
-	slot0._baseTagFilterMap = slot1
-	slot0._extraTagFilterMap = slot2
+function var_0_0.onInitData(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._baseTagFilterMap = arg_1_1
+	arg_1_0._extraTagFilterMap = arg_1_2
 
-	slot0:filterCollection()
+	arg_1_0:filterCollection()
 end
 
-function slot0.filterCollection(slot0)
-	slot1 = {}
+function var_0_0.filterCollection(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = RougeCollectionConfig.instance:getCollectionSynthesisList()
 
-	if RougeCollectionConfig.instance:getCollectionSynthesisList() then
-		for slot6, slot7 in ipairs(slot2) do
-			if RougeCollectionHelper.checkCollectionHasAnyOneTag(slot7.product, nil, slot0._baseTagFilterMap, slot0._extraTagFilterMap) and RougeDLCHelper.isCurrentUsingContent(slot7.version) then
-				table.insert(slot1, slot7)
+	if var_2_1 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+			local var_2_2 = RougeCollectionHelper.checkCollectionHasAnyOneTag(iter_2_1.product, nil, arg_2_0._baseTagFilterMap, arg_2_0._extraTagFilterMap)
+			local var_2_3 = RougeDLCHelper.isCurrentUsingContent(iter_2_1.version)
+
+			if var_2_2 and var_2_3 then
+				table.insert(var_2_0, iter_2_1)
 			end
 		end
 	end
 
-	table.sort(slot1, slot0.sortFunc)
-	slot0:setList(slot1)
+	table.sort(var_2_0, arg_2_0.sortFunc)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	if RougeCollectionModel.instance:checkIsCanCompositeCollection(slot0.id) ~= RougeCollectionModel.instance:checkIsCanCompositeCollection(slot1.id) then
-		return slot2
+function var_0_0.sortFunc(arg_3_0, arg_3_1)
+	local var_3_0 = RougeCollectionModel.instance:checkIsCanCompositeCollection(arg_3_0.id)
+
+	if var_3_0 ~= RougeCollectionModel.instance:checkIsCanCompositeCollection(arg_3_1.id) then
+		return var_3_0
 	end
 
-	return slot0.id < slot1.id
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.isBagEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBagEmpty(arg_4_0)
+	return arg_4_0:getCount() <= 0
 end
 
-function slot0.selectCell(slot0, slot1, slot2)
-	if not slot0:getByIndex(slot1) then
+function var_0_0.selectCell(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getByIndex(arg_5_1)
+
+	if not var_5_0 then
 		return
 	end
 
-	slot0._curSelectId = slot2 and slot3.id or 0
+	arg_5_0._curSelectId = arg_5_2 and var_5_0.id or 0
 
-	uv0.super.selectCell(slot0, slot1, slot2)
+	var_0_0.super.selectCell(arg_5_0, arg_5_1, arg_5_2)
 end
 
-function slot0.selectFirstOrDefault(slot0)
-	if not slot0:isBagEmpty() then
-		slot0:selectCell(1, true)
+function var_0_0.selectFirstOrDefault(arg_6_0)
+	if not arg_6_0:isBagEmpty() then
+		arg_6_0:selectCell(1, true)
 	end
 end
 
-function slot0.getCurSelectCellId(slot0)
-	return slot0._curSelectId or 0
+function var_0_0.getCurSelectCellId(arg_7_0)
+	return arg_7_0._curSelectId or 0
 end
 
-function slot0.isFiltering(slot0)
-	return not GameUtil.tabletool_dictIsEmpty(slot0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(slot0._extraTagFilterMap)
+function var_0_0.isFiltering(arg_8_0)
+	return not GameUtil.tabletool_dictIsEmpty(arg_8_0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(arg_8_0._extraTagFilterMap)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

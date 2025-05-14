@@ -1,73 +1,79 @@
-module("modules.logic.guide.controller.GuideAudioPreloadController", package.seeall)
+﻿module("modules.logic.guide.controller.GuideAudioPreloadController", package.seeall)
 
-slot0 = class("GuideAudioPreloadController", BaseController)
-slot1 = {
-	[106.0] = true,
-	[206.0] = true,
-	[104.0] = true,
-	[205.0] = true,
-	[101.0] = true
+local var_0_0 = class("GuideAudioPreloadController", BaseController)
+local var_0_1 = {
+	[106] = true,
+	[206] = true,
+	[104] = true,
+	[205] = true,
+	[101] = true
 }
 
-function slot0.addConstEvents(slot0)
-	GuideController.instance:registerCallback(GuideEvent.GuideEvent.StartGuideStep, slot0._onStartGuideStep, slot0)
-	GuideController.instance:registerCallback(GuideEvent.GuideEvent.FinishGuideLastStep, slot0._onFinishGuide, slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	GuideController.instance:registerCallback(GuideEvent.GuideEvent.StartGuideStep, arg_1_0._onStartGuideStep, arg_1_0)
+	GuideController.instance:registerCallback(GuideEvent.GuideEvent.FinishGuideLastStep, arg_1_0._onFinishGuide, arg_1_0)
 end
 
-function slot0.onInit(slot0)
-	slot0._preloadGuideIdDict = {}
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._preloadGuideIdDict = {}
 end
 
-function slot0.reInit(slot0)
-	for slot4, slot5 in pairs(slot0._preloadGuideIdDict) do
-		slot0:unload(slot4)
+function var_0_0.reInit(arg_3_0)
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._preloadGuideIdDict) do
+		arg_3_0:unload(iter_3_0)
 	end
 
-	slot0._preloadGuideIdDict = {}
+	arg_3_0._preloadGuideIdDict = {}
 end
 
-function slot0._onStartGuideStep(slot0, slot1, slot2)
-	slot0:preload(slot1)
+function var_0_0._onStartGuideStep(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:preload(arg_4_1)
 end
 
-function slot0._onFinishGuide(slot0, slot1, slot2)
-	slot0:unload(slot1)
+function var_0_0._onFinishGuide(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0:unload(arg_5_1)
 end
 
-function slot0.preload(slot0, slot1)
-	if not uv0[slot1] then
+function var_0_0.preload(arg_6_0, arg_6_1)
+	if not var_0_1[arg_6_1] then
 		return
 	end
 
-	if slot0._preloadGuideIdDict[slot1] then
+	if arg_6_0._preloadGuideIdDict[arg_6_1] then
 		return
 	end
 
-	slot0._preloadGuideIdDict[slot1] = {}
+	local var_6_0 = {}
 
-	for slot7, slot8 in ipairs(GuideConfig.instance:getStepList(slot1)) do
-		slot9 = AudioConfig.instance:getAudioCOById(slot8.audio)
+	arg_6_0._preloadGuideIdDict[arg_6_1] = var_6_0
 
-		if slot8.audio > 0 and slot9 then
-			slot2[slot9.bankName] = true
+	local var_6_1 = GuideConfig.instance:getStepList(arg_6_1)
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		local var_6_2 = AudioConfig.instance:getAudioCOById(iter_6_1.audio)
+
+		if iter_6_1.audio > 0 and var_6_2 then
+			var_6_0[var_6_2.bankName] = true
 		end
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		ZProj.AudioManager.Instance:LoadBank(slot7)
+	for iter_6_2, iter_6_3 in pairs(var_6_0) do
+		ZProj.AudioManager.Instance:LoadBank(iter_6_2)
 	end
 end
 
-function slot0.unload(slot0, slot1)
-	if slot0._preloadGuideIdDict[slot1] then
-		slot0._preloadGuideIdDict[slot1] = nil
+function var_0_0.unload(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._preloadGuideIdDict[arg_7_1]
 
-		for slot6, slot7 in pairs(slot2) do
-			ZProj.AudioManager.Instance:UnloadBank(slot6)
+	if var_7_0 then
+		arg_7_0._preloadGuideIdDict[arg_7_1] = nil
+
+		for iter_7_0, iter_7_1 in pairs(var_7_0) do
+			ZProj.AudioManager.Instance:UnloadBank(iter_7_0)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

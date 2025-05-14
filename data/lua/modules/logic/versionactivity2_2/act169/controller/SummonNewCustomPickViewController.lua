@@ -1,24 +1,27 @@
-module("modules.logic.versionactivity2_2.act169.controller.SummonNewCustomPickViewController", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act169.controller.SummonNewCustomPickViewController", package.seeall)
 
-slot0 = class("SummonNewCustomPickViewController", BaseController)
+local var_0_0 = class("SummonNewCustomPickViewController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.getSummonInfo(slot0, slot1, slot2, slot3)
-	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(slot1, slot2, slot3)
+function var_0_0.getSummonInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(arg_4_1, arg_4_2, arg_4_3)
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_5_0)
 	SummonNewCustomPickViewModel.instance:reInit()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

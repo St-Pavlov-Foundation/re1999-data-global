@@ -1,50 +1,55 @@
-module("modules.logic.explore.map.tree.ExploreMapTree", package.seeall)
+﻿module("modules.logic.explore.map.tree.ExploreMapTree", package.seeall)
 
-slot0 = class("ExploreMapTree")
+local var_0_0 = class("ExploreMapTree")
 
-function slot0.ctor(slot0)
-	slot0.root = nil
-	slot0.checkMode = ExploreEnum.SceneCheckMode.Planes
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.root = nil
+	arg_1_0.checkMode = ExploreEnum.SceneCheckMode.Planes
 
 	if SLFramework.FrameworkSettings.IsEditor then
 		ZProj.ExploreHelper.InitDrawBound()
-		TaskDispatcher.runRepeat(slot0.drawBound, slot0, 1e-05)
+		TaskDispatcher.runRepeat(arg_1_0.drawBound, arg_1_0, 1e-05)
 	end
 end
 
-function slot0.setup(slot0, slot1, slot2)
-	slot0.root = ExploreMapTreeNode.New(slot1, slot2)
-	slot0.camera = CameraMgr.instance:getMainCamera()
+function var_0_0.setup(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.root = ExploreMapTreeNode.New(arg_2_1, arg_2_2)
+	arg_2_0.camera = CameraMgr.instance:getMainCamera()
 end
 
-function slot0.triggerMove(slot0, slot1, slot2)
-	if slot0.checkMode == ExploreEnum.SceneCheckMode.Planes then
-		ZProj.ExploreHelper.RebuildFrustumPlanes(slot0.camera, 25, 0.01, slot0.camera.fieldOfView + 2, slot0.camera.aspect)
+function var_0_0.triggerMove(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_0.checkMode == ExploreEnum.SceneCheckMode.Planes then
+		local var_3_0 = arg_3_0.camera.fieldOfView + 2
+		local var_3_1 = arg_3_0.camera.aspect
+		local var_3_2 = 25
+		local var_3_3 = 0.01
+
+		ZProj.ExploreHelper.RebuildFrustumPlanes(arg_3_0.camera, var_3_2, var_3_3, var_3_0, var_3_1)
 	end
 
-	if slot0.checkMode ~= ExploreEnum.SceneCheckMode.Rage then
-		slot1.z = 6
-		slot1.w = 6
+	if arg_3_0.checkMode ~= ExploreEnum.SceneCheckMode.Rage then
+		arg_3_1.z = 6
+		arg_3_1.w = 6
 	end
 
-	slot0.root:triggerMove(slot1, slot0.camera, slot0.checkMode, slot2)
+	arg_3_0.root:triggerMove(arg_3_1, arg_3_0.camera, arg_3_0.checkMode, arg_3_2)
 end
 
-function slot0.drawBound(slot0)
+function var_0_0.drawBound(arg_4_0)
 	ZProj.ExploreHelper.ResetBoundsList()
-	slot0.root:drawBound()
+	arg_4_0.root:drawBound()
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.drawBound, slot0)
+function var_0_0.onDestroy(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.drawBound, arg_5_0)
 
-	if slot0.root then
-		slot0.root:onDestroy()
+	if arg_5_0.root then
+		arg_5_0.root:onDestroy()
 
-		slot0.root = nil
+		arg_5_0.root = nil
 	end
 
-	slot0.camera = nil
+	arg_5_0.camera = nil
 end
 
-return slot0
+return var_0_0

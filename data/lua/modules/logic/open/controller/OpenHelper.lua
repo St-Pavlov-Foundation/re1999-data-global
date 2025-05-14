@@ -1,49 +1,67 @@
-module("modules.logic.open.controller.OpenHelper", package.seeall)
+﻿module("modules.logic.open.controller.OpenHelper", package.seeall)
 
-slot0 = class("OpenHelper")
+local var_0_0 = class("OpenHelper")
 
-function slot0.getToastIdAndParam(slot0)
-	return uv0.ToastId2FuncDict[OpenConfig.instance:getOpenCo(slot0).dec] or uv0.defaultGetToast(slot1)
+function var_0_0.getToastIdAndParam(arg_1_0)
+	local var_1_0 = OpenConfig.instance:getOpenCo(arg_1_0)
+	local var_1_1 = var_1_0.dec
+
+	return (var_0_0.ToastId2FuncDict[var_1_1] or var_0_0.defaultGetToast)(var_1_0)
 end
 
-function slot0.defaultGetToast(slot0)
-	return slot0 and slot0.dec
+function var_0_0.defaultGetToast(arg_2_0)
+	return arg_2_0 and arg_2_0.dec
 end
 
-function slot0.getDungeonToast(slot0)
-	slot1 = slot0.dec
+function var_0_0.getDungeonToast(arg_3_0)
+	local var_3_0 = arg_3_0.dec
+	local var_3_1 = VersionValidator.instance:isInReviewing() and arg_3_0.verifingEpisodeId or arg_3_0.episodeId
 
-	if (not VersionValidator.instance:isInReviewing() or not slot0.verifingEpisodeId) and not slot0.episodeId or slot2 == 0 then
-		return slot1
+	if not var_3_1 or var_3_1 == 0 then
+		return var_3_0
 	end
 
-	return slot1, {
-		DungeonConfig.instance:getEpisodeDisplay(slot2)
+	local var_3_2 = DungeonConfig.instance:getEpisodeDisplay(var_3_1)
+
+	return var_3_0, {
+		var_3_2
 	}
 end
 
-function slot0.getActivityDungeonToast(slot0)
-	return slot0.dec, {
-		ActivityConfig.instance:getActivityCo(DungeonConfig.instance:getChapterCO(DungeonConfig.instance:getEpisodeCO(slot0.episodeId) and slot2.chapterId) and slot3.actId) and slot4.name,
-		DungeonConfig.instance:getEpisodeDisplay(slot0.episodeId)
+function var_0_0.getActivityDungeonToast(arg_4_0)
+	local var_4_0 = arg_4_0.dec
+	local var_4_1 = DungeonConfig.instance:getEpisodeCO(arg_4_0.episodeId)
+	local var_4_2 = DungeonConfig.instance:getChapterCO(var_4_1 and var_4_1.chapterId)
+	local var_4_3 = ActivityConfig.instance:getActivityCo(var_4_2 and var_4_2.actId)
+	local var_4_4 = DungeonConfig.instance:getEpisodeDisplay(arg_4_0.episodeId)
+
+	return var_4_0, {
+		var_4_3 and var_4_3.name,
+		var_4_4
 	}
 end
 
-function slot0.getActivityDungeon1Toast(slot0)
-	return slot0.dec, {
+function var_0_0.getActivityDungeon1Toast(arg_5_0)
+	local var_5_0 = arg_5_0.dec
+	local var_5_1 = DungeonConfig.instance:getEpisodeDisplay(arg_5_0.episodeId)
+
+	return var_5_0, {
 		luaLang("v1a2_enterview_activitytip"),
-		DungeonConfig.instance:getEpisodeDisplay(slot0.episodeId)
+		var_5_1
 	}
 end
 
-function slot0.getActivityUnlockTxt(slot0)
-	return string.format(luaLang("versionactivity1_3_hardlocktip"), DungeonConfig.instance:getEpisodeDisplay(OpenConfig.instance:getOpenCo(slot0).episodeId))
+function var_0_0.getActivityUnlockTxt(arg_6_0)
+	local var_6_0 = OpenConfig.instance:getOpenCo(arg_6_0)
+	local var_6_1 = DungeonConfig.instance:getEpisodeDisplay(var_6_0.episodeId)
+
+	return string.format(luaLang("versionactivity1_3_hardlocktip"), var_6_1)
 end
 
-slot0.ToastId2FuncDict = {
-	[ToastEnum.DungeonMapLevel] = slot0.getDungeonToast,
-	[ToastEnum.ActivityDungeon] = slot0.getActivityDungeonToast,
-	[ToastEnum.ActivityDungeon1] = slot0.getActivityDungeon1Toast
+var_0_0.ToastId2FuncDict = {
+	[ToastEnum.DungeonMapLevel] = var_0_0.getDungeonToast,
+	[ToastEnum.ActivityDungeon] = var_0_0.getActivityDungeonToast,
+	[ToastEnum.ActivityDungeon1] = var_0_0.getActivityDungeon1Toast
 }
 
-return slot0
+return var_0_0

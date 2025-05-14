@@ -1,12 +1,12 @@
-module("modules.logic.character.view.CharacterGetViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterGetViewContainer", package.seeall)
 
-slot0 = class("CharacterGetViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterGetViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		CharacterGetView.New(),
 		CharacterSkinGetDetailView.New()
 	}
 end
 
-return slot0
+return var_0_0

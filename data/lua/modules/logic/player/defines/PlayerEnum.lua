@@ -1,7 +1,8 @@
-module("modules.logic.player.defines.PlayerEnum", package.seeall)
+﻿module("modules.logic.player.defines.PlayerEnum", package.seeall)
 
-slot0 = _M
-slot0.SimpleProperty = {
+local var_0_0 = _M
+
+var_0_0.SimpleProperty = {
 	EquipPreferenceOpen = 9,
 	HeroGroupAct = 3,
 	SkinState = 11,
@@ -18,4 +19,4 @@ slot0.SimpleProperty = {
 	ShowHelpIds = 6
 }
 
-return slot0
+return var_0_0

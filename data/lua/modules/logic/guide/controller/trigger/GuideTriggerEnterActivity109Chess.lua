@@ -1,18 +1,18 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerEnterActivity109Chess", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerEnterActivity109Chess", package.seeall)
 
-slot0 = class("GuideTriggerEnterActivity109Chess", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerEnterActivity109Chess", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	Activity109ChessController.instance:registerCallback(ActivityChessEvent.GuideOnEnterMap, slot0._onEnterMap, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	Activity109ChessController.instance:registerCallback(ActivityChessEvent.GuideOnEnterMap, arg_1_0._onEnterMap, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return slot1 == slot2
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	return arg_2_1 == arg_2_2
 end
 
-function slot0._onEnterMap(slot0, slot1)
-	slot0:checkStartGuide(slot1)
+function var_0_0._onEnterMap(arg_3_0, arg_3_1)
+	arg_3_0:checkStartGuide(arg_3_1)
 end
 
-return slot0
+return var_0_0

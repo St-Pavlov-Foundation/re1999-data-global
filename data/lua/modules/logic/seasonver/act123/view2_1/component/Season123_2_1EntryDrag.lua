@@ -1,172 +1,192 @@
-module("modules.logic.seasonver.act123.view2_1.component.Season123_2_1EntryDrag", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.component.Season123_2_1EntryDrag", package.seeall)
 
-slot0 = class("Season123_2_1EntryDrag", UserDataDispose)
+local var_0_0 = class("Season123_2_1EntryDrag", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._goFullScreen = slot1
-	slot0._sceneGo = slot2.gameObject
-	slot0._tfScene = slot2
-	slot0._tempVector = Vector3.New()
-	slot0._dragDeltaPos = Vector3.New()
-	slot0._tweenId = nil
-	slot0._dragEnabled = true
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._goFullScreen)
+	arg_1_0._goFullScreen = arg_1_1
+	arg_1_0._sceneGo = arg_1_2.gameObject
+	arg_1_0._tfScene = arg_1_2
+	arg_1_0._tempVector = Vector3.New()
+	arg_1_0._dragDeltaPos = Vector3.New()
+	arg_1_0._tweenId = nil
+	arg_1_0._dragEnabled = true
+	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._goFullScreen)
 
-	slot0._drag:AddDragBeginListener(slot0.onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0.onDragEnd, slot0)
-	slot0._drag:AddDragListener(slot0.onDrag, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0.handleScreenResize, slot0)
+	arg_1_0._drag:AddDragBeginListener(arg_1_0.onDragBegin, arg_1_0)
+	arg_1_0._drag:AddDragEndListener(arg_1_0.onDragEnd, arg_1_0)
+	arg_1_0._drag:AddDragListener(arg_1_0.onDrag, arg_1_0)
+	arg_1_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_1_0.handleScreenResize, arg_1_0)
 end
 
-function slot0.dispose(slot0)
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragListener()
-		slot0._drag:RemoveDragEndListener()
+function var_0_0.dispose(arg_2_0)
+	if arg_2_0._drag then
+		arg_2_0._drag:RemoveDragBeginListener()
+		arg_2_0._drag:RemoveDragListener()
+		arg_2_0._drag:RemoveDragEndListener()
 	end
 
-	slot0:killTween()
-	slot0:__onDispose()
+	arg_2_0:killTween()
+	arg_2_0:__onDispose()
 end
 
-function slot0.initBound(slot0)
-	slot0._mapSize = gohelper.findChild(slot0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
-	slot3 = nil
-	slot5 = ((GameUtil.getAdapterScale() == 1 or ViewMgr.instance:getUILayer(UILayerName.Hud)) and ViewMgr.instance:getUIRoot()).transform:GetWorldCorners()
-	slot6 = slot5[1] * slot4
-	slot7 = slot5[3] * slot4
-	slot0._viewWidth = math.abs(slot7.x - slot6.x)
-	slot0._viewHeight = math.abs(slot7.y - slot6.y)
-	slot0._mapMinX = slot6.x - (slot0._mapSize.x - slot0._viewWidth)
-	slot0._mapMaxX = slot6.x
-	slot0._mapMinY = slot6.y
-	slot0._mapMaxY = slot6.y + slot0._mapSize.y - slot0._viewHeight
+function var_0_0.initBound(arg_3_0)
+	arg_3_0._mapSize = gohelper.findChild(arg_3_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
+
+	local var_3_0
+	local var_3_1 = GameUtil.getAdapterScale()
+
+	if var_3_1 ~= 1 then
+		var_3_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	else
+		var_3_0 = ViewMgr.instance:getUIRoot()
+	end
+
+	local var_3_2 = var_3_0.transform:GetWorldCorners()
+	local var_3_3 = var_3_2[1] * var_3_1
+	local var_3_4 = var_3_2[3] * var_3_1
+
+	arg_3_0._viewWidth = math.abs(var_3_4.x - var_3_3.x)
+	arg_3_0._viewHeight = math.abs(var_3_4.y - var_3_3.y)
+	arg_3_0._mapMinX = var_3_3.x - (arg_3_0._mapSize.x - arg_3_0._viewWidth)
+	arg_3_0._mapMaxX = var_3_3.x
+	arg_3_0._mapMinY = var_3_3.y
+	arg_3_0._mapMaxY = var_3_3.y + (arg_3_0._mapSize.y - arg_3_0._viewHeight)
 end
 
-function slot0.onDragBegin(slot0, slot1, slot2)
-	if not slot0._dragEnabled then
+function var_0_0.onDragBegin(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._dragEnabled then
 		return
 	end
 
-	slot0:killTween()
+	arg_4_0:killTween()
 
-	slot0._dragBeginPos = slot0:getDragWorldPos(slot2)
+	arg_4_0._dragBeginPos = arg_4_0:getDragWorldPos(arg_4_2)
 
-	if slot0._tfScene then
-		slot0._beginDragPos = slot0._tfScene.localPosition
+	if arg_4_0._tfScene then
+		arg_4_0._beginDragPos = arg_4_0._tfScene.localPosition
 	end
 end
 
-function slot0.onDragEnd(slot0, slot1, slot2)
-	slot0._dragBeginPos = nil
-	slot0._beginDragPos = nil
+function var_0_0.onDragEnd(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._dragBeginPos = nil
+	arg_5_0._beginDragPos = nil
 end
 
-function slot0.onDrag(slot0, slot1, slot2)
-	if not slot0._dragBeginPos then
+function var_0_0.onDrag(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_0._dragBeginPos then
 		return
 	end
 
-	slot0:drag(slot0:getDragWorldPos(slot2) - slot0._dragBeginPos)
+	local var_6_0 = arg_6_0:getDragWorldPos(arg_6_2) - arg_6_0._dragBeginPos
+
+	arg_6_0:drag(var_6_0)
 end
 
-function slot0.drag(slot0, slot1)
-	if not slot0._tfScene or not slot0._beginDragPos then
+function var_0_0.drag(arg_7_0, arg_7_1)
+	if not arg_7_0._tfScene or not arg_7_0._beginDragPos then
 		return
 	end
 
-	slot0._dragDeltaPos.x = slot1.x
-	slot0._dragDeltaPos.y = slot1.y
+	arg_7_0._dragDeltaPos.x = arg_7_1.x
+	arg_7_0._dragDeltaPos.y = arg_7_1.y
 
-	slot0:setScenePosDrag(slot0:vectorAdd(slot0._beginDragPos, slot0._dragDeltaPos))
+	local var_7_0 = arg_7_0:vectorAdd(arg_7_0._beginDragPos, arg_7_0._dragDeltaPos)
+
+	arg_7_0:setScenePosDrag(var_7_0)
 end
 
-function slot0.setScenePosDrag(slot0, slot1)
-	slot1.x, slot1.y = slot0:fixTargetPos(slot1)
-	slot0._targetPos = slot1
+function var_0_0.setScenePosDrag(arg_8_0, arg_8_1)
+	arg_8_1.x, arg_8_1.y = arg_8_0:fixTargetPos(arg_8_1)
+	arg_8_0._targetPos = arg_8_1
 
-	transformhelper.setLocalPos(slot0._tfScene, slot1.x, slot1.y, 0)
+	transformhelper.setLocalPos(arg_8_0._tfScene, arg_8_1.x, arg_8_1.y, 0)
 end
 
-function slot0.setScenePosTween(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._tfScene then
+function var_0_0.setScenePosTween(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	if not arg_9_0._tfScene then
 		return
 	end
 
-	slot0._targetPos = slot1
+	arg_9_0._targetPos = arg_9_1
 
-	slot0:killTween()
+	local var_9_0 = arg_9_2 or 0.46
 
-	slot0._tweenId = ZProj.TweenHelper.DOLocalMove(slot0._tfScene, slot1.x, slot1.y, 0, slot2 or 0.46, slot0.localMoveDone, slot0, nil, EaseType.OutQuad)
+	arg_9_0:killTween()
+
+	arg_9_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_9_0._tfScene, arg_9_1.x, arg_9_1.y, 0, var_9_0, arg_9_0.localMoveDone, arg_9_0, nil, EaseType.OutQuad)
 end
 
-function slot0.fixTargetPos(slot0, slot1)
-	slot2 = slot1.x
-	slot3 = slot1.y
+function var_0_0.fixTargetPos(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1.x
+	local var_10_1 = arg_10_1.y
 
-	if slot0._mapMinX and slot0._mapMaxX then
-		if slot1.x < slot0._mapMinX then
-			slot2 = slot0._mapMinX
-		elseif slot0._mapMaxX < slot1.x then
-			slot2 = slot0._mapMaxX
+	if arg_10_0._mapMinX and arg_10_0._mapMaxX then
+		if arg_10_1.x < arg_10_0._mapMinX then
+			var_10_0 = arg_10_0._mapMinX
+		elseif arg_10_1.x > arg_10_0._mapMaxX then
+			var_10_0 = arg_10_0._mapMaxX
 		end
 	end
 
-	if slot0._mapMinY and slot0._mapMaxY then
-		if slot1.y < slot0._mapMinY then
-			slot3 = slot0._mapMinY
-		elseif slot0._mapMaxY < slot1.y then
-			slot3 = slot0._mapMaxY
+	if arg_10_0._mapMinY and arg_10_0._mapMaxY then
+		if arg_10_1.y < arg_10_0._mapMinY then
+			var_10_1 = arg_10_0._mapMinY
+		elseif arg_10_1.y > arg_10_0._mapMaxY then
+			var_10_1 = arg_10_0._mapMaxY
 		end
 	end
 
-	return slot2, slot3
+	return var_10_0, var_10_1
 end
 
-function slot0.localMoveDone(slot0)
-	slot0._tweenId = nil
+function var_0_0.localMoveDone(arg_11_0)
+	arg_11_0._tweenId = nil
 end
 
-function slot0.vectorAdd(slot0, slot1, slot2)
-	slot3 = slot0._tempVector
-	slot3.x = slot1.x + slot2.x
-	slot3.y = slot1.y + slot2.y
+function var_0_0.vectorAdd(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._tempVector
 
-	return slot3
+	var_12_0.x = arg_12_1.x + arg_12_2.x
+	var_12_0.y = arg_12_1.y + arg_12_2.y
+
+	return var_12_0
 end
 
-function slot0.getTempPos(slot0)
-	return slot0._tempVector
+function var_0_0.getTempPos(arg_13_0)
+	return arg_13_0._tempVector
 end
 
-function slot0.killTween(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.killTween(arg_14_0)
+	if arg_14_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_14_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_14_0._tweenId = nil
 	end
 end
 
-function slot0.setDragEnabled(slot0, slot1)
-	slot0._dragEnabled = slot1
+function var_0_0.setDragEnabled(arg_15_0, arg_15_1)
+	arg_15_0._dragEnabled = arg_15_1
 end
 
-function slot0.getDragWorldPos(slot0, slot1)
-	return SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(slot1.position, CameraMgr.instance:getMainCamera(), slot0._goFullScreen.transform.position)
+function var_0_0.getDragWorldPos(arg_16_0, arg_16_1)
+	local var_16_0 = CameraMgr.instance:getMainCamera()
+	local var_16_1 = arg_16_0._goFullScreen.transform.position
+
+	return (SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_16_1.position, var_16_0, var_16_1))
 end
 
-function slot0.handleScreenResize(slot0)
-	slot0:initBound()
+function var_0_0.handleScreenResize(arg_17_0)
+	arg_17_0:initBound()
 
-	if slot0._dragEnabled then
-		slot1 = slot0:getTempPos()
-		slot1.y = SeasonEntryEnum.DefaultScenePosY
-		slot1.x = SeasonEntryEnum.DefaultScenePosX
+	if arg_17_0._dragEnabled then
+		local var_17_0 = arg_17_0:getTempPos()
 
-		slot0:setScenePosDrag(slot1)
+		var_17_0.x, var_17_0.y = SeasonEntryEnum.DefaultScenePosX, SeasonEntryEnum.DefaultScenePosY
+
+		arg_17_0:setScenePosDrag(var_17_0)
 	end
 end
 
-return slot0
+return var_0_0

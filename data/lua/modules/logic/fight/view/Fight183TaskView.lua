@@ -1,50 +1,55 @@
-module("modules.logic.fight.view.Fight183TaskView", package.seeall)
+﻿module("modules.logic.fight.view.Fight183TaskView", package.seeall)
 
-slot0 = class("Fight183TaskView", FightBaseView)
+local var_0_0 = class("Fight183TaskView", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._titleText = gohelper.findChildText(slot0.viewGO, "#txt_title")
-	slot0._descText = gohelper.findChildText(slot0.viewGO, "#txt_dec")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._titleText = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
+	arg_1_0._descText = gohelper.findChildText(arg_1_0.viewGO, "#txt_dec")
 end
 
-function slot0.addEvents(slot0)
-	slot0:com_registFightEvent(FightEvent.OnBuffUpdate, slot0._onBuffUpdate)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onConstructor(slot0, slot1)
-	slot0._config = lua_challenge_condition.configDict[string.splitToNumber(slot1, "#")[1]]
+function var_0_0.onConstructor(arg_4_0, arg_4_1)
+	local var_4_0 = string.splitToNumber(arg_4_1, "#")[1]
+
+	arg_4_0._config = lua_challenge_condition.configDict[var_4_0]
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshData()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:_refreshData()
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
-	if not slot0._config then
+function var_0_0._onBuffUpdate(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if not arg_6_0._config then
 		return
 	end
 
-	if slot1 ~= FightEntityScene.MySideId then
+	if arg_6_1 ~= FightEntityScene.MySideId then
 		return
 	end
 
-	slot0:_refreshData()
+	arg_6_0:_refreshData()
 end
 
-function slot0._refreshData(slot0)
-	if slot0._config then
-		slot2 = false
+function var_0_0._refreshData(arg_7_0)
+	if arg_7_0._config then
+		local var_7_0 = arg_7_0._config
+		local var_7_1 = false
 
-		if slot0._config.type == 19 then
-			slot3 = tonumber(slot1.value)
+		if var_7_0.type == 19 then
+			local var_7_2 = tonumber(var_7_0.value)
+			local var_7_3 = FightDataHelper.entityMgr:getMyVertin()
 
-			if FightDataHelper.entityMgr:getMyVertin() then
-				for slot8, slot9 in pairs(slot4.buffDic) do
-					if slot9.buffId == slot3 then
-						slot2 = true
+			if var_7_3 then
+				for iter_7_0, iter_7_1 in pairs(var_7_3.buffDic) do
+					if iter_7_1.buffId == var_7_2 then
+						var_7_1 = true
 
 						break
 					end
@@ -52,27 +57,30 @@ function slot0._refreshData(slot0)
 			end
 		end
 
-		slot3 = ""
+		local var_7_4 = ""
+		local var_7_5 = var_7_0.decs1
 
-		if slot2 then
-			slot3 = string.format("<color=#7A8E51>%s</color>", luaLang("act183task_condition_title_complete"))
-			slot4 = string.format("<s><color=#7A8E51>%s</color></s>", slot1.decs1)
+		if var_7_1 then
+			var_7_4 = string.format("<color=#7A8E51>%s</color>", luaLang("act183task_condition_title_complete"))
+			var_7_5 = string.format("<s><color=#7A8E51>%s</color></s>", var_7_5)
 		else
-			slot3 = luaLang("act183task_condition_title")
+			var_7_4 = luaLang("act183task_condition_title")
 		end
 
-		slot0._titleText.text = slot3
-		slot0._descText.text = slot4
+		arg_7_0._titleText.text = var_7_4
+		arg_7_0._descText.text = var_7_5
 	else
-		slot0._titleText.text = ""
-		slot0._descText.text = ""
+		arg_7_0._titleText.text = ""
+		arg_7_0._descText.text = ""
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

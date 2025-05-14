@@ -1,300 +1,319 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.model.FeiLinShiDuoGameModel", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.model.FeiLinShiDuoGameModel", package.seeall)
 
-slot0 = class("FeiLinShiDuoGameModel", BaseModel)
+local var_0_0 = class("FeiLinShiDuoGameModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 
-	slot0.curGameConfig = {}
-	slot0.isBlindnessMode = false
+	arg_1_0.curGameConfig = {}
+	arg_1_0.isBlindnessMode = false
 end
 
-function slot0.reInit(slot0)
-	slot0.elementMap = {}
-	slot0.elementList = {}
-	slot0.interElementList = {}
-	slot0.interElementMap = {}
-	slot0.elementShowStateMap = {}
-	slot0.touchElementState = {}
-	slot0.playerCurMoveSpeed = 0
-	slot0.doorOpenStateMap = {}
-	slot0.curColor = FeiLinShiDuoEnum.ColorType.None
-	slot0.isInColorChanging = false
-	slot0.isPlayerInIdleState = true
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.elementMap = {}
+	arg_2_0.elementList = {}
+	arg_2_0.interElementList = {}
+	arg_2_0.interElementMap = {}
+	arg_2_0.elementShowStateMap = {}
+	arg_2_0.touchElementState = {}
+	arg_2_0.playerCurMoveSpeed = 0
+	arg_2_0.doorOpenStateMap = {}
+	arg_2_0.curColor = FeiLinShiDuoEnum.ColorType.None
+	arg_2_0.isInColorChanging = false
+	arg_2_0.isPlayerInIdleState = true
 end
 
-function slot0.initConfigData(slot0, slot1)
-	slot0:reInit()
+function var_0_0.initConfigData(arg_3_0, arg_3_1)
+	arg_3_0:reInit()
 
-	slot5 = slot1
-	slot0.mapConfigData = addGlobalModule("modules.configs.feilinshiduo.lua_feilinshiduo_map_" .. tostring(slot5))
-	slot0.mapConfig = slot0.mapConfigData.mapConfig
+	arg_3_0.mapConfigData = addGlobalModule("modules.configs.feilinshiduo.lua_feilinshiduo_map_" .. tostring(arg_3_1))
+	arg_3_0.mapConfig = arg_3_0.mapConfigData.mapConfig
 
-	for slot5, slot6 in ipairs(slot0.mapConfig) do
-		if not slot0.elementMap[slot6.type] then
-			slot0.elementMap[slot6.type] = {}
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.mapConfig) do
+		local var_3_0 = arg_3_0.elementMap[iter_3_1.type]
+
+		if not var_3_0 then
+			var_3_0 = {}
+			arg_3_0.elementMap[iter_3_1.type] = var_3_0
 		end
 
-		if not slot7[slot6.id] then
-			slot7[slot6.id] = {
-				id = slot6.id,
-				type = slot6.type,
-				pos = string.splitToNumber(slot6.pos, "#"),
-				color = slot6.color,
-				refId = slot6.refId,
-				scale = string.splitToNumber(slot6.scale, "#"),
-				params = slot6.params,
-				subGOPosList = GameUtil.splitString2(slot6.subGOPosList, true),
-				groupName = FeiLinShiDuoEnum.ParentName[slot6.type],
-				width = tonumber(slot6.width),
-				height = tonumber(slot6.height)
+		if not var_3_0[iter_3_1.id] then
+			local var_3_1 = {
+				id = iter_3_1.id,
+				type = iter_3_1.type,
+				pos = string.splitToNumber(iter_3_1.pos, "#"),
+				color = iter_3_1.color,
+				refId = iter_3_1.refId,
+				scale = string.splitToNumber(iter_3_1.scale, "#"),
+				params = iter_3_1.params,
+				subGOPosList = GameUtil.splitString2(iter_3_1.subGOPosList, true),
+				groupName = FeiLinShiDuoEnum.ParentName[iter_3_1.type],
+				width = tonumber(iter_3_1.width),
+				height = tonumber(iter_3_1.height)
 			}
+
+			var_3_0[iter_3_1.id] = var_3_1
 		end
 
-		table.insert(slot0.interElementList, slot7[slot6.id])
-		table.insert(slot0.elementList, slot7[slot6.id])
+		table.insert(arg_3_0.interElementList, var_3_0[iter_3_1.id])
+		table.insert(arg_3_0.elementList, var_3_0[iter_3_1.id])
 
-		slot0.elementShowStateMap[slot6.id] = true
-		slot0.interElementMap[slot6.id] = slot7[slot6.id]
+		arg_3_0.elementShowStateMap[iter_3_1.id] = true
+		arg_3_0.interElementMap[iter_3_1.id] = var_3_0[iter_3_1.id]
 	end
 end
 
-function slot0.setCurMapId(slot0, slot1)
-	slot0.curMapId = slot1
+function var_0_0.setCurMapId(arg_4_0, arg_4_1)
+	arg_4_0.curMapId = arg_4_1
 end
 
-function slot0.getCurMapId(slot0)
-	return slot0.curMapId
+function var_0_0.getCurMapId(arg_5_0)
+	return arg_5_0.curMapId
 end
 
-function slot0.setGameConfig(slot0, slot1)
-	slot0.curGameConfig = slot1
+function var_0_0.setGameConfig(arg_6_0, arg_6_1)
+	arg_6_0.curGameConfig = arg_6_1
 end
 
-function slot0.getCurGameConfig(slot0)
-	return slot0.curGameConfig
+function var_0_0.getCurGameConfig(arg_7_0)
+	return arg_7_0.curGameConfig
 end
 
-function slot0.getElementList(slot0)
-	return slot0.elementList
+function var_0_0.getElementList(arg_8_0)
+	return arg_8_0.elementList
 end
 
-function slot0.getInterElementList(slot0)
-	return slot0.interElementList
+function var_0_0.getInterElementList(arg_9_0)
+	return arg_9_0.interElementList
 end
 
-function slot0.getInterElementMap(slot0)
-	return slot0.interElementMap
+function var_0_0.getInterElementMap(arg_10_0)
+	return arg_10_0.interElementMap
 end
 
-function slot0.getElementMap(slot0)
-	return slot0.elementMap
+function var_0_0.getElementMap(arg_11_0)
+	return arg_11_0.elementMap
 end
 
-function slot0.getMapConfigData(slot0)
-	return slot0.mapConfigData
+function var_0_0.getMapConfigData(arg_12_0)
+	return arg_12_0.mapConfigData
 end
 
-function slot0.setCurPlayerMoveSpeed(slot0, slot1)
-	slot0.playerCurMoveSpeed = slot1
+function var_0_0.setCurPlayerMoveSpeed(arg_13_0, arg_13_1)
+	arg_13_0.playerCurMoveSpeed = arg_13_1
 end
 
-function slot0.getCurPlayerMoveSpeed(slot0)
-	return slot0.playerCurMoveSpeed
+function var_0_0.getCurPlayerMoveSpeed(arg_14_0)
+	return arg_14_0.playerCurMoveSpeed
 end
 
-function slot0.setBlindnessModeState(slot0, slot1)
-	slot0.isBlindnessMode = slot1
+function var_0_0.setBlindnessModeState(arg_15_0, arg_15_1)
+	arg_15_0.isBlindnessMode = arg_15_1
 end
 
-function slot0.getBlindnessModeState(slot0)
-	return slot0.isBlindnessMode
+function var_0_0.getBlindnessModeState(arg_16_0)
+	return arg_16_0.isBlindnessMode
 end
 
-slot1 = Vector3()
-slot2 = Vector3()
+local var_0_1 = Vector3()
+local var_0_2 = Vector3()
 
-function slot0.checkTouchElement(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = {}
+function var_0_0.checkTouchElement(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
+	local var_17_0 = {}
+	local var_17_1 = arg_17_4 or arg_17_0.interElementList
 
-	for slot11, slot12 in pairs(slot4 or slot0.interElementList) do
-		uv0.x = slot12.pos[1]
-		uv0.y = slot12.pos[2]
-		uv1.x = uv0.x + slot12.width
-		uv1.y = uv0.y + slot12.height
-		slot13 = true
+	for iter_17_0, iter_17_1 in pairs(var_17_1) do
+		var_0_1.x = iter_17_1.pos[1]
+		var_0_1.y = iter_17_1.pos[2]
+		var_0_2.x = var_0_1.x + iter_17_1.width
+		var_0_2.y = var_0_1.y + iter_17_1.height
 
-		if slot3 and #slot3 > 0 then
-			for slot17, slot18 in ipairs(slot3) do
-				if slot12.type == slot18 then
-					slot13 = false
+		local var_17_2 = true
+
+		if arg_17_3 and #arg_17_3 > 0 then
+			for iter_17_2, iter_17_3 in ipairs(arg_17_3) do
+				if iter_17_1.type == iter_17_3 then
+					var_17_2 = false
 
 					break
 				end
 			end
 		end
 
-		if slot12.type == FeiLinShiDuoEnum.ObjectType.Stairs and slot5 and uv0.x <= slot1 and slot1 <= uv1.x and uv0.y < slot2 and slot2 < uv1.y - FeiLinShiDuoEnum.HalfSlotWidth / 2 then
-			slot13 = false
+		if iter_17_1.type == FeiLinShiDuoEnum.ObjectType.Stairs and arg_17_5 and arg_17_1 >= var_0_1.x and arg_17_1 <= var_0_2.x and arg_17_2 > var_0_1.y and arg_17_2 < var_0_2.y - FeiLinShiDuoEnum.HalfSlotWidth / 2 then
+			var_17_2 = false
 		end
 
-		if slot0.elementShowStateMap[slot12.id] and uv0.x <= slot1 and slot1 <= uv1.x and uv0.y <= slot2 and slot2 <= uv1.y and slot13 then
-			table.insert(slot6, slot12)
+		if arg_17_0.elementShowStateMap[iter_17_1.id] and arg_17_1 >= var_0_1.x and arg_17_1 <= var_0_2.x and arg_17_2 >= var_0_1.y and arg_17_2 <= var_0_2.y and var_17_2 then
+			table.insert(var_17_0, iter_17_1)
 		end
 	end
 
-	return slot6
+	return var_17_0
 end
 
-function slot0.checkItemTouchElemenet(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0.elementShowStateMap[slot3.id] then
-		return {}
+function var_0_0.checkItemTouchElemenet(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5, arg_18_6)
+	local var_18_0 = {}
+
+	if not arg_18_0.elementShowStateMap[arg_18_3.id] then
+		return var_18_0
 	end
 
-	slot8 = FeiLinShiDuoEnum.touchCheckRange
+	local var_18_1 = FeiLinShiDuoEnum.touchCheckRange
+	local var_18_2 = arg_18_5 or arg_18_0.interElementList
 
-	for slot13, slot14 in pairs(slot5 or slot0.interElementList) do
-		if slot0.elementShowStateMap[slot14.id] then
-			slot15 = false
+	for iter_18_0, iter_18_1 in pairs(var_18_2) do
+		if arg_18_0.elementShowStateMap[iter_18_1.id] then
+			local var_18_3 = false
 
-			if slot4 == FeiLinShiDuoEnum.checkDir.Left then
-				if slot2 < slot14.pos[2] + slot14.height - slot8 and slot14.pos[2] + slot8 < slot2 + slot3.height and slot14.pos[1] < slot1 and Mathf.Abs(slot14.pos[1] - slot1) <= slot14.width then
-					slot15 = true
+			if arg_18_4 == FeiLinShiDuoEnum.checkDir.Left then
+				if arg_18_2 < iter_18_1.pos[2] + iter_18_1.height - var_18_1 and iter_18_1.pos[2] + var_18_1 < arg_18_2 + arg_18_3.height and arg_18_1 > iter_18_1.pos[1] and Mathf.Abs(iter_18_1.pos[1] - arg_18_1) <= iter_18_1.width then
+					var_18_3 = true
 				end
-			elseif slot4 == FeiLinShiDuoEnum.checkDir.Top then
-				if slot1 < slot14.pos[1] + slot14.width - slot8 and slot14.pos[1] + slot8 < slot1 + slot3.width and slot2 < slot14.pos[2] and Mathf.Abs(slot14.pos[2] - slot2) <= slot3.height then
-					slot15 = true
+			elseif arg_18_4 == FeiLinShiDuoEnum.checkDir.Top then
+				if arg_18_1 < iter_18_1.pos[1] + iter_18_1.width - var_18_1 and iter_18_1.pos[1] + var_18_1 < arg_18_1 + arg_18_3.width and arg_18_2 < iter_18_1.pos[2] and Mathf.Abs(iter_18_1.pos[2] - arg_18_2) <= arg_18_3.height then
+					var_18_3 = true
 				end
-			elseif slot4 == FeiLinShiDuoEnum.checkDir.Right then
-				if slot2 < slot14.pos[2] + slot14.height - slot8 and slot14.pos[2] + slot8 < slot2 + slot3.height and slot1 < slot14.pos[1] and Mathf.Abs(slot14.pos[1] - slot1) <= slot3.width then
-					slot15 = true
+			elseif arg_18_4 == FeiLinShiDuoEnum.checkDir.Right then
+				if arg_18_2 < iter_18_1.pos[2] + iter_18_1.height - var_18_1 and iter_18_1.pos[2] + var_18_1 < arg_18_2 + arg_18_3.height and arg_18_1 < iter_18_1.pos[1] and Mathf.Abs(iter_18_1.pos[1] - arg_18_1) <= arg_18_3.width then
+					var_18_3 = true
 				end
-			elseif slot4 == FeiLinShiDuoEnum.checkDir.Bottom and slot1 < slot14.pos[1] + slot14.width - slot8 and slot14.pos[1] + slot8 < slot1 + slot3.width and slot14.pos[2] < slot2 and Mathf.Abs(slot14.pos[2] - slot2) <= slot14.height then
-				slot15 = true
+			elseif arg_18_4 == FeiLinShiDuoEnum.checkDir.Bottom and arg_18_1 < iter_18_1.pos[1] + iter_18_1.width - var_18_1 and iter_18_1.pos[1] + var_18_1 < arg_18_1 + arg_18_3.width and arg_18_2 > iter_18_1.pos[2] and Mathf.Abs(iter_18_1.pos[2] - arg_18_2) <= iter_18_1.height then
+				var_18_3 = true
 			end
 
-			if slot14.type == FeiLinShiDuoEnum.ObjectType.Stairs and Mathf.Abs(slot3.pos[1] + slot3.width / 2 - (slot14.pos[1] - slot14.width / 2)) < slot3.width / 2 + slot14.width / 2 and slot14.pos[2] < slot2 and slot2 <= slot14.pos[2] + slot14.height - FeiLinShiDuoEnum.HalfSlotWidth / 2 then
-				slot15 = false
+			if iter_18_1.type == FeiLinShiDuoEnum.ObjectType.Stairs and Mathf.Abs(arg_18_3.pos[1] + arg_18_3.width / 2 - (iter_18_1.pos[1] - iter_18_1.width / 2)) < arg_18_3.width / 2 + iter_18_1.width / 2 and arg_18_2 > iter_18_1.pos[2] and arg_18_2 <= iter_18_1.pos[2] + iter_18_1.height - FeiLinShiDuoEnum.HalfSlotWidth / 2 then
+				var_18_3 = false
 			end
 
-			if slot6 and #slot6 > 0 then
-				for slot19, slot20 in pairs(slot6) do
-					if slot14.type == slot20 then
-						slot15 = false
+			if arg_18_6 and #arg_18_6 > 0 then
+				for iter_18_2, iter_18_3 in pairs(arg_18_6) do
+					if iter_18_1.type == iter_18_3 then
+						var_18_3 = false
 
 						break
 					end
 				end
 			end
 
-			if slot15 then
-				table.insert(slot7, slot14)
+			if var_18_3 then
+				table.insert(var_18_0, iter_18_1)
 			end
 		end
 	end
 
-	return slot7
+	return var_18_0
 end
 
-function slot0.updateBoxPos(slot0, slot1, slot2)
-	if not slot0.elementMap or next(slot0.elementMap) == nil then
+function var_0_0.updateBoxPos(arg_19_0, arg_19_1, arg_19_2)
+	if not arg_19_0.elementMap or next(arg_19_0.elementMap) == nil then
 		return
 	end
 
-	slot0.elementMap[FeiLinShiDuoEnum.ObjectType.Box][slot1].pos = slot2
+	arg_19_0.elementMap[FeiLinShiDuoEnum.ObjectType.Box][arg_19_1].pos = arg_19_2
 end
 
-slot3 = Vector3()
-slot4 = Vector3()
+local var_0_3 = Vector3()
+local var_0_4 = Vector3()
 
-function slot0.getFixStandePos(slot0, slot1, slot2, slot3)
-	if slot1 and #slot1 > 0 then
-		for slot7, slot8 in ipairs(slot1) do
-			if slot8.pos[2] <= slot3 and (slot8.type == FeiLinShiDuoEnum.ObjectType.ColorPlane or slot8.type == FeiLinShiDuoEnum.ObjectType.Wall or slot8.type == FeiLinShiDuoEnum.ObjectType.Box or slot8.type == FeiLinShiDuoEnum.ObjectType.Trap) then
-				uv0.x = slot8.pos[1]
-				uv0.y = slot8.pos[2]
-				uv1.x = uv0.x + slot8.width
-				uv1.y = uv0.y + slot8.height
+function var_0_0.getFixStandePos(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	if arg_20_1 and #arg_20_1 > 0 then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
+			if arg_20_3 >= iter_20_1.pos[2] and (iter_20_1.type == FeiLinShiDuoEnum.ObjectType.ColorPlane or iter_20_1.type == FeiLinShiDuoEnum.ObjectType.Wall or iter_20_1.type == FeiLinShiDuoEnum.ObjectType.Box or iter_20_1.type == FeiLinShiDuoEnum.ObjectType.Trap) then
+				var_0_3.x = iter_20_1.pos[1]
+				var_0_3.y = iter_20_1.pos[2]
+				var_0_4.x = var_0_3.x + iter_20_1.width
+				var_0_4.y = var_0_3.y + iter_20_1.height
 
-				if uv0.y <= slot3 and slot3 <= uv1.y then
-					return uv0, uv1
+				if arg_20_3 >= var_0_3.y and arg_20_3 <= var_0_4.y then
+					return var_0_3, var_0_4
 				end
 			end
 		end
 	end
 end
 
-function slot0.setElememntShowStateByColor(slot0, slot1)
-	slot0.curColor = slot1
+function var_0_0.setElememntShowStateByColor(arg_21_0, arg_21_1)
+	arg_21_0.curColor = arg_21_1
 
-	for slot5, slot6 in ipairs(slot0.elementList) do
-		if slot1 == FeiLinShiDuoEnum.ColorType.Yellow and slot6.color == FeiLinShiDuoEnum.ColorType.Red then
-			slot0.elementShowStateMap[slot6.id] = false
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.elementList) do
+		if arg_21_1 == FeiLinShiDuoEnum.ColorType.Yellow and iter_21_1.color == FeiLinShiDuoEnum.ColorType.Red then
+			arg_21_0.elementShowStateMap[iter_21_1.id] = false
 		else
-			slot0.elementShowStateMap[slot6.id] = slot6.color ~= slot1 or slot1 == FeiLinShiDuoEnum.ColorType.None
+			arg_21_0.elementShowStateMap[iter_21_1.id] = iter_21_1.color ~= arg_21_1 or arg_21_1 == FeiLinShiDuoEnum.ColorType.None
 		end
 	end
 end
 
-function slot0.showAllElementState(slot0)
-	for slot4, slot5 in ipairs(slot0.elementList) do
-		slot0.elementShowStateMap[slot5.id] = true
+function var_0_0.showAllElementState(arg_22_0)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.elementList) do
+		arg_22_0.elementShowStateMap[iter_22_1.id] = true
 	end
 end
 
-function slot0.getCurColor(slot0)
-	return slot0.curColor
+function var_0_0.getCurColor(arg_23_0)
+	return arg_23_0.curColor
 end
 
-function slot0.getElementShowStateMap(slot0)
-	return slot0.elementShowStateMap
+function var_0_0.getElementShowStateMap(arg_24_0)
+	return arg_24_0.elementShowStateMap
 end
 
-function slot0.getElementShowState(slot0, slot1)
-	return slot0.elementShowStateMap[slot1.id]
+function var_0_0.getElementShowState(arg_25_0, arg_25_1)
+	return arg_25_0.elementShowStateMap[arg_25_1.id]
 end
 
-function slot0.setDoorOpenState(slot0, slot1, slot2)
-	slot0.doorOpenStateMap[slot1] = slot2
+function var_0_0.setDoorOpenState(arg_26_0, arg_26_1, arg_26_2)
+	arg_26_0.doorOpenStateMap[arg_26_1] = arg_26_2
 end
 
-function slot0.getDoorOpenStateMap(slot0)
-	return slot0.doorOpenStateMap
+function var_0_0.getDoorOpenStateMap(arg_27_0)
+	return arg_27_0.doorOpenStateMap
 end
 
-function slot0.setIsPlayerInColorChanging(slot0, slot1)
-	slot0.isInColorChanging = slot1
+function var_0_0.setIsPlayerInColorChanging(arg_28_0, arg_28_1)
+	arg_28_0.isInColorChanging = arg_28_1
 end
 
-function slot0.getIsPlayerInColorChanging(slot0)
-	return slot0.isInColorChanging
+function var_0_0.getIsPlayerInColorChanging(arg_29_0)
+	return arg_29_0.isInColorChanging
 end
 
-function slot0.setPlayerIsIdleState(slot0, slot1)
-	slot0.isPlayerInIdleState = slot1
+function var_0_0.setPlayerIsIdleState(arg_30_0, arg_30_1)
+	arg_30_0.isPlayerInIdleState = arg_30_1
 end
 
-function slot0.getPlayerIsIdleState(slot0)
-	return slot0.isPlayerInIdleState
+function var_0_0.getPlayerIsIdleState(arg_31_0)
+	return arg_31_0.isPlayerInIdleState
 end
 
-function slot0.checkForwardCanMove(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = {}
+function var_0_0.checkForwardCanMove(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4, arg_32_5)
+	local var_32_0 = {}
 
-	if (not slot5 or slot0:checkItemTouchElemenet(slot1, slot2, slot4, slot3 > 0 and FeiLinShiDuoEnum.checkDir.Right or FeiLinShiDuoEnum.checkDir.Left)) and slot0:checkTouchElement(slot1, slot2) and #slot6 > 0 then
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11.type == FeiLinShiDuoEnum.ObjectType.Wall or slot11.type == FeiLinShiDuoEnum.ObjectType.ColorPlane then
-				return false, slot3 > 0 and slot11.pos[1] or slot11.pos[1] + slot11.width
-			elseif slot11.type == FeiLinShiDuoEnum.ObjectType.Door and not slot0.doorOpenStateMap[slot11.id] then
-				if slot4 and slot4.type == FeiLinShiDuoEnum.ObjectType.Box and Mathf.Abs(slot11.pos[1] + slot11.width / 2 - (slot1 + (slot3 > 0 and slot4.width or 0))) <= FeiLinShiDuoEnum.touchElementRange then
-					return false, slot11.pos[1] + slot11.width / 2 - slot3 * FeiLinShiDuoEnum.doorTouchCheckRang / 2
-				elseif not slot4 and Mathf.Abs(slot11.pos[1] + slot11.width / 2 - slot1) <= FeiLinShiDuoEnum.touchElementRange then
-					return false, slot11.pos[1] + slot11.width / 2 - slot3 * FeiLinShiDuoEnum.doorTouchCheckRang / 2
+	if arg_32_5 then
+		local var_32_1 = arg_32_3 > 0 and FeiLinShiDuoEnum.checkDir.Right or FeiLinShiDuoEnum.checkDir.Left
+
+		var_32_0 = arg_32_0:checkItemTouchElemenet(arg_32_1, arg_32_2, arg_32_4, var_32_1)
+	else
+		var_32_0 = arg_32_0:checkTouchElement(arg_32_1, arg_32_2)
+	end
+
+	if var_32_0 and #var_32_0 > 0 then
+		for iter_32_0, iter_32_1 in ipairs(var_32_0) do
+			if iter_32_1.type == FeiLinShiDuoEnum.ObjectType.Wall or iter_32_1.type == FeiLinShiDuoEnum.ObjectType.ColorPlane then
+				return false, arg_32_3 > 0 and iter_32_1.pos[1] or iter_32_1.pos[1] + iter_32_1.width
+			elseif iter_32_1.type == FeiLinShiDuoEnum.ObjectType.Door and not arg_32_0.doorOpenStateMap[iter_32_1.id] then
+				if arg_32_4 and arg_32_4.type == FeiLinShiDuoEnum.ObjectType.Box and Mathf.Abs(iter_32_1.pos[1] + iter_32_1.width / 2 - (arg_32_1 + (arg_32_3 > 0 and arg_32_4.width or 0))) <= FeiLinShiDuoEnum.touchElementRange then
+					return false, iter_32_1.pos[1] + iter_32_1.width / 2 - arg_32_3 * FeiLinShiDuoEnum.doorTouchCheckRang / 2
+				elseif not arg_32_4 and Mathf.Abs(iter_32_1.pos[1] + iter_32_1.width / 2 - arg_32_1) <= FeiLinShiDuoEnum.touchElementRange then
+					return false, iter_32_1.pos[1] + iter_32_1.width / 2 - arg_32_3 * FeiLinShiDuoEnum.doorTouchCheckRang / 2
 				end
-			elseif slot11.type == FeiLinShiDuoEnum.ObjectType.Box then
-				slot12, slot13 = slot0:checkForwardCanMove(slot11.pos[1] + slot3, slot11.pos[2], slot3, slot11, true)
+			elseif iter_32_1.type == FeiLinShiDuoEnum.ObjectType.Box then
+				local var_32_2, var_32_3 = arg_32_0:checkForwardCanMove(iter_32_1.pos[1] + arg_32_3, iter_32_1.pos[2], arg_32_3, iter_32_1, true)
 
-				return slot12, slot13 and (slot3 > 0 and slot11.pos[1] or slot11.pos[1] + slot11.width)
+				var_32_3 = var_32_3 and (arg_32_3 > 0 and iter_32_1.pos[1] or iter_32_1.pos[1] + iter_32_1.width)
+
+				return var_32_2, var_32_3
 			end
 		end
 	end
@@ -302,6 +321,6 @@ function slot0.checkForwardCanMove(slot0, slot1, slot2, slot3, slot4, slot5)
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

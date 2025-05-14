@@ -1,35 +1,41 @@
-module("modules.logic.handbook.view.HandbookWeekWalkView", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookWeekWalkView", package.seeall)
 
-slot0 = class("HandbookWeekWalkView", BaseView)
+local var_0_0 = class("HandbookWeekWalkView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.mapId = slot0.viewParam.id
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0.mapId = arg_6_0.viewParam.id
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

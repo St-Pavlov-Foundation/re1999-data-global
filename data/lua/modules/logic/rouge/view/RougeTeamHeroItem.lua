@@ -1,137 +1,150 @@
-module("modules.logic.rouge.view.RougeTeamHeroItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeTeamHeroItem", package.seeall)
 
-slot0 = class("RougeTeamHeroItem", RougeLuaCompBase)
+local var_0_0 = class("RougeTeamHeroItem", RougeLuaCompBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._go = slot1
-	slot0._heroGOParent = gohelper.findChild(slot1, "hero")
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(slot0._heroGOParent)
+	arg_1_0._go = arg_1_1
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
+	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
 
-	slot0._heroItem:hideFavor(true)
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
+	arg_1_0._heroItem:hideFavor(true)
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
 
-	slot0._gohp = gohelper.findChild(slot1, "#go_hp")
-	slot0._sliderhp = gohelper.findChildSlider(slot1, "#go_hp/#slider_hp")
-	slot0._godead = gohelper.findChild(slot1, "#go_dead")
-	slot0._goassit = gohelper.findChild(slot1, "assit")
-	slot0._goFrame = gohelper.findChild(slot1, "frame_hp")
+	arg_1_0._gohp = gohelper.findChild(arg_1_1, "#go_hp")
+	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_1, "#go_hp/#slider_hp")
+	arg_1_0._godead = gohelper.findChild(arg_1_1, "#go_dead")
+	arg_1_0._goassit = gohelper.findChild(arg_1_1, "assit")
+	arg_1_0._goFrame = gohelper.findChild(arg_1_1, "frame_hp")
 
-	slot0:_initCapacity()
-	slot0:_initObj(slot1)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnTeamViewSelectedHeroPlayEffect, slot0._onTeamViewSelectedHeroPlayEffect, slot0)
+	arg_1_0:_initCapacity()
+	arg_1_0:_initObj(arg_1_1)
+	arg_1_0:addEventCb(RougeController.instance, RougeEvent.OnTeamViewSelectedHeroPlayEffect, arg_1_0._onTeamViewSelectedHeroPlayEffect, arg_1_0)
 end
 
-function slot0._onTeamViewSelectedHeroPlayEffect(slot0, slot1)
-	if not slot0._isSelected then
+function var_0_0._onTeamViewSelectedHeroPlayEffect(arg_2_0, arg_2_1)
+	if not arg_2_0._isSelected then
 		return
 	end
 
-	if slot1 == RougeEnum.TeamType.Treat then
-		gohelper.setActive(gohelper.findChild(slot0._go, "Reply"), true)
-		TaskDispatcher.runDelay(slot0._delayPlayHpEffect, slot0, 0.6)
+	if arg_2_1 == RougeEnum.TeamType.Treat then
+		local var_2_0 = gohelper.findChild(arg_2_0._go, "Reply")
 
-		return
-	end
-
-	if slot1 == RougeEnum.TeamType.Revive then
-		gohelper.setActive(gohelper.findChild(slot0._go, "Resurrection"), true)
-		TaskDispatcher.runDelay(slot0._delayPlayReviveEffect, slot0, 0.6)
+		gohelper.setActive(var_2_0, true)
+		TaskDispatcher.runDelay(arg_2_0._delayPlayHpEffect, arg_2_0, 0.6)
 
 		return
 	end
 
-	if slot1 == RougeEnum.TeamType.Assignment then
-		gohelper.setActive(gohelper.findChild(slot0._go, "Dispatch"), true)
+	if arg_2_1 == RougeEnum.TeamType.Revive then
+		local var_2_1 = gohelper.findChild(arg_2_0._go, "Resurrection")
+
+		gohelper.setActive(var_2_1, true)
+		TaskDispatcher.runDelay(arg_2_0._delayPlayReviveEffect, arg_2_0, 0.6)
+
+		return
+	end
+
+	if arg_2_1 == RougeEnum.TeamType.Assignment then
+		local var_2_2 = gohelper.findChild(arg_2_0._go, "Dispatch")
+
+		gohelper.setActive(var_2_2, true)
 
 		return
 	end
 end
 
-function slot0._delayPlayHpEffect(slot0)
-	slot0._dotweenId = ZProj.TweenHelper.DOTweenFloat(slot0._hpValue, 1, 1, slot0.everyFrame, nil, slot0)
+function var_0_0._delayPlayHpEffect(arg_3_0)
+	arg_3_0._dotweenId = ZProj.TweenHelper.DOTweenFloat(arg_3_0._hpValue, 1, 1, arg_3_0.everyFrame, nil, arg_3_0)
 end
 
-function slot0.everyFrame(slot0, slot1)
-	slot0._sliderhp:SetValue(slot1)
+function var_0_0.everyFrame(arg_4_0, arg_4_1)
+	arg_4_0._sliderhp:SetValue(arg_4_1)
 end
 
-function slot0._delayPlayReviveEffect(slot0)
-	slot0:_updateHp(1000)
+function var_0_0._delayPlayReviveEffect(arg_5_0)
+	arg_5_0:_updateHp(1000)
 end
 
-function slot0._initCapacity(slot0)
-	slot0._gopoint = gohelper.findChild(slot0._go, "volume/point")
+function var_0_0._initCapacity(arg_6_0)
+	arg_6_0._gopoint = gohelper.findChild(arg_6_0._go, "volume/point")
 
-	gohelper.setActive(slot0._gopoint, false)
+	gohelper.setActive(arg_6_0._gopoint, false)
 
-	slot0._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._go, RougeCapacityComp)
+	arg_6_0._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._go, RougeCapacityComp)
 
-	slot0._capacityComp:setSpriteType("rouge_team_volume_3", "rouge_team_volume_3")
-	slot0._capacityComp:setPoint(slot0._gopoint)
-	slot0._capacityComp:initCapacity()
+	arg_6_0._capacityComp:setSpriteType("rouge_team_volume_3", "rouge_team_volume_3")
+	arg_6_0._capacityComp:setPoint(arg_6_0._gopoint)
+	arg_6_0._capacityComp:initCapacity()
 end
 
-function slot0._initObj(slot0, slot1)
-	slot0._animator = slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initObj(arg_7_0, arg_7_1)
+	arg_7_0._animator = arg_7_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0._heroItem:onUpdateMO(slot1)
+	arg_8_0._heroItem:onUpdateMO(arg_8_1)
 
-	if slot1.level < RougeHeroGroupBalanceHelper.getHeroBalanceLv(slot1.heroId) then
-		slot0._heroItem:setBalanceLv(slot2)
+	local var_8_0 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(arg_8_1.heroId)
+
+	if var_8_0 > arg_8_1.level then
+		arg_8_0._heroItem:setBalanceLv(var_8_0)
 	end
 
 	if RougeController.instance:useHalfCapacity() then
-		slot0._capacity = RougeConfig1.instance:getRoleHalfCapacity(slot1.config.rare)
+		arg_8_0._capacity = RougeConfig1.instance:getRoleHalfCapacity(arg_8_1.config.rare)
 	else
-		slot0._capacity = RougeConfig1.instance:getRoleCapacity(slot1.config.rare)
+		arg_8_0._capacity = RougeConfig1.instance:getRoleCapacity(arg_8_1.config.rare)
 	end
 
-	slot0._capacityComp:updateMaxNum(slot0._capacity)
-	slot0:_updateStatus()
-	slot0:_updateSelected()
-	slot0:tickUpdateDLCs(slot1)
+	arg_8_0._capacityComp:updateMaxNum(arg_8_0._capacity)
+	arg_8_0:_updateStatus()
+	arg_8_0:_updateSelected()
+	arg_8_0:tickUpdateDLCs(arg_8_1)
 end
 
-function slot0._updateStatus(slot0)
-	slot0:_updateHp(RougeTeamListModel.instance:getHp(slot0._mo))
+function var_0_0._updateStatus(arg_9_0)
+	local var_9_0 = RougeTeamListModel.instance:getHp(arg_9_0._mo)
+
+	arg_9_0:_updateHp(var_9_0)
 end
 
-function slot0._updateHp(slot0, slot1)
-	slot2 = slot1 <= 0
+function var_0_0._updateHp(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1 <= 0
+	local var_10_1 = RougeTeamListModel.instance:isInTeam(arg_10_0._mo)
+	local var_10_2 = RougeTeamListModel.instance:isAssit(arg_10_0._mo)
+	local var_10_3 = var_10_1 and 1 or 0
 
-	slot0._heroItem:setInteam(RougeTeamListModel.instance:isInTeam(slot0._mo) and 1 or 0)
-	gohelper.setActive(slot0._goassit, RougeTeamListModel.instance:isAssit(slot0._mo))
-	gohelper.setActive(slot0._godead, slot2)
+	arg_10_0._heroItem:setInteam(var_10_3)
+	gohelper.setActive(arg_10_0._goassit, var_10_2)
+	gohelper.setActive(arg_10_0._godead, var_10_0)
 
-	slot0._hpValue = slot1 / 1000
+	arg_10_0._hpValue = arg_10_1 / 1000
 
-	slot0._sliderhp:SetValue(slot0._hpValue)
-	slot0._heroItem:setNewShow(false)
-	slot0._heroItem:setDamage(slot2)
+	arg_10_0._sliderhp:SetValue(arg_10_0._hpValue)
+	arg_10_0._heroItem:setNewShow(false)
+	arg_10_0._heroItem:setDamage(var_10_0)
 
-	slot0._heroItem._isInjury = false
+	arg_10_0._heroItem._isInjury = false
 
-	gohelper.setActive(slot0._heroItem._maskgray, slot2)
+	gohelper.setActive(arg_10_0._heroItem._maskgray, var_10_0)
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
 	if RougeTeamListModel.instance:getTeamType() ~= RougeEnum.TeamType.View then
-		RougeTeamListModel.instance:selectHero(slot0._mo)
-		slot0:_updateSelected()
+		RougeTeamListModel.instance:selectHero(arg_11_0._mo)
+		arg_11_0:_updateSelected()
 		RougeController.instance:dispatchEvent(RougeEvent.OnTeamViewSelectedHero)
 
 		return
 	end
 
-	CharacterController.instance:openCharacterView(slot0._mo, nil, {
+	CharacterController.instance:openCharacterView(arg_11_0._mo, nil, {
 		isOwnHero = false,
 		hideHomeBtn = true,
 		fromHeroDetailView = true,
@@ -139,27 +152,27 @@ function slot0._onItemClick(slot0)
 	})
 end
 
-function slot0._updateSelected(slot0)
-	slot1 = RougeTeamListModel.instance:isHeroSelected(slot0._mo)
+function var_0_0._updateSelected(arg_12_0)
+	local var_12_0 = RougeTeamListModel.instance:isHeroSelected(arg_12_0._mo)
 
-	gohelper.setActive(slot0._goFrame, slot1)
+	gohelper.setActive(arg_12_0._goFrame, var_12_0)
 
-	slot0._isSelected = slot1
+	arg_12_0._isSelected = var_12_0
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._dotweenId then
-		ZProj.TweenHelper.KillById(slot0._dotweenId, false)
+function var_0_0.onDestroy(arg_13_0)
+	if arg_13_0._dotweenId then
+		ZProj.TweenHelper.KillById(arg_13_0._dotweenId, false)
 
-		slot0._dotweenId = nil
+		arg_13_0._dotweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayPlayHpEffect, slot0)
-	uv0.super.onDestroy(slot0)
+	TaskDispatcher.cancelTask(arg_13_0._delayPlayHpEffect, arg_13_0)
+	var_0_0.super.onDestroy(arg_13_0)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_14_0)
+	return arg_14_0._animator
 end
 
-return slot0
+return var_0_0

@@ -1,33 +1,39 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerRoomCheckGatherFactoryNum", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomCheckGatherFactoryNum", package.seeall)
 
-slot0 = class("GuideTriggerRoomCheckGatherFactoryNum", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerRoomCheckGatherFactoryNum", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._onEnterOneSceneFinish, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.UseBuildingReply, slot0._onUseBuildingReply, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
+	RoomMapController.instance:registerCallback(RoomEvent.UseBuildingReply, arg_1_0._onUseBuildingReply, arg_1_0)
 end
 
-function slot0._onUseBuildingReply(slot0)
-	slot0:checkStartGuide(SceneType.Room)
+function var_0_0._onUseBuildingReply(arg_2_0)
+	arg_2_0:checkStartGuide(SceneType.Room)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	if slot1 ~= SceneType.Room or not RoomController.instance:isObMode() then
+function var_0_0.assertGuideSatisfy(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_1 == SceneType.Room
+	local var_3_1 = RoomController.instance:isObMode()
+
+	if not var_3_0 or not var_3_1 then
 		return
 	end
 
-	for slot10, slot11 in ipairs(RoomMapBuildingModel.instance:getBuildingMOList()) do
-		if slot11.config.buildingType == RoomBuildingEnum.BuildingType.Gather and slot11.buildingState == RoomBuildingEnum.BuildingState.Map then
-			slot6 = 0 + 1
+	local var_3_2 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local var_3_3 = 0
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_2) do
+		if iter_3_1.config.buildingType == RoomBuildingEnum.BuildingType.Gather and iter_3_1.buildingState == RoomBuildingEnum.BuildingState.Map then
+			var_3_3 = var_3_3 + 1
 		end
 	end
 
-	return slot6 >= 4
+	return var_3_3 >= 4
 end
 
-function slot0._onEnterOneSceneFinish(slot0, slot1, slot2)
-	slot0:checkStartGuide(slot1)
+function var_0_0._onEnterOneSceneFinish(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:checkStartGuide(arg_4_1)
 end
 
-return slot0
+return var_0_0

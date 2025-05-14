@@ -1,127 +1,137 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.config.FeiLinShiDuoConfig", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.config.FeiLinShiDuoConfig", package.seeall)
 
-slot0 = class("FeiLinShiDuoConfig", BaseConfig)
+local var_0_0 = class("FeiLinShiDuoConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.taskDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.taskDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity185_episode",
 		"activity185_task"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity185_episode" then
-		slot0._episodeConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity185_episode" then
+		arg_3_0._episodeConfig = arg_3_2
 
-		slot0:buildStageMap()
-	elseif slot1 == "activity185_task" then
-		slot0._taskConfig = slot2
+		arg_3_0:buildStageMap()
+	elseif arg_3_1 == "activity185_task" then
+		arg_3_0._taskConfig = arg_3_2
 	end
 end
 
-function slot0.buildStageMap(slot0)
-	slot0.stageMap = {}
-	slot1 = 0
+function var_0_0.buildStageMap(arg_4_0)
+	arg_4_0.stageMap = {}
 
-	for slot5, slot6 in ipairs(slot0._episodeConfig.configList) do
-		if slot1 ~= slot6.stage then
-			slot0.stageMap[slot6.stage] = {}
+	local var_4_0 = 0
+
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._episodeConfig.configList) do
+		if var_4_0 ~= iter_4_1.stage then
+			var_4_0 = iter_4_1.stage
+			arg_4_0.stageMap[var_4_0] = {}
 		end
 
-		slot0.stageMap[slot1][slot6.episodeId] = slot6
+		arg_4_0.stageMap[var_4_0][iter_4_1.episodeId] = iter_4_1
 	end
 end
 
-function slot0.getEpisodeConfig(slot0, slot1, slot2)
-	if not slot0._episodeConfig.configDict[slot1] and not slot0._episodeConfig.configDict[slot1][slot2] then
-		logError(slot1 .. " 活动没有该关卡id信息: " .. slot2)
+function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_0._episodeConfig.configDict[arg_5_1] and not arg_5_0._episodeConfig.configDict[arg_5_1][arg_5_2] then
+		logError(arg_5_1 .. " 活动没有该关卡id信息: " .. arg_5_2)
 
 		return nil
 	end
 
-	return slot0._episodeConfig.configDict[slot1][slot2]
+	return arg_5_0._episodeConfig.configDict[arg_5_1][arg_5_2]
 end
 
-function slot0.getEpisodeConfigList(slot0)
-	return slot0._episodeConfig.configList
+function var_0_0.getEpisodeConfigList(arg_6_0)
+	return arg_6_0._episodeConfig.configList
 end
 
-function slot0.getNoGameEpisodeList(slot0, slot1)
-	slot0.noGameEpisodeList = slot0.noGameEpisodeList or {}
+function var_0_0.getNoGameEpisodeList(arg_7_0, arg_7_1)
+	arg_7_0.noGameEpisodeList = arg_7_0.noGameEpisodeList or {}
 
-	if not slot0.noGameEpisodeList[slot1] then
-		slot0.noGameEpisodeList[slot1] = {}
+	if not arg_7_0.noGameEpisodeList[arg_7_1] then
+		arg_7_0.noGameEpisodeList[arg_7_1] = {}
 
-		for slot6, slot7 in ipairs(slot0:getEpisodeConfigList(slot1) or {}) do
-			if slot7.storyId > 0 then
-				table.insert(slot0.noGameEpisodeList[slot1], slot7)
+		local var_7_0 = arg_7_0:getEpisodeConfigList(arg_7_1) or {}
+
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			if iter_7_1.storyId > 0 then
+				table.insert(arg_7_0.noGameEpisodeList[arg_7_1], iter_7_1)
 			end
 		end
 
-		table.sort(slot0.noGameEpisodeList, slot0.sortEpisode)
+		table.sort(arg_7_0.noGameEpisodeList, arg_7_0.sortEpisode)
 	end
 
-	return slot0.noGameEpisodeList[slot1]
+	return arg_7_0.noGameEpisodeList[arg_7_1]
 end
 
-function slot0.sortEpisode(slot0, slot1)
-	return slot0.stage <= slot1.stage
+function var_0_0.sortEpisode(arg_8_0, arg_8_1)
+	return arg_8_0.stage <= arg_8_1.stage
 end
 
-function slot0.getGameEpisode(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getEpisodeConfigList()) do
-		if slot7.preEpisodeId == slot1 and slot7.mapId > 0 then
-			return slot7
+function var_0_0.getGameEpisode(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getEpisodeConfigList()
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1.preEpisodeId == arg_9_1 and iter_9_1.mapId > 0 then
+			return iter_9_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.getStageEpisodes(slot0, slot1)
-	if not slot0.stageMap[slot1] then
-		logError("当前关卡阶段的配置不存在，请检查" .. slot1)
+function var_0_0.getStageEpisodes(arg_10_0, arg_10_1)
+	if not arg_10_0.stageMap[arg_10_1] then
+		logError("当前关卡阶段的配置不存在，请检查" .. arg_10_1)
 
 		return {}
 	end
 
-	return slot0.stageMap[slot1]
+	return arg_10_0.stageMap[arg_10_1]
 end
 
-function slot0.getTaskConfig(slot0, slot1)
-	return slot0._taskConfig.configDict[slot1]
+function var_0_0.getTaskConfig(arg_11_0, arg_11_1)
+	return arg_11_0._taskConfig.configDict[arg_11_1]
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	if not slot0.taskDict[slot1] then
-		slot2 = {}
+function var_0_0.getTaskByActId(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.taskDict[arg_12_1]
 
-		for slot6, slot7 in ipairs(lua_activity185_task.configList) do
-			if slot7.activityId == slot1 then
-				table.insert(slot2, slot7)
+	if not var_12_0 then
+		var_12_0 = {}
+
+		for iter_12_0, iter_12_1 in ipairs(lua_activity185_task.configList) do
+			if iter_12_1.activityId == arg_12_1 then
+				table.insert(var_12_0, iter_12_1)
 			end
 		end
 
-		slot0.taskDict[slot1] = slot2
+		arg_12_0.taskDict[arg_12_1] = var_12_0
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getNextEpisode(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getEpisodeConfigList()) do
-		if slot7.preEpisodeId == slot1 then
-			return slot7
+function var_0_0.getNextEpisode(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getEpisodeConfigList()
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		if iter_13_1.preEpisodeId == arg_13_1 then
+			return iter_13_1
 		end
 	end
 
 	return nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

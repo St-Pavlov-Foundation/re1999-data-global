@@ -1,26 +1,28 @@
-module("modules.logic.rouge.dlc.101.model.RougeLimiterDebuffOverListModel", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.model.RougeLimiterDebuffOverListModel", package.seeall)
 
-slot0 = class("RougeLimiterDebuffOverListModel", ListScrollModel)
+local var_0_0 = class("RougeLimiterDebuffOverListModel", ListScrollModel)
 
-function slot0.onInit(slot0, slot1)
-	slot0:initLimiterGroupList(slot1)
+function var_0_0.onInit(arg_1_0, arg_1_1)
+	arg_1_0:initLimiterGroupList(arg_1_1)
 end
 
-function slot0.initLimiterGroupList(slot0, slot1)
-	slot2 = {}
+function var_0_0.initLimiterGroupList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	for slot6, slot7 in ipairs(slot1 or {}) do
-		table.insert(slot2, RougeDLCConfig101.instance:getLimiterCo(slot7))
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1 or {}) do
+		local var_2_1 = RougeDLCConfig101.instance:getLimiterCo(iter_2_1)
+
+		table.insert(var_2_0, var_2_1)
 	end
 
-	table.sort(slot2, slot0._debuffSortFunc)
-	slot0:setList(slot2)
+	table.sort(var_2_0, arg_2_0._debuffSortFunc)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0._debuffSortFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0._debuffSortFunc(arg_3_0, arg_3_1)
+	return arg_3_0.id < arg_3_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,59 +1,60 @@
-module("modules.logic.rouge.view.RougePageProgressItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougePageProgressItem", package.seeall)
 
-slot0 = class("RougePageProgressItem", UserDataDispose)
-slot1 = {
+local var_0_0 = class("RougePageProgressItem", UserDataDispose)
+local var_0_1 = {
 	line2 = 3,
 	line1 = 2,
 	finished = 0,
 	line3 = 4,
 	unfinished = 1
 }
-slot0.LineStateEnum = {
+
+var_0_0.LineStateEnum = {
 	Edit = 2,
 	Locked = 3,
 	Done = 1
 }
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._parent = slot1
+	arg_1_0._parent = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1.gameObject
-	slot0._transFinished = slot1:GetChild(uv0.finished)
-	slot0._transUnFinished = slot1:GetChild(uv0.unfinished)
-	slot0._transLine1 = slot1:GetChild(uv0.line1)
-	slot0._transLine2 = slot1:GetChild(uv0.line2)
-	slot0._transLine3 = slot1:GetChild(uv0.line3)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.viewGO = arg_2_1.gameObject
+	arg_2_0._transFinished = arg_2_1:GetChild(var_0_1.finished)
+	arg_2_0._transUnFinished = arg_2_1:GetChild(var_0_1.unfinished)
+	arg_2_0._transLine1 = arg_2_1:GetChild(var_0_1.line1)
+	arg_2_0._transLine2 = arg_2_1:GetChild(var_0_1.line2)
+	arg_2_0._transLine3 = arg_2_1:GetChild(var_0_1.line3)
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0.viewGO, arg_3_1)
 end
 
-function slot0.setHighLight(slot0, slot1)
-	GameUtil.setActive01(slot0._transFinished, slot1)
-	GameUtil.setActive01(slot0._transUnFinished, not slot1)
+function var_0_0.setHighLight(arg_4_0, arg_4_1)
+	GameUtil.setActive01(arg_4_0._transFinished, arg_4_1)
+	GameUtil.setActive01(arg_4_0._transUnFinished, not arg_4_1)
 end
 
-function slot0.setLineActive(slot0, slot1, slot2)
-	GameUtil.setActive01(slot0["_transLine" .. slot1], slot2)
+function var_0_0.setLineActive(arg_5_0, arg_5_1, arg_5_2)
+	GameUtil.setActive01(arg_5_0["_transLine" .. arg_5_1], arg_5_2)
 end
 
-function slot0.setLineActiveByState(slot0, slot1)
-	GameUtil.setActive01(slot0._transLine1, slot1 == uv0.LineStateEnum.Done)
-	GameUtil.setActive01(slot0._transLine2, slot1 == uv0.LineStateEnum.Edit)
-	GameUtil.setActive01(slot0._transLine3, slot1 == uv0.LineStateEnum.Locked)
+function var_0_0.setLineActiveByState(arg_6_0, arg_6_1)
+	GameUtil.setActive01(arg_6_0._transLine1, arg_6_1 == var_0_0.LineStateEnum.Done)
+	GameUtil.setActive01(arg_6_0._transLine2, arg_6_1 == var_0_0.LineStateEnum.Edit)
+	GameUtil.setActive01(arg_6_0._transLine3, arg_6_1 == var_0_0.LineStateEnum.Locked)
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyView()
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0:onDestroyView()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0:__onDispose()
 end
 
-return slot0
+return var_0_0

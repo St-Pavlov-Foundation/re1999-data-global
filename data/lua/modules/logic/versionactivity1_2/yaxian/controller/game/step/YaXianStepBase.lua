@@ -1,24 +1,28 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepBase", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepBase", package.seeall)
 
-slot0 = class("YaXianStepBase")
+local var_0_0 = class("YaXianStepBase")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.originData = slot1
-	slot0.index = slot2
-	slot0.originData.index = slot2
-	slot0.stepType = slot0.originData.stepType
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.originData = arg_1_1
+	arg_1_0.index = arg_1_2
+	arg_1_0.originData.index = arg_1_2
+	arg_1_0.stepType = arg_1_0.originData.stepType
 end
 
-function slot0.start(slot0)
+function var_0_0.start(arg_2_0)
+	return
 end
 
-function slot0.finish(slot0)
-	if YaXianGameController.instance.stepMgr then
-		slot1:nextStep()
+function var_0_0.finish(arg_3_0)
+	local var_3_0 = YaXianGameController.instance.stepMgr
+
+	if var_3_0 then
+		var_3_0:nextStep()
 	end
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

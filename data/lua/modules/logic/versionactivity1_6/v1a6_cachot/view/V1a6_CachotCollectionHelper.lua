@@ -1,91 +1,133 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionHelper", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionHelper", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionHelper")
+local var_0_0 = class("V1a6_CachotCollectionHelper")
 
-function slot0.refreshSkillDesc(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6, slot7 = V1a6_CachotCollectionConfig.instance:getCollectionSkillsInfo(slot0)
-	slot8 = slot6 and #slot6 or 0
+function var_0_0.refreshSkillDesc(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	local var_1_0, var_1_1 = V1a6_CachotCollectionConfig.instance:getCollectionSkillsInfo(arg_1_0)
+	local var_1_2 = var_1_0 and #var_1_0 or 0
 
-	tabletool.addValues(slot6, slot7)
+	tabletool.addValues(var_1_0, var_1_1)
 
-	slot11 = slot5 or uv0
+	local var_1_3 = arg_1_3 or var_0_0._refreshSingleSkillDesc
+	local var_1_4 = arg_1_4 or var_0_0._refreshSingleEffectDesc
+	local var_1_5 = arg_1_5 or var_0_0
 
-	gohelper.CreateObjList(slot11, slot3 or uv0._refreshSingleSkillDesc, slot6, slot1, slot2, nil, 1, slot8)
-	gohelper.CreateObjList(slot11, slot4 or uv0._refreshSingleEffectDesc, slot6, slot1, slot2, nil, slot8 + 1)
+	gohelper.CreateObjList(var_1_5, var_1_3, var_1_0, arg_1_1, arg_1_2, nil, 1, var_1_2)
+	gohelper.CreateObjList(var_1_5, var_1_4, var_1_0, arg_1_1, arg_1_2, nil, var_1_2 + 1)
 end
 
-function slot0.refreshSkillDescWithoutEffectDesc(slot0, slot1, slot2, slot3, slot4)
-	gohelper.CreateObjList(slot4 or uv0, slot3 or uv0._refreshSingleSkillDesc, slot5, slot1, slot2, nil, 1, V1a6_CachotCollectionConfig.instance:getCollectionSkillsByConfig(slot0) and #slot5 or 0)
+function var_0_0.refreshSkillDescWithoutEffectDesc(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = V1a6_CachotCollectionConfig.instance:getCollectionSkillsByConfig(arg_2_0)
+	local var_2_1 = var_2_0 and #var_2_0 or 0
+	local var_2_2 = arg_2_3 or var_0_0._refreshSingleSkillDesc
+	local var_2_3 = arg_2_4 or var_0_0
+
+	gohelper.CreateObjList(var_2_3, var_2_2, var_2_0, arg_2_1, arg_2_2, nil, 1, var_2_1)
 end
 
-function slot0._refreshSingleSkillDesc(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(lua_rule.configDict[slot2] and slot4.desc or "")
+function var_0_0._refreshSingleSkillDesc(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = lua_rule.configDict[arg_3_2]
+	local var_3_1 = var_3_0 and var_3_0.desc or ""
+
+	gohelper.findChildText(arg_3_1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(var_3_1)
 end
 
-function slot0._refreshSingleEffectDesc(slot0, slot1, slot2, slot3)
-	if SkillConfig.instance:getSkillEffectDescCo(slot2) then
-		gohelper.findChildText(slot1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(string.format("[%s]: %s", slot4.name, slot4.desc))
+function var_0_0._refreshSingleEffectDesc(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = SkillConfig.instance:getSkillEffectDescCo(arg_4_2)
+
+	if var_4_0 then
+		local var_4_1 = gohelper.findChildText(arg_4_1, "txt_desc")
+		local var_4_2 = string.format("[%s]: %s", var_4_0.name, var_4_0.desc)
+
+		var_4_1.text = HeroSkillModel.instance:skillDesToSpot(var_4_2)
 	end
 end
 
-function slot0.refreshEnchantDesc(slot0, slot1, slot2, slot3, slot4)
-	gohelper.CreateObjList(slot4 or uv0, slot3 or uv0._refreshSingleEnchantDesc, V1a6_CachotCollectionConfig.instance:getCollectionSpDescsByConfig(slot0), slot1, slot2)
+function var_0_0.refreshEnchantDesc(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = V1a6_CachotCollectionConfig.instance:getCollectionSpDescsByConfig(arg_5_0)
+	local var_5_1 = arg_5_3 or var_0_0._refreshSingleEnchantDesc
+	local var_5_2 = arg_5_4 or var_0_0
+
+	gohelper.CreateObjList(var_5_2, var_5_1, var_5_0, arg_5_1, arg_5_2)
 end
 
-function slot0._refreshSingleEnchantDesc(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(slot2)
+function var_0_0._refreshSingleEnchantDesc(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	gohelper.findChildText(arg_6_1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(arg_6_2)
 end
 
-function slot0.isCollectionBagCanEnchant()
-	slot0 = false
-	slot1 = false
+function var_0_0.isCollectionBagCanEnchant()
+	local var_7_0 = false
+	local var_7_1 = false
+	local var_7_2 = V1a6_CachotModel.instance:getRogueInfo()
 
-	if V1a6_CachotModel.instance:getRogueInfo() then
-		slot3 = slot2.collections
-		slot6 = slot3 and #slot3 or 0
+	if var_7_2 then
+		local var_7_3 = var_7_2.collections
+		local var_7_4 = var_7_2.enchants
+		local var_7_5 = var_7_4 and #var_7_4 or 0
+		local var_7_6 = var_7_3 and #var_7_3 or 0
 
-		if (slot2.enchants and #slot4 or 0) <= 0 or slot6 <= 0 then
+		if var_7_5 <= 0 or var_7_6 <= 0 then
 			return false
 		end
 
-		for slot10 = 1, slot6 do
-			slot12, slot1 = uv0.isCollectionHoleEmptyOrUnEnchant(slot3[slot10], slot0, slot1)
+		for iter_7_0 = 1, var_7_6 do
+			local var_7_7 = var_7_3[iter_7_0]
 
-			if slot12 and slot1 then
+			var_7_0, var_7_1 = var_0_0.isCollectionHoleEmptyOrUnEnchant(var_7_7, var_7_0, var_7_1)
+
+			if var_7_0 and var_7_1 then
 				break
 			end
 		end
 	end
 
-	return slot0 and slot1
+	return var_7_0 and var_7_1
 end
 
-function slot0.isCollectionHoleEmptyOrUnEnchant(slot0, slot1, slot2)
-	if V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot0.cfgId).type ~= V1a6_CachotEnum.CollectionType.Enchant and not slot1 then
-		slot1 = slot1 or slot0:getEnchantCount() < slot3.holeNum
-	elseif slot4 == V1a6_CachotEnum.CollectionType.Enchant then
-		slot2 = slot2 or slot2 or not slot0:isEnchant()
+function var_0_0.isCollectionHoleEmptyOrUnEnchant(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_8_0.cfgId)
+	local var_8_1 = var_8_0.type
+
+	if var_8_1 ~= V1a6_CachotEnum.CollectionType.Enchant and not arg_8_1 then
+		local var_8_2 = var_8_0.holeNum
+		local var_8_3 = arg_8_0:getEnchantCount()
+
+		arg_8_1 = arg_8_1 or var_8_3 < var_8_2
+	elseif var_8_1 == V1a6_CachotEnum.CollectionType.Enchant and not arg_8_2 then
+		local var_8_4 = arg_8_0:isEnchant()
+
+		arg_8_2 = arg_8_2 or not var_8_4
 	end
 
-	return slot1, slot2
+	return arg_8_1, arg_8_2
 end
 
-function slot0.createCollectionHoles(slot0, slot1, slot2)
-	gohelper.CreateNumObjList(slot1, slot2, slot0 and slot0.holeNum or 0)
+function var_0_0.createCollectionHoles(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0 and arg_9_0.holeNum or 0
+
+	gohelper.CreateNumObjList(arg_9_1, arg_9_2, var_9_0)
 end
 
-function slot0.refreshCollectionUniqueTip(slot0, slot1, slot2)
-	if slot0 and slot0.unique == 1 then
-		slot4 = ""
+function var_0_0.refreshCollectionUniqueTip(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0 and arg_10_0.unique == 1
 
-		if slot1 then
-			slot1.text = (slot0.showRare ~= V1a6_CachotEnum.CollectionShowRare.Boss or luaLang("v1a6_cachotcollection_bossunique")) and luaLang("p_v1a6_cachot_collectionbagview_txt_uniquetips")
+	if var_10_0 then
+		local var_10_1 = ""
+
+		if arg_10_0.showRare == V1a6_CachotEnum.CollectionShowRare.Boss then
+			var_10_1 = luaLang("v1a6_cachotcollection_bossunique")
+		else
+			var_10_1 = luaLang("p_v1a6_cachot_collectionbagview_txt_uniquetips")
+		end
+
+		if arg_10_1 then
+			arg_10_1.text = var_10_1
 		end
 	end
 
-	if slot2 then
-		gohelper.setActive(slot2, slot3)
+	if arg_10_2 then
+		gohelper.setActive(arg_10_2, var_10_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,19 +1,21 @@
-module("modules.logic.character.model.CharacterSkinTagListModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterSkinTagListModel", package.seeall)
 
-slot0 = class("CharacterSkinTagListModel", ListScrollModel)
+local var_0_0 = class("CharacterSkinTagListModel", ListScrollModel)
 
-function slot0.updateList(slot0, slot1)
-	slot2 = {}
+function var_0_0.updateList(arg_1_0, arg_1_1)
+	local var_1_0 = {}
 
-	if string.nilorempty(slot1.storeTag) == false then
-		for slot7, slot8 in ipairs(string.splitToNumber(slot1.storeTag, "|")) do
-			table.insert(slot2, SkinConfig.instance:getSkinStoreTagConfig(slot8))
+	if string.nilorempty(arg_1_1.storeTag) == false then
+		local var_1_1 = string.splitToNumber(arg_1_1.storeTag, "|")
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			table.insert(var_1_0, SkinConfig.instance:getSkinStoreTagConfig(iter_1_1))
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

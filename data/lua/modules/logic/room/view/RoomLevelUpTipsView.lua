@@ -1,220 +1,252 @@
-module("modules.logic.room.view.RoomLevelUpTipsView", package.seeall)
+﻿module("modules.logic.room.view.RoomLevelUpTipsView", package.seeall)
 
-slot0 = class("RoomLevelUpTipsView", BaseView)
-slot1 = 43
+local var_0_0 = class("RoomLevelUpTipsView", BaseView)
+local var_0_1 = 43
 
-function slot0.onInitView(slot0)
-	slot0._simagemaskbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_maskbg")
-	slot0._txttype = gohelper.findChildText(slot0.viewGO, "title/#txt_type")
-	slot0._gopreviouslevel = gohelper.findChild(slot0.viewGO, "levelup/previous/node/#go_previouslevel")
-	slot0._txtpreviouslv = gohelper.findChildText(slot0.viewGO, "levelup/previous/#txt_previouslv")
-	slot0._gocurrentlevel = gohelper.findChild(slot0.viewGO, "levelup/current/node/#go_currentlevel")
-	slot0._txtcurrentlv = gohelper.findChildText(slot0.viewGO, "levelup/current/#txt_currentlv")
-	slot0._goinfo = gohelper.findChild(slot0.viewGO, "levelupInfo/#go_info")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
+	arg_1_0._txttype = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_type")
+	arg_1_0._gopreviouslevel = gohelper.findChild(arg_1_0.viewGO, "levelup/previous/node/#go_previouslevel")
+	arg_1_0._txtpreviouslv = gohelper.findChildText(arg_1_0.viewGO, "levelup/previous/#txt_previouslv")
+	arg_1_0._gocurrentlevel = gohelper.findChild(arg_1_0.viewGO, "levelup/current/node/#go_currentlevel")
+	arg_1_0._txtcurrentlv = gohelper.findChildText(arg_1_0.viewGO, "levelup/current/#txt_currentlv")
+	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "levelupInfo/#go_info")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._scene = GameSceneMgr.instance:getCurScene()
 
-	gohelper.setActive(slot0._gopreviouslevel, false)
-	gohelper.setActive(slot0._gocurrentlevel, false)
-	gohelper.setActive(slot0._goinfo, false)
+	gohelper.setActive(arg_5_0._gopreviouslevel, false)
+	gohelper.setActive(arg_5_0._gocurrentlevel, false)
+	gohelper.setActive(arg_5_0._goinfo, false)
 
-	slot0._previousLevelItemList = {}
-	slot0._currentLevelItemList = {}
-	slot0._infoItemList = {}
-	slot0._btnclose = gohelper.findChildClickWithAudio(slot0.viewGO, "bg")
+	arg_5_0._previousLevelItemList = {}
+	arg_5_0._currentLevelItemList = {}
+	arg_5_0._infoItemList = {}
+	arg_5_0._btnclose = gohelper.findChildClickWithAudio(arg_5_0.viewGO, "bg")
 end
 
-function slot0._refreshLevel(slot0, slot1, slot2, slot3, slot4)
-	for slot8 = 1, slot4 do
-		if not slot1[slot8] then
-			slot9 = slot0:getUserDataTb_()
-			slot9.go = gohelper.cloneInPlace(slot2, "item" .. slot8)
-			slot9.golight = gohelper.findChild(slot9.go, "active")
+function var_0_0._refreshLevel(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	for iter_6_0 = 1, arg_6_4 do
+		local var_6_0 = arg_6_1[iter_6_0]
 
-			table.insert(slot1, slot9)
+		if not var_6_0 then
+			var_6_0 = arg_6_0:getUserDataTb_()
+			var_6_0.go = gohelper.cloneInPlace(arg_6_2, "item" .. iter_6_0)
+			var_6_0.golight = gohelper.findChild(var_6_0.go, "active")
+
+			table.insert(arg_6_1, var_6_0)
 		end
 
-		gohelper.setActive(slot9.golight, slot8 <= slot3)
-		gohelper.setActive(slot9.go, true)
+		gohelper.setActive(var_6_0.golight, iter_6_0 <= arg_6_3)
+		gohelper.setActive(var_6_0.go, true)
 	end
 
-	for slot8 = slot4 + 1, #slot1 do
-		gohelper.setActive(slot1[slot8].go, false)
+	for iter_6_1 = arg_6_4 + 1, #arg_6_1 do
+		local var_6_1 = arg_6_1[iter_6_1]
+
+		gohelper.setActive(var_6_1.go, false)
 	end
 end
 
-function slot0._playLevelAnimation(slot0, slot1, slot2)
-	if not slot1 or #slot1 <= 0 then
+function var_0_0._playLevelAnimation(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 or #arg_7_1 <= 0 then
 		return
 	end
 
-	for slot6 = 1, slot2 do
-		gohelper.setActive(slot1[slot6].golight, false)
+	for iter_7_0 = 1, arg_7_2 do
+		local var_7_0 = arg_7_1[iter_7_0]
+
+		gohelper.setActive(var_7_0.golight, false)
 	end
 
-	slot5 = 0.6 + (slot2 - 1) * 0.06
+	local var_7_1 = 0.6
+	local var_7_2 = 0.06
+	local var_7_3 = var_7_1 + (arg_7_2 - 1) * var_7_2
 
-	if slot0._scene and slot0._scene.tween then
-		slot0._levelTweenId = slot0._scene.tween:tweenFloat(0, slot5, slot5, slot0._levelAnimationFrame, slot0._levelAnimationFinish, slot0, {
-			delay = slot3,
-			interval = slot4,
-			level = slot2,
-			duration = slot5,
-			itemList = slot1
+	if arg_7_0._scene and arg_7_0._scene.tween then
+		arg_7_0._levelTweenId = arg_7_0._scene.tween:tweenFloat(0, var_7_3, var_7_3, arg_7_0._levelAnimationFrame, arg_7_0._levelAnimationFinish, arg_7_0, {
+			delay = var_7_1,
+			interval = var_7_2,
+			level = arg_7_2,
+			duration = var_7_3,
+			itemList = arg_7_1
 		})
 	else
-		slot0._levelTweenId = ZProj.TweenHelper.DOTweenFloat(0, slot5, slot5, slot0._levelAnimationFrame, slot0._levelAnimationFinish, slot0, {
-			delay = slot3,
-			interval = slot4,
-			level = slot2,
-			duration = slot5,
-			itemList = slot1
+		arg_7_0._levelTweenId = ZProj.TweenHelper.DOTweenFloat(0, var_7_3, var_7_3, arg_7_0._levelAnimationFrame, arg_7_0._levelAnimationFinish, arg_7_0, {
+			delay = var_7_1,
+			interval = var_7_2,
+			level = arg_7_2,
+			duration = var_7_3,
+			itemList = arg_7_1
 		})
 	end
 end
 
-function slot0._levelAnimationFrame(slot0, slot1, slot2)
-	for slot6 = 1, slot2.level do
-		gohelper.setActive(slot2.itemList[slot6].golight, slot1 >= slot2.delay + (slot6 - 1) * slot2.interval)
+function var_0_0._levelAnimationFrame(arg_8_0, arg_8_1, arg_8_2)
+	for iter_8_0 = 1, arg_8_2.level do
+		local var_8_0 = arg_8_2.itemList[iter_8_0]
+
+		gohelper.setActive(var_8_0.golight, arg_8_1 >= arg_8_2.delay + (iter_8_0 - 1) * arg_8_2.interval)
 	end
 end
 
-function slot0._levelAnimationFinish(slot0, slot1)
-	slot0:_levelAnimationFrame(slot1.duration + 0.001, slot1)
+function var_0_0._levelAnimationFinish(arg_9_0, arg_9_1)
+	arg_9_0:_levelAnimationFrame(arg_9_1.duration + 0.001, arg_9_1)
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam.level then
-		slot0:_updateLevelInfo(slot0.viewParam.level)
-	elseif slot0.viewParam.buildingUid then
-		slot0:_updateBuildingLevelInfo(slot0.viewParam.buildingUid)
+function var_0_0.onOpen(arg_10_0)
+	if arg_10_0.viewParam.level then
+		arg_10_0:_updateLevelInfo(arg_10_0.viewParam.level)
+	elseif arg_10_0.viewParam.buildingUid then
+		arg_10_0:_updateBuildingLevelInfo(arg_10_0.viewParam.buildingUid)
 	else
-		slot0:_updateProductLineLevelInfo(slot0.viewParam.productLineMO)
+		arg_10_0:_updateProductLineLevelInfo(arg_10_0.viewParam.productLineMO)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_upgrade)
 end
 
-function slot0._updateLevelInfo(slot0, slot1)
-	slot0._txttype.text = luaLang("room_level_up")
-	slot0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", slot1 - 1)
-	slot0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", slot1)
-	slot2 = RoomConfig.instance:getMaxRoomLevel()
+function var_0_0._updateLevelInfo(arg_11_0, arg_11_1)
+	arg_11_0._txttype.text = luaLang("room_level_up")
+	arg_11_0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", arg_11_1 - 1)
+	arg_11_0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", arg_11_1)
 
-	slot0:_refreshLevel(slot0._previousLevelItemList, slot0._gopreviouslevel, slot1 - 1, slot2)
-	slot0:_refreshLevel(slot0._currentLevelItemList, slot0._gocurrentlevel, slot1, slot2)
-	slot0:_playLevelAnimation(slot0._currentLevelItemList, slot1)
-	slot0:_refreshDescTips(RoomProductionHelper.getRoomLevelUpParams(slot1 - 1, slot1, true))
+	local var_11_0 = RoomConfig.instance:getMaxRoomLevel()
+
+	arg_11_0:_refreshLevel(arg_11_0._previousLevelItemList, arg_11_0._gopreviouslevel, arg_11_1 - 1, var_11_0)
+	arg_11_0:_refreshLevel(arg_11_0._currentLevelItemList, arg_11_0._gocurrentlevel, arg_11_1, var_11_0)
+	arg_11_0:_playLevelAnimation(arg_11_0._currentLevelItemList, arg_11_1)
+
+	local var_11_1 = RoomProductionHelper.getRoomLevelUpParams(arg_11_1 - 1, arg_11_1, true)
+
+	arg_11_0:_refreshDescTips(var_11_1)
 end
 
-function slot0._updateBuildingLevelInfo(slot0, slot1)
-	slot0._txttype.text = luaLang("room_building_level_up")
-	slot3 = 0
-	slot4 = 0
-	slot5 = 0
+function var_0_0._updateBuildingLevelInfo(arg_12_0, arg_12_1)
+	local var_12_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_12_1)
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-		slot4 = Mathf.Max(0, slot2:getLevel() - 1)
+	arg_12_0._txttype.text = luaLang("room_building_level_up")
+
+	local var_12_1 = 0
+	local var_12_2 = 0
+	local var_12_3 = 0
+
+	if var_12_0 then
+		var_12_3 = var_12_0:getLevel()
+		var_12_2 = Mathf.Max(0, var_12_3 - 1)
 	end
 
-	slot0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", slot4)
-	slot0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", slot5)
+	arg_12_0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", var_12_2)
+	arg_12_0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", var_12_3)
 
-	slot0:_refreshLevel(slot0._previousLevelItemList, slot0._gopreviouslevel, slot4, slot3)
-	slot0:_refreshLevel(slot0._currentLevelItemList, slot0._gocurrentlevel, slot5, slot3)
-	slot0:_playLevelAnimation(slot0._currentLevelItemList, slot5)
-	slot0:_refreshDescTips(RoomHelper.getBuildingLevelUpTipsParam(slot1))
+	arg_12_0:_refreshLevel(arg_12_0._previousLevelItemList, arg_12_0._gopreviouslevel, var_12_2, var_12_1)
+	arg_12_0:_refreshLevel(arg_12_0._currentLevelItemList, arg_12_0._gocurrentlevel, var_12_3, var_12_1)
+	arg_12_0:_playLevelAnimation(arg_12_0._currentLevelItemList, var_12_3)
+
+	local var_12_4 = RoomHelper.getBuildingLevelUpTipsParam(arg_12_1)
+
+	arg_12_0:_refreshDescTips(var_12_4)
 end
 
-function slot0._updateProductLineLevelInfo(slot0, slot1)
-	slot0._txttype.text = luaLang("room_production_line_level_up")
-	slot0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", slot1.level - 1)
-	slot0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", slot1.level)
+function var_0_0._updateProductLineLevelInfo(arg_13_0, arg_13_1)
+	arg_13_0._txttype.text = luaLang("room_production_line_level_up")
+	arg_13_0._txtpreviouslv.text = string.format("Lv.<size=56>%d</size>", arg_13_1.level - 1)
+	arg_13_0._txtcurrentlv.text = string.format("Lv.<size=56>%d</size>", arg_13_1.level)
 
-	slot0:_refreshLevel(slot0._previousLevelItemList, slot0._gopreviouslevel, slot1.level - 1, slot1.maxLevel)
-	slot0:_refreshLevel(slot0._currentLevelItemList, slot0._gocurrentlevel, slot1.level, slot1.maxLevel)
-	slot0:_playLevelAnimation(slot0._currentLevelItemList, slot1.level)
-	slot0:_refreshDescTips(RoomProductionHelper.getProductLineLevelUpParams(slot1.id, slot1.level - 1, slot1.level, true))
+	arg_13_0:_refreshLevel(arg_13_0._previousLevelItemList, arg_13_0._gopreviouslevel, arg_13_1.level - 1, arg_13_1.maxLevel)
+	arg_13_0:_refreshLevel(arg_13_0._currentLevelItemList, arg_13_0._gocurrentlevel, arg_13_1.level, arg_13_1.maxLevel)
+	arg_13_0:_playLevelAnimation(arg_13_0._currentLevelItemList, arg_13_1.level)
+
+	local var_13_0 = RoomProductionHelper.getProductLineLevelUpParams(arg_13_1.id, arg_13_1.level - 1, arg_13_1.level, true)
+
+	arg_13_0:_refreshDescTips(var_13_0)
 end
 
-function slot0._refreshDescTips(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._infoItemList[slot5] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = gohelper.cloneInPlace(slot0._goinfo, "item" .. slot5)
-			slot7.trans = slot7.go.transform
-			slot7.gonormal = gohelper.findChild(slot7.go, "#go_normal")
-			slot7.txtinfo = gohelper.findChildText(slot7.go, "#go_normal/txt_info")
-			slot7.gohasNewItem = gohelper.findChild(slot7.go, "#go_hasNewItem")
-			slot7.txtnewItemInfo = gohelper.findChildText(slot7.go, "#go_hasNewItem/txt_newItemInfo")
-			slot7.goNewItemLayout = gohelper.findChild(slot7.go, "#go_hasNewItem/#go_newItemLayout")
-			slot7.goNewItem = gohelper.findChild(slot7.go, "#go_hasNewItem/#go_newItemLayout/#go_newItem")
+function var_0_0._refreshDescTips(arg_14_0, arg_14_1)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		local var_14_0 = arg_14_0._infoItemList[iter_14_0]
 
-			table.insert(slot0._infoItemList, slot7)
+		if not var_14_0 then
+			var_14_0 = arg_14_0:getUserDataTb_()
+			var_14_0.go = gohelper.cloneInPlace(arg_14_0._goinfo, "item" .. iter_14_0)
+			var_14_0.trans = var_14_0.go.transform
+			var_14_0.gonormal = gohelper.findChild(var_14_0.go, "#go_normal")
+			var_14_0.txtinfo = gohelper.findChildText(var_14_0.go, "#go_normal/txt_info")
+			var_14_0.gohasNewItem = gohelper.findChild(var_14_0.go, "#go_hasNewItem")
+			var_14_0.txtnewItemInfo = gohelper.findChildText(var_14_0.go, "#go_hasNewItem/txt_newItemInfo")
+			var_14_0.goNewItemLayout = gohelper.findChild(var_14_0.go, "#go_hasNewItem/#go_newItemLayout")
+			var_14_0.goNewItem = gohelper.findChild(var_14_0.go, "#go_hasNewItem/#go_newItemLayout/#go_newItem")
+
+			table.insert(arg_14_0._infoItemList, var_14_0)
 		end
 
-		slot9 = recthelper.getHeight(slot7.trans)
+		local var_14_1 = iter_14_1.newItemInfoList and true or false
+		local var_14_2 = recthelper.getHeight(var_14_0.trans)
 
-		if slot6.newItemInfoList and true or false then
-			slot9 = recthelper.getHeight(slot7.goNewItemLayout.transform)
-			slot7.txtnewItemInfo.text = slot6.desc
+		if var_14_1 then
+			var_14_2 = recthelper.getHeight(var_14_0.goNewItemLayout.transform)
+			var_14_0.txtnewItemInfo.text = iter_14_1.desc
 
-			gohelper.CreateObjList(slot0, slot0._onSetNewItem, slot6.newItemInfoList, slot7.goNewItemLayout, slot7.goNewItem)
+			gohelper.CreateObjList(arg_14_0, arg_14_0._onSetNewItem, iter_14_1.newItemInfoList, var_14_0.goNewItemLayout, var_14_0.goNewItem)
 		else
-			slot7.txtinfo.text = slot6.desc
+			var_14_0.txtinfo.text = iter_14_1.desc
 		end
 
-		recthelper.setHeight(slot7.trans, slot9)
-		gohelper.setActive(slot7.gonormal, not slot8)
-		gohelper.setActive(slot7.gohasNewItem, slot8)
-		gohelper.setActive(slot7.go, true)
+		recthelper.setHeight(var_14_0.trans, var_14_2)
+		gohelper.setActive(var_14_0.gonormal, not var_14_1)
+		gohelper.setActive(var_14_0.gohasNewItem, var_14_1)
+		gohelper.setActive(var_14_0.go, true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._infoItemList do
-		gohelper.setActive(slot0._infoItemList[slot5].go, false)
+	for iter_14_2 = #arg_14_1 + 1, #arg_14_0._infoItemList do
+		local var_14_3 = arg_14_0._infoItemList[iter_14_2]
+
+		gohelper.setActive(var_14_3.go, false)
 	end
 end
 
-function slot0._onSetNewItem(slot0, slot1, slot2, slot3)
-	slot6 = slot2.quantity or 0
-	slot7 = IconMgr.instance:getCommonItemIcon(slot1)
+function var_0_0._onSetNewItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = arg_15_2.type
+	local var_15_1 = arg_15_2.id
+	local var_15_2 = arg_15_2.quantity or 0
+	local var_15_3 = IconMgr.instance:getCommonItemIcon(arg_15_1)
 
-	slot7:setCountFontSize(uv0)
-	slot7:setMOValue(slot2.type, slot2.id, slot6)
-	slot7:isShowCount(slot6 ~= 0)
+	var_15_3:setCountFontSize(var_0_1)
+	var_15_3:setMOValue(var_15_0, var_15_1, var_15_2)
+	var_15_3:isShowCount(var_15_2 ~= 0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._levelTweenId then
-		if slot0._scene and slot0._scene.tween then
-			slot0._scene.tween:killById(slot0._levelTweenId)
+function var_0_0.onDestroyView(arg_17_0)
+	if arg_17_0._levelTweenId then
+		if arg_17_0._scene and arg_17_0._scene.tween then
+			arg_17_0._scene.tween:killById(arg_17_0._levelTweenId)
 		else
-			ZProj.TweenHelper.KillById(slot0._levelTweenId)
+			ZProj.TweenHelper.KillById(arg_17_0._levelTweenId)
 		end
 
-		slot0._levelTweenId = nil
+		arg_17_0._levelTweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

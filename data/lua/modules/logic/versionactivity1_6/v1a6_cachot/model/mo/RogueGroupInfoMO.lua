@@ -1,33 +1,39 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueGroupInfoMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueGroupInfoMO", package.seeall)
 
-slot0 = pureTable("RogueGroupInfoMO")
+local var_0_0 = pureTable("RogueGroupInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.name = slot1.name
-	slot0.clothId = slot1.clothId
-	slot0.heroList = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.name = arg_1_1.name
+	arg_1_0.clothId = arg_1_1.clothId
+	arg_1_0.heroList = {}
 
-	for slot5, slot6 in ipairs(slot1.heroList) do
-		table.insert(slot0.heroList, HeroModel.instance:getByHeroId(slot6) and slot7.uid or "0")
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.heroList) do
+		local var_1_0 = HeroModel.instance:getByHeroId(iter_1_1)
+
+		table.insert(arg_1_0.heroList, var_1_0 and var_1_0.uid or "0")
 	end
 
-	slot0.equips = {}
+	arg_1_0.equips = {}
 
-	for slot5, slot6 in ipairs(slot1.equips) do
-		slot7 = HeroGroupEquipMO.New()
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1.equips) do
+		local var_1_1 = HeroGroupEquipMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.equips, slot7)
+		var_1_1:init(iter_1_3)
+		table.insert(arg_1_0.equips, var_1_1)
 	end
 end
 
-function slot0.getFirstEquipMo(slot0, slot1)
-	if not slot0.equips[slot1] then
+function var_0_0.getFirstEquipMo(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0.equips[arg_2_1]
+
+	if not var_2_0 then
 		return nil
 	end
 
-	return EquipModel.instance:getEquip(slot2.equipUid[1])
+	local var_2_1 = var_2_0.equipUid[1]
+
+	return EquipModel.instance:getEquip(var_2_1)
 end
 
-return slot0
+return var_0_0

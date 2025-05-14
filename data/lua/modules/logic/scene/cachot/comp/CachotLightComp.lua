@@ -1,32 +1,32 @@
-module("modules.logic.scene.cachot.comp.CachotLightComp", package.seeall)
+﻿module("modules.logic.scene.cachot.comp.CachotLightComp", package.seeall)
 
-slot0 = class("CachotLightComp", BaseSceneComp)
+local var_0_0 = class("CachotLightComp", BaseSceneComp)
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot0._preloadComp = slot0._scene.preloader
-	slot0._lightGo = gohelper.create3d(slot0._scene:getSceneContainerGO(), "Light")
-	slot0._lightAnim = slot0._preloadComp:getResInst(CachotScenePreloader.LightPath, slot0._lightGo):GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._scene = arg_1_0:getCurScene()
+	arg_1_0._preloadComp = arg_1_0._scene.preloader
+	arg_1_0._lightGo = gohelper.create3d(arg_1_0._scene:getSceneContainerGO(), "Light")
+	arg_1_0._lightAnim = arg_1_0._preloadComp:getResInst(CachotScenePreloader.LightPath, arg_1_0._lightGo):GetComponent(typeof(UnityEngine.Animator))
 
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, slot0._playClickAnim, slot0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_1_0._playClickAnim, arg_1_0)
 end
 
-function slot0._playClickAnim(slot0)
-	slot0._lightAnim:Play("open", 0, 0)
+function var_0_0._playClickAnim(arg_2_0)
+	arg_2_0._lightAnim:Play("open", 0, 0)
 end
 
-function slot0.onSceneClose(slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, slot0._playClickAnim, slot0)
+function var_0_0.onSceneClose(arg_3_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_3_0._playClickAnim, arg_3_0)
 
-	if slot0._lightGo then
-		gohelper.destroy(slot0._lightGo)
+	if arg_3_0._lightGo then
+		gohelper.destroy(arg_3_0._lightGo)
 
-		slot0._lightGo = nil
+		arg_3_0._lightGo = nil
 	end
 
-	slot0._preloadComp = nil
-	slot0._scene = nil
-	slot0._lightAnim = nil
+	arg_3_0._preloadComp = nil
+	arg_3_0._scene = nil
+	arg_3_0._lightAnim = nil
 end
 
-return slot0
+return var_0_0

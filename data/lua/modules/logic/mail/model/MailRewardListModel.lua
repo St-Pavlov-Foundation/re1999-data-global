@@ -1,19 +1,19 @@
-module("modules.logic.mail.model.MailRewardListModel", package.seeall)
+﻿module("modules.logic.mail.model.MailRewardListModel", package.seeall)
 
-slot0 = class("MailRewardListModel", ListScrollModel)
+local var_0_0 = class("MailRewardListModel", ListScrollModel)
 
-function slot0.setRewardList(slot0, slot1)
-	slot0._moList = {}
+function var_0_0.setRewardList(arg_1_0, arg_1_1)
+	arg_1_0._moList = {}
 
-	if slot1 then
-		for slot5, slot6 in pairs(slot1) do
-			table.insert(slot0._moList, slot6)
+	if arg_1_1 then
+		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
+			table.insert(arg_1_0._moList, iter_1_1)
 		end
 	end
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

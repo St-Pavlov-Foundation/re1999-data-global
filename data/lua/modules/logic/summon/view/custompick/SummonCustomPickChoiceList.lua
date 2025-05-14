@@ -1,97 +1,117 @@
-module("modules.logic.summon.view.custompick.SummonCustomPickChoiceList", package.seeall)
+﻿module("modules.logic.summon.view.custompick.SummonCustomPickChoiceList", package.seeall)
 
-slot0 = class("SummonCustomPickChoiceList", BaseView)
+local var_0_0 = class("SummonCustomPickChoiceList", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._noGainHeroes = {}
-	slot0._ownHeroes = {}
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
-	slot0._goNoGain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
-	slot0._goOwn = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
-	slot0._goTitleNoGain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
-	slot0._goTitleOwn = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
-	slot0.goTips2 = gohelper.findChild(slot0.viewGO, "Tips2")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title")
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "TipsBG/Tips")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._noGainHeroes = {}
+	arg_4_0._ownHeroes = {}
+	arg_4_0._gobg = gohelper.findChild(arg_4_0.viewGO, "bg")
+	arg_4_0._goitem = gohelper.findChild(arg_4_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
+	arg_4_0._gocontent = gohelper.findChild(arg_4_0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
+	arg_4_0._goNoGain = gohelper.findChild(arg_4_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
+	arg_4_0._goOwn = gohelper.findChild(arg_4_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
+	arg_4_0._goTitleNoGain = gohelper.findChild(arg_4_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
+	arg_4_0._goTitleOwn = gohelper.findChild(arg_4_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
+	arg_4_0.goTips2 = gohelper.findChild(arg_4_0.viewGO, "Tips2")
+	arg_4_0._txtTitle = gohelper.findChildText(arg_4_0.viewGO, "Title")
+	arg_4_0._txtTips = gohelper.findChildText(arg_4_0.viewGO, "TipsBG/Tips")
 
-	gohelper.setActive(slot0._goitem, false)
+	gohelper.setActive(arg_4_0._goitem, false)
 
-	slot0._tfcontent = slot0._gocontent.transform
+	arg_4_0._tfcontent = arg_4_0._gocontent.transform
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	logNormal("SummonCustomPickChoiceList onOpen")
-	slot0:addEventCb(SummonCustomPickChoiceController.instance, SummonEvent.onCustomPickListChanged, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+	arg_6_0:addEventCb(SummonCustomPickChoiceController.instance, SummonEvent.onCustomPickListChanged, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshList()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshList()
 
-	slot2 = nil
-	slot0._txtTitle.text = (SummonCustomPickChoiceListModel.instance:getMaxSelectCount() ~= 2 or luaLang("summoncustompickchoice_txt_Title_Two")) and string.format(luaLang("summoncustompickchoice_txt_Title_Multiple"), slot1)
+	local var_8_0 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
+	local var_8_1
 
-	gohelper.setActive(slot0.goTips2, slot1 ~= 1)
+	if var_8_0 == 2 then
+		var_8_1 = luaLang("summoncustompickchoice_txt_Title_Two")
+	else
+		var_8_1 = string.format(luaLang("summoncustompickchoice_txt_Title_Multiple"), var_8_0)
+	end
 
-	slot0._txtTips.text = (SummonCustomPickChoiceListModel.instance:getPoolType() ~= SummonEnum.Type.StrongCustomOnePick or luaLang("summon_strong_custompick_desc")) and luaLang("p_selfselectsixchoiceview_txt_tips")
+	arg_8_0._txtTitle.text = var_8_1
+
+	gohelper.setActive(arg_8_0.goTips2, var_8_0 ~= 1)
+
+	if SummonCustomPickChoiceListModel.instance:getPoolType() == SummonEnum.Type.StrongCustomOnePick then
+		var_8_1 = luaLang("summon_strong_custompick_desc")
+	else
+		var_8_1 = luaLang("p_selfselectsixchoiceview_txt_tips")
+	end
+
+	arg_8_0._txtTips.text = var_8_1
 end
 
-function slot0.refreshList(slot0)
-	slot0:refreshItems(SummonCustomPickChoiceListModel.instance.noGainList, slot0._noGainHeroes, slot0._goNoGain, slot0._goTitleNoGain)
-	slot0:refreshItems(SummonCustomPickChoiceListModel.instance.ownList, slot0._ownHeroes, slot0._goOwn, slot0._goTitleOwn)
-	ZProj.UGUIHelper.RebuildLayout(slot0._tfcontent)
+function var_0_0.refreshList(arg_9_0)
+	arg_9_0:refreshItems(SummonCustomPickChoiceListModel.instance.noGainList, arg_9_0._noGainHeroes, arg_9_0._goNoGain, arg_9_0._goTitleNoGain)
+	arg_9_0:refreshItems(SummonCustomPickChoiceListModel.instance.ownList, arg_9_0._ownHeroes, arg_9_0._goOwn, arg_9_0._goTitleOwn)
+	ZProj.UGUIHelper.RebuildLayout(arg_9_0._tfcontent)
 end
 
-function slot0.refreshItems(slot0, slot1, slot2, slot3, slot4)
-	if slot1 and #slot1 > 0 then
-		gohelper.setActive(slot3, true)
-		gohelper.setActive(slot4, true)
+function var_0_0.refreshItems(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if arg_10_1 and #arg_10_1 > 0 then
+		gohelper.setActive(arg_10_3, true)
+		gohelper.setActive(arg_10_4, true)
 
-		for slot8, slot9 in ipairs(slot1) do
-			slot0:getOrCreateItem(slot8, slot2, slot3).component:onUpdateMO(slot9)
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+			arg_10_0:getOrCreateItem(iter_10_0, arg_10_2, arg_10_3).component:onUpdateMO(iter_10_1)
 		end
 	else
-		gohelper.setActive(slot3, false)
-		gohelper.setActive(slot4, false)
+		gohelper.setActive(arg_10_3, false)
+		gohelper.setActive(arg_10_4, false)
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1, slot2, slot3)
-	if not slot2[slot1] then
-		slot4 = slot0:getUserDataTb_()
-		slot4.go = gohelper.clone(slot0._goitem, slot3, "item" .. tostring(slot1))
+function var_0_0.getOrCreateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = arg_11_2[arg_11_1]
 
-		gohelper.setActive(slot4.go, true)
+	if not var_11_0 then
+		var_11_0 = arg_11_0:getUserDataTb_()
+		var_11_0.go = gohelper.clone(arg_11_0._goitem, arg_11_3, "item" .. tostring(arg_11_1))
 
-		slot4.component = MonoHelper.addNoUpdateLuaComOnceToGo(slot4.go, SummonCustomPickChoiceItem)
+		gohelper.setActive(var_11_0.go, true)
 
-		slot4.component:init(slot4.go)
-		slot4.component:addEvents()
+		var_11_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0.go, SummonCustomPickChoiceItem)
 
-		slot2[slot1] = slot4
+		var_11_0.component:init(var_11_0.go)
+		var_11_0.component:addEvents()
+
+		arg_11_2[arg_11_1] = var_11_0
 	end
 
-	return slot4
+	return var_11_0
 end
 
-return slot0
+return var_0_0

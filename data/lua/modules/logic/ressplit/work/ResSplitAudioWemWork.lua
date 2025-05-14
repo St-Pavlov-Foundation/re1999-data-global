@@ -1,58 +1,58 @@
-module("modules.logic.ressplit.work.ResSplitAudioWemWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitAudioWemWork", package.seeall)
 
-slot0 = class("ResSplitAudioWemWork", BaseWork)
+local var_0_0 = class("ResSplitAudioWemWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = io.open("../audios/Android/SoundbanksInfo.xml", "r")
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = io.open("../audios/Android/SoundbanksInfo.xml", "r")
+	local var_1_1 = var_1_0:read("*a")
 
-	slot2:close()
-	ResSplitXml2lua.parser(ResSplitXmlTree):parse(slot2:read("*a"))
+	var_1_0:close()
+	ResSplitXml2lua.parser(ResSplitXmlTree):parse(var_1_1)
+	ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, "ResSplitAudioWemWork_temp", false)
 
-	slot9 = false
+	local var_1_2 = {}
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, "ResSplitAudioWemWork_temp", slot9)
-
-	slot5 = {}
-
-	for slot9, slot10 in ipairs(lua_bg_audio.configList) do
-		if slot5[slot10.bankName] == nil then
-			slot5[slot10.bankName] = {}
+	for iter_1_0, iter_1_1 in ipairs(lua_bg_audio.configList) do
+		if var_1_2[iter_1_1.bankName] == nil then
+			var_1_2[iter_1_1.bankName] = {}
 		end
 
-		table.insert(slot5[slot10.bankName], slot10)
+		table.insert(var_1_2[iter_1_1.bankName], iter_1_1)
 	end
 
-	slot0.bank2wenDic = {}
-	slot0.bankEvent2wenDic = {}
-	slot0.wen2BankDic = {}
+	arg_1_0.bank2wenDic = {}
+	arg_1_0.bankEvent2wenDic = {}
+	arg_1_0.wen2BankDic = {}
 
-	for slot9, slot10 in pairs(ResSplitXmlTree.root.SoundBanksInfo.SoundBanks.SoundBank) do
-		slot0:_dealSingleSoundBank(slot10)
+	for iter_1_2, iter_1_3 in pairs(ResSplitXmlTree.root.SoundBanksInfo.SoundBanks.SoundBank) do
+		arg_1_0:_dealSingleSoundBank(iter_1_3)
 	end
 
-	for slot10, slot11 in pairs(ResSplitModel.instance:getExcludeDic(ResSplitEnum.CommonAudioBank)) do
-		if slot11 == true then
-			if slot0.bank2wenDic[slot10] then
-				for slot15, slot16 in pairs(slot0.bank2wenDic[slot10]) do
-					slot0.wen2BankDic[slot16][slot10] = nil
+	local var_1_3 = ResSplitModel.instance:getExcludeDic(ResSplitEnum.CommonAudioBank)
+
+	for iter_1_4, iter_1_5 in pairs(var_1_3) do
+		if iter_1_5 == true then
+			if arg_1_0.bank2wenDic[iter_1_4] then
+				for iter_1_6, iter_1_7 in pairs(arg_1_0.bank2wenDic[iter_1_4]) do
+					arg_1_0.wen2BankDic[iter_1_7][iter_1_4] = nil
 				end
 			end
 
-			slot5[slot10] = nil
+			var_1_2[iter_1_4] = nil
 		end
 	end
 
-	slot7 = {
-		[slot11] = true
-	}
+	local var_1_4 = {}
 
-	for slot11, slot12 in pairs(slot0.wen2BankDic) do
-		if tabletool.len(slot12) == 0 then
-			ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, slot11, true)
+	for iter_1_8, iter_1_9 in pairs(arg_1_0.wen2BankDic) do
+		if tabletool.len(iter_1_9) == 0 then
+			ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, iter_1_8, true)
+
+			var_1_4[iter_1_8] = true
 		end
 	end
 
-	slot8 = {
+	local var_1_5 = {
 		[AudioEnum.Default_UI_Bgm] = true,
 		[AudioEnum.Default_UI_Bgm_Stop] = true,
 		[AudioEnum.Default_Fight_Bgm] = true,
@@ -62,79 +62,92 @@ function slot0.onStart(slot0, slot1)
 		[AudioEnum.UI.Play_Login_interface_noise_1_9] = true,
 		[AudioEnum.UI.Stop_Login_interface_noise_1_9] = true
 	}
-	slot9 = {}
+	local var_1_6 = {}
 
-	for slot13, slot14 in pairs(slot5) do
-		for slot18, slot19 in pairs(slot14) do
-			if slot19 and slot0.bankEvent2wenDic[slot19.bankName .. "#" .. slot19.eventName] then
-				for slot24, slot25 in pairs(slot0.bankEvent2wenDic[slot20]) do
-					if slot7[slot25] == nil then
-						ResSplitModel.instance:setExclude(ResSplitEnum.InnerAudioWem, slot25, slot8[slot19.id] ~= true)
+	for iter_1_10, iter_1_11 in pairs(var_1_2) do
+		for iter_1_12, iter_1_13 in pairs(iter_1_11) do
+			if iter_1_13 then
+				local var_1_7 = iter_1_13.bankName .. "#" .. iter_1_13.eventName
+
+				if arg_1_0.bankEvent2wenDic[var_1_7] then
+					for iter_1_14, iter_1_15 in pairs(arg_1_0.bankEvent2wenDic[var_1_7]) do
+						if var_1_4[iter_1_15] == nil then
+							ResSplitModel.instance:setExclude(ResSplitEnum.InnerAudioWem, iter_1_15, var_1_5[iter_1_13.id] ~= true)
+						end
 					end
 				end
 			end
 		end
 	end
 
-	slot0:_dealActivitySoundBank()
-	slot0:onDone(true)
+	arg_1_0:_dealActivitySoundBank()
+	arg_1_0:onDone(true)
 end
 
-function slot0._dealActivitySoundBank(slot0)
-	slot2 = {}
+function var_0_0._dealActivitySoundBank(arg_2_0)
+	local var_2_0 = SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/../../../audios/iOS/", false)
+	local var_2_1 = {}
 
-	for slot6 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/../../../audios/iOS/", false).Length - 1 do
-		if string.find(slot1[slot6], "ui_activity", 1, true) == 1 or string.find(slot7, "activity", 1, true) then
-			table.insert(slot2, SLFramework.FileHelper.GetFileName(slot7, false))
+	for iter_2_0 = 0, var_2_0.Length - 1 do
+		local var_2_2 = var_2_0[iter_2_0]
+
+		if string.find(var_2_2, "ui_activity", 1, true) == 1 or string.find(var_2_2, "activity", 1, true) then
+			local var_2_3 = SLFramework.FileHelper.GetFileName(var_2_2, false)
+
+			table.insert(var_2_1, var_2_3)
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.CommonAudioBank, slot7, true)
+	for iter_2_1, iter_2_2 in ipairs(var_2_1) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.CommonAudioBank, iter_2_2, true)
 
-		if slot0.bank2wenDic[slot7] then
-			for slot12, slot13 in ipairs(slot8) do
-				ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, slot13, true)
+		local var_2_4 = arg_2_0.bank2wenDic[iter_2_2]
+
+		if var_2_4 then
+			for iter_2_3, iter_2_4 in ipairs(var_2_4) do
+				ResSplitModel.instance:setExclude(ResSplitEnum.AudioWem, iter_2_4, true)
 			end
 		end
 	end
 end
 
-function slot0._dealSingleSoundBank(slot0, slot1)
-	slot2 = slot1.ShortName
-	slot3 = slot1.Path
+function var_0_0._dealSingleSoundBank(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.ShortName
+	local var_3_1 = arg_3_1.Path
 
-	if slot1._attr.Language == "SFX" and slot1.IncludedEvents then
-		for slot7, slot8 in pairs(slot1.IncludedEvents.Event) do
-			slot9 = slot8._attr.Name
+	if arg_3_1._attr.Language == "SFX" and arg_3_1.IncludedEvents then
+		for iter_3_0, iter_3_1 in pairs(arg_3_1.IncludedEvents.Event) do
+			local var_3_2 = iter_3_1._attr.Name
 
-			if slot8.ReferencedStreamedFiles then
-				for slot13, slot14 in pairs(slot8.ReferencedStreamedFiles.File) do
-					slot0:_addWenInfo(slot2, slot9, slot14._attr.Id)
+			if iter_3_1.ReferencedStreamedFiles then
+				for iter_3_2, iter_3_3 in pairs(iter_3_1.ReferencedStreamedFiles.File) do
+					arg_3_0:_addWenInfo(var_3_0, var_3_2, iter_3_3._attr.Id)
 				end
 			end
 		end
 	end
 end
 
-function slot0._addWenInfo(slot0, slot1, slot2, slot3)
-	if slot0.bank2wenDic[slot1] == nil then
-		slot0.bank2wenDic[slot1] = {}
+function var_0_0._addWenInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_0.bank2wenDic[arg_4_1] == nil then
+		arg_4_0.bank2wenDic[arg_4_1] = {}
 	end
 
-	table.insert(slot0.bank2wenDic[slot1], slot3)
+	table.insert(arg_4_0.bank2wenDic[arg_4_1], arg_4_3)
 
-	if slot0.bankEvent2wenDic[slot1 .. "#" .. slot2] == nil then
-		slot0.bankEvent2wenDic[slot4] = {}
+	local var_4_0 = arg_4_1 .. "#" .. arg_4_2
+
+	if arg_4_0.bankEvent2wenDic[var_4_0] == nil then
+		arg_4_0.bankEvent2wenDic[var_4_0] = {}
 	end
 
-	table.insert(slot0.bankEvent2wenDic[slot4], slot3)
+	table.insert(arg_4_0.bankEvent2wenDic[var_4_0], arg_4_3)
 
-	if slot0.wen2BankDic[slot3] == nil then
-		slot0.wen2BankDic[slot3] = {}
+	if arg_4_0.wen2BankDic[arg_4_3] == nil then
+		arg_4_0.wen2BankDic[arg_4_3] = {}
 	end
 
-	slot0.wen2BankDic[slot3][slot1] = true
+	arg_4_0.wen2BankDic[arg_4_3][arg_4_1] = true
 end
 
-return slot0
+return var_0_0

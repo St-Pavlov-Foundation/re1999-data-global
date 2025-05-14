@@ -1,35 +1,36 @@
-module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaStoryViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaStoryViewContainer", package.seeall)
 
-slot0 = class("LanShouPaStoryViewContainer", BaseViewContainer)
+local var_0_0 = class("LanShouPaStoryViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_ChapterList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = LanShouPaStoryViewItem.prefabPath
-	slot2.cellClass = LanShouPaStoryViewItem
-	slot2.scrollDir = ScrollEnum.ScrollDirH
-	slot2.lineCount = 1
-	slot2.cellWidth = 500
-	slot2.cellHeight = 720
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(LanShouPaStoryListModel.instance, slot2))
-	table.insert(slot1, LanShouPaStoryView.New())
+	var_1_1.scrollGOPath = "#scroll_ChapterList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = LanShouPaStoryViewItem.prefabPath
+	var_1_1.cellClass = LanShouPaStoryViewItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirH
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 500
+	var_1_1.cellHeight = 720
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(LanShouPaStoryListModel.instance, var_1_1))
+	table.insert(var_1_0, LanShouPaStoryView.New())
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -40,4 +41,4 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

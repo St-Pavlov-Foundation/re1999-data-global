@@ -1,135 +1,146 @@
-module("modules.logic.fight.view.assistboss.FightAssistBossBase", package.seeall)
+﻿module("modules.logic.fight.view.assistboss.FightAssistBossBase", package.seeall)
 
-slot0 = class("FightAssistBossBase", UserDataDispose)
-slot0.InCDColor = Color(0.5019607843137255, 0.5019607843137255, 0.5019607843137255)
+local var_0_0 = class("FightAssistBossBase", UserDataDispose)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+var_0_0.InCDColor = Color(0.5019607843137255, 0.5019607843137255, 0.5019607843137255)
 
-	slot0.goContainer = slot1
-	slot0.loadDone = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0:setPrefabPath()
-	slot0:loadRes()
+	arg_1_0.goContainer = arg_1_1
+	arg_1_0.loadDone = false
+
+	arg_1_0:setPrefabPath()
+	arg_1_0:loadRes()
 end
 
-function slot0.setPrefabPath(slot0)
-	slot0.prefabPath = "ui/viewres/assistboss/boss0.prefab"
+function var_0_0.setPrefabPath(arg_2_0)
+	arg_2_0.prefabPath = "ui/viewres/assistboss/boss0.prefab"
 end
 
-function slot0.loadRes(slot0)
-	slot0.loader = PrefabInstantiate.Create(slot0.goContainer)
+function var_0_0.loadRes(arg_3_0)
+	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.goContainer)
 
-	slot0.loader:startLoad(slot0.prefabPath, slot0.onResLoaded, slot0)
+	arg_3_0.loader:startLoad(arg_3_0.prefabPath, arg_3_0.onResLoaded, arg_3_0)
 end
 
-function slot0.onResLoaded(slot0)
-	slot0.loadDone = true
-	slot0.viewGo = slot0.loader:getInstGO()
+function var_0_0.onResLoaded(arg_4_0)
+	arg_4_0.loadDone = true
+	arg_4_0.viewGo = arg_4_0.loader:getInstGO()
 
-	slot0:initView()
-	slot0:addEvents()
-	slot0:refreshUI()
+	arg_4_0:initView()
+	arg_4_0:addEvents()
+	arg_4_0:refreshUI()
 end
 
-function slot0.initView(slot0)
-	slot0.headImage = gohelper.findChildImage(slot0.viewGo, "head/boss")
-	slot0.headSImage = gohelper.findChildSingleImage(slot0.viewGo, "head/boss")
-	slot0.goCD = gohelper.findChild(slot0.viewGo, "cd")
-	slot0.txtCD = gohelper.findChildText(slot0.viewGo, "cd/cdbg/#txt_cd")
-	slot0.longListener = SLFramework.UGUI.UILongPressListener.Get(gohelper.findChild(slot0.viewGo, "clickarea"))
+function var_0_0.initView(arg_5_0)
+	arg_5_0.headImage = gohelper.findChildImage(arg_5_0.viewGo, "head/boss")
+	arg_5_0.headSImage = gohelper.findChildSingleImage(arg_5_0.viewGo, "head/boss")
+	arg_5_0.goCD = gohelper.findChild(arg_5_0.viewGo, "cd")
+	arg_5_0.txtCD = gohelper.findChildText(arg_5_0.viewGo, "cd/cdbg/#txt_cd")
 
-	slot0.longListener:SetLongPressTime({
+	local var_5_0 = gohelper.findChild(arg_5_0.viewGo, "clickarea")
+
+	arg_5_0.longListener = SLFramework.UGUI.UILongPressListener.Get(var_5_0)
+
+	arg_5_0.longListener:SetLongPressTime({
 		0.5,
 		99999
 	})
-	slot0.longListener:AddLongPressListener(slot0.onLongPress, slot0)
-	slot0.longListener:AddClickListener(slot0.playAssistBossCard, slot0)
+	arg_5_0.longListener:AddLongPressListener(arg_5_0.onLongPress, arg_5_0)
+	arg_5_0.longListener:AddClickListener(arg_5_0.playAssistBossCard, arg_5_0)
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnAssistBossPowerChange, slot0.onAssistBossPowerChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnAssistBossCDChange, slot0.onAssistBossCDChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PowerChange, slot0.onPowerChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnResetCard, slot0.onResetCard, slot0)
+function var_0_0.addEvents(arg_6_0)
+	arg_6_0:addEventCb(FightController.instance, FightEvent.OnAssistBossPowerChange, arg_6_0.onAssistBossPowerChange, arg_6_0)
+	arg_6_0:addEventCb(FightController.instance, FightEvent.OnAssistBossCDChange, arg_6_0.onAssistBossCDChange, arg_6_0)
+	arg_6_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_6_0.onPowerChange, arg_6_0)
+	arg_6_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_6_0.onResetCard, arg_6_0)
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0.loadDone then
+function var_0_0.refreshUI(arg_7_0)
+	if not arg_7_0.loadDone then
 		return
 	end
 
-	slot0:refreshHeadImage()
-	slot0:refreshPower()
-	slot0:refreshCD()
+	arg_7_0:refreshHeadImage()
+	arg_7_0:refreshPower()
+	arg_7_0:refreshCD()
 end
 
-function slot0.onAssistBossPowerChange(slot0)
-	slot0:refreshPower()
+function var_0_0.onAssistBossPowerChange(arg_8_0)
+	arg_8_0:refreshPower()
 end
 
-function slot0.onAssistBossCDChange(slot0)
-	slot0:refreshCD()
+function var_0_0.onAssistBossCDChange(arg_9_0)
+	arg_9_0:refreshCD()
 end
 
-function slot0.onPowerChange(slot0, slot1, slot2, slot3, slot4)
-	if slot2 ~= FightEnum.PowerType.AssistBoss then
+function var_0_0.onPowerChange(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if arg_10_2 ~= FightEnum.PowerType.AssistBoss then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getAssistBoss() or slot5.id ~= slot1 then
+	local var_10_0 = FightDataHelper.entityMgr:getAssistBoss()
+
+	if not var_10_0 or var_10_0.id ~= arg_10_1 then
 		return
 	end
 
-	slot0:refreshPower()
+	arg_10_0:refreshPower()
 end
 
-function slot0.onResetCard(slot0)
-	slot0:refreshPower()
-	slot0:refreshCD()
+function var_0_0.onResetCard(arg_11_0)
+	arg_11_0:refreshPower()
+	arg_11_0:refreshCD()
 end
 
-function slot0.refreshHeadImage(slot0)
-	slot0.headSImage:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(FightDataHelper.entityMgr:getAssistBoss().originSkin).headIcon))
+function var_0_0.refreshHeadImage(arg_12_0)
+	local var_12_0 = FightDataHelper.entityMgr:getAssistBoss().originSkin
+	local var_12_1 = FightConfig.instance:getSkinCO(var_12_0)
+
+	arg_12_0.headSImage:LoadImage(ResUrl.monsterHeadIcon(var_12_1.headIcon))
 end
 
-function slot0.refreshPower(slot0)
-	slot0:refreshHeadImageColor()
+function var_0_0.refreshPower(arg_13_0)
+	arg_13_0:refreshHeadImageColor()
 end
 
-function slot0.checkInCd(slot0)
-	return FightDataHelper.paTaMgr:getCurCD() and slot1 > 0
+function var_0_0.checkInCd(arg_14_0)
+	local var_14_0 = FightDataHelper.paTaMgr:getCurCD()
+
+	return var_14_0 and var_14_0 > 0
 end
 
-function slot0.refreshCD(slot0)
-	slot1 = slot0:checkInCd()
+function var_0_0.refreshCD(arg_15_0)
+	local var_15_0 = arg_15_0:checkInCd()
 
-	gohelper.setActive(slot0.goCD, slot1)
+	gohelper.setActive(arg_15_0.goCD, var_15_0)
 
-	if slot1 then
-		slot0.txtCD.text = tostring(FightDataHelper.paTaMgr:getCurCD())
+	if var_15_0 then
+		arg_15_0.txtCD.text = tostring(FightDataHelper.paTaMgr:getCurCD())
 	end
 
-	slot0:refreshHeadImageColor()
+	arg_15_0:refreshHeadImageColor()
 end
 
-function slot0.refreshHeadImageColor(slot0)
+function var_0_0.refreshHeadImageColor(arg_16_0)
 	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
-		slot0.headImage.color = uv0.InCDColor
+		arg_16_0.headImage.color = var_0_0.InCDColor
 
 		return
 	end
 
-	if slot0:checkInCd() then
-		slot0.headImage.color = uv0.InCDColor
+	if arg_16_0:checkInCd() then
+		arg_16_0.headImage.color = var_0_0.InCDColor
 
 		return
 	end
 
-	slot0.headImage.color = Color.white
+	arg_16_0.headImage.color = Color.white
 end
 
-function slot0.onLongPress(slot0)
+function var_0_0.onLongPress(arg_17_0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
 		return
 	end
@@ -142,36 +153,48 @@ function slot0.onLongPress(slot0)
 		return
 	end
 
-	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() and not FightDataHelper.paTaMgr:getBossSkillInfoList()[1] then
-		logError("boss not found any one skill!")
+	local var_17_0 = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+
+	if not var_17_0 then
+		var_17_0 = FightDataHelper.paTaMgr:getBossSkillInfoList()[1]
+
+		if not var_17_0 then
+			logError("boss not found any one skill!")
+
+			return
+		end
+	end
+
+	local var_17_1 = var_17_0.skillId
+	local var_17_2 = lua_skill.configDict[var_17_1]
+
+	if not var_17_2 then
+		logError("long press assist boss, skill not exist !!! id : " .. tostring(var_17_1))
 
 		return
 	end
 
-	if not lua_skill.configDict[slot1.skillId] then
-		logError("long press assist boss, skill not exist !!! id : " .. tostring(slot2))
+	arg_17_0.tempInfo = arg_17_0.tempInfo or {}
 
-		return
-	end
+	tabletool.clear(arg_17_0.tempInfo)
 
-	slot0.tempInfo = slot0.tempInfo or {}
+	arg_17_0.tempSkillIdList = arg_17_0.tempSkillIdList or {}
 
-	tabletool.clear(slot0.tempInfo)
+	tabletool.clear(arg_17_0.tempSkillIdList)
 
-	slot0.tempSkillIdList = slot0.tempSkillIdList or {}
+	arg_17_0.tempSkillIdList[1] = var_17_1
+	arg_17_0.tempInfo.super = var_17_2.isBigSkill == 1
+	arg_17_0.tempInfo.skillIdList = arg_17_0.tempSkillIdList
+	arg_17_0.tempInfo.skillIndex = 1
 
-	tabletool.clear(slot0.tempSkillIdList)
+	local var_17_3 = FightDataHelper.entityMgr:getAssistBoss()
 
-	slot0.tempSkillIdList[1] = slot2
-	slot0.tempInfo.super = slot3.isBigSkill == 1
-	slot0.tempInfo.skillIdList = slot0.tempSkillIdList
-	slot0.tempInfo.skillIndex = 1
-	slot0.tempInfo.monsterName = FightDataHelper.entityMgr:getAssistBoss() and slot4:getEntityName() or ""
+	arg_17_0.tempInfo.monsterName = var_17_3 and var_17_3:getEntityName() or ""
 
-	ViewMgr.instance:openView(ViewName.SkillTipView, slot0.tempInfo)
+	ViewMgr.instance:openView(ViewName.SkillTipView, arg_17_0.tempInfo)
 end
 
-function slot0.playAssistBossCard(slot0)
+function var_0_0.playAssistBossCard(arg_18_0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard then
 		return
 	end
@@ -184,91 +207,99 @@ function slot0.playAssistBossCard(slot0)
 		return
 	end
 
-	if not slot0:canUseSkill() then
+	local var_18_0 = arg_18_0:canUseSkill()
+
+	if not var_18_0 then
 		return
 	end
 
-	slot2 = FightCardModel.instance:playAssistBossHandCardOp(slot1.skillId)
+	local var_18_1 = FightCardModel.instance:playAssistBossHandCardOp(var_18_0.skillId)
 
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot2)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_18_1)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, slot2)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, slot2)
-	FightDataHelper.paTaMgr:playAssistBossSkill(slot1)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_18_1)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, var_18_1)
+	FightDataHelper.paTaMgr:playAssistBossSkill(var_18_0)
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossPowerChange)
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossCDChange)
 
 	return true
 end
 
-function slot0.canUseSkill(slot0)
+function var_0_0.canUseSkill(arg_19_0)
 	if not FightDataHelper.paTaMgr:canUseSkill() then
 		return
 	end
 
-	if FightDataHelper.paTaMgr:getCurCD() and slot1 > 0 then
+	local var_19_0 = FightDataHelper.paTaMgr:getCurCD()
+
+	if var_19_0 and var_19_0 > 0 then
 		return
 	end
 
-	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
+	local var_19_1 = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+
+	if not var_19_1 then
 		return
 	end
 
-	if FightDataHelper.paTaMgr:getAssistBossPower() < FightDataHelper.paTaMgr:getNeedPower(slot2) then
+	if FightDataHelper.paTaMgr:getNeedPower(var_19_1) > FightDataHelper.paTaMgr:getAssistBossPower() then
 		return
 	end
 
-	return slot2
+	return var_19_1
 end
 
-slot0.Duration = 0.5
+var_0_0.Duration = 0.5
 
-function slot0.setFillAmount(slot0, slot1, slot2)
-	slot0:killTween()
+function var_0_0.setFillAmount(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0:killTween()
 
-	if not slot1 then
-		slot0.curImage = nil
+	if not arg_20_1 then
+		arg_20_0.curImage = nil
 
 		return
 	end
 
-	slot0.curImage = slot1
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot1.fillAmount, slot2, uv0.Duration, slot0.onFrameCallback, nil, slot0, nil, EaseType.Linear)
+	local var_20_0 = arg_20_1.fillAmount
+
+	arg_20_0.curImage = arg_20_1
+	arg_20_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_20_0, arg_20_2, var_0_0.Duration, arg_20_0.onFrameCallback, nil, arg_20_0, nil, EaseType.Linear)
 end
 
-function slot0.onFrameCallback(slot0, slot1)
-	slot0.curImage.fillAmount = slot1
+function var_0_0.onFrameCallback(arg_21_0, arg_21_1)
+	arg_21_0.curImage.fillAmount = arg_21_1
 end
 
-function slot0.killTween(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.killTween(arg_22_0)
+	if arg_22_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:killTween()
+function var_0_0.destroy(arg_23_0)
+	arg_23_0:killTween()
 
-	if slot0.headSImage then
-		slot0.headSImage:UnLoadImage()
+	if arg_23_0.headSImage then
+		arg_23_0.headSImage:UnLoadImage()
 	end
 
-	if slot0.loader then
-		slot0.loader:dispose()
+	if arg_23_0.loader then
+		arg_23_0.loader:dispose()
 
-		slot0.loader = nil
+		arg_23_0.loader = nil
 	end
 
-	if slot0.longListener then
-		slot0.longListener:RemoveClickListener()
-		slot0.longListener:RemoveLongPressListener()
+	if arg_23_0.longListener then
+		arg_23_0.longListener:RemoveClickListener()
+		arg_23_0.longListener:RemoveLongPressListener()
 
-		slot0.longListener = nil
+		arg_23_0.longListener = nil
 	end
 
-	slot0.loadDone = false
+	arg_23_0.loadDone = false
 
-	slot0:__onDispose()
+	arg_23_0:__onDispose()
 end
 
-return slot0
+return var_0_0

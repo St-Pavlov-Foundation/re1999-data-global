@@ -1,29 +1,36 @@
-module("modules.logic.fight.system.work.FightWorkSpCardAddContainer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSpCardAddContainer", package.seeall)
 
-slot0 = class("FightWorkSpCardAddContainer", FightStepEffectFlow)
-slot1 = {
+local var_0_0 = class("FightWorkSpCardAddContainer", FightStepEffectFlow)
+local var_0_1 = {
 	[FightEnum.EffectType.SPCARDADD] = true,
 	[FightEnum.EffectType.CHANGETOTEMPCARD] = true
 }
 
-function slot0.onStart(slot0)
-	slot3 = slot0:com_registWorkDoneFlowParallel():registWork(FightWorkFlowSequence)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0:getAdjacentSameEffectList(var_0_1, true)
+	local var_1_1 = arg_1_0:com_registWorkDoneFlowParallel()
+	local var_1_2 = var_1_1:registWork(FightWorkFlowSequence)
+	local var_1_3 = 0
 
-	for slot8, slot9 in ipairs(slot0:getAdjacentSameEffectList(uv0, true)) do
-		slot10 = slot9.effect.effectType
-		slot11 = FightStepBuilder.ActEffectWorkCls[slot10]
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_4 = iter_1_1.effect.effectType
+		local var_1_5 = FightStepBuilder.ActEffectWorkCls[var_1_4]
 
-		if slot10 == FightEnum.EffectType.SPCARDADD then
-			slot2:registWork(FightWorkFlowSequence):registWork(FightWorkDelayTimer, 0.1 * (0 + 1))
+		if var_1_4 == FightEnum.EffectType.SPCARDADD then
+			var_1_3 = var_1_3 + 1
+			var_1_2 = var_1_1:registWork(FightWorkFlowSequence)
+
+			var_1_2:registWork(FightWorkDelayTimer, 0.1 * var_1_3)
 		end
 
-		slot3:registWork(slot11, slot9.stepMO, slot9.effect)
+		var_1_2:registWork(var_1_5, iter_1_1.stepMO, iter_1_1.effect)
 	end
 
-	slot2:start()
+	var_1_1:start()
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

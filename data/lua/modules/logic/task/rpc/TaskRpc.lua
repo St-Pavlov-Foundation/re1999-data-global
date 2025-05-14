@@ -1,170 +1,175 @@
-module("modules.logic.task.rpc.TaskRpc", package.seeall)
+﻿module("modules.logic.task.rpc.TaskRpc", package.seeall)
 
-slot0 = class("TaskRpc", BaseRpc)
+local var_0_0 = class("TaskRpc", BaseRpc)
 
-function slot0.onInit(slot0)
-	slot0._sendTypeDict = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._sendTypeDict = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._sendTypeDict = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._sendTypeDict = nil
 
-	TaskDispatcher.cancelTask(slot0._delaySendGetTask, slot0)
+	TaskDispatcher.cancelTask(arg_2_0._delaySendGetTask, arg_2_0)
 end
 
-function slot0.sendGetTaskInfoRequest(slot0, slot1, slot2, slot3)
-	if not slot2 then
-		if not slot0._sendTypeDict then
-			slot0._sendTypeDict = {}
+function var_0_0.sendGetTaskInfoRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if not arg_3_2 then
+		if not arg_3_0._sendTypeDict then
+			arg_3_0._sendTypeDict = {}
 
-			TaskDispatcher.runDelay(slot0._delaySendGetTask, slot0, 0.5)
+			TaskDispatcher.runDelay(arg_3_0._delaySendGetTask, arg_3_0, 0.5)
 		end
 
-		for slot7, slot8 in pairs(slot1) do
-			slot0._sendTypeDict[slot8] = true
+		for iter_3_0, iter_3_1 in pairs(arg_3_1) do
+			arg_3_0._sendTypeDict[iter_3_1] = true
 		end
 
 		return
 	end
 
-	logNormal("send Get TaskInfo Request" .. slot1[1])
+	logNormal("send Get TaskInfo Request" .. arg_3_1[1])
 
-	slot4 = TaskModule_pb.GetTaskInfoRequest()
+	local var_3_0 = TaskModule_pb.GetTaskInfoRequest()
 
-	for slot8, slot9 in pairs(slot1) do
-		table.insert(slot4.typeIds, slot9)
+	for iter_3_2, iter_3_3 in pairs(arg_3_1) do
+		table.insert(var_3_0.typeIds, iter_3_3)
 	end
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
 end
 
-function slot0._delaySendGetTask(slot0)
-	if slot0._sendTypeDict then
-		slot1 = TaskModule_pb.GetTaskInfoRequest()
+function var_0_0._delaySendGetTask(arg_4_0)
+	if arg_4_0._sendTypeDict then
+		local var_4_0 = TaskModule_pb.GetTaskInfoRequest()
 
-		for slot5 in pairs(slot0._sendTypeDict) do
-			table.insert(slot1.typeIds, slot5)
+		for iter_4_0 in pairs(arg_4_0._sendTypeDict) do
+			table.insert(var_4_0.typeIds, iter_4_0)
 		end
 
-		slot0:sendMsg(slot1)
+		arg_4_0:sendMsg(var_4_0)
 
-		slot0._sendTypeDict = nil
+		arg_4_0._sendTypeDict = nil
 	end
 end
 
-function slot0.onReceiveGetTaskInfoReply(slot0, slot1, slot2)
-	logNormal("Receive Get TaskInfo Reply" .. slot1)
+function var_0_0.onReceiveGetTaskInfoReply(arg_5_0, arg_5_1, arg_5_2)
+	logNormal("Receive Get TaskInfo Reply" .. arg_5_1)
 
-	if slot1 == 0 then
-		TaskModel.instance:setTaskMOList(slot2.taskInfo, slot2.typeIds)
-		TaskModel.instance:setTaskActivityMOList(slot2.activityInfo)
-		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList, slot2.typeIds)
+	if arg_5_1 == 0 then
+		TaskModel.instance:setTaskMOList(arg_5_2.taskInfo, arg_5_2.typeIds)
+		TaskModel.instance:setTaskActivityMOList(arg_5_2.activityInfo)
+		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList, arg_5_2.typeIds)
 	end
 end
 
-function slot0.sendFinishTaskRequest(slot0, slot1, slot2, slot3)
-	logNormal("send Finish Task Request" .. slot1)
+function var_0_0.sendFinishTaskRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	logNormal("send Finish Task Request" .. arg_6_1)
 
-	slot4 = TaskModule_pb.FinishTaskRequest()
-	slot4.id = slot1
+	local var_6_0 = TaskModule_pb.FinishTaskRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_6_0.id = arg_6_1
+
+	arg_6_0:sendMsg(var_6_0, arg_6_2, arg_6_3)
 end
 
-function slot0.onReceiveFinishTaskReply(slot0, slot1, slot2)
-	logNormal("Receive Finish Task Reply" .. slot1)
+function var_0_0.onReceiveFinishTaskReply(arg_7_0, arg_7_1, arg_7_2)
+	logNormal("Receive Finish Task Reply" .. arg_7_1)
 
-	if slot1 == 0 then
-		TaskController.instance:dispatchEvent(TaskEvent.OnFinishTask, slot2.id)
+	if arg_7_1 == 0 then
+		TaskController.instance:dispatchEvent(TaskEvent.OnFinishTask, arg_7_2.id)
 
-		if TaskConfig.instance:gettaskdailyCO(slot2.id) then
+		if TaskConfig.instance:gettaskdailyCO(arg_7_2.id) then
 			SDKChannelEventModel.instance:updateDailyTaskActive()
 		end
 	end
 end
 
-function slot0.sendGetTaskActivityBonusRequest(slot0, slot1, slot2)
-	logNormal("send Get TaskActivityBonus Request" .. slot2)
+function var_0_0.sendGetTaskActivityBonusRequest(arg_8_0, arg_8_1, arg_8_2)
+	logNormal("send Get TaskActivityBonus Request" .. arg_8_2)
 
-	slot3 = TaskModule_pb.GetTaskActivityBonusRequest()
-	slot3.typeId = slot1
-	slot3.defineId = slot2
+	local var_8_0 = TaskModule_pb.GetTaskActivityBonusRequest()
 
-	slot0:sendMsg(slot3)
+	var_8_0.typeId = arg_8_1
+	var_8_0.defineId = arg_8_2
+
+	arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceiveGetTaskActivityBonusReply(slot0, slot1, slot2)
-	logNormal("Receive Get TaskActivityBonus Reply" .. slot1)
+function var_0_0.onReceiveGetTaskActivityBonusReply(arg_9_0, arg_9_1, arg_9_2)
+	logNormal("Receive Get TaskActivityBonus Reply" .. arg_9_1)
 
-	if slot1 == 0 then
+	if arg_9_1 == 0 then
 		TaskController.instance:dispatchEvent(TaskEvent.SuccessGetBonus)
 	end
 end
 
-function slot0.onReceiveUpdateTaskPush(slot0, slot1, slot2)
-	logNormal("Receive Update Task Push" .. slot1)
+function var_0_0.onReceiveUpdateTaskPush(arg_10_0, arg_10_1, arg_10_2)
+	logNormal("Receive Update Task Push" .. arg_10_1)
 
-	if slot1 == 0 then
-		TaskModel.instance:onTaskMOChange(slot2.taskInfo)
-		TaskModel.instance:onTaskActivityMOChange(slot2.activityInfo)
-		TaskController.instance:dispatchEvent(TaskEvent.UpdateTaskList, slot2)
+	if arg_10_1 == 0 then
+		TaskModel.instance:onTaskMOChange(arg_10_2.taskInfo)
+		TaskModel.instance:onTaskActivityMOChange(arg_10_2.activityInfo)
+		TaskController.instance:dispatchEvent(TaskEvent.UpdateTaskList, arg_10_2)
 	end
 end
 
-function slot0.onReceiveDeleteTaskPush(slot0, slot1, slot2)
-	logNormal("Receive Delete Task Push" .. slot1)
+function var_0_0.onReceiveDeleteTaskPush(arg_11_0, arg_11_1, arg_11_2)
+	logNormal("Receive Delete Task Push" .. arg_11_1)
 
-	if slot1 == 0 then
-		TaskModel.instance:deleteTask(slot2.taskIds)
-		TaskController.instance:dispatchEvent(TaskEvent.OnDeleteTask, slot2)
+	if arg_11_1 == 0 then
+		TaskModel.instance:deleteTask(arg_11_2.taskIds)
+		TaskController.instance:dispatchEvent(TaskEvent.OnDeleteTask, arg_11_2)
 	end
 end
 
-function slot0.sendFinishAllTaskRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	TaskModule_pb.FinishAllTaskRequest().typeId = slot1
+function var_0_0.sendFinishAllTaskRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6)
+	local var_12_0 = TaskModule_pb.FinishAllTaskRequest()
 
-	if slot2 then
-		slot7.minTypeId = slot2
+	var_12_0.typeId = arg_12_1
+
+	if arg_12_2 then
+		var_12_0.minTypeId = arg_12_2
 	end
 
-	if slot6 then
-		slot7.activityId = slot6
+	if arg_12_6 then
+		var_12_0.activityId = arg_12_6
 	end
 
-	if slot3 then
-		for slot11, slot12 in ipairs(slot3) do
-			table.insert(slot7.taskIds, slot12)
+	if arg_12_3 then
+		for iter_12_0, iter_12_1 in ipairs(arg_12_3) do
+			table.insert(var_12_0.taskIds, iter_12_1)
 		end
 	end
 
-	slot0:sendMsg(slot7, slot4, slot5)
+	arg_12_0:sendMsg(var_12_0, arg_12_4, arg_12_5)
 end
 
-function slot0.onReceiveFinishAllTaskReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveFinishAllTaskReply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 == 0 then
 		logNormal("一键领取任务奖励成功")
 		TaskController.instance:dispatchEvent(TaskEvent.SuccessGetBonus)
 
-		if slot2.typeId == TaskEnum.TaskType.Daily then
+		if arg_13_2.typeId == TaskEnum.TaskType.Daily then
 			SDKChannelEventModel.instance:updateDailyTaskActive()
 		end
 	end
 end
 
-function slot0.sendFinishReadTaskRequest(slot0, slot1, slot2, slot3)
-	slot4 = TaskModule_pb.FinishReadTaskRequest()
-	slot4.taskId = slot1
+function var_0_0.sendFinishReadTaskRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = TaskModule_pb.FinishReadTaskRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_14_0.taskId = arg_14_1
+
+	return arg_14_0:sendMsg(var_14_0, arg_14_2, arg_14_3)
 end
 
-function slot0.onReceiveFinishReadTaskReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		TaskController.instance:dispatchEvent(TaskEvent.onReceiveFinishReadTaskReply, slot2.taskId)
-		SportsNewsController.instance:dispatchEvent(SportsNewsEvent.OnReadEnd, slot2.taskId)
+function var_0_0.onReceiveFinishReadTaskReply(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 == 0 then
+		TaskController.instance:dispatchEvent(TaskEvent.onReceiveFinishReadTaskReply, arg_15_2.taskId)
+		SportsNewsController.instance:dispatchEvent(SportsNewsEvent.OnReadEnd, arg_15_2.taskId)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

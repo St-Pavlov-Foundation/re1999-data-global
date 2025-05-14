@@ -1,26 +1,26 @@
-module("modules.common.work.OpenViewAndWaitCloseWork", package.seeall)
+﻿module("modules.common.work.OpenViewAndWaitCloseWork", package.seeall)
 
-slot0 = class("OpenViewAndWaitCloseWork", BaseWork)
+local var_0_0 = class("OpenViewAndWaitCloseWork", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0.viewName = slot1
-	slot0.viewParam = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.viewName = arg_1_1
+	arg_1_0.viewParam = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	ViewMgr.instance:openView(slot0.viewName, slot0.viewParam)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.onStart(arg_2_0)
+	ViewMgr.instance:openView(arg_2_0.viewName, arg_2_0.viewParam)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot0.viewName == slot1 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-		slot0:onDone(true)
+function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
+	if arg_3_0.viewName == arg_3_1 then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

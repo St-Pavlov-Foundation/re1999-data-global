@@ -1,450 +1,459 @@
-module("modules.logic.character.model.CharacterModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterModel", package.seeall)
 
-slot0 = class("CharacterModel", BaseModel)
+local var_0_0 = class("CharacterModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._btnTag = {}
-	slot0._curCardList = {}
-	slot0._curRankIndex = 0
-	slot0._rareAscend = false
-	slot0._levelAscend = false
-	slot0._faithAscend = false
-	slot0._exSklAscend = false
-	slot0._showHeroDict = {}
-	slot0._heroList = nil
-	slot0._hideGainHeroView = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._btnTag = {}
+	arg_2_0._curCardList = {}
+	arg_2_0._curRankIndex = 0
+	arg_2_0._rareAscend = false
+	arg_2_0._levelAscend = false
+	arg_2_0._faithAscend = false
+	arg_2_0._exSklAscend = false
+	arg_2_0._showHeroDict = {}
+	arg_2_0._heroList = nil
+	arg_2_0._hideGainHeroView = false
 end
 
-function slot0.getBtnTag(slot0, slot1)
-	if not slot0._btnTag[slot1] then
-		slot0._btnTag[slot1] = 1
+function var_0_0.getBtnTag(arg_3_0, arg_3_1)
+	if not arg_3_0._btnTag[arg_3_1] then
+		arg_3_0._btnTag[arg_3_1] = 1
 	end
 
-	return slot0._btnTag[slot1]
+	return arg_3_0._btnTag[arg_3_1]
 end
 
-function slot0.getRankIndex(slot0)
-	return slot0._curRankIndex
+function var_0_0.getRankIndex(arg_4_0)
+	return arg_4_0._curRankIndex
 end
 
-function slot0.setSortByRankDescOnce(slot0)
-	slot0._sortByRankDesc = true
+function var_0_0.setSortByRankDescOnce(arg_5_0)
+	arg_5_0._sortByRankDesc = true
 end
 
-function slot0._setCharacterCardList(slot0, slot1)
-	CharacterBackpackCardListModel.instance:setCharacterCardList(slot1)
+function var_0_0._setCharacterCardList(arg_6_0, arg_6_1)
+	CharacterBackpackCardListModel.instance:setCharacterCardList(arg_6_1)
 end
 
-function slot0.setHeroList(slot0, slot1)
-	slot0._heroList = slot1
+function var_0_0.setHeroList(arg_7_0, arg_7_1)
+	arg_7_0._heroList = arg_7_1
 end
 
-function slot0._getHeroList(slot0)
-	if slot0._heroList then
-		return slot0._heroList
+function var_0_0._getHeroList(arg_8_0)
+	if arg_8_0._heroList then
+		return arg_8_0._heroList
 	end
 
 	return HeroModel.instance:getList()
 end
 
-function slot0.setCharacterList(slot0, slot1, slot2)
-	if not slot0._btnTag[slot2] then
-		slot0._btnTag[slot2] = 1
+function var_0_0.setCharacterList(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._btnTag[arg_9_2] then
+		arg_9_0._btnTag[arg_9_2] = 1
 	end
 
-	slot0:setCardListByCareerIndex(slot0._curRankIndex, slot1)
+	arg_9_0:setCardListByCareerIndex(arg_9_0._curRankIndex, arg_9_1)
 
-	if slot0._btnTag[slot2] == 1 then
-		slot0:_sortByLevel(slot1)
-	elseif slot0._btnTag[slot2] == 2 then
-		slot0:_sortByRare(slot1)
-	elseif slot0._btnTag[slot2] == 3 then
-		slot0:_sortByFaith(slot1)
-	elseif slot0._btnTag[slot2] == 4 then
-		slot0:_sortByExSkill(slot1)
+	if arg_9_0._btnTag[arg_9_2] == 1 then
+		arg_9_0:_sortByLevel(arg_9_1)
+	elseif arg_9_0._btnTag[arg_9_2] == 2 then
+		arg_9_0:_sortByRare(arg_9_1)
+	elseif arg_9_0._btnTag[arg_9_2] == 3 then
+		arg_9_0:_sortByFaith(arg_9_1)
+	elseif arg_9_0._btnTag[arg_9_2] == 4 then
+		arg_9_0:_sortByExSkill(arg_9_1)
 	end
 
-	if slot0._sortByRankDesc then
-		slot0._sortByRankDesc = false
+	if arg_9_0._sortByRankDesc then
+		arg_9_0._sortByRankDesc = false
 	end
 
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_9_0:_setCharacterCardList(arg_9_0._curCardList)
 end
 
-function slot0.setCardListByLevel(slot0, slot1, slot2)
-	if not slot0._btnTag[slot2] then
-		slot0._btnTag[slot2] = 1
+function var_0_0.setCardListByLevel(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_0._btnTag[arg_10_2] then
+		arg_10_0._btnTag[arg_10_2] = 1
 	end
 
-	slot0._rareAscend = false
-	slot0._faithAscend = false
-	slot0._exSklAscend = false
+	arg_10_0._rareAscend = false
+	arg_10_0._faithAscend = false
+	arg_10_0._exSklAscend = false
 
-	if slot0._btnTag[slot2] == 1 then
-		slot0._levelAscend = not slot0._levelAscend
+	if arg_10_0._btnTag[arg_10_2] == 1 then
+		arg_10_0._levelAscend = not arg_10_0._levelAscend
 	else
-		slot0._btnTag[slot2] = 1
+		arg_10_0._btnTag[arg_10_2] = 1
 	end
 
-	slot0:_sortByLevel(slot1)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_10_0:_sortByLevel(arg_10_1)
+	arg_10_0:_setCharacterCardList(arg_10_0._curCardList)
 end
 
-function slot0._updateShowHeroDict(slot0)
-	slot0._showHeroDict = {}
+function var_0_0._updateShowHeroDict(arg_11_0)
+	local var_11_0 = PlayerModel.instance:getShowHeros()
 
-	for slot5 = 1, #PlayerModel.instance:getShowHeros() do
-		if slot1[slot5] ~= 0 then
-			slot0._showHeroDict[slot1[slot5].heroId] = #slot1 - slot5 + 1
+	arg_11_0._showHeroDict = {}
+
+	for iter_11_0 = 1, #var_11_0 do
+		if var_11_0[iter_11_0] ~= 0 then
+			arg_11_0._showHeroDict[var_11_0[iter_11_0].heroId] = #var_11_0 - iter_11_0 + 1
 		end
 	end
 end
 
-function slot0._sortByLevel(slot0, slot1)
-	if slot1 then
-		slot0:_updateShowHeroDict()
+function var_0_0._sortByLevel(arg_12_0, arg_12_1)
+	if arg_12_1 then
+		arg_12_0:_updateShowHeroDict()
 	else
-		slot0._showHeroDict = {}
+		arg_12_0._showHeroDict = {}
 	end
 
-	table.sort(slot0._curCardList, function (slot0, slot1)
-		slot2 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot0.heroId] or slot0.level
-		slot3 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot1.heroId] or slot1.level
-		slot4 = uv0._showHeroDict[slot0.heroId] or 0
-		slot5 = uv0._showHeroDict[slot1.heroId] or 0
+	table.sort(arg_12_0._curCardList, function(arg_13_0, arg_13_1)
+		local var_13_0 = arg_12_0._fakeLevelDict and arg_12_0._fakeLevelDict[arg_13_0.heroId] or arg_13_0.level
+		local var_13_1 = arg_12_0._fakeLevelDict and arg_12_0._fakeLevelDict[arg_13_1.heroId] or arg_13_1.level
+		local var_13_2 = arg_12_0._showHeroDict[arg_13_0.heroId] or 0
+		local var_13_3 = arg_12_0._showHeroDict[arg_13_1.heroId] or 0
 
-		if uv0._sortByRankDesc and slot0.rank ~= slot1.rank then
-			return slot1.rank < slot0.rank
+		if arg_12_0._sortByRankDesc and arg_13_0.rank ~= arg_13_1.rank then
+			return arg_13_0.rank > arg_13_1.rank
 		end
 
-		if slot5 < slot4 then
+		if var_13_3 < var_13_2 then
 			return true
-		elseif slot4 < slot5 then
+		elseif var_13_2 < var_13_3 then
 			return false
-		elseif slot0.isFavor ~= slot1.isFavor then
-			return slot0.isFavor
-		elseif slot2 ~= slot3 then
-			if uv0._levelAscend then
-				return slot2 < slot3
+		elseif arg_13_0.isFavor ~= arg_13_1.isFavor then
+			return arg_13_0.isFavor
+		elseif var_13_0 ~= var_13_1 then
+			if arg_12_0._levelAscend then
+				return var_13_0 < var_13_1
 			else
-				return slot3 < slot2
+				return var_13_1 < var_13_0
 			end
-		elseif slot0.config.rare ~= slot1.config.rare then
-			return slot1.config.rare < slot0.config.rare
-		elseif slot0.exSkillLevel ~= slot1.exSkillLevel then
-			return slot1.exSkillLevel < slot0.exSkillLevel
-		elseif slot0.heroId ~= slot1.heroId then
-			return slot1.heroId < slot0.heroId
+		elseif arg_13_0.config.rare ~= arg_13_1.config.rare then
+			return arg_13_0.config.rare > arg_13_1.config.rare
+		elseif arg_13_0.exSkillLevel ~= arg_13_1.exSkillLevel then
+			return arg_13_0.exSkillLevel > arg_13_1.exSkillLevel
+		elseif arg_13_0.heroId ~= arg_13_1.heroId then
+			return arg_13_0.heroId > arg_13_1.heroId
 		end
 	end)
 end
 
-function slot0.setCardListByRareAndSort(slot0, slot1, slot2, slot3)
-	if not slot0._btnTag[slot2] then
-		slot0._btnTag[slot2] = 1
+function var_0_0.setCardListByRareAndSort(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if not arg_14_0._btnTag[arg_14_2] then
+		arg_14_0._btnTag[arg_14_2] = 1
 	end
 
-	slot0._levelAscend = false
-	slot0._faithAscend = false
-	slot0._exSklAscend = false
-	slot0._btnTag[slot2] = 2
-	slot0._rareAscend = slot3
+	arg_14_0._levelAscend = false
+	arg_14_0._faithAscend = false
+	arg_14_0._exSklAscend = false
+	arg_14_0._btnTag[arg_14_2] = 2
+	arg_14_0._rareAscend = arg_14_3
 
-	slot0:_sortByRare(slot1)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_14_0:_sortByRare(arg_14_1)
+	arg_14_0:_setCharacterCardList(arg_14_0._curCardList)
 end
 
-function slot0.setCardListByRare(slot0, slot1, slot2)
-	if not slot0._btnTag[slot2] then
-		slot0._btnTag[slot2] = 1
+function var_0_0.setCardListByRare(arg_15_0, arg_15_1, arg_15_2)
+	if not arg_15_0._btnTag[arg_15_2] then
+		arg_15_0._btnTag[arg_15_2] = 1
 	end
 
-	slot0._levelAscend = false
-	slot0._faithAscend = false
-	slot0._exSklAscend = false
+	arg_15_0._levelAscend = false
+	arg_15_0._faithAscend = false
+	arg_15_0._exSklAscend = false
 
-	if slot0._btnTag[slot2] == 2 then
-		slot0._rareAscend = not slot0._rareAscend
+	if arg_15_0._btnTag[arg_15_2] == 2 then
+		arg_15_0._rareAscend = not arg_15_0._rareAscend
 	else
-		slot0._btnTag[slot2] = 2
+		arg_15_0._btnTag[arg_15_2] = 2
 	end
 
-	slot0:_sortByRare(slot1)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_15_0:_sortByRare(arg_15_1)
+	arg_15_0:_setCharacterCardList(arg_15_0._curCardList)
 end
 
-function slot0._sortByRare(slot0, slot1)
-	if slot1 then
-		slot0:_updateShowHeroDict()
+function var_0_0._sortByRare(arg_16_0, arg_16_1)
+	if arg_16_1 then
+		arg_16_0:_updateShowHeroDict()
 	else
-		slot0._showHeroDict = {}
+		arg_16_0._showHeroDict = {}
 	end
 
-	table.sort(slot0._curCardList, function (slot0, slot1)
-		slot2 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot0.heroId] or slot0.level
-		slot3 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot1.heroId] or slot1.level
+	table.sort(arg_16_0._curCardList, function(arg_17_0, arg_17_1)
+		local var_17_0 = arg_16_0._fakeLevelDict and arg_16_0._fakeLevelDict[arg_17_0.heroId] or arg_17_0.level
+		local var_17_1 = arg_16_0._fakeLevelDict and arg_16_0._fakeLevelDict[arg_17_1.heroId] or arg_17_1.level
+		local var_17_2 = arg_16_0._showHeroDict[arg_17_0.heroId] or 0
+		local var_17_3 = arg_16_0._showHeroDict[arg_17_1.heroId] or 0
 
-		if (uv0._showHeroDict[slot0.heroId] or 0) > (uv0._showHeroDict[slot1.heroId] or 0) then
+		if var_17_3 < var_17_2 then
 			return true
-		elseif slot4 < slot5 then
+		elseif var_17_2 < var_17_3 then
 			return false
-		elseif slot0.isFavor ~= slot1.isFavor then
-			return slot0.isFavor
-		elseif slot0.config.rare ~= slot1.config.rare then
-			if uv0._rareAscend then
-				return slot0.config.rare < slot1.config.rare
+		elseif arg_17_0.isFavor ~= arg_17_1.isFavor then
+			return arg_17_0.isFavor
+		elseif arg_17_0.config.rare ~= arg_17_1.config.rare then
+			if arg_16_0._rareAscend then
+				return arg_17_0.config.rare < arg_17_1.config.rare
 			else
-				return slot1.config.rare < slot0.config.rare
+				return arg_17_0.config.rare > arg_17_1.config.rare
 			end
-		elseif slot2 ~= slot3 then
-			return slot3 < slot2
-		elseif slot0.exSkillLevel ~= slot1.exSkillLevel then
-			return slot1.exSkillLevel < slot0.exSkillLevel
-		elseif slot0.heroId ~= slot1.heroId then
-			return slot1.heroId < slot0.heroId
+		elseif var_17_0 ~= var_17_1 then
+			return var_17_1 < var_17_0
+		elseif arg_17_0.exSkillLevel ~= arg_17_1.exSkillLevel then
+			return arg_17_0.exSkillLevel > arg_17_1.exSkillLevel
+		elseif arg_17_0.heroId ~= arg_17_1.heroId then
+			return arg_17_0.heroId > arg_17_1.heroId
 		end
 	end)
 end
 
-function slot0.setCardListByFaith(slot0, slot1, slot2)
-	if not slot0._btnTag[slot2] then
-		slot0._btnTag[slot2] = 1
+function var_0_0.setCardListByFaith(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_0._btnTag[arg_18_2] then
+		arg_18_0._btnTag[arg_18_2] = 1
 	end
 
-	slot0._rareAscend = false
-	slot0._levelAscend = false
-	slot0._exSklAscend = false
+	arg_18_0._rareAscend = false
+	arg_18_0._levelAscend = false
+	arg_18_0._exSklAscend = false
 
-	if slot0._btnTag[slot2] == 3 then
-		slot0._faithAscend = not slot0._faithAscend
+	if arg_18_0._btnTag[arg_18_2] == 3 then
+		arg_18_0._faithAscend = not arg_18_0._faithAscend
 	else
-		slot0._btnTag[slot2] = 3
+		arg_18_0._btnTag[arg_18_2] = 3
 	end
 
-	slot0:_sortByFaith(slot1)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_18_0:_sortByFaith(arg_18_1)
+	arg_18_0:_setCharacterCardList(arg_18_0._curCardList)
 end
 
-function slot0._sortByFaith(slot0, slot1)
-	if slot1 then
-		slot0:_updateShowHeroDict()
+function var_0_0._sortByFaith(arg_19_0, arg_19_1)
+	if arg_19_1 then
+		arg_19_0:_updateShowHeroDict()
 	else
-		slot0._showHeroDict = {}
+		arg_19_0._showHeroDict = {}
 	end
 
-	table.sort(slot0._curCardList, function (slot0, slot1)
-		slot2 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot0.heroId] or slot0.level
-		slot3 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot1.heroId] or slot1.level
+	table.sort(arg_19_0._curCardList, function(arg_20_0, arg_20_1)
+		local var_20_0 = arg_19_0._fakeLevelDict and arg_19_0._fakeLevelDict[arg_20_0.heroId] or arg_20_0.level
+		local var_20_1 = arg_19_0._fakeLevelDict and arg_19_0._fakeLevelDict[arg_20_1.heroId] or arg_20_1.level
+		local var_20_2 = arg_19_0._showHeroDict[arg_20_0.heroId] or 0
+		local var_20_3 = arg_19_0._showHeroDict[arg_20_1.heroId] or 0
 
-		if (uv0._showHeroDict[slot0.heroId] or 0) > (uv0._showHeroDict[slot1.heroId] or 0) then
+		if var_20_3 < var_20_2 then
 			return true
-		elseif slot4 < slot5 then
+		elseif var_20_2 < var_20_3 then
 			return false
-		elseif slot0.isFavor ~= slot1.isFavor then
-			return slot0.isFavor
-		elseif slot0.faith ~= slot1.faith then
-			if uv0._faithAscend then
-				return slot0.faith < slot1.faith
+		elseif arg_20_0.isFavor ~= arg_20_1.isFavor then
+			return arg_20_0.isFavor
+		elseif arg_20_0.faith ~= arg_20_1.faith then
+			if arg_19_0._faithAscend then
+				return arg_20_0.faith < arg_20_1.faith
 			else
-				return slot1.faith < slot0.faith
+				return arg_20_0.faith > arg_20_1.faith
 			end
-		elseif slot2 ~= slot3 then
-			if uv0._faithAscend then
-				return slot2 < slot3
+		elseif var_20_0 ~= var_20_1 then
+			if arg_19_0._faithAscend then
+				return var_20_0 < var_20_1
 			else
-				return slot3 < slot2
+				return var_20_1 < var_20_0
 			end
-		elseif slot0.config.rare ~= slot1.config.rare then
-			return slot1.config.rare < slot0.config.rare
-		elseif slot0.exSkillLevel ~= slot1.exSkillLevel then
-			return slot1.exSkillLevel < slot0.exSkillLevel
-		elseif slot0.heroId ~= slot1.heroId then
-			return slot1.heroId < slot0.heroId
+		elseif arg_20_0.config.rare ~= arg_20_1.config.rare then
+			return arg_20_0.config.rare > arg_20_1.config.rare
+		elseif arg_20_0.exSkillLevel ~= arg_20_1.exSkillLevel then
+			return arg_20_0.exSkillLevel > arg_20_1.exSkillLevel
+		elseif arg_20_0.heroId ~= arg_20_1.heroId then
+			return arg_20_0.heroId > arg_20_1.heroId
 		end
 	end)
 end
 
-function slot0.setCardListByExSkill(slot0, slot1, slot2)
-	if not slot0._btnTag[slot2] then
-		slot0._btnTag[slot2] = 1
+function var_0_0.setCardListByExSkill(arg_21_0, arg_21_1, arg_21_2)
+	if not arg_21_0._btnTag[arg_21_2] then
+		arg_21_0._btnTag[arg_21_2] = 1
 	end
 
-	slot0._btnTag[slot2] = 4
-	slot0._rareAscend = false
-	slot0._levelAscend = false
-	slot0._faithAscend = false
+	arg_21_0._btnTag[arg_21_2] = 4
+	arg_21_0._rareAscend = false
+	arg_21_0._levelAscend = false
+	arg_21_0._faithAscend = false
 
-	if slot0._btnTag[slot2] == 4 then
-		slot0._exSklAscend = not slot0._exSklAscend
+	if arg_21_0._btnTag[arg_21_2] == 4 then
+		arg_21_0._exSklAscend = not arg_21_0._exSklAscend
 	else
-		slot0._btnTag[slot2] = 4
+		arg_21_0._btnTag[arg_21_2] = 4
 	end
 
-	slot0:_sortByExSkill(slot1)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_21_0:_sortByExSkill(arg_21_1)
+	arg_21_0:_setCharacterCardList(arg_21_0._curCardList)
 end
 
-function slot0._sortByExSkill(slot0, slot1)
-	if slot1 then
-		slot0:_updateShowHeroDict()
+function var_0_0._sortByExSkill(arg_22_0, arg_22_1)
+	if arg_22_1 then
+		arg_22_0:_updateShowHeroDict()
 	else
-		slot0._showHeroDict = {}
+		arg_22_0._showHeroDict = {}
 	end
 
-	table.sort(slot0._curCardList, function (slot0, slot1)
-		slot2 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot0.heroId] or slot0.level
-		slot3 = uv0._fakeLevelDict and uv0._fakeLevelDict[slot1.heroId] or slot1.level
+	table.sort(arg_22_0._curCardList, function(arg_23_0, arg_23_1)
+		local var_23_0 = arg_22_0._fakeLevelDict and arg_22_0._fakeLevelDict[arg_23_0.heroId] or arg_23_0.level
+		local var_23_1 = arg_22_0._fakeLevelDict and arg_22_0._fakeLevelDict[arg_23_1.heroId] or arg_23_1.level
+		local var_23_2 = arg_22_0._showHeroDict[arg_23_0.heroId] or 0
+		local var_23_3 = arg_22_0._showHeroDict[arg_23_1.heroId] or 0
 
-		if (uv0._showHeroDict[slot0.heroId] or 0) > (uv0._showHeroDict[slot1.heroId] or 0) then
+		if var_23_3 < var_23_2 then
 			return true
-		elseif slot4 < slot5 then
+		elseif var_23_2 < var_23_3 then
 			return false
-		elseif slot0.isFavor ~= slot1.isFavor then
-			return slot0.isFavor
-		elseif slot0.exSkillLevel ~= slot1.exSkillLevel then
-			if uv0._exSklAscend then
-				return slot0.exSkillLevel < slot1.exSkillLevel
+		elseif arg_23_0.isFavor ~= arg_23_1.isFavor then
+			return arg_23_0.isFavor
+		elseif arg_23_0.exSkillLevel ~= arg_23_1.exSkillLevel then
+			if arg_22_0._exSklAscend then
+				return arg_23_0.exSkillLevel < arg_23_1.exSkillLevel
 			else
-				return slot1.exSkillLevel < slot0.exSkillLevel
+				return arg_23_0.exSkillLevel > arg_23_1.exSkillLevel
 			end
-		elseif slot2 ~= slot3 then
-			return slot3 < slot2
-		elseif slot0.config.rare ~= slot1.config.rare then
-			return slot1.config.rare < slot0.config.rare
-		elseif slot0.faith ~= slot1.faith then
-			return slot1.faith < slot0.faith
-		elseif slot0.heroId ~= slot1.heroId then
-			return slot1.heroId < slot0.heroId
+		elseif var_23_0 ~= var_23_1 then
+			return var_23_1 < var_23_0
+		elseif arg_23_0.config.rare ~= arg_23_1.config.rare then
+			return arg_23_0.config.rare > arg_23_1.config.rare
+		elseif arg_23_0.faith ~= arg_23_1.faith then
+			return arg_23_0.faith > arg_23_1.faith
+		elseif arg_23_0.heroId ~= arg_23_1.heroId then
+			return arg_23_0.heroId > arg_23_1.heroId
 		end
 	end)
 end
 
-function slot0.setCardListByLangType(slot0, slot1, slot2, slot3)
-	if not slot0._btnTag[slot1] then
-		slot0._btnTag[slot1] = 1
+function var_0_0.setCardListByLangType(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if not arg_24_0._btnTag[arg_24_1] then
+		arg_24_0._btnTag[arg_24_1] = 1
 	end
 
-	slot0._levelAscend = false
-	slot0._exSklAscend = false
+	arg_24_0._levelAscend = false
+	arg_24_0._exSklAscend = false
 
-	if slot3 then
-		if slot0._btnTag[slot1] == 3 then
-			slot0._faithAscend = not slot0._faithAscend
+	if arg_24_3 then
+		if arg_24_0._btnTag[arg_24_1] == 3 then
+			arg_24_0._faithAscend = not arg_24_0._faithAscend
 		else
-			slot0._btnTag[slot1] = 3
+			arg_24_0._btnTag[arg_24_1] = 3
 		end
 	end
 
-	if slot2 then
-		if slot0._btnTag[slot1] == 2 then
-			slot0._rareAscend = not slot0._rareAscend
+	if arg_24_2 then
+		if arg_24_0._btnTag[arg_24_1] == 2 then
+			arg_24_0._rareAscend = not arg_24_0._rareAscend
 		else
-			slot0._btnTag[slot1] = 2
+			arg_24_0._btnTag[arg_24_1] = 2
 		end
 	end
 
-	slot0:_sortByLangTypeAndRareOrTrust(slot2, slot3)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_24_0:_sortByLangTypeAndRareOrTrust(arg_24_2, arg_24_3)
+	arg_24_0:_setCharacterCardList(arg_24_0._curCardList)
 end
 
-function slot0._sortByLangTypeAndRareOrTrust(slot0, slot1, slot2)
-	table.sort(slot0._curCardList, function (slot0, slot1)
-		if uv0 then
-			slot2, slot3 = uv1:_sortByRareFunction(slot0, slot1)
+function var_0_0._sortByLangTypeAndRareOrTrust(arg_25_0, arg_25_1, arg_25_2)
+	table.sort(arg_25_0._curCardList, function(arg_26_0, arg_26_1)
+		if arg_25_1 then
+			local var_26_0, var_26_1 = arg_25_0:_sortByRareFunction(arg_26_0, arg_26_1)
 
-			if slot2 then
-				return slot3
+			if var_26_0 then
+				return var_26_1
 			end
 
-			slot4, slot5 = uv1._sortByLangTypeFunction(slot0, slot1)
+			local var_26_2, var_26_3 = arg_25_0._sortByLangTypeFunction(arg_26_0, arg_26_1)
 
-			if slot4 then
-				return slot5
+			if var_26_2 then
+				return var_26_3
 			end
-		elseif uv2 then
-			slot2, slot3 = uv1:_sortByTrustFunction(slot0, slot1)
+		elseif arg_25_2 then
+			local var_26_4, var_26_5 = arg_25_0:_sortByTrustFunction(arg_26_0, arg_26_1)
 
-			if slot2 then
-				return slot3
+			if var_26_4 then
+				return var_26_5
 			end
 		end
 
-		if slot0.level ~= slot1.level then
-			return slot1.level < slot0.level
-		elseif slot0.heroId ~= slot1.heroId then
-			return slot1.heroId < slot0.heroId
+		if arg_26_0.level ~= arg_26_1.level then
+			return arg_26_0.level > arg_26_1.level
+		elseif arg_26_0.heroId ~= arg_26_1.heroId then
+			return arg_26_0.heroId > arg_26_1.heroId
 		end
 	end)
 end
 
-function slot0._sortByLangTypeFunction(slot0, slot1)
-	slot2, slot3 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot0.heroId)
-	slot4, slot5 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot1.heroId)
+function var_0_0._sortByLangTypeFunction(arg_27_0, arg_27_1)
+	local var_27_0, var_27_1 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_27_0.heroId)
+	local var_27_2, var_27_3 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_27_1.heroId)
 
-	if slot2 == slot4 then
+	if var_27_0 == var_27_2 then
 		return false, nil
 	end
 
-	slot7 = 0
-	slot8 = 0
+	local var_27_4 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_27_5 = 0
+	local var_27_6 = 0
 
-	for slot12, slot13 in ipairs(HotUpdateVoiceMgr.instance:getSupportVoiceLangs()) do
-		if slot3 == slot13 then
-			slot7 = slot12
+	for iter_27_0, iter_27_1 in ipairs(var_27_4) do
+		if var_27_1 == iter_27_1 then
+			var_27_5 = iter_27_0
 		end
 
-		if slot5 == slot13 then
-			slot8 = slot12
+		if var_27_3 == iter_27_1 then
+			var_27_6 = iter_27_0
 		end
 	end
 
-	if slot7 == slot8 then
+	if var_27_5 == var_27_6 then
 		return false, nil
 	else
-		return true, slot7 < slot8
+		return true, var_27_5 < var_27_6
 	end
 end
 
-function slot0._sortByRareFunction(slot0, slot1, slot2)
-	if slot1.config.rare == slot2.config.rare then
+function var_0_0._sortByRareFunction(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_1.config.rare == arg_28_2.config.rare then
 		return false, nil
 	end
 
-	if slot0._rareAscend then
-		return true, slot1.config.rare < slot2.config.rare
+	if arg_28_0._rareAscend then
+		return true, arg_28_1.config.rare < arg_28_2.config.rare
 	else
-		return true, slot2.config.rare < slot1.config.rare
+		return true, arg_28_1.config.rare > arg_28_2.config.rare
 	end
 end
 
-function slot0._sortByTrustFunction(slot0, slot1, slot2)
-	if slot1.faith == slot2.faith then
+function var_0_0._sortByTrustFunction(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_1.faith == arg_29_2.faith then
 		return false, nil
 	end
 
-	if slot0._faithAscend then
-		return true, slot1.faith < slot2.faith
+	if arg_29_0._faithAscend then
+		return true, arg_29_1.faith < arg_29_2.faith
 	else
-		return true, slot2.faith < slot1.faith
+		return true, arg_29_1.faith > arg_29_2.faith
 	end
 end
 
-function slot0.getRankState(slot0)
+function var_0_0.getRankState(arg_30_0)
 	return {
-		slot0._levelAscend and 1 or -1,
-		slot0._rareAscend and 1 or -1,
-		slot0._faithAscend and 1 or -1,
-		slot0._exSklAscend and 1 or -1
+		arg_30_0._levelAscend and 1 or -1,
+		arg_30_0._rareAscend and 1 or -1,
+		arg_30_0._faithAscend and 1 or -1,
+		arg_30_0._exSklAscend and 1 or -1
 	}
 end
 
-function slot0._isHeroInCardList(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._curCardList) do
-		if slot6.heroId == slot1 then
+function var_0_0._isHeroInCardList(arg_31_0, arg_31_1)
+	for iter_31_0, iter_31_1 in pairs(arg_31_0._curCardList) do
+		if iter_31_1.heroId == arg_31_1 then
 			return true
 		end
 	end
@@ -452,12 +461,12 @@ function slot0._isHeroInCardList(slot0, slot1)
 	return false
 end
 
-function slot0.filterCardListByDmgAndCareer(slot0, slot1, slot2, slot3)
-	if not slot0._btnTag[slot3] then
-		slot0._btnTag[slot3] = 1
+function var_0_0.filterCardListByDmgAndCareer(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	if not arg_32_0._btnTag[arg_32_3] then
+		arg_32_0._btnTag[arg_32_3] = 1
 	end
 
-	slot4 = {
+	local var_32_0 = {
 		101,
 		102,
 		103,
@@ -465,31 +474,36 @@ function slot0.filterCardListByDmgAndCareer(slot0, slot1, slot2, slot3)
 		106,
 		107
 	}
-	slot0._curCardList = {}
 
-	slot0:checkAppendHeroMOs(tabletool.copy(slot0:_getHeroList()))
+	arg_32_0._curCardList = {}
 
-	slot6 = #slot1.locations >= 6
+	local var_32_1 = tabletool.copy(arg_32_0:_getHeroList())
 
-	for slot10, slot11 in pairs(slot5) do
-		slot12 = false
+	arg_32_0:checkAppendHeroMOs(var_32_1)
 
-		for slot16, slot17 in pairs(slot1.dmgs) do
-			for slot21, slot22 in pairs(slot1.careers) do
-				for slot26, slot27 in pairs(slot1.locations) do
-					if slot0._showHeroDict[slot11.heroId] then
-						table.insert(slot0._curCardList, slot11)
+	local var_32_2 = #arg_32_1.locations >= 6
+
+	for iter_32_0, iter_32_1 in pairs(var_32_1) do
+		local var_32_3 = false
+
+		for iter_32_2, iter_32_3 in pairs(arg_32_1.dmgs) do
+			for iter_32_4, iter_32_5 in pairs(arg_32_1.careers) do
+				for iter_32_6, iter_32_7 in pairs(arg_32_1.locations) do
+					if arg_32_0._showHeroDict[iter_32_1.heroId] then
+						table.insert(arg_32_0._curCardList, iter_32_1)
 					end
 
-					if slot11.config.career == slot22 and slot11.config.dmgType == slot17 then
-						if slot6 then
-							if not slot0:_isHeroInCardList(slot11.heroId) then
-								table.insert(slot0._curCardList, slot11)
+					if iter_32_1.config.career == iter_32_5 and iter_32_1.config.dmgType == iter_32_3 then
+						if var_32_2 then
+							if not arg_32_0:_isHeroInCardList(iter_32_1.heroId) then
+								table.insert(arg_32_0._curCardList, iter_32_1)
 							end
 						else
-							for slot32, slot33 in pairs(string.splitToNumber(HeroConfig.instance:getHeroCO(slot11.heroId).battleTag, "#")) do
-								if slot33 == slot4[slot27] and not slot0:_isHeroInCardList(slot11.heroId) then
-									table.insert(slot0._curCardList, slot11)
+							local var_32_4 = string.splitToNumber(HeroConfig.instance:getHeroCO(iter_32_1.heroId).battleTag, "#")
+
+							for iter_32_8, iter_32_9 in pairs(var_32_4) do
+								if iter_32_9 == var_32_0[iter_32_7] and not arg_32_0:_isHeroInCardList(iter_32_1.heroId) then
+									table.insert(arg_32_0._curCardList, iter_32_1)
 								end
 							end
 						end
@@ -499,144 +513,166 @@ function slot0.filterCardListByDmgAndCareer(slot0, slot1, slot2, slot3)
 		end
 	end
 
-	if slot0._btnTag[slot3] == 1 then
-		slot0:_sortByLevel(slot2)
-	elseif slot0._btnTag[slot3] == 2 then
-		slot0:_sortByRare(slot2)
-	elseif slot0._btnTag[slot3] == 3 then
-		slot0:_sortByFaith(slot2)
-	elseif slot0._btnTag[slot3] == 4 then
-		slot0:_sortByExSkill(slot2)
+	if arg_32_0._btnTag[arg_32_3] == 1 then
+		arg_32_0:_sortByLevel(arg_32_2)
+	elseif arg_32_0._btnTag[arg_32_3] == 2 then
+		arg_32_0:_sortByRare(arg_32_2)
+	elseif arg_32_0._btnTag[arg_32_3] == 3 then
+		arg_32_0:_sortByFaith(arg_32_2)
+	elseif arg_32_0._btnTag[arg_32_3] == 4 then
+		arg_32_0:_sortByExSkill(arg_32_2)
 	end
 
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_32_0:_setCharacterCardList(arg_32_0._curCardList)
 end
 
-function slot0.filterCardListByCareerAndCharType(slot0, slot1, slot2, slot3)
-	if not slot0._btnTag[slot3] then
-		slot0._btnTag[slot3] = 2
+function var_0_0.filterCardListByCareerAndCharType(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	if not arg_33_0._btnTag[arg_33_3] then
+		arg_33_0._btnTag[arg_33_3] = 2
 	end
 
-	slot0._curCardList = {}
+	arg_33_0._curCardList = {}
 
-	slot0:checkAppendHeroMOs(tabletool.copy(slot0:_getHeroList()))
+	local var_33_0 = tabletool.copy(arg_33_0:_getHeroList())
 
-	for slot11, slot12 in pairs(slot4) do
-		if #slot1.careers >= 6 and #slot1.charTypes >= 6 and slot1.charLang == 0 then
-			slot0._curCardList[#slot0._curCardList + 1] = slot12
+	arg_33_0:checkAppendHeroMOs(var_33_0)
+
+	local var_33_1 = #arg_33_1.careers >= 6
+	local var_33_2 = #arg_33_1.charTypes >= 6
+	local var_33_3 = arg_33_1.charLang == 0
+
+	for iter_33_0, iter_33_1 in pairs(var_33_0) do
+		if var_33_1 and var_33_2 and var_33_3 then
+			arg_33_0._curCardList[#arg_33_0._curCardList + 1] = iter_33_1
 		else
-			for slot16, slot17 in pairs(slot1.careers) do
-				for slot21, slot22 in pairs(slot1.charTypes) do
-					slot26, slot27 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot12.heroId)
+			for iter_33_2, iter_33_3 in pairs(arg_33_1.careers) do
+				for iter_33_4, iter_33_5 in pairs(arg_33_1.charTypes) do
+					local var_33_4 = iter_33_1.config.career == iter_33_3
+					local var_33_5 = iter_33_1.config.heroType == iter_33_5
+					local var_33_6 = iter_33_1.heroId
+					local var_33_7, var_33_8 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_33_6)
+					local var_33_9 = arg_33_1.charLang == 0 or arg_33_1.charLang == var_33_7
 
-					if slot12.config.career == slot17 and slot12.config.heroType == slot22 and (slot1.charLang == 0 or slot1.charLang == slot26) then
-						slot0._curCardList[#slot0._curCardList + 1] = slot12
+					if var_33_4 and var_33_5 and var_33_9 then
+						arg_33_0._curCardList[#arg_33_0._curCardList + 1] = iter_33_1
 					end
 				end
 			end
 		end
 	end
 
-	slot0:_sortByLangTypeAndRareOrTrust(slot0._btnTag[slot3] == 2, slot0._btnTag[slot3] == 3)
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_33_0:_sortByLangTypeAndRareOrTrust(arg_33_0._btnTag[arg_33_3] == 2, arg_33_0._btnTag[arg_33_3] == 3)
+	arg_33_0:_setCharacterCardList(arg_33_0._curCardList)
 end
 
-function slot0.setCardListByCareerIndex(slot0, slot1, slot2)
-	if slot2 then
-		slot0:_updateShowHeroDict()
+function var_0_0.setCardListByCareerIndex(arg_34_0, arg_34_1, arg_34_2)
+	if arg_34_2 then
+		arg_34_0:_updateShowHeroDict()
 	else
-		slot0._showHeroDict = {}
+		arg_34_0._showHeroDict = {}
 	end
 
-	slot0._curCardList = {}
-	slot0._curRankIndex = slot1
+	arg_34_0._curCardList = {}
+	arg_34_0._curRankIndex = arg_34_1
 
-	slot0:checkAppendHeroMOs(tabletool.copy(slot0:_getHeroList()))
+	local var_34_0 = tabletool.copy(arg_34_0:_getHeroList())
 
-	if slot0._curRankIndex == 0 then
-		for slot7, slot8 in pairs(slot3) do
-			table.insert(slot0._curCardList, slot8)
+	arg_34_0:checkAppendHeroMOs(var_34_0)
+
+	if arg_34_0._curRankIndex == 0 then
+		for iter_34_0, iter_34_1 in pairs(var_34_0) do
+			table.insert(arg_34_0._curCardList, iter_34_1)
 		end
 	else
-		for slot7, slot8 in pairs(slot3) do
-			if slot8.config.career == slot1 or slot0._showHeroDict[slot8.heroId] then
-				table.insert(slot0._curCardList, slot8)
+		for iter_34_2, iter_34_3 in pairs(var_34_0) do
+			if iter_34_3.config.career == arg_34_1 or arg_34_0._showHeroDict[iter_34_3.heroId] then
+				table.insert(arg_34_0._curCardList, iter_34_3)
 			end
 		end
 	end
 
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_34_0:_setCharacterCardList(arg_34_0._curCardList)
 end
 
-function slot0.updateCardList(slot0, slot1)
-	slot0:setCardListByCareerIndex(slot0._curRankIndex)
+function var_0_0.updateCardList(arg_35_0, arg_35_1)
+	arg_35_0:setCardListByCareerIndex(arg_35_0._curRankIndex)
 
-	if slot0._rareAscend then
-		slot0:_sortByRare(slot1)
-	elseif slot0._levelAscend then
-		slot0:_sortByLevel(slot1)
-	elseif slot0._faithAscend then
-		slot0:_sortByFaith(slot1)
-	elseif slot0._exSklAscend then
-		slot0:_sortByExSkill(slot1)
+	if arg_35_0._rareAscend then
+		arg_35_0:_sortByRare(arg_35_1)
+	elseif arg_35_0._levelAscend then
+		arg_35_0:_sortByLevel(arg_35_1)
+	elseif arg_35_0._faithAscend then
+		arg_35_0:_sortByFaith(arg_35_1)
+	elseif arg_35_0._exSklAscend then
+		arg_35_0:_sortByExSkill(arg_35_1)
 	end
 
-	slot0:_setCharacterCardList(slot0._curCardList)
+	arg_35_0:_setCharacterCardList(arg_35_0._curCardList)
 end
 
-function slot0.getpassiveskills(slot0, slot1)
-	if not SkillConfig.instance:getpassiveskillsCO(slot1) then
+function var_0_0.getpassiveskills(arg_36_0, arg_36_1)
+	local var_36_0 = SkillConfig.instance:getpassiveskillsCO(arg_36_1)
+
+	if not var_36_0 then
 		return {}
 	end
 
-	slot3 = {}
+	local var_36_1 = {}
 
-	for slot7, slot8 in pairs(slot2) do
-		if not slot3[slot8.skillGroup] then
-			slot3[slot8.skillGroup] = {}
+	for iter_36_0, iter_36_1 in pairs(var_36_0) do
+		if not var_36_1[iter_36_1.skillGroup] then
+			var_36_1[iter_36_1.skillGroup] = {}
 		end
 
-		if not slot3[slot8.skillGroup].unlockId then
-			slot3[slot8.skillGroup].unlockId = {}
+		if not var_36_1[iter_36_1.skillGroup].unlockId then
+			var_36_1[iter_36_1.skillGroup].unlockId = {}
 		end
 
-		if not slot3[slot8.skillGroup].lockId then
-			slot3[slot8.skillGroup].lockId = {}
+		if not var_36_1[iter_36_1.skillGroup].lockId then
+			var_36_1[iter_36_1.skillGroup].lockId = {}
 		end
 
-		if slot0:isPassiveUnlock(slot1, slot7) then
-			slot3[slot8.skillGroup].unlock = true
+		if arg_36_0:isPassiveUnlock(arg_36_1, iter_36_0) then
+			var_36_1[iter_36_1.skillGroup].unlock = true
 
-			table.insert(slot3[slot8.skillGroup].unlockId, slot8.skillLevel)
+			table.insert(var_36_1[iter_36_1.skillGroup].unlockId, iter_36_1.skillLevel)
 		else
-			table.insert(slot3[slot8.skillGroup].lockId, slot8.skillLevel)
+			table.insert(var_36_1[iter_36_1.skillGroup].lockId, iter_36_1.skillLevel)
 		end
 	end
 
-	slot4 = {}
+	local var_36_2 = {}
 
-	for slot8, slot9 in pairs(slot3) do
-		table.sort(slot9.unlockId)
-		table.sort(slot9.lockId)
-		table.insert(slot4, {
-			unlockId = slot9.unlockId,
-			lockId = slot9.lockId,
-			unlock = slot9.unlock
-		})
+	for iter_36_2, iter_36_3 in pairs(var_36_1) do
+		table.sort(iter_36_3.unlockId)
+		table.sort(iter_36_3.lockId)
+
+		local var_36_3 = {
+			unlockId = iter_36_3.unlockId,
+			lockId = iter_36_3.lockId,
+			unlock = iter_36_3.unlock
+		}
+
+		table.insert(var_36_2, var_36_3)
 	end
 
-	table.sort(slot4, function (slot0, slot1)
-		if (slot0.unlock and 1 or 0) ~= (slot1.unlock and 1 or 0) then
-			return slot3 < slot2
+	table.sort(var_36_2, function(arg_37_0, arg_37_1)
+		local var_37_0 = arg_37_0.unlock and 1 or 0
+		local var_37_1 = arg_37_1.unlock and 1 or 0
+
+		if var_37_0 ~= var_37_1 then
+			return var_37_1 < var_37_0
 		end
 	end)
 
-	return slot4
+	return var_36_2
 end
 
-function slot0.isPassiveUnlockByHeroMo(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in ipairs(slot3 or slot1.passiveSkillLevel) do
-		if slot9 == slot2 then
+function var_0_0.isPassiveUnlockByHeroMo(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	local var_38_0 = arg_38_3 or arg_38_1.passiveSkillLevel
+
+	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
+		if iter_38_1 == arg_38_2 then
 			return true
 		end
 	end
@@ -644,492 +680,572 @@ function slot0.isPassiveUnlockByHeroMo(slot0, slot1, slot2, slot3)
 	return false
 end
 
-function slot0.isPassiveUnlock(slot0, slot1, slot2)
-	return slot0:isPassiveUnlockByHeroMo(HeroModel.instance:getByHeroId(slot1), slot2)
+function var_0_0.isPassiveUnlock(arg_39_0, arg_39_1, arg_39_2)
+	return arg_39_0:isPassiveUnlockByHeroMo(HeroModel.instance:getByHeroId(arg_39_1), arg_39_2)
 end
 
-function slot0.getMaxUnlockPassiveLevel(slot0, slot1)
-	slot2 = 0
+function var_0_0.getMaxUnlockPassiveLevel(arg_40_0, arg_40_1)
+	local var_40_0 = 0
+	local var_40_1 = HeroModel.instance:getByHeroId(arg_40_1).passiveSkillLevel
 
-	for slot7, slot8 in ipairs(HeroModel.instance:getByHeroId(slot1).passiveSkillLevel) do
-		if slot2 < slot8 then
-			slot2 = slot8 or slot2
+	for iter_40_0, iter_40_1 in ipairs(var_40_1) do
+		var_40_0 = var_40_0 < iter_40_1 and iter_40_1 or var_40_0
+	end
+
+	return var_40_0
+end
+
+function var_0_0.isHeroLevelReachCeil(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = HeroModel.instance:getByHeroId(arg_41_1)
+
+	arg_41_2 = arg_41_2 or var_41_0.level
+
+	return arg_41_2 >= arg_41_0:getrankEffects(arg_41_1, var_41_0.rank)[1]
+end
+
+function var_0_0.isHeroRankReachCeil(arg_42_0, arg_42_1)
+	return HeroModel.instance:getByHeroId(arg_42_1).rank == arg_42_0:getMaxRank(arg_42_1)
+end
+
+function var_0_0.isHeroTalentReachCeil(arg_43_0, arg_43_1)
+	return HeroModel.instance:getByHeroId(arg_43_1).talent == arg_43_0:getMaxTalent(arg_43_1)
+end
+
+function var_0_0.isHeroTalentLevelUnlock(arg_44_0, arg_44_1, arg_44_2)
+	return arg_44_2 <= HeroModel.instance:getByHeroId(arg_44_1).talent
+end
+
+function var_0_0.getrankEffects(arg_45_0, arg_45_1, arg_45_2)
+	local var_45_0 = SkillConfig.instance:getherorankCO(arg_45_1, arg_45_2)
+	local var_45_1 = {
+		0,
+		0,
+		0
+	}
+
+	if not var_45_0 then
+		return var_45_1
+	end
+
+	for iter_45_0, iter_45_1 in pairs(string.split(var_45_0.effect, "|")) do
+		local var_45_2 = string.split(iter_45_1, "#")
+
+		if var_45_2[1] == "1" then
+			var_45_1[1] = tonumber(var_45_2[2])
+		elseif var_45_2[1] == "2" then
+			var_45_1[2] = tonumber(var_45_2[2])
+		elseif var_45_2[1] == "3" then
+			var_45_1[3] = tonumber(var_45_2[2])
 		end
 	end
 
-	return slot2
+	return var_45_1
 end
 
-function slot0.isHeroLevelReachCeil(slot0, slot1, slot2)
-	slot3 = HeroModel.instance:getByHeroId(slot1)
+function var_0_0.getMaxexskill(arg_46_0, arg_46_1)
+	local var_46_0 = SkillConfig.instance:getheroexskillco(arg_46_1)
+	local var_46_1 = 0
 
-	return slot0:getrankEffects(slot1, slot3.rank)[1] <= (slot2 or slot3.level)
+	for iter_46_0, iter_46_1 in pairs(var_46_0) do
+		if var_46_1 < iter_46_1.skillLevel then
+			var_46_1 = iter_46_1.skillLevel
+		end
+	end
+
+	return var_46_1
 end
 
-function slot0.isHeroRankReachCeil(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1).rank == slot0:getMaxRank(slot1)
+function var_0_0.getMaxLevel(arg_47_0, arg_47_1)
+	local var_47_0 = SkillConfig.instance:getherolevelsCO(arg_47_1)
+	local var_47_1 = 0
+
+	for iter_47_0, iter_47_1 in pairs(var_47_0) do
+		if var_47_1 < iter_47_1.level then
+			var_47_1 = iter_47_1.level
+		end
+	end
+
+	return var_47_1
 end
 
-function slot0.isHeroTalentReachCeil(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1).talent == slot0:getMaxTalent(slot1)
+function var_0_0.getCurCharacterStage(arg_48_0, arg_48_1)
+	local var_48_0 = HeroModel.instance:getByHeroId(arg_48_1).level
+	local var_48_1 = SkillConfig.instance:getherolevelsCO(arg_48_1)
+	local var_48_2 = 0
+
+	for iter_48_0, iter_48_1 in pairs(var_48_1) do
+		if var_48_0 >= iter_48_1.level and var_48_2 < iter_48_1.level then
+			var_48_2 = iter_48_1.level
+		end
+	end
+
+	return var_48_2
 end
 
-function slot0.isHeroTalentLevelUnlock(slot0, slot1, slot2)
-	return slot2 <= HeroModel.instance:getByHeroId(slot1).talent
+function var_0_0.getMaxRank(arg_49_0, arg_49_1)
+	local var_49_0 = SkillConfig.instance:getheroranksCO(arg_49_1)
+	local var_49_1 = 0
+
+	for iter_49_0, iter_49_1 in pairs(var_49_0) do
+		if var_49_1 < iter_49_1.rank then
+			var_49_1 = iter_49_1.rank
+		end
+	end
+
+	return var_49_1
 end
 
-function slot0.getrankEffects(slot0, slot1, slot2)
-	if not SkillConfig.instance:getherorankCO(slot1, slot2) then
-		return {
-			0,
-			0,
-			0
+function var_0_0.getMaxTalent(arg_50_0, arg_50_1)
+	local var_50_0 = SkillConfig.instance:getherotalentsCo(arg_50_1)
+	local var_50_1 = 0
+
+	for iter_50_0, iter_50_1 in pairs(var_50_0) do
+		if var_50_1 < iter_50_1.talentId then
+			var_50_1 = iter_50_1.talentId
+		end
+	end
+
+	return var_50_1
+end
+
+function var_0_0.getAttributeCE(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
+	local var_51_0 = arg_51_1.hp
+	local var_51_1 = arg_51_1.atk
+	local var_51_2 = arg_51_1.def
+	local var_51_3 = arg_51_1.mdef
+	local var_51_4 = arg_51_1.technic
+	local var_51_5 = arg_51_1.cri
+	local var_51_6 = arg_51_1.recri
+	local var_51_7 = arg_51_1.cri_dmg
+	local var_51_8 = arg_51_1.cri_def
+	local var_51_9 = arg_51_1.add_dmg
+	local var_51_10 = arg_51_1.drop_dmg
+	local var_51_11 = arg_51_1.revive
+	local var_51_12 = arg_51_1.absorb
+	local var_51_13 = arg_51_1.clutch
+	local var_51_14 = arg_51_1.heal
+	local var_51_15 = arg_51_1.defense_ignore
+	local var_51_16 = SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicCriticalRatio)
+	local var_51_17 = SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicCriticalDamageRatio)
+	local var_51_18 = SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicCorrectConst)
+	local var_51_19 = SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicTargetLevelRatio)
+	local var_51_20 = math.floor(var_51_4 * var_51_16 / (var_51_18 + arg_51_2 * var_51_19)) / 1000
+	local var_51_21 = math.floor(var_51_4 * var_51_17 / (var_51_18 + arg_51_2 * var_51_19)) / 1000
+	local var_51_22 = var_51_5 + var_51_20
+	local var_51_23 = var_51_7 + var_51_21
+
+	if arg_51_3 then
+		logNormal(string.format("技巧折算%s = 暴击率%s + 暴击创伤%s", var_51_4, var_51_20, var_51_21))
+	end
+
+	local var_51_24 = var_51_1 * 1
+	local var_51_25 = var_51_2 * 0.5
+	local var_51_26 = var_51_3 * 0.5
+	local var_51_27 = var_51_0 * 0.0833
+	local var_51_28 = var_51_1 * 0.5 * var_51_22 * 0.5
+	local var_51_29 = math.max(0, var_51_1 * 0.5 * (var_51_23 - 1) * 0.5)
+	local var_51_30 = var_51_1 * 0.5 * var_51_9
+	local var_51_31 = var_51_1 * 0.5 * var_51_15
+	local var_51_32 = var_51_1 * 0.5 * var_51_12 * 0.66
+	local var_51_33 = var_51_1 * 0.5 * var_51_13 * 0.5
+	local var_51_34 = (var_51_2 + var_51_3) * 0.5 * var_51_6 * 0.5
+	local var_51_35 = (var_51_2 + var_51_3) * 0.5 * var_51_8 * 0.5
+	local var_51_36 = (var_51_2 + var_51_3) * 0.5 * var_51_10
+	local var_51_37 = (var_51_2 + var_51_3) * 0.5 * var_51_11 * 0.66
+	local var_51_38 = (var_51_2 + var_51_3) * 0.5 * var_51_14 * 0.5
+	local var_51_39 = var_51_27 + var_51_24 + var_51_25 + var_51_26 + var_51_28 + var_51_29 + var_51_30 + var_51_31 + var_51_32 + var_51_33 + var_51_34 + var_51_35 + var_51_36 + var_51_37 + var_51_38
+
+	if arg_51_3 then
+		logNormal(string.format("基础 %s   %s   %s   %s", var_51_24, var_51_25, var_51_26, var_51_27))
+		logNormal(string.format("攻击附加 %s   %s   %s   %s   %s   %s", var_51_28, var_51_29, var_51_30, var_51_31, var_51_32, var_51_33))
+		logNormal(string.format("双防附加 %s   %s   %s   %s   %s", var_51_34, var_51_35, var_51_36, var_51_37, var_51_38))
+	end
+
+	return var_51_39
+end
+
+function var_0_0.getCorrectCE(arg_52_0, arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5, arg_52_6, arg_52_7)
+	local var_52_0 = math.pow(arg_52_1, 2.5) / math.pow(arg_52_7, 2.5)
+	local var_52_1 = arg_52_2 and 0.7 or 1
+	local var_52_2 = 0
+
+	for iter_52_0, iter_52_1 in ipairs(arg_52_4) do
+		local var_52_3 = FightConfig.instance:getRestrain(arg_52_3, iter_52_1)
+
+		if var_52_3 > 1000 then
+			var_52_2 = var_52_2 + 1
+		elseif var_52_3 < 1000 then
+			var_52_2 = var_52_2 - 1
+		end
+	end
+
+	local var_52_4 = 1 + 0.2 * Mathf.Clamp(var_52_2, -1, 1)
+	local var_52_5 = 1
+
+	if not arg_52_0._exSkillCorrectDict then
+		arg_52_0._exSkillCorrectDict = {}
+		arg_52_0._exSkillCorrectDict[5] = {
+			1.33,
+			1.55,
+			1.66,
+			1.77,
+			1.88,
+			2
+		}
+		arg_52_0._exSkillCorrectDict[4] = {
+			1.17,
+			1.39,
+			1.5,
+			1.61,
+			1.72,
+			1.83
+		}
+		arg_52_0._exSkillCorrectDict[3] = {
+			1,
+			1.22,
+			1.33,
+			1.44,
+			1.55,
+			1.66
 		}
 	end
 
-	slot8 = "|"
-
-	for slot8, slot9 in pairs(string.split(slot3.effect, slot8)) do
-		if string.split(slot9, "#")[1] == "1" then
-			slot4[1] = tonumber(slot10[2])
-		elseif slot10[1] == "2" then
-			slot4[2] = tonumber(slot10[2])
-		elseif slot10[1] == "3" then
-			slot4[3] = tonumber(slot10[2])
-		end
+	if arg_52_0._exSkillCorrectDict[arg_52_5] and arg_52_0._exSkillCorrectDict[arg_52_5][arg_52_6] then
+		var_52_5 = arg_52_0._exSkillCorrectDict[arg_52_5][arg_52_6]
 	end
 
-	return slot4
+	local var_52_6 = 1 + (var_52_5 - 1) * 0.5
+
+	return var_52_0 * var_52_1 * var_52_4 * var_52_6, var_52_0, var_52_1, var_52_4, var_52_6
 end
 
-function slot0.getMaxexskill(slot0, slot1)
-	for slot7, slot8 in pairs(SkillConfig.instance:getheroexskillco(slot1)) do
-		if 0 < slot8.skillLevel then
-			slot3 = slot8.skillLevel
-		end
-	end
+function var_0_0.getMonsterAttribute(arg_53_0, arg_53_1)
+	local var_53_0 = {}
+	local var_53_1 = lua_monster.configDict[arg_53_1]
+	local var_53_2 = lua_monster_template.configDict[var_53_1.template]
+	local var_53_3 = var_53_1.level
 
-	return slot3
+	var_53_0.hp = var_53_2.life + var_53_3 * var_53_2.lifeGrow
+	var_53_0.atk = var_53_2.attack + var_53_3 * var_53_2.attackGrow
+	var_53_0.def = var_53_2.defense + var_53_3 * var_53_2.defenseGrow
+	var_53_0.mdef = var_53_2.mdefense + var_53_3 * var_53_2.mdefenseGrow
+	var_53_0.technic = var_53_2.technic + var_53_3 * var_53_2.technicGrow
+	var_53_0.cri = var_53_2.cri + var_53_3 * var_53_2.criGrow
+	var_53_0.recri = var_53_2.recri + var_53_3 * var_53_2.recriGrow
+	var_53_0.cri_dmg = var_53_2.criDmg + var_53_3 * var_53_2.criDmgGrow
+	var_53_0.cri_def = var_53_2.criDef + var_53_3 * var_53_2.criDefGrow
+	var_53_0.add_dmg = var_53_2.addDmg + var_53_3 * var_53_2.addDmgGrow
+	var_53_0.drop_dmg = var_53_2.dropDmg + var_53_3 * var_53_2.dropDmgGrow
+	var_53_0.cri = var_53_0.cri / 1000
+	var_53_0.recri = var_53_0.recri / 1000
+	var_53_0.cri_dmg = var_53_0.cri_dmg / 1000
+	var_53_0.cri_def = var_53_0.cri_def / 1000
+	var_53_0.add_dmg = var_53_0.add_dmg / 1000
+	var_53_0.drop_dmg = var_53_0.drop_dmg / 1000
+	var_53_0.revive = 0
+	var_53_0.absorb = 0
+	var_53_0.clutch = 0
+	var_53_0.heal = 0
+	var_53_0.defense_ignore = 0
+
+	return var_53_0
 end
 
-function slot0.getMaxLevel(slot0, slot1)
-	for slot7, slot8 in pairs(SkillConfig.instance:getherolevelsCO(slot1)) do
-		if 0 < slot8.level then
-			slot3 = slot8.level
-		end
-	end
+function var_0_0.getCharacterAttributeWithEquip(arg_54_0, arg_54_1, arg_54_2)
+	local var_54_0 = {}
+	local var_54_1 = HeroModel.instance:getByHeroId(arg_54_1)
 
-	return slot3
-end
+	var_54_0.hp = var_54_1.baseAttr.hp
+	var_54_0.atk = var_54_1.baseAttr.attack
+	var_54_0.def = var_54_1.baseAttr.defense
+	var_54_0.mdef = var_54_1.baseAttr.mdefense
+	var_54_0.technic = var_54_1.baseAttr.technic
+	var_54_0.cri = var_54_1.exAttr.cri
+	var_54_0.recri = var_54_1.exAttr.recri
+	var_54_0.cri_dmg = var_54_1.exAttr.criDmg
+	var_54_0.cri_def = var_54_1.exAttr.criDef
+	var_54_0.add_dmg = var_54_1.exAttr.addDmg
+	var_54_0.drop_dmg = var_54_1.exAttr.dropDmg
+	var_54_0.revive = var_54_1.spAttr.revive
+	var_54_0.absorb = var_54_1.spAttr.absorb
+	var_54_0.clutch = var_54_1.spAttr.clutch
+	var_54_0.heal = var_54_1.spAttr.heal
+	var_54_0.defense_ignore = var_54_1.spAttr.defenseIgnore
 
-function slot0.getCurCharacterStage(slot0, slot1)
-	for slot8, slot9 in pairs(SkillConfig.instance:getherolevelsCO(slot1)) do
-		if slot9.level <= HeroModel.instance:getByHeroId(slot1).level and 0 < slot9.level then
-			slot4 = slot9.level
-		end
-	end
+	if arg_54_2 and #arg_54_2 > 0 then
+		for iter_54_0 = 1, #arg_54_2 do
+			local var_54_2 = EquipModel.instance:getEquip(arg_54_2[iter_54_0])
 
-	return slot4
-end
+			if var_54_2 then
+				local var_54_3, var_54_4, var_54_5, var_54_6, var_54_7 = EquipConfig.instance:getEquipStrengthenAttrMax0(var_54_2)
 
-function slot0.getMaxRank(slot0, slot1)
-	for slot7, slot8 in pairs(SkillConfig.instance:getheroranksCO(slot1)) do
-		if 0 < slot8.rank then
-			slot3 = slot8.rank
-		end
-	end
-
-	return slot3
-end
-
-function slot0.getMaxTalent(slot0, slot1)
-	for slot7, slot8 in pairs(SkillConfig.instance:getherotalentsCo(slot1)) do
-		if 0 < slot8.talentId then
-			slot3 = slot8.talentId
-		end
-	end
-
-	return slot3
-end
-
-function slot0.getAttributeCE(slot0, slot1, slot2, slot3)
-	slot4 = slot1.hp
-	slot5 = slot1.atk
-	slot6 = slot1.def
-	slot7 = slot1.mdef
-	slot8 = slot1.technic
-	slot10 = slot1.recri
-	slot12 = slot1.cri_def
-	slot13 = slot1.add_dmg
-	slot14 = slot1.drop_dmg
-	slot15 = slot1.revive
-	slot16 = slot1.absorb
-	slot17 = slot1.clutch
-	slot18 = slot1.heal
-	slot19 = slot1.defense_ignore
-	slot22 = SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicCorrectConst)
-	slot23 = SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicTargetLevelRatio)
-	slot9 = slot1.cri + math.floor(slot8 * SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicCriticalRatio) / (slot22 + slot2 * slot23)) / 1000
-	slot11 = slot1.cri_dmg + math.floor(slot8 * SkillConfig.instance:getConstNum(FightEnum.FightConstId.TechnicCriticalDamageRatio) / (slot22 + slot2 * slot23)) / 1000
-
-	if slot3 then
-		logNormal(string.format("技巧折算%s = 暴击率%s + 暴击创伤%s", slot8, slot24, slot25))
-	end
-
-	slot41 = slot4 * 0.0833 + slot5 * 1 + slot6 * 0.5 + slot7 * 0.5 + slot5 * 0.5 * slot9 * 0.5 + math.max(0, slot5 * 0.5 * (slot11 - 1) * 0.5) + slot5 * 0.5 * slot13 + slot5 * 0.5 * slot19 + slot5 * 0.5 * slot16 * 0.66 + slot5 * 0.5 * slot17 * 0.5 + (slot6 + slot7) * 0.5 * slot10 * 0.5 + (slot6 + slot7) * 0.5 * slot12 * 0.5 + (slot6 + slot7) * 0.5 * slot14 + (slot6 + slot7) * 0.5 * slot15 * 0.66 + (slot6 + slot7) * 0.5 * slot18 * 0.5
-
-	if slot3 then
-		logNormal(string.format("基础 %s   %s   %s   %s", slot26, slot27, slot28, slot29))
-		logNormal(string.format("攻击附加 %s   %s   %s   %s   %s   %s", slot30, slot31, slot32, slot33, slot34, slot35))
-		logNormal(string.format("双防附加 %s   %s   %s   %s   %s", slot36, slot37, slot38, slot39, slot40))
-	end
-
-	return slot41
-end
-
-function slot0.getCorrectCE(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot8 = math.pow(slot1, 2.5) / math.pow(slot7, 2.5)
-	slot9 = slot2 and 0.7 or 1
-
-	for slot14, slot15 in ipairs(slot4) do
-		if FightConfig.instance:getRestrain(slot3, slot15) > 1000 then
-			slot10 = 0 + 1
-		elseif slot16 < 1000 then
-			slot10 = slot10 - 1
-		end
-	end
-
-	slot10 = 1 + 0.2 * Mathf.Clamp(slot10, -1, 1)
-	slot11 = 1
-
-	if not slot0._exSkillCorrectDict then
-		slot0._exSkillCorrectDict = {
-			[5] = {
-				1.33,
-				1.55,
-				1.66,
-				1.77,
-				1.88,
-				2
-			},
-			[4] = {
-				1.17,
-				1.39,
-				1.5,
-				1.61,
-				1.72,
-				1.83
-			},
-			[3] = {
-				1,
-				1.22,
-				1.33,
-				1.44,
-				1.55,
-				1.66
-			}
-		}
-	end
-
-	if slot0._exSkillCorrectDict[slot5] and slot0._exSkillCorrectDict[slot5][slot6] then
-		slot11 = slot0._exSkillCorrectDict[slot5][slot6]
-	end
-
-	slot11 = 1 + (slot11 - 1) * 0.5
-
-	return slot8 * slot9 * slot10 * slot11, slot8, slot9, slot10, slot11
-end
-
-function slot0.getMonsterAttribute(slot0, slot1)
-	slot2 = {
-		hp = slot4.life + slot5 * slot4.lifeGrow,
-		atk = slot4.attack + slot5 * slot4.attackGrow,
-		def = slot4.defense + slot5 * slot4.defenseGrow,
-		mdef = slot4.mdefense + slot5 * slot4.mdefenseGrow,
-		technic = slot4.technic + slot5 * slot4.technicGrow,
-		cri = slot4.cri + slot5 * slot4.criGrow,
-		recri = slot4.recri + slot5 * slot4.recriGrow,
-		cri_dmg = slot4.criDmg + slot5 * slot4.criDmgGrow,
-		cri_def = slot4.criDef + slot5 * slot4.criDefGrow,
-		add_dmg = slot4.addDmg + slot5 * slot4.addDmgGrow,
-		drop_dmg = slot4.dropDmg + slot5 * slot4.dropDmgGrow
-	}
-	slot3 = lua_monster.configDict[slot1]
-	slot4 = lua_monster_template.configDict[slot3.template]
-	slot5 = slot3.level
-	slot2.cri = slot2.cri / 1000
-	slot2.recri = slot2.recri / 1000
-	slot2.cri_dmg = slot2.cri_dmg / 1000
-	slot2.cri_def = slot2.cri_def / 1000
-	slot2.add_dmg = slot2.add_dmg / 1000
-	slot2.drop_dmg = slot2.drop_dmg / 1000
-	slot2.revive = 0
-	slot2.absorb = 0
-	slot2.clutch = 0
-	slot2.heal = 0
-	slot2.defense_ignore = 0
-
-	return slot2
-end
-
-function slot0.getCharacterAttributeWithEquip(slot0, slot1, slot2)
-	slot3 = {
-		hp = slot4.baseAttr.hp,
-		atk = slot4.baseAttr.attack,
-		def = slot4.baseAttr.defense,
-		mdef = slot4.baseAttr.mdefense,
-		technic = slot4.baseAttr.technic,
-		cri = slot4.exAttr.cri,
-		recri = slot4.exAttr.recri,
-		cri_dmg = slot4.exAttr.criDmg,
-		cri_def = slot4.exAttr.criDef,
-		add_dmg = slot4.exAttr.addDmg,
-		drop_dmg = slot4.exAttr.dropDmg,
-		revive = slot4.spAttr.revive,
-		absorb = slot4.spAttr.absorb,
-		clutch = slot4.spAttr.clutch,
-		heal = slot4.spAttr.heal,
-		defense_ignore = slot4.spAttr.defenseIgnore
-	}
-	slot4 = HeroModel.instance:getByHeroId(slot1)
-
-	if slot2 and #slot2 > 0 then
-		for slot8 = 1, #slot2 do
-			if EquipModel.instance:getEquip(slot2[slot8]) then
-				slot10, slot11, slot12, slot13, slot14 = EquipConfig.instance:getEquipStrengthenAttrMax0(slot9)
-				slot3.hp = slot3.hp + slot10
-				slot3.atk = slot3.atk + slot11
-				slot3.def = slot3.def + slot12
-				slot3.mdef = slot3.mdef + slot13
-				slot3.cri = slot3.cri + slot14.cri
-				slot3.recri = slot3.recri + slot14.recri
-				slot3.cri_dmg = slot3.cri_dmg + slot14.criDmg
-				slot3.cri_def = slot3.cri_def + slot14.criDef
-				slot3.add_dmg = slot3.add_dmg + slot14.addDmg
-				slot3.drop_dmg = slot3.drop_dmg + slot14.dropDmg
-				slot3.revive = slot3.revive + slot14.revive
-				slot3.absorb = slot3.absorb + slot14.absorb
-				slot3.clutch = slot3.clutch + slot14.clutch
-				slot3.heal = slot3.heal + slot14.heal
-				slot3.defense_ignore = slot3.defense_ignore + slot14.defenseIgnore
+				var_54_0.hp = var_54_0.hp + var_54_3
+				var_54_0.atk = var_54_0.atk + var_54_4
+				var_54_0.def = var_54_0.def + var_54_5
+				var_54_0.mdef = var_54_0.mdef + var_54_6
+				var_54_0.cri = var_54_0.cri + var_54_7.cri
+				var_54_0.recri = var_54_0.recri + var_54_7.recri
+				var_54_0.cri_dmg = var_54_0.cri_dmg + var_54_7.criDmg
+				var_54_0.cri_def = var_54_0.cri_def + var_54_7.criDef
+				var_54_0.add_dmg = var_54_0.add_dmg + var_54_7.addDmg
+				var_54_0.drop_dmg = var_54_0.drop_dmg + var_54_7.dropDmg
+				var_54_0.revive = var_54_0.revive + var_54_7.revive
+				var_54_0.absorb = var_54_0.absorb + var_54_7.absorb
+				var_54_0.clutch = var_54_0.clutch + var_54_7.clutch
+				var_54_0.heal = var_54_0.heal + var_54_7.heal
+				var_54_0.defense_ignore = var_54_0.defense_ignore + var_54_7.defenseIgnore
 			end
 		end
 	end
 
-	slot3.cri = slot3.cri / 1000
-	slot3.recri = slot3.recri / 1000
-	slot3.cri_dmg = slot3.cri_dmg / 1000
-	slot3.cri_def = slot3.cri_def / 1000
-	slot3.add_dmg = slot3.add_dmg / 1000
-	slot3.drop_dmg = slot3.drop_dmg / 1000
-	slot3.revive = slot3.revive / 1000
-	slot3.absorb = slot3.absorb / 1000
-	slot3.clutch = slot3.clutch / 1000
-	slot3.heal = slot3.heal / 1000
-	slot3.defense_ignore = slot3.defense_ignore / 1000
+	var_54_0.cri = var_54_0.cri / 1000
+	var_54_0.recri = var_54_0.recri / 1000
+	var_54_0.cri_dmg = var_54_0.cri_dmg / 1000
+	var_54_0.cri_def = var_54_0.cri_def / 1000
+	var_54_0.add_dmg = var_54_0.add_dmg / 1000
+	var_54_0.drop_dmg = var_54_0.drop_dmg / 1000
+	var_54_0.revive = var_54_0.revive / 1000
+	var_54_0.absorb = var_54_0.absorb / 1000
+	var_54_0.clutch = var_54_0.clutch / 1000
+	var_54_0.heal = var_54_0.heal / 1000
+	var_54_0.defense_ignore = var_54_0.defense_ignore / 1000
 
-	return slot3
+	return var_54_0
 end
 
-function slot0.getSumCE(slot0, slot1, slot2, slot3, slot4, slot5)
-	if lua_battle.configDict[slot4].battleEffectiveness <= 0 then
+function var_0_0.getSumCE(arg_55_0, arg_55_1, arg_55_2, arg_55_3, arg_55_4, arg_55_5)
+	local var_55_0 = lua_battle.configDict[arg_55_4]
+	local var_55_1 = var_55_0.battleEffectiveness
+
+	if var_55_1 <= 0 then
 		return 1
 	end
 
-	for slot14, slot15 in ipairs(DungeonConfig.instance:getMonsterListFromGroupID(slot6.monsterGroupIds)) do
-		table.insert({}, slot15.career)
+	local var_55_2 = 0
+	local var_55_3 = {}
+	local var_55_4 = DungeonConfig.instance:getMonsterListFromGroupID(var_55_0.monsterGroupIds)
 
-		slot8 = 0 + slot15.level
+	for iter_55_0, iter_55_1 in ipairs(var_55_4) do
+		table.insert(var_55_3, iter_55_1.career)
+
+		var_55_2 = var_55_2 + iter_55_1.level
 	end
 
-	if #slot10 > 0 then
-		slot8 = slot8 / #slot10
+	if #var_55_4 > 0 then
+		var_55_2 = var_55_2 / #var_55_4
 	end
 
-	slot11 = 0
-	slot13 = 0
+	local var_55_5 = 0
+	local var_55_6 = var_55_0.playerMax
+	local var_55_7 = 0
 
-	for slot17, slot18 in ipairs(slot1) do
-		slot20, slot21 = slot0:getCharacterCE(slot18, slot6, slot9, slot7, slot3, slot6.playerMax <= slot13, slot8, slot5)
+	for iter_55_2, iter_55_3 in ipairs(arg_55_1) do
+		local var_55_8 = var_55_6 <= var_55_7
+		local var_55_9, var_55_10 = arg_55_0:getCharacterCE(iter_55_3, var_55_0, var_55_3, var_55_1, arg_55_3, var_55_8, var_55_2, arg_55_5)
 
-		if slot21 then
-			slot13 = slot13 + 1
+		if var_55_10 then
+			var_55_7 = var_55_7 + 1
 		end
 
-		slot11 = slot11 + slot20
+		var_55_5 = var_55_5 + var_55_9
 	end
 
-	for slot17, slot18 in ipairs(slot2) do
-		slot20, slot21 = slot0:getCharacterCE(slot18, slot6, slot9, slot7, slot3, slot12 <= slot13, slot8, slot5)
+	for iter_55_4, iter_55_5 in ipairs(arg_55_2) do
+		local var_55_11 = var_55_6 <= var_55_7
+		local var_55_12, var_55_13 = arg_55_0:getCharacterCE(iter_55_5, var_55_0, var_55_3, var_55_1, arg_55_3, var_55_11, var_55_2, arg_55_5)
 
-		if slot21 then
-			slot13 = slot13 + 1
+		if var_55_13 then
+			var_55_7 = var_55_7 + 1
 		end
 
-		slot11 = slot11 + slot20
+		var_55_5 = var_55_5 + var_55_12
 	end
 
-	slot14 = slot11 / slot7 / 4
+	local var_55_14 = var_55_5 / var_55_1 / 4
 
-	if slot5 then
-		logNormal(string.format("最终战力allCE = %s", slot11))
-		logNormal(string.format("均值比例sumCE = %s", slot14))
+	if arg_55_5 then
+		logNormal(string.format("最终战力allCE = %s", var_55_5))
+		logNormal(string.format("均值比例sumCE = %s", var_55_14))
 	end
 
-	return slot14
+	return var_55_14
 end
 
-function slot0.getCharacterCE(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	if tonumber(slot1) < 0 then
-		slot9 = math.abs(slot1)
-		slot10 = {}
+function var_0_0.getCharacterCE(arg_56_0, arg_56_1, arg_56_2, arg_56_3, arg_56_4, arg_56_5, arg_56_6, arg_56_7, arg_56_8)
+	arg_56_1 = tonumber(arg_56_1)
 
-		if not string.nilorempty(slot2.aid) then
-			slot10 = string.splitToNumber(slot2.aid, "#")
+	if arg_56_1 < 0 then
+		local var_56_0 = math.abs(arg_56_1)
+		local var_56_1 = {}
+
+		if not string.nilorempty(arg_56_2.aid) then
+			var_56_1 = string.splitToNumber(arg_56_2.aid, "#")
 		end
 
-		if not (slot10[slot9] and lua_monster.configDict[slot11]) then
+		local var_56_2 = var_56_1[var_56_0]
+		local var_56_3 = var_56_2 and lua_monster.configDict[var_56_2]
+
+		if not var_56_3 then
 			return 0, false
 		end
 
-		slot13 = uv0.instance:getMonsterAttribute(slot11)
+		local var_56_4 = var_0_0.instance:getMonsterAttribute(var_56_2)
 
-		if slot8 then
-			logNormal(string.format("助战角色monsterId = %s", slot11))
+		if arg_56_8 then
+			logNormal(string.format("助战角色monsterId = %s", var_56_2))
 		end
 
-		slot14 = uv0.instance:getAttributeCE(slot13, slot7, slot8)
+		local var_56_5 = var_0_0.instance:getAttributeCE(var_56_4, arg_56_7, arg_56_8)
 
-		if slot8 then
-			logNormal(string.format("属性战力attributeCE = %s", slot14))
+		if arg_56_8 then
+			logNormal(string.format("属性战力attributeCE = %s", var_56_5))
 		end
 
-		slot18, slot19, slot20, slot21, slot22 = uv0.instance:getCorrectCE(slot14, slot6, slot12.career, slot3, 1, slot12.uniqueSkillLevel, slot4)
-		slot23 = slot14 * slot18
+		local var_56_6 = var_56_3.career
+		local var_56_7 = 1
+		local var_56_8 = var_56_3.uniqueSkillLevel
+		local var_56_9, var_56_10, var_56_11, var_56_12, var_56_13 = var_0_0.instance:getCorrectCE(var_56_5, arg_56_6, var_56_6, arg_56_3, var_56_7, var_56_8, arg_56_4)
+		local var_56_14 = var_56_5 * var_56_9
 
-		if slot8 then
-			logNormal(string.format("战力修正correctCE = %s = 碾压修正%s x 替补修正%s x 克制修正%s x 仪式修正%s", slot18, slot19, slot20, slot21, slot22))
-			logNormal(string.format("角色战力ce = %s", slot23))
+		if arg_56_8 then
+			logNormal(string.format("战力修正correctCE = %s = 碾压修正%s x 替补修正%s x 克制修正%s x 仪式修正%s", var_56_9, var_56_10, var_56_11, var_56_12, var_56_13))
+			logNormal(string.format("角色战力ce = %s", var_56_14))
 		end
 
-		return slot23, true
-	elseif slot1 > 0 then
-		if not HeroModel.instance:getById(tostring(slot1)) then
+		return var_56_14, true
+	elseif arg_56_1 > 0 then
+		local var_56_15 = HeroModel.instance:getById(tostring(arg_56_1))
+
+		if not var_56_15 then
 			return 0, false
 		end
 
-		slot10 = slot9.heroId
-		slot11 = {}
+		local var_56_16 = var_56_15.heroId
+		local var_56_17 = {}
 
-		for slot15, slot16 in ipairs(slot5) do
-			if tonumber(slot16.heroUid) == slot1 then
-				slot11 = slot16.equipUid
+		for iter_56_0, iter_56_1 in ipairs(arg_56_5) do
+			if tonumber(iter_56_1.heroUid) == arg_56_1 then
+				var_56_17 = iter_56_1.equipUid
 			end
 		end
 
-		slot12 = uv0.instance:getCharacterAttributeWithEquip(slot10, slot11)
+		local var_56_18 = var_0_0.instance:getCharacterAttributeWithEquip(var_56_16, var_56_17)
 
-		if slot8 then
-			logNormal(string.format("玩家角色heroId = %s", slot10))
+		if arg_56_8 then
+			logNormal(string.format("玩家角色heroId = %s", var_56_16))
 		end
 
-		slot13 = uv0.instance:getAttributeCE(slot12, slot7, slot8)
+		local var_56_19 = var_0_0.instance:getAttributeCE(var_56_18, arg_56_7, arg_56_8)
 
-		if slot8 then
-			logNormal(string.format("属性战力attributeCE = %s", slot13))
+		if arg_56_8 then
+			logNormal(string.format("属性战力attributeCE = %s", var_56_19))
 		end
 
-		slot14 = slot9.config
-		slot18, slot19, slot20, slot21, slot22 = uv0.instance:getCorrectCE(slot13, slot6, slot14.career, slot3, slot14.rare, slot9.exSkillLevel, slot4)
-		slot23 = slot13 * slot18
+		local var_56_20 = var_56_15.config
+		local var_56_21 = var_56_20.career
+		local var_56_22 = var_56_20.rare
+		local var_56_23 = var_56_15.exSkillLevel
+		local var_56_24, var_56_25, var_56_26, var_56_27, var_56_28 = var_0_0.instance:getCorrectCE(var_56_19, arg_56_6, var_56_21, arg_56_3, var_56_22, var_56_23, arg_56_4)
+		local var_56_29 = var_56_19 * var_56_24
 
-		if slot8 then
-			logNormal(string.format("战力修正correctCE = %s = 碾压修正%s x 替补修正%s x 克制修正%s x 仪式修正%s", slot18, slot19, slot20, slot21, slot22))
-			logNormal(string.format("角色战力ce = %s", slot23))
+		if arg_56_8 then
+			logNormal(string.format("战力修正correctCE = %s = 碾压修正%s x 替补修正%s x 克制修正%s x 仪式修正%s", var_56_24, var_56_25, var_56_26, var_56_27, var_56_28))
+			logNormal(string.format("角色战力ce = %s", var_56_29))
 		end
 
-		return slot23, true
+		return var_56_29, true
 	end
 
 	return 0, false
 end
 
-function slot0.isHeroCouldRankUp(slot0, slot1)
-	if slot0:isHeroRankReachCeil(slot1) then
+function var_0_0.isHeroCouldRankUp(arg_57_0, arg_57_1)
+	if arg_57_0:isHeroRankReachCeil(arg_57_1) then
 		return false
 	end
 
-	slot3 = SkillConfig.instance:getherorankCO(slot1, HeroModel.instance:getByHeroId(slot1).rank + 1)
-	slot5 = string.split(slot3.consume, "|")
-	slot6 = true
+	local var_57_0 = HeroModel.instance:getByHeroId(arg_57_1)
+	local var_57_1 = SkillConfig.instance:getherorankCO(arg_57_1, var_57_0.rank + 1)
+	local var_57_2 = string.split(var_57_1.requirement, "|")
+	local var_57_3 = string.split(var_57_1.consume, "|")
+	local var_57_4 = true
 
-	for slot10, slot11 in pairs(string.split(slot3.requirement, "|")) do
-		if string.splitToNumber(slot11, "#")[1] == 1 and slot2.level < slot12[2] then
-			slot6 = false
+	for iter_57_0, iter_57_1 in pairs(var_57_2) do
+		local var_57_5 = string.splitToNumber(iter_57_1, "#")
+
+		if var_57_5[1] == 1 and var_57_0.level < var_57_5[2] then
+			var_57_4 = false
 		end
 	end
 
-	for slot10 = 1, #slot5 do
-		slot11 = string.splitToNumber(slot5[slot10], "#")
+	for iter_57_2 = 1, #var_57_3 do
+		local var_57_6 = string.splitToNumber(var_57_3[iter_57_2], "#")
 
-		if ItemModel.instance:getItemQuantity(slot11[1], slot11[2]) < slot11[3] then
-			slot6 = false
+		if ItemModel.instance:getItemQuantity(var_57_6[1], var_57_6[2]) < var_57_6[3] then
+			var_57_4 = false
 		end
 	end
 
-	return slot6
+	return var_57_4
 end
 
-function slot0.isHeroFullDuplicateCount(slot0, slot1)
-	return HeroModel.instance:getByHeroId(slot1) and CharacterEnum.MaxSkillExLevel <= slot2.duplicateCount
+function var_0_0.isHeroFullDuplicateCount(arg_58_0, arg_58_1)
+	local var_58_0 = HeroModel.instance:getByHeroId(arg_58_1)
+
+	return var_58_0 and CharacterEnum.MaxSkillExLevel <= var_58_0.duplicateCount
 end
 
-function slot0.isHeroCouldExskillUp(slot0, slot1)
-	if CharacterEnum.MaxSkillExLevel <= HeroModel.instance:getByHeroId(slot1).exSkillLevel then
+function var_0_0.isHeroCouldExskillUp(arg_59_0, arg_59_1)
+	local var_59_0 = HeroModel.instance:getByHeroId(arg_59_1)
+
+	if CharacterEnum.MaxSkillExLevel <= var_59_0.exSkillLevel then
 		return false
 	end
 
-	if not SkillConfig.instance:getherolevelexskillCO(slot1, slot2.exSkillLevel + 1) then
-		logError(string.format("not found ExConfig, heroId : %s, exSkillLevel : %s", slot1, slot2.exSkillLevel + 1))
+	local var_59_1 = SkillConfig.instance:getherolevelexskillCO(arg_59_1, var_59_0.exSkillLevel + 1)
+
+	if not var_59_1 then
+		logError(string.format("not found ExConfig, heroId : %s, exSkillLevel : %s", arg_59_1, var_59_0.exSkillLevel + 1))
 
 		return false
 	end
 
-	slot5 = true
+	local var_59_2 = string.split(var_59_1.consume, "|")
+	local var_59_3 = true
 
-	for slot9 = 1, #string.split(slot3.consume, "|") do
-		slot10 = string.splitToNumber(slot4[slot9], "#")
+	for iter_59_0 = 1, #var_59_2 do
+		local var_59_4 = string.splitToNumber(var_59_2[iter_59_0], "#")
 
-		if ItemModel.instance:getItemQuantity(slot10[1], slot10[2]) < slot10[3] then
-			slot5 = false
+		if ItemModel.instance:getItemQuantity(var_59_4[1], var_59_4[2]) < var_59_4[3] then
+			var_59_3 = false
 		end
 	end
 
-	return slot5
+	return var_59_3
 end
 
-function slot0.hasRoleCouldUp(slot0)
-	slot1 = false
-	slot2 = tabletool.copy(slot0:_getHeroList())
+function var_0_0.hasRoleCouldUp(arg_60_0)
+	local var_60_0 = false
+	local var_60_1 = tabletool.copy(arg_60_0:_getHeroList())
 
-	slot0:checkAppendHeroMOs(slot2)
+	arg_60_0:checkAppendHeroMOs(var_60_1)
 
-	for slot6, slot7 in pairs(slot2) do
-		if slot0:isHeroCouldExskillUp(slot7.heroId) and not HeroModel.instance:getByHeroId(slot7.heroId).isNew then
-			slot1 = true
+	for iter_60_0, iter_60_1 in pairs(var_60_1) do
+		if arg_60_0:isHeroCouldExskillUp(iter_60_1.heroId) and not HeroModel.instance:getByHeroId(iter_60_1.heroId).isNew then
+			var_60_0 = true
 		end
 	end
 
-	return slot1
+	return var_60_0
 end
 
-function slot0.hasRewardGet(slot0)
-	slot1 = tabletool.copy(slot0:_getHeroList())
+function var_0_0.hasRewardGet(arg_61_0)
+	local var_61_0 = tabletool.copy(arg_61_0:_getHeroList())
 
-	slot0:checkAppendHeroMOs(slot1)
+	arg_61_0:checkAppendHeroMOs(var_61_0)
 
-	for slot5, slot6 in pairs(slot1) do
-		if slot0:hasCultureRewardGet(slot6.heroId) or slot0:hasItemRewardGet(slot6.heroId) then
+	for iter_61_0, iter_61_1 in pairs(var_61_0) do
+		if arg_61_0:hasCultureRewardGet(iter_61_1.heroId) or arg_61_0:hasItemRewardGet(iter_61_1.heroId) then
 			return true
 		end
 	end
@@ -1137,9 +1253,11 @@ function slot0.hasRewardGet(slot0)
 	return false
 end
 
-function slot0.hasCultureRewardGet(slot0, slot1)
-	for slot5 = 1, 3 do
-		if CharacterDataConfig.instance:getCharacterDataCO(slot1, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, slot5) and not string.nilorempty(slot6.unlockConditine) and not CharacterDataConfig.instance:checkLockCondition(slot6) and not HeroModel.instance:checkGetRewards(slot1, 4 + slot5) then
+function var_0_0.hasCultureRewardGet(arg_62_0, arg_62_1)
+	for iter_62_0 = 1, 3 do
+		local var_62_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_62_1, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Culture, iter_62_0)
+
+		if var_62_0 and not string.nilorempty(var_62_0.unlockConditine) and not CharacterDataConfig.instance:checkLockCondition(var_62_0) and not HeroModel.instance:checkGetRewards(arg_62_1, 4 + iter_62_0) then
 			return true
 		end
 	end
@@ -1147,9 +1265,11 @@ function slot0.hasCultureRewardGet(slot0, slot1)
 	return false
 end
 
-function slot0.hasItemRewardGet(slot0, slot1)
-	for slot5 = 1, 3 do
-		if CharacterDataConfig.instance:getCharacterDataCO(slot1, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Item, slot5) and not string.nilorempty(slot6.unlockConditine) and not CharacterDataConfig.instance:checkLockCondition(slot6) and not HeroModel.instance:checkGetRewards(slot1, slot5 + 1) then
+function var_0_0.hasItemRewardGet(arg_63_0, arg_63_1)
+	for iter_63_0 = 1, 3 do
+		local var_63_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_63_1, CharacterDataConfig.DefaultSkinDataKey, CharacterEnum.CharacterDataItemType.Item, iter_63_0)
+
+		if var_63_0 and not string.nilorempty(var_63_0.unlockConditine) and not CharacterDataConfig.instance:checkLockCondition(var_63_0) and not HeroModel.instance:checkGetRewards(arg_63_1, iter_63_0 + 1) then
 			return true
 		end
 	end
@@ -1157,54 +1277,56 @@ function slot0.hasItemRewardGet(slot0, slot1)
 	return false
 end
 
-function slot0.setFakeList(slot0, slot1)
-	slot0._fakeLevelDict = slot1
+function var_0_0.setFakeList(arg_64_0, arg_64_1)
+	arg_64_0._fakeLevelDict = arg_64_1
 end
 
-function slot0.clearFakeList(slot0)
-	slot0._fakeLevelDict = nil
+function var_0_0.clearFakeList(arg_65_0)
+	arg_65_0._fakeLevelDict = nil
 end
 
-function slot0.setFakeLevel(slot0, slot1, slot2)
-	slot0._fakeLevelDict = {}
+function var_0_0.setFakeLevel(arg_66_0, arg_66_1, arg_66_2)
+	arg_66_0._fakeLevelDict = {}
 
-	if slot1 and slot2 then
-		slot0._fakeLevelDict[slot1] = slot2
+	if arg_66_1 and arg_66_2 then
+		arg_66_0._fakeLevelDict[arg_66_1] = arg_66_2
 	end
 end
 
-function slot0.getFakeLevel(slot0, slot1)
-	return slot0._fakeLevelDict and slot0._fakeLevelDict[slot1]
+function var_0_0.getFakeLevel(arg_67_0, arg_67_1)
+	return arg_67_0._fakeLevelDict and arg_67_0._fakeLevelDict[arg_67_1]
 end
 
-function slot0.heroTalentRedPoint(slot0, slot1)
+function var_0_0.heroTalentRedPoint(arg_68_0, arg_68_1)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
 		return false
 	end
 
-	slot2 = HeroModel.instance:getByHeroId(slot1)
+	local var_68_0 = HeroModel.instance:getByHeroId(arg_68_1)
 
-	if not HeroResonanceConfig.instance:getTalentConfig(slot2.heroId, slot2.talent) then
-		logError("共鸣表找不到,英雄id：", slot2.heroId, "共鸣等级：", slot2.talent)
+	if not HeroResonanceConfig.instance:getTalentConfig(var_68_0.heroId, var_68_0.talent) then
+		logError("共鸣表找不到,英雄id：", var_68_0.heroId, "共鸣等级：", var_68_0.talent)
 	end
 
-	if not HeroResonanceConfig.instance:getTalentConfig(slot2.heroId, slot2.talent + 1) then
+	local var_68_1 = HeroResonanceConfig.instance:getTalentConfig(var_68_0.heroId, var_68_0.talent + 1)
+
+	if not var_68_1 then
 		return false
 	else
-		if slot2.rank < slot4.requirement then
+		if var_68_1.requirement > var_68_0.rank then
 			return false
 		end
 
-		if string.nilorempty(slot4.consume) then
-			logError("共鸣消耗配置为空，英雄id：" .. slot1 .. "      共鸣等级:" .. slot4.talentId)
+		if string.nilorempty(var_68_1.consume) then
+			logError("共鸣消耗配置为空，英雄id：" .. arg_68_1 .. "      共鸣等级:" .. var_68_1.talentId)
 
 			return true
 		end
 
-		slot9 = true
+		local var_68_2 = ItemModel.instance:getItemDataListByConfigStr(var_68_1.consume, true, true)
 
-		for slot9, slot10 in ipairs(ItemModel.instance:getItemDataListByConfigStr(slot4.consume, true, slot9)) do
-			if not ItemModel.instance:goodsIsEnough(slot10.materilType, slot10.materilId, slot10.quantity) then
+		for iter_68_0, iter_68_1 in ipairs(var_68_2) do
+			if not ItemModel.instance:goodsIsEnough(iter_68_1.materilType, iter_68_1.materilId, iter_68_1.quantity) then
 				return false
 			end
 		end
@@ -1213,32 +1335,32 @@ function slot0.heroTalentRedPoint(slot0, slot1)
 	return true
 end
 
-function slot0.setAppendHeroMOs(slot0, slot1)
-	slot0._appendHeroMOs = slot1
+function var_0_0.setAppendHeroMOs(arg_69_0, arg_69_1)
+	arg_69_0._appendHeroMOs = arg_69_1
 end
 
-function slot0.checkAppendHeroMOs(slot0, slot1)
-	if slot0._appendHeroMOs then
-		tabletool.addValues(slot1, slot0._appendHeroMOs)
+function var_0_0.checkAppendHeroMOs(arg_70_0, arg_70_1)
+	if arg_70_0._appendHeroMOs then
+		tabletool.addValues(arg_70_1, arg_70_0._appendHeroMOs)
 	end
 end
 
-function slot0.setGainHeroViewShowState(slot0, slot1)
-	slot0._hideGainHeroView = slot1
+function var_0_0.setGainHeroViewShowState(arg_71_0, arg_71_1)
+	arg_71_0._hideGainHeroView = arg_71_1
 end
 
-function slot0.getGainHeroViewShowState(slot0)
-	return slot0._hideGainHeroView
+function var_0_0.getGainHeroViewShowState(arg_72_0)
+	return arg_72_0._hideGainHeroView
 end
 
-function slot0.setGainHeroViewNewShowState(slot0, slot1)
-	slot0._hideOldGainHeroView = slot1
+function var_0_0.setGainHeroViewNewShowState(arg_73_0, arg_73_1)
+	arg_73_0._hideOldGainHeroView = arg_73_1
 end
 
-function slot0.getGainHeroViewShowNewState(slot0)
-	return slot0._hideOldGainHeroView
+function var_0_0.getGainHeroViewShowNewState(arg_74_0)
+	return arg_74_0._hideOldGainHeroView
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,203 +1,216 @@
-module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationAnalyRewardView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationAnalyRewardView", package.seeall)
 
-slot0 = class("Season166_2_4InformationAnalyRewardView", BaseView)
+local var_0_0 = class("Season166_2_4InformationAnalyRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.rewardItems = {}
-	slot0.goReward = gohelper.findChild(slot0.viewGO, "Bottom/SliderPoint/#go_rewards")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.rewardItems = {}
+	arg_1_0.goReward = gohelper.findChild(arg_1_0.viewGO, "Bottom/SliderPoint/#go_rewards")
 
-	gohelper.setActive(slot0.goReward, false)
+	gohelper.setActive(arg_1_0.goReward, false)
 
-	slot0.slider = gohelper.findChildSlider(slot0.viewGO, "Bottom/Slider")
+	arg_1_0.slider = gohelper.findChildSlider(arg_1_0.viewGO, "Bottom/Slider")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, slot0.onAnalyInfoSuccess, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, slot0.onInformationUpdate, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, slot0.onGetInfoBonus, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.ChangeAnalyInfo, slot0.onChangeAnalyInfo, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, arg_2_0.onAnalyInfoSuccess, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, arg_2_0.onInformationUpdate, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, arg_2_0.onGetInfoBonus, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.ChangeAnalyInfo, arg_2_0.onChangeAnalyInfo, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onAnalyInfoSuccess(slot0)
-	slot0:refreshUI()
+function var_0_0.onAnalyInfoSuccess(arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onChangeAnalyInfo(slot0, slot1)
-	slot0.infoId = slot1
+function var_0_0.onChangeAnalyInfo(arg_7_0, arg_7_1)
+	arg_7_0.infoId = arg_7_1
 
-	for slot5, slot6 in ipairs(slot0.rewardItems) do
-		slot6.activieStatus = nil
-		slot6.hasGet = nil
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.rewardItems) do
+		iter_7_1.activieStatus = nil
+		iter_7_1.hasGet = nil
 	end
 
-	slot0:refreshUI()
+	arg_7_0:refreshUI()
 end
 
-function slot0.onInformationUpdate(slot0)
-	slot0:refreshUI()
+function var_0_0.onInformationUpdate(arg_8_0)
+	arg_8_0:refreshUI()
 end
 
-function slot0.onGetInfoBonus(slot0)
+function var_0_0.onGetInfoBonus(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.infoId = slot0.viewParam.infoId
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.actId = arg_10_0.viewParam.actId
+	arg_10_0.infoId = arg_10_0.viewParam.infoId
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0.actId then
+function var_0_0.refreshUI(arg_11_0)
+	if not arg_11_0.actId then
 		return
 	end
 
-	slot0:refreshReward()
+	arg_11_0:refreshReward()
 end
 
-function slot0.refreshReward(slot0)
+function var_0_0.refreshReward(arg_12_0)
 	if ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		return
 	end
 
-	slot2 = Season166Model.instance:getActInfo(slot0.actId):getInformationMO(slot0.infoId)
-	slot3 = Season166Config.instance:getSeasonInfoAnalys(slot0.actId, slot0.infoId) or {}
-	slot7 = #slot0.rewardItems
+	local var_12_0 = Season166Model.instance:getActInfo(arg_12_0.actId):getInformationMO(arg_12_0.infoId)
+	local var_12_1 = Season166Config.instance:getSeasonInfoAnalys(arg_12_0.actId, arg_12_0.infoId) or {}
 
-	for slot7 = 1, math.max(#slot3, slot7) do
-		slot0:refreshRewardItem(slot0.rewardItems[slot7] or slot0:createRewardItem(slot7), slot3[slot7])
+	for iter_12_0 = 1, math.max(#var_12_1, #arg_12_0.rewardItems) do
+		local var_12_2 = arg_12_0.rewardItems[iter_12_0] or arg_12_0:createRewardItem(iter_12_0)
+
+		arg_12_0:refreshRewardItem(var_12_2, var_12_1[iter_12_0])
 	end
 
-	slot0.slider:SetValue(Mathf.Clamp01(((slot2 and slot2.stage or 0) - 1) / (#slot3 - 1)))
+	local var_12_3 = #var_12_1
+	local var_12_4 = var_12_0 and var_12_0.stage or 0
+	local var_12_5 = Mathf.Clamp01((var_12_4 - 1) / (var_12_3 - 1))
+
+	arg_12_0.slider:SetValue(var_12_5)
 end
 
-function slot0.onGetReward(slot0, slot1)
-	if not slot1.config then
+function var_0_0.onGetReward(arg_13_0, arg_13_1)
+	if not arg_13_1.config then
 		return
 	end
 
-	slot2 = slot1.config
+	local var_13_0 = arg_13_1.config
+	local var_13_1 = Season166Model.instance:getActInfo(var_13_0.activityId):getInformationMO(var_13_0.infoId)
 
-	if not Season166Model.instance:getActInfo(slot2.activityId):getInformationMO(slot2.infoId) then
+	if not var_13_1 then
 		return
 	end
 
-	if slot2.stage <= slot4.bonusStage then
-		slot0:showInfo(slot2)
+	if var_13_1.bonusStage >= var_13_0.stage then
+		arg_13_0:showInfo(var_13_0)
 
 		return
 	end
 
-	if slot2.stage <= slot4.stage then
-		Activity166Rpc.instance:sendAct166ReceiveInfoBonusRequest(slot0.actId, slot0.infoId)
+	if var_13_1.stage >= var_13_0.stage then
+		Activity166Rpc.instance:sendAct166ReceiveInfoBonusRequest(arg_13_0.actId, arg_13_0.infoId)
 	else
-		slot0:showInfo(slot2)
+		arg_13_0:showInfo(var_13_0)
 	end
 end
 
-function slot0.showInfo(slot0, slot1)
-	slot3 = GameUtil.splitString2(slot1.bonus, true)[1]
+function var_0_0.showInfo(arg_14_0, arg_14_1)
+	local var_14_0 = GameUtil.splitString2(arg_14_1.bonus, true)[1]
 
-	MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2], nil, , true)
+	MaterialTipController.instance:showMaterialInfo(var_14_0[1], var_14_0[2], nil, nil, true)
 end
 
-function slot0.createRewardItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0.goReward, string.format("reward%s", slot1))
-	slot2.goStatus0 = gohelper.findChild(slot2.go, "image_status0")
-	slot2.goStatus = gohelper.findChild(slot2.go, "#image_status")
-	slot2.goReward = gohelper.findChild(slot2.go, "#go_reward_template")
-	slot2.imgBg = gohelper.findChildImage(slot2.goReward, "image_bg")
-	slot2.imgCircle = gohelper.findChildImage(slot2.goReward, "image_circle")
-	slot2.goHasGet = gohelper.findChild(slot2.goReward, "go_hasget")
-	slot2.goIcon = gohelper.findChild(slot2.goReward, "go_icon")
-	slot2.txtCount = gohelper.findChildTextMesh(slot2.goReward, "txt_rewardcount")
-	slot2.goCanget = gohelper.findChild(slot2.goReward, "go_canget")
-	slot2.btn = gohelper.findButtonWithAudio(slot2.go)
+function var_0_0.createRewardItem(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getUserDataTb_()
 
-	slot2.btn:AddClickListener(slot0.onGetReward, slot0, slot2)
+	var_15_0.go = gohelper.cloneInPlace(arg_15_0.goReward, string.format("reward%s", arg_15_1))
+	var_15_0.goStatus0 = gohelper.findChild(var_15_0.go, "image_status0")
+	var_15_0.goStatus = gohelper.findChild(var_15_0.go, "#image_status")
+	var_15_0.goReward = gohelper.findChild(var_15_0.go, "#go_reward_template")
+	var_15_0.imgBg = gohelper.findChildImage(var_15_0.goReward, "image_bg")
+	var_15_0.imgCircle = gohelper.findChildImage(var_15_0.goReward, "image_circle")
+	var_15_0.goHasGet = gohelper.findChild(var_15_0.goReward, "go_hasget")
+	var_15_0.goIcon = gohelper.findChild(var_15_0.goReward, "go_icon")
+	var_15_0.txtCount = gohelper.findChildTextMesh(var_15_0.goReward, "txt_rewardcount")
+	var_15_0.goCanget = gohelper.findChild(var_15_0.goReward, "go_canget")
+	var_15_0.btn = gohelper.findButtonWithAudio(var_15_0.go)
 
-	slot2.animStatus = slot2.goStatus:GetComponent(typeof(UnityEngine.Animator))
-	slot2.animHasGet = slot2.goHasGet:GetComponent(typeof(UnityEngine.Animator))
-	slot0.rewardItems[slot1] = slot2
+	var_15_0.btn:AddClickListener(arg_15_0.onGetReward, arg_15_0, var_15_0)
 
-	return slot2
+	var_15_0.animStatus = var_15_0.goStatus:GetComponent(typeof(UnityEngine.Animator))
+	var_15_0.animHasGet = var_15_0.goHasGet:GetComponent(typeof(UnityEngine.Animator))
+	arg_15_0.rewardItems[arg_15_1] = var_15_0
+
+	return var_15_0
 end
 
-function slot0.refreshRewardItem(slot0, slot1, slot2)
-	slot1.config = slot2
+function var_0_0.refreshRewardItem(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_1.config = arg_16_2
 
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+	if not arg_16_2 then
+		gohelper.setActive(arg_16_1.go, false)
 
 		return
 	end
 
-	slot5 = Season166Model.instance:getActInfo(slot2.activityId):getInformationMO(slot2.infoId) and slot2.stage <= slot4.bonusStage or false
-	slot6 = slot4 and slot2.stage <= slot4.stage or false
+	local var_16_0 = Season166Model.instance:getActInfo(arg_16_2.activityId):getInformationMO(arg_16_2.infoId)
+	local var_16_1 = var_16_0 and var_16_0.bonusStage >= arg_16_2.stage or false
+	local var_16_2 = var_16_0 and var_16_0.stage >= arg_16_2.stage or false
 
-	gohelper.setActive(slot1.go, true)
-	gohelper.setActive(slot1.goHasGet, slot5)
-	gohelper.setActive(slot1.goStatus, slot6)
-	gohelper.setActive(slot1.goCanget, not slot5 and slot6)
+	gohelper.setActive(arg_16_1.go, true)
+	gohelper.setActive(arg_16_1.goHasGet, var_16_1)
+	gohelper.setActive(arg_16_1.goStatus, var_16_2)
+	gohelper.setActive(arg_16_1.goCanget, not var_16_1 and var_16_2)
 
-	slot8 = GameUtil.splitString2(slot2.bonus, true)[1]
-	slot9 = ItemModel.instance:getItemConfig(slot8[1], slot8[2])
+	local var_16_3 = GameUtil.splitString2(arg_16_2.bonus, true)[1]
+	local var_16_4 = ItemModel.instance:getItemConfig(var_16_3[1], var_16_3[2])
 
-	UISpriteSetMgr.instance:setUiFBSprite(slot1.imgBg, "bg_pinjidi_" .. slot9.rare)
-	UISpriteSetMgr.instance:setUiFBSprite(slot1.imgCircle, "bg_pinjidi_lanse_" .. slot9.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_16_1.imgBg, "bg_pinjidi_" .. var_16_4.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_16_1.imgCircle, "bg_pinjidi_lanse_" .. var_16_4.rare)
 
-	slot1.txtCount.text = string.format("x%s", slot8[3])
+	arg_16_1.txtCount.text = string.format("x%s", var_16_3[3])
 
-	if slot8 then
-		if not slot1.itemIcon then
-			slot1.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot1.goIcon)
+	if var_16_3 then
+		if not arg_16_1.itemIcon then
+			arg_16_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_16_1.goIcon)
 		end
 
-		slot1.itemIcon:setMOValue(slot8[1], slot8[2], slot8[3], nil, true)
-		slot1.itemIcon:isShowQuality(false)
-		slot1.itemIcon:isShowCount(false)
+		arg_16_1.itemIcon:setMOValue(var_16_3[1], var_16_3[2], var_16_3[3], nil, true)
+		arg_16_1.itemIcon:isShowQuality(false)
+		arg_16_1.itemIcon:isShowCount(false)
 	end
 
-	if slot5 and slot1.hasGet == false then
-		slot1.animHasGet:Play("open")
+	if var_16_1 and arg_16_1.hasGet == false then
+		arg_16_1.animHasGet:Play("open")
 	end
 
-	if slot6 and slot1.activieStatus == false then
-		slot1.animStatus:Play("open")
+	if var_16_2 and arg_16_1.activieStatus == false then
+		arg_16_1.animStatus:Play("open")
 	end
 
-	slot1.activieStatus = slot6
-	slot1.hasGet = slot5
+	arg_16_1.activieStatus = var_16_2
+	arg_16_1.hasGet = var_16_1
 end
 
-function slot0.onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		slot0:refreshReward()
-	end
-end
-
-function slot0.onClose(slot0)
-end
-
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.rewardItems) do
-		slot5.btn:RemoveClickListener()
+function var_0_0.onCloseViewFinish(arg_17_0, arg_17_1)
+	if arg_17_1 == ViewName.CommonPropView then
+		arg_17_0:refreshReward()
 	end
 end
 
-return slot0
+function var_0_0.onClose(arg_18_0)
+	return
+end
+
+function var_0_0.onDestroyView(arg_19_0)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.rewardItems) do
+		iter_19_1.btn:RemoveClickListener()
+	end
+end
+
+return var_0_0

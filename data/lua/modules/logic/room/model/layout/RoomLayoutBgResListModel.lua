@@ -1,51 +1,55 @@
-module("modules.logic.room.model.layout.RoomLayoutBgResListModel", package.seeall)
+﻿module("modules.logic.room.model.layout.RoomLayoutBgResListModel", package.seeall)
 
-slot0 = class("RoomLayoutBgResListModel", ListScrollModel)
+local var_0_0 = class("RoomLayoutBgResListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.init(slot0, slot1)
-	slot2 = {}
+function var_0_0.init(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+	local var_3_1 = RoomConfig.instance:getPlanCoverConfigList()
 
-	for slot7 = 1, #RoomConfig.instance:getPlanCoverConfigList() do
-		slot9 = slot3[slot7]
+	for iter_3_0 = 1, #var_3_1 do
+		local var_3_2 = RoomLayoutBgResMO.New()
+		local var_3_3 = var_3_1[iter_3_0]
 
-		RoomLayoutBgResMO.New():init(slot9.id, slot9)
+		var_3_2:init(var_3_3.id, var_3_3)
 
-		if slot9.id == slot1 then
-			table.insert(slot2, 1, slot8)
+		if var_3_3.id == arg_3_1 then
+			table.insert(var_3_0, 1, var_3_2)
 		else
-			table.insert(slot2, slot8)
+			table.insert(var_3_0, var_3_2)
 		end
 	end
 
-	slot0._selectId = nil
+	arg_3_0._selectId = nil
 
-	slot0:setList(slot2)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectId))
+function var_0_0._refreshSelect(arg_4_0)
+	local var_4_0 = arg_4_0:getById(arg_4_0._selectId)
+
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
+		iter_4_1:setSelect(var_4_0)
 	end
 end
 
-function slot0.getSelectMO(slot0)
-	return slot0:getById(slot0._selectId)
+function var_0_0.getSelectMO(arg_5_0)
+	return arg_5_0:getById(arg_5_0._selectId)
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectId = slot1
+function var_0_0.setSelect(arg_6_0, arg_6_1)
+	arg_6_0._selectId = arg_6_1
 
-	slot0:_refreshSelect()
+	arg_6_0:_refreshSelect()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

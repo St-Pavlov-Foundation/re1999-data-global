@@ -1,27 +1,28 @@
-module("modules.logic.store.model.StoreSkinChargeMo", package.seeall)
+﻿module("modules.logic.store.model.StoreSkinChargeMo", package.seeall)
 
-slot0 = pureTable("StoreSkinChargeMo")
+local var_0_0 = pureTable("StoreSkinChargeMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.belongStoreId = slot1
-	slot0.id = slot2.id
-	slot0.buyCount = slot2.buyCount
-	slot0.config = StoreConfig.instance:getChargeGoodsConfig(slot0.id)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.belongStoreId = arg_1_1
+	arg_1_0.id = arg_1_2.id
+	arg_1_0.buyCount = arg_1_2.buyCount
+	arg_1_0.config = StoreConfig.instance:getChargeGoodsConfig(arg_1_0.id)
 end
 
-function slot0.getSkinChargePrice(slot0)
-	slot1, slot2 = nil
+function var_0_0.getSkinChargePrice(arg_2_0)
+	local var_2_0
+	local var_2_1
 
-	if slot0.config then
-		slot1 = slot0.config.price
-		slot2 = slot0.config.originalCost
+	if arg_2_0.config then
+		var_2_0 = arg_2_0.config.price
+		var_2_1 = arg_2_0.config.originalCost
 	end
 
-	return slot1, slot2
+	return var_2_0, var_2_1
 end
 
-function slot0.isSoldOut(slot0)
-	return slot0.buyCount > 0
+function var_0_0.isSoldOut(arg_3_0)
+	return arg_3_0.buyCount > 0
 end
 
-return slot0
+return var_0_0

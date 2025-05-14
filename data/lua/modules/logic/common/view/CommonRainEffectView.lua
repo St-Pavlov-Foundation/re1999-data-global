@@ -1,51 +1,60 @@
-module("modules.logic.common.view.CommonRainEffectView", package.seeall)
+﻿module("modules.logic.common.view.CommonRainEffectView", package.seeall)
 
-slot0 = class("CommonRainEffectView", BaseView)
+local var_0_0 = class("CommonRainEffectView", BaseView)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._containerPath = slot1
+	arg_1_0._containerPath = arg_1_1
 end
 
-function slot0.onInitView(slot0)
-	slot0._goglowcontainer = gohelper.findChild(slot0.viewGO, slot0._containerPath)
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._goglowcontainer = gohelper.findChild(arg_2_0.viewGO, arg_2_0._containerPath)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_3_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._effectLoader = MultiAbLoader.New()
+function var_0_0._editableInitView(arg_5_0)
+	local var_5_0 = "ui/viewres/effect/ui_character_rain.prefab"
 
-	slot0._effectLoader:addPath("ui/viewres/effect/ui_character_rain.prefab")
-	slot0._effectLoader:startLoad(function (slot0)
-		gohelper.clone(uv0._effectLoader:getAssetItem(uv1):GetResource(uv1), uv0._goglowcontainer)
+	arg_5_0._effectLoader = MultiAbLoader.New()
+
+	arg_5_0._effectLoader:addPath(var_5_0)
+	arg_5_0._effectLoader:startLoad(function(arg_6_0)
+		local var_6_0 = arg_5_0._effectLoader:getAssetItem(var_5_0):GetResource(var_5_0)
+
+		gohelper.clone(var_6_0, arg_5_0._goglowcontainer)
 	end)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._effectLoader then
-		slot0._effectLoader:dispose()
+function var_0_0.onDestroyView(arg_10_0)
+	if arg_10_0._effectLoader then
+		arg_10_0._effectLoader:dispose()
 
-		slot0._effectLoader = nil
+		arg_10_0._effectLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

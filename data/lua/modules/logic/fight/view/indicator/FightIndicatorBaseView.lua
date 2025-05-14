@@ -1,25 +1,27 @@
-module("modules.logic.fight.view.indicator.FightIndicatorBaseView", package.seeall)
+﻿module("modules.logic.fight.view.indicator.FightIndicatorBaseView", package.seeall)
 
-slot0 = class("FightIndicatorBaseView", UserDataDispose)
+local var_0_0 = class("FightIndicatorBaseView", UserDataDispose)
 
-function slot0.initView(slot0, slot1, slot2, slot3)
-	slot0:__onInit()
+function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0:__onInit()
 
-	slot0._indicatorMgrView = slot1
-	slot0.indicatorId = slot2
-	slot0.totalIndicatorNum = slot3 or 0
-	slot0.viewGO = slot0._indicatorMgrView.viewGO
-	slot0.goIndicatorRoot = gohelper.findChild(slot0.viewGO, "root/indicator_container")
+	arg_1_0._indicatorMgrView = arg_1_1
+	arg_1_0.indicatorId = arg_1_2
+	arg_1_0.totalIndicatorNum = arg_1_3 or 0
+	arg_1_0.viewGO = arg_1_0._indicatorMgrView.viewGO
+	arg_1_0.goIndicatorRoot = gohelper.findChild(arg_1_0.viewGO, "root/indicator_container")
 end
 
-function slot0.startLoadPrefab(slot0)
+function var_0_0.startLoadPrefab(arg_2_0)
+	return
 end
 
-function slot0.onIndicatorChange(slot0)
+function var_0_0.onIndicatorChange(arg_3_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroy(arg_4_0)
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

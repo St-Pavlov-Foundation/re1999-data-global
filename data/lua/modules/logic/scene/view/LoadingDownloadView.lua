@@ -1,77 +1,83 @@
-module("modules.logic.scene.view.LoadingDownloadView", package.seeall)
+﻿module("modules.logic.scene.view.LoadingDownloadView", package.seeall)
 
-slot0 = class("LoadingDownloadView", BaseView)
+local var_0_0 = class("LoadingDownloadView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._progressBar = SLFramework.UGUI.SliderWrap.GetWithPath(slot0.viewGO, "progressBar")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtPercent = gohelper.findChildText(slot0.viewGO, "bottom_text/#txt_percent")
-	slot0._txtWarn = gohelper.findChildText(slot0.viewGO, "bottom_text/#txt_actualnum")
-	slot0._txtDescribe = gohelper.findChildText(slot0.viewGO, "describe_text/#txt_describe")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "describe_text/#txt_describe/title/#txt_title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "describe_text/#txt_describe/title/#txt_title_en")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._progressBar = SLFramework.UGUI.SliderWrap.GetWithPath(arg_1_0.viewGO, "progressBar")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtPercent = gohelper.findChildText(arg_1_0.viewGO, "bottom_text/#txt_percent")
+	arg_1_0._txtWarn = gohelper.findChildText(arg_1_0.viewGO, "bottom_text/#txt_actualnum")
+	arg_1_0._txtDescribe = gohelper.findChildText(arg_1_0.viewGO, "describe_text/#txt_describe")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "describe_text/#txt_describe/title/#txt_title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "describe_text/#txt_describe/title/#txt_title_en")
 
-	slot0:_setLoadingItem()
+	arg_1_0:_setLoadingItem()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, slot0._showDownloadInfo, slot0)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0:addEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, arg_2_0._showDownloadInfo, arg_2_0)
 end
 
-function slot0.onClose(slot0)
-	gohelper.setActive(slot0.viewGO, false)
-	slot0:removeEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, slot0._showDownloadInfo, slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onClose(arg_3_0)
+	gohelper.setActive(arg_3_0.viewGO, false)
+	arg_3_0:removeEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, arg_3_0._showDownloadInfo, arg_3_0)
+	arg_3_0._simagebg:UnLoadImage()
 end
 
-function slot0._showDownloadInfo(slot0, slot1, slot2, slot3)
-	slot0:setPercent(slot1)
-	slot0:setProgressMsg(slot2)
-	slot0:setWarnningMsg(slot3)
+function var_0_0._showDownloadInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0:setPercent(arg_4_1)
+	arg_4_0:setProgressMsg(arg_4_2)
+	arg_4_0:setWarnningMsg(arg_4_3)
 end
 
-function slot0._getRandomCO(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
-		slot2 = 0 + slot7.weight
+function var_0_0._getRandomCO(arg_5_0, arg_5_1)
+	local var_5_0 = 0
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		var_5_0 = var_5_0 + iter_5_1.weight
 	end
 
-	for slot7, slot8 in ipairs(slot1) do
-		if math.floor(math.random() * slot2) < slot8.weight then
-			return slot8
+	local var_5_1 = math.floor(math.random() * var_5_0)
+
+	for iter_5_2, iter_5_3 in ipairs(arg_5_1) do
+		if var_5_1 < iter_5_3.weight then
+			return iter_5_3
 		else
-			slot3 = slot3 - slot8.weight
+			var_5_1 = var_5_1 - iter_5_3.weight
 		end
 	end
 
-	return slot1[math.random(1, #slot1)]
+	return arg_5_1[math.random(1, #arg_5_1)]
 end
 
-function slot0._setLoadingItem(slot0)
-	slot2 = slot0:_getRandomCO(booterLoadingConfig())
-	slot0._txtDescribe.text = slot2.desc
-	slot0._txtTitle.text = slot2.title
-	slot0._txtTitleEn.text = slot2.titleen
+function var_0_0._setLoadingItem(arg_6_0)
+	local var_6_0 = booterLoadingConfig()
+	local var_6_1 = arg_6_0:_getRandomCO(var_6_0)
 
-	slot0:_showDownloadInfo(0, luaLang("voice_package_update"))
-	slot0._simagebg:LoadImage(ResUrl.getLoadingBg("full/originbg"))
+	arg_6_0._txtDescribe.text = var_6_1.desc
+	arg_6_0._txtTitle.text = var_6_1.title
+	arg_6_0._txtTitleEn.text = var_6_1.titleen
+
+	arg_6_0:_showDownloadInfo(0, luaLang("voice_package_update"))
+	arg_6_0._simagebg:LoadImage(ResUrl.getLoadingBg("full/originbg"))
 end
 
-function slot0.show(slot0, slot1, slot2, slot3)
-	slot0:setPercent(slot1)
-	slot0:setProgressMsg(slot2)
-	slot0:setWarnningMsg(slot3)
+function var_0_0.show(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0:setPercent(arg_7_1)
+	arg_7_0:setProgressMsg(arg_7_2)
+	arg_7_0:setWarnningMsg(arg_7_3)
 end
 
-function slot0.setPercent(slot0, slot1)
-	slot0._progressBar:SetValue(slot1)
+function var_0_0.setPercent(arg_8_0, arg_8_1)
+	arg_8_0._progressBar:SetValue(arg_8_1)
 end
 
-function slot0.setProgressMsg(slot0, slot1)
-	slot0._txtPercent.text = slot1 and slot1 or ""
+function var_0_0.setProgressMsg(arg_9_0, arg_9_1)
+	arg_9_0._txtPercent.text = arg_9_1 and arg_9_1 or ""
 end
 
-function slot0.setWarnningMsg(slot0, slot1)
-	slot0._txtWarn.text = slot1 and slot1 or ""
+function var_0_0.setWarnningMsg(arg_10_0, arg_10_1)
+	arg_10_0._txtWarn.text = arg_10_1 and arg_10_1 or ""
 end
 
-return slot0
+return var_0_0

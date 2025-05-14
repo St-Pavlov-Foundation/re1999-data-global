@@ -1,193 +1,207 @@
-module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessLevelItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessLevelItem", package.seeall)
 
-slot0 = class("AutoChessLevelItem", LuaCompBase)
-slot0.UnlockPrefsKey = "AutoChessLevelItemEpisodeUnlock"
-slot0.FinishPrefsKey = "AutoChessLevelItemEpisodeFinish"
+local var_0_0 = class("AutoChessLevelItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._handleView = slot1
+var_0_0.UnlockPrefsKey = "AutoChessLevelItemEpisodeUnlock"
+var_0_0.FinishPrefsKey = "AutoChessLevelItemEpisodeFinish"
+
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._handleView = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._btnClick = gohelper.findChildButtonWithAudio(slot1, "#btn_Click")
-	slot0._goLock = gohelper.findChild(slot1, "#go_Lock")
-	slot0._txtNameL = gohelper.findChildText(slot1, "#go_Lock/#txt_NameL")
-	slot0._imageNameL = gohelper.findChildImage(slot1, "#go_Lock/Name/#image_NameL")
-	slot0._btnRewardL = gohelper.findChildButtonWithAudio(slot1, "#go_Lock/#btn_RewardL")
-	slot0._goUnlock = gohelper.findChild(slot1, "#go_Unlock")
-	slot0._txtNameU = gohelper.findChildText(slot1, "#go_Unlock/#txt_NameU")
-	slot0._imageNameU = gohelper.findChildImage(slot1, "#go_Unlock/Name/#image_NameU")
-	slot0._goHasGet = gohelper.findChild(slot1, "#go_Unlock/#go_HasGet")
-	slot0._btnRewardU = gohelper.findChildButtonWithAudio(slot1, "#go_Unlock/#btn_RewardU")
-	slot0._goRound = gohelper.findChild(slot1, "#go_Unlock/#go_Round")
-	slot0._txtRound = gohelper.findChildText(slot1, "#go_Unlock/#go_Round/#txt_Round")
-	slot0._btnGiveUp = gohelper.findChildButtonWithAudio(slot1, "#go_Unlock/#go_Round/#btn_GiveUp")
-	slot0._goCurrent = gohelper.findChild(slot1, "#go_Unlock/#go_Current")
-	slot0._goNew = gohelper.findChild(slot1, "#go_New")
-	slot0._goRewardTips = gohelper.findChild(slot1, "#go_RewardTips")
-	slot0._btnCloseReward = gohelper.findChildButtonWithAudio(slot1, "#go_RewardTips/#btn_CloseReward")
-	slot0._goRewardDesc = gohelper.findChild(slot1, "#go_RewardTips/#go_RewardDesc")
-	slot0._goTipsBg = gohelper.findChild(slot1, "#go_RewardTips/#go_Tipsbg")
-	slot0._txtUnlockTips = gohelper.findChildText(slot1, "#go_RewardTips/#go_Tipsbg/#txt_UnlockTips")
-	slot0._goSpecialDesc = gohelper.findChild(slot1, "#go_RewardTips/#go_SpecialDesc")
-	slot0._goRewardItem = gohelper.findChild(slot1, "#go_RewardTips/#go_RewardItem")
-	slot0._btnRewardTips = gohelper.findButtonWithAudio(slot0._goRewardTips)
-	slot0.moduleId = AutoChessEnum.ModuleId.PVE
-	slot0.anim = slot1:GetComponent(gohelper.Type_Animator)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._btnClick = gohelper.findChildButtonWithAudio(arg_2_1, "#btn_Click")
+	arg_2_0._goLock = gohelper.findChild(arg_2_1, "#go_Lock")
+	arg_2_0._txtNameL = gohelper.findChildText(arg_2_1, "#go_Lock/#txt_NameL")
+	arg_2_0._imageNameL = gohelper.findChildImage(arg_2_1, "#go_Lock/Name/#image_NameL")
+	arg_2_0._btnRewardL = gohelper.findChildButtonWithAudio(arg_2_1, "#go_Lock/#btn_RewardL")
+	arg_2_0._goUnlock = gohelper.findChild(arg_2_1, "#go_Unlock")
+	arg_2_0._txtNameU = gohelper.findChildText(arg_2_1, "#go_Unlock/#txt_NameU")
+	arg_2_0._imageNameU = gohelper.findChildImage(arg_2_1, "#go_Unlock/Name/#image_NameU")
+	arg_2_0._goHasGet = gohelper.findChild(arg_2_1, "#go_Unlock/#go_HasGet")
+	arg_2_0._btnRewardU = gohelper.findChildButtonWithAudio(arg_2_1, "#go_Unlock/#btn_RewardU")
+	arg_2_0._goRound = gohelper.findChild(arg_2_1, "#go_Unlock/#go_Round")
+	arg_2_0._txtRound = gohelper.findChildText(arg_2_1, "#go_Unlock/#go_Round/#txt_Round")
+	arg_2_0._btnGiveUp = gohelper.findChildButtonWithAudio(arg_2_1, "#go_Unlock/#go_Round/#btn_GiveUp")
+	arg_2_0._goCurrent = gohelper.findChild(arg_2_1, "#go_Unlock/#go_Current")
+	arg_2_0._goNew = gohelper.findChild(arg_2_1, "#go_New")
+	arg_2_0._goRewardTips = gohelper.findChild(arg_2_1, "#go_RewardTips")
+	arg_2_0._btnCloseReward = gohelper.findChildButtonWithAudio(arg_2_1, "#go_RewardTips/#btn_CloseReward")
+	arg_2_0._goRewardDesc = gohelper.findChild(arg_2_1, "#go_RewardTips/#go_RewardDesc")
+	arg_2_0._goTipsBg = gohelper.findChild(arg_2_1, "#go_RewardTips/#go_Tipsbg")
+	arg_2_0._txtUnlockTips = gohelper.findChildText(arg_2_1, "#go_RewardTips/#go_Tipsbg/#txt_UnlockTips")
+	arg_2_0._goSpecialDesc = gohelper.findChild(arg_2_1, "#go_RewardTips/#go_SpecialDesc")
+	arg_2_0._goRewardItem = gohelper.findChild(arg_2_1, "#go_RewardTips/#go_RewardItem")
+	arg_2_0._btnRewardTips = gohelper.findButtonWithAudio(arg_2_0._goRewardTips)
+	arg_2_0.moduleId = AutoChessEnum.ModuleId.PVE
+	arg_2_0.anim = arg_2_1:GetComponent(gohelper.Type_Animator)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnClick:AddClickListener(slot0._btnClickOnClick, slot0)
-	slot0._btnRewardU:AddClickListener(slot0._btnRewardOnClick, slot0)
-	slot0._btnRewardL:AddClickListener(slot0._btnRewardOnClick, slot0)
-	slot0._btnGiveUp:AddClickListener(slot0._btnGiveUpOnClick, slot0)
-	slot0._btnCloseReward:AddClickListener(slot0._btnCloseRewardOnClick, slot0)
-	slot0:addEventCb(Activity182Controller.instance, Activity182Event.UpdateInfo, slot0.refreshUI, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0._btnClick:AddClickListener(arg_3_0._btnClickOnClick, arg_3_0)
+	arg_3_0._btnRewardU:AddClickListener(arg_3_0._btnRewardOnClick, arg_3_0)
+	arg_3_0._btnRewardL:AddClickListener(arg_3_0._btnRewardOnClick, arg_3_0)
+	arg_3_0._btnGiveUp:AddClickListener(arg_3_0._btnGiveUpOnClick, arg_3_0)
+	arg_3_0._btnCloseReward:AddClickListener(arg_3_0._btnCloseRewardOnClick, arg_3_0)
+	arg_3_0:addEventCb(Activity182Controller.instance, Activity182Event.UpdateInfo, arg_3_0.refreshUI, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnClick:RemoveClickListener()
-	slot0._btnRewardU:RemoveClickListener()
-	slot0._btnRewardL:RemoveClickListener()
-	slot0._btnGiveUp:RemoveClickListener()
-	slot0._btnCloseReward:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._btnClick:RemoveClickListener()
+	arg_4_0._btnRewardU:RemoveClickListener()
+	arg_4_0._btnRewardL:RemoveClickListener()
+	arg_4_0._btnGiveUp:RemoveClickListener()
+	arg_4_0._btnCloseReward:RemoveClickListener()
 end
 
-function slot0._btnClickOnClick(slot0)
-	slot0._handleView:onClickItem(slot0.co.id)
+function var_0_0._btnClickOnClick(arg_5_0)
+	arg_5_0._handleView:onClickItem(arg_5_0.co.id)
 end
 
-function slot0._btnRewardOnClick(slot0)
-	slot0._handleView:onOpenItemReward(slot0.co.id)
+function var_0_0._btnRewardOnClick(arg_6_0)
+	arg_6_0._handleView:onOpenItemReward(arg_6_0.co.id)
 end
 
-function slot0._btnGiveUpOnClick(slot0)
-	slot0._handleView:onGiveUpGame(slot0.co.id)
+function var_0_0._btnGiveUpOnClick(arg_7_0)
+	arg_7_0._handleView:onGiveUpGame(arg_7_0.co.id)
 end
 
-function slot0._btnCloseRewardOnClick(slot0)
-	slot0._handleView:onCloseItemReward(slot0.co.id)
+function var_0_0._btnCloseRewardOnClick(arg_8_0)
+	arg_8_0._handleView:onCloseItemReward(arg_8_0.co.id)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.co = slot1
+function var_0_0.setData(arg_9_0, arg_9_1)
+	arg_9_0.co = arg_9_1
 
-	if slot1 then
-		slot0:refreshSpecialUnlockTips()
-		slot0:refreshUI()
+	if arg_9_1 then
+		arg_9_0:refreshSpecialUnlockTips()
+		arg_9_0:refreshUI()
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(slot0.co.firstBounds, true)) do
-			slot9 = IconMgr.instance:getCommonItemIcon(gohelper.cloneInPlace(slot0._goRewardItem))
+		local var_9_0 = GameUtil.splitString2(arg_9_0.co.firstBounds, true)
 
-			slot9:setMOValue(slot7[1], slot7[2], slot7[3])
-			transformhelper.setLocalScale(slot9:getCountBg().transform, 1, 1.7, 1)
-			slot9:setCountFontSize(45)
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			local var_9_1 = gohelper.cloneInPlace(arg_9_0._goRewardItem)
+			local var_9_2 = IconMgr.instance:getCommonItemIcon(var_9_1)
+
+			var_9_2:setMOValue(iter_9_1[1], iter_9_1[2], iter_9_1[3])
+
+			local var_9_3 = var_9_2:getCountBg()
+
+			transformhelper.setLocalScale(var_9_3.transform, 1, 1.7, 1)
+			var_9_2:setCountFontSize(45)
 		end
 
-		gohelper.setActive(slot0._goRewardItem, false)
-		gohelper.setActive(slot0._btnRewardU, not slot0.isPass)
-		gohelper.setActive(slot0._goHasGet, slot0.isPass)
+		gohelper.setActive(arg_9_0._goRewardItem, false)
+		gohelper.setActive(arg_9_0._btnRewardU, not arg_9_0.isPass)
+		gohelper.setActive(arg_9_0._goHasGet, arg_9_0.isPass)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0.actMo = Activity182Model.instance:getActMo()
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0.actMo = Activity182Model.instance:getActMo()
 
-	slot0:refreshLock()
-	slot0:refreshSelect()
-	slot0:refreshFinish()
-	slot0:refreshBtnSate()
+	arg_10_0:refreshLock()
+	arg_10_0:refreshSelect()
+	arg_10_0:refreshFinish()
+	arg_10_0:refreshBtnSate()
 
-	if slot0.unlock and slot0.isSelect then
-		slot0.anim:Play("challenge", 0, 0)
+	if arg_10_0.unlock and arg_10_0.isSelect then
+		arg_10_0.anim:Play("challenge", 0, 0)
 	end
 end
 
-function slot0.refreshSelect(slot0)
-	slot0.isSelect = slot0.actMo.gameMoDic[slot0.moduleId].episodeId == slot0.co.id
+function var_0_0.refreshSelect(arg_11_0)
+	local var_11_0 = arg_11_0.actMo.gameMoDic[arg_11_0.moduleId]
 
-	if slot0.isSelect then
-		slot0._txtRound.text = string.format("%d/%d", slot1.currRound, slot0.co.maxRound)
+	arg_11_0.isSelect = var_11_0.episodeId == arg_11_0.co.id
+
+	if arg_11_0.isSelect then
+		arg_11_0._txtRound.text = string.format("%d/%d", var_11_0.currRound, arg_11_0.co.maxRound)
 	end
 
-	gohelper.setActive(slot0._goCurrent, slot0.isSelect)
-	gohelper.setActive(slot0._goRound, slot0.isSelect)
+	gohelper.setActive(arg_11_0._goCurrent, arg_11_0.isSelect)
+	gohelper.setActive(arg_11_0._goRound, arg_11_0.isSelect)
 end
 
-function slot0.refreshLock(slot0)
-	slot0.unlock = slot0.actMo:isEpisodeUnlock(slot0.co.id)
+function var_0_0.refreshLock(arg_12_0)
+	arg_12_0.unlock = arg_12_0.actMo:isEpisodeUnlock(arg_12_0.co.id)
 
-	gohelper.setActive(slot0._goLock, not slot0.unlock)
-	gohelper.setActive(slot0._goUnlock, slot0.unlock)
-	ZProj.UGUIHelper.SetGrayscale(slot0.goArrow, not slot0.unlock)
+	gohelper.setActive(arg_12_0._goLock, not arg_12_0.unlock)
+	gohelper.setActive(arg_12_0._goUnlock, arg_12_0.unlock)
+	ZProj.UGUIHelper.SetGrayscale(arg_12_0.goArrow, not arg_12_0.unlock)
 
-	if slot0.unlock then
-		slot0._txtNameU.text = slot0.co.name
+	if arg_12_0.unlock then
+		arg_12_0._txtNameU.text = arg_12_0.co.name
 
-		UISpriteSetMgr.instance:setAutoChessSprite(slot0._imageNameU, slot0.co.image)
+		UISpriteSetMgr.instance:setAutoChessSprite(arg_12_0._imageNameU, arg_12_0.co.image)
 
-		if AutoChessHelper.getPlayerPrefs(uv0.UnlockPrefsKey .. slot0.co.id, 0) == 0 then
-			gohelper.setActive(slot0._goLock, true)
-			slot0.anim:Play("unlock", 0, 0)
+		local var_12_0 = var_0_0.UnlockPrefsKey .. arg_12_0.co.id
+
+		if AutoChessHelper.getPlayerPrefs(var_12_0, 0) == 0 then
+			gohelper.setActive(arg_12_0._goLock, true)
+			arg_12_0.anim:Play("unlock", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_unlock)
-			AutoChessHelper.setPlayerPrefs(slot1, 1)
+			AutoChessHelper.setPlayerPrefs(var_12_0, 1)
 		end
 	else
-		slot0._txtNameL.text = slot0.co.name
+		arg_12_0._txtNameL.text = arg_12_0.co.name
 
-		UISpriteSetMgr.instance:setAutoChessSprite(slot0._imageNameL, slot0.co.image)
+		UISpriteSetMgr.instance:setAutoChessSprite(arg_12_0._imageNameL, arg_12_0.co.image)
 	end
 end
 
-function slot0.refreshFinish(slot0)
-	slot0.isPass = slot0.actMo:isEpisodePass(slot0.co.id)
+function var_0_0.refreshFinish(arg_13_0)
+	arg_13_0.isPass = arg_13_0.actMo:isEpisodePass(arg_13_0.co.id)
 
-	if slot0.isPass then
-		gohelper.setActive(slot0._goHasGet, true)
+	if arg_13_0.isPass then
+		gohelper.setActive(arg_13_0._goHasGet, true)
 
-		if AutoChessHelper.getPlayerPrefs(uv0.FinishPrefsKey .. slot0.co.id, 0) == 0 then
-			slot0.anim:Play("finish", 0, 0)
-			AutoChessHelper.setPlayerPrefs(slot1, 1)
+		local var_13_0 = var_0_0.FinishPrefsKey .. arg_13_0.co.id
+
+		if AutoChessHelper.getPlayerPrefs(var_13_0, 0) == 0 then
+			arg_13_0.anim:Play("finish", 0, 0)
+			AutoChessHelper.setPlayerPrefs(var_13_0, 1)
 		end
 	end
 end
 
-function slot0.refreshSpecialUnlockTips(slot0)
-	slot2 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
-	slot3 = lua_auto_chess_episode.configDict[AutoChessEnum.PvpEpisodeId].preEpisode
+function var_0_0.refreshSpecialUnlockTips(arg_14_0)
+	local var_14_0 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)
+	local var_14_1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
+	local var_14_2 = lua_auto_chess_episode.configDict[AutoChessEnum.PvpEpisodeId].preEpisode
 
-	if slot0.co.id == tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value) then
-		slot0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips3")
-	elseif slot0.co.id == slot2 then
-		slot0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips2")
-	elseif slot0.co.id == slot3 then
-		slot0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips1")
+	if arg_14_0.co.id == var_14_0 then
+		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips3")
+	elseif arg_14_0.co.id == var_14_1 then
+		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips2")
+	elseif arg_14_0.co.id == var_14_2 then
+		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips1")
 	else
-		gohelper.setActive(slot0._goRewardDesc, true)
-		gohelper.setActive(slot0._goTipsBg, false)
-		gohelper.setActive(slot0._goSpecialDesc, false)
+		gohelper.setActive(arg_14_0._goRewardDesc, true)
+		gohelper.setActive(arg_14_0._goTipsBg, false)
+		gohelper.setActive(arg_14_0._goSpecialDesc, false)
 	end
 end
 
-function slot0.refreshBtnSate(slot0)
-	gohelper.setActive(slot0._btnGiveUp, GuideModel.instance:isGuideFinish(25406))
+function var_0_0.refreshBtnSate(arg_15_0)
+	gohelper.setActive(arg_15_0._btnGiveUp, GuideModel.instance:isGuideFinish(25406))
 end
 
-function slot0.openReward(slot0)
-	gohelper.setActive(slot0._goRewardTips, true)
+function var_0_0.openReward(arg_16_0)
+	gohelper.setActive(arg_16_0._goRewardTips, true)
 end
 
-function slot0.closeReward(slot0)
-	gohelper.setActive(slot0._goRewardTips, false)
+function var_0_0.closeReward(arg_17_0)
+	gohelper.setActive(arg_17_0._goRewardTips, false)
 end
 
-function slot0.enterLevel(slot0)
-	if slot0.unlock then
-		AutoChessController.instance:startGame(slot0.moduleId, slot0.co.id)
+function var_0_0.enterLevel(arg_18_0)
+	if arg_18_0.unlock then
+		AutoChessController.instance:startGame(arg_18_0.moduleId, arg_18_0.co.id)
 	else
 		GameFacade.showToast(ToastEnum.AutoChessEpisodeLock)
 	end
 end
 
-return slot0
+return var_0_0

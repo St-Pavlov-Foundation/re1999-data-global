@@ -1,12 +1,12 @@
-module("modules.logic.fight.view.FightQuitTipViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightQuitTipViewContainer", package.seeall)
 
-slot0 = class("FightQuitTipViewContainer", BaseViewContainer)
+local var_0_0 = class("FightQuitTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightQuitTipView.New(),
 		Season166FightQuitTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

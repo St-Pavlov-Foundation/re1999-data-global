@@ -1,11 +1,11 @@
-module("modules.logic.fight.system.work.FightWorkEffectUniversalCard", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectUniversalCard", package.seeall)
 
-slot0 = class("FightWorkEffectUniversalCard", FightEffectBase)
-slot1 = "ui/viewres/fight/ui_effect_flusheddown.prefab"
+local var_0_0 = class("FightWorkEffectUniversalCard", FightEffectBase)
+local var_0_1 = "ui/viewres/fight/ui_effect_flusheddown.prefab"
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
@@ -13,22 +13,23 @@ function slot0.onStart(slot0)
 	FightCardModel.instance:clearCardOps()
 	FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
 
-	slot1 = FightCardInfoMO.New()
+	local var_1_0 = FightCardInfoMO.New()
 
-	slot1:init({
+	var_1_0:init({
 		uid = "0",
-		skillId = slot0._actEffectMO.effectNum
+		skillId = arg_1_0._actEffectMO.effectNum
 	})
-	FightController.instance:dispatchEvent(FightEvent.UniversalAppear, slot1)
-	slot0:com_registTimer(slot0._delayDone, 1.3 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.UniversalAppear, var_1_0)
+	arg_1_0:com_registTimer(arg_1_0._delayDone, 1.3 / FightModel.instance:getUISpeed())
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_add_universalcard)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

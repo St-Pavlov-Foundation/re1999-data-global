@@ -1,57 +1,60 @@
-module("modules.logic.enemyinfo.model.EnemyInfoLayoutMo", package.seeall)
+﻿module("modules.logic.enemyinfo.model.EnemyInfoLayoutMo", package.seeall)
 
-slot0 = pureTable("EnemyInfoLayoutMo")
+local var_0_0 = pureTable("EnemyInfoLayoutMo")
 
-function slot0.ctor(slot0)
-	slot0.showLeftTab = false
-	slot0.viewWidth = 0
-	slot0.tabWidth = 0
-	slot0.leftTabWidth = 0
-	slot0.rightTabWidth = 0
-	slot0.enemyInfoWidth = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.showLeftTab = false
+	arg_1_0.viewWidth = 0
+	arg_1_0.tabWidth = 0
+	arg_1_0.leftTabWidth = 0
+	arg_1_0.rightTabWidth = 0
+	arg_1_0.enemyInfoWidth = 0
 end
 
-function slot0.updateLayout(slot0, slot1, slot2)
-	slot0.showLeftTab = slot2
-	slot0.viewWidth = slot1
-	slot0.tabWidth = 0
+function var_0_0.updateLayout(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.showLeftTab = arg_2_2
+	arg_2_0.viewWidth = arg_2_1
+	arg_2_0.tabWidth = 0
 
-	if slot0.showLeftTab then
-		slot0.tabWidth = EnemyInfoEnum.TabWidth
-		slot0.viewWidth = slot0.viewWidth - slot0.tabWidth
+	if arg_2_0.showLeftTab then
+		arg_2_0.tabWidth = EnemyInfoEnum.TabWidth
+		arg_2_0.viewWidth = arg_2_0.viewWidth - arg_2_0.tabWidth
 	end
 
-	if slot0.showLeftTab then
-		slot3 = EnemyInfoEnum.LeftTabRatio + EnemyInfoEnum.WithTabOffset.LeftRatio
-		slot4 = EnemyInfoEnum.RightTabRatio + EnemyInfoEnum.WithTabOffset.RightRatio
+	local var_2_0 = EnemyInfoEnum.LeftTabRatio
+	local var_2_1 = EnemyInfoEnum.RightTabRatio
+
+	if arg_2_0.showLeftTab then
+		var_2_0 = var_2_0 + EnemyInfoEnum.WithTabOffset.LeftRatio
+		var_2_1 = var_2_1 + EnemyInfoEnum.WithTabOffset.RightRatio
 	end
 
-	slot0.leftTabWidth = slot0.viewWidth * slot3
-	slot0.rightTabWidth = slot0.viewWidth * slot4
+	arg_2_0.leftTabWidth = arg_2_0.viewWidth * var_2_0
+	arg_2_0.rightTabWidth = arg_2_0.viewWidth * var_2_1
 end
 
-function slot0.setEnemyInfoWidth(slot0, slot1)
-	slot0.enemyInfoWidth = slot1
+function var_0_0.setEnemyInfoWidth(arg_3_0, arg_3_1)
+	arg_3_0.enemyInfoWidth = arg_3_1
 end
 
-function slot0.setScrollEnemyWidth(slot0, slot1)
-	slot0.scrollEnemyWidth = slot1
+function var_0_0.setScrollEnemyWidth(arg_4_0, arg_4_1)
+	arg_4_0.scrollEnemyWidth = arg_4_1
 end
 
-function slot0.getScrollEnemyLeftMargin(slot0)
-	if slot0.showLeftTab then
+function var_0_0.getScrollEnemyLeftMargin(arg_5_0)
+	if arg_5_0.showLeftTab then
 		return EnemyInfoEnum.ScrollEnemyMargin.Left + EnemyInfoEnum.WithTabOffset.ScrollEnemyLeftMargin
 	end
 
 	return EnemyInfoEnum.ScrollEnemyMargin.Left
 end
 
-function slot0.getEnemyInfoLeftMargin(slot0)
-	if slot0.showLeftTab then
+function var_0_0.getEnemyInfoLeftMargin(arg_6_0)
+	if arg_6_0.showLeftTab then
 		return EnemyInfoEnum.EnemyInfoMargin.Left + EnemyInfoEnum.WithTabOffset.EnemyInfoLeftMargin
 	end
 
 	return EnemyInfoEnum.EnemyInfoMargin.Left
 end
 
-return slot0
+return var_0_0

@@ -1,17 +1,17 @@
-module("modules.logic.store.model.ActivityStoreMo", package.seeall)
+﻿module("modules.logic.store.model.ActivityStoreMo", package.seeall)
 
-slot0 = pureTable("ActivityStoreMo")
+local var_0_0 = pureTable("ActivityStoreMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.actId = slot1
-	slot0.id = slot2.id
-	slot0.config = ActivityStoreConfig.instance:getStoreConfig(slot1, slot0.id)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.actId = arg_1_1
+	arg_1_0.id = arg_1_2.id
+	arg_1_0.config = ActivityStoreConfig.instance:getStoreConfig(arg_1_1, arg_1_0.id)
 
-	slot0:updateData(slot2)
+	arg_1_0:updateData(arg_1_2)
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0.buyCount = slot1.buyCount
+function var_0_0.updateData(arg_2_0, arg_2_1)
+	arg_2_0.buyCount = arg_2_1.buyCount
 end
 
-return slot0
+return var_0_0

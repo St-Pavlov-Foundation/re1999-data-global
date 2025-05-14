@@ -1,43 +1,47 @@
-module("modules.configs.excel2json.lua_block_package_data", package.seeall)
+﻿module("modules.configs.excel2json.lua_block_package_data", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	packageId = 3,
 	blockId = 2,
 	mainRes = 5,
 	defineId = 1,
 	order = 4
 }
-slot2 = {
+local var_0_2 = {
 	"blockId"
 }
-slot3 = {}
+local var_0_3 = {}
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict, uv0.packageDict = uv0.json_parse(slot0)
-	end,
-	json_parse = function (slot0)
-		slot1 = {}
-		slot2 = {}
-		slot3 = {}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict, var_0_0.packageDict = var_0_0.json_parse(arg_1_0)
+end
 
-		for slot7, slot8 in ipairs(slot0) do
-			if not slot3[slot8.id] then
-				slot3[slot8.id] = {}
-			end
+function var_0_0.json_parse(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = {}
+	local var_2_2 = {}
 
-			for slot13, slot14 in ipairs(slot8.infos) do
-				slot14.packageId = slot8.id
-				slot14.packageOrder = slot13
-
-				table.insert(slot1, slot14)
-
-				slot2[slot14.blockId] = slot14
-
-				table.insert(slot3[slot8.id], slot14)
-			end
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
+		if not var_2_2[iter_2_1.id] then
+			var_2_2[iter_2_1.id] = {}
 		end
 
-		return slot1, slot2, slot3
+		local var_2_3 = var_2_2[iter_2_1.id]
+
+		for iter_2_2, iter_2_3 in ipairs(iter_2_1.infos) do
+			iter_2_3.packageId = iter_2_1.id
+			iter_2_3.packageOrder = iter_2_2
+
+			table.insert(var_2_0, iter_2_3)
+
+			var_2_1[iter_2_3.blockId] = iter_2_3
+
+			table.insert(var_2_3, iter_2_3)
+		end
 	end
-}
+
+	return var_2_0, var_2_1, var_2_2
+end
+
+return var_0_0

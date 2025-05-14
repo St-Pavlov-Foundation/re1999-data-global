@@ -1,804 +1,926 @@
-module("modules.logic.fight.view.FightViewHandCardItem", package.seeall)
+﻿module("modules.logic.fight.view.FightViewHandCardItem", package.seeall)
 
-slot0 = class("FightViewHandCardItem", LuaCompBase)
+local var_0_0 = class("FightViewHandCardItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._subViewInst = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._subViewInst = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.tr = slot1.transform
-	slot0._cardItemAni = gohelper.onceAddComponent(slot0.go, typeof(UnityEngine.Animator))
-	slot0._forAnimGO = gohelper.findChild(slot1, "foranim")
-	slot0._innerGO = slot0._subViewInst:getResInst(slot0._subViewInst.viewContainer:getSetting().otherRes[1], slot0._forAnimGO, "card")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.tr = arg_2_1.transform
+	arg_2_0._cardItemAni = gohelper.onceAddComponent(arg_2_0.go, typeof(UnityEngine.Animator))
+	arg_2_0._forAnimGO = gohelper.findChild(arg_2_1, "foranim")
 
-	gohelper.setAsFirstSibling(slot0._innerGO)
+	local var_2_0 = arg_2_0._subViewInst.viewContainer:getSetting().otherRes[1]
 
-	slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._innerGO, FightViewCardItem, FightEnum.CardShowType.HandCard)
-	slot0._cardAni = slot0._innerGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._cardAni.enabled = false
-	slot0._innerTr = slot0._innerGO.transform
-	slot0._universalGO = gohelper.findChild(slot0._forAnimGO, "universal")
-	slot0._spEffectGO = gohelper.findChild(slot0._forAnimGO, "spEffect")
-	slot0._foranim = slot0._forAnimGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._itemWidth = recthelper.getWidth(slot0.tr)
-	slot0._oldParentX = -999999
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0.go)
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0.go)
-	slot0._long = SLFramework.UGUI.UILongPressListener.Get(slot0.go)
-	slot0._rightClick = SLFramework.UGUI.UIRightClickListener.Get(slot0.go)
-	slot0._longPressArr = {
+	arg_2_0._innerGO = arg_2_0._subViewInst:getResInst(var_2_0, arg_2_0._forAnimGO, "card")
+
+	gohelper.setAsFirstSibling(arg_2_0._innerGO)
+
+	arg_2_0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._innerGO, FightViewCardItem, FightEnum.CardShowType.HandCard)
+	arg_2_0._cardAni = arg_2_0._innerGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._cardAni.enabled = false
+	arg_2_0._innerTr = arg_2_0._innerGO.transform
+	arg_2_0._universalGO = gohelper.findChild(arg_2_0._forAnimGO, "universal")
+	arg_2_0._spEffectGO = gohelper.findChild(arg_2_0._forAnimGO, "spEffect")
+	arg_2_0._foranim = arg_2_0._forAnimGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._itemWidth = recthelper.getWidth(arg_2_0.tr)
+	arg_2_0._oldParentX = -999999
+	arg_2_0._click = SLFramework.UGUI.UIClickListener.Get(arg_2_0.go)
+	arg_2_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_2_0.go)
+	arg_2_0._long = SLFramework.UGUI.UILongPressListener.Get(arg_2_0.go)
+	arg_2_0._rightClick = SLFramework.UGUI.UIRightClickListener.Get(arg_2_0.go)
+	arg_2_0._longPressArr = {
 		0.5,
 		99999
 	}
-	slot0._isDraging = false
-	slot0._isLongPress = false
+	arg_2_0._isDraging = false
+	arg_2_0._isLongPress = false
 
-	slot0:setUniversal(false)
+	arg_2_0:setUniversal(false)
 
-	slot0._keyOffset = 8
-	slot0._keyMaxTipsNum = 9
-	slot0._restrainComp = MonoHelper.addLuaComOnceToGo(slot0.go, FightViewHandCardItemRestrain, slot0)
-	slot0._lockComp = MonoHelper.addLuaComOnceToGo(slot0.go, FightViewHandCardItemLock, slot0)
-	slot0._loader = slot0._loader or LoaderComponent.New()
-	slot0._lockGO = gohelper.findChild(slot0.go, "foranim/lock")
-	slot0._cardConvertEffect = gohelper.findChild(slot0.go, "foranim/cardConvertEffect")
+	arg_2_0._keyOffset = 8
+	arg_2_0._keyMaxTipsNum = 9
+	arg_2_0._restrainComp = MonoHelper.addLuaComOnceToGo(arg_2_0.go, FightViewHandCardItemRestrain, arg_2_0)
+	arg_2_0._lockComp = MonoHelper.addLuaComOnceToGo(arg_2_0.go, FightViewHandCardItemLock, arg_2_0)
+	arg_2_0._loader = arg_2_0._loader or LoaderComponent.New()
+	arg_2_0._lockGO = gohelper.findChild(arg_2_0.go, "foranim/lock")
+	arg_2_0._cardConvertEffect = gohelper.findChild(arg_2_0.go, "foranim/cardConvertEffect")
 
-	slot0:setASFDActive(true)
+	arg_2_0:setASFDActive(true)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
 	if not FightReplayModel.instance:isReplay() then
-		slot0._click:AddClickListener(slot0._onClickThis, slot0)
-		slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-		slot0._drag:AddDragListener(slot0._onDragThis, slot0)
-		slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
+		arg_3_0._click:AddClickListener(arg_3_0._onClickThis, arg_3_0)
+		arg_3_0._drag:AddDragBeginListener(arg_3_0._onDragBegin, arg_3_0)
+		arg_3_0._drag:AddDragListener(arg_3_0._onDragThis, arg_3_0)
+		arg_3_0._drag:AddDragEndListener(arg_3_0._onDragEnd, arg_3_0)
 	end
 
-	slot0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, slot0._onSelectSkillTarget, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.DragHandCardBegin, slot0._onDragHandCardBegin, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.DragHandCardEnd, slot0._onDragHandCardEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, slot0._simulateDragHandCardBegin, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCard, slot0._simulateDragHandCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, slot0._simulateDragHandCardEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, slot0._simulatePlayHandCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.StartReplay, slot0._checkStartReplay, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RefreshOneHandCard, slot0._onRefreshOneHandCard, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RefreshHandCardMO, slot0._onRefreshHandCardMO, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.CardLevelChangeDone, slot0._onCardLevelChangeDone, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, slot0._allocateEnergyDone, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PlayCardOver, slot0._showASFD, slot0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_3_0._onSelectSkillTarget, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_3_0._onStageChange, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.DragHandCardBegin, arg_3_0._onDragHandCardBegin, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.DragHandCardEnd, arg_3_0._onDragHandCardEnd, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, arg_3_0._simulateDragHandCardBegin, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCard, arg_3_0._simulateDragHandCard, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, arg_3_0._simulateDragHandCardEnd, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, arg_3_0._simulatePlayHandCard, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.StartReplay, arg_3_0._checkStartReplay, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.RefreshOneHandCard, arg_3_0._onRefreshOneHandCard, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.RefreshHandCardMO, arg_3_0._onRefreshHandCardMO, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.CardLevelChangeDone, arg_3_0._onCardLevelChangeDone, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, arg_3_0._onGMForceRefreshNameUIBuff, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_3_0._onSeasonSelectChangeHeroTarget, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.ExitOperateState, arg_3_0._onExitOperateState, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.CancelOperation, arg_3_0._onCancelOperation, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, arg_3_0._allocateEnergyDone, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.PlayCardOver, arg_3_0._showASFD, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0._long:RemoveLongPressListener()
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._click:RemoveClickListener()
+	arg_4_0._drag:RemoveDragBeginListener()
+	arg_4_0._drag:RemoveDragListener()
+	arg_4_0._drag:RemoveDragEndListener()
+	arg_4_0._long:RemoveLongPressListener()
 
 	if PCInputController.instance:getIsUse() then
-		slot0._long:RemoveHoverListener()
+		arg_4_0._long:RemoveHoverListener()
 	end
 
-	slot0._rightClick:RemoveClickListener()
-	slot0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, slot0._onSelectSkillTarget, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.DragHandCardBegin, slot0._onDragHandCardBegin, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.DragHandCardEnd, slot0._onDragHandCardEnd, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, slot0._simulateDragHandCardBegin, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCard, slot0._simulateDragHandCard, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, slot0._simulateDragHandCardEnd, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, slot0._simulatePlayHandCard, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.StartReplay, slot0._checkStartReplay, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.RefreshOneHandCard, slot0._onRefreshOneHandCard, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.RefreshHandCardMO, slot0._onRefreshHandCardMO, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.CardLevelChangeDone, slot0._onCardLevelChangeDone, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.CancelOperation, slot0._onCancelOperation, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, slot0._allocateEnergyDone, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.PlayCardOver, slot0._showASFD, slot0)
-	TaskDispatcher.cancelTask(slot0._delayDisableAnim, slot0)
+	arg_4_0._rightClick:RemoveClickListener()
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_4_0._onSelectSkillTarget, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnStageChange, arg_4_0._onStageChange, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_4_0._onBuffUpdate, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.DragHandCardBegin, arg_4_0._onDragHandCardBegin, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.DragHandCardEnd, arg_4_0._onDragHandCardEnd, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, arg_4_0._simulateDragHandCardBegin, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCard, arg_4_0._simulateDragHandCard, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, arg_4_0._simulateDragHandCardEnd, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, arg_4_0._simulatePlayHandCard, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.StartReplay, arg_4_0._checkStartReplay, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.RefreshOneHandCard, arg_4_0._onRefreshOneHandCard, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.RefreshHandCardMO, arg_4_0._onRefreshHandCardMO, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.CardLevelChangeDone, arg_4_0._onCardLevelChangeDone, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, arg_4_0._onGMForceRefreshNameUIBuff, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_4_0._onSeasonSelectChangeHeroTarget, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.ExitOperateState, arg_4_0._onExitOperateState, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.CancelOperation, arg_4_0._onCancelOperation, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, arg_4_0._allocateEnergyDone, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.PlayCardOver, arg_4_0._showASFD, arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDisableAnim, arg_4_0)
 end
 
-function slot0._allocateEnergyDone(slot0)
-	if slot0._cardItem then
-		slot0._cardItem:_allocateEnergyDone()
-	end
-end
-
-function slot0._showASFD(slot0)
-	slot0:setASFDActive(true)
-end
-
-function slot0._onCancelOperation(slot0)
-	slot0:setASFDActive(true)
-end
-
-function slot0._onSeasonSelectChangeHeroTarget(slot0, slot1)
-	if slot0.cardInfoMO and slot0.cardInfoMO.uid == slot1 then
-		slot0._seasonChangeHeroSelecting = true
-
-		slot0._cardItemAni:Play("preview")
-	elseif slot0._seasonChangeHeroSelecting then
-		slot0._cardItemAni:Play("idle")
-
-		slot0._seasonChangeHeroSelecting = false
+function var_0_0._allocateEnergyDone(arg_5_0)
+	if arg_5_0._cardItem then
+		arg_5_0._cardItem:_allocateEnergyDone()
 	end
 end
 
-function slot0._onExitOperateState(slot0)
-	if slot0._seasonChangeHeroSelecting then
-		slot0._cardItemAni:Play("idle")
+function var_0_0._showASFD(arg_6_0)
+	arg_6_0:setASFDActive(true)
+end
 
-		slot0._seasonChangeHeroSelecting = false
+function var_0_0._onCancelOperation(arg_7_0)
+	arg_7_0:setASFDActive(true)
+end
+
+function var_0_0._onSeasonSelectChangeHeroTarget(arg_8_0, arg_8_1)
+	if arg_8_0.cardInfoMO and arg_8_0.cardInfoMO.uid == arg_8_1 then
+		arg_8_0._seasonChangeHeroSelecting = true
+
+		arg_8_0._cardItemAni:Play("preview")
+	elseif arg_8_0._seasonChangeHeroSelecting then
+		arg_8_0._cardItemAni:Play("idle")
+
+		arg_8_0._seasonChangeHeroSelecting = false
 	end
 end
 
-function slot0.setASFDActive(slot0, slot1)
-	if slot0._cardItem then
-		slot0._cardItem:setASFDActive(slot1)
+function var_0_0._onExitOperateState(arg_9_0)
+	if arg_9_0._seasonChangeHeroSelecting then
+		arg_9_0._cardItemAni:Play("idle")
+
+		arg_9_0._seasonChangeHeroSelecting = false
 	end
 end
 
-function slot0.playASFDAnim(slot0, slot1)
-	if slot0._cardItem then
-		slot0._cardItem:playASFDAnim(slot1)
+function var_0_0.setASFDActive(arg_10_0, arg_10_1)
+	if arg_10_0._cardItem then
+		arg_10_0._cardItem:setASFDActive(arg_10_1)
 	end
 end
 
-function slot0.onStart(slot0)
-	if FightModel.instance:getCurStage() then
-		slot0:_onStageChange(slot1)
+function var_0_0.playASFDAnim(arg_11_0, arg_11_1)
+	if arg_11_0._cardItem then
+		arg_11_0._cardItem:playASFDAnim(arg_11_1)
 	end
-
-	slot0:_checkStartReplay()
 end
 
-function slot0._checkStartReplay(slot0)
+function var_0_0.onStart(arg_12_0)
+	local var_12_0 = FightModel.instance:getCurStage()
+
+	if var_12_0 then
+		arg_12_0:_onStageChange(var_12_0)
+	end
+
+	arg_12_0:_checkStartReplay()
+end
+
+function var_0_0._checkStartReplay(arg_13_0)
 	if FightReplayModel.instance:isReplay() then
-		slot0._click:RemoveClickListener()
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragListener()
-		slot0._drag:RemoveDragEndListener()
-		slot0._long:RemoveLongPressListener()
-		slot0._long:RemoveHoverListener()
-		slot0._rightClick:RemoveClickListener()
+		arg_13_0._click:RemoveClickListener()
+		arg_13_0._drag:RemoveDragBeginListener()
+		arg_13_0._drag:RemoveDragListener()
+		arg_13_0._drag:RemoveDragEndListener()
+		arg_13_0._long:RemoveLongPressListener()
+		arg_13_0._long:RemoveHoverListener()
+		arg_13_0._rightClick:RemoveClickListener()
 	end
 end
 
-function slot0.setUniversal(slot0, slot1)
-	gohelper.setActive(slot0._universalGO, slot1)
+function var_0_0.setUniversal(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._universalGO, arg_14_1)
 end
 
-function slot0.refreshPreDelete(slot0, slot1)
-	if slot1 then
-		-- Nothing
+function var_0_0.refreshPreDelete(arg_15_0, arg_15_1)
+	if arg_15_1 then
+		-- block empty
 	end
 end
 
-function slot0.updateItem(slot0, slot1, slot2)
-	slot0.index = slot1 or slot0.index
+function var_0_0.updateItem(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0.index = arg_16_1 or arg_16_0.index
 
-	if slot2 then
-		slot0.cardInfoMO = slot2
-		slot2.custom_handCardIndex = slot0.index
+	if arg_16_2 then
+		arg_16_0.cardInfoMO = arg_16_2
+		arg_16_2.custom_handCardIndex = arg_16_0.index
 
-		if not lua_skill.configDict[slot2.skillId] then
-			logError("skill not exist: " .. slot2.skillId)
+		if not lua_skill.configDict[arg_16_2.skillId] then
+			logError("skill not exist: " .. arg_16_2.skillId)
 
 			return
 		end
 
-		slot0._cardItem:updateItem(slot2.uid, slot2.skillId, slot2)
+		arg_16_0._cardItem:updateItem(arg_16_2.uid, arg_16_2.skillId, arg_16_2)
 
-		slot0._isDraging = false
-		slot0._isLongPress = false
-		slot0._skillId = slot2.skillId
+		arg_16_0._isDraging = false
+		arg_16_0._isLongPress = false
+		arg_16_0._skillId = arg_16_2.skillId
 
-		slot0:setUniversal(false)
-		slot0:_updateSpEffect()
-		slot0._restrainComp:updateItem(slot2)
-		slot0._lockComp:updateItem(slot2)
-		slot0._cardItem:updateResistanceByCardInfo(slot2)
+		arg_16_0:setUniversal(false)
+		arg_16_0:_updateSpEffect()
+		arg_16_0._restrainComp:updateItem(arg_16_2)
+		arg_16_0._lockComp:updateItem(arg_16_2)
+		arg_16_0._cardItem:updateResistanceByCardInfo(arg_16_2)
 	end
 
-	slot0:_hideEffect()
-	slot0:_refreshBlueStar()
-	slot0:showKeytips()
-	slot0:showCardHeat()
+	arg_16_0:_hideEffect()
+	arg_16_0:_refreshBlueStar()
+	arg_16_0:showKeytips()
+	arg_16_0:showCardHeat()
 end
 
-function slot0.showCardHeat(slot0)
-	slot0._cardItem:showCardHeat()
+function var_0_0.showCardHeat(arg_17_0)
+	arg_17_0._cardItem:showCardHeat()
 end
 
-function slot0.showKeytips(slot0)
-	slot1 = gohelper.findChild(slot0.go, "foranim/card/#go_pcbtn")
+function var_0_0.showKeytips(arg_18_0)
+	local var_18_0 = gohelper.findChild(arg_18_0.go, "foranim/card/#go_pcbtn")
+	local var_18_1 = #FightCardModel.instance:getHandCards()
 
-	if #FightCardModel.instance:getHandCards() == 0 then
+	if var_18_1 == 0 then
 		return
 	end
 
-	if slot2 - slot0.index + 1 >= 1 and slot3 <= slot2 and slot3 <= slot0._keyMaxTipsNum then
-		if not slot0._pcTips then
-			slot0._pcTips = PCInputController.instance:showkeyTips(slot1, PCInputModel.Activity.battle, slot3 + slot0._keyOffset)
+	local var_18_2 = var_18_1 - arg_18_0.index + 1
+
+	if var_18_2 >= 1 and var_18_2 <= var_18_1 and var_18_2 <= arg_18_0._keyMaxTipsNum then
+		if not arg_18_0._pcTips then
+			arg_18_0._pcTips = PCInputController.instance:showkeyTips(var_18_0, PCInputModel.Activity.battle, var_18_2 + arg_18_0._keyOffset)
 		else
-			slot0._pcTips:Refresh(PCInputModel.Activity.battle, slot3 + slot0._keyOffset)
+			arg_18_0._pcTips:Refresh(PCInputModel.Activity.battle, var_18_2 + arg_18_0._keyOffset)
 		end
 
-		if slot0._pcTips == nil then
+		if arg_18_0._pcTips == nil then
 			return
 		end
 
-		if slot0._cardItem and slot0._cardItem:IsUniqueSkill() then
-			recthelper.setAnchorY(slot0._pcTips._go.transform, 200)
+		if arg_18_0._cardItem and arg_18_0._cardItem:IsUniqueSkill() then
+			recthelper.setAnchorY(arg_18_0._pcTips._go.transform, 200)
 		else
-			recthelper.setAnchorY(slot0._pcTips._go.transform, 150)
+			recthelper.setAnchorY(arg_18_0._pcTips._go.transform, 150)
 		end
 
-		slot0._pcTips:Show(true)
-	elseif slot0._pcTips then
-		slot0._pcTips:Show(false)
+		arg_18_0._pcTips:Show(true)
+	elseif arg_18_0._pcTips then
+		arg_18_0._pcTips:Show(false)
 	end
 end
 
-function slot0.refreshCardMO(slot0, slot1, slot2)
-	slot0.index = slot1
-	slot0.cardInfoMO = slot2
+function var_0_0.refreshCardMO(arg_19_0, arg_19_1, arg_19_2)
+	arg_19_0.index = arg_19_1
+	arg_19_0.cardInfoMO = arg_19_2
 end
 
-function slot0._onRefreshHandCardMO(slot0, slot1, slot2)
-	slot0:refreshCardMO(slot1, slot2)
+function var_0_0._onRefreshHandCardMO(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0:refreshCardMO(arg_20_1, arg_20_2)
 end
 
-function slot0.onLongPressEnd(slot0)
-	slot0._isLongPress = false
+function var_0_0.onLongPressEnd(arg_21_0)
+	arg_21_0._isLongPress = false
 end
 
-function slot0.getCardItem(slot0)
-	return slot0._cardItem
+function var_0_0.getCardItem(arg_22_0)
+	return arg_22_0._cardItem
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
-	if not slot0.cardInfoMO then
+function var_0_0._onBuffUpdate(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	if not arg_23_0.cardInfoMO then
 		return
 	end
 
-	if slot1 ~= slot0.cardInfoMO.uid then
+	if arg_23_1 ~= arg_23_0.cardInfoMO.uid then
 		return
 	end
 
-	slot0:_updateSpEffect()
+	arg_23_0:_updateSpEffect()
 
-	if slot2 ~= FightEnum.EffectType.BUFFUPDATE and FightConfig.instance:hasBuffFeature(slot3, FightEnum.BuffFeature.SkillLevelJudgeAdd) then
-		slot0:_refreshBlueStar()
+	if arg_23_2 ~= FightEnum.EffectType.BUFFUPDATE and FightConfig.instance:hasBuffFeature(arg_23_3, FightEnum.BuffFeature.SkillLevelJudgeAdd) then
+		arg_23_0:_refreshBlueStar()
 	end
 end
 
-function slot0._refreshBlueStar(slot0)
-	slot1 = slot0.cardInfoMO and slot0.cardInfoMO.uid
-	slot2 = slot0.cardInfoMO and slot0.cardInfoMO.skillId
+function var_0_0._refreshBlueStar(arg_24_0)
+	local var_24_0 = arg_24_0.cardInfoMO and arg_24_0.cardInfoMO.uid
+	local var_24_1 = arg_24_0.cardInfoMO and arg_24_0.cardInfoMO.skillId
+	local var_24_2 = var_24_0 and var_24_1 and FightCardModel.instance:getSkillLv(var_24_0, var_24_1)
 
-	slot0._cardItem:showBlueStar(slot1 and slot2 and FightCardModel.instance:getSkillLv(slot1, slot2))
+	arg_24_0._cardItem:showBlueStar(var_24_2)
 end
 
-function slot0._onDragHandCardBegin(slot0, slot1, slot2, slot3)
-	if not slot0.cardInfoMO then
+function var_0_0._onDragHandCardBegin(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	if not arg_25_0.cardInfoMO then
 		return
 	end
 
-	if not FightEnum.UniversalCard[slot3.skillId] or slot3 == slot0.cardInfoMO then
+	if not FightEnum.UniversalCard[arg_25_3.skillId] or arg_25_3 == arg_25_0.cardInfoMO then
 		return
 	end
 
-	if FightCardModel.instance:getSkillLv(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId) <= FightCardModel.instance:getSkillLv(slot3.uid, slot3.skillId) then
+	local var_25_0 = FightCardModel.instance:getSkillLv(arg_25_3.uid, arg_25_3.skillId)
+	local var_25_1 = FightCardModel.instance:getSkillLv(arg_25_0.cardInfoMO.uid, arg_25_0.cardInfoMO.skillId)
+
+	if var_25_1 <= var_25_0 then
 		return
 	end
 
-	gohelper.setActive(gohelper.findChild(slot0._forAnimGO, "universalMask"), true)
+	local var_25_2 = gohelper.findChild(arg_25_0._forAnimGO, "universalMask")
 
-	for slot10 = 1, 4 do
-		gohelper.setActive(gohelper.findChild(slot6, "jinengpai_" .. slot10), slot10 == slot5)
+	gohelper.setActive(var_25_2, true)
+
+	for iter_25_0 = 1, 4 do
+		local var_25_3 = gohelper.findChild(var_25_2, "jinengpai_" .. iter_25_0)
+
+		gohelper.setActive(var_25_3, iter_25_0 == var_25_1)
 	end
 end
 
-function slot0._onDragHandCardEnd(slot0)
-	gohelper.setActive(gohelper.findChild(slot0._forAnimGO, "universalMask"), false)
+function var_0_0._onDragHandCardEnd(arg_26_0)
+	local var_26_0 = gohelper.findChild(arg_26_0._forAnimGO, "universalMask")
+
+	gohelper.setActive(var_26_0, false)
 end
 
-function slot0._onSelectSkillTarget(slot0)
-	slot0:_updateSpEffect()
+function var_0_0._onSelectSkillTarget(arg_27_0)
+	arg_27_0:_updateSpEffect()
 end
 
-function slot0._updateSpEffect(slot0)
-	if gohelper.isNil(slot0._spEffectGO) then
+function var_0_0._updateSpEffect(arg_28_0)
+	if gohelper.isNil(arg_28_0._spEffectGO) then
 		return
 	end
 
-	if not slot0.cardInfoMO then
+	if not arg_28_0.cardInfoMO then
 		return
 	end
 
-	slot1 = lua_skill.configDict[slot0._skillId]
+	local var_28_0 = lua_skill.configDict[arg_28_0._skillId]
+	local var_28_1 = FightModel.instance:getCurStage()
 
-	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card and slot2 ~= FightEnum.Stage.AutoCard then
-		gohelper.setActive(slot0._spEffectGO, false)
+	if var_28_1 ~= FightEnum.Stage.Card and var_28_1 ~= FightEnum.Stage.AutoCard then
+		gohelper.setActive(arg_28_0._spEffectGO, false)
 
 		return
 	end
 
-	slot3 = false
-	slot4 = {
-		[slot9] = true
-	}
-	slot8 = slot1.clientIgnoreCondition
-	slot9 = "#"
+	local var_28_2 = false
+	local var_28_3 = {}
 
-	for slot8, slot9 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot8, slot9)) do
-		-- Nothing
+	for iter_28_0, iter_28_1 in ipairs(FightStrUtil.instance:getSplitToNumberCache(var_28_0.clientIgnoreCondition, "#")) do
+		var_28_3[iter_28_1] = true
 	end
 
-	for slot8 = 1, FightEnum.MaxBehavior do
-		if not slot4[slot8] and (slot0:_checkConditionSpEffect(slot1["condition" .. slot8], slot1["conditionTarget" .. slot8]) or slot0:_checkSkillRateUpBehavior(slot1["behavior" .. slot8], slot10)) then
-			slot3 = true
+	for iter_28_2 = 1, FightEnum.MaxBehavior do
+		if not var_28_3[iter_28_2] then
+			local var_28_4 = var_28_0["condition" .. iter_28_2]
+			local var_28_5 = var_28_0["conditionTarget" .. iter_28_2]
+			local var_28_6 = var_28_0["behavior" .. iter_28_2]
 
-			break
+			if arg_28_0:_checkConditionSpEffect(var_28_4, var_28_5) or arg_28_0:_checkSkillRateUpBehavior(var_28_6, var_28_5) then
+				var_28_2 = true
+
+				break
+			end
 		end
 	end
 
-	if slot3 ~= slot0._spEffectGO.activeSelf then
-		gohelper.setActive(slot0._spEffectGO, slot3)
+	if var_28_2 ~= arg_28_0._spEffectGO.activeSelf then
+		gohelper.setActive(arg_28_0._spEffectGO, var_28_2)
 	end
 end
 
-function slot0._getConditionTargetUid(slot0, slot1)
-	if slot1 == 103 then
-		return slot0.cardInfoMO.uid
-	elseif slot1 == 0 then
+function var_0_0._getConditionTargetUid(arg_29_0, arg_29_1)
+	if arg_29_1 == 103 then
+		return arg_29_0.cardInfoMO.uid
+	elseif arg_29_1 == 0 then
 		return FightCardModel.instance.curSelectEntityId
-	elseif slot1 == 202 then
-		for slot5, slot6 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
-			return slot6.id
+	elseif arg_29_1 == 202 then
+		for iter_29_0, iter_29_1 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
+			return iter_29_1.id
 		end
 	end
 end
 
-function slot0._getConditionTargetUids(slot0, slot1)
-	if slot1 == 103 then
+function var_0_0._getConditionTargetUids(arg_30_0, arg_30_1)
+	if arg_30_1 == 103 then
 		return {
-			slot0.cardInfoMO.uid
+			arg_30_0.cardInfoMO.uid
 		}
-	elseif slot1 == 0 then
+	elseif arg_30_1 == 0 then
 		return {
 			FightCardModel.instance.curSelectEntityId
 		}
-	elseif slot1 == 202 then
-		slot2 = {}
+	elseif arg_30_1 == 202 then
+		local var_30_0 = {}
 
-		for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
-			table.insert(slot2, slot7.id)
+		for iter_30_0, iter_30_1 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
+			table.insert(var_30_0, iter_30_1.id)
 		end
 
-		return slot2
+		return var_30_0
 	end
 
 	return {}
 end
 
-function slot0._checkConditionSpEffect(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0._checkConditionSpEffect(arg_31_0, arg_31_1, arg_31_2)
+	if string.nilorempty(arg_31_1) then
 		return
 	end
 
-	if #FightStrUtil.instance:getSplitCache(slot1, "&") > 1 then
-		for slot8, slot9 in ipairs(slot3) do
-			if slot0:_checkSingleCondition(slot9, slot2) then
-				slot4 = 0 + 1
+	local var_31_0 = FightStrUtil.instance:getSplitCache(arg_31_1, "&")
+
+	if #var_31_0 > 1 then
+		local var_31_1 = 0
+
+		for iter_31_0, iter_31_1 in ipairs(var_31_0) do
+			if arg_31_0:_checkSingleCondition(iter_31_1, arg_31_2) then
+				var_31_1 = var_31_1 + 1
 			end
 		end
 
-		if slot4 == #slot3 then
+		if var_31_1 == #var_31_0 then
 			return true
 		end
-	elseif #FightStrUtil.instance:getSplitCache(slot1, "|") > 1 then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot0:_checkSingleCondition(slot8, slot2) then
-				return true
+	else
+		local var_31_2 = FightStrUtil.instance:getSplitCache(arg_31_1, "|")
+
+		if #var_31_2 > 1 then
+			for iter_31_2, iter_31_3 in ipairs(var_31_2) do
+				if arg_31_0:_checkSingleCondition(iter_31_3, arg_31_2) then
+					return true
+				end
 			end
+		elseif arg_31_0:_checkSingleCondition(arg_31_1, arg_31_2) then
+			return true
 		end
-	elseif slot0:_checkSingleCondition(slot1, slot2) then
-		return true
 	end
 end
 
-function slot0._checkSingleCondition(slot0, slot1, slot2)
-	if not lua_skill_behavior_condition.configDict[tonumber(FightStrUtil.instance:getSplitCache(slot1, "#")[1])] or string.nilorempty(slot5.type) then
+function var_0_0._checkSingleCondition(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = FightStrUtil.instance:getSplitCache(arg_32_1, "#")
+	local var_32_1 = tonumber(var_32_0[1])
+	local var_32_2 = lua_skill_behavior_condition.configDict[var_32_1]
+
+	if not var_32_2 or string.nilorempty(var_32_2.type) then
 		return false
 	end
 
-	if not slot0:_getConditionTargetUid(slot2) or tostring(slot6) == "0" then
+	local var_32_3 = arg_32_0:_getConditionTargetUid(arg_32_2)
+
+	if not var_32_3 or tostring(var_32_3) == "0" then
 		return false
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot6) then
+	local var_32_4 = FightDataHelper.entityMgr:getById(var_32_3)
+
+	if not var_32_4 then
 		return false
 	end
 
-	if slot5.type == "LifeLess" then
-		return tonumber(slot3[2]) * 0.001 > slot7.currentHp / slot7.attrMO.hp
-	elseif slot5.type == "LifeMore" then
-		return tonumber(slot3[2]) * 0.001 < slot7.currentHp / slot7.attrMO.hp
-	elseif slot5.type == "HasBuffId" then
-		for slot12 = 2, #slot3 do
-			if tonumber(slot3[slot12]) and slot0:_getSimulateBuffTypeDic(slot7)[slot13] then
+	if var_32_2.type == "LifeLess" then
+		return tonumber(var_32_0[2]) * 0.001 > var_32_4.currentHp / var_32_4.attrMO.hp
+	elseif var_32_2.type == "LifeMore" then
+		return tonumber(var_32_0[2]) * 0.001 < var_32_4.currentHp / var_32_4.attrMO.hp
+	elseif var_32_2.type == "HasBuffId" then
+		local var_32_5 = arg_32_0:_getSimulateBuffTypeDic(var_32_4)
+
+		for iter_32_0 = 2, #var_32_0 do
+			local var_32_6 = tonumber(var_32_0[iter_32_0])
+
+			if var_32_6 and var_32_5[var_32_6] then
 				return true
 			end
 		end
-	elseif slot5.type == "HasBuff" then
-		slot9 = {
-			[slot15.type] = true
-		}
+	elseif var_32_2.type == "HasBuff" then
+		local var_32_7 = arg_32_0:_getSimulateBuffTypeDic(var_32_4)
+		local var_32_8 = {}
 
-		for slot13, slot14 in pairs(slot0:_getSimulateBuffTypeDic(slot7)) do
-			if lua_skill_bufftype.configDict[slot13] then
-				-- Nothing
+		for iter_32_1, iter_32_2 in pairs(var_32_7) do
+			local var_32_9 = lua_skill_bufftype.configDict[iter_32_1]
+
+			if var_32_9 then
+				var_32_8[var_32_9.type] = true
 			end
 		end
 
-		for slot13 = 2, #slot3 do
-			if tonumber(slot3[slot13]) and slot9[slot14] then
+		for iter_32_3 = 2, #var_32_0 do
+			local var_32_10 = tonumber(var_32_0[iter_32_3])
+
+			if var_32_10 and var_32_8[var_32_10] then
 				return true
 			end
 		end
-	elseif slot5.type == "HasBuffGroup" then
-		slot9 = {
-			[slot15.group] = true
-		}
+	elseif var_32_2.type == "HasBuffGroup" then
+		local var_32_11 = arg_32_0:_getSimulateBuffTypeDic(var_32_4)
+		local var_32_12 = {}
 
-		for slot13, slot14 in pairs(slot0:_getSimulateBuffTypeDic(slot7)) do
-			if lua_skill_bufftype.configDict[slot13] then
-				-- Nothing
+		for iter_32_4, iter_32_5 in pairs(var_32_11) do
+			local var_32_13 = lua_skill_bufftype.configDict[iter_32_4]
+
+			if var_32_13 then
+				var_32_12[var_32_13.group] = true
 			end
 		end
 
-		for slot13 = 2, #slot3 do
-			if tonumber(slot3[slot13]) and slot9[slot14] then
+		for iter_32_6 = 2, #var_32_0 do
+			local var_32_14 = tonumber(var_32_0[iter_32_6])
+
+			if var_32_14 and var_32_12[var_32_14] then
 				return true
 			end
 		end
-	elseif slot5.type == "NoBuffId" then
-		slot8 = slot0:_getBuffTypeDic(slot7)
+	elseif var_32_2.type == "NoBuffId" then
+		local var_32_15 = arg_32_0:_getBuffTypeDic(var_32_4)
+		local var_32_16 = FightStrUtil.instance:getSplitCache(var_32_0[2], ",")
 
-		if #FightStrUtil.instance:getSplitCache(slot3[2], ",") > 1 then
-			for slot13 = 1, #slot9 do
-				if tonumber(slot9[slot13]) and slot8[slot14] then
+		if #var_32_16 > 1 then
+			for iter_32_7 = 1, #var_32_16 do
+				local var_32_17 = tonumber(var_32_16[iter_32_7])
+
+				if var_32_17 and var_32_15[var_32_17] then
 					return false
 				end
 			end
 		else
-			for slot13 = 2, #slot3 do
-				if tonumber(slot3[slot13]) and slot8[slot14] then
+			for iter_32_8 = 2, #var_32_0 do
+				local var_32_18 = tonumber(var_32_0[iter_32_8])
+
+				if var_32_18 and var_32_15[var_32_18] then
 					return false
 				end
 			end
 		end
 
 		return true
-	elseif slot5.type == "NoBuff" then
-		slot9 = {
-			[slot15.type] = true
-		}
+	elseif var_32_2.type == "NoBuff" then
+		local var_32_19 = arg_32_0:_getBuffTypeDic(var_32_4)
+		local var_32_20 = {}
 
-		for slot13, slot14 in pairs(slot0:_getBuffTypeDic(slot7)) do
-			if lua_skill_bufftype.configDict[slot13] then
-				-- Nothing
+		for iter_32_9, iter_32_10 in pairs(var_32_19) do
+			local var_32_21 = lua_skill_bufftype.configDict[iter_32_9]
+
+			if var_32_21 then
+				var_32_20[var_32_21.type] = true
 			end
 		end
 
-		if #FightStrUtil.instance:getSplitCache(slot3[2], ",") > 1 then
-			for slot14 = 1, #slot10 do
-				if tonumber(slot10[slot14]) and slot9[slot15] then
+		local var_32_22 = FightStrUtil.instance:getSplitCache(var_32_0[2], ",")
+
+		if #var_32_22 > 1 then
+			for iter_32_11 = 1, #var_32_22 do
+				local var_32_23 = tonumber(var_32_22[iter_32_11])
+
+				if var_32_23 and var_32_20[var_32_23] then
 					return false
 				end
 			end
 		else
-			for slot14 = 2, #slot3 do
-				if tonumber(slot3[slot14]) and slot9[slot15] then
+			for iter_32_12 = 2, #var_32_0 do
+				local var_32_24 = tonumber(var_32_0[iter_32_12])
+
+				if var_32_24 and var_32_20[var_32_24] then
 					return false
 				end
 			end
 		end
 
 		return true
-	elseif slot5.type == "NoBuffGroup" then
-		slot9 = {
-			[slot15.group] = true
-		}
+	elseif var_32_2.type == "NoBuffGroup" then
+		local var_32_25 = arg_32_0:_getBuffTypeDic(var_32_4)
+		local var_32_26 = {}
 
-		for slot13, slot14 in pairs(slot0:_getBuffTypeDic(slot7)) do
-			if lua_skill_bufftype.configDict[slot13] then
-				-- Nothing
+		for iter_32_13, iter_32_14 in pairs(var_32_25) do
+			local var_32_27 = lua_skill_bufftype.configDict[iter_32_13]
+
+			if var_32_27 then
+				var_32_26[var_32_27.group] = true
 			end
 		end
 
-		if #FightStrUtil.instance:getSplitCache(slot3[2], ",") > 1 then
-			for slot14 = 1, #slot10 do
-				if tonumber(slot10[slot14]) and slot9[slot15] then
+		local var_32_28 = FightStrUtil.instance:getSplitCache(var_32_0[2], ",")
+
+		if #var_32_28 > 1 then
+			for iter_32_15 = 1, #var_32_28 do
+				local var_32_29 = tonumber(var_32_28[iter_32_15])
+
+				if var_32_29 and var_32_26[var_32_29] then
 					return false
 				end
 			end
 		else
-			for slot14 = 2, #slot3 do
-				if tonumber(slot3[slot14]) and slot9[slot15] then
+			for iter_32_16 = 2, #var_32_0 do
+				local var_32_30 = tonumber(var_32_0[iter_32_16])
+
+				if var_32_30 and var_32_26[var_32_30] then
 					return false
 				end
 			end
 		end
 
 		return true
-	elseif slot5.type == "PowerCompare" then
-		if slot7:getPowerInfo(tonumber(slot3[3])) then
-			if slot3[2] == "1" then
-				return tonumber(slot3[4]) <= slot8.num
+	elseif var_32_2.type == "PowerCompare" then
+		local var_32_31 = var_32_4:getPowerInfo(tonumber(var_32_0[3]))
+
+		if var_32_31 then
+			if var_32_0[2] == "1" then
+				return var_32_31.num >= tonumber(var_32_0[4])
 			end
 		else
 			return false
 		end
-	elseif slot5.type == "TypeIdBuffCountMoreThan" then
-		for slot14, slot15 in ipairs(slot7:getBuffList()) do
-			if lua_skill_buff.configDict[slot15.buffId] and slot16.typeId == tonumber(slot3[2]) and tonumber(slot3[3]) <= (slot15.layer and slot15.layer > 0 and slot15.layer or 1) then
+	elseif var_32_2.type == "TypeIdBuffCountMoreThan" then
+		local var_32_32 = tonumber(var_32_0[2])
+		local var_32_33 = tonumber(var_32_0[3])
+		local var_32_34 = var_32_4:getBuffList()
+
+		for iter_32_17, iter_32_18 in ipairs(var_32_34) do
+			local var_32_35 = lua_skill_buff.configDict[iter_32_18.buffId]
+
+			if var_32_35 and var_32_35.typeId == var_32_32 and var_32_33 <= (iter_32_18.layer and iter_32_18.layer > 0 and iter_32_18.layer or 1) then
 				return true
 			end
 		end
-	elseif slot5.type == "SelfTeamHasBuffTypeLayerMoreThan" then
-		slot9 = tonumber(slot3[3])
-		slot10 = tonumber(slot3[2])
-		slot11 = 0
+	elseif var_32_2.type == "SelfTeamHasBuffTypeLayerMoreThan" then
+		local var_32_36 = arg_32_0:_getConditionTargetUids(arg_32_2)
+		local var_32_37 = tonumber(var_32_0[3])
+		local var_32_38 = tonumber(var_32_0[2])
+		local var_32_39 = 0
 
-		for slot15, slot16 in ipairs(slot0:_getConditionTargetUids(slot2)) do
-			for slot22, slot23 in ipairs(FightDataHelper.entityMgr:getById(slot16):getBuffList()) do
-				if lua_skill_buff.configDict[slot23.buffId] and slot24.typeId == slot9 then
-					slot11 = slot11 + (slot23.layer and slot23.layer > 0 and slot23.layer or 1)
+		for iter_32_19, iter_32_20 in ipairs(var_32_36) do
+			local var_32_40 = FightDataHelper.entityMgr:getById(iter_32_20):getBuffList()
+
+			for iter_32_21, iter_32_22 in ipairs(var_32_40) do
+				local var_32_41 = lua_skill_buff.configDict[iter_32_22.buffId]
+
+				if var_32_41 and var_32_41.typeId == var_32_37 then
+					var_32_39 = var_32_39 + (iter_32_22.layer and iter_32_22.layer > 0 and iter_32_22.layer or 1)
 				end
 			end
 		end
 
-		return slot10 <= slot11
-	elseif slot5.type == "HasTypeIdBuffMoreThan" then
-		slot9 = tonumber(slot3[3])
-		slot11 = 0
+		return var_32_38 <= var_32_39
+	elseif var_32_2.type == "HasTypeIdBuffMoreThan" then
+		local var_32_42 = tonumber(var_32_0[2])
+		local var_32_43 = tonumber(var_32_0[3])
+		local var_32_44 = var_32_4:getBuffList()
+		local var_32_45 = 0
 
-		for slot15, slot16 in ipairs(slot7:getBuffList()) do
-			if lua_skill_buff.configDict[slot16.buffId] and slot17.typeId == tonumber(slot3[2]) then
-				slot11 = FightBuffHelper.isIncludeType(slot16.buffId, FightEnum.BuffIncludeTypes.Stacked) and slot11 + (slot16.layer and slot16.layer > 0 and slot16.layer or 1) or slot11 + 1
+		for iter_32_23, iter_32_24 in ipairs(var_32_44) do
+			local var_32_46 = lua_skill_buff.configDict[iter_32_24.buffId]
+
+			if var_32_46 and var_32_46.typeId == var_32_42 then
+				if FightBuffHelper.isIncludeType(iter_32_24.buffId, FightEnum.BuffIncludeTypes.Stacked) then
+					var_32_45 = var_32_45 + (iter_32_24.layer and iter_32_24.layer > 0 and iter_32_24.layer or 1)
+				else
+					var_32_45 = var_32_45 + 1
+				end
 			end
 		end
 
-		return slot9 <= slot11
-	elseif slot5.type == "EnemyNumIncludeSpMoreThan" then
-		return tonumber(slot3[2]) <= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
-	elseif slot5.type == "EnemyNumIncludeSpLessThan" then
-		return tonumber(slot3[2]) >= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+		return var_32_43 <= var_32_45
+	elseif var_32_2.type == "EnemyNumIncludeSpMoreThan" then
+		return tonumber(var_32_0[2]) <= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+	elseif var_32_2.type == "EnemyNumIncludeSpLessThan" then
+		return tonumber(var_32_0[2]) >= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 	end
 end
 
-function slot0._getBuffTypeDic(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1:getBuffList()) do
-		if lua_skill_buff.configDict[slot8.buffId] then
-			-- Nothing
+function var_0_0._getBuffTypeDic(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_1:getBuffList()
+	local var_33_1 = {}
+
+	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
+		local var_33_2 = lua_skill_buff.configDict[iter_33_1.buffId]
+
+		if var_33_2 then
+			var_33_1[var_33_2.typeId] = true
 		end
 	end
 
-	return {
-		[slot9.typeId] = true
-	}
+	return var_33_1
 end
 
-function slot0._getSimulateBuffTypeDic(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0:_simulateBuffList(slot1)) do
-		if lua_skill_buff.configDict[slot8.buffId] then
-			-- Nothing
+function var_0_0._getSimulateBuffTypeDic(arg_34_0, arg_34_1)
+	local var_34_0 = arg_34_0:_simulateBuffList(arg_34_1)
+	local var_34_1 = {}
+
+	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+		local var_34_2 = lua_skill_buff.configDict[iter_34_1.buffId]
+
+		if var_34_2 then
+			var_34_1[var_34_2.typeId] = true
 		end
 	end
 
-	return {
-		[slot9.typeId] = true
-	}
+	return var_34_1
 end
 
-function slot0._checkSkillRateUpBehavior(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0._checkSkillRateUpBehavior(arg_35_0, arg_35_1, arg_35_2)
+	if string.nilorempty(arg_35_1) then
 		return
 	end
 
-	slot5 = lua_skill_behavior.configDict[tonumber(FightStrUtil.instance:getSplitCache(slot1, "#")[1])]
+	local var_35_0 = FightStrUtil.instance:getSplitCache(arg_35_1, "#")
+	local var_35_1 = tonumber(var_35_0[1])
+	local var_35_2 = lua_skill_behavior.configDict[var_35_1]
+	local var_35_3 = arg_35_0:_getConditionTargetUid(arg_35_2)
 
-	if slot0:_getConditionTargetUid(slot2) == 0 then
+	if var_35_3 == 0 then
 		return false
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot6) then
+	local var_35_4 = FightDataHelper.entityMgr:getById(var_35_3)
+
+	if not var_35_4 then
 		return false
 	end
 
-	slot10 = slot0:_simulateBuffList(slot7)
+	local var_35_5 = var_35_2.type == "SkillRateUp1" and arg_35_2 == 103
+	local var_35_6 = var_35_2.type == "SkillRateUp2" and arg_35_2 ~= 103
+	local var_35_7 = arg_35_0:_simulateBuffList(var_35_4)
 
-	if slot5.type == "SkillRateUp1" and slot2 == 103 or slot5.type == "SkillRateUp2" and slot2 ~= 103 then
-		for slot15, slot16 in ipairs(slot10) do
-			if lua_skill_buff.configDict[slot16.buffId] and lua_skill_bufftype.configDict[slot17.typeId] and tabletool.indexOf(slot3[4] and FightStrUtil.instance:getSplitToNumberCache(slot3[4], ",") or {}, slot18.type) then
+	if var_35_5 or var_35_6 then
+		local var_35_8 = var_35_0[4] and FightStrUtil.instance:getSplitToNumberCache(var_35_0[4], ",") or {}
+
+		for iter_35_0, iter_35_1 in ipairs(var_35_7) do
+			local var_35_9 = lua_skill_buff.configDict[iter_35_1.buffId]
+			local var_35_10 = var_35_9 and lua_skill_bufftype.configDict[var_35_9.typeId]
+
+			if var_35_10 and tabletool.indexOf(var_35_8, var_35_10.type) then
 				return true
 			end
 		end
 	end
 end
 
-function slot0._simulateBuffList(slot0, slot1)
-	slot2 = slot1:getBuffList()
+function var_0_0._simulateBuffList(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_1:getBuffList()
+	local var_36_1 = FightCardModel.instance:getCardOps()
 
-	for slot7, slot8 in ipairs(FightCardModel.instance:getCardOps()) do
-		if slot8:isPlayCard() then
-			slot9 = lua_skill.configDict[slot8.skillId]
+	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
+		if iter_36_1:isPlayCard() then
+			local var_36_2 = lua_skill.configDict[iter_36_1.skillId]
 
-			for slot13 = 1, FightEnum.MaxBehavior do
-				slot15 = slot9["behavior" .. slot13]
-				slot16 = slot9["behaviorTarget" .. slot13]
-				slot17 = slot9["conditionTarget" .. slot13]
+			for iter_36_2 = 1, FightEnum.MaxBehavior do
+				local var_36_3 = var_36_2["condition" .. iter_36_2]
+				local var_36_4 = var_36_2["behavior" .. iter_36_2]
+				local var_36_5 = var_36_2["behaviorTarget" .. iter_36_2]
+				local var_36_6 = var_36_2["conditionTarget" .. iter_36_2]
 
-				if slot0:_checkCanAddBuff(slot9["condition" .. slot13]) and not string.nilorempty(slot15) then
-					slot18 = slot16
+				if arg_36_0:_checkCanAddBuff(var_36_3) and not string.nilorempty(var_36_4) then
+					local var_36_7 = var_36_5
 
-					if slot16 == 0 then
-						slot18 = slot9.logicTarget
-					elseif slot16 == 999 then
-						slot18 = slot17 ~= 0 and slot17 or slot9.logicTarget
+					if var_36_5 == 0 then
+						var_36_7 = var_36_2.logicTarget
+					elseif var_36_5 == 999 then
+						var_36_7 = var_36_6 ~= 0 and var_36_6 or var_36_2.logicTarget
 					end
 
-					slot0:_simulateSkillehavior(slot1, slot8, slot15, slot18, slot2)
+					arg_36_0:_simulateSkillehavior(arg_36_1, iter_36_1, var_36_4, var_36_7, var_36_0)
 				end
 			end
 		end
 	end
 
-	return slot2
+	return var_36_0
 end
 
-function slot0._checkCanAddBuff(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0._checkCanAddBuff(arg_37_0, arg_37_1)
+	if string.nilorempty(arg_37_1) then
 		return
 	end
 
-	if #FightStrUtil.instance:getSplitCache(slot1, "&") > 1 then
-		for slot7, slot8 in ipairs(slot2) do
-			if slot0:_checkSingleConditionCanAddBuff(slot8) then
-				slot3 = 0 + 1
+	local var_37_0 = FightStrUtil.instance:getSplitCache(arg_37_1, "&")
+
+	if #var_37_0 > 1 then
+		local var_37_1 = 0
+
+		for iter_37_0, iter_37_1 in ipairs(var_37_0) do
+			if arg_37_0:_checkSingleConditionCanAddBuff(iter_37_1) then
+				var_37_1 = var_37_1 + 1
 			end
 		end
 
-		if slot3 == #slot2 then
+		if var_37_1 == #var_37_0 then
 			return true
 		end
-	elseif #FightStrUtil.instance:getSplitCache(slot1, "|") > 1 then
-		for slot6, slot7 in ipairs(slot2) do
-			if slot0:_checkSingleConditionCanAddBuff(slot7) then
-				return true
+	else
+		local var_37_2 = FightStrUtil.instance:getSplitCache(arg_37_1, "|")
+
+		if #var_37_2 > 1 then
+			for iter_37_2, iter_37_3 in ipairs(var_37_2) do
+				if arg_37_0:_checkSingleConditionCanAddBuff(iter_37_3) then
+					return true
+				end
 			end
+		elseif arg_37_0:_checkSingleConditionCanAddBuff(arg_37_1) then
+			return true
 		end
-	elseif slot0:_checkSingleConditionCanAddBuff(slot1) then
-		return true
 	end
 end
 
-function slot0._checkSingleConditionCanAddBuff(slot0, slot1)
-	if not lua_skill_behavior_condition.configDict[tonumber(FightStrUtil.instance:getSplitCache(slot1, "#")[1])] or string.nilorempty(slot4.type) then
+function var_0_0._checkSingleConditionCanAddBuff(arg_38_0, arg_38_1)
+	local var_38_0 = FightStrUtil.instance:getSplitCache(arg_38_1, "#")
+	local var_38_1 = tonumber(var_38_0[1])
+	local var_38_2 = lua_skill_behavior_condition.configDict[var_38_1]
+
+	if not var_38_2 or string.nilorempty(var_38_2.type) then
 		return false
 	end
 
-	if slot4.type == "None" then
+	if var_38_2.type == "None" then
 		return true
 	end
 end
 
-function slot0._simulateSkillehavior(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot8 = lua_skill_behavior.configDict[FightStrUtil.instance:getSplitToNumberCache(slot3, "#")[1]]
-	slot9 = false
+function var_0_0._simulateSkillehavior(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4, arg_39_5)
+	local var_39_0 = FightStrUtil.instance:getSplitToNumberCache(arg_39_3, "#")
+	local var_39_1 = var_39_0[1]
+	local var_39_2 = lua_skill_behavior.configDict[var_39_1]
+	local var_39_3 = false
 
-	if FightEnum.LogicTargetClassify.Special[slot4] then
-		-- Nothing
-	elseif FightEnum.LogicTargetClassify.Single[slot4] then
-		if slot2.toId == slot1.id then
-			slot9 = true
+	if FightEnum.LogicTargetClassify.Special[arg_39_4] then
+		-- block empty
+	elseif FightEnum.LogicTargetClassify.Single[arg_39_4] then
+		if arg_39_2.toId == arg_39_1.id then
+			var_39_3 = true
 		end
-	elseif FightEnum.LogicTargetClassify.SingleAndRandom[slot4] then
-		if slot2.toId == slot1.id then
-			slot9 = true
+	elseif FightEnum.LogicTargetClassify.SingleAndRandom[arg_39_4] then
+		if arg_39_2.toId == arg_39_1.id then
+			var_39_3 = true
 		end
-	elseif FightEnum.LogicTargetClassify.EnemySideAll[slot4] then
-		if slot1.side == FightEnum.EntitySide.EnemySide then
-			slot9 = true
+	elseif FightEnum.LogicTargetClassify.EnemySideAll[arg_39_4] then
+		if arg_39_1.side == FightEnum.EntitySide.EnemySide then
+			var_39_3 = true
 		end
-	elseif FightEnum.LogicTargetClassify.MySideAll[slot4] then
-		if slot1.side == FightEnum.EntitySide.MySide then
-			slot9 = true
+	elseif FightEnum.LogicTargetClassify.MySideAll[arg_39_4] then
+		if arg_39_1.side == FightEnum.EntitySide.MySide then
+			var_39_3 = true
 		end
-	elseif FightEnum.LogicTargetClassify.Me[slot4] and slot2.belongToEntityId == slot1.id then
-		slot9 = true
+	elseif FightEnum.LogicTargetClassify.Me[arg_39_4] and arg_39_2.belongToEntityId == arg_39_1.id then
+		var_39_3 = true
 	end
 
-	if slot9 and slot8 then
-		slot10 = nil
+	if var_39_3 and var_39_2 then
+		local var_39_4
 
-		if slot8.type == "AddBuff" then
-			slot10 = slot6[2]
-		elseif slot8.type == "CatapultBuff" then
-			slot10 = slot6[5]
+		if var_39_2.type == "AddBuff" then
+			var_39_4 = var_39_0[2]
+		elseif var_39_2.type == "CatapultBuff" then
+			var_39_4 = var_39_0[5]
 		end
 
-		if slot10 then
-			slot11 = FightBuffMO.New()
-			slot11.uid = "9999"
-			slot11.id = "9999"
-			slot11.entityId = slot1.id
-			slot11.buffId = slot10
+		if var_39_4 then
+			local var_39_5 = FightBuffMO.New()
 
-			table.insert(slot5, slot11)
+			var_39_5.uid = "9999"
+			var_39_5.id = "9999"
+			var_39_5.entityId = arg_39_1.id
+			var_39_5.buffId = var_39_4
+
+			table.insert(arg_39_5, var_39_5)
 		end
 	end
 end
 
-function slot0._onStageChange(slot0, slot1)
-	if slot1 == FightEnum.Stage.Card then
+function var_0_0._onStageChange(arg_40_0, arg_40_1)
+	if arg_40_1 == FightEnum.Stage.Card then
 		if not FightReplayModel.instance:isReplay() then
-			slot0._long:SetLongPressTime(slot0._longPressArr)
-			slot0._long:AddLongPressListener(slot0._onLongPress, slot0)
+			arg_40_0._long:SetLongPressTime(arg_40_0._longPressArr)
+			arg_40_0._long:AddLongPressListener(arg_40_0._onLongPress, arg_40_0)
 
 			if PCInputController.instance:getIsUse() then
-				-- Nothing
+				-- block empty
 			end
 
-			slot0._rightClick:AddClickListener(slot0._onClickRight, slot0)
+			arg_40_0._rightClick:AddClickListener(arg_40_0._onClickRight, arg_40_0)
 		end
 	else
-		slot0._long:RemoveLongPressListener()
+		arg_40_0._long:RemoveLongPressListener()
 
 		if PCInputController.instance:getIsUse() then
-			slot0._long:RemoveHoverListener()
+			arg_40_0._long:RemoveHoverListener()
 		end
 
-		slot0._rightClick:RemoveClickListener()
+		arg_40_0._rightClick:RemoveClickListener()
 	end
 
-	slot0:_updateSpEffect()
+	arg_40_0:_updateSpEffect()
 end
 
-function slot0.playLongPressEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDisableAnim, slot0)
-	TaskDispatcher.runDelay(slot0._delayDisableAnim, slot0, 1)
+function var_0_0.playLongPressEffect(arg_41_0)
+	TaskDispatcher.cancelTask(arg_41_0._delayDisableAnim, arg_41_0)
+	TaskDispatcher.runDelay(arg_41_0._delayDisableAnim, arg_41_0, 1)
 end
 
-function slot0._delayDisableAnim(slot0)
-	slot0:stopLongPressEffect()
+function var_0_0._delayDisableAnim(arg_42_0)
+	arg_42_0:stopLongPressEffect()
 end
 
-function slot0.stopLongPressEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDisableAnim, slot0)
-	recthelper.setAnchor(slot0._forAnimGO.transform, 0, 0)
-	transformhelper.setLocalRotation(slot0._forAnimGO.transform, 0, 0, 0)
+function var_0_0.stopLongPressEffect(arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._delayDisableAnim, arg_43_0)
+	recthelper.setAnchor(arg_43_0._forAnimGO.transform, 0, 0)
+	transformhelper.setLocalRotation(arg_43_0._forAnimGO.transform, 0, 0, 0)
 end
 
-function slot0._onClickThis(slot0)
-	if slot0._isLongPress then
-		slot0._isLongPress = false
+function var_0_0._onClickThis(arg_44_0)
+	if arg_44_0._isLongPress then
+		arg_44_0._isLongPress = false
 
 		logNormal("has LongPress, can't click card")
 
@@ -813,8 +935,8 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
-	if slot0._isLongPress and not PCInputController.instance:getIsUse() then
-		slot0._isLongPress = false
+	if arg_44_0._isLongPress and not PCInputController.instance:getIsUse() then
+		arg_44_0._isLongPress = false
 
 		logNormal("has LongPress, can't click card")
 
@@ -832,12 +954,14 @@ function slot0._onClickThis(slot0)
 	end
 
 	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.Discard then
-		if FightDataHelper.entityMgr:getById(slot0.cardInfoMO.uid) and slot1:isUniqueSkill(slot0.cardInfoMO.skillId) then
+		local var_44_0 = FightDataHelper.entityMgr:getById(arg_44_0.cardInfoMO.uid)
+
+		if var_44_0 and var_44_0:isUniqueSkill(arg_44_0.cardInfoMO.skillId) then
 			return
 		end
 
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
-		FightController.instance:dispatchEvent(FightEvent.PlayDiscardEffect, slot0.index)
+		FightController.instance:dispatchEvent(FightEvent.PlayDiscardEffect, arg_44_0.index)
 
 		return
 	end
@@ -860,57 +984,64 @@ function slot0._onClickThis(slot0)
 		return
 	end
 
-	if slot0._isDraging then
+	if arg_44_0._isDraging then
 		return
 	end
 
-	if not FightCardDataHelper.canPlayCard(slot0.cardInfoMO) then
+	if not FightCardDataHelper.canPlayCard(arg_44_0.cardInfoMO) then
 		return
 	end
 
-	if FightEnum.UniversalCard[slot0.cardInfoMO.skillId] then
+	local var_44_1 = arg_44_0.cardInfoMO.skillId
+
+	if FightEnum.UniversalCard[var_44_1] then
 		return
 	end
 
-	for slot6, slot7 in ipairs(FightCardModel.instance:getPlayCardOpList()) do
-		slot2 = 0 + slot7.costActPoint
+	local var_44_2 = 0
+
+	for iter_44_0, iter_44_1 in ipairs(FightCardModel.instance:getPlayCardOpList()) do
+		var_44_2 = var_44_2 + iter_44_1.costActPoint
 	end
 
-	if FightCardModel.instance:getCardMO().actPoint <= slot2 then
+	if var_44_2 >= FightCardModel.instance:getCardMO().actPoint then
 		return
 	end
 
-	slot6 = #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	local var_44_3 = lua_skill.configDict[var_44_1]
+	local var_44_4 = FightDataHelper.entityMgr:getMyNormalList()
+	local var_44_5 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	local var_44_6 = #var_44_4 + #var_44_5
 
-	if lua_skill.configDict[slot1] and FightEnum.ShowLogicTargetView[slot3.logicTarget] and slot3.targetLimit == FightEnum.TargetLimit.MySide then
-		if slot6 > 1 then
+	if var_44_3 and FightEnum.ShowLogicTargetView[var_44_3.logicTarget] and var_44_3.targetLimit == FightEnum.TargetLimit.MySide then
+		if var_44_6 > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
-				fromId = slot0.cardInfoMO.uid,
-				skillId = slot1,
-				callback = slot0._toPlayCard,
-				callbackObj = slot0
+				fromId = arg_44_0.cardInfoMO.uid,
+				skillId = var_44_1,
+				callback = arg_44_0._toPlayCard,
+				callbackObj = arg_44_0
 			})
 
 			return
 		end
 
-		if slot6 == 1 then
-			slot0:_toPlayCard(slot4[1].id)
+		if var_44_6 == 1 then
+			arg_44_0:_toPlayCard(var_44_4[1].id)
 
 			return
 		end
 	end
 
-	slot0:_toPlayCard()
+	arg_44_0:_toPlayCard()
 end
 
-function slot0._toPlayCard(slot0, slot1, slot2)
+function var_0_0._toPlayCard(arg_45_0, arg_45_1, arg_45_2)
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
-	FightController.instance:dispatchEvent(FightEvent.BeforePlayHandCard, slot0.index, slot1)
-	FightController.instance:dispatchEvent(FightEvent.PlayHandCard, slot0.index, slot1, slot2)
+	FightController.instance:dispatchEvent(FightEvent.BeforePlayHandCard, arg_45_0.index, arg_45_1)
+	FightController.instance:dispatchEvent(FightEvent.PlayHandCard, arg_45_0.index, arg_45_1, arg_45_2)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
+function var_0_0._onDragBegin(arg_46_0, arg_46_1, arg_46_2)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
@@ -931,20 +1062,22 @@ function slot0._onDragBegin(slot0, slot1, slot2)
 		return
 	end
 
-	if GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightMoveCard) and slot3.from and slot3.from ~= slot0.index then
+	local var_46_0 = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightMoveCard)
+
+	if var_46_0 and var_46_0.from and var_46_0.from ~= arg_46_0.index then
 		return
 	end
 
-	if not FightCardDataHelper.canMoveCard(slot0.cardInfoMO) then
+	if not FightCardDataHelper.canMoveCard(arg_46_0.cardInfoMO) then
 		return
 	end
 
-	slot0._isDraging = true
+	arg_46_0._isDraging = true
 
-	FightController.instance:dispatchEvent(FightEvent.DragHandCardBegin, slot0.index, slot2.position, slot0.cardInfoMO)
+	FightController.instance:dispatchEvent(FightEvent.DragHandCardBegin, arg_46_0.index, arg_46_2.position, arg_46_0.cardInfoMO)
 end
 
-function slot0._onDragThis(slot0, slot1, slot2)
+function var_0_0._onDragThis(arg_47_0, arg_47_1, arg_47_2)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
@@ -961,12 +1094,12 @@ function slot0._onDragThis(slot0, slot1, slot2)
 		return
 	end
 
-	if slot0._isDraging then
-		FightController.instance:dispatchEvent(FightEvent.DragHandCard, slot0.index, slot2.position)
+	if arg_47_0._isDraging then
+		FightController.instance:dispatchEvent(FightEvent.DragHandCard, arg_47_0.index, arg_47_2.position)
 	end
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
+function var_0_0._onDragEnd(arg_48_0, arg_48_1, arg_48_2)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
@@ -983,26 +1116,26 @@ function slot0._onDragEnd(slot0, slot1, slot2)
 		return
 	end
 
-	if slot0._isDraging then
-		slot0._isDraging = false
+	if arg_48_0._isDraging then
+		arg_48_0._isDraging = false
 
-		FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, slot0.index, slot2.position)
+		FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, arg_48_0.index, arg_48_2.position)
 		GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
 	end
 end
 
-function slot0._onClickRight(slot0)
+function var_0_0._onClickRight(arg_49_0)
 	GameGlobalMgr.instance:playTouchEffect()
 
-	if FightCardModel.instance:getLongPressIndex() ~= slot0.index then
+	if FightCardModel.instance:getLongPressIndex() ~= arg_49_0.index then
 		FightController.instance:dispatchEvent(FightEvent.LongPressHandCardEnd)
-		slot0:_onLongPress()
+		arg_49_0:_onLongPress()
 
-		slot0._isLongPress = false
+		arg_49_0._isLongPress = false
 	end
 end
 
-function slot0._onLongPress(slot0)
+function var_0_0._onLongPress(arg_50_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesgo)
 
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidLongPressCard) then
@@ -1027,400 +1160,419 @@ function slot0._onLongPress(slot0)
 		end
 	end
 
-	if not slot0._isDraging then
-		slot0._isLongPress = true
+	if not arg_50_0._isDraging then
+		arg_50_0._isLongPress = true
 
-		FightController.instance:dispatchEvent(FightEvent.LongPressHandCard, slot0.index)
+		FightController.instance:dispatchEvent(FightEvent.LongPressHandCard, arg_50_0.index)
 	end
 end
 
-function slot0._onHover(slot0)
+function var_0_0._onHover(arg_51_0)
 	if GuideController.instance:isGuiding() then
 		return
 	end
 
-	if not slot0._isLongPress then
-		slot0:_onLongPress()
+	if not arg_51_0._isLongPress then
+		arg_51_0:_onLongPress()
 	end
 end
 
-function slot0._simulateDragHandCardBegin(slot0, slot1)
-	if not slot0.cardInfoMO then
+function var_0_0._simulateDragHandCardBegin(arg_52_0, arg_52_1)
+	if not arg_52_0.cardInfoMO then
 		return
 	end
 
-	if slot0.index ~= slot1 then
+	if arg_52_0.index ~= arg_52_1 then
 		return
 	end
 
-	slot0:_onDragBegin(nil, {
-		position = recthelper.uiPosToScreenPos(slot0.tr)
+	local var_52_0 = recthelper.uiPosToScreenPos(arg_52_0.tr)
+
+	arg_52_0:_onDragBegin(nil, {
+		position = var_52_0
 	})
 end
 
-function slot0._simulateDragHandCard(slot0, slot1, slot2)
-	if not slot0.cardInfoMO then
+function var_0_0._simulateDragHandCard(arg_53_0, arg_53_1, arg_53_2)
+	if not arg_53_0.cardInfoMO then
 		return
 	end
 
-	if slot0.index ~= slot1 then
+	if arg_53_0.index ~= arg_53_1 then
 		return
 	end
 
-	if slot0._subViewInst:getHandCardItem(slot2) then
-		slot0:_onDragThis(nil, {
-			position = recthelper.uiPosToScreenPos(slot3.tr)
+	local var_53_0 = arg_53_0._subViewInst:getHandCardItem(arg_53_2)
+
+	if var_53_0 then
+		local var_53_1 = recthelper.uiPosToScreenPos(var_53_0.tr)
+
+		arg_53_0:_onDragThis(nil, {
+			position = var_53_1
 		})
 	end
 end
 
-function slot0._simulateDragHandCardEnd(slot0, slot1, slot2)
-	if not slot0.cardInfoMO then
+function var_0_0._simulateDragHandCardEnd(arg_54_0, arg_54_1, arg_54_2)
+	if not arg_54_0.cardInfoMO then
 		return
 	end
 
-	if slot0.index ~= slot1 then
+	if arg_54_0.index ~= arg_54_1 then
 		return
 	end
 
-	slot0._isDraging = true
+	local var_54_0 = recthelper.uiPosToScreenPos(arg_54_0.tr)
 
-	slot0:_onDragEnd(nil, {
-		position = recthelper.uiPosToScreenPos(slot0.tr)
+	arg_54_0._isDraging = true
+
+	arg_54_0:_onDragEnd(nil, {
+		position = var_54_0
 	})
 end
 
-function slot0._simulatePlayHandCard(slot0, slot1, slot2, slot3)
-	if not slot0.cardInfoMO then
+function var_0_0._simulatePlayHandCard(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
+	if not arg_55_0.cardInfoMO then
 		return
 	end
 
-	if slot0.index ~= slot1 then
+	if arg_55_0.index ~= arg_55_1 then
 		return
 	end
 
-	slot0:_toPlayCard(slot2, slot3)
+	arg_55_0:_toPlayCard(arg_55_2, arg_55_3)
 end
 
-function slot0.playCardAni(slot0, slot1, slot2)
-	slot0._cardAniName = slot2 or UIAnimationName.Open
+function var_0_0.playCardAni(arg_56_0, arg_56_1, arg_56_2)
+	arg_56_0._cardAniName = arg_56_2 or UIAnimationName.Open
 
-	slot0._loader:loadAsset(slot1, slot0._onCardAniLoaded, slot0)
+	arg_56_0._loader:loadAsset(arg_56_1, arg_56_0._onCardAniLoaded, arg_56_0)
 end
 
-function slot0._onCardAniLoaded(slot0, slot1)
-	slot0._cardAni.runtimeAnimatorController = slot1:GetResource()
-	slot0._cardAni.enabled = true
-	slot0._cardAni.speed = FightModel.instance:getUISpeed()
+function var_0_0._onCardAniLoaded(arg_57_0, arg_57_1)
+	arg_57_0._cardAni.runtimeAnimatorController = arg_57_1:GetResource()
+	arg_57_0._cardAni.enabled = true
+	arg_57_0._cardAni.speed = FightModel.instance:getUISpeed()
 
-	gohelper.setActive(slot0.go, true)
-	SLFramework.AnimatorPlayer.Get(slot0._innerGO):Play(slot0._cardAniName, slot0._onCardAniFinish, slot0)
+	gohelper.setActive(arg_57_0.go, true)
+	SLFramework.AnimatorPlayer.Get(arg_57_0._innerGO):Play(arg_57_0._cardAniName, arg_57_0._onCardAniFinish, arg_57_0)
 end
 
-function slot0._onCardAniFinish(slot0)
-	slot0._cardAni.enabled = false
+function var_0_0._onCardAniFinish(arg_58_0)
+	arg_58_0._cardAni.enabled = false
 
-	slot0:_hideEffect()
+	arg_58_0:_hideEffect()
 end
 
-function slot0.playAni(slot0, slot1, slot2)
-	slot0._aniName = slot2 or UIAnimationName.Open
+function var_0_0.playAni(arg_59_0, arg_59_1, arg_59_2)
+	arg_59_0._aniName = arg_59_2 or UIAnimationName.Open
 
-	slot0._loader:loadAsset(slot1, slot0._onAniLoaded, slot0)
+	arg_59_0._loader:loadAsset(arg_59_1, arg_59_0._onAniLoaded, arg_59_0)
 end
 
-function slot0._onAniLoaded(slot0, slot1)
-	slot0._foranim.runtimeAnimatorController = slot1:GetResource()
-	slot0._foranim.enabled = true
-	slot0._foranim.speed = FightModel.instance:getUISpeed()
+function var_0_0._onAniLoaded(arg_60_0, arg_60_1)
+	arg_60_0._foranim.runtimeAnimatorController = arg_60_1:GetResource()
+	arg_60_0._foranim.enabled = true
+	arg_60_0._foranim.speed = FightModel.instance:getUISpeed()
 
-	gohelper.setActive(slot0.go, true)
-	SLFramework.AnimatorPlayer.Get(slot0._forAnimGO):Play(slot0._aniName, slot0._onAniFinish, slot0)
+	gohelper.setActive(arg_60_0.go, true)
+	SLFramework.AnimatorPlayer.Get(arg_60_0._forAnimGO):Play(arg_60_0._aniName, arg_60_0._onAniFinish, arg_60_0)
 end
 
-function slot0._onAniFinish(slot0)
-	slot0._foranim.enabled = false
+function var_0_0._onAniFinish(arg_61_0)
+	arg_61_0._foranim.enabled = false
 end
 
-function slot0._hideEffect(slot0)
-	gohelper.setActive(gohelper.findChild(slot0._innerGO, "vx_balance"), false)
+function var_0_0._hideEffect(arg_62_0)
+	gohelper.setActive(gohelper.findChild(arg_62_0._innerGO, "vx_balance"), false)
 end
 
-function slot0._onRefreshOneHandCard(slot0, slot1)
-	if not slot0.cardInfoMO then
+function var_0_0._onRefreshOneHandCard(arg_63_0, arg_63_1)
+	if not arg_63_0.cardInfoMO then
 		return
 	end
 
-	if slot1 == slot0.index then
-		slot0:updateItem(slot0.index, slot0.cardInfoMO)
+	if arg_63_1 == arg_63_0.index then
+		arg_63_0:updateItem(arg_63_0.index, arg_63_0.cardInfoMO)
 	end
 end
 
-function slot0._onGMForceRefreshNameUIBuff(slot0)
-	slot0:_onRefreshOneHandCard(slot0.index)
+function var_0_0._onGMForceRefreshNameUIBuff(arg_64_0)
+	arg_64_0:_onRefreshOneHandCard(arg_64_0.index)
 end
 
-function slot0.playDistribute(slot0)
-	if not slot0._distributeFlow then
-		slot0._distributeFlow = FlowSequence.New()
+function var_0_0.playDistribute(arg_65_0)
+	if not arg_65_0._distributeFlow then
+		arg_65_0._distributeFlow = FlowSequence.New()
 
-		slot0._distributeFlow:addWork(FigthCardDistributeEffect.New())
+		arg_65_0._distributeFlow:addWork(FigthCardDistributeEffect.New())
 	else
-		slot0._distributeFlow:stop()
+		arg_65_0._distributeFlow:stop()
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.cards = tabletool.copy(FightCardModel.instance:getHandCards())
-	slot1.handCardItemList = slot0._subViewInst._handCardItemList
-	slot1.preCardCount = #slot1.cards - 1
-	slot1.newCardCount = 1
+	local var_65_0 = arg_65_0:getUserDataTb_()
 
-	slot0._distributeFlow:start(slot1)
+	var_65_0.cards = tabletool.copy(FightCardModel.instance:getHandCards())
+	var_65_0.handCardItemList = arg_65_0._subViewInst._handCardItemList
+	var_65_0.preCardCount = #var_65_0.cards - 1
+	var_65_0.newCardCount = 1
+
+	arg_65_0._distributeFlow:start(var_65_0)
 end
 
-function slot0.playMasterAddHandCard(slot0)
-	if not slot0._masterAddHandCardFlow then
-		slot0._masterAddHandCardFlow = FlowSequence.New()
+function var_0_0.playMasterAddHandCard(arg_66_0)
+	if not arg_66_0._masterAddHandCardFlow then
+		arg_66_0._masterAddHandCardFlow = FlowSequence.New()
 
-		slot0._masterAddHandCardFlow:addWork(FigthMasterAddHandCardEffect.New())
+		arg_66_0._masterAddHandCardFlow:addWork(FigthMasterAddHandCardEffect.New())
 	else
-		slot0._masterAddHandCardFlow:stop()
+		arg_66_0._masterAddHandCardFlow:stop()
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.card = slot0
+	local var_66_0 = arg_66_0:getUserDataTb_()
 
-	slot0._masterAddHandCardFlow:start(slot1)
+	var_66_0.card = arg_66_0
+
+	arg_66_0._masterAddHandCardFlow:start(var_66_0)
 end
 
-function slot0.playMasterCardRemove(slot0)
-	if not slot0._masterCardRemoveFlow then
-		slot0._masterCardRemoveFlow = FlowSequence.New()
+function var_0_0.playMasterCardRemove(arg_67_0)
+	if not arg_67_0._masterCardRemoveFlow then
+		arg_67_0._masterCardRemoveFlow = FlowSequence.New()
 
-		slot0._masterCardRemoveFlow:addWork(FigthMasterCardRemoveEffect.New())
+		arg_67_0._masterCardRemoveFlow:addWork(FigthMasterCardRemoveEffect.New())
 	else
-		slot0._masterCardRemoveFlow:stop()
+		arg_67_0._masterCardRemoveFlow:stop()
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.card = slot0
+	local var_67_0 = arg_67_0:getUserDataTb_()
 
-	slot0._masterCardRemoveFlow:start(slot1)
+	var_67_0.card = arg_67_0
+
+	arg_67_0._masterCardRemoveFlow:start(var_67_0)
 end
 
-function slot0.dissolveEntityCard(slot0, slot1)
-	if not slot0.cardInfoMO then
+function var_0_0.dissolveEntityCard(arg_68_0, arg_68_1)
+	if not arg_68_0.cardInfoMO then
 		return
 	end
 
-	if slot0.cardInfoMO.uid ~= slot1 then
+	if arg_68_0.cardInfoMO.uid ~= arg_68_1 then
 		return
 	end
 
-	slot0:dissolveCard()
+	arg_68_0:dissolveCard()
 
 	return true
 end
 
-function slot0.dissolveCard(slot0)
-	if not slot0.go.activeInHierarchy then
+function var_0_0.dissolveCard(arg_69_0)
+	if not arg_69_0.go.activeInHierarchy then
 		return
 	end
 
-	slot0:setASFDActive(false)
-	slot0._cardItem:dissolveCard(transformhelper.getLocalScale(slot0._subViewInst._handCardContainer.transform))
+	arg_69_0:setASFDActive(false)
+	arg_69_0._cardItem:dissolveCard(transformhelper.getLocalScale(arg_69_0._subViewInst._handCardContainer.transform))
 end
 
-function slot0.moveSelfPos(slot0, slot1, slot2)
-	slot0:_releaseMoveFlow()
+function var_0_0.moveSelfPos(arg_70_0, arg_70_1, arg_70_2)
+	arg_70_0:_releaseMoveFlow()
 
-	slot0._moveCardFlow = FlowParallel.New()
-	slot3 = 0.033 / FightModel.instance:getUISpeed()
-	slot4 = slot0.go.transform
-	slot5 = FlowSequence.New()
+	arg_70_0._moveCardFlow = FlowParallel.New()
 
-	slot5:addWork(WorkWaitSeconds.New(3 * slot2 * slot3))
+	local var_70_0 = 0.033 / FightModel.instance:getUISpeed()
+	local var_70_1 = arg_70_0.go.transform
+	local var_70_2 = FlowSequence.New()
 
-	slot6 = FightViewHandCard.calcCardPosX(slot1)
+	var_70_2:addWork(WorkWaitSeconds.New(3 * arg_70_2 * var_70_0))
 
-	slot5:addWork(TweenWork.New({
+	local var_70_3 = FightViewHandCard.calcCardPosX(arg_70_1)
+	local var_70_4 = var_70_3 + 10
+
+	var_70_2:addWork(TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = slot4,
-		to = slot6 + 10,
-		t = slot3 * 5
+		tr = var_70_1,
+		to = var_70_4,
+		t = var_70_0 * 5
 	}))
-	slot5:addWork(TweenWork.New({
+	var_70_2:addWork(TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = slot4,
-		to = slot6,
-		t = slot3 * 2
+		tr = var_70_1,
+		to = var_70_3,
+		t = var_70_0 * 2
 	}))
-	slot0._moveCardFlow:addWork(slot5)
-	slot0._moveCardFlow:start()
+	arg_70_0._moveCardFlow:addWork(var_70_2)
+	arg_70_0._moveCardFlow:start()
 end
 
-function slot0.playCardLevelChange(slot0, slot1, slot2)
-	if not slot0.cardInfoMO then
+function var_0_0.playCardLevelChange(arg_71_0, arg_71_1, arg_71_2)
+	if not arg_71_0.cardInfoMO then
 		return
 	end
 
-	if not slot0.go.activeInHierarchy then
+	if not arg_71_0.go.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(slot0._lockGO, false)
+	gohelper.setActive(arg_71_0._lockGO, false)
 
-	slot0.cardInfoMO = slot1
+	arg_71_0.cardInfoMO = arg_71_1
 
-	slot0._cardItem:playCardLevelChange(slot1, slot2)
+	arg_71_0._cardItem:playCardLevelChange(arg_71_1, arg_71_2)
 end
 
-function slot0._onCardLevelChangeDone(slot0, slot1)
-	if slot1 == slot0.cardInfoMO then
-		gohelper.setActive(slot0._lockGO, true)
-		slot0:updateItem(slot0.index, slot0.cardInfoMO)
+function var_0_0._onCardLevelChangeDone(arg_72_0, arg_72_1)
+	if arg_72_1 == arg_72_0.cardInfoMO then
+		gohelper.setActive(arg_72_0._lockGO, true)
+		arg_72_0:updateItem(arg_72_0.index, arg_72_0.cardInfoMO)
 	end
 end
 
-function slot0.playCardAConvertCardB(slot0)
-	if not slot0.cardInfoMO then
+function var_0_0.playCardAConvertCardB(arg_73_0)
+	if not arg_73_0.cardInfoMO then
 		return
 	end
 
-	gohelper.setActive(slot0._cardConvertEffect, true)
-	TaskDispatcher.cancelTask(slot0._afterConvertCardEffect, slot0)
+	gohelper.setActive(arg_73_0._cardConvertEffect, true)
+	TaskDispatcher.cancelTask(arg_73_0._afterConvertCardEffect, arg_73_0)
 
-	if slot0._convertEffect then
-		slot2 = slot0._convertEffect.transform.childCount
-		slot4 = nil
+	if arg_73_0._convertEffect then
+		local var_73_0 = arg_73_0._convertEffect.transform
+		local var_73_1 = var_73_0.childCount
+		local var_73_2 = FightCardModel.instance:isUniqueSkill(arg_73_0.cardInfoMO.uid, arg_73_0.cardInfoMO.skillId)
+		local var_73_3
 
-		if FightCardModel.instance:isUniqueSkill(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId) then
-			for slot8 = 0, slot2 - 1 do
-				slot9 = slot1:GetChild(slot8).gameObject
+		if var_73_2 then
+			for iter_73_0 = 0, var_73_1 - 1 do
+				local var_73_4 = var_73_0:GetChild(iter_73_0).gameObject
 
-				if slot8 == 3 then
-					gohelper.setActive(slot9, true)
+				if iter_73_0 == 3 then
+					gohelper.setActive(var_73_4, true)
 
-					slot4 = gohelper.onceAddComponent(slot9, typeof(UnityEngine.Animation))
+					var_73_3 = gohelper.onceAddComponent(var_73_4, typeof(UnityEngine.Animation))
 				else
-					gohelper.setActive(slot9, false)
+					gohelper.setActive(var_73_4, false)
 				end
 			end
 		else
-			for slot9 = 0, slot2 - 1 do
-				slot10 = slot1:GetChild(slot9).gameObject
+			local var_73_5 = FightCardModel.instance:getSkillLv(arg_73_0.cardInfoMO.uid, arg_73_0.cardInfoMO.skillId)
 
-				if slot9 + 1 == FightCardModel.instance:getSkillLv(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId) then
-					gohelper.setActive(slot10, true)
+			for iter_73_1 = 0, var_73_1 - 1 do
+				local var_73_6 = var_73_0:GetChild(iter_73_1).gameObject
 
-					slot4 = gohelper.onceAddComponent(slot10, typeof(UnityEngine.Animation))
+				if iter_73_1 + 1 == var_73_5 then
+					gohelper.setActive(var_73_6, true)
+
+					var_73_3 = gohelper.onceAddComponent(var_73_6, typeof(UnityEngine.Animation))
 				else
-					gohelper.setActive(slot10, false)
+					gohelper.setActive(var_73_6, false)
 				end
 			end
 		end
 
-		if slot4 then
-			slot4.this:get(slot4.clip.name).speed = FightModel.instance:getUISpeed()
+		if var_73_3 then
+			var_73_3.this:get(var_73_3.clip.name).speed = FightModel.instance:getUISpeed()
 		end
 
-		TaskDispatcher.runDelay(slot0._afterConvertCardEffect, slot0, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
+		TaskDispatcher.runDelay(arg_73_0._afterConvertCardEffect, arg_73_0, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 	else
-		slot0._loader:loadAsset("ui/viewres/fight/card_intensive.prefab", slot0._onCardAConvertCardBLoaded, slot0)
+		arg_73_0._loader:loadAsset("ui/viewres/fight/card_intensive.prefab", arg_73_0._onCardAConvertCardBLoaded, arg_73_0)
 	end
 end
 
-function slot0._onCardAConvertCardBLoaded(slot0, slot1)
-	slot0._convertEffect = gohelper.clone(slot1:GetResource(), slot0._cardConvertEffect)
+function var_0_0._onCardAConvertCardBLoaded(arg_74_0, arg_74_1)
+	local var_74_0 = arg_74_1:GetResource()
 
-	slot0:playCardAConvertCardB()
-	TaskDispatcher.runDelay(slot0._afterConvertCardEffect, slot0, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
+	arg_74_0._convertEffect = gohelper.clone(var_74_0, arg_74_0._cardConvertEffect)
+
+	arg_74_0:playCardAConvertCardB()
+	TaskDispatcher.runDelay(arg_74_0._afterConvertCardEffect, arg_74_0, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 end
 
-function slot0._afterConvertCardEffect(slot0)
-	gohelper.setActive(slot0._cardConvertEffect, false)
+function var_0_0._afterConvertCardEffect(arg_75_0)
+	gohelper.setActive(arg_75_0._cardConvertEffect, false)
 end
 
-function slot0.changeToTempCard(slot0)
-	slot0._cardItem:changeToTempCard()
+function var_0_0.changeToTempCard(arg_76_0)
+	arg_76_0._cardItem:changeToTempCard()
 end
 
-function slot0.getASFDScreenPos(slot0)
-	return slot0._cardItem:getASFDScreenPos()
+function var_0_0.getASFDScreenPos(arg_77_0)
+	return arg_77_0._cardItem:getASFDScreenPos()
 end
 
-function slot0.refreshPreDeleteImage(slot0, slot1)
-	if slot0._cardItem then
-		slot0._cardItem:_refreshPreDeleteImage(slot1)
+function var_0_0.refreshPreDeleteImage(arg_78_0, arg_78_1)
+	if arg_78_0._cardItem then
+		arg_78_0._cardItem:_refreshPreDeleteImage(arg_78_1)
 	end
 end
 
-function slot0.setActiveRed(slot0, slot1)
-	if slot0._cardItem then
-		slot0._cardItem:setActiveRed(slot1)
+function var_0_0.setActiveRed(arg_79_0, arg_79_1)
+	if arg_79_0._cardItem then
+		arg_79_0._cardItem:setActiveRed(arg_79_1)
 	end
 end
 
-function slot0.setActiveBlue(slot0, slot1)
-	if slot0._cardItem then
-		slot0._cardItem:setActiveBlue(slot1)
+function var_0_0.setActiveBlue(arg_80_0, arg_80_1)
+	if arg_80_0._cardItem then
+		arg_80_0._cardItem:setActiveBlue(arg_80_1)
 	end
 end
 
-function slot0.setActiveBoth(slot0, slot1)
-	if slot0._cardItem then
-		slot0._cardItem:setActiveBoth(slot1)
+function var_0_0.setActiveBoth(arg_81_0, arg_81_1)
+	if arg_81_0._cardItem then
+		arg_81_0._cardItem:setActiveBoth(arg_81_1)
 	end
 end
 
-function slot0.resetRedAndBlue(slot0)
-	if slot0._cardItem then
-		slot0._cardItem:resetRedAndBlue()
+function var_0_0.resetRedAndBlue(arg_82_0)
+	if arg_82_0._cardItem then
+		arg_82_0._cardItem:resetRedAndBlue()
 	end
 end
 
-function slot0._releaseMoveFlow(slot0)
-	if slot0._moveCardFlow then
-		slot0._moveCardFlow:stop()
+function var_0_0._releaseMoveFlow(arg_83_0)
+	if arg_83_0._moveCardFlow then
+		arg_83_0._moveCardFlow:stop()
 
-		slot0._moveCardFlow = nil
+		arg_83_0._moveCardFlow = nil
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	TaskDispatcher.cancelTask(slot0._afterConvertCardEffect, slot0)
+function var_0_0.releaseSelf(arg_84_0)
+	TaskDispatcher.cancelTask(arg_84_0._afterConvertCardEffect, arg_84_0)
 
-	if slot0._distributeFlow then
-		slot0._distributeFlow:stop()
+	if arg_84_0._distributeFlow then
+		arg_84_0._distributeFlow:stop()
 
-		slot0._distributeFlow = nil
+		arg_84_0._distributeFlow = nil
 	end
 
-	if slot0._dissolveFlow then
-		slot0._dissolveFlow:stop()
+	if arg_84_0._dissolveFlow then
+		arg_84_0._dissolveFlow:stop()
 
-		slot0._dissolveFlow = nil
+		arg_84_0._dissolveFlow = nil
 	end
 
-	if slot0._masterAddHandCardFlow then
-		slot0._masterAddHandCardFlow:stop()
+	if arg_84_0._masterAddHandCardFlow then
+		arg_84_0._masterAddHandCardFlow:stop()
 
-		slot0._masterAddHandCardFlow = nil
+		arg_84_0._masterAddHandCardFlow = nil
 	end
 
-	if slot0._masterCardRemoveFlow then
-		slot0._masterCardRemoveFlow:stop()
+	if arg_84_0._masterCardRemoveFlow then
+		arg_84_0._masterCardRemoveFlow:stop()
 
-		slot0._masterCardRemoveFlow = nil
+		arg_84_0._masterCardRemoveFlow = nil
 	end
 
-	slot0:_releaseMoveFlow()
+	arg_84_0:_releaseMoveFlow()
 
-	if slot0._loader then
-		slot0._loader:releaseSelf()
+	if arg_84_0._loader then
+		arg_84_0._loader:releaseSelf()
 
-		slot0._loader = nil
+		arg_84_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

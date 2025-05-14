@@ -1,66 +1,67 @@
-module("modules.logic.social.view.SocialRemarkTipView", package.seeall)
+﻿module("modules.logic.social.view.SocialRemarkTipView", package.seeall)
 
-slot0 = class("SocialRemarkTipView", BaseView)
+local var_0_0 = class("SocialRemarkTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "main/bg/#simage_left")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "main/bg/#simage_right")
-	slot0._inputsignature = gohelper.findChildTextMeshInputField(slot0.viewGO, "main/bg/textArea/#input_signature")
-	slot0._btncleanname = gohelper.findChildButtonWithAudio(slot0.viewGO, "main/bg/textArea/#btn_cleanname")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "main/bg/btnnode/#btn_cancel")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "main/bg/btnnode/#btn_confirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "main/bg/#simage_left")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "main/bg/#simage_right")
+	arg_1_0._inputsignature = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "main/bg/textArea/#input_signature")
+	arg_1_0._btncleanname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/bg/textArea/#btn_cleanname")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/bg/btnnode/#btn_cancel")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/bg/btnnode/#btn_confirm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncleanname:AddClickListener(slot0._clickClean, slot0)
-	slot0._btncancel:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._clickConfirm, slot0)
-	slot0._inputsignature:AddOnValueChanged(slot0._onValueChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncleanname:AddClickListener(arg_2_0._clickClean, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._clickConfirm, arg_2_0)
+	arg_2_0._inputsignature:AddOnValueChanged(arg_2_0._onValueChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncleanname:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._inputsignature:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncleanname:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._inputsignature:RemoveOnValueChanged()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_4_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "main/bg/#simage_bg2")
+	arg_4_0._simagebg2 = gohelper.findChildSingleImage(arg_4_0.viewGO, "main/bg/#simage_bg2")
 end
 
-function slot0._clickConfirm(slot0)
-	FriendRpc.instance:changeDesc(slot0.viewParam.userId, slot0._inputsignature:GetText())
-	slot0:closeThis()
+function var_0_0._clickConfirm(arg_5_0)
+	FriendRpc.instance:changeDesc(arg_5_0.viewParam.userId, arg_5_0._inputsignature:GetText())
+	arg_5_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0._inputsignature:SetText(slot0.viewParam.desc)
-	gohelper.setActive(slot0._btncleanname, not string.nilorempty(slot0.viewParam.desc))
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._inputsignature:SetText(arg_6_0.viewParam.desc)
+	gohelper.setActive(arg_6_0._btncleanname, not string.nilorempty(arg_6_0.viewParam.desc))
 end
 
-function slot0._clickClean(slot0)
-	slot0._inputsignature:SetText("")
+function var_0_0._clickClean(arg_7_0)
+	arg_7_0._inputsignature:SetText("")
 end
 
-function slot0._onValueChange(slot0)
-	slot1 = slot0._inputsignature:GetText()
-	slot3 = GameUtil.utf8sub(slot1, 1, math.min(GameUtil.utf8len(slot1), CommonConfig.instance:getConstNum(ConstEnum.CharacterNameLimit)))
+function var_0_0._onValueChange(arg_8_0)
+	local var_8_0 = arg_8_0._inputsignature:GetText()
+	local var_8_1 = CommonConfig.instance:getConstNum(ConstEnum.CharacterNameLimit)
+	local var_8_2 = GameUtil.utf8sub(var_8_0, 1, math.min(GameUtil.utf8len(var_8_0), var_8_1))
 
-	gohelper.setActive(slot0._btncleanname, not string.nilorempty(slot3))
+	gohelper.setActive(arg_8_0._btncleanname, not string.nilorempty(var_8_2))
 
-	if slot3 == slot1 then
+	if var_8_2 == var_8_0 then
 		return
 	end
 
-	slot0._inputsignature:SetText(slot3)
+	arg_8_0._inputsignature:SetText(var_8_2)
 end
 
-return slot0
+return var_0_0

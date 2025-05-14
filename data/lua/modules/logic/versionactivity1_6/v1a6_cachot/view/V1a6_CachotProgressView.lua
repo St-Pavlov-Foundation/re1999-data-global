@@ -1,192 +1,218 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressView", package.seeall)
 
-slot0 = class("V1a6_CachotProgressView", BaseView)
+local var_0_0 = class("V1a6_CachotProgressView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._txtdetail = gohelper.findChildText(slot0.viewGO, "Left/#txt_detail")
-	slot0._txtscore = gohelper.findChildText(slot0.viewGO, "Left/#txt_score")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "Left/#txt_score/#simage_icon")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "Left/#go_progress")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "Left/#go_progress/#scroll_view")
-	slot0._gofillbg = gohelper.findChild(slot0.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg")
-	slot0._gofill = gohelper.findChild(slot0.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._gonextstagetips = gohelper.findChild(slot0.viewGO, "Left/#go_nextstagetips")
-	slot0._txtnextstageopentime = gohelper.findChildText(slot0.viewGO, "Left/#go_nextstagetips/nextstage/#txt_nextstageopentime")
-	slot0._txtreamindoulescore = gohelper.findChildText(slot0.viewGO, "Left/#txt_score/#txt_remaindoublescore")
-	slot0._btnback = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_back")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._txtdetail = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_detail")
+	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_score")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#txt_score/#simage_icon")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "Left/#go_progress")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#go_progress/#scroll_view")
+	arg_1_0._gofillbg = gohelper.findChild(arg_1_0.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg")
+	arg_1_0._gofill = gohelper.findChild(arg_1_0.viewGO, "Left/#go_progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._gonextstagetips = gohelper.findChild(arg_1_0.viewGO, "Left/#go_nextstagetips")
+	arg_1_0._txtnextstageopentime = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_nextstagetips/nextstage/#txt_nextstageopentime")
+	arg_1_0._txtreamindoulescore = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_score/#txt_remaindoublescore")
+	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_back")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, slot0.onRogueSateInfoUpdate, slot0)
-	slot0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onWeekRefresh, slot0)
-	slot0._btnback:AddClickListener(slot0._btnbackOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, arg_2_0.onRogueSateInfoUpdate, arg_2_0)
+	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onWeekRefresh, arg_2_0)
+	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, slot0.onRogueSateInfoUpdate, slot0)
-	slot0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onWeekRefresh, slot0)
-	slot0._btnback:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, arg_3_0.onRogueSateInfoUpdate, arg_3_0)
+	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onWeekRefresh, arg_3_0)
+	arg_3_0._btnback:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	V1a6_CachotProgressListModel.instance:initDatas()
-	slot0:refreshScoreUI()
+	arg_6_0:refreshScoreUI()
 end
 
-function slot0.refreshScoreUI(slot0)
-	slot0:refreshScoreInfo()
-	slot0:refreshStageInfo()
-	slot0:setProgressBarWidth()
-	slot0:setProgressHorizontalPos()
-	slot0:refreshRedDot()
+function var_0_0.refreshScoreUI(arg_7_0)
+	arg_7_0:refreshScoreInfo()
+	arg_7_0:refreshStageInfo()
+	arg_7_0:setProgressBarWidth()
+	arg_7_0:setProgressHorizontalPos()
+	arg_7_0:refreshRedDot()
 end
 
-function slot0.refreshStageInfo(slot0)
-	slot0:updateUnLockNextStageRemainTime()
+function var_0_0.refreshStageInfo(arg_8_0)
+	arg_8_0:updateUnLockNextStageRemainTime()
 end
 
-function slot0.refreshUnLockNextStageTimeUI(slot0, slot1, slot2)
-	if slot1 > 0 then
-		slot0._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainDay", slot1)
+function var_0_0.refreshUnLockNextStageTimeUI(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 > 0 then
+		arg_9_0._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainDay", arg_9_1)
 	else
-		slot0._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainHour", slot2)
+		arg_9_0._txtnextstageopentime.text = formatLuaLang("cachotprogressview_remainHour", arg_9_2)
 	end
 end
 
-function slot0.refreshScoreInfo(slot0)
-	slot5 = tonumber(lua_rogue_const.configDict[V1a6_CachotEnum.Const.DoubleScoreLimit] and slot2.value or 0) <= V1a6_CachotProgressListModel.instance:getWeekScore()
-	slot0._txtscore.text = V1a6_CachotProgressListModel.instance:getCurGetTotalScore() or ""
+function var_0_0.refreshScoreInfo(arg_10_0)
+	local var_10_0 = V1a6_CachotProgressListModel.instance:getCurGetTotalScore()
+	local var_10_1 = lua_rogue_const.configDict[V1a6_CachotEnum.Const.DoubleScoreLimit]
+	local var_10_2 = tonumber(var_10_1 and var_10_1.value or 0)
+	local var_10_3 = V1a6_CachotProgressListModel.instance:getWeekScore()
+	local var_10_4 = var_10_2 <= var_10_3
 
-	gohelper.setActive(slot0._txtreamindoulescore.gameObject, not slot5)
+	arg_10_0._txtscore.text = var_10_0 or ""
 
-	if not slot5 then
-		slot0._txtreamindoulescore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("cachot_progressview_remaindoublescore"), {
-			slot4,
-			slot3
-		})
+	gohelper.setActive(arg_10_0._txtreamindoulescore.gameObject, not var_10_4)
+
+	if not var_10_4 then
+		local var_10_5 = {
+			var_10_3,
+			var_10_2
+		}
+
+		arg_10_0._txtreamindoulescore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("cachot_progressview_remaindoublescore"), var_10_5)
 	end
 end
 
-slot0.SingleRewardtWidth = 240
+var_0_0.SingleRewardtWidth = 240
 
-function slot0.setProgressBarWidth(slot0)
-	slot0:setScrollFillBgWidth(V1a6_CachotProgressListModel.instance:getUnLockedRewardCount())
-	slot0:setScrollFillWidth()
+function var_0_0.setProgressBarWidth(arg_11_0)
+	local var_11_0 = V1a6_CachotProgressListModel.instance:getUnLockedRewardCount()
+
+	arg_11_0:setScrollFillBgWidth(var_11_0)
+	arg_11_0:setScrollFillWidth()
 end
 
-function slot0.setScrollFillBgWidth(slot0, slot1)
-	slot2 = 0
-	slot3 = slot1 - 1
+function var_0_0.setScrollFillBgWidth(arg_12_0, arg_12_1)
+	local var_12_0 = 0
+	local var_12_1 = arg_12_1 - 1
+	local var_12_2 = Mathf.Clamp(var_12_1, 0, var_12_1) * var_0_0.SingleRewardtWidth
 
-	recthelper.setWidth(slot0._gofillbg.transform, Mathf.Clamp(slot3, 0, slot3) * uv0.SingleRewardtWidth)
+	recthelper.setWidth(arg_12_0._gofillbg.transform, var_12_2)
 end
 
-function slot0.setScrollFillWidth(slot0)
+function var_0_0.setScrollFillWidth(arg_13_0)
 	if V1a6_CachotProgressListModel.instance:getCurrentStage() <= 0 then
-		recthelper.setWidth(slot0._gofill.transform, 0)
+		recthelper.setWidth(arg_13_0._gofill.transform, 0)
 
 		return
 	end
 
-	slot2 = V1a6_CachotProgressListModel.instance:getCurFinishRewardCount()
-	slot4, slot5 = V1a6_CachotScoreConfig.instance:getStagePartRange(V1a6_CachotProgressListModel.instance:getCurGetTotalScore())
+	local var_13_0 = V1a6_CachotProgressListModel.instance:getCurFinishRewardCount()
+	local var_13_1 = V1a6_CachotProgressListModel.instance:getCurGetTotalScore()
+	local var_13_2, var_13_3 = V1a6_CachotScoreConfig.instance:getStagePartRange(var_13_1)
+	local var_13_4 = V1a6_CachotScoreConfig.instance:getStagePartScore(var_13_2)
+	local var_13_5 = V1a6_CachotScoreConfig.instance:getStagePartScore(var_13_3) - var_13_4
+	local var_13_6 = var_13_5 > 0 and (var_13_1 - var_13_4) / var_13_5 or 0
 
-	if (V1a6_CachotScoreConfig.instance:getStagePartScore(slot5) - V1a6_CachotScoreConfig.instance:getStagePartScore(slot4) > 0 and (slot3 - slot6) / slot8 or 0) >= 1 then
-		slot9 = 0
+	if var_13_6 >= 1 then
+		var_13_6 = 0
 	end
 
-	slot10 = slot2 + slot9
+	local var_13_7 = var_13_0 + var_13_6
+	local var_13_8 = Mathf.Clamp(var_13_7 - 1, 0, var_13_7) * var_0_0.SingleRewardtWidth
 
-	recthelper.setWidth(slot0._gofill.transform, Mathf.Clamp(slot10 - 1, 0, slot10) * uv0.SingleRewardtWidth)
+	recthelper.setWidth(arg_13_0._gofill.transform, var_13_8)
 end
 
-function slot0.setProgressHorizontalPos(slot0)
-	slot1 = slot0.viewContainer._scrollView:getCsScroll()
+function var_0_0.setProgressHorizontalPos(arg_14_0)
+	local var_14_0 = arg_14_0.viewContainer._scrollView:getCsScroll()
+	local var_14_1 = V1a6_CachotProgressListModel.instance:getHasFinishedMoList()
+	local var_14_2 = 0
 
-	if V1a6_CachotProgressListModel.instance:getHasFinishedMoList() and #slot2 > 0 then
-		for slot7 = 1, #slot2 - 1 do
-			slot3 = 0 + (slot0.viewContainer._scrollParam.startSpace or 0) + (slot2[slot7]:getLineWidth() or 0)
+	if var_14_1 and #var_14_1 > 0 then
+		var_14_2 = var_14_2 + (arg_14_0.viewContainer._scrollParam.startSpace or 0)
+
+		for iter_14_0 = 1, #var_14_1 - 1 do
+			var_14_2 = var_14_2 + (var_14_1[iter_14_0]:getLineWidth() or 0)
 		end
 	end
 
-	slot0.viewContainer._scrollView:refreshScroll()
+	arg_14_0.viewContainer._scrollView:refreshScroll()
 
-	slot1.HorizontalScrollPixel = math.max(0, slot3)
+	var_14_0.HorizontalScrollPixel = math.max(0, var_14_2)
 end
 
-function slot0.updateUnLockNextStageRemainTime(slot0)
-	slot1 = V1a6_CachotProgressListModel.instance:isAllRewardUnLocked()
+function var_0_0.updateUnLockNextStageRemainTime(arg_15_0)
+	local var_15_0 = V1a6_CachotProgressListModel.instance:isAllRewardUnLocked()
 
-	gohelper.setActive(slot0._gonextstagetips, not slot1)
+	gohelper.setActive(arg_15_0._gonextstagetips, not var_15_0)
 
-	if not slot1 then
-		TaskDispatcher.cancelTask(slot0.onOneMinutesPassCallBack, slot0)
-		TaskDispatcher.runRepeat(slot0.onOneMinutesPassCallBack, slot0, TimeUtil.OneMinuteSecond)
-		slot0:checkIsArriveUnLockNextStageTime()
+	if not var_15_0 then
+		TaskDispatcher.cancelTask(arg_15_0.onOneMinutesPassCallBack, arg_15_0)
+		TaskDispatcher.runRepeat(arg_15_0.onOneMinutesPassCallBack, arg_15_0, TimeUtil.OneMinuteSecond)
+		arg_15_0:checkIsArriveUnLockNextStageTime()
 	end
 end
 
-function slot0.onOneMinutesPassCallBack(slot0)
+function var_0_0.onOneMinutesPassCallBack(arg_16_0)
 	V1a6_CachotProgressListModel.instance:updateUnLockNextStageRemainTime(TimeUtil.OneMinuteSecond)
-	slot0:checkIsArriveUnLockNextStageTime()
+	arg_16_0:checkIsArriveUnLockNextStageTime()
 end
 
-function slot0.checkIsArriveUnLockNextStageTime(slot0)
-	if V1a6_CachotProgressListModel.instance:getUnLockNextStageRemainTime() and slot1 > 0 then
-		slot2, slot3 = TimeUtil.secondsToDDHHMMSS(slot1)
+function var_0_0.checkIsArriveUnLockNextStageTime(arg_17_0)
+	local var_17_0 = V1a6_CachotProgressListModel.instance:getUnLockNextStageRemainTime()
 
-		slot0:refreshUnLockNextStageTimeUI(slot2, slot3)
+	if var_17_0 and var_17_0 > 0 then
+		local var_17_1, var_17_2 = TimeUtil.secondsToDDHHMMSS(var_17_0)
+
+		arg_17_0:refreshUnLockNextStageTimeUI(var_17_1, var_17_2)
 	else
-		TaskDispatcher.cancelTask(slot0.onOneMinutesPassCallBack, slot0)
+		TaskDispatcher.cancelTask(arg_17_0.onOneMinutesPassCallBack, arg_17_0)
 		RogueRpc.instance:sendGetRogueStateRequest()
 	end
 end
 
-function slot0.onRogueSateInfoUpdate(slot0)
+function var_0_0.onRogueSateInfoUpdate(arg_18_0)
 	V1a6_CachotProgressListModel.instance:initDatas()
-	slot0:refreshScoreUI()
+	arg_18_0:refreshScoreUI()
 end
 
-function slot0._onWeekRefresh(slot0)
+function var_0_0._onWeekRefresh(arg_19_0)
 	RogueRpc.instance:sendGetRogueStateRequest()
 end
 
-function slot0.refreshRedDot(slot0)
-	slot1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueDoubleScore
-	slot3 = ServerTime.now()
+function var_0_0.refreshRedDot(arg_20_0)
+	local var_20_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueDoubleScore
+	local var_20_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueRewardStage
+	local var_20_2 = ServerTime.now()
+	local var_20_3 = V1a6_CachotProgressListModel.instance:getCurrentStage()
 
 	if V1a6_CachotProgressListModel.instance:checkRewardStageChange() then
-		PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueRewardStage, V1a6_CachotProgressListModel.instance:getCurrentStage())
+		PlayerPrefsHelper.setNumber(var_20_1, var_20_3)
 		V1a6_CachotProgressListModel.instance:checkRewardStageChangeRed()
 	end
 
 	if V1a6_CachotProgressListModel.instance:checkDoubleStoreRefresh() then
-		PlayerPrefsHelper.setString(slot1, slot3)
+		PlayerPrefsHelper.setString(var_20_0, var_20_2)
 		V1a6_CachotProgressListModel.instance:checkDoubleStoreRefreshRed()
 	end
 end
 
-function slot0._btnbackOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnbackOnClick(arg_21_0)
+	arg_21_0:closeThis()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_22_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.onOneMinutesPassCallBack, slot0)
+function var_0_0.onDestroyView(arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0.onOneMinutesPassCallBack, arg_23_0)
 end
 
-return slot0
+return var_0_0

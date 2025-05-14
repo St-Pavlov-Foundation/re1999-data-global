@@ -1,38 +1,43 @@
-module("modules.logic.guide.controller.trigger.BaseGuideTrigger", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.BaseGuideTrigger", package.seeall)
 
-slot0 = class("BaseGuideTrigger")
+local var_0_0 = class("BaseGuideTrigger")
 
-function slot0.ctor(slot0, slot1)
-	slot0._triggerKey = slot1
-	slot0._guideIdList = nil
-	slot0._canTrigger = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._triggerKey = arg_1_1
+	arg_1_0._guideIdList = nil
+	arg_1_0._canTrigger = false
 end
 
-function slot0.onReset(slot0)
-	slot0._canTrigger = false
+function var_0_0.onReset(arg_2_0)
+	arg_2_0._canTrigger = false
 end
 
-function slot0.setCanTrigger(slot0, slot1)
-	slot0._canTrigger = slot1
+function var_0_0.setCanTrigger(arg_3_0, arg_3_1)
+	arg_3_0._canTrigger = arg_3_1
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
+function var_0_0.assertGuideSatisfy(arg_4_0, arg_4_1, arg_4_2)
 	return false
 end
 
-function slot0.getParam(slot0)
+function var_0_0.getParam(arg_5_0)
 	return nil
 end
 
-function slot0.hasSatisfyGuide(slot0)
-	slot0:_classifyGuide()
+function var_0_0.hasSatisfyGuide(arg_6_0)
+	arg_6_0:_classifyGuide()
 
-	for slot5 = 1, slot0._guideIdList and #slot0._guideIdList or 0 do
-		slot6 = slot0._guideIdList[slot5]
-		slot8 = GuideConfig.instance:getGuideCO(slot6)
+	local var_6_0 = arg_6_0._guideIdList and #arg_6_0._guideIdList or 0
 
-		if (GuideModel.instance:getById(slot6) == nil or slot7.isFinish and slot8.restart == 1) and not GuideInvalidController.instance:isInvalid(slot6) then
-			if slot8.parallel ~= 1 and slot0:assertGuideSatisfy(slot0:getParam(), GuideConfig.instance:getTriggerParam(slot6)) then
+	for iter_6_0 = 1, var_6_0 do
+		local var_6_1 = arg_6_0._guideIdList[iter_6_0]
+		local var_6_2 = GuideModel.instance:getById(var_6_1)
+		local var_6_3 = GuideConfig.instance:getGuideCO(var_6_1)
+
+		if (var_6_2 == nil or var_6_2.isFinish and var_6_3.restart == 1) and not GuideInvalidController.instance:isInvalid(var_6_1) then
+			local var_6_4 = GuideConfig.instance:getTriggerParam(var_6_1)
+
+			if var_6_3.parallel ~= 1 and arg_6_0:assertGuideSatisfy(arg_6_0:getParam(), var_6_4) then
 				return true
 			end
 		end
@@ -41,46 +46,53 @@ function slot0.hasSatisfyGuide(slot0)
 	return false
 end
 
-function slot0.checkStartGuide(slot0, slot1, slot2)
-	if not slot0._canTrigger then
+function var_0_0.checkStartGuide(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0._canTrigger then
 		return
 	end
 
-	if slot2 then
-		slot0:_checkStartOneGuide(slot1, slot2)
+	if arg_7_2 then
+		arg_7_0:_checkStartOneGuide(arg_7_1, arg_7_2)
 	else
-		slot0:_classifyGuide()
+		arg_7_0:_classifyGuide()
 
-		for slot6 = 1, #slot0._guideIdList do
-			slot0:_checkStartOneGuide(slot1, slot0._guideIdList[slot6])
+		for iter_7_0 = 1, #arg_7_0._guideIdList do
+			local var_7_0 = arg_7_0._guideIdList[iter_7_0]
+
+			arg_7_0:_checkStartOneGuide(arg_7_1, var_7_0)
 		end
 	end
 end
 
-function slot0._checkStartOneGuide(slot0, slot1, slot2)
-	slot4 = GuideConfig.instance:getGuideCO(slot2)
+function var_0_0._checkStartOneGuide(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = GuideModel.instance:getById(arg_8_2)
+	local var_8_1 = GuideConfig.instance:getGuideCO(arg_8_2)
 
-	if GuideModel.instance:getById(slot2) == nil or slot3.isFinish and slot4.restart == 1 then
-		if not GuideInvalidController.instance:isInvalid(slot2) and slot0:assertGuideSatisfy(slot1, GuideConfig.instance:getTriggerParam(slot2)) then
-			if slot4.parallel == 1 then
-				GuideController.instance:startGudie(slot2)
+	if var_8_0 == nil or var_8_0.isFinish and var_8_1.restart == 1 then
+		local var_8_2 = GuideConfig.instance:getTriggerParam(arg_8_2)
+
+		if not GuideInvalidController.instance:isInvalid(arg_8_2) and arg_8_0:assertGuideSatisfy(arg_8_1, var_8_2) then
+			if var_8_1.parallel == 1 then
+				GuideController.instance:startGudie(arg_8_2)
 			elseif GuideModel.instance:getDoingGuideId() == nil then
-				GuideController.instance:toStartGudie(slot2)
+				GuideController.instance:toStartGudie(arg_8_2)
 			end
 		end
 	end
 end
 
-function slot0._classifyGuide(slot0)
-	if slot0._guideIdList == nil then
-		slot0._guideIdList = {}
+function var_0_0._classifyGuide(arg_9_0)
+	if arg_9_0._guideIdList == nil then
+		arg_9_0._guideIdList = {}
 
-		for slot5, slot6 in ipairs(GuideConfig.instance:getGuideList()) do
-			if GuideConfig.instance:getTriggerType(slot6.id) == slot0._triggerKey then
-				table.insert(slot0._guideIdList, slot6.id)
+		local var_9_0 = GuideConfig.instance:getGuideList()
+
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			if GuideConfig.instance:getTriggerType(iter_9_1.id) == arg_9_0._triggerKey then
+				table.insert(arg_9_0._guideIdList, iter_9_1.id)
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

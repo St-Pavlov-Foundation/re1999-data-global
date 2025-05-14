@@ -1,24 +1,27 @@
-module("modules.logic.scene.room.fsm.action.RoomBaseFsmAction", package.seeall)
+﻿module("modules.logic.scene.room.fsm.action.RoomBaseFsmAction", package.seeall)
 
-slot0 = class("RoomBaseFsmAction")
+local var_0_0 = class("RoomBaseFsmAction")
 
-function slot0.ctor(slot0, slot1)
-	slot0.fsmTransition = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.fsmTransition = arg_1_1
 end
 
-function slot0.start(slot0, slot1)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_2_0, arg_2_1)
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
 
-	slot0:onStart(slot1)
+	arg_2_0:onStart(arg_2_1)
 end
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_4_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

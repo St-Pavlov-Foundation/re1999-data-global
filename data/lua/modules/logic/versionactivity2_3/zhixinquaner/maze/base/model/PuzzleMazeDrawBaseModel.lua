@@ -1,328 +1,369 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.model.PuzzleMazeDrawBaseModel", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.model.PuzzleMazeDrawBaseModel", package.seeall)
 
-slot0 = class("PuzzleMazeDrawBaseModel", BaseModel)
+local var_0_0 = class("PuzzleMazeDrawBaseModel", BaseModel)
 
-function slot0.reInit(slot0)
-	slot0:release()
+function var_0_0.reInit(arg_1_0)
+	arg_1_0:release()
 end
 
-function slot0.release(slot0)
-	slot0._statusMap = nil
-	slot0._blockMap = nil
-	slot0._objMap = nil
-	slot0._objList = nil
-	slot0._startX = nil
-	slot0._startY = nil
-	slot0._endX = nil
-	slot0._endY = nil
-	slot0._lineMap = nil
-	slot0._interactCtrlMap = nil
-	slot0._elementCo = nil
+function var_0_0.release(arg_2_0)
+	arg_2_0._statusMap = nil
+	arg_2_0._blockMap = nil
+	arg_2_0._objMap = nil
+	arg_2_0._objList = nil
+	arg_2_0._startX = nil
+	arg_2_0._startY = nil
+	arg_2_0._endX = nil
+	arg_2_0._endY = nil
+	arg_2_0._lineMap = nil
+	arg_2_0._interactCtrlMap = nil
+	arg_2_0._elementCo = nil
 
-	slot0:clear()
+	arg_2_0:clear()
 end
 
-function slot0.startGame(slot0, slot1)
-	slot0:release()
-	slot0:decode(slot1.param)
+function var_0_0.startGame(arg_3_0, arg_3_1)
+	arg_3_0:release()
+	arg_3_0:decode(arg_3_1.param)
 
-	slot0._elementCo = slot1
+	arg_3_0._elementCo = arg_3_1
 end
 
-function slot0.decode(slot0, slot1)
-	slot0._objMap = {}
-	slot0._blockMap = {}
-	slot0._lineMap = {}
-	slot0._interactCtrlMap = {}
-	slot2 = cjson.decode(slot1)
-	slot0._width = slot2.width
-	slot0._height = slot2.height
-	slot0._pawnIconUrl = slot2.pawnIconUrl
+function var_0_0.decode(arg_4_0, arg_4_1)
+	arg_4_0._objMap = {}
+	arg_4_0._blockMap = {}
+	arg_4_0._lineMap = {}
+	arg_4_0._interactCtrlMap = {}
 
-	slot0:decodeObj(slot0._blockMap, slot2.blockMap)
-	slot0:decodeObj(slot0._objMap, slot2.objMap)
-	slot0:initMapLineState(slot2)
-	slot0:findStartAndEndPos()
-	slot0:initConst()
+	local var_4_0 = cjson.decode(arg_4_1)
+
+	arg_4_0._width = var_4_0.width
+	arg_4_0._height = var_4_0.height
+	arg_4_0._pawnIconUrl = var_4_0.pawnIconUrl
+
+	arg_4_0:decodeObj(arg_4_0._blockMap, var_4_0.blockMap)
+	arg_4_0:decodeObj(arg_4_0._objMap, var_4_0.objMap)
+	arg_4_0:initMapLineState(var_4_0)
+	arg_4_0:findStartAndEndPos()
+	arg_4_0:initConst()
 end
 
-function slot0.findStartAndEndPos(slot0)
-	for slot4, slot5 in pairs(slot0._objMap) do
-		if slot5.objType == PuzzleEnum.MazeObjType.Start then
-			slot0._startPosX = slot5.x
-			slot0._startPosY = slot5.y
-		elseif slot5.objType == PuzzleEnum.MazeObjType.End then
-			slot0._endPosX = slot5.x
-			slot0._endPosY = slot5.y
+function var_0_0.findStartAndEndPos(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._objMap) do
+		if iter_5_1.objType == PuzzleEnum.MazeObjType.Start then
+			arg_5_0._startPosX = iter_5_1.x
+			arg_5_0._startPosY = iter_5_1.y
+		elseif iter_5_1.objType == PuzzleEnum.MazeObjType.End then
+			arg_5_0._endPosX = iter_5_1.x
+			arg_5_0._endPosY = iter_5_1.y
 		end
 	end
 end
 
-function slot0.decodeObj(slot0, slot1, slot2)
-	if not slot2 then
+function var_0_0.decodeObj(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_2 then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		slot9 = nil
+	for iter_6_0, iter_6_1 in pairs(arg_6_2) do
+		local var_6_0 = string.splitToNumber(iter_6_1.key, "_")
+		local var_6_1
+		local var_6_2 = #var_6_0
 
-		if #string.splitToNumber(slot7.key, "_") <= 2 then
-			slot9 = slot0:createMOByPos(slot8[1], slot8[2], slot7)
-		elseif slot10 >= 4 then
-			slot9 = slot0:createMOByLine(slot8[1], slot8[2], slot8[3], slot8[4], slot7)
+		if var_6_2 <= 2 then
+			var_6_1 = arg_6_0:createMOByPos(var_6_0[1], var_6_0[2], iter_6_1)
+		elseif var_6_2 >= 4 then
+			var_6_1 = arg_6_0:createMOByLine(var_6_0[1], var_6_0[2], var_6_0[3], var_6_0[4], iter_6_1)
 		end
 
-		slot1[slot7.key] = slot9
+		arg_6_1[iter_6_1.key] = var_6_1
 	end
 end
 
-function slot0.createMOByPos(slot0, slot1, slot2, slot3)
-	slot4 = PuzzleMazeDrawMO.New()
+function var_0_0.createMOByPos(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = PuzzleMazeDrawMO.New()
 
-	slot4:initByPos(slot1, slot2, slot3.type, slot3.subType, slot3.group, slot3.priority, slot3.iconUrl, slot3.effects, slot3.interactLines)
-	slot0:addAtLast(slot4)
+	var_7_0:initByPos(arg_7_1, arg_7_2, arg_7_3.type, arg_7_3.subType, arg_7_3.group, arg_7_3.priority, arg_7_3.iconUrl, arg_7_3.effects, arg_7_3.interactLines)
+	arg_7_0:addAtLast(var_7_0)
 
-	return slot4
+	return var_7_0
 end
 
-function slot0.createMOByLine(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = PuzzleMazeDrawMO.New()
+function var_0_0.createMOByLine(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	local var_8_0 = PuzzleMazeDrawMO.New()
 
-	slot6:initByLine(slot1, slot2, slot3, slot4, slot5.type, slot5.subType, slot5.group, slot5.priority, slot5.iconUrl)
-	slot0:addAtLast(slot6)
+	var_8_0:initByLine(arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5.type, arg_8_5.subType, arg_8_5.group, arg_8_5.priority, arg_8_5.iconUrl)
+	arg_8_0:addAtLast(var_8_0)
 
-	return slot6
+	return var_8_0
 end
 
-function slot0.initMapLineState(slot0, slot1)
-	for slot6, slot7 in pairs(slot1 and slot1.blockMap or {}) do
-		slot0._lineMap[slot7.key] = PuzzleEnum.LineState.Disconnect
+function var_0_0.initMapLineState(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1 and arg_9_1.blockMap
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0 or {}) do
+		local var_9_1 = iter_9_1.key
+
+		arg_9_0._lineMap[var_9_1] = PuzzleEnum.LineState.Disconnect
 	end
 
-	for slot7, slot8 in pairs(slot1 and slot1.objMap or {}) do
-		if slot8.interactLines then
-			for slot12, slot13 in pairs(slot8.interactLines) do
-				slot14 = PuzzleMazeHelper.getLineKey(slot13.x1, slot13.y1, slot13.x2, slot13.y2)
-				slot0._lineMap[slot14] = PuzzleEnum.LineState.Switch_Off
-				slot0._interactCtrlMap[slot14] = slot8
+	local var_9_2 = arg_9_1 and arg_9_1.objMap
+
+	for iter_9_2, iter_9_3 in pairs(var_9_2 or {}) do
+		if iter_9_3.interactLines then
+			for iter_9_4, iter_9_5 in pairs(iter_9_3.interactLines) do
+				local var_9_3 = PuzzleMazeHelper.getLineKey(iter_9_5.x1, iter_9_5.y1, iter_9_5.x2, iter_9_5.y2)
+
+				arg_9_0._lineMap[var_9_3] = PuzzleEnum.LineState.Switch_Off
+				arg_9_0._interactCtrlMap[var_9_3] = iter_9_3
 			end
 		end
 	end
 end
 
-function slot0.initConst(slot0)
-	slot1, slot2 = slot0:getGameSize()
-	slot0._startX = -slot1 * 0.5 - 0.5
-	slot0._startY = -slot2 * 0.5 - 0.5
+function var_0_0.initConst(arg_10_0)
+	local var_10_0, var_10_1 = arg_10_0:getGameSize()
+
+	arg_10_0._startX = -var_10_0 * 0.5 - 0.5
+	arg_10_0._startY = -var_10_1 * 0.5 - 0.5
 end
 
-function slot0.getStartPoint(slot0)
-	return slot0._startPosX, slot0._startPosY
+function var_0_0.getStartPoint(arg_11_0)
+	return arg_11_0._startPosX, arg_11_0._startPosY
 end
 
-function slot0.getEndPoint(slot0)
-	return slot0._endPosX, slot0._endPosY
+function var_0_0.getEndPoint(arg_12_0)
+	return arg_12_0._endPosX, arg_12_0._endPosY
 end
 
-function slot0.getElementCo(slot0)
-	return slot0._elementCo
+function var_0_0.getElementCo(arg_13_0)
+	return arg_13_0._elementCo
 end
 
-function slot0.setGameStatus(slot0, slot1)
-	if slot0._elementCo then
-		slot0._statusMap = slot0._statusMap or {}
-		slot0._statusMap[slot0._elementCo.id] = slot1
+function var_0_0.setGameStatus(arg_14_0, arg_14_1)
+	if arg_14_0._elementCo then
+		arg_14_0._statusMap = arg_14_0._statusMap or {}
+		arg_14_0._statusMap[arg_14_0._elementCo.id] = arg_14_1
 	end
 end
 
-function slot0.getClearStatus(slot0, slot1)
-	if slot0._statusMap and slot0._statusMap[slot1] then
+function var_0_0.getClearStatus(arg_15_0, arg_15_1)
+	if arg_15_0._statusMap and arg_15_0._statusMap[arg_15_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getObjAtPos(slot0, slot1, slot2)
-	return slot0._objMap[PuzzleMazeHelper.getPosKey(slot1, slot2)]
+function var_0_0.getObjAtPos(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = PuzzleMazeHelper.getPosKey(arg_16_1, arg_16_2)
+
+	return arg_16_0._objMap[var_16_0]
 end
 
-function slot0.getObjAtLine(slot0, slot1, slot2, slot3, slot4)
-	return slot0._blockMap[PuzzleMazeHelper.getLineKey(slot1, slot2, slot3, slot4)]
+function var_0_0.getObjAtLine(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = PuzzleMazeHelper.getLineKey(arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+
+	return arg_17_0._blockMap[var_17_0]
 end
 
-function slot0.getObjByLineKey(slot0, slot1)
-	return slot0._blockMap[slot1]
+function var_0_0.getObjByLineKey(arg_18_0, arg_18_1)
+	return arg_18_0._blockMap[arg_18_1]
 end
 
-function slot0.getGameSize(slot0)
-	return slot0._width or 0, slot0._height or 0
+function var_0_0.getGameSize(arg_19_0)
+	return arg_19_0._width or 0, arg_19_0._height or 0
 end
 
-function slot0.getUIGridSize(slot0)
+function var_0_0.getUIGridSize(arg_20_0)
 	return PuzzleEnum.mazeUIGridWidth, PuzzleEnum.mazeUIGridHeight
 end
 
-function slot0.getObjectAnchor(slot0, slot1, slot2)
-	return slot0:getGridCenterPos(slot1 - 0.5, slot2 - 0.5)
+function var_0_0.getObjectAnchor(arg_21_0, arg_21_1, arg_21_2)
+	return arg_21_0:getGridCenterPos(arg_21_1 - 0.5, arg_21_2 - 0.5)
 end
 
-function slot0.getLineObjectAnchor(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot1 + (slot3 - slot1) * 0.5 - 0.5
+function var_0_0.getLineObjectAnchor(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	local var_22_0 = arg_22_1
+	local var_22_1 = arg_22_2
+	local var_22_2 = var_22_0 + (arg_22_3 - arg_22_1) * 0.5 - 0.5
+	local var_22_3 = var_22_1 + (arg_22_2 - arg_22_2) * 0.5
 
-	if slot2 == slot4 then
-		slot6 = slot2 + (slot2 - slot2) * 0.5 - 0.5
+	if arg_22_2 == arg_22_4 then
+		var_22_3 = var_22_3 - 0.5
 	end
 
-	return slot0:getGridCenterPos(slot5, slot6)
+	return arg_22_0:getGridCenterPos(var_22_2, var_22_3)
 end
 
-function slot0.getLineAnchor(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot1 + (slot3 - slot1) * 0.5 - 0.5
+function var_0_0.getLineAnchor(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+	local var_23_0 = arg_23_1
+	local var_23_1 = arg_23_2
+	local var_23_2 = var_23_0 + (arg_23_3 - arg_23_1) * 0.5 - 0.5
+	local var_23_3 = var_23_1 + (arg_23_2 - arg_23_2) * 0.5
 
-	if slot2 == slot4 then
-		slot6 = slot2 + (slot2 - slot2) * 0.5 - 0.5
+	if arg_23_2 == arg_23_4 then
+		var_23_3 = var_23_3 - 0.5
 	end
 
-	return slot0:getGridCenterPos(slot5, slot6)
+	return arg_23_0:getGridCenterPos(var_23_2, var_23_3)
 end
 
-function slot0.getGridCenterPos(slot0, slot1, slot2)
-	slot3, slot4 = slot0:getUIGridSize()
+function var_0_0.getGridCenterPos(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0, var_24_1 = arg_24_0:getUIGridSize()
 
-	return (slot0._startX + slot1) * slot3, (slot0._startY + slot2) * slot4
+	return (arg_24_0._startX + arg_24_1) * var_24_0, (arg_24_0._startY + arg_24_2) * var_24_1
 end
 
-function slot0.getIntegerPosByTouchPos(slot0, slot1, slot2)
-	slot3, slot4 = slot0:getUIGridSize()
-	slot6 = math.floor((slot2 - (slot0._startY + 0.5) * slot4) / slot4)
-	slot7, slot8 = slot0:getGameSize()
-	slot9 = -1
-	slot10 = -1
-	slot11 = PuzzleEnum.mazeUILineWidth * 0.5
+function var_0_0.getIntegerPosByTouchPos(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0, var_25_1 = arg_25_0:getUIGridSize()
+	local var_25_2 = math.floor((arg_25_1 - (arg_25_0._startX + 0.5) * var_25_0) / var_25_0)
+	local var_25_3 = math.floor((arg_25_2 - (arg_25_0._startY + 0.5) * var_25_1) / var_25_1)
+	local var_25_4, var_25_5 = arg_25_0:getGameSize()
+	local var_25_6 = -1
+	local var_25_7 = -1
+	local var_25_8 = PuzzleEnum.mazeUILineWidth * 0.5
 
-	if math.floor((slot1 - (slot0._startX + 0.5) * slot3) / slot3) >= 0 and slot5 < slot7 and slot6 >= 0 and slot6 < slot8 then
-		slot10 = slot6 + 1
-		slot9 = slot5 + 1
+	if var_25_2 >= 0 and var_25_2 < var_25_4 and var_25_3 >= 0 and var_25_3 < var_25_5 then
+		var_25_6, var_25_7 = var_25_2 + 1, var_25_3 + 1
 	else
-		slot12 = slot5 >= 0 and slot5 < slot7 and slot5 + 1 or -1
-		slot13 = slot6 >= 0 and slot6 < slot8 and slot6 + 1 or -1
-		slot15 = slot2 - (slot0._startY + 0.5) * slot4
+		local var_25_9 = var_25_2 >= 0 and var_25_2 < var_25_4 and var_25_2 + 1 or -1
+		local var_25_10 = var_25_3 >= 0 and var_25_3 < var_25_5 and var_25_3 + 1 or -1
+		local var_25_11 = arg_25_1 - (arg_25_0._startX + 0.5) * var_25_0
+		local var_25_12 = arg_25_2 - (arg_25_0._startY + 0.5) * var_25_1
 
-		if slot5 < 0 and slot1 - (slot0._startX + 0.5) * slot3 > -slot11 then
-			slot12 = 1
-		elseif slot7 <= slot5 and slot14 < slot7 * slot3 + slot0._startX + slot11 then
-			slot12 = slot7
+		if var_25_2 < 0 and var_25_11 > -var_25_8 then
+			var_25_9 = 1
+		elseif var_25_4 <= var_25_2 and var_25_11 < var_25_4 * var_25_0 + arg_25_0._startX + var_25_8 then
+			var_25_9 = var_25_4
 		end
 
-		if slot6 < 0 and slot15 > -slot11 then
-			slot13 = 1
-		elseif slot8 <= slot6 and slot15 < slot8 * slot4 + slot0._startY + slot11 then
-			slot13 = slot8
+		if var_25_3 < 0 and var_25_12 > -var_25_8 then
+			var_25_10 = 1
+		elseif var_25_5 <= var_25_3 and var_25_12 < var_25_5 * var_25_1 + arg_25_0._startY + var_25_8 then
+			var_25_10 = var_25_5
 		end
 
-		if slot12 ~= -1 and slot13 ~= -1 then
-			slot10 = slot13
-			slot9 = slot12
+		if var_25_9 ~= -1 and var_25_10 ~= -1 then
+			var_25_6, var_25_7 = var_25_9, var_25_10
 		end
 	end
 
-	return slot9, slot10
+	return var_25_6, var_25_7
 end
 
-function slot0.getClosePosByTouchPos(slot0, slot1, slot2)
-	slot3, slot4 = slot0:getUIGridSize()
-	slot5, slot6 = slot0:getIntegerPosByTouchPos(slot1, slot2)
+function var_0_0.getClosePosByTouchPos(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0, var_26_1 = arg_26_0:getUIGridSize()
+	local var_26_2, var_26_3 = arg_26_0:getIntegerPosByTouchPos(arg_26_1, arg_26_2)
 
-	if slot5 ~= -1 then
-		slot10 = false
+	if var_26_2 ~= -1 then
+		local var_26_4 = PuzzleEnum.mazeUILineWidth * 0.5
+		local var_26_5 = arg_26_1 - (arg_26_0._startX + 0.5) * var_26_0
+		local var_26_6 = (var_26_2 - 1) * var_26_0
+		local var_26_7 = false
 
-		if slot1 - (slot0._startX + 0.5) * slot3 >= (slot5 - 1) * slot3 + PuzzleEnum.mazeUILineWidth * 0.5 then
-			if slot8 >= slot9 + slot3 - slot7 then
-				slot5 = slot5 + 1
+		if var_26_5 >= var_26_6 + var_26_4 then
+			if var_26_5 >= var_26_6 + (var_26_0 - var_26_4) then
+				var_26_2 = var_26_2 + 1
 			else
-				slot10 = true
+				var_26_7 = true
 			end
 		end
 
-		slot13 = false
+		local var_26_8 = arg_26_2 - (arg_26_0._startY + 0.5) * var_26_1
+		local var_26_9 = (var_26_3 - 1) * var_26_1
+		local var_26_10 = false
 
-		if slot2 - (slot0._startY + 0.5) * slot4 >= (slot6 - 1) * slot4 + slot7 then
-			if slot11 >= slot12 + slot4 - slot7 then
-				slot6 = slot6 + 1
+		if var_26_8 >= var_26_9 + var_26_4 then
+			if var_26_8 >= var_26_9 + (var_26_1 - var_26_4) then
+				var_26_3 = var_26_3 + 1
 			else
-				slot13 = true
+				var_26_10 = true
 			end
 		end
 
-		if slot10 or slot13 then
+		if var_26_7 or var_26_10 then
 			return -1, -1
 		end
 	end
 
-	return slot5, slot6
+	return var_26_2, var_26_3
 end
 
-function slot0.getLineFieldByTouchPos(slot0, slot1, slot2)
-	slot3, slot4 = slot0:getUIGridSize()
-	slot5, slot8 = slot0:getIntegerPosByTouchPos(slot1, slot2)
-	slot9, slot10 = nil
+function var_0_0.getLineFieldByTouchPos(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0, var_27_1 = arg_27_0:getUIGridSize()
+	local var_27_2, var_27_3 = arg_27_0:getIntegerPosByTouchPos(arg_27_1, arg_27_2)
+	local var_27_4 = var_27_2
+	local var_27_5 = var_27_3
+	local var_27_6
+	local var_27_7
 
-	if slot5 ~= -1 then
-		slot14 = false
+	if var_27_2 ~= -1 then
+		local var_27_8 = PuzzleEnum.mazeUILineWidth * 0.5
+		local var_27_9 = (var_27_2 - 1) * var_27_0
+		local var_27_10 = arg_27_1 - (arg_27_0._startX + 0.5) * var_27_0
+		local var_27_11 = false
 
-		if slot1 - (slot0._startX + 0.5) * slot3 >= (slot5 - 1) * slot3 + PuzzleEnum.mazeUILineWidth * 0.5 then
-			slot7 = slot5 + 1
+		if var_27_10 >= var_27_9 + var_27_8 then
+			var_27_4 = var_27_4 + 1
 
-			if slot13 < slot12 + slot3 - slot11 then
-				slot14 = true
-				slot9 = (slot13 - slot12) / slot3
+			if var_27_10 < var_27_9 + (var_27_0 - var_27_8) then
+				var_27_11 = true
+				var_27_6 = (var_27_10 - var_27_9) / var_27_0
 			else
-				slot5 = slot5 + 1
+				var_27_2 = var_27_2 + 1
 			end
 		end
 
-		slot17 = false
+		local var_27_12 = (var_27_3 - 1) * var_27_1
+		local var_27_13 = arg_27_2 - (arg_27_0._startY + 0.5) * var_27_1
+		local var_27_14 = false
 
-		if slot2 - (slot0._startY + 0.5) * slot4 >= (slot6 - 1) * slot4 + slot11 then
-			slot8 = slot8 + 1
+		if var_27_13 >= var_27_12 + var_27_8 then
+			var_27_5 = var_27_5 + 1
 
-			if slot16 < slot15 + slot4 - slot11 then
-				slot17 = true
-				slot10 = (slot16 - slot15) / slot4
+			if var_27_13 < var_27_12 + (var_27_1 - var_27_8) then
+				var_27_14 = true
+				var_27_7 = (var_27_13 - var_27_12) / var_27_1
 			else
-				slot6 = slot6 + 1
+				var_27_3 = var_27_3 + 1
 			end
 		end
 
-		if not slot14 or not slot17 then
-			return true, slot5, slot6, slot7, slot8, slot9, slot10
+		if not var_27_11 or not var_27_14 then
+			return true, var_27_2, var_27_3, var_27_4, var_27_5, var_27_6, var_27_7
 		end
 	end
 
 	return false
 end
 
-function slot0.getMapLineState(slot0, slot1, slot2, slot3, slot4)
-	return slot0._lineMap and slot0._lineMap[PuzzleMazeHelper.getLineKey(slot1, slot2, slot3, slot4)]
+function var_0_0.getMapLineState(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4)
+	local var_28_0 = PuzzleMazeHelper.getLineKey(arg_28_1, arg_28_2, arg_28_3, arg_28_4)
+
+	return arg_28_0._lineMap and arg_28_0._lineMap[var_28_0]
 end
 
-function slot0.getAllMapLines(slot0)
-	return slot0._lineMap
+function var_0_0.getAllMapLines(arg_29_0)
+	return arg_29_0._lineMap
 end
 
-function slot0.getInteractLineCtrl(slot0, slot1, slot2, slot3, slot4)
-	return slot0._interactCtrlMap and slot0._interactCtrlMap[PuzzleMazeHelper.getLineKey(slot1, slot2, slot3, slot4)]
+function var_0_0.getInteractLineCtrl(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4)
+	local var_30_0 = PuzzleMazeHelper.getLineKey(arg_30_1, arg_30_2, arg_30_3, arg_30_4)
+
+	return arg_30_0._interactCtrlMap and arg_30_0._interactCtrlMap[var_30_0]
 end
 
-function slot0.pawnIconUrl(slot0)
-	return slot0._pawnIconUrl
+function var_0_0.pawnIconUrl(arg_31_0)
+	return arg_31_0._pawnIconUrl
 end
 
-function slot0.setMapLineState(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._lineMap[PuzzleMazeHelper.getLineKey(slot1, slot2, slot3, slot4)] = slot5
+function var_0_0.setMapLineState(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4, arg_32_5)
+	local var_32_0 = PuzzleMazeHelper.getLineKey(arg_32_1, arg_32_2, arg_32_3, arg_32_4)
+
+	arg_32_0._lineMap[var_32_0] = arg_32_5
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

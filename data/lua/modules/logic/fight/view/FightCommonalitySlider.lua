@@ -1,56 +1,64 @@
-module("modules.logic.fight.view.FightCommonalitySlider", package.seeall)
+﻿module("modules.logic.fight.view.FightCommonalitySlider", package.seeall)
 
-slot0 = class("FightCommonalitySlider", FightBaseView)
+local var_0_0 = class("FightCommonalitySlider", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._slider = gohelper.findChildImage(slot0.viewGO, "slider/sliderbg/sliderfg")
-	slot0._skillName = gohelper.findChildText(slot0.viewGO, "slider/txt_commonality")
-	slot0._sliderText = gohelper.findChildText(slot0.viewGO, "slider/sliderbg/#txt_slidernum")
-	slot0._tips = gohelper.findChild(slot0.viewGO, "tips")
-	slot0._tipsTitle = gohelper.findChildText(slot0.viewGO, "tips/#txt_title")
-	slot0._desText = gohelper.findChildText(slot0.viewGO, "tips/desccont/#txt_descitem")
-	slot0._max = gohelper.findChild(slot0.viewGO, "slider/max")
-	slot0._click = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "btn")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._slider = gohelper.findChildImage(arg_1_0.viewGO, "slider/sliderbg/sliderfg")
+	arg_1_0._skillName = gohelper.findChildText(arg_1_0.viewGO, "slider/txt_commonality")
+	arg_1_0._sliderText = gohelper.findChildText(arg_1_0.viewGO, "slider/sliderbg/#txt_slidernum")
+	arg_1_0._tips = gohelper.findChild(arg_1_0.viewGO, "tips")
+	arg_1_0._tipsTitle = gohelper.findChildText(arg_1_0.viewGO, "tips/#txt_title")
+	arg_1_0._desText = gohelper.findChildText(arg_1_0.viewGO, "tips/desccont/#txt_descitem")
+	arg_1_0._max = gohelper.findChild(arg_1_0.viewGO, "slider/max")
+	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn")
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshData()
-	slot0:com_registMsg(FightMsgId.FightProgressValueChange, slot0._refreshData)
-	slot0:com_registMsg(FightMsgId.FightMaxProgressValueChange, slot0._refreshData)
-	slot0:com_registClick(slot0._click, slot0._onBtnClick)
-	slot0:com_registFightEvent(FightEvent.TouchFightViewScreen, slot0._onTouchFightViewScreen)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0:_refreshData()
+	arg_2_0:com_registMsg(FightMsgId.FightProgressValueChange, arg_2_0._refreshData)
+	arg_2_0:com_registMsg(FightMsgId.FightMaxProgressValueChange, arg_2_0._refreshData)
+	arg_2_0:com_registClick(arg_2_0._click, arg_2_0._onBtnClick)
+	arg_2_0:com_registFightEvent(FightEvent.TouchFightViewScreen, arg_2_0._onTouchFightViewScreen)
 end
 
-function slot0._onTouchFightViewScreen(slot0)
-	gohelper.setActive(slot0._tips, false)
+function var_0_0._onTouchFightViewScreen(arg_3_0)
+	gohelper.setActive(arg_3_0._tips, false)
 end
 
-function slot0._onBtnClick(slot0)
-	gohelper.setActive(slot0._tips, true)
+function var_0_0._onBtnClick(arg_4_0)
+	gohelper.setActive(arg_4_0._tips, true)
 end
 
-function slot0._refreshData(slot0)
-	if lua_skill.configDict[FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]] then
-		slot0._skillName.text = slot2.name
-		slot0._tipsTitle.text = slot2.name
-		slot0._desText.text = FightConfig.instance:getSkillEffectDesc(nil, slot2)
+function var_0_0._refreshData(arg_5_0)
+	local var_5_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressSkill]
+	local var_5_1 = lua_skill.configDict[var_5_0]
+
+	if var_5_1 then
+		arg_5_0._skillName.text = var_5_1.name
+		arg_5_0._tipsTitle.text = var_5_1.name
+		arg_5_0._desText.text = FightConfig.instance:getSkillEffectDesc(nil, var_5_1)
 	end
 
-	if slot0._lastMax ~= (FightDataHelper.fieldMgr.progressMax <= FightDataHelper.fieldMgr.progress) then
-		gohelper.setActive(slot0._max, slot5)
+	local var_5_2 = FightDataHelper.fieldMgr.progress
+	local var_5_3 = FightDataHelper.fieldMgr.progressMax
+	local var_5_4 = var_5_3 <= var_5_2
+
+	if arg_5_0._lastMax ~= var_5_4 then
+		gohelper.setActive(arg_5_0._max, var_5_4)
 	end
 
-	slot6 = slot3 / slot4
-	slot0._sliderText.text = Mathf.Clamp(slot6 * 100, 0, 100) .. "%"
+	local var_5_5 = var_5_2 / var_5_3
 
-	ZProj.TweenHelper.KillByObj(slot0._slider)
-	ZProj.TweenHelper.DOFillAmount(slot0._slider, slot6, 0.2 / FightModel.instance:getUISpeed())
+	arg_5_0._sliderText.text = Mathf.Clamp(var_5_5 * 100, 0, 100) .. "%"
 
-	slot0._lastMax = slot5
+	ZProj.TweenHelper.KillByObj(arg_5_0._slider)
+	ZProj.TweenHelper.DOFillAmount(arg_5_0._slider, var_5_5, 0.2 / FightModel.instance:getUISpeed())
+
+	arg_5_0._lastMax = var_5_4
 end
 
-function slot0.onClose(slot0)
-	ZProj.TweenHelper.KillByObj(slot0._slider)
+function var_0_0.onClose(arg_6_0)
+	ZProj.TweenHelper.KillByObj(arg_6_0._slider)
 end
 
-return slot0
+return var_0_0

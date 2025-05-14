@@ -1,32 +1,33 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183TaskViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183TaskViewContainer", package.seeall)
 
-slot0 = class("Act183TaskViewContainer", BaseViewContainer)
+local var_0_0 = class("Act183TaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(slot1, Act183TaskView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(var_1_0, Act183TaskView.New())
 
-	slot2 = MixScrollParam.New()
-	slot2.scrollGOPath = "root/right/#scroll_task"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = Act183TaskItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.startSpace = 0
-	slot2.endSpace = 0
-	slot0._scrollView = LuaMixScrollView.New(Act183TaskListModel.instance, slot2)
+	local var_1_1 = MixScrollParam.New()
 
-	slot0._scrollView:setDynamicGetItem(slot0._dynamicGetItem, slot0)
-	table.insert(slot1, slot0._scrollView)
+	var_1_1.scrollGOPath = "root/right/#scroll_task"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = Act183TaskItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.startSpace = 0
+	var_1_1.endSpace = 0
+	arg_1_0._scrollView = LuaMixScrollView.New(Act183TaskListModel.instance, var_1_1)
 
-	return slot1
+	arg_1_0._scrollView:setDynamicGetItem(arg_1_0._dynamicGetItem, arg_1_0)
+	table.insert(var_1_0, arg_1_0._scrollView)
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -37,20 +38,20 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0._dynamicGetItem(slot0, slot1)
-	if not slot1 then
+function var_0_0._dynamicGetItem(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	if slot1.type == Act183Enum.TaskListItemType.Head then
-		return "taskheader", Act183TaskHeadItem, slot0._viewSetting.otherRes[2]
-	elseif slot1.type == Act183Enum.TaskListItemType.OneKey then
-		return "onekey", Act183TaskOneKeyItem, slot0._viewSetting.otherRes[3]
+	if arg_3_1.type == Act183Enum.TaskListItemType.Head then
+		return "taskheader", Act183TaskHeadItem, arg_3_0._viewSetting.otherRes[2]
+	elseif arg_3_1.type == Act183Enum.TaskListItemType.OneKey then
+		return "onekey", Act183TaskOneKeyItem, arg_3_0._viewSetting.otherRes[3]
 	end
 end
 
-function slot0.getTaskScrollView(slot0)
-	return slot0._scrollView
+function var_0_0.getTaskScrollView(arg_4_0)
+	return arg_4_0._scrollView
 end
 
-return slot0
+return var_0_0

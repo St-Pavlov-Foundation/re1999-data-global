@@ -1,286 +1,328 @@
-module("modules.logic.weekwalk.view.WeekWalkMap", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkMap", package.seeall)
 
-slot0 = class("WeekWalkMap", BaseView)
+local var_0_0 = class("WeekWalkMap", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._gotoptipsbg = gohelper.findChild(slot0.viewGO, "#go_main/#go_toptipsbg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._gotoptipsbg = gohelper.findChild(arg_1_0.viewGO, "#go_main/#go_toptipsbg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._elementList = slot0:getUserDataTb_()
-	slot0._tempVector = Vector3()
-	slot0._infoNeedUpdate = WeekWalkModel.instance:infoNeedUpdate()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._elementList = arg_4_0:getUserDataTb_()
+	arg_4_0._tempVector = Vector3()
+	arg_4_0._infoNeedUpdate = WeekWalkModel.instance:infoNeedUpdate()
 
-	slot0:_initMap()
-	slot0:_initClick()
+	arg_4_0:_initMap()
+	arg_4_0:_initClick()
 end
 
-function slot0._initClick(slot0)
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._gofullscreen)
+function var_0_0._initClick(arg_5_0)
+	arg_5_0._click = SLFramework.UGUI.UIClickListener.Get(arg_5_0._gofullscreen)
 
-	slot0._click:AddClickUpListener(slot0._clickUp, slot0)
+	arg_5_0._click:AddClickUpListener(arg_5_0._clickUp, arg_5_0)
 end
 
-function slot0.setElementDown(slot0, slot1)
+function var_0_0.setElementDown(arg_6_0, arg_6_1)
 	if ViewMgr.instance:isOpen(ViewName.WeekWalkDialogView) or ViewMgr.instance:isOpen(ViewName.WeekWalkTarotView) then
 		return
 	end
 
-	slot0._elementMouseDown = slot1
+	arg_6_0._elementMouseDown = arg_6_1
 end
 
-function slot0._clickUp(slot0)
-	slot0._elementMouseDown = nil
+function var_0_0._clickUp(arg_7_0)
+	local var_7_0 = arg_7_0._elementMouseDown
 
-	if slot0._elementMouseDown and slot1:isValid() then
-		slot1:onClick()
+	arg_7_0._elementMouseDown = nil
+
+	if var_7_0 and var_7_0:isValid() then
+		var_7_0:onClick()
 	end
 end
 
-function slot0.setScenePosSafety(slot0, slot1, slot2)
-	if not slot0._sceneTrans then
+function var_0_0.setScenePosSafety(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0._sceneTrans then
 		return
 	end
 
-	if slot1.x < slot0._mapMinX then
-		slot1.x = slot0._mapMinX
-	elseif slot0._mapMaxX < slot1.x then
-		slot1.x = slot0._mapMaxX
+	if arg_8_1.x < arg_8_0._mapMinX then
+		arg_8_1.x = arg_8_0._mapMinX
+	elseif arg_8_1.x > arg_8_0._mapMaxX then
+		arg_8_1.x = arg_8_0._mapMaxX
 	end
 
-	if slot1.y < slot0._mapMinY then
-		slot1.y = slot0._mapMinY
-	elseif slot0._mapMaxY < slot1.y then
-		slot1.y = slot0._mapMaxY
+	if arg_8_1.y < arg_8_0._mapMinY then
+		arg_8_1.y = arg_8_0._mapMinY
+	elseif arg_8_1.y > arg_8_0._mapMaxY then
+		arg_8_1.y = arg_8_0._mapMaxY
 	end
 
-	if slot2 then
-		ZProj.TweenHelper.DOLocalMove(slot0._sceneTrans, slot1.x, slot1.y, 0, 0.26)
+	if arg_8_2 then
+		ZProj.TweenHelper.DOLocalMove(arg_8_0._sceneTrans, arg_8_1.x, arg_8_1.y, 0, 0.26)
 	else
-		slot0._sceneTrans.localPosition = slot1
+		arg_8_0._sceneTrans.localPosition = arg_8_1
 	end
 end
 
-function slot0._initCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
+function var_0_0._initCamera(arg_9_0)
+	local var_9_0 = CameraMgr.instance:getMainCamera()
 
-	transformhelper.setLocalRotation(slot1.transform, 0, 0, 0)
+	var_9_0.orthographic = true
 
-	slot1.orthographicSize = WeekWalkEnum.orthographicSize * GameUtil.getAdapterScale()
+	transformhelper.setLocalRotation(var_9_0.transform, 0, 0, 0)
+
+	local var_9_1 = GameUtil.getAdapterScale()
+
+	var_9_0.orthographicSize = WeekWalkEnum.orthographicSize * var_9_1
 end
 
-function slot0._initMap(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("WeekWalkMap")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+function var_0_0._initMap(arg_10_0)
+	local var_10_0 = CameraMgr.instance:getMainCameraTrs().parent
+	local var_10_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	arg_10_0._sceneRoot = UnityEngine.GameObject.New("WeekWalkMap")
+
+	local var_10_2, var_10_3, var_10_4 = transformhelper.getLocalPos(var_10_0)
+
+	transformhelper.setLocalPos(arg_10_0._sceneRoot.transform, 0, var_10_3, 0)
+	gohelper.addChild(var_10_1, arg_10_0._sceneRoot)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0._showMap(slot0)
-	slot0:_changeMap(WeekWalkConfig.instance:getMapConfig(slot0._mapId))
+function var_0_0._showMap(arg_12_0)
+	local var_12_0 = WeekWalkConfig.instance:getMapConfig(arg_12_0._mapId)
+
+	arg_12_0:_changeMap(var_12_0)
 end
 
-function slot0._changeMap(slot0, slot1)
-	if not slot1 or slot0._mapCfg == slot1 then
+function var_0_0._changeMap(arg_13_0, arg_13_1)
+	if not arg_13_1 or arg_13_0._mapCfg == arg_13_1 then
 		return
 	end
 
-	if not slot0._oldMapLoader then
-		slot0._oldMapLoader = slot0._mapLoader
-		slot0._oldSceneGo = slot0._sceneGo
-		slot0._oldSceneTrans = slot0._sceneTrans
-	elseif slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if not arg_13_0._oldMapLoader then
+		arg_13_0._oldMapLoader = arg_13_0._mapLoader
+		arg_13_0._oldSceneGo = arg_13_0._sceneGo
+		arg_13_0._oldSceneTrans = arg_13_0._sceneTrans
+	elseif arg_13_0._mapLoader then
+		arg_13_0._mapLoader:dispose()
 
-		slot0._mapLoader = nil
+		arg_13_0._mapLoader = nil
 	end
 
-	slot0._mapCfg = slot1
-	slot2 = WeekWalkModel.instance:getOldOrNewCurMapInfo()
-	slot0._mapLoader = MultiAbLoader.New()
+	arg_13_0._mapCfg = arg_13_1
 
-	slot0._mapLoader:addPath(lua_weekwalk_scene.configDict[slot2.sceneId].map)
+	local var_13_0 = WeekWalkModel.instance:getOldOrNewCurMapInfo()
+	local var_13_1 = lua_weekwalk_scene.configDict[var_13_0.sceneId].map
 
-	slot0._canvasUrl = "ui/viewres/dungeon/chaptermap/chaptermapscenecanvas.prefab"
-	slot0._interactiveItemUrl = "ui/viewres/weekwalk/weekwalkmapinteractiveitem.prefab"
+	arg_13_0._mapLoader = MultiAbLoader.New()
 
-	slot0._mapLoader:addPath(slot0._canvasUrl)
-	slot0._mapLoader:addPath(slot0._interactiveItemUrl)
+	arg_13_0._mapLoader:addPath(var_13_1)
 
-	if not WeekWalkModel.isShallowMap(slot2.id) then
-		slot0._smokeUrl = "scenes/m_s09_rgmy/prefab/weekwalk_deepdream_smoke01.prefab"
+	arg_13_0._canvasUrl = "ui/viewres/dungeon/chaptermap/chaptermapscenecanvas.prefab"
+	arg_13_0._interactiveItemUrl = "ui/viewres/weekwalk/weekwalkmapinteractiveitem.prefab"
 
-		slot0._mapLoader:addPath(slot0._smokeUrl)
+	arg_13_0._mapLoader:addPath(arg_13_0._canvasUrl)
+	arg_13_0._mapLoader:addPath(arg_13_0._interactiveItemUrl)
+
+	if not WeekWalkModel.isShallowMap(var_13_0.id) then
+		arg_13_0._smokeUrl = "scenes/m_s09_rgmy/prefab/weekwalk_deepdream_smoke01.prefab"
+
+		arg_13_0._mapLoader:addPath(arg_13_0._smokeUrl)
 	end
 
-	slot0._mapLoader:startLoad(function (slot0)
-		uv0:disposeOldMap()
+	arg_13_0._mapLoader:startLoad(function(arg_14_0)
+		arg_13_0:disposeOldMap()
 
-		uv0._sceneGo = gohelper.clone(uv0._mapLoader:getAssetItem(uv1):GetResource(uv1), uv0._sceneRoot, tostring(uv2.id))
+		local var_14_0 = arg_13_0._mapLoader:getAssetItem(var_13_1):GetResource(var_13_1)
 
-		gohelper.setActive(uv0._sceneGo, true)
+		arg_13_0._sceneGo = gohelper.clone(var_14_0, arg_13_0._sceneRoot, tostring(arg_13_1.id))
 
-		uv0._sceneTrans = uv0._sceneGo.transform
-		uv0._backgroundGo = gohelper.findChild(uv0._sceneGo, "root/BackGround")
-		uv0._diffuseGo = gohelper.findChild(uv0._sceneGo, "Obj-Plant/all/diffuse")
-		uv0._elementRoot = UnityEngine.GameObject.New("elementRoot")
+		gohelper.setActive(arg_13_0._sceneGo, true)
 
-		gohelper.addChild(uv0._sceneGo, uv0._elementRoot)
+		arg_13_0._sceneTrans = arg_13_0._sceneGo.transform
+		arg_13_0._backgroundGo = gohelper.findChild(arg_13_0._sceneGo, "root/BackGround")
+		arg_13_0._diffuseGo = gohelper.findChild(arg_13_0._sceneGo, "Obj-Plant/all/diffuse")
+		arg_13_0._elementRoot = UnityEngine.GameObject.New("elementRoot")
 
-		if uv0._smokeUrl then
-			uv0._smokeGo = gohelper.clone(uv0._mapLoader:getAssetItem(uv0._smokeUrl):GetResource(uv0._smokeUrl), uv0._sceneGo)
-			uv0._smokeMaskMat = gohelper.findChild(uv0._smokeGo, "smoke01/1"):GetComponent(typeof(UnityEngine.Renderer)).sharedMaterial
+		gohelper.addChild(arg_13_0._sceneGo, arg_13_0._elementRoot)
 
-			uv0:_updateSmokeMask()
-			transformhelper.setLocalPos(uv0._smokeGo.transform, 0, 0, 0)
+		if arg_13_0._smokeUrl then
+			local var_14_1 = arg_13_0._mapLoader:getAssetItem(arg_13_0._smokeUrl):GetResource(arg_13_0._smokeUrl)
+
+			arg_13_0._smokeGo = gohelper.clone(var_14_1, arg_13_0._sceneGo)
+
+			local var_14_2 = gohelper.findChild(arg_13_0._smokeGo, "smoke01/1"):GetComponent(typeof(UnityEngine.Renderer))
+
+			arg_13_0._smokeMaskMat = var_14_2.sharedMaterial
+
+			arg_13_0:_updateSmokeMask()
+			transformhelper.setLocalPos(arg_13_0._smokeGo.transform, 0, 0, 0)
 		end
 
-		uv0._anim = uv0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+		arg_13_0._anim = arg_13_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-		uv0:_initScene()
-		uv0:_initCanvas()
-		uv0:_onPlayEnterAnim()
+		arg_13_0:_initScene()
+		arg_13_0:_initCanvas()
+		arg_13_0:_onPlayEnterAnim()
 	end)
 end
 
-function slot0._playEnterAnim(slot0)
-	slot0._isPlayAnim = true
+function var_0_0._playEnterAnim(arg_15_0)
+	arg_15_0._isPlayAnim = true
 
-	slot0:_onPlayEnterAnim()
+	arg_15_0:_onPlayEnterAnim()
 end
 
-function slot0._onPlayEnterAnim(slot0)
-	if slot0._anim then
-		slot0._anim.enabled = slot0._isPlayAnim
+function var_0_0._onPlayEnterAnim(arg_16_0)
+	if arg_16_0._anim then
+		arg_16_0._anim.enabled = arg_16_0._isPlayAnim
 
-		if gohelper.findChild(slot0._backgroundGo, "bg_static") then
-			gohelper.setActive(slot1, not slot0._isPlayAnim)
+		local var_16_0 = gohelper.findChild(arg_16_0._backgroundGo, "bg_static")
+
+		if var_16_0 then
+			gohelper.setActive(var_16_0, not arg_16_0._isPlayAnim)
 		end
 
-		if slot0._isPlayAnim and not slot0._infoNeedUpdate then
-			slot0:_initElements()
+		if arg_16_0._isPlayAnim and not arg_16_0._infoNeedUpdate then
+			arg_16_0:_initElements()
 		end
 	end
 end
 
-function slot0._playBgm(slot0, slot1)
-	if not tonumber(slot1) or slot1 <= 0 or slot0._bgmId then
+function var_0_0._playBgm(arg_17_0, arg_17_1)
+	arg_17_1 = tonumber(arg_17_1)
+
+	if not arg_17_1 or arg_17_1 <= 0 or arg_17_0._bgmId then
 		return
 	end
 
-	slot0._bgmId = slot1
+	arg_17_0._bgmId = arg_17_1
 
-	AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.WeekWalk, slot0._bgmId, AudioEnum.WeekWalk.stop_sleepwalkingaudio)
+	AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.WeekWalk, arg_17_0._bgmId, AudioEnum.WeekWalk.stop_sleepwalkingaudio)
 end
 
-function slot0._stopBgm(slot0)
-	if slot0._bgmId then
-		slot0._bgmId = nil
+function var_0_0._stopBgm(arg_18_0)
+	if arg_18_0._bgmId then
+		arg_18_0._bgmId = nil
 
 		AudioBgmManager.instance:stopAndClear(AudioBgmEnum.Layer.WeekWalk)
 	end
 end
 
-function slot0._initCanvas(slot0)
-	slot0._sceneCanvasGo = gohelper.clone(slot0._mapLoader:getAssetItem(slot0._canvasUrl):GetResource(slot0._canvasUrl), slot0._sceneGo)
-	slot0._sceneCanvas = slot0._sceneCanvasGo:GetComponent("Canvas")
-	slot0._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
-	slot0._itemPrefab = slot0._mapLoader:getAssetItem(slot0._interactiveItemUrl):GetResource(slot0._interactiveItemUrl)
+function var_0_0._initCanvas(arg_19_0)
+	local var_19_0 = arg_19_0._mapLoader:getAssetItem(arg_19_0._canvasUrl):GetResource(arg_19_0._canvasUrl)
+
+	arg_19_0._sceneCanvasGo = gohelper.clone(var_19_0, arg_19_0._sceneGo)
+	arg_19_0._sceneCanvas = arg_19_0._sceneCanvasGo:GetComponent("Canvas")
+	arg_19_0._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
+	arg_19_0._itemPrefab = arg_19_0._mapLoader:getAssetItem(arg_19_0._interactiveItemUrl):GetResource(arg_19_0._interactiveItemUrl)
 end
 
-function slot0.getInteractiveItem(slot0)
-	slot0._uiGo = gohelper.clone(slot0._itemPrefab, slot0._sceneCanvasGo)
-	slot0._interactiveItem = MonoHelper.addLuaComOnceToGo(slot0._uiGo, WeekWalkMapInteractiveItem)
+function var_0_0.getInteractiveItem(arg_20_0)
+	arg_20_0._uiGo = gohelper.clone(arg_20_0._itemPrefab, arg_20_0._sceneCanvasGo)
+	arg_20_0._interactiveItem = MonoHelper.addLuaComOnceToGo(arg_20_0._uiGo, WeekWalkMapInteractiveItem)
 
-	gohelper.setActive(slot0._uiGo, false)
+	gohelper.setActive(arg_20_0._uiGo, false)
 
-	return slot0._interactiveItem
+	return arg_20_0._interactiveItem
 end
 
-function slot0._initScene(slot0)
-	slot0._mapSize = gohelper.findChild(slot0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
-	slot3 = nil
-	slot5 = ((GameUtil.getAdapterScale() == 1 or ViewMgr.instance:getUILayer(UILayerName.Hud)) and ViewMgr.instance:getUIRoot()).transform:GetWorldCorners()
-	slot6 = slot5[1]
-	slot7 = slot5[3]
-	slot0._viewWidth = math.abs(slot7.x - slot6.x)
-	slot0._viewHeight = math.abs(slot7.y - slot6.y)
-	slot0._mapMinX = slot6.x - (slot0._mapSize.x - slot0._viewWidth)
-	slot0._mapMaxX = slot6.x
-	slot0._mapMinY = slot6.y
-	slot0._mapMaxY = slot6.y + slot0._mapSize.y - slot0._viewHeight
+function var_0_0._initScene(arg_21_0)
+	arg_21_0._mapSize = gohelper.findChild(arg_21_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
 
-	if slot0._oldScenePos then
-		slot0._sceneTrans.localPosition = slot0._oldScenePos
+	local var_21_0
+
+	if GameUtil.getAdapterScale() ~= 1 then
+		var_21_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	else
+		var_21_0 = ViewMgr.instance:getUIRoot()
 	end
 
-	slot0._oldScenePos = nil
+	local var_21_1 = var_21_0.transform:GetWorldCorners()
+	local var_21_2 = var_21_1[1]
+	local var_21_3 = var_21_1[3]
+
+	arg_21_0._viewWidth = math.abs(var_21_3.x - var_21_2.x)
+	arg_21_0._viewHeight = math.abs(var_21_3.y - var_21_2.y)
+	arg_21_0._mapMinX = var_21_2.x - (arg_21_0._mapSize.x - arg_21_0._viewWidth)
+	arg_21_0._mapMaxX = var_21_2.x
+	arg_21_0._mapMinY = var_21_2.y
+	arg_21_0._mapMaxY = var_21_2.y + (arg_21_0._mapSize.y - arg_21_0._viewHeight)
+
+	if arg_21_0._oldScenePos then
+		arg_21_0._sceneTrans.localPosition = arg_21_0._oldScenePos
+	end
+
+	arg_21_0._oldScenePos = nil
 end
 
-function slot0._setInitPos(slot0, slot1)
-	if not slot0._mapCfg then
+function var_0_0._setInitPos(arg_22_0, arg_22_1)
+	if not arg_22_0._mapCfg then
 		return
 	end
 
-	slot3 = string.splitToNumber(slot0._mapCfg.initPos, "#")
+	local var_22_0 = arg_22_0._mapCfg.initPos
+	local var_22_1 = string.splitToNumber(var_22_0, "#")
 
-	slot0:setScenePosSafety(Vector3(slot3[1], slot3[2], 0), slot1)
+	arg_22_0:setScenePosSafety(Vector3(var_22_1[1], var_22_1[2], 0), arg_22_1)
 end
 
-function slot0.disposeOldMap(slot0)
-	if slot0._sceneTrans then
-		slot0._oldScenePos = slot0._sceneTrans.localPosition
+function var_0_0.disposeOldMap(arg_23_0)
+	if arg_23_0._sceneTrans then
+		arg_23_0._oldScenePos = arg_23_0._sceneTrans.localPosition
 	else
-		slot0._oldScenePos = nil
+		arg_23_0._oldScenePos = nil
 	end
 
-	if slot0._oldMapLoader then
-		slot0._oldMapLoader:dispose()
+	if arg_23_0._oldMapLoader then
+		arg_23_0._oldMapLoader:dispose()
 
-		slot0._oldMapLoader = nil
+		arg_23_0._oldMapLoader = nil
 	end
 
-	if slot0._oldSceneGo then
-		gohelper.destroy(slot0._oldSceneGo)
+	if arg_23_0._oldSceneGo then
+		gohelper.destroy(arg_23_0._oldSceneGo)
 
-		slot0._oldSceneGo = nil
+		arg_23_0._oldSceneGo = nil
 	end
 
-	slot0:_clearElements()
-	slot0:_stopBgm()
+	arg_23_0:_clearElements()
+	arg_23_0:_stopBgm()
 end
 
-function slot0._clearElements(slot0)
-	for slot4, slot5 in pairs(slot0._elementList) do
-		slot5:dispose()
+function var_0_0._clearElements(arg_24_0)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0._elementList) do
+		iter_24_1:dispose()
 	end
 
-	slot0._elementList = slot0:getUserDataTb_()
+	arg_24_0._elementList = arg_24_0:getUserDataTb_()
 end
 
-function slot0._initElements(slot0)
-	slot0:_showElements()
-	slot0:_openBattleElement()
+function var_0_0._initElements(arg_25_0)
+	arg_25_0:_showElements()
+	arg_25_0:_openBattleElement()
 end
 
-function slot0._openBattleElement(slot0)
-	if not WeekWalkModel.instance:getBattleElementId() then
+function var_0_0._openBattleElement(arg_26_0)
+	local var_26_0 = WeekWalkModel.instance:getBattleElementId()
+
+	if not var_26_0 then
 		return
 	end
 
@@ -290,146 +332,176 @@ function slot0._openBattleElement(slot0)
 		return
 	end
 
-	if not slot0._elementList[slot1] then
+	local var_26_1 = arg_26_0._elementList[var_26_0]
+
+	if not var_26_1 then
 		return
 	end
 
-	slot3 = slot2._info
-	slot4 = slot3.elementId
+	local var_26_2 = var_26_1._info
+	local var_26_3 = var_26_2.elementId
 
-	if slot3:getType() == WeekWalkEnum.ElementType.Battle then
+	if var_26_2:getType() == WeekWalkEnum.ElementType.Battle then
 		return
 	end
 
-	slot0:_OnClickElement(slot2)
+	arg_26_0:_OnClickElement(var_26_1)
 end
 
-function slot0._showElements(slot0)
-	if WeekWalkView._canShowFinishAnim(slot0._mapId) then
+function var_0_0._showElements(arg_27_0)
+	if WeekWalkView._canShowFinishAnim(arg_27_0._mapId) then
 		return
 	end
 
-	slot2 = {}
+	local var_27_0 = WeekWalkModel.instance:getOldOrNewElementInfos(arg_27_0._mapId)
+	local var_27_1 = {}
 
-	for slot6, slot7 in ipairs(WeekWalkModel.instance:getOldOrNewElementInfos(slot0._mapId)) do
-		if not string.nilorempty(slot7.config.res) then
-			slot9 = slot2[slot8] or {}
+	for iter_27_0, iter_27_1 in ipairs(var_27_0) do
+		local var_27_2 = iter_27_1.config.res
 
-			if slot7:isAvailable() or slot0._elementList[slot7.elementId] then
-				table.insert(slot9, slot7)
+		if not string.nilorempty(var_27_2) then
+			local var_27_3 = var_27_1[var_27_2] or {}
+
+			if iter_27_1:isAvailable() or arg_27_0._elementList[iter_27_1.elementId] then
+				table.insert(var_27_3, iter_27_1)
 			end
 
-			slot2[slot8] = slot9
+			var_27_1[var_27_2] = var_27_3
 		end
 	end
 
-	slot3 = {}
+	local var_27_4 = {}
 
-	for slot7 = #slot1, 1, -1 do
-		if not slot8:isAvailable() then
-			slot0:_removeElement(slot8, (slot2[slot1[slot7].config.res] and #slot10 or 0) <= 1)
+	for iter_27_2 = #var_27_0, 1, -1 do
+		local var_27_5 = var_27_0[iter_27_2]
+		local var_27_6 = var_27_1[var_27_5.config.res]
+		local var_27_7 = var_27_6 and #var_27_6 or 0
+
+		if not var_27_5:isAvailable() then
+			arg_27_0:_removeElement(var_27_5, var_27_7 <= 1)
 		else
-			table.insert(slot3, slot8)
+			table.insert(var_27_4, var_27_5)
 		end
 	end
 
-	for slot7 = #slot3, 1, -1 do
-		slot0:_addElement(slot8, (slot2[slot3[slot7].config.res] and #slot10 or 0) <= 1)
+	for iter_27_3 = #var_27_4, 1, -1 do
+		local var_27_8 = var_27_4[iter_27_3]
+		local var_27_9 = var_27_1[var_27_8.config.res]
+		local var_27_10 = var_27_9 and #var_27_9 or 0
+
+		arg_27_0:_addElement(var_27_8, var_27_10 <= 1)
 	end
 end
 
-function slot0._addElement(slot0, slot1, slot2)
-	if slot1:getType() == WeekWalkEnum.ElementType.General and slot1.config.generalType == WeekWalkEnum.GeneralType.Audio then
-		AudioMgr.instance:trigger(tonumber(slot1.config.param))
-		WeekwalkRpc.instance:sendWeekwalkGeneralRequest(slot1.elementId)
+function var_0_0._addElement(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_1:getType() == WeekWalkEnum.ElementType.General and arg_28_1.config.generalType == WeekWalkEnum.GeneralType.Audio then
+		local var_28_0 = tonumber(arg_28_1.config.param)
+
+		AudioMgr.instance:trigger(var_28_0)
+		WeekwalkRpc.instance:sendWeekwalkGeneralRequest(arg_28_1.elementId)
 
 		return
 	end
 
-	if slot0._elementList[slot1.elementId] then
-		slot3:updateInfo(slot1)
+	local var_28_1 = arg_28_0._elementList[arg_28_1.elementId]
+
+	if var_28_1 then
+		var_28_1:updateInfo(arg_28_1)
 
 		return
 	end
 
-	slot4 = UnityEngine.GameObject.New(tostring(slot1.elementId))
+	local var_28_2 = UnityEngine.GameObject.New(tostring(arg_28_1.elementId))
 
-	gohelper.addChild(slot0._elementRoot, slot4)
+	gohelper.addChild(arg_28_0._elementRoot, var_28_2)
 
-	slot3 = MonoHelper.addLuaComOnceToGo(slot4, WeekWalkMapElement, {
-		slot1,
-		slot0
+	local var_28_3 = MonoHelper.addLuaComOnceToGo(var_28_2, WeekWalkMapElement, {
+		arg_28_1,
+		arg_28_0
 	})
-	slot0._elementList[slot1.elementId] = slot3
 
-	if string.nilorempty(slot3:getResName()) then
+	arg_28_0._elementList[arg_28_1.elementId] = var_28_3
+
+	local var_28_4 = var_28_3:getResName()
+
+	if string.nilorempty(var_28_4) then
 		return
 	end
 
-	slot7 = nil
+	local var_28_5 = gohelper.findChild(arg_28_0._diffuseGo, var_28_4)
+	local var_28_6
 
-	if not gohelper.findChild(slot0._diffuseGo, slot5) then
-		slot7 = gohelper.findChild(slot0._backgroundGo, slot5)
+	if not var_28_5 then
+		var_28_5 = gohelper.findChild(arg_28_0._backgroundGo, var_28_4)
+		var_28_6 = var_28_5
 	end
 
-	if not slot6 then
-		logError(string.format("元件id: %s no resGo:%s", slot1.elementId, slot5))
+	if not var_28_5 then
+		logError(string.format("元件id: %s no resGo:%s", arg_28_1.elementId, var_28_4))
 
 		return
 	end
 
-	slot7 = slot7 or gohelper.clone(slot6, slot4, slot5)
+	var_28_6 = var_28_6 or gohelper.clone(var_28_5, var_28_2, var_28_4)
 
-	gohelper.setLayer(slot7, UnityLayer.Scene, true)
-	slot3:setItemGo(slot7, slot2)
+	gohelper.setLayer(var_28_6, UnityLayer.Scene, true)
+	var_28_3:setItemGo(var_28_6, arg_28_2)
 
-	if slot1.elementId == 10112 then
+	if arg_28_1.elementId == 10112 then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideShowElement10112)
 	end
 end
 
-function slot0._removeElement(slot0, slot1, slot2)
-	if not slot0._elementList[slot1.elementId] then
+function var_0_0._removeElement(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = arg_29_1.elementId
+	local var_29_1 = arg_29_0._elementList[var_29_0]
+
+	if not var_29_1 then
 		return
 	end
 
-	slot0._elementList[slot3] = nil
+	arg_29_0._elementList[var_29_0] = nil
 
-	slot4:updateInfo(slot1)
-	slot4:disappear(slot2)
+	var_29_1:updateInfo(arg_29_1)
+	var_29_1:disappear(arg_29_2)
 end
 
-function slot0.onOpen(slot0)
-	slot0._mapId = WeekWalkModel.instance:getCurMapId()
-	slot0._smokeMaskList = {}
-	slot0._smokeMaskOffset = Vector4()
+function var_0_0.onOpen(arg_30_0)
+	arg_30_0._mapId = WeekWalkModel.instance:getCurMapId()
+	arg_30_0._smokeMaskList = {}
+	arg_30_0._smokeMaskOffset = Vector4()
 
 	if GamepadController.instance:isOpen() then
-		slot0:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, slot0._onGamepadKeyDown, slot0)
+		arg_30_0:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, arg_30_0._onGamepadKeyDown, arg_30_0)
 	end
 
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeMap, slot0._OnChangeMap, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnClickElement, slot0._OnClickElement, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.GuideClickElement, slot0._OnGuideClickElement, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnDialogReply, slot0._OnDialogReply, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnAddSmokeMask, slot0._onAddSmokeMask, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnRemoveSmokeMask, slot0._onRemoveSmokeMask, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkInfoUpdate, slot0._onWeekwalkInfoUpdate, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkResetLayer, slot0._onWeekwalkResetLayer, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnShowFinishAnimDone, slot0._onShowFinishAnimDone, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnSceneClose, slot0._onSceneClose, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	MainCameraMgr.instance:addView(ViewName.WeekWalkView, slot0._initCamera, nil, slot0)
-	slot0:_showMap()
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeMap, arg_30_0._OnChangeMap, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnClickElement, arg_30_0._OnClickElement, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.GuideClickElement, arg_30_0._OnGuideClickElement, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnDialogReply, arg_30_0._OnDialogReply, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnAddSmokeMask, arg_30_0._onAddSmokeMask, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnRemoveSmokeMask, arg_30_0._onRemoveSmokeMask, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkInfoUpdate, arg_30_0._onWeekwalkInfoUpdate, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkResetLayer, arg_30_0._onWeekwalkResetLayer, arg_30_0)
+	arg_30_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnShowFinishAnimDone, arg_30_0._onShowFinishAnimDone, arg_30_0)
+	arg_30_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_30_0._onSceneClose, arg_30_0)
+	arg_30_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_30_0._onOpenView, arg_30_0)
+	MainCameraMgr.instance:addView(ViewName.WeekWalkView, arg_30_0._initCamera, nil, arg_30_0)
+	arg_30_0:_showMap()
 end
 
-function slot0._onGamepadKeyDown(slot0, slot1)
-	if slot1 == GamepadEnum.KeyCode.A then
-		slot2 = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
+function var_0_0._onGamepadKeyDown(arg_31_0, arg_31_1)
+	if arg_31_1 == GamepadEnum.KeyCode.A then
+		local var_31_0 = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
+		local var_31_1 = UnityEngine.Physics2D.RaycastAll(var_31_0.origin, var_31_0.direction)
+		local var_31_2 = var_31_1.Length - 1
 
-		for slot8 = 0, UnityEngine.Physics2D.RaycastAll(slot2.origin, slot2.direction).Length - 1 do
-			if MonoHelper.getLuaComFromGo(slot3[slot8].transform.parent.gameObject, WeekWalkMapElement) then
-				slot10:onDown()
+		for iter_31_0 = 0, var_31_2 do
+			local var_31_3 = var_31_1[iter_31_0]
+			local var_31_4 = MonoHelper.getLuaComFromGo(var_31_3.transform.parent.gameObject, WeekWalkMapElement)
+
+			if var_31_4 then
+				var_31_4:onDown()
 
 				return
 			end
@@ -437,99 +509,116 @@ function slot0._onGamepadKeyDown(slot0, slot1)
 	end
 end
 
-function slot0._onSceneClose(slot0)
-	slot0:_stopBgm()
+function var_0_0._onSceneClose(arg_32_0)
+	arg_32_0:_stopBgm()
 end
 
-function slot0._onOpenView(slot0, slot1)
-	slot0._elementMouseDown = nil
+function var_0_0._onOpenView(arg_33_0, arg_33_1)
+	arg_33_0._elementMouseDown = nil
 end
 
-function slot0._onShowFinishAnimDone(slot0)
-	slot0:_showElements()
+function var_0_0._onShowFinishAnimDone(arg_34_0)
+	arg_34_0:_showElements()
 end
 
-function slot0._onWeekwalkResetLayer(slot0)
-	slot0:_clearElements()
-	slot0:_showElements()
-	slot0._sceneGo:GetComponent(typeof(UnityEngine.Animator)):Play("m_s09_rgmy_in", 0, 0)
+function var_0_0._onWeekwalkResetLayer(arg_35_0)
+	arg_35_0:_clearElements()
+	arg_35_0:_showElements()
+	arg_35_0._sceneGo:GetComponent(typeof(UnityEngine.Animator)):Play("m_s09_rgmy_in", 0, 0)
 end
 
-function slot0._onWeekwalkInfoUpdate(slot0)
-	slot0:_showElements()
+function var_0_0._onWeekwalkInfoUpdate(arg_36_0)
+	arg_36_0:_showElements()
 end
 
-function slot0._onAddSmokeMask(slot0, slot1, slot2)
-	slot3 = string.split(slot2, "#")
-	slot0._smokeMaskList[slot1] = {
-		tonumber(slot3[1]),
-		tonumber(slot3[2])
+function var_0_0._onAddSmokeMask(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = string.split(arg_37_2, "#")
+	local var_37_1 = tonumber(var_37_0[1])
+	local var_37_2 = tonumber(var_37_0[2])
+
+	arg_37_0._smokeMaskList[arg_37_1] = {
+		var_37_1,
+		var_37_2
 	}
 
-	slot0:_updateSmokeMask()
+	arg_37_0:_updateSmokeMask()
 end
 
-function slot0._onRemoveSmokeMask(slot0, slot1)
-	slot0._smokeMaskList[slot1] = nil
+function var_0_0._onRemoveSmokeMask(arg_38_0, arg_38_1)
+	arg_38_0._smokeMaskList[arg_38_1] = nil
 
-	slot0:_updateSmokeMask()
+	arg_38_0:_updateSmokeMask()
 end
 
-function slot0._updateSmokeMask(slot0)
-	if not slot0._smokeMaskMat then
+function var_0_0._updateSmokeMask(arg_39_0)
+	if not arg_39_0._smokeMaskMat then
 		return
 	end
 
-	slot1 = 0
+	local var_39_0 = 0
 
-	for slot5, slot6 in pairs(slot0._smokeMaskList) do
-		slot0._smokeMaskOffset.x = slot6[1]
-		slot0._smokeMaskOffset.y = slot6[2]
+	for iter_39_0, iter_39_1 in pairs(arg_39_0._smokeMaskList) do
+		var_39_0 = var_39_0 + 1
+		arg_39_0._smokeMaskOffset.x = iter_39_1[1]
+		arg_39_0._smokeMaskOffset.y = iter_39_1[2]
 
-		slot0._smokeMaskMat:SetVector("_TransPos_" .. slot1 + 1, slot0._smokeMaskOffset)
+		arg_39_0._smokeMaskMat:SetVector("_TransPos_" .. var_39_0, arg_39_0._smokeMaskOffset)
 	end
 
-	for slot5 = slot1 + 1, 5 do
-		slot0._smokeMaskOffset.x = 1000
-		slot0._smokeMaskOffset.y = 1000
+	for iter_39_2 = var_39_0 + 1, 5 do
+		arg_39_0._smokeMaskOffset.x = 1000
+		arg_39_0._smokeMaskOffset.y = 1000
 
-		slot0._smokeMaskMat:SetVector("_TransPos_" .. slot5, slot0._smokeMaskOffset)
+		arg_39_0._smokeMaskMat:SetVector("_TransPos_" .. iter_39_2, arg_39_0._smokeMaskOffset)
 	end
 end
 
-function slot0._OnDialogReply(slot0, slot1)
-	if not slot0._elementList[slot1] then
+function var_0_0._OnDialogReply(arg_40_0, arg_40_1)
+	local var_40_0 = arg_40_0._elementList[arg_40_1]
+
+	if not var_40_0 then
 		return
 	end
 
-	slot0:_OnClickElement(slot2)
+	arg_40_0:_OnClickElement(var_40_0)
 end
 
-function slot0._OnGuideClickElement(slot0, slot1)
-	if not tonumber(slot1) then
+function var_0_0._OnGuideClickElement(arg_41_0, arg_41_1)
+	local var_41_0 = tonumber(arg_41_1)
+
+	if not var_41_0 then
 		return
 	end
 
-	if not slot0._elementList[slot2] then
+	local var_41_1 = arg_41_0._elementList[var_41_0]
+
+	if not var_41_1 then
 		return
 	end
 
-	slot0:_OnClickElement(slot3)
+	arg_41_0:_OnClickElement(var_41_1)
 end
 
-function slot0._OnClickElement(slot0, slot1)
-	slot3, slot4 = transformhelper.getLocalPos(slot1._go.transform)
-	slot3 = slot0._mapMaxX - (slot3 + (string.splitToNumber(slot1._config.offsetPos, "#")[1] or 0)) + slot0._viewWidth / 2
-	slot4 = slot0._mapMinY - (slot4 + (slot6[2] or 0)) - slot0._viewHeight / 2 + 2
+function var_0_0._OnClickElement(arg_42_0, arg_42_1)
+	local var_42_0 = arg_42_1._go
+	local var_42_1, var_42_2 = transformhelper.getLocalPos(var_42_0.transform)
+	local var_42_3 = arg_42_1._config
+	local var_42_4 = string.splitToNumber(var_42_3.offsetPos, "#")
+	local var_42_5 = var_42_1 + (var_42_4[1] or 0)
+	local var_42_6 = var_42_2 + (var_42_4[2] or 0)
+	local var_42_7 = arg_42_0._mapMaxX - var_42_5 + arg_42_0._viewWidth / 2
+	local var_42_8 = arg_42_0._mapMinY - var_42_6 - arg_42_0._viewHeight / 2 + 2
 
-	slot0:_clickElement(slot1)
+	arg_42_0:_clickElement(arg_42_1)
 end
 
-function slot0._clickElement(slot0, slot1)
-	if WeekWalkModel.instance:getCurMapInfo() and slot2.isFinish > 0 then
-		slot3, slot4 = slot2:getCurStarInfo()
+function var_0_0._clickElement(arg_43_0, arg_43_1)
+	local var_43_0 = WeekWalkModel.instance:getCurMapInfo()
 
-		if slot3 ~= slot4 then
+	if var_43_0 and var_43_0.isFinish > 0 then
+		local var_43_1, var_43_2 = var_43_0:getCurStarInfo()
+
+		if var_43_1 ~= var_43_2 then
 			AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_completelement)
 			WeekWalkController.instance:openWeekWalkResetView()
 		end
@@ -537,48 +626,49 @@ function slot0._clickElement(slot0, slot1)
 		return
 	end
 
-	slot3 = slot1._info
-	slot4 = slot3.elementId
+	local var_43_3 = arg_43_1._info
+	local var_43_4 = var_43_3.elementId
+	local var_43_5 = var_43_3:getType()
 
-	if slot3:getType() == WeekWalkEnum.ElementType.Battle then
+	if var_43_5 == WeekWalkEnum.ElementType.Battle then
 		if WeekWalkModel.instance:getCurMapIsFinish() then
 			AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_completelement)
 		else
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
 		end
 
-		WeekWalkDialogView.startBattle(slot4)
-	elseif slot5 == WeekWalkEnum.ElementType.Respawn then
-		-- Nothing
-	elseif slot5 == WeekWalkEnum.ElementType.Dialog then
+		WeekWalkDialogView.startBattle(var_43_4)
+	elseif var_43_5 == WeekWalkEnum.ElementType.Respawn then
+		-- block empty
+	elseif var_43_5 == WeekWalkEnum.ElementType.Dialog then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
-		WeekWalkController.instance:openWeekWalkDialogView(slot1)
+		WeekWalkController.instance:openWeekWalkDialogView(arg_43_1)
 	end
 end
 
-function slot0._OnChangeMap(slot0, slot1)
-	if slot1 == slot0._mapCfg then
-		slot0:_setInitPos(true)
+function var_0_0._OnChangeMap(arg_44_0, arg_44_1)
+	if arg_44_1 == arg_44_0._mapCfg then
+		arg_44_0:_setInitPos(true)
 
 		return
 	end
 
-	slot0:_changeMap(slot1)
+	arg_44_0:_changeMap(arg_44_1)
 end
 
-function slot0.onClose(slot0)
-	slot0:_stopBgm()
+function var_0_0.onClose(arg_45_0)
+	arg_45_0:_stopBgm()
 end
 
-function slot0.onDestroyView(slot0)
-	gohelper.destroy(slot0._sceneRoot)
-	slot0:disposeOldMap()
+function var_0_0.onDestroyView(arg_46_0)
+	gohelper.destroy(arg_46_0._sceneRoot)
+	arg_46_0:disposeOldMap()
 
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if arg_46_0._mapLoader then
+		arg_46_0._mapLoader:dispose()
 	end
 
-	slot0._click:RemoveClickUpListener()
+	arg_46_0._click:RemoveClickUpListener()
 end
 
-return slot0
+return var_0_0

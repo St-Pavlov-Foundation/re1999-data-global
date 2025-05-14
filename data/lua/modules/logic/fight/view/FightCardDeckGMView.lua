@@ -1,134 +1,152 @@
-module("modules.logic.fight.view.FightCardDeckGMView", package.seeall)
+﻿module("modules.logic.fight.view.FightCardDeckGMView", package.seeall)
 
-slot0 = class("FightCardDeckGMView", BaseViewExtended)
+local var_0_0 = class("FightCardDeckGMView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._click = gohelper.getClick(slot0.viewGO)
-	slot0._btnCardBox = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "topTab/#btn_cardbox")
-	slot0._cardBoxSelect = gohelper.findChild(slot0.viewGO, "topTab/#btn_cardbox/select")
-	slot0._cardBoxUnselect = gohelper.findChild(slot0.viewGO, "topTab/#btn_cardbox/unselect")
-	slot0._btnCardPre = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "topTab/#btn_cardpre")
-	slot0._cardPreSelect = gohelper.findChild(slot0.viewGO, "topTab/#btn_cardpre/select")
-	slot0._cardPreUnselect = gohelper.findChild(slot0.viewGO, "topTab/#btn_cardpre/unselect")
-	slot0._cardRoot = gohelper.findChild(slot0.viewGO, "layout/#scroll_card/Viewport/Content")
-	slot0._cardItem = gohelper.findChild(slot0.viewGO, "layout/#scroll_card/Viewport/Content/#go_carditem")
-	slot0._nameText = gohelper.findChildText(slot0.viewGO, "layout/#scroll_card/#txt_skillname")
-	slot0._skillText = gohelper.findChildText(slot0.viewGO, "layout/#scroll_card/#scroll_skill/viewport/content/#txt_skilldec")
-	slot0._cardMask = gohelper.findChild(slot0.viewGO, "layout/#scroll_card/Viewport").transform
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._click = gohelper.getClick(arg_1_0.viewGO)
+	arg_1_0._btnCardBox = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "topTab/#btn_cardbox")
+	arg_1_0._cardBoxSelect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardbox/select")
+	arg_1_0._cardBoxUnselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardbox/unselect")
+	arg_1_0._btnCardPre = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "topTab/#btn_cardpre")
+	arg_1_0._cardPreSelect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardpre/select")
+	arg_1_0._cardPreUnselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardpre/unselect")
+	arg_1_0._cardRoot = gohelper.findChild(arg_1_0.viewGO, "layout/#scroll_card/Viewport/Content")
+	arg_1_0._cardItem = gohelper.findChild(arg_1_0.viewGO, "layout/#scroll_card/Viewport/Content/#go_carditem")
+	arg_1_0._nameText = gohelper.findChildText(arg_1_0.viewGO, "layout/#scroll_card/#txt_skillname")
+	arg_1_0._skillText = gohelper.findChildText(arg_1_0.viewGO, "layout/#scroll_card/#scroll_skill/viewport/content/#txt_skilldec")
+	arg_1_0._cardMask = gohelper.findChild(arg_1_0.viewGO, "layout/#scroll_card/Viewport").transform
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._click, slot0._onViewClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._click, arg_2_0._onViewClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._nameText.text = ""
-	slot0._skillText.text = ""
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._nameText.text = ""
+	arg_4_0._skillText.text = ""
 end
 
-function slot0._onViewClick(slot0)
-	slot0:closeThis()
+function var_0_0._onViewClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0._proto = slot0.viewParam
-	slot0._cardItemDic = {}
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._proto = arg_6_0.viewParam
+	arg_6_0._cardItemDic = {}
 
-	slot0:_refreshBtn()
-	slot0:_refreshBtnState()
-	slot0:com_loadAsset("ui/viewres/fight/fightcarditem.prefab", slot0._onCardLoadFinish)
+	arg_6_0:_refreshBtn()
+	arg_6_0:_refreshBtnState()
+
+	local var_6_0 = "ui/viewres/fight/fightcarditem.prefab"
+
+	arg_6_0:com_loadAsset(var_6_0, arg_6_0._onCardLoadFinish)
 end
 
-function slot0._startRefreshUI(slot0)
-	slot0:_refreshUI()
+function var_0_0._startRefreshUI(arg_7_0)
+	arg_7_0:_refreshUI()
 end
 
-function slot0._onCardLoadFinish(slot0, slot1)
-	gohelper.clone(slot1:GetResource(), gohelper.findChild(slot0._cardItem, "card"), "card")
-	gohelper.setActive(gohelper.findChild(slot0._cardItem, "select"), false)
-	slot0:_startRefreshUI()
+function var_0_0._onCardLoadFinish(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1:GetResource()
+
+	gohelper.clone(var_8_0, gohelper.findChild(arg_8_0._cardItem, "card"), "card")
+	gohelper.setActive(gohelper.findChild(arg_8_0._cardItem, "select"), false)
+	arg_8_0:_startRefreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot0._cardDataList = {}
+function var_0_0._refreshUI(arg_9_0)
+	arg_9_0._cardDataList = {}
 
-	for slot4, slot5 in ipairs(slot0._proto.deckInfos) do
-		table.insert(slot0._cardDataList, {
-			entityId = slot5.uid,
-			skillId = slot5.skillId,
-			num = slot5.num
-		})
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._proto.deckInfos) do
+		local var_9_0 = {
+			entityId = iter_9_1.uid,
+			skillId = iter_9_1.skillId,
+			num = iter_9_1.num
+		}
+
+		table.insert(arg_9_0._cardDataList, var_9_0)
 	end
 
-	slot0:com_createObjList(slot0._onCardItemShow, slot0._cardDataList, slot0._cardRoot, slot0._cardItem)
+	arg_9_0:com_createObjList(arg_9_0._onCardItemShow, arg_9_0._cardDataList, arg_9_0._cardRoot, arg_9_0._cardItem)
 
-	if #slot0._cardDataList == 0 then
-		slot0._nameText.text = ""
-		slot0._skillText.text = ""
+	if #arg_9_0._cardDataList == 0 then
+		arg_9_0._nameText.text = ""
+		arg_9_0._skillText.text = ""
 	end
 
-	if #slot0._cardDataList > 6 then
-		recthelper.setHeight(slot0._cardMask, 480)
+	if #arg_9_0._cardDataList > 6 then
+		recthelper.setHeight(arg_9_0._cardMask, 480)
 	else
-		recthelper.setHeight(slot0._cardMask, 320)
+		recthelper.setHeight(arg_9_0._cardMask, 320)
 	end
 end
 
-function slot0._onCardItemShow(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1, false)
-	gohelper.setActive(slot1, true)
+function var_0_0._onCardItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	gohelper.setActive(arg_10_1, false)
+	gohelper.setActive(arg_10_1, true)
 
-	if not slot0._cardItemDic[slot1:GetInstanceID()] then
-		slot0._cardItemDic[slot4] = slot0:openSubView(FightCardDeckViewItem, slot1)
+	local var_10_0 = arg_10_1:GetInstanceID()
+	local var_10_1 = arg_10_0._cardItemDic[var_10_0]
 
-		slot0:addClickCb(gohelper.getClickWithDefaultAudio(gohelper.findChild(slot1, "card")), slot0._onCardItemClick, slot0, slot4)
+	if not var_10_1 then
+		var_10_1 = arg_10_0:openSubView(FightCardDeckViewItem, arg_10_1)
+		arg_10_0._cardItemDic[var_10_0] = var_10_1
+
+		arg_10_0:addClickCb(gohelper.getClickWithDefaultAudio(gohelper.findChild(arg_10_1, "card")), arg_10_0._onCardItemClick, arg_10_0, var_10_0)
 	end
 
-	slot5:refreshItem(slot2)
+	var_10_1:refreshItem(arg_10_2)
 
-	if slot3 == 1 then
-		slot0:_onCardItemClick(slot4)
+	if arg_10_3 == 1 then
+		arg_10_0:_onCardItemClick(var_10_0)
 	end
 end
 
-function slot0._onCardItemClick(slot0, slot1)
-	slot2 = slot0._cardItemDic[slot1]
+function var_0_0._onCardItemClick(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0._cardItemDic[arg_11_1]
 
-	if slot0._curSelectItem then
-		slot0._curSelectItem:setSelect(false)
+	if arg_11_0._curSelectItem then
+		arg_11_0._curSelectItem:setSelect(false)
 	end
 
-	slot0._curSelectItem = slot2
+	arg_11_0._curSelectItem = var_11_0
 
-	slot0._curSelectItem:setSelect(true)
+	arg_11_0._curSelectItem:setSelect(true)
 
-	slot3 = slot2._data
-	slot6 = lua_skill.configDict[slot3.skillId]
-	slot0._nameText.text = slot6.name
-	slot0._skillText.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getEntitySkillDesc(slot3.entityId, slot6), "#c56131", "#7c93ad")
+	local var_11_1 = var_11_0._data
+	local var_11_2 = var_11_1.skillId
+	local var_11_3 = var_11_1.entityId
+	local var_11_4 = lua_skill.configDict[var_11_2]
+
+	arg_11_0._nameText.text = var_11_4.name
+	arg_11_0._skillText.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getEntitySkillDesc(var_11_3, var_11_4), "#c56131", "#7c93ad")
 end
 
-function slot0._refreshBtnState(slot0)
-	gohelper.setActive(slot0._cardBoxSelect, true)
-	gohelper.setActive(slot0._cardBoxUnselect, false)
-	gohelper.setActive(slot0._cardPreSelect, false)
-	gohelper.setActive(slot0._cardPreUnselect, false)
+function var_0_0._refreshBtnState(arg_12_0)
+	gohelper.setActive(arg_12_0._cardBoxSelect, true)
+	gohelper.setActive(arg_12_0._cardBoxUnselect, false)
+	gohelper.setActive(arg_12_0._cardPreSelect, false)
+	gohelper.setActive(arg_12_0._cardPreUnselect, false)
 end
 
-function slot0._refreshBtn(slot0)
+function var_0_0._refreshBtn(arg_13_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

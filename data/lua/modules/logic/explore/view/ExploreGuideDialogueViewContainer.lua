@@ -1,11 +1,11 @@
-module("modules.logic.explore.view.ExploreGuideDialogueViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreGuideDialogueViewContainer", package.seeall)
 
-slot0 = class("ExploreGuideDialogueViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreGuideDialogueViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreGuideDialogueView.New()
 	}
 end
 
-return slot0
+return var_0_0

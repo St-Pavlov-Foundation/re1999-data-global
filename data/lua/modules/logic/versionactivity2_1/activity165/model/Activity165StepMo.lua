@@ -1,97 +1,108 @@
-module("modules.logic.versionactivity2_1.activity165.model.Activity165StepMo", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.model.Activity165StepMo", package.seeall)
 
-slot0 = class("Activity165StepMo")
+local var_0_0 = class("Activity165StepMo")
 
-function slot0.ctor(slot0)
-	slot0._actId = nil
-	slot0.stepId = nil
-	slot0.stepCo = nil
-	slot0.isEndingStep = nil
-	slot0.isFirstStep = nil
-	slot0.nextSteps = nil
-	slot0.lastSteps = nil
-	slot0.roundSteps = nil
-	slot0.isUnlock = nil
-	slot0.isFixStep = nil
-	slot0.canUseKeywordMos = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._actId = nil
+	arg_1_0.stepId = nil
+	arg_1_0.stepCo = nil
+	arg_1_0.isEndingStep = nil
+	arg_1_0.isFirstStep = nil
+	arg_1_0.nextSteps = nil
+	arg_1_0.lastSteps = nil
+	arg_1_0.roundSteps = nil
+	arg_1_0.isUnlock = nil
+	arg_1_0.isFixStep = nil
+	arg_1_0.canUseKeywordMos = nil
 end
 
-function slot0.onInit(slot0, slot1, slot2, slot3)
-	slot0._actId = slot1
-	slot0.stepId = slot2
-	slot0.stepCo = Activity165Config.instance:getStepCo(slot1, slot2)
-	slot0.nextSteps = {}
+function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._actId = arg_2_1
+	arg_2_0.stepId = arg_2_2
+	arg_2_0.stepCo = Activity165Config.instance:getStepCo(arg_2_1, arg_2_2)
+	arg_2_0.nextSteps = {}
 
-	if not string.nilorempty(slot0.stepCo.answersKeywordIds) then
-		slot0.isEndingStep = slot0.stepCo.answersKeywordIds == "-1"
+	if not string.nilorempty(arg_2_0.stepCo.answersKeywordIds) then
+		arg_2_0.isEndingStep = arg_2_0.stepCo.answersKeywordIds == "-1"
 
-		if not slot0.isEndingStep then
-			for slot8, slot9 in pairs(GameUtil.splitString2(slot0.stepCo.answersKeywordIds, "#", "|")) do
-				if LuaUtil.tableNotEmpty(slot9) then
-					slot12 = (slot0.nextSteps[slot9[1]] or {
-						nextId = slot10
-					}).needKws or {}
-					slot13 = {}
+		if not arg_2_0.isEndingStep then
+			local var_2_0 = GameUtil.splitString2(arg_2_0.stepCo.answersKeywordIds, "#", "|")
 
-					for slot17 = 2, #slot9 do
-						table.insert(slot13, slot9[slot17])
+			for iter_2_0, iter_2_1 in pairs(var_2_0) do
+				if LuaUtil.tableNotEmpty(iter_2_1) then
+					local var_2_1 = iter_2_1[1]
+					local var_2_2 = arg_2_0.nextSteps[var_2_1] or {
+						nextId = var_2_1
+					}
+					local var_2_3 = var_2_2.needKws or {}
+					local var_2_4 = {}
+
+					for iter_2_2 = 2, #iter_2_1 do
+						table.insert(var_2_4, iter_2_1[iter_2_2])
 					end
 
-					table.insert(slot12, slot13)
+					table.insert(var_2_3, var_2_4)
 
-					slot11.needKws = slot12
-					slot0.nextSteps[slot10] = slot11
+					var_2_2.needKws = var_2_3
+					arg_2_0.nextSteps[var_2_1] = var_2_2
 				end
 			end
 		end
 	end
 
-	slot0.lastSteps = {}
-	slot0.roundSteps = {}
+	arg_2_0.lastSteps = {}
+	arg_2_0.roundSteps = {}
 
-	if not string.nilorempty(slot0.stepCo.nextStepConditionIds) then
-		for slot8, slot9 in pairs(GameUtil.splitString2(slot0.stepCo.nextStepConditionIds, "#", "|")) do
-			if LuaUtil.tableNotEmpty(slot9) then
-				slot10 = {}
+	if not string.nilorempty(arg_2_0.stepCo.nextStepConditionIds) then
+		local var_2_5 = GameUtil.splitString2(arg_2_0.stepCo.nextStepConditionIds, "#", "|")
 
-				for slot14 = 2, #slot9 do
-					table.insert(slot10, slot9[slot14])
+		for iter_2_3, iter_2_4 in pairs(var_2_5) do
+			if LuaUtil.tableNotEmpty(iter_2_4) then
+				local var_2_6 = {}
+
+				for iter_2_5 = 2, #iter_2_4 do
+					table.insert(var_2_6, iter_2_4[iter_2_5])
 				end
 
-				if LuaUtil.tableNotEmpty(slot10) then
-					table.insert(slot0.lastSteps, slot10)
+				if LuaUtil.tableNotEmpty(var_2_6) then
+					table.insert(arg_2_0.lastSteps, var_2_6)
 				end
 
-				slot11 = tabletool.copy(slot10)
+				local var_2_7 = tabletool.copy(var_2_6)
 
-				table.insert(slot11, slot0.stepId)
-				table.insert(slot11, slot9[1])
-				table.insert(slot0.roundSteps, slot11)
+				table.insert(var_2_7, arg_2_0.stepId)
+				table.insert(var_2_7, iter_2_4[1])
+				table.insert(arg_2_0.roundSteps, var_2_7)
 			end
 		end
 	end
 
-	slot0.isUnlock = false
-	slot0.canUseKeywordMos = {}
+	arg_2_0.isUnlock = false
+	arg_2_0.canUseKeywordMos = {}
 
-	if not string.nilorempty(slot0.stepCo.optionalKeywordIds) then
-		for slot8, slot9 in pairs(string.splitToNumber(slot0.stepCo.optionalKeywordIds, "#")) do
-			table.insert(slot0.canUseKeywordMos, slot3:getKeywordMo(slot9))
+	if not string.nilorempty(arg_2_0.stepCo.optionalKeywordIds) then
+		local var_2_8 = string.splitToNumber(arg_2_0.stepCo.optionalKeywordIds, "#")
+
+		for iter_2_6, iter_2_7 in pairs(var_2_8) do
+			local var_2_9 = arg_2_3:getKeywordMo(iter_2_7)
+
+			table.insert(arg_2_0.canUseKeywordMos, var_2_9)
 		end
 	end
 end
 
-function slot0.setCanUseKeywords(slot0)
+function var_0_0.setCanUseKeywords(arg_3_0)
+	return
 end
 
-function slot0.isSameTableValue(slot0, slot1, slot2)
-	if LuaUtil.tableNotEmpty(slot1) and LuaUtil.tableNotEmpty(slot2) then
-		if tabletool.len(slot1) ~= tabletool.len(slot2) then
+function var_0_0.isSameTableValue(arg_4_0, arg_4_1, arg_4_2)
+	if LuaUtil.tableNotEmpty(arg_4_1) and LuaUtil.tableNotEmpty(arg_4_2) then
+		if tabletool.len(arg_4_1) ~= tabletool.len(arg_4_2) then
 			return false
 		end
 
-		for slot6, slot7 in pairs(slot1) do
-			if not LuaUtil.tableContains(slot2, slot7) then
+		for iter_4_0, iter_4_1 in pairs(arg_4_1) do
+			if not LuaUtil.tableContains(arg_4_2, iter_4_1) then
 				return false
 			end
 		end
@@ -100,49 +111,51 @@ function slot0.isSameTableValue(slot0, slot1, slot2)
 	end
 end
 
-function slot0.onReset(slot0)
-	slot0.isUnlock = nil
-	slot0.isFixStep = nil
+function var_0_0.onReset(arg_5_0)
+	arg_5_0.isUnlock = nil
+	arg_5_0.isFixStep = nil
 end
 
-function slot0.getNextStep(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.nextSteps) do
-		for slot10, slot11 in pairs(slot6.needKws) do
-			if slot0:isSameTableValue(slot11, slot1) then
-				return slot6.nextId
+function var_0_0.getNextStep(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.nextSteps) do
+		for iter_6_2, iter_6_3 in pairs(iter_6_1.needKws) do
+			if arg_6_0:isSameTableValue(iter_6_3, arg_6_1) then
+				return iter_6_1.nextId
 			end
 		end
 	end
 end
 
-function slot0.getNextStepKeyword(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.nextSteps) do
-		if slot6.nextId == slot1 then
-			slot7, slot8 = next(slot6.needKws)
+function var_0_0.getNextStepKeyword(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.nextSteps) do
+		if iter_7_1.nextId == arg_7_1 then
+			local var_7_0, var_7_1 = next(iter_7_1.needKws)
 
-			return slot8
+			return var_7_1
 		end
 	end
 end
 
-function slot0.setUnlock(slot0, slot1)
-	slot0.isUnlock = slot1
+function var_0_0.setUnlock(arg_8_0, arg_8_1)
+	arg_8_0.isUnlock = arg_8_1
 end
 
-function slot0.getCanEndingRound(slot0, slot1)
-	slot2 = {}
+function var_0_0.getCanEndingRound(arg_9_0, arg_9_1)
+	local var_9_0 = {}
 
-	for slot6, slot7 in pairs(slot0.roundSteps) do
-		if LuaUtil.tableContains(slot1, slot7[#slot7]) then
-			table.insert(slot2, slot7)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0.roundSteps) do
+		local var_9_1 = iter_9_1[#iter_9_1]
+
+		if LuaUtil.tableContains(arg_9_1, var_9_1) then
+			table.insert(var_9_0, iter_9_1)
 		end
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.getCanUseKeywords(slot0)
-	return slot0.canUseKeywordMos
+function var_0_0.getCanUseKeywords(arg_10_0)
+	return arg_10_0.canUseKeywordMos
 end
 
-return slot0
+return var_0_0

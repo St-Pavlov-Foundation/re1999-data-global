@@ -1,187 +1,229 @@
-module("modules.logic.versionactivity2_5.act186.model.Activity186Model", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.model.Activity186Model", package.seeall)
 
-slot0 = class("Activity186Model", BaseModel)
+local var_0_0 = class("Activity186Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.localPrefsDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.localPrefsDict = {}
 end
 
-function slot0.getActId(slot0)
-	return ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act186) and slot1[1]
+function var_0_0.getActId(arg_3_0)
+	local var_3_0 = ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act186)
+
+	return var_3_0 and var_3_0[1]
 end
 
-function slot0.isActivityOnline(slot0)
-	if not slot0:getActId() then
+function var_0_0.isActivityOnline(arg_4_0)
+	local var_4_0 = arg_4_0:getActId()
+
+	if not var_4_0 then
 		return false
 	end
 
-	return ActivityModel.instance:isActOnLine(slot1)
+	return ActivityModel.instance:isActOnLine(var_4_0)
 end
 
-function slot0.setActInfo(slot0, slot1)
-	slot0:getActMo(slot1.activityId):updateInfo(slot1)
+function var_0_0.setActInfo(arg_5_0, arg_5_1)
+	arg_5_0:getActMo(arg_5_1.activityId):updateInfo(arg_5_1)
 end
 
-function slot0.getActMo(slot0, slot1)
-	if not slot0:getById(slot1) then
-		slot2 = Activity186MO.New()
+function var_0_0.getActMo(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getById(arg_6_1)
 
-		slot2:init(slot1)
-		slot0:addAtLast(slot2)
+	if not var_6_0 then
+		var_6_0 = Activity186MO.New()
+
+		var_6_0:init(arg_6_1)
+		arg_6_0:addAtLast(var_6_0)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.onFinishAct186Task(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:finishTask(slot1.taskId)
-	end
-end
+function var_0_0.onFinishAct186Task(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getById(arg_7_1.activityId)
 
-function slot0.onGetAct186MilestoneReward(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:acceptRewards(slot1.getMilestoneProgress)
+	if var_7_0 then
+		var_7_0:finishTask(arg_7_1.taskId)
 	end
 end
 
-function slot0.onGetAct186DailyCollection(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:onGetDailyCollection()
+function var_0_0.onGetAct186MilestoneReward(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getById(arg_8_1.activityId)
+
+	if var_8_0 then
+		var_8_0:acceptRewards(arg_8_1.getMilestoneProgress)
 	end
 end
 
-function slot0.onAct186TaskPush(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:pushTask(slot1.act186Tasks, slot1.deleteTasks)
+function var_0_0.onGetAct186DailyCollection(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getById(arg_9_1.activityId)
+
+	if var_9_0 then
+		var_9_0:onGetDailyCollection()
 	end
 end
 
-function slot0.onAct186LikePush(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:pushLike(slot1.likeInfos)
+function var_0_0.onAct186TaskPush(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getById(arg_10_1.activityId)
+
+	if var_10_0 then
+		var_10_0:pushTask(arg_10_1.act186Tasks, arg_10_1.deleteTasks)
 	end
 end
 
-function slot0.onFinishAct186Game(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:finishGame(slot1)
+function var_0_0.onAct186LikePush(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getById(arg_11_1.activityId)
+
+	if var_11_0 then
+		var_11_0:pushLike(arg_11_1.likeInfos)
 	end
 end
 
-function slot0.onBTypeGamePlay(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:playBTypeGame(slot1)
+function var_0_0.onFinishAct186Game(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getById(arg_12_1.activityId)
+
+	if var_12_0 then
+		var_12_0:finishGame(arg_12_1)
 	end
 end
 
-function slot0.onGetAct186SpBonusInfo(slot0, slot1)
-	slot0:getActMo(slot1.act186ActivityId):setSpBonusStage(slot1.spBonusStage)
-end
+function var_0_0.onBTypeGamePlay(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getById(arg_13_1.activityId)
 
-function slot0.onAcceptAct186SpBonus(slot0, slot1)
-	slot0:getActMo(slot1.act186ActivityId):setSpBonusStage(2)
-end
-
-function slot0.onGetOnceBonusReply(slot0, slot1)
-	if slot0:getById(slot1.activityId) then
-		slot2:onGetOnceBonus(slot1)
+	if var_13_0 then
+		var_13_0:playBTypeGame(arg_13_1)
 	end
 end
 
-function slot0.getLocalPrefsTab(slot0, slot1, slot2)
-	if not slot0.localPrefsDict[slot0:prefabKeyPrefs(slot1, slot2)] then
-		slot4 = {}
+function var_0_0.onGetAct186SpBonusInfo(arg_14_0, arg_14_1)
+	arg_14_0:getActMo(arg_14_1.act186ActivityId):setSpBonusStage(arg_14_1.spBonusStage)
+end
 
-		if GameUtil.splitString2(Activity186Controller.instance:getPlayerPrefs(slot3), true) then
-			for slot10, slot11 in ipairs(slot6) do
-				slot4[slot11[1]] = slot11[2]
+function var_0_0.onAcceptAct186SpBonus(arg_15_0, arg_15_1)
+	arg_15_0:getActMo(arg_15_1.act186ActivityId):setSpBonusStage(2)
+end
+
+function var_0_0.onGetOnceBonusReply(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getById(arg_16_1.activityId)
+
+	if var_16_0 then
+		var_16_0:onGetOnceBonus(arg_16_1)
+	end
+end
+
+function var_0_0.getLocalPrefsTab(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0:prefabKeyPrefs(arg_17_1, arg_17_2)
+
+	if not arg_17_0.localPrefsDict[var_17_0] then
+		local var_17_1 = {}
+		local var_17_2 = Activity186Controller.instance:getPlayerPrefs(var_17_0)
+		local var_17_3 = GameUtil.splitString2(var_17_2, true)
+
+		if var_17_3 then
+			for iter_17_0, iter_17_1 in ipairs(var_17_3) do
+				var_17_1[iter_17_1[1]] = iter_17_1[2]
 			end
 		end
 
-		slot0.localPrefsDict[slot3] = slot4
+		arg_17_0.localPrefsDict[var_17_0] = var_17_1
 	end
 
-	return slot0.localPrefsDict[slot3]
+	return arg_17_0.localPrefsDict[var_17_0]
 end
 
-function slot0.getLocalPrefsState(slot0, slot1, slot2, slot3, slot4)
-	return slot0:getLocalPrefsTab(slot1, slot2)[slot3] or slot4
+function var_0_0.getLocalPrefsState(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	return arg_18_0:getLocalPrefsTab(arg_18_1, arg_18_2)[arg_18_3] or arg_18_4
 end
 
-function slot0.setLocalPrefsState(slot0, slot1, slot2, slot3, slot4)
-	if slot0:getLocalPrefsTab(slot1, slot2)[slot3] == slot4 then
+function var_0_0.setLocalPrefsState(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	local var_19_0 = arg_19_0:getLocalPrefsTab(arg_19_1, arg_19_2)
+
+	if var_19_0[arg_19_3] == arg_19_4 then
 		return
 	end
 
-	slot5[slot3] = slot4
-	slot6 = {}
+	var_19_0[arg_19_3] = arg_19_4
 
-	for slot10, slot11 in pairs(slot5) do
-		table.insert(slot6, string.format("%s#%s", slot10, slot11))
+	local var_19_1 = {}
+
+	for iter_19_0, iter_19_1 in pairs(var_19_0) do
+		table.insert(var_19_1, string.format("%s#%s", iter_19_0, iter_19_1))
 	end
 
-	Activity186Controller.instance:setPlayerPrefs(slot0:prefabKeyPrefs(slot1, slot2), table.concat(slot6, "|"))
+	local var_19_2 = table.concat(var_19_1, "|")
+	local var_19_3 = arg_19_0:prefabKeyPrefs(arg_19_1, arg_19_2)
+
+	Activity186Controller.instance:setPlayerPrefs(var_19_3, var_19_2)
 end
 
-function slot0.prefabKeyPrefs(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
-		return slot1
+function var_0_0.prefabKeyPrefs(arg_20_0, arg_20_1, arg_20_2)
+	if string.nilorempty(arg_20_1) then
+		return arg_20_1
 	end
 
-	return string.format("%s_%s", slot1, slot2)
+	return (string.format("%s_%s", arg_20_1, arg_20_2))
 end
 
-function slot0.checkReadTasks(slot0, slot1)
-	if slot1 then
-		for slot5, slot6 in pairs(slot1) do
-			slot0:checkReadTask(slot6)
+function var_0_0.checkReadTasks(arg_21_0, arg_21_1)
+	if arg_21_1 then
+		for iter_21_0, iter_21_1 in pairs(arg_21_1) do
+			arg_21_0:checkReadTask(iter_21_1)
 		end
 	end
 end
 
-function slot0.checkReadTask(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkReadTask(arg_22_0, arg_22_1)
+	if not arg_22_1 then
 		return
 	end
 
-	if not slot0:getActMo(slot0:getActId()) then
+	local var_22_0 = arg_22_0:getActMo(arg_22_0:getActId())
+
+	if not var_22_0 then
 		return
 	end
 
-	if not slot2:getTaskInfo(slot1) then
+	local var_22_1 = var_22_0:getTaskInfo(arg_22_1)
+
+	if not var_22_1 then
 		return
 	end
 
-	if slot3.hasGetBonus then
+	if var_22_1.hasGetBonus then
 		return
 	end
 
-	if slot2:checkTaskCanReward(slot3) then
+	if var_22_0:checkTaskCanReward(var_22_1) then
 		return
 	end
 
-	TaskRpc.instance:sendFinishReadTaskRequest(slot1)
+	TaskRpc.instance:sendFinishReadTaskRequest(arg_22_1)
 end
 
-function slot0.isShowSignRed(slot0)
-	if ActivityHelper.getActivityStatus(ActivityEnum.Activity.V2a5_Act186Sign) ~= ActivityEnum.ActivityStatus.Normal then
+function var_0_0.isShowSignRed(arg_23_0)
+	local var_23_0 = ActivityEnum.Activity.V2a5_Act186Sign
+
+	if ActivityHelper.getActivityStatus(var_23_0) ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	slot3 = false
+	local var_23_1 = false
+	local var_23_2 = arg_23_0:getActId()
+	local var_23_3 = arg_23_0:getById(var_23_2)
 
-	if slot0:getById(slot0:getActId()) then
-		slot3 = slot5.spBonusStage == 1
+	if var_23_3 then
+		var_23_1 = var_23_3.spBonusStage == 1
 	end
 
-	return slot3 or ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot1)
+	var_23_1 = var_23_1 or ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_23_0)
+
+	return var_23_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

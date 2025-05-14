@@ -1,103 +1,106 @@
-module("modules.ugui.textmeshpro.TMPMarkTopText", package.seeall)
+﻿module("modules.ugui.textmeshpro.TMPMarkTopText", package.seeall)
 
-slot0 = class("TMPMarkTopText", ListScrollCellExtend)
+local var_0_0 = class("TMPMarkTopText", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	slot0:reInitByCmp(slot1:GetComponent(gohelper.Type_TextMesh))
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1:GetComponent(gohelper.Type_TextMesh)
+
+	arg_1_0:reInitByCmp(var_1_0)
 end
 
-function slot0.initByCmp(slot0, slot1)
-	slot0:reInitByCmp(slot1)
+function var_0_0.initByCmp(arg_2_0, arg_2_1)
+	arg_2_0:reInitByCmp(arg_2_1)
 end
 
-function slot0.reInitByCmp(slot0, slot1)
-	if slot0._txtcontentcn == slot1 then
+function var_0_0.reInitByCmp(arg_3_0, arg_3_1)
+	if arg_3_0._txtcontentcn == arg_3_1 then
 		return
 	end
 
-	slot0:onDestroyView()
+	arg_3_0:onDestroyView()
 
-	slot2 = slot1.gameObject
-	slot0._markTopList = {}
-	slot0._lineSpacing = 0
-	slot0._txtcontentcn = slot1
-	slot0._txtmarktopGo = IconMgr.instance:getCommonTextMarkTop(slot2)
-	slot0._txtmarktop = slot0._txtmarktopGo:GetComponent(gohelper.Type_TextMesh)
-	slot0._conMark = gohelper.onceAddComponent(slot2, typeof(ZProj.TMPMark))
+	local var_3_0 = arg_3_1.gameObject
 
-	slot0._conMark:SetMarkTopGo(slot0._txtmarktopGo)
+	arg_3_0._markTopList = {}
+	arg_3_0._lineSpacing = 0
+	arg_3_0._txtcontentcn = arg_3_1
+	arg_3_0._txtmarktopGo = IconMgr.instance:getCommonTextMarkTop(var_3_0)
+	arg_3_0._txtmarktop = arg_3_0._txtmarktopGo:GetComponent(gohelper.Type_TextMesh)
+	arg_3_0._conMark = gohelper.onceAddComponent(var_3_0, typeof(ZProj.TMPMark))
 
-	slot0._originalLineSpacing = slot0._txtcontentcn.lineSpacing
-	slot0._lineSpacing = slot0._originalLineSpacing
+	arg_3_0._conMark:SetMarkTopGo(arg_3_0._txtmarktopGo)
 
-	uv0.super.init(slot0, slot2)
+	arg_3_0._originalLineSpacing = arg_3_0._txtcontentcn.lineSpacing
+	arg_3_0._lineSpacing = arg_3_0._originalLineSpacing
+
+	var_0_0.super.init(arg_3_0, var_3_0)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._markTopList = StoryTool.getMarkTopTextList(slot1)
+function var_0_0.setData(arg_4_0, arg_4_1)
+	arg_4_0._markTopList = StoryTool.getMarkTopTextList(arg_4_1)
 
-	slot0:_setLineSpacing(slot0:getLineSpacing())
+	arg_4_0:_setLineSpacing(arg_4_0:getLineSpacing())
 
-	slot0._txtcontentcn.text = StoryTool.filterMarkTop(slot1)
+	arg_4_0._txtcontentcn.text = StoryTool.filterMarkTop(arg_4_1)
 
-	FrameTimerController.onDestroyViewMember(slot0, "_frameTimer")
+	FrameTimerController.onDestroyViewMember(arg_4_0, "_frameTimer")
 
-	slot0._frameTimer = FrameTimerController.instance:register(slot0._onSetMarksTop, slot0)
+	arg_4_0._frameTimer = FrameTimerController.instance:register(arg_4_0._onSetMarksTop, arg_4_0)
 
-	slot0._frameTimer:Start()
+	arg_4_0._frameTimer:Start()
 end
 
-function slot0._onSetMarksTop(slot0)
-	slot0._conMark:SetMarksTop(slot0._markTopList)
-	slot0:rebuildLayout()
+function var_0_0._onSetMarksTop(arg_5_0)
+	arg_5_0._conMark:SetMarksTop(arg_5_0._markTopList)
+	arg_5_0:rebuildLayout()
 end
 
-function slot0.getLineSpacing(slot0)
-	return slot0:isContainsMarkTop() and slot0._lineSpacing or slot0._originalLineSpacing
+function var_0_0.getLineSpacing(arg_6_0)
+	return arg_6_0:isContainsMarkTop() and arg_6_0._lineSpacing or arg_6_0._originalLineSpacing
 end
 
-function slot0._setLineSpacing(slot0, slot1)
-	slot0._txtcontentcn.lineSpacing = slot1 or 0
+function var_0_0._setLineSpacing(arg_7_0, arg_7_1)
+	arg_7_0._txtcontentcn.lineSpacing = arg_7_1 or 0
 end
 
-function slot0.onDestroyView(slot0)
-	FrameTimerController.onDestroyViewMember(slot0, "_frameTimer")
+function var_0_0.onDestroyView(arg_8_0)
+	FrameTimerController.onDestroyViewMember(arg_8_0, "_frameTimer")
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyView()
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0:onDestroyView()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0:setData(slot1)
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0:setData(arg_10_1)
 end
 
-function slot0.isContainsMarkTop(slot0)
-	return #slot0._markTopList > 0
+function var_0_0.isContainsMarkTop(arg_11_0)
+	return #arg_11_0._markTopList > 0
 end
 
-function slot0.rebuildLayout(slot0)
-	if not slot0._rbTrans then
+function var_0_0.rebuildLayout(arg_12_0)
+	if not arg_12_0._rbTrans then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._rbTrans)
+	ZProj.UGUIHelper.RebuildLayout(arg_12_0._rbTrans)
 end
 
-function slot0.setTopOffset(slot0, slot1, slot2)
-	slot0._conMark:SetTopOffset(slot1 or 0, slot2 or 0)
+function var_0_0.setTopOffset(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._conMark:SetTopOffset(arg_13_1 or 0, arg_13_2 or 0)
 end
 
-function slot0.setLineSpacing(slot0, slot1)
-	slot0._lineSpacing = slot1 or 0
+function var_0_0.setLineSpacing(arg_14_0, arg_14_1)
+	arg_14_0._lineSpacing = arg_14_1 or 0
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0.viewGO, arg_15_1)
 end
 
-function slot0.registerRebuildLayout(slot0, slot1)
-	slot0._rbTrans = slot1
+function var_0_0.registerRebuildLayout(arg_16_0, arg_16_1)
+	arg_16_0._rbTrans = arg_16_1
 end
 
-return slot0
+return var_0_0

@@ -1,273 +1,295 @@
-module("modules.logic.dungeon.model.RoleStoryMO", package.seeall)
+﻿module("modules.logic.dungeon.model.RoleStoryMO", package.seeall)
 
-slot0 = pureTable("RoleStoryMO")
+local var_0_0 = pureTable("RoleStoryMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.progress = 0
-	slot0.getReward = false
-	slot0.cfg = RoleStoryConfig.instance:getStoryById(slot1)
-	slot0.order = slot0.cfg.order
-	slot0.maxProgress, slot0.episodeCount = slot0:caleMaxProgress()
-	slot0.hasUnlock = false
-	slot0.startTime = 0
-	slot0.endTime = 0
-	slot0.startTimeResident = 0
-	slot0.endTimeResident = 0
-	slot0.rewards = GameUtil.splitString2(slot0.cfg.bonus, true)
-	slot0.getScoreBonus = {}
-	slot0.score = 0
-	slot0.addscore = 0
-	slot0.wave = 0
-	slot0.maxWave = 1
-	slot0.getChallengeReward = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.progress = 0
+	arg_1_0.getReward = false
+	arg_1_0.cfg = RoleStoryConfig.instance:getStoryById(arg_1_1)
+	arg_1_0.order = arg_1_0.cfg.order
+	arg_1_0.maxProgress, arg_1_0.episodeCount = arg_1_0:caleMaxProgress()
+	arg_1_0.hasUnlock = false
+	arg_1_0.startTime = 0
+	arg_1_0.endTime = 0
+	arg_1_0.startTimeResident = 0
+	arg_1_0.endTimeResident = 0
+	arg_1_0.rewards = GameUtil.splitString2(arg_1_0.cfg.bonus, true)
+	arg_1_0.getScoreBonus = {}
+	arg_1_0.score = 0
+	arg_1_0.addscore = 0
+	arg_1_0.wave = 0
+	arg_1_0.maxWave = 1
+	arg_1_0.getChallengeReward = false
 
-	slot0:refreshOrder()
+	arg_1_0:refreshOrder()
 
-	slot0.dispatchDict = {}
-	slot0._dispatchHeroDict = {}
+	arg_1_0.dispatchDict = {}
+	arg_1_0._dispatchHeroDict = {}
 end
 
-function slot0.getCost(slot0)
-	if slot0:isActTime() then
-		slot1 = string.splitToNumber(slot0.cfg.unlock, "#")
+function var_0_0.getCost(arg_2_0)
+	if arg_2_0:isActTime() then
+		local var_2_0 = string.splitToNumber(arg_2_0.cfg.unlock, "#")
 
-		return slot1[1], slot1[2], slot1[3]
+		return var_2_0[1], var_2_0[2], var_2_0[3]
 	end
 
-	slot1 = string.splitToNumber(slot0.cfg.permanentUnlock, "#")
+	local var_2_1 = string.splitToNumber(arg_2_0.cfg.permanentUnlock, "#")
 
-	return slot1[1], slot1[2], slot1[3]
+	return var_2_1[1], var_2_1[2], var_2_1[3]
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.progress = slot1.progress
-	slot0.getReward = slot1.getReward
-	slot0.hasUnlock = slot1.unlock
-	slot0.getScoreBonus = {}
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0.progress = arg_3_1.progress
+	arg_3_0.getReward = arg_3_1.getReward
+	arg_3_0.hasUnlock = arg_3_1.unlock
+	arg_3_0.getScoreBonus = {}
 
-	slot0:addScoreBonus(slot1.getScoreBonus)
+	arg_3_0:addScoreBonus(arg_3_1.getScoreBonus)
 
-	slot0.score = slot1.score
-	slot0.wave = slot1.challengeWave
-	slot0.maxWave = slot1.challengeMaxWave
-	slot0.getChallengeReward = slot1.getChallengeReward
+	arg_3_0.score = arg_3_1.score
+	arg_3_0.wave = arg_3_1.challengeWave
+	arg_3_0.maxWave = arg_3_1.challengeMaxWave
+	arg_3_0.getChallengeReward = arg_3_1.getChallengeReward
 
-	slot0:refreshOrder()
+	arg_3_0:refreshOrder()
 
-	slot0.dispatchDict = {}
+	arg_3_0.dispatchDict = {}
 
-	for slot5 = 1, #slot1.dispatchInfos do
-		slot0:updateDispatch(slot1.dispatchInfos[slot5])
+	for iter_3_0 = 1, #arg_3_1.dispatchInfos do
+		arg_3_0:updateDispatch(arg_3_1.dispatchInfos[iter_3_0])
 	end
 
-	slot0:updateDispatchHeroDict()
+	arg_3_0:updateDispatchHeroDict()
 end
 
-function slot0.updateDispatch(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateDispatch(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot0:getDispatchMo(slot1.id):updateInfo(slot1)
+	local var_4_0 = arg_4_1.id
+
+	arg_4_0:getDispatchMo(var_4_0):updateInfo(arg_4_1)
 end
 
-function slot0.updateDispatchTime(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateDispatchTime(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	slot0:getDispatchMo(slot1.dispatchId):updateTime(slot1)
+	local var_5_0 = arg_5_1.dispatchId
 
-	for slot7 = 1, #slot1.dispatchInfos do
-		slot0:updateDispatch(slot1.dispatchInfos[slot7])
+	arg_5_0:getDispatchMo(var_5_0):updateTime(arg_5_1)
+
+	for iter_5_0 = 1, #arg_5_1.dispatchInfos do
+		arg_5_0:updateDispatch(arg_5_1.dispatchInfos[iter_5_0])
 	end
 
-	slot0:updateDispatchHeroDict()
+	arg_5_0:updateDispatchHeroDict()
 end
 
-function slot0.resetDispatch(slot0, slot1)
-	slot0:getDispatchMo(slot1.dispatchId):resetDispatch()
-	slot0:updateDispatchHeroDict()
+function var_0_0.resetDispatch(arg_6_0, arg_6_1)
+	arg_6_0:getDispatchMo(arg_6_1.dispatchId):resetDispatch()
+	arg_6_0:updateDispatchHeroDict()
 end
 
-function slot0.completeDispatch(slot0, slot1)
-	slot0:getDispatchMo(slot1.dispatchId):completeDispatch()
-	slot0:updateDispatchHeroDict()
+function var_0_0.completeDispatch(arg_7_0, arg_7_1)
+	arg_7_0:getDispatchMo(arg_7_1.dispatchId):completeDispatch()
+	arg_7_0:updateDispatchHeroDict()
 end
 
-function slot0.updateTime(slot0, slot1)
-	slot0.startTime = slot1.startTime
-	slot0.endTime = slot1.endTime
-	slot0.startTimeResident = slot1.startTimeResident
-	slot0.endTimeResident = slot1.endTimeResident
+function var_0_0.updateTime(arg_8_0, arg_8_1)
+	arg_8_0.startTime = arg_8_1.startTime
+	arg_8_0.endTime = arg_8_1.endTime
+	arg_8_0.startTimeResident = arg_8_1.startTimeResident
+	arg_8_0.endTimeResident = arg_8_1.endTimeResident
 end
 
-function slot0.updateScore(slot0, slot1)
-	slot0.addscore = slot1.score - slot0.score
-	slot0.score = slot1.score
-	slot0.wave = slot1.wave
-	slot0.maxWave = slot1.maxWave
+function var_0_0.updateScore(arg_9_0, arg_9_1)
+	arg_9_0.addscore = arg_9_1.score - arg_9_0.score
+	arg_9_0.score = arg_9_1.score
+	arg_9_0.wave = arg_9_1.wave
+	arg_9_0.maxWave = arg_9_1.maxWave
 end
 
-function slot0.refreshOrder(slot0)
-	slot0.getRewardOrder = slot0.getReward and 0 or 1
+function var_0_0.refreshOrder(arg_10_0)
+	arg_10_0.getRewardOrder = arg_10_0.getReward and 0 or 1
 end
 
-function slot0.caleMaxProgress(slot0)
-	slot3 = 0
-	slot4 = 0
+function var_0_0.caleMaxProgress(arg_11_0)
+	local var_11_0 = arg_11_0.cfg.chapterId
+	local var_11_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_11_0)
+	local var_11_2 = 0
+	local var_11_3 = 0
 
-	if DungeonConfig.instance:getChapterEpisodeCOList(slot0.cfg.chapterId) then
-		for slot8, slot9 in ipairs(slot2) do
-			slot3 = slot3 + 1
-			slot4 = slot4 + 1
+	if var_11_1 then
+		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+			var_11_2 = var_11_2 + 1
+			var_11_3 = var_11_3 + 1
 		end
 	end
 
-	return slot3, slot4
+	return var_11_2, var_11_3
 end
 
-function slot0.canGetReward(slot0)
-	if not slot0.hasUnlock then
+function var_0_0.canGetReward(arg_12_0)
+	if not arg_12_0.hasUnlock then
 		return false
 	end
 
-	if slot0.getReward then
+	if arg_12_0.getReward then
 		return false
 	end
 
-	if slot0.progress and slot0.maxProgress then
-		return slot0.maxProgress <= slot0.progress
+	if arg_12_0.progress and arg_12_0.maxProgress then
+		return arg_12_0.progress >= arg_12_0.maxProgress
 	end
 
 	return false
 end
 
-function slot0.getActTime(slot0)
-	return slot0.startTime, slot0.endTime
+function var_0_0.getActTime(arg_13_0)
+	return arg_13_0.startTime, arg_13_0.endTime
 end
 
-function slot0.getResidentTime(slot0)
-	return slot0.startTimeResident, slot0.endTimeResident
+function var_0_0.getResidentTime(arg_14_0)
+	return arg_14_0.startTimeResident, arg_14_0.endTimeResident
 end
 
-function slot0.isActTime(slot0)
-	return slot0.startTime <= ServerTime.now() and slot1 <= slot0.endTime
+function var_0_0.isActTime(arg_15_0)
+	local var_15_0 = ServerTime.now()
+
+	return var_15_0 >= arg_15_0.startTime and var_15_0 <= arg_15_0.endTime
 end
 
-function slot0.isResidentTime(slot0)
-	return slot0.startTimeResident <= ServerTime.now() and slot1 <= slot0.endTimeResident
+function var_0_0.isResidentTime(arg_16_0)
+	local var_16_0 = ServerTime.now()
+
+	return var_16_0 >= arg_16_0.startTimeResident and var_16_0 <= arg_16_0.endTimeResident
 end
 
-function slot0.addScoreBonus(slot0, slot1)
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0.getScoreBonus[slot1[slot5]] = true
+function var_0_0.addScoreBonus(arg_17_0, arg_17_1)
+	if arg_17_1 then
+		for iter_17_0 = 1, #arg_17_1 do
+			arg_17_0.getScoreBonus[arg_17_1[iter_17_0]] = true
 		end
 	end
 end
 
-function slot0.isBonusHasGet(slot0, slot1)
-	return slot0.getScoreBonus[slot1]
+function var_0_0.isBonusHasGet(arg_18_0, arg_18_1)
+	return arg_18_0.getScoreBonus[arg_18_1]
 end
 
-function slot0.getScore(slot0)
-	return slot0.score
+function var_0_0.getScore(arg_19_0)
+	return arg_19_0.score
 end
 
-function slot0.getAddScore(slot0)
-	return slot0.addscore
+function var_0_0.getAddScore(arg_20_0)
+	return arg_20_0.addscore
 end
 
-function slot0.hasScoreReward(slot0)
-	slot1 = false
+function var_0_0.hasScoreReward(arg_21_0)
+	local var_21_0 = false
+	local var_21_1 = RoleStoryConfig.instance:getRewardList(arg_21_0.id)
 
-	if RoleStoryConfig.instance:getRewardList(slot0.id) then
-		for slot6, slot7 in ipairs(slot2) do
-			if slot7.score <= slot0.score and not slot0:isBonusHasGet(slot7.id) then
-				slot1 = true
+	if var_21_1 then
+		for iter_21_0, iter_21_1 in ipairs(var_21_1) do
+			if arg_21_0.score >= iter_21_1.score and not arg_21_0:isBonusHasGet(iter_21_1.id) then
+				var_21_0 = true
 
 				break
 			end
 		end
 	end
 
-	return slot1
+	return var_21_0
 end
 
-function slot0.getDispatchMo(slot0, slot1)
-	if not slot0.dispatchDict[slot1] then
-		slot2 = RoleStoryDispatchMO.New()
+function var_0_0.getDispatchMo(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0.dispatchDict[arg_22_1]
 
-		slot2:init(slot1, slot0.id)
+	if not var_22_0 then
+		var_22_0 = RoleStoryDispatchMO.New()
 
-		slot0.dispatchDict[slot1] = slot2
+		var_22_0:init(arg_22_1, arg_22_0.id)
+
+		arg_22_0.dispatchDict[arg_22_1] = var_22_0
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0.getDispatchState(slot0, slot1)
-	if slot0:getDispatchMo(slot1) then
-		return slot2:getDispatchState()
+function var_0_0.getDispatchState(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getDispatchMo(arg_23_1)
+
+	if var_23_0 then
+		return var_23_0:getDispatchState()
 	end
 end
 
-function slot0.getNormalDispatchList(slot0)
-	slot1 = {}
+function var_0_0.getNormalDispatchList(arg_24_0)
+	local var_24_0 = {}
 
-	for slot5, slot6 in pairs(slot0.dispatchDict) do
-		if slot6.config.type == RoleStoryEnum.DispatchType.Normal then
-			table.insert(slot1, slot6)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0.dispatchDict) do
+		if iter_24_1.config.type == RoleStoryEnum.DispatchType.Normal then
+			table.insert(var_24_0, iter_24_1)
 		end
 	end
 
-	return slot1
+	return var_24_0
 end
 
-function slot0.isScoreFull(slot0)
-	if not (RoleStoryConfig.instance:getRewardList(slot0.id) and slot1[#slot1]) then
+function var_0_0.isScoreFull(arg_25_0)
+	local var_25_0 = RoleStoryConfig.instance:getRewardList(arg_25_0.id)
+	local var_25_1 = var_25_0 and var_25_0[#var_25_0]
+
+	if not var_25_1 then
 		return true
 	end
 
-	return slot2.score <= slot0.score
+	return arg_25_0.score >= var_25_1.score
 end
 
-function slot0.updateDispatchHeroDict(slot0)
-	slot0._dispatchHeroDict = {}
+function var_0_0.updateDispatchHeroDict(arg_26_0)
+	arg_26_0._dispatchHeroDict = {}
 
-	for slot4, slot5 in pairs(slot0.dispatchDict) do
-		if slot5:getDispatchState() ~= RoleStoryEnum.DispatchState.Finish then
-			for slot9, slot10 in pairs(slot5.heroIds) do
-				slot0._dispatchHeroDict[slot10] = true
+	for iter_26_0, iter_26_1 in pairs(arg_26_0.dispatchDict) do
+		if iter_26_1:getDispatchState() ~= RoleStoryEnum.DispatchState.Finish then
+			for iter_26_2, iter_26_3 in pairs(iter_26_1.heroIds) do
+				arg_26_0._dispatchHeroDict[iter_26_3] = true
 			end
 		end
 	end
 end
 
-function slot0.isHeroDispatching(slot0, slot1)
-	return slot0._dispatchHeroDict[slot1]
+function var_0_0.isHeroDispatching(arg_27_0, arg_27_1)
+	return arg_27_0._dispatchHeroDict[arg_27_1]
 end
 
-function slot0.hasNewDispatchFinish(slot0)
-	slot1 = false
+function var_0_0.hasNewDispatchFinish(arg_28_0)
+	local var_28_0 = false
 
-	for slot5, slot6 in pairs(slot0.dispatchDict) do
-		if slot6:isNewFinish() then
-			slot1 = true
+	for iter_28_0, iter_28_1 in pairs(arg_28_0.dispatchDict) do
+		if iter_28_1:isNewFinish() then
+			var_28_0 = true
 		end
 	end
 
-	return slot1
+	return var_28_0
 end
 
-function slot0.canPlayNormalDispatchUnlockAnim(slot0)
-	return PlayerPrefsHelper.getNumber(string.format("%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchUnlockAnim, slot0.id), 0) == 0
+function var_0_0.canPlayNormalDispatchUnlockAnim(arg_29_0)
+	local var_29_0 = string.format("%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchUnlockAnim, arg_29_0.id)
+
+	return PlayerPrefsHelper.getNumber(var_29_0, 0) == 0
 end
 
-function slot0.setPlayNormalDispatchUnlockAnimFlag(slot0)
-	PlayerPrefsHelper.setNumber(string.format("%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchUnlockAnim, slot0.id), 1)
+function var_0_0.setPlayNormalDispatchUnlockAnimFlag(arg_30_0)
+	local var_30_0 = string.format("%s_%s_%s", PlayerModel.instance:getMyUserId(), PlayerPrefsKey.RoleStoryDispatchUnlockAnim, arg_30_0.id)
+
+	PlayerPrefsHelper.setNumber(var_30_0, 1)
 end
 
-return slot0
+return var_0_0

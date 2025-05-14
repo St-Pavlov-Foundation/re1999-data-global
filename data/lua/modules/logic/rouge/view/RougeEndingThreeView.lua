@@ -1,37 +1,42 @@
-module("modules.logic.rouge.view.RougeEndingThreeView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeEndingThreeView", package.seeall)
 
-slot0 = class("RougeEndingThreeView", BaseView)
+local var_0_0 = class("RougeEndingThreeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnnext = gohelper.findChildButton(slot0.viewGO, "Content/#btn_next")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "Content/#go_success/txt_success")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "Content/Title/#txt_Title")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnnext = gohelper.findChildButton(arg_1_0.viewGO, "Content/#btn_next")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "Content/#go_success/txt_success")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Content/Title/#txt_Title")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnext:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnnext:RemoveClickListener()
 end
 
-function slot0._btnnextOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnnextOnClick(arg_4_0)
+	arg_4_0:closeThis()
 	RougeController.instance:openRougeResultView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txttitle.text = lua_rouge_const.configDict[RougeEnum.Const.EndingThreeTitle] and slot1.value2
-	slot0._txtcontent.text = lua_rouge_const.configDict[RougeEnum.Const.EndingThreeContent] and slot3.value2
+function var_0_0._editableInitView(arg_5_0)
+	local var_5_0 = lua_rouge_const.configDict[RougeEnum.Const.EndingThreeTitle]
+	local var_5_1 = var_5_0 and var_5_0.value2
+	local var_5_2 = lua_rouge_const.configDict[RougeEnum.Const.EndingThreeContent]
+	local var_5_3 = var_5_2 and var_5_2.value2
+
+	arg_5_0._txttitle.text = var_5_1
+	arg_5_0._txtcontent.text = var_5_3
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenEndingThreeView)
 end
 
-return slot0
+return var_0_0

@@ -1,12 +1,13 @@
-module("modules.logic.activity.controller.chessmap.event.ActivityChessStateLock", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateLock", package.seeall)
 
-slot0 = class("ActivityChessStateLock", ActivityChessStateBase)
+local var_0_0 = class("ActivityChessStateLock", ActivityChessStateBase)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
 	logNormal("ActivityChessStateLock start")
 end
 
-function slot0.onClickPos(slot0, slot1, slot2)
+function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-return slot0
+return var_0_0

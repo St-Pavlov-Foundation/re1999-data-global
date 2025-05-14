@@ -1,647 +1,795 @@
-module("modules.logic.room.model.manufacture.ManufactureModel", package.seeall)
+﻿module("modules.logic.room.model.manufacture.ManufactureModel", package.seeall)
 
-slot0 = class("ManufactureModel", BaseModel)
-slot1 = 1
-slot2 = 0
+local var_0_0 = class("ManufactureModel", BaseModel)
+local var_0_1 = 1
+local var_0_2 = 0
 
-function slot0.onInit(slot0)
-	slot0:clear()
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.clearData(slot0)
-	slot0:setSelectedSlot()
-	slot0:setSelectedCritterSlot()
-	slot0:setSelectedCritterSeatSlot()
-	slot0:setSelectedTransportPath()
-	slot0:setNewRestCritter()
-	slot0:setIsJump2ManufactureBuildingList()
-	slot0:setTradeLevel()
-	slot0:clearCritterBuildingData()
-	slot0:setCameraRecord()
+function var_0_0.clearData(arg_3_0)
+	arg_3_0:setSelectedSlot()
+	arg_3_0:setSelectedCritterSlot()
+	arg_3_0:setSelectedCritterSeatSlot()
+	arg_3_0:setSelectedTransportPath()
+	arg_3_0:setNewRestCritter()
+	arg_3_0:setIsJump2ManufactureBuildingList()
+	arg_3_0:setTradeLevel()
+	arg_3_0:clearCritterBuildingData()
+	arg_3_0:setCameraRecord()
 
-	slot0._frozenMatDict = nil
-	slot0._needMatDict = nil
-	slot0._isPlayManufactureUnlock = nil
-	slot0._isExpandManufacture = nil
-	slot0._readFormulaDict = nil
-	slot0._recordOneKeyType = nil
+	arg_3_0._frozenMatDict = nil
+	arg_3_0._needMatDict = nil
+	arg_3_0._isPlayManufactureUnlock = nil
+	arg_3_0._isExpandManufacture = nil
+	arg_3_0._readFormulaDict = nil
+	arg_3_0._recordOneKeyType = nil
 end
 
-function slot0.resetDataBeforeSetInfo(slot0)
-	slot0:setTradeLevel()
-	slot0:clearCritterBuildingData()
-	slot0:clear()
+function var_0_0.resetDataBeforeSetInfo(arg_4_0)
+	arg_4_0:setTradeLevel()
+	arg_4_0:clearCritterBuildingData()
+	arg_4_0:clear()
 end
 
-function slot0.clearCritterBuildingData(slot0)
-	slot0._buildingCritterMOList = {}
-	slot0._buildingCritterMODict = {}
+function var_0_0.clearCritterBuildingData(arg_5_0)
+	arg_5_0._buildingCritterMOList = {}
+	arg_5_0._buildingCritterMODict = {}
 end
 
-function slot0.initNewManufactureFormulaCacheData(slot0)
-	if slot0._readFormulaDict then
+function var_0_0.initNewManufactureFormulaCacheData(arg_6_0)
+	if arg_6_0._readFormulaDict then
 		return
 	end
 
-	if not string.nilorempty(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomManufactureReadFormula, "")) then
-		slot0._readFormulaDict = cjson.decode(slot1)
+	local var_6_0 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomManufactureReadFormula, "")
+
+	if not string.nilorempty(var_6_0) then
+		arg_6_0._readFormulaDict = cjson.decode(var_6_0)
 	end
 
-	slot0._readFormulaDict = slot0._readFormulaDict or {}
+	arg_6_0._readFormulaDict = arg_6_0._readFormulaDict or {}
 end
 
-function slot0.setManufactureInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.setManufactureInfo(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	slot0:setTradeLevel(slot1.tradeLevel)
-	slot0:setManuBuildingInfoList(slot1.manuBuildingInfos)
-	slot0:setCritterBuildingInfoList(slot1.restBuildingInfos)
-	slot0:setFrozenItemDict(slot1.frozenItems2Count)
+	arg_7_0:setTradeLevel(arg_7_1.tradeLevel)
+	arg_7_0:setManuBuildingInfoList(arg_7_1.manuBuildingInfos)
+	arg_7_0:setCritterBuildingInfoList(arg_7_1.restBuildingInfos)
+	arg_7_0:setFrozenItemDict(arg_7_1.frozenItems2Count)
 end
 
-function slot0.setTradeLevel(slot0, slot1)
-	slot0._tradeLevel = slot1
+function var_0_0.setTradeLevel(arg_8_0, arg_8_1)
+	arg_8_0._tradeLevel = arg_8_1
 end
 
-function slot0.setManuBuildingInfoList(slot0, slot1)
-	if not slot1 then
+function var_0_0.setManuBuildingInfoList(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:setManuBuildingInfo(slot6)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		arg_9_0:setManuBuildingInfo(iter_9_1)
 	end
 
-	slot0:refreshAllNeedMat()
+	arg_9_0:refreshAllNeedMat()
 end
 
-function slot0.setManuBuildingInfo(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.setManuBuildingInfo(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_1 then
 		return
 	end
 
-	slot3 = false
+	local var_10_0 = false
+	local var_10_1 = arg_10_0:getManufactureMOById(arg_10_1.buildingUid)
 
-	if not slot0:getManufactureMOById(slot1.buildingUid) then
-		slot4 = RoomBuildingManufactureMO.New()
-		slot3 = true
+	if not var_10_1 then
+		var_10_1 = RoomBuildingManufactureMO.New()
+		var_10_0 = true
 	end
 
-	slot4:init(slot1)
+	var_10_1:init(arg_10_1)
 
-	if slot3 then
-		slot0:addAtLast(slot4)
+	if var_10_0 then
+		arg_10_0:addAtLast(var_10_1)
 	end
 
-	if slot2 then
-		slot0:refreshAllNeedMat()
+	if arg_10_2 then
+		arg_10_0:refreshAllNeedMat()
 	end
 end
 
-function slot0.setFrozenItemDict(slot0, slot1)
-	slot0._frozenMatDict = {}
+function var_0_0.setFrozenItemDict(arg_11_0, arg_11_1)
+	arg_11_0._frozenMatDict = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0._frozenMatDict[slot6.materialId] = slot6.quantity + (slot0._frozenMatDict[slot6.materialId] or 0)
+	if arg_11_1 then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+			arg_11_0._frozenMatDict[iter_11_1.materialId] = iter_11_1.quantity + (arg_11_0._frozenMatDict[iter_11_1.materialId] or 0)
 		end
 	end
 end
 
-function slot0._isCanFrozenItem(slot0, slot1, slot2)
-	if not ManufactureConfig.instance:getManufactureItemListByItemId(slot1)[1] then
+function var_0_0._isCanFrozenItem(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = ManufactureConfig.instance:getManufactureItemListByItemId(arg_12_1)[1]
+
+	if not var_12_0 then
 		return false
 	end
 
-	if slot0:getManufactureItemCount(slot4) < slot2 then
+	if arg_12_2 > arg_12_0:getManufactureItemCount(var_12_0) then
 		return false
 	end
 
-	if slot0:getFrozenManufactureItemCount(slot4) + slot2 < 0 then
+	if arg_12_0:getFrozenManufactureItemCount(var_12_0) + arg_12_2 < 0 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.clientCalAllFrozenItemDict(slot0)
-	slot0._frozenMatDict = {}
+function var_0_0.clientCalAllFrozenItemDict(arg_13_0)
+	arg_13_0._frozenMatDict = {}
 
-	for slot5, slot6 in ipairs(slot0:getAllPlacedManufactureBuilding()) do
-		for slot11, slot12 in ipairs(slot6:getAllUnlockedSlotIdList()) do
-			if slot6:getSlotState(slot12, true) == RoomManufactureEnum.SlotState.Wait then
-				for slot20, slot21 in ipairs(ManufactureConfig.instance:getNeedMatItemList(slot6:getSlotManufactureItemId(slot12))) do
-					if slot0:_isCanFrozenItem(ManufactureConfig.instance:getItemId(slot21.id), slot21.quantity) then
-						-- Nothing
+	local var_13_0 = arg_13_0:getAllPlacedManufactureBuilding()
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_1 = iter_13_1:getAllUnlockedSlotIdList()
+
+		for iter_13_2, iter_13_3 in ipairs(var_13_1) do
+			if iter_13_1:getSlotState(iter_13_3, true) == RoomManufactureEnum.SlotState.Wait then
+				local var_13_2 = {}
+				local var_13_3 = iter_13_1:getSlotManufactureItemId(iter_13_3)
+				local var_13_4 = ManufactureConfig.instance:getNeedMatItemList(var_13_3)
+
+				for iter_13_4, iter_13_5 in ipairs(var_13_4) do
+					local var_13_5 = ManufactureConfig.instance:getItemId(iter_13_5.id)
+					local var_13_6 = iter_13_5.quantity
+
+					if arg_13_0:_isCanFrozenItem(var_13_5, var_13_6) then
+						var_13_2[var_13_5] = var_13_6
 					else
-						slot14 = {}
+						var_13_2 = {}
 
 						break
 					end
 				end
 
-				for slot20, slot21 in pairs({
-					[slot22] = slot23
-				}) do
-					slot0._frozenMatDict[slot20] = (slot0._frozenMatDict[slot20] or 0) + slot21
+				for iter_13_6, iter_13_7 in pairs(var_13_2) do
+					arg_13_0._frozenMatDict[iter_13_6] = (arg_13_0._frozenMatDict[iter_13_6] or 0) + iter_13_7
 				end
 			end
 		end
 	end
 end
 
-function slot0.refreshAllNeedMat(slot0)
-	slot0._needMatDict = {}
+function var_0_0.refreshAllNeedMat(arg_14_0)
+	arg_14_0._needMatDict = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		for slot11, slot12 in pairs(slot6:getNeedMatDict()) do
-			slot0._needMatDict[slot11] = slot12 + (slot0._needMatDict[slot11] or 0)
+	local var_14_0 = arg_14_0:getList()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_1 = iter_14_1:getNeedMatDict()
+
+		for iter_14_2, iter_14_3 in pairs(var_14_1) do
+			arg_14_0._needMatDict[iter_14_2] = iter_14_3 + (arg_14_0._needMatDict[iter_14_2] or 0)
 		end
 	end
 end
 
-function slot0.setWorkCritterInfo(slot0, slot1, slot2)
-	if slot0:getManufactureMOById(slot1) then
-		slot3:setWorkCritterInfo(slot2)
+function var_0_0.setWorkCritterInfo(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getManufactureMOById(arg_15_1)
+
+	if var_15_0 then
+		var_15_0:setWorkCritterInfo(arg_15_2)
 	end
 end
 
-function slot0.setCritterBuildingInfoList(slot0, slot1)
-	if not slot1 then
+function var_0_0.setCritterBuildingInfoList(arg_16_0, arg_16_1)
+	if not arg_16_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:setCritterBuildingInfo(slot6)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
+		arg_16_0:setCritterBuildingInfo(iter_16_1)
 	end
 end
 
-function slot0.setCritterBuildingInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.setCritterBuildingInfo(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	slot2 = false
+	local var_17_0 = false
+	local var_17_1 = arg_17_1.buildingUid
+	local var_17_2 = arg_17_0:getCritterBuildingMOById(var_17_1)
 
-	if not slot0:getCritterBuildingMOById(slot1.buildingUid) then
-		slot4 = RoomBuildingCritterMO.New()
-		slot2 = true
+	if not var_17_2 then
+		var_17_2 = RoomBuildingCritterMO.New()
+		var_17_0 = true
 	end
 
-	slot4:init(slot1)
+	var_17_2:init(arg_17_1)
 
-	if slot2 then
-		table.insert(slot0._buildingCritterMOList, slot4)
+	if var_17_0 then
+		table.insert(arg_17_0._buildingCritterMOList, var_17_2)
 
-		slot0._buildingCritterMODict[slot3] = slot4
+		arg_17_0._buildingCritterMODict[var_17_1] = var_17_2
 	end
 end
 
-function slot0.setPlayManufactureUnlock(slot0, slot1)
-	slot0._isPlayManufactureUnlock = slot1 and uv0 or uv1
+function var_0_0.setPlayManufactureUnlock(arg_18_0, arg_18_1)
+	arg_18_0._isPlayManufactureUnlock = arg_18_1 and var_0_1 or var_0_2
 
-	PlayerPrefsHelper.setNumber(slot0:getManufacturePlayUnlockKey(), slot0._isPlayManufactureUnlock)
+	local var_18_0 = arg_18_0:getManufacturePlayUnlockKey()
+
+	PlayerPrefsHelper.setNumber(var_18_0, arg_18_0._isPlayManufactureUnlock)
 end
 
-function slot0.setExpandManufactureBtn(slot0, slot1)
-	if slot0._isExpandManufacture == slot1 then
+function var_0_0.setExpandManufactureBtn(arg_19_0, arg_19_1)
+	if arg_19_0._isExpandManufacture == arg_19_1 then
 		return
 	end
 
-	slot0._isExpandManufacture = slot1
+	arg_19_0._isExpandManufacture = arg_19_1
 
-	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.RoomExpandManufacture, slot1 and uv0 or uv1)
+	local var_19_0 = arg_19_1 and var_0_1 or var_0_2
+
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.RoomExpandManufacture, var_19_0)
 end
 
-function slot0.setReadNewManufactureFormula(slot0, slot1)
-	slot0:initNewManufactureFormulaCacheData()
+function var_0_0.setReadNewManufactureFormula(arg_20_0, arg_20_1)
+	arg_20_0:initNewManufactureFormulaCacheData()
 
-	if not slot0._readFormulaDict[slot1] then
-		slot0._readFormulaDict[slot1] = {}
+	local var_20_0 = arg_20_0._readFormulaDict[arg_20_1]
+
+	if not var_20_0 then
+		var_20_0 = {}
+		arg_20_0._readFormulaDict[arg_20_1] = var_20_0
 	end
 
-	for slot7, slot8 in pairs(slot0:getCanProduceManufactureItemDict(slot1)) do
-		slot2[tostring(slot7)] = true
+	local var_20_1 = arg_20_0:getCanProduceManufactureItemDict(arg_20_1)
+
+	for iter_20_0, iter_20_1 in pairs(var_20_1) do
+		var_20_0[tostring(iter_20_0)] = true
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomManufactureReadFormula, cjson.encode(slot0._readFormulaDict) or "")
+	local var_20_2 = cjson.encode(arg_20_0._readFormulaDict) or ""
+
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomManufactureReadFormula, var_20_2)
 end
 
-function slot0.setRecordOneKeyType(slot0, slot1)
-	if not LuaUtil.tableContains(RoomManufactureEnum.OneKeyType, slot1) or slot0._recordOneKeyType == slot1 then
+function var_0_0.setRecordOneKeyType(arg_21_0, arg_21_1)
+	if not LuaUtil.tableContains(RoomManufactureEnum.OneKeyType, arg_21_1) or arg_21_0._recordOneKeyType == arg_21_1 then
 		return
 	end
 
-	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.RoomManufactureOneKeyType, slot1)
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.RoomManufactureOneKeyType, arg_21_1)
 
-	slot0._recordOneKeyType = slot1
+	arg_21_0._recordOneKeyType = arg_21_1
 end
 
-function slot0.setSelectedSlot(slot0, slot1, slot2)
-	slot0._selectedSlotBuildingUid = slot1
-	slot0._selectedSlotId = slot2
+function var_0_0.setSelectedSlot(arg_22_0, arg_22_1, arg_22_2)
+	arg_22_0._selectedSlotBuildingUid = arg_22_1
+	arg_22_0._selectedSlotId = arg_22_2
 end
 
-function slot0.setSelectedCritterSlot(slot0, slot1, slot2)
-	slot0._selectedCritterSlotBuildingUid = slot1
-	slot0._selectedCritterSlotId = slot2
+function var_0_0.setSelectedCritterSlot(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0._selectedCritterSlotBuildingUid = arg_23_1
+	arg_23_0._selectedCritterSlotId = arg_23_2
 end
 
-function slot0.setSelectedCritterSeatSlot(slot0, slot1, slot2)
-	slot0._selectedCritterSeatSlotBuildingUid = slot1
-	slot0._selectedCritterSeatSlotId = slot2
+function var_0_0.setSelectedCritterSeatSlot(arg_24_0, arg_24_1, arg_24_2)
+	arg_24_0._selectedCritterSeatSlotBuildingUid = arg_24_1
+	arg_24_0._selectedCritterSeatSlotId = arg_24_2
 end
 
-function slot0.setSelectedTransportPath(slot0, slot1)
-	slot0._selectedTransportPathId = slot1
+function var_0_0.setSelectedTransportPath(arg_25_0, arg_25_1)
+	arg_25_0._selectedTransportPathId = arg_25_1
 end
 
-function slot0.setNewRestCritter(slot0, slot1)
-	slot0._newRestCritter = slot1
+function var_0_0.setNewRestCritter(arg_26_0, arg_26_1)
+	arg_26_0._newRestCritter = arg_26_1
 end
 
-function slot0.setIsJump2ManufactureBuildingList(slot0, slot1)
-	slot0._isJumpManuBuildingList = slot1
+function var_0_0.setIsJump2ManufactureBuildingList(arg_27_0, arg_27_1)
+	arg_27_0._isJumpManuBuildingList = arg_27_1
 end
 
-function slot0.setCameraRecord(slot0, slot1, slot2)
-	slot0._recordCameraState = slot1
-	slot0._recordCameraParam = slot2
+function var_0_0.setCameraRecord(arg_28_0, arg_28_1, arg_28_2)
+	arg_28_0._recordCameraState = arg_28_1
+	arg_28_0._recordCameraParam = arg_28_2
 end
 
-function slot0.getTradeLevel(slot0)
-	return slot0._tradeLevel or 0
+function var_0_0.getTradeLevel(arg_29_0)
+	return arg_29_0._tradeLevel or 0
 end
 
-function slot0.getCritterWorkingBuilding(slot0, slot1)
-	if not slot1 then
+function var_0_0.getCritterWorkingBuilding(arg_30_0, arg_30_1)
+	if not arg_30_1 then
 		return
 	end
 
-	slot2 = nil
+	local var_30_0
+	local var_30_1 = arg_30_0:getList()
 
-	for slot7, slot8 in ipairs(slot0:getList()) do
-		if slot8:getCritterWorkSlot(slot1) then
-			slot2 = slot8.uid
+	for iter_30_0, iter_30_1 in ipairs(var_30_1) do
+		if iter_30_1:getCritterWorkSlot(arg_30_1) then
+			var_30_0 = iter_30_1.uid
 
 			break
 		end
 	end
 
-	return slot2
+	return var_30_0
 end
 
-function slot0.getCritterRestingBuilding(slot0, slot1)
-	if not slot1 then
+function var_0_0.getCritterRestingBuilding(arg_31_0, arg_31_1)
+	if not arg_31_1 then
 		return
 	end
 
-	slot2 = nil
+	local var_31_0
+	local var_31_1 = var_0_0.instance:getAllCritterBuildingMOList()
 
-	for slot7, slot8 in ipairs(uv0.instance:getAllCritterBuildingMOList()) do
-		if slot8:isCritterInSeatSlot(slot1) then
-			slot2 = slot8.uid
+	for iter_31_0, iter_31_1 in ipairs(var_31_1) do
+		if iter_31_1:isCritterInSeatSlot(arg_31_1) then
+			var_31_0 = iter_31_1.uid
 
 			break
 		end
 	end
 
-	return slot2
+	return var_31_0
 end
 
-function slot0.getManufactureItemCount(slot0, slot1, slot2, slot3, slot4)
-	slot5 = 0
-	slot6 = 0
+function var_0_0.getManufactureItemCount(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4)
+	local var_32_0 = 0
+	local var_32_1 = 0
+	local var_32_2 = MaterialEnum.MaterialType.Item
+	local var_32_3 = ManufactureConfig.instance:getItemId(arg_32_1)
 
-	if ManufactureConfig.instance:getItemId(slot1) then
-		slot9 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot8)
-		slot5 = slot4 and slot9 or slot9 - slot0:getFrozenManufactureItemCount(slot1)
+	if var_32_3 then
+		local var_32_4 = ItemModel.instance:getItemQuantity(var_32_2, var_32_3)
+		local var_32_5 = arg_32_0:getFrozenManufactureItemCount(arg_32_1)
+
+		var_32_0 = arg_32_4 and var_32_4 or var_32_4 - var_32_5
 	end
 
-	if slot2 then
-		slot6 = slot0:getManufactureItemCountInSlotQueue(slot1, false, slot3)
+	if arg_32_2 then
+		var_32_1 = arg_32_0:getManufactureItemCountInSlotQueue(arg_32_1, false, arg_32_3)
 	end
 
-	return slot5, slot6
+	return var_32_0, var_32_1
 end
 
-function slot0.getManufactureItemCountInSlotQueue(slot0, slot1, slot2, slot3)
-	for slot9, slot10 in ipairs(slot0:getList()) do
-		slot4 = 0 + slot10:getManufactureItemFinishCount(slot1, slot2, slot3)
+function var_0_0.getManufactureItemCountInSlotQueue(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	local var_33_0 = 0
+	local var_33_1 = arg_33_0:getList()
+
+	for iter_33_0, iter_33_1 in ipairs(var_33_1) do
+		var_33_0 = var_33_0 + iter_33_1:getManufactureItemFinishCount(arg_33_1, arg_33_2, arg_33_3)
 	end
 
-	return slot4
+	return var_33_0
 end
 
-function slot0.isManufactureUnlock(slot0, slot1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoomManufacture) and GuideModel.instance:isGuideFinish(CritterEnum.OppenFuncGuide.RoomManufacture) then
-		slot2 = true
+function var_0_0.isManufactureUnlock(arg_34_0, arg_34_1)
+	local var_34_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoomManufacture)
+
+	if not var_34_0 and GuideModel.instance:isGuideFinish(CritterEnum.OppenFuncGuide.RoomManufacture) then
+		var_34_0 = true
 	end
 
-	if not slot2 and slot1 then
+	if not var_34_0 and arg_34_1 then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.RoomManufacture))
 	end
 
-	return slot2
+	return var_34_0
 end
 
-function slot0.getManufacturePlayUnlockKey(slot0)
-	return string.format("%s_%s", PlayerPrefsKey.RoomManufactureEntrancePlayUnlockAnim, PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getManufacturePlayUnlockKey(arg_35_0)
+	local var_35_0 = PlayerModel.instance:getPlayinfo().userId
+
+	return string.format("%s_%s", PlayerPrefsKey.RoomManufactureEntrancePlayUnlockAnim, var_35_0)
 end
 
-function slot0.getPlayManufactureUnlock(slot0)
-	if slot0._isPlayManufactureUnlock == nil then
-		slot0._isPlayManufactureUnlock = PlayerPrefsHelper.getNumber(slot0:getManufacturePlayUnlockKey(), uv0)
+function var_0_0.getPlayManufactureUnlock(arg_36_0)
+	if arg_36_0._isPlayManufactureUnlock == nil then
+		local var_36_0 = arg_36_0:getManufacturePlayUnlockKey()
+
+		arg_36_0._isPlayManufactureUnlock = PlayerPrefsHelper.getNumber(var_36_0, var_0_2)
 	end
 
-	return slot0._isPlayManufactureUnlock == uv1
+	return arg_36_0._isPlayManufactureUnlock == var_0_1
 end
 
-function slot0.getExpandManufactureBtn(slot0)
-	if not slot0._isExpandManufacture then
-		slot0._isExpandManufacture = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.RoomExpandManufacture, uv0) == uv1
+function var_0_0.getExpandManufactureBtn(arg_37_0)
+	if not arg_37_0._isExpandManufacture then
+		arg_37_0._isExpandManufacture = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.RoomExpandManufacture, var_0_2) == var_0_1
 	end
 
-	return slot0._isExpandManufacture
+	return arg_37_0._isExpandManufacture
 end
 
-function slot0.getRecordOneKeyType(slot0)
-	if not slot0._recordOneKeyType then
-		slot0._recordOneKeyType = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.RoomManufactureOneKeyType, RoomManufactureEnum.OneKeyType.ShortTime)
+function var_0_0.getRecordOneKeyType(arg_38_0)
+	local var_38_0 = RoomManufactureEnum.OneKeyType.ShortTime
+
+	if not arg_38_0._recordOneKeyType then
+		arg_38_0._recordOneKeyType = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.RoomManufactureOneKeyType, var_38_0)
 	end
 
-	if slot0._recordOneKeyType == RoomManufactureEnum.OneKeyType.Customize and not OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
-		slot0._recordOneKeyType = slot1
+	if arg_38_0._recordOneKeyType == RoomManufactureEnum.OneKeyType.Customize and not OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
+		arg_38_0._recordOneKeyType = var_38_0
 	end
 
-	return slot0._recordOneKeyType or slot1
+	return arg_38_0._recordOneKeyType or var_38_0
 end
 
-function slot0.getManufactureMOById(slot0, slot1)
-	return slot0:getById(slot1)
+function var_0_0.getManufactureMOById(arg_39_0, arg_39_1)
+	return arg_39_0:getById(arg_39_1)
 end
 
-function slot0.getAllManufactureMOList(slot0)
-	return slot0:getList()
+function var_0_0.getAllManufactureMOList(arg_40_0)
+	return arg_40_0:getList()
 end
 
-function slot3(slot0, slot1)
-	if slot0.config.buildingType ~= slot1.config.buildingType then
-		return slot2 < slot3
+local function var_0_3(arg_41_0, arg_41_1)
+	local var_41_0 = arg_41_0.config.buildingType
+	local var_41_1 = arg_41_1.config.buildingType
+
+	if var_41_0 ~= var_41_1 then
+		return var_41_0 < var_41_1
 	end
 
-	if slot0.buildingId ~= slot1.buildingId then
-		return slot4 < slot5
+	local var_41_2 = arg_41_0.buildingId
+	local var_41_3 = arg_41_1.buildingId
+
+	if var_41_2 ~= var_41_3 then
+		return var_41_2 < var_41_3
 	end
 
-	return slot0.uid < slot1.uid
+	return arg_41_0.uid < arg_41_1.uid
 end
 
-function slot0.getAllPlacedManufactureBuilding(slot0)
-	slot1 = {}
+function var_0_0.getAllPlacedManufactureBuilding(arg_42_0)
+	local var_42_0 = {}
+	local var_42_1 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Collect)
 
-	tabletool.addValues(slot1, RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Collect))
-	tabletool.addValues(slot1, RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Process))
-	tabletool.addValues(slot1, RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Manufacture))
-	table.sort(slot1, uv0)
+	tabletool.addValues(var_42_0, var_42_1)
 
-	return slot1
+	local var_42_2 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Process)
+
+	tabletool.addValues(var_42_0, var_42_2)
+
+	local var_42_3 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Manufacture)
+
+	tabletool.addValues(var_42_0, var_42_3)
+	table.sort(var_42_0, var_0_3)
+
+	return var_42_0
 end
 
-function slot0.getAllBuildingCanClaimProducts(slot0)
-	slot1 = {}
+function var_0_0.getAllBuildingCanClaimProducts(arg_43_0)
+	local var_43_0 = {}
+	local var_43_1 = arg_43_0:getAllPlacedManufactureBuilding()
 
-	for slot6, slot7 in ipairs(slot0:getAllPlacedManufactureBuilding()) do
-		if slot7:isCanClaimProduction() then
-			slot1[#slot1 + 1] = slot7
+	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
+		if iter_43_1:isCanClaimProduction() then
+			var_43_0[#var_43_0 + 1] = iter_43_1
 		end
 	end
 
-	return slot1
+	return var_43_0
 end
 
-function slot0.isMaxLevel(slot0, slot1)
-	slot2 = true
+function var_0_0.isMaxLevel(arg_44_0, arg_44_1)
+	local var_44_0 = true
+	local var_44_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_44_1)
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-		slot2 = ManufactureConfig.instance:getBuildingMaxLevel(slot3.buildingId) <= slot3.level
+	if var_44_1 then
+		var_44_0 = ManufactureConfig.instance:getBuildingMaxLevel(var_44_1.buildingId) <= var_44_1.level
 	end
 
-	return slot2
+	return var_44_0
 end
 
-function slot0.getManufactureLevelUpParam(slot0, slot1)
-	slot2 = {
-		buildingUid = slot1,
+function var_0_0.getManufactureLevelUpParam(arg_45_0, arg_45_1)
+	local var_45_0 = {
+		buildingUid = arg_45_1,
 		extraCheckFunc = ManufactureController.checkTradeLevelCondition,
 		extraCheckFuncObj = ManufactureController.instance
 	}
+	local var_45_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_45_1)
+	local var_45_2 = var_45_1.buildingId
+	local var_45_3 = ManufactureConfig.instance:getBuildingUpgradeGroup(var_45_2)
 
-	if not ManufactureConfig.instance:getBuildingUpgradeGroup(RoomMapBuildingModel.instance:getBuildingMOById(slot1).buildingId) or slot5 == 0 then
-		return slot2
+	if not var_45_3 or var_45_3 == 0 then
+		return var_45_0
 	end
 
-	slot6 = slot3.level
-	slot7 = slot6 + 1
-	slot2.levelUpInfoList = {}
+	local var_45_4 = var_45_1.level
+	local var_45_5 = var_45_4 + 1
 
-	table.insert(slot2.levelUpInfoList, {
+	var_45_0.levelUpInfoList = {}
+
+	local var_45_6 = {
 		desc = luaLang("room_building_level_up_tip"),
-		currentDesc = formatLuaLang("v1a5_aizila_level", slot6),
-		nextDesc = formatLuaLang("v1a5_aizila_level", slot7)
-	})
+		currentDesc = formatLuaLang("v1a5_aizila_level", var_45_4),
+		nextDesc = formatLuaLang("v1a5_aizila_level", var_45_5)
+	}
 
-	if ManufactureConfig.instance:getBuildingSlotCount(slot4, slot6) ~= ManufactureConfig.instance:getBuildingSlotCount(slot4, slot7) then
-		table.insert(slot2.levelUpInfoList, {
+	table.insert(var_45_0.levelUpInfoList, var_45_6)
+
+	local var_45_7 = ManufactureConfig.instance:getBuildingSlotCount(var_45_2, var_45_4)
+	local var_45_8 = ManufactureConfig.instance:getBuildingSlotCount(var_45_2, var_45_5)
+
+	if var_45_7 ~= var_45_8 then
+		local var_45_9 = {
 			desc = luaLang("room_manufacture_building_add_slot"),
-			currentDesc = slot9,
-			nextDesc = slot10
-		})
+			currentDesc = var_45_7,
+			nextDesc = var_45_8
+		}
+
+		table.insert(var_45_0.levelUpInfoList, var_45_9)
 	end
 
-	slot11 = {}
-	slot12 = {}
+	local var_45_10 = {}
+	local var_45_11 = {}
+	local var_45_12 = ManufactureConfig.instance:getNewManufactureItemList(var_45_3, var_45_5)
 
-	for slot17, slot18 in ipairs(ManufactureConfig.instance:getNewManufactureItemList(slot5, slot7)) do
-		if not slot12[ManufactureConfig.instance:getItemId(slot18)] then
-			slot11[#slot11 + 1] = {
+	for iter_45_0, iter_45_1 in ipairs(var_45_12) do
+		local var_45_13 = ManufactureConfig.instance:getItemId(iter_45_1)
+
+		if not var_45_11[var_45_13] then
+			var_45_10[#var_45_10 + 1] = {
 				type = MaterialEnum.MaterialType.Item,
-				id = slot19
+				id = var_45_13
 			}
-			slot12[slot19] = true
+			var_45_11[var_45_13] = true
 		end
 	end
 
-	table.insert(slot2.levelUpInfoList, {
+	local var_45_14 = {
 		desc = luaLang("room_new_manufacture_item"),
-		newItemInfoList = slot11
-	})
+		newItemInfoList = var_45_10
+	}
 
-	return slot2
+	table.insert(var_45_0.levelUpInfoList, var_45_14)
+
+	return var_45_0
 end
 
-function slot0.isAreaHasManufactureRunning(slot0, slot1)
-	slot2 = false
+function var_0_0.isAreaHasManufactureRunning(arg_46_0, arg_46_1)
+	local var_46_0 = false
+	local var_46_1 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(arg_46_1)
+	local var_46_2 = var_46_1 and var_46_1:getBuildingMOList(true)
 
-	if RoomMapBuildingAreaModel.instance:getAreaMOByBType(slot1) and slot3:getBuildingMOList(true) then
-		for slot8, slot9 in ipairs(slot4) do
-			if slot9:getManufactureState() == RoomManufactureEnum.ManufactureState.Running then
-				slot2 = true
+	if var_46_2 then
+		for iter_46_0, iter_46_1 in ipairs(var_46_2) do
+			if iter_46_1:getManufactureState() == RoomManufactureEnum.ManufactureState.Running then
+				var_46_0 = true
 
 				break
 			end
 		end
 	end
 
-	return slot2
+	return var_46_0
 end
 
-function slot0.getCanProduceManufactureItemDict(slot0, slot1)
-	slot2 = {}
+function var_0_0.getCanProduceManufactureItemDict(arg_47_0, arg_47_1)
+	local var_47_0 = {}
+	local var_47_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_47_1)
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-		for slot10, slot11 in ipairs(ManufactureConfig.instance:getAllManufactureItems(slot3.buildingId)) do
-			if ManufactureConfig.instance:getManufactureItemNeedLevel(slot4, slot11) <= slot3:getLevel() then
-				slot2[slot11] = true
+	if var_47_1 then
+		local var_47_2 = var_47_1.buildingId
+		local var_47_3 = var_47_1:getLevel()
+		local var_47_4 = ManufactureConfig.instance:getAllManufactureItems(var_47_2)
+
+		for iter_47_0, iter_47_1 in ipairs(var_47_4) do
+			if var_47_3 >= ManufactureConfig.instance:getManufactureItemNeedLevel(var_47_2, iter_47_1) then
+				var_47_0[iter_47_1] = true
 			end
 		end
 	end
 
-	return slot2
+	return var_47_0
 end
 
-function slot0.hasNewManufactureFormula(slot0, slot1)
-	slot2 = false
+function var_0_0.hasNewManufactureFormula(arg_48_0, arg_48_1)
+	local var_48_0 = false
 
-	slot0:initNewManufactureFormulaCacheData()
+	arg_48_0:initNewManufactureFormulaCacheData()
 
-	slot3 = slot0._readFormulaDict[slot1]
+	local var_48_1 = arg_48_0._readFormulaDict[arg_48_1]
+	local var_48_2 = arg_48_0:getCanProduceManufactureItemDict(arg_48_1)
 
-	for slot8, slot9 in pairs(slot0:getCanProduceManufactureItemDict(slot1)) do
-		if not slot3 or not slot3[tostring(slot8)] then
-			slot2 = true
+	for iter_48_0, iter_48_1 in pairs(var_48_2) do
+		local var_48_3 = tostring(iter_48_0)
+
+		if not var_48_1 or not var_48_1[var_48_3] then
+			var_48_0 = true
 
 			break
 		end
 	end
 
-	return slot2
+	return var_48_0
 end
 
-function slot0.hasPathLinkedToThisBuildingType(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.hasPathLinkedToThisBuildingType(arg_49_0, arg_49_1, arg_49_2)
+	local var_49_0 = false
+	local var_49_1 = ManufactureConfig.instance:getManufactureItemBelongBuildingType(arg_49_1)
 
-	if ManufactureConfig.instance:getManufactureItemBelongBuildingType(slot1) and slot2 and RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot4, slot2) then
-		slot3 = slot5:isLinkFinish() and slot5:hasCritterWorking()
+	if var_49_1 and arg_49_2 then
+		local var_49_2 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_49_1, arg_49_2)
+
+		if var_49_2 then
+			local var_49_3 = var_49_2:isLinkFinish()
+			local var_49_4 = var_49_2:hasCritterWorking()
+
+			var_49_0 = var_49_3 and var_49_4
+		end
 	end
 
-	return slot3
+	return var_49_0
 end
 
-function slot0.getMaxCanProductCount(slot0, slot1)
-	if not slot1 then
-		return OneKeyAddPopListModel.MINI_COUNT, true
+function var_0_0.getMaxCanProductCount(arg_50_0, arg_50_1)
+	local var_50_0 = true
+
+	if not arg_50_1 then
+		return OneKeyAddPopListModel.MINI_COUNT, var_50_0
 	end
 
-	slot3 = 0
-	slot4, slot5 = ManufactureConfig.instance:getManufactureItemUnitCountRange(slot1)
-	slot6 = slot4 / slot5
+	local var_50_1 = 0
+	local var_50_2, var_50_3 = ManufactureConfig.instance:getManufactureItemUnitCountRange(arg_50_1)
+	local var_50_4 = var_50_2 / var_50_3
+	local var_50_5 = ManufactureConfig.instance:getManufactureItemBelongBuildingType(arg_50_1)
+	local var_50_6 = RoomMapBuildingModel.instance:getBuildingListByType(var_50_5)
 
-	if RoomMapBuildingModel.instance:getBuildingListByType(ManufactureConfig.instance:getManufactureItemBelongBuildingType(slot1)) and #slot8 > 0 then
-		for slot12, slot13 in ipairs(slot8) do
-			if ManufactureConfig.instance:isManufactureItemBelongBuilding(slot13.buildingId, slot1) then
-				slot15 = 0
+	if var_50_6 and #var_50_6 > 0 then
+		for iter_50_0, iter_50_1 in ipairs(var_50_6) do
+			if ManufactureConfig.instance:isManufactureItemBelongBuilding(iter_50_1.buildingId, arg_50_1) then
+				local var_50_7 = 0
+				local var_50_8 = iter_50_1:getEmptySlotIdList()
 
-				if #slot13:getEmptySlotIdList() > 0 then
-					slot15 = #slot16 * slot6
+				if #var_50_8 > 0 then
+					var_50_7 = #var_50_8 * var_50_4
 				end
 
-				slot3 = slot3 + slot15
+				var_50_1 = var_50_1 + var_50_7
 			end
 		end
 	end
 
-	return math.max(slot3, OneKeyAddPopListModel.MINI_COUNT), slot3 == 0
+	local var_50_9 = var_50_1 == 0
+
+	return math.max(var_50_1, OneKeyAddPopListModel.MINI_COUNT), var_50_9
 end
 
-function slot0.getManufactureWrongType(slot0, slot1, slot2)
-	if (RoomMapBuildingModel.instance:getBuildingMOById(slot1) and slot3:getSlotState(slot2)) ~= RoomManufactureEnum.SlotState.Stop then
+function var_0_0.getManufactureWrongType(arg_51_0, arg_51_1, arg_51_2)
+	local var_51_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_51_1)
+
+	if (var_51_0 and var_51_0:getSlotState(arg_51_2)) ~= RoomManufactureEnum.SlotState.Stop then
 		return
 	end
 
-	slot5 = nil
+	local var_51_1
+	local var_51_2 = var_51_0:getSlotManufactureItemId(arg_51_2)
+	local var_51_3 = ManufactureConfig.instance:getNeedMatItemList(var_51_2)
+	local var_51_4 = var_51_0.config.buildingType
 
-	for slot12, slot13 in ipairs(ManufactureConfig.instance:getNeedMatItemList(slot3:getSlotManufactureItemId(slot2))) do
-		slot16, slot17 = slot0:getManufactureItemCount(slot13.id, true, true, true)
+	for iter_51_0, iter_51_1 in ipairs(var_51_3) do
+		local var_51_5 = iter_51_1.id
+		local var_51_6 = iter_51_1.quantity
+		local var_51_7, var_51_8 = arg_51_0:getManufactureItemCount(var_51_5, true, true, true)
 
-		if slot16 < slot13.quantity then
-			slot5 = (slot15 > slot16 + slot17 or (not slot0:hasPathLinkedToThisBuildingType(slot14, slot3.config.buildingType) or RoomManufactureEnum.ManufactureWrongType.WaitPreMat) and RoomManufactureEnum.ManufactureWrongType.NoLinkPath) and RoomManufactureEnum.ManufactureWrongType.LackPreMat
+		if var_51_7 < var_51_6 then
+			if var_51_6 <= var_51_7 + var_51_8 then
+				if arg_51_0:hasPathLinkedToThisBuildingType(var_51_5, var_51_4) then
+					var_51_1 = RoomManufactureEnum.ManufactureWrongType.WaitPreMat
+				else
+					var_51_1 = RoomManufactureEnum.ManufactureWrongType.NoLinkPath
+				end
+			else
+				var_51_1 = RoomManufactureEnum.ManufactureWrongType.LackPreMat
+			end
 		end
 
-		if slot5 and slot5 ~= RoomManufactureEnum.ManufactureWrongType.WaitPreMat then
+		if var_51_1 and var_51_1 ~= RoomManufactureEnum.ManufactureWrongType.WaitPreMat then
 			break
 		end
 	end
 
-	if not slot5 and not next(slot3:getSlot2CritterDict()) then
-		slot5 = RoomManufactureEnum.ManufactureWrongType.NoCritter
-	end
+	if not var_51_1 then
+		local var_51_9 = var_51_0:getSlot2CritterDict()
 
-	return slot5
-end
-
-function slot0.getManufactureWrongTipItemList(slot0, slot1)
-	if not RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-		return {}
-	end
-
-	slot4 = {}
-
-	for slot9, slot10 in ipairs(slot3:getAllUnlockedSlotIdList()) do
-		if slot0:getManufactureWrongType(slot1, slot10) and slot11 ~= RoomManufactureEnum.ManufactureWrongType.WaitPreMat then
-			if not slot4[slot3:getSlotManufactureItemId(slot10)] then
-				slot4[slot12] = {}
-			end
-
-			slot13[#slot13 + 1] = slot10
+		if not next(var_51_9) then
+			var_51_1 = RoomManufactureEnum.ManufactureWrongType.NoCritter
 		end
 	end
 
-	for slot9, slot10 in pairs(slot4) do
-		slot2[#slot2 + 1] = {
-			manufactureItemId = slot9,
-			wrongSlotIdList = slot10
+	return var_51_1
+end
+
+function var_0_0.getManufactureWrongTipItemList(arg_52_0, arg_52_1)
+	local var_52_0 = {}
+	local var_52_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_52_1)
+
+	if not var_52_1 then
+		return var_52_0
+	end
+
+	local var_52_2 = {}
+	local var_52_3 = var_52_1:getAllUnlockedSlotIdList()
+
+	for iter_52_0, iter_52_1 in ipairs(var_52_3) do
+		local var_52_4 = arg_52_0:getManufactureWrongType(arg_52_1, iter_52_1)
+
+		if var_52_4 and var_52_4 ~= RoomManufactureEnum.ManufactureWrongType.WaitPreMat then
+			local var_52_5 = var_52_1:getSlotManufactureItemId(iter_52_1)
+			local var_52_6 = var_52_2[var_52_5]
+
+			if not var_52_6 then
+				var_52_6 = {}
+				var_52_2[var_52_5] = var_52_6
+			end
+
+			var_52_6[#var_52_6 + 1] = iter_52_1
+		end
+	end
+
+	for iter_52_2, iter_52_3 in pairs(var_52_2) do
+		var_52_0[#var_52_0 + 1] = {
+			manufactureItemId = iter_52_2,
+			wrongSlotIdList = iter_52_3
 		}
 	end
 
-	return slot2
+	return var_52_0
 end
 
-function slot0.getAllWrongManufactureItemList(slot0, slot1, slot2, slot3)
-	if not RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
-		return {}, {}
+function var_0_0.getAllWrongManufactureItemList(arg_53_0, arg_53_1, arg_53_2, arg_53_3)
+	local var_53_0 = {}
+	local var_53_1 = {}
+	local var_53_2 = RoomMapBuildingModel.instance:getBuildingMOById(arg_53_1)
+
+	if not var_53_2 then
+		return var_53_0, var_53_1
 	end
 
-	slot7 = {}
-	slot8 = slot6.config.buildingType
+	local var_53_3 = {}
+	local var_53_4 = var_53_2.config.buildingType
+	local var_53_5 = ManufactureConfig.instance:getNeedMatItemList(arg_53_2)
 
-	for slot13, slot14 in ipairs(ManufactureConfig.instance:getNeedMatItemList(slot2)) do
-		slot15 = true
-		slot17 = slot14.quantity * slot3
-		slot18 = nil
+	for iter_53_0, iter_53_1 in ipairs(var_53_5) do
+		local var_53_6 = true
+		local var_53_7 = iter_53_1.id
+		local var_53_8 = iter_53_1.quantity * arg_53_3
+		local var_53_9
+		local var_53_10 = ManufactureConfig.instance:getManufactureItemBelongBuildingType(var_53_7)
+		local var_53_11 = RoomMapBuildingModel.instance:getBuildingListByType(var_53_10)
 
-		if RoomMapBuildingModel.instance:getBuildingListByType(ManufactureConfig.instance:getManufactureItemBelongBuildingType(slot14.id)) and #slot20 > 0 then
-			for slot24, slot25 in ipairs(slot20) do
-				if ManufactureConfig.instance:isManufactureItemBelongBuilding(slot25.buildingId, slot16) then
-					if ManufactureConfig.instance:getManufactureItemNeedLevel(slot26, slot16) and slot29 <= slot25:getLevel() then
-						slot15 = false
+		if var_53_11 and #var_53_11 > 0 then
+			for iter_53_2, iter_53_3 in ipairs(var_53_11) do
+				local var_53_12 = iter_53_3.buildingId
+
+				if ManufactureConfig.instance:isManufactureItemBelongBuilding(var_53_12, var_53_7) then
+					local var_53_13 = iter_53_3:getLevel()
+					local var_53_14 = ManufactureConfig.instance:getManufactureItemNeedLevel(var_53_12, var_53_7)
+
+					if var_53_14 and var_53_14 <= var_53_13 then
+						var_53_6 = false
 
 						break
 					end
@@ -649,140 +797,164 @@ function slot0.getAllWrongManufactureItemList(slot0, slot1, slot2, slot3)
 			end
 		end
 
-		if slot15 then
-			slot18 = RoomManufactureEnum.ManufactureWrongType.PreMatNotUnlock
+		if var_53_6 then
+			var_53_9 = RoomManufactureEnum.ManufactureWrongType.PreMatNotUnlock
 		else
-			slot21, slot22 = slot0:getManufactureItemCount(slot16, true, true)
+			local var_53_15, var_53_16 = arg_53_0:getManufactureItemCount(var_53_7, true, true)
 
-			if slot21 < slot17 then
-				if slot17 <= slot21 + slot22 then
-					if not slot0:hasPathLinkedToThisBuildingType(slot16, slot8) then
-						slot18 = RoomManufactureEnum.ManufactureWrongType.NoLinkPath
+			if var_53_15 < var_53_8 then
+				local var_53_17 = arg_53_0:hasPathLinkedToThisBuildingType(var_53_7, var_53_4)
+
+				if var_53_8 <= var_53_15 + var_53_16 then
+					if not var_53_17 then
+						var_53_9 = RoomManufactureEnum.ManufactureWrongType.NoLinkPath
 					end
 				else
-					slot18 = RoomManufactureEnum.ManufactureWrongType.LackPreMat
+					var_53_9 = RoomManufactureEnum.ManufactureWrongType.LackPreMat
 				end
 			end
 		end
 
-		if slot18 then
-			if not slot7[slot18] then
-				slot7[slot18] = {}
+		if var_53_9 then
+			local var_53_18 = var_53_3[var_53_9]
+
+			if not var_53_18 then
+				var_53_18 = {}
+				var_53_3[var_53_9] = var_53_18
 			end
 
-			slot21[#slot21 + 1] = {
-				manufactureItemId = slot16,
-				buildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(slot16),
-				needQuantity = slot17
+			local var_53_19 = {
+				manufactureItemId = var_53_7,
+				buildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(var_53_7),
+				needQuantity = var_53_8
 			}
+
+			var_53_18[#var_53_18 + 1] = var_53_19
 		end
 	end
 
-	slot10 = {}
+	local var_53_20 = {}
 
-	for slot14, slot15 in pairs(slot7) do
-		for slot19, slot20 in ipairs(slot15) do
-			if slot14 ~= RoomManufactureEnum.ManufactureWrongType.NoLinkPath or not slot10[slot20.buildingType] then
-				slot4[#slot4 + 1] = {
-					manufactureItemId = slot20.manufactureItemId,
-					wrongType = slot14,
-					buildingType = slot20.buildingType,
-					needQuantity = slot20.needQuantity
+	for iter_53_4, iter_53_5 in pairs(var_53_3) do
+		for iter_53_6, iter_53_7 in ipairs(iter_53_5) do
+			if iter_53_4 ~= RoomManufactureEnum.ManufactureWrongType.NoLinkPath or not var_53_20[iter_53_7.buildingType] then
+				var_53_0[#var_53_0 + 1] = {
+					manufactureItemId = iter_53_7.manufactureItemId,
+					wrongType = iter_53_4,
+					buildingType = iter_53_7.buildingType,
+					needQuantity = iter_53_7.needQuantity
 				}
 
-				if slot14 == RoomManufactureEnum.ManufactureWrongType.NoLinkPath then
-					slot10[slot20.buildingType] = true
+				if iter_53_4 == RoomManufactureEnum.ManufactureWrongType.NoLinkPath then
+					var_53_20[iter_53_7.buildingType] = true
 				end
 			end
 		end
 
-		slot5[#slot5 + 1] = slot14
+		var_53_1[#var_53_1 + 1] = iter_53_4
 	end
 
-	if not next(slot6:getSlot2CritterDict()) then
-		slot5[#slot5 + 1] = RoomManufactureEnum.ManufactureWrongType.NoCritter
+	local var_53_21 = var_53_2:getSlot2CritterDict()
+
+	if not next(var_53_21) then
+		var_53_1[#var_53_1 + 1] = RoomManufactureEnum.ManufactureWrongType.NoCritter
 	end
 
-	return slot4, slot5
+	return var_53_0, var_53_1
 end
 
-function slot0.getFrozenManufactureItemCount(slot0, slot1)
-	return slot0._frozenMatDict and slot0._frozenMatDict[ManufactureConfig.instance:getItemId(slot1)] or 0
+function var_0_0.getFrozenManufactureItemCount(arg_54_0, arg_54_1)
+	local var_54_0 = ManufactureConfig.instance:getItemId(arg_54_1)
+
+	return arg_54_0._frozenMatDict and arg_54_0._frozenMatDict[var_54_0] or 0
 end
 
-function slot0.getLackMatCount(slot0, slot1)
-	slot2, slot3 = slot0:getManufactureItemCount(slot1, true, true, true)
-	slot5 = true
-	slot6, slot7 = RoomTradeModel.instance:getTracedGoodsCount(slot1)
+function var_0_0.getLackMatCount(arg_55_0, arg_55_1)
+	local var_55_0, var_55_1 = arg_55_0:getManufactureItemCount(arg_55_1, true, true, true)
+	local var_55_2 = var_55_0 + var_55_1
+	local var_55_3 = true
+	local var_55_4, var_55_5 = RoomTradeModel.instance:getTracedGoodsCount(arg_55_1)
+	local var_55_6 = math.max(0, var_55_4 + var_55_5 - var_55_2)
 
-	if math.max(0, slot6 + slot7 - (slot2 + slot3)) <= 0 then
-		slot5 = false
-		slot8 = math.max(0, slot0:getNeedMatCount(slot1) + slot6 - slot4)
+	if var_55_6 <= 0 then
+		var_55_3 = false
+
+		local var_55_7 = arg_55_0:getNeedMatCount(arg_55_1)
+
+		var_55_6 = math.max(0, var_55_7 + var_55_4 - var_55_2)
 	end
 
-	slot9 = ManufactureConfig.instance:getItemId(slot1)
+	local var_55_8 = ManufactureConfig.instance:getItemId(arg_55_1)
+	local var_55_9 = arg_55_0:getAllPlacedManufactureBuilding()
 
-	for slot14, slot15 in ipairs(slot0:getAllPlacedManufactureBuilding()) do
-		if slot15:getSlotManufactureItemId(slot15:getSlotIdInProgress()) then
-			for slot22, slot23 in ipairs(ManufactureConfig.instance:getNeedMatItemList(slot17)) do
-				if ManufactureConfig.instance:getItemId(slot23.id) == slot9 then
-					slot8 = slot8 - slot23.quantity
+	for iter_55_0, iter_55_1 in ipairs(var_55_9) do
+		local var_55_10 = iter_55_1:getSlotIdInProgress()
+		local var_55_11 = iter_55_1:getSlotManufactureItemId(var_55_10)
+
+		if var_55_11 then
+			local var_55_12 = ManufactureConfig.instance:getNeedMatItemList(var_55_11)
+
+			for iter_55_2, iter_55_3 in ipairs(var_55_12) do
+				if ManufactureConfig.instance:getItemId(iter_55_3.id) == var_55_8 then
+					var_55_6 = var_55_6 - iter_55_3.quantity
 				end
 			end
 		end
 	end
 
-	return math.max(0, slot8), slot5
+	return math.max(0, var_55_6), var_55_3
 end
 
-function slot0.getNeedMatCount(slot0, slot1)
-	return slot0._needMatDict and slot0._needMatDict[ManufactureConfig.instance:getItemId(slot1)] or 0
+function var_0_0.getNeedMatCount(arg_56_0, arg_56_1)
+	local var_56_0 = ManufactureConfig.instance:getItemId(arg_56_1)
+
+	return arg_56_0._needMatDict and arg_56_0._needMatDict[var_56_0] or 0
 end
 
-function slot0.getCritterBuildingMOById(slot0, slot1)
-	return slot0._buildingCritterMODict[slot1]
+function var_0_0.getCritterBuildingMOById(arg_57_0, arg_57_1)
+	return arg_57_0._buildingCritterMODict[arg_57_1]
 end
 
-function slot0.getAllCritterBuildingMOList(slot0)
-	return slot0._buildingCritterMOList
+function var_0_0.getAllCritterBuildingMOList(arg_58_0)
+	return arg_58_0._buildingCritterMOList
 end
 
-function slot0.getCritterBuildingListInOrder(slot0)
-	return RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Rest, true)
+function var_0_0.getCritterBuildingListInOrder(arg_59_0)
+	return (RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Rest, true))
 end
 
-function slot0.getSelectedSlot(slot0)
-	return slot0._selectedSlotBuildingUid, slot0._selectedSlotId
+function var_0_0.getSelectedSlot(arg_60_0)
+	return arg_60_0._selectedSlotBuildingUid, arg_60_0._selectedSlotId
 end
 
-function slot0.getSelectedCritterSlot(slot0)
-	return slot0._selectedCritterSlotBuildingUid, slot0._selectedCritterSlotId
+function var_0_0.getSelectedCritterSlot(arg_61_0)
+	return arg_61_0._selectedCritterSlotBuildingUid, arg_61_0._selectedCritterSlotId
 end
 
-function slot0.getSelectedCritterSeatSlot(slot0)
-	return slot0._selectedCritterSeatSlotBuildingUid, slot0._selectedCritterSeatSlotId
+function var_0_0.getSelectedCritterSeatSlot(arg_62_0)
+	return arg_62_0._selectedCritterSeatSlotBuildingUid, arg_62_0._selectedCritterSeatSlotId
 end
 
-function slot0.getSelectedTransportPath(slot0)
-	return slot0._selectedTransportPathId
+function var_0_0.getSelectedTransportPath(arg_63_0)
+	return arg_63_0._selectedTransportPathId
 end
 
-function slot0.getNewRestCritter(slot0)
-	return slot0._newRestCritter
+function var_0_0.getNewRestCritter(arg_64_0)
+	return arg_64_0._newRestCritter
 end
 
-function slot0.getIsJump2ManufactureBuildingList(slot0)
-	return slot0._isJumpManuBuildingList
+function var_0_0.getIsJump2ManufactureBuildingList(arg_65_0)
+	return arg_65_0._isJumpManuBuildingList
 end
 
-function slot0.getCameraRecord(slot0)
-	return slot0._recordCameraState, slot0._recordCameraParam
+function var_0_0.getCameraRecord(arg_66_0)
+	return arg_66_0._recordCameraState, arg_66_0._recordCameraParam
 end
 
-function slot0.getTradeBuildingListInOrder(slot0)
-	return RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Trade, true)
+function var_0_0.getTradeBuildingListInOrder(arg_67_0)
+	return (RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Trade, true))
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

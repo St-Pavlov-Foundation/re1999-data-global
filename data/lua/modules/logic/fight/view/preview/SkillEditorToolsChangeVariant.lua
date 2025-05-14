@@ -1,87 +1,105 @@
-module("modules.logic.fight.view.preview.SkillEditorToolsChangeVariant", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorToolsChangeVariant", package.seeall)
 
-slot0 = class("SkillEditorToolsChangeVariant", BaseViewExtended)
+local var_0_0 = class("SkillEditorToolsChangeVariant", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_5_0)
+	return
 end
 
-function slot0._onBtnClick(slot0)
-	slot0:getParentView():hideToolsBtnList()
-	gohelper.setActive(slot0._btn, true)
+function var_0_0._onBtnClick(arg_6_0)
+	arg_6_0:getParentView():hideToolsBtnList()
+	gohelper.setActive(arg_6_0._btn, true)
 end
 
-function slot0.onOpen(slot0)
-	slot0:getParentView():addToolBtn("换变体", slot0._onBtnClick, slot0)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:getParentView():addToolBtn("换变体", arg_7_0._onBtnClick, arg_7_0)
 
-	slot0._btn = slot0:getParentView():addToolViewObj("换变体")
-	slot0._item = gohelper.findChild(slot0._btn, "variant")
+	arg_7_0._btn = arg_7_0:getParentView():addToolViewObj("换变体")
+	arg_7_0._item = gohelper.findChild(arg_7_0._btn, "variant")
 
-	slot0:_showData()
+	arg_7_0:_showData()
 end
 
-function slot0._showData(slot0)
-	slot1 = {}
+function var_0_0._showData(arg_8_0)
+	local var_8_0 = {}
 
-	for slot5, slot6 in pairs(FightVariantHeartComp.VariantKey) do
-		table.insert(slot1, slot5)
+	for iter_8_0, iter_8_1 in pairs(FightVariantHeartComp.VariantKey) do
+		table.insert(var_8_0, iter_8_0)
 	end
 
-	table.insert(slot1, 1, -1)
-	slot0:com_createObjList(slot0._onItemShow, slot1, slot0._btn, slot0._item)
+	table.insert(var_8_0, 1, -1)
+	arg_8_0:com_createObjList(arg_8_0._onItemShow, var_8_0, arg_8_0._btn, arg_8_0._item)
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "Text").text = slot2
+function var_0_0._onItemShow(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = gohelper.findChildText(arg_9_1, "Text")
 
-	if slot2 == -1 then
-		slot4.text = "还原"
+	var_9_0.text = arg_9_2
+
+	if arg_9_2 == -1 then
+		var_9_0.text = "还原"
 	end
 
-	slot0:addClickCb(gohelper.getClick(slot1), slot0._onItemClick, slot0, slot2)
+	local var_9_1 = gohelper.getClick(arg_9_1)
+
+	arg_9_0:addClickCb(var_9_1, arg_9_0._onItemClick, arg_9_0, arg_9_2)
 end
 
-function slot0._onItemClick(slot0, slot1)
-	slot2 = nil
-	slot3 = GameSceneMgr.instance:getCurScene().entityMgr
+function var_0_0._onItemClick(arg_10_0, arg_10_1)
+	local var_10_0
+	local var_10_1 = GameSceneMgr.instance:getCurScene().entityMgr
 
-	if ((not SkillEditorMgr.instance.cur_select_entity_id or slot3:getEntity(SkillEditorMgr.instance.cur_select_entity_id)) and slot3:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])).variantHeart then
-		for slot7, slot8 in pairs(FightVariantHeartComp.VariantKey) do
-			if slot1 ~= slot7 then
-				if not slot2.spineRenderer:getReplaceMat() then
+	if SkillEditorMgr.instance.cur_select_entity_id then
+		var_10_0 = var_10_1:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+	else
+		var_10_0 = var_10_1:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+	end
+
+	if var_10_0.variantHeart then
+		for iter_10_0, iter_10_1 in pairs(FightVariantHeartComp.VariantKey) do
+			if arg_10_1 ~= iter_10_0 then
+				local var_10_2 = var_10_0.spineRenderer:getReplaceMat()
+
+				if not var_10_2 then
 					return
 				end
 
-				slot9:DisableKeyword(slot8)
+				var_10_2:DisableKeyword(iter_10_1)
 			end
 		end
 
-		if slot1 == -1 then
+		if arg_10_1 == -1 then
 			return
 		end
 
-		slot2.variantHeart:_changeVariant(slot1)
+		var_10_0.variantHeart:_changeVariant(arg_10_1)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,7 +1,0 @@
-module("framework.gamescene.SceneLayer", package.seeall)
-
-return {
-	Default = "Default",
-	Water = "Water",
-	UI = "UI"
-}

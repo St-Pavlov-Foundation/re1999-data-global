@@ -1,167 +1,183 @@
-module("modules.ugui.icon.common.CommonHeroIconNew", package.seeall)
+﻿module("modules.ugui.icon.common.CommonHeroIconNew", package.seeall)
 
-slot0 = class("CommonHeroIconNew", LuaCompBase)
+local var_0_0 = class("CommonHeroIconNew", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.trans = slot1.transform
-	slot0._goEmpty = gohelper.findChild(slot0.go, "#go_empty")
-	slot0._goHero = gohelper.findChild(slot0.go, "#go_hero")
-	slot0._goBgFrame = gohelper.findChild(slot0.go, "#go_hero/bgframe")
-	slot0._heroIcon = gohelper.findChildSingleImage(slot0.go, "#go_hero/heroicon")
-	slot0._careerIcon = gohelper.findChildImage(slot0.go, "#go_hero/career")
-	slot0._goLevel = gohelper.findChild(slot0.go, "#go_hero/#go_level")
-	slot0._rankIcon = gohelper.findChildImage(slot0.go, "#go_hero/#go_level/layout/#image_insight")
-	slot0._txtLvHead = gohelper.findChildText(slot0.go, "#go_hero/#go_level/layout/#txt_lvHead")
-	slot0._txtLevel = gohelper.findChildText(slot0.go, "#go_hero/#go_level/layout/#txt_level")
-	slot0._rareIcon = gohelper.findChildImage(slot0.go, "#go_hero/rare")
-	slot0._clickCb = nil
-	slot0._clickCbObj = nil
-	slot0._btnClick = nil
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.trans = arg_1_1.transform
+	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.go, "#go_empty")
+	arg_1_0._goHero = gohelper.findChild(arg_1_0.go, "#go_hero")
+	arg_1_0._goBgFrame = gohelper.findChild(arg_1_0.go, "#go_hero/bgframe")
+	arg_1_0._heroIcon = gohelper.findChildSingleImage(arg_1_0.go, "#go_hero/heroicon")
+	arg_1_0._careerIcon = gohelper.findChildImage(arg_1_0.go, "#go_hero/career")
+	arg_1_0._goLevel = gohelper.findChild(arg_1_0.go, "#go_hero/#go_level")
+	arg_1_0._rankIcon = gohelper.findChildImage(arg_1_0.go, "#go_hero/#go_level/layout/#image_insight")
+	arg_1_0._txtLvHead = gohelper.findChildText(arg_1_0.go, "#go_hero/#go_level/layout/#txt_lvHead")
+	arg_1_0._txtLevel = gohelper.findChildText(arg_1_0.go, "#go_hero/#go_level/layout/#txt_level")
+	arg_1_0._rareIcon = gohelper.findChildImage(arg_1_0.go, "#go_hero/rare")
+	arg_1_0._clickCb = nil
+	arg_1_0._clickCbObj = nil
+	arg_1_0._btnClick = nil
 
-	slot0:isShowEmptyWhenNoneHero(true)
-	slot0:updateIsEmpty()
+	arg_1_0:isShowEmptyWhenNoneHero(true)
+	arg_1_0:updateIsEmpty()
 end
 
-function slot0.addClickListener(slot0, slot1, slot2)
-	slot0._clickCb = slot1
-	slot0._clickCbObj = slot2
+function var_0_0.addClickListener(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._clickCb = arg_2_1
+	arg_2_0._clickCbObj = arg_2_2
 
-	if not slot0._btnClick then
-		slot0._btnClick = SLFramework.UGUI.UIClickListener.Get(slot0.go)
+	if not arg_2_0._btnClick then
+		arg_2_0._btnClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0.go)
 	end
 
-	slot0._btnClick:AddClickListener(slot0._onItemClick, slot0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
 end
 
-function slot0._onItemClick(slot0)
-	if slot0._clickCb then
-		if slot0._clickCbObj then
-			slot0._clickCb(slot0._clickCbObj, slot0._mo)
+function var_0_0._onItemClick(arg_3_0)
+	if arg_3_0._clickCb then
+		if arg_3_0._clickCbObj then
+			arg_3_0._clickCb(arg_3_0._clickCbObj, arg_3_0._mo)
 		else
-			slot0._clickCb(slot0._mo)
+			arg_3_0._clickCb(arg_3_0._mo)
 		end
 	end
 end
 
-function slot0.removeClickListener(slot0)
-	if slot0._btnClick then
-		slot0._btnClick:RemoveClickListener()
+function var_0_0.removeClickListener(arg_4_0)
+	if arg_4_0._btnClick then
+		arg_4_0._btnClick:RemoveClickListener()
 	end
 
-	slot0._clickCb = nil
-	slot0._clickCbObj = nil
+	arg_4_0._clickCb = nil
+	arg_4_0._clickCbObj = nil
 end
 
-function slot0.getIsHasHero(slot0)
-	slot1 = slot0._mo and slot0._mo.config
-	slot2 = slot1 and slot1.id
+function var_0_0.getIsHasHero(arg_5_0)
+	local var_5_0 = arg_5_0._mo and arg_5_0._mo.config
+	local var_5_1 = var_5_0 and var_5_0.id
 
-	return slot2 and slot2 ~= 0
+	return var_5_1 and var_5_1 ~= 0
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.trans, slot1, slot1, slot1)
+function var_0_0.setScale(arg_6_0, arg_6_1)
+	transformhelper.setLocalScale(arg_6_0.trans, arg_6_1, arg_6_1, arg_6_1)
 end
 
-function slot0.setAnchor(slot0, slot1, slot2)
-	recthelper.setAnchor(slot0.trans, slot1, slot2)
+function var_0_0.setAnchor(arg_7_0, arg_7_1, arg_7_2)
+	recthelper.setAnchor(arg_7_0.trans, arg_7_1, arg_7_2)
 end
 
-function slot0.setIsBalance(slot0, slot1)
-	slot2 = slot1 and "#81abe5" or "#FFFFFF"
+function var_0_0.setIsBalance(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1 and "#81abe5" or "#FFFFFF"
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._rankIcon, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtLvHead, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtLevel, slot2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._rankIcon, var_8_0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._txtLvHead, var_8_0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._txtLevel, var_8_0)
 end
 
-function slot0.isShowEmptyWhenNoneHero(slot0, slot1)
-	slot0._isShowEmptyWhenNoneHero = slot1
+function var_0_0.isShowEmptyWhenNoneHero(arg_9_0, arg_9_1)
+	arg_9_0._isShowEmptyWhenNoneHero = arg_9_1
 
-	if not slot0:getIsHasHero() then
-		gohelper.setActive(slot0._goEmpty, slot1)
+	if not arg_9_0:getIsHasHero() then
+		gohelper.setActive(arg_9_0._goEmpty, arg_9_1)
 	else
-		gohelper.setActive(slot0._goEmpty, false)
+		gohelper.setActive(arg_9_0._goEmpty, false)
 	end
 end
 
-function slot0.isShowBgFrame(slot0, slot1)
-	gohelper.setActive(slot0._goBgFrame, slot1)
+function var_0_0.isShowBgFrame(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._goBgFrame, arg_10_1)
 end
 
-function slot0.isShowLevel(slot0, slot1)
-	gohelper.setActive(slot0._goLevel, slot1)
+function var_0_0.isShowLevel(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._goLevel, arg_11_1)
 end
 
-function slot0.isShowRare(slot0, slot1)
-	gohelper.setActive(slot0._rareIcon.gameObject, slot1)
+function var_0_0.isShowRare(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._rareIcon.gameObject, arg_12_1)
 end
 
-function slot0.isShowCareer(slot0, slot1)
-	gohelper.setActive(slot0._careerIcon.gameObject, slot1)
+function var_0_0.isShowCareer(arg_13_0, arg_13_1)
+	gohelper.setActive(arg_13_0._careerIcon.gameObject, arg_13_1)
 end
 
-function slot0.onUpdateHeroId(slot0, slot1, slot2)
-	if not HeroConfig.instance:getHeroCO(slot1) then
+function var_0_0.onUpdateHeroId(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = HeroConfig.instance:getHeroCO(arg_14_1)
+
+	if not var_14_0 then
 		return
 	end
 
-	slot4 = HeroMo.New()
+	local var_14_1 = HeroMo.New()
+	local var_14_2 = arg_14_2 or var_14_0.skinId
 
-	slot4:init({
-		heroId = slot1,
-		skin = slot2 or slot3.skinId
-	}, slot3)
-	slot0:onUpdateMO(slot4)
+	var_14_1:init({
+		heroId = arg_14_1,
+		skin = var_14_2
+	}, var_14_0)
+	arg_14_0:onUpdateMO(var_14_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	if not (slot1 and slot1.config) then
-		slot0:updateIsEmpty()
+function var_0_0.onUpdateMO(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1 and arg_15_1.config
 
-		return
-	end
-
-	slot0._mo = slot1
-
-	UISpriteSetMgr.instance:setCommonSprite(slot0._careerIcon, "lssx_" .. tostring(slot2.career))
-
-	if not SkinConfig.instance:getSkinCo(slot0._mo.skin) then
-		logError(string.format("CommonHeroIconNew:onUpdateMO error, skinConfig is nil, skinId: %s", slot4))
+	if not var_15_0 then
+		arg_15_0:updateIsEmpty()
 
 		return
 	end
 
-	slot0._heroIcon:LoadImage(ResUrl.getRoomHeadIcon(slot5.headIcon))
+	arg_15_0._mo = arg_15_1
 
-	slot7, slot8 = HeroConfig.instance:getShowLevel(slot0._mo.level)
+	local var_15_1 = tostring(var_15_0.career)
 
-	if slot8 and slot8 > 1 then
-		UISpriteSetMgr.instance:setCommonSprite(slot0._rankIcon, "dongxi_xiao_" .. slot8 - 1)
-	else
-		gohelper.setActive(slot0._rankIcon.gameObject, false)
+	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._careerIcon, "lssx_" .. var_15_1)
+
+	local var_15_2 = arg_15_0._mo.skin
+	local var_15_3 = SkinConfig.instance:getSkinCo(var_15_2)
+
+	if not var_15_3 then
+		logError(string.format("CommonHeroIconNew:onUpdateMO error, skinConfig is nil, skinId: %s", var_15_2))
+
+		return
 	end
 
-	slot0._txtLevel.text = slot7
+	local var_15_4 = ResUrl.getRoomHeadIcon(var_15_3.headIcon)
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._rareIcon, "equipbar" .. CharacterEnum.Color[slot2.rare])
-	slot0:updateIsEmpty()
+	arg_15_0._heroIcon:LoadImage(var_15_4)
+
+	local var_15_5, var_15_6 = HeroConfig.instance:getShowLevel(arg_15_0._mo.level)
+
+	if var_15_6 and var_15_6 > 1 then
+		local var_15_7 = var_15_6 - 1
+
+		UISpriteSetMgr.instance:setCommonSprite(arg_15_0._rankIcon, "dongxi_xiao_" .. var_15_7)
+	else
+		gohelper.setActive(arg_15_0._rankIcon.gameObject, false)
+	end
+
+	arg_15_0._txtLevel.text = var_15_5
+
+	local var_15_8 = var_15_0.rare
+
+	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._rareIcon, "equipbar" .. CharacterEnum.Color[var_15_8])
+	arg_15_0:updateIsEmpty()
 end
 
-function slot0.updateIsEmpty(slot0)
-	if slot0:getIsHasHero() then
-		gohelper.setActive(slot0._goHero, true)
-		gohelper.setActive(slot0._goEmpty, false)
+function var_0_0.updateIsEmpty(arg_16_0)
+	if arg_16_0:getIsHasHero() then
+		gohelper.setActive(arg_16_0._goHero, true)
+		gohelper.setActive(arg_16_0._goEmpty, false)
 	else
-		gohelper.setActive(slot0._goHero, false)
-		gohelper.setActive(slot0._goEmpty, slot0._isShowEmptyWhenNoneHero)
+		gohelper.setActive(arg_16_0._goHero, false)
+		gohelper.setActive(arg_16_0._goEmpty, arg_16_0._isShowEmptyWhenNoneHero)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0._heroIcon:UnLoadImage()
-	slot0:isShowEmptyWhenNoneHero(true)
+function var_0_0.onDestroy(arg_17_0)
+	arg_17_0._heroIcon:UnLoadImage()
+	arg_17_0:isShowEmptyWhenNoneHero(true)
 end
 
-return slot0
+return var_0_0

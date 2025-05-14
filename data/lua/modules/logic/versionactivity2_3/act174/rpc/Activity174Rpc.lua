@@ -1,268 +1,288 @@
-module("modules.logic.versionactivity2_3.act174.rpc.Activity174Rpc", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.rpc.Activity174Rpc", package.seeall)
 
-slot0 = class("Activity174Rpc", BaseRpc)
+local var_0_0 = class("Activity174Rpc", BaseRpc)
 
-function slot0.sendGetAct174InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.GetAct174InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct174InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity174Module_pb.GetAct174InfoRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct174InfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:setActInfo(slot2.activityId, slot2.info)
+function var_0_0.onReceiveGetAct174InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		Activity174Model.instance:setActInfo(arg_2_2.activityId, arg_2_2.info)
 	end
 end
 
-function slot0.sendStart174GameRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.Start174GameRequest()
-	slot4.activityId = slot1
+function var_0_0.sendStart174GameRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = Activity174Module_pb.Start174GameRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_3_0.activityId = arg_3_1
+
+	arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
 end
 
-function slot0.onReceiveStart174GameReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo)
+function var_0_0.onReceiveStart174GameReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		Activity174Model.instance:updateGameInfo(arg_4_2.activityId, arg_4_2.gameInfo)
 	end
 end
 
-function slot0.sendFresh174ShopRequest(slot0, slot1)
-	slot2 = Activity174Module_pb.Fresh174ShopRequest()
-	slot2.activityId = slot1
+function var_0_0.sendFresh174ShopRequest(arg_5_0, arg_5_1)
+	local var_5_0 = Activity174Module_pb.Fresh174ShopRequest()
 
-	slot0:sendMsg(slot2)
+	var_5_0.activityId = arg_5_1
+
+	arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveFresh174ShopReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateShopInfo(slot2.activityId, slot2.shopInfo, slot2.coin)
+function var_0_0.onReceiveFresh174ShopReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
+		Activity174Model.instance:updateShopInfo(arg_6_2.activityId, arg_6_2.shopInfo, arg_6_2.coin)
 		Activity174Controller.instance:dispatchEvent(Activity174Event.FreshShopReply)
 	end
 end
 
-function slot0.sendBuyIn174ShopRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity174Module_pb.BuyIn174ShopRequest()
-	slot5.activityId = slot1
-	slot5.index = slot2
+function var_0_0.sendBuyIn174ShopRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	local var_7_0 = Activity174Module_pb.BuyIn174ShopRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_7_0.activityId = arg_7_1
+	var_7_0.index = arg_7_2
+
+	arg_7_0:sendMsg(var_7_0, arg_7_3, arg_7_4)
 end
 
-function slot0.onReceiveBuyIn174ShopReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:getActInfo(slot2.activityId):getGameInfo():buyInShopReply(slot2.gameInfo)
+function var_0_0.onReceiveBuyIn174ShopReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 == 0 then
+		Activity174Model.instance:getActInfo(arg_8_2.activityId):getGameInfo():buyInShopReply(arg_8_2.gameInfo)
 		Activity174Controller.instance:dispatchEvent(Activity174Event.BuyInShopReply)
 	end
 end
 
-function slot0.sendChangeAct174TeamRequest(slot0, slot1, slot2)
-	Activity174Module_pb.ChangeAct174TeamRequest().activityId = slot1
+function var_0_0.sendChangeAct174TeamRequest(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = Activity174Module_pb.ChangeAct174TeamRequest()
 
-	for slot7, slot8 in ipairs(slot2) do
-		Activity174Module_pb.Act174TeamInfo().index = slot8.index
+	var_9_0.activityId = arg_9_1
 
-		for slot13, slot14 in ipairs(slot8.battleHeroInfo) do
-			if slot14.heroId then
-				slot15 = Activity174Module_pb.Act174BattleHero()
-				slot15.index = slot14.index
-				slot15.heroId = slot14.heroId
-				slot15.itemId = slot14.itemId or 0
-				slot15.priorSkill = slot14.priorSkill or 0
+	for iter_9_0, iter_9_1 in ipairs(arg_9_2) do
+		local var_9_1 = Activity174Module_pb.Act174TeamInfo()
 
-				table.insert(slot9.battleHeroInfo, slot15)
+		var_9_1.index = iter_9_1.index
+
+		for iter_9_2, iter_9_3 in ipairs(iter_9_1.battleHeroInfo) do
+			if iter_9_3.heroId then
+				local var_9_2 = Activity174Module_pb.Act174BattleHero()
+
+				var_9_2.index = iter_9_3.index
+				var_9_2.heroId = iter_9_3.heroId
+				var_9_2.itemId = iter_9_3.itemId or 0
+				var_9_2.priorSkill = iter_9_3.priorSkill or 0
+
+				table.insert(var_9_1.battleHeroInfo, var_9_2)
 			end
 		end
 
-		table.insert(slot3.teamInfo, slot9)
+		table.insert(var_9_0.teamInfo, var_9_1)
 	end
 
-	slot0:sendMsg(slot3)
+	arg_9_0:sendMsg(var_9_0)
 end
 
-function slot0.onReceiveChangeAct174TeamReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateTeamInfo(slot2.activityId, slot2.teamInfo)
+function var_0_0.onReceiveChangeAct174TeamReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
+		Activity174Model.instance:updateTeamInfo(arg_10_2.activityId, arg_10_2.teamInfo)
 	end
 end
 
-function slot0.sendSwitchAct174TeamRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.from = slot2
-	slot0.to = slot3
-	slot6 = Activity174Module_pb.SwitchAct174TeamRequest()
-	slot6.activityId = slot1
-	slot6.beforeIndex = slot2
-	slot6.afterIndex = slot3
+function var_0_0.sendSwitchAct174TeamRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	arg_11_0.from = arg_11_2
+	arg_11_0.to = arg_11_3
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	local var_11_0 = Activity174Module_pb.SwitchAct174TeamRequest()
+
+	var_11_0.activityId = arg_11_1
+	var_11_0.beforeIndex = arg_11_2
+	var_11_0.afterIndex = arg_11_3
+
+	arg_11_0:sendMsg(var_11_0, arg_11_4, arg_11_5)
 end
 
-function slot0.onReceiveSwitchAct174TeamReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		if slot0.from then
-			Activity174Model.instance:getActInfo(slot2.activityId):getGameInfo():exchangeTempCollection(slot0.from, slot0.to)
+function var_0_0.onReceiveSwitchAct174TeamReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == 0 then
+		if arg_12_0.from then
+			Activity174Model.instance:getActInfo(arg_12_2.activityId):getGameInfo():exchangeTempCollection(arg_12_0.from, arg_12_0.to)
 
-			slot0.from = nil
-			slot0.to = nil
+			arg_12_0.from = nil
+			arg_12_0.to = nil
 		end
 
-		Activity174Model.instance:updateTeamInfo(slot2.activityId, slot2.teamInfo)
+		Activity174Model.instance:updateTeamInfo(arg_12_2.activityId, arg_12_2.teamInfo)
 	end
 end
 
-function slot0.sendSelectAct174ForceBagRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity174Module_pb.SelectAct174ForceBagRequest()
-	slot5.activityId = slot1
-	slot5.index = slot2
+function var_0_0.sendSelectAct174ForceBagRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	local var_13_0 = Activity174Module_pb.SelectAct174ForceBagRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_13_0.activityId = arg_13_1
+	var_13_0.index = arg_13_2
+
+	arg_13_0:sendMsg(var_13_0, arg_13_3, arg_13_4)
 end
 
-function slot0.onReceiveSelectAct174ForceBagReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo, true)
+function var_0_0.onReceiveSelectAct174ForceBagReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == 0 then
+		Activity174Model.instance:updateGameInfo(arg_14_2.activityId, arg_14_2.gameInfo, true)
 	end
 end
 
-function slot0.sendStartAct174FightMatchRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.StartAct174FightMatchRequest()
-	slot4.activityId = slot1
+function var_0_0.sendStartAct174FightMatchRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = Activity174Module_pb.StartAct174FightMatchRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_15_0.activityId = arg_15_1
+
+	arg_15_0:sendMsg(var_15_0, arg_15_2, arg_15_3)
 end
 
-function slot0.onReceiveStartAct174FightMatchReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo)
+function var_0_0.onReceiveStartAct174FightMatchReply(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 == 0 then
+		Activity174Model.instance:updateGameInfo(arg_16_2.activityId, arg_16_2.gameInfo)
 	end
 end
 
-function slot0.sendBetHpBeforeAct174FightRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity174Module_pb.BetHpBeforeAct174FightRequest()
-	slot5.activityId = slot1
-	slot5.bet = slot2
+function var_0_0.sendBetHpBeforeAct174FightRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = Activity174Module_pb.BetHpBeforeAct174FightRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_17_0.activityId = arg_17_1
+	var_17_0.bet = arg_17_2
+
+	arg_17_0:sendMsg(var_17_0, arg_17_3, arg_17_4)
 end
 
-function slot0.onReceiveBetHpBeforeAct174FightReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateIsBet(slot2.activityId, slot2.bet)
+function var_0_0.onReceiveBetHpBeforeAct174FightReply(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 == 0 then
+		Activity174Model.instance:updateIsBet(arg_18_2.activityId, arg_18_2.bet)
 	end
 end
 
-function slot0.sendStartAct174FightRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.StartAct174FightRequest()
-	slot4.activityId = slot1
+function var_0_0.sendStartAct174FightRequest(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0 = Activity174Module_pb.StartAct174FightRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_19_0.activityId = arg_19_1
+
+	arg_19_0:sendMsg(var_19_0, arg_19_2, arg_19_3)
 end
 
-function slot0.onReceiveStartAct174FightReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo)
+function var_0_0.onReceiveStartAct174FightReply(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_1 == 0 then
+		Activity174Model.instance:updateGameInfo(arg_20_2.activityId, arg_20_2.gameInfo)
 	end
 end
 
-function slot0.sendEnterNextAct174FightRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.EnterNextAct174FightRequest()
-	slot4.activityId = slot1
+function var_0_0.sendEnterNextAct174FightRequest(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = Activity174Module_pb.EnterNextAct174FightRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_21_0.activityId = arg_21_1
+
+	arg_21_0:sendMsg(var_21_0, arg_21_2, arg_21_3)
 end
 
-function slot0.onReceiveEnterNextAct174FightReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		if slot2.gameInfo.state == Activity174Enum.GameState.None then
-			Activity174Model.instance:endGameReply(slot2.activityId, slot2.gameEndInfo)
+function var_0_0.onReceiveEnterNextAct174FightReply(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_1 == 0 then
+		if arg_22_2.gameInfo.state == Activity174Enum.GameState.None then
+			Activity174Model.instance:endGameReply(arg_22_2.activityId, arg_22_2.gameEndInfo)
 		else
-			Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo)
+			Activity174Model.instance:updateGameInfo(arg_22_2.activityId, arg_22_2.gameInfo)
 		end
 	end
 end
 
-function slot0.sendEndAct174GameRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.EndAct174GameRequest()
-	slot4.activityId = slot1
+function var_0_0.sendEndAct174GameRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	local var_23_0 = Activity174Module_pb.EndAct174GameRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_23_0.activityId = arg_23_1
+
+	arg_23_0:sendMsg(var_23_0, arg_23_2, arg_23_3)
 end
 
-function slot0.onReceiveEndAct174GameReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:endGameReply(slot2.activityId, slot2.gameEndInfo)
+function var_0_0.onReceiveEndAct174GameReply(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_1 == 0 then
+		Activity174Model.instance:endGameReply(arg_24_2.activityId, arg_24_2.gameEndInfo)
 	end
 end
 
-function slot0.sendEnterEndLessAct174FightRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity174Module_pb.EnterEndLessAct174FightRequest()
-	slot6.activityId = slot1
-	slot6.enter = slot2
-	slot6.level = slot3
+function var_0_0.sendEnterEndLessAct174FightRequest(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5)
+	local var_25_0 = Activity174Module_pb.EnterEndLessAct174FightRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_25_0.activityId = arg_25_1
+	var_25_0.enter = arg_25_2
+	var_25_0.level = arg_25_3
+
+	arg_25_0:sendMsg(var_25_0, arg_25_4, arg_25_5)
 end
 
-function slot0.onReceiveEnterEndLessAct174FightReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		if slot2.gameInfo.state == Activity174Enum.GameState.None then
-			Activity174Model.instance:endGameReply(slot2.activityId, slot2.gameEndInfo)
+function var_0_0.onReceiveEnterEndLessAct174FightReply(arg_26_0, arg_26_1, arg_26_2)
+	if arg_26_1 == 0 then
+		if arg_26_2.gameInfo.state == Activity174Enum.GameState.None then
+			Activity174Model.instance:endGameReply(arg_26_2.activityId, arg_26_2.gameEndInfo)
 		else
-			Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo)
+			Activity174Model.instance:updateGameInfo(arg_26_2.activityId, arg_26_2.gameInfo)
 		end
 	end
 end
 
-function slot0.onReceiveAct174GameInfoUpdatePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo, true)
+function var_0_0.onReceiveAct174GameInfoUpdatePush(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_1 == 0 then
+		Activity174Model.instance:updateGameInfo(arg_27_2.activityId, arg_27_2.gameInfo, true)
 	end
 end
 
-function slot0.onReceiveAct174TriggerEffectPush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity174Model.instance:triggerEffectPush(slot2.activityId, slot2.effectId, slot2.param)
+function var_0_0.onReceiveAct174TriggerEffectPush(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_1 == 0 then
+		Activity174Model.instance:triggerEffectPush(arg_28_2.activityId, arg_28_2.effectId, arg_28_2.param)
 	end
 end
 
-function slot0.sendViewFightAct174Request(slot0, slot1, slot2)
-	slot3 = Activity174Module_pb.ViewFightAct174Request()
-	slot3.activityId = Activity174Model.instance:getCurActId()
-	slot3.index = slot1
-	slot3.round = slot2
+function var_0_0.sendViewFightAct174Request(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = Activity174Module_pb.ViewFightAct174Request()
 
-	slot0:sendMsg(slot3)
+	var_29_0.activityId = Activity174Model.instance:getCurActId()
+	var_29_0.index = arg_29_1
+	var_29_0.round = arg_29_2
+
+	arg_29_0:sendMsg(var_29_0)
 end
 
-function slot0.onReceiveViewFightAct174Reply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		FightDataModel.instance.douQuQuMgr:cacheFightProto(slot2)
-		FightMsgMgr.sendMsg(FightMsgId.FightAct174Reply, slot2)
+function var_0_0.onReceiveViewFightAct174Reply(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_1 == 0 then
+		FightDataModel.instance.douQuQuMgr:cacheFightProto(arg_30_2)
+		FightMsgMgr.sendMsg(FightMsgId.FightAct174Reply, arg_30_2)
 	end
 end
 
-function slot0.onReceiveAct174FightRoundInfo(slot0, slot1, slot2)
-	FightMgr.instance:playGMDouQuQu(slot2)
+function var_0_0.onReceiveAct174FightRoundInfo(arg_31_0, arg_31_1, arg_31_2)
+	FightMgr.instance:playGMDouQuQu(arg_31_2)
 end
 
-function slot0.sendChangeSeasonEndAct174Request(slot0, slot1, slot2, slot3)
-	slot4 = Activity174Module_pb.ChangeSeasonEndAct174Request()
-	slot4.activityId = slot1
+function var_0_0.sendChangeSeasonEndAct174Request(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	local var_32_0 = Activity174Module_pb.ChangeSeasonEndAct174Request()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_32_0.activityId = arg_32_1
+
+	arg_32_0:sendMsg(var_32_0, arg_32_2, arg_32_3)
 end
 
-function slot0.onReceiveChangeSeasonEndAct174Reply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		if slot2.gameInfo.state == Activity174Enum.GameState.None then
-			Activity174Model.instance:endGameReply(slot2.activityId, slot2.gameEndInfo)
+function var_0_0.onReceiveChangeSeasonEndAct174Reply(arg_33_0, arg_33_1, arg_33_2)
+	if arg_33_1 == 0 then
+		if arg_33_2.gameInfo.state == Activity174Enum.GameState.None then
+			Activity174Model.instance:endGameReply(arg_33_2.activityId, arg_33_2.gameEndInfo)
 		else
-			Activity174Model.instance:updateGameInfo(slot2.activityId, slot2.gameInfo)
+			Activity174Model.instance:updateGameInfo(arg_33_2.activityId, arg_33_2.gameInfo)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

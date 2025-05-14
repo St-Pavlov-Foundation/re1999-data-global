@@ -1,137 +1,140 @@
-module("modules.logic.main.controller.MainController", package.seeall)
+﻿module("modules.logic.main.controller.MainController", package.seeall)
 
-slot0 = class("MainController", BaseController)
+local var_0_0 = class("MainController", BaseController)
 
-function slot0.addConstEvents(slot0)
-	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, slot0._onLoginEnterMainScene, slot0)
-	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, slot0._onActivityUpdate, slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, arg_1_0._onLoginEnterMainScene, arg_1_0)
+	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, arg_1_0._onDailyRefresh, arg_1_0)
+	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, arg_1_0._onActivityUpdate, arg_1_0)
 end
 
-function slot0.onInit(slot0)
-	slot0.firstEnterMainScene = true
-	slot0._inPopupFlow = false
+function var_0_0.onInit(arg_2_0)
+	arg_2_0.firstEnterMainScene = true
+	arg_2_0._inPopupFlow = false
 end
 
-function slot0.reInit(slot0)
-	slot0:_destroyPopupFlow()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:_destroyPopupFlow()
 
-	slot0.firstEnterMainScene = true
-	slot0._inPopupFlow = false
+	arg_3_0.firstEnterMainScene = true
+	arg_3_0._inPopupFlow = false
 end
 
-function slot0._startPopupFlow(slot0)
-	slot0:_destroyPopupFlow()
+function var_0_0._startPopupFlow(arg_4_0)
+	arg_4_0:_destroyPopupFlow()
 
-	slot0._popupFlow = FlowSequence.New()
+	arg_4_0._popupFlow = FlowSequence.New()
 
-	slot0._popupFlow:addWork(MainGuideWork.New())
-	slot0._popupFlow:addWork(MainLimitedRoleEffect.New())
-	slot0._popupFlow:addWork(FunctionWork.New(function ()
+	arg_4_0._popupFlow:addWork(MainGuideWork.New())
+	arg_4_0._popupFlow:addWork(MainLimitedRoleEffect.New())
+	arg_4_0._popupFlow:addWork(FunctionWork.New(function()
 		BGMSwitchController.instance:startAllOnLogin()
 	end))
-	slot0._popupFlow:addWork(MainAchievementToast.New())
-	slot0._popupFlow:addWork(MainThumbnailWork.New())
-	slot0._popupFlow:addWork(MainMailWork.New())
-	slot0._popupFlow:addWork(MainUseExpireItemWork.New())
-	slot0._popupFlow:addWork(MainSignInWork.New())
-	slot0._popupFlow:addWork(MainFightReconnectWork.New())
-	slot0._popupFlow:addWork(MainPatFaceWork.New())
-	slot0._popupFlow:addWork(MainParallelGuideWork.New())
-	slot0._popupFlow:addWork(AutoOpenNoticeWork.New())
-	slot0._popupFlow:registerDoneListener(slot0._onPopupFlowDone, slot0)
-	slot0._popupFlow:start({})
+	arg_4_0._popupFlow:addWork(MainAchievementToast.New())
+	arg_4_0._popupFlow:addWork(MainThumbnailWork.New())
+	arg_4_0._popupFlow:addWork(MainMailWork.New())
+	arg_4_0._popupFlow:addWork(MainUseExpireItemWork.New())
+	arg_4_0._popupFlow:addWork(MainSignInWork.New())
+	arg_4_0._popupFlow:addWork(MainFightReconnectWork.New())
+	arg_4_0._popupFlow:addWork(MainPatFaceWork.New())
+	arg_4_0._popupFlow:addWork(MainParallelGuideWork.New())
+	arg_4_0._popupFlow:addWork(AutoOpenNoticeWork.New())
+	arg_4_0._popupFlow:registerDoneListener(arg_4_0._onPopupFlowDone, arg_4_0)
+	arg_4_0._popupFlow:start({})
 
-	slot0._inPopupFlow = true
+	arg_4_0._inPopupFlow = true
 end
 
-function slot0._destroyPopupFlow(slot0)
-	if slot0._popupFlow then
-		slot0._popupFlow:destroy()
+function var_0_0._destroyPopupFlow(arg_6_0)
+	if arg_6_0._popupFlow then
+		arg_6_0._popupFlow:destroy()
 
-		slot0._popupFlow = nil
-		slot0._inPopupFlow = false
+		arg_6_0._popupFlow = nil
+		arg_6_0._inPopupFlow = false
 	end
 end
 
-function slot0._onLoginEnterMainScene(slot0)
-	uv0.instance:dispatchEvent(MainEvent.OnFirstEnterMain)
-	slot0:_startPopupFlow()
+function var_0_0._onLoginEnterMainScene(arg_7_0)
+	var_0_0.instance:dispatchEvent(MainEvent.OnFirstEnterMain)
+	arg_7_0:_startPopupFlow()
 end
 
-function slot0._onDailyRefresh(slot0)
-	slot0:_onCheckAutoPop(true)
+function var_0_0._onDailyRefresh(arg_8_0)
+	arg_8_0:_onCheckAutoPop(true)
 end
 
-function slot0._onActivityUpdate(slot0)
-	slot0:_onCheckAutoPop(false)
+function var_0_0._onActivityUpdate(arg_9_0)
+	arg_9_0:_onCheckAutoPop(false)
 end
 
-function slot0._onCheckAutoPop(slot0, slot1)
-	slot0:_destroyPopupFlow()
+function var_0_0._onCheckAutoPop(arg_10_0, arg_10_1)
+	arg_10_0:_destroyPopupFlow()
 
-	slot0._popupFlow = FlowSequence.New()
+	arg_10_0._popupFlow = FlowSequence.New()
 
-	slot0._popupFlow:addWork(MainSignInWork.New())
+	arg_10_0._popupFlow:addWork(MainSignInWork.New())
 
-	if slot1 then
-		slot0._popupFlow:addWork(MainPatFaceWork.New())
+	if arg_10_1 then
+		arg_10_0._popupFlow:addWork(MainPatFaceWork.New())
 	else
-		slot0._popupFlow:addWork(Activity152PatFaceWork.New())
+		arg_10_0._popupFlow:addWork(Activity152PatFaceWork.New())
 	end
 
-	slot0._popupFlow:start({
-		dailyRefresh = slot1
+	arg_10_0._popupFlow:start({
+		dailyRefresh = arg_10_1
 	})
 
-	slot0._inPopupFlow = true
+	arg_10_0._inPopupFlow = true
 end
 
-function slot0._onPopupFlowDone(slot0, slot1)
-	slot0._inPopupFlow = false
+function var_0_0._onPopupFlowDone(arg_11_0, arg_11_1)
+	arg_11_0._inPopupFlow = false
 
-	uv0.instance:dispatchEvent(MainEvent.OnMainPopupFlowFinish)
+	var_0_0.instance:dispatchEvent(MainEvent.OnMainPopupFlowFinish)
 end
 
-function slot0.enterMainScene(slot0, slot1, slot2)
-	GameSceneMgr.instance:startSceneDefaultLevel(SceneType.Main, 101, slot1, slot2)
+function var_0_0.enterMainScene(arg_12_0, arg_12_1, arg_12_2)
+	GameSceneMgr.instance:startSceneDefaultLevel(SceneType.Main, 101, arg_12_1, arg_12_2)
 end
 
-function slot0.openMainThumbnailView(slot0, slot1, slot2)
-	uv0.instance:dispatchEvent(MainEvent.OnClickSwitchRole)
-	ViewMgr.instance:openView(ViewName.MainThumbnailView, slot1, slot2)
+function var_0_0.openMainThumbnailView(arg_13_0, arg_13_1, arg_13_2)
+	var_0_0.instance:dispatchEvent(MainEvent.OnClickSwitchRole)
+	ViewMgr.instance:openView(ViewName.MainThumbnailView, arg_13_1, arg_13_2)
 end
 
-function slot0.setRequestNoticeTime(slot0)
-	slot0.requestTime = Time.realtimeSinceStartup
+function var_0_0.setRequestNoticeTime(arg_14_0)
+	arg_14_0.requestTime = Time.realtimeSinceStartup
 end
 
-function slot0.getLastRequestNoticeTime(slot0)
-	return slot0.requestTime
+function var_0_0.getLastRequestNoticeTime(arg_15_0)
+	return arg_15_0.requestTime
 end
 
-function slot0.isInMainView(slot0)
-	slot2 = {}
+function var_0_0.isInMainView(arg_16_0)
+	local var_16_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_16_1 = {}
 
-	for slot6, slot7 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if ViewMgr.instance:getSetting(slot7).layer ~= UILayerName.Message and slot8.layer ~= UILayerName.IDCanvasPopUp then
-			table.insert(slot2, slot7)
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_2 = ViewMgr.instance:getSetting(iter_16_1)
+
+		if var_16_2.layer ~= UILayerName.Message and var_16_2.layer ~= UILayerName.IDCanvasPopUp then
+			table.insert(var_16_1, iter_16_1)
 		end
 	end
 
-	slot3 = true
+	local var_16_3 = true
 
-	if #slot2 > 1 or slot2[1] ~= ViewName.MainView then
-		slot3 = false
+	if #var_16_1 > 1 or var_16_1[1] ~= ViewName.MainView then
+		var_16_3 = false
 	end
 
-	return slot3
+	return var_16_3
 end
 
-function slot0.isInPopupFlow(slot0)
-	return slot0._inPopupFlow
+function var_0_0.isInPopupFlow(arg_17_0)
+	return arg_17_0._inPopupFlow
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

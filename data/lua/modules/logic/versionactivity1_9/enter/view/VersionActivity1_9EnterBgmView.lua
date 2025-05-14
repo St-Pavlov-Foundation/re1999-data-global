@@ -1,114 +1,124 @@
-module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterBgmView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterBgmView", package.seeall)
 
-slot0 = class("VersionActivity1_9EnterBgmView", BaseView)
+local var_0_0 = class("VersionActivity1_9EnterBgmView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, slot0.onSelectActId, slot0, LuaEventSystem.Low)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_4_0.onSelectActId, arg_4_0, LuaEventSystem.Low)
 end
 
-function slot0.onOpen(slot0)
-	slot0._isFirstOpenMainAct = VersionActivityEnterHelper.getActId(slot0.viewParam.activityIdList[VersionActivityEnterHelper.getTabIndex(slot0.viewParam.activityIdList, slot0.viewParam.jumpActId)]) == VersionActivity1_9Enum.ActivityId.Dungeon
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = VersionActivityEnterHelper.getTabIndex(arg_5_0.viewParam.activityIdList, arg_5_0.viewParam.jumpActId)
+	local var_5_1 = VersionActivityEnterHelper.getActId(arg_5_0.viewParam.activityIdList[var_5_0])
 
-	slot0:modifyBgm(slot2)
+	arg_5_0._isFirstOpenMainAct = var_5_1 == VersionActivity1_9Enum.ActivityId.Dungeon
 
-	slot0._isFirstOpenMainAct = false
+	arg_5_0:modifyBgm(var_5_1)
+
+	arg_5_0._isFirstOpenMainAct = false
 end
 
-function slot0.onSelectActId(slot0, slot1)
-	slot0:modifyBgm(slot1)
+function var_0_0.onSelectActId(arg_6_0, arg_6_1)
+	arg_6_0:modifyBgm(arg_6_1)
 end
 
-function slot0.initActHandle(slot0)
-	if not slot0.actHandleDict then
-		slot0.actHandleDict = {
-			[VersionActivity1_9Enum.ActivityId.BossRush] = slot0.playBossRushBgm
+function var_0_0.initActHandle(arg_7_0)
+	if not arg_7_0.actHandleDict then
+		arg_7_0.actHandleDict = {
+			[VersionActivity1_9Enum.ActivityId.BossRush] = arg_7_0.playBossRushBgm
 		}
 	end
 end
 
-function slot0.modifyBgm(slot0, slot1)
-	slot0._isMainAct = slot1 == VersionActivity1_9Enum.ActivityId.Dungeon
-	slot2 = 0
+function var_0_0.modifyBgm(arg_8_0, arg_8_1)
+	arg_8_0._isMainAct = arg_8_1 == VersionActivity1_9Enum.ActivityId.Dungeon
 
-	if slot0._isMainAct then
+	local var_8_0 = 0
+
+	if arg_8_0._isMainAct then
 		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.VersionActivity1_9Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 
-		slot0.playingActId = nil
-		slot0.bgmId = nil
+		arg_8_0.playingActId = nil
+		arg_8_0.bgmId = nil
 
-		if slot0._isFirstOpenMainAct then
-			slot0._isFirstOpenMainAct = false
-			slot2 = 3.5
+		if arg_8_0._isFirstOpenMainAct then
+			arg_8_0._isFirstOpenMainAct = false
+			var_8_0 = 3.5
 
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity1_9Enter.play_ui_jinye_open)
 		else
-			slot2 = 1
+			var_8_0 = 1
 
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity1_9Enter.play_ui_jinye_unfold)
 		end
 	end
 
-	slot0._actId = slot1
+	arg_8_0._actId = arg_8_1
 
-	TaskDispatcher.cancelTask(slot0._delayModifyBgm, slot0)
-	TaskDispatcher.runDelay(slot0._delayModifyBgm, slot0, slot2)
+	TaskDispatcher.cancelTask(arg_8_0._delayModifyBgm, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0._delayModifyBgm, arg_8_0, var_8_0)
 end
 
-function slot0._delayModifyBgm(slot0)
-	slot0:_doModifyBgm(slot0._actId)
+function var_0_0._delayModifyBgm(arg_9_0)
+	arg_9_0:_doModifyBgm(arg_9_0._actId)
 end
 
-function slot0._doModifyBgm(slot0, slot1)
-	slot0:initActHandle()
-	slot0.actHandleDict[slot1] or slot0.defaultBgmHandle(slot0, slot1)
+function var_0_0._doModifyBgm(arg_10_0, arg_10_1)
+	arg_10_0:initActHandle()
+	;(arg_10_0.actHandleDict[arg_10_1] or arg_10_0.defaultBgmHandle)(arg_10_0, arg_10_1)
 end
 
-function slot0.defaultBgmHandle(slot0, slot1)
-	if slot0.playingActId == slot1 then
+function var_0_0.defaultBgmHandle(arg_11_0, arg_11_1)
+	if arg_11_0.playingActId == arg_11_1 then
 		return
 	end
 
-	slot0.playingActId = slot1
+	arg_11_0.playingActId = arg_11_1
 
-	if ActivityConfig.instance:getActivityEnterViewBgm(slot1) == 0 then
-		logError("actId : " .. tostring(slot1) .. " 没有配置背景音乐")
+	local var_11_0 = ActivityConfig.instance:getActivityEnterViewBgm(arg_11_1)
 
-		slot2 = AudioEnum.Bgm.Act1_9DungeonBgm
+	if var_11_0 == 0 then
+		logError("actId : " .. tostring(arg_11_1) .. " 没有配置背景音乐")
+
+		var_11_0 = AudioEnum.Bgm.Act1_9DungeonBgm
 	end
 
-	if slot2 == slot0.bgmId and not slot0._isMainAct then
+	if var_11_0 == arg_11_0.bgmId and not arg_11_0._isMainAct then
 		return
 	end
 
-	slot0.bgmId = slot2
+	arg_11_0.bgmId = var_11_0
 
 	AudioBgmManager.instance:setSwitchData(AudioBgmEnum.Layer.VersionActivity1_9Main)
-	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity1_9Main, slot2)
+	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity1_9Main, var_11_0)
 end
 
-function slot0.playBossRushBgm(slot0, slot1)
-	slot0.playingActId = slot1
-	slot2 = ActivityConfig.instance:getActivityEnterViewBgm(slot1)
-	slot0.bgmId = slot2
+function var_0_0.playBossRushBgm(arg_12_0, arg_12_1)
+	arg_12_0.playingActId = arg_12_1
+
+	local var_12_0 = ActivityConfig.instance:getActivityEnterViewBgm(arg_12_1)
+
+	arg_12_0.bgmId = var_12_0
 
 	AudioBgmManager.instance:setSwitchData(AudioBgmEnum.Layer.VersionActivity1_9Main, FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Comeshow)
-	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity1_9Main, slot2)
+	AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.VersionActivity1_9Main, var_12_0)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayModifyBgm, slot0)
+function var_0_0.onClose(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._delayModifyBgm, arg_13_0)
 end
 
-return slot0
+return var_0_0

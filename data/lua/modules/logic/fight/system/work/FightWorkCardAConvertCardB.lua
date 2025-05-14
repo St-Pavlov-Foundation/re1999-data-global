@@ -1,40 +1,44 @@
-module("modules.logic.fight.system.work.FightWorkCardAConvertCardB", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCardAConvertCardB", package.seeall)
 
-slot0 = class("FightWorkCardAConvertCardB", FightEffectBase)
+local var_0_0 = class("FightWorkCardAConvertCardB", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._revertVisible = true
+	arg_1_0._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 	AudioMgr.instance:trigger(2000072)
 
-	if FightCardModel.instance:getHandCards()[slot0._actEffectMO.effectNum] then
-		slot3:init(slot0._actEffectMO.cardInfo)
+	local var_1_0 = FightCardModel.instance:getHandCards()
+	local var_1_1 = arg_1_0._actEffectMO.effectNum
+	local var_1_2 = var_1_0[var_1_1]
+
+	if var_1_2 then
+		var_1_2:init(arg_1_0._actEffectMO.cardInfo)
 
 		if FightModel.instance:getVersion() >= 4 then
-			FightController.instance:dispatchEvent(FightEvent.CardAConvertCardB, slot2)
-			slot0:com_registTimer(slot0._delayAfterPerformance, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
+			FightController.instance:dispatchEvent(FightEvent.CardAConvertCardB, var_1_1)
+			arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 		else
 			FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		end
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._revertVisible then
+function var_0_0.clearWork(arg_2_0)
+	if arg_2_0._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return slot0
+return var_0_0

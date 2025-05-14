@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_activity161_graffiti", package.seeall)
+﻿module("modules.configs.excel2json.lua_activity161_graffiti", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	dialogGroupId = 7,
 	subElementIds = 6,
 	activityId = 1,
@@ -16,17 +17,17 @@ slot1 = {
 	mainElementId = 3,
 	sort = 11
 }
-slot2 = {
+local var_0_2 = {
 	"activityId",
 	"elementId"
 }
-slot3 = {
+local var_0_3 = {
 	finishDesc = 2,
 	finishTitle = 1
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

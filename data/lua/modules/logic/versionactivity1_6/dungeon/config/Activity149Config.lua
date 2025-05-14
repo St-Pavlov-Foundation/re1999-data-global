@@ -1,17 +1,17 @@
-module("modules.logic.versionactivity1_6.dungeon.config.Activity149Config", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.config.Activity149Config", package.seeall)
 
-slot0 = class("Activity149Config", BaseConfig)
+local var_0_0 = class("Activity149Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._bossEpisodeCfgList = {}
-	slot0._bossEpisodeCfgDict = {}
-	slot0._bossMapElementDict = {}
-	slot0._rewardCfgDict = {}
-	slot0._rewardCfgList = {}
-	slot0._activityConstDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._bossEpisodeCfgList = {}
+	arg_1_0._bossEpisodeCfgDict = {}
+	arg_1_0._bossMapElementDict = {}
+	arg_1_0._rewardCfgDict = {}
+	arg_1_0._rewardCfgList = {}
+	arg_1_0._activityConstDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity149_episode",
 		"activity149_rewards",
@@ -20,150 +20,175 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity149_episode" then
-		slot0._bossEpisodeCfgList = slot2.configList
-		slot0._bossEpisodeCfgDict = slot2.configDict
-	elseif slot1 == "activity149_rewards" then
-		slot0:initRewardCfg(slot2)
-	elseif slot1 == "activity149_const" then
-		slot0._activityConstDict = slot2.configDict
-	elseif slot1 == "activity149_map_element" then
-		slot0._bossMapElementDict = slot2.configDict
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity149_episode" then
+		arg_3_0._bossEpisodeCfgList = arg_3_2.configList
+		arg_3_0._bossEpisodeCfgDict = arg_3_2.configDict
+	elseif arg_3_1 == "activity149_rewards" then
+		arg_3_0:initRewardCfg(arg_3_2)
+	elseif arg_3_1 == "activity149_const" then
+		arg_3_0._activityConstDict = arg_3_2.configDict
+	elseif arg_3_1 == "activity149_map_element" then
+		arg_3_0._bossMapElementDict = arg_3_2.configDict
 	end
 end
 
-function slot0.initRewardCfg(slot0, slot1)
-	slot0._rewardCfgDict = slot1.configDict
-	slot0._rewardCfgList = slot1.configList
-	slot0._maxScore = 0
+function var_0_0.initRewardCfg(arg_4_0, arg_4_1)
+	arg_4_0._rewardCfgDict = arg_4_1.configDict
+	arg_4_0._rewardCfgList = arg_4_1.configList
+	arg_4_0._maxScore = 0
 
-	for slot5, slot6 in ipairs(slot0._rewardCfgList) do
-		slot0._maxScore = math.max(slot0._maxScore, slot6.rewardPointNum)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._rewardCfgList) do
+		arg_4_0._maxScore = math.max(arg_4_0._maxScore, iter_4_1.rewardPointNum)
 	end
 end
 
-function slot0.getAct149EpisodeCfg(slot0, slot1)
-	return slot0._bossEpisodeCfgDict[slot1]
+function var_0_0.getAct149EpisodeCfg(arg_5_0, arg_5_1)
+	return arg_5_0._bossEpisodeCfgDict[arg_5_1]
 end
 
-function slot0.getDungeonEpisodeCfg(slot0, slot1)
-	return lua_episode.configDict[slot0._bossEpisodeCfgDict[slot1].episodeId]
+function var_0_0.getDungeonEpisodeCfg(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._bossEpisodeCfgDict[arg_6_1]
+
+	return lua_episode.configDict[var_6_0.episodeId]
 end
 
-function slot0.getAct149EpisodeCfgByOrder(slot0, slot1, slot2)
-	if slot2 then
-		slot3 = {}
+function var_0_0.getAct149EpisodeCfgByOrder(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_2 then
+		local var_7_0 = {}
 
-		for slot7, slot8 in pairs(slot0._bossEpisodeCfgDict) do
-			if slot8.order == slot1 then
-				slot3[#slot3 + 1] = slot8
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._bossEpisodeCfgDict) do
+			if iter_7_1.order == arg_7_1 then
+				var_7_0[#var_7_0 + 1] = iter_7_1
 			end
 		end
 
-		return slot3
+		return var_7_0
 	end
 
-	for slot6, slot7 in pairs(slot0._bossEpisodeCfgDict) do
-		if slot7.order == slot1 then
-			return slot7
+	for iter_7_2, iter_7_3 in pairs(arg_7_0._bossEpisodeCfgDict) do
+		if iter_7_3.order == arg_7_1 then
+			return iter_7_3
 		end
 	end
 end
 
-function slot0.getAct149EpisodeCfgByEpisodeId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._bossEpisodeCfgDict) do
-		if slot6.episodeId == slot1 then
-			return slot6
+function var_0_0.getAct149EpisodeCfgByEpisodeId(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._bossEpisodeCfgDict) do
+		if iter_8_1.episodeId == arg_8_1 then
+			return iter_8_1
 		end
 	end
 end
 
-function slot0.getNextBossEpisodeCfgById(slot0, slot1)
-	if slot0._bossEpisodeCfgDict[slot1 + 1] then
-		if slot3.order == slot0._bossEpisodeCfgDict[slot1].order then
-			return slot3
+function var_0_0.getNextBossEpisodeCfgById(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._bossEpisodeCfgDict[arg_9_1]
+	local var_9_1 = arg_9_0._bossEpisodeCfgDict[arg_9_1 + 1]
+	local var_9_2 = var_9_0.order
+
+	if var_9_1 then
+		if var_9_1.order == var_9_2 then
+			return var_9_1
 		end
 	else
-		for slot8, slot9 in ipairs(slot0._bossEpisodeCfgList) do
-			if slot4 == slot9.order then
-				return slot9
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0._bossEpisodeCfgList) do
+			if var_9_2 == iter_9_1.order then
+				return iter_9_1
 			end
 		end
 	end
 end
 
-function slot0.getEpisodeMaxScore(slot0, slot1, slot2)
-	if not slot0._bossEpisodeCfgDict[slot1] then
+function var_0_0.getEpisodeMaxScore(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0._bossEpisodeCfgDict[arg_10_1]
+
+	if not var_10_0 then
 		return 0
 	end
 
-	return tonumber(slot0._activityConstDict[1].value) * slot3.multi
+	return tonumber(arg_10_0._activityConstDict[1].value) * var_10_0.multi
 end
 
-function slot0.getAct149BossMapElement(slot0, slot1)
-	return slot0._bossMapElementDict[slot1]
+function var_0_0.getAct149BossMapElement(arg_11_0, arg_11_1)
+	return arg_11_0._bossMapElementDict[arg_11_1]
 end
 
-function slot0.getAct149BossMapElementByMapId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._bossMapElementDict) do
-		if slot6.mapId == slot1 then
-			return slot6
+function var_0_0.getAct149BossMapElementByMapId(arg_12_0, arg_12_1)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._bossMapElementDict) do
+		if iter_12_1.mapId == arg_12_1 then
+			return iter_12_1
 		end
 	end
 end
 
-function slot0.getAct149ConstValue(slot0, slot1)
-	return slot0._activityConstDict[slot1] and slot2.value
+function var_0_0.getAct149ConstValue(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._activityConstDict[arg_13_1]
+
+	return var_13_0 and var_13_0.value
 end
 
-function slot0.getBossRewardCfgList(slot0)
-	return slot0._rewardCfgList
+function var_0_0.getBossRewardCfgList(arg_14_0)
+	return arg_14_0._rewardCfgList
 end
 
-function slot0.getBossRewardMaxScore(slot0)
-	return slot0._maxScore
+function var_0_0.getBossRewardMaxScore(arg_15_0)
+	return arg_15_0._maxScore
 end
 
-function slot0.calRewardProgressWidth(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if #slot0:getBossRewardCfgList() == 0 then
+function var_0_0.calRewardProgressWidth(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6, arg_16_7)
+	local var_16_0 = arg_16_0:getBossRewardCfgList()
+	local var_16_1 = #var_16_0
+
+	if var_16_1 == 0 then
 		return 0, 0
 	end
 
-	slot6 = slot6 or 0
-	slot10 = (slot4 or slot3 / 2) + (slot9 - 1) * (slot5 or slot3 + slot2) + (slot7 or 0)
-	slot12 = 0
+	arg_16_6 = arg_16_6 or 0
+	arg_16_7 = arg_16_7 or 0
+	arg_16_4 = arg_16_4 or arg_16_3 / 2
+	arg_16_5 = arg_16_5 or arg_16_3 + arg_16_2
 
-	for slot16, slot17 in ipairs(slot8) do
-		if slot17.rewardPointNum <= slot1 then
-			slot11 = 0 + (slot16 == 1 and slot4 or slot5)
-			slot12 = slot18
+	local var_16_2 = arg_16_4 + (var_16_1 - 1) * arg_16_5 + arg_16_7
+	local var_16_3 = 0
+	local var_16_4 = 0
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_5 = iter_16_1.rewardPointNum
+		local var_16_6 = iter_16_0 == 1 and arg_16_4 or arg_16_5
+
+		if var_16_5 <= arg_16_1 then
+			var_16_3 = var_16_3 + var_16_6
+			var_16_4 = var_16_5
 		else
-			slot11 = slot11 + GameUtil.remap(slot1, slot12, slot18, 0, slot19)
+			var_16_3 = var_16_3 + GameUtil.remap(arg_16_1, var_16_4, var_16_5, 0, var_16_6)
 
 			break
 		end
 	end
 
-	return math.max(0, slot11 - slot6), slot10
+	return math.max(0, var_16_3 - arg_16_6), var_16_2
 end
 
-function slot0.getAlternateDay(slot0)
-	if not slot0._alternateDay then
-		slot0._alternateDay = 1
+function var_0_0.getAlternateDay(arg_17_0)
+	if not arg_17_0._alternateDay then
+		arg_17_0._alternateDay = 1
 
-		if slot0._bossEpisodeCfgDict then
-			for slot4, slot5 in pairs(slot0._bossEpisodeCfgDict) do
-				if not string.nilorempty(slot5.effectCondition) and string.splitToNumber(slot5.effectCondition, "_") and slot6[2] then
-					slot0._alternateDay = math.max(slot0._alternateDay, slot6[2])
+		if arg_17_0._bossEpisodeCfgDict then
+			for iter_17_0, iter_17_1 in pairs(arg_17_0._bossEpisodeCfgDict) do
+				if not string.nilorempty(iter_17_1.effectCondition) then
+					local var_17_0 = string.splitToNumber(iter_17_1.effectCondition, "_")
+
+					if var_17_0 and var_17_0[2] then
+						arg_17_0._alternateDay = math.max(arg_17_0._alternateDay, var_17_0[2])
+					end
 				end
 			end
 		end
 	end
 
-	return slot0._alternateDay
+	return arg_17_0._alternateDay
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

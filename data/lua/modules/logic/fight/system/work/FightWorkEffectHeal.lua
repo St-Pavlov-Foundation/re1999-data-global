@@ -1,33 +1,39 @@
-module("modules.logic.fight.system.work.FightWorkEffectHeal", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectHeal", package.seeall)
 
-slot0 = class("FightWorkEffectHeal", FightEffectBase)
+local var_0_0 = class("FightWorkEffectHeal", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not slot0._actEffectMO then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not arg_1_0._actEffectMO then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		if not slot1.nameUI then
-			slot0:onDone(true)
+	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+
+	if var_1_0 then
+		if not var_1_0.nameUI then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		slot3 = slot0._actEffectMO.effectNum
+		local var_1_1 = var_1_0.nameUI:getHp()
+		local var_1_2 = arg_1_0._actEffectMO.effectNum
+		local var_1_3 = arg_1_0._actEffectMO.effectType == FightEnum.EffectType.HEALCRIT and FightEnum.FloatType.crit_heal or FightEnum.FloatType.heal
 
-		FightFloatMgr.instance:float(slot1.id, slot0._actEffectMO.effectType == FightEnum.EffectType.HEALCRIT and FightEnum.FloatType.crit_heal or FightEnum.FloatType.heal, slot3)
-		slot1.nameUI:addHp(slot3)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, slot3)
+		FightFloatMgr.instance:float(var_1_0.id, var_1_3, var_1_2)
+		var_1_0.nameUI:addHp(var_1_2)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, var_1_2)
 
-		if slot1.nameUI:getHp() <= 0 and slot1.nameUI:getHp() > 0 and not FightSkillMgr.instance:isPlayingAnyTimeline() then
-			slot1.nameUI:setActive(true)
+		local var_1_4 = var_1_0.nameUI:getHp()
+
+		if var_1_1 <= 0 and var_1_4 > 0 and not FightSkillMgr.instance:isPlayingAnyTimeline() then
+			var_1_0.nameUI:setActive(true)
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

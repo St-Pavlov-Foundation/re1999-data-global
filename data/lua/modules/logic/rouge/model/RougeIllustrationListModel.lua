@@ -1,18 +1,25 @@
-module("modules.logic.rouge.model.RougeIllustrationListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeIllustrationListModel", package.seeall)
 
-slot0 = class("RougeIllustrationListModel", MixScrollModel)
+local var_0_0 = class("RougeIllustrationListModel", MixScrollModel)
 
-function slot0.initList(slot0)
-	tabletool.addValues({}, RougeFavoriteConfig.instance:getIllustrationPages())
+function var_0_0.initList(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = RougeFavoriteConfig.instance:getIllustrationPages()
 
-	if RougeFavoriteConfig.instance:getNormalIllustrationPageCount() > 0 then
-		table.insert(slot1, slot3 + 1, slot0:getSplitSpaceInfoItem())
+	tabletool.addValues(var_1_0, var_1_1)
+
+	local var_1_2 = RougeFavoriteConfig.instance:getNormalIllustrationPageCount()
+
+	if var_1_2 > 0 then
+		local var_1_3 = arg_1_0:getSplitSpaceInfoItem()
+
+		table.insert(var_1_0, var_1_2 + 1, var_1_3)
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-slot1 = {
+local var_0_1 = {
 	480,
 	660,
 	1140,
@@ -20,49 +27,53 @@ slot1 = {
 	1770,
 	2103
 }
-slot2 = 300
-slot3 = 1000
+local var_0_2 = 300
+local var_0_3 = 1000
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
-	slot0._splitSpaceStartPosX = 0
-	slot4 = false
+function var_0_0.getInfoList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+	local var_2_1 = arg_2_0:getList()
 
-	for slot8, slot9 in ipairs(slot0:getList()) do
-		slot10 = nil
+	arg_2_0._splitSpaceStartPosX = 0
 
-		if slot9.isSplitSpace then
-			slot10 = SLFramework.UGUI.MixCellInfo.New(uv0, uv1, slot8)
-			slot4 = true
+	local var_2_2 = false
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+		local var_2_3
+
+		if iter_2_1.isSplitSpace then
+			var_2_3 = SLFramework.UGUI.MixCellInfo.New(var_0_3, var_0_2, iter_2_0)
+			var_2_2 = true
 		else
-			slot11 = #slot9
-			slot10 = SLFramework.UGUI.MixCellInfo.New(slot11, uv2[slot11], slot8)
+			local var_2_4 = #iter_2_1
 
-			if not slot4 then
-				slot0._splitSpaceStartPosX = slot0._splitSpaceStartPosX + uv2[slot11]
+			var_2_3 = SLFramework.UGUI.MixCellInfo.New(var_2_4, var_0_1[var_2_4], iter_2_0)
+
+			if not var_2_2 then
+				arg_2_0._splitSpaceStartPosX = arg_2_0._splitSpaceStartPosX + var_0_1[var_2_4]
 			end
 		end
 
-		table.insert(slot2, slot10)
+		table.insert(var_2_0, var_2_3)
 	end
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.getSplitSpaceInfoItem(slot0)
-	if not slot0._splitSpaceItem then
-		slot0._splitSpaceItem = {
+function var_0_0.getSplitSpaceInfoItem(arg_3_0)
+	if not arg_3_0._splitSpaceItem then
+		arg_3_0._splitSpaceItem = {
 			isSplitSpace = true
 		}
 	end
 
-	return slot0._splitSpaceItem
+	return arg_3_0._splitSpaceItem
 end
 
-function slot0.getSplitEmptySpaceStartPosX(slot0)
-	return slot0._splitSpaceStartPosX or 0
+function var_0_0.getSplitEmptySpaceStartPosX(arg_4_0)
+	return arg_4_0._splitSpaceStartPosX or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

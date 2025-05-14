@@ -1,175 +1,184 @@
-module("modules.logic.battlepass.view.BpBonusSelectView", package.seeall)
+﻿module("modules.logic.battlepass.view.BpBonusSelectView", package.seeall)
 
-slot0 = class("BpBonusSelectView", BaseView)
-slot1 = {
+local var_0_0 = class("BpBonusSelectView", BaseView)
+local var_0_1 = {
 	Finish = 3,
 	CanGet = 2,
 	Lock = 1
 }
 
-function slot0.onInitView(slot0)
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "txt_titledec")
-	slot0._btnGet = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_get")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
-	slot0._finish = gohelper.findChild(slot0.viewGO, "#go_finish")
-	slot0._txtgetname = gohelper.findChildTextMesh(slot0.viewGO, "#go_finish/#txt_getname")
-	slot0._items = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "txt_titledec")
+	arg_1_0._btnGet = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_get")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+	arg_1_0._finish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
+	arg_1_0._txtgetname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_finish/#txt_getname")
+	arg_1_0._items = {}
 
-	for slot4 = 1, 4 do
-		slot5 = gohelper.findChild(slot0.viewGO, "item" .. slot4)
-		slot0._items[slot4] = slot0:getUserDataTb_()
-		slot0._items[slot4].select = gohelper.findChild(slot5, "#go_select")
-		slot0._items[slot4].btnClick = gohelper.findChildButtonWithAudio(slot5, "#btn_click")
-		slot0._items[slot4].btnDetail = gohelper.findChildButtonWithAudio(slot5, "#btn_detail")
-		slot0._items[slot4].imageSign = gohelper.findChildSingleImage(slot5, "#simage_sign")
-		slot0._items[slot4].mask = gohelper.findChild(slot5, "#go_mask")
-		slot0._items[slot4].owned = gohelper.findChild(slot5, "#go_owned")
-		slot0._items[slot4].get = gohelper.findChild(slot5, "#go_get")
-		slot0._items[slot4].getAnim = slot0._items[slot4].get:GetComponent(typeof(UnityEngine.Animator))
+	for iter_1_0 = 1, 4 do
+		local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "item" .. iter_1_0)
 
-		if slot4 == 4 then
-			slot0._items[slot4].txtname = gohelper.findChildTextMesh(slot5, "#txt_name")
+		arg_1_0._items[iter_1_0] = arg_1_0:getUserDataTb_()
+		arg_1_0._items[iter_1_0].select = gohelper.findChild(var_1_0, "#go_select")
+		arg_1_0._items[iter_1_0].btnClick = gohelper.findChildButtonWithAudio(var_1_0, "#btn_click")
+		arg_1_0._items[iter_1_0].btnDetail = gohelper.findChildButtonWithAudio(var_1_0, "#btn_detail")
+		arg_1_0._items[iter_1_0].imageSign = gohelper.findChildSingleImage(var_1_0, "#simage_sign")
+		arg_1_0._items[iter_1_0].mask = gohelper.findChild(var_1_0, "#go_mask")
+		arg_1_0._items[iter_1_0].owned = gohelper.findChild(var_1_0, "#go_owned")
+		arg_1_0._items[iter_1_0].get = gohelper.findChild(var_1_0, "#go_get")
+		arg_1_0._items[iter_1_0].getAnim = arg_1_0._items[iter_1_0].get:GetComponent(typeof(UnityEngine.Animator))
+
+		if iter_1_0 == 4 then
+			arg_1_0._items[iter_1_0].txtname = gohelper.findChildTextMesh(var_1_0, "#txt_name")
 		else
-			slot0._items[slot4].txtskinname = gohelper.findChildTextMesh(slot5, "#txt_skinname")
-			slot0._items[slot4].txtname = gohelper.findChildTextMesh(slot5, "#txt_skinname/#txt_name")
+			arg_1_0._items[iter_1_0].txtskinname = gohelper.findChildTextMesh(var_1_0, "#txt_skinname")
+			arg_1_0._items[iter_1_0].txtname = gohelper.findChildTextMesh(var_1_0, "#txt_skinname/#txt_name")
 		end
 
-		slot0:addClickCb(slot0._items[slot4].btnClick, slot0._onGetClick, slot0, slot4)
-		slot0:addClickCb(slot0._items[slot4].btnDetail, slot0._onDetailClick, slot0, slot4)
+		arg_1_0:addClickCb(arg_1_0._items[iter_1_0].btnClick, arg_1_0._onGetClick, arg_1_0, iter_1_0)
+		arg_1_0:addClickCb(arg_1_0._items[iter_1_0].btnDetail, arg_1_0._onDetailClick, arg_1_0, iter_1_0)
 	end
 
-	slot0:addClickCb(slot0._btnGet, slot0._getBonus, slot0)
-	slot0:addClickCb(slot0._btnClose, slot0.closeThis, slot0)
+	arg_1_0:addClickCb(arg_1_0._btnGet, arg_1_0._getBonus, arg_1_0)
+	arg_1_0:addClickCb(arg_1_0._btnClose, arg_1_0.closeThis, arg_1_0)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2BPSP.play_ui_mln_unlock)
 
-	slot2 = nil
+	local var_3_0 = BpConfig.instance:getBonusCOList(BpModel.instance.id)
+	local var_3_1
 
-	for slot6, slot7 in ipairs(BpConfig.instance:getBonusCOList(BpModel.instance.id)) do
-		if not string.nilorempty(slot7.selfSelectPayBonus) then
-			slot2 = slot7
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		if not string.nilorempty(iter_3_1.selfSelectPayBonus) then
+			var_3_1 = iter_3_1
 
 			break
 		end
 	end
 
-	if not slot2 then
+	if not var_3_1 then
 		logError("没有皮肤可选！！！")
 
 		return
 	end
 
-	slot0._itemInfo = GameUtil.splitString2(slot2.selfSelectPayBonus, true)
-	slot0._level = slot2.level
-	slot0._getIndex = BpBonusModel.instance:isGetSelectBonus(slot0._level)
+	arg_3_0._itemInfo = GameUtil.splitString2(var_3_1.selfSelectPayBonus, true)
+	arg_3_0._level = var_3_1.level
 
-	if BpModel.instance.firstShowSp or BpModel.instance:getBpLv() < slot0._level then
-		slot0._statu = uv0.Lock
+	local var_3_2 = BpModel.instance:getBpLv()
 
-		slot0:setFinish(0)
-	elseif slot0._getIndex then
-		slot0._statu = uv0.Finish
+	arg_3_0._getIndex = BpBonusModel.instance:isGetSelectBonus(arg_3_0._level)
 
-		slot0:setFinish(slot0._getIndex)
+	if BpModel.instance.firstShowSp or var_3_2 < arg_3_0._level then
+		arg_3_0._statu = var_0_1.Lock
+
+		arg_3_0:setFinish(0)
+	elseif arg_3_0._getIndex then
+		arg_3_0._statu = var_0_1.Finish
+
+		arg_3_0:setFinish(arg_3_0._getIndex)
 	else
-		slot0._statu = uv0.CanGet
+		arg_3_0._statu = var_0_1.CanGet
 
-		slot0:setFinish(0)
+		arg_3_0:setFinish(0)
 	end
 
-	slot0:setSelect(0)
-	gohelper.setActive(slot0._btnGet, slot0._statu == uv0.CanGet)
-	gohelper.setActive(slot0._golock, slot0._statu == uv0.Lock)
-	gohelper.setActive(slot0._finish, slot0._statu == uv0.Finish)
-	gohelper.setActive(slot0._goselect, slot0._statu ~= uv0.Finish)
-	ZProj.UGUIHelper.SetGrayFactor(slot0._btnGet.gameObject, 1)
+	arg_3_0:setSelect(0)
+	gohelper.setActive(arg_3_0._btnGet, arg_3_0._statu == var_0_1.CanGet)
+	gohelper.setActive(arg_3_0._golock, arg_3_0._statu == var_0_1.Lock)
+	gohelper.setActive(arg_3_0._finish, arg_3_0._statu == var_0_1.Finish)
+	gohelper.setActive(arg_3_0._goselect, arg_3_0._statu ~= var_0_1.Finish)
+	ZProj.UGUIHelper.SetGrayFactor(arg_3_0._btnGet.gameObject, 1)
 
-	for slot7 = 1, 4 do
-		gohelper.setActive(slot0._items[slot7].owned, ItemModel.instance:getItemQuantity(slot0._itemInfo[slot7][1], slot0._itemInfo[slot7][2]) > 0)
+	for iter_3_2 = 1, 4 do
+		local var_3_3 = ItemModel.instance:getItemQuantity(arg_3_0._itemInfo[iter_3_2][1], arg_3_0._itemInfo[iter_3_2][2]) > 0
 
-		if slot0._statu == uv0.Finish then
-			gohelper.setActive(slot0._items[slot7].mask, slot0._getIndex ~= slot7)
+		gohelper.setActive(arg_3_0._items[iter_3_2].owned, var_3_3)
 
-			if slot0._getIndex == slot7 then
-				gohelper.setActive(slot0._items[slot7].owned, false)
+		if arg_3_0._statu == var_0_1.Finish then
+			gohelper.setActive(arg_3_0._items[iter_3_2].mask, arg_3_0._getIndex ~= iter_3_2)
+
+			if arg_3_0._getIndex == iter_3_2 then
+				gohelper.setActive(arg_3_0._items[iter_3_2].owned, false)
 			end
 		else
-			gohelper.setActive(slot0._items[slot7].mask, slot8)
+			gohelper.setActive(arg_3_0._items[iter_3_2].mask, var_3_3)
 		end
 
-		slot9 = ItemConfig.instance:getItemConfig(slot0._itemInfo[slot7][1], slot0._itemInfo[slot7][2])
-		slot10 = ""
+		local var_3_4 = ItemConfig.instance:getItemConfig(arg_3_0._itemInfo[iter_3_2][1], arg_3_0._itemInfo[iter_3_2][2])
+		local var_3_5 = ""
 
-		if slot7 == 4 then
-			slot0._items[slot7].txtname.text = slot9.name
-			slot10 = slot9.name
+		if iter_3_2 == 4 then
+			arg_3_0._items[iter_3_2].txtname.text = var_3_4.name
+			var_3_5 = var_3_4.name
 		else
-			slot0._items[slot7].txtskinname.text = slot9.des
-			slot11 = HeroConfig.instance:getHeroCO(slot9.characterId)
-			slot0._items[slot7].txtname.text = slot11.name
-			slot10 = string.format("%s——%s", slot11.name, slot9.des)
+			arg_3_0._items[iter_3_2].txtskinname.text = var_3_4.des
+
+			local var_3_6 = HeroConfig.instance:getHeroCO(var_3_4.characterId)
+
+			arg_3_0._items[iter_3_2].txtname.text = var_3_6.name
+			var_3_5 = string.format("%s——%s", var_3_6.name, var_3_4.des)
 		end
 
-		if slot0._getIndex == slot7 then
-			slot0._txtgetname.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("bp_sp_get_bound"), slot10)
-		end
-	end
-end
-
-function slot0.setSelect(slot0, slot1)
-	for slot5 = 1, 4 do
-		gohelper.setActive(slot0._items[slot5].select, slot1 == slot5)
-	end
-end
-
-function slot0.setFinish(slot0, slot1)
-	for slot5 = 1, 4 do
-		gohelper.setActive(slot0._items[slot5].get, slot1 == slot5)
-
-		if slot1 == slot5 then
-			slot0._items[slot5].getAnim:Play("in")
+		if arg_3_0._getIndex == iter_3_2 then
+			arg_3_0._txtgetname.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("bp_sp_get_bound"), var_3_5)
 		end
 	end
 end
 
-function slot0._onGetClick(slot0, slot1)
-	if slot0._statu == uv0.CanGet then
-		if slot0._items[slot1].mask.activeSelf then
+function var_0_0.setSelect(arg_4_0, arg_4_1)
+	for iter_4_0 = 1, 4 do
+		gohelper.setActive(arg_4_0._items[iter_4_0].select, arg_4_1 == iter_4_0)
+	end
+end
+
+function var_0_0.setFinish(arg_5_0, arg_5_1)
+	for iter_5_0 = 1, 4 do
+		gohelper.setActive(arg_5_0._items[iter_5_0].get, arg_5_1 == iter_5_0)
+
+		if arg_5_1 == iter_5_0 then
+			arg_5_0._items[iter_5_0].getAnim:Play("in")
+		end
+	end
+end
+
+function var_0_0._onGetClick(arg_6_0, arg_6_1)
+	if arg_6_0._statu == var_0_1.CanGet then
+		if arg_6_0._items[arg_6_1].mask.activeSelf then
 			return
 		end
 
-		ZProj.UGUIHelper.SetGrayFactor(slot0._btnGet.gameObject, 0)
+		ZProj.UGUIHelper.SetGrayFactor(arg_6_0._btnGet.gameObject, 0)
 
-		slot0._nowSelect = slot1
+		arg_6_0._nowSelect = arg_6_1
 
-		slot0:setSelect(slot1)
+		arg_6_0:setSelect(arg_6_1)
 	else
-		slot0:_onDetailClick(slot1)
+		arg_6_0:_onDetailClick(arg_6_1)
 	end
 end
 
-function slot0._getBonus(slot0)
-	if not slot0._nowSelect then
+function var_0_0._getBonus(arg_7_0)
+	if not arg_7_0._nowSelect then
 		return
 	end
 
-	BpRpc.instance:sendGetSelfSelectBonusRequest(slot0._level or 0, slot0._nowSelect - 1)
-	slot0:closeThis()
+	BpRpc.instance:sendGetSelfSelectBonusRequest(arg_7_0._level or 0, arg_7_0._nowSelect - 1)
+	arg_7_0:closeThis()
 end
 
-function slot0._onDetailClick(slot0, slot1)
-	if not slot0._itemInfo[slot1] then
+function var_0_0._onDetailClick(arg_8_0, arg_8_1)
+	if not arg_8_0._itemInfo[arg_8_1] then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(slot0._itemInfo[slot1][1], slot0._itemInfo[slot1][2], false, nil, false)
+	MaterialTipController.instance:showMaterialInfo(arg_8_0._itemInfo[arg_8_1][1], arg_8_0._itemInfo[arg_8_1][2], false, nil, false)
 end
 
-return slot0
+return var_0_0

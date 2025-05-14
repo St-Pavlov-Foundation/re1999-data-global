@@ -1,42 +1,47 @@
-module("modules.logic.activity.view.chessmap.ActivityChessGameContainer", package.seeall)
+﻿module("modules.logic.activity.view.chessmap.ActivityChessGameContainer", package.seeall)
 
-slot0 = class("ActivityChessGameContainer", BaseViewContainer)
+local var_0_0 = class("ActivityChessGameContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, ActivityChessGameScene.New())
-	table.insert(slot1, ActivityChessGameMain.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, ActivityChessGameScene.New())
+	table.insert(var_1_0, ActivityChessGameMain.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.ChessGame109)
 
-		slot0._navigateButtonView:setOverrideClose(slot0.overrideOnCloseClick, slot0)
+		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.setHelpVisible(slot0, slot1)
-	slot0._navigateButtonView:setHelpVisible(slot1)
+function var_0_0.setHelpVisible(arg_3_0, arg_3_1)
+	arg_3_0._navigateButtonView:setHelpVisible(arg_3_1)
 end
 
-function slot0.overrideOnCloseClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, function ()
+function var_0_0.overrideOnCloseClick(arg_4_0)
+	local function var_4_0()
 		ViewMgr.instance:closeView(ViewName.ActivityChessGame, nil, true)
-		Activity109Rpc.instance:sendGetAct109InfoRequest(Activity109ChessModel.instance:getActId())
-	end)
+
+		local var_5_0 = Activity109ChessModel.instance:getActId()
+
+		Activity109Rpc.instance:sendGetAct109InfoRequest(var_5_0)
+	end
+
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, var_4_0)
 end
 
-return slot0
+return var_0_0

@@ -1,88 +1,107 @@
-module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractBoltLauncher", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractBoltLauncher", package.seeall)
 
-slot0 = class("Va3ChessInteractBoltLauncher", Va3ChessInteractBase)
+local var_0_0 = class("Va3ChessInteractBoltLauncher", Va3ChessInteractBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._enableAlarm = true
+	arg_1_0._enableAlarm = true
 end
 
-function slot0.onDrawAlert(slot0, slot1)
-	if not slot0._enableAlarm then
+function var_0_0.onDrawAlert(arg_2_0, arg_2_1)
+	if not arg_2_0._enableAlarm then
 		return
 	end
 
-	if not slot0._target.originData:getDirection() then
+	local var_2_0 = arg_2_0._target.originData:getDirection()
+
+	if not var_2_0 then
 		return
 	end
 
-	slot5, slot6 = Va3ChessGameModel.instance:getGameSize()
-	slot9 = slot2 == Va3ChessEnum.Direction.Up
-	slot4 = (slot9 or slot2 == Va3ChessEnum.Direction.Down) and (slot9 and slot6 - 1 or slot0._target.originData.posY - 1) or slot2 == Va3ChessEnum.Direction.Right and slot5 - 1 or slot0._target.originData.posX - 1
+	local var_2_1
+	local var_2_2
+	local var_2_3, var_2_4 = Va3ChessGameModel.instance:getGameSize()
+	local var_2_5 = arg_2_0._target.originData.posX
+	local var_2_6 = arg_2_0._target.originData.posY
+	local var_2_7 = var_2_0 == Va3ChessEnum.Direction.Up
+	local var_2_8 = var_2_0 == Va3ChessEnum.Direction.Down
+	local var_2_9 = var_2_0 == Va3ChessEnum.Direction.Right
 
-	if nil < 0 or slot4 < 0 then
+	if var_2_7 or var_2_8 then
+		var_2_1 = var_2_7 and var_2_6 + 1 or 0
+		var_2_2 = var_2_7 and var_2_4 - 1 or var_2_6 - 1
+	else
+		var_2_1 = var_2_9 and var_2_5 + 1 or 0
+		var_2_2 = var_2_9 and var_2_3 - 1 or var_2_5 - 1
+	end
+
+	if var_2_1 < 0 or var_2_2 < 0 then
 		return
 	end
 
-	if slot4 < slot3 then
-		logError(string.format("Va3ChessInteractBoltLauncher:onDrawAlert target error,interactId:%s beginPos:%s endPos:%s", slot0._target.id, slot3, slot4))
+	if var_2_2 < var_2_1 then
+		logError(string.format("Va3ChessInteractBoltLauncher:onDrawAlert target error,interactId:%s beginPos:%s endPos:%s", arg_2_0._target.id, var_2_1, var_2_2))
 
 		return
 	end
 
-	if slot9 or slot10 then
-		for slot15 = slot3, slot4 do
-			if slot15 == slot3 then
-				table.insert({
-					Va3ChessEnum.Direction.Left,
-					Va3ChessEnum.Direction.Right
-				}, Va3ChessEnum.Direction.Down)
-			elseif slot15 == slot4 then
-				table.insert(slot16, Va3ChessEnum.Direction.Up)
+	if var_2_7 or var_2_8 then
+		for iter_2_0 = var_2_1, var_2_2 do
+			local var_2_10 = {
+				Va3ChessEnum.Direction.Left,
+				Va3ChessEnum.Direction.Right
+			}
+
+			if iter_2_0 == var_2_1 then
+				table.insert(var_2_10, Va3ChessEnum.Direction.Down)
+			elseif iter_2_0 == var_2_2 then
+				table.insert(var_2_10, Va3ChessEnum.Direction.Up)
 			end
 
-			slot0:_insertToAlertMap(slot1, slot7, slot15, slot16)
+			arg_2_0:_insertToAlertMap(arg_2_1, var_2_5, iter_2_0, var_2_10)
 		end
 	else
-		for slot15 = slot3, slot4 do
-			if slot15 == slot3 then
-				table.insert({
-					Va3ChessEnum.Direction.Up,
-					Va3ChessEnum.Direction.Down
-				}, Va3ChessEnum.Direction.Left)
-			elseif slot15 == slot4 then
-				table.insert(slot16, Va3ChessEnum.Direction.Right)
+		for iter_2_1 = var_2_1, var_2_2 do
+			local var_2_11 = {
+				Va3ChessEnum.Direction.Up,
+				Va3ChessEnum.Direction.Down
+			}
+
+			if iter_2_1 == var_2_1 then
+				table.insert(var_2_11, Va3ChessEnum.Direction.Left)
+			elseif iter_2_1 == var_2_2 then
+				table.insert(var_2_11, Va3ChessEnum.Direction.Right)
 			end
 
-			slot0:_insertToAlertMap(slot1, slot15, slot8, slot16)
+			arg_2_0:_insertToAlertMap(arg_2_1, iter_2_1, var_2_6, var_2_11)
 		end
 	end
 end
 
-function slot0._insertToAlertMap(slot0, slot1, slot2, slot3, slot4)
-	if Va3ChessGameModel.instance:isPosInChessBoard(slot2, slot3) and Va3ChessGameModel.instance:getBaseTile(slot2, slot3) ~= Va3ChessEnum.TileBaseType.None then
-		slot1[slot2] = slot1[slot2] or {}
-		slot1[slot2][slot3] = slot1[slot2][slot3] or {}
+function var_0_0._insertToAlertMap(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	if Va3ChessGameModel.instance:isPosInChessBoard(arg_3_2, arg_3_3) and Va3ChessGameModel.instance:getBaseTile(arg_3_2, arg_3_3) ~= Va3ChessEnum.TileBaseType.None then
+		arg_3_1[arg_3_2] = arg_3_1[arg_3_2] or {}
+		arg_3_1[arg_3_2][arg_3_3] = arg_3_1[arg_3_2][arg_3_3] or {}
 
-		table.insert(slot1[slot2][slot3], {
+		table.insert(arg_3_1[arg_3_2][arg_3_3], {
 			isStatic = true,
 			resPath = Va3ChessEnum.SceneResPath.AlarmItem2,
-			showDirLine = slot4
+			showDirLine = arg_3_4
 		})
 	end
 end
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_4_0)
+	var_0_0.super.onAvatarLoaded(arg_4_0)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-function slot0.dispose(slot0)
-	slot0._enableAlarm = false
+function var_0_0.dispose(arg_5_0)
+	arg_5_0._enableAlarm = false
 
-	uv0.super.dispose(slot0)
+	var_0_0.super.dispose(arg_5_0)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-return slot0
+return var_0_0

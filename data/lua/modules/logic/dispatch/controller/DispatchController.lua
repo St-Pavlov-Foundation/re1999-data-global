@@ -1,43 +1,47 @@
-module("modules.logic.dispatch.controller.DispatchController", package.seeall)
+﻿module("modules.logic.dispatch.controller.DispatchController", package.seeall)
 
-slot0 = class("DispatchController", BaseController)
+local var_0_0 = class("DispatchController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.openDispatchView(slot0, slot1, slot2, slot3)
-	slot4 = nil
+function var_0_0.openDispatchView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0
 
-	if slot1 then
-		slot4 = DispatchEnum.ActId2View[slot1]
+	if arg_5_1 then
+		var_5_0 = DispatchEnum.ActId2View[arg_5_1]
 	end
 
-	if not slot4 then
-		logError(string.format("DispatchController:openDispatchView error,DispatchEnum.ActId2View not have view, actId:%s", slot1))
+	if not var_5_0 then
+		logError(string.format("DispatchController:openDispatchView error,DispatchEnum.ActId2View not have view, actId:%s", arg_5_1))
 
 		return
 	end
 
-	if DispatchModel.instance:getDispatchStatus(slot2, slot3) == DispatchEnum.DispatchStatus.Finished then
+	if DispatchModel.instance:getDispatchStatus(arg_5_2, arg_5_3) == DispatchEnum.DispatchStatus.Finished then
 		return
 	end
 
 	DispatchModel.instance:checkDispatchFinish()
-	ViewMgr.instance:openView(slot4, {
-		elementId = slot2,
-		dispatchId = slot3
+	ViewMgr.instance:openView(var_5_0, {
+		elementId = arg_5_2,
+		dispatchId = arg_5_3
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

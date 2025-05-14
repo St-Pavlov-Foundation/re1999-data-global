@@ -1,88 +1,100 @@
-module("modules.logic.turnback.invitation.view.TurnBackInvitationFriendItem", package.seeall)
+﻿module("modules.logic.turnback.invitation.view.TurnBackInvitationFriendItem", package.seeall)
 
-slot0 = class("TurnBackInvitationFriendItem", LuaCompBase)
+local var_0_0 = class("TurnBackInvitationFriendItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0._txtName = gohelper.findChildTextMesh(slot1, "invited/namebg/#txt_name")
-	slot0._goInvited = gohelper.findChild(slot1, "invited")
-	slot0._goUnInvite = gohelper.findChild(slot1, "uninvite")
-	slot0._simgHeadIcon = gohelper.findChildSingleImage(slot1, "invited/#go_playerheadicon")
-	slot0._goframenode = gohelper.findChild(slot1, "invited/#go_playerheadicon/#go_framenode")
-	slot0._loader = MultiAbLoader.New()
+	arg_1_0.go = arg_1_1
+	arg_1_0._txtName = gohelper.findChildTextMesh(arg_1_1, "invited/namebg/#txt_name")
+	arg_1_0._goInvited = gohelper.findChild(arg_1_1, "invited")
+	arg_1_0._goUnInvite = gohelper.findChild(arg_1_1, "uninvite")
+	arg_1_0._simgHeadIcon = gohelper.findChildSingleImage(arg_1_1, "invited/#go_playerheadicon")
+	arg_1_0._goframenode = gohelper.findChild(arg_1_1, "invited/#go_playerheadicon/#go_framenode")
+	arg_1_0._loader = MultiAbLoader.New()
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._roleInfo = slot1
+function var_0_0.setData(arg_2_0, arg_2_1)
+	arg_2_0._roleInfo = arg_2_1
 
-	slot0:_refreshItem()
+	arg_2_0:_refreshItem()
 end
 
-function slot0.setEmpty(slot0)
-	slot0:setInfoState(false)
+function var_0_0.setEmpty(arg_3_0)
+	arg_3_0:setInfoState(false)
 end
 
-function slot0.setInfoState(slot0, slot1)
-	gohelper.setActive(slot0._goInvited, slot1)
-	gohelper.setActive(slot0._goUnInvite, not slot1)
+function var_0_0.setInfoState(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0._goInvited, arg_4_1)
+	gohelper.setActive(arg_4_0._goUnInvite, not arg_4_1)
 end
 
-function slot0._refreshItem(slot0)
-	if slot0._roleInfo == nil then
+function var_0_0._refreshItem(arg_5_0)
+	local var_5_0 = arg_5_0._roleInfo
+
+	if var_5_0 == nil then
 		logError("Player Info is nil")
-		slot0:setEmpty()
+		arg_5_0:setEmpty()
 
 		return
 	end
 
-	slot0:setInfoState(true)
+	arg_5_0:setInfoState(true)
 
-	slot0._txtName.text = slot1.name
-	slot2 = lua_item.configDict[slot1.portrait]
+	arg_5_0._txtName.text = var_5_0.name
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simgHeadIcon)
+	local var_5_1 = lua_item.configDict[var_5_0.portrait]
+
+	if not arg_5_0._liveHeadIcon then
+		arg_5_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_5_0._simgHeadIcon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot2.id)
+	arg_5_0._liveHeadIcon:setLiveHead(var_5_1.id)
 
-	if #string.split(slot2.effect, "#") > 1 then
-		if slot2.id == tonumber(slot3[#slot3]) then
-			gohelper.setActive(slot0._goframenode, true)
+	local var_5_2 = string.split(var_5_1.effect, "#")
 
-			if not slot0.frame then
-				slot0._loader:addPath("ui/viewres/common/effect/frame.prefab")
-				slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+	if #var_5_2 > 1 then
+		if var_5_1.id == tonumber(var_5_2[#var_5_2]) then
+			gohelper.setActive(arg_5_0._goframenode, true)
+
+			if not arg_5_0.frame then
+				local var_5_3 = "ui/viewres/common/effect/frame.prefab"
+
+				arg_5_0._loader:addPath(var_5_3)
+				arg_5_0._loader:startLoad(arg_5_0._onLoadCallback, arg_5_0)
 			end
 		end
 	else
-		gohelper.setActive(slot0._goframenode, false)
+		gohelper.setActive(arg_5_0._goframenode, false)
 	end
 end
 
-function slot0._onLoadCallback(slot0)
-	gohelper.clone(slot0._loader:getFirstAssetItem():GetResource(), slot0._goframenode, "frame")
+function var_0_0._onLoadCallback(arg_6_0)
+	local var_6_0 = arg_6_0._loader:getFirstAssetItem():GetResource()
 
-	slot0.frame = gohelper.findChild(slot0._goframenode, "frame")
-	slot0.frame:GetComponent(gohelper.Type_Image).enabled = false
-	slot5 = 1.41 * recthelper.getWidth(slot0._simgHeadIcon.transform) / recthelper.getWidth(slot0.frame.transform)
+	gohelper.clone(var_6_0, arg_6_0._goframenode, "frame")
 
-	transformhelper.setLocalScale(slot0.frame.transform, slot5, slot5, 1)
+	arg_6_0.frame = gohelper.findChild(arg_6_0._goframenode, "frame")
+	arg_6_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+
+	local var_6_1 = 1.41 * (recthelper.getWidth(arg_6_0._simgHeadIcon.transform) / recthelper.getWidth(arg_6_0.frame.transform))
+
+	transformhelper.setLocalScale(arg_6_0.frame.transform, var_6_1, var_6_1, 1)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_7_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_8_0)
+	return
 end
 
-function slot0.destroy(slot0)
-	slot0:__onDispose()
-	slot0._simgHeadIcon:UnLoadImage()
+function var_0_0.destroy(arg_9_0)
+	arg_9_0:__onDispose()
+	arg_9_0._simgHeadIcon:UnLoadImage()
 
-	slot0._roleInfo = nil
+	arg_9_0._roleInfo = nil
 end
 
-return slot0
+return var_0_0

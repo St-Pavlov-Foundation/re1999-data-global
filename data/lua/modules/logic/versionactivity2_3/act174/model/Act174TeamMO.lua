@@ -1,28 +1,28 @@
-module("modules.logic.versionactivity2_3.act174.model.Act174TeamMO", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.model.Act174TeamMO", package.seeall)
 
-slot0 = pureTable("Act174TeamMO")
+local var_0_0 = pureTable("Act174TeamMO")
 
-function slot0.init(slot0, slot1)
-	slot0.index = slot1.index
-	slot0.battleHeroInfo = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.index = arg_1_1.index
+	arg_1_0.battleHeroInfo = {}
 
-	for slot5, slot6 in ipairs(slot1.battleHeroInfo) do
-		slot0.battleHeroInfo[slot5] = slot0:creatBattleHero(slot6)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.battleHeroInfo) do
+		arg_1_0.battleHeroInfo[iter_1_0] = arg_1_0:creatBattleHero(iter_1_1)
 	end
 end
 
-function slot0.creatBattleHero(slot0, slot1)
+function var_0_0.creatBattleHero(arg_2_0, arg_2_1)
 	return {
-		index = slot1.index,
-		heroId = slot1.heroId,
-		itemId = slot1.itemId,
-		priorSkill = slot1.priorSkill
+		index = arg_2_1.index,
+		heroId = arg_2_1.heroId,
+		itemId = arg_2_1.itemId,
+		priorSkill = arg_2_1.priorSkill
 	}
 end
 
-function slot0.notEmpty(slot0)
-	for slot4, slot5 in ipairs(slot0.battleHeroInfo) do
-		if slot5.heroId and slot5.heroId ~= 0 then
+function var_0_0.notEmpty(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.battleHeroInfo) do
+		if iter_3_1.heroId and iter_3_1.heroId ~= 0 then
 			return true
 		end
 	end
@@ -30,4 +30,4 @@ function slot0.notEmpty(slot0)
 	return false
 end
 
-return slot0
+return var_0_0

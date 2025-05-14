@@ -1,144 +1,160 @@
-module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryRewardItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryRewardItem", package.seeall)
 
-slot0 = class("Activity165StoryRewardItem", LuaCompBase)
+local var_0_0 = class("Activity165StoryRewardItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._goreward = gohelper.findChild(slot0.viewGO, "#go_reward")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#go_reward")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_5_0)
+	arg_5_0:removeEvents()
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_6_0, arg_6_1)
+	arg_6_0.viewGO = arg_6_1
 
-	slot0:onInitView()
+	arg_6_0:onInitView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rewarditems = {}
-	slot0._rewardGoPrefabs = gohelper.findChild(slot0.viewGO, "layout/go_reward")
-	slot0._godarkpoint = gohelper.findChild(slot0.viewGO, "darkpoint")
-	slot0._golightpoint = gohelper.findChild(slot0.viewGO, "lightpoint")
-	slot0._golayout = gohelper.findChild(slot0.viewGO, "layout")
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._rewarditems = {}
+	arg_7_0._rewardGoPrefabs = gohelper.findChild(arg_7_0.viewGO, "layout/go_reward")
+	arg_7_0._godarkpoint = gohelper.findChild(arg_7_0.viewGO, "darkpoint")
+	arg_7_0._golightpoint = gohelper.findChild(arg_7_0.viewGO, "lightpoint")
+	arg_7_0._golayout = gohelper.findChild(arg_7_0.viewGO, "layout")
 end
 
-function slot0.onUpdateParam(slot0, slot1, slot2)
-	slot0._storyId = slot2.storyId
-	slot0._actId = Activity165Model.instance:getActivityId()
-	slot0._storyMo = Activity165Model.instance:getStoryMo(slot0._actId, slot0._storyId)
-	slot0._index = slot1
+function var_0_0.onUpdateParam(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = DungeonConfig.instance:getRewardItems(tonumber(arg_8_2.bonus))
 
-	for slot8 = 1, #DungeonConfig.instance:getRewardItems(tonumber(slot2.bonus)) do
-		slot9 = slot3[slot8]
-		slot10 = slot0:getRewardItem(slot8)
+	arg_8_0._storyId = arg_8_2.storyId
+	arg_8_0._actId = Activity165Model.instance:getActivityId()
+	arg_8_0._storyMo = Activity165Model.instance:getStoryMo(arg_8_0._actId, arg_8_0._storyId)
+	arg_8_0._index = arg_8_1
 
-		slot0:onRefreshItem(slot1, slot8)
-		gohelper.setActive(slot10.go, true)
+	local var_8_1 = #var_8_0
 
-		slot10.rewardCfg = slot9
-		slot10.itemCfg, slot10.iconPath = ItemModel.instance:getItemConfigAndIcon(slot9[1], slot9[2])
+	for iter_8_0 = 1, var_8_1 do
+		local var_8_2 = var_8_0[iter_8_0]
+		local var_8_3 = arg_8_0:getRewardItem(iter_8_0)
 
-		slot10.simagereward:LoadImage(slot10.iconPath)
-		UISpriteSetMgr.instance:setUiFBSprite(slot10.imagebg, "bg_pinjidi_" .. slot10.itemCfg.rare)
+		arg_8_0:onRefreshItem(arg_8_1, iter_8_0)
+		gohelper.setActive(var_8_3.go, true)
 
-		slot10.txtpointvalue.text = luaLang("multiple") .. slot9[3]
+		var_8_3.rewardCfg = var_8_2
+		var_8_3.itemCfg, var_8_3.iconPath = ItemModel.instance:getItemConfigAndIcon(var_8_2[1], var_8_2[2])
+
+		var_8_3.simagereward:LoadImage(var_8_3.iconPath)
+		UISpriteSetMgr.instance:setUiFBSprite(var_8_3.imagebg, "bg_pinjidi_" .. var_8_3.itemCfg.rare)
+
+		var_8_3.txtpointvalue.text = luaLang("multiple") .. var_8_2[3]
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_8_0.viewGO, true)
 end
 
-function slot0.getRewardItem(slot0, slot1)
-	if not slot0._rewarditems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.clone(slot0._rewardGoPrefabs, slot0._golayout, "reward_" .. tostring(slot1))
-		slot2.imagebg = gohelper.findChildImage(slot3, "item/image_rare")
-		slot2.simagereward = gohelper.findChildSingleImage(slot3, "item/simage_icon")
-		slot2.txtpointvalue = gohelper.findChildText(slot3, "item/txt_num")
-		slot2.imagereward = slot2.simagereward:GetComponent(gohelper.Type_Image)
-		slot2.btn = gohelper.findChildButtonWithAudio(slot3, "item/btn_click")
-		slot2.goalreadygot = gohelper.findChild(slot3, "go_hasget")
-		slot2.btncanget = gohelper.findChildButtonWithAudio(slot3, "go_canget")
+function var_0_0.getRewardItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._rewarditems[arg_9_1]
 
-		slot2.btn:AddClickListener(slot0.onClickItem, slot0, slot2)
+	if not var_9_0 then
+		var_9_0 = arg_9_0:getUserDataTb_()
 
-		slot2.go = slot3
-		slot0._rewarditems[slot1] = slot2
+		local var_9_1 = gohelper.clone(arg_9_0._rewardGoPrefabs, arg_9_0._golayout, "reward_" .. tostring(arg_9_1))
+
+		var_9_0.imagebg = gohelper.findChildImage(var_9_1, "item/image_rare")
+		var_9_0.simagereward = gohelper.findChildSingleImage(var_9_1, "item/simage_icon")
+		var_9_0.txtpointvalue = gohelper.findChildText(var_9_1, "item/txt_num")
+		var_9_0.imagereward = var_9_0.simagereward:GetComponent(gohelper.Type_Image)
+		var_9_0.btn = gohelper.findChildButtonWithAudio(var_9_1, "item/btn_click")
+		var_9_0.goalreadygot = gohelper.findChild(var_9_1, "go_hasget")
+		var_9_0.btncanget = gohelper.findChildButtonWithAudio(var_9_1, "go_canget")
+
+		var_9_0.btn:AddClickListener(arg_9_0.onClickItem, arg_9_0, var_9_0)
+
+		var_9_0.go = var_9_1
+		arg_9_0._rewarditems[arg_9_1] = var_9_0
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.onRefreshItem(slot0, slot1, slot2)
-	if not slot0._storyMo then
+function var_0_0.onRefreshItem(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_0._storyMo then
 		return
 	end
 
-	slot3 = slot0:getRewardItem(slot2)
-	slot3.hasGetBonus = slot1 <= (slot0._storyMo:getclaimRewardCount() or 0)
-	slot3.unlock = slot1 <= (slot0._storyMo:getUnlockEndingCount() or 0)
-	slot3.canGetBonus = slot3.unlock and not slot3.hasGetBonus
+	local var_10_0 = arg_10_0:getRewardItem(arg_10_2)
+	local var_10_1 = arg_10_0._storyMo:getUnlockEndingCount() or 0
 
-	gohelper.setActive(slot3.goalreadygot, slot3.hasGetBonus)
-	gohelper.setActive(slot3.btncanget.gameObject, slot3.canGetBonus)
-	gohelper.setActive(slot0._godarkpoint, not slot3.unlock)
-	gohelper.setActive(slot0._golightpoint.gameObject, slot3.unlock)
+	var_10_0.hasGetBonus = arg_10_1 <= (arg_10_0._storyMo:getclaimRewardCount() or 0)
+	var_10_0.unlock = arg_10_1 <= var_10_1
+	var_10_0.canGetBonus = var_10_0.unlock and not var_10_0.hasGetBonus
+
+	gohelper.setActive(var_10_0.goalreadygot, var_10_0.hasGetBonus)
+	gohelper.setActive(var_10_0.btncanget.gameObject, var_10_0.canGetBonus)
+	gohelper.setActive(arg_10_0._godarkpoint, not var_10_0.unlock)
+	gohelper.setActive(arg_10_0._golightpoint.gameObject, var_10_0.unlock)
 end
 
-function slot0.onClickItem(slot0, slot1)
-	MaterialTipController.instance:showMaterialInfo(slot1.rewardCfg[1], slot1.rewardCfg[2])
+function var_0_0.onClickItem(arg_11_0, arg_11_1)
+	MaterialTipController.instance:showMaterialInfo(arg_11_1.rewardCfg[1], arg_11_1.rewardCfg[2])
 end
 
-function slot0.checkBonus(slot0)
-	if not slot0._storyMo then
+function var_0_0.checkBonus(arg_12_0)
+	if not arg_12_0._storyMo then
 		return
 	end
 
-	slot4 = false
+	local var_12_0 = arg_12_0._storyMo:getUnlockEndingCount()
+	local var_12_1 = arg_12_0._storyMo:getclaimRewardCount()
+	local var_12_2 = arg_12_0._storyMo:getAllEndingRewardCo()
+	local var_12_3 = false
 
-	for slot8 = 1, #slot0._storyMo:getAllEndingRewardCo() do
-		if slot8 <= slot0._storyMo:getUnlockEndingCount() and slot8 > slot0._storyMo:getclaimRewardCount() then
-			slot4 = true
+	for iter_12_0 = 1, #var_12_2 do
+		if iter_12_0 <= var_12_0 and not (iter_12_0 <= var_12_1) then
+			var_12_3 = true
 
 			break
 		end
 	end
 
-	if slot4 then
-		TaskDispatcher.runDelay(slot0.onGetBonusCallback, slot0, 0.5)
+	if var_12_3 then
+		TaskDispatcher.runDelay(arg_12_0.onGetBonusCallback, arg_12_0, 0.5)
 	end
 end
 
-function slot0.onGetBonusCallback(slot0)
-	Activity165Rpc.instance:sendAct165GainMilestoneRewardRequest(slot0._actId, slot0._storyId)
+function var_0_0.onGetBonusCallback(arg_13_0)
+	Activity165Rpc.instance:sendAct165GainMilestoneRewardRequest(arg_13_0._actId, arg_13_0._storyId)
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_14_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in pairs(slot0._rewarditems) do
-		slot5.btn:RemoveClickListener()
-		slot5.btncanget:RemoveClickListener()
-		slot5.simagereward:UnLoadImage()
+function var_0_0.onDestroy(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._rewarditems) do
+		iter_15_1.btn:RemoveClickListener()
+		iter_15_1.btncanget:RemoveClickListener()
+		iter_15_1.simagereward:UnLoadImage()
 	end
 
-	TaskDispatcher.cancelTask(slot0.onGetBonusCallback, slot0)
+	TaskDispatcher.cancelTask(arg_15_0.onGetBonusCallback, arg_15_0)
 end
 
-return slot0
+return var_0_0

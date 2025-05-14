@@ -1,92 +1,104 @@
-module("modules.logic.room.view.transport.RoomViewUITransportSiteItem", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomViewUITransportSiteItem", package.seeall)
 
-slot0 = class("RoomViewUITransportSiteItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUITransportSiteItem", RoomViewUIBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._siteType = slot1
-	slot0._fromType, slot0._toType = RoomTransportHelper.getSiteFromToByType(slot1)
+	arg_1_0._siteType = arg_1_1
+	arg_1_0._fromType, arg_1_0._toType = RoomTransportHelper.getSiteFromToByType(arg_1_1)
 end
 
-function slot0._customOnInit(slot0)
-	slot0._gomain = gohelper.findChild(slot0._gocontainer, "bubblebg/#go_main")
-	slot0._imagebuildingicon = gohelper.findChildImage(slot0._gocontainer, "#image_buildingicon")
-	slot0._txtbuildingname = gohelper.findChildText(slot0._gocontainer, "bottom/txt_buildingName")
-	slot0._goreddot = gohelper.findChild(slot0._gocontainer, "bottom/#go_reddot")
-	slot0._txtbuildingname.text = luaLang(RoomBuildingEnum.BuildingTypeSiteLangKey[slot0._siteType])
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._gomain = gohelper.findChild(arg_2_0._gocontainer, "bubblebg/#go_main")
+	arg_2_0._imagebuildingicon = gohelper.findChildImage(arg_2_0._gocontainer, "#image_buildingicon")
+	arg_2_0._txtbuildingname = gohelper.findChildText(arg_2_0._gocontainer, "bottom/txt_buildingName")
+	arg_2_0._goreddot = gohelper.findChild(arg_2_0._gocontainer, "bottom/#go_reddot")
+	arg_2_0._txtbuildingname.text = luaLang(RoomBuildingEnum.BuildingTypeSiteLangKey[arg_2_0._siteType])
 end
 
-function slot0._customAddEventListeners(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.TransportBuildingChanged, slot0._refreshIconUI, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.TransportCritterChanged, slot0._refreshIconUI, slot0)
-	slot0:refreshUI(true)
-	slot0:_refreshIconUI()
+function var_0_0._customAddEventListeners(arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.TransportBuildingChanged, arg_3_0._refreshIconUI, arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.TransportCritterChanged, arg_3_0._refreshIconUI, arg_3_0)
+	arg_3_0:refreshUI(true)
+	arg_3_0:_refreshIconUI()
 end
 
-function slot0._customRemoveEventListeners(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.TransportBuildingChanged, slot0._refreshIconUI, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.TransportCritterChanged, slot0._refreshIconUI, slot0)
+function var_0_0._customRemoveEventListeners(arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TransportBuildingChanged, arg_4_0._refreshIconUI, arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TransportCritterChanged, arg_4_0._refreshIconUI, arg_4_0)
 end
 
-function slot0._onClick(slot0, slot1, slot2)
-	RoomTransportController.instance:openTransportSiteView(slot0._siteType)
+function var_0_0._onClick(arg_5_0, arg_5_1, arg_5_2)
+	RoomTransportController.instance:openTransportSiteView(arg_5_0._siteType)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0._refreshIconUI(slot0)
-	slot2 = nil
+function var_0_0._refreshIconUI(arg_6_0)
+	local var_6_0 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_6_0._fromType, arg_6_0._toType)
+	local var_6_1
 
-	if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot0._fromType, slot0._toType) and RoomTransportHelper.getVehicleCfgByBuildingId(slot1.buildingId, slot1.buildingSkinId) then
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imagebuildingicon, slot2.uiIcon)
+	if var_6_0 then
+		var_6_1 = RoomTransportHelper.getVehicleCfgByBuildingId(var_6_0.buildingId, var_6_0.buildingSkinId)
+
+		if var_6_1 then
+			UISpriteSetMgr.instance:setCritterSprite(arg_6_0._imagebuildingicon, var_6_1.uiIcon)
+		end
 	end
 
-	gohelper.setActive(slot0._gomain, slot1 ~= nil and slot1.critterUid and slot1.critterUid ~= 0)
-	gohelper.setActive(slot0._imagebuildingicon, slot2 ~= nil)
+	gohelper.setActive(arg_6_0._gomain, var_6_0 ~= nil and var_6_0.critterUid and var_6_0.critterUid ~= 0)
+	gohelper.setActive(arg_6_0._imagebuildingicon, var_6_1 ~= nil)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:_refreshShow(slot1)
-	slot0:_refreshPosition()
+function var_0_0.refreshUI(arg_7_0, arg_7_1)
+	arg_7_0:_refreshShow(arg_7_1)
+	arg_7_0:_refreshPosition()
 end
 
-function slot0._refreshShow(slot0, slot1)
+function var_0_0._refreshShow(arg_8_0, arg_8_1)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_8_0:_setShow(false, arg_8_1)
 
 		return
 	end
 
-	if slot0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook and slot2 ~= RoomEnum.CameraState.OverlookAll then
-		slot0:_setShow(false, slot1)
+	local var_8_0 = arg_8_0._scene.camera:getCameraState()
+
+	if var_8_0 ~= RoomEnum.CameraState.Overlook and var_8_0 ~= RoomEnum.CameraState.OverlookAll then
+		arg_8_0:_setShow(false, arg_8_1)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		slot0:_setShow(false, slot1)
+		arg_8_0:_setShow(false, arg_8_1)
 
 		return
 	end
 
-	slot0:_setShow(true, slot1)
+	arg_8_0:_setShow(true, arg_8_1)
 end
 
-function slot0.getUI3DPos(slot0)
-	if not slot0._scene.sitemgr:getSiteEntity(slot0._siteType) then
+function var_0_0.getUI3DPos(arg_9_0)
+	local var_9_0 = arg_9_0._scene.sitemgr:getSiteEntity(arg_9_0._siteType)
+
+	if not var_9_0 then
 		return Vector3.zero
 	end
 
-	if slot1:getHeadGO() then
-		return slot2.transform.position
+	local var_9_1 = var_9_0:getHeadGO()
+
+	if var_9_1 then
+		return var_9_1.transform.position
 	end
 
-	return slot1.goTrs.position
+	return var_9_0.goTrs.position
 end
 
-function slot0._customOnDestory(slot0)
+function var_0_0._customOnDestory(arg_10_0)
+	return
 end
 
-slot0.prefabPath = "ui/viewres/room/sceneui/roomscenetransportsiteui.prefab"
+var_0_0.prefabPath = "ui/viewres/room/sceneui/roomscenetransportsiteui.prefab"
 
-return slot0
+return var_0_0

@@ -1,200 +1,223 @@
-module("modules.logic.seasonver.act166.model.Season166MO", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166MO", package.seeall)
 
-slot0 = pureTable("Season166MO")
+local var_0_0 = pureTable("Season166MO")
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.isFinishTeach = slot1.isFinishTeach
+function var_0_0.updateInfo(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.isFinishTeach = arg_1_1.isFinishTeach
 
-	slot0:updateSpotsInfo(slot1.bases)
-	slot0:updateTrainsInfo(slot1.trains)
-	slot0:updateTeachsInfo(slot1.teachs)
-	slot0:updateInfomation(slot1.information)
-	slot0:initTalentInfo(slot1.talents)
+	arg_1_0:updateSpotsInfo(arg_1_1.bases)
+	arg_1_0:updateTrainsInfo(arg_1_1.trains)
+	arg_1_0:updateTeachsInfo(arg_1_1.teachs)
+	arg_1_0:updateInfomation(arg_1_1.information)
+	arg_1_0:initTalentInfo(arg_1_1.talents)
 
-	slot0.spotHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(slot1.baseHeroGroupSnapshot)
-	slot0.trainHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(slot1.trainHeroGroupSnapshot)
+	arg_1_0.spotHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(arg_1_1.baseHeroGroupSnapshot)
+	arg_1_0.trainHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(arg_1_1.trainHeroGroupSnapshot)
 end
 
-function slot0.updateInfomation(slot0, slot1)
-	slot0.infoBonusDict = {}
-	slot0.informationDict = {}
+function var_0_0.updateInfomation(arg_2_0, arg_2_1)
+	arg_2_0.infoBonusDict = {}
+	arg_2_0.informationDict = {}
 
-	for slot5 = 1, #slot1.bonusIds do
-		slot0.infoBonusDict[slot1.bonusIds[slot5]] = 1
+	for iter_2_0 = 1, #arg_2_1.bonusIds do
+		arg_2_0.infoBonusDict[arg_2_1.bonusIds[iter_2_0]] = 1
 	end
 
-	slot0:updateInfos(slot1.infos)
+	arg_2_0:updateInfos(arg_2_1.infos)
 end
 
-function slot0.updateInfos(slot0, slot1)
-	slot2 = false
+function var_0_0.updateInfos(arg_3_0, arg_3_1)
+	local var_3_0 = false
 
-	for slot6 = 1, #slot1 do
-		if not slot0.informationDict[slot1[slot6].id] then
-			slot8 = Season166InfoMO.New()
+	for iter_3_0 = 1, #arg_3_1 do
+		local var_3_1 = arg_3_1[iter_3_0]
+		local var_3_2 = arg_3_0.informationDict[var_3_1.id]
 
-			slot8:init(slot0.activityId)
+		if not var_3_2 then
+			var_3_2 = Season166InfoMO.New()
 
-			slot0.informationDict[slot7.id] = slot8
-			slot2 = true
+			var_3_2:init(arg_3_0.activityId)
+
+			arg_3_0.informationDict[var_3_1.id] = var_3_2
+			var_3_0 = true
 		end
 
-		slot8:setData(slot7)
+		var_3_2:setData(var_3_1)
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.updateAnalyInfoStage(slot0, slot1, slot2)
-	if slot0.informationDict[slot1] then
-		slot3.stage = slot2
-	end
-end
+function var_0_0.updateAnalyInfoStage(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0.informationDict[arg_4_1]
 
-function slot0.updateInfoBonus(slot0, slot1, slot2)
-	if slot0.informationDict[slot1] then
-		slot3.bonusStage = slot2
+	if var_4_0 then
+		var_4_0.stage = arg_4_2
 	end
 end
 
-function slot0.onReceiveInformationBonus(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		slot0.infoBonusDict[slot1[slot5]] = 1
+function var_0_0.updateInfoBonus(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0.informationDict[arg_5_1]
+
+	if var_5_0 then
+		var_5_0.bonusStage = arg_5_2
 	end
 end
 
-function slot0.updateSpotsInfo(slot0, slot1)
-	slot0.baseSpotInfoMap = {}
-
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
-		slot7 = Season166BaseSpotMO.New()
-
-		slot7:setData(slot6)
-
-		slot0.baseSpotInfoMap[slot6.id] = slot7
+function var_0_0.onReceiveInformationBonus(arg_6_0, arg_6_1)
+	for iter_6_0 = 1, #arg_6_1 do
+		arg_6_0.infoBonusDict[arg_6_1[iter_6_0]] = 1
 	end
 end
 
-function slot0.updateMaxScore(slot0, slot1, slot2)
-	if slot0.baseSpotInfoMap[slot1] then
-		slot3.maxScore = slot2
+function var_0_0.updateSpotsInfo(arg_7_0, arg_7_1)
+	arg_7_0.baseSpotInfoMap = {}
+
+	for iter_7_0 = 1, #arg_7_1 do
+		local var_7_0 = arg_7_1[iter_7_0]
+		local var_7_1 = Season166BaseSpotMO.New()
+
+		var_7_1:setData(var_7_0)
+
+		arg_7_0.baseSpotInfoMap[var_7_0.id] = var_7_1
 	end
 end
 
-function slot0.updateTrainsInfo(slot0, slot1)
-	slot0.trainInfoMap = {}
+function var_0_0.updateMaxScore(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0.baseSpotInfoMap[arg_8_1]
 
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
-		slot7 = Season166TrainMO.New()
-
-		slot7:setData(slot6)
-
-		slot0.trainInfoMap[slot6.id] = slot7
+	if var_8_0 then
+		var_8_0.maxScore = arg_8_2
 	end
 end
 
-function slot0.updateTeachsInfo(slot0, slot1)
-	slot0.teachInfoMap = {}
+function var_0_0.updateTrainsInfo(arg_9_0, arg_9_1)
+	arg_9_0.trainInfoMap = {}
 
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
-		slot7 = Season166TeachMO.New()
+	for iter_9_0 = 1, #arg_9_1 do
+		local var_9_0 = arg_9_1[iter_9_0]
+		local var_9_1 = Season166TrainMO.New()
 
-		slot7:setData(slot6)
+		var_9_1:setData(var_9_0)
 
-		slot0.teachInfoMap[slot6.id] = slot7
+		arg_9_0.trainInfoMap[var_9_0.id] = var_9_1
 	end
 end
 
-function slot0.getHeroGroupSnapShot(slot0, slot1)
-	if slot1 == DungeonEnum.EpisodeType.Season166Base then
-		return slot0.spotHeroGroupSnapshot
-	elseif slot1 == DungeonEnum.EpisodeType.Season166Train then
-		return slot0.trainHeroGroupSnapshot
+function var_0_0.updateTeachsInfo(arg_10_0, arg_10_1)
+	arg_10_0.teachInfoMap = {}
+
+	for iter_10_0 = 1, #arg_10_1 do
+		local var_10_0 = arg_10_1[iter_10_0]
+		local var_10_1 = Season166TeachMO.New()
+
+		var_10_1:setData(var_10_0)
+
+		arg_10_0.teachInfoMap[var_10_0.id] = var_10_1
 	end
 end
 
-function slot0.getInformationMO(slot0, slot1)
-	return slot0.informationDict[slot1]
+function var_0_0.getHeroGroupSnapShot(arg_11_0, arg_11_1)
+	if arg_11_1 == DungeonEnum.EpisodeType.Season166Base then
+		return arg_11_0.spotHeroGroupSnapshot
+	elseif arg_11_1 == DungeonEnum.EpisodeType.Season166Train then
+		return arg_11_0.trainHeroGroupSnapshot
+	end
 end
 
-function slot0.isBonusGet(slot0, slot1)
-	return slot0.infoBonusDict[slot1] == 1
+function var_0_0.getInformationMO(arg_12_0, arg_12_1)
+	return arg_12_0.informationDict[arg_12_1]
 end
 
-function slot0.getBonusNum(slot0)
-	slot2 = #(Season166Config.instance:getSeasonInfoBonuss(slot0.activityId) or {})
+function var_0_0.isBonusGet(arg_13_0, arg_13_1)
+	return arg_13_0.infoBonusDict[arg_13_1] == 1
+end
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9.analyCount <= slot0:getInfoAnalyCount() then
-			slot3 = 0 + 1
+function var_0_0.getBonusNum(arg_14_0)
+	local var_14_0 = Season166Config.instance:getSeasonInfoBonuss(arg_14_0.activityId) or {}
+	local var_14_1 = #var_14_0
+	local var_14_2 = 0
+	local var_14_3 = arg_14_0:getInfoAnalyCount()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		if var_14_3 >= iter_14_1.analyCount then
+			var_14_2 = var_14_2 + 1
 		end
 	end
 
-	return slot3, slot2
+	return var_14_2, var_14_1
 end
 
-function slot0.getInfoAnalyCount(slot0)
-	for slot5, slot6 in pairs(slot0.informationDict) do
-		if slot6:hasAnaly() then
-			slot1 = 0 + 1
+function var_0_0.getInfoAnalyCount(arg_15_0)
+	local var_15_0 = 0
+
+	for iter_15_0, iter_15_1 in pairs(arg_15_0.informationDict) do
+		if iter_15_1:hasAnaly() then
+			var_15_0 = var_15_0 + 1
 		end
 	end
 
-	return slot1
+	return var_15_0
 end
 
-function slot0.initTalentInfo(slot0, slot1)
-	slot0.talentMap = {}
+function var_0_0.initTalentInfo(arg_16_0, arg_16_1)
+	arg_16_0.talentMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = slot0.talentMap[slot6.id] or Season166TalentMO.New()
+	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
+		local var_16_0 = arg_16_0.talentMap[iter_16_1.id] or Season166TalentMO.New()
 
-		slot7:setData(slot6)
+		var_16_0:setData(iter_16_1)
 
-		slot0.talentMap[slot6.id] = slot7
+		arg_16_0.talentMap[iter_16_1.id] = var_16_0
 	end
 end
 
-function slot0.updateTalentInfo(slot0, slot1)
-	if not slot0.talentMap[slot1.id] then
-		logError("talent not init" .. slot1.id)
+function var_0_0.updateTalentInfo(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0.talentMap[arg_17_1.id]
+
+	if not var_17_0 then
+		logError("talent not init" .. arg_17_1.id)
 	end
 
-	slot2:setData(slot1)
+	var_17_0:setData(arg_17_1)
 end
 
-function slot0.setTalentSkillIds(slot0, slot1, slot2)
-	slot3 = slot0:getTalentMO(slot1)
+function var_0_0.setTalentSkillIds(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0:getTalentMO(arg_18_1)
+	local var_18_1 = #var_18_0.skillIds
 
-	slot3:updateSkillIds(slot2)
+	var_18_0:updateSkillIds(arg_18_2)
 
-	return #slot3.skillIds < #slot2
+	return var_18_1 < #arg_18_2
 end
 
-function slot0.getTalentMO(slot0, slot1)
-	if not slot0.talentMap[slot1] then
-		logError("dont exist TalentMO" .. slot1)
+function var_0_0.getTalentMO(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0.talentMap[arg_19_1]
+
+	if not var_19_0 then
+		logError("dont exist TalentMO" .. arg_19_1)
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.isTrainPass(slot0, slot1)
-	if slot0.trainInfoMap[slot1] then
-		return slot2.passCount > 0
+function var_0_0.isTrainPass(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0.trainInfoMap[arg_20_1]
+
+	if var_20_0 then
+		return var_20_0.passCount > 0
 	end
 
 	return false
 end
 
-function slot0.setSpotBaseEnter(slot0, slot1, slot2)
-	if slot0.baseSpotInfoMap[slot1] then
-		slot3.isEnter = slot2
+function var_0_0.setSpotBaseEnter(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0.baseSpotInfoMap[arg_21_1]
+
+	if var_21_0 then
+		var_21_0.isEnter = arg_21_2
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,94 +1,95 @@
-module("modules.configschecker.ConfigsCheckerStrBuf", package.seeall)
+﻿module("modules.configschecker.ConfigsCheckerStrBuf", package.seeall)
 
-slot0 = table.insert
-slot1 = string.format
-slot2 = debug.getinfo
-slot3 = table.concat
-slot4 = class("ConfigsCheckerStrBuf")
+local var_0_0 = table.insert
+local var_0_1 = string.format
+local var_0_2 = debug.getinfo
+local var_0_3 = table.concat
+local var_0_4 = class("ConfigsCheckerStrBuf")
 
-function slot4.ctor(slot0, slot1)
-	slot0:init(slot1)
+function var_0_4.ctor(arg_1_0, arg_1_1)
+	arg_1_0:init(arg_1_1)
 end
 
-function slot4.init(slot0, slot1)
-	slot0:clean()
+function var_0_4.init(arg_2_0, arg_2_1)
+	arg_2_0:clean()
 
-	slot2 = uv0(5, "Slf")
-	slot0._srcloc = uv1("%s : line %s", slot2.source, slot2.currentline)
-	slot0._source = slot1 or slot0._source
+	local var_2_0 = var_0_2(5, "Slf")
+
+	arg_2_0._srcloc = var_0_1("%s : line %s", var_2_0.source, var_2_0.currentline)
+	arg_2_0._source = arg_2_1 or arg_2_0._source
 end
 
-function slot4.clean(slot0)
-	slot0._list = {}
-	slot0._srcloc = "[Unknown]"
-	slot0._source = "[Unknown]"
+function var_0_4.clean(arg_3_0)
+	arg_3_0._list = {}
+	arg_3_0._srcloc = "[Unknown]"
+	arg_3_0._source = "[Unknown]"
 end
 
-function slot4.empty(slot0)
-	return #slot0._list == 0
+function var_0_4.empty(arg_4_0)
+	return #arg_4_0._list == 0
 end
 
-function slot4._beginOnce(slot0)
-	if not slot0:empty() then
+function var_0_4._beginOnce(arg_5_0)
+	if not arg_5_0:empty() then
 		return
 	end
 
-	uv0(slot0._list, uv1("%s =========== begin", slot0._srcloc))
-	uv0(slot0._list, uv1("source: %s", slot0._source))
+	var_0_0(arg_5_0._list, var_0_1("%s =========== begin", arg_5_0._srcloc))
+	var_0_0(arg_5_0._list, var_0_1("source: %s", arg_5_0._source))
 end
 
-function slot4._endOnce(slot0)
-	if slot0._list[-11235] then
+function var_0_4._endOnce(arg_6_0)
+	if arg_6_0._list[-11235] then
 		return
 	end
 
-	slot0._list[-11235] = true
+	arg_6_0._list[-11235] = true
 
-	slot0:appendLine(uv0("%s =========== end", slot0._srcloc))
+	arg_6_0:appendLine(var_0_1("%s =========== end", arg_6_0._srcloc))
 end
 
-function slot4._logIfGot(slot0, slot1, slot2)
-	if slot0:empty() then
+function var_0_4._logIfGot(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0:empty() then
 		return
 	end
 
-	slot0:_endOnce()
-	slot1(uv0(slot0._list, "\n"))
+	arg_7_0:_endOnce()
+	arg_7_1(var_0_3(arg_7_0._list, "\n"))
 
-	if not slot2 then
-		slot0:clean()
+	if not arg_7_2 then
+		arg_7_0:clean()
 	end
 end
 
-function slot4.appendLine(slot0, slot1)
-	if type(slot1) == type(true) then
-		slot1 = tostring(slot1)
-	elseif slot1 == nil then
-		slot1 = "nil"
+function var_0_4.appendLine(arg_8_0, arg_8_1)
+	if type(arg_8_1) == type(true) then
+		arg_8_1 = tostring(arg_8_1)
+	elseif arg_8_1 == nil then
+		arg_8_1 = "nil"
 	end
 
-	slot0:_beginOnce()
-	uv0(slot0._list, slot1)
+	arg_8_0:_beginOnce()
+	var_0_0(arg_8_0._list, arg_8_1)
 end
 
-function slot4.appendLineIfOK(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_4.appendLineIfOK(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_1 then
 		return
 	end
 
-	slot0:appendLine(slot2)
+	arg_9_0:appendLine(arg_9_2)
 end
 
-function slot4.logErrorIfGot(slot0, slot1)
-	slot0:_logIfGot(logError, slot1)
+function var_0_4.logErrorIfGot(arg_10_0, arg_10_1)
+	arg_10_0:_logIfGot(logError, arg_10_1)
 end
 
-function slot4.logWarnIfGot(slot0, slot1)
-	slot0:_logIfGot(logWarn, slot1)
+function var_0_4.logWarnIfGot(arg_11_0, arg_11_1)
+	arg_11_0:_logIfGot(logWarn, arg_11_1)
 end
 
-function slot4.logNormalIfGot(slot0, slot1)
-	slot0:_logIfGot(logNormal, slot1)
+function var_0_4.logNormalIfGot(arg_12_0, arg_12_1)
+	arg_12_0:_logIfGot(logNormal, arg_12_1)
 end
 
-return slot4
+return var_0_4

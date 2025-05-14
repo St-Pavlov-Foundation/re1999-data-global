@@ -1,364 +1,394 @@
-module("modules.logic.rouge.view.RougeCollectionGiftView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionGiftView", package.seeall)
 
-slot0 = class("RougeCollectionGiftView", BaseView)
+local var_0_0 = class("RougeCollectionGiftView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagemaskbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_maskbg")
-	slot0._gorougepageprogress = gohelper.findChild(slot0.viewGO, "#go_rougepageprogress")
-	slot0._gocollectionitem = gohelper.findChild(slot0.viewGO, "scroll_view/Viewport/Content/#go_collectionitem")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_start")
-	slot0._btnemptyBlock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_emptyBlock")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
+	arg_1_0._gorougepageprogress = gohelper.findChild(arg_1_0.viewGO, "#go_rougepageprogress")
+	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "scroll_view/Viewport/Content/#go_collectionitem")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
+	arg_1_0._btnemptyBlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBlock")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0._btnemptyBlock:AddClickListener(slot0._btnemptyBlockOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0._btnemptyBlock:AddClickListener(arg_2_0._btnemptyBlockOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstart:RemoveClickListener()
-	slot0._btnemptyBlock:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btnemptyBlock:RemoveClickListener()
 end
 
-slot1 = ZProj.TweenHelper
-slot0.Type = {
+local var_0_1 = ZProj.TweenHelper
+
+var_0_0.Type = {
 	DropGroup = 2,
 	Drop = 1,
 	None = 0
 }
 
-function slot0._btnstartOnClick(slot0)
-	slot0:_submitFunc()
+function var_0_0._btnstartOnClick(arg_4_0)
+	arg_4_0:_submitFunc()
 end
 
-function slot0._btnemptyBlockOnClick(slot0)
-	slot0:setActiveBlock(false)
+function var_0_0._btnemptyBlockOnClick(arg_5_0)
+	arg_5_0:setActiveBlock(false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnemptyBlockGo = slot0._btnemptyBlock.gameObject
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "scroll_view")
-	slot0._tipsText = gohelper.findChildText(slot0.viewGO, "tips")
-	slot0._scrollViewGo = slot0._scrollview.gameObject
-	slot0._scrollViewLimitScrollCmp = slot0._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
-	slot0._scrollViewTrans = slot0._scrollViewGo.transform
-	slot0._btnstartGo = slot0._btnstart.gameObject
-	slot0._collectionObjList = {}
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._btnemptyBlockGo = arg_6_0._btnemptyBlock.gameObject
+	arg_6_0._scrollview = gohelper.findChildScrollRect(arg_6_0.viewGO, "scroll_view")
+	arg_6_0._tipsText = gohelper.findChildText(arg_6_0.viewGO, "tips")
+	arg_6_0._scrollViewGo = arg_6_0._scrollview.gameObject
+	arg_6_0._scrollViewLimitScrollCmp = arg_6_0._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
+	arg_6_0._scrollViewTrans = arg_6_0._scrollViewGo.transform
+	arg_6_0._btnstartGo = arg_6_0._btnstart.gameObject
+	arg_6_0._collectionObjList = {}
 
-	slot0:_initPageProgress()
+	arg_6_0:_initPageProgress()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	slot0._isBlocked = nil
-	slot0._hasSelectedCount = 0
-	slot0._hasSelectedIndexDict = {}
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._isBlocked = nil
+	arg_8_0._hasSelectedCount = 0
+	arg_8_0._hasSelectedIndexDict = {}
 
-	slot0:_setActiveBtn(false)
-	slot0:onUpdateParam()
+	arg_8_0:_setActiveBtn(false)
+	arg_8_0:onUpdateParam()
 
-	slot0._tipsText.text = string.format(luaLang("rougecollectiongiftview_txt_tips"), slot0:_selectRewardNum())
+	arg_8_0._tipsText.text = string.format(luaLang("rougecollectiongiftview_txt_tips"), arg_8_0:_selectRewardNum())
 
-	slot0.viewContainer:registerCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, slot0._onSelectIndexByUser, slot0)
+	arg_8_0.viewContainer:registerCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, arg_8_0._onSelectIndexByUser, arg_8_0)
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_9_0)
 	ViewMgr.instance:closeView(ViewName.RougeDifficultyView)
-	gohelper.setActive(slot0._gocollectionitem, false)
+	gohelper.setActive(arg_9_0._gocollectionitem, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_clearing_open_20190323)
 end
 
-function slot0.onClose(slot0)
-	slot0:_killTween()
-	slot0.viewContainer:unregisterCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, slot0._onSelectIndexByUser, slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_collectionObjList")
+function var_0_0.onClose(arg_10_0)
+	arg_10_0:_killTween()
+	arg_10_0.viewContainer:unregisterCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, arg_10_0._onSelectIndexByUser, arg_10_0)
+	GameUtil.onDestroyViewMemberList(arg_10_0, "_collectionObjList")
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshList()
-	slot0:_refreshConfirmBtn()
+function var_0_0._refresh(arg_12_0)
+	arg_12_0:_refreshList()
+	arg_12_0:_refreshConfirmBtn()
 end
 
-function slot0._refreshConfirmBtn(slot0)
-	slot1 = slot0._hasSelectedCount == slot0:_selectRewardNum()
+function var_0_0._refreshConfirmBtn(arg_13_0)
+	local var_13_0 = arg_13_0._hasSelectedCount == arg_13_0:_selectRewardNum()
 
-	gohelper.setActive(slot0._btnstartGo, slot1)
-	slot0:_tweenTipsText(not slot1)
+	gohelper.setActive(arg_13_0._btnstartGo, var_13_0)
+	arg_13_0:_tweenTipsText(not var_13_0)
 end
 
-slot2 = 0.4
+local var_0_2 = 0.4
 
-function slot0._tweenTipsText(slot0, slot1)
-	slot0:_killTween()
+function var_0_0._tweenTipsText(arg_14_0, arg_14_1)
+	arg_14_0:_killTween()
 
-	slot0._tweenId = uv0.DoFade(slot0._tipsText, slot0._tipsText.alpha, slot1 and 1 or 0, uv1, nil, , , EaseType.OutQuad)
+	local var_14_0 = arg_14_1 and 1 or 0
+	local var_14_1 = arg_14_0._tipsText.alpha
+
+	arg_14_0._tweenId = var_0_1.DoFade(arg_14_0._tipsText, var_14_1, var_14_0, var_0_2, nil, nil, nil, EaseType.OutQuad)
 end
 
-function slot0._killTween(slot0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId")
+function var_0_0._killTween(arg_15_0)
+	GameUtil.onDestroyViewMember_TweenId(arg_15_0, "_tweenId")
 end
 
-function slot0._refreshList(slot0)
-	for slot5, slot6 in ipairs(slot0:_getRewardList()) do
-		slot7 = nil
+function var_0_0._refreshList(arg_16_0)
+	local var_16_0 = arg_16_0:_getRewardList()
 
-		if slot5 > #slot0._collectionObjList then
-			table.insert(slot0._collectionObjList, slot0:_create_RougeCollectionGiftViewItem(slot5))
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_1
+
+		if iter_16_0 > #arg_16_0._collectionObjList then
+			var_16_1 = arg_16_0:_create_RougeCollectionGiftViewItem(iter_16_0)
+
+			table.insert(arg_16_0._collectionObjList, var_16_1)
 		else
-			slot7 = slot0._collectionObjList[slot5]
+			var_16_1 = arg_16_0._collectionObjList[iter_16_0]
 		end
 
-		slot7:onUpdateMO(slot6)
-		slot7:setActive(true)
-		slot7:setSelected(slot0._hasSelectedIndexDict[slot5] and true or false)
+		var_16_1:onUpdateMO(iter_16_1)
+		var_16_1:setActive(true)
+		var_16_1:setSelected(arg_16_0._hasSelectedIndexDict[iter_16_0] and true or false)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._collectionObjList do
-		slot0._collectionObjList[slot5]:setActive(false)
+	for iter_16_2 = #var_16_0 + 1, #arg_16_0._collectionObjList do
+		arg_16_0._collectionObjList[iter_16_2]:setActive(false)
 	end
 end
 
-function slot0._getRewardList(slot0)
-	if not slot0._tmpRewardList then
-		slot0._tmpRewardList = slot0:_rewardList()
+function var_0_0._getRewardList(arg_17_0)
+	if not arg_17_0._tmpRewardList then
+		arg_17_0._tmpRewardList = arg_17_0:_rewardList()
 	end
 
-	return slot0._tmpRewardList
+	return arg_17_0._tmpRewardList
 end
 
-function slot0._create_RougeCollectionGiftViewItem(slot0, slot1)
-	slot3 = RougeCollectionGiftViewItem.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+function var_0_0._create_RougeCollectionGiftViewItem(arg_18_0, arg_18_1)
+	local var_18_0 = gohelper.cloneInPlace(arg_18_0._gocollectionitem)
+	local var_18_1 = RougeCollectionGiftViewItem.New({
+		parent = arg_18_0,
+		baseViewContainer = arg_18_0.viewContainer
 	})
 
-	slot3:setIndex(slot1)
-	slot3:init(gohelper.cloneInPlace(slot0._gocollectionitem))
+	var_18_1:setIndex(arg_18_1)
+	var_18_1:init(var_18_0)
 
-	return slot3
+	return var_18_1
 end
 
-function slot0._setActiveBtn(slot0, slot1)
-	gohelper.setActive(slot0._btnstartGo, slot1)
+function var_0_0._setActiveBtn(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._btnstartGo, arg_19_1)
 end
 
-function slot0._initPageProgress(slot0)
-	slot1 = RougePageProgress
-	slot0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, slot0._gorougepageprogress, slot1.__cname), slot1)
+function var_0_0._initPageProgress(arg_20_0)
+	local var_20_0 = RougePageProgress
+	local var_20_1 = arg_20_0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, arg_20_0._gorougepageprogress, var_20_0.__cname)
 
-	slot0._pageProgress:setData()
+	arg_20_0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_1, var_20_0)
+
+	arg_20_0._pageProgress:setData()
 end
 
-function slot0._selectRewardNum(slot0)
-	if not slot0.viewParam then
-		return slot0:_getRougeSelectRewardNum()
+function var_0_0._selectRewardNum(arg_21_0)
+	if not arg_21_0.viewParam then
+		return arg_21_0:_getRougeSelectRewardNum()
 	end
 
-	return slot0.viewParam.selectRewardNum or slot0:_getRougeSelectRewardNum()
+	return arg_21_0.viewParam.selectRewardNum or arg_21_0:_getRougeSelectRewardNum()
 end
 
-function slot0._rewardList(slot0)
-	if not slot0.viewParam then
-		return slot0:_getRougeLastRewardList()
+function var_0_0._rewardList(arg_22_0)
+	if not arg_22_0.viewParam then
+		return arg_22_0:_getRougeLastRewardList()
 	end
 
-	return slot0.viewParam.rewardList or slot0:_getRougeLastRewardList()
+	return arg_22_0.viewParam.rewardList or arg_22_0:_getRougeLastRewardList()
 end
 
-function slot0._submitFunc(slot0)
-	if not slot0.viewParam then
-		slot0:_defaultSubmitFunc()
+function var_0_0._submitFunc(arg_23_0)
+	if not arg_23_0.viewParam then
+		arg_23_0:_defaultSubmitFunc()
 
 		return
 	end
 
-	if slot0.viewParam.submitFunc then
-		slot0.viewParam.submitFunc(slot0)
+	if arg_23_0.viewParam.submitFunc then
+		arg_23_0.viewParam.submitFunc(arg_23_0)
 	else
-		slot0:_defaultSubmitFunc()
+		arg_23_0:_defaultSubmitFunc()
 	end
 end
 
-function slot0._getRougeSelectRewardNum(slot0)
+function var_0_0._getRougeSelectRewardNum(arg_24_0)
 	return RougeModel.instance:getSelectRewardNum() or 0
 end
 
-function slot0._getRougeLastRewardList(slot0)
-	if not RougeModel.instance:getLastRewardList() or #slot1 == 0 then
-		return {}
+function var_0_0._getRougeLastRewardList(arg_25_0)
+	local var_25_0 = RougeModel.instance:getLastRewardList()
+	local var_25_1 = {}
+
+	if not var_25_0 or #var_25_0 == 0 then
+		return var_25_1
 	end
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = slot8.id
-		slot10 = slot8.param
-		slot13 = {
+	local var_25_2 = RougeOutsideModel.instance:config()
+
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		local var_25_3 = iter_25_1.id
+		local var_25_4 = iter_25_1.param
+		local var_25_5 = var_25_2:getLastRewardCO(var_25_3)
+		local var_25_6 = var_25_5.type
+		local var_25_7 = {
 			title = "",
-			id = slot9,
+			id = var_25_3,
 			descList = {},
-			type = uv0.Type.unknown,
-			type = uv0.Type.Drop,
-			title = slot11.title
+			type = var_0_0.Type.unknown
 		}
 
-		if RougeOutsideModel.instance:config():getLastRewardCO(slot9).type == "drop" then
-			table.insert(slot13.descList, slot11.desc)
+		if var_25_6 == "drop" then
+			var_25_7.type = var_0_0.Type.Drop
+			var_25_7.title = var_25_5.title
 
-			slot13.resUrl = ResUrl.getRougeSingleBgCollection(slot11.iconName)
-		elseif slot12 == "dropGroup" then
-			slot13.type = uv0.Type.DropGroup
-			slot13.resUrl = nil
-			slot13.title = slot11.title
-			slot13.data = {}
-			slot14 = string.splitToNumber(slot10, "#")
-			slot13.data.collectionId = slot14[1]
+			table.insert(var_25_7.descList, var_25_5.desc)
 
-			for slot18, slot19 in ipairs(slot14) do
-				slot20 = RougeCollectionConfig.instance:getCollectionCfg(slot19)
+			var_25_7.resUrl = ResUrl.getRougeSingleBgCollection(var_25_5.iconName)
+		elseif var_25_6 == "dropGroup" then
+			var_25_7.type = var_0_0.Type.DropGroup
+			var_25_7.resUrl = nil
+			var_25_7.title = var_25_5.title
+			var_25_7.data = {}
 
-				if slot13.resUrl == nil and not string.nilorempty(slot20.iconPath) then
-					slot13.resUrl = ResUrl.getRougeSingleBgCollection(slot20.iconPath)
+			local var_25_8 = string.splitToNumber(var_25_4, "#")
+
+			var_25_7.data.collectionId = var_25_8[1]
+
+			for iter_25_2, iter_25_3 in ipairs(var_25_8) do
+				local var_25_9 = RougeCollectionConfig.instance:getCollectionCfg(iter_25_3)
+
+				if var_25_7.resUrl == nil and not string.nilorempty(var_25_9.iconPath) then
+					var_25_7.resUrl = ResUrl.getRougeSingleBgCollection(var_25_9.iconPath)
 				end
 
-				slot21, slot22 = RougeCollectionConfig.instance:getCollectionEffectsInfo(slot19)
+				local var_25_10, var_25_11 = RougeCollectionConfig.instance:getCollectionEffectsInfo(iter_25_3)
 
-				for slot26, slot27 in ipairs(slot21) do
-					table.insert(slot13.descList, HeroSkillModel.instance:skillDesToSpot(slot27))
+				for iter_25_4, iter_25_5 in ipairs(var_25_10) do
+					table.insert(var_25_7.descList, HeroSkillModel.instance:skillDesToSpot(iter_25_5))
 				end
 
-				for slot26, slot27 in ipairs(slot22) do
-					slot28 = SkillConfig.instance:getSkillEffectDescCo(slot27)
+				for iter_25_6, iter_25_7 in ipairs(var_25_11) do
+					local var_25_12 = SkillConfig.instance:getSkillEffectDescCo(iter_25_7)
+					local var_25_13 = RougeCollectionHelper.instance:getHeroSkillDesc(var_25_12.name, var_25_12.desc)
 
-					table.insert(slot13.descList, HeroSkillModel.instance:skillDesToSpot(RougeCollectionHelper.instance:getHeroSkillDesc(slot28.name, slot28.desc)))
+					table.insert(var_25_7.descList, HeroSkillModel.instance:skillDesToSpot(var_25_13))
 				end
 			end
 		else
-			logError(string.format("[RougeInfoMO:getLastRewardList] unsupported error type=%s, id=%s", slot12, slot9))
+			local var_25_14 = string.format("[RougeInfoMO:getLastRewardList] unsupported error type=%s, id=%s", var_25_6, var_25_3)
+
+			logError(var_25_14)
 		end
 
-		table.insert(slot2, slot13)
+		table.insert(var_25_1, var_25_7)
 	end
 
-	return slot2
+	return var_25_1
 end
 
-function slot0._isSingleSelect(slot0)
-	return slot0:_selectRewardNum() == 1
+function var_0_0._isSingleSelect(arg_26_0)
+	return arg_26_0:_selectRewardNum() == 1
 end
 
-function slot0._onSelectIndexByUser(slot0, slot1)
-	if slot0:_isSingleSelect() then
-		slot0:_onSelectIndex_SingleSelect(slot1)
+function var_0_0._onSelectIndexByUser(arg_27_0, arg_27_1)
+	if arg_27_0:_isSingleSelect() then
+		arg_27_0:_onSelectIndex_SingleSelect(arg_27_1)
 	else
-		slot0:_onSelectIndex_MultiSelect(slot1)
+		arg_27_0:_onSelectIndex_MultiSelect(arg_27_1)
 	end
 end
 
-function slot0._onSelectIndex_SingleSelect(slot0, slot1)
-	slot2 = slot0._collectionObjList[slot1]
+function var_0_0._onSelectIndex_SingleSelect(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._collectionObjList[arg_28_1]
 
-	if slot0._hasSelectedIndexDict[slot1] then
+	if arg_28_0._hasSelectedIndexDict[arg_28_1] then
 		return
 	end
 
-	slot3, slot4 = next(slot0._hasSelectedIndexDict)
+	local var_28_1, var_28_2 = next(arg_28_0._hasSelectedIndexDict)
 
-	if slot3 then
-		slot0._hasSelectedIndexDict[slot3] = nil
+	if var_28_1 then
+		arg_28_0._hasSelectedIndexDict[var_28_1] = nil
 
-		slot0._collectionObjList[slot3]:setSelected(false)
+		arg_28_0._collectionObjList[var_28_1]:setSelected(false)
 	end
 
-	slot2:setSelected(true)
+	var_28_0:setSelected(true)
 
-	slot0._hasSelectedIndexDict[slot1] = true
-	slot0._hasSelectedCount = math.min(1, slot0._hasSelectedCount + 1)
+	arg_28_0._hasSelectedIndexDict[arg_28_1] = true
+	arg_28_0._hasSelectedCount = math.min(1, arg_28_0._hasSelectedCount + 1)
 
-	slot0:_refreshConfirmBtn()
+	arg_28_0:_refreshConfirmBtn()
 end
 
-function slot0._onSelectIndex_MultiSelect(slot0, slot1)
-	if slot0._hasSelectedIndexDict[slot1] then
-		slot0._hasSelectedIndexDict[slot1] = false
-		slot0._hasSelectedCount = slot0._hasSelectedCount - 1
+function var_0_0._onSelectIndex_MultiSelect(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0._collectionObjList[arg_29_1]
 
-		slot0._collectionObjList[slot1]:setSelected(false)
-		slot0:_refreshConfirmBtn()
+	if arg_29_0._hasSelectedIndexDict[arg_29_1] then
+		arg_29_0._hasSelectedIndexDict[arg_29_1] = false
+		arg_29_0._hasSelectedCount = arg_29_0._hasSelectedCount - 1
+
+		var_29_0:setSelected(false)
+		arg_29_0:_refreshConfirmBtn()
 
 		return
 	end
 
-	if slot0:_selectRewardNum() <= slot0._hasSelectedCount then
+	if arg_29_0._hasSelectedCount >= arg_29_0:_selectRewardNum() then
 		GameFacade.showToast(ToastEnum.RougeCollectionGiftView_ReachMaxSelectedCount)
 
 		return
 	end
 
-	slot2:setSelected(true)
+	var_29_0:setSelected(true)
 
-	slot0._hasSelectedIndexDict[slot1] = true
-	slot0._hasSelectedCount = slot0._hasSelectedCount + 1
+	arg_29_0._hasSelectedIndexDict[arg_29_1] = true
+	arg_29_0._hasSelectedCount = arg_29_0._hasSelectedCount + 1
 
-	slot0:_refreshConfirmBtn()
+	arg_29_0:_refreshConfirmBtn()
 end
 
-slot3 = "RougeCollectionGiftView:_defaultSubmitFunc"
+local var_0_3 = "RougeCollectionGiftView:_defaultSubmitFunc"
 
-function slot0._defaultSubmitFunc(slot0)
-	UIBlockHelper.instance:startBlock(uv0, 1, slot0.viewName)
+function var_0_0._defaultSubmitFunc(arg_30_0)
+	UIBlockHelper.instance:startBlock(var_0_3, 1, arg_30_0.viewName)
 
-	slot1 = RougeOutsideModel.instance:season()
-	slot2 = {}
+	local var_30_0 = RougeOutsideModel.instance:season()
+	local var_30_1 = {}
+	local var_30_2 = arg_30_0:_getRewardList()
 
-	for slot7, slot8 in pairs(slot0._hasSelectedIndexDict) do
-		if slot8 then
-			table.insert(slot2, slot0:_getRewardList()[slot7].id)
+	for iter_30_0, iter_30_1 in pairs(arg_30_0._hasSelectedIndexDict) do
+		local var_30_3 = var_30_2[iter_30_0].id
+
+		if iter_30_1 then
+			table.insert(var_30_1, var_30_3)
 		end
 	end
 
-	RougeRpc.instance:sendEnterRougeSelectRewardRequest(slot1, slot2, function (slot0, slot1)
-		if slot1 ~= 0 then
-			logError("RougeCollectionGiftView:_defaultSubmitFunc resultCode=" .. tostring(slot1))
+	RougeRpc.instance:sendEnterRougeSelectRewardRequest(var_30_0, var_30_1, function(arg_31_0, arg_31_1)
+		if arg_31_1 ~= 0 then
+			logError("RougeCollectionGiftView:_defaultSubmitFunc resultCode=" .. tostring(arg_31_1))
 
 			return
 		end
 
-		UIBlockHelper.instance:endBlock(uv0)
+		UIBlockHelper.instance:endBlock(var_0_3)
 		RougeController.instance:openRougeFactionView()
 	end)
 end
 
-function slot0.getScrollViewGo(slot0)
-	return slot0._scrollViewGo
+function var_0_0.getScrollViewGo(arg_32_0)
+	return arg_32_0._scrollViewGo
 end
 
-function slot0.getScrollRect(slot0)
-	return slot0._scrollViewLimitScrollCmp
+function var_0_0.getScrollRect(arg_33_0)
+	return arg_33_0._scrollViewLimitScrollCmp
 end
 
-function slot0.setActiveBlock(slot0, slot1)
-	if slot0._isBlocked == slot1 then
+function var_0_0.setActiveBlock(arg_34_0, arg_34_1)
+	if arg_34_0._isBlocked == arg_34_1 then
 		return
 	end
 
-	slot0._isBlocked = slot1
+	arg_34_0._isBlocked = arg_34_1
 
-	gohelper.setActive(slot0._btnemptyBlockGo, slot1)
+	gohelper.setActive(arg_34_0._btnemptyBlockGo, arg_34_1)
 
-	if not slot1 then
-		for slot5, slot6 in ipairs(slot0._collectionObjList) do
-			slot6:onCloseBlock()
+	if not arg_34_1 then
+		for iter_34_0, iter_34_1 in ipairs(arg_34_0._collectionObjList) do
+			iter_34_1:onCloseBlock()
 		end
 	end
 end
 
-return slot0
+return var_0_0

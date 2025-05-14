@@ -1,79 +1,90 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadTimelineFirstWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadTimelineFirstWork", package.seeall)
 
-slot0 = class("FightPreloadTimelineFirstWork", BaseWork)
+local var_0_0 = class("FightPreloadTimelineFirstWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = slot0:_getTimelineUrlList()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0:_getTimelineUrlList()
 
 	if not GameResMgr.IsFromEditorDir then
-		slot0.context.timelineDict = {}
+		arg_1_0.context.timelineDict = {}
 
-		for slot6, slot7 in ipairs(slot2) do
-			slot0.context.timelineDict[slot7] = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			local var_1_1 = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
+
+			arg_1_0.context.timelineDict[iter_1_1] = var_1_1
 		end
 
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._loader = SequenceAbLoader.New()
+	arg_1_0._loader = SequenceAbLoader.New()
 
-	for slot6, slot7 in ipairs(slot2) do
-		slot0._loader:addPath(slot7)
+	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
+		arg_1_0._loader:addPath(iter_1_3)
 	end
 
-	slot0._loader:setConcurrentCount(10)
-	slot0._loader:setLoadFailCallback(slot0._onPreloadOneFail)
-	slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	arg_1_0._loader:setConcurrentCount(10)
+	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
 end
 
-function slot0._onPreloadFinish(slot0)
-	slot0.context.timelineDict = {}
+function var_0_0._onPreloadFinish(arg_2_0)
+	local var_2_0 = arg_2_0._loader:getAssetItemDict()
 
-	for slot5, slot6 in pairs(slot0._loader:getAssetItemDict()) do
-		slot0.context.timelineDict[slot5] = slot6
+	arg_2_0.context.timelineDict = {}
 
-		slot0.context.callback(slot0.context.callbackObj, slot6)
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		arg_2_0.context.timelineDict[iter_2_0] = iter_2_1
+
+		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onPreloadOneFail(slot0, slot1, slot2)
-	logError("Timeline加载失败：" .. slot2.ResPath)
+function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
+	logError("Timeline加载失败：" .. arg_3_2.ResPath)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._loader then
+		arg_4_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_4_0._loader = nil
 	end
 end
 
-function slot0._getTimelineUrlList(slot0)
-	slot0.context.timelineUrlDict = {}
-	slot0.context.timelineSkinDict = {}
+function var_0_0._getTimelineUrlList(arg_5_0)
+	arg_5_0.context.timelineUrlDict = {}
+	arg_5_0.context.timelineSkinDict = {}
 
-	if lua_battle.configDict[slot0.context.battleId] then
-		for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot1.monsterGroupIds, "#")) do
-			if not string.nilorempty(lua_monster_group.configDict[slot7].appearTimeline) then
-				slot9 = ResUrl.getSkillTimeline(slot8.appearTimeline)
-				slot0.context.timelineUrlDict[slot9] = FightEnum.EntitySide.EnemySide
-				slot0.context.timelineSkinDict[slot9] = slot0.context.timelineSkinDict[slot9] or {}
-				slot0.context.timelineSkinDict[slot9][0] = true
+	local var_5_0 = lua_battle.configDict[arg_5_0.context.battleId]
+
+	if var_5_0 then
+		local var_5_1 = FightStrUtil.instance:getSplitToNumberCache(var_5_0.monsterGroupIds, "#")
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			local var_5_2 = lua_monster_group.configDict[iter_5_1]
+
+			if not string.nilorempty(var_5_2.appearTimeline) then
+				local var_5_3 = ResUrl.getSkillTimeline(var_5_2.appearTimeline)
+
+				arg_5_0.context.timelineUrlDict[var_5_3] = FightEnum.EntitySide.EnemySide
+				arg_5_0.context.timelineSkinDict[var_5_3] = arg_5_0.context.timelineSkinDict[var_5_3] or {}
+				arg_5_0.context.timelineSkinDict[var_5_3][0] = true
 			end
 		end
 	end
 
-	slot2 = {}
+	local var_5_4 = {}
 
-	for slot6, slot7 in pairs(slot0.context.timelineUrlDict) do
-		table.insert(slot2, slot6)
+	for iter_5_2, iter_5_3 in pairs(arg_5_0.context.timelineUrlDict) do
+		table.insert(var_5_4, iter_5_2)
 	end
 
-	return slot2
+	return var_5_4
 end
 
-return slot0
+return var_0_0

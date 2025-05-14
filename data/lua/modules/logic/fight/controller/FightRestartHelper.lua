@@ -1,50 +1,64 @@
-module("modules.logic.fight.controller.FightRestartHelper", package.seeall)
+﻿module("modules.logic.fight.controller.FightRestartHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.tryRestart()
-	if FightModel.instance:getRecordMO() and slot0.fightResult == FightEnum.FightResult.Succ then
+function var_0_0.tryRestart()
+	local var_1_0 = FightModel.instance:getRecordMO()
+
+	if var_1_0 and var_1_0.fightResult == FightEnum.FightResult.Succ then
 		return false
 	end
 
-	if not (DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and slot1.type) then
+	local var_1_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local var_1_2 = var_1_1 and var_1_1.type
+
+	if not var_1_2 then
 		return false
 	end
 
-	uv0._initHandle()
+	var_0_0._initHandle()
 
-	return uv0.handleDict[slot2] and slot3()
+	local var_1_3 = var_0_0.handleDict[var_1_2]
+
+	return var_1_3 and var_1_3()
 end
 
-function slot0._initHandle()
-	if not uv0.handleDict then
-		uv0.handleDict = {
-			[DungeonEnum.EpisodeType.Cachot] = uv0.tryRestartCachot,
-			[DungeonEnum.EpisodeType.Rouge] = uv0.tryRestartRouge
+function var_0_0._initHandle()
+	if not var_0_0.handleDict then
+		var_0_0.handleDict = {
+			[DungeonEnum.EpisodeType.Cachot] = var_0_0.tryRestartCachot,
+			[DungeonEnum.EpisodeType.Rouge] = var_0_0.tryRestartRouge
 		}
 	end
 end
 
-function slot0.tryRestartCachot()
+function var_0_0.tryRestartCachot()
 	if ActivityHelper.getActivityStatus(V1a6_CachotEnum.ActivityId) ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	if V1a6_CachotRoomModel.instance:getNowBattleEventMo() and lua_rogue_difficulty.configDict[V1a6_CachotModel.instance:getRogueInfo().difficulty].retries - slot1:getRetries() + 1 > 0 then
-		MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.V1a6CachotMsgBox05, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightSystem._onRestart, FightSystem.onExitCachot, nil, FightSystem.instance, nil, , slot4)
+	local var_3_0 = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
 
-		return true
+	if var_3_0 then
+		local var_3_1 = V1a6_CachotModel.instance:getRogueInfo().difficulty
+		local var_3_2 = lua_rogue_difficulty.configDict[var_3_1].retries - var_3_0:getRetries() + 1
+
+		if var_3_2 > 0 then
+			MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.V1a6CachotMsgBox05, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightSystem._onRestart, FightSystem.onExitCachot, nil, FightSystem.instance, nil, nil, var_3_2)
+
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.onExitCachot()
+function var_0_0.onExitCachot()
 	RogueRpc.instance:sendAbortRogueRequest(V1a6_CachotEnum.ActivityId)
 	FightSystem.instance:_onEndFight()
 end
 
-function slot0.tryRestartRouge()
+function var_0_0.tryRestartRouge()
 	if (SLFramework.FrameworkSettings.IsEditor or isDebugBuild) and RougeEditorController.instance:isAllowAbortFight() then
 		GMRpc.instance:sendGMRequest("rougeSetRetryNum 1 0")
 
@@ -61,22 +75,26 @@ function slot0.tryRestartRouge()
 		return false
 	end
 
-	if not RougeModel.instance:getFightResultInfo() then
+	local var_5_0 = RougeModel.instance:getFightResultInfo()
+
+	if not var_5_0 then
 		return false
 	end
 
-	if RougeMapConfig.instance:getFightRetryNum() < slot0.retryNum then
+	local var_5_1 = RougeMapConfig.instance:getFightRetryNum()
+
+	if var_5_1 < var_5_0.retryNum then
 		return false
 	end
 
-	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.RougeFightFailConfirm, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightSystem._onRestart, uv0.onExitFight, nil, FightSystem.instance, nil, , slot1 - slot0.retryNum + 1)
+	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.RougeFightFailConfirm, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightSystem._onRestart, var_0_0.onExitFight, nil, FightSystem.instance, nil, nil, var_5_1 - var_5_0.retryNum + 1)
 
 	return true
 end
 
-function slot0.onExitFight()
+function var_0_0.onExitFight()
 	RougeRpc.instance:sendRougeAbortRequest(RougeModel.instance:getSeason() or 1)
 	FightSystem.instance:_onEndFight()
 end
 
-return slot0
+return var_0_0

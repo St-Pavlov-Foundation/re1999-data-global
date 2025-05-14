@@ -1,76 +1,80 @@
-module("modules.logic.herogroup.view.HeroGroupEditViewContainer", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupEditViewContainer", package.seeall)
 
-slot0 = class("HeroGroupEditViewContainer", BaseViewContainer)
+local var_0_0 = class("HeroGroupEditViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = HeroGroupEditItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 200
-	slot1.cellHeight = 440
-	slot1.cellSpaceH = 12
-	slot1.cellSpaceV = 10
-	slot1.startSpace = 37
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	for slot6 = 1, 15 do
+	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = HeroGroupEditItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 5
+	var_1_0.cellWidth = 200
+	var_1_0.cellHeight = 440
+	var_1_0.cellSpaceH = 12
+	var_1_0.cellSpaceV = 10
+	var_1_0.startSpace = 37
+
+	local var_1_1 = {}
+
+	for iter_1_0 = 1, 15 do
+		var_1_1[iter_1_0] = math.ceil((iter_1_0 - 1) % 5) * 0.03
 	end
 
 	return {
 		HeroGroupEditView.New(),
-		LuaListScrollViewWithAnimator.New(HeroGroupEditListModel.instance, slot1, {
-			[slot6] = math.ceil((slot6 - 1) % 5) * 0.03
-		}),
-		slot0:getQuickEditScroll(),
+		LuaListScrollViewWithAnimator.New(HeroGroupEditListModel.instance, var_1_0, var_1_1),
+		arg_1_0:getQuickEditScroll(),
 		CommonRainEffectView.New("bg/#go_raincontainer"),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.getQuickEditScroll(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_rolecontainer/#scroll_quickedit"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[2]
-	slot1.cellClass = HeroGroupQuickEditItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 200
-	slot1.cellHeight = 440
-	slot1.cellSpaceH = 12
-	slot1.cellSpaceV = 10
-	slot1.startSpace = 37
+function var_0_0.getQuickEditScroll(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	for slot6 = 1, 15 do
+	var_2_0.scrollGOPath = "#go_rolecontainer/#scroll_quickedit"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[2]
+	var_2_0.cellClass = HeroGroupQuickEditItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+	var_2_0.lineCount = 5
+	var_2_0.cellWidth = 200
+	var_2_0.cellHeight = 440
+	var_2_0.cellSpaceH = 12
+	var_2_0.cellSpaceV = 10
+	var_2_0.startSpace = 37
+
+	local var_2_1 = {}
+
+	for iter_2_0 = 1, 15 do
+		var_2_1[iter_2_0] = math.ceil((iter_2_0 - 1) % 5) * 0.03
 	end
 
-	return LuaListScrollViewWithAnimator.New(HeroGroupQuickEditListModel.instance, slot1, {
-		[slot6] = math.ceil((slot6 - 1) % 5) * 0.03
-	})
+	return LuaListScrollViewWithAnimator.New(HeroGroupQuickEditListModel.instance, var_2_0, var_2_1)
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	arg_3_0._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
-	slot0._navigateButtonView:setOverrideClose(slot0._overrideClose, slot0)
+	arg_3_0._navigateButtonView:setOverrideClose(arg_3_0._overrideClose, arg_3_0)
 
 	return {
-		slot0._navigateButtonView
+		arg_3_0._navigateButtonView
 	}
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.HeroGroupUI.Play_UI_Team_Close)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.HeroGroupUI.Play_UI_Team_Close)
 end
 
-function slot0._overrideClose(slot0)
+function var_0_0._overrideClose(arg_5_0)
 	if ViewMgr.instance:isOpen(ViewName.CharacterLevelUpView) then
 		ViewMgr.instance:closeView(ViewName.CharacterLevelUpView, nil, true)
 	elseif ViewMgr.instance:isOpen(ViewName.HeroGroupEditView) then
@@ -78,12 +82,12 @@ function slot0._overrideClose(slot0)
 	end
 end
 
-function slot0._setHomeBtnVisible(slot0, slot1)
-	slot0._navigateButtonView:setParam({
+function var_0_0._setHomeBtnVisible(arg_6_0, arg_6_1)
+	arg_6_0._navigateButtonView:setParam({
 		true,
-		slot1,
+		arg_6_1,
 		false
 	})
 end
 
-return slot0
+return var_0_0

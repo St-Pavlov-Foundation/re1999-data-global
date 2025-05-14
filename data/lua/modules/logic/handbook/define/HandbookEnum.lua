@@ -1,29 +1,30 @@
-module("modules.logic.handbook.define.HandbookEnum", package.seeall)
+﻿module("modules.logic.handbook.define.HandbookEnum", package.seeall)
 
-slot0 = _M
-slot0.Type = {
+local var_0_0 = _M
+
+var_0_0.Type = {
 	Character = 3,
 	Story = 1,
 	CG = 2,
 	Equip = 4
 }
-slot0.HeroType = {
+var_0_0.HeroType = {
 	Common = 1,
 	AllHero = 99
 }
-slot0.CGType = {
+var_0_0.CGType = {
 	Role = 2,
 	Dungeon = 1
 }
-slot0.BookBGRes = {
-	[slot0.HeroType.Common] = {
+var_0_0.BookBGRes = {
+	[var_0_0.HeroType.Common] = {
 		left = "peper_06",
 		right = "peper_05"
 	},
-	[slot0.HeroType.AllHero] = {
+	[var_0_0.HeroType.AllHero] = {
 		left = "img_tujian_bg_zuo",
 		right = "img_tujian_bg_you"
 	}
 }
 
-return slot0
+return var_0_0

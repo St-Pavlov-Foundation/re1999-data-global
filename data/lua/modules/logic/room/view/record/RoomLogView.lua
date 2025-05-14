@@ -1,460 +1,527 @@
-module("modules.logic.room.view.record.RoomLogView", package.seeall)
+﻿module("modules.logic.room.view.record.RoomLogView", package.seeall)
 
-slot0 = class("RoomLogView", BaseView)
+local var_0_0 = class("RoomLogView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnbook = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_book")
-	slot0._gohandbookreddot = gohelper.findChild(slot0.viewGO, "root/#btn_book/#go_handbookreddot")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_task")
-	slot0._gotaskreddot = gohelper.findChild(slot0.viewGO, "root/#btn_task/#go_taskreddot")
-	slot0._txtleftpages = gohelper.findChildText(slot0.viewGO, "root/#txt_leftpages")
-	slot0._txtrightpages = gohelper.findChildText(slot0.viewGO, "root/#txt_rightpages")
-	slot0._btnback = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_back")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_next")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_reward")
-	slot0._gobookContent = gohelper.findChild(slot0.viewGO, "root/content")
-	slot0._gobookItem = gohelper.findChild(slot0.viewGO, "root/content/bookitem")
-	slot0._gopool = gohelper.findChild(slot0.viewGO, "pool")
-	slot0._goleftempty = gohelper.findChild(slot0.viewGO, "root/#go_leftempty")
-	slot0._gorightempty = gohelper.findChild(slot0.viewGO, "root/#go_rightempty")
-	slot0._gorewardreddot = gohelper.findChild(slot0.viewGO, "root/#btn_reward/#go_rewardreddot")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._leftContentHeight = 740
-	slot0._rightContentHeight = 925.7935
-	slot0._singleTextHeight = 37.1
-	slot0._itemspace = 40
-	slot0._contentHeight = 0
-	slot0._isLeftFull = false
-	slot0._isRightFull = false
-	slot0._itempool = {}
-	slot0._itemList = {}
-	slot0._leftItemList = {}
-	slot0._rightItemList = {}
-	slot0._moIndex = 1
-	slot0._pageToMo = {}
-	slot0._curCreateBookItem = nil
-	slot0._bookItemTab = {}
-	slot0._bookPage = 1
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_book")
+	arg_1_0._gohandbookreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_book/#go_handbookreddot")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_task")
+	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_task/#go_taskreddot")
+	arg_1_0._txtleftpages = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_leftpages")
+	arg_1_0._txtrightpages = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_rightpages")
+	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_back")
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_next")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_reward")
+	arg_1_0._gobookContent = gohelper.findChild(arg_1_0.viewGO, "root/content")
+	arg_1_0._gobookItem = gohelper.findChild(arg_1_0.viewGO, "root/content/bookitem")
+	arg_1_0._gopool = gohelper.findChild(arg_1_0.viewGO, "pool")
+	arg_1_0._goleftempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_leftempty")
+	arg_1_0._gorightempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_rightempty")
+	arg_1_0._gorewardreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_reward/#go_rewardreddot")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._leftContentHeight = 740
+	arg_1_0._rightContentHeight = 925.7935
+	arg_1_0._singleTextHeight = 37.1
+	arg_1_0._itemspace = 40
+	arg_1_0._contentHeight = 0
+	arg_1_0._isLeftFull = false
+	arg_1_0._isRightFull = false
+	arg_1_0._itempool = {}
+	arg_1_0._itemList = {}
+	arg_1_0._leftItemList = {}
+	arg_1_0._rightItemList = {}
+	arg_1_0._moIndex = 1
+	arg_1_0._pageToMo = {}
+	arg_1_0._curCreateBookItem = nil
+	arg_1_0._bookItemTab = {}
+	arg_1_0._bookPage = 1
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbook:AddClickListener(slot0._btnbookOnClick, slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
-	slot0._btnback:AddClickListener(slot0._btnbackOnClick, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskExtraBonusReply, slot0.refreshBtn, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbook:AddClickListener(arg_2_0._btnbookOnClick, arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskExtraBonusReply, arg_2_0.refreshBtn, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbook:RemoveClickListener()
-	slot0._btntask:RemoveClickListener()
-	slot0._btnback:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
-	slot0._btnreward:RemoveClickListener()
-	slot0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskExtraBonusReply, slot0.refreshBtn, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbook:RemoveClickListener()
+	arg_3_0._btntask:RemoveClickListener()
+	arg_3_0._btnback:RemoveClickListener()
+	arg_3_0._btnnext:RemoveClickListener()
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomTradeController.instance, RoomTradeEvent.OnGetTradeTaskExtraBonusReply, arg_3_0.refreshBtn, arg_3_0)
 end
 
-function slot0._btnbookOnClick(slot0)
+function var_0_0._btnbookOnClick(arg_4_0)
 	RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
 		animName = RoomRecordEnum.AnimName.Log2HandBook,
 		view = RoomRecordEnum.View.HandBook
 	})
 end
 
-function slot0._btntaskOnClick(slot0)
+function var_0_0._btntaskOnClick(arg_5_0)
 	RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
 		animName = RoomRecordEnum.AnimName.Log2Task,
 		view = RoomRecordEnum.View.Task
 	})
 end
 
-function slot0._btnbackOnClick(slot0)
-	slot0._bookPage = slot0._bookPage - 1
+function var_0_0._btnbackOnClick(arg_6_0)
+	arg_6_0._bookPage = arg_6_0._bookPage - 1
 
-	slot0._animator:Play("switch", 0, 0)
-	slot0:refreshUI()
+	arg_6_0._animator:Play("switch", 0, 0)
+	arg_6_0:refreshUI()
 end
 
-function slot0._btnrewardOnClick(slot0)
+function var_0_0._btnrewardOnClick(arg_7_0)
 	RoomRpc.instance:sendGetTradeTaskExtraBonusRequest()
 end
 
-function slot0.refreshBtn(slot0)
-	gohelper.setActive(slot0._btnreward.gameObject, RoomTradeTaskModel.instance:getCanGetExtraBonus())
+function var_0_0.refreshBtn(arg_8_0)
+	local var_8_0 = RoomTradeTaskModel.instance:getCanGetExtraBonus()
+
+	gohelper.setActive(arg_8_0._btnreward.gameObject, var_8_0)
 end
 
-function slot0._btnnextOnClick(slot0)
-	slot0._bookPage = slot0._bookPage + 1
+function var_0_0._btnnextOnClick(arg_9_0)
+	arg_9_0._bookPage = arg_9_0._bookPage + 1
 
-	if slot0._moIndex ~= #slot0._molist then
-		slot0._moIndex = slot0._moIndex + 1
+	if arg_9_0._moIndex ~= #arg_9_0._molist then
+		arg_9_0._moIndex = arg_9_0._moIndex + 1
 	end
 
-	slot0._animator:Play("switch", 0, 0)
-	slot0:refreshUI()
+	arg_9_0._animator:Play("switch", 0, 0)
+	arg_9_0:refreshUI()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_10_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._molist = RoomLogModel.instance:getInfos()
-	slot1 = false
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._molist = RoomLogModel.instance:getInfos()
 
-	if not slot0._molist or #slot0._molist == 0 then
-		slot1 = true
+	local var_12_0 = false
+
+	if not arg_12_0._molist or #arg_12_0._molist == 0 then
+		var_12_0 = true
 	end
 
-	gohelper.setActive(slot0._gobookContent, not slot1)
-	gohelper.setActive(slot0._goleftempty, slot1)
-	gohelper.setActive(slot0._gorightempty, slot1)
+	gohelper.setActive(arg_12_0._gobookContent, not var_12_0)
+	gohelper.setActive(arg_12_0._goleftempty, var_12_0)
+	gohelper.setActive(arg_12_0._gorightempty, var_12_0)
 
-	if not slot1 then
-		slot0:updateView()
-		slot0:refreshBtn()
+	if not var_12_0 then
+		arg_12_0:updateView()
+		arg_12_0:refreshBtn()
 	end
 
-	RedDotController.instance:addRedDot(slot0._gotaskreddot, RedDotEnum.DotNode.TradeTask)
-	RedDotController.instance:addRedDot(slot0._gorewardreddot, RedDotEnum.DotNode.StrikerReward)
-	RedDotController.instance:addRedDot(slot0._gohandbookreddot, RedDotEnum.DotNode.CritterHandBook)
+	RedDotController.instance:addRedDot(arg_12_0._gotaskreddot, RedDotEnum.DotNode.TradeTask)
+	RedDotController.instance:addRedDot(arg_12_0._gorewardreddot, RedDotEnum.DotNode.StrikerReward)
+	RedDotController.instance:addRedDot(arg_12_0._gohandbookreddot, RedDotEnum.DotNode.CritterHandBook)
 end
 
-function slot0.updateView(slot0)
-	gohelper.setActive(slot0._goleftempty, false)
-	gohelper.setActive(slot0._gorightempty, false)
+function var_0_0.updateView(arg_13_0)
+	gohelper.setActive(arg_13_0._goleftempty, false)
+	gohelper.setActive(arg_13_0._gorightempty, false)
 
-	if not slot0:createBookItem().isFull then
-		slot0:buildLogItem(slot0._molist[slot0._moIndex], slot0._moIndex)
+	local var_13_0 = arg_13_0:createBookItem()
 
-		if not slot0._rightItemList[slot1.page] then
-			gohelper.setActive(slot1.goempty, true)
+	if not var_13_0.isFull then
+		local var_13_1 = arg_13_0._molist[arg_13_0._moIndex]
+
+		arg_13_0:buildLogItem(var_13_1, arg_13_0._moIndex)
+
+		if not arg_13_0._rightItemList[var_13_0.page] then
+			gohelper.setActive(var_13_0.goempty, true)
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0._bookItemTab) do
-		gohelper.setActive(slot6.go, slot6.page == slot0._bookPage)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._bookItemTab) do
+		gohelper.setActive(iter_13_1.go, iter_13_1.page == arg_13_0._bookPage)
 	end
 
-	if slot0._bookPage == 1 then
-		gohelper.setActive(slot0._btnback.gameObject, false)
+	if arg_13_0._bookPage == 1 then
+		gohelper.setActive(arg_13_0._btnback.gameObject, false)
 
-		if slot0._moIndex ~= #slot0._molist then
-			gohelper.setActive(slot0._btnnext.gameObject, true)
+		if arg_13_0._moIndex ~= #arg_13_0._molist then
+			gohelper.setActive(arg_13_0._btnnext.gameObject, true)
 		end
 	else
-		gohelper.setActive(slot0._btnback.gameObject, true)
+		gohelper.setActive(arg_13_0._btnback.gameObject, true)
 	end
 
-	if slot0._bookPage ~= #slot0._bookItemTab then
-		gohelper.setActive(slot0._btnnext.gameObject, true)
-	elseif slot0._moIndex == #slot0._molist then
-		gohelper.setActive(slot0._btnnext.gameObject, false)
+	if arg_13_0._bookPage ~= #arg_13_0._bookItemTab then
+		gohelper.setActive(arg_13_0._btnnext.gameObject, true)
+	elseif arg_13_0._moIndex == #arg_13_0._molist then
+		gohelper.setActive(arg_13_0._btnnext.gameObject, false)
 	end
 
-	slot0._txtleftpages.text = slot0._bookPage * 2 - 1
-	slot0._txtrightpages.text = slot0._bookPage * 2
+	arg_13_0._txtleftpages.text = arg_13_0._bookPage * 2 - 1
+	arg_13_0._txtrightpages.text = arg_13_0._bookPage * 2
 end
 
-function slot0.createBookItem(slot0)
-	if not slot0._bookItemTab[slot0._bookPage] then
-		slot1 = slot0:getUserDataTb_()
-		slot1.page = slot0._bookPage
-		slot1.go = gohelper.cloneInPlace(slot0._gobookItem, "bookItem" .. slot0._bookPage)
-		slot1.goLeft = gohelper.findChild(slot1.go, "left/content")
-		slot1.goRight = gohelper.findChild(slot1.go, "right/content")
-		slot1.goempty = gohelper.findChild(slot1.go, "#go_empty")
+function var_0_0.createBookItem(arg_14_0)
+	local var_14_0 = arg_14_0._bookItemTab[arg_14_0._bookPage]
 
-		gohelper.setActive(slot1.go, true)
+	if not var_14_0 then
+		var_14_0 = arg_14_0:getUserDataTb_()
+		var_14_0.page = arg_14_0._bookPage
+		var_14_0.go = gohelper.cloneInPlace(arg_14_0._gobookItem, "bookItem" .. arg_14_0._bookPage)
+		var_14_0.goLeft = gohelper.findChild(var_14_0.go, "left/content")
+		var_14_0.goRight = gohelper.findChild(var_14_0.go, "right/content")
+		var_14_0.goempty = gohelper.findChild(var_14_0.go, "#go_empty")
 
-		slot0._bookItemTab[slot0._bookPage] = slot1
-		slot0._curCreateBookItem = slot1
+		gohelper.setActive(var_14_0.go, true)
+
+		arg_14_0._bookItemTab[arg_14_0._bookPage] = var_14_0
+		arg_14_0._curCreateBookItem = var_14_0
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.createLogItem(slot0)
-	if slot0._molist[slot0._moIndex] then
-		slot0:buildLogItem(slot1, slot0._moIndex)
+function var_0_0.createLogItem(arg_15_0)
+	local var_15_0 = arg_15_0._molist[arg_15_0._moIndex]
+
+	if var_15_0 then
+		arg_15_0:buildLogItem(var_15_0, arg_15_0._moIndex)
 	end
 end
 
-function slot0.checkContinue(slot0)
-	if slot0._curCreateBookItem.isFull then
+function var_0_0.checkContinue(arg_16_0)
+	if arg_16_0._curCreateBookItem.isFull then
 		return false
 	end
 
-	if slot0._isLeftFull and slot0._isRightFull then
+	if arg_16_0._isLeftFull and arg_16_0._isRightFull then
 		return false
 	end
 
-	if tabletool.len(slot0._molist) <= slot0._moIndex then
+	if tabletool.len(arg_16_0._molist) <= arg_16_0._moIndex then
 		return false
 	end
 
 	return true
 end
 
-function slot0.buildLogItem(slot0, slot1, slot2)
-	slot3 = slot0:createOrGetItem()
-	slot3.mo = slot1
-	slot3.index = slot2
-	slot0.localContentHeight = 0
+function var_0_0.buildLogItem(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0:createOrGetItem()
 
-	if slot1.type == RoomRecordEnum.LogType.Normal then
-		slot3 = slot0:buildNoramlItem(slot3, slot1, slot2)
-	elseif slot1.type == RoomRecordEnum.LogType.Speical then
-		slot3 = slot0:buildSpeicalItem(slot3, slot1, slot2)
-	elseif slot1.type == RoomRecordEnum.LogType.Custom then
-		slot3 = slot0:buildCustomItem(slot3, slot1, slot2)
-	elseif slot1.type == RoomRecordEnum.LogType.Time then
-		slot3 = slot0:buildTimeItem(slot3, slot1, slot2)
+	var_17_0.mo = arg_17_1
+	var_17_0.index = arg_17_2
+	arg_17_0.localContentHeight = 0
+
+	if arg_17_1.type == RoomRecordEnum.LogType.Normal then
+		var_17_0 = arg_17_0:buildNoramlItem(var_17_0, arg_17_1, arg_17_2)
+	elseif arg_17_1.type == RoomRecordEnum.LogType.Speical then
+		var_17_0 = arg_17_0:buildSpeicalItem(var_17_0, arg_17_1, arg_17_2)
+	elseif arg_17_1.type == RoomRecordEnum.LogType.Custom then
+		var_17_0 = arg_17_0:buildCustomItem(var_17_0, arg_17_1, arg_17_2)
+	elseif arg_17_1.type == RoomRecordEnum.LogType.Time then
+		var_17_0 = arg_17_0:buildTimeItem(var_17_0, arg_17_1, arg_17_2)
 	end
 
-	if slot3 then
-		slot0:setParent(slot3)
-		slot0:checkSingleItemHeightIsFull()
+	if var_17_0 then
+		arg_17_0:setParent(var_17_0)
+		arg_17_0:checkSingleItemHeightIsFull()
 	end
 
-	if slot0:checkContinue() then
-		slot0._moIndex = slot0._moIndex + 1
+	if arg_17_0:checkContinue() then
+		arg_17_0._moIndex = arg_17_0._moIndex + 1
 
-		slot0:createLogItem()
+		arg_17_0:createLogItem()
 	else
-		slot0._curCreateBookItem.isFull = true
+		arg_17_0._curCreateBookItem.isFull = true
 	end
 end
 
-function slot0.buildNoramlItem(slot0, slot1, slot2, slot3)
-	if slot0:handleType(slot1, slot2) then
-		gohelper.setActive(gohelper.findChild(slot4, "timebg"), not slot2.isclone)
-		gohelper.setActive(gohelper.findChild(slot4, "icon"), not slot2.isclone)
+function var_0_0.buildNoramlItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = arg_18_0:handleType(arg_18_1, arg_18_2)
 
-		gohelper.findChildText(slot4, "timebg/#txt_time").text = slot2.timestr
-		slot1.cscontent = gohelper.findChild(slot4, "#scroll_details/Viewport/Content"):GetComponent(gohelper.Type_VerticalLayoutGroup)
-		slot10 = gohelper.findChild(slot4, "#scroll_details/Viewport/Content/logitem")
+	if var_18_0 then
+		local var_18_1 = gohelper.findChild(var_18_0, "timebg")
+		local var_18_2 = gohelper.findChildText(var_18_0, "timebg/#txt_time")
+		local var_18_3 = gohelper.findChild(var_18_0, "icon")
 
-		if slot2.content then
-			gohelper.setActive(slot10, true)
+		gohelper.setActive(var_18_1, not arg_18_2.isclone)
+		gohelper.setActive(var_18_3, not arg_18_2.isclone)
 
-			slot12 = gohelper.findChildText(slot10, "#txt_log")
+		var_18_2.text = arg_18_2.timestr
 
-			gohelper.setActive(gohelper.findChild(slot10, "icon"), not slot2.isclone)
+		local var_18_4 = gohelper.findChild(var_18_0, "#scroll_details/Viewport/Content")
+		local var_18_5 = var_18_4:GetComponent(gohelper.Type_VerticalLayoutGroup)
 
-			slot12.text = slot2.content
+		arg_18_1.cscontent = var_18_5
 
-			ZProj.UGUIHelper.RebuildLayout(slot8.transform)
-			slot0:checkSingleItemHeightIsFull(true)
+		local var_18_6 = gohelper.findChild(var_18_0, "#scroll_details/Viewport/Content/logitem")
 
-			if slot0:checkAndHandleOverText(slot2, slot1.index, nil, slot9, false, slot12) then
-				ZProj.UGUIHelper.RebuildLayout(slot8.transform)
+		if arg_18_2.content then
+			gohelper.setActive(var_18_6, true)
+
+			local var_18_7 = arg_18_2.content
+			local var_18_8 = gohelper.findChildText(var_18_6, "#txt_log")
+			local var_18_9 = gohelper.findChild(var_18_6, "icon")
+
+			gohelper.setActive(var_18_9, not arg_18_2.isclone)
+
+			var_18_8.text = var_18_7
+
+			ZProj.UGUIHelper.RebuildLayout(var_18_4.transform)
+			arg_18_0:checkSingleItemHeightIsFull(true)
+
+			if arg_18_0:checkAndHandleOverText(arg_18_2, arg_18_1.index, nil, var_18_5, false, var_18_8) then
+				ZProj.UGUIHelper.RebuildLayout(var_18_4.transform)
 			else
-				slot0:resetFunc(slot1)
-				gohelper.destroy(slot1.go)
+				arg_18_0:resetFunc(arg_18_1)
+				gohelper.destroy(arg_18_1.go)
 
-				slot1 = nil
+				arg_18_1 = nil
 
-				if not slot0._isLeftFull then
-					slot0._isLeftFull = true
+				if not arg_18_0._isLeftFull then
+					arg_18_0._isLeftFull = true
 				else
-					slot0._isRightFull = true
+					arg_18_0._isRightFull = true
 				end
 
 				return false
 			end
 		end
 
-		slot1.preferredHeight = slot9.preferredHeight
+		arg_18_1.preferredHeight = var_18_5.preferredHeight
 	end
 
-	return slot1
+	return arg_18_1
 end
 
-function slot0.buildSpeicalItem(slot0, slot1, slot2, slot3)
-	if slot0:handleType(slot1, slot2) then
-		gohelper.findChildText(slot4, "timebg/#txt_time").text = slot2.timestr
+function var_0_0.buildSpeicalItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0 = arg_19_0:handleType(arg_19_1, arg_19_2)
 
-		gohelper.setActive(gohelper.findChild(slot4, "timebg"), not slot2.isclone)
-		gohelper.setActive(gohelper.findChild(slot4, "icon"), not slot2.isclone)
+	if var_19_0 then
+		local var_19_1 = gohelper.findChild(var_19_0, "timebg")
+		local var_19_2 = gohelper.findChildText(var_19_0, "timebg/#txt_time")
+		local var_19_3 = gohelper.findChild(var_19_0, "icon")
 
-		slot1.cscontent = slot1.go:GetComponent(gohelper.Type_VerticalLayoutGroup)
-		slot9 = gohelper.findChild(slot4, "#scroll_details/Viewport/Content/logitem")
+		var_19_2.text = arg_19_2.timestr
 
-		if slot2.logConfigList and #slot2.logConfigList > 0 then
-			slot10 = slot0:getUserDataTb_()
+		gohelper.setActive(var_19_1, not arg_19_2.isclone)
+		gohelper.setActive(var_19_3, not arg_19_2.isclone)
 
-			for slot14, slot15 in ipairs(slot2.logConfigList) do
-				slot16 = gohelper.cloneInPlace(slot9, "speicalLog" .. slot14)
+		local var_19_4 = arg_19_1.go:GetComponent(gohelper.Type_VerticalLayoutGroup)
 
-				gohelper.setActive(slot16, true)
+		arg_19_1.cscontent = var_19_4
 
-				gohelper.findChildText(slot16, "#txt_log").text = "<color=#A14114>" .. slot15.speaker .. "</color>" .. ":" .. slot15.content
+		local var_19_5 = gohelper.findChild(var_19_0, "#scroll_details/Viewport/Content/logitem")
 
-				ZProj.UGUIHelper.RebuildLayout(slot16.transform)
-				ZProj.UGUIHelper.RebuildLayout(slot1.go.transform)
+		if arg_19_2.logConfigList and #arg_19_2.logConfigList > 0 then
+			local var_19_6 = arg_19_0:getUserDataTb_()
 
-				if not slot0:checkSingleItemHeightIsFull(false, slot16:GetComponent(gohelper.Type_HorizontalLayoutGroup).preferredHeight) then
-					gohelper.destroy(slot16)
+			for iter_19_0, iter_19_1 in ipairs(arg_19_2.logConfigList) do
+				local var_19_7 = gohelper.cloneInPlace(var_19_5, "speicalLog" .. iter_19_0)
+
+				gohelper.setActive(var_19_7, true)
+
+				local var_19_8 = iter_19_1.speaker
+				local var_19_9 = iter_19_1.content
+				local var_19_10 = var_19_7:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+				local var_19_11 = gohelper.findChildText(var_19_7, "#txt_log")
+
+				var_19_11.text = "<color=#A14114>" .. var_19_8 .. "</color>" .. ":" .. var_19_9
+
+				ZProj.UGUIHelper.RebuildLayout(var_19_7.transform)
+				ZProj.UGUIHelper.RebuildLayout(arg_19_1.go.transform)
+
+				if not arg_19_0:checkSingleItemHeightIsFull(false, var_19_10.preferredHeight) then
+					gohelper.destroy(var_19_7)
 
 					break
 				end
 
-				if slot0:checkAndHandleOverText(slot2, slot1.index, slot14, slot8, true, slot20) then
-					table.insert(slot10, slot16)
+				if arg_19_0:checkAndHandleOverText(arg_19_2, arg_19_1.index, iter_19_0, var_19_4, true, var_19_11) then
+					table.insert(var_19_6, var_19_7)
 				else
-					gohelper.destroy(slot16)
+					gohelper.destroy(var_19_7)
 
 					break
 				end
 			end
 
-			slot1.logList = slot10
+			arg_19_1.logList = var_19_6
 		end
 
-		if not slot1.logList or not next(slot1.logList) then
-			slot0:resetFunc(slot1)
-			gohelper.destroy(slot1.go)
+		if not arg_19_1.logList or not next(arg_19_1.logList) then
+			arg_19_0:resetFunc(arg_19_1)
+			gohelper.destroy(arg_19_1.go)
 
-			slot1 = nil
+			arg_19_1 = nil
 
 			return false
 		end
 
-		ZProj.UGUIHelper.RebuildLayout(slot1.go.transform)
+		ZProj.UGUIHelper.RebuildLayout(arg_19_1.go.transform)
 
-		slot1.preferredHeight = slot8.preferredHeight
+		arg_19_1.preferredHeight = var_19_4.preferredHeight
 	end
 
-	return slot1
+	return arg_19_1
 end
 
-function slot0.buildCustomItem(slot0, slot1, slot2, slot3)
-	slot5 = slot0._isLeftFull and slot0._rightContentHeight or slot0._leftContentHeight
-	slot6 = slot2.num or math.random(1, 2)
+function var_0_0.buildCustomItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	local var_20_0 = arg_20_0:handleType(arg_20_1, arg_20_2)
 
-	if slot0:handleType(slot1, slot2) then
-		slot7 = slot0:getUserDataTb_()
+	if not arg_20_0._isLeftFull or not arg_20_0._rightContentHeight then
+		local var_20_1 = arg_20_0._leftContentHeight
+	end
 
-		for slot11 = 1, 2 do
-			gohelper.setActive(gohelper.findChild(slot4, "#scroll_details/image_detailsbg" .. slot11), false)
+	local var_20_2 = arg_20_2.num or math.random(1, 2)
+
+	if var_20_0 then
+		local var_20_3 = arg_20_0:getUserDataTb_()
+
+		for iter_20_0 = 1, 2 do
+			local var_20_4 = gohelper.findChild(var_20_0, "#scroll_details/image_detailsbg" .. iter_20_0)
+
+			gohelper.setActive(var_20_4, false)
 		end
 
-		slot7.num = slot6
-		slot8 = gohelper.findChild(slot4, "#scroll_details/image_detailsbg" .. slot6)
-		slot9 = gohelper.findChild(slot8, "dec")
-		slot10 = gohelper.findChild(slot8, "dec/icon")
-		slot11 = gohelper.findChild(slot8, "timebg")
-		gohelper.findChildText(slot8, "timebg/#txt_time").text = slot2.timestr
+		var_20_3.num = var_20_2
 
-		gohelper.setActive(slot8, true)
+		local var_20_5 = gohelper.findChild(var_20_0, "#scroll_details/image_detailsbg" .. var_20_2)
+		local var_20_6 = gohelper.findChild(var_20_5, "dec")
+		local var_20_7 = gohelper.findChild(var_20_5, "dec/icon")
+		local var_20_8 = gohelper.findChild(var_20_5, "timebg")
 
-		slot7.simagesticker = gohelper.findChildSingleImage(slot4, "#scroll_details/#simage_stickers")
-		slot7.simagesignature = gohelper.findChildSingleImage(slot4, "#scroll_details/#simage_signature")
-		slot14 = gohelper.findChild(slot4, "#scroll_details/Viewport/Content/logitem")
-		gohelper.findChildText(slot4, "#scroll_details/#txt_name").text = slot2.name
-		slot17 = slot2.config.icon
+		gohelper.findChildText(var_20_5, "timebg/#txt_time").text = arg_20_2.timestr
 
-		if string.split(slot2.config.extraBonus, "#")[2] then
-			slot7.simagesticker:LoadImage(ResUrl.getPropItemIcon(slot16))
+		gohelper.setActive(var_20_5, true)
+
+		var_20_3.simagesticker = gohelper.findChildSingleImage(var_20_0, "#scroll_details/#simage_stickers")
+		var_20_3.simagesignature = gohelper.findChildSingleImage(var_20_0, "#scroll_details/#simage_signature")
+
+		local var_20_9 = gohelper.findChildText(var_20_0, "#scroll_details/#txt_name")
+		local var_20_10 = gohelper.findChild(var_20_0, "#scroll_details/Viewport/Content/logitem")
+
+		var_20_9.text = arg_20_2.name
+
+		local var_20_11 = string.split(arg_20_2.config.extraBonus, "#")[2]
+		local var_20_12 = arg_20_2.config.icon
+
+		if var_20_11 then
+			var_20_3.simagesticker:LoadImage(ResUrl.getPropItemIcon(var_20_11))
 		end
 
-		if slot17 then
-			slot7.simagesignature:LoadImage(ResUrl.getSignature("characterget/" .. slot17))
+		if var_20_12 then
+			var_20_3.simagesignature:LoadImage(ResUrl.getSignature("characterget/" .. var_20_12))
 		end
 
-		gohelper.setActive(slot10, not slot2.isclone)
-		gohelper.setActive(slot9, not slot2.isclone)
-		gohelper.setActive(slot11, not slot2.isclone)
-		gohelper.setActive(slot7.simagesticker.gameObject, not slot2.isclone)
-		gohelper.setActive(slot13.gameObject, not slot2.isclone)
+		gohelper.setActive(var_20_7, not arg_20_2.isclone)
+		gohelper.setActive(var_20_6, not arg_20_2.isclone)
+		gohelper.setActive(var_20_8, not arg_20_2.isclone)
+		gohelper.setActive(var_20_3.simagesticker.gameObject, not arg_20_2.isclone)
+		gohelper.setActive(var_20_9.gameObject, not arg_20_2.isclone)
 
-		slot1.cscontent = slot1.go:GetComponent(gohelper.Type_VerticalLayoutGroup)
+		local var_20_13 = arg_20_1.go:GetComponent(gohelper.Type_VerticalLayoutGroup)
 
-		if slot2.logConfigList and #slot2.logConfigList > 0 then
-			slot19 = slot0:getUserDataTb_()
+		arg_20_1.cscontent = var_20_13
 
-			for slot23, slot24 in ipairs(slot2.logConfigList) do
-				slot25 = gohelper.cloneInPlace(slot14, "customLog" .. slot23)
+		if arg_20_2.logConfigList and #arg_20_2.logConfigList > 0 then
+			local var_20_14 = arg_20_0:getUserDataTb_()
 
-				gohelper.setActive(slot25, true)
+			for iter_20_1, iter_20_2 in ipairs(arg_20_2.logConfigList) do
+				local var_20_15 = gohelper.cloneInPlace(var_20_10, "customLog" .. iter_20_1)
 
-				slot27 = gohelper.findChildText(slot25, "#txt_log")
-				slot27.text = slot24.content
+				gohelper.setActive(var_20_15, true)
 
-				ZProj.UGUIHelper.RebuildLayout(slot25.transform)
-				ZProj.UGUIHelper.RebuildLayout(slot1.go.transform)
-				slot0:checkSingleItemHeightIsFull(false, slot25:GetComponent(gohelper.Type_VerticalLayoutGroup).preferredHeight)
+				local var_20_16 = var_20_15:GetComponent(gohelper.Type_VerticalLayoutGroup)
+				local var_20_17 = gohelper.findChildText(var_20_15, "#txt_log")
 
-				if slot0:checkAndHandleOverText(slot2, slot1.index, slot23, slot18, true, slot27, slot7) then
-					table.insert(slot19, slot25)
+				var_20_17.text = iter_20_2.content
+
+				ZProj.UGUIHelper.RebuildLayout(var_20_15.transform)
+				ZProj.UGUIHelper.RebuildLayout(arg_20_1.go.transform)
+				arg_20_0:checkSingleItemHeightIsFull(false, var_20_16.preferredHeight)
+
+				if arg_20_0:checkAndHandleOverText(arg_20_2, arg_20_1.index, iter_20_1, var_20_13, true, var_20_17, var_20_3) then
+					table.insert(var_20_14, var_20_15)
 				else
-					gohelper.destroy(slot25)
+					gohelper.destroy(var_20_15)
 
 					break
 				end
 			end
 
-			slot1.logList = slot19
+			arg_20_1.logList = var_20_14
 		end
 
-		if not slot1.logList or not next(slot1.logList) then
-			slot0:resetFunc(slot1)
-			gohelper.destroy(slot1.go)
+		if not arg_20_1.logList or not next(arg_20_1.logList) then
+			arg_20_0:resetFunc(arg_20_1)
+			gohelper.destroy(arg_20_1.go)
 
-			slot1 = nil
+			arg_20_1 = nil
 
 			return false
 		end
 
-		ZProj.UGUIHelper.RebuildLayout(slot1.go.transform)
+		ZProj.UGUIHelper.RebuildLayout(arg_20_1.go.transform)
 
-		slot1.preferredHeight = slot18.preferredHeight
+		arg_20_1.preferredHeight = var_20_13.preferredHeight
 	end
 
-	return slot1
+	return arg_20_1
 end
 
-function slot0.buildTimeItem(slot0, slot1, slot2, slot3)
-	if slot0:handleType(slot1, slot2) then
-		slot5 = slot1.go:GetComponent(gohelper.Type_VerticalLayoutGroup)
-		slot1.cscontent = slot5
-		gohelper.findChildText(slot4, "bg/#txt_time").text = luaLang("weekday" .. tonumber(slot2.day))
+function var_0_0.buildTimeItem(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = arg_21_0:handleType(arg_21_1, arg_21_2)
 
-		ZProj.UGUIHelper.RebuildLayout(slot1.go.transform)
+	if var_21_0 then
+		local var_21_1 = arg_21_1.go:GetComponent(gohelper.Type_VerticalLayoutGroup)
 
-		slot1.preferredHeight = slot5.preferredHeight
+		arg_21_1.cscontent = var_21_1
+		gohelper.findChildText(var_21_0, "bg/#txt_time").text = luaLang("weekday" .. tonumber(arg_21_2.day))
 
-		if not slot0:checkSingleItemHeightIsFull(false, slot1.preferredHeight) then
-			table.insert(slot0._molist, slot3 + 1, slot2)
-			slot0:resetFunc(slot1)
-			gohelper.destroy(slot1.go)
+		ZProj.UGUIHelper.RebuildLayout(arg_21_1.go.transform)
 
-			slot1 = nil
+		arg_21_1.preferredHeight = var_21_1.preferredHeight
+
+		if not arg_21_0:checkSingleItemHeightIsFull(false, arg_21_1.preferredHeight) then
+			table.insert(arg_21_0._molist, arg_21_3 + 1, arg_21_2)
+			arg_21_0:resetFunc(arg_21_1)
+			gohelper.destroy(arg_21_1.go)
+
+			arg_21_1 = nil
 
 			return false
 		end
 	end
 
-	return slot1
+	return arg_21_1
 end
 
-function slot0.checkSingleItemHeightIsFull(slot0, slot1, slot2)
-	if not slot0._isLeftFull then
-		if 16 + (slot2 or slot0._singleTextHeight) + 16 + (slot1 and 40 or 0) > slot0._leftContentHeight - slot0._contentHeight then
-			slot0._isLeftFull = true
+function var_0_0.checkSingleItemHeightIsFull(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = 16
+	local var_22_1 = 16
+	local var_22_2 = arg_22_1 and 40 or 0
+	local var_22_3 = arg_22_2 or arg_22_0._singleTextHeight
+
+	if not arg_22_0._isLeftFull then
+		if var_22_0 + var_22_3 + var_22_1 + var_22_2 > arg_22_0._leftContentHeight - arg_22_0._contentHeight then
+			arg_22_0._isLeftFull = true
 
 			return false
 		end
-	elseif not slot0._isRightFull and slot3 + slot6 + slot4 + slot5 > slot0._rightContentHeight - slot0._contentHeight then
-		slot0._isRightFull = true
+	elseif not arg_22_0._isRightFull and var_22_0 + var_22_3 + var_22_1 + var_22_2 > arg_22_0._rightContentHeight - arg_22_0._contentHeight then
+		arg_22_0._isRightFull = true
 
 		return false
 	end
@@ -462,193 +529,225 @@ function slot0.checkSingleItemHeightIsFull(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.handleType(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.handleType(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0
 
-	for slot7, slot8 in ipairs(slot1.gotypelist) do
-		if slot7 == slot2.type then
-			gohelper.setActive(slot8, true)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_1.gotypelist) do
+		if iter_23_0 == arg_23_2.type then
+			gohelper.setActive(iter_23_1, true)
 
-			slot3 = slot8
+			var_23_0 = iter_23_1
 		else
-			gohelper.setActive(slot8, false)
+			gohelper.setActive(iter_23_1, false)
 		end
 	end
 
-	return slot3
+	return var_23_0
 end
 
-function slot0.createOrGetItem(slot0)
-	if not nil then
-		slot1 = slot0:getUserDataTb_()
-		slot1.go = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[3], slot0._isLeftFull and slot0._curCreateBookItem.goRight or slot0._curCreateBookItem.goLeft, "item")
-		slot1.gotypelist = {}
+function var_0_0.createOrGetItem(arg_24_0)
+	local var_24_0
 
-		for slot7 = 1, 4 do
-			table.insert(slot1.gotypelist, gohelper.findChild(slot1.go, "type" .. slot7))
+	if not var_24_0 then
+		var_24_0 = arg_24_0:getUserDataTb_()
+
+		local var_24_1 = arg_24_0.viewContainer:getSetting().otherRes[3]
+		local var_24_2 = arg_24_0._isLeftFull and arg_24_0._curCreateBookItem.goRight or arg_24_0._curCreateBookItem.goLeft
+
+		var_24_0.go = arg_24_0:getResInst(var_24_1, var_24_2, "item")
+		var_24_0.gotypelist = {}
+
+		for iter_24_0 = 1, 4 do
+			local var_24_3 = gohelper.findChild(var_24_0.go, "type" .. iter_24_0)
+
+			table.insert(var_24_0.gotypelist, var_24_3)
 		end
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(var_24_0.go, true)
 
-	return slot1
+	return var_24_0
 end
 
-function slot0.setParent(slot0, slot1)
-	slot3 = slot0._isLeftFull and slot0._rightContentHeight or slot0._leftContentHeight
-	slot0._contentHeight = slot0:calculateHeight(not slot0._isLeftFull and true or false)
+function var_0_0.setParent(arg_25_0, arg_25_1)
+	local var_25_0 = not arg_25_0._isLeftFull and true or false
+	local var_25_1 = arg_25_0._isLeftFull and arg_25_0._rightContentHeight or arg_25_0._leftContentHeight
 
-	function slot0.checkfunc(slot0)
-		if uv1 < uv0._contentHeight + slot0.preferredHeight then
-			if slot0.logList and #slot0.logList > 1 then
-				gohelper.destroy(table.remove(slot0.logList))
-				ZProj.UGUIHelper.RebuildLayout(slot0.go.transform)
+	arg_25_0._contentHeight = arg_25_0:calculateHeight(var_25_0)
 
-				slot0.preferredHeight = slot0.cscontent.preferredHeight
+	function arg_25_0.checkfunc(arg_26_0)
+		if arg_25_0._contentHeight + arg_26_0.preferredHeight > var_25_1 then
+			if arg_26_0.logList and #arg_26_0.logList > 1 then
+				local var_26_0 = table.remove(arg_26_0.logList)
 
-				uv0.checkfunc(slot0, uv0)
+				gohelper.destroy(var_26_0)
+				ZProj.UGUIHelper.RebuildLayout(arg_26_0.go.transform)
+
+				arg_26_0.preferredHeight = arg_26_0.cscontent.preferredHeight
+
+				arg_25_0.checkfunc(arg_26_0, arg_25_0)
 			else
-				if uv2 then
-					uv0._isLeftFull = true
+				if var_25_0 then
+					arg_25_0._isLeftFull = true
 				else
-					uv0._isRightFull = true
+					arg_25_0._isRightFull = true
 				end
 
-				uv0._contentHeight = 0
+				arg_25_0._contentHeight = 0
 
-				uv0:resetFunc(slot0)
+				arg_25_0:resetFunc(arg_26_0)
 
-				slot0 = nil
+				arg_26_0 = nil
 			end
-		elseif uv2 then
-			slot0.go.transform:SetParent(uv0._curCreateBookItem.goLeft.transform)
+		elseif var_25_0 then
+			arg_26_0.go.transform:SetParent(arg_25_0._curCreateBookItem.goLeft.transform)
 
-			uv0._leftItemList[uv0._bookPage] = uv0._leftItemList[uv0._bookPage] or {}
+			arg_25_0._leftItemList[arg_25_0._bookPage] = arg_25_0._leftItemList[arg_25_0._bookPage] or {}
 
-			table.insert(uv0._leftItemList[uv0._bookPage], slot0)
+			table.insert(arg_25_0._leftItemList[arg_25_0._bookPage], arg_26_0)
 
-			uv0._pageToMo[uv0._bookPage] = uv0._pageToMo[uv0._bookPage] or {}
-			uv0._pageToMo[uv0._bookPage][slot0.index] = slot0.mo
-			uv0._contentHeight = uv0:calculateHeight(true)
+			arg_25_0._pageToMo[arg_25_0._bookPage] = arg_25_0._pageToMo[arg_25_0._bookPage] or {}
+			arg_25_0._pageToMo[arg_25_0._bookPage][arg_26_0.index] = arg_26_0.mo
+			arg_25_0._contentHeight = arg_25_0:calculateHeight(true)
 		else
-			slot0.go.transform:SetParent(uv0._curCreateBookItem.goRight.transform)
+			arg_26_0.go.transform:SetParent(arg_25_0._curCreateBookItem.goRight.transform)
 
-			uv0._rightItemList[uv0._bookPage] = uv0._rightItemList[uv0._bookPage] or {}
+			arg_25_0._rightItemList[arg_25_0._bookPage] = arg_25_0._rightItemList[arg_25_0._bookPage] or {}
 
-			table.insert(uv0._rightItemList[uv0._bookPage], slot0)
+			table.insert(arg_25_0._rightItemList[arg_25_0._bookPage], arg_26_0)
 
-			uv0._pageToMo[uv0._bookPage][slot0.index] = slot0.mo
-			uv0._contentHeight = uv0:calculateHeight(false)
+			arg_25_0._pageToMo[arg_25_0._bookPage][arg_26_0.index] = arg_26_0.mo
+			arg_25_0._contentHeight = arg_25_0:calculateHeight(false)
 		end
 	end
 
-	slot0.checkfunc(slot1, slot0)
+	arg_25_0.checkfunc(arg_25_1, arg_25_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0._isLeftFull = false
-	slot0._isRightFull = false
-	slot0._contentHeight = 0
+function var_0_0.refreshUI(arg_27_0)
+	arg_27_0._isLeftFull = false
+	arg_27_0._isRightFull = false
+	arg_27_0._contentHeight = 0
 
-	slot0:updateView()
+	arg_27_0:updateView()
 end
 
-function slot0.resetFunc(slot0, slot1)
-	if slot1.logList and #slot1.logList > 0 then
-		for slot5, slot6 in ipairs(slot1.logList) do
-			gohelper.destroy(slot6)
+function var_0_0.resetFunc(arg_28_0, arg_28_1)
+	if arg_28_1.logList and #arg_28_1.logList > 0 then
+		for iter_28_0, iter_28_1 in ipairs(arg_28_1.logList) do
+			gohelper.destroy(iter_28_1)
 		end
 
-		slot1.logList = nil
+		arg_28_1.logList = nil
 	end
 end
 
-function slot0.checkAndHandleOverText(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot8 = slot4.preferredHeight
-	slot9 = 16
-	slot10 = 16
-	slot11 = 10
-	slot12 = 220
-	slot13 = 30
-	slot14 = 80
-	slot16 = slot0._isLeftFull and slot0._rightContentHeight or slot0._leftContentHeight
-	slot0.localContentHeight = slot0.localContentHeight == 0 and slot0:calculateHeight(not slot0._isLeftFull and true or false) or slot0.localContentHeight
+function var_0_0.checkAndHandleOverText(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5, arg_29_6, arg_29_7)
+	local var_29_0 = arg_29_4.preferredHeight
+	local var_29_1 = 16
+	local var_29_2 = 16
+	local var_29_3 = 10
+	local var_29_4 = 220
+	local var_29_5 = 30
+	local var_29_6 = 80
+	local var_29_7 = not arg_29_0._isLeftFull and true or false
+	local var_29_8 = arg_29_0._isLeftFull and arg_29_0._rightContentHeight or arg_29_0._leftContentHeight
 
-	if not slot5 or #slot1.logConfigList == 1 then
-		slot21 = 0
+	arg_29_0.localContentHeight = arg_29_0.localContentHeight == 0 and arg_29_0:calculateHeight(var_29_7) or arg_29_0.localContentHeight
 
-		for slot25 = 0, slot6:GetTextInfo(slot6.text).lineCount - 1 do
-			if slot16 < slot9 + slot0:calculateHeight(slot15) + slot19.lineInfo[slot25].lineHeight + slot10 + (slot25 + 1) * slot11 then
-				if slot25 > 1 then
-					slot21 = slot19.lineInfo[slot25 - 1].firstVisibleCharacterIndex
+	if not arg_29_5 or #arg_29_1.logConfigList == 1 then
+		local var_29_9 = arg_29_0:calculateHeight(var_29_7)
+		local var_29_10 = arg_29_6.text
+		local var_29_11 = arg_29_6:GetTextInfo(var_29_10)
+		local var_29_12 = var_29_11.lineCount
+		local var_29_13 = 0
+
+		for iter_29_0 = 0, var_29_12 - 1 do
+			var_29_9 = var_29_9 + var_29_11.lineInfo[iter_29_0].lineHeight
+
+			if var_29_8 < var_29_1 + var_29_9 + var_29_2 + (iter_29_0 + 1) * var_29_3 then
+				if iter_29_0 > 1 then
+					var_29_13 = var_29_11.lineInfo[iter_29_0 - 1].firstVisibleCharacterIndex
 				else
-					table.insert(slot0._molist, slot2 + 1, slot1)
+					table.insert(arg_29_0._molist, arg_29_2 + 1, arg_29_1)
 
 					return false
 				end
 
-				slot6.text = GameUtil.utf8sub(slot18, 1, slot21)
+				arg_29_6.text = GameUtil.utf8sub(var_29_10, 1, var_29_13)
 
-				if slot1.type == RoomRecordEnum.LogType.Normal then
-					slot28 = slot1
-					slot28.content = GameUtil.utf8sub(slot18, slot21 + 1, slot19.characterCount)
-					slot28.isclone = true
+				local var_29_14 = GameUtil.utf8sub(var_29_10, var_29_13 + 1, var_29_11.characterCount)
 
-					table.insert(slot0._molist, slot2 + 1, slot28)
+				if arg_29_1.type == RoomRecordEnum.LogType.Normal then
+					local var_29_15 = arg_29_1
+
+					var_29_15.content = var_29_14
+					var_29_15.isclone = true
+
+					table.insert(arg_29_0._molist, arg_29_2 + 1, var_29_15)
 
 					return true
 				else
-					slot28 = slot1
-					slot28.logConfigList[1].content = slot27
-					slot28.isclone = true
+					local var_29_16 = arg_29_1
 
-					table.insert(slot0._molist, slot2 + 1, slot28)
+					var_29_16.logConfigList[1].content = var_29_14
+					var_29_16.isclone = true
+
+					table.insert(arg_29_0._molist, arg_29_2 + 1, var_29_16)
 
 					return true
 				end
 			end
 		end
-	elseif slot1.type == RoomRecordEnum.LogType.Custom then
-		if slot12 > slot16 - slot0:calculateHeight(slot15) - slot13 - slot14 then
-			if slot15 then
-				slot0._isLeftFull = true
+	elseif arg_29_1.type == RoomRecordEnum.LogType.Custom then
+		local var_29_17 = arg_29_0:calculateHeight(var_29_7)
+
+		if var_29_4 > var_29_8 - var_29_17 - var_29_5 - var_29_6 then
+			if var_29_7 then
+				arg_29_0._isLeftFull = true
 			else
-				slot0._isRightFull = true
+				arg_29_0._isRightFull = true
 			end
 
-			table.insert(slot0._molist, slot2 + 1, slot1)
+			table.insert(arg_29_0._molist, arg_29_2 + 1, arg_29_1)
 
 			return false
-		elseif slot16 < slot17 + slot8 then
-			slot1.num = slot7.num
-			slot19 = {}
-			slot1.isclone = true
+		elseif var_29_8 < var_29_17 + var_29_0 then
+			local var_29_18 = arg_29_1
 
-			for slot23 = slot3, #slot1.logConfigList do
-				table.insert(slot19, slot1.logConfigList[slot23])
+			arg_29_1.num = arg_29_7.num
+
+			local var_29_19 = {}
+
+			var_29_18.isclone = true
+
+			for iter_29_1 = arg_29_3, #arg_29_1.logConfigList do
+				table.insert(var_29_19, arg_29_1.logConfigList[iter_29_1])
 			end
 
-			slot18.logConfigList = slot19
+			var_29_18.logConfigList = var_29_19
 
-			table.insert(slot0._molist, slot2 + 1, slot18)
+			table.insert(arg_29_0._molist, arg_29_2 + 1, var_29_18)
 
-			if slot7 then
-				gohelper.setActive(slot7.simagesignature.gameObject, false)
+			if arg_29_7 then
+				gohelper.setActive(arg_29_7.simagesignature.gameObject, false)
 			end
 
 			return false
 		end
-	elseif slot16 < slot0:calculateHeight(slot15) + slot8 then
-		slot19 = {}
-		slot1.isclone = true
+	elseif var_29_8 < arg_29_0:calculateHeight(var_29_7) + var_29_0 then
+		local var_29_20 = arg_29_1
+		local var_29_21 = {}
 
-		for slot23 = slot3, #slot1.logConfigList do
-			table.insert(slot19, slot1.logConfigList[slot23])
+		var_29_20.isclone = true
+
+		for iter_29_2 = arg_29_3, #arg_29_1.logConfigList do
+			table.insert(var_29_21, arg_29_1.logConfigList[iter_29_2])
 		end
 
-		slot18.logConfigList = slot19
+		var_29_20.logConfigList = var_29_21
 
-		table.insert(slot0._molist, slot2 + 1, slot18)
+		table.insert(arg_29_0._molist, arg_29_2 + 1, var_29_20)
 
 		return false
 	end
@@ -656,34 +755,36 @@ function slot0.checkAndHandleOverText(slot0, slot1, slot2, slot3, slot4, slot5, 
 	return true
 end
 
-function slot0.calculateHeight(slot0, slot1)
-	slot2 = 0
-	slot3 = 16
-	slot4 = 16
+function var_0_0.calculateHeight(arg_30_0, arg_30_1)
+	local var_30_0 = 0
+	local var_30_1 = 16
+	local var_30_2 = 16
 
-	if slot1 then
-		if slot0._leftItemList[slot0._bookPage] and #slot0._leftItemList[slot0._bookPage] > 0 then
-			for slot8, slot9 in ipairs(slot0._leftItemList[slot0._bookPage]) do
-				slot2 = slot2 + slot9.preferredHeight
+	if arg_30_1 then
+		if arg_30_0._leftItemList[arg_30_0._bookPage] and #arg_30_0._leftItemList[arg_30_0._bookPage] > 0 then
+			for iter_30_0, iter_30_1 in ipairs(arg_30_0._leftItemList[arg_30_0._bookPage]) do
+				var_30_0 = var_30_0 + iter_30_1.preferredHeight
 			end
 
-			slot2 = slot2 + slot0._itemspace * (#slot0._leftItemList[slot0._bookPage] - 1)
+			var_30_0 = var_30_0 + arg_30_0._itemspace * (#arg_30_0._leftItemList[arg_30_0._bookPage] - 1)
 		end
-	elseif slot0._rightItemList[slot0._bookPage] and #slot0._rightItemList[slot0._bookPage] > 0 then
-		for slot8, slot9 in ipairs(slot0._rightItemList[slot0._bookPage]) do
-			slot2 = slot2 + slot9.preferredHeight
+	elseif arg_30_0._rightItemList[arg_30_0._bookPage] and #arg_30_0._rightItemList[arg_30_0._bookPage] > 0 then
+		for iter_30_2, iter_30_3 in ipairs(arg_30_0._rightItemList[arg_30_0._bookPage]) do
+			var_30_0 = var_30_0 + iter_30_3.preferredHeight
 		end
 
-		slot2 = slot2 + slot0._itemspace * (#slot0._rightItemList[slot0._bookPage] - 1)
+		var_30_0 = var_30_0 + arg_30_0._itemspace * (#arg_30_0._rightItemList[arg_30_0._bookPage] - 1)
 	end
 
-	return slot2
+	return var_30_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_31_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_32_0)
+	return
 end
 
-return slot0
+return var_0_0

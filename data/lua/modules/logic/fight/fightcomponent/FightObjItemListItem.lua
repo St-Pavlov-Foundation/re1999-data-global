@@ -1,82 +1,89 @@
-module("modules.logic.fight.fightcomponent.FightObjItemListItem", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightObjItemListItem", package.seeall)
 
-slot0 = class("FightObjItemListItem", FightBaseClass)
+local var_0_0 = class("FightObjItemListItem", FightBaseClass)
 
-function slot0.onConstructor(slot0, slot1, slot2, slot3)
-	slot0.autoSetSibling = true
-	slot0.siblingOffset = 0
-	slot0.recycle = true
-	slot0.dataList = {}
-	slot0._modelGameObject = slot1
-	slot0._class = slot2
-	slot0._parentObject = slot3 or slot0._modelGameObject.transform.parent.gameObject
-	slot0._standbyList = {}
-	slot0._gameObjectStandbyList = {}
+function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.autoSetSibling = true
+	arg_1_0.siblingOffset = 0
+	arg_1_0.recycle = true
+	arg_1_0.dataList = {}
+	arg_1_0._modelGameObject = arg_1_1
+	arg_1_0._class = arg_1_2
+	arg_1_0._parentObject = arg_1_3 or arg_1_0._modelGameObject.transform.parent.gameObject
+	arg_1_0._standbyList = {}
+	arg_1_0._gameObjectStandbyList = {}
 
-	gohelper.setActive(slot0._modelGameObject, false)
+	gohelper.setActive(arg_1_0._modelGameObject, false)
 end
 
-function slot0.setFuncNames(slot0, slot1, slot2, slot3)
-	slot0.funcNameOfRefreshItemData = slot1
-	slot0.funcNameOfItemRemoved = slot2
-	slot0.funcNameOfItemReused = slot3
+function var_0_0.setFuncNames(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.funcNameOfRefreshItemData = arg_2_1
+	arg_2_0.funcNameOfItemRemoved = arg_2_2
+	arg_2_0.funcNameOfItemReused = arg_2_3
 end
 
-function slot0.setFuncNameOfRefreshItemData(slot0, slot1)
-	slot0.funcNameOfRefreshItemData = slot1
+function var_0_0.setFuncNameOfRefreshItemData(arg_3_0, arg_3_1)
+	arg_3_0.funcNameOfRefreshItemData = arg_3_1
 end
 
-function slot0.setFuncNameOfItemRemoved(slot0, slot1)
-	slot0.funcNameOfItemRemoved = slot1
+function var_0_0.setFuncNameOfItemRemoved(arg_4_0, arg_4_1)
+	arg_4_0.funcNameOfItemRemoved = arg_4_1
 end
 
-function slot0.setFuncNameOfItemReused(slot0, slot1)
-	slot0.funcNameOfItemReused = slot1
+function var_0_0.setFuncNameOfItemReused(arg_5_0, arg_5_1)
+	arg_5_0.funcNameOfItemReused = arg_5_1
 end
 
-function slot0.invokeRefreshFunc(slot0, slot1, slot2)
-	slot1.keyword_itemData = slot2
+function var_0_0.invokeRefreshFunc(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_1.keyword_itemData = arg_6_2
 
-	if slot0.funcNameOfRefreshItemData then
-		gohelper.setActive(slot1.keyword_gameObject, true)
-		xpcall(slot1[slot0.funcNameOfRefreshItemData], __G__TRACKBACK__, slot1, slot2)
+	if arg_6_0.funcNameOfRefreshItemData then
+		gohelper.setActive(arg_6_1.keyword_gameObject, true)
+		xpcall(arg_6_1[arg_6_0.funcNameOfRefreshItemData], __G__TRACKBACK__, arg_6_1, arg_6_2)
 	end
 end
 
-function slot0.onRemoveItem(slot0, slot1)
-	if slot0.funcNameOfItemRemoved then
-		xpcall(slot1[slot0.funcNameOfItemRemoved], __G__TRACKBACK__, slot1)
+function var_0_0.onRemoveItem(arg_7_0, arg_7_1)
+	if arg_7_0.funcNameOfItemRemoved then
+		xpcall(arg_7_1[arg_7_0.funcNameOfItemRemoved], __G__TRACKBACK__, arg_7_1)
 	end
 end
 
-function slot0.onReuseItem(slot0, slot1)
-	if slot0.funcNameOfItemReused then
-		xpcall(slot1[slot0.funcNameOfItemReused], __G__TRACKBACK__, slot1)
+function var_0_0.onReuseItem(arg_8_0, arg_8_1)
+	if arg_8_0.funcNameOfItemReused then
+		xpcall(arg_8_1[arg_8_0.funcNameOfItemReused], __G__TRACKBACK__, arg_8_1)
 	end
 end
 
-function slot0.refreshSibling(slot0)
-	for slot4, slot5 in ipairs(slot0) do
-		gohelper.setSibling(slot5.keyword_gameObject, slot4 - 1 + slot0.siblingOffset)
+function var_0_0.refreshSibling(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0) do
+		gohelper.setSibling(iter_9_1.keyword_gameObject, iter_9_0 - 1 + arg_9_0.siblingOffset)
 	end
 end
 
-function slot0.swap(slot0, slot1, slot2)
-	slot0[slot1] = slot0[slot2]
-	slot0[slot2] = slot0[slot1]
-	slot0.dataList[slot1] = slot0.dataList[slot2]
-	slot0.dataList[slot2] = slot0.dataList[slot1]
+function var_0_0.swap(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0[arg_10_1]
+	local var_10_1 = arg_10_0[arg_10_2]
 
-	if slot0.autoSetSibling then
-		gohelper.setSibling(slot3.keyword_gameObject, slot2 - 1 + slot0.siblingOffset)
-		gohelper.setSibling(slot4.keyword_gameObject, slot1 - 1 + slot0.siblingOffset)
+	arg_10_0[arg_10_1] = var_10_1
+	arg_10_0[arg_10_2] = var_10_0
+
+	local var_10_2 = arg_10_0.dataList[arg_10_1]
+	local var_10_3 = arg_10_0.dataList[arg_10_2]
+
+	arg_10_0.dataList[arg_10_1] = var_10_3
+	arg_10_0.dataList[arg_10_2] = var_10_2
+
+	if arg_10_0.autoSetSibling then
+		gohelper.setSibling(var_10_0.keyword_gameObject, arg_10_2 - 1 + arg_10_0.siblingOffset)
+		gohelper.setSibling(var_10_1.keyword_gameObject, arg_10_1 - 1 + arg_10_0.siblingOffset)
 	end
 end
 
-function slot0.getIndex(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0) do
-		if slot6 == slot1 then
-			return slot5
+function var_0_0.getIndex(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0) do
+		if iter_11_1 == arg_11_1 then
+			return iter_11_0
 		end
 	end
 
@@ -85,183 +92,207 @@ function slot0.getIndex(slot0, slot1)
 	return 0
 end
 
-function slot0.setDataList(slot0, slot1)
-	tabletool.clear(slot0.dataList)
-	tabletool.addValues(slot0.dataList, slot1)
+function var_0_0.setDataList(arg_12_0, arg_12_1)
+	tabletool.clear(arg_12_0.dataList)
+	tabletool.addValues(arg_12_0.dataList, arg_12_1)
 
-	for slot5, slot6 in ipairs(slot0.dataList) do
-		if not slot0[slot5] then
-			slot0:addItemAtIndex(slot5, slot6)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.dataList) do
+		local var_12_0 = arg_12_0[iter_12_0]
+
+		if not var_12_0 then
+			arg_12_0:addItemAtIndex(iter_12_0, iter_12_1)
 		else
-			slot0:onReuseItem(slot7)
-			slot0:invokeRefreshFunc(slot7, slot6)
+			arg_12_0:onReuseItem(var_12_0)
+			arg_12_0:invokeRefreshFunc(var_12_0, iter_12_1)
 		end
 	end
 
-	for slot5 = #slot0, #slot0.dataList + 1, -1 do
-		slot0:removeIndex(slot5)
+	for iter_12_2 = #arg_12_0, #arg_12_0.dataList + 1, -1 do
+		arg_12_0:removeIndex(iter_12_2)
 	end
 
-	if slot0.autoSetSibling then
-		slot0:refreshSibling()
+	if arg_12_0.autoSetSibling then
+		arg_12_0:refreshSibling()
 	end
 end
 
-function slot0.addIndex(slot0, slot1, slot2)
-	table.insert(slot0.dataList, slot1, slot2)
+function var_0_0.addIndex(arg_13_0, arg_13_1, arg_13_2)
+	table.insert(arg_13_0.dataList, arg_13_1, arg_13_2)
 
-	return slot0:addItemAtIndex(slot1, slot2)
+	return (arg_13_0:addItemAtIndex(arg_13_1, arg_13_2))
 end
 
-function slot0.addItemAtIndex(slot0, slot1, slot2)
-	slot3 = slot0:getItem()
+function var_0_0.addItemAtIndex(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_0:getItem()
 
-	table.insert(slot0, slot1, slot3)
-	slot0:invokeRefreshFunc(slot3, slot2)
+	table.insert(arg_14_0, arg_14_1, var_14_0)
+	arg_14_0:invokeRefreshFunc(var_14_0, arg_14_2)
 
-	if slot0.autoSetSibling then
-		gohelper.setSibling(slot0.keyword_gameObject, slot1 - 1 + slot0.siblingOffset)
+	if arg_14_0.autoSetSibling then
+		gohelper.setSibling(arg_14_0.keyword_gameObject, arg_14_1 - 1 + arg_14_0.siblingOffset)
 	end
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.addHead(slot0, slot1)
-	return slot0:addIndex(1, slot1)
+function var_0_0.addHead(arg_15_0, arg_15_1)
+	return arg_15_0:addIndex(1, arg_15_1)
 end
 
-function slot0.addLast(slot0, slot1)
-	return slot0:addIndex(#slot0 + 1, slot1)
+function var_0_0.addLast(arg_16_0, arg_16_1)
+	return arg_16_0:addIndex(#arg_16_0 + 1, arg_16_1)
 end
 
-function slot0.getItem(slot0)
-	if not table.remove(slot0._standbyList, #slot0._standbyList) then
-		slot1 = slot0:newItem()
+function var_0_0.getItem(arg_17_0)
+	local var_17_0 = table.remove(arg_17_0._standbyList, #arg_17_0._standbyList)
+
+	if not var_17_0 then
+		var_17_0 = arg_17_0:newItem()
 	else
-		slot0:onReuseItem(slot1)
+		arg_17_0:onReuseItem(var_17_0)
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0.getHead(slot0)
-	return slot0[1]
+function var_0_0.getHead(arg_18_0)
+	return arg_18_0[1]
 end
 
-function slot0.getLast(slot0)
-	return slot0[#slot0]
+function var_0_0.getLast(arg_19_0)
+	return arg_19_0[#arg_19_0]
 end
 
-function slot0.removeHead(slot0)
-	return slot0:removeIndex(1)
+function var_0_0.removeHead(arg_20_0)
+	return arg_20_0:removeIndex(1)
 end
 
-function slot0.removeLast(slot0)
-	return slot0:removeIndex(#slot0)
+function var_0_0.removeLast(arg_21_0)
+	return arg_21_0:removeIndex(#arg_21_0)
 end
 
-function slot0.removeItem(slot0, slot1)
-	return slot0:removeIndex(slot1:getItemIndex())
+function var_0_0.removeItem(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_1:getItemIndex()
+
+	return arg_22_0:removeIndex(var_22_0)
 end
 
-function slot0.removeIndex(slot0, slot1)
-	slot2 = slot0:_removeIndex(slot1)
+function var_0_0.removeIndex(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:_removeIndex(arg_23_1)
 
-	slot0:_recycleItem(slot2)
+	arg_23_0:_recycleItem(var_23_0)
 
-	return slot2
+	return var_23_0
 end
 
-function slot0.removeIndexDelayRecycle(slot0, slot1, slot2)
-	slot3 = slot0:_removeIndex(slot1)
+function var_0_0.removeIndexDelayRecycle(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = arg_24_0:_removeIndex(arg_24_1)
 
-	slot0:com_registTimer(slot0._recycleItem, slot2, slot3)
+	arg_24_0:com_registTimer(arg_24_0._recycleItem, arg_24_2, var_24_0)
 
-	return slot3
+	return var_24_0
 end
 
-function slot0._removeIndex(slot0, slot1)
-	if slot0[slot1] then
-		table.remove(slot0.dataList, slot1)
-		slot0:onRemoveItem(table.remove(slot0, slot1))
+function var_0_0._removeIndex(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0[arg_25_1]
+
+	if var_25_0 then
+		table.remove(arg_25_0.dataList, arg_25_1)
+
+		var_25_0 = table.remove(arg_25_0, arg_25_1)
+
+		arg_25_0:onRemoveItem(var_25_0)
 	end
 
-	return slot2
+	return var_25_0
 end
 
-function slot0._recycleItem(slot0, slot1)
-	if slot0.recycle then
-		table.insert(slot0._standbyList, slot1)
-		gohelper.setActive(slot1.keyword_gameObject, false)
+function var_0_0._recycleItem(arg_26_0, arg_26_1)
+	if arg_26_0.recycle then
+		local var_26_0 = arg_26_1.keyword_gameObject
 
-		if slot0.autoSetSibling then
-			gohelper.setSibling(slot2, #slot0 + slot0.siblingOffset)
+		table.insert(arg_26_0._standbyList, arg_26_1)
+		gohelper.setActive(var_26_0, false)
+
+		if arg_26_0.autoSetSibling then
+			gohelper.setSibling(var_26_0, #arg_26_0 + arg_26_0.siblingOffset)
 		end
 	else
-		slot1:disposeSelf()
+		arg_26_1:disposeSelf()
 	end
 end
 
-function slot0.newItem(slot0)
-	slot1 = slot0:createItem()
-	slot1.getItemIndex = uv0.getItemIndex
-	slot1.getItemParent = uv0.getItemParent
-	slot1.getPreItem = uv0.getPreItem
-	slot1.getNextItem = uv0.getNextItem
-	slot1.getDataListCount = uv0.getDataListCount
-	slot1.getItemListMgr = uv0.getItemListMgr
+function var_0_0.newItem(arg_27_0)
+	local var_27_0 = arg_27_0:createItem()
 
-	return slot1
+	var_27_0.getItemIndex = var_0_0.getItemIndex
+	var_27_0.getItemParent = var_0_0.getItemParent
+	var_27_0.getPreItem = var_0_0.getPreItem
+	var_27_0.getNextItem = var_0_0.getNextItem
+	var_27_0.getDataListCount = var_0_0.getDataListCount
+	var_27_0.getItemListMgr = var_0_0.getItemListMgr
+
+	return var_27_0
 end
 
-function slot0.getItemIndex(slot0)
-	return slot0.PARENT_ROOT_CLASS:getIndex(slot0)
+function var_0_0.getItemIndex(arg_28_0)
+	return arg_28_0.PARENT_ROOT_CLASS:getIndex(arg_28_0)
 end
 
-function slot0.getDataListCount(slot0)
-	return #slot0.PARENT_ROOT_CLASS.dataList
+function var_0_0.getDataListCount(arg_29_0)
+	return #arg_29_0.PARENT_ROOT_CLASS.dataList
 end
 
-function slot0.getItemListMgr(slot0)
-	return slot0.ITEM_LIST_MGR
+function var_0_0.getItemListMgr(arg_30_0)
+	return arg_30_0.ITEM_LIST_MGR
 end
 
-function slot0.getPreItem(slot0)
-	return slot0.ITEM_LIST_MGR[slot0:getItemIndex() - 1]
+function var_0_0.getPreItem(arg_31_0)
+	local var_31_0 = arg_31_0:getItemIndex()
+
+	return arg_31_0.ITEM_LIST_MGR[var_31_0 - 1]
 end
 
-function slot0.getNextItem(slot0)
-	return slot0.ITEM_LIST_MGR[slot0:getItemIndex() + 1]
+function var_0_0.getNextItem(arg_32_0)
+	local var_32_0 = arg_32_0:getItemIndex()
+
+	return arg_32_0.ITEM_LIST_MGR[var_32_0 + 1]
 end
 
-function slot0.getItemParent(slot0)
-	return slot0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS
+function var_0_0.getItemParent(arg_33_0)
+	return arg_33_0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS
 end
 
-function slot0.createItem(slot0)
-	slot1 = #slot0._gameObjectStandbyList > 0 and table.remove(slot0._gameObjectStandbyList) or gohelper.clone(slot0._modelGameObject, slot0._parentObject)
-	slot2 = slot0:newClass(slot0._class, slot1)
-	slot2.keyword_gameObject = slot1
-	slot2.ITEM_LIST_MGR = slot0
+function var_0_0.createItem(arg_34_0)
+	local var_34_0 = #arg_34_0._gameObjectStandbyList > 0 and table.remove(arg_34_0._gameObjectStandbyList) or gohelper.clone(arg_34_0._modelGameObject, arg_34_0._parentObject)
+	local var_34_1 = arg_34_0:newClass(arg_34_0._class, var_34_0)
 
-	return slot2
+	var_34_1.keyword_gameObject = var_34_0
+	var_34_1.ITEM_LIST_MGR = arg_34_0
+
+	return var_34_1
 end
 
-function slot0.cloneGameObject2Standby(slot0, slot1, slot2)
-	if slot2 then
-		slot0:com_registRepeatTimer(slot0.delaycloneGameObject2Standby, slot2, slot1)
+function var_0_0.cloneGameObject2Standby(arg_35_0, arg_35_1, arg_35_2)
+	if arg_35_2 then
+		arg_35_0:com_registRepeatTimer(arg_35_0.delaycloneGameObject2Standby, arg_35_2, arg_35_1)
 	else
-		for slot6 = 1, slot1 do
-			table.insert(slot0._gameObjectStandbyList, gohelper.clone(slot0._modelGameObject, slot0._parentObject))
+		for iter_35_0 = 1, arg_35_1 do
+			local var_35_0 = gohelper.clone(arg_35_0._modelGameObject, arg_35_0._parentObject)
+
+			table.insert(arg_35_0._gameObjectStandbyList, var_35_0)
 		end
 	end
 end
 
-function slot0.delaycloneGameObject2Standby(slot0)
-	table.insert(slot0._gameObjectStandbyList, gohelper.clone(slot0._modelGameObject, slot0._parentObject))
+function var_0_0.delaycloneGameObject2Standby(arg_36_0)
+	local var_36_0 = gohelper.clone(arg_36_0._modelGameObject, arg_36_0._parentObject)
+
+	table.insert(arg_36_0._gameObjectStandbyList, var_36_0)
 end
 
-function slot0.onDestructor(slot0)
+function var_0_0.onDestructor(arg_37_0)
+	return
 end
 
-return slot0
+return var_0_0

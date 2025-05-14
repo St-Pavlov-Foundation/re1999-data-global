@@ -1,63 +1,67 @@
-module("modules.logic.seasonver.act123.model.Season123EpisodeMO", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EpisodeMO", package.seeall)
 
-slot0 = pureTable("Season123EpisodeMO")
+local var_0_0 = pureTable("Season123EpisodeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.layer = slot1.layer
-	slot0.state = slot1.state or 0
-	slot0.round = slot1.round or 0
-	slot0.effectMainCelebrityEquipIds = slot1.effectMainCelebrityEquipIds or {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.layer = arg_1_1.layer
+	arg_1_0.state = arg_1_1.state or 0
+	arg_1_0.round = arg_1_1.round or 0
+	arg_1_0.effectMainCelebrityEquipIds = arg_1_1.effectMainCelebrityEquipIds or {}
 
-	slot0:initHeroes(slot1.heroInfos)
+	arg_1_0:initHeroes(arg_1_1.heroInfos)
 end
 
-function slot0.update(slot0, slot1)
-	slot0.state = slot1.state
-	slot0.round = slot1.round
-	slot0.effectMainCelebrityEquipIds = slot1.effectMainCelebrityEquipIds
+function var_0_0.update(arg_2_0, arg_2_1)
+	arg_2_0.state = arg_2_1.state
+	arg_2_0.round = arg_2_1.round
+	arg_2_0.effectMainCelebrityEquipIds = arg_2_1.effectMainCelebrityEquipIds
 
-	slot0:updateHeroes(slot1.heroInfos)
+	arg_2_0:updateHeroes(arg_2_1.heroInfos)
 end
 
-function slot0.isFinished(slot0)
-	return slot0.state == 1
+function var_0_0.isFinished(arg_3_0)
+	return arg_3_0.state == 1
 end
 
-function slot0.initHeroes(slot0, slot1)
-	slot0.heroes = {}
-	slot0.heroesMap = {}
+function var_0_0.initHeroes(arg_4_0, arg_4_1)
+	arg_4_0.heroes = {}
+	arg_4_0.heroesMap = {}
 
-	if not slot1 then
+	if not arg_4_1 then
 		return
 	end
 
-	for slot5 = 1, #slot1 do
-		slot7 = Season123HeroMO.New()
+	for iter_4_0 = 1, #arg_4_1 do
+		local var_4_0 = arg_4_1[iter_4_0]
+		local var_4_1 = Season123HeroMO.New()
 
-		slot7:init(slot1[slot5])
-		table.insert(slot0.heroes, slot7)
+		var_4_1:init(var_4_0)
+		table.insert(arg_4_0.heroes, var_4_1)
 
-		slot0.heroesMap[slot7.heroUid] = slot7
+		arg_4_0.heroesMap[var_4_1.heroUid] = var_4_1
 	end
 end
 
-function slot0.updateHeroes(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateHeroes(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	for slot5 = 1, #slot1 do
-		if not slot0.heroesMap[slot1[slot5].heroUid] then
-			slot7 = Season123HeroMO.New()
+	for iter_5_0 = 1, #arg_5_1 do
+		local var_5_0 = arg_5_1[iter_5_0]
+		local var_5_1 = arg_5_0.heroesMap[var_5_0.heroUid]
 
-			slot7:init(slot6)
-			table.insert(slot0.heroes, slot7)
+		if not var_5_1 then
+			var_5_1 = Season123HeroMO.New()
 
-			slot0.heroesMap[slot7.heroUid] = slot7
+			var_5_1:init(var_5_0)
+			table.insert(arg_5_0.heroes, var_5_1)
+
+			arg_5_0.heroesMap[var_5_1.heroUid] = var_5_1
 		else
-			slot7:update(slot6)
+			var_5_1:update(var_5_0)
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,29 +1,38 @@
-module("modules.logic.fight.system.work.FightWorkMagicCircleAdd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkMagicCircleAdd", package.seeall)
 
-slot0 = class("FightWorkMagicCircleAdd", FightEffectBase)
+local var_0_0 = class("FightWorkMagicCircleAdd", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightModel.instance:getMagicCircleInfo() then
-		slot1:refreshData(slot0._actEffectMO.magicCircle)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightModel.instance:getMagicCircleInfo()
 
-		if lua_magic_circle.configDict[slot0._actEffectMO.magicCircle.magicCircleId] then
-			slot0:com_registTimer(slot0._delayDone, math.max(slot3.enterTime / 1000, 0.7) / FightModel.instance:getSpeed())
-			FightController.instance:dispatchEvent(FightEvent.AddMagicCircile, slot2)
+	if var_1_0 then
+		local var_1_1 = arg_1_0._actEffectMO.magicCircle.magicCircleId
+
+		var_1_0:refreshData(arg_1_0._actEffectMO.magicCircle)
+
+		local var_1_2 = lua_magic_circle.configDict[var_1_1]
+
+		if var_1_2 then
+			local var_1_3 = math.max(var_1_2.enterTime / 1000, 0.7)
+
+			arg_1_0:com_registTimer(arg_1_0._delayDone, var_1_3 / FightModel.instance:getSpeed())
+			FightController.instance:dispatchEvent(FightEvent.AddMagicCircile, var_1_1)
 
 			return
 		end
 
-		logError("术阵表找不到id:" .. slot2)
+		logError("术阵表找不到id:" .. var_1_1)
 	end
 
-	slot0:_delayDone()
+	arg_1_0:_delayDone()
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

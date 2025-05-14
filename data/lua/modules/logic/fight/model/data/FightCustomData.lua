@@ -1,14 +1,15 @@
-module("modules.logic.fight.model.data.FightCustomData", package.seeall)
+﻿module("modules.logic.fight.model.data.FightCustomData", package.seeall)
 
-slot0 = FightDataClass("FightCustomData")
-slot0.CustomDataType = {
+local var_0_0 = FightDataClass("FightCustomData")
+
+var_0_0.CustomDataType = {
 	Act183 = 1
 }
 
-function slot0.onConstructor(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0[slot6.type] = slot6.data
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		arg_1_0[iter_1_1.type] = iter_1_1.data
 	end
 end
 
-return slot0
+return var_0_0

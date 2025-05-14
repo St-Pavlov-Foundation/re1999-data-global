@@ -1,27 +1,27 @@
-module("modules.logic.explore.controller.ExploreEnum", package.seeall)
+﻿module("modules.logic.explore.controller.ExploreEnum", package.seeall)
 
-slot0 = _M
-slot0.RoleMoveDir = {
+local var_0_0 = _M
+
+var_0_0.RoleMoveDir = {
 	None = false,
 	Up = Vector2.New(0, 1),
 	Down = Vector2.New(0, -1),
 	Left = Vector2.New(-1, 0),
 	Right = Vector2.New(1, 0)
 }
-slot0.RoleMoveRotateDirIndex = {
-	[slot0.RoleMoveDir.Up] = 0,
-	[slot0.RoleMoveDir.Right] = 1,
-	[slot0.RoleMoveDir.Down] = 2,
-	[slot0.RoleMoveDir.Left] = 3
+var_0_0.RoleMoveRotateDirIndex = {
+	[var_0_0.RoleMoveDir.Up] = 0,
+	[var_0_0.RoleMoveDir.Right] = 1,
+	[var_0_0.RoleMoveDir.Down] = 2,
+	[var_0_0.RoleMoveDir.Left] = 3
 }
-slot4 = 0
-slot0.RoleMoveRotateDir = {
+var_0_0.RoleMoveRotateDir = {
 	[0] = Vector2.New(0, 1),
 	Vector2.New(1, 0),
 	Vector2.New(0, -1),
-	Vector2.New(-1, slot4)
+	(Vector2.New(-1, 0))
 }
-slot0.ItemType = {
+var_0_0.ItemType = {
 	PipePot = 224,
 	Magic = 101,
 	Currency = 221,
@@ -66,31 +66,31 @@ slot0.ItemType = {
 	StepOnce = 211,
 	Elevator = 208
 }
-slot0.ItemTypeToName = {}
+var_0_0.ItemTypeToName = {}
 
-for slot4, slot5 in pairs(slot0.ItemType) do
-	slot0.ItemTypeToName[slot5] = slot4
+for iter_0_0, iter_0_1 in pairs(var_0_0.ItemType) do
+	var_0_0.ItemTypeToName[iter_0_1] = iter_0_0
 end
 
-slot0.WhirlType = {
+var_0_0.WhirlType = {
 	Rune = 1
 }
-slot0.RuneTriggerType = {
+var_0_0.RuneTriggerType = {
 	ItemActive = 1,
 	RuneActive = 2,
 	None = 0
 }
-slot0.BackPackItemType = {
+var_0_0.BackPackItemType = {
 	Rune = 2,
 	Normal = 1
 }
-slot0.TriggerDir = {
+var_0_0.TriggerDir = {
 	Down = 4,
 	Up = 3,
 	Right = 2,
 	Left = 1
 }
-slot0.TriggerEvent = {
+var_0_0.TriggerEvent = {
 	CatchUnit = 30,
 	MiniGame = 17,
 	ChangeInteractActive = 21,
@@ -128,93 +128,91 @@ slot0.TriggerEvent = {
 	Dialogue = 31,
 	BubbleDialogue = 34
 }
-slot0.ServerTriggerType = {
-	[slot0.ItemType.Door] = 1,
-	[slot0.ItemType.Step] = 1,
-	[slot0.ItemType.StepOnce] = 1,
-	[slot0.ItemType.Currency] = 1,
-	[slot0.ItemType.GravityGear] = 1,
-	[slot0.ItemType.Ice] = 1,
-	[slot0.ItemType.Obstacle] = 1,
-	[slot0.ItemType.Elevator] = 1,
-	[slot0.ItemType.LightReceiver] = 1,
-	[slot0.ItemType.Rock] = 1,
-	[slot0.ItemType.LightBall] = 1,
-	[slot0.ItemType.BonusScene] = 1
+var_0_0.ServerTriggerType = {
+	[var_0_0.ItemType.Door] = 1,
+	[var_0_0.ItemType.Step] = 1,
+	[var_0_0.ItemType.StepOnce] = 1,
+	[var_0_0.ItemType.Currency] = 1,
+	[var_0_0.ItemType.GravityGear] = 1,
+	[var_0_0.ItemType.Ice] = 1,
+	[var_0_0.ItemType.Obstacle] = 1,
+	[var_0_0.ItemType.Elevator] = 1,
+	[var_0_0.ItemType.LightReceiver] = 1,
+	[var_0_0.ItemType.Rock] = 1,
+	[var_0_0.ItemType.LightBall] = 1,
+	[var_0_0.ItemType.BonusScene] = 1
 }
-slot0.ItemEffect = {
+var_0_0.ItemEffect = {
 	CreateUnit2 = "3",
 	CreateUnit = "1",
 	Fix = "4",
 	Active = "2"
 }
-slot0.ItemEffectRange = {
+var_0_0.ItemEffectRange = {
 	Round = 1
 }
-slot0.EnterMode = {
+var_0_0.EnterMode = {
 	Normal = 2,
 	Battle = 3,
 	First = 1
 }
-slot0.ProgressType = {
-	[slot0.ItemType.Battle] = true,
-	[slot0.ItemType.Bonus] = true
+var_0_0.ProgressType = {
+	[var_0_0.ItemType.Battle] = true,
+	[var_0_0.ItemType.Bonus] = true
 }
-slot0.InteractIndex = {
+var_0_0.InteractIndex = {
 	InteractEnabled = 2,
 	IsFinish = 4,
 	ActiveState = 3,
 	IsEnter = 1
 }
-slot0.LightRecvType = {
+var_0_0.LightRecvType = {
 	Photic = 2,
 	Barricade = 1,
 	Custom = 3
 }
-slot0.RuneStatus = {
+var_0_0.RuneStatus = {
 	Inactive = 0,
 	Active = 1
 }
-slot0.ExplorePipePotHangType = {
+var_0_0.ExplorePipePotHangType = {
 	UnCarry = 2,
 	Put = 4,
 	Carry = 1,
 	Pick = 3
 }
-slot0.SceneCheckMode = {
+var_0_0.SceneCheckMode = {
 	Rage = 0,
 	Planes = 2,
 	Camera = 1
 }
-slot0.PipeColor = {
+var_0_0.PipeColor = {
 	Color3 = 4,
 	Color2 = 2,
 	Color1 = 1,
 	None = 0
 }
-slot4 = 0.16775
-slot5 = 0.61
-slot0.PipeColorDef = {
-	[slot0.PipeColor.None] = Color.New(),
-	[slot0.PipeColor.Color1] = Color.New(0.7735849, 0.2799217, 0.2152901),
-	[slot0.PipeColor.Color2] = Color.New(0.199134, 0.4504557, 0.851),
-	[slot0.PipeColor.Color3] = Color.New(slot4, slot5, 0.2614471)
+var_0_0.PipeColorDef = {
+	[var_0_0.PipeColor.None] = Color.New(),
+	[var_0_0.PipeColor.Color1] = Color.New(0.7735849, 0.2799217, 0.2152901),
+	[var_0_0.PipeColor.Color2] = Color.New(0.199134, 0.4504557, 0.851),
+	[var_0_0.PipeColor.Color3] = Color.New(0.16775, 0.61, 0.2614471)
 }
-slot0.PipeGoNode = {
+var_0_0.PipeGoNode = {
 	Pipe4 = 5,
 	Pipe3 = 4,
 	Pipe2 = 3,
 	Pipe1 = 2,
 	Center = 1
 }
-slot0.PipeGoNodeName = {
-	[slot0.PipeGoNode.Center] = "#go_center",
-	[slot0.PipeGoNode.Pipe1] = "#go_pipe1",
-	[slot0.PipeGoNode.Pipe2] = "#go_pipe2",
-	[slot0.PipeGoNode.Pipe3] = "#go_pipe3",
-	[slot0.PipeGoNode.Pipe4] = "#go_pipe4"
+var_0_0.PipeGoNodeName = {
+	[var_0_0.PipeGoNode.Center] = "#go_center",
+	[var_0_0.PipeGoNode.Pipe1] = "#go_pipe1",
+	[var_0_0.PipeGoNode.Pipe2] = "#go_pipe2",
+	[var_0_0.PipeGoNode.Pipe3] = "#go_pipe3",
+	[var_0_0.PipeGoNode.Pipe4] = "#go_pipe4"
 }
-slot0.PipeShape = {
+var_0_0.PipeShape = {
 	Shape5 = 5,
 	Shape6 = 6,
 	Shape2 = 2,
@@ -222,28 +220,28 @@ slot0.PipeShape = {
 	Shape4 = 4,
 	Shape1 = 1
 }
-slot0.PipeDirMatchMode = {
+var_0_0.PipeDirMatchMode = {
 	All = 3,
 	Single = 1,
 	Both = 2
 }
-slot0.MapStatus = {
+var_0_0.MapStatus = {
 	RotateUnit = 3,
 	UseItem = 1,
 	MoveUnit = 2,
 	Normal = 0
 }
-slot0.PipeTypes = {
-	[slot0.ItemType.PipeEntrance] = true,
-	[slot0.ItemType.Pipe] = true,
-	[slot0.ItemType.PipeSensor] = true,
-	[slot0.ItemType.PipeMemory] = true
+var_0_0.PipeTypes = {
+	[var_0_0.ItemType.PipeEntrance] = true,
+	[var_0_0.ItemType.Pipe] = true,
+	[var_0_0.ItemType.PipeSensor] = true,
+	[var_0_0.ItemType.PipeMemory] = true
 }
-slot0.PrismTypes = {
-	[slot0.ItemType.Prism] = true,
-	[slot0.ItemType.DichroicPrism] = true
+var_0_0.PrismTypes = {
+	[var_0_0.ItemType.Prism] = true,
+	[var_0_0.ItemType.DichroicPrism] = true
 }
-slot0.StepType = {
+var_0_0.StepType = {
 	ResetBegin = -7,
 	ArchiveClient = -4,
 	DelUnit = 3,
@@ -271,29 +269,29 @@ slot0.StepType = {
 	Elevator = 9,
 	TriggerAudio = -9
 }
-slot0.MustDoStep = {
-	[slot0.StepType.UpdateCoin] = true,
-	[slot0.StepType.Archive] = true,
-	[slot0.StepType.BonusScene] = true
+var_0_0.MustDoStep = {
+	[var_0_0.StepType.UpdateCoin] = true,
+	[var_0_0.StepType.Archive] = true,
+	[var_0_0.StepType.BonusScene] = true
 }
-slot0.StepTypeToName = {}
+var_0_0.StepTypeToName = {}
 
-for slot4, slot5 in pairs(slot0.StepType) do
-	slot0.StepTypeToName[slot5] = slot4
+for iter_0_2, iter_0_3 in pairs(var_0_0.StepType) do
+	var_0_0.StepTypeToName[iter_0_3] = iter_0_2
 end
 
-slot0.MapCompType = {
+var_0_0.MapCompType = {
 	Pipe = 4,
 	Whirl = 3,
 	Light = 2,
 	Map = 1
 }
-slot0.CoinType = {
+var_0_0.CoinType = {
 	GoldCoin = 1,
 	Bonus = 0,
 	PurpleCoin = 2
 }
-slot0.HeroLock = {
+var_0_0.HeroLock = {
 	Spike = 8,
 	Rune = 6,
 	Teleport = 12,
@@ -312,15 +310,15 @@ slot0.HeroLock = {
 	ShowArea = 2,
 	Reset = 11
 }
-slot0.WalkAudioType = {
+var_0_0.WalkAudioType = {
 	Normal = 1,
 	Ice = 2,
 	None = 0
 }
-slot0.NodeType = {
+var_0_0.NodeType = {
 	Ice = 2,
 	Obstacle = 3,
 	Normal = 1
 }
 
-return slot0
+return var_0_0

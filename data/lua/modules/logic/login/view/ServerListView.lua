@@ -1,46 +1,54 @@
-module("modules.logic.login.view.ServerListView", package.seeall)
+﻿module("modules.logic.login.view.ServerListView", package.seeall)
 
-slot0 = class("ServerListView", BaseView)
+local var_0_0 = class("ServerListView", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot3 = {}
+function var_0_0.onOpen(arg_3_0)
+	local var_3_0 = arg_3_0.viewParam.useBackupUrl
+	local var_3_1 = LoginController.instance:get_getServerListUrl(var_3_0)
+	local var_3_2 = {}
 
-	table.insert(slot3, string.format("sessionId=%s", LoginModel.instance.sessionId))
-	table.insert(slot3, string.format("zoneId=%s", 0))
+	table.insert(var_3_2, string.format("sessionId=%s", LoginModel.instance.sessionId))
+	table.insert(var_3_2, string.format("zoneId=%s", 0))
 
-	slot0._webRequestId = SLFramework.SLWebRequest.Instance:Get(LoginController.instance:get_getServerListUrl(slot0.viewParam.useBackupUrl) .. "?" .. table.concat(slot3, "&"), slot0._onGetServerListResponse, slot0)
+	local var_3_3 = var_3_1 .. "?" .. table.concat(var_3_2, "&")
+
+	arg_3_0._webRequestId = SLFramework.SLWebRequest.Instance:Get(var_3_3, arg_3_0._onGetServerListResponse, arg_3_0)
 end
 
-function slot0.onClose(slot0)
-	if slot0._webRequestId then
-		SLFramework.SLWebRequest.Instance:Stop(slot0._webRequestId)
+function var_0_0.onClose(arg_4_0)
+	if arg_4_0._webRequestId then
+		SLFramework.SLWebRequest.Instance:Stop(arg_4_0._webRequestId)
 
-		slot0._webRequestId = nil
+		arg_4_0._webRequestId = nil
 	end
 end
 
-function slot0._onGetServerListResponse(slot0, slot1, slot2)
-	slot0._webRequestId = nil
+function var_0_0._onGetServerListResponse(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._webRequestId = nil
 
-	logNormal("get server list response: " .. (slot2 or "nil"))
+	logNormal("get server list response: " .. (arg_5_2 or "nil"))
 
-	if slot1 and slot2 and slot2 ~= "" then
-		if cjson.decode(slot2) and slot3.resultCode and slot3.resultCode == 0 then
-			if slot3.zoneInfos then
-				ServerListModel.instance:setServerList(slot3.zoneInfos)
+	if arg_5_1 and arg_5_2 and arg_5_2 ~= "" then
+		local var_5_0 = cjson.decode(arg_5_2)
+
+		if var_5_0 and var_5_0.resultCode and var_5_0.resultCode == 0 then
+			if var_5_0.zoneInfos then
+				ServerListModel.instance:setServerList(var_5_0.zoneInfos)
 			end
 		else
-			logNormal(string.format("get server list 出错了 resultCode = %d", slot3.resultCode))
+			logNormal(string.format("get server list 出错了 resultCode = %d", var_5_0.resultCode))
 		end
 	else
 		logError("get server list 失败")
 	end
 end
 
-return slot0
+return var_0_0

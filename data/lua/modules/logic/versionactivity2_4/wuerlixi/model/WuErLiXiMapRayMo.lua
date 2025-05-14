@@ -1,48 +1,48 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapRayMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapRayMo", package.seeall)
 
-slot0 = pureTable("WuErLiXiMapRayMo")
+local var_0_0 = pureTable("WuErLiXiMapRayMo")
 
-function slot0.ctor(slot0)
-	slot0.rayId = 0
-	slot0.rayParent = 0
-	slot0.rayDir = 0
-	slot0.rayType = WuErLiXiEnum.RayType.NormalSignal
-	slot0.rayTime = ServerTime.now()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.rayId = 0
+	arg_1_0.rayParent = 0
+	arg_1_0.rayDir = 0
+	arg_1_0.rayType = WuErLiXiEnum.RayType.NormalSignal
+	arg_1_0.rayTime = ServerTime.now()
 end
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.rayId = slot1
-	slot0.rayType = slot2
-	slot0.rayDir = slot3
-	slot0.rayParent = slot4
-	slot0.rayTime = ServerTime.now()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0.rayId = arg_2_1
+	arg_2_0.rayType = arg_2_2
+	arg_2_0.rayDir = arg_2_3
+	arg_2_0.rayParent = arg_2_4
+	arg_2_0.rayTime = ServerTime.now()
 end
 
-function slot0.reset(slot0, slot1, slot2, slot3, slot4)
-	if slot0.rayId ~= slot1 or slot0.rayType ~= slot2 then
-		slot0.rayTime = ServerTime.now()
+function var_0_0.reset(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	if arg_3_0.rayId ~= arg_3_1 or arg_3_0.rayType ~= arg_3_2 then
+		arg_3_0.rayTime = ServerTime.now()
 	end
 
-	slot0.rayId = slot1
-	slot0.rayType = slot2
-	slot0.rayDir = slot3
-	slot0.rayParent = slot4
+	arg_3_0.rayId = arg_3_1
+	arg_3_0.rayType = arg_3_2
+	arg_3_0.rayDir = arg_3_3
+	arg_3_0.rayParent = arg_3_4
 end
 
-function slot0.setId(slot0, slot1)
-	slot0.rayId = slot1
+function var_0_0.setId(arg_4_0, arg_4_1)
+	arg_4_0.rayId = arg_4_1
 end
 
-function slot0.setType(slot0, slot1)
-	slot0.rayType = slot1
+function var_0_0.setType(arg_5_0, arg_5_1)
+	arg_5_0.rayType = arg_5_1
 end
 
-function slot0.setRayDir(slot0, slot1)
-	slot0.rayDir = slot1
+function var_0_0.setRayDir(arg_6_0, arg_6_1)
+	arg_6_0.rayDir = arg_6_1
 end
 
-function slot0.setRayParent(slot0, slot1)
-	slot0.rayParent = slot1
+function var_0_0.setRayParent(arg_7_0, arg_7_1)
+	arg_7_0.rayParent = arg_7_1
 end
 
-return slot0
+return var_0_0

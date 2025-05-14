@@ -1,426 +1,523 @@
-module("modules.logic.ressplit.controller.VersionResSplitHandler", package.seeall)
+﻿module("modules.logic.ressplit.controller.VersionResSplitHandler", package.seeall)
 
-slot0 = ResSplitEnum.VersionResEnum
-slot1 = class("VersionResSplitHandler")
+local var_0_0 = ResSplitEnum.VersionResEnum
+local var_0_1 = class("VersionResSplitHandler")
 
-function slot1.generateResSplitCfg(slot0)
-	slot0:_InitMapElementData()
-	slot0:_InitAudioCfg()
-	slot0:_InitAudioInfoXml()
-	slot0:_InitGuideCfg()
-	slot0:_InitStoryCfg()
-	slot0:_loadAllStoryCfg(slot0._generateResSplitCfg, slot0)
+function var_0_1.generateResSplitCfg(arg_1_0)
+	arg_1_0:_InitMapElementData()
+	arg_1_0:_InitAudioCfg()
+	arg_1_0:_InitAudioInfoXml()
+	arg_1_0:_InitGuideCfg()
+	arg_1_0:_InitStoryCfg()
+	arg_1_0:_loadAllStoryCfg(arg_1_0._generateResSplitCfg, arg_1_0)
 end
 
-function slot1._generateResSplitCfg(slot0)
-	slot0._resSplitResult = {}
-	slot0._versionSplitData = {}
-	slot0._allVersionSplitPathMap = {}
-	slot2 = {}
-	slot3 = {}
-	slot4 = {}
+function var_0_1._generateResSplitCfg(arg_2_0)
+	local var_2_0 = lua_version_res_split.configDict
 
-	for slot8, slot9 in pairs(lua_version_res_split.configDict) do
-		for slot14, slot15 in ipairs(slot9.chapter) do
-			slot2[slot15] = true
+	arg_2_0._resSplitResult = {}
+	arg_2_0._versionSplitData = {}
+	arg_2_0._allVersionSplitPathMap = {}
+
+	local var_2_1 = {}
+	local var_2_2 = {}
+	local var_2_3 = {}
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		local var_2_4 = iter_2_1.chapter
+
+		for iter_2_2, iter_2_3 in ipairs(var_2_4) do
+			var_2_1[iter_2_3] = true
 		end
 
-		for slot15, slot16 in ipairs(slot9.uiFolder) do
-			for slot21, slot22 in ipairs(uv0._getFolderPrefabs(slot16)) do
-				slot3[slot22] = true
+		local var_2_5 = iter_2_1.uiFolder
+
+		for iter_2_4, iter_2_5 in ipairs(var_2_5) do
+			local var_2_6 = var_0_1._getFolderPrefabs(iter_2_5)
+
+			for iter_2_6, iter_2_7 in ipairs(var_2_6) do
+				var_2_2[iter_2_7] = true
 			end
 		end
 
-		for slot16, slot17 in ipairs(slot9.story) do
-			slot4[slot17] = true
+		local var_2_7 = iter_2_1.story
+
+		for iter_2_8, iter_2_9 in ipairs(var_2_7) do
+			var_2_3[iter_2_9] = true
 		end
 	end
 
-	for slot8, slot9 in pairs(slot2) do
-		if DungeonConfig.instance:getChapterEpisodeCOList(slot8) then
-			for slot14, slot15 in ipairs(slot10) do
-				if slot15.beforeStory ~= 0 then
-					slot4[slot16] = true
+	for iter_2_10, iter_2_11 in pairs(var_2_1) do
+		local var_2_8 = DungeonConfig.instance:getChapterEpisodeCOList(iter_2_10)
+
+		if var_2_8 then
+			for iter_2_12, iter_2_13 in ipairs(var_2_8) do
+				local var_2_9 = iter_2_13.beforeStory
+
+				if var_2_9 ~= 0 then
+					var_2_3[var_2_9] = true
 				end
 
-				if #string.split(slot15.story, "#") == 3 then
-					slot4[tonumber(slot17[3])] = true
+				local var_2_10 = string.split(iter_2_13.story, "#")
+
+				if #var_2_10 == 3 then
+					var_2_3[tonumber(var_2_10[3])] = true
 				end
 
-				if slot15.afterStory ~= 0 then
-					slot4[slot18] = true
-				end
-			end
-		end
-	end
+				local var_2_11 = iter_2_13.afterStory
 
-	VersionResSplitData.New():init(0)
-
-	for slot10, slot11 in ipairs(lua_chapter.configList) do
-		if not slot2[slot10] then
-			slot0:_fillSceneResByChatper(slot10, slot5)
-		end
-	end
-
-	for slot12, slot13 in ipairs(uv0._getFolderPrefabs("ui/viewres")) do
-		if not slot3[slot13] then
-			slot0:_fillUIRes(slot13, slot5)
-		end
-	end
-
-	for slot12, slot13 in ipairs(slot0._allStoryIds) do
-		if not slot4[slot13] then
-			slot0:_fillStoryRes(slot13, slot5)
-		end
-	end
-
-	for slot12, slot13 in pairs(slot1) do
-		slot14 = VersionResSplitData.New()
-
-		slot14:init(slot12)
-
-		slot0._versionSplitData[slot12] = slot14
-
-		for slot19, slot20 in ipairs(slot13.chapter) do
-			slot0:_fillSceneResByChatper(slot20, slot14)
-			slot0:_fillStoryResByChatper(slot20, slot14)
-		end
-
-		for slot20, slot21 in ipairs(slot13.audio) do
-			slot0:_fillAudioResByAudioId(slot21, slot14)
-		end
-
-		for slot21, slot22 in ipairs(slot13.guide) do
-			slot0:_fillResByGuideId(slot22, slot14)
-		end
-
-		for slot22, slot23 in ipairs(slot13.story) do
-			slot0:_fillStoryRes(slot23, slot14)
-		end
-
-		for slot23, slot24 in ipairs(slot13.uiFolder) do
-			for slot29, slot30 in ipairs(uv0._getFolderPrefabs(string.gsub(slot24, SLFramework.FrameworkSettings.ResourcesLibName .. "/", ""))) do
-				slot0:_fillUIRes(slot30, slot14)
-			end
-		end
-
-		for slot24, slot25 in ipairs(slot13.folderPath) do
-			slot14:addResSplitInfo(ResSplitEnum.Folder, uv1.SingleFolder, slot25)
-		end
-
-		for slot25, slot26 in ipairs(slot13.path) do
-			slot14:addResSplitInfo(ResSplitEnum.Path, uv1.SingleFile, slot26)
-		end
-
-		for slot26, slot27 in ipairs(slot13.videoPath or {}) do
-			slot14:addResSplitInfo(ResSplitEnum.Video, uv1.SingleFile, slot27)
-		end
-
-		for slot27, slot28 in pairs(slot14:getAllResDict()) do
-			for slot32, slot33 in pairs(slot28) do
-				if slot5:checkResSplitInfo(slot27, slot32) then
-					slot14:deleteResSplitInfo(slot27, nil, slot32)
-				end
-			end
-		end
-
-		for slot28, slot29 in pairs(slot14:getAllResTypeDict()) do
-			for slot33, slot34 in pairs(slot29) do
-				if slot5:checkResTypeSplitInfo(slot28, slot33) then
-					slot14:deleteResSplitInfo(nil, slot28, slot33)
+				if var_2_11 ~= 0 then
+					var_2_3[var_2_11] = true
 				end
 			end
 		end
 	end
 
-	for slot12, slot13 in pairs(slot0._versionSplitData) do
-		for slot18, slot19 in pairs(slot13:getAllResDict()) do
-			for slot23, slot24 in pairs(slot19) do
-				if slot24 then
-					if slot0._allVersionSplitPathMap[slot23] then
-						logWarn("存在于多个版本分包中的资源： " .. slot23)
+	local var_2_12 = VersionResSplitData.New()
+
+	var_2_12:init(0)
+
+	local var_2_13 = lua_chapter.configList
+
+	for iter_2_14, iter_2_15 in ipairs(var_2_13) do
+		if not var_2_1[iter_2_14] then
+			arg_2_0:_fillSceneResByChatper(iter_2_14, var_2_12)
+		end
+	end
+
+	local var_2_14 = "ui/viewres"
+	local var_2_15 = var_0_1._getFolderPrefabs(var_2_14)
+
+	for iter_2_16, iter_2_17 in ipairs(var_2_15) do
+		if not var_2_2[iter_2_17] then
+			arg_2_0:_fillUIRes(iter_2_17, var_2_12)
+		end
+	end
+
+	for iter_2_18, iter_2_19 in ipairs(arg_2_0._allStoryIds) do
+		if not var_2_3[iter_2_19] then
+			arg_2_0:_fillStoryRes(iter_2_19, var_2_12)
+		end
+	end
+
+	for iter_2_20, iter_2_21 in pairs(var_2_0) do
+		local var_2_16 = VersionResSplitData.New()
+
+		var_2_16:init(iter_2_20)
+
+		arg_2_0._versionSplitData[iter_2_20] = var_2_16
+
+		local var_2_17 = iter_2_21.chapter
+
+		for iter_2_22, iter_2_23 in ipairs(var_2_17) do
+			arg_2_0:_fillSceneResByChatper(iter_2_23, var_2_16)
+			arg_2_0:_fillStoryResByChatper(iter_2_23, var_2_16)
+		end
+
+		local var_2_18 = iter_2_21.audio
+
+		for iter_2_24, iter_2_25 in ipairs(var_2_18) do
+			arg_2_0:_fillAudioResByAudioId(iter_2_25, var_2_16)
+		end
+
+		local var_2_19 = iter_2_21.guide
+
+		for iter_2_26, iter_2_27 in ipairs(var_2_19) do
+			arg_2_0:_fillResByGuideId(iter_2_27, var_2_16)
+		end
+
+		local var_2_20 = iter_2_21.story
+
+		for iter_2_28, iter_2_29 in ipairs(var_2_20) do
+			arg_2_0:_fillStoryRes(iter_2_29, var_2_16)
+		end
+
+		local var_2_21 = iter_2_21.uiFolder
+
+		for iter_2_30, iter_2_31 in ipairs(var_2_21) do
+			iter_2_31 = string.gsub(iter_2_31, SLFramework.FrameworkSettings.ResourcesLibName .. "/", "")
+
+			local var_2_22 = var_0_1._getFolderPrefabs(iter_2_31)
+
+			for iter_2_32, iter_2_33 in ipairs(var_2_22) do
+				arg_2_0:_fillUIRes(iter_2_33, var_2_16)
+			end
+		end
+
+		local var_2_23 = iter_2_21.folderPath
+
+		for iter_2_34, iter_2_35 in ipairs(var_2_23) do
+			var_2_16:addResSplitInfo(ResSplitEnum.Folder, var_0_0.SingleFolder, iter_2_35)
+		end
+
+		local var_2_24 = iter_2_21.path
+
+		for iter_2_36, iter_2_37 in ipairs(var_2_24) do
+			var_2_16:addResSplitInfo(ResSplitEnum.Path, var_0_0.SingleFile, iter_2_37)
+		end
+
+		local var_2_25 = iter_2_21.videoPath or {}
+
+		for iter_2_38, iter_2_39 in ipairs(var_2_25) do
+			var_2_16:addResSplitInfo(ResSplitEnum.Video, var_0_0.SingleFile, iter_2_39)
+		end
+
+		local var_2_26 = var_2_16:getAllResDict()
+
+		for iter_2_40, iter_2_41 in pairs(var_2_26) do
+			for iter_2_42, iter_2_43 in pairs(iter_2_41) do
+				if var_2_12:checkResSplitInfo(iter_2_40, iter_2_42) then
+					var_2_16:deleteResSplitInfo(iter_2_40, nil, iter_2_42)
+				end
+			end
+		end
+
+		local var_2_27 = var_2_16:getAllResTypeDict()
+
+		for iter_2_44, iter_2_45 in pairs(var_2_27) do
+			for iter_2_46, iter_2_47 in pairs(iter_2_45) do
+				if var_2_12:checkResTypeSplitInfo(iter_2_44, iter_2_46) then
+					var_2_16:deleteResSplitInfo(nil, iter_2_44, iter_2_46)
+				end
+			end
+		end
+	end
+
+	for iter_2_48, iter_2_49 in pairs(arg_2_0._versionSplitData) do
+		local var_2_28 = iter_2_49:getAllResDict()
+
+		for iter_2_50, iter_2_51 in pairs(var_2_28) do
+			for iter_2_52, iter_2_53 in pairs(iter_2_51) do
+				if iter_2_53 then
+					if arg_2_0._allVersionSplitPathMap[iter_2_52] then
+						logWarn("存在于多个版本分包中的资源： " .. iter_2_52)
 					else
-						slot0._allVersionSplitPathMap[slot23] = true
+						arg_2_0._allVersionSplitPathMap[iter_2_52] = true
 					end
 				end
 			end
 		end
 	end
 
-	slot0:_ExportSplitResult()
+	arg_2_0:_ExportSplitResult()
 end
 
-function slot1._mergeSplitResult(slot0)
-	slot1 = lua_version_res_split.configDict
-	slot2 = {}
+function var_0_1._mergeSplitResult(arg_3_0)
+	local var_3_0 = lua_version_res_split.configDict
+	local var_3_1 = {}
 
-	for slot6, slot7 in pairs(slot0._versionSplitData) do
-		slot8 = slot1[slot6] or slot1[tonumber(slot6)]
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._versionSplitData) do
+		local var_3_2 = var_3_0[iter_3_0] or var_3_0[tonumber(iter_3_0)]
+		local var_3_3 = var_3_2 and var_3_2.packName or "opveract"
 
-		if not slot2[slot8 and slot8.packName or "opveract"] then
-			slot2[slot9] = {}
+		if not var_3_1[var_3_3] then
+			var_3_1[var_3_3] = {}
 		end
 
-		slot10 = slot2[slot9]
+		local var_3_4 = var_3_1[var_3_3]
+		local var_3_5 = iter_3_1:getResSplitMap()
 
-		for slot15, slot16 in pairs(slot7:getResSplitMap()) do
-			if not slot10[slot15] then
-				slot10[slot15] = {}
+		for iter_3_2, iter_3_3 in pairs(var_3_5) do
+			if not var_3_4[iter_3_2] then
+				var_3_4[iter_3_2] = {}
 			end
 
-			tabletool.addValues(slot10[slot15], slot16)
+			tabletool.addValues(var_3_4[iter_3_2], iter_3_3)
 		end
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		if slot8.pathList then
-			slot0:_checkResWhiteList(slot8.pathList, slot0:_getResWhiteListDict())
+	local var_3_6 = arg_3_0:_getResWhiteListDict()
+
+	for iter_3_4, iter_3_5 in pairs(var_3_1) do
+		if iter_3_5.pathList then
+			arg_3_0:_checkResWhiteList(iter_3_5.pathList, var_3_6)
 		end
 	end
 
-	return slot2
+	return var_3_1
 end
 
-function slot1._checkSingleBgAb(slot0, slot1, slot2)
-	slot3 = {
-		[string.format("Assets/ZResourcesLib/%s", string.gsub(slot8, "\\/", "/"))] = slot8
-	}
+function var_0_1._checkSingleBgAb(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = {}
 
-	for slot7 = #slot1, 1, -1 do
-		if string.find(slot1[slot7], "singlebg") then
-			table.remove(slot1, slot7)
+	for iter_4_0 = #arg_4_1, 1, -1 do
+		local var_4_1 = arg_4_1[iter_4_0]
+
+		if string.find(var_4_1, "singlebg") then
+			local var_4_2 = string.format("Assets/ZResourcesLib/%s", string.gsub(var_4_1, "\\/", "/"))
+
+			table.remove(arg_4_1, iter_4_0)
+
+			var_4_0[var_4_2] = var_4_1
 		end
 	end
 
-	slot4 = {}
+	local var_4_3 = {}
 
-	for slot8, slot9 in pairs(slot2) do
-		slot10 = true
+	for iter_4_1, iter_4_2 in pairs(arg_4_2) do
+		local var_4_4 = true
 
-		for slot14, slot15 in ipairs(slot9) do
-			if not slot3[slot15] then
-				slot10 = false
-			elseif slot4[slot15] == nil then
-				slot4[slot15] = false
+		for iter_4_3, iter_4_4 in ipairs(iter_4_2) do
+			if not var_4_0[iter_4_4] then
+				var_4_4 = false
+			elseif var_4_3[iter_4_4] == nil then
+				var_4_3[iter_4_4] = false
 			end
 		end
 
-		if slot10 then
-			for slot14, slot15 in ipairs(slot9) do
-				if not slot4[slot15] then
-					slot4[slot15] = true
+		if var_4_4 then
+			for iter_4_5, iter_4_6 in ipairs(iter_4_2) do
+				if not var_4_3[iter_4_6] then
+					var_4_3[iter_4_6] = true
 
-					table.insert(slot1, slot3[slot15])
+					table.insert(arg_4_1, var_4_0[iter_4_6])
 				end
 			end
 		end
 	end
 
-	for slot8, slot9 in pairs(slot3) do
-		if slot4[slot8] == nil then
-			slot4[slot8] = true
+	for iter_4_7, iter_4_8 in pairs(var_4_0) do
+		if var_4_3[iter_4_7] == nil then
+			var_4_3[iter_4_7] = true
 
-			table.insert(slot1, slot9)
+			table.insert(arg_4_1, iter_4_8)
 		end
 	end
 end
 
-function slot1._getResWhiteListDict(slot0)
-	slot1 = io.open(ResSplitEnum.VersionResWhiteListPath, "r")
+function var_0_1._getResWhiteListDict(arg_5_0)
+	local var_5_0 = io.open(ResSplitEnum.VersionResWhiteListPath, "r")
+	local var_5_1 = var_5_0:read("*a")
 
-	slot1:close()
+	var_5_0:close()
 
-	slot4 = {}
+	local var_5_2 = string.gsub(var_5_1, "\\/", "/")
+	local var_5_3 = cjson.decode(var_5_2)
+	local var_5_4 = {}
 
-	if cjson.decode(string.gsub(slot1:read("*a"), "\\/", "/")) and #slot3 > 0 then
-		for slot8, slot9 in ipairs(slot3) do
-			slot4[slot9] = true
+	if var_5_3 and #var_5_3 > 0 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_3) do
+			var_5_4[iter_5_1] = true
 		end
 	end
 
-	return slot4
+	return var_5_4
 end
 
-function slot1._checkResWhiteList(slot0, slot1, slot2)
-	if slot1 and #slot1 > 0 and slot2 then
-		for slot6 = #slot1, 1, -1 do
-			if slot2[slot1[slot6]] then
-				table.remove(slot1, slot6)
+function var_0_1._checkResWhiteList(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 and #arg_6_1 > 0 and arg_6_2 then
+		for iter_6_0 = #arg_6_1, 1, -1 do
+			if arg_6_2[arg_6_1[iter_6_0]] then
+				table.remove(arg_6_1, iter_6_0)
 			end
 		end
 	end
 end
 
-function slot1._ExportSplitResult(slot0)
-	slot2 = io.open(ResSplitEnum.VersionResSplitCfgPath, "w")
+function var_0_1._ExportSplitResult(arg_7_0)
+	local var_7_0 = cjson.encode(arg_7_0:_mergeSplitResult())
+	local var_7_1 = string.gsub(var_7_0, "\\/", "/")
+	local var_7_2 = io.open(ResSplitEnum.VersionResSplitCfgPath, "w")
 
-	slot2:write(tostring(string.gsub(cjson.encode(slot0:_mergeSplitResult()), "\\/", "/")))
-	slot2:close()
+	var_7_2:write(tostring(var_7_1))
+	var_7_2:close()
 
-	for slot7, slot8 in pairs(slot0._versionSplitData) do
-		-- Nothing
+	local var_7_3 = {}
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._versionSplitData) do
+		var_7_3[tostring(iter_7_0)] = arg_7_0._versionSplitData[iter_7_0]:getResTypeSplitMap()
 	end
 
-	slot6 = io.open(string.format("%s/../versionressplitdebug.json", UnityEngine.Application.dataPath), "w")
+	local var_7_4 = cjson.encode(var_7_3)
+	local var_7_5 = string.gsub(var_7_4, "\\/", "/")
+	local var_7_6 = string.format("%s/../versionressplitdebug.json", UnityEngine.Application.dataPath)
+	local var_7_7 = io.open(var_7_6, "w")
 
-	slot6:write(tostring(string.gsub(cjson.encode({
-		[tostring(slot7)] = slot0._versionSplitData[slot7]:getResTypeSplitMap()
-	}), "\\/", "/")))
-	slot6:close()
+	var_7_7:write(tostring(var_7_5))
+	var_7_7:close()
 end
 
-function slot1._InitMapElementData(slot0)
-	slot0._mapElementResDic = {}
+function var_0_1._InitMapElementData(arg_8_0)
+	local var_8_0 = lua_chapter_map_element.configDict
 
-	for slot5, slot6 in pairs(lua_chapter_map_element.configDict) do
-		slot0._mapElementResDic[slot6.mapId] = slot0._mapElementResDic[slot6.mapId] or {}
+	arg_8_0._mapElementResDic = {}
 
-		if not string.nilorempty(slot6.res) then
-			table.insert(slot0._mapElementResDic[slot6.mapId], slot6.res)
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		arg_8_0._mapElementResDic[iter_8_1.mapId] = arg_8_0._mapElementResDic[iter_8_1.mapId] or {}
+
+		if not string.nilorempty(iter_8_1.res) then
+			table.insert(arg_8_0._mapElementResDic[iter_8_1.mapId], iter_8_1.res)
 		end
 
-		if not string.nilorempty(slot6.effect) then
-			table.insert(slot0._mapElementResDic[slot6.mapId], slot6.effect)
-		end
-	end
-end
-
-function slot1._InitGuideCfg(slot0)
-	slot0._guideId2HelpPageDict = {}
-
-	for slot5, slot6 in ipairs(lua_helppage.configList) do
-		if slot6.type == 2 then
-			slot0._guideId2HelpPageDict[slot7] = slot0._guideId2HelpPageDict[slot6.unlockGuideId] or {}
-			slot8 = slot0._guideId2HelpPageDict[slot7]
-			slot8[#slot8 + 1] = slot6
+		if not string.nilorempty(iter_8_1.effect) then
+			table.insert(arg_8_0._mapElementResDic[iter_8_1.mapId], iter_8_1.effect)
 		end
 	end
 end
 
-function slot1._InitAudioCfg(slot0)
-	slot0._allAudioDic = AudioConfig.instance:getAudioCO()
-end
+function var_0_1._InitGuideCfg(arg_9_0)
+	local var_9_0 = lua_helppage.configList
 
-function slot1._InitAudioInfoXml(slot0)
-	slot2 = io.open("../audios/Android/SoundbanksInfo.xml", "r")
+	arg_9_0._guideId2HelpPageDict = {}
 
-	slot2:close()
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1.type == 2 then
+			local var_9_1 = iter_9_1.unlockGuideId
 
-	slot4 = ResSplitXmlTree:new()
+			arg_9_0._guideId2HelpPageDict[var_9_1] = arg_9_0._guideId2HelpPageDict[var_9_1] or {}
 
-	ResSplitXml2lua.parser(slot4):parse(slot2:read("*a"))
+			local var_9_2 = arg_9_0._guideId2HelpPageDict[var_9_1]
 
-	slot0._bnk2wenDic = {}
-	slot0.bankEvent2wenDic = {}
-	slot0.wen2BankDic = {}
-
-	for slot9, slot10 in pairs(slot4.root.SoundBanksInfo.SoundBanks.SoundBank) do
-		slot0:_dealSingleSoundBank(slot10)
+			var_9_2[#var_9_2 + 1] = iter_9_1
+		end
 	end
 end
 
-function slot1._dealSingleSoundBank(slot0, slot1)
-	slot2 = slot1.ShortName
-	slot3 = slot1.Path
+function var_0_1._InitAudioCfg(arg_10_0)
+	arg_10_0._allAudioDic = AudioConfig.instance:getAudioCO()
+end
 
-	if slot1._attr.Language == "SFX" and slot1.IncludedEvents then
-		for slot7, slot8 in pairs(slot1.IncludedEvents.Event) do
-			slot9 = slot8._attr.Name
+function var_0_1._InitAudioInfoXml(arg_11_0)
+	local var_11_0 = "../audios/Android/SoundbanksInfo.xml"
+	local var_11_1 = io.open(var_11_0, "r")
+	local var_11_2 = var_11_1:read("*a")
 
-			if slot8.ReferencedStreamedFiles then
-				for slot13, slot14 in pairs(slot8.ReferencedStreamedFiles.File) do
-					slot0:_addWenInfo(slot2, slot9, slot14._attr.Id)
+	var_11_1:close()
+
+	local var_11_3 = ResSplitXmlTree:new()
+
+	ResSplitXml2lua.parser(var_11_3):parse(var_11_2)
+
+	arg_11_0._bnk2wenDic = {}
+	arg_11_0.bankEvent2wenDic = {}
+	arg_11_0.wen2BankDic = {}
+
+	for iter_11_0, iter_11_1 in pairs(var_11_3.root.SoundBanksInfo.SoundBanks.SoundBank) do
+		arg_11_0:_dealSingleSoundBank(iter_11_1)
+	end
+end
+
+function var_0_1._dealSingleSoundBank(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.ShortName
+	local var_12_1 = arg_12_1.Path
+
+	if arg_12_1._attr.Language == "SFX" and arg_12_1.IncludedEvents then
+		for iter_12_0, iter_12_1 in pairs(arg_12_1.IncludedEvents.Event) do
+			local var_12_2 = iter_12_1._attr.Name
+
+			if iter_12_1.ReferencedStreamedFiles then
+				for iter_12_2, iter_12_3 in pairs(iter_12_1.ReferencedStreamedFiles.File) do
+					arg_12_0:_addWenInfo(var_12_0, var_12_2, iter_12_3._attr.Id)
 				end
 			end
 		end
 	end
 end
 
-function slot1._addWenInfo(slot0, slot1, slot2, slot3)
-	if slot0._bnk2wenDic[slot1] == nil then
-		slot0._bnk2wenDic[slot1] = {}
+function var_0_1._addWenInfo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_0._bnk2wenDic[arg_13_1] == nil then
+		arg_13_0._bnk2wenDic[arg_13_1] = {}
 	end
 
-	table.insert(slot0._bnk2wenDic[slot1], slot3)
+	table.insert(arg_13_0._bnk2wenDic[arg_13_1], arg_13_3)
 
-	if slot0.bankEvent2wenDic[slot1 .. "#" .. slot2] == nil then
-		slot0.bankEvent2wenDic[slot4] = {}
+	local var_13_0 = arg_13_1 .. "#" .. arg_13_2
+
+	if arg_13_0.bankEvent2wenDic[var_13_0] == nil then
+		arg_13_0.bankEvent2wenDic[var_13_0] = {}
 	end
 
-	table.insert(slot0.bankEvent2wenDic[slot4], slot3)
+	table.insert(arg_13_0.bankEvent2wenDic[var_13_0], arg_13_3)
 
-	if slot0.wen2BankDic[slot3] == nil then
-		slot0.wen2BankDic[slot3] = {}
+	if arg_13_0.wen2BankDic[arg_13_3] == nil then
+		arg_13_0.wen2BankDic[arg_13_3] = {}
 	end
 
-	slot0.wen2BankDic[slot3][slot1] = true
+	arg_13_0.wen2BankDic[arg_13_3][arg_13_1] = true
 end
 
-function slot1._InitStoryCfg(slot0)
-	slot0._allStoryIds = {}
+function var_0_1._InitStoryCfg(arg_14_0)
+	local var_14_0 = "Assets/ZResourcesLib/configs/story/groups"
+	local var_14_1 = SLFramework.FileHelper.GetDirFilePaths(var_14_0)
 
-	for slot6 = 0, SLFramework.FileHelper.GetDirFilePaths("Assets/ZResourcesLib/configs/story/groups").Length - 1 do
-		if slot2[slot6]:match("%.json$") and tonumber(string.gsub(SLFramework.FileHelper.GetFileName(slot7, false), "json_story_group_", "")) > 999 then
-			slot0._allStoryIds[#slot0._allStoryIds + 1] = slot10
+	arg_14_0._allStoryIds = {}
+
+	for iter_14_0 = 0, var_14_1.Length - 1 do
+		local var_14_2 = var_14_1[iter_14_0]
+
+		if var_14_2:match("%.json$") then
+			local var_14_3 = SLFramework.FileHelper.GetFileName(var_14_2, false)
+			local var_14_4 = string.gsub(var_14_3, "json_story_group_", "")
+			local var_14_5 = tonumber(var_14_4)
+
+			if var_14_5 > 999 then
+				arg_14_0._allStoryIds[#arg_14_0._allStoryIds + 1] = var_14_5
+			end
 		end
 	end
 end
 
-function slot1._loadAllStoryCfg(slot0, slot1, slot2)
-	if slot0._loadStroyFinishCount and slot0._loadStroyFinishCount > 0 then
+function var_0_1._loadAllStoryCfg(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0._loadStroyFinishCount and arg_15_0._loadStroyFinishCount > 0 then
 		return
 	end
 
-	slot0._loadFinishCallblock = slot1
-	slot0._loadFinishCallblockObj = slot2
-	slot0._loadStroyFinishCount = #slot0._allStoryIds * 2
+	arg_15_0._loadFinishCallblock = arg_15_1
+	arg_15_0._loadFinishCallblockObj = arg_15_2
+	arg_15_0._loadStroyFinishCount = #arg_15_0._allStoryIds * 2
 
-	for slot6, slot7 in ipairs(slot0._allStoryIds) do
-		loadNonAbAsset(string.format("configs/story/steps/json_story_step_%s.json", slot7), SLFramework.AssetType.TEXT, slot0._loadStoryCfgCallBack, slot0)
-		loadNonAbAsset(string.format("configs/story/groups/json_story_group_%s.json", slot7), SLFramework.AssetType.TEXT, slot0._loadStoryCfgCallBack, slot0)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._allStoryIds) do
+		local var_15_0 = string.format("configs/story/steps/json_story_step_%s.json", iter_15_1)
+		local var_15_1 = string.format("configs/story/groups/json_story_group_%s.json", iter_15_1)
+
+		loadNonAbAsset(var_15_0, SLFramework.AssetType.TEXT, arg_15_0._loadStoryCfgCallBack, arg_15_0)
+		loadNonAbAsset(var_15_1, SLFramework.AssetType.TEXT, arg_15_0._loadStoryCfgCallBack, arg_15_0)
 	end
 end
 
-function slot1._loadStoryCfgCallBack(slot0, slot1)
-	if not slot1.IsLoadSuccess then
-		logError("config load fail: " .. slot1.ResPath)
+function var_0_1._loadStoryCfgCallBack(arg_16_0, arg_16_1)
+	if not arg_16_1.IsLoadSuccess then
+		logError("config load fail: " .. arg_16_1.ResPath)
 
 		return
 	end
 
-	slot0._loadStroyFinishCount = slot0._loadStroyFinishCount - 1
-	slot0._storyCfgMap = slot0._storyCfgMap or {}
-	slot0._storyCfgMap[slot1.ResPath] = cjson.decode(slot1.TextAsset)
+	arg_16_0._loadStroyFinishCount = arg_16_0._loadStroyFinishCount - 1
+	arg_16_0._storyCfgMap = arg_16_0._storyCfgMap or {}
+	arg_16_0._storyCfgMap[arg_16_1.ResPath] = cjson.decode(arg_16_1.TextAsset)
 
-	slot1:Retain()
+	arg_16_1:Retain()
 
-	if slot0._loadStroyFinishCount <= 0 and slot0._loadFinishCallblock then
-		if slot0._loadFinishCallblockObj then
-			slot0._loadFinishCallblock(slot0._loadFinishCallblockObj)
+	if arg_16_0._loadStroyFinishCount <= 0 and arg_16_0._loadFinishCallblock then
+		if arg_16_0._loadFinishCallblockObj then
+			arg_16_0._loadFinishCallblock(arg_16_0._loadFinishCallblockObj)
 		else
-			slot0._loadFinishCallblock()
+			arg_16_0._loadFinishCallblock()
 		end
 	end
 end
 
-function slot1._fillSceneResByChatper(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(lua_chapter_map.configList) do
-		if slot7.chapterId == slot1 then
-			slot9 = ResUrl.getDungeonMapRes(slot7.res)
+function var_0_1._fillSceneResByChatper(arg_17_0, arg_17_1, arg_17_2)
+	for iter_17_0, iter_17_1 in ipairs(lua_chapter_map.configList) do
+		if iter_17_1.chapterId == arg_17_1 then
+			local var_17_0 = iter_17_1.res
+			local var_17_1 = ResUrl.getDungeonMapRes(var_17_0)
 
-			slot2:addResSplitInfo(ResSplitEnum.Path, uv0.ChapterScene, slot9)
-			slot0:_fillSceneDependRes(slot9, slot2)
+			arg_17_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.ChapterScene, var_17_1)
+			arg_17_0:_fillSceneDependRes(var_17_1, arg_17_2)
 
-			if slot0._mapElementResDic[slot7.id] then
-				for slot14, slot15 in ipairs(slot10) do
-					slot0:_fillSceneDependRes(slot15, slot2)
+			local var_17_2 = arg_17_0._mapElementResDic[iter_17_1.id]
+
+			if var_17_2 then
+				for iter_17_2, iter_17_3 in ipairs(var_17_2) do
+					arg_17_0:_fillSceneDependRes(iter_17_3, arg_17_2)
 				end
 			end
 		end
 	end
 end
 
-slot2 = {
+local var_0_2 = {
 	tga = true,
 	prefab = true,
 	controller = true,
@@ -429,174 +526,248 @@ slot2 = {
 	anim = true,
 	mat = true
 }
-slot3 = {
+local var_0_3 = {
 	["font/"] = true
 }
 
-function slot1._fillSceneDependRes(slot0, slot1, slot2)
-	for slot7 = 0, ZProj.AssetDatabaseHelper.GetDependencies(SLFramework.FrameworkSettings.GetEditorResPath(slot1), true).Length - 1 do
-		slot9 = string.match(slot3[slot7], ".+%.(%w+)$")
-		slot10 = false
+function var_0_1._fillSceneDependRes(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_1 = SLFramework.FrameworkSettings.GetEditorResPath(arg_18_1)
 
-		for slot14, slot15 in pairs(uv0) do
-			if string.match(slot8, "font/") then
-				slot10 = true
+	local var_18_0 = ZProj.AssetDatabaseHelper.GetDependencies(arg_18_1, true)
+
+	for iter_18_0 = 0, var_18_0.Length - 1 do
+		local var_18_1 = var_18_0[iter_18_0]
+		local var_18_2 = string.match(var_18_1, ".+%.(%w+)$")
+		local var_18_3 = false
+
+		for iter_18_1, iter_18_2 in pairs(var_0_3) do
+			if string.match(var_18_1, "font/") then
+				var_18_3 = true
 
 				break
 			end
 		end
 
-		if not slot10 and uv1[string.match(slot8, ".+%.(%w+)$")] then
-			slot2:addResSplitInfo(ResSplitEnum.Path, uv2.ChapterSceneDepand, string.gsub(slot8, SLFramework.FrameworkSettings.AssetRootDir .. "/", ""))
+		if not var_18_3 then
+			local var_18_4 = string.match(var_18_1, ".+%.(%w+)$")
+
+			if var_0_2[var_18_4] then
+				local var_18_5 = string.gsub(var_18_1, SLFramework.FrameworkSettings.AssetRootDir .. "/", "")
+
+				arg_18_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.ChapterSceneDepand, var_18_5)
+			end
 		end
 	end
 end
 
-function slot1._fillStoryResByChatper(slot0, slot1, slot2)
-	if not DungeonConfig.instance:getChapterEpisodeCOList(slot1) then
+function var_0_1._fillStoryResByChatper(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_19_1)
+
+	if not var_19_0 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if slot8.beforeStory ~= 0 then
-			slot0:_fillStoryRes(slot9, slot2)
+	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+		local var_19_1 = iter_19_1.beforeStory
+
+		if var_19_1 ~= 0 then
+			arg_19_0:_fillStoryRes(var_19_1, arg_19_2)
 		end
 
-		if #string.split(slot8.story, "#") == 3 then
-			slot0:_fillStoryRes(tonumber(slot10[3]), slot2)
+		local var_19_2 = string.split(iter_19_1.story, "#")
+
+		if #var_19_2 == 3 then
+			local var_19_3 = tonumber(var_19_2[3])
+
+			arg_19_0:_fillStoryRes(var_19_3, arg_19_2)
 		end
 
-		if slot8.afterStory ~= 0 then
-			slot0:_fillStoryRes(slot11, slot2)
+		local var_19_4 = iter_19_1.afterStory
+
+		if var_19_4 ~= 0 then
+			arg_19_0:_fillStoryRes(var_19_4, arg_19_2)
 		end
 	end
 end
 
-function slot1._fillStoryRes(slot0, slot1, slot2)
+function var_0_1._fillStoryRes(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = string.format("configs/story/steps/json_story_step_%s.json", arg_20_1)
+	local var_20_1 = string.format("configs/story/groups/json_story_group_%s.json", arg_20_1)
+	local var_20_2 = arg_20_0._storyCfgMap[var_20_0]
+	local var_20_3 = arg_20_0._storyCfgMap[var_20_1]
+
 	StoryModel.instance:clearData()
-	StoryStepModel.instance:setStepList(slot0._storyCfgMap[string.format("configs/story/steps/json_story_step_%s.json", slot1)][3])
-	StoryGroupModel.instance:setGroupList(slot0._storyCfgMap[string.format("configs/story/groups/json_story_group_%s.json", slot1)])
+	StoryStepModel.instance:setStepList(var_20_2[3])
+	StoryGroupModel.instance:setGroupList(var_20_3)
 
-	for slot11, slot12 in ipairs(StoryStepModel.instance:getStepList()) do
-		if not string.nilorempty(slot12.bg.bgImg) then
-			slot2:addResSplitInfo(ResSplitEnum.Path, uv0.StoryBg, ResUrl.getStoryBg(slot12.bg.bgImg))
+	local var_20_4 = StoryStepModel.instance:getStepList()
+
+	for iter_20_0, iter_20_1 in ipairs(var_20_4) do
+		if not string.nilorempty(iter_20_1.bg.bgImg) then
+			local var_20_5 = ResUrl.getStoryBg(iter_20_1.bg.bgImg)
+
+			arg_20_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.StoryBg, var_20_5)
 		end
 
-		for slot16, slot17 in pairs(slot12.videoList) do
-			slot2:addResSplitInfo(ResSplitEnum.Video, uv0.StoryVideo, string.split(slot17.video, ".")[1])
+		for iter_20_2, iter_20_3 in pairs(iter_20_1.videoList) do
+			local var_20_6 = string.split(iter_20_3.video, ".")[1]
+
+			arg_20_2:addResSplitInfo(ResSplitEnum.Video, var_0_0.StoryVideo, var_20_6)
 		end
 
-		for slot16, slot17 in pairs(slot12.conversation.audios) do
-			if slot0._allAudioDic[slot17] then
-				slot2:addResSplitInfo(ResSplitEnum.AudioBank, uv0.StoryAudio, slot18.bankName)
-				slot0:_fillAudioResByAudioBnkName(slot18.bankName, slot2)
+		for iter_20_4, iter_20_5 in pairs(iter_20_1.conversation.audios) do
+			local var_20_7 = arg_20_0._allAudioDic[iter_20_5]
+
+			if var_20_7 then
+				arg_20_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.StoryAudio, var_20_7.bankName)
+				arg_20_0:_fillAudioResByAudioBnkName(var_20_7.bankName, arg_20_2)
 			end
 		end
 
-		for slot16, slot17 in pairs(slot12.audioList) do
-			if slot0._allAudioDic[slot17.audio] then
-				slot2:addResSplitInfo(ResSplitEnum.AudioBank, uv0.StoryAudio, slot18.bankName)
-				slot0:_fillAudioResByAudioBnkName(slot18.bankName, slot2)
+		for iter_20_6, iter_20_7 in pairs(iter_20_1.audioList) do
+			local var_20_8 = arg_20_0._allAudioDic[iter_20_7.audio]
+
+			if var_20_8 then
+				arg_20_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.StoryAudio, var_20_8.bankName)
+				arg_20_0:_fillAudioResByAudioBnkName(var_20_8.bankName, arg_20_2)
 			end
 		end
 
-		for slot16, slot17 in pairs(slot12.picList) do
-			if not string.nilorempty(slot17.picture) then
-				slot2:addResSplitInfo(ResSplitEnum.Path, uv0.StoryBgItem, ResUrl.getStoryItem(slot17.picture))
+		for iter_20_8, iter_20_9 in pairs(iter_20_1.picList) do
+			if not string.nilorempty(iter_20_9.picture) then
+				local var_20_9 = ResUrl.getStoryItem(iter_20_9.picture)
+
+				arg_20_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.StoryBgItem, var_20_9)
 			end
 		end
 	end
 end
 
-function slot1._fillAudioResByAudioId(slot0, slot1, slot2)
-	if slot0._allAudioDic[slot1] then
-		slot2:addResSplitInfo(ResSplitEnum.AudioBank, uv0.VersionAudio, slot3.bankName)
-		slot0:_fillAudioResByAudioBnkName(slot3.bankName, slot2)
+function var_0_1._fillAudioResByAudioId(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0._allAudioDic[arg_21_1]
+
+	if var_21_0 then
+		arg_21_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.VersionAudio, var_21_0.bankName)
+		arg_21_0:_fillAudioResByAudioBnkName(var_21_0.bankName, arg_21_2)
 	end
 end
 
-function slot1._fillAudioResByAudioBnkName(slot0, slot1, slot2)
-	if slot0._bnk2wenDic[slot1] then
-		for slot7, slot8 in ipairs(slot3) do
-			slot2:addResSplitInfo(ResSplitEnum.AudioWem, uv0.VersionAudio, slot8)
+function var_0_1._fillAudioResByAudioBnkName(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = arg_22_0._bnk2wenDic[arg_22_1]
+
+	if var_22_0 then
+		for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+			arg_22_2:addResSplitInfo(ResSplitEnum.AudioWem, var_0_0.VersionAudio, iter_22_1)
 		end
 	end
 end
 
-function slot1._fillResByGuideId(slot0, slot1, slot2)
-	if slot0._guideId2HelpPageDict[slot1] then
-		for slot7, slot8 in ipairs(slot3) do
-			slot2:addResSplitInfo(ResSplitEnum.Path, uv0.GuideHalpPage, ResUrl.getVersionActivityHelpItem(slot8.icon, slot8.isCn))
+function var_0_1._fillResByGuideId(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = arg_23_0._guideId2HelpPageDict[arg_23_1]
+
+	if var_23_0 then
+		for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+			local var_23_1 = ResUrl.getVersionActivityHelpItem(iter_23_1.icon, iter_23_1.isCn)
+
+			arg_23_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.GuideHalpPage, var_23_1)
 		end
 	end
 end
 
-function slot1._fillUIResByFolder(slot0, slot1, slot2)
-	for slot7 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.GetEditorResPath(slot1)).Length - 1 do
-		if slot3[slot7]:match("%.prefab$") then
-			slot0:_fillUIRes(slot8, slot2)
+function var_0_1._fillUIResByFolder(arg_24_0, arg_24_1, arg_24_2)
+	arg_24_1 = SLFramework.FrameworkSettings.GetEditorResPath(arg_24_1)
+
+	local var_24_0 = SLFramework.FileHelper.GetDirFilePaths(arg_24_1)
+
+	for iter_24_0 = 0, var_24_0.Length - 1 do
+		local var_24_1 = var_24_0[iter_24_0]
+
+		if var_24_1:match("%.prefab$") then
+			arg_24_0:_fillUIRes(var_24_1, arg_24_2)
 		end
 	end
 end
 
-function slot1._fillUIRes(slot0, slot1, slot2, slot3)
-	slot5 = string.sub(slot1, string.find(slot1, "Assets"), string.len(slot1))
-	slot11 = uv0.UIPrefab
+function var_0_1._fillUIRes(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = string.find(arg_25_1, "Assets")
+	local var_25_1 = string.sub(arg_25_1, var_25_0, string.len(arg_25_1))
+	local var_25_2 = string.gsub(var_25_1, SLFramework.FrameworkSettings.AssetRootDir .. "/", "")
+	local var_25_3 = ZProj.AssetDatabaseHelper.GetDependencies(var_25_1, true)
 
-	slot2:addResSplitInfo(ResSplitEnum.Path, slot11, string.gsub(slot5, SLFramework.FrameworkSettings.AssetRootDir .. "/", ""))
+	arg_25_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.UIPrefab, var_25_2)
 
-	for slot11 = 0, ZProj.AssetDatabaseHelper.GetDependencies(slot5, true).Length - 1 do
-		slot12 = slot7[slot11]
-		slot13 = false
+	for iter_25_0 = 0, var_25_3.Length - 1 do
+		local var_25_4 = var_25_3[iter_25_0]
+		local var_25_5 = false
 
-		for slot17, slot18 in pairs(uv1) do
-			if string.match(slot12, "font/") then
-				slot13 = true
+		for iter_25_1, iter_25_2 in pairs(var_0_3) do
+			if string.match(var_25_4, "font/") then
+				var_25_5 = true
 
 				break
 			end
 		end
 
-		if not slot13 and uv2[string.match(slot12, ".+%.(%w+)$")] then
-			slot2:addResSplitInfo(ResSplitEnum.Path, uv0.UIPrefabDepand, string.gsub(slot12, SLFramework.FrameworkSettings.AssetRootDir .. "/", ""))
-		end
-	end
+		if not var_25_5 then
+			local var_25_6 = string.match(var_25_4, ".+%.(%w+)$")
 
-	if not slot3 then
-		slot0:_fillUIRes("Assets/ZResourcesLib/lang/common/" .. slot6, slot2, true)
-	end
-end
+			if var_0_2[var_25_6] then
+				local var_25_7 = string.gsub(var_25_4, SLFramework.FrameworkSettings.AssetRootDir .. "/", "")
 
-function slot1._getFolderPrefabs(slot0)
-	slot1 = {}
-
-	if not SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.GetEditorResPath(slot0)) then
-		logError("文件夹" .. slot0 .. "不存在，请检查")
-	else
-		for slot6 = 0, SLFramework.FileHelper.GetDirFilePaths(slot0).Length - 1 do
-			if slot2[slot6]:match("%.prefab$") then
-				slot1[#slot1 + 1] = slot7
+				arg_25_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.UIPrefabDepand, var_25_7)
 			end
 		end
 	end
 
-	return slot1
+	if not arg_25_3 then
+		local var_25_8 = "Assets/ZResourcesLib/lang/common/" .. var_25_2
+
+		arg_25_0:_fillUIRes(var_25_8, arg_25_2, true)
+	end
 end
 
-function slot1._getResFolderFiles(slot0, slot1)
-	slot2 = {}
+function var_0_1._getFolderPrefabs(arg_26_0)
+	local var_26_0 = {}
 
-	if not SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.GetEditorResPath(slot0)) then
-		logError("文件夹" .. slot0 .. " 不存在，请检查")
+	arg_26_0 = SLFramework.FrameworkSettings.GetEditorResPath(arg_26_0)
+
+	if not SLFramework.FileHelper.IsDirExists(arg_26_0) then
+		logError("文件夹" .. arg_26_0 .. "不存在，请检查")
 	else
-		for slot7 = 0, SLFramework.FileHelper.GetDirFilePaths(slot0).Length - 1 do
-			if slot3[slot7]:match("%." .. slot1 .. "$") then
-				slot2[#slot2 + 1] = slot8
+		local var_26_1 = SLFramework.FileHelper.GetDirFilePaths(arg_26_0)
+
+		for iter_26_0 = 0, var_26_1.Length - 1 do
+			local var_26_2 = var_26_1[iter_26_0]
+
+			if var_26_2:match("%.prefab$") then
+				var_26_0[#var_26_0 + 1] = var_26_2
 			end
 		end
 	end
 
-	return slot2
+	return var_26_0
 end
 
-return slot1
+function var_0_1._getResFolderFiles(arg_27_0, arg_27_1)
+	local var_27_0 = {}
+
+	arg_27_0 = SLFramework.FrameworkSettings.GetEditorResPath(arg_27_0)
+
+	if not SLFramework.FileHelper.IsDirExists(arg_27_0) then
+		logError("文件夹" .. arg_27_0 .. " 不存在，请检查")
+	else
+		local var_27_1 = SLFramework.FileHelper.GetDirFilePaths(arg_27_0)
+
+		for iter_27_0 = 0, var_27_1.Length - 1 do
+			local var_27_2 = var_27_1[iter_27_0]
+
+			if var_27_2:match("%." .. arg_27_1 .. "$") then
+				var_27_0[#var_27_0 + 1] = var_27_2
+			end
+		end
+	end
+
+	return var_27_0
+end
+
+return var_0_1

@@ -1,66 +1,77 @@
-module("modules.logic.room.view.critter.RoomCritterAttrScrollCell", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterAttrScrollCell", package.seeall)
 
-slot0 = class("RoomCritterAttrScrollCell", ListScrollCellExtend)
+local var_0_0 = class("RoomCritterAttrScrollCell", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#txt_name/#image_icon")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#txt_num")
-	slot0._txtratio = gohelper.findChildText(slot0.viewGO, "#txt_ratio")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_name/#image_icon")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_num")
+	arg_1_0._txtratio = gohelper.findChildText(arg_1_0.viewGO, "#txt_ratio")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.getDataMO(slot0)
-	return slot0._critterAttributeInfoMO
+function var_0_0.getDataMO(arg_7_0)
+	return arg_7_0._critterAttributeInfoMO
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._critterAttributeInfoMO = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._critterAttributeInfoMO = arg_8_1
 
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0._critterAttributeInfoMO then
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = arg_11_0._critterAttributeInfoMO
+
+	if not var_11_0 then
 		return
 	end
 
-	slot0._txtnum.text = slot1.value
-	slot0._txtratio.text = math.floor(slot1.rate * 0.01) * 0.01 .. luaLang("multiple")
+	local var_11_1 = math.floor(var_11_0.rate * 0.01) * 0.01 .. luaLang("multiple")
 
-	if slot0._txtname then
-		slot0._txtname.text = slot1:getName()
+	arg_11_0._txtnum.text = var_11_0.value
+	arg_11_0._txtratio.text = var_11_1
+
+	if arg_11_0._txtname then
+		arg_11_0._txtname.text = var_11_0:getName()
 	end
 
-	if slot0._imageicon and not string.nilorempty(slot1:getIcon()) then
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imageicon, slot1:getIcon())
+	if arg_11_0._imageicon and not string.nilorempty(var_11_0:getIcon()) then
+		UISpriteSetMgr.instance:setCritterSprite(arg_11_0._imageicon, var_11_0:getIcon())
 	end
 
-	gohelper.setActive(slot0._goArrow, slot1:getIsAddition())
+	gohelper.setActive(arg_11_0._goArrow, var_11_0:getIsAddition())
 end
 
-return slot0
+return var_0_0

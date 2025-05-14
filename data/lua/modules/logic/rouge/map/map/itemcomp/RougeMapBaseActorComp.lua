@@ -1,77 +1,78 @@
-module("modules.logic.rouge.map.map.itemcomp.RougeMapBaseActorComp", package.seeall)
+﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapBaseActorComp", package.seeall)
 
-slot0 = class("RougeMapBaseActorComp", UserDataDispose)
+local var_0_0 = class("RougeMapBaseActorComp", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.map = slot2
-	slot0.goActor = slot1
+	arg_1_0.map = arg_1_2
+	arg_1_0.goActor = arg_1_1
 
-	slot0:initActor()
+	arg_1_0:initActor()
 end
 
-function slot0.initActor(slot0)
-	slot0.trActor = slot0.goActor.transform
-	slot1, slot2 = slot0.map:getActorPos()
+function var_0_0.initActor(arg_2_0)
+	arg_2_0.trActor = arg_2_0.goActor.transform
 
-	transformhelper.setLocalPos(slot0.trActor, slot1, slot2, RougeMapHelper.getOffsetZ(slot2))
+	local var_2_0, var_2_1 = arg_2_0.map:getActorPos()
+
+	transformhelper.setLocalPos(arg_2_0.trActor, var_2_0, var_2_1, RougeMapHelper.getOffsetZ(var_2_1))
 end
 
-function slot0.getActorWordPos(slot0)
-	return slot0.trActor.position
+function var_0_0.getActorWordPos(arg_3_0)
+	return arg_3_0.trActor.position
 end
 
-function slot0.moveToMapItem(slot0, slot1, slot2, slot3)
+function var_0_0.moveToMapItem(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	logNormal("base move to map item")
 end
 
-function slot0.moveToPieceItem(slot0, slot1, slot2, slot3)
+function var_0_0.moveToPieceItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	logNormal("base move to piece item")
 end
 
-function slot0.onMovingDone(slot0)
-	slot0:endBlock()
+function var_0_0.onMovingDone(arg_6_0)
+	arg_6_0:endBlock()
 	AudioMgr.instance:trigger(AudioEnum.UI.StopMoveAudio)
 
-	slot0.movingTweenId = nil
+	arg_6_0.movingTweenId = nil
 
-	if slot0.callback then
-		slot0.callback(slot0.callbackObj)
+	if arg_6_0.callback then
+		arg_6_0.callback(arg_6_0.callbackObj)
 	end
 
-	slot0.callback = nil
-	slot0.callbackObj = nil
+	arg_6_0.callback = nil
+	arg_6_0.callbackObj = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onActorMovingDone)
 end
 
-function slot0.startBlock(slot0)
+function var_0_0.startBlock(arg_7_0)
 	UIBlockMgr.instance:startBlock(RougeMapEnum.MovingBlock)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 end
 
-function slot0.endBlock(slot0)
+function var_0_0.endBlock(arg_8_0)
 	UIBlockMgr.instance:endBlock(RougeMapEnum.MovingBlock)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.clearTween(slot0)
-	if slot0.movingTweenId then
-		ZProj.TweenHelper.KillById(slot0.movingTweenId)
+function var_0_0.clearTween(arg_9_0)
+	if arg_9_0.movingTweenId then
+		ZProj.TweenHelper.KillById(arg_9_0.movingTweenId)
 
-		slot0.movingTweenId = nil
+		arg_9_0.movingTweenId = nil
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:endBlock()
+function var_0_0.destroy(arg_10_0)
+	arg_10_0:endBlock()
 
-	slot0.callback = nil
-	slot0.callbackObj = nil
+	arg_10_0.callback = nil
+	arg_10_0.callbackObj = nil
 
-	slot0:clearTween()
-	slot0:__onDispose()
+	arg_10_0:clearTween()
+	arg_10_0:__onDispose()
 end
 
-return slot0
+return var_0_0

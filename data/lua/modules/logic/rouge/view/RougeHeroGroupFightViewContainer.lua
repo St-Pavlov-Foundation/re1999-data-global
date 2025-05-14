@@ -1,14 +1,14 @@
-module("modules.logic.rouge.view.RougeHeroGroupFightViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeHeroGroupFightViewContainer", package.seeall)
 
-slot0 = class("RougeHeroGroupFightViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeHeroGroupFightViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._heroGroupFightView = RougeHeroGroupFightView.New()
-	slot0._heroGroupLayoutView = HeroGroupFightLayoutView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._heroGroupFightView = RougeHeroGroupFightView.New()
+	arg_1_0._heroGroupLayoutView = HeroGroupFightLayoutView.New()
 
 	return {
-		slot0._heroGroupLayoutView,
-		slot0._heroGroupFightView,
+		arg_1_0._heroGroupLayoutView,
+		arg_1_0._heroGroupFightView,
 		HeroGroupAnimView.New(),
 		RougeHeroGroupListView.New(),
 		RougeHeroGroupFightViewLevel.New(),
@@ -22,52 +22,59 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.getHeroGroupFightView(slot0)
-	return slot0._heroGroupFightView
+function var_0_0.getHeroGroupFightView(arg_2_0)
+	return arg_2_0._heroGroupFightView
 end
 
-function slot0.beforeEnterFight(slot0)
+function var_0_0.beforeEnterFight(arg_3_0)
+	return
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_4_0, arg_4_1)
+	if arg_4_1 == 1 then
+		local var_4_0 = arg_4_0:getHelpId()
+		local var_4_1 = not arg_4_0:_checkHideHomeBtn()
+
+		arg_4_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
-			not slot0:_checkHideHomeBtn(),
-			slot0:getHelpId() ~= nil
-		}, slot2, slot0._closeCallback, nil, , slot0)
+			var_4_1,
+			var_4_0 ~= nil
+		}, var_4_0, arg_4_0._closeCallback, nil, nil, arg_4_0)
 
-		slot0._navigateButtonsView:setCloseCheck(slot0.defaultOverrideCloseCheck, slot0)
+		arg_4_0._navigateButtonsView:setCloseCheck(arg_4_0.defaultOverrideCloseCheck, arg_4_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_4_0._navigateButtonsView
 		}
-	elseif slot1 == 2 then
+	elseif arg_4_1 == 2 then
+		local var_4_2 = CurrencyEnum.CurrencyType
+		local var_4_3 = arg_4_0:_checkHidePowerCurrencyBtn() and {} or {
+			var_4_2.Power
+		}
+
 		return {
-			CurrencyView.New(slot0:_checkHidePowerCurrencyBtn() and {} or {
-				CurrencyEnum.CurrencyType.Power
-			})
+			CurrencyView.New(var_4_3)
 		}
 	end
 end
 
-function slot0.getHelpId(slot0)
+function var_0_0.getHelpId(arg_5_0)
 	return HelpEnum.HelpId.RougeHeroGroupFightViewHelp
 end
 
-function slot0._closeCallback(slot0)
-	slot0._manualClose = true
+function var_0_0._closeCallback(arg_6_0)
+	arg_6_0._manualClose = true
 
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0.onContainerCloseFinish(slot0)
-	if slot0._manualClose then
+function var_0_0.onContainerCloseFinish(arg_7_0)
+	if arg_7_0._manualClose then
 		RougeController.instance:enterRouge()
 	end
 end
 
-function slot0.handleVersionActivityCloseCall(slot0)
+function var_0_0.handleVersionActivityCloseCall(arg_8_0)
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -75,41 +82,51 @@ function slot0.handleVersionActivityCloseCall(slot0)
 	end
 end
 
-function slot0._checkHideHomeBtn(slot0)
+function var_0_0._checkHideHomeBtn(arg_9_0)
 	return true
 end
 
-slot0._hideHomeBtnEpisodeType = {
+var_0_0._hideHomeBtnEpisodeType = {
 	[DungeonEnum.EpisodeType.Act1_3Role1Chess] = true,
 	[DungeonEnum.EpisodeType.Act1_3Role2Chess] = true
 }
 
-function slot0.checkShowHomeByEpisodeType(slot0)
-	return uv0._hideHomeBtnEpisodeType[DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId).type]
+function var_0_0.checkShowHomeByEpisodeType(arg_10_0)
+	local var_10_0 = HeroGroupModel.instance.episodeId
+	local var_10_1 = DungeonConfig.instance:getEpisodeCO(var_10_0)
+
+	return var_0_0._hideHomeBtnEpisodeType[var_10_1.type]
 end
 
-function slot0._checkHidePowerCurrencyBtn(slot0)
-	return slot0:checkHidePowerCurrencyBtnByEpisodeType()
+function var_0_0._checkHidePowerCurrencyBtn(arg_11_0)
+	return (arg_11_0:checkHidePowerCurrencyBtnByEpisodeType())
 end
 
-slot0._hidePowerCurrencyBtnEpisodeType = {
+var_0_0._hidePowerCurrencyBtnEpisodeType = {
 	[DungeonEnum.EpisodeType.Act1_3Role1Chess] = true,
 	[DungeonEnum.EpisodeType.Act1_3Role2Chess] = true
 }
 
-function slot0.checkHidePowerCurrencyBtnByEpisodeType(slot0)
-	return uv0._hidePowerCurrencyBtnEpisodeType[DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId).type]
+function var_0_0.checkHidePowerCurrencyBtnByEpisodeType(arg_12_0)
+	local var_12_0 = HeroGroupModel.instance.episodeId
+	local var_12_1 = DungeonConfig.instance:getEpisodeCO(var_12_0)
+
+	return var_0_0._hidePowerCurrencyBtnEpisodeType[var_12_1.type]
 end
 
-function slot0.setNavigateOverrideClose(slot0, slot1, slot2)
-	slot0._navigateButtonsView:setOverrideClose(slot1, slot2)
+function var_0_0.setNavigateOverrideClose(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._navigateButtonsView:setOverrideClose(arg_13_1, arg_13_2)
 end
 
-function slot0.defaultOverrideCloseCheck(slot0, slot1, slot2)
-	if DungeonConfig.instance:getChapterCO(DungeonModel.instance.curSendChapterId).actId == VersionActivityEnum.ActivityId.Act109 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, function ()
-			uv0(uv1)
-		end)
+function var_0_0.defaultOverrideCloseCheck(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = DungeonModel.instance.curSendChapterId
+
+	if DungeonConfig.instance:getChapterCO(var_14_0).actId == VersionActivityEnum.ActivityId.Act109 then
+		local function var_14_1()
+			arg_14_1(arg_14_2)
+		end
+
+		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, var_14_1)
 
 		return false
 	end
@@ -117,20 +134,20 @@ function slot0.defaultOverrideCloseCheck(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.onContainerInit(slot0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0.refreshHelpBtnIcon, slot0)
+function var_0_0.onContainerInit(arg_16_0)
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_16_0.refreshHelpBtnIcon, arg_16_0)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonsView:resetOnCloseViewAudio(AudioEnum.UI.UI_Team_close)
+function var_0_0.onContainerOpenFinish(arg_17_0)
+	arg_17_0._navigateButtonsView:resetOnCloseViewAudio(AudioEnum.UI.UI_Team_close)
 end
 
-function slot0.onContainerDestroy(slot0)
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0.refreshHelpBtnIcon, slot0)
+function var_0_0.onContainerDestroy(arg_18_0)
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_18_0.refreshHelpBtnIcon, arg_18_0)
 end
 
-function slot0.refreshHelpBtnIcon(slot0)
-	slot0._navigateButtonsView:changerHelpId(slot0:getHelpId())
+function var_0_0.refreshHelpBtnIcon(arg_19_0)
+	arg_19_0._navigateButtonsView:changerHelpId(arg_19_0:getHelpId())
 end
 
-return slot0
+return var_0_0

@@ -1,21 +1,22 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessForecastUpdateStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessForecastUpdateStep", package.seeall)
 
-slot0 = class("TeamChessForecastUpdateStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessForecastUpdateStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.EnemyForecastChessIdUpdate)
-	TaskDispatcher.runDelay(slot0._onDone, slot0, EliminateTeamChessEnum.teamChessForecastUpdateStep)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessForecastUpdateStep)
 end
 
-function slot0._onDone(slot0)
-	slot1 = EliminateTeamChessModel.instance:getCurTeamChessWar()
+function var_0_0._onDone(arg_2_0)
+	local var_2_0 = EliminateTeamChessModel.instance:getCurTeamChessWar()
+	local var_2_1 = EliminateTeamChessModel.instance:getServerTeamChessWar()
 
-	if EliminateTeamChessModel.instance:getServerTeamChessWar() and slot1 then
-		slot1:updateForecastBehavior(slot2.enemyCharacter.forecastBehavior)
+	if var_2_1 and var_2_0 then
+		var_2_0:updateForecastBehavior(var_2_1.enemyCharacter.forecastBehavior)
 	end
 
 	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.EnemyForecastChessIdUpdate)
-	uv0.super._onDone(slot0)
+	var_0_0.super._onDone(arg_2_0)
 end
 
-return slot0
+return var_0_0

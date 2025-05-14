@@ -1,294 +1,325 @@
-module("modules.logic.rouge.common.comp.RougeCollectionSlotComp", package.seeall)
+﻿module("modules.logic.rouge.common.comp.RougeCollectionSlotComp", package.seeall)
 
-slot0 = class("RougeCollectionSlotComp", UserDataDispose)
+local var_0_0 = class("RougeCollectionSlotComp", UserDataDispose)
 
-function slot0.Get(slot0, slot1)
-	slot2 = uv0.New()
+function var_0_0.Get(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_0.New()
 
-	slot2:init(slot0, slot1 or RougeCollectionHelper.DefaultSlotParam)
+	arg_1_1 = arg_1_1 or RougeCollectionHelper.DefaultSlotParam
 
-	return slot2
+	var_1_0:init(arg_1_0, arg_1_1)
+
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:__onInit()
 
-	slot0.params = slot2
-	slot0._slotItemLoader = PrefabInstantiate.Create(slot1)
+	arg_2_0.params = arg_2_2
+	arg_2_0._slotItemLoader = PrefabInstantiate.Create(arg_2_1)
 
-	slot0._slotItemLoader:startLoad(RougeEnum.ResPath.CommonCollectionSlotItem, slot0._onCollectionSlotLoaded, slot0)
+	arg_2_0._slotItemLoader:startLoad(RougeEnum.ResPath.CommonCollectionSlotItem, arg_2_0._onCollectionSlotLoaded, arg_2_0)
 end
 
-function slot0._onCollectionSlotLoaded(slot0)
-	slot0.viewGO = slot0._slotItemLoader:getInstGO()
+function var_0_0._onCollectionSlotLoaded(arg_3_0)
+	arg_3_0.viewGO = arg_3_0._slotItemLoader:getInstGO()
 
-	slot0:_editableInitView()
-	slot0:checkIsNeedUpdate()
+	arg_3_0:_editableInitView()
+	arg_3_0:checkIsNeedUpdate()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gomeshcontainer = gohelper.findChild(slot0.viewGO, "#go_meshcontainer")
-	slot0._gomeshItem = gohelper.findChild(slot0.viewGO, "#go_meshcontainer/#go_meshItem")
-	slot0._goplacecontainer = gohelper.findChild(slot0.viewGO, "#go_placecontainer")
-	slot0._gochessitem = gohelper.findChild(slot0.viewGO, "#go_placecontainer/#go_chessitem")
-	slot0._goeffect = gohelper.findChild(slot0.viewGO, "#go_meshcontainer/#effect")
-	slot0._coverCells = slot0:getUserDataTb_()
-	slot0._collectionItemMap = slot0:getUserDataTb_()
-	slot0._placeCollectionMap = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gomeshcontainer = gohelper.findChild(arg_4_0.viewGO, "#go_meshcontainer")
+	arg_4_0._gomeshItem = gohelper.findChild(arg_4_0.viewGO, "#go_meshcontainer/#go_meshItem")
+	arg_4_0._goplacecontainer = gohelper.findChild(arg_4_0.viewGO, "#go_placecontainer")
+	arg_4_0._gochessitem = gohelper.findChild(arg_4_0.viewGO, "#go_placecontainer/#go_chessitem")
+	arg_4_0._goeffect = gohelper.findChild(arg_4_0.viewGO, "#go_meshcontainer/#effect")
+	arg_4_0._coverCells = arg_4_0:getUserDataTb_()
+	arg_4_0._collectionItemMap = arg_4_0:getUserDataTb_()
+	arg_4_0._placeCollectionMap = {}
 
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, slot0.placeCollection2SlotArea, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, slot0.deleteSlotCollection, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.GetNewCollections, slot0._onGetNewCollections, slot0)
-	slot0:initCellPrefabItem()
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.PlaceCollection2SlotArea, arg_4_0.placeCollection2SlotArea, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, arg_4_0.deleteSlotCollection, arg_4_0)
+	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.GetNewCollections, arg_4_0._onGetNewCollections, arg_4_0)
+	arg_4_0:initCellPrefabItem()
 
-	slot0._slotCellTab = slot0:getUserDataTb_()
+	arg_4_0._slotCellTab = arg_4_0:getUserDataTb_()
 end
 
-function slot0.initCellPrefabItem(slot0)
-	if not slot0.params then
+function var_0_0.initCellPrefabItem(arg_5_0)
+	if not arg_5_0.params then
 		return
 	end
 
-	slot0._cellWidth = slot0.params.cellWidth
-	slot0._cellHeight = slot0.params.cellHeight
+	arg_5_0._cellWidth = arg_5_0.params.cellWidth
+	arg_5_0._cellHeight = arg_5_0.params.cellHeight
 
-	recthelper.setSize(slot0._gochessitem.transform, slot0._cellWidth, slot0._cellHeight)
+	recthelper.setSize(arg_5_0._gochessitem.transform, arg_5_0._cellWidth, arg_5_0._cellHeight)
 
-	slot0._gridlayout = slot0._gomeshcontainer:GetComponent(gohelper.Type_GridLayoutGroup)
-	slot0._gridlayout.cellSize = Vector2(slot0._cellWidth, slot0._cellHeight)
+	arg_5_0._gridlayout = arg_5_0._gomeshcontainer:GetComponent(gohelper.Type_GridLayoutGroup)
+	arg_5_0._gridlayout.cellSize = Vector2(arg_5_0._cellWidth, arg_5_0._cellHeight)
 
-	recthelper.setSize(slot0._goplacecontainer.transform, slot0._cellWidth, slot0._cellHeight)
+	recthelper.setSize(arg_5_0._goplacecontainer.transform, arg_5_0._cellWidth, arg_5_0._cellHeight)
 end
 
-function slot0.checkIsNeedUpdate(slot0)
-	if slot0._isDirty then
-		slot0:start2InitSlot()
+function var_0_0.checkIsNeedUpdate(arg_6_0)
+	if arg_6_0._isDirty then
+		arg_6_0:start2InitSlot()
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	if not slot1 or slot1 <= 0 or not slot2 or slot2 <= 0 then
-		logError(string.format("初始化肉鸽棋盘失败,失败原因:棋盘宽或高不可小于或等于0, col = %s, row = %s", slot1, slot2))
-
-		return
-	end
-
-	slot0._placeCollectionMOs = slot3
-	slot0._col = slot1
-	slot0._row = slot2
-
-	slot0:start2InitSlot()
-end
-
-function slot0.start2InitSlot(slot0)
-	if gohelper.isNil(slot0.viewGO) then
-		slot0._isDirty = true
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if not arg_7_1 or not (arg_7_1 > 0) or not arg_7_2 or not (arg_7_2 > 0) then
+		logError(string.format("初始化肉鸽棋盘失败,失败原因:棋盘宽或高不可小于或等于0, col = %s, row = %s", arg_7_1, arg_7_2))
 
 		return
 	end
 
-	slot0:initCollectionSlot()
-	slot0:initPlaceCollections()
+	arg_7_0._placeCollectionMOs = arg_7_3
+	arg_7_0._col = arg_7_1
+	arg_7_0._row = arg_7_2
 
-	slot0._isDirty = false
+	arg_7_0:start2InitSlot()
 end
 
-function slot0.initCollectionSlot(slot0)
-	slot0._gridlayout.constraintCount = slot0._col
+function var_0_0.start2InitSlot(arg_8_0)
+	if gohelper.isNil(arg_8_0.viewGO) then
+		arg_8_0._isDirty = true
 
-	for slot4 = 0, slot0._row - 1 do
-		for slot8 = 0, slot0._col - 1 do
-			slot0:createCollectionSlotCell(slot8, slot4)
-		end
-	end
-
-	for slot4, slot5 in pairs(slot0._slotCellTab) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10:setItemVisible(slot4 >= 0 and slot4 < slot0._col and slot9 >= 0 and slot9 < slot0._row)
-		end
-	end
-
-	recthelper.setAnchor(slot0._goplacecontainer.transform, -(slot0._row / 2 - 0.5) * slot0._cellHeight, (slot0._col / 2 - 0.5) * slot0._cellWidth)
-end
-
-function slot0.initPlaceCollections(slot0)
-	if slot0._placeCollectionMOs then
-		for slot4, slot5 in ipairs(slot0._placeCollectionMOs) do
-			slot0:placeCollection2SlotArea(slot5)
-		end
-	end
-end
-
-function slot0.getCollectionSlotCell(slot0, slot1, slot2)
-	return slot0._slotCellTab and slot0._slotCellTab[slot1] and slot0._slotCellTab[slot1][slot2]
-end
-
-function slot0.createCollectionSlotCell(slot0, slot1, slot2)
-	if not (slot0._slotCellTab[slot1] and slot0._slotCellTab[slot1][slot2]) then
-		slot4 = gohelper.cloneInPlace(slot0._gomeshItem, string.format("%s_%s", slot1, slot2))
-
-		gohelper.setActive(slot4, true)
-		slot0.params.cls.New():onInit(slot4, slot1, slot2, slot0.params)
-
-		slot0._slotCellTab = slot0._slotCellTab or slot0:getUserDataTb_()
-		slot0._slotCellTab[slot1] = slot0._slotCellTab[slot1] or slot0:getUserDataTb_()
-		slot0._slotCellTab[slot1][slot2] = slot3
-	end
-
-	slot3:initSlotCellLines()
-end
-
-slot0.PlayEffectDuration = 0.5
-
-function slot0.placeCollection2SlotArea(slot0, slot1, slot2)
-	if not slot1 then
 		return
 	end
 
-	if slot0._placeCollectionMap[slot1 and slot1.id] then
-		slot0._placeCollectionMap[slot3] = nil
-	end
+	arg_8_0:initCollectionSlot()
+	arg_8_0:initPlaceCollections()
 
-	slot4 = slot1:getRotation()
-	slot6 = slot1:getCenterSlotPos()
-	slot11 = RougeEnum.CollectionEditorParamType.Shape
+	arg_8_0._isDirty = false
+end
 
-	slot0:revertCoverCells(slot1.id)
+function var_0_0.initCollectionSlot(arg_9_0)
+	arg_9_0._gridlayout.constraintCount = arg_9_0._col
 
-	for slot11, slot12 in ipairs(RougeCollectionConfig.instance:getRotateEditorParam(slot1.cfgId, slot4, slot11)) do
-		slot13 = Vector2(slot12.x + slot6.x, slot6.y - slot12.y)
-
-		if slot0:getCollectionSlotCell(slot13.x, slot13.y) then
-			slot14:onPlaceCollection(RougeCollectionHelper.getSlotCellInsideLine(RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(slot1.cfgId, slot4), slot12))
-
-			slot0._placeCollectionMap[slot3] = slot0._placeCollectionMap[slot3] or {}
-			slot0._coverCells[slot3] = slot0._coverCells[slot3] or {}
-
-			table.insert(slot0._placeCollectionMap[slot3], slot13)
-			table.insert(slot0._coverCells[slot3], slot14)
+	for iter_9_0 = 0, arg_9_0._row - 1 do
+		for iter_9_1 = 0, arg_9_0._col - 1 do
+			arg_9_0:createCollectionSlotCell(iter_9_1, iter_9_0)
 		end
 	end
 
-	if slot0.params and slot0.params.showIcon then
-		slot0:showCollectionIcon(slot1)
+	for iter_9_2, iter_9_3 in pairs(arg_9_0._slotCellTab) do
+		for iter_9_4, iter_9_5 in pairs(iter_9_3) do
+			local var_9_0 = iter_9_2 >= 0 and iter_9_2 < arg_9_0._col and iter_9_4 >= 0 and iter_9_4 < arg_9_0._row
+
+			iter_9_5:setItemVisible(var_9_0)
+		end
+	end
+
+	local var_9_1 = -(arg_9_0._row / 2 - 0.5) * arg_9_0._cellHeight
+	local var_9_2 = (arg_9_0._col / 2 - 0.5) * arg_9_0._cellWidth
+
+	recthelper.setAnchor(arg_9_0._goplacecontainer.transform, var_9_1, var_9_2)
+end
+
+function var_0_0.initPlaceCollections(arg_10_0)
+	if arg_10_0._placeCollectionMOs then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0._placeCollectionMOs) do
+			arg_10_0:placeCollection2SlotArea(iter_10_1)
+		end
 	end
 end
 
-function slot0.showCollectionIcon(slot0, slot1)
-	if not slot1 then
+function var_0_0.getCollectionSlotCell(arg_11_0, arg_11_1, arg_11_2)
+	return arg_11_0._slotCellTab and arg_11_0._slotCellTab[arg_11_1] and arg_11_0._slotCellTab[arg_11_1][arg_11_2]
+end
+
+function var_0_0.createCollectionSlotCell(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._slotCellTab[arg_12_1] and arg_12_0._slotCellTab[arg_12_1][arg_12_2]
+
+	if not var_12_0 then
+		local var_12_1 = gohelper.cloneInPlace(arg_12_0._gomeshItem, string.format("%s_%s", arg_12_1, arg_12_2))
+
+		gohelper.setActive(var_12_1, true)
+
+		var_12_0 = arg_12_0.params.cls.New()
+
+		var_12_0:onInit(var_12_1, arg_12_1, arg_12_2, arg_12_0.params)
+
+		arg_12_0._slotCellTab = arg_12_0._slotCellTab or arg_12_0:getUserDataTb_()
+		arg_12_0._slotCellTab[arg_12_1] = arg_12_0._slotCellTab[arg_12_1] or arg_12_0:getUserDataTb_()
+		arg_12_0._slotCellTab[arg_12_1][arg_12_2] = var_12_0
+	end
+
+	var_12_0:initSlotCellLines()
+end
+
+var_0_0.PlayEffectDuration = 0.5
+
+function var_0_0.placeCollection2SlotArea(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_1 then
 		return
 	end
 
-	slot0:getOrCreateCollectionItem(slot1.id):onUpdateMO(slot1)
-end
+	local var_13_0 = arg_13_1 and arg_13_1.id
 
-function slot0.getOrCreateCollectionItem(slot0, slot1)
-	if not slot0._collectionItemMap[slot1] then
-		slot2 = RougeCollectionBaseSlotItem.New()
-
-		slot2:onInit(gohelper.cloneInPlace(slot0._gochessitem, "item_" .. tostring(slot1)))
-		slot2:setPerCellWidthAndHeight(slot0._cellWidth, slot0._cellHeight)
-
-		slot0._collectionItemMap[slot1] = slot2
+	if arg_13_0._placeCollectionMap[var_13_0] then
+		arg_13_0._placeCollectionMap[var_13_0] = nil
 	end
 
-	return slot2
-end
+	local var_13_1 = arg_13_1:getRotation()
+	local var_13_2 = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(arg_13_1.cfgId, var_13_1)
+	local var_13_3 = arg_13_1:getCenterSlotPos()
+	local var_13_4 = RougeCollectionConfig.instance:getRotateEditorParam(arg_13_1.cfgId, var_13_1, RougeEnum.CollectionEditorParamType.Shape)
 
-function slot0.deleteSlotCollection(slot0, slot1)
-	if slot0._coverCells and slot0._coverCells[slot1] then
-		for slot6, slot7 in ipairs(slot2) do
-			slot7:revertCellState()
+	arg_13_0:revertCoverCells(arg_13_1.id)
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_4) do
+		local var_13_5 = Vector2(iter_13_1.x + var_13_3.x, var_13_3.y - iter_13_1.y)
+		local var_13_6 = arg_13_0:getCollectionSlotCell(var_13_5.x, var_13_5.y)
+
+		if var_13_6 then
+			local var_13_7 = RougeCollectionHelper.getSlotCellInsideLine(var_13_2, iter_13_1)
+
+			var_13_6:onPlaceCollection(var_13_7)
+
+			arg_13_0._placeCollectionMap[var_13_0] = arg_13_0._placeCollectionMap[var_13_0] or {}
+			arg_13_0._coverCells[var_13_0] = arg_13_0._coverCells[var_13_0] or {}
+
+			table.insert(arg_13_0._placeCollectionMap[var_13_0], var_13_5)
+			table.insert(arg_13_0._coverCells[var_13_0], var_13_6)
 		end
+	end
 
-		slot2[slot1] = nil
+	if arg_13_0.params and arg_13_0.params.showIcon then
+		arg_13_0:showCollectionIcon(arg_13_1)
 	end
 end
 
-function slot0._onGetNewCollections(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 then
+function var_0_0.showCollectionIcon(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	if slot3 == RougeEnum.CollectionPlaceArea.SlotArea then
-		for slot7, slot8 in ipairs(slot1) do
-			RougeCollectionHelper.foreachCollectionCells(RougeCollectionModel.instance:getCollectionByUid(slot8), slot0._playEffectAfterGetNewSlotCollection, slot0)
+	arg_14_0:getOrCreateCollectionItem(arg_14_1.id):onUpdateMO(arg_14_1)
+end
+
+function var_0_0.getOrCreateCollectionItem(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._collectionItemMap[arg_15_1]
+
+	if not var_15_0 then
+		var_15_0 = RougeCollectionBaseSlotItem.New()
+
+		local var_15_1 = gohelper.cloneInPlace(arg_15_0._gochessitem, "item_" .. tostring(arg_15_1))
+
+		var_15_0:onInit(var_15_1)
+		var_15_0:setPerCellWidthAndHeight(arg_15_0._cellWidth, arg_15_0._cellHeight)
+
+		arg_15_0._collectionItemMap[arg_15_1] = var_15_0
+	end
+
+	return var_15_0
+end
+
+function var_0_0.deleteSlotCollection(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0._coverCells and arg_16_0._coverCells[arg_16_1]
+
+	if var_16_0 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			iter_16_1:revertCellState()
+		end
+
+		var_16_0[arg_16_1] = nil
+	end
+end
+
+function var_0_0._onGetNewCollections(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if not arg_17_1 or not arg_17_2 then
+		return
+	end
+
+	if arg_17_3 == RougeEnum.CollectionPlaceArea.SlotArea then
+		for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+			local var_17_0 = RougeCollectionModel.instance:getCollectionByUid(iter_17_1)
+
+			RougeCollectionHelper.foreachCollectionCells(var_17_0, arg_17_0._playEffectAfterGetNewSlotCollection, arg_17_0)
 		end
 	end
 
-	slot0:showGetCollectionEffect()
+	arg_17_0:showGetCollectionEffect()
 	AudioMgr.instance:trigger(AudioEnum.UI.CollectionChange)
 end
 
-function slot0._playEffectAfterGetNewSlotCollection(slot0, slot1, slot2, slot3)
-	slot4 = slot1:getLeftTopPos()
+function var_0_0._playEffectAfterGetNewSlotCollection(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = arg_18_1:getLeftTopPos()
+	local var_18_1 = var_18_0.x + arg_18_3 - 1
+	local var_18_2 = var_18_0.y + arg_18_2 - 1
+	local var_18_3 = arg_18_0:getCollectionSlotCell(var_18_1, var_18_2)
 
-	if slot0:getCollectionSlotCell(slot4.x + slot3 - 1, slot4.y + slot2 - 1) then
-		slot7:playGetCollectionEffect()
+	if var_18_3 then
+		var_18_3:playGetCollectionEffect()
 	end
 end
 
-function slot0.showGetCollectionEffect(slot0)
-	if slot0._isPlayingEffect then
+function var_0_0.showGetCollectionEffect(arg_19_0)
+	if arg_19_0._isPlayingEffect then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._delay2HideEffect, slot0)
-	TaskDispatcher.runDelay(slot0._delay2HideEffect, slot0, uv0.PlayEffectDuration)
-	gohelper.setActive(slot0._goeffect, true)
+	TaskDispatcher.cancelTask(arg_19_0._delay2HideEffect, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0._delay2HideEffect, arg_19_0, var_0_0.PlayEffectDuration)
+	gohelper.setActive(arg_19_0._goeffect, true)
 
-	slot0._isPlayingEffect = true
+	arg_19_0._isPlayingEffect = true
 end
 
-function slot0._delay2HideEffect(slot0)
-	gohelper.setActive(slot0._goeffect, false)
+function var_0_0._delay2HideEffect(arg_20_0)
+	gohelper.setActive(arg_20_0._goeffect, false)
 
-	slot0._isPlayingEffect = false
+	arg_20_0._isPlayingEffect = false
 end
 
-function slot0.revertCoverCells(slot0, slot1)
-	if slot0._coverCells and slot0._coverCells[slot1] then
-		for slot6, slot7 in pairs(slot2) do
-			slot7:updateCellState(RougeEnum.LineState.Normal)
+function var_0_0.revertCoverCells(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0._coverCells and arg_21_0._coverCells[arg_21_1]
+
+	if var_21_0 then
+		for iter_21_0, iter_21_1 in pairs(var_21_0) do
+			iter_21_1:updateCellState(RougeEnum.LineState.Normal)
 		end
 
-		slot0._coverCells[slot1] = {}
+		arg_21_0._coverCells[arg_21_1] = {}
 	end
 end
 
-function slot0.disposeAllSlotCells(slot0)
-	if slot0._slotCellTab then
-		for slot4, slot5 in pairs(slot0._slotCellTab) do
-			for slot9, slot10 in pairs(slot5) do
-				slot10:destroy()
+function var_0_0.disposeAllSlotCells(arg_22_0)
+	if arg_22_0._slotCellTab then
+		for iter_22_0, iter_22_1 in pairs(arg_22_0._slotCellTab) do
+			for iter_22_2, iter_22_3 in pairs(iter_22_1) do
+				iter_22_3:destroy()
 			end
 		end
 
-		slot0._slotCellTab = nil
+		arg_22_0._slotCellTab = nil
 	end
 
-	slot0._coverCells = nil
+	arg_22_0._coverCells = nil
 end
 
-function slot0.disposeAllCollections(slot0)
-	if slot0._collectionItemMap then
-		for slot4, slot5 in pairs(slot0._collectionItemMap) do
-			slot5:destroy()
+function var_0_0.disposeAllCollections(arg_23_0)
+	if arg_23_0._collectionItemMap then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0._collectionItemMap) do
+			iter_23_1:destroy()
 		end
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:disposeAllSlotCells()
+function var_0_0.destroy(arg_24_0)
+	arg_24_0:disposeAllSlotCells()
 
-	if slot0._slotItemLoader then
-		slot0._slotItemLoader:onDestroy()
+	if arg_24_0._slotItemLoader then
+		arg_24_0._slotItemLoader:onDestroy()
 
-		slot0._slotItemLoader = nil
+		arg_24_0._slotItemLoader = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._delay2HideEffect, slot0)
-	slot0:__onDispose()
+	TaskDispatcher.cancelTask(arg_24_0._delay2HideEffect, arg_24_0)
+	arg_24_0:__onDispose()
 end
 
-return slot0
+return var_0_0

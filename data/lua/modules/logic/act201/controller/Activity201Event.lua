@@ -1,6 +1,7 @@
-module("modules.logic.act201.controller.Activity201Event", package.seeall)
+﻿module("modules.logic.act201.controller.Activity201Event", package.seeall)
 
-slot0 = _M
-slot0.OnGetInfoSuccess = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnGetInfoSuccess = 1
+
+return var_0_0

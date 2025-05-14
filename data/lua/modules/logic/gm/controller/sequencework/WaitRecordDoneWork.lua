@@ -1,27 +1,28 @@
-module("modules.logic.gm.controller.sequencework.WaitRecordDoneWork", package.seeall)
+﻿module("modules.logic.gm.controller.sequencework.WaitRecordDoneWork", package.seeall)
 
-slot0 = class("WaitRecordDoneWork", BaseWork)
+local var_0_0 = class("WaitRecordDoneWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if not PerformanceRecorder.instance:isRecording() then
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	PerformanceRecorder.instance:registerCallback(PerformanceRecordEvent.onRecordDone, slot0.onRecordDone, slot0)
+	PerformanceRecorder.instance:registerCallback(PerformanceRecordEvent.onRecordDone, arg_2_0.onRecordDone, arg_2_0)
 end
 
-function slot0.onRecordDone(slot0)
-	PerformanceRecorder.instance:unregisterCallback(PerformanceRecordEvent.onRecordDone, slot0.onRecordDone, slot0)
-	slot0:onDone(true)
+function var_0_0.onRecordDone(arg_3_0)
+	PerformanceRecorder.instance:unregisterCallback(PerformanceRecordEvent.onRecordDone, arg_3_0.onRecordDone, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	PerformanceRecorder.instance:unregisterCallback(PerformanceRecordEvent.onRecordDone, slot0.onRecordDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	PerformanceRecorder.instance:unregisterCallback(PerformanceRecordEvent.onRecordDone, arg_4_0.onRecordDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

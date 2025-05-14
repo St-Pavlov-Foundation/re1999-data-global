@@ -1,158 +1,186 @@
-module("modules.logic.fight.mgr.FightBuffTypeId2EffectMgr", package.seeall)
+﻿module("modules.logic.fight.mgr.FightBuffTypeId2EffectMgr", package.seeall)
 
-slot0 = class("FightBuffTypeId2EffectMgr", FightBaseClass)
+local var_0_0 = class("FightBuffTypeId2EffectMgr", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0.effectDic = {}
-	slot0.refCounter = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.effectDic = {}
+	arg_1_0.refCounter = {}
 
-	slot0:com_registFightEvent(FightEvent.AddEntityBuff, slot0._onAddEntityBuff)
-	slot0:com_registFightEvent(FightEvent.RemoveEntityBuff, slot0._onRemoveEntityBuff)
-	slot0:com_registFightEvent(FightEvent.OnFightReconnectLastWork, slot0._onFightReconnectLastWork)
-	slot0:com_registFightEvent(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart)
-	slot0:com_registFightEvent(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish)
-	slot0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, slot0._onOnRoundSequenceFinish)
+	arg_1_0:com_registFightEvent(FightEvent.AddEntityBuff, arg_1_0._onAddEntityBuff)
+	arg_1_0:com_registFightEvent(FightEvent.RemoveEntityBuff, arg_1_0._onRemoveEntityBuff)
+	arg_1_0:com_registFightEvent(FightEvent.OnFightReconnectLastWork, arg_1_0._onFightReconnectLastWork)
+	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart)
+	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish)
+	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_1_0._onOnRoundSequenceFinish)
 end
 
-slot1 = {
-	[7253501.0] = "buff/buff_yinyangyu"
+local var_0_1 = {
+	[7253501] = "buff/buff_yinyangyu"
 }
 
-function slot0._isValid(slot0, slot1)
-	if not lua_skill_buff.configDict[slot1] then
+function var_0_0._isValid(arg_2_0, arg_2_1)
+	local var_2_0 = lua_skill_buff.configDict[arg_2_1]
+
+	if not var_2_0 then
 		return
 	end
 
-	if not uv0[slot2.typeId] then
+	local var_2_1 = var_2_0.typeId
+
+	if not var_0_1[var_2_1] then
 		return
 	end
 
-	return true, slot2
+	return true, var_2_0
 end
 
-function slot0._onAddEntityBuff(slot0, slot1, slot2)
-	slot3, slot4 = slot0:_isValid(slot2.buffId)
+function var_0_0._onAddEntityBuff(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0, var_3_1 = arg_3_0:_isValid(arg_3_2.buffId)
 
-	if not slot3 then
+	if not var_3_0 then
 		return
 	end
 
-	slot0:addBuff(slot4.typeId)
+	arg_3_0:addBuff(var_3_1.typeId)
 end
 
-function slot0._onRemoveEntityBuff(slot0, slot1, slot2)
-	slot3, slot4 = slot0:_isValid(slot2.buffId)
+function var_0_0._onRemoveEntityBuff(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0, var_4_1 = arg_4_0:_isValid(arg_4_2.buffId)
 
-	if not slot3 then
+	if not var_4_0 then
 		return
 	end
 
-	slot0:deleteBuff(slot4.typeId)
+	arg_4_0:deleteBuff(var_4_1.typeId)
 end
 
-function slot0.addBuff(slot0, slot1)
-	slot2 = (slot0.refCounter[slot1] or 0) + 1
-	slot0.refCounter[slot1] = slot2
+function var_0_0.addBuff(arg_5_0, arg_5_1)
+	local var_5_0 = (arg_5_0.refCounter[arg_5_1] or 0) + 1
 
-	if slot2 == 1 then
-		slot0:addEffect(slot1)
+	arg_5_0.refCounter[arg_5_1] = var_5_0
+
+	if var_5_0 == 1 then
+		arg_5_0:addEffect(arg_5_1)
 	end
 end
 
-function slot0.deleteBuff(slot0, slot1)
-	slot2 = (slot0.refCounter[slot1] or 0) - 1
-	slot0.refCounter[slot1] = slot2
+function var_0_0.deleteBuff(arg_6_0, arg_6_1)
+	local var_6_0 = (arg_6_0.refCounter[arg_6_1] or 0) - 1
 
-	if slot2 <= 0 then
-		slot0:releaseEffect(slot1)
+	arg_6_0.refCounter[arg_6_1] = var_6_0
+
+	if var_6_0 <= 0 then
+		arg_6_0:releaseEffect(arg_6_1)
 	end
 end
 
-function slot0.addEffect(slot0, slot1)
-	if not FightHelper.getEntity(FightEntityScene.MySideId) then
+function var_0_0.addEffect(arg_7_0, arg_7_1)
+	local var_7_0 = FightHelper.getEntity(FightEntityScene.MySideId)
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0.effectDic[slot1] = slot2.effect:addGlobalEffect(uv0[slot1])
+	arg_7_0.effectDic[arg_7_1] = var_7_0.effect:addGlobalEffect(var_0_1[arg_7_1])
 end
 
-function slot0.releaseEffect(slot0, slot1)
-	if not slot0.effectDic[slot1] then
+function var_0_0.releaseEffect(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.effectDic[arg_8_1]
+
+	if not var_8_0 then
 		return
 	end
 
-	if not FightHelper.getEntity(FightEntityScene.MySideId) then
+	local var_8_1 = FightHelper.getEntity(FightEntityScene.MySideId)
+
+	if not var_8_1 then
 		return
 	end
 
-	slot3.effect:removeEffect(slot2)
+	var_8_1.effect:removeEffect(var_8_0)
 
-	slot0.effectDic[slot1] = nil
+	arg_8_0.effectDic[arg_8_1] = nil
 end
 
-function slot0._onFightReconnectLastWork(slot0)
-	for slot5, slot6 in pairs(FightDataHelper.entityMgr:getAllEntityData()) do
-		for slot11, slot12 in pairs(slot6:getBuffDic()) do
-			slot0:_onAddEntityBuff(slot5, slot12)
+function var_0_0._onFightReconnectLastWork(arg_9_0)
+	local var_9_0 = FightDataHelper.entityMgr:getAllEntityData()
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		local var_9_1 = iter_9_1:getBuffDic()
+
+		for iter_9_2, iter_9_3 in pairs(var_9_1) do
+			arg_9_0:_onAddEntityBuff(iter_9_0, iter_9_3)
 		end
 	end
 end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2)
-	if slot1:getMO() and slot3:isUniqueSkill(slot2) then
-		slot0:_hideEffect()
+function var_0_0._onSkillPlayStart(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_1:getMO()
+
+	if var_10_0 and var_10_0:isUniqueSkill(arg_10_2) then
+		arg_10_0:_hideEffect()
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1, slot2)
-	if slot1:getMO() and slot3:isUniqueSkill(slot2) then
-		slot0:_showEffect()
+function var_0_0._onSkillPlayFinish(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_1:getMO()
+
+	if var_11_0 and var_11_0:isUniqueSkill(arg_11_2) then
+		arg_11_0:_showEffect()
 	end
 end
 
-function slot0._hideEffect(slot0)
-	for slot4, slot5 in pairs(slot0.effectDic) do
-		slot5:setActive(false, "FightBuffTypeId2EffectMgr")
+function var_0_0._hideEffect(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.effectDic) do
+		iter_12_1:setActive(false, "FightBuffTypeId2EffectMgr")
 	end
 end
 
-function slot0._showEffect(slot0)
-	for slot4, slot5 in pairs(slot0.effectDic) do
-		slot5:setActive(true, "FightBuffTypeId2EffectMgr")
+function var_0_0._showEffect(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.effectDic) do
+		iter_13_1:setActive(true, "FightBuffTypeId2EffectMgr")
 	end
 end
 
-function slot0._onOnRoundSequenceFinish(slot0)
-	if tabletool.len(slot0.refCounter) <= 0 then
+function var_0_0._onOnRoundSequenceFinish(arg_14_0)
+	if tabletool.len(arg_14_0.refCounter) <= 0 then
 		return
 	end
 
-	slot1 = {}
+	local var_14_0 = {}
+	local var_14_1 = FightDataHelper.entityMgr:getAllEntityData()
 
-	for slot6, slot7 in pairs(FightDataHelper.entityMgr:getAllEntityData()) do
-		for slot12, slot13 in pairs(slot7:getBuffDic()) do
-			if lua_skill_buff.configDict[slot13.buffId] and uv0[slot14.typeId] then
-				slot1[slot14.typeId] = (slot1[slot14.typeId] or 0) + 1
+	for iter_14_0, iter_14_1 in pairs(var_14_1) do
+		local var_14_2 = iter_14_1:getBuffDic()
+
+		for iter_14_2, iter_14_3 in pairs(var_14_2) do
+			local var_14_3 = lua_skill_buff.configDict[iter_14_3.buffId]
+
+			if var_14_3 and var_0_1[var_14_3.typeId] then
+				local var_14_4 = (var_14_0[var_14_3.typeId] or 0) + 1
+
+				var_14_0[var_14_3.typeId] = var_14_4
 			end
 		end
 	end
 
-	if FightDataHelper.findDiff(slot0.refCounter, slot1) then
-		slot0:releaseAllEffect()
+	if FightDataHelper.findDiff(arg_14_0.refCounter, var_14_0) then
+		arg_14_0:releaseAllEffect()
 
-		slot0.refCounter = {}
+		arg_14_0.refCounter = {}
 
-		slot0:_onFightReconnectLastWork()
+		arg_14_0:_onFightReconnectLastWork()
 	end
 end
 
-function slot0.releaseAllEffect(slot0)
-	for slot4, slot5 in pairs(slot0.effectDic) do
-		slot0:releaseEffect(slot4)
+function var_0_0.releaseAllEffect(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0.effectDic) do
+		arg_15_0:releaseEffect(iter_15_0)
 	end
 end
 
-function slot0.onDestructor(slot0)
+function var_0_0.onDestructor(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

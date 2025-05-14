@@ -1,364 +1,434 @@
-module("modules.logic.fight.controller.log.FightLogHelper", package.seeall)
+﻿module("modules.logic.fight.controller.log.FightLogHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.getPrefix(slot0)
-	return string.rep("\t", slot0)
+function var_0_0.getPrefix(arg_1_0)
+	return string.rep("\t", arg_1_0)
 end
 
-function slot0.getMoListString(slot0, slot1, slot2, slot3)
-	if not slot0 then
-		return string.format("%s %s : nil", uv0.getPrefix(slot3 or 0), slot2)
+function var_0_0.getMoListString(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_3 = arg_2_3 or 0
+
+	local var_2_0 = var_0_0.getPrefix(arg_2_3)
+
+	if not arg_2_0 then
+		return string.format("%s %s : nil", var_2_0, arg_2_2)
 	end
 
-	if #slot0 == 0 then
-		return string.format("%s %s : []", slot4, slot2)
+	if #arg_2_0 == 0 then
+		return string.format("%s %s : []", var_2_0, arg_2_2)
 	end
 
-	slot5 = {
-		string.format("%s %s : [", slot4, slot9)
+	local var_2_1 = {
+		string.format("%s %s : [", var_2_0, arg_2_2)
 	}
-	slot9 = slot2
 
-	for slot9, slot10 in ipairs(slot0) do
-		table.insert(slot5, slot1(slot10, slot3 + 1, slot9))
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
+		table.insert(var_2_1, arg_2_1(iter_2_1, arg_2_3 + 1, iter_2_0))
 	end
 
-	table.insert(slot5, slot4 .. "]")
+	table.insert(var_2_1, var_2_0 .. "]")
 
-	return table.concat(slot5, "\n")
+	return table.concat(var_2_1, "\n")
 end
 
-function slot0.getMoDictString(slot0, slot1, slot2, slot3, slot4)
-	if not slot0 then
-		return string.format("%s %s : nil", uv0.getPrefix(slot3 or 0), slot2)
+function var_0_0.getMoDictString(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	arg_3_3 = arg_3_3 or 0
+
+	local var_3_0 = var_0_0.getPrefix(arg_3_3)
+
+	if not arg_3_0 then
+		return string.format("%s %s : nil", var_3_0, arg_3_2)
 	end
 
-	if GameUtil.tabletool_dictIsEmpty(slot0) then
-		return string.format("%s %s : []", slot5, slot2)
+	if GameUtil.tabletool_dictIsEmpty(arg_3_0) then
+		return string.format("%s %s : []", var_3_0, arg_3_2)
 	end
 
-	slot10 = slot4
-	slot11 = slot2
+	local var_3_1 = {
+		string.format("%s %s : [", var_3_0, arg_3_2)
+	}
 
-	uv0.addStack({
-		string.format("%s %s : [", slot5, slot2)
-	}, uv0.getPrefix(slot3 + 1), slot10, slot11)
+	var_0_0.addStack(var_3_1, var_0_0.getPrefix(arg_3_3 + 1), arg_3_4, arg_3_2)
 
-	for slot10, slot11 in pairs(slot0) do
-		table.insert(slot6, slot1(slot11, slot3 + 1, tostring(slot10), uv0.getStack(slot4, slot2)))
+	arg_3_4 = var_0_0.getStack(arg_3_4, arg_3_2)
+
+	for iter_3_0, iter_3_1 in pairs(arg_3_0) do
+		table.insert(var_3_1, arg_3_1(iter_3_1, arg_3_3 + 1, tostring(iter_3_0), arg_3_4))
 	end
 
-	table.insert(slot6, slot5 .. "]")
+	table.insert(var_3_1, var_3_0 .. "]")
 
-	return table.concat(slot6, "\n")
+	return table.concat(var_3_1, "\n")
 end
 
-function slot0.buildClassNameByIndex(slot0, slot1)
-	if slot1 and slot1 ~= 0 then
-		return slot0 .. "_" .. tostring(slot1)
+function var_0_0.buildClassNameByIndex(arg_4_0, arg_4_1)
+	if arg_4_1 and arg_4_1 ~= 0 then
+		return arg_4_0 .. "_" .. tostring(arg_4_1)
 	end
 
-	return slot0
+	return arg_4_0
 end
 
-function slot0.getFightRoundString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("FightRoundMO", slot2)
+function var_0_0.getFightRoundString(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_1 = arg_5_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_5_0 = var_0_0.getPrefix(arg_5_1)
+	local var_5_1 = var_0_0.buildClassNameByIndex("FightRoundMO", arg_5_2)
+
+	if not arg_5_0 then
+		return string.format("%s %s : nil", var_5_0, var_5_1)
 	end
 
-	slot5 = {}
+	local var_5_2 = {}
 
-	table.insert(slot5, string.format("%s %s {", slot3, slot4))
+	table.insert(var_5_2, string.format("%s %s {", var_5_0, var_5_1))
 
-	slot1 = slot1 + 1
-	slot6 = uv0.getPrefix(slot1)
+	arg_5_1 = arg_5_1 + 1
 
-	table.insert(slot5, string.format("%s actPoint : %s", slot6, slot0.actPoint))
-	table.insert(slot5, string.format("%s isFinish : %s", slot6, slot0.isFinish))
-	table.insert(slot5, string.format("%s moveNum : %s", slot6, slot0.moveNum))
-	table.insert(slot5, string.format("%s power : %s", slot6, slot0.power))
-	table.insert(slot5, uv0.getFightStepListString(slot0.fightStepMOs, slot1, "fightStepMOs"))
-	table.insert(slot5, uv0.getFightStepListString(slot0.nextRoundBeginStepMOs, slot1, "nextRoundBeginStepMOs"))
-	table.insert(slot5, slot3 .. "}")
+	local var_5_3 = var_0_0.getPrefix(arg_5_1)
 
-	return table.concat(slot5, "\n")
+	table.insert(var_5_2, string.format("%s actPoint : %s", var_5_3, arg_5_0.actPoint))
+	table.insert(var_5_2, string.format("%s isFinish : %s", var_5_3, arg_5_0.isFinish))
+	table.insert(var_5_2, string.format("%s moveNum : %s", var_5_3, arg_5_0.moveNum))
+	table.insert(var_5_2, string.format("%s power : %s", var_5_3, arg_5_0.power))
+	table.insert(var_5_2, var_0_0.getFightStepListString(arg_5_0.fightStepMOs, arg_5_1, "fightStepMOs"))
+	table.insert(var_5_2, var_0_0.getFightStepListString(arg_5_0.nextRoundBeginStepMOs, arg_5_1, "nextRoundBeginStepMOs"))
+	table.insert(var_5_2, var_5_0 .. "}")
+
+	return table.concat(var_5_2, "\n")
 end
 
-function slot0.getFightStepString(slot0, slot1, slot2)
-	if not slot0 then
-		return string.format("%s %s : nil", uv0.getPrefix(slot1 or 0), uv0.buildClassNameByIndex("FightStepMo", slot2))
+function var_0_0.getFightStepString(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_1 = arg_6_1 or 0
+
+	local var_6_0 = var_0_0.getPrefix(arg_6_1)
+	local var_6_1 = var_0_0.buildClassNameByIndex("FightStepMo", arg_6_2)
+
+	if not arg_6_0 then
+		return string.format("%s %s : nil", var_6_0, var_6_1)
 	end
 
-	slot5 = {}
+	local var_6_2 = {}
+	local var_6_3 = string.format("%s %s {", var_6_0, var_6_1)
 
-	if FightHelper.needAddRoundStep(slot0) then
-		slot6 = string.format("%s %s {", slot3, slot4) .. "会被添加为新的步骤"
+	if FightHelper.needAddRoundStep(arg_6_0) then
+		var_6_3 = var_6_3 .. "会被添加为新的步骤"
 	end
 
-	table.insert(slot5, slot6)
-	table.insert(slot5, string.format("%s actType : %s %s", uv0.getPrefix(slot1 + 1), slot0.actType, uv0.getActTypeName(slot0.actType)))
+	table.insert(var_6_2, var_6_3)
 
-	if slot0.actType == FightEnum.ActType.SKILL then
-		table.insert(slot5, string.format("%s fromId : %s 技能发起者:%s", slot7, slot0.fromId, uv0.getEntityName(slot0.fromId)))
-		table.insert(slot5, string.format("%s toId : %s 技能承受者:%s", slot7, slot0.toId, uv0.getEntityName(slot0.toId)))
-		table.insert(slot5, string.format("%s actId : %s 技能名字:%s timeline : %s", slot7, slot0.actId, uv0.getSkillName(slot0.actId), uv0.getTimelineName(slot0.fromId, slot0.actId)))
+	arg_6_1 = arg_6_1 + 1
+
+	local var_6_4 = var_0_0.getPrefix(arg_6_1)
+
+	table.insert(var_6_2, string.format("%s actType : %s %s", var_6_4, arg_6_0.actType, var_0_0.getActTypeName(arg_6_0.actType)))
+
+	if arg_6_0.actType == FightEnum.ActType.SKILL then
+		table.insert(var_6_2, string.format("%s fromId : %s 技能发起者:%s", var_6_4, arg_6_0.fromId, var_0_0.getEntityName(arg_6_0.fromId)))
+		table.insert(var_6_2, string.format("%s toId : %s 技能承受者:%s", var_6_4, arg_6_0.toId, var_0_0.getEntityName(arg_6_0.toId)))
+		table.insert(var_6_2, string.format("%s actId : %s 技能名字:%s timeline : %s", var_6_4, arg_6_0.actId, var_0_0.getSkillName(arg_6_0.actId), var_0_0.getTimelineName(arg_6_0.fromId, arg_6_0.actId)))
 	else
-		table.insert(slot5, string.format("%s fromId : %s", slot7, slot0.fromId))
-		table.insert(slot5, string.format("%s toId : %s", slot7, slot0.toId))
-		table.insert(slot5, string.format("%s actId : %s", slot7, slot0.actId))
+		table.insert(var_6_2, string.format("%s fromId : %s", var_6_4, arg_6_0.fromId))
+		table.insert(var_6_2, string.format("%s toId : %s", var_6_4, arg_6_0.toId))
+		table.insert(var_6_2, string.format("%s actId : %s", var_6_4, arg_6_0.actId))
 	end
 
-	table.insert(slot5, string.format("%s cardIndex : %s", slot7, slot0.cardIndex))
-	table.insert(slot5, string.format("%s supportHeroId : %s", slot7, slot0.supportHeroId))
-	table.insert(slot5, uv0.getFightActEffectListString(slot0.actEffectMOs, slot1, "actEffectMOs"))
-	table.insert(slot5, slot3 .. "}")
+	table.insert(var_6_2, string.format("%s cardIndex : %s", var_6_4, arg_6_0.cardIndex))
+	table.insert(var_6_2, string.format("%s supportHeroId : %s", var_6_4, arg_6_0.supportHeroId))
+	table.insert(var_6_2, var_0_0.getFightActEffectListString(arg_6_0.actEffectMOs, arg_6_1, "actEffectMOs"))
+	table.insert(var_6_2, var_6_0 .. "}")
 
-	return table.concat(slot5, "\n")
+	return table.concat(var_6_2, "\n")
 end
 
-function slot0.getFightStepListString(slot0, slot1, slot2)
-	return uv0.getMoListString(slot0, uv0.getFightStepString, slot2 or "stepMoList", slot1)
+function var_0_0.getFightStepListString(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_2 = arg_7_2 or "stepMoList"
+
+	return var_0_0.getMoListString(arg_7_0, var_0_0.getFightStepString, arg_7_2, arg_7_1)
 end
 
-function slot0.getFightActEffectString(slot0, slot1, slot2)
-	if FightLogFilterHelper.checkEffectMoIsFilter(slot0) then
+function var_0_0.getFightActEffectString(arg_8_0, arg_8_1, arg_8_2)
+	if FightLogFilterHelper.checkEffectMoIsFilter(arg_8_0) then
 		return ""
 	end
 
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("ActEffectMO", slot2)
+	arg_8_1 = arg_8_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_8_0 = var_0_0.getPrefix(arg_8_1)
+	local var_8_1 = var_0_0.buildClassNameByIndex("ActEffectMO", arg_8_2)
+
+	if not arg_8_0 then
+		return string.format("%s %s : nil", var_8_0, var_8_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_8_2 = {
+		string.format("%s %s {", var_8_0, var_8_1)
 	}
-	slot1 = slot1 + 1
-	slot6 = uv0.getPrefix(slot1)
 
-	table.insert(slot5, string.format("%s targetId : %s 作用对象:%s", slot6, slot0.targetId, uv0.getEntityName(slot0.targetId)))
-	table.insert(slot5, string.format("%s effectType : %s 效果类型:%s", slot6, slot0.effectType, uv0.getEffectTypeName(slot0.effectType)))
-	table.insert(slot5, string.format("%s effectNum : %s", slot6, slot0.effectNum))
-	table.insert(slot5, string.format("%s effectNum1 : %s", slot6, slot0.effectNum1))
-	table.insert(slot5, string.format("%s fromSide : %s", slot6, slot0.fromSide))
-	table.insert(slot5, string.format("%s configEffect : %s", slot6, slot0.configEffect))
-	table.insert(slot5, string.format("%s buffActId : %s", slot6, slot0.buffActId))
-	table.insert(slot5, string.format("%s reserveId : %s", slot6, slot0.reserveId))
-	table.insert(slot5, string.format("%s reserveStr : %s", slot6, slot0.reserveStr))
-	table.insert(slot5, uv0.getAssistBossInfoString(slot0.assistBossInfo, slot1))
+	arg_8_1 = arg_8_1 + 1
 
-	if slot0.cus_stepMO then
-		table.insert(slot5, uv0.getFightStepString(slot0.cus_stepMO, slot1))
+	local var_8_3 = var_0_0.getPrefix(arg_8_1)
+
+	table.insert(var_8_2, string.format("%s targetId : %s 作用对象:%s", var_8_3, arg_8_0.targetId, var_0_0.getEntityName(arg_8_0.targetId)))
+	table.insert(var_8_2, string.format("%s effectType : %s 效果类型:%s", var_8_3, arg_8_0.effectType, var_0_0.getEffectTypeName(arg_8_0.effectType)))
+	table.insert(var_8_2, string.format("%s effectNum : %s", var_8_3, arg_8_0.effectNum))
+	table.insert(var_8_2, string.format("%s effectNum1 : %s", var_8_3, arg_8_0.effectNum1))
+	table.insert(var_8_2, string.format("%s fromSide : %s", var_8_3, arg_8_0.fromSide))
+	table.insert(var_8_2, string.format("%s configEffect : %s", var_8_3, arg_8_0.configEffect))
+	table.insert(var_8_2, string.format("%s buffActId : %s", var_8_3, arg_8_0.buffActId))
+	table.insert(var_8_2, string.format("%s reserveId : %s", var_8_3, arg_8_0.reserveId))
+	table.insert(var_8_2, string.format("%s reserveStr : %s", var_8_3, arg_8_0.reserveStr))
+	table.insert(var_8_2, var_0_0.getAssistBossInfoString(arg_8_0.assistBossInfo, arg_8_1))
+
+	if arg_8_0.cus_stepMO then
+		table.insert(var_8_2, var_0_0.getFightStepString(arg_8_0.cus_stepMO, arg_8_1))
 	end
 
-	if slot0.buff then
-		table.insert(slot5, uv0.getFightBuffString(slot0.buff, slot1))
+	if arg_8_0.buff then
+		table.insert(var_8_2, var_0_0.getFightBuffString(arg_8_0.buff, arg_8_1))
 	end
 
-	if slot0.entityMO then
-		table.insert(slot5, uv0.getEntityMoString(slot0.entityMO, slot1))
+	if arg_8_0.entityMO then
+		table.insert(var_8_2, var_0_0.getEntityMoString(arg_8_0.entityMO, arg_8_1))
 	end
 
-	table.insert(slot5, slot3 .. "}")
+	table.insert(var_8_2, var_8_0 .. "}")
 
-	return table.concat(slot5, "\n")
+	return table.concat(var_8_2, "\n")
 end
 
-function slot0.getAssistBossInfoString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("AssistBossInfo", slot2)
+function var_0_0.getAssistBossInfoString(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_1 = arg_9_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_9_0 = var_0_0.getPrefix(arg_9_1)
+	local var_9_1 = var_0_0.buildClassNameByIndex("AssistBossInfo", arg_9_2)
+
+	if not arg_9_0 then
+		return string.format("%s %s : nil", var_9_0, var_9_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_9_2 = {
+		string.format("%s %s {", var_9_0, var_9_1)
 	}
-	slot1 = slot1 + 1
-	slot6 = uv0.getPrefix(slot1)
 
-	table.insert(slot5, string.format("%s currCd : %s", slot6, slot0.currCd))
-	table.insert(slot5, string.format("%s cdCfg : %s", slot6, slot0.cdCfg))
-	table.insert(slot5, string.format("%s formId : %s", slot6, slot0.formId))
-	table.insert(slot5, uv0.getAssistBossSkillInfoString(slot0.skills, slot1))
-	table.insert(slot5, slot3 .. "}")
+	arg_9_1 = arg_9_1 + 1
 
-	return table.concat(slot5, "\n")
+	local var_9_3 = var_0_0.getPrefix(arg_9_1)
+
+	table.insert(var_9_2, string.format("%s currCd : %s", var_9_3, arg_9_0.currCd))
+	table.insert(var_9_2, string.format("%s cdCfg : %s", var_9_3, arg_9_0.cdCfg))
+	table.insert(var_9_2, string.format("%s formId : %s", var_9_3, arg_9_0.formId))
+	table.insert(var_9_2, var_0_0.getAssistBossSkillInfoString(arg_9_0.skills, arg_9_1))
+	table.insert(var_9_2, var_9_0 .. "}")
+
+	return table.concat(var_9_2, "\n")
 end
 
-function slot0.getAssistBossSkillInfoString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("AssistBossSkillInfo", slot2)
+function var_0_0.getAssistBossSkillInfoString(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_1 = arg_10_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_10_0 = var_0_0.getPrefix(arg_10_1)
+	local var_10_1 = var_0_0.buildClassNameByIndex("AssistBossSkillInfo", arg_10_2)
+
+	if not arg_10_0 then
+		return string.format("%s %s : nil", var_10_0, var_10_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_10_2 = {
+		string.format("%s %s {", var_10_0, var_10_1)
 	}
-	slot6 = uv0.getPrefix(slot1 + 1)
 
-	table.insert(slot5, string.format("%s skillId : %s", slot6, slot0.skillId))
-	table.insert(slot5, string.format("%s needPower : %s", slot6, slot0.needPower))
-	table.insert(slot5, string.format("%s powerLow : %s", slot6, slot0.powerLow))
-	table.insert(slot5, string.format("%s powerHigh : %s", slot6, slot0.powerHigh))
-	table.insert(slot5, slot3 .. "}")
+	arg_10_1 = arg_10_1 + 1
 
-	return table.concat(slot5, "\n")
+	local var_10_3 = var_0_0.getPrefix(arg_10_1)
+
+	table.insert(var_10_2, string.format("%s skillId : %s", var_10_3, arg_10_0.skillId))
+	table.insert(var_10_2, string.format("%s needPower : %s", var_10_3, arg_10_0.needPower))
+	table.insert(var_10_2, string.format("%s powerLow : %s", var_10_3, arg_10_0.powerLow))
+	table.insert(var_10_2, string.format("%s powerHigh : %s", var_10_3, arg_10_0.powerHigh))
+	table.insert(var_10_2, var_10_0 .. "}")
+
+	return table.concat(var_10_2, "\n")
 end
 
-function slot0.getFightAssistBossSkillListString(slot0, slot1, slot2)
-	return uv0.getMoListString(slot0, uv0.getAssistBossSkillInfoString, slot2 or "assistBossSkillInfoList", slot1)
+function var_0_0.getFightAssistBossSkillListString(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_2 = arg_11_2 or "assistBossSkillInfoList"
+
+	return var_0_0.getMoListString(arg_11_0, var_0_0.getAssistBossSkillInfoString, arg_11_2, arg_11_1)
 end
 
-function slot0.getFightActEffectListString(slot0, slot1, slot2)
-	return uv0.getMoListString(slot0, uv0.getFightActEffectString, slot2 or "actEffectMoList", slot1)
+function var_0_0.getFightActEffectListString(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_2 = arg_12_2 or "actEffectMoList"
+
+	return var_0_0.getMoListString(arg_12_0, var_0_0.getFightActEffectString, arg_12_2, arg_12_1)
 end
 
-function slot0.getFightBuffString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("FightBuffMO", slot2)
+function var_0_0.getFightBuffString(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_1 = arg_13_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_13_0 = var_0_0.getPrefix(arg_13_1)
+	local var_13_1 = var_0_0.buildClassNameByIndex("FightBuffMO", arg_13_2)
+
+	if not arg_13_0 then
+		return string.format("%s %s : nil", var_13_0, var_13_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_13_2 = {
+		string.format("%s %s {", var_13_0, var_13_1)
 	}
-	slot6 = uv0.getPrefix(slot1 + 1)
 
-	table.insert(slot5, string.format("%s time : %s", slot6, slot0.time))
-	table.insert(slot5, string.format("%s entityId : %s %s", slot6, slot0.entityId, uv0.getEntityName(slot0.entityId)))
-	table.insert(slot5, string.format("%s id : %s", slot6, slot0.id))
-	table.insert(slot5, string.format("%s uid : %s", slot6, slot0.uid))
-	table.insert(slot5, string.format("%s buffId : %s %s", slot6, slot0.buffId, slot0.name))
-	table.insert(slot5, string.format("%s duration : %s", slot6, slot0.duration))
-	table.insert(slot5, string.format("%s exInfo : %s", slot6, slot0.exInfo))
-	table.insert(slot5, string.format("%s fromUid : %s", slot6, slot0.fromUid))
-	table.insert(slot5, string.format("%s count : %s", slot6, slot0.count))
-	table.insert(slot5, string.format("%s name : %s", slot6, slot0.name))
-	table.insert(slot5, string.format("%s actCommonParams : %s", slot6, slot0.actCommonParams))
-	table.insert(slot5, string.format("%s layer : %s", slot6, slot0.layer))
-	table.insert(slot5, slot3 .. "}")
+	arg_13_1 = arg_13_1 + 1
 
-	return table.concat(slot5, "\n")
+	local var_13_3 = var_0_0.getPrefix(arg_13_1)
+
+	table.insert(var_13_2, string.format("%s time : %s", var_13_3, arg_13_0.time))
+	table.insert(var_13_2, string.format("%s entityId : %s %s", var_13_3, arg_13_0.entityId, var_0_0.getEntityName(arg_13_0.entityId)))
+	table.insert(var_13_2, string.format("%s id : %s", var_13_3, arg_13_0.id))
+	table.insert(var_13_2, string.format("%s uid : %s", var_13_3, arg_13_0.uid))
+	table.insert(var_13_2, string.format("%s buffId : %s %s", var_13_3, arg_13_0.buffId, arg_13_0.name))
+	table.insert(var_13_2, string.format("%s duration : %s", var_13_3, arg_13_0.duration))
+	table.insert(var_13_2, string.format("%s exInfo : %s", var_13_3, arg_13_0.exInfo))
+	table.insert(var_13_2, string.format("%s fromUid : %s", var_13_3, arg_13_0.fromUid))
+	table.insert(var_13_2, string.format("%s count : %s", var_13_3, arg_13_0.count))
+	table.insert(var_13_2, string.format("%s name : %s", var_13_3, arg_13_0.name))
+	table.insert(var_13_2, string.format("%s actCommonParams : %s", var_13_3, arg_13_0.actCommonParams))
+	table.insert(var_13_2, string.format("%s layer : %s", var_13_3, arg_13_0.layer))
+	table.insert(var_13_2, var_13_0 .. "}")
+
+	return table.concat(var_13_2, "\n")
 end
 
-function slot0.getFightBuffListString(slot0, slot1, slot2)
-	return uv0.getMoListString(slot0, uv0.getFightBuffString, slot2 or "buffMoList", slot1)
+function var_0_0.getFightBuffListString(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_2 = arg_14_2 or "buffMoList"
+
+	return var_0_0.getMoListString(arg_14_0, var_0_0.getFightBuffString, arg_14_2, arg_14_1)
 end
 
-function slot0.getFightBuffDictString(slot0, slot1, slot2)
-	return uv0.getMoDictString(slot0, uv0.getFightBuffString, slot2 or "buffMoDict", slot1)
+function var_0_0.getFightBuffDictString(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_2 = arg_15_2 or "buffMoDict"
+
+	return var_0_0.getMoDictString(arg_15_0, var_0_0.getFightBuffString, arg_15_2, arg_15_1)
 end
 
-function slot0.getEntityMoString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("FightEntityMO", slot2)
+function var_0_0.getEntityMoString(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_1 = arg_16_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_16_0 = var_0_0.getPrefix(arg_16_1)
+	local var_16_1 = var_0_0.buildClassNameByIndex("FightEntityMO", arg_16_2)
+
+	if not arg_16_0 then
+		return string.format("%s %s : nil", var_16_0, var_16_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_16_2 = {
+		string.format("%s %s {", var_16_0, var_16_1)
 	}
-	slot6 = uv0.getPrefix(slot1 + 1)
 
-	table.insert(slot5, string.format("%s id : %s", slot6, slot0.id))
-	table.insert(slot5, string.format("%s uid : %s", slot6, slot0.uid))
-	table.insert(slot5, string.format("%s modelId : %s", slot6, slot0.modelId))
-	table.insert(slot5, string.format("%s skin : %s", slot6, slot0.skin))
-	table.insert(slot5, string.format("%s originSkin : %s", slot6, slot0.originSkin))
-	table.insert(slot5, string.format("%s position : %s", slot6, slot0.position))
-	table.insert(slot5, string.format("%s entityType : %s", slot6, slot0.entityType))
-	table.insert(slot5, string.format("%s userId : %s", slot6, slot0.userId))
-	table.insert(slot5, string.format("%s exPoint : %s", slot6, slot0.exPoint))
-	table.insert(slot5, string.format("%s level : %s", slot6, slot0.level))
-	table.insert(slot5, string.format("%s currentHp : %s", slot6, slot0.currentHp))
-	table.insert(slot5, string.format("%s equipUid : %s", slot6, slot0.equipUid))
-	table.insert(slot5, string.format("%s side : %s", slot6, slot0.side))
-	table.insert(slot5, string.format("%s career : %s", slot6, slot0.career))
-	table.insert(slot5, string.format("%s storedExPoint : %s", slot6, slot0.storedExPoint))
-	table.insert(slot5, slot3 .. "}")
+	arg_16_1 = arg_16_1 + 1
 
-	return table.concat(slot5, "\n")
+	local var_16_3 = var_0_0.getPrefix(arg_16_1)
+
+	table.insert(var_16_2, string.format("%s id : %s", var_16_3, arg_16_0.id))
+	table.insert(var_16_2, string.format("%s uid : %s", var_16_3, arg_16_0.uid))
+	table.insert(var_16_2, string.format("%s modelId : %s", var_16_3, arg_16_0.modelId))
+	table.insert(var_16_2, string.format("%s skin : %s", var_16_3, arg_16_0.skin))
+	table.insert(var_16_2, string.format("%s originSkin : %s", var_16_3, arg_16_0.originSkin))
+	table.insert(var_16_2, string.format("%s position : %s", var_16_3, arg_16_0.position))
+	table.insert(var_16_2, string.format("%s entityType : %s", var_16_3, arg_16_0.entityType))
+	table.insert(var_16_2, string.format("%s userId : %s", var_16_3, arg_16_0.userId))
+	table.insert(var_16_2, string.format("%s exPoint : %s", var_16_3, arg_16_0.exPoint))
+	table.insert(var_16_2, string.format("%s level : %s", var_16_3, arg_16_0.level))
+	table.insert(var_16_2, string.format("%s currentHp : %s", var_16_3, arg_16_0.currentHp))
+	table.insert(var_16_2, string.format("%s equipUid : %s", var_16_3, arg_16_0.equipUid))
+	table.insert(var_16_2, string.format("%s side : %s", var_16_3, arg_16_0.side))
+	table.insert(var_16_2, string.format("%s career : %s", var_16_3, arg_16_0.career))
+	table.insert(var_16_2, string.format("%s storedExPoint : %s", var_16_3, arg_16_0.storedExPoint))
+	table.insert(var_16_2, var_16_0 .. "}")
+
+	return table.concat(var_16_2, "\n")
 end
 
-function slot0.getFightEntityListString(slot0, slot1, slot2)
-	return uv0.getMoListString(slot0, uv0.getEntityMoString, slot2 or "entityMoList", slot1)
+function var_0_0.getFightEntityListString(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_2 = arg_17_2 or "entityMoList"
+
+	return var_0_0.getMoListString(arg_17_0, var_0_0.getEntityMoString, arg_17_2, arg_17_1)
 end
 
-function slot0.getCardInfoString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("FightCardInfoMO", slot2)
+function var_0_0.getCardInfoString(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_1 = arg_18_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_18_0 = var_0_0.getPrefix(arg_18_1)
+	local var_18_1 = var_0_0.buildClassNameByIndex("FightCardInfoMO", arg_18_2)
+
+	if not arg_18_0 then
+		return string.format("%s %s : nil", var_18_0, var_18_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_18_2 = {
+		string.format("%s %s {", var_18_0, var_18_1)
 	}
-	slot1 = slot1 + 1
-	slot6 = uv0.getPrefix(slot1)
 
-	table.insert(slot5, string.format("%s uid : %s %s", slot6, slot0.uid, uv0.getEntityName(slot0.uid)))
-	table.insert(slot5, string.format("%s skillId : %s %s", slot6, slot0.skillId, uv0.getSkillName(slot0.skillId)))
-	table.insert(slot5, string.format("%s cardEffect : %s", slot6, slot0.cardEffect))
-	table.insert(slot5, string.format("%s tempCard : %s", slot6, slot0.tempCard))
-	table.insert(slot5, string.format("%s cardType : %s", slot6, slot0.cardType))
-	table.insert(slot5, string.format("%s heroId : %s", slot6, slot0.heroId))
-	table.insert(slot5, string.format("%s status : %s", slot6, slot0.status))
-	table.insert(slot5, string.format("%s targetUid : %s %s", slot6, slot0.targetUid, uv0.getEntityName(slot0.targetUid)))
-	table.insert(slot5, string.format("%s energy : %s", slot6, slot0.energy))
-	table.insert(slot5, string.format("%s areaRedOrBlue : %s", slot6, slot0.areaRedOrBlue))
-	table.insert(slot5, string.format("%s heatId : %s", slot6, slot0.heatId))
-	table.insert(slot5, uv0.getEnchantListString(slot0.enchants, slot1, "enchants"))
-	table.insert(slot5, slot3 .. "}")
+	arg_18_1 = arg_18_1 + 1
 
-	return table.concat(slot5, "\n")
+	local var_18_3 = var_0_0.getPrefix(arg_18_1)
+
+	table.insert(var_18_2, string.format("%s uid : %s %s", var_18_3, arg_18_0.uid, var_0_0.getEntityName(arg_18_0.uid)))
+	table.insert(var_18_2, string.format("%s skillId : %s %s", var_18_3, arg_18_0.skillId, var_0_0.getSkillName(arg_18_0.skillId)))
+	table.insert(var_18_2, string.format("%s cardEffect : %s", var_18_3, arg_18_0.cardEffect))
+	table.insert(var_18_2, string.format("%s tempCard : %s", var_18_3, arg_18_0.tempCard))
+	table.insert(var_18_2, string.format("%s cardType : %s", var_18_3, arg_18_0.cardType))
+	table.insert(var_18_2, string.format("%s heroId : %s", var_18_3, arg_18_0.heroId))
+	table.insert(var_18_2, string.format("%s status : %s", var_18_3, arg_18_0.status))
+	table.insert(var_18_2, string.format("%s targetUid : %s %s", var_18_3, arg_18_0.targetUid, var_0_0.getEntityName(arg_18_0.targetUid)))
+	table.insert(var_18_2, string.format("%s energy : %s", var_18_3, arg_18_0.energy))
+	table.insert(var_18_2, string.format("%s areaRedOrBlue : %s", var_18_3, arg_18_0.areaRedOrBlue))
+	table.insert(var_18_2, string.format("%s heatId : %s", var_18_3, arg_18_0.heatId))
+	table.insert(var_18_2, var_0_0.getEnchantListString(arg_18_0.enchants, arg_18_1, "enchants"))
+	table.insert(var_18_2, var_18_0 .. "}")
+
+	return table.concat(var_18_2, "\n")
 end
 
-function slot0.getCardInfoListString(slot0, slot1, slot2, slot3)
-	return uv0.getMoListString(slot0, uv0.getCardInfoString, slot2 or "cardInfoList", slot1, slot3)
+function var_0_0.getCardInfoListString(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	arg_19_2 = arg_19_2 or "cardInfoList"
+
+	return var_0_0.getMoListString(arg_19_0, var_0_0.getCardInfoString, arg_19_2, arg_19_1, arg_19_3)
 end
 
-function slot0.getCardInfoEnchantString(slot0, slot1, slot2)
-	slot3 = uv0.getPrefix(slot1 or 0)
-	slot4 = uv0.buildClassNameByIndex("CardEnchant", slot2)
+function var_0_0.getCardInfoEnchantString(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_1 = arg_20_1 or 0
 
-	if not slot0 then
-		return string.format("%s %s : nil", slot3, slot4)
+	local var_20_0 = var_0_0.getPrefix(arg_20_1)
+	local var_20_1 = var_0_0.buildClassNameByIndex("CardEnchant", arg_20_2)
+
+	if not arg_20_0 then
+		return string.format("%s %s : nil", var_20_0, var_20_1)
 	end
 
-	slot5 = {
-		string.format("%s %s {", slot3, slot4)
+	local var_20_2 = {
+		string.format("%s %s {", var_20_0, var_20_1)
 	}
-	slot6 = uv0.getPrefix(slot1 + 1)
 
-	table.insert(slot5, string.format("%s enchantId : %s", slot6, slot0.enchantId))
-	table.insert(slot5, string.format("%s duration : %s", slot6, slot0.duration))
-	table.insert(slot5, string.format("%s exInfo : %s", slot6, table.concat(slot0.exInfo, ",")))
-	table.insert(slot5, slot3 .. "}")
+	arg_20_1 = arg_20_1 + 1
 
-	return table.concat(slot5, "\n")
+	local var_20_3 = var_0_0.getPrefix(arg_20_1)
+
+	table.insert(var_20_2, string.format("%s enchantId : %s", var_20_3, arg_20_0.enchantId))
+	table.insert(var_20_2, string.format("%s duration : %s", var_20_3, arg_20_0.duration))
+	table.insert(var_20_2, string.format("%s exInfo : %s", var_20_3, table.concat(arg_20_0.exInfo, ",")))
+	table.insert(var_20_2, var_20_0 .. "}")
+
+	return table.concat(var_20_2, "\n")
 end
 
-function slot0.getEnchantListString(slot0, slot1, slot2, slot3)
-	return uv0.getMoListString(slot0, uv0.getCardInfoEnchantString, slot2 or "enchantList", slot1, slot3)
+function var_0_0.getEnchantListString(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	arg_21_2 = arg_21_2 or "enchantList"
+
+	return var_0_0.getMoListString(arg_21_0, var_0_0.getCardInfoEnchantString, arg_21_2, arg_21_1, arg_21_3)
 end
 
-slot0.ActTypeName = {
+var_0_0.ActTypeName = {
 	[FightEnum.ActType.SKILL] = "技能",
 	[FightEnum.ActType.BUFF] = "buff",
 	[FightEnum.ActType.EFFECT] = "效果",
@@ -366,18 +436,20 @@ slot0.ActTypeName = {
 	[FightEnum.ActType.CHANGEWAVE] = "换波次时机"
 }
 
-function slot0.getActTypeName(slot0)
-	return slot0 and uv0.ActTypeName[slot0] or ""
+function var_0_0.getActTypeName(arg_22_0)
+	return arg_22_0 and var_0_0.ActTypeName[arg_22_0] or ""
 end
 
-function slot0.getEntityName(slot0)
-	if slot0 == FightEntityScene.MySideId then
+function var_0_0.getEntityName(arg_23_0)
+	if arg_23_0 == FightEntityScene.MySideId then
 		return "维尔汀"
-	elseif slot0 == FightEntityScene.EnemySideId then
+	elseif arg_23_0 == FightEntityScene.EnemySideId then
 		return "重塑之手"
 	else
-		if FightDataHelper.entityMgr:getById(slot0) then
-			return slot1:getEntityName()
+		local var_23_0 = FightDataHelper.entityMgr:getById(arg_23_0)
+
+		if var_23_0 then
+			return var_23_0:getEntityName()
 		end
 
 		return ""
@@ -386,29 +458,34 @@ function slot0.getEntityName(slot0)
 	return ""
 end
 
-function slot0.getSkillName(slot0)
-	return lua_skill.configDict[slot0] and slot1.name or ""
+function var_0_0.getSkillName(arg_24_0)
+	local var_24_0 = lua_skill.configDict[arg_24_0]
+
+	return var_24_0 and var_24_0.name or ""
 end
 
-function slot0.getTimelineName(slot0, slot1)
-	slot2 = slot0 and FightDataHelper.entityMgr:getById(slot0)
+function var_0_0.getTimelineName(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0 and FightDataHelper.entityMgr:getById(arg_25_0)
+	local var_25_1 = FightConfig.instance:getSkinSkillTimeline(var_25_0 and var_25_0.skin, arg_25_1)
 
-	return string.nilorempty(FightConfig.instance:getSkinSkillTimeline(slot2 and slot2.skin, slot1)) and "nil" or slot3
+	return string.nilorempty(var_25_1) and "nil" or var_25_1
 end
 
-function slot0.getStack(slot0, slot1)
-	return slot0 and string.format("%s.%s", slot0, slot1) or slot1
+function var_0_0.getStack(arg_26_0, arg_26_1)
+	return arg_26_0 and string.format("%s.%s", arg_26_0, arg_26_1) or arg_26_1
 end
 
-function slot0.addStack(slot0, slot1, slot2, slot3)
-	if string.nilorempty(uv0.getStack(slot2, slot3)) then
+function var_0_0.addStack(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	arg_27_2 = var_0_0.getStack(arg_27_2, arg_27_3)
+
+	if string.nilorempty(arg_27_2) then
 		return
 	end
 
-	table.insert(slot0, string.format("%s stack : %s", slot1, slot2))
+	table.insert(arg_27_0, string.format("%s stack : %s", arg_27_1, arg_27_2))
 end
 
-slot0.EffectTypeNameDict = {
+var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.NONE] = "无效果",
 	[FightEnum.EffectType.MISS] = "闪避",
 	[FightEnum.EffectType.DAMAGE] = "造成伤害",
@@ -726,8 +803,8 @@ slot0.EffectTypeNameDict = {
 	[FightEnum.EffectType.TRIGGER] = "触发器"
 }
 
-function slot0.getEffectTypeName(slot0)
-	return uv0.EffectTypeNameDict[slot0]
+function var_0_0.getEffectTypeName(arg_28_0)
+	return var_0_0.EffectTypeNameDict[arg_28_0]
 end
 
-return slot0
+return var_0_0

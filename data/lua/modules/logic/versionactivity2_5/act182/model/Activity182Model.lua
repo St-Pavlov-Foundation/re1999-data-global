@@ -1,43 +1,49 @@
-module("modules.logic.versionactivity2_5.act182.model.Activity182Model", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act182.model.Activity182Model", package.seeall)
 
-slot0 = class("Activity182Model", BaseModel)
+local var_0_0 = class("Activity182Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.actMoDic = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.actMoDic = {}
 end
 
-function slot0.setActInfo(slot0, slot1)
-	slot0.curActId = slot1.activityId
+function var_0_0.setActInfo(arg_3_0, arg_3_1)
+	arg_3_0.curActId = arg_3_1.activityId
 
-	if slot0.actMoDic[slot0.curActId] then
-		slot2:update(slot1)
+	local var_3_0 = arg_3_0.actMoDic[arg_3_0.curActId]
+
+	if var_3_0 then
+		var_3_0:update(arg_3_1)
 	else
-		slot2 = Act182MO.New()
+		local var_3_1 = Act182MO.New()
 
-		slot2:init(slot1)
+		var_3_1:init(arg_3_1)
 
-		slot0.actMoDic[slot0.curActId] = slot2
+		arg_3_0.actMoDic[arg_3_0.curActId] = var_3_1
 	end
 
 	Activity182Controller.instance:dispatchEvent(Activity182Event.UpdateInfo)
 end
 
-function slot0.getCurActId(slot0)
-	return slot0.curActId
+function var_0_0.getCurActId(arg_4_0)
+	return arg_4_0.curActId
 end
 
-function slot0.getActMo(slot0, slot1)
-	if not slot0.actMoDic[slot1 or slot0.curActId] then
-		logError("dont exist actMo" .. tostring(slot1))
+function var_0_0.getActMo(arg_5_0, arg_5_1)
+	arg_5_1 = arg_5_1 or arg_5_0.curActId
+
+	local var_5_0 = arg_5_0.actMoDic[arg_5_1]
+
+	if not var_5_0 then
+		logError("dont exist actMo" .. tostring(arg_5_1))
 	end
 
-	return slot2
+	return var_5_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

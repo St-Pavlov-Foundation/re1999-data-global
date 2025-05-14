@@ -1,363 +1,389 @@
-module("modules.logic.enemyinfo.view.EnemyInfoLeftView", package.seeall)
+﻿module("modules.logic.enemyinfo.view.EnemyInfoLeftView", package.seeall)
 
-slot0 = class("EnemyInfoLeftView", BaseView)
+local var_0_0 = class("EnemyInfoLeftView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gorulecontainer = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_rule_container")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_rule_container/#go_ruleitem")
-	slot0._goline1 = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_line1")
-	slot0._scrollenemy = gohelper.findChildScrollRect(slot0.viewGO, "#go_left_container/#scroll_enemy")
-	slot0._gopoolcontainer = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container")
-	slot0._goenemygrouppool = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool")
-	slot0._goenemygroupitem = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool/#go_enemygroupitem")
-	slot0._goenemyitempool = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool")
-	slot0._goenemyitem = gohelper.findChild(slot0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool/#go_enemyitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorulecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_rule_container")
+	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_rule_container/#go_ruleitem")
+	arg_1_0._goline1 = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_line1")
+	arg_1_0._scrollenemy = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_left_container/#scroll_enemy")
+	arg_1_0._gopoolcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container")
+	arg_1_0._goenemygrouppool = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool")
+	arg_1_0._goenemygroupitem = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool/#go_enemygroupitem")
+	arg_1_0._goenemyitempool = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool")
+	arg_1_0._goenemyitem = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool/#go_enemyitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickRule(slot0)
-	slot1 = math.floor(slot0.layoutMo.scrollEnemyWidth / EnemyInfoEnum.RuleItemWeight)
-	slot2 = slot1
+function var_0_0.onClickRule(arg_4_0)
+	local var_4_0 = math.floor(arg_4_0.layoutMo.scrollEnemyWidth / EnemyInfoEnum.RuleItemWeight)
+	local var_4_1 = var_4_0
 
-	if slot1 > #slot0.ruleItemList then
-		slot2 = #slot0.ruleItemList
+	if var_4_0 > #arg_4_0.ruleItemList then
+		var_4_1 = #arg_4_0.ruleItemList
 	end
 
-	slot5, slot6 = recthelper.worldPosToAnchorPos2(slot0.ruleItemList[slot2].go:GetComponent(gohelper.Type_Transform).position, slot0.ruleTipContainerRectTr)
+	local var_4_2 = arg_4_0.ruleItemList[var_4_1].go:GetComponent(gohelper.Type_Transform)
+	local var_4_3, var_4_4 = recthelper.worldPosToAnchorPos2(var_4_2.position, arg_4_0.ruleTipContainerRectTr)
 
 	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
-		ruleList = slot0._ruleList
+		ruleList = arg_4_0._ruleList
 	})
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goruleitem, false)
-	gohelper.setActive(slot0._goenemygroupitem, false)
-	gohelper.setActive(slot0._goenemyitem, false)
-	gohelper.setActive(slot0._gopoolcontainer, false)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._goruleitem, false)
+	gohelper.setActive(arg_5_0._goenemygroupitem, false)
+	gohelper.setActive(arg_5_0._goenemyitem, false)
+	gohelper.setActive(arg_5_0._gopoolcontainer, false)
 
-	slot0.ruleTipContainerRectTr = gohelper.findChildComponent(slot0.viewGO, "#go_tip_container", gohelper.Type_RectTransform)
-	slot0.ruleTipRectTr = gohelper.findChildComponent(slot0.viewGO, "#go_tip_container/#go_ruletip", gohelper.Type_RectTransform)
-	slot0.trScrollContent = gohelper.findChildComponent(slot0._scrollenemy.gameObject, "viewport/content", gohelper.Type_Transform)
-	slot0.enemyGroupPoolTr = slot0._goenemygrouppool:GetComponent(gohelper.Type_Transform)
-	slot0.enemyItemPoolTr = slot0._goenemyitempool:GetComponent(gohelper.Type_Transform)
-	slot0.ruleClick = gohelper.getClickWithDefaultAudio(slot0._gorulecontainer, slot0)
-	slot4 = slot0
+	arg_5_0.ruleTipContainerRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "#go_tip_container", gohelper.Type_RectTransform)
+	arg_5_0.ruleTipRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "#go_tip_container/#go_ruletip", gohelper.Type_RectTransform)
+	arg_5_0.trScrollContent = gohelper.findChildComponent(arg_5_0._scrollenemy.gameObject, "viewport/content", gohelper.Type_Transform)
+	arg_5_0.enemyGroupPoolTr = arg_5_0._goenemygrouppool:GetComponent(gohelper.Type_Transform)
+	arg_5_0.enemyItemPoolTr = arg_5_0._goenemyitempool:GetComponent(gohelper.Type_Transform)
+	arg_5_0.ruleClick = gohelper.getClickWithDefaultAudio(arg_5_0._gorulecontainer, arg_5_0)
 
-	slot0.ruleClick:AddClickListener(slot0.onClickRule, slot4)
+	arg_5_0.ruleClick:AddClickListener(arg_5_0.onClickRule, arg_5_0)
 
-	slot0.ruleLineCount = 0
-	slot0.ruleItemPool = {}
-	slot0.ruleItemList = {}
-	slot0.ruleTipItemPool = {}
-	slot0.ruleTipItemList = {}
-	slot0.enemyGroupPool = {}
-	slot0.enemyGroupList = {}
-	slot0.enemyItemList = {}
-	slot0.enemyItemPool = {
+	arg_5_0.ruleLineCount = 0
+	arg_5_0.ruleItemPool = {}
+	arg_5_0.ruleItemList = {}
+	arg_5_0.ruleTipItemPool = {}
+	arg_5_0.ruleTipItemList = {}
+	arg_5_0.enemyGroupPool = {}
+	arg_5_0.enemyGroupList = {}
+	arg_5_0.enemyItemList = {}
+	arg_5_0.enemyItemPool = {
 		[0] = {}
 	}
 
-	for slot4, slot5 in pairs(IconMaterialMgr.instance.variantIdToMaterialPath) do
-		slot0.enemyItemPool[slot4] = {}
+	for iter_5_0, iter_5_1 in pairs(IconMaterialMgr.instance.variantIdToMaterialPath) do
+		arg_5_0.enemyItemPool[iter_5_0] = {}
 	end
 
-	slot0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.SelectMonsterChange, slot0.onSelectMonsterChange, slot0)
-	slot0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.UpdateBattleInfo, slot0.onUpdateBattleInfo, slot0)
+	arg_5_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.SelectMonsterChange, arg_5_0.onSelectMonsterChange, arg_5_0)
+	arg_5_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.UpdateBattleInfo, arg_5_0.onUpdateBattleInfo, arg_5_0)
 end
 
-function slot0.onSelectMonsterChange(slot0, slot1)
-	slot0.selectEnemyIndex = slot1.enemyIndex
+function var_0_0.onSelectMonsterChange(arg_6_0, arg_6_1)
+	arg_6_0.selectEnemyIndex = arg_6_1.enemyIndex
 
-	for slot5, slot6 in ipairs(slot0.enemyItemList) do
-		gohelper.setActive(slot6.selectframe, slot0.selectEnemyIndex == slot5)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.enemyItemList) do
+		gohelper.setActive(iter_6_1.selectframe, arg_6_0.selectEnemyIndex == iter_6_0)
 	end
 end
 
-function slot0.onUpdateBattleInfo(slot0, slot1)
-	if slot0.battleId == slot1 then
+function var_0_0.onUpdateBattleInfo(arg_7_0, arg_7_1)
+	if arg_7_0.battleId == arg_7_1 then
 		return
 	end
 
-	slot0.battleId = slot1
-	slot0.battleCo = lua_battle.configDict[slot0.battleId]
+	arg_7_0.battleId = arg_7_1
+	arg_7_0.battleCo = lua_battle.configDict[arg_7_0.battleId]
 
-	slot0:refreshUI()
-	slot0:selectFirstMonster()
+	arg_7_0:refreshUI()
+	arg_7_0:selectFirstMonster()
 end
 
-function slot0.selectFirstMonster(slot0)
-	slot1 = slot0.enemyItemList[1]
-	slot0.eventData = slot0.eventData or {}
-	slot0.eventData.monsterId = slot1.monsterId
-	slot0.eventData.isBoss = slot1.isBoss
-	slot0.eventData.enemyIndex = 1
+function var_0_0.selectFirstMonster(arg_8_0)
+	local var_8_0 = arg_8_0.enemyItemList[1]
 
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, slot0.eventData)
+	arg_8_0.eventData = arg_8_0.eventData or {}
+	arg_8_0.eventData.monsterId = var_8_0.monsterId
+	arg_8_0.eventData.isBoss = var_8_0.isBoss
+	arg_8_0.eventData.enemyIndex = 1
+
+	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, arg_8_0.eventData)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshRule()
-	slot0:refreshScrollEnemy()
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshRule()
+	arg_9_0:refreshScrollEnemy()
 end
 
-function slot0.refreshRule(slot0)
-	slot0:recycleAllRuleItem()
-	slot0:recycleAllRuleTipItem()
+function var_0_0.refreshRule(arg_10_0)
+	arg_10_0:recycleAllRuleItem()
+	arg_10_0:recycleAllRuleTipItem()
 
-	if string.nilorempty(slot0.battleCo.additionRule) then
-		gohelper.setActive(slot0._goline1, false)
-		gohelper.setActive(slot0._gorulecontainer, false)
+	local var_10_0 = arg_10_0.battleCo.additionRule
+
+	if string.nilorempty(var_10_0) then
+		gohelper.setActive(arg_10_0._goline1, false)
+		gohelper.setActive(arg_10_0._gorulecontainer, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gorulecontainer, true)
+	gohelper.setActive(arg_10_0._gorulecontainer, true)
 
-	slot6 = "#"
-	slot2 = GameUtil.splitString2(slot1, true, "|", slot6)
-	slot0._ruleList = slot2
+	local var_10_1 = GameUtil.splitString2(var_10_0, true, "|", "#")
 
-	slot0:filterRule(slot2)
+	arg_10_0._ruleList = var_10_1
 
-	for slot6, slot7 in ipairs(slot2) do
-		if lua_rule.configDict[slot7[2]] then
-			slot0:addRuleItem(slot10, slot7[1])
+	arg_10_0:filterRule(var_10_1)
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		local var_10_2 = iter_10_1[1]
+		local var_10_3 = iter_10_1[2]
+		local var_10_4 = lua_rule.configDict[var_10_3]
+
+		if var_10_4 then
+			arg_10_0:addRuleItem(var_10_4, var_10_2)
 		end
 	end
 
-	gohelper.setActive(slot0._goline1, #slot2 > 0)
+	gohelper.setActive(arg_10_0._goline1, #var_10_1 > 0)
 
-	if slot0.ruleTipItemList[#slot0.ruleTipItemList] then
-		gohelper.setActive(slot3.goLine, false)
+	local var_10_5 = arg_10_0.ruleTipItemList[#arg_10_0.ruleTipItemList]
+
+	if var_10_5 then
+		gohelper.setActive(var_10_5.goLine, false)
 	end
 end
 
-function slot0.filterRule(slot0, slot1)
-	if slot0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Season123 then
-		for slot7 = #slot1, 1, -1 do
-			if tabletool.indexOf(string.splitToNumber(Season123Config.instance:getSeasonConstStr(slot0.viewParam.activityId, Activity123Enum.Const.HideRule), "#"), slot1[slot7][2]) then
-				table.remove(slot1, slot7)
+function var_0_0.filterRule(arg_11_0, arg_11_1)
+	if arg_11_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Season123 then
+		local var_11_0 = Season123Config.instance:getSeasonConstStr(arg_11_0.viewParam.activityId, Activity123Enum.Const.HideRule)
+		local var_11_1 = string.splitToNumber(var_11_0, "#")
+
+		for iter_11_0 = #arg_11_1, 1, -1 do
+			if tabletool.indexOf(var_11_1, arg_11_1[iter_11_0][2]) then
+				table.remove(arg_11_1, iter_11_0)
 			end
 		end
 	end
 end
 
-function slot0.refreshScrollEnemy(slot0)
-	if string.nilorempty(slot0.battleCo.monsterGroupIds) then
+function var_0_0.refreshScrollEnemy(arg_12_0)
+	local var_12_0 = arg_12_0.battleCo.monsterGroupIds
+
+	if string.nilorempty(var_12_0) then
 		return
 	end
 
-	slot0:recycleAllEnemyGroupList()
-	slot0:recycleAllEnemyItemList()
+	arg_12_0:recycleAllEnemyGroupList()
+	arg_12_0:recycleAllEnemyItemList()
 
-	for slot6, slot7 in ipairs(string.splitToNumber(slot1, "#")) do
-		slot0:addGroupItem(slot7, slot6)
+	local var_12_1 = string.splitToNumber(var_12_0, "#")
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+		arg_12_0:addGroupItem(iter_12_1, iter_12_0)
 	end
 end
 
-function slot0.recycleAllRuleItem(slot0)
-	for slot4, slot5 in ipairs(slot0.ruleItemList) do
-		gohelper.setActive(slot5.go, false)
-		table.insert(slot0.ruleItemPool, slot5)
+function var_0_0.recycleAllRuleItem(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.ruleItemList) do
+		gohelper.setActive(iter_13_1.go, false)
+		table.insert(arg_13_0.ruleItemPool, iter_13_1)
 	end
 
-	tabletool.clear(slot0.ruleItemList)
+	tabletool.clear(arg_13_0.ruleItemList)
 end
 
-function slot0.recycleAllRuleTipItem(slot0)
-	for slot4, slot5 in ipairs(slot0.ruleTipItemList) do
-		gohelper.setActive(slot5.go, false)
-		table.insert(slot0.ruleTipItemPool, slot5)
+function var_0_0.recycleAllRuleTipItem(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.ruleTipItemList) do
+		gohelper.setActive(iter_14_1.go, false)
+		table.insert(arg_14_0.ruleTipItemPool, iter_14_1)
 	end
 
-	tabletool.clear(slot0.ruleTipItemList)
+	tabletool.clear(arg_14_0.ruleTipItemList)
 end
 
-function slot0.addRuleItem(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.addRuleItem(arg_15_0, arg_15_1, arg_15_2)
+	if not arg_15_1 then
 		logError("rule co nil")
 
 		return
 	end
 
-	slot3 = slot0:getRuleItem()
+	local var_15_0 = arg_15_0:getRuleItem()
 
-	UISpriteSetMgr.instance:setCommonSprite(slot3.tagIcon, "wz_" .. slot2)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot3.ruleIcon, slot1.icon)
+	UISpriteSetMgr.instance:setCommonSprite(var_15_0.tagIcon, "wz_" .. arg_15_2)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_15_0.ruleIcon, arg_15_1.icon)
 end
 
-function slot0.getRuleItem(slot0)
-	if #slot0.ruleItemPool > 0 then
-		slot1 = table.remove(slot0.ruleItemPool)
+function var_0_0.getRuleItem(arg_16_0)
+	if #arg_16_0.ruleItemPool > 0 then
+		local var_16_0 = table.remove(arg_16_0.ruleItemPool)
 
-		table.insert(slot0.ruleItemList, slot1)
-		gohelper.setActive(slot1.go, true)
-		gohelper.setAsLastSibling(slot1.go)
+		table.insert(arg_16_0.ruleItemList, var_16_0)
+		gohelper.setActive(var_16_0.go, true)
+		gohelper.setAsLastSibling(var_16_0.go)
 
-		return slot1
+		return var_16_0
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._goruleitem)
-	slot1.ruleIcon = gohelper.findChildImage(slot1.go, "#image_ruleicon")
-	slot1.tagIcon = gohelper.findChildImage(slot1.go, "#image_ruleicon/#image_tagicon")
+	local var_16_1 = arg_16_0:getUserDataTb_()
 
-	gohelper.setActive(slot1.go, true)
-	table.insert(slot0.ruleItemList, slot1)
+	var_16_1.go = gohelper.cloneInPlace(arg_16_0._goruleitem)
+	var_16_1.ruleIcon = gohelper.findChildImage(var_16_1.go, "#image_ruleicon")
+	var_16_1.tagIcon = gohelper.findChildImage(var_16_1.go, "#image_ruleicon/#image_tagicon")
 
-	return slot1
+	gohelper.setActive(var_16_1.go, true)
+	table.insert(arg_16_0.ruleItemList, var_16_1)
+
+	return var_16_1
 end
 
-function slot0.recycleAllEnemyGroupList(slot0)
-	for slot4, slot5 in ipairs(slot0.enemyGroupList) do
-		gohelper.setActive(slot5.go, false)
-		slot5.tr:SetParent(slot0.enemyGroupPoolTr)
-		table.insert(slot0.enemyGroupPool, slot5)
+function var_0_0.recycleAllEnemyGroupList(arg_17_0)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0.enemyGroupList) do
+		gohelper.setActive(iter_17_1.go, false)
+		iter_17_1.tr:SetParent(arg_17_0.enemyGroupPoolTr)
+		table.insert(arg_17_0.enemyGroupPool, iter_17_1)
 	end
 
-	tabletool.clear(slot0.enemyGroupList)
+	tabletool.clear(arg_17_0.enemyGroupList)
 end
 
-function slot0.recycleAllEnemyItemList(slot0)
-	for slot4, slot5 in ipairs(slot0.enemyItemList) do
-		gohelper.setActive(slot5.go, false)
-		slot5.tr:SetParent(slot0.enemyItemPoolTr)
+function var_0_0.recycleAllEnemyItemList(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.enemyItemList) do
+		gohelper.setActive(iter_18_1.go, false)
+		iter_18_1.tr:SetParent(arg_18_0.enemyItemPoolTr)
 
-		slot5.monsterId = nil
+		iter_18_1.monsterId = nil
 
-		table.insert(slot0.enemyItemPool[slot5.variantId], slot5)
+		table.insert(arg_18_0.enemyItemPool[iter_18_1.variantId], iter_18_1)
 	end
 
-	tabletool.clear(slot0.enemyItemList)
+	tabletool.clear(arg_18_0.enemyItemList)
 end
 
-function slot0.getEnemyGroupItem(slot0)
-	if #slot0.enemyGroupPool > 0 then
-		slot1 = table.remove(slot0.enemyGroupPool)
+function var_0_0.getEnemyGroupItem(arg_19_0)
+	if #arg_19_0.enemyGroupPool > 0 then
+		local var_19_0 = table.remove(arg_19_0.enemyGroupPool)
 
-		table.insert(slot0.enemyGroupList, slot1)
-		recthelper.setWidth(slot1.tr, slot0.layoutMo.scrollEnemyWidth)
-		recthelper.setWidth(slot1.trContent, slot0.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
-		gohelper.setActive(slot1.go, true)
-		gohelper.setAsLastSibling(slot1.go)
+		table.insert(arg_19_0.enemyGroupList, var_19_0)
+		recthelper.setWidth(var_19_0.tr, arg_19_0.layoutMo.scrollEnemyWidth)
+		recthelper.setWidth(var_19_0.trContent, arg_19_0.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
+		gohelper.setActive(var_19_0.go, true)
+		gohelper.setAsLastSibling(var_19_0.go)
 
-		return slot1
+		return var_19_0
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._goenemygroupitem)
-	slot1.tr = slot1.go:GetComponent(gohelper.Type_Transform)
-	slot1.txtTitleNum = gohelper.findChildText(slot1.go, "title/#txt_titlenum")
-	slot1.trContent = gohelper.findChildComponent(slot1.go, "content", gohelper.Type_RectTransform)
+	local var_19_1 = arg_19_0:getUserDataTb_()
 
-	recthelper.setWidth(slot1.tr, slot0.layoutMo.scrollEnemyWidth)
-	recthelper.setWidth(slot1.trContent, slot0.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
-	gohelper.setActive(slot1.go, true)
-	table.insert(slot0.enemyGroupList, slot1)
+	var_19_1.go = gohelper.cloneInPlace(arg_19_0._goenemygroupitem)
+	var_19_1.tr = var_19_1.go:GetComponent(gohelper.Type_Transform)
+	var_19_1.txtTitleNum = gohelper.findChildText(var_19_1.go, "title/#txt_titlenum")
+	var_19_1.trContent = gohelper.findChildComponent(var_19_1.go, "content", gohelper.Type_RectTransform)
 
-	return slot1
+	recthelper.setWidth(var_19_1.tr, arg_19_0.layoutMo.scrollEnemyWidth)
+	recthelper.setWidth(var_19_1.trContent, arg_19_0.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
+	gohelper.setActive(var_19_1.go, true)
+	table.insert(arg_19_0.enemyGroupList, var_19_1)
+
+	return var_19_1
 end
 
-function slot0.getEnemyItem(slot0, slot1)
-	if not slot0.enemyItemPool[slot1] then
-		logError("not variantId : " .. tostring(slot1) .. " pool")
+function var_0_0.getEnemyItem(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0.enemyItemPool[arg_20_1]
+
+	if not var_20_0 then
+		logError("not variantId : " .. tostring(arg_20_1) .. " pool")
 
 		return nil
 	end
 
-	if #slot2 > 0 then
-		slot3 = table.remove(slot2)
+	if #var_20_0 > 0 then
+		local var_20_1 = table.remove(var_20_0)
 
-		table.insert(slot0.enemyItemList, slot3)
-		gohelper.setActive(slot3.go, true)
-		gohelper.setAsLastSibling(slot3.go)
+		table.insert(arg_20_0.enemyItemList, var_20_1)
+		gohelper.setActive(var_20_1.go, true)
+		gohelper.setAsLastSibling(var_20_1.go)
 
-		return slot3
+		return var_20_1
 	end
 
-	slot3 = slot0:getUserDataTb_()
-	slot3.go = gohelper.cloneInPlace(slot0._goenemyitem)
-	slot3.tr = slot3.go:GetComponent(gohelper.Type_Transform)
-	slot3.icon = gohelper.findChildImage(slot3.go, "icon")
-	slot3.career = gohelper.findChildImage(slot3.go, "career")
-	slot3.selectframe = gohelper.findChild(slot3.go, "selectframe")
-	slot3.bosstag = gohelper.findChild(slot3.go, "bosstag")
+	local var_20_2 = arg_20_0:getUserDataTb_()
 
-	gohelper.setActive(slot3.selectframe, false)
+	var_20_2.go = gohelper.cloneInPlace(arg_20_0._goenemyitem)
+	var_20_2.tr = var_20_2.go:GetComponent(gohelper.Type_Transform)
+	var_20_2.icon = gohelper.findChildImage(var_20_2.go, "icon")
+	var_20_2.career = gohelper.findChildImage(var_20_2.go, "career")
+	var_20_2.selectframe = gohelper.findChild(var_20_2.go, "selectframe")
+	var_20_2.bosstag = gohelper.findChild(var_20_2.go, "bosstag")
 
-	slot3.btn = gohelper.findChildButtonWithAudio(slot3.go, "btn_click", AudioEnum.UI.Play_UI_Tags)
+	gohelper.setActive(var_20_2.selectframe, false)
 
-	slot3.btn:AddClickListener(slot0.onClickEnemyItem, slot0, slot3)
+	var_20_2.btn = gohelper.findChildButtonWithAudio(var_20_2.go, "btn_click", AudioEnum.UI.Play_UI_Tags)
 
-	slot3.variantId = slot1
+	var_20_2.btn:AddClickListener(arg_20_0.onClickEnemyItem, arg_20_0, var_20_2)
 
-	if slot1 ~= 0 then
-		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(slot1), slot3.icon)
+	var_20_2.variantId = arg_20_1
+
+	if arg_20_1 ~= 0 then
+		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(arg_20_1), var_20_2.icon)
 	end
 
-	gohelper.setActive(slot3.go, true)
-	table.insert(slot0.enemyItemList, slot3)
+	gohelper.setActive(var_20_2.go, true)
+	table.insert(arg_20_0.enemyItemList, var_20_2)
 
-	return slot3
+	return var_20_2
 end
 
-function slot0.addGroupItem(slot0, slot1, slot2)
-	slot3 = lua_monster_group.configDict[slot1]
-	slot5 = string.splitToNumber(slot3.bossId, "#")
+function var_0_0.addGroupItem(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = lua_monster_group.configDict[arg_21_1]
+	local var_21_1 = arg_21_0.tempMonsterIdList or {}
+	local var_21_2 = string.splitToNumber(var_21_0.bossId, "#")
 
-	tabletool.clear(slot0.tempMonsterIdList or {})
+	tabletool.clear(var_21_1)
 
-	if not string.nilorempty(slot3.monster) then
-		tabletool.addValues(slot4, string.splitToNumber(slot3.monster, "#"))
+	if not string.nilorempty(var_21_0.monster) then
+		tabletool.addValues(var_21_1, string.splitToNumber(var_21_0.monster, "#"))
 	end
 
-	if not string.nilorempty(slot3.spMonster) then
-		tabletool.addValues(slot4, string.splitToNumber(slot3.spMonster, "#"))
+	if not string.nilorempty(var_21_0.spMonster) then
+		tabletool.addValues(var_21_1, string.splitToNumber(var_21_0.spMonster, "#"))
 	end
 
-	if #slot4 <= 0 then
+	if #var_21_1 <= 0 then
 		return
 	end
 
-	slot6 = slot0:getEnemyGroupItem()
+	local var_21_3 = arg_21_0:getEnemyGroupItem()
 
-	slot6.tr:SetParent(slot0.trScrollContent)
+	var_21_3.tr:SetParent(arg_21_0.trScrollContent)
 
-	slot6.txtTitleNum.text = slot2
+	var_21_3.txtTitleNum.text = arg_21_2
 
-	for slot10, slot11 in ipairs(slot4) do
-		slot0:addMonsterItem(slot11, slot6.trContent, slot5)
+	for iter_21_0, iter_21_1 in ipairs(var_21_1) do
+		arg_21_0:addMonsterItem(iter_21_1, var_21_3.trContent, var_21_2)
 	end
 end
 
-function slot0.addMonsterItem(slot0, slot1, slot2, slot3)
-	slot4 = lua_monster.configDict[slot1]
-	slot5 = slot0:getEnemyItem(slot4.heartVariantId)
+function var_0_0.addMonsterItem(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	local var_22_0 = lua_monster.configDict[arg_22_1]
+	local var_22_1 = arg_22_0:getEnemyItem(var_22_0.heartVariantId)
 
-	slot5.tr:SetParent(slot2)
+	var_22_1.tr:SetParent(arg_22_2)
 
-	slot5.monsterId = slot1
-	slot5.isBoss = slot0:checkIsBoss(slot3, slot1)
-	slot5.enemyIndex = #slot0.enemyItemList
+	var_22_1.monsterId = arg_22_1
+	var_22_1.isBoss = arg_22_0:checkIsBoss(arg_22_3, arg_22_1)
+	var_22_1.enemyIndex = #arg_22_0.enemyItemList
 
-	gohelper.getSingleImage(slot5.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(slot4.skinId).headIcon))
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot5.career, "sxy_" .. slot4.career)
-	gohelper.setActive(slot5.bosstag, slot5.isBoss)
+	local var_22_2 = FightConfig.instance:getSkinCO(var_22_0.skinId)
+
+	gohelper.getSingleImage(var_22_1.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_22_2.headIcon))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(var_22_1.career, "sxy_" .. var_22_0.career)
+	gohelper.setActive(var_22_1.bosstag, var_22_1.isBoss)
 end
 
-function slot0.checkIsBoss(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot2 == slot7 then
+function var_0_0.checkIsBoss(arg_23_0, arg_23_1, arg_23_2)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
+		if arg_23_2 == iter_23_1 then
 			return true
 		end
 	end
@@ -365,30 +391,31 @@ function slot0.checkIsBoss(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.onClickEnemyItem(slot0, slot1)
-	slot0.eventData = slot0.eventData or {}
-	slot0.eventData.monsterId = slot1.monsterId
-	slot0.eventData.isBoss = slot1.isBoss
-	slot0.eventData.enemyIndex = slot1.enemyIndex
+function var_0_0.onClickEnemyItem(arg_24_0, arg_24_1)
+	arg_24_0.eventData = arg_24_0.eventData or {}
+	arg_24_0.eventData.monsterId = arg_24_1.monsterId
+	arg_24_0.eventData.isBoss = arg_24_1.isBoss
+	arg_24_0.eventData.enemyIndex = arg_24_1.enemyIndex
 
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, slot0.eventData)
+	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, arg_24_0.eventData)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_25_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.ruleClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0.ruleClick:RemoveClickListener()
 
-	for slot4, slot5 in ipairs(slot0.enemyItemList) do
-		slot5.btn:RemoveClickListener()
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0.enemyItemList) do
+		iter_26_1.btn:RemoveClickListener()
 	end
 
-	for slot4, slot5 in pairs(slot0.enemyItemPool) do
-		for slot9, slot10 in ipairs(slot5) do
-			slot10.btn:RemoveClickListener()
+	for iter_26_2, iter_26_3 in pairs(arg_26_0.enemyItemPool) do
+		for iter_26_4, iter_26_5 in ipairs(iter_26_3) do
+			iter_26_5.btn:RemoveClickListener()
 		end
 	end
 end
 
-return slot0
+return var_0_0

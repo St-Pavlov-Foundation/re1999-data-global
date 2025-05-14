@@ -1,189 +1,199 @@
-module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandFullScreenNumber", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandFullScreenNumber", package.seeall)
 
-slot0 = class("FairyLandFullScreenNumber", UserDataDispose)
-slot1 = UnityEngine.Time
+local var_0_0 = class("FairyLandFullScreenNumber", UserDataDispose)
+local var_0_1 = UnityEngine.Time
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.viewGO = slot1.viewGO
-	slot0.goNum = gohelper.findChild(slot0.viewGO, "numbg")
-	slot0.textContent = gohelper.findChild(slot0.viewGO, "numbg/content")
-	slot0.text = gohelper.findChildText(slot0.viewGO, "numbg/content/Text")
-	slot0.content = "1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727350138462309122970249248360558507372126441214970999358314132226659275055927557999505011527820605714701095599716059702745345968620147285174186408891986095523292304843087143214508397626036279952514079896872533965463318088296406206152583523950547457502877599617298355752203375318570113543746034084988471603868999706990048150305440277903164542478230684929369186215805784631115966687130130156185689872372352885092648612494977154218334204285686060146824720771435854874155657069677653720226485447015858801620758474922657226002085584466521458398893944370926591800311388246468157082630100594858704003186480342194897278290641045072636881313739855256117322040245091227700226941127573627280495738108967504018369868368450725799364729060762996941380475654823728997180326802474420629269124859052181004459842150591120249441341728531478105803603371077309182869314710171111683916581726889419758716582152128229518488472"
-	slot0.numTab = {}
-	slot2 = 1
+	arg_1_0.viewGO = arg_1_1.viewGO
+	arg_1_0.goNum = gohelper.findChild(arg_1_0.viewGO, "numbg")
+	arg_1_0.textContent = gohelper.findChild(arg_1_0.viewGO, "numbg/content")
+	arg_1_0.text = gohelper.findChildText(arg_1_0.viewGO, "numbg/content/Text")
+	arg_1_0.content = "1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727350138462309122970249248360558507372126441214970999358314132226659275055927557999505011527820605714701095599716059702745345968620147285174186408891986095523292304843087143214508397626036279952514079896872533965463318088296406206152583523950547457502877599617298355752203375318570113543746034084988471603868999706990048150305440277903164542478230684929369186215805784631115966687130130156185689872372352885092648612494977154218334204285686060146824720771435854874155657069677653720226485447015858801620758474922657226002085584466521458398893944370926591800311388246468157082630100594858704003186480342194897278290641045072636881313739855256117322040245091227700226941127573627280495738108967504018369868368450725799364729060762996941380475654823728997180326802474420629269124859052181004459842150591120249441341728531478105803603371077309182869314710171111683916581726889419758716582152128229518488472"
+	arg_1_0.numTab = {}
 
-	for slot6 in string.gmatch(slot0.content, ".") do
-		slot0.numTab[slot2] = slot6
-		slot2 = slot2 + 1
+	local var_1_0 = 1
+
+	for iter_1_0 in string.gmatch(arg_1_0.content, ".") do
+		arg_1_0.numTab[var_1_0] = iter_1_0
+		var_1_0 = var_1_0 + 1
 	end
 
-	slot0.numCount = slot2 - 1
-	slot0._showCheckStamp = 0
+	arg_1_0.numCount = var_1_0 - 1
+	arg_1_0._showCheckStamp = 0
 end
 
-function slot0.addUpdate(slot0)
-	if slot0.hasAddUpdate then
+function var_0_0.addUpdate(arg_2_0)
+	if arg_2_0.hasAddUpdate then
 		return
 	end
 
-	slot0.hasAddUpdate = true
+	arg_2_0.hasAddUpdate = true
 
-	LateUpdateBeat:Add(slot0._updateText, slot0)
+	LateUpdateBeat:Add(arg_2_0._updateText, arg_2_0)
 end
 
-function slot0._updateText(slot0)
-	if slot0.showTextTween then
-		slot0._showCheckStamp = slot0._showCheckStamp + uv0.deltaTime
+function var_0_0._updateText(arg_3_0)
+	if arg_3_0.showTextTween then
+		arg_3_0._showCheckStamp = arg_3_0._showCheckStamp + var_0_1.deltaTime
 
-		if slot0.showTweenStamp < slot0._showCheckStamp then
-			slot0._showCheckStamp = 0
+		if arg_3_0._showCheckStamp > arg_3_0.showTweenStamp then
+			arg_3_0._showCheckStamp = 0
 
-			slot0:_playShowText()
+			arg_3_0:_playShowText()
 		end
 	end
 
-	if slot0.showZeroTween then
-		slot0._showCheckStamp = slot0._showCheckStamp + uv0.deltaTime
+	if arg_3_0.showZeroTween then
+		arg_3_0._showCheckStamp = arg_3_0._showCheckStamp + var_0_1.deltaTime
 
-		if slot0.showTweenStamp < slot0._showCheckStamp then
-			slot0._showCheckStamp = 0
+		if arg_3_0._showCheckStamp > arg_3_0.showTweenStamp then
+			arg_3_0._showCheckStamp = 0
 
-			slot0:_playZeroTween()
+			arg_3_0:_playZeroTween()
 		end
 	end
 end
 
-function slot0.playShowTween(slot0)
-	if slot0.showTextTween then
+function var_0_0.playShowTween(arg_4_0)
+	if arg_4_0.showTextTween then
 		return
 	end
 
-	gohelper.setActive(slot0.goNum, true)
+	gohelper.setActive(arg_4_0.goNum, true)
 
-	slot1 = #slot0.content * 0.1
-	slot0.text.text = ""
-	slot0.showStartIndex = 1
-	slot0.showStartCount = 1
-	slot0.showTextIsFull = false
-	slot0.textWidth = recthelper.getWidth(slot0.text.transform)
-	slot0.textHeight = recthelper.getHeight(slot0.text.transform)
-	slot0.lineCount = math.floor(slot0.textWidth / 50)
-	slot0.showAddCount = math.ceil(slot0.lineCount / 10)
-	slot0.showTextTween = true
-	slot0.showZeroTween = false
-	slot0.showTweenStamp = 0.01
+	local var_4_0 = #arg_4_0.content * 0.1
 
-	slot0:addUpdate()
+	arg_4_0.text.text = ""
+	arg_4_0.showStartIndex = 1
+	arg_4_0.showStartCount = 1
+	arg_4_0.showTextIsFull = false
+	arg_4_0.textWidth = recthelper.getWidth(arg_4_0.text.transform)
+	arg_4_0.textHeight = recthelper.getHeight(arg_4_0.text.transform)
+	arg_4_0.lineCount = math.floor(arg_4_0.textWidth / 50)
+	arg_4_0.showAddCount = math.ceil(arg_4_0.lineCount / 10)
+	arg_4_0.showTextTween = true
+	arg_4_0.showZeroTween = false
+	arg_4_0.showTweenStamp = 0.01
+
+	arg_4_0:addUpdate()
 end
 
-function slot0._playShowText(slot0)
-	if not slot0.showTextIsFull and slot0.textHeight < slot0.text.preferredHeight then
-		slot0.showTextIsFull = true
-		slot0.showTweenStamp = 0.1
+function var_0_0._playShowText(arg_5_0)
+	if not arg_5_0.showTextIsFull and arg_5_0.text.preferredHeight > arg_5_0.textHeight then
+		arg_5_0.showTextIsFull = true
+		arg_5_0.showTweenStamp = 0.1
 	end
 
-	if slot0.showTextIsFull then
-		slot0.showStartIndex = slot0.showStartIndex + 1
+	if arg_5_0.showTextIsFull then
+		arg_5_0.showStartIndex = arg_5_0.showStartIndex + 1
 	else
-		slot0.showStartCount = slot0.showStartCount + 20
+		arg_5_0.showStartCount = arg_5_0.showStartCount + 20
 	end
 
-	slot0.text.text = slot0:getShowText(slot0.showStartIndex, slot0.showStartCount)
+	local var_5_0 = arg_5_0:getShowText(arg_5_0.showStartIndex, arg_5_0.showStartCount)
+
+	arg_5_0.text.text = var_5_0
 end
 
-function slot0.getShowText(slot0, slot1, slot2)
-	if not slot0.showTextTab then
-		slot0.showTextTab = {}
+function var_0_0.getShowText(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_0.showTextTab then
+		arg_6_0.showTextTab = {}
 	end
 
-	slot3 = nil
+	local var_6_0
 
-	for slot7 = 1, slot2 do
-		if slot0.numCount < slot7 + slot1 then
-			slot3 = slot3 % slot0.numCount
+	for iter_6_0 = 1, arg_6_2 do
+		local var_6_1 = iter_6_0 + arg_6_1
+
+		if var_6_1 > arg_6_0.numCount then
+			var_6_1 = var_6_1 % arg_6_0.numCount
 		end
 
-		slot0.showTextTab[slot7] = slot0.numTab[slot3] or ""
+		arg_6_0.showTextTab[iter_6_0] = arg_6_0.numTab[var_6_1] or ""
 	end
 
-	return table.concat(slot0.showTextTab, "")
+	return table.concat(arg_6_0.showTextTab, "")
 end
 
-function slot0.playZeroTween(slot0, slot1, slot2)
-	if slot0.showZeroTween then
+function var_0_0.playZeroTween(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0.showZeroTween then
 		return
 	end
 
-	gohelper.setActive(slot0.goNum, true)
+	gohelper.setActive(arg_7_0.goNum, true)
 
-	slot0.showTextTween = false
-	slot0.showZeroTween = true
-	slot0.showTweenStamp = 0.1
-	slot0.zeroCallback = slot1
-	slot0.zeroCallbackObj = slot2
+	arg_7_0.showTextTween = false
+	arg_7_0.showZeroTween = true
+	arg_7_0.showTweenStamp = 0.1
+	arg_7_0.zeroCallback = arg_7_1
+	arg_7_0.zeroCallbackObj = arg_7_2
 
-	slot0:addUpdate()
+	arg_7_0:addUpdate()
 end
 
-function slot0._playZeroTween(slot0)
-	slot0.text.text, slot2 = slot0:getZeroText()
+function var_0_0._playZeroTween(arg_8_0)
+	local var_8_0, var_8_1 = arg_8_0:getZeroText()
 
-	if slot2 then
-		slot0.showZeroTween = false
+	arg_8_0.text.text = var_8_0
 
-		TaskDispatcher.runDelay(slot0._onFinishZeroTween, slot0, 0.5)
+	if var_8_1 then
+		arg_8_0.showZeroTween = false
+
+		TaskDispatcher.runDelay(arg_8_0._onFinishZeroTween, arg_8_0, 0.5)
 	end
 end
 
-function slot0._onFinishZeroTween(slot0)
-	if slot0.zeroCallback then
-		slot0.zeroCallback(slot0.zeroCallbackObj)
+function var_0_0._onFinishZeroTween(arg_9_0)
+	if arg_9_0.zeroCallback then
+		arg_9_0.zeroCallback(arg_9_0.zeroCallbackObj)
 	end
 end
 
-function slot0.getZeroText(slot0)
-	if not slot0.showTextTab then
-		slot0.showTextTab = {}
+function var_0_0.getZeroText(arg_10_0)
+	if not arg_10_0.showTextTab then
+		arg_10_0.showTextTab = {}
 	end
 
-	slot1 = true
-	slot2 = nil
+	local var_10_0 = true
+	local var_10_1
 
-	for slot6, slot7 in ipairs(slot0.showTextTab) do
-		if tonumber(slot7) then
-			if slot2 ~= 0 then
-				slot2 = slot2 - 1
-				slot1 = false
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.showTextTab) do
+		local var_10_2 = tonumber(iter_10_1)
+
+		if var_10_2 then
+			if var_10_2 ~= 0 then
+				var_10_2 = var_10_2 - 1
+				var_10_0 = false
 			end
 		else
-			slot2 = slot7
+			var_10_2 = iter_10_1
 		end
 
-		slot0.showTextTab[slot6] = slot2
+		arg_10_0.showTextTab[iter_10_0] = var_10_2
 	end
 
-	return table.concat(slot0.showTextTab, ""), slot1
+	return table.concat(arg_10_0.showTextTab, ""), var_10_0
 end
 
-function slot0.clear(slot0)
-	gohelper.setActive(slot0.goNum, false)
-	TaskDispatcher.cancelTask(slot0._onFinishZeroTween, slot0)
+function var_0_0.clear(arg_11_0)
+	gohelper.setActive(arg_11_0.goNum, false)
+	TaskDispatcher.cancelTask(arg_11_0._onFinishZeroTween, arg_11_0)
 
-	slot0.showTextTween = false
-	slot0.showZeroTween = false
+	arg_11_0.showTextTween = false
+	arg_11_0.showZeroTween = false
 
-	if slot0.hasAddUpdate then
-		LateUpdateBeat:Remove(slot0._updateText, slot0)
+	if arg_11_0.hasAddUpdate then
+		LateUpdateBeat:Remove(arg_11_0._updateText, arg_11_0)
 
-		slot0.hasAddUpdate = false
+		arg_11_0.hasAddUpdate = false
 	end
 end
 
-function slot0.destory(slot0)
-	slot0:clear()
-	slot0:__onDispose()
+function var_0_0.destory(arg_12_0)
+	arg_12_0:clear()
+	arg_12_0:__onDispose()
 end
 
-return slot0
+return var_0_0

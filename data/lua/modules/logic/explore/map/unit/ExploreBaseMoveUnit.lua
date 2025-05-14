@@ -1,274 +1,308 @@
-module("modules.logic.explore.map.unit.ExploreBaseMoveUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreBaseMoveUnit", package.seeall)
 
-slot0 = class("ExploreBaseMoveUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreBaseMoveUnit", ExploreBaseDisplayUnit)
 
-function slot0.canMove(slot0)
-	return slot0.mo.isCanMove
+function var_0_0.canMove(arg_1_0)
+	return arg_1_0.mo.isCanMove
 end
 
-function slot0.isMoving(slot0)
-	return slot0._isMoving
+function var_0_0.isMoving(arg_2_0)
+	return arg_2_0._isMoving
 end
 
-function slot0.beginPick(slot0)
+function var_0_0.beginPick(arg_3_0)
+	return
 end
 
-function slot0.endPick(slot0)
+function var_0_0.endPick(arg_4_0)
+	return
 end
 
-function slot0.setMoveDir(slot0, slot1)
-	slot0._moveDirKey = slot1
+function var_0_0.setMoveDir(arg_5_0, arg_5_1)
+	arg_5_0._moveDirKey = arg_5_1
 
-	slot0:tryMoveByDir()
+	arg_5_0:tryMoveByDir()
 end
 
-function slot0.tryMoveByDir(slot0)
-	if slot0:checkUseMoveDir() and not slot0._isMoving and ExploreModel.instance:isHeroInControl() and UIBlockMgr.instance:isBlock() ~= true and ZProj.TouchEventMgr.Fobidden ~= true then
-		slot0:_updateRealMoveDir()
+function var_0_0.tryMoveByDir(arg_6_0)
+	if arg_6_0:checkUseMoveDir() and not arg_6_0._isMoving and ExploreModel.instance:isHeroInControl() and UIBlockMgr.instance:isBlock() ~= true and ZProj.TouchEventMgr.Fobidden ~= true then
+		local var_6_0 = ExploreHelper.getKey(arg_6_0.nodePos)
+		local var_6_1 = ExploreMapModel.instance:getNode(var_6_0).height
 
-		if ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0.nodePos + slot0._realMoveDir)) and slot2:isWalkable(ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0.nodePos)).height) then
-			slot0:moveTo(slot4)
+		arg_6_0:_updateRealMoveDir()
+
+		local var_6_2 = arg_6_0.nodePos + arg_6_0._realMoveDir
+		local var_6_3 = ExploreHelper.getKey(var_6_2)
+		local var_6_4 = ExploreMapModel.instance:getNode(var_6_3)
+
+		if var_6_4 and var_6_4:isWalkable(var_6_1) then
+			arg_6_0:moveTo(var_6_2)
 		else
-			slot0:onCheckDir(slot0.nodePos, slot4)
+			arg_6_0:onCheckDir(arg_6_0.nodePos, var_6_2)
 		end
 	end
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3)
-	slot0._tarUnitMO = nil
+function var_0_0.moveTo(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0._tarUnitMO = nil
 
-	slot0:_startMove(slot1, slot2, slot3)
+	arg_7_0:_startMove(arg_7_1, arg_7_2, arg_7_3)
 end
 
-function slot0.moveByPath(slot0, slot1, slot2, slot3, slot4, slot5)
-	if #slot1 <= 0 then
-		if slot4 then
-			slot4(slot5, slot0.nodePos, slot0.nodePos)
+function var_0_0.moveByPath(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	local var_8_0 = #arg_8_1
+
+	if var_8_0 <= 0 then
+		if arg_8_4 then
+			arg_8_4(arg_8_5, arg_8_0.nodePos, arg_8_0.nodePos)
 		end
 
 		return
 	end
 
-	slot0._lockDir = slot3
-	slot0._moveDir = slot2
+	arg_8_0._lockDir = arg_8_3
+	arg_8_0._moveDir = arg_8_2
 
-	if slot2 then
-		slot0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, slot2)
+	if arg_8_2 then
+		arg_8_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, arg_8_2)
 	end
 
-	slot0._pathArray = slot1
-	slot0._walkDistance = slot6
-	slot0._gotoCallback = slot4
-	slot0._gotoCallbackObj = slot5
-	slot0._endPos = slot1[slot0._walkDistance]
+	arg_8_0._pathArray = arg_8_1
+	arg_8_0._walkDistance = var_8_0
+	arg_8_0._gotoCallback = arg_8_4
+	arg_8_0._gotoCallbackObj = arg_8_5
+	arg_8_0._endPos = arg_8_1[arg_8_0._walkDistance]
 
-	slot0:_startMove2()
-	slot0:onStartMove()
+	arg_8_0:_startMove2()
+	arg_8_0:onStartMove()
 end
 
-function slot0.reStartMoving(slot0)
-	if slot0._isMoving then
-		slot0:_startMove(slot0._endPos, slot0._gotoCallback, slot0._gotoCallbackObj)
+function var_0_0.reStartMoving(arg_9_0)
+	if arg_9_0._isMoving then
+		arg_9_0:_startMove(arg_9_0._endPos, arg_9_0._gotoCallback, arg_9_0._gotoCallbackObj)
 	end
 end
 
-function slot0.getMoveDistance(slot0)
-	if not slot0._isMoving then
+function var_0_0.getMoveDistance(arg_10_0)
+	if not arg_10_0._isMoving then
 		return 0
 	end
 
-	return slot0._walkDistance
+	return arg_10_0._walkDistance
 end
 
-function slot0.getRunTotalTime(slot0)
-	if slot0._isMoving then
-		return slot0._runTotalTime
+function var_0_0.getRunTotalTime(arg_11_0)
+	if arg_11_0._isMoving then
+		return arg_11_0._runTotalTime
 	else
 		return 0
 	end
 end
 
-function slot0.stopMoving(slot0, slot1)
-	if not slot0._isMoving then
+function var_0_0.stopMoving(arg_12_0, arg_12_1)
+	if not arg_12_0._isMoving then
 		return
 	end
 
-	if not slot1 then
-		if ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0._nextNodePos)).nodeType == ExploreEnum.NodeType.Ice then
+	if not arg_12_1 then
+		local var_12_0 = arg_12_0._nextNodePos
+		local var_12_1 = ExploreHelper.getKey(var_12_0)
+
+		if ExploreMapModel.instance:getNode(var_12_1).nodeType == ExploreEnum.NodeType.Ice then
 			return
 		end
 
-		slot0._isStopMoving = true
+		arg_12_0._isStopMoving = true
 
-		return slot2
+		return var_12_0
 	end
 
-	slot0._isMoving = false
+	arg_12_0._isMoving = false
 
-	if slot0._moveDir then
-		slot0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
+	if arg_12_0._moveDir then
+		arg_12_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
 	end
 
-	slot0._moveDir = nil
-	slot0._lockDir = nil
-	slot0._nextWorldPos = nil
-	slot0._nextNodePos = nil
-	slot0._oldWorldPos = nil
+	arg_12_0._moveDir = nil
+	arg_12_0._lockDir = nil
+	arg_12_0._nextWorldPos = nil
+	arg_12_0._nextNodePos = nil
+	arg_12_0._oldWorldPos = nil
 
-	slot0:onEndMove()
+	arg_12_0:onEndMove()
 
-	slot0._walkDistance = 0
+	arg_12_0._walkDistance = 0
 
-	if slot0._tureDir then
-		slot0:onDirChange(slot0._tureDir)
+	if arg_12_0._tureDir then
+		arg_12_0:onDirChange(arg_12_0._tureDir)
 
-		slot0._tureDir = nil
+		arg_12_0._tureDir = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.onMoveTick, slot0)
+	TaskDispatcher.cancelTask(arg_12_0.onMoveTick, arg_12_0)
 end
 
-function slot0.onCheckDir(slot0, slot1, slot2)
+function var_0_0.onCheckDir(arg_13_0, arg_13_1, arg_13_2)
+	return
 end
 
-function slot0.onCheckDirByPos(slot0, slot1, slot2)
+function var_0_0.onCheckDirByPos(arg_14_0, arg_14_1, arg_14_2)
+	return
 end
 
-function slot0.onDirChange(slot0, slot1)
+function var_0_0.onDirChange(arg_15_0, arg_15_1)
+	return
 end
 
-function slot0.onMoveTick(slot0)
-	slot0:_moving()
+function var_0_0.onMoveTick(arg_16_0)
+	arg_16_0:_moving()
 end
 
-function slot0.onStartMove(slot0)
+function var_0_0.onStartMove(arg_17_0)
+	return
 end
 
-function slot0.onEndMove(slot0)
+function var_0_0.onEndMove(arg_18_0)
+	return
 end
 
-function slot0.moveSpeed(slot0)
+function var_0_0.moveSpeed(arg_19_0)
 	return ExploreAnimEnum.RoleSpeed.walk
 end
 
-function slot0.onDestroy(slot0)
-	slot0._gotoCallback = nil
-	slot0._gotoCallbackObj = nil
-	slot0._endPos = nil
-	slot0._exploreMap = nil
+function var_0_0.onDestroy(arg_20_0)
+	arg_20_0._gotoCallback = nil
+	arg_20_0._gotoCallbackObj = nil
+	arg_20_0._endPos = nil
+	arg_20_0._exploreMap = nil
 
-	TaskDispatcher.cancelTask(slot0.onMoveTick, slot0)
-	uv0.super.onDestroy(slot0)
+	TaskDispatcher.cancelTask(arg_20_0.onMoveTick, arg_20_0)
+	var_0_0.super.onDestroy(arg_20_0)
 end
 
-function slot0._startMove(slot0, slot1, slot2, slot3)
-	slot0._gotoCallback = slot2
-	slot0._gotoCallbackObj = slot3
-	slot0._endPos = slot1
+function var_0_0._startMove(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	arg_21_0._gotoCallback = arg_21_2
+	arg_21_0._gotoCallbackObj = arg_21_3
+	arg_21_0._endPos = arg_21_1
 
-	if not slot0.nodePos or ExploreHelper.isPosEqual(slot0.nodePos, slot0._endPos) then
-		slot0:_onEndMoveCallback()
+	if not arg_21_0.nodePos or ExploreHelper.isPosEqual(arg_21_0.nodePos, arg_21_0._endPos) then
+		arg_21_0:_onEndMoveCallback()
 
 		return
 	end
 
-	if not slot0._exploreMap then
-		slot0._exploreMap = ExploreController.instance:getMap()
+	if not arg_21_0._exploreMap then
+		arg_21_0._exploreMap = ExploreController.instance:getMap()
 	end
 
-	slot0._pathArray = slot0._exploreMap:startFindPath(slot0.nodePos, slot0._endPos)
+	arg_21_0._pathArray = arg_21_0._exploreMap:startFindPath(arg_21_0.nodePos, arg_21_0._endPos)
 
-	if #slot0._pathArray == 0 then
-		slot0:_onEndMoveCallback()
+	local var_21_0 = #arg_21_0._pathArray
+
+	if var_21_0 == 0 then
+		arg_21_0:_onEndMoveCallback()
 
 		return
 	end
 
-	slot0._walkDistance = slot4
+	arg_21_0._walkDistance = var_21_0
 
-	slot0:_startMove2()
-	slot0:onStartMove()
+	arg_21_0:_startMove2()
+	arg_21_0:onStartMove()
 end
 
-function slot0._startMove2(slot0)
-	slot0._isMoving = true
+function var_0_0._startMove2(arg_22_0)
+	arg_22_0._isMoving = true
 
-	TaskDispatcher.runRepeat(slot0.onMoveTick, slot0, 0)
-	slot0:onMoveTick()
+	TaskDispatcher.runRepeat(arg_22_0.onMoveTick, arg_22_0, 0)
+	arg_22_0:onMoveTick()
 end
 
-function slot0._moving(slot0)
-	if slot0._nextWorldPos then
-		slot0._runStartTime = slot0._runStartTime + Time.deltaTime
-		slot1 = Vector3.Lerp(slot0._oldWorldPos, slot0._nextWorldPos, math.min(1, slot0._runStartTime / slot0._runTotalTime))
+function var_0_0._moving(arg_23_0)
+	if arg_23_0._nextWorldPos then
+		arg_23_0._runStartTime = arg_23_0._runStartTime + Time.deltaTime
 
-		if slot0._runTotalTime <= slot0._runStartTime then
-			slot0:setPosByNode(slot0._nextNodePos)
+		local var_23_0 = Vector3.Lerp(arg_23_0._oldWorldPos, arg_23_0._nextWorldPos, math.min(1, arg_23_0._runStartTime / arg_23_0._runTotalTime))
 
-			slot0._nextWorldPos = nil
+		if arg_23_0._runStartTime >= arg_23_0._runTotalTime then
+			arg_23_0:setPosByNode(arg_23_0._nextNodePos)
 
-			if slot0._isStopMoving then
-				slot0._pathArray = {}
-				slot0._isStopMoving = nil
+			arg_23_0._nextWorldPos = nil
+
+			if arg_23_0._isStopMoving then
+				arg_23_0._pathArray = {}
+				arg_23_0._isStopMoving = nil
 			end
 
-			slot0:_moving()
+			arg_23_0:_moving()
 		else
-			slot0:setPos(slot1)
+			arg_23_0:setPos(var_23_0)
 		end
 
 		return
 	end
 
-	if #slot0._pathArray == 0 then
-		slot0:_addMovePathByDir()
+	if #arg_23_0._pathArray == 0 then
+		arg_23_0:_addMovePathByDir()
 	end
 
-	if #slot0._pathArray > 0 then
-		slot0._nextNodePos = table.remove(slot0._pathArray)
-		slot0._runTotalTime = slot0:moveSpeed()
+	if #arg_23_0._pathArray > 0 then
+		local var_23_1 = arg_23_0.nodePos
 
-		if ExploreHelper.isPosEqual(slot0.nodePos, slot0._nextNodePos) then
+		arg_23_0._nextNodePos = table.remove(arg_23_0._pathArray)
+		arg_23_0._runTotalTime = arg_23_0:moveSpeed()
+
+		if ExploreHelper.isPosEqual(var_23_1, arg_23_0._nextNodePos) then
 			return
 		end
 
-		if not slot0._lockDir and ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0._nextNodePos)):isWalkable(ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot1)).height) == false then
-			slot0:_endMove()
+		local var_23_2 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(var_23_1))
+		local var_23_3 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_23_0._nextNodePos))
+
+		if not arg_23_0._lockDir and var_23_3:isWalkable(var_23_2.height) == false then
+			arg_23_0:_endMove()
 
 			return
 		end
 
-		slot0._oldWorldPos = slot0.position
-		slot0._nextWorldPos = ExploreHelper.tileToPos(slot0._nextNodePos)
-		slot0._nextWorldPos.y = slot0._oldWorldPos.y
-		slot0._runStartTime = 0
+		arg_23_0._oldWorldPos = arg_23_0.position
+		arg_23_0._nextWorldPos = ExploreHelper.tileToPos(arg_23_0._nextNodePos)
+		arg_23_0._nextWorldPos.y = arg_23_0._oldWorldPos.y
+		arg_23_0._runStartTime = 0
 
-		slot0:onCheckDir(slot1, slot0._nextNodePos)
-		slot0:onCheckDirByPos(slot0._oldWorldPos, slot0._nextWorldPos)
+		arg_23_0:onCheckDir(var_23_1, arg_23_0._nextNodePos)
+		arg_23_0:onCheckDirByPos(arg_23_0._oldWorldPos, arg_23_0._nextWorldPos)
 
 		return
 	end
 
-	slot0:_endMove()
+	arg_23_0:_endMove()
 end
 
-function slot0._addMovePathByDir(slot0)
-	if slot0:checkUseMoveDir() and ExploreModel.instance:isHeroInControl() and slot0:_checkInUIBlock() == false and ZProj.TouchEventMgr.Fobidden ~= true then
-		slot0:_updateRealMoveDir()
+function var_0_0._addMovePathByDir(arg_24_0)
+	if arg_24_0:checkUseMoveDir() and ExploreModel.instance:isHeroInControl() and arg_24_0:_checkInUIBlock() == false and ZProj.TouchEventMgr.Fobidden ~= true then
+		local var_24_0 = ExploreHelper.getKey(arg_24_0.nodePos)
+		local var_24_1 = ExploreMapModel.instance:getNode(var_24_0).height
 
-		if ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0.nodePos + slot0._realMoveDir)) and slot2:isWalkable(ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0.nodePos)).height) then
-			table.insert(slot0._pathArray, slot4)
+		arg_24_0:_updateRealMoveDir()
+
+		local var_24_2 = arg_24_0.nodePos + arg_24_0._realMoveDir
+		local var_24_3 = ExploreHelper.getKey(var_24_2)
+		local var_24_4 = ExploreMapModel.instance:getNode(var_24_3)
+
+		if var_24_4 and var_24_4:isWalkable(var_24_1) then
+			table.insert(arg_24_0._pathArray, var_24_2)
 		end
 	end
 end
 
-slot0.ExploreMoveRequest = 13574
+var_0_0.ExploreMoveRequest = 13574
 
-function slot0._checkInUIBlock(slot0)
-	for slot4, slot5 in pairs(UIBlockMgr.instance._blockKeyDict) do
-		if slot4 == UIBlockKey.MsgLock then
-			for slot9, slot10 in pairs(GameGlobalMgr.instance:getMsgLockState()._blockCmdDict) do
-				if uv0.ExploreMoveRequest ~= slot9 then
+function var_0_0._checkInUIBlock(arg_25_0)
+	for iter_25_0, iter_25_1 in pairs(UIBlockMgr.instance._blockKeyDict) do
+		if iter_25_0 == UIBlockKey.MsgLock then
+			for iter_25_2, iter_25_3 in pairs(GameGlobalMgr.instance:getMsgLockState()._blockCmdDict) do
+				if var_0_0.ExploreMoveRequest ~= iter_25_2 then
 					return true
 				end
 			end
@@ -280,50 +314,55 @@ function slot0._checkInUIBlock(slot0)
 	return false
 end
 
-function slot0._updateRealMoveDir(slot0)
-	if ExploreMapModel.instance.nowMapRotate % 360 < 0 then
-		slot1 = slot1 + 360
+function var_0_0._updateRealMoveDir(arg_26_0)
+	local var_26_0 = ExploreMapModel.instance.nowMapRotate % 360
+
+	if var_26_0 < 0 then
+		var_26_0 = var_26_0 + 360
 	end
 
-	slot0._realMoveDir = ExploreEnum.RoleMoveRotateDir[(ExploreEnum.RoleMoveRotateDirIndex[slot0._moveDirKey] + Mathf.Round(slot1 / 90)) % 4]
+	local var_26_1 = Mathf.Round(var_26_0 / 90)
+	local var_26_2 = (ExploreEnum.RoleMoveRotateDirIndex[arg_26_0._moveDirKey] + var_26_1) % 4
+
+	arg_26_0._realMoveDir = ExploreEnum.RoleMoveRotateDir[var_26_2]
 end
 
-function slot0.checkUseMoveDir(slot0)
-	return slot0._moveDirKey
+function var_0_0.checkUseMoveDir(arg_27_0)
+	return arg_27_0._moveDirKey
 end
 
-function slot0._endMove(slot0)
-	slot0._walkDistance = 0
+function var_0_0._endMove(arg_28_0)
+	arg_28_0._walkDistance = 0
 
-	if slot0._tureDir then
-		slot0:onDirChange(slot0._tureDir)
+	if arg_28_0._tureDir then
+		arg_28_0:onDirChange(arg_28_0._tureDir)
 
-		slot0._tureDir = nil
+		arg_28_0._tureDir = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.onMoveTick, slot0)
+	TaskDispatcher.cancelTask(arg_28_0.onMoveTick, arg_28_0)
 
-	slot0._nextNodePos = nil
+	arg_28_0._nextNodePos = nil
 
-	slot0:_onEndMoveCallback()
+	arg_28_0:_onEndMoveCallback()
 end
 
-function slot0._onEndMoveCallback(slot0)
-	slot0._isMoving = false
+function var_0_0._onEndMoveCallback(arg_29_0)
+	arg_29_0._isMoving = false
 
-	if slot0._moveDir then
-		slot0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
+	if arg_29_0._moveDir then
+		arg_29_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
 	end
 
-	slot0._moveDir = nil
-	slot0._moveDirKey = nil
-	slot0._lockDir = nil
+	arg_29_0._moveDir = nil
+	arg_29_0._moveDirKey = nil
+	arg_29_0._lockDir = nil
 
-	slot0:onEndMove()
+	arg_29_0:onEndMove()
 
-	if slot0._gotoCallback then
-		slot0._gotoCallback(slot0._gotoCallbackObj, slot0.nodePos, slot0._endPos)
+	if arg_29_0._gotoCallback then
+		arg_29_0._gotoCallback(arg_29_0._gotoCallbackObj, arg_29_0.nodePos, arg_29_0._endPos)
 	end
 end
 
-return slot0
+return var_0_0

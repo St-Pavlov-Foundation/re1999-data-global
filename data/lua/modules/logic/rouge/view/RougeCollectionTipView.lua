@@ -1,366 +1,426 @@
-module("modules.logic.rouge.view.RougeCollectionTipView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionTipView", package.seeall)
 
-slot0 = class("RougeCollectionTipView", BaseView)
+local var_0_0 = class("RougeCollectionTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goroot = gohelper.findChild(slot0.viewGO, "#go_root")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_root/anim/#simage_icon")
-	slot0._txtcollectionname = gohelper.findChildText(slot0.viewGO, "#go_root/anim/#txt_collectionname")
-	slot0._scrollcollectiondesc = gohelper.findChildScrollRect(slot0.viewGO, "#go_root/anim/#scroll_collectiondesc")
-	slot0._godescContent = gohelper.findChild(slot0.viewGO, "#go_root/anim/#scroll_collectiondesc/Viewport/#go_descContent")
-	slot0._godescitem = gohelper.findChild(slot0.viewGO, "#go_root/anim/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
-	slot0._gotags = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_tags")
-	slot0._gotagitem = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_tags/#go_tagitem")
-	slot0._goextratags = gohelper.findChild(slot0.viewGO, "#go_root/anim/tags/#go_extratags")
-	slot0._goextratagitem = gohelper.findChild(slot0.viewGO, "#go_root/anim/tags/#go_extratags/#go_extratagitem")
-	slot0._goholetool = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_holetool")
-	slot0._goholeitem = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_holetool/#go_holeitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goshapecontainer = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_shapecontainer")
-	slot0._goshapecell = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_shapecontainer/#go_shapecell")
-	slot0._btnunequip = gohelper.findChildButton(slot0.viewGO, "#go_root/anim/#btn_unequip")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_tips")
-	slot0._gotagdescitem = gohelper.findChild(slot0.viewGO, "#go_root/anim/#go_tips/#txt_tagitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_root/anim/#simage_icon")
+	arg_1_0._txtcollectionname = gohelper.findChildText(arg_1_0.viewGO, "#go_root/anim/#txt_collectionname")
+	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_root/anim/#scroll_collectiondesc")
+	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#scroll_collectiondesc/Viewport/#go_descContent")
+	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
+	arg_1_0._gotags = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_tags")
+	arg_1_0._gotagitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_tags/#go_tagitem")
+	arg_1_0._goextratags = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/tags/#go_extratags")
+	arg_1_0._goextratagitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/tags/#go_extratags/#go_extratagitem")
+	arg_1_0._goholetool = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_holetool")
+	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_holetool/#go_holeitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goshapecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_shapecontainer")
+	arg_1_0._goshapecell = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_shapecontainer/#go_shapecell")
+	arg_1_0._btnunequip = gohelper.findChildButton(arg_1_0.viewGO, "#go_root/anim/#btn_unequip")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_tips")
+	arg_1_0._gotagdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/anim/#go_tips/#txt_tagitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnunequip:AddClickListener(slot0._btnunequipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnunequip:AddClickListener(arg_2_0._btnunequipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnunequip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnunequip:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnunequipOnClick(slot0)
-	RougeCollectionChessController.instance:removeCollectionFromSlotArea(slot0.viewParam and slot0.viewParam.collectionId)
-	slot0:closeThis()
+function var_0_0._btnunequipOnClick(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam and arg_5_0.viewParam.collectionId
+
+	RougeCollectionChessController.instance:removeCollectionFromSlotArea(var_5_0)
+	arg_5_0:closeThis()
 	AudioMgr.instance:trigger(AudioEnum.UI.UnEquipCollection)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, slot0.updateCollectionEnchantInfo, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.SetCollectionTipViewInteractable, slot0.setViewInteractable, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateCollectionAttr, slot0.updateCollectionAttr, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseViewCallBack, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, arg_6_0.updateCollectionEnchantInfo, arg_6_0)
+	arg_6_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.SetCollectionTipViewInteractable, arg_6_0.setViewInteractable, arg_6_0)
+	arg_6_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateCollectionAttr, arg_6_0.updateCollectionAttr, arg_6_0)
+	arg_6_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_6_0._onSwitchCollectionInfoType, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0.onCloseViewCallBack, arg_6_0)
 
-	slot0._cellModelTab = slot0:getUserDataTb_()
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0._hooltoolCanvasGroup = gohelper.onceAddComponent(slot0._goholetool, gohelper.Type_CanvasGroup)
-	slot0._rootCanvasGroup = gohelper.onceAddComponent(slot0._goroot, gohelper.Type_CanvasGroup)
+	arg_6_0._cellModelTab = arg_6_0:getUserDataTb_()
+	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
+	arg_6_0._hooltoolCanvasGroup = gohelper.onceAddComponent(arg_6_0._goholetool, gohelper.Type_CanvasGroup)
+	arg_6_0._rootCanvasGroup = gohelper.onceAddComponent(arg_6_0._goroot, gohelper.Type_CanvasGroup)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_choices_open_1)
-	slot0:refreshCollectionInfos()
+	arg_7_0:refreshCollectionInfos()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshCollectionInfos()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:refreshCollectionInfos()
 end
 
-function slot0.refreshCollectionInfos(slot0)
-	slot1 = slot0.viewParam and slot0.viewParam.collectionId
-	slot2 = slot0.viewParam and slot0.viewParam.collectionCfgId
-	slot3 = slot0:getViewPos()
-	slot0._interactable = true
-	slot0._useCloseBtn = true
+function var_0_0.refreshCollectionInfos(arg_9_0)
+	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.collectionId
+	local var_9_1 = arg_9_0.viewParam and arg_9_0.viewParam.collectionCfgId
+	local var_9_2 = arg_9_0:getViewPos()
 
-	if slot0.viewParam and slot0.viewParam.interactable ~= nil then
-		slot0._interactable = slot0.viewParam.interactable
+	arg_9_0._interactable = true
+	arg_9_0._useCloseBtn = true
+
+	if arg_9_0.viewParam and arg_9_0.viewParam.interactable ~= nil then
+		arg_9_0._interactable = arg_9_0.viewParam.interactable
 	end
 
-	if slot0.viewParam and slot0.viewParam.useCloseBtn ~= nil then
-		slot0._useCloseBtn = slot0.viewParam.useCloseBtn
+	if arg_9_0.viewParam and arg_9_0.viewParam.useCloseBtn ~= nil then
+		arg_9_0._useCloseBtn = arg_9_0.viewParam.useCloseBtn
 	end
 
-	slot0:updateViewPosition(slot3)
-	slot0:refreshCollectionTips(slot1, slot2)
-	slot0:setInterable(slot0._interactable)
-	slot0:setCloseBtnInteractable(slot0._useCloseBtn)
+	arg_9_0:updateViewPosition(var_9_2)
+	arg_9_0:refreshCollectionTips(var_9_0, var_9_1)
+	arg_9_0:setInterable(arg_9_0._interactable)
+	arg_9_0:setCloseBtnInteractable(arg_9_0._useCloseBtn)
 end
 
-function slot0.getViewPos(slot0)
-	slot1 = slot0.viewParam and slot0.viewParam.viewPosition
+function var_0_0.getViewPos(arg_10_0)
+	local var_10_0 = arg_10_0.viewParam and arg_10_0.viewParam.viewPosition
 
-	if (slot0.viewParam and slot0.viewParam.source) ~= RougeEnum.OpenCollectionTipSource.ChoiceView then
-		return slot1
+	if (arg_10_0.viewParam and arg_10_0.viewParam.source) ~= RougeEnum.OpenCollectionTipSource.ChoiceView then
+		return var_10_0
 	end
 
-	return recthelper.screenPosToAnchorPos(slot1, slot0.viewGO.transform)
+	return recthelper.screenPosToAnchorPos(var_10_0, arg_10_0.viewGO.transform)
 end
 
-function slot0.setCloseBtnInteractable(slot0, slot1)
-	gohelper.setActive(slot0._btnclose.gameObject, slot1)
+function var_0_0.setCloseBtnInteractable(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._btnclose.gameObject, arg_11_1)
 end
 
-function slot0.setInterable(slot0, slot1)
-	slot0._hooltoolCanvasGroup.interactable = slot1
-	slot0._hooltoolCanvasGroup.blocksRaycasts = slot1
+function var_0_0.setInterable(arg_12_0, arg_12_1)
+	arg_12_0._hooltoolCanvasGroup.interactable = arg_12_1
+	arg_12_0._hooltoolCanvasGroup.blocksRaycasts = arg_12_1
 end
 
-function slot0.updateViewPosition(slot0, slot1)
-	recthelper.setAnchor(slot0._goroot.transform, slot1 and slot1.x or 0, slot1 and slot1.y or 0)
+function var_0_0.updateViewPosition(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1 and arg_13_1.x or 0
+	local var_13_1 = arg_13_1 and arg_13_1.y or 0
+
+	recthelper.setAnchor(arg_13_0._goroot.transform, var_13_0, var_13_1)
 end
 
-function slot0.refreshCollectionTips(slot0, slot1, slot2)
-	if RougeCollectionModel.instance:getCollectionByUid(slot1) then
-		slot2 = slot3.cfgId
+function var_0_0.refreshCollectionTips(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = RougeCollectionModel.instance:getCollectionByUid(arg_14_1)
+
+	if var_14_0 then
+		arg_14_2 = var_14_0.cfgId
 	end
 
-	slot4 = RougeCollectionConfig.instance:getCollectionCfg(slot2)
+	local var_14_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_14_2)
 
-	slot0:refreshCollectionBaseInfo(slot3, slot4)
-	slot0:refreshCollectionHoles(slot4, slot3)
-	RougeCollectionHelper.loadShapeGrid(slot2, slot0._goshapecontainer, slot0._goshapecell, slot0._cellModelTab, false)
+	arg_14_0:refreshCollectionBaseInfo(var_14_0, var_14_1)
+	arg_14_0:refreshCollectionHoles(var_14_1, var_14_0)
+	RougeCollectionHelper.loadShapeGrid(arg_14_2, arg_14_0._goshapecontainer, arg_14_0._goshapecell, arg_14_0._cellModelTab, false)
 
-	slot5 = slot3 and slot3:getAllEnchantCfgId()
+	local var_14_2 = var_14_0 and var_14_0:getAllEnchantCfgId()
 
-	RougeCollectionHelper.loadCollectionAndEnchantTags(slot2, slot5, slot0._gotags, slot0._gotagitem)
-	RougeCollectionHelper.loadCollectionAndEnchantTagNames(slot2, slot5, slot0._gotips, slot0._gotagdescitem, RougeCollectionHelper._loadCollectionTagNameCallBack, RougeCollectionHelper)
-	gohelper.setActive(slot0._btnunequip.gameObject, RougeCollectionModel.instance:isCollectionPlaceInSlotArea(slot1) and slot0._interactable)
+	RougeCollectionHelper.loadCollectionAndEnchantTags(arg_14_2, var_14_2, arg_14_0._gotags, arg_14_0._gotagitem)
+	RougeCollectionHelper.loadCollectionAndEnchantTagNames(arg_14_2, var_14_2, arg_14_0._gotips, arg_14_0._gotagdescitem, RougeCollectionHelper._loadCollectionTagNameCallBack, RougeCollectionHelper)
+
+	local var_14_3 = RougeCollectionModel.instance:isCollectionPlaceInSlotArea(arg_14_1)
+
+	gohelper.setActive(arg_14_0._btnunequip.gameObject, var_14_3 and arg_14_0._interactable)
 end
 
-slot1 = 247
-slot2 = 420
+local var_0_1 = 247
+local var_0_2 = 420
 
-function slot0.refreshCollectionBaseInfo(slot0, slot1, slot2)
-	slot4 = slot2 and slot2.id
-	slot0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(slot4, slot1 and slot1:getAllEnchantCfgId())
+function var_0_0.refreshCollectionBaseInfo(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_1 and arg_15_1:getAllEnchantCfgId()
+	local var_15_1 = arg_15_2 and arg_15_2.id
 
-	slot0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot4))
+	arg_15_0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(var_15_1, var_15_0)
 
-	slot0._itemInstTab = slot0._itemInstTab or slot0:getUserDataTb_()
+	local var_15_2 = RougeCollectionHelper.getCollectionIconUrl(var_15_1)
 
-	if slot1 then
-		RougeCollectionDescHelper.setCollectionDescInfos(slot1.id, slot0._godescContent, slot0._itemInstTab)
+	arg_15_0._simageicon:LoadImage(var_15_2)
+
+	arg_15_0._itemInstTab = arg_15_0._itemInstTab or arg_15_0:getUserDataTb_()
+
+	if arg_15_1 then
+		RougeCollectionDescHelper.setCollectionDescInfos(arg_15_1.id, arg_15_0._godescContent, arg_15_0._itemInstTab)
 	else
-		RougeCollectionDescHelper.setCollectionDescInfos2(slot4, slot3, slot0._godescContent, slot0._itemInstTab, nil, {
+		RougeCollectionDescHelper.setCollectionDescInfos2(var_15_1, var_15_0, arg_15_0._godescContent, arg_15_0._itemInstTab, nil, {
 			isAllActive = true
 		})
 	end
 
-	recthelper.setHeight(slot0._scrollcollectiondesc.transform, (slot2 and slot2.holeNum or 0) > 0 and uv0 or uv1)
+	local var_15_3 = (arg_15_2 and arg_15_2.holeNum or 0) > 0 and var_0_1 or var_0_2
+
+	recthelper.setHeight(arg_15_0._scrollcollectiondesc.transform, var_15_3)
 end
 
-slot3 = 3
+local var_0_3 = 3
 
-function slot0.refreshCollectionHoles(slot0, slot1, slot2)
-	gohelper.setActive(slot0._goholetool, (slot1.holeNum or 0) > 0)
+function var_0_0.refreshCollectionHoles(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_1.holeNum or 0
 
-	for slot7 = 1, uv0 do
-		slot8 = slot0:getOrCreateHole(slot7)
+	gohelper.setActive(arg_16_0._goholetool, var_16_0 > 0)
 
-		gohelper.setActive(slot8.viewGO, true)
-		gohelper.setActive(slot8.golock, slot3 < slot7)
-		gohelper.setActive(slot8.godisenchant, not slot0._interactable or not slot2)
+	for iter_16_0 = 1, var_0_3 do
+		local var_16_1 = arg_16_0:getOrCreateHole(iter_16_0)
 
-		slot9 = false
+		gohelper.setActive(var_16_1.viewGO, true)
+		gohelper.setActive(var_16_1.golock, var_16_0 < iter_16_0)
+		gohelper.setActive(var_16_1.godisenchant, not arg_16_0._interactable or not arg_16_2)
 
-		if slot2 then
-			slot10, slot11 = slot2:getEnchantIdAndCfgId(slot7)
+		local var_16_2 = false
 
-			if slot10 and slot10 > 0 then
-				slot8.simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot11))
+		if arg_16_2 then
+			local var_16_3, var_16_4 = arg_16_2:getEnchantIdAndCfgId(iter_16_0)
+
+			var_16_2 = var_16_3 and var_16_3 > 0
+
+			if var_16_2 then
+				local var_16_5 = RougeCollectionHelper.getCollectionIconUrl(var_16_4)
+
+				var_16_1.simageicon:LoadImage(var_16_5)
 			end
 		end
 
-		gohelper.setActive(slot8.goadd, slot7 <= slot3 and not slot9 and slot0._interactable)
-		gohelper.setActive(slot8.goenchant, slot7 <= slot3 and slot9)
-		gohelper.setActive(slot8.btnremoveenchant.gameObject, slot7 <= slot3 and slot9 and slot0._interactable)
-		gohelper.setActive(slot8.btnclick.gameObject, slot7 <= slot3)
+		gohelper.setActive(var_16_1.goadd, iter_16_0 <= var_16_0 and not var_16_2 and arg_16_0._interactable)
+		gohelper.setActive(var_16_1.goenchant, iter_16_0 <= var_16_0 and var_16_2)
+		gohelper.setActive(var_16_1.btnremoveenchant.gameObject, iter_16_0 <= var_16_0 and var_16_2 and arg_16_0._interactable)
+		gohelper.setActive(var_16_1.btnclick.gameObject, iter_16_0 <= var_16_0)
 	end
 end
 
-function slot0.getOrCreateHole(slot0, slot1)
-	slot0._holeTab = slot0._holeTab or slot0:getUserDataTb_()
+function var_0_0.getOrCreateHole(arg_17_0, arg_17_1)
+	arg_17_0._holeTab = arg_17_0._holeTab or arg_17_0:getUserDataTb_()
 
-	if not slot0._holeTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._goholeitem, "hole_" .. slot1)
-		slot2.godisenchant = gohelper.findChild(slot2.viewGO, "go_disenchant")
-		slot2.goadd = gohelper.findChild(slot2.viewGO, "go_add")
-		slot2.golock = gohelper.findChild(slot2.viewGO, "go_lock")
-		slot2.goenchant = gohelper.findChild(slot2.viewGO, "go_enchant")
-		slot2.btnclick = gohelper.findChildButtonWithAudio(slot2.viewGO, "btn_click")
+	local var_17_0 = arg_17_0._holeTab[arg_17_1]
 
-		slot2.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot1)
+	if not var_17_0 then
+		var_17_0 = arg_17_0:getUserDataTb_()
+		var_17_0.viewGO = gohelper.cloneInPlace(arg_17_0._goholeitem, "hole_" .. arg_17_1)
+		var_17_0.godisenchant = gohelper.findChild(var_17_0.viewGO, "go_disenchant")
+		var_17_0.goadd = gohelper.findChild(var_17_0.viewGO, "go_add")
+		var_17_0.golock = gohelper.findChild(var_17_0.viewGO, "go_lock")
+		var_17_0.goenchant = gohelper.findChild(var_17_0.viewGO, "go_enchant")
+		var_17_0.btnclick = gohelper.findChildButtonWithAudio(var_17_0.viewGO, "btn_click")
 
-		slot2.simageicon = gohelper.findChildSingleImage(slot2.viewGO, "go_enchant/simage_icon")
-		slot2.btnremoveenchant = gohelper.findChildButtonWithAudio(slot2.viewGO, "go_enchant/btn_remove")
+		var_17_0.btnclick:AddClickListener(arg_17_0._btnclickOnClick, arg_17_0, arg_17_1)
 
-		slot2.btnremoveenchant:AddClickListener(slot0._btnRemoveEnchantOnClick, slot0, slot1)
+		var_17_0.simageicon = gohelper.findChildSingleImage(var_17_0.viewGO, "go_enchant/simage_icon")
+		var_17_0.btnremoveenchant = gohelper.findChildButtonWithAudio(var_17_0.viewGO, "go_enchant/btn_remove")
 
-		slot0._holeTab[slot1] = slot2
+		var_17_0.btnremoveenchant:AddClickListener(arg_17_0._btnRemoveEnchantOnClick, arg_17_0, arg_17_1)
+
+		arg_17_0._holeTab[arg_17_1] = var_17_0
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0._btnclickOnClick(slot0, slot1)
-	if not slot0._interactable then
+function var_0_0._btnclickOnClick(arg_18_0, arg_18_1)
+	if not arg_18_0._interactable then
 		return
 	end
 
-	if slot0.viewParam and slot0.viewParam.collectionId and slot2 > 0 then
-		slot0._selectCollectionId = slot2
-		slot0._selectHoleIndex = slot1
-		slot0._waitCount = 1
+	local var_18_0 = arg_18_0.viewParam and arg_18_0.viewParam.collectionId
 
-		slot0._animatorPlayer:Play("switch", slot0.playSwitchAnimDoneCallBack, slot0)
+	if var_18_0 and var_18_0 > 0 then
+		arg_18_0._selectCollectionId = var_18_0
+		arg_18_0._selectHoleIndex = arg_18_1
+		arg_18_0._waitCount = 1
+
+		arg_18_0._animatorPlayer:Play("switch", arg_18_0.playSwitchAnimDoneCallBack, arg_18_0)
 	end
 end
 
-function slot0._btnRemoveEnchantOnClick(slot0, slot1)
-	if not slot0._interactable then
+function var_0_0._btnRemoveEnchantOnClick(arg_19_0, arg_19_1)
+	if not arg_19_0._interactable then
 		return
 	end
 
-	if slot0.viewParam and slot0.viewParam.collectionId and slot2 > 0 then
-		RougeCollectionEnchantController.instance:removeEnchant(slot2, slot1)
+	local var_19_0 = arg_19_0.viewParam and arg_19_0.viewParam.collectionId
+
+	if var_19_0 and var_19_0 > 0 then
+		RougeCollectionEnchantController.instance:removeEnchant(var_19_0, arg_19_1)
 	end
 end
 
-function slot0.playSwitchAnimDoneCallBack(slot0)
-	slot0._waitCount = (slot0._waitCount or 0) - 1
+function var_0_0.playSwitchAnimDoneCallBack(arg_20_0)
+	arg_20_0._waitCount = (arg_20_0._waitCount or 0) - 1
 
-	slot0:checkIsCouldOpenEnchantView()
+	arg_20_0:checkIsCouldOpenEnchantView()
 end
 
-function slot0.checkIsCouldOpenEnchantView(slot0)
-	if slot0._waitCount <= 0 then
-		RougeController.instance:openRougeCollectionEnchantView({
-			collectionId = slot0._selectCollectionId,
-			collectionIds = slot0:getCollectionIds(),
-			selectHoleIndex = slot0._selectHoleIndex
-		})
+function var_0_0.checkIsCouldOpenEnchantView(arg_21_0)
+	if arg_21_0._waitCount <= 0 then
+		local var_21_0 = arg_21_0:getCollectionIds()
+		local var_21_1 = {
+			collectionId = arg_21_0._selectCollectionId,
+			collectionIds = var_21_0,
+			selectHoleIndex = arg_21_0._selectHoleIndex
+		}
+
+		RougeController.instance:openRougeCollectionEnchantView(var_21_1)
 	end
 end
 
-function slot0.getCollectionIds(slot0)
-	slot2 = {}
-	slot3 = slot0.sortCollectionFunction1
+function var_0_0.getCollectionIds(arg_22_0)
+	local var_22_0 = arg_22_0.viewParam and arg_22_0.viewParam.source
+	local var_22_1 = {}
+	local var_22_2 = arg_22_0.sortCollectionFunction1
 
-	if (slot0.viewParam and slot0.viewParam.source) == RougeEnum.OpenCollectionTipSource.SlotArea then
-		slot2 = RougeCollectionModel.instance:getSlotAreaCollection()
-		slot3 = slot0.sortCollectionFunction1
-	elseif slot1 == RougeEnum.OpenCollectionTipSource.BagArea then
-		slot2 = RougeCollectionModel.instance:getBagAreaCollection()
-		slot3 = slot0.sortCollectionFunction2
+	if var_22_0 == RougeEnum.OpenCollectionTipSource.SlotArea then
+		var_22_1 = RougeCollectionModel.instance:getSlotAreaCollection()
+		var_22_2 = arg_22_0.sortCollectionFunction1
+	elseif var_22_0 == RougeEnum.OpenCollectionTipSource.BagArea then
+		var_22_1 = RougeCollectionModel.instance:getBagAreaCollection()
+		var_22_2 = arg_22_0.sortCollectionFunction2
 	end
 
-	slot4 = {}
+	local var_22_3 = {}
 
-	if slot2 then
-		for slot8, slot9 in ipairs(slot2) do
-			if (RougeCollectionConfig.instance:getCollectionCfg(slot9.cfgId) and slot10.holeNum or 0) > 0 then
-				table.insert(slot4, slot9.id)
+	if var_22_1 then
+		for iter_22_0, iter_22_1 in ipairs(var_22_1) do
+			local var_22_4 = RougeCollectionConfig.instance:getCollectionCfg(iter_22_1.cfgId)
+
+			if (var_22_4 and var_22_4.holeNum or 0) > 0 then
+				table.insert(var_22_3, iter_22_1.id)
 			end
 		end
 	end
 
-	table.sort(slot4, slot3)
+	table.sort(var_22_3, var_22_2)
 
-	return slot4
+	return var_22_3
 end
 
-function slot0.sortCollectionFunction1(slot0, slot1)
-	slot3 = RougeCollectionModel.instance:getCollectionByUid(slot1)
-	slot7 = RougeCollectionConfig.instance:getCollectionCfg(slot3 and slot3.cfgId)
+function var_0_0.sortCollectionFunction1(arg_23_0, arg_23_1)
+	local var_23_0 = RougeCollectionModel.instance:getCollectionByUid(arg_23_0)
+	local var_23_1 = RougeCollectionModel.instance:getCollectionByUid(arg_23_1)
+	local var_23_2 = var_23_0 and var_23_0.cfgId
+	local var_23_3 = var_23_1 and var_23_1.cfgId
+	local var_23_4 = RougeCollectionConfig.instance:getCollectionCfg(var_23_2)
+	local var_23_5 = RougeCollectionConfig.instance:getCollectionCfg(var_23_3)
+	local var_23_6 = var_23_4 and var_23_4.showRare or 0
+	local var_23_7 = var_23_5 and var_23_5.showRare or 0
 
-	if (RougeCollectionConfig.instance:getCollectionCfg(RougeCollectionModel.instance:getCollectionByUid(slot0) and slot2.cfgId) and slot6.showRare or 0) ~= (slot7 and slot7.showRare or 0) then
-		return slot9 < slot8
+	if var_23_6 ~= var_23_7 then
+		return var_23_7 < var_23_6
 	end
 
-	if RougeCollectionConfig.instance:getCollectionCellCount(slot2.cfgId, RougeEnum.CollectionEditorParamType.Shape) ~= RougeCollectionConfig.instance:getCollectionCellCount(slot3.cfgId, RougeEnum.CollectionEditorParamType.Shape) then
-		return slot11 < slot10
+	local var_23_8 = RougeCollectionConfig.instance:getCollectionCellCount(var_23_0.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local var_23_9 = RougeCollectionConfig.instance:getCollectionCellCount(var_23_1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+
+	if var_23_8 ~= var_23_9 then
+		return var_23_9 < var_23_8
 	end
 
-	return slot0 < slot1
+	return arg_23_0 < arg_23_1
 end
 
-function slot0.sortCollectionFunction2(slot0, slot1)
-	slot3 = RougeCollectionModel.instance:getCollectionByUid(slot1)
+function var_0_0.sortCollectionFunction2(arg_24_0, arg_24_1)
+	local var_24_0 = RougeCollectionModel.instance:getCollectionByUid(arg_24_0)
+	local var_24_1 = RougeCollectionModel.instance:getCollectionByUid(arg_24_1)
+	local var_24_2 = var_24_0 and var_24_0.cfgId
+	local var_24_3 = var_24_1 and var_24_1.cfgId
+	local var_24_4 = RougeCollectionConfig.instance:getCollectionCfg(var_24_2)
+	local var_24_5 = RougeCollectionConfig.instance:getCollectionCfg(var_24_3)
 
-	if RougeCollectionConfig.instance:getCollectionCfg(RougeCollectionModel.instance:getCollectionByUid(slot0) and slot2.cfgId).type ~= RougeCollectionConfig.instance:getCollectionCfg(slot3 and slot3.cfgId).type and (slot6.type == RougeEnum.CollectionType.Enchant or slot7.type == RougeEnum.CollectionType.Enchant) then
-		return slot6.type == RougeEnum.CollectionType.Enchant
+	if var_24_4.type ~= var_24_5.type and (var_24_4.type == RougeEnum.CollectionType.Enchant or var_24_5.type == RougeEnum.CollectionType.Enchant) then
+		return var_24_4.type == RougeEnum.CollectionType.Enchant
 	end
 
-	if (slot6 and slot6.showRare or 0) ~= (slot7 and slot7.showRare or 0) then
-		return slot9 < slot8
+	local var_24_6 = var_24_4 and var_24_4.showRare or 0
+	local var_24_7 = var_24_5 and var_24_5.showRare or 0
+
+	if var_24_6 ~= var_24_7 then
+		return var_24_7 < var_24_6
 	end
 
-	if RougeCollectionConfig.instance:getCollectionCellCount(slot2.cfgId, RougeEnum.CollectionEditorParamType.Shape) ~= RougeCollectionConfig.instance:getCollectionCellCount(slot3.cfgId, RougeEnum.CollectionEditorParamType.Shape) then
-		return slot11 < slot10
+	local var_24_8 = RougeCollectionConfig.instance:getCollectionCellCount(var_24_0.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local var_24_9 = RougeCollectionConfig.instance:getCollectionCellCount(var_24_1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+
+	if var_24_8 ~= var_24_9 then
+		return var_24_9 < var_24_8
 	end
 
-	return slot0 < slot1
+	return arg_24_0 < arg_24_1
 end
 
-function slot0.updateCollectionEnchantInfo(slot0, slot1)
-	if not slot0.viewParam or not slot0.viewParam.collectionId or slot2 ~= slot1 then
+function var_0_0.updateCollectionEnchantInfo(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0.viewParam and arg_25_0.viewParam.collectionId
+
+	if not var_25_0 or var_25_0 ~= arg_25_1 then
 		return
 	end
 
-	slot0:refreshCollectionTips(slot1)
+	arg_25_0:refreshCollectionTips(arg_25_1)
 end
 
-function slot0.updateCollectionAttr(slot0, slot1)
-	if (slot0.viewParam and slot0.viewParam.collectionId) == slot1 then
-		slot0:refreshCollectionTips(slot2)
+function var_0_0.updateCollectionAttr(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0.viewParam and arg_26_0.viewParam.collectionId
+
+	if var_26_0 == arg_26_1 then
+		arg_26_0:refreshCollectionTips(var_26_0)
 	end
 end
 
-function slot0.removeAllHoleClicks(slot0)
-	if slot0._holeTab then
-		for slot4, slot5 in pairs(slot0._holeTab) do
-			slot5.btnclick:RemoveClickListener()
-			slot5.btnremoveenchant:RemoveClickListener()
-			slot5.simageicon:UnLoadImage()
+function var_0_0.removeAllHoleClicks(arg_27_0)
+	if arg_27_0._holeTab then
+		for iter_27_0, iter_27_1 in pairs(arg_27_0._holeTab) do
+			iter_27_1.btnclick:RemoveClickListener()
+			iter_27_1.btnremoveenchant:RemoveClickListener()
+			iter_27_1.simageicon:UnLoadImage()
 		end
 	end
 end
 
-function slot0.onCloseViewCallBack(slot0, slot1)
-	if slot1 == ViewName.RougeCollectionEnchantView then
-		slot0._animatorPlayer:Play("back", slot0._onPlayBackAnimCallBack, slot0)
+function var_0_0.onCloseViewCallBack(arg_28_0, arg_28_1)
+	if arg_28_1 == ViewName.RougeCollectionEnchantView then
+		arg_28_0._animatorPlayer:Play("back", arg_28_0._onPlayBackAnimCallBack, arg_28_0)
 	end
 end
 
-function slot0._onPlayBackAnimCallBack(slot0)
+function var_0_0._onPlayBackAnimCallBack(arg_29_0)
+	return
 end
 
-function slot0.setViewInteractable(slot0, slot1)
-	slot0._rootCanvasGroup.interactable = slot1
-	slot0._rootCanvasGroup.blocksRaycasts = slot1
+function var_0_0.setViewInteractable(arg_30_0, arg_30_1)
+	arg_30_0._rootCanvasGroup.interactable = arg_30_1
+	arg_30_0._rootCanvasGroup.blocksRaycasts = arg_30_1
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
-	slot0:refreshCollectionInfos()
+function var_0_0._onSwitchCollectionInfoType(arg_31_0)
+	arg_31_0:refreshCollectionInfos()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeAllHoleClicks()
+function var_0_0.onClose(arg_32_0)
+	arg_32_0:removeAllHoleClicks()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_33_0)
+	arg_33_0._simageicon:UnLoadImage()
 
-	if slot0._itemAttrCallBackId then
-		RougeRpc.instance:removeCallbackById(slot0._itemAttrCallBackId)
+	if arg_33_0._itemAttrCallBackId then
+		RougeRpc.instance:removeCallbackById(arg_33_0._itemAttrCallBackId)
 
-		slot0._itemAttrCallBackId = nil
+		arg_33_0._itemAttrCallBackId = nil
 	end
 end
 
-return slot0
+return var_0_0

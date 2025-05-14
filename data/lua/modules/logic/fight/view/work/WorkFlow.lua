@@ -1,75 +1,80 @@
-module("modules.logic.fight.view.work.WorkFlow", package.seeall)
+﻿module("modules.logic.fight.view.work.WorkFlow", package.seeall)
 
-slot0 = class("WorkFlow", BaseFlow)
+local var_0_0 = class("WorkFlow", BaseFlow)
 
-function slot0.ctor(slot0)
-	slot0._work = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._work = nil
 end
 
-function slot0.deserialize(slot0, slot1)
-	if slot1 then
-		slot0:addChild(slot0:_parse(slot1))
+function var_0_0.deserialize(arg_2_0, arg_2_1)
+	if arg_2_1 then
+		local var_2_0 = arg_2_0:_parse(arg_2_1)
+
+		arg_2_0:addChild(var_2_0)
 	end
 end
 
-function slot0._parse(slot0, slot1)
-	if _G[slot1.type] then
-		slot4 = slot0:_parse(slot1)
+function var_0_0._parse(arg_3_0, arg_3_1)
+	local var_3_0 = _G[arg_3_1.type]
 
-		slot0:addChild(slot2.New(slot1.paramTable))
+	if var_3_0 then
+		local var_3_1 = var_3_0.New(arg_3_1.paramTable)
+		local var_3_2 = arg_3_0:_parse(arg_3_1)
+
+		arg_3_0:addChild(var_3_1)
 	end
 end
 
-function slot0.addWork(slot0, slot1)
-	uv0.super.addWork(slot0, slot1)
+function var_0_0.addWork(arg_4_0, arg_4_1)
+	var_0_0.super.addWork(arg_4_0, arg_4_1)
 
-	slot0._work = slot1
+	arg_4_0._work = arg_4_1
 end
 
-function slot0.onWorkDone(slot0, slot1)
-	slot0:onDone(slot0._work.isSuccess)
-	slot0._work:onResetInternal()
+function var_0_0.onWorkDone(arg_5_0, arg_5_1)
+	arg_5_0:onDone(arg_5_0._work.isSuccess)
+	arg_5_0._work:onResetInternal()
 end
 
-function slot0.onStartInternal(slot0, slot1)
-	uv0.super.onStartInternal(slot0, slot1)
-	slot0._work:onStartInternal(slot0.context)
+function var_0_0.onStartInternal(arg_6_0, arg_6_1)
+	var_0_0.super.onStartInternal(arg_6_0, arg_6_1)
+	arg_6_0._work:onStartInternal(arg_6_0.context)
 end
 
-function slot0.onStopInternal(slot0)
-	uv0.super.onStopInternal(slot0)
+function var_0_0.onStopInternal(arg_7_0)
+	var_0_0.super.onStopInternal(arg_7_0)
 
-	if slot0._work.status == WorkStatus.Running then
-		slot0._work:onStopInternal()
+	if arg_7_0._work.status == WorkStatus.Running then
+		arg_7_0._work:onStopInternal()
 	end
 end
 
-function slot0.onResumeInternal(slot0)
-	uv0.super.onResumeInternal(slot0)
+function var_0_0.onResumeInternal(arg_8_0)
+	var_0_0.super.onResumeInternal(arg_8_0)
 
-	if slot0._work.status == WorkStatus.Stopped then
-		slot0._work:onResumeInternal()
+	if arg_8_0._work.status == WorkStatus.Stopped then
+		arg_8_0._work:onResumeInternal()
 	end
 end
 
-function slot0.onResetInternal(slot0)
-	uv0.super.onResetInternal(slot0)
+function var_0_0.onResetInternal(arg_9_0)
+	var_0_0.super.onResetInternal(arg_9_0)
 
-	if slot0._work.status == WorkStatus.Running or slot0._work.status == WorkStatus.Stopped then
-		slot0._work:onResetInternal()
+	if arg_9_0._work.status == WorkStatus.Running or arg_9_0._work.status == WorkStatus.Stopped then
+		arg_9_0._work:onResetInternal()
 	end
 end
 
-function slot0.onDestroyInternal(slot0)
-	uv0.super.onDestroyInternal(slot0)
+function var_0_0.onDestroyInternal(arg_10_0)
+	var_0_0.super.onDestroyInternal(arg_10_0)
 
-	if slot0._work.status == WorkStatus.Running then
-		slot0._work:onStopInternal()
+	if arg_10_0._work.status == WorkStatus.Running then
+		arg_10_0._work:onStopInternal()
 	end
 
-	slot0._work:onResetInternal()
+	arg_10_0._work:onResetInternal()
 
-	slot0._work = nil
+	arg_10_0._work = nil
 end
 
-return slot0
+return var_0_0

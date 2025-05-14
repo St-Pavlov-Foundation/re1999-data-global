@@ -1,41 +1,42 @@
-module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenViewContainer", package.seeall)
 
-slot0 = class("EliminateSelectChessMenViewContainer", BaseViewContainer)
+local var_0_0 = class("EliminateSelectChessMenViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, EliminateSelectChessMenView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(var_1_0, EliminateSelectChessMenView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "Left/#scroll_ChessList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = EliminateSelectChessMenItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 5
-	slot2.cellWidth = 220
-	slot2.cellHeight = 272
-	slot2.startSpace = 20
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(EliminateSelectChessMenListModel.instance, slot2))
+	var_1_1.scrollGOPath = "Left/#scroll_ChessList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = EliminateSelectChessMenItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 5
+	var_1_1.cellWidth = 220
+	var_1_1.cellHeight = 272
+	var_1_1.startSpace = 20
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(EliminateSelectChessMenListModel.instance, var_1_1))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-return slot0
+return var_0_0

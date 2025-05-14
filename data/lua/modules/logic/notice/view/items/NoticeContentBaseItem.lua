@@ -1,75 +1,94 @@
-module("modules.logic.notice.view.items.NoticeContentBaseItem", package.seeall)
+﻿module("modules.logic.notice.view.items.NoticeContentBaseItem", package.seeall)
 
-slot0 = class("NoticeContentBaseItem", UserDataDispose)
+local var_0_0 = class("NoticeContentBaseItem", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.itemGo = slot1
-	slot0.types = slot2
+	arg_1_0.itemGo = arg_1_1
+	arg_1_0.types = arg_1_2
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0.mo = arg_4_1
 
-	if slot0:includeType(slot0.mo.type) then
-		slot0:show()
+	if arg_4_0:includeType(arg_4_0.mo.type) then
+		arg_4_0:show()
 	else
-		slot0:hide()
+		arg_4_0:hide()
 	end
 end
 
-function slot0.includeType(slot0, slot1)
-	return tabletool.indexOf(slot0.types, slot1)
+function var_0_0.includeType(arg_5_0, arg_5_1)
+	return tabletool.indexOf(arg_5_0.types, arg_5_1)
 end
 
-function slot0.show(slot0)
+function var_0_0.show(arg_6_0)
+	return
 end
 
-function slot0.hide(slot0)
+function var_0_0.hide(arg_7_0)
+	return
 end
 
-function slot0.jump(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot2 = string.trim(slot2)
+function var_0_0.jump(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	arg_8_2 = string.trim(arg_8_2)
 
-	if slot1 == NoticeContentType.LinkType.InnerLink then
-		logNormal("click inner link : " .. slot2)
-		GameFacade.jump(slot2)
-	elseif slot1 == NoticeContentType.LinkType.OutLink then
-		logNormal("Open Url :" .. tostring(string.gsub(NoticeModel.instance:getNoticeUrl(tonumber(slot2)) and (string.find(slot6, "http") and slot6 or "http://" .. slot6) or slot2, "\\", "")))
+	if arg_8_1 == NoticeContentType.LinkType.InnerLink then
+		logNormal("click inner link : " .. arg_8_2)
+		GameFacade.jump(arg_8_2)
+	elseif arg_8_1 == NoticeContentType.LinkType.OutLink then
+		local var_8_0 = NoticeModel.instance:getNoticeUrl(tonumber(arg_8_2))
 
-		if slot4 then
-			WebViewController.instance:openWebView(slot6, slot5)
+		if var_8_0 then
+			var_8_0 = string.find(var_8_0, "http") and var_8_0 or "http://" .. var_8_0
 		else
-			if slot5 then
-				slot6 = WebViewController.instance:getRecordUserUrl(slot6)
+			var_8_0 = arg_8_2
+		end
+
+		local var_8_1 = string.gsub(var_8_0, "\\", "")
+
+		logNormal("Open Url :" .. tostring(var_8_1))
+
+		if arg_8_4 then
+			WebViewController.instance:openWebView(var_8_1, arg_8_5)
+		else
+			if arg_8_5 then
+				var_8_1 = WebViewController.instance:getRecordUserUrl(var_8_1)
 			end
 
-			GameUtil.openURL(slot6)
+			GameUtil.openURL(var_8_1)
 		end
-	elseif slot1 == NoticeContentType.LinkType.DeepLink then
-		slot6 = slot2
+	elseif arg_8_1 == NoticeContentType.LinkType.DeepLink then
+		local var_8_2 = arg_8_2
+		local var_8_3 = arg_8_3 and string.trim(arg_8_3)
 
-		if string.nilorempty(slot3 and string.trim(slot3)) then
-			slot7 = "https://" .. string.split(slot6, "//")[2]
+		if string.nilorempty(var_8_3) then
+			local var_8_4 = string.split(var_8_2, "//")
+
+			var_8_3 = "https://" .. var_8_4[2]
 		end
 
-		logNormal("Open Http Url : " .. slot7)
-		logNormal("Open Deep Url : " .. slot6)
-		GameUtil.openDeepLink(slot7, slot6)
-	elseif slot1 == NoticeContentType.LinkType.Time then
-		logNormal("时间戳 ： " .. slot2)
+		logNormal("Open Http Url : " .. var_8_3)
+		logNormal("Open Deep Url : " .. var_8_2)
+		GameUtil.openDeepLink(var_8_3, var_8_2)
+	elseif arg_8_1 == NoticeContentType.LinkType.Time then
+		local var_8_5 = "时间戳 ： " .. arg_8_2
+
+		logNormal(var_8_5)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

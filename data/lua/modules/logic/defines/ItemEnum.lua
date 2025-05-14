@@ -1,7 +1,8 @@
-module("modules.logic.defines.ItemEnum", package.seeall)
+﻿module("modules.logic.defines.ItemEnum", package.seeall)
 
-slot0 = _M
-slot0.SubType = {
+local var_0_0 = _M
+
+var_0_0.SubType = {
 	RandomGift = 49,
 	OptionalHeroGift = 52,
 	PlayerBg = 21,
@@ -32,37 +33,37 @@ slot0.SubType = {
 	BreachItem = 13,
 	CritterIncubate = 30
 }
-slot0.CategoryType = {
+var_0_0.CategoryType = {
 	All = 1,
 	Equip = 4,
 	Antique = 5,
 	Material = 2,
 	UseType = 3
 }
-slot0.Color = {
+var_0_0.Color = {
 	2,
 	3,
 	4,
 	5,
 	6
 }
-slot0.ItemIconEffect = {
+var_0_0.ItemIconEffect = {
 	["2#1401"] = 1
 }
-slot0.RoomBackpackPropSubType = {
-	[slot0.SubType.RoomManufactureItem] = true,
-	[slot0.SubType.RoomManufactureAccelerateItem] = true,
-	[slot0.SubType.CritterFood] = true,
-	[slot0.SubType.CritterTrain] = true,
-	[slot0.SubType.CritterSummon] = true,
-	[slot0.SubType.CritterIncubate] = true,
-	[slot0.SubType.CritterAccelerateItem] = true
+var_0_0.RoomBackpackPropSubType = {
+	[var_0_0.SubType.RoomManufactureItem] = true,
+	[var_0_0.SubType.RoomManufactureAccelerateItem] = true,
+	[var_0_0.SubType.CritterFood] = true,
+	[var_0_0.SubType.CritterTrain] = true,
+	[var_0_0.SubType.CritterSummon] = true,
+	[var_0_0.SubType.CritterIncubate] = true,
+	[var_0_0.SubType.CritterAccelerateItem] = true
 }
-slot0.NewbiePackGiftId = 520010
-slot0.NoExpiredNum = 70128
-slot0.Tag = {
+var_0_0.NewbiePackGiftId = 520010
+var_0_0.NoExpiredNum = 70128
+var_0_0.Tag = {
 	PackageSkin = 2,
 	SummonSkin = 1
 }
 
-return slot0
+return var_0_0

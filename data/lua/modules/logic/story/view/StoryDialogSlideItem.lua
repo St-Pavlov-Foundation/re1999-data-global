@@ -1,80 +1,86 @@
-module("modules.logic.story.view.StoryDialogSlideItem", package.seeall)
+﻿module("modules.logic.story.view.StoryDialogSlideItem", package.seeall)
 
-slot0 = class("StoryDialogSlideItem")
+local var_0_0 = class("StoryDialogSlideItem")
 
-function slot0.init(slot0, slot1)
-	slot2 = ViewMgr.instance:getContainer(ViewName.StoryView)
-	slot0._dialogGo = slot2:getResInst(slot2:getSetting().otherRes[3], slot1)
-	slot0._simagedialog = gohelper.findChildSingleImage(slot0._dialogGo, "#simage_dialog")
-	slot0._imagedialog = gohelper.findChildImage(slot0._dialogGo, "#simage_dialog")
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0 = ViewMgr.instance:getContainer(ViewName.StoryView)
+	local var_1_1 = var_1_0:getSetting().otherRes[3]
+
+	arg_1_0._dialogGo = var_1_0:getResInst(var_1_1, arg_1_1)
+	arg_1_0._simagedialog = gohelper.findChildSingleImage(arg_1_0._dialogGo, "#simage_dialog")
+	arg_1_0._imagedialog = gohelper.findChildImage(arg_1_0._dialogGo, "#simage_dialog")
 end
 
-function slot0.clearSlideDialog(slot0)
-	slot0._callback = nil
-	slot0._callbackObj = nil
+function var_0_0.clearSlideDialog(arg_2_0)
+	arg_2_0._callback = nil
+	arg_2_0._callbackObj = nil
 end
 
-function slot0.startShowDialog(slot0, slot1, slot2, slot3)
-	slot0._speed = slot1.speed
-	slot0._showTime = slot1.showTime
-	slot0._callback = slot2
-	slot0._callbackObj = slot3
+function var_0_0.startShowDialog(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = ResUrl.getStoryLangPath(arg_3_1.img)
 
-	gohelper.setActive(slot0._dialogGo, true)
-	slot0._simagedialog:LoadImage(ResUrl.getStoryLangPath(slot1.img), slot0._imgLoaded, slot0)
+	arg_3_0._speed = arg_3_1.speed
+	arg_3_0._showTime = arg_3_1.showTime
+	arg_3_0._callback = arg_3_2
+	arg_3_0._callbackObj = arg_3_3
+
+	gohelper.setActive(arg_3_0._dialogGo, true)
+	arg_3_0._simagedialog:LoadImage(var_3_0, arg_3_0._imgLoaded, arg_3_0)
 end
 
-function slot0.hideDialog(slot0)
-	gohelper.setActive(slot0._dialogGo, false)
-	slot0._simagedialog:UnLoadImage()
+function var_0_0.hideDialog(arg_4_0)
+	gohelper.setActive(arg_4_0._dialogGo, false)
+	arg_4_0._simagedialog:UnLoadImage()
 end
 
-function slot0._imgLoaded(slot0)
-	gohelper.setActive(slot0._imagedialog.gameObject, false)
-	TaskDispatcher.runDelay(function ()
-		gohelper.setActive(uv0._imagedialog.gameObject, true)
-		uv0._imagedialog:SetNativeSize()
-		uv0:_startMove()
+function var_0_0._imgLoaded(arg_5_0)
+	gohelper.setActive(arg_5_0._imagedialog.gameObject, false)
+	TaskDispatcher.runDelay(function()
+		gohelper.setActive(arg_5_0._imagedialog.gameObject, true)
+		arg_5_0._imagedialog:SetNativeSize()
+		arg_5_0:_startMove()
 	end, nil, 0.05)
 end
 
-function slot0._moveUpdate(slot0, slot1)
-	slot2, slot3 = transformhelper.getLocalPos(slot0._simagedialog.transform)
+function var_0_0._moveUpdate(arg_7_0, arg_7_1)
+	local var_7_0, var_7_1 = transformhelper.getLocalPos(arg_7_0._simagedialog.transform)
 
-	transformhelper.setLocalPosXY(slot0._simagedialog.transform, slot1, slot3)
+	transformhelper.setLocalPosXY(arg_7_0._simagedialog.transform, arg_7_1, var_7_1)
 end
 
-function slot0._startMove(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._startMove(arg_8_0)
+	if arg_8_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_8_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_8_0._tweenId = nil
 	end
 
-	slot1 = recthelper.getWidth(slot0._simagedialog.transform)
-	slot2 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
-	slot3 = 0.5 * (slot2 + slot1)
-	slot4 = slot0._showTime
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot3, slot3 - 0.2 * (slot2 + slot1) * slot0._speed * slot4, slot4, slot0._moveUpdate, slot0._moveDone, slot0, nil, EaseType.Linear)
+	local var_8_0 = recthelper.getWidth(arg_8_0._simagedialog.transform)
+	local var_8_1 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local var_8_2 = 0.5 * (var_8_1 + var_8_0)
+	local var_8_3 = arg_8_0._showTime
+	local var_8_4 = var_8_2 - 0.2 * (var_8_1 + var_8_0) * arg_8_0._speed * var_8_3
+
+	arg_8_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_8_2, var_8_4, var_8_3, arg_8_0._moveUpdate, arg_8_0._moveDone, arg_8_0, nil, EaseType.Linear)
 end
 
-function slot0._moveDone(slot0)
-	if slot0._callback then
-		slot0._callback(slot0._callbackObj)
+function var_0_0._moveDone(arg_9_0)
+	if arg_9_0._callback then
+		arg_9_0._callback(arg_9_0._callbackObj)
 	end
 
-	TaskDispatcher.runDelay(slot0._startMove, slot0, 3)
+	TaskDispatcher.runDelay(arg_9_0._startMove, arg_9_0, 3)
 end
 
-function slot0.destroy(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.destroy(arg_10_0)
+	if arg_10_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_10_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_10_0._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._startMove, slot0)
-	slot0._simagedialog:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_10_0._startMove, arg_10_0)
+	arg_10_0._simagedialog:UnLoadImage()
 end
 
-return slot0
+return var_0_0

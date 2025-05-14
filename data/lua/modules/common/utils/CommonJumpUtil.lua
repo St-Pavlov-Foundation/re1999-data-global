@@ -1,76 +1,95 @@
-module("modules.common.utils.CommonJumpUtil", package.seeall)
+﻿module("modules.common.utils.CommonJumpUtil", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0._enterMainScene(slot0)
-	logError("enter main scene " .. cjson.encode(slot0))
+function var_0_0._enterMainScene(arg_1_0)
+	logError("enter main scene " .. cjson.encode(arg_1_0))
 end
 
-function slot0._jumpSpecial(slot0)
-	logError("jump special " .. cjson.encode(slot0))
+function var_0_0._jumpSpecial(arg_2_0)
+	logError("jump special " .. cjson.encode(arg_2_0))
 end
 
-function slot0._openSpecialView(slot0)
-	logError("open special view " .. cjson.encode(slot0))
+function var_0_0._openSpecialView(arg_3_0)
+	logError("open special view " .. cjson.encode(arg_3_0))
 end
 
-slot0.JumpTypeSpecialFunc = {
-	special = slot0._jumpSpecial
+var_0_0.JumpTypeSpecialFunc = {
+	special = var_0_0._jumpSpecial
 }
-slot0.JumpViewSpecialFunc = {
-	["view#special"] = slot0._openSpecialView
+var_0_0.JumpViewSpecialFunc = {
+	["view#special"] = var_0_0._openSpecialView
 }
-slot0.JumpSceneFunc = {
-	["scene#main"] = slot0._enterMainScene
+var_0_0.JumpSceneFunc = {
+	["scene#main"] = var_0_0._enterMainScene
 }
-slot0.JumpSeparator = "#"
-slot0.JumpType = {
+var_0_0.JumpSeparator = "#"
+var_0_0.JumpType = {
 	View = "view",
 	Scene = "scene"
 }
 
-function slot0.jump(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.jump(arg_4_0)
+	if string.nilorempty(arg_4_0) then
 		return
 	end
 
-	if uv0.JumpTypeSpecialFunc[string.trim(string.split(slot0, uv0.JumpSeparator)[1])] then
-		slot3(uv0._deserializeParams(slot1, 2))
-	elseif slot2 == uv0.JumpType.View then
-		if uv0.JumpViewSpecialFunc[uv0.JumpType.View .. uv0.JumpSeparator .. string.trim(slot1[2])] then
-			slot7(uv0._deserializeParams(slot1, 3))
+	local var_4_0 = string.split(arg_4_0, var_0_0.JumpSeparator)
+	local var_4_1 = string.trim(var_4_0[1])
+	local var_4_2 = var_0_0.JumpTypeSpecialFunc[var_4_1]
+
+	if var_4_2 then
+		local var_4_3 = var_0_0._deserializeParams(var_4_0, 2)
+
+		var_4_2(var_4_3)
+	elseif var_4_1 == var_0_0.JumpType.View then
+		local var_4_4 = var_0_0._deserializeParams(var_4_0, 3)
+		local var_4_5 = string.trim(var_4_0[2])
+		local var_4_6 = var_0_0.JumpType.View .. var_0_0.JumpSeparator .. var_4_5
+		local var_4_7 = var_0_0.JumpViewSpecialFunc[var_4_6]
+
+		if var_4_7 then
+			var_4_7(var_4_4)
 		else
-			ViewMgr.instance:openView(slot5, slot4)
+			ViewMgr.instance:openView(var_4_5, var_4_4)
 		end
-	elseif slot2 == uv0.JumpType.Scene then
-		if uv0.JumpSceneFunc[uv0.JumpType.Scene .. uv0.JumpSeparator .. string.trim(slot1[2])] then
-			slot6(uv0._deserializeParams(slot1, 3))
+	elseif var_4_1 == var_0_0.JumpType.Scene then
+		local var_4_8 = string.trim(var_4_0[2])
+		local var_4_9 = var_0_0.JumpType.Scene .. var_0_0.JumpSeparator .. var_4_8
+		local var_4_10 = var_0_0.JumpSceneFunc[var_4_9]
+
+		if var_4_10 then
+			local var_4_11 = var_0_0._deserializeParams(var_4_0, 3)
+
+			var_4_10(var_4_11)
 		else
-			logError("jumpType scene invalid: " .. slot0)
+			logError("jumpType scene invalid: " .. arg_4_0)
 		end
 	else
-		logError("jumpType invalid: " .. slot0)
+		logError("jumpType invalid: " .. arg_4_0)
 	end
 end
 
-function slot0._deserializeParams(slot0, slot1)
-	if slot1 > #slot0 then
+function var_0_0._deserializeParams(arg_5_0, arg_5_1)
+	local var_5_0 = #arg_5_0
+
+	if var_5_0 < arg_5_1 then
 		return nil
 	end
 
-	slot3 = slot0[slot2]
+	local var_5_1 = arg_5_0[var_5_0]
 
-	if slot1 < slot2 then
-		slot4 = {}
+	if arg_5_1 < var_5_0 then
+		local var_5_2 = {}
 
-		for slot8 = slot1, slot2 do
-			table.insert(slot4, slot0[slot8])
+		for iter_5_0 = arg_5_1, var_5_0 do
+			table.insert(var_5_2, arg_5_0[iter_5_0])
 		end
 
-		slot3 = table.concat(slot4, uv0.JumpSeparator)
+		var_5_1 = table.concat(var_5_2, var_0_0.JumpSeparator)
 	end
 
-	return cjson.decode(slot3)
+	return cjson.decode(var_5_1)
 end
 
-return slot0
+return var_0_0

@@ -1,16 +1,17 @@
-module("modules.logic.gm.view.GMAddItemView", package.seeall)
+﻿module("modules.logic.gm.view.GMAddItemView", package.seeall)
 
-slot0 = class("GMAddItemView", BaseView)
-slot0.LevelType = "人物等级"
-slot0.HeroAttr = "英雄提升"
-slot0.ClickItem = "ClickItem"
-slot0.Return = "Return"
+local var_0_0 = class("GMAddItemView", BaseView)
 
-function slot0.ctor(slot0)
-	slot0._allItems = nil
-	slot0._itemListView = nil
-	slot0._rootType = nil
-	slot0.RootTypes = {
+var_0_0.LevelType = "人物等级"
+var_0_0.HeroAttr = "英雄提升"
+var_0_0.ClickItem = "ClickItem"
+var_0_0.Return = "Return"
+
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._allItems = nil
+	arg_1_0._itemListView = nil
+	arg_1_0._rootType = nil
+	arg_1_0.RootTypes = {
 		{
 			name = "物品",
 			isRoot = 1,
@@ -35,7 +36,7 @@ function slot0.ctor(slot0)
 			numTips = "目标等级",
 			name = "人物等级",
 			isRoot = 0,
-			type = uv0.LevelType
+			type = var_0_0.LevelType
 		},
 		{
 			numTips = "增加经验值",
@@ -51,7 +52,7 @@ function slot0.ctor(slot0)
 		{
 			name = "英雄提升",
 			isRoot = 1,
-			type = uv0.HeroAttr
+			type = var_0_0.HeroAttr
 		},
 		{
 			name = "英雄皮肤",
@@ -91,178 +92,190 @@ function slot0.ctor(slot0)
 	}
 end
 
-function slot0._checkBuildItems(slot0)
-	function slot1(slot0, slot1, slot2, slot3)
-		for slot7 = 1, #slot1 do
-			slot8 = slot1[slot7]
+function var_0_0._checkBuildItems(arg_2_0)
+	local function var_2_0(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+		for iter_3_0 = 1, #arg_3_1 do
+			local var_3_0 = arg_3_1[iter_3_0]
+			local var_3_1 = var_3_0.rare
 
-			table.insert(slot0, {
-				itemId = slot8.id,
-				itemIdStr = tostring(slot8.id),
-				type = slot2,
-				name = slot8.name,
-				rare = slot8.rare,
-				numTips = slot3
+			table.insert(arg_3_0, {
+				itemId = var_3_0.id,
+				itemIdStr = tostring(var_3_0.id),
+				type = arg_3_2,
+				name = var_3_0.name,
+				rare = var_3_1,
+				numTips = arg_3_3
 			})
 		end
 	end
 
-	if slot0._allItems == nil then
-		slot0._allItems = {}
+	if arg_2_0._allItems == nil then
+		arg_2_0._allItems = {}
 
-		table.insert(slot0._allItems, {
+		local var_2_1 = {
 			itemId = 0,
 			name = "ALL",
 			numTips = "<size=25>等级#洞悉#共鸣#塑造</size>",
 			itemIdStr = "0",
 			rare = 5,
-			type = uv0.HeroAttr
-		})
-		slot1(slot0._allItems, lua_item.configList, MaterialEnum.MaterialType.Item, "物品数量")
-		slot1(slot0._allItems, lua_equip.configList, MaterialEnum.MaterialType.Equip, "装备数量")
-		slot1(slot0._allItems, lua_currency.configList, MaterialEnum.MaterialType.Currency, "货币数量")
-		slot1(slot0._allItems, lua_power_item.configList, MaterialEnum.MaterialType.PowerPotion, "体力药数量")
-		slot1(slot0._allItems, lua_character.configList, MaterialEnum.MaterialType.Hero, "英雄数量")
-		slot1(slot0._allItems, lua_skin.configList, MaterialEnum.MaterialType.HeroSkin, "英雄服装数量")
-		slot1(slot0._allItems, lua_character.configList, MaterialEnum.MaterialType.Faith, "增加英雄信赖值")
-		slot1(slot0._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerCloth, "服装数量")
-		slot1(slot0._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerClothExp, "增加服装经验值")
-		slot1(slot0._allItems, lua_room_building.configList, MaterialEnum.MaterialType.Building, "1")
-		slot1(slot0._allItems, lua_formula.configList, MaterialEnum.MaterialType.Formula, "1")
-		slot1(slot0._allItems, lua_character.configList, uv0.HeroAttr, "<size=25>等级#洞悉#共鸣#塑造</size>")
-		slot1(slot0._allItems, lua_block_package.configList, MaterialEnum.MaterialType.BlockPackage, "数量（不用填）")
+			type = var_0_0.HeroAttr
+		}
+
+		table.insert(arg_2_0._allItems, var_2_1)
+		var_2_0(arg_2_0._allItems, lua_item.configList, MaterialEnum.MaterialType.Item, "物品数量")
+		var_2_0(arg_2_0._allItems, lua_equip.configList, MaterialEnum.MaterialType.Equip, "装备数量")
+		var_2_0(arg_2_0._allItems, lua_currency.configList, MaterialEnum.MaterialType.Currency, "货币数量")
+		var_2_0(arg_2_0._allItems, lua_power_item.configList, MaterialEnum.MaterialType.PowerPotion, "体力药数量")
+		var_2_0(arg_2_0._allItems, lua_character.configList, MaterialEnum.MaterialType.Hero, "英雄数量")
+		var_2_0(arg_2_0._allItems, lua_skin.configList, MaterialEnum.MaterialType.HeroSkin, "英雄服装数量")
+		var_2_0(arg_2_0._allItems, lua_character.configList, MaterialEnum.MaterialType.Faith, "增加英雄信赖值")
+		var_2_0(arg_2_0._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerCloth, "服装数量")
+		var_2_0(arg_2_0._allItems, lua_cloth.configList, MaterialEnum.MaterialType.PlayerClothExp, "增加服装经验值")
+		var_2_0(arg_2_0._allItems, lua_room_building.configList, MaterialEnum.MaterialType.Building, "1")
+		var_2_0(arg_2_0._allItems, lua_formula.configList, MaterialEnum.MaterialType.Formula, "1")
+		var_2_0(arg_2_0._allItems, lua_character.configList, var_0_0.HeroAttr, "<size=25>等级#洞悉#共鸣#塑造</size>")
+		var_2_0(arg_2_0._allItems, lua_block_package.configList, MaterialEnum.MaterialType.BlockPackage, "数量（不用填）")
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._maskGO = gohelper.findChild(slot0.viewGO, "addItem")
-	slot0._inpItem = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/item2/inpItem")
-	slot0._txtNumPlaceholder = gohelper.findChildText(slot0.viewGO, "viewport/content/item2/inpNum/Placeholder")
+function var_0_0.onInitView(arg_4_0)
+	arg_4_0._maskGO = gohelper.findChild(arg_4_0.viewGO, "addItem")
+	arg_4_0._inpItem = gohelper.findChildTextMeshInputField(arg_4_0.viewGO, "viewport/content/item2/inpItem")
+	arg_4_0._txtNumPlaceholder = gohelper.findChildText(arg_4_0.viewGO, "viewport/content/item2/inpNum/Placeholder")
 
-	slot0:_hideScroll()
+	arg_4_0:_hideScroll()
 end
 
-function slot0.addEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._inpItem.gameObject):AddClickListener(slot0._onClickInpItem, slot0, nil)
-	SLFramework.UGUI.UIClickListener.Get(slot0._maskGO):AddClickListener(slot0._onClickMask, slot0, nil)
-	slot0._inpItem:AddOnValueChanged(slot0._onInpValueChanged, slot0)
+function var_0_0.addEvents(arg_5_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_5_0._inpItem.gameObject):AddClickListener(arg_5_0._onClickInpItem, arg_5_0, nil)
+	SLFramework.UGUI.UIClickListener.Get(arg_5_0._maskGO):AddClickListener(arg_5_0._onClickMask, arg_5_0, nil)
+	arg_5_0._inpItem:AddOnValueChanged(arg_5_0._onInpValueChanged, arg_5_0)
 end
 
-function slot0.removeEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._inpItem.gameObject):RemoveClickListener()
-	SLFramework.UGUI.UIClickListener.Get(slot0._maskGO):RemoveClickListener()
-	slot0._inpItem:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_6_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_6_0._inpItem.gameObject):RemoveClickListener()
+	SLFramework.UGUI.UIClickListener.Get(arg_6_0._maskGO):RemoveClickListener()
+	arg_6_0._inpItem:RemoveOnValueChanged()
 end
 
-function slot0.onOpen(slot0)
-	GMController.instance:registerCallback(uv0.ClickItem, slot0._onClickItem, slot0)
-	GMController.instance:registerCallback(uv0.Return, slot0._onClickReturn, slot0)
+function var_0_0.onOpen(arg_7_0)
+	GMController.instance:registerCallback(var_0_0.ClickItem, arg_7_0._onClickItem, arg_7_0)
+	GMController.instance:registerCallback(var_0_0.Return, arg_7_0._onClickReturn, arg_7_0)
 end
 
-function slot0.onClose(slot0)
-	GMController.instance:unregisterCallback(uv0.ClickItem, slot0._onClickItem, slot0)
-	GMController.instance:unregisterCallback(uv0.Return, slot0._onClickReturn, slot0)
+function var_0_0.onClose(arg_8_0)
+	GMController.instance:unregisterCallback(var_0_0.ClickItem, arg_8_0._onClickItem, arg_8_0)
+	GMController.instance:unregisterCallback(var_0_0.Return, arg_8_0._onClickReturn, arg_8_0)
 end
 
-function slot0._onClickInpItem(slot0)
-	slot0:_showScroll()
+function var_0_0._onClickInpItem(arg_9_0)
+	arg_9_0:_showScroll()
 end
 
-function slot0._onClickMask(slot0)
-	slot0:_hideScroll()
+function var_0_0._onClickMask(arg_10_0)
+	arg_10_0:_hideScroll()
 end
 
-function slot0._showScroll(slot0)
-	gohelper.setActive(slot0._maskGO, true)
-	slot0:_checkBuildItems()
+function var_0_0._showScroll(arg_11_0)
+	gohelper.setActive(arg_11_0._maskGO, true)
+	arg_11_0:_checkBuildItems()
 
-	slot0._rootType = nil
+	arg_11_0._rootType = nil
 
-	slot0:_showDefaultItems()
+	arg_11_0:_showDefaultItems()
 end
 
-function slot0._hideScroll(slot0)
-	gohelper.setActive(slot0._maskGO, false)
+function var_0_0._hideScroll(arg_12_0)
+	gohelper.setActive(arg_12_0._maskGO, false)
 
-	slot0._rootType = nil
+	arg_12_0._rootType = nil
 
 	GMAddItemModel.instance:clear()
 end
 
-function slot0._onClickItem(slot0, slot1)
-	if slot1.isRoot == 1 then
-		slot0._rootType = slot1.type
+function var_0_0._onClickItem(arg_13_0, arg_13_1)
+	if arg_13_1.isRoot == 1 then
+		arg_13_0._rootType = arg_13_1.type
 
-		slot0:_showTargetItems()
+		arg_13_0:_showTargetItems()
 	else
-		slot0._inpItem:SetText(slot1.type .. "#" .. (slot1.itemIdStr or ""))
-		slot0:_hideScroll()
+		arg_13_0._inpItem:SetText(arg_13_1.type .. "#" .. (arg_13_1.itemIdStr or ""))
+		arg_13_0:_hideScroll()
 	end
 
-	slot0._txtNumPlaceholder.text = string.nilorempty(slot1.numTips) and "Num" or slot1.numTips
+	arg_13_0._txtNumPlaceholder.text = string.nilorempty(arg_13_1.numTips) and "Num" or arg_13_1.numTips
 end
 
-function slot0._onClickReturn(slot0, slot1)
-	slot0._rootType = nil
+function var_0_0._onClickReturn(arg_14_0, arg_14_1)
+	arg_14_0._rootType = nil
 
-	slot0:_showDefaultItems()
+	arg_14_0:_showDefaultItems()
 end
 
-function slot0._onInpValueChanged(slot0, slot1)
-	slot0._rootType = nil
+function var_0_0._onInpValueChanged(arg_15_0, arg_15_1)
+	arg_15_0._rootType = nil
 
-	if string.nilorempty(slot1) then
-		slot0:_showDefaultItems()
+	if string.nilorempty(arg_15_1) then
+		arg_15_0:_showDefaultItems()
 	else
-		slot0:_showTargetItems()
+		arg_15_0:_showTargetItems()
 	end
 end
 
-function slot0._showDefaultItems(slot0)
-	GMAddItemModel.instance:setList(slot0.RootTypes)
+function var_0_0._showDefaultItems(arg_16_0)
+	GMAddItemModel.instance:setList(arg_16_0.RootTypes)
 end
 
-function slot0._showTargetItems(slot0)
-	if not slot0._allItems then
+function var_0_0._showTargetItems(arg_17_0)
+	if not arg_17_0._allItems then
 		return
 	end
 
-	if slot0._rootType then
-		slot1 = 2
+	if arg_17_0._rootType then
+		local var_17_0 = 2
+		local var_17_1 = {}
 
-		table.insert({}, {
+		table.insert(var_17_1, {
 			id = 1,
 			name = "返回",
 			type = 0
 		})
 
-		for slot6 = 1, #slot0._allItems do
-			if slot0._allItems[slot6].type == slot0._rootType then
-				slot7.id = slot1
-				slot1 = slot1 + 1
+		for iter_17_0 = 1, #arg_17_0._allItems do
+			local var_17_2 = arg_17_0._allItems[iter_17_0]
 
-				table.insert(slot2, slot7)
+			if var_17_2.type == arg_17_0._rootType then
+				var_17_2.id = var_17_0
+				var_17_0 = var_17_0 + 1
+
+				table.insert(var_17_1, var_17_2)
 			end
 		end
 
-		GMAddItemModel.instance:setList(slot2)
-	elseif not string.nilorempty(slot0._inpItem:GetText()) then
-		slot2 = 1
-		slot3 = {}
-
-		for slot7 = 1, #slot0._allItems do
-			if string.find(slot0._allItems[slot7].name, slot1) or string.find(slot8.itemIdStr, slot1) then
-				slot8.id = slot2
-				slot2 = slot2 + 1
-
-				table.insert(slot3, slot8)
-			end
-		end
-
-		GMAddItemModel.instance:setList(slot3)
+		GMAddItemModel.instance:setList(var_17_1)
 	else
-		GMAddItemModel.instance:setList(slot0.RootTypes)
+		local var_17_3 = arg_17_0._inpItem:GetText()
+
+		if not string.nilorempty(var_17_3) then
+			local var_17_4 = 1
+			local var_17_5 = {}
+
+			for iter_17_1 = 1, #arg_17_0._allItems do
+				local var_17_6 = arg_17_0._allItems[iter_17_1]
+
+				if string.find(var_17_6.name, var_17_3) or string.find(var_17_6.itemIdStr, var_17_3) then
+					var_17_6.id = var_17_4
+					var_17_4 = var_17_4 + 1
+
+					table.insert(var_17_5, var_17_6)
+				end
+			end
+
+			GMAddItemModel.instance:setList(var_17_5)
+		else
+			GMAddItemModel.instance:setList(arg_17_0.RootTypes)
+		end
 	end
 end
 
-return slot0
+return var_0_0

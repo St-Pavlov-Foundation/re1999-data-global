@@ -1,25 +1,25 @@
-module("modules.logic.gm.view.GM_PackageStoreViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GM_PackageStoreViewContainer", package.seeall)
 
-slot0 = class("GM_PackageStoreViewContainer", BaseViewContainer)
+local var_0_0 = class("GM_PackageStoreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		GM_PackageStoreView.New()
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	ViewMgr.instance:closeView(slot0.viewName)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	ViewMgr.instance:closeView(arg_2_0.viewName)
 end
 
-function slot0.addEvents(slot0)
-	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, slot0._gm_showAllTabIdUpdate, slot0)
-	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, slot0._gm_showAllItemIdUpdate, slot0)
+function var_0_0.addEvents(arg_3_0)
+	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, arg_3_0._gm_showAllItemIdUpdate, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, slot0._gm_showAllTabIdUpdate, slot0)
-	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, slot0._gm_showAllItemIdUpdate, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, arg_4_0._gm_showAllItemIdUpdate, arg_4_0)
 end
 
-return slot0
+return var_0_0

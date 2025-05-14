@@ -1,59 +1,84 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventSetSpinePos", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetSpinePos", package.seeall)
 
-slot0 = class("FightTLEventSetSpinePos")
+local var_0_0 = class("FightTLEventSetSpinePos")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot5 = nil
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_3[1]
+	local var_1_1
 
-	if slot3[1] == "1" then
-		table.insert({}, FightHelper.getEntity(slot1.fromId))
-	elseif slot4 == "2" then
-		slot5 = FightHelper.getSkillTargetEntitys(slot1)
-	elseif slot4 == "3" then
-		slot5 = FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide(), true)
-	elseif slot4 == "4" then
-		slot5 = FightHelper.getSideEntitys(FightHelper.getEntity(slot1.toId):getSide(), true)
-	elseif slot4 == "5" then
-		for slot10, slot11 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide(), true)) do
-			if slot11.id == slot1.fromId then
-				table.remove(slot5, slot10)
+	if var_1_0 == "1" then
+		var_1_1 = {}
+
+		table.insert(var_1_1, FightHelper.getEntity(arg_1_1.fromId))
+	elseif var_1_0 == "2" then
+		var_1_1 = FightHelper.getSkillTargetEntitys(arg_1_1)
+	elseif var_1_0 == "3" then
+		local var_1_2 = FightHelper.getEntity(arg_1_1.fromId)
+
+		var_1_1 = FightHelper.getSideEntitys(var_1_2:getSide(), true)
+	elseif var_1_0 == "4" then
+		local var_1_3 = FightHelper.getEntity(arg_1_1.toId)
+
+		var_1_1 = FightHelper.getSideEntitys(var_1_3:getSide(), true)
+	elseif var_1_0 == "5" then
+		local var_1_4 = FightHelper.getEntity(arg_1_1.fromId)
+
+		var_1_1 = FightHelper.getSideEntitys(var_1_4:getSide(), true)
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			if iter_1_1.id == arg_1_1.fromId then
+				table.remove(var_1_1, iter_1_0)
 
 				break
 			end
 		end
 	end
 
-	if not string.nilorempty(slot3[4]) then
-		for slot11, slot12 in pairs(GameSceneMgr.instance:getCurScene().deadEntityMgr._entityDic) do
-			if slot12:getMO() and tabletool.indexOf(string.splitToNumber(slot3[4], "#"), slot13.skin) then
-				table.insert({}, slot12)
+	if not string.nilorempty(arg_1_3[4]) then
+		local var_1_5 = GameSceneMgr.instance:getCurScene().deadEntityMgr
+
+		var_1_1 = {}
+
+		local var_1_6 = string.splitToNumber(arg_1_3[4], "#")
+
+		for iter_1_2, iter_1_3 in pairs(var_1_5._entityDic) do
+			local var_1_7 = iter_1_3:getMO()
+
+			if var_1_7 and tabletool.indexOf(var_1_6, var_1_7.skin) then
+				table.insert(var_1_1, iter_1_3)
 			end
 		end
 	end
 
-	slot6 = string.splitToNumber(slot3[2], "#")
-	slot7 = slot3[3] == "1"
+	local var_1_8 = string.splitToNumber(arg_1_3[2], "#")
+	local var_1_9 = arg_1_3[3] == "1"
 
-	if #slot5 > 0 then
-		for slot11, slot12 in ipairs(slot5) do
-			if slot12.spine and slot13:getSpineTr() then
-				if slot7 then
-					transformhelper.setLocalPos(slot14, 0, 0, 0)
+	if #var_1_1 > 0 then
+		for iter_1_4, iter_1_5 in ipairs(var_1_1) do
+			local var_1_10 = iter_1_5.spine
+			local var_1_11 = var_1_10 and var_1_10:getSpineTr()
+
+			if var_1_11 then
+				if var_1_9 then
+					transformhelper.setLocalPos(var_1_11, 0, 0, 0)
 				else
-					transformhelper.setLocalPos(slot14, slot6[1] or 0, slot6[2] or 0, slot6[3] or 0)
+					transformhelper.setLocalPos(var_1_11, var_1_8[1] or 0, var_1_8[2] or 0, var_1_8[3] or 0)
 				end
 			end
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_3_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

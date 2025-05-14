@@ -1,29 +1,33 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballRestLoadingViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballRestLoadingViewContainer", package.seeall)
 
-slot0 = class("PinballRestLoadingViewContainer", PinballLoadingViewContainer)
+local var_0_0 = class("PinballRestLoadingViewContainer", PinballLoadingViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {}
 end
 
-function slot0.onContainerOpen(slot0, ...)
-	uv0.super.onContainerOpen(slot0, ...)
+function var_0_0.onContainerOpen(arg_2_0, ...)
+	var_0_0.super.onContainerOpen(arg_2_0, ...)
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio10)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg/#txt_dec"), PinballModel.instance.restCdDay <= 0)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg/#txt_dec2"), PinballModel.instance.restCdDay > 0)
 
-	slot0._openDt = UnityEngine.Time.realtimeSinceStartup
+	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "bg/#txt_dec")
+	local var_2_1 = gohelper.findChild(arg_2_0.viewGO, "bg/#txt_dec2")
+
+	gohelper.setActive(var_2_0, PinballModel.instance.restCdDay <= 0)
+	gohelper.setActive(var_2_1, PinballModel.instance.restCdDay > 0)
+
+	arg_2_0._openDt = UnityEngine.Time.realtimeSinceStartup
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	if not slot0._openDt or UnityEngine.Time.realtimeSinceStartup - slot0._openDt > 1 then
-		slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_3_0)
+	if not arg_3_0._openDt or UnityEngine.Time.realtimeSinceStartup - arg_3_0._openDt > 1 then
+		arg_3_0:closeThis()
 	end
 end
 
-function slot0.onContainerClose(slot0, ...)
-	uv0.super.onContainerClose(slot0, ...)
+function var_0_0.onContainerClose(arg_4_0, ...)
+	var_0_0.super.onContainerClose(arg_4_0, ...)
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio11)
 end
 
-return slot0
+return var_0_0

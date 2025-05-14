@@ -1,70 +1,76 @@
-module("modules.logic.room.view.RoomViewDebugBuilding", package.seeall)
+﻿module("modules.logic.room.view.RoomViewDebugBuilding", package.seeall)
 
-slot0 = class("RoomViewDebugBuilding", BaseView)
+local var_0_0 = class("RoomViewDebugBuilding", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._godebugbuilding = gohelper.findChild(slot0.viewGO, "go_normalroot/go_debugbuilding")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/go_debugbuilding/btn_close")
-	slot0._scrolldebugbuilding = gohelper.findChildScrollRect(slot0.viewGO, "go_normalroot/go_debugbuilding/scroll_debugbuilding")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._godebugbuilding = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_debugbuilding")
+	arg_4_0._btnclose = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/go_debugbuilding/btn_close")
+	arg_4_0._scrolldebugbuilding = gohelper.findChildScrollRect(arg_4_0.viewGO, "go_normalroot/go_debugbuilding/scroll_debugbuilding")
 
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+	arg_4_0._btnclose:AddClickListener(arg_4_0._btncloseOnClick, arg_4_0)
 
-	slot0._isShowDebugBuilding = false
+	arg_4_0._isShowDebugBuilding = false
 
-	gohelper.setActive(slot0._godebugbuilding, false)
+	gohelper.setActive(arg_4_0._godebugbuilding, false)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_5_0)
 	RoomDebugController.instance:setDebugBuildingListShow(false)
 end
 
-function slot0._refreshUI(slot0)
+function var_0_0._refreshUI(arg_6_0)
+	return
 end
 
-function slot0._debugBuildingListViewShowChanged(slot0, slot1)
-	slot2 = slot0._isShowDebugBuilding ~= slot1
-	slot0._isShowDebugBuilding = slot1
+function var_0_0._debugBuildingListViewShowChanged(arg_7_0, arg_7_1)
+	local var_7_0
+
+	var_7_0 = arg_7_0._isShowDebugBuilding ~= arg_7_1
+	arg_7_0._isShowDebugBuilding = arg_7_1
 
 	RoomDebugBuildingListModel.instance:clearSelect()
-	gohelper.setActive(slot0._godebugbuilding, slot1)
+	gohelper.setActive(arg_7_0._godebugbuilding, arg_7_1)
 
-	if slot1 then
+	if arg_7_1 then
 		RoomDebugBuildingListModel.instance:setDebugBuildingList()
 
-		slot0._scrolldebugbuilding.horizontalNormalizedPosition = 0
+		arg_7_0._scrolldebugbuilding.horizontalNormalizedPosition = 0
 	end
 end
 
-function slot0._addBtnAudio(slot0)
-	gohelper.addUIClickAudio(slot0._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function var_0_0._addBtnAudio(arg_8_0)
+	gohelper.addUIClickAudio(arg_8_0._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
-	slot0:_addBtnAudio()
-	slot0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, slot0._debugBuildingListViewShowChanged, slot0)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:_refreshUI()
+	arg_9_0:_addBtnAudio()
+	arg_9_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_9_0._debugBuildingListViewShowChanged, arg_9_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._scrolldebugbuilding:RemoveOnValueChanged()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._btnclose:RemoveClickListener()
+	arg_11_0._scrolldebugbuilding:RemoveOnValueChanged()
 end
 
-return slot0
+return var_0_0

@@ -1,16 +1,19 @@
-module("modules.logic.seasonver.act166.model.Season166BattleContext", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166BattleContext", package.seeall)
 
-slot0 = pureTable("Season166BattleContext")
+local var_0_0 = pureTable("Season166BattleContext")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.actId = slot1
-	slot0.episodeId = slot2
-	slot0.baseId = slot3
-	slot0.talentId = slot4
-	slot0.trainId = slot5
-	slot0.teachId = slot6
-	slot0.episodeType = lua_episode.configDict[slot0.episodeId] and slot7.type
-	slot0.battleId = slot7 and slot7.battleId
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
+	arg_1_0.actId = arg_1_1
+	arg_1_0.episodeId = arg_1_2
+	arg_1_0.baseId = arg_1_3
+	arg_1_0.talentId = arg_1_4
+	arg_1_0.trainId = arg_1_5
+	arg_1_0.teachId = arg_1_6
+
+	local var_1_0 = lua_episode.configDict[arg_1_0.episodeId]
+
+	arg_1_0.episodeType = var_1_0 and var_1_0.type
+	arg_1_0.battleId = var_1_0 and var_1_0.battleId
 end
 
-return slot0
+return var_0_0

@@ -1,113 +1,120 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114FullPhotoView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114FullPhotoView", package.seeall)
 
-slot0 = class("Activity114FullPhotoView", BaseView)
+local var_0_0 = class("Activity114FullPhotoView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagephoto = gohelper.findChildSingleImage(slot0.viewGO, "#simage_photo")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_leftArrow")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_rightArrow")
-	slot0._txtname = gohelper.findChildTextMesh(slot0.viewGO, "#txt_name")
-	slot0._txtnameen = gohelper.findChildTextMesh(slot0.viewGO, "#txt_name/#txt_nameen")
-	slot0._txtpage = gohelper.findChildTextMesh(slot0.viewGO, "#txt_page")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#simage_photo/#go_empty")
-	slot0._animationEventWrap = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._image = gohelper.findChildImage(slot0.viewGO, "#simage_photo")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagephoto = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_photo")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_leftArrow")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rightArrow")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtnameen = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_name/#txt_nameen")
+	arg_1_0._txtpage = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_page")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#simage_photo/#go_empty")
+	arg_1_0._animationEventWrap = arg_1_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._image = gohelper.findChildImage(arg_1_0.viewGO, "#simage_photo")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnleft:AddClickListener(slot0.onLeftPhoto, slot0)
-	slot0._btnright:AddClickListener(slot0.onRightPhoto, slot0)
-	slot0._animationEventWrap:AddEventListener("switch", slot0.updatePhotoShow, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0.onLeftPhoto, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0.onRightPhoto, arg_2_0)
+	arg_2_0._animationEventWrap:AddEventListener("switch", arg_2_0.updatePhotoShow, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
-	slot0._animationEventWrap:RemoveAllEventListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
+	arg_3_0._animationEventWrap:RemoveAllEventListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.nowShowIndex = slot0.viewParam
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0.nowShowIndex = arg_5_0.viewParam
 
-	slot0:updatePhotoShow()
+	arg_5_0:updatePhotoShow()
 end
 
-function slot0.updatePhotoShow(slot0)
-	slot0._animLock = nil
-	slot2 = Activity114Config.instance:getPhotoCoList(Activity114Model.instance.id)[slot0.nowShowIndex]
+function var_0_0.updatePhotoShow(arg_6_0)
+	arg_6_0._animLock = nil
 
-	if Activity114Model.instance.unLockPhotoDict[slot0.nowShowIndex] then
-		slot0._txtname.text = slot2.name
-		slot0._txtnameen.text = slot2.nameEn
+	local var_6_0 = Activity114Config.instance:getPhotoCoList(Activity114Model.instance.id)
+	local var_6_1 = var_6_0[arg_6_0.nowShowIndex]
 
-		gohelper.setActive(slot0._goempty, false)
+	if Activity114Model.instance.unLockPhotoDict[arg_6_0.nowShowIndex] then
+		arg_6_0._txtname.text = var_6_1.name
+		arg_6_0._txtnameen.text = var_6_1.nameEn
 
-		slot0._image.enabled = true
+		gohelper.setActive(arg_6_0._goempty, false)
 
-		slot0._simagephoto:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("photo/" .. slot1[slot0.nowShowIndex].bigCg .. ".png"))
+		arg_6_0._image.enabled = true
+
+		arg_6_0._simagephoto:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("photo/" .. var_6_0[arg_6_0.nowShowIndex].bigCg .. ".png"))
 	else
-		slot0._txtname.text = luaLang("hero_display_level0_variant")
-		slot0._txtnameen.text = ""
+		arg_6_0._txtname.text = luaLang("hero_display_level0_variant")
+		arg_6_0._txtnameen.text = ""
 
-		gohelper.setActive(slot0._goempty, true)
+		gohelper.setActive(arg_6_0._goempty, true)
 
-		slot0._image.enabled = false
+		arg_6_0._image.enabled = false
 	end
 
-	slot0._txtpage.text = slot2.desc
+	arg_6_0._txtpage.text = var_6_1.desc
 end
 
-function slot0.onLeftPhoto(slot0)
-	if slot0._animLock then
+function var_0_0.onLeftPhoto(arg_7_0)
+	if arg_7_0._animLock then
 		return
 	end
 
-	slot0._animLock = true
+	arg_7_0._animLock = true
 
-	if slot0.nowShowIndex - 1 <= 0 then
-		slot1 = 9
+	local var_7_0 = arg_7_0.nowShowIndex - 1
+
+	if var_7_0 <= 0 then
+		var_7_0 = 9
 	end
 
-	slot0.nowShowIndex = slot1
+	arg_7_0.nowShowIndex = var_7_0
 
-	slot0._anim:Play(UIAnimationName.Left, 0, 0)
+	arg_7_0._anim:Play(UIAnimationName.Left, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 end
 
-function slot0.onRightPhoto(slot0)
-	if slot0._animLock then
+function var_0_0.onRightPhoto(arg_8_0)
+	if arg_8_0._animLock then
 		return
 	end
 
-	slot0._animLock = true
+	arg_8_0._animLock = true
 
-	if slot0.nowShowIndex + 1 > 9 then
-		slot1 = 1
+	local var_8_0 = arg_8_0.nowShowIndex + 1
+
+	if var_8_0 > 9 then
+		var_8_0 = 1
 	end
 
-	slot0.nowShowIndex = slot1
+	arg_8_0.nowShowIndex = var_8_0
 
-	slot0._anim:Play(UIAnimationName.Right, 0, 0)
+	arg_8_0._anim:Play(UIAnimationName.Right, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mail_close)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagephoto:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagephoto:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,68 +1,74 @@
-module("modules.logic.fight.view.FightTechniqueTipsView", package.seeall)
+﻿module("modules.logic.fight.view.FightTechniqueTipsView", package.seeall)
 
-slot0 = class("FightTechniqueTipsView", BaseView)
+local var_0_0 = class("FightTechniqueTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goclose = gohelper.findChildClick(slot0.viewGO, "#go_close")
-	slot0._gocenter = gohelper.findChild(slot0.viewGO, "#go_center")
-	slot0._txttemp = gohelper.findChildText(slot0.viewGO, "#txt_temp")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_center/#simage_icon")
-	slot0._mask = gohelper.findChildClickWithAudio(slot0.viewGO, "mask")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goclose = gohelper.findChildClick(arg_1_0.viewGO, "#go_close")
+	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "#go_center")
+	arg_1_0._txttemp = gohelper.findChildText(arg_1_0.viewGO, "#txt_temp")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/#simage_icon")
+	arg_1_0._mask = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "mask")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._goclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._mask:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._goclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._mask:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._goclose:RemoveClickListener()
-	slot0._mask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._goclose:RemoveClickListener()
+	arg_3_0._mask:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshView()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:_refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshView()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:_refreshView()
 end
 
-function slot0._refreshView(slot0)
-	if slot0.viewParam.isGMShow then
-		slot0.config = slot0.viewParam.config
+function var_0_0._refreshView(arg_8_0)
+	if arg_8_0.viewParam.isGMShow then
+		arg_8_0.config = arg_8_0.viewParam.config
 	else
-		slot0.config = slot0.viewParam
+		arg_8_0.config = arg_8_0.viewParam
 
-		FightViewTechniqueModel.instance:readTechnique(slot0.config.id)
+		FightViewTechniqueModel.instance:readTechnique(arg_8_0.config.id)
 	end
 
-	slot0._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(slot0.config.picture2 or ""))
+	arg_8_0._simageicon:LoadImage(ResUrl.getTechniqueLangIcon(arg_8_0.config.picture2 or ""))
 
-	slot1 = FightStrUtil.instance:getSplitCache(slot0.config.content1, "|")
+	local var_8_0 = FightStrUtil.instance:getSplitCache(arg_8_0.config.content1, "|")
 
-	for slot5, slot6 in pairs(lua_fight_technique.configDict) do
-		if gohelper.findChild(slot0.viewGO, "#go_center/content/" .. slot6.id) then
-			gohelper.setActive(slot7, slot6.id == slot0.config.id)
+	for iter_8_0, iter_8_1 in pairs(lua_fight_technique.configDict) do
+		local var_8_1 = gohelper.findChild(arg_8_0.viewGO, "#go_center/content/" .. iter_8_1.id)
 
-			if slot0.config.id == slot6.id then
-				for slot11, slot12 in ipairs(slot1) do
-					slot17 = "<color=%s>"
+		if var_8_1 then
+			gohelper.setActive(var_8_1, iter_8_1.id == arg_8_0.config.id)
 
-					for slot17 = 0, slot7:GetComponentsInChildren(gohelper.Type_TextMesh).Length - 1 do
-						if slot13[slot17].gameObject.name == "txt_" .. slot11 then
-							slot13[slot17].text = string.gsub(string.gsub(slot12, "%{", string.format(slot17, "#ff906a")), "%}", "</color>")
+			if arg_8_0.config.id == iter_8_1.id then
+				for iter_8_2, iter_8_3 in ipairs(var_8_0) do
+					iter_8_3 = string.gsub(iter_8_3, "%{", string.format("<color=%s>", "#ff906a"))
+					iter_8_3 = string.gsub(iter_8_3, "%}", "</color>")
+
+					local var_8_2 = var_8_1:GetComponentsInChildren(gohelper.Type_TextMesh)
+
+					for iter_8_4 = 0, var_8_2.Length - 1 do
+						if var_8_2[iter_8_4].gameObject.name == "txt_" .. iter_8_2 then
+							var_8_2[iter_8_4].text = iter_8_3
 						end
 					end
 				end
@@ -73,12 +79,12 @@ function slot0._refreshView(slot0)
 	FightAudioMgr.instance:obscureBgm(true)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
 	FightAudioMgr.instance:obscureBgm(false)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,24 +1,30 @@
-module("modules.logic.patface.controller.work.TurnbackStoryPatFaceWork", package.seeall)
+﻿module("modules.logic.patface.controller.work.TurnbackStoryPatFaceWork", package.seeall)
 
-slot0 = class("TurnbackStoryPatFaceWork", PatFaceWorkBase)
+local var_0_0 = class("TurnbackStoryPatFaceWork", PatFaceWorkBase)
 
-function slot0.checkCanPat(slot0)
-	slot1 = false
+function var_0_0.checkCanPat(arg_1_0)
+	local var_1_0 = false
+	local var_1_1 = TurnbackModel.instance:canShowTurnbackPop()
+	local var_1_2 = TurnbackModel.instance:getCurTurnbackId()
+	local var_1_3 = TurnbackController.instance:hasPlayedStoryVideo(var_1_2)
 
-	if TurnbackModel.instance:canShowTurnbackPop() and not TurnbackController.instance:hasPlayedStoryVideo(TurnbackModel.instance:getCurTurnbackId()) then
-		slot1 = true
+	if var_1_1 and not var_1_3 then
+		var_1_0 = true
 	end
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.startPat(slot0)
-	if TurnbackModel.instance:getCurTurnbackMo() and slot1.config and slot1.config.startStory then
-		StoryController.instance:playStory(slot2, nil, slot0.onPlayPatStoryFinish, slot0)
+function var_0_0.startPat(arg_2_0)
+	local var_2_0 = TurnbackModel.instance:getCurTurnbackMo()
+	local var_2_1 = var_2_0 and var_2_0.config and var_2_0.config.startStory
+
+	if var_2_1 then
+		StoryController.instance:playStory(var_2_1, nil, arg_2_0.onPlayPatStoryFinish, arg_2_0)
 	else
-		logError(string.format("TurnbackStoryPatFaceWork:startPat error, storyId is nil", slot2))
-		slot0:onPlayPatStoryFinish()
+		logError(string.format("TurnbackStoryPatFaceWork:startPat error, storyId is nil", var_2_1))
+		arg_2_0:onPlayPatStoryFinish()
 	end
 end
 
-return slot0
+return var_0_0

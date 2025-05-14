@@ -1,115 +1,116 @@
-module("modules.logic.scene.summon.SummonSceneShell", package.seeall)
+﻿module("modules.logic.scene.summon.SummonSceneShell", package.seeall)
 
-slot0 = class("SummonSceneShell")
-slot1 = {
+local var_0_0 = class("SummonSceneShell")
+local var_0_1 = {
 	Prepared = 3,
 	Close = 1,
 	Start = 2
 }
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._curSceneId = slot1
-	slot0._curLevelId = slot2
-	slot0._curStep = uv0.Close
-	slot0._allComps = {}
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._curSceneId = arg_1_1
+	arg_1_0._curLevelId = arg_1_2
+	arg_1_0._curStep = var_0_1.Close
+	arg_1_0._allComps = {}
 
-	slot0:registClz()
+	arg_1_0:registClz()
 
-	for slot6, slot7 in ipairs(slot0._allComps) do
-		if slot7.onInit then
-			slot7:onInit()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0._allComps) do
+		if iter_1_1.onInit then
+			iter_1_1:onInit()
 		end
 	end
 end
 
-function slot0.registClz(slot0)
-	slot0:_addComp("director", SummonSceneDirector)
-	slot0:_addComp("view", SummonSceneViewComp)
-	slot0:_addComp("bgm", SummonSceneBgmComp)
-	slot0:_addComp("cameraAnim", SummonSceneCameraComp)
-	slot0:_addComp("preloader", SummonScenePreloader)
-	slot0:_addComp("selector", SummonSceneSelector)
+function var_0_0.registClz(arg_2_0)
+	arg_2_0:_addComp("director", SummonSceneDirector)
+	arg_2_0:_addComp("view", SummonSceneViewComp)
+	arg_2_0:_addComp("bgm", SummonSceneBgmComp)
+	arg_2_0:_addComp("cameraAnim", SummonSceneCameraComp)
+	arg_2_0:_addComp("preloader", SummonScenePreloader)
+	arg_2_0:_addComp("selector", SummonSceneSelector)
 end
 
-function slot0._addComp(slot0, slot1, slot2)
-	slot3 = slot2.New(slot0)
-	slot0[slot1] = slot3
+function var_0_0._addComp(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_2.New(arg_3_0)
 
-	table.insert(slot0._allComps, slot3)
+	arg_3_0[arg_3_1] = var_3_0
+
+	table.insert(arg_3_0._allComps, var_3_0)
 end
 
-function slot0.onStart(slot0, slot1, slot2)
-	if slot0._curStep ~= uv0.Close then
+function var_0_0.onStart(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._curStep ~= var_0_1.Close then
 		return
 	end
 
-	slot0._curStep = uv0.Start
+	arg_4_0._curStep = var_0_1.Start
 
 	logNormal("summmon start")
 
-	for slot6, slot7 in ipairs(slot0._allComps) do
-		if slot7.onSceneStart and not slot7.isOnStarted then
-			slot7:onSceneStart(slot1, slot2)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._allComps) do
+		if iter_4_1.onSceneStart and not iter_4_1.isOnStarted then
+			iter_4_1:onSceneStart(arg_4_1, arg_4_2)
 		end
 	end
 end
 
-function slot0.onPrepared(slot0)
-	if slot0._curStep ~= uv0.Start then
+function var_0_0.onPrepared(arg_5_0)
+	if arg_5_0._curStep ~= var_0_1.Start then
 		return
 	end
 
-	slot0._curStep = uv0.Prepared
+	arg_5_0._curStep = var_0_1.Prepared
 
 	logNormal("summmon onPrepared")
 
-	for slot4, slot5 in ipairs(slot0._allComps) do
-		if slot5.onScenePrepared then
-			slot5:onScenePrepared(slot0._curSceneId, slot0._curLevelId)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._allComps) do
+		if iter_5_1.onScenePrepared then
+			iter_5_1:onScenePrepared(arg_5_0._curSceneId, arg_5_0._curLevelId)
 		end
 	end
 
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonScenePrepared)
 end
 
-function slot0.onClose(slot0)
-	if slot0._curStep == uv0.Close then
+function var_0_0.onClose(arg_6_0)
+	if arg_6_0._curStep == var_0_1.Close then
 		return
 	end
 
-	slot0._curStep = uv0.Close
+	arg_6_0._curStep = var_0_1.Close
 
 	logNormal("summmon close")
 
-	slot0._isClosing = true
+	arg_6_0._isClosing = true
 
-	for slot4, slot5 in ipairs(slot0._allComps) do
-		if slot5.onSceneClose then
-			slot5:onSceneClose()
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._allComps) do
+		if iter_6_1.onSceneClose then
+			iter_6_1:onSceneClose()
 		end
 	end
 
-	slot0._isClosing = false
+	arg_6_0._isClosing = false
 end
 
-function slot0.onHide(slot0)
-	if slot0._curStep == uv0.Close then
+function var_0_0.onHide(arg_7_0)
+	if arg_7_0._curStep == var_0_1.Close then
 		return
 	end
 
-	slot0._curStep = uv0.Close
+	arg_7_0._curStep = var_0_1.Close
 
 	logNormal("summmon hide")
 
-	for slot4, slot5 in ipairs(slot0._allComps) do
-		if slot5.onSceneHide then
-			slot5:onSceneHide()
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._allComps) do
+		if iter_7_1.onSceneHide then
+			iter_7_1:onSceneHide()
 		end
 	end
 end
 
-function slot0.getSceneContainerGO(slot0)
+function var_0_0.getSceneContainerGO(arg_8_0)
 	return VirtualSummonScene.instance:getRootGO()
 end
 
-return slot0
+return var_0_0

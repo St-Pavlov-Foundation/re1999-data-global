@@ -1,103 +1,105 @@
-module("modules.logic.backpack.view.BackpackView", package.seeall)
+﻿module("modules.logic.backpack.view.BackpackView", package.seeall)
 
-slot0 = class("BackpackView", BaseView)
+local var_0_0 = class("BackpackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollcategory = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_category")
-	slot0._scrollprop = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_prop")
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_category")
+	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	BackpackController.instance:registerCallback(BackpackEvent.SelectCategory, slot0._onSelectCategoryChange, slot0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, slot0._refreshView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	BackpackController.instance:registerCallback(BackpackEvent.SelectCategory, arg_2_0._onSelectCategoryChange, arg_2_0)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_2_0._refreshView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.SelectCategory, slot0._onSelectCategoryChange, slot0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, slot0._refreshView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.SelectCategory, arg_3_0._onSelectCategoryChange, arg_3_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_3_0._refreshView, arg_3_0)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._anim.enabled = true
+function var_0_0.onOpenFinish(arg_4_0)
+	arg_4_0._anim.enabled = true
 
 	if BackpackModel.instance:getCurCategoryId() ~= ItemEnum.CategoryType.Material then
-		slot0:_onSelectCategoryChange()
+		arg_4_0:_onSelectCategoryChange()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._cateList = slot0.viewParam.data.cateList
-	slot0._enableAni = true
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0._cateList = arg_5_0.viewParam.data.cateList
+	arg_5_0._enableAni = true
 
-	slot0:_refreshDeadline()
+	arg_5_0:_refreshDeadline()
 	CharacterBackpackEquipListModel.instance:openEquipView()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_6_0)
 	BackpackModel.instance:setItemAniHasShown(false)
 end
 
-function slot0._refreshView(slot0)
-	BackpackModel.instance:setBackpackCategoryList(slot0._cateList)
-	BackpackCategoryListModel.instance:setCategoryList(slot0._cateList)
+function var_0_0._refreshView(arg_7_0)
+	BackpackModel.instance:setBackpackCategoryList(arg_7_0._cateList)
+	BackpackCategoryListModel.instance:setCategoryList(arg_7_0._cateList)
 end
 
-function slot0._refreshDeadline(slot0)
-	slot0._itemDeadline = BackpackModel.instance:getItemDeadline()
+function var_0_0._refreshDeadline(arg_8_0)
+	arg_8_0._itemDeadline = BackpackModel.instance:getItemDeadline()
 
-	if slot0._itemDeadline then
-		TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
+	if arg_8_0._itemDeadline then
+		TaskDispatcher.runRepeat(arg_8_0._onRefreshDeadline, arg_8_0, 1)
 	end
 end
 
-function slot0._onSelectCategoryChange(slot0)
-	if slot0.viewContainer:getCurrentSelectCategoryId() == BackpackModel.instance:getCurCategoryId() and not slot0.viewParam.isJump then
-		slot0.viewParam.isJump = false
+function var_0_0._onSelectCategoryChange(arg_9_0)
+	local var_9_0 = BackpackModel.instance:getCurCategoryId()
+
+	if arg_9_0.viewContainer:getCurrentSelectCategoryId() == var_9_0 and not arg_9_0.viewParam.isJump then
+		arg_9_0.viewParam.isJump = false
 
 		return
 	end
 
-	slot0:_refreshView()
+	arg_9_0:_refreshView()
 
-	if slot1 == ItemEnum.CategoryType.Equip then
-		slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, 2)
-		TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	elseif slot1 == ItemEnum.CategoryType.Antique then
-		slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, 3)
+	if var_9_0 == ItemEnum.CategoryType.Equip then
+		arg_9_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, 2)
+		TaskDispatcher.cancelTask(arg_9_0._onRefreshDeadline, arg_9_0)
+	elseif var_9_0 == ItemEnum.CategoryType.Antique then
+		arg_9_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, 3)
 	else
-		slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, 1)
-		slot0:_refreshDeadline()
+		arg_9_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, 1)
+		arg_9_0:_refreshDeadline()
 	end
 end
 
-function slot0._onRefreshDeadline(slot0)
-	if slot0._itemDeadline and slot0._itemDeadline > 0 and slot0._itemDeadline - ServerTime.now() <= -1 then
-		slot0._sendCount = slot0._sendCount and slot0._sendCount + 1 or 1
+function var_0_0._onRefreshDeadline(arg_10_0)
+	if arg_10_0._itemDeadline and arg_10_0._itemDeadline > 0 and arg_10_0._itemDeadline - ServerTime.now() <= -1 then
+		arg_10_0._sendCount = arg_10_0._sendCount and arg_10_0._sendCount + 1 or 1
 
-		if slot0._sendCount < 2 then
+		if arg_10_0._sendCount < 2 then
 			ItemRpc.instance:sendGetItemListRequest()
 			ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
 		else
-			slot0._sendCount = 0
+			arg_10_0._sendCount = 0
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
 	BackpackPropListModel.instance:clearList()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	slot0._imgBg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
+	arg_11_0._imgBg:UnLoadImage()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._imgBg = gohelper.findChildSingleImage(slot0.viewGO, "bg/bgimg")
+function var_0_0._editableInitView(arg_12_0)
+	arg_12_0._imgBg = gohelper.findChildSingleImage(arg_12_0.viewGO, "bg/bgimg")
 
-	slot0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/beibao_bj"))
+	arg_12_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/beibao_bj"))
 end
 
-return slot0
+return var_0_0

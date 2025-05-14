@@ -1,53 +1,55 @@
-module("modules.logic.summonsimulationpick.model.SummonSimulationPickModel", package.seeall)
+﻿module("modules.logic.summonsimulationpick.model.SummonSimulationPickModel", package.seeall)
 
-slot0 = class("SummonSimulationPickModel", BaseModel)
+local var_0_0 = class("SummonSimulationPickModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._actInfo = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._actInfo = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._actInfo = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._actInfo = {}
 end
 
-function slot0.setActInfo(slot0, slot1, slot2, slot3)
-	slot4 = slot0._actInfo[slot1] or SummonSimulationInfoMo.New()
+function var_0_0.setActInfo(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_0._actInfo[arg_3_1] or SummonSimulationInfoMo.New()
 
-	slot4:update(slot2, slot3)
+	var_3_0:update(arg_3_2, arg_3_3)
 
-	slot0._actInfo[slot1] = slot4
+	arg_3_0._actInfo[arg_3_1] = var_3_0
 end
 
-function slot0.getActInfo(slot0, slot1)
-	return slot0._actInfo[slot1]
+function var_0_0.getActInfo(arg_4_0, arg_4_1)
+	return arg_4_0._actInfo[arg_4_1]
 end
 
-function slot0.isActivityOpen(slot0, slot1)
-	slot2 = ServerTime.now() * 1000
+function var_0_0.isActivityOpen(arg_5_0, arg_5_1)
+	local var_5_0 = ServerTime.now() * 1000
 
-	if not slot1 or not ActivityModel.instance:isActOnLine(slot1) then
+	if not arg_5_1 or not ActivityModel.instance:isActOnLine(arg_5_1) then
 		return false
 	end
 
-	if slot2 < ActivityModel.instance:getActStartTime(slot1) then
+	if var_5_0 < ActivityModel.instance:getActStartTime(arg_5_1) then
 		return false
 	end
 
-	if ActivityModel.instance:getActEndTime(slot1) <= slot2 then
+	if var_5_0 >= ActivityModel.instance:getActEndTime(arg_5_1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getActivityMaxSummonCount(slot0, slot1)
-	if SummonSimulationPickConfig.instance:getSummonConfigById(slot1) and slot2.summonTimes then
-		return slot2.summonTimes
+function var_0_0.getActivityMaxSummonCount(arg_6_0, arg_6_1)
+	local var_6_0 = SummonSimulationPickConfig.instance:getSummonConfigById(arg_6_1)
+
+	if var_6_0 and var_6_0.summonTimes then
+		return var_6_0.summonTimes
 	end
 
 	return 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,226 +1,239 @@
-module("modules.logic.fight.entity.pool.FightEffectWrap", package.seeall)
+﻿module("modules.logic.fight.entity.pool.FightEffectWrap", package.seeall)
 
-slot0 = class("FightEffectWrap", LuaCompBase)
+local var_0_0 = class("FightEffectWrap", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0.uniqueId = nil
-	slot0.path = nil
-	slot0.abPath = nil
-	slot0.side = nil
-	slot0.containerGO = nil
-	slot0.containerTr = nil
-	slot0.effectGO = nil
-	slot0.hangPointGO = nil
-	slot0._canDestroy = false
-	slot0._layer = nil
-	slot0._renderOrder = nil
-	slot0._nonActiveKeyList = {}
-	slot0._nonPosActiveKeyList = {}
-	slot0.callback = nil
-	slot0.callbackObj = nil
-	slot0.dontPlay = nil
-	slot0.cus_localPosX = nil
-	slot0.cus_localPosY = nil
-	slot0.cus_localPosZ = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.uniqueId = nil
+	arg_1_0.path = nil
+	arg_1_0.abPath = nil
+	arg_1_0.side = nil
+	arg_1_0.containerGO = nil
+	arg_1_0.containerTr = nil
+	arg_1_0.effectGO = nil
+	arg_1_0.hangPointGO = nil
+	arg_1_0._canDestroy = false
+	arg_1_0._layer = nil
+	arg_1_0._renderOrder = nil
+	arg_1_0._nonActiveKeyList = {}
+	arg_1_0._nonPosActiveKeyList = {}
+	arg_1_0.callback = nil
+	arg_1_0.callbackObj = nil
+	arg_1_0.dontPlay = nil
+	arg_1_0.cus_localPosX = nil
+	arg_1_0.cus_localPosY = nil
+	arg_1_0.cus_localPosZ = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = slot1
-	slot0.containerTr = slot1.transform
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.containerGO = arg_2_1
+	arg_2_0.containerTr = arg_2_1.transform
 end
 
-function slot0.play(slot0)
-	if slot0.effectGO and not slot0.dontPlay then
-		slot0:setActive(true)
+function var_0_0.play(arg_3_0)
+	if arg_3_0.effectGO and not arg_3_0.dontPlay then
+		arg_3_0:setActive(true)
 
-		if slot0.effectGO:GetComponent(typeof(ZProj.EffectShakeComponent)) then
-			slot3 = 1
+		local var_3_0 = arg_3_0.effectGO:GetComponent(typeof(ZProj.EffectShakeComponent))
 
-			if FightModel.instance:getSpeed() > 1.4 then
-				slot3 = 1 - 0.3 * (slot2 - 1.4) / 1.4
+		if var_3_0 then
+			local var_3_1 = FightModel.instance:getSpeed()
+			local var_3_2 = 1
+
+			if var_3_1 > 1.4 then
+				var_3_2 = 1 - 0.3 * (var_3_1 - 1.4) / 1.4
 			end
 
-			slot1:Play(CameraMgr.instance:getCameraShake(), slot2, slot3)
+			var_3_0:Play(CameraMgr.instance:getCameraShake(), var_3_1, var_3_2)
 		end
 	end
 end
 
-function slot0.setUniqueId(slot0, slot1)
-	slot0.uniqueId = slot1
+function var_0_0.setUniqueId(arg_4_0, arg_4_1)
+	arg_4_0.uniqueId = arg_4_1
 end
 
-function slot0.setPath(slot0, slot1)
-	slot0.path = slot1
-	slot0.abPath = FightHelper.getEffectAbPath(slot1)
+function var_0_0.setPath(arg_5_0, arg_5_1)
+	arg_5_0.path = arg_5_1
+	arg_5_0.abPath = FightHelper.getEffectAbPath(arg_5_1)
 end
 
-function slot0.setEffectGO(slot0, slot1)
-	slot0.effectGO = slot1
+function var_0_0.setEffectGO(arg_6_0, arg_6_1)
+	arg_6_0.effectGO = arg_6_1
 
-	if slot0._effectScale then
-		transformhelper.setLocalScale(slot0.effectGO.transform, slot0._effectScale, slot0._effectScale, slot0._effectScale)
+	if arg_6_0._effectScale then
+		transformhelper.setLocalScale(arg_6_0.effectGO.transform, arg_6_0._effectScale, arg_6_0._effectScale, arg_6_0._effectScale)
 	end
 
-	if slot0._renderOrder then
-		slot0:setRenderOrder(slot0._renderOrder, true)
+	if arg_6_0._renderOrder then
+		arg_6_0:setRenderOrder(arg_6_0._renderOrder, true)
 	end
 
-	slot0.cus_localPosX, slot0.cus_localPosY, slot0.cus_localPosZ = transformhelper.getLocalPos(slot0.effectGO.transform)
+	arg_6_0.cus_localPosX, arg_6_0.cus_localPosY, arg_6_0.cus_localPosZ = transformhelper.getLocalPos(arg_6_0.effectGO.transform)
 
-	if slot0._nonPosActiveKeyList and #slot0._nonPosActiveKeyList > 0 then
-		slot0:playActiveByPos(false)
-	end
-end
-
-function slot0.setLayer(slot0, slot1)
-	slot0._layer = slot1
-
-	gohelper.setLayer(slot0.effectGO, slot0._layer, true)
-end
-
-function slot0.setHangPointGO(slot0, slot1)
-	if not gohelper.isNil(slot1) and not gohelper.isNil(slot0.containerGO) and slot0.hangPointGO ~= slot1 then
-		slot0.hangPointGO = slot1
-
-		slot0.containerGO.transform:SetParent(slot0.hangPointGO.transform, true)
-		transformhelper.setLocalRotation(slot0.containerGO.transform, 0, 0, 0)
-		transformhelper.setLocalScale(slot0.containerGO.transform, 1, 1, 1)
+	if arg_6_0._nonPosActiveKeyList and #arg_6_0._nonPosActiveKeyList > 0 then
+		arg_6_0:playActiveByPos(false)
 	end
 end
 
-function slot0.setLocalPos(slot0, slot1, slot2, slot3)
-	if slot0.containerTr then
-		transformhelper.setLocalPos(slot0.containerTr, slot1, slot2, slot3)
-		slot0:clearTrail()
+function var_0_0.setLayer(arg_7_0, arg_7_1)
+	arg_7_0._layer = arg_7_1
+
+	gohelper.setLayer(arg_7_0.effectGO, arg_7_0._layer, true)
+end
+
+function var_0_0.setHangPointGO(arg_8_0, arg_8_1)
+	if not gohelper.isNil(arg_8_1) and not gohelper.isNil(arg_8_0.containerGO) and arg_8_0.hangPointGO ~= arg_8_1 then
+		arg_8_0.hangPointGO = arg_8_1
+
+		arg_8_0.containerGO.transform:SetParent(arg_8_0.hangPointGO.transform, true)
+		transformhelper.setLocalRotation(arg_8_0.containerGO.transform, 0, 0, 0)
+		transformhelper.setLocalScale(arg_8_0.containerGO.transform, 1, 1, 1)
 	end
 end
 
-function slot0.setWorldPos(slot0, slot1, slot2, slot3)
-	if slot0.containerTr then
-		transformhelper.setPos(slot0.containerTr, slot1, slot2, slot3)
-		slot0:clearTrail()
+function var_0_0.setLocalPos(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_0.containerTr then
+		transformhelper.setLocalPos(arg_9_0.containerTr, arg_9_1, arg_9_2, arg_9_3)
+		arg_9_0:clearTrail()
 	end
 end
 
-function slot0.setCallback(slot0, slot1, slot2)
-	slot0.callback = slot1
-	slot0.callbackObj = slot2
+function var_0_0.setWorldPos(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if arg_10_0.containerTr then
+		transformhelper.setPos(arg_10_0.containerTr, arg_10_1, arg_10_2, arg_10_3)
+		arg_10_0:clearTrail()
+	end
 end
 
-function slot0.setActive(slot0, slot1, slot2)
-	if slot0.containerGO then
-		if slot1 then
-			tabletool.removeValue(slot0._nonActiveKeyList, slot2 or "default")
-			gohelper.setActive(slot0.containerGO, #slot0._nonActiveKeyList == 0)
+function var_0_0.setCallback(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0.callback = arg_11_1
+	arg_11_0.callbackObj = arg_11_2
+end
+
+function var_0_0.setActive(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_2 = arg_12_2 or "default"
+
+	if arg_12_0.containerGO then
+		if arg_12_1 then
+			tabletool.removeValue(arg_12_0._nonActiveKeyList, arg_12_2)
+			gohelper.setActive(arg_12_0.containerGO, #arg_12_0._nonActiveKeyList == 0)
 		else
-			if not tabletool.indexOf(slot0._nonActiveKeyList, slot2) then
-				table.insert(slot0._nonActiveKeyList, slot2)
+			if not tabletool.indexOf(arg_12_0._nonActiveKeyList, arg_12_2) then
+				table.insert(arg_12_0._nonActiveKeyList, arg_12_2)
 			end
 
-			gohelper.setActive(slot0.containerGO, false)
+			gohelper.setActive(arg_12_0.containerGO, false)
 		end
 	else
-		logError("Effect container is nil, setActive fail: " .. slot0.path)
+		logError("Effect container is nil, setActive fail: " .. arg_12_0.path)
 	end
 end
 
-function slot0.setActiveByPos(slot0, slot1, slot2)
-	if slot0.containerGO then
-		if slot1 then
-			tabletool.removeValue(slot0._nonPosActiveKeyList, slot2 or "default")
-			slot0:playActiveByPos(#slot0._nonPosActiveKeyList == 0)
+function var_0_0.setActiveByPos(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_2 = arg_13_2 or "default"
+
+	if arg_13_0.containerGO then
+		if arg_13_1 then
+			tabletool.removeValue(arg_13_0._nonPosActiveKeyList, arg_13_2)
+			arg_13_0:playActiveByPos(#arg_13_0._nonPosActiveKeyList == 0)
 		else
-			if not tabletool.indexOf(slot0._nonPosActiveKeyList, slot2) then
-				table.insert(slot0._nonPosActiveKeyList, slot2)
+			if not tabletool.indexOf(arg_13_0._nonPosActiveKeyList, arg_13_2) then
+				table.insert(arg_13_0._nonPosActiveKeyList, arg_13_2)
 			end
 
-			slot0:playActiveByPos(false)
+			arg_13_0:playActiveByPos(false)
 		end
 	else
-		logError("Effect container is nil, setActive fail: " .. slot0.path)
+		logError("Effect container is nil, setActive fail: " .. arg_13_0.path)
 	end
 end
 
-function slot0.playActiveByPos(slot0, slot1)
-	if slot0.effectGO and slot0.cus_localPosX then
-		if slot1 then
-			transformhelper.setLocalPos(slot0.effectGO.transform, slot0.cus_localPosX, slot0.cus_localPosY, slot0.cus_localPosZ)
+function var_0_0.playActiveByPos(arg_14_0, arg_14_1)
+	if arg_14_0.effectGO and arg_14_0.cus_localPosX then
+		if arg_14_1 then
+			transformhelper.setLocalPos(arg_14_0.effectGO.transform, arg_14_0.cus_localPosX, arg_14_0.cus_localPosY, arg_14_0.cus_localPosZ)
 		else
-			transformhelper.setLocalPos(slot0.effectGO.transform, slot0.cus_localPosX + 20000, slot0.cus_localPosY + 20000, slot0.cus_localPosZ + 20000)
+			transformhelper.setLocalPos(arg_14_0.effectGO.transform, arg_14_0.cus_localPosX + 20000, arg_14_0.cus_localPosY + 20000, arg_14_0.cus_localPosZ + 20000)
 		end
 	end
 end
 
-function slot0.onReturnPool(slot0)
-	slot0._nonActiveKeyList = {}
-	slot0._nonPosActiveKeyList = {}
+function var_0_0.onReturnPool(arg_15_0)
+	arg_15_0._nonActiveKeyList = {}
+	arg_15_0._nonPosActiveKeyList = {}
 
-	slot0:playActiveByPos(true)
+	arg_15_0:playActiveByPos(true)
 end
 
-function slot0.setRenderOrder(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.setRenderOrder(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_1 then
 		return
 	end
 
-	slot0._renderOrder = slot1
+	local var_16_0 = arg_16_0._renderOrder
 
-	if not slot2 and slot1 == slot0._renderOrder then
+	arg_16_0._renderOrder = arg_16_1
+
+	if not arg_16_2 and arg_16_1 == var_16_0 then
 		return
 	end
 
-	if not gohelper.isNil(slot0.effectGO) and slot0.effectGO:GetComponent(typeof(ZProj.EffectOrderContainer)) then
-		slot4:SetBaseOrder(slot1)
+	if not gohelper.isNil(arg_16_0.effectGO) then
+		local var_16_1 = arg_16_0.effectGO:GetComponent(typeof(ZProj.EffectOrderContainer))
+
+		if var_16_1 then
+			var_16_1:SetBaseOrder(arg_16_1)
+		end
 	end
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	if slot0.effectGO then
-		gohelper.onceAddComponent(slot0.effectGO, typeof(ZProj.EffectTimeScale)):SetTimeScale(slot1)
+function var_0_0.setTimeScale(arg_17_0, arg_17_1)
+	if arg_17_0.effectGO then
+		gohelper.onceAddComponent(arg_17_0.effectGO, typeof(ZProj.EffectTimeScale)):SetTimeScale(arg_17_1)
 	end
 end
 
-function slot0.clearTrail(slot0)
-	if slot0.effectGO then
-		gohelper.onceAddComponent(slot0.effectGO, typeof(ZProj.EffectTimeScale)):ClearTrail()
+function var_0_0.clearTrail(arg_18_0)
+	if arg_18_0.effectGO then
+		gohelper.onceAddComponent(arg_18_0.effectGO, typeof(ZProj.EffectTimeScale)):ClearTrail()
 	end
 end
 
-function slot0.doCallback(slot0, slot1)
-	if slot0.callback then
-		if slot0.callbackObj then
-			slot0.callback(slot0.callbackObj, slot0, slot1)
+function var_0_0.doCallback(arg_19_0, arg_19_1)
+	if arg_19_0.callback then
+		if arg_19_0.callbackObj then
+			arg_19_0.callback(arg_19_0.callbackObj, arg_19_0, arg_19_1)
 		else
-			slot0:callback(slot1)
+			arg_19_0.callback(arg_19_0, arg_19_1)
 		end
 
-		slot0.callback = nil
-		slot0.callbackObj = nil
+		arg_19_0.callback = nil
+		arg_19_0.callbackObj = nil
 	end
 end
 
-function slot0.setEffectScale(slot0, slot1)
-	slot0._effectScale = slot1
+function var_0_0.setEffectScale(arg_20_0, arg_20_1)
+	arg_20_0._effectScale = arg_20_1
 
-	if slot0.effectGO then
-		transformhelper.setLocalScale(slot0.effectGO.transform, slot0._effectScale, slot0._effectScale, slot0._effectScale)
+	if arg_20_0.effectGO then
+		transformhelper.setLocalScale(arg_20_0.effectGO.transform, arg_20_0._effectScale, arg_20_0._effectScale, arg_20_0._effectScale)
 	end
 end
 
-function slot0.markCanDestroy(slot0)
-	slot0._canDestroy = true
+function var_0_0.markCanDestroy(arg_21_0)
+	arg_21_0._canDestroy = true
 end
 
-function slot0.onDestroy(slot0)
-	if not slot0._canDestroy then
-		logError("Effect destroy unexpected: " .. slot0.path)
+function var_0_0.onDestroy(arg_22_0)
+	if not arg_22_0._canDestroy then
+		logError("Effect destroy unexpected: " .. arg_22_0.path)
 	end
 
-	slot0.containerGO = nil
-	slot0.effectGO = nil
-	slot0.hangPointGO = nil
-	slot0.callback = nil
-	slot0.callbackObj = nil
+	arg_22_0.containerGO = nil
+	arg_22_0.effectGO = nil
+	arg_22_0.hangPointGO = nil
+	arg_22_0.callback = nil
+	arg_22_0.callbackObj = nil
 end
 
-return slot0
+return var_0_0

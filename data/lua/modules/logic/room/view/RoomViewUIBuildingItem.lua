@@ -1,82 +1,95 @@
-module("modules.logic.room.view.RoomViewUIBuildingItem", package.seeall)
+﻿module("modules.logic.room.view.RoomViewUIBuildingItem", package.seeall)
 
-slot0 = class("RoomViewUIBuildingItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUIBuildingItem", RoomViewUIBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	slot0._buildingUid = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._buildingUid = arg_1_1
 end
 
-function slot0._customOnInit(slot0)
-	slot0._gomain = gohelper.findChild(slot0._gocontainer, "bubblebg/#go_main")
-	slot0._imagebuildingicon = gohelper.findChildImage(slot0._gocontainer, "#image_buildingicon")
-	slot0._txtnamecn = gohelper.findChildText(slot0._gocontainer, "bottom/txt_buildingName")
-	slot0._goreddot = gohelper.findChild(slot0._gocontainer, "bottom/#go_reddot")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._gomain = gohelper.findChild(arg_2_0._gocontainer, "bubblebg/#go_main")
+	arg_2_0._imagebuildingicon = gohelper.findChildImage(arg_2_0._gocontainer, "#image_buildingicon")
+	arg_2_0._txtnamecn = gohelper.findChildText(arg_2_0._gocontainer, "bottom/txt_buildingName")
+	arg_2_0._goreddot = gohelper.findChild(arg_2_0._gocontainer, "bottom/#go_reddot")
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot0._buildingUid) then
-		slot2 = slot1.config
-		slot3 = slot2.buildingType
-		slot0._txtnamecn.text = slot2.name
+	local var_2_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_2_0._buildingUid)
 
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imagebuildingicon, RoomBuildingEnum.BuildingMapUiIcon[slot2.buildingType])
+	if var_2_0 then
+		local var_2_1 = var_2_0.config
+		local var_2_2 = var_2_1.buildingType
+
+		arg_2_0._txtnamecn.text = var_2_1.name
+
+		UISpriteSetMgr.instance:setCritterSprite(arg_2_0._imagebuildingicon, RoomBuildingEnum.BuildingMapUiIcon[var_2_1.buildingType])
 	end
 end
 
-function slot0._customAddEventListeners(slot0)
-	slot0:refreshUI(true)
+function var_0_0._customAddEventListeners(arg_3_0)
+	arg_3_0:refreshUI(true)
 end
 
-function slot0._customRemoveEventListeners(slot0)
+function var_0_0._customRemoveEventListeners(arg_4_0)
+	return
 end
 
-function slot0._onClick(slot0, slot1, slot2)
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot0._buildingUid) then
-		RoomMap3DClickController.instance:onBuildingEntityClick(slot3)
+function var_0_0._onClick(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_5_0._buildingUid)
+
+	if var_5_0 then
+		RoomMap3DClickController.instance:onBuildingEntityClick(var_5_0)
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:_refreshShow(slot1)
-	slot0:_refreshPosition()
+function var_0_0.refreshUI(arg_6_0, arg_6_1)
+	arg_6_0:_refreshShow(arg_6_1)
+	arg_6_0:_refreshPosition()
 end
 
-function slot0._refreshShow(slot0, slot1)
+function var_0_0._refreshShow(arg_7_0, arg_7_1)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_7_0:_setShow(false, arg_7_1)
 
 		return
 	end
 
-	if slot0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook and slot2 ~= RoomEnum.CameraState.OverlookAll then
-		slot0:_setShow(false, slot1)
+	local var_7_0 = arg_7_0._scene.camera:getCameraState()
+
+	if var_7_0 ~= RoomEnum.CameraState.Overlook and var_7_0 ~= RoomEnum.CameraState.OverlookAll then
+		arg_7_0:_setShow(false, arg_7_1)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		slot0:_setShow(false, slot1)
+		arg_7_0:_setShow(false, arg_7_1)
 
 		return
 	end
 
-	slot0:_setShow(true, slot1)
+	arg_7_0:_setShow(true, arg_7_1)
 end
 
-function slot0.getUI3DPos(slot0)
-	if not slot0._scene.buildingmgr:getBuildingEntity(slot0._buildingUid, SceneTag.RoomBuilding) then
-		slot0:_setShow(false, true)
+function var_0_0.getUI3DPos(arg_8_0)
+	local var_8_0 = arg_8_0._scene.buildingmgr:getBuildingEntity(arg_8_0._buildingUid, SceneTag.RoomBuilding)
+
+	if not var_8_0 then
+		arg_8_0:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	if slot1:getHeadGO() then
-		return slot2.transform.position
+	local var_8_1 = var_8_0:getHeadGO()
+
+	if var_8_1 then
+		return var_8_1.transform.position
 	end
 
-	return slot1.goTrs.position
+	return var_8_0.goTrs.position
 end
 
-function slot0._customOnDestory(slot0)
+function var_0_0._customOnDestory(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

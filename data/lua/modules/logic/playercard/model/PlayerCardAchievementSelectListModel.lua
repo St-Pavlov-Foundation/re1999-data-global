@@ -1,284 +1,321 @@
-module("modules.logic.playercard.model.PlayerCardAchievementSelectListModel", package.seeall)
+﻿module("modules.logic.playercard.model.PlayerCardAchievementSelectListModel", package.seeall)
 
-slot0 = class("PlayerCardAchievementSelectListModel", ListScrollModel)
+local var_0_0 = class("PlayerCardAchievementSelectListModel", ListScrollModel)
 
-function slot0.initDatas(slot0, slot1)
-	slot0._curCategory = slot1 or 1
-	slot0.isGroup = false
+function var_0_0.initDatas(arg_1_0, arg_1_1)
+	arg_1_0._curCategory = arg_1_1 or 1
+	arg_1_0.isGroup = false
 
-	slot0:decodeShowAchievement()
+	arg_1_0:decodeShowAchievement()
 
-	slot0.isGroup = slot0:getGroupSelectedCount() > 0
-	slot0.infoDict = slot0:packInfos()
-	slot0.moTypeCache = {}
-	slot0.moTypeGroupCache = {}
-	slot0._itemAniHasShownIndex = 0
+	arg_1_0.isGroup = arg_1_0:getGroupSelectedCount() > 0
+	arg_1_0.infoDict = arg_1_0:packInfos()
+	arg_1_0.moTypeCache = {}
+	arg_1_0.moTypeGroupCache = {}
+	arg_1_0._itemAniHasShownIndex = 0
 
-	slot0:refreshTabData()
+	arg_1_0:refreshTabData()
 end
 
-function slot0.release(slot0)
-	slot0.moTypeCache = nil
-	slot0.moTypeGroupCache = nil
-	slot0.singleSet = nil
-	slot0.singleSelectList = nil
-	slot0.groupSet = nil
-	slot0.selectSingleCategoryMap = nil
-	slot0.selectGroupCategoryMap = nil
+function var_0_0.release(arg_2_0)
+	arg_2_0.moTypeCache = nil
+	arg_2_0.moTypeGroupCache = nil
+	arg_2_0.singleSet = nil
+	arg_2_0.singleSelectList = nil
+	arg_2_0.groupSet = nil
+	arg_2_0.selectSingleCategoryMap = nil
+	arg_2_0.selectGroupCategoryMap = nil
 end
 
-function slot0.packInfos(slot0)
-	slot1 = {
-		[slot5] = {}
-	}
+function var_0_0.packInfos(arg_3_0)
+	local var_3_0 = {}
 
-	for slot5, slot6 in ipairs(AchievementEnum.Type) do
-		-- Nothing
+	for iter_3_0, iter_3_1 in ipairs(AchievementEnum.Type) do
+		var_3_0[iter_3_0] = {}
 	end
 
-	for slot6, slot7 in ipairs(AchievementConfig.instance:getAllAchievements()) do
-		slot1[slot7.category] = slot1[slot7.category] or {}
+	local var_3_1 = AchievementConfig.instance:getAllAchievements()
 
-		table.insert(slot1[slot7.category], slot7)
+	for iter_3_2, iter_3_3 in ipairs(var_3_1) do
+		var_3_0[iter_3_3.category] = var_3_0[iter_3_3.category] or {}
+
+		local var_3_2 = var_3_0[iter_3_3.category]
+
+		table.insert(var_3_2, iter_3_3)
 	end
 
-	return slot1
+	return var_3_0
 end
 
-function slot0.decodeShowAchievement(slot0)
-	slot2, slot3 = AchievementUtils.decodeShowStr(PlayerCardModel.instance:getShowAchievement())
-	slot0.singleSet = {}
-	slot0.singleSelectList = {}
+function var_0_0.decodeShowAchievement(arg_4_0)
+	local var_4_0 = PlayerCardModel.instance:getShowAchievement()
+	local var_4_1, var_4_2 = AchievementUtils.decodeShowStr(var_4_0)
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot9 = AchievementConfig.instance:getTask(slot8)
-		slot0.singleSet[slot9.achievementId] = true
+	arg_4_0.singleSet = {}
+	arg_4_0.singleSelectList = {}
 
-		table.insert(slot0.singleSelectList, slot9.achievementId)
-		slot0:updateSingleSelectCategoryMap(slot9.achievementId, true)
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		local var_4_3 = AchievementConfig.instance:getTask(iter_4_1)
+
+		arg_4_0.singleSet[var_4_3.achievementId] = true
+
+		table.insert(arg_4_0.singleSelectList, var_4_3.achievementId)
+		arg_4_0:updateSingleSelectCategoryMap(var_4_3.achievementId, true)
 	end
 
-	slot0.groupSet = {}
-	slot0.groupSelectList = {}
+	arg_4_0.groupSet = {}
+	arg_4_0.groupSelectList = {}
 
-	for slot7, slot8 in pairs(slot3) do
-		if AchievementConfig.instance:getTask(slot8) and AchievementConfig.instance:getAchievement(slot9.achievementId).groupId ~= 0 and not slot0.groupSet[slot10.groupId] then
-			slot0.groupSet[slot10.groupId] = true
+	for iter_4_2, iter_4_3 in pairs(var_4_2) do
+		local var_4_4 = AchievementConfig.instance:getTask(iter_4_3)
 
-			table.insert(slot0.groupSelectList, slot10.groupId)
-			slot0:updateGroupSelectCategoryMap(slot10.groupId, true)
+		if var_4_4 then
+			local var_4_5 = AchievementConfig.instance:getAchievement(var_4_4.achievementId)
+
+			if var_4_5.groupId ~= 0 and not arg_4_0.groupSet[var_4_5.groupId] then
+				arg_4_0.groupSet[var_4_5.groupId] = true
+
+				table.insert(arg_4_0.groupSelectList, var_4_5.groupId)
+				arg_4_0:updateGroupSelectCategoryMap(var_4_5.groupId, true)
+			end
 		end
 	end
 
-	slot0.originSingleSet = tabletool.copy(slot0.singleSet)
-	slot0.originGroupSet = tabletool.copy(slot0.groupSet)
-	slot0.originSingleSelectList = tabletool.copy(slot0.singleSelectList)
-	slot0.originGroupSelectList = tabletool.copy(slot0.groupSelectList)
+	arg_4_0.originSingleSet = tabletool.copy(arg_4_0.singleSet)
+	arg_4_0.originGroupSet = tabletool.copy(arg_4_0.groupSet)
+	arg_4_0.originSingleSelectList = tabletool.copy(arg_4_0.singleSelectList)
+	arg_4_0.originGroupSelectList = tabletool.copy(arg_4_0.groupSelectList)
 end
 
-function slot0.resumeToOriginSelect(slot0)
-	slot0.groupSet = tabletool.copy(slot0.originGroupSet)
-	slot0.singleSet = tabletool.copy(slot0.originSingleSet)
-	slot0.singleSelectList = tabletool.copy(slot0.originSingleSelectList)
-	slot0.groupSelectList = tabletool.copy(slot0.originGroupSelectList)
+function var_0_0.resumeToOriginSelect(arg_5_0)
+	arg_5_0.groupSet = tabletool.copy(arg_5_0.originGroupSet)
+	arg_5_0.singleSet = tabletool.copy(arg_5_0.originSingleSet)
+	arg_5_0.singleSelectList = tabletool.copy(arg_5_0.originSingleSelectList)
+	arg_5_0.groupSelectList = tabletool.copy(arg_5_0.originGroupSelectList)
 
-	slot0:buildSelectCategoryMap()
+	arg_5_0:buildSelectCategoryMap()
 end
 
-function slot0.buildSelectCategoryMap(slot0)
-	slot0.selectSingleCategoryMap = {}
-	slot0.selectGroupCategoryMap = {}
+function var_0_0.buildSelectCategoryMap(arg_6_0)
+	arg_6_0.selectSingleCategoryMap = {}
+	arg_6_0.selectGroupCategoryMap = {}
 
-	if slot0.singleSelectList then
-		for slot4, slot5 in ipairs(slot0.singleSelectList) do
-			slot0:updateSingleSelectCategoryMap(slot5, true)
+	if arg_6_0.singleSelectList then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0.singleSelectList) do
+			arg_6_0:updateSingleSelectCategoryMap(iter_6_1, true)
 		end
 	end
 
-	if slot0.groupSelectList then
-		for slot4, slot5 in ipairs(slot0.groupSelectList) do
-			slot0:updateGroupSelectCategoryMap(slot5, true)
-		end
-	end
-end
-
-function slot0.updateSingleSelectCategoryMap(slot0, slot1, slot2)
-	if AchievementConfig.instance:getAchievement(slot1) then
-		slot4 = slot3.category
-
-		if slot2 then
-			slot0.selectSingleCategoryMap = slot0.selectSingleCategoryMap or {}
-			slot0.selectSingleCategoryMap[slot4] = slot0.selectSingleCategoryMap[slot4] or {}
-			slot0.selectSingleCategoryMap[slot4][slot1] = true
-		elseif not slot2 and slot0.selectSingleCategoryMap and slot0.selectSingleCategoryMap[slot4] then
-			slot0.selectSingleCategoryMap[slot4][slot1] = nil
+	if arg_6_0.groupSelectList then
+		for iter_6_2, iter_6_3 in ipairs(arg_6_0.groupSelectList) do
+			arg_6_0:updateGroupSelectCategoryMap(iter_6_3, true)
 		end
 	end
 end
 
-function slot0.updateGroupSelectCategoryMap(slot0, slot1, slot2)
-	if AchievementConfig.instance:getGroup(slot1) then
-		slot4 = slot3.category
+function var_0_0.updateSingleSelectCategoryMap(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = AchievementConfig.instance:getAchievement(arg_7_1)
 
-		if slot2 then
-			slot0.selectGroupCategoryMap = slot0.selectGroupCategoryMap or {}
-			slot0.selectGroupCategoryMap[slot4] = slot0.selectGroupCategoryMap[slot4] or {}
-			slot0.selectGroupCategoryMap[slot4][slot1] = slot2
-		elseif not slot2 and slot0.selectGroupCategoryMap and slot0.selectGroupCategoryMap[slot4] then
-			slot0.selectGroupCategoryMap[slot4][slot1] = nil
+	if var_7_0 then
+		local var_7_1 = var_7_0.category
+
+		if arg_7_2 then
+			arg_7_0.selectSingleCategoryMap = arg_7_0.selectSingleCategoryMap or {}
+			arg_7_0.selectSingleCategoryMap[var_7_1] = arg_7_0.selectSingleCategoryMap[var_7_1] or {}
+			arg_7_0.selectSingleCategoryMap[var_7_1][arg_7_1] = true
+		elseif not arg_7_2 and arg_7_0.selectSingleCategoryMap and arg_7_0.selectSingleCategoryMap[var_7_1] then
+			arg_7_0.selectSingleCategoryMap[var_7_1][arg_7_1] = nil
 		end
 	end
 end
 
-function slot0.setTab(slot0, slot1)
-	slot0._curCategory = slot1
+function var_0_0.updateGroupSelectCategoryMap(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = AchievementConfig.instance:getGroup(arg_8_1)
 
-	slot0:refreshTabData()
+	if var_8_0 then
+		local var_8_1 = var_8_0.category
+
+		if arg_8_2 then
+			arg_8_0.selectGroupCategoryMap = arg_8_0.selectGroupCategoryMap or {}
+			arg_8_0.selectGroupCategoryMap[var_8_1] = arg_8_0.selectGroupCategoryMap[var_8_1] or {}
+			arg_8_0.selectGroupCategoryMap[var_8_1][arg_8_1] = arg_8_2
+		elseif not arg_8_2 and arg_8_0.selectGroupCategoryMap and arg_8_0.selectGroupCategoryMap[var_8_1] then
+			arg_8_0.selectGroupCategoryMap[var_8_1][arg_8_1] = nil
+		end
+	end
 end
 
-function slot0.setIsSelectGroup(slot0, slot1)
-	slot0.isGroup = slot1
+function var_0_0.setTab(arg_9_0, arg_9_1)
+	arg_9_0._curCategory = arg_9_1
 
-	slot0:refreshTabData()
+	arg_9_0:refreshTabData()
 end
 
-function slot0.refreshTabData(slot0)
-	if not slot0.infoDict then
+function var_0_0.setIsSelectGroup(arg_10_0, arg_10_1)
+	arg_10_0.isGroup = arg_10_1
+
+	arg_10_0:refreshTabData()
+end
+
+function var_0_0.refreshTabData(arg_11_0)
+	if not arg_11_0.infoDict then
 		return
 	end
 
-	if not (slot0.isGroup and slot0.moTypeGroupCache or slot0.moTypeCache)[slot0._curCategory] then
-		slot1[slot0._curCategory] = (not slot0.isGroup or slot0:buildGroupMOList(slot0._curCategory)) and slot0:buildSingleMOList(slot0._curCategory)
+	local var_11_0 = arg_11_0.isGroup and arg_11_0.moTypeGroupCache or arg_11_0.moTypeCache
+	local var_11_1 = var_11_0[arg_11_0._curCategory]
+
+	if not var_11_1 then
+		if arg_11_0.isGroup then
+			var_11_1 = arg_11_0:buildGroupMOList(arg_11_0._curCategory)
+		else
+			var_11_1 = arg_11_0:buildSingleMOList(arg_11_0._curCategory)
+		end
+
+		var_11_0[arg_11_0._curCategory] = var_11_1
 	end
 
-	slot0:setList(slot2)
+	arg_11_0:setList(var_11_1)
 end
 
-function slot0.buildSingleMOList(slot0, slot1)
-	slot3 = {}
+function var_0_0.buildSingleMOList(arg_12_0, arg_12_1)
+	local var_12_0 = {}
+	local var_12_1 = {}
+	local var_12_2 = arg_12_0.infoDict[arg_12_1]
 
-	if not slot0.infoDict[slot1] then
-		return {}
+	if not var_12_2 then
+		return var_12_0
 	end
 
-	table.sort(slot4, slot0.sortAchievement)
+	table.sort(var_12_2, arg_12_0.sortAchievement)
 
-	for slot8, slot9 in ipairs(slot4) do
-		if AchievementModel.instance:getAchievementLevel(slot9.id) > 0 then
-			if AchievementEnum.MainListLineCount <= #slot3 then
-				slot0:buildMO(slot2, slot3, 0)
+	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
+		if AchievementModel.instance:getAchievementLevel(iter_12_1.id) > 0 then
+			if #var_12_1 >= AchievementEnum.MainListLineCount then
+				arg_12_0:buildMO(var_12_0, var_12_1, 0)
 
-				slot3 = {}
+				var_12_1 = {}
 			end
 
-			table.insert(slot3, slot9)
+			table.insert(var_12_1, iter_12_1)
 		end
 	end
 
-	if #slot3 > 0 then
-		slot0:buildMO(slot2, slot3, 0)
+	if #var_12_1 > 0 then
+		arg_12_0:buildMO(var_12_0, var_12_1, 0)
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.buildGroupMOList(slot0, slot1)
-	slot3 = {}
+function var_0_0.buildGroupMOList(arg_13_0, arg_13_1)
+	local var_13_0 = {}
+	local var_13_1 = {}
+	local var_13_2 = arg_13_0.infoDict[arg_13_1]
 
-	if not slot0.infoDict[slot1] then
-		return {}
+	if not var_13_2 then
+		return var_13_0
 	end
 
-	table.sort(slot4, slot0.sortAchievement)
+	table.sort(var_13_2, arg_13_0.sortAchievement)
 
-	slot5 = 0
+	local var_13_3 = 0
 
-	for slot9, slot10 in ipairs(slot4) do
-		if slot10.groupId ~= 0 then
-			if slot5 ~= slot10.groupId then
-				if slot5 == 0 then
-					slot5 = slot10.groupId
+	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
+		if iter_13_1.groupId ~= 0 then
+			if var_13_3 ~= iter_13_1.groupId then
+				if var_13_3 == 0 then
+					var_13_3 = iter_13_1.groupId
 				else
-					slot0:buildMO(slot2, slot3, slot5)
+					arg_13_0:buildMO(var_13_0, var_13_1, var_13_3)
 
-					slot3 = {}
-					slot5 = slot10.groupId
+					var_13_1 = {}
+					var_13_3 = iter_13_1.groupId
 				end
 			end
 
-			table.insert(slot3, slot10)
+			table.insert(var_13_1, iter_13_1)
 		end
 	end
 
-	if #slot3 > 0 then
-		slot0:buildMO(slot2, slot3, slot5)
+	if #var_13_1 > 0 then
+		arg_13_0:buildMO(var_13_0, var_13_1, var_13_3)
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.buildMO(slot0, slot1, slot2, slot3)
-	if slot3 ~= 0 then
-		slot4 = false
+function var_0_0.buildMO(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if arg_14_3 ~= 0 then
+		local var_14_0 = false
 
-		for slot8, slot9 in ipairs(slot2) do
-			if AchievementModel.instance:getAchievementLevel(slot9.id) > 0 then
-				slot4 = true
+		for iter_14_0, iter_14_1 in ipairs(arg_14_2) do
+			if AchievementModel.instance:getAchievementLevel(iter_14_1.id) > 0 then
+				var_14_0 = true
 
 				break
 			end
 		end
 
-		if not slot4 then
+		if not var_14_0 then
 			return
 		end
 	end
 
-	slot4 = AchievementTileMO.New()
+	local var_14_1 = AchievementTileMO.New()
 
-	slot4:init(slot2, slot3)
-	table.insert(slot1, slot4)
+	var_14_1:init(arg_14_2, arg_14_3)
+	table.insert(arg_14_1, var_14_1)
 end
 
-function slot0.sortAchievement(slot0, slot1)
-	if uv0.instance:checkIsSelected(slot0) ~= uv0.instance:checkIsSelected(slot1) then
-		return slot2
-	elseif slot2 and slot3 then
-		slot5 = uv0.instance.isGroup and uv0.instance.groupSelectList or uv0.instance.singleSelectList
+function var_0_0.sortAchievement(arg_15_0, arg_15_1)
+	local var_15_0 = var_0_0.instance:checkIsSelected(arg_15_0)
+	local var_15_1 = var_0_0.instance:checkIsSelected(arg_15_1)
 
-		return (tabletool.indexOf(slot5, slot4 and slot0.groupId or slot0.id) or 0) < (tabletool.indexOf(slot5, slot4 and slot1.groupId or slot1.id) or 0)
+	if var_15_0 ~= var_15_1 then
+		return var_15_0
+	elseif var_15_0 and var_15_1 then
+		local var_15_2 = var_0_0.instance.isGroup
+		local var_15_3 = var_15_2 and var_0_0.instance.groupSelectList or var_0_0.instance.singleSelectList
+
+		return (tabletool.indexOf(var_15_3, var_15_2 and arg_15_0.groupId or arg_15_0.id) or 0) < (tabletool.indexOf(var_15_3, var_15_2 and arg_15_1.groupId or arg_15_1.id) or 0)
 	end
 
-	if slot0.groupId ~= 0 ~= (slot1.groupId ~= 0) then
-		return not slot4
+	local var_15_4 = arg_15_0.groupId ~= 0
+
+	if var_15_4 ~= (arg_15_1.groupId ~= 0) then
+		return not var_15_4
 	end
 
-	if slot4 then
-		if slot0.groupId ~= slot1.groupId then
-			slot7 = AchievementConfig.instance:getGroup(slot1.groupId)
+	if var_15_4 then
+		if arg_15_0.groupId ~= arg_15_1.groupId then
+			local var_15_5 = AchievementConfig.instance:getGroup(arg_15_0.groupId)
+			local var_15_6 = AchievementConfig.instance:getGroup(arg_15_1.groupId)
 
-			if AchievementConfig.instance:getGroup(slot0.groupId) and slot7 and slot6.order ~= slot7.order then
-				return slot6.order < slot7.order
+			if var_15_5 and var_15_6 and var_15_5.order ~= var_15_6.order then
+				return var_15_5.order < var_15_6.order
 			end
 
-			return slot0.groupId < slot1.groupId
+			return arg_15_0.groupId < arg_15_1.groupId
 		end
 
-		if slot0.order ~= slot1.order then
-			return slot0.order < slot1.order
+		if arg_15_0.order ~= arg_15_1.order then
+			return arg_15_0.order < arg_15_1.order
 		end
 	end
 
-	return slot0.id < slot1.id
+	return arg_15_0.id < arg_15_1.id
 end
 
-function slot0.checkIsSelected(slot0, slot1)
-	if slot0.isGroup and slot1.groupId ~= 0 then
-		return slot0:isGroupSelected(slot1.groupId)
+function var_0_0.checkIsSelected(arg_16_0, arg_16_1)
+	if arg_16_0.isGroup and arg_16_1.groupId ~= 0 then
+		return arg_16_0:isGroupSelected(arg_16_1.groupId)
 	else
-		if AchievementConfig.instance:getTasksByAchievementId(slot1.id) then
-			for slot6, slot7 in pairs(slot2) do
-				if slot0:isSingleSelected(slot7.id) then
+		local var_16_0 = AchievementConfig.instance:getTasksByAchievementId(arg_16_1.id)
+
+		if var_16_0 then
+			for iter_16_0, iter_16_1 in pairs(var_16_0) do
+				if arg_16_0:isSingleSelected(iter_16_1.id) then
 					return true
 				end
 			end
@@ -288,123 +325,140 @@ function slot0.checkIsSelected(slot0, slot1)
 	end
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getInfoList(arg_17_0, arg_17_1)
+	local var_17_0 = {}
+	local var_17_1 = arg_17_0:getList()
 
-	for slot7, slot8 in ipairs(slot0:getList()) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot7, slot8:getLineHeight(), slot7))
+	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
+		local var_17_2 = SLFramework.UGUI.MixCellInfo.New(iter_17_0, iter_17_1:getLineHeight(), iter_17_0)
+
+		table.insert(var_17_0, var_17_2)
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.isSingleSelected(slot0, slot1)
-	if AchievementConfig.instance:getTask(slot1) then
-		return slot0.singleSet[slot2.achievementId]
+function var_0_0.isSingleSelected(arg_18_0, arg_18_1)
+	local var_18_0 = AchievementConfig.instance:getTask(arg_18_1)
+
+	if var_18_0 then
+		return arg_18_0.singleSet[var_18_0.achievementId]
 	end
 
 	return false
 end
 
-function slot0.getSelectOrderIndex(slot0, slot1)
-	if AchievementConfig.instance:getTask(slot1) then
-		return tabletool.indexOf(slot0.singleSelectList, slot2.achievementId)
+function var_0_0.getSelectOrderIndex(arg_19_0, arg_19_1)
+	local var_19_0 = AchievementConfig.instance:getTask(arg_19_1)
+
+	if var_19_0 then
+		return tabletool.indexOf(arg_19_0.singleSelectList, var_19_0.achievementId)
 	end
 end
 
-function slot0.isGroupSelected(slot0, slot1)
-	return slot0.groupSet[slot1]
+function var_0_0.isGroupSelected(arg_20_0, arg_20_1)
+	return arg_20_0.groupSet[arg_20_1]
 end
 
-function slot0.getSingleSelectedCount(slot0)
-	return tabletool.len(slot0.singleSet)
+function var_0_0.getSingleSelectedCount(arg_21_0)
+	return tabletool.len(arg_21_0.singleSet)
 end
 
-function slot0.getGroupSelectedCount(slot0)
-	return tabletool.len(slot0.groupSet)
+function var_0_0.getGroupSelectedCount(arg_22_0)
+	return tabletool.len(arg_22_0.groupSet)
 end
 
-function slot0.setSingleSelect(slot0, slot1, slot2)
-	if not AchievementConfig.instance:getTask(slot1) then
+function var_0_0.setSingleSelect(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = AchievementConfig.instance:getTask(arg_23_1)
+
+	if not var_23_0 then
 		return
 	end
 
-	tabletool.removeValue(slot0.singleSelectList, slot3.achievementId)
+	tabletool.removeValue(arg_23_0.singleSelectList, var_23_0.achievementId)
 
-	if slot2 then
-		slot0.singleSet[slot3.achievementId] = true
+	if arg_23_2 then
+		arg_23_0.singleSet[var_23_0.achievementId] = true
 
-		table.insert(slot0.singleSelectList, slot3.achievementId)
+		table.insert(arg_23_0.singleSelectList, var_23_0.achievementId)
 	else
-		slot0.singleSet[slot3.achievementId] = nil
+		arg_23_0.singleSet[var_23_0.achievementId] = nil
 	end
 
-	slot0:updateSingleSelectCategoryMap(slot3.achievementId, slot2)
+	arg_23_0:updateSingleSelectCategoryMap(var_23_0.achievementId, arg_23_2)
 end
 
-function slot0.setGroupSelect(slot0, slot1, slot2)
-	tabletool.removeValue(slot0.groupSelectList, slot1)
+function var_0_0.setGroupSelect(arg_24_0, arg_24_1, arg_24_2)
+	tabletool.removeValue(arg_24_0.groupSelectList, arg_24_1)
 
-	if slot2 then
-		slot0.groupSet[slot1] = true
+	if arg_24_2 then
+		arg_24_0.groupSet[arg_24_1] = true
 
-		table.insert(slot0.groupSelectList, slot1)
+		table.insert(arg_24_0.groupSelectList, arg_24_1)
 	else
-		slot0.groupSet[slot1] = nil
+		arg_24_0.groupSet[arg_24_1] = nil
 	end
 
-	slot0:updateGroupSelectCategoryMap(slot1, slot2)
+	arg_24_0:updateGroupSelectCategoryMap(arg_24_1, arg_24_2)
 end
 
-function slot0.getSaveRequestParam(slot0)
-	slot1 = {}
-	slot2 = 0
+function var_0_0.getSaveRequestParam(arg_25_0)
+	local var_25_0 = {}
+	local var_25_1 = 0
 
-	if slot0.isGroup then
-		for slot6, slot7 in ipairs(slot0.groupSelectList) do
-			slot0:fillGroupTaskIds(slot1, slot7)
+	if arg_25_0.isGroup then
+		for iter_25_0, iter_25_1 in ipairs(arg_25_0.groupSelectList) do
+			arg_25_0:fillGroupTaskIds(var_25_0, iter_25_1)
 
-			slot2 = slot7
+			var_25_1 = iter_25_1
 		end
 	else
-		for slot6, slot7 in ipairs(slot0.singleSelectList) do
-			slot0:fillSingleTaskId(slot1, slot7)
+		for iter_25_2, iter_25_3 in ipairs(arg_25_0.singleSelectList) do
+			arg_25_0:fillSingleTaskId(var_25_0, iter_25_3)
 		end
 	end
 
-	return slot1, slot2
+	return var_25_0, var_25_1
 end
 
-function slot0.getCurrentCategory(slot0)
-	return slot0._curCategory
+function var_0_0.getCurrentCategory(arg_26_0)
+	return arg_26_0._curCategory
 end
 
-function slot0.fillGroupTaskIds(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(AchievementConfig.instance:getAchievementsByGroupId(slot2)) do
-		slot0:fillSingleTaskId(slot1, slot8.id)
+function var_0_0.fillGroupTaskIds(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_27_2)
+
+	for iter_27_0, iter_27_1 in ipairs(var_27_0) do
+		arg_27_0:fillSingleTaskId(arg_27_1, iter_27_1.id)
 	end
 end
 
-function slot0.fillSingleTaskId(slot0, slot1, slot2)
-	if AchievementModel.instance:getAchievementLevel(slot2) > 0 and AchievementConfig.instance:getTaskByAchievementLevel(slot2, slot3) ~= nil then
-		table.insert(slot1, slot4.id)
+function var_0_0.fillSingleTaskId(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = AchievementModel.instance:getAchievementLevel(arg_28_2)
+
+	if var_28_0 > 0 then
+		local var_28_1 = AchievementConfig.instance:getTaskByAchievementLevel(arg_28_2, var_28_0)
+
+		if var_28_1 ~= nil then
+			table.insert(arg_28_1, var_28_1.id)
+		end
 	end
 end
 
-function slot0.checkDirty(slot0, slot1)
-	if slot1 then
-		if tabletool.len(slot0.groupSet) == tabletool.len(slot0.originGroupSet) then
-			for slot5, slot6 in pairs(slot0.groupSet) do
-				if slot6 ~= slot0.originGroupSet[slot5] then
+function var_0_0.checkDirty(arg_29_0, arg_29_1)
+	if arg_29_1 then
+		if tabletool.len(arg_29_0.groupSet) == tabletool.len(arg_29_0.originGroupSet) then
+			for iter_29_0, iter_29_1 in pairs(arg_29_0.groupSet) do
+				if iter_29_1 ~= arg_29_0.originGroupSet[iter_29_0] then
 					return true
 				end
 			end
 		else
 			return true
 		end
-	elseif #slot0.singleSelectList == #slot0.originSingleSelectList then
-		for slot5, slot6 in ipairs(slot0.singleSelectList) do
-			if slot6 ~= slot0.originSingleSelectList[slot5] then
+	elseif #arg_29_0.singleSelectList == #arg_29_0.originSingleSelectList then
+		for iter_29_2, iter_29_3 in ipairs(arg_29_0.singleSelectList) do
+			if iter_29_3 ~= arg_29_0.originSingleSelectList[iter_29_2] then
 				return true
 			end
 		end
@@ -415,38 +469,38 @@ function slot0.checkDirty(slot0, slot1)
 	return false
 end
 
-function slot0.clearAllSelect(slot0)
-	slot0.singleSet = {}
-	slot0.singleSelectList = {}
-	slot0.groupSet = {}
-	slot0.groupSelectList = {}
-	slot0.selectSingleCategoryMap = {}
-	slot0.selectGroupCategoryMap = {}
+function var_0_0.clearAllSelect(arg_30_0)
+	arg_30_0.singleSet = {}
+	arg_30_0.singleSelectList = {}
+	arg_30_0.groupSet = {}
+	arg_30_0.groupSelectList = {}
+	arg_30_0.selectSingleCategoryMap = {}
+	arg_30_0.selectGroupCategoryMap = {}
 end
 
-function slot0.getSelectCount(slot0)
-	if slot0.isGroup then
-		return slot0.groupSet and tabletool.len(slot0.groupSet) or 0
+function var_0_0.getSelectCount(arg_31_0)
+	if arg_31_0.isGroup then
+		return arg_31_0.groupSet and tabletool.len(arg_31_0.groupSet) or 0
 	else
-		return slot0.singleSet and tabletool.len(slot0.singleSet) or 0
+		return arg_31_0.singleSet and tabletool.len(arg_31_0.singleSet) or 0
 	end
 end
 
-function slot0.getSelectCountByCategory(slot0, slot1)
-	slot2 = slot0.isGroup and slot0.selectGroupCategoryMap or slot0.selectSingleCategoryMap
-	slot3 = slot2 and slot2[slot1]
+function var_0_0.getSelectCountByCategory(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_0.isGroup and arg_32_0.selectGroupCategoryMap or arg_32_0.selectSingleCategoryMap
+	local var_32_1 = var_32_0 and var_32_0[arg_32_1]
 
-	return slot3 and tabletool.len(slot3) or 0
+	return var_32_1 and tabletool.len(var_32_1) or 0
 end
 
-function slot0.getItemAniHasShownIndex(slot0)
-	return slot0._itemAniHasShownIndex
+function var_0_0.getItemAniHasShownIndex(arg_33_0)
+	return arg_33_0._itemAniHasShownIndex
 end
 
-function slot0.setItemAniHasShownIndex(slot0, slot1)
-	slot0._itemAniHasShownIndex = slot1 or 0
+function var_0_0.setItemAniHasShownIndex(arg_34_0, arg_34_1)
+	arg_34_0._itemAniHasShownIndex = arg_34_1 or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

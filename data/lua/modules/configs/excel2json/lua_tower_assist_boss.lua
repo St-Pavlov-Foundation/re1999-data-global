@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_tower_assist_boss", package.seeall)
+﻿module("modules.configs.excel2json.lua_tower_assist_boss", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	bossId = 1,
 	passiveSkills = 12,
 	heartVariantId = 9,
@@ -19,17 +20,17 @@ slot1 = {
 	activeSkills = 11,
 	bossPic = 16
 }
-slot2 = {
+local var_0_2 = {
 	"bossId"
 }
-slot3 = {
+local var_0_3 = {
 	tag = 2,
 	name = 1,
 	passiveSkillName = 3
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

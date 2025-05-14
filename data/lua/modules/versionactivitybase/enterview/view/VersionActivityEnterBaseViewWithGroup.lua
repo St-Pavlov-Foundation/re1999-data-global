@@ -1,52 +1,62 @@
-module("modules.versionactivitybase.enterview.view.VersionActivityEnterBaseViewWithGroup", package.seeall)
+﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterBaseViewWithGroup", package.seeall)
 
-slot0 = class("VersionActivityEnterBaseViewWithGroup", BaseView)
-slot0.ShowActTagEnum = {
+local var_0_0 = class("VersionActivityEnterBaseViewWithGroup", BaseView)
+
+var_0_0.ShowActTagEnum = {
 	ShowNewStage = 1,
 	ShowNewAct = 0
 }
 
-function slot0.onInitView(slot0)
-	slot0._btnreplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_replay")
-	slot0._goGroupController = gohelper.findChild(slot0.viewGO, "entrance/#go_groupController")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_replay")
+	arg_1_0._goGroupController = gohelper.findChild(arg_1_0.viewGO, "entrance/#go_groupController")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreplay:AddClickListener(slot0._btnReplayOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreplay:AddClickListener(arg_2_0._btnReplayOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreplay:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreplay:RemoveClickListener()
 end
 
-slot0.ActUnlockAnimationDuration = 2.5
+var_0_0.ActUnlockAnimationDuration = 2.5
 
-function slot0._btnReplayOnClick(slot0)
-	if not (ActivityModel.instance:getActMO(slot0.actId) and slot1.config and slot1.config.storyId) then
-		logError(string.format("act id %s dot config story id", slot2))
+function var_0_0._btnReplayOnClick(arg_4_0)
+	local var_4_0 = ActivityModel.instance:getActMO(arg_4_0.actId)
+	local var_4_1 = var_4_0 and var_4_0.config and var_4_0.config.storyId
+
+	if not var_4_1 then
+		logError(string.format("act id %s dot config story id", var_4_1))
 
 		return
 	end
 
-	StoryController.instance:playStory(slot2, {
-		isVersionActivityPV = true
-	})
+	local var_4_2 = {}
+
+	var_4_2.isVersionActivityPV = true
+
+	StoryController.instance:playStory(var_4_1, var_4_2)
 end
 
-function slot0.onClickGroupBtn(slot0, slot1)
-	if slot1.groupIndex == slot0.showGroupIndex then
+function var_0_0.onClickGroupBtn(arg_5_0, arg_5_1)
+	if arg_5_1.groupIndex == arg_5_0.showGroupIndex then
 		return
 	end
 
-	slot3, slot4, slot5 = ActivityHelper.getActivityStatusAndToast(slot0.mainActIdList[slot1.groupIndex])
+	local var_5_0 = arg_5_0.mainActIdList[arg_5_1.groupIndex]
+	local var_5_1, var_5_2, var_5_3 = ActivityHelper.getActivityStatusAndToast(var_5_0)
 
-	if slot3 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot3 == ActivityEnum.ActivityStatus.NotOpen then
-			slot6 = ActivityModel.instance:getActMO(slot2)
+	if var_5_1 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_5_1 == ActivityEnum.ActivityStatus.NotOpen then
+			local var_5_4 = ActivityModel.instance:getActMO(var_5_0)
+			local var_5_5 = var_5_4:getRealStartTimeStamp() - ServerTime.now()
+			local var_5_6 = var_5_4.config.name
+			local var_5_7 = TimeUtil.getFormatTime_overseas(var_5_5)
 
-			GameFacade.showToast(ToastEnum.V1a4_ActPreTips, slot6.config.name, TimeUtil.getFormatTime_overseas(slot6:getRealStartTimeStamp() - ServerTime.now()))
-		elseif slot4 then
-			GameFacade.showToastWithTableParam(slot4, slot5)
+			GameFacade.showToast(ToastEnum.V1a4_ActPreTips, var_5_6, var_5_7)
+		elseif var_5_2 then
+			GameFacade.showToastWithTableParam(var_5_2, var_5_3)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
@@ -54,19 +64,21 @@ function slot0.onClickGroupBtn(slot0, slot1)
 		return
 	end
 
-	slot0.showGroupIndex = slot1.groupIndex
+	arg_5_0.showGroupIndex = arg_5_1.groupIndex
 
-	slot0.animator:Play(slot0.showGroupIndex == 1 and "switch_b" or "switch_a", 0, 0)
-	slot0:beforeClickGroupBtn()
-	slot0:refreshGroupBtnUI()
+	local var_5_8 = arg_5_0.showGroupIndex == 1 and "switch_b" or "switch_a"
+
+	arg_5_0.animator:Play(var_5_8, 0, 0)
+	arg_5_0:beforeClickGroupBtn()
+	arg_5_0:refreshGroupBtnUI()
 end
 
-function slot0.defaultCheckActivityCanClick(slot0, slot1)
-	slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(slot1.actId)
+function var_0_0.defaultCheckActivityCanClick(arg_6_0, arg_6_1)
+	local var_6_0, var_6_1, var_6_2 = ActivityHelper.getActivityStatusAndToast(arg_6_1.actId)
 
-	if slot2 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot3 then
-			GameFacade.showToastWithTableParam(slot3, slot4)
+	if var_6_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_6_1 then
+			GameFacade.showToastWithTableParam(var_6_1, var_6_2)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
@@ -77,159 +89,174 @@ function slot0.defaultCheckActivityCanClick(slot0, slot1)
 	return true
 end
 
-function slot0._activityBtnOnClick(slot0, slot1)
-	if slot1.actId == ActivityEnum.PlaceholderActivityId then
+function var_0_0._activityBtnOnClick(arg_7_0, arg_7_1)
+	if arg_7_1.actId == ActivityEnum.PlaceholderActivityId then
 		return
 	end
 
-	if not slot0["checkActivityCanClickFunc" .. slot1.index] or slot0.defaultCheckActivityCanClick(slot0, slot1) then
+	if not (arg_7_0["checkActivityCanClickFunc" .. arg_7_1.index] or arg_7_0.defaultCheckActivityCanClick)(arg_7_0, arg_7_1) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_sign)
 
-	if slot0["onClickActivity" .. slot1.index] then
-		slot3(slot0)
+	local var_7_0 = arg_7_0["onClickActivity" .. arg_7_1.index]
+
+	if var_7_0 then
+		var_7_0(arg_7_0)
 	end
 end
 
-function slot0.initActivityItem(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot0:getUserDataTb_()
-	slot5.groupIndex = slot1
-	slot5.index = slot2
-	slot5.actId = slot3
-	slot5.rootGo = slot4
-	slot5.openId = ActivityConfig.instance:getActivityCo(slot3) and slot6.openId
-	slot5.redDotId = slot6 and slot6.redDotId
-	slot5.animator = slot5.rootGo:GetComponent(typeof(UnityEngine.Animator))
-	slot5.goNormal = gohelper.findChild(slot4, "normal")
-	slot5.goNormalAnimator = slot5.goNormal:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.initActivityItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	local var_8_0 = arg_8_0:getUserDataTb_()
 
-	if slot5.goNormalAnimator then
-		slot5.goNormalAnimator.enabled = false
+	var_8_0.groupIndex = arg_8_1
+	var_8_0.index = arg_8_2
+	var_8_0.actId = arg_8_3
+	var_8_0.rootGo = arg_8_4
+
+	local var_8_1 = ActivityConfig.instance:getActivityCo(arg_8_3)
+
+	var_8_0.openId = var_8_1 and var_8_1.openId
+	var_8_0.redDotId = var_8_1 and var_8_1.redDotId
+	var_8_0.animator = var_8_0.rootGo:GetComponent(typeof(UnityEngine.Animator))
+	var_8_0.goNormal = gohelper.findChild(arg_8_4, "normal")
+	var_8_0.goNormalAnimator = var_8_0.goNormal:GetComponent(typeof(UnityEngine.Animator))
+
+	if var_8_0.goNormalAnimator then
+		var_8_0.goNormalAnimator.enabled = false
 	end
 
-	if VersionActivityEnum.EnterViewNormalAnimationPath[slot3] and gohelper.findChild(slot4, slot7) then
-		slot5.normalAnimation = slot8:GetComponent(typeof(UnityEngine.Animation))
+	local var_8_2 = VersionActivityEnum.EnterViewNormalAnimationPath[arg_8_3]
+
+	if var_8_2 then
+		local var_8_3 = gohelper.findChild(arg_8_4, var_8_2)
+
+		if var_8_3 then
+			var_8_0.normalAnimation = var_8_3:GetComponent(typeof(UnityEngine.Animation))
+		end
 	end
 
-	slot5.goLockContainer = gohelper.findChild(slot4, "lockContainer")
-	slot5.txtLockGo = gohelper.findChild(slot4, "lockContainer/lock")
-	slot5.txtLock = gohelper.findChildText(slot4, "lockContainer/lock/txt_lock")
-	slot5.goRedPoint = gohelper.findChild(slot4, "redpoint")
-	slot5.goRedPointTag = gohelper.findChild(slot4, "tag")
-	slot5.goRedPointTagNewAct = gohelper.findChild(slot4, "tag/new_act")
-	slot5.goRedPointTagNewEpisode = gohelper.findChild(slot4, "tag/new_episode")
-	slot5.goTime = gohelper.findChild(slot4, "timeContainer")
-	slot5.txtTime = gohelper.findChildText(slot4, "timeContainer/time")
-	slot5.txtRemainTime = gohelper.findChildText(slot4, "timeContainer/TimeBG/remain_time")
-	slot5.click = SLFramework.UGUI.ButtonWrap.Get(slot4)
+	var_8_0.goLockContainer = gohelper.findChild(arg_8_4, "lockContainer")
+	var_8_0.txtLockGo = gohelper.findChild(arg_8_4, "lockContainer/lock")
+	var_8_0.txtLock = gohelper.findChildText(arg_8_4, "lockContainer/lock/txt_lock")
+	var_8_0.goRedPoint = gohelper.findChild(arg_8_4, "redpoint")
+	var_8_0.goRedPointTag = gohelper.findChild(arg_8_4, "tag")
+	var_8_0.goRedPointTagNewAct = gohelper.findChild(arg_8_4, "tag/new_act")
+	var_8_0.goRedPointTagNewEpisode = gohelper.findChild(arg_8_4, "tag/new_episode")
+	var_8_0.goTime = gohelper.findChild(arg_8_4, "timeContainer")
+	var_8_0.txtTime = gohelper.findChildText(arg_8_4, "timeContainer/time")
+	var_8_0.txtRemainTime = gohelper.findChildText(arg_8_4, "timeContainer/TimeBG/remain_time")
+	var_8_0.click = SLFramework.UGUI.ButtonWrap.Get(arg_8_4)
 
-	gohelper.setActive(gohelper.findChild(slot4, "clickarea"), false)
-	slot5.click:AddClickListener(slot0._activityBtnOnClick, slot0, slot5)
-	gohelper.setActive(slot5.goRedPointTag, true)
-	gohelper.setActive(slot5.goRedPointTagNewAct, false)
-	gohelper.setActive(slot5.goRedPointTagNewEpisode, false)
+	local var_8_4 = gohelper.findChild(arg_8_4, "clickarea")
 
-	slot5.redPointTagAnimator = slot5.goRedPointTag and slot5.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
+	gohelper.setActive(var_8_4, false)
+	var_8_0.click:AddClickListener(arg_8_0._activityBtnOnClick, arg_8_0, var_8_0)
+	gohelper.setActive(var_8_0.goRedPointTag, true)
+	gohelper.setActive(var_8_0.goRedPointTagNewAct, false)
+	gohelper.setActive(var_8_0.goRedPointTagNewEpisode, false)
 
-	return slot5
+	var_8_0.redPointTagAnimator = var_8_0.goRedPointTag and var_8_0.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
+
+	return var_8_0
 end
 
-function slot0.createGroupBtnItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.groupIndex = slot1
-	slot2.goGroup = gohelper.findChild(slot0._goGroupController, "tab" .. slot1)
+function var_0_0.createGroupBtnItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	if gohelper.isNil(slot2.goGroup) then
-		logError("not found btn group : " .. tostring(slot1))
+	var_9_0.groupIndex = arg_9_1
+	var_9_0.goGroup = gohelper.findChild(arg_9_0._goGroupController, "tab" .. arg_9_1)
+
+	if gohelper.isNil(var_9_0.goGroup) then
+		logError("not found btn group : " .. tostring(arg_9_1))
 
 		return
 	end
 
-	slot2.click = gohelper.getClick(slot2.goGroup)
-	slot2.goNormal = gohelper.findChild(slot2.goGroup, "go_normal")
-	slot2.goSelect = gohelper.findChild(slot2.goGroup, "go_select")
-	slot2.goRedDot = gohelper.findChild(slot2.goGroup, "go_reddot")
+	var_9_0.click = gohelper.getClick(var_9_0.goGroup)
+	var_9_0.goNormal = gohelper.findChild(var_9_0.goGroup, "go_normal")
+	var_9_0.goSelect = gohelper.findChild(var_9_0.goGroup, "go_select")
+	var_9_0.goRedDot = gohelper.findChild(var_9_0.goGroup, "go_reddot")
 
-	slot2.click:AddClickListener(slot0.onClickGroupBtn, slot0, slot2)
+	var_9_0.click:AddClickListener(arg_9_0.onClickGroupBtn, arg_9_0, var_9_0)
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.initBtnGroup(slot0)
-	slot0.groupItemList = {}
+function var_0_0.initBtnGroup(arg_10_0)
+	arg_10_0.groupItemList = {}
 
-	for slot4 = 1, 2 do
-		table.insert(slot0.groupItemList, slot0:createGroupBtnItem(slot4))
+	for iter_10_0 = 1, 2 do
+		table.insert(arg_10_0.groupItemList, arg_10_0:createGroupBtnItem(iter_10_0))
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0.activityGoContainerList = slot0:getUserDataTb_()
-	slot0.activityItemListWithGroup = {}
-	slot0.groupGoList = slot0:getUserDataTb_()
-	slot0.showGroupIndex = 0
-	slot0.playedNewActTagAnimationIdList = nil
-	slot0.animEventWrap = slot0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0.animator = arg_11_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_11_0.activityGoContainerList = arg_11_0:getUserDataTb_()
+	arg_11_0.activityItemListWithGroup = {}
+	arg_11_0.groupGoList = arg_11_0:getUserDataTb_()
+	arg_11_0.showGroupIndex = 0
+	arg_11_0.playedNewActTagAnimationIdList = nil
+	arg_11_0.animEventWrap = arg_11_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
 
-	slot0.animEventWrap:AddEventListener("refreshUI", slot0.onSwitchGroup, slot0)
-	slot0:initBtnGroup()
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.checkNeedRefreshUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, slot0.refreshAllNewActOpenTagUI, slot0)
-	slot0:addEventCb(NavigateMgr.instance, NavigateEvent.BeforeClickHome, slot0.beforeClickHome, slot0)
-	TaskDispatcher.runRepeat(slot0.everyMinuteCall, slot0, TimeUtil.OneMinuteSecond)
+	arg_11_0.animEventWrap:AddEventListener("refreshUI", arg_11_0.onSwitchGroup, arg_11_0)
+	arg_11_0:initBtnGroup()
+	arg_11_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_11_0.checkNeedRefreshUI, arg_11_0)
+	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_11_0.onCloseViewFinish, arg_11_0)
+	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_11_0.onOpenViewFinish, arg_11_0)
+	arg_11_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_11_0.refreshAllNewActOpenTagUI, arg_11_0)
+	arg_11_0:addEventCb(NavigateMgr.instance, NavigateEvent.BeforeClickHome, arg_11_0.beforeClickHome, arg_11_0)
+	TaskDispatcher.runRepeat(arg_11_0.everyMinuteCall, arg_11_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0.onCloseViewFinish(slot0)
-	slot0:checkNeedRefreshUI()
+function var_0_0.onCloseViewFinish(arg_12_0)
+	arg_12_0:checkNeedRefreshUI()
 
-	if ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0:playAmbientAudio()
+	if ViewHelper.instance:checkViewOnTheTop(arg_12_0.viewName) then
+		arg_12_0:playAmbientAudio()
 	end
 end
 
-function slot0.onOpenViewFinish(slot0)
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0:stopAmbientAudio()
+function var_0_0.onOpenViewFinish(arg_13_0)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_13_0.viewName) then
+		arg_13_0:stopAmbientAudio()
 	end
 end
 
-function slot0.beforeClickHome(slot0)
-	slot0.clickedHome = true
+function var_0_0.beforeClickHome(arg_14_0)
+	arg_14_0.clickedHome = true
 end
 
-function slot0.checkNeedRefreshUI(slot0)
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
+function var_0_0.checkNeedRefreshUI(arg_15_0)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_15_0.viewName) then
 		return
 	end
 
-	if slot0.clickedHome then
+	if arg_15_0.clickedHome then
 		return
 	end
 
-	slot0:refreshUI()
-	ActivityStageHelper.recordActivityStage(slot0.activityIdListWithGroup[slot0.mainActIdList[slot0.showGroupIndex]])
+	arg_15_0:refreshUI()
+	ActivityStageHelper.recordActivityStage(arg_15_0.activityIdListWithGroup[arg_15_0.mainActIdList[arg_15_0.showGroupIndex]])
 end
 
-function slot0.initViewParam(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.skipOpenAnim = slot0.viewParam.skipOpenAnim
-	slot0.activityIdListWithGroup = slot0.viewParam.activityIdListWithGroup
-	slot0.mainActIdList = slot0.viewParam.mainActIdList
-	slot0.actId2AmbientDict = slot0.viewParam.actId2AmbientDict
-	slot0.actId2OpenAudioDict = slot0.viewParam.actId2OpenAudioDict
+function var_0_0.initViewParam(arg_16_0)
+	arg_16_0.actId = arg_16_0.viewParam.actId
+	arg_16_0.skipOpenAnim = arg_16_0.viewParam.skipOpenAnim
+	arg_16_0.activityIdListWithGroup = arg_16_0.viewParam.activityIdListWithGroup
+	arg_16_0.mainActIdList = arg_16_0.viewParam.mainActIdList
+	arg_16_0.actId2AmbientDict = arg_16_0.viewParam.actId2AmbientDict
+	arg_16_0.actId2OpenAudioDict = arg_16_0.viewParam.actId2OpenAudioDict
 
-	slot0:initGroupIndex()
+	arg_16_0:initGroupIndex()
 end
 
-function slot0.initGroupIndex(slot0)
-	for slot4 = #slot0.mainActIdList, 1, -1 do
-		if ActivityHelper.getActivityStatus(slot0.mainActIdList[slot4]) == ActivityEnum.ActivityStatus.Normal then
-			slot0.showGroupIndex = slot4
+function var_0_0.initGroupIndex(arg_17_0)
+	for iter_17_0 = #arg_17_0.mainActIdList, 1, -1 do
+		if ActivityHelper.getActivityStatus(arg_17_0.mainActIdList[iter_17_0]) == ActivityEnum.ActivityStatus.Normal then
+			arg_17_0.showGroupIndex = iter_17_0
 
 			return
 		end
@@ -237,497 +264,532 @@ function slot0.initGroupIndex(slot0)
 
 	logError("一个活动都没解锁？")
 
-	slot0.showGroupIndex = 1
+	arg_17_0.showGroupIndex = 1
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:initViewParam()
-	slot0:refreshUI()
+function var_0_0.onUpdateParam(arg_18_0)
+	arg_18_0:initViewParam()
+	arg_18_0:refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0.onOpening = true
+function var_0_0.onOpen(arg_19_0)
+	arg_19_0.onOpening = true
 
-	slot0:initViewParam()
-	slot0:initActivityNode()
-	slot0:initActivityItemList()
-	slot0:refreshUI()
-	slot0:playOpenAnimation()
-	slot0:playBgm()
-	slot0:playAmbientAudio()
+	arg_19_0:initViewParam()
+	arg_19_0:initActivityNode()
+	arg_19_0:initActivityItemList()
+	arg_19_0:refreshUI()
+	arg_19_0:playOpenAnimation()
+	arg_19_0:playBgm()
+	arg_19_0:playAmbientAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_switch)
 end
 
-function slot0.initActivityNode(slot0)
-	for slot4 = 1, 2 do
-		if gohelper.isNil(gohelper.findChild(slot0.viewGO, "entrance/#go_group" .. slot4)) then
-			logError("not found group node : entrance/#go_group" .. slot4)
+function var_0_0.initActivityNode(arg_20_0)
+	for iter_20_0 = 1, 2 do
+		local var_20_0 = gohelper.findChild(arg_20_0.viewGO, "entrance/#go_group" .. iter_20_0)
+
+		if gohelper.isNil(var_20_0) then
+			logError("not found group node : entrance/#go_group" .. iter_20_0)
 		end
 
-		table.insert(slot0.groupGoList, slot5)
+		table.insert(arg_20_0.groupGoList, var_20_0)
 	end
 
-	slot1 = 0
+	local var_20_1 = 0
 
-	for slot5, slot6 in ipairs(slot0.mainActIdList) do
-		slot7 = slot0.groupGoList[slot5]
+	for iter_20_1, iter_20_2 in ipairs(arg_20_0.mainActIdList) do
+		local var_20_2 = arg_20_0.groupGoList[iter_20_1]
+		local var_20_3 = arg_20_0.activityIdListWithGroup[iter_20_2]
 
-		for slot12 = 1, #slot0.activityIdListWithGroup[slot6] do
-			if gohelper.isNil(gohelper.findChild(slot7, "activityContainer" .. slot1 + 1)) then
-				logError(string.format("not found container node : %s/activityContainer%s", slot7.name, slot1))
+		for iter_20_3 = 1, #var_20_3 do
+			var_20_1 = var_20_1 + 1
+
+			local var_20_4 = gohelper.findChild(var_20_2, "activityContainer" .. var_20_1)
+
+			if gohelper.isNil(var_20_4) then
+				logError(string.format("not found container node : %s/activityContainer%s", var_20_2.name, var_20_1))
 			end
 
-			table.insert(slot0.activityGoContainerList, slot13)
+			table.insert(arg_20_0.activityGoContainerList, var_20_4)
 		end
 	end
 end
 
-function slot0.initActivityItemList(slot0)
-	slot1 = 0
+function var_0_0.initActivityItemList(arg_21_0)
+	local var_21_0 = 0
 
-	for slot5, slot6 in ipairs(slot0.mainActIdList) do
-		slot7 = slot0.activityIdListWithGroup[slot6]
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.mainActIdList) do
+		local var_21_1 = arg_21_0.activityIdListWithGroup[iter_21_1]
+		local var_21_2 = arg_21_0.activityItemListWithGroup[iter_21_0]
 
-		if slot0.activityItemListWithGroup[slot5] == nil then
-			slot0.activityItemListWithGroup[slot5] = {}
+		if var_21_2 == nil then
+			var_21_2 = {}
+			arg_21_0.activityItemListWithGroup[iter_21_0] = var_21_2
 		end
 
-		for slot12, slot13 in ipairs(slot7) do
-			slot1 = slot1 + 1
+		for iter_21_2, iter_21_3 in ipairs(var_21_1) do
+			var_21_0 = var_21_0 + 1
 
-			table.insert(slot8, slot0:initActivityItem(slot5, slot1, slot13, slot0.activityGoContainerList[slot1]))
+			table.insert(var_21_2, arg_21_0:initActivityItem(iter_21_0, var_21_0, iter_21_3, arg_21_0.activityGoContainerList[var_21_0]))
 		end
 	end
 end
 
-function slot0.getVersionActivityItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.activityItemListWithGroup) do
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11.actId == slot1 then
-				return slot11
+function var_0_0.getVersionActivityItem(arg_22_0, arg_22_1)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.activityItemListWithGroup) do
+		for iter_22_2, iter_22_3 in ipairs(iter_22_1) do
+			if iter_22_3.actId == arg_22_1 then
+				return iter_22_3
 			end
 		end
 	end
 end
 
-function slot0.playOpenAnimation(slot0)
+function var_0_0.playOpenAnimation(arg_23_0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(slot0.viewName .. "playOpenAnimation")
+	UIBlockMgr.instance:startBlock(arg_23_0.viewName .. "playOpenAnimation")
 
-	if slot0.skipOpenAnim then
-		slot0.animator:Play(UIAnimationName.Idle)
-		TaskDispatcher.runDelay(slot0.onOpenAnimationDone, slot0, 0.5)
+	if arg_23_0.skipOpenAnim then
+		arg_23_0.animator:Play(UIAnimationName.Idle)
+		TaskDispatcher.runDelay(arg_23_0.onOpenAnimationDone, arg_23_0, 0.5)
 	else
-		slot0:beforePlayOpenAnimation()
-		slot0.animator:Play(slot0.showGroupIndex == 1 and "open_a" or "open_b", 0, 0)
-		TaskDispatcher.runDelay(slot0.onOpenAnimationDone, slot0, 2.167)
+		arg_23_0:beforePlayOpenAnimation()
+
+		local var_23_0 = arg_23_0.showGroupIndex == 1 and "open_a" or "open_b"
+
+		arg_23_0.animator:Play(var_23_0, 0, 0)
+		TaskDispatcher.runDelay(arg_23_0.onOpenAnimationDone, arg_23_0, 2.167)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshCenterActUI()
-	slot0:refreshActivityUI()
+function var_0_0.refreshUI(arg_24_0)
+	arg_24_0:refreshCenterActUI()
+	arg_24_0:refreshActivityUI()
 end
 
-function slot0.refreshCenterActUI(slot0)
-	slot0:refreshSingleBgUI()
-	slot0:refreshGroupBtnUI()
+function var_0_0.refreshCenterActUI(arg_25_0)
+	arg_25_0:refreshSingleBgUI()
+	arg_25_0:refreshGroupBtnUI()
 end
 
-function slot0.refreshSingleBgUI(slot0)
+function var_0_0.refreshSingleBgUI(arg_26_0)
+	return
 end
 
-function slot0.refreshGroupBtnUI(slot0)
-	for slot4, slot5 in ipairs(slot0.groupItemList) do
-		gohelper.setActive(slot5.goNormal, slot0.showGroupIndex ~= slot5.groupIndex)
-		gohelper.setActive(slot5.goSelect, slot0.showGroupIndex == slot5.groupIndex)
+function var_0_0.refreshGroupBtnUI(arg_27_0)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0.groupItemList) do
+		gohelper.setActive(iter_27_1.goNormal, arg_27_0.showGroupIndex ~= iter_27_1.groupIndex)
+		gohelper.setActive(iter_27_1.goSelect, arg_27_0.showGroupIndex == iter_27_1.groupIndex)
 
-		if ActivityHelper.getActivityStatus(slot0.mainActIdList[slot4]) == ActivityEnum.ActivityStatus.Normal and not slot5.redDotComp then
-			slot5.redDotComp = RedDotController.instance:addRedDot(slot5.goRedDot, ActivityConfig.instance:getActivityCo(slot6).redDotId)
+		local var_27_0 = arg_27_0.mainActIdList[iter_27_0]
+
+		if ActivityHelper.getActivityStatus(var_27_0) == ActivityEnum.ActivityStatus.Normal and not iter_27_1.redDotComp then
+			local var_27_1 = ActivityConfig.instance:getActivityCo(var_27_0)
+
+			iter_27_1.redDotComp = RedDotController.instance:addRedDot(iter_27_1.goRedDot, var_27_1.redDotId)
 		end
 	end
 end
 
-function slot0.refreshActivityUI(slot0)
-	slot0.playedActTagAudio = false
-	slot0.playedActUnlockAudio = false
+function var_0_0.refreshActivityUI(arg_28_0)
+	arg_28_0.playedActTagAudio = false
+	arg_28_0.playedActUnlockAudio = false
 
-	for slot4, slot5 in ipairs(slot0.groupGoList) do
-		gohelper.setActive(slot5, slot4 == slot0.showGroupIndex)
+	for iter_28_0, iter_28_1 in ipairs(arg_28_0.groupGoList) do
+		gohelper.setActive(iter_28_1, iter_28_0 == arg_28_0.showGroupIndex)
 	end
 
-	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup[slot0.showGroupIndex]) do
-		slot0:refreshActivityItem(slot5)
-	end
-end
-
-function slot0.defaultBeforePlayActUnlockAnimation(slot0, slot1)
-	gohelper.setActive(slot1.goTime, false)
-	gohelper.setActive(slot1.goLockContainer, true)
-
-	if slot1.txtLockGo then
-		gohelper.setActive(slot1.txtLockGo, false)
+	for iter_28_2, iter_28_3 in ipairs(arg_28_0.activityItemListWithGroup[arg_28_0.showGroupIndex]) do
+		arg_28_0:refreshActivityItem(iter_28_3)
 	end
 end
 
-function slot0.refreshActivityItem(slot0, slot1)
-	if slot1.actId == ActivityEnum.PlaceholderActivityId then
+function var_0_0.defaultBeforePlayActUnlockAnimation(arg_29_0, arg_29_1)
+	gohelper.setActive(arg_29_1.goTime, false)
+	gohelper.setActive(arg_29_1.goLockContainer, true)
+
+	if arg_29_1.txtLockGo then
+		gohelper.setActive(arg_29_1.txtLockGo, false)
+	end
+end
+
+function var_0_0.refreshActivityItem(arg_30_0, arg_30_1)
+	if arg_30_1.actId == ActivityEnum.PlaceholderActivityId then
 		return
 	end
 
-	slot2 = ActivityHelper.getActivityStatus(slot1.actId)
+	local var_30_0 = ActivityHelper.getActivityStatus(arg_30_1.actId)
 
-	logNormal("act id : " .. slot1.actId .. ", status : " .. slot2)
+	logNormal("act id : " .. arg_30_1.actId .. ", status : " .. var_30_0)
 
-	slot3 = slot2 == ActivityEnum.ActivityStatus.Normal
-	slot4 = ActivityModel.instance:getActivityInfo()[slot1.actId]
+	local var_30_1 = var_30_0 == ActivityEnum.ActivityStatus.Normal
+	local var_30_2 = ActivityModel.instance:getActivityInfo()[arg_30_1.actId]
 
-	if slot1.normalAnimation then
-		slot1.normalAnimation.enabled = slot3
+	if arg_30_1.normalAnimation then
+		arg_30_1.normalAnimation.enabled = var_30_1
 	end
 
-	if slot3 and not VersionActivityBaseController.instance:isPlayedUnlockAnimation(slot1.actId) then
-		slot1.lockAnimator = slot1.goLockContainer and slot1.goLockContainer:GetComponent(typeof(UnityEngine.Animator))
+	if var_30_1 and not VersionActivityBaseController.instance:isPlayedUnlockAnimation(arg_30_1.actId) then
+		arg_30_1.lockAnimator = arg_30_1.goLockContainer and arg_30_1.goLockContainer:GetComponent(typeof(UnityEngine.Animator))
 
-		if not slot1.lockAnimator then
-			slot0:refreshLockUI(slot1, slot2)
+		if not arg_30_1.lockAnimator then
+			arg_30_0:refreshLockUI(arg_30_1, var_30_0)
 		else
-			slot0["beforePlayActUnlockAnimationActivity" .. slot1.index] or slot0.defaultBeforePlayActUnlockAnimation(slot0, slot1)
-			slot0:playActUnlockAnimation(slot1)
+			(arg_30_0["beforePlayActUnlockAnimationActivity" .. arg_30_1.index] or arg_30_0.defaultBeforePlayActUnlockAnimation)(arg_30_0, arg_30_1)
+			arg_30_0:playActUnlockAnimation(arg_30_1)
 		end
 	else
-		slot0:refreshLockUI(slot1, slot2)
+		arg_30_0:refreshLockUI(arg_30_1, var_30_0)
 	end
 
-	if slot1.animator then
-		if slot2 == ActivityEnum.ActivityStatus.Normal then
-			slot1.animator:Play(UIAnimationName.Loop)
+	if arg_30_1.animator then
+		if var_30_0 == ActivityEnum.ActivityStatus.Normal then
+			arg_30_1.animator:Play(UIAnimationName.Loop)
 		else
-			slot1.animator:Play(UIAnimationName.Idle)
+			arg_30_1.animator:Play(UIAnimationName.Idle)
 		end
 	end
 
-	if slot1.txtTime then
-		slot1.txtTime.text = slot4:getStartTimeStr() .. "~" .. slot4:getEndTimeStr()
+	if arg_30_1.txtTime then
+		arg_30_1.txtTime.text = var_30_2:getStartTimeStr() .. "~" .. var_30_2:getEndTimeStr()
 	end
 
-	if slot1.txtRemainTime then
-		if slot2 == ActivityEnum.ActivityStatus.Normal then
-			slot1.txtRemainTime.text = string.format(luaLang("remain"), slot4:getRemainTimeStr2ByEndTime())
+	if arg_30_1.txtRemainTime then
+		if var_30_0 == ActivityEnum.ActivityStatus.Normal then
+			arg_30_1.txtRemainTime.text = string.format(luaLang("remain"), var_30_2:getRemainTimeStr2ByEndTime())
 		else
-			slot1.txtRemainTime.text = ""
+			arg_30_1.txtRemainTime.text = ""
 		end
 	end
 
-	if slot3 and slot1.redDotId and slot1.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(slot1.goRedPoint, slot1.redDotId)
+	if var_30_1 and arg_30_1.redDotId and arg_30_1.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(arg_30_1.goRedPoint, arg_30_1.redDotId)
 	end
 
-	gohelper.setActive(slot1.goRedPointTag, slot3)
-	gohelper.setActive(slot1.goRedPointTagNewAct, false)
-	gohelper.setActive(slot1.goRedPointTagNewEpisode, false)
+	gohelper.setActive(arg_30_1.goRedPointTag, var_30_1)
+	gohelper.setActive(arg_30_1.goRedPointTagNewAct, false)
+	gohelper.setActive(arg_30_1.goRedPointTagNewEpisode, false)
 
-	slot1.showTag = nil
+	arg_30_1.showTag = nil
 
-	if slot3 then
-		if not ActivityEnterMgr.instance:isEnteredActivity(slot1.actId) then
-			slot1.showTag = uv0.ShowActTagEnum.ShowNewAct
+	if var_30_1 then
+		if not ActivityEnterMgr.instance:isEnteredActivity(arg_30_1.actId) then
+			arg_30_1.showTag = var_0_0.ShowActTagEnum.ShowNewAct
 
-			slot0:playActTagAnimation(slot1)
-		elseif slot4:isNewStageOpen() then
-			slot1.showTag = uv0.ShowActTagEnum.ShowNewStage
+			arg_30_0:playActTagAnimation(arg_30_1)
+		elseif var_30_2:isNewStageOpen() then
+			arg_30_1.showTag = var_0_0.ShowActTagEnum.ShowNewStage
 
-			slot0:playActTagAnimation(slot1)
+			arg_30_0:playActTagAnimation(arg_30_1)
 		end
 	end
 
-	if slot0["onRefreshActivity" .. slot1.index] then
-		slot5(slot0, slot1)
+	local var_30_3 = arg_30_0["onRefreshActivity" .. arg_30_1.index]
+
+	if var_30_3 then
+		var_30_3(arg_30_0, arg_30_1)
 	end
 end
 
-function slot0.refreshLockUI(slot0, slot1, slot2)
-	slot3 = slot2 == ActivityEnum.ActivityStatus.Normal
+function var_0_0.refreshLockUI(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_2 == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(slot1.goLockContainer, not slot3)
-	gohelper.setActive(slot1.txtLockGo, not slot3)
-	gohelper.setActive(slot1.goTime, slot3)
+	gohelper.setActive(arg_31_1.goLockContainer, not var_31_0)
+	gohelper.setActive(arg_31_1.txtLockGo, not var_31_0)
+	gohelper.setActive(arg_31_1.goTime, var_31_0)
 
-	if not slot3 and slot1.txtLock then
-		slot1.txtLock.text = slot0["getLockTextFunc" .. slot1.index] or slot0.getLockText(slot0, slot1, slot2)
+	if not var_31_0 and arg_31_1.txtLock then
+		local var_31_1 = arg_31_0["getLockTextFunc" .. arg_31_1.index] or arg_31_0.getLockText
+
+		arg_31_1.txtLock.text = var_31_1(arg_31_0, arg_31_1, arg_31_2)
 	end
 end
 
-function slot0.getLockText(slot0, slot1, slot2)
-	slot4 = nil
+function var_0_0.getLockText(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = ActivityModel.instance:getActivityInfo()[arg_32_1.actId]
+	local var_32_1
 
-	if slot2 == ActivityEnum.ActivityStatus.NotOpen then
-		slot4 = string.format(luaLang("test_task_unlock_time"), ActivityModel.instance:getActivityInfo()[slot1.actId]:getRemainTimeStr2ByOpenTime())
-	elseif slot2 == ActivityEnum.ActivityStatus.Expired then
-		slot4 = luaLang("p_activityenter_finish")
-	elseif slot2 == ActivityEnum.ActivityStatus.NotUnlock then
-		slot4 = luaLang("p_versionactivitytripenter_lock")
-	elseif slot2 == ActivityEnum.ActivityStatus.NotOnLine then
-		slot4 = luaLang("p_activityenter_finish")
-	elseif slot2 == ActivityEnum.ActivityStatus.None then
-		slot4 = luaLang("p_activityenter_finish")
+	if arg_32_2 == ActivityEnum.ActivityStatus.NotOpen then
+		var_32_1 = string.format(luaLang("test_task_unlock_time"), var_32_0:getRemainTimeStr2ByOpenTime())
+	elseif arg_32_2 == ActivityEnum.ActivityStatus.Expired then
+		var_32_1 = luaLang("p_activityenter_finish")
+	elseif arg_32_2 == ActivityEnum.ActivityStatus.NotUnlock then
+		var_32_1 = luaLang("p_versionactivitytripenter_lock")
+	elseif arg_32_2 == ActivityEnum.ActivityStatus.NotOnLine then
+		var_32_1 = luaLang("p_activityenter_finish")
+	elseif arg_32_2 == ActivityEnum.ActivityStatus.None then
+		var_32_1 = luaLang("p_activityenter_finish")
 	end
 
-	return slot4
+	return var_32_1
 end
 
-function slot0.refreshAllNewActOpenTagUI(slot0)
-	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup[slot0.showGroupIndex]) do
-		slot7 = ActivityHelper.getActivityStatus(slot5.actId) == ActivityEnum.ActivityStatus.Normal
+function var_0_0.refreshAllNewActOpenTagUI(arg_33_0)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_0.activityItemListWithGroup[arg_33_0.showGroupIndex]) do
+		local var_33_0 = ActivityHelper.getActivityStatus(iter_33_1.actId) == ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(slot5.goRedPointTag, slot7)
-		gohelper.setActive(slot5.goRedPointTagNewAct, slot7 and not ActivityEnterMgr.instance:isEnteredActivity(slot5.actId))
+		gohelper.setActive(iter_33_1.goRedPointTag, var_33_0)
+		gohelper.setActive(iter_33_1.goRedPointTagNewAct, var_33_0 and not ActivityEnterMgr.instance:isEnteredActivity(iter_33_1.actId))
 	end
 end
 
-function slot0.isPlayedActTagAnimation(slot0, slot1)
-	if not slot0.playedNewActTagAnimationIdList then
+function var_0_0.isPlayedActTagAnimation(arg_34_0, arg_34_1)
+	if not arg_34_0.playedNewActTagAnimationIdList then
 		return false
 	end
 
-	return tabletool.indexOf(slot0.playedNewActTagAnimationIdList, slot1)
+	return tabletool.indexOf(arg_34_0.playedNewActTagAnimationIdList, arg_34_1)
 end
 
-function slot0.playActTagAnimation(slot0, slot1)
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
+function var_0_0.playActTagAnimation(arg_35_0, arg_35_1)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_35_0.viewName) then
 		return
 	end
 
-	if slot0.onOpening or slot0.playingUnlockAnimation then
-		slot0.needPlayNewActTagActIdList = slot0.needPlayNewActTagActIdList or {}
+	if arg_35_0.onOpening or arg_35_0.playingUnlockAnimation then
+		arg_35_0.needPlayNewActTagActIdList = arg_35_0.needPlayNewActTagActIdList or {}
 
-		if not tabletool.indexOf(slot0.needPlayNewActTagActIdList, slot1.actId) then
-			table.insert(slot0.needPlayNewActTagActIdList, slot1.actId)
+		if not tabletool.indexOf(arg_35_0.needPlayNewActTagActIdList, arg_35_1.actId) then
+			table.insert(arg_35_0.needPlayNewActTagActIdList, arg_35_1.actId)
 		end
 	else
-		slot0:_playActTagAnimation(slot1)
+		arg_35_0:_playActTagAnimation(arg_35_1)
 	end
 end
 
-function slot0._playActTagAnimation(slot0, slot1)
-	if slot1.showTag == uv0.ShowActTagEnum.ShowNewAct then
-		gohelper.setActive(slot1.goRedPointTagNewAct, true)
-	elseif slot1.showTag == uv0.ShowActTagEnum.ShowNewStage then
-		gohelper.setActive(slot1.goRedPointTagNewEpisode, true)
+function var_0_0._playActTagAnimation(arg_36_0, arg_36_1)
+	if arg_36_1.showTag == var_0_0.ShowActTagEnum.ShowNewAct then
+		gohelper.setActive(arg_36_1.goRedPointTagNewAct, true)
+	elseif arg_36_1.showTag == var_0_0.ShowActTagEnum.ShowNewStage then
+		gohelper.setActive(arg_36_1.goRedPointTagNewEpisode, true)
 	end
 
-	slot0.playedNewActTagAnimationIdList = slot0.playedNewActTagAnimationIdList or {}
+	arg_36_0.playedNewActTagAnimationIdList = arg_36_0.playedNewActTagAnimationIdList or {}
 
-	if not slot1.redPointTagAnimator then
-		table.insert(slot0.playedNewActTagAnimationIdList, slot1.actId)
+	if not arg_36_1.redPointTagAnimator then
+		table.insert(arg_36_0.playedNewActTagAnimationIdList, arg_36_1.actId)
 
 		return
 	end
 
-	if not slot0:isPlayedActTagAnimation(slot1.actId) then
-		slot1.redPointTagAnimator:Play(UIAnimationName.Open)
-		table.insert(slot0.playedNewActTagAnimationIdList, slot1.actId)
+	if not arg_36_0:isPlayedActTagAnimation(arg_36_1.actId) then
+		arg_36_1.redPointTagAnimator:Play(UIAnimationName.Open)
+		table.insert(arg_36_0.playedNewActTagAnimationIdList, arg_36_1.actId)
 
-		if not slot0.playedActTagAudio and not slot0.onOpening then
+		if not arg_36_0.playedActTagAudio and not arg_36_0.onOpening then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_open)
 
-			slot0.playedActTagAudio = true
+			arg_36_0.playedActTagAudio = true
 		end
 	end
 end
 
-function slot0.playActUnlockAnimation(slot0, slot1)
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
+function var_0_0.playActUnlockAnimation(arg_37_0, arg_37_1)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_37_0.viewName) then
 		return
 	end
 
-	if slot0.onOpening then
-		slot0.needPlayUnlockAnimationActIdList = slot0.needPlayUnlockAnimationActIdList or {}
+	if arg_37_0.onOpening then
+		arg_37_0.needPlayUnlockAnimationActIdList = arg_37_0.needPlayUnlockAnimationActIdList or {}
 
-		if not tabletool.indexOf(slot0.needPlayUnlockAnimationActIdList, slot1.actId) then
-			table.insert(slot0.needPlayUnlockAnimationActIdList, slot1.actId)
+		if not tabletool.indexOf(arg_37_0.needPlayUnlockAnimationActIdList, arg_37_1.actId) then
+			table.insert(arg_37_0.needPlayUnlockAnimationActIdList, arg_37_1.actId)
 		end
 	else
-		slot0:_playActUnlockAnimation(slot1)
+		arg_37_0:_playActUnlockAnimation(arg_37_1)
 	end
 end
 
-function slot0._playActUnlockAnimation(slot0, slot1)
-	if not slot1 then
+function var_0_0._playActUnlockAnimation(arg_38_0, arg_38_1)
+	if not arg_38_1 then
 		return
 	end
 
-	VersionActivityBaseController.instance:playedActivityUnlockAnimation(slot1.actId)
+	VersionActivityBaseController.instance:playedActivityUnlockAnimation(arg_38_1.actId)
 
-	if slot1.lockAnimator then
-		if slot1.goNormalAnimator then
-			slot1.goNormalAnimator.enabled = true
+	if arg_38_1.lockAnimator then
+		if arg_38_1.goNormalAnimator then
+			arg_38_1.goNormalAnimator.enabled = true
 		end
 
-		slot1.lockAnimator:Play(UIAnimationName.Unlock, 0, 0)
-		slot0:playTimeUnlock(slot1)
+		arg_38_1.lockAnimator:Play(UIAnimationName.Unlock, 0, 0)
+		arg_38_0:playTimeUnlock(arg_38_1)
 
-		if not slot0.playedActUnlockAudio then
+		if not arg_38_0.playedActUnlockAudio then
 			AudioMgr.instance:trigger(AudioEnum.chess_activity142.SwitchPlayer)
 
-			slot0.playedActUnlockAudio = true
+			arg_38_0.playedActUnlockAudio = true
 		end
 
-		slot0.playingUnlockAnimation = true
+		arg_38_0.playingUnlockAnimation = true
 
-		TaskDispatcher.runDelay(slot0.playUnlockAnimationDone, slot0, uv0.ActUnlockAnimationDuration)
+		TaskDispatcher.runDelay(arg_38_0.playUnlockAnimationDone, arg_38_0, var_0_0.ActUnlockAnimationDuration)
 	end
 end
 
-function slot0.playTimeUnlock(slot0, slot1)
-	slot1.timeAnimator = slot1.goTime and slot1.goTime:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.playTimeUnlock(arg_39_0, arg_39_1)
+	arg_39_1.timeAnimator = arg_39_1.goTime and arg_39_1.goTime:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot1.timeAnimator then
-		slot0.needPlayTimeUnlockList = slot0.needPlayTimeUnlockList or {}
+	if arg_39_1.timeAnimator then
+		arg_39_0.needPlayTimeUnlockList = arg_39_0.needPlayTimeUnlockList or {}
 
-		if not tabletool.indexOf(slot0.needPlayTimeUnlockList, slot1) then
-			table.insert(slot0.needPlayTimeUnlockList, slot1)
+		if not tabletool.indexOf(arg_39_0.needPlayTimeUnlockList, arg_39_1) then
+			table.insert(arg_39_0.needPlayTimeUnlockList, arg_39_1)
 		end
 	end
 end
 
-function slot0.playAllTimeUnlockAnimation(slot0)
-	if slot0.needPlayTimeUnlockList then
-		for slot4, slot5 in ipairs(slot0.needPlayTimeUnlockList) do
-			if slot5.timeAnimator then
-				gohelper.setActive(slot5.goTime, true)
-				slot5.timeAnimator:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.playAllTimeUnlockAnimation(arg_40_0)
+	if arg_40_0.needPlayTimeUnlockList then
+		for iter_40_0, iter_40_1 in ipairs(arg_40_0.needPlayTimeUnlockList) do
+			if iter_40_1.timeAnimator then
+				gohelper.setActive(iter_40_1.goTime, true)
+				iter_40_1.timeAnimator:Play(UIAnimationName.Open, 0, 0)
 			end
 		end
 	end
 end
 
-function slot0.playUnlockAnimationDone(slot0)
-	slot0.playingUnlockAnimation = false
+function var_0_0.playUnlockAnimationDone(arg_41_0)
+	arg_41_0.playingUnlockAnimation = false
 
-	slot0:refreshActivityUI()
-	slot0:playAllTimeUnlockAnimation()
-	slot0:playAllNewTagAnimation()
+	arg_41_0:refreshActivityUI()
+	arg_41_0:playAllTimeUnlockAnimation()
+	arg_41_0:playAllNewTagAnimation()
 end
 
-function slot0.onOpenAnimationDone(slot0)
-	UIBlockMgr.instance:endBlock(slot0.viewName .. "playOpenAnimation")
+function var_0_0.onOpenAnimationDone(arg_42_0)
+	UIBlockMgr.instance:endBlock(arg_42_0.viewName .. "playOpenAnimation")
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	slot0.animator:Play(slot0.showGroupIndex == 1 and "open_a" or "open_b", 0, 1)
 
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0.onOpening = false
+	local var_42_0 = arg_42_0.showGroupIndex == 1 and "open_a" or "open_b"
+
+	arg_42_0.animator:Play(var_42_0, 0, 1)
+
+	if not ViewHelper.instance:checkViewOnTheTop(arg_42_0.viewName) then
+		arg_42_0.onOpening = false
 
 		return
 	end
 
-	if slot0.needPlayUnlockAnimationActIdList then
-		for slot5, slot6 in ipairs(slot0.needPlayUnlockAnimationActIdList) do
-			slot0:_playActUnlockAnimation(slot0:getVersionActivityItem(slot6))
+	if arg_42_0.needPlayUnlockAnimationActIdList then
+		for iter_42_0, iter_42_1 in ipairs(arg_42_0.needPlayUnlockAnimationActIdList) do
+			arg_42_0:_playActUnlockAnimation(arg_42_0:getVersionActivityItem(iter_42_1))
 		end
 
-		slot0.needPlayUnlockAnimationActIdList = nil
+		arg_42_0.needPlayUnlockAnimationActIdList = nil
 	end
 
-	if not slot0.playingUnlockAnimation then
-		slot0:playAllNewTagAnimation()
+	if not arg_42_0.playingUnlockAnimation then
+		arg_42_0:playAllNewTagAnimation()
 	end
 
-	slot0.onOpening = false
+	arg_42_0.onOpening = false
 end
 
-function slot0.playAllNewTagAnimation(slot0)
-	if slot0.needPlayNewActTagActIdList then
-		for slot4, slot5 in ipairs(slot0.needPlayNewActTagActIdList) do
-			slot0:_playActTagAnimation(slot0:getVersionActivityItem(slot5))
+function var_0_0.playAllNewTagAnimation(arg_43_0)
+	if arg_43_0.needPlayNewActTagActIdList then
+		for iter_43_0, iter_43_1 in ipairs(arg_43_0.needPlayNewActTagActIdList) do
+			arg_43_0:_playActTagAnimation(arg_43_0:getVersionActivityItem(iter_43_1))
 		end
 
-		slot0.needPlayNewActTagActIdList = nil
+		arg_43_0.needPlayNewActTagActIdList = nil
 	end
 end
 
-function slot0.everyMinuteCall(slot0)
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
+function var_0_0.everyMinuteCall(arg_44_0)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_44_0.viewName) then
 		return
 	end
 
-	slot0:refreshUI()
+	arg_44_0:refreshUI()
 end
 
-function slot0.onSwitchGroup(slot0)
-	slot0:refreshUI()
-	slot0:playAmbientAudio()
+function var_0_0.onSwitchGroup(arg_45_0)
+	arg_45_0:refreshUI()
+	arg_45_0:playAmbientAudio()
 end
 
-function slot0.onClose(slot0)
-	UIBlockMgr.instance:endBlock(slot0.viewName .. "playOpenAnimation")
+function var_0_0.onClose(arg_46_0)
+	UIBlockMgr.instance:endBlock(arg_46_0.viewName .. "playOpenAnimation")
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	slot0:stopBgm()
-	slot0:stopAmbientAudio()
-	TaskDispatcher.cancelTask(slot0.everyMinuteCall, slot0)
-	TaskDispatcher.cancelTask(slot0.onOpenAnimationDone, slot0)
-	TaskDispatcher.cancelTask(slot0.playUnlockAnimationDone, slot0)
+	arg_46_0:stopBgm()
+	arg_46_0:stopAmbientAudio()
+	TaskDispatcher.cancelTask(arg_46_0.everyMinuteCall, arg_46_0)
+	TaskDispatcher.cancelTask(arg_46_0.onOpenAnimationDone, arg_46_0)
+	TaskDispatcher.cancelTask(arg_46_0.playUnlockAnimationDone, arg_46_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.activityItemListWithGroup) do
-		for slot9, slot10 in ipairs(slot5) do
-			slot10.click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_47_0)
+	for iter_47_0, iter_47_1 in ipairs(arg_47_0.activityItemListWithGroup) do
+		for iter_47_2, iter_47_3 in ipairs(iter_47_1) do
+			iter_47_3.click:RemoveClickListener()
 		end
 	end
 
-	for slot4, slot5 in ipairs(slot0.groupItemList) do
-		slot5.click:RemoveClickListener()
+	for iter_47_4, iter_47_5 in ipairs(arg_47_0.groupItemList) do
+		iter_47_5.click:RemoveClickListener()
 	end
 
-	slot0.animEventWrap:RemoveAllEventListener()
+	arg_47_0.animEventWrap:RemoveAllEventListener()
 end
 
-function slot0.beforeClickGroupBtn(slot0)
+function var_0_0.beforeClickGroupBtn(arg_48_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_switch)
 end
 
-function slot0.getLastNormalActId(slot0)
-	for slot4 = #slot0.mainActIdList, 1, -1 do
-		if ActivityHelper.getActivityStatus(slot0.mainActIdList[slot4]) == ActivityEnum.ActivityStatus.Normal then
-			return slot0.mainActIdList[slot4]
+function var_0_0.getLastNormalActId(arg_49_0)
+	for iter_49_0 = #arg_49_0.mainActIdList, 1, -1 do
+		if ActivityHelper.getActivityStatus(arg_49_0.mainActIdList[iter_49_0]) == ActivityEnum.ActivityStatus.Normal then
+			return arg_49_0.mainActIdList[iter_49_0]
 		end
 	end
 
-	return slot0.mainActIdList[1]
+	return arg_49_0.mainActIdList[1]
 end
 
-function slot0.beforePlayOpenAnimation(slot0)
-	if not slot0.actId2OpenAudioDict[slot0:getLastNormalActId()] then
+function var_0_0.beforePlayOpenAnimation(arg_50_0)
+	local var_50_0 = arg_50_0:getLastNormalActId()
+	local var_50_1 = arg_50_0.actId2OpenAudioDict[var_50_0]
+
+	if not var_50_1 then
 		logWarn("no open audio")
 
 		return
 	end
 
-	AudioMgr.instance:trigger(slot2)
+	AudioMgr.instance:trigger(var_50_1)
 end
 
-function slot0.playAmbientAudio(slot0)
-	if slot0.mainActIdList[slot0.showGroupIndex] == slot0.playingAmbientActId then
+function var_0_0.playAmbientAudio(arg_51_0)
+	local var_51_0 = arg_51_0.mainActIdList[arg_51_0.showGroupIndex]
+
+	if var_51_0 == arg_51_0.playingAmbientActId then
 		return
 	end
 
-	slot0:stopAmbientAudio()
+	arg_51_0:stopAmbientAudio()
 
-	slot0.playingAmbientActId = slot1
-	slot0.ambientPlayingId = AudioMgr.instance:trigger(slot0.actId2AmbientDict[slot1])
+	arg_51_0.playingAmbientActId = var_51_0
+
+	local var_51_1 = arg_51_0.actId2AmbientDict[var_51_0]
+
+	arg_51_0.ambientPlayingId = AudioMgr.instance:trigger(var_51_1)
 end
 
-function slot0.stopAmbientAudio(slot0)
-	if slot0.ambientPlayingId then
-		AudioMgr.instance:stopPlayingID(slot0.ambientPlayingId)
+function var_0_0.stopAmbientAudio(arg_52_0)
+	if arg_52_0.ambientPlayingId then
+		AudioMgr.instance:stopPlayingID(arg_52_0.ambientPlayingId)
 	end
 end
 
-function slot0.playBgm(slot0)
+function var_0_0.playBgm(arg_53_0)
+	return
 end
 
-function slot0.stopBgm(slot0)
+function var_0_0.stopBgm(arg_54_0)
+	return
 end
 
-return slot0
+return var_0_0

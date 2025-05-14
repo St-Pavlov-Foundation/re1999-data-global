@@ -1,56 +1,58 @@
-module("modules.logic.gm.view.GMVideoPlayViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GMVideoPlayViewContainer", package.seeall)
 
-slot0 = class("GMVideoPlayViewContainer", BaseViewContainer)
+local var_0_0 = class("GMVideoPlayViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {}
 end
 
-function slot0.onContainerInit(slot0)
-	slot0._clickMask = gohelper.findChildClick(slot0.viewGO, "clickMask")
-	slot0._btnSkip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_skip")
-	slot0._videoGO = gohelper.findChild(slot0.viewGO, "#go_video")
+function var_0_0.onContainerInit(arg_2_0)
+	arg_2_0._clickMask = gohelper.findChildClick(arg_2_0.viewGO, "clickMask")
+	arg_2_0._btnSkip = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btn_skip")
+	arg_2_0._videoGO = gohelper.findChild(arg_2_0.viewGO, "#go_video")
 
-	gohelper.setActive(slot0._btnSkip.gameObject, false)
-	slot0._clickMask:AddClickListener(slot0._onClickMask, slot0)
-	slot0._btnSkip:AddClickListener(slot0.closeThis, slot0)
+	gohelper.setActive(arg_2_0._btnSkip.gameObject, false)
+	arg_2_0._clickMask:AddClickListener(arg_2_0._onClickMask, arg_2_0)
+	arg_2_0._btnSkip:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.onContainerDestroy(slot0)
-	slot0._clickMask:RemoveClickListener()
-	slot0._btnSkip:RemoveClickListener()
-	slot0:_stopMovie()
+function var_0_0.onContainerDestroy(arg_3_0)
+	arg_3_0._clickMask:RemoveClickListener()
+	arg_3_0._btnSkip:RemoveClickListener()
+	arg_3_0:_stopMovie()
 end
 
-function slot0.onContainerOpen(slot0)
-	slot1 = slot0.viewParam
+function var_0_0.onContainerOpen(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam
 
-	if not slot0._videoPlayer then
-		slot0._videoPlayer, slot0._displauUGUI, slot0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(slot0._videoGO)
-		slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._videoPlayerGO, FullScreenVideoAdapter)
-		slot0._videoPlayerGO = nil
+	if not arg_4_0._videoPlayer then
+		arg_4_0._videoPlayer, arg_4_0._displauUGUI, arg_4_0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(arg_4_0._videoGO)
+
+		local var_4_1 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._videoPlayerGO, FullScreenVideoAdapter)
+
+		arg_4_0._videoPlayerGO = nil
 	end
 
-	slot0._videoPlayer:Play(slot0._displauUGUI, langVideoUrl(slot1), false, slot0._videoStatusUpdate, slot0)
+	arg_4_0._videoPlayer:Play(arg_4_0._displauUGUI, langVideoUrl(var_4_0), false, arg_4_0._videoStatusUpdate, arg_4_0)
 end
 
-function slot0._onClickMask(slot0)
-	gohelper.setActive(slot0._btnSkip.gameObject, true)
+function var_0_0._onClickMask(arg_5_0)
+	gohelper.setActive(arg_5_0._btnSkip.gameObject, true)
 end
 
-function slot0._videoStatusUpdate(slot0, slot1, slot2, slot3)
-	if slot2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		slot0:closeThis()
-	end
-end
-
-function slot0._stopMovie(slot0)
-	if slot0._videoPlayer then
-		slot0._videoPlayer:Stop()
-		slot0._videoPlayer:Clear()
-
-		slot0._videoPlayer = nil
+function var_0_0._videoStatusUpdate(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_2 == AvProEnum.PlayerStatus.FinishedPlaying then
+		arg_6_0:closeThis()
 	end
 end
 
-return slot0
+function var_0_0._stopMovie(arg_7_0)
+	if arg_7_0._videoPlayer then
+		arg_7_0._videoPlayer:Stop()
+		arg_7_0._videoPlayer:Clear()
+
+		arg_7_0._videoPlayer = nil
+	end
+end
+
+return var_0_0

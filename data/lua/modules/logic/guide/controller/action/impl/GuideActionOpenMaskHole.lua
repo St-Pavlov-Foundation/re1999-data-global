@@ -1,16 +1,16 @@
-module("modules.logic.guide.controller.action.impl.GuideActionOpenMaskHole", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionOpenMaskHole", package.seeall)
 
-slot0 = class("GuideActionOpenMaskHole", BaseGuideAction)
+local var_0_0 = class("GuideActionOpenMaskHole", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	GuideViewMgr.instance:open(slot0.guideId, slot0.stepId)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	GuideViewMgr.instance:open(arg_1_0.guideId, arg_1_0.stepId)
+	arg_1_0:onDone(true)
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_2_0)
+	var_0_0.super.onDestroy(arg_2_0)
 	GuideViewMgr.instance:close()
 end
 
-return slot0
+return var_0_0

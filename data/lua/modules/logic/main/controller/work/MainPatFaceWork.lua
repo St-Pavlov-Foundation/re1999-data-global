@@ -1,27 +1,27 @@
-module("modules.logic.main.controller.work.MainPatFaceWork", package.seeall)
+﻿module("modules.logic.main.controller.work.MainPatFaceWork", package.seeall)
 
-slot0 = class("MainPatFaceWork", BaseWork)
+local var_0_0 = class("MainPatFaceWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	PatFaceController.instance:registerCallback(PatFaceEvent.FinishAllPatFace, slot0._onFinishAllPatFace, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	PatFaceController.instance:registerCallback(PatFaceEvent.FinishAllPatFace, arg_1_0._onFinishAllPatFace, arg_1_0)
 
-	slot2 = PatFaceEnum.patFaceType.Login
+	local var_1_0 = PatFaceEnum.patFaceType.Login
 
-	if slot1 and slot1.dailyRefresh then
-		slot2 = PatFaceEnum.patFaceType.NewDay
+	if arg_1_1 and arg_1_1.dailyRefresh then
+		var_1_0 = PatFaceEnum.patFaceType.NewDay
 	end
 
-	if not PatFaceController.instance:startPatFace(slot2) then
-		slot0:onDone(true)
+	if not PatFaceController.instance:startPatFace(var_1_0) then
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onFinishAllPatFace(slot0)
-	slot0:onDone(true)
+function var_0_0._onFinishAllPatFace(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	PatFaceController.instance:unregisterCallback(PatFaceEvent.FinishAllPatFace, slot0._onFinishAllPatFace, slot0)
+function var_0_0.clearWork(arg_3_0)
+	PatFaceController.instance:unregisterCallback(PatFaceEvent.FinishAllPatFace, arg_3_0._onFinishAllPatFace, arg_3_0)
 end
 
-return slot0
+return var_0_0

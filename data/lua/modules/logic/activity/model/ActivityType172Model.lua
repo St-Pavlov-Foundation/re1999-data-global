@@ -1,45 +1,45 @@
-module("modules.logic.activity.model.ActivityType172Model", package.seeall)
+﻿module("modules.logic.activity.model.ActivityType172Model", package.seeall)
 
-slot0 = class("ActivityType172Model", BaseModel)
-slot1 = 0
-slot2 = 1
-slot3 = 2
+local var_0_0 = class("ActivityType172Model", BaseModel)
+local var_0_1 = 0
+local var_0_2 = 1
+local var_0_3 = 2
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._type172Info = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._type172Info = {}
 end
 
-function slot0.setType172Info(slot0, slot1, slot2)
-	slot3 = ActivityType172InfoMo.New()
+function var_0_0.setType172Info(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = ActivityType172InfoMo.New()
 
-	slot3:init(slot2.useItemTaskIds)
+	var_3_0:init(arg_3_2.useItemTaskIds)
 
-	slot0._type172Info[slot1] = slot3
+	arg_3_0._type172Info[arg_3_1] = var_3_0
 end
 
-function slot0.updateType172Info(slot0, slot1, slot2)
-	if not slot0._type172Info[slot1] then
-		slot3 = ActivityType172InfoMo.New()
+function var_0_0.updateType172Info(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._type172Info[arg_4_1] then
+		local var_4_0 = ActivityType172InfoMo.New()
 
-		slot3:init(slot2)
+		var_4_0:init(arg_4_2)
 
-		slot0._type172Info[slot1] = slot3
+		arg_4_0._type172Info[arg_4_1] = var_4_0
 	else
-		slot0._type172Info[slot1]:update(slot2)
+		arg_4_0._type172Info[arg_4_1]:update(arg_4_2)
 	end
 end
 
-function slot0.isTaskHasUsed(slot0, slot1, slot2)
-	if not slot0._type172Info[slot1] then
+function var_0_0.isTaskHasUsed(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_0._type172Info[arg_5_1] then
 		return false
 	end
 
-	for slot6, slot7 in pairs(slot0._type172Info[slot1].useItemTaskIds) do
-		if slot7 == slot2 then
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._type172Info[arg_5_1].useItemTaskIds) do
+		if iter_5_1 == arg_5_2 then
 			return true
 		end
 	end
@@ -47,6 +47,6 @@ function slot0.isTaskHasUsed(slot0, slot1, slot2)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

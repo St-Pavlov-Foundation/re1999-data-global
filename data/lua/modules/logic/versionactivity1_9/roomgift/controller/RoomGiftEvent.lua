@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity1_9.roomgift.controller.RoomGiftEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_9.roomgift.controller.RoomGiftEvent", package.seeall)
 
-slot0 = _M
-slot0.UpdateActInfo = 1
-slot0.GetBonus = 2
+local var_0_0 = _M
 
-return slot0
+var_0_0.UpdateActInfo = 1
+var_0_0.GetBonus = 2
+
+return var_0_0

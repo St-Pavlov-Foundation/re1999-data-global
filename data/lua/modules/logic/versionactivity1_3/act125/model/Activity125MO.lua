@@ -1,166 +1,189 @@
-module("modules.logic.versionactivity1_3.act125.model.Activity125MO", package.seeall)
+﻿module("modules.logic.versionactivity1_3.act125.model.Activity125MO", package.seeall)
 
-slot0 = pureTable("Activity125MO")
+local var_0_0 = pureTable("Activity125MO")
 
-function slot0.ctor(slot0)
-	slot0._userId = PlayerModel.instance:getMyUserId()
-	slot0._episdoeInfos = {}
-	slot0._oldDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._userId = PlayerModel.instance:getMyUserId()
+	arg_1_0._episdoeInfos = {}
+	arg_1_0._oldDict = {}
 end
 
-function slot0.setInfo(slot0, slot1)
-	slot0._episdoeInfos = {}
-	slot0.id = slot1.activityId
+function var_0_0.setInfo(arg_2_0, arg_2_1)
+	arg_2_0._episdoeInfos = {}
+	arg_2_0.id = arg_2_1.activityId
 
-	slot0:initConfig()
-	slot0:updateInfo(slot1.act125Episodes)
+	arg_2_0:initConfig()
+	arg_2_0:updateInfo(arg_2_1.act125Episodes)
 end
 
-function slot0.initConfig(slot0)
-	if slot0.config then
+function var_0_0.initConfig(arg_3_0)
+	if arg_3_0.config then
 		return
 	end
 
-	slot0.config = Activity125Config.instance:getAct125Config(slot0.id)
-	slot0._episodeList = {}
+	arg_3_0.config = Activity125Config.instance:getAct125Config(arg_3_0.id)
+	arg_3_0._episodeList = {}
 
-	if slot0.config then
-		for slot4, slot5 in pairs(slot0.config) do
-			table.insert(slot0._episodeList, slot5)
+	if arg_3_0.config then
+		for iter_3_0, iter_3_1 in pairs(arg_3_0.config) do
+			table.insert(arg_3_0._episodeList, iter_3_1)
 		end
 
-		table.sort(slot0._episodeList, SortUtil.keyLower("id"))
+		table.sort(arg_3_0._episodeList, SortUtil.keyLower("id"))
 	end
 end
 
-function slot0.updateInfo(slot0, slot1)
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot6 = slot1[slot5]
-			slot0._episdoeInfos[slot6.id] = slot6.state
+function var_0_0.updateInfo(arg_4_0, arg_4_1)
+	if arg_4_1 then
+		for iter_4_0 = 1, #arg_4_1 do
+			local var_4_0 = arg_4_1[iter_4_0]
+
+			arg_4_0._episdoeInfos[var_4_0.id] = var_4_0.state
 		end
 	end
 
+	local var_4_1 = ActivityConfig.instance:getActivityCo(arg_4_0.id).redDotId
+
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-		[tonumber(ActivityConfig.instance:getActivityCo(slot0.id).redDotId)] = true
+		[tonumber(var_4_1)] = true
 	})
 end
 
-function slot0.isEpisodeFinished(slot0, slot1)
-	return slot0._episdoeInfos and slot0._episdoeInfos[slot1] == 1
+function var_0_0.isEpisodeFinished(arg_5_0, arg_5_1)
+	return arg_5_0._episdoeInfos and arg_5_0._episdoeInfos[arg_5_1] == 1
 end
 
-function slot0.getEpisodeConfig(slot0, slot1)
-	return slot0.config[slot1]
+function var_0_0.getEpisodeConfig(arg_6_0, arg_6_1)
+	return arg_6_0.config[arg_6_1]
 end
 
-function slot0.isEpisodeUnLock(slot0, slot1)
-	slot4 = true
+function var_0_0.isEpisodeUnLock(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getEpisodeConfig(arg_7_1).preId
+	local var_7_1 = true
 
-	if slot0:getEpisodeConfig(slot1).preId and slot3 > 0 then
-		slot4 = slot0._episdoeInfos[slot3] == 1 or slot0:checkLocalIsPlay(slot3) and slot0._episdoeInfos[slot3] == 0
+	if var_7_0 and var_7_0 > 0 then
+		var_7_1 = arg_7_0._episdoeInfos[var_7_0] == 1 or arg_7_0:checkLocalIsPlay(var_7_0) and arg_7_0._episdoeInfos[var_7_0] == 0
 	end
 
-	return slot4 and slot0._episdoeInfos[slot1] ~= nil
+	return var_7_1 and arg_7_0._episdoeInfos[arg_7_1] ~= nil
 end
 
-function slot0.isEpisodeDayOpen(slot0, slot1, slot2)
-	slot3 = false
-	slot6 = slot0:getEpisodeConfig(slot1).openDay
-	slot7 = 0
-	slot8 = 0
+function var_0_0.isEpisodeDayOpen(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = false
+	local var_8_1 = ActivityModel.instance:getActMO(arg_8_0.id)
+	local var_8_2 = arg_8_0:getEpisodeConfig(arg_8_1).openDay
+	local var_8_3 = 0
+	local var_8_4 = 0
 
-	if ActivityModel.instance:getActMO(slot0.id) and slot6 then
-		slot10 = ServerTime.now()
+	if var_8_1 and var_8_2 then
+		local var_8_5 = var_8_1:getRealStartTimeStamp() + (var_8_2 - 1) * TimeUtil.OneDaySecond
+		local var_8_6 = ServerTime.now()
 
-		if slot4:getRealStartTimeStamp() + (slot6 - 1) * TimeUtil.OneDaySecond - ServerTime.now() < 0 then
-			slot3 = true
+		var_8_4 = var_8_5 - ServerTime.now()
+
+		if var_8_4 < 0 then
+			var_8_0 = true
 		else
-			slot7 = math.floor(slot8 / TimeUtil.OneDaySecond)
+			var_8_3 = math.floor(var_8_4 / TimeUtil.OneDaySecond)
 		end
 	end
 
-	return slot3, slot7, slot8
+	return var_8_0, var_8_3, var_8_4
 end
 
-function slot0.isEpisodeReallyOpen(slot0, slot1)
-	slot2 = slot0:isEpisodeUnLock(slot1)
-	slot3 = slot0:isEpisodeDayOpen(slot1)
+function var_0_0.isEpisodeReallyOpen(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:isEpisodeUnLock(arg_9_1)
+	local var_9_1 = arg_9_0:isEpisodeDayOpen(arg_9_1)
+	local var_9_2 = arg_9_0:getEpisodeConfig(arg_9_1)
+	local var_9_3 = var_9_2 and var_9_2.preId or nil
 
-	if (slot0:getEpisodeConfig(slot1) and slot4.preId or nil) and slot5 > 0 and not slot0:isEpisodeFinished(slot5) then
+	if var_9_3 and var_9_3 > 0 and not arg_9_0:isEpisodeFinished(var_9_3) then
 		return false
 	end
 
-	return slot2 and slot3
+	return var_9_0 and var_9_1
 end
 
-function slot0.getLastEpisode(slot0)
-	for slot4 = #slot0._episodeList, 1, -1 do
-		if slot0:isEpisodeReallyOpen(slot0._episodeList[slot4].id) then
-			return slot5.id
+function var_0_0.getLastEpisode(arg_10_0)
+	for iter_10_0 = #arg_10_0._episodeList, 1, -1 do
+		local var_10_0 = arg_10_0._episodeList[iter_10_0]
+
+		if arg_10_0:isEpisodeReallyOpen(var_10_0.id) then
+			return var_10_0.id
 		end
 	end
 
-	return slot0._episodeList[1] and slot1.id
+	local var_10_1 = arg_10_0._episodeList[1]
+
+	return var_10_1 and var_10_1.id
 end
 
-function slot0.getFirstRewardEpisode(slot0)
-	for slot4, slot5 in ipairs(slot0._episodeList) do
-		if slot0:isEpisodeReallyOpen(slot5.id) then
-			if slot0._episdoeInfos[slot5.id] == 0 then
-				return slot5.id
+function var_0_0.getFirstRewardEpisode(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._episodeList) do
+		if arg_11_0:isEpisodeReallyOpen(iter_11_1.id) then
+			if arg_11_0._episdoeInfos[iter_11_1.id] == 0 then
+				return iter_11_1.id
 			end
 		else
-			return slot5.preId
+			return iter_11_1.preId
 		end
 	end
 
-	return slot0._episodeList[#slot0._episodeList] and slot1.id
+	local var_11_0 = arg_11_0._episodeList[#arg_11_0._episodeList]
+
+	return var_11_0 and var_11_0.id
 end
 
-function slot0.setLocalIsPlay(slot0, slot1)
-	PlayerPrefsHelper.setString(string.format("%s_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, PlayerPrefsKey.VersionActivityWarmUpView, slot0.id, slot1), 1)
+function var_0_0.setLocalIsPlay(arg_12_0, arg_12_1)
+	local var_12_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, PlayerPrefsKey.VersionActivityWarmUpView, arg_12_0.id, arg_12_1)
+
+	PlayerPrefsHelper.setString(var_12_0, 1)
 end
 
-function slot0.checkLocalIsPlay(slot0, slot1)
-	if string.nilorempty(PlayerPrefsHelper.getString(string.format("%s_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, PlayerPrefsKey.VersionActivityWarmUpView, slot0.id, slot1), "")) then
+function var_0_0.checkLocalIsPlay(arg_13_0, arg_13_1)
+	local var_13_0 = string.format("%s_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, PlayerPrefsKey.VersionActivityWarmUpView, arg_13_0.id, arg_13_1)
+	local var_13_1 = PlayerPrefsHelper.getString(var_13_0, "")
+
+	if string.nilorempty(var_13_1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.setOldEpisode(slot0, slot1)
-	slot0._oldDict[slot1] = true
+function var_0_0.setOldEpisode(arg_14_0, arg_14_1)
+	arg_14_0._oldDict[arg_14_1] = true
 end
 
-function slot0.checkIsOldEpisode(slot0, slot1)
-	return slot0._oldDict[slot1]
+function var_0_0.checkIsOldEpisode(arg_15_0, arg_15_1)
+	return arg_15_0._oldDict[arg_15_1]
 end
 
-function slot0.getEpisodeCount(slot0)
-	return #slot0._episodeList
+function var_0_0.getEpisodeCount(arg_16_0)
+	return #arg_16_0._episodeList
 end
 
-function slot0.getEpisodeList(slot0)
-	return slot0._episodeList
+function var_0_0.getEpisodeList(arg_17_0)
+	return arg_17_0._episodeList
 end
 
-function slot0.setSelectEpisodeId(slot0, slot1)
-	slot0._selectId = slot1
+function var_0_0.setSelectEpisodeId(arg_18_0, arg_18_1)
+	arg_18_0._selectId = arg_18_1
 end
 
-function slot0.getSelectEpisodeId(slot0)
-	if not slot0._selectId then
-		slot0._selectId = slot0:getFirstRewardEpisode()
+function var_0_0.getSelectEpisodeId(arg_19_0)
+	if not arg_19_0._selectId then
+		arg_19_0._selectId = arg_19_0:getFirstRewardEpisode()
 	end
 
-	return slot0._selectId
+	return arg_19_0._selectId
 end
 
-function slot0.isAllEpisodeFinish(slot0)
-	for slot4, slot5 in ipairs(slot0._episodeList) do
-		if not slot0._episdoeInfos[slot5.id] or slot6 == 0 then
+function var_0_0.isAllEpisodeFinish(arg_20_0)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0._episodeList) do
+		local var_20_0 = arg_20_0._episdoeInfos[iter_20_1.id]
+
+		if not var_20_0 or var_20_0 == 0 then
 			return false
 		end
 	end
@@ -168,13 +191,13 @@ function slot0.isAllEpisodeFinish(slot0)
 	return true
 end
 
-function slot0.isHasEpisodeCanReceiveReward(slot0, slot1)
-	if slot1 then
-		return slot0._episdoeInfos[slot1] == 0
+function var_0_0.isHasEpisodeCanReceiveReward(arg_21_0, arg_21_1)
+	if arg_21_1 then
+		return arg_21_0._episdoeInfos[arg_21_1] == 0
 	end
 
-	for slot5, slot6 in ipairs(slot0._episodeList) do
-		if slot0._episdoeInfos[slot6.id] == 0 then
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._episodeList) do
+		if arg_21_0._episdoeInfos[iter_21_1.id] == 0 then
 			return true
 		end
 	end
@@ -182,19 +205,25 @@ function slot0.isHasEpisodeCanReceiveReward(slot0, slot1)
 	return false
 end
 
-function slot0.isFirstCheckEpisode(slot0, slot1)
-	return PlayerPrefsHelper.getNumber(string.format("%s_%s_%s_%s", slot0._userId, PlayerPrefsKey.Activity125FirstCheckEpisode, slot0.id, slot1), 0) == 0
+function var_0_0.isFirstCheckEpisode(arg_22_0, arg_22_1)
+	local var_22_0 = string.format("%s_%s_%s_%s", arg_22_0._userId, PlayerPrefsKey.Activity125FirstCheckEpisode, arg_22_0.id, arg_22_1)
+
+	return PlayerPrefsHelper.getNumber(var_22_0, 0) == 0
 end
 
-function slot0.setHasCheckEpisode(slot0, slot1)
-	if slot0:isFirstCheckEpisode(slot1) then
-		PlayerPrefsHelper.setNumber(string.format("%s_%s_%s_%s", slot0._userId, PlayerPrefsKey.Activity125FirstCheckEpisode, slot0.id, slot1), 1)
+function var_0_0.setHasCheckEpisode(arg_23_0, arg_23_1)
+	local var_23_0 = string.format("%s_%s_%s_%s", arg_23_0._userId, PlayerPrefsKey.Activity125FirstCheckEpisode, arg_23_0.id, arg_23_1)
+
+	if arg_23_0:isFirstCheckEpisode(arg_23_1) then
+		PlayerPrefsHelper.setNumber(var_23_0, 1)
 	end
 end
 
-function slot0.hasEpisodeCanCheck(slot0)
-	for slot4, slot5 in ipairs(slot0._episodeList) do
-		if slot0:isEpisodeReallyOpen(slot5.id) and slot0:isFirstCheckEpisode(slot6) then
+function var_0_0.hasEpisodeCanCheck(arg_24_0)
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0._episodeList) do
+		local var_24_0 = iter_24_1.id
+
+		if arg_24_0:isEpisodeReallyOpen(var_24_0) and arg_24_0:isFirstCheckEpisode(var_24_0) then
 			return true
 		end
 	end
@@ -202,9 +231,12 @@ function slot0.hasEpisodeCanCheck(slot0)
 	return false
 end
 
-function slot0.hasEpisodeCanGetReward(slot0)
-	for slot4, slot5 in ipairs(slot0._episodeList) do
-		if slot0._episdoeInfos[slot5.id] == 0 and slot0:checkLocalIsPlay(slot5.id) then
+function var_0_0.hasEpisodeCanGetReward(arg_25_0)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_0._episodeList) do
+		local var_25_0 = arg_25_0._episdoeInfos[iter_25_1.id]
+		local var_25_1 = arg_25_0:checkLocalIsPlay(iter_25_1.id)
+
+		if var_25_0 == 0 and var_25_1 then
 			return true
 		end
 	end
@@ -212,15 +244,20 @@ function slot0.hasEpisodeCanGetReward(slot0)
 	return false
 end
 
-function slot0.getRLOC(slot0, slot1)
-	slot3 = slot0:checkLocalIsPlay(slot1)
+function var_0_0.getRLOC(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:isEpisodeFinished(arg_26_1)
+	local var_26_1 = arg_26_0:checkLocalIsPlay(arg_26_1)
+	local var_26_2 = arg_26_0:checkIsOldEpisode(arg_26_1)
+	local var_26_3 = not var_26_0 and var_26_1
 
-	return slot2, slot3, slot0:checkIsOldEpisode(slot1), not slot0:isEpisodeFinished(slot1) and slot3
+	return var_26_0, var_26_1, var_26_2, var_26_3
 end
 
-function slot0.hasRedDot(slot0)
-	for slot4, slot5 in ipairs(slot0._episodeList) do
-		if slot0:isEpisodeReallyOpen(slot5.id) and slot0:isHasEpisodeCanReceiveReward(slot6) then
+function var_0_0.hasRedDot(arg_27_0)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0._episodeList) do
+		local var_27_0 = iter_27_1.id
+
+		if arg_27_0:isEpisodeReallyOpen(var_27_0) and arg_27_0:isHasEpisodeCanReceiveReward(var_27_0) then
 			return true
 		end
 	end
@@ -228,4 +265,4 @@ function slot0.hasRedDot(slot0)
 	return false
 end
 
-return slot0
+return var_0_0

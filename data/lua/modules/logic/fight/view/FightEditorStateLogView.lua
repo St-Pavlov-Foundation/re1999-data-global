@@ -1,234 +1,354 @@
-module("modules.logic.fight.view.FightEditorStateLogView", package.seeall)
+﻿module("modules.logic.fight.view.FightEditorStateLogView", package.seeall)
 
-slot0 = class("FightEditorStateLogView", BaseViewExtended)
+local var_0_0 = class("FightEditorStateLogView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._btnListRoot = gohelper.findChild(slot0.viewGO, "btnScrill/Viewport/Content")
-	slot0._btnModel = gohelper.findChild(slot0._btnListRoot, "btnModel")
-	slot0._logText = gohelper.findChildText(slot0.viewGO, "ScrollView/Viewport/Content/logText")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnListRoot = gohelper.findChild(arg_1_0.viewGO, "btnScrill/Viewport/Content")
+	arg_1_0._btnModel = gohelper.findChild(arg_1_0._btnListRoot, "btnModel")
+	arg_1_0._logText = gohelper.findChildText(arg_1_0.viewGO, "ScrollView/Viewport/Content/logText")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_5_0)
+	return
 end
 
-function slot0.processStr(slot0)
-	slot2, slot3 = string.find(slot0, "cardInfoList.-heroId: [-%d]+")
-	slot4 = ""
-	slot5 = ""
+function var_0_0.processStr(arg_6_0)
+	local var_6_0 = "cardInfoList.-heroId: [-%d]+"
+	local var_6_1, var_6_2 = string.find(arg_6_0, var_6_0)
+	local var_6_3 = ""
+	local var_6_4 = ""
 
-	while slot2 do
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.gsub(string.gsub(string.sub(slot0, slot2, -1), "(uid: ([-%d]+))", function (slot0, slot1)
-			slot2 = ""
-			slot3 = ""
+	while var_6_1 do
+		local var_6_5 = string.sub(arg_6_0, 1, var_6_1 - 1)
+		local var_6_6 = string.sub(arg_6_0, var_6_1, -1)
+		local var_6_7 = string.gsub(var_6_6, "(uid: ([-%d]+))", function(arg_7_0, arg_7_1)
+			local var_7_0 = ""
+			local var_7_1 = ""
+			local var_7_2 = FightLocalDataMgr.instance:getEntityById(arg_7_1)
 
-			if FightLocalDataMgr.instance:getEntityById(slot1) then
-				slot3 = slot4:getEntityName()
+			if var_7_2 then
+				var_7_1 = var_7_2:getEntityName()
 			end
 
-			return slot2 .. slot0 .. " 卡牌持有者:" .. slot3
-		end, 1), "(skillId: ([-%d]+))", function (slot0, slot1)
-			return "" .. slot0 .. " 技能名称:" .. (lua_skill.configDict[tonumber(slot1)] and slot4.name or "")
-		end, 1), "(heroId: ([-%d]+))", function (slot0, slot1)
-			return "" .. slot0 .. " 模型id(肉鸽支援技能牌会用到):" .. slot1
-		end, 1), slot1, slot2 + 1)
+			return var_7_0 .. arg_7_0 .. " 卡牌持有者:" .. var_7_1
+		end, 1)
+		local var_6_8 = string.gsub(var_6_7, "(skillId: ([-%d]+))", function(arg_8_0, arg_8_1)
+			local var_8_0 = ""
+			local var_8_1 = tonumber(arg_8_1)
+			local var_8_2 = lua_skill.configDict[var_8_1]
+
+			return var_8_0 .. arg_8_0 .. " 技能名称:" .. (var_8_2 and var_8_2.name or "")
+		end, 1)
+		local var_6_9 = string.gsub(var_6_8, "(heroId: ([-%d]+))", function(arg_9_0, arg_9_1)
+			return "" .. arg_9_0 .. " 模型id(肉鸽支援技能牌会用到):" .. arg_9_1
+		end, 1)
+
+		arg_6_0 = var_6_5 .. var_6_9
+
+		local var_6_10
+
+		var_6_1, var_6_10 = string.find(arg_6_0, var_6_0, var_6_1 + 1)
 	end
 
-	slot2, slot3 = string.find(slot0, "modelId: %d+")
+	local var_6_11 = "modelId: %d+"
+	local var_6_12, var_6_13 = string.find(arg_6_0, var_6_11)
 
-	while slot2 do
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.sub(slot0, slot2, -1), "(modelId: (%d+))", function (slot0, slot1)
-			slot3 = lua_character.configDict[tonumber(slot1)] or lua_monster.configDict[slot2]
+	while var_6_12 do
+		local var_6_14 = string.sub(arg_6_0, 1, var_6_12 - 1)
+		local var_6_15 = string.sub(arg_6_0, var_6_12, -1)
+		local var_6_16 = string.gsub(var_6_15, "(modelId: (%d+))", function(arg_10_0, arg_10_1)
+			local var_10_0 = tonumber(arg_10_1)
+			local var_10_1 = lua_character.configDict[var_10_0] or lua_monster.configDict[var_10_0]
+			local var_10_2 = var_10_1 and var_10_1.name or ""
 
-			return slot0 .. " 角色名称:" .. (slot3 and slot3.name or "")
-		end, 1), slot1, slot2 + 1)
+			return arg_10_0 .. " 角色名称:" .. var_10_2
+		end, 1)
+
+		arg_6_0 = var_6_14 .. var_6_16
+
+		local var_6_17
+
+		var_6_12, var_6_17 = string.find(arg_6_0, var_6_11, var_6_12 + 1)
 	end
 
-	slot2, slot3 = string.find(slot0, "skin: [-%d]+")
+	local var_6_18 = "skin: [-%d]+"
+	local var_6_19, var_6_20 = string.find(arg_6_0, var_6_18)
 
-	while slot2 do
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.sub(slot0, slot2, -1), "(skin: ([-%d]+))", function (slot0, slot1)
-			return slot0 .. " 皮肤id:" .. slot1
-		end, 1), slot1, slot2 + 1)
+	while var_6_19 do
+		local var_6_21 = string.sub(arg_6_0, 1, var_6_19 - 1)
+		local var_6_22 = string.sub(arg_6_0, var_6_19, -1)
+		local var_6_23 = string.gsub(var_6_22, "(skin: ([-%d]+))", function(arg_11_0, arg_11_1)
+			return arg_11_0 .. " 皮肤id:" .. arg_11_1
+		end, 1)
+
+		arg_6_0 = var_6_21 .. var_6_23
+
+		local var_6_24
+
+		var_6_19, var_6_24 = string.find(arg_6_0, var_6_18, var_6_19 + 1)
 	end
 
-	slot2, slot3 = string.find(slot0, "actType: [-%d]+")
+	local var_6_25 = "actType: [-%d]+"
+	local var_6_26, var_6_27 = string.find(arg_6_0, var_6_25)
 
-	while slot2 do
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.sub(slot0, slot2, -1), "(actType: ([-%d]+))", function (slot0, slot1)
-			if slot1 == "1" then
-				return slot0 .. " 步骤类型:技能"
-			elseif slot1 == "2" then
-				return slot0 .. " 步骤类型:buff"
-			elseif slot1 == "3" then
-				return slot0 .. " 步骤类型:效果"
-			elseif slot1 == "4" then
-				return slot0 .. " 步骤类型:换人"
-			elseif slot1 == "5" then
-				return slot0 .. " 步骤类型:换波次时机（供客户端使用）"
+	while var_6_26 do
+		local var_6_28 = string.sub(arg_6_0, 1, var_6_26 - 1)
+		local var_6_29 = string.sub(arg_6_0, var_6_26, -1)
+		local var_6_30 = string.gsub(var_6_29, "(actType: ([-%d]+))", function(arg_12_0, arg_12_1)
+			if arg_12_1 == "1" then
+				return arg_12_0 .. " 步骤类型:技能"
+			elseif arg_12_1 == "2" then
+				return arg_12_0 .. " 步骤类型:buff"
+			elseif arg_12_1 == "3" then
+				return arg_12_0 .. " 步骤类型:效果"
+			elseif arg_12_1 == "4" then
+				return arg_12_0 .. " 步骤类型:换人"
+			elseif arg_12_1 == "5" then
+				return arg_12_0 .. " 步骤类型:换波次时机（供客户端使用）"
 			end
 
-			return slot0
-		end, 1), slot1, slot2 + 1)
+			return arg_12_0
+		end, 1)
+
+		arg_6_0 = var_6_28 .. var_6_30
+
+		local var_6_31
+
+		var_6_26, var_6_31 = string.find(arg_6_0, var_6_25, var_6_26 + 1)
 	end
 
-	slot2, slot3 = string.find(slot0, "步骤类型:技能")
+	local var_6_32 = "步骤类型:技能"
+	local var_6_33, var_6_34 = string.find(arg_6_0, var_6_32)
 
-	while slot2 do
-		slot6 = nil
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.gsub(string.gsub(string.sub(slot0, slot2, -1), "(fromId: ([-%d]+))", function (slot0, slot1)
-			slot2 = slot1
-			slot3 = ""
+	while var_6_33 do
+		local var_6_35 = string.sub(arg_6_0, 1, var_6_33 - 1)
+		local var_6_36 = string.sub(arg_6_0, var_6_33, -1)
+		local var_6_37
+		local var_6_38 = string.gsub(var_6_36, "(fromId: ([-%d]+))", function(arg_13_0, arg_13_1)
+			local var_13_0 = arg_13_1
+			local var_13_1 = ""
 
-			if slot1 == FightEntityScene.MySideId then
-				slot3 = "维尔汀"
-			elseif slot1 == FightEntityScene.EnemySideId then
-				slot3 = "重塑之手"
+			if arg_13_1 == FightEntityScene.MySideId then
+				var_13_1 = "维尔汀"
+			elseif arg_13_1 == FightEntityScene.EnemySideId then
+				var_13_1 = "重塑之手"
 			else
-				uv0 = slot2
+				var_6_37 = var_13_0
 
-				if FightLocalDataMgr.instance:getEntityById(slot2) then
-					slot3 = slot4:getEntityName()
+				local var_13_2 = FightLocalDataMgr.instance:getEntityById(var_13_0)
+
+				if var_13_2 then
+					var_13_1 = var_13_2:getEntityName()
 				end
 			end
 
-			return slot0 .. " 技能发起者:" .. slot3
-		end, 1), "(toId: ([-%d]+))", function (slot0, slot1)
-			slot2 = slot1
-			slot3 = ""
+			return arg_13_0 .. " 技能发起者:" .. var_13_1
+		end, 1)
+		local var_6_39 = string.gsub(var_6_38, "(toId: ([-%d]+))", function(arg_14_0, arg_14_1)
+			local var_14_0 = arg_14_1
+			local var_14_1 = ""
 
-			if slot1 == FightEntityScene.MySideId then
-				slot3 = "维尔汀"
-			elseif slot1 == FightEntityScene.EnemySideId then
-				slot3 = "重塑之手"
-			elseif FightLocalDataMgr.instance:getEntityById(slot2) then
-				slot3 = slot4:getEntityName()
+			if arg_14_1 == FightEntityScene.MySideId then
+				var_14_1 = "维尔汀"
+			elseif arg_14_1 == FightEntityScene.EnemySideId then
+				var_14_1 = "重塑之手"
+			else
+				local var_14_2 = FightLocalDataMgr.instance:getEntityById(var_14_0)
+
+				if var_14_2 then
+					var_14_1 = var_14_2:getEntityName()
+				end
 			end
 
-			return slot0 .. " 技能承受者:" .. slot3
-		end, 1), "(actId: ([-%d]+))", function (slot0, slot1)
-			return slot0 .. " 技能id:" .. slot1 .. " 技能名字:" .. (lua_skill.configDict[tonumber(slot1)] and slot3.name or "") .. " timeline : " .. FightLogHelper.getTimelineName(uv0, slot2)
-		end, 1), slot1, slot2 + 1)
+			return arg_14_0 .. " 技能承受者:" .. var_14_1
+		end, 1)
+		local var_6_40 = string.gsub(var_6_39, "(actId: ([-%d]+))", function(arg_15_0, arg_15_1)
+			local var_15_0 = tonumber(arg_15_1)
+			local var_15_1 = lua_skill.configDict[var_15_0]
+			local var_15_2 = var_15_1 and var_15_1.name or ""
+
+			return arg_15_0 .. " 技能id:" .. arg_15_1 .. " 技能名字:" .. var_15_2 .. " timeline : " .. FightLogHelper.getTimelineName(var_6_37, var_15_0)
+		end, 1)
+
+		arg_6_0 = var_6_35 .. var_6_40
+
+		local var_6_41
+
+		var_6_33, var_6_41 = string.find(arg_6_0, var_6_32, var_6_33 + 1)
 	end
 
-	slot2, slot3 = string.find(slot0, "targetId: [-%d]+")
+	local var_6_42 = "targetId: [-%d]+"
+	local var_6_43, var_6_44 = string.find(arg_6_0, var_6_42)
 
-	while slot2 do
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.sub(slot0, slot2, -1), "(targetId: ([-%d]+))", function (slot0, slot1)
-			slot2 = slot1
-			slot3 = ""
+	while var_6_43 do
+		local var_6_45 = string.sub(arg_6_0, 1, var_6_43 - 1)
+		local var_6_46 = string.sub(arg_6_0, var_6_43, -1)
+		local var_6_47 = string.gsub(var_6_46, "(targetId: ([-%d]+))", function(arg_16_0, arg_16_1)
+			local var_16_0 = arg_16_1
+			local var_16_1 = ""
 
-			if slot1 == FightEntityScene.MySideId then
-				slot3 = "维尔汀"
-			elseif slot1 == FightEntityScene.EnemySideId then
-				slot3 = "重塑之手"
-			elseif FightLocalDataMgr.instance:getEntityById(slot2) then
-				slot3 = slot4:getEntityName()
+			if arg_16_1 == FightEntityScene.MySideId then
+				var_16_1 = "维尔汀"
+			elseif arg_16_1 == FightEntityScene.EnemySideId then
+				var_16_1 = "重塑之手"
+			else
+				local var_16_2 = FightLocalDataMgr.instance:getEntityById(var_16_0)
+
+				if var_16_2 then
+					var_16_1 = var_16_2:getEntityName()
+				end
 			end
 
-			return slot0 .. " 作用对象:" .. slot3
-		end, 1), slot1, slot2 + 1)
+			return arg_16_0 .. " 作用对象:" .. var_16_1
+		end, 1)
+
+		arg_6_0 = var_6_45 .. var_6_47
+
+		local var_6_48
+
+		var_6_43, var_6_48 = string.find(arg_6_0, var_6_42, var_6_43 + 1)
 	end
 
-	slot2, slot3 = string.find(slot0, "buffId: %d+")
+	local var_6_49 = "buffId: %d+"
+	local var_6_50, var_6_51 = string.find(arg_6_0, var_6_49)
 
-	while slot2 do
-		slot2, slot3 = string.find(string.sub(slot0, 1, slot2 - 1) .. string.gsub(string.sub(slot0, slot2, -1), "(buffId: ([-%d]+))", function (slot0, slot1)
-			return slot0 .. " buff名称:" .. (lua_skill_buff.configDict[tonumber(slot1)] and slot3.name or "")
-		end, 1), slot1, slot2 + 1)
+	while var_6_50 do
+		local var_6_52 = string.sub(arg_6_0, 1, var_6_50 - 1)
+		local var_6_53 = string.sub(arg_6_0, var_6_50, -1)
+		local var_6_54 = string.gsub(var_6_53, "(buffId: ([-%d]+))", function(arg_17_0, arg_17_1)
+			local var_17_0 = tonumber(arg_17_1)
+			local var_17_1 = lua_skill_buff.configDict[var_17_0]
+			local var_17_2 = var_17_1 and var_17_1.name or ""
+
+			return arg_17_0 .. " buff名称:" .. var_17_2
+		end, 1)
+
+		arg_6_0 = var_6_52 .. var_6_54
+
+		local var_6_55
+
+		var_6_50, var_6_55 = string.find(arg_6_0, var_6_49, var_6_50 + 1)
 	end
 
-	return uv0.typeExplain(slot0)
+	arg_6_0 = var_0_0.typeExplain(arg_6_0)
+
+	return arg_6_0
 end
 
-function slot0.onOpen(slot0)
-	slot0._type2FuncName = {}
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0._type2FuncName = {}
 
-	if not GameSceneMgr.instance:getCurScene().fightLog then
+	local var_18_0 = GameSceneMgr.instance:getCurScene().fightLog
+
+	if not var_18_0 then
 		return
 	end
 
-	slot0._strList = {}
+	local var_18_1 = var_18_0:getProtoList()
 
-	for slot6, slot7 in ipairs(slot1:getProtoList()) do
-		if slot7.protoType == FightEnum.CacheProtoType.Round then
-			slot0:addLog("回合" .. slot7.round)
-			slot0:addLog(tostring(slot7.proto))
-		elseif slot7.protoType == FightEnum.CacheProtoType.Fight then
-			slot0:addLog("更新战场")
-			slot0:addLog(tostring(slot7.proto))
+	arg_18_0._strList = {}
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		if iter_18_1.protoType == FightEnum.CacheProtoType.Round then
+			arg_18_0:addLog("回合" .. iter_18_1.round)
+			arg_18_0:addLog(tostring(iter_18_1.proto))
+		elseif iter_18_1.protoType == FightEnum.CacheProtoType.Fight then
+			arg_18_0:addLog("更新战场")
+			arg_18_0:addLog(tostring(iter_18_1.proto))
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0._strList) do
-		slot3 = "" .. slot8 .. "\n"
+	local var_18_2 = ""
+
+	for iter_18_2, iter_18_3 in ipairs(arg_18_0._strList) do
+		var_18_2 = var_18_2 .. iter_18_3 .. "\n"
 	end
 
-	slot0._logText.text = uv0.processStr(slot3)
+	arg_18_0._logText.text = var_0_0.processStr(var_18_2)
 
-	slot0:com_createObjList(slot0._onBtnItemShow, {
+	local var_18_3 = {
 		{
 			name = "复制"
 		}
-	}, slot0._btnListRoot, slot0._btnModel)
-end
-
-function slot0._onBtnItemShow(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "text").text = slot2.name
-
-	slot0:addClickCb(gohelper.findChildClick(slot1, "btn"), slot0["_onBtnClick" .. slot3], slot0)
-end
-
-function slot0._onBtnClick1(slot0)
-	ZProj.UGUIHelper.CopyText(slot0._logText.text)
-end
-
-function slot0.addLog(slot0, slot1)
-	table.insert(slot0._strList, slot1)
-end
-
-function slot0.onClose(slot0)
-end
-
-function slot0.onDestroyView(slot0)
-end
-
-function slot0.typeExplain(slot0)
-	slot2 = io.open("Assets/ZProj/Scripts/Lua/modules/logic/fight/config/FightEnum.lua", "r")
-	slot3 = slot2:read("*a")
-
-	slot2:close()
-
-	slot4, slot5 = string.find(slot3, "FightEnum.EffectType = {.-}")
-	slot6 = {
-		[slot10] = slot11
 	}
 
-	for slot10, slot11 in string.gmatch(string.gsub(string.sub(slot3, slot4, slot5), "FightEnum.EffectType =", ""), "=.-([-%d]+).-%-%-(.-)\n") do
-		-- Nothing
-	end
-
-	slot4, slot5 = string.find(slot0, "effectType: [-%d]+")
-
-	while slot4 do
-		slot4, slot5 = string.find(string.sub(slot0, 1, slot4 - 1) .. string.gsub(string.sub(slot0, slot4, -1), "(effectType: ([-%d]+))", function (slot0, slot1)
-			return slot0 .. " " .. (uv0[slot1] or "")
-		end, 1), slot7, slot4 + 1)
-	end
-
-	return slot0
+	arg_18_0:com_createObjList(arg_18_0._onBtnItemShow, var_18_3, arg_18_0._btnListRoot, arg_18_0._btnModel)
 end
 
-return slot0
+function var_0_0._onBtnItemShow(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	gohelper.findChildText(arg_19_1, "text").text = arg_19_2.name
+
+	local var_19_0 = gohelper.findChildClick(arg_19_1, "btn")
+
+	arg_19_0:addClickCb(var_19_0, arg_19_0["_onBtnClick" .. arg_19_3], arg_19_0)
+end
+
+function var_0_0._onBtnClick1(arg_20_0)
+	ZProj.UGUIHelper.CopyText(arg_20_0._logText.text)
+end
+
+function var_0_0.addLog(arg_21_0, arg_21_1)
+	table.insert(arg_21_0._strList, arg_21_1)
+end
+
+function var_0_0.onClose(arg_22_0)
+	return
+end
+
+function var_0_0.onDestroyView(arg_23_0)
+	return
+end
+
+function var_0_0.typeExplain(arg_24_0)
+	local var_24_0 = "Assets/ZProj/Scripts/Lua/modules/logic/fight/config/FightEnum.lua"
+	local var_24_1 = io.open(var_24_0, "r")
+	local var_24_2 = var_24_1:read("*a")
+
+	var_24_1:close()
+
+	local var_24_3, var_24_4 = string.find(var_24_2, "FightEnum.EffectType = {.-}")
+	local var_24_5 = string.sub(var_24_2, var_24_3, var_24_4)
+	local var_24_6 = string.gsub(var_24_5, "FightEnum.EffectType =", "")
+	local var_24_7 = {}
+
+	for iter_24_0, iter_24_1 in string.gmatch(var_24_6, "=.-([-%d]+).-%-%-(.-)\n") do
+		var_24_7[iter_24_0] = iter_24_1
+	end
+
+	local var_24_8 = "effectType: [-%d]+"
+	local var_24_9, var_24_10 = string.find(arg_24_0, var_24_8)
+
+	while var_24_9 do
+		local var_24_11 = string.sub(arg_24_0, 1, var_24_9 - 1)
+		local var_24_12 = string.sub(arg_24_0, var_24_9, -1)
+		local var_24_13 = string.gsub(var_24_12, "(effectType: ([-%d]+))", function(arg_25_0, arg_25_1)
+			return arg_25_0 .. " " .. (var_24_7[arg_25_1] or "")
+		end, 1)
+
+		arg_24_0 = var_24_11 .. var_24_13
+
+		local var_24_14
+
+		var_24_9, var_24_14 = string.find(arg_24_0, var_24_8, var_24_9 + 1)
+	end
+
+	return arg_24_0
+end
+
+return var_0_0

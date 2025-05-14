@@ -1,41 +1,45 @@
-module("modules.logic.guide.controller.action.impl.GuideActionPlayStory", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionPlayStory", package.seeall)
 
-slot0 = class("GuideActionPlayStory", BaseGuideAction)
+local var_0_0 = class("GuideActionPlayStory", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._storyId = tonumber(slot3) or nil
+	arg_1_0._storyId = tonumber(arg_1_3) or nil
 
-	if slot0._storyId == nil then
-		slot0._storyIds = string.splitToNumber(slot3, "#")
+	if arg_1_0._storyId == nil then
+		arg_1_0._storyIds = string.splitToNumber(arg_1_3, "#")
 	end
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	if slot0._storyId then
-		if StoryModel.instance:isPrologueSkip(slot0._storyId) then
-			StoryController.instance:setStoryFinished(slot0._storyId)
-			StoryRpc.instance:sendUpdateStoryRequest(slot0._storyId, -1, 0)
-			StoryController.instance:dispatchEvent(StoryEvent.Finish, slot0._storyId)
+	if arg_2_0._storyId then
+		if StoryModel.instance:isPrologueSkip(arg_2_0._storyId) then
+			StoryController.instance:setStoryFinished(arg_2_0._storyId)
+			StoryRpc.instance:sendUpdateStoryRequest(arg_2_0._storyId, -1, 0)
+			StoryController.instance:dispatchEvent(StoryEvent.Finish, arg_2_0._storyId)
 		else
-			StoryController.instance:playStory(slot0._storyId, {
-				mark = true
-			})
+			local var_2_0 = {}
+
+			var_2_0.mark = true
+
+			StoryController.instance:playStory(arg_2_0._storyId, var_2_0)
 		end
 
-		slot0:onDone(true)
-	elseif slot0._storyIds and #slot0._storyIds > 0 then
-		StoryController.instance:playStories(slot0._storyIds, {
-			mark = true
-		})
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
+	elseif arg_2_0._storyIds and #arg_2_0._storyIds > 0 then
+		local var_2_1 = {}
+
+		var_2_1.mark = true
+
+		StoryController.instance:playStories(arg_2_0._storyIds, var_2_1)
+		arg_2_0:onDone(true)
 	else
-		logError("Guide story id nil, guide_" .. slot0.guideId .. "_" .. slot0.stepId)
-		slot0:onDone(false)
+		logError("Guide story id nil, guide_" .. arg_2_0.guideId .. "_" .. arg_2_0.stepId)
+		arg_2_0:onDone(false)
 	end
 end
 
-return slot0
+return var_0_0

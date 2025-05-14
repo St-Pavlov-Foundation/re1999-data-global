@@ -1,50 +1,52 @@
-module("modules.logic.fight.view.FightTechniqueSelectItem", package.seeall)
+﻿module("modules.logic.fight.view.FightTechniqueSelectItem", package.seeall)
 
-slot0 = class("FightTechniqueSelectItem", LuaCompBase)
+local var_0_0 = class("FightTechniqueSelectItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._selectGos = slot0:getUserDataTb_()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._selectGos = arg_1_0:getUserDataTb_()
 
-	for slot5 = 1, 2 do
-		table.insert(slot0._selectGos, gohelper.findChild(slot1, "item" .. slot5))
+	for iter_1_0 = 1, 2 do
+		local var_1_0 = gohelper.findChild(arg_1_1, "item" .. iter_1_0)
+
+		table.insert(arg_1_0._selectGos, var_1_0)
 	end
 
-	slot0._click = gohelper.getClickWithAudio(slot0.go)
+	arg_1_0._click = gohelper.getClickWithAudio(arg_1_0.go)
 end
 
-function slot0.updateItem(slot0, slot1)
-	slot0._index = slot1.index
-	slot0._id = slot1.id
+function var_0_0.updateItem(arg_2_0, arg_2_1)
+	arg_2_0._index = arg_2_1.index
+	arg_2_0._id = arg_2_1.id
 
-	transformhelper.setLocalPos(slot0.go.transform, slot1.pos, 0, 0)
+	transformhelper.setLocalPos(arg_2_0.go.transform, arg_2_1.pos, 0, 0)
 end
 
-function slot0.setView(slot0, slot1)
-	slot0._view = slot1
+function var_0_0.setView(arg_3_0, arg_3_1)
+	arg_3_0._view = arg_3_1
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot2 = slot0._index == slot1
+function var_0_0.setSelect(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._index == arg_4_1
 
-	gohelper.setActive(slot0._selectGos[1], slot2)
-	gohelper.setActive(slot0._selectGos[2], not slot2)
+	gohelper.setActive(arg_4_0._selectGos[1], var_4_0)
+	gohelper.setActive(arg_4_0._selectGos[2], not var_4_0)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_5_0)
+	arg_5_0._click:AddClickListener(arg_5_0._onClickThis, arg_5_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_6_0)
+	arg_6_0._click:RemoveClickListener()
 end
 
-function slot0.onDestroy(slot0)
-	slot0._view = nil
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0._view = nil
 end
 
-function slot0._onClickThis(slot0)
-	slot0._view:setSelect(slot0._index)
+function var_0_0._onClickThis(arg_8_0)
+	arg_8_0._view:setSelect(arg_8_0._index)
 end
 
-return slot0
+return var_0_0

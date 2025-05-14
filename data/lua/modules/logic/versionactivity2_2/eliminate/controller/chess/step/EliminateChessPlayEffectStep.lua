@@ -1,31 +1,35 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessPlayEffectStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessPlayEffectStep", package.seeall)
 
-slot0 = class("EliminateChessPlayEffectStep", EliminateChessStepBase)
+local var_0_0 = class("EliminateChessPlayEffectStep", EliminateChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1, slot2, slot0.effectType = EliminateChessModel.instance:getRecordCurNeedShowEffectAndXYAndClear()
+function var_0_0.onStart(arg_1_0)
+	local var_1_0, var_1_1, var_1_2 = EliminateChessModel.instance:getRecordCurNeedShowEffectAndXYAndClear()
 
-	if slot1 == nil or slot2 == nil or slot0.effectType == nil then
-		slot0:onDone(true)
+	arg_1_0.effectType = var_1_2
 
-		return
-	end
-
-	if not EliminateChessItemController.instance:getChessItem(slot1, slot2) then
-		logError("步骤 PlayEffect 棋子：" .. slot1, slot2 .. "不存在")
-		slot0:onDone(true)
+	if var_1_0 == nil or var_1_1 == nil or arg_1_0.effectType == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot5, slot6 = slot4:getGoPos()
+	local var_1_3 = EliminateChessItemController.instance:getChessItem(var_1_0, var_1_1)
 
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, slot0.effectType, slot1, slot2, slot5, slot6, true, slot0._onPlayEnd, slot0)
+	if not var_1_3 then
+		logError("步骤 PlayEffect 棋子：" .. var_1_0, var_1_1 .. "不存在")
+		arg_1_0:onDone(true)
+
+		return
+	end
+
+	local var_1_4, var_1_5 = var_1_3:getGoPos()
+
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, arg_1_0.effectType, var_1_0, var_1_1, var_1_4, var_1_5, true, arg_1_0._onPlayEnd, arg_1_0)
 end
 
-function slot0._onPlayEnd(slot0)
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, slot0.effectType, nil, , 0, 0, false, nil, )
-	slot0:onDone(true)
+function var_0_0._onPlayEnd(arg_2_0)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, arg_2_0.effectType, nil, nil, 0, 0, false, nil, nil)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

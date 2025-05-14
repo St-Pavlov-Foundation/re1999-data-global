@@ -1,17 +1,17 @@
-module("modules.logic.signin.model.SignInMonthCardHistoryMo", package.seeall)
+﻿module("modules.logic.signin.model.SignInMonthCardHistoryMo", package.seeall)
 
-slot0 = pureTable("SignInMonthCardHistoryMo")
+local var_0_0 = pureTable("SignInMonthCardHistoryMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.startTime = 0
-	slot0.endTime = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.startTime = 0
+	arg_1_0.endTime = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.startTime = slot1.startTime
-	slot0.endTime = slot1.endTime
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.startTime = arg_2_1.startTime
+	arg_2_0.endTime = arg_2_1.endTime
 end
 
-return slot0
+return var_0_0

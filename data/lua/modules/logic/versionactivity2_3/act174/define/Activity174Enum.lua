@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity2_3.act174.define.Activity174Enum", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.define.Activity174Enum", package.seeall)
 
-slot0 = _M
-slot0.GameState = {
+local var_0_0 = _M
+
+var_0_0.GameState = {
 	AfterFight = 4,
 	Init = 1,
 	BeforeFight = 3,
@@ -10,13 +11,13 @@ slot0.GameState = {
 	EnterEndless = 998,
 	None = 0
 }
-slot0.FightResult = {
+var_0_0.FightResult = {
 	Win = 1,
 	Lose = 2,
 	Draw = 3,
 	None = 0
 }
-slot0.BagType = {
+var_0_0.BagType = {
 	Collection = "collection",
 	Enhance = "enhance",
 	StartCareer = "startCareer",
@@ -25,12 +26,12 @@ slot0.BagType = {
 	Hero = "hero",
 	StartRare = "startRare"
 }
-slot0.WareType = {
+var_0_0.WareType = {
 	Collection = 2,
 	Hero = 1
 }
-slot0.MaxWareItemSinglePage = 12
-slot0.ConstKey = {
+var_0_0.MaxWareItemSinglePage = 12
+var_0_0.ConstKey = {
 	BetHealth = 3,
 	FreshRoundShopCost = 6,
 	MatchTxt = 16,
@@ -41,37 +42,37 @@ slot0.ConstKey = {
 	FreshShopCost = 4,
 	ShopSlot = 2
 }
-slot0.PrefabPath = {
+var_0_0.PrefabPath = {
 	BattleHero = "ui/viewres/versionactivity_2_3/act174/act174fightheroitem.prefab"
 }
-slot0.ItemTipType = {
+var_0_0.ItemTipType = {
 	Character2 = 5,
 	Buff = 3,
 	Character1 = 4,
 	Character3 = 6,
-	Character = slot0.WareType.Hero,
-	Collection = slot0.WareType.Collection
+	Character = var_0_0.WareType.Hero,
+	Collection = var_0_0.WareType.Collection
 }
-slot0.CollectionColor = {
+var_0_0.CollectionColor = {
 	"587FA1",
 	"8D6993",
 	"B8945F"
 }
-slot0.heroBagIcon = {
+var_0_0.heroBagIcon = {
 	"act174_icon_1",
 	"act174_icon_2",
 	"act174_icon_3"
 }
-slot0.CharacterType = {
+var_0_0.CharacterType = {
 	Monster = "monster",
 	Hero = "hero"
 }
-slot0.BadgeState = {
+var_0_0.BadgeState = {
 	Sp = 3,
 	Light = 2,
 	Normal = 1
 }
-slot0.EffectType = {
+var_0_0.EffectType = {
 	Rebirth = 17,
 	MaybeAddCoin = 18,
 	BuyAddCoin = 3,
@@ -83,4 +84,4 @@ slot0.EffectType = {
 	ReduceHpAddCoin = 4
 }
 
-return slot0
+return var_0_0

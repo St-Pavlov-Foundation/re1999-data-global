@@ -1,351 +1,423 @@
-module("modules.logic.toughbattle.view.ToughBattleMapScene", package.seeall)
+﻿module("modules.logic.toughbattle.view.ToughBattleMapScene", package.seeall)
 
-slot0 = class("ToughBattleMapScene", BaseView)
+local var_0_0 = class("ToughBattleMapScene", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._gofullscreen)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._gofullscreen)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-	slot0:addEventCb(ToughBattleController.instance, ToughBattleEvent.StageUpdate, slot0.loadMap, slot0)
-	slot0:addEventCb(ToughBattleController.instance, ToughBattleEvent.BeginPlayFightSucessAnim, slot0.playSuccAnim, slot0)
-	slot0:addEventCb(ToughBattleController.instance, ToughBattleEvent.GuideSetElementsActive, slot0._setElementsActive, slot0)
-	slot0:addEventCb(ToughBattleController.instance, ToughBattleEvent.GuideClickElement, slot0._guideClickElement, slot0)
-	slot0:addEventCb(ToughBattleController.instance, ToughBattleEvent.GuideFocusElement, slot0._guideFocusElement, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
+	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
+	arg_2_0._drag:AddDragListener(arg_2_0._onDrag, arg_2_0)
+	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
+	arg_2_0:addEventCb(ToughBattleController.instance, ToughBattleEvent.StageUpdate, arg_2_0.loadMap, arg_2_0)
+	arg_2_0:addEventCb(ToughBattleController.instance, ToughBattleEvent.BeginPlayFightSucessAnim, arg_2_0.playSuccAnim, arg_2_0)
+	arg_2_0:addEventCb(ToughBattleController.instance, ToughBattleEvent.GuideSetElementsActive, arg_2_0._setElementsActive, arg_2_0)
+	arg_2_0:addEventCb(ToughBattleController.instance, ToughBattleEvent.GuideClickElement, arg_2_0._guideClickElement, arg_2_0)
+	arg_2_0:addEventCb(ToughBattleController.instance, ToughBattleEvent.GuideFocusElement, arg_2_0._guideFocusElement, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-	slot0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.StageUpdate, slot0.loadMap, slot0)
-	slot0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.BeginPlayFightSucessAnim, slot0.playSuccAnim, slot0)
-	slot0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.GuideSetElementsActive, slot0._setElementsActive, slot0)
-	slot0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.GuideClickElement, slot0._guideClickElement, slot0)
-	slot0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.GuideFocusElement, slot0._guideFocusElement, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._drag:RemoveDragBeginListener()
+	arg_3_0._drag:RemoveDragListener()
+	arg_3_0._drag:RemoveDragEndListener()
+	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
+	arg_3_0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.StageUpdate, arg_3_0.loadMap, arg_3_0)
+	arg_3_0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.BeginPlayFightSucessAnim, arg_3_0.playSuccAnim, arg_3_0)
+	arg_3_0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.GuideSetElementsActive, arg_3_0._setElementsActive, arg_3_0)
+	arg_3_0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.GuideClickElement, arg_3_0._guideClickElement, arg_3_0)
+	arg_3_0:removeEventCb(ToughBattleController.instance, ToughBattleEvent.GuideFocusElement, arg_3_0._guideFocusElement, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._tempVector = Vector3()
-	slot0._dragDeltaPos = Vector3()
-	slot0._scenePos = Vector3()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._tempVector = Vector3()
+	arg_4_0._dragDeltaPos = Vector3()
+	arg_4_0._scenePos = Vector3()
 
-	slot0:_initMapRootNode()
+	arg_4_0:_initMapRootNode()
 end
 
-function slot0.onOpen(slot0)
-	slot0:loadMap()
-	MainCameraMgr.instance:addView(slot0.viewName, slot0._initCamera, nil, slot0)
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:loadMap()
+	MainCameraMgr.instance:addView(arg_5_0.viewName, arg_5_0._initCamera, nil, arg_5_0)
 end
 
-function slot0._onScreenResize(slot0)
-	if slot0._sceneGo then
-		CameraMgr.instance:getMainCamera().orthographicSize = ToughBattleEnum.DungeonMapCameraSize * GameUtil.getAdapterScale()
+function var_0_0._onScreenResize(arg_6_0)
+	if arg_6_0._sceneGo then
+		local var_6_0 = CameraMgr.instance:getMainCamera()
+		local var_6_1 = GameUtil.getAdapterScale()
 
-		slot0:_initScene()
+		var_6_0.orthographicSize = ToughBattleEnum.DungeonMapCameraSize * var_6_1
+
+		arg_6_0:_initScene()
 	end
 end
 
-function slot0._initCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
-	slot1.orthographicSize = ToughBattleEnum.DungeonMapCameraSize * GameUtil.getAdapterScale()
+function var_0_0._initCamera(arg_7_0)
+	local var_7_0 = CameraMgr.instance:getMainCamera()
+
+	var_7_0.orthographic = true
+
+	local var_7_1 = GameUtil.getAdapterScale()
+
+	var_7_0.orthographicSize = ToughBattleEnum.DungeonMapCameraSize * var_7_1
 end
 
-function slot0.loadMap(slot0)
-	if slot0._mapLoader then
-		slot0._oldMapLoader = slot0._mapLoader
+function var_0_0.loadMap(arg_8_0)
+	if arg_8_0._mapLoader then
+		arg_8_0._oldMapLoader = arg_8_0._mapLoader
 	end
 
-	slot0._mapCfg = lua_chapter_map.configDict[slot0:getNowShowStage() == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2]
-	slot0._mapLoader = MultiAbLoader.New()
-	slot3 = {}
+	local var_8_0 = arg_8_0:getNowShowStage()
+	local var_8_1 = var_8_0 == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2
 
-	slot0:buildLoadRes(slot3, slot0._mapCfg, slot1)
+	arg_8_0._mapCfg = lua_chapter_map.configDict[var_8_1]
+	arg_8_0._mapLoader = MultiAbLoader.New()
 
-	slot0._sceneUrl = slot3[1]
-	slot0._mapLightUrl = slot3[2]
-	slot0._mapEffectUrl = slot3[3]
+	local var_8_2 = {}
 
-	slot0._mapLoader:addPath(slot0._sceneUrl)
-	slot0._mapLoader:addPath(slot0._mapLightUrl)
+	arg_8_0:buildLoadRes(var_8_2, arg_8_0._mapCfg, var_8_0)
 
-	if slot0._mapEffectUrl then
-		slot0._mapLoader:addPath(slot0._mapEffectUrl)
+	arg_8_0._sceneUrl = var_8_2[1]
+	arg_8_0._mapLightUrl = var_8_2[2]
+	arg_8_0._mapEffectUrl = var_8_2[3]
+
+	arg_8_0._mapLoader:addPath(arg_8_0._sceneUrl)
+	arg_8_0._mapLoader:addPath(arg_8_0._mapLightUrl)
+
+	if arg_8_0._mapEffectUrl then
+		arg_8_0._mapLoader:addPath(arg_8_0._mapEffectUrl)
 	end
 
-	slot0._mapLoader:startLoad(slot0._loadSceneFinish, slot0)
+	arg_8_0._mapLoader:startLoad(arg_8_0._loadSceneFinish, arg_8_0)
 end
 
-function slot0.buildLoadRes(slot0, slot1, slot2, slot3)
-	table.insert(slot1, ResUrl.getDungeonMapRes(slot2.res))
-	table.insert(slot1, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
+function var_0_0.buildLoadRes(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	table.insert(arg_9_1, ResUrl.getDungeonMapRes(arg_9_2.res))
+	table.insert(arg_9_1, "scenes/m_s08_hddt/scene_prefab/m_s08_hddt_light.prefab")
 
-	if slot3 == 2 then
-		table.insert(slot1, "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect3.prefab")
+	if arg_9_3 == 2 then
+		table.insert(arg_9_1, "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect3.prefab")
 	end
 end
 
-function slot0._loadSceneFinish(slot0)
-	if slot0._oldMapLoader then
-		slot0._oldMapLoader:dispose()
+function var_0_0._loadSceneFinish(arg_10_0)
+	if arg_10_0._oldMapLoader then
+		arg_10_0._oldMapLoader:dispose()
 
-		slot0._oldMapLoader = nil
+		arg_10_0._oldMapLoader = nil
 
-		gohelper.destroy(slot0._sceneGo)
+		gohelper.destroy(arg_10_0._sceneGo)
 	end
 
-	slot1 = slot0._sceneUrl
-	slot0._sceneGo = gohelper.clone(slot0._mapLoader:getAssetItem(slot1):GetResource(slot1), slot0._sceneRoot, slot0._mapCfg.id)
-	slot0._sceneTrans = slot0._sceneGo.transform
+	local var_10_0 = arg_10_0._sceneUrl
+	local var_10_1 = arg_10_0._mapLoader:getAssetItem(var_10_0):GetResource(var_10_0)
 
-	slot0:_initScene()
-	slot0:_initSceneEffect()
-	slot0:_addMapLight()
-	slot0:_initElements()
-	slot0:_setMapPos()
+	arg_10_0._sceneGo = gohelper.clone(var_10_1, arg_10_0._sceneRoot, arg_10_0._mapCfg.id)
+	arg_10_0._sceneTrans = arg_10_0._sceneGo.transform
+
+	arg_10_0:_initScene()
+	arg_10_0:_initSceneEffect()
+	arg_10_0:_addMapLight()
+	arg_10_0:_initElements()
+	arg_10_0:_setMapPos()
 end
 
-function slot0._initSceneEffect(slot0)
-	if not slot0._mapEffectUrl then
+function var_0_0._initSceneEffect(arg_11_0)
+	if not arg_11_0._mapEffectUrl then
 		return
 	end
 
-	gohelper.clone(slot0._mapLoader:getAssetItem(slot0._mapEffectUrl):GetResource(slot0._mapEffectUrl), slot0._sceneGo)
+	local var_11_0 = arg_11_0._mapLoader:getAssetItem(arg_11_0._mapEffectUrl):GetResource(arg_11_0._mapEffectUrl)
+
+	gohelper.clone(var_11_0, arg_11_0._sceneGo)
 end
 
-function slot0._initScene(slot0)
-	slot2 = gohelper.findChild(slot0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider))
-	slot0._mapSize = slot2.size
-	slot3 = slot2.center
-	slot4 = slot3.x - slot0._mapSize.x / 2
-	slot5 = slot3.y + slot0._mapSize.y / 2
-	slot6 = nil
-	slot8 = ((GameUtil.getAdapterScale() == 1 or ViewMgr.instance:getUILayer(UILayerName.Hud)) and ViewMgr.instance:getUIRoot()).transform:GetWorldCorners()
-	slot11 = ToughBattleEnum.DungeonMapCameraSize / (CameraMgr.instance:getUICamera() and slot9.orthographicSize or 5)
-	slot12 = slot8[1] * slot7 * slot11
-	slot13 = slot8[3] * slot7 * slot11
-	slot0._viewWidth = math.abs(slot13.x - slot12.x)
-	slot0._viewHeight = math.abs(slot13.y - slot12.y)
-	slot0._mapMinX = slot12.x - (slot0._mapSize.x - slot0._viewWidth) - slot4
-	slot0._mapMaxX = slot12.x - slot4
-	slot0._mapMinY = slot12.y - slot5
-	slot0._mapMaxY = slot12.y + slot0._mapSize.y - slot0._viewHeight - slot5
+function var_0_0._initScene(arg_12_0)
+	local var_12_0 = gohelper.findChild(arg_12_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider))
+
+	arg_12_0._mapSize = var_12_0.size
+
+	local var_12_1 = var_12_0.center
+	local var_12_2 = var_12_1.x - arg_12_0._mapSize.x / 2
+	local var_12_3 = var_12_1.y + arg_12_0._mapSize.y / 2
+	local var_12_4
+	local var_12_5 = GameUtil.getAdapterScale()
+
+	if var_12_5 ~= 1 then
+		var_12_4 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	else
+		var_12_4 = ViewMgr.instance:getUIRoot()
+	end
+
+	local var_12_6 = var_12_4.transform:GetWorldCorners()
+	local var_12_7 = CameraMgr.instance:getUICamera()
+	local var_12_8 = var_12_7 and var_12_7.orthographicSize or 5
+	local var_12_9 = ToughBattleEnum.DungeonMapCameraSize / var_12_8
+	local var_12_10 = var_12_6[1] * var_12_5 * var_12_9
+	local var_12_11 = var_12_6[3] * var_12_5 * var_12_9
+
+	arg_12_0._viewWidth = math.abs(var_12_11.x - var_12_10.x)
+	arg_12_0._viewHeight = math.abs(var_12_11.y - var_12_10.y)
+	arg_12_0._mapMinX = var_12_10.x - (arg_12_0._mapSize.x - arg_12_0._viewWidth) - var_12_2
+	arg_12_0._mapMaxX = var_12_10.x - var_12_2
+	arg_12_0._mapMinY = var_12_10.y - var_12_3
+	arg_12_0._mapMaxY = var_12_10.y + (arg_12_0._mapSize.y - arg_12_0._viewHeight) - var_12_3
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._dragBeginPos = slot0:getDragWorldPos(slot2)
+function var_0_0._onDragBegin(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._dragBeginPos = arg_13_0:getDragWorldPos(arg_13_2)
 
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnBeginDragMap)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	slot0._dragBeginPos = nil
+function var_0_0._onDragEnd(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0._dragBeginPos = nil
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0._dragBeginPos then
+function var_0_0._onDrag(arg_15_0, arg_15_1, arg_15_2)
+	if not arg_15_0._dragBeginPos then
 		return
 	end
 
-	slot0._downElement = nil
-	slot3 = slot0:getDragWorldPos(slot2)
-	slot4 = slot3 - slot0._dragBeginPos
-	slot0._dragBeginPos = slot3
+	arg_15_0._downElement = nil
 
-	slot0._tempVector:Set(slot0._scenePos.x + slot4.x, slot0._scenePos.y + slot4.y)
-	slot0:directSetScenePos(slot0._tempVector)
+	local var_15_0 = arg_15_0:getDragWorldPos(arg_15_2)
+	local var_15_1 = var_15_0 - arg_15_0._dragBeginPos
+
+	arg_15_0._dragBeginPos = var_15_0
+
+	arg_15_0._tempVector:Set(arg_15_0._scenePos.x + var_15_1.x, arg_15_0._scenePos.y + var_15_1.y)
+	arg_15_0:directSetScenePos(arg_15_0._tempVector)
 end
 
-function slot0.getDragWorldPos(slot0, slot1)
-	return SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(slot1.position, CameraMgr.instance:getMainCamera(), slot0._gofullscreen.transform.position)
+function var_0_0.getDragWorldPos(arg_16_0, arg_16_1)
+	local var_16_0 = CameraMgr.instance:getMainCamera()
+	local var_16_1 = arg_16_0._gofullscreen.transform.position
+
+	return (SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_16_1.position, var_16_0, var_16_1))
 end
 
-function slot0._setMapPos(slot0)
-	if slot0.tempInitPosX then
-		slot0._tempVector:Set(slot0.tempInitPosX, slot0.tempInitPosY, 0)
+function var_0_0._setMapPos(arg_17_0)
+	if arg_17_0.tempInitPosX then
+		arg_17_0._tempVector:Set(arg_17_0.tempInitPosX, arg_17_0.tempInitPosY, 0)
 
-		slot0.tempInitPosX = nil
-		slot0.tempInitPosY = nil
+		arg_17_0.tempInitPosX = nil
+		arg_17_0.tempInitPosY = nil
 	else
-		slot2 = string.splitToNumber(slot0._mapCfg.initPos, "#")
+		local var_17_0 = arg_17_0._mapCfg.initPos
+		local var_17_1 = string.splitToNumber(var_17_0, "#")
 
-		slot0._tempVector:Set(slot2[1], slot2[2], 0)
+		arg_17_0._tempVector:Set(var_17_1[1], var_17_1[2], 0)
 	end
 
-	if slot0.needTween then
-		slot0:tweenSetScenePos(slot0._tempVector, slot0._oldScenePos)
+	if arg_17_0.needTween then
+		arg_17_0:tweenSetScenePos(arg_17_0._tempVector, arg_17_0._oldScenePos)
 	else
-		slot0:directSetScenePos(slot0._tempVector)
+		arg_17_0:directSetScenePos(arg_17_0._tempVector)
 	end
 end
 
-function slot0._addMapLight(slot0)
-	slot1 = slot0._mapLightUrl
+function var_0_0._addMapLight(arg_18_0)
+	local var_18_0 = arg_18_0._mapLightUrl
+	local var_18_1 = arg_18_0._mapLoader:getAssetItem(var_18_0):GetResource(var_18_0)
 
-	gohelper.clone(slot0._mapLoader:getAssetItem(slot1):GetResource(slot1), slot0._sceneGo)
+	gohelper.clone(var_18_1, arg_18_0._sceneGo)
 end
 
-function slot0.tweenFinishCallback(slot0)
-	slot0._tempVector:Set(slot0._tweenTargetPosX, slot0._tweenTargetPosY, 0)
-	slot0:directSetScenePos(slot0._tempVector)
-	slot0:onTweenFinish()
+function var_0_0.tweenFinishCallback(arg_19_0)
+	arg_19_0._tempVector:Set(arg_19_0._tweenTargetPosX, arg_19_0._tweenTargetPosY, 0)
+	arg_19_0:directSetScenePos(arg_19_0._tempVector)
+	arg_19_0:onTweenFinish()
 end
 
-function slot0.directSetScenePos(slot0, slot1)
-	slot0._downElement = nil
-	slot0._scenePos.x, slot0._scenePos.y = slot0:getTargetPos(slot1)
+function var_0_0.directSetScenePos(arg_20_0, arg_20_1)
+	arg_20_0._downElement = nil
 
-	if not slot0._sceneTrans or gohelper.isNil(slot0._sceneTrans) then
+	local var_20_0, var_20_1 = arg_20_0:getTargetPos(arg_20_1)
+
+	arg_20_0._scenePos.x = var_20_0
+	arg_20_0._scenePos.y = var_20_1
+
+	if not arg_20_0._sceneTrans or gohelper.isNil(arg_20_0._sceneTrans) then
 		return
 	end
 
-	transformhelper.setLocalPos(slot0._sceneTrans, slot0._scenePos.x, slot0._scenePos.y, 0)
+	transformhelper.setLocalPos(arg_20_0._sceneTrans, arg_20_0._scenePos.x, arg_20_0._scenePos.y, 0)
 end
 
-function slot0._initElements(slot0)
-	slot0._elementRoot = UnityEngine.GameObject.New("elementRoot")
+function var_0_0._initElements(arg_21_0)
+	arg_21_0._elementRoot = UnityEngine.GameObject.New("elementRoot")
 
-	gohelper.addChild(slot0._sceneGo, slot0._elementRoot)
+	gohelper.addChild(arg_21_0._sceneGo, arg_21_0._elementRoot)
 
-	slot0._elementFinishRoot = UnityEngine.GameObject.New("elementRootFinish")
+	arg_21_0._elementFinishRoot = UnityEngine.GameObject.New("elementRootFinish")
 
-	gohelper.addChild(slot0._sceneGo, slot0._elementFinishRoot)
+	gohelper.addChild(arg_21_0._sceneGo, arg_21_0._elementFinishRoot)
 
-	slot0.tempInitPosX = nil
-	slot0.tempInitPosY = nil
-	slot0.needTween = nil
-	slot0._finishIcons = {}
-	slot3 = DungeonConfig.instance:getMapElements(slot0:getNowShowStage() == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2)
-	slot4 = nil
-	slot5 = slot0:getInfo()
+	arg_21_0.tempInitPosX = nil
+	arg_21_0.tempInitPosY = nil
+	arg_21_0.needTween = nil
+	arg_21_0._finishIcons = {}
 
-	if slot1 == 1 then
-		for slot9 = 1, 5 do
-			if slot0:getCo(slot9).guideId and slot10.guideId > 0 and GuideModel.instance:getById(slot10.guideId) and slot11.isFinish and not tabletool.indexOf(slot5.passChallengeIds, slot10.id) then
-				slot4 = slot9
+	local var_21_0 = arg_21_0:getNowShowStage()
+	local var_21_1 = var_21_0 == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2
+	local var_21_2 = DungeonConfig.instance:getMapElements(var_21_1)
+	local var_21_3
+	local var_21_4 = arg_21_0:getInfo()
 
-				break
+	if var_21_0 == 1 then
+		for iter_21_0 = 1, 5 do
+			local var_21_5 = arg_21_0:getCo(iter_21_0)
+
+			if var_21_5.guideId and var_21_5.guideId > 0 then
+				local var_21_6 = GuideModel.instance:getById(var_21_5.guideId)
+
+				if var_21_6 and var_21_6.isFinish and not tabletool.indexOf(var_21_4.passChallengeIds, var_21_5.id) then
+					var_21_3 = iter_21_0
+
+					break
+				end
 			end
 		end
 	end
 
-	slot6 = slot0.viewParam.lastFightSuccIndex
+	local var_21_7 = arg_21_0.viewParam.lastFightSuccIndex
 
-	for slot10, slot11 in ipairs(slot3) do
-		slot14 = tabletool.indexOf(slot5.passChallengeIds, slot0:getCo(tonumber(slot11.param)).id)
+	for iter_21_1, iter_21_2 in ipairs(var_21_2) do
+		local var_21_8 = tonumber(iter_21_2.param)
+		local var_21_9 = arg_21_0:getCo(var_21_8)
+		local var_21_10 = tabletool.indexOf(var_21_4.passChallengeIds, var_21_9.id)
 
-		if not slot4 or slot12 == slot4 or slot14 then
-			if slot14 then
-				slot15 = UnityEngine.GameObject.New(tostring(slot11.id))
+		if not var_21_3 or var_21_8 == var_21_3 or var_21_10 then
+			if var_21_10 then
+				local var_21_11 = UnityEngine.GameObject.New(tostring(iter_21_2.id))
 
-				gohelper.addChild(slot0._elementFinishRoot, slot15)
+				gohelper.addChild(arg_21_0._elementFinishRoot, var_21_11)
 
-				slot17 = gohelper.create3d(slot15, "icon")
-				slot19 = PrefabInstantiate.Create(slot17)
-				slot20 = ToughBattleEnum.FinishIconPos[slot12]
+				local var_21_12 = gohelper.create3d(var_21_11, "boss")
+				local var_21_13 = gohelper.create3d(var_21_11, "icon")
+				local var_21_14 = PrefabInstantiate.Create(var_21_12)
+				local var_21_15 = PrefabInstantiate.Create(var_21_13)
+				local var_21_16 = ToughBattleEnum.FinishIconPos[var_21_8]
 
-				transformhelper.setLocalPosXY(slot17.transform, slot20.x, slot20.y)
-				PrefabInstantiate.Create(gohelper.create3d(slot15, "boss")):startLoad("scenes/v1a9_m_s08_hddt/prefab/m_s08_hddt_obj_boss" .. slot12 .. ".prefab")
-				slot19:startLoad("scenes/v1a9_m_s08_hddt/prefab/hddt_icon_toughbattle_wancheng.prefab", uv0.onFinishIconLoaded, {
-					slot0,
-					slot12,
-					slot13.sort == slot6,
-					slot19
+				transformhelper.setLocalPosXY(var_21_13.transform, var_21_16.x, var_21_16.y)
+				var_21_14:startLoad("scenes/v1a9_m_s08_hddt/prefab/m_s08_hddt_obj_boss" .. var_21_8 .. ".prefab")
+				var_21_15:startLoad("scenes/v1a9_m_s08_hddt/prefab/hddt_icon_toughbattle_wancheng.prefab", var_0_0.onFinishIconLoaded, {
+					arg_21_0,
+					var_21_8,
+					var_21_9.sort == var_21_7,
+					var_21_15
 				})
 			else
-				slot15 = UnityEngine.GameObject.New(tostring(slot11.id))
+				local var_21_17 = UnityEngine.GameObject.New(tostring(iter_21_2.id))
 
-				gohelper.addChild(slot0._elementRoot, slot15)
-				MonoHelper.addLuaComOnceToGo(slot15, ToughBattleMapElement, {
-					slot11,
-					slot0
+				gohelper.addChild(arg_21_0._elementRoot, var_21_17)
+				MonoHelper.addLuaComOnceToGo(var_21_17, ToughBattleMapElement, {
+					iter_21_2,
+					arg_21_0
 				})
 			end
 
-			if slot12 == slot6 then
-				slot16 = string.splitToNumber(slot0._mapCfg.initPos, "#")
-				slot0._oldScenePos = Vector2(slot16[1], slot16[2])
-				slot0.tempInitPosX = -string.splitToNumber(slot11.pos, "#")[1] or 0
-				slot0.tempInitPosY = -slot16[2] or 0
-				slot0.needTween = true
+			if var_21_8 == var_21_7 then
+				local var_21_18 = arg_21_0._mapCfg.initPos
+				local var_21_19 = string.splitToNumber(var_21_18, "#")
+
+				arg_21_0._oldScenePos = Vector2(var_21_19[1], var_21_19[2])
+
+				local var_21_20 = string.splitToNumber(iter_21_2.pos, "#")
+				local var_21_21 = -var_21_20[1] or 0
+
+				arg_21_0.tempInitPosY, arg_21_0.tempInitPosX = -var_21_20[2] or 0, var_21_21
+				arg_21_0.needTween = true
 			end
 		end
 	end
 
-	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.GuideCurStage, slot1)
-	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.InitFightIndex, tostring(#slot5.passChallengeIds + 1))
+	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.GuideCurStage, var_21_0)
+	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.InitFightIndex, tostring(#var_21_4.passChallengeIds + 1))
 end
 
-function slot0._setElementsActive(slot0, slot1)
-	gohelper.setActive(slot0._elementRoot, slot1 == "true" and true or false)
+function var_0_0._setElementsActive(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_1 == "true" and true or false
+
+	gohelper.setActive(arg_22_0._elementRoot, var_22_0)
 end
 
-function slot0._guideFocusElement(slot0, slot1)
-	for slot9, slot10 in ipairs(DungeonConfig.instance:getMapElements(slot0:getNowShowStage() == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2)) do
-		if tonumber(slot1) == tonumber(slot10.param) then
-			slot0.tempInitPosX = -string.splitToNumber(slot10.pos, "#")[1] or 0
-			slot0.tempInitPosY = -slot12[2] or 0
-			slot0.needTween = true
+function var_0_0._guideFocusElement(arg_23_0, arg_23_1)
+	local var_23_0 = tonumber(arg_23_1)
+	local var_23_1 = arg_23_0:getNowShowStage() == 1 and ToughBattleEnum.MapId_stage1 or ToughBattleEnum.MapId_stage2
+	local var_23_2 = DungeonConfig.instance:getMapElements(var_23_1)
 
-			slot0:_setMapPos()
+	for iter_23_0, iter_23_1 in ipairs(var_23_2) do
+		if var_23_0 == tonumber(iter_23_1.param) then
+			local var_23_3 = string.splitToNumber(iter_23_1.pos, "#")
+			local var_23_4 = -var_23_3[1] or 0
+
+			arg_23_0.tempInitPosY, arg_23_0.tempInitPosX = -var_23_3[2] or 0, var_23_4
+			arg_23_0.needTween = true
+
+			arg_23_0:_setMapPos()
 
 			break
 		end
 	end
 end
 
-function slot0._guideClickElement(slot0, slot1)
-	slot2 = tonumber(slot1)
+function var_0_0._guideClickElement(arg_24_0, arg_24_1)
+	local var_24_0 = tonumber(arg_24_1)
+	local var_24_1 = arg_24_0:getCo(var_24_0)
 
-	slot0:onEnterFight(slot0:getCo(slot2), slot2 == 6 and 2 or 1)
+	arg_24_0:onEnterFight(var_24_1, var_24_0 == 6 and 2 or 1)
 end
 
-function slot0.playSuccAnim(slot0)
-	if not slot0._finishIcons or not slot0._finishIcons[slot0.viewParam.lastFightSuccIndex] then
+function var_0_0.playSuccAnim(arg_25_0)
+	if not arg_25_0._finishIcons or not arg_25_0._finishIcons[arg_25_0.viewParam.lastFightSuccIndex] then
 		return
 	end
 
-	slot0._finishIcons[slot0.viewParam.lastFightSuccIndex]:Play("open", 0, 0)
+	arg_25_0._finishIcons[arg_25_0.viewParam.lastFightSuccIndex]:Play("open", 0, 0)
 end
 
-function slot0.onFinishIconLoaded(slot0)
-	slot0[1]._finishIcons[slot0[2]] = slot0[4]:getInstGO():GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onFinishIconLoaded(arg_26_0)
+	local var_26_0 = arg_26_0[1]
+	local var_26_1 = arg_26_0[2]
+	local var_26_2 = arg_26_0[3]
+	local var_26_3 = arg_26_0[4]:getInstGO():GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0[3] then
-		slot6:Play("open", 0, 0)
+	var_26_0._finishIcons[var_26_1] = var_26_3
+
+	if var_26_2 then
+		var_26_3:Play("open", 0, 0)
 	else
-		slot6:Play("open", 0, 1)
+		var_26_3:Play("open", 0, 1)
 	end
 end
 
-function slot0.onTweenFinish(slot0)
+function var_0_0.onTweenFinish(arg_27_0)
+	return
 end
 
-function slot0.getInfo(slot0)
-	return slot0.viewParam.mode == ToughBattleEnum.Mode.Act and ToughBattleModel.instance:getActInfo() or ToughBattleModel.instance:getStoryInfo()
+function var_0_0.getInfo(arg_28_0)
+	return arg_28_0.viewParam.mode == ToughBattleEnum.Mode.Act and ToughBattleModel.instance:getActInfo() or ToughBattleModel.instance:getStoryInfo()
 end
 
-function slot0.getNowShowStage(slot0)
-	if #slot0:getInfo().passChallengeIds >= 3 and not slot0.viewParam.lastFightSuccIndex then
+function var_0_0.getNowShowStage(arg_29_0)
+	if #arg_29_0:getInfo().passChallengeIds >= 3 and not arg_29_0.viewParam.lastFightSuccIndex then
 		return 2
 	else
 		return 1
 	end
 end
 
-function slot0.setMouseElementUp(slot0, slot1)
-	if slot0._downElement ~= slot1 then
+function var_0_0.setMouseElementUp(arg_30_0, arg_30_1)
+	if arg_30_0._downElement ~= arg_30_1 then
 		return
 	end
 
@@ -353,119 +425,138 @@ function slot0.setMouseElementUp(slot0, slot1)
 		return
 	end
 
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0._downElement = false
+	if not ViewHelper.instance:checkViewOnTheTop(arg_30_0.viewName) then
+		arg_30_0._downElement = false
 
 		return
 	end
 
-	if slot0.viewParam.lastFightSuccIndex then
+	if arg_30_0.viewParam.lastFightSuccIndex then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	slot3 = tonumber(slot1._config.param)
+	local var_30_0 = arg_30_1._config
+	local var_30_1 = tonumber(var_30_0.param)
 
-	slot0:onEnterFight(slot0:getCo(slot3), slot3 == 6 and 2 or 1)
+	arg_30_0:onEnterFight(arg_30_0:getCo(var_30_1), var_30_1 == 6 and 2 or 1)
 end
 
-function slot0.getCo(slot0, slot1)
-	if slot0.viewParam.mode == ToughBattleEnum.Mode.Act then
-		if slot1 == 6 then
-			return ToughBattleConfig.instance:getCOByDiffcult(slot0:getInfo().currDifficulty).stage2
+function var_0_0.getCo(arg_31_0, arg_31_1)
+	if arg_31_0.viewParam.mode == ToughBattleEnum.Mode.Act then
+		local var_31_0 = arg_31_0:getInfo()
+		local var_31_1 = ToughBattleConfig.instance:getCOByDiffcult(var_31_0.currDifficulty)
+
+		if arg_31_1 == 6 then
+			return var_31_1.stage2
 		else
-			return slot3.stage1[slot1]
+			return var_31_1.stage1[arg_31_1]
 		end
-	elseif slot1 == 6 then
-		return ToughBattleConfig.instance:getStoryCO().stage2
 	else
-		return slot2.stage1[slot1]
+		local var_31_2 = ToughBattleConfig.instance:getStoryCO()
+
+		if arg_31_1 == 6 then
+			return var_31_2.stage2
+		else
+			return var_31_2.stage1[arg_31_1]
+		end
 	end
 end
 
-function slot0.setMouseElementDown(slot0, slot1)
-	slot0._downElement = slot1
+function var_0_0.setMouseElementDown(arg_32_0, arg_32_1)
+	arg_32_0._downElement = arg_32_1
 end
 
-function slot0.onEnterFight(slot0, slot1, slot2)
-	if tabletool.indexOf(slot0:getInfo().passChallengeIds, slot1.id) then
+function var_0_0.onEnterFight(arg_33_0, arg_33_1, arg_33_2)
+	local var_33_0 = arg_33_0:getInfo()
+
+	if tabletool.indexOf(var_33_0.passChallengeIds, arg_33_1.id) then
 		return
 	end
 
-	if slot2 == 1 then
-		ViewMgr.instance:openView(ViewName.ToughBattleEnemyInfoView, slot1)
+	if arg_33_2 == 1 then
+		ViewMgr.instance:openView(ViewName.ToughBattleEnemyInfoView, arg_33_1)
 	else
-		slot4 = slot1.episodeId
+		local var_33_1 = arg_33_1.episodeId
+		local var_33_2 = DungeonConfig.instance:getEpisodeCO(var_33_1)
 
-		DungeonFightController.instance:enterFight(DungeonConfig.instance:getEpisodeCO(slot4).chapterId, slot4)
+		DungeonFightController.instance:enterFight(var_33_2.chapterId, var_33_1)
 	end
 end
 
-function slot0.tweenSetScenePos(slot0, slot1, slot2)
-	slot0._tweenTargetPosX, slot0._tweenTargetPosY = slot0:getTargetPos(slot1)
-	slot0._tweenStartPosX, slot0._tweenStartPosY = slot0:getTargetPos(slot2 or slot0._scenePos)
+function var_0_0.tweenSetScenePos(arg_34_0, arg_34_1, arg_34_2)
+	arg_34_0._tweenTargetPosX, arg_34_0._tweenTargetPosY = arg_34_0:getTargetPos(arg_34_1)
+	arg_34_0._tweenStartPosX, arg_34_0._tweenStartPosY = arg_34_0:getTargetPos(arg_34_2 or arg_34_0._scenePos)
 
-	slot0:killTween()
+	arg_34_0:killTween()
 
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, DungeonEnum.DefaultTweenMapTime, slot0.tweenFrameCallback, slot0.tweenFinishCallback, slot0)
+	arg_34_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, DungeonEnum.DefaultTweenMapTime, arg_34_0.tweenFrameCallback, arg_34_0.tweenFinishCallback, arg_34_0)
 
-	slot0:tweenFrameCallback(0)
+	arg_34_0:tweenFrameCallback(0)
 end
 
-function slot0.killTween(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.killTween(arg_35_0)
+	if arg_35_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_35_0.tweenId)
 	end
 end
 
-function slot0.tweenFrameCallback(slot0, slot1)
-	slot0._tempVector:Set(Mathf.Lerp(slot0._tweenStartPosX, slot0._tweenTargetPosX, slot1), Mathf.Lerp(slot0._tweenStartPosY, slot0._tweenTargetPosY, slot1), 0)
-	slot0:directSetScenePos(slot0._tempVector)
+function var_0_0.tweenFrameCallback(arg_36_0, arg_36_1)
+	local var_36_0 = Mathf.Lerp(arg_36_0._tweenStartPosX, arg_36_0._tweenTargetPosX, arg_36_1)
+	local var_36_1 = Mathf.Lerp(arg_36_0._tweenStartPosY, arg_36_0._tweenTargetPosY, arg_36_1)
+
+	arg_36_0._tempVector:Set(var_36_0, var_36_1, 0)
+	arg_36_0:directSetScenePos(arg_36_0._tempVector)
 end
 
-function slot0.getTargetPos(slot0, slot1)
-	slot2 = slot1.x
+function var_0_0.getTargetPos(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_1.x
+	local var_37_1 = arg_37_1.y
 
-	if not slot0._mapMinX or not slot0._mapMinY then
-		return slot2, slot1.y
+	if not arg_37_0._mapMinX or not arg_37_0._mapMinY then
+		return var_37_0, var_37_1
 	end
 
-	if slot2 < slot0._mapMinX then
-		slot2 = slot0._mapMinX
-	elseif slot0._mapMaxX < slot2 then
-		slot2 = slot0._mapMaxX
+	if var_37_0 < arg_37_0._mapMinX then
+		var_37_0 = arg_37_0._mapMinX
+	elseif var_37_0 > arg_37_0._mapMaxX then
+		var_37_0 = arg_37_0._mapMaxX
 	end
 
-	if slot3 < slot0._mapMinY then
-		slot3 = slot0._mapMinY
-	elseif slot0._mapMaxY < slot3 then
-		slot3 = slot0._mapMaxY
+	if var_37_1 < arg_37_0._mapMinY then
+		var_37_1 = arg_37_0._mapMinY
+	elseif var_37_1 > arg_37_0._mapMaxY then
+		var_37_1 = arg_37_0._mapMaxY
 	end
 
-	return slot2, slot3
+	return var_37_0, var_37_1
 end
 
-function slot0._initMapRootNode(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("ToughBattleMapScene")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+function var_0_0._initMapRootNode(arg_38_0)
+	local var_38_0 = CameraMgr.instance:getMainCameraTrs().parent
+	local var_38_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	arg_38_0._sceneRoot = UnityEngine.GameObject.New("ToughBattleMapScene")
+
+	local var_38_2, var_38_3, var_38_4 = transformhelper.getLocalPos(var_38_0)
+
+	transformhelper.setLocalPos(arg_38_0._sceneRoot.transform, 0, var_38_3, 0)
+	gohelper.addChild(var_38_1, arg_38_0._sceneRoot)
 end
 
-function slot0.setSceneVisible(slot0, slot1)
-	gohelper.setActive(slot0._sceneRoot, slot1)
+function var_0_0.setSceneVisible(arg_39_0, arg_39_1)
+	gohelper.setActive(arg_39_0._sceneRoot, arg_39_1)
 end
 
-function slot0.onClose(slot0)
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+function var_0_0.onClose(arg_40_0)
+	if arg_40_0._mapLoader then
+		arg_40_0._mapLoader:dispose()
 
-		slot0._mapLoader = nil
+		arg_40_0._mapLoader = nil
 	end
 
-	gohelper.destroy(slot0._sceneRoot)
+	gohelper.destroy(arg_40_0._sceneRoot)
 end
 
-return slot0
+return var_0_0

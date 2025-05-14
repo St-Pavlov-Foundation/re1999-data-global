@@ -1,15 +1,15 @@
-module("modules.logic.dungeon.model.RewardPointInfoMO", package.seeall)
+﻿module("modules.logic.dungeon.model.RewardPointInfoMO", package.seeall)
 
-slot0 = pureTable("RewardPointInfoMO")
+local var_0_0 = pureTable("RewardPointInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.chapterId = slot1.chapterId
-	slot0.rewardPoint = slot1.rewardPoint
-	slot0.hasGetPointRewardIds = slot1.hasGetPointRewardIds or {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.chapterId = arg_1_1.chapterId
+	arg_1_0.rewardPoint = arg_1_1.rewardPoint
+	arg_1_0.hasGetPointRewardIds = arg_1_1.hasGetPointRewardIds or {}
 end
 
-function slot0.setRewardPoint(slot0, slot1)
-	slot0.rewardPoint = slot1
+function var_0_0.setRewardPoint(arg_2_0, arg_2_1)
+	arg_2_0.rewardPoint = arg_2_1
 end
 
-return slot0
+return var_0_0

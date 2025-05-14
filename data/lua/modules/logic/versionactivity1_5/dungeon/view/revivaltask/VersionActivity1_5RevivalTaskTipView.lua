@@ -1,97 +1,100 @@
-module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5RevivalTaskTipView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5RevivalTaskTipView", package.seeall)
 
-slot0 = class("VersionActivity1_5RevivalTaskTipView", BaseView)
+local var_0_0 = class("VersionActivity1_5RevivalTaskTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotipscontainer = gohelper.findChild(slot0.viewGO, "#go_tipcontainer")
-	slot0._goclosetip = gohelper.findChild(slot0.viewGO, "#go_tipcontainer/#go_closetip")
-	slot0._txtTipTitle = gohelper.findChildText(slot0.viewGO, "#go_tipcontainer/#go_tips/#txt_title")
-	slot0._simageTipPic = gohelper.findChildSingleImage(slot0.viewGO, "#go_tipcontainer/#go_tips/#simage_pic")
-	slot0._txtTipDesc = gohelper.findChildText(slot0.viewGO, "#go_tipcontainer/#go_tips/#txt_desc")
-	slot0._btnReplay = gohelper.findChildButton(slot0.viewGO, "#go_tipcontainer/#go_tips/#btn_replay")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotipscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_tipcontainer")
+	arg_1_0._goclosetip = gohelper.findChild(arg_1_0.viewGO, "#go_tipcontainer/#go_closetip")
+	arg_1_0._txtTipTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_tipcontainer/#go_tips/#txt_title")
+	arg_1_0._simageTipPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_tipcontainer/#go_tips/#simage_pic")
+	arg_1_0._txtTipDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_tipcontainer/#go_tips/#txt_desc")
+	arg_1_0._btnReplay = gohelper.findChildButton(arg_1_0.viewGO, "#go_tipcontainer/#go_tips/#btn_replay")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnReplay:AddClickListener(slot0.onClickBtnReplay, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnReplay:AddClickListener(arg_2_0.onClickBtnReplay, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnReplay:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnReplay:RemoveClickListener()
 end
 
-function slot0.onClickBtnReplay(slot0)
-	if not slot0.isShowBtn then
+function var_0_0.onClickBtnReplay(arg_4_0)
+	if not arg_4_0.isShowBtn then
 		return
 	end
 
-	if slot0.showType == DungeonEnum.ElementType.None then
+	if arg_4_0.showType == DungeonEnum.ElementType.None then
 		ViewMgr.instance:openView(ViewName.DungeonFragmentInfoView, {
-			fragmentId = slot0.showParam
+			fragmentId = arg_4_0.showParam
 		})
-	elseif slot0.showType == DungeonEnum.ElementType.EnterDialogue then
-		DialogueController.instance:enterDialogue(slot0.showParam)
+	elseif arg_4_0.showType == DungeonEnum.ElementType.EnterDialogue then
+		DialogueController.instance:enterDialogue(arg_4_0.showParam)
 	else
-		logError("un support type, " .. tostring(slot0.showType))
+		logError("un support type, " .. tostring(arg_4_0.showType))
 	end
 end
 
-function slot0.onClickCloseBtn(slot0)
-	slot0.config = nil
+function var_0_0.onClickCloseBtn(arg_5_0)
+	arg_5_0.config = nil
 
-	gohelper.setActive(slot0._gotipscontainer, false)
+	gohelper.setActive(arg_5_0._gotipscontainer, false)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gotipscontainer, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._gotipscontainer, false)
 
-	slot0.closeClick = gohelper.getClickWithDefaultAudio(slot0._goclosetip)
+	arg_6_0.closeClick = gohelper.getClickWithDefaultAudio(arg_6_0._goclosetip)
 
-	slot0.closeClick:AddClickListener(slot0.onClickCloseBtn, slot0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ShowSubTaskDetail, slot0.showSubTaskDetail, slot0)
+	arg_6_0.closeClick:AddClickListener(arg_6_0.onClickCloseBtn, arg_6_0)
+	arg_6_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ShowSubTaskDetail, arg_6_0.showSubTaskDetail, arg_6_0)
 end
 
-function slot0.showSubTaskDetail(slot0, slot1)
-	slot0.config = slot1
+function var_0_0.showSubTaskDetail(arg_7_0, arg_7_1)
+	arg_7_0.config = arg_7_1
 
-	gohelper.setActive(slot0._gotipscontainer, true)
+	gohelper.setActive(arg_7_0._gotipscontainer, true)
 
-	slot0._txtTipTitle.text = slot0.config.title
+	arg_7_0._txtTipTitle.text = arg_7_0.config.title
 
 	if LangSettings.instance:isEn() then
-		slot0._txtTipDesc.text = slot0.config.desc .. " " .. slot0.config.descSuffix
+		arg_7_0._txtTipDesc.text = arg_7_0.config.desc .. " " .. arg_7_0.config.descSuffix
 	else
-		slot0._txtTipDesc.text = slot0.config.desc .. slot0.config.descSuffix
+		arg_7_0._txtTipDesc.text = arg_7_0.config.desc .. arg_7_0.config.descSuffix
 	end
 
-	slot0._simageTipPic:LoadImage(ResUrl.getV1a5RevivalTaskSingleBg(slot0.config.image))
-	slot0:showReplayBtn()
+	arg_7_0._simageTipPic:LoadImage(ResUrl.getV1a5RevivalTaskSingleBg(arg_7_0.config.image))
+	arg_7_0:showReplayBtn()
 end
 
-function slot0.showReplayBtn(slot0)
-	slot0.isShowBtn = false
+function var_0_0.showReplayBtn(arg_8_0)
+	local var_8_0 = arg_8_0.config.elementList[1]
+	local var_8_1 = lua_chapter_map_element.configDict[var_8_0]
 
-	if lua_chapter_map_element.configDict[slot0.config.elementList[1]].type == DungeonEnum.ElementType.None then
-		if slot2.fragment ~= 0 then
-			slot0.isShowBtn = true
-			slot0.showType = DungeonEnum.ElementType.None
-			slot0.showParam = slot2.fragment
+	arg_8_0.isShowBtn = false
+
+	if var_8_1.type == DungeonEnum.ElementType.None then
+		if var_8_1.fragment ~= 0 then
+			arg_8_0.isShowBtn = true
+			arg_8_0.showType = DungeonEnum.ElementType.None
+			arg_8_0.showParam = var_8_1.fragment
 		end
-	elseif slot2.type == DungeonEnum.ElementType.EnterDialogue then
-		slot0.isShowBtn = true
-		slot0.showType = DungeonEnum.ElementType.EnterDialogue
-		slot0.showParam = tonumber(slot2.param)
+	elseif var_8_1.type == DungeonEnum.ElementType.EnterDialogue then
+		arg_8_0.isShowBtn = true
+		arg_8_0.showType = DungeonEnum.ElementType.EnterDialogue
+		arg_8_0.showParam = tonumber(var_8_1.param)
 	end
 
-	gohelper.setActive(slot0._btnReplay, slot0.isShowBtn)
+	gohelper.setActive(arg_8_0._btnReplay, arg_8_0.isShowBtn)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageTipPic:UnLoadImage()
-	slot0.closeClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simageTipPic:UnLoadImage()
+	arg_9_0.closeClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

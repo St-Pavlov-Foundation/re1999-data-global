@@ -1,182 +1,219 @@
-module("modules.logic.room.model.mainview.RoomNavigateBubbleModel", package.seeall)
+﻿module("modules.logic.room.model.mainview.RoomNavigateBubbleModel", package.seeall)
 
-slot0 = class("RoomNavigateBubbleModel", BaseModel)
+local var_0_0 = class("RoomNavigateBubbleModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0._categoryMap = nil
+function var_0_0.clear(arg_3_0)
+	arg_3_0._categoryMap = nil
 
-	uv0.super.clear(slot0)
+	var_0_0.super.clear(arg_3_0)
 end
 
-function slot0.buildCategory(slot0)
-	slot0:clear()
+function var_0_0.buildCategory(arg_4_0)
+	arg_4_0:clear()
 
-	slot0._categoryMap = {}
+	arg_4_0._categoryMap = {}
 
-	slot0:updateFactoryProgress()
-	slot0:updateBuildingUpgrade()
-	slot0:updateHeroFaith()
-	slot0:updateRoomGift()
-	slot0:updateManufacture()
-	slot0:updateCritterEvent()
+	arg_4_0:updateFactoryProgress()
+	arg_4_0:updateBuildingUpgrade()
+	arg_4_0:updateHeroFaith()
+	arg_4_0:updateRoomGift()
+	arg_4_0:updateManufacture()
+	arg_4_0:updateCritterEvent()
 end
 
-function slot0.checkCreateCategory(slot0, slot1)
-	if slot0._categoryMap[slot1] == nil then
-		slot2 = RoomNavigateBubbleCategoryMO.New()
+function var_0_0.checkCreateCategory(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._categoryMap[arg_5_1]
 
-		slot2:init(slot1)
+	if var_5_0 == nil then
+		var_5_0 = RoomNavigateBubbleCategoryMO.New()
 
-		slot0._categoryMap[slot1] = slot2
+		var_5_0:init(arg_5_1)
+
+		arg_5_0._categoryMap[arg_5_1] = var_5_0
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.updateFactoryProgress(slot0)
-	slot1 = slot0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory)
+function var_0_0.updateFactoryProgress(arg_6_0)
+	local var_6_0 = arg_6_0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory)
 
-	slot1:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress)
-	slot1:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress)
+	var_6_0:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress)
+	var_6_0:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress)
 
-	for slot6, slot7 in ipairs(RoomProductionModel.instance:getList()) do
-		slot0:collectFactoryProductProgress(slot7)
-	end
-end
+	local var_6_1 = RoomProductionModel.instance:getList()
 
-function slot0.updateBuildingUpgrade(slot0)
-	slot1 = slot0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory)
-
-	slot1:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
-	slot1:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
-	slot0:collectHallUpgrade()
-
-	for slot6, slot7 in ipairs(RoomProductionModel.instance:getList()) do
-		slot0:collectFactoryUpgrade(slot7)
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		arg_6_0:collectFactoryProductProgress(iter_6_1)
 	end
 end
 
-function slot0.updateHeroFaith(slot0)
-	slot1 = slot0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory)
+function var_0_0.updateBuildingUpgrade(arg_7_0)
+	local var_7_0 = arg_7_0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory)
 
-	slot1:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward)
-	slot1:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward)
-	slot1:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull)
+	var_7_0:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
+	var_7_0:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
+	arg_7_0:collectHallUpgrade()
 
-	for slot6, slot7 in ipairs(RoomCharacterModel.instance:getList()) do
-		slot0:collectHeroFaithReward(slot7)
+	local var_7_1 = RoomProductionModel.instance:getList()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		arg_7_0:collectFactoryUpgrade(iter_7_1)
 	end
 end
 
-function slot0.updateRoomGift(slot0)
-	slot0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory):cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift)
-	slot0:collectRoomGift()
+function var_0_0.updateHeroFaith(arg_8_0)
+	local var_8_0 = arg_8_0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory)
+
+	var_8_0:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward)
+	var_8_0:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward)
+	var_8_0:cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull)
+
+	local var_8_1 = RoomCharacterModel.instance:getList()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		arg_8_0:collectHeroFaithReward(iter_8_1)
+	end
 end
 
-function slot0.updateManufacture(slot0)
-	slot0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory):cleanBubble(RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture)
-	slot0:collectManufacture()
+function var_0_0.updateRoomGift(arg_9_0)
+	local var_9_0 = RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift
+
+	arg_9_0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory):cleanBubble(var_9_0)
+	arg_9_0:collectRoomGift()
 end
 
-function slot0.collectFactoryProductProgress(slot0, slot1)
-	if (slot1.config and slot2.type) ~= RoomProductLineEnum.ProductItemType.ProductExp and slot3 ~= RoomProductLineEnum.ProductItemType.ProductGold then
+function var_0_0.updateManufacture(arg_10_0)
+	local var_10_0 = RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture
+
+	arg_10_0:checkCreateCategory(RoomNavigateBubbleEnum.CategoryType.Factory):cleanBubble(var_10_0)
+	arg_10_0:collectManufacture()
+end
+
+function var_0_0.collectFactoryProductProgress(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.config
+	local var_11_1 = var_11_0 and var_11_0.type
+
+	if var_11_1 ~= RoomProductLineEnum.ProductItemType.ProductExp and var_11_1 ~= RoomProductLineEnum.ProductItemType.ProductGold then
 		return
 	end
 
-	if slot1.finishCount ~= 0 then
-		slot4, slot5 = slot1:getReservePer()
+	if arg_11_1.finishCount ~= 0 then
+		local var_11_2, var_11_3 = arg_11_1:getReservePer()
 
-		if slot5 >= 100 then
-			slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress):addBubbleData(slot1.id)
+		if var_11_3 >= 100 then
+			local var_11_4 = arg_11_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress)
+			local var_11_5 = arg_11_1.id
+
+			var_11_4:addBubbleData(var_11_5)
 		end
 	end
 end
 
-function slot0.collectHallUpgrade(slot0)
-	slot1, slot2 = RoomInitBuildingHelper.canLevelUp()
+function var_0_0.collectHallUpgrade(arg_12_0)
+	local var_12_0, var_12_1 = RoomInitBuildingHelper.canLevelUp()
 
-	if slot1 then
-		slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade):addBubbleData(RoomNavigateBubbleEnum.HallId)
+	if var_12_0 then
+		arg_12_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade):addBubbleData(RoomNavigateBubbleEnum.HallId)
 	end
 end
 
-function slot0.collectFactoryUpgrade(slot0, slot1)
-	if RoomProductionHelper.canLevelUp(slot1) then
-		slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade):addBubbleData(slot1.id)
+function var_0_0.collectFactoryUpgrade(arg_13_0, arg_13_1)
+	if RoomProductionHelper.canLevelUp(arg_13_1) then
+		local var_13_0 = arg_13_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade)
+		local var_13_1 = arg_13_1.id
+
+		var_13_0:addBubbleData(var_13_1)
 	end
 end
 
-function slot0.collectHeroFaithReward(slot0, slot1)
-	if slot1.currentFaith > 0 then
-		slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward):addBubbleData(slot1.heroId)
+function var_0_0.collectHeroFaithReward(arg_14_0, arg_14_1)
+	if arg_14_1.currentFaith > 0 then
+		local var_14_0 = arg_14_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward)
+		local var_14_1 = arg_14_1.heroId
+
+		var_14_0:addBubbleData(var_14_1)
 	end
 end
 
-function slot0.collectHeroFaithFull(slot0, slot1)
-	if RoomCharacterController.instance:isCharacterFaithFull(slot1.heroId) and RoomCharacterModel.instance:isShowFaithFull(slot2) then
-		slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull):addBubbleData(slot2)
+function var_0_0.collectHeroFaithFull(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.heroId
+
+	if RoomCharacterController.instance:isCharacterFaithFull(var_15_0) and RoomCharacterModel.instance:isShowFaithFull(var_15_0) then
+		arg_15_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull):addBubbleData(var_15_0)
 	end
 end
 
-function slot0.collectRoomGift(slot0)
+function var_0_0.collectRoomGift(arg_16_0)
 	if not RoomGiftModel.instance:isCanGetBonus() then
 		return
 	end
 
-	slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift):addBubbleData(RoomNavigateBubbleEnum.HallId)
+	arg_16_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift):addBubbleData(RoomNavigateBubbleEnum.HallId)
 end
 
-function slot0.collectManufacture(slot0)
-	if not ManufactureModel.instance:getAllBuildingCanClaimProducts() or #slot1 <= 0 then
+function var_0_0.collectManufacture(arg_17_0)
+	local var_17_0 = ManufactureModel.instance:getAllBuildingCanClaimProducts()
+
+	if not var_17_0 or #var_17_0 <= 0 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture):addBubbleData(slot8.uid)
+	local var_17_1 = arg_17_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture)
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		var_17_1:addBubbleData(iter_17_1.uid)
 	end
 end
 
-function slot0.updateCritterEvent(slot0)
-	slot3 = slot0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.Critter)
-	slot4 = nil
+function var_0_0.updateCritterEvent(arg_18_0)
+	local var_18_0 = CritterModel.instance:getAllCritters()
+	local var_18_1 = arg_18_0._categoryMap[RoomNavigateBubbleEnum.CategoryType.Factory]:getOrCreateBubbleMO(RoomNavigateBubbleEnum.FactoryBubbleType.Critter)
+	local var_18_2
 
-	for slot8 = 1, #CritterModel.instance:getAllCritters() do
-		slot9 = slot1[slot8]
+	for iter_18_0 = 1, #var_18_0 do
+		local var_18_3 = var_18_0[iter_18_0]
+		local var_18_4 = var_18_3:isNoMoodWorking()
+		local var_18_5 = var_18_3:isCultivating()
+		local var_18_6 = var_18_3.trainInfo:isHasEventTrigger()
+		local var_18_7 = var_18_3.trainInfo:isTrainFinish()
 
-		if slot9:isNoMoodWorking() or slot9:isCultivating() and (slot9.trainInfo:isHasEventTrigger() or slot9.trainInfo:isTrainFinish()) then
-			table.insert(slot4 or {}, slot9)
+		if var_18_4 or var_18_5 and (var_18_6 or var_18_7) then
+			var_18_2 = var_18_2 or {}
+
+			table.insert(var_18_2, var_18_3)
 		end
 	end
 
-	slot3:clear()
+	var_18_1:clear()
 
-	if slot4 then
-		table.sort(slot4, CritterHelper.sortEvent)
+	if var_18_2 then
+		table.sort(var_18_2, CritterHelper.sortEvent)
 
-		for slot8, slot9 in ipairs(slot4) do
-			slot3:addBubbleData(slot9.id)
+		for iter_18_1, iter_18_2 in ipairs(var_18_2) do
+			var_18_1:addBubbleData(iter_18_2.id)
 		end
 	end
 end
 
-function slot0.sortCategory(slot0)
-	for slot4, slot5 in pairs(slot0._categoryMap) do
-		slot5:sort()
+function var_0_0.sortCategory(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._categoryMap) do
+		iter_19_1:sort()
 	end
 end
 
-function slot0.getCategoryMap(slot0)
-	return slot0._categoryMap
+function var_0_0.getCategoryMap(arg_20_0)
+	return arg_20_0._categoryMap
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

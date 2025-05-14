@@ -1,111 +1,122 @@
-module("modules.logic.fight.view.preview.SkillEditorStanceSelectView", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorStanceSelectView", package.seeall)
 
-slot0 = class("SkillEditorStanceSelectView", BaseView)
+local var_0_0 = class("SkillEditorStanceSelectView", BaseView)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onInitView(slot0)
-	slot0._actionViewGO = gohelper.findChild(slot0.viewGO, "selectStance")
-	slot0._itemGOParent = gohelper.findChild(slot0.viewGO, "selectStance/scroll/content")
-	slot0._itemGOPrefab = gohelper.findChild(slot0.viewGO, "selectStance/scroll/item")
-	slot0._btnSelectStanceID = gohelper.findChildButton(slot0.viewGO, "scene/Grid/btnSelectStanceID")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._actionViewGO = gohelper.findChild(arg_2_0.viewGO, "selectStance")
+	arg_2_0._itemGOParent = gohelper.findChild(arg_2_0.viewGO, "selectStance/scroll/content")
+	arg_2_0._itemGOPrefab = gohelper.findChild(arg_2_0.viewGO, "selectStance/scroll/item")
+	arg_2_0._btnSelectStanceID = gohelper.findChildButton(arg_2_0.viewGO, "scene/Grid/btnSelectStanceID")
 end
 
-function slot0.addEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._actionViewGO):AddClickListener(slot0._hideThis, slot0)
-	slot0:addClickCb(slot0._btnSelectStanceID, slot0._showThis, slot0)
-	slot0:addEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectStance, slot0._onSelectStance, slot0)
+function var_0_0.addEvents(arg_3_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_3_0._actionViewGO):AddClickListener(arg_3_0._hideThis, arg_3_0)
+	arg_3_0:addClickCb(arg_3_0._btnSelectStanceID, arg_3_0._showThis, arg_3_0)
+	arg_3_0:addEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectStance, arg_3_0._onSelectStance, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._actionViewGO):RemoveClickListener()
-	slot0:removeClickCb(slot0._btnSelectStanceID)
-	slot0:removeEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectStance, slot0._onSelectStance, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_4_0._actionViewGO):RemoveClickListener()
+	arg_4_0:removeClickCb(arg_4_0._btnSelectStanceID)
+	arg_4_0:removeEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectStance, arg_4_0._onSelectStance, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0.data_list = slot0.data_list or lua_stance.configList
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0.data_list = arg_5_0.data_list or lua_stance.configList
 
-	gohelper.CreateObjList(slot0, slot0.OnItemShow, slot0.data_list, slot0._itemGOParent, slot0._itemGOPrefab)
+	gohelper.CreateObjList(arg_5_0, arg_5_0.OnItemShow, arg_5_0.data_list, arg_5_0._itemGOParent, arg_5_0._itemGOPrefab)
 end
 
-function slot0._hideThis(slot0)
-	gohelper.setActive(slot0._actionViewGO, false)
+function var_0_0._hideThis(arg_6_0)
+	gohelper.setActive(arg_6_0._actionViewGO, false)
 end
 
-function slot0._showThis(slot0)
-	gohelper.setActive(slot0._actionViewGO, true)
+function var_0_0._showThis(arg_7_0)
+	gohelper.setActive(arg_7_0._actionViewGO, true)
 end
 
-function slot0.OnItemShow(slot0, slot1, slot2, slot3)
-	slot1.transform:Find("Text"):GetComponent(gohelper.Type_TextMesh).text = slot2.dec_stance
+function var_0_0.OnItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_1.transform:Find("Text"):GetComponent(gohelper.Type_TextMesh).text = arg_8_2.dec_stance
 
-	slot0:addClickCb(slot1:GetComponent(typeof(SLFramework.UGUI.ButtonWrap)), slot0.OnItemClick, slot0, slot2)
+	arg_8_0:addClickCb(arg_8_1:GetComponent(typeof(SLFramework.UGUI.ButtonWrap)), arg_8_0.OnItemClick, arg_8_0, arg_8_2)
 end
 
-function slot0.OnItemClick(slot0, slot1)
-	slot0.cur_select = SkillEditorMgr.instance.cur_select_side == FightEnum.EntitySide.EnemySide and "enemy_" or ""
-	SkillEditorMgr.instance[slot0.cur_select .. "stance_id"] = slot1.id
-	slot2 = SkillEditorMgr.instance.cur_select_side
+function var_0_0.OnItemClick(arg_9_0, arg_9_1)
+	arg_9_0.cur_select = SkillEditorMgr.instance.cur_select_side == FightEnum.EntitySide.EnemySide and "enemy_" or ""
+	SkillEditorMgr.instance[arg_9_0.cur_select .. "stance_id"] = arg_9_1.id
 
-	for slot7 = 1, 5 do
-		if #slot1["pos" .. slot7] ~= 0 then
-			slot3 = 0 + 1
+	local var_9_0 = SkillEditorMgr.instance.cur_select_side
+	local var_9_1 = 0
+
+	for iter_9_0 = 1, 5 do
+		if #arg_9_1["pos" .. iter_9_0] ~= 0 then
+			var_9_1 = var_9_1 + 1
 		end
 	end
 
-	slot4, slot5 = SkillEditorMgr.instance:getTypeInfo(slot2)
+	local var_9_2, var_9_3 = SkillEditorMgr.instance:getTypeInfo(var_9_0)
 
-	while slot3 < #slot5.ids do
-		if SkillEditorMgr.instance.cur_select_entity_id == slot5.ids[#slot5.ids] then
-			SkillEditorMgr.instance.cur_select_entity_id = slot5.ids[slot6 - 1]
+	while var_9_1 < #var_9_3.ids do
+		local var_9_4 = #var_9_3.ids
+
+		if SkillEditorMgr.instance.cur_select_entity_id == var_9_3.ids[var_9_4] then
+			SkillEditorMgr.instance.cur_select_entity_id = var_9_3.ids[var_9_4 - 1]
 		end
 
-		table.remove(slot5.ids, slot6)
-		table.remove(slot5.skinIds, slot6)
+		table.remove(var_9_3.ids, var_9_4)
+		table.remove(var_9_3.skinIds, var_9_4)
 	end
 
-	SkillEditorMgr.instance[slot0.cur_select .. "stance_count_limit"] = slot3
+	SkillEditorMgr.instance[arg_9_0.cur_select .. "stance_count_limit"] = var_9_1
 
-	SkillEditorMgr.instance:refreshInfo(slot2)
-	SkillEditorMgr.instance:rebuildEntitys(slot2)
+	SkillEditorMgr.instance:refreshInfo(var_9_0)
+	SkillEditorMgr.instance:rebuildEntitys(var_9_0)
 end
 
-function slot0._onSelectStance(slot0, slot1, slot2, slot3)
-	if not lua_stance.configDict[slot2] then
-		logError("站位不存在: " .. slot2)
+function var_0_0._onSelectStance(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = lua_stance.configDict[arg_10_2]
+
+	if not var_10_0 then
+		logError("站位不存在: " .. arg_10_2)
 
 		return
 	end
 
-	slot0.cur_select = slot1 == FightEnum.EntitySide.EnemySide and "enemy_" or ""
-	SkillEditorMgr.instance[slot0.cur_select .. "stance_id"] = slot4.id
+	arg_10_0.cur_select = arg_10_1 == FightEnum.EntitySide.EnemySide and "enemy_" or ""
+	SkillEditorMgr.instance[arg_10_0.cur_select .. "stance_id"] = var_10_0.id
 
-	for slot9 = 1, 5 do
-		if #slot4["pos" .. slot9] ~= 0 then
-			slot5 = 0 + 1
+	local var_10_1 = 0
+
+	for iter_10_0 = 1, 5 do
+		if #var_10_0["pos" .. iter_10_0] ~= 0 then
+			var_10_1 = var_10_1 + 1
 		end
 	end
 
-	slot6, slot7 = SkillEditorMgr.instance:getTypeInfo(slot1)
+	local var_10_2, var_10_3 = SkillEditorMgr.instance:getTypeInfo(arg_10_1)
 
-	while slot5 < #slot7.ids do
-		if SkillEditorMgr.instance.cur_select_entity_id == slot7.ids[#slot7.ids] then
-			SkillEditorMgr.instance.cur_select_entity_id = slot7.ids[slot8 - 1]
+	while var_10_1 < #var_10_3.ids do
+		local var_10_4 = #var_10_3.ids
+
+		if SkillEditorMgr.instance.cur_select_entity_id == var_10_3.ids[var_10_4] then
+			SkillEditorMgr.instance.cur_select_entity_id = var_10_3.ids[var_10_4 - 1]
 		end
 
-		table.remove(slot7.ids, slot8)
-		table.remove(slot7.skinIds, slot8)
+		table.remove(var_10_3.ids, var_10_4)
+		table.remove(var_10_3.skinIds, var_10_4)
 	end
 
-	SkillEditorMgr.instance[slot0.cur_select .. "stance_count_limit"] = slot5
+	SkillEditorMgr.instance[arg_10_0.cur_select .. "stance_count_limit"] = var_10_1
 
-	SkillEditorMgr.instance:refreshInfo(slot1)
+	SkillEditorMgr.instance:refreshInfo(arg_10_1)
 
-	if slot3 then
-		SkillEditorMgr.instance:rebuildEntitys(slot1)
+	if arg_10_3 then
+		SkillEditorMgr.instance:rebuildEntitys(arg_10_1)
 	end
 end
 
-return slot0
+return var_0_0

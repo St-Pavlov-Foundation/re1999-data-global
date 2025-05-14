@@ -1,88 +1,95 @@
-module("modules.logic.fight.model.mo.FightEntitySummonedInfo", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightEntitySummonedInfo", package.seeall)
 
-slot0 = pureTable("FightEntitySummonedInfo")
+local var_0_0 = pureTable("FightEntitySummonedInfo")
 
-function slot0.ctor(slot0)
-	slot0.stanceDic = {}
-	slot0.dataDic = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.stanceDic = {}
+	arg_1_0.dataDic = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.stanceDic = {}
-	slot0.dataDic = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.stanceDic = {}
+	arg_2_0.dataDic = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:addData(slot6)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		arg_2_0:addData(iter_2_1)
 	end
 end
 
-function slot0.addData(slot0, slot1)
-	slot2 = {
-		summonedId = slot1.summonedId,
-		level = slot1.level,
-		uid = slot1.uid,
-		fromUid = slot1.fromUid
+function var_0_0.addData(arg_3_0, arg_3_1)
+	local var_3_0 = {
+		summonedId = arg_3_1.summonedId,
+		level = arg_3_1.level,
+		uid = arg_3_1.uid,
+		fromUid = arg_3_1.fromUid
 	}
-	slot0.dataDic[slot1.uid] = slot2
 
-	if lua_fight_summoned_stance.configDict[FightConfig.instance:getSummonedConfig(slot2.summonedId, slot2.level).stanceId] then
-		slot0.stanceDic[slot4] = slot0.stanceDic[slot4] or {}
+	arg_3_0.dataDic[arg_3_1.uid] = var_3_0
 
-		for slot9 = 1, 20 do
-			if not slot5["pos" .. slot9] then
+	local var_3_1 = FightConfig.instance:getSummonedConfig(var_3_0.summonedId, var_3_0.level).stanceId
+	local var_3_2 = lua_fight_summoned_stance.configDict[var_3_1]
+
+	if var_3_2 then
+		arg_3_0.stanceDic[var_3_1] = arg_3_0.stanceDic[var_3_1] or {}
+
+		for iter_3_0 = 1, 20 do
+			if not var_3_2["pos" .. iter_3_0] then
 				break
 			end
 
-			if #slot5["pos" .. slot9] == 0 then
+			if #var_3_2["pos" .. iter_3_0] == 0 then
 				break
 			end
 
-			if not slot0.stanceDic[slot4][slot9] then
-				slot0.stanceDic[slot4][slot9] = slot2.uid
-				slot2.stanceIndex = slot9
-
-				break
-			end
-		end
-	end
-
-	if not slot2.stanceIndex then
-		logError("挂件位置都被占用了,或者坐标数据没有配置,或者位置表找不到id:" .. slot4)
-
-		slot2.stanceIndex = 1
-	end
-
-	return slot2
-end
-
-function slot0.removeData(slot0, slot1)
-	slot2 = slot0:getData(slot1)
-
-	if slot0.stanceDic[FightConfig.instance:getSummonedConfig(slot2.summonedId, slot2.level).stanceId] then
-		for slot8, slot9 in pairs(slot0.stanceDic[slot4]) do
-			if slot9 == slot1 then
-				slot0.stanceDic[slot4][slot8] = nil
+			if not arg_3_0.stanceDic[var_3_1][iter_3_0] then
+				arg_3_0.stanceDic[var_3_1][iter_3_0] = var_3_0.uid
+				var_3_0.stanceIndex = iter_3_0
 
 				break
 			end
 		end
 	end
 
-	slot0.dataDic[slot1] = nil
+	if not var_3_0.stanceIndex then
+		logError("挂件位置都被占用了,或者坐标数据没有配置,或者位置表找不到id:" .. var_3_1)
+
+		var_3_0.stanceIndex = 1
+	end
+
+	return var_3_0
 end
 
-function slot0.getDataDic(slot0)
-	return slot0.dataDic
+function var_0_0.removeData(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getData(arg_4_1)
+	local var_4_1 = FightConfig.instance:getSummonedConfig(var_4_0.summonedId, var_4_0.level).stanceId
+
+	if arg_4_0.stanceDic[var_4_1] then
+		for iter_4_0, iter_4_1 in pairs(arg_4_0.stanceDic[var_4_1]) do
+			if iter_4_1 == arg_4_1 then
+				arg_4_0.stanceDic[var_4_1][iter_4_0] = nil
+
+				break
+			end
+		end
+	end
+
+	arg_4_0.dataDic[arg_4_1] = nil
 end
 
-function slot0.getData(slot0, slot1)
-	return slot0.dataDic[slot1]
+function var_0_0.getDataDic(arg_5_0)
+	return arg_5_0.dataDic
 end
 
-function slot0.setLevel(slot0, slot1, slot2)
-	if slot0.dataDic[slot1] then
-		slot3.level = slot2
+function var_0_0.getData(arg_6_0, arg_6_1)
+	return arg_6_0.dataDic[arg_6_1]
+end
+
+function var_0_0.setLevel(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0.dataDic[arg_7_1]
+
+	if var_7_0 then
+		var_7_0.level = arg_7_2
 	end
 end
 
-return slot0
+return var_0_0

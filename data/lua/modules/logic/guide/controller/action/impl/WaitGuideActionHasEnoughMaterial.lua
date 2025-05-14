@@ -1,34 +1,37 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionHasEnoughMaterial", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionHasEnoughMaterial", package.seeall)
 
-slot0 = class("WaitGuideActionHasEnoughMaterial", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionHasEnoughMaterial", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, slot0._checkMaterials, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_1_0._checkMaterials, arg_1_0)
 
-	slot0._materials = GameUtil.splitString2(slot0.actionParam, true, "|", "#")
+	arg_1_0._materials = GameUtil.splitString2(arg_1_0.actionParam, true, "|", "#")
 
-	slot0:_checkMaterials()
+	arg_1_0:_checkMaterials()
 end
 
-function slot0._checkMaterials(slot0)
-	slot1 = true
+function var_0_0._checkMaterials(arg_2_0)
+	local var_2_0 = true
 
-	for slot5, slot6 in ipairs(slot0._materials) do
-		if ItemModel.instance:getItemQuantity(slot6[1], slot6[2]) < slot6[3] then
-			slot1 = false
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._materials) do
+		local var_2_1 = iter_2_1[1]
+		local var_2_2 = iter_2_1[2]
+
+		if iter_2_1[3] > ItemModel.instance:getItemQuantity(var_2_1, var_2_2) then
+			var_2_0 = false
 
 			break
 		end
 	end
 
-	if slot1 then
-		slot0:onDone(true)
+	if var_2_0 then
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, slot0._checkMaterials, slot0)
+function var_0_0.clearWork(arg_3_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_3_0._checkMaterials, arg_3_0)
 end
 
-return slot0
+return var_0_0

@@ -1,33 +1,35 @@
-module("modules.logic.chessgame.config.ChessGameInteractField", package.seeall)
+﻿module("modules.logic.chessgame.config.ChessGameInteractField", package.seeall)
 
-slot0 = _M
-slot0.id = 1
-slot0.groupId = 2
-slot0.interactType = 3
-slot0.x = 4
-slot0.y = 5
-slot0.dir = 6
-slot0.path = 7
-slot0.offset = nil
-slot0.walkable = 9
-slot0.show = 10
-slot0.canMove = 11
-slot0.touchTrigger = 12
-slot0.specialData = 13
-slot0.triggerDir = 14
-slot0.effects = nil
-slot0.iconType = 16
+local var_0_0 = _M
+
+var_0_0.id = 1
+var_0_0.groupId = 2
+var_0_0.interactType = 3
+var_0_0.x = 4
+var_0_0.y = 5
+var_0_0.dir = 6
+var_0_0.path = 7
+var_0_0.offset = nil
+var_0_0.walkable = 9
+var_0_0.show = 10
+var_0_0.canMove = 11
+var_0_0.touchTrigger = 12
+var_0_0.specialData = 13
+var_0_0.triggerDir = 14
+var_0_0.effects = nil
+var_0_0.iconType = 16
 
 if false then
-	slot1 = {
-		type = 1,
-		param = 2
-	}
-	slot2 = {
-		path = "",
-		interacts = {},
-		nodes = {}
-	}
+	local var_0_1 = {}
+
+	var_0_1.type = 1
+	var_0_1.param = 2
+
+	local var_0_2 = {}
+
+	var_0_2.path = ""
+	var_0_2.interacts = {}
+	var_0_2.nodes = {}
 end
 
-return slot0
+return var_0_0

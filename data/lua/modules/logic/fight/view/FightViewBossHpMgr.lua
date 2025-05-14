@@ -1,98 +1,121 @@
-module("modules.logic.fight.view.FightViewBossHpMgr", package.seeall)
+﻿module("modules.logic.fight.view.FightViewBossHpMgr", package.seeall)
 
-slot0 = class("FightViewBossHpMgr", BaseViewExtended)
+local var_0_0 = class("FightViewBossHpMgr", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._bossHpRoot = gohelper.findChild(slot0.viewGO, "root/bossHpRoot").transform
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._bossHpRoot = gohelper.findChild(arg_1_0.viewGO, "root/bossHpRoot").transform
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, slot0._onBeforeEnterStepBehaviour, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, slot0._onRestartStage, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_2_0._onBeforeEnterStepBehaviour, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, arg_2_0._onRestartStage, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._hpItem = gohelper.findChild(slot0.viewGO, "root/bossHpRoot/bossHp")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._hpItem = gohelper.findChild(arg_4_0.viewGO, "root/bossHpRoot/bossHp")
 
-	SLFramework.AnimatorPlayer.Get(slot0._hpItem):Play("idle", nil, )
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "root/bossHpRoot/bossHp/Alpha/bossHp"), false)
+	SLFramework.AnimatorPlayer.Get(arg_4_0._hpItem):Play("idle", nil, nil)
+	gohelper.setActive(gohelper.findChild(arg_4_0.viewGO, "root/bossHpRoot/bossHp/Alpha/bossHp"), false)
 end
 
-function slot0._onRestartStage(slot0)
-	slot0:killAllChildView()
+function var_0_0._onRestartStage(arg_5_0)
+	arg_5_0:killAllChildView()
 end
 
-function slot0._onBeforeEnterStepBehaviour(slot0)
+function var_0_0._onBeforeEnterStepBehaviour(arg_6_0)
 	if not GMFightShowState.bossHp then
 		return
 	end
 
 	if BossRushController.instance:isInBossRushInfiniteFight(true) then
-		slot0:openSubView(BossRushFightViewBossHp, slot0._hpItem)
+		arg_6_0:openSubView(BossRushFightViewBossHp, arg_6_0._hpItem)
 
 		return
 	end
 
+	local var_6_0 = 3
+
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CardDeck) then
-		slot1 = 3 + 1
+		var_6_0 = var_6_0 + 1
 	end
 
 	if FightView.canShowSpecialBtn() then
-		slot1 = slot1 + 1
+		var_6_0 = var_6_0 + 1
 	end
 
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and slot2.type == DungeonEnum.EpisodeType.Rouge then
-		slot1 = slot1 + 1
+	local var_6_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if var_6_1 and var_6_1.type == DungeonEnum.EpisodeType.Rouge then
+		var_6_0 = var_6_0 + 1
 	end
 
-	if slot1 >= 6 then
-		recthelper.setAnchorX(slot0._bossHpRoot, -70)
+	if var_6_0 >= 6 then
+		recthelper.setAnchorX(arg_6_0._bossHpRoot, -70)
 	end
 
-	for slot11, slot12 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do
-		if slot12:getMO() and FightHelper.isBossId(FightHelper.getCurBossId(), slot13.modelId) then
-			slot5 = 0 + 1
+	local var_6_2 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+	local var_6_3 = 0
+	local var_6_4 = FightHelper.getCurBossId()
+	local var_6_5 = {}
 
-			table.insert({}, slot12.id)
+	for iter_6_0, iter_6_1 in ipairs(var_6_2) do
+		local var_6_6 = iter_6_1:getMO()
+
+		if var_6_6 and FightHelper.isBossId(var_6_4, var_6_6.modelId) then
+			var_6_3 = var_6_3 + 1
+
+			table.insert(var_6_5, iter_6_1.id)
 		end
 	end
 
-	if slot5 == 2 then
-		for slot11, slot12 in ipairs(slot7) do
-			gohelper.setActive(gohelper.cloneInPlace(slot0._hpItem, "bossHp" .. slot11), true)
-			recthelper.setWidth(slot13.transform, slot1 >= 5 and 400 or 450)
+	if var_6_3 == 2 then
+		for iter_6_2, iter_6_3 in ipairs(var_6_5) do
+			local var_6_7 = gohelper.cloneInPlace(arg_6_0._hpItem, "bossHp" .. iter_6_2)
 
-			if (slot1 >= 5 and 240 or 295) == 295 and slot11 == 1 then
-				slot15 = 255
+			gohelper.setActive(var_6_7, true)
+
+			local var_6_8 = var_6_0 >= 5 and 400 or 450
+
+			recthelper.setWidth(var_6_7.transform, var_6_8)
+
+			local var_6_9 = var_6_0 >= 5 and 240 or 295
+
+			if var_6_9 == 295 and iter_6_2 == 1 then
+				var_6_9 = 255
 			end
 
-			recthelper.setAnchorX(slot13.transform, slot11 == 1 and -slot15 or slot15)
-			slot0:openSubView(FightViewMultiBossHp, slot13, nil, slot12)
+			recthelper.setAnchorX(var_6_7.transform, iter_6_2 == 1 and -var_6_9 or var_6_9)
+			arg_6_0:openSubView(FightViewMultiBossHp, var_6_7, nil, iter_6_3)
 		end
 
-		gohelper.setActive(slot0._hpItem, false)
+		gohelper.setActive(arg_6_0._hpItem, false)
 	else
-		slot0:openSubView(FightViewBossHp, slot0._hpItem)
+		arg_6_0:openSubView(FightViewBossHp, arg_6_0._hpItem)
 	end
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

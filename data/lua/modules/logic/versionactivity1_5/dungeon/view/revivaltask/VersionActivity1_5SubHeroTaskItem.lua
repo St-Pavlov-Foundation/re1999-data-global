@@ -1,212 +1,210 @@
-module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5SubHeroTaskItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5SubHeroTaskItem", package.seeall)
 
-slot0 = class("VersionActivity1_5SubHeroTaskItem", UserDataDispose)
+local var_0_0 = class("VersionActivity1_5SubHeroTaskItem", UserDataDispose)
 
-function slot0.createItem(slot0)
-	slot1 = uv0.New()
+function var_0_0.createItem(arg_1_0)
+	local var_1_0 = var_0_0.New()
 
-	slot1:init(slot0)
+	var_1_0:init(arg_1_0)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0:__onInit()
 
-	slot0.go = slot1
-	slot0._gofinished = gohelper.findChild(slot0.go, "#go_finished")
-	slot0._txttitle = gohelper.findChildText(slot0.go, "#go_finished/#txt_title")
-	slot0._txtdes = gohelper.findChildText(slot0.go, "#go_finished/#txt_des")
-	slot0._gofinishrewarditem = gohelper.findChild(slot0.go, "#go_finished/#go_finishrewarditem")
-	slot0._goGainReward = gohelper.findChild(slot0.go, "#go_finished/#go_gainReward")
-	slot0.tipClick = gohelper.findChildClickWithDefaultAudio(slot0.go, "#go_finished/bg")
-	slot0._gohasget = gohelper.findChild(slot0.go, "#go_finished/go_hasget")
-	slot0._finishAnimator = ZProj.ProjAnimatorPlayer.Get(slot0._gofinished)
-	slot0._gonormal = gohelper.findChild(slot0.go, "#go_normal")
-	slot0._txtnormaltitle = gohelper.findChildText(slot0.go, "#go_normal/#txt_title")
-	slot0._txtnormaldes = gohelper.findChildText(slot0.go, "#go_normal/#txt_des")
-	slot0._gonormalrewarditem = gohelper.findChild(slot0.go, "#go_normal/#go_normalrewarditem")
-	slot0._btngo = gohelper.findChildButtonWithAudio(slot0.go, "#go_normal/btn_go")
-	slot0._normalAnimator = ZProj.ProjAnimatorPlayer.Get(slot0._gonormal)
-	slot0._golocked = gohelper.findChild(slot0.go, "#go_locked")
-	slot0._txtlocked = gohelper.findChildText(slot0.go, "#go_locked/#txt_locked")
-	slot0._golockrewarditem = gohelper.findChild(slot0.go, "#go_locked/#go_lockrewarditem")
-	slot0._lockAnimator = ZProj.ProjAnimatorPlayer.Get(slot0._golocked)
-	slot0._gainRewardClick = gohelper.getClickWithDefaultAudio(slot0._goGainReward, AudioEnum.UI.UI_Common_Click)
+	arg_2_0.go = arg_2_1
+	arg_2_0._gofinished = gohelper.findChild(arg_2_0.go, "#go_finished")
+	arg_2_0._txttitle = gohelper.findChildText(arg_2_0.go, "#go_finished/#txt_title")
+	arg_2_0._txtdes = gohelper.findChildText(arg_2_0.go, "#go_finished/#txt_des")
+	arg_2_0._gofinishrewarditem = gohelper.findChild(arg_2_0.go, "#go_finished/#go_finishrewarditem")
+	arg_2_0._goGainReward = gohelper.findChild(arg_2_0.go, "#go_finished/#go_gainReward")
+	arg_2_0.tipClick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#go_finished/bg")
+	arg_2_0._gohasget = gohelper.findChild(arg_2_0.go, "#go_finished/go_hasget")
+	arg_2_0._finishAnimator = ZProj.ProjAnimatorPlayer.Get(arg_2_0._gofinished)
+	arg_2_0._gonormal = gohelper.findChild(arg_2_0.go, "#go_normal")
+	arg_2_0._txtnormaltitle = gohelper.findChildText(arg_2_0.go, "#go_normal/#txt_title")
+	arg_2_0._txtnormaldes = gohelper.findChildText(arg_2_0.go, "#go_normal/#txt_des")
+	arg_2_0._gonormalrewarditem = gohelper.findChild(arg_2_0.go, "#go_normal/#go_normalrewarditem")
+	arg_2_0._btngo = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_normal/btn_go")
+	arg_2_0._normalAnimator = ZProj.ProjAnimatorPlayer.Get(arg_2_0._gonormal)
+	arg_2_0._golocked = gohelper.findChild(arg_2_0.go, "#go_locked")
+	arg_2_0._txtlocked = gohelper.findChildText(arg_2_0.go, "#go_locked/#txt_locked")
+	arg_2_0._golockrewarditem = gohelper.findChild(arg_2_0.go, "#go_locked/#go_lockrewarditem")
+	arg_2_0._lockAnimator = ZProj.ProjAnimatorPlayer.Get(arg_2_0._golocked)
+	arg_2_0._gainRewardClick = gohelper.getClickWithDefaultAudio(arg_2_0._goGainReward, AudioEnum.UI.UI_Common_Click)
 
-	slot0.tipClick:AddClickListener(slot0.tipClickOnClick, slot0)
-	slot0._btngo:AddClickListener(slot0._btngoOnClick, slot0)
-	slot0._gainRewardClick:AddClickListener(slot0.onClickGainReward, slot0)
+	arg_2_0.tipClick:AddClickListener(arg_2_0.tipClickOnClick, arg_2_0)
+	arg_2_0._btngo:AddClickListener(arg_2_0._btngoOnClick, arg_2_0)
+	arg_2_0._gainRewardClick:AddClickListener(arg_2_0.onClickGainReward, arg_2_0)
 
-	slot0.openViewFinish = ViewMgr.instance:isOpenFinish(ViewName.VersionActivity1_5RevivalTaskView)
+	arg_2_0.openViewFinish = ViewMgr.instance:isOpenFinish(ViewName.VersionActivity1_5RevivalTaskView)
 
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward, slot0.onGainedSubHeroTaskReward, slot0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OpenAnimPlayingStatusChange, slot0.openAnimPlayingStatusChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
+	arg_2_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward, arg_2_0.onGainedSubHeroTaskReward, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OpenAnimPlayingStatusChange, arg_2_0.openAnimPlayingStatusChange, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
 
-	slot0._txtdes.overflowMode = TMPro.TextOverflowModes.Ellipsis
+	arg_2_0._txtdes.overflowMode = TMPro.TextOverflowModes.Ellipsis
 end
 
-function slot0.tipClickOnClick(slot0)
-	if slot0.status < VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished then
+function var_0_0.tipClickOnClick(arg_3_0)
+	if arg_3_0.status < VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished then
 		return
 	end
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ShowSubTaskDetail, slot0.config)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ShowSubTaskDetail, arg_3_0.config)
 end
 
-function slot0._btngoOnClick(slot0)
-	if slot0.status ~= VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal then
+function var_0_0._btngoOnClick(arg_4_0)
+	if arg_4_0.status ~= VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0.elementList) do
-		if not DungeonMapModel.instance:elementIsFinished(slot5) then
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.elementList) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_4_1) then
 			ViewMgr.instance:closeView(ViewName.VersionActivity1_5RevivalTaskView)
-			VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.FocusElement, slot5)
+			VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.FocusElement, iter_4_1)
 
 			return
 		end
 	end
 end
 
-function slot0.onClickGainReward(slot0)
-	VersionActivity1_5DungeonRpc.instance:sendAct139GainSubHeroTaskRewardRequest(slot0.id)
+function var_0_0.onClickGainReward(arg_5_0)
+	VersionActivity1_5DungeonRpc.instance:sendAct139GainSubHeroTaskRewardRequest(arg_5_0.id)
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.show(arg_6_0)
+	gohelper.setActive(arg_6_0.go, true)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_7_0)
+	gohelper.setActive(arg_7_0.go, false)
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.config = slot1
-	slot0.elementList = string.splitToNumber(slot0.config.elementIds, "#")
-	slot2 = string.splitToNumber(slot0.config.reward, "#")
-	slot0.rewardType = slot2[1]
-	slot0.rewardId = slot2[2]
-	slot0.rewardQuantity = slot2[3]
+function var_0_0.updateData(arg_8_0, arg_8_1)
+	arg_8_0.id = arg_8_1.id
+	arg_8_0.config = arg_8_1
+	arg_8_0.elementList = string.splitToNumber(arg_8_0.config.elementIds, "#")
 
-	slot0:refreshUI()
+	local var_8_0 = string.splitToNumber(arg_8_0.config.reward, "#")
+
+	arg_8_0.rewardType = var_8_0[1]
+	arg_8_0.rewardId = var_8_0[2]
+	arg_8_0.rewardQuantity = var_8_0[3]
+
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0.status = VersionActivity1_5RevivalTaskModel.instance:getSubHeroTaskStatus(slot0.config)
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0.status = VersionActivity1_5RevivalTaskModel.instance:getSubHeroTaskStatus(arg_9_0.config)
 
-	gohelper.setActive(slot0._gofinished, VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished <= slot0.status)
-	gohelper.setActive(slot0._gonormal, slot0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal)
-	gohelper.setActive(slot0._golocked, slot0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock)
+	gohelper.setActive(arg_9_0._gofinished, arg_9_0.status >= VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished)
+	gohelper.setActive(arg_9_0._gonormal, arg_9_0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal)
+	gohelper.setActive(arg_9_0._golocked, arg_9_0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock)
 
-	if VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished <= slot0.status then
-		slot0:refreshFinishedUI()
-	elseif slot0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal then
-		slot0:refreshNormalUI()
-	elseif slot0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock then
-		slot0:refreshLockUI()
+	if arg_9_0.status >= VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Finished then
+		arg_9_0:refreshFinishedUI()
+	elseif arg_9_0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal then
+		arg_9_0:refreshNormalUI()
+	elseif arg_9_0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock then
+		arg_9_0:refreshLockUI()
 	end
 
-	slot0.icon:setMOValue(slot0.rewardType, slot0.rewardId, slot0.rewardQuantity)
-	slot0.icon:setScale(0.6, 0.6, 0.6)
+	arg_9_0.icon:setMOValue(arg_9_0.rewardType, arg_9_0.rewardId, arg_9_0.rewardQuantity)
+	arg_9_0.icon:setScale(0.6, 0.6, 0.6)
 end
 
-function slot0.refreshFinishedUI(slot0)
-	slot0._txttitle.text = slot0.config.title
+function var_0_0.refreshFinishedUI(arg_10_0)
+	arg_10_0._txttitle.text = arg_10_0.config.title
 
 	if LangSettings.instance:isEn() then
-		slot3 = VersionActivity1_5DungeonEnum.HeroTaskDescShowCount
-		slot4 = VersionActivity1_5DungeonEnum.Suffix
-		slot0._txtdes.text = slot0.config.desc .. " " .. slot0.config.descSuffix
+		arg_10_0._txtdes.text = arg_10_0.config.desc .. " " .. arg_10_0.config.descSuffix, VersionActivity1_5DungeonEnum.HeroTaskDescShowCount, VersionActivity1_5DungeonEnum.Suffix
 	else
-		slot3 = VersionActivity1_5DungeonEnum.HeroTaskDescShowCount
-		slot4 = VersionActivity1_5DungeonEnum.Suffix
-		slot0._txtdes.text = slot0.config.desc .. slot0.config.descSuffix
+		arg_10_0._txtdes.text = arg_10_0.config.desc .. arg_10_0.config.descSuffix, VersionActivity1_5DungeonEnum.HeroTaskDescShowCount, VersionActivity1_5DungeonEnum.Suffix
 	end
 
-	if not slot0.finishRewardIcon then
-		slot0.finishRewardIcon = IconMgr.instance:getCommonItemIcon(slot0._gofinishrewarditem)
+	if not arg_10_0.finishRewardIcon then
+		arg_10_0.finishRewardIcon = IconMgr.instance:getCommonItemIcon(arg_10_0._gofinishrewarditem)
 	end
 
-	slot0.icon = slot0.finishRewardIcon
+	arg_10_0.icon = arg_10_0.finishRewardIcon
 
-	slot0:refreshGainedReward()
-	slot0:playUnlockAnimation(slot0.playFinishOpenAnim)
+	arg_10_0:refreshGainedReward()
+	arg_10_0:playUnlockAnimation(arg_10_0.playFinishOpenAnim)
 end
 
-function slot0.refreshGainedReward(slot0)
-	slot1 = VersionActivity1_5RevivalTaskModel.instance:checkSubHeroTaskGainedReward(slot0.config)
+function var_0_0.refreshGainedReward(arg_11_0)
+	local var_11_0 = VersionActivity1_5RevivalTaskModel.instance:checkSubHeroTaskGainedReward(arg_11_0.config)
 
-	gohelper.setActive(slot0._gohasget, slot1)
-	gohelper.setActive(slot0._goGainReward, not slot1)
+	gohelper.setActive(arg_11_0._gohasget, var_11_0)
+	gohelper.setActive(arg_11_0._goGainReward, not var_11_0)
 end
 
-function slot0.onGainedSubHeroTaskReward(slot0, slot1)
-	if slot0.id ~= slot1 then
+function var_0_0.onGainedSubHeroTaskReward(arg_12_0, arg_12_1)
+	if arg_12_0.id ~= arg_12_1 then
 		return
 	end
 
-	slot0:refreshGainedReward()
+	arg_12_0:refreshGainedReward()
 end
 
-function slot0.refreshNormalUI(slot0)
-	slot0._txtnormaltitle.text = slot0.config.title
-	slot0._txtnormaldes.text = GameUtil.getBriefName(slot0.config.desc, VersionActivity1_5DungeonEnum.HeroTaskDescShowCount, VersionActivity1_5DungeonEnum.Suffix)
+function var_0_0.refreshNormalUI(arg_13_0)
+	arg_13_0._txtnormaltitle.text = arg_13_0.config.title
+	arg_13_0._txtnormaldes.text = GameUtil.getBriefName(arg_13_0.config.desc, VersionActivity1_5DungeonEnum.HeroTaskDescShowCount, VersionActivity1_5DungeonEnum.Suffix)
 
-	if not slot0.normalRewardIcon then
-		slot0.normalRewardIcon = IconMgr.instance:getCommonItemIcon(slot0._gonormalrewarditem)
+	if not arg_13_0.normalRewardIcon then
+		arg_13_0.normalRewardIcon = IconMgr.instance:getCommonItemIcon(arg_13_0._gonormalrewarditem)
 	end
 
-	slot0.icon = slot0.normalRewardIcon
+	arg_13_0.icon = arg_13_0.normalRewardIcon
 
-	slot0:playUnlockAnimation(slot0.playNormalOpenAnim)
+	arg_13_0:playUnlockAnimation(arg_13_0.playNormalOpenAnim)
 end
 
-function slot0.refreshLockUI(slot0)
-	slot0._txtlocked.text = slot0.config.lockDesc
+function var_0_0.refreshLockUI(arg_14_0)
+	arg_14_0._txtlocked.text = arg_14_0.config.lockDesc
 
-	if not slot0.lockRewardIcon then
-		slot0.lockRewardIcon = IconMgr.instance:getCommonItemIcon(slot0._golockrewarditem)
+	if not arg_14_0.lockRewardIcon then
+		arg_14_0.lockRewardIcon = IconMgr.instance:getCommonItemIcon(arg_14_0._golockrewarditem)
 	end
 
-	slot0.icon = slot0.lockRewardIcon
+	arg_14_0.icon = arg_14_0.lockRewardIcon
 
-	slot0._lockAnimator:Play("idle")
+	arg_14_0._lockAnimator:Play("idle")
 end
 
-function slot0.playUnlockAnimation(slot0, slot1)
-	if not VersionActivity1_5RevivalTaskModel.instance:checkIsPlayedUnlockAnimation(slot0.config.id) then
-		gohelper.setActive(slot0._gofinished, false)
-		gohelper.setActive(slot0._gonormal, false)
-		gohelper.setActive(slot0._golocked, true)
+function var_0_0.playUnlockAnimation(arg_15_0, arg_15_1)
+	if not VersionActivity1_5RevivalTaskModel.instance:checkIsPlayedUnlockAnimation(arg_15_0.config.id) then
+		gohelper.setActive(arg_15_0._gofinished, false)
+		gohelper.setActive(arg_15_0._gonormal, false)
+		gohelper.setActive(arg_15_0._golocked, true)
 
-		slot0._txtlocked.text = slot0.config.lockDesc
+		arg_15_0._txtlocked.text = arg_15_0.config.lockDesc
 
-		if not slot0.lockRewardIcon then
-			slot0.lockRewardIcon = IconMgr.instance:getCommonItemIcon(slot0._golockrewarditem)
+		if not arg_15_0.lockRewardIcon then
+			arg_15_0.lockRewardIcon = IconMgr.instance:getCommonItemIcon(arg_15_0._golockrewarditem)
 		end
 
-		slot0.lockRewardIcon:setMOValue(slot0.rewardType, slot0.rewardId, slot0.rewardQuantity)
-		slot0.lockRewardIcon:setScale(0.6, 0.6, 0.6)
+		arg_15_0.lockRewardIcon:setMOValue(arg_15_0.rewardType, arg_15_0.rewardId, arg_15_0.rewardQuantity)
+		arg_15_0.lockRewardIcon:setScale(0.6, 0.6, 0.6)
 
-		slot0.unlockCallback = slot1
+		arg_15_0.unlockCallback = arg_15_1
 
-		slot0:_playUnlockAnimation()
+		arg_15_0:_playUnlockAnimation()
 	end
 end
 
-function slot0._playUnlockAnimation(slot0)
-	if slot0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock then
+function var_0_0._playUnlockAnimation(arg_16_0)
+	if arg_16_0.status == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Lock then
 		return
 	end
 
-	if VersionActivity1_5RevivalTaskModel.instance:checkIsPlayedUnlockAnimation(slot0.config.id) then
+	if VersionActivity1_5RevivalTaskModel.instance:checkIsPlayedUnlockAnimation(arg_16_0.config.id) then
 		return
 	end
 
-	if not slot0.openViewFinish then
+	if not arg_16_0.openViewFinish then
 		return
 	end
 
@@ -215,49 +213,49 @@ function slot0._playUnlockAnimation(slot0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_quest_unlock)
-	slot0._lockAnimator:Play("unlock", slot0.unLockAnimationDone, slot0)
+	arg_16_0._lockAnimator:Play("unlock", arg_16_0.unLockAnimationDone, arg_16_0)
 end
 
-function slot0.unLockAnimationDone(slot0)
-	VersionActivity1_5RevivalTaskModel.instance:playedUnlockAnimation(slot0.config.id)
-	gohelper.setActive(slot0._golocked, false)
+function var_0_0.unLockAnimationDone(arg_17_0)
+	VersionActivity1_5RevivalTaskModel.instance:playedUnlockAnimation(arg_17_0.config.id)
+	gohelper.setActive(arg_17_0._golocked, false)
 
-	if slot0.unlockCallback then
-		slot0:unlockCallback()
+	if arg_17_0.unlockCallback then
+		arg_17_0.unlockCallback(arg_17_0)
 
-		slot0.unlockCallback = nil
+		arg_17_0.unlockCallback = nil
 	end
 end
 
-function slot0.playNormalOpenAnim(slot0)
-	gohelper.setActive(slot0._gonormal, true)
-	slot0._normalAnimator:Play("open")
+function var_0_0.playNormalOpenAnim(arg_18_0)
+	gohelper.setActive(arg_18_0._gonormal, true)
+	arg_18_0._normalAnimator:Play("open")
 end
 
-function slot0.playFinishOpenAnim(slot0)
-	gohelper.setActive(slot0._gofinished, true)
-	slot0._finishAnimator:Play("open")
+function var_0_0.playFinishOpenAnim(arg_19_0)
+	gohelper.setActive(arg_19_0._gofinished, true)
+	arg_19_0._finishAnimator:Play("open")
 end
 
-function slot0.onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.VersionActivity1_5RevivalTaskView then
-		slot0.openViewFinish = true
+function var_0_0.onOpenViewFinish(arg_20_0, arg_20_1)
+	if arg_20_1 == ViewName.VersionActivity1_5RevivalTaskView then
+		arg_20_0.openViewFinish = true
 
-		slot0:_playUnlockAnimation()
+		arg_20_0:_playUnlockAnimation()
 	end
 end
 
-function slot0.openAnimPlayingStatusChange(slot0, slot1)
-	if not slot1 then
-		slot0:_playUnlockAnimation()
+function var_0_0.openAnimPlayingStatusChange(arg_21_0, arg_21_1)
+	if not arg_21_1 then
+		arg_21_0:_playUnlockAnimation()
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0.tipClick:RemoveClickListener()
-	slot0._btngo:RemoveClickListener()
-	slot0._gainRewardClick:RemoveClickListener()
-	slot0:__onDispose()
+function var_0_0.destroy(arg_22_0)
+	arg_22_0.tipClick:RemoveClickListener()
+	arg_22_0._btngo:RemoveClickListener()
+	arg_22_0._gainRewardClick:RemoveClickListener()
+	arg_22_0:__onDispose()
 end
 
-return slot0
+return var_0_0

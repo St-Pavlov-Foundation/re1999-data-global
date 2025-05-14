@@ -1,37 +1,59 @@
-module("modules.logic.activity.controller.chessmap.step.ActivityChessStepDeleteObject", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepDeleteObject", package.seeall)
 
-slot0 = class("ActivityChessStepDeleteObject", ActivityChessStepBase)
+local var_0_0 = class("ActivityChessStepDeleteObject", ActivityChessStepBase)
 
-function slot0.start(slot0)
-	slot2 = slot0.originData.x
-	slot3 = slot0.originData.y
-	slot4 = ActivityChessGameModel.instance:getActId()
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+	local var_1_1 = arg_1_0.originData.x
+	local var_1_2 = arg_1_0.originData.y
+	local var_1_3 = ActivityChessGameModel.instance:getActId()
+	local var_1_4 = ActivityChessGameController.instance.interacts
 
-	if ActivityChessGameController.instance.interacts and slot5:get(slot0.originData.id) and slot6.config and slot6.config.interactType == ActivityChessEnum.InteractType.Player and slot0:checkPlayDisappearAnim(slot6) then
-		return
+	if var_1_4 then
+		local var_1_5 = var_1_4:get(var_1_0)
+
+		if var_1_5 and var_1_5.config and var_1_5.config.interactType == ActivityChessEnum.InteractType.Player and arg_1_0:checkPlayDisappearAnim(var_1_5) then
+			return
+		end
 	end
 
-	slot0:removeFinish()
+	arg_1_0:removeFinish()
 end
 
-function slot0.checkPlayDisappearAnim(slot0, slot1)
-	if slot1.avatar and slot1.avatar.goSelected and slot1.avatar.goSelected:GetComponent(typeof(UnityEngine.Animator)) then
-		slot2:Play("close", 0, 0)
+function var_0_0.checkPlayDisappearAnim(arg_2_0, arg_2_1)
+	if arg_2_1.avatar and arg_2_1.avatar.goSelected then
+		local var_2_0 = arg_2_1.avatar.goSelected:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_2_0 then
+			var_2_0:Play("close", 0, 0)
+		end
 	end
 
-	if not gohelper.isNil(slot1:tryGetGameObject()) then
-		gohelper.setActive(gohelper.findChild(slot2, "vx_disappear"), true)
+	local var_2_1 = arg_2_1:tryGetGameObject()
 
-		if not gohelper.isNil(gohelper.findChild(slot2, "piecea/vx_tracked")) and slot4:GetComponent(typeof(UnityEngine.Animator)) then
-			slot5:Play("close", 0, 0)
+	if not gohelper.isNil(var_2_1) then
+		local var_2_2 = gohelper.findChild(var_2_1, "vx_disappear")
+
+		gohelper.setActive(var_2_2, true)
+
+		local var_2_3 = gohelper.findChild(var_2_1, "piecea/vx_tracked")
+
+		if not gohelper.isNil(var_2_3) then
+			local var_2_4 = var_2_3:GetComponent(typeof(UnityEngine.Animator))
+
+			if var_2_4 then
+				var_2_4:Play("close", 0, 0)
+			end
 		end
 
-		if slot2:GetComponent(typeof(UnityEngine.Animator)) then
-			slot5:Play("close", 0, 0)
+		local var_2_5 = var_2_1:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_2_5 then
+			var_2_5:Play("close", 0, 0)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerDisappear)
-		TaskDispatcher.runDelay(slot0.removeFinish, slot0, 0.7)
+		TaskDispatcher.runDelay(arg_2_0.removeFinish, arg_2_0, 0.7)
 
 		return true
 	end
@@ -39,17 +61,17 @@ function slot0.checkPlayDisappearAnim(slot0, slot1)
 	return false
 end
 
-function slot0.removeFinish(slot0)
-	slot1 = slot0.originData.id
+function var_0_0.removeFinish(arg_3_0)
+	local var_3_0 = arg_3_0.originData.id
 
-	ActivityChessGameModel.instance:removeObjectById(slot1)
-	ActivityChessGameController.instance:deleteInteractObj(slot1)
-	slot0:finish()
+	ActivityChessGameModel.instance:removeObjectById(var_3_0)
+	ActivityChessGameController.instance:deleteInteractObj(var_3_0)
+	arg_3_0:finish()
 end
 
-function slot0.dispose(slot0)
-	uv0.super.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0.removeFinish, slot0)
+function var_0_0.dispose(arg_4_0)
+	var_0_0.super.dispose(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.removeFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

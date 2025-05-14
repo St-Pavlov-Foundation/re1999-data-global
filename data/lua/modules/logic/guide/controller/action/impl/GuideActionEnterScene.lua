@@ -1,30 +1,32 @@
-module("modules.logic.guide.controller.action.impl.GuideActionEnterScene", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionEnterScene", package.seeall)
 
-slot0 = class("GuideActionEnterScene", BaseGuideAction)
+local var_0_0 = class("GuideActionEnterScene", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._sceneType = SceneType[string.split(slot0.actionParam, "#")[1]]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	if VirtualSummonScene.instance:isOpen() and slot0._sceneType ~= SceneType.Summon then
+	arg_1_0._sceneType = SceneType[var_1_0[1]]
+
+	if VirtualSummonScene.instance:isOpen() and arg_1_0._sceneType ~= SceneType.Summon then
 		VirtualSummonScene.instance:close(true)
 	end
 
-	if slot0._sceneType == SceneType.Summon then
+	if arg_1_0._sceneType == SceneType.Summon then
 		SummonController.instance:enterSummonScene()
 	else
-		slot0._sceneId = tonumber(slot2[2])
-		slot0._sceneLevel = tonumber(slot2[3])
+		arg_1_0._sceneId = tonumber(var_1_0[2])
+		arg_1_0._sceneLevel = tonumber(var_1_0[3])
 
-		if slot0._sceneLevel then
-			GameSceneMgr.instance:startScene(slot0._sceneType, slot0._sceneId, slot0._sceneLevel)
+		if arg_1_0._sceneLevel then
+			GameSceneMgr.instance:startScene(arg_1_0._sceneType, arg_1_0._sceneId, arg_1_0._sceneLevel)
 		else
-			GameSceneMgr.instance:startSceneDefaultLevel(slot0._sceneType, slot0._sceneId)
+			GameSceneMgr.instance:startSceneDefaultLevel(arg_1_0._sceneType, arg_1_0._sceneId)
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

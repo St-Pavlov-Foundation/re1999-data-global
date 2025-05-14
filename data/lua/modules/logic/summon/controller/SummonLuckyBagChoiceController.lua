@@ -1,77 +1,105 @@
-module("modules.logic.summon.controller.SummonLuckyBagChoiceController", package.seeall)
+﻿module("modules.logic.summon.controller.SummonLuckyBagChoiceController", package.seeall)
 
-slot0 = class("SummonLuckyBagChoiceController", BaseController)
+local var_0_0 = class("SummonLuckyBagChoiceController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2)
-	SummonLuckyBagChoiceListModel.instance:initDatas(slot1, slot2)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2)
+	SummonLuckyBagChoiceListModel.instance:initDatas(arg_1_1, arg_1_2)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
+	return
 end
 
-function slot0.trySendChoice(slot0)
-	if not SummonMainModel.instance:getPoolServerMO(SummonLuckyBagChoiceListModel.instance:getPoolId()) or not slot2:isOpening() then
+function var_0_0.trySendChoice(arg_3_0)
+	local var_3_0 = SummonLuckyBagChoiceListModel.instance:getPoolId()
+	local var_3_1 = SummonMainModel.instance:getPoolServerMO(var_3_0)
+
+	if not var_3_1 or not var_3_1:isOpening() then
 		return false
 	end
 
-	if not SummonLuckyBagChoiceListModel.instance:getSelectId() then
+	local var_3_2 = SummonLuckyBagChoiceListModel.instance:getSelectId()
+
+	if not var_3_2 then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagNotSelect)
 
 		return false
 	end
 
-	if slot0:isLuckyBagOpened() then
+	if arg_3_0:isLuckyBagOpened() then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagAlreadyReceive)
 
 		return false
 	end
 
-	slot4, slot5, slot6, slot7 = slot0:getDuplicatePopUpParam(slot3)
+	local var_3_3, var_3_4, var_3_5, var_3_6 = arg_3_0:getDuplicatePopUpParam(var_3_2)
 
-	GameFacade.showMessageBox(slot4, MsgBoxEnum.BoxType.Yes_No, slot0.realSendChoice, nil, , slot0, nil, , slot5, slot6, slot7)
+	GameFacade.showMessageBox(var_3_3, MsgBoxEnum.BoxType.Yes_No, arg_3_0.realSendChoice, nil, nil, arg_3_0, nil, nil, var_3_4, var_3_5, var_3_6)
 end
 
-function slot0.realSendChoice(slot0)
-	if SummonLuckyBagChoiceListModel.instance:getSelectId() and slot1 ~= 0 then
-		SummonRpc.instance:sendOpenLuckyBagRequest(SummonLuckyBagChoiceListModel.instance:getLuckyBagId(), slot1)
+function var_0_0.realSendChoice(arg_4_0)
+	local var_4_0 = SummonLuckyBagChoiceListModel.instance:getSelectId()
+	local var_4_1 = SummonLuckyBagChoiceListModel.instance:getLuckyBagId()
+
+	if var_4_0 and var_4_0 ~= 0 then
+		SummonRpc.instance:sendOpenLuckyBagRequest(var_4_1, var_4_0)
 	end
 end
 
-function slot0.getDuplicatePopUpParam(slot0, slot1)
-	slot4 = MessageBoxIdDefine.SummonLuckyBagSelectChar
-	slot5 = HeroConfig.instance:getHeroCO(slot1) and slot3.name or ""
-	slot6 = ""
-	slot7 = ""
+function var_0_0.getDuplicatePopUpParam(arg_5_0, arg_5_1)
+	local var_5_0 = HeroModel.instance:getByHeroId(arg_5_1)
+	local var_5_1 = HeroConfig.instance:getHeroCO(arg_5_1)
+	local var_5_2 = MessageBoxIdDefine.SummonLuckyBagSelectChar
+	local var_5_3 = var_5_1 and var_5_1.name or ""
+	local var_5_4 = ""
+	local var_5_5 = ""
 
-	if HeroModel.instance:getByHeroId(slot1) and slot3 then
-		slot8 = {}
-		slot4 = (HeroModel.instance:isMaxExSkill(slot1, true) or MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat) and MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat2
+	if var_5_0 and var_5_1 then
+		local var_5_6 = {}
 
-		if slot8[1] and slot8[2] then
-			slot12, slot13 = ItemModel.instance:getItemConfigAndIcon(slot8[1], slot8[2])
-			slot6 = slot12 and slot12.name or ""
+		if not HeroModel.instance:isMaxExSkill(arg_5_1, true) then
+			local var_5_7 = GameUtil.splitString2(var_5_1.duplicateItem, true)
+
+			var_5_6 = var_5_7 and var_5_7[1] or var_5_6
+			var_5_2 = MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat
+		else
+			var_5_6 = string.splitToNumber(var_5_1.duplicateItem2, "#") or var_5_6
+			var_5_5 = var_5_6[3] or ""
+			var_5_2 = MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat2
+		end
+
+		local var_5_8 = var_5_6[1]
+		local var_5_9 = var_5_6[2]
+
+		if var_5_8 and var_5_9 then
+			local var_5_10, var_5_11 = ItemModel.instance:getItemConfigAndIcon(var_5_6[1], var_5_6[2])
+
+			var_5_4 = var_5_10 and var_5_10.name or ""
 		end
 	end
 
-	return slot4, slot5, slot6, slot7
+	return var_5_2, var_5_3, var_5_4, var_5_5
 end
 
-function slot0.isLuckyBagOpened(slot0)
-	if SummonLuckyBagModel.instance:isLuckyBagOpened(SummonLuckyBagChoiceListModel.instance:getPoolId(), SummonLuckyBagChoiceListModel.instance:getLuckyBagId()) then
+function var_0_0.isLuckyBagOpened(arg_6_0)
+	local var_6_0 = SummonLuckyBagChoiceListModel.instance:getPoolId()
+	local var_6_1 = SummonLuckyBagChoiceListModel.instance:getLuckyBagId()
+
+	if SummonLuckyBagModel.instance:isLuckyBagOpened(var_6_0, var_6_1) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.setSelect(slot0, slot1)
-	SummonLuckyBagChoiceListModel.instance:setSelectId(slot1)
+function var_0_0.setSelect(arg_7_0, arg_7_1)
+	SummonLuckyBagChoiceListModel.instance:setSelectId(arg_7_1)
 	SummonLuckyBagChoiceListModel.instance:onModelUpdate()
-	slot0:dispatchEvent(SummonEvent.onLuckyListChanged)
+	arg_7_0:dispatchEvent(SummonEvent.onLuckyListChanged)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

@@ -1,339 +1,351 @@
-module("modules.logic.story.view.StoryNavigateItem", package.seeall)
+﻿module("modules.logic.story.view.StoryNavigateItem", package.seeall)
 
-slot0 = class("StoryNavigateItem")
+local var_0_0 = class("StoryNavigateItem")
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._gobg = gohelper.findChild(slot1, "bg")
-	slot0._goepisode = gohelper.findChild(slot1, "#go_episode")
-	slot0._goepisodevideo = gohelper.findChild(slot1, "#go_episode/#go_episodevideo")
-	slot0._goepisodeicon = gohelper.findChild(slot1, "#go_episode/#go_episodeicon")
-	slot0._txtepisode = gohelper.findChildText(slot1, "#go_episode/#txt_episode")
-	slot0._txtepisodeEn = gohelper.findChildText(slot1, "#go_episode/#txt_episodeEn")
-	slot0._txtepisodeNum = gohelper.findChildText(slot1, "#go_episode/#txt_episodeNum")
-	slot0._gochapter = gohelper.findChild(slot1, "#go_chapter")
-	slot0._goopen = gohelper.findChild(slot1, "#go_chapter/#go_open")
-	slot0._gochapteropenvideo = gohelper.findChild(slot1, "#go_chapter/#go_open/#go_chapteropenvideo")
-	slot0._txtchapterName = gohelper.findChildText(slot1, "#go_chapter/#go_open/#txt_chapterName")
-	slot0._txtchapterNameEn = gohelper.findChildText(slot1, "#go_chapter/#go_open/#txt_chapterNameEn")
-	slot0._txtchapterNum = gohelper.findChildText(slot1, "#go_chapter/#go_open/#txt_chapterNum")
-	slot0._goclose = gohelper.findChild(slot1, "#go_chapter/#go_close")
-	slot0._gochapterclosevideo = gohelper.findChild(slot1, "#go_chapter/#go_close/#go_chapterclosevideo")
-	slot0._txtchaptercloseNum = gohelper.findChildText(slot1, "#go_chapter/#go_close/icon/#txt_chaptercloseNum")
-	slot0._gomap = gohelper.findChild(slot1, "#go_map")
-	slot0._txtmapname = gohelper.findChildText(slot1, "#go_map/#txt_mapname")
-	slot0._txtmapnameen = gohelper.findChildText(slot1, "#go_map/#txt_mapnameen")
-	slot0._mapAnimator = slot0._gomap:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goActivityChapter = gohelper.findChild(slot1, "#go_activity_chapter")
-	slot0._gostorm = gohelper.findChild(slot1, "#go_storm")
-	slot0._stormAnim = slot0._gostorm:GetComponent(typeof(UnityEngine.Animator))
-	slot0._txtTimeNum1 = gohelper.findChildText(slot1, "#go_storm/txt_Time2/txt_TimeNum1")
-	slot0._txtTimeNum2 = gohelper.findChildText(slot1, "#go_storm/txt_Time2/txt_TimeNum2")
-	slot0._txtTimeEn1 = gohelper.findChildText(slot1, "#go_storm/#txt_TimeEn")
-	slot0._txtTimeEn2 = gohelper.findChildText(slot1, "#go_storm/#txt_TimeEn1")
-	slot0._showFunc = {
-		[StoryEnum.NavigateType.Map] = slot0.showMap,
-		[StoryEnum.NavigateType.Episode] = slot0.showEpisode,
-		[StoryEnum.NavigateType.ChapterStart] = slot0.showChapterStart,
-		[StoryEnum.NavigateType.ChapterEnd] = slot0.showChapterEnd,
-		[StoryEnum.NavigateType.ActivityStart] = slot0.showActivityChapterStart,
-		[StoryEnum.NavigateType.ActivityEnd] = slot0.showActivityChapterEnd,
-		[StoryEnum.NavigateType.RoleStoryStart] = slot0.showRoleStoryStart,
-		[StoryEnum.NavigateType.StormDeadline] = slot0.showStormDeadline
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._gobg = gohelper.findChild(arg_1_1, "bg")
+	arg_1_0._goepisode = gohelper.findChild(arg_1_1, "#go_episode")
+	arg_1_0._goepisodevideo = gohelper.findChild(arg_1_1, "#go_episode/#go_episodevideo")
+	arg_1_0._goepisodeicon = gohelper.findChild(arg_1_1, "#go_episode/#go_episodeicon")
+	arg_1_0._txtepisode = gohelper.findChildText(arg_1_1, "#go_episode/#txt_episode")
+	arg_1_0._txtepisodeEn = gohelper.findChildText(arg_1_1, "#go_episode/#txt_episodeEn")
+	arg_1_0._txtepisodeNum = gohelper.findChildText(arg_1_1, "#go_episode/#txt_episodeNum")
+	arg_1_0._gochapter = gohelper.findChild(arg_1_1, "#go_chapter")
+	arg_1_0._goopen = gohelper.findChild(arg_1_1, "#go_chapter/#go_open")
+	arg_1_0._gochapteropenvideo = gohelper.findChild(arg_1_1, "#go_chapter/#go_open/#go_chapteropenvideo")
+	arg_1_0._txtchapterName = gohelper.findChildText(arg_1_1, "#go_chapter/#go_open/#txt_chapterName")
+	arg_1_0._txtchapterNameEn = gohelper.findChildText(arg_1_1, "#go_chapter/#go_open/#txt_chapterNameEn")
+	arg_1_0._txtchapterNum = gohelper.findChildText(arg_1_1, "#go_chapter/#go_open/#txt_chapterNum")
+	arg_1_0._goclose = gohelper.findChild(arg_1_1, "#go_chapter/#go_close")
+	arg_1_0._gochapterclosevideo = gohelper.findChild(arg_1_1, "#go_chapter/#go_close/#go_chapterclosevideo")
+	arg_1_0._txtchaptercloseNum = gohelper.findChildText(arg_1_1, "#go_chapter/#go_close/icon/#txt_chaptercloseNum")
+	arg_1_0._gomap = gohelper.findChild(arg_1_1, "#go_map")
+	arg_1_0._txtmapname = gohelper.findChildText(arg_1_1, "#go_map/#txt_mapname")
+	arg_1_0._txtmapnameen = gohelper.findChildText(arg_1_1, "#go_map/#txt_mapnameen")
+	arg_1_0._mapAnimator = arg_1_0._gomap:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goActivityChapter = gohelper.findChild(arg_1_1, "#go_activity_chapter")
+	arg_1_0._gostorm = gohelper.findChild(arg_1_1, "#go_storm")
+	arg_1_0._stormAnim = arg_1_0._gostorm:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._txtTimeNum1 = gohelper.findChildText(arg_1_1, "#go_storm/txt_Time2/txt_TimeNum1")
+	arg_1_0._txtTimeNum2 = gohelper.findChildText(arg_1_1, "#go_storm/txt_Time2/txt_TimeNum2")
+	arg_1_0._txtTimeEn1 = gohelper.findChildText(arg_1_1, "#go_storm/#txt_TimeEn")
+	arg_1_0._txtTimeEn2 = gohelper.findChildText(arg_1_1, "#go_storm/#txt_TimeEn1")
+	arg_1_0._showFunc = {
+		[StoryEnum.NavigateType.Map] = arg_1_0.showMap,
+		[StoryEnum.NavigateType.Episode] = arg_1_0.showEpisode,
+		[StoryEnum.NavigateType.ChapterStart] = arg_1_0.showChapterStart,
+		[StoryEnum.NavigateType.ChapterEnd] = arg_1_0.showChapterEnd,
+		[StoryEnum.NavigateType.ActivityStart] = arg_1_0.showActivityChapterStart,
+		[StoryEnum.NavigateType.ActivityEnd] = arg_1_0.showActivityChapterEnd,
+		[StoryEnum.NavigateType.RoleStoryStart] = arg_1_0.showRoleStoryStart,
+		[StoryEnum.NavigateType.StormDeadline] = arg_1_0.showStormDeadline
 	}
 end
 
-function slot0.show(slot0, slot1)
-	slot0:clear()
+function var_0_0.show(arg_2_0, arg_2_1)
+	arg_2_0:clear()
 
-	slot0._navigateCo = slot1
+	arg_2_0._navigateCo = arg_2_1
 
-	for slot5, slot6 in pairs(slot0._navigateCo) do
-		slot0:showNavigate(slot6.navigateType, slot6)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._navigateCo) do
+		arg_2_0:showNavigate(iter_2_1.navigateType, iter_2_1)
 	end
 end
 
-function slot0.showNavigate(slot0, slot1, slot2)
-	if not slot0._showFunc[slot1] then
+function var_0_0.showNavigate(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0._showFunc[arg_3_1]
+
+	if not var_3_0 then
 		return
 	end
 
-	slot3(slot0, slot2)
+	var_3_0(arg_3_0, arg_3_2)
 end
 
-function slot0.showMap(slot0, slot1)
-	gohelper.setActive(slot0._gomap, true)
+function var_0_0.showMap(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0._gomap, true)
 
-	slot0._txtmapname.text = tonumber(slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) and luaLang(slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) or slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
-	slot0._txtmapnameen.text = slot1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
+	arg_4_0._txtmapname.text = tonumber(arg_4_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) and luaLang(arg_4_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) or arg_4_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
+	arg_4_0._txtmapnameen.text = arg_4_1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Story_Map_In)
-	slot0._mapAnimator:Play("go_mapname_in")
-	TaskDispatcher.cancelTask(slot0._mapOut, slot0)
-	TaskDispatcher.runDelay(slot0._mapOut, slot0, 3)
+	arg_4_0._mapAnimator:Play("go_mapname_in")
+	TaskDispatcher.cancelTask(arg_4_0._mapOut, arg_4_0)
+	TaskDispatcher.runDelay(arg_4_0._mapOut, arg_4_0, 3)
 end
 
-function slot0._mapOut(slot0)
-	slot0._mapAnimator:Play("go_mapname_out")
-	TaskDispatcher.cancelTask(slot0._mapOut, slot0)
+function var_0_0._mapOut(arg_5_0)
+	arg_5_0._mapAnimator:Play("go_mapname_out")
+	TaskDispatcher.cancelTask(arg_5_0._mapOut, arg_5_0)
 end
 
-function slot0.showEpisode(slot0, slot1)
-	gohelper.setActive(slot0._goepisode, true)
+function var_0_0.showEpisode(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._goepisode, true)
 
-	if slot0._episodeIconLoader then
-		slot0._episodeIconLoader:dispose()
+	if arg_6_0._episodeIconLoader then
+		arg_6_0._episodeIconLoader:dispose()
 
-		slot0._episodeIconLoader = nil
+		arg_6_0._episodeIconLoader = nil
 
-		SLFramework.GameObjectHelper.DestroyAllChildren(slot0._iconGo)
+		SLFramework.GameObjectHelper.DestroyAllChildren(arg_6_0._iconGo)
 	end
 
-	if slot0._episodeVideoPlayer then
-		slot0._episodeVideoPlayer:Stop()
-		slot0._episodeVideoPlayer:Clear()
+	if arg_6_0._episodeVideoPlayer then
+		arg_6_0._episodeVideoPlayer:Stop()
+		arg_6_0._episodeVideoPlayer:Clear()
 
-		slot0._episodeVideoPlayer = nil
+		arg_6_0._episodeVideoPlayer = nil
 	end
 
-	if gohelper.isNil(slot0._episodeVideoGO) then
-		slot2, slot3, slot0._episodeVideoGO = AvProMgr.instance:getVideoPlayer(slot0._goepisodevideo)
+	if gohelper.isNil(arg_6_0._episodeVideoGO) then
+		local var_6_0, var_6_1, var_6_2 = AvProMgr.instance:getVideoPlayer(arg_6_0._goepisodevideo)
+
+		arg_6_0._episodeVideoGO = var_6_2
 	end
 
 	if SettingsModel.instance:getVideoEnabled() == false then
-		slot0._episodeVideoPlayer = AvProUGUIPlayer_adjust.instance
+		arg_6_0._episodeVideoPlayer = AvProUGUIPlayer_adjust.instance
 
-		slot0._episodeVideoPlayer:Play()
+		arg_6_0._episodeVideoPlayer:Play()
 	else
-		slot0._episodeDisplayUGUI = gohelper.onceAddComponent(slot0._episodeVideoGO, AvProMgr.Type_DisplayUGUI)
-		slot0._episodeDisplayUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
-		slot0._episodeVideoPlayer = gohelper.onceAddComponent(slot0._episodeVideoGO, AvProMgr.Type_AvProUGUIPlayer)
+		arg_6_0._episodeDisplayUGUI = gohelper.onceAddComponent(arg_6_0._episodeVideoGO, AvProMgr.Type_DisplayUGUI)
+		arg_6_0._episodeDisplayUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+		arg_6_0._episodeVideoPlayer = gohelper.onceAddComponent(arg_6_0._episodeVideoGO, AvProMgr.Type_AvProUGUIPlayer)
 
-		slot0._episodeVideoPlayer:Play(slot0._episodeDisplayUGUI, langVideoUrl("story_rian_bg"), true, nil, )
+		arg_6_0._episodeVideoPlayer:Play(arg_6_0._episodeDisplayUGUI, langVideoUrl("story_rian_bg"), true, nil, nil)
 	end
 
-	slot0._episodeIconLoader = PrefabInstantiate.Create(slot0._goepisodeicon)
+	arg_6_0._episodeIconLoader = PrefabInstantiate.Create(arg_6_0._goepisodeicon)
 
-	slot0._episodeIconLoader:startLoad(ResUrl.getStoryEpisodeIcon(slot1.navigateLogo), function (slot0)
-		uv0._iconGo = slot0:getInstGO()
+	arg_6_0._episodeIconLoader:startLoad(ResUrl.getStoryEpisodeIcon(arg_6_1.navigateLogo), function(arg_7_0)
+		arg_6_0._iconGo = arg_7_0:getInstGO()
 	end)
 
-	slot0._txtepisode.text = tonumber(slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) and luaLang(slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) or slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
-	slot0._txtepisodeEn.text = slot1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
-	slot0._txtepisodeNum.text = slot1.navigateChapterEn
+	arg_6_0._txtepisode.text = tonumber(arg_6_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) and luaLang(arg_6_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]) or arg_6_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
+	arg_6_0._txtepisodeEn.text = arg_6_1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
+	arg_6_0._txtepisodeNum.text = arg_6_1.navigateChapterEn
 
-	TaskDispatcher.cancelTask(slot0._episodeOut, slot0)
-	TaskDispatcher.runDelay(slot0._episodeOut, slot0, 5.667)
+	TaskDispatcher.cancelTask(arg_6_0._episodeOut, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._episodeOut, arg_6_0, 5.667)
 end
 
-function slot0._episodeOut(slot0)
-	gohelper.setActive(slot0._goepisode, false)
-	TaskDispatcher.cancelTask(slot0._episodeOut, slot0)
+function var_0_0._episodeOut(arg_8_0)
+	gohelper.setActive(arg_8_0._goepisode, false)
+	TaskDispatcher.cancelTask(arg_8_0._episodeOut, arg_8_0)
 end
 
-function slot0.showChapterStart(slot0, slot1)
-	gohelper.setActive(slot0._gochapter, true)
-	gohelper.setActive(slot0._goopen, true)
-	gohelper.setActive(slot0._goclose, false)
+function var_0_0.showChapterStart(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0._gochapter, true)
+	gohelper.setActive(arg_9_0._goopen, true)
+	gohelper.setActive(arg_9_0._goclose, false)
 
-	slot0._txtchapterName.text = slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
-	slot0._txtchapterNameEn.text = slot1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
-	slot0._txtchapterNum.text = slot1.navigateChapterEn
+	arg_9_0._txtchapterName.text = arg_9_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
+	arg_9_0._txtchapterNameEn.text = arg_9_1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
+	arg_9_0._txtchapterNum.text = arg_9_1.navigateChapterEn
 
-	if slot0._chapterOpenVideoPlayer then
-		slot0._chapterOpenVideoPlayer:Stop()
-		slot0._chapterOpenVideoPlayer:Clear()
+	if arg_9_0._chapterOpenVideoPlayer then
+		arg_9_0._chapterOpenVideoPlayer:Stop()
+		arg_9_0._chapterOpenVideoPlayer:Clear()
 
-		slot0._chapterOpenVideoPlayer = nil
+		arg_9_0._chapterOpenVideoPlayer = nil
 	end
 
-	if gohelper.isNil(slot0._chapterOpenVideoGO) then
-		slot2, slot3, slot0._chapterOpenVideoGO = AvProMgr.instance:getVideoPlayer(slot0._gochapteropenvideo)
+	if gohelper.isNil(arg_9_0._chapterOpenVideoGO) then
+		local var_9_0, var_9_1, var_9_2 = AvProMgr.instance:getVideoPlayer(arg_9_0._gochapteropenvideo)
+
+		arg_9_0._chapterOpenVideoGO = var_9_2
 	end
 
-	slot0._chapterOpenDisplayUGUI = gohelper.onceAddComponent(slot0._chapterOpenVideoGO, AvProMgr.Type_DisplayUGUI)
-	slot0._chapterOpenDisplayUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
-	slot0._chapterOpenVideoPlayer = gohelper.onceAddComponent(slot0._chapterOpenVideoGO, AvProMgr.Type_AvProUGUIPlayer)
+	arg_9_0._chapterOpenDisplayUGUI = gohelper.onceAddComponent(arg_9_0._chapterOpenVideoGO, AvProMgr.Type_DisplayUGUI)
+	arg_9_0._chapterOpenDisplayUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+	arg_9_0._chapterOpenVideoPlayer = gohelper.onceAddComponent(arg_9_0._chapterOpenVideoGO, AvProMgr.Type_AvProUGUIPlayer)
 
-	slot0._chapterOpenVideoPlayer:Play(slot0._chapterOpenDisplayUGUI, langVideoUrl("story_rian_bg"), true, nil, )
+	arg_9_0._chapterOpenVideoPlayer:Play(arg_9_0._chapterOpenDisplayUGUI, langVideoUrl("story_rian_bg"), true, nil, nil)
 	AudioEffectMgr.instance:playAudio(AudioEnum.Story.Play_Chapter_Start)
-	TaskDispatcher.cancelTask(slot0._chapterStartOut, slot0)
-	TaskDispatcher.runDelay(slot0._chapterStartOut, slot0, 5.333)
+	TaskDispatcher.cancelTask(arg_9_0._chapterStartOut, arg_9_0)
+	TaskDispatcher.runDelay(arg_9_0._chapterStartOut, arg_9_0, 5.333)
 end
 
-function slot0._chapterStartOut(slot0)
+function var_0_0._chapterStartOut(arg_10_0)
 	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_Start)
-	gohelper.setActive(slot0._goopen, false)
-	TaskDispatcher.cancelTask(slot0._chapterStartOut, slot0)
+	gohelper.setActive(arg_10_0._goopen, false)
+	TaskDispatcher.cancelTask(arg_10_0._chapterStartOut, arg_10_0)
 end
 
-function slot0.showChapterEnd(slot0, slot1)
-	gohelper.setActive(slot0._goepisode, false)
-	gohelper.setActive(slot0._gochapter, true)
-	gohelper.setActive(slot0._goclose, true)
-	gohelper.setActive(slot0._goopen, false)
+function var_0_0.showChapterEnd(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._goepisode, false)
+	gohelper.setActive(arg_11_0._gochapter, true)
+	gohelper.setActive(arg_11_0._goclose, true)
+	gohelper.setActive(arg_11_0._goopen, false)
 
-	if slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] == "" then
-		slot2 = slot1.navigateChapterEn
+	local var_11_0 = arg_11_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
+
+	if var_11_0 == "" then
+		var_11_0 = arg_11_1.navigateChapterEn
 	end
 
-	slot0._txtchaptercloseNum.text = slot2
+	arg_11_0._txtchaptercloseNum.text = var_11_0
 
-	if slot0._chapterCloseVideoPlayer then
-		slot0._chapterCloseVideoPlayer:Stop()
-		slot0._chapterCloseVideoPlayer:Clear()
+	if arg_11_0._chapterCloseVideoPlayer then
+		arg_11_0._chapterCloseVideoPlayer:Stop()
+		arg_11_0._chapterCloseVideoPlayer:Clear()
 
-		slot0._chapterCloseVideoPlayer = nil
+		arg_11_0._chapterCloseVideoPlayer = nil
 	end
 
-	if gohelper.isNil(slot0._chapterCloseVideoGO) then
-		slot3, slot4, slot0._chapterCloseVideoGO = AvProMgr.instance:getVideoPlayer(slot0._gochapterclosevideo)
+	if gohelper.isNil(arg_11_0._chapterCloseVideoGO) then
+		local var_11_1, var_11_2, var_11_3 = AvProMgr.instance:getVideoPlayer(arg_11_0._gochapterclosevideo)
+
+		arg_11_0._chapterCloseVideoGO = var_11_3
 	end
 
-	slot0._chapterCloseDisplayUGUI = gohelper.onceAddComponent(slot0._chapterCloseVideoGO, AvProMgr.Type_DisplayUGUI)
-	slot0._chapterCloseDisplayUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
-	slot0._chapterCloseVideoPlayer = gohelper.onceAddComponent(slot0._chapterCloseVideoGO, AvProMgr.Type_AvProUGUIPlayer)
+	arg_11_0._chapterCloseDisplayUGUI = gohelper.onceAddComponent(arg_11_0._chapterCloseVideoGO, AvProMgr.Type_DisplayUGUI)
+	arg_11_0._chapterCloseDisplayUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+	arg_11_0._chapterCloseVideoPlayer = gohelper.onceAddComponent(arg_11_0._chapterCloseVideoGO, AvProMgr.Type_AvProUGUIPlayer)
 
-	slot0._chapterCloseVideoPlayer:Play(slot0._chapterCloseDisplayUGUI, langVideoUrl("story_rian_bg"), true, nil, )
+	arg_11_0._chapterCloseVideoPlayer:Play(arg_11_0._chapterCloseDisplayUGUI, langVideoUrl("story_rian_bg"), true, nil, nil)
 	AudioEffectMgr.instance:playAudio(AudioEnum.Story.Play_Chapter_End)
-	TaskDispatcher.cancelTask(slot0._chapterEndOut, slot0)
-	TaskDispatcher.runDelay(slot0._chapterEndOut, slot0, 3.2)
+	TaskDispatcher.cancelTask(arg_11_0._chapterEndOut, arg_11_0)
+	TaskDispatcher.runDelay(arg_11_0._chapterEndOut, arg_11_0, 3.2)
 end
 
-function slot0._chapterEndOut(slot0)
+function var_0_0._chapterEndOut(arg_12_0)
 	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_End)
-	TaskDispatcher.cancelTask(slot0._chapterEndOut, slot0)
+	TaskDispatcher.cancelTask(arg_12_0._chapterEndOut, arg_12_0)
 end
 
-function slot0.showActivityChapterStart(slot0, slot1)
-	if not slot0.activityChapterPlayer then
-		slot0.activityChapterPlayer = StoryActivityChapterPlayer.New(slot0._goActivityChapter)
+function var_0_0.showActivityChapterStart(arg_13_0, arg_13_1)
+	if not arg_13_0.activityChapterPlayer then
+		arg_13_0.activityChapterPlayer = StoryActivityChapterPlayer.New(arg_13_0._goActivityChapter)
 	end
 
-	slot0.activityChapterPlayer:playStart(slot1)
+	arg_13_0.activityChapterPlayer:playStart(arg_13_1)
 end
 
-function slot0.showActivityChapterEnd(slot0, slot1)
-	gohelper.setActive(slot0._gobg, true)
+function var_0_0.showActivityChapterEnd(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._gobg, true)
 
-	if not slot0.activityChapterPlayer then
-		slot0.activityChapterPlayer = StoryActivityChapterPlayer.New(slot0._goActivityChapter)
+	if not arg_14_0.activityChapterPlayer then
+		arg_14_0.activityChapterPlayer = StoryActivityChapterPlayer.New(arg_14_0._goActivityChapter)
 	end
 
-	slot0.activityChapterPlayer:playEnd(slot1)
+	arg_14_0.activityChapterPlayer:playEnd(arg_14_1)
 end
 
-function slot0.showRoleStoryStart(slot0, slot1)
-	if not slot0.activityChapterPlayer then
-		slot0.activityChapterPlayer = StoryActivityChapterPlayer.New(slot0._goActivityChapter)
+function var_0_0.showRoleStoryStart(arg_15_0, arg_15_1)
+	if not arg_15_0.activityChapterPlayer then
+		arg_15_0.activityChapterPlayer = StoryActivityChapterPlayer.New(arg_15_0._goActivityChapter)
 	end
 
-	slot0.activityChapterPlayer:playRoleStoryStart(slot1)
+	arg_15_0.activityChapterPlayer:playRoleStoryStart(arg_15_1)
 end
 
-function slot0.showStormDeadline(slot0, slot1)
+function var_0_0.showStormDeadline(arg_16_0, arg_16_1)
 	AudioMgr.instance:trigger(AudioEnum.Story.Play_Storm_Deadline)
 
-	slot2 = string.splitToNumber(slot1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], "#")
+	local var_16_0 = string.splitToNumber(arg_16_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], "#")
 
-	gohelper.setActive(slot0._gostorm, true)
-	slot0._stormAnim:Play("open", 0, 0)
+	gohelper.setActive(arg_16_0._gostorm, true)
+	arg_16_0._stormAnim:Play("open", 0, 0)
 
-	slot0._txtTimeNum1.text = slot2[1]
-	slot0._txtTimeNum2.text = slot2[1] - slot2[2]
-	slot3 = "%s HOURS\nBEFORE THE STORM"
-	slot0._txtTimeEn1.text = string.format(slot3, slot2[1])
-	slot0._txtTimeEn2.text = string.format(slot3, slot2[1] - slot2[2])
+	arg_16_0._txtTimeNum1.text = var_16_0[1]
+	arg_16_0._txtTimeNum2.text = var_16_0[1] - var_16_0[2]
+
+	local var_16_1 = "%s HOURS\nBEFORE THE STORM"
+
+	arg_16_0._txtTimeEn1.text = string.format(var_16_1, var_16_0[1])
+	arg_16_0._txtTimeEn2.text = string.format(var_16_1, var_16_0[1] - var_16_0[2])
 end
 
-function slot0.clear(slot0)
-	if slot0.activityChapterPlayer then
-		slot0.activityChapterPlayer:hide()
+function var_0_0.clear(arg_17_0)
+	if arg_17_0.activityChapterPlayer then
+		arg_17_0.activityChapterPlayer:hide()
 	end
 
-	gohelper.setActive(slot0._goepisode, false)
-	gohelper.setActive(slot0._gochapter, false)
-	gohelper.setActive(slot0._gomap, false)
-	gohelper.setActive(slot0._gobg, false)
+	gohelper.setActive(arg_17_0._goepisode, false)
+	gohelper.setActive(arg_17_0._gochapter, false)
+	gohelper.setActive(arg_17_0._gomap, false)
+	gohelper.setActive(arg_17_0._gobg, false)
 end
 
-function slot0.destroy(slot0)
+function var_0_0.destroy(arg_18_0)
 	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_Start)
 	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_End)
-	TaskDispatcher.cancelTask(slot0._mapOut, slot0)
-	TaskDispatcher.cancelTask(slot0._episodeOut, slot0)
-	TaskDispatcher.cancelTask(slot0._chapterStartOut, slot0)
-	TaskDispatcher.cancelTask(slot0._chapterEndOut, slot0)
+	TaskDispatcher.cancelTask(arg_18_0._mapOut, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._episodeOut, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._chapterStartOut, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._chapterEndOut, arg_18_0)
 
-	if slot0._episodeIconLoader then
-		slot0._episodeIconLoader:dispose()
+	if arg_18_0._episodeIconLoader then
+		arg_18_0._episodeIconLoader:dispose()
 
-		slot0._episodeIconLoader = nil
+		arg_18_0._episodeIconLoader = nil
 
-		SLFramework.GameObjectHelper.DestroyAllChildren(slot0._iconGo)
+		SLFramework.GameObjectHelper.DestroyAllChildren(arg_18_0._iconGo)
 	end
 
-	if slot0._episodeVideoPlayer then
+	if arg_18_0._episodeVideoPlayer then
 		if not BootNativeUtil.isIOS() then
-			slot0._episodeVideoPlayer:Stop()
+			arg_18_0._episodeVideoPlayer:Stop()
 		end
 
-		slot0._episodeVideoPlayer:Clear()
+		arg_18_0._episodeVideoPlayer:Clear()
 
-		slot0._episodeVideoPlayer = nil
+		arg_18_0._episodeVideoPlayer = nil
 	end
 
-	if slot0._episodeVideoGO then
-		gohelper.destroy(slot0._episodeVideoGO)
+	if arg_18_0._episodeVideoGO then
+		gohelper.destroy(arg_18_0._episodeVideoGO)
 
-		slot0._episodeVideoGO = nil
+		arg_18_0._episodeVideoGO = nil
 	end
 
-	if slot0._chapterOpenVideoPlayer then
+	if arg_18_0._chapterOpenVideoPlayer then
 		if not BootNativeUtil.isIOS() then
-			slot0._chapterOpenVideoPlayer:Stop()
+			arg_18_0._chapterOpenVideoPlayer:Stop()
 		end
 
-		slot0._chapterOpenVideoPlayer:Clear()
+		arg_18_0._chapterOpenVideoPlayer:Clear()
 
-		slot0._chapterOpenVideoPlayer = nil
+		arg_18_0._chapterOpenVideoPlayer = nil
 	end
 
-	if slot0._chapterOpenVideoGO then
-		gohelper.destroy(slot0._chapterOpenVideoGO)
+	if arg_18_0._chapterOpenVideoGO then
+		gohelper.destroy(arg_18_0._chapterOpenVideoGO)
 
-		slot0._chapterOpenVideoGO = nil
+		arg_18_0._chapterOpenVideoGO = nil
 	end
 
-	if slot0._chapterCloseVideoPlayer then
+	if arg_18_0._chapterCloseVideoPlayer then
 		if not BootNativeUtil.isIOS() then
-			slot0._chapterCloseVideoPlayer:Stop()
+			arg_18_0._chapterCloseVideoPlayer:Stop()
 		end
 
-		slot0._chapterCloseVideoPlayer:Clear()
+		arg_18_0._chapterCloseVideoPlayer:Clear()
 
-		slot0._chapterCloseVideoPlayer = nil
+		arg_18_0._chapterCloseVideoPlayer = nil
 	end
 
-	if slot0._chapterCloseVideoGO then
-		gohelper.destroy(slot0._chapterCloseVideoGO)
+	if arg_18_0._chapterCloseVideoGO then
+		gohelper.destroy(arg_18_0._chapterCloseVideoGO)
 
-		slot0._chapterCloseVideoGO = nil
+		arg_18_0._chapterCloseVideoGO = nil
 	end
 
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if arg_18_0._mapLoader then
+		arg_18_0._mapLoader:dispose()
 
-		slot0._mapLoader = nil
+		arg_18_0._mapLoader = nil
 	end
 
-	if slot0.activityChapterPlayer then
-		slot0.activityChapterPlayer:dispose()
+	if arg_18_0.activityChapterPlayer then
+		arg_18_0.activityChapterPlayer:dispose()
 
-		slot0.activityChapterPlayer = nil
+		arg_18_0.activityChapterPlayer = nil
 	end
 
-	gohelper.setActive(slot0._go, false)
+	gohelper.setActive(arg_18_0._go, false)
 end
 
-return slot0
+return var_0_0

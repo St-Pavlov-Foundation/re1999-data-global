@@ -1,77 +1,85 @@
-module("modules.logic.seasonver.act123.view2_3.Season123_2_3EquipFloatTouch", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3EquipFloatTouch", package.seeall)
 
-slot0 = class("Season123_2_3EquipFloatTouch", BaseView)
+local var_0_0 = class("Season123_2_3EquipFloatTouch", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._goctrlPath = slot1
-	slot0._gotouchPath = slot2
+function var_0_0.init(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._goctrlPath = arg_4_1
+	arg_4_0._gotouchPath = arg_4_2
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goctrl = gohelper.findChild(slot0.viewGO, slot0._goctrlPath)
-	slot0._gotouch = gohelper.findChild(slot0.viewGO, slot0._gotouchPath)
-	slot0._tfTouch = slot0._gotouch.transform
-	slot0._tfCtrl = slot0._goctrl.transform
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._gotouch)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goctrl = gohelper.findChild(arg_5_0.viewGO, arg_5_0._goctrlPath)
+	arg_5_0._gotouch = gohelper.findChild(arg_5_0.viewGO, arg_5_0._gotouchPath)
+	arg_5_0._tfTouch = arg_5_0._gotouch.transform
+	arg_5_0._tfCtrl = arg_5_0._goctrl.transform
+	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._gotouch)
 
-	slot0._drag:AddDragBeginListener(slot0.onDragBegin, slot0)
-	slot0._drag:AddDragListener(slot0.onDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0.onDragEnd, slot0)
+	arg_5_0._drag:AddDragBeginListener(arg_5_0.onDragBegin, arg_5_0)
+	arg_5_0._drag:AddDragListener(arg_5_0.onDrag, arg_5_0)
+	arg_5_0._drag:AddDragEndListener(arg_5_0.onDragEnd, arg_5_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:killTween()
+function var_0_0.onDestroyView(arg_6_0)
+	arg_6_0:killTween()
 
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragListener()
-		slot0._drag:RemoveDragEndListener()
+	if arg_6_0._drag then
+		arg_6_0._drag:RemoveDragBeginListener()
+		arg_6_0._drag:RemoveDragListener()
+		arg_6_0._drag:RemoveDragEndListener()
 
-		slot0._drag = nil
+		arg_6_0._drag = nil
 	end
 end
 
-function slot0.onDragBegin(slot0, slot1, slot2)
+function var_0_0.onDragBegin(arg_7_0, arg_7_1, arg_7_2)
+	return
 end
 
-function slot0.onDragEnd(slot0, slot1, slot2)
-	slot0:killTween()
+function var_0_0.onDragEnd(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0:killTween()
 
-	slot0._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(slot0._tfCtrl, 0, 0, 0, 0.7, nil, , , EaseType.OutCirc)
+	arg_8_0._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(arg_8_0._tfCtrl, 0, 0, 0, 0.7, nil, nil, nil, EaseType.OutCirc)
 end
 
-slot0.Range_Rotaion_Min_X = -25
-slot0.Range_Rotaion_Max_X = 25
-slot0.Range_Rotaion_Min_Y = -25
-slot0.Range_Rotaion_Max_Y = 25
+var_0_0.Range_Rotaion_Min_X = -25
+var_0_0.Range_Rotaion_Max_X = 25
+var_0_0.Range_Rotaion_Min_Y = -25
+var_0_0.Range_Rotaion_Max_Y = 25
 
-function slot0.onDrag(slot0, slot1, slot2)
-	slot4 = 250
-	slot5 = recthelper.screenPosToAnchorPos(slot2.position, slot0._tfTouch)
+function var_0_0.onDrag(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_2.position
+	local var_9_1 = 250
+	local var_9_2 = recthelper.screenPosToAnchorPos(var_9_0, arg_9_0._tfTouch)
+	local var_9_3 = Mathf.Clamp(var_9_2.x / var_9_1, -1, 1) * 0.5 + 0.5
+	local var_9_4 = Mathf.Clamp(-var_9_2.y / var_9_1, -1, 1) * 0.5 + 0.5
+	local var_9_5 = Mathf.Lerp(var_0_0.Range_Rotaion_Min_X, var_0_0.Range_Rotaion_Max_X, var_9_3)
+	local var_9_6 = Mathf.Lerp(var_0_0.Range_Rotaion_Min_Y, var_0_0.Range_Rotaion_Max_Y, var_9_4)
 
-	slot0:killTween()
+	arg_9_0:killTween()
 
-	slot0._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(slot0._tfCtrl, Mathf.Lerp(uv0.Range_Rotaion_Min_Y, uv0.Range_Rotaion_Max_Y, Mathf.Clamp(-slot5.y / slot4, -1, 1) * 0.5 + 0.5), Mathf.Lerp(uv0.Range_Rotaion_Min_X, uv0.Range_Rotaion_Max_X, Mathf.Clamp(slot5.x / slot4, -1, 1) * 0.5 + 0.5), 0, 0.3, nil, , , EaseType.Linear)
+	arg_9_0._tweenRotationId = ZProj.TweenHelper.DOLocalRotate(arg_9_0._tfCtrl, var_9_6, var_9_5, 0, 0.3, nil, nil, nil, EaseType.Linear)
 end
 
-function slot0.killTween(slot0)
-	if slot0._tweenRotationId then
-		ZProj.TweenHelper.KillById(slot0._tweenRotationId)
+function var_0_0.killTween(arg_10_0)
+	if arg_10_0._tweenRotationId then
+		ZProj.TweenHelper.KillById(arg_10_0._tweenRotationId)
 
-		slot0._tweenRotationId = nil
+		arg_10_0._tweenRotationId = nil
 	end
 end
 
-return slot0
+return var_0_0

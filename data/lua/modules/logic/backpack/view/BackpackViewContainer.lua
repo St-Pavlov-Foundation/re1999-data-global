@@ -1,22 +1,23 @@
-module("modules.logic.backpack.view.BackpackViewContainer", package.seeall)
+﻿module("modules.logic.backpack.view.BackpackViewContainer", package.seeall)
 
-slot0 = class("BackpackViewContainer", BaseViewContainer)
+local var_0_0 = class("BackpackViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_category"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[2]
-	slot1.cellClass = BackpackCategoryListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 370
-	slot1.cellHeight = 110
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 4
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#scroll_category"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[2]
+	var_1_0.cellClass = BackpackCategoryListItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 370
+	var_1_0.cellHeight = 110
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 4
 
 	return {
-		LuaListScrollView.New(BackpackCategoryListModel.instance, slot1),
+		LuaListScrollView.New(BackpackCategoryListModel.instance, var_1_0),
 		BackpackView.New(),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(BackpackController.BackpackViewTabContainerId, "#go_container"),
@@ -24,97 +25,102 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot2 = 0
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = 0
 
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
-	elseif slot1 == 2 then
-		slot3 = ListScrollParam.New()
-		slot3.scrollGOPath = "#scroll_prop"
-		slot3.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot3.prefabUrl = slot0._viewSetting.otherRes[1]
-		slot3.cellClass = BackpackPropListItem
-		slot3.scrollDir = ScrollEnum.ScrollDirV
-		slot3.lineCount = 6
-		slot3.cellWidth = 254
-		slot3.cellHeight = 200
-		slot3.cellSpaceH = slot2
-		slot3.cellSpaceV = 25
-		slot3.startSpace = 28
-		slot3.endSpace = 0
-		slot3.minUpdateCountInFrame = 100
-		slot4 = ListScrollParam.New()
-		slot4.scrollGOPath = "#scroll_equip"
-		slot4.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot4.prefabUrl = slot0._viewSetting.otherRes[3]
-		slot4.cellClass = CharacterEquipItem
-		slot4.scrollDir = ScrollEnum.ScrollDirV
-		slot4.lineCount = 6
-		slot4.cellWidth = 220
-		slot4.cellHeight = 210
-		slot4.cellSpaceH = 33.8 + slot2
-		slot4.cellSpaceV = 13
-		slot4.startSpace = 16
-		slot4.minUpdateCountInFrame = 100
-		slot6 = nil
+	elseif arg_2_1 == 2 then
+		local var_2_1 = ListScrollParam.New()
 
-		for slot10 = 1, 24 do
+		var_2_1.scrollGOPath = "#scroll_prop"
+		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+		var_2_1.cellClass = BackpackPropListItem
+		var_2_1.scrollDir = ScrollEnum.ScrollDirV
+		var_2_1.lineCount = 6
+		var_2_1.cellWidth = 254
+		var_2_1.cellHeight = 200
+		var_2_1.cellSpaceH = var_2_0
+		var_2_1.cellSpaceV = 25
+		var_2_1.startSpace = 28
+		var_2_1.endSpace = 0
+		var_2_1.minUpdateCountInFrame = 100
+
+		local var_2_2 = ListScrollParam.New()
+
+		var_2_2.scrollGOPath = "#scroll_equip"
+		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_2.prefabUrl = arg_2_0._viewSetting.otherRes[3]
+		var_2_2.cellClass = CharacterEquipItem
+		var_2_2.scrollDir = ScrollEnum.ScrollDirV
+		var_2_2.lineCount = 6
+		var_2_2.cellWidth = 220
+		var_2_2.cellHeight = 210
+		var_2_2.cellSpaceH = 33.8 + var_2_0
+		var_2_2.cellSpaceV = 13
+		var_2_2.startSpace = 16
+		var_2_2.minUpdateCountInFrame = 100
+
+		local var_2_3 = {}
+		local var_2_4
+
+		for iter_2_0 = 1, 24 do
+			var_2_3[iter_2_0] = (math.ceil(iter_2_0 / 6) - 1) * 0.03
 		end
 
-		slot7 = ListScrollParam.New()
-		slot7.scrollGOPath = "#scroll_antique"
-		slot7.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot7.prefabUrl = slot0._viewSetting.otherRes[1]
-		slot7.cellClass = AntiqueBackpackItem
-		slot7.scrollDir = ScrollEnum.ScrollDirV
-		slot7.lineCount = 6
-		slot7.cellWidth = 250
-		slot7.cellHeight = 250
-		slot7.cellSpaceH = 0
-		slot7.cellSpaceV = 0
-		slot7.startSpace = 20
-		slot7.endSpace = 10
-		slot7.minUpdateCountInFrame = 100
-		slot0.notPlayAnimation = true
+		local var_2_5 = ListScrollParam.New()
+
+		var_2_5.scrollGOPath = "#scroll_antique"
+		var_2_5.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_5.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+		var_2_5.cellClass = AntiqueBackpackItem
+		var_2_5.scrollDir = ScrollEnum.ScrollDirV
+		var_2_5.lineCount = 6
+		var_2_5.cellWidth = 250
+		var_2_5.cellHeight = 250
+		var_2_5.cellSpaceH = 0
+		var_2_5.cellSpaceV = 0
+		var_2_5.startSpace = 20
+		var_2_5.endSpace = 10
+		var_2_5.minUpdateCountInFrame = 100
+		arg_2_0.notPlayAnimation = true
 
 		return {
 			MultiView.New({
 				BackpackPropView.New(),
-				LuaListScrollView.New(BackpackPropListModel.instance, slot3)
+				LuaListScrollView.New(BackpackPropListModel.instance, var_2_1)
 			}),
 			MultiView.New({
 				CharacterBackpackEquipView.New(),
-				LuaListScrollViewWithAnimator.New(CharacterBackpackEquipListModel.instance, slot4, {
-					[slot10] = (math.ceil(slot10 / 6) - 1) * 0.03
-				})
+				LuaListScrollViewWithAnimator.New(CharacterBackpackEquipListModel.instance, var_2_2, var_2_3)
 			}),
 			MultiView.New({
 				AntiqueBackpackView.New(),
-				LuaListScrollViewWithAnimator.New(AntiqueBackpackListModel.instance, slot7)
+				LuaListScrollViewWithAnimator.New(AntiqueBackpackListModel.instance, var_2_5)
 			})
 		}
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
+function var_0_0.onContainerOpenFinish(arg_3_0)
+	arg_3_0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
 end
 
-function slot0.setCurrentSelectCategoryId(slot0, slot1)
-	slot0.currentSelectCategoryId = slot1 or ItemEnum.CategoryType.All
+function var_0_0.setCurrentSelectCategoryId(arg_4_0, arg_4_1)
+	arg_4_0.currentSelectCategoryId = arg_4_1 or ItemEnum.CategoryType.All
 end
 
-function slot0.getCurrentSelectCategoryId(slot0)
-	return slot0.currentSelectCategoryId
+function var_0_0.getCurrentSelectCategoryId(arg_5_0)
+	return arg_5_0.currentSelectCategoryId
 end
 
-return slot0
+return var_0_0

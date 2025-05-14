@@ -1,435 +1,500 @@
-module("modules.logic.main.view.MainThumbnailRecommendView", package.seeall)
+﻿module("modules.logic.main.view.MainThumbnailRecommendView", package.seeall)
 
-slot0 = class("MainThumbnailRecommendView", BaseView)
+local var_0_0 = class("MainThumbnailRecommendView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goslider = gohelper.findChild(slot0.viewGO, "#go_banner/#go_slider")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_banner/#go_bannercontent")
-	slot0._goscroll = gohelper.findChild(slot0.viewGO, "#go_banner/#go_bannerscroll")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_slider")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannercontent")
+	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "#go_banner/#go_bannerscroll")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._selectItems = {}
-	slot0._helpItems = {}
-	slot1 = recthelper.getWidth(slot0.viewGO.transform)
-	slot0._space = 670
-	slot0._scroll = SLFramework.UGUI.UIDragListener.Get(slot0._goscroll)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._selectItems = {}
+	arg_4_0._helpItems = {}
 
-	slot0._scroll:AddDragBeginListener(slot0._onScrollDragBegin, slot0)
-	slot0._scroll:AddDragEndListener(slot0._onScrollDragEnd, slot0)
+	local var_4_0 = recthelper.getWidth(arg_4_0.viewGO.transform)
 
-	slot0._viewClick = gohelper.getClick(slot0._goscroll)
+	arg_4_0._space = 670
+	arg_4_0._scroll = SLFramework.UGUI.UIDragListener.Get(arg_4_0._goscroll)
 
-	slot0._viewClick:AddClickListener(slot0._onClickView, slot0)
+	arg_4_0._scroll:AddDragBeginListener(arg_4_0._onScrollDragBegin, arg_4_0)
+	arg_4_0._scroll:AddDragEndListener(arg_4_0._onScrollDragEnd, arg_4_0)
+
+	arg_4_0._viewClick = gohelper.getClick(arg_4_0._goscroll)
+
+	arg_4_0._viewClick:AddClickListener(arg_4_0._onClickView, arg_4_0)
 end
 
-function slot0._onScrollDragBegin(slot0, slot1, slot2)
-	slot0._scrollStartPos = slot2.position
+function var_0_0._onScrollDragBegin(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._scrollStartPos = arg_5_2.position
 end
 
-function slot0._onScrollDragEnd(slot0, slot1, slot2)
-	if not slot0._scrollStartPos then
+function var_0_0._onScrollDragEnd(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_0._scrollStartPos then
 		return
 	end
 
-	slot3 = slot2.position
-	slot0._scrollStartPos = nil
+	local var_6_0 = arg_6_2.position
+	local var_6_1 = var_6_0.x - arg_6_0._scrollStartPos.x
+	local var_6_2 = var_6_0.y - arg_6_0._scrollStartPos.y
 
-	if math.abs(slot3.x - slot0._scrollStartPos.x) < math.abs(slot3.y - slot0._scrollStartPos.y) then
+	arg_6_0._scrollStartPos = nil
+
+	if math.abs(var_6_1) < math.abs(var_6_2) then
 		return
 	end
 
-	slot7 = slot0:getTargetPageIndex() <= #slot0._pagesCo
+	local var_6_3 = arg_6_0:getTargetPageIndex()
+	local var_6_4 = var_6_3 <= #arg_6_0._pagesCo
+	local var_6_5 = var_6_3 >= 1
 
-	if slot4 > 100 and slot6 >= 1 then
-		slot0:setTargetPageIndex(slot6 - 1, slot6)
-		slot0:_updateSelectedItem()
-		slot0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.Manual)
-	elseif slot4 < -100 and slot7 then
-		slot0:setTargetPageIndex(slot6 + 1, slot6)
-		slot0:_updateSelectedItem()
-		slot0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.Manual)
+	if var_6_1 > 100 and var_6_5 then
+		arg_6_0:setTargetPageIndex(var_6_3 - 1, var_6_3)
+		arg_6_0:_updateSelectedItem()
+		arg_6_0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.Manual)
+	elseif var_6_1 < -100 and var_6_4 then
+		arg_6_0:setTargetPageIndex(var_6_3 + 1, var_6_3)
+		arg_6_0:_updateSelectedItem()
+		arg_6_0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.Manual)
 	end
 
-	slot0:_startAutoSwitch()
+	arg_6_0:_startAutoSwitch()
 end
 
-function slot0.statRecommendPage(slot0, slot1, slot2)
+function var_0_0.statRecommendPage(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0._pagesCo[arg_7_0:getTargetPageIndex()]
+
 	StatController.instance:track(StatEnum.EventName.ShowRecommendPage, {
-		[StatEnum.EventProperties.RecommendPageType] = slot1,
-		[StatEnum.EventProperties.ShowType] = slot2,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(slot0._pagesCo[slot0:getTargetPageIndex()].id)
+		[StatEnum.EventProperties.RecommendPageType] = arg_7_1,
+		[StatEnum.EventProperties.ShowType] = arg_7_2,
+		[StatEnum.EventProperties.RecommendPageId] = tostring(var_7_0.id)
 	})
 end
 
-function slot0._startAutoSwitch(slot0)
-	TaskDispatcher.cancelTask(slot0._onSwitch, slot0)
-	TaskDispatcher.runRepeat(slot0._onSwitch, slot0, 5)
+function var_0_0._startAutoSwitch(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._onSwitch, arg_8_0)
+	TaskDispatcher.runRepeat(arg_8_0._onSwitch, arg_8_0, 5)
 end
 
-function slot0._onSwitch(slot0)
-	if #slot0._pagesCo == 1 then
-		TaskDispatcher.cancelTask(slot0._onSwitch, slot0)
+function var_0_0._onSwitch(arg_9_0)
+	if #arg_9_0._pagesCo == 1 then
+		TaskDispatcher.cancelTask(arg_9_0._onSwitch, arg_9_0)
 
 		return
 	end
 
-	slot1 = slot0:getTargetPageIndex()
+	local var_9_0 = arg_9_0:getTargetPageIndex()
 
-	slot0:setTargetPageIndex(slot1 + 1, slot1)
-	slot0:_updateSelectedItem()
+	arg_9_0:setTargetPageIndex(var_9_0 + 1, var_9_0)
+	arg_9_0:_updateSelectedItem()
 
-	if ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.Auto)
+	if ViewHelper.instance:checkViewOnTheTop(arg_9_0.viewName) then
+		arg_9_0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.Auto)
 	end
 end
 
-function slot0.setTargetPageIndex(slot0, slot1, slot2)
-	slot0._targetPageIndex = slot1
-	slot0._prevTargetPageIndex = slot2
+function var_0_0.setTargetPageIndex(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._targetPageIndex = arg_10_1
+	arg_10_0._prevTargetPageIndex = arg_10_2
 end
 
-function slot0.getTargetPageIndex(slot0)
-	if slot0._targetPageIndex < 1 then
-		return #slot0._pagesCo
+function var_0_0.getTargetPageIndex(arg_11_0)
+	if arg_11_0._targetPageIndex < 1 then
+		return #arg_11_0._pagesCo
 	end
 
-	if slot0._targetPageIndex > #slot0._pagesCo then
+	if arg_11_0._targetPageIndex > #arg_11_0._pagesCo then
 		return 1
 	end
 
-	return slot0._targetPageIndex
+	return arg_11_0._targetPageIndex
 end
 
-function slot0._onClickView(slot0)
-	if slot0._scrollStartPos then
+function var_0_0._onClickView(arg_12_0)
+	if arg_12_0._scrollStartPos then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_jump)
 
-	if slot0._pagesCo[slot0:getTargetPageIndex()] and string.nilorempty(slot1.systemJumpCode) == false then
+	local var_12_0 = arg_12_0._pagesCo[arg_12_0:getTargetPageIndex()]
+
+	if var_12_0 and string.nilorempty(var_12_0.systemJumpCode) == false then
 		StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 			[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Main,
-			[StatEnum.EventProperties.RecommendPageId] = tostring(slot1.id),
-			[StatEnum.EventProperties.RecommendPageName] = slot1.name
+			[StatEnum.EventProperties.RecommendPageId] = tostring(var_12_0.id),
+			[StatEnum.EventProperties.RecommendPageName] = var_12_0.name
 		})
-		GameFacade.jumpByAdditionParam(slot1.systemJumpCode)
+		GameFacade.jumpByAdditionParam(var_12_0.systemJumpCode)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_13_0)
+	return
 end
 
-function slot0._checkExpire(slot0)
-	for slot5, slot6 in ipairs(slot0.recommendList) do
-		if slot6.type == 1 and slot0:_inOpenTime(slot6) and slot0:_checkRelations(slot6.relations) then
-			if VersionValidator.instance:isInReviewing() ~= true or string.nilorempty(slot6.systemJumpCode) or JumpConfig.instance:isOpenJumpId(string.splitToNumber(slot6.systemJumpCode, "#")[1]) then
-				slot1 = 0 + 1
+function var_0_0._checkExpire(arg_14_0)
+	local var_14_0 = 0
+
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.recommendList) do
+		if iter_14_1.type == 1 and arg_14_0:_inOpenTime(iter_14_1) and arg_14_0:_checkRelations(iter_14_1.relations) then
+			local var_14_1 = string.splitToNumber(iter_14_1.systemJumpCode, "#")[1]
+
+			if VersionValidator.instance:isInReviewing() ~= true or string.nilorempty(iter_14_1.systemJumpCode) or JumpConfig.instance:isOpenJumpId(var_14_1) then
+				var_14_0 = var_14_0 + 1
 			end
 		end
 	end
 
-	if slot1 ~= slot0._totalPageCount then
-		slot0:_clearPages()
-		slot0:_initPages()
+	if var_14_0 ~= arg_14_0._totalPageCount then
+		arg_14_0:_clearPages()
+		arg_14_0:_initPages()
 	end
 end
 
-function slot0._checkCountry(slot0, slot1)
-	return slot1 == nil or tabletool.len(slot1) == 0 or tabletool.indexOf(slot1, SettingsModel.instance:getRegionShortcut()) ~= nil
+function var_0_0._checkCountry(arg_15_0, arg_15_1)
+	local var_15_0 = SettingsModel.instance:getRegionShortcut()
+
+	return arg_15_1 == nil or tabletool.len(arg_15_1) == 0 or tabletool.indexOf(arg_15_1, var_15_0) ~= nil
 end
 
-function slot0._startCheckExpire(slot0)
-	TaskDispatcher.cancelTask(slot0._checkExpire, slot0)
-	TaskDispatcher.runRepeat(slot0._checkExpire, slot0, 1)
+function var_0_0._startCheckExpire(arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._checkExpire, arg_16_0)
+	TaskDispatcher.runRepeat(arg_16_0._checkExpire, arg_16_0, 1)
 end
 
-function slot0.onOpen(slot0)
-	slot0.recommendList = {}
+function var_0_0.onOpen(arg_17_0)
+	arg_17_0.recommendList = {}
 
-	for slot4, slot5 in ipairs(lua_store_recommend.configList) do
-		if slot0:_checkCountry(slot5.country) then
-			table.insert(slot0.recommendList, slot5)
+	for iter_17_0, iter_17_1 in ipairs(lua_store_recommend.configList) do
+		if arg_17_0:_checkCountry(iter_17_1.country) then
+			table.insert(arg_17_0.recommendList, iter_17_1)
 		end
 	end
 
-	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._checkExpire, slot0)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_17_0._checkExpire, arg_17_0)
 
-	if tabletool.len(slot0:_initPages(true)) > 0 then
-		slot2 = {}
+	local var_17_0 = arg_17_0:_initPages(true)
 
-		for slot6, slot7 in pairs(slot1) do
-			table.insert(slot2, slot6)
+	if tabletool.len(var_17_0) > 0 then
+		local var_17_1 = {}
+
+		for iter_17_2, iter_17_3 in pairs(var_17_0) do
+			table.insert(var_17_1, iter_17_2)
 		end
 
-		StoreRpc.instance:sendGetStoreInfosRequest(slot2)
+		StoreRpc.instance:sendGetStoreInfosRequest(var_17_1)
 	end
 end
 
-function slot0._initPages(slot0, slot1)
-	recthelper.setAnchorX(slot0._gocontent.transform, 0)
-	slot0:setTargetPageIndex(1)
+function var_0_0._initPages(arg_18_0, arg_18_1)
+	recthelper.setAnchorX(arg_18_0._gocontent.transform, 0)
+	arg_18_0:setTargetPageIndex(1)
 
-	slot2 = {}
-	slot0._pagesCo = {}
-	slot0._totalPageCount = 0
-	slot3 = {}
-	slot0._openSummonPoolDic = {}
+	local var_18_0 = {}
 
-	for slot8, slot9 in ipairs(SummonMainModel.getValidPools()) do
-		slot0._openSummonPoolDic[slot9.id] = slot9
+	arg_18_0._pagesCo = {}
+	arg_18_0._totalPageCount = 0
+
+	local var_18_1 = {}
+	local var_18_2 = SummonMainModel.getValidPools()
+
+	arg_18_0._openSummonPoolDic = {}
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_2) do
+		arg_18_0._openSummonPoolDic[iter_18_1.id] = iter_18_1
 	end
 
-	for slot8, slot9 in ipairs(slot0.recommendList) do
-		slot10, slot11, slot12 = slot0:_checkRelations(slot9.relations, nil, slot1)
+	for iter_18_2, iter_18_3 in ipairs(arg_18_0.recommendList) do
+		local var_18_3, var_18_4, var_18_5 = arg_18_0:_checkRelations(iter_18_3.relations, nil, arg_18_1)
 
-		if slot9.type == 1 and slot0:_inOpenTime(slot9) and slot10 then
-			if VersionValidator.instance:isInReviewing() ~= true or string.nilorempty(slot9.systemJumpCode) or JumpConfig.instance:isOpenJumpId(string.splitToNumber(slot9.systemJumpCode, "#")[1]) then
-				table.insert(slot2, slot9)
+		if iter_18_3.type == 1 and arg_18_0:_inOpenTime(iter_18_3) and var_18_3 then
+			local var_18_6 = string.splitToNumber(iter_18_3.systemJumpCode, "#")[1]
 
-				slot0._totalPageCount = slot0._totalPageCount + 1
+			if VersionValidator.instance:isInReviewing() ~= true or string.nilorempty(iter_18_3.systemJumpCode) or JumpConfig.instance:isOpenJumpId(var_18_6) then
+				table.insert(var_18_0, iter_18_3)
+
+				arg_18_0._totalPageCount = arg_18_0._totalPageCount + 1
 			end
 		end
 
-		if slot12 then
-			for slot16, slot17 in pairs(slot12) do
-				slot3[slot16] = true
+		if var_18_5 then
+			for iter_18_4, iter_18_5 in pairs(var_18_5) do
+				var_18_1[iter_18_4] = true
 			end
 		end
 	end
 
-	slot0:sortPage(slot2)
+	local var_18_7 = CommonConfig.instance:getConstNum(ConstEnum.MainThumbnailRecommendItemCount) or 14
 
-	for slot9 = 1, CommonConfig.instance:getConstNum(ConstEnum.MainThumbnailRecommendItemCount) or 14 do
-		if slot2[slot9] then
-			slot0._pagesCo[#slot0._pagesCo + 1] = slot2[slot9]
+	arg_18_0:sortPage(var_18_0)
+
+	for iter_18_6 = 1, var_18_7 do
+		if var_18_0[iter_18_6] then
+			arg_18_0._pagesCo[#arg_18_0._pagesCo + 1] = var_18_0[iter_18_6]
 		end
 	end
 
-	slot0:setSelectItem()
-	slot0:setContentItem()
-	slot0:_startAutoSwitch()
-	slot0:_startCheckExpire()
-	slot0:_updateSelectedItem()
-	slot0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.First)
+	arg_18_0:setSelectItem()
+	arg_18_0:setContentItem()
+	arg_18_0:_startAutoSwitch()
+	arg_18_0:_startCheckExpire()
+	arg_18_0:_updateSelectedItem()
+	arg_18_0:statRecommendPage(StatEnum.RecommendType.Main, StatEnum.DragType.First)
 
-	return slot3
+	return var_18_1
 end
 
-function slot0._sort(slot0, slot1)
-	return slot0.order < slot1.order
+function var_0_0._sort(arg_19_0, arg_19_1)
+	return arg_19_0.order < arg_19_1.order
 end
 
-function slot0.sortPage(slot0, slot1)
-	slot0:_cacheConfigGroupData(slot1)
-	table.sort(slot1, function (slot0, slot1)
-		return uv0:_tabSortGroupFunction(slot0, slot1)
+function var_0_0.sortPage(arg_20_0, arg_20_1)
+	arg_20_0:_cacheConfigGroupData(arg_20_1)
+	table.sort(arg_20_1, function(arg_21_0, arg_21_1)
+		return arg_20_0:_tabSortGroupFunction(arg_21_0, arg_21_1)
 	end)
 
-	slot0._cacheConfigGroupDic = {}
-	slot0._cacheConfigOrderDic = {}
+	arg_20_0._cacheConfigGroupDic = {}
+	arg_20_0._cacheConfigOrderDic = {}
 end
 
-function slot0._cacheConfigGroupData(slot0, slot1)
-	slot0._cacheConfigGroupDic = {}
-	slot0._cacheConfigOrderDic = {}
+function var_0_0._cacheConfigGroupData(arg_22_0, arg_22_1)
+	arg_22_0._cacheConfigGroupDic = {}
+	arg_22_0._cacheConfigOrderDic = {}
 
-	if not slot1 or #slot1 <= 0 then
+	if not arg_22_1 or #arg_22_1 <= 0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._cacheConfigGroupDic[slot6.id], slot0._cacheConfigOrderDic[slot6.id] = StoreHelper.getRecommendStoreGroupAndOrder(slot6, false)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
+		local var_22_0, var_22_1 = StoreHelper.getRecommendStoreGroupAndOrder(iter_22_1, false)
+
+		arg_22_0._cacheConfigGroupDic[iter_22_1.id] = var_22_0
+		arg_22_0._cacheConfigOrderDic[iter_22_1.id] = var_22_1
 	end
 end
 
-function slot0._tabSortGroupFunction(slot0, slot1, slot2)
-	if slot0._cacheConfigGroupDic[slot1.id] == slot0._cacheConfigGroupDic[slot2.id] then
-		return slot0._cacheConfigOrderDic[slot1.id] < slot0._cacheConfigOrderDic[slot2.id]
+function var_0_0._tabSortGroupFunction(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = arg_23_0._cacheConfigGroupDic[arg_23_1.id]
+	local var_23_1 = arg_23_0._cacheConfigGroupDic[arg_23_2.id]
+
+	if var_23_0 == var_23_1 then
+		return arg_23_0._cacheConfigOrderDic[arg_23_1.id] < arg_23_0._cacheConfigOrderDic[arg_23_2.id]
 	end
 
-	return slot3 < slot4
+	return var_23_0 < var_23_1
 end
 
-function slot0._checkRelations(slot0, slot1, slot2, slot3)
-	slot4 = GameUtil.splitString2(slot1, true)
-	slot5 = false
-	slot6 = false
-	slot7 = nil
+function var_0_0._checkRelations(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	local var_24_0 = GameUtil.splitString2(arg_24_1, true)
+	local var_24_1 = false
+	local var_24_2 = false
+	local var_24_3
 
-	if slot3 then
-		slot7 = {}
+	if arg_24_3 then
+		var_24_3 = {}
 	end
 
-	if string.nilorempty(slot1) == false and slot4 and #slot4 > 0 then
-		for slot11, slot12 in ipairs(slot4) do
-			slot13 = true
+	if string.nilorempty(arg_24_1) == false and var_24_0 and #var_24_0 > 0 then
+		for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+			local var_24_4 = true
+			local var_24_5 = iter_24_1[1]
+			local var_24_6 = iter_24_1[2]
 
-			if slot12[1] == StoreEnum.RecommendRelationType.Summon then
-				if slot0._openSummonPoolDic[slot12[2]] == nil then
-					slot13 = false
+			if var_24_5 == StoreEnum.RecommendRelationType.Summon then
+				if arg_24_0._openSummonPoolDic[var_24_6] == nil then
+					var_24_4 = false
 				end
-			elseif slot14 == StoreEnum.RecommendRelationType.PackageStoreGoods then
-				if StoreModel.instance:getGoodsMO(slot15) == nil or slot16:isSoldOut() then
-					slot13 = false
-				end
+			elseif var_24_5 == StoreEnum.RecommendRelationType.PackageStoreGoods then
+				local var_24_7 = StoreModel.instance:getGoodsMO(var_24_6)
 
-				slot5 = true
-			elseif slot14 == StoreEnum.RecommendRelationType.StoreGoods then
-				if StoreModel.instance:getGoodsMO(slot15) == nil or slot16:isSoldOut() or slot16:alreadyHas() then
-					slot13 = false
+				if var_24_7 == nil or var_24_7:isSoldOut() then
+					var_24_4 = false
 				end
 
-				if slot3 and StoreConfig.instance:getGoodsConfig(slot15) then
-					slot7[slot17.storeId] = true
-				end
-			elseif slot14 == StoreEnum.RecommendRelationType.OtherRecommendClose then
-				slot16 = lua_store_entrance.configList[slot15]
+				var_24_1 = true
+			elseif var_24_5 == StoreEnum.RecommendRelationType.StoreGoods then
+				local var_24_8 = StoreModel.instance:getGoodsMO(var_24_6)
 
-				if StoreConfig.instance:getStoreRecommendConfig(slot15).type == 1 and slot0:_inOpenTime(slot17) and slot0:_checkRelations(slot17.relations) then
-					slot13 = false
+				if var_24_8 == nil or var_24_8:isSoldOut() or var_24_8:alreadyHas() then
+					var_24_4 = false
+				end
+
+				if arg_24_3 then
+					local var_24_9 = StoreConfig.instance:getGoodsConfig(var_24_6)
+
+					if var_24_9 then
+						var_24_3[var_24_9.storeId] = true
+					end
+				end
+			elseif var_24_5 == StoreEnum.RecommendRelationType.OtherRecommendClose then
+				local var_24_10 = lua_store_entrance.configList[var_24_6]
+				local var_24_11 = StoreConfig.instance:getStoreRecommendConfig(var_24_6)
+
+				if var_24_11.type == 1 and arg_24_0:_inOpenTime(var_24_11) and arg_24_0:_checkRelations(var_24_11.relations) then
+					var_24_4 = false
 				end
 			end
 
-			slot6 = slot6 or slot13
+			var_24_2 = var_24_2 or var_24_4
 		end
 	else
-		slot6 = true
+		var_24_2 = true
 	end
 
-	return slot6, slot5, slot7
+	return var_24_2, var_24_1, var_24_3
 end
 
-function slot0._inOpenTime(slot0, slot1)
-	slot2 = ServerTime.now()
+function var_0_0._inOpenTime(arg_25_0, arg_25_1)
+	local var_25_0 = ServerTime.now()
+	local var_25_1 = TimeUtil.stringToTimestamp(arg_25_1.onlineTime)
+	local var_25_2 = TimeUtil.stringToTimestamp(arg_25_1.offlineTime)
+	local var_25_3 = string.nilorempty(arg_25_1.onlineTime) and var_25_0 or var_25_1
+	local var_25_4 = string.nilorempty(arg_25_1.offlineTime) and var_25_0 or var_25_2
 
-	return slot1.isOffline == 0 and (string.nilorempty(slot1.onlineTime) and slot2 or TimeUtil.stringToTimestamp(slot1.onlineTime)) <= slot2 and slot2 <= (string.nilorempty(slot1.offlineTime) and slot2 or TimeUtil.stringToTimestamp(slot1.offlineTime))
+	return arg_25_1.isOffline == 0 and var_25_3 <= var_25_0 and var_25_0 <= var_25_4
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_26_0)
+	return
 end
 
-function slot0.setSelectItem(slot0)
-	for slot5 = 1, #slot0._pagesCo do
-		slot7 = MainThumbnailBannerSelectItem.New()
+function var_0_0.setSelectItem(arg_27_0)
+	local var_27_0 = arg_27_0.viewContainer:getSetting().otherRes[1]
 
-		slot7:init({
-			go = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goslider),
-			index = slot5,
-			config = slot0._pagesCo[slot5],
-			pos = slot0:_getPos(slot5)
+	for iter_27_0 = 1, #arg_27_0._pagesCo do
+		local var_27_1 = arg_27_0:getResInst(var_27_0, arg_27_0._goslider)
+		local var_27_2 = MainThumbnailBannerSelectItem.New()
+
+		var_27_2:init({
+			go = var_27_1,
+			index = iter_27_0,
+			config = arg_27_0._pagesCo[iter_27_0],
+			pos = arg_27_0:_getPos(iter_27_0)
 		})
-		slot7:updateItem(slot0:getTargetPageIndex(), #slot0._pagesCo)
-		table.insert(slot0._selectItems, slot7)
+		var_27_2:updateItem(arg_27_0:getTargetPageIndex(), #arg_27_0._pagesCo)
+		table.insert(arg_27_0._selectItems, var_27_2)
 	end
 end
 
-function slot0._getPos(slot0, slot1)
-	return 55 * (slot1 - 0.5 * (#slot0._pagesCo + 1))
+function var_0_0._getPos(arg_28_0, arg_28_1)
+	return 55 * (arg_28_1 - 0.5 * (#arg_28_0._pagesCo + 1))
 end
 
-function slot0.setContentItem(slot0)
-	for slot5 = 1, #slot0._pagesCo do
-		slot7 = MainThumbnailBannerContent.New()
+function var_0_0.setContentItem(arg_29_0)
+	local var_29_0 = arg_29_0.viewContainer:getSetting().otherRes[2]
 
-		slot7:init({
-			go = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._gocontent),
-			index = slot5,
-			config = slot0._pagesCo[slot5],
-			pos = slot0:_getContentPos(-1)
+	for iter_29_0 = 1, #arg_29_0._pagesCo do
+		local var_29_1 = arg_29_0:getResInst(var_29_0, arg_29_0._gocontent)
+		local var_29_2 = MainThumbnailBannerContent.New()
+
+		var_29_2:init({
+			go = var_29_1,
+			index = iter_29_0,
+			config = arg_29_0._pagesCo[iter_29_0],
+			pos = arg_29_0:_getContentPos(-1)
 		})
-		slot7:updateItem()
-		table.insert(slot0._helpItems, slot7)
+		var_29_2:updateItem()
+		table.insert(arg_29_0._helpItems, var_29_2)
 	end
 end
 
-function slot0._getContentPos(slot0, slot1)
-	return slot0._space * (slot1 - 1)
+function var_0_0._getContentPos(arg_30_0, arg_30_1)
+	return arg_30_0._space * (arg_30_1 - 1)
 end
 
-function slot0._updateSelectedItem(slot0)
-	for slot4, slot5 in pairs(slot0._selectItems) do
-		slot5:updateItem(slot0:getTargetPageIndex(), #slot0._pagesCo)
+function var_0_0._updateSelectedItem(arg_31_0)
+	for iter_31_0, iter_31_1 in pairs(arg_31_0._selectItems) do
+		iter_31_1:updateItem(arg_31_0:getTargetPageIndex(), #arg_31_0._pagesCo)
 	end
 
-	for slot4, slot5 in ipairs(slot0._helpItems) do
-		slot5:updateItem(slot0:getTargetPageIndex())
+	for iter_31_2, iter_31_3 in ipairs(arg_31_0._helpItems) do
+		iter_31_3:updateItem(arg_31_0:getTargetPageIndex())
 	end
 
-	if not slot0._prevTargetPageIndex then
-		slot0:_updateContentPos(slot0:getTargetPageIndex(), slot0:getTargetPageIndex(), true)
+	if not arg_31_0._prevTargetPageIndex then
+		arg_31_0:_updateContentPos(arg_31_0:getTargetPageIndex(), arg_31_0:getTargetPageIndex(), true)
 
 		return
 	end
 
-	slot0:_updateContentPos(slot0._prevTargetPageIndex, slot0._prevTargetPageIndex, true)
-	slot0:_updateContentPos(slot0:getTargetPageIndex(), slot0._targetPageIndex, false)
+	arg_31_0:_updateContentPos(arg_31_0._prevTargetPageIndex, arg_31_0._prevTargetPageIndex, true)
+	arg_31_0:_updateContentPos(arg_31_0:getTargetPageIndex(), arg_31_0._targetPageIndex, false)
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_31_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_31_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_31_0._tweenId = nil
 	end
 
-	slot0._tweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._gocontent.transform, (1 - slot0._targetPageIndex) * slot0._space, 0.75, slot0._tweenPosFinish, slot0)
+	local var_31_0 = (1 - arg_31_0._targetPageIndex) * arg_31_0._space
+
+	arg_31_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_31_0._gocontent.transform, var_31_0, 0.75, arg_31_0._tweenPosFinish, arg_31_0)
 end
 
-function slot0._updateContentPos(slot0, slot1, slot2, slot3)
-	recthelper.setAnchorX(slot0._helpItems[slot1]._go.transform, slot0:_getContentPos(slot2))
+function var_0_0._updateContentPos(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	local var_32_0 = arg_32_0._helpItems[arg_32_1]
 
-	if not slot3 then
+	recthelper.setAnchorX(var_32_0._go.transform, arg_32_0:_getContentPos(arg_32_2))
+
+	if not arg_32_3 then
 		return
 	end
 
-	recthelper.setAnchorX(slot0._gocontent.transform, (1 - slot2) * slot0._space)
+	local var_32_1 = (1 - arg_32_2) * arg_32_0._space
+
+	recthelper.setAnchorX(arg_32_0._gocontent.transform, var_32_1)
 end
 
-function slot0._tweenPosFinish(slot0)
+function var_0_0._tweenPosFinish(arg_33_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._initPages, slot0)
+function var_0_0.onClose(arg_34_0)
+	arg_34_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_34_0._initPages, arg_34_0)
 end
 
-function slot0._clearPages(slot0)
-	if slot0._selectItems then
-		for slot4, slot5 in pairs(slot0._selectItems) do
-			slot5:destroy()
+function var_0_0._clearPages(arg_35_0)
+	if arg_35_0._selectItems then
+		for iter_35_0, iter_35_1 in pairs(arg_35_0._selectItems) do
+			iter_35_1:destroy()
 		end
 
-		slot0._selectItems = {}
+		arg_35_0._selectItems = {}
 	end
 
-	if slot0._helpItems then
-		for slot4, slot5 in pairs(slot0._helpItems) do
-			slot5:destroy()
+	if arg_35_0._helpItems then
+		for iter_35_2, iter_35_3 in pairs(arg_35_0._helpItems) do
+			iter_35_3:destroy()
 		end
 
-		slot0._helpItems = {}
+		arg_35_0._helpItems = {}
 	end
 
-	gohelper.destroyAllChildren(slot0._goslider)
-	gohelper.destroyAllChildren(slot0._gocontent)
+	gohelper.destroyAllChildren(arg_35_0._goslider)
+	gohelper.destroyAllChildren(arg_35_0._gocontent)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clearPages()
-	slot0._scroll:RemoveDragBeginListener()
-	slot0._scroll:RemoveDragEndListener()
-	slot0._viewClick:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0._onSwitch, slot0)
-	TaskDispatcher.cancelTask(slot0._checkExpire, slot0)
+function var_0_0.onDestroyView(arg_36_0)
+	arg_36_0:_clearPages()
+	arg_36_0._scroll:RemoveDragBeginListener()
+	arg_36_0._scroll:RemoveDragEndListener()
+	arg_36_0._viewClick:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_36_0._onSwitch, arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0._checkExpire, arg_36_0)
 end
 
-return slot0
+return var_0_0

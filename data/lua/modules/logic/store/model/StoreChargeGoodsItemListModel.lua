@@ -1,33 +1,36 @@
-module("modules.logic.store.model.StoreChargeGoodsItemListModel", package.seeall)
+﻿module("modules.logic.store.model.StoreChargeGoodsItemListModel", package.seeall)
 
-slot0 = class("StoreChargeGoodsItemListModel", ListScrollModel)
+local var_0_0 = class("StoreChargeGoodsItemListModel", ListScrollModel)
 
-function slot0.setMOList(slot0, slot1, slot2)
-	slot0._moList = {}
+function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._moList = {}
 
-	if slot1 then
-		for slot6, slot7 in pairs(slot1) do
-			if slot7.config.belongStoreId == slot2 then
-				table.insert(slot0._moList, slot7)
+	if arg_1_1 then
+		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
+			if iter_1_1.config.belongStoreId == arg_1_2 then
+				table.insert(arg_1_0._moList, iter_1_1)
 			end
 		end
 
-		if #slot0._moList > 1 then
-			table.sort(slot0._moList, slot0._sortFunction)
+		if #arg_1_0._moList > 1 then
+			table.sort(arg_1_0._moList, arg_1_0._sortFunction)
 		end
 	end
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if StoreConfig.instance:getChargeGoodsConfig(slot0.id).order ~= StoreConfig.instance:getChargeGoodsConfig(slot1.id).order then
-		return slot2.order < slot3.order
+function var_0_0._sortFunction(arg_2_0, arg_2_1)
+	local var_2_0 = StoreConfig.instance:getChargeGoodsConfig(arg_2_0.id)
+	local var_2_1 = StoreConfig.instance:getChargeGoodsConfig(arg_2_1.id)
+
+	if var_2_0.order ~= var_2_1.order then
+		return var_2_0.order < var_2_1.order
 	end
 
-	return slot2.id < slot3.id
+	return var_2_0.id < var_2_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

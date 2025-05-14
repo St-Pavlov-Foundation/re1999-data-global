@@ -1,159 +1,166 @@
-module("modules.logic.gm.controller.GMLogController", package.seeall)
+﻿module("modules.logic.gm.controller.GMLogController", package.seeall)
 
-slot0 = class("GMLogController", BaseController)
-slot1 = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=8feabd52-f611-4a10-8ad8-5b3c94c79bd2"
-slot2 = 1600
-slot3 = 1
-slot4 = 20
+local var_0_0 = class("GMLogController", BaseController)
+local var_0_1 = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=8feabd52-f611-4a10-8ad8-5b3c94c79bd2"
+local var_0_2 = 1600
+local var_0_3 = 1
+local var_0_4 = 20
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_1_0)
 	if isDebugBuild then
-		slot0._msgCounter = uv0
+		arg_1_0._msgCounter = var_0_4
 
-		SLFramework.SLLogger.SetErrorCallback(slot0._onErrorMsg, slot0)
-		TaskDispatcher.runRepeat(slot0._onCoolDown, slot0, uv1)
-		TaskDispatcher.runRepeat(slot0._onTick, slot0, 1)
-		GMController.instance:registerCallback(GMEvent.GMLog_UpdateCount, slot0._updateCount, slot0)
+		SLFramework.SLLogger.SetErrorCallback(arg_1_0._onErrorMsg, arg_1_0)
+		TaskDispatcher.runRepeat(arg_1_0._onCoolDown, arg_1_0, var_0_3)
+		TaskDispatcher.runRepeat(arg_1_0._onTick, arg_1_0, 1)
+		GMController.instance:registerCallback(GMEvent.GMLog_UpdateCount, arg_1_0._updateCount, arg_1_0)
 
-		slot0._logQueue = {}
+		arg_1_0._logQueue = {}
 	end
 
-	slot0._errorAlertGO = nil
+	arg_1_0._errorAlertGO = nil
 end
 
-function slot0.block(slot0)
-	slot0:hideAlert()
-	SLFramework.SLLogger.SetErrorCallback(nil, )
-	TaskDispatcher.cancelTask(slot0._onCoolDown, slot0)
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
+function var_0_0.block(arg_2_0)
+	arg_2_0:hideAlert()
+	SLFramework.SLLogger.SetErrorCallback(nil, nil)
+	TaskDispatcher.cancelTask(arg_2_0._onCoolDown, arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._onTick, arg_2_0)
 end
 
-function slot0.cancelBlock(slot0)
-	slot0:showAlert()
-	slot0:_updateCount()
-	SLFramework.SLLogger.SetErrorCallback(slot0._onErrorMsg, slot0)
-	TaskDispatcher.runRepeat(slot0._onCoolDown, slot0, uv0)
+function var_0_0.cancelBlock(arg_3_0)
+	arg_3_0:showAlert()
+	arg_3_0:_updateCount()
+	SLFramework.SLLogger.SetErrorCallback(arg_3_0._onErrorMsg, arg_3_0)
+	TaskDispatcher.runRepeat(arg_3_0._onCoolDown, arg_3_0, var_0_3)
 end
 
-function slot0._onCoolDown(slot0)
-	if slot0._msgCounter < uv0 then
-		slot0._msgCounter = slot0._msgCounter + 1
+function var_0_0._onCoolDown(arg_4_0)
+	if arg_4_0._msgCounter < var_0_4 then
+		arg_4_0._msgCounter = arg_4_0._msgCounter + 1
 	end
 end
 
-function slot0._onTick(slot0)
-	if not slot0._logQueue or #slot0._logQueue == 0 then
+function var_0_0._onTick(arg_5_0)
+	if not arg_5_0._logQueue or #arg_5_0._logQueue == 0 then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._logQueue) do
-		slot8 = slot5.logType
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._logQueue) do
+		local var_5_0 = iter_5_1.logString
+		local var_5_1 = iter_5_1.stackTrace
+		local var_5_2 = iter_5_1.logType
 
-		GMLogModel.instance:addMsg(slot5.logString, slot5.stackTrace, slot8)
+		GMLogModel.instance:addMsg(var_5_0, var_5_1, var_5_2)
 
-		if slot8 == 0 then
-			if not slot0._errorAlertGO then
-				slot0._errorAlertGO = GMController.instance:getGMNode("erroralert", ViewMgr.instance:getUILayer(UILayerName.Top))
+		if var_5_2 == 0 then
+			if not arg_5_0._errorAlertGO then
+				local var_5_3 = ViewMgr.instance:getUILayer(UILayerName.Top)
 
-				if slot0._errorAlertGO then
-					slot0._btnAlert = gohelper.findChildButtonWithAudio(slot0._errorAlertGO, "btnAlert")
+				arg_5_0._errorAlertGO = GMController.instance:getGMNode("erroralert", var_5_3)
 
-					slot0._btnAlert:AddClickListener(slot0._onClickAlert, slot0)
+				if arg_5_0._errorAlertGO then
+					arg_5_0._btnAlert = gohelper.findChildButtonWithAudio(arg_5_0._errorAlertGO, "btnAlert")
 
-					slot0._txtCount = gohelper.findChildText(slot0._errorAlertGO, "btnAlert/image/txtCount")
+					arg_5_0._btnAlert:AddClickListener(arg_5_0._onClickAlert, arg_5_0)
+
+					arg_5_0._txtCount = gohelper.findChildText(arg_5_0._errorAlertGO, "btnAlert/image/txtCount")
 				end
 			end
 
-			if slot0._errorAlertGO then
-				gohelper.setActive(slot0._errorAlertGO, true)
-				slot0:_updateCount()
+			if arg_5_0._errorAlertGO then
+				gohelper.setActive(arg_5_0._errorAlertGO, true)
+				arg_5_0:_updateCount()
 			end
 		end
 
-		GMController.instance:dispatchEvent(GMEvent.GMLog_Trigger, slot6, slot7, slot8)
+		GMController.instance:dispatchEvent(GMEvent.GMLog_Trigger, var_5_0, var_5_1, var_5_2)
 	end
 
-	tabletool.clear(slot0._logQueue)
+	tabletool.clear(arg_5_0._logQueue)
 end
 
-function slot0._onErrorMsg(slot0, slot1, slot2, slot3)
-	slot0._msgCounter = slot0._msgCounter - 1
+function var_0_0._onErrorMsg(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._msgCounter = arg_6_0._msgCounter - 1
 
-	if slot0._msgCounter < 0 then
-		slot0._msgCounter = 0
+	if arg_6_0._msgCounter < 0 then
+		arg_6_0._msgCounter = 0
 
 		return
 	end
 
-	table.insert(slot0._logQueue, {
-		logString = slot1,
-		stackTrace = slot2,
-		logType = slot3
+	table.insert(arg_6_0._logQueue, {
+		logString = arg_6_1,
+		stackTrace = arg_6_2,
+		logType = arg_6_3
 	})
 end
 
-function slot0.showAlert(slot0)
-	gohelper.setActive(slot0._errorAlertGO, true)
+function var_0_0.showAlert(arg_7_0)
+	gohelper.setActive(arg_7_0._errorAlertGO, true)
 end
 
-function slot0.hideAlert(slot0)
-	gohelper.setActive(slot0._errorAlertGO, false)
+function var_0_0.hideAlert(arg_8_0)
+	gohelper.setActive(arg_8_0._errorAlertGO, false)
 end
 
-function slot0._updateCount(slot0)
-	if slot0._txtCount then
-		slot0._txtCount.text = tostring(GMLogModel.instance.errorModel:getCount())
+function var_0_0._updateCount(arg_9_0)
+	if arg_9_0._txtCount then
+		arg_9_0._txtCount.text = tostring(GMLogModel.instance.errorModel:getCount())
 	end
 end
 
-function slot0._onClickAlert(slot0)
+function var_0_0._onClickAlert(arg_10_0)
 	if not ViewMgr.instance:isOpen(ViewName.GMErrorView) then
 		ViewMgr.instance:openView(ViewName.GMErrorView)
 	end
 end
 
-function slot0.sendRobotMsg(slot0, slot1, slot2)
-	logWarn(string.split(slot1, "stack traceback:")[1])
+function var_0_0.sendRobotMsg(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = string.split(arg_11_1, "stack traceback:")
 
-	if PlayerModel.instance:getPlayinfo() and not string.nilorempty(slot5.userId) and slot5.userId ~= 0 then
-		slot4 = string.format("**角色ID：**<font color=\"info\">%s</font>\n**角色名：**%s\n**设备：**%s", tostring(slot5.userId), tostring(slot5.name), tostring(UnityEngine.SystemInfo.deviceModel))
+	logWarn(var_11_0[1])
+
+	local var_11_1 = UnityEngine.SystemInfo.deviceModel
+	local var_11_2 = PlayerModel.instance:getPlayinfo()
+
+	if var_11_2 and not string.nilorempty(var_11_2.userId) and var_11_2.userId ~= 0 then
+		var_11_1 = string.format("**角色ID：**<font color=\"info\">%s</font>\n**角色名：**%s\n**设备：**%s", tostring(var_11_2.userId), tostring(var_11_2.name), tostring(var_11_1))
 	end
 
 	if not string.nilorempty(LoginModel.instance.serverName) then
-		slot4 = string.format("%s\n**服务器：**%s\n", slot4, LoginModel.instance.serverName)
+		var_11_1 = string.format("%s\n**服务器：**%s\n", var_11_1, LoginModel.instance.serverName)
 	end
 
-	if uv0 < string.len((string.nilorempty(slot3[2]) or string.format([[
-%s
-**报错：**<font color="warning">%s</font>
-**stack traceback：**
-%s
- 
-%s]], tostring(slot4), tostring(slot3[1]), tostring(slot3[2]), tostring(slot2))) and string.format([[
-%s
-**报错：**<font color="warning">%s</font>
-**stack traceback：**
- 
-%s]], tostring(slot4), tostring(slot3[1]), tostring(slot2))) then
-		slot1 = string.sub(slot1, 1, uv0)
+	if not string.nilorempty(var_11_0[2]) then
+		arg_11_1 = string.format("%s\n**报错：**<font color=\"warning\">%s</font>\n**stack traceback：**\n%s\n \n%s", tostring(var_11_1), tostring(var_11_0[1]), tostring(var_11_0[2]), tostring(arg_11_2))
+	else
+		arg_11_1 = string.format("%s\n**报错：**<font color=\"warning\">%s</font>\n**stack traceback：**\n \n%s", tostring(var_11_1), tostring(var_11_0[1]), tostring(arg_11_2))
 	end
 
-	SLFramework.SLWebRequest.Instance:PostJson(uv1, cjson.encode({
+	if string.len(arg_11_1) > var_0_2 then
+		arg_11_1 = string.sub(arg_11_1, 1, var_0_2)
+	end
+
+	local var_11_3 = {
 		msgtype = "markdown",
 		markdown = {
-			content = slot1
+			content = arg_11_1
 		}
-	}), slot0._onSendSucc, slot0)
+	}
+	local var_11_4 = cjson.encode(var_11_3)
+
+	SLFramework.SLWebRequest.Instance:PostJson(var_0_1, var_11_4, arg_11_0._onSendSucc, arg_11_0)
 end
 
-function slot0._onSendSucc(slot0, slot1, slot2)
-	if slot1 then
+function var_0_0._onSendSucc(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 then
 		GameFacade.showToast(ToastEnum.IconId, "send success")
 	else
-		GameFacade.showToast(ToastEnum.IconId, "send fail " .. slot2)
+		GameFacade.showToast(ToastEnum.IconId, "send fail " .. arg_12_2)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

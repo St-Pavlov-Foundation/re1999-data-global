@@ -1,12 +1,13 @@
-module("modules.logic.defines.ModuleEnum", package.seeall)
+﻿module("modules.logic.defines.ModuleEnum", package.seeall)
 
-slot0 = _M
-slot0.HeroCountInGroup = 3
-slot0.SubHeroCountInGroup = 1
-slot0.MaxHeroCountInGroup = slot0.HeroCountInGroup + slot0.SubHeroCountInGroup
-slot0.ServerUtcOffset = 28800
-slot0.SpineHangPointRoot = "mountroot"
-slot0.SpineHangPoint = {
+local var_0_0 = _M
+
+var_0_0.HeroCountInGroup = 3
+var_0_0.SubHeroCountInGroup = 1
+var_0_0.MaxHeroCountInGroup = var_0_0.HeroCountInGroup + var_0_0.SubHeroCountInGroup
+var_0_0.ServerUtcOffset = 28800
+var_0_0.SpineHangPointRoot = "mountroot"
+var_0_0.SpineHangPoint = {
 	mounthead = "mounthead",
 	mountbody = "mountbody",
 	HeadStatic = "HeadStatic",
@@ -19,26 +20,26 @@ slot0.SpineHangPoint = {
 	bone = "bone",
 	mountweapon = "mountweapon"
 }
-slot0.Gender = {
+var_0_0.Gender = {
 	Female = 2,
 	Male = 1,
 	None = 0
 }
-slot0.Performance = {
+var_0_0.Performance = {
 	High = 1,
 	Undefine = 0,
 	Low = 3,
 	Middle = 2
 }
-slot0.TargetFrameRate = {
+var_0_0.TargetFrameRate = {
 	Low = 30,
 	High = 60
 }
-slot0.FullScreenState = {
+var_0_0.FullScreenState = {
 	On = 1,
 	Off = 0
 }
-slot0.HeroGroupType = {
+var_0_0.HeroGroupType = {
 	Default = 0,
 	Trial = 6,
 	Season166Base = 9,
@@ -52,7 +53,7 @@ slot0.HeroGroupType = {
 	Season166Teach = 11,
 	Temp = 3
 }
-slot0.HeroGroupSnapshotType = {
+var_0_0.HeroGroupSnapshotType = {
 	Season166Base = 8,
 	Resources = 3,
 	Act183Normal = 12,
@@ -65,10 +66,10 @@ slot0.HeroGroupSnapshotType = {
 	Season123Retail = 7,
 	Act183Boss = 13
 }
-slot0.HeroGroupServerType = {
+var_0_0.HeroGroupServerType = {
 	Activity = 100,
 	Equip = 2,
 	Main = 1
 }
 
-return slot0
+return var_0_0

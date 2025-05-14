@@ -1,6 +1,7 @@
-module("modules.logic.nfc.rpc.NFCRpc", package.seeall)
+﻿module("modules.logic.nfc.rpc.NFCRpc", package.seeall)
 
-slot0 = class("NFCRpc", BaseRpc)
-slot0.instance = slot0.New()
+local var_0_0 = class("NFCRpc", BaseRpc)
 
-return slot0
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

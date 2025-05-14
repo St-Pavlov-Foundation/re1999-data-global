@@ -1,34 +1,37 @@
-module("modules.logic.versionactivity.view.VersionActivityDungeonMapLevelView", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapLevelView", package.seeall)
 
-slot0 = class("VersionActivityDungeonMapLevelView", VersionActivityDungeonBaseMapLevelView)
+local var_0_0 = class("VersionActivityDungeonMapLevelView", VersionActivityDungeonBaseMapLevelView)
 
-function slot0.getEpisodeIndex(slot0)
-	if ActivityConfig.instance:getChapterIdMode(slot0.originEpisodeConfig.chapterId) == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
-		return uv0.super.getEpisodeIndex(slot0)
+function var_0_0.getEpisodeIndex(arg_1_0)
+	if ActivityConfig.instance:getChapterIdMode(arg_1_0.originEpisodeConfig.chapterId) == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+		return var_0_0.super.getEpisodeIndex(arg_1_0)
 	end
 
-	return DungeonConfig.instance:getEpisodeLevelIndex(DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(slot0.originEpisodeConfig)[1])
+	local var_1_0 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(arg_1_0.originEpisodeConfig)
+
+	return DungeonConfig.instance:getEpisodeLevelIndex(var_1_0[1])
 end
 
-function slot0.buildEpisodeName(slot0)
-	slot1 = slot0.showEpisodeCo.name
-	slot2 = GameUtil.utf8sub(slot1, 1, 1)
-	slot3 = ""
+function var_0_0.buildEpisodeName(arg_2_0)
+	local var_2_0 = arg_2_0.showEpisodeCo.name
+	local var_2_1 = GameUtil.utf8sub(var_2_0, 1, 1)
+	local var_2_2 = ""
+	local var_2_3 = GameUtil.utf8len(var_2_0)
 
-	if GameUtil.utf8len(slot1) > 1 then
-		slot3 = GameUtil.utf8sub(slot1, 2, slot4 - 1)
+	if var_2_3 > 1 then
+		var_2_2 = GameUtil.utf8sub(var_2_0, 2, var_2_3 - 1)
 	end
 
-	slot5 = slot0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#bc9999" or "#bcbaaa"
-	slot6 = 112
+	local var_2_4 = arg_2_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#bc9999" or "#bcbaaa"
+	local var_2_5 = 112
 
 	if GameConfig:GetCurLangType() == LangSettings.en then
-		slot6 = 90
+		var_2_5 = 90
 	elseif GameConfig:GetCurLangType() == LangSettings.kr then
-		slot6 = 100
+		var_2_5 = 100
 	end
 
-	return slot0:buildColorText(string.format("<size=%s>%s</size>%s", slot6, slot2, slot3), slot5)
+	return arg_2_0:buildColorText(string.format("<size=%s>%s</size>%s", var_2_5, var_2_1, var_2_2), var_2_4)
 end
 
-return slot0
+return var_0_0

@@ -1,81 +1,85 @@
-module("modules.versionactivitybase.enterview.controller.VersionActivityBaseController", package.seeall)
+﻿module("modules.versionactivitybase.enterview.controller.VersionActivityBaseController", package.seeall)
 
-slot0 = class("VersionActivityBaseController", BaseController)
+local var_0_0 = class("VersionActivityBaseController", BaseController)
 
-function slot0.isPlayedActivityVideo(slot0, slot1)
-	if not ActivityConfig.instance:getActivityCo(slot1) then
+function var_0_0.isPlayedActivityVideo(arg_1_0, arg_1_1)
+	local var_1_0 = ActivityConfig.instance:getActivityCo(arg_1_1)
+
+	if not var_1_0 then
 		return true
 	end
 
-	if string.nilorempty(slot2.storyId) or slot2.storyId == 0 then
+	if string.nilorempty(var_1_0.storyId) or var_1_0.storyId == 0 then
 		return true
 	end
 
-	return StoryModel.instance:isStoryFinished(slot2.storyId)
+	return StoryModel.instance:isStoryFinished(var_1_0.storyId)
 end
 
-function slot0._initPlayedActUnlockAnimationList(slot0)
-	if string.nilorempty(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey))) then
-		slot0.playedActUnlockAnimationList = {}
+function var_0_0._initPlayedActUnlockAnimationList(arg_2_0)
+	local var_2_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey))
+
+	if string.nilorempty(var_2_0) then
+		arg_2_0.playedActUnlockAnimationList = {}
 
 		return
 	end
 
-	slot0.playedActUnlockAnimationList = string.splitToNumber(slot1, "#")
+	arg_2_0.playedActUnlockAnimationList = string.splitToNumber(var_2_0, "#")
 end
 
-function slot0.playedActivityUnlockAnimation(slot0, slot1)
-	if not slot1 then
+function var_0_0.playedActivityUnlockAnimation(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	if not slot0.playedActUnlockAnimationList then
-		slot0:_initPlayedActUnlockAnimationList()
+	if not arg_3_0.playedActUnlockAnimationList then
+		arg_3_0:_initPlayedActUnlockAnimationList()
 	end
 
-	if tabletool.indexOf(slot0.playedActUnlockAnimationList, slot1) then
+	if tabletool.indexOf(arg_3_0.playedActUnlockAnimationList, arg_3_1) then
 		return
 	end
 
-	table.insert(slot0.playedActUnlockAnimationList, slot1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey), table.concat(slot0.playedActUnlockAnimationList, "#"))
+	table.insert(arg_3_0.playedActUnlockAnimationList, arg_3_1)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey), table.concat(arg_3_0.playedActUnlockAnimationList, "#"))
 end
 
-function slot0.isPlayedUnlockAnimation(slot0, slot1)
-	if not slot0.playedActUnlockAnimationList then
-		slot0:_initPlayedActUnlockAnimationList()
+function var_0_0.isPlayedUnlockAnimation(arg_4_0, arg_4_1)
+	if not arg_4_0.playedActUnlockAnimationList then
+		arg_4_0:_initPlayedActUnlockAnimationList()
 	end
 
-	return tabletool.indexOf(slot0.playedActUnlockAnimationList, slot1)
+	return tabletool.indexOf(arg_4_0.playedActUnlockAnimationList, arg_4_1)
 end
 
-function slot0.clear(slot0)
-	slot0.playedActUnlockAnimationList = nil
-	slot0.playedVideosActivityIdList = nil
+function var_0_0.clear(arg_5_0)
+	arg_5_0.playedActUnlockAnimationList = nil
+	arg_5_0.playedVideosActivityIdList = nil
 end
 
-function slot0.enterVersionActivityView(slot0, slot1, slot2, slot3, slot4)
-	slot5, slot6, slot7 = ActivityHelper.getActivityStatusAndToast(slot2)
+function var_0_0.enterVersionActivityView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	local var_6_0, var_6_1, var_6_2 = ActivityHelper.getActivityStatusAndToast(arg_6_2)
 
-	if slot5 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot6 then
-			GameFacade.showToast(slot6, slot7)
+	if var_6_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_6_1 then
+			GameFacade.showToast(var_6_1, var_6_2)
 		end
 
 		return
 	end
 
-	if slot3 then
-		slot3(slot4, slot1, slot2)
+	if arg_6_3 then
+		arg_6_3(arg_6_4, arg_6_1, arg_6_2)
 
 		return
 	end
 
-	ViewMgr.instance:openView(slot1)
+	ViewMgr.instance:openView(arg_6_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

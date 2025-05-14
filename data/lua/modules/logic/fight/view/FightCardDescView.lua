@@ -1,48 +1,55 @@
-module("modules.logic.fight.view.FightCardDescView", package.seeall)
+﻿module("modules.logic.fight.view.FightCardDescView", package.seeall)
 
-slot0 = class("FightCardDescView", BaseView)
+local var_0_0 = class("FightCardDescView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gocardlist = gohelper.findChild(slot0.viewGO, "#go_cardlist")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gocardlist = gohelper.findChild(arg_1_0.viewGO, "#go_cardlist")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	for slot4, slot5 in ipairs(lua_card_description.configList) do
-		slot0:_addCardItem(slot5, slot4 == #lua_card_description.configList)
+function var_0_0.onOpen(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(lua_card_description.configList) do
+		arg_7_0:_addCardItem(iter_7_1, iter_7_0 == #lua_card_description.configList)
 	end
 end
 
-function slot0._addCardItem(slot0, slot1, slot2)
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocardlist), FightCardDescItem):onUpdateMO(slot1, slot2)
+function var_0_0._addCardItem(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0.viewContainer:getSetting().otherRes[1]
+	local var_8_1 = arg_8_0:getResInst(var_8_0, arg_8_0._gocardlist)
+
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, FightCardDescItem):onUpdateMO(arg_8_1, arg_8_2)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

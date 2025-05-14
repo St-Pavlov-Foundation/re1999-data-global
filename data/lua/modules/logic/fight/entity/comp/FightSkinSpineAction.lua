@@ -1,102 +1,109 @@
-module("modules.logic.fight.entity.comp.FightSkinSpineAction", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightSkinSpineAction", package.seeall)
 
-slot0 = class("FightSkinSpineAction", LuaCompBase)
+local var_0_0 = class("FightSkinSpineAction", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._effectWraps = {}
-	slot0.lock = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectWraps = {}
+	arg_1_0.lock = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0._spine = slot0.entity.spine
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._spine = arg_2_0.entity.spine
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._spine:addAnimEventCallback(slot0._onAnimEvent, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0._spine:addAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._spine:removeAnimEventCallback(arg_4_0._onAnimEvent, arg_4_0)
 end
 
-function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
-	if slot0.lock then
+function var_0_0._onAnimEvent(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_0.lock then
 		return
 	end
 
-	if not slot0.entity:getMO() then
+	local var_5_0 = arg_5_0.entity:getMO()
+
+	if not var_5_0 then
 		return
 	end
 
-	if not FightConfig.instance:getSkinSpineActionDict(slot4.skin, slot1) then
+	local var_5_1 = FightConfig.instance:getSkinSpineActionDict(var_5_0.skin, arg_5_1)
+
+	if not var_5_1 then
 		return
 	end
 
-	slot6 = slot5[slot1]
+	local var_5_2 = var_5_1[arg_5_1]
 
-	if slot2 == SpineAnimEvent.ActionStart then
-		slot0:_removeEffect()
+	if arg_5_2 == SpineAnimEvent.ActionStart then
+		arg_5_0:_removeEffect()
 
-		slot7 = true
+		local var_5_3 = true
 
-		if slot1 == SpineAnimState.die or slot1 == SpineAnimState.born then
-			if FightDataHelper.entityMgr:isSub(slot4.id) then
-				slot7 = false
+		if arg_5_1 == SpineAnimState.die or arg_5_1 == SpineAnimState.born then
+			if FightDataHelper.entityMgr:isSub(var_5_0.id) then
+				var_5_3 = false
 			end
 
-			if slot1 == SpineAnimState.born and FightAudioMgr.instance.enterFightVoiceHeroID and FightAudioMgr.instance.enterFightVoiceHeroID ~= slot4.modelId then
-				slot7 = false
-			end
-		end
-
-		if slot6 then
-			slot0:_playActionEffect(slot6)
-
-			if slot7 then
-				slot0:_playActionAudio(slot6)
-			end
-
-			if slot6.effectRemoveTime > 0 then
-				TaskDispatcher.cancelTask(slot0._removeEffect, slot0)
-				TaskDispatcher.runDelay(slot0._removeEffect, slot0, slot6.effectRemoveTime)
+			if arg_5_1 == SpineAnimState.born and FightAudioMgr.instance.enterFightVoiceHeroID and FightAudioMgr.instance.enterFightVoiceHeroID ~= var_5_0.modelId then
+				var_5_3 = false
 			end
 		end
-	elseif slot2 == SpineAnimEvent.ActionComplete and slot6 and slot6.effectRemoveTime == 0 then
-		slot0:_removeEffect()
+
+		if var_5_2 then
+			arg_5_0:_playActionEffect(var_5_2)
+
+			if var_5_3 then
+				arg_5_0:_playActionAudio(var_5_2)
+			end
+
+			if var_5_2.effectRemoveTime > 0 then
+				TaskDispatcher.cancelTask(arg_5_0._removeEffect, arg_5_0)
+				TaskDispatcher.runDelay(arg_5_0._removeEffect, arg_5_0, var_5_2.effectRemoveTime)
+			end
+		end
+	elseif arg_5_2 == SpineAnimEvent.ActionComplete and var_5_2 and var_5_2.effectRemoveTime == 0 then
+		arg_5_0:_removeEffect()
 	end
 end
 
-function slot0._removeEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._removeEffect, slot0)
+function var_0_0._removeEffect(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._removeEffect, arg_6_0)
 
-	for slot4, slot5 in ipairs(slot0._effectWraps) do
-		slot0.entity.effect:removeEffect(slot5)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._effectWraps) do
+		arg_6_0.entity.effect:removeEffect(iter_6_1)
 	end
 
-	slot0._effectWraps = {}
+	arg_6_0._effectWraps = {}
 end
 
-function slot0._playActionEffect(slot0, slot1)
-	if not string.nilorempty(slot1.effect) then
-		for slot7, slot8 in ipairs(string.split(slot1.effect, "#")) do
-			slot9 = slot0.entity.effect:addHangEffect(slot8, string.split(slot1.effectHangPoint, "#")[slot7])
+function var_0_0._playActionEffect(arg_7_0, arg_7_1)
+	if not string.nilorempty(arg_7_1.effect) then
+		local var_7_0 = string.split(arg_7_1.effect, "#")
+		local var_7_1 = string.split(arg_7_1.effectHangPoint, "#")
 
-			slot9:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot0.entity.id, slot9)
-			table.insert(slot0._effectWraps, slot9)
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			local var_7_2 = arg_7_0.entity.effect:addHangEffect(iter_7_1, var_7_1[iter_7_0])
+
+			var_7_2:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(arg_7_0.entity.id, var_7_2)
+			table.insert(arg_7_0._effectWraps, var_7_2)
 		end
 	end
 end
 
-function slot0._playActionAudio(slot0, slot1)
-	if slot1.audioId and slot1.audioId > 0 then
-		FightAudioMgr.instance:playAudio(slot1.audioId)
+function var_0_0._playActionAudio(arg_8_0, arg_8_1)
+	if arg_8_1.audioId and arg_8_1.audioId > 0 then
+		FightAudioMgr.instance:playAudio(arg_8_1.audioId)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:_removeEffect()
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0:_removeEffect()
 end
 
-return slot0
+return var_0_0

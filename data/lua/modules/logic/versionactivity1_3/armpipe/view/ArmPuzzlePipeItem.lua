@@ -1,151 +1,161 @@
-module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipeItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipeItem", package.seeall)
 
-slot0 = class("ArmPuzzlePipeItem", LuaCompBase)
+local var_0_0 = class("ArmPuzzlePipeItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._imageBg = gohelper.findChildImage(slot0.viewGO, "#go_content/#image_Bg")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_content/#image_icon")
-	slot0._imagenum = gohelper.findChildImage(slot0.viewGO, "#go_content/#image_num")
-	slot0._imageconn = gohelper.findChildImage(slot0.viewGO, "#go_content/#image_conn")
-	slot0.tf = slot0._gocontent.transform
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._imageBg = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_Bg")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_icon")
+	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_num")
+	arg_1_0._imageconn = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_conn")
+	arg_1_0.tf = arg_1_0._gocontent.transform
 
-	slot0:_editableInitView()
+	arg_1_0:_editableInitView()
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_4_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goEffLight = gohelper.findChild(slot0.viewGO, "#go_content/eff_light")
-	slot0._effLightAnimator = slot0._goEffLight:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
-	slot0._imageconnTrs = slot0._imageconn.transform
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._goEffLight = gohelper.findChild(arg_6_0.viewGO, "#go_content/eff_light")
+	arg_6_0._effLightAnimator = arg_6_0._goEffLight:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
+	arg_6_0._imageconnTrs = arg_6_0._imageconn.transform
 
-	slot0:_playAnim(false, nil)
-	gohelper.setActive(slot0._imageBg, false)
+	arg_6_0:_playAnim(false, nil)
+	gohelper.setActive(arg_6_0._imageBg, false)
 end
 
-function slot0.initItem(slot0, slot1)
-	if not slot1 or slot1.typeId == 0 then
-		gohelper.setActive(slot0._gocontent, false)
+function var_0_0.initItem(arg_7_0, arg_7_1)
+	if not arg_7_1 or arg_7_1.typeId == 0 then
+		gohelper.setActive(arg_7_0._gocontent, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gocontent, true)
+	gohelper.setActive(arg_7_0._gocontent, true)
 
-	slot2 = ArmPuzzlePipeModel.instance:isPlaceByXY(slot1.x, slot1.y)
+	local var_7_0 = ArmPuzzlePipeModel.instance:isPlaceByXY(arg_7_1.x, arg_7_1.y)
 
-	if slot1.typeId == ArmPuzzlePipeEnum.type.zhanwei then
-		slot3 = ArmPuzzlePipeModel.instance:isPlaceSelectXY(slot1.x, slot1.y)
+	if arg_7_1.typeId == ArmPuzzlePipeEnum.type.zhanwei then
+		local var_7_1 = ArmPuzzlePipeModel.instance:isPlaceSelectXY(arg_7_1.x, arg_7_1.y)
 
-		slot0:_playAnim(slot3, slot3 and "turngreen" or "turnred")
+		arg_7_0:_playAnim(var_7_1, var_7_1 and "turngreen" or "turnred")
 	else
-		slot0:_playAnim(false, nil)
+		arg_7_0:_playAnim(false, nil)
 	end
 
-	gohelper.setActive(slot0._imageBg, slot2 and slot1.typeId ~= ArmPuzzlePipeEnum.type.zhanwei)
-	UISpriteSetMgr.instance:setArmPipeSprite(slot0._imageicon, slot1:getBackgroundRes(), true)
+	gohelper.setActive(arg_7_0._imageBg, var_7_0 and arg_7_1.typeId ~= ArmPuzzlePipeEnum.type.zhanwei)
+	UISpriteSetMgr.instance:setArmPipeSprite(arg_7_0._imageicon, arg_7_1:getBackgroundRes(), true)
 
-	slot3 = ArmPuzzlePipeEnum.resNumIcons[slot1.numIndex]
+	local var_7_2 = ArmPuzzlePipeEnum.resNumIcons[arg_7_1.numIndex]
 
-	if slot1:isEntry() then
-		if slot3 then
-			UISpriteSetMgr.instance:setArmPipeSprite(slot0._imagenum, slot3, true)
+	if arg_7_1:isEntry() then
+		if var_7_2 then
+			UISpriteSetMgr.instance:setArmPipeSprite(arg_7_0._imagenum, var_7_2, true)
 		end
-	elseif ArmPuzzlePipeEnum.pathConn[slot1.typeId] then
-		UISpriteSetMgr.instance:setArmPipeSprite(slot0._imageconn, slot1:getConnectRes(), true)
+	elseif ArmPuzzlePipeEnum.pathConn[arg_7_1.typeId] then
+		UISpriteSetMgr.instance:setArmPipeSprite(arg_7_0._imageconn, arg_7_1:getConnectRes(), true)
 	end
 
-	slot5 = (ArmPuzzlePipeEnum.entryTypeColor[slot1.typeId] or ArmPuzzlePipeEnum.entryColor)[slot1.pathIndex] or ArmPuzzlePipeEnum.entryColor[0]
+	local var_7_3 = (ArmPuzzlePipeEnum.entryTypeColor[arg_7_1.typeId] or ArmPuzzlePipeEnum.entryColor)[arg_7_1.pathIndex] or ArmPuzzlePipeEnum.entryColor[0]
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagenum, slot5)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageicon, slot5)
-	gohelper.setActive(slot0._imagenum, slot1:isEntry() and slot3 ~= nil)
-	gohelper.setActive(slot0._imageconn, false)
-	slot0:syncRotation(slot1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._imagenum, var_7_3)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._imageicon, var_7_3)
+	gohelper.setActive(arg_7_0._imagenum, arg_7_1:isEntry() and var_7_2 ~= nil)
+	gohelper.setActive(arg_7_0._imageconn, false)
+	arg_7_0:syncRotation(arg_7_1)
 end
 
-function slot0._getEntryColor(slot0, slot1)
-	slot2 = nil
+function var_0_0._getEntryColor(arg_8_0, arg_8_1)
+	local var_8_0
 
-	if slot1.typeId ~= ArmPuzzlePipeEnum.type.first and slot1.typeId == ArmPuzzlePipeEnum.type.last then
-		-- Nothing
+	if arg_8_1.typeId ~= ArmPuzzlePipeEnum.type.first and arg_8_1.typeId == ArmPuzzlePipeEnum.type.last then
+		-- block empty
 	end
 
-	return slot2 or "#FFFFFF"
+	return var_8_0 or "#FFFFFF"
 end
 
-function slot0._playAnim(slot0, slot1, slot2)
-	if slot0._lastEffActivie ~= slot1 then
-		slot0._lastEffActivie = slot1
+function var_0_0._playAnim(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._lastEffActivie ~= arg_9_1 then
+		arg_9_0._lastEffActivie = arg_9_1
 
-		gohelper.setActive(slot0._goEffLight, slot1)
+		gohelper.setActive(arg_9_0._goEffLight, arg_9_1)
 	end
 
-	if slot1 then
-		if slot2 and slot0._lastEffActivie ~= slot2 then
-			slot0._lastEffActivie = slot2
+	if arg_9_1 then
+		if arg_9_2 and arg_9_0._lastEffActivie ~= arg_9_2 then
+			arg_9_0._lastEffActivie = arg_9_2
 
-			slot0._effLightAnimator:Play(slot2)
+			arg_9_0._effLightAnimator:Play(arg_9_2)
 		end
 	else
-		slot0._lastEffAnimName = nil
+		arg_9_0._lastEffAnimName = nil
 	end
 end
 
-function slot0.initConnectObj(slot0, slot1)
-	slot2 = false
+function var_0_0.initConnectObj(arg_10_0, arg_10_1)
+	local var_10_0 = false
 
-	if slot1 then
-		if ArmPuzzlePipeEnum.pathConn[slot1.typeId] then
-			slot2 = slot1:getConnectValue() ~= 0
-		elseif ArmPuzzlePipeEnum.type.wrong == slot1.typeId then
-			UISpriteSetMgr.instance:setArmPipeSprite(slot0._imageicon, slot1:getConnectValue() >= 2 and slot1:getConnectRes() or slot1:getBackgroundRes(), true)
+	if arg_10_1 then
+		if ArmPuzzlePipeEnum.pathConn[arg_10_1.typeId] then
+			var_10_0 = arg_10_1:getConnectValue() ~= 0
+		elseif ArmPuzzlePipeEnum.type.wrong == arg_10_1.typeId then
+			local var_10_1 = arg_10_1:getConnectValue() >= 2 and arg_10_1:getConnectRes() or arg_10_1:getBackgroundRes()
+
+			UISpriteSetMgr.instance:setArmPipeSprite(arg_10_0._imageicon, var_10_1, true)
 		end
 
-		if slot2 then
-			slot3, slot4 = slot0:_getConnectParam(slot1)
+		if var_10_0 then
+			local var_10_2, var_10_3 = arg_10_0:_getConnectParam(arg_10_1)
 
-			UISpriteSetMgr.instance:setArmPipeSprite(slot0._imageconn, ArmPuzzleHelper.getConnectRes(slot3), true)
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._imageconn, ArmPuzzlePipeEnum.pathColor[slot1.connectPathIndex] or "#FFFFFF")
-			transformhelper.setLocalRotation(slot0._imageconnTrs, 0, 0, slot4)
+			UISpriteSetMgr.instance:setArmPipeSprite(arg_10_0._imageconn, ArmPuzzleHelper.getConnectRes(var_10_2), true)
+			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._imageconn, ArmPuzzlePipeEnum.pathColor[arg_10_1.connectPathIndex] or "#FFFFFF")
+			transformhelper.setLocalRotation(arg_10_0._imageconnTrs, 0, 0, var_10_3)
 		end
 	end
 
-	gohelper.setActive(slot0._imageconn, slot2)
+	gohelper.setActive(arg_10_0._imageconn, var_10_0)
 end
 
-function slot0._getConnectParam(slot0, slot1)
-	if ArmPuzzlePipeEnum.type.t_shape == slot1.typeId then
-		slot2 = slot1:getConnectValue()
+function var_0_0._getConnectParam(arg_11_0, arg_11_1)
+	if ArmPuzzlePipeEnum.type.t_shape == arg_11_1.typeId then
+		local var_11_0 = arg_11_1:getConnectValue()
 
-		for slot6, slot7 in pairs(ArmPuzzlePipeEnum.rotate) do
-			if slot7[slot2] then
-				return slot6, ArmPuzzleHelper.getRotation(slot6, slot2) - slot1:getRotation()
+		for iter_11_0, iter_11_1 in pairs(ArmPuzzlePipeEnum.rotate) do
+			if iter_11_1[var_11_0] then
+				local var_11_1 = ArmPuzzleHelper.getRotation(iter_11_0, var_11_0) - arg_11_1:getRotation()
+
+				return iter_11_0, var_11_1
 			end
 		end
 	end
 
-	return slot1.typeId, 0
+	return arg_11_1.typeId, 0
 end
 
-function slot0.syncRotation(slot0, slot1)
-	if slot1 then
-		transformhelper.setLocalRotation(slot0.tf, 0, 0, slot1:getRotation())
+function var_0_0.syncRotation(arg_12_0, arg_12_1)
+	if arg_12_1 then
+		local var_12_0 = arg_12_1:getRotation()
+
+		transformhelper.setLocalRotation(arg_12_0.tf, 0, 0, var_12_0)
 	end
 end
 
-slot0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_arm/v1a3_armpuzzleitem.prefab"
+var_0_0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_arm/v1a3_armpuzzleitem.prefab"
 
-return slot0
+return var_0_0

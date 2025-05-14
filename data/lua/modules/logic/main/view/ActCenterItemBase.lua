@@ -1,111 +1,116 @@
-module("modules.logic.main.view.ActCenterItemBase", package.seeall)
+﻿module("modules.logic.main.view.ActCenterItemBase", package.seeall)
 
-slot0 = class("ActCenterItemBase", LuaCompBase)
+local var_0_0 = class("ActCenterItemBase", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0._transform = slot1.transform
-	slot0._imgGo = gohelper.findChild(slot1, "bg")
-	slot0._imgitem = gohelper.findChildImage(slot1, "bg")
-	slot0._btnitem = gohelper.findChildClick(slot1, "bg")
-	slot0._goactivityreddot = gohelper.findChild(slot1, "go_activityreddot")
-	slot0._txttheme = gohelper.findChildText(slot1, "txt_theme")
-	slot0._godeadline = gohelper.findChild(slot1, "#go_deadline")
-	slot0._txttime = gohelper.findChildText(slot1, "#go_deadline/#txt_time")
-	slot0._act_iconbgGo = gohelper.findChild(slot1, "act_iconbg")
-	slot0._act_iconbg_effGo = gohelper.findChild(slot1, "act_iconbg_eff")
-	slot0._goexpup = gohelper.findChild(slot0.go, "#go_expup")
+	arg_1_0.go = arg_1_1
+	arg_1_0._transform = arg_1_1.transform
+	arg_1_0._imgGo = gohelper.findChild(arg_1_1, "bg")
+	arg_1_0._imgitem = gohelper.findChildImage(arg_1_1, "bg")
+	arg_1_0._btnitem = gohelper.findChildClick(arg_1_1, "bg")
+	arg_1_0._goactivityreddot = gohelper.findChild(arg_1_1, "go_activityreddot")
+	arg_1_0._txttheme = gohelper.findChildText(arg_1_1, "txt_theme")
+	arg_1_0._godeadline = gohelper.findChild(arg_1_1, "#go_deadline")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_1, "#go_deadline/#txt_time")
+	arg_1_0._act_iconbgGo = gohelper.findChild(arg_1_1, "act_iconbg")
+	arg_1_0._act_iconbg_effGo = gohelper.findChild(arg_1_1, "act_iconbg_eff")
+	arg_1_0._goexpup = gohelper.findChild(arg_1_0.go, "#go_expup")
 
-	slot0:onInit(slot1)
-	slot0:_addEvent()
-	gohelper.setActive(slot1, true)
+	arg_1_0:onInit(arg_1_1)
+	arg_1_0:_addEvent()
+	gohelper.setActive(arg_1_1, true)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvent()
-	gohelper.setActive(slot0.go, false)
-	gohelper.destroy(slot0.go)
-	slot0:onDestroy()
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_2_0)
+	arg_2_0:_removeEvent()
+	gohelper.setActive(arg_2_0.go, false)
+	gohelper.destroy(arg_2_0.go)
+	arg_2_0:onDestroy()
+	arg_2_0:__onDispose()
 end
 
-function slot0._addEvent(slot0)
-	slot0._btnitem:AddClickListener(slot0.onClick, slot0)
-	slot0:onAddEvent()
+function var_0_0._addEvent(arg_3_0)
+	arg_3_0._btnitem:AddClickListener(arg_3_0.onClick, arg_3_0)
+	arg_3_0:onAddEvent()
 end
 
-function slot0._removeEvent(slot0)
-	slot0._btnitem:RemoveClickListener()
-	slot0:onRemoveEvent()
+function var_0_0._removeEvent(arg_4_0)
+	arg_4_0._btnitem:RemoveClickListener()
+	arg_4_0:onRemoveEvent()
 end
 
-function slot0._onOpen(slot0, ...)
-	slot0:onOpen(...)
+function var_0_0._onOpen(arg_5_0, ...)
+	arg_5_0:onOpen(...)
 end
 
-function slot0.refresh(slot0, ...)
-	if not slot0.__isFirst then
-		slot0:_onOpen(...)
+function var_0_0.refresh(arg_6_0, ...)
+	if not arg_6_0.__isFirst then
+		arg_6_0:_onOpen(...)
 
-		slot0.__isFirst = true
+		arg_6_0.__isFirst = true
 	end
 
-	slot0:onRefresh(...)
+	arg_6_0:onRefresh(...)
 end
 
-function slot0._addNotEventRedDot(slot0, slot1, slot2)
-	slot0._redDot = RedDotController.instance:addNotEventRedDot(slot0._goactivityreddot, slot1, slot2)
+function var_0_0._addNotEventRedDot(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._redDot = RedDotController.instance:addNotEventRedDot(arg_7_0._goactivityreddot, arg_7_1, arg_7_2)
 end
 
-function slot0.isShowRedDot(slot0)
-	return slot0._redDot and slot0._redDot.isShowRedDot
+function var_0_0.isShowRedDot(arg_8_0)
+	return arg_8_0._redDot and arg_8_0._redDot.isShowRedDot
 end
 
-function slot0._setMainSprite(slot0, slot1)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, slot1)
+function var_0_0._setMainSprite(arg_9_0, arg_9_1)
+	UISpriteSetMgr.instance:setMainSprite(arg_9_0._imgitem, arg_9_1)
 end
 
-function slot0.setSiblingIndex(slot0, slot1)
-	slot0._transform:SetSiblingIndex(slot1)
+function var_0_0.setSiblingIndex(arg_10_0, arg_10_1)
+	arg_10_0._transform:SetSiblingIndex(arg_10_1)
 end
 
-function slot0._refreshRedDot(slot0)
-	if slot0._redDot then
-		slot0._redDot:refreshRedDot()
+function var_0_0._refreshRedDot(arg_11_0)
+	if arg_11_0._redDot then
+		arg_11_0._redDot:refreshRedDot()
 	end
 end
 
-function slot0.setCustomData(slot0, slot1)
-	slot0._data = slot1
+function var_0_0.setCustomData(arg_12_0, arg_12_1)
+	arg_12_0._data = arg_12_1
 end
 
-function slot0.getCustomData(slot0)
-	return slot0._data
+function var_0_0.getCustomData(arg_13_0)
+	return arg_13_0._data
 end
 
-function slot0.onInit(slot0, slot1)
+function var_0_0.onInit(arg_14_0, arg_14_1)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_15_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_16_0)
+	return
 end
 
-function slot0.onRefresh(slot0, ...)
-	slot0:refreshRedDot()
+function var_0_0.onRefresh(arg_17_0, ...)
+	arg_17_0:refreshRedDot()
 end
 
-function slot0.onAddEvent(slot0)
+function var_0_0.onAddEvent(arg_18_0)
+	return
 end
 
-function slot0.onRemoveEvent(slot0)
+function var_0_0.onRemoveEvent(arg_19_0)
+	return
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_20_0)
 	assert(false, "please override 'onClick' function!!")
 end
 
-return slot0
+return var_0_0

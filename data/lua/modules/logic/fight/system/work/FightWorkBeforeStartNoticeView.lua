@@ -1,62 +1,78 @@
-module("modules.logic.fight.system.work.FightWorkBeforeStartNoticeView", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkBeforeStartNoticeView", package.seeall)
 
-slot0 = class("FightWorkBeforeStartNoticeView", BaseWork)
+local var_0_0 = class("FightWorkBeforeStartNoticeView", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if not FightReplayModel.instance:isReplay() and ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
-		FightController.instance:registerCallback(FightEvent.OnFightQuitTipViewClose, slot0.bootLogic, slot0)
+		FightController.instance:registerCallback(FightEvent.OnFightQuitTipViewClose, arg_2_0.bootLogic, arg_2_0)
 	else
-		slot0:bootLogic()
+		arg_2_0:bootLogic()
 	end
 end
 
-function slot0.bootLogic(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, slot0.bootLogic, slot0)
+function var_0_0.bootLogic(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, arg_3_0.bootLogic, arg_3_0)
 
-	if uv0.canShowTips() and not FightModel.instance:isAuto() then
+	if var_0_0.canShowTips() and not FightModel.instance:isAuto() then
 		FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOutScreen)
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 		FightController.instance:openFightSpecialTipView(true)
 	else
-		slot0:onDone(true)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.FightSpecialTipView or tabletool.indexOf(SeasonFightHandler.SeasonFightRuleTipViewList, slot1) then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-		slot0:onDone(true)
+function var_0_0._onCloseViewFinish(arg_4_0, arg_4_1)
+	if arg_4_1 == ViewName.FightSpecialTipView or tabletool.indexOf(SeasonFightHandler.SeasonFightRuleTipViewList, arg_4_1) then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
+		arg_4_0:onDone(true)
 	end
 end
 
-function slot0.canShowTips()
+function var_0_0.canShowTips()
 	if not GMFightShowState.roundSpecialView then
 		return false
 	end
 
-	slot1 = nil
+	local var_5_0 = FightModel.instance:getFightParam()
+	local var_5_1
+	local var_5_2 = DungeonConfig.instance:getEpisodeCO(var_5_0.episodeId)
 
-	if DungeonConfig.instance:getEpisodeCO(FightModel.instance:getFightParam().episodeId) and not string.nilorempty(slot2.battleDesc) then
-		slot1 = true
+	if var_5_2 and not string.nilorempty(var_5_2.battleDesc) then
+		var_5_1 = true
 	end
 
-	if lua_battle.configDict[slot0.battleId] and not string.nilorempty(slot3.additionRule) then
-		if (slot2 and slot2.type) == DungeonEnum.EpisodeType.Meilanni then
-			slot6 = HeroGroupFightViewRule.meilanniExcludeRules(GameUtil.splitString2(slot3.additionRule, true, "|", "#"))
-			slot1 = slot1 or slot6 and #slot6 > 0
+	local var_5_3 = lua_battle.configDict[var_5_0.battleId]
+	local var_5_4 = var_5_2 and var_5_2.type
+
+	if var_5_3 and not string.nilorempty(var_5_3.additionRule) then
+		local var_5_5 = var_5_3.additionRule
+
+		if var_5_4 == DungeonEnum.EpisodeType.Meilanni then
+			local var_5_6 = GameUtil.splitString2(var_5_5, true, "|", "#")
+			local var_5_7 = HeroGroupFightViewRule.meilanniExcludeRules(var_5_6)
+
+			var_5_1 = var_5_1 or var_5_7 and #var_5_7 > 0
 		else
-			slot1 = SeasonFightHandler.canSeasonShowTips(slot5, slot4)
+			var_5_1 = SeasonFightHandler.canSeasonShowTips(var_5_5, var_5_4)
 		end
-	elseif slot4 == DungeonEnum.EpisodeType.Rouge then
-		slot6 = RougeMapModel.instance:getCurNode() and slot5.eventMo
-		slot7 = slot6 and slot6:getSurpriseAttackList()
-		slot1 = slot7 and #slot7 > 0
+	elseif var_5_4 == DungeonEnum.EpisodeType.Rouge then
+		local var_5_8 = RougeMapModel.instance:getCurNode()
+		local var_5_9 = var_5_8 and var_5_8.eventMo
+		local var_5_10 = var_5_9 and var_5_9:getSurpriseAttackList()
+
+		var_5_1 = var_5_10 and #var_5_10 > 0
 	end
 
-	if slot1 and (not GuideModel.instance:isDoingFirstGuide() or GuideController.instance:isForbidGuides()) and not FightReplayModel.instance:isReplay() then
+	local var_5_11 = GuideModel.instance:isDoingFirstGuide()
+	local var_5_12 = GuideController.instance:isForbidGuides()
+	local var_5_13 = FightReplayModel.instance:isReplay()
+
+	if var_5_1 and (not var_5_11 or var_5_12) and not var_5_13 then
 		return true
 	else
 		return false
@@ -65,10 +81,10 @@ function slot0.canShowTips()
 	return false
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, slot0.bootLogic, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.OnFightQuitTipViewClose, arg_6_0.bootLogic, arg_6_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0._onCloseViewFinish, arg_6_0)
 	FightController.instance:dispatchEvent(FightEvent.SetPlayCardPartOriginPos)
 end
 
-return slot0
+return var_0_0

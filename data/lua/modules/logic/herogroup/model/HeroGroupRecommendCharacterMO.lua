@@ -1,18 +1,18 @@
-module("modules.logic.herogroup.model.HeroGroupRecommendCharacterMO", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupRecommendCharacterMO", package.seeall)
 
-slot0 = pureTable("HeroGroupRecommendCharacterMO")
+local var_0_0 = pureTable("HeroGroupRecommendCharacterMO")
 
-function slot0.init(slot0, slot1)
-	if not slot1 or not slot1.rate then
-		slot0.isEmpty = true
-		slot0.heroRecommendInfos = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	if not arg_1_1 or not arg_1_1.rate then
+		arg_1_0.isEmpty = true
+		arg_1_0.heroRecommendInfos = {}
 
 		return
 	end
 
-	slot0.heroId = slot1.heroId
-	slot0.heroRecommendInfos = slot1.infos
-	slot0.rate = slot1.rate
+	arg_1_0.heroId = arg_1_1.heroId
+	arg_1_0.heroRecommendInfos = arg_1_1.infos
+	arg_1_0.rate = arg_1_1.rate
 end
 
-return slot0
+return var_0_0

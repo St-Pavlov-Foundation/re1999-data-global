@@ -1,385 +1,423 @@
-module("modules.logic.story.view.StoryMainSceneView", package.seeall)
+﻿module("modules.logic.story.view.StoryMainSceneView", package.seeall)
 
-slot0 = class("StoryMainSceneView", BaseView)
+local var_0_0 = class("StoryMainSceneView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._str2Id = {}
-	slot0._lightMapPath = "scenes/dynamic/%s/lightmaps/%s_%s.tga"
-	slot0._effectPath = "scenes/%s/effect/s01_effect_0%s.prefab"
-	slot1 = UnityEngine.Shader
-	slot0._MainColorId = slot1.PropertyToID("_MainColor")
-	slot0._EmissionColorId = slot1.PropertyToID("_EmissionColor")
-	slot0._UseSecondMapId = slot1.PropertyToID("_UseSecondMap")
-	slot0._UseFirstMapId = slot1.PropertyToID("_UseFirstMap")
-	slot0._PercentId = slot1.PropertyToID("_Percent")
-	slot0._LightmaplerpId = slot1.PropertyToID("_Lightmaplerp")
-	slot0._BloomFactorId = slot1.PropertyToID("_BloomFactor")
-	slot0._BloomFactor2Id = slot1.PropertyToID("_BloomFactor2")
-	slot0._LuminanceId = slot1.PropertyToID("Luminance")
-	slot0._RainId = slot1.PropertyToID("_Rain")
-	slot0._RainDistortionFactorId = slot1.PropertyToID("_DistortionFactor")
-	slot0._RainEmissionId = slot1.PropertyToID("_Emission")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._str2Id = {}
+	arg_4_0._lightMapPath = "scenes/dynamic/%s/lightmaps/%s_%s.tga"
+	arg_4_0._effectPath = "scenes/%s/effect/s01_effect_0%s.prefab"
+
+	local var_4_0 = UnityEngine.Shader
+
+	arg_4_0._MainColorId = var_4_0.PropertyToID("_MainColor")
+	arg_4_0._EmissionColorId = var_4_0.PropertyToID("_EmissionColor")
+	arg_4_0._UseSecondMapId = var_4_0.PropertyToID("_UseSecondMap")
+	arg_4_0._UseFirstMapId = var_4_0.PropertyToID("_UseFirstMap")
+	arg_4_0._PercentId = var_4_0.PropertyToID("_Percent")
+	arg_4_0._LightmaplerpId = var_4_0.PropertyToID("_Lightmaplerp")
+	arg_4_0._BloomFactorId = var_4_0.PropertyToID("_BloomFactor")
+	arg_4_0._BloomFactor2Id = var_4_0.PropertyToID("_BloomFactor2")
+	arg_4_0._LuminanceId = var_4_0.PropertyToID("Luminance")
+	arg_4_0._RainId = var_4_0.PropertyToID("_Rain")
+	arg_4_0._RainDistortionFactorId = var_4_0.PropertyToID("_DistortionFactor")
+	arg_4_0._RainEmissionId = var_4_0.PropertyToID("_Emission")
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	if slot0._srcLoader then
-		slot0._srcLoader:dispose()
+function var_0_0.onClose(arg_6_0)
+	if arg_6_0._srcLoader then
+		arg_6_0._srcLoader:dispose()
 
-		slot0._srcLoader = nil
+		arg_6_0._srcLoader = nil
 	end
 
-	if slot0._targetLoader then
-		slot0._targetLoader:dispose()
+	if arg_6_0._targetLoader then
+		arg_6_0._targetLoader:dispose()
 
-		slot0._targetLoader = nil
+		arg_6_0._targetLoader = nil
 	end
 
-	if slot0._effectLoader then
-		slot0._effectLoader:dispose()
+	if arg_6_0._effectLoader then
+		arg_6_0._effectLoader:dispose()
 
-		slot0._effectLoader = nil
+		arg_6_0._effectLoader = nil
 	end
 end
 
-function slot0.setSceneId(slot0, slot1)
-	slot0._sceneId = slot1
+function var_0_0.setSceneId(arg_7_0, arg_7_1)
+	arg_7_0._sceneId = arg_7_1
 end
 
-function slot0.initSceneGo(slot0, slot1, slot2)
-	if slot0._sceneGo then
+function var_0_0.initSceneGo(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0._sceneGo then
 		return
 	end
 
-	slot0._resName = slot2
-	slot0._revert = true
-	slot0._sceneGo = slot1
-	slot0._frameBg = slot0:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
+	arg_8_0._resName = arg_8_2
+	arg_8_0._revert = true
+	arg_8_0._sceneGo = arg_8_1
+	arg_8_0._frameBg = arg_8_0:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
 
-	gohelper.setActive(slot0._frameBg, false)
+	gohelper.setActive(arg_8_0._frameBg, false)
 
-	slot3 = slot0:getSceneNode("s01_obj_a/Anim/Effect")
-	slot0._effectRoot = slot3.transform
-	slot0._effectLightPs = gohelper.findChildComponent(slot3, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
-	slot0._effectAirPs = gohelper.findChildComponent(slot3, "m_s01_effect_air", WeatherComp.TypeOfParticleSystem)
-	slot0._lightSwitch = slot1:GetComponent(WeatherComp.TypeOfLightSwitch)
-	slot0._lightMats = {}
-	slot0._matsMap = {}
-	slot0._rawLightMats = {}
-	slot0._rainEffectMat = nil
+	local var_8_0 = arg_8_0:getSceneNode("s01_obj_a/Anim/Effect")
 
-	for slot8 = 0, slot0._lightSwitch.lightMats.Length - 1 do
-		slot9 = slot4[slot8]
-		slot10 = UnityEngine.Material.Instantiate(slot9)
-		slot10.name = slot9.name
-		slot4[slot8] = slot10
-		slot11 = string.split(slot10.name, "#")
-		slot13 = slot11[2]
-		slot0._lightMats[slot12] = slot0._lightMats[slot11[1]] or {}
+	arg_8_0._effectRoot = var_8_0.transform
+	arg_8_0._effectLightPs = gohelper.findChildComponent(var_8_0, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
+	arg_8_0._effectAirPs = gohelper.findChildComponent(var_8_0, "m_s01_effect_air", WeatherComp.TypeOfParticleSystem)
+	arg_8_0._lightSwitch = arg_8_1:GetComponent(WeatherComp.TypeOfLightSwitch)
 
-		table.insert(slot0._lightMats[slot12], slot10)
-		table.insert(slot0._rawLightMats, slot10)
+	local var_8_1 = arg_8_0._lightSwitch.lightMats
 
-		slot0._matsMap[slot10.name] = slot10
+	arg_8_0._lightMats = {}
+	arg_8_0._matsMap = {}
+	arg_8_0._rawLightMats = {}
+	arg_8_0._rainEffectMat = nil
 
-		if string.find(slot12, "m_s01_obj_e$") then
-			slot0._rainEffectMat = slot10
+	for iter_8_0 = 0, var_8_1.Length - 1 do
+		local var_8_2 = var_8_1[iter_8_0]
+		local var_8_3 = UnityEngine.Material.Instantiate(var_8_2)
+
+		var_8_3.name = var_8_2.name
+		var_8_1[iter_8_0] = var_8_3
+
+		local var_8_4 = string.split(var_8_3.name, "#")
+		local var_8_5 = var_8_4[1]
+		local var_8_6 = var_8_4[2]
+
+		arg_8_0._lightMats[var_8_5] = arg_8_0._lightMats[var_8_5] or {}
+
+		table.insert(arg_8_0._lightMats[var_8_5], var_8_3)
+		table.insert(arg_8_0._rawLightMats, var_8_3)
+
+		arg_8_0._matsMap[var_8_3.name] = var_8_3
+
+		if string.find(var_8_5, "m_s01_obj_e$") then
+			arg_8_0._rainEffectMat = var_8_3
 		end
 	end
 
-	slot0:setReport(lua_weather_report.configDict[2])
+	local var_8_7 = lua_weather_report.configDict[2]
+
+	arg_8_0:setReport(var_8_7)
 end
 
-function slot0.setReport(slot0, slot1)
-	if slot0._curReport and slot1.id == slot0._curReport.id then
+function var_0_0.setReport(arg_9_0, arg_9_1)
+	if arg_9_0._curReport and arg_9_1.id == arg_9_0._curReport.id then
 		return
 	end
 
-	slot0._prevReport = slot0._curReport
-	slot0._curReport = slot1
-	slot0.reportLightMode = slot0._curReport.lightMode
+	arg_9_0._prevReport = arg_9_0._curReport
+	arg_9_0._curReport = arg_9_1
+	arg_9_0.reportLightMode = arg_9_0._curReport.lightMode
 
-	slot0:changeLightEffectColor()
-	slot0:startSwitchReport(slot0._prevReport, slot0._curReport)
+	arg_9_0:changeLightEffectColor()
+	arg_9_0:startSwitchReport(arg_9_0._prevReport, arg_9_0._curReport)
 end
 
-function slot0.changeLightEffectColor(slot0)
-	if not slot0._effectLightPs or not slot0._effectAirPs then
+function var_0_0.changeLightEffectColor(arg_10_0)
+	if not arg_10_0._effectLightPs or not arg_10_0._effectAirPs then
 		return
 	end
 
-	slot1 = MainSceneSwitchController.getLightColor(slot0._curReport.lightMode, slot0._sceneId)
-	slot2 = WeatherEnum.EffectAirColor[slot0._curReport.lightMode]
-	slot3 = ZProj.ParticleSystemHelper
+	local var_10_0 = MainSceneSwitchController.getLightColor(arg_10_0._curReport.lightMode, arg_10_0._sceneId)
+	local var_10_1 = WeatherEnum.EffectAirColor[arg_10_0._curReport.lightMode]
+	local var_10_2 = ZProj.ParticleSystemHelper
 
-	slot3.SetStartColor(slot0._effectLightPs, slot1[1] / 255, slot1[2] / 255, slot1[3] / 255, slot1[4] / 255)
-	slot3.SetStartColor(slot0._effectAirPs, slot2[1] / 255, slot2[2] / 255, slot2[3] / 255, slot2[4] / 255)
-	gohelper.setActive(slot0._effectLightPs, false)
-	slot3.SetStartRotation(slot0._effectLightPs, MainSceneSwitchController.getPrefabLightStartRotation(slot0._curReport.lightMode, slot0._sceneId))
-	gohelper.setActive(slot0._effectLightPs, true)
+	var_10_2.SetStartColor(arg_10_0._effectLightPs, var_10_0[1] / 255, var_10_0[2] / 255, var_10_0[3] / 255, var_10_0[4] / 255)
+	var_10_2.SetStartColor(arg_10_0._effectAirPs, var_10_1[1] / 255, var_10_1[2] / 255, var_10_1[3] / 255, var_10_1[4] / 255)
+	gohelper.setActive(arg_10_0._effectLightPs, false)
+	var_10_2.SetStartRotation(arg_10_0._effectLightPs, MainSceneSwitchController.getPrefabLightStartRotation(arg_10_0._curReport.lightMode, arg_10_0._sceneId))
+	gohelper.setActive(arg_10_0._effectLightPs, true)
 end
 
-function slot0.startSwitchReport(slot0, slot1, slot2)
-	slot0._speed = 0.5
-	slot0._revert = not slot0._revert
+function var_0_0.startSwitchReport(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._speed = 0.5
+	arg_11_0._revert = not arg_11_0._revert
 
-	if slot0._revert then
-		slot0._startValue = 1
-		slot0._targetValue = 0
-		slot0._srcReport = slot2
-		slot0._targetReport = slot1
+	if arg_11_0._revert then
+		arg_11_0._startValue = 1
+		arg_11_0._targetValue = 0
+		arg_11_0._srcReport = arg_11_2
+		arg_11_0._targetReport = arg_11_1
 	else
-		slot0._startValue = 0
-		slot0._targetValue = 1
-		slot0._srcReport = slot1
-		slot0._targetReport = slot2
+		arg_11_0._startValue = 0
+		arg_11_0._targetValue = 1
+		arg_11_0._srcReport = arg_11_1
+		arg_11_0._targetReport = arg_11_2
 	end
 
-	slot0._deltaValue = slot0._targetValue - slot0._startValue
+	arg_11_0._deltaValue = arg_11_0._targetValue - arg_11_0._startValue
 
-	slot0:switchLight(slot0._srcReport and slot0._srcReport.lightMode - 1 or nil, slot0._targetReport.lightMode - 1)
+	arg_11_0:switchLight(arg_11_0._srcReport and arg_11_0._srcReport.lightMode - 1 or nil, arg_11_0._targetReport.lightMode - 1)
 end
 
-function slot0.switchLight(slot0, slot1, slot2)
-	slot0:_startLoad(slot1, slot2)
+function var_0_0.switchLight(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:_startLoad(arg_12_1, arg_12_2)
 end
 
-function slot0._startLoad(slot0, slot1, slot2)
-	TaskDispatcher.cancelTask(slot0._resGC, slot0)
+function var_0_0._startLoad(arg_13_0, arg_13_1, arg_13_2)
+	TaskDispatcher.cancelTask(arg_13_0._resGC, arg_13_0)
 
-	slot0._reportSrc = slot1
-	slot0._reportTarget = slot2
+	arg_13_0._reportSrc = arg_13_1
+	arg_13_0._reportTarget = arg_13_2
 
-	if slot0._srcLoader then
-		slot0._srcLoader:dispose()
+	if arg_13_0._srcLoader then
+		arg_13_0._srcLoader:dispose()
 
-		slot0._srcLoader = nil
+		arg_13_0._srcLoader = nil
 	end
 
-	if slot0._targetLoader then
-		slot0._targetLoader:dispose()
+	if arg_13_0._targetLoader then
+		arg_13_0._targetLoader:dispose()
 
-		slot0._targetLoader = nil
+		arg_13_0._targetLoader = nil
 	end
 
-	slot3 = slot0._resName
-	slot4 = {}
-	slot5 = {}
-	slot6 = {}
+	local var_13_0 = arg_13_0._resName
+	local var_13_1 = {}
+	local var_13_2 = {}
+	local var_13_3 = {}
 
-	for slot10, slot11 in pairs(slot0._lightMats) do
-		slot12 = slot4[slot10] or {}
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._lightMats) do
+		local var_13_4 = var_13_1[iter_13_0] or {}
 
-		if slot1 then
-			slot13 = string.format(slot0._lightMapPath, slot3, slot10, slot1)
+		if arg_13_1 then
+			local var_13_5 = string.format(arg_13_0._lightMapPath, var_13_0, iter_13_0, arg_13_1)
 
-			table.insert(slot5, slot13)
+			table.insert(var_13_2, var_13_5)
 
-			slot12[slot1] = slot13
+			var_13_4[arg_13_1] = var_13_5
 		end
 
-		slot13 = string.format(slot0._lightMapPath, slot3, slot10, slot2)
+		local var_13_6 = string.format(arg_13_0._lightMapPath, var_13_0, iter_13_0, arg_13_2)
 
-		table.insert(slot6, slot13)
+		table.insert(var_13_3, var_13_6)
 
-		slot12[slot2] = slot13
-		slot4[slot10] = slot12
+		var_13_4[arg_13_2] = var_13_6
+		var_13_1[iter_13_0] = var_13_4
 	end
 
-	slot0._lightMapPathPrefix = slot4
-	slot0._loadFinishNum = 0
+	arg_13_0._lightMapPathPrefix = var_13_1
+	arg_13_0._loadFinishNum = 0
 
-	if #slot5 > 0 then
-		slot0._loadMaxNum = 2
-		slot0._srcLoader = MultiAbLoader.New()
+	if #var_13_2 > 0 then
+		arg_13_0._loadMaxNum = 2
+		arg_13_0._srcLoader = MultiAbLoader.New()
 
-		slot0._srcLoader:setPathList(slot5)
-		slot0._srcLoader:startLoad(slot0._onLoadOneDone, slot0)
+		arg_13_0._srcLoader:setPathList(var_13_2)
+		arg_13_0._srcLoader:startLoad(arg_13_0._onLoadOneDone, arg_13_0)
 	else
-		slot0._loadMaxNum = 1
+		arg_13_0._loadMaxNum = 1
 	end
 
-	if #slot6 > 0 then
-		slot0._targetLoader = MultiAbLoader.New()
+	if #var_13_3 > 0 then
+		arg_13_0._targetLoader = MultiAbLoader.New()
 
-		slot0._targetLoader:setPathList(slot6)
-		slot0._targetLoader:startLoad(slot0._onLoadOneDone, slot0)
+		arg_13_0._targetLoader:setPathList(var_13_3)
+		arg_13_0._targetLoader:startLoad(arg_13_0._onLoadOneDone, arg_13_0)
 	end
 end
 
-function slot0._onLoadOneDone(slot0)
-	slot0._loadFinishNum = slot0._loadFinishNum + 1
+function var_0_0._onLoadOneDone(arg_14_0)
+	arg_14_0._loadFinishNum = arg_14_0._loadFinishNum + 1
 
-	if slot0._loadFinishNum < slot0._loadMaxNum then
+	if arg_14_0._loadFinishNum < arg_14_0._loadMaxNum then
 		return
 	end
 
-	slot0:_loadTexturesFinish(slot0._srcLoader, slot0._targetLoader, slot0._lightMapPathPrefix, slot0._reportSrc, slot0._reportTarget)
+	arg_14_0:_loadTexturesFinish(arg_14_0._srcLoader, arg_14_0._targetLoader, arg_14_0._lightMapPathPrefix, arg_14_0._reportSrc, arg_14_0._reportTarget)
 end
 
-function slot0._loadTexturesFinish(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = nil
+function var_0_0._loadTexturesFinish(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	local var_15_0
 
-	for slot10, slot11 in pairs(slot3) do
-		if slot4 then
-			slot12 = slot11[slot4]
-			slot6 = slot1:getAssetItem(slot12):GetResource(slot12)
+	for iter_15_0, iter_15_1 in pairs(arg_15_3) do
+		if arg_15_4 then
+			local var_15_1 = iter_15_1[arg_15_4]
+
+			var_15_0 = arg_15_1:getAssetItem(var_15_1):GetResource(var_15_1)
 		end
 
-		slot12 = slot11[slot5]
-		slot14 = slot2:getAssetItem(slot12):GetResource(slot12)
+		local var_15_2 = iter_15_1[arg_15_5]
+		local var_15_3 = arg_15_2:getAssetItem(var_15_2):GetResource(var_15_2)
 
-		for slot18, slot19 in pairs(slot0._lightMats[slot10]) do
-			if slot4 then
-				slot19:SetTexture(ShaderPropertyId.MainTex, slot6)
+		for iter_15_2, iter_15_3 in pairs(arg_15_0._lightMats[iter_15_0]) do
+			if arg_15_4 then
+				iter_15_3:SetTexture(ShaderPropertyId.MainTex, var_15_0)
 			end
 
-			slot19:SetTexture(ShaderPropertyId.MainTexSecond, slot14)
+			iter_15_3:SetTexture(ShaderPropertyId.MainTexSecond, var_15_3)
 		end
 	end
 
-	slot0:_setSceneMatMapCfg(0, 1)
-	slot0:_changeBlendValue(slot0._targetValue, true)
-	slot0:_changeEffectBlendValue(1, true)
-	slot0:_resetMats()
+	arg_15_0:_setSceneMatMapCfg(0, 1)
+	arg_15_0:_changeBlendValue(arg_15_0._targetValue, true)
+	arg_15_0:_changeEffectBlendValue(1, true)
+	arg_15_0:_resetMats()
 end
 
-function slot0._resetMats(slot0)
-	slot0:_resetGoMats(slot0:getSceneNode("s01_obj_a/Anim/Sky"))
-	slot0:_resetGoMats(slot0:getSceneNode("s01_obj_a/Anim/Ground"))
-	slot0:_resetGoMats(slot0:getSceneNode("s01_obj_a/Anim/Obj"))
+function var_0_0._resetMats(arg_16_0)
+	arg_16_0:_resetGoMats(arg_16_0:getSceneNode("s01_obj_a/Anim/Sky"))
+	arg_16_0:_resetGoMats(arg_16_0:getSceneNode("s01_obj_a/Anim/Ground"))
+	arg_16_0:_resetGoMats(arg_16_0:getSceneNode("s01_obj_a/Anim/Obj"))
 end
 
-function slot0._resetGoMats(slot0, slot1)
-	if slot1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true) then
-		for slot6 = 0, slot2.Length - 1 do
-			if slot2[slot6].sharedMaterial and string.split(slot8.name, " ")[1] and slot0._matsMap[slot9] then
-				slot7.sharedMaterial = slot0._matsMap[slot9]
+function var_0_0._resetGoMats(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
+
+	if var_17_0 then
+		for iter_17_0 = 0, var_17_0.Length - 1 do
+			local var_17_1 = var_17_0[iter_17_0]
+			local var_17_2 = var_17_1.sharedMaterial
+			local var_17_3 = var_17_2 and string.split(var_17_2.name, " ")[1]
+
+			if var_17_3 and arg_17_0._matsMap[var_17_3] then
+				var_17_1.sharedMaterial = arg_17_0._matsMap[var_17_3]
 			end
 		end
 	end
 end
 
-function slot0._setSceneMatMapCfg(slot0, slot1, slot2)
-	if slot1 == 0 and slot2 == 0 then
+function var_0_0._setSceneMatMapCfg(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 == 0 and arg_18_2 == 0 then
 		logError("useFirst useSecond 不能同时为0！ ")
 
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0._rawLightMats) do
-		if slot1 == 1 then
-			slot7:EnableKeyword("_USEFIRSTMAP_ON")
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._rawLightMats) do
+		local var_18_0 = "_USEFIRSTMAP_ON"
+
+		if arg_18_1 == 1 then
+			iter_18_1:EnableKeyword(var_18_0)
 		else
-			slot7:DisableKeyword(slot8)
+			iter_18_1:DisableKeyword(var_18_0)
 		end
 
-		if slot2 == 1 then
-			slot7:EnableKeyword("_USESECONDMAP_ON")
+		local var_18_1 = "_USESECONDMAP_ON"
+
+		if arg_18_2 == 1 then
+			iter_18_1:EnableKeyword(var_18_1)
 		else
-			slot7:DisableKeyword(slot9)
+			iter_18_1:DisableKeyword(var_18_1)
 		end
 	end
 end
 
-function slot0._changeBlendValue(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0._rawLightMats) do
-		slot7:SetFloat(ShaderPropertyId.ChangeTexture, slot1)
+function var_0_0._changeBlendValue(arg_19_0, arg_19_1, arg_19_2)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._rawLightMats) do
+		iter_19_1:SetFloat(ShaderPropertyId.ChangeTexture, arg_19_1)
 	end
 
-	if slot2 then
-		slot0:addAllEffect()
+	if arg_19_2 then
+		arg_19_0:addAllEffect()
 	end
 end
 
-function slot0.addAllEffect(slot0)
-	slot0:_addWeatherEffect()
+function var_0_0.addAllEffect(arg_20_0)
+	arg_20_0:_addWeatherEffect()
 end
 
-function slot0._addWeatherEffect(slot0)
-	if slot0._prevReport and slot0._prevReport.effect == slot0._curReport.effect then
-		slot0:_setDynamicEffectLightStartRotation()
+function var_0_0._addWeatherEffect(arg_21_0)
+	if arg_21_0._prevReport and arg_21_0._prevReport.effect == arg_21_0._curReport.effect then
+		arg_21_0:_setDynamicEffectLightStartRotation()
 
 		return
 	end
 
-	if slot0._curReport.effect <= 1 then
+	if arg_21_0._curReport.effect <= 1 then
 		return
 	end
 
-	if not slot0._effectLoader then
-		slot0._effectLoader = PrefabInstantiate.Create(slot0._sceneGo)
+	if not arg_21_0._effectLoader then
+		arg_21_0._effectLoader = PrefabInstantiate.Create(arg_21_0._sceneGo)
 
-		slot0._effectLoader:startLoad(string.format(slot0._effectPath, slot0._resName, slot0._curReport.effect - 1), slot0._effectLoaded, slot0)
+		local var_21_0 = arg_21_0._resName
+		local var_21_1 = string.format(arg_21_0._effectPath, var_21_0, arg_21_0._curReport.effect - 1)
+
+		arg_21_0._effectLoader:startLoad(var_21_1, arg_21_0._effectLoaded, arg_21_0)
 	end
 end
 
-function slot0._effectLoaded(slot0)
-	slot1 = slot0._effectLoader:getInstGO()
-	slot1.transform.parent = slot0._effectRoot
-	slot0._dynamicEffectLightPs = gohelper.findChildComponent(slot1, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
+function var_0_0._effectLoaded(arg_22_0)
+	local var_22_0 = arg_22_0._effectLoader:getInstGO()
 
-	slot0:_setDynamicEffectLightStartRotation()
+	var_22_0.transform.parent = arg_22_0._effectRoot
+	arg_22_0._dynamicEffectLightPs = gohelper.findChildComponent(var_22_0, "m_s01_effect_light", WeatherComp.TypeOfParticleSystem)
+
+	arg_22_0:_setDynamicEffectLightStartRotation()
 end
 
-function slot0._setDynamicEffectLightStartRotation(slot0)
-	if slot0._dynamicEffectLightPs then
-		gohelper.setActive(slot0._dynamicEffectLightPs, false)
-		ZProj.ParticleSystemHelper.SetStartRotation(slot0._dynamicEffectLightPs, MainSceneSwitchController.getEffectLightStartRotation(slot0._curReport.lightMode, slot0._sceneId))
-		gohelper.setActive(slot0._dynamicEffectLightPs, true)
+function var_0_0._setDynamicEffectLightStartRotation(arg_23_0)
+	if arg_23_0._dynamicEffectLightPs then
+		gohelper.setActive(arg_23_0._dynamicEffectLightPs, false)
+		ZProj.ParticleSystemHelper.SetStartRotation(arg_23_0._dynamicEffectLightPs, MainSceneSwitchController.getEffectLightStartRotation(arg_23_0._curReport.lightMode, arg_23_0._sceneId))
+		gohelper.setActive(arg_23_0._dynamicEffectLightPs, true)
 	end
 end
 
-function slot0._changeEffectBlendValue(slot0, slot1, slot2)
-	if not slot0._rainEffectMat then
+function var_0_0._changeEffectBlendValue(arg_24_0, arg_24_1, arg_24_2)
+	if not arg_24_0._rainEffectMat then
 		return
 	end
 
-	slot3 = slot0._prevReport or slot0._curReport
-	slot4 = slot0._curReport
+	local var_24_0 = arg_24_0._prevReport or arg_24_0._curReport
+	local var_24_1 = arg_24_0._curReport
+	local var_24_2 = arg_24_0:_getRainEffectValue(WeatherEnum.RainOn, var_24_1.effect)
+	local var_24_3 = arg_24_0:_getRainEffectValue(WeatherEnum.RainValue, var_24_1.effect)
 
-	if slot0:_getRainEffectValue(WeatherEnum.RainOn, slot4.effect) == 1 then
-		slot0._rainEffectMat:EnableKeyword("_RAIN_ON")
-		slot0._rainEffectMat:SetInt(slot0._RainId, slot0:_getRainEffectValue(WeatherEnum.RainValue, slot4.effect))
-	elseif slot2 then
-		slot0._rainEffectMat:DisableKeyword("_RAIN_ON")
-		slot0._rainEffectMat:SetInt(slot0._RainId, slot6)
+	if var_24_2 == 1 then
+		arg_24_0._rainEffectMat:EnableKeyword("_RAIN_ON")
+		arg_24_0._rainEffectMat:SetInt(arg_24_0._RainId, var_24_3)
+	elseif arg_24_2 then
+		arg_24_0._rainEffectMat:DisableKeyword("_RAIN_ON")
+		arg_24_0._rainEffectMat:SetInt(arg_24_0._RainId, var_24_3)
 	end
 
-	slot0._rainEffectMat:SetVector(slot0._RainDistortionFactorId, slot0:lerpVector4(slot0:_getRainEffectValue(WeatherEnum.RainDistortionFactor, slot3.effect), slot0:_getRainEffectValue(WeatherEnum.RainDistortionFactor, slot4.effect), slot1))
-	slot0._rainEffectMat:SetVector(slot0._RainEmissionId, slot0:lerpVector4(slot0:_getRainEffectValue(WeatherEnum.RainEmission, slot3.effect), slot0:_getRainEffectValue(WeatherEnum.RainEmission, slot4.effect), slot1))
+	local var_24_4 = arg_24_0:_getRainEffectValue(WeatherEnum.RainDistortionFactor, var_24_0.effect)
+	local var_24_5 = arg_24_0:_getRainEffectValue(WeatherEnum.RainDistortionFactor, var_24_1.effect)
+	local var_24_6 = arg_24_0:lerpVector4(var_24_4, var_24_5, arg_24_1)
+
+	arg_24_0._rainEffectMat:SetVector(arg_24_0._RainDistortionFactorId, var_24_6)
+
+	local var_24_7 = arg_24_0:_getRainEffectValue(WeatherEnum.RainEmission, var_24_0.effect)
+	local var_24_8 = arg_24_0:_getRainEffectValue(WeatherEnum.RainEmission, var_24_1.effect)
+	local var_24_9 = arg_24_0:lerpVector4(var_24_7, var_24_8, arg_24_1)
+
+	arg_24_0._rainEffectMat:SetVector(arg_24_0._RainEmissionId, var_24_9)
 end
 
-function slot0._getRainEffectValue(slot0, slot1, slot2)
-	return slot1[slot2] or slot1[WeatherEnum.Default]
+function var_0_0._getRainEffectValue(arg_25_0, arg_25_1, arg_25_2)
+	return arg_25_1[arg_25_2] or arg_25_1[WeatherEnum.Default]
 end
 
-function slot0.lerpVector4(slot0, slot1, slot2, slot3)
-	slot0._tempVector4 = slot0._tempVector4 or Vector4.New()
-	slot0._tempVector4.w = slot1.w + slot3 * (slot2.w - slot1.w)
-	slot0._tempVector4.z = slot1.z + slot3 * (slot2.z - slot1.z)
-	slot0._tempVector4.y = slot1.y + slot3 * (slot2.y - slot1.y)
-	slot0._tempVector4.x = slot1.x + slot3 * (slot2.x - slot1.x)
+function var_0_0.lerpVector4(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	arg_26_0._tempVector4 = arg_26_0._tempVector4 or Vector4.New()
+	arg_26_0._tempVector4.x, arg_26_0._tempVector4.y, arg_26_0._tempVector4.z, arg_26_0._tempVector4.w = arg_26_1.x + arg_26_3 * (arg_26_2.x - arg_26_1.x), arg_26_1.y + arg_26_3 * (arg_26_2.y - arg_26_1.y), arg_26_1.z + arg_26_3 * (arg_26_2.z - arg_26_1.z), arg_26_1.w + arg_26_3 * (arg_26_2.w - arg_26_1.w)
 
-	return slot0._tempVector4
+	return arg_26_0._tempVector4
 end
 
-function slot0.getSceneNode(slot0, slot1)
-	return gohelper.findChild(slot0._sceneGo, slot1)
+function var_0_0.getSceneNode(arg_27_0, arg_27_1)
+	return gohelper.findChild(arg_27_0._sceneGo, arg_27_1)
 end
 
-return slot0
+return var_0_0

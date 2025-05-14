@@ -1,37 +1,43 @@
-module("modules.logic.dungeon.view.DungeonEquipEntryViewSelectItem", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonEquipEntryViewSelectItem", package.seeall)
 
-slot0 = class("DungeonEquipEntryViewSelectItem", LuaCompBase)
+local var_0_0 = class("DungeonEquipEntryViewSelectItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1.go
-	slot0._pageIndex = slot1.index
-	slot0._config = slot1.config
-	slot0._selectGos = slot0:getUserDataTb_()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1.go
+	arg_2_0._pageIndex = arg_2_1.index
+	arg_2_0._config = arg_2_1.config
+	arg_2_0._selectGos = arg_2_0:getUserDataTb_()
 
-	for slot5 = 1, 2 do
-		table.insert(slot0._selectGos, gohelper.findChild(slot0._go, "item" .. tostring(slot5)))
+	for iter_2_0 = 1, 2 do
+		local var_2_0 = gohelper.findChild(arg_2_0._go, "item" .. tostring(iter_2_0))
+
+		table.insert(arg_2_0._selectGos, var_2_0)
 	end
 
-	transformhelper.setLocalPos(slot0._go.transform, slot1.pos, 0, 0)
+	transformhelper.setLocalPos(arg_2_0._go.transform, arg_2_1.pos, 0, 0)
 end
 
-function slot0.updateItem(slot0, slot1)
-	slot2 = slot0._pageIndex == slot1
+function var_0_0.updateItem(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0._pageIndex == arg_3_1
 
-	gohelper.setActive(slot0._selectGos[1], slot2)
-	gohelper.setActive(slot0._selectGos[2], not slot2)
+	gohelper.setActive(arg_3_0._selectGos[1], var_3_0)
+	gohelper.setActive(arg_3_0._selectGos[2], not var_3_0)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	return
 end
 
-function slot0.destroy(slot0)
+function var_0_0.destroy(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

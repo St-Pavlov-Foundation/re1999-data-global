@@ -1,71 +1,75 @@
-module("modules.logic.room.view.manufacture.RoomManufactureOverBuildingItem", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureOverBuildingItem", package.seeall)
 
-slot0 = class("RoomManufactureOverBuildingItem", LuaCompBase)
+local var_0_0 = class("RoomManufactureOverBuildingItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gocritterInfo = gohelper.findChild(slot0.go, "critterInfo")
-	slot0._gocritterItem = gohelper.findChild(slot0.go, "critterInfo/#go_critterInfoItem")
-	slot0._txtbuilding = gohelper.findChildText(slot0.go, "manufactureInfo/progress/#txt_building")
-	slot0._imagebuildingicon = gohelper.findChildImage(slot0.go, "manufactureInfo/progress/#txt_building/#image_buildingicon")
-	slot0._btnaccelerate = gohelper.findChildButtonWithAudio(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_accelerate")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail")
-	slot0._goaccelerate = slot0._btnaccelerate.gameObject
-	slot0._btnwrong = gohelper.findChildClickWithDefaultAudio(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong")
-	slot0._gowrongselect = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_select")
-	slot0._gowrongunselect = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_unselect")
-	slot0._btngoto = gohelper.findChildClickWithAudio(slot0.go, "manufactureInfo/progress/#btn_goto/clickarea")
-	slot0._goscrollslot = gohelper.findChild(slot0.go, "manufactureInfo/#scroll_slot")
-	slot0._scrollSlot = slot0._goscrollslot:GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._goslotItemContent = gohelper.findChild(slot0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent")
-	slot0._transslotItemContent = slot0._goslotItemContent.transform
-	slot0._goslotItem = gohelper.findChild(slot0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent/#go_slotItem")
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._gocritterInfo = gohelper.findChild(arg_2_0.go, "critterInfo")
+	arg_2_0._gocritterItem = gohelper.findChild(arg_2_0.go, "critterInfo/#go_critterInfoItem")
+	arg_2_0._txtbuilding = gohelper.findChildText(arg_2_0.go, "manufactureInfo/progress/#txt_building")
+	arg_2_0._imagebuildingicon = gohelper.findChildImage(arg_2_0.go, "manufactureInfo/progress/#txt_building/#image_buildingicon")
+	arg_2_0._btnaccelerate = gohelper.findChildButtonWithAudio(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_accelerate")
+	arg_2_0._btndetail = gohelper.findChildButtonWithAudio(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail")
+	arg_2_0._goaccelerate = arg_2_0._btnaccelerate.gameObject
+	arg_2_0._btnwrong = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong")
+	arg_2_0._gowrongselect = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_select")
+	arg_2_0._gowrongunselect = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_unselect")
+	arg_2_0._btngoto = gohelper.findChildClickWithAudio(arg_2_0.go, "manufactureInfo/progress/#btn_goto/clickarea")
+	arg_2_0._goscrollslot = gohelper.findChild(arg_2_0.go, "manufactureInfo/#scroll_slot")
+	arg_2_0._scrollSlot = arg_2_0._goscrollslot:GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_2_0._goslotItemContent = gohelper.findChild(arg_2_0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent")
+	arg_2_0._transslotItemContent = arg_2_0._goslotItemContent.transform
+	arg_2_0._goslotItem = gohelper.findChild(arg_2_0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent/#go_slotItem")
 
-	gohelper.setActive(slot0._goslotItem, false)
+	gohelper.setActive(arg_2_0._goslotItem, false)
 
-	slot0._gounselectdetail = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/unselect")
-	slot0._goselectdetail = gohelper.findChild(slot0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/select")
+	arg_2_0._gounselectdetail = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/unselect")
+	arg_2_0._goselectdetail = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/select")
 
-	slot0:clearVar()
-	slot0:_setDetailSelect(false)
+	arg_2_0:clearVar()
+	arg_2_0:_setDetailSelect(false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnaccelerate:AddClickListener(slot0._btnaccelerateOnClick, slot0)
-	slot0._btnwrong:AddClickListener(slot0._btnwrongOnClick, slot0)
-	slot0._btngoto:AddClickListener(slot0._btngotoOnClick, slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, slot0._onCloseDetatilView, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, slot0._onWrongViewChange, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0._btnaccelerate:AddClickListener(arg_3_0._btnaccelerateOnClick, arg_3_0)
+	arg_3_0._btnwrong:AddClickListener(arg_3_0._btnwrongOnClick, arg_3_0)
+	arg_3_0._btngoto:AddClickListener(arg_3_0._btngotoOnClick, arg_3_0)
+	arg_3_0._btndetail:AddClickListener(arg_3_0._btndetailOnClick, arg_3_0)
+	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, arg_3_0._onCloseDetatilView, arg_3_0)
+	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, arg_3_0._onWrongViewChange, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnaccelerate:RemoveClickListener()
-	slot0._btnwrong:RemoveClickListener()
-	slot0._btngoto:RemoveClickListener()
-	slot0._btndetail:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, slot0._onCloseDetatilView, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, slot0._onWrongViewChange, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._btnaccelerate:RemoveClickListener()
+	arg_4_0._btnwrong:RemoveClickListener()
+	arg_4_0._btngoto:RemoveClickListener()
+	arg_4_0._btndetail:RemoveClickListener()
+	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, arg_4_0._onCloseDetatilView, arg_4_0)
+	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, arg_4_0._onWrongViewChange, arg_4_0)
 end
 
-function slot0._btnaccelerateOnClick(slot0)
-	ManufactureController.instance:openManufactureAccelerateView(slot0:getViewBuilding())
-	slot0:closePopView()
+function var_0_0._btnaccelerateOnClick(arg_5_0)
+	local var_5_0 = arg_5_0:getViewBuilding()
+
+	ManufactureController.instance:openManufactureAccelerateView(var_5_0)
+	arg_5_0:closePopView()
 end
 
-function slot0._btnwrongOnClick(slot0)
-	ManufactureController.instance:clickWrongBtn(slot0:getViewBuilding(), true)
+function var_0_0._btnwrongOnClick(arg_6_0)
+	local var_6_0 = arg_6_0:getViewBuilding()
+
+	ManufactureController.instance:clickWrongBtn(var_6_0, true)
 end
 
-function slot0._btngotoOnClick(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
+function var_0_0._btngotoOnClick(arg_7_0)
+	local var_7_0, var_7_1 = arg_7_0:getViewBuilding()
 
 	ViewMgr.instance:closeView(ViewName.RoomOverView, true)
 
@@ -73,317 +77,371 @@ function slot0._btngotoOnClick(slot0)
 		ManufactureController.instance:closeCritterBuildingView(true)
 	end
 
-	slot4 = false
+	local var_7_2 = false
 
-	if slot0.parentView and slot0.parentView.viewContainer.viewParam then
-		slot4 = slot0.parentView.viewContainer.viewParam.openFromRest
+	if arg_7_0.parentView and arg_7_0.parentView.viewContainer.viewParam then
+		var_7_2 = arg_7_0.parentView.viewContainer.viewParam.openFromRest
 	end
 
-	ManufactureController.instance:openManufactureBuildingViewByBuilding(slot2, slot4)
+	ManufactureController.instance:openManufactureBuildingViewByBuilding(var_7_1, var_7_2)
 end
 
-function slot0._btndetailOnClick(slot0)
-	slot0:_setDetailSelect(ManufactureController.instance:openRoomManufactureBuildingDetailView(slot0:getViewBuilding(), true))
+function var_0_0._btndetailOnClick(arg_8_0)
+	local var_8_0 = arg_8_0:getViewBuilding()
+	local var_8_1 = ManufactureController.instance:openRoomManufactureBuildingDetailView(var_8_0, true)
+
+	arg_8_0:_setDetailSelect(var_8_1)
 end
 
-function slot0._onCloseDetatilView(slot0)
-	slot0:_setDetailSelect(false)
+function var_0_0._onCloseDetatilView(arg_9_0)
+	arg_9_0:_setDetailSelect(false)
 end
 
-function slot0.onManufactureInfoUpdate(slot0)
-	slot0:refreshSelectedSlot()
-	slot0:refreshSelectedCritterSlot()
-	slot0:_setSlotItems()
-	slot0:_setCritterItem()
-	slot0:refresh()
+function var_0_0.onManufactureInfoUpdate(arg_10_0)
+	arg_10_0:refreshSelectedSlot()
+	arg_10_0:refreshSelectedCritterSlot()
+	arg_10_0:_setSlotItems()
+	arg_10_0:_setCritterItem()
+	arg_10_0:refresh()
 end
 
-function slot0.onManufactureBuildingInfoChange(slot0, slot1)
-	if slot1 and not slot1[slot0:getViewBuilding()] then
+function var_0_0.onManufactureBuildingInfoChange(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getViewBuilding()
+
+	if arg_11_1 and not arg_11_1[var_11_0] then
 		return
 	end
 
-	slot0:refreshSelectedSlot()
-	slot0:refreshSelectedCritterSlot()
-	slot0:_setSlotItems()
-	slot0:_setCritterItem()
-	slot0:refresh()
+	arg_11_0:refreshSelectedSlot()
+	arg_11_0:refreshSelectedCritterSlot()
+	arg_11_0:_setSlotItems()
+	arg_11_0:_setCritterItem()
+	arg_11_0:refresh()
 end
 
-function slot0.onTradeLevelChange(slot0)
-	slot0:_setCritterItem()
+function var_0_0.onTradeLevelChange(arg_12_0)
+	arg_12_0:_setCritterItem()
 end
 
-function slot0.onChangeSelectedSlotItem(slot0)
-	for slot4, slot5 in ipairs(slot0._slotItemList) do
-		slot5:onChangeSelectedSlotItem()
+function var_0_0.onChangeSelectedSlotItem(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._slotItemList) do
+		iter_13_1:onChangeSelectedSlotItem()
 	end
 end
 
-function slot0._setDetailSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselectdetail, slot1)
-	gohelper.setActive(slot0._gounselectdetail, not slot1)
+function var_0_0._setDetailSelect(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._goselectdetail, arg_14_1)
+	gohelper.setActive(arg_14_0._gounselectdetail, not arg_14_1)
 end
 
-function slot0._onWrongViewChange(slot0, slot1)
-	slot0:refreshWrongBtnSelect(slot1)
+function var_0_0._onWrongViewChange(arg_15_0, arg_15_1)
+	arg_15_0:refreshWrongBtnSelect(arg_15_1)
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	slot0.buildingMO = slot1
-	slot0.index = slot2
-	slot0.parentView = slot3
-	slot0._scrollSlot.parentGameObject = slot3._goscrollbuilding
-	slot0._curViewManufactureState = nil
+function var_0_0.setData(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	arg_16_0.buildingMO = arg_16_1
+	arg_16_0.index = arg_16_2
+	arg_16_0.parentView = arg_16_3
+	arg_16_0._scrollSlot.parentGameObject = arg_16_3._goscrollbuilding
+	arg_16_0._curViewManufactureState = nil
 
-	slot0:_setSlotItems()
-	slot0:_setCritterItem()
-	slot0:refresh()
+	arg_16_0:_setSlotItems()
+	arg_16_0:_setCritterItem()
+	arg_16_0:refresh()
 end
 
-function slot0._setSlotItems(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
+function var_0_0._setSlotItems(arg_17_0)
+	local var_17_0, var_17_1 = arg_17_0:getViewBuilding()
 
-	if not slot2 then
-		slot0:recycleAllSlotItem()
+	if not var_17_1 then
+		arg_17_0:recycleAllSlotItem()
 
 		return
 	end
 
-	for slot9 = 1, ManufactureConfig.instance:getBuildingTotalSlotCount(slot2.buildingId) do
-		slot0:getSlotItem(slot9):setData(slot2:getAllUnlockedSlotIdList()[slot9], slot9)
+	local var_17_2 = var_17_1.buildingId
+	local var_17_3 = var_17_1:getAllUnlockedSlotIdList()
+	local var_17_4 = ManufactureConfig.instance:getBuildingTotalSlotCount(var_17_2)
+
+	for iter_17_0 = 1, var_17_4 do
+		local var_17_5 = arg_17_0:getSlotItem(iter_17_0)
+		local var_17_6 = var_17_3[iter_17_0]
+
+		var_17_5:setData(var_17_6, iter_17_0)
 	end
 
-	if slot5 < #slot0._slotItemList then
-		for slot10 = slot5 + 1, slot6 do
-			slot0:recycleSlotItem(slot0._slotItemList[slot10])
+	local var_17_7 = #arg_17_0._slotItemList
+
+	if var_17_4 < var_17_7 then
+		for iter_17_1 = var_17_4 + 1, var_17_7 do
+			local var_17_8 = arg_17_0._slotItemList[iter_17_1]
+
+			arg_17_0:recycleSlotItem(var_17_8)
 		end
 	end
 
-	slot0:_setSlotContentSize()
+	arg_17_0:_setSlotContentSize()
 end
 
-function slot0._setSlotContentSize(slot0)
-	recthelper.setWidth(slot0._transslotItemContent, (recthelper.getWidth(slot0._goslotItem.transform) + RoomManufactureEnum.OverviewSlotItemSpace) * #slot0._slotItemList - RoomManufactureEnum.OverviewSlotItemSpace)
+function var_0_0._setSlotContentSize(arg_18_0)
+	local var_18_0 = #arg_18_0._slotItemList
+	local var_18_1 = (recthelper.getWidth(arg_18_0._goslotItem.transform) + RoomManufactureEnum.OverviewSlotItemSpace) * var_18_0 - RoomManufactureEnum.OverviewSlotItemSpace
+
+	recthelper.setWidth(arg_18_0._transslotItemContent, var_18_1)
 end
 
-function slot0._setCritterItem(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
-	slot3 = 0
+function var_0_0._setCritterItem(arg_19_0)
+	local var_19_0, var_19_1 = arg_19_0:getViewBuilding()
+	local var_19_2 = 0
 
-	if slot2 then
-		slot3 = slot2:getCanPlaceCritterCount()
+	if var_19_1 then
+		var_19_2 = var_19_1:getCanPlaceCritterCount()
 	end
 
-	if slot0._critterItemList and #slot0._critterItemList and slot3 < slot4 then
-		for slot8 = slot3 + 1, slot4 do
-			slot0._critterItemList[slot8]:reset()
+	local var_19_3 = arg_19_0._critterItemList and #arg_19_0._critterItemList
+
+	if var_19_3 and var_19_2 < var_19_3 then
+		for iter_19_0 = var_19_2 + 1, var_19_3 do
+			arg_19_0._critterItemList[iter_19_0]:reset()
 		end
 	end
 
-	slot0._critterItemList = {}
+	arg_19_0._critterItemList = {}
 
-	for slot9 = 1, slot3 do
+	local var_19_4 = {}
+
+	for iter_19_1 = 1, var_19_2 do
+		var_19_4[iter_19_1] = iter_19_1 - 1
 	end
 
-	gohelper.CreateObjList(slot0, slot0._onSetCritterItem, {
-		[slot9] = slot9 - 1
-	}, slot0._gocritterInfo, slot0._gocritterItem, RoomManufactureCritterInfo)
+	gohelper.CreateObjList(arg_19_0, arg_19_0._onSetCritterItem, var_19_4, arg_19_0._gocritterInfo, arg_19_0._gocritterItem, RoomManufactureCritterInfo)
 end
 
-function slot0._onSetCritterItem(slot0, slot1, slot2, slot3)
-	slot0._critterItemList[slot3] = slot1
+function var_0_0._onSetCritterItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	arg_20_0._critterItemList[arg_20_3] = arg_20_1
 
-	slot1:setData(slot2, slot3, slot0)
+	arg_20_1:setData(arg_20_2, arg_20_3, arg_20_0)
 end
 
-function slot0.closePopView(slot0)
+function var_0_0.closePopView(arg_21_0)
 	ManufactureController.instance:clearSelectedSlotItem()
 	ManufactureController.instance:clearSelectCritterSlotItem()
 end
 
-function slot0.getSlotItem(slot0, slot1)
-	if not slot0._slotItemList[slot1] then
-		slot0._slotItemList[slot1] = slot0:getSlotItemFromPool()
+function var_0_0.getSlotItem(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0._slotItemList[arg_22_1]
+
+	if not var_22_0 then
+		var_22_0 = arg_22_0:getSlotItemFromPool()
+		arg_22_0._slotItemList[arg_22_1] = var_22_0
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0.getSlotItemFromPool(slot0)
-	if next(slot0._slotItemPool) then
-		return table.remove(slot0._slotItemPool)
+function var_0_0.getSlotItemFromPool(arg_23_0)
+	if next(arg_23_0._slotItemPool) then
+		return (table.remove(arg_23_0._slotItemPool))
 	else
-		return slot0:createSlotItem()
+		return arg_23_0:createSlotItem()
 	end
 end
 
-function slot0.createSlotItem(slot0)
-	return RoomManufactureOverSlotItem.New(gohelper.clone(slot0._goslotItem, slot0._goslotItemContent), slot0)
+function var_0_0.createSlotItem(arg_24_0)
+	local var_24_0 = gohelper.clone(arg_24_0._goslotItem, arg_24_0._goslotItemContent)
+
+	return (RoomManufactureOverSlotItem.New(var_24_0, arg_24_0))
 end
 
-function slot0.recycleSlotItem(slot0, slot1)
-	slot1:reset(true)
-	tabletool.removeValue(slot0._slotItemList, slot1)
-	table.insert(slot0._slotItemPool, slot1)
+function var_0_0.recycleSlotItem(arg_25_0, arg_25_1)
+	arg_25_1:reset(true)
+	tabletool.removeValue(arg_25_0._slotItemList, arg_25_1)
+	table.insert(arg_25_0._slotItemPool, arg_25_1)
 end
 
-function slot0.recycleAllSlotItem(slot0)
-	if slot0._slotItemList then
-		for slot4, slot5 in ipairs(slot0._slotItemList) do
-			slot5:reset(true)
-			table.insert(slot0._slotItemPool, slot5)
+function var_0_0.recycleAllSlotItem(arg_26_0)
+	if arg_26_0._slotItemList then
+		for iter_26_0, iter_26_1 in ipairs(arg_26_0._slotItemList) do
+			iter_26_1:reset(true)
+			table.insert(arg_26_0._slotItemPool, iter_26_1)
 		end
 	end
 
-	slot0._slotItemList = {}
+	arg_26_0._slotItemList = {}
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshTitle()
-	slot0:refreshCritter()
-	slot0:checkManufactureState()
-	slot0:refreshSlotItems()
-	slot0:refreshWrongBtnShow()
-	slot0:refreshDetailBtn()
+function var_0_0.refresh(arg_27_0)
+	arg_27_0:refreshTitle()
+	arg_27_0:refreshCritter()
+	arg_27_0:checkManufactureState()
+	arg_27_0:refreshSlotItems()
+	arg_27_0:refreshWrongBtnShow()
+	arg_27_0:refreshDetailBtn()
 end
 
-function slot0.refreshTitle(slot0)
-	slot1 = ""
-	slot2 = 0
-	slot3 = nil
-	slot4, slot5 = slot0:getViewBuilding()
+function var_0_0.refreshTitle(arg_28_0)
+	local var_28_0 = ""
+	local var_28_1 = 0
+	local var_28_2
+	local var_28_3, var_28_4 = arg_28_0:getViewBuilding()
 
-	if slot5 then
-		slot1 = slot5.config.useDesc
-		slot2 = slot5.level
-		slot3 = slot5.buildingId
+	if var_28_4 then
+		var_28_0 = var_28_4.config.useDesc
+		var_28_1 = var_28_4.level
+		var_28_2 = var_28_4.buildingId
 	end
 
-	slot6 = ""
-	slot0._txtbuilding.text = string.format("%s <color=#E19653>%s</color>", slot1, (ManufactureConfig.instance:getBuildingMaxLevel(slot3) > slot2 or luaLang("lv_max")) and formatLuaLang("v1a5_aizila_level", slot2))
+	local var_28_5 = ""
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imagebuildingicon, ManufactureConfig.instance:getManufactureBuildingIcon(slot5.buildingId))
-end
-
-function slot0.refreshCritter(slot0)
-end
-
-function slot0.checkManufactureState(slot0)
-	slot1 = false
-	slot2, slot3 = slot0:getViewBuilding()
-
-	if slot3 then
-		slot1 = slot3:getManufactureState()
+	if var_28_1 >= ManufactureConfig.instance:getBuildingMaxLevel(var_28_2) then
+		var_28_5 = luaLang("lv_max")
+	else
+		var_28_5 = formatLuaLang("v1a5_aizila_level", var_28_1)
 	end
 
-	if slot0._curViewManufactureState == slot1 then
+	arg_28_0._txtbuilding.text = string.format("%s <color=#E19653>%s</color>", var_28_0, var_28_5)
+
+	local var_28_6 = ManufactureConfig.instance:getManufactureBuildingIcon(var_28_4.buildingId)
+
+	UISpriteSetMgr.instance:setRoomSprite(arg_28_0._imagebuildingicon, var_28_6)
+end
+
+function var_0_0.refreshCritter(arg_29_0)
+	return
+end
+
+function var_0_0.checkManufactureState(arg_30_0)
+	local var_30_0 = false
+	local var_30_1, var_30_2 = arg_30_0:getViewBuilding()
+
+	if var_30_2 then
+		var_30_0 = var_30_2:getManufactureState()
+	end
+
+	if arg_30_0._curViewManufactureState == var_30_0 then
 		return
 	end
 
-	slot0._curViewManufactureState = slot1
+	arg_30_0._curViewManufactureState = var_30_0
 
-	gohelper.setActive(slot0._goaccelerate, slot0._curViewManufactureState == RoomManufactureEnum.ManufactureState.Running)
+	local var_30_3 = arg_30_0._curViewManufactureState == RoomManufactureEnum.ManufactureState.Running
+
+	gohelper.setActive(arg_30_0._goaccelerate, var_30_3)
 end
 
-function slot0.refreshSlotItems(slot0)
-	for slot4, slot5 in ipairs(slot0._slotItemList) do
-		slot5:refresh()
+function var_0_0.refreshSlotItems(arg_31_0)
+	for iter_31_0, iter_31_1 in ipairs(arg_31_0._slotItemList) do
+		iter_31_1:refresh()
 	end
 end
 
-function slot0.refreshSelectedSlot(slot0)
-	if ManufactureModel.instance:getSelectedSlot() == slot0:getViewBuilding() then
-		ManufactureController.instance:refreshSelectedSlotId(slot1)
+function var_0_0.refreshSelectedSlot(arg_32_0)
+	local var_32_0 = arg_32_0:getViewBuilding()
+
+	if ManufactureModel.instance:getSelectedSlot() == var_32_0 then
+		ManufactureController.instance:refreshSelectedSlotId(var_32_0)
 	end
 end
 
-function slot0.refreshSelectedCritterSlot(slot0)
-	if ManufactureModel.instance:getSelectedCritterSlot() == slot0:getViewBuilding() then
-		ManufactureController.instance:refreshSelectedCritterSlotId(slot1)
+function var_0_0.refreshSelectedCritterSlot(arg_33_0)
+	local var_33_0 = arg_33_0:getViewBuilding()
+
+	if ManufactureModel.instance:getSelectedCritterSlot() == var_33_0 then
+		ManufactureController.instance:refreshSelectedCritterSlotId(var_33_0)
 	end
 end
 
-function slot0.refreshWrongBtnShow(slot0)
-	slot0:refreshWrongBtnSelect()
-	gohelper.setActive(slot0._btnwrong, #ManufactureModel.instance:getManufactureWrongTipItemList(slot0:getViewBuilding()) > 0)
+function var_0_0.refreshWrongBtnShow(arg_34_0)
+	local var_34_0 = arg_34_0:getViewBuilding()
+	local var_34_1 = ManufactureModel.instance:getManufactureWrongTipItemList(var_34_0)
+
+	arg_34_0:refreshWrongBtnSelect()
+
+	local var_34_2 = #var_34_1 > 0
+
+	gohelper.setActive(arg_34_0._btnwrong, var_34_2)
 end
 
-function slot0.refreshWrongBtnSelect(slot0, slot1)
-	slot4 = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView) and slot1 == slot0:getViewBuilding()
+function var_0_0.refreshWrongBtnSelect(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0:getViewBuilding()
+	local var_35_1 = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView) and arg_35_1 == var_35_0
 
-	gohelper.setActive(slot0._gowrongselect, slot4)
-	gohelper.setActive(slot0._gowrongunselect, not slot4)
+	gohelper.setActive(arg_35_0._gowrongselect, var_35_1)
+	gohelper.setActive(arg_35_0._gowrongunselect, not var_35_1)
 end
 
-function slot0.refreshDetailBtn(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
+function var_0_0.refreshDetailBtn(arg_36_0)
+	local var_36_0, var_36_1 = arg_36_0:getViewBuilding()
+	local var_36_2 = var_36_1:getSlot2CritterDict()
+	local var_36_3 = next(var_36_2)
 
-	gohelper.setActive(slot0._btndetail, next(slot2:getSlot2CritterDict()))
+	gohelper.setActive(arg_36_0._btndetail, var_36_3)
 end
 
-function slot0.everySecondCall(slot0)
-	for slot4, slot5 in ipairs(slot0._slotItemList) do
-		slot5:everySecondCall()
+function var_0_0.everySecondCall(arg_37_0)
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0._slotItemList) do
+		iter_37_1:everySecondCall()
 	end
 end
 
-function slot0.getViewBuilding(slot0)
-	slot1 = nil
+function var_0_0.getViewBuilding(arg_38_0)
+	local var_38_0
 
-	if slot0.buildingMO then
-		slot1 = slot0.buildingMO.uid
+	if arg_38_0.buildingMO then
+		var_38_0 = arg_38_0.buildingMO.uid
 	end
 
-	return slot1, slot0.buildingMO
+	return var_38_0, arg_38_0.buildingMO
 end
 
-function slot0.getSlotItemContentTrans(slot0)
-	return slot0._transslotItemContent
+function var_0_0.getSlotItemContentTrans(arg_39_0)
+	return arg_39_0._transslotItemContent
 end
 
-function slot0.getIndex(slot0)
-	return slot0.index
+function var_0_0.getIndex(arg_40_0)
+	return arg_40_0.index
 end
 
-function slot0.isShowAddPop(slot0)
-	return slot0.parentView:isShowAddPop()
+function var_0_0.isShowAddPop(arg_41_0)
+	return arg_41_0.parentView:isShowAddPop()
 end
 
-function slot0.setViewBuildingUid(slot0)
-	slot0.parentView:setViewBuildingUid(slot0:getViewBuilding())
+function var_0_0.setViewBuildingUid(arg_42_0)
+	local var_42_0 = arg_42_0:getViewBuilding()
+
+	arg_42_0.parentView:setViewBuildingUid(var_42_0)
 end
 
-function slot0.clearVar(slot0)
-	slot0.index = nil
-	slot0._curViewManufactureState = nil
+function var_0_0.clearVar(arg_43_0)
+	arg_43_0.index = nil
+	arg_43_0._curViewManufactureState = nil
 
-	slot0:clearSlotPool()
-	slot0:clearSlotItemList()
+	arg_43_0:clearSlotPool()
+	arg_43_0:clearSlotItemList()
 end
 
-function slot0.clearSlotPool(slot0)
-	if slot0._slotItemPool then
-		for slot4, slot5 in ipairs(slot0._slotItemPool) do
-			slot5:destroy()
+function var_0_0.clearSlotPool(arg_44_0)
+	if arg_44_0._slotItemPool then
+		for iter_44_0, iter_44_1 in ipairs(arg_44_0._slotItemPool) do
+			iter_44_1:destroy()
 		end
 	end
 
-	slot0._slotItemPool = {}
+	arg_44_0._slotItemPool = {}
 end
 
-function slot0.clearSlotItemList(slot0)
-	if slot0._slotItemList then
-		for slot4, slot5 in ipairs(slot0._slotItemList) do
-			slot5:destroy()
+function var_0_0.clearSlotItemList(arg_45_0)
+	if arg_45_0._slotItemList then
+		for iter_45_0, iter_45_1 in ipairs(arg_45_0._slotItemList) do
+			iter_45_1:destroy()
 		end
 	end
 
-	slot0._slotItemList = {}
+	arg_45_0._slotItemList = {}
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clearVar()
+function var_0_0.onDestroy(arg_46_0)
+	arg_46_0:clearVar()
 end
 
-return slot0
+return var_0_0

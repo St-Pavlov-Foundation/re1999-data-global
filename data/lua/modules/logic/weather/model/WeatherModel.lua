@@ -1,128 +1,159 @@
-module("modules.logic.weather.model.WeatherModel", package.seeall)
+﻿module("modules.logic.weather.model.WeatherModel", package.seeall)
 
-slot0 = class("WeatherModel", BaseModel)
+local var_0_0 = class("WeatherModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._curDayCo = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._curDayCo = nil
 end
 
-function slot0.getZeroTime(slot0)
-	slot1 = slot0:getNowDate()
-	slot1.hour = 0
-	slot1.min = 0
-	slot1.sec = 0
+function var_0_0.getZeroTime(arg_3_0)
+	local var_3_0 = arg_3_0:getNowDate()
 
-	return os.time(slot1)
+	var_3_0.hour = 0
+	var_3_0.min = 0
+	var_3_0.sec = 0
+
+	return (os.time(var_3_0))
 end
 
-function slot0.getWeekYday(slot0, slot1)
-	return slot1.yday - TimeUtil.convertWday(slot1.wday)
+function var_0_0.getWeekYday(arg_4_0, arg_4_1)
+	local var_4_0 = TimeUtil.convertWday(arg_4_1.wday)
+
+	return arg_4_1.yday - var_4_0
 end
 
-function slot0._initDay(slot0, slot1)
-	slot3, slot4 = nil
+function var_0_0._initDay(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getZeroTime()
+	local var_5_1
+	local var_5_2
+	local var_5_3 = PlayerEnum.SimpleProperty.Weather
+	local var_5_4 = PlayerModel.instance:getSimpleProperty(var_5_3)
 
-	if LuaUtil.isEmptyStr(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.Weather)) == false then
-		slot7 = string.split(slot6, "#")
-		slot3 = tonumber(slot7[2])
-		slot4 = tonumber(slot7[3])
+	if LuaUtil.isEmptyStr(var_5_4) == false then
+		local var_5_5 = string.split(var_5_4, "#")
+		local var_5_6 = tonumber(var_5_5[1])
 
-		if slot0:getZeroTime() ~= tonumber(slot7[1]) then
-			if slot0:getWeekYday(slot0:getNowDate()) ~= slot0:getWeekYday(os.date("*t", slot8)) then
-				slot3 = nil
+		var_5_1 = tonumber(var_5_5[2])
+		var_5_2 = tonumber(var_5_5[3])
+
+		if var_5_0 ~= var_5_6 then
+			local var_5_7 = arg_5_0:getNowDate()
+			local var_5_8 = os.date("*t", var_5_6)
+
+			if arg_5_0:getWeekYday(var_5_7) ~= arg_5_0:getWeekYday(var_5_8) then
+				var_5_1 = nil
 			end
 
-			slot4 = nil
+			var_5_2 = nil
 		end
 	end
 
-	slot0._curDayCo, slot0._newWeekId, slot0._newDayId = WeatherConfig.instance:getDay(slot3, slot4, slot1)
+	arg_5_0._curDayCo, arg_5_0._newWeekId, arg_5_0._newDayId = WeatherConfig.instance:getDay(var_5_1, var_5_2, arg_5_1)
 
-	if slot0._curDayCo.sceneId ~= slot1 then
-		logError(string.format("WeatherModel:_initDay sceneId error result:%s param:%s", slot0._curDayCo.sceneId, slot1))
+	if arg_5_0._curDayCo.sceneId ~= arg_5_1 then
+		logError(string.format("WeatherModel:_initDay sceneId error result:%s param:%s", arg_5_0._curDayCo.sceneId, arg_5_1))
 	end
 
-	if slot0._newDayId ~= slot4 then
-		PlayerRpc.instance:sendSetSimplePropertyRequest(slot5, string.format("%s#%s#%s", slot2, slot0._newWeekId, slot0._newDayId))
+	if arg_5_0._newDayId ~= var_5_2 then
+		local var_5_9 = string.format("%s#%s#%s", var_5_0, arg_5_0._newWeekId, arg_5_0._newDayId)
+
+		PlayerRpc.instance:sendSetSimplePropertyRequest(var_5_3, var_5_9)
 	end
 end
 
-function slot0.debug(slot0, slot1, slot2)
-	return string.format("WeatherModel weekId:%s,dayId:%s,reportId:%s,sceneId:%s", slot0._newWeekId, slot0._newDayId, slot1, slot2)
+function var_0_0.debug(arg_6_0, arg_6_1, arg_6_2)
+	return string.format("WeatherModel weekId:%s,dayId:%s,reportId:%s,sceneId:%s", arg_6_0._newWeekId, arg_6_0._newDayId, arg_6_1, arg_6_2)
 end
 
-function slot0.initDay(slot0, slot1)
-	if not slot1 then
+function var_0_0.initDay(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		logError("WeatherModel:initDay sceneId nil")
 
-		slot1 = MainSceneSwitchEnum.DefaultScene
+		arg_7_1 = MainSceneSwitchEnum.DefaultScene
 	end
 
-	if slot0._curDayCo and slot0._curDayCo.sceneId == slot1 then
+	if arg_7_0._curDayCo and arg_7_0._curDayCo.sceneId == arg_7_1 then
 		return
 	end
 
-	slot0:_initDay(slot1)
+	arg_7_0:_initDay(arg_7_1)
 
-	slot3 = string.split(slot0._curDayCo.reportList, "|")
-	slot0._reportList = {}
+	local var_7_0 = arg_7_0._curDayCo.reportList
+	local var_7_1 = string.split(var_7_0, "|")
+	local var_7_2 = #var_7_1
 
-	for slot9, slot10 in ipairs(slot3) do
-		slot12 = string.split(string.split(slot10, "#")[1], ":")
-		slot14 = tonumber(slot12[2])
+	arg_7_0._reportList = {}
 
-		if tonumber(slot12[1]) and slot14 then
-			if slot9 == #slot3 then
-				slot15 = slot0:getZeroTime() + (slot13 * 60 + slot14) * 60 + math.random(21600)
+	local var_7_3 = arg_7_0:getZeroTime()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		local var_7_4 = string.split(iter_7_1, "#")
+		local var_7_5 = string.split(var_7_4[1], ":")
+		local var_7_6 = tonumber(var_7_5[1])
+		local var_7_7 = tonumber(var_7_5[2])
+
+		if var_7_6 and var_7_7 then
+			local var_7_8 = var_7_3 + (var_7_6 * 60 + var_7_7) * 60
+
+			if iter_7_0 == var_7_2 then
+				var_7_8 = var_7_8 + math.random(21600)
 			end
 
-			if WeatherConfig.instance:getReport(tonumber(slot11[2])) then
-				table.insert(slot0._reportList, {
-					slot15,
-					slot17
+			local var_7_9 = tonumber(var_7_4[2])
+			local var_7_10 = WeatherConfig.instance:getReport(var_7_9)
+
+			if var_7_10 then
+				table.insert(arg_7_0._reportList, {
+					var_7_8,
+					var_7_10
 				})
 			end
 		end
 	end
 end
 
-function slot0.getReport(slot0)
-	slot1, slot2 = slot0:_getReport()
+function var_0_0.getReport(arg_8_0)
+	local var_8_0, var_8_1 = arg_8_0:_getReport()
 
-	if not slot1 then
-		slot0._curDayCo = nil
+	if not var_8_0 then
+		local var_8_2 = arg_8_0._curDayCo and arg_8_0._curDayCo.sceneId or MainSceneSwitchEnum.DefaultScene
 
-		slot0:initDay(slot0._curDayCo and slot0._curDayCo.sceneId or MainSceneSwitchEnum.DefaultScene)
+		arg_8_0._curDayCo = nil
 
-		slot1, slot2 = uv0.instance:getReport()
+		arg_8_0:initDay(var_8_2)
+
+		var_8_0, var_8_1 = var_0_0.instance:getReport()
 	end
 
-	if not slot1 then
+	if not var_8_0 then
 		logError("WeatherModel:getReport error no report")
 
 		return lua_weather_report.configDict[1], 3600
 	end
 
-	return slot1, slot2
+	return var_8_0, var_8_1
 end
 
-function slot0._getReport(slot0)
-	slot1 = os.time()
+function var_0_0._getReport(arg_9_0)
+	local var_9_0 = os.time()
 
-	for slot5, slot6 in ipairs(slot0._reportList) do
-		if slot1 < slot6[1] then
-			return slot6[2], slot7 - slot1
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._reportList) do
+		local var_9_1 = iter_9_1[1]
+
+		if var_9_0 < var_9_1 then
+			return iter_9_1[2], var_9_1 - var_9_0
 		end
 	end
 end
 
-function slot0.getNowDate(slot0)
+function var_0_0.getNowDate(arg_10_0)
 	return WeatherConfig.instance:getNowDate()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

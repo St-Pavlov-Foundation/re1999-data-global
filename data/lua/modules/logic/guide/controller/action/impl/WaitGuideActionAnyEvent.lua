@@ -1,68 +1,71 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionAnyEvent", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionAnyEvent", package.seeall)
 
-slot0 = class("WaitGuideActionAnyEvent", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionAnyEvent", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot4 = slot2[2]
-	slot5 = slot2[3]
-	slot0._param = slot2[4]
-	slot0._controller = _G[slot2[1]]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+	local var_1_1 = var_1_0[1]
+	local var_1_2 = var_1_0[2]
+	local var_1_3 = var_1_0[3]
 
-	if not slot0._controller then
-		logError("WaitGuideActionAnyEvent controllerName error:" .. tostring(slot3))
+	arg_1_0._param = var_1_0[4]
+	arg_1_0._controller = _G[var_1_1]
 
-		return
-	end
-
-	slot0._eventModule = _G[slot4]
-
-	if not slot0._eventModule then
-		logError("WaitGuideActionAnyEvent eventModuleName error:" .. tostring(slot4))
+	if not arg_1_0._controller then
+		logError("WaitGuideActionAnyEvent controllerName error:" .. tostring(var_1_1))
 
 		return
 	end
 
-	slot0._eventName = slot0._eventModule[slot5]
+	arg_1_0._eventModule = _G[var_1_2]
 
-	if not slot0._eventName then
-		logError("WaitGuideActionAnyEvent eventName error:" .. tostring(slot5))
+	if not arg_1_0._eventModule then
+		logError("WaitGuideActionAnyEvent eventModuleName error:" .. tostring(var_1_2))
 
 		return
 	end
 
-	slot0._controller.instance:registerCallback(slot0._eventName, slot0._onReceiveEvent, slot0)
+	arg_1_0._eventName = arg_1_0._eventModule[var_1_3]
+
+	if not arg_1_0._eventName then
+		logError("WaitGuideActionAnyEvent eventName error:" .. tostring(var_1_3))
+
+		return
+	end
+
+	arg_1_0._controller.instance:registerCallback(arg_1_0._eventName, arg_1_0._onReceiveEvent, arg_1_0)
 end
 
-function slot0._onReceiveEvent(slot0, slot1)
-	if slot0:checkGuideLock() then
+function var_0_0._onReceiveEvent(arg_2_0, arg_2_1)
+	if arg_2_0:checkGuideLock() then
 		return
 	end
 
-	slot3 = false
+	local var_2_0 = type(arg_2_1)
+	local var_2_1 = false
 
-	if type(slot1) == "number" then
-		slot1 = tostring(slot1)
-	elseif slot2 == "boolean" then
-		slot1 = tostring(slot1)
-	elseif slot2 == "function" then
-		slot3 = slot1(slot0._param)
+	if var_2_0 == "number" then
+		arg_2_1 = tostring(arg_2_1)
+	elseif var_2_0 == "boolean" then
+		arg_2_1 = tostring(arg_2_1)
+	elseif var_2_0 == "function" then
+		var_2_1 = arg_2_1(arg_2_0._param)
 	end
 
-	if not slot3 and slot0._param and slot0._param ~= slot1 then
+	if not var_2_1 and arg_2_0._param and arg_2_0._param ~= arg_2_1 then
 		return
 	end
 
-	slot0._controller.instance:unregisterCallback(slot0._eventName, slot0._onReceiveEvent, slot0)
-	slot0:onDone(true)
+	arg_2_0._controller.instance:unregisterCallback(arg_2_0._eventName, arg_2_0._onReceiveEvent, arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._controller then
-		slot0._controller.instance:unregisterCallback(slot0._eventName, slot0._onReceiveEvent, slot0)
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._controller then
+		arg_3_0._controller.instance:unregisterCallback(arg_3_0._eventName, arg_3_0._onReceiveEvent, arg_3_0)
 	end
 end
 
-return slot0
+return var_0_0

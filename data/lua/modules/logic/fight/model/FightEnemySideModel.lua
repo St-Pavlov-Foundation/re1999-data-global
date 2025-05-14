@@ -1,11 +1,11 @@
-module("modules.logic.fight.model.FightEnemySideModel", package.seeall)
+﻿module("modules.logic.fight.model.FightEnemySideModel", package.seeall)
 
-slot0 = class("FightEnemySideModel", BaseModel)
+local var_0_0 = class("FightEnemySideModel", BaseModel)
 
-function slot0.getList(slot0)
-	table.sort(slot0._list, FightHelper.sortAssembledMonsterFunc)
+function var_0_0.getList(arg_1_0)
+	table.sort(arg_1_0._list, FightHelper.sortAssembledMonsterFunc)
 
-	return slot0._list
+	return arg_1_0._list
 end
 
-return slot0
+return var_0_0

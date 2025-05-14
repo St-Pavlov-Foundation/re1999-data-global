@@ -1,27 +1,28 @@
-module("modules.logic.activity.controller.chessmap.ActivityChessEvent", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.ActivityChessEvent", package.seeall)
 
-slot0 = _M
-slot0.GuideOnEnterMap = 10
-slot0.GuideClickTile = 11
-slot0.InteractObjectCreated = 1000
-slot0.AllObjectCreated = 1001
-slot0.DeleteInteractAvatar = 1002
-slot0.ResetMapView = 1003
-slot0.SetViewVictory = 1004
-slot0.SetViewFail = 1005
-slot0.SetAlwayUpdateRenderOrder = 1006
-slot0.GameViewOpened = 1007
-slot0.GameResultQuit = 1008
-slot0.GameMapDataUpdate = 1009
-slot0.GameReset = 1010
-slot0.SetNeedChooseDirectionVisible = 2002
-slot0.CurrentRoundUpdate = 2003
-slot0.CurrentConditionUpdate = 2004
-slot0.RewardIsClose = 2005
-slot0.RefreshAlarmArea = 2006
-slot0.SetCenterHintText = 2007
-slot0.ResetGameByResultView = 2008
-slot0.TaskJump = 3001
-slot0.EventFinishPlay = 12001
+local var_0_0 = _M
 
-return slot0
+var_0_0.GuideOnEnterMap = 10
+var_0_0.GuideClickTile = 11
+var_0_0.InteractObjectCreated = 1000
+var_0_0.AllObjectCreated = 1001
+var_0_0.DeleteInteractAvatar = 1002
+var_0_0.ResetMapView = 1003
+var_0_0.SetViewVictory = 1004
+var_0_0.SetViewFail = 1005
+var_0_0.SetAlwayUpdateRenderOrder = 1006
+var_0_0.GameViewOpened = 1007
+var_0_0.GameResultQuit = 1008
+var_0_0.GameMapDataUpdate = 1009
+var_0_0.GameReset = 1010
+var_0_0.SetNeedChooseDirectionVisible = 2002
+var_0_0.CurrentRoundUpdate = 2003
+var_0_0.CurrentConditionUpdate = 2004
+var_0_0.RewardIsClose = 2005
+var_0_0.RefreshAlarmArea = 2006
+var_0_0.SetCenterHintText = 2007
+var_0_0.ResetGameByResultView = 2008
+var_0_0.TaskJump = 3001
+var_0_0.EventFinishPlay = 12001
+
+return var_0_0

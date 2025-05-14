@@ -1,19 +1,19 @@
-module("modules.logic.social.view.SocialViewContainer", package.seeall)
+﻿module("modules.logic.social.view.SocialViewContainer", package.seeall)
 
-slot0 = class("SocialViewContainer", BaseViewContainer)
+local var_0_0 = class("SocialViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, SocialView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(slot1, TabViewGroup.New(2, "container/tabviews"))
+	table.insert(var_1_0, SocialView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, TabViewGroup.New(2, "container/tabviews"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,125 +21,138 @@ function slot0.buildTabViews(slot0, slot1)
 				false
 			})
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
+		local var_2_0 = arg_2_0:getFriendsScrollParam()
+		local var_2_1 = arg_2_0:getRequestScrollParam()
+		local var_2_2 = arg_2_0:getRecommendScrollParam()
+		local var_2_3 = arg_2_0:getSearchScrollParam()
+		local var_2_4 = arg_2_0:getBlackListScrollParam()
+		local var_2_5 = arg_2_0:getMessageListScrollParam()
+
 		return {
 			MultiView.New({
-				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Friend), slot0:getFriendsScrollParam()),
-				LuaMixScrollView.New(SocialMessageListModel.instance, slot0:getMessageListScrollParam()),
+				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Friend), var_2_0),
+				LuaMixScrollView.New(SocialMessageListModel.instance, var_2_5),
 				SocialFriendsView.New()
 			}),
 			MultiView.New({
-				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Recommend), slot0:getRecommendScrollParam()),
-				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Search), slot0:getSearchScrollParam()),
+				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Recommend), var_2_2),
+				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Search), var_2_3),
 				SocialSearchView.New()
 			}),
 			MultiView.New({
-				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Request), slot0:getRequestScrollParam()),
+				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Request), var_2_1),
 				SocialRequestView.New()
 			}),
 			MultiView.New({
-				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Black), slot0:getBlackListScrollParam()),
+				LuaListScrollView.New(SocialListModel.instance:getModel(SocialEnum.Type.Black), var_2_4),
 				SocialBlackListView.New()
 			})
 		}
 	end
 end
 
-function slot0.getFriendsScrollParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_has/left/hasscrollview"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = SocialFriendItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 555
-	slot1.cellHeight = 152
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 10
-	slot1.startSpace = 8
+function var_0_0.getFriendsScrollParam(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
 
-	return slot1
+	var_3_0.scrollGOPath = "#go_has/left/hasscrollview"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+	var_3_0.cellClass = SocialFriendItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirV
+	var_3_0.lineCount = 1
+	var_3_0.cellWidth = 555
+	var_3_0.cellHeight = 152
+	var_3_0.cellSpaceH = 0
+	var_3_0.cellSpaceV = 10
+	var_3_0.startSpace = 8
+
+	return var_3_0
 end
 
-function slot0.getRequestScrollParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "scrollview"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[2]
-	slot1.cellClass = SocialRequestItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1560
-	slot1.cellHeight = 160
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 24
+function var_0_0.getRequestScrollParam(arg_4_0)
+	local var_4_0 = ListScrollParam.New()
 
-	return slot1
+	var_4_0.scrollGOPath = "scrollview"
+	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_4_0.prefabUrl = arg_4_0._viewSetting.otherRes[2]
+	var_4_0.cellClass = SocialRequestItem
+	var_4_0.scrollDir = ScrollEnum.ScrollDirV
+	var_4_0.lineCount = 1
+	var_4_0.cellWidth = 1560
+	var_4_0.cellHeight = 160
+	var_4_0.cellSpaceH = 0
+	var_4_0.cellSpaceV = 24
+
+	return var_4_0
 end
 
-function slot0.getRecommendScrollParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "container/#go_recommend/scrollview"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[3]
-	slot1.cellClass = SocialSearchItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1560
-	slot1.cellHeight = 160
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 24
+function var_0_0.getRecommendScrollParam(arg_5_0)
+	local var_5_0 = ListScrollParam.New()
 
-	return slot1
+	var_5_0.scrollGOPath = "container/#go_recommend/scrollview"
+	var_5_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_5_0.prefabUrl = arg_5_0._viewSetting.otherRes[3]
+	var_5_0.cellClass = SocialSearchItem
+	var_5_0.scrollDir = ScrollEnum.ScrollDirV
+	var_5_0.lineCount = 1
+	var_5_0.cellWidth = 1560
+	var_5_0.cellHeight = 160
+	var_5_0.cellSpaceH = 0
+	var_5_0.cellSpaceV = 24
+
+	return var_5_0
 end
 
-function slot0.getSearchScrollParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "container/#go_searchresults/scrollview"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[3]
-	slot1.cellClass = SocialSearchItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1560
-	slot1.cellHeight = 160
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 24
+function var_0_0.getSearchScrollParam(arg_6_0)
+	local var_6_0 = ListScrollParam.New()
 
-	return slot1
+	var_6_0.scrollGOPath = "container/#go_searchresults/scrollview"
+	var_6_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_6_0.prefabUrl = arg_6_0._viewSetting.otherRes[3]
+	var_6_0.cellClass = SocialSearchItem
+	var_6_0.scrollDir = ScrollEnum.ScrollDirV
+	var_6_0.lineCount = 1
+	var_6_0.cellWidth = 1560
+	var_6_0.cellHeight = 160
+	var_6_0.cellSpaceH = 0
+	var_6_0.cellSpaceV = 24
+
+	return var_6_0
 end
 
-function slot0.getBlackListScrollParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_has/scrollview"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[4]
-	slot1.cellClass = SocialBlackListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 2
-	slot1.cellWidth = 755
-	slot1.cellHeight = 160
-	slot1.cellSpaceH = 6
-	slot1.cellSpaceV = 1.5
+function var_0_0.getBlackListScrollParam(arg_7_0)
+	local var_7_0 = ListScrollParam.New()
 
-	return slot1
+	var_7_0.scrollGOPath = "#go_has/scrollview"
+	var_7_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_7_0.prefabUrl = arg_7_0._viewSetting.otherRes[4]
+	var_7_0.cellClass = SocialBlackListItem
+	var_7_0.scrollDir = ScrollEnum.ScrollDirV
+	var_7_0.lineCount = 2
+	var_7_0.cellWidth = 755
+	var_7_0.cellHeight = 160
+	var_7_0.cellSpaceH = 6
+	var_7_0.cellSpaceV = 1.5
+
+	return var_7_0
 end
 
-function slot0.getMessageListScrollParam(slot0)
-	slot1 = MixScrollParam.New()
-	slot1.scrollGOPath = "#go_has/right/#go_message/#scroll_message"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[5]
-	slot1.cellClass = SocialMessageItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
+function var_0_0.getMessageListScrollParam(arg_8_0)
+	local var_8_0 = MixScrollParam.New()
 
-	return slot1
+	var_8_0.scrollGOPath = "#go_has/right/#go_message/#scroll_message"
+	var_8_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_8_0.prefabUrl = arg_8_0._viewSetting.otherRes[5]
+	var_8_0.cellClass = SocialMessageItem
+	var_8_0.scrollDir = ScrollEnum.ScrollDirV
+	var_8_0.lineCount = 1
+
+	return var_8_0
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.switchTab(arg_9_0, arg_9_1)
+	arg_9_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_9_1)
 end
 
-return slot0
+return var_0_0

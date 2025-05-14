@@ -1,62 +1,65 @@
-module("modules.logic.room.view.backpack.RoomBackpackCritterItem", package.seeall)
+﻿module("modules.logic.room.view.backpack.RoomBackpackCritterItem", package.seeall)
 
-slot0 = class("RoomBackpackCritterItem", ListScrollCellExtend)
+local var_0_0 = class("RoomBackpackCritterItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goCritterIcon = gohelper.findChild(slot0.viewGO, "#go_critterIcon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goCritterIcon = gohelper.findChild(arg_1_0.viewGO, "#go_critterIcon")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onCritterInfoUpdate, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, slot0._onCritterLockStatusChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_2_0._onCritterInfoUpdate, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, arg_2_0._onCritterLockStatusChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onCritterInfoUpdate, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, slot0._onCritterLockStatusChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_3_0._onCritterInfoUpdate, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, arg_3_0._onCritterLockStatusChange, arg_3_0)
 end
 
-function slot0._onCritterInfoUpdate(slot0, slot1)
-	slot2 = slot0._mo and slot0._mo:getId()
+function var_0_0._onCritterInfoUpdate(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._mo and arg_4_0._mo:getId()
 
-	if not slot0._critterIcon or not slot2 or slot1 and not slot1[slot2] then
+	if not arg_4_0._critterIcon or not var_4_0 or arg_4_1 and not arg_4_1[var_4_0] then
 		return
 	end
 
-	slot0._critterIcon:refreshLockIcon()
-	slot0._critterIcon:refreshMaturityIcon()
+	arg_4_0._critterIcon:refreshLockIcon()
+	arg_4_0._critterIcon:refreshMaturityIcon()
 end
 
-function slot0._onCritterLockStatusChange(slot0, slot1)
-	slot2 = slot0._mo and slot0._mo:getId()
+function var_0_0._onCritterLockStatusChange(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._mo and arg_5_0._mo:getId()
 
-	if not slot0._critterIcon or not slot2 or slot2 ~= slot1 then
+	if not arg_5_0._critterIcon or not var_5_0 or var_5_0 ~= arg_5_1 then
 		return
 	end
 
-	slot0._critterIcon:refreshLockIcon()
+	arg_5_0._critterIcon:refreshLockIcon()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	if not slot0._critterIcon then
-		slot0._critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._goCritterIcon)
+	if not arg_6_0._critterIcon then
+		arg_6_0._critterIcon = IconMgr.instance:getCommonCritterIcon(arg_6_0._goCritterIcon)
 
-		slot0._critterIcon:setLockIconShow(true)
-		slot0._critterIcon:setMaturityIconShow(true)
+		arg_6_0._critterIcon:setLockIconShow(true)
+		arg_6_0._critterIcon:setMaturityIconShow(true)
 	end
 
-	slot0._critterIcon:onUpdateMO(slot0._mo)
-	slot0._critterIcon:setCustomClick(slot0.onClickCB, slot0)
-	slot0._critterIcon:setIsShowBuildingIcon(true)
+	arg_6_0._critterIcon:onUpdateMO(arg_6_0._mo)
+	arg_6_0._critterIcon:setCustomClick(arg_6_0.onClickCB, arg_6_0)
+	arg_6_0._critterIcon:setIsShowBuildingIcon(true)
 end
 
-function slot0.onClickCB(slot0)
-	CritterController.instance:openRoomCritterDetailView(not slot0._mo:isMaturity(), slot0._mo)
+function var_0_0.onClickCB(arg_7_0)
+	local var_7_0 = arg_7_0._mo:isMaturity()
+
+	CritterController.instance:openRoomCritterDetailView(not var_7_0, arg_7_0._mo)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

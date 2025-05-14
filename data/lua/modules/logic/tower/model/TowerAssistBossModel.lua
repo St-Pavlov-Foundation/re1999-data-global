@@ -1,51 +1,62 @@
-module("modules.logic.tower.model.TowerAssistBossModel", package.seeall)
+﻿module("modules.logic.tower.model.TowerAssistBossModel", package.seeall)
 
-slot0 = class("TowerAssistBossModel", BaseModel)
+local var_0_0 = class("TowerAssistBossModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.tempBossDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.tempBossDict = {}
 end
 
-function slot0.updateAssistBossInfo(slot0, slot1)
-	if not slot0:getById(slot1.id) then
-		slot3 = TowerAssistBossMo.New()
+function var_0_0.updateAssistBossInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.id
+	local var_3_1 = arg_3_0:getById(var_3_0)
 
-		slot3:init(slot2)
-		slot0:addAtLast(slot3)
+	if not var_3_1 then
+		var_3_1 = TowerAssistBossMo.New()
+
+		var_3_1:init(var_3_0)
+		arg_3_0:addAtLast(var_3_1)
 	end
 
-	slot3:updateInfo(slot1)
+	var_3_1:updateInfo(arg_3_1)
 end
 
-function slot0.onTowerActiveTalent(slot0, slot1)
-	if slot0:getById(slot1.bossId) then
-		slot3:onTowerActiveTalent(slot1)
+function var_0_0.onTowerActiveTalent(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.bossId
+	local var_4_1 = arg_4_0:getById(var_4_0)
+
+	if var_4_1 then
+		var_4_1:onTowerActiveTalent(arg_4_1)
 	end
 end
 
-function slot0.onTowerResetTalent(slot0, slot1)
-	if slot0:getById(slot1.bossId) then
-		slot3:onTowerResetTalent(slot1)
+function var_0_0.onTowerResetTalent(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.bossId
+	local var_5_1 = arg_5_0:getById(var_5_0)
+
+	if var_5_1 then
+		var_5_1:onTowerResetTalent(arg_5_1)
 	end
 end
 
-function slot0.getBoss(slot0, slot1)
-	if not (slot0:getById(slot1) or slot0.tempBossDict[slot1]) then
-		slot2 = TowerAssistBossMo.New()
+function var_0_0.getBoss(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getById(arg_6_1) or arg_6_0.tempBossDict[arg_6_1]
 
-		slot2:init(slot1)
-		slot2:initTalentIds()
+	if not var_6_0 then
+		var_6_0 = TowerAssistBossMo.New()
 
-		slot0.tempBossDict[slot1] = slot2
+		var_6_0:init(arg_6_1)
+		var_6_0:initTalentIds()
+
+		arg_6_0.tempBossDict[arg_6_1] = var_6_0
 	end
 
-	return slot2
+	return var_6_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

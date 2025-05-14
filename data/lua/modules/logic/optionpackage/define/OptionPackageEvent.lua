@@ -1,8 +1,9 @@
-module("modules.logic.optionpackage.define.OptionPackageEvent", package.seeall)
+﻿module("modules.logic.optionpackage.define.OptionPackageEvent", package.seeall)
 
-slot0 = _M
-slot0.DownloadProgressRefresh = 10001
-slot0.UnZipProgressRefresh = 10002
-slot0.DownladErrorMsg = 10003
+local var_0_0 = _M
 
-return slot0
+var_0_0.DownloadProgressRefresh = 10001
+var_0_0.UnZipProgressRefresh = 10002
+var_0_0.DownladErrorMsg = 10003
+
+return var_0_0

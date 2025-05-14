@@ -1,38 +1,40 @@
-module("modules.logic.versionactivity1_6.v1a6_warmup.rpc.Activity156Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_warmup.rpc.Activity156Rpc", package.seeall)
 
-slot0 = class("Activity156Rpc", BaseRpc)
+local var_0_0 = class("Activity156Rpc", BaseRpc)
 
-function slot0.sendGetAct125InfosRequest(slot0, slot1)
-	slot2 = Activity125Module_pb.GetAct125InfosRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct125InfosRequest(arg_1_0, arg_1_1)
+	local var_1_0 = Activity125Module_pb.GetAct125InfosRequest()
 
-	slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGetAct125InfosReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity156Model.instance:setActivityInfo(slot2.act125Episodes)
+function var_0_0.onReceiveGetAct125InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		Activity156Model.instance:setActivityInfo(arg_2_2.act125Episodes)
 		Activity156Controller.instance:dispatchEvent(Activity156Event.DataUpdate)
 	end
 end
 
-function slot0.sendFinishAct125EpisodeRequest(slot0, slot1, slot2)
-	slot3 = Activity125Module_pb.FinishAct125EpisodeRequest()
-	slot3.activityId = slot1
-	slot3.episodeId = slot2
-	slot3.targetFrequency = 0
+function var_0_0.sendFinishAct125EpisodeRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = Activity125Module_pb.FinishAct125EpisodeRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.activityId = arg_3_1
+	var_3_0.episodeId = arg_3_2
+	var_3_0.targetFrequency = 0
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveFinishAct125EpisodeReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity156Model.instance:setActivityInfo(slot2.updateAct125Episodes)
+function var_0_0.onReceiveFinishAct125EpisodeReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		Activity156Model.instance:setActivityInfo(arg_4_2.updateAct125Episodes)
 		Activity156Controller.instance:dispatchEvent(Activity156Event.DataUpdate)
-		Activity156Controller.instance:dispatchEvent(Activity156Event.EpisodeFinished, slot2.episodeId)
+		Activity156Controller.instance:dispatchEvent(Activity156Event.EpisodeFinished, arg_4_2.episodeId)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,8 +1,8 @@
-module("projbooter.hotupdate.GamepadBooter", package.seeall)
+﻿module("projbooter.hotupdate.GamepadBooter", package.seeall)
 
-slot0 = class("GamepadBooter")
+local var_0_0 = class("GamepadBooter")
 
-function slot0.init(slot0)
+function var_0_0.init(arg_1_0)
 	addGlobalModule("projbooter.gamepad.define.GamepadEnum", "GamepadEnum")
 	addGlobalModule("projbooter.gamepad.define.GamepadEvent", "GamepadEvent")
 	addGlobalModule("projbooter.gamepad.define.GamepadXBoxKey_Android", "GamepadXBoxKey_Android")
@@ -10,69 +10,74 @@ function slot0.init(slot0)
 	addGlobalModule("projbooter.gamepad.define.GamepadKeyMapEnum", "GamepadKeyMapEnum")
 end
 
-function slot0.setBootMsgBoxClick(slot0, slot1, slot2, slot3, slot4)
-	slot0.onClickRightCallBack = slot1
-	slot0.onClickRightCallBackObj = slot2
-	slot0.onClickLeftCallBack = slot3
-	slot0.onClickLeftCallBackObj = slot4
+function var_0_0.setBootMsgBoxClick(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0.onClickRightCallBack = arg_2_1
+	arg_2_0.onClickRightCallBackObj = arg_2_2
+	arg_2_0.onClickLeftCallBack = arg_2_3
+	arg_2_0.onClickLeftCallBackObj = arg_2_4
 
-	slot0:_checkGamepadModel()
+	arg_2_0:_checkGamepadModel()
 
-	if slot0._isOpen == false then
+	if arg_2_0._isOpen == false then
 		return
 	end
 
-	for slot9, slot10 in pairs(slot0._useKeyType.JoystickKeys) do
-		table.insert({}, slot9)
+	local var_2_0 = {}
+
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._useKeyType.JoystickKeys) do
+		table.insert(var_2_0, iter_2_0)
 	end
 
-	slot6 = {}
+	local var_2_1 = {}
 
-	for slot10, slot11 in pairs(slot0._useKeyType.AxisKeys) do
-		table.insert(slot6, slot10)
+	for iter_2_2, iter_2_3 in pairs(arg_2_0._useKeyType.AxisKeys) do
+		table.insert(var_2_1, iter_2_2)
 	end
 
-	slot0._mgrInst = ZProj.GamepadManager.Instance
-	slot0._eventMgrInst = ZProj.GamepadEvent.Instance
-	slot0._eventMgr = ZProj.GamepadEvent
+	arg_2_0._mgrInst = ZProj.GamepadManager.Instance
+	arg_2_0._eventMgrInst = ZProj.GamepadEvent.Instance
+	arg_2_0._eventMgr = ZProj.GamepadEvent
 
-	slot0._mgrInst:SetKeyListLua(slot5, slot6)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.UpKey, slot0._onClickKey, slot0)
+	arg_2_0._mgrInst:SetKeyListLua(var_2_0, var_2_1)
+	arg_2_0._eventMgrInst:AddLuaLisenter(arg_2_0._eventMgr.UpKey, arg_2_0._onClickKey, arg_2_0)
 
-	slot0._buttonHandleFunc = {
+	arg_2_0._buttonHandleFunc = {
 		[GamepadEnum.KeyCode.A] = {
-			slot0._onClickA
+			arg_2_0._onClickA
 		},
 		[GamepadEnum.KeyCode.B] = {
-			slot0._onClickB
+			arg_2_0._onClickB
 		}
 	}
 end
 
-function slot0._checkGamepadModel(slot0)
-	slot0._isOpen = SDKNativeUtil.isGamePad()
+function var_0_0._checkGamepadModel(arg_3_0)
+	arg_3_0._isOpen = SDKNativeUtil.isGamePad()
 
-	if slot0._isOpen then
-		slot2 = false
+	if arg_3_0._isOpen then
+		local var_3_0 = UnityEngine.Input.GetJoystickNames()
+		local var_3_1 = false
 
-		if UnityEngine.Input.GetJoystickNames() and slot1.Length > 0 then
-			for slot6 = 0, slot1.Length - 1 do
-				if slot2 then
+		if var_3_0 and var_3_0.Length > 0 then
+			for iter_3_0 = 0, var_3_0.Length - 1 do
+				if var_3_1 then
 					break
 				end
 
-				for slot11, slot12 in pairs(GamepadKeyMapEnum.KeyMap) do
-					if string.find(slot1[slot6], slot11) then
-						slot2 = true
+				local var_3_2 = var_3_0[iter_3_0]
+
+				for iter_3_1, iter_3_2 in pairs(GamepadKeyMapEnum.KeyMap) do
+					if string.find(var_3_2, iter_3_1) then
+						var_3_1 = true
 
 						if BootNativeUtil.isAndroid() then
-							slot0._useKeyType = slot12[2]
+							arg_3_0._useKeyType = iter_3_2[2]
 
 							break
 						end
 
 						if BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-							slot0._useKeyType = slot12[1]
+							arg_3_0._useKeyType = iter_3_2[1]
 						end
 
 						break
@@ -81,51 +86,54 @@ function slot0._checkGamepadModel(slot0)
 			end
 		end
 
-		if slot2 == false then
+		if var_3_1 == false then
 			if BootNativeUtil.isAndroid() then
-				slot0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
+				arg_3_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
 			elseif BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-				slot0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
+				arg_3_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
 			end
 		end
 	end
 end
 
-function slot0._onClickKey(slot0, slot1)
-	if slot0._buttonHandleFunc[slot0._useKeyType.JoystickKeys[slot1]][1] then
-		slot3(slot0)
+function var_0_0._onClickKey(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._useKeyType.JoystickKeys[arg_4_1]
+	local var_4_1 = arg_4_0._buttonHandleFunc[var_4_0][1]
+
+	if var_4_1 then
+		var_4_1(arg_4_0)
 	end
 end
 
-function slot0._onClickA(slot0)
-	if slot0.onClickRightCallBack then
-		slot0.onClickRightCallBack(slot0.onClickRightCallBackObj)
+function var_0_0._onClickA(arg_5_0)
+	if arg_5_0.onClickRightCallBack then
+		arg_5_0.onClickRightCallBack(arg_5_0.onClickRightCallBackObj)
 	end
 end
 
-function slot0._onClickB(slot0)
-	if slot0.onClickLeftCallBack then
-		slot0.onClickLeftCallBack(slot0.onClickLeftCallBackObj)
+function var_0_0._onClickB(arg_6_0)
+	if arg_6_0.onClickLeftCallBack then
+		arg_6_0.onClickLeftCallBack(arg_6_0.onClickLeftCallBackObj)
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0.onClickRightCallBack = nil
-	slot0.onClickRightCallBackObj = nil
-	slot0.onClickLeftCallBack = nil
-	slot0.onClickLeftCallBackObj = nil
-	slot0._mgrInst = nil
-	slot0._eventMgrInst = nil
-	slot0._eventMgr = nil
+function var_0_0.dispose(arg_7_0)
+	arg_7_0.onClickRightCallBack = nil
+	arg_7_0.onClickRightCallBackObj = nil
+	arg_7_0.onClickLeftCallBack = nil
+	arg_7_0.onClickLeftCallBackObj = nil
+	arg_7_0._mgrInst = nil
+	arg_7_0._eventMgrInst = nil
+	arg_7_0._eventMgr = nil
 
-	for slot4, slot5 in pairs(slot0) do
-		if type(slot5) == "userdata" then
-			rawset(slot0, slot4, nil)
-			logNormal("key = " .. tostring(slot4) .. " value = " .. tostring(slot5))
+	for iter_7_0, iter_7_1 in pairs(arg_7_0) do
+		if type(iter_7_1) == "userdata" then
+			rawset(arg_7_0, iter_7_0, nil)
+			logNormal("key = " .. tostring(iter_7_0) .. " value = " .. tostring(iter_7_1))
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

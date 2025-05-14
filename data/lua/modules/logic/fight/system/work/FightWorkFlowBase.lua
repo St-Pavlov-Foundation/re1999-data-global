@@ -1,44 +1,44 @@
-module("modules.logic.fight.system.work.FightWorkFlowBase", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFlowBase", package.seeall)
 
-slot0 = class("FightWorkFlowBase", FightWorkItem)
-slot1 = 10
+local var_0_0 = class("FightWorkFlowBase", FightWorkItem)
+local var_0_1 = 10
 
-function slot0.start(slot0, slot1)
-	if slot0.PARENT_ROOT_CLASS then
-		if isTypeOf(slot0.PARENT_ROOT_CLASS, FightWorkFlowSequence) or isTypeOf(slot0.PARENT_ROOT_CLASS, uv0) then
-			slot0.ROOTFLOW = slot0.PARENT_ROOT_CLASS.ROOTFLOW
-			slot0.ROOTFLOW.COUNTERDEEP = slot0.ROOTFLOW.COUNTERDEEP + 1
-			slot0.COUNTERDEEP = slot0.ROOTFLOW.COUNTERDEEP
+function var_0_0.start(arg_1_0, arg_1_1)
+	if arg_1_0.PARENT_ROOT_CLASS then
+		if isTypeOf(arg_1_0.PARENT_ROOT_CLASS, FightWorkFlowSequence) or isTypeOf(arg_1_0.PARENT_ROOT_CLASS, var_0_0) then
+			arg_1_0.ROOTFLOW = arg_1_0.PARENT_ROOT_CLASS.ROOTFLOW
+			arg_1_0.ROOTFLOW.COUNTERDEEP = arg_1_0.ROOTFLOW.COUNTERDEEP + 1
+			arg_1_0.COUNTERDEEP = arg_1_0.ROOTFLOW.COUNTERDEEP
 		else
-			slot0.ROOTFLOW = slot0
-			slot0.COUNTERDEEP = 0
+			arg_1_0.ROOTFLOW = arg_1_0
+			arg_1_0.COUNTERDEEP = 0
 		end
 	else
-		slot0.ROOTFLOW = slot0
-		slot0.COUNTERDEEP = 0
+		arg_1_0.ROOTFLOW = arg_1_0
+		arg_1_0.COUNTERDEEP = 0
 	end
 
-	if slot0.COUNTERDEEP == 0 then
-		return FightWorkItem.start(slot0, slot1)
-	elseif slot0.COUNTERDEEP % uv1 == 0 then
-		return slot0:com_registTimer(FightWorkItem.start, 0.01, slot1)
+	if arg_1_0.COUNTERDEEP == 0 then
+		return FightWorkItem.start(arg_1_0, arg_1_1)
+	elseif arg_1_0.COUNTERDEEP % var_0_1 == 0 then
+		return arg_1_0:com_registTimer(FightWorkItem.start, 0.01, arg_1_1)
 	else
-		return FightWorkItem.start(slot0, slot1)
+		return FightWorkItem.start(arg_1_0, arg_1_1)
 	end
 end
 
-function slot0.onDestructorFinish(slot0)
-	if not slot0.COUNTERDEEP then
-		return FightWorkItem.onDestructorFinish(slot0)
+function var_0_0.onDestructorFinish(arg_2_0)
+	if not arg_2_0.COUNTERDEEP then
+		return FightWorkItem.onDestructorFinish(arg_2_0)
 	end
 
-	if slot0.COUNTERDEEP == 0 then
-		return FightWorkItem.onDestructorFinish(slot0)
-	elseif slot0.COUNTERDEEP % uv0 == 0 then
-		return FightTimer.registTimer(FightWorkItem.onDestructorFinish, slot0, 0.01)
+	if arg_2_0.COUNTERDEEP == 0 then
+		return FightWorkItem.onDestructorFinish(arg_2_0)
+	elseif arg_2_0.COUNTERDEEP % var_0_1 == 0 then
+		return FightTimer.registTimer(FightWorkItem.onDestructorFinish, arg_2_0, 0.01)
 	else
-		return FightWorkItem.onDestructorFinish(slot0)
+		return FightWorkItem.onDestructorFinish(arg_2_0)
 	end
 end
 
-return slot0
+return var_0_0

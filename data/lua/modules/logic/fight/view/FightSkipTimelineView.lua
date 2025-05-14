@@ -1,56 +1,58 @@
-module("modules.logic.fight.view.FightSkipTimelineView", package.seeall)
+﻿module("modules.logic.fight.view.FightSkipTimelineView", package.seeall)
 
-slot0 = class("FightSkipTimelineView", BaseView)
+local var_0_0 = class("FightSkipTimelineView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#go_btnright/#btn_skip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#go_btnright/#btn_skip")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnskip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnskip:RemoveClickListener()
 end
 
-function slot0._btnskipOnClick(slot0)
+function var_0_0._btnskipOnClick(arg_4_0)
 	FightController.instance:dispatchEvent(FightEvent.SkipAppearTimeline)
 end
 
-function slot0.onOpen(slot0)
-	slot0._timeline = slot0.viewParam
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0._timeline = arg_5_0.viewParam
 
-	if uv0.getState(slot0._timeline) == 0 then
-		uv0.setState(slot0._timeline, 1)
-		gohelper.setActive(slot0.viewGO, false)
+	if var_0_0.getState(arg_5_0._timeline) == 0 then
+		var_0_0.setState(arg_5_0._timeline, 1)
+		gohelper.setActive(arg_5_0.viewGO, false)
 	else
-		gohelper.setActive(slot0.viewGO, true)
+		gohelper.setActive(arg_5_0.viewGO, true)
 
-		slot0._canSkip = true
+		arg_5_0._canSkip = true
 	end
 
-	NavigateMgr.instance:addEscape(ViewName.FightSkipTimelineView, slot0._onEscBtnClick, slot0)
+	NavigateMgr.instance:addEscape(ViewName.FightSkipTimelineView, arg_5_0._onEscBtnClick, arg_5_0)
 end
 
-function slot0._onEscBtnClick(slot0)
-	if slot0._canSkip then
+function var_0_0._onEscBtnClick(arg_6_0)
+	if arg_6_0._canSkip then
 		FightController.instance:dispatchEvent(FightEvent.SkipAppearTimeline)
 	end
 end
 
-function slot0.getState(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.SkipAppearTimeline .. slot0, 0)
+function var_0_0.getState(arg_7_0)
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.SkipAppearTimeline .. arg_7_0, 0)
 end
 
-function slot0.setState(slot0, slot1)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.SkipAppearTimeline .. slot0, slot1 or 1)
+function var_0_0.setState(arg_8_0, arg_8_1)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.SkipAppearTimeline .. arg_8_0, arg_8_1 or 1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

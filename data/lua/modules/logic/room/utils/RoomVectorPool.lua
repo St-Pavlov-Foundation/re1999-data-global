@@ -1,61 +1,63 @@
-module("modules.logic.room.utils.RoomVectorPool", package.seeall)
+﻿module("modules.logic.room.utils.RoomVectorPool", package.seeall)
 
-slot0 = class("RoomVectorPool")
+local var_0_0 = class("RoomVectorPool")
 
-function slot0.ctor(slot0)
-	slot0._posList = {}
-	slot0._xCache = {}
-	slot0._yCache = {}
-	slot0._zCache = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._posList = {}
+	arg_1_0._xCache = {}
+	arg_1_0._yCache = {}
+	arg_1_0._zCache = {}
 end
 
-function slot0.packPosList(slot0, slot1)
-	slot2 = {}
-	slot6 = slot0._yCache
+function var_0_0.packPosList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	ZProj.AStarPathBridge.PosListToLuaTable(slot1, slot0._xCache, slot6, slot0._zCache)
+	ZProj.AStarPathBridge.PosListToLuaTable(arg_2_1, arg_2_0._xCache, arg_2_0._yCache, arg_2_0._zCache)
 
-	for slot6 = 1, #slot0._xCache do
-		slot7 = slot0:get()
-		slot7.z = slot0._zCache[slot6]
-		slot7.y = slot0._yCache[slot6]
-		slot7.x = slot0._xCache[slot6]
+	for iter_2_0 = 1, #arg_2_0._xCache do
+		local var_2_1 = arg_2_0:get()
 
-		table.insert(slot2, slot7)
+		var_2_1.x, var_2_1.y, var_2_1.z = arg_2_0._xCache[iter_2_0], arg_2_0._yCache[iter_2_0], arg_2_0._zCache[iter_2_0]
+
+		table.insert(var_2_0, var_2_1)
 	end
 
-	slot0:cleanTable(slot0._xCache)
-	slot0:cleanTable(slot0._yCache)
-	slot0:cleanTable(slot0._zCache)
+	arg_2_0:cleanTable(arg_2_0._xCache)
+	arg_2_0:cleanTable(arg_2_0._yCache)
+	arg_2_0:cleanTable(arg_2_0._zCache)
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.get(slot0)
-	if #slot0._posList > 0 then
-		slot0._posList[slot1] = nil
+function var_0_0.get(arg_3_0)
+	local var_3_0 = #arg_3_0._posList
 
-		return slot0._posList[slot1]
+	if var_3_0 > 0 then
+		local var_3_1 = arg_3_0._posList[var_3_0]
+
+		arg_3_0._posList[var_3_0] = nil
+
+		return var_3_1
 	end
 
 	return Vector3.New()
 end
 
-function slot0.recycle(slot0, slot1)
-	slot1:Set(0, 0, 0)
-	table.insert(slot0._posList, slot1)
+function var_0_0.recycle(arg_4_0, arg_4_1)
+	arg_4_1:Set(0, 0, 0)
+	table.insert(arg_4_0._posList, arg_4_1)
 end
 
-function slot0.clean(slot0)
-	slot0:cleanTable(slot0._posList)
+function var_0_0.clean(arg_5_0)
+	arg_5_0:cleanTable(arg_5_0._posList)
 end
 
-function slot0.cleanTable(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		slot1[slot5] = nil
+function var_0_0.cleanTable(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
+		arg_6_1[iter_6_0] = nil
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

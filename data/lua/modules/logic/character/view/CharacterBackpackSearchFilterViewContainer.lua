@@ -1,11 +1,11 @@
-module("modules.logic.character.view.CharacterBackpackSearchFilterViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterBackpackSearchFilterViewContainer", package.seeall)
 
-slot0 = class("CharacterBackpackSearchFilterViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterBackpackSearchFilterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		CharacterBackpackSearchFilterView.New()
 	}
 end
 
-return slot0
+return var_0_0

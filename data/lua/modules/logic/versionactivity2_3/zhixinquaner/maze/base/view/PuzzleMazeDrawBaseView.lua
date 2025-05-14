@@ -1,620 +1,710 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeDrawBaseView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeDrawBaseView", package.seeall)
 
-slot0 = class("PuzzleMazeDrawBaseView", BaseView)
+local var_0_0 = class("PuzzleMazeDrawBaseView", BaseView)
 
-function slot0._editableInitView(slot0)
-	slot0:onInit()
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0:onInit()
 end
 
-function slot0.onOpen(slot0)
-	slot0:startGame()
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0:startGame()
 end
 
-function slot0.onClose(slot0)
-	slot0:unregisterDragCallBacks()
-	slot0:destroyPawnObj()
-	slot0:removeAllPathLines()
-	slot0:removeAllMapLines()
-	slot0:removeAllObjects()
+function var_0_0.onClose(arg_3_0)
+	arg_3_0:unregisterDragCallBacks()
+	arg_3_0:destroyPawnObj()
+	arg_3_0:removeAllPathLines()
+	arg_3_0:removeAllMapLines()
+	arg_3_0:removeAllObjects()
 end
 
-function slot0.onInit(slot0)
-	slot0._curDragLine = {
+function var_0_0.onInit(arg_4_0)
+	arg_4_0._curDragLine = {
 		x2 = 0,
 		y2 = 0,
 		x1 = 0,
 		y1 = 0
 	}
-	slot0._objectMap = {}
-	slot0._pathLineMap = {}
-	slot0._mapLineSet = {}
-	slot0._alertObjList = {}
-	slot0._alertFreePool = {}
+	arg_4_0._objectMap = {}
+	arg_4_0._pathLineMap = {}
+	arg_4_0._mapLineSet = {}
+	arg_4_0._alertObjList = {}
+	arg_4_0._alertFreePool = {}
 
-	slot0:setCanTouch(true)
+	arg_4_0:setCanTouch(true)
 
-	slot0._modelInst = slot0:getModelInst()
-	slot0._ctrlInst = slot0:getCtrlInst()
-	slot0._alertTriggerFuncMap = {}
+	arg_4_0._modelInst = arg_4_0:getModelInst()
+	arg_4_0._ctrlInst = arg_4_0:getCtrlInst()
+	arg_4_0._alertTriggerFuncMap = {}
 
-	slot0:registerDragCallBacks()
+	arg_4_0:registerDragCallBacks()
 end
 
-function slot0.registerDragCallBacks(slot0)
-	if slot0:getDragGo() then
-		slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot1)
+function var_0_0.registerDragCallBacks(arg_5_0)
+	local var_5_0 = arg_5_0:getDragGo()
 
-		slot0._drag:AddDragBeginListener(slot0.onBeginDragHandler, slot0)
-		slot0._drag:AddDragListener(slot0.onDragHandler, slot0)
-		slot0._drag:AddDragEndListener(slot0.onEndDragHandler, slot0)
+	if var_5_0 then
+		arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(var_5_0)
+
+		arg_5_0._drag:AddDragBeginListener(arg_5_0.onBeginDragHandler, arg_5_0)
+		arg_5_0._drag:AddDragListener(arg_5_0.onDragHandler, arg_5_0)
+		arg_5_0._drag:AddDragEndListener(arg_5_0.onEndDragHandler, arg_5_0)
 	end
 end
 
-function slot0.unregisterDragCallBacks(slot0)
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragListener()
-		slot0._drag:RemoveDragEndListener()
+function var_0_0.unregisterDragCallBacks(arg_6_0)
+	if arg_6_0._drag then
+		arg_6_0._drag:RemoveDragBeginListener()
+		arg_6_0._drag:RemoveDragListener()
+		arg_6_0._drag:RemoveDragEndListener()
 
-		slot0._drag = nil
+		arg_6_0._drag = nil
 	end
 end
 
-function slot0.startGame(slot0)
-	slot0:setCanTouch(true)
-	slot0:setGameFinished(false)
-	slot0:removeAllPathLines()
-	slot0:removeAllMapLines()
-	slot0:removeAllObjects()
-	slot0:initAllMapLines()
-	slot0:initAllObjects()
-	slot0:initPawn()
-	slot0:syncPath()
-	slot0:syncAlertObjs()
-	slot0:syncCheckPoints()
-	slot0._ctrlInst:dispatchEvent(PuzzleEvent.InitGameDone)
+function var_0_0.startGame(arg_7_0)
+	arg_7_0:setCanTouch(true)
+	arg_7_0:setGameFinished(false)
+	arg_7_0:removeAllPathLines()
+	arg_7_0:removeAllMapLines()
+	arg_7_0:removeAllObjects()
+	arg_7_0:initAllMapLines()
+	arg_7_0:initAllObjects()
+	arg_7_0:initPawn()
+	arg_7_0:syncPath()
+	arg_7_0:syncAlertObjs()
+	arg_7_0:syncCheckPoints()
+	arg_7_0._ctrlInst:dispatchEvent(PuzzleEvent.InitGameDone)
 end
 
-function slot0.restartGame(slot0)
-	slot0._ctrlInst:restartGame()
-	slot0:startGame()
+function var_0_0.restartGame(arg_8_0)
+	arg_8_0._ctrlInst:restartGame()
+	arg_8_0:startGame()
 end
 
-function slot0.initAllMapLines(slot0)
-	slot1, slot2 = slot0._modelInst:getGameSize()
+function var_0_0.initAllMapLines(arg_9_0)
+	local var_9_0, var_9_1 = arg_9_0._modelInst:getGameSize()
 
-	for slot6 = 1, slot1 + 1 do
-		for slot10 = 1, slot2 + 1 do
-			if slot6 <= slot1 then
-				slot0:initMapLine(slot6, slot10, slot6 + 1, slot10)
+	for iter_9_0 = 1, var_9_0 + 1 do
+		for iter_9_1 = 1, var_9_1 + 1 do
+			if iter_9_0 <= var_9_0 then
+				arg_9_0:initMapLine(iter_9_0, iter_9_1, iter_9_0 + 1, iter_9_1)
 			end
 
-			if slot10 <= slot2 then
-				slot0:initMapLine(slot6, slot10, slot6, slot10 + 1)
+			if iter_9_1 <= var_9_1 then
+				arg_9_0:initMapLine(iter_9_0, iter_9_1, iter_9_0, iter_9_1 + 1)
 			end
 		end
 	end
 end
 
-function slot0.initMapLine(slot0, slot1, slot2, slot3, slot4)
-	slot5, slot6, slot7, slot8 = PuzzleMazeHelper.formatPos(slot1, slot2, slot3, slot4)
+function var_0_0.initMapLine(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	arg_10_1, arg_10_2, arg_10_3, arg_10_4 = PuzzleMazeHelper.formatPos(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 
-	if not slot0._mapLineSet[PuzzleMazeHelper.getLineKey(slot5, slot6, slot7, slot8)] then
-		slot11, slot12 = slot0:getLineTemplateFillOrigin()
-		slot0._mapLineSet[slot5] = slot0:getLineObjCls(PuzzleEnum.LineType.Map).New(slot0:getResInst(slot0:getLineResUrl(PuzzleEnum.LineType.Map), slot0:getLineParentGo(PuzzleEnum.LineType.Map), slot5), slot11, slot12)
+	local var_10_0 = PuzzleMazeHelper.getLineKey(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	local var_10_1 = arg_10_0._mapLineSet[var_10_0]
+
+	if not var_10_1 then
+		local var_10_2 = arg_10_0:getLineObjCls(PuzzleEnum.LineType.Map)
+		local var_10_3 = arg_10_0:getLineResUrl(PuzzleEnum.LineType.Map)
+		local var_10_4 = arg_10_0:getLineParentGo(PuzzleEnum.LineType.Map)
+		local var_10_5 = arg_10_0:getResInst(var_10_3, var_10_4, var_10_0)
+		local var_10_6, var_10_7 = arg_10_0:getLineTemplateFillOrigin()
+
+		var_10_1 = var_10_2.New(var_10_5, var_10_6, var_10_7)
+		arg_10_0._mapLineSet[var_10_0] = var_10_1
 	end
 
-	slot6:onInit(slot1, slot2, slot3, slot4)
+	var_10_1:onInit(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 
-	return slot6
+	return var_10_1
 end
 
-function slot0.getOrCreatePathLine(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6, slot7, slot8, slot9 = PuzzleMazeHelper.formatPos(slot2, slot3, slot4, slot5)
+function var_0_0.getOrCreatePathLine(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	arg_11_2, arg_11_3, arg_11_4, arg_11_5 = PuzzleMazeHelper.formatPos(arg_11_2, arg_11_3, arg_11_4, arg_11_5)
 
-	if not slot0._pathLineMap[PuzzleMazeHelper.getLineKey(slot6, slot7, slot8, slot9)] then
-		slot12, slot13 = slot0:getLineTemplateFillOrigin()
-		slot7 = slot0:getLineObjCls(slot1).New(slot0:getResInst(slot0:getLineResUrl(slot1), slot0:getLineParentGo(slot1), slot6), slot12, slot13)
+	local var_11_0 = PuzzleMazeHelper.getLineKey(arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	local var_11_1 = arg_11_0._pathLineMap[var_11_0]
 
-		slot7:onInit(slot2, slot3, slot4, slot5)
+	if not var_11_1 then
+		local var_11_2 = arg_11_0:getLineObjCls(arg_11_1)
+		local var_11_3 = arg_11_0:getLineResUrl(arg_11_1)
+		local var_11_4 = arg_11_0:getLineParentGo(arg_11_1)
+		local var_11_5 = arg_11_0:getResInst(var_11_3, var_11_4, var_11_0)
+		local var_11_6, var_11_7 = arg_11_0:getLineTemplateFillOrigin()
 
-		slot0._pathLineMap[slot6] = slot7
+		var_11_1 = var_11_2.New(var_11_5, var_11_6, var_11_7)
+
+		var_11_1:onInit(arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+
+		arg_11_0._pathLineMap[var_11_0] = var_11_1
 	end
 
-	return slot7
+	return var_11_1
 end
 
-function slot0.removeAllPathLines(slot0)
-	for slot4, slot5 in pairs(slot0._pathLineMap) do
-		slot5:destroy()
+function var_0_0.removeAllPathLines(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._pathLineMap) do
+		iter_12_1:destroy()
 
-		slot0._pathLineMap[slot4] = nil
-	end
-end
-
-function slot0.removeAllMapLines(slot0)
-	for slot4, slot5 in pairs(slot0._mapLineSet) do
-		slot5:destroy()
-
-		slot0._mapLineSet[slot4] = nil
-	end
-end
-
-function slot0.getOrCreateObject(slot0, slot1)
-	if not slot0._objectMap[slot1:getKey()] then
-		slot0._objectMap[slot2] = slot0:getMazeObjCls(slot1.objType, slot1.subType, slot1.group).New(slot0:getResInst(slot0:getObjectResUrl(slot1.objType, slot1.subType, slot1.group), slot0:getObjectParentGo(), slot2))
-	end
-
-	return slot3
-end
-
-function slot0.removeAllObjects(slot0)
-	for slot4, slot5 in pairs(slot0._objectMap) do
-		slot5:destroy()
-
-		slot0._objectMap[slot4] = nil
+		arg_12_0._pathLineMap[iter_12_0] = nil
 	end
 end
 
-function slot0.initAllObjects(slot0)
-	for slot5, slot6 in ipairs(slot0._modelInst:getList()) do
-		slot0:getOrCreateObject(slot6):onInit(slot6)
+function var_0_0.removeAllMapLines(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._mapLineSet) do
+		iter_13_1:destroy()
+
+		arg_13_0._mapLineSet[iter_13_0] = nil
 	end
 end
 
-function slot0.getOrCreateAlertObj(slot0, slot1)
-	slot2 = nil
-	slot2 = (#slot0._alertFreePool > 0 or slot0:getAlertObjCls(slot1).New(slot0:getResInst(slot0:getAlertResUrl(slot1), slot0:getAlertParentGo(slot1), string.format("alert_%s", (slot0._alertObjList and #slot0._alertObjList or 0) + 1)))) and table.remove(slot0._alertFreePool)
+function var_0_0.getOrCreateObject(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1:getKey()
+	local var_14_1 = arg_14_0._objectMap[var_14_0]
 
-	table.insert(slot0._alertObjList, slot2)
+	if not var_14_1 then
+		local var_14_2 = arg_14_0:getObjectParentGo()
+		local var_14_3 = arg_14_0:getObjectResUrl(arg_14_1.objType, arg_14_1.subType, arg_14_1.group)
+		local var_14_4 = arg_14_0:getResInst(var_14_3, var_14_2, var_14_0)
 
-	return slot2
+		var_14_1 = arg_14_0:getMazeObjCls(arg_14_1.objType, arg_14_1.subType, arg_14_1.group).New(var_14_4)
+		arg_14_0._objectMap[var_14_0] = var_14_1
+	end
+
+	return var_14_1
 end
 
-function slot0.recycleAlertObjs(slot0)
-	for slot4 = #slot0._alertObjList, 1, -1 do
-		slot5 = slot0._alertObjList[slot4]
+function var_0_0.removeAllObjects(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._objectMap) do
+		iter_15_1:destroy()
 
-		slot5:onDisable()
-		slot5:onRecycle()
-		table.insert(slot0._alertFreePool, slot5)
-
-		slot0._alertObjList[slot4] = nil
+		arg_15_0._objectMap[iter_15_0] = nil
 	end
 end
 
-function slot0.initPawn(slot0)
-	slot1, slot2 = slot0._ctrlInst:getLastPos()
+function var_0_0.initAllObjects(arg_16_0)
+	local var_16_0 = arg_16_0._modelInst:getList()
 
-	if slot1 ~= nil then
-		slot3, slot4 = slot0._modelInst:getObjectAnchor(slot1, slot2)
-
-		slot0:getOrCreatePawnObj():onInit(slot3, slot4)
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		arg_16_0:getOrCreateObject(iter_16_1):onInit(iter_16_1)
 	end
 end
 
-function slot0.getOrCreatePawnObj(slot0)
-	if not slot0._objPawn then
-		slot4 = slot0:getResInst(slot0:getPawnResUrl(), slot0:getPawnParentGo(), "pawn")
+function var_0_0.getOrCreateAlertObj(arg_17_0, arg_17_1)
+	local var_17_0
 
-		gohelper.setAsLastSibling(slot4)
+	if #arg_17_0._alertFreePool <= 0 then
+		local var_17_1 = arg_17_0:getAlertParentGo(arg_17_1)
+		local var_17_2 = arg_17_0:getAlertResUrl(arg_17_1)
+		local var_17_3 = arg_17_0:getAlertObjCls(arg_17_1)
+		local var_17_4 = arg_17_0._alertObjList and #arg_17_0._alertObjList or 0
+		local var_17_5 = string.format("alert_%s", var_17_4 + 1)
+		local var_17_6 = arg_17_0:getResInst(var_17_2, var_17_1, var_17_5)
 
-		slot0._objPawn = slot0:getPawnObjCls().New(slot4)
+		var_17_0 = var_17_3.New(var_17_6)
+	else
+		var_17_0 = table.remove(arg_17_0._alertFreePool)
 	end
 
-	return slot1
+	table.insert(arg_17_0._alertObjList, var_17_0)
+
+	return var_17_0
 end
 
-function slot0.destroyPawnObj(slot0)
-	if slot0:getOrCreatePawnObj() then
-		slot1:destroy()
+function var_0_0.recycleAlertObjs(arg_18_0)
+	for iter_18_0 = #arg_18_0._alertObjList, 1, -1 do
+		local var_18_0 = arg_18_0._alertObjList[iter_18_0]
+
+		var_18_0:onDisable()
+		var_18_0:onRecycle()
+		table.insert(arg_18_0._alertFreePool, var_18_0)
+
+		arg_18_0._alertObjList[iter_18_0] = nil
 	end
 end
 
-function slot0.syncPath(slot0)
-	slot1, slot2 = slot0._ctrlInst:getPassedPoints()
-	slot3, slot4 = nil
-	slot5 = {
-		[PuzzleMazeHelper.getLineKey(slot3, slot4, slot10, slot11)] = true
-	}
+function var_0_0.initPawn(arg_19_0)
+	local var_19_0, var_19_1 = arg_19_0._ctrlInst:getLastPos()
 
-	for slot9 = 1, slot1 and #slot1 or 0 do
-		slot10 = slot1[slot9]
-		slot11 = slot2[slot9]
+	if var_19_0 ~= nil then
+		local var_19_2, var_19_3 = arg_19_0._modelInst:getObjectAnchor(var_19_0, var_19_1)
 
-		if slot3 ~= nil then
-			if PuzzleMazeHelper.getFromToDir(slot3, slot4, slot10, slot11) then
-				slot14 = slot0:getOrCreatePathLine(PuzzleEnum.LineType.Path, slot3, slot4, slot10, slot11)
+		arg_19_0:getOrCreatePawnObj():onInit(var_19_2, var_19_3)
+	end
+end
 
-				slot14:onCrossFull(slot12)
-				slot14:onAlert(slot0._alertType)
+function var_0_0.getOrCreatePawnObj(arg_20_0)
+	local var_20_0 = arg_20_0._objPawn
+
+	if not var_20_0 then
+		local var_20_1 = arg_20_0:getPawnResUrl()
+		local var_20_2 = arg_20_0:getPawnParentGo()
+		local var_20_3 = arg_20_0:getResInst(var_20_1, var_20_2, "pawn")
+
+		gohelper.setAsLastSibling(var_20_3)
+
+		var_20_0 = arg_20_0:getPawnObjCls().New(var_20_3)
+		arg_20_0._objPawn = var_20_0
+	end
+
+	return var_20_0
+end
+
+function var_0_0.destroyPawnObj(arg_21_0)
+	local var_21_0 = arg_21_0:getOrCreatePawnObj()
+
+	if var_21_0 then
+		var_21_0:destroy()
+	end
+end
+
+function var_0_0.syncPath(arg_22_0)
+	local var_22_0, var_22_1 = arg_22_0._ctrlInst:getPassedPoints()
+	local var_22_2
+	local var_22_3
+	local var_22_4 = {}
+
+	for iter_22_0 = 1, var_22_0 and #var_22_0 or 0 do
+		local var_22_5 = var_22_0[iter_22_0]
+		local var_22_6 = var_22_1[iter_22_0]
+
+		if var_22_2 ~= nil then
+			local var_22_7 = PuzzleMazeHelper.getFromToDir(var_22_2, var_22_3, var_22_5, var_22_6)
+
+			if var_22_7 then
+				local var_22_8 = PuzzleMazeHelper.getLineKey(var_22_2, var_22_3, var_22_5, var_22_6)
+				local var_22_9 = arg_22_0:getOrCreatePathLine(PuzzleEnum.LineType.Path, var_22_2, var_22_3, var_22_5, var_22_6)
+
+				var_22_9:onCrossFull(var_22_7)
+				var_22_9:onAlert(arg_22_0._alertType)
+
+				var_22_4[var_22_8] = true
 			else
-				logNormal(string.format("error dir in (%s,%s,%s,%s)", slot3, slot4, slot10, slot11))
+				logNormal(string.format("error dir in (%s,%s,%s,%s)", var_22_2, var_22_3, var_22_5, var_22_6))
 			end
 		end
 
-		slot4 = slot11
-		slot3 = slot10
+		var_22_2, var_22_3 = var_22_5, var_22_6
 	end
 
-	for slot9, slot10 in pairs(slot0._pathLineMap) do
-		if not slot5[slot9] then
-			slot10:clear()
+	for iter_22_1, iter_22_2 in pairs(arg_22_0._pathLineMap) do
+		if not var_22_4[iter_22_1] then
+			iter_22_2:clear()
 		end
 	end
 
-	slot0._ctrlInst:resetLineDirty()
+	arg_22_0._ctrlInst:resetLineDirty()
 end
 
-function slot0.syncDragLine(slot0)
-	slot1 = false
-	slot2, slot3, slot4, slot5 = slot0._ctrlInst:getProgressLine()
+function var_0_0.syncDragLine(arg_23_0)
+	local var_23_0 = false
+	local var_23_1, var_23_2, var_23_3, var_23_4 = arg_23_0._ctrlInst:getProgressLine()
 
-	if not slot0._ctrlInst:isBackward(slot2, slot3) then
-		for slot10, slot11 in pairs(slot0._ctrlInst:getAlertMap()) do
+	if not arg_23_0._ctrlInst:isBackward(var_23_1, var_23_2) then
+		local var_23_5 = arg_23_0._ctrlInst:getAlertMap()
+
+		for iter_23_0, iter_23_1 in pairs(var_23_5) do
 			return false
 		end
 	end
 
-	slot6 = slot4 or slot5
+	local var_23_6 = var_23_3 or var_23_4
 
-	if slot2 and slot3 and slot6 then
-		slot7, slot8 = slot0._ctrlInst:getLastPos()
-		slot9, slot10, slot11, slot12 = PuzzleMazeHelper.formatPos(slot7, slot8, slot2, slot3)
+	if var_23_1 and var_23_2 and var_23_6 then
+		local var_23_7, var_23_8 = arg_23_0._ctrlInst:getLastPos()
+		local var_23_9, var_23_10, var_23_11, var_23_12 = PuzzleMazeHelper.formatPos(var_23_7, var_23_8, var_23_1, var_23_2)
 
-		if slot0._curDragLine.x1 ~= slot9 or slot0._curDragLine.y1 ~= slot10 or slot0._curDragLine.x2 ~= slot11 or slot0._curDragLine.y2 ~= slot12 then
-			slot0._curDragLine.y2 = slot12
-			slot0._curDragLine.x2 = slot11
-			slot0._curDragLine.y1 = slot10
-			slot0._curDragLine.x1 = slot9
-			slot1 = true
+		if arg_23_0._curDragLine.x1 ~= var_23_9 or arg_23_0._curDragLine.y1 ~= var_23_10 or arg_23_0._curDragLine.x2 ~= var_23_11 or arg_23_0._curDragLine.y2 ~= var_23_12 then
+			arg_23_0._curDragLine.x1, arg_23_0._curDragLine.y1, arg_23_0._curDragLine.x2, arg_23_0._curDragLine.y2 = var_23_9, var_23_10, var_23_11, var_23_12
+			var_23_0 = true
 
-			slot0:cleanDragLine()
+			arg_23_0:cleanDragLine()
 		end
 
-		slot13 = PuzzleMazeHelper.getFromToDir(slot7, slot8, slot2, slot3)
+		local var_23_13 = PuzzleMazeHelper.getFromToDir(var_23_7, var_23_8, var_23_1, var_23_2)
 
-		slot0:getOrCreatePawnObj():setDir(slot13)
-		slot0:getOrCreatePathLine(PuzzleEnum.LineType.Path, slot9, slot10, slot11, slot12):onCrossHalf(slot13, slot6)
+		arg_23_0:getOrCreatePawnObj():setDir(var_23_13)
+		arg_23_0:getOrCreatePathLine(PuzzleEnum.LineType.Path, var_23_9, var_23_10, var_23_11, var_23_12):onCrossHalf(var_23_13, var_23_6)
 
-		return slot1
+		return var_23_0
 	end
 
 	return false
 end
 
-function slot0.syncAlertObjs(slot0)
-	slot0:recycleAlertObjs()
+function var_0_0.syncAlertObjs(arg_24_0)
+	arg_24_0:recycleAlertObjs()
 
-	slot0._alertType = PuzzleEnum.MazeAlertType.None
+	arg_24_0._alertType = PuzzleEnum.MazeAlertType.None
 
-	if slot0._ctrlInst:getAlertMap() then
-		for slot5, slot6 in pairs(slot1) do
-			slot0:onTriggerAlert(slot6, slot5)
+	local var_24_0 = arg_24_0._ctrlInst:getAlertMap()
 
-			slot0._alertType = slot6
+	if var_24_0 then
+		for iter_24_0, iter_24_1 in pairs(var_24_0) do
+			arg_24_0:onTriggerAlert(iter_24_1, iter_24_0)
+
+			arg_24_0._alertType = iter_24_1
 
 			return
 		end
 	end
 end
 
-function slot0.onTriggerAlert(slot0, slot1, slot2)
-	slot0:getOrCreateAlertObj(slot1):onEnable(slot1, slot2)
+function var_0_0.onTriggerAlert(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0:getOrCreateAlertObj(arg_25_1):onEnable(arg_25_1, arg_25_2)
 
-	if slot0:getAlertTriggerFunc(slot1) then
-		slot4(slot0, slot2)
+	local var_25_0 = arg_25_0:getAlertTriggerFunc(arg_25_1)
+
+	if var_25_0 then
+		var_25_0(arg_25_0, arg_25_2)
 	end
 end
 
-function slot0.registerAlertTriggerFunc(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.registerAlertTriggerFunc(arg_26_0, arg_26_1, arg_26_2)
+	if not arg_26_1 or not arg_26_2 then
 		logError("注册警告触发方法时警告类型及回调方法不可为空")
 
 		return
 	end
 
-	if slot0._alertTriggerFuncMap[slot1] then
-		logError("注册了重复的警告执行方法 :" .. tostring(slot1))
+	if arg_26_0._alertTriggerFuncMap[arg_26_1] then
+		logError("注册了重复的警告执行方法 :" .. tostring(arg_26_1))
 
 		return
 	end
 
-	slot0._alertTriggerFuncMap[slot1] = slot2
+	arg_26_0._alertTriggerFuncMap[arg_26_1] = arg_26_2
 end
 
-function slot0.getAlertTriggerFunc(slot0, slot1)
-	if not slot1 then
+function var_0_0.getAlertTriggerFunc(arg_27_0, arg_27_1)
+	if not arg_27_1 then
 		return
 	end
 
-	return slot0._alertTriggerFuncMap and slot0._alertTriggerFuncMap[slot1]
+	return arg_27_0._alertTriggerFuncMap and arg_27_0._alertTriggerFuncMap[arg_27_1]
 end
 
-function slot0.onBeginDragHandler(slot0, slot1, slot2)
-	if not slot0:canTouch() then
-		slot0:onBeginDragFailed(slot2)
+function var_0_0.onBeginDragHandler(arg_28_0, arg_28_1, arg_28_2)
+	if not arg_28_0:canTouch() then
+		arg_28_0:onBeginDragFailed(arg_28_2)
 
 		return
 	end
 
-	slot0:onBeginDragSucc(slot2)
+	arg_28_0:onBeginDragSucc(arg_28_2)
 end
 
-function slot0.onDragHandler(slot0, slot1, slot2)
-	if not slot0:canTouch() then
+function var_0_0.onDragHandler(arg_29_0, arg_29_1, arg_29_2)
+	if not arg_29_0:canTouch() then
 		return
 	end
 
-	if slot0._isPawnMoving then
-		slot5 = recthelper.screenPosToAnchorPos(slot2.position, slot0:getDragGo().transform)
+	if arg_29_0._isPawnMoving then
+		local var_29_0 = arg_29_0:getDragGo()
+		local var_29_1 = recthelper.screenPosToAnchorPos(arg_29_2.position, var_29_0.transform)
 
-		slot0:onDrag_StartProcessPos(slot2, slot5)
-		slot0:onDrag_EndProcessPos(slot2, slot5)
+		arg_29_0:onDrag_StartProcessPos(arg_29_2, var_29_1)
+		arg_29_0:onDrag_EndProcessPos(arg_29_2, var_29_1)
 	end
 end
 
-function slot0.onDrag_StartProcessPos(slot0, slot1, slot2)
-	slot3, slot4 = slot0._modelInst:getClosePosByTouchPos(slot2.x, slot2.y)
+function var_0_0.onDrag_StartProcessPos(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0, var_30_1 = arg_30_0._modelInst:getClosePosByTouchPos(arg_30_2.x, arg_30_2.y)
 
-	if slot3 ~= -1 then
-		slot0._ctrlInst:goPassPos(slot3, slot4)
+	if var_30_0 ~= -1 then
+		arg_30_0._ctrlInst:goPassPos(var_30_0, var_30_1)
 	else
-		slot5, slot6, slot7, slot8, slot9, slot10, slot11 = slot0._modelInst:getLineFieldByTouchPos(slot2.x, slot2.y)
+		local var_30_2, var_30_3, var_30_4, var_30_5, var_30_6, var_30_7, var_30_8 = arg_30_0._modelInst:getLineFieldByTouchPos(arg_30_2.x, arg_30_2.y)
 
-		if slot5 then
-			slot0._ctrlInst:goPassLine(slot6, slot7, slot8, slot9, slot10, slot11)
+		if var_30_2 then
+			arg_30_0._ctrlInst:goPassLine(var_30_3, var_30_4, var_30_5, var_30_6, var_30_7, var_30_8)
 		end
 	end
 end
 
-function slot0.onDrag_EndProcessPos(slot0, slot1, slot2)
-	slot0:onDrag_SyncPawn(slot1, slot2)
-	slot0:onDrag_SyncPath(slot1, slot2)
+function var_0_0.onDrag_EndProcessPos(arg_31_0, arg_31_1, arg_31_2)
+	arg_31_0:onDrag_SyncPawn(arg_31_1, arg_31_2)
+	arg_31_0:onDrag_SyncPath(arg_31_1, arg_31_2)
 end
 
-function slot0.onDrag_SyncPath(slot0, slot1, slot2)
-	if slot0._ctrlInst:isLineDirty() then
-		slot0:syncPath()
-		slot0:syncAlertObjs()
-		slot0:syncCheckPoints()
+function var_0_0.onDrag_SyncPath(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = arg_32_0._ctrlInst:isLineDirty()
+
+	if var_32_0 then
+		arg_32_0:syncPath()
+		arg_32_0:syncAlertObjs()
+		arg_32_0:syncCheckPoints()
 	end
 
-	if not slot3 and slot0:syncDragLine() then
-		slot0:syncPath()
+	local var_32_1 = arg_32_0:syncDragLine()
+
+	if not var_32_0 and var_32_1 then
+		arg_32_0:syncPath()
 	end
 
-	if slot3 then
-		slot0:checkGameFinished()
+	if var_32_0 then
+		arg_32_0:checkGameFinished()
 	end
 end
 
-function slot0.onEndDragHandler(slot0, slot1, slot2)
-	if not slot0:canTouch() then
+function var_0_0.onEndDragHandler(arg_33_0, arg_33_1, arg_33_2)
+	if not arg_33_0:canTouch() then
 		return
 	end
 
-	if slot0._isPawnMoving then
-		slot0._isPawnMoving = false
+	if arg_33_0._isPawnMoving then
+		arg_33_0._isPawnMoving = false
 
-		if slot0._ctrlInst:hasAlertObj() then
-			slot0:onEndDrag_HasAlert()
+		if arg_33_0._ctrlInst:hasAlertObj() then
+			arg_33_0:onEndDrag_HasAlert()
 		else
-			slot0:onEndDrag_NoneAlert()
+			arg_33_0:onEndDrag_NoneAlert()
 		end
 	end
 end
 
-function slot0.cleanDragLine(slot0)
-	for slot4, slot5 in pairs(slot0._pathLineMap) do
-		if slot5:getProgress() <= 0.999 and slot6 >= 0.01 then
-			slot5:clear()
+function var_0_0.cleanDragLine(arg_34_0)
+	for iter_34_0, iter_34_1 in pairs(arg_34_0._pathLineMap) do
+		local var_34_0 = iter_34_1:getProgress()
+
+		if var_34_0 <= 0.999 and var_34_0 >= 0.01 then
+			iter_34_1:clear()
 		end
 	end
 end
 
-function slot0.syncCheckPoints(slot0)
-	slot2 = {}
+function var_0_0.syncCheckPoints(arg_35_0)
+	local var_35_0 = arg_35_0._modelInst:getList()
+	local var_35_1 = {}
+	local var_35_2 = 0
 
-	for slot7, slot8 in ipairs(slot0._modelInst:getList()) do
-		slot9 = slot0:getOrCreateObject(slot8)
+	for iter_35_0, iter_35_1 in ipairs(var_35_0) do
+		local var_35_3 = arg_35_0:getOrCreateObject(iter_35_1)
 
-		if slot8.objType == PuzzleEnum.MazeObjType.CheckPoint and slot0._ctrlInst:alreadyCheckPoint(slot8) then
-			table.insert(slot2, tostring(slot8))
+		if iter_35_1.objType == PuzzleEnum.MazeObjType.CheckPoint and arg_35_0._ctrlInst:alreadyCheckPoint(iter_35_1) then
+			table.insert(var_35_1, tostring(iter_35_1))
 
-			slot3 = 0 + 1
+			var_35_2 = var_35_2 + 1
 		end
 
-		slot0:tickObjBehaviour(slot8, slot9)
+		arg_35_0:tickObjBehaviour(iter_35_1, var_35_3)
 	end
 
-	slot0:onEndRefreshCheckPoint(slot0._lastCheckSum, table.concat(slot2), slot0._lastCheckCount, slot3)
+	local var_35_4 = table.concat(var_35_1)
+
+	arg_35_0:onEndRefreshCheckPoint(arg_35_0._lastCheckSum, var_35_4, arg_35_0._lastCheckCount, var_35_2)
 end
 
-function slot0.tickObjBehaviour(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.tickObjBehaviour(arg_36_0, arg_36_1, arg_36_2)
+	local var_36_0 = false
 
-	if slot1.objType ~= PuzzleEnum.MazeObjType.Block then
-		slot3 = slot0._ctrlInst:alreadyPassed(slot1.x, slot1.y)
+	if arg_36_1.objType ~= PuzzleEnum.MazeObjType.Block then
+		var_36_0 = arg_36_0._ctrlInst:alreadyPassed(arg_36_1.x, arg_36_1.y)
 	end
 
-	if slot2:HasEnter() then
-		if slot3 then
-			slot2:onAlreadyEnter()
+	local var_36_1 = arg_36_2:HasEnter()
+
+	if var_36_1 then
+		if var_36_0 then
+			arg_36_2:onAlreadyEnter()
 		else
-			slot2:onExit()
+			arg_36_2:onExit()
 		end
-	elseif not slot4 and slot3 then
-		slot2:onEnter()
+	elseif not var_36_1 and var_36_0 then
+		arg_36_2:onEnter()
 	end
 end
 
-function slot0.checkGameFinished(slot0)
-	if slot0:isGameFinished() then
+function var_0_0.checkGameFinished(arg_37_0)
+	if arg_37_0:isGameFinished() then
 		return
 	end
 
-	if slot0:checkIsGameFailed() then
-		slot0:onGameFailed()
+	if arg_37_0:checkIsGameFailed() then
+		arg_37_0:onGameFailed()
 
 		return
 	end
 
-	if slot0:checkIsGameSucc() then
-		slot0:onGameSucc()
+	if arg_37_0:checkIsGameSucc() then
+		arg_37_0:onGameSucc()
 
 		return
 	end
 end
 
-function slot0.onBeginDragSucc(slot0, slot1)
-	slot2, slot3 = slot0._ctrlInst:getLastPos()
-	slot4, slot5 = slot0:getPawnPosByPointerEventData(slot1)
+function var_0_0.onBeginDragSucc(arg_38_0, arg_38_1)
+	local var_38_0, var_38_1 = arg_38_0._ctrlInst:getLastPos()
+	local var_38_2, var_38_3 = arg_38_0:getPawnPosByPointerEventData(arg_38_1)
 
-	if slot4 ~= -1 and slot2 == slot4 and slot3 == slot5 then
-		slot0:onBeginDrag_SyncPawn()
+	if var_38_2 ~= -1 and var_38_0 == var_38_2 and var_38_1 == var_38_3 then
+		arg_38_0:onBeginDrag_SyncPawn()
 	end
 end
 
-function slot0.getPawnPosByPointerEventData(slot0, slot1)
-	slot3 = recthelper.screenPosToAnchorPos(slot1.position, slot0:getDragGo().transform)
-	slot4, slot5 = slot0._modelInst:getClosePosByTouchPos(slot3.x - PuzzleEnum.mazeMonsterTouchOffsetX, slot3.y - PuzzleEnum.mazeMonsterHeight)
+function var_0_0.getPawnPosByPointerEventData(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0:getDragGo()
+	local var_39_1 = recthelper.screenPosToAnchorPos(arg_39_1.position, var_39_0.transform)
+	local var_39_2, var_39_3 = arg_39_0._modelInst:getClosePosByTouchPos(var_39_1.x - PuzzleEnum.mazeMonsterTouchOffsetX, var_39_1.y - PuzzleEnum.mazeMonsterHeight)
 
-	return slot4, slot5
+	return var_39_2, var_39_3
 end
 
-function slot0.onEndDrag_HasAlert(slot0)
-	slot0._ctrlInst:goBackPos()
-	slot0:onEndDrag_SyncPawn()
-	slot0:syncAlertObjs()
-	slot0:syncPath()
-	slot0:cleanDragLine()
-	slot0:syncCheckPoints()
+function var_0_0.onEndDrag_HasAlert(arg_40_0)
+	arg_40_0._ctrlInst:goBackPos()
+	arg_40_0:onEndDrag_SyncPawn()
+	arg_40_0:syncAlertObjs()
+	arg_40_0:syncPath()
+	arg_40_0:cleanDragLine()
+	arg_40_0:syncCheckPoints()
 end
 
-function slot0.onEndDrag_NoneAlert(slot0)
-	slot0:onEndDrag_SyncPawn()
-	slot0:syncPath()
-	slot0:cleanDragLine()
-	slot0:checkGameFinished()
+function var_0_0.onEndDrag_NoneAlert(arg_41_0)
+	arg_41_0:onEndDrag_SyncPawn()
+	arg_41_0:syncPath()
+	arg_41_0:cleanDragLine()
+	arg_41_0:checkGameFinished()
 end
 
-function slot0.onBeginDrag_SyncPawn(slot0)
-	slot0._isPawnMoving = true
+function var_0_0.onBeginDrag_SyncPawn(arg_42_0)
+	arg_42_0._isPawnMoving = true
 
-	slot0:getOrCreatePawnObj():onBeginDrag()
-	slot0._ctrlInst:dispatchEvent(PuzzleEvent.OnBeginDragPawn)
+	arg_42_0:getOrCreatePawnObj():onBeginDrag()
+	arg_42_0._ctrlInst:dispatchEvent(PuzzleEvent.OnBeginDragPawn)
 end
 
-function slot0.onDrag_SyncPawn(slot0, slot1, slot2)
-	slot0:getOrCreatePawnObj():onDraging(slot2.x, slot2.y)
+function var_0_0.onDrag_SyncPawn(arg_43_0, arg_43_1, arg_43_2)
+	arg_43_0:getOrCreatePawnObj():onDraging(arg_43_2.x, arg_43_2.y)
 end
 
-function slot0.onEndDrag_SyncPawn(slot0)
-	slot1, slot2 = slot0._ctrlInst:getLastPos()
-	slot3, slot4 = slot0._modelInst:getObjectAnchor(slot1, slot2)
+function var_0_0.onEndDrag_SyncPawn(arg_44_0)
+	local var_44_0, var_44_1 = arg_44_0._ctrlInst:getLastPos()
+	local var_44_2, var_44_3 = arg_44_0._modelInst:getObjectAnchor(var_44_0, var_44_1)
 
-	slot0:getOrCreatePawnObj():onEndDrag(slot3, slot4)
-	slot0._ctrlInst:dispatchEvent(PuzzleEvent.OnEndDragPawn)
+	arg_44_0:getOrCreatePawnObj():onEndDrag(var_44_2, var_44_3)
+	arg_44_0._ctrlInst:dispatchEvent(PuzzleEvent.OnEndDragPawn)
 end
 
-function slot0.canTouch(slot0)
-	return slot0._canTouch
+function var_0_0.canTouch(arg_45_0)
+	return arg_45_0._canTouch
 end
 
-function slot0.setCanTouch(slot0, slot1)
-	slot0._canTouch = slot1
+function var_0_0.setCanTouch(arg_46_0, arg_46_1)
+	arg_46_0._canTouch = arg_46_1
 end
 
-function slot0.onBeginDragFailed(slot0, slot1)
+function var_0_0.onBeginDragFailed(arg_47_0, arg_47_1)
+	return
 end
 
-function slot0.onEndRefreshCheckPoint(slot0, slot1, slot2, slot3, slot4)
-	slot0._lastCheckSum = slot2
-	slot0._lastCheckCount = slot4
+function var_0_0.onEndRefreshCheckPoint(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4)
+	arg_48_0._lastCheckSum = arg_48_2
+	arg_48_0._lastCheckCount = arg_48_4
 end
 
-function slot0.checkIsGameSucc(slot0)
-	return slot0._ctrlInst:isGameClear()
+function var_0_0.checkIsGameSucc(arg_49_0)
+	return arg_49_0._ctrlInst:isGameClear()
 end
 
-function slot0.onGameSucc(slot0)
-	if slot0._isPawnMoving then
-		slot0:onEndDrag_SyncPawn()
+function var_0_0.onGameSucc(arg_50_0)
+	if arg_50_0._isPawnMoving then
+		arg_50_0:onEndDrag_SyncPawn()
 	end
 
-	slot0:setCanTouch(false)
-	slot0:setGameFinished(true)
-	slot0._modelInst:setGameStatus(true)
+	arg_50_0:setCanTouch(false)
+	arg_50_0:setGameFinished(true)
+	arg_50_0._modelInst:setGameStatus(true)
 
-	if slot0._modelInst:getElementCo() and slot1.id and not DungeonModel.instance:isFinishElementList(slot1) then
-		DungeonRpc.instance:sendMapElementRequest(slot2)
+	local var_50_0 = arg_50_0._modelInst:getElementCo()
+	local var_50_1 = var_50_0 and var_50_0.id
+	local var_50_2 = DungeonModel.instance:isFinishElementList(var_50_0)
+
+	if var_50_1 and not var_50_2 then
+		DungeonRpc.instance:sendMapElementRequest(var_50_1)
 	end
 
-	slot0._ctrlInst:dispatchEvent(PuzzleEvent.OnGameFinished, slot2)
+	arg_50_0._ctrlInst:dispatchEvent(PuzzleEvent.OnGameFinished, var_50_1)
 end
 
-function slot0.checkIsGameFailed(slot0)
+function var_0_0.checkIsGameFailed(arg_51_0)
+	return
 end
 
-function slot0.onGameFailed(slot0)
-	slot0:setGameFinished(true)
+function var_0_0.onGameFailed(arg_52_0)
+	arg_52_0:setGameFinished(true)
 end
 
-function slot0.isGameFinished(slot0)
-	return slot0._isFinished
+function var_0_0.isGameFinished(arg_53_0)
+	return arg_53_0._isFinished
 end
 
-function slot0.setGameFinished(slot0, slot1)
-	slot0._isFinished = slot1
+function var_0_0.setGameFinished(arg_54_0, arg_54_1)
+	arg_54_0._isFinished = arg_54_1
 end
 
-function slot0.getModelInst(slot0)
+function var_0_0.getModelInst(arg_55_0)
+	return
 end
 
-function slot0.getCtrlInst(slot0)
+function var_0_0.getCtrlInst(arg_56_0)
+	return
 end
 
-function slot0.getDragGo(slot0)
+function var_0_0.getDragGo(arg_57_0)
+	return
 end
 
-function slot0.getLineParentGo(slot0)
+function var_0_0.getLineParentGo(arg_58_0)
+	return
 end
 
-function slot0.getPawnParentGo(slot0)
+function var_0_0.getPawnParentGo(arg_59_0)
+	return
 end
 
-function slot0.getObjectParentGo(slot0)
+function var_0_0.getObjectParentGo(arg_60_0)
+	return
 end
 
-function slot0.getAlertParentGo(slot0)
+function var_0_0.getAlertParentGo(arg_61_0)
+	return
 end
 
-function slot0.getMazeObjCls(slot0, slot1, slot2, slot3)
+function var_0_0.getMazeObjCls(arg_62_0, arg_62_1, arg_62_2, arg_62_3)
+	return
 end
 
-function slot0.getPawnObjCls(slot0)
+function var_0_0.getPawnObjCls(arg_63_0)
+	return
 end
 
-function slot0.getLineObjCls(slot0, slot1)
+function var_0_0.getLineObjCls(arg_64_0, arg_64_1)
+	return
 end
 
-function slot0.getAlertObjCls(slot0, slot1)
+function var_0_0.getAlertObjCls(arg_65_0, arg_65_1)
+	return
 end
 
-function slot0.getPawnResUrl(slot0)
+function var_0_0.getPawnResUrl(arg_66_0)
+	return
 end
 
-function slot0.getLineResUrl(slot0, slot1)
+function var_0_0.getLineResUrl(arg_67_0, arg_67_1)
+	return
 end
 
-function slot0.getObjectResUrl(slot0, slot1, slot2, slot3)
+function var_0_0.getObjectResUrl(arg_68_0, arg_68_1, arg_68_2, arg_68_3)
+	return
 end
 
-function slot0.getAlertResUrl(slot0, slot1)
+function var_0_0.getAlertResUrl(arg_69_0, arg_69_1)
+	return
 end
 
-function slot0.getLineTemplateFillOrigin(slot0)
+function var_0_0.getLineTemplateFillOrigin(arg_70_0)
+	return
 end
 
-return slot0
+return var_0_0

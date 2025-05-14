@@ -1,22 +1,23 @@
-module("modules.logic.room.define.RoomProductLineEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomProductLineEnum", package.seeall)
 
-slot0 = _M
-slot0.ProductType = {
+local var_0_0 = _M
+
+var_0_0.ProductType = {
 	Product = 1,
 	Change = 2
 }
-slot0.ProductItemType = {
+var_0_0.ProductItemType = {
 	ProductGold = 2,
 	ProductExp = 1,
 	Change = 3
 }
-slot0.AnimTime = {
+var_0_0.AnimTime = {
 	TreeAnim = 0.1
 }
-slot0.AnimName = {
+var_0_0.AnimName = {
 	TreeShow = "show",
 	TreeIdle = "idle",
 	TreeHide = "hide"
 }
 
-return slot0
+return var_0_0

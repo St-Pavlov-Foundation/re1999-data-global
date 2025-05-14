@@ -1,53 +1,58 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186MainBtnItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186MainBtnItem", package.seeall)
 
-slot0 = class("Activity186MainBtnItem", ActCenterItemBase)
+local var_0_0 = class("Activity186MainBtnItem", ActCenterItemBase)
 
-function slot0.onAddEvent(slot0)
-	gohelper.addUIClickAudio(slot0._btnitem)
-	Activity186Controller.instance:registerCallback(Activity186Event.RefreshRed, slot0.refreshDot, slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, slot0.refreshDot, slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, slot0.refreshDot, slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, slot0.refreshDot, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, slot0.refreshDot, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, slot0.refreshDot, slot0)
+function var_0_0.onAddEvent(arg_1_0)
+	gohelper.addUIClickAudio(arg_1_0._btnitem)
+	Activity186Controller.instance:registerCallback(Activity186Event.RefreshRed, arg_1_0.refreshDot, arg_1_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, arg_1_0.refreshDot, arg_1_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, arg_1_0.refreshDot, arg_1_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_1_0.refreshDot, arg_1_0)
+	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, arg_1_0.refreshDot, arg_1_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_1_0.refreshDot, arg_1_0)
 end
 
-function slot0.onRemoveEvent(slot0)
-	Activity186Controller.instance:unregisterCallback(Activity186Event.RefreshRed, slot0.refreshDot, slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, slot0.refreshDot, slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, slot0.refreshDot, slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, slot0.refreshDot, slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, slot0.refreshDot, slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, slot0.refreshDot, slot0)
+function var_0_0.onRemoveEvent(arg_2_0)
+	Activity186Controller.instance:unregisterCallback(Activity186Event.RefreshRed, arg_2_0.refreshDot, arg_2_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, arg_2_0.refreshDot, arg_2_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, arg_2_0.refreshDot, arg_2_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_2_0.refreshDot, arg_2_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, arg_2_0.refreshDot, arg_2_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshDot, arg_2_0)
 end
 
-function slot0.onClick(slot0)
-	Activity186Rpc.instance:sendGetAct186InfoRequest(slot0:onGetActId(), slot0._onReceiveGetInfosReply, slot0)
+function var_0_0.onClick(arg_3_0)
+	local var_3_0 = arg_3_0:onGetActId()
+
+	Activity186Rpc.instance:sendGetAct186InfoRequest(var_3_0, arg_3_0._onReceiveGetInfosReply, arg_3_0)
 end
 
-function slot0._onReceiveGetInfosReply(slot0, slot1, slot2)
-	if slot2 == 0 then
-		slot3, slot4 = slot0:onGetViewNameAndParam()
+function var_0_0._onReceiveGetInfosReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_2 == 0 then
+		local var_4_0, var_4_1 = arg_4_0:onGetViewNameAndParam()
 
-		ViewMgr.instance:openView(slot3, slot4)
+		ViewMgr.instance:openView(var_4_0, var_4_1)
 	end
 end
 
-function slot0.refreshData(slot0)
-	slot0:setCustomData({
+function var_0_0.refreshData(arg_5_0)
+	local var_5_0 = Activity186Model.instance:getActId()
+	local var_5_1 = {
 		viewName = "Activity186View",
 		viewParam = {
-			actId = Activity186Model.instance:getActId()
+			actId = var_5_0
 		}
-	})
+	}
+
+	arg_5_0:setCustomData(var_5_1)
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshData()
-	slot0:_addNotEventRedDot(slot0._checkRed, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:refreshData()
+	arg_6_0:_addNotEventRedDot(arg_6_0._checkRed, arg_6_0)
 end
 
-function slot0._checkRed(slot0)
+function var_0_0._checkRed(arg_7_0)
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a5_Act186, 0) then
 		return true
 	end
@@ -56,41 +61,53 @@ function slot0._checkRed(slot0)
 		return true
 	end
 
-	if Activity186Model.instance:getById(Activity186Model.instance:getActId()) and slot2:isCanShowAvgBtn() then
+	local var_7_0 = Activity186Model.instance:getActId()
+	local var_7_1 = Activity186Model.instance:getById(var_7_0)
+
+	if var_7_1 and var_7_1:isCanShowAvgBtn() then
 		return true
 	end
 
 	return false
 end
 
-function slot0.onRefresh(slot0)
-	slot0:refreshData()
+function var_0_0.onRefresh(arg_8_0)
+	arg_8_0:refreshData()
 
-	slot3 = ActivityModel.showActivityEffect() and ActivityConfig.instance:getMainActAtmosphereConfig().mainViewActBtnPrefix .. "icon_6" or "icon_6"
+	local var_8_0 = ActivityModel.showActivityEffect()
+	local var_8_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local var_8_2 = var_8_0 and var_8_1.mainViewActBtnPrefix .. "icon_6" or "icon_6"
 
-	if not slot1 and ActivityConfig.instance:getMainActAtmosphereConfig() then
-		for slot8, slot9 in ipairs(slot4.mainViewActBtn) do
-			if gohelper.findChild(slot0.go, slot9) then
-				gohelper.setActive(slot10, slot1)
+	if not var_8_0 then
+		local var_8_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+
+		if var_8_3 then
+			for iter_8_0, iter_8_1 in ipairs(var_8_3.mainViewActBtn) do
+				local var_8_4 = gohelper.findChild(arg_8_0.go, iter_8_1)
+
+				if var_8_4 then
+					gohelper.setActive(var_8_4, var_8_0)
+				end
 			end
 		end
 	end
 
-	slot0:_setMainSprite(slot3)
+	arg_8_0:_setMainSprite(var_8_2)
 end
 
-function slot0.onGetViewNameAndParam(slot0)
-	slot1 = slot0:getCustomData()
+function var_0_0.onGetViewNameAndParam(arg_9_0)
+	local var_9_0 = arg_9_0:getCustomData()
+	local var_9_1 = var_9_0.viewParam
 
-	return slot1.viewName, slot1.viewParam
+	return var_9_0.viewName, var_9_1
 end
 
-function slot0.onGetActId(slot0)
-	return slot0:getCustomData().viewParam.actId
+function var_0_0.onGetActId(arg_10_0)
+	return arg_10_0:getCustomData().viewParam.actId
 end
 
-function slot0.refreshDot(slot0)
-	slot0:_refreshRedDot()
+function var_0_0.refreshDot(arg_11_0)
+	arg_11_0:_refreshRedDot()
 end
 
-return slot0
+return var_0_0

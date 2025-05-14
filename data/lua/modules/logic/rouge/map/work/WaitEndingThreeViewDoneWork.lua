@@ -1,39 +1,41 @@
-module("modules.logic.rouge.map.work.WaitEndingThreeViewDoneWork", package.seeall)
+﻿module("modules.logic.rouge.map.work.WaitEndingThreeViewDoneWork", package.seeall)
 
-slot0 = class("WaitEndingThreeViewDoneWork", BaseWork)
+local var_0_0 = class("WaitEndingThreeViewDoneWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0.endId = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.endId = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	if slot0.endId ~= RougeEnum.EndingThreeId then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if arg_2_0.endId ~= RougeEnum.EndingThreeId then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if not (RougeModel.instance:getRougeResult() and slot1:isSucceed()) then
-		slot0:onDone(true)
+	local var_2_0 = RougeModel.instance:getRougeResult()
+
+	if not (var_2_0 and var_2_0:isSucceed()) then
+		arg_2_0:onDone(true)
 	end
 
-	slot0.flow = FlowSequence.New()
+	arg_2_0.flow = FlowSequence.New()
 
-	slot0.flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.RougeEndingThreeView))
-	slot0.flow:registerDoneListener(slot0.onFlowDone, slot0)
-	slot0.flow:start()
+	arg_2_0.flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.RougeEndingThreeView))
+	arg_2_0.flow:registerDoneListener(arg_2_0.onFlowDone, arg_2_0)
+	arg_2_0.flow:start()
 end
 
-function slot0.onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0.onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0.flow then
-		slot0.flow:onDestroy()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0.flow then
+		arg_4_0.flow:onDestroy()
 
-		slot0.flow = nil
+		arg_4_0.flow = nil
 	end
 end
 
-return slot0
+return var_0_0

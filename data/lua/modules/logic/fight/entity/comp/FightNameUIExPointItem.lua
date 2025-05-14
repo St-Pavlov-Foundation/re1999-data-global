@@ -1,37 +1,37 @@
-module("modules.logic.fight.entity.comp.FightNameUIExPointItem", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightNameUIExPointItem", package.seeall)
 
-slot0 = class("FightNameUIExPointItem", FightNameUIExPointBaseItem)
+local var_0_0 = class("FightNameUIExPointItem", FightNameUIExPointBaseItem)
 
-function slot0.GetExPointItem(slot0)
-	slot1 = uv0.New()
+function var_0_0.GetExPointItem(arg_1_0)
+	local var_1_0 = var_0_0.New()
 
-	slot1:init(slot0)
+	var_1_0:init(arg_1_0)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	var_0_0.super.init(arg_2_0, arg_2_1)
 
-	slot0.goFull2 = gohelper.findChild(slot0.exPointGo, "full2")
-	slot0.imageFull2 = slot0.goFull2:GetComponent(gohelper.Type_Image)
+	arg_2_0.goFull2 = gohelper.findChild(arg_2_0.exPointGo, "full2")
+	arg_2_0.imageFull2 = arg_2_0.goFull2:GetComponent(gohelper.Type_Image)
 end
 
-function slot0.resetToEmpty(slot0)
-	uv0.super.resetToEmpty(slot0)
-	gohelper.setActive(slot0.goFull2, false)
+function var_0_0.resetToEmpty(arg_3_0)
+	var_0_0.super.resetToEmpty(arg_3_0)
+	gohelper.setActive(arg_3_0.goFull2, false)
 
-	slot0.imageFull2.color = Color.white
+	arg_3_0.imageFull2.color = Color.white
 end
 
-function slot0.directSetStoredState(slot0, slot1)
-	uv0.super.directSetStoredState(slot0)
-	gohelper.setActive(slot0.goFull2, true)
+function var_0_0.directSetStoredState(arg_4_0, arg_4_1)
+	var_0_0.super.directSetStoredState(arg_4_0)
+	gohelper.setActive(arg_4_0.goFull2, true)
 end
 
-function slot0.switchToStoredState(slot0, slot1)
-	uv0.super.switchToStoredState(slot0)
-	gohelper.setActive(slot0.goFull2, true)
+function var_0_0.switchToStoredState(arg_5_0, arg_5_1)
+	var_0_0.super.switchToStoredState(arg_5_0)
+	gohelper.setActive(arg_5_0.goFull2, true)
 end
 
-return slot0
+return var_0_0

@@ -1,46 +1,53 @@
-module("modules.logic.versionactivity1_9.roomgift.view.RoomGiftView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.roomgift.view.RoomGiftView", package.seeall)
 
-slot0 = class("RoomGiftView", BaseView)
+local var_0_0 = class("RoomGiftView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "LimitTime/image_LimitTimeBG/#txt_LimitTime")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/image_LimitTimeBG/#txt_LimitTime")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam.parent then
-		gohelper.addChild(slot1, slot0.viewGO)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.parent
+
+	if var_6_0 then
+		gohelper.addChild(var_6_0, arg_6_0.viewGO)
 	end
 
-	slot0:_refreshTimeTick()
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, TimeUtil.OneMinuteSecond)
+	arg_6_0:_refreshTimeTick()
+	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
+	TaskDispatcher.runRepeat(arg_6_0._refreshTimeTick, arg_6_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(ActivityEnum.Activity.RoomGift)
+function var_0_0._refreshTimeTick(arg_7_0)
+	arg_7_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(ActivityEnum.Activity.RoomGift)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0.onClose(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

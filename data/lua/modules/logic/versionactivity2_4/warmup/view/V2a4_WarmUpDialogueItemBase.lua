@@ -1,249 +1,270 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase", package.seeall)
 
-slot0 = class("V2a4_WarmUpDialogueItemBase", RougeSimpleItemBase)
-slot1 = typeof(ZProj.TMPMark)
+local var_0_0 = class("V2a4_WarmUpDialogueItemBase", RougeSimpleItemBase)
+local var_0_1 = typeof(ZProj.TMPMark)
 
-function slot0.ctor(slot0, ...)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	arg_1_0:__onInit()
+	var_0_0.super.ctor(arg_1_0, ...)
 
-	slot0.__txtCmpList = slot0:getUserDataTb_()
-	slot0.__txtmarktopList = slot0:getUserDataTb_()
-	slot0.__txtmarktopGoList = slot0:getUserDataTb_()
-	slot0.__txtConMarkList = slot0:getUserDataTb_()
-	slot0.__txtmarktopIndex = 0
-	slot0.__fTimerList = {}
-	slot0.__lineSpacing = {}
-	slot0.__originalLineSpacing = {}
-	slot0.__markTopListList = {}
-	slot0._isFlushed = false
-	slot0._isReadyStepEnd = false
-	slot0._isGrayscaled = false
+	arg_1_0.__txtCmpList = arg_1_0:getUserDataTb_()
+	arg_1_0.__txtmarktopList = arg_1_0:getUserDataTb_()
+	arg_1_0.__txtmarktopGoList = arg_1_0:getUserDataTb_()
+	arg_1_0.__txtConMarkList = arg_1_0:getUserDataTb_()
+	arg_1_0.__txtmarktopIndex = 0
+	arg_1_0.__fTimerList = {}
+	arg_1_0.__lineSpacing = {}
+	arg_1_0.__originalLineSpacing = {}
+	arg_1_0.__markTopListList = {}
+	arg_1_0._isFlushed = false
+	arg_1_0._isReadyStepEnd = false
+	arg_1_0._isGrayscaled = false
 end
 
-function slot0.setTopOffset(slot0, slot1, slot2, slot3)
-	if not slot0.__txtConMarkList[slot1] then
+function var_0_0.setTopOffset(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = arg_2_0.__txtConMarkList[arg_2_1]
+
+	if not var_2_0 then
 		return
 	end
 
-	slot4:SetTopOffset(slot2 or 0, slot3 or 0)
+	var_2_0:SetTopOffset(arg_2_2 or 0, arg_2_3 or 0)
 end
 
-function slot0.createMarktopCmp(slot0, slot1)
-	slot2 = slot0.__txtmarktopIndex + 1
-	slot0.__txtmarktopIndex = slot2
-	slot3 = slot1.gameObject
-	slot4 = IconMgr.instance:getCommonTextMarkTop(slot3)
-	slot6 = gohelper.onceAddComponent(slot3, uv0)
-	slot0.__txtCmpList[slot2] = slot1
-	slot0.__txtmarktopGoList[slot2] = slot4
-	slot0.__txtmarktopList[slot2] = slot4:GetComponent(gohelper.Type_TextMesh)
-	slot0.__txtConMarkList[slot2] = slot6
-	slot0.__originalLineSpacing[slot2] = slot1.lineSpacing
+function var_0_0.createMarktopCmp(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.__txtmarktopIndex + 1
 
-	slot6:SetMarkTopGo(slot4)
+	arg_3_0.__txtmarktopIndex = var_3_0
 
-	return slot2
+	local var_3_1 = arg_3_1.gameObject
+	local var_3_2 = IconMgr.instance:getCommonTextMarkTop(var_3_1)
+	local var_3_3 = var_3_2:GetComponent(gohelper.Type_TextMesh)
+	local var_3_4 = gohelper.onceAddComponent(var_3_1, var_0_1)
+
+	arg_3_0.__txtCmpList[var_3_0] = arg_3_1
+	arg_3_0.__txtmarktopGoList[var_3_0] = var_3_2
+	arg_3_0.__txtmarktopList[var_3_0] = var_3_3
+	arg_3_0.__txtConMarkList[var_3_0] = var_3_4
+	arg_3_0.__originalLineSpacing[var_3_0] = arg_3_1.lineSpacing
+
+	var_3_4:SetMarkTopGo(var_3_2)
+
+	return var_3_0
 end
 
-function slot0.setTextWithMarktopByIndex(slot0, slot1, slot2)
-	slot0.__markTopListList[slot1] = StoryTool.getMarkTopTextList(slot2)
+function var_0_0.setTextWithMarktopByIndex(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.__markTopListList[arg_4_1] = StoryTool.getMarkTopTextList(arg_4_2)
 
-	slot0:_setText(slot1, StoryTool.filterMarkTop(slot2))
-	slot0:_unregftimer(slot1)
+	arg_4_0:_setText(arg_4_1, StoryTool.filterMarkTop(arg_4_2))
+	arg_4_0:_unregftimer(arg_4_1)
 
-	slot3 = FrameTimerController.instance:register(function ()
-		slot2 = uv0.__txtConMarkList[uv1]
+	local var_4_0 = FrameTimerController.instance:register(function()
+		local var_5_0 = arg_4_0.__txtmarktopList[arg_4_1]
+		local var_5_1 = arg_4_0.__txtmarktopGoList[arg_4_1]
+		local var_5_2 = arg_4_0.__txtConMarkList[arg_4_1]
+		local var_5_3 = arg_4_0.__markTopListList[arg_4_1]
 
-		if uv0.__markTopListList[uv1] and uv0.__txtmarktopList[uv1] and slot2 and not gohelper.isNil(uv0.__txtmarktopGoList[uv1]) then
-			slot2:SetMarksTop(slot3)
+		if var_5_3 and var_5_0 and var_5_2 and not gohelper.isNil(var_5_1) then
+			var_5_2:SetMarksTop(var_5_3)
 		end
 	end, nil, 1)
-	slot0.__fTimerList[slot1] = slot3
 
-	slot3:Start()
+	arg_4_0.__fTimerList[arg_4_1] = var_4_0
+
+	var_4_0:Start()
 end
 
-function slot0._setText(slot0, slot1, slot2)
-	if not slot0.__txtCmpList[slot1] then
+function var_0_0._setText(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0.__txtCmpList[arg_6_1]
+
+	if not var_6_0 then
 		return
 	end
 
-	slot3.lineSpacing = slot0:getLineSpacing(slot1)
-	slot3.text = slot2
+	var_6_0.lineSpacing = arg_6_0:getLineSpacing(arg_6_1)
+	var_6_0.text = arg_6_2
 end
 
-function slot0.setLineSpacing(slot0, slot1, slot2)
-	slot0.__lineSpacing[slot1] = slot2 or 0
+function var_0_0.setLineSpacing(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.__lineSpacing[arg_7_1] = arg_7_2 or 0
 end
 
-function slot0.getLineSpacing(slot0, slot1)
-	return slot0.__markTopListList[slot1] and #slot2 > 0 and slot0.__lineSpacing[slot1] or slot0.__originalLineSpacing[slot1] or 0
+function var_0_0.getLineSpacing(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.__markTopListList[arg_8_1]
+	local var_8_1 = arg_8_0.__lineSpacing[arg_8_1]
+	local var_8_2 = arg_8_0.__originalLineSpacing[arg_8_1]
+
+	return var_8_0 and #var_8_0 > 0 and var_8_1 or var_8_2 or 0
 end
 
-function slot0._unregftimer(slot0, slot1)
-	if not slot0.__fTimerList[slot1] then
+function var_0_0._unregftimer(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0.__fTimerList[arg_9_1]
+
+	if not var_9_0 then
 		return
 	end
 
-	FrameTimerController.instance:unregister(slot2)
+	FrameTimerController.instance:unregister(var_9_0)
 
-	slot0.__fTimerList[slot1] = nil
+	arg_9_0.__fTimerList[arg_9_1] = nil
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.__fTimerList) do
-		slot0:_unregftimer(slot4)
+function var_0_0.onDestroyView(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.__fTimerList) do
+		arg_10_0:_unregftimer(iter_10_0)
 	end
 
-	FrameTimerController.onDestroyViewMember(slot0, "__fTimerSetTxt")
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+	FrameTimerController.onDestroyViewMember(arg_10_0, "__fTimerSetTxt")
+	var_0_0.super.onDestroyView(arg_10_0)
+	arg_10_0:__onDispose()
 end
 
-function slot0.isFlushed(slot0)
-	return slot0._isFlushed
+function var_0_0.isFlushed(arg_11_0)
+	return arg_11_0._isFlushed
 end
 
-function slot0.isReadyStepEnd(slot0)
-	return slot0._isReadyStepEnd
+function var_0_0.isReadyStepEnd(arg_12_0)
+	return arg_12_0._isReadyStepEnd
 end
 
-function slot0.waveMO(slot0)
-	return slot0._mo.waveMO
+function var_0_0.waveMO(arg_13_0)
+	return arg_13_0._mo.waveMO
 end
 
-function slot0.roundMO(slot0)
-	return slot0._mo.roundMO
+function var_0_0.roundMO(arg_14_0)
+	return arg_14_0._mo.roundMO
 end
 
-function slot0.dialogCO(slot0)
-	return slot0._mo.dialogCO
+function var_0_0.dialogCO(arg_15_0)
+	return arg_15_0._mo.dialogCO
 end
 
-function slot0.addContentItem(slot0, slot1)
-	slot0:parent():onAddContentItem(slot0, slot1)
+function var_0_0.addContentItem(arg_16_0, arg_16_1)
+	arg_16_0:parent():onAddContentItem(arg_16_0, arg_16_1)
 end
 
-function slot0.uiInfo(slot0)
-	return slot0:parent():uiInfo()
+function var_0_0.uiInfo(arg_17_0)
+	return arg_17_0:parent():uiInfo()
 end
 
-function slot0.stY(slot0)
-	return slot0:uiInfo().stY or 0
+function var_0_0.stY(arg_18_0)
+	return arg_18_0:uiInfo().stY or 0
 end
 
-function slot0.getTemplateGo(slot0)
+function var_0_0.getTemplateGo(arg_19_0)
 	assert(false, "please override this function")
 end
 
-function slot0.onRefreshLineInfo(slot0)
-	slot0:stepEnd()
+function var_0_0.onRefreshLineInfo(arg_20_0)
+	arg_20_0:stepEnd()
 end
 
-function slot0.onFlush(slot0)
-	if slot0._isFlushed then
+function var_0_0.onFlush(arg_21_0)
+	if arg_21_0._isFlushed then
 		return
 	end
 
-	slot0._isFlushed = true
+	arg_21_0._isFlushed = true
 
-	slot0:setActive_Txt(true)
+	arg_21_0:setActive_Txt(true)
 end
 
-function slot0.stepEnd(slot0)
-	slot0:parent():onStepEnd(slot0:waveMO(), slot0:roundMO())
+function var_0_0.stepEnd(arg_22_0)
+	arg_22_0:parent():onStepEnd(arg_22_0:waveMO(), arg_22_0:roundMO())
 end
 
-function slot0.lineCount(slot0)
-	return slot0._txtcontent:GetTextInfo(slot0._txtcontent.text).lineCount
+function var_0_0.lineCount(arg_23_0)
+	return arg_23_0._txtcontent:GetTextInfo(arg_23_0._txtcontent.text).lineCount
 end
 
-function slot0.preferredWidthTxt(slot0)
-	return slot0._txtcontent.preferredWidth
+function var_0_0.preferredWidthTxt(arg_24_0)
+	return arg_24_0._txtcontent.preferredWidth
 end
 
-function slot0.preferredHeightTxt(slot0)
-	return slot0._txtcontent.preferredHeight
+function var_0_0.preferredHeightTxt(arg_25_0)
+	return arg_25_0._txtcontent.preferredHeight
 end
 
-function slot0.setActive_Txt(slot0, slot1)
-	GameUtil.setActive01(slot0._txtTrans, slot1)
+function var_0_0.setActive_Txt(arg_26_0, arg_26_1)
+	GameUtil.setActive01(arg_26_0._txtTrans, arg_26_1)
 end
 
-function slot0.setActive_loading(slot0, slot1)
-	gohelper.setActive(slot0._goloading, slot1)
+function var_0_0.setActive_loading(arg_27_0, arg_27_1)
+	gohelper.setActive(arg_27_0._goloading, arg_27_1)
 end
 
-function slot0.setFontColor(slot0, slot1)
-	slot0._txtcontent.color = GameUtil.parseColor(slot1)
+function var_0_0.setFontColor(arg_28_0, arg_28_1)
+	arg_28_0._txtcontent.color = GameUtil.parseColor(arg_28_1)
 end
 
-function slot0.grayscale(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0._isGrayscaled == slot1 then
+function var_0_0.grayscale(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
+	if arg_29_0._isGrayscaled == arg_29_1 then
 		return
 	end
 
-	slot0._isGrayscaled = true
+	arg_29_0._isGrayscaled = true
 
-	if slot2 then
-		slot0:setGrayscale(slot2, slot1)
+	if arg_29_2 then
+		arg_29_0:setGrayscale(arg_29_2, arg_29_1)
 	end
 
-	if slot3 then
-		slot0:setGrayscale(slot3, slot1)
+	if arg_29_3 then
+		arg_29_0:setGrayscale(arg_29_3, arg_29_1)
 	end
 
-	if slot4 then
-		slot0:setGrayscale(slot4, slot1)
+	if arg_29_4 then
+		arg_29_0:setGrayscale(arg_29_4, arg_29_1)
 	end
 
-	if slot5 then
-		slot0:setGrayscale(slot5, slot1)
+	if arg_29_5 then
+		arg_29_0:setGrayscale(arg_29_5, arg_29_1)
 	end
 end
 
-function slot0.refreshLineInfo(slot0)
-	slot2 = slot0._txtcontent:GetTextInfo(slot0._txtcontent.text).lineCount
-	slot0._lineCount = slot2
+function var_0_0.refreshLineInfo(arg_30_0)
+	local var_30_0 = arg_30_0._txtcontent:GetTextInfo(arg_30_0._txtcontent.text)
+	local var_30_1 = var_30_0.lineCount
 
-	if slot2 > 0 then
-		slot3 = slot1.lineInfo[0]
-		slot0._lineHeight = slot3.lineHeight
-		slot0._lineWidth = slot3.width
+	arg_30_0._lineCount = var_30_1
+
+	if var_30_1 > 0 then
+		local var_30_2 = var_30_0.lineInfo[0]
+
+		arg_30_0._lineHeight = var_30_2.lineHeight
+		arg_30_0._lineWidth = var_30_2.width
 	else
-		slot0._lineHeight = recthelper.getHeight(slot0._txtTrans)
-		slot0._lineWidth = slot0._txtcontent.preferredWidth
+		arg_30_0._lineHeight = recthelper.getHeight(arg_30_0._txtTrans)
+		arg_30_0._lineWidth = arg_30_0._txtcontent.preferredWidth
 	end
 
-	slot0._isReadyStepEnd = true
+	arg_30_0._isReadyStepEnd = true
 
-	slot0:onRefreshLineInfo()
+	arg_30_0:onRefreshLineInfo()
 end
 
-function slot0.setData(slot0, slot1)
-	uv0.super.setData(slot0, slot1)
-	recthelper.setAnchorY(slot0:transform(), slot0:stY())
+function var_0_0.setData(arg_31_0, arg_31_1)
+	var_0_0.super.setData(arg_31_0, arg_31_1)
+	recthelper.setAnchorY(arg_31_0:transform(), arg_31_0:stY())
 end
 
-function slot0.setText(slot0, slot1, slot2)
-	slot0._txtcontent.text = slot1
-	slot0._isFlushed = slot2
+function var_0_0.setText(arg_32_0, arg_32_1, arg_32_2)
+	arg_32_0._txtcontent.text = arg_32_1
+	arg_32_0._isFlushed = arg_32_2
 
-	slot0:setActive_Txt(false)
-	FrameTimerController.onDestroyViewMember(slot0, "__fTimerSetTxt")
+	arg_32_0:setActive_Txt(false)
+	FrameTimerController.onDestroyViewMember(arg_32_0, "__fTimerSetTxt")
 
-	slot0.__fTimerSetTxt = FrameTimerController.instance:register(function ()
-		if not gohelper.isNil(uv0._txtGo) then
-			uv0:refreshLineInfo()
+	arg_32_0.__fTimerSetTxt = FrameTimerController.instance:register(function()
+		if not gohelper.isNil(arg_32_0._txtGo) then
+			arg_32_0:refreshLineInfo()
 
-			if uv0._isFlushed then
-				uv0:setActive_Txt(true)
+			if arg_32_0._isFlushed then
+				arg_32_0:setActive_Txt(true)
 			end
 		end
 	end, nil, 1)
 
-	slot0.__fTimerSetTxt:Start()
+	arg_32_0.__fTimerSetTxt:Start()
 end
 
-return slot0
+return var_0_0

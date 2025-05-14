@@ -1,227 +1,257 @@
-module("modules.logic.tower.view.permanenttower.TowerPermanentInfoView", package.seeall)
+﻿module("modules.logic.tower.view.permanenttower.TowerPermanentInfoView", package.seeall)
 
-slot0 = class("TowerPermanentInfoView", BaseView)
+local var_0_0 = class("TowerPermanentInfoView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtepisode = gohelper.findChildText(slot0.viewGO, "right/Title/#txt_episode")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "right/Title/#txt_name")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "right/Title/txt_TitleEn")
-	slot0._btnenemyInfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/Title/#btn_enemyInfo")
-	slot0._gorecommendAttr = gohelper.findChild(slot0.viewGO, "right/#go_recommendAttr")
-	slot0._goattritem = gohelper.findChild(slot0.viewGO, "right/#go_recommendAttr/attrlist/#go_attritem")
-	slot0._txtrecommonddes = gohelper.findChildText(slot0.viewGO, "right/#go_recommendAttr/#txt_recommonddes")
-	slot0._txtrecommendLevel = gohelper.findChildText(slot0.viewGO, "right/recommendlevel/#txt_recommendLevel")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "right/desc/Viewport/#txt_desc")
-	slot0._gocurherogroup = gohelper.findChild(slot0.viewGO, "right/#go_curherogroup")
-	slot0._goherogroupItem = gohelper.findChild(slot0.viewGO, "right/#go_curherogroup/#go_herogroupItem")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_reset")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "right/#btn_fight/#go_lock")
-	slot0._gostart = gohelper.findChild(slot0.viewGO, "right/#btn_fight/#go_start")
-	slot0._gorestart = gohelper.findChild(slot0.viewGO, "right/#btn_fight/#go_restart")
-	slot0._gostartElite = gohelper.findChild(slot0.viewGO, "right/#btn_fight/#go_startelite")
-	slot0._gorestartElite = gohelper.findChild(slot0.viewGO, "right/#btn_fight/#go_restartelite")
-	slot0._btnlock = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_fight/#go_lock")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_fight/#go_start")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_fight/#go_restart")
-	slot0._btnstartElite = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_fight/#go_startelite")
-	slot0._btnrestartElite = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_fight/#go_restartelite")
-	slot0._gomopup = gohelper.findChild(slot0.viewGO, "#go_mopup")
-	slot0._btnticket = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_mopup/ticket/#btn_ticket")
-	slot0._imageticket = gohelper.findChildImage(slot0.viewGO, "#go_mopup/ticket/#btn_ticket/#image_ticket")
-	slot0._txtticketNum = gohelper.findChildText(slot0.viewGO, "#go_mopup/ticket/#btn_ticket/#txt_ticketNum")
-	slot0._btnmopup = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_mopup/#btn_mopup")
-	slot0._goMopUpReddot = gohelper.findChild(slot0.viewGO, "#go_mopup/#btn_mopup/#go_mopupReddot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtepisode = gohelper.findChildText(arg_1_0.viewGO, "right/Title/#txt_episode")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "right/Title/#txt_name")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "right/Title/txt_TitleEn")
+	arg_1_0._btnenemyInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/Title/#btn_enemyInfo")
+	arg_1_0._gorecommendAttr = gohelper.findChild(arg_1_0.viewGO, "right/#go_recommendAttr")
+	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "right/#go_recommendAttr/attrlist/#go_attritem")
+	arg_1_0._txtrecommonddes = gohelper.findChildText(arg_1_0.viewGO, "right/#go_recommendAttr/#txt_recommonddes")
+	arg_1_0._txtrecommendLevel = gohelper.findChildText(arg_1_0.viewGO, "right/recommendlevel/#txt_recommendLevel")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/desc/Viewport/#txt_desc")
+	arg_1_0._gocurherogroup = gohelper.findChild(arg_1_0.viewGO, "right/#go_curherogroup")
+	arg_1_0._goherogroupItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_curherogroup/#go_herogroupItem")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_reset")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_lock")
+	arg_1_0._gostart = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_start")
+	arg_1_0._gorestart = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_restart")
+	arg_1_0._gostartElite = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_startelite")
+	arg_1_0._gorestartElite = gohelper.findChild(arg_1_0.viewGO, "right/#btn_fight/#go_restartelite")
+	arg_1_0._btnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_lock")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_start")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_restart")
+	arg_1_0._btnstartElite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_startelite")
+	arg_1_0._btnrestartElite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight/#go_restartelite")
+	arg_1_0._gomopup = gohelper.findChild(arg_1_0.viewGO, "#go_mopup")
+	arg_1_0._btnticket = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mopup/ticket/#btn_ticket")
+	arg_1_0._imageticket = gohelper.findChildImage(arg_1_0.viewGO, "#go_mopup/ticket/#btn_ticket/#image_ticket")
+	arg_1_0._txtticketNum = gohelper.findChildText(arg_1_0.viewGO, "#go_mopup/ticket/#btn_ticket/#txt_ticketNum")
+	arg_1_0._btnmopup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mopup/#btn_mopup")
+	arg_1_0._goMopUpReddot = gohelper.findChild(arg_1_0.viewGO, "#go_mopup/#btn_mopup/#go_mopupReddot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnenemyInfo:AddClickListener(slot0._btnenemyInfoOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnlock:AddClickListener(slot0._btnfightOnClick, slot0)
-	slot0._btnstart:AddClickListener(slot0._btnfightOnClick, slot0)
-	slot0._btnrestart:AddClickListener(slot0._btnfightOnClick, slot0)
-	slot0._btnstartElite:AddClickListener(slot0._btnfightOnClick, slot0)
-	slot0._btnrestartElite:AddClickListener(slot0._btnfightOnClick, slot0)
-	slot0._btnticket:AddClickListener(slot0._btnticketOnClick, slot0)
-	slot0._btnmopup:AddClickListener(slot0._btnmopupOnClick, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, slot0.refreshUI, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, slot0.refreshUI, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, slot0.refreshTicket, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, slot0.refreshTicket, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnenemyInfo:AddClickListener(arg_2_0._btnenemyInfoOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnlock:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
+	arg_2_0._btnstartElite:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
+	arg_2_0._btnrestartElite:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
+	arg_2_0._btnticket:AddClickListener(arg_2_0._btnticketOnClick, arg_2_0)
+	arg_2_0._btnmopup:AddClickListener(arg_2_0._btnmopupOnClick, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, arg_2_0.refreshTicket, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.refreshTicket, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnenemyInfo:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnlock:RemoveClickListener()
-	slot0._btnstart:RemoveClickListener()
-	slot0._btnrestart:RemoveClickListener()
-	slot0._btnstartElite:RemoveClickListener()
-	slot0._btnrestartElite:RemoveClickListener()
-	slot0._btnticket:RemoveClickListener()
-	slot0._btnmopup:RemoveClickListener()
-	slot0:removeEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, slot0.refreshUI, slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, slot0.refreshUI, slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, slot0.refreshTicket, slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, slot0.refreshTicket, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnenemyInfo:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnlock:RemoveClickListener()
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btnrestart:RemoveClickListener()
+	arg_3_0._btnstartElite:RemoveClickListener()
+	arg_3_0._btnrestartElite:RemoveClickListener()
+	arg_3_0._btnticket:RemoveClickListener()
+	arg_3_0._btnmopup:RemoveClickListener()
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectPermanentEpisode, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, arg_3_0.refreshTicket, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.refreshTicket, arg_3_0)
 end
 
-function slot0._btnenemyInfoOnClick(slot0)
-	EnemyInfoController.instance:openEnemyInfoViewByBattleId(slot0.episodeCo.battleId)
+function var_0_0._btnenemyInfoOnClick(arg_4_0)
+	EnemyInfoController.instance:openEnemyInfoViewByBattleId(arg_4_0.episodeCo.battleId)
 end
 
-function slot0._btnresetOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, slot0.sendTowerResetSubEpisodeRequest, nil, , slot0)
+function var_0_0._btnresetOnClick(arg_5_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0.sendTowerResetSubEpisodeRequest, nil, nil, arg_5_0)
 end
 
-function slot0.sendTowerResetSubEpisodeRequest(slot0)
-	TowerRpc.instance:sendTowerResetSubEpisodeRequest(TowerEnum.TowerType.Normal, TowerEnum.PermanentTowerId, slot0.layerConfig.layerId, slot0.curSelectEpisodeId)
+function var_0_0.sendTowerResetSubEpisodeRequest(arg_6_0)
+	TowerRpc.instance:sendTowerResetSubEpisodeRequest(TowerEnum.TowerType.Normal, TowerEnum.PermanentTowerId, arg_6_0.layerConfig.layerId, arg_6_0.curSelectEpisodeId)
 end
 
-function slot0._btnfightOnClick(slot0)
-	if not slot0.layerConfig then
+function var_0_0._btnfightOnClick(arg_7_0)
+	if not arg_7_0.layerConfig then
 		return
 	end
 
-	if not TowerPermanentModel.instance:checkLayerUnlock(slot0.layerConfig) then
+	if not TowerPermanentModel.instance:checkLayerUnlock(arg_7_0.layerConfig) then
 		return
 	end
 
-	TowerController.instance:enterFight({
+	local var_7_0 = {
 		towerType = TowerEnum.TowerType.Normal,
 		towerId = TowerEnum.PermanentTowerId,
-		layerId = slot0.layerConfig.layerId,
-		episodeId = slot0.curSelectEpisodeId
-	})
+		layerId = arg_7_0.layerConfig.layerId,
+		episodeId = arg_7_0.curSelectEpisodeId
+	}
+
+	TowerController.instance:enterFight(var_7_0)
 end
 
-function slot0._btnticketOnClick(slot0)
-	slot1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
+function var_0_0._btnticketOnClick(arg_8_0)
+	local var_8_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
 end
 
-function slot0._btnmopupOnClick(slot0)
+function var_0_0._btnmopupOnClick(arg_9_0)
 	TowerController.instance:openTowerMopUpView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.simageHeroGroupTab = slot0:getUserDataTb_()
-	slot0._animEventWrap = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0.simageHeroGroupTab = arg_10_0:getUserDataTb_()
+	arg_10_0._animEventWrap = arg_10_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	slot0._animEventWrap:AddEventListener("switchright", slot0.refreshUI, slot0)
+	arg_10_0._animEventWrap:AddEventListener("switchright", arg_10_0.refreshUI, arg_10_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	RedDotController.instance:addRedDot(slot0._goMopUpReddot, RedDotEnum.DotNode.TowerMopUp)
-	slot0:refreshUI()
-	slot0:refreshTicket()
+function var_0_0.onOpen(arg_12_0)
+	RedDotController.instance:addRedDot(arg_12_0._goMopUpReddot, RedDotEnum.DotNode.TowerMopUp)
+	arg_12_0:refreshUI()
+	arg_12_0:refreshTicket()
 end
 
-function slot0.refreshUI(slot0)
-	slot0.permanentTowerMo = TowerModel.instance:getCurPermanentMo()
-	slot0.curSelectEpisodeId = TowerPermanentModel.instance:getCurSelectEpisodeId()
-	slot1, slot2 = TowerPermanentModel.instance:getRealSelectStage()
-	slot0.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(slot1, slot2)
-	slot0.episodeCo = lua_episode.configDict[slot0.curSelectEpisodeId]
-	slot0.isElite = slot0.layerConfig.isElite == 1
-	slot0._txtepisode.text = "ST - " .. slot2
-	slot0._txtname.text = GameUtil.setFirstStrSize(slot0.episodeCo.name, 90)
-	slot0._txtTitleEn.text = slot0.episodeCo.name_En
-	slot0._txtdesc.text = slot0.episodeCo.desc
-	slot3, slot4 = TowerPermanentModel.instance:checkLayerSubEpisodeFinish(slot0.layerConfig.layerId, slot0.curSelectEpisodeId)
-	slot5 = slot0.layerConfig.layerId <= slot0.permanentTowerMo.passLayerId
+function var_0_0.refreshUI(arg_13_0)
+	arg_13_0.permanentTowerMo = TowerModel.instance:getCurPermanentMo()
+	arg_13_0.curSelectEpisodeId = TowerPermanentModel.instance:getCurSelectEpisodeId()
 
-	gohelper.setActive(slot0._golock, not TowerPermanentModel.instance:checkLayerUnlock(slot0.layerConfig))
-	gohelper.setActive(slot0._gorestart, slot5 and slot6 and not slot0.isElite)
-	gohelper.setActive(slot0._gostart, not slot5 and slot6 and not slot0.isElite)
-	gohelper.setActive(slot0._gorestartElite, slot3 and slot6 and slot0.isElite)
-	gohelper.setActive(slot0._gostartElite, not slot3 and slot6 and slot0.isElite)
-	gohelper.setActive(slot0._gocurherogroup, slot3 and slot4 and #slot4.heroIds > 0)
-	gohelper.setActive(slot0._btnreset.gameObject, slot3 and slot4 and #slot4.heroIds > 0)
+	local var_13_0, var_13_1 = TowerPermanentModel.instance:getRealSelectStage()
 
-	if slot4 then
-		if slot4.assistBossId > 0 then
-			table.insert({}, {
+	arg_13_0.layerConfig = TowerConfig.instance:getPermanentEpisodeLayerCo(var_13_0, var_13_1)
+	arg_13_0.episodeCo = lua_episode.configDict[arg_13_0.curSelectEpisodeId]
+	arg_13_0.isElite = arg_13_0.layerConfig.isElite == 1
+	arg_13_0._txtepisode.text = "ST - " .. var_13_1
+	arg_13_0._txtname.text = GameUtil.setFirstStrSize(arg_13_0.episodeCo.name, 90)
+	arg_13_0._txtTitleEn.text = arg_13_0.episodeCo.name_En
+	arg_13_0._txtdesc.text = arg_13_0.episodeCo.desc
+
+	local var_13_2, var_13_3 = TowerPermanentModel.instance:checkLayerSubEpisodeFinish(arg_13_0.layerConfig.layerId, arg_13_0.curSelectEpisodeId)
+	local var_13_4 = arg_13_0.layerConfig.layerId <= arg_13_0.permanentTowerMo.passLayerId
+	local var_13_5 = TowerPermanentModel.instance:checkLayerUnlock(arg_13_0.layerConfig)
+
+	gohelper.setActive(arg_13_0._golock, not var_13_5)
+	gohelper.setActive(arg_13_0._gorestart, var_13_4 and var_13_5 and not arg_13_0.isElite)
+	gohelper.setActive(arg_13_0._gostart, not var_13_4 and var_13_5 and not arg_13_0.isElite)
+	gohelper.setActive(arg_13_0._gorestartElite, var_13_2 and var_13_5 and arg_13_0.isElite)
+	gohelper.setActive(arg_13_0._gostartElite, not var_13_2 and var_13_5 and arg_13_0.isElite)
+	gohelper.setActive(arg_13_0._gocurherogroup, var_13_2 and var_13_3 and #var_13_3.heroIds > 0)
+	gohelper.setActive(arg_13_0._btnreset.gameObject, var_13_2 and var_13_3 and #var_13_3.heroIds > 0)
+
+	if var_13_3 then
+		local var_13_6 = {}
+		local var_13_7 = var_13_3.assistBossId
+
+		if var_13_7 > 0 then
+			table.insert(var_13_6, {
 				isAssistBoss = true,
-				id = slot8
+				id = var_13_7
 			})
 		end
 
-		for slot12, slot13 in ipairs(slot4.heroIds) do
-			table.insert(slot7, {
-				id = slot13
+		for iter_13_0, iter_13_1 in ipairs(var_13_3.heroIds) do
+			table.insert(var_13_6, {
+				id = iter_13_1
 			})
 		end
 
-		gohelper.CreateObjList(slot0, slot0.showHeroGroupItem, slot7, slot0._gocurherogroup, slot0._goherogroupItem)
+		gohelper.CreateObjList(arg_13_0, arg_13_0.showHeroGroupItem, var_13_6, arg_13_0._gocurherogroup, arg_13_0._goherogroupItem)
 	end
 
-	slot0:refreshRecommend()
+	arg_13_0:refreshRecommend()
 end
 
-function slot0.showHeroGroupItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChild(slot1, "go_herogItem")
-	slot5 = gohelper.findChild(slot1, "go_bossItem")
-	slot8 = {
-		gohelper.findChildSingleImage(slot4, "simage_hero"),
-		gohelper.findChildSingleImage(slot5, "simage_enemy")
+function var_0_0.showHeroGroupItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = gohelper.findChild(arg_14_1, "go_herogItem")
+	local var_14_1 = gohelper.findChild(arg_14_1, "go_bossItem")
+	local var_14_2 = gohelper.findChildSingleImage(var_14_0, "simage_hero")
+	local var_14_3 = gohelper.findChildSingleImage(var_14_1, "simage_enemy")
+	local var_14_4 = {
+		var_14_2,
+		var_14_3
 	}
 
-	gohelper.setActive(slot4, not slot2.isAssistBoss)
-	gohelper.setActive(slot5, slot2.isAssistBoss)
+	gohelper.setActive(var_14_0, not arg_14_2.isAssistBoss)
+	gohelper.setActive(var_14_1, arg_14_2.isAssistBoss)
 
-	if slot2.isAssistBoss then
-		slot7:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(TowerConfig.instance:getAssistBossConfig(slot2.id).skinId).headIcon))
+	if arg_14_2.isAssistBoss then
+		local var_14_5 = TowerConfig.instance:getAssistBossConfig(arg_14_2.id)
+		local var_14_6 = FightConfig.instance:getSkinCO(var_14_5.skinId)
+
+		var_14_3:LoadImage(ResUrl.monsterHeadIcon(var_14_6.headIcon))
 	else
-		slot6:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(HeroModel.instance:getByHeroId(slot2.id).skin).retangleIcon))
+		local var_14_7 = HeroModel.instance:getByHeroId(arg_14_2.id)
+		local var_14_8 = FightConfig.instance:getSkinCO(var_14_7.skin)
+
+		var_14_2:LoadImage(ResUrl.getHeadIconSmall(var_14_8.retangleIcon))
 	end
 
-	slot0.simageHeroGroupTab[slot3] = slot8
+	arg_14_0.simageHeroGroupTab[arg_14_3] = var_14_4
 end
 
-function slot0.refreshRecommend(slot0)
-	slot0._txtrecommendLevel.text = FightHelper.getBattleRecommendLevel(slot0.episodeCo.battleId) >= 0 and HeroConfig.instance:getLevelDisplayVariant(slot1) or ""
-	slot2, slot3 = TowerController.instance:getRecommendList(slot0.episodeCo.battleId)
+function var_0_0.refreshRecommend(arg_15_0)
+	local var_15_0 = FightHelper.getBattleRecommendLevel(arg_15_0.episodeCo.battleId)
 
-	gohelper.CreateObjList(slot0, slot0._onRecommendCareerItemShow, slot2, gohelper.findChild(slot0._gorecommendAttr.gameObject, "attrlist"), slot0._goattritem)
+	arg_15_0._txtrecommendLevel.text = var_15_0 >= 0 and HeroConfig.instance:getLevelDisplayVariant(var_15_0) or ""
 
-	slot0._txtrecommonddes.text = #slot2 == 0 and luaLang("new_common_none") or ""
+	local var_15_1, var_15_2 = TowerController.instance:getRecommendList(arg_15_0.episodeCo.battleId)
+
+	gohelper.CreateObjList(arg_15_0, arg_15_0._onRecommendCareerItemShow, var_15_1, gohelper.findChild(arg_15_0._gorecommendAttr.gameObject, "attrlist"), arg_15_0._goattritem)
+
+	arg_15_0._txtrecommonddes.text = #var_15_1 == 0 and luaLang("new_common_none") or ""
 end
 
-function slot0._onRecommendCareerItemShow(slot0, slot1, slot2, slot3)
-	UISpriteSetMgr.instance:setHeroGroupSprite(gohelper.findChildImage(slot1, "icon"), "career_" .. slot2)
+function var_0_0._onRecommendCareerItemShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = gohelper.findChildImage(arg_16_1, "icon")
+
+	UISpriteSetMgr.instance:setHeroGroupSprite(var_16_0, "career_" .. arg_16_2)
 end
 
-function slot0.refreshTicket(slot0)
-	slot2 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)) <= slot0.permanentTowerMo.passLayerId
+function var_0_0.refreshTicket(arg_17_0)
+	local var_17_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
+	local var_17_1 = arg_17_0.permanentTowerMo.passLayerId >= tonumber(var_17_0)
 
-	gohelper.setActive(slot0._gomopup, slot2)
+	gohelper.setActive(arg_17_0._gomopup, var_17_1)
 
-	if not slot2 then
+	if not var_17_1 then
 		return
 	end
 
-	slot0._txtticketNum.text = string.format("%s/%s", TowerModel.instance:getMopUpTimes(), TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes))
+	local var_17_2 = TowerModel.instance:getMopUpTimes()
+	local var_17_3 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageticket, TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon) .. "_1", true)
+	arg_17_0._txtticketNum.text = string.format("%s/%s", var_17_2, var_17_3)
+
+	local var_17_4 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_17_0._imageticket, var_17_4 .. "_1", true)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_18_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.simageHeroGroupTab) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0.simageHeroGroupTab) do
+		for iter_19_2, iter_19_3 in pairs(iter_19_1) do
+			iter_19_3:UnLoadImage()
 		end
 	end
 
-	slot0._animEventWrap:RemoveAllEventListener()
+	arg_19_0._animEventWrap:RemoveAllEventListener()
 end
 
-return slot0
+return var_0_0

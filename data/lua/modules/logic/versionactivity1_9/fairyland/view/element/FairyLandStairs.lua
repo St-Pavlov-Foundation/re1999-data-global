@@ -1,182 +1,214 @@
-module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandStairs", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandStairs", package.seeall)
 
-slot0 = class("FairyLandStairs", BaseView)
+local var_0_0 = class("FairyLandStairs", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goRoot = gohelper.findChild(slot0.viewGO, "main/#go_Root")
-	slot0.rootTrs = slot0.goRoot.transform
-	slot0.goStairs = gohelper.findChild(slot0.goRoot, "#go_Stairs")
-	slot0.goPool = gohelper.findChild(slot0.goStairs, "pool")
-	slot0.goStair = gohelper.findChild(slot0.goStairs, "pool/stair")
-	slot0.stairPool = slot0:getUserDataTb_()
-	slot0.stairDict = slot0:getUserDataTb_()
-	slot0.noUseDict = {}
-	slot0.poolCount = 0
-	slot0.startPosX = -90
-	slot0.startPosY = -120
-	slot0.spaceX = 244
-	slot0.spaceY = 73
-	slot0.maxStair = 50
-	slot0.offsetX = recthelper.getWidth(slot0.viewGO.transform) * 0.5 - slot0:caleStairPos(3) - 318
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goRoot = gohelper.findChild(arg_1_0.viewGO, "main/#go_Root")
+	arg_1_0.rootTrs = arg_1_0.goRoot.transform
+	arg_1_0.goStairs = gohelper.findChild(arg_1_0.goRoot, "#go_Stairs")
+	arg_1_0.goPool = gohelper.findChild(arg_1_0.goStairs, "pool")
+	arg_1_0.goStair = gohelper.findChild(arg_1_0.goStairs, "pool/stair")
+	arg_1_0.stairPool = arg_1_0:getUserDataTb_()
+	arg_1_0.stairDict = arg_1_0:getUserDataTb_()
+	arg_1_0.noUseDict = {}
+	arg_1_0.poolCount = 0
+	arg_1_0.startPosX = -90
+	arg_1_0.startPosY = -120
+	arg_1_0.spaceX = 244
+	arg_1_0.spaceY = 73
+	arg_1_0.maxStair = 50
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	local var_1_0 = recthelper.getWidth(arg_1_0.viewGO.transform)
+	local var_1_1 = arg_1_0:caleStairPos(3)
+
+	arg_1_0.offsetX = var_1_0 * 0.5 - var_1_1 - 318
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.DoStairAnim, slot0.onDoStairAnim, slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.SetStairPos, slot0.onSetStairPos, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.DoStairAnim, arg_2_0.onDoStairAnim, arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.SetStairPos, arg_2_0.onSetStairPos, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
+	return
 end
 
-function slot0.onDoStairAnim(slot0, slot1)
-	if slot0.stairDict[slot1] then
-		slot0.stairDict[slot1].anim:Play("open", 0, 0)
+function var_0_0.onDoStairAnim(arg_5_0, arg_5_1)
+	if arg_5_0.stairDict[arg_5_1] then
+		arg_5_0.stairDict[arg_5_1].anim:Play("open", 0, 0)
 	end
 end
 
-function slot0.moveToPos(slot0, slot1, slot2)
-	if slot0.moveTweenId then
-		ZProj.TweenHelper.KillById(slot0.moveTweenId)
+function var_0_0.moveToPos(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0.moveTweenId then
+		ZProj.TweenHelper.KillById(arg_6_0.moveTweenId)
 
-		slot0.moveTweenId = nil
+		arg_6_0.moveTweenId = nil
 	end
 
-	slot3, slot4 = slot0:caleStairRootPos(math.min(slot0.maxStair - 6, slot1))
+	arg_6_1 = math.min(arg_6_0.maxStair - 6, arg_6_1)
 
-	if slot2 then
-		slot0.moveTweenId = ZProj.TweenHelper.DOAnchorPos(slot0.rootTrs, slot3, slot4, slot0._tweenTime or 1, slot0._moveDone, slot0, nil, EaseType.OutQuad)
+	local var_6_0, var_6_1 = arg_6_0:caleStairRootPos(arg_6_1)
+
+	if arg_6_2 then
+		local var_6_2 = arg_6_0._tweenTime or 1
+
+		arg_6_0.moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_6_0.rootTrs, var_6_0, var_6_1, var_6_2, arg_6_0._moveDone, arg_6_0, nil, EaseType.OutQuad)
 	else
-		recthelper.setAnchor(slot0.rootTrs, slot3, slot4)
-		slot0:updateStairs()
+		recthelper.setAnchor(arg_6_0.rootTrs, var_6_0, var_6_1)
+		arg_6_0:updateStairs()
 	end
 end
 
-function slot0._moveDone(slot0)
-	if slot0.moveTweenId then
-		ZProj.TweenHelper.KillById(slot0.moveTweenId)
+function var_0_0._moveDone(arg_7_0)
+	if arg_7_0.moveTweenId then
+		ZProj.TweenHelper.KillById(arg_7_0.moveTweenId)
 
-		slot0.moveTweenId = nil
+		arg_7_0.moveTweenId = nil
 	end
 
-	slot0:updateStairs()
+	arg_7_0:updateStairs()
 end
 
-function slot0.caleStairRootPos(slot0, slot1)
-	return -slot1 * slot0.spaceX + FairyLandEnum.StartCameraPosX + slot0.offsetX, slot1 * slot0.spaceY + FairyLandEnum.StartCameraPosY
+function var_0_0.caleStairRootPos(arg_8_0, arg_8_1)
+	local var_8_0 = -arg_8_1 * arg_8_0.spaceX + FairyLandEnum.StartCameraPosX + arg_8_0.offsetX
+	local var_8_1 = arg_8_1 * arg_8_0.spaceY + FairyLandEnum.StartCameraPosY
+
+	return var_8_0, var_8_1
 end
 
-function slot0.onSetStairPos(slot0, slot1)
-	if slot1 then
-		slot0:moveToPos(FairyLandModel.instance:getStairPos(), true)
+function var_0_0.onSetStairPos(arg_9_0, arg_9_1)
+	local var_9_0 = FairyLandModel.instance:getStairPos()
+
+	if arg_9_1 then
+		arg_9_0:moveToPos(var_9_0, true)
 	else
-		slot0:moveToPos(slot2)
-		slot0:updateStairs()
+		arg_9_0:moveToPos(var_9_0)
+		arg_9_0:updateStairs()
 	end
 end
 
-function slot0.updateStairs(slot0)
-	slot1 = math.min(slot0.maxStair - 6, FairyLandModel.instance:getStairPos())
+function var_0_0.updateStairs(arg_10_0)
+	local var_10_0 = FairyLandModel.instance:getStairPos()
+	local var_10_1 = math.min(arg_10_0.maxStair - 6, var_10_0)
+	local var_10_2 = var_10_1 + arg_10_0:getScreenStairCount()
+	local var_10_3 = var_10_1 - 2
 
-	slot0:setNoUseStairs()
+	arg_10_0:setNoUseStairs()
 
-	for slot7 = slot1 - 2, slot1 + slot0:getScreenStairCount() do
-		slot0:getStair(slot7)
+	for iter_10_0 = var_10_3, var_10_2 do
+		arg_10_0:getStair(iter_10_0)
 	end
 
-	slot0:recycleStairs()
+	arg_10_0:recycleStairs()
 end
 
-function slot0.getScreenStairCount(slot0)
-	if slot0.stairCount then
-		return slot0.stairCount
+function var_0_0.getScreenStairCount(arg_11_0)
+	if arg_11_0.stairCount then
+		return arg_11_0.stairCount
 	end
 
-	slot0.stairCount = math.ceil(recthelper.getHeight(gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP").transform) / slot0.spaceY) + 2
+	local var_11_0 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local var_11_1 = recthelper.getHeight(var_11_0.transform)
 
-	return slot0.stairCount
+	arg_11_0.stairCount = math.ceil(var_11_1 / arg_11_0.spaceY) + 2
+
+	return arg_11_0.stairCount
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.setNoUseStairs(slot0)
-	for slot4, slot5 in pairs(slot0.stairDict) do
-		slot0.noUseDict[slot4] = true
+function var_0_0.setNoUseStairs(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.stairDict) do
+		arg_13_0.noUseDict[iter_13_0] = true
 	end
 end
 
-function slot0.recycleStairs(slot0)
-	for slot4, slot5 in pairs(slot0.noUseDict) do
-		slot0:recycleStair(slot0.stairDict[slot4])
+function var_0_0.recycleStairs(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.noUseDict) do
+		arg_14_0:recycleStair(arg_14_0.stairDict[iter_14_0])
 
-		slot0.stairDict[slot4] = nil
+		arg_14_0.stairDict[iter_14_0] = nil
 	end
 
-	slot0.noUseDict = {}
+	arg_14_0.noUseDict = {}
 end
 
-function slot0.getStair(slot0, slot1)
-	slot0.noUseDict[slot1] = nil
+function var_0_0.getStair(arg_15_0, arg_15_1)
+	arg_15_0.noUseDict[arg_15_1] = nil
 
-	if not slot0.stairDict[slot1] then
-		slot0.stairDict[slot1] = slot0:getOrCreateStair(slot1)
+	local var_15_0 = arg_15_0.stairDict[arg_15_1]
+
+	if not var_15_0 then
+		var_15_0 = arg_15_0:getOrCreateStair(arg_15_1)
+		arg_15_0.stairDict[arg_15_1] = var_15_0
 	end
 
-	gohelper.setActive(slot2.go, slot1 <= slot0.maxStair)
+	local var_15_1 = arg_15_1 <= arg_15_0.maxStair
 
-	return slot2
+	gohelper.setActive(var_15_0.go, var_15_1)
+
+	return var_15_0
 end
 
-function slot0.getOrCreateStair(slot0, slot1)
-	slot2 = nil
+function var_0_0.getOrCreateStair(arg_16_0, arg_16_1)
+	local var_16_0
 
-	if slot0.poolCount > 0 then
-		slot0.poolCount = slot0.poolCount - 1
+	if arg_16_0.poolCount > 0 then
+		var_16_0 = table.remove(arg_16_0.stairPool)
+		arg_16_0.poolCount = arg_16_0.poolCount - 1
 
-		gohelper.addChild(slot0.goStairs, table.remove(slot0.stairPool).go)
+		gohelper.addChild(arg_16_0.goStairs, var_16_0.go)
 	else
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.clone(slot0.goStair, slot0.goStairs)
-		slot2.transform = slot2.go.transform
-		slot2.anim = slot2.go:GetComponent(typeof(UnityEngine.Animator))
+		var_16_0 = arg_16_0:getUserDataTb_()
+		var_16_0.go = gohelper.clone(arg_16_0.goStair, arg_16_0.goStairs)
+		var_16_0.transform = var_16_0.go.transform
+		var_16_0.anim = var_16_0.go:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot2.go.name = tostring(slot1)
-	slot3, slot4 = slot0:caleStairPos(slot1)
+	var_16_0.go.name = tostring(arg_16_1)
 
-	recthelper.setAnchor(slot2.transform, slot3, slot4)
+	local var_16_1, var_16_2 = arg_16_0:caleStairPos(arg_16_1)
 
-	return slot2
+	recthelper.setAnchor(var_16_0.transform, var_16_1, var_16_2)
+
+	return var_16_0
 end
 
-function slot0.caleStairPos(slot0, slot1)
-	return slot0.startPosX + slot1 * slot0.spaceX, slot0.startPosY - slot1 * slot0.spaceY
+function var_0_0.caleStairPos(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0.startPosX + arg_17_1 * arg_17_0.spaceX
+	local var_17_1 = arg_17_0.startPosY - arg_17_1 * arg_17_0.spaceY
+
+	return var_17_0, var_17_1
 end
 
-function slot0.recycleStair(slot0, slot1)
-	if not slot1 then
+function var_0_0.recycleStair(arg_18_0, arg_18_1)
+	if not arg_18_1 then
 		return
 	end
 
-	gohelper.addChild(slot0.goPool, slot1.go)
-	table.insert(slot0.stairPool, slot1)
+	gohelper.addChild(arg_18_0.goPool, arg_18_1.go)
+	table.insert(arg_18_0.stairPool, arg_18_1)
 
-	slot0.poolCount = slot0.poolCount + 1
+	arg_18_0.poolCount = arg_18_0.poolCount + 1
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.moveTweenId then
-		ZProj.TweenHelper.KillById(slot0.moveTweenId)
+function var_0_0.onDestroyView(arg_19_0)
+	if arg_19_0.moveTweenId then
+		ZProj.TweenHelper.KillById(arg_19_0.moveTweenId)
 
-		slot0.moveTweenId = nil
+		arg_19_0.moveTweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

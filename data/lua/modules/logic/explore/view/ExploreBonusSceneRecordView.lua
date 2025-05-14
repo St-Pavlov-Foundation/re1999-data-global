@@ -1,137 +1,154 @@
-module("modules.logic.explore.view.ExploreBonusSceneRecordView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBonusSceneRecordView", package.seeall)
 
-slot0 = class("ExploreBonusSceneRecordView", BaseView)
-slot1 = 8
+local var_0_0 = class("ExploreBonusSceneRecordView", BaseView)
+local var_0_1 = 8
 
-function slot0._setContentPaddingTop(slot0, slot1)
-	slot0._vLayoutGroup.padding.top = slot1
+function var_0_0._setContentPaddingTop(arg_1_0, arg_1_1)
+	arg_1_0._vLayoutGroup.padding.top = arg_1_1
 end
 
-function slot0._updateContentPaddingTop(slot0, slot1)
-	if slot1 then
-		slot2 = slot0._originalPaddingTop + uv0
+function var_0_0._updateContentPaddingTop(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._originalPaddingTop
+
+	if arg_2_1 then
+		var_2_0 = var_2_0 + var_0_1
 	end
 
-	slot0:_setContentPaddingTop(slot2)
+	arg_2_0:_setContentPaddingTop(var_2_0)
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._item = gohelper.findChild(slot0.viewGO, "mask/Scroll View/Viewport/Content/#go_chatitem")
-	slot0._itemContent = gohelper.findChild(slot0.viewGO, "mask/Scroll View/Viewport/Content")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_icon")
-	slot0._vLayoutGroup = slot0._itemContent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
-	slot0._originalPaddingTop = slot0._vLayoutGroup.padding.top
-	slot0._tmpMarkTopTextList = {}
-	slot0._tmpMarkTopTextListList = {}
+function var_0_0.onInitView(arg_3_0)
+	arg_3_0._btnclose = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "#btn_close")
+	arg_3_0._item = gohelper.findChild(arg_3_0.viewGO, "mask/Scroll View/Viewport/Content/#go_chatitem")
+	arg_3_0._itemContent = gohelper.findChild(arg_3_0.viewGO, "mask/Scroll View/Viewport/Content")
+	arg_3_0._simageicon = gohelper.findChildSingleImage(arg_3_0.viewGO, "#simage_icon")
+	arg_3_0._vLayoutGroup = arg_3_0._itemContent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	arg_3_0._originalPaddingTop = arg_3_0._vLayoutGroup.padding.top
+	arg_3_0._tmpMarkTopTextList = {}
+	arg_3_0._tmpMarkTopTextListList = {}
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_4_0)
+	arg_4_0._btnclose:AddClickListener(arg_4_0.closeThis, arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0._btnclose:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot3, slot4 = next(ExploreSimpleModel.instance:getChapterMo(slot0.viewParam.chapterId).bonusScene)
-	slot6 = {}
-	slot7 = nil
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.chapterId
+	local var_6_1 = ExploreSimpleModel.instance:getChapterMo(var_6_0).bonusScene
+	local var_6_2, var_6_3 = next(var_6_1)
+	local var_6_4 = ExploreConfig.instance:getDialogueConfig(var_6_2)
+	local var_6_5 = {}
+	local var_6_6
 
-	for slot11, slot12 in ipairs(slot4) do
-		if ExploreConfig.instance:getDialogueConfig(slot3)[slot11] then
-			if not string.nilorempty(slot13.bonusButton) then
-				-- Nothing
+	for iter_6_0, iter_6_1 in ipairs(var_6_3) do
+		local var_6_7 = var_6_4[iter_6_0]
+
+		if var_6_7 then
+			local var_6_8 = {
+				desc = var_6_7.desc
+			}
+
+			if not string.nilorempty(var_6_7.bonusButton) then
+				var_6_8.options = string.split(var_6_7.bonusButton, "|")
+				var_6_8.index = iter_6_1
 			end
 
-			table.insert(slot6, {
-				desc = slot13.desc,
-				options = string.split(slot13.bonusButton, "|"),
-				index = slot12
-			})
+			table.insert(var_6_5, var_6_8)
 
-			if not string.nilorempty(slot13.picture) then
-				slot7 = slot13.picture
+			if not string.nilorempty(var_6_7.picture) then
+				var_6_6 = var_6_7.picture
 			end
 		end
 	end
 
-	if not string.nilorempty(slot7) then
-		slot0._simageicon:LoadImage(ResUrl.getExploreBg("file/" .. slot7))
+	if not string.nilorempty(var_6_6) then
+		arg_6_0._simageicon:LoadImage(ResUrl.getExploreBg("file/" .. var_6_6))
 	end
 
-	gohelper.CreateObjList(slot0, slot0.onCreateItem, slot6, slot0._itemContent, slot0._item)
+	gohelper.CreateObjList(arg_6_0, arg_6_0.onCreateItem, var_6_5, arg_6_0._itemContent, arg_6_0._item)
 end
 
-function slot0.onCreateItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(gohelper.findChildTextMesh(slot1, "info"), slot2.desc)
-	gohelper.setActive(gohelper.findChild(slot1, "bg"), slot2.options)
+function var_0_0.onCreateItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = gohelper.findChildTextMesh(arg_7_1, "info")
+	local var_7_1 = gohelper.findChild(arg_7_1, "bg")
 
-	if slot2.desc then
-		if not slot0._tmpMarkTopTextList[slot3] then
-			slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4.gameObject, TMPMarkTopText)
+	gohelper.setActive(var_7_0, arg_7_2.desc)
+	gohelper.setActive(var_7_1, arg_7_2.options)
 
-			slot6:setTopOffset(0, -5.2)
-			slot6:setLineSpacing(15)
+	if arg_7_2.desc then
+		local var_7_2 = arg_7_0._tmpMarkTopTextList[arg_7_3]
 
-			slot0._tmpMarkTopTextList[slot3] = slot6
+		if not var_7_2 then
+			var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0.gameObject, TMPMarkTopText)
+
+			var_7_2:setTopOffset(0, -5.2)
+			var_7_2:setLineSpacing(15)
+
+			arg_7_0._tmpMarkTopTextList[arg_7_3] = var_7_2
 		else
-			slot6:reInitByCmp(slot4)
+			var_7_2:reInitByCmp(var_7_0)
 		end
 
-		slot6:setData(slot2.desc)
+		var_7_2:setData(arg_7_2.desc)
 	end
 
-	if slot3 == 1 then
-		slot0:_updateContentPaddingTop(slot0._tmpMarkTopTextList[slot3]:isContainsMarkTop())
+	if arg_7_3 == 1 then
+		arg_7_0:_updateContentPaddingTop(arg_7_0._tmpMarkTopTextList[arg_7_3]:isContainsMarkTop())
 	end
 
-	if slot2.options then
-		for slot9 = 1, 3 do
-			slot11 = gohelper.findChild(slot5, "txt" .. slot9 .. "/play")
-			slot0._tmpMarkTopTextListList[slot3] = slot0._tmpMarkTopTextListList[slot3] or {}
+	if arg_7_2.options then
+		for iter_7_0 = 1, 3 do
+			local var_7_3 = gohelper.findChildTextMesh(var_7_1, "txt" .. iter_7_0)
+			local var_7_4 = gohelper.findChild(var_7_1, "txt" .. iter_7_0 .. "/play")
 
-			if not slot0._tmpMarkTopTextListList[slot3][slot9] then
-				slot13 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChildTextMesh(slot5, "txt" .. slot9).gameObject, TMPMarkTopText)
+			arg_7_0._tmpMarkTopTextListList[arg_7_3] = arg_7_0._tmpMarkTopTextListList[arg_7_3] or {}
 
-				slot13:setTopOffset(0, -5.5)
-				slot13:setLineSpacing(7)
+			local var_7_5 = arg_7_0._tmpMarkTopTextListList[arg_7_3][iter_7_0]
 
-				slot0._tmpMarkTopTextListList[slot3][slot9] = slot13
+			if not var_7_5 then
+				var_7_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3.gameObject, TMPMarkTopText)
+
+				var_7_5:setTopOffset(0, -5.5)
+				var_7_5:setLineSpacing(7)
+
+				arg_7_0._tmpMarkTopTextListList[arg_7_3][iter_7_0] = var_7_5
 			else
-				slot13:reInitByCmp(slot10)
+				var_7_5:reInitByCmp(var_7_3)
 			end
 
-			if slot2.options[slot9] then
-				slot13:setData(slot2.options[slot9])
-				gohelper.setActive(slot11, slot2.index == slot9)
-				SLFramework.UGUI.GuiHelper.SetColor(slot10, slot2.index == slot9 and "#445D42" or "#3D3939")
+			if arg_7_2.options[iter_7_0] then
+				var_7_5:setData(arg_7_2.options[iter_7_0])
+				gohelper.setActive(var_7_4, arg_7_2.index == iter_7_0)
+				SLFramework.UGUI.GuiHelper.SetColor(var_7_3, arg_7_2.index == iter_7_0 and "#445D42" or "#3D3939")
 			else
-				gohelper.setActive(slot10, false)
+				gohelper.setActive(var_7_3, false)
 			end
 		end
 	end
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0.onClose(slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_tmpMarkTopTextList")
+function var_0_0.onClose(arg_9_0)
+	GameUtil.onDestroyViewMemberList(arg_9_0, "_tmpMarkTopTextList")
 
-	if slot0._tmpMarkTopTextListList then
-		for slot4, slot5 in pairs(slot0._tmpMarkTopTextListList) do
-			for slot9, slot10 in pairs(slot5) do
-				slot10:onDestroyView()
+	if arg_9_0._tmpMarkTopTextListList then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._tmpMarkTopTextListList) do
+			for iter_9_2, iter_9_3 in pairs(iter_9_1) do
+				iter_9_3:onDestroyView()
 			end
 		end
 
-		slot0._tmpMarkTopTextListList = nil
+		arg_9_0._tmpMarkTopTextListList = nil
 	end
 
-	slot0._simageicon:UnLoadImage()
+	arg_9_0._simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

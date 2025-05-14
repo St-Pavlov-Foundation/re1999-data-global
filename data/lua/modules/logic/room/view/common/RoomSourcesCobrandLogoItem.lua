@@ -1,76 +1,89 @@
-module("modules.logic.room.view.common.RoomSourcesCobrandLogoItem", package.seeall)
+﻿module("modules.logic.room.view.common.RoomSourcesCobrandLogoItem", package.seeall)
 
-slot0 = class("RoomSourcesCobrandLogoItem", ListScrollCellExtend)
+local var_0_0 = class("RoomSourcesCobrandLogoItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagelogoicon = gohelper.findChildImage(slot0.viewGO, "logo/#image_logoicon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagelogoicon = gohelper.findChildImage(arg_1_0.viewGO, "logo/#image_logoicon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	return
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0.setSourcesTypeStr(slot0, slot1)
-	slot0._sourcesTypeCfg = slot0:_findSourcesTypeCfg(slot1)
-	slot0._isShow = false
+function var_0_0.setSourcesTypeStr(arg_10_0, arg_10_1)
+	arg_10_0._sourcesTypeCfg = arg_10_0:_findSourcesTypeCfg(arg_10_1)
+	arg_10_0._isShow = false
 
-	if slot0._sourcesTypeCfg then
-		slot0._isShow = true
+	if arg_10_0._sourcesTypeCfg then
+		arg_10_0._isShow = true
 
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imagelogoicon, slot0._sourcesTypeCfg.bgIcon)
+		UISpriteSetMgr.instance:setRoomSprite(arg_10_0._imagelogoicon, arg_10_0._sourcesTypeCfg.bgIcon)
 	end
 
-	gohelper.setActive(slot0.viewGO, slot0._isShow)
+	gohelper.setActive(arg_10_0.viewGO, arg_10_0._isShow)
 end
 
-function slot0.getIsShow(slot0)
-	return slot0._isShow
+function var_0_0.getIsShow(arg_11_0)
+	return arg_11_0._isShow
 end
 
-function slot0._findSourcesTypeCfg(slot0, slot1)
-	if not slot1 or string.nilorempty(slot1) then
+function var_0_0._findSourcesTypeCfg(arg_12_0, arg_12_1)
+	if not arg_12_1 or string.nilorempty(arg_12_1) then
 		return nil
 	end
 
-	if string.splitToNumber(slot1, "#") == nil or #slot2 < 1 then
+	local var_12_0 = string.splitToNumber(arg_12_1, "#")
+
+	if var_12_0 == nil or #var_12_0 < 1 then
 		return nil
 	end
 
-	slot3 = nil
+	local var_12_1
+	local var_12_2 = RoomEnum.SourcesShowType.Cobrand
 
-	for slot8, slot9 in ipairs(slot2) do
-		if RoomConfig.instance:getSourcesTypeConfig(slot9) and slot10.showType == RoomEnum.SourcesShowType.Cobrand then
-			slot3 = slot10
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_3 = RoomConfig.instance:getSourcesTypeConfig(iter_12_1)
+
+		if var_12_3 and var_12_3.showType == var_12_2 then
+			var_12_1 = var_12_3
 
 			break
 		end
 	end
 
-	return slot3
+	return var_12_1
 end
 
-return slot0
+return var_0_0

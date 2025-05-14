@@ -1,13 +1,14 @@
-module("modules.logic.dungeon.defines.DungeonEnum", package.seeall)
+﻿module("modules.logic.dungeon.defines.DungeonEnum", package.seeall)
 
-slot0 = _M
-slot0.StarType = {
+local var_0_0 = _M
+
+var_0_0.StarType = {
 	Ultra = 3,
 	Advanced = 2,
 	Normal = 1,
 	None = 0
 }
-slot0.EpisodeType = {
+var_0_0.EpisodeType = {
 	Season166Base = 125,
 	RoleStoryChallenge = 16,
 	Boss = 2,
@@ -60,7 +61,7 @@ slot0.EpisodeType = {
 	SeasonRetail = 12,
 	Rouge = 20
 }
-slot0.ChapterType = {
+var_0_0.ChapterType = {
 	Season166Base = 30,
 	Season123Retail = 24,
 	Newbie = 3,
@@ -113,63 +114,62 @@ slot0.ChapterType = {
 	RoleStory = 19,
 	Rouge = 29
 }
-slot4 = slot0.EpisodeType.RoleStoryChallenge
-slot0.ChapterContainEpisodeType = {
-	[slot0.ChapterType.Normal] = {
-		slot0.EpisodeType.Normal,
-		slot0.EpisodeType.Boss,
-		slot0.EpisodeType.Story,
-		slot0.EpisodeType.Decrypt
+var_0_0.ChapterContainEpisodeType = {
+	[var_0_0.ChapterType.Normal] = {
+		var_0_0.EpisodeType.Normal,
+		var_0_0.EpisodeType.Boss,
+		var_0_0.EpisodeType.Story,
+		var_0_0.EpisodeType.Decrypt
 	},
-	[slot0.ChapterType.Hard] = {
-		slot0.EpisodeType.Normal
+	[var_0_0.ChapterType.Hard] = {
+		var_0_0.EpisodeType.Normal
 	},
-	[slot0.ChapterType.Newbie] = {
-		slot0.EpisodeType.Normal
+	[var_0_0.ChapterType.Newbie] = {
+		var_0_0.EpisodeType.Normal
 	},
-	[slot0.ChapterType.Gold] = {
-		slot0.EpisodeType.Normal
+	[var_0_0.ChapterType.Gold] = {
+		var_0_0.EpisodeType.Normal
 	},
-	[slot0.ChapterType.Exp] = {
-		slot0.EpisodeType.Normal
+	[var_0_0.ChapterType.Exp] = {
+		var_0_0.EpisodeType.Normal
 	},
-	[slot0.ChapterType.Equip] = {
-		slot0.EpisodeType.Equip
+	[var_0_0.ChapterType.Equip] = {
+		var_0_0.EpisodeType.Equip
 	},
-	[slot0.ChapterType.Break] = {
-		slot0.EpisodeType.Normal
+	[var_0_0.ChapterType.Break] = {
+		var_0_0.EpisodeType.Normal
 	},
-	[slot0.ChapterType.SpecialEquip] = {
-		slot0.EpisodeType.SpecialEquip
+	[var_0_0.ChapterType.SpecialEquip] = {
+		var_0_0.EpisodeType.SpecialEquip
 	},
-	[slot0.ChapterType.WeekWalk] = {
-		slot0.EpisodeType.WeekWalk
+	[var_0_0.ChapterType.WeekWalk] = {
+		var_0_0.EpisodeType.WeekWalk
 	},
-	[slot0.ChapterType.Sp] = {
-		slot0.EpisodeType.Sp
+	[var_0_0.ChapterType.Sp] = {
+		var_0_0.EpisodeType.Sp
 	},
-	[slot0.ChapterType.TeachNote] = {
-		slot0.EpisodeType.Sp
+	[var_0_0.ChapterType.TeachNote] = {
+		var_0_0.EpisodeType.Sp
 	},
-	[slot0.ChapterType.Season] = {
-		slot0.EpisodeType.Season
+	[var_0_0.ChapterType.Season] = {
+		var_0_0.EpisodeType.Season
 	},
-	[slot0.ChapterType.RoleStoryChallenge] = {
-		slot4
+	[var_0_0.ChapterType.RoleStoryChallenge] = {
+		var_0_0.EpisodeType.RoleStoryChallenge
 	}
 }
-slot0.ChapterListType = {
+var_0_0.ChapterListType = {
 	WeekWalk = 4,
 	Story = 1,
 	Insight = 3,
 	Resource = 2
 }
-slot0.Probability = {
+var_0_0.Probability = {
 	Flag1 = 1,
 	Flag3 = 3,
 	Flag2 = 2
 }
-slot0.TagType = {
+var_0_0.TagType = {
 	FirstPass = 100,
 	SecondPass = 101,
 	Fix = 1,
@@ -186,26 +186,26 @@ slot0.TagType = {
 	StoryFirst = 104,
 	None = 0
 }
-slot0.RewardProbability = {
-	dagailv = slot0.TagType.LargeProbability,
-	gailv = slot0.TagType.Probability,
-	xiaogailv = slot0.TagType.SmallProbability,
-	guding = slot0.TagType.Fix,
-	jixiaogailv = slot0.TagType.VerySmallProbability
+var_0_0.RewardProbability = {
+	dagailv = var_0_0.TagType.LargeProbability,
+	gailv = var_0_0.TagType.Probability,
+	xiaogailv = var_0_0.TagType.SmallProbability,
+	guding = var_0_0.TagType.Fix,
+	jixiaogailv = var_0_0.TagType.VerySmallProbability
 }
-slot0.RewardProbabilityToMaterialProbability = {
+var_0_0.RewardProbabilityToMaterialProbability = {
 	dagailv = MaterialEnum.JumpProbability.Large,
 	gailv = MaterialEnum.JumpProbability.Small,
 	xiaogailv = MaterialEnum.JumpProbability.Little,
 	guding = MaterialEnum.JumpProbability.Must,
 	jixiaogailv = MaterialEnum.JumpProbability.VerySmall
 }
-slot0.ChallengeCountLimitType = {
+var_0_0.ChallengeCountLimitType = {
 	Daily = 1,
 	Monthly = 3,
 	Weekly = 2
 }
-slot0.AdditionRuleType = {
+var_0_0.AdditionRuleType = {
 	TimeLimit = 3,
 	Skill = 1,
 	FightSkill = 6,
@@ -213,13 +213,13 @@ slot0.AdditionRuleType = {
 	Level = 2,
 	DeadLimit = 5
 }
-slot0.UnlockContentType = {
+var_0_0.UnlockContentType = {
 	OpenGroup = 3,
 	ActivityOpen = 4,
 	Episode = 2,
 	Open = 1
 }
-slot0.ElementType = {
+var_0_0.ElementType = {
 	EnterDispatch = 501,
 	OuijaGame = 15,
 	ChangeColor = 10,
@@ -253,13 +253,13 @@ slot0.ElementType = {
 	DailyEpisode = 16,
 	None = 1
 }
-slot0.FragmentType = {
+var_0_0.FragmentType = {
 	OptionsText = 2,
 	LeiMiTeBeiNew = 101,
 	PlainText = 3,
 	Normal = 1
 }
-slot0.ElementTypeIconIndex = {
+var_0_0.ElementTypeIconIndex = {
 	["20"] = 2,
 	["31"] = 5,
 	["51"] = 9,
@@ -277,25 +277,25 @@ slot0.ElementTypeIconIndex = {
 	["40"] = 6,
 	["91"] = 11
 }
-slot0.ElementTypeUIResIdMap = {
-	[slot0.ElementType.PipeGame] = slot0.ElementType.FullScreenQuestion,
-	[slot0.ElementType.MazeDraw] = slot0.ElementType.FullScreenQuestion,
-	[slot0.ElementType.PutCubeGame] = slot0.ElementType.FullScreenQuestion,
-	[slot0.ElementType.OuijaGame] = slot0.ElementType.FullScreenQuestion,
-	[slot0.ElementType.CircuitGame] = slot0.ElementType.FullScreenQuestion,
-	[slot0.ElementType.UnLockExplore] = slot0.ElementType.FullScreenQuestion,
-	[slot0.ElementType.Activity1_2Fight] = slot0.ElementType.Fight,
-	[slot0.ElementType.Activity1_2Note] = slot0.ElementType.Fight,
-	[slot0.ElementType.Activity1_2Episode13Unlock] = slot0.ElementType.Fight,
-	[slot0.ElementType.EnterDialogue] = slot0.ElementType.None,
-	[slot0.ElementType.EnterDispatch] = slot0.ElementType.None,
-	[slot0.ElementType.ToughBattle] = slot0.ElementType.None,
-	[slot0.ElementType.FairyLand] = slot0.ElementType.None,
-	[slot0.ElementType.ToughBattleBoss] = slot0.ElementType.None,
-	[slot0.ElementType.HeroInvitation] = slot0.ElementType.None
+var_0_0.ElementTypeUIResIdMap = {
+	[var_0_0.ElementType.PipeGame] = var_0_0.ElementType.FullScreenQuestion,
+	[var_0_0.ElementType.MazeDraw] = var_0_0.ElementType.FullScreenQuestion,
+	[var_0_0.ElementType.PutCubeGame] = var_0_0.ElementType.FullScreenQuestion,
+	[var_0_0.ElementType.OuijaGame] = var_0_0.ElementType.FullScreenQuestion,
+	[var_0_0.ElementType.CircuitGame] = var_0_0.ElementType.FullScreenQuestion,
+	[var_0_0.ElementType.UnLockExplore] = var_0_0.ElementType.FullScreenQuestion,
+	[var_0_0.ElementType.Activity1_2Fight] = var_0_0.ElementType.Fight,
+	[var_0_0.ElementType.Activity1_2Note] = var_0_0.ElementType.Fight,
+	[var_0_0.ElementType.Activity1_2Episode13Unlock] = var_0_0.ElementType.Fight,
+	[var_0_0.ElementType.EnterDialogue] = var_0_0.ElementType.None,
+	[var_0_0.ElementType.EnterDispatch] = var_0_0.ElementType.None,
+	[var_0_0.ElementType.ToughBattle] = var_0_0.ElementType.None,
+	[var_0_0.ElementType.FairyLand] = var_0_0.ElementType.None,
+	[var_0_0.ElementType.ToughBattleBoss] = var_0_0.ElementType.None,
+	[var_0_0.ElementType.HeroInvitation] = var_0_0.ElementType.None
 }
-slot0.EquipDungeonChapterId = 601
-slot0.ChapterId = {
+var_0_0.EquipDungeonChapterId = 601
+var_0_0.ChapterId = {
 	ResourceExp = 401,
 	ResourceGold = 501,
 	InsightBrutes = 704,
@@ -311,39 +311,39 @@ slot0.ChapterId = {
 	RoleDuDuGu = 23501,
 	ToughBattleStory = 19101
 }
-slot0.SpecialMainPlot = {
-	[310.0] = "p_dungeonchapterminiitem_txt_Special",
-	[slot0.ChapterId.HeroInvitation] = "dungeonchapterminiitem_txt_NewWorld"
+var_0_0.SpecialMainPlot = {
+	[310] = "p_dungeonchapterminiitem_txt_Special",
+	[var_0_0.ChapterId.HeroInvitation] = "dungeonchapterminiitem_txt_NewWorld"
 }
-slot0.ChapterWidth = {
+var_0_0.ChapterWidth = {
 	Special = 270,
 	Normal = 415
 }
-slot0.RefreshTimeAfterShowReward = 0
-slot0.ShowNewElementsTimeAfterShowReward = 0.7
-slot0.MoveEpisodeTimeAfterShowReward = 1.5
-slot0.UpdateLockTimeAfterShowReward = 2.5
-slot0.dungeonweekwalkviewPath = "ui/viewres/dungeon/dungeonweekwalkview.prefab"
-slot0.dungeonexploreviewPath = "ui/viewres/explore/exploremainview.prefab"
-slot0.DefaultTweenMapTime = 0.26
-slot0.NotPopFragmentToastDict = {
-	[5007.0] = true,
-	[5004.0] = true,
-	[5005.0] = true,
-	[5002.0] = true,
-	[5001.0] = true,
-	[5003.0] = true,
-	[5009.0] = true,
-	[5010.0] = true,
-	[5011.0] = true,
-	[5006.0] = true,
-	[5008.0] = true
+var_0_0.RefreshTimeAfterShowReward = 0
+var_0_0.ShowNewElementsTimeAfterShowReward = 0.7
+var_0_0.MoveEpisodeTimeAfterShowReward = 1.5
+var_0_0.UpdateLockTimeAfterShowReward = 2.5
+var_0_0.dungeonweekwalkviewPath = "ui/viewres/dungeon/dungeonweekwalkview.prefab"
+var_0_0.dungeonexploreviewPath = "ui/viewres/explore/exploremainview.prefab"
+var_0_0.DefaultTweenMapTime = 0.26
+var_0_0.NotPopFragmentToastDict = {
+	[5007] = true,
+	[5004] = true,
+	[5005] = true,
+	[5002] = true,
+	[5001] = true,
+	[5003] = true,
+	[5009] = true,
+	[5010] = true,
+	[5011] = true,
+	[5006] = true,
+	[5008] = true
 }
-slot0.AssistType = {
+var_0_0.AssistType = {
 	Normal = PickAssistEnum.Type.Normal,
 	Season123 = PickAssistEnum.Type.Activity123
 }
-slot0.MapIdGroupDef = {
+var_0_0.MapIdGroupDef = {
 	{
 		10701,
 		10702,
@@ -379,24 +379,24 @@ slot0.MapIdGroupDef = {
 		10730
 	}
 }
-slot0.MapIdGroup = {}
+var_0_0.MapIdGroup = {}
 
-for slot4, slot5 in pairs(slot0.MapIdGroupDef) do
-	for slot9, slot10 in pairs(slot5) do
-		slot0.MapIdGroup[slot10] = slot4
+for iter_0_0, iter_0_1 in pairs(var_0_0.MapIdGroupDef) do
+	for iter_0_2, iter_0_3 in pairs(iter_0_1) do
+		var_0_0.MapIdGroup[iter_0_3] = iter_0_0
 	end
 end
 
-slot0.ElementExEffectPath = {
-	[100702.0] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect1.prefab",
-	[100709.0] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect2.prefab"
+var_0_0.ElementExEffectPath = {
+	[100702] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect1.prefab",
+	[100709] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect2.prefab"
 }
-slot0.MapExEffectPath = {
-	[10712.0] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect4.prefab"
+var_0_0.MapExEffectPath = {
+	[10712] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect4.prefab"
 }
-slot0.EpisodeListVisibleSource = {
+var_0_0.EpisodeListVisibleSource = {
 	ToughBattle = 1,
 	Normal = 0
 }
 
-return slot0
+return var_0_0

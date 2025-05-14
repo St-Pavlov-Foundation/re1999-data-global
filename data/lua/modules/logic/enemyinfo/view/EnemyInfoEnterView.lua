@@ -1,119 +1,131 @@
-module("modules.logic.enemyinfo.view.EnemyInfoEnterView", package.seeall)
+﻿module("modules.logic.enemyinfo.view.EnemyInfoEnterView", package.seeall)
 
-slot0 = class("EnemyInfoEnterView", BaseViewExtended)
+local var_0_0 = class("EnemyInfoEnterView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.simageRightBg = gohelper.findChildSingleImage(slot0.viewGO, "bg_container/#simage_rightbg")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.simageRightBg = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg_container/#simage_rightbg")
 
-	slot0.simageRightBg:LoadImage("singlebg/dungeon/bg_battledetail.png")
+	arg_4_0.simageRightBg:LoadImage("singlebg/dungeon/bg_battledetail.png")
 
-	slot4 = gohelper.Type_Transform
-	slot0.trTabContainer = gohelper.findChildComponent(slot0.viewGO, "#go_tab_container", slot4)
+	arg_4_0.trTabContainer = gohelper.findChildComponent(arg_4_0.viewGO, "#go_tab_container", gohelper.Type_Transform)
 
-	for slot4 = 0, slot0.trTabContainer.childCount - 1 do
-		gohelper.setActive(slot0.trTabContainer:GetChild(slot4).gameObject, false)
+	for iter_4_0 = 0, arg_4_0.trTabContainer.childCount - 1 do
+		local var_4_0 = arg_4_0.trTabContainer:GetChild(iter_4_0)
+
+		gohelper.setActive(var_4_0.gameObject, false)
 	end
 end
 
-function slot0.initHandleDict(slot0)
-	if slot0.tabEnum2HandleFunc then
+function var_0_0.initHandleDict(arg_5_0)
+	if arg_5_0.tabEnum2HandleFunc then
 		return
 	end
 
-	slot0.tabEnum2HandleFunc = {
-		[EnemyInfoEnum.TabEnum.Normal] = slot0.refreshNormal,
-		[EnemyInfoEnum.TabEnum.WeekWalk] = slot0.refreshWeekWalk,
-		[EnemyInfoEnum.TabEnum.Season123] = slot0.refreshSeason,
-		[EnemyInfoEnum.TabEnum.BossRush] = slot0.refreshBossRush
+	arg_5_0.tabEnum2HandleFunc = {
+		[EnemyInfoEnum.TabEnum.Normal] = arg_5_0.refreshNormal,
+		[EnemyInfoEnum.TabEnum.WeekWalk] = arg_5_0.refreshWeekWalk,
+		[EnemyInfoEnum.TabEnum.Season123] = arg_5_0.refreshSeason,
+		[EnemyInfoEnum.TabEnum.BossRush] = arg_5_0.refreshBossRush
 	}
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.enemyInfoMo
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.enemyInfoMo
 
-	slot1:setTabEnum(slot0.viewParam.tabEnum)
-	slot0:initHandleDict()
-	slot0.tabEnum2HandleFunc[slot1.tabEnum] or slot0.refreshNormal(slot0)
+	var_6_0:setTabEnum(arg_6_0.viewParam.tabEnum)
+	arg_6_0:initHandleDict()
+	;(arg_6_0.tabEnum2HandleFunc[var_6_0.tabEnum] or arg_6_0.refreshNormal)(arg_6_0)
 end
 
-function slot0.refreshNormal(slot0)
-	slot1 = slot0.enemyInfoMo
+function var_0_0.refreshNormal(arg_7_0)
+	local var_7_0 = arg_7_0.enemyInfoMo
 
-	slot1:setShowLeftTab(false)
-	slot1:updateBattleId(slot0.viewParam.battleId)
+	var_7_0:setShowLeftTab(false)
+	var_7_0:updateBattleId(arg_7_0.viewParam.battleId)
 end
 
-function slot0.refreshWeekWalk(slot0)
-	slot0.tabView = slot0:createTabView(EnemyInfoWeekWalkTabView)
+function var_0_0.refreshWeekWalk(arg_8_0)
+	arg_8_0.tabView = arg_8_0:createTabView(EnemyInfoWeekWalkTabView)
 
-	slot0.tabView:onOpen()
+	arg_8_0.tabView:onOpen()
 end
 
-function slot0.refreshSeason(slot0)
-	if slot0.viewParam.showLeftTab then
-		slot0.enemyInfoMo:setShowLeftTab(true)
+function var_0_0.refreshSeason(arg_9_0)
+	local var_9_0 = arg_9_0.enemyInfoMo
 
-		slot0.tabView = slot0:createTabView(EnemyInfoSeason123TabView)
+	if arg_9_0.viewParam.showLeftTab then
+		var_9_0:setShowLeftTab(true)
 
-		slot0.tabView:onOpen()
+		arg_9_0.tabView = arg_9_0:createTabView(EnemyInfoSeason123TabView)
+
+		arg_9_0.tabView:onOpen()
 	else
-		slot1:setShowLeftTab(false)
-		slot1:updateBattleId(slot0.viewParam.battleId)
+		var_9_0:setShowLeftTab(false)
+		var_9_0:updateBattleId(arg_9_0.viewParam.battleId)
 	end
 end
 
-function slot0.refreshBossRush(slot0)
-	slot1 = slot0.enemyInfoMo
+function var_0_0.refreshBossRush(arg_10_0)
+	local var_10_0 = arg_10_0.enemyInfoMo
 
-	slot1:setShowLeftTab(false)
-	slot1:updateBattleId(DungeonConfig.instance:getEpisodeCO(lua_activity128_episode.configDict[slot0.viewParam.activityId][slot0.viewParam.stage][slot0.viewParam.layer].episodeId).battleId)
+	var_10_0:setShowLeftTab(false)
+
+	local var_10_1 = arg_10_0.viewParam.activityId
+	local var_10_2 = arg_10_0.viewParam.stage
+	local var_10_3 = arg_10_0.viewParam.layer
+	local var_10_4 = lua_activity128_episode.configDict[var_10_1][var_10_2][var_10_3]
+	local var_10_5 = DungeonConfig.instance:getEpisodeCO(var_10_4.episodeId)
+
+	var_10_0:updateBattleId(var_10_5.battleId)
 end
 
-function slot0.createTabView(slot0, slot1)
-	slot2 = slot1.New()
+function var_0_0.createTabView(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.New()
 
-	slot2:__onInit()
+	var_11_0:__onInit()
 
-	slot2.viewGO = slot0.viewGO
-	slot2.viewContainer = slot0.viewContainer
-	slot2.viewName = slot0.viewName
+	var_11_0.viewGO = arg_11_0.viewGO
+	var_11_0.viewContainer = arg_11_0.viewContainer
+	var_11_0.viewName = arg_11_0.viewName
 
-	slot2:onInitView()
-	slot2:addEvents()
+	var_11_0:onInitView()
+	var_11_0:addEvents()
 
-	slot2.layoutMo = slot0.layoutMo
-	slot2.enemyInfoMo = slot0.enemyInfoMo
-	slot2.viewParam = slot0.viewParam
+	var_11_0.layoutMo = arg_11_0.layoutMo
+	var_11_0.enemyInfoMo = arg_11_0.enemyInfoMo
+	var_11_0.viewParam = arg_11_0.viewParam
 
-	return slot2
+	return var_11_0
 end
 
-function slot0.onClose(slot0)
-	if slot0.tabView then
-		slot0.tabView:onClose()
+function var_0_0.onClose(arg_12_0)
+	if arg_12_0.tabView then
+		arg_12_0.tabView:onClose()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.tabView then
-		slot0.tabView:removeEvents()
-		slot0.tabView:onDestroyView()
-		slot0.tabView:__onDispose()
+function var_0_0.onDestroyView(arg_13_0)
+	if arg_13_0.tabView then
+		arg_13_0.tabView:removeEvents()
+		arg_13_0.tabView:onDestroyView()
+		arg_13_0.tabView:__onDispose()
 	end
 
-	slot0.simageRightBg:UnLoadImage()
+	arg_13_0.simageRightBg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

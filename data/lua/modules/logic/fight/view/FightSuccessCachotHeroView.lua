@@ -1,55 +1,66 @@
-module("modules.logic.fight.view.FightSuccessCachotHeroView", package.seeall)
+﻿module("modules.logic.fight.view.FightSuccessCachotHeroView", package.seeall)
 
-slot0 = class("FightSuccessCachotHeroView", BaseView)
+local var_0_0 = class("FightSuccessCachotHeroView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goroot = gohelper.findChild(slot0.viewGO, "#go_cachot_herogroup")
-	slot0._heroItemParent = gohelper.findChild(slot0._goroot, "layout")
-	slot0._heroItem = gohelper.findChild(slot0._goroot, "layout/heroitem")
-	slot0._txtLv = gohelper.findChild(slot0.viewGO, "goalcontent/txtLv")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_cachot_herogroup")
+	arg_1_0._heroItemParent = gohelper.findChild(arg_1_0._goroot, "layout")
+	arg_1_0._heroItem = gohelper.findChild(arg_1_0._goroot, "layout/heroitem")
+	arg_1_0._txtLv = gohelper.findChild(arg_1_0.viewGO, "goalcontent/txtLv")
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._txtLv, false)
-	gohelper.setActive(slot0._goroot, true)
+function var_0_0.onOpen(arg_2_0)
+	gohelper.setActive(arg_2_0._txtLv, false)
+	gohelper.setActive(arg_2_0._goroot, true)
 
-	slot1 = {}
+	local var_2_0 = {}
+	local var_2_1 = V1a6_CachotModel.instance:getTeamInfo()
 
-	if not V1a6_CachotModel.instance:getTeamInfo() then
+	if not var_2_1 then
 		return
 	end
 
-	if slot2:getCurGroupInfo() then
-		for slot7, slot8 in ipairs(slot3.heroList) do
-			if HeroModel.instance:getById(slot8) then
-				slot10 = slot2:getHeroHp(slot9.heroId)
+	local var_2_2 = var_2_1:getCurGroupInfo()
 
-				if slot9.skin == 0 then
-					slot11 = lua_character.configDict[slot9.heroId].skinId
+	if var_2_2 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_2.heroList) do
+			local var_2_3 = HeroModel.instance:getById(iter_2_1)
+
+			if var_2_3 then
+				local var_2_4 = var_2_1:getHeroHp(var_2_3.heroId)
+
+				if var_2_3.skin == 0 then
+					local var_2_5 = lua_character.configDict[var_2_3.heroId].skinId
 				end
 
-				table.insert(slot1, {
-					skinId = slot9.skin,
-					nowHp = slot10.life / 1000,
-					heroId = slot9.heroId
+				table.insert(var_2_0, {
+					skinId = var_2_3.skin,
+					nowHp = var_2_4.life / 1000,
+					heroId = var_2_3.heroId
 				})
 			end
 		end
 	end
 
-	gohelper.CreateObjList(slot0, slot0._onHeroItemCreate, slot1, slot0._heroItemParent, slot0._heroItem)
+	gohelper.CreateObjList(arg_2_0, arg_2_0._onHeroItemCreate, var_2_0, arg_2_0._heroItemParent, arg_2_0._heroItem)
 end
 
-function slot0._onHeroItemCreate(slot0, slot1, slot2, slot3)
-	slot5 = gohelper.findChildSingleImage(slot1, "hero/#simage_rolehead")
+function var_0_0._onHeroItemCreate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = gohelper.findChildSlider(arg_3_1, "#slider_hp")
+	local var_3_1 = gohelper.findChildSingleImage(arg_3_1, "hero/#simage_rolehead")
+	local var_3_2 = gohelper.findChild(arg_3_1, "#dead")
 
-	gohelper.findChildSlider(slot1, "#slider_hp"):SetValue(slot2.nowHp)
-	gohelper.setActive(gohelper.findChild(slot1, "#dead"), slot2.nowHp <= 0)
-	slot5:LoadImage(ResUrl.getHeadIconSmall(lua_skin.configDict[slot2.skinId].headIcon))
-	ZProj.UGUIHelper.SetGrayscale(slot5.gameObject, slot2.nowHp <= 0)
+	var_3_0:SetValue(arg_3_2.nowHp)
+	gohelper.setActive(var_3_2, arg_3_2.nowHp <= 0)
+
+	local var_3_3 = lua_skin.configDict[arg_3_2.skinId]
+
+	var_3_1:LoadImage(ResUrl.getHeadIconSmall(var_3_3.headIcon))
+	ZProj.UGUIHelper.SetGrayscale(var_3_1.gameObject, arg_3_2.nowHp <= 0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

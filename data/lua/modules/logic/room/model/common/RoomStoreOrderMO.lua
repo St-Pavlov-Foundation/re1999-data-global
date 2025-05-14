@@ -1,102 +1,116 @@
-module("modules.logic.room.model.common.RoomStoreOrderMO", package.seeall)
+﻿module("modules.logic.room.model.common.RoomStoreOrderMO", package.seeall)
 
-slot0 = pureTable("RoomStoreOrderMO")
+local var_0_0 = pureTable("RoomStoreOrderMO")
 
-function slot0.ctor(slot0)
-	slot0._materialDateMOList = {}
-	slot0._poolList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._materialDateMOList = {}
+	arg_1_0._poolList = {}
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1
-	slot0.goodsId = slot1
-	slot0.themeId = slot2
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.id = arg_2_1
+	arg_2_0.goodsId = arg_2_1
+	arg_2_0.themeId = arg_2_2
 
-	slot0:clear()
+	arg_2_0:clear()
 end
 
-function slot0.addValue(slot0, slot1, slot2, slot3)
-	if not slot0:getMaterialDateMO(slot1, slot2) then
-		slot4 = slot0:_popMaterialDateMO() or MaterialDataMO.New()
+function var_0_0.addValue(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_0:getMaterialDateMO(arg_3_1, arg_3_2)
 
-		slot4:initValue(slot1, slot2, slot3)
+	if not var_3_0 then
+		var_3_0 = arg_3_0:_popMaterialDateMO() or MaterialDataMO.New()
 
-		slot4.tempCount = 0
+		var_3_0:initValue(arg_3_1, arg_3_2, arg_3_3)
 
-		table.insert(slot0._materialDateMOList, slot4)
+		var_3_0.tempCount = 0
+
+		table.insert(arg_3_0._materialDateMOList, var_3_0)
 	else
-		slot4.quantity = slot4.quantity + slot3
+		var_3_0.quantity = var_3_0.quantity + arg_3_3
 	end
 end
 
-function slot0.getMaterialDateMO(slot0, slot1, slot2)
-	for slot7 = 1, #slot0._materialDateMOList do
-		if slot3[slot7].materilId == slot2 and slot8.materilType == slot1 then
-			return slot8
+function var_0_0.getMaterialDateMO(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0._materialDateMOList
+
+	for iter_4_0 = 1, #var_4_0 do
+		local var_4_1 = var_4_0[iter_4_0]
+
+		if var_4_1.materilId == arg_4_2 and var_4_1.materilType == arg_4_1 then
+			return var_4_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.isSameValue(slot0, slot1)
-	slot0:_resetListTempCountValue()
+function var_0_0.isSameValue(arg_5_0, arg_5_1)
+	arg_5_0:_resetListTempCountValue()
 
-	slot2 = true
+	local var_5_0 = true
 
-	for slot6 = 1, #slot1 do
-		slot7 = slot1[slot6]
+	for iter_5_0 = 1, #arg_5_1 do
+		local var_5_1 = arg_5_1[iter_5_0]
+		local var_5_2 = arg_5_0:getMaterialDateMO(var_5_1.materilType, var_5_1.materilId)
 
-		if slot0:getMaterialDateMO(slot7.materilType, slot7.materilId) then
-			slot8.tempCount = slot8.tempCount + slot7.quantity
+		if var_5_2 then
+			var_5_2.tempCount = var_5_2.tempCount + var_5_1.quantity
 		else
-			slot2 = false
+			var_5_0 = false
 
 			break
 		end
 	end
 
-	if slot2 then
-		for slot7 = 1, #slot0._materialDateMOList do
-			slot8 = slot3[slot7]
+	if var_5_0 then
+		local var_5_3 = arg_5_0._materialDateMOList
 
-			if slot8.quantity ~= slot8.tempCount then
-				slot2 = false
+		for iter_5_1 = 1, #var_5_3 do
+			local var_5_4 = var_5_3[iter_5_1]
+
+			if var_5_4.quantity ~= var_5_4.tempCount then
+				var_5_0 = false
 
 				break
 			end
 		end
 	end
 
-	slot0:_resetListTempCountValue()
+	arg_5_0:_resetListTempCountValue()
 
-	return slot2
+	return var_5_0
 end
 
-function slot0._resetListTempCountValue(slot0)
-	for slot5 = 1, #slot0._materialDateMOList do
-		slot1[slot5].tempCount = 0
+function var_0_0._resetListTempCountValue(arg_6_0)
+	local var_6_0 = arg_6_0._materialDateMOList
+
+	for iter_6_0 = 1, #var_6_0 do
+		var_6_0[iter_6_0].tempCount = 0
 	end
 end
 
-function slot0._popMaterialDateMO(slot0)
-	if #slot0._poolList > 0 then
-		slot2 = slot0._poolList[slot1]
-		slot2.quantity = 0
-		slot2.tempCount = 0
+function var_0_0._popMaterialDateMO(arg_7_0)
+	local var_7_0 = #arg_7_0._poolList
 
-		table.remove(slot0._poolList, slot1)
+	if var_7_0 > 0 then
+		local var_7_1 = arg_7_0._poolList[var_7_0]
 
-		return slot2
+		var_7_1.quantity = 0
+		var_7_1.tempCount = 0
+
+		table.remove(arg_7_0._poolList, var_7_0)
+
+		return var_7_1
 	end
 end
 
-function slot0.clear(slot0)
-	if #slot0._materialDateMOList > 0 then
-		tabletool.addArray(slot0._poolList, slot0._materialDateMOList)
+function var_0_0.clear(arg_8_0)
+	if #arg_8_0._materialDateMOList > 0 then
+		tabletool.addArray(arg_8_0._poolList, arg_8_0._materialDateMOList)
 
-		slot0._materialDateMOList = {}
+		arg_8_0._materialDateMOList = {}
 	end
 end
 
-return slot0
+return var_0_0

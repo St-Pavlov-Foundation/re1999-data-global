@@ -1,90 +1,96 @@
-module("modules.logic.explore.map.ExploreMapUnitCatchComp", package.seeall)
+﻿module("modules.logic.explore.map.ExploreMapUnitCatchComp", package.seeall)
 
-slot0 = class("ExploreMapUnitCatchComp", LuaCompBase)
+local var_0_0 = class("ExploreMapUnitCatchComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._mapGo = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._mapGo = arg_1_1
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, slot0._onUpdateCatchUnit, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.OnClickHero, slot0._onClickHero, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, slot0._onHeroInitDone, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, arg_2_0._onUpdateCatchUnit, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.OnClickHero, arg_2_0._onClickHero, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, arg_2_0._onHeroInitDone, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, slot0._onUpdateCatchUnit, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, slot0._onHeroInitDone, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.OnClickHero, slot0._onClickHero, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, arg_3_0._onUpdateCatchUnit, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.HeroResInitDone, arg_3_0._onHeroInitDone, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.OnClickHero, arg_3_0._onClickHero, arg_3_0)
 end
 
-function slot0.setMap(slot0, slot1)
-	slot0._map = slot1
-	slot0._hero = slot1:getHero()
+function var_0_0.setMap(arg_4_0, arg_4_1)
+	arg_4_0._map = arg_4_1
+	arg_4_0._hero = arg_4_1:getHero()
 
-	slot0:_onUpdateCatchUnit()
+	arg_4_0:_onUpdateCatchUnit()
 
-	if slot0._catchUnit then
-		slot0._catchUnit:setActive(false)
+	if arg_4_0._catchUnit then
+		arg_4_0._catchUnit:setActive(false)
 	end
 end
 
-function slot0._onHeroInitDone(slot0)
-	if slot0._catchUnit then
-		slot0._catchUnit:setActive(true)
-		slot0._catchUnit:setupRes()
-		slot0._hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
+function var_0_0._onHeroInitDone(arg_5_0)
+	if arg_5_0._catchUnit then
+		arg_5_0._catchUnit:setActive(true)
+		arg_5_0._catchUnit:setupRes()
+		arg_5_0._hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryChange)
 
-		if slot0._hero:getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right) then
-			slot0._catchUnit:setParent(slot1, ExploreEnum.ExplorePipePotHangType.Carry)
+		local var_5_0 = arg_5_0._hero:getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right)
+
+		if var_5_0 then
+			arg_5_0._catchUnit:setParent(var_5_0, ExploreEnum.ExplorePipePotHangType.Carry)
 		end
 	end
 end
 
-function slot0._onUpdateCatchUnit(slot0, slot1)
-	slot0._catchUnit = slot0._map:getUnit(tonumber(ExploreModel.instance:getUseItemUid()), true)
-	slot4 = slot0._catchUnit ~= slot0._catchUnit
+function var_0_0._onUpdateCatchUnit(arg_6_0, arg_6_1)
+	local var_6_0 = tonumber(ExploreModel.instance:getUseItemUid())
+	local var_6_1 = arg_6_0._catchUnit
 
-	if slot0._catchUnit then
-		slot0._catchUnit:removeFromNode()
+	arg_6_0._catchUnit = arg_6_0._map:getUnit(var_6_0, true)
+
+	local var_6_2 = arg_6_0._catchUnit ~= var_6_1
+
+	if arg_6_0._catchUnit then
+		arg_6_0._catchUnit:removeFromNode()
 	end
 
-	if slot4 and slot1 then
-		if slot0._catchUnit ~= nil then
-			if not slot0._catchUnit.nodePos then
-				slot0._catchUnit.nodePos = slot0._catchUnit.mo.nodePos
+	if var_6_2 and arg_6_1 then
+		if arg_6_0._catchUnit ~= nil then
+			if not arg_6_0._catchUnit.nodePos then
+				arg_6_0._catchUnit.nodePos = arg_6_0._catchUnit.mo.nodePos
 			end
 
-			ExploreHeroCatchUnitFlow.instance:catchUnit(slot0._catchUnit)
+			ExploreHeroCatchUnitFlow.instance:catchUnit(arg_6_0._catchUnit)
 		else
-			ExploreHeroCatchUnitFlow.instance:uncatchUnit(slot3)
+			ExploreHeroCatchUnitFlow.instance:uncatchUnit(var_6_1)
 		end
 	end
 end
 
-function slot0.setCatchUnit(slot0, slot1)
-	slot0._catchUnit = slot1
+function var_0_0.setCatchUnit(arg_7_0, arg_7_1)
+	arg_7_0._catchUnit = arg_7_1
 end
 
-function slot0._onClickHero(slot0)
+function var_0_0._onClickHero(arg_8_0)
 	if not ExploreModel.instance:isHeroInControl() then
 		return
 	end
 
-	if slot0._hero:isMoving() then
+	if arg_8_0._hero:isMoving() then
 		return
 	end
 
-	if slot0._catchUnit then
-		ExploreController.instance:dispatchEvent(ExploreEvent.TryCancelTriggerUnit, slot0._catchUnit.id)
+	if arg_8_0._catchUnit then
+		ExploreController.instance:dispatchEvent(ExploreEvent.TryCancelTriggerUnit, arg_8_0._catchUnit.id)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0._mapGo = nil
-	slot0._map = nil
-	slot0._catchUnit = nil
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0._mapGo = nil
+	arg_9_0._map = nil
+	arg_9_0._catchUnit = nil
 end
 
-return slot0
+return var_0_0

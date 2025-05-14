@@ -1,13 +1,15 @@
-module("modules.logic.explore.controller.steps.ExploreElevatorStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreElevatorStep", package.seeall)
 
-slot0 = class("ExploreElevatorStep", ExploreStepBase)
+local var_0_0 = class("ExploreElevatorStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	if ExploreModel.instance:getInteractInfo(slot0._data.interactId) then
-		slot1.statusInfo.height = slot0._data.height
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = ExploreModel.instance:getInteractInfo(arg_1_0._data.interactId)
+
+	if var_1_0 then
+		var_1_0.statusInfo.height = arg_1_0._data.height
 	end
 
-	slot0:onDone()
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

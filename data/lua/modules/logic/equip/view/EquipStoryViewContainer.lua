@@ -1,11 +1,11 @@
-module("modules.logic.equip.view.EquipStoryViewContainer", package.seeall)
+﻿module("modules.logic.equip.view.EquipStoryViewContainer", package.seeall)
 
-slot0 = class("EquipStoryViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipStoryViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		EquipStoryView.New()
 	}
 end
 
-return slot0
+return var_0_0

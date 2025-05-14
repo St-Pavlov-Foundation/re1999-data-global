@@ -1,150 +1,152 @@
-module("modules.logic.room.utils.fsm.SimpleFSM", package.seeall)
+﻿module("modules.logic.room.utils.fsm.SimpleFSM", package.seeall)
 
-slot0 = class("SimpleFSM")
+local var_0_0 = class("SimpleFSM")
 
-function slot0.ctor(slot0, slot1)
-	slot0.context = slot1
-	slot0.states = {}
-	slot0.transitions = {}
-	slot0.isRunning = false
-	slot0.isTransitioning = false
-	slot0.curStateName = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.context = arg_1_1
+	arg_1_0.states = {}
+	arg_1_0.transitions = {}
+	arg_1_0.isRunning = false
+	arg_1_0.isTransitioning = false
+	arg_1_0.curStateName = nil
 end
 
-function slot0.registerState(slot0, slot1)
-	if slot1.fsm then
+function var_0_0.registerState(arg_2_0, arg_2_1)
+	if arg_2_1.fsm then
 		return
 	end
 
-	if slot0.states[slot1.name] then
+	if arg_2_0.states[arg_2_1.name] then
 		return
 	end
 
-	slot1:register(slot0, slot0.context)
+	arg_2_1:register(arg_2_0, arg_2_0.context)
 
-	slot0.states[slot1.name] = slot1
+	arg_2_0.states[arg_2_1.name] = arg_2_1
 end
 
-function slot0.registerTransition(slot0, slot1)
-	if slot1.fsm then
+function var_0_0.registerTransition(arg_3_0, arg_3_1)
+	if arg_3_1.fsm then
 		return
 	end
 
-	if slot0.transitions[slot1.name] then
+	if arg_3_0.transitions[arg_3_1.name] then
 		return
 	end
 
-	if string.nilorempty(slot1.fromStateName) or string.nilorempty(slot1.toStateName) or not slot1.eventId then
+	if string.nilorempty(arg_3_1.fromStateName) or string.nilorempty(arg_3_1.toStateName) or not arg_3_1.eventId then
 		return
 	end
 
-	if not slot0.states[slot1.fromStateName] or not slot0.states[slot1.toStateName] then
+	if not arg_3_0.states[arg_3_1.fromStateName] or not arg_3_0.states[arg_3_1.toStateName] then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0.transitions) do
-		if slot6.fromStateName == slot1.fromStateName and slot6.eventId == slot1.eventId then
+	for iter_3_0, iter_3_1 in pairs(arg_3_0.transitions) do
+		if iter_3_1.fromStateName == arg_3_1.fromStateName and iter_3_1.eventId == arg_3_1.eventId then
 			return
 		end
 	end
 
-	slot1:register(slot0, slot0.context)
+	arg_3_1:register(arg_3_0, arg_3_0.context)
 
-	slot0.transitions[slot1.name] = slot1
+	arg_3_0.transitions[arg_3_1.name] = arg_3_1
 end
 
-function slot0.triggerEvent(slot0, slot1, slot2)
-	if not slot0.isRunning or slot0.isTransitioning then
+function var_0_0.triggerEvent(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0.isRunning or arg_4_0.isTransitioning then
 		return
 	end
 
-	if string.nilorempty(slot0.curStateName) then
+	if string.nilorempty(arg_4_0.curStateName) then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0.transitions) do
-		if slot7.fromStateName == slot0.curStateName and slot7.eventId == slot1 and slot7:check() then
-			slot0:startTransition(slot7, slot2)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0.transitions) do
+		if iter_4_1.fromStateName == arg_4_0.curStateName and iter_4_1.eventId == arg_4_1 and iter_4_1:check() then
+			arg_4_0:startTransition(iter_4_1, arg_4_2)
 
 			break
 		end
 	end
 end
 
-function slot0.startTransition(slot0, slot1, slot2)
-	slot0.isTransitioning = true
+function var_0_0.startTransition(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.isTransitioning = true
 
-	slot0:leaveState(slot0.curStateName)
-	slot1:onStart(slot2)
+	arg_5_0:leaveState(arg_5_0.curStateName)
+	arg_5_1:onStart(arg_5_2)
 end
 
-function slot0.endTransition(slot0, slot1)
-	slot0.isTransitioning = false
+function var_0_0.endTransition(arg_6_0, arg_6_1)
+	arg_6_0.isTransitioning = false
 
-	slot0:enterState(slot1)
+	arg_6_0:enterState(arg_6_1)
 end
 
-function slot0.enterState(slot0, slot1)
-	slot0.curStateName = slot1
+function var_0_0.enterState(arg_7_0, arg_7_1)
+	arg_7_0.curStateName = arg_7_1
 
-	slot0.states[slot0.curStateName]:onEnter()
+	arg_7_0.states[arg_7_0.curStateName]:onEnter()
 end
 
-function slot0.leaveState(slot0)
-	slot0.curStateName = nil
+function var_0_0.leaveState(arg_8_0)
+	local var_8_0 = arg_8_0.curStateName
 
-	slot0.states[slot0.curStateName]:onLeave()
+	arg_8_0.curStateName = nil
+
+	arg_8_0.states[var_8_0]:onLeave()
 end
 
-function slot0.start(slot0, slot1)
-	if slot0.isRunning then
+function var_0_0.start(arg_9_0, arg_9_1)
+	if arg_9_0.isRunning then
 		return
 	end
 
-	if string.nilorempty(slot1) then
+	if string.nilorempty(arg_9_1) then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0.states) do
-		slot6:start()
+	for iter_9_0, iter_9_1 in pairs(arg_9_0.states) do
+		iter_9_1:start()
 	end
 
-	for slot5, slot6 in pairs(slot0.transitions) do
-		slot6:start()
+	for iter_9_2, iter_9_3 in pairs(arg_9_0.transitions) do
+		iter_9_3:start()
 	end
 
-	slot0.isRunning = true
-	slot0.isTransitioning = false
+	arg_9_0.isRunning = true
+	arg_9_0.isTransitioning = false
 
-	slot0:enterState(slot1)
+	arg_9_0:enterState(arg_9_1)
 end
 
-function slot0.stop(slot0)
-	if not slot0.isRunning then
+function var_0_0.stop(arg_10_0)
+	if not arg_10_0.isRunning then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0.states) do
-		slot5:stop()
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.states) do
+		iter_10_1:stop()
 	end
 
-	for slot4, slot5 in pairs(slot0.transitions) do
-		slot5:stop()
+	for iter_10_2, iter_10_3 in pairs(arg_10_0.transitions) do
+		iter_10_3:stop()
 	end
 
-	slot0.isRunning = false
-	slot0.isTransitioning = false
-	slot0.curStateName = nil
+	arg_10_0.isRunning = false
+	arg_10_0.isTransitioning = false
+	arg_10_0.curStateName = nil
 end
 
-function slot0.clear(slot0)
-	for slot4, slot5 in pairs(slot0.states) do
-		slot5:clear()
+function var_0_0.clear(arg_11_0)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0.states) do
+		iter_11_1:clear()
 	end
 
-	for slot4, slot5 in pairs(slot0.transitions) do
-		slot5:clear()
+	for iter_11_2, iter_11_3 in pairs(arg_11_0.transitions) do
+		iter_11_3:clear()
 	end
 end
 
-return slot0
+return var_0_0

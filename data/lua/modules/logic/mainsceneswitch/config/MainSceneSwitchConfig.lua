@@ -1,8 +1,8 @@
-module("modules.logic.mainsceneswitch.config.MainSceneSwitchConfig", package.seeall)
+﻿module("modules.logic.mainsceneswitch.config.MainSceneSwitchConfig", package.seeall)
 
-slot0 = class("MainSceneSwitchConfig", BaseConfig)
+local var_0_0 = class("MainSceneSwitchConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"scene_switch",
 		"scene_settings",
@@ -10,91 +10,101 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "scene_switch" then
-		slot0:_initSceneSwitchConfig()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "scene_switch" then
+		arg_3_0:_initSceneSwitchConfig()
 	end
 end
 
-function slot0._initSceneSwitchConfig(slot0)
-	slot0._itemMap = {}
-	slot0._itemLockList = {}
-	slot0._itemSource = {}
-	slot0._defaultSceneId = nil
+function var_0_0._initSceneSwitchConfig(arg_4_0)
+	arg_4_0._itemMap = {}
+	arg_4_0._itemLockList = {}
+	arg_4_0._itemSource = {}
+	arg_4_0._defaultSceneId = nil
 
-	for slot4, slot5 in ipairs(lua_scene_switch.configList) do
-		slot0._itemMap[slot5.itemId] = slot5
+	for iter_4_0, iter_4_1 in ipairs(lua_scene_switch.configList) do
+		arg_4_0._itemMap[iter_4_1.itemId] = iter_4_1
 
-		if slot5.defaultUnlock == 1 then
-			if slot0._defaultSceneId ~= nil then
+		if iter_4_1.defaultUnlock == 1 then
+			if arg_4_0._defaultSceneId ~= nil then
 				logError("MainSceneSwitchConfig:_initSceneSwitchConfig has more than one default scene")
 			end
 
-			slot0._defaultSceneId = slot5.id
+			arg_4_0._defaultSceneId = iter_4_1.id
 		else
-			table.insert(slot0._itemLockList, slot5.itemId)
+			table.insert(arg_4_0._itemLockList, iter_4_1.itemId)
 		end
 	end
 
-	if not slot0._defaultSceneId then
+	if not arg_4_0._defaultSceneId then
 		logError("MainSceneSwitchConfig:_initSceneSwitchConfig has no default scene")
 	end
 end
 
-function slot0.getItemSource(slot0, slot1)
-	if not slot0._itemSource[slot1] then
-		slot0._itemSource[slot1] = slot0:_collectSource(slot1)
+function var_0_0.getItemSource(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._itemSource[arg_5_1]
+
+	if not var_5_0 then
+		var_5_0 = arg_5_0:_collectSource(arg_5_1)
+		arg_5_0._itemSource[arg_5_1] = var_5_0
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0._collectSource(slot0, slot1)
-	slot4 = {}
+function var_0_0._collectSource(arg_6_0, arg_6_1)
+	local var_6_0 = lua_item.configDict[arg_6_1].sources
+	local var_6_1 = {}
 
-	if not string.nilorempty(lua_item.configDict[slot1].sources) then
-		for slot9, slot10 in ipairs(string.split(slot3, "|")) do
-			slot11 = string.splitToNumber(slot10, "#")
-			slot12 = {
-				sourceId = slot11[1],
-				probability = slot11[2]
+	if not string.nilorempty(var_6_0) then
+		local var_6_2 = string.split(var_6_0, "|")
+
+		for iter_6_0, iter_6_1 in ipairs(var_6_2) do
+			local var_6_3 = string.splitToNumber(iter_6_1, "#")
+			local var_6_4 = {
+				sourceId = var_6_3[1],
+				probability = var_6_3[2]
 			}
-			slot12.episodeId = JumpConfig.instance:getJumpEpisodeId(slot12.sourceId)
 
-			if slot12.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(slot12.episodeId) then
-				table.insert(slot4, slot12)
+			var_6_4.episodeId = JumpConfig.instance:getJumpEpisodeId(var_6_4.sourceId)
+
+			if var_6_4.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(var_6_4.episodeId) then
+				table.insert(var_6_1, var_6_4)
 			end
 		end
 	end
 
-	return slot4
+	return var_6_1
 end
 
-function slot0.getItemLockList(slot0)
-	return slot0._itemLockList
+function var_0_0.getItemLockList(arg_7_0)
+	return arg_7_0._itemLockList
 end
 
-function slot0.getConfigByItemId(slot0, slot1)
-	return slot0._itemMap[slot1]
+function var_0_0.getConfigByItemId(arg_8_0, arg_8_1)
+	return arg_8_0._itemMap[arg_8_1]
 end
 
-function slot0.getDefaultSceneId(slot0)
-	return slot0._defaultSceneId
+function var_0_0.getDefaultSceneId(arg_9_0)
+	return arg_9_0._defaultSceneId
 end
 
-function slot0.getSceneEffect(slot0, slot1, slot2)
-	if lua_scene_effect_settings.configDict[slot1] then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot8.tag == slot2 then
-				return slot8
+function var_0_0.getSceneEffect(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = lua_scene_effect_settings.configDict[arg_10_1]
+
+	if var_10_0 then
+		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+			if iter_10_1.tag == arg_10_2 then
+				return iter_10_1
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

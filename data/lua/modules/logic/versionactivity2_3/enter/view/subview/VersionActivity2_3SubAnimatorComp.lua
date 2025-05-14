@@ -1,46 +1,46 @@
-module("modules.logic.versionactivity2_3.enter.view.subview.VersionActivity2_3SubAnimatorComp", package.seeall)
+﻿module("modules.logic.versionactivity2_3.enter.view.subview.VersionActivity2_3SubAnimatorComp", package.seeall)
 
-slot0 = class("VersionActivity2_3SubAnimatorComp", VersionActivitySubAnimatorComp)
+local var_0_0 = class("VersionActivity2_3SubAnimatorComp", VersionActivitySubAnimatorComp)
 
-function slot0.get(slot0, slot1)
-	slot2 = uv0.New()
+function var_0_0.get(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_0.New()
 
-	slot2:init(slot0, slot1)
+	var_1_0:init(arg_1_0, arg_1_1)
 
-	return slot2
+	return var_1_0
 end
 
-function slot0.playOpenAnim(slot0)
-	if slot0.view.viewParam.skipOpenAnim then
-		slot0.animator:Play(UIAnimationName.Open, 0, 1)
+function var_0_0.playOpenAnim(arg_2_0)
+	if arg_2_0.view.viewParam.skipOpenAnim then
+		arg_2_0.animator:Play(UIAnimationName.Open, 0, 1)
 
-		slot0.view.viewParam.skipOpenAnim = false
+		arg_2_0.view.viewParam.skipOpenAnim = false
 
-		slot0.viewContainer:markPlayedSubViewAnim()
+		arg_2_0.viewContainer:markPlayedSubViewAnim()
 
 		return
 	end
 
-	if slot0.viewContainer:getIsFirstPlaySubViewAnim() then
-		if slot0.view.viewParam.playVideo then
-			slot0.viewContainer:markPlayedSubViewAnim()
-			slot0.animator:Play("open1", 0, 0)
+	if arg_2_0.viewContainer:getIsFirstPlaySubViewAnim() then
+		if arg_2_0.view.viewParam.playVideo then
+			arg_2_0.viewContainer:markPlayedSubViewAnim()
+			arg_2_0.animator:Play("open1", 0, 0)
 
-			slot0.animator.speed = 0
+			arg_2_0.animator.speed = 0
 
-			slot0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, slot0.onPlayVideoDone, slot0)
-			slot0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, slot0.onPlayVideoDone, slot0)
+			arg_2_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, arg_2_0.onPlayVideoDone, arg_2_0)
+			arg_2_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, arg_2_0.onPlayVideoDone, arg_2_0)
 		else
-			slot0.viewContainer:markPlayedSubViewAnim()
-			slot0.animator:Play("open1", 0, 0)
+			arg_2_0.viewContainer:markPlayedSubViewAnim()
+			arg_2_0.animator:Play("open1", 0, 0)
 
-			slot0.animator.speed = 1
+			arg_2_0.animator.speed = 1
 		end
 	else
-		slot0.animator:Play(UIAnimationName.Open, 0, 0)
+		arg_2_0.animator:Play(UIAnimationName.Open, 0, 0)
 
-		slot0.animator.speed = 1
+		arg_2_0.animator.speed = 1
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,62 +1,81 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepSyncObject", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepSyncObject", package.seeall)
 
-slot0 = class("Va3ChessStepSyncObject", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepSyncObject", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot1 = slot0.originData.object
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.object
+	local var_1_1 = var_1_0.id
+	local var_1_2 = var_1_0.data
+	local var_1_3 = var_1_0.direction
 
-	if Va3ChessGameModel.instance:getObjectDataById(slot1.id) then
-		slot0:_syncObject(slot2, slot1.data, slot1.direction)
+	if Va3ChessGameModel.instance:getObjectDataById(var_1_1) then
+		arg_1_0:_syncObject(var_1_1, var_1_2, var_1_3)
 	end
 
-	slot0:finish()
+	arg_1_0:finish()
 end
 
-function slot0._syncObject(slot0, slot1, slot2, slot3)
-	if Va3ChessGameModel.instance:syncObjectData(slot1, slot2) == nil then
+function var_0_0._syncObject(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = Va3ChessGameModel.instance:syncObjectData(arg_2_1, arg_2_2)
+
+	if var_2_0 == nil then
 		return
 	end
 
-	if slot0:dataHasChanged(slot4, "alertArea") then
+	if arg_2_0:dataHasChanged(var_2_0, "alertArea") then
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 	end
 
-	if slot0:dataHasChanged(slot4, "goToObject") and Va3ChessGameController.instance.interacts:get(slot1) then
-		slot5.goToObject:updateGoToObject()
+	if arg_2_0:dataHasChanged(var_2_0, "goToObject") then
+		local var_2_1 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+
+		if var_2_1 then
+			var_2_1.goToObject:updateGoToObject()
+		end
 	end
 
-	if slot0:dataHasChanged(slot4, "lostTarget") and Va3ChessGameController.instance.interacts:get(slot1) then
-		slot5.effect:refreshSearchFailed()
-		slot5.goToObject:refreshTarget()
+	if arg_2_0:dataHasChanged(var_2_0, "lostTarget") then
+		local var_2_2 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+
+		if var_2_2 then
+			var_2_2.effect:refreshSearchFailed()
+			var_2_2.goToObject:refreshTarget()
+		end
 	end
 
-	if slot0:dataHasChanged(slot4, "pedalStatus") and Va3ChessGameController.instance.interacts:get(slot1) and slot5:getHandler().refreshPedalStatus then
-		slot5:getHandler():refreshPedalStatus()
+	if arg_2_0:dataHasChanged(var_2_0, "pedalStatus") then
+		local var_2_3 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+
+		if var_2_3 and var_2_3:getHandler().refreshPedalStatus then
+			var_2_3:getHandler():refreshPedalStatus()
+		end
 	end
 
-	if not Va3ChessGameController.instance.interacts:get(slot1) or not slot5.chessEffectObj then
+	local var_2_4 = Va3ChessGameController.instance.interacts:get(arg_2_1)
+
+	if not var_2_4 or not var_2_4.chessEffectObj then
 		return
 	end
 
-	if slot2.attributes and slot2.attributes.sleep and slot5.chessEffectObj.setSleep then
-		slot5.chessEffectObj:setSleep(slot2.attributes.sleep)
+	if arg_2_2.attributes and arg_2_2.attributes.sleep and var_2_4.chessEffectObj.setSleep then
+		var_2_4.chessEffectObj:setSleep(arg_2_2.attributes.sleep)
 	end
 
-	if slot5.chessEffectObj.refreshKillEffect then
-		slot5.chessEffectObj:refreshKillEffect()
+	if var_2_4.chessEffectObj.refreshKillEffect then
+		var_2_4.chessEffectObj:refreshKillEffect()
 	end
 
-	if slot3 then
-		slot5:getHandler():faceTo(slot3)
+	if arg_2_3 then
+		var_2_4:getHandler():faceTo(arg_2_3)
 	end
 end
 
-function slot0.dataHasChanged(slot0, slot1, slot2)
-	if slot1[slot2] ~= nil or slot1.__deleteFields and slot1.__deleteFields[slot2] then
+function var_0_0.dataHasChanged(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1[arg_3_2] ~= nil or arg_3_1.__deleteFields and arg_3_1.__deleteFields[arg_3_2] then
 		return true
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

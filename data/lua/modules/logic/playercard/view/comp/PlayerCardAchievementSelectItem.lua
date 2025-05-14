@@ -1,204 +1,243 @@
-module("modules.logic.playercard.view.comp.PlayerCardAchievementSelectItem", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardAchievementSelectItem", package.seeall)
 
-slot0 = class("PlayerCardAchievementSelectItem", ListScrollCellExtend)
+local var_0_0 = class("PlayerCardAchievementSelectItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gosingle = gohelper.findChild(slot0.viewGO, "#go_single")
-	slot0._gogroup = gohelper.findChild(slot0.viewGO, "#go_group")
-	slot0._gosingleitem = gohelper.findChild(slot0.viewGO, "#go_single/#go_singleitem")
-	slot0._gogroupselected = gohelper.findChild(slot0.viewGO, "#go_group/#go_groupselected")
-	slot0._btngroupselect = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_group/#btn_groupselect")
-	slot0._gogroupcontainer = gohelper.findChild(slot0.viewGO, "#go_group/#go_groupcontainer")
-	slot0._simagegroupbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_group/#simage_groupbg")
-	slot0._goallcollect = gohelper.findChild(slot0.viewGO, "#go_group/#go_allcollect")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gosingle = gohelper.findChild(arg_1_0.viewGO, "#go_single")
+	arg_1_0._gogroup = gohelper.findChild(arg_1_0.viewGO, "#go_group")
+	arg_1_0._gosingleitem = gohelper.findChild(arg_1_0.viewGO, "#go_single/#go_singleitem")
+	arg_1_0._gogroupselected = gohelper.findChild(arg_1_0.viewGO, "#go_group/#go_groupselected")
+	arg_1_0._btngroupselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_group/#btn_groupselect")
+	arg_1_0._gogroupcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_group/#go_groupcontainer")
+	arg_1_0._simagegroupbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_group/#simage_groupbg")
+	arg_1_0._goallcollect = gohelper.findChild(arg_1_0.viewGO, "#go_group/#go_allcollect")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btngroupselect:AddClickListener(slot0._btngroupselectOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btngroupselect:AddClickListener(arg_2_0._btngroupselectOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btngroupselect:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btngroupselect:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._anim = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._anim = gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.Animator))
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._singleItems then
-		for slot4, slot5 in pairs(slot0._singleItems) do
-			slot5:dispose()
+function var_0_0.onDestroy(arg_5_0)
+	if arg_5_0._singleItems then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._singleItems) do
+			iter_5_1:dispose()
 		end
 
-		slot0._singleItems = nil
+		arg_5_0._singleItems = nil
 	end
 
-	if slot0._groupItems then
-		for slot4, slot5 in pairs(slot0._groupItems) do
-			slot5:dispose()
+	if arg_5_0._groupItems then
+		for iter_5_2, iter_5_3 in pairs(arg_5_0._groupItems) do
+			iter_5_3:dispose()
 		end
 
-		slot0._groupItems = nil
+		arg_5_0._groupItems = nil
 	end
 
-	slot0._simagegroupbg:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._playItemOpenAim, slot0)
+	arg_5_0._simagegroupbg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_5_0._playItemOpenAim, arg_5_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	slot0:refreshUI()
+	arg_6_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = slot0._mo.groupId ~= 0
+function var_0_0.refreshUI(arg_7_0)
+	local var_7_0 = arg_7_0._mo.groupId ~= 0
 
-	gohelper.setActive(slot0._gosingle, not slot1)
-	gohelper.setActive(slot0._gogroup, slot1)
+	gohelper.setActive(arg_7_0._gosingle, not var_7_0)
+	gohelper.setActive(arg_7_0._gogroup, var_7_0)
 
-	if slot1 then
-		slot0:refreshGroup()
+	if var_7_0 then
+		arg_7_0:refreshGroup()
 	else
-		slot0:refreshSingle()
+		arg_7_0:refreshSingle()
 	end
 
-	slot0:_playAnim()
+	arg_7_0:_playAnim()
 end
 
-function slot0.refreshSingle(slot0)
-	slot0:checkInitSingle()
+function var_0_0.refreshSingle(arg_8_0)
+	arg_8_0:checkInitSingle()
 
-	for slot4 = 1, AchievementEnum.MainListLineCount do
-		gohelper.setActive(slot0._singleItems[slot4].viewGO, slot0._mo.achievementCfgs[slot4] ~= nil)
+	for iter_8_0 = 1, AchievementEnum.MainListLineCount do
+		local var_8_0 = arg_8_0._singleItems[iter_8_0]
+		local var_8_1 = arg_8_0._mo.achievementCfgs[iter_8_0]
 
-		if slot6 then
-			if AchievementController.instance:getMaxLevelFinishTask(slot6.id) then
-				slot5:setData(slot8)
+		gohelper.setActive(var_8_0.viewGO, var_8_1 ~= nil)
+
+		if var_8_1 then
+			local var_8_2 = var_8_1.id
+			local var_8_3 = AchievementController.instance:getMaxLevelFinishTask(var_8_2)
+
+			if var_8_3 then
+				var_8_0:setData(var_8_3)
 			else
-				gohelper.setActive(slot5.viewGO, false)
+				gohelper.setActive(var_8_0.viewGO, false)
 			end
 		end
 	end
 end
 
-function slot0.refreshGroup(slot0)
-	if AchievementConfig.instance:getGroup(slot0._mo.groupId) then
-		slot0._simagegroupbg:LoadImage(AchievementConfig.instance:getGroupBgUrl(slot1, AchievementEnum.GroupParamType.List, AchievementModel.instance:isAchievementTaskFinished(slot2.unLockAchievement)))
-		slot0:refreshSingleInGroup()
+function var_0_0.refreshGroup(arg_9_0)
+	local var_9_0 = arg_9_0._mo.groupId
+	local var_9_1 = AchievementConfig.instance:getGroup(var_9_0)
+
+	if var_9_1 then
+		local var_9_2 = AchievementModel.instance:isAchievementTaskFinished(var_9_1.unLockAchievement)
+		local var_9_3 = AchievementConfig.instance:getGroupBgUrl(var_9_0, AchievementEnum.GroupParamType.List, var_9_2)
+
+		arg_9_0._simagegroupbg:LoadImage(var_9_3)
+		arg_9_0:refreshSingleInGroup()
 	end
 
-	gohelper.setActive(slot0._gogroupselected, PlayerCardAchievementSelectListModel.instance:isGroupSelected(slot1))
+	gohelper.setActive(arg_9_0._gogroupselected, PlayerCardAchievementSelectListModel.instance:isGroupSelected(var_9_0))
 end
 
-function slot0.refreshSingleInGroup(slot0)
-	slot2 = {}
+function var_0_0.refreshSingleInGroup(arg_10_0)
+	local var_10_0 = AchievementConfig.instance:getGroupParamIdTab(arg_10_0._mo.groupId, AchievementEnum.GroupParamType.List)
+	local var_10_1 = {}
 
-	if AchievementConfig.instance:getGroupParamIdTab(slot0._mo.groupId, AchievementEnum.GroupParamType.List) then
-		for slot7, slot8 in ipairs(slot1) do
-			slot9 = slot0:getOrCreateSingleItemInGroup(slot7)
-			slot2[slot9] = true
+	if var_10_0 then
+		local var_10_2 = AchievementConfig.instance:getAchievementsByGroupId(arg_10_0._mo.groupId)
 
-			slot0:_setGroupAchievementPosAndScale(slot9.viewGO, slot0._mo.groupId, slot7)
-			gohelper.setActive(slot9.viewGO, AchievementConfig.instance:getAchievementsByGroupId(slot0._mo.groupId)[slot8] ~= nil)
+		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+			local var_10_3 = arg_10_0:getOrCreateSingleItemInGroup(iter_10_0)
 
-			if slot10 then
-				if AchievementController.instance:getMaxLevelFinishTask(slot10.id) then
-					slot9:setData(slot11)
-					slot9:setNameTxtVisible(false)
-					slot9:setSelectIconVisible(false)
-					slot9:setBgVisible(false)
-					gohelper.setActive(slot9.viewGO, not AchievementModel.instance:achievementHasLocked(slot10.id))
+			var_10_1[var_10_3] = true
+
+			arg_10_0:_setGroupAchievementPosAndScale(var_10_3.viewGO, arg_10_0._mo.groupId, iter_10_0)
+
+			local var_10_4 = var_10_2[iter_10_1]
+
+			gohelper.setActive(var_10_3.viewGO, var_10_4 ~= nil)
+
+			if var_10_4 then
+				local var_10_5 = AchievementController.instance:getMaxLevelFinishTask(var_10_4.id)
+
+				if var_10_5 then
+					var_10_3:setData(var_10_5)
+					var_10_3:setNameTxtVisible(false)
+					var_10_3:setSelectIconVisible(false)
+					var_10_3:setBgVisible(false)
+
+					local var_10_6 = AchievementModel.instance:achievementHasLocked(var_10_4.id)
+
+					gohelper.setActive(var_10_3.viewGO, not var_10_6)
 				else
-					gohelper.setActive(slot9.viewGO, false)
+					gohelper.setActive(var_10_3.viewGO, false)
 				end
 			end
 		end
 	end
 
-	if slot2 and slot0._groupItems then
-		for slot6, slot7 in pairs(slot0._groupItems) do
-			if not slot2[slot7] then
-				gohelper.setActive(slot7.viewGO, false)
+	if var_10_1 and arg_10_0._groupItems then
+		for iter_10_2, iter_10_3 in pairs(arg_10_0._groupItems) do
+			if not var_10_1[iter_10_3] then
+				gohelper.setActive(iter_10_3.viewGO, false)
 			end
 		end
 	end
 
-	gohelper.setActive(slot0._goallcollect, AchievementModel.instance:isGroupFinished(slot0._mo.groupId))
+	local var_10_7 = AchievementModel.instance:isGroupFinished(arg_10_0._mo.groupId)
+
+	gohelper.setActive(arg_10_0._goallcollect, var_10_7)
 end
 
-function slot0.getOrCreateSingleItemInGroup(slot0, slot1)
-	slot0._groupItems = slot0._groupItems or {}
+function var_0_0.getOrCreateSingleItemInGroup(arg_11_0, arg_11_1)
+	arg_11_0._groupItems = arg_11_0._groupItems or {}
 
-	if not slot0._groupItems[slot1] then
-		slot2 = AchievementMainIcon.New()
+	local var_11_0 = arg_11_0._groupItems[arg_11_1]
 
-		slot2:init(slot0._view:getResInst(AchievementEnum.MainIconPath, slot0._gogroupcontainer, "#go_icon" .. slot1))
+	if not var_11_0 then
+		var_11_0 = AchievementMainIcon.New()
 
-		slot0._groupItems[slot1] = slot2
+		local var_11_1 = arg_11_0._view:getResInst(AchievementEnum.MainIconPath, arg_11_0._gogroupcontainer, "#go_icon" .. arg_11_1)
+
+		var_11_0:init(var_11_1)
+
+		arg_11_0._groupItems[arg_11_1] = var_11_0
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0._setGroupAchievementPosAndScale(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6, slot7 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(slot2, slot3, AchievementEnum.GroupParamType.List)
+function var_0_0._setGroupAchievementPosAndScale(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0, var_12_1, var_12_2, var_12_3 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(arg_12_2, arg_12_3, AchievementEnum.GroupParamType.List)
 
-	if slot1 then
-		recthelper.setAnchor(slot1.transform, slot4 or 0, slot5 or 0)
-		transformhelper.setLocalScale(slot1.transform, slot6 or 1, slot7 or 1, 1)
+	if arg_12_1 then
+		recthelper.setAnchor(arg_12_1.transform, var_12_0 or 0, var_12_1 or 0)
+		transformhelper.setLocalScale(arg_12_1.transform, var_12_2 or 1, var_12_3 or 1, 1)
 	end
 end
 
-slot0.IconStartX = -535
-slot0.IconIntervalX = 265
+var_0_0.IconStartX = -535
+var_0_0.IconIntervalX = 265
 
-function slot0.checkInitSingle(slot0)
-	if slot0._singleItems then
+function var_0_0.checkInitSingle(arg_13_0)
+	if arg_13_0._singleItems then
 		return
 	end
 
-	slot0._singleItems = {}
+	arg_13_0._singleItems = {}
 
-	for slot4 = 1, AchievementEnum.MainListLineCount do
-		slot5 = PlayerCardAchievementSelectIcon.New()
-		slot6 = gohelper.cloneInPlace(slot0._gosingleitem, "item" .. tostring(slot4))
+	for iter_13_0 = 1, AchievementEnum.MainListLineCount do
+		local var_13_0 = PlayerCardAchievementSelectIcon.New()
+		local var_13_1 = gohelper.cloneInPlace(arg_13_0._gosingleitem, "item" .. tostring(iter_13_0))
+		local var_13_2 = arg_13_0._view:getResInst(AchievementEnum.MainIconPath, var_13_1, "#go_icon")
 
-		slot5:init(slot6, slot0._view:getResInst(AchievementEnum.MainIconPath, slot6, "#go_icon"))
-		recthelper.setAnchorX(slot6.transform, uv0.IconStartX + (slot4 - 1) * uv0.IconIntervalX)
+		var_13_0:init(var_13_1, var_13_2)
 
-		slot0._singleItems[slot4] = slot5
+		local var_13_3 = var_13_1.transform
+
+		recthelper.setAnchorX(var_13_3, var_0_0.IconStartX + (iter_13_0 - 1) * var_0_0.IconIntervalX)
+
+		arg_13_0._singleItems[iter_13_0] = var_13_0
 	end
 end
 
-function slot0._btngroupselectOnClick(slot0)
-	PlayerCardAchievementSelectController.instance:changeGroupSelect(slot0._mo.groupId)
-	AudioMgr.instance:trigger(PlayerCardAchievementSelectListModel.instance:isGroupSelected(slot0._mo.groupId) and AudioEnum.UI.play_ui_hero_card_click or AudioEnum.UI.play_ui_hero_card_gone)
+function var_0_0._btngroupselectOnClick(arg_14_0)
+	PlayerCardAchievementSelectController.instance:changeGroupSelect(arg_14_0._mo.groupId)
+
+	local var_14_0 = PlayerCardAchievementSelectListModel.instance:isGroupSelected(arg_14_0._mo.groupId)
+
+	AudioMgr.instance:trigger(var_14_0 and AudioEnum.UI.play_ui_hero_card_click or AudioEnum.UI.play_ui_hero_card_gone)
 end
 
-slot0.AnimDelayDelta = 0.06
-slot0.OneScreenItemCountInSingle = 3
-slot0.OneScreenItemCountInGroup = 2
+var_0_0.AnimDelayDelta = 0.06
+var_0_0.OneScreenItemCountInSingle = 3
+var_0_0.OneScreenItemCountInGroup = 2
 
-function slot0._playAnim(slot0)
-	TaskDispatcher.cancelTask(slot0._playItemOpenAim, slot0)
-	slot0._anim:Play("close", 0, 0)
+function var_0_0._playAnim(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._playItemOpenAim, arg_15_0)
+	arg_15_0._anim:Play("close", 0, 0)
 
-	if slot0._index <= (slot0._mo.groupId ~= 0 and uv0.OneScreenItemCountInGroup or uv0.OneScreenItemCountInSingle) and PlayerCardAchievementSelectListModel.instance:getItemAniHasShownIndex() < slot0._index then
-		TaskDispatcher.runDelay(slot0._playItemOpenAim, slot0, uv0.AnimDelayDelta * (slot0._index - 1))
+	local var_15_0 = PlayerCardAchievementSelectListModel.instance:getItemAniHasShownIndex()
+
+	if (arg_15_0._mo.groupId ~= 0 and var_0_0.OneScreenItemCountInGroup or var_0_0.OneScreenItemCountInSingle) >= arg_15_0._index and var_15_0 < arg_15_0._index then
+		TaskDispatcher.runDelay(arg_15_0._playItemOpenAim, arg_15_0, var_0_0.AnimDelayDelta * (arg_15_0._index - 1))
 	else
-		slot0._anim:Play("idle", 0, 0)
+		arg_15_0._anim:Play("idle", 0, 0)
 	end
 end
 
-function slot0._playItemOpenAim(slot0)
-	slot0._anim:Play("open", 0, 0)
-	PlayerCardAchievementSelectListModel.instance:setItemAniHasShownIndex(slot0._index)
+function var_0_0._playItemOpenAim(arg_16_0)
+	arg_16_0._anim:Play("open", 0, 0)
+	PlayerCardAchievementSelectListModel.instance:setItemAniHasShownIndex(arg_16_0._index)
 end
 
-return slot0
+return var_0_0

@@ -1,67 +1,71 @@
-module("modules.logic.versionactivity1_5.act146.config.Activity146Config", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act146.config.Activity146Config", package.seeall)
 
-slot0 = class("Activity146Config", BaseConfig)
+local var_0_0 = class("Activity146Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._configList = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._configList = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity146"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity146" then
-		slot0._configList = slot2.configDict
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity146" then
+		arg_3_0._configList = arg_3_2.configDict
 	end
 end
 
-function slot0.getEpisodeConfig(slot0, slot1, slot2)
-	return slot0._configList[slot1][slot2]
+function var_0_0.getEpisodeConfig(arg_4_0, arg_4_1, arg_4_2)
+	return arg_4_0._configList[arg_4_1][arg_4_2]
 end
 
-function slot0.getAllEpisodeConfigs(slot0, slot1)
-	return slot0._configList and slot0._configList[slot1]
+function var_0_0.getAllEpisodeConfigs(arg_5_0, arg_5_1)
+	return arg_5_0._configList and arg_5_0._configList[arg_5_1]
 end
 
-function slot0.getEpisodeRewardConfig(slot0, slot1, slot2)
-	if slot0._configList and slot0._configList[slot1] and slot0._configList[slot1][slot2] then
-		return string.split(slot0._configList[slot1][slot2].bonus, "|")
+function var_0_0.getEpisodeRewardConfig(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0._configList and arg_6_0._configList[arg_6_1] and arg_6_0._configList[arg_6_1][arg_6_2] then
+		local var_6_0 = arg_6_0._configList[arg_6_1][arg_6_2].bonus
+
+		return (string.split(var_6_0, "|"))
 	end
 end
 
-function slot0.getEpisodeDesc(slot0, slot1, slot2)
-	if slot0._configList and slot0._configList[slot1] and slot0._configList[slot1][slot2] then
-		return slot0._configList[slot1][slot2].text
+function var_0_0.getEpisodeDesc(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0._configList and arg_7_0._configList[arg_7_1] and arg_7_0._configList[arg_7_1][arg_7_2] then
+		return arg_7_0._configList[arg_7_1][arg_7_2].text
 	end
 end
 
-function slot0.getEpisodeTitle(slot0, slot1, slot2)
-	if slot0._configList and slot0._configList[slot1] and slot0._configList[slot1][slot2] then
-		return slot0._configList[slot1][slot2].name
+function var_0_0.getEpisodeTitle(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0._configList and arg_8_0._configList[arg_8_1] and arg_8_0._configList[arg_8_1][arg_8_2] then
+		return arg_8_0._configList[arg_8_1][arg_8_2].name
 	end
 end
 
-function slot0.getPreEpisodeConfig(slot0, slot1, slot2)
-	if slot0._configList and slot0._configList[slot1] and slot0._configList[slot1][slot2] then
-		return slot0._configList[slot1][slot0._configList[slot1][slot2].preId]
+function var_0_0.getPreEpisodeConfig(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._configList and arg_9_0._configList[arg_9_1] and arg_9_0._configList[arg_9_1][arg_9_2] then
+		local var_9_0 = arg_9_0._configList[arg_9_1][arg_9_2].preId
+
+		return arg_9_0._configList[arg_9_1][var_9_0]
 	end
 end
 
-function slot0.getEpisodePhoto(slot0, slot1, slot2)
-	if slot0._configList and slot0._configList[slot1] and slot0._configList[slot1][slot2] then
-		return slot0._configList[slot1][slot2].photo
+function var_0_0.getEpisodePhoto(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_0._configList and arg_10_0._configList[arg_10_1] and arg_10_0._configList[arg_10_1][arg_10_2] then
+		return arg_10_0._configList[arg_10_1][arg_10_2].photo
 	end
 end
 
-function slot0.getEpisodeInteractType(slot0, slot1, slot2)
-	if slot0._configList and slot0._configList[slot1] and slot0._configList[slot1][slot2] then
-		return slot0._configList[slot1][slot2].interactType or 1
+function var_0_0.getEpisodeInteractType(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_0._configList and arg_11_0._configList[arg_11_1] and arg_11_0._configList[arg_11_1][arg_11_2] then
+		return arg_11_0._configList[arg_11_1][arg_11_2].interactType or 1
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

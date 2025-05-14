@@ -1,67 +1,69 @@
-module("modules.logic.fight.view.preview.SkillEditorAutoPlaySkillItem", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorAutoPlaySkillItem", package.seeall)
 
-slot0 = class("SkillEditorAutoPlaySkillItem", ListScrollCell)
+local var_0_0 = class("SkillEditorAutoPlaySkillItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._text = gohelper.findChildText(slot1, "Text")
-	slot0._text1 = gohelper.findChildText(slot1, "imgSelect/Text")
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot1)
-	slot0._selectGO = gohelper.findChild(slot1, "imgSelect")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
+	arg_1_0._text1 = gohelper.findChildText(arg_1_1, "imgSelect/Text")
+	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "imgSelect")
 
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(arg_1_1, true)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot1.co
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	if slot1.type == SkillEditorMgr.SelectType.Hero or SkillEditorHeroSelectModel.instance.selectType == SkillEditorMgr.SelectType.SubHero then
-		slot0._text.text = slot2.skinId .. (slot2.name and "\n" .. slot2.name or "")
-		slot0._text1.text = slot2.skinId .. (slot2.name and "\n" .. slot2.name or "")
-	elseif slot1.type == SkillEditorMgr.SelectType.Monster then
-		slot4 = FightConfig.instance:getSkinCO(slot2.skinId) and slot3.name or nil
+	local var_4_0 = arg_4_1.co
 
-		if not slot3 then
-			logError("皮肤表找不到id,怪物模型id：", slot2.skinId)
+	if arg_4_1.type == SkillEditorMgr.SelectType.Hero or SkillEditorHeroSelectModel.instance.selectType == SkillEditorMgr.SelectType.SubHero then
+		arg_4_0._text.text = var_4_0.skinId .. (var_4_0.name and "\n" .. var_4_0.name or "")
+		arg_4_0._text1.text = var_4_0.skinId .. (var_4_0.name and "\n" .. var_4_0.name or "")
+	elseif arg_4_1.type == SkillEditorMgr.SelectType.Monster then
+		local var_4_1 = FightConfig.instance:getSkinCO(var_4_0.skinId)
+		local var_4_2 = var_4_1 and var_4_1.name or nil
+
+		if not var_4_1 then
+			logError("皮肤表找不到id,怪物模型id：", var_4_0.skinId)
 		end
 
-		slot0._text.text = slot2.skinId .. (slot4 and "\n" .. slot4 or "")
-		slot0._text1.text = slot2.skinId .. (slot4 and "\n" .. slot4 or "")
-	elseif slot1.type == SkillEditorMgr.SelectType.Group then
-		slot3 = string.splitToNumber(slot2.monster, "#")
-		slot4 = lua_monster.configDict[slot3[1]]
+		arg_4_0._text.text = var_4_0.skinId .. (var_4_2 and "\n" .. var_4_2 or "")
+		arg_4_0._text1.text = var_4_0.skinId .. (var_4_2 and "\n" .. var_4_2 or "")
+	elseif arg_4_1.type == SkillEditorMgr.SelectType.Group then
+		local var_4_3 = string.splitToNumber(var_4_0.monster, "#")
+		local var_4_4 = lua_monster.configDict[var_4_3[1]]
 
-		for slot8 = 2, #slot3 do
-			if tabletool.indexOf(string.splitToNumber(slot2.bossId, "#"), slot3[slot8]) then
-				slot4 = lua_monster.configDict[slot3[slot8]]
+		for iter_4_0 = 2, #var_4_3 do
+			if tabletool.indexOf(string.splitToNumber(var_4_0.bossId, "#"), var_4_3[iter_4_0]) then
+				var_4_4 = lua_monster.configDict[var_4_3[iter_4_0]]
 
 				break
 			end
 		end
 
-		slot0._text.text = slot2.id .. (slot4 and slot4.name and "\n" .. slot4.name or "")
-		slot0._text1.text = slot2.id .. (slot4 and slot4.name and "\n" .. slot4.name or "")
+		arg_4_0._text.text = var_4_0.id .. (var_4_4 and var_4_4.name and "\n" .. var_4_4.name or "")
+		arg_4_0._text1.text = var_4_0.id .. (var_4_4 and var_4_4.name and "\n" .. var_4_4.name or "")
 	else
-		slot0._text.text = slot2.id .. (slot2.name and "\n" .. slot2.name or "")
-		slot0._text1.text = slot2.id .. (slot2.name and "\n" .. slot2.name or "")
+		arg_4_0._text.text = var_4_0.id .. (var_4_0.name and "\n" .. var_4_0.name or "")
+		arg_4_0._text1.text = var_4_0.id .. (var_4_0.name and "\n" .. var_4_0.name or "")
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._selectGO, slot1)
+function var_0_0.onSelect(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._selectGO, arg_5_1)
 end
 
-function slot0._onClickThis(slot0)
-	slot0._view:selectCell(slot0._mo.id, true)
-	SkillEditorToolAutoPlaySkillSelectModel.instance:addAtLast(slot0._mo)
+function var_0_0._onClickThis(arg_6_0)
+	arg_6_0._view:selectCell(arg_6_0._mo.id, true)
+	SkillEditorToolAutoPlaySkillSelectModel.instance:addAtLast(arg_6_0._mo)
 end
 
-return slot0
+return var_0_0

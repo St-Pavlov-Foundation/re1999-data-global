@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.DungeonMapInteractive1_3ItemComp", package.seeall)
+﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.DungeonMapInteractive1_3ItemComp", package.seeall)
 
-slot0 = class("DungeonMapInteractive1_3ItemComp", DungeonMapInteractiveItem)
+local var_0_0 = class("DungeonMapInteractive1_3ItemComp", DungeonMapInteractiveItem)
 
-function slot0._editableInitView(slot0)
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "rotate/bg/#txt_info")
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "rotate/bg/#txt_info")
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0._loadBgImage(slot0)
-	slot0._simagebgimage:LoadImage("singlebg/v1a3_dungeon_singlebg/v1a3_dungeoninteractive_panelbg.png")
+function var_0_0._loadBgImage(arg_2_0)
+	arg_2_0._simagebgimage:LoadImage("singlebg/v1a3_dungeon_singlebg/v1a3_dungeoninteractive_panelbg.png")
 end
 
-return slot0
+return var_0_0

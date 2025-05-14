@@ -1,109 +1,119 @@
-module("modules.logic.versionactivity1_2.trade.view.ActivityTradeSuccessView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeSuccessView", package.seeall)
 
-slot0 = class("ActivityTradeSuccessView", BaseView)
+local var_0_0 = class("ActivityTradeSuccessView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_bg")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "root/main/iconbg/#simage_icon")
-	slot0._txtaddcount = gohelper.findChildTextMesh(slot0.viewGO, "root/main/iconbg/#txt_addcount")
-	slot0._txtname = gohelper.findChildTextMesh(slot0.viewGO, "root/main/#txt_name")
-	slot0._txttotalget = gohelper.findChildTextMesh(slot0.viewGO, "root/main/bg/#txt_totalget")
-	slot0._txtnextgoal = gohelper.findChildTextMesh(slot0.viewGO, "root/main/nextstage/#txt_nextgoal")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "root/main/nextstage/#txt_nextgoal/#go_finish")
-	slot0._btnclose = gohelper.findChildClick(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_bg")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/main/iconbg/#simage_icon")
+	arg_1_0._txtaddcount = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/main/iconbg/#txt_addcount")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/main/#txt_name")
+	arg_1_0._txttotalget = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/main/bg/#txt_totalget")
+	arg_1_0._txtnextgoal = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/main/nextstage/#txt_nextgoal")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "root/main/nextstage/#txt_nextgoal/#go_finish")
+	arg_1_0._btnclose = gohelper.findChildClick(arg_1_0.viewGO, "root/#btn_close")
 
-	gohelper.setActive(slot0._gofinish, false)
+	gohelper.setActive(arg_1_0._gofinish, false)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._onClickClose, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._onClickClose, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageicon:LoadImage(ResUrl.getVersionTradeBargainBg("icon/icon_tuerjiuchi"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simageicon:LoadImage(ResUrl.getVersionTradeBargainBg("icon/icon_tuerjiuchi"))
 
-	slot0._txtname.text = luaLang("p_versionactivitytraderewardview_iconname")
+	arg_4_0._txtname.text = luaLang("p_versionactivitytraderewardview_iconname")
 
-	slot0._simagebg:LoadImage(ResUrl.getYaXianImage("img_huode_bg_2"))
+	arg_4_0._simagebg:LoadImage(ResUrl.getYaXianImage("img_huode_bg_2"))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0._simageicon:UnLoadImage()
+	arg_5_0._simagebg:UnLoadImage()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Task_UI_TaskItem_fadeout)
-	slot0:updateView()
+	arg_6_0:updateView()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:updateView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:updateView()
 end
 
-function slot0.updateView(slot0)
-	slot0:refreshText(slot0.viewParam and slot0.viewParam.score or 0, slot0.viewParam and slot0.viewParam.curScore or 0, slot0.viewParam and slot0.viewParam.nextScore or 0)
+function var_0_0.updateView(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam and arg_8_0.viewParam.score or 0
+	local var_8_1 = arg_8_0.viewParam and arg_8_0.viewParam.curScore or 0
+	local var_8_2 = arg_8_0.viewParam and arg_8_0.viewParam.nextScore or 0
+
+	arg_8_0:refreshText(var_8_0, var_8_1, var_8_2)
 end
 
-function slot0.refreshText(slot0, slot1, slot2, slot3)
-	slot0.score = slot1
-	slot0.curScore = slot2
-	slot0.nextScore = slot3
-	slot0._txtaddcount.text = string.format("+%s", slot1)
-	slot0._txtnextgoal.text = formatLuaLang("versionactivity_1_2_tradesuccessview_nextgoal", slot3)
+function var_0_0.refreshText(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	arg_9_0.score = arg_9_1
+	arg_9_0.curScore = arg_9_2
+	arg_9_0.nextScore = arg_9_3
+	arg_9_0._txtaddcount.text = string.format("+%s", arg_9_1)
+	arg_9_0._txtnextgoal.text = formatLuaLang("versionactivity_1_2_tradesuccessview_nextgoal", arg_9_3)
 
-	slot0:_refreshTotalget(true)
+	arg_9_0:_refreshTotalget(true)
 end
 
-function slot0._refreshTotalget(slot0, slot1)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._refreshTotalget(arg_10_0, arg_10_1)
+	if arg_10_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_10_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_10_0._tweenId = nil
 	end
 
-	if slot1 then
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, slot0._tweenFrameCallback, slot0._tweenFinishCallback, slot0)
+	if arg_10_1 then
+		arg_10_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, arg_10_0._tweenFrameCallback, arg_10_0._tweenFinishCallback, arg_10_0)
 	else
-		slot0:_setTotal(slot0.curScore + slot0.score)
+		arg_10_0:_setTotal(arg_10_0.curScore + arg_10_0.score)
 	end
 end
 
-function slot0._tweenFrameCallback(slot0, slot1)
-	slot0:_setTotal(slot1 * slot0.score + slot0.curScore)
+function var_0_0._tweenFrameCallback(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1 * arg_11_0.score + arg_11_0.curScore
+
+	arg_11_0:_setTotal(var_11_0)
 end
 
-function slot0._tweenFinishCallback(slot0)
-	slot0:_setTotal(slot0.curScore + slot0.score)
+function var_0_0._tweenFinishCallback(arg_12_0)
+	arg_12_0:_setTotal(arg_12_0.curScore + arg_12_0.score)
 end
 
-function slot0._setTotal(slot0, slot1)
-	slot0._txttotalget.text = GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity_1_2_tradesuccessview_totalget"), {
-		slot0.nextScore <= math.floor(slot1) and "#B9FF80" or "#D9A06F",
-		slot2
-	})
+function var_0_0._setTotal(arg_13_0, arg_13_1)
+	local var_13_0 = math.floor(arg_13_1)
+	local var_13_1 = var_13_0 >= arg_13_0.nextScore and "#B9FF80" or "#D9A06F"
+	local var_13_2 = {
+		var_13_1,
+		var_13_0
+	}
 
-	gohelper.setActive(slot0._gofinish, slot0.nextScore <= slot2)
+	arg_13_0._txttotalget.text = GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity_1_2_tradesuccessview_totalget"), var_13_2)
+
+	gohelper.setActive(arg_13_0._gofinish, var_13_0 >= arg_13_0.nextScore)
 end
 
-function slot0.onClose(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.onClose(arg_14_0)
+	if arg_14_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_14_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_14_0._tweenId = nil
 	end
 end
 
-function slot0._onClickClose(slot0)
-	slot0:closeThis()
+function var_0_0._onClickClose(arg_15_0)
+	arg_15_0:closeThis()
 end
 
-return slot0
+return var_0_0

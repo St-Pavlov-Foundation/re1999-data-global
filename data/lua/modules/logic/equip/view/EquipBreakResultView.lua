@@ -1,97 +1,103 @@
-module("modules.logic.equip.view.EquipBreakResultView", package.seeall)
+﻿module("modules.logic.equip.view.EquipBreakResultView", package.seeall)
 
-slot0 = class("EquipBreakResultView", BaseView)
+local var_0_0 = class("EquipBreakResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._simageequip = gohelper.findChildSingleImage(slot0.viewGO, "center/#simage_equip")
-	slot0._imagelock = gohelper.findChildImage(slot0.viewGO, "center/#image_lock")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "center/#txt_name")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "center/#txt_num")
-	slot0._gorighttop = gohelper.findChild(slot0.viewGO, "#go_righttop")
-	slot0._image1 = gohelper.findChildImage(slot0.viewGO, "right/container/go_insigt/#image_1")
-	slot0._image2 = gohelper.findChildImage(slot0.viewGO, "right/container/go_insigt/#image_2")
-	slot0._image3 = gohelper.findChildImage(slot0.viewGO, "right/container/go_insigt/#image_3")
-	slot0._image4 = gohelper.findChildImage(slot0.viewGO, "right/container/go_insigt/#image_4")
-	slot0._image5 = gohelper.findChildImage(slot0.viewGO, "right/container/go_insigt/#image_5")
-	slot0._gostrengthenattr = gohelper.findChild(slot0.viewGO, "right/container/#go_strengthenattr")
-	slot0._gobreakattr = gohelper.findChild(slot0.viewGO, "right/container/#go_breakattr")
-	slot0._txtmeshsuiteffect = gohelper.findChildTextMesh(slot0.viewGO, "right/suiteffect/#txtmesh_suiteffect")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._simageequip = gohelper.findChildSingleImage(arg_1_0.viewGO, "center/#simage_equip")
+	arg_1_0._imagelock = gohelper.findChildImage(arg_1_0.viewGO, "center/#image_lock")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "center/#txt_name")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "center/#txt_num")
+	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+	arg_1_0._image1 = gohelper.findChildImage(arg_1_0.viewGO, "right/container/go_insigt/#image_1")
+	arg_1_0._image2 = gohelper.findChildImage(arg_1_0.viewGO, "right/container/go_insigt/#image_2")
+	arg_1_0._image3 = gohelper.findChildImage(arg_1_0.viewGO, "right/container/go_insigt/#image_3")
+	arg_1_0._image4 = gohelper.findChildImage(arg_1_0.viewGO, "right/container/go_insigt/#image_4")
+	arg_1_0._image5 = gohelper.findChildImage(arg_1_0.viewGO, "right/container/go_insigt/#image_5")
+	arg_1_0._gostrengthenattr = gohelper.findChild(arg_1_0.viewGO, "right/container/#go_strengthenattr")
+	arg_1_0._gobreakattr = gohelper.findChild(arg_1_0.viewGO, "right/container/#go_breakattr")
+	arg_1_0._txtmeshsuiteffect = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/suiteffect/#txtmesh_suiteffect")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/zhuangbei_006"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/zhuangbei_006"))
 
-	slot0._strengthenattrs = slot0:getUserDataTb_()
-	slot0._attrIndex = 1
+	arg_5_0._strengthenattrs = arg_5_0:getUserDataTb_()
+	arg_5_0._attrIndex = 1
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._equipMO = slot0.viewParam[1]
-	slot0._prevLv = slot0.viewParam[2]
-	slot0._prevBreakLv = slot0.viewParam[3]
-	slot0._config = slot0._equipMO.config
-	slot0._lock = slot0._equipMO.isLock
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._equipMO = arg_7_0.viewParam[1]
+	arg_7_0._prevLv = arg_7_0.viewParam[2]
+	arg_7_0._prevBreakLv = arg_7_0.viewParam[3]
+	arg_7_0._config = arg_7_0._equipMO.config
+	arg_7_0._lock = arg_7_0._equipMO.isLock
 
-	if slot0._config.isExpEquip == 1 then
-		slot0._imagelock.gameObject:SetActive(false)
+	if arg_7_0._config.isExpEquip == 1 then
+		arg_7_0._imagelock.gameObject:SetActive(false)
 	else
-		UISpriteSetMgr.instance:setEquipSprite(slot0._imagelock, slot0._lock and "bg_tips_suo" or "bg_tips_jiesuo", true)
+		UISpriteSetMgr.instance:setEquipSprite(arg_7_0._imagelock, arg_7_0._lock and "bg_tips_suo" or "bg_tips_jiesuo", true)
 	end
 
-	for slot5 = 1, 5 do
-		UISpriteSetMgr.instance:setEquipSprite(slot0["_image" .. slot5], slot5 <= slot0._equipMO.breakLv and "xx_11" or "xx_10")
+	for iter_7_0 = 1, 5 do
+		UISpriteSetMgr.instance:setEquipSprite(arg_7_0["_image" .. iter_7_0], iter_7_0 <= arg_7_0._equipMO.breakLv and "xx_11" or "xx_10")
 	end
 
-	slot0._simageequip:LoadImage(ResUrl.getEquipSuit(slot0._config.icon))
+	arg_7_0._simageequip:LoadImage(ResUrl.getEquipSuit(arg_7_0._config.icon))
 
-	slot0._txtname.text = slot0._config.name
-	slot2, slot3, slot4, slot5, slot6 = EquipConfig.instance:getEquipStrengthenAttr(slot0._equipMO, nil, slot0._prevLv, slot0._prevBreakLv)
-	slot7, slot8, slot9, slot10, slot11 = EquipConfig.instance:getEquipStrengthenAttr(slot0._equipMO, nil, slot0._equipMO.level, slot0._equipMO.breakLv)
+	arg_7_0._txtname.text = arg_7_0._config.name
 
-	for slot15, slot16 in pairs(lua_character_attribute.configDict) do
-		if slot16.type == 2 or slot16.type == 3 then
-			EquipController.instance.showAttr(slot0, slot15, slot16.showType, slot11[slot16.attrType], slot6[slot16.attrType])
+	local var_7_0, var_7_1, var_7_2, var_7_3, var_7_4 = EquipConfig.instance:getEquipStrengthenAttr(arg_7_0._equipMO, nil, arg_7_0._prevLv, arg_7_0._prevBreakLv)
+	local var_7_5, var_7_6, var_7_7, var_7_8, var_7_9 = EquipConfig.instance:getEquipStrengthenAttr(arg_7_0._equipMO, nil, arg_7_0._equipMO.level, arg_7_0._equipMO.breakLv)
+
+	for iter_7_1, iter_7_2 in pairs(lua_character_attribute.configDict) do
+		if iter_7_2.type == 2 or iter_7_2.type == 3 then
+			EquipController.instance.showAttr(arg_7_0, iter_7_1, iter_7_2.showType, var_7_9[iter_7_2.attrType], var_7_4[iter_7_2.attrType])
 		end
 	end
 
-	slot0:showLevelInfo()
+	arg_7_0:showLevelInfo()
 end
 
-function slot0.showLevelInfo(slot0)
-	gohelper.setActive(slot0._gobreakattr, true)
+function var_0_0.showLevelInfo(arg_8_0)
+	gohelper.setActive(arg_8_0._gobreakattr, true)
 
-	gohelper.findChildText(slot0._gobreakattr, "txt_value").text = EquipConfig.instance:getMaxLevel(slot0._equipMO.breakLv)
-	gohelper.findChildText(slot0._gobreakattr, "txt_prevvalue").text = EquipConfig.instance:getMaxLevel(slot0._prevBreakLv)
+	local var_8_0 = gohelper.findChildText(arg_8_0._gobreakattr, "txt_value")
+	local var_8_1 = gohelper.findChildText(arg_8_0._gobreakattr, "txt_prevvalue")
+
+	var_8_0.text = EquipConfig.instance:getMaxLevel(arg_8_0._equipMO.breakLv)
+	var_8_1.text = EquipConfig.instance:getMaxLevel(arg_8_0._prevBreakLv)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageequip:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagebg:UnLoadImage()
+	arg_10_0._simageequip:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,113 +1,133 @@
-module("modules.logic.fight.view.FightToughBattleSkillView", package.seeall)
+﻿module("modules.logic.fight.view.FightToughBattleSkillView", package.seeall)
 
-slot0 = class("FightToughBattleSkillView", BaseViewExtended)
+local var_0_0 = class("FightToughBattleSkillView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._item = gohelper.findChild(slot0.viewGO, "#scroll_List/Viewport/Content/#go_Items")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._item = gohelper.findChild(arg_1_0.viewGO, "#scroll_List/Viewport/Content/#go_Items")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, slot0._onRoundSequenceStart, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, slot0._onRoundSequenceStart, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_2_0._onRoundSequenceStart, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, arg_2_0._onRoundSequenceStart, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onRoundSequenceStart(slot0)
-	gohelper.setActive(slot0.viewGO, false)
+function var_0_0._onRoundSequenceStart(arg_4_0)
+	gohelper.setActive(arg_4_0.viewGO, false)
 end
 
-function slot0._onRoundSequenceFinish(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0._onRoundSequenceFinish(arg_5_0)
+	gohelper.setActive(arg_5_0.viewGO, true)
 end
 
-function slot0.onOpen(slot0)
-	if not DungeonConfig.instance:getChapterCO(FightModel.instance:getFightParam().chapterId) or slot3.type ~= DungeonEnum.ChapterType.ToughBattle then
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = FightModel.instance:getFightParam()
+	local var_6_1 = var_6_0.chapterId
+	local var_6_2 = DungeonConfig.instance:getChapterCO(var_6_1)
+
+	if not var_6_2 or var_6_2.type ~= DungeonEnum.ChapterType.ToughBattle then
 		return
 	end
 
-	if not slot1.episodeId then
+	local var_6_3 = var_6_0.episodeId
+
+	if not var_6_3 then
 		return
 	end
 
-	slot0._isAct = ToughBattleConfig.instance:isActEpisodeId(slot4)
+	arg_6_0._isAct = ToughBattleConfig.instance:isActEpisodeId(var_6_3)
 
-	slot0:refreshView()
+	arg_6_0:refreshView()
 end
 
-function slot0.refreshView(slot0)
-	if not slot0:getInfo() then
+function var_0_0.refreshView(arg_7_0)
+	local var_7_0 = arg_7_0:getInfo()
+
+	if not var_7_0 then
 		return
 	end
 
-	slot2 = slot1.passChallengeIds
-	slot3 = {}
-	slot4 = {}
+	local var_7_1 = var_7_0.passChallengeIds
+	local var_7_2 = {}
+	local var_7_3 = {}
+	local var_7_4 = FightModel.instance.last_fightGroup
 
-	if FightModel.instance.last_fightGroup then
-		for slot9, slot10 in ipairs(slot5.trialHeroList) do
-			slot4[slot10.trialId] = true
+	if var_7_4 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_4.trialHeroList) do
+			var_7_3[iter_7_1.trialId] = true
 		end
 	end
 
-	if slot0._isAct then
-		for slot9, slot10 in ipairs(slot2) do
-			if lua_activity158_challenge.configDict[slot10] then
-				slot0:addHeroId(slot3, slot11.heroId, slot4)
+	if arg_7_0._isAct then
+		for iter_7_2, iter_7_3 in ipairs(var_7_1) do
+			local var_7_5 = lua_activity158_challenge.configDict[iter_7_3]
+
+			if var_7_5 then
+				arg_7_0:addHeroId(var_7_2, var_7_5.heroId, var_7_3)
 			end
 		end
 	else
-		for slot9, slot10 in ipairs(slot2) do
-			if lua_siege_battle.configDict[slot10] then
-				slot0:addHeroId(slot3, slot11.heroId, slot4)
+		for iter_7_4, iter_7_5 in ipairs(var_7_1) do
+			local var_7_6 = lua_siege_battle.configDict[iter_7_5]
+
+			if var_7_6 then
+				arg_7_0:addHeroId(var_7_2, var_7_6.heroId, var_7_3)
 			end
 		end
 	end
 
-	gohelper.CreateObjList(slot0, slot0.createItem, slot3, slot0._item.transform.parent.gameObject, slot0._item, FightToughBattleSkillItem)
+	gohelper.CreateObjList(arg_7_0, arg_7_0.createItem, var_7_2, arg_7_0._item.transform.parent.gameObject, arg_7_0._item, FightToughBattleSkillItem)
 end
 
-function slot0.addHeroId(slot0, slot1, slot2, slot3)
-	if not lua_siege_battle_hero.configDict[slot2] then
+function var_0_0.addHeroId(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = lua_siege_battle_hero.configDict[arg_8_2]
+
+	if not var_8_0 then
 		return
 	end
 
-	if slot4.type == ToughBattleEnum.HeroType.Hero and not slot3[tonumber(slot4.param)] then
+	if var_8_0.type == ToughBattleEnum.HeroType.Hero and not arg_8_3[tonumber(var_8_0.param)] then
 		return
 	end
 
-	table.insert(slot1, slot4)
+	table.insert(arg_8_1, var_8_0)
 end
 
-function slot0.createItem(slot0, slot1, slot2, slot3)
-	slot1:setCo(slot2)
+function var_0_0.createItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	arg_9_1:setCo(arg_9_2)
 end
 
-function slot0.getInfo(slot0)
-	if slot0._isAct then
-		if ToughBattleModel.instance:getActInfo() then
-			return slot1
+function var_0_0.getInfo(arg_10_0)
+	if arg_10_0._isAct then
+		local var_10_0 = ToughBattleModel.instance:getActInfo()
+
+		if var_10_0 then
+			return var_10_0
 		end
 
-		Activity158Rpc.instance:sendGet158InfosRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, slot0.onRecvMsg, slot0)
+		Activity158Rpc.instance:sendGet158InfosRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, arg_10_0.onRecvMsg, arg_10_0)
 	else
-		if ToughBattleModel.instance:getStoryInfo() then
-			return slot1
+		local var_10_1 = ToughBattleModel.instance:getStoryInfo()
+
+		if var_10_1 then
+			return var_10_1
 		end
 
-		SiegeBattleRpc.instance:sendGetSiegeBattleInfoRequest(slot0.onRecvMsg, slot0)
+		SiegeBattleRpc.instance:sendGetSiegeBattleInfoRequest(arg_10_0.onRecvMsg, arg_10_0)
 	end
 end
 
-function slot0.onRecvMsg(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0.onRecvMsg(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_2 ~= 0 then
 		return
 	end
 
-	slot0:refreshView()
+	arg_11_0:refreshView()
 end
 
-return slot0
+return var_0_0

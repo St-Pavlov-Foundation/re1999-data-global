@@ -1,51 +1,51 @@
-module("modules.logic.activity.model.warmup.ActivityWarmUpOrderMO", package.seeall)
+﻿module("modules.logic.activity.model.warmup.ActivityWarmUpOrderMO", package.seeall)
 
-slot0 = pureTable("ActivityWarmUpOrderMO")
+local var_0_0 = pureTable("ActivityWarmUpOrderMO")
 
-function slot0.ctor(slot0)
-	slot0.id = nil
-	slot0.cfg = nil
-	slot0.progress = nil
-	slot0.hasGetBonus = false
-	slot0.accept = false
-	slot0.status = ActivityWarmUpEnum.OrderStatus.None
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = nil
+	arg_1_0.cfg = nil
+	arg_1_0.progress = nil
+	arg_1_0.hasGetBonus = false
+	arg_1_0.accept = false
+	arg_1_0.status = ActivityWarmUpEnum.OrderStatus.None
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.cfg = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.cfg = arg_2_1
 end
 
-function slot0.initServerData(slot0, slot1)
-	slot0.progress = slot1.process
-	slot0.hasGetBonus = slot1.hasGetBonus
-	slot0.accept = slot1.accept
+function var_0_0.initServerData(arg_3_0, arg_3_1)
+	arg_3_0.progress = arg_3_1.process
+	arg_3_0.hasGetBonus = arg_3_1.hasGetBonus
+	arg_3_0.accept = arg_3_1.accept
 
-	if slot0.hasGetBonus then
-		slot0.status = ActivityWarmUpEnum.OrderStatus.Finished
-	elseif not slot0.accept then
-		slot0.status = ActivityWarmUpEnum.OrderStatus.WaitForAccept
-	elseif slot0.accept and not slot0:isColleted() then
-		slot0.status = ActivityWarmUpEnum.OrderStatus.Accepted
-	elseif slot0.accept and slot0:isColleted() and not slot0.hasGetBonus then
-		slot0.status = ActivityWarmUpEnum.OrderStatus.Collected
+	if arg_3_0.hasGetBonus then
+		arg_3_0.status = ActivityWarmUpEnum.OrderStatus.Finished
+	elseif not arg_3_0.accept then
+		arg_3_0.status = ActivityWarmUpEnum.OrderStatus.WaitForAccept
+	elseif arg_3_0.accept and not arg_3_0:isColleted() then
+		arg_3_0.status = ActivityWarmUpEnum.OrderStatus.Accepted
+	elseif arg_3_0.accept and arg_3_0:isColleted() and not arg_3_0.hasGetBonus then
+		arg_3_0.status = ActivityWarmUpEnum.OrderStatus.Collected
 	end
 end
 
-function slot0.getStatus(slot0)
-	return slot0.status
+function var_0_0.getStatus(arg_4_0)
+	return arg_4_0.status
 end
 
-function slot0.isColleted(slot0)
-	if slot0.progress then
-		return slot0.cfg.maxProgress <= slot0.progress
+function var_0_0.isColleted(arg_5_0)
+	if arg_5_0.progress then
+		return arg_5_0.progress >= arg_5_0.cfg.maxProgress
 	else
 		return false
 	end
 end
 
-function slot0.canFinish(slot0)
-	return slot0.status == ActivityWarmUpEnum.OrderStatus.Collected
+function var_0_0.canFinish(arg_6_0)
+	return arg_6_0.status == ActivityWarmUpEnum.OrderStatus.Collected
 end
 
-return slot0
+return var_0_0

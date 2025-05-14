@@ -1,310 +1,341 @@
-module("modules.logic.meilanni.view.MeilanniEventView", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniEventView", package.seeall)
 
-slot0 = class("MeilanniEventView", BaseView)
+local var_0_0 = class("MeilanniEventView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goeventlist = gohelper.findChild(slot0.viewGO, "#go_eventlist")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goeventlist = gohelper.findChild(arg_1_0.viewGO, "#go_eventlist")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0._episodeInfoUpdate(slot0)
-	if slot0._mapInfo:getCurEpisodeInfo() ~= slot0._episodeInfo then
-		MeilanniAnimationController.instance:addDelayCall(slot0._updateElements, slot0, nil, MeilanniEnum.showElementTime, MeilanniAnimationController.showElementsLayer)
+function var_0_0._episodeInfoUpdate(arg_6_0)
+	if arg_6_0._mapInfo:getCurEpisodeInfo() ~= arg_6_0._episodeInfo then
+		MeilanniAnimationController.instance:addDelayCall(arg_6_0._updateElements, arg_6_0, nil, MeilanniEnum.showElementTime, MeilanniAnimationController.showElementsLayer)
 	else
-		slot0:_updateElements()
+		arg_6_0:_updateElements()
 	end
 end
 
-function slot0._updateElements(slot0)
-	slot2 = slot0._mapInfo:getCurEpisodeInfo() ~= slot0._episodeInfo
+function var_0_0._updateElements(arg_7_0)
+	local var_7_0 = arg_7_0._mapInfo:getCurEpisodeInfo()
+	local var_7_1 = var_7_0 ~= arg_7_0._episodeInfo
 
-	if slot1.isFinish then
-		slot0:_removeAllElements()
+	if var_7_0.isFinish then
+		arg_7_0:_removeAllElements()
 
 		return
 	end
 
-	if slot2 then
-		slot0:_removeAllElements()
+	if var_7_1 then
+		arg_7_0:_removeAllElements()
 	end
 
-	if not slot2 then
-		slot0:_showElements(false)
+	if not var_7_1 then
+		arg_7_0:_showElements(false)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayShowElements, slot0)
-	TaskDispatcher.runDelay(slot0._delayShowElements, slot0, 0.5)
+	TaskDispatcher.cancelTask(arg_7_0._delayShowElements, arg_7_0)
+	TaskDispatcher.runDelay(arg_7_0._delayShowElements, arg_7_0, 0.5)
 end
 
-function slot0._delayShowElements(slot0)
-	slot0:_showElements(true)
+function var_0_0._delayShowElements(arg_8_0)
+	arg_8_0:_showElements(true)
 end
 
-function slot0._resetMap(slot0)
-	slot0:_updateElements()
+function var_0_0._resetMap(arg_9_0)
+	arg_9_0:_updateElements()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, slot0._episodeInfoUpdate, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.setElementsVisible, slot0._setElementsVisible, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, slot0._resetMap, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.getInfo, slot0._getInfo, slot0)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_10_0._episodeInfoUpdate, arg_10_0)
+	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.setElementsVisible, arg_10_0._setElementsVisible, arg_10_0)
+	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_10_0._resetMap, arg_10_0)
+	arg_10_0:addEventCb(MeilanniController.instance, MeilanniEvent.getInfo, arg_10_0._getInfo, arg_10_0)
 
-	slot0._mapId = slot0.viewParam.mapId
-	slot0._mapInfo = MeilanniModel.instance:getMapInfo(slot0._mapId)
-	slot0._eventList = slot0:getUserDataTb_()
+	arg_10_0._mapId = arg_10_0.viewParam.mapId
+	arg_10_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_10_0._mapId)
+	arg_10_0._eventList = arg_10_0:getUserDataTb_()
 
-	slot0:_showElements(true)
+	arg_10_0:_showElements(true)
 end
 
-function slot0._getInfo(slot0)
-	if slot0._mapInfo.isFinish then
-		slot0:_removeAllElements()
+function var_0_0._getInfo(arg_11_0)
+	if arg_11_0._mapInfo.isFinish then
+		arg_11_0:_removeAllElements()
 	end
 end
 
-function slot0.mapIsFinish(slot0)
-	if slot0._mapInfo.isFinish or slot0._mapInfo.score <= 0 then
+function var_0_0.mapIsFinish(arg_12_0)
+	if arg_12_0._mapInfo.isFinish or arg_12_0._mapInfo.score <= 0 then
 		return true
 	end
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_13_0)
+	return
 end
 
-function slot0._openBattleElement(slot0)
-	if not MeilanniModel.instance:getBattleElementId() then
+function var_0_0._openBattleElement(arg_14_0)
+	local var_14_0 = MeilanniModel.instance:getBattleElementId()
+
+	if not var_14_0 then
 		return
 	end
 
 	MeilanniModel.instance:setBattleElementId(nil)
 
-	if not slot0._eventList[slot1] then
+	local var_14_1 = arg_14_0._eventList[var_14_0]
+
+	if not var_14_1 then
 		return
 	end
 
-	slot3 = slot2._info
-	slot4 = slot3.eventId
+	local var_14_2 = var_14_1._info
+	local var_14_3 = var_14_2.eventId
 
-	if slot3:getType() == MeilanniEnum.ElementType.Battle then
+	if var_14_2:getType() == MeilanniEnum.ElementType.Battle then
 		return
 	end
 
-	slot2:_onClick()
+	var_14_1:_onClick()
 end
 
-function slot0._removeAllElements(slot0)
-	if not slot0._episodeInfo then
+function var_0_0._removeAllElements(arg_15_0)
+	if not arg_15_0._episodeInfo then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._episodeInfo.events) do
-		slot0:_removeElement(slot5)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._episodeInfo.events) do
+		arg_15_0:_removeElement(iter_15_1)
 	end
 end
 
-function slot0._showElements(slot0, slot1)
-	if slot0:mapIsFinish() then
+function var_0_0._showElements(arg_16_0, arg_16_1)
+	if arg_16_0:mapIsFinish() then
 		return
 	end
 
-	slot2 = nil
-	slot0._episodeInfo = slot0._mapInfo:getCurEpisodeInfo()
+	local var_16_0
 
-	for slot6, slot7 in ipairs(slot0._episodeInfo.events) do
-		if slot7.isFinish then
-			slot0:_removeElement(slot7)
-		elseif slot7.index > 0 then
-			slot2 = slot0:_addElement(slot7)
-		end
-	end
+	arg_16_0._episodeInfo = arg_16_0._mapInfo:getCurEpisodeInfo()
 
-	for slot6, slot7 in pairs(slot0._eventList) do
-		if not slot0._episodeInfo:getEventInfo(slot6) then
-			slot0:_removeElementById(slot6)
-		end
-	end
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._episodeInfo.events) do
+		if iter_16_1.isFinish then
+			arg_16_0:_removeElement(iter_16_1)
+		else
+			local var_16_1 = arg_16_0:_addElement(iter_16_1)
 
-	if slot2 then
-		for slot6, slot7 in pairs(slot0._eventList) do
-			if slot7 ~= slot2 then
-				gohelper.setActive(slot7.viewGO, false)
+			if iter_16_1.index > 0 then
+				var_16_0 = var_16_1
 			end
 		end
 	end
 
-	if slot1 then
-		slot0:_elementFadeIn()
+	for iter_16_2, iter_16_3 in pairs(arg_16_0._eventList) do
+		if not arg_16_0._episodeInfo:getEventInfo(iter_16_2) then
+			arg_16_0:_removeElementById(iter_16_2)
+		end
 	end
 
-	slot0:_checkActPointStatus()
+	if var_16_0 then
+		for iter_16_4, iter_16_5 in pairs(arg_16_0._eventList) do
+			if iter_16_5 ~= var_16_0 then
+				gohelper.setActive(iter_16_5.viewGO, false)
+			end
+		end
+	end
+
+	if arg_16_1 then
+		arg_16_0:_elementFadeIn()
+	end
+
+	arg_16_0:_checkActPointStatus()
 end
 
-function slot0._oneElementFadeIn(slot0)
-	slot2 = slot0[2]
+function var_0_0._oneElementFadeIn(arg_17_0)
+	local var_17_0 = arg_17_0[1]
+	local var_17_1 = arg_17_0[2]
 
-	if slot0[1]._episodeInfo.isFinish and not slot1._episodeInfo.confirm then
+	if var_17_0._episodeInfo.isFinish and not var_17_0._episodeInfo.confirm then
 		return
 	end
 
-	gohelper.setActive(slot2.viewGO, true)
-	slot2:playAnim("appear")
-	slot2:setClickEnabled(false)
+	gohelper.setActive(var_17_1.viewGO, true)
+	var_17_1:playAnim("appear")
+	var_17_1:setClickEnabled(false)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_story_open)
 end
 
-function slot0._oneElementFadeInFinish(slot0)
-	for slot5, slot6 in ipairs(slot0[1]._fadeList) do
-		slot6:setClickEnabled(true)
+function var_0_0._oneElementFadeInFinish(arg_18_0)
+	local var_18_0 = arg_18_0[1]
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_0._fadeList) do
+		iter_18_1:setClickEnabled(true)
 	end
 
-	slot1:_openBattleElement()
+	var_18_0:_openBattleElement()
 end
 
-function slot0._elementFadeIn(slot0)
-	slot1 = slot0:getUserDataTb_()
+function var_0_0._elementFadeIn(arg_19_0)
+	local var_19_0 = arg_19_0:getUserDataTb_()
 
-	for slot5, slot6 in pairs(slot0._eventList) do
-		if slot6.viewGO.activeSelf then
-			gohelper.setActive(slot6.viewGO, false)
-			table.insert(slot1, slot6)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._eventList) do
+		if iter_19_1.viewGO.activeSelf then
+			gohelper.setActive(iter_19_1.viewGO, false)
+			table.insert(var_19_0, iter_19_1)
 		end
 	end
 
-	table.sort(slot1, uv0._sort)
-	slot0:_stopShowSequence()
+	table.sort(var_19_0, var_0_0._sort)
+	arg_19_0:_stopShowSequence()
 
-	slot0._showSequence = FlowSequence.New()
-	slot5 = 0.5
+	arg_19_0._showSequence = FlowSequence.New()
 
-	slot0._showSequence:addWork(TimerWork.New(slot5))
+	arg_19_0._showSequence:addWork(TimerWork.New(0.5))
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._showSequence:addWork(FunctionWork.New(uv0._oneElementFadeIn, {
-			slot0,
-			slot6
+	for iter_19_2, iter_19_3 in ipairs(var_19_0) do
+		arg_19_0._showSequence:addWork(FunctionWork.New(var_0_0._oneElementFadeIn, {
+			arg_19_0,
+			iter_19_3
 		}))
 
-		if slot5 ~= #slot1 then
-			slot0._showSequence:addWork(TimerWork.New(0.5))
+		if iter_19_2 ~= #var_19_0 then
+			arg_19_0._showSequence:addWork(TimerWork.New(0.5))
 		end
 	end
 
-	slot0._showSequence:addWork(TimerWork.New(0.8))
-	slot0._showSequence:addWork(FunctionWork.New(uv0._oneElementFadeInFinish, {
-		slot0
+	arg_19_0._showSequence:addWork(TimerWork.New(0.8))
+	arg_19_0._showSequence:addWork(FunctionWork.New(var_0_0._oneElementFadeInFinish, {
+		arg_19_0
 	}))
 
-	slot0._fadeList = slot1
+	arg_19_0._fadeList = var_19_0
 
-	slot0._showSequence:registerDoneListener(slot0._stopShowSequence, slot0)
-	slot0._showSequence:start()
+	arg_19_0._showSequence:registerDoneListener(arg_19_0._stopShowSequence, arg_19_0)
+	arg_19_0._showSequence:start()
 end
 
-function slot0._stopShowSequence(slot0)
-	if slot0._showSequence then
-		slot0._showSequence:destroy()
+function var_0_0._stopShowSequence(arg_20_0)
+	if arg_20_0._showSequence then
+		arg_20_0._showSequence:destroy()
 
-		slot0._showSequence = nil
+		arg_20_0._showSequence = nil
 	end
 end
 
-function slot0._sort(slot0, slot1)
-	return slot0._eventId < slot1._eventId
+function var_0_0._sort(arg_21_0, arg_21_1)
+	return arg_21_0._eventId < arg_21_1._eventId
 end
 
-function slot0._addElement(slot0, slot1)
-	if slot0._eventList[slot1.eventId] then
-		slot3:updateInfo(slot1)
+function var_0_0._addElement(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_1.eventId
+	local var_22_1 = arg_22_0._eventList[var_22_0]
 
-		return slot3
+	if var_22_1 then
+		var_22_1:updateInfo(arg_22_1)
+
+		return var_22_1
 	end
 
-	slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goeventlist, slot2), MeilanniEventItem)
-	slot0._eventList[slot2] = slot3
+	local var_22_2 = arg_22_0.viewContainer:getSetting().otherRes[1]
+	local var_22_3 = arg_22_0:getResInst(var_22_2, arg_22_0._goeventlist, var_22_0)
+	local var_22_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_3, MeilanniEventItem)
 
-	slot3:updateInfo(slot1)
+	arg_22_0._eventList[var_22_0] = var_22_4
 
-	return slot3
+	var_22_4:updateInfo(arg_22_1)
+
+	return var_22_4
 end
 
-function slot0._removeElement(slot0, slot1)
-	slot0:_removeElementById(slot1.eventId)
+function var_0_0._removeElement(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_1.eventId
+
+	arg_23_0:_removeElementById(var_23_0)
 end
 
-function slot0._removeElementById(slot0, slot1)
-	if not slot0._eventList[slot1] then
+function var_0_0._removeElementById(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0._eventList[arg_24_1]
+
+	if not var_24_0 then
 		return
 	end
 
-	slot0._eventList[slot1] = nil
+	arg_24_0._eventList[arg_24_1] = nil
 
-	slot2:dispose()
+	var_24_0:dispose()
 end
 
-function slot0._setElementsVisible(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._eventList) do
-		if slot7 ~= slot2 then
-			if not slot7.viewGO.activeSelf and slot1 then
-				gohelper.setActive(slot7.viewGO, true)
-				slot7:playAnim("appear")
-				slot7:setPhotoVisible(true)
+function var_0_0._setElementsVisible(arg_25_0, arg_25_1, arg_25_2)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._eventList) do
+		if iter_25_1 ~= arg_25_2 then
+			if not iter_25_1.viewGO.activeSelf and arg_25_1 then
+				gohelper.setActive(iter_25_1.viewGO, true)
+				iter_25_1:playAnim("appear")
+				iter_25_1:setPhotoVisible(true)
 			end
 
-			if slot7:isSelected() then
-				slot7:setSelected(false)
+			if iter_25_1:isSelected() then
+				iter_25_1:setSelected(false)
 			else
-				slot7:playAnim(slot1 and "appear" or "disappear")
-				slot7:setPhotoVisible(slot1)
+				iter_25_1:playAnim(arg_25_1 and "appear" or "disappear")
+				iter_25_1:setPhotoVisible(arg_25_1)
 			end
 		end
 
-		slot7:setClickEnabled(slot1)
+		iter_25_1:setClickEnabled(arg_25_1)
 	end
 end
 
-function slot0._checkActPointStatus(slot0)
-	slot2 = slot0._mapInfo:getCurEpisodeInfo().leftActPoint
-	slot3 = 0
+function var_0_0._checkActPointStatus(arg_26_0)
+	local var_26_0 = arg_26_0._mapInfo:getCurEpisodeInfo().leftActPoint
+	local var_26_1 = 0
+	local var_26_2 = 0
 
-	for slot8, slot9 in pairs(slot0._eventList) do
-		if slot9:isSpecialType() then
-			slot4 = 0 + 1
+	for iter_26_0, iter_26_1 in pairs(arg_26_0._eventList) do
+		if iter_26_1:isSpecialType() then
+			var_26_2 = var_26_2 + 1
 		else
-			slot3 = slot3 + 1
+			var_26_1 = var_26_1 + 1
 		end
 	end
 
-	for slot8, slot9 in pairs(slot0._eventList) do
-		if not slot9:isSpecialType() then
-			slot9:setGray(slot2 - slot4 > 0)
+	local var_26_3 = var_26_0 - var_26_2
+
+	for iter_26_2, iter_26_3 in pairs(arg_26_0._eventList) do
+		if not iter_26_3:isSpecialType() then
+			iter_26_3:setGray(var_26_3 > 0)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_stopShowSequence()
-	TaskDispatcher.cancelTask(slot0._delayShowElements, slot0)
+function var_0_0.onClose(arg_27_0)
+	arg_27_0:_stopShowSequence()
+	TaskDispatcher.cancelTask(arg_27_0._delayShowElements, arg_27_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_28_0)
+	return
 end
 
-return slot0
+return var_0_0

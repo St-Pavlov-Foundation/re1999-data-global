@@ -1,52 +1,67 @@
-module("modules.logic.rouge.dlc.101.controller.RougeDLCHelper101", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.controller.RougeDLCHelper101", package.seeall)
 
-slot0 = class("RougeDLCHelper101")
+local var_0_0 = class("RougeDLCHelper101")
 
-function slot0.getLimiterBuffSpeedupCost(slot0)
-	return uv0._getOrCreateBuffSpeedupCostMap() and slot1[slot0] or 0
+function var_0_0.getLimiterBuffSpeedupCost(arg_1_0)
+	local var_1_0 = var_0_0._getOrCreateBuffSpeedupCostMap()
+
+	return var_1_0 and var_1_0[arg_1_0] or 0
 end
 
-function slot0._getOrCreateBuffSpeedupCostMap()
-	if not uv0._costMap then
-		uv0._costMap = {}
+function var_0_0._getOrCreateBuffSpeedupCostMap()
+	if not var_0_0._costMap then
+		local var_2_0 = lua_rouge_dlc_const.configDict[RougeDLCEnum101.Const.SpeedupCost]
+		local var_2_1 = var_2_0 and var_2_0.value
+		local var_2_2 = GameUtil.splitString2(var_2_1, true)
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(lua_rouge_dlc_const.configDict[RougeDLCEnum101.Const.SpeedupCost] and slot0.value, true) or {}) do
-			uv0._costMap[slot7[1]] = slot7[2]
+		var_0_0._costMap = {}
+
+		for iter_2_0, iter_2_1 in ipairs(var_2_2 or {}) do
+			local var_2_3 = iter_2_1[1]
+			local var_2_4 = iter_2_1[2]
+
+			var_0_0._costMap[var_2_3] = var_2_4
 		end
 	end
 
-	return uv0._costMap
+	return var_0_0._costMap
 end
 
-function slot0.isLimiterRisker(slot0, slot1)
-	slot2 = slot1 ~= nil
+function var_0_0.isLimiterRisker(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1 ~= nil
 
-	if slot0 and slot1 then
-		slot3, slot4 = uv0._getRiskRange(slot0)
-		slot2 = slot4 < uv0._getRiskRange(slot1)
+	if arg_3_0 and arg_3_1 then
+		local var_3_1, var_3_2 = var_0_0._getRiskRange(arg_3_0)
+
+		var_3_0 = var_3_2 < var_0_0._getRiskRange(arg_3_1)
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0._getRiskRange(slot0)
-	if not slot0 then
+function var_0_0._getRiskRange(arg_4_0)
+	if not arg_4_0 then
 		return
 	end
 
-	return string.splitToNumber(slot0.range, "#")[1] or 0, slot1[2] or 0
+	local var_4_0 = string.splitToNumber(arg_4_0.range, "#")
+	local var_4_1 = var_4_0[1] or 0
+	local var_4_2 = var_4_0[2] or 0
+
+	return var_4_1, var_4_2
 end
 
-function slot0.isNearLimiter(slot0, slot1)
-	slot2 = false
+function var_0_0.isNearLimiter(arg_5_0, arg_5_1)
+	local var_5_0 = false
 
-	if slot0 and slot1 then
-		slot3, slot4 = uv0._getRiskRange(slot0)
-		slot5, slot6 = uv0._getRiskRange(slot1)
-		slot2 = math.abs(slot5 - slot4) <= 1 or math.abs(slot3 - slot6) <= 1
+	if arg_5_0 and arg_5_1 then
+		local var_5_1, var_5_2 = var_0_0._getRiskRange(arg_5_0)
+		local var_5_3, var_5_4 = var_0_0._getRiskRange(arg_5_1)
+
+		var_5_0 = math.abs(var_5_3 - var_5_2) <= 1 or math.abs(var_5_1 - var_5_4) <= 1
 	end
 
-	return slot2
+	return var_5_0
 end
 
-return slot0
+return var_0_0

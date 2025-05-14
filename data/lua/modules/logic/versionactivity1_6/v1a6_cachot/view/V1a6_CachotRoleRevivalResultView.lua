@@ -1,59 +1,68 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalResultView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalResultView", package.seeall)
 
-slot0 = class("V1a6_CachotRoleRevivalResultView", BaseView)
+local var_0_0 = class("V1a6_CachotRoleRevivalResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotipswindow = gohelper.findChild(slot0.viewGO, "#go_tipswindow")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#simage_title")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goteamprepareitem = gohelper.findChild(slot0.viewGO, "#go_teamprepareitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotipswindow = gohelper.findChild(arg_1_0.viewGO, "#go_tipswindow")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goteamprepareitem = gohelper.findChild(arg_1_0.viewGO, "#go_teamprepareitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0._initPresetItem(slot0)
-	slot0._item = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goteamprepareitem), V1a6_CachotRoleRevivalPresetItem)
+function var_0_0._initPresetItem(arg_7_0)
+	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes[1]
+	local var_7_1 = arg_7_0:getResInst(var_7_0, arg_7_0._goteamprepareitem)
+
+	arg_7_0._item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, V1a6_CachotRoleRevivalPresetItem)
 end
 
-function slot0._initPrepareItem(slot0)
-	slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._goteamprepareitem), V1a6_CachotRoleRevivalPrepareItem)
+function var_0_0._initPrepareItem(arg_8_0)
+	local var_8_0 = arg_8_0.viewContainer:getSetting().otherRes[2]
+	local var_8_1 = arg_8_0:getResInst(var_8_0, arg_8_0._goteamprepareitem)
+	local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, V1a6_CachotRoleRevivalPrepareItem)
 
-	slot3:hideDeadStatus(true)
+	var_8_2:hideDeadStatus(true)
 
-	slot0._item = slot3
+	arg_8_0._item = var_8_2
 end
 
-function slot0.onOpen(slot0)
-	slot0._mo = slot0.viewParam[1]
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._mo = arg_9_0.viewParam[1]
 
-	slot0:_initPrepareItem()
-	slot0._item:onUpdateMO(slot0._mo)
+	arg_9_0:_initPrepareItem()
+	arg_9_0._item:onUpdateMO(arg_9_0._mo)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

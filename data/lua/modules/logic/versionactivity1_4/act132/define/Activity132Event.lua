@@ -1,9 +1,10 @@
-module("modules.logic.versionactivity1_4.act132.define.Activity132Event", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.define.Activity132Event", package.seeall)
 
-slot0 = _M
-slot0.OnChangeCollect = 10000
-slot0.OnForceClueItem = 10001
-slot0.OnUpdateInfo = 10002
-slot0.OnContentUnlock = 10003
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnChangeCollect = 10000
+var_0_0.OnForceClueItem = 10001
+var_0_0.OnUpdateInfo = 10002
+var_0_0.OnContentUnlock = 10003
+
+return var_0_0

@@ -1,36 +1,39 @@
-module("modules.logic.settings.rpc.UserSettingRpc", package.seeall)
+﻿module("modules.logic.settings.rpc.UserSettingRpc", package.seeall)
 
-slot0 = class("UserSettingRpc", BaseRpc)
+local var_0_0 = class("UserSettingRpc", BaseRpc)
 
-function slot0.sendGetSettingInfosRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(UserSettingModule_pb.GetSettingInfosRequest(), slot1, slot2)
+function var_0_0.sendGetSettingInfosRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = UserSettingModule_pb.GetSettingInfosRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetSettingInfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetSettingInfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	SettingsModel.instance:setPushState(slot2.infos)
+	SettingsModel.instance:setPushState(arg_2_2.infos)
 end
 
-function slot0.sendUpdateSettingInfoRequest(slot0, slot1, slot2)
-	slot3 = UserSettingModule_pb.UpdateSettingInfoRequest()
-	slot3.type = slot1
-	slot3.param = slot2
+function var_0_0.sendUpdateSettingInfoRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = UserSettingModule_pb.UpdateSettingInfoRequest()
 
-	return slot0:sendMsg(slot3)
+	var_3_0.type = arg_3_1
+	var_3_0.param = arg_3_2
+
+	return arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveUpdateSettingInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUpdateSettingInfoReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	SettingsModel.instance:updatePushState(slot2.type, slot2.param)
+	SettingsModel.instance:updatePushState(arg_4_2.type, arg_4_2.param)
 	SettingsController.instance:dispatchEvent(SettingsEvent.OnChangePushType)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

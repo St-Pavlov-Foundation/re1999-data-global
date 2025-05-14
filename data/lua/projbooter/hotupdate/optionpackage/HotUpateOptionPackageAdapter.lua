@@ -1,117 +1,145 @@
-module("projbooter.hotupdate.optionpackage.HotUpateOptionPackageAdapter", package.seeall)
+﻿module("projbooter.hotupdate.optionpackage.HotUpateOptionPackageAdapter", package.seeall)
 
-slot0 = class("HotUpateOptionPackageAdapter")
+local var_0_0 = class("HotUpateOptionPackageAdapter")
 
-function slot0.ctor(slot0)
-	slot0._downloadSuccSize = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._downloadSuccSize = 0
 end
 
-function slot0.getHttpGetterList(slot0)
-	slot2 = {}
+function var_0_0.getHttpGetterList(arg_2_0)
+	local var_2_0 = HotUpdateOptionPackageMgr.instance:getHotUpdateLangPacks()
+	local var_2_1 = {}
 
-	if HotUpdateOptionPackageMgr.instance:getHotUpdateLangPacks() and #slot1 > 0 then
-		table.insert(slot2, OptionPackageHttpGetter.New(3, slot1))
+	if var_2_0 and #var_2_0 > 0 then
+		table.insert(var_2_1, OptionPackageHttpGetter.New(3, var_2_0))
 	end
 
-	return slot2
+	return var_2_1
 end
 
-function slot0.setDownloder(slot0, slot1, slot2)
-	slot0._downloader = slot1
-	slot0._packageMgr = slot2 or HotUpdateOptionPackageMgr.instance
+function var_0_0.setDownloder(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._downloader = arg_3_1
+	arg_3_0._packageMgr = arg_3_2 or HotUpdateOptionPackageMgr.instance
 end
 
-function slot0._downloadRetry(slot0)
-	slot0._downloader:retry()
+function var_0_0._downloadRetry(arg_4_0)
+	arg_4_0._downloader:retry()
 end
 
-function slot0._quitGame(slot0)
+function var_0_0._quitGame(arg_5_0)
 	ProjBooter.instance:quitGame()
 end
 
-function slot0._fixSizeStr(slot0, slot1)
-	return HotUpdateMgr.fixSizeStr(slot1)
+function var_0_0._fixSizeStr(arg_6_0, arg_6_1)
+	return HotUpdateMgr.fixSizeStr(arg_6_1)
 end
 
-function slot0._fixSizeMB(slot0, slot1)
-	return HotUpdateMgr.fixSizeMB(slot1)
+function var_0_0._fixSizeMB(arg_7_0, arg_7_1)
+	return HotUpdateMgr.fixSizeMB(arg_7_1)
 end
 
-function slot0.onDownloadStart(slot0, slot1, slot2, slot3)
+function var_0_0.onDownloadStart(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	return
 end
 
-function slot0.onDownloadProgressRefresh(slot0, slot1, slot2, slot3)
-	logNormal("HotUpateOptionPackageAdapter:onDownloadProgressRefresh, packName = " .. slot1 .. " curSize = " .. slot2 .. " allSize = " .. slot3)
+function var_0_0.onDownloadProgressRefresh(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	logNormal("HotUpateOptionPackageAdapter:onDownloadProgressRefresh, packName = " .. arg_9_1 .. " curSize = " .. arg_9_2 .. " allSize = " .. arg_9_3)
 
-	slot4 = slot0._downloader:getDownloadSize()
-	slot5 = slot0._downloader:getTotalSize()
-	slot0._downProgressS1 = slot0:_fixSizeStr(slot4)
-	slot0._downProgressS2 = slot0:_fixSizeStr(slot5)
-	slot9 = nil
+	local var_9_0 = arg_9_0._downloader:getDownloadSize()
+	local var_9_1 = arg_9_0._downloader:getTotalSize()
+	local var_9_2 = var_9_0 / var_9_1
+	local var_9_3 = arg_9_0:_fixSizeStr(var_9_0)
+	local var_9_4 = arg_9_0:_fixSizeStr(var_9_1)
 
-	BootLoadingView.instance:show(slot4 / slot5, (UnityEngine.Application.internetReachability ~= UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork or string.format(booterLang("download_info_wifi"), slot7, slot8)) and string.format(booterLang("download_info"), slot7, slot8))
-end
+	arg_9_0._downProgressS1 = var_9_3
+	arg_9_0._downProgressS2 = var_9_4
 
-function slot0.onDownloadPackSuccess(slot0, slot1)
-end
+	local var_9_5
 
-function slot0.onDownloadPackFail(slot0, slot1, slot2, slot3, slot4)
-	if slot3 == 5 then
-		slot0:onNotEnoughDiskSpace(slot1)
+	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
+		var_9_5 = string.format(booterLang("download_info_wifi"), var_9_3, var_9_4)
 	else
-		BootMsgBox.instance:show({
+		var_9_5 = string.format(booterLang("download_info"), var_9_3, var_9_4)
+	end
+
+	BootLoadingView.instance:show(var_9_2, var_9_5)
+end
+
+function var_0_0.onDownloadPackSuccess(arg_10_0, arg_10_1)
+	return
+end
+
+function var_0_0.onDownloadPackFail(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	if arg_11_3 == 5 then
+		arg_11_0:onNotEnoughDiskSpace(arg_11_1)
+	else
+		local var_11_0 = {
 			title = booterLang("hotupdate"),
-			content = OptionPackageDownloader.getDownloadFailedTip(slot3, slot4),
+			content = OptionPackageDownloader.getDownloadFailedTip(arg_11_3, arg_11_4),
 			leftMsg = booterLang("exit"),
-			leftCb = slot0._quitGame,
-			leftCbObj = slot0,
+			leftCb = arg_11_0._quitGame,
+			leftCbObj = arg_11_0,
 			rightMsg = booterLang("retry"),
-			rightCb = slot0._downloadRetry,
-			rightCbObj = slot0
-		})
+			rightCb = arg_11_0._downloadRetry,
+			rightCbObj = arg_11_0
+		}
+
+		BootMsgBox.instance:show(var_11_0)
 	end
 end
 
-function slot0.onNotEnoughDiskSpace(slot0, slot1)
-	logNormal("HotUpateOptionPackageAdapter:_onNotEnoughDiskSpace, packName = " .. slot1)
-	BootMsgBox.instance:show({
+function var_0_0.onNotEnoughDiskSpace(arg_12_0, arg_12_1)
+	logNormal("HotUpateOptionPackageAdapter:_onNotEnoughDiskSpace, packName = " .. arg_12_1)
+
+	local var_12_0 = {
 		title = booterLang("hotupdate"),
 		content = booterLang("download_fail_no_enough_disk"),
 		rightMsg = booterLang("exit"),
-		rightCb = slot0._quitGame,
-		rightCbObj = slot0
-	})
+		rightCb = arg_12_0._quitGame,
+		rightCbObj = arg_12_0
+	}
+
+	BootMsgBox.instance:show(var_12_0)
 end
 
-function slot0.onUnzipProgress(slot0, slot1)
-	if tostring(slot1) == "nan" then
+function var_0_0.onUnzipProgress(arg_13_0, arg_13_1)
+	if tostring(arg_13_1) == "nan" then
 		return
 	end
 
-	slot2 = slot0._downProgressS1 or ""
-	slot3 = slot0._downProgressS2 or ""
-	slot4 = math.floor(100 * slot1 + 0.5)
-	slot5 = nil
+	local var_13_0 = arg_13_0._downProgressS1 or ""
+	local var_13_1 = arg_13_0._downProgressS2 or ""
+	local var_13_2 = math.floor(100 * arg_13_1 + 0.5)
+	local var_13_3
 
-	BootLoadingView.instance:setProgressMsg((UnityEngine.Application.internetReachability ~= UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork or string.format(booterLang("unziping_progress_wifi"), tostring(slot4), slot2, slot3)) and string.format(booterLang("unziping_progress"), tostring(slot4), slot2, slot3))
+	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
+		var_13_3 = string.format(booterLang("unziping_progress_wifi"), tostring(var_13_2), var_13_0, var_13_1)
+	else
+		var_13_3 = string.format(booterLang("unziping_progress"), tostring(var_13_2), var_13_0, var_13_1)
+	end
+
+	BootLoadingView.instance:setProgressMsg(var_13_3)
 end
 
-function slot0.onPackUnZipFail(slot0, slot1, slot2)
-	if slot1 then
-		BootMsgBox.instance:show({
+function var_0_0.onPackUnZipFail(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 then
+		local var_14_0 = {
 			title = booterLang("hotupdate"),
-			content = OptionPackageDownloader._getUnzipFailedTip(slot2),
+			content = OptionPackageDownloader._getUnzipFailedTip(arg_14_2),
 			leftMsg = booterLang("exit"),
-			leftCb = slot0._quitGame,
-			leftCbObj = slot0,
+			leftCb = arg_14_0._quitGame,
+			leftCbObj = arg_14_0,
 			rightMsg = booterLang("retry"),
-			rightCb = slot0._downloadRetry,
-			rightCbObj = slot0
-		})
+			rightCb = arg_14_0._downloadRetry,
+			rightCbObj = arg_14_0
+		}
+
+		BootMsgBox.instance:show(var_14_0)
 	end
 end
 
-function slot0.onPackItemStateChange(slot0, slot1)
+function var_0_0.onPackItemStateChange(arg_15_0, arg_15_1)
+	return
 end
 
-return slot0
+return var_0_0

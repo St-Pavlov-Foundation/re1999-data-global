@@ -1,18 +1,19 @@
-module("modules.logic.activity.view.LinkageActivity_FullViewContainer", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_FullViewContainer", package.seeall)
 
-slot0 = class("LinkageActivity_FullViewContainer", LinkageActivity_BaseViewContainer)
+local var_0_0 = class("LinkageActivity_FullViewContainer", LinkageActivity_BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._view = LinkageActivity_FullView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._view)
+	arg_1_0._view = LinkageActivity_FullView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._view)
+
+	return var_1_0
 end
 
-function slot0.view(slot0)
-	return slot0._view
+function var_0_0.view(arg_2_0)
+	return arg_2_0._view
 end
 
-return slot0
+return var_0_0

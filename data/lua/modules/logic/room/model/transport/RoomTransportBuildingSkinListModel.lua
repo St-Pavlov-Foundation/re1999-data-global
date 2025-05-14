@@ -1,63 +1,73 @@
-module("modules.logic.room.model.transport.RoomTransportBuildingSkinListModel", package.seeall)
+﻿module("modules.logic.room.model.transport.RoomTransportBuildingSkinListModel", package.seeall)
 
-slot0 = class("RoomTransportBuildingSkinListModel", ListScrollModel)
+local var_0_0 = class("RoomTransportBuildingSkinListModel", ListScrollModel)
 
-function slot0.setBuildingUid(slot0, slot1)
-	if RoomModel.instance:getBuildingInfoByBuildingUid(slot1) then
-		slot0:setBuildingId(slot2.buildingId or slot2.defineId)
+function var_0_0.setBuildingUid(arg_1_0, arg_1_1)
+	local var_1_0 = RoomModel.instance:getBuildingInfoByBuildingUid(arg_1_1)
+
+	if var_1_0 then
+		local var_1_1 = var_1_0.buildingId or var_1_0.defineId
+
+		arg_1_0:setBuildingId(var_1_1)
 	else
-		slot0:setList({})
+		arg_1_0:setList({})
 	end
 end
 
-function slot0.setBuildingId(slot0, slot1)
-	slot2 = {}
-	slot3 = RoomConfig.instance:getBuildingConfig(slot1)
+function var_0_0.setBuildingId(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+	local var_2_1 = RoomConfig.instance:getBuildingConfig(arg_2_1)
+	local var_2_2 = RoomConfig.instance:getBuildingSkinList(arg_2_1)
 
-	if RoomConfig.instance:getBuildingSkinList(slot1) then
-		for slot8, slot9 in ipairs(slot4) do
-			slot11 = true
+	if var_2_2 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+			local var_2_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_2_1.itemId)
+			local var_2_4 = true
 
-			if ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot9.itemId) > 0 then
-				slot11 = false
+			if var_2_3 > 0 then
+				var_2_4 = false
 			end
 
-			table.insert(slot2, {
-				id = slot9.id,
-				buildingId = slot1,
-				config = slot9,
-				buildingCfg = slot3,
-				isLock = slot11
-			})
+			local var_2_5 = {
+				id = iter_2_1.id,
+				buildingId = arg_2_1,
+				config = iter_2_1,
+				buildingCfg = var_2_1,
+				isLock = var_2_4
+			}
+
+			table.insert(var_2_0, var_2_5)
 		end
 	end
 
-	table.insert(slot2, {
+	local var_2_6 = {
 		isLock = false,
 		id = 0,
-		buildingId = slot1,
-		buildingCfg = slot3
-	})
-	table.sort(slot2, slot0:_getSortFunc())
-	slot0:setList(slot2)
+		buildingId = arg_2_1,
+		buildingCfg = var_2_1
+	}
+
+	table.insert(var_2_0, var_2_6)
+	table.sort(var_2_0, arg_2_0:_getSortFunc())
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0._getSortFunc(slot0)
-	if slot0._sortFunc_ then
-		return slot0._sortFunc_
+function var_0_0._getSortFunc(arg_3_0)
+	if arg_3_0._sortFunc_ then
+		return arg_3_0._sortFunc_
 	end
 
-	function slot0._sortFunc_(slot0, slot1)
-		if slot0.isLock ~= slot1.isLock then
-			if slot1.isLock then
+	function arg_3_0._sortFunc_(arg_4_0, arg_4_1)
+		if arg_4_0.isLock ~= arg_4_1.isLock then
+			if arg_4_1.isLock then
 				return true
 			end
 
 			return false
 		end
 
-		if slot0.id ~= slot1.id then
-			if slot0.id == 0 or slot1.id < slot0.id then
+		if arg_4_0.id ~= arg_4_1.id then
+			if arg_4_0.id == 0 or arg_4_0.id > arg_4_1.id then
 				return true
 			end
 
@@ -65,33 +75,35 @@ function slot0._getSortFunc(slot0)
 		end
 	end
 
-	return slot0._sortFunc_
+	return arg_3_0._sortFunc_
 end
 
-function slot0.getBuildingUid(slot0)
-	return slot0._buildingUid
+function var_0_0.getBuildingUid(arg_5_0)
+	return arg_5_0._buildingUid
 end
 
-function slot0.getSelectMO(slot0)
-	return slot0:getById(slot0._selectId)
+function var_0_0.getSelectMO(arg_6_0)
+	return arg_6_0:getById(arg_6_0._selectId)
 end
 
-function slot0.getSelect(slot0)
-	return slot0._selectId
+function var_0_0.getSelect(arg_7_0)
+	return arg_7_0._selectId
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectId))
+function var_0_0._refreshSelect(arg_8_0)
+	local var_8_0 = arg_8_0:getById(arg_8_0._selectId)
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._scrollViews) do
+		iter_8_1:setSelect(var_8_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectId = slot1
+function var_0_0.setSelect(arg_9_0, arg_9_1)
+	arg_9_0._selectId = arg_9_1
 
-	slot0:_refreshSelect()
+	arg_9_0:_refreshSelect()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

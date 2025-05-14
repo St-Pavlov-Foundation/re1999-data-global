@@ -1,13 +1,13 @@
-module("modules.logic.meilanni.view.MeilanniSettlementViewContainer", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniSettlementViewContainer", package.seeall)
 
-slot0 = class("MeilanniSettlementViewContainer", BaseViewContainer)
+local var_0_0 = class("MeilanniSettlementViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, MeilanniSettlementView.New())
+	table.insert(var_1_0, MeilanniSettlementView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

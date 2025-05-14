@@ -1,44 +1,51 @@
-module("modules.logic.versionactivity1_4.act132.model.Activity132ClueMo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.model.Activity132ClueMo", package.seeall)
 
-slot0 = class("Activity132ClueMo")
+local var_0_0 = class("Activity132ClueMo")
 
-function slot0.ctor(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.clueId = slot1.clueId
-	slot0.name = slot1.name
-	slot0.contentDict = {}
-	slot0.posX = string.splitToNumber(slot1.pos, "#")[1] or 0
-	slot0.posY = slot2[2] or 0
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.clueId = arg_1_1.clueId
+	arg_1_0.name = arg_1_1.name
+	arg_1_0.contentDict = {}
 
-	for slot7, slot8 in ipairs(string.splitToNumber(slot1.contents, "#")) do
-		if Activity132Config.instance:getContentConfig(slot0.activityId, slot8) then
-			slot0.contentDict[slot8] = Activity132ContentMo.New(slot9)
+	local var_1_0 = string.splitToNumber(arg_1_1.pos, "#")
+
+	arg_1_0.posX = var_1_0[1] or 0
+	arg_1_0.posY = var_1_0[2] or 0
+
+	local var_1_1 = string.splitToNumber(arg_1_1.contents, "#")
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_2 = Activity132Config.instance:getContentConfig(arg_1_0.activityId, iter_1_1)
+
+		if var_1_2 then
+			arg_1_0.contentDict[iter_1_1] = Activity132ContentMo.New(var_1_2)
 		end
 	end
 
-	slot0._cfg = slot1
+	arg_1_0._cfg = arg_1_1
 end
 
-function slot0.getContentList(slot0)
-	slot1 = {}
+function var_0_0.getContentList(arg_2_0)
+	local var_2_0 = {}
 
-	for slot5, slot6 in pairs(slot0.contentDict) do
-		table.insert(slot1, slot6)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0.contentDict) do
+		table.insert(var_2_0, iter_2_1)
 	end
 
-	if #slot1 > 1 then
-		table.sort(slot1, SortUtil.keyLower("contentId"))
+	if #var_2_0 > 1 then
+		table.sort(var_2_0, SortUtil.keyLower("contentId"))
 	end
 
-	return slot1
+	return var_2_0
 end
 
-function slot0.getPos(slot0)
-	return slot0.posX, slot0.posY
+function var_0_0.getPos(arg_3_0)
+	return arg_3_0.posX, arg_3_0.posY
 end
 
-function slot0.getName(slot0)
-	return slot0._cfg.name
+function var_0_0.getName(arg_4_0)
+	return arg_4_0._cfg.name
 end
 
-return slot0
+return var_0_0

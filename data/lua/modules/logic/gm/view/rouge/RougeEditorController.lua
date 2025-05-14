@@ -1,13 +1,15 @@
-module("modules.logic.gm.view.rouge.RougeEditorController", package.seeall)
+﻿module("modules.logic.gm.view.rouge.RougeEditorController", package.seeall)
 
-slot0 = class("RougeEditorController")
+local var_0_0 = class("RougeEditorController")
 
-function slot0._addMapEditorView(slot0)
-	if module_views.RougeMapEditorView then
+function var_0_0._addMapEditorView(arg_1_0)
+	local var_1_0 = "RougeMapEditorView"
+
+	if module_views[var_1_0] then
 		return
 	end
 
-	module_views[slot1] = {
+	module_views[var_1_0] = {
 		destroy = 0,
 		container = "RougeMapEditorViewContainer",
 		bgBlur = 0,
@@ -16,15 +18,17 @@ function slot0._addMapEditorView(slot0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	ViewName[slot1] = slot1
+	ViewName[var_1_0] = var_1_0
 end
 
-function slot0._addPathSelectMapEditorView(slot0)
-	if module_views.RougePathSelectMapEditorView then
+function var_0_0._addPathSelectMapEditorView(arg_2_0)
+	local var_2_0 = "RougePathSelectMapEditorView"
+
+	if module_views[var_2_0] then
 		return
 	end
 
-	module_views[slot1] = {
+	module_views[var_2_0] = {
 		destroy = 0,
 		container = "RougePathSelectMapEditorViewContainer",
 		bgBlur = 0,
@@ -33,28 +37,28 @@ function slot0._addPathSelectMapEditorView(slot0)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
-	ViewName[slot1] = slot1
+	ViewName[var_2_0] = var_2_0
 end
 
-function slot0.enterRougeMapEditor(slot0)
-	if slot0.flow then
+function var_0_0.enterRougeMapEditor(arg_3_0)
+	if arg_3_0.flow then
 		return
 	end
 
-	slot0:_addMapEditorView()
+	arg_3_0:_addMapEditorView()
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
-		slot2 = lua_rouge_middle_layer.configList[1]
+		local var_3_0 = lua_rouge_middle_layer.configList[1]
 
 		RougeMapModel.instance:init(RougeMapEnum.MapType.Edit)
-		RougeMapEditModel.instance:init(slot2.id)
+		RougeMapEditModel.instance:init(var_3_0.id)
 
-		slot0.flow = FlowSequence.New()
+		arg_3_0.flow = FlowSequence.New()
 
-		slot0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, slot2.id))
-		slot0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougeMapEditorView))
-		slot0.flow:registerDoneListener(slot0.onFlowDone, slot0)
-		slot0.flow:start()
+		arg_3_0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, var_3_0.id))
+		arg_3_0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougeMapEditorView))
+		arg_3_0.flow:registerDoneListener(arg_3_0.onFlowDone, arg_3_0)
+		arg_3_0.flow:start()
 
 		return
 	end
@@ -62,24 +66,27 @@ function slot0.enterRougeMapEditor(slot0)
 	if RougeMapModel.instance:isMiddle() then
 		ViewMgr.instance:openView(ViewName.RougeMapEditorView)
 	else
-		RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, slot0.onLoadMapDone, slot0)
+		RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, arg_3_0.onLoadMapDone, arg_3_0)
 
 		RougeMapModel.instance.isMiddle = true
 
-		GameSceneMgr.instance:getCurScene().map:switchMap(RougeMapModel.instance:getLayerId(), lua_rouge_middle_layer.configList[1].id)
+		local var_3_1 = GameSceneMgr.instance:getCurScene().map
+		local var_3_2 = lua_rouge_middle_layer.configList[1]
+
+		var_3_1:switchMap(RougeMapModel.instance:getLayerId(), var_3_2.id)
 	end
 end
 
-function slot0.onFlowDone(slot0)
-	slot0.flow = nil
+function var_0_0.onFlowDone(arg_4_0)
+	arg_4_0.flow = nil
 end
 
-function slot0.onLoadMapDone(slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, slot0.onMapLoadDone, slot0)
+function var_0_0.onLoadMapDone(arg_5_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, arg_5_0.onMapLoadDone, arg_5_0)
 	ViewMgr.instance:openView(ViewName.RougeMapEditorView)
 end
 
-function slot0.enterRougeTestMap(slot0)
+function var_0_0.enterRougeTestMap(arg_6_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
 		RougeMapModel.instance:init(RougeMapEnum.MapType.Normal)
 		GameSceneMgr.instance:startScene(SceneType.Rouge, 1, RougeMapModel.instance:getLayerId())
@@ -90,7 +97,7 @@ function slot0.enterRougeTestMap(slot0)
 	GameSceneMgr.instance:getCurScene().map:switchMap(RougeMapModel.instance:getLayerId(), nil)
 end
 
-function slot0.showNodeClickArea(slot0)
+function var_0_0.showNodeClickArea(arg_7_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
 		return
 	end
@@ -99,186 +106,218 @@ function slot0.showNodeClickArea(slot0)
 		return
 	end
 
-	if slot0.loadingText then
+	if arg_7_0.loadingText then
 		return
 	end
 
-	slot0.showing = true
+	arg_7_0.showing = true
 
-	if slot0.textGo then
-		slot0:_showNodeClickArea()
+	if arg_7_0.textGo then
+		arg_7_0:_showNodeClickArea()
 	else
-		slot0.loadingText = true
+		arg_7_0.loadingText = true
 
-		loadAbAsset(uv0.TextPath, false, slot0._onLoadTextCallback, slot0)
+		loadAbAsset(var_0_0.TextPath, false, arg_7_0._onLoadTextCallback, arg_7_0)
 	end
 end
 
-slot0.TextPath = "ui/viewres/gm/rouge/gm_rouge_text.prefab"
+var_0_0.TextPath = "ui/viewres/gm/rouge/gm_rouge_text.prefab"
 
-function slot0._onLoadTextCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot0._assetItem = slot1
+function var_0_0._onLoadTextCallback(arg_8_0, arg_8_1)
+	if arg_8_1.IsLoadSuccess then
+		arg_8_0._assetItem = arg_8_1
 
-		slot0._assetItem:Retain()
+		arg_8_0._assetItem:Retain()
 
-		slot0.textGo = slot0._assetItem:GetResource(uv0.TextPath)
-		slot0.loadingText = false
+		arg_8_0.textGo = arg_8_0._assetItem:GetResource(var_0_0.TextPath)
+		arg_8_0.loadingText = false
 
-		slot0:_showNodeClickArea()
+		arg_8_0:_showNodeClickArea()
 	end
 end
 
-function slot0._showNodeClickArea(slot0)
-	if not slot0.showing then
+function var_0_0._showNodeClickArea(arg_9_0)
+	if not arg_9_0.showing then
 		return
 	end
 
-	slot0:createArea()
-	RougeMapController.instance:registerCallback(RougeMapEvent.onMapPosChange, slot0.onMapPosChange, slot0, LuaEventSystem.Low)
-	TaskDispatcher.runRepeat(slot0.refreshPos, slot0, 0.1)
+	arg_9_0:createArea()
+	RougeMapController.instance:registerCallback(RougeMapEvent.onMapPosChange, arg_9_0.onMapPosChange, arg_9_0, LuaEventSystem.Low)
+	TaskDispatcher.runRepeat(arg_9_0.refreshPos, arg_9_0, 0.1)
 end
 
-slot0.AreaTextColor = Color.New(1, 0, 0, 1)
+var_0_0.AreaTextColor = Color.New(1, 0, 0, 1)
 
-function slot0.createArea(slot0)
-	slot4 = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO, "areaContainer") or gohelper.create2d(slot2, "areaContainer")
-	slot5 = gohelper.findChild(slot2, "centerPointContainer") or gohelper.create2d(slot2, "centerPointContainer")
+function var_0_0.createArea(arg_10_0)
+	local var_10_0 = ViewMgr.instance:getContainer(ViewName.RougeMapView).viewGO
+	local var_10_1 = arg_10_0.textGo
+	local var_10_2 = gohelper.findChild(var_10_0, "areaContainer") or gohelper.create2d(var_10_0, "areaContainer")
+	local var_10_3 = gohelper.findChild(var_10_0, "centerPointContainer") or gohelper.create2d(var_10_0, "centerPointContainer")
+	local var_10_4 = var_10_2:GetComponent(gohelper.Type_RectTransform)
+	local var_10_5 = var_10_3:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(slot4, true)
-	gohelper.setActive(slot5:GetComponent(gohelper.Type_RectTransform), true)
+	gohelper.setActive(var_10_2, true)
+	gohelper.setActive(var_10_5, true)
 
-	slot0.goAreaContainer = slot4
-	slot0.goCenterPointContainer = slot5
-	slot0.textItemList = {}
+	arg_10_0.goAreaContainer = var_10_2
+	arg_10_0.goCenterPointContainer = var_10_3
+	arg_10_0.textItemList = {}
 
-	for slot13, slot14 in ipairs(RougeMapController.instance:getMapComp():getMapItemList()) do
-		slot15 = gohelper.findChild(slot4, slot13) or gohelper.create2d(slot4, slot13)
+	local var_10_6 = RougeMapController.instance:getMapComp():getMapItemList()
 
-		gohelper.setActive(slot15, true)
+	for iter_10_0, iter_10_1 in ipairs(var_10_6) do
+		local var_10_7 = gohelper.findChild(var_10_2, iter_10_0) or gohelper.create2d(var_10_2, iter_10_0)
 
-		slot16 = gohelper.onceAddComponent(slot15, gohelper.Type_Image)
+		gohelper.setActive(var_10_7, true)
 
-		ZProj.UGUIHelper.SetColorAlpha(slot16, 0.5)
+		local var_10_8 = gohelper.onceAddComponent(var_10_7, gohelper.Type_Image)
 
-		slot16.raycastTarget = false
-		slot17 = slot14:getClickArea()
-		slot22, slot23 = slot14:getUiPos(slot4:GetComponent(gohelper.Type_RectTransform))
+		ZProj.UGUIHelper.SetColorAlpha(var_10_8, 0.5)
 
-		recthelper.setAnchor(slot15.transform, slot22 + slot17.z, slot23 + slot17.w)
-		recthelper.setSize(slot15.transform, slot17.x, slot17.y)
+		var_10_8.raycastTarget = false
 
-		slot24 = gohelper.findChild(slot5, slot13) or gohelper.create2d(slot5, slot13)
+		local var_10_9 = iter_10_1:getClickArea()
+		local var_10_10 = var_10_9.x
+		local var_10_11 = var_10_9.y
+		local var_10_12 = var_10_9.z
+		local var_10_13 = var_10_9.w
+		local var_10_14, var_10_15 = iter_10_1:getUiPos(var_10_4)
 
-		gohelper.setActive(slot24, true)
+		recthelper.setAnchor(var_10_7.transform, var_10_14 + var_10_12, var_10_15 + var_10_13)
+		recthelper.setSize(var_10_7.transform, var_10_10, var_10_11)
 
-		slot16 = gohelper.onceAddComponent(slot24, gohelper.Type_Image)
-		slot16.color = Color.New(0, 0, 0, 1)
-		slot16.raycastTarget = false
+		local var_10_16 = gohelper.findChild(var_10_3, iter_10_0) or gohelper.create2d(var_10_3, iter_10_0)
 
-		recthelper.setSize(slot24.transform, 20, 20)
-		recthelper.setAnchor(slot24.transform, slot22, slot23)
+		gohelper.setActive(var_10_16, true)
 
-		slot25 = {
-			text = slot26:GetComponent(gohelper.Type_TextMesh)
-		}
-		slot25.text.color = uv0.AreaTextColor
-		slot25.areaRectTr = slot15:GetComponent(gohelper.Type_RectTransform)
-		slot25.mapItem = slot14
+		local var_10_17 = gohelper.onceAddComponent(var_10_16, gohelper.Type_Image)
 
-		recthelper.setAnchor((gohelper.findChild(slot15, "text") or gohelper.clone(slot0.textGo, slot15, "text")):GetComponent(gohelper.Type_RectTransform), 0, 50)
-		table.insert(slot0.textItemList, slot25)
-		slot0:refreshOnePos(slot25)
+		var_10_17.color = Color.New(0, 0, 0, 1)
+		var_10_17.raycastTarget = false
+
+		recthelper.setSize(var_10_16.transform, 20, 20)
+		recthelper.setAnchor(var_10_16.transform, var_10_14, var_10_15)
+
+		local var_10_18 = {}
+		local var_10_19 = gohelper.findChild(var_10_7, "text") or gohelper.clone(var_10_1, var_10_7, "text")
+
+		var_10_18.text = var_10_19:GetComponent(gohelper.Type_TextMesh)
+		var_10_18.text.color = var_0_0.AreaTextColor
+		var_10_18.areaRectTr = var_10_7:GetComponent(gohelper.Type_RectTransform)
+		var_10_18.mapItem = iter_10_1
+
+		local var_10_20 = var_10_19:GetComponent(gohelper.Type_RectTransform)
+
+		recthelper.setAnchor(var_10_20, 0, 50)
+		table.insert(arg_10_0.textItemList, var_10_18)
+		arg_10_0:refreshOnePos(var_10_18)
 	end
 end
 
-function slot0.refreshPos(slot0)
-	for slot4, slot5 in ipairs(slot0.textItemList) do
-		if not slot0:refreshOnePos(slot5) then
-			TaskDispatcher.cancelTask(slot0.refreshPos, slot0)
+function var_0_0.refreshPos(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.textItemList) do
+		if not arg_11_0:refreshOnePos(iter_11_1) then
+			TaskDispatcher.cancelTask(arg_11_0.refreshPos, arg_11_0)
 
 			return
 		end
 	end
 end
 
-function slot0.refreshOnePos(slot0, slot1)
-	if gohelper.isNil(slot1.areaRectTr) then
+function var_0_0.refreshOnePos(arg_12_0, arg_12_1)
+	if gohelper.isNil(arg_12_1.areaRectTr) then
 		return false
 	end
 
-	slot4, slot5 = slot1.mapItem:getUiPos(slot0.goAreaContainer.transform)
-	slot6, slot7 = recthelper.getAnchor(slot1.areaRectTr)
-	slot1.text.text = string.format("%s, %s, %s, %s", RougeMapHelper.retain2decimals(recthelper.getWidth(slot1.areaRectTr)), RougeMapHelper.retain2decimals(recthelper.getHeight(slot1.areaRectTr)), RougeMapHelper.retain2decimals(slot6 - slot4), RougeMapHelper.retain2decimals(slot7 - slot5))
+	local var_12_0 = recthelper.getWidth(arg_12_1.areaRectTr)
+	local var_12_1 = recthelper.getHeight(arg_12_1.areaRectTr)
+	local var_12_2, var_12_3 = arg_12_1.mapItem:getUiPos(arg_12_0.goAreaContainer.transform)
+	local var_12_4, var_12_5 = recthelper.getAnchor(arg_12_1.areaRectTr)
+	local var_12_6 = var_12_4 - var_12_2
+	local var_12_7 = var_12_5 - var_12_3
+
+	arg_12_1.text.text = string.format("%s, %s, %s, %s", RougeMapHelper.retain2decimals(var_12_0), RougeMapHelper.retain2decimals(var_12_1), RougeMapHelper.retain2decimals(var_12_6), RougeMapHelper.retain2decimals(var_12_7))
 
 	return true
 end
 
-function slot0.onMapPosChange(slot0)
-	if not slot0.showing then
+function var_0_0.onMapPosChange(arg_13_0)
+	if not arg_13_0.showing then
 		return
 	end
 
-	slot0:createArea()
+	arg_13_0:createArea()
 end
 
-function slot0.hideNodeClickArea(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshPos, slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMapPosChange, slot0.onMapPosChange, slot0)
+function var_0_0.hideNodeClickArea(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0.refreshPos, arg_14_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMapPosChange, arg_14_0.onMapPosChange, arg_14_0)
 
-	if not slot0.showing then
+	if not arg_14_0.showing then
 		return
 	end
 
-	if gohelper.isNil(slot0.goAreaContainer) then
+	if gohelper.isNil(arg_14_0.goAreaContainer) then
 		return
 	end
 
-	slot0.showing = false
+	arg_14_0.showing = false
 
-	gohelper.setActive(slot0.goAreaContainer, false)
+	gohelper.setActive(arg_14_0.goAreaContainer, false)
 
-	for slot6 = 0, slot0.goAreaContainer.transform.childCount - 1 do
-		gohelper.setActive(slot1:GetChild(slot6).gameObject, false)
+	local var_14_0 = arg_14_0.goAreaContainer.transform
+	local var_14_1 = var_14_0.childCount
+
+	for iter_14_0 = 0, var_14_1 - 1 do
+		local var_14_2 = var_14_0:GetChild(iter_14_0)
+
+		gohelper.setActive(var_14_2.gameObject, false)
 	end
 
-	gohelper.setActive(slot0.goCenterPointContainer, false)
+	gohelper.setActive(arg_14_0.goCenterPointContainer, false)
 
-	for slot6 = 0, slot0.goCenterPointContainer.transform.childCount - 1 do
-		gohelper.setActive(slot1:GetChild(slot6).gameObject, false)
+	local var_14_3 = arg_14_0.goCenterPointContainer.transform
+	local var_14_4 = var_14_3.childCount
+
+	for iter_14_1 = 0, var_14_4 - 1 do
+		local var_14_5 = var_14_3:GetChild(iter_14_1)
+
+		gohelper.setActive(var_14_5.gameObject, false)
 	end
 end
 
-function slot0.getIsShowing(slot0)
-	return slot0.showing
+function var_0_0.getIsShowing(arg_15_0)
+	return arg_15_0.showing
 end
 
-function slot0.enterPathSelectMapEditorView(slot0)
-	if slot0.flow then
+function var_0_0.enterPathSelectMapEditorView(arg_16_0)
+	if arg_16_0.flow then
 		return
 	end
 
-	slot0:_addPathSelectMapEditorView()
+	arg_16_0:_addPathSelectMapEditorView()
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Rouge then
-		RougeMapModel.instance:updateMapInfo({
+		local var_16_0 = {
 			mapType = RougeMapEnum.MapType.Middle,
 			middleLayerInfo = {
 				layerId = 101,
 				middleLayerId = 101,
 				positionIndex = RougeMapEnum.PathSelectIndex
 			},
-			HasField = function ()
+			HasField = function()
 				return false
 			end
-		})
+		}
 
-		slot0.flow = FlowSequence.New()
+		RougeMapModel.instance:updateMapInfo(var_16_0)
 
-		slot0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, 101))
-		slot0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougePathSelectMapEditorView))
-		slot0.flow:registerDoneListener(slot0.onFlowDone, slot0)
-		slot0.flow:start()
+		arg_16_0.flow = FlowSequence.New()
+
+		arg_16_0.flow:addWork(OpenSceneWork.New(SceneType.Rouge, 1, 101))
+		arg_16_0.flow:addWork(OpenViewWorkByViewName.New(ViewName.RougePathSelectMapEditorView))
+		arg_16_0.flow:registerDoneListener(arg_16_0.onFlowDone, arg_16_0)
+		arg_16_0.flow:start()
 
 		return
 	end
@@ -288,14 +327,14 @@ function slot0.enterPathSelectMapEditorView(slot0)
 	end
 end
 
-function slot0.allowAbortFight(slot0, slot1)
-	slot0.allow = slot1
+function var_0_0.allowAbortFight(arg_18_0, arg_18_1)
+	arg_18_0.allow = arg_18_1
 end
 
-function slot0.isAllowAbortFight(slot0)
-	return slot0.allow and true or false
+function var_0_0.isAllowAbortFight(arg_19_0)
+	return arg_19_0.allow and true or false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

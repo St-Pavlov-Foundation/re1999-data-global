@@ -1,47 +1,49 @@
-module("modules.logic.test.view.TestUIView", package.seeall)
+﻿module("modules.logic.test.view.TestUIView", package.seeall)
 
-slot0 = class("TestUIView", BaseViewExtended)
+local var_0_0 = class("TestUIView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(gohelper.getClick(gohelper.findChild(slot0.viewGO, "#btn_decompose")), slot0._onClick, slot0)
-	slot0:addClickCb(gohelper.getClick(gohelper.findChild(slot0.viewGO, "#btn_1")), slot0._on1Click, slot0)
-	slot0:addClickCb(gohelper.getClick(gohelper.findChild(slot0.viewGO, "#btn_2")), slot0._on2Click, slot0)
-	slot0:addClickCb(gohelper.getClick(gohelper.findChild(slot0.viewGO, "#btn_3")), slot0._on3Click, slot0)
-	slot0:addClickCb(gohelper.getClick(gohelper.findChild(slot0.viewGO, "#btn_close_exclusive")), slot0._onCloseExclusive, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(gohelper.getClick(gohelper.findChild(arg_2_0.viewGO, "#btn_decompose")), arg_2_0._onClick, arg_2_0)
+	arg_2_0:addClickCb(gohelper.getClick(gohelper.findChild(arg_2_0.viewGO, "#btn_1")), arg_2_0._on1Click, arg_2_0)
+	arg_2_0:addClickCb(gohelper.getClick(gohelper.findChild(arg_2_0.viewGO, "#btn_2")), arg_2_0._on2Click, arg_2_0)
+	arg_2_0:addClickCb(gohelper.getClick(gohelper.findChild(arg_2_0.viewGO, "#btn_3")), arg_2_0._on3Click, arg_2_0)
+	arg_2_0:addClickCb(gohelper.getClick(gohelper.findChild(arg_2_0.viewGO, "#btn_close_exclusive")), arg_2_0._onCloseExclusive, arg_2_0)
 end
 
-function slot0._onClick(slot0)
-	if slot0.sub_view then
-		slot0.sub_view:setViewVisible(true)
+function var_0_0._onClick(arg_3_0)
+	if arg_3_0.sub_view then
+		arg_3_0.sub_view:setViewVisible(true)
 	else
-		slot0.sub_view = slot0:openSubView(TestUISubView, "ui/viewres/test/testuisubview.prefab")
+		arg_3_0.sub_view = arg_3_0:openSubView(TestUISubView, "ui/viewres/test/testuisubview.prefab")
 	end
 end
 
-function slot0._on1Click(slot0)
-	slot0:openSubView(TestHeroBagView)
+function var_0_0._on1Click(arg_4_0)
+	arg_4_0:openSubView(TestHeroBagView)
 end
 
-function slot0._on2Click(slot0)
-	slot0:openExclusiveView(nil, 2, TestUIExclusive, "ui/viewres/test/testuiexclusiveview.prefab", nil, 2)
+function var_0_0._on2Click(arg_5_0)
+	arg_5_0:openExclusiveView(nil, 2, TestUIExclusive, "ui/viewres/test/testuiexclusiveview.prefab", nil, 2)
 end
 
-function slot0._on3Click(slot0)
-	slot0:openExclusiveView(nil, 3, TestUIExclusive, "ui/viewres/test/testuiexclusiveview.prefab", nil, 3)
+function var_0_0._on3Click(arg_6_0)
+	arg_6_0:openExclusiveView(nil, 3, TestUIExclusive, "ui/viewres/test/testuiexclusiveview.prefab", nil, 3)
 end
 
-function slot0._onCloseExclusive(slot0)
-	slot0:hideExclusiveGroup(1)
+function var_0_0._onCloseExclusive(arg_7_0)
+	arg_7_0:hideExclusiveGroup(1)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

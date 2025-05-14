@@ -1,73 +1,80 @@
-module("modules.logic.achievement.model.AchievementEntryModel", package.seeall)
+﻿module("modules.logic.achievement.model.AchievementEntryModel", package.seeall)
 
-slot0 = class("AchievementEntryModel", BaseModel)
+local var_0_0 = class("AchievementEntryModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.initData(slot0)
-	slot0.infoDict = AchievementConfig.instance:getCategoryAchievementMap()
+function var_0_0.initData(arg_3_0)
+	arg_3_0.infoDict = AchievementConfig.instance:getCategoryAchievementMap()
 
-	slot0:initCategory()
+	arg_3_0:initCategory()
 end
 
-function slot0.initCategory(slot0)
-	slot0._category2TotalDict = {}
-	slot0._category2FinishedDict = {}
-	slot0._totalAchievementGotCount = 0
-	slot0._level2AchievementDict = {}
+function var_0_0.initCategory(arg_4_0)
+	local var_4_0 = AchievementConfig.instance:getOnlineAchievements()
 
-	for slot5, slot6 in ipairs(AchievementConfig.instance:getOnlineAchievements()) do
-		slot8 = slot6.category
+	arg_4_0._category2TotalDict = {}
+	arg_4_0._category2FinishedDict = {}
+	arg_4_0._totalAchievementGotCount = 0
+	arg_4_0._level2AchievementDict = {}
 
-		if AchievementModel.instance:getAchievementLevel(slot6.id) > 0 then
-			if slot0._category2FinishedDict[slot8] == nil then
-				slot0._category2FinishedDict[slot8] = 1
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		local var_4_1 = AchievementModel.instance:getAchievementLevel(iter_4_1.id)
+		local var_4_2 = iter_4_1.category
+
+		if var_4_1 > 0 then
+			if arg_4_0._category2FinishedDict[var_4_2] == nil then
+				arg_4_0._category2FinishedDict[var_4_2] = 1
 			else
-				slot0._category2FinishedDict[slot8] = slot0._category2FinishedDict[slot8] + 1
+				arg_4_0._category2FinishedDict[var_4_2] = arg_4_0._category2FinishedDict[var_4_2] + 1
 			end
 
-			slot0._totalAchievementGotCount = slot0._totalAchievementGotCount + 1
+			arg_4_0._totalAchievementGotCount = arg_4_0._totalAchievementGotCount + 1
 		end
 
-		slot0._level2AchievementDict[slot7] = slot0._level2AchievementDict[slot7] or 0
-		slot0._level2AchievementDict[slot7] = slot0._level2AchievementDict[slot7] + 1
+		arg_4_0._level2AchievementDict[var_4_1] = arg_4_0._level2AchievementDict[var_4_1] or 0
+		arg_4_0._level2AchievementDict[var_4_1] = arg_4_0._level2AchievementDict[var_4_1] + 1
 
-		if slot0._category2TotalDict[slot8] == nil then
-			slot0._category2TotalDict[slot8] = 1
+		if arg_4_0._category2TotalDict[var_4_2] == nil then
+			arg_4_0._category2TotalDict[var_4_2] = 1
 		else
-			slot0._category2TotalDict[slot8] = slot0._category2TotalDict[slot8] + 1
+			arg_4_0._category2TotalDict[var_4_2] = arg_4_0._category2TotalDict[var_4_2] + 1
 		end
 	end
 end
 
-function slot0.getFinishCount(slot0, slot1)
-	return slot0._category2FinishedDict[slot1] or 0, slot0._category2TotalDict[slot1] or 0
+function var_0_0.getFinishCount(arg_5_0, arg_5_1)
+	return arg_5_0._category2FinishedDict[arg_5_1] or 0, arg_5_0._category2TotalDict[arg_5_1] or 0
 end
 
-function slot0.getLevelCount(slot0, slot1)
-	if slot0._level2AchievementDict then
-		return slot0._level2AchievementDict[slot1] or 0
+function var_0_0.getLevelCount(arg_6_0, arg_6_1)
+	if arg_6_0._level2AchievementDict then
+		return arg_6_0._level2AchievementDict[arg_6_1] or 0
 	end
 end
 
-function slot0.getTotalFinishedCount(slot0)
-	return slot0._totalAchievementGotCount or 0
+function var_0_0.getTotalFinishedCount(arg_7_0)
+	return arg_7_0._totalAchievementGotCount or 0
 end
 
-function slot0.categoryHasNew(slot0, slot1)
-	if slot0.infoDict[slot1] then
-		for slot6, slot7 in ipairs(slot2) do
-			if AchievementModel.instance:achievementHasNew(slot7.id) then
+function var_0_0.categoryHasNew(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.infoDict[arg_8_1]
+
+	if var_8_0 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+			if AchievementModel.instance:achievementHasNew(iter_8_1.id) then
 				return true
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

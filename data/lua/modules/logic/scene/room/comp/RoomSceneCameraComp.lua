@@ -1,118 +1,126 @@
-module("modules.logic.scene.room.comp.RoomSceneCameraComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneCameraComp", package.seeall)
 
-slot0 = class("RoomSceneCameraComp", BaseSceneComp)
+local var_0_0 = class("RoomSceneCameraComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0.cameraGO = nil
-	slot0.camera = nil
-	slot0._moveDistance = 2
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.cameraGO = nil
+	arg_1_0.camera = nil
+	arg_1_0._moveDistance = 2
 end
 
-function slot0._setCPMinMaxStr(slot0, slot1, slot2, slot3, slot4)
-	slot0:_setCPMinMax(slot1, slot2, slot3, string.splitToNumber(slot4, "#"))
+function var_0_0._setCPMinMaxStr(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = string.splitToNumber(arg_2_4, "#")
+
+	arg_2_0:_setCPMinMax(arg_2_1, arg_2_2, arg_2_3, var_2_0)
 end
 
-function slot0._setCPMinMax(slot0, slot1, slot2, slot3, slot4)
-	slot2[slot1] = slot4[1]
-	slot3[slot1] = slot4[2]
+function var_0_0._setCPMinMax(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	arg_3_2[arg_3_1] = arg_3_4[1]
+	arg_3_3[arg_3_1] = arg_3_4[2]
 end
 
-function slot0._setFogMinMax(slot0, slot1, slot2, slot3, slot4)
-	slot5 = GameUtil.splitString2(slot4.fogRangeXYZW, true)
-	slot6 = GameUtil.splitString2(slot4.fogNearColorRGBA, true)
-	slot7 = GameUtil.splitString2(slot4.fogFarColorRGBA, true)
+function var_0_0._setFogMinMax(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local var_4_0 = GameUtil.splitString2(arg_4_4.fogRangeXYZW, true)
+	local var_4_1 = GameUtil.splitString2(arg_4_4.fogNearColorRGBA, true)
+	local var_4_2 = GameUtil.splitString2(arg_4_4.fogFarColorRGBA, true)
+	local var_4_3 = string.splitToNumber(arg_4_4.fogParticles, "#")
+	local var_4_4 = string.splitToNumber(arg_4_4.fogViewType, "#")
 
-	for slot13 = 1, 2 do
-		(slot13 == 1 and slot2 or slot3)[slot1] = {
-			maxParticles = string.splitToNumber(slot4.fogParticles, "#")[slot13],
-			centerY = slot5[slot13][1],
-			height = slot5[slot13][2],
-			fogRangeZ = slot5[slot13][3],
-			fogRangeW = slot5[slot13][4],
-			nearColorR = slot6[slot13][1],
-			nearColorG = slot6[slot13][2],
-			nearColorB = slot6[slot13][3],
-			nearColorA = slot6[slot13][4],
-			farColorR = slot7[slot13][1],
-			farColorG = slot7[slot13][2],
-			farColorB = slot7[slot13][3],
-			farColorA = slot7[slot13][4],
-			fogViewType = string.splitToNumber(slot4.fogViewType, "#")[slot13]
+	for iter_4_0 = 1, 2 do
+		(iter_4_0 == 1 and arg_4_2 or arg_4_3)[arg_4_1] = {
+			maxParticles = var_4_3[iter_4_0],
+			centerY = var_4_0[iter_4_0][1],
+			height = var_4_0[iter_4_0][2],
+			fogRangeZ = var_4_0[iter_4_0][3],
+			fogRangeW = var_4_0[iter_4_0][4],
+			nearColorR = var_4_1[iter_4_0][1],
+			nearColorG = var_4_1[iter_4_0][2],
+			nearColorB = var_4_1[iter_4_0][3],
+			nearColorA = var_4_1[iter_4_0][4],
+			farColorR = var_4_2[iter_4_0][1],
+			farColorG = var_4_2[iter_4_0][2],
+			farColorB = var_4_2[iter_4_0][3],
+			farColorA = var_4_2[iter_4_0][4],
+			fogViewType = var_4_4[iter_4_0]
 		}
 	end
 end
 
-function slot0._initCameraParam(slot0)
-	slot0._angleMin = {}
-	slot0._angleMax = {}
-	slot0._distanceMin = {}
-	slot0._distanceMax = {}
-	slot0._bendingAmountMin = {}
-	slot0._bendingAmountMax = {}
-	slot0._blurMin = {}
-	slot0._blurMax = {}
-	slot0._fogParamMin = {}
-	slot0._fogParamMax = {}
-	slot0._offsetHorizonMin = {}
-	slot0._offsetHorizonMax = {}
-	slot0._oceanFogMin = {}
-	slot0._oceanFogMax = {}
-	slot0._lightRangeMin = {}
-	slot0._lightRangeMax = {}
-	slot0._lightOffsetMin = {}
-	slot0._lightOffsetMax = {}
-	slot0._shadowOffsetMin = {}
-	slot0._shadowOffsetMax = {}
-	slot0._touchMoveSpeedMin = {}
-	slot0._touchMoveSpeedMax = {}
-	slot0._zoomInitValue = {}
-	slot0._lightMinMin = {}
-	slot0._lightMinMax = {}
-	slot0._offsetHeightMap = {}
-	slot0._camerClipPlaneMin = {}
-	slot0._camerClipPlaneMax = {}
-	slot0._isShadowHideMap = {}
+function var_0_0._initCameraParam(arg_5_0)
+	arg_5_0._angleMin = {}
+	arg_5_0._angleMax = {}
+	arg_5_0._distanceMin = {}
+	arg_5_0._distanceMax = {}
+	arg_5_0._bendingAmountMin = {}
+	arg_5_0._bendingAmountMax = {}
+	arg_5_0._blurMin = {}
+	arg_5_0._blurMax = {}
+	arg_5_0._fogParamMin = {}
+	arg_5_0._fogParamMax = {}
+	arg_5_0._offsetHorizonMin = {}
+	arg_5_0._offsetHorizonMax = {}
+	arg_5_0._oceanFogMin = {}
+	arg_5_0._oceanFogMax = {}
+	arg_5_0._lightRangeMin = {}
+	arg_5_0._lightRangeMax = {}
+	arg_5_0._lightOffsetMin = {}
+	arg_5_0._lightOffsetMax = {}
+	arg_5_0._shadowOffsetMin = {}
+	arg_5_0._shadowOffsetMax = {}
+	arg_5_0._touchMoveSpeedMin = {}
+	arg_5_0._touchMoveSpeedMax = {}
+	arg_5_0._zoomInitValue = {}
+	arg_5_0._lightMinMin = {}
+	arg_5_0._lightMinMax = {}
+	arg_5_0._offsetHeightMap = {}
+	arg_5_0._camerClipPlaneMin = {}
+	arg_5_0._camerClipPlaneMax = {}
+	arg_5_0._isShadowHideMap = {}
 
-	for slot5, slot6 in pairs(RoomEnum.CameraState) do
-		slot0._offsetHeightMap[slot6] = 0
+	local var_5_0 = RoomModel.instance:getGameMode()
 
-		if RoomConfig.instance:getCameraParamByStateId(slot6, RoomModel.instance:getGameMode()) then
-			slot0:_setCPMinMaxStr(slot6, slot0._angleMin, slot0._angleMax, slot7.angle)
-			slot0:_setCPMinMaxStr(slot6, slot0._distanceMin, slot0._distanceMax, slot7.distance)
-			slot0:_setCPMinMaxStr(slot6, slot0._bendingAmountMin, slot0._bendingAmountMax, slot7.bendingAmount)
-			slot0:_setCPMinMaxStr(slot6, slot0._touchMoveSpeedMin, slot0._touchMoveSpeedMax, slot7.touchMoveSpeed)
-			slot0:_setCPMinMaxStr(slot6, slot0._blurMin, slot0._blurMax, slot7.blur)
-			slot0:_setCPMinMaxStr(slot6, slot0._offsetHorizonMin, slot0._offsetHorizonMax, slot7.offsetHorizon)
-			slot0:_setCPMinMaxStr(slot6, slot0._oceanFogMin, slot0._oceanFogMax, slot7.oceanFog)
-			slot0:_setCPMinMaxStr(slot6, slot0._lightMinMin, slot0._lightMinMax, slot7.lightMin)
-			slot0:_setFogMinMax(slot6, slot0._fogParamMin, slot0._fogParamMax, slot7)
-			slot0:_setCPMinMax(slot6, slot0._shadowOffsetMin, slot0._shadowOffsetMax, GameUtil.splitString2(slot7.shadowOffsetXYZW, true))
-			slot0:_setCPMinMax(slot6, slot0._lightRangeMin, slot0._lightRangeMax, {
+	for iter_5_0, iter_5_1 in pairs(RoomEnum.CameraState) do
+		local var_5_1 = RoomConfig.instance:getCameraParamByStateId(iter_5_1, var_5_0)
+
+		arg_5_0._offsetHeightMap[iter_5_1] = 0
+
+		if var_5_1 then
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._angleMin, arg_5_0._angleMax, var_5_1.angle)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._distanceMin, arg_5_0._distanceMax, var_5_1.distance)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._bendingAmountMin, arg_5_0._bendingAmountMax, var_5_1.bendingAmount)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._touchMoveSpeedMin, arg_5_0._touchMoveSpeedMax, var_5_1.touchMoveSpeed)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._blurMin, arg_5_0._blurMax, var_5_1.blur)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._offsetHorizonMin, arg_5_0._offsetHorizonMax, var_5_1.offsetHorizon)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._oceanFogMin, arg_5_0._oceanFogMax, var_5_1.oceanFog)
+			arg_5_0:_setCPMinMaxStr(iter_5_1, arg_5_0._lightMinMin, arg_5_0._lightMinMax, var_5_1.lightMin)
+			arg_5_0:_setFogMinMax(iter_5_1, arg_5_0._fogParamMin, arg_5_0._fogParamMax, var_5_1)
+			arg_5_0:_setCPMinMax(iter_5_1, arg_5_0._shadowOffsetMin, arg_5_0._shadowOffsetMax, GameUtil.splitString2(var_5_1.shadowOffsetXYZW, true))
+			arg_5_0:_setCPMinMax(iter_5_1, arg_5_0._lightRangeMin, arg_5_0._lightRangeMax, {
 				0.5,
 				0.5
 			})
-			slot0:_setCPMinMax(slot6, slot0._lightOffsetMin, slot0._lightOffsetMax, {
+			arg_5_0:_setCPMinMax(iter_5_1, arg_5_0._lightOffsetMin, arg_5_0._lightOffsetMax, {
 				0.5,
 				0.5
 			})
-			slot0:_setCPMinMax(slot6, slot0._camerClipPlaneMin, slot0._camerClipPlaneMax, {
+			arg_5_0:_setCPMinMax(iter_5_1, arg_5_0._camerClipPlaneMin, arg_5_0._camerClipPlaneMax, {
 				0.01,
 				100
 			})
 
-			slot0._zoomInitValue[slot6] = slot7.zoom * 0.001
-			slot0._isShadowHideMap[slot6] = true
+			arg_5_0._zoomInitValue[iter_5_1] = var_5_1.zoom * 0.001
+			arg_5_0._isShadowHideMap[iter_5_1] = true
 		else
-			logError(string.format("小屋相机镜头配置缺失[RoomEnum.CameraState.%s]:【export_镜头参数】state:%s", slot5, slot6))
+			logError(string.format("小屋相机镜头配置缺失[RoomEnum.CameraState.%s]:【export_镜头参数】state:%s", iter_5_0, iter_5_1))
 		end
 	end
 
-	for slot5, slot6 in ipairs(RoomEnum.CameraOverlooks) do
-		slot0._camerClipPlaneMin[slot6] = 0.3
-		slot0._isShadowHideMap[slot6] = false
+	for iter_5_2, iter_5_3 in ipairs(RoomEnum.CameraOverlooks) do
+		arg_5_0._camerClipPlaneMin[iter_5_3] = 0.3
+		arg_5_0._isShadowHideMap[iter_5_3] = false
 	end
 
-	slot0._cameraSwitchAudioDict = {
+	arg_5_0._cameraSwitchAudioDict = {
 		[RoomEnum.CameraState.Overlook] = {
 			[RoomEnum.CameraState.Normal] = AudioEnum.Room.play_ui_home_lens_push,
 			[RoomEnum.CameraState.Character] = AudioEnum.Room.play_ui_home_lens_push,
@@ -136,443 +144,475 @@ function slot0._initCameraParam(slot0)
 			[RoomEnum.CameraState.Overlook] = AudioEnum.Room.play_ui_home_lens_pull
 		}
 	}
-	slot0._cameraStateInEditYDict = {
+	arg_5_0._cameraStateInEditYDict = {
 		[RoomEnum.CameraState.Normal] = 0.3,
 		[RoomEnum.CameraState.Manufacture] = 0.3
 	}
-	slot2 = {}
 
-	for slot7 = 1, 6 do
-		table.insert(slot2, HexMath.hexToPosition(HexPoint.directions[slot7] * CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius), RoomBlockEnum.BlockSize))
+	local var_5_2 = {}
+	local var_5_3 = CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius)
+
+	for iter_5_4 = 1, 6 do
+		local var_5_4 = HexPoint.directions[iter_5_4] * var_5_3
+
+		table.insert(var_5_2, HexMath.hexToPosition(var_5_4, RoomBlockEnum.BlockSize))
 	end
 
-	slot0._editModeConvexHull = RoomCameraHelper.getConvexHull(slot2)
+	arg_5_0._editModeConvexHull = RoomCameraHelper.getConvexHull(var_5_2)
 end
 
-function slot0.setChangeCameraParamsById(slot0, slot1, slot2)
-	if RoomEnum.ChangeCameraParamDict[slot1] and (RoomConfig.instance:getCharacterBuildingInteractCameraConfig(slot2) or RoomConfig.instance:getCameraParamByStateId(slot1, RoomModel.instance:getGameMode())) then
-		slot0:_setCPMinMaxStr(slot1, slot0._angleMin, slot0._angleMax, slot3.angle)
-		slot0:_setCPMinMaxStr(slot1, slot0._distanceMin, slot0._distanceMax, slot3.distance)
+function var_0_0.setChangeCameraParamsById(arg_6_0, arg_6_1, arg_6_2)
+	if RoomEnum.ChangeCameraParamDict[arg_6_1] then
+		local var_6_0 = RoomConfig.instance:getCharacterBuildingInteractCameraConfig(arg_6_2) or RoomConfig.instance:getCameraParamByStateId(arg_6_1, RoomModel.instance:getGameMode())
 
-		slot4 = slot3.focusXYZ and string.splitToNumber(slot3.focusXYZ, "#")
-		slot0._offsetHeightMap[slot1] = slot4 and slot4[2] or 0
+		if var_6_0 then
+			arg_6_0:_setCPMinMaxStr(arg_6_1, arg_6_0._angleMin, arg_6_0._angleMax, var_6_0.angle)
+			arg_6_0:_setCPMinMaxStr(arg_6_1, arg_6_0._distanceMin, arg_6_0._distanceMax, var_6_0.distance)
+
+			local var_6_1 = var_6_0.focusXYZ and string.splitToNumber(var_6_0.focusXYZ, "#")
+
+			arg_6_0._offsetHeightMap[arg_6_1] = var_6_1 and var_6_1[2] or 0
+		end
 	end
 end
 
-function slot0.setCharacterbuildingInteractionById(slot0, slot1)
-	slot0:setChangeCameraParamsById(RoomEnum.CameraState.InteractionCharacterBuilding, slot1)
+function var_0_0.setCharacterbuildingInteractionById(arg_7_0, arg_7_1)
+	local var_7_0 = RoomEnum.CameraState.InteractionCharacterBuilding
+
+	arg_7_0:setChangeCameraParamsById(var_7_0, arg_7_1)
 end
 
-function slot0.init(slot0, slot1, slot2)
-	TaskDispatcher.runRepeat(slot0._onUpdate, slot0, 0)
-	slot0:_initCameraParam()
-	slot0:_initCamera()
+function var_0_0.init(arg_8_0, arg_8_1, arg_8_2)
+	TaskDispatcher.runRepeat(arg_8_0._onUpdate, arg_8_0, 0)
+	arg_8_0:_initCameraParam()
+	arg_8_0:_initCamera()
 
-	slot0._scene = slot0:getCurScene()
-	slot0._cameraParam = nil
-	slot0._realCameraParam = nil
-	slot0._tempRealCameraParam = nil
-	slot0._offsetY = 0
-	slot0.cameraGO = CameraMgr.instance:getMainCameraGO()
-	slot0.cameraTrs = CameraMgr.instance:getMainCameraTrs()
-	slot0.camera = CameraMgr.instance:getMainCamera()
-	slot0.orthCameraGO = CameraMgr.instance:getOrthCameraGO()
-	slot0.orthCamera = CameraMgr.instance:getOrthCamera()
+	arg_8_0._scene = arg_8_0:getCurScene()
+	arg_8_0._cameraParam = nil
+	arg_8_0._realCameraParam = nil
+	arg_8_0._tempRealCameraParam = nil
+	arg_8_0._offsetY = 0
+	arg_8_0.cameraGO = CameraMgr.instance:getMainCameraGO()
+	arg_8_0.cameraTrs = CameraMgr.instance:getMainCameraTrs()
+	arg_8_0.camera = CameraMgr.instance:getMainCamera()
+	arg_8_0.orthCameraGO = CameraMgr.instance:getOrthCameraGO()
+	arg_8_0.orthCamera = CameraMgr.instance:getOrthCamera()
 
-	RenderPipelineSetting.SetCameraRenderingLayerMask(slot0.orthCamera, 128)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "Scene", true)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "SceneOpaque", true)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "CullOnLowQuality", true)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "CullByDistance", true)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "SceneOrthogonal", false)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "SceneOrthogonalOpaque", false)
+	RenderPipelineSetting.SetCameraRenderingLayerMask(arg_8_0.orthCamera, 128)
+	PostProcessingMgr.setCameraLayer(arg_8_0.orthCamera, "Scene", true)
+	PostProcessingMgr.setCameraLayer(arg_8_0.orthCamera, "SceneOpaque", true)
+	PostProcessingMgr.setCameraLayer(arg_8_0.orthCamera, "CullOnLowQuality", true)
+	PostProcessingMgr.setCameraLayer(arg_8_0.orthCamera, "CullByDistance", true)
+	PostProcessingMgr.setCameraLayer(arg_8_0.orthCamera, "SceneOrthogonal", false)
+	PostProcessingMgr.setCameraLayer(arg_8_0.orthCamera, "SceneOrthogonalOpaque", false)
 
-	slot0.orthCameraTrs = slot0.orthCameraGO.transform
-	slot0.orthCameraTrs.position = Vector3(0, 3.5, 0)
-	slot0.orthCameraTrs.rotation = Quaternion.Euler(90, 0, 0)
+	arg_8_0.orthCameraTrs = arg_8_0.orthCameraGO.transform
+	arg_8_0.orthCameraTrs.position = Vector3(0, 3.5, 0)
+	arg_8_0.orthCameraTrs.rotation = Quaternion.Euler(90, 0, 0)
 
-	slot0:_setCanvasCamera()
-	slot0:resetTransform()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	arg_8_0:_setCanvasCamera()
+	arg_8_0:resetTransform()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_8_0._onScreenResize, arg_8_0)
 end
 
-function slot0._initCamera(slot0)
+function var_0_0._initCamera(arg_9_0)
 	gohelper.setActive(CameraMgr.instance:getVirtualCameraGO(), false)
 	transformhelper.setLocalPos(CameraMgr.instance:getMainCameraTrs(), 0, 0, 0)
 	transformhelper.setLocalRotation(CameraMgr.instance:getMainCameraTrs(), 0, 0, 0)
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
+function var_0_0.onSceneStart(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 
-	if slot0._tweenOffsetYId then
-		slot0._scene.tween:killById(slot0._tweenOffsetYId)
+	if arg_11_0._tweenOffsetYId then
+		arg_11_0._scene.tween:killById(arg_11_0._tweenOffsetYId)
 
-		slot0._tweenOffsetYId = nil
+		arg_11_0._tweenOffsetYId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._onUpdate, slot0)
-	TaskDispatcher.cancelTask(slot0._forceUpdataTransform, slot0)
+	TaskDispatcher.cancelTask(arg_11_0._onUpdate, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._forceUpdataTransform, arg_11_0)
 	UIBlockMgr.instance:endBlock(UIBlockKey.RoomCameraTweening)
 
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+	if arg_11_0._tweenId then
+		arg_11_0._scene.tween:killById(arg_11_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_11_0._tweenId = nil
 	end
 
-	transformhelper.setPos(slot0.cameraTrs, 0, 0, 0)
-	transformhelper.setLocalRotation(slot0.cameraTrs, 0, 0, 0)
-	RenderPipelineSetting.SetCameraRenderingLayerMask(slot0.orthCamera, 1)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "Scene", false)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "SceneOpaque", false)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "CullOnLowQuality", false)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "CullByDistance", false)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "SceneOrthogonal", true)
-	PostProcessingMgr.setCameraLayer(slot0.orthCamera, "SceneOrthogonalOpaque", true)
+	transformhelper.setPos(arg_11_0.cameraTrs, 0, 0, 0)
+	transformhelper.setLocalRotation(arg_11_0.cameraTrs, 0, 0, 0)
+	RenderPipelineSetting.SetCameraRenderingLayerMask(arg_11_0.orthCamera, 1)
+	PostProcessingMgr.setCameraLayer(arg_11_0.orthCamera, "Scene", false)
+	PostProcessingMgr.setCameraLayer(arg_11_0.orthCamera, "SceneOpaque", false)
+	PostProcessingMgr.setCameraLayer(arg_11_0.orthCamera, "CullOnLowQuality", false)
+	PostProcessingMgr.setCameraLayer(arg_11_0.orthCamera, "CullByDistance", false)
+	PostProcessingMgr.setCameraLayer(arg_11_0.orthCamera, "SceneOrthogonal", true)
+	PostProcessingMgr.setCameraLayer(arg_11_0.orthCamera, "SceneOrthogonalOpaque", true)
 
-	slot0.orthCamera = nil
-	slot0._cameraParam = nil
-	slot0._realCameraParam = nil
-	slot0._tempRealCameraParam = nil
-	slot0.cameraGO = nil
-	slot0.cameraTrs = nil
-	slot0.camera = nil
+	arg_11_0.orthCamera = nil
+	arg_11_0._cameraParam = nil
+	arg_11_0._realCameraParam = nil
+	arg_11_0._tempRealCameraParam = nil
+	arg_11_0.cameraGO = nil
+	arg_11_0.cameraTrs = nil
+	arg_11_0.camera = nil
 
-	slot0:_hideOrthCamera()
+	arg_11_0:_hideOrthCamera()
 
-	slot0.orthCameraGO = nil
-	slot0.orthCameraTrs = nil
+	arg_11_0.orthCameraGO = nil
+	arg_11_0.orthCameraTrs = nil
 
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_11_0._onScreenResize, arg_11_0)
 end
 
-function slot0.move(slot0, slot1, slot2)
-	slot0:moveTo(slot0._cameraParam.focusX + slot1, slot0._cameraParam.focusY + slot2)
+function var_0_0.move(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:moveTo(arg_12_0._cameraParam.focusX + arg_12_1, arg_12_0._cameraParam.focusY + arg_12_2)
 end
 
-function slot0.moveTo(slot0, slot1, slot2)
-	slot3 = Vector2(slot1, slot2)
-	slot4 = nil
-	slot5 = RoomCameraHelper.getOffsetPosition(Vector2(slot0._cameraParam.focusX, slot0._cameraParam.focusY), Vector2(slot1, slot2), (not RoomController.instance:isEditMode() or slot0._editModeConvexHull) and RoomMapBlockModel.instance:getConvexHull())
-	slot0._cameraParam.focusX = slot5.x
-	slot0._cameraParam.focusY = slot5.y
-	slot0._realCameraParam = slot0:cameraParamToRealCameraParam(slot0._cameraParam)
+function var_0_0.moveTo(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = Vector2(arg_13_1, arg_13_2)
+	local var_13_1
 
-	slot0:updateTransform()
+	if RoomController.instance:isEditMode() then
+		var_13_1 = arg_13_0._editModeConvexHull
+	else
+		var_13_1 = RoomMapBlockModel.instance:getConvexHull()
+	end
+
+	local var_13_2 = RoomCameraHelper.getOffsetPosition(Vector2(arg_13_0._cameraParam.focusX, arg_13_0._cameraParam.focusY), Vector2(arg_13_1, arg_13_2), var_13_1)
+
+	arg_13_0._cameraParam.focusX = var_13_2.x
+	arg_13_0._cameraParam.focusY = var_13_2.y
+	arg_13_0._realCameraParam = arg_13_0:cameraParamToRealCameraParam(arg_13_0._cameraParam)
+
+	arg_13_0:updateTransform()
 end
 
-function slot0.zoom(slot0, slot1)
-	slot0:zoomTo(slot0._cameraParam.zoom + slot1)
+function var_0_0.zoom(arg_14_0, arg_14_1)
+	arg_14_0:zoomTo(arg_14_0._cameraParam.zoom + arg_14_1)
 end
 
-function slot0.zoomTo(slot0, slot1)
-	slot0._cameraParam.zoom = Mathf.Clamp(slot1, 0, 1)
-	slot0._realCameraParam = slot0:cameraParamToRealCameraParam(slot0._cameraParam)
+function var_0_0.zoomTo(arg_15_0, arg_15_1)
+	arg_15_0._cameraParam.zoom = Mathf.Clamp(arg_15_1, 0, 1)
+	arg_15_0._realCameraParam = arg_15_0:cameraParamToRealCameraParam(arg_15_0._cameraParam)
 
-	slot0:updateTransform()
+	arg_15_0:updateTransform()
 end
 
-function slot0.rotate(slot0, slot1)
-	slot0:rotateTo(slot0._cameraParam.rotate + slot1)
+function var_0_0.rotate(arg_16_0, arg_16_1)
+	arg_16_0:rotateTo(arg_16_0._cameraParam.rotate + arg_16_1)
 end
 
-function slot0.rotateTo(slot0, slot1)
-	slot0._cameraParam.rotate = RoomRotateHelper.getMod(slot1, 2 * Mathf.PI)
-	slot0._realCameraParam = slot0:cameraParamToRealCameraParam(slot0._cameraParam)
+function var_0_0.rotateTo(arg_17_0, arg_17_1)
+	arg_17_0._cameraParam.rotate = RoomRotateHelper.getMod(arg_17_1, 2 * Mathf.PI)
+	arg_17_0._realCameraParam = arg_17_0:cameraParamToRealCameraParam(arg_17_0._cameraParam)
 
-	slot0:updateTransform()
+	arg_17_0:updateTransform()
 end
 
-function slot0.getZoomInitValue(slot0, slot1)
-	return slot0._zoomInitValue and slot0._zoomInitValue[slot1] or 0.5
+function var_0_0.getZoomInitValue(arg_18_0, arg_18_1)
+	return arg_18_0._zoomInitValue and arg_18_0._zoomInitValue[arg_18_1] or 0.5
 end
 
-function slot0.resetTransform(slot0)
-	slot0._cameraState = RoomEnum.CameraState.Overlook
-	slot0._cameraParam = {
+function var_0_0.resetTransform(arg_19_0)
+	arg_19_0._cameraState = RoomEnum.CameraState.Overlook
+	arg_19_0._cameraParam = {
 		focusY = 0,
 		focusX = 0,
 		rotate = 0,
-		zoom = slot0:getZoomInitValue(slot0._cameraState)
+		zoom = arg_19_0:getZoomInitValue(arg_19_0._cameraState)
 	}
-	slot0._realCameraParam = slot0:cameraParamToRealCameraParam(slot0._cameraParam)
-	slot0._savedCameraParam = LuaUtil.deepCopy(slot0._cameraParam)
-	slot0._savedCameraState = slot0._cameraState
-	slot0._isTweening = false
+	arg_19_0._realCameraParam = arg_19_0:cameraParamToRealCameraParam(arg_19_0._cameraParam)
+	arg_19_0._savedCameraParam = LuaUtil.deepCopy(arg_19_0._cameraParam)
+	arg_19_0._savedCameraState = arg_19_0._cameraState
+	arg_19_0._isTweening = false
 
 	UIBlockMgr.instance:endBlock(UIBlockKey.RoomCameraTweening)
-	slot0:updateTransform()
-	TaskDispatcher.runDelay(slot0._forceUpdataTransform, slot0, 0.0001)
-	slot0:_updateCameraClipPlane()
+	arg_19_0:updateTransform()
+	TaskDispatcher.runDelay(arg_19_0._forceUpdataTransform, arg_19_0, 0.0001)
+	arg_19_0:_updateCameraClipPlane()
 end
 
-function slot0._forceUpdataTransform(slot0)
-	slot0:updateTransform(true)
+function var_0_0._forceUpdataTransform(arg_20_0)
+	arg_20_0:updateTransform(true)
 end
 
-function slot0.cameraParamToRealCameraParam(slot0, slot1, slot2)
-	slot2 = slot2 or slot0._cameraState
-	slot3 = slot0:focusToPos(slot1.zoom, Vector2(slot1.focusX, slot1.focusY), slot1.rotate, slot2, slot1.isPart)
+function var_0_0.cameraParamToRealCameraParam(arg_21_0, arg_21_1, arg_21_2)
+	arg_21_2 = arg_21_2 or arg_21_0._cameraState
+
+	local var_21_0 = arg_21_0:focusToPos(arg_21_1.zoom, Vector2(arg_21_1.focusX, arg_21_1.focusY), arg_21_1.rotate, arg_21_2, arg_21_1.isPart)
+	local var_21_1 = arg_21_0:zoomToOffsetY(arg_21_1.zoom, arg_21_2)
 
 	return {
-		zoom = slot1.zoom,
-		bendingAmount = slot0:zoomToBendingAmount(slot1.zoom, slot2),
-		angle = slot0:zoomToAngle(slot1.zoom, slot2),
-		distance = slot0:zoomToDistance(slot1.zoom, slot2),
-		blur = slot0:zoomToBlur(slot1.zoom, slot2),
-		fogParam = slot0:zoomToFogParam(slot1.zoom, slot2),
-		offsetHorizon = slot0:zoomToOffsetHorizon(slot1.zoom, slot2),
-		oceanFog = slot0:zoomToOceanFog(slot1.zoom, slot2),
-		lightRange = slot0:zoomToLightRange(slot1.zoom, slot2),
-		lightOffset = slot0:zoomToLightOffset(slot1.zoom, slot2),
-		lightMin = slot0:zoomToLightMin(slot1.zoom, slot2),
-		shadowOffset = slot0:zoomToShadowOffset(slot1.zoom, slot2),
-		touchMoveSpeed = slot0:zoomToTouchMoveSpeed(slot1.zoom, slot2),
-		posX = slot3.x,
-		posY = slot3.y,
-		rotate = slot1.rotate,
-		height = slot0:zoomToOffsetY(slot1.zoom, slot2) + slot0:zoomToHeight(slot1.zoom, Vector2(slot1.focusX, slot1.focusY), slot2, slot1.isPart)
+		zoom = arg_21_1.zoom,
+		bendingAmount = arg_21_0:zoomToBendingAmount(arg_21_1.zoom, arg_21_2),
+		angle = arg_21_0:zoomToAngle(arg_21_1.zoom, arg_21_2),
+		distance = arg_21_0:zoomToDistance(arg_21_1.zoom, arg_21_2),
+		blur = arg_21_0:zoomToBlur(arg_21_1.zoom, arg_21_2),
+		fogParam = arg_21_0:zoomToFogParam(arg_21_1.zoom, arg_21_2),
+		offsetHorizon = arg_21_0:zoomToOffsetHorizon(arg_21_1.zoom, arg_21_2),
+		oceanFog = arg_21_0:zoomToOceanFog(arg_21_1.zoom, arg_21_2),
+		lightRange = arg_21_0:zoomToLightRange(arg_21_1.zoom, arg_21_2),
+		lightOffset = arg_21_0:zoomToLightOffset(arg_21_1.zoom, arg_21_2),
+		lightMin = arg_21_0:zoomToLightMin(arg_21_1.zoom, arg_21_2),
+		shadowOffset = arg_21_0:zoomToShadowOffset(arg_21_1.zoom, arg_21_2),
+		touchMoveSpeed = arg_21_0:zoomToTouchMoveSpeed(arg_21_1.zoom, arg_21_2),
+		posX = var_21_0.x,
+		posY = var_21_0.y,
+		rotate = arg_21_1.rotate,
+		height = var_21_1 + arg_21_0:zoomToHeight(arg_21_1.zoom, Vector2(arg_21_1.focusX, arg_21_1.focusY), arg_21_2, arg_21_1.isPart)
 	}
 end
 
-function slot0.updateTransform(slot0, slot1)
-	slot2 = slot1
+function var_0_0.updateTransform(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_1
 
-	if not slot0._tempRealCameraParam then
-		slot2 = true
+	if not arg_22_0._tempRealCameraParam then
+		var_22_0 = true
 	else
-		for slot6, slot7 in pairs(slot0._realCameraParam) do
-			if type(slot7) == "table" then
-				for slot11, slot12 in pairs(slot7) do
-					if slot12 ~= slot0._tempRealCameraParam[slot6][slot11] then
-						slot2 = true
+		for iter_22_0, iter_22_1 in pairs(arg_22_0._realCameraParam) do
+			if type(iter_22_1) == "table" then
+				for iter_22_2, iter_22_3 in pairs(iter_22_1) do
+					if iter_22_3 ~= arg_22_0._tempRealCameraParam[iter_22_0][iter_22_2] then
+						var_22_0 = true
 
 						break
 					end
 				end
-			elseif slot7 ~= slot0._tempRealCameraParam[slot6] then
-				slot2 = true
+			elseif iter_22_1 ~= arg_22_0._tempRealCameraParam[iter_22_0] then
+				var_22_0 = true
 			end
 
-			if slot2 then
+			if var_22_0 then
 				break
 			end
 		end
 	end
 
-	if not slot2 then
+	if not var_22_0 then
 		return
 	end
 
-	slot0._tempRealCameraParam = LuaUtil.deepCopy(slot0._realCameraParam)
-	RoomController.instance.touchMoveSpeed = slot0._realCameraParam.touchMoveSpeed
+	arg_22_0._tempRealCameraParam = LuaUtil.deepCopy(arg_22_0._realCameraParam)
+	RoomController.instance.touchMoveSpeed = arg_22_0._realCameraParam.touchMoveSpeed
 
-	slot0._scene.bending:setBendingAmount(slot0._realCameraParam.bendingAmount)
-	slot0._scene.bending:setBendingPosition(Vector3(slot0._realCameraParam.posX, 0, slot0._realCameraParam.posY))
-	slot0._scene.fog:setFogParam(slot0._realCameraParam.fogParam)
-	slot0._scene.bending:setSkylineOffset(slot0._realCameraParam.offsetHorizon)
-	slot0._scene.ocean:setOceanFog(slot0._realCameraParam.oceanFog)
-	slot0._scene.light:setLightMin(slot0._realCameraParam.lightMin)
-	slot0._scene.light:setLightRange(slot0._realCameraParam.lightRange)
-	slot0._scene.light:setLightOffset(slot0._realCameraParam.lightOffset)
+	arg_22_0._scene.bending:setBendingAmount(arg_22_0._realCameraParam.bendingAmount)
+	arg_22_0._scene.bending:setBendingPosition(Vector3(arg_22_0._realCameraParam.posX, 0, arg_22_0._realCameraParam.posY))
+	arg_22_0._scene.fog:setFogParam(arg_22_0._realCameraParam.fogParam)
+	arg_22_0._scene.bending:setSkylineOffset(arg_22_0._realCameraParam.offsetHorizon)
+	arg_22_0._scene.ocean:setOceanFog(arg_22_0._realCameraParam.oceanFog)
+	arg_22_0._scene.light:setLightMin(arg_22_0._realCameraParam.lightMin)
+	arg_22_0._scene.light:setLightRange(arg_22_0._realCameraParam.lightRange)
+	arg_22_0._scene.light:setLightOffset(arg_22_0._realCameraParam.lightOffset)
 
-	slot3 = slot0._realCameraParam.shadowOffset
+	local var_22_1 = arg_22_0._realCameraParam.shadowOffset
 
-	slot0._scene.character:setShadowOffset(Vector4(slot3[1], slot3[2], slot3[3], slot3[4]))
+	arg_22_0._scene.character:setShadowOffset(Vector4(var_22_1[1], var_22_1[2], var_22_1[3], var_22_1[4]))
 
-	slot4 = slot0._realCameraParam.distance * Mathf.Cos(slot0._realCameraParam.angle)
-	slot6 = -Mathf.Sin(slot0._realCameraParam.rotate) * slot4 + slot0._realCameraParam.posX
-	slot7 = -Mathf.Cos(slot0._realCameraParam.rotate) * slot4 + slot0._realCameraParam.posY
-	slot0._position = Vector3(slot6, math.max(0.11, slot0._realCameraParam.distance * Mathf.Sin(slot0._realCameraParam.angle) + slot0._realCameraParam.height + slot0._offsetY + slot0._scene.cameraFollow:getCameraOffsetY()), slot7)
-	slot10 = Mathf.Rad2Deg * slot0._realCameraParam.rotate
-	slot0._rotation = Quaternion.Euler(Mathf.Rad2Deg * slot0._realCameraParam.angle, slot10, 0)
-	slot0._orthRotation = Quaternion.Euler(90, slot10, 0)
-	slot0._inventoryRotation = Quaternion.Euler(0, slot10, 0)
+	local var_22_2 = arg_22_0._realCameraParam.distance * Mathf.Cos(arg_22_0._realCameraParam.angle)
+	local var_22_3 = arg_22_0._realCameraParam.distance * Mathf.Sin(arg_22_0._realCameraParam.angle) + arg_22_0._realCameraParam.height
+	local var_22_4 = -Mathf.Sin(arg_22_0._realCameraParam.rotate) * var_22_2 + arg_22_0._realCameraParam.posX
+	local var_22_5 = -Mathf.Cos(arg_22_0._realCameraParam.rotate) * var_22_2 + arg_22_0._realCameraParam.posY
+	local var_22_6 = var_22_3 + arg_22_0._offsetY + arg_22_0._scene.cameraFollow:getCameraOffsetY()
+	local var_22_7 = math.max(0.11, var_22_6)
 
-	transformhelper.setPos(slot0.cameraTrs, slot0._position.x, slot0._position.y, slot0._position.z)
-	transformhelper.setRotation(slot0.cameraTrs, slot0._rotation.x, slot0._rotation.y, slot0._rotation.z, slot0._rotation.w)
-	transformhelper.setPos(slot0._scene.go.virtualCameraTrs, slot0._position.x, slot0._position.y, slot0._position.z)
-	slot0:_setPosXZ(slot0._scene.go.virtualCameraXZTrs, slot6, slot7)
-	transformhelper.setRotation(slot0._scene.go.virtualCameraTrs, slot0._rotation.x, slot0._rotation.y, slot0._rotation.z, slot0._rotation.w)
-	transformhelper.setRotation(slot0.orthCameraTrs, slot0._orthRotation.x, slot0._orthRotation.y, slot0._orthRotation.z, slot0._orthRotation.w)
-	transformhelper.setRotation(slot0._scene.go.inventoryRootTrs, slot0._inventoryRotation.x, slot0._inventoryRotation.y, slot0._inventoryRotation.z, slot0._inventoryRotation.w)
-	slot0:_setPosXZ(slot0._scene.go.inventoryRootTrs, slot6, slot7)
-	slot0:_setPosXZ(slot0.orthCameraTrs, slot6, slot7)
+	arg_22_0._position = Vector3(var_22_4, var_22_7, var_22_5)
+
+	local var_22_8 = Mathf.Rad2Deg * arg_22_0._realCameraParam.angle
+	local var_22_9 = Mathf.Rad2Deg * arg_22_0._realCameraParam.rotate
+
+	arg_22_0._rotation = Quaternion.Euler(var_22_8, var_22_9, 0)
+	arg_22_0._orthRotation = Quaternion.Euler(90, var_22_9, 0)
+	arg_22_0._inventoryRotation = Quaternion.Euler(0, var_22_9, 0)
+
+	transformhelper.setPos(arg_22_0.cameraTrs, arg_22_0._position.x, arg_22_0._position.y, arg_22_0._position.z)
+	transformhelper.setRotation(arg_22_0.cameraTrs, arg_22_0._rotation.x, arg_22_0._rotation.y, arg_22_0._rotation.z, arg_22_0._rotation.w)
+	transformhelper.setPos(arg_22_0._scene.go.virtualCameraTrs, arg_22_0._position.x, arg_22_0._position.y, arg_22_0._position.z)
+	arg_22_0:_setPosXZ(arg_22_0._scene.go.virtualCameraXZTrs, var_22_4, var_22_5)
+	transformhelper.setRotation(arg_22_0._scene.go.virtualCameraTrs, arg_22_0._rotation.x, arg_22_0._rotation.y, arg_22_0._rotation.z, arg_22_0._rotation.w)
+	transformhelper.setRotation(arg_22_0.orthCameraTrs, arg_22_0._orthRotation.x, arg_22_0._orthRotation.y, arg_22_0._orthRotation.z, arg_22_0._orthRotation.w)
+	transformhelper.setRotation(arg_22_0._scene.go.inventoryRootTrs, arg_22_0._inventoryRotation.x, arg_22_0._inventoryRotation.y, arg_22_0._inventoryRotation.z, arg_22_0._inventoryRotation.w)
+	arg_22_0:_setPosXZ(arg_22_0._scene.go.inventoryRootTrs, var_22_4, var_22_5)
+	arg_22_0:_setPosXZ(arg_22_0.orthCameraTrs, var_22_4, var_22_5)
 	RoomMapController.instance:dispatchEvent(RoomEvent.CameraTransformUpdate)
-	RoomMapController.instance:dispatchEvent(RoomEvent.UpdateBlur, slot0._realCameraParam.blur)
-	slot0:_cameraUpdateMask()
+	RoomMapController.instance:dispatchEvent(RoomEvent.UpdateBlur, arg_22_0._realCameraParam.blur)
+	arg_22_0:_cameraUpdateMask()
 
-	if slot0._scene.graphics ~= nil then
-		if slot0._isShadowHideMap[slot0._cameraState] or slot0._realCameraParam.distance < 2.7 then
-			slot0._scene.graphics:setupShadowParam(false, slot0._realCameraParam.distance)
+	if arg_22_0._scene.graphics ~= nil then
+		if arg_22_0._isShadowHideMap[arg_22_0._cameraState] or arg_22_0._realCameraParam.distance < 2.7 then
+			arg_22_0._scene.graphics:setupShadowParam(false, arg_22_0._realCameraParam.distance)
 		else
-			slot0._scene.graphics:setupShadowParam(true, slot0._realCameraParam.distance)
+			arg_22_0._scene.graphics:setupShadowParam(true, arg_22_0._realCameraParam.distance)
 		end
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		-- Nothing
+		-- block empty
 	end
 end
 
-function slot0._cameraUpdateMask(slot0)
-	slot0._isCameraUpdateMask = true
-	slot0._cameraUpdateMaskFrame = 0
+function var_0_0._cameraUpdateMask(arg_23_0)
+	arg_23_0._isCameraUpdateMask = true
+	arg_23_0._cameraUpdateMaskFrame = 0
 end
 
-function slot0._onUpdate(slot0)
-	if slot0._isCameraUpdateMask then
-		if slot0._cameraUpdateMaskFrame < 1 then
-			slot0._cameraUpdateMaskFrame = slot0._cameraUpdateMaskFrame + 1
+function var_0_0._onUpdate(arg_24_0)
+	if arg_24_0._isCameraUpdateMask then
+		if arg_24_0._cameraUpdateMaskFrame < 1 then
+			arg_24_0._cameraUpdateMaskFrame = arg_24_0._cameraUpdateMaskFrame + 1
 		else
-			slot0._isCameraUpdateMask = false
+			arg_24_0._isCameraUpdateMask = false
 
 			RoomMapController.instance:dispatchEvent(RoomEvent.CameraUpdateFinish)
 		end
 	end
 end
 
-function slot0._setPosXZ(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6 = transformhelper.getPos(slot1)
+function var_0_0._setPosXZ(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0, var_25_1, var_25_2 = transformhelper.getPos(arg_25_1)
 
-	transformhelper.setPos(slot1, slot2, slot5, slot3)
+	transformhelper.setPos(arg_25_1, arg_25_2, var_25_1, arg_25_3)
 end
 
-function slot0.focusToPos(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Vector2.zero
+function var_0_0.focusToPos(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5)
+	local var_26_0 = Vector2.zero
 
-	if slot4 == RoomEnum.CameraState.Normal and not slot5 then
-		slot8 = Vector2(0, (1 - slot1) * 0.90432 + slot1 * 1.204425)
-		slot6.x = slot8.x * Mathf.Cos(slot3) + slot8.y * Mathf.Sin(slot3)
-		slot6.y = slot8.y * Mathf.Cos(slot3) - slot8.x * Mathf.Sin(slot3)
+	if arg_26_4 == RoomEnum.CameraState.Normal and not arg_26_5 then
+		local var_26_1 = (1 - arg_26_1) * 0.90432 + arg_26_1 * 1.204425
+		local var_26_2 = Vector2(0, var_26_1)
+
+		var_26_0.x = var_26_2.x * Mathf.Cos(arg_26_3) + var_26_2.y * Mathf.Sin(arg_26_3)
+		var_26_0.y = var_26_2.y * Mathf.Cos(arg_26_3) - var_26_2.x * Mathf.Sin(arg_26_3)
 	end
 
-	return slot2 + slot6
+	return arg_26_2 + var_26_0
 end
 
-function slot0.zoomToTouchMoveSpeed(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._touchMoveSpeedMin[slot2] + slot1 * slot0._touchMoveSpeedMax[slot2]
+function var_0_0.zoomToTouchMoveSpeed(arg_27_0, arg_27_1, arg_27_2)
+	return (1 - arg_27_1) * arg_27_0._touchMoveSpeedMin[arg_27_2] + arg_27_1 * arg_27_0._touchMoveSpeedMax[arg_27_2]
 end
 
-function slot0.zoomToOffsetY(slot0, slot1, slot2)
-	return slot0._offsetHeightMap[slot2] or 0
+function var_0_0.zoomToOffsetY(arg_28_0, arg_28_1, arg_28_2)
+	return arg_28_0._offsetHeightMap[arg_28_2] or 0
 end
 
-function slot0.zoomToAngle(slot0, slot1, slot2)
-	return ((1 - slot1) * slot0._angleMin[slot2] + slot1 * slot0._angleMax[slot2]) * Mathf.Deg2Rad
+function var_0_0.zoomToAngle(arg_29_0, arg_29_1, arg_29_2)
+	return ((1 - arg_29_1) * arg_29_0._angleMin[arg_29_2] + arg_29_1 * arg_29_0._angleMax[arg_29_2]) * Mathf.Deg2Rad
 end
 
-function slot0.zoomToBendingAmount(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._bendingAmountMin[slot2] + slot1 * slot0._bendingAmountMax[slot2]
+function var_0_0.zoomToBendingAmount(arg_30_0, arg_30_1, arg_30_2)
+	return (1 - arg_30_1) * arg_30_0._bendingAmountMin[arg_30_2] + arg_30_1 * arg_30_0._bendingAmountMax[arg_30_2]
 end
 
-function slot0.zoomToDistance(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._distanceMin[slot2] + slot1 * slot0._distanceMax[slot2]
+function var_0_0.zoomToDistance(arg_31_0, arg_31_1, arg_31_2)
+	return (1 - arg_31_1) * arg_31_0._distanceMin[arg_31_2] + arg_31_1 * arg_31_0._distanceMax[arg_31_2]
 end
 
-function slot0.zoomToBlur(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._blurMin[slot2] + slot1 * slot0._blurMax[slot2]
+function var_0_0.zoomToBlur(arg_32_0, arg_32_1, arg_32_2)
+	return (1 - arg_32_1) * arg_32_0._blurMin[arg_32_2] + arg_32_1 * arg_32_0._blurMax[arg_32_2]
 end
 
-function slot0.zoomToFogParam(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot0._fogParamMin[slot2]) do
-		-- Nothing
+function var_0_0.zoomToFogParam(arg_33_0, arg_33_1, arg_33_2)
+	local var_33_0 = {}
+
+	for iter_33_0, iter_33_1 in pairs(arg_33_0._fogParamMin[arg_33_2]) do
+		var_33_0[iter_33_0] = (1 - arg_33_1) * iter_33_1 + arg_33_1 * arg_33_0._fogParamMax[arg_33_2][iter_33_0]
 	end
 
-	return {
-		[slot7] = (1 - slot1) * slot8 + slot1 * slot0._fogParamMax[slot2][slot7]
-	}
+	return var_33_0
 end
 
-function slot0.zoomToOffsetHorizon(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._offsetHorizonMin[slot2] + slot1 * slot0._offsetHorizonMax[slot2]
+function var_0_0.zoomToOffsetHorizon(arg_34_0, arg_34_1, arg_34_2)
+	return (1 - arg_34_1) * arg_34_0._offsetHorizonMin[arg_34_2] + arg_34_1 * arg_34_0._offsetHorizonMax[arg_34_2]
 end
 
-function slot0.zoomToOceanFog(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._oceanFogMin[slot2] + slot1 * slot0._oceanFogMax[slot2]
+function var_0_0.zoomToOceanFog(arg_35_0, arg_35_1, arg_35_2)
+	return (1 - arg_35_1) * arg_35_0._oceanFogMin[arg_35_2] + arg_35_1 * arg_35_0._oceanFogMax[arg_35_2]
 end
 
-function slot0.zoomToHeight(slot0, slot1, slot2, slot3, slot4)
-	if slot3 ~= RoomEnum.CameraState.Normal or slot4 then
+function var_0_0.zoomToHeight(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4)
+	if arg_36_3 ~= RoomEnum.CameraState.Normal or arg_36_4 then
 		return 0
 	end
 
-	return RoomCharacterHelper.getLandHeightByRaycast(Vector3(slot2.x, 0, slot2.y)) - RoomCharacterEnum.CharacterHeightOffset
+	return RoomCharacterHelper.getLandHeightByRaycast(Vector3(arg_36_2.x, 0, arg_36_2.y)) - RoomCharacterEnum.CharacterHeightOffset
 end
 
-function slot0.zoomToLightRange(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._lightRangeMin[slot2] + slot1 * slot0._lightRangeMax[slot2]
+function var_0_0.zoomToLightRange(arg_37_0, arg_37_1, arg_37_2)
+	return (1 - arg_37_1) * arg_37_0._lightRangeMin[arg_37_2] + arg_37_1 * arg_37_0._lightRangeMax[arg_37_2]
 end
 
-function slot0.zoomToLightOffset(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._lightOffsetMin[slot2] + slot1 * slot0._lightOffsetMax[slot2]
+function var_0_0.zoomToLightOffset(arg_38_0, arg_38_1, arg_38_2)
+	return (1 - arg_38_1) * arg_38_0._lightOffsetMin[arg_38_2] + arg_38_1 * arg_38_0._lightOffsetMax[arg_38_2]
 end
 
-function slot0.zoomToLightMin(slot0, slot1, slot2)
-	return (1 - slot1) * slot0._lightMinMin[slot2] + slot1 * slot0._lightMinMax[slot2]
+function var_0_0.zoomToLightMin(arg_39_0, arg_39_1, arg_39_2)
+	return (1 - arg_39_1) * arg_39_0._lightMinMin[arg_39_2] + arg_39_1 * arg_39_0._lightMinMax[arg_39_2]
 end
 
-function slot0.zoomToShadowOffset(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot0._shadowOffsetMin[slot2]) do
-		-- Nothing
+function var_0_0.zoomToShadowOffset(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = {}
+
+	for iter_40_0, iter_40_1 in pairs(arg_40_0._shadowOffsetMin[arg_40_2]) do
+		var_40_0[iter_40_0] = (1 - arg_40_1) * iter_40_1 + arg_40_1 * arg_40_0._shadowOffsetMax[arg_40_2][iter_40_0]
 	end
 
-	return {
-		[slot7] = (1 - slot1) * slot8 + slot1 * slot0._shadowOffsetMax[slot2][slot7]
-	}
+	return var_40_0
 end
 
-function slot0.switchCameraState(slot0, slot1, slot2, slot3, slot4, slot5)
+function var_0_0.switchCameraState(arg_41_0, arg_41_1, arg_41_2, arg_41_3, arg_41_4, arg_41_5)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
-	slot0:_switchCameraStatePre(slot1)
+	arg_41_0:_switchCameraStatePre(arg_41_1)
 
-	if slot2 then
-		slot0:tweenCamera(slot2, slot3, slot4, slot5)
+	if arg_41_2 then
+		arg_41_0:tweenCamera(arg_41_2, arg_41_3, arg_41_4, arg_41_5)
 	end
 
-	slot0:_switchCameraStateAft(slot1)
+	arg_41_0:_switchCameraStateAft(arg_41_1)
 end
 
-function slot0.switchCameraStateWithRealCameraParam(slot0, slot1, slot2, slot3, slot4, slot5)
+function var_0_0.switchCameraStateWithRealCameraParam(arg_42_0, arg_42_1, arg_42_2, arg_42_3, arg_42_4, arg_42_5)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
-	slot0:_switchCameraStatePre(slot1)
+	arg_42_0:_switchCameraStatePre(arg_42_1)
 
-	if slot2 then
-		slot0:tweenRealCamera(slot2, slot3, slot4, slot5)
+	if arg_42_2 then
+		arg_42_0:tweenRealCamera(arg_42_2, arg_42_3, arg_42_4, arg_42_5)
 	end
 
-	slot0:_switchCameraStateAft(slot1)
+	arg_42_0:_switchCameraStateAft(arg_42_1)
 end
 
-function slot0._switchCameraStatePre(slot0, slot1)
-	if slot0._cameraState ~= RoomEnum.CameraState.Normal and slot0._cameraState ~= RoomEnum.CameraState.Character and (slot1 == RoomEnum.CameraState.Normal or slot1 == RoomEnum.CameraState.Character) then
+function var_0_0._switchCameraStatePre(arg_43_0, arg_43_1)
+	if arg_43_0._cameraState ~= RoomEnum.CameraState.Normal and arg_43_0._cameraState ~= RoomEnum.CameraState.Character and (arg_43_1 == RoomEnum.CameraState.Normal or arg_43_1 == RoomEnum.CameraState.Character) then
 		RoomCharacterController.instance:correctAllCharacterHeight()
 	end
 
-	if slot0._cameraSwitchAudioDict[slot0._cameraState] and slot0._cameraSwitchAudioDict[slot0._cameraState][slot1] then
-		AudioMgr.instance:trigger(slot2)
+	local var_43_0 = arg_43_0._cameraSwitchAudioDict[arg_43_0._cameraState] and arg_43_0._cameraSwitchAudioDict[arg_43_0._cameraState][arg_43_1]
+
+	if var_43_0 then
+		AudioMgr.instance:trigger(var_43_0)
 	end
 
-	if slot0._cameraState == RoomEnum.CameraState.Normal or slot0._cameraState == RoomEnum.CameraState.Overlook then
-		slot0._savedCameraParam = LuaUtil.deepCopy(slot0._cameraParam)
-		slot0._savedCameraState = slot0._cameraState
+	if arg_43_0._cameraState == RoomEnum.CameraState.Normal or arg_43_0._cameraState == RoomEnum.CameraState.Overlook then
+		arg_43_0._savedCameraParam = LuaUtil.deepCopy(arg_43_0._cameraParam)
+		arg_43_0._savedCameraState = arg_43_0._cameraState
 	end
 
-	if slot0._cameraState ~= slot1 then
-		slot0._cameraState = slot1
+	if arg_43_0._cameraState ~= arg_43_1 then
+		arg_43_0._cameraState = arg_43_1
 
-		slot0:_updateCameraClipPlane()
+		arg_43_0:_updateCameraClipPlane()
 		RoomMapController.instance:dispatchEvent(RoomEvent.CameraStateUpdate)
 	end
 end
 
-function slot0._switchCameraStateAft(slot0, slot1)
-	if slot0._cameraState == RoomEnum.CameraState.Normal then
+function var_0_0._switchCameraStateAft(arg_44_0, arg_44_1)
+	if arg_44_0._cameraState == RoomEnum.CameraState.Normal then
 		RoomBuildingController.instance:setBuildingListShow(false)
 		RoomCharacterController.instance:setCharacterListShow(false)
 	end
@@ -581,251 +621,282 @@ function slot0._switchCameraStateAft(slot0, slot1)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.RefreshSpineShow)
 end
 
-function slot0.tweenCamera(slot0, slot1, slot2, slot3, slot4, slot5)
-	for slot9, slot10 in pairs(slot1) do
-		slot0._cameraParam[slot9] = slot10
+function var_0_0.tweenCamera(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4, arg_45_5)
+	for iter_45_0, iter_45_1 in pairs(arg_45_1) do
+		arg_45_0._cameraParam[iter_45_0] = iter_45_1
 	end
 
-	slot0:tweenRealCamera(slot0:cameraParamToRealCameraParam(slot0._cameraParam), slot2, slot3, slot4, slot5)
+	local var_45_0 = arg_45_0:cameraParamToRealCameraParam(arg_45_0._cameraParam)
+
+	arg_45_0:tweenRealCamera(var_45_0, arg_45_2, arg_45_3, arg_45_4, arg_45_5)
 end
 
-function slot0.tweenRealCamera(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0.tweenRealCamera(arg_46_0, arg_46_1, arg_46_2, arg_46_3, arg_46_4, arg_46_5)
+	if arg_46_0._tweenId then
+		arg_46_0._scene.tween:killById(arg_46_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_46_0._tweenId = nil
 	end
 
-	if ({
-		srcParam = LuaUtil.deepCopy(slot0._realCameraParam),
-		dstParam = slot1,
-		frameCallback = slot2,
-		finishCallback = slot3,
-		callbackObj = slot4
-	}).dstParam.bendingAmount then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.bendingAmount - slot6.srcParam.bendingAmount), 0)
+	local var_46_0 = {
+		srcParam = LuaUtil.deepCopy(arg_46_0._realCameraParam),
+		dstParam = arg_46_1,
+		frameCallback = arg_46_2,
+		finishCallback = arg_46_3,
+		callbackObj = arg_46_4
+	}
+	local var_46_1 = 0
+
+	if var_46_0.dstParam.bendingAmount then
+		local var_46_2 = Mathf.Abs(var_46_0.dstParam.bendingAmount - var_46_0.srcParam.bendingAmount)
+
+		var_46_1 = Mathf.Max(var_46_2, var_46_1)
 	end
 
-	if slot6.dstParam.angle then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.angle - slot6.srcParam.angle), slot7)
+	if var_46_0.dstParam.angle then
+		local var_46_3 = Mathf.Abs(var_46_0.dstParam.angle - var_46_0.srcParam.angle)
+
+		var_46_1 = Mathf.Max(var_46_3, var_46_1)
 	end
 
-	if slot6.dstParam.distance then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.distance - slot6.srcParam.distance), slot7)
+	if var_46_0.dstParam.distance then
+		local var_46_4 = Mathf.Abs(var_46_0.dstParam.distance - var_46_0.srcParam.distance)
+
+		var_46_1 = Mathf.Max(var_46_4, var_46_1)
 	end
 
-	if slot6.dstParam.posX then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.posX - slot6.srcParam.posX) / 2.5, slot7)
+	if var_46_0.dstParam.posX then
+		local var_46_5 = Mathf.Abs(var_46_0.dstParam.posX - var_46_0.srcParam.posX) / 2.5
+
+		var_46_1 = Mathf.Max(var_46_5, var_46_1)
 	end
 
-	if slot6.dstParam.posY then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.posY - slot6.srcParam.posY) / 2.5, slot7)
+	if var_46_0.dstParam.posY then
+		local var_46_6 = Mathf.Abs(var_46_0.dstParam.posY - var_46_0.srcParam.posY) / 2.5
+
+		var_46_1 = Mathf.Max(var_46_6, var_46_1)
 	end
 
-	if slot6.dstParam.rotate then
-		if Mathf.PI < Mathf.Abs(RoomRotateHelper.getMod(slot6.dstParam.rotate, Mathf.PI * 2) - RoomRotateHelper.getMod(slot6.srcParam.rotate, Mathf.PI * 2)) then
-			slot10 = 2 * Mathf.PI - slot10
+	if var_46_0.dstParam.rotate then
+		local var_46_7 = RoomRotateHelper.getMod(var_46_0.dstParam.rotate, Mathf.PI * 2)
+		local var_46_8 = RoomRotateHelper.getMod(var_46_0.srcParam.rotate, Mathf.PI * 2)
+		local var_46_9 = Mathf.Abs(var_46_7 - var_46_8)
+
+		if var_46_9 > Mathf.PI then
+			var_46_9 = 2 * Mathf.PI - var_46_9
 		end
 
-		slot7 = Mathf.Max(slot10 / 2, slot7)
+		local var_46_10 = var_46_9 / 2
+
+		var_46_1 = Mathf.Max(var_46_10, var_46_1)
 	end
 
-	if slot6.dstParam.blur then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.blur - slot6.srcParam.blur) / 1, slot7)
+	if var_46_0.dstParam.blur then
+		local var_46_11 = Mathf.Abs(var_46_0.dstParam.blur - var_46_0.srcParam.blur) / 1
+
+		var_46_1 = Mathf.Max(var_46_11, var_46_1)
 	end
 
-	if slot6.dstParam.height then
-		slot7 = Mathf.Max(Mathf.Abs(slot6.dstParam.height - slot6.srcParam.height) / 2.5, slot7)
+	if var_46_0.dstParam.height then
+		local var_46_12 = Mathf.Abs(var_46_0.dstParam.height - var_46_0.srcParam.height) / 2.5
+
+		var_46_1 = Mathf.Max(var_46_12, var_46_1)
 	end
 
-	if slot7 > 0 then
-		if slot5 then
-			slot0:_tweenCameraFinish(slot6)
+	if var_46_1 > 0 then
+		if arg_46_5 then
+			arg_46_0:_tweenCameraFinish(var_46_0)
 		else
-			slot0._isTweening = true
+			local var_46_13 = Mathf.Clamp(var_46_1, 0.8, 1)
+
+			arg_46_0._isTweening = true
 
 			UIBlockMgr.instance:startBlock(UIBlockKey.RoomCameraTweening)
 
-			slot0._tweenId = slot0._scene.tween:tweenFloat(0, 1, Mathf.Clamp(slot7, 0.8, 1), slot0._tweenCameraFrame, slot0._tweenCameraFinish, slot0, slot6, EaseType.InOutQuart)
+			arg_46_0._tweenId = arg_46_0._scene.tween:tweenFloat(0, 1, var_46_13, arg_46_0._tweenCameraFrame, arg_46_0._tweenCameraFinish, arg_46_0, var_46_0, EaseType.InOutQuart)
 		end
-	elseif slot6.finishCallback then
-		slot6.finishCallback(slot6.callbackObj)
+	elseif var_46_0.finishCallback then
+		var_46_0.finishCallback(var_46_0.callbackObj)
 	end
 end
 
-function slot0._tweenCameraFrame(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot2.dstParam) do
-		if type(slot7) == "table" then
-			for slot11, slot12 in pairs(slot7) do
-				slot0._realCameraParam[slot6][slot11] = (1 - slot1) * slot2.srcParam[slot6][slot11] + slot1 * slot12
+function var_0_0._tweenCameraFrame(arg_47_0, arg_47_1, arg_47_2)
+	for iter_47_0, iter_47_1 in pairs(arg_47_2.dstParam) do
+		if type(iter_47_1) == "table" then
+			for iter_47_2, iter_47_3 in pairs(iter_47_1) do
+				arg_47_0._realCameraParam[iter_47_0][iter_47_2] = (1 - arg_47_1) * arg_47_2.srcParam[iter_47_0][iter_47_2] + arg_47_1 * iter_47_3
 			end
-		elseif slot6 == "rotate" then
-			slot0._realCameraParam[slot6] = RoomRotateHelper.simpleRotate(slot1, slot2.srcParam[slot6], slot7)
+		elseif iter_47_0 == "rotate" then
+			arg_47_0._realCameraParam[iter_47_0] = RoomRotateHelper.simpleRotate(arg_47_1, arg_47_2.srcParam[iter_47_0], iter_47_1)
 		else
-			slot0._realCameraParam[slot6] = (1 - slot1) * slot2.srcParam[slot6] + slot1 * slot7
+			arg_47_0._realCameraParam[iter_47_0] = (1 - arg_47_1) * arg_47_2.srcParam[iter_47_0] + arg_47_1 * iter_47_1
 		end
 	end
 
-	if slot2.dstParam.rotate then
-		slot0._realCameraParam.rotate = RoomRotateHelper.simpleRotate(slot1, slot2.srcParam.rotate, slot2.dstParam.rotate)
+	if arg_47_2.dstParam.rotate then
+		arg_47_0._realCameraParam.rotate = RoomRotateHelper.simpleRotate(arg_47_1, arg_47_2.srcParam.rotate, arg_47_2.dstParam.rotate)
 	end
 
-	slot0:updateTransform()
+	arg_47_0:updateTransform()
 
-	if slot2.frameCallback then
-		if slot2.callbackObj then
-			slot2.frameCallback(slot2.callbackObj, slot1)
+	if arg_47_2.frameCallback then
+		if arg_47_2.callbackObj then
+			arg_47_2.frameCallback(arg_47_2.callbackObj, arg_47_1)
 		else
-			slot2.frameCallback(slot1)
+			arg_47_2.frameCallback(arg_47_1)
 		end
 	end
 end
 
-function slot0._tweenCameraFinish(slot0, slot1)
-	for slot5, slot6 in pairs(slot1.dstParam) do
-		slot0._realCameraParam[slot5] = slot6
+function var_0_0._tweenCameraFinish(arg_48_0, arg_48_1)
+	for iter_48_0, iter_48_1 in pairs(arg_48_1.dstParam) do
+		arg_48_0._realCameraParam[iter_48_0] = iter_48_1
 	end
 
-	slot0:updateTransform()
+	arg_48_0:updateTransform()
 
-	slot0._isTweening = false
+	arg_48_0._isTweening = false
 
 	UIBlockMgr.instance:endBlock(UIBlockKey.RoomCameraTweening)
 
-	if slot1.finishCallback then
-		if slot1.callbackObj then
-			slot1.finishCallback(slot1.callbackObj)
+	if arg_48_1.finishCallback then
+		if arg_48_1.callbackObj then
+			arg_48_1.finishCallback(arg_48_1.callbackObj)
 		else
-			slot1.finishCallback()
+			arg_48_1.finishCallback()
 		end
 	end
 end
 
-function slot0.getCameraPosition(slot0)
-	return slot0._position
+function var_0_0.getCameraPosition(arg_49_0)
+	return arg_49_0._position
 end
 
-function slot0.getCameraRotation(slot0)
-	return slot0._rotation
+function var_0_0.getCameraRotation(arg_50_0)
+	return arg_50_0._rotation
 end
 
-function slot0.getCameraFocus(slot0)
-	if slot0._cameraParam then
-		return Vector2(slot0._cameraParam.focusX, slot0._cameraParam.focusY)
+function var_0_0.getCameraFocus(arg_51_0)
+	if arg_51_0._cameraParam then
+		return Vector2(arg_51_0._cameraParam.focusX, arg_51_0._cameraParam.focusY)
 	end
 
 	return Vector2(0, 0)
 end
 
-function slot0.getCameraRotate(slot0)
-	return slot0._cameraParam and slot0._cameraParam.rotate or 0
+function var_0_0.getCameraRotate(arg_52_0)
+	return arg_52_0._cameraParam and arg_52_0._cameraParam.rotate or 0
 end
 
-function slot0.getCameraZoom(slot0)
-	return slot0._cameraParam and slot0._cameraParam.zoom or 0.5
+function var_0_0.getCameraZoom(arg_53_0)
+	return arg_53_0._cameraParam and arg_53_0._cameraParam.zoom or 0.5
 end
 
-function slot0.getCameraParam(slot0)
-	return slot0._cameraParam
+function var_0_0.getCameraParam(arg_54_0)
+	return arg_54_0._cameraParam
 end
 
-function slot0.getRealCameraParam(slot0)
-	return slot0._realCameraParam
+function var_0_0.getRealCameraParam(arg_55_0)
+	return arg_55_0._realCameraParam
 end
 
-function slot0.getSavedCameraParam(slot0)
-	return slot0._savedCameraParam
+function var_0_0.getSavedCameraParam(arg_56_0)
+	return arg_56_0._savedCameraParam
 end
 
-function slot0.getSavedCameraState(slot0)
-	return slot0._savedCameraState
+function var_0_0.getSavedCameraState(arg_57_0)
+	return arg_57_0._savedCameraState
 end
 
-function slot0.getCameraState(slot0)
-	return slot0._cameraState
+function var_0_0.getCameraState(arg_58_0)
+	return arg_58_0._cameraState
 end
 
-function slot0.isTweening(slot0)
-	return slot0._isTweening
+function var_0_0.isTweening(arg_59_0)
+	return arg_59_0._isTweening
 end
 
-function slot0._setCanvasCamera(slot0)
-	slot0._scene.go.canvasGO:GetComponent(typeof(UnityEngine.Canvas)).worldCamera = CameraMgr.instance:getUnitCamera()
+function var_0_0._setCanvasCamera(arg_60_0)
+	arg_60_0._scene.go.canvasGO:GetComponent(typeof(UnityEngine.Canvas)).worldCamera = CameraMgr.instance:getUnitCamera()
 end
 
-slot1 = 60
-slot2 = 1.7777777777777777
+local var_0_1 = 60
+local var_0_2 = 1.7777777777777777
 
-function slot0._onScreenResize(slot0, slot1, slot2)
-	slot3 = CameraMgr.instance:getVirtualCameras()
-	slot6 = Mathf.Clamp(uv1 * uv0 / (slot1 / slot2), 60, 120)
-	CameraMgr.instance:getMainCamera().fieldOfView = slot6
-	CameraMgr.instance:getUnitCamera().fieldOfView = slot6
+function var_0_0._onScreenResize(arg_61_0, arg_61_1, arg_61_2)
+	local var_61_0 = CameraMgr.instance:getVirtualCameras()
+	local var_61_1 = arg_61_1 / arg_61_2
+	local var_61_2 = var_0_2 / var_61_1
+	local var_61_3 = var_0_1 * var_61_2
+	local var_61_4 = Mathf.Clamp(var_61_3, 60, 120)
+
+	CameraMgr.instance:getMainCamera().fieldOfView = var_61_4
+	CameraMgr.instance:getUnitCamera().fieldOfView = var_61_4
 end
 
-function slot0.playCameraAnim(slot0, slot1)
-	if slot1 == "idle" then
-		slot0:tweenOffsetY(0)
-	elseif slot1 == "in_show" then
-		slot0:tweenOffsetY(0, 0.3, 2)
-	elseif slot1 == "in_edit" then
-		slot0:tweenOffsetY(0, slot0._cameraStateInEditYDict[slot0._cameraState] or -0.3, 2)
-	elseif slot1 == "out_show" then
-		slot0:tweenOffsetY(0.3, 0, 2)
-	elseif slot1 == "out_edit" then
-		slot0:tweenOffsetY(-0.3, 0, 2)
+function var_0_0.playCameraAnim(arg_62_0, arg_62_1)
+	if arg_62_1 == "idle" then
+		arg_62_0:tweenOffsetY(0)
+	elseif arg_62_1 == "in_show" then
+		arg_62_0:tweenOffsetY(0, 0.3, 2)
+	elseif arg_62_1 == "in_edit" then
+		arg_62_0:tweenOffsetY(0, arg_62_0._cameraStateInEditYDict[arg_62_0._cameraState] or -0.3, 2)
+	elseif arg_62_1 == "out_show" then
+		arg_62_0:tweenOffsetY(0.3, 0, 2)
+	elseif arg_62_1 == "out_edit" then
+		arg_62_0:tweenOffsetY(-0.3, 0, 2)
 	end
 end
 
-function slot0.tweenOffsetY(slot0, slot1, slot2, slot3)
-	if slot0._tweenOffsetYId then
-		slot0._scene.tween:killById(slot0._tweenOffsetYId)
+function var_0_0.tweenOffsetY(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
+	if arg_63_0._tweenOffsetYId then
+		arg_63_0._scene.tween:killById(arg_63_0._tweenOffsetYId)
 
-		slot0._tweenOffsetYId = nil
+		arg_63_0._tweenOffsetYId = nil
 	end
 
-	slot0._offsetY = slot1
+	arg_63_0._offsetY = arg_63_1
 
-	slot0:updateTransform(true)
+	arg_63_0:updateTransform(true)
 
-	if not slot2 or slot1 == slot2 then
+	if not arg_63_2 or arg_63_1 == arg_63_2 then
 		return
 	end
 
-	slot0._tweenOffsetYId = slot0._scene.tween:tweenFloat(slot1, slot2, slot3, slot0._tweenOffsetYFrame, slot0._tweenOffsetYFinish, slot0, {
-		from = slot1,
-		to = slot2
+	arg_63_0._tweenOffsetYId = arg_63_0._scene.tween:tweenFloat(arg_63_1, arg_63_2, arg_63_3, arg_63_0._tweenOffsetYFrame, arg_63_0._tweenOffsetYFinish, arg_63_0, {
+		from = arg_63_1,
+		to = arg_63_2
 	}, EaseType.OutQuad)
 end
 
-function slot0._tweenOffsetYFrame(slot0, slot1, slot2)
-	slot0._offsetY = slot1
+function var_0_0._tweenOffsetYFrame(arg_64_0, arg_64_1, arg_64_2)
+	arg_64_0._offsetY = arg_64_1
 
-	slot0:updateTransform(true)
+	arg_64_0:updateTransform(true)
 end
 
-function slot0._tweenOffsetYFinish(slot0, slot1)
-	slot0._offsetY = slot1.to
+function var_0_0._tweenOffsetYFinish(arg_65_0, arg_65_1)
+	arg_65_0._offsetY = arg_65_1.to
 
-	slot0:updateTransform(true)
+	arg_65_0:updateTransform(true)
 end
 
-function slot0._updateCameraClipPlane(slot0)
-	if slot0._camerClipPlaneMin[slot0._cameraState] and slot0.camera then
-		slot0.camera.nearClipPlane = slot0._camerClipPlaneMin[slot0._cameraState]
-		slot0.camera.farClipPlane = slot0._camerClipPlaneMax[slot0._cameraState]
+function var_0_0._updateCameraClipPlane(arg_66_0)
+	if arg_66_0._camerClipPlaneMin[arg_66_0._cameraState] and arg_66_0.camera then
+		arg_66_0.camera.nearClipPlane = arg_66_0._camerClipPlaneMin[arg_66_0._cameraState]
+		arg_66_0.camera.farClipPlane = arg_66_0._camerClipPlaneMax[arg_66_0._cameraState]
 	end
 end
 
-function slot0.refreshOrthCamera(slot0)
-	gohelper.setActive(slot0.orthCameraGO, true)
-	TaskDispatcher.cancelTask(slot0._hideOrthCamera, slot0)
-	TaskDispatcher.runDelay(slot0._hideOrthCamera, slot0, 0.01)
+function var_0_0.refreshOrthCamera(arg_67_0)
+	gohelper.setActive(arg_67_0.orthCameraGO, true)
+	TaskDispatcher.cancelTask(arg_67_0._hideOrthCamera, arg_67_0)
+	TaskDispatcher.runDelay(arg_67_0._hideOrthCamera, arg_67_0, 0.01)
 end
 
-function slot0._hideOrthCamera(slot0)
-	TaskDispatcher.cancelTask(slot0._hideOrthCamera, slot0)
-	gohelper.setActive(slot0.orthCameraGO, false)
+function var_0_0._hideOrthCamera(arg_68_0)
+	TaskDispatcher.cancelTask(arg_68_0._hideOrthCamera, arg_68_0)
+	gohelper.setActive(arg_68_0.orthCameraGO, false)
 end
 
-return slot0
+return var_0_0

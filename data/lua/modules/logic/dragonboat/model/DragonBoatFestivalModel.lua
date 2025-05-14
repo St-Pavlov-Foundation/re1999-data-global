@@ -1,18 +1,21 @@
-module("modules.logic.dragonboat.model.DragonBoatFestivalModel", package.seeall)
+﻿module("modules.logic.dragonboat.model.DragonBoatFestivalModel", package.seeall)
 
-slot0 = class("DragonBoatFestivalModel", BaseModel)
+local var_0_0 = class("DragonBoatFestivalModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._curDay = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._curDay = nil
 end
 
-function slot0.hasRewardNotGet(slot0)
-	for slot6, slot7 in pairs(ActivityConfig.instance:getNorSignActivityCos(ActivityEnum.Activity.DragonBoatFestival)) do
-		if slot0:isGiftUnlock(slot7.id) and not slot0:isGiftGet(slot7.id) then
+function var_0_0.hasRewardNotGet(arg_3_0)
+	local var_3_0 = ActivityEnum.Activity.DragonBoatFestival
+	local var_3_1 = ActivityConfig.instance:getNorSignActivityCos(var_3_0)
+
+	for iter_3_0, iter_3_1 in pairs(var_3_1) do
+		if arg_3_0:isGiftUnlock(iter_3_1.id) and not arg_3_0:isGiftGet(iter_3_1.id) then
 			return true
 		end
 	end
@@ -20,64 +23,69 @@ function slot0.hasRewardNotGet(slot0)
 	return false
 end
 
-function slot0.setCurDay(slot0, slot1)
-	slot0._curDay = slot1
+function var_0_0.setCurDay(arg_4_0, arg_4_1)
+	arg_4_0._curDay = arg_4_1
 end
 
-function slot0.getCurDay(slot0)
-	slot1 = slot0._curDay or slot0:getFinalGiftGetDay()
+function var_0_0.getCurDay(arg_5_0)
+	local var_5_0 = arg_5_0._curDay or arg_5_0:getFinalGiftGetDay()
 
-	return slot0:getMaxDay() < slot1 and slot0:getMaxDay() or slot1
+	return var_5_0 > arg_5_0:getMaxDay() and arg_5_0:getMaxDay() or var_5_0
 end
 
-function slot0.getFinalGiftGetDay(slot0)
-	slot3 = {}
+function var_0_0.getFinalGiftGetDay(arg_6_0)
+	local var_6_0 = ActivityEnum.Activity.DragonBoatFestival
+	local var_6_1 = ActivityConfig.instance:getNorSignActivityCos(var_6_0)
+	local var_6_2 = {}
 
-	for slot7, slot8 in pairs(ActivityConfig.instance:getNorSignActivityCos(ActivityEnum.Activity.DragonBoatFestival)) do
-		if slot0:isGiftUnlock(slot8.id) and slot0:isGiftGet(slot8.id) then
-			table.insert(slot3, slot8.id)
+	for iter_6_0, iter_6_1 in pairs(var_6_1) do
+		if arg_6_0:isGiftUnlock(iter_6_1.id) and arg_6_0:isGiftGet(iter_6_1.id) then
+			table.insert(var_6_2, iter_6_1.id)
 		end
 	end
 
-	if GameUtil.getTabLen(slot3) > 0 then
-		return slot3[#slot3]
+	if GameUtil.getTabLen(var_6_2) > 0 then
+		return var_6_2[#var_6_2]
 	else
-		return slot0:getLoginCount()
+		return arg_6_0:getLoginCount()
 	end
 end
 
-function slot0.isGiftGet(slot0, slot1)
-	slot2 = ActivityEnum.Activity.DragonBoatFestival
+function var_0_0.isGiftGet(arg_7_0, arg_7_1)
+	local var_7_0 = ActivityEnum.Activity.DragonBoatFestival
 
-	if slot0:getMaxDay() < slot1 then
+	if arg_7_1 > arg_7_0:getMaxDay() then
 		return false
 	end
 
-	return ActivityType101Model.instance:isType101RewardGet(slot2, slot1)
+	return ActivityType101Model.instance:isType101RewardGet(var_7_0, arg_7_1)
 end
 
-function slot0.isGiftUnlock(slot0, slot1)
-	return slot1 <= slot0:getLoginCount()
+function var_0_0.isGiftUnlock(arg_8_0, arg_8_1)
+	return arg_8_1 <= arg_8_0:getLoginCount()
 end
 
-function slot0.getMaxDay(slot0)
-	slot2 = 0
+function var_0_0.getMaxDay(arg_9_0)
+	local var_9_0 = DragonBoatFestivalConfig.instance:getDragonBoatCos()
+	local var_9_1 = 0
 
-	for slot6, slot7 in pairs(DragonBoatFestivalConfig.instance:getDragonBoatCos()) do
-		slot2 = slot7.day < slot2 and slot2 or slot7.day
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		var_9_1 = var_9_1 > iter_9_1.day and var_9_1 or iter_9_1.day
 	end
 
-	return slot2
+	return var_9_1
 end
 
-function slot0.getLoginCount(slot0)
-	return ActivityType101Model.instance:getType101LoginCount(ActivityEnum.Activity.DragonBoatFestival)
+function var_0_0.getLoginCount(arg_10_0)
+	local var_10_0 = ActivityEnum.Activity.DragonBoatFestival
+
+	return (ActivityType101Model.instance:getType101LoginCount(var_10_0))
 end
 
-function slot0.getMaxUnlockDay(slot0)
-	return slot0:getLoginCount() <= slot0:getMaxDay() and slot0:getLoginCount() or slot0:getMaxDay()
+function var_0_0.getMaxUnlockDay(arg_11_0)
+	return arg_11_0:getLoginCount() <= arg_11_0:getMaxDay() and arg_11_0:getLoginCount() or arg_11_0:getMaxDay()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

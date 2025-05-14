@@ -1,124 +1,130 @@
-module("modules.logic.fight.controller.FightReplayController", package.seeall)
+﻿module("modules.logic.fight.controller.FightReplayController", package.seeall)
 
-slot0 = class("FightReplayController", BaseController)
+local var_0_0 = class("FightReplayController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._replayErrorFix = FightReplayErrorFix.New()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._replayErrorFix = FightReplayErrorFix.New()
 end
 
-function slot0.reInit(slot0)
-	slot0._replayErrorFix:reInit()
-	slot0:_stopReplay()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._replayErrorFix:reInit()
+	arg_2_0:_stopReplay()
 
-	slot0._callback = nil
-	slot0._calbackObj = nil
+	arg_2_0._callback = nil
+	arg_2_0._calbackObj = nil
 end
 
-function slot0.addConstEvents(slot0)
-	FightController.instance:registerCallback(FightEvent.StartReplay, slot0._startReplay, slot0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._stopReplay, slot0)
-	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplay, slot0._onGetOperReplay, slot0)
-	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplayFail, slot0._onGetOperReplayFail, slot0)
-	slot0._replayErrorFix:addConstEvents()
+function var_0_0.addConstEvents(arg_3_0)
+	FightController.instance:registerCallback(FightEvent.StartReplay, arg_3_0._startReplay, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_3_0._stopReplay, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplay, arg_3_0._onGetOperReplay, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.RespGetFightOperReplayFail, arg_3_0._onGetOperReplayFail, arg_3_0)
+	arg_3_0._replayErrorFix:addConstEvents()
 end
 
-function slot0.reqReplay(slot0, slot1, slot2)
-	slot0._callback = slot1
-	slot0._calbackObj = slot2
+function var_0_0.reqReplay(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._callback = arg_4_1
+	arg_4_0._calbackObj = arg_4_2
 
 	FightRpc.instance:sendGetFightOperRequest()
 end
 
-function slot0._setQuality(slot0, slot1)
-	if slot1 then
-		if not slot0._quality then
-			slot0._quality = SettingsModel.instance:getModelGraphicsQuality()
-			slot0._frameRate = SettingsModel.instance:getModelTargetFrameRate()
+function var_0_0._setQuality(arg_5_0, arg_5_1)
+	if arg_5_1 then
+		if not arg_5_0._quality then
+			arg_5_0._quality = SettingsModel.instance:getModelGraphicsQuality()
+			arg_5_0._frameRate = SettingsModel.instance:getModelTargetFrameRate()
 
 			GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.Low, true)
 			GameGlobalMgr.instance:getScreenState():setTargetFrameRate(ModuleEnum.TargetFrameRate.Low, true)
 		end
-	elseif slot0._quality then
-		GameGlobalMgr.instance:getScreenState():setLocalQuality(slot0._quality, true)
-		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(slot0._frameRate, true)
+	elseif arg_5_0._quality then
+		GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_5_0._quality, true)
+		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(arg_5_0._frameRate, true)
 
-		slot0._quality = nil
-		slot0._frameRate = nil
+		arg_5_0._quality = nil
+		arg_5_0._frameRate = nil
 	end
 end
 
-function slot0._onGetOperReplay(slot0)
+function var_0_0._onGetOperReplay(arg_6_0)
 	FightController.instance:dispatchEvent(FightEvent.StartReplay)
 	FightReplayModel.instance:setReplay(true)
-	slot0:_reqReplayCallback()
+	arg_6_0:_reqReplayCallback()
 end
 
-function slot0._onGetOperReplayFail(slot0)
-	slot0:_reqReplayCallback()
+function var_0_0._onGetOperReplayFail(arg_7_0)
+	arg_7_0:_reqReplayCallback()
 end
 
-function slot0._reqReplayCallback(slot0)
-	slot0._callback = nil
-	slot0._calbackObj = nil
+function var_0_0._reqReplayCallback(arg_8_0)
+	local var_8_0 = arg_8_0._callback
+	local var_8_1 = arg_8_0._calbackObj
 
-	if slot0._callback then
-		slot1(slot0._calbackObj)
+	arg_8_0._callback = nil
+	arg_8_0._calbackObj = nil
+
+	if var_8_0 then
+		var_8_0(var_8_1)
 	end
 end
 
-function slot0._startReplay(slot0)
-	slot0:_setQuality(true)
-	slot0:_stopReplayFlow()
+function var_0_0._startReplay(arg_9_0)
+	arg_9_0:_setQuality(true)
+	arg_9_0:_stopReplayFlow()
 
-	slot0._replayFlow = FightReplayStepBuilder.buildReplaySequence()
+	arg_9_0._replayFlow = FightReplayStepBuilder.buildReplaySequence()
 
-	slot0._replayFlow:registerDoneListener(slot0._onReplayDone, slot0)
-	slot0._replayFlow:start({})
+	arg_9_0._replayFlow:registerDoneListener(arg_9_0._onReplayDone, arg_9_0)
+	arg_9_0._replayFlow:start({})
 end
 
-function slot0.doneCardStage(slot0)
-	if slot0._replayFlow and slot0._replayFlow.status == WorkStatus.Running then
-		slot1 = slot0._replayFlow:getWorkList()
-		slot3 = slot0._replayFlow._workList and slot0._replayFlow._workList[slot0._replayFlow._curIndex]
+function var_0_0.doneCardStage(arg_10_0)
+	if arg_10_0._replayFlow and arg_10_0._replayFlow.status == WorkStatus.Running then
+		local var_10_0 = arg_10_0._replayFlow:getWorkList()
+		local var_10_1 = arg_10_0._replayFlow._curIndex
+		local var_10_2 = arg_10_0._replayFlow._workList and arg_10_0._replayFlow._workList[var_10_1]
 
-		for slot7 = slot2, #slot1 do
-			if isTypeOf(slot1[slot7], FightReplayWorkWaitRoundEnd) then
-				slot0._replayFlow._curIndex = slot7 - 1
+		for iter_10_0 = var_10_1, #var_10_0 do
+			local var_10_3 = var_10_0[iter_10_0]
 
-				slot0._replayFlow:_runNext()
+			if isTypeOf(var_10_3, FightReplayWorkWaitRoundEnd) then
+				arg_10_0._replayFlow._curIndex = iter_10_0 - 1
+
+				arg_10_0._replayFlow:_runNext()
 
 				break
 			end
 		end
 
-		if slot3 then
-			slot3:onDone(true)
+		if var_10_2 then
+			var_10_2:onDone(true)
 		end
 	end
 end
 
-function slot0._onReplayDone(slot0)
-	slot0:_stopReplayFlow()
+function var_0_0._onReplayDone(arg_11_0)
+	arg_11_0:_stopReplayFlow()
 end
 
-function slot0._stopReplay(slot0)
-	slot0:_setQuality(false)
+function var_0_0._stopReplay(arg_12_0)
+	arg_12_0:_setQuality(false)
 	FightReplayModel.instance:setReplay(false)
-	slot0:_stopReplayFlow()
+	arg_12_0:_stopReplayFlow()
 end
 
-function slot0._stopReplayFlow(slot0)
-	if slot0._replayFlow then
-		if slot0._replayFlow.status == WorkStatus.Running then
-			slot0._replayFlow:stop()
+function var_0_0._stopReplayFlow(arg_13_0)
+	if arg_13_0._replayFlow then
+		if arg_13_0._replayFlow.status == WorkStatus.Running then
+			arg_13_0._replayFlow:stop()
 		end
 
-		slot0._replayFlow:unregisterDoneListener(slot0._onReplayDone, slot0)
+		arg_13_0._replayFlow:unregisterDoneListener(arg_13_0._onReplayDone, arg_13_0)
 
-		slot0._replayFlow = nil
+		arg_13_0._replayFlow = nil
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

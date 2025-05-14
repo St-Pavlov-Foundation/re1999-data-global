@@ -1,39 +1,39 @@
-module("modules.logic.story.model.StoryGroupModel", package.seeall)
+﻿module("modules.logic.story.model.StoryGroupModel", package.seeall)
 
-slot0 = class("StoryGroupModel", BaseModel)
+local var_0_0 = class("StoryGroupModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._groupList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._groupList = {}
 end
 
-function slot0.setGroupList(slot0, slot1)
-	slot0._groupList = {}
+function var_0_0.setGroupList(arg_2_0, arg_2_1)
+	arg_2_0._groupList = {}
 
-	if slot1 then
-		for slot5, slot6 in pairs(slot1) do
-			slot7 = {}
+	if arg_2_1 then
+		for iter_2_0, iter_2_1 in pairs(arg_2_1) do
+			local var_2_0 = {}
 
-			for slot11, slot12 in ipairs(slot6) do
-				slot13 = StoryGroupMo.New()
+			for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
+				local var_2_1 = StoryGroupMo.New()
 
-				slot13:init(slot12)
-				table.insert(slot7, slot13)
+				var_2_1:init(iter_2_3)
+				table.insert(var_2_0, var_2_1)
 			end
 
-			table.insert(slot0._groupList, slot7)
+			table.insert(arg_2_0._groupList, var_2_0)
 		end
 	end
 end
 
-function slot0.getGroupList(slot0)
-	return slot0._groupList
+function var_0_0.getGroupList(arg_3_0)
+	return arg_3_0._groupList
 end
 
-function slot0.getGroupListById(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._groupList) do
-		for slot10, slot11 in pairs(slot6) do
-			if slot11.id == slot1 then
-				return slot6
+function var_0_0.getGroupListById(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._groupList) do
+		for iter_4_2, iter_4_3 in pairs(iter_4_1) do
+			if iter_4_3.id == arg_4_1 then
+				return iter_4_1
 			end
 		end
 	end
@@ -41,6 +41,6 @@ function slot0.getGroupListById(slot0, slot1)
 	return nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

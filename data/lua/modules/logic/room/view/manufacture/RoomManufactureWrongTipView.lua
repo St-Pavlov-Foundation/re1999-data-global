@@ -1,75 +1,79 @@
-module("modules.logic.room.view.manufacture.RoomManufactureWrongTipView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureWrongTipView", package.seeall)
 
-slot0 = class("RoomManufactureWrongTipView", BaseView)
+local var_0_0 = class("RoomManufactureWrongTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goroot = gohelper.findChild(slot0.viewGO, "root")
-	slot0._gorightroot = gohelper.findChild(slot0.viewGO, "rightRoot")
-	slot0._goworngPop = gohelper.findChild(slot0.viewGO, "root/#go_wrongPop")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "root/#go_wrongPop/#simage_bg")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "root/#go_wrongPop/#txt_title")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#go_wrongPop/#btn_close")
-	slot0._scrolllist = gohelper.findChildScrollRect(slot0.viewGO, "root/#go_wrongPop/#scroll_list")
-	slot0._gotipcontent = gohelper.findChild(slot0.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content")
-	slot0._gotipItem = gohelper.findChild(slot0.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content/#go_tipItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "root")
+	arg_1_0._gorightroot = gohelper.findChild(arg_1_0.viewGO, "rightRoot")
+	arg_1_0._goworngPop = gohelper.findChild(arg_1_0.viewGO, "root/#go_wrongPop")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_wrongPop/#simage_bg")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/#go_wrongPop/#txt_title")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_wrongPop/#btn_close")
+	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#go_wrongPop/#scroll_list")
+	arg_1_0._gotipcontent = gohelper.findChild(arg_1_0.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content")
+	arg_1_0._gotipItem = gohelper.findChild(arg_1_0.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content/#go_tipItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	if not slot0.viewParam then
+function var_0_0.onUpdateParam(arg_6_0)
+	if not arg_6_0.viewParam then
 		return
 	end
 
-	slot0.isRight = slot0.viewParam.isRight
-	slot0.buildingUid = slot0.viewParam.buildingUid
+	arg_6_0.isRight = arg_6_0.viewParam.isRight
+	arg_6_0.buildingUid = arg_6_0.viewParam.buildingUid
 
-	slot0:setTipItems()
-	ManufactureController.instance:dispatchEvent(ManufactureEvent.OnWrongTipViewChange, slot0.buildingUid)
+	arg_6_0:setTipItems()
+	ManufactureController.instance:dispatchEvent(ManufactureEvent.OnWrongTipViewChange, arg_6_0.buildingUid)
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:onUpdateParam()
 
-	if slot0.isRight then
-		gohelper.addChild(slot0._gorightroot, slot0._goworngPop)
+	if arg_7_0.isRight then
+		gohelper.addChild(arg_7_0._gorightroot, arg_7_0._goworngPop)
 	end
 end
 
-function slot0.setTipItems(slot0)
-	slot0.tipItemList = {}
+function var_0_0.setTipItems(arg_8_0)
+	arg_8_0.tipItemList = {}
 
-	gohelper.CreateObjList(slot0, slot0._onSetTipItem, ManufactureModel.instance:getManufactureWrongTipItemList(slot0.buildingUid), slot0._gotipcontent, slot0._gotipItem, RoomManufactureWrongTipItem)
+	local var_8_0 = ManufactureModel.instance:getManufactureWrongTipItemList(arg_8_0.buildingUid)
+
+	gohelper.CreateObjList(arg_8_0, arg_8_0._onSetTipItem, var_8_0, arg_8_0._gotipcontent, arg_8_0._gotipItem, RoomManufactureWrongTipItem)
 end
 
-function slot0._onSetTipItem(slot0, slot1, slot2, slot3)
-	slot0.tipItemList[slot3] = slot1
+function var_0_0._onSetTipItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	arg_9_0.tipItemList[arg_9_3] = arg_9_1
 
-	slot1:setData(slot0.buildingUid, slot2.manufactureItemId, slot2.wrongSlotIdList, slot0.isRight)
+	arg_9_1:setData(arg_9_0.buildingUid, arg_9_2.manufactureItemId, arg_9_2.wrongSlotIdList, arg_9_0.isRight)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	ManufactureController.instance:dispatchEvent(ManufactureEvent.OnWrongTipViewChange)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

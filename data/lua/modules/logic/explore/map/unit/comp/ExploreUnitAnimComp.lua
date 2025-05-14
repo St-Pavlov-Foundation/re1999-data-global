@@ -1,157 +1,169 @@
-module("modules.logic.explore.map.unit.comp.ExploreUnitAnimComp", package.seeall)
+﻿module("modules.logic.explore.map.unit.comp.ExploreUnitAnimComp", package.seeall)
 
-slot0 = class("ExploreUnitAnimComp", LuaCompBase)
+local var_0_0 = class("ExploreUnitAnimComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.unit = slot1
-	slot0._curAnim = nil
-	slot0._curAnimHash = nil
-	slot0._checkTime = 0
-	slot0._playTime = 0
-	slot0._showEffect = true
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.unit = arg_1_1
+	arg_1_0._curAnim = nil
+	arg_1_0._curAnimHash = nil
+	arg_1_0._checkTime = 0
+	arg_1_0._playTime = 0
+	arg_1_0._showEffect = true
 end
 
-function slot0.setup(slot0, slot1)
-	slot0.animator = slot1:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.setup(arg_2_0, arg_2_1)
+	arg_2_0.animator = arg_2_1:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0.animator then
-		slot0._goName = slot0.animator.runtimeAnimatorController.name
-		slot0.animator.keepAnimatorControllerStateOnDisable = true
+	if arg_2_0.animator then
+		arg_2_0._goName = arg_2_0.animator.runtimeAnimatorController.name
+		arg_2_0.animator.keepAnimatorControllerStateOnDisable = true
 	else
-		slot0._goName = nil
+		arg_2_0._goName = nil
 	end
 
-	if slot0._curAnim then
-		slot0:playAnim(slot0._curAnim)
+	if arg_2_0._curAnim then
+		arg_2_0:playAnim(arg_2_0._curAnim)
 	else
-		slot0:playIdleAnim()
+		arg_2_0:playIdleAnim()
 	end
 end
 
-function slot0.playIdleAnim(slot0)
-	slot0:playAnim(slot0.unit:getIdleAnim(), true)
+function var_0_0.playIdleAnim(arg_3_0)
+	arg_3_0:playAnim(arg_3_0.unit:getIdleAnim(), true)
 end
 
-function slot0.onUpdate(slot0)
-	if not slot0.animator then
+function var_0_0.onUpdate(arg_4_0)
+	if not arg_4_0.animator then
 		return
 	end
 
-	if slot0:isIdleAnim() then
+	if arg_4_0:isIdleAnim() then
 		return
 	end
 
-	if slot0.unit:needUpdateHeroPos() then
-		slot1 = ExploreController.instance:getMap():getHero()
+	if arg_4_0.unit:needUpdateHeroPos() then
+		local var_4_0 = ExploreController.instance:getMap():getHero()
 
-		slot1:setPos(slot1:getPos())
+		var_4_0:setPos(var_4_0:getPos())
 	end
 
-	if slot0._curAnim == ExploreAnimEnum.AnimName.exit and slot0.animator:GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 then
-		slot0:onAnimPlayEnd(ExploreAnimEnum.AnimName.exit, nil)
-	elseif slot0._curAnimHash ~= slot1.shortNameHash then
-		slot0:onAnimPlayEnd(slot0._curAnim, ExploreAnimEnum.AnimHashToName[slot1.shortNameHash])
+	local var_4_1 = arg_4_0.animator:GetCurrentAnimatorStateInfo(0)
+
+	if arg_4_0._curAnim == ExploreAnimEnum.AnimName.exit and var_4_1.normalizedTime >= 1 then
+		arg_4_0:onAnimPlayEnd(ExploreAnimEnum.AnimName.exit, nil)
+	elseif arg_4_0._curAnimHash ~= var_4_1.shortNameHash then
+		arg_4_0:onAnimPlayEnd(arg_4_0._curAnim, ExploreAnimEnum.AnimHashToName[var_4_1.shortNameHash])
 	end
 end
 
-function slot0.onAnimPlayEnd(slot0, slot1, slot2)
-	slot0:_setCurAnimName(slot2)
-	slot0.unit:onAnimEnd(slot1, slot2)
+function var_0_0.onAnimPlayEnd(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0:_setCurAnimName(arg_5_2)
+	arg_5_0.unit:onAnimEnd(arg_5_1, arg_5_2)
 end
 
-function slot0.isIdleAnim(slot0, slot1)
-	slot1 = slot1 or slot0._curAnim
+function var_0_0.isIdleAnim(arg_6_0, arg_6_1)
+	arg_6_1 = arg_6_1 or arg_6_0._curAnim
 
-	return ExploreAnimEnum.LoopAnims[slot1] or slot1 == nil
+	return ExploreAnimEnum.LoopAnims[arg_6_1] or arg_6_1 == nil
 end
 
-function slot0.haveAnim(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.haveAnim(arg_7_0, arg_7_1)
+	if arg_7_1 == nil then
 		return false
 	end
 
-	if not slot0._goName then
+	if not arg_7_0._goName then
 		return false
 	end
 
-	return ExploreConfig.instance:getAnimLength(slot0._goName, slot1)
+	return ExploreConfig.instance:getAnimLength(arg_7_0._goName, arg_7_1)
 end
 
-function slot0.playAnim(slot0, slot1, slot2)
-	if not slot0.animator then
-		slot0:_setCurAnimName(slot1, slot2)
+function var_0_0.playAnim(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0.animator then
+		arg_8_0:_setCurAnimName(arg_8_1, arg_8_2)
 
-		if ExploreAnimEnum.NextAnimName[slot1] and ExploreAnimEnum.NextAnimName[slot1] ~= slot1 then
-			slot0.unit:onAnimEnd(slot1, ExploreAnimEnum.NextAnimName[slot1])
-			slot0:playAnim(ExploreAnimEnum.NextAnimName[slot1], slot2)
-		elseif not slot0:isIdleAnim(slot1) then
-			slot0.unit:onAnimEnd(slot1, nil)
+		if ExploreAnimEnum.NextAnimName[arg_8_1] and ExploreAnimEnum.NextAnimName[arg_8_1] ~= arg_8_1 then
+			arg_8_0.unit:onAnimEnd(arg_8_1, ExploreAnimEnum.NextAnimName[arg_8_1])
+			arg_8_0:playAnim(ExploreAnimEnum.NextAnimName[arg_8_1], arg_8_2)
+		elseif not arg_8_0:isIdleAnim(arg_8_1) then
+			arg_8_0.unit:onAnimEnd(arg_8_1, nil)
 		end
 
 		return
 	end
 
-	slot3 = nil
+	local var_8_0
 
-	if not slot0:haveAnim(slot1) and ExploreAnimEnum.NextAnimName[slot1] and ExploreAnimEnum.NextAnimName[slot1] ~= slot1 then
-		slot3 = slot1
-		slot1 = ExploreAnimEnum.NextAnimName[slot1]
+	if not arg_8_0:haveAnim(arg_8_1) and ExploreAnimEnum.NextAnimName[arg_8_1] and ExploreAnimEnum.NextAnimName[arg_8_1] ~= arg_8_1 then
+		var_8_0 = arg_8_1
+		arg_8_1 = ExploreAnimEnum.NextAnimName[arg_8_1]
 	end
 
-	slot4 = slot0._curAnim
+	local var_8_1 = arg_8_0._curAnim
+	local var_8_2 = arg_8_0._curAnimHash
 
-	slot0:_setCurAnimName(slot1, slot2)
+	arg_8_0:_setCurAnimName(arg_8_1, arg_8_2)
 
-	slot6 = 0
+	local var_8_3 = 0
+	local var_8_4 = arg_8_0.animator:GetCurrentAnimatorStateInfo(0)
 
-	if slot0.animator:GetCurrentAnimatorStateInfo(0).shortNameHash ~= slot0._curAnimHash then
-		slot4 = ExploreAnimEnum.AnimHashToName[slot7.shortNameHash]
+	if var_8_4.shortNameHash ~= var_8_2 then
+		var_8_2 = var_8_4.shortNameHash
+		var_8_1 = ExploreAnimEnum.AnimHashToName[var_8_2]
 	end
 
-	if slot5 == slot0._curAnimHash then
-		slot6 = slot7.normalizedTime
-	elseif slot0.unit:isPairAnim(slot4, slot0._curAnim) then
-		slot9 = ExploreConfig.instance:getAnimLength(slot0._goName, slot0._curAnim)
+	if var_8_2 == arg_8_0._curAnimHash then
+		var_8_3 = var_8_4.normalizedTime
+	elseif arg_8_0.unit:isPairAnim(var_8_1, arg_8_0._curAnim) then
+		local var_8_5 = ExploreConfig.instance:getAnimLength(arg_8_0._goName, var_8_1)
+		local var_8_6 = ExploreConfig.instance:getAnimLength(arg_8_0._goName, arg_8_0._curAnim)
 
-		if ExploreConfig.instance:getAnimLength(slot0._goName, slot4) and slot9 then
-			slot6 = math.max(0, slot8 == slot9 and 1 - slot7.normalizedTime or 1 - (slot8 * slot7.normalizedTime - (slot8 - slot9)) / slot9)
+		if var_8_5 and var_8_6 then
+			if var_8_5 == var_8_6 then
+				var_8_3 = 1 - var_8_4.normalizedTime
+			else
+				var_8_3 = 1 - (var_8_5 * var_8_4.normalizedTime - (var_8_5 - var_8_6)) / var_8_6
+			end
+
+			var_8_3 = math.max(0, var_8_3)
 		end
 	end
 
-	if slot0:haveAnim(slot1) then
-		slot0.animator:Play(slot1, 0, slot6)
-		slot0.animator:Update(0)
+	if arg_8_0:haveAnim(arg_8_1) then
+		arg_8_0.animator:Play(arg_8_1, 0, var_8_3)
+		arg_8_0.animator:Update(0)
 	end
 
-	if slot3 then
-		slot0.unit:onAnimEnd(slot3, slot1)
-	end
-end
-
-function slot0.setShowEffect(slot0, slot1)
-	slot0._showEffect = slot1
-end
-
-function slot0._setCurAnimName(slot0, slot1, slot2)
-	slot0._curAnim = slot1
-	slot0._curAnimHash = ExploreAnimEnum.AnimNameToHash[slot1]
-
-	if slot0.unit.animEffectComp and slot0._showEffect then
-		slot0.unit.animEffectComp:playAnim(slot1, slot2)
+	if var_8_0 then
+		arg_8_0.unit:onAnimEnd(var_8_0, arg_8_1)
 	end
 end
 
-function slot0.clear(slot0)
-	if not slot0:isIdleAnim() then
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitAnimEnd, slot0.unit.id, slot0._curAnim)
+function var_0_0.setShowEffect(arg_9_0, arg_9_1)
+	arg_9_0._showEffect = arg_9_1
+end
+
+function var_0_0._setCurAnimName(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._curAnim = arg_10_1
+	arg_10_0._curAnimHash = ExploreAnimEnum.AnimNameToHash[arg_10_1]
+
+	if arg_10_0.unit.animEffectComp and arg_10_0._showEffect then
+		arg_10_0.unit.animEffectComp:playAnim(arg_10_1, arg_10_2)
+	end
+end
+
+function var_0_0.clear(arg_11_0)
+	if not arg_11_0:isIdleAnim() then
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitAnimEnd, arg_11_0.unit.id, arg_11_0._curAnim)
 	end
 
-	slot0._curAnim = nil
-	slot0.animator = nil
+	arg_11_0._curAnim = nil
+	arg_11_0.animator = nil
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clear()
+function var_0_0.onDestroy(arg_12_0)
+	arg_12_0:clear()
 end
 
-return slot0
+return var_0_0

@@ -1,23 +1,23 @@
-module("modules.logic.endofdream.model.EndOfDreamModel", package.seeall)
+﻿module("modules.logic.endofdream.model.EndOfDreamModel", package.seeall)
 
-slot0 = class("EndOfDreamModel", BaseModel)
+local var_0_0 = class("EndOfDreamModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear()
 end
 
-function slot0.isLevelUnlocked(slot0, slot1)
+function var_0_0.isLevelUnlocked(arg_4_0, arg_4_1)
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,118 +1,130 @@
-module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaStoryViewItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaStoryViewItem", package.seeall)
 
-slot0 = class("LanShouPaStoryViewItem", ListScrollCellExtend)
+local var_0_0 = class("LanShouPaStoryViewItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._txtNum = gohelper.findChildText(slot0.viewGO, "#txt_Num")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "#txt_Num/#txt_TitleEn")
-	slot0._goLocked = gohelper.findChild(slot0.viewGO, "#go_Locked")
-	slot0._goUnLocked = gohelper.findChild(slot0.viewGO, "#go_UnLocked")
-	slot0._simageModIcon = gohelper.findChildSingleImage(slot0.viewGO, "#go_UnLocked/image_UnLockedMod/#simage_ModIcon")
-	slot0._txtModName = gohelper.findChildText(slot0.viewGO, "#go_UnLocked/#txt_ModName")
-	slot0._btnReview = gohelper.findChildButtonWithAudio(slot0.viewGO, "Review/#btn_Review")
-	slot0._goTxtReview = gohelper.findChild(slot0.viewGO, "Review/#btn_Review/#go_TxtReview")
-	slot0._goTxtLocked = gohelper.findChild(slot0.viewGO, "Review/#btn_Review/#go_TxtLocked")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "#txt_Num")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#txt_Num/#txt_TitleEn")
+	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
+	arg_1_0._goUnLocked = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked")
+	arg_1_0._simageModIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_UnLocked/image_UnLockedMod/#simage_ModIcon")
+	arg_1_0._txtModName = gohelper.findChildText(arg_1_0.viewGO, "#go_UnLocked/#txt_ModName")
+	arg_1_0._btnReview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Review/#btn_Review")
+	arg_1_0._goTxtReview = gohelper.findChild(arg_1_0.viewGO, "Review/#btn_Review/#go_TxtReview")
+	arg_1_0._goTxtLocked = gohelper.findChild(arg_1_0.viewGO, "Review/#btn_Review/#go_TxtLocked")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnReview:AddClickListener(slot0._btnReviewOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnReview:AddClickListener(arg_2_0._btnReviewOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnReview:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnReview:RemoveClickListener()
 end
 
-function slot0._btnReviewOnClick(slot0)
-	if not slot0._storyMO then
+function var_0_0._btnReviewOnClick(arg_4_0)
+	if not arg_4_0._storyMO then
 		return
 	end
 
-	if slot0._storyMO:isLocked() then
+	if arg_4_0._storyMO:isLocked() then
 		return
 	end
 
-	StoryController.instance:playStory(slot0._storyMO.storyId, {
-		hideStartAndEndDark = true
-	}, slot0.afterPlayStory, slot0)
+	local var_4_0 = {}
 
-	slot0._needBg = slot0._storyMO.config and slot0._storyMO.config.needbg == 1 or false
+	var_4_0.hideStartAndEndDark = true
 
-	if slot0._needBg then
-		ChessController.instance:dispatchEvent(ChessGameEvent.StoryReviewSceneActvie, slot0._needBg, slot0._storyMO.config.bgPath)
+	StoryController.instance:playStory(arg_4_0._storyMO.storyId, var_4_0, arg_4_0.afterPlayStory, arg_4_0)
+
+	local var_4_1 = arg_4_0._storyMO.config and arg_4_0._storyMO.config.needbg == 1 or false
+
+	arg_4_0._needBg = var_4_1
+
+	if arg_4_0._needBg then
+		local var_4_2 = arg_4_0._storyMO.config.bgPath
+
+		ChessController.instance:dispatchEvent(ChessGameEvent.StoryReviewSceneActvie, arg_4_0._needBg, var_4_2)
 	end
 
-	LanShouPaController.instance:dispatchEvent(LanShouPaEvent.MapSceneActvie, slot2)
+	LanShouPaController.instance:dispatchEvent(LanShouPaEvent.MapSceneActvie, var_4_1)
 end
 
-function slot0.afterPlayStory(slot0)
-	if slot0._needBg then
+function var_0_0.afterPlayStory(arg_5_0)
+	if arg_5_0._needBg then
 		ChessController.instance:dispatchEvent(ChessGameEvent.StoryReviewSceneActvie, false)
 	end
 
 	ChessController.instance:dispatchEvent(ChessGameEvent.MapSceneActvie, true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._canvasGroup = gohelper.findChild(slot0.viewGO, "Review"):GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._canvasGroup = gohelper.findChild(arg_6_0.viewGO, "Review"):GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_7_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_8_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._storyMO = slot1
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._storyMO = arg_9_1
 
-	slot0:_refreshUI()
+	arg_9_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageModIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simageModIcon:UnLoadImage()
 end
 
-function slot0._refreshUI(slot0)
-	if not slot0._storyMO then
+function var_0_0._refreshUI(arg_12_0)
+	if not arg_12_0._storyMO then
 		return
 	end
 
-	slot0._txtNum.text = slot0:_getNumStr(slot0._storyMO.index)
-	slot0._txtModName.text = slot0._storyMO.config.name
-	slot0._txtTitleEn.text = slot0._storyMO:isLocked() and "UNKNOWN" or slot0._storyMO.config.nameen
+	local var_12_0 = arg_12_0._storyMO:isLocked()
 
-	if not slot1 then
-		slot0._simageModIcon:LoadImage(string.format("%s.png", slot0._storyMO.config.icon))
+	arg_12_0._txtNum.text = arg_12_0:_getNumStr(arg_12_0._storyMO.index)
+	arg_12_0._txtModName.text = arg_12_0._storyMO.config.name
+	arg_12_0._txtTitleEn.text = var_12_0 and "UNKNOWN" or arg_12_0._storyMO.config.nameen
+
+	if not var_12_0 then
+		arg_12_0._simageModIcon:LoadImage(string.format("%s.png", arg_12_0._storyMO.config.icon))
 	end
 
-	gohelper.setActive(slot0._goLocked, slot1)
-	gohelper.setActive(slot0._goUnLocked, not slot1)
+	gohelper.setActive(arg_12_0._goLocked, var_12_0)
+	gohelper.setActive(arg_12_0._goUnLocked, not var_12_0)
 
-	if slot0._lastIsLocked ~= slot1 then
-		slot0._lastIsLocked = slot1
-		slot0._canvasGroup.alpha = slot1 and 0.5 or 1
-		slot2 = slot1 and "#3B3E47" or "#A7AAAF"
+	if arg_12_0._lastIsLocked ~= var_12_0 then
+		arg_12_0._lastIsLocked = var_12_0
+		arg_12_0._canvasGroup.alpha = var_12_0 and 0.5 or 1
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtNum, slot2)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtTitleEn, slot2)
+		local var_12_1 = var_12_0 and "#3B3E47" or "#A7AAAF"
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._txtNum, var_12_1)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_12_0._txtTitleEn, var_12_1)
 	end
 end
 
-function slot0._getNumStr(slot0, slot1)
-	if slot1 < 10 then
-		return "0" .. slot1
+function var_0_0._getNumStr(arg_13_0, arg_13_1)
+	if arg_13_1 < 10 then
+		return "0" .. arg_13_1
 	end
 
-	return tostring(slot1)
+	return tostring(arg_13_1)
 end
 
-slot0.prefabPath = "ui/viewres/versionactivity_2_1/v2a1_tuesday/v2a1_tuesday_storyviewitem.prefab"
+var_0_0.prefabPath = "ui/viewres/versionactivity_2_1/v2a1_tuesday/v2a1_tuesday_storyviewitem.prefab"
 
-return slot0
+return var_0_0

@@ -1,136 +1,150 @@
-module("modules.logic.notice.view.NoticeImage", package.seeall)
+﻿module("modules.logic.notice.view.NoticeImage", package.seeall)
 
-slot0 = class("NoticeImage", LuaCompBase)
+local var_0_0 = class("NoticeImage", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._img = gohelper.onceAddComponent(slot0._go, gohelper.Type_Image)
-	slot0._assetItem = nil
-	slot0._cacheSprite = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._img = gohelper.onceAddComponent(arg_1_0._go, gohelper.Type_Image)
+	arg_1_0._assetItem = nil
+	arg_1_0._cacheSprite = {}
 
-	gohelper.setActive(slot0._go, false)
+	gohelper.setActive(arg_1_0._go, false)
 end
 
-function slot0.load(slot0, slot1)
-	gohelper.setActive(slot0._go, true)
+function var_0_0.load(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getFilenameFormUrl(arg_2_1)
 
-	if NoticeModel.instance:isLoaded(slot0:getFilenameFormUrl(slot1)) then
-		slot0._img.color = Color.white
-		slot0._img.sprite = NoticeModel.instance:getSpriteCache(slot2)
+	gohelper.setActive(arg_2_0._go, true)
 
-		slot0:log("【load func】 load cache success , filename is : " .. slot2)
+	if NoticeModel.instance:isLoaded(var_2_0) then
+		arg_2_0._img.color = Color.white
+		arg_2_0._img.sprite = NoticeModel.instance:getSpriteCache(var_2_0)
+
+		arg_2_0:log("【load func】 load cache success , filename is : " .. var_2_0)
 
 		return true
 	end
 
-	slot0:log("【load func】 load url is : " .. slot1)
+	arg_2_0:log("【load func】 load url is : " .. arg_2_1)
 
-	slot0._img.sprite = nil
-	slot0._img.color = Color.clear
+	arg_2_0._img.sprite = nil
+	arg_2_0._img.color = Color.clear
 
-	if NoticeModel.instance:filenameInLoadingSprite(slot2) then
-		slot0:log("【load func】 " .. slot2 .. "  loading return false,")
+	if NoticeModel.instance:filenameInLoadingSprite(var_2_0) then
+		arg_2_0:log("【load func】 " .. var_2_0 .. "  loading return false,")
 
 		return false
 	end
 
-	NoticeModel.instance:addLoadingSprite(slot2)
-	NoticeModel.instance:addNeedLoadImageUrl(slot1)
-	NoticeModel.instance:addLoadTask(slot0._load, slot0)
-	TaskDispatcher.runDelay(slot0._load, slot0, 0.01)
+	NoticeModel.instance:addLoadingSprite(var_2_0)
+	NoticeModel.instance:addNeedLoadImageUrl(arg_2_1)
+	NoticeModel.instance:addLoadTask(arg_2_0._load, arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._load, arg_2_0, 0.01)
 
 	return false
 end
 
-function slot0._load(slot0)
-	slot1 = NoticeModel.instance:popNeedLoadImageUrl()
+function var_0_0._load(arg_3_0)
+	local var_3_0 = NoticeModel.instance:popNeedLoadImageUrl()
 
-	while slot1 do
-		if SLFramework.FileHelper.IsFileExists(slot0:getNoticeImgFilePath("notice/" .. slot0:getFilenameFormUrl(slot1))) then
-			loadPersistentRes(slot3, SLFramework.AssetType.TEXTURE, slot0._onLoadCallback, slot0)
+	while var_3_0 do
+		local var_3_1 = arg_3_0:getFilenameFormUrl(var_3_0)
+		local var_3_2 = "notice/" .. var_3_1
+		local var_3_3 = arg_3_0:getNoticeImgFilePath(var_3_2)
+
+		if SLFramework.FileHelper.IsFileExists(var_3_3) then
+			loadPersistentRes(var_3_2, SLFramework.AssetType.TEXTURE, arg_3_0._onLoadCallback, arg_3_0)
 		else
-			ZProj.SLPictureDownloader.Instance:Download(slot1, slot0._downloadCallback, slot0)
+			ZProj.SLPictureDownloader.Instance:Download(var_3_0, arg_3_0._downloadCallback, arg_3_0)
 		end
 
-		slot1 = NoticeModel.instance:popNeedLoadImageUrl()
+		var_3_0 = NoticeModel.instance:popNeedLoadImageUrl()
 	end
 
-	NoticeModel.instance:removeLoadTask(slot0._load, slot0)
+	NoticeModel.instance:removeLoadTask(arg_3_0._load, arg_3_0)
 end
 
-function slot0.addLoadCallback(slot0, slot1, slot2)
-	slot0._callback = slot1
-	slot0._callbackObj = slot2
+function var_0_0.addLoadCallback(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._callback = arg_4_1
+	arg_4_0._callbackObj = arg_4_2
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	NoticeModel.instance:setLoadedSprite(slot0:getFilenameFormUrl(slot1.ResPath))
+function var_0_0._onLoadCallback(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getFilenameFormUrl(arg_5_1.ResPath)
 
-	if slot1.IsLoadSuccess then
-		slot1:Retain()
+	NoticeModel.instance:setLoadedSprite(var_5_0)
 
-		slot3 = slot1:GetResource()
+	if arg_5_1.IsLoadSuccess then
+		arg_5_1:Retain()
 
-		NoticeModel.instance:setSpriteCache(slot2, UnityEngine.Sprite.Create(slot3, UnityEngine.Rect.New(0, 0, slot3.width, slot3.height), Vector2.zero, 100, 0))
-		NoticeModel.instance:setSpriteCacheDefaultSize(slot2, slot3.width, slot3.height)
-		NoticeModel.instance:addAssetItem(slot1)
-		slot0:_doCallback(true, slot2)
+		local var_5_1 = arg_5_1:GetResource()
+
+		NoticeModel.instance:setSpriteCache(var_5_0, UnityEngine.Sprite.Create(var_5_1, UnityEngine.Rect.New(0, 0, var_5_1.width, var_5_1.height), Vector2.zero, 100, 0))
+		NoticeModel.instance:setSpriteCacheDefaultSize(var_5_0, var_5_1.width, var_5_1.height)
+		NoticeModel.instance:addAssetItem(arg_5_1)
+		arg_5_0:_doCallback(true, var_5_0)
 	else
-		logError("load fail: " .. slot1.ResPath)
-		slot0:_doCallback(false, slot2)
+		logError("load fail: " .. arg_5_1.ResPath)
+		arg_5_0:_doCallback(false, var_5_0)
 	end
 end
 
-function slot0._downloadCallback(slot0, slot1, slot2, slot3, slot4)
-	NoticeModel.instance:setLoadedSprite(slot0:getFilenameFormUrl(slot4))
+function var_0_0._downloadCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	local var_6_0 = arg_6_0:getFilenameFormUrl(arg_6_4)
 
-	if slot1 then
-		SLFramework.FileHelper.WriteAllBytesToPath(slot0:getNoticeImgFilePath("notice/" .. slot5), slot3)
-		NoticeModel.instance:setSpriteCache(slot5, UnityEngine.Sprite.Create(slot2, UnityEngine.Rect.New(0, 0, slot2.width, slot2.height), Vector2.zero, 100, 0))
-		NoticeModel.instance:setSpriteCacheDefaultSize(slot5, slot2.width, slot2.height)
-		slot0:_doCallback(true, slot5)
+	NoticeModel.instance:setLoadedSprite(var_6_0)
+
+	if arg_6_1 then
+		local var_6_1 = arg_6_0:getNoticeImgFilePath("notice/" .. var_6_0)
+
+		SLFramework.FileHelper.WriteAllBytesToPath(var_6_1, arg_6_3)
+		NoticeModel.instance:setSpriteCache(var_6_0, UnityEngine.Sprite.Create(arg_6_2, UnityEngine.Rect.New(0, 0, arg_6_2.width, arg_6_2.height), Vector2.zero, 100, 0))
+		NoticeModel.instance:setSpriteCacheDefaultSize(var_6_0, arg_6_2.width, arg_6_2.height)
+		arg_6_0:_doCallback(true, var_6_0)
 	else
-		logError("download fail: " .. slot4)
-		slot0:_doCallback(false, slot5)
+		logError("download fail: " .. arg_6_4)
+		arg_6_0:_doCallback(false, var_6_0)
 	end
 end
 
-function slot0._doCallback(slot0, slot1, slot2)
-	if slot1 then
-		slot0:log("【_doCallback func】 load success, self.filename is " .. slot2)
+function var_0_0._doCallback(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 then
+		arg_7_0:log("【_doCallback func】 load success, self.filename is " .. arg_7_2)
 	else
-		slot0:log("【_doCallback func】 load fail, self.filename is " .. slot2)
+		arg_7_0:log("【_doCallback func】 load fail, self.filename is " .. arg_7_2)
 	end
 
-	NoticeModel.instance:removeLoadingSpriteCount(slot2)
+	NoticeModel.instance:removeLoadingSpriteCount(arg_7_2)
 
 	if NoticeModel.instance:getLoadingSpriteCount() <= 0 then
 		NoticeContentListModel.instance:onModelUpdate()
 	end
 
-	slot4 = slot0._callbackObj
-	slot0._callback = nil
-	slot0._callbackObj = nil
+	local var_7_0 = arg_7_0._callback
+	local var_7_1 = arg_7_0._callbackObj
 
-	if slot0._callback then
-		if slot4 then
-			slot3(slot4, slot1)
+	arg_7_0._callback = nil
+	arg_7_0._callbackObj = nil
+
+	if var_7_0 then
+		if var_7_1 then
+			var_7_0(var_7_1, arg_7_1)
 		else
-			slot3(slot1)
+			var_7_0(arg_7_1)
 		end
 	end
 end
 
-function slot0.getNoticeImgFilePath(slot0, slot1)
-	return SLFramework.FrameworkSettings.PersistentResRootDir .. "/" .. slot1
+function var_0_0.getNoticeImgFilePath(arg_8_0, arg_8_1)
+	return SLFramework.FrameworkSettings.PersistentResRootDir .. "/" .. arg_8_1
 end
 
-function slot0.getFilenameFormUrl(slot0, slot1)
-	return SLFramework.FileHelper.GetFileName(string.gsub(slot1, "?.*", ""), true)
+function var_0_0.getFilenameFormUrl(arg_9_0, arg_9_1)
+	return SLFramework.FileHelper.GetFileName(string.gsub(arg_9_1, "?.*", ""), true)
 end
 
-function slot0.log(slot0, slot1)
-	logWarn(string.format("【NoticeImageLog】msg : %s", slot1))
+function var_0_0.log(arg_10_0, arg_10_1)
+	logWarn(string.format("【NoticeImageLog】msg : %s", arg_10_1))
 end
 
-return slot0
+return var_0_0

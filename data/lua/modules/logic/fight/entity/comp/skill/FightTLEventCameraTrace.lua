@@ -1,7 +1,7 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventCameraTrace", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraTrace", package.seeall)
 
-slot0 = class("FightTLEventCameraTrace")
-slot1 = {
+local var_0_0 = class("FightTLEventCameraTrace")
+local var_0_1 = {
 	Attacker = 1,
 	Defender = 2,
 	Reset = 0,
@@ -9,55 +9,69 @@ slot1 = {
 	PosAbs = 3
 }
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot4 = GameSceneMgr.instance:getCurScene().camera
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = GameSceneMgr.instance:getCurScene().camera
 
-	slot4:setEaseTime(slot2)
-	slot4:setEaseType(EaseType.Str2Type(slot3[5]))
+	var_1_0:setEaseTime(arg_1_2)
+	var_1_0:setEaseType(EaseType.Str2Type(arg_1_3[5]))
 
-	if (tonumber(slot3[1]) or 0) == uv0.Reset then
-		slot4:resetParam()
+	local var_1_1 = tonumber(arg_1_3[1]) or 0
+
+	if var_1_1 == var_0_1.Reset then
+		var_1_0:resetParam()
 	else
-		if (tonumber(slot3[2]) or 0) > 0 then
-			slot7 = slot4:getCurCO()
+		local var_1_2 = tonumber(arg_1_3[2]) or 0
 
-			if slot5 == uv0.PosAbsDistRelateAtk then
-				slot9, slot10, slot11 = transformhelper.getPos(FightHelper.getEntity(slot1.fromId).go.transform)
+		if var_1_2 > 0 then
+			local var_1_3 = var_1_0:getCurCO()
 
-				slot4:setDistance(slot6 - slot11)
+			if var_1_1 == var_0_1.PosAbsDistRelateAtk then
+				local var_1_4 = FightHelper.getEntity(arg_1_1.fromId)
+				local var_1_5, var_1_6, var_1_7 = transformhelper.getPos(var_1_4.go.transform)
+
+				var_1_0:setDistance(var_1_2 - var_1_7)
 			else
-				slot4:setDistance(slot6)
+				var_1_0:setDistance(var_1_2)
 			end
 		else
-			slot4:resetDistance(slot6)
+			var_1_0:resetDistance(var_1_2)
 		end
 
-		if slot3[3] == "1" then
-			slot10 = tonumber(slot8[2]) or 0
-			slot11 = tonumber(slot8[3]) or 0
-			slot12 = 0
-			slot13 = 0
-			slot14 = 0
+		if arg_1_3[3] == "1" then
+			local var_1_8 = string.split(arg_1_3[4], ",")
+			local var_1_9 = tonumber(var_1_8[1]) or 0
+			local var_1_10 = tonumber(var_1_8[2]) or 0
+			local var_1_11 = tonumber(var_1_8[3]) or 0
+			local var_1_12 = 0
+			local var_1_13 = 0
+			local var_1_14 = 0
 
-			if slot5 == uv0.Attacker or slot5 == uv0.Defender then
-				if FightHelper.getEntity(slot5 == uv0.Attacker and slot1.fromId or slot1.toId) then
-					slot12, slot13, slot14 = FightHelper.getEntityWorldCenterPos(slot16)
+			if var_1_1 == var_0_1.Attacker or var_1_1 == var_0_1.Defender then
+				local var_1_15 = var_1_1 == var_0_1.Attacker and arg_1_1.fromId or arg_1_1.toId
+				local var_1_16 = FightHelper.getEntity(var_1_15)
 
-					if not slot16:isMySide() then
-						slot9 = -(tonumber(string.split(slot3[4], ",")[1]) or 0)
+				if var_1_16 then
+					var_1_12, var_1_13, var_1_14 = FightHelper.getEntityWorldCenterPos(var_1_16)
+
+					if not var_1_16:isMySide() then
+						var_1_9 = -var_1_9
 					end
 				end
-			elseif (slot5 == uv0.PosAbs or slot5 == uv0.PosAbsDistRelateAtk) and FightHelper.getEntity(slot1.fromId) and not slot15:isMySide() then
-				slot9 = -slot9
+			elseif var_1_1 == var_0_1.PosAbs or var_1_1 == var_0_1.PosAbsDistRelateAtk then
+				local var_1_17 = FightHelper.getEntity(arg_1_1.fromId)
+
+				if var_1_17 and not var_1_17:isMySide() then
+					var_1_9 = -var_1_9
+				end
 			end
 
-			slot4:setFocus(slot12 + slot9, slot13 + slot10, slot14 + slot11)
+			var_1_0:setFocus(var_1_12 + var_1_9, var_1_13 + var_1_10, var_1_14 + var_1_11)
 		else
-			slot8 = slot4:getCurCO()
+			local var_1_18 = var_1_0:getCurCO()
 
-			slot4:setFocus(0, slot8.yOffset, slot8.focusZ)
+			var_1_0:setFocus(0, var_1_18.yOffset, var_1_18.focusZ)
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,163 +1,208 @@
-module("modules.logic.scene.fight.preloadwork.FightRoundPreloadMonsterWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightRoundPreloadMonsterWork", package.seeall)
 
-slot0 = class("FightRoundPreloadMonsterWork", BaseWork)
+local var_0_0 = class("FightRoundPreloadMonsterWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if FightModel.instance.hasNextWave then
-		slot0:_onFightWavePush()
+		arg_1_0:_onFightWavePush()
 	else
-		FightController.instance:registerCallback(FightEvent.PushFightWave, slot0._onFightWavePush, slot0)
+		FightController.instance:registerCallback(FightEvent.PushFightWave, arg_1_0._onFightWavePush, arg_1_0)
 	end
 end
 
-function slot0._onFightWavePush(slot0)
-	FightController.instance:unregisterCallback(FightEvent.PushFightWave, slot0._onFightWavePush, slot0)
+function var_0_0._onFightWavePush(arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.PushFightWave, arg_2_0._onFightWavePush, arg_2_0)
 
-	slot0._spineCountDict = nil
-	slot2, slot0._spineCountDict = slot0:_getSpineUrlList()
-	slot0._loader = SequenceAbLoader.New()
+	local var_2_0
 
-	slot0._loader:setPathList(slot2)
-	slot0._loader:setConcurrentCount(1)
-	slot0._loader:setInterval(0.1)
-	slot0._loader:setLoadFailCallback(slot0._onPreloadOneFail)
-	slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	arg_2_0._spineCountDict = nil
+
+	local var_2_1
+
+	var_2_1, arg_2_0._spineCountDict = arg_2_0:_getSpineUrlList()
+	arg_2_0._loader = SequenceAbLoader.New()
+
+	arg_2_0._loader:setPathList(var_2_1)
+	arg_2_0._loader:setConcurrentCount(1)
+	arg_2_0._loader:setInterval(0.1)
+	arg_2_0._loader:setLoadFailCallback(arg_2_0._onPreloadOneFail)
+	arg_2_0._loader:startLoad(arg_2_0._onPreloadFinish, arg_2_0)
 end
 
-function slot0._onPreloadFinish(slot0)
-	if not slot0._loader then
+function var_0_0._onPreloadFinish(arg_3_0)
+	if not arg_3_0._loader then
 		return
 	end
 
-	slot0._needCreateList = {}
-	slot0._hasCreateList = {}
+	local var_3_0 = arg_3_0._loader:getAssetItemDict()
 
-	for slot5, slot6 in pairs(slot0._loader:getAssetItemDict()) do
-		FightSpinePool.setAssetItem(slot5, slot6)
+	arg_3_0._needCreateList = {}
+	arg_3_0._hasCreateList = {}
 
-		for slot11 = 1, slot0._spineCountDict[slot5] do
-			table.insert(slot0._needCreateList, slot5)
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		FightSpinePool.setAssetItem(iter_3_0, iter_3_1)
+
+		local var_3_1 = arg_3_0._spineCountDict[iter_3_0]
+
+		for iter_3_2 = 1, var_3_1 do
+			table.insert(arg_3_0._needCreateList, iter_3_0)
 		end
 
-		slot0.context.callback(slot0.context.callbackObj, slot6)
+		arg_3_0.context.callback(arg_3_0.context.callbackObj, iter_3_1)
 	end
 
-	if #slot0._needCreateList > 0 then
-		TaskDispatcher.runRepeat(slot0._createSpineGO, slot0, 0.1, slot2)
+	local var_3_2 = #arg_3_0._needCreateList
+
+	if var_3_2 > 0 then
+		TaskDispatcher.runRepeat(arg_3_0._createSpineGO, arg_3_0, 0.1, var_3_2)
 	else
-		slot0:onDone(true)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._createSpineGO(slot0)
-	slot1 = table.remove(slot0._needCreateList)
-	slot2 = FightSpinePool.getSpine(slot1)
+function var_0_0._createSpineGO(arg_4_0)
+	local var_4_0 = table.remove(arg_4_0._needCreateList)
+	local var_4_1 = FightSpinePool.getSpine(var_4_0)
 
-	gohelper.setActive(slot2, false)
-	gohelper.addChild(GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer(), slot2)
-	table.insert(slot0._hasCreateList, {
-		slot1,
-		slot2
+	gohelper.setActive(var_4_1, false)
+
+	local var_4_2 = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
+
+	gohelper.addChild(var_4_2, var_4_1)
+	table.insert(arg_4_0._hasCreateList, {
+		var_4_0,
+		var_4_1
 	})
 
-	if #slot0._needCreateList == 0 then
-		TaskDispatcher.cancelTask(slot0._createSpineGO, slot0)
-		slot0:_returnSpineToPool()
-		slot0:onDone(true)
+	if #arg_4_0._needCreateList == 0 then
+		TaskDispatcher.cancelTask(arg_4_0._createSpineGO, arg_4_0)
+		arg_4_0:_returnSpineToPool()
+		arg_4_0:onDone(true)
 	end
 end
 
-function slot0._returnSpineToPool(slot0)
-	if slot0._hasCreateList then
-		for slot4, slot5 in ipairs(slot0._hasCreateList) do
-			slot5[1] = nil
-			slot5[2] = nil
+function var_0_0._returnSpineToPool(arg_5_0)
+	if arg_5_0._hasCreateList then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._hasCreateList) do
+			local var_5_0 = iter_5_1[1]
+			local var_5_1 = iter_5_1[2]
 
-			FightSpinePool.putSpine(slot5[1], slot5[2])
+			iter_5_1[1] = nil
+			iter_5_1[2] = nil
+
+			FightSpinePool.putSpine(var_5_0, var_5_1)
 		end
 	end
 
-	slot0._needCreateList = nil
-	slot0._hasCreateList = nil
+	arg_5_0._needCreateList = nil
+	arg_5_0._hasCreateList = nil
 end
 
-function slot0._onPreloadOneFail(slot0, slot1, slot2)
-	logError("战斗Spine加载失败：" .. slot2.ResPath)
+function var_0_0._onPreloadOneFail(arg_6_0, arg_6_1, arg_6_2)
+	logError("战斗Spine加载失败：" .. arg_6_2.ResPath)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.PushFightWave, slot0._onFightWavePush, slot0)
-	slot0:_returnSpineToPool()
-	TaskDispatcher.cancelTask(slot0._createSpineGO, slot0)
+function var_0_0.clearWork(arg_7_0)
+	FightController.instance:unregisterCallback(FightEvent.PushFightWave, arg_7_0._onFightWavePush, arg_7_0)
+	arg_7_0:_returnSpineToPool()
+	TaskDispatcher.cancelTask(arg_7_0._createSpineGO, arg_7_0)
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_7_0._loader then
+		arg_7_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_7_0._loader = nil
 	end
 end
 
-function slot0._getSpineUrlList(slot0)
-	slot3 = FightModel.instance:getFightParam() and slot2.episodeId
-	slot5 = {}
-	slot6 = {}
+function var_0_0._getSpineUrlList(arg_8_0)
+	local var_8_0 = FightModel.instance:getCurWaveId() + 1
+	local var_8_1 = FightModel.instance:getFightParam()
+	local var_8_2 = var_8_1 and var_8_1.episodeId
+	local var_8_3 = var_8_1 and var_8_1.battleId or var_8_2 and DungeonConfig.instance:getEpisodeBattleId(var_8_2)
+	local var_8_4 = {}
+	local var_8_5 = {}
+	local var_8_6 = lua_battle.configDict[var_8_3]
 
-	if lua_battle.configDict[slot2 and slot2.battleId or slot3 and DungeonConfig.instance:getEpisodeBattleId(slot3)] then
-		slot9 = string.splitToNumber(slot7.monsterGroupIds, "#") and slot8[FightModel.instance:getCurWaveId() + 1]
-		slot10 = slot9 and lua_monster_group.configDict[slot9]
+	if var_8_6 then
+		local var_8_7 = string.splitToNumber(var_8_6.monsterGroupIds, "#")
+		local var_8_8 = var_8_7 and var_8_7[var_8_0]
+		local var_8_9 = var_8_8 and lua_monster_group.configDict[var_8_8]
+		local var_8_10 = var_8_9 and string.splitToNumber(var_8_9.monster, "#")
 
-		if slot10 and string.splitToNumber(slot10.monster, "#") then
-			for slot15, slot16 in ipairs(slot11) do
-				slot0:_calcMonster(slot16, slot6)
+		if var_8_10 then
+			for iter_8_0, iter_8_1 in ipairs(var_8_10) do
+				arg_8_0:_calcMonster(iter_8_1, var_8_5)
 			end
 		end
 	end
 
-	for slot11, slot12 in ipairs(slot6) do
-		if FightConfig.instance:getSkinCO(slot12) and not string.nilorempty(slot13.spine) then
-			slot5[slot14] = slot5[ResUrl.getSpineFightPrefabBySkin(slot13)] and slot5[slot14] + 1 or 1
+	for iter_8_2, iter_8_3 in ipairs(var_8_5) do
+		local var_8_11 = FightConfig.instance:getSkinCO(iter_8_3)
+
+		if var_8_11 and not string.nilorempty(var_8_11.spine) then
+			local var_8_12 = ResUrl.getSpineFightPrefabBySkin(var_8_11)
+
+			var_8_4[var_8_12] = var_8_4[var_8_12] and var_8_4[var_8_12] + 1 or 1
 		end
 	end
 
-	slot8 = {}
+	local var_8_13 = {}
 
-	for slot12, slot13 in pairs(slot5) do
-		table.insert(slot8, slot12)
+	for iter_8_4, iter_8_5 in pairs(var_8_4) do
+		table.insert(var_8_13, iter_8_4)
 	end
 
-	return slot8, slot5
+	return var_8_13, var_8_4
 end
 
-function slot0._calcMonster(slot0, slot1, slot2)
-	table.insert(slot2, lua_monster.configDict[slot1] and slot3.skinId or 0)
+function var_0_0._calcMonster(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = lua_monster.configDict[arg_9_1]
 
-	if slot0:_calcRefMonsterIds(slot1) then
-		for slot8, slot9 in ipairs(slot4) do
-			if lua_monster.configDict[slot9] then
-				table.insert(slot2, slot10 and slot10.skinId or 0)
+	table.insert(arg_9_2, var_9_0 and var_9_0.skinId or 0)
+
+	local var_9_1 = arg_9_0:_calcRefMonsterIds(arg_9_1)
+
+	if var_9_1 then
+		for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+			local var_9_2 = lua_monster.configDict[iter_9_1]
+
+			if var_9_2 then
+				table.insert(arg_9_2, var_9_2 and var_9_2.skinId or 0)
 			else
-				logError("怪物" .. slot1 .. "，引用的怪物" .. slot9 .. "不存在")
+				logError("怪物" .. arg_9_1 .. "，引用的怪物" .. iter_9_1 .. "不存在")
 			end
 		end
 	end
 end
 
-function slot0._calcRefMonsterIds(slot0, slot1)
-	if not lua_monster.configDict[slot1] then
+function var_0_0._calcRefMonsterIds(arg_10_0, arg_10_1)
+	local var_10_0 = lua_monster.configDict[arg_10_1]
+
+	if not var_10_0 then
 		return
 	end
 
-	slot3 = nil
+	local var_10_1
+	local var_10_2 = FightHelper._buildMonsterSkills(var_10_0)
 
-	for slot8, slot9 in ipairs(FightHelper._buildMonsterSkills(slot2)) do
-		for slot14 = 1, FightEnum.MaxBehavior do
-			if string.splitToNumber(lua_skill.configDict[slot9]["behavior" .. slot14], "#")[1] and lua_skill_behavior.configDict[slot17] and slot18.type == "MonsterChange" then
-				table.insert(slot3 or {}, slot16[2])
+	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
+		local var_10_3 = lua_skill.configDict[iter_10_1]
+
+		for iter_10_2 = 1, FightEnum.MaxBehavior do
+			local var_10_4 = var_10_3["behavior" .. iter_10_2]
+			local var_10_5 = string.splitToNumber(var_10_4, "#")
+			local var_10_6 = var_10_5[1]
+			local var_10_7 = var_10_6 and lua_skill_behavior.configDict[var_10_6]
+
+			if var_10_7 and var_10_7.type == "MonsterChange" then
+				var_10_1 = var_10_1 or {}
+
+				table.insert(var_10_1, var_10_5[2])
 			end
 		end
 	end
 
-	return slot3
+	return var_10_1
 end
 
-return slot0
+return var_0_0

@@ -1,42 +1,47 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessMallLevelUpView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessMallLevelUpView", package.seeall)
 
-slot0 = class("AutoChessMallLevelUpView", BaseView)
+local var_0_0 = class("AutoChessMallLevelUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._imageLevel1 = gohelper.findChildImage(slot0.viewGO, "icon/#image_Level1")
-	slot0._txtMallLv1 = gohelper.findChildText(slot0.viewGO, "icon/#image_Level1/#txt_MallLv1")
-	slot0._imageLevel2 = gohelper.findChildImage(slot0.viewGO, "icon/#image_Level2")
-	slot0._txtMallLv2 = gohelper.findChildText(slot0.viewGO, "icon/#image_Level2/#txt_MallLv2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageLevel1 = gohelper.findChildImage(arg_1_0.viewGO, "icon/#image_Level1")
+	arg_1_0._txtMallLv1 = gohelper.findChildText(arg_1_0.viewGO, "icon/#image_Level1/#txt_MallLv1")
+	arg_1_0._imageLevel2 = gohelper.findChildImage(arg_1_0.viewGO, "icon/#image_Level2")
+	arg_1_0._txtMallLv2 = gohelper.findChildText(arg_1_0.viewGO, "icon/#image_Level2/#txt_MallLv2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_store_upgrade)
 
-	slot4 = lua_auto_chess_mall.configDict[AutoChessHelper.getMallRegionByType(AutoChessModel.instance:getChessMo().svrMall.regions, AutoChessEnum.MallType.Normal).mallId].showLevel
-	slot5 = slot4 - 1
+	local var_5_0 = AutoChessModel.instance:getChessMo()
+	local var_5_1 = AutoChessHelper.getMallRegionByType(var_5_0.svrMall.regions, AutoChessEnum.MallType.Normal)
+	local var_5_2 = lua_auto_chess_mall.configDict[var_5_1.mallId].showLevel
+	local var_5_3 = var_5_2 - 1
 
-	UISpriteSetMgr.instance:setAutoChessSprite(slot0._imageLevel1, "v2a5_autochess_quality3_" .. slot5)
-	UISpriteSetMgr.instance:setAutoChessSprite(slot0._imageLevel2, "v2a5_autochess_quality3_" .. slot4)
+	UISpriteSetMgr.instance:setAutoChessSprite(arg_5_0._imageLevel1, "v2a5_autochess_quality3_" .. var_5_3)
+	UISpriteSetMgr.instance:setAutoChessSprite(arg_5_0._imageLevel2, "v2a5_autochess_quality3_" .. var_5_2)
 
-	slot6 = luaLang("autochess_malllevelupview_level")
-	slot0._txtMallLv1.text = GameUtil.getSubPlaceholderLuaLangOneParam(slot6, slot5)
-	slot0._txtMallLv2.text = GameUtil.getSubPlaceholderLuaLangOneParam(slot6, slot4)
+	local var_5_4 = luaLang("autochess_malllevelupview_level")
 
-	TaskDispatcher.runDelay(slot0.onClickModalMask, slot0, 2)
+	arg_5_0._txtMallLv1.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_5_4, var_5_3)
+	arg_5_0._txtMallLv2.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_5_4, var_5_2)
+
+	TaskDispatcher.runDelay(arg_5_0.onClickModalMask, arg_5_0, 2)
 end
 
-return slot0
+return var_0_0

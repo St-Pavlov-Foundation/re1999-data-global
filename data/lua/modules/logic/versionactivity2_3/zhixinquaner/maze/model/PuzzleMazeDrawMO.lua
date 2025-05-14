@@ -1,37 +1,39 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.model.PuzzleMazeDrawMO", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.model.PuzzleMazeDrawMO", package.seeall)
 
-slot0 = pureTable("PuzzleMazeDrawMO")
+local var_0_0 = pureTable("PuzzleMazeDrawMO")
 
-function slot0.initByPos(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
-	slot0.y = slot2
-	slot0.x = slot1
-	slot0.objType = slot3
-	slot0.subType = slot4 or 0
-	slot0.group = slot5 or 0
-	slot0.priority = slot6 or 0
-	slot0.iconUrl = slot7
-	slot0.effects = slot8
-	slot0.interactLines = slot9
-	slot0.positionType = PuzzleEnum.PositionType.Point
+function var_0_0.initByPos(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6, arg_1_7, arg_1_8, arg_1_9)
+	arg_1_0.x, arg_1_0.y = arg_1_1, arg_1_2
+	arg_1_0.objType = arg_1_3
+	arg_1_0.subType = arg_1_4 or 0
+	arg_1_0.group = arg_1_5 or 0
+	arg_1_0.priority = arg_1_6 or 0
+	arg_1_0.iconUrl = arg_1_7
+	arg_1_0.effects = arg_1_8
+	arg_1_0.interactLines = arg_1_9
+	arg_1_0.positionType = PuzzleEnum.PositionType.Point
 end
 
-function slot0.initByLine(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
-	slot0.y2 = slot4
-	slot0.x2 = slot3
-	slot0.y1 = slot2
-	slot0.x1 = slot1
-	slot0.objType = slot5
-	slot0.subType = slot6 or 0
-	slot0.group = slot7 or 0
-	slot0.priority = slot8 or 0
-	slot0.iconUrl = slot9
-	slot0.positionType = PuzzleEnum.PositionType.Line
+function var_0_0.initByLine(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6, arg_2_7, arg_2_8, arg_2_9)
+	arg_2_0.x1, arg_2_0.y1, arg_2_0.x2, arg_2_0.y2 = arg_2_1, arg_2_2, arg_2_3, arg_2_4
+	arg_2_0.objType = arg_2_5
+	arg_2_0.subType = arg_2_6 or 0
+	arg_2_0.group = arg_2_7 or 0
+	arg_2_0.priority = arg_2_8 or 0
+	arg_2_0.iconUrl = arg_2_9
+	arg_2_0.positionType = PuzzleEnum.PositionType.Line
 end
 
-function slot0.getKey(slot0)
-	slot1 = ""
+function var_0_0.getKey(arg_3_0)
+	local var_3_0 = ""
 
-	return (slot0.positionType ~= PuzzleEnum.PositionType.Point or PuzzleMazeHelper.getPosKey(slot0.x, slot0.y)) and PuzzleMazeHelper.getLineKey(slot0.x1, slot0.y1, slot0.x2, slot0.y2)
+	if arg_3_0.positionType == PuzzleEnum.PositionType.Point then
+		var_3_0 = PuzzleMazeHelper.getPosKey(arg_3_0.x, arg_3_0.y)
+	else
+		var_3_0 = PuzzleMazeHelper.getLineKey(arg_3_0.x1, arg_3_0.y1, arg_3_0.x2, arg_3_0.y2)
+	end
+
+	return var_3_0
 end
 
-return slot0
+return var_0_0

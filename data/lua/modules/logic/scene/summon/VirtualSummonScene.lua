@@ -1,157 +1,166 @@
-module("modules.logic.scene.summon.VirtualSummonScene", package.seeall)
+﻿module("modules.logic.scene.summon.VirtualSummonScene", package.seeall)
 
-slot0 = class("VirtualSummonScene")
+local var_0_0 = class("VirtualSummonScene")
 
-function slot0.ctor(slot0)
-	slot0._curSceneType = SceneType.Summon
-	slot0._curSceneId = SummonEnum.SummonSceneId
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._curSceneType = SceneType.Summon
+	arg_1_0._curSceneId = SummonEnum.SummonSceneId
 
-	if SceneConfig.instance:getSceneLevelCOs(slot0._curSceneId) and #slot1 > 0 then
-		slot0._curLevelId = slot1[1].id
+	local var_1_0 = SceneConfig.instance:getSceneLevelCOs(arg_1_0._curSceneId)
+
+	if var_1_0 and #var_1_0 > 0 then
+		arg_1_0._curLevelId = var_1_0[1].id
 	else
-		logError("levelID Error in SummonScene : " .. tostring(slot0._curSceneId))
+		logError("levelID Error in SummonScene : " .. tostring(arg_1_0._curSceneId))
 	end
 
-	slot0._isOpenImmediately = false
-	slot0._isOpen = false
-	slot0.charGoPath = SummonController.getCharScenePrefabPath()
+	arg_1_0._isOpenImmediately = false
+	arg_1_0._isOpen = false
+	arg_1_0.charGoPath = SummonController.getCharScenePrefabPath()
 
-	slot0:checkInitLoader()
+	arg_1_0:checkInitLoader()
 
-	slot0._sceneObj = SummonSceneShell.New()
+	arg_1_0._sceneObj = SummonSceneShell.New()
 
-	slot0._sceneObj:init(slot0._curSceneId, slot0._curSceneLevel)
+	arg_1_0._sceneObj:init(arg_1_0._curSceneId, arg_1_0._curSceneLevel)
 end
 
-function slot0.createLoader(slot0, slot1, slot2)
-	slot3 = SummonLoader.New()
-	slot4 = {}
+function var_0_0.createLoader(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = SummonLoader.New()
+	local var_2_1 = {}
 
-	for slot8, slot9 in pairs(slot1) do
-		table.insert(slot4, slot9)
+	for iter_2_0, iter_2_1 in pairs(arg_2_1) do
+		table.insert(var_2_1, iter_2_1)
 	end
 
-	table.insert(slot4, slot2)
-	slot3:init(slot4)
-	slot3:setLoadOneItemCallback(slot0.onLoadOneCallback, slot0)
-	slot3:setLoadFinishCallback(slot0.onLoadAllCompleted, slot0)
+	table.insert(var_2_1, arg_2_2)
+	var_2_0:init(var_2_1)
+	var_2_0:setLoadOneItemCallback(arg_2_0.onLoadOneCallback, arg_2_0)
+	var_2_0:setLoadFinishCallback(arg_2_0.onLoadAllCompleted, arg_2_0)
 
-	return slot3
+	return var_2_0
 end
 
-function slot0.checkInitLoader(slot0)
-	if not slot0._loaderChar then
-		slot1 = tabletool.copy(SummonEnum.SummonCharPreloadPath)
+function var_0_0.checkInitLoader(arg_3_0)
+	if not arg_3_0._loaderChar then
+		local var_3_0 = tabletool.copy(SummonEnum.SummonCharPreloadPath)
 
 		if SummonConfig.instance:isLuckyBagPoolExist() then
-			slot0:addUrlToPreloadMap(slot1, SummonEnum.SummonLuckyBagPreloadPath)
+			arg_3_0:addUrlToPreloadMap(var_3_0, SummonEnum.SummonLuckyBagPreloadPath)
 		end
 
-		slot0._loaderChar = slot0:createLoader(slot1, slot0.charGoPath)
-		slot0._isCharLoaded = false
+		arg_3_0._loaderChar = arg_3_0:createLoader(var_3_0, arg_3_0.charGoPath)
+		arg_3_0._isCharLoaded = false
 	end
 end
 
-function slot0.addUrlToPreloadMap(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot2) do
-		slot1[slot6] = slot7
+function var_0_0.addUrlToPreloadMap(arg_4_0, arg_4_1, arg_4_2)
+	for iter_4_0, iter_4_1 in pairs(arg_4_2) do
+		arg_4_1[iter_4_0] = iter_4_1
 	end
 end
 
-function slot0.checkNeedLoad(slot0, slot1, slot2)
-	if slot1 then
-		if slot0._loaderChar ~= nil then
-			slot0._loaderChar:checkStartLoad(slot2)
+function var_0_0.checkNeedLoad(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 then
+		if arg_5_0._loaderChar ~= nil then
+			arg_5_0._loaderChar:checkStartLoad(arg_5_2)
 		end
 	else
 		logError("other loader is not implement!")
 	end
 end
 
-function slot0.onLoadOneCallback(slot0, slot1, slot2)
-	if slot1 == slot0.charGoPath then
-		slot0:getSummonScene().selector:initCharSceneGo(slot2)
+function var_0_0.onLoadOneCallback(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == arg_6_0.charGoPath then
+		arg_6_0:getSummonScene().selector:initCharSceneGo(arg_6_2)
 	else
-		SummonEffectPool.onEffectPreload(slot2)
+		SummonEffectPool.onEffectPreload(arg_6_2)
 	end
 end
 
-function slot0.onLoadAllCompleted(slot0, slot1)
-	if slot1 == slot0._loaderChar then
-		slot0._isCharLoaded = true
+function var_0_0.onLoadAllCompleted(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1 == arg_7_0._loaderChar
+
+	if var_7_0 then
+		arg_7_0._isCharLoaded = true
 	end
 
-	slot0:dispatchEvent(SummonSceneEvent.OnPreloadFinish, slot2)
+	arg_7_0:dispatchEvent(SummonSceneEvent.OnPreloadFinish, var_7_0)
 end
 
-function slot0.onEnterScene(slot0)
+function var_0_0.onEnterScene(arg_8_0)
+	return
 end
 
-function slot0.onCloseFullView(slot0, slot1, slot2)
-	if GameSceneMgr.instance:getCurScene() and not gohelper.isNil(slot3:getSceneContainerGO()) then
-		gohelper.setActive(slot3:getSceneContainerGO(), false)
+function var_0_0.onCloseFullView(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_9_0 and not gohelper.isNil(var_9_0:getSceneContainerGO()) then
+		gohelper.setActive(var_9_0:getSceneContainerGO(), false)
 	end
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot1 == ViewName.SummonView and slot0:isOpen() then
-		slot0:close(true)
+function var_0_0.onCloseView(arg_10_0, arg_10_1)
+	if arg_10_1 == ViewName.SummonView and arg_10_0:isOpen() then
+		arg_10_0:close(true)
 	end
 end
 
-function slot0.onClickHome(slot0)
-	slot0:close(true)
+function var_0_0.onClickHome(arg_11_0)
+	arg_11_0:close(true)
 end
 
-function slot0.openSummonScene(slot0, slot1)
-	if slot0._isOpen then
+function var_0_0.openSummonScene(arg_12_0, arg_12_1)
+	if arg_12_0._isOpen then
 		return
 	end
 
-	slot0._isOpen = true
-	slot0._isOpenImmediately = slot1
+	arg_12_0._isOpen = true
+	arg_12_0._isOpenImmediately = arg_12_1
 
-	slot0:checkInitRootGO()
-	slot0:checkInitLoader()
-	gohelper.setActive(slot0:getRootGO(), true)
-	slot0:getSummonScene():onStart(slot0._curSceneId, slot0._curLevelId)
+	arg_12_0:checkInitRootGO()
+	arg_12_0:checkInitLoader()
+	gohelper.setActive(arg_12_0:getRootGO(), true)
+	arg_12_0:getSummonScene():onStart(arg_12_0._curSceneId, arg_12_0._curLevelId)
 
-	if slot0._isOpenImmediately then
-		slot0._loaderChar:checkStartLoad(true)
+	if arg_12_0._isOpenImmediately then
+		arg_12_0._loaderChar:checkStartLoad(true)
 	end
 
-	if GameSceneMgr.instance:getCurScene() and not gohelper.isNil(slot3:getSceneContainerGO()) then
-		gohelper.setActive(slot3:getSceneContainerGO(), false)
+	local var_12_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_12_0 and not gohelper.isNil(var_12_0:getSceneContainerGO()) then
+		gohelper.setActive(var_12_0:getSceneContainerGO(), false)
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, slot0.onCloseFullView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	NavigateMgr.instance:registerCallback(NavigateEvent.ClickHome, slot0.onClickHome, slot0)
-	slot0._sceneObj.director:registerCallback(SummonSceneEvent.OnEnterScene, slot0.onEnterScene, slot0)
-	slot0:checkCloseOldSceneUI()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, arg_12_0.onCloseFullView, arg_12_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_12_0.onCloseView, arg_12_0)
+	NavigateMgr.instance:registerCallback(NavigateEvent.ClickHome, arg_12_0.onClickHome, arg_12_0)
+	arg_12_0._sceneObj.director:registerCallback(SummonSceneEvent.OnEnterScene, arg_12_0.onEnterScene, arg_12_0)
+	arg_12_0:checkCloseOldSceneUI()
 end
 
-function slot0.close(slot0, slot1)
-	if not slot0._isOpen then
+function var_0_0.close(arg_13_0, arg_13_1)
+	if not arg_13_0._isOpen then
 		return
 	end
 
 	logNormal("VirtualSummonScene close")
 
-	slot0._isOpen = false
-	slot0._isOpenImmediately = false
+	arg_13_0._isOpen = false
+	arg_13_0._isOpenImmediately = false
 
-	if slot1 then
-		slot0:release()
+	if arg_13_1 then
+		arg_13_0:release()
 	else
-		slot0:hide()
+		arg_13_0:hide()
 	end
 
-	slot0:checkResumeMainScene()
+	arg_13_0:checkResumeMainScene()
 	MainController.instance:dispatchEvent(MainEvent.SetMainViewRootVisible, true)
 end
 
-function slot0.checkCloseOldSceneUI(slot0)
+function var_0_0.checkCloseOldSceneUI(arg_14_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 		MainController.instance:dispatchEvent(MainEvent.SetMainViewRootVisible, false)
 	else
@@ -162,81 +171,84 @@ function slot0.checkCloseOldSceneUI(slot0)
 	end
 end
 
-function slot0.checkResumeMainScene(slot0)
-	slot1 = GameSceneMgr.instance:getCurScene()
+function var_0_0.checkResumeMainScene(arg_15_0)
+	local var_15_0 = GameSceneMgr.instance:getCurScene()
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
-		slot2 = GameSceneMgr.instance:getCurScene()
+		local var_15_1 = GameSceneMgr.instance:getCurScene()
 
-		slot2.camera:resetParam()
-		slot2.camera:applyDirectly()
+		var_15_1.camera:resetParam()
+		var_15_1.camera:applyDirectly()
 	end
 
-	if slot1 and not gohelper.isNil(slot1:getSceneContainerGO()) then
-		gohelper.setActive(slot1:getSceneContainerGO(), true)
-	end
-end
-
-function slot0.checkInitRootGO(slot0)
-	if gohelper.isNil(slot0._rootGO) then
-		slot0._rootGO = gohelper.create3d(CameraMgr.instance:getSceneRoot(), "VirtualSummonScene")
+	if var_15_0 and not gohelper.isNil(var_15_0:getSceneContainerGO()) then
+		gohelper.setActive(var_15_0:getSceneContainerGO(), true)
 	end
 end
 
-function slot0.getSummonScene(slot0)
-	return slot0._sceneObj
+function var_0_0.checkInitRootGO(arg_16_0)
+	if gohelper.isNil(arg_16_0._rootGO) then
+		arg_16_0._rootGO = gohelper.create3d(CameraMgr.instance:getSceneRoot(), "VirtualSummonScene")
+	end
 end
 
-function slot0.getRootGO(slot0)
-	return slot0._rootGO
+function var_0_0.getSummonScene(arg_17_0)
+	return arg_17_0._sceneObj
 end
 
-function slot0.isOpenImmediately(slot0)
-	return slot0._isOpenImmediately
+function var_0_0.getRootGO(arg_18_0)
+	return arg_18_0._rootGO
 end
 
-function slot0.isOpen(slot0)
-	return slot0._isOpen
+function var_0_0.isOpenImmediately(arg_19_0)
+	return arg_19_0._isOpenImmediately
 end
 
-function slot0.isABLoaded(slot0, slot1)
-	if slot1 then
-		return slot0._isCharLoaded
+function var_0_0.isOpen(arg_20_0)
+	return arg_20_0._isOpen
+end
+
+function var_0_0.isABLoaded(arg_21_0, arg_21_1)
+	if arg_21_1 then
+		return arg_21_0._isCharLoaded
 	end
 
 	return false
 end
 
-function slot0.hide(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, slot0.onCloseFullView, slot0)
-	slot0._sceneObj.director:unregisterCallback(SummonSceneEvent.OnEnterScene, slot0.onEnterScene, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	NavigateMgr.instance:unregisterCallback(NavigateEvent.ClickHome, slot0.onClickHome, slot0)
-	gohelper.setActive(slot0:getRootGO(), false)
-	slot0:getSummonScene():onHide()
+function var_0_0.hide(arg_22_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_22_0.onCloseFullView, arg_22_0)
+	arg_22_0._sceneObj.director:unregisterCallback(SummonSceneEvent.OnEnterScene, arg_22_0.onEnterScene, arg_22_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_22_0.onCloseView, arg_22_0)
+	NavigateMgr.instance:unregisterCallback(NavigateEvent.ClickHome, arg_22_0.onClickHome, arg_22_0)
+
+	local var_22_0 = arg_22_0:getRootGO()
+
+	gohelper.setActive(var_22_0, false)
+	arg_22_0:getSummonScene():onHide()
 end
 
-function slot0.release(slot0)
-	slot0:getSummonScene():onClose()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, slot0.onCloseFullView, slot0)
-	slot0._sceneObj.director:unregisterCallback(SummonSceneEvent.OnEnterScene, slot0.onEnterScene, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	NavigateMgr.instance:unregisterCallback(NavigateEvent.ClickHome, slot0.onClickHome, slot0)
+function var_0_0.release(arg_23_0)
+	arg_23_0:getSummonScene():onClose()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_23_0.onCloseFullView, arg_23_0)
+	arg_23_0._sceneObj.director:unregisterCallback(SummonSceneEvent.OnEnterScene, arg_23_0.onEnterScene, arg_23_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_23_0.onCloseView, arg_23_0)
+	NavigateMgr.instance:unregisterCallback(NavigateEvent.ClickHome, arg_23_0.onClickHome, arg_23_0)
 
-	slot0._isCharLoaded = false
+	arg_23_0._isCharLoaded = false
 
 	SummonEffectPool.dispose()
-	slot0._loaderChar:dispose()
+	arg_23_0._loaderChar:dispose()
 
-	slot0._loaderChar = nil
+	arg_23_0._loaderChar = nil
 
-	gohelper.destroy(slot0._rootGO)
+	gohelper.destroy(arg_23_0._rootGO)
 
-	slot0._rootGO = nil
+	arg_23_0._rootGO = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

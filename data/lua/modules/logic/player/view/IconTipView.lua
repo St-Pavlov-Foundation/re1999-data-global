@@ -1,114 +1,128 @@
-module("modules.logic.player.view.IconTipView", package.seeall)
+﻿module("modules.logic.player.view.IconTipView", package.seeall)
 
-slot0 = class("IconTipView", BaseView)
+local var_0_0 = class("IconTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagetop = gohelper.findChildSingleImage(slot0.viewGO, "window/bg/#simage_top")
-	slot0._simagebottom = gohelper.findChildSingleImage(slot0.viewGO, "window/bg/#simage_bottom")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "window/right/useState/#btn_change")
-	slot0._txtnameCn = gohelper.findChildText(slot0.viewGO, "window/right/#txt_nameCn")
-	slot0._gousing = gohelper.findChild(slot0.viewGO, "window/right/useState/#go_using")
-	slot0._simageheadIcon = gohelper.findChildSingleImage(slot0.viewGO, "window/right/#simage_headIcon")
-	slot0._goframenode = gohelper.findChild(slot0.viewGO, "window/right/#simage_headIcon/#go_framenode")
-	slot0._btncloseBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "window/top/#btn_closeBtn")
-	slot0._loader = MultiAbLoader.New()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/bg/#simage_top")
+	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/bg/#simage_bottom")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/right/useState/#btn_change")
+	arg_1_0._txtnameCn = gohelper.findChildText(arg_1_0.viewGO, "window/right/#txt_nameCn")
+	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "window/right/useState/#go_using")
+	arg_1_0._simageheadIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/right/#simage_headIcon")
+	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "window/right/#simage_headIcon/#go_framenode")
+	arg_1_0._btncloseBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "window/top/#btn_closeBtn")
+	arg_1_0._loader = MultiAbLoader.New()
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btncloseBtn:AddClickListener(slot0._btncloseBtnOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btncloseBtn:AddClickListener(arg_2_0._btncloseBtnOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btncloseBtn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btncloseBtn:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	PlayerRpc.instance:sendSetPortraitRequest(IconTipModel.instance:getSelectIcon())
+function var_0_0._btnconfirmOnClick(arg_4_0)
+	local var_4_0 = IconTipModel.instance:getSelectIcon()
+
+	PlayerRpc.instance:sendSetPortraitRequest(var_4_0)
 end
 
-function slot0._btncloseBtnOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseBtnOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = PlayerModel.instance:getPlayinfo()
+function var_0_0._editableInitView(arg_6_0)
+	local var_6_0 = PlayerModel.instance:getPlayinfo()
 
-	IconTipModel.instance:setSelectIcon(slot1.portrait)
-	IconTipModel.instance:setIconList(slot1.portrait)
-	slot0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	IconTipModel.instance:setSelectIcon(var_6_0.portrait)
+	IconTipModel.instance:setIconList(var_6_0.portrait)
+	arg_6_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_6_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 
-	slot0._buttonbg = gohelper.findChildClick(slot0.viewGO, "maskbg")
+	arg_6_0._buttonbg = gohelper.findChildClick(arg_6_0.viewGO, "maskbg")
 
-	slot0._buttonbg:AddClickListener(slot0._btncloseBtnOnClick, slot0)
+	arg_6_0._buttonbg:AddClickListener(arg_6_0._btncloseBtnOnClick, arg_6_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	gohelper.setActive(slot0._btnconfirm.gameObject, IconTipModel.instance:getSelectIcon() ~= PlayerModel.instance:getPlayinfo().portrait)
-	gohelper.setActive(slot0._gousing, slot1 == slot3)
+function var_0_0._refreshUI(arg_8_0)
+	local var_8_0 = IconTipModel.instance:getSelectIcon()
+	local var_8_1 = PlayerModel.instance:getPlayinfo().portrait
 
-	slot0._txtnameCn.text = lua_item.configDict[slot1].name
+	gohelper.setActive(arg_8_0._btnconfirm.gameObject, var_8_0 ~= var_8_1)
+	gohelper.setActive(arg_8_0._gousing, var_8_0 == var_8_1)
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageheadIcon)
+	local var_8_2 = lua_item.configDict[var_8_0]
+
+	arg_8_0._txtnameCn.text = var_8_2.name
+
+	if not arg_8_0._liveHeadIcon then
+		arg_8_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_8_0._simageheadIcon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot4.id)
+	arg_8_0._liveHeadIcon:setLiveHead(var_8_2.id)
 
-	if #string.split(slot4.effect, "#") > 1 then
-		if slot4.id == tonumber(slot5[#slot5]) then
-			gohelper.setActive(slot0._goframenode, true)
+	local var_8_3 = string.split(var_8_2.effect, "#")
 
-			if not slot0.frame then
-				slot0._loader:addPath("ui/viewres/common/effect/frame.prefab")
-				slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+	if #var_8_3 > 1 then
+		if var_8_2.id == tonumber(var_8_3[#var_8_3]) then
+			gohelper.setActive(arg_8_0._goframenode, true)
+
+			if not arg_8_0.frame then
+				local var_8_4 = "ui/viewres/common/effect/frame.prefab"
+
+				arg_8_0._loader:addPath(var_8_4)
+				arg_8_0._loader:startLoad(arg_8_0._onLoadCallback, arg_8_0)
 			end
 		end
 	else
-		gohelper.setActive(slot0._goframenode, false)
+		gohelper.setActive(arg_8_0._goframenode, false)
 	end
 end
 
-function slot0._onLoadCallback(slot0)
-	gohelper.clone(slot0._loader:getFirstAssetItem():GetResource(), slot0._goframenode, "frame")
+function var_0_0._onLoadCallback(arg_9_0)
+	local var_9_0 = arg_9_0._loader:getFirstAssetItem():GetResource()
 
-	slot0.frame = gohelper.findChild(slot0._goframenode, "frame")
-	slot0.frame:GetComponent(gohelper.Type_Image).enabled = false
-	slot5 = 1.41 * recthelper.getWidth(slot0._simageheadIcon.transform) / recthelper.getWidth(slot0.frame.transform)
+	gohelper.clone(var_9_0, arg_9_0._goframenode, "frame")
 
-	transformhelper.setLocalScale(slot0.frame.transform, slot5, slot5, 1)
+	arg_9_0.frame = gohelper.findChild(arg_9_0._goframenode, "frame")
+	arg_9_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+
+	local var_9_1 = 1.41 * (recthelper.getWidth(arg_9_0._simageheadIcon.transform) / recthelper.getWidth(arg_9_0.frame.transform))
+
+	transformhelper.setLocalScale(arg_9_0.frame.transform, var_9_1, var_9_1, 1)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, slot0._refreshUI, slot0)
-	slot0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, slot0._refreshUI, slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_10_0._refreshUI, arg_10_0)
+	arg_10_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_10_0._refreshUI, arg_10_0)
+	arg_10_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, slot0._refreshUI, slot0)
-	slot0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, slot0._refreshUI, slot0)
+function var_0_0.onClose(arg_11_0)
+	arg_11_0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_11_0._refreshUI, arg_11_0)
+	arg_11_0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_11_0._refreshUI, arg_11_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageheadIcon:UnLoadImage()
-	slot0._buttonbg:RemoveClickListener()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._simageheadIcon:UnLoadImage()
+	arg_12_0._buttonbg:RemoveClickListener()
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_12_0._loader then
+		arg_12_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_12_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

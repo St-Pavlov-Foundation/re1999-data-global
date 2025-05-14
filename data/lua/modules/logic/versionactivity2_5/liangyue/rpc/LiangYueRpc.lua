@@ -1,56 +1,61 @@
-module("modules.logic.versionactivity2_5.liangyue.rpc.LiangYueRpc", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.rpc.LiangYueRpc", package.seeall)
 
-slot0 = class("LiangYueRpc", BaseRpc)
+local var_0_0 = class("LiangYueRpc", BaseRpc)
 
-function slot0.sendGetAct184InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity184Module_pb.GetAct184InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct184InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity184Module_pb.GetAct184InfoRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct184InfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct184InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.activityId
-	slot4 = slot2.episodes
+	local var_2_0 = arg_2_2.activityId
+	local var_2_1 = arg_2_2.episodes
 
-	LiangYueModel.instance:onGetActInfo(slot2)
+	LiangYueModel.instance:onGetActInfo(arg_2_2)
 	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnReceiveEpisodeInfo)
 end
 
-function slot0.sendAct184FinishEpisodeRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity184Module_pb.Act184FinishEpisodeRequest()
-	slot6.activityId = slot1
-	slot6.episodeId = slot2
-	slot6.puzzle = slot3 or ""
+function var_0_0.sendAct184FinishEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = Activity184Module_pb.Act184FinishEpisodeRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_3_0.activityId = arg_3_1
+	var_3_0.episodeId = arg_3_2
+	var_3_0.puzzle = arg_3_3 or ""
+
+	arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
 end
 
-function slot0.onReceiveAct184FinishEpisodeReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct184FinishEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	LiangYueModel.instance:setEpisodeInfo(slot2)
-	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnFinishEpisode, slot2.activityId, slot2.episodeId)
+	local var_4_0 = arg_4_2.activityId
+	local var_4_1 = arg_4_2.episodeId
+
+	LiangYueModel.instance:setEpisodeInfo(arg_4_2)
+	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnFinishEpisode, var_4_0, var_4_1)
 end
 
-function slot0.onReceiveAct184EpisodePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct184EpisodePush(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.activityId
-	slot4 = slot2.episodes
+	local var_5_0 = arg_5_2.activityId
+	local var_5_1 = arg_5_2.episodes
 
-	LiangYueModel.instance:onActInfoPush(slot2)
+	LiangYueModel.instance:onActInfoPush(arg_5_2)
 	LiangYueController.instance:dispatchEvent(LiangYueEvent.OnEpisodeInfoPush)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

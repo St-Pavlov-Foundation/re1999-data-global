@@ -1,97 +1,114 @@
-module("modules.logic.room.model.common.RoomStoreItemListModel", package.seeall)
+﻿module("modules.logic.room.model.common.RoomStoreItemListModel", package.seeall)
 
-slot0 = class("RoomStoreItemListModel", ListScrollModel)
+local var_0_0 = class("RoomStoreItemListModel", ListScrollModel)
 
-function slot0.setStoreGoodsMO(slot0, slot1)
-	slot0.storeGoodsMO = slot1
-	slot2 = slot1.config
-	slot3, slot4 = slot1:getAllCostInfo()
-	slot5 = {
-		slot3,
-		slot4
+function var_0_0.setStoreGoodsMO(arg_1_0, arg_1_1)
+	arg_1_0.storeGoodsMO = arg_1_1
+
+	local var_1_0 = arg_1_1.config
+	local var_1_1, var_1_2 = arg_1_1:getAllCostInfo()
+	local var_1_3 = {
+		var_1_1,
+		var_1_2
 	}
-	slot0._costsId = 1
-	slot6 = GameUtil.splitString2(slot2.product, true)
-	slot8 = {}
-	slot9 = {}
 
-	for slot13, slot14 in ipairs(string.splitToNumber(slot2.reduction, "#")) do
-		slot15 = StoreConfig.instance:getGoodsConfig(slot14)
-		slot18 = GameUtil.splitString2(slot15.product, true)[1]
-		slot9[slot19] = slot9[slot18[1]] or {}
-		slot9[slot19][slot18[2]] = {
-			GameUtil.splitString2(slot15.cost, true)[1][3],
-			GameUtil.splitString2(slot15.cost2, true)[1][3]
+	arg_1_0._costsId = 1
+
+	local var_1_4 = GameUtil.splitString2(var_1_0.product, true)
+	local var_1_5 = string.splitToNumber(var_1_0.reduction, "#")
+	local var_1_6 = {}
+	local var_1_7 = {}
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_5) do
+		local var_1_8 = StoreConfig.instance:getGoodsConfig(iter_1_1)
+		local var_1_9 = GameUtil.splitString2(var_1_8.cost, true)[1]
+		local var_1_10 = GameUtil.splitString2(var_1_8.cost2, true)[1]
+		local var_1_11 = GameUtil.splitString2(var_1_8.product, true)[1]
+		local var_1_12 = var_1_11[1]
+		local var_1_13 = var_1_11[2]
+
+		var_1_7[var_1_12] = var_1_7[var_1_12] or {}
+		var_1_7[var_1_12][var_1_13] = {
+			var_1_9[3],
+			var_1_10[3]
 		}
 	end
 
-	for slot13 = 1, #slot6 do
-		slot14 = slot6[slot13]
-		slot16 = {}
-		slot20 = slot14[1]
-		slot21 = slot14[3]
+	for iter_1_2 = 1, #var_1_4 do
+		local var_1_14 = var_1_4[iter_1_2]
+		local var_1_15 = RoomStoreItemMO.New()
+		local var_1_16 = {}
 
-		RoomStoreItemMO.New():init(slot14[2], slot20, slot21, slot0._costId, slot1)
+		var_1_15:init(var_1_14[2], var_1_14[1], var_1_14[3], arg_1_0._costId, arg_1_1)
 
-		for slot20, slot21 in ipairs(slot5) do
-			if slot21 then
-				slot23 = slot21[1][3]
+		for iter_1_3, iter_1_4 in ipairs(var_1_3) do
+			if iter_1_4 then
+				local var_1_17 = iter_1_4[1]
+				local var_1_18 = var_1_17[3]
 
-				if slot9[slot14[1]] and slot9[slot14[1]][slot14[2]] then
-					slot23 = slot9[slot14[1]][slot14[2]][slot20]
+				if var_1_7[var_1_14[1]] and var_1_7[var_1_14[1]][var_1_14[2]] then
+					var_1_18 = var_1_7[var_1_14[1]][var_1_14[2]][iter_1_3]
 				end
 
-				slot15:addCost(slot20, slot22[2], slot22[1], slot23)
+				var_1_15:addCost(iter_1_3, var_1_17[2], var_1_17[1], var_1_18)
 			end
 		end
 
-		table.insert(slot8, slot15)
+		table.insert(var_1_6, var_1_15)
 	end
 
-	slot0:setList(slot8)
-	slot0:onModelUpdate()
+	arg_1_0:setList(var_1_6)
+	arg_1_0:onModelUpdate()
 end
 
-function slot0.getCostId(slot0)
-	return slot0._costsId or 1
+function var_0_0.getCostId(arg_2_0)
+	return arg_2_0._costsId or 1
 end
 
-function slot0.setCostId(slot0, slot1)
-	if slot1 == 1 or slot1 == 2 then
-		slot0._costsId = slot1
+function var_0_0.setCostId(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 or arg_3_1 == 2 then
+		arg_3_0._costsId = arg_3_1
 
-		slot0:onModelUpdate()
+		arg_3_0:onModelUpdate()
 	end
 end
 
-function slot0.getTotalPriceByCostId(slot0, slot1)
-	slot2 = slot0:getList()
+function var_0_0.getTotalPriceByCostId(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getList()
 
-	for slot7 = 1, #slot2 do
-		slot3 = 0 + slot2[slot7]:getTotalPriceByCostId(slot1 or slot0._costsId)
+	arg_4_1 = arg_4_1 or arg_4_0._costsId
+
+	local var_4_1 = 0
+
+	for iter_4_0 = 1, #var_4_0 do
+		var_4_1 = var_4_1 + var_4_0[iter_4_0]:getTotalPriceByCostId(arg_4_1)
 	end
 
-	return slot3
+	return var_4_1
 end
 
-function slot0.getRoomStoreItemMOHasTheme(slot0)
-	for slot5 = 1, #slot0:getList() do
-		if slot1[slot5].themeId then
-			return slot6
+function var_0_0.getRoomStoreItemMOHasTheme(arg_5_0)
+	local var_5_0 = arg_5_0:getList()
+
+	for iter_5_0 = 1, #var_5_0 do
+		local var_5_1 = var_5_0[iter_5_0]
+
+		if var_5_1.themeId then
+			return var_5_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.setIsSelectCurrency(slot0, slot1)
-	slot0.isSelectCurrency = slot1
+function var_0_0.setIsSelectCurrency(arg_6_0, arg_6_1)
+	arg_6_0.isSelectCurrency = arg_6_1
 end
 
-function slot0.getIsSelectCurrency(slot0)
-	return slot0.isSelectCurrency
+function var_0_0.getIsSelectCurrency(arg_7_0)
+	return arg_7_0.isSelectCurrency
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,42 +1,50 @@
-module("modules.logic.guide.controller.action.impl.GuideActionPlayEffect", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionPlayEffect", package.seeall)
 
-slot0 = class("GuideActionPlayEffect", BaseGuideAction)
+local var_0_0 = class("GuideActionPlayEffect", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot0._effectRoot = slot2[1]
-	slot0._effectPathList = string.split(slot2[2], ",")
-	slot0._effectGoList = {}
-	slot0._loader = MultiAbLoader.New()
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	for slot7, slot8 in ipairs(slot0._effectPathList) do
-		slot3:addPath(slot8)
+	arg_1_0._effectRoot = var_1_0[1]
+	arg_1_0._effectPathList = string.split(var_1_0[2], ",")
+	arg_1_0._effectGoList = {}
+
+	local var_1_1 = MultiAbLoader.New()
+
+	arg_1_0._loader = var_1_1
+
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0._effectPathList) do
+		var_1_1:addPath(iter_1_1)
 	end
 
-	slot3:startLoad(slot0._loadedFinish, slot0)
-	slot0:onDone(true)
+	var_1_1:startLoad(arg_1_0._loadedFinish, arg_1_0)
+	arg_1_0:onDone(true)
 end
 
-function slot0._loadedFinish(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0._effectPathList) do
-		table.insert(slot0._effectGoList, gohelper.clone(slot0._loader:getAssetItem(slot7):GetResource(slot7), gohelper.find(slot0._effectRoot)))
+function var_0_0._loadedFinish(arg_2_0, arg_2_1)
+	local var_2_0 = gohelper.find(arg_2_0._effectRoot)
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._effectPathList) do
+		local var_2_1 = arg_2_0._loader:getAssetItem(iter_2_1):GetResource(iter_2_1)
+
+		table.insert(arg_2_0._effectGoList, gohelper.clone(var_2_1, var_2_0))
 	end
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_3_0)
+	var_0_0.super.onDestroy(arg_3_0)
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_3_0._loader then
+		arg_3_0._loader:dispose()
 	end
 
-	if slot0._effectGoList then
-		for slot4, slot5 in ipairs(slot0._effectGoList) do
-			UnityEngine.GameObject.Destroy(slot5)
+	if arg_3_0._effectGoList then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0._effectGoList) do
+			UnityEngine.GameObject.Destroy(iter_3_1)
 		end
 	end
 end
 
-return slot0
+return var_0_0

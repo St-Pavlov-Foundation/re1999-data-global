@@ -1,15 +1,15 @@
-module("modules.logic.explore.view.ExploreArchivesViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreArchivesViewContainer", package.seeall)
 
-slot0 = class("ExploreArchivesViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreArchivesViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreArchivesView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +19,4 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,539 +1,568 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView", package.seeall)
 
-slot0 = class("V2a4_WarmUp_DialogueView", BaseView)
+local var_0_0 = class("V2a4_WarmUp_DialogueView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "Mask/#go_fail")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "Mask/#go_success")
-	slot0._goaskphoto = gohelper.findChild(slot0.viewGO, "Left/#go_ask_photo")
-	slot0._simageimage = gohelper.findChildSingleImage(slot0.viewGO, "Left/#go_ask_photo/#simage_image")
-	slot0._goasktext = gohelper.findChild(slot0.viewGO, "Left/#go_ask_text")
-	slot0._simageroleicon = gohelper.findChildSingleImage(slot0.viewGO, "Left/#go_ask_text/cardbg/#simage_roleicon")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "Left/#go_ask_text/info/#go_item")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "Left/#go_ask_text/info/#go_item/bg/#txt_title")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "Left/#go_ask_text/info/#go_item/#txt_dec")
-	slot0._txtsmalltitle = gohelper.findChildText(slot0.viewGO, "Right/#txt_smalltitle")
-	slot0._godialoguecontainer = gohelper.findChild(slot0.viewGO, "Right/#go_dialoguecontainer")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content")
-	slot0._goleftdialogueitem = gohelper.findChild(slot0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem/content_bg/#txt_content")
-	slot0._gorightdialogueitem = gohelper.findChild(slot0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_rightdialogueitem")
-	slot0._gomiddialogueItem = gohelper.findChild(slot0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_middialogueItem")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "Right/#go_dialoguecontainer/#go_arrow")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "Right/#go_time")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "Right/#go_time/#txt_time")
-	slot0._gooptionitem = gohelper.findChild(slot0.viewGO, "Right/#go_optionitem")
-	slot0._goyes = gohelper.findChild(slot0.viewGO, "Right/#go_optionitem/#go_yes")
-	slot0._btnyes = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_optionitem/#go_yes/#btn_yes")
-	slot0._gono = gohelper.findChild(slot0.viewGO, "Right/#go_optionitem/#go_no")
-	slot0._btnno = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_optionitem/#go_no/#btn_no")
-	slot0._gonext = gohelper.findChild(slot0.viewGO, "Right/#go_optionitem/#go_next")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_optionitem/#go_next/#btn_next")
-	slot0._txtcorrect = gohelper.findChildText(slot0.viewGO, "Top/#txt_correct")
-	slot0._txtwrong = gohelper.findChildText(slot0.viewGO, "Top/#txt_wrong")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "Mask/#go_fail")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "Mask/#go_success")
+	arg_1_0._goaskphoto = gohelper.findChild(arg_1_0.viewGO, "Left/#go_ask_photo")
+	arg_1_0._simageimage = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#go_ask_photo/#simage_image")
+	arg_1_0._goasktext = gohelper.findChild(arg_1_0.viewGO, "Left/#go_ask_text")
+	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#go_ask_text/cardbg/#simage_roleicon")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_ask_text/info/#go_item")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_ask_text/info/#go_item/bg/#txt_title")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_ask_text/info/#go_item/#txt_dec")
+	arg_1_0._txtsmalltitle = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_smalltitle")
+	arg_1_0._godialoguecontainer = gohelper.findChild(arg_1_0.viewGO, "Right/#go_dialoguecontainer")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content")
+	arg_1_0._goleftdialogueitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem/content_bg/#txt_content")
+	arg_1_0._gorightdialogueitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_rightdialogueitem")
+	arg_1_0._gomiddialogueItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_middialogueItem")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "Right/#go_dialoguecontainer/#go_arrow")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "Right/#go_time")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_time/#txt_time")
+	arg_1_0._gooptionitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_optionitem")
+	arg_1_0._goyes = gohelper.findChild(arg_1_0.viewGO, "Right/#go_optionitem/#go_yes")
+	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_optionitem/#go_yes/#btn_yes")
+	arg_1_0._gono = gohelper.findChild(arg_1_0.viewGO, "Right/#go_optionitem/#go_no")
+	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_optionitem/#go_no/#btn_no")
+	arg_1_0._gonext = gohelper.findChild(arg_1_0.viewGO, "Right/#go_optionitem/#go_next")
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_optionitem/#go_next/#btn_next")
+	arg_1_0._txtcorrect = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_correct")
+	arg_1_0._txtwrong = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_wrong")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnyes:AddClickListener(slot0._btnyesOnClick, slot0)
-	slot0._btnno:AddClickListener(slot0._btnnoOnClick, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
+	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnyes:RemoveClickListener()
-	slot0._btnno:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnyes:RemoveClickListener()
+	arg_3_0._btnno:RemoveClickListener()
+	arg_3_0._btnnext:RemoveClickListener()
 end
 
-slot1 = string.format
-slot2 = SLFramework.AnimatorPlayer
-slot3 = "switch"
+local var_0_1 = string.format
+local var_0_2 = SLFramework.AnimatorPlayer
+local var_0_3 = "switch"
 
-function slot0._btnyesOnClick(slot0)
+function var_0_0._btnyesOnClick(arg_4_0)
 	V2a4_WarmUpController.instance:commitAnswer(true)
 end
 
-function slot0._btnnoOnClick(slot0)
+function var_0_0._btnnoOnClick(arg_5_0)
 	V2a4_WarmUpController.instance:commitAnswer(false)
 end
 
-slot4 = "V2a4_WarmUp_DialogueView:_btnnextOnClick()"
+local var_0_4 = "V2a4_WarmUp_DialogueView:_btnnextOnClick()"
 
-function slot0._btnnextOnClick(slot0)
-	UIBlockHelper.instance:startBlock(uv0, 3, slot0.viewName)
-	V2a4_WarmUpController.instance:waveStart(slot0:_level())
+function var_0_0._btnnextOnClick(arg_6_0)
+	UIBlockHelper.instance:startBlock(var_0_4, 3, arg_6_0.viewName)
+	V2a4_WarmUpController.instance:waveStart(arg_6_0:_level())
 end
 
-function slot0._editableInitView_dialogItem(slot0)
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "Right/#go_dialoguecontainer/Scroll View")
-	slot0._txtcontentBg = gohelper.findChild(slot0._scrollcontent.gameObject, "Viewport/#go_content/#go_leftdialogueitem/content_bg")
-	slot1 = slot0._goleftdialogueitem.transform
-	slot4 = slot0._txtcontentBg.transform
+function var_0_0._editableInitView_dialogItem(arg_7_0)
+	arg_7_0._scrollcontent = gohelper.findChildScrollRect(arg_7_0.viewGO, "Right/#go_dialoguecontainer/Scroll View")
+	arg_7_0._txtcontentBg = gohelper.findChild(arg_7_0._scrollcontent.gameObject, "Viewport/#go_content/#go_leftdialogueitem/content_bg")
 
-	gohelper.setActive(slot0._goleftdialogueitem, false)
-	gohelper.setActive(slot0._gorightdialogueitem, false)
-	gohelper.setActive(slot0._gomiddialogueItem, false)
+	local var_7_0 = arg_7_0._goleftdialogueitem.transform
+	local var_7_1 = arg_7_0._gorightdialogueitem.transform
+	local var_7_2 = arg_7_0._txtcontent.transform
+	local var_7_3 = arg_7_0._txtcontentBg.transform
 
-	slot5 = recthelper.getAnchorY(slot1)
-	slot0._contentMinHeight = recthelper.getHeight(slot0._godialoguecontainer.transform)
-	slot0._rectTrContent = slot0._gocontent.transform
-	slot0._uiInfo = {
-		stY = slot5,
-		intervalY = math.max(1, math.abs(recthelper.getAnchorY(slot0._gorightdialogueitem.transform) - slot5) - recthelper.getHeight(slot1)),
-		messageTxtMaxWidth = recthelper.getWidth(slot0._txtcontent.transform)
+	gohelper.setActive(arg_7_0._goleftdialogueitem, false)
+	gohelper.setActive(arg_7_0._gorightdialogueitem, false)
+	gohelper.setActive(arg_7_0._gomiddialogueItem, false)
+
+	local var_7_4 = recthelper.getAnchorY(var_7_0)
+	local var_7_5 = recthelper.getAnchorY(var_7_1)
+	local var_7_6 = recthelper.getHeight(var_7_0)
+
+	arg_7_0._contentMinHeight = recthelper.getHeight(arg_7_0._godialoguecontainer.transform)
+	arg_7_0._rectTrContent = arg_7_0._gocontent.transform
+	arg_7_0._uiInfo = {
+		stY = var_7_4,
+		intervalY = math.max(1, math.abs(var_7_5 - var_7_4) - var_7_6),
+		messageTxtMaxWidth = recthelper.getWidth(var_7_2)
 	}
 
-	slot0:_setTimerText(V2a4_WarmUpConfig.instance:getDurationSec())
+	arg_7_0:_setTimerText(V2a4_WarmUpConfig.instance:getDurationSec())
 end
 
-function slot0._editableInitView(slot0)
-	slot0._topGo = gohelper.findChild(slot0.viewGO, "Top")
-	slot0._leftGo = gohelper.findChild(slot0.viewGO, "Left")
-	slot0._animPlayer_Top = uv0.Get(slot0._topGo)
-	slot0._animPlayer_Left = uv0.Get(slot0._leftGo)
-	slot0._basicInfoItemList = {}
-	slot0._dialogueItemList = {}
-	slot0._modifiledOnceDict = {}
-	slot0._totRoundCount = 0
-	slot0._totCorrectCount = 0
-	slot0._totWrongCount = 0
-	slot0._contentHeight = 0
-	slot0._lastDialogueIndex = 0
-	slot0._lastWaveMO = nil
-	slot0._lastRoundMO = nil
-	slot0._lastDialogCO = nil
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._topGo = gohelper.findChild(arg_8_0.viewGO, "Top")
+	arg_8_0._leftGo = gohelper.findChild(arg_8_0.viewGO, "Left")
+	arg_8_0._animPlayer_Top = var_0_2.Get(arg_8_0._topGo)
+	arg_8_0._animPlayer_Left = var_0_2.Get(arg_8_0._leftGo)
+	arg_8_0._basicInfoItemList = {}
+	arg_8_0._dialogueItemList = {}
+	arg_8_0._modifiledOnceDict = {}
+	arg_8_0._totRoundCount = 0
+	arg_8_0._totCorrectCount = 0
+	arg_8_0._totWrongCount = 0
+	arg_8_0._contentHeight = 0
+	arg_8_0._lastDialogueIndex = 0
+	arg_8_0._lastWaveMO = nil
+	arg_8_0._lastRoundMO = nil
+	arg_8_0._lastDialogCO = nil
 
-	slot0:_setActive_GlobalClick(false)
-	slot0:_editableInitView_dialogItem()
-	gohelper.setActive(slot0._goitem, false)
-	gohelper.setActive(slot0._goaskphoto, false)
-	gohelper.setActive(slot0._goasktext, false)
-	gohelper.setActive(slot0._goyes, false)
-	gohelper.setActive(slot0._gono, false)
-	gohelper.setActive(slot0._gonext, false)
+	arg_8_0:_setActive_GlobalClick(false)
+	arg_8_0:_editableInitView_dialogItem()
+	gohelper.setActive(arg_8_0._goitem, false)
+	gohelper.setActive(arg_8_0._goaskphoto, false)
+	gohelper.setActive(arg_8_0._goasktext, false)
+	gohelper.setActive(arg_8_0._goyes, false)
+	gohelper.setActive(arg_8_0._gono, false)
+	gohelper.setActive(arg_8_0._gonext, false)
 
-	slot0._leftAnimEvent = gohelper.onceAddComponent(slot0._leftGo, gohelper.Type_AnimationEventWrap)
+	arg_8_0._leftAnimEvent = gohelper.onceAddComponent(arg_8_0._leftGo, gohelper.Type_AnimationEventWrap)
 
-	slot0._leftAnimEvent:AddEventListener(uv1, slot0._onAnimSwitch, slot0)
-	slot0:_refreshScoreboard()
+	arg_8_0._leftAnimEvent:AddEventListener(var_0_3, arg_8_0._onAnimSwitch, arg_8_0)
+	arg_8_0:_refreshScoreboard()
 end
 
-function slot0.onUpdateParam(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+function var_0_0.onUpdateParam(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._refreshTimeTick, arg_9_0)
+	TaskDispatcher.runRepeat(arg_9_0._refreshTimeTick, arg_9_0, 1)
 end
 
-function slot0._level(slot0)
-	return slot0.viewParam.level or 1
+function var_0_0._level(arg_10_0)
+	return arg_10_0.viewParam.level or 1
 end
 
-function slot0.onOpen(slot0)
-	slot0._isFirstWave = true
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0._isFirstWave = true
 
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, slot0._onTouchScreen, slot0)
-	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onWaveStart, slot0._onWaveStart, slot0)
-	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onRoundStart, slot0._onRoundStart, slot0)
-	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onMoveStep, slot0._onMoveStep, slot0)
-	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onWaveEnd, slot0._onWaveEnd, slot0)
-	slot0:onUpdateParam()
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_11_0._onTouchScreen, arg_11_0)
+	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onWaveStart, arg_11_0._onWaveStart, arg_11_0)
+	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onRoundStart, arg_11_0._onRoundStart, arg_11_0)
+	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onMoveStep, arg_11_0._onMoveStep, arg_11_0)
+	V2a4_WarmUpController.instance:registerCallback(V2a4_WarmUpEvent.onWaveEnd, arg_11_0._onWaveEnd, arg_11_0)
+	arg_11_0:onUpdateParam()
 end
 
-function slot0.onOpenFinish(slot0)
-	V2a4_WarmUpController.instance:restart(slot0:_level())
+function var_0_0.onOpenFinish(arg_12_0)
+	local var_12_0 = arg_12_0:_level()
+
+	V2a4_WarmUpController.instance:restart(var_12_0)
 end
 
-function slot0.onClose(slot0)
-	slot0._modifiledOnceDict = {}
+function var_0_0.onClose(arg_13_0)
+	arg_13_0._modifiledOnceDict = {}
 
-	slot0._leftAnimEvent:RemoveEventListener(uv0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_upTween")
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
-	TaskDispatcher.cancelTask(slot0._onWaitAnsOvertime, slot0)
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, slot0._onTouchScreen, slot0)
-	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onWaveStart, slot0._onWaveStart, slot0)
-	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onRoundStart, slot0._onRoundStart, slot0)
-	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onMoveStep, slot0._onMoveStep, slot0)
-	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onWaveEnd, slot0._onWaveEnd, slot0)
+	arg_13_0._leftAnimEvent:RemoveEventListener(var_0_3)
+	GameUtil.onDestroyViewMember_TweenId(arg_13_0, "_upTween")
+	TaskDispatcher.cancelTask(arg_13_0._refreshTimeTick, arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._onWaitAnsOvertime, arg_13_0)
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_13_0._onTouchScreen, arg_13_0)
+	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onWaveStart, arg_13_0._onWaveStart, arg_13_0)
+	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onRoundStart, arg_13_0._onRoundStart, arg_13_0)
+	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onMoveStep, arg_13_0._onMoveStep, arg_13_0)
+	V2a4_WarmUpController.instance:unregisterCallback(V2a4_WarmUpEvent.onWaveEnd, arg_13_0._onWaveEnd, arg_13_0)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_upTween")
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
-	TaskDispatcher.cancelTask(slot0._onWaitAnsOvertime, slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_dialogueItemList")
-	GameUtil.onDestroyViewMemberList(slot0, "_basicInfoItemList")
+function var_0_0.onDestroyView(arg_14_0)
+	GameUtil.onDestroyViewMember_TweenId(arg_14_0, "_upTween")
+	TaskDispatcher.cancelTask(arg_14_0._refreshTimeTick, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._onWaitAnsOvertime, arg_14_0)
+	GameUtil.onDestroyViewMemberList(arg_14_0, "_dialogueItemList")
+	GameUtil.onDestroyViewMemberList(arg_14_0, "_basicInfoItemList")
 end
 
-function slot0._onWaveStart(slot0, slot1)
-	if slot0._isFirstWave then
-		slot0._isFirstWave = false
+function var_0_0._onWaveStart(arg_15_0, arg_15_1)
+	if arg_15_0._isFirstWave then
+		arg_15_0._isFirstWave = false
 
-		slot0:_onWaveStartInner(slot1)
+		arg_15_0:_onWaveStartInner(arg_15_1)
 	else
-		slot0._lastWaveMO = slot1
+		arg_15_0._lastWaveMO = arg_15_1
 
-		slot0._animPlayer_Left:Play(UIAnimationName.Switch, slot0._onAnimSwitchDone, slot0)
-		slot0:_moveUpToBlank()
+		arg_15_0._animPlayer_Left:Play(UIAnimationName.Switch, arg_15_0._onAnimSwitchDone, arg_15_0)
+		arg_15_0:_moveUpToBlank()
 	end
 end
 
-function slot0._isReachBound(slot0)
-	slot2 = slot0._contentHeight - -slot0._uiInfo.stY
+function var_0_0._isReachBound(arg_16_0)
+	local var_16_0 = -arg_16_0._uiInfo.stY
+	local var_16_1 = arg_16_0._contentHeight - var_16_0
 
-	return Mathf.Approximately(slot2, 0), slot2
+	return Mathf.Approximately(var_16_1, 0), var_16_1
 end
 
-function slot0._moveUpToBlank(slot0)
-	slot3 = slot0._contentMinHeight
+function var_0_0._moveUpToBlank(arg_17_0)
+	local var_17_0 = math.max(1, arg_17_0._lastDialogueIndex)
+	local var_17_1 = #arg_17_0._dialogueItemList
+	local var_17_2 = arg_17_0._contentMinHeight
 
-	for slot7 = math.max(1, slot0._lastDialogueIndex), #slot0._dialogueItemList do
-		slot0._dialogueItemList[slot7]:setGray(true)
+	for iter_17_0 = var_17_0, var_17_1 do
+		arg_17_0._dialogueItemList[iter_17_0]:setGray(true)
 	end
 
-	slot4, slot5 = slot0:_isReachBound()
-	slot0._contentHeight = slot0._contentHeight + slot3
+	local var_17_3, var_17_4 = arg_17_0:_isReachBound()
 
-	if not slot4 then
-		slot0._contentHeight = slot0._contentHeight - slot5
+	arg_17_0._contentHeight = arg_17_0._contentHeight + var_17_2
+
+	if not var_17_3 then
+		arg_17_0._contentHeight = arg_17_0._contentHeight - var_17_4
 	end
 
-	recthelper.setHeight(slot0._rectTrContent, Mathf.Max(slot0._contentHeight, slot0._contentMinHeight))
-	slot0:_playUpAnimation()
+	recthelper.setHeight(arg_17_0._rectTrContent, Mathf.Max(arg_17_0._contentHeight, arg_17_0._contentMinHeight))
+	arg_17_0:_playUpAnimation()
 end
 
-function slot0._onAnimSwitchDone(slot0)
-	if not slot0._lastWaveMO then
+function var_0_0._onAnimSwitchDone(arg_18_0)
+	if not arg_18_0._lastWaveMO then
 		return
 	end
 
-	slot0:_onWaveStartInner()
+	arg_18_0:_onWaveStartInner()
 end
 
-function slot0._onAnimSwitch(slot0)
-	slot0._lastWaveMO = nil
+function var_0_0._onAnimSwitch(arg_19_0)
+	local var_19_0 = arg_19_0._lastWaveMO
 
-	slot0:_onWaveStartInner(slot0._lastWaveMO)
+	arg_19_0._lastWaveMO = nil
+
+	arg_19_0:_onWaveStartInner(var_19_0)
 end
 
-function slot0._onWaveStartInner(slot0, slot1)
-	UIBlockHelper.instance:endBlock(uv0)
-	gohelper.setActive(slot0._gonext, false)
-	gohelper.setActive(slot0._goyes, false)
-	gohelper.setActive(slot0._gono, false)
-	gohelper.setActive(slot0._goasktext, slot1:isRound_Text())
-	gohelper.setActive(slot0._goaskphoto, slot1:isRound_Photo())
-	V2a4_WarmUpController.instance:postWaveStart(slot1)
+function var_0_0._onWaveStartInner(arg_20_0, arg_20_1)
+	UIBlockHelper.instance:endBlock(var_0_4)
+	gohelper.setActive(arg_20_0._gonext, false)
+	gohelper.setActive(arg_20_0._goyes, false)
+	gohelper.setActive(arg_20_0._gono, false)
+	gohelper.setActive(arg_20_0._goasktext, arg_20_1:isRound_Text())
+	gohelper.setActive(arg_20_0._goaskphoto, arg_20_1:isRound_Photo())
+	V2a4_WarmUpController.instance:postWaveStart(arg_20_1)
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot1 = math.max(0, V2a4_WarmUpBattleModel.instance:getRemainTime())
+function var_0_0._refreshTimeTick(arg_21_0)
+	local var_21_0 = V2a4_WarmUpBattleModel.instance:getRemainTime()
+	local var_21_1 = math.max(0, var_21_0)
 
-	slot0:_setTimerText(slot1)
+	arg_21_0:_setTimerText(var_21_1)
 
-	if slot1 <= 0 then
-		TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+	if var_21_1 <= 0 then
+		TaskDispatcher.cancelTask(arg_21_0._refreshTimeTick, arg_21_0)
 		V2a4_WarmUpController.instance:timeout()
 	end
 end
 
-function slot0._setTimerText(slot0, slot1)
-	slot0._txttime.text = uv0(V2a4_WarmUpConfig.instance:getConstStr(2), slot1)
+function var_0_0._setTimerText(arg_22_0, arg_22_1)
+	arg_22_0._txttime.text = var_0_1(V2a4_WarmUpConfig.instance:getConstStr(2), arg_22_1)
 end
 
-function slot0._onWaitAnsOvertime(slot0)
-	slot1, slot2 = V2a4_WarmUpBattleModel.instance:curRound()
+function var_0_0._onWaitAnsOvertime(arg_23_0)
+	local var_23_0, var_23_1 = V2a4_WarmUpBattleModel.instance:curRound()
 
-	if not slot1:isWaitAns() or not slot0:_isLastWaveAndRound(slot2, slot1) then
-		TaskDispatcher.cancelTask(slot0._onWaitAnsOvertime, slot0)
+	if not var_23_0:isWaitAns() or not arg_23_0:_isLastWaveAndRound(var_23_1, var_23_0) then
+		TaskDispatcher.cancelTask(arg_23_0._onWaitAnsOvertime, arg_23_0)
 
 		return
 	end
 
-	if not slot0._lastDialogCO then
+	if not arg_23_0._lastDialogCO then
 		return
 	end
 
-	slot3 = slot0._lastDialogCO
-	slot0._lastDialogCO = nil
+	local var_23_2 = arg_23_0._lastDialogCO
 
-	if slot1:isLastStep() then
-		slot0._lastWaveMO = nil
-		slot0._lastRoundMO = nil
+	arg_23_0._lastDialogCO = nil
+
+	if var_23_0:isLastStep() then
+		arg_23_0._lastWaveMO = nil
+		arg_23_0._lastRoundMO = nil
 	end
 
-	slot0:_appendDialogueItem(slot2, slot1, slot3)
+	arg_23_0:_appendDialogueItem(var_23_1, var_23_0, var_23_2)
 end
 
-function slot0._onRoundStart(slot0, slot1, slot2)
-	slot0:_cleanLast()
+function var_0_0._onRoundStart(arg_24_0, arg_24_1, arg_24_2)
+	arg_24_0:_cleanLast()
 
-	slot0._totRoundCount = slot0._totRoundCount + 1
+	arg_24_0._totRoundCount = arg_24_0._totRoundCount + 1
 
-	slot0:_refreshRoundTitle(slot1, slot2)
-	slot0:_refreshNpcIcon(slot1, slot2)
-	slot0:_refreshNpcInfoList(slot1, slot2)
-	slot0:_refreshPhotoIcon(slot1, slot2)
-	V2a4_WarmUpController.instance:postRoundStart(slot1, slot2)
+	arg_24_0:_refreshRoundTitle(arg_24_1, arg_24_2)
+	arg_24_0:_refreshNpcIcon(arg_24_1, arg_24_2)
+	arg_24_0:_refreshNpcInfoList(arg_24_1, arg_24_2)
+	arg_24_0:_refreshPhotoIcon(arg_24_1, arg_24_2)
+	V2a4_WarmUpController.instance:postRoundStart(arg_24_1, arg_24_2)
 end
 
-function slot0._onMoveStep(slot0, slot1, slot2, slot3)
-	TaskDispatcher.cancelTask(slot0._onWaitAnsOvertime, slot0)
+function var_0_0._onMoveStep(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	TaskDispatcher.cancelTask(arg_25_0._onWaitAnsOvertime, arg_25_0)
 
-	slot4 = slot2:isWaitAns()
-	slot5 = slot2:isReplyResult()
+	local var_25_0 = arg_25_2:isWaitAns()
+	local var_25_1 = arg_25_2:isReplyResult()
 
-	gohelper.setActive(slot0._goyes, slot4)
-	gohelper.setActive(slot0._gono, slot4)
-	gohelper.setActive(slot0._gonext, false)
+	gohelper.setActive(arg_25_0._goyes, var_25_0)
+	gohelper.setActive(arg_25_0._gono, var_25_0)
+	gohelper.setActive(arg_25_0._gonext, false)
 
-	if slot4 then
-		slot0._lastDialogCO = slot3
+	if var_25_0 then
+		arg_25_0._lastDialogCO = arg_25_3
 
-		if slot0:_isLastWaveAndRound(slot1, slot2) then
-			slot0:_onWaitAnsOvertime()
+		if arg_25_0:_isLastWaveAndRound(arg_25_1, arg_25_2) then
+			arg_25_0:_onWaitAnsOvertime()
 		else
-			slot0._lastWaveMO = slot1
-			slot0._lastRoundMO = slot2
+			arg_25_0._lastWaveMO = arg_25_1
+			arg_25_0._lastRoundMO = arg_25_2
 
-			TaskDispatcher.runRepeat(slot0._onWaitAnsOvertime, slot0, V2a4_WarmUpConfig.instance:getHangonWaitSec())
+			TaskDispatcher.runRepeat(arg_25_0._onWaitAnsOvertime, arg_25_0, V2a4_WarmUpConfig.instance:getHangonWaitSec())
 		end
-	elseif slot5 then
-		slot0._animPlayer_Top:Play("refresh", nil, )
+	elseif var_25_1 then
+		arg_25_0._animPlayer_Top:Play("refresh", nil, nil)
 
-		if not slot0:_isLastWaveAndRound(slot1, slot2) then
-			slot0._lastWaveMO = slot1
-			slot0._lastRoundMO = slot2
+		if not arg_25_0:_isLastWaveAndRound(arg_25_1, arg_25_2) then
+			arg_25_0._lastWaveMO = arg_25_1
+			arg_25_0._lastRoundMO = arg_25_2
 
-			if slot2:isWin() then
-				slot0._totCorrectCount = slot0._totCorrectCount + 1
+			if arg_25_2:isWin() then
+				arg_25_0._totCorrectCount = arg_25_0._totCorrectCount + 1
 			else
-				slot0._totWrongCount = slot0._totWrongCount + 1
+				arg_25_0._totWrongCount = arg_25_0._totWrongCount + 1
 			end
 
-			slot0:_refreshScoreboard()
+			arg_25_0:_refreshScoreboard()
 		end
 
-		slot0:_showDialogItemOrStepEnd(slot1, slot2, slot3)
+		arg_25_0:_showDialogItemOrStepEnd(arg_25_1, arg_25_2, arg_25_3)
 	else
-		slot0:_cleanLast()
-		slot0:_showDialogItemOrStepEnd(slot1, slot2, slot3)
+		arg_25_0:_cleanLast()
+		arg_25_0:_showDialogItemOrStepEnd(arg_25_1, arg_25_2, arg_25_3)
 	end
 end
 
-function slot0._showDialogItemOrStepEnd(slot0, slot1, slot2, slot3)
-	if not slot3 then
-		slot0:onStepEnd(slot1, slot2)
+function var_0_0._showDialogItemOrStepEnd(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	if not arg_26_3 then
+		arg_26_0:onStepEnd(arg_26_1, arg_26_2)
 	else
-		slot0:_appendDialogueItem(slot1, slot2, slot3)
+		arg_26_0:_appendDialogueItem(arg_26_1, arg_26_2, arg_26_3)
 	end
 end
 
-function slot0._onWaveEnd(slot0, slot1)
-	gohelper.setActive(slot0._goyes, false)
-	gohelper.setActive(slot0._gono, false)
-	gohelper.setActive(slot0._gonext, true)
+function var_0_0._onWaveEnd(arg_27_0, arg_27_1)
+	gohelper.setActive(arg_27_0._goyes, false)
+	gohelper.setActive(arg_27_0._gono, false)
+	gohelper.setActive(arg_27_0._gonext, true)
 end
 
-function slot0._appendDialogueItem(slot0, slot1, slot2, slot3)
-	slot5 = slot0:_create_V2a4_WarmUp_DialogueView_XXXDialogueItem(slot3.group)
+function var_0_0._appendDialogueItem(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	local var_28_0 = arg_28_3.group
+	local var_28_1 = arg_28_0:_create_V2a4_WarmUp_DialogueView_XXXDialogueItem(var_28_0)
 
-	table.insert(slot0._dialogueItemList, slot5)
-	slot5:onUpdateMO({
-		waveMO = slot1,
-		roundMO = slot2,
-		dialogCO = slot3
-	})
-	slot0:_setActive_GlobalClick(true)
+	table.insert(arg_28_0._dialogueItemList, var_28_1)
+
+	local var_28_2 = {
+		waveMO = arg_28_1,
+		roundMO = arg_28_2,
+		dialogCO = arg_28_3
+	}
+
+	var_28_1:onUpdateMO(var_28_2)
+	arg_28_0:_setActive_GlobalClick(true)
 end
 
-function slot0.onAddContentItem(slot0, slot1, slot2)
-	if not slot0._modifiledOnceDict[slot1] then
-		slot0._modifiledOnceDict[slot1] = {
-			contentHeight = slot0._contentHeight,
-			stY = slot0._uiInfo.stY
+function var_0_0.onAddContentItem(arg_29_0, arg_29_1, arg_29_2)
+	if not arg_29_0._modifiledOnceDict[arg_29_1] then
+		arg_29_0._modifiledOnceDict[arg_29_1] = {
+			contentHeight = arg_29_0._contentHeight,
+			stY = arg_29_0._uiInfo.stY
 		}
 	else
-		slot0._uiInfo.stY = slot0._modifiledOnceDict[slot1].stY
-		slot0._contentHeight = slot0._modifiledOnceDict[slot1].contentHeight
+		arg_29_0._uiInfo.stY = arg_29_0._modifiledOnceDict[arg_29_1].stY
+		arg_29_0._contentHeight = arg_29_0._modifiledOnceDict[arg_29_1].contentHeight
 	end
 
-	slot5, slot6 = slot0:_isReachBound()
+	local var_29_0 = arg_29_2 + arg_29_0._uiInfo.intervalY
+	local var_29_1, var_29_2 = arg_29_0:_isReachBound()
 
-	if slot5 then
-		slot0._contentHeight = slot0._contentHeight + slot2 + slot0._uiInfo.intervalY
+	if var_29_1 then
+		arg_29_0._contentHeight = arg_29_0._contentHeight + var_29_0
 	else
-		slot0._contentHeight = slot0._contentHeight + math.max(0, slot4 - slot6)
+		arg_29_0._contentHeight = arg_29_0._contentHeight + math.max(0, var_29_0 - var_29_2)
 	end
 
-	slot0._uiInfo.stY = slot0._uiInfo.stY - slot4
+	arg_29_0._uiInfo.stY = arg_29_0._uiInfo.stY - var_29_0
 
-	recthelper.setHeight(slot0._rectTrContent, Mathf.Max(slot0._contentHeight, slot0._contentMinHeight))
-	slot0:_playUpAnimation()
+	recthelper.setHeight(arg_29_0._rectTrContent, Mathf.Max(arg_29_0._contentHeight, arg_29_0._contentMinHeight))
+	arg_29_0:_playUpAnimation()
 end
 
-function slot0.onStepEnd(slot0, slot1, slot2)
-	V2a4_WarmUpController.instance:stepEnd(slot1, slot2)
+function var_0_0.onStepEnd(arg_30_0, arg_30_1, arg_30_2)
+	V2a4_WarmUpController.instance:stepEnd(arg_30_1, arg_30_2)
 end
 
-function slot0._playUpAnimation(slot0)
-	if slot0._contentHeight <= slot0._contentMinHeight then
+function var_0_0._playUpAnimation(arg_31_0)
+	if arg_31_0._contentHeight <= arg_31_0._contentMinHeight then
 		return
 	end
 
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_upTween")
+	GameUtil.onDestroyViewMember_TweenId(arg_31_0, "_upTween")
 
-	slot0._upTween = ZProj.TweenHelper.DOTweenFloat(slot0._scrollcontent.verticalNormalizedPosition, 0, 0.5, slot0._frameUpdate, slot0._frameFinished, slot0)
+	arg_31_0._upTween = ZProj.TweenHelper.DOTweenFloat(arg_31_0._scrollcontent.verticalNormalizedPosition, 0, 0.5, arg_31_0._frameUpdate, arg_31_0._frameFinished, arg_31_0)
 end
 
-function slot0._frameUpdate(slot0, slot1)
-	slot0._scrollcontent.verticalNormalizedPosition = slot1
+function var_0_0._frameUpdate(arg_32_0, arg_32_1)
+	arg_32_0._scrollcontent.verticalNormalizedPosition = arg_32_1
 end
 
-function slot0._frameFinished(slot0)
-	gohelper.setActive(slot0._goArrow, false)
+function var_0_0._frameFinished(arg_33_0)
+	gohelper.setActive(arg_33_0._goArrow, false)
 end
 
-function slot0._refreshRoundTitle(slot0, slot1, slot2)
-	slot0._txtsmalltitle.text = uv0(V2a4_WarmUpConfig.instance:getConstStr(1), slot0._totRoundCount)
+function var_0_0._refreshRoundTitle(arg_34_0, arg_34_1, arg_34_2)
+	arg_34_0._txtsmalltitle.text = var_0_1(V2a4_WarmUpConfig.instance:getConstStr(1), arg_34_0._totRoundCount)
 end
 
-function slot0._refreshScoreboard(slot0, slot1, slot2)
-	slot0._txtcorrect.text = tostring(slot0._totCorrectCount)
-	slot0._txtwrong.text = tostring(slot0._totWrongCount)
+function var_0_0._refreshScoreboard(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_0._txtcorrect.text = tostring(arg_35_0._totCorrectCount)
+	arg_35_0._txtwrong.text = tostring(arg_35_0._totWrongCount)
 end
 
-function slot0._refreshNpcIcon(slot0, slot1, slot2)
-	if not slot1:isRound_Text() then
+function var_0_0._refreshNpcIcon(arg_36_0, arg_36_1, arg_36_2)
+	if not arg_36_1:isRound_Text() then
 		return
 	end
 
-	GameUtil.loadSImage(slot0._simageroleicon, slot2:resUrl())
+	GameUtil.loadSImage(arg_36_0._simageroleicon, arg_36_2:resUrl())
 end
 
-function slot0._refreshPhotoIcon(slot0, slot1, slot2)
-	if not slot1:isRound_Photo() then
+function var_0_0._refreshPhotoIcon(arg_37_0, arg_37_1, arg_37_2)
+	if not arg_37_1:isRound_Photo() then
 		return
 	end
 
-	GameUtil.loadSImage(slot0._simageimage, slot2:resUrl())
+	GameUtil.loadSImage(arg_37_0._simageimage, arg_37_2:resUrl())
 end
 
-function slot0._getNpcBasicInfoIdList(slot0, slot1)
-	slot2 = V2a4_WarmUpConfig.instance:textItemListCO(slot1)
+function var_0_0._getNpcBasicInfoIdList(arg_38_0, arg_38_1)
+	local var_38_0 = V2a4_WarmUpConfig.instance:textItemListCO(arg_38_1)
 
 	return {
-		slot2.info1,
-		slot2.info2,
-		slot2.info3,
-		slot2.info4,
-		slot2.info5,
-		slot2.info6
+		var_38_0.info1,
+		var_38_0.info2,
+		var_38_0.info3,
+		var_38_0.info4,
+		var_38_0.info5,
+		var_38_0.info6
 	}
 end
 
-function slot0._refreshNpcInfoList(slot0, slot1, slot2)
-	if not slot1:isRound_Text() then
+function var_0_0._refreshNpcInfoList(arg_39_0, arg_39_1, arg_39_2)
+	if not arg_39_1:isRound_Text() then
 		return
 	end
 
-	for slot8, slot9 in ipairs(slot0:_getNpcBasicInfoIdList(slot2:cfgId())) do
-		slot10 = nil
+	local var_39_0 = arg_39_2:cfgId()
+	local var_39_1 = arg_39_0:_getNpcBasicInfoIdList(var_39_0)
 
-		if slot8 > #slot0._basicInfoItemList then
-			table.insert(slot0._basicInfoItemList, slot0:_create_V2a4_WarmUp_DialogueView_BasicInfoItem(slot8))
+	for iter_39_0, iter_39_1 in ipairs(var_39_1) do
+		local var_39_2
+
+		if iter_39_0 > #arg_39_0._basicInfoItemList then
+			var_39_2 = arg_39_0:_create_V2a4_WarmUp_DialogueView_BasicInfoItem(iter_39_0)
+
+			table.insert(arg_39_0._basicInfoItemList, var_39_2)
 		else
-			slot10 = slot0._basicInfoItemList[slot8]
+			var_39_2 = arg_39_0._basicInfoItemList[iter_39_0]
 		end
 
-		slot11 = slot9 ~= 0
+		local var_39_3 = iter_39_1 ~= 0
 
-		slot10:setActive(slot11)
+		var_39_2:setActive(var_39_3)
 
-		if slot11 then
-			slot10:onUpdateMO(slot9)
+		if var_39_3 then
+			var_39_2:onUpdateMO(iter_39_1)
 		end
 	end
 
-	for slot8 = #slot4 + 1, #slot0._basicInfoItemList do
-		slot0._basicInfoItemList[slot8]:setActive(false)
+	for iter_39_2 = #var_39_1 + 1, #arg_39_0._basicInfoItemList do
+		arg_39_0._basicInfoItemList[iter_39_2]:setActive(false)
 	end
 end
 
-function slot0._create_V2a4_WarmUp_DialogueView_BasicInfoItem(slot0, slot1)
-	slot3 = V2a4_WarmUp_DialogueView_BasicInfoItem.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+function var_0_0._create_V2a4_WarmUp_DialogueView_BasicInfoItem(arg_40_0, arg_40_1)
+	local var_40_0 = gohelper.cloneInPlace(arg_40_0._goitem)
+	local var_40_1 = V2a4_WarmUp_DialogueView_BasicInfoItem.New({
+		parent = arg_40_0,
+		baseViewContainer = arg_40_0.viewContainer
 	})
 
-	slot3:setIndex(slot1)
-	slot3:init(gohelper.cloneInPlace(slot0._goitem))
+	var_40_1:setIndex(arg_40_1)
+	var_40_1:init(var_40_0)
 
-	return slot3
+	return var_40_1
 end
 
-function slot0._create_V2a4_WarmUp_DialogueView_XXXDialogueItem(slot0, slot1)
-	slot2 = V2a4_WarmUpConfig.instance:getDialogStyleCO(slot1)
-	slot3 = _G[slot2.className]
+function var_0_0._create_V2a4_WarmUp_DialogueView_XXXDialogueItem(arg_41_0, arg_41_1)
+	local var_41_0 = V2a4_WarmUpConfig.instance:getDialogStyleCO(arg_41_1)
+	local var_41_1 = _G[var_41_0.className]
 
-	assert(slot3)
+	assert(var_41_1)
 
-	slot4 = slot3.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+	local var_41_2 = var_41_1.New({
+		parent = arg_41_0,
+		baseViewContainer = arg_41_0.viewContainer
 	})
-	slot5 = gohelper.cloneInPlace(slot4:getTemplateGo())
+	local var_41_3 = gohelper.cloneInPlace(var_41_2:getTemplateGo())
 
-	gohelper.setActive(slot5, true)
-	slot4:init(slot5)
-	slot4:setFontColor(slot2.fontColor)
+	gohelper.setActive(var_41_3, true)
+	var_41_2:init(var_41_3)
+	var_41_2:setFontColor(var_41_0.fontColor)
 
-	return slot4
+	return var_41_2
 end
 
-function slot0.flush(slot0)
-	if not slot0._dialogueItemList[#slot0._dialogueItemList] then
-		slot0:_setActive_GlobalClick(false)
+function var_0_0.flush(arg_42_0)
+	local var_42_0 = arg_42_0._dialogueItemList[#arg_42_0._dialogueItemList]
+
+	if not var_42_0 then
+		arg_42_0:_setActive_GlobalClick(false)
 
 		return
 	end
 
-	if not slot1:isFlushed() then
-		slot1:onFlush()
+	if not var_42_0:isFlushed() then
+		var_42_0:onFlush()
 	else
-		slot0:_setActive_GlobalClick(false)
+		arg_42_0:_setActive_GlobalClick(false)
 	end
 end
 
-function slot0._isLastWaveAndRound(slot0, slot1, slot2)
-	return slot1 ~= nil and slot0._lastWaveMO == slot1 and slot0._lastRoundMO == slot2
+function var_0_0._isLastWaveAndRound(arg_43_0, arg_43_1, arg_43_2)
+	return arg_43_1 ~= nil and arg_43_0._lastWaveMO == arg_43_1 and arg_43_0._lastRoundMO == arg_43_2
 end
 
-function slot0._setActive_GlobalClick(slot0, slot1)
-	slot0._allowGlobalClick = slot1
+function var_0_0._setActive_GlobalClick(arg_44_0, arg_44_1)
+	arg_44_0._allowGlobalClick = arg_44_1
 end
 
-function slot0._onTouchScreen(slot0)
-	if not slot0._allowGlobalClick then
+function var_0_0._onTouchScreen(arg_45_0)
+	if not arg_45_0._allowGlobalClick then
 		return
 	end
 
-	slot0:flush()
+	arg_45_0:flush()
 end
 
-function slot0._cleanLast(slot0)
-	slot0._lastWaveMO = nil
-	slot0._lastRoundMO = nil
-	slot0._lastDialogCO = nil
+function var_0_0._cleanLast(arg_46_0)
+	arg_46_0._lastWaveMO = nil
+	arg_46_0._lastRoundMO = nil
+	arg_46_0._lastDialogCO = nil
 end
 
-function slot0.uiInfo(slot0)
-	return slot0._uiInfo
+function var_0_0.uiInfo(arg_47_0)
+	return arg_47_0._uiInfo
 end
 
-return slot0
+return var_0_0

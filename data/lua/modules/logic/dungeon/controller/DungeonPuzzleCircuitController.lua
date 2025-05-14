@@ -1,21 +1,24 @@
-module("modules.logic.dungeon.controller.DungeonPuzzleCircuitController", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonPuzzleCircuitController", package.seeall)
 
-slot0 = class("DungeonPuzzleCircuitController", BaseController)
+local var_0_0 = class("DungeonPuzzleCircuitController", BaseController)
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_1_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-function slot0.openGame(slot0, slot1)
-	DungeonPuzzleCircuitModel.instance:initByElementCo(slot1)
+function var_0_0.openGame(arg_4_0, arg_4_1)
+	DungeonPuzzleCircuitModel.instance:initByElementCo(arg_4_1)
 	ViewMgr.instance:openView(ViewName.DungeonPuzzleCircuitView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

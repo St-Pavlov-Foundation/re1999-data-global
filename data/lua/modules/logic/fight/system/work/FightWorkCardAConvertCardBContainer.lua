@@ -1,17 +1,18 @@
-module("modules.logic.fight.system.work.FightWorkCardAConvertCardBContainer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCardAConvertCardBContainer", package.seeall)
 
-slot0 = class("FightWorkCardAConvertCardBContainer", FightStepEffectFlow)
-slot1 = {
+local var_0_0 = class("FightWorkCardAConvertCardBContainer", FightStepEffectFlow)
+local var_0_1 = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true,
 	[FightEnum.EffectType.CHANGEHERO] = true
 }
 
-function slot0.onStart(slot0)
-	slot0:playAdjacentParallelEffect(uv0, true)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

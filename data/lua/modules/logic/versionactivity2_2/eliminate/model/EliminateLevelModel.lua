@@ -1,219 +1,251 @@
-module("modules.logic.versionactivity2_2.eliminate.model.EliminateLevelModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateLevelModel", package.seeall)
 
-slot0 = class("EliminateLevelModel", BaseModel)
+local var_0_0 = class("EliminateLevelModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.initLevel(slot0, slot1, slot2, slot3)
-	slot0._levelId = slot1
-	slot0._warChessCharacterId = slot2
-	slot0._pieceIds = slot3
-	slot0.curRoundType = EliminateEnum.RoundType.TeamChess
+function var_0_0.initLevel(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0._levelId = arg_3_1
+	arg_3_0._warChessCharacterId = arg_3_2
+	arg_3_0._pieceIds = arg_3_3
+	arg_3_0.curRoundType = EliminateEnum.RoundType.TeamChess
 
-	EliminateTeamChessModel.instance:initTeamChess(EliminateConfig.instance:getEliminateEpisodeConfig(slot0._levelId).warChessId)
+	local var_3_0 = EliminateConfig.instance:getEliminateEpisodeConfig(arg_3_0._levelId)
 
-	slot0.beginTime = Time.realtimeSinceStartup
+	EliminateTeamChessModel.instance:initTeamChess(var_3_0.warChessId)
+
+	arg_3_0.beginTime = Time.realtimeSinceStartup
 end
 
-function slot0.getCurLevelPieceIds(slot0)
-	return slot0._pieceIds
+function var_0_0.getCurLevelPieceIds(arg_4_0)
+	return arg_4_0._pieceIds
 end
 
-function slot0.setCurRoundType(slot0, slot1)
-	slot0.curRoundType = slot1
+function var_0_0.setCurRoundType(arg_5_0, arg_5_1)
+	arg_5_0.curRoundType = arg_5_1
 end
 
-function slot0.getWarChessCharacterId(slot0)
-	return slot0._warChessCharacterId
+function var_0_0.getWarChessCharacterId(arg_6_0)
+	return arg_6_0._warChessCharacterId
 end
 
-function slot0.setNeedChangeTeamToEliminate(slot0, slot1)
-	slot0._needChangeTeamToEliminate = slot1
+function var_0_0.setNeedChangeTeamToEliminate(arg_7_0, arg_7_1)
+	arg_7_0._needChangeTeamToEliminate = arg_7_1
 end
 
-function slot0.getLevelId(slot0)
-	return slot0._levelId
+function var_0_0.getLevelId(arg_8_0)
+	return arg_8_0._levelId
 end
 
-function slot0.getCurLevelConfig(slot0)
-	return EliminateConfig.instance:getEliminateEpisodeConfig(slot0._levelId)
+function var_0_0.getCurLevelConfig(arg_9_0)
+	return EliminateConfig.instance:getEliminateEpisodeConfig(arg_9_0._levelId)
 end
 
-function slot0.getCurRoundType(slot0)
-	return slot0.curRoundType
+function var_0_0.getCurRoundType(arg_10_0)
+	return arg_10_0.curRoundType
 end
 
-function slot0.getRoundNumber(slot0)
-	return EliminateTeamChessModel.instance:getServerTeamChessWar() and slot1.round or 1
+function var_0_0.getRoundNumber(arg_11_0)
+	local var_11_0 = EliminateTeamChessModel.instance:getServerTeamChessWar()
+
+	return var_11_0 and var_11_0.round or 1
 end
 
-function slot0.needPlayShowView(slot0)
-	return slot0:getRoundNumber() < 2
+function var_0_0.needPlayShowView(arg_12_0)
+	return arg_12_0:getRoundNumber() < 2
 end
 
-function slot0.getNeedChangeTeamToEliminate(slot0)
-	return slot0._needChangeTeamToEliminate
+function var_0_0.getNeedChangeTeamToEliminate(arg_13_0)
+	return arg_13_0._needChangeTeamToEliminate
 end
 
-function slot0.clear(slot0)
-	slot0.curRoundType = nil
-	slot0._needChangeTeamToEliminate = nil
-	slot0.curRoundNumber = 1
-	slot0._useSkillCount = 0
-	slot0._star = 0
+function var_0_0.clear(arg_14_0)
+	arg_14_0.curRoundType = nil
+	arg_14_0._needChangeTeamToEliminate = nil
+	arg_14_0.curRoundNumber = 1
+	arg_14_0._useSkillCount = 0
+	arg_14_0._star = 0
 end
 
-function slot0.mainCharacterSkillIsUnLock(slot0)
-	if EliminateConfig.instance:getUnLockMainCharacterSkillConst() then
-		return EliminateOutsideModel.instance:hasPassedEpisode(slot1)
+function var_0_0.mainCharacterSkillIsUnLock(arg_15_0)
+	local var_15_0 = EliminateConfig.instance:getUnLockMainCharacterSkillConst()
+
+	if var_15_0 then
+		return (EliminateOutsideModel.instance:hasPassedEpisode(var_15_0))
 	end
 
 	return false
 end
 
-function slot0.sellChessIsUnLock(slot0)
-	if EliminateConfig.instance:getUnLockChessSellConst() then
-		return EliminateOutsideModel.instance:hasPassedEpisode(slot1)
+function var_0_0.sellChessIsUnLock(arg_16_0)
+	local var_16_0 = EliminateConfig.instance:getUnLockChessSellConst()
+
+	if var_16_0 then
+		return (EliminateOutsideModel.instance:hasPassedEpisode(var_16_0))
 	end
 
 	return false
 end
 
-function slot0.selectSoliderIsUnLock(slot0)
-	if tonumber(EliminateConfig.instance:getUnLockSelectSoliderConst()) then
-		return EliminateOutsideModel.instance:hasPassedEpisode(slot1)
+function var_0_0.selectSoliderIsUnLock(arg_17_0)
+	local var_17_0 = EliminateConfig.instance:getUnLockSelectSoliderConst()
+	local var_17_1 = tonumber(var_17_0)
+
+	if var_17_1 then
+		return (EliminateOutsideModel.instance:hasPassedEpisode(var_17_1))
 	end
 
 	return false
 end
 
-function slot0.canReleaseSkill(slot0)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() == nil then
+function var_0_0.canReleaseSkill(arg_18_0)
+	local var_18_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+
+	if var_18_0 == nil then
 		return false
 	end
 
-	if not EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).activeSkillIds) or string.nilorempty(slot3.effect) then
+	local var_18_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_18_0.id)
+	local var_18_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_18_1.activeSkillIds)
+
+	if not var_18_2 or string.nilorempty(var_18_2.effect) then
 		return false
 	end
 
-	return slot3.cost <= slot1.power
+	return var_18_0.power >= var_18_2.cost
 end
 
-function slot0.setIsWatchTeamChess(slot0, slot1)
-	slot0._isWatchTeamChess = slot1
+function var_0_0.setIsWatchTeamChess(arg_19_0, arg_19_1)
+	arg_19_0._isWatchTeamChess = arg_19_1
 end
 
-function slot0.getIsWatchTeamChess(slot0)
-	if slot0._isWatchTeamChess == nil then
-		-- Nothing
+function var_0_0.getIsWatchTeamChess(arg_20_0)
+	if arg_20_0._isWatchTeamChess == nil then
+		-- block empty
 	end
 
-	return slot0._isWatchTeamChess
+	return arg_20_0._isWatchTeamChess
 end
 
-function slot0.formatString(slot0, slot1)
-	return slot0:gsub("<(.-):(.-)>", function (slot0, slot1)
-		slot2 = uv0 and uv0[slot1] or EliminateTeamChessEnum.PreBattleFormatType[slot1]
+function var_0_0.formatString(arg_21_0, arg_21_1)
+	return (arg_21_0:gsub("<(.-):(.-)>", function(arg_22_0, arg_22_1)
+		local var_22_0 = arg_21_1 and arg_21_1[arg_22_1] or EliminateTeamChessEnum.PreBattleFormatType[arg_22_1]
 
-		return slot2 and string.format(slot2, slot0) or slot0
-	end)
+		return var_22_0 and string.format(var_22_0, arg_22_0) or arg_22_0
+	end))
 end
 
-function slot0.getAllStrongHoldId(slot0)
-	slot1 = {}
+function var_0_0.getAllStrongHoldId(arg_23_0)
+	local var_23_0 = {}
+	local var_23_1 = EliminateTeamChessModel.instance:getStrongholds()
 
-	for slot6 = 1, #EliminateTeamChessModel.instance:getStrongholds() do
-		table.insert(slot1, slot2[slot6].id)
+	for iter_23_0 = 1, #var_23_1 do
+		local var_23_2 = var_23_1[iter_23_0]
+
+		table.insert(var_23_0, var_23_2.id)
 	end
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.getAllPieceName(slot0)
-	slot1 = {}
+function var_0_0.getAllPieceName(arg_24_0)
+	local var_24_0 = {}
 
-	for slot5 = 1, #slot0._pieceIds do
-		table.insert(slot1, EliminateConfig.instance:getSoldierChessConfig(slot0._pieceIds[slot5]).name)
+	for iter_24_0 = 1, #arg_24_0._pieceIds do
+		local var_24_1 = EliminateConfig.instance:getSoldierChessConfig(arg_24_0._pieceIds[iter_24_0])
+
+		table.insert(var_24_0, var_24_1.name)
 	end
 
-	return slot1
+	return var_24_0
 end
 
-function slot0.setStar(slot0, slot1)
-	slot0._star = slot1
+function var_0_0.setStar(arg_25_0, arg_25_1)
+	arg_25_0._star = arg_25_1
 end
 
-function slot0.getStar(slot0)
-	return slot0._star or 0
+function var_0_0.getStar(arg_26_0)
+	return arg_26_0._star or 0
 end
 
-function slot0.resourceIdToDict(slot0, slot1)
-	slot2 = {}
+function var_0_0.resourceIdToDict(arg_27_0, arg_27_1)
+	local var_27_0 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		table.insert(slot2, {
-			resources_colour = slot6,
-			resources_num = slot7
-		})
+	for iter_27_0, iter_27_1 in pairs(arg_27_1) do
+		local var_27_1 = {
+			resources_colour = iter_27_0,
+			resources_num = iter_27_1
+		}
+
+		table.insert(var_27_0, var_27_1)
 	end
 
-	return slot2
+	return var_27_0
 end
 
-function slot0.addMainUseSkillNum(slot0)
-	slot0._useSkillCount = (slot0._useSkillCount or 0) + 1
+function var_0_0.addMainUseSkillNum(arg_28_0)
+	arg_28_0._useSkillCount = (arg_28_0._useSkillCount or 0) + 1
 end
 
-function slot0.getMainUseSkillNum(slot0)
-	return slot0._useSkillCount or 0
+function var_0_0.getMainUseSkillNum(arg_29_0)
+	return arg_29_0._useSkillCount or 0
 end
 
-function slot0.sendStatData(slot0, slot1)
-	slot2 = slot0:getAllStrongHoldId()
-	slot4 = EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot0._warChessCharacterId).activeSkillIds)
-	slot5 = slot0:getAllPieceName()
-	slot6 = slot0:getStar()
-	slot8 = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
-	slot9 = 0
-	slot10 = 0
-	slot11 = 0
-	slot12 = 0
+function var_0_0.sendStatData(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0:getAllStrongHoldId()
+	local var_30_1 = EliminateConfig.instance:getTeamChessCharacterConfig(arg_30_0._warChessCharacterId)
+	local var_30_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_30_1.activeSkillIds)
+	local var_30_3 = arg_30_0:getAllPieceName()
+	local var_30_4 = arg_30_0:getStar()
+	local var_30_5 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+	local var_30_6 = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
+	local var_30_7 = 0
+	local var_30_8 = 0
+	local var_30_9 = 0
+	local var_30_10 = 0
 
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() ~= nil then
-		slot9 = slot7.hp
-		slot12 = slot7.hpInjury
+	if var_30_5 ~= nil then
+		var_30_7 = var_30_5.hp
+		var_30_10 = var_30_5.hpInjury
 	end
 
-	if slot8 ~= nil then
-		slot10 = slot8.hp
-		slot11 = slot8.hpInjury
+	if var_30_6 ~= nil then
+		var_30_8 = var_30_6.hp
+		var_30_9 = var_30_6.hpInjury
 	end
+
+	local var_30_11 = arg_30_0:resourceIdToDict(var_30_5.addDiamonds)
+	local var_30_12 = arg_30_0:resourceIdToDict(var_30_5.removeDiamonds)
+	local var_30_13 = arg_30_0:resourceIdToDict(var_30_5.diamonds)
+	local var_30_14 = arg_30_0:getMainUseSkillNum()
 
 	StatController.instance:track(StatEnum.EventName.TeamchessSettlement, {
-		[StatEnum.EventProperties.EpisodeId] = tostring(slot0._levelId),
-		[StatEnum.EventProperties.StrongholdId] = slot2,
-		[StatEnum.EventProperties.MainFighter] = slot3.name,
-		[StatEnum.EventProperties.MainFighterSkill] = slot4.name,
-		[StatEnum.EventProperties.InitialChess] = slot5,
-		[StatEnum.EventProperties.Result] = slot1,
-		[StatEnum.EventProperties.Star] = slot6,
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - slot0.beginTime,
-		[StatEnum.EventProperties.TotalRound] = slot0:getRoundNumber(),
-		[StatEnum.EventProperties.OurRemainingHP] = slot9,
-		[StatEnum.EventProperties.EnemyRemainingHP] = slot10,
-		[StatEnum.EventProperties.SettlementHarm] = slot11,
-		[StatEnum.EventProperties.SettlementInjury] = slot12,
-		[StatEnum.EventProperties.GainResources] = slot0:resourceIdToDict(slot7.addDiamonds),
-		[StatEnum.EventProperties.ConsumeResources] = slot0:resourceIdToDict(slot7.removeDiamonds),
-		[StatEnum.EventProperties.ResidueResources] = slot0:resourceIdToDict(slot7.diamonds),
-		[StatEnum.EventProperties.MainFighterSkillNum] = slot0:getMainUseSkillNum()
+		[StatEnum.EventProperties.EpisodeId] = tostring(arg_30_0._levelId),
+		[StatEnum.EventProperties.StrongholdId] = var_30_0,
+		[StatEnum.EventProperties.MainFighter] = var_30_1.name,
+		[StatEnum.EventProperties.MainFighterSkill] = var_30_2.name,
+		[StatEnum.EventProperties.InitialChess] = var_30_3,
+		[StatEnum.EventProperties.Result] = arg_30_1,
+		[StatEnum.EventProperties.Star] = var_30_4,
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_30_0.beginTime,
+		[StatEnum.EventProperties.TotalRound] = arg_30_0:getRoundNumber(),
+		[StatEnum.EventProperties.OurRemainingHP] = var_30_7,
+		[StatEnum.EventProperties.EnemyRemainingHP] = var_30_8,
+		[StatEnum.EventProperties.SettlementHarm] = var_30_9,
+		[StatEnum.EventProperties.SettlementInjury] = var_30_10,
+		[StatEnum.EventProperties.GainResources] = var_30_11,
+		[StatEnum.EventProperties.ConsumeResources] = var_30_12,
+		[StatEnum.EventProperties.ResidueResources] = var_30_13,
+		[StatEnum.EventProperties.MainFighterSkillNum] = var_30_14
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,677 +1,697 @@
-module("modules.logic.rouge.map.model.mapmodel.RougeMapModel", package.seeall)
+﻿module("modules.logic.rouge.map.model.mapmodel.RougeMapModel", package.seeall)
 
-slot0 = class("RougeMapModel")
+local var_0_0 = class("RougeMapModel")
 
-function slot0.init(slot0, slot1)
-	slot0.mapType = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.mapType = arg_1_1
 end
 
-function slot0.getMapType(slot0)
-	return slot0.mapType
+function var_0_0.getMapType(arg_2_0)
+	return arg_2_0.mapType
 end
 
-function slot0.setMapSize(slot0, slot1)
-	slot0.mapSize = slot1
+function var_0_0.setMapSize(arg_3_0, arg_3_1)
+	arg_3_0.mapSize = arg_3_1
 
-	slot0:calculateMapEpisodeIntervalX()
+	arg_3_0:calculateMapEpisodeIntervalX()
 end
 
-function slot0.getMapSize(slot0)
-	return slot0.mapSize
+function var_0_0.getMapSize(arg_4_0)
+	return arg_4_0.mapSize
 end
 
-function slot0.calculateMapEpisodeIntervalX(slot0)
-	if not slot0:isNormalLayer() then
-		slot0.mapEpisodeIntervalX = 0
+function var_0_0.calculateMapEpisodeIntervalX(arg_5_0)
+	if not arg_5_0:isNormalLayer() then
+		arg_5_0.mapEpisodeIntervalX = 0
 
 		return
 	end
 
-	slot0.mapEpisodeIntervalX = RougeMapHelper.retain2decimals((slot0.mapSize.x - RougeMapEnum.MapStartOffsetX * 2) / (#slot0:getEpisodeList() - 1))
+	local var_5_0 = arg_5_0.mapSize.x - RougeMapEnum.MapStartOffsetX * 2
+	local var_5_1 = #arg_5_0:getEpisodeList() - 1
+
+	arg_5_0.mapEpisodeIntervalX = RougeMapHelper.retain2decimals(var_5_0 / var_5_1)
 end
 
-function slot0.getMapEpisodeIntervalX(slot0)
-	return slot0.mapEpisodeIntervalX
+function var_0_0.getMapEpisodeIntervalX(arg_6_0)
+	return arg_6_0.mapEpisodeIntervalX
 end
 
-function slot0.setCameraSize(slot0, slot1)
-	slot0.cameraSize = slot1
+function var_0_0.setCameraSize(arg_7_0, arg_7_1)
+	arg_7_0.cameraSize = arg_7_1
 end
 
-function slot0.setMapXRange(slot0, slot1, slot2)
-	slot0.minX = slot1
-	slot0.maxX = slot2
+function var_0_0.setMapXRange(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.minX = arg_8_1
+	arg_8_0.maxX = arg_8_2
 end
 
-function slot0.getCameraSize(slot0)
-	return slot0.cameraSize
+function var_0_0.getCameraSize(arg_9_0)
+	return arg_9_0.cameraSize
 end
 
-function slot0.setMapPosX(slot0, slot1)
-	if slot1 < slot0.minX then
-		slot1 = slot0.minX
+function var_0_0.setMapPosX(arg_10_0, arg_10_1)
+	if arg_10_1 < arg_10_0.minX then
+		arg_10_1 = arg_10_0.minX
 	end
 
-	if slot0.maxX < slot1 then
-		slot1 = slot0.maxX
+	if arg_10_1 > arg_10_0.maxX then
+		arg_10_1 = arg_10_0.maxX
 	end
 
-	if slot0.mapPosX == slot1 then
+	if arg_10_0.mapPosX == arg_10_1 then
 		return
 	end
 
-	slot0.mapPosX = slot1
+	arg_10_0.mapPosX = arg_10_1
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onMapPosChange, slot0.mapPosX)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onMapPosChange, arg_10_0.mapPosX)
 end
 
-function slot0.getMapPosX(slot0)
-	return slot0.mapPosX
+function var_0_0.getMapPosX(arg_11_0)
+	return arg_11_0.mapPosX
 end
 
-function slot0.setFocusScreenPosX(slot0, slot1)
-	slot0.focusScreenPosX = slot1
+function var_0_0.setFocusScreenPosX(arg_12_0, arg_12_1)
+	arg_12_0.focusScreenPosX = arg_12_1
 end
 
-function slot0.getFocusScreenPosX(slot0)
-	return slot0.focusScreenPosX
+function var_0_0.getFocusScreenPosX(arg_13_0)
+	return arg_13_0.focusScreenPosX
 end
 
-function slot0.getLayerId(slot0)
-	return slot0.mapModel and slot0.mapModel.layerId
+function var_0_0.getLayerId(arg_14_0)
+	return arg_14_0.mapModel and arg_14_0.mapModel.layerId
 end
 
-function slot0.getLayerCo(slot0)
-	return slot0.mapModel and slot0.mapModel.layerCo
+function var_0_0.getLayerCo(arg_15_0)
+	return arg_15_0.mapModel and arg_15_0.mapModel.layerCo
 end
 
-function slot0.isNormalLayer(slot0)
-	return slot0.mapType == RougeMapEnum.MapType.Normal
+function var_0_0.isNormalLayer(arg_16_0)
+	return arg_16_0.mapType == RougeMapEnum.MapType.Normal
 end
 
-function slot0.isMiddle(slot0)
-	return slot0.mapType == RougeMapEnum.MapType.Middle
+function var_0_0.isMiddle(arg_17_0)
+	return arg_17_0.mapType == RougeMapEnum.MapType.Middle
 end
 
-function slot0.isPathSelect(slot0)
-	return slot0.mapType == RougeMapEnum.MapType.PathSelect
+function var_0_0.isPathSelect(arg_18_0)
+	return arg_18_0.mapType == RougeMapEnum.MapType.PathSelect
 end
 
-function slot0.getMiddleLayerId(slot0)
-	return slot0.mapModel and slot0.mapModel.middleLayerId
+function var_0_0.getMiddleLayerId(arg_19_0)
+	return arg_19_0.mapModel and arg_19_0.mapModel.middleLayerId
 end
 
-function slot0.getMiddleLayerCo(slot0)
-	return slot0.mapModel and slot0.mapModel.middleCo
+function var_0_0.getMiddleLayerCo(arg_20_0)
+	return arg_20_0.mapModel and arg_20_0.mapModel.middleCo
 end
 
-function slot0.getPathSelectCo(slot0)
-	return slot0.mapModel and slot0.mapModel.pathSelectCo
+function var_0_0.getPathSelectCo(arg_21_0)
+	return arg_21_0.mapModel and arg_21_0.mapModel.pathSelectCo
 end
 
-function slot0.setWaitLeaveMiddleLayerReply(slot0, slot1)
-	slot0.waitMiddleLayerReply = slot1
+function var_0_0.setWaitLeaveMiddleLayerReply(arg_22_0, arg_22_1)
+	arg_22_0.waitMiddleLayerReply = arg_22_1
 end
 
-function slot0.updateSimpleMapInfo(slot0, slot1)
-	if slot0.waitMiddleLayerReply then
+function var_0_0.updateSimpleMapInfo(arg_23_0, arg_23_1)
+	if arg_23_0.waitMiddleLayerReply then
 		return
 	end
 
-	if not slot0:_isSameMap(slot1) then
+	if not arg_23_0:_isSameMap(arg_23_1) then
 		return
 	end
 
-	if slot0.mapType == RougeMapEnum.MapType.Middle or slot0.mapType == RougeMapEnum.MapType.PathSelect then
-		slot0.mapModel:updateSimpleMapInfo(slot1.middleLayerInfo)
+	if arg_23_0.mapType == RougeMapEnum.MapType.Middle or arg_23_0.mapType == RougeMapEnum.MapType.PathSelect then
+		arg_23_0.mapModel:updateSimpleMapInfo(arg_23_1.middleLayerInfo)
 	else
-		slot0.mapModel:updateSimpleMapInfo(slot1.layerInfo)
+		arg_23_0.mapModel:updateSimpleMapInfo(arg_23_1.layerInfo)
 	end
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onUpdateMapInfo)
 end
 
-function slot0.updateMapInfo(slot0, slot1)
-	if slot0.waitMiddleLayerReply then
+function var_0_0.updateMapInfo(arg_24_0, arg_24_1)
+	if arg_24_0.waitMiddleLayerReply then
 		return
 	end
 
-	if slot0.inited then
-		if slot0:_isSameMap(slot1) then
-			slot0:_updateMapInfo(slot1)
+	if arg_24_0.inited then
+		if arg_24_0:_isSameMap(arg_24_1) then
+			arg_24_0:_updateMapInfo(arg_24_1)
 		else
-			slot0:_changeMapInfo(slot1)
+			arg_24_0:_changeMapInfo(arg_24_1)
 		end
 	else
-		slot0:_initMapInfo(slot1)
+		arg_24_0:_initMapInfo(arg_24_1)
 	end
 end
 
-function slot0._isSameMap(slot0, slot1)
-	if not slot0.inited then
+function var_0_0._isSameMap(arg_25_0, arg_25_1)
+	if not arg_25_0.inited then
 		return false
 	end
 
-	if slot0.mapType ~= slot0:_getTypeByInfo(slot1) then
+	if arg_25_0.mapType ~= arg_25_0:_getTypeByInfo(arg_25_1) then
 		return false
 	end
 
-	if slot0.mapType == RougeMapEnum.MapType.Normal then
-		return slot0.mapModel.layerId == slot1.layerInfo.layerId
+	if arg_25_0.mapType == RougeMapEnum.MapType.Normal then
+		return arg_25_0.mapModel.layerId == arg_25_1.layerInfo.layerId
 	end
 
-	return slot0.mapModel.layerId == slot1.middleLayerInfo.layerId and slot0.mapModel.middleLayerId == slot2.middleLayerId
+	local var_25_0 = arg_25_1.middleLayerInfo
+
+	return arg_25_0.mapModel.layerId == var_25_0.layerId and arg_25_0.mapModel.middleLayerId == var_25_0.middleLayerId
 end
 
-function slot0._getTypeByInfo(slot0, slot1)
-	if slot1.mapType ~= RougeMapEnum.MapType.Middle then
-		return slot1.mapType
+function var_0_0._getTypeByInfo(arg_26_0, arg_26_1)
+	if arg_26_1.mapType ~= RougeMapEnum.MapType.Middle then
+		return arg_26_1.mapType
 	end
 
-	if slot1.middleLayerInfo.positionIndex == RougeMapEnum.PathSelectIndex then
+	if arg_26_1.middleLayerInfo.positionIndex == RougeMapEnum.PathSelectIndex then
 		return RougeMapEnum.MapType.PathSelect
 	end
 
 	return RougeMapEnum.MapType.Middle
 end
 
-function slot0._initMapInfo(slot0, slot1)
-	slot0.inited = true
-	slot0.mapType = slot0:_getTypeByInfo(slot1)
-	slot0.mapModel = RougeMapEnum.MapType2ModelCls[slot0.mapType].New()
+function var_0_0._initMapInfo(arg_27_0, arg_27_1)
+	arg_27_0.inited = true
+	arg_27_0.mapType = arg_27_0:_getTypeByInfo(arg_27_1)
+	arg_27_0.mapModel = RougeMapEnum.MapType2ModelCls[arg_27_0.mapType].New()
 
-	if slot0.mapType == RougeMapEnum.MapType.Middle or slot0.mapType == RougeMapEnum.MapType.PathSelect then
-		slot0.mapModel:initMap(slot1.middleLayerInfo)
+	if arg_27_0.mapType == RougeMapEnum.MapType.Middle or arg_27_0.mapType == RougeMapEnum.MapType.PathSelect then
+		arg_27_0.mapModel:initMap(arg_27_1.middleLayerInfo)
 	else
-		slot0.mapModel:initMap(slot1.layerInfo)
+		arg_27_0.mapModel:initMap(arg_27_1.layerInfo)
 	end
 
-	slot0:setMapEntrustInfo(slot1)
-	slot0:initMapInteractive(slot1)
-	slot0:setMapSkillInfo(slot1)
+	arg_27_0:setMapEntrustInfo(arg_27_1)
+	arg_27_0:initMapInteractive(arg_27_1)
+	arg_27_0:setMapSkillInfo(arg_27_1)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onInitMapInfoDone)
 end
 
-function slot0._updateMapInfo(slot0, slot1)
-	if slot0.mapType == RougeMapEnum.MapType.Middle or slot0.mapType == RougeMapEnum.MapType.PathSelect then
-		slot0.mapModel:updateMapInfo(slot1.middleLayerInfo)
+function var_0_0._updateMapInfo(arg_28_0, arg_28_1)
+	if arg_28_0.mapType == RougeMapEnum.MapType.Middle or arg_28_0.mapType == RougeMapEnum.MapType.PathSelect then
+		arg_28_0.mapModel:updateMapInfo(arg_28_1.middleLayerInfo)
 	else
-		slot0.mapModel:updateMapInfo(slot1.layerInfo)
+		arg_28_0.mapModel:updateMapInfo(arg_28_1.layerInfo)
 	end
 
-	slot0:setMapEntrustInfo(slot1)
-	slot0:setMapCurInteractive(slot1)
-	slot0:setMapSkillInfo(slot1)
+	arg_28_0:setMapEntrustInfo(arg_28_1)
+	arg_28_0:setMapCurInteractive(arg_28_1)
+	arg_28_0:setMapSkillInfo(arg_28_1)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onUpdateMapInfo)
 end
 
-function slot0._changeMapInfo(slot0, slot1)
-	if RougeMapHelper.getChangeMapEnum(slot0.mapType, slot0:_getTypeByInfo(slot1)) == RougeMapEnum.ChangeMapEnum.NormalToMiddle then
-		slot0._newInfo = slot1
+function var_0_0._changeMapInfo(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:_getTypeByInfo(arg_29_1)
 
-		slot0:clearInteractive()
+	if RougeMapHelper.getChangeMapEnum(arg_29_0.mapType, var_29_0) == RougeMapEnum.ChangeMapEnum.NormalToMiddle then
+		arg_29_0._newInfo = arg_29_1
 
-		if slot0:getMapState() == RougeMapEnum.MapState.Normal then
+		arg_29_0:clearInteractive()
+
+		if arg_29_0:getMapState() == RougeMapEnum.MapState.Normal then
 			RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeActorMoveToEnd)
 		end
 
 		return
 	end
 
-	slot0:_initMapInfo(slot1)
-	slot0:dispatchChangeMapEvent()
+	arg_29_0:_initMapInfo(arg_29_1)
+	arg_29_0:dispatchChangeMapEvent()
 end
 
-function slot0.updateToNewMapInfo(slot0)
+function var_0_0.updateToNewMapInfo(arg_30_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeNormalToMiddle)
-	slot0:setMapState(RougeMapEnum.MapState.SwitchMapAnim)
+	arg_30_0:setMapState(RougeMapEnum.MapState.SwitchMapAnim)
 
-	if slot0.mapModel then
-		slot0.mapModel:clear()
+	if arg_30_0.mapModel then
+		arg_30_0.mapModel:clear()
 	end
 
-	slot0._newInfo = nil
+	local var_30_0 = arg_30_0._newInfo
 
-	slot0:_initMapInfo(slot0._newInfo)
-	slot0:dispatchChangeMapEvent()
+	arg_30_0._newInfo = nil
+
+	arg_30_0:_initMapInfo(var_30_0)
+	arg_30_0:dispatchChangeMapEvent()
 end
 
-function slot0.dispatchChangeMapEvent(slot0)
+function var_0_0.dispatchChangeMapEvent(arg_31_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeChangeMapInfo)
-	TaskDispatcher.runDelay(slot0._dispatchChangeMapEvent, slot0, RougeMapEnum.WaitSwitchMapAnim)
+	TaskDispatcher.runDelay(arg_31_0._dispatchChangeMapEvent, arg_31_0, RougeMapEnum.WaitSwitchMapAnim)
 end
 
-function slot0._dispatchChangeMapEvent(slot0)
+function var_0_0._dispatchChangeMapEvent(arg_32_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChangeMapInfo)
 end
 
-function slot0.needPlayMoveToEndAnim(slot0)
-	return slot0._newInfo ~= nil
+function var_0_0.needPlayMoveToEndAnim(arg_33_0)
+	return arg_33_0._newInfo ~= nil
 end
 
-function slot0.initMapInteractive(slot0, slot1)
-	if not slot1:HasField("curInteractiveIndex") then
-		slot0:clearInteractive()
+function var_0_0.initMapInteractive(arg_34_0, arg_34_1)
+	if not arg_34_1:HasField("curInteractiveIndex") then
+		arg_34_0:clearInteractive()
 
 		return
 	end
 
-	slot0.interactiveJson = cjson.decode(slot1.interactiveJson)
+	arg_34_0.interactiveJson = cjson.decode(arg_34_1.interactiveJson)
 
-	if slot0:checkDropIsEmpty(slot1.curInteractive) then
-		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", slot1.curInteractive, slot1.interactiveJson))
-		slot0:clearInteractive()
+	if arg_34_0:checkDropIsEmpty(arg_34_1.curInteractive) then
+		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", arg_34_1.curInteractive, arg_34_1.interactiveJson))
+		arg_34_0:clearInteractive()
 
 		return
 	end
 
-	slot0.curInteractive = slot1.curInteractive
-	slot0.curInteractType = string.splitToNumber(slot0.curInteractive, "#")[1]
-	slot0.curInteractiveIndex = slot1.curInteractiveIndex
+	arg_34_0.curInteractive = arg_34_1.curInteractive
+	arg_34_0.curInteractType = string.splitToNumber(arg_34_0.curInteractive, "#")[1]
+	arg_34_0.curInteractiveIndex = arg_34_1.curInteractiveIndex
 end
 
-function slot0.setMapCurInteractive(slot0, slot1)
-	if not slot1:HasField("curInteractiveIndex") then
-		slot0:clearInteractive()
+function var_0_0.setMapCurInteractive(arg_35_0, arg_35_1)
+	if not arg_35_1:HasField("curInteractiveIndex") then
+		arg_35_0:clearInteractive()
 
 		return
 	end
 
-	slot0.interactiveJson = cjson.decode(slot1.interactiveJson)
+	arg_35_0.interactiveJson = cjson.decode(arg_35_1.interactiveJson)
 
-	if slot0:checkDropIsEmpty(slot1.curInteractive) then
-		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", slot1.curInteractive, slot1.interactiveJson))
-		slot0:clearInteractive()
+	if arg_35_0:checkDropIsEmpty(arg_35_1.curInteractive) then
+		logError(string.format("触发掉落，但是掉落列表是空! interactive : %s, json : %s", arg_35_1.curInteractive, arg_35_1.interactiveJson))
+		arg_35_0:clearInteractive()
 
 		return
 	end
 
-	if slot0.curInteractiveIndex == slot1.curInteractiveIndex then
+	if arg_35_0.curInteractiveIndex == arg_35_1.curInteractiveIndex then
 		return
 	end
 
-	slot0.curInteractive = slot1.curInteractive
-	slot0.curInteractType = string.splitToNumber(slot0.curInteractive, "#")[1]
-	slot0.curInteractiveIndex = slot1.curInteractiveIndex
+	arg_35_0.curInteractive = arg_35_1.curInteractive
+	arg_35_0.curInteractType = string.splitToNumber(arg_35_0.curInteractive, "#")[1]
+	arg_35_0.curInteractiveIndex = arg_35_1.curInteractiveIndex
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.triggerInteract)
 end
 
-function slot0.clearInteractive(slot0)
+function var_0_0.clearInteractive(arg_36_0)
 	logNormal("清理交互数据")
 
-	slot0.curInteractiveIndex = nil
-	slot0.curInteractive = nil
-	slot0.interactiveJson = nil
+	arg_36_0.curInteractiveIndex = nil
+	arg_36_0.curInteractive = nil
+	arg_36_0.interactiveJson = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onClearInteract)
 end
 
-function slot0.checkDropIsEmpty(slot0, slot1)
-	if string.splitToNumber(slot1, "#")[1] == RougeMapEnum.InteractType.Drop or slot3 == RougeMapEnum.InteractType.DropGroup or slot3 == RougeMapEnum.InteractType.AdvanceDrop then
-		return not slot0.interactiveJson.dropCollectList or #slot4 < 1
+function var_0_0.checkDropIsEmpty(arg_37_0, arg_37_1)
+	local var_37_0 = string.splitToNumber(arg_37_1, "#")[1]
+
+	if var_37_0 == RougeMapEnum.InteractType.Drop or var_37_0 == RougeMapEnum.InteractType.DropGroup or var_37_0 == RougeMapEnum.InteractType.AdvanceDrop then
+		local var_37_1 = arg_37_0.interactiveJson.dropCollectList
+
+		return not var_37_1 or #var_37_1 < 1
 	end
 
 	return false
 end
 
-function slot0.setMapEntrustInfo(slot0, slot1)
-	if not slot1:HasField("rougeEntrust") then
-		slot0:clearEntrustInfo()
+function var_0_0.setMapEntrustInfo(arg_38_0, arg_38_1)
+	if not arg_38_1:HasField("rougeEntrust") then
+		arg_38_0:clearEntrustInfo()
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 
 		return
 	end
 
-	slot2 = slot1.rougeEntrust
+	local var_38_0 = arg_38_1.rougeEntrust
+	local var_38_1 = var_38_0.id
+	local var_38_2 = var_38_0.count
 
-	if slot0.entrustId == slot2.id and slot0.entrustProgress == slot2.count then
+	if arg_38_0.entrustId == var_38_1 and arg_38_0.entrustProgress == var_38_2 then
 		return
 	end
 
-	if slot0.entrustId ~= slot3 then
+	if arg_38_0.entrustId ~= var_38_1 then
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onAcceptEntrust)
 	end
 
-	slot0.entrustId = slot3
-	slot0.entrustProgress = slot4
+	arg_38_0.entrustId = var_38_1
+	arg_38_0.entrustProgress = var_38_2
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 end
 
-function slot0.updateEntrustInfo(slot0, slot1)
-	if slot1.id == 0 then
-		slot0:clearEntrustInfo()
+function var_0_0.updateEntrustInfo(arg_39_0, arg_39_1)
+	if arg_39_1.id == 0 then
+		arg_39_0:clearEntrustInfo()
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 
 		return
 	end
 
-	slot0.entrustId = slot1.id
-	slot0.entrustProgress = slot1.count
+	arg_39_0.entrustId = arg_39_1.id
+	arg_39_0.entrustProgress = arg_39_1.count
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onEntrustChange)
 end
 
-function slot0.clearEntrustInfo(slot0)
-	slot0.entrustId = nil
-	slot0.entrustProgress = nil
+function var_0_0.clearEntrustInfo(arg_40_0)
+	arg_40_0.entrustId = nil
+	arg_40_0.entrustProgress = nil
 end
 
-function slot0.getEntrustId(slot0)
-	return slot0.entrustId
+function var_0_0.getEntrustId(arg_41_0)
+	return arg_41_0.entrustId
 end
 
-function slot0.getEntrustProgress(slot0)
-	return slot0.entrustProgress
+function var_0_0.getEntrustProgress(arg_42_0)
+	return arg_42_0.entrustProgress
 end
 
-function slot0.setMapSkillInfo(slot0, slot1)
-	slot0._mapSkills = {}
-	slot0._mapSkillMap = {}
+function var_0_0.setMapSkillInfo(arg_43_0, arg_43_1)
+	arg_43_0._mapSkills = {}
+	arg_43_0._mapSkillMap = {}
 
-	for slot5, slot6 in ipairs(slot1.mapSkill) do
-		slot7 = RougeMapSkillMO.New()
+	for iter_43_0, iter_43_1 in ipairs(arg_43_1.mapSkill) do
+		local var_43_0 = RougeMapSkillMO.New()
 
-		slot7:init(slot6)
+		var_43_0:init(iter_43_1)
 
-		slot0._mapSkillMap[slot7.id] = slot7
+		arg_43_0._mapSkillMap[var_43_0.id] = var_43_0
 
-		table.insert(slot0._mapSkills, slot7)
+		table.insert(arg_43_0._mapSkills, var_43_0)
 	end
 end
 
-function slot0.clearMapSkillInfo(slot0)
-	slot0._mapSkills = nil
+function var_0_0.clearMapSkillInfo(arg_44_0)
+	arg_44_0._mapSkills = nil
 end
 
-function slot0.getMapSkillList(slot0)
-	return slot0._mapSkills
+function var_0_0.getMapSkillList(arg_45_0)
+	return arg_45_0._mapSkills
 end
 
-function slot0.onUpdateMapSkillInfo(slot0, slot1)
-	if slot0._mapSkillMap and slot0._mapSkillMap[slot1.id] then
-		slot2:init(slot1)
+function var_0_0.onUpdateMapSkillInfo(arg_46_0, arg_46_1)
+	local var_46_0 = arg_46_0._mapSkillMap and arg_46_0._mapSkillMap[arg_46_1.id]
+
+	if var_46_0 then
+		var_46_0:init(arg_46_1)
 	end
 end
 
-function slot0.getEpisodeList(slot0)
-	return slot0.mapModel and slot0.mapModel:getEpisodeList()
+function var_0_0.getEpisodeList(arg_47_0)
+	return arg_47_0.mapModel and arg_47_0.mapModel:getEpisodeList()
 end
 
-function slot0.getNode(slot0, slot1)
-	return slot0.mapModel and slot0.mapModel:getNode(slot1)
+function var_0_0.getNode(arg_48_0, arg_48_1)
+	return arg_48_0.mapModel and arg_48_0.mapModel:getNode(arg_48_1)
 end
 
-function slot0.getEndNodeId(slot0)
-	return slot0.mapModel and slot0.mapModel:getEndNodeId()
+function var_0_0.getEndNodeId(arg_49_0)
+	return arg_49_0.mapModel and arg_49_0.mapModel:getEndNodeId()
 end
 
-function slot0.getCurEpisodeId(slot0)
-	return slot0.mapModel and slot0.mapModel:getCurEpisodeId()
+function var_0_0.getCurEpisodeId(arg_50_0)
+	return arg_50_0.mapModel and arg_50_0.mapModel:getCurEpisodeId()
 end
 
-function slot0.getCurNode(slot0)
-	return slot0.mapModel and slot0.mapModel.getCurNode and slot0.mapModel:getCurNode()
+function var_0_0.getCurNode(arg_51_0)
+	return arg_51_0.mapModel and arg_51_0.mapModel.getCurNode and arg_51_0.mapModel:getCurNode()
 end
 
-function slot0.getCurEvent(slot0)
-	if not slot0.mapModel then
+function var_0_0.getCurEvent(arg_52_0)
+	if not arg_52_0.mapModel then
 		return
 	end
 
-	return slot0:getCurNode() and slot1:getEventCo()
+	local var_52_0 = arg_52_0:getCurNode()
+
+	return var_52_0 and var_52_0:getEventCo()
 end
 
-function slot0.getCurPieceMo(slot0)
-	return slot0.mapModel.getCurPieceMo and slot0.mapModel:getCurPieceMo()
+function var_0_0.getCurPieceMo(arg_53_0)
+	return arg_53_0.mapModel.getCurPieceMo and arg_53_0.mapModel:getCurPieceMo()
 end
 
-function slot0.getNodeDict(slot0)
-	return slot0.mapModel and slot0.mapModel:getNodeDict()
+function var_0_0.getNodeDict(arg_54_0)
+	return arg_54_0.mapModel and arg_54_0.mapModel:getNodeDict()
 end
 
-function slot0.getCurInteractType(slot0)
-	return slot0.curInteractType
+function var_0_0.getCurInteractType(arg_55_0)
+	return arg_55_0.curInteractType
 end
 
-function slot0.getCurInteractive(slot0)
-	return slot0.curInteractive
+function var_0_0.getCurInteractive(arg_56_0)
+	return arg_56_0.curInteractive
 end
 
-function slot0.getCurInteractiveJson(slot0)
-	return slot0.interactiveJson
+function var_0_0.getCurInteractiveJson(arg_57_0)
+	return arg_57_0.interactiveJson
 end
 
-function slot0.isInteractiving(slot0)
-	return slot0.curInteractive ~= nil
+function var_0_0.isInteractiving(arg_58_0)
+	return arg_58_0.curInteractive ~= nil
 end
 
-function slot0.getPieceList(slot0)
-	return slot0.mapModel and slot0.mapModel:getPieceList()
+function var_0_0.getPieceList(arg_59_0)
+	return arg_59_0.mapModel and arg_59_0.mapModel:getPieceList()
 end
 
-function slot0.getPieceMo(slot0, slot1)
-	return slot0.mapModel and slot0.mapModel:getPieceMo(slot1)
+function var_0_0.getPieceMo(arg_60_0, arg_60_1)
+	return arg_60_0.mapModel and arg_60_0.mapModel:getPieceMo(arg_60_1)
 end
 
-function slot0.getMiddleLayerPosByIndex(slot0, slot1)
-	return slot0.mapModel and slot0.mapModel:getMiddleLayerPosByIndex(slot1)
+function var_0_0.getMiddleLayerPosByIndex(arg_61_0, arg_61_1)
+	return arg_61_0.mapModel and arg_61_0.mapModel:getMiddleLayerPosByIndex(arg_61_1)
 end
 
-function slot0.getPathIndex(slot0, slot1)
-	if not slot0.mapModel then
+function var_0_0.getPathIndex(arg_62_0, arg_62_1)
+	if not arg_62_0.mapModel then
 		return
 	end
 
-	return slot0:getMiddleLayerPosByIndex(slot1).z
+	return arg_62_0:getMiddleLayerPosByIndex(arg_62_1).z
 end
 
-function slot0.getMiddleLayerPathPos(slot0, slot1)
-	return slot0.mapModel and slot0.mapModel:getMiddleLayerPathPos(slot1)
+function var_0_0.getMiddleLayerPathPos(arg_63_0, arg_63_1)
+	return arg_63_0.mapModel and arg_63_0.mapModel:getMiddleLayerPathPos(arg_63_1)
 end
 
-function slot0.getMiddleLayerPathPosByPathIndex(slot0, slot1)
-	return slot0.mapModel and slot0.mapModel:getMiddleLayerPathPosByPathIndex(slot1)
+function var_0_0.getMiddleLayerPathPosByPathIndex(arg_64_0, arg_64_1)
+	return arg_64_0.mapModel and arg_64_0.mapModel:getMiddleLayerPathPosByPathIndex(arg_64_1)
 end
 
-function slot0.getMiddleLayerLeavePos(slot0)
-	if not slot0.mapModel then
+function var_0_0.getMiddleLayerLeavePos(arg_65_0)
+	if not arg_65_0.mapModel then
 		return
 	end
 
-	return slot0.mapModel:getMiddleLayerLeavePos()
+	return arg_65_0.mapModel:getMiddleLayerLeavePos()
 end
 
-function slot0.hadLeavePos(slot0)
-	if not slot0.mapModel then
+function var_0_0.hadLeavePos(arg_66_0)
+	if not arg_66_0.mapModel then
 		return
 	end
 
-	return slot0.mapModel:hadLeavePos()
+	return arg_66_0.mapModel:hadLeavePos()
 end
 
-function slot0.getMiddleLayerLeavePathIndex(slot0)
-	return slot0.mapModel and slot0.mapModel:getMiddleLayerLeavePathIndex()
+function var_0_0.getMiddleLayerLeavePathIndex(arg_67_0)
+	return arg_67_0.mapModel and arg_67_0.mapModel:getMiddleLayerLeavePathIndex()
 end
 
-function slot0.getCurPosIndex(slot0)
-	return slot0.mapModel and slot0.mapModel:getCurPosIndex()
+function var_0_0.getCurPosIndex(arg_68_0)
+	return arg_68_0.mapModel and arg_68_0.mapModel:getCurPosIndex()
 end
 
-function slot0.getMapName(slot0)
-	if not slot0.mapModel then
+function var_0_0.getMapName(arg_69_0)
+	if not arg_69_0.mapModel then
 		return
 	end
 
-	if slot0.mapType == RougeMapEnum.MapType.Normal then
-		return slot0.mapModel.layerCo.name
-	elseif slot0.mapType == RougeMapEnum.MapType.Middle then
-		return slot0.mapModel.middleCo.name
-	elseif slot0.mapType == RougeMapEnum.MapType.PathSelect then
-		return slot0.mapModel.pathSelectCo.name
+	if arg_69_0.mapType == RougeMapEnum.MapType.Normal then
+		return arg_69_0.mapModel.layerCo.name
+	elseif arg_69_0.mapType == RougeMapEnum.MapType.Middle then
+		return arg_69_0.mapModel.middleCo.name
+	elseif arg_69_0.mapType == RougeMapEnum.MapType.PathSelect then
+		return arg_69_0.mapModel.pathSelectCo.name
 	end
 end
 
-function slot0.getNextLayerList(slot0)
-	return slot0.mapModel and slot0.mapModel:getNextLayerList()
+function var_0_0.getNextLayerList(arg_70_0)
+	return arg_70_0.mapModel and arg_70_0.mapModel:getNextLayerList()
 end
 
-function slot0.setEndId(slot0, slot1)
-	slot0.endId = slot1
+function var_0_0.setEndId(arg_71_0, arg_71_1)
+	arg_71_0.endId = arg_71_1
 end
 
-function slot0.getEndId(slot0)
-	if slot0.endId then
-		return slot0.endId
+function var_0_0.getEndId(arg_72_0)
+	if arg_72_0.endId then
+		return arg_72_0.endId
 	end
 
 	return RougeMapHelper.getEndId()
 end
 
-function slot0.updateSelectLayerId(slot0, slot1)
-	if not slot0.mapModel then
+function var_0_0.updateSelectLayerId(arg_73_0, arg_73_1)
+	if not arg_73_0.mapModel then
 		return
 	end
 
-	slot0.mapModel:updateSelectLayerId(slot1)
+	arg_73_0.mapModel:updateSelectLayerId(arg_73_1)
 end
 
-function slot0.getSelectLayerId(slot0)
-	return slot0.mapModel and slot0.mapModel:getSelectLayerId()
+function var_0_0.getSelectLayerId(arg_74_0)
+	return arg_74_0.mapModel and arg_74_0.mapModel:getSelectLayerId()
 end
 
-function slot0.getFogNodeList(slot0)
-	if slot0.mapModel and slot0.mapModel.getFogNodeList then
-		return slot0.mapModel:getFogNodeList()
+function var_0_0.getFogNodeList(arg_75_0)
+	if arg_75_0.mapModel and arg_75_0.mapModel.getFogNodeList then
+		return arg_75_0.mapModel:getFogNodeList()
 	end
 end
 
-function slot0.getHoleNodeList(slot0)
-	if slot0.mapModel and slot0.mapModel.getFogNodeList then
-		return slot0.mapModel:getHoleNodeList()
+function var_0_0.getHoleNodeList(arg_76_0)
+	if arg_76_0.mapModel and arg_76_0.mapModel.getFogNodeList then
+		return arg_76_0.mapModel:getHoleNodeList()
 	end
 end
 
-function slot0.isHoleNode(slot0, slot1)
-	if slot0.mapModel and slot0.mapModel.isHoleNode then
-		return slot0.mapModel:isHoleNode(slot1)
+function var_0_0.isHoleNode(arg_77_0, arg_77_1)
+	if arg_77_0.mapModel and arg_77_0.mapModel.isHoleNode then
+		return arg_77_0.mapModel:isHoleNode(arg_77_1)
 	end
 end
 
-function slot0.clear(slot0)
-	slot0.inited = nil
-	slot0.mapType = nil
-	slot0.mapEpisodeIntervalX = nil
-	slot0.mapSize = nil
-	slot0.cameraSize = nil
-	slot0.minX = nil
-	slot0.maxX = nil
-	slot0.mapPosX = nil
-	slot0.focusScreenPosX = nil
-	slot0._newInfo = nil
-	slot0.interactiveJson = nil
-	slot0.curInteractive = nil
-	slot0.curInteractType = nil
-	slot0.curInteractiveIndex = nil
-	slot0.entrustId = nil
-	slot0.entrustProgress = nil
-	slot0.endId = nil
-	slot0.loading = nil
-	slot0.curChoiceId = nil
-	slot0.playingDialogue = nil
-	slot0.state = nil
-	slot0.mapState = nil
-	slot0.finalMap = nil
-	slot0.firstEnterMapFlag = nil
+function var_0_0.clear(arg_78_0)
+	arg_78_0.inited = nil
+	arg_78_0.mapType = nil
+	arg_78_0.mapEpisodeIntervalX = nil
+	arg_78_0.mapSize = nil
+	arg_78_0.cameraSize = nil
+	arg_78_0.minX = nil
+	arg_78_0.maxX = nil
+	arg_78_0.mapPosX = nil
+	arg_78_0.focusScreenPosX = nil
+	arg_78_0._newInfo = nil
+	arg_78_0.interactiveJson = nil
+	arg_78_0.curInteractive = nil
+	arg_78_0.curInteractType = nil
+	arg_78_0.curInteractiveIndex = nil
+	arg_78_0.entrustId = nil
+	arg_78_0.entrustProgress = nil
+	arg_78_0.endId = nil
+	arg_78_0.loading = nil
+	arg_78_0.curChoiceId = nil
+	arg_78_0.playingDialogue = nil
+	arg_78_0.state = nil
+	arg_78_0.mapState = nil
+	arg_78_0.finalMap = nil
+	arg_78_0.firstEnterMapFlag = nil
 
-	TaskDispatcher.cancelTask(slot0._dispatchChangeMapEvent, slot0)
+	TaskDispatcher.cancelTask(arg_78_0._dispatchChangeMapEvent, arg_78_0)
 
-	if slot0.mapModel then
-		slot0.mapModel:clear()
+	if arg_78_0.mapModel then
+		arg_78_0.mapModel:clear()
 
-		slot0.mapModel = nil
+		arg_78_0.mapModel = nil
 
 		return
 	end
 
-	if slot0.preMapModel then
-		slot0.preMapModel:clear()
+	if arg_78_0.preMapModel then
+		arg_78_0.preMapModel:clear()
 
-		slot0.preMapModel = nil
+		arg_78_0.preMapModel = nil
 	end
 end
 
-function slot0.setLoadingMap(slot0, slot1)
-	slot0.loading = slot1
+function var_0_0.setLoadingMap(arg_79_0, arg_79_1)
+	arg_79_0.loading = arg_79_1
 end
 
-function slot0.checkIsLoading(slot0)
-	return slot0.loading
+function var_0_0.checkIsLoading(arg_80_0)
+	return arg_80_0.loading
 end
 
-function slot0.recordCurChoiceEventSelectId(slot0, slot1)
-	slot0.curChoiceId = slot1
+function var_0_0.recordCurChoiceEventSelectId(arg_81_0, arg_81_1)
+	arg_81_0.curChoiceId = arg_81_1
 end
 
-function slot0.getCurChoiceId(slot0)
-	return slot0.curChoiceId
+function var_0_0.getCurChoiceId(arg_82_0)
+	return arg_82_0.curChoiceId
 end
 
-function slot0.setPlayingDialogue(slot0, slot1)
-	slot0.playingDialogue = slot1
+function var_0_0.setPlayingDialogue(arg_83_0, arg_83_1)
+	arg_83_0.playingDialogue = arg_83_1
 end
 
-function slot0.isPlayingDialogue(slot0)
-	return slot0.playingDialogue
+function var_0_0.isPlayingDialogue(arg_84_0)
+	return arg_84_0.playingDialogue
 end
 
-function slot0.setChoiceViewState(slot0, slot1)
-	slot0.state = slot1
+function var_0_0.setChoiceViewState(arg_85_0, arg_85_1)
+	arg_85_0.state = arg_85_1
 end
 
-function slot0.getChoiceViewState(slot0)
-	return slot0.state
+function var_0_0.getChoiceViewState(arg_86_0)
+	return arg_86_0.state
 end
 
-function slot0.setMapState(slot0, slot1)
-	slot0.mapState = slot1
+function var_0_0.setMapState(arg_87_0, arg_87_1)
+	arg_87_0.mapState = arg_87_1
 end
 
-function slot0.getMapState(slot0)
-	return slot0.mapState or RougeMapEnum.MapState.Empty
+function var_0_0.getMapState(arg_88_0)
+	return arg_88_0.mapState or RougeMapEnum.MapState.Empty
 end
 
-function slot0.setFinalMapInfo(slot0, slot1)
-	slot0.finalMap = slot1
+function var_0_0.setFinalMapInfo(arg_89_0, arg_89_1)
+	arg_89_0.finalMap = arg_89_1
 end
 
-function slot0.getFinalMapInfo(slot0)
-	return slot0.finalMap
+function var_0_0.getFinalMapInfo(arg_90_0)
+	return arg_90_0.finalMap
 end
 
-function slot0.getExchangeMaxDisplaceNum(slot0)
-	slot1 = RougeMapConfig.instance:getRestExchangeCount()
+function var_0_0.getExchangeMaxDisplaceNum(arg_91_0)
+	local var_91_0 = RougeMapConfig.instance:getRestExchangeCount()
+	local var_91_1 = RougeModel.instance:getEffectDict()
 
-	if RougeModel.instance:getEffectDict() then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.type == RougeMapEnum.EffectType.UpdateExchangeDisplaceNum then
-				slot1 = slot1 + tonumber(slot7.typeParam)
+	if var_91_1 then
+		for iter_91_0, iter_91_1 in pairs(var_91_1) do
+			if iter_91_1.type == RougeMapEnum.EffectType.UpdateExchangeDisplaceNum then
+				var_91_0 = var_91_0 + tonumber(iter_91_1.typeParam)
 			end
 		end
 	end
 
-	return slot1
+	return var_91_0
 end
 
-function slot0.setFirstEnterMap(slot0, slot1)
-	slot0.firstEnterMapFlag = slot1
+function var_0_0.setFirstEnterMap(arg_92_0, arg_92_1)
+	arg_92_0.firstEnterMapFlag = arg_92_1
 end
 
-function slot0.getFirstEnterMapFlag(slot0)
-	return slot0.firstEnterMapFlag
+function var_0_0.getFirstEnterMapFlag(arg_93_0)
+	return arg_93_0.firstEnterMapFlag
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

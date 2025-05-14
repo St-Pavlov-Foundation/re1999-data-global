@@ -1,159 +1,178 @@
-module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabItem", package.seeall)
+﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterViewTabItem", package.seeall)
 
-slot0 = class("VersionActivityEnterViewTabItem", UserDataDispose)
-slot1 = VersionActivityEnterViewTabEnum.ActTabFlag
-slot0.activityRemainTimeColor = "#9DD589"
+local var_0_0 = class("VersionActivityEnterViewTabItem", UserDataDispose)
+local var_0_1 = VersionActivityEnterViewTabEnum.ActTabFlag
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.index = slot1
-	slot0.actId = slot2
-	slot0.rootGo = slot3
-	slot0.go_selected = gohelper.findChild(slot0.rootGo, "#go_select")
-	slot0.go_unselected = gohelper.findChild(slot0.rootGo, "#go_normal")
-	slot0.activityNameTexts = slot0:getUserDataTb_()
-	slot0.activityNameTexts.select = gohelper.findChildText(slot0.go_selected, "#txt_name")
-	slot0.activityNameTexts.normal = gohelper.findChildText(slot0.go_unselected, "#txt_name")
-	slot0.txtLockGo = gohelper.findChild(slot3, "lockContainer/lock")
-	slot0.txtLock = gohelper.findChildText(slot3, "lockContainer/lock/txt_lock")
-	slot0.redPoints = slot0:getUserDataTb_()
-	slot0.redPoints.select = gohelper.findChild(slot0.go_selected, "#image_reddot")
-	slot0.redPoints.normal = gohelper.findChild(slot0.go_unselected, "#image_reddot")
-	slot0.newActivityFlags = slot0:getUserDataTb_()
-	slot0.newActivityFlags.select = gohelper.findChild(slot0.go_selected, "#go_newact")
-	slot0.newActivityFlags.normal = gohelper.findChild(slot0.go_unselected, "#go_newact")
-	slot0.newEpisodeFlags = slot0:getUserDataTb_()
-	slot0.newEpisodeFlags.select = gohelper.findChild(slot0.go_selected, "#go_newlevel")
-	slot0.newEpisodeFlags.normal = gohelper.findChild(slot0.go_unselected, "#go_newlevel")
-	slot0.rewardunlock = slot0:getUserDataTb_()
-	slot0.rewardunlock.select = gohelper.findChild(slot0.go_selected, "#go_rewardunlock")
-	slot0.rewardunlock.normal = gohelper.findChild(slot0.go_unselected, "#go_rewardunlock")
-	slot0.timeObjs = slot0:getUserDataTb_()
-	slot0.timeObjs.goTime = slot0:getUserDataTb_()
-	slot0.timeObjs.goTime.select = gohelper.findChild(slot0.go_selected, "#go_time")
-	slot0.timeObjs.goTime.normal = gohelper.findChild(slot0.go_unselected, "#go_time")
-	slot0.timeObjs.txtTime = slot0:getUserDataTb_()
-	slot0.timeObjs.txtTime.select = gohelper.findChildText(slot0.go_selected, "#go_time/bg/#txt_timelimit")
-	slot0.timeObjs.txtTime.normal = gohelper.findChildText(slot0.go_unselected, "#go_time/bg/#txt_timelimit")
-	slot0.timeObjs.timeIcon = slot0:getUserDataTb_()
-	slot0.timeObjs.timeIcon.select = gohelper.findChildImage(slot0.go_selected, "#go_time/bg/#txt_timelimit/#image_timeicon")
-	slot0.timeObjs.timeIcon.normal = gohelper.findChildImage(slot0.go_unselected, "#go_time/bg/#txt_timelimit/#image_timeicon")
-	slot0.imageIcons = slot0:getUserDataTb_()
-	slot0.imageIcons.select = gohelper.findChildImage(slot0.go_selected, "#simage_icon_select")
-	slot0.imageIcons.normal = gohelper.findChildImage(slot0.go_unselected, "#simage_icon_normal")
-	slot0.click = SLFramework.UGUI.ButtonWrap.Get(gohelper.findChild(slot0.rootGo, "#btn_self"))
-	slot0.redPointTagAnimator = slot0.goRedPointTag and slot0.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
-	slot0.openId = ActivityConfig.instance:getActivityCo(slot2) and slot5.openId
-	slot0.redDotId = slot5 and slot5.redDotId
-	slot0.redDotUid = 0
-	slot0._redDotIconSelect = nil
-	slot0._redDotIconNormal = nil
+var_0_0.activityRemainTimeColor = "#9DD589"
+
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.index = arg_1_1
+	arg_1_0.actId = arg_1_2
+	arg_1_0.rootGo = arg_1_3
+	arg_1_0.go_selected = gohelper.findChild(arg_1_0.rootGo, "#go_select")
+	arg_1_0.go_unselected = gohelper.findChild(arg_1_0.rootGo, "#go_normal")
+	arg_1_0.activityNameTexts = arg_1_0:getUserDataTb_()
+	arg_1_0.activityNameTexts.select = gohelper.findChildText(arg_1_0.go_selected, "#txt_name")
+	arg_1_0.activityNameTexts.normal = gohelper.findChildText(arg_1_0.go_unselected, "#txt_name")
+	arg_1_0.txtLockGo = gohelper.findChild(arg_1_3, "lockContainer/lock")
+	arg_1_0.txtLock = gohelper.findChildText(arg_1_3, "lockContainer/lock/txt_lock")
+	arg_1_0.redPoints = arg_1_0:getUserDataTb_()
+	arg_1_0.redPoints.select = gohelper.findChild(arg_1_0.go_selected, "#image_reddot")
+	arg_1_0.redPoints.normal = gohelper.findChild(arg_1_0.go_unselected, "#image_reddot")
+	arg_1_0.newActivityFlags = arg_1_0:getUserDataTb_()
+	arg_1_0.newActivityFlags.select = gohelper.findChild(arg_1_0.go_selected, "#go_newact")
+	arg_1_0.newActivityFlags.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_newact")
+	arg_1_0.newEpisodeFlags = arg_1_0:getUserDataTb_()
+	arg_1_0.newEpisodeFlags.select = gohelper.findChild(arg_1_0.go_selected, "#go_newlevel")
+	arg_1_0.newEpisodeFlags.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_newlevel")
+	arg_1_0.rewardunlock = arg_1_0:getUserDataTb_()
+	arg_1_0.rewardunlock.select = gohelper.findChild(arg_1_0.go_selected, "#go_rewardunlock")
+	arg_1_0.rewardunlock.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_rewardunlock")
+	arg_1_0.timeObjs = arg_1_0:getUserDataTb_()
+	arg_1_0.timeObjs.goTime = arg_1_0:getUserDataTb_()
+	arg_1_0.timeObjs.goTime.select = gohelper.findChild(arg_1_0.go_selected, "#go_time")
+	arg_1_0.timeObjs.goTime.normal = gohelper.findChild(arg_1_0.go_unselected, "#go_time")
+	arg_1_0.timeObjs.txtTime = arg_1_0:getUserDataTb_()
+	arg_1_0.timeObjs.txtTime.select = gohelper.findChildText(arg_1_0.go_selected, "#go_time/bg/#txt_timelimit")
+	arg_1_0.timeObjs.txtTime.normal = gohelper.findChildText(arg_1_0.go_unselected, "#go_time/bg/#txt_timelimit")
+	arg_1_0.timeObjs.timeIcon = arg_1_0:getUserDataTb_()
+	arg_1_0.timeObjs.timeIcon.select = gohelper.findChildImage(arg_1_0.go_selected, "#go_time/bg/#txt_timelimit/#image_timeicon")
+	arg_1_0.timeObjs.timeIcon.normal = gohelper.findChildImage(arg_1_0.go_unselected, "#go_time/bg/#txt_timelimit/#image_timeicon")
+	arg_1_0.imageIcons = arg_1_0:getUserDataTb_()
+	arg_1_0.imageIcons.select = gohelper.findChildImage(arg_1_0.go_selected, "#simage_icon_select")
+	arg_1_0.imageIcons.normal = gohelper.findChildImage(arg_1_0.go_unselected, "#simage_icon_normal")
+
+	local var_1_0 = gohelper.findChild(arg_1_0.rootGo, "#btn_self")
+
+	arg_1_0.click = SLFramework.UGUI.ButtonWrap.Get(var_1_0)
+	arg_1_0.redPointTagAnimator = arg_1_0.goRedPointTag and arg_1_0.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
+
+	local var_1_1 = ActivityConfig.instance:getActivityCo(arg_1_2)
+
+	arg_1_0.openId = var_1_1 and var_1_1.openId
+	arg_1_0.redDotId = var_1_1 and var_1_1.redDotId
+	arg_1_0.redDotUid = 0
+	arg_1_0._redDotIconSelect = nil
+	arg_1_0._redDotIconNormal = nil
 end
 
-function slot0.setClickFunc(slot0, slot1, slot2)
-	slot0.click:AddClickListener(slot1, slot2, slot0)
+function var_0_0.setClickFunc(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.click:AddClickListener(arg_2_1, arg_2_2, arg_2_0)
 end
 
-function slot0.setShowRemainDayToggle(slot0, slot1, slot2)
-	slot0._showOpenRemainDayThreshold = slot2
-	slot0._showOpenRemainDay = slot1
+function var_0_0.setShowRemainDayToggle(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._showOpenRemainDayThreshold = arg_3_2
+	arg_3_0._showOpenRemainDay = arg_3_1
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_4_0)
+	return
 end
 
-function slot0.refreshSelectState(slot0, slot1)
-	gohelper.setActive(slot0.go_selected, slot1)
-	gohelper.setActive(slot0.go_unselected, not slot1)
+function var_0_0.refreshSelectState(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0.go_selected, arg_5_1)
+	gohelper.setActive(arg_5_0.go_unselected, not arg_5_1)
 end
 
-function slot0.refreshNameText(slot0)
-	if slot0.activityNameTexts then
-		slot2 = ActivityModel.instance:getActMO(slot0.actId).config.tabName
-		slot0.activityNameTexts.select.text = slot2
-		slot0.activityNameTexts.normal.text = slot2
+function var_0_0.refreshNameText(arg_6_0)
+	if arg_6_0.activityNameTexts then
+		local var_6_0 = ActivityModel.instance:getActMO(arg_6_0.actId).config.tabName
+
+		arg_6_0.activityNameTexts.select.text = var_6_0
+		arg_6_0.activityNameTexts.normal.text = var_6_0
 	end
 end
 
-function slot0.addRedDot(slot0)
-	if slot0._redDotIconNormal ~= nil then
+function var_0_0.addRedDot(arg_7_0)
+	if arg_7_0._redDotIconNormal ~= nil then
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.Normal and slot0.redDotId and slot0.redDotId ~= 0 then
-		slot0._redDotIconSelect = RedDotController.instance:addRedDot(slot0.redPoints.select, slot0.redDotId, slot0.redDotUid)
-		slot0._redDotIconNormal = RedDotController.instance:addRedDot(slot0.redPoints.normal, slot0.redDotId, slot0.redDotUid)
+	if ActivityHelper.getActivityStatus(arg_7_0.actId) == ActivityEnum.ActivityStatus.Normal and arg_7_0.redDotId and arg_7_0.redDotId ~= 0 then
+		arg_7_0._redDotIconSelect = RedDotController.instance:addRedDot(arg_7_0.redPoints.select, arg_7_0.redDotId, arg_7_0.redDotUid)
+		arg_7_0._redDotIconNormal = RedDotController.instance:addRedDot(arg_7_0.redPoints.normal, arg_7_0.redDotId, arg_7_0.redDotUid)
 	end
 end
 
-function slot0.refreshActivityItemTag(slot0)
-	gohelper.setActive(slot0.newActivityFlags.select, false)
-	gohelper.setActive(slot0.newActivityFlags.normal, false)
-	gohelper.setActive(slot0.newEpisodeFlags.select, false)
-	gohelper.setActive(slot0.newEpisodeFlags.normal, false)
+function var_0_0.refreshActivityItemTag(arg_8_0)
+	local var_8_0 = ActivityHelper.getActivityStatus(arg_8_0.actId)
+	local var_8_1 = var_8_0 == ActivityEnum.ActivityStatus.Normal or var_8_0 == ActivityEnum.ActivityStatus.NotUnlock
 
-	slot0.showTag = nil
+	gohelper.setActive(arg_8_0.newActivityFlags.select, false)
+	gohelper.setActive(arg_8_0.newActivityFlags.normal, false)
+	gohelper.setActive(arg_8_0.newEpisodeFlags.select, false)
+	gohelper.setActive(arg_8_0.newEpisodeFlags.normal, false)
 
-	if ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.Normal or slot1 == ActivityEnum.ActivityStatus.NotUnlock then
-		slot3 = ActivityModel.instance:getActMO(slot0.actId)
+	arg_8_0.showTag = nil
 
-		if not ActivityEnterMgr.instance:isEnteredActivity(slot0.actId) then
-			slot0.showTag = uv0.ShowNewAct
-		elseif slot3:isNewStageOpen() then
-			slot0.showTag = uv0.ShowNewStage
+	if var_8_1 then
+		local var_8_2 = ActivityModel.instance:getActMO(arg_8_0.actId)
+		local var_8_3 = not ActivityEnterMgr.instance:isEnteredActivity(arg_8_0.actId)
+
+		if var_8_3 then
+			arg_8_0.showTag = var_0_1.ShowNewAct
+		elseif var_8_2:isNewStageOpen() then
+			arg_8_0.showTag = var_0_1.ShowNewStage
 		end
 
-		if slot0.actId == VersionActivity1_6Enum.ActivityId.Cachot then
-			gohelper.setActive(slot0.rewardunlock.select, V1a6_CachotProgressListModel.instance:checkRewardStageChange() and not slot4)
-			gohelper.setActive(slot0.rewardunlock.normal, slot5 and not slot4)
+		if arg_8_0.actId == VersionActivity1_6Enum.ActivityId.Cachot then
+			local var_8_4 = V1a6_CachotProgressListModel.instance:checkRewardStageChange()
+
+			gohelper.setActive(arg_8_0.rewardunlock.select, var_8_4 and not var_8_3)
+			gohelper.setActive(arg_8_0.rewardunlock.normal, var_8_4 and not var_8_3)
 		end
 	end
 end
 
-function slot0.refreshTimeInfo(slot0)
-	if slot0.showTag == uv0.ShowNewAct or slot0.showTag == uv0.ShowNewStage then
-		slot0:_setItemObjActive(slot0.timeObjs.goTime, false)
+function var_0_0.refreshTimeInfo(arg_9_0)
+	if arg_9_0.showTag == var_0_1.ShowNewAct or arg_9_0.showTag == var_0_1.ShowNewStage then
+		arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, false)
 
 		return
 	end
 
-	slot2 = "#FFFFFF"
-	slot3 = ""
-	slot4 = ActivityModel.instance:getActMO(slot0.actId)
+	local var_9_0 = ActivityHelper.getActivityStatus(arg_9_0.actId)
+	local var_9_1 = "#FFFFFF"
+	local var_9_2 = ""
+	local var_9_3 = ActivityModel.instance:getActMO(arg_9_0.actId)
 
-	if (ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.Normal or slot1 == ActivityEnum.ActivityStatus.NotUnlock) and slot0._showOpenRemainDay then
-		if slot4:getRemainDay() < slot0._showOpenRemainDayThreshold then
-			slot0:_setItemObjActive(slot0.timeObjs.goTime, true)
+	if (var_9_0 == ActivityEnum.ActivityStatus.Normal or var_9_0 == ActivityEnum.ActivityStatus.NotUnlock) and arg_9_0._showOpenRemainDay then
+		if var_9_3:getRemainDay() < arg_9_0._showOpenRemainDayThreshold then
+			arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, true)
 
-			slot2 = uv1.activityRemainTimeColor
-			slot3 = slot4:getRemainTimeStr2ByEndTime()
-			slot0.timeObjs.txtTime.select.text = slot3
-			slot0.timeObjs.txtTime.normal.text = slot3
+			var_9_1 = var_0_0.activityRemainTimeColor
 
-			SLFramework.UGUI.GuiHelper.SetColor(slot0.timeObjs.timeIcon.select, slot2)
-			SLFramework.UGUI.GuiHelper.SetColor(slot0.timeObjs.timeIcon.normal, slot2)
+			local var_9_4 = var_9_3:getRemainTimeStr2ByEndTime()
+
+			arg_9_0.timeObjs.txtTime.select.text = var_9_4
+			arg_9_0.timeObjs.txtTime.normal.text = var_9_4
+
+			SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.select, var_9_1)
+			SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.normal, var_9_1)
 		else
-			slot0:_setItemObjActive(slot0.timeObjs.goTime, false)
+			arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, false)
 		end
-	elseif slot1 == ActivityEnum.ActivityStatus.NotOpen then
-		slot5 = slot4:getRemainOpeningDay()
+	elseif var_9_0 == ActivityEnum.ActivityStatus.NotOpen then
+		local var_9_5 = var_9_3:getRemainOpeningDay()
 
-		slot0:_setItemObjActive(slot0.timeObjs.goTime, true)
+		arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, true)
 
-		slot3 = slot4:getRemainTimeStr2ByOpenTime()
-		slot0.timeObjs.txtTime.select.text = slot3
-		slot0.timeObjs.txtTime.normal.text = slot3
+		local var_9_6 = var_9_3:getRemainTimeStr2ByOpenTime()
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot0.timeObjs.timeIcon.select, slot2)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0.timeObjs.timeIcon.normal, slot2)
+		arg_9_0.timeObjs.txtTime.select.text = var_9_6
+		arg_9_0.timeObjs.txtTime.normal.text = var_9_6
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.select, var_9_1)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.timeObjs.timeIcon.normal, var_9_1)
 	else
-		slot0:_setItemObjActive(slot0.timeObjs.goTime, false)
+		arg_9_0:_setItemObjActive(arg_9_0.timeObjs.goTime, false)
 	end
 end
 
-function slot0._setItemObjActive(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot1) do
-		gohelper.setActive(slot7.gameObject, slot2)
+function var_0_0._setItemObjActive(arg_10_0, arg_10_1, arg_10_2)
+	for iter_10_0, iter_10_1 in pairs(arg_10_1) do
+		gohelper.setActive(iter_10_1.gameObject, arg_10_2)
 	end
 end
 
-return slot0
+return var_0_0

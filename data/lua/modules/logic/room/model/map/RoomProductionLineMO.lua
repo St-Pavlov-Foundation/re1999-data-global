@@ -1,125 +1,149 @@
-module("modules.logic.room.model.map.RoomProductionLineMO", package.seeall)
+﻿module("modules.logic.room.model.map.RoomProductionLineMO", package.seeall)
 
-slot0 = pureTable("RoomProductionLineMO")
+local var_0_0 = pureTable("RoomProductionLineMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.config = RoomConfig.instance:getProductionLineConfig(slot0.id)
-	slot0.finishCount = 0
-	slot0.reserve = slot0.config.reserve
-	slot0.useReserve = 0
-	slot0.level = 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.config = RoomConfig.instance:getProductionLineConfig(arg_1_0.id)
+	arg_1_0.finishCount = 0
+	arg_1_0.reserve = arg_1_0.config.reserve
+	arg_1_0.useReserve = 0
+	arg_1_0.level = 0
 
-	if slot0.config.levelGroup > 0 then
-		slot0.levelGroupCO = RoomConfig.instance:getProductionLineLevelGroupIdConfig(slot0.config.levelGroup)
+	if arg_1_0.config.levelGroup > 0 then
+		arg_1_0.levelGroupCO = RoomConfig.instance:getProductionLineLevelGroupIdConfig(arg_1_0.config.levelGroup)
 	end
 
-	slot0:updateMaxLevel()
+	arg_1_0:updateMaxLevel()
 end
 
-function slot0.updateMaxLevel(slot0)
-	slot1 = RoomModel.instance:getRoomLevel()
-	slot0.maxLevel = 0
-	slot0.maxConfigLevel = 0
+function var_0_0.updateMaxLevel(arg_2_0)
+	local var_2_0 = RoomModel.instance:getRoomLevel()
 
-	if slot0.config.levelGroup > 0 and slot0.levelGroupCO then
-		for slot5, slot6 in ipairs(slot0.levelGroupCO) do
-			if slot6.needRoomLevel <= slot1 then
-				slot0.maxLevel = math.max(slot6.id, slot0.maxLevel)
+	arg_2_0.maxLevel = 0
+	arg_2_0.maxConfigLevel = 0
+
+	if arg_2_0.config.levelGroup > 0 and arg_2_0.levelGroupCO then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0.levelGroupCO) do
+			if var_2_0 >= iter_2_1.needRoomLevel then
+				arg_2_0.maxLevel = math.max(iter_2_1.id, arg_2_0.maxLevel)
 			end
 
-			slot0.maxConfigLevel = math.max(slot6.id, slot0.maxConfigLevel)
+			arg_2_0.maxConfigLevel = math.max(iter_2_1.id, arg_2_0.maxConfigLevel)
 		end
 	end
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.formulaId = slot1.formulaId
-	slot0.finishCount = slot1.finishCount or 0
-	slot0.nextFinishTime = slot1.nextFinishTime
-	slot0.pauseTime = slot1.pauseTime
-	slot0.reserve = slot0.config.reserve
-	slot0.useReserve = 0
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0.formulaId = arg_3_1.formulaId
+	arg_3_0.finishCount = arg_3_1.finishCount or 0
+	arg_3_0.nextFinishTime = arg_3_1.nextFinishTime
+	arg_3_0.pauseTime = arg_3_1.pauseTime
+	arg_3_0.reserve = arg_3_0.config.reserve
+	arg_3_0.useReserve = 0
 
-	slot0:updateLevel(slot1.level or 1)
+	arg_3_0:updateLevel(arg_3_1.level or 1)
 end
 
-function slot0.updateLevel(slot0, slot1)
-	slot0.level = slot1
+function var_0_0.updateLevel(arg_4_0, arg_4_1)
+	arg_4_0.level = arg_4_1
 
-	if slot0.config.levelGroup > 0 then
-		slot0.levelCO = RoomConfig.instance:getProductionLineLevelConfig(slot0.config.levelGroup, slot0.level)
-		slot3 = 0
+	if arg_4_0.config.levelGroup > 0 then
+		arg_4_0.levelCO = RoomConfig.instance:getProductionLineLevelConfig(arg_4_0.config.levelGroup, arg_4_0.level)
 
-		if GameUtil.splitString2(slot0.levelCO.effect, true) then
-			for slot7, slot8 in ipairs(slot2) do
-				if slot8[1] == RoomBuildingEnum.EffectType.Reserve then
-					slot0.reserve = slot0.reserve + slot8[2]
-				elseif slot8[1] == RoomBuildingEnum.EffectType.Time then
-					slot3 = slot3 + slot8[2]
+		local var_4_0 = GameUtil.splitString2(arg_4_0.levelCO.effect, true)
+		local var_4_1 = 0
+
+		if var_4_0 then
+			for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+				if iter_4_1[1] == RoomBuildingEnum.EffectType.Reserve then
+					arg_4_0.reserve = arg_4_0.reserve + iter_4_1[2]
+				elseif iter_4_1[1] == RoomBuildingEnum.EffectType.Time then
+					var_4_1 = var_4_1 + iter_4_1[2]
 				end
 			end
 		end
 
-		slot0.formulaCO = RoomConfig.instance:getFormulaConfig(slot0.formulaId)
+		arg_4_0.formulaCO = RoomConfig.instance:getFormulaConfig(arg_4_0.formulaId)
 
-		if not slot0.formulaCO then
+		if not arg_4_0.formulaCO then
 			return
 		end
 
-		slot0.useReserve = slot0.formulaCO.costReserve * slot0.finishCount
-		slot0.costTime = math.floor(slot0.formulaCO.costTime * math.max(0, 1000 - slot3) / 1000)
-		slot0.produceSpeed = string.splitToNumber(slot0.formulaCO.produce, "#")[3]
-		slot0.allFinishTime = slot0.nextFinishTime
+		arg_4_0.useReserve = arg_4_0.formulaCO.costReserve * arg_4_0.finishCount
 
-		if slot0.reserve - (slot0.useReserve + slot0.formulaCO.costReserve) > 0 then
-			slot0.allFinishTime = slot0.allFinishTime + math.ceil(slot7 / slot0.formulaCO.costReserve) * slot0.costTime
-		elseif slot7 < 0 then
-			slot0.allFinishTime = 0
+		local var_4_2 = math.max(0, 1000 - var_4_1)
+
+		arg_4_0.costTime = math.floor(arg_4_0.formulaCO.costTime * var_4_2 / 1000)
+		arg_4_0.produceSpeed = string.splitToNumber(arg_4_0.formulaCO.produce, "#")[3]
+
+		local var_4_3 = arg_4_0.reserve - (arg_4_0.useReserve + arg_4_0.formulaCO.costReserve)
+
+		arg_4_0.allFinishTime = arg_4_0.nextFinishTime
+
+		if var_4_3 > 0 then
+			arg_4_0.allFinishTime = arg_4_0.allFinishTime + math.ceil(var_4_3 / arg_4_0.formulaCO.costReserve) * arg_4_0.costTime
+		elseif var_4_3 < 0 then
+			arg_4_0.allFinishTime = 0
 		end
 	end
 end
 
-function slot0.isCanGain(slot0)
-	return slot0.useReserve > 0
+function var_0_0.isCanGain(arg_5_0)
+	return arg_5_0.useReserve > 0
 end
 
-function slot0.isLock(slot0)
-	return slot0.level == 0
+function var_0_0.isLock(arg_6_0)
+	return arg_6_0.level == 0
 end
 
-function slot0.isRoomLevelUnLockNext(slot0)
-	return slot0.config.needRoomLevel == RoomModel.instance:getRoomLevel() + 1
+function var_0_0.isRoomLevelUnLockNext(arg_7_0)
+	local var_7_0 = RoomModel.instance:getRoomLevel()
+
+	return arg_7_0.config.needRoomLevel == var_7_0 + 1
 end
 
-function slot0.isPause(slot0)
-	return slot0.pauseTime and slot0.pauseTime > 0
+function var_0_0.isPause(arg_8_0)
+	return arg_8_0.pauseTime and arg_8_0.pauseTime > 0
 end
 
-function slot0.getReservePer(slot0)
-	slot2 = 0
+function var_0_0.getReservePer(arg_9_0)
+	local var_9_0 = arg_9_0.useReserve / arg_9_0.reserve
+	local var_9_1 = math.min(1, var_9_0)
+	local var_9_2 = 0
 
-	if math.min(1, slot0.useReserve / slot0.reserve) ~= 0 then
-		slot2 = math.max(1, math.floor(slot1 * 100))
+	if var_9_1 ~= 0 then
+		var_9_2 = math.max(1, math.floor(var_9_1 * 100))
 	end
 
-	return slot1, slot2
+	return var_9_1, var_9_2
 end
 
-function slot0.isFull(slot0)
-	return slot0.reserve <= slot0.useReserve
+function var_0_0.isFull(arg_10_0)
+	return arg_10_0.useReserve >= arg_10_0.reserve
 end
 
-function slot0.isIdle(slot0)
-	return not slot0.formulaId or slot0.formulaId <= 0
+function var_0_0.isIdle(arg_11_0)
+	return not arg_11_0.formulaId or arg_11_0.formulaId <= 0
 end
 
-function slot0.getGathericon(slot0)
-	if RoomProductionHelper.getFormulaProduceItem(slot0.formulaId) then
-		slot3 = nil
+function var_0_0.getGathericon(arg_12_0)
+	local var_12_0 = arg_12_0.formulaId
+	local var_12_1 = RoomProductionHelper.getFormulaProduceItem(var_12_0)
 
-		return (slot2.type ~= MaterialEnum.MaterialType.Currency or ResUrl.getCurrencyItemIcon(CurrencyConfig.instance:getCurrencyCo(slot2.id).icon .. "_room")) and ResUrl.getCurrencyItemIcon(slot2.id .. "_room")
+	if var_12_1 then
+		local var_12_2
+
+		if var_12_1.type == MaterialEnum.MaterialType.Currency then
+			local var_12_3 = CurrencyConfig.instance:getCurrencyCo(var_12_1.id).icon
+
+			var_12_2 = ResUrl.getCurrencyItemIcon(var_12_3 .. "_room")
+		else
+			var_12_2 = ResUrl.getCurrencyItemIcon(var_12_1.id .. "_room")
+		end
+
+		return var_12_2
 	end
 end
 
-return slot0
+return var_0_0

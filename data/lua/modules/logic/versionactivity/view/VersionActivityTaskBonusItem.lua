@@ -1,136 +1,145 @@
-module("modules.logic.versionactivity.view.VersionActivityTaskBonusItem", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityTaskBonusItem", package.seeall)
 
-slot0 = class("VersionActivityTaskBonusItem", ListScrollCell)
+local var_0_0 = class("VersionActivityTaskBonusItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0.txtIndex = gohelper.findChildText(slot0.viewGO, "index")
-	slot0.imagePoint = gohelper.findChildImage(slot0.viewGO, "progress/point")
-	slot0.scrollRewards = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_rewards")
-	slot0.goRewardRoot = gohelper.findChild(slot0.viewGO, "#scroll_rewards/Viewport/rewardsroot")
-	slot0.goFinish = gohelper.findChild(slot0.viewGO, "go_finish")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0.txtIndex = gohelper.findChildText(arg_1_0.viewGO, "index")
+	arg_1_0.imagePoint = gohelper.findChildImage(arg_1_0.viewGO, "progress/point")
+	arg_1_0.scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rewards")
+	arg_1_0.goRewardRoot = gohelper.findChild(arg_1_0.viewGO, "#scroll_rewards/Viewport/rewardsroot")
+	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "go_finish")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0.pointItemList = {}
-	slot0.rewardItems = {}
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0.pointItemList = {}
+	arg_2_0.rewardItems = {}
+	arg_2_0._animator = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot0.imagePoint.gameObject, false)
-	gohelper.setActive(slot0.goFinish, false)
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.AddTaskActivityBonus, slot0.addActivityPoints, slot0)
+	gohelper.setActive(arg_2_0.imagePoint.gameObject, false)
+	gohelper.setActive(arg_2_0.goFinish, false)
+	arg_2_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.AddTaskActivityBonus, arg_2_0.addActivityPoints, arg_2_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.co = slot1
+function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
+	arg_3_0.co = arg_3_1
 
-	slot0:show()
+	arg_3_0:show()
 
-	slot0.txtIndex.text = string.format("%2d", slot0.co.id)
-	slot0.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
+	arg_3_0.txtIndex.text = string.format("%2d", arg_3_0.co.id)
+	arg_3_0.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
 
-	slot0:refreshPoints()
-	slot0:refreshRewardItems()
+	arg_3_0:refreshPoints()
+	arg_3_0:refreshRewardItems()
 end
 
-function slot0.refreshPoints(slot0)
-	slot1 = nil
-	slot3 = 0
+function var_0_0.refreshPoints(arg_4_0)
+	local var_4_0
+	local var_4_1 = arg_4_0.taskActivityMo
+	local var_4_2 = 0
 
-	gohelper.setActive(slot0.goFinish, false)
+	gohelper.setActive(arg_4_0.goFinish, false)
 
-	if slot0.co.id <= slot0.taskActivityMo.defineId then
-		slot3 = slot0.co.needActivity
+	if arg_4_0.co.id <= var_4_1.defineId then
+		var_4_2 = arg_4_0.co.needActivity
 
-		gohelper.setActive(slot0.goFinish, true)
-	elseif slot0.co.id == slot2.defineId + 1 then
-		slot3 = slot2.value - slot2.gainValue
+		gohelper.setActive(arg_4_0.goFinish, true)
+	elseif arg_4_0.co.id == var_4_1.defineId + 1 then
+		var_4_2 = var_4_1.value - var_4_1.gainValue
 	end
 
-	for slot7 = 1, slot0.co.needActivity do
-		if not slot0.pointItemList[slot7] then
-			slot1 = slot0:getUserDataTb_()
-			slot1.go = gohelper.cloneInPlace(slot0.imagePoint.gameObject)
-			slot1.image = slot1.go:GetComponent(gohelper.Type_Image)
-			slot1.playGo = gohelper.findChild(slot1.go, "play")
+	for iter_4_0 = 1, arg_4_0.co.needActivity do
+		local var_4_3 = arg_4_0.pointItemList[iter_4_0]
 
-			table.insert(slot0.pointItemList, slot1)
+		if not var_4_3 then
+			var_4_3 = arg_4_0:getUserDataTb_()
+			var_4_3.go = gohelper.cloneInPlace(arg_4_0.imagePoint.gameObject)
+			var_4_3.image = var_4_3.go:GetComponent(gohelper.Type_Image)
+			var_4_3.playGo = gohelper.findChild(var_4_3.go, "play")
+
+			table.insert(arg_4_0.pointItemList, var_4_3)
 		end
 
-		gohelper.setActive(slot1.go, true)
-		gohelper.setActive(slot1.playGo, false)
-		UISpriteSetMgr.instance:setVersionActivitySprite(slot1.image, slot7 <= slot3 and "img_li1" or "img_li2")
+		gohelper.setActive(var_4_3.go, true)
+		gohelper.setActive(var_4_3.playGo, false)
+		UISpriteSetMgr.instance:setVersionActivitySprite(var_4_3.image, iter_4_0 <= var_4_2 and "img_li1" or "img_li2")
 	end
 
-	for slot7 = slot0.co.needActivity + 1, #slot0.pointItemList do
-		gohelper.setActive(slot0.pointItemList[slot7].go, false)
+	for iter_4_1 = arg_4_0.co.needActivity + 1, #arg_4_0.pointItemList do
+		gohelper.setActive(arg_4_0.pointItemList[iter_4_1].go, false)
 	end
 end
 
-function slot0.refreshRewardItems(slot0)
-	slot1, slot2 = nil
+function var_0_0.refreshRewardItems(arg_5_0)
+	local var_5_0
+	local var_5_1
+	local var_5_2 = string.split(arg_5_0.co.bonus, "|")
 
-	for slot7 = 1, #string.split(slot0.co.bonus, "|") do
-		slot2 = string.splitToNumber(slot3[slot7], "#")
+	for iter_5_0 = 1, #var_5_2 do
+		local var_5_3 = arg_5_0.rewardItems[iter_5_0]
+		local var_5_4 = string.splitToNumber(var_5_2[iter_5_0], "#")
 
-		if not slot0.rewardItems[slot7] then
-			slot1 = IconMgr.instance:getCommonPropItemIcon(slot0.goRewardRoot)
+		if not var_5_3 then
+			var_5_3 = IconMgr.instance:getCommonPropItemIcon(arg_5_0.goRewardRoot)
 
-			table.insert(slot0.rewardItems, slot1)
-			transformhelper.setLocalScale(slot1.go.transform, 0.62, 0.62, 1)
-			slot1:setMOValue(slot2[1], slot2[2], slot2[3], nil, true)
-			slot1:setCountFontSize(50)
-			slot1:showStackableNum2()
-			slot1:isShowEffect(true)
-			slot1:setHideLvAndBreakFlag(true)
-			slot1:hideEquipLvAndBreak(true)
+			table.insert(arg_5_0.rewardItems, var_5_3)
+			transformhelper.setLocalScale(var_5_3.go.transform, 0.62, 0.62, 1)
+			var_5_3:setMOValue(var_5_4[1], var_5_4[2], var_5_4[3], nil, true)
+			var_5_3:setCountFontSize(50)
+			var_5_3:showStackableNum2()
+			var_5_3:isShowEffect(true)
+			var_5_3:setHideLvAndBreakFlag(true)
+			var_5_3:hideEquipLvAndBreak(true)
 		else
-			slot1:setMOValue(slot2[1], slot2[2], slot2[3], nil, true)
+			var_5_3:setMOValue(var_5_4[1], var_5_4[2], var_5_4[3], nil, true)
 		end
 
-		gohelper.setActive(slot1.go, true)
+		gohelper.setActive(var_5_3.go, true)
 	end
 
-	for slot7 = #slot3 + 1, #slot0.rewardItems do
-		gohelper.setActive(slot0.rewardItems[slot7].go, false)
+	for iter_5_1 = #var_5_2 + 1, #arg_5_0.rewardItems do
+		gohelper.setActive(arg_5_0.rewardItems[iter_5_1].go, false)
 	end
 
-	slot0.scrollRewards.horizontalNormalizedPosition = 0
+	arg_5_0.scrollRewards.horizontalNormalizedPosition = 0
 end
 
-function slot0.addActivityPoints(slot0)
+function var_0_0.addActivityPoints(arg_6_0)
 	if not VersionActivityTaskBonusListModel.instance:checkActivityPointCountHasChange() then
 		return
 	end
 
-	for slot4 = 1, #slot0.pointItemList do
-		if VersionActivityTaskBonusListModel.instance:checkNeedPlayEffect(slot0.co.id, slot4) then
-			gohelper.setActive(slot0.pointItemList[slot4].playGo, true)
+	for iter_6_0 = 1, #arg_6_0.pointItemList do
+		if VersionActivityTaskBonusListModel.instance:checkNeedPlayEffect(arg_6_0.co.id, iter_6_0) then
+			local var_6_0 = arg_6_0.pointItemList[iter_6_0]
+
+			gohelper.setActive(var_6_0.playGo, true)
 		end
 	end
 end
 
-function slot0.playAnimation(slot0, slot1, slot2)
-	slot0._animator:Play(slot1, 0, -slot2)
+function var_0_0.playAnimation(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._animator:Play(arg_7_1, 0, -arg_7_2)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_8_0)
+	return arg_8_0._animator
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0.show(arg_9_0)
+	gohelper.setActive(arg_9_0.viewGO, true)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.viewGO, false)
+function var_0_0.hide(arg_10_0)
+	gohelper.setActive(arg_10_0.viewGO, false)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

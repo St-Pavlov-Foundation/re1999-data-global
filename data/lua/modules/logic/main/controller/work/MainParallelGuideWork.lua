@@ -1,25 +1,33 @@
-module("modules.logic.main.controller.work.MainParallelGuideWork", package.seeall)
+﻿module("modules.logic.main.controller.work.MainParallelGuideWork", package.seeall)
 
-slot0 = class("MainParallelGuideWork", BaseWork)
+local var_0_0 = class("MainParallelGuideWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if GuideController.instance:isForbidGuides() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0:onDone(not slot0:_checkDoGuide())
+	local var_1_0 = arg_1_0:_checkDoGuide()
+
+	arg_1_0:onDone(not var_1_0)
 end
 
-function slot0._checkDoGuide(slot0)
-	if tonumber(GuideModel.instance:getFlagValue(GuideModel.GuideFlag.MainViewGuideId)) and slot1 > 0 and (MainViewGuideCondition.getCondition(slot1) == nil and true or slot2()) then
-		GuideController.instance:dispatchEvent(GuideEvent.DoMainViewGuide, slot1)
+function var_0_0._checkDoGuide(arg_2_0)
+	local var_2_0 = tonumber(GuideModel.instance:getFlagValue(GuideModel.GuideFlag.MainViewGuideId))
 
-		return true
+	if var_2_0 and var_2_0 > 0 then
+		local var_2_1 = MainViewGuideCondition.getCondition(var_2_0)
+
+		if var_2_1 == nil and true or var_2_1() then
+			GuideController.instance:dispatchEvent(GuideEvent.DoMainViewGuide, var_2_0)
+
+			return true
+		end
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

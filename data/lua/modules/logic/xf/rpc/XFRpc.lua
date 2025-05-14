@@ -1,37 +1,40 @@
-module("modules.logic.xf.rpc.XFRpc", package.seeall)
+﻿module("modules.logic.xf.rpc.XFRpc", package.seeall)
 
-slot0 = class("XFRpc", BaseRpc)
+local var_0_0 = class("XFRpc", BaseRpc)
 
-function slot0.onReceiveGuestTimeOutPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGuestTimeOutPush(arg_1_0, arg_1_1, arg_1_2)
+	if arg_1_1 ~= 0 then
 		return
 	end
 
 	SDKMgr.instance:showVistorPlayTimeOutDialog()
 end
 
-function slot0.onReceiveMinorPlayTimeOutPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMinorPlayTimeOutPush(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	SDKMgr.instance:showMinorPlayTimeOutDialog(string.format("%.1f", slot2.timeOutHour / 60))
+	local var_2_0 = arg_2_2.timeOutHour / 60
+	local var_2_1 = string.format("%.1f", var_2_0)
+
+	SDKMgr.instance:showMinorPlayTimeOutDialog(var_2_1)
 end
 
-function slot0.onReceiveMinorLimitLoginTimePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMinorLimitLoginTimePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.limitLoginTime
+	local var_3_0 = arg_3_2.limitLoginTime
 
-	if slot2.isLogin then
+	if arg_3_2.isLogin then
 		SDKMgr.instance:showMinorLimitLoginTimeDialog()
 	else
 		SDKMgr.instance:showMinorPlayTimeOutDialog()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

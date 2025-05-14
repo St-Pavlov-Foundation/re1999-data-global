@@ -1,11 +1,12 @@
-module("modules.logic.nfc.define.NFCEnum", package.seeall)
+﻿module("modules.logic.nfc.define.NFCEnum", package.seeall)
 
-slot0 = _M
-slot0.NFCType = {
+local var_0_0 = _M
+
+var_0_0.NFCType = {
 	BGMSwitch = 1
 }
-slot0.NFCVersion = {
+var_0_0.NFCVersion = {
 	BGMSwitch = 1
 }
 
-return slot0
+return var_0_0

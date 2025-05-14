@@ -1,28 +1,28 @@
-module("modules.logic.rouge.dlc.101.model.rpcmo.RougeLimiterResultMO", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeLimiterResultMO", package.seeall)
 
-slot0 = pureTable("RougeLimiterResultMO")
+local var_0_0 = pureTable("RougeLimiterResultMO")
 
-function slot0.init(slot0, slot1)
-	slot0.addEmblem = tonumber(slot1.addEmblem)
-	slot0.useLimitBuffIds = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.addEmblem = tonumber(arg_1_1.addEmblem)
+	arg_1_0.useLimitBuffIds = {}
 
-	tabletool.addValues(slot0.useLimitBuffIds, slot1.useLimitBuffIds)
+	tabletool.addValues(arg_1_0.useLimitBuffIds, arg_1_1.useLimitBuffIds)
 end
 
-function slot0.getLimiterAddEmblem(slot0)
-	return slot0.addEmblem or 0
+function var_0_0.getLimiterAddEmblem(arg_2_0)
+	return arg_2_0.addEmblem or 0
 end
 
-function slot0.getLimiterUseBuffIds(slot0)
-	return slot0.useLimitBuffIds
+function var_0_0.getLimiterUseBuffIds(arg_3_0)
+	return arg_3_0.useLimitBuffIds
 end
 
-function slot0.setPreEmbleCount(slot0, slot1)
-	slot0.preEmbleCount = slot1 or 0
+function var_0_0.setPreEmbleCount(arg_4_0, arg_4_1)
+	arg_4_0.preEmbleCount = arg_4_1 or 0
 end
 
-function slot0.getPreEmbleCount(slot0)
-	return slot0.preEmbleCount or 0
+function var_0_0.getPreEmbleCount(arg_5_0)
+	return arg_5_0.preEmbleCount or 0
 end
 
-return slot0
+return var_0_0

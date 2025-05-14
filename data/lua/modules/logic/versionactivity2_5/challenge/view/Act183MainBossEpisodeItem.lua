@@ -1,7 +1,7 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183MainBossEpisodeItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183MainBossEpisodeItem", package.seeall)
 
-slot0 = class("Act183MainBossEpisodeItem", Act183BaseEpisodeItem)
-slot1 = {
+local var_0_0 = class("Act183MainBossEpisodeItem", Act183BaseEpisodeItem)
+local var_0_1 = {
 	2.9,
 	-3.3,
 	0,
@@ -9,30 +9,30 @@ slot1 = {
 	0
 }
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._animunlock = gohelper.onceAddComponent(slot0._gounlock, gohelper.Type_Animator)
+	arg_1_0._animunlock = gohelper.onceAddComponent(arg_1_0._gounlock, gohelper.Type_Animator)
 
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, slot0._onInitDungeonDone, slot0)
+	arg_1_0:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, arg_1_0._onInitDungeonDone, arg_1_0)
 end
 
-function slot0._onInitDungeonDone(slot0)
-	slot0:_checkPlayNewUnlockAnim()
+function var_0_0._onInitDungeonDone(arg_2_0)
+	arg_2_0:_checkPlayNewUnlockAnim()
 end
 
-function slot0._checkPlayNewUnlockAnim(slot0)
-	if slot0._status ~= Act183Enum.EpisodeStatus.Unlocked then
+function var_0_0._checkPlayNewUnlockAnim(arg_3_0)
+	if arg_3_0._status ~= Act183Enum.EpisodeStatus.Unlocked then
 		return
 	end
 
-	if Act183Model.instance:isEpisodeNewUnlock(slot0._episodeId) then
-		slot0._animunlock:Play("unlock", 0, 0)
+	if Act183Model.instance:isEpisodeNewUnlock(arg_3_0._episodeId) then
+		arg_3_0._animunlock:Play("unlock", 0, 0)
 	end
 end
 
-function slot0._getCheckIconPosAndRotConfig(slot0, slot1)
-	return uv0
+function var_0_0._getCheckIconPosAndRotConfig(arg_4_0, arg_4_1)
+	return var_0_1
 end
 
-return slot0
+return var_0_0

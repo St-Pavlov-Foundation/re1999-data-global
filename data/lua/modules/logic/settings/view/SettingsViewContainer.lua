@@ -1,38 +1,39 @@
-module("modules.logic.settings.view.SettingsViewContainer", package.seeall)
+﻿module("modules.logic.settings.view.SettingsViewContainer", package.seeall)
 
-slot0 = class("SettingsViewContainer", BaseViewContainer)
+local var_0_0 = class("SettingsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_category"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = SettingsCategoryListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 300
-	slot1.cellHeight = 120
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#scroll_category"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = SettingsCategoryListItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 300
+	var_1_0.cellHeight = 120
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 0
 
 	return {
-		LuaListScrollView.New(SettingsCategoryListModel.instance, slot1),
+		LuaListScrollView.New(SettingsCategoryListModel.instance, var_1_0),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_settingscontent"),
 		SettingsView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
 				true,
 				false
-			}, nil, slot0.clickClose, nil, , slot0)
+			}, nil, arg_2_0.clickClose, nil, nil, arg_2_0)
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			SettingsKeyMapView.New(),
 			SettingsAccountView.New(),
@@ -45,12 +46,12 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.switchTab(arg_3_0, arg_3_1)
+	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
 end
 
-function slot0.clickClose(slot0)
+function var_0_0.clickClose(arg_4_0)
 	ViewMgr.instance:openView(ViewName.MainThumbnailView)
 end
 
-return slot0
+return var_0_0

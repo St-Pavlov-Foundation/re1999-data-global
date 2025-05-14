@@ -1,639 +1,682 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeonbase.view.VersionActivity1_2DungeonMapLevelBaseView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeonbase.view.VersionActivity1_2DungeonMapLevelBaseView", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonMapLevelBaseView", BaseView)
+local var_0_0 = class("VersionActivity1_2DungeonMapLevelBaseView", BaseView)
 
-function slot0._btnreplayStoryOnClick(slot0)
-	if not slot0.storyIdList or #slot0.storyIdList < 1 then
+function var_0_0._btnreplayStoryOnClick(arg_1_0)
+	if not arg_1_0.storyIdList or #arg_1_0.storyIdList < 1 then
 		return
 	end
 
-	StoryController.instance:playStories(slot0.storyIdList)
+	StoryController.instance:playStories(arg_1_0.storyIdList)
 end
 
-function slot0.refreshStoryIdList(slot0)
-	if slot0._episode_list[1].type == DungeonEnum.EpisodeType.Story then
-		slot0.storyIdList = nil
+function var_0_0.refreshStoryIdList(arg_2_0)
+	local var_2_0 = arg_2_0._episode_list[1]
 
-		return
-	end
-
-	if slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
-		slot0.storyIdList = nil
+	if var_2_0.type == DungeonEnum.EpisodeType.Story then
+		arg_2_0.storyIdList = nil
 
 		return
 	end
 
-	slot0.storyIdList = {}
-
-	if slot1.beforeStory > 0 and StoryModel.instance:isStoryHasPlayed(slot1.beforeStory) then
-		table.insert(slot0.storyIdList, slot1.beforeStory)
-	end
-
-	if slot1.afterStory > 0 and StoryModel.instance:isStoryHasPlayed(slot1.afterStory) then
-		table.insert(slot0.storyIdList, slot1.afterStory)
-	end
-end
-
-function slot0._btncloseviewOnClick(slot0)
-	slot0:startCloseTaskNextFrame()
-end
-
-function slot0.startCloseTaskNextFrame(slot0)
-	TaskDispatcher.runDelay(slot0.reallyClose, slot0, 0.01)
-end
-
-function slot0.cancelStartCloseTask(slot0)
-	TaskDispatcher.cancelTask(slot0.reallyClose, slot0)
-end
-
-function slot0.reallyClose(slot0)
-	slot0:closeThis()
-end
-
-function slot0._btnleftarrowOnClick(slot0)
-	if slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
-		return
-	end
-
-	if #slot0._episode_list == 1 then
-		return
-	end
-
-	if slot0._cur_select_index <= 1 then
-		return
-	end
-
-	slot0._cur_select_index = slot0._cur_select_index - 1
-
-	slot0:refreshUIByMode(slot0._cur_select_index)
-end
-
-function slot0._btnrightarrowOnClick(slot0)
-	if slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
-		return
-	end
-
-	if #slot0._episode_list == 1 then
-		return
-	end
-
-	if slot0._cur_select_index >= #slot0._episode_list then
-		return
-	end
-
-	slot0._cur_select_index = slot0._cur_select_index + 1
-
-	slot0:refreshUIByMode(slot0._cur_select_index)
-end
-
-function slot0.refreshUIByMode(slot0, slot1)
-	slot0.animator:Play("switch", 0, 0)
-	slot0:_refreshSelectData(slot1)
-	slot0:refreshUI()
-end
-
-function slot0._refreshSelectData(slot0, slot1)
-	slot0.showEpisodeCo = slot0._episode_list[slot1]
-
-	if not slot0.showEpisodeCo then
-		slot0._cur_select_index = 1
-		slot0.showEpisodeCo = slot0._episode_list[slot0._cur_select_index]
-	end
-
-	slot0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(slot0.showEpisodeCo.id)
-
-	if not slot0.showEpisodeMo then
-		slot0.showEpisodeMo = UserDungeonMO.New()
-
-		slot0.showEpisodeMo:initFromManual(slot0.showEpisodeCo.chapterId, slot0.showEpisodeCo.id, 0, 0)
-	end
-
-	slot0._chapterConfig = DungeonConfig.instance:getChapterCO(slot0.showEpisodeCo.chapterId)
-	slot0.modeCanFight = DungeonModel.instance:hasPassLevelAndStory(slot0.showEpisodeCo.preEpisode) and DungeonModel.instance:isFinishElementList(slot0.showEpisodeCo)
-
-	gohelper.setActive(slot0._gorecommond, FightHelper.getEpisodeRecommendLevel(slot0.showEpisodeCo.id) > 0)
-
-	if slot2 > 0 then
-		slot0._txtrecommondlv.text = HeroConfig.instance:getCommonLevelDisplay(slot2)
-	end
-
-	gohelper.setActive(slot0._golock, not DungeonModel.instance:isUnlock(slot0.showEpisodeCo))
-	slot0._lockAni:Play("idle")
-end
-
-function slot0._btnactivityrewardOnClick(slot0)
-	DungeonController.instance:openDungeonRewardView(slot0.showEpisodeCo)
-end
-
-function slot0._btnnormalStartOnClick(slot0)
-	if not slot0.modeCanFight then
-		GameFacade.showToast(ToastEnum.VersionActivityCanFight, slot0:getPreModeName())
+	if arg_2_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
+		arg_2_0.storyIdList = nil
 
 		return
 	end
 
-	slot0:startBattle()
+	arg_2_0.storyIdList = {}
+
+	if var_2_0.beforeStory > 0 and StoryModel.instance:isStoryHasPlayed(var_2_0.beforeStory) then
+		table.insert(arg_2_0.storyIdList, var_2_0.beforeStory)
+	end
+
+	if var_2_0.afterStory > 0 and StoryModel.instance:isStoryHasPlayed(var_2_0.afterStory) then
+		table.insert(arg_2_0.storyIdList, var_2_0.afterStory)
+	end
 end
 
-function slot0._btnhardStartOnClick(slot0)
-	slot0:startBattle()
+function var_0_0._btncloseviewOnClick(arg_3_0)
+	arg_3_0:startCloseTaskNextFrame()
 end
 
-function slot0._btncloseruleOnClick(slot0)
+function var_0_0.startCloseTaskNextFrame(arg_4_0)
+	TaskDispatcher.runDelay(arg_4_0.reallyClose, arg_4_0, 0.01)
 end
 
-function slot0.startBattle(slot0)
-	if slot0.showEpisodeCo.type == DungeonEnum.EpisodeType.Story then
-		slot0:_playMainStory()
+function var_0_0.cancelStartCloseTask(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.reallyClose, arg_5_0)
+end
+
+function var_0_0.reallyClose(arg_6_0)
+	arg_6_0:closeThis()
+end
+
+function var_0_0._btnleftarrowOnClick(arg_7_0)
+	if arg_7_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
+		return
+	end
+
+	if #arg_7_0._episode_list == 1 then
+		return
+	end
+
+	if arg_7_0._cur_select_index <= 1 then
+		return
+	end
+
+	arg_7_0._cur_select_index = arg_7_0._cur_select_index - 1
+
+	arg_7_0:refreshUIByMode(arg_7_0._cur_select_index)
+end
+
+function var_0_0._btnrightarrowOnClick(arg_8_0)
+	if arg_8_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
+		return
+	end
+
+	if #arg_8_0._episode_list == 1 then
+		return
+	end
+
+	if arg_8_0._cur_select_index >= #arg_8_0._episode_list then
+		return
+	end
+
+	arg_8_0._cur_select_index = arg_8_0._cur_select_index + 1
+
+	arg_8_0:refreshUIByMode(arg_8_0._cur_select_index)
+end
+
+function var_0_0.refreshUIByMode(arg_9_0, arg_9_1)
+	arg_9_0.animator:Play("switch", 0, 0)
+	arg_9_0:_refreshSelectData(arg_9_1)
+	arg_9_0:refreshUI()
+end
+
+function var_0_0._refreshSelectData(arg_10_0, arg_10_1)
+	arg_10_0.showEpisodeCo = arg_10_0._episode_list[arg_10_1]
+
+	if not arg_10_0.showEpisodeCo then
+		arg_10_0._cur_select_index = 1
+		arg_10_0.showEpisodeCo = arg_10_0._episode_list[arg_10_0._cur_select_index]
+	end
+
+	arg_10_0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(arg_10_0.showEpisodeCo.id)
+
+	if not arg_10_0.showEpisodeMo then
+		arg_10_0.showEpisodeMo = UserDungeonMO.New()
+
+		arg_10_0.showEpisodeMo:initFromManual(arg_10_0.showEpisodeCo.chapterId, arg_10_0.showEpisodeCo.id, 0, 0)
+	end
+
+	arg_10_0._chapterConfig = DungeonConfig.instance:getChapterCO(arg_10_0.showEpisodeCo.chapterId)
+	arg_10_0.modeCanFight = DungeonModel.instance:hasPassLevelAndStory(arg_10_0.showEpisodeCo.preEpisode) and DungeonModel.instance:isFinishElementList(arg_10_0.showEpisodeCo)
+
+	local var_10_0 = FightHelper.getEpisodeRecommendLevel(arg_10_0.showEpisodeCo.id)
+
+	gohelper.setActive(arg_10_0._gorecommond, var_10_0 > 0)
+
+	if var_10_0 > 0 then
+		arg_10_0._txtrecommondlv.text = HeroConfig.instance:getCommonLevelDisplay(var_10_0)
+	end
+
+	local var_10_1 = not DungeonModel.instance:isUnlock(arg_10_0.showEpisodeCo)
+
+	gohelper.setActive(arg_10_0._golock, var_10_1)
+	arg_10_0._lockAni:Play("idle")
+end
+
+function var_0_0._btnactivityrewardOnClick(arg_11_0)
+	DungeonController.instance:openDungeonRewardView(arg_11_0.showEpisodeCo)
+end
+
+function var_0_0._btnnormalStartOnClick(arg_12_0)
+	if not arg_12_0.modeCanFight then
+		GameFacade.showToast(ToastEnum.VersionActivityCanFight, arg_12_0:getPreModeName())
 
 		return
 	end
 
-	if DungeonModel.instance:hasPassLevelAndStory(slot0.showEpisodeCo.id) then
-		slot0:_enterFight()
-
-		return
-	end
-
-	if slot0.showEpisodeCo.beforeStory > 0 and not StoryModel.instance:isStoryFinished(slot0.showEpisodeCo.beforeStory) then
-		slot0:_playStoryAndEnterFight(slot0.showEpisodeCo.beforeStory)
-
-		return
-	end
-
-	if slot0.showEpisodeMo.star <= DungeonEnum.StarType.None then
-		slot0:_enterFight()
-
-		return
-	end
-
-	if slot0.showEpisodeCo.afterStory > 0 and not StoryModel.instance:isStoryFinished(slot0.showEpisodeCo.afterStory) then
-		slot0:playAfterStory(slot0.showEpisodeCo.afterStory)
-
-		return
-	end
-
-	slot0:_enterFight()
+	arg_12_0:startBattle()
 end
 
-function slot0._playMainStory(slot0)
-	DungeonRpc.instance:sendStartDungeonRequest(slot0.showEpisodeCo.chapterId, slot0.showEpisodeCo.id)
-	StoryController.instance:playStory(slot0.showEpisodeCo.beforeStory, {
-		mark = true,
-		episodeId = slot0.showEpisodeCo.id
-	}, slot0.onStoryFinished, slot0)
+function var_0_0._btnhardStartOnClick(arg_13_0)
+	arg_13_0:startBattle()
 end
 
-function slot0.playAfterStory(slot0, slot1)
-	StoryController.instance:playStory(slot1, {
-		mark = true,
-		episodeId = slot0.showEpisodeCo.id
-	}, function ()
+function var_0_0._btncloseruleOnClick(arg_14_0)
+	return
+end
+
+function var_0_0.startBattle(arg_15_0)
+	if arg_15_0.showEpisodeCo.type == DungeonEnum.EpisodeType.Story then
+		arg_15_0:_playMainStory()
+
+		return
+	end
+
+	if DungeonModel.instance:hasPassLevelAndStory(arg_15_0.showEpisodeCo.id) then
+		arg_15_0:_enterFight()
+
+		return
+	end
+
+	if arg_15_0.showEpisodeCo.beforeStory > 0 and not StoryModel.instance:isStoryFinished(arg_15_0.showEpisodeCo.beforeStory) then
+		arg_15_0:_playStoryAndEnterFight(arg_15_0.showEpisodeCo.beforeStory)
+
+		return
+	end
+
+	if arg_15_0.showEpisodeMo.star <= DungeonEnum.StarType.None then
+		arg_15_0:_enterFight()
+
+		return
+	end
+
+	if arg_15_0.showEpisodeCo.afterStory > 0 and not StoryModel.instance:isStoryFinished(arg_15_0.showEpisodeCo.afterStory) then
+		arg_15_0:playAfterStory(arg_15_0.showEpisodeCo.afterStory)
+
+		return
+	end
+
+	arg_15_0:_enterFight()
+end
+
+function var_0_0._playMainStory(arg_16_0)
+	DungeonRpc.instance:sendStartDungeonRequest(arg_16_0.showEpisodeCo.chapterId, arg_16_0.showEpisodeCo.id)
+
+	local var_16_0 = {}
+
+	var_16_0.mark = true
+	var_16_0.episodeId = arg_16_0.showEpisodeCo.id
+
+	StoryController.instance:playStory(arg_16_0.showEpisodeCo.beforeStory, var_16_0, arg_16_0.onStoryFinished, arg_16_0)
+end
+
+function var_0_0.playAfterStory(arg_17_0, arg_17_1)
+	local var_17_0 = {}
+
+	var_17_0.mark = true
+	var_17_0.episodeId = arg_17_0.showEpisodeCo.id
+
+	StoryController.instance:playStory(arg_17_1, var_17_0, function()
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo, nil)
 
 		DungeonMapModel.instance.playAfterStory = true
 
-		uv0:closeThis()
-	end, slot0)
+		arg_17_0:closeThis()
+	end, arg_17_0)
 end
 
-function slot0._playStoryAndEnterFight(slot0, slot1)
-	if StoryModel.instance:isStoryFinished(slot1) then
-		slot0:_enterFight()
+function var_0_0._playStoryAndEnterFight(arg_19_0, arg_19_1)
+	if StoryModel.instance:isStoryFinished(arg_19_1) then
+		arg_19_0:_enterFight()
 
 		return
 	end
 
-	StoryController.instance:playStory(slot1, {
-		mark = true,
-		episodeId = slot0.showEpisodeCo.id
-	}, slot0._enterFight, slot0)
+	local var_19_0 = {}
+
+	var_19_0.mark = true
+	var_19_0.episodeId = arg_19_0.showEpisodeCo.id
+
+	StoryController.instance:playStory(arg_19_1, var_19_0, arg_19_0._enterFight, arg_19_0)
 end
 
-function slot0._enterFight(slot0)
-	for slot4, slot5 in ipairs(slot0._episode_list) do
-		uv0.setlastBattleEpisodeId2Index(slot5.id, slot0._cur_select_index)
+function var_0_0._enterFight(arg_20_0)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0._episode_list) do
+		var_0_0.setlastBattleEpisodeId2Index(iter_20_1.id, arg_20_0._cur_select_index)
 	end
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.enterFight, slot0._episode_list[1].id)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.enterFight, arg_20_0._episode_list[1].id)
 
-	DungeonModel.instance.versionActivityChapterType = DungeonConfig.instance:getChapterTypeByEpisodeId(slot0.showEpisodeCo.id)
+	DungeonModel.instance.versionActivityChapterType = DungeonConfig.instance:getChapterTypeByEpisodeId(arg_20_0.showEpisodeCo.id)
 
-	DungeonFightController.instance:enterFight(slot0.showEpisodeCo.chapterId, slot0.showEpisodeCo.id, 1)
+	DungeonFightController.instance:enterFight(arg_20_0.showEpisodeCo.chapterId, arg_20_0.showEpisodeCo.id, 1)
 end
 
-function slot0.getlastBattleEpisodeId2Index(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2LastBattleEpisodeId2Index .. "_" .. slot0, 1)
+function var_0_0.getlastBattleEpisodeId2Index(arg_21_0)
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2LastBattleEpisodeId2Index .. "_" .. arg_21_0, 1)
 end
 
-function slot0.setlastBattleEpisodeId2Index(slot0, slot1)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2LastBattleEpisodeId2Index .. "_" .. slot0, slot1)
+function var_0_0.setlastBattleEpisodeId2Index(arg_22_0, arg_22_1)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2LastBattleEpisodeId2Index .. "_" .. arg_22_0, arg_22_1)
 end
 
-function slot0.onStoryFinished(slot0)
+function var_0_0.onStoryFinished(arg_23_0)
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(slot0.showEpisodeCo.id)
+	DungeonModel.instance:setLastSendEpisodeId(arg_23_0.showEpisodeCo.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
-	slot0:closeThis()
+	arg_23_0:closeThis()
 end
 
-function slot0._onClueFlowDone(slot0)
-	slot0:closeThis()
+function var_0_0._onClueFlowDone(arg_24_0)
+	arg_24_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goactivityrewarditem, false)
+function var_0_0._editableInitView(arg_25_0)
+	gohelper.setActive(arg_25_0._goactivityrewarditem, false)
 
-	slot0.storyGoType = slot0._gotype1
-	slot0.story3GoType = slot0._gotype2
-	slot0.story4GoType = slot0._gotype3
-	slot0.hardGoType = slot0._gotype4
-	slot0.rewardItems = {}
+	arg_25_0.storyGoType = arg_25_0._gotype1
+	arg_25_0.story3GoType = arg_25_0._gotype2
+	arg_25_0.story4GoType = arg_25_0._gotype3
+	arg_25_0.hardGoType = arg_25_0._gotype4
+	arg_25_0.rewardItems = {}
 
-	slot0._simageactivitynormalbg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg002"))
-	slot0._simageactivityhardbg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg003"))
+	arg_25_0._simageactivitynormalbg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg002"))
+	arg_25_0._simageactivityhardbg:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg003"))
 
-	slot0.goVersionActivity = gohelper.findChild(slot0.viewGO, "anim/versionactivity")
-	slot0.animator = slot0.goVersionActivity:GetComponent(typeof(UnityEngine.Animator))
+	arg_25_0.goVersionActivity = gohelper.findChild(arg_25_0.viewGO, "anim/versionactivity")
+	arg_25_0.animator = arg_25_0.goVersionActivity:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateParam(slot0)
-	gohelper.setActive(slot0.viewGO, false)
-	gohelper.setActive(slot0.viewGO, true)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_26_0)
+	gohelper.setActive(arg_26_0.viewGO, false)
+	gohelper.setActive(arg_26_0.viewGO, true)
+	arg_26_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
-	slot0.showEpisodeCo = DungeonConfig.instance:getEpisodeCO(slot0.viewParam.episodeId)
-	slot0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(slot0.viewParam.episodeId)
-	slot0.isFromJump = slot0.viewParam.isJump
+function var_0_0.onOpen(arg_27_0)
+	arg_27_0.showEpisodeCo = DungeonConfig.instance:getEpisodeCO(arg_27_0.viewParam.episodeId)
+	arg_27_0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(arg_27_0.viewParam.episodeId)
+	arg_27_0.isFromJump = arg_27_0.viewParam.isJump
 
-	slot0:initMode()
+	arg_27_0:initMode()
 
-	slot0.modeCanFight = true
+	arg_27_0.modeCanFight = true
 
-	slot0:refreshStoryIdList()
-	slot0:refreshBg()
-	slot0:refreshUI()
-	VersionActivity1_2DungeonController.instance:setDungeonSelectedEpisodeId(slot0._episode_list[1].id)
+	arg_27_0:refreshStoryIdList()
+	arg_27_0:refreshBg()
+	arg_27_0:refreshUI()
+	VersionActivity1_2DungeonController.instance:setDungeonSelectedEpisodeId(arg_27_0._episode_list[1].id)
 end
 
-function slot0.getEpisodeUnlockAniFinish(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2EpisodeUnlockAniFinish .. "_" .. slot0, 0)
+function var_0_0.getEpisodeUnlockAniFinish(arg_28_0)
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2EpisodeUnlockAniFinish .. "_" .. arg_28_0, 0)
 end
 
-function slot0.setEpisodeUnlockAniFinish(slot0)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2EpisodeUnlockAniFinish .. "_" .. slot0, 1)
+function var_0_0.setEpisodeUnlockAniFinish(arg_29_0)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Fight1_2EpisodeUnlockAniFinish .. "_" .. arg_29_0, 1)
 end
 
-function slot0.initMode(slot0)
-	slot1 = uv0.getlastBattleEpisodeId2Index(slot0.showEpisodeCo.id)
-	slot0.mode = VersionActivity1_2DungeonEnum.DungeonChapterId2UIModel[slot0.showEpisodeCo.chapterId]
-	slot0._episode_list = {}
-	slot0._playUnlockAniIndex = nil
-	slot2 = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(slot0.showEpisodeCo.id)
-	slot6 = slot0.showEpisodeCo.id
+function var_0_0.initMode(arg_30_0)
+	local var_30_0 = var_0_0.getlastBattleEpisodeId2Index(arg_30_0.showEpisodeCo.id)
 
-	for slot6, slot7 in ipairs(DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(slot6)) do
-		table.insert(slot0._episode_list, DungeonConfig.instance:getEpisodeCO(slot7))
+	arg_30_0.mode = VersionActivity1_2DungeonEnum.DungeonChapterId2UIModel[arg_30_0.showEpisodeCo.chapterId]
+	arg_30_0._episode_list = {}
+	arg_30_0._playUnlockAniIndex = nil
+
+	local var_30_1 = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(arg_30_0.showEpisodeCo.id)
+
+	for iter_30_0, iter_30_1 in ipairs(DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(arg_30_0.showEpisodeCo.id)) do
+		local var_30_2 = DungeonConfig.instance:getEpisodeCO(iter_30_1)
+
+		table.insert(arg_30_0._episode_list, var_30_2)
 	end
 
-	if slot0.isFromJump then
-		if DungeonModel.instance:isUnlock(slot0.showEpisodeCo) then
-			for slot7, slot8 in ipairs(slot0._episode_list) do
-				if slot8.id == slot0.showEpisodeCo.id then
-					slot0._cur_select_index = slot7
+	if arg_30_0.isFromJump then
+		if DungeonModel.instance:isUnlock(arg_30_0.showEpisodeCo) then
+			for iter_30_2, iter_30_3 in ipairs(arg_30_0._episode_list) do
+				if iter_30_3.id == arg_30_0.showEpisodeCo.id then
+					arg_30_0._cur_select_index = iter_30_2
 
 					break
 				end
 			end
 
-			if not slot0._playUnlockAniIndex and uv0.getEpisodeUnlockAniFinish(slot0.showEpisodeCo.id) == 0 then
-				slot0._playUnlockAniIndex = slot0._cur_select_index
+			local var_30_3 = var_0_0.getEpisodeUnlockAniFinish(arg_30_0.showEpisodeCo.id)
 
-				uv0.setEpisodeUnlockAniFinish(slot0.showEpisodeCo.id)
+			if not arg_30_0._playUnlockAniIndex and var_30_3 == 0 then
+				arg_30_0._playUnlockAniIndex = arg_30_0._cur_select_index
+
+				var_0_0.setEpisodeUnlockAniFinish(arg_30_0.showEpisodeCo.id)
 			end
 		end
 	else
-		for slot6, slot7 in ipairs(slot2) do
-			if slot6 > 1 and DungeonModel.instance:isUnlock(DungeonConfig.instance:getEpisodeCO(slot7)) then
-				if not slot0._playUnlockAniIndex and uv0.getEpisodeUnlockAniFinish(slot7) == 0 then
-					slot0._playUnlockAniIndex = slot6
-					slot0._cur_select_index = slot6
+		for iter_30_4, iter_30_5 in ipairs(var_30_1) do
+			local var_30_4 = DungeonConfig.instance:getEpisodeCO(iter_30_5)
 
-					uv0.setEpisodeUnlockAniFinish(slot7)
+			if iter_30_4 > 1 and DungeonModel.instance:isUnlock(var_30_4) then
+				local var_30_5 = var_0_0.getEpisodeUnlockAniFinish(iter_30_5)
+
+				if not arg_30_0._playUnlockAniIndex and var_30_5 == 0 then
+					arg_30_0._playUnlockAniIndex = iter_30_4
+					arg_30_0._cur_select_index = iter_30_4
+
+					var_0_0.setEpisodeUnlockAniFinish(iter_30_5)
 				end
 			end
 		end
 	end
 
-	slot0._cur_select_index = slot0._cur_select_index or slot1
+	arg_30_0._cur_select_index = arg_30_0._cur_select_index or var_30_0
 
-	slot0:_refreshSelectData(slot0._cur_select_index)
+	arg_30_0:_refreshSelectData(arg_30_0._cur_select_index)
 
-	if slot0._playUnlockAniIndex then
-		gohelper.setActive(slot0._golock, true)
-		slot0._lockAni:Play("unlock")
-		TaskDispatcher.runDelay(slot0._playUnlockAudio, slot0, 1)
+	if arg_30_0._playUnlockAniIndex then
+		gohelper.setActive(arg_30_0._golock, true)
+		arg_30_0._lockAni:Play("unlock")
+		TaskDispatcher.runDelay(arg_30_0._playUnlockAudio, arg_30_0, 1)
 	end
 end
 
-function slot0._playUnlockAudio(slot0)
+function var_0_0._playUnlockAudio(arg_31_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_unlock)
 end
 
-function slot0.refreshBg(slot0)
-	gohelper.setActive(slot0._simageactivitynormalbg.gameObject, slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard)
-	gohelper.setActive(slot0._simageactivityhardbg.gameObject, slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard)
+function var_0_0.refreshBg(arg_32_0)
+	gohelper.setActive(arg_32_0._simageactivitynormalbg.gameObject, arg_32_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard)
+	gohelper.setActive(arg_32_0._simageactivityhardbg.gameObject, arg_32_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshEpisodeTextInfo()
-	slot0:refreshStar()
-	slot0:refreshMode()
-	slot0:refreshArrow()
-	slot0:refreshReward()
-	slot0:refreshStartBtn()
+function var_0_0.refreshUI(arg_33_0)
+	arg_33_0:refreshEpisodeTextInfo()
+	arg_33_0:refreshStar()
+	arg_33_0:refreshMode()
+	arg_33_0:refreshArrow()
+	arg_33_0:refreshReward()
+	arg_33_0:refreshStartBtn()
 end
 
-function slot0.refreshEpisodeTextInfo(slot0)
-	slot0._txtmapName.text = slot0:buildEpisodeName()
-	slot0._txtmapNameEn.text = slot0.showEpisodeCo.name_En
-	slot0._txtmapNum.text = string.format("%02d", VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(slot0.showEpisodeCo.id))
-	slot0._txtactivitydesc.text = slot0.showEpisodeCo.desc
+function var_0_0.refreshEpisodeTextInfo(arg_34_0)
+	arg_34_0._txtmapName.text = arg_34_0:buildEpisodeName()
+	arg_34_0._txtmapNameEn.text = arg_34_0.showEpisodeCo.name_En
+	arg_34_0._txtmapNum.text = string.format("%02d", VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(arg_34_0.showEpisodeCo.id))
+	arg_34_0._txtactivitydesc.text = arg_34_0.showEpisodeCo.desc
 end
 
-function slot0.refreshStar(slot0)
-	slot0:setImage(slot0._imagestar1, slot0.showEpisodeCo.id and DungeonModel.instance:hasPassLevelAndStory(slot1))
+function var_0_0.refreshStar(arg_35_0)
+	local var_35_0 = arg_35_0.showEpisodeCo.id
+	local var_35_1 = var_35_0 and DungeonModel.instance:hasPassLevelAndStory(var_35_0)
+	local var_35_2 = DungeonConfig.instance:getEpisodeAdvancedConditionText(var_35_0)
 
-	if string.nilorempty(DungeonConfig.instance:getEpisodeAdvancedConditionText(slot1)) then
-		gohelper.setActive(slot0._imagestar2.gameObject, false)
+	arg_35_0:setImage(arg_35_0._imagestar1, var_35_1)
+
+	if string.nilorempty(var_35_2) then
+		gohelper.setActive(arg_35_0._imagestar2.gameObject, false)
 	else
-		slot0:setImage(slot0._imagestar2, DungeonEnum.StarType.Advanced <= slot0.showEpisodeMo.star)
+		arg_35_0:setImage(arg_35_0._imagestar2, arg_35_0.showEpisodeMo.star >= DungeonEnum.StarType.Advanced)
 	end
 end
 
-function slot0.refreshMode(slot0)
-	gohelper.setActive(slot0.storyGoType, slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and slot0._cur_select_index == 1)
-	gohelper.setActive(slot0.story3GoType, slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and slot0._cur_select_index == 2)
-	gohelper.setActive(slot0.story4GoType, slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and slot0._cur_select_index == 3)
-	gohelper.setActive(slot0.hardGoType, slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard)
+function var_0_0.refreshMode(arg_36_0)
+	gohelper.setActive(arg_36_0.storyGoType, arg_36_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and arg_36_0._cur_select_index == 1)
+	gohelper.setActive(arg_36_0.story3GoType, arg_36_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and arg_36_0._cur_select_index == 2)
+	gohelper.setActive(arg_36_0.story4GoType, arg_36_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and arg_36_0._cur_select_index == 3)
+	gohelper.setActive(arg_36_0.hardGoType, arg_36_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard)
 end
 
-function slot0.refreshArrow(slot0)
-	slot1 = slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and #slot0._episode_list > 1
+function var_0_0.refreshArrow(arg_37_0)
+	local var_37_0 = arg_37_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and #arg_37_0._episode_list > 1
 
-	gohelper.setActive(slot0._btnleftarrow.gameObject, slot1)
-	gohelper.setActive(slot0._btnrightarrow.gameObject, slot1)
+	gohelper.setActive(arg_37_0._btnleftarrow.gameObject, var_37_0)
+	gohelper.setActive(arg_37_0._btnrightarrow.gameObject, var_37_0)
 
-	if slot1 then
-		slot0._leftArrow = slot0._leftArrow or gohelper.findChildImage(slot0._btnleftarrow.gameObject, "left_arrow")
-		slot0._rightArrow = slot0._rightArrow or gohelper.findChildImage(slot0._btnrightarrow.gameObject, "right_arrow")
+	if var_37_0 then
+		arg_37_0._leftArrow = arg_37_0._leftArrow or gohelper.findChildImage(arg_37_0._btnleftarrow.gameObject, "left_arrow")
+		arg_37_0._rightArrow = arg_37_0._rightArrow or gohelper.findChildImage(arg_37_0._btnrightarrow.gameObject, "right_arrow")
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._leftArrow, slot0._cur_select_index == 1 and "#8C8C8C" or "#FFFFFF")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._rightArrow, slot0._cur_select_index == #slot0._episode_list and "#8C8C8C" or "#FFFFFF")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_37_0._leftArrow, arg_37_0._cur_select_index == 1 and "#8C8C8C" or "#FFFFFF")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_37_0._rightArrow, arg_37_0._cur_select_index == #arg_37_0._episode_list and "#8C8C8C" or "#FFFFFF")
 	end
 end
 
-function slot0.refreshReward(slot0)
-	slot1 = {}
-	slot2 = 0
-	slot3 = 0
+function var_0_0.refreshReward(arg_38_0)
+	local var_38_0 = {}
+	local var_38_1 = 0
+	local var_38_2 = 0
 
-	if slot0.showEpisodeMo and slot0.showEpisodeMo.star ~= DungeonEnum.StarType.Advanced then
-		tabletool.addValues(slot1, DungeonModel.instance:getEpisodeAdvancedBonus(slot0.showEpisodeCo.id))
+	if arg_38_0.showEpisodeMo and arg_38_0.showEpisodeMo.star ~= DungeonEnum.StarType.Advanced then
+		tabletool.addValues(var_38_0, DungeonModel.instance:getEpisodeAdvancedBonus(arg_38_0.showEpisodeCo.id))
 
-		slot3 = #slot1
+		var_38_2 = #var_38_0
 	end
 
-	if slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
-		tabletool.addValues(slot1, DungeonModel.instance:getEpisodeFirstBonus(slot0.showEpisodeCo.id))
+	if arg_38_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
+		tabletool.addValues(var_38_0, DungeonModel.instance:getEpisodeFirstBonus(arg_38_0.showEpisodeCo.id))
 
-		slot2 = #slot1
-	elseif slot0.showEpisodeMo and slot0.showEpisodeMo.star == DungeonEnum.StarType.None then
-		tabletool.addValues(slot1, DungeonModel.instance:getEpisodeFirstBonus(slot0.showEpisodeCo.id))
+		var_38_1 = #var_38_0
+	elseif arg_38_0.showEpisodeMo and arg_38_0.showEpisodeMo.star == DungeonEnum.StarType.None then
+		tabletool.addValues(var_38_0, DungeonModel.instance:getEpisodeFirstBonus(arg_38_0.showEpisodeCo.id))
 
-		slot2 = #slot1
+		var_38_1 = #var_38_0
 	end
 
-	tabletool.addValues(slot1, DungeonModel.instance:getEpisodeRewardDisplayList(slot0.showEpisodeCo.id))
-	gohelper.setActive(slot0._gorewards, #slot1 > 0)
-	gohelper.setActive(slot0._gonorewards, slot4 == 0)
+	tabletool.addValues(var_38_0, DungeonModel.instance:getEpisodeRewardDisplayList(arg_38_0.showEpisodeCo.id))
 
-	if slot4 == 0 then
+	local var_38_3 = #var_38_0
+
+	gohelper.setActive(arg_38_0._gorewards, var_38_3 > 0)
+	gohelper.setActive(arg_38_0._gonorewards, var_38_3 == 0)
+
+	if var_38_3 == 0 then
 		return
 	end
 
-	slot6, slot7 = nil
+	local var_38_4 = math.min(#var_38_0, 3)
+	local var_38_5
+	local var_38_6
 
-	for slot11 = 1, math.min(#slot1, 3) do
-		if not slot0.rewardItems[slot11] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = gohelper.cloneInPlace(slot0._goactivityrewarditem, "item" .. slot11)
-			slot7.iconItem = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot7.go, "itemicon"))
-			slot7.gorare = gohelper.findChild(slot7.go, "rare")
-			slot7.gonormal = gohelper.findChild(slot7.go, "rare/#go_rare1")
-			slot7.gofirst = gohelper.findChild(slot7.go, "rare/#go_rare2")
-			slot7.goadvance = gohelper.findChild(slot7.go, "rare/#go_rare3")
-			slot7.gofirsthard = gohelper.findChild(slot7.go, "rare/#go_rare4")
-			slot7.txtnormal = gohelper.findChildText(slot7.go, "rare/#go_rare1/txt")
-			slot7.count = gohelper.findChildText(slot7.go, "countbg/count")
-			slot7.countBg = gohelper.findChild(slot7.go, "countbg")
-			slot7.got = gohelper.findChild(slot7.go, "got")
+	for iter_38_0 = 1, var_38_4 do
+		local var_38_7 = arg_38_0.rewardItems[iter_38_0]
 
-			table.insert(slot0.rewardItems, slot7)
+		if not var_38_7 then
+			var_38_7 = arg_38_0:getUserDataTb_()
+			var_38_7.go = gohelper.cloneInPlace(arg_38_0._goactivityrewarditem, "item" .. iter_38_0)
+			var_38_7.iconItem = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(var_38_7.go, "itemicon"))
+			var_38_7.gorare = gohelper.findChild(var_38_7.go, "rare")
+			var_38_7.gonormal = gohelper.findChild(var_38_7.go, "rare/#go_rare1")
+			var_38_7.gofirst = gohelper.findChild(var_38_7.go, "rare/#go_rare2")
+			var_38_7.goadvance = gohelper.findChild(var_38_7.go, "rare/#go_rare3")
+			var_38_7.gofirsthard = gohelper.findChild(var_38_7.go, "rare/#go_rare4")
+			var_38_7.txtnormal = gohelper.findChildText(var_38_7.go, "rare/#go_rare1/txt")
+			var_38_7.count = gohelper.findChildText(var_38_7.go, "countbg/count")
+			var_38_7.countBg = gohelper.findChild(var_38_7.go, "countbg")
+			var_38_7.got = gohelper.findChild(var_38_7.go, "got")
+
+			table.insert(arg_38_0.rewardItems, var_38_7)
 		end
 
-		gohelper.setActive(slot7.gonormal, false)
-		gohelper.setActive(slot7.gofirst, false)
-		gohelper.setActive(slot7.goadvance, false)
-		gohelper.setActive(slot7.gofirsthard, false)
-		gohelper.setActive(slot7.got, false)
-		gohelper.setActive(slot7.gorare, true)
+		local var_38_8 = var_38_0[iter_38_0]
 
-		slot12, slot13 = nil
-		slot14 = slot1[slot11][3]
-		slot15 = true
+		gohelper.setActive(var_38_7.gonormal, false)
+		gohelper.setActive(var_38_7.gofirst, false)
+		gohelper.setActive(var_38_7.goadvance, false)
+		gohelper.setActive(var_38_7.gofirsthard, false)
+		gohelper.setActive(var_38_7.got, false)
+		gohelper.setActive(var_38_7.gorare, true)
 
-		if slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
-			slot12 = slot7.gofirsthard
-			slot13 = slot7.goadvance
+		local var_38_9
+		local var_38_10
+		local var_38_11 = var_38_8[3]
+		local var_38_12 = true
+
+		if arg_38_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
+			var_38_9 = var_38_7.gofirsthard
+			var_38_10 = var_38_7.goadvance
 		else
-			slot12 = slot7.gofirst
-			slot13 = slot7.goadvance
+			var_38_9 = var_38_7.gofirst
+			var_38_10 = var_38_7.goadvance
 		end
 
-		if slot11 <= slot3 then
-			gohelper.setActive(slot13, true)
-		elseif slot11 <= slot2 then
-			gohelper.setActive(slot12, true)
+		if iter_38_0 <= var_38_2 then
+			gohelper.setActive(var_38_10, true)
+		elseif iter_38_0 <= var_38_1 then
+			gohelper.setActive(var_38_9, true)
 		else
-			gohelper.setActive(slot7.gonormal, true)
+			gohelper.setActive(var_38_7.gonormal, true)
 
-			slot7.txtnormal.text = luaLang("dungeon_prob_flag" .. slot6[3])
+			var_38_7.txtnormal.text = luaLang("dungeon_prob_flag" .. var_38_8[3])
 
-			if #slot6 >= 4 then
-				slot14 = slot6[4]
+			if #var_38_8 >= 4 then
+				var_38_11 = var_38_8[4]
 			else
-				slot15 = false
+				var_38_12 = false
 			end
 		end
 
-		gohelper.setActive(slot7.countBg, slot15)
+		gohelper.setActive(var_38_7.countBg, var_38_12)
 
-		slot7.count.text = slot15 and slot14 or ""
+		var_38_7.count.text = var_38_12 and var_38_11 or ""
 
-		slot7.iconItem:setMOValue(slot6[1], slot6[2], slot14, nil, true)
-		slot7.iconItem:setCountFontSize(0)
-		slot7.iconItem:setHideLvAndBreakFlag(true)
-		slot7.iconItem:hideEquipLvAndBreak(true)
-		slot7.iconItem:isShowCount(slot15)
+		var_38_7.iconItem:setMOValue(var_38_8[1], var_38_8[2], var_38_11, nil, true)
+		var_38_7.iconItem:setCountFontSize(0)
+		var_38_7.iconItem:setHideLvAndBreakFlag(true)
+		var_38_7.iconItem:hideEquipLvAndBreak(true)
+		var_38_7.iconItem:isShowCount(var_38_12)
 
-		if DungeonModel.instance:hasPassLevelAndStory(slot0.showEpisodeCo.id) and slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
-			gohelper.setActive(slot7.got, true)
-			gohelper.setActive(slot7.gorare, false)
+		if DungeonModel.instance:hasPassLevelAndStory(arg_38_0.showEpisodeCo.id) and arg_38_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard then
+			gohelper.setActive(var_38_7.got, true)
+			gohelper.setActive(var_38_7.gorare, false)
 		end
 
-		gohelper.setActive(slot7.go, true)
+		gohelper.setActive(var_38_7.go, true)
 	end
 
-	for slot11 = slot5 + 1, #slot0.rewardItems do
-		gohelper.setActive(slot0.rewardItems[slot11].go, false)
+	for iter_38_1 = var_38_4 + 1, #arg_38_0.rewardItems do
+		gohelper.setActive(arg_38_0.rewardItems[iter_38_1].go, false)
 	end
 end
 
-function slot0.refreshStartBtn(slot0)
-	slot1 = 0
+function var_0_0.refreshStartBtn(arg_39_0)
+	local var_39_0 = 0
 
-	if not string.nilorempty(slot0.showEpisodeCo.cost) then
-		slot1 = string.splitToNumber(slot0.showEpisodeCo.cost, "#")[3]
+	if not string.nilorempty(arg_39_0.showEpisodeCo.cost) then
+		var_39_0 = string.splitToNumber(arg_39_0.showEpisodeCo.cost, "#")[3]
 	end
 
-	if slot0._simagepower then
-		slot0._simagepower:LoadImage(ResUrl.getCurrencyItemIcon(CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).icon))
+	local var_39_1 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	local var_39_2 = ResUrl.getCurrencyItemIcon(var_39_1.icon)
+
+	if arg_39_0._simagepower then
+		arg_39_0._simagepower:LoadImage(var_39_2)
 	end
 
-	if slot0._simagepower2 then
-		slot0._simagepower2:LoadImage(slot3)
+	if arg_39_0._simagepower2 then
+		arg_39_0._simagepower2:LoadImage(var_39_2)
 	end
 
-	slot0._txtusepowernormal.text = "-" .. slot1
-	slot0._txtusepowernormal2.text = "-" .. slot1
-	slot0._txtusepowerhard.text = "-" .. slot1
+	arg_39_0._txtusepowernormal.text = "-" .. var_39_0
+	arg_39_0._txtusepowernormal2.text = "-" .. var_39_0
+	arg_39_0._txtusepowerhard.text = "-" .. var_39_0
 
-	if slot1 <= CurrencyModel.instance:getPower() then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepowernormal, "#ACCB8C")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepowernormal2, "#ACCB8C")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepowerhard, "#FFB7B7")
+	if var_39_0 <= CurrencyModel.instance:getPower() then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtusepowernormal, "#ACCB8C")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtusepowernormal2, "#ACCB8C")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtusepowerhard, "#FFB7B7")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepowernormal, "#800015")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepowernormal2, "#800015")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepowerhard, "#C44945")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtusepowernormal, "#800015")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtusepowernormal2, "#800015")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_39_0._txtusepowerhard, "#C44945")
 	end
 
-	slot4 = DungeonModel.instance:hasPassLevelAndStory(slot0._episode_list[1].id) and slot0.storyIdList and #slot0.storyIdList > 0
+	local var_39_3 = DungeonModel.instance:hasPassLevelAndStory(arg_39_0._episode_list[1].id) and arg_39_0.storyIdList and #arg_39_0.storyIdList > 0
 
-	if slot0._btnreplayStory then
-		gohelper.setActive(slot0._btnreplayStory.gameObject, slot4)
+	if arg_39_0._btnreplayStory then
+		gohelper.setActive(arg_39_0._btnreplayStory.gameObject, var_39_3)
 	end
 
-	gohelper.setActive(slot0._btnnormalStart.gameObject, slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and not slot4)
-	gohelper.setActive(slot0._btnnormalStart2.gameObject, slot0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and slot4)
-	gohelper.setActive(slot0._btnhardStart.gameObject, slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard)
+	gohelper.setActive(arg_39_0._btnnormalStart.gameObject, arg_39_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and not var_39_3)
+	gohelper.setActive(arg_39_0._btnnormalStart2.gameObject, arg_39_0.mode ~= VersionActivity1_2DungeonEnum.DungeonMode.Hard and var_39_3)
+	gohelper.setActive(arg_39_0._btnhardStart.gameObject, arg_39_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard)
 
-	if DungeonModel.instance:hasPassLevel(slot0.showEpisodeCo.id) and slot0.showEpisodeCo.afterStory > 0 and not StoryModel.instance:isStoryFinished(slot0.showEpisodeCo.afterStory) then
-		slot0._txtnorstarttext.text = luaLang("p_dungeonlevelview_continuestory")
-		slot0._txtnorstarttext2.text = luaLang("p_dungeonlevelview_continuestory")
+	if DungeonModel.instance:hasPassLevel(arg_39_0.showEpisodeCo.id) and arg_39_0.showEpisodeCo.afterStory > 0 and not StoryModel.instance:isStoryFinished(arg_39_0.showEpisodeCo.afterStory) then
+		arg_39_0._txtnorstarttext.text = luaLang("p_dungeonlevelview_continuestory")
+		arg_39_0._txtnorstarttext2.text = luaLang("p_dungeonlevelview_continuestory")
 
-		gohelper.setActive(slot0._txtusepowernormal.gameObject, false)
-		gohelper.setActive(slot0._gonormalStartnode, false)
+		gohelper.setActive(arg_39_0._txtusepowernormal.gameObject, false)
+		gohelper.setActive(arg_39_0._gonormalStartnode, false)
 
-		if slot0._simagepower then
-			gohelper.setActive(slot0._simagepower.gameObject, false)
+		if arg_39_0._simagepower then
+			gohelper.setActive(arg_39_0._simagepower.gameObject, false)
 		end
 	else
-		slot0._txtnorstarttext.text = luaLang("p_dungeonlevelview_startfight")
-		slot0._txtnorstarttext2.text = luaLang("p_dungeonlevelview_startfight")
+		arg_39_0._txtnorstarttext.text = luaLang("p_dungeonlevelview_startfight")
+		arg_39_0._txtnorstarttext2.text = luaLang("p_dungeonlevelview_startfight")
 
-		gohelper.setActive(slot0._txtusepowernormal.gameObject, true)
-		gohelper.setActive(slot0._txtusepowernormal2.gameObject, true)
+		gohelper.setActive(arg_39_0._txtusepowernormal.gameObject, true)
+		gohelper.setActive(arg_39_0._txtusepowernormal2.gameObject, true)
 
-		if slot0._simagepower then
-			gohelper.setActive(slot0._simagepower.gameObject, true)
-			gohelper.setActive(slot0._simagepower2.gameObject, true)
+		if arg_39_0._simagepower then
+			gohelper.setActive(arg_39_0._simagepower.gameObject, true)
+			gohelper.setActive(arg_39_0._simagepower2.gameObject, true)
 		end
 	end
 end
 
-function slot0.setImage(slot0, slot1, slot2)
-	if slot2 then
-		UISpriteSetMgr.instance:setVersionActivitySprite(slot1, "star_1_3")
+function var_0_0.setImage(arg_40_0, arg_40_1, arg_40_2)
+	if arg_40_2 then
+		UISpriteSetMgr.instance:setVersionActivitySprite(arg_40_1, "star_1_3")
 	else
-		UISpriteSetMgr.instance:setVersionActivitySprite(slot1, "star_1_1")
+		UISpriteSetMgr.instance:setVersionActivitySprite(arg_40_1, "star_1_1")
 	end
 end
 
-function slot0.buildEpisodeName(slot0)
-	slot1 = slot0.showEpisodeCo.name
-	slot2 = GameUtil.utf8sub(slot1, 1, 1)
-	slot3 = ""
+function var_0_0.buildEpisodeName(arg_41_0)
+	local var_41_0 = arg_41_0.showEpisodeCo.name
+	local var_41_1 = GameUtil.utf8sub(var_41_0, 1, 1)
+	local var_41_2 = ""
+	local var_41_3 = GameUtil.utf8len(var_41_0)
 
-	if GameUtil.utf8len(slot1) > 1 then
-		slot3 = GameUtil.utf8sub(slot1, 2, slot4 - 1)
+	if var_41_3 > 1 then
+		var_41_2 = GameUtil.utf8sub(var_41_0, 2, var_41_3 - 1)
 	end
 
-	slot5 = 112
+	local var_41_4 = 112
 
 	if GameConfig:GetCurLangType() == LangSettings.jp then
-		slot5 = 90
+		var_41_4 = 90
 	elseif GameConfig:GetCurLangType() == LangSettings.en then
-		slot5 = 90
+		var_41_4 = 90
 	elseif GameConfig:GetCurLangType() == LangSettings.kr then
-		slot5 = 110
+		var_41_4 = 110
 	end
 
-	return string.format("<size=%s>%s</size>%s", slot5, slot2, slot3)
+	return string.format("<size=%s>%s</size>%s", var_41_4, var_41_1, var_41_2)
 end
 
-function slot0.buildColorText(slot0, slot1, slot2)
-	return string.format("<color=%s>%s</color>", slot2, slot1)
+function var_0_0.buildColorText(arg_42_0, arg_42_1, arg_42_2)
+	return string.format("<color=%s>%s</color>", arg_42_2, arg_42_1)
 end
 
-function slot0.getPreModeName(slot0)
-	if slot0._cur_select_index - 1 <= 0 then
-		logWarn("not modeIndex mode : " .. slot0._cur_select_index)
+function var_0_0.getPreModeName(arg_43_0)
+	if arg_43_0._cur_select_index - 1 <= 0 then
+		logWarn("not modeIndex mode : " .. arg_43_0._cur_select_index)
 
 		return ""
 	end
 
-	return luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[slot0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard and 99 or slot0._cur_select_index - 1])
+	local var_43_0 = arg_43_0.mode == VersionActivity1_2DungeonEnum.DungeonMode.Hard and 99 or arg_43_0._cur_select_index - 1
+
+	return luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[var_43_0])
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._playUnlockAudio, slot0)
+function var_0_0.onClose(arg_44_0)
+	TaskDispatcher.cancelTask(arg_44_0._playUnlockAudio, arg_44_0)
 
-	if slot0._clueFlow then
-		slot0._clueFlow:unregisterDoneListener(slot0._onClueFlowDone, slot0)
-		slot0._clueFlow:stop()
+	if arg_44_0._clueFlow then
+		arg_44_0._clueFlow:unregisterDoneListener(arg_44_0._onClueFlowDone, arg_44_0)
+		arg_44_0._clueFlow:stop()
 
-		slot0._clueFlow = nil
+		arg_44_0._clueFlow = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.rewardItems = nil
+function var_0_0.onDestroyView(arg_45_0)
+	arg_45_0.rewardItems = nil
 
-	slot0._simageactivitynormalbg:UnLoadImage()
-	slot0._simageactivityhardbg:UnLoadImage()
+	arg_45_0._simageactivitynormalbg:UnLoadImage()
+	arg_45_0._simageactivityhardbg:UnLoadImage()
 
-	if slot0._simagepower then
-		slot0._simagepower:UnLoadImage()
+	if arg_45_0._simagepower then
+		arg_45_0._simagepower:UnLoadImage()
 	end
 
-	if slot0._simagepower2 then
-		slot0._simagepower2:UnLoadImage()
+	if arg_45_0._simagepower2 then
+		arg_45_0._simagepower2:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

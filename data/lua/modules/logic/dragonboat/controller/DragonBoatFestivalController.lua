@@ -1,28 +1,31 @@
-module("modules.logic.dragonboat.controller.DragonBoatFestivalController", package.seeall)
+﻿module("modules.logic.dragonboat.controller.DragonBoatFestivalController", package.seeall)
 
-slot0 = class("DragonBoatFestivalController", BaseController)
+local var_0_0 = class("DragonBoatFestivalController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0._checkActivityInfo(slot0)
+function var_0_0._checkActivityInfo(arg_4_0)
+	return
 end
 
-function slot0.openQuestionTipView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.DragonBoatFestivalQuestionTipView, slot1)
+function var_0_0.openQuestionTipView(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.DragonBoatFestivalQuestionTipView, arg_5_1)
 end
 
-function slot0.openDragonBoatFestivalView(slot0)
+function var_0_0.openDragonBoatFestivalView(arg_6_0)
 	ViewMgr.instance:openView(ViewName.DragonBoatFestivalView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

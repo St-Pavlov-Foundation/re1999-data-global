@@ -1,138 +1,143 @@
-module("modules.logic.explore.view.ExploreBonusSceneView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBonusSceneView", package.seeall)
 
-slot0 = class("ExploreBonusSceneView", BaseView)
+local var_0_0 = class("ExploreBonusSceneView", BaseView)
 
-function slot0.onClose(slot0)
-	GameUtil.onDestroyViewMember(slot0, "_hasIconDialogItem")
-	GameUtil.onDestroyViewMemberList(slot0, "_tmpMarkTopTextList")
+function var_0_0.onClose(arg_1_0)
+	GameUtil.onDestroyViewMember(arg_1_0, "_hasIconDialogItem")
+	GameUtil.onDestroyViewMemberList(arg_1_0, "_tmpMarkTopTextList")
 end
 
-function slot0._editableInitView(slot0)
-	slot0._tmpMarkTopTextList = {}
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._tmpMarkTopTextList = {}
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnfullscreen = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_fullscreen")
-	slot0._gochoicelist = gohelper.findChild(slot0.viewGO, "#go_choicelist")
-	slot0._gochoiceitem = gohelper.findChild(slot0.viewGO, "#go_choicelist/#go_choiceitem")
-	slot0._txttalkinfo = gohelper.findChildText(slot0.viewGO, "#txt_talkinfo")
-	slot0._txttalker = gohelper.findChildText(slot0.viewGO, "#txt_talker")
+function var_0_0.onInitView(arg_3_0)
+	arg_3_0._btnfullscreen = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "#btn_fullscreen")
+	arg_3_0._gochoicelist = gohelper.findChild(arg_3_0.viewGO, "#go_choicelist")
+	arg_3_0._gochoiceitem = gohelper.findChild(arg_3_0.viewGO, "#go_choicelist/#go_choiceitem")
+	arg_3_0._txttalkinfo = gohelper.findChildText(arg_3_0.viewGO, "#txt_talkinfo")
+	arg_3_0._txttalker = gohelper.findChildText(arg_3_0.viewGO, "#txt_talker")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_3_0._editableInitView then
+		arg_3_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	NavigateMgr.instance:addSpace(ViewName.ExploreBonusSceneView, slot0.onClickFull, slot0)
-	slot0._btnfullscreen:AddClickListener(slot0.onClickFull, slot0)
+function var_0_0.addEvents(arg_4_0)
+	NavigateMgr.instance:addSpace(ViewName.ExploreBonusSceneView, arg_4_0.onClickFull, arg_4_0)
+	arg_4_0._btnfullscreen:AddClickListener(arg_4_0.onClickFull, arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_5_0)
 	NavigateMgr.instance:removeSpace(ViewName.ExploreBonusSceneView)
-	slot0._btnfullscreen:RemoveClickListener()
+	arg_5_0._btnfullscreen:RemoveClickListener()
 end
 
-function slot0.onClickFull(slot0)
-	if slot0._hasIconDialogItem and slot0._hasIconDialogItem:isPlaying() then
-		slot0._hasIconDialogItem:conFinished()
+function var_0_0.onClickFull(arg_6_0)
+	if arg_6_0._hasIconDialogItem and arg_6_0._hasIconDialogItem:isPlaying() then
+		arg_6_0._hasIconDialogItem:conFinished()
 
 		return
 	end
 
-	if not slot0._btnDatas[1] then
-		slot0._curStep = slot0._curStep + 1
+	if not arg_6_0._btnDatas[1] then
+		arg_6_0._curStep = arg_6_0._curStep + 1
 
-		if slot0.config[slot0._curStep] then
-			table.insert(slot0.options, -1)
-			slot0:onStep()
+		if arg_6_0.config[arg_6_0._curStep] then
+			table.insert(arg_6_0.options, -1)
+			arg_6_0:onStep()
 		else
-			if slot0.viewParam.callBack then
-				slot0.viewParam.callBack(slot0.viewParam.callBackObj, slot0.options)
+			if arg_6_0.viewParam.callBack then
+				arg_6_0.viewParam.callBack(arg_6_0.viewParam.callBackObj, arg_6_0.options)
 			end
 
-			slot0:closeThis()
+			arg_6_0:closeThis()
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_course_open)
 
-	slot0.unit = slot0.viewParam.unit
-	slot0.config = ExploreConfig.instance:getDialogueConfig(slot0.viewParam.id)
+	arg_7_0.unit = arg_7_0.viewParam.unit
+	arg_7_0.config = ExploreConfig.instance:getDialogueConfig(arg_7_0.viewParam.id)
 
-	if not slot0.config then
-		logError("对话配置不存在，id：" .. tostring(slot0.viewParam.id))
-		slot0:closeThis()
+	if not arg_7_0.config then
+		logError("对话配置不存在，id：" .. tostring(arg_7_0.viewParam.id))
+		arg_7_0:closeThis()
 
 		return
 	end
 
-	slot0.options = {}
-	slot0._curStep = 1
+	arg_7_0.options = {}
+	arg_7_0._curStep = 1
 
-	slot0:onStep()
+	arg_7_0:onStep()
 end
 
-function slot0.onStep(slot0)
-	slot2 = string.gsub(slot0.config[slot0._curStep].desc, " ", " ")
+function var_0_0.onStep(arg_8_0)
+	local var_8_0 = arg_8_0.config[arg_8_0._curStep]
+	local var_8_1 = string.gsub(var_8_0.desc, " ", " ")
 
 	if LangSettings.instance:isEn() then
-		slot2 = slot1.desc
+		var_8_1 = var_8_0.desc
 	end
 
-	if not slot0._hasIconDialogItem then
-		slot0._hasIconDialogItem = MonoHelper.addLuaComOnceToGo(slot0.viewGO, TMPFadeIn)
+	if not arg_8_0._hasIconDialogItem then
+		arg_8_0._hasIconDialogItem = MonoHelper.addLuaComOnceToGo(arg_8_0.viewGO, TMPFadeIn)
 
-		slot0._hasIconDialogItem:setTopOffset(0, -2.4)
-		slot0._hasIconDialogItem:setLineSpacing(26)
+		arg_8_0._hasIconDialogItem:setTopOffset(0, -2.4)
+		arg_8_0._hasIconDialogItem:setLineSpacing(26)
 	end
 
-	slot0._hasIconDialogItem:playNormalText(slot2)
+	arg_8_0._hasIconDialogItem:playNormalText(var_8_1)
 
-	slot0._txttalker.text = slot1.speaker
-	slot3 = {}
+	arg_8_0._txttalker.text = var_8_0.speaker
 
-	if not string.nilorempty(slot1.bonusButton) then
-		slot3 = string.split(slot1.bonusButton, "|")
+	local var_8_2 = {}
+
+	if not string.nilorempty(var_8_0.bonusButton) then
+		var_8_2 = string.split(var_8_0.bonusButton, "|")
 	end
 
-	gohelper.CreateObjList(slot0, slot0._createItem, slot3, slot0._gochoicelist, slot0._gochoiceitem)
+	gohelper.CreateObjList(arg_8_0, arg_8_0._createItem, var_8_2, arg_8_0._gochoicelist, arg_8_0._gochoiceitem)
 
-	slot0._btnDatas = slot3
+	arg_8_0._btnDatas = var_8_2
 end
 
-function slot0._createItem(slot0, slot1, slot2, slot3)
-	if not slot0._tmpMarkTopTextList[slot3] then
-		slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChildText(slot1, "info").gameObject, TMPMarkTopText)
+function var_0_0._createItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = gohelper.findChildText(arg_9_1, "info")
+	local var_9_1 = arg_9_0._tmpMarkTopTextList[arg_9_3]
 
-		slot5:setTopOffset(0, -2.6)
-		slot5:setLineSpacing(5)
+	if not var_9_1 then
+		var_9_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_0.gameObject, TMPMarkTopText)
 
-		slot0._tmpMarkTopTextList[slot3] = slot5
+		var_9_1:setTopOffset(0, -2.6)
+		var_9_1:setLineSpacing(5)
+
+		arg_9_0._tmpMarkTopTextList[arg_9_3] = var_9_1
 	else
-		slot5:reInitByCmp(slot4)
+		var_9_1:reInitByCmp(var_9_0)
 	end
 
-	slot5:setData(slot2)
+	var_9_1:setData(arg_9_2)
 
-	slot6 = gohelper.findChildButtonWithAudio(slot1, "click")
+	local var_9_2 = gohelper.findChildButtonWithAudio(arg_9_1, "click")
 
-	slot0:removeClickCb(slot6)
-	slot0:addClickCb(slot6, slot0.onBtnClick, slot0, slot3)
+	arg_9_0:removeClickCb(var_9_2)
+	arg_9_0:addClickCb(var_9_2, arg_9_0.onBtnClick, arg_9_0, arg_9_3)
 end
 
-function slot0.onBtnClick(slot0, slot1)
-	table.insert(slot0.options, slot1)
+function var_0_0.onBtnClick(arg_10_0, arg_10_1)
+	table.insert(arg_10_0.options, arg_10_1)
 
-	slot2 = slot0.config[slot0._curStep]
+	local var_10_0 = arg_10_0.config[arg_10_0._curStep]
 
-	GameSceneMgr.instance:getCurScene().stat:onTriggerEggs(string.format("%d_%d", slot2.id, slot2.stepid), slot0._btnDatas[slot1])
+	GameSceneMgr.instance:getCurScene().stat:onTriggerEggs(string.format("%d_%d", var_10_0.id, var_10_0.stepid), arg_10_0._btnDatas[arg_10_1])
 
-	slot0._btnDatas = {}
+	arg_10_0._btnDatas = {}
 
-	slot0:onClickFull()
+	arg_10_0:onClickFull()
 end
 
-return slot0
+return var_0_0

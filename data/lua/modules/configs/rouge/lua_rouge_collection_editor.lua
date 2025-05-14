@@ -1,4 +1,4 @@
-return {
+﻿return {
 	{
 		ownerId = 0,
 		type = 0,

@@ -1,61 +1,70 @@
-module("modules.logic.versionactivity1_9.roomgift.model.RoomGiftModel", package.seeall)
+﻿module("modules.logic.versionactivity1_9.roomgift.model.RoomGiftModel", package.seeall)
 
-slot0 = class("RoomGiftModel", BaseModel)
+local var_0_0 = class("RoomGiftModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:setActivityInfo()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:setActivityInfo()
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.getActId(slot0)
+function var_0_0.getActId(arg_3_0)
 	return ActivityEnum.Activity.RoomGift
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	slot2 = slot1 or {}
+function var_0_0.setActivityInfo(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1 or {}
 
-	slot0:setCurDay(slot2.currentDay)
-	slot0:setHasGotBonus(slot2.hasGetBonus)
+	arg_4_0:setCurDay(var_4_0.currentDay)
+	arg_4_0:setHasGotBonus(var_4_0.hasGetBonus)
 end
 
-function slot0.setCurDay(slot0, slot1)
-	slot0._curDay = slot1
+function var_0_0.setCurDay(arg_5_0, arg_5_1)
+	arg_5_0._curDay = arg_5_1
 end
 
-function slot0.setHasGotBonus(slot0, slot1)
-	slot0._hasGotBonus = slot1
+function var_0_0.setHasGotBonus(arg_6_0, arg_6_1)
+	arg_6_0._hasGotBonus = arg_6_1
 end
 
-function slot0.getHasGotBonus(slot0)
-	return slot0._hasGotBonus
+function var_0_0.getHasGotBonus(arg_7_0)
+	return arg_7_0._hasGotBonus
 end
 
-function slot0.isActOnLine(slot0, slot1)
-	slot2 = false
-	slot4, slot5, slot6 = ActivityHelper.getActivityStatusAndToast(slot0:getActId(), true)
+function var_0_0.isActOnLine(arg_8_0, arg_8_1)
+	local var_8_0 = false
+	local var_8_1 = arg_8_0:getActId()
+	local var_8_2, var_8_3, var_8_4 = ActivityHelper.getActivityStatusAndToast(var_8_1, true)
 
-	if slot4 == ActivityEnum.ActivityStatus.Normal then
-		slot2 = true
-	elseif slot1 and slot5 then
-		GameFacade.showToastWithTableParam(slot5, slot6)
+	if var_8_2 == ActivityEnum.ActivityStatus.Normal then
+		var_8_0 = true
+	elseif arg_8_1 and var_8_3 then
+		GameFacade.showToastWithTableParam(var_8_3, var_8_4)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.isCanGetBonus(slot0)
-	slot1 = false
+function var_0_0.isCanGetBonus(arg_9_0)
+	local var_9_0 = false
 
-	if slot0:isActOnLine() and RoomGiftConfig.instance:getRoomGiftBonus(slot0:getActId(), slot0._curDay) and slot0:getHasGotBonus() ~= nil then
-		slot1 = not slot5
+	if arg_9_0:isActOnLine() then
+		local var_9_1 = arg_9_0:getActId()
+
+		if RoomGiftConfig.instance:getRoomGiftBonus(var_9_1, arg_9_0._curDay) then
+			local var_9_2 = arg_9_0:getHasGotBonus()
+
+			if var_9_2 ~= nil then
+				var_9_0 = not var_9_2
+			end
+		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

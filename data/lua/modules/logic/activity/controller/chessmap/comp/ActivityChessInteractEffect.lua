@@ -1,28 +1,31 @@
-module("modules.logic.activity.controller.chessmap.comp.ActivityChessInteractEffect", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.comp.ActivityChessInteractEffect", package.seeall)
 
-slot0 = class("ActivityChessInteractEffect")
+local var_0_0 = class("ActivityChessInteractEffect")
 
-function slot0.ctor(slot0, slot1)
-	slot0._target = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._target = arg_1_1
 end
 
-function slot0.refreshSearchFailed(slot0)
-	if slot0._target.originData and slot0._target.originData.data and slot0._target.avatar and slot0._target.avatar.goLostTarget then
-		gohelper.setActive(slot0._target.avatar.goLostTarget, slot0._target.originData.data.lostTarget)
+function var_0_0.refreshSearchFailed(arg_2_0)
+	if arg_2_0._target.originData and arg_2_0._target.originData.data and arg_2_0._target.avatar and arg_2_0._target.avatar.goLostTarget then
+		gohelper.setActive(arg_2_0._target.avatar.goLostTarget, arg_2_0._target.originData.data.lostTarget)
 	end
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_3_0)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
-	if not slot0._target.avatar.loader then
+function var_0_0.onAvatarLoaded(arg_4_0)
+	local var_4_0 = arg_4_0._target.avatar.loader
+
+	if not var_4_0 then
 		return
 	end
 
-	slot0._target.avatar.goLostTarget = gohelper.findChild(slot1:getInstGO(), "piecea/vx_vertigo")
+	arg_4_0._target.avatar.goLostTarget = gohelper.findChild(var_4_0:getInstGO(), "piecea/vx_vertigo")
 
-	slot0:refreshSearchFailed()
+	arg_4_0:refreshSearchFailed()
 end
 
-return slot0
+return var_0_0

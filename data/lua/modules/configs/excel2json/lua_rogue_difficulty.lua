@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_rogue_difficulty", package.seeall)
+﻿module("modules.configs.excel2json.lua_rogue_difficulty", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	effect1 = 15,
 	initRoom = 5,
 	effectDesc1 = 14,
@@ -21,18 +22,18 @@ slot1 = {
 	retries = 13,
 	initLevel = 4
 }
-slot2 = {
+local var_0_2 = {
 	"difficulty"
 }
-slot3 = {
+local var_0_3 = {
 	effectDesc1 = 2,
 	title = 1,
 	effectDesc3 = 4,
 	effectDesc2 = 3
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

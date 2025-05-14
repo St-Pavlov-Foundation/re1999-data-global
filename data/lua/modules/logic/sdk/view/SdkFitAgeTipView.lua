@@ -1,47 +1,49 @@
-module("modules.logic.sdk.view.SdkFitAgeTipView", package.seeall)
+﻿module("modules.logic.sdk.view.SdkFitAgeTipView", package.seeall)
 
-slot0 = class("SdkFitAgeTipView", BaseView)
+local var_0_0 = class("SdkFitAgeTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simageline = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg/#simage_line")
-	slot0._btnsure = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_sure")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg/#simage_line")
+	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_sure")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnsure:AddClickListener(slot0._btnsureOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnsure:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnsure:RemoveClickListener()
 end
 
-function slot0._btnsureOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnsureOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getSdkIcon("bg_beijing"))
-	slot0._simageline:LoadImage(ResUrl.getSdkIcon("bg_hengxian"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getSdkIcon("bg_beijing"))
+	arg_5_0._simageline:LoadImage(ResUrl.getSdkIcon("bg_hengxian"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	NavigateMgr.instance:addEscape(ViewName.SdkFitAgeTipView, slot0._btnsureOnClick, slot0)
+function var_0_0.onOpen(arg_7_0)
+	NavigateMgr.instance:addEscape(ViewName.SdkFitAgeTipView, arg_7_0._btnsureOnClick, arg_7_0)
 end
 
-function slot0.onClose(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageline:UnLoadImage()
+function var_0_0.onClose(arg_8_0)
+	arg_8_0._simagebg:UnLoadImage()
+	arg_8_0._simageline:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,167 +1,187 @@
-module("modules.logic.optionpackage.model.OptionPackageModel", package.seeall)
+﻿module("modules.logic.optionpackage.model.OptionPackageModel", package.seeall)
 
-slot0 = class("OptionPackageModel", BaseModel)
+local var_0_0 = class("OptionPackageModel", BaseModel)
 
-function slot0.ctor(slot0)
-	slot0._setMOModel = BaseModel.New()
-	slot0._packMOModel = BaseModel.New()
-	slot0._initialized = false
-	slot0._voiceLangsDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._setMOModel = BaseModel.New()
+	arg_1_0._packMOModel = BaseModel.New()
+	arg_1_0._initialized = false
+	arg_1_0._voiceLangsDict = {}
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
 	if not HotUpdateVoiceMgr then
 		return
 	end
 
-	slot0._initialized = true
-	slot1 = OptionPackageEnum.PackageNameList or {}
-	slot3 = HotUpdateVoiceMgr.ForceSelect or {}
-	slot4 = GameConfig:GetDefaultVoiceShortcut()
+	arg_2_0._initialized = true
 
-	for slot8, slot9 in ipairs(slot0:getSupportVoiceLangs()) do
-		slot10 = {}
-		slot0._voiceLangsDict[slot9] = slot10
+	local var_2_0 = OptionPackageEnum.PackageNameList or {}
+	local var_2_1 = arg_2_0:getSupportVoiceLangs()
+	local var_2_2 = HotUpdateVoiceMgr.ForceSelect or {}
+	local var_2_3 = GameConfig:GetDefaultVoiceShortcut()
 
-		table.insert(slot10, slot9)
+	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+		local var_2_4 = {}
 
-		for slot14, slot15 in pairs(slot3) do
-			if not tabletool.indexOf(slot10, slot14) then
-				table.insert(slot10, slot14)
+		arg_2_0._voiceLangsDict[iter_2_1] = var_2_4
+
+		table.insert(var_2_4, iter_2_1)
+
+		for iter_2_2, iter_2_3 in pairs(var_2_2) do
+			if not tabletool.indexOf(var_2_4, iter_2_2) then
+				table.insert(var_2_4, iter_2_2)
 			end
 		end
 
-		if not tabletool.indexOf(slot10, slot4) then
-			table.insert(slot10, slot4)
+		if not tabletool.indexOf(var_2_4, var_2_3) then
+			table.insert(var_2_4, var_2_3)
 		end
 	end
 
-	slot5 = {}
+	local var_2_5 = {}
 
-	for slot9, slot10 in ipairs(slot1) do
-		slot11 = OptionPackageSetMO.New()
+	for iter_2_4, iter_2_5 in ipairs(var_2_0) do
+		local var_2_6 = OptionPackageSetMO.New()
 
-		slot11:init(slot10, slot2, slot0._packMOModel)
-		table.insert(slot5, slot11)
+		var_2_6:init(iter_2_5, var_2_1, arg_2_0._packMOModel)
+		table.insert(var_2_5, var_2_6)
 	end
 
-	slot0._setMOModel:setList(slot5)
-	slot0._packMOModel:setList({})
+	local var_2_7 = {}
+
+	arg_2_0._setMOModel:setList(var_2_5)
+	arg_2_0._packMOModel:setList(var_2_7)
 end
 
-function slot0.getSupportVoiceLangs(slot0)
-	if not slot0._supportVoiceLangList then
-		slot0._supportVoiceLangList = {}
+function var_0_0.getSupportVoiceLangs(arg_3_0)
+	if not arg_3_0._supportVoiceLangList then
+		arg_3_0._supportVoiceLangList = {}
 
-		tabletool.addValues(slot0._supportVoiceLangList, HotUpdateVoiceMgr and HotUpdateVoiceMgr.instance:getSupportVoiceLangs())
+		local var_3_0 = HotUpdateVoiceMgr and HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+
+		tabletool.addValues(arg_3_0._supportVoiceLangList, var_3_0)
 	end
 
-	return slot0._supportVoiceLangList
+	return arg_3_0._supportVoiceLangList
 end
 
-function slot0.reInit(slot0)
-	slot0._localPackSetNameList = nil
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._localPackSetNameList = nil
 end
 
-function slot0.setOpenInfo(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if slot0:getPackageMO(slot5) then
-			slot7:setLangInfo(slot6)
+function var_0_0.setOpenInfo(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
+		local var_5_0 = arg_5_0:getPackageMO(iter_5_0)
+
+		if var_5_0 then
+			var_5_0:setLangInfo(iter_5_1)
 		end
 	end
 end
 
-function slot0.getPackageMO(slot0, slot1)
-	return slot0._packMOModel:getById(slot1)
+function var_0_0.getPackageMO(arg_6_0, arg_6_1)
+	return arg_6_0._packMOModel:getById(arg_6_1)
 end
 
-function slot0.getPackageMOList(slot0)
-	return slot0._packMOModel:getList()
+function var_0_0.getPackageMOList(arg_7_0)
+	return arg_7_0._packMOModel:getList()
 end
 
-function slot0.addPackageMO(slot0, slot1)
-	slot0._packMOModel:addAtLast(slot1)
+function var_0_0.addPackageMO(arg_8_0, arg_8_1)
+	arg_8_0._packMOModel:addAtLast(arg_8_1)
 end
 
-function slot0.addPackageMOList(slot0, slot1)
-	slot0._packMOModel:addList(slot1)
+function var_0_0.addPackageMOList(arg_9_0, arg_9_1)
+	arg_9_0._packMOModel:addList(arg_9_1)
 end
 
-function slot0.getPackageSetMO(slot0, slot1)
-	return slot0._setMOModel:getById(slot1)
+function var_0_0.getPackageSetMO(arg_10_0, arg_10_1)
+	return arg_10_0._setMOModel:getById(arg_10_1)
 end
 
-function slot0.getPackageSetMOList(slot0)
-	return slot0._setMOModel:getList()
+function var_0_0.getPackageSetMOList(arg_11_0)
+	return arg_11_0._setMOModel:getList()
 end
 
-function slot0.setDownloadProgress(slot0, slot1, slot2, slot3)
-	if slot0:getPackageMO(slot1) then
-		slot4:setLocalSize(slot2)
+function var_0_0.setDownloadProgress(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_0:getPackageMO(arg_12_1)
+
+	if var_12_0 then
+		var_12_0:setLocalSize(arg_12_2)
 	end
 end
 
-function slot0.updateLocalVersion(slot0, slot1)
-	if slot0:getPackageMO(slot1) then
-		slot2:setLocalVersion(OptionPackageController.instance:getLocalVersionInt(slot1))
+function var_0_0.updateLocalVersion(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getPackageMO(arg_13_1)
+
+	if var_13_0 then
+		local var_13_1 = OptionPackageController.instance:getLocalVersionInt(arg_13_1)
+
+		var_13_0:setLocalVersion(var_13_1)
 	end
 end
 
-function slot0.onDownloadSucc(slot0, slot1)
-	slot0:updateLocalVersion(slot1)
+function var_0_0.onDownloadSucc(arg_14_0, arg_14_1)
+	arg_14_0:updateLocalVersion(arg_14_1)
 end
 
-function slot0.onDeleteVoicePack(slot0, slot1)
-	slot0:updateLocalVersion(slot1)
+function var_0_0.onDeleteVoicePack(arg_15_0, arg_15_1)
+	arg_15_0:updateLocalVersion(arg_15_1)
 end
 
-function slot0.getNeedVoiceLangList(slot0, slot1)
-	return slot0._voiceLangsDict[slot1 or GameConfig:GetCurVoiceShortcut()]
+function var_0_0.getNeedVoiceLangList(arg_16_0, arg_16_1)
+	arg_16_1 = arg_16_1 or GameConfig:GetCurVoiceShortcut()
+
+	return arg_16_0._voiceLangsDict[arg_16_1]
 end
 
-function slot0.addLocalPackSetName(slot0, slot1)
-	if not slot0._initialized then
+function var_0_0.addLocalPackSetName(arg_17_0, arg_17_1)
+	if not arg_17_0._initialized then
 		return
 	end
 
-	if not OptionPackageEnum.HasPackageNameDict[slot1] then
+	if not OptionPackageEnum.HasPackageNameDict[arg_17_1] then
 		return
 	end
 
-	if not tabletool.indexOf(HotUpdateOptionPackageMgr.instance:getPackageNameList(), slot1) then
-		table.insert(slot2, slot1)
-		HotUpdateOptionPackageMgr.instance:savePackageNameList(slot2)
+	local var_17_0 = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+
+	if not tabletool.indexOf(var_17_0, arg_17_1) then
+		table.insert(var_17_0, arg_17_1)
+		HotUpdateOptionPackageMgr.instance:savePackageNameList(var_17_0)
 	end
 end
 
-function slot0.saveLocalPackSetName(slot0)
-	if not slot0._initialized then
+function var_0_0.saveLocalPackSetName(arg_18_0)
+	if not arg_18_0._initialized then
 		return
 	end
 
-	slot1 = slot0:_getLocalSetNameList()
+	local var_18_0 = arg_18_0:_getLocalSetNameList()
+	local var_18_1 = arg_18_0:getPackageSetMOList()
 
-	for slot6, slot7 in ipairs(slot0:getPackageSetMOList()) do
-		slot8 = slot7.packName
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		local var_18_2 = iter_18_1.packName
 
-		if slot7:hasLocalVersion() and not tabletool.indexOf(slot1, slot8) then
-			table.insert(slot1, slot8)
+		if iter_18_1:hasLocalVersion() and not tabletool.indexOf(var_18_0, var_18_2) then
+			table.insert(var_18_0, var_18_2)
 		end
 	end
 
-	HotUpdateOptionPackageMgr.instance:savePackageNameList(slot1)
+	HotUpdateOptionPackageMgr.instance:savePackageNameList(var_18_0)
 end
 
-function slot0._getLocalSetNameList(slot0)
-	if not slot0._localPackSetNameList then
-		slot0._localPackSetNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList() or {}
+function var_0_0._getLocalSetNameList(arg_19_0)
+	if not arg_19_0._localPackSetNameList then
+		arg_19_0._localPackSetNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList() or {}
 	end
 
-	return slot0._localPackSetNameList
+	return arg_19_0._localPackSetNameList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

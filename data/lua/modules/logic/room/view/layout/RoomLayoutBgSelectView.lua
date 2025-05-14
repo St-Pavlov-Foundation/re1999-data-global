@@ -1,66 +1,73 @@
-module("modules.logic.room.view.layout.RoomLayoutBgSelectView", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutBgSelectView", package.seeall)
 
-slot0 = class("RoomLayoutBgSelectView", BaseView)
+local var_0_0 = class("RoomLayoutBgSelectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#go_content/Bg/#txt_title")
-	slot0._scrollCoverItemList = gohelper.findChildScrollRect(slot0.viewGO, "#go_content/#scroll_CoverItemList")
-	slot0._gocoveritem = gohelper.findChild(slot0.viewGO, "#go_content/#go_coveritem")
-	slot0._simagecover = gohelper.findChildSingleImage(slot0.viewGO, "#go_content/#go_coveritem/bg/#simage_cover")
-	slot0._txtcovername = gohelper.findChildText(slot0.viewGO, "#go_content/#go_coveritem/bg/covernamebg/#txt_covername")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_content/Bg/#txt_title")
+	arg_1_0._scrollCoverItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_CoverItemList")
+	arg_1_0._gocoveritem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_coveritem")
+	arg_1_0._simagecover = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_content/#go_coveritem/bg/#simage_cover")
+	arg_1_0._txtcovername = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_coveritem/bg/covernamebg/#txt_covername")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 
-	slot2 = RoomLayoutListModel.instance:getSelectMO()
+	local var_4_0 = RoomLayoutBgResListModel.instance:getSelectMO()
+	local var_4_1 = RoomLayoutListModel.instance:getSelectMO()
 
-	if RoomLayoutBgResListModel.instance:getSelectMO() and slot2 and slot1.id ~= slot2:getCoverId() then
-		RoomRpc.instance:sendSetRoomPlanCoverRequest(slot2.id, slot1.id)
+	if var_4_0 and var_4_1 and var_4_0.id ~= var_4_1:getCoverId() then
+		RoomRpc.instance:sendSetRoomPlanCoverRequest(var_4_1.id, var_4_0.id)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewGOTrs = slot0.viewGO.transform
-	slot0._gocontentTrs = slot0._gocontent.transform
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._viewGOTrs = arg_5_0.viewGO.transform
+	arg_5_0._gocontentTrs = arg_5_0._gocontent.transform
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._txttitle.text = RoomLayoutListModel.instance:getSelectMO() and slot1.name or ""
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = RoomLayoutListModel.instance:getSelectMO()
 
-	RoomLayoutBgResListModel.instance:setSelect(RoomLayoutListModel.instance:getSelectMO() and slot2:getCoverId())
+	arg_7_0._txttitle.text = var_7_0 and var_7_0.name or ""
 
-	if slot0.viewParam and slot0.viewParam.uiWorldPos then
-		slot0:layoutAnchor(slot0.viewParam.uiWorldPos, slot0.viewParam.offsetWidth, slot0.viewParam.offsetHeight)
+	local var_7_1 = RoomLayoutListModel.instance:getSelectMO()
+
+	RoomLayoutBgResListModel.instance:setSelect(var_7_1 and var_7_1:getCoverId())
+
+	if arg_7_0.viewParam and arg_7_0.viewParam.uiWorldPos then
+		arg_7_0:layoutAnchor(arg_7_0.viewParam.uiWorldPos, arg_7_0.viewParam.offsetWidth, arg_7_0.viewParam.offsetHeight)
 	end
 end
 
-function slot0.layoutAnchor(slot0, slot1, slot2, slot3)
-	RoomLayoutHelper.tipLayoutAnchor(slot0._gocontentTrs, slot0._viewGOTrs, slot1, slot2, slot3)
+function var_0_0.layoutAnchor(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	RoomLayoutHelper.tipLayoutAnchor(arg_8_0._gocontentTrs, arg_8_0._viewGOTrs, arg_8_1, arg_8_2, arg_8_3)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
 	RoomLayoutController.instance:dispatchEvent(RoomEvent.UICancelLayoutPlanItemTab)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

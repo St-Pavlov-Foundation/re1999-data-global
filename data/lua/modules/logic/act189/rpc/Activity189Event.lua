@@ -1,15 +1,16 @@
-module("modules.logic.act189.rpc.Activity189Event", package.seeall)
+﻿module("modules.logic.act189.rpc.Activity189Event", package.seeall)
 
-slot1 = 1
+local var_0_0 = _M
+local var_0_1 = 1
 
-function slot2(slot0)
-	assert(uv0[slot0] == nil, "[Activity189Event] error redefined Activity189Event." .. slot0)
+local function var_0_2(arg_1_0)
+	assert(var_0_0[arg_1_0] == nil, "[Activity189Event] error redefined Activity189Event." .. arg_1_0)
 
-	uv0[slot0] = uv1
-	uv1 = uv1 + 1
+	var_0_0[arg_1_0] = var_0_1
+	var_0_1 = var_0_1 + 1
 end
 
-slot2("onReceiveGetAct189InfoReply")
-slot2("onReceiveGetAct189OnceBonusReply")
+var_0_2("onReceiveGetAct189InfoReply")
+var_0_2("onReceiveGetAct189OnceBonusReply")
 
-return _M
+return var_0_0

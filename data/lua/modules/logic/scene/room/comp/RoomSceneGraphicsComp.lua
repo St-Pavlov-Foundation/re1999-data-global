@@ -1,21 +1,23 @@
-module("modules.logic.scene.room.comp.RoomSceneGraphicsComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneGraphicsComp", package.seeall)
 
-slot0 = class("RoomSceneGraphicsComp", BaseSceneComp)
+local var_0_0 = class("RoomSceneGraphicsComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0.LAYER_MASK_CullByDistance = LayerMask.GetMask("CullByDistance")
-	slot0.LAYER_MASK_CullOnLowQuality = LayerMask.GetMask("CullOnLowQuality")
-	slot0.LAYER_INDEX_CullByDistance = LayerMask.NameToLayer("CullByDistance")
-	slot0.LAYER_INDEX_CullOnLowQuality = LayerMask.NameToLayer("CullOnLowQuality")
-	slot0.highQualityCullingDistance = 6
-	slot0.middleQualityCullingDistance = 5.5
-	slot0.lowQualityCullingDistance = 3.5
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.LAYER_MASK_CullByDistance = LayerMask.GetMask("CullByDistance")
+	arg_1_0.LAYER_MASK_CullOnLowQuality = LayerMask.GetMask("CullOnLowQuality")
+	arg_1_0.LAYER_INDEX_CullByDistance = LayerMask.NameToLayer("CullByDistance")
+	arg_1_0.LAYER_INDEX_CullOnLowQuality = LayerMask.NameToLayer("CullOnLowQuality")
+	arg_1_0.highQualityCullingDistance = 6
+	arg_1_0.middleQualityCullingDistance = 5.5
+	arg_1_0.lowQualityCullingDistance = 3.5
 
 	if BootNativeUtil.isAndroid() then
-		slot0.compatibility = string.find(UnityEngine.SystemInfo.graphicsDeviceName, "^Adreno") or string.find(slot1, "^Mali")
-		slot0.compatibility = slot0.compatibility or SDKMgr.instance:isEmulator()
+		local var_1_0 = UnityEngine.SystemInfo.graphicsDeviceName
+
+		arg_1_0.compatibility = string.find(var_1_0, "^Adreno") or string.find(var_1_0, "^Mali")
+		arg_1_0.compatibility = arg_1_0.compatibility or SDKMgr.instance:isEmulator()
 	else
-		slot0.compatibility = true
+		arg_1_0.compatibility = true
 	end
 
 	if SDKMgr.instance:isEmulator() then
@@ -23,87 +25,90 @@ function slot0.onInit(slot0)
 	end
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._unitPPVolume = gohelper.findChildComponent(CameraMgr.instance:getMainCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._unitPPVolume = gohelper.findChildComponent(CameraMgr.instance:getMainCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
 
-	slot0:_refreshGraphics()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, slot0._refreshGraphics, slot0)
+	arg_2_0:_refreshGraphics()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, arg_2_0._refreshGraphics, arg_2_0)
 
-	slot0.projPhysics = UnityEngine.Physics.autoSimulation
-	slot0.projTransforms = UnityEngine.Physics.autoSyncTransforms
+	arg_2_0.projPhysics = UnityEngine.Physics.autoSimulation
+	arg_2_0.projTransforms = UnityEngine.Physics.autoSyncTransforms
 	UnityEngine.Physics.autoSimulation = false
 	UnityEngine.Physics.autoSyncTransforms = true
-	slot3 = CameraMgr.instance:getMainCamera()
-	slot4 = slot3:GetComponent(PostProcessingMgr.PPCustomCamDataType)
-	slot0.useLightData = slot4.useLightData
-	slot0.useLightmap = slot4.useLightmap
-	slot0.useProbe = slot4.useProbe
-	slot4.useProbe = false
-	slot4.useLightmap = false
-	slot4.useLightData = false
-	slot0.lodBias = UnityEngine.QualitySettings.lodBias
+
+	local var_2_0 = CameraMgr.instance:getMainCamera()
+	local var_2_1 = var_2_0:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+
+	arg_2_0.useLightData = var_2_1.useLightData
+	arg_2_0.useLightmap = var_2_1.useLightmap
+	arg_2_0.useProbe = var_2_1.useProbe
+	var_2_1.useProbe = false
+	var_2_1.useLightmap = false
+	var_2_1.useLightData = false
+	arg_2_0.lodBias = UnityEngine.QualitySettings.lodBias
 
 	UnityEngine.Shader.EnableKeyword("_FASTER_BLOOM")
-	slot0:getCurScene().go.sceneAmbient:SetReflectionType(0)
+	arg_2_0:getCurScene().go.sceneAmbient:SetReflectionType(0)
 
 	RenderPipelineSetting.useRenderOpaqueWithSceneColorPass = true
 
-	PostProcessingMgr.setCameraLayerInt(slot3, slot0.LAYER_MASK_CullByDistance, true)
-	PostProcessingMgr.setCameraLayerInt(slot3, slot0.LAYER_MASK_CullOnLowQuality, false)
+	PostProcessingMgr.setCameraLayerInt(var_2_0, arg_2_0.LAYER_MASK_CullByDistance, true)
+	PostProcessingMgr.setCameraLayerInt(var_2_0, arg_2_0.LAYER_MASK_CullOnLowQuality, false)
 
-	slot3.layerCullSpherical = true
+	var_2_0.layerCullSpherical = true
 
 	if BootNativeUtil.isWindows() then
 		RenderPipelineSetting.ForwardPlusToggle = true
 	end
 
 	if BootNativeUtil.isWindows() and GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High then
-		slot0:getCurScene().loader:makeSureLoaded({
+		arg_2_0:getCurScene().loader:makeSureLoaded({
 			RoomScenePreloader.DiffuseGI
-		}, slot0._OnGetInstance, slot0)
+		}, arg_2_0._OnGetInstance, arg_2_0)
 	end
 end
 
-function slot0._OnGetInstance(slot0)
-	slot0.go_GI = RoomGOPool.getInstance(RoomScenePreloader.DiffuseGI, slot0:getCurScene().go.sceneGO, "diffuse_gi")
+function var_0_0._OnGetInstance(arg_3_0)
+	arg_3_0.go_GI = RoomGOPool.getInstance(RoomScenePreloader.DiffuseGI, arg_3_0:getCurScene().go.sceneGO, "diffuse_gi")
 
-	transformhelper.setPos(slot0.go_GI.transform, 0, 0, 0)
+	transformhelper.setPos(arg_3_0.go_GI.transform, 0, 0, 0)
 end
 
-function slot0.setPPValue(slot0, slot1, slot2)
-	if slot0._unitPPVolume then
-		slot0._unitPPVolume.refresh = true
-		slot0._unitPPVolume[slot1] = slot2
+function var_0_0.setPPValue(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._unitPPVolume then
+		arg_4_0._unitPPVolume.refresh = true
+		arg_4_0._unitPPVolume[arg_4_1] = arg_4_2
 	end
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_5_0)
 	UnityEngine.Shader.DisableKeyword("_FASTER_BLOOM")
 	PostProcessingMgr.instance:setRenderShadow(true)
 	PostProcessingMgr.instance:clearLayerCullDistance()
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, slot0._refreshGraphics, slot0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_5_0._refreshGraphics, arg_5_0)
 
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot2 = slot1:GetComponent(PostProcessingMgr.PPCustomCamDataType)
-	slot0.overLookFlag = nil
-	slot2.renderScale = 1
-	slot2.useProbe = slot0.useProbe
-	slot2.useLightmap = slot0.useLightmap
-	slot2.useLightData = slot0.useLightData
-	UnityEngine.Physics.autoSimulation = slot0.projPhysics
-	UnityEngine.Physics.autoSyncTransforms = slot0.projTransforms
-	slot0.projPhysics = nil
-	slot0.projTransforms = nil
-	UnityEngine.QualitySettings.lodBias = slot0.lodBias
+	local var_5_0 = CameraMgr.instance:getMainCamera()
+	local var_5_1 = var_5_0:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-	PostProcessingMgr.setCameraLayerInt(slot1, slot0.LAYER_MASK_CullOnLowQuality, false)
-	PostProcessingMgr.setCameraLayerInt(slot1, slot0.LAYER_MASK_CullByDistance, false)
+	arg_5_0.overLookFlag = nil
+	var_5_1.renderScale = 1
+	var_5_1.useProbe = arg_5_0.useProbe
+	var_5_1.useLightmap = arg_5_0.useLightmap
+	var_5_1.useLightData = arg_5_0.useLightData
+	UnityEngine.Physics.autoSimulation = arg_5_0.projPhysics
+	UnityEngine.Physics.autoSyncTransforms = arg_5_0.projTransforms
+	arg_5_0.projPhysics = nil
+	arg_5_0.projTransforms = nil
+	UnityEngine.QualitySettings.lodBias = arg_5_0.lodBias
 
-	slot1.layerCullSpherical = false
+	PostProcessingMgr.setCameraLayerInt(var_5_0, arg_5_0.LAYER_MASK_CullOnLowQuality, false)
+	PostProcessingMgr.setCameraLayerInt(var_5_0, arg_5_0.LAYER_MASK_CullByDistance, false)
 
-	slot0:setPPValue("ssaoEnable", false)
+	var_5_0.layerCullSpherical = false
 
-	slot0._unitPPVolume = nil
+	arg_5_0:setPPValue("ssaoEnable", false)
+
+	arg_5_0._unitPPVolume = nil
 	RenderPipelineSetting.useRenderOpaqueWithSceneColorPass = false
 	UnityEngine.QualitySettings.masterTextureLimit = 0
 
@@ -111,108 +116,118 @@ function slot0.onSceneClose(slot0)
 		RenderPipelineSetting.ForwardPlusToggle = false
 	end
 
-	slot0.go_GI = nil
+	arg_5_0.go_GI = nil
 end
 
-function slot0._refreshGraphics(slot0)
-	slot4 = slot0:getCurScene().go.sceneCulling
+function var_0_0._refreshGraphics(arg_6_0)
+	local var_6_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local var_6_1 = CameraMgr.instance:getMainCamera():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	local var_6_2 = arg_6_0:getCurScene().go.sceneCulling
 
-	if GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High then
+	if var_6_0 == ModuleEnum.Performance.High then
 		PostProcessingMgr.instance:setRenderShadow(true)
 
-		CameraMgr.instance:getMainCamera():GetComponent(PostProcessingMgr.PPCustomCamDataType).renderScale = 1
-		slot4.smallRate = 0.005
-		slot4.proxyRate = 0.015
+		var_6_1.renderScale = 1
+		var_6_2.smallRate = 0.005
+		var_6_2.proxyRate = 0.015
 		UnityEngine.QualitySettings.lodBias = 1
 
-		if slot0.compatibility then
-			slot0:setPPValue("ssaoEnable", true)
-			slot0:setPPValue("ssaoIntensity", 0.38)
-			slot0:setPPValue("ssaoRadius", 0.07)
-			slot0:setPPValue("ssaoRenderScale", 0.2)
-			slot0:setPPValue("ssaoDepthQuality", 1)
+		if arg_6_0.compatibility then
+			arg_6_0:setPPValue("ssaoEnable", true)
+			arg_6_0:setPPValue("ssaoIntensity", 0.38)
+			arg_6_0:setPPValue("ssaoRadius", 0.07)
+			arg_6_0:setPPValue("ssaoRenderScale", 0.2)
+			arg_6_0:setPPValue("ssaoDepthQuality", 1)
 		end
 
-		PostProcessingMgr.instance:setLayerCullDistance(slot0.LAYER_INDEX_CullByDistance, slot0.highQualityCullingDistance)
-		PostProcessingMgr.instance:setLayerCullDistance(slot0.LAYER_INDEX_CullOnLowQuality, slot0.highQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullByDistance, arg_6_0.highQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullOnLowQuality, arg_6_0.highQualityCullingDistance)
 
 		UnityEngine.QualitySettings.masterTextureLimit = 0
-	elseif slot1 == ModuleEnum.Performance.Middle then
-		slot3.renderScale = 0.8
+	elseif var_6_0 == ModuleEnum.Performance.Middle then
+		var_6_1.renderScale = 0.8
 		UnityEngine.QualitySettings.lodBias = 0.9
 
 		PostProcessingMgr.instance:setRenderShadow(true)
-		slot0:setPPValue("ssaoEnable", false)
-		slot0:getCurScene().go.sceneAmbient:SetReflectionType(0)
-		PostProcessingMgr.instance:setLayerCullDistance(slot0.LAYER_INDEX_CullByDistance, slot0.middleQualityCullingDistance)
-		PostProcessingMgr.instance:setLayerCullDistance(slot0.LAYER_INDEX_CullOnLowQuality, slot0.middleQualityCullingDistance)
+		arg_6_0:setPPValue("ssaoEnable", false)
+		arg_6_0:getCurScene().go.sceneAmbient:SetReflectionType(0)
+		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullByDistance, arg_6_0.middleQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullOnLowQuality, arg_6_0.middleQualityCullingDistance)
 
-		slot4.smallRate = 0.02
-		slot4.proxyRate = 0.03
+		var_6_2.smallRate = 0.02
+		var_6_2.proxyRate = 0.03
 		UnityEngine.QualitySettings.masterTextureLimit = 0
-	elseif slot1 == ModuleEnum.Performance.Low then
-		slot3.renderScale = 0.7
+	elseif var_6_0 == ModuleEnum.Performance.Low then
+		var_6_1.renderScale = 0.7
 		UnityEngine.QualitySettings.lodBias = 0.7
 
 		PostProcessingMgr.instance:setRenderShadow(false)
-		slot0:setPPValue("ssaoEnable", false)
-		slot0:getCurScene().go.sceneAmbient:SetReflectionType(0)
-		PostProcessingMgr.instance:setLayerCullDistance(slot0.LAYER_INDEX_CullByDistance, slot0.lowQualityCullingDistance)
-		PostProcessingMgr.instance:setLayerCullDistance(slot0.LAYER_INDEX_CullOnLowQuality, slot0.lowQualityCullingDistance)
+		arg_6_0:setPPValue("ssaoEnable", false)
+		arg_6_0:getCurScene().go.sceneAmbient:SetReflectionType(0)
+		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullByDistance, arg_6_0.lowQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullOnLowQuality, arg_6_0.lowQualityCullingDistance)
 
-		slot4.smallRate = 0.03
-		slot4.proxyRate = 0.075
+		var_6_2.smallRate = 0.03
+		var_6_2.proxyRate = 0.075
 		UnityEngine.QualitySettings.masterTextureLimit = 1
 	end
 end
 
-function slot0.setupShadowParam(slot0, slot1, slot2)
-	if slot0.overLookFlag ~= slot1 then
-		slot3, slot4 = nil
+function var_0_0.setupShadowParam(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0.overLookFlag ~= arg_7_1 then
+		local var_7_0
+		local var_7_1
+		local var_7_2 = arg_7_0:getCurScene()
 
-		if slot0:getCurScene() ~= nil and slot5.go ~= nil then
-			slot3 = slot5.go.sceneShadow
-			slot4 = slot5.go.sceneAmbient
+		if var_7_2 ~= nil and var_7_2.go ~= nil then
+			var_7_0 = var_7_2.go.sceneShadow
+			var_7_1 = var_7_2.go.sceneAmbient
 		end
 
-		if slot3 ~= nil then
-			if slot1 then
-				slot3.overrideShadowCascadesOption = true
-				slot3.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.NoCascades
-				slot3.overrideShadowResolution = true
-				slot3.shadowResolution = 1600
-				slot3.softShadow = true
+		if var_7_0 ~= nil then
+			if arg_7_1 then
+				var_7_0.overrideShadowCascadesOption = true
+				var_7_0.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.NoCascades
+				var_7_0.overrideShadowResolution = true
+				var_7_0.shadowResolution = 1600
+				var_7_0.softShadow = true
 			else
-				slot3.overrideShadowCascadesOption = true
-				slot3.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.TwoCascades
-				slot3.overrideShadowResolution = true
-				slot3.shadowResolution = 2048
-				slot3.softShadow = true
+				var_7_0.overrideShadowCascadesOption = true
+				var_7_0.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.TwoCascades
+				var_7_0.overrideShadowResolution = true
+				var_7_0.shadowResolution = 2048
+				var_7_0.softShadow = true
 			end
 
-			slot3:ApplyProperty()
+			var_7_0:ApplyProperty()
 		end
 
-		if GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High and slot0.compatibility then
-			if slot1 then
-				slot4:SetReflectionType(0)
-				slot0:setPPValue("ssaoIntensity", 0.38)
-				slot0:setPPValue("ssaoRadius", 0.07)
+		local var_7_3 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+
+		if var_7_3 == ModuleEnum.Performance.High and arg_7_0.compatibility then
+			if arg_7_1 then
+				var_7_1:SetReflectionType(0)
+				arg_7_0:setPPValue("ssaoIntensity", 0.38)
+				arg_7_0:setPPValue("ssaoRadius", 0.07)
 			else
-				slot4:SetReflectionType(1)
-				slot0:setPPValue("ssaoIntensity", 0.38)
-				slot0:setPPValue("ssaoRadius", 0.015)
+				var_7_1:SetReflectionType(1)
+				arg_7_0:setPPValue("ssaoIntensity", 0.38)
+				arg_7_0:setPPValue("ssaoRadius", 0.015)
 			end
 		end
 
-		if slot1 then
-			PostProcessingMgr.setCameraLayerInt(CameraMgr.instance:getMainCamera(), slot0.LAYER_MASK_CullOnLowQuality, false)
-		elseif slot6 ~= ModuleEnum.Performance.Low then
-			PostProcessingMgr.setCameraLayerInt(CameraMgr.instance:getMainCamera(), slot0.LAYER_MASK_CullOnLowQuality, true)
+		if arg_7_1 then
+			local var_7_4 = CameraMgr.instance:getMainCamera()
+
+			PostProcessingMgr.setCameraLayerInt(var_7_4, arg_7_0.LAYER_MASK_CullOnLowQuality, false)
+		elseif var_7_3 ~= ModuleEnum.Performance.Low then
+			local var_7_5 = CameraMgr.instance:getMainCamera()
+
+			PostProcessingMgr.setCameraLayerInt(var_7_5, arg_7_0.LAYER_MASK_CullOnLowQuality, true)
 		end
 
-		slot0.overLookFlag = slot1
+		arg_7_0.overLookFlag = arg_7_1
 	end
 end
 
-return slot0
+return var_0_0

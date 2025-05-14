@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotDifficultyViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotDifficultyViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotDifficultyViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotDifficultyViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		V1a6_CachotDifficultyView.New()
 	}
 end
 
-return slot0
+return var_0_0

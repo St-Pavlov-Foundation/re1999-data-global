@@ -1,224 +1,254 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupFightView_Level", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupFightView_Level", package.seeall)
 
-slot0 = class("Act183HeroGroupFightView_Level", HeroGroupFightViewLevel)
+local var_0_0 = class("Act183HeroGroupFightView_Level", HeroGroupFightViewLevel)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._goadditioncontain = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain")
-	slot0._goadditionitem = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/targetList/#go_additionitem")
-	slot0._goadditionstar1 = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star1")
-	slot0._goadditionstar2 = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star2")
-	slot0._goadditionstar3 = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star3")
-	slot0._gochallenge = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege")
-	slot0._gobaserulecontainer = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt")
-	slot0._gobaserules = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist")
-	slot0._gobaseruleItem = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist/#go_item")
-	slot0._goescapecontainer = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt")
-	slot0._goescaperules = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist")
-	slot0._goescaperuleitem = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist/#go_item")
-	slot0._btnchallengetip = gohelper.findChildButton(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/title/#btn_info")
-	slot0._btnchallengetip = gohelper.findChildButton(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/title/#btn_info")
-	slot0._gochallengetips = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips")
-	slot0._btnclosechallengetips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_challengetips/#btn_closechallengetips")
-	slot0._gochallengetipscontent = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content")
-	slot0._gochallengetiptitle = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/title")
-	slot0._gochallengetipitem = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem")
-	slot0._gochallengedescitem = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/#txt_desc")
+	arg_1_0._goadditioncontain = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain")
+	arg_1_0._goadditionitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/targetList/#go_additionitem")
+	arg_1_0._goadditionstar1 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star1")
+	arg_1_0._goadditionstar2 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star2")
+	arg_1_0._goadditionstar3 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star3")
+	arg_1_0._gochallenge = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege")
+	arg_1_0._gobaserulecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt")
+	arg_1_0._gobaserules = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist")
+	arg_1_0._gobaseruleItem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist/#go_item")
+	arg_1_0._goescapecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt")
+	arg_1_0._goescaperules = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist")
+	arg_1_0._goescaperuleitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist/#go_item")
+	arg_1_0._btnchallengetip = gohelper.findChildButton(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/title/#btn_info")
+	arg_1_0._btnchallengetip = gohelper.findChildButton(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/title/#btn_info")
+	arg_1_0._gochallengetips = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips")
+	arg_1_0._btnclosechallengetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_challengetips/#btn_closechallengetips")
+	arg_1_0._gochallengetipscontent = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content")
+	arg_1_0._gochallengetiptitle = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/title")
+	arg_1_0._gochallengetipitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem")
+	arg_1_0._gochallengedescitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/#txt_desc")
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	var_0_0.super._editableInitView(arg_2_0)
 
-	slot0._activityId = Act183Model.instance:getActivityId()
-	slot0._episodeId = HeroGroupModel.instance.episodeId
-	slot0._episodeCo = Act183Config.instance:getEpisodeCo(slot0._episodeId)
-	slot0._episodeMo = Act183Model.instance:getEpisodeMo(slot0._episodeCo.groupId, slot0._episodeId)
-	slot0._groupEpisodeMo = Act183Model.instance:getGroupEpisodeMo(slot0._episodeCo.groupId)
-	slot0._groupType = slot0._groupEpisodeMo:getGroupType()
-	slot0._hardMode = slot0._groupType == Act183Enum.GroupType.HardMain
-	slot0._conditionItemTab = slot0:getUserDataTb_()
+	arg_2_0._activityId = Act183Model.instance:getActivityId()
+	arg_2_0._episodeId = HeroGroupModel.instance.episodeId
+	arg_2_0._episodeCo = Act183Config.instance:getEpisodeCo(arg_2_0._episodeId)
+	arg_2_0._episodeMo = Act183Model.instance:getEpisodeMo(arg_2_0._episodeCo.groupId, arg_2_0._episodeId)
+	arg_2_0._groupEpisodeMo = Act183Model.instance:getGroupEpisodeMo(arg_2_0._episodeCo.groupId)
+	arg_2_0._groupType = arg_2_0._groupEpisodeMo:getGroupType()
+	arg_2_0._hardMode = arg_2_0._groupType == Act183Enum.GroupType.HardMain
+	arg_2_0._conditionItemTab = arg_2_0:getUserDataTb_()
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0._btnchallengetip:AddClickListener(slot0._btnchallengetipOnClick, slot0)
-	slot0._btnclosechallengetips:AddClickListener(slot0._btnclosechallengetipsOnClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	var_0_0.super.addEvents(arg_3_0)
+	arg_3_0._btnchallengetip:AddClickListener(arg_3_0._btnchallengetipOnClick, arg_3_0)
+	arg_3_0._btnclosechallengetips:AddClickListener(arg_3_0._btnclosechallengetipsOnClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0._btnchallengetip:RemoveClickListener()
-	slot0._btnclosechallengetips:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	var_0_0.super.removeEvents(arg_4_0)
+	arg_4_0._btnchallengetip:RemoveClickListener()
+	arg_4_0._btnclosechallengetips:RemoveClickListener()
 end
 
-function slot0._btnchallengetipOnClick(slot0)
-	gohelper.setActive(slot0._gochallengetips, true)
-	slot0:refreshChallengeTips()
+function var_0_0._btnchallengetipOnClick(arg_5_0)
+	gohelper.setActive(arg_5_0._gochallengetips, true)
+	arg_5_0:refreshChallengeTips()
 end
 
-function slot0._btnclosechallengetipsOnClick(slot0)
-	gohelper.setActive(slot0._gochallengetips, false)
+function var_0_0._btnclosechallengetipsOnClick(arg_6_0)
+	gohelper.setActive(arg_6_0._gochallengetips, false)
 end
 
-function slot0._refreshUI(slot0)
-	uv0.super._refreshUI(slot0)
-	slot0:refreshChallengeRules()
-	slot0:refreshFightConditions()
-	gohelper.setActive(slot0._gohardEffect, slot0._hardMode)
+function var_0_0._refreshUI(arg_7_0)
+	var_0_0.super._refreshUI(arg_7_0)
+	arg_7_0:refreshChallengeRules()
+	arg_7_0:refreshFightConditions()
+	gohelper.setActive(arg_7_0._gohardEffect, arg_7_0._hardMode)
 end
 
-function slot0.refreshFightConditions(slot0)
-	slot3 = (slot0._episodeMo:getConditionIds() and #slot1 or 0) > 0
+function var_0_0.refreshFightConditions(arg_8_0)
+	local var_8_0 = arg_8_0._episodeMo:getConditionIds()
+	local var_8_1 = var_8_0 and #var_8_0 or 0
+	local var_8_2 = var_8_1 > 0
 
-	gohelper.setActive(slot0._goadditioncontain, slot3)
+	gohelper.setActive(arg_8_0._goadditioncontain, var_8_2)
 
-	if not slot3 then
+	if not var_8_2 then
 		return
 	end
 
-	slot4 = {}
-	slot5 = {}
+	local var_8_3 = {}
+	local var_8_4 = {}
 
-	if slot1 then
-		for slot9, slot10 in ipairs(slot1) do
-			slot12 = slot0._episodeMo:isConditionPass(slot10)
-			slot0:_getOrCreateConditionItem(slot9).txtcontent.text = Act183Config.instance:getConditionCo(slot10) and slot13.decs1 or ""
+	if var_8_0 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+			local var_8_5 = arg_8_0:_getOrCreateConditionItem(iter_8_0)
+			local var_8_6 = arg_8_0._episodeMo:isConditionPass(iter_8_1)
+			local var_8_7 = Act183Config.instance:getConditionCo(iter_8_1)
 
-			gohelper.setActive(slot11.viewGO, true)
-			gohelper.setActive(slot11.gofinish, slot12)
-			gohelper.setActive(slot11.gounfinish, not slot12)
+			var_8_5.txtcontent.text = var_8_7 and var_8_7.decs1 or ""
 
-			slot5[slot9] = slot12
-			slot4[slot11] = true
+			gohelper.setActive(var_8_5.viewGO, true)
+			gohelper.setActive(var_8_5.gofinish, var_8_6)
+			gohelper.setActive(var_8_5.gounfinish, not var_8_6)
+
+			var_8_4[iter_8_0] = var_8_6
+			var_8_3[var_8_5] = true
 		end
 	end
 
-	for slot9, slot10 in pairs(slot0._conditionItemTab) do
-		if not slot4[slot10] then
-			gohelper.setActive(slot10.viewGO, false)
+	for iter_8_2, iter_8_3 in pairs(arg_8_0._conditionItemTab) do
+		if not var_8_3[iter_8_3] then
+			gohelper.setActive(iter_8_3.viewGO, false)
 		end
 	end
 
-	slot0:refreshFightConditionTitleStar(slot2, slot5)
+	arg_8_0:refreshFightConditionTitleStar(var_8_1, var_8_4)
 end
 
-function slot0.refreshFightConditionTitleStar(slot0, slot1, slot2)
-	if not slot0["_goadditionstar" .. slot1] then
+function var_0_0.refreshFightConditionTitleStar(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0["_goadditionstar" .. arg_9_1]
+
+	if not var_9_0 then
 		return
 	end
 
-	for slot7 = 1, slot1 do
-		if not gohelper.isNil(gohelper.findChildImage(slot3, "star" .. slot7)) then
-			slot0:_setStar(slot8, slot2[slot7])
+	for iter_9_0 = 1, arg_9_1 do
+		local var_9_1 = gohelper.findChildImage(var_9_0, "star" .. iter_9_0)
+
+		if not gohelper.isNil(var_9_1) then
+			local var_9_2 = arg_9_2[iter_9_0]
+
+			arg_9_0:_setStar(var_9_1, var_9_2)
 		end
 	end
 
-	gohelper.setActive(slot3, true)
+	gohelper.setActive(var_9_0, true)
 end
 
-function slot0._getOrCreateConditionItem(slot0, slot1)
-	if not slot0._conditionItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._goadditionitem, "fightcondition_" .. slot1)
-		slot2.txtcontent = gohelper.findChildText(slot2.viewGO, "#txt_normalcondition")
-		slot2.gofinish = gohelper.findChild(slot2.viewGO, "#go_normalfinish")
-		slot2.gounfinish = gohelper.findChild(slot2.viewGO, "#go_normalunfinish")
-		slot0._conditionItemTab[slot1] = slot2
+function var_0_0._getOrCreateConditionItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._conditionItemTab[arg_10_1]
+
+	if not var_10_0 then
+		var_10_0 = arg_10_0:getUserDataTb_()
+		var_10_0.viewGO = gohelper.cloneInPlace(arg_10_0._goadditionitem, "fightcondition_" .. arg_10_1)
+		var_10_0.txtcontent = gohelper.findChildText(var_10_0.viewGO, "#txt_normalcondition")
+		var_10_0.gofinish = gohelper.findChild(var_10_0.viewGO, "#go_normalfinish")
+		var_10_0.gounfinish = gohelper.findChild(var_10_0.viewGO, "#go_normalunfinish")
+		arg_10_0._conditionItemTab[arg_10_1] = var_10_0
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.refreshChallengeRules(slot0)
-	slot0._baseRuleDescList = Act183Config.instance:getEpisodeAllRuleDesc(slot0._episodeId)
-	slot0._hasBaseRule = (slot0._baseRuleDescList and #slot0._baseRuleDescList or 0) > 0
+function var_0_0.refreshChallengeRules(arg_11_0)
+	arg_11_0._baseRuleDescList = Act183Config.instance:getEpisodeAllRuleDesc(arg_11_0._episodeId)
+	arg_11_0._hasBaseRule = (arg_11_0._baseRuleDescList and #arg_11_0._baseRuleDescList or 0) > 0
 
-	gohelper.setActive(slot0._gobaserulecontainer, slot0._hasBaseRule)
+	gohelper.setActive(arg_11_0._gobaserulecontainer, arg_11_0._hasBaseRule)
 
-	if slot0._hasBaseRule then
-		gohelper.CreateObjList(slot0, slot0._refreshBaseRuleItem, slot0._baseRuleDescList, slot0._gobaserules, slot0._gobaseruleItem)
+	if arg_11_0._hasBaseRule then
+		gohelper.CreateObjList(arg_11_0, arg_11_0._refreshBaseRuleItem, arg_11_0._baseRuleDescList, arg_11_0._gobaserules, arg_11_0._gobaseruleItem)
 	end
 
-	slot0._escapeRules = slot0._groupEpisodeMo:getEscapeRules(slot0._episodeId)
-	slot0._canGetRule = (slot0._episodeMo and slot0._episodeMo:getEpisodeType()) == Act183Enum.EpisodeType.Sub and (slot0._escapeRules and #slot0._escapeRules > 0)
+	local var_11_0 = (arg_11_0._episodeMo and arg_11_0._episodeMo:getEpisodeType()) == Act183Enum.EpisodeType.Sub
 
-	gohelper.setActive(slot0._goescapecontainer, slot0._canGetRule)
+	arg_11_0._escapeRules = arg_11_0._groupEpisodeMo:getEscapeRules(arg_11_0._episodeId)
 
-	if slot0._canGetRule then
-		gohelper.CreateObjList(slot0, slot0._refreshEscapeRuleItem, slot0._escapeRules, slot0._goescaperules, slot0._goescaperuleitem)
+	local var_11_1 = arg_11_0._escapeRules and #arg_11_0._escapeRules > 0
+
+	arg_11_0._canGetRule = var_11_0 and var_11_1
+
+	gohelper.setActive(arg_11_0._goescapecontainer, arg_11_0._canGetRule)
+
+	if arg_11_0._canGetRule then
+		gohelper.CreateObjList(arg_11_0, arg_11_0._refreshEscapeRuleItem, arg_11_0._escapeRules, arg_11_0._goescaperules, arg_11_0._goescaperuleitem)
 	end
 
-	gohelper.setActive(slot0._gochallenge, slot0._hasBaseRule or slot0._canGetRule)
+	gohelper.setActive(arg_11_0._gochallenge, arg_11_0._hasBaseRule or arg_11_0._canGetRule)
 end
 
-function slot0._refreshBaseRuleItem(slot0, slot1, slot2, slot3)
-	Act183Helper.setRuleIcon(slot0._episodeId, slot3, gohelper.findChildImage(slot1, "icon"))
+function var_0_0._refreshBaseRuleItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = gohelper.findChildImage(arg_12_1, "icon")
+
+	Act183Helper.setRuleIcon(arg_12_0._episodeId, arg_12_3, var_12_0)
 end
 
-function slot0._refreshEscapeRuleItem(slot0, slot1, slot2, slot3)
-	Act183Helper.setRuleIcon(slot2.episodeId, slot2.ruleIndex, gohelper.findChildImage(slot1, "icon"))
+function var_0_0._refreshEscapeRuleItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = gohelper.findChildImage(arg_13_1, "icon")
+	local var_13_1 = arg_13_2.episodeId
+	local var_13_2 = arg_13_2.ruleIndex
+
+	Act183Helper.setRuleIcon(var_13_1, var_13_2, var_13_0)
 end
 
-function slot0.refreshChallengeTips(slot0)
-	if slot0._initChallengeTipsDone then
+function var_0_0.refreshChallengeTips(arg_14_0)
+	if arg_14_0._initChallengeTipsDone then
 		return
 	end
 
-	slot0:_refreshBaseRuleTipContents()
-	slot0:_refreshEscapeRuleTipContents()
+	arg_14_0:_refreshBaseRuleTipContents()
+	arg_14_0:_refreshEscapeRuleTipContents()
 
-	slot0._initChallengeTipsDone = true
+	arg_14_0._initChallengeTipsDone = true
 end
 
-function slot0._refreshBaseRuleTipContents(slot0)
-	if not slot0._hasBaseRule then
+function var_0_0._refreshBaseRuleTipContents(arg_15_0)
+	if not arg_15_0._hasBaseRule then
 		return
 	end
 
-	slot0._gobaseruletipitem = gohelper.cloneInPlace(slot0._gochallengetipitem, "baseruleitem")
-	slot4 = "p_v2a5_challenge_herogroupview_basictxt"
+	arg_15_0._gobaseruletipitem = gohelper.cloneInPlace(arg_15_0._gochallengetipitem, "baseruleitem")
 
-	slot0:_refreshTipTitle(slot0._gobaseruletipitem, slot4)
+	arg_15_0:_refreshTipTitle(arg_15_0._gobaseruletipitem, "p_v2a5_challenge_herogroupview_basictxt")
 
-	for slot4, slot5 in ipairs(slot0._baseRuleDescList) do
-		slot6 = gohelper.clone(slot0._gochallengedescitem, slot0._gobaseruletipitem, "item_" .. slot4)
-		slot7 = gohelper.onceAddComponent(slot6, gohelper.Type_TextMesh)
-		slot7.text = SkillHelper.buildDesc(slot5)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._baseRuleDescList) do
+		local var_15_0 = gohelper.clone(arg_15_0._gochallengedescitem, arg_15_0._gobaseruletipitem, "item_" .. iter_15_0)
+		local var_15_1 = gohelper.onceAddComponent(var_15_0, gohelper.Type_TextMesh)
+		local var_15_2 = gohelper.findChildImage(var_15_0, "image_icon")
 
-		SkillHelper.addHyperLinkClick(slot7)
-		Act183Helper.setRuleIcon(slot0._episodeId, slot4, gohelper.findChildImage(slot6, "image_icon"))
-		gohelper.setActive(slot6, true)
+		var_15_1.text = SkillHelper.buildDesc(iter_15_1)
+
+		SkillHelper.addHyperLinkClick(var_15_1)
+		Act183Helper.setRuleIcon(arg_15_0._episodeId, iter_15_0, var_15_2)
+		gohelper.setActive(var_15_0, true)
 	end
 
-	gohelper.setActive(slot0._gobaseruletipitem, true)
+	gohelper.setActive(arg_15_0._gobaseruletipitem, true)
 end
 
-function slot0._refreshEscapeRuleTipContents(slot0)
-	if not slot0._canGetRule then
+function var_0_0._refreshEscapeRuleTipContents(arg_16_0)
+	if not arg_16_0._canGetRule then
 		return
 	end
 
-	slot0._goescaperuletipitem = gohelper.cloneInPlace(slot0._gochallengetipitem, "escaperuleitem")
-	slot4 = "p_v2a5_challenge_herogroupview_escapetxt"
+	arg_16_0._goescaperuletipitem = gohelper.cloneInPlace(arg_16_0._gochallengetipitem, "escaperuleitem")
 
-	slot0:_refreshTipTitle(slot0._goescaperuletipitem, slot4)
+	arg_16_0:_refreshTipTitle(arg_16_0._goescaperuletipitem, "p_v2a5_challenge_herogroupview_escapetxt")
 
-	for slot4, slot5 in ipairs(slot0._escapeRules) do
-		slot6 = gohelper.clone(slot0._gochallengedescitem, slot0._goescaperuletipitem, "item_" .. slot4)
-		slot7 = gohelper.onceAddComponent(slot6, gohelper.Type_TextMesh)
-		slot7.text = SkillHelper.buildDesc(slot5.ruleDesc)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._escapeRules) do
+		local var_16_0 = gohelper.clone(arg_16_0._gochallengedescitem, arg_16_0._goescaperuletipitem, "item_" .. iter_16_0)
+		local var_16_1 = gohelper.onceAddComponent(var_16_0, gohelper.Type_TextMesh)
 
-		SkillHelper.addHyperLinkClick(slot7)
-		Act183Helper.setRuleIcon(slot5.episodeId, slot5.ruleIndex, gohelper.findChildImage(slot6, "image_icon"))
-		gohelper.setActive(slot6, true)
+		var_16_1.text = SkillHelper.buildDesc(iter_16_1.ruleDesc)
+
+		SkillHelper.addHyperLinkClick(var_16_1)
+
+		local var_16_2 = iter_16_1.episodeId
+		local var_16_3 = iter_16_1.ruleIndex
+		local var_16_4 = gohelper.findChildImage(var_16_0, "image_icon")
+
+		Act183Helper.setRuleIcon(var_16_2, var_16_3, var_16_4)
+		gohelper.setActive(var_16_0, true)
 	end
 
-	gohelper.setActive(slot0._goescaperuletipitem, true)
+	gohelper.setActive(arg_16_0._goescaperuletipitem, true)
 end
 
-function slot0._refreshTipTitle(slot0, slot1, slot2)
-	gohelper.findChildText(slot1, "title/txt_name").text = luaLang(slot2)
+function var_0_0._refreshTipTitle(arg_17_0, arg_17_1, arg_17_2)
+	gohelper.findChildText(arg_17_1, "title/txt_name").text = luaLang(arg_17_2)
 end
 
-return slot0
+return var_0_0

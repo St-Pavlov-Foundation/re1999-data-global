@@ -1,7 +1,8 @@
-module("modules.logic.room.define.RoomJumpEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomJumpEnum", package.seeall)
 
-slot0 = _M
-slot0.JumpView = {
+local var_0_0 = _M
+
+var_0_0.JumpView = {
 	Critter = 2,
 	RoomRecordView = 1,
 	Manufacture = 3,
@@ -13,10 +14,10 @@ slot0.JumpView = {
 	Backpack = 5,
 	BuildingLevelUp = 8
 }
-slot0.ManufactureBuildingType = {
+var_0_0.ManufactureBuildingType = {
 	Manufacture = 3,
 	Collect = 1,
 	Process = 2
 }
 
-return slot0
+return var_0_0

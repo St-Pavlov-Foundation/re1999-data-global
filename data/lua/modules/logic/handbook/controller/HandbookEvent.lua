@@ -1,6 +1,7 @@
-module("modules.logic.handbook.controller.HandbookEvent", package.seeall)
+﻿module("modules.logic.handbook.controller.HandbookEvent", package.seeall)
 
-slot0 = _M
-slot0.OnReadInfoChanged = 1001
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnReadInfoChanged = 1001
+
+return var_0_0

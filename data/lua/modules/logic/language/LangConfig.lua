@@ -1,12 +1,12 @@
-module("modules.logic.language.LangConfig", package.seeall)
+﻿module("modules.logic.language.LangConfig", package.seeall)
 
-slot0 = class("LangConfig", BaseConfig)
+local var_0_0 = class("LangConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
 	addGlobalModule("modules.logic.language.lua_language", "lua_language")
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"language_coder",
 		"language_prefab",
@@ -14,51 +14,65 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot0.updateLanguage(slot0, slot1)
-	lua_language.onLoad(slot1)
+function var_0_0.updateLanguage(arg_4_0, arg_4_1)
+	lua_language.onLoad(arg_4_1)
 end
 
-function slot0.updateServerLanguage(slot0, slot1)
-	lua_language_server.onLoad(slot1)
+function var_0_0.updateServerLanguage(arg_5_0, arg_5_1)
+	lua_language_server.onLoad(arg_5_1)
 end
 
-function slot0.getLangTxt(slot0, slot1, slot2)
-	if not string.nilorempty(lua_language.configDict[slot2] and slot3.content) then
-		return slot4
+function var_0_0.getLangTxt(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = lua_language.configDict[arg_6_2]
+	local var_6_1 = var_6_0 and var_6_0.content
+
+	if not string.nilorempty(var_6_1) then
+		return var_6_1
 	end
 
-	if string.find(slot2, "language_") and string.getLastNum(slot2) then
-		return tostring(slot2)
+	if string.find(arg_6_2, "language_") then
+		arg_6_2 = string.getLastNum(arg_6_2)
+
+		if arg_6_2 then
+			return tostring(arg_6_2)
+		end
 	end
 
 	return ""
 end
 
-function slot0.getServerLangTxt(slot0, slot1, slot2)
-	if lua_language_server.configDict[slot2] then
-		return slot3.content
+function var_0_0.getServerLangTxt(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = lua_language_server.configDict[arg_7_2]
+
+	if var_7_0 then
+		return var_7_0.content
 	end
 
-	return slot2
+	return arg_7_2
 end
 
-function slot0.getLangTxtFromeKey(slot0, slot1, slot2)
-	if not (lua_language_coder.configDict[slot2] or lua_language_prefab.configDict[slot2]) then
-		logError("语言表key[language_coder.xlsx/language_prefab.xlsx]中找不到key = " .. slot2 .. " 请检查！")
+function var_0_0.getLangTxtFromeKey(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = lua_language_coder.configDict[arg_8_2] or lua_language_prefab.configDict[arg_8_2]
 
-		return slot2
+	if not var_8_0 then
+		logError("语言表key[language_coder.xlsx/language_prefab.xlsx]中找不到key = " .. arg_8_2 .. " 请检查！")
+
+		return arg_8_2
 	end
 
-	if LuaUtil.isEmptyStr(slot0:getLangTxt(slot1, slot3.lang)) then
-		return slot3.lang
+	local var_8_1 = arg_8_0:getLangTxt(arg_8_1, var_8_0.lang)
+
+	if LuaUtil.isEmptyStr(var_8_1) then
+		return var_8_0.lang
 	end
 
-	return slot4
+	return var_8_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

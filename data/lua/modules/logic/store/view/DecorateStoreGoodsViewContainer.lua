@@ -1,35 +1,35 @@
-module("modules.logic.store.view.DecorateStoreGoodsViewContainer", package.seeall)
+﻿module("modules.logic.store.view.DecorateStoreGoodsViewContainer", package.seeall)
 
-slot0 = class("DecorateStoreGoodsViewContainer", BaseViewContainer)
+local var_0_0 = class("DecorateStoreGoodsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
-	table.insert(slot1, DecorateStoreGoodsView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, DecorateStoreGoodsView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._currencyView = CurrencyView.New({})
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._currencyView = CurrencyView.New({})
 
 		return {
-			slot0._currencyView
+			arg_3_0._currencyView
 		}
 	end
 end
 
-function slot0.setCurrencyType(slot0, slot1)
-	if slot0._currencyView then
-		slot0._currencyView:setCurrencyType(slot1)
+function var_0_0.setCurrencyType(arg_4_0, arg_4_1)
+	if arg_4_0._currencyView then
+		arg_4_0._currencyView:setCurrencyType(arg_4_1)
 	end
 end
 
-return slot0
+return var_0_0

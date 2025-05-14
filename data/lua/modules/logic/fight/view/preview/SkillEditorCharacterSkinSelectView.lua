@@ -1,90 +1,99 @@
-module("modules.logic.fight.view.preview.SkillEditorCharacterSkinSelectView", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorCharacterSkinSelectView", package.seeall)
 
-slot0 = class("SkillEditorCharacterSkinSelectView", BaseView)
+local var_0_0 = class("SkillEditorCharacterSkinSelectView", BaseView)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onInitView(slot0)
-	slot0._actionViewGO = gohelper.findChild(slot0.viewGO, "selectSkin")
-	slot0._itemGOParent = gohelper.findChild(slot0.viewGO, "selectSkin/scroll/content")
-	slot0._itemGOPrefab = gohelper.findChild(slot0.viewGO, "selectSkin/scroll/item")
-	slot0._btnselectSkinID = gohelper.findChildButton(slot0.viewGO, "scene/Grid/btnSelectSkin")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._actionViewGO = gohelper.findChild(arg_2_0.viewGO, "selectSkin")
+	arg_2_0._itemGOParent = gohelper.findChild(arg_2_0.viewGO, "selectSkin/scroll/content")
+	arg_2_0._itemGOPrefab = gohelper.findChild(arg_2_0.viewGO, "selectSkin/scroll/item")
+	arg_2_0._btnselectSkinID = gohelper.findChildButton(arg_2_0.viewGO, "scene/Grid/btnSelectSkin")
 end
 
-function slot0.addEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._actionViewGO):AddClickListener(slot0._hideThis, slot0)
-	slot0:addClickCb(slot0._btnselectSkinID, slot0._showThis, slot0)
+function var_0_0.addEvents(arg_3_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_3_0._actionViewGO):AddClickListener(arg_3_0._hideThis, arg_3_0)
+	arg_3_0:addClickCb(arg_3_0._btnselectSkinID, arg_3_0._showThis, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._actionViewGO):RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_4_0._actionViewGO):RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
+	return
 end
 
-function slot0._hideThis(slot0)
-	gohelper.setActive(slot0._actionViewGO, false)
+function var_0_0._hideThis(arg_6_0)
+	gohelper.setActive(arg_6_0._actionViewGO, false)
 end
 
-function slot0._showThis(slot0)
-	gohelper.setActive(slot0._actionViewGO, true)
+function var_0_0._showThis(arg_7_0)
+	gohelper.setActive(arg_7_0._actionViewGO, true)
+
+	local var_7_0 = GameSceneMgr.instance:getCurScene()
 
 	if SkillEditorMgr.instance.cur_select_entity_id then
-		slot0._attacker = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+		arg_7_0._attacker = var_7_0.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
 	else
-		slot0._attacker = slot1.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+		arg_7_0._attacker = var_7_0.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
 	end
 
-	if not slot0._attacker then
+	if not arg_7_0._attacker then
 		logError("所选对象错误，请从新选择对象")
 
 		return
 	end
 
-	slot0.entity_mo = slot0._attacker:getMO()
-	slot2 = SkinConfig.instance:getCharacterSkinCoList(slot0.entity_mo.modelId) or {}
+	arg_7_0.entity_mo = arg_7_0._attacker:getMO()
 
-	gohelper.CreateObjList(slot0, slot0.OnItemShow, slot2, slot0._itemGOParent, slot0._itemGOPrefab)
+	local var_7_1 = SkinConfig.instance:getCharacterSkinCoList(arg_7_0.entity_mo.modelId) or {}
 
-	if #slot2 == 0 then
+	gohelper.CreateObjList(arg_7_0, arg_7_0.OnItemShow, var_7_1, arg_7_0._itemGOParent, arg_7_0._itemGOPrefab)
+
+	if #var_7_1 == 0 then
 		logError("所选对象没有可选皮肤")
-		slot0:_hideThis()
+		arg_7_0:_hideThis()
 	end
 end
 
-function slot0.OnItemShow(slot0, slot1, slot2, slot3)
-	slot1.transform:Find("Text"):GetComponent(gohelper.Type_TextMesh).text = slot2.des
-	slot6 = slot1:GetComponent(typeof(SLFramework.UGUI.ButtonWrap))
+function var_0_0.OnItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_1.transform:Find("Text"):GetComponent(gohelper.Type_TextMesh).text = arg_8_2.des
 
-	slot0:removeClickCb(slot6)
-	slot0:addClickCb(slot6, slot0.OnItemClick, slot0, slot2)
+	local var_8_0 = arg_8_1:GetComponent(typeof(SLFramework.UGUI.ButtonWrap))
+
+	arg_8_0:removeClickCb(var_8_0)
+	arg_8_0:addClickCb(var_8_0, arg_8_0.OnItemClick, arg_8_0, arg_8_2)
 end
 
-function slot0.OnItemClick(slot0, slot1)
-	slot2 = SkillEditorMgr.instance.cur_select_side
-	slot3, slot4 = SkillEditorMgr.instance:getTypeInfo(slot2)
-	slot4.skinIds[slot0.entity_mo.position] = slot1.id
+function var_0_0.OnItemClick(arg_9_0, arg_9_1)
+	local var_9_0 = SkillEditorMgr.instance.cur_select_side
+	local var_9_1, var_9_2 = SkillEditorMgr.instance:getTypeInfo(var_9_0)
 
-	SkillEditorMgr.instance:setTypeInfo(slot2, slot3, slot4.ids, slot4.skinIds, slot4.groupId)
+	var_9_2.skinIds[arg_9_0.entity_mo.position] = arg_9_1.id
 
-	slot5 = slot2 == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
+	SkillEditorMgr.instance:setTypeInfo(var_9_0, var_9_1, var_9_2.ids, var_9_2.skinIds, var_9_2.groupId)
 
-	if GameSceneMgr.instance:getCurScene().entityMgr:getEntity(slot0._attacker.id).skill then
-		slot7.skill:stopSkill()
+	local var_9_3 = var_9_0 == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
+	local var_9_4 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_9_5 = var_9_4:getEntity(arg_9_0._attacker.id)
+
+	if var_9_5.skill then
+		var_9_5.skill:stopSkill()
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, slot7.id)
-	slot6:removeUnit(slot5, slot0._attacker.id)
+	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, var_9_5.id)
+	var_9_4:removeUnit(var_9_3, arg_9_0._attacker.id)
 
-	slot0.entity_mo.skin = slot1.id
+	arg_9_0.entity_mo.skin = arg_9_1.id
 
-	if FightDataHelper.entityMgr:isSub(slot0.entity_mo.id) then
-		slot6:buildSubSpine(slot0.entity_mo)
+	if FightDataHelper.entityMgr:isSub(arg_9_0.entity_mo.id) then
+		var_9_4:buildSubSpine(arg_9_0.entity_mo)
 	else
-		slot6:buildSpine(slot0.entity_mo)
+		var_9_4:buildSpine(arg_9_0.entity_mo)
 	end
 end
 
-return slot0
+return var_0_0

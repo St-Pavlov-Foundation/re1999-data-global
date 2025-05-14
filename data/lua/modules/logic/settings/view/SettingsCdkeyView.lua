@@ -1,86 +1,90 @@
-module("modules.logic.settings.view.SettingsCdkeyView", package.seeall)
+﻿module("modules.logic.settings.view.SettingsCdkeyView", package.seeall)
 
-slot0 = class("SettingsCdkeyView", BaseView)
+local var_0_0 = class("SettingsCdkeyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_rightbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_leftbg")
-	slot0._inputcdkey = gohelper.findChildTextMeshInputField(slot0.viewGO, "#input_cdkey")
-	slot0._goplaceholdertext = gohelper.findChildText(slot0.viewGO, "#input_cdkey/Text Area/Placeholder")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_close")
-	slot0._btnsure = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_sure")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_rightbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_leftbg")
+	arg_1_0._inputcdkey = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#input_cdkey")
+	arg_1_0._goplaceholdertext = gohelper.findChildText(arg_1_0.viewGO, "#input_cdkey/Text Area/Placeholder")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_close")
+	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_sure")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnsure:AddClickListener(slot0._btnsureOnClick, slot0)
-	slot0._inputcdkey:AddOnEndEdit(slot0._onInputCdkeyEndEdit, slot0)
-	slot0._inputcdkey:AddOnValueChanged(slot0._onValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
+	arg_2_0._inputcdkey:AddOnEndEdit(arg_2_0._onInputCdkeyEndEdit, arg_2_0)
+	arg_2_0._inputcdkey:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnsure:RemoveClickListener()
-	slot0._inputcdkey:RemoveOnEndEdit()
-	slot0._inputcdkey:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnsure:RemoveClickListener()
+	arg_3_0._inputcdkey:RemoveOnEndEdit()
+	arg_3_0._inputcdkey:RemoveOnValueChanged()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnsureOnClick(slot0)
-	if string.nilorempty(slot0._inputcdkey:GetText()) then
+function var_0_0._btnsureOnClick(arg_5_0)
+	local var_5_0 = arg_5_0._inputcdkey:GetText()
+
+	if string.nilorempty(var_5_0) then
 		GameFacade.showToast(ToastEnum.SettingsCdkeyIsNull)
 
 		return
 	end
 
-	PlayerRpc.instance:sendUseCdKeyRequset(slot1)
+	PlayerRpc.instance:sendUseCdKeyRequset(var_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	SLFramework.UGUI.UIClickListener.Get(slot0._inputcdkey.gameObject):AddClickListener(slot0._hidePlaceholderText, slot0)
-	slot0:addEventCb(SettingsController.instance, SettingsEvent.OnUseCdkReplay, slot0.onUseCdkReplay, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_6_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	SLFramework.UGUI.UIClickListener.Get(arg_6_0._inputcdkey.gameObject):AddClickListener(arg_6_0._hidePlaceholderText, arg_6_0)
+	arg_6_0:addEventCb(SettingsController.instance, SettingsEvent.OnUseCdkReplay, arg_6_0.onUseCdkReplay, arg_6_0)
 end
 
-function slot0._hidePlaceholderText(slot0)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._goplaceholdertext, 0)
+function var_0_0._hidePlaceholderText(arg_7_0)
+	ZProj.UGUIHelper.SetColorAlpha(arg_7_0._goplaceholdertext, 0)
 end
 
-function slot0._onValueChanged(slot0, slot1)
-	if GameUtil.utf8len(slot1) > 50 then
-		slot0._inputcdkey:SetText(GameUtil.utf8sub(slot1, 1, 50))
+function var_0_0._onValueChanged(arg_8_0, arg_8_1)
+	if GameUtil.utf8len(arg_8_1) > 50 then
+		arg_8_0._inputcdkey:SetText(GameUtil.utf8sub(arg_8_1, 1, 50))
 	end
 end
 
-function slot0._onInputCdkeyEndEdit(slot0)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._goplaceholdertext, 0.6)
+function var_0_0._onInputCdkeyEndEdit(arg_9_0)
+	ZProj.UGUIHelper.SetColorAlpha(arg_9_0._goplaceholdertext, 0.6)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_11_0)
+	return
 end
 
-function slot0.onUseCdkReplay(slot0)
-	slot0._inputcdkey:SetText("")
+function var_0_0.onUseCdkReplay(arg_12_0)
+	arg_12_0._inputcdkey:SetText("")
 end
 
-function slot0.onClose(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._inputcdkey.gameObject):RemoveClickListener()
+function var_0_0.onClose(arg_13_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_13_0._inputcdkey.gameObject):RemoveClickListener()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0._simageleftbg:UnLoadImage()
+	arg_14_0._simagerightbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

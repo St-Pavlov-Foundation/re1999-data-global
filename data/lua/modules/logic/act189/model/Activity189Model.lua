@@ -1,59 +1,63 @@
-module("modules.logic.act189.model.Activity189Model", package.seeall)
+﻿module("modules.logic.act189.model.Activity189Model", package.seeall)
 
-slot0 = class("Activity189Model", BaseModel)
+local var_0_0 = class("Activity189Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._actInfo = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._actInfo = {}
 end
 
-function slot0.getActMO(slot0, slot1)
-	return ActivityModel.instance:getActMO(slot1)
+function var_0_0.getActMO(arg_3_0, arg_3_1)
+	return ActivityModel.instance:getActMO(arg_3_1)
 end
 
-function slot0.getRealStartTimeStamp(slot0, slot1)
-	return slot0:getActMO(slot1):getRealStartTimeStamp()
+function var_0_0.getRealStartTimeStamp(arg_4_0, arg_4_1)
+	return arg_4_0:getActMO(arg_4_1):getRealStartTimeStamp()
 end
 
-function slot0.getRealEndTimeStamp(slot0, slot1)
-	return slot0:getActMO(slot1):getRealEndTimeStamp()
+function var_0_0.getRealEndTimeStamp(arg_5_0, arg_5_1)
+	return arg_5_0:getActMO(arg_5_1):getRealEndTimeStamp()
 end
 
-function slot0.getRemainTimeSec(slot0, slot1)
-	return ActivityModel.instance:getRemainTimeSec(slot1) or 0
+function var_0_0.getRemainTimeSec(arg_6_0, arg_6_1)
+	return ActivityModel.instance:getRemainTimeSec(arg_6_1) or 0
 end
 
-function slot0.onReceiveGetAct189InfoReply(slot0, slot1)
-	slot0._actInfo[slot1.activityId] = slot1
+function var_0_0.onReceiveGetAct189InfoReply(arg_7_0, arg_7_1)
+	arg_7_0._actInfo[arg_7_1.activityId] = arg_7_1
 end
 
-function slot0.onReceiveGetAct189OnceBonusReply(slot0, slot1)
-	if not slot0._actInfo[slot1.activityId] then
+function var_0_0.onReceiveGetAct189OnceBonusReply(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._actInfo[arg_8_1.activityId]
+
+	if not var_8_0 then
 		return
 	end
 
-	rawset(slot2, "hasGetOnceBonus", true)
+	rawset(var_8_0, "hasGetOnceBonus", true)
 end
 
-function slot0.isClaimed(slot0, slot1)
-	if not slot0._actInfo[slot1] then
+function var_0_0.isClaimed(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._actInfo[arg_9_1]
+
+	if not var_9_0 then
 		return false
 	end
 
-	return slot2.hasGetOnceBonus
+	return var_9_0.hasGetOnceBonus
 end
 
-function slot0.isClaimable(slot0, slot1)
-	if not slot0._actInfo[slot1] then
+function var_0_0.isClaimable(arg_10_0, arg_10_1)
+	if not arg_10_0._actInfo[arg_10_1] then
 		return false
 	end
 
-	return not slot0:isClaimed(slot1)
+	return not arg_10_0:isClaimed(arg_10_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

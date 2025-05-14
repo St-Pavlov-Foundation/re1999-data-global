@@ -1,41 +1,46 @@
-module("modules.logic.fight.system.work.FightWorkChangeWaveView", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeWaveView", package.seeall)
 
-slot0 = class("FightWorkChangeWaveView", BaseWork)
+local var_0_0 = class("FightWorkChangeWaveView", BaseWork)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if FightReplayModel.instance:isReplay() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	else
-		if FightModel.instance:getFightParam() then
-			slot2 = false
+		local var_1_0 = FightModel.instance:getFightParam()
 
-			if slot1.episodeId == 1310102 or slot3 == 1310111 then
-				slot2 = true
+		if var_1_0 then
+			local var_1_1 = false
+			local var_1_2 = var_1_0.episodeId
+
+			if var_1_2 == 1310102 or var_1_2 == 1310111 then
+				var_1_1 = true
 			end
 
-			if slot1.battleId == 9130101 or slot4 == 9130107 then
-				slot2 = true
+			local var_1_3 = var_1_0.battleId
+
+			if var_1_3 == 9130101 or var_1_3 == 9130107 then
+				var_1_1 = true
 			end
 
-			if slot2 then
+			if var_1_1 then
 				ViewMgr.instance:openView(ViewName.FightWaveChangeView)
-				TaskDispatcher.runDelay(slot0._done, slot0, 1)
+				TaskDispatcher.runDelay(arg_1_0._done, arg_1_0, 1)
 
 				return
 			end
 		end
 
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._done(slot0)
-	slot0:onDone(true)
+function var_0_0._done(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
 	ViewMgr.instance:closeView(ViewName.FightWaveChangeView)
-	TaskDispatcher.cancelTask(slot0._done, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._done, arg_3_0)
 end
 
-return slot0
+return var_0_0

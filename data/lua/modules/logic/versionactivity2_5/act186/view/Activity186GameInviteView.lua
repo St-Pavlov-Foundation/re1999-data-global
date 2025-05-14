@@ -1,109 +1,114 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteView", package.seeall)
 
-slot0 = class("Activity186GameInviteView", BaseView)
+local var_0_0 = class("Activity186GameInviteView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goSelect = gohelper.findChild(slot0.viewGO, "root/goSelect")
-	slot0.goRight = gohelper.findChild(slot0.viewGO, "root/right")
-	slot0.btnSure = gohelper.findChildButtonWithAudio(slot0.goSelect, "btnSure")
-	slot0.btnCancel = gohelper.findChildButtonWithAudio(slot0.goSelect, "btnCancel")
-	slot0.txtTitle = gohelper.findChildTextMesh(slot0.goSelect, "content")
-	slot0.txtSure = gohelper.findChildTextMesh(slot0.goSelect, "btnSure/txt")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "root/goSelect")
+	arg_1_0.goRight = gohelper.findChild(arg_1_0.viewGO, "root/right")
+	arg_1_0.btnSure = gohelper.findChildButtonWithAudio(arg_1_0.goSelect, "btnSure")
+	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.goSelect, "btnCancel")
+	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.goSelect, "content")
+	arg_1_0.txtSure = gohelper.findChildTextMesh(arg_1_0.goSelect, "btnSure/txt")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnSure, slot0.onClickBtnSure, slot0)
-	slot0:addClickCb(slot0.btnCancel, slot0.onClickBtnCancel, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnSure, arg_2_0.onClickBtnSure, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnCancel, arg_2_0.onClickBtnCancel, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onClickBtnSure(slot0)
-	Activity186Controller.instance:enterGame(slot0.actId, slot0.gameId)
+function var_0_0.onClickBtnSure(arg_5_0)
+	Activity186Controller.instance:enterGame(arg_5_0.actId, arg_5_0.gameId)
 end
 
-function slot0.onClickBtnCancel(slot0)
-	slot0:closeThis()
+function var_0_0.onClickBtnCancel(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:refreshParam()
+	arg_7_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_leimi_theft_open)
-	slot0:refreshParam()
-	slot0:refreshView()
+	arg_8_0:refreshParam()
+	arg_8_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.actId = slot0.viewParam.activityId
-	slot0.gameId = slot0.viewParam.gameId
-	slot0.gameStatus = slot0.viewParam.gameStatus
-	slot0.gameType = slot0.viewParam.gameType
+function var_0_0.refreshParam(arg_9_0)
+	arg_9_0.actId = arg_9_0.viewParam.activityId
+	arg_9_0.gameId = arg_9_0.viewParam.gameId
+	arg_9_0.gameStatus = arg_9_0.viewParam.gameStatus
+	arg_9_0.gameType = arg_9_0.viewParam.gameType
 end
 
-function slot0.refreshView(slot0)
-	gohelper.setActive(slot0.goSelect, slot0.gameStatus == Activity186Enum.GameStatus.Start)
-	gohelper.setActive(slot0.goRight, slot0.gameStatus == Activity186Enum.GameStatus.Playing)
+function var_0_0.refreshView(arg_10_0)
+	gohelper.setActive(arg_10_0.goSelect, arg_10_0.gameStatus == Activity186Enum.GameStatus.Start)
+	gohelper.setActive(arg_10_0.goRight, arg_10_0.gameStatus == Activity186Enum.GameStatus.Playing)
 
-	if slot0.gameStatus == Activity186Enum.GameStatus.Start then
-		if slot0.gameType == 1 then
-			slot0.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content1"))
+	if arg_10_0.gameStatus == Activity186Enum.GameStatus.Start then
+		if arg_10_0.gameType == 1 then
+			arg_10_0.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content1"))
 
-			slot0.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title1")
-			slot0.txtSure.text = luaLang("p_activity186gameinviteview_txt_start2")
+			arg_10_0.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title1")
+			arg_10_0.txtSure.text = luaLang("p_activity186gameinviteview_txt_start2")
 		else
-			slot0.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content2"))
+			arg_10_0.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content2"))
 
-			slot0.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title2")
-			slot0.txtSure.text = luaLang("p_activity186gameinviteview_txt_start")
+			arg_10_0.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title2")
+			arg_10_0.txtSure.text = luaLang("p_activity186gameinviteview_txt_start")
 		end
 
-		slot0:_showDeadline()
+		arg_10_0:_showDeadline()
 	else
-		TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+		TaskDispatcher.cancelTask(arg_10_0._onRefreshDeadline, arg_10_0)
 	end
 end
 
-function slot0._showDeadline(slot0)
-	slot0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
+function var_0_0._showDeadline(arg_11_0)
+	arg_11_0:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
+	TaskDispatcher.runRepeat(arg_11_0._onRefreshDeadline, arg_11_0, 1)
 end
 
-function slot0._onRefreshDeadline(slot0)
-	slot0:checkGameNotOnline()
+function var_0_0._onRefreshDeadline(arg_12_0)
+	arg_12_0:checkGameNotOnline()
 end
 
-function slot0.checkGameNotOnline(slot0)
-	if not Activity186Model.instance:getById(slot0.actId) then
+function var_0_0.checkGameNotOnline(arg_13_0)
+	local var_13_0 = Activity186Model.instance:getById(arg_13_0.actId)
+
+	if not var_13_0 then
 		return
 	end
 
-	if not slot1:getGameInfo(slot0.gameId) then
+	if not var_13_0:getGameInfo(arg_13_0.gameId) then
 		return
 	end
 
-	if not slot1:isGameOnline(slot0.gameId) then
-		slot0:closeThis()
+	if not var_13_0:isGameOnline(arg_13_0.gameId) then
+		arg_13_0:closeThis()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadline, arg_15_0)
 end
 
-return slot0
+return var_0_0

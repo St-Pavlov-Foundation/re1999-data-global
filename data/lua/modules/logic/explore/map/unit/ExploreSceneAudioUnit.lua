@@ -1,30 +1,34 @@
-module("modules.logic.explore.map.unit.ExploreSceneAudioUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreSceneAudioUnit", package.seeall)
 
-slot0 = class("ExploreSceneAudioUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreSceneAudioUnit", ExploreBaseDisplayUnit)
 
-function slot0.onInit(slot0)
-	uv0.super.onInit(slot0)
-	gohelper.addAkGameObject(slot0.go)
+function var_0_0.onInit(arg_1_0)
+	var_0_0.super.onInit(arg_1_0)
+	gohelper.addAkGameObject(arg_1_0.go)
 end
 
-function slot0.onHeroInitDone(slot0)
-	uv0.super.onHeroInitDone(slot0)
-	ExploreHelper.triggerAudio(tonumber(slot0.mo.specialDatas[1]), true, slot0.go, slot0.id)
+function var_0_0.onHeroInitDone(arg_2_0)
+	var_0_0.super.onHeroInitDone(arg_2_0)
+
+	local var_2_0 = tonumber(arg_2_0.mo.specialDatas[1])
+
+	ExploreHelper.triggerAudio(var_2_0, true, arg_2_0.go, arg_2_0.id)
 end
 
-function slot0.setInFOV(slot0)
+function var_0_0.setInFOV(arg_3_0)
+	return
 end
 
-function slot0.isInFOV(slot0)
+function var_0_0.isInFOV(arg_4_0)
 	return true
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Explore then
 		return
 	end
 
-	GameSceneMgr.instance:getCurScene().audio:stopAudioByUnit(slot0.id)
+	GameSceneMgr.instance:getCurScene().audio:stopAudioByUnit(arg_5_0.id)
 end
 
-return slot0
+return var_0_0

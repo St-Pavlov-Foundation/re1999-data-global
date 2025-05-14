@@ -1,6 +1,7 @@
-module("modules.logic.versionactivity1_6.act148.define.Act148Enum", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act148.define.Act148Enum", package.seeall)
 
-slot0 = _M
-slot0.SkillTypeNum = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.SkillTypeNum = 4
+
+return var_0_0

@@ -1,29 +1,31 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessFightResultStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessFightResultStep", package.seeall)
 
-slot0 = class("TeamChessFightResultStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessFightResultStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessEnemyDie, EliminateLevelModel.instance:getLevelId())
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = EliminateLevelModel.instance:getLevelId()
+
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessEnemyDie, var_1_0)
 
 	if GuideModel.instance:isGuideRunning(22013) then
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, slot0._finishStep, slot0)
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_1_0._finishStep, arg_1_0)
 	else
-		slot0:_Done()
+		arg_1_0:_Done()
 	end
 end
 
-function slot0._finishStep(slot0, slot1)
-	if slot1 ~= 22013 then
+function var_0_0._finishStep(arg_2_0, arg_2_1)
+	if arg_2_1 ~= 22013 then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._finishStep, slot0)
-	slot0:_Done()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_2_0._finishStep, arg_2_0)
+	arg_2_0:_Done()
 end
 
-function slot0._Done(slot0)
+function var_0_0._Done(arg_3_0)
 	EliminateLevelController.instance:openEliminateResultView()
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

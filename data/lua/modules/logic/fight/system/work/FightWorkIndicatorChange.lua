@@ -1,28 +1,32 @@
-module("modules.logic.fight.system.work.FightWorkIndicatorChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkIndicatorChange", package.seeall)
 
-slot0 = class("FightWorkIndicatorChange", FightEffectBase)
-slot0.ConfigEffect = {
+local var_0_0 = class("FightWorkIndicatorChange", FightEffectBase)
+
+var_0_0.ConfigEffect = {
 	ClearIndicator = 60017,
 	AddIndicator = 60016
 }
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = tonumber(arg_1_0._actEffectMO.targetId)
+
 	FightModel.instance:setWaitIndicatorAnimation(false)
-	slot0:com_sendFightEvent(FightEvent.OnIndicatorChange, tonumber(slot0._actEffectMO.targetId))
+	arg_1_0:com_sendFightEvent(FightEvent.OnIndicatorChange, var_1_0)
 
 	if FightModel.instance:isWaitIndicatorAnimation() then
-		slot0:com_registTimer(slot0._delayDone, 3)
-		slot0:com_registFightEvent(FightEvent.OnIndicatorAnimationDone, slot0._delayDone)
+		arg_1_0:com_registTimer(arg_1_0._delayDone, 3)
+		arg_1_0:com_registFightEvent(FightEvent.OnIndicatorAnimationDone, arg_1_0._delayDone)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

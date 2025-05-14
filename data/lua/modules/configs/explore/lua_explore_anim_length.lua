@@ -1,4 +1,4 @@
-return {
+﻿return {
 	zj_01_jh_block_01 = {
 		aToN = 2.433333,
 		nToA = 2.5,

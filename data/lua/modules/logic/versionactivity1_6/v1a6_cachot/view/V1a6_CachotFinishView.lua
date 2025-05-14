@@ -1,83 +1,88 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotFinishView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotFinishView", package.seeall)
 
-slot0 = class("V1a6_CachotFinishView", BaseView)
+local var_0_0 = class("V1a6_CachotFinishView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagelevelbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_levelbg")
-	slot0._txtsuccesstips = gohelper.findChildText(slot0.viewGO, "success/#txt_successtips")
-	slot0._txtfailedtips = gohelper.findChildText(slot0.viewGO, "failed/#txt_failedtips")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._gofailed = gohelper.findChild(slot0.viewGO, "#go_failed")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
+	arg_1_0._txtsuccesstips = gohelper.findChildText(arg_1_0.viewGO, "success/#txt_successtips")
+	arg_1_0._txtfailedtips = gohelper.findChildText(arg_1_0.viewGO, "failed/#txt_failedtips")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._gofailed = gohelper.findChild(arg_1_0.viewGO, "#go_failed")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnjump:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnjump:RemoveClickListener()
 end
 
-function slot0._btnjumpOnClick(slot0)
-	if slot0._isFinish then
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnFinishGame, slot0._rogueEndingInfo and slot0._rogueEndingInfo._ending)
+function var_0_0._btnjumpOnClick(arg_4_0)
+	if arg_4_0._isFinish then
+		local var_4_0 = arg_4_0._rogueEndingInfo and arg_4_0._rogueEndingInfo._ending
+
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnFinishGame, var_4_0)
 	else
-		slot0:_jump2ResultView()
+		arg_4_0:_jump2ResultView()
 	end
 
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotFinishView, slot0._btnjumpOnClick, slot0)
+function var_0_0.onOpen(arg_7_0)
+	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotFinishView, arg_7_0._btnjumpOnClick, arg_7_0)
 	RogueRpc.instance:sendRogueReadEndingRequest(V1a6_CachotEnum.ActivityId)
 
-	slot0._rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
-	slot0._isFinish = false
+	arg_7_0._rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
+	arg_7_0._isFinish = false
 
-	if slot0._rogueEndingInfo then
-		slot0._isFinish = slot0._rogueEndingInfo._isFinish
+	if arg_7_0._rogueEndingInfo then
+		arg_7_0._isFinish = arg_7_0._rogueEndingInfo._isFinish
 
-		slot0._rogueEndingInfo:onEnterEndingFlow()
+		arg_7_0._rogueEndingInfo:onEnterEndingFlow()
 	end
 
-	slot0:refreshUI()
-	slot0:playAudioEffect()
+	arg_7_0:refreshUI()
+	arg_7_0:playAudioEffect()
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._gosuccess, slot0._isFinish)
-	gohelper.setActive(slot0._gofailed, not slot0._isFinish)
+function var_0_0.refreshUI(arg_8_0)
+	gohelper.setActive(arg_8_0._gosuccess, arg_8_0._isFinish)
+	gohelper.setActive(arg_8_0._gofailed, not arg_8_0._isFinish)
 end
 
-function slot0._jump2ResultView(slot0)
+function var_0_0._jump2ResultView(arg_9_0)
 	V1a6_CachotController.instance:openV1a6_CachotResultView()
 end
 
-function slot0.playAudioEffect(slot0)
-	if slot0._isFinish then
+function var_0_0.playAudioEffect(arg_10_0)
+	if arg_10_0._isFinish then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_victory_open)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_fail_open)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._rogueEndingInfo = nil
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._rogueEndingInfo = nil
 end
 
-return slot0
+return var_0_0

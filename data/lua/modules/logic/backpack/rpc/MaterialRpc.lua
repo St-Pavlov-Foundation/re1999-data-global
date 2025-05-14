@@ -1,195 +1,215 @@
-module("modules.logic.backpack.rpc.MaterialRpc", package.seeall)
+﻿module("modules.logic.backpack.rpc.MaterialRpc", package.seeall)
 
-slot0 = class("MaterialRpc", BaseRpc)
+local var_0_0 = class("MaterialRpc", BaseRpc)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0:set_onReceiveMaterialChangePushOnce(nil, )
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:set_onReceiveMaterialChangePushOnce(nil, nil)
 end
 
-function slot0.receiveMaterial(slot0)
-	slot1 = {}
-	slot2 = {}
-	slot3 = {}
-	slot4 = {}
+function var_0_0.receiveMaterial(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = {}
+	local var_3_2 = {}
+	local var_3_3 = {}
 
-	for slot8, slot9 in ipairs(slot0.dataList) do
-		slot10 = nil
-		slot11 = MaterialDataMO.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.dataList) do
+		local var_3_4
+		local var_3_5 = MaterialDataMO.New()
 
-		if slot9.materilType == MaterialEnum.MaterialType.PowerPotion then
-			for slot16, slot17 in pairs(ItemPowerModel.instance:getLatestPowerChange()) do
-				if tonumber(slot17.itemid) == tonumber(slot9.materilId) then
-					slot10 = slot17.uid
+		if iter_3_1.materilType == MaterialEnum.MaterialType.PowerPotion then
+			local var_3_6 = ItemPowerModel.instance:getLatestPowerChange()
+
+			for iter_3_2, iter_3_3 in pairs(var_3_6) do
+				if tonumber(iter_3_3.itemid) == tonumber(iter_3_1.materilId) then
+					var_3_4 = iter_3_3.uid
 				end
 			end
-		elseif slot9.materilType == MaterialEnum.MaterialType.NewInsight then
-			for slot16, slot17 in pairs(ItemInsightModel.instance:getLatestInsightChange()) do
-				if tonumber(slot17.itemid) == tonumber(slot9.materilId) then
-					slot10 = slot17.uid
+		elseif iter_3_1.materilType == MaterialEnum.MaterialType.NewInsight then
+			local var_3_7 = ItemInsightModel.instance:getLatestInsightChange()
+
+			for iter_3_4, iter_3_5 in pairs(var_3_7) do
+				if tonumber(iter_3_5.itemid) == tonumber(iter_3_1.materilId) then
+					var_3_4 = iter_3_5.uid
 				end
 			end
 		end
 
-		slot11:initValue(slot9.materilType, slot9.materilId, slot9.quantity, slot10, slot9.roomBuildingLevel)
+		var_3_5:initValue(iter_3_1.materilType, iter_3_1.materilId, iter_3_1.quantity, var_3_4, iter_3_1.roomBuildingLevel)
 
-		if slot9.materilType == MaterialEnum.MaterialType.Faith then
-			table.insert(slot2, slot11)
-		elseif slot9.materilType == MaterialEnum.MaterialType.EquipCard then
-			for slot15 = 1, slot9.quantity do
-				table.insert(slot3, slot9.materilId)
+		if iter_3_1.materilType == MaterialEnum.MaterialType.Faith then
+			table.insert(var_3_1, var_3_5)
+		elseif iter_3_1.materilType == MaterialEnum.MaterialType.EquipCard then
+			for iter_3_6 = 1, iter_3_1.quantity do
+				table.insert(var_3_2, iter_3_1.materilId)
 			end
-		elseif slot9.materilType == MaterialEnum.MaterialType.Season123EquipCard then
-			for slot15 = 1, slot9.quantity do
-				table.insert(slot4, slot9.materilId)
+		elseif iter_3_1.materilType == MaterialEnum.MaterialType.Season123EquipCard then
+			for iter_3_7 = 1, iter_3_1.quantity do
+				table.insert(var_3_3, iter_3_1.materilId)
 			end
-		elseif slot9.materilType ~= MaterialEnum.MaterialType.Act186Like then
-			table.insert(slot1, slot11)
+		elseif iter_3_1.materilType == MaterialEnum.MaterialType.Act186Like then
+			-- block empty
+		else
+			table.insert(var_3_0, var_3_5)
 		end
 	end
 
-	return slot1, slot2, slot3, slot4
+	return var_3_0, var_3_1, var_3_2, var_3_3
 end
 
-function slot0.set_onReceiveMaterialChangePushOnce(slot0, slot1, slot2)
-	slot0._materialChangePushOnceCb = slot1
-	slot0._materialChangePushOnceCbObj = slot2
+function var_0_0.set_onReceiveMaterialChangePushOnce(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._materialChangePushOnceCb = arg_4_1
+	arg_4_0._materialChangePushOnceCbObj = arg_4_2
 end
 
-function slot0.onReceiveMaterialChangePush(slot0, slot1, slot2)
-	if slot0._materialChangePushOnceCb then
-		slot0:set_onReceiveMaterialChangePushOnce(nil, )
-		slot3(slot0._materialChangePushOnceCbObj, slot1, slot2)
+function var_0_0.onReceiveMaterialChangePush(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0._materialChangePushOnceCb
+
+	if var_5_0 then
+		local var_5_1 = arg_5_0._materialChangePushOnceCbObj
+
+		arg_5_0:set_onReceiveMaterialChangePushOnce(nil, nil)
+		var_5_0(var_5_1, arg_5_1, arg_5_2)
 
 		return
 	end
 
-	if slot1 ~= 0 then
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	slot4, slot5, slot6, slot7 = uv0.receiveMaterial(slot2)
+	local var_5_2, var_5_3, var_5_4, var_5_5 = var_0_0.receiveMaterial(arg_5_2)
 
-	slot0:_onReceiveMaterialChangePush(slot2, slot4, slot5, slot6, slot7)
+	arg_5_0:_onReceiveMaterialChangePush(arg_5_2, var_5_2, var_5_3, var_5_4, var_5_5)
 end
 
-function slot0._onReceiveMaterialChangePush(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1.getApproach == MaterialEnum.GetApproach.Charge then
-		PayController.instance:onReceiveMaterialChangePush(slot2)
+function var_0_0._onReceiveMaterialChangePush(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
+	local var_6_0 = arg_6_1.getApproach
+
+	if var_6_0 == MaterialEnum.GetApproach.Charge then
+		PayController.instance:onReceiveMaterialChangePush(arg_6_2)
 	end
 
-	if PopupCacheController.instance:tryCacheGetPropView(slot6, {
-		materialDataMOList = slot2
+	if PopupCacheController.instance:tryCacheGetPropView(var_6_0, {
+		materialDataMOList = arg_6_2
 	}) then
 		return
 	end
 
-	if slot6 == MaterialEnum.GetApproach.RoomProductLine then
-		RoomController.instance:MaterialChangeByRoomProductLine(slot2)
-	elseif slot6 == MaterialEnum.GetApproach.Explore then
-		-- Nothing
-	elseif slot6 == MaterialEnum.GetApproach.BattlePass then
-		BpController.instance:_showCommonPropView(slot2)
-	elseif slot6 == MaterialEnum.GetApproach.DungeonRewardPoint then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnGetPointRewardMaterials, slot2)
-	elseif slot6 == MaterialEnum.GetApproach.AstrologyStarReward then
-		VersionActivity1_3AstrologyModel.instance:setStarReward(slot2)
+	if var_6_0 == MaterialEnum.GetApproach.RoomProductLine then
+		RoomController.instance:MaterialChangeByRoomProductLine(arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.Explore then
+		-- block empty
+	elseif var_6_0 == MaterialEnum.GetApproach.BattlePass then
+		BpController.instance:_showCommonPropView(arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.DungeonRewardPoint then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnGetPointRewardMaterials, arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.AstrologyStarReward then
+		VersionActivity1_3AstrologyModel.instance:setStarReward(arg_6_2)
 
 		return
-	elseif slot6 == MaterialEnum.GetApproach.Task or slot1.getApproach == MaterialEnum.GetApproach.TaskAct then
+	elseif var_6_0 == MaterialEnum.GetApproach.Task or arg_6_1.getApproach == MaterialEnum.GetApproach.TaskAct then
 		if ViewMgr.instance:isOpen(ViewName.WeekWalkRewardView) or ViewMgr.instance:isOpen(ViewName.WeekWalkLayerRewardView) then
-			WeekWalkTaskListModel.instance:setTaskRewardList(slot2)
+			WeekWalkTaskListModel.instance:setTaskRewardList(arg_6_2)
 
 			return
 		end
 
-		TaskController.instance:getRewardByLine(slot6, ViewName.CommonPropView, slot2)
+		TaskController.instance:getRewardByLine(var_6_0, ViewName.CommonPropView, arg_6_2)
 
-		if #slot4 > 0 then
-			Activity104Model.instance:addCardGetData(slot4)
+		if #arg_6_4 > 0 then
+			Activity104Model.instance:addCardGetData(arg_6_4)
 			Activity104Controller.instance:checkShowEquipSelfChoiceView()
 		end
 
-		if #slot5 > 0 then
-			Season123Model.instance:addCardGetData(slot5)
+		if #arg_6_5 > 0 then
+			Season123Model.instance:addCardGetData(arg_6_5)
 		end
-	elseif slot6 == MaterialEnum.GetApproach.RoomInteraction then
-		RoomController.instance:showInteractionRewardToast(slot2)
+	elseif var_6_0 == MaterialEnum.GetApproach.RoomInteraction then
+		RoomController.instance:showInteractionRewardToast(arg_6_2)
 
-		if #slot3 > 0 then
-			RoomCharacterController.instance:showGainFaithToast(slot3)
+		if #arg_6_3 > 0 then
+			RoomCharacterController.instance:showGainFaithToast(arg_6_3)
 		end
-	elseif slot6 == MaterialEnum.GetApproach.NoviceStageReward then
+	elseif var_6_0 == MaterialEnum.GetApproach.NoviceStageReward then
 		TaskModel.instance:setHasTaskNoviceStageReward(true)
-	elseif slot6 == MaterialEnum.GetApproach.SignIn then
-		SignInController.instance:setSigninReward(slot2)
-	elseif slot6 == MaterialEnum.GetApproach.Act1_6SkillLvDown or slot6 == MaterialEnum.GetApproach.Act1_6SkillReset then
+	elseif var_6_0 == MaterialEnum.GetApproach.SignIn then
+		SignInController.instance:setSigninReward(arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.Act1_6SkillLvDown or var_6_0 == MaterialEnum.GetApproach.Act1_6SkillReset then
 		VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.SkillPointReturnBack)
 
 		return
-	elseif slot6 == MaterialEnum.GetApproach.v1a8Act157ComponentReward then
+	elseif var_6_0 == MaterialEnum.GetApproach.v1a8Act157ComponentReward then
 		return
-	elseif slot6 == MaterialEnum.GetApproach.v2a2Act169SummonNewPick and not SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
-		SummonNewCustomPickChoiceController.instance:setSummonReward(slot2)
+	elseif var_6_0 == MaterialEnum.GetApproach.v2a2Act169SummonNewPick and not SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
+		SummonNewCustomPickChoiceController.instance:setSummonReward(arg_6_2)
 
 		return
-	elseif slot6 == MaterialEnum.GetApproach.LifeCircleSign then
-		LifeCircleController.instance:openLifeCircleRewardView(slot2)
-	elseif slot6 == MaterialEnum.GetApproach.AutoChessRankReward or slot6 == MaterialEnum.GetApproach.AutoChessPveReward then
-		AutoChessController.instance:addPopupView(ViewName.CommonPropView, slot2)
+	elseif var_6_0 == MaterialEnum.GetApproach.LifeCircleSign then
+		LifeCircleController.instance:openLifeCircleRewardView(arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.AutoChessRankReward or var_6_0 == MaterialEnum.GetApproach.AutoChessPveReward then
+		AutoChessController.instance:addPopupView(ViewName.CommonPropView, arg_6_2)
 	else
-		slot0:_onReceiveMaterialChangePush_default(slot1, slot2, slot3, slot4, slot5)
+		arg_6_0:_onReceiveMaterialChangePush_default(arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
 	end
 end
 
-function slot0._onReceiveMaterialChangePush_default(slot0, slot1, slot2, slot3, slot4, slot5)
-	if #slot3 > 0 and slot1.getApproach == MaterialEnum.GetApproach.RoomGainFaith then
-		RoomCharacterController.instance:showGainFaithToast(slot3)
+function var_0_0._onReceiveMaterialChangePush_default(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
+	local var_7_0 = arg_7_1.getApproach
+
+	if #arg_7_3 > 0 and var_7_0 == MaterialEnum.GetApproach.RoomGainFaith then
+		RoomCharacterController.instance:showGainFaithToast(arg_7_3)
 	end
 
-	if #slot4 > 0 then
-		Activity104Model.instance:addCardGetData(slot4)
+	if #arg_7_4 > 0 then
+		Activity104Model.instance:addCardGetData(arg_7_4)
 	end
 
-	if #slot5 > 0 then
-		Season123Model.instance:addCardGetData(slot5)
+	if #arg_7_5 > 0 then
+		Season123Model.instance:addCardGetData(arg_7_5)
 	end
 
-	if #slot2 == 1 and slot2[1].materilType == MaterialEnum.MaterialType.HeroSkin then
+	if #arg_7_2 == 1 and arg_7_2[1].materilType == MaterialEnum.MaterialType.HeroSkin then
 		return
 	end
 
-	if #slot2 == 1 and slot2[1].materilType == MaterialEnum.MaterialType.Item and MainSceneSwitchConfig.instance:getConfigByItemId(slot2[1].materilId) then
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainSceneSwitchInfoView, {
-			sceneSkinId = slot7.id
-		})
+	if #arg_7_2 == 1 and arg_7_2[1].materilType == MaterialEnum.MaterialType.Item then
+		local var_7_1 = MainSceneSwitchConfig.instance:getConfigByItemId(arg_7_2[1].materilId)
 
-		return
-	end
+		if var_7_1 then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainSceneSwitchInfoView, {
+				sceneSkinId = var_7_1.id
+			})
 
-	if #slot2 ~= 0 and slot2[1].materilType == MaterialEnum.MaterialType.Critter then
-		CritterController.instance:popUpCritterGetView()
-
-		if slot7 == 1 then
 			return
 		end
 	end
 
-	slot0:simpleShowView(slot2)
+	local var_7_2 = #arg_7_2
+
+	if var_7_2 ~= 0 and arg_7_2[1].materilType == MaterialEnum.MaterialType.Critter then
+		CritterController.instance:popUpCritterGetView()
+
+		if var_7_2 == 1 then
+			return
+		end
+	end
+
+	arg_7_0:simpleShowView(arg_7_2)
 end
 
-function slot0.simpleShowView(slot0, slot1)
-	if slot1 or #slot1 == 0 then
+function var_0_0.simpleShowView(arg_8_0, arg_8_1)
+	if not #arg_8_1 or #arg_8_1 == 0 then
 		return
 	end
 
-	RoomController.instance:popUpRoomBlockPackageView(slot1)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot1)
+	RoomController.instance:popUpRoomBlockPackageView(arg_8_1)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_8_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

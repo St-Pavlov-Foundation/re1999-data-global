@@ -1,149 +1,177 @@
-module("modules.logic.activity.controller.chessmap.comp.ActivityChessGotoObject", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.comp.ActivityChessGotoObject", package.seeall)
 
-slot0 = class("ActivityChessGotoObject")
+local var_0_0 = class("ActivityChessGotoObject")
 
-function slot0.ctor(slot0, slot1)
-	slot0._target = slot1
-	slot0._srcList = nil
-	slot0._itemTrackMark = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._target = arg_1_1
+	arg_1_0._srcList = nil
+	arg_1_0._itemTrackMark = false
 
-	if slot0._target.originData.data then
-		slot0._goToObjectId = slot2.goToObject
+	local var_1_0 = arg_1_0._target.originData.data
+
+	if var_1_0 then
+		arg_1_0._goToObjectId = var_1_0.goToObject
 	end
 
-	slot0:initAttract()
+	arg_1_0:initAttract()
 end
 
-function slot0.init(slot0)
-	if slot0._target.originData.data and slot1.goToObject and ActivityChessGameController.instance.interacts:get(slot1.goToObject) then
-		slot3.goToObject:addSource(slot0._target.originData.id)
-	end
-end
+function var_0_0.init(arg_2_0)
+	local var_2_0 = arg_2_0._target.originData.data
 
-function slot0.initAttract(slot0)
-	slot0._attractEnemyMap = {}
+	if var_2_0 and var_2_0.goToObject then
+		local var_2_1 = var_2_0.goToObject
+		local var_2_2 = ActivityChessGameController.instance.interacts:get(var_2_1)
 
-	if slot0._target.config and slot0._target.config.interactType == ActivityChessEnum.InteractType.Item and not string.nilorempty(slot0._target.config.showParam) then
-		for slot5, slot6 in pairs(string.splitToNumber(slot0._target.config.showParam, "#")) do
-			logNormal("ActivityChessGotoObject initAttract : " .. tostring(slot6))
-
-			slot0._attractEnemyMap[slot6] = true
+		if var_2_2 then
+			var_2_2.goToObject:addSource(arg_2_0._target.originData.id)
 		end
 	end
 end
 
-function slot0.updateGoToObject(slot0)
-	slot1 = nil
+function var_0_0.initAttract(arg_3_0)
+	arg_3_0._attractEnemyMap = {}
 
-	if slot0._target.originData.data then
-		slot1 = slot2.goToObject
+	if arg_3_0._target.config and arg_3_0._target.config.interactType == ActivityChessEnum.InteractType.Item and not string.nilorempty(arg_3_0._target.config.showParam) then
+		local var_3_0 = string.splitToNumber(arg_3_0._target.config.showParam, "#")
+
+		for iter_3_0, iter_3_1 in pairs(var_3_0) do
+			logNormal("ActivityChessGotoObject initAttract : " .. tostring(iter_3_1))
+
+			arg_3_0._attractEnemyMap[iter_3_1] = true
+		end
+	end
+end
+
+function var_0_0.updateGoToObject(arg_4_0)
+	local var_4_0
+	local var_4_1 = arg_4_0._target.originData.data
+
+	if var_4_1 then
+		var_4_0 = var_4_1.goToObject
 	end
 
-	if slot0._goToObjectId == slot1 then
+	if arg_4_0._goToObjectId == var_4_0 then
 		return
 	end
 
-	slot0:deleteRelation()
+	arg_4_0:deleteRelation()
 
-	slot0._goToObjectId = slot1
+	arg_4_0._goToObjectId = var_4_0
 
-	if ActivityChessGameController.instance.interacts:get(slot1) ~= nil then
-		slot4.goToObject:addSource(slot0._target.originData.id)
+	local var_4_2 = arg_4_0._target.originData.id
+	local var_4_3 = ActivityChessGameController.instance.interacts:get(var_4_0)
+
+	if var_4_3 ~= nil then
+		var_4_3.goToObject:addSource(var_4_2)
 	end
 
-	slot0:refreshTarget()
+	arg_4_0:refreshTarget()
 end
 
-function slot0.deleteRelation(slot0)
-	if slot0._goToObjectId and ActivityChessGameController.instance.interacts:get(slot0._goToObjectId) ~= nil and slot2.goToObject ~= nil then
-		slot2.goToObject:removeSource(slot0._target.originData.id)
+function var_0_0.deleteRelation(arg_5_0)
+	local var_5_0 = arg_5_0._target.originData.id
+
+	if arg_5_0._goToObjectId then
+		local var_5_1 = ActivityChessGameController.instance.interacts:get(arg_5_0._goToObjectId)
+
+		if var_5_1 ~= nil and var_5_1.goToObject ~= nil then
+			var_5_1.goToObject:removeSource(var_5_0)
+		end
 	end
 end
 
-function slot0.refreshSource(slot0)
-	if slot0._target.avatar and slot0._target.avatar.goTracked then
-		if slot0._srcList then
-			gohelper.setActive(slot0._target.avatar.goTracked, #slot0._srcList > 0)
+function var_0_0.refreshSource(arg_6_0)
+	if arg_6_0._target.avatar and arg_6_0._target.avatar.goTracked then
+		if arg_6_0._srcList then
+			gohelper.setActive(arg_6_0._target.avatar.goTracked, #arg_6_0._srcList > 0)
 		else
-			gohelper.setActive(slot0._target.avatar.goTracked, false)
+			gohelper.setActive(arg_6_0._target.avatar.goTracked, false)
 		end
 	end
 end
 
-function slot0.refreshTarget(slot0)
-	if slot0._target.avatar then
-		slot1 = false
-		slot2 = false
+function var_0_0.refreshTarget(arg_7_0)
+	if arg_7_0._target.avatar then
+		local var_7_0 = false
+		local var_7_1 = false
 
-		if slot0._goToObjectId ~= nil and slot0._goToObjectId ~= 0 then
-			slot3 = nil
+		if arg_7_0._goToObjectId ~= nil and arg_7_0._goToObjectId ~= 0 then
+			local var_7_2
+			local var_7_3 = ActivityChessGameController.instance.interacts:get(arg_7_0._goToObjectId)
 
-			if ActivityChessGameController.instance.interacts:get(slot0._goToObjectId) ~= nil then
-				slot3 = slot4.objType
+			if var_7_3 ~= nil then
+				var_7_2 = var_7_3.objType
 			end
 
-			if slot3 == ActivityChessEnum.InteractType.Item or slot3 == ActivityChessEnum.InteractType.NoEffectItem then
-				slot2 = true
+			if var_7_2 == ActivityChessEnum.InteractType.Item or var_7_2 == ActivityChessEnum.InteractType.NoEffectItem then
+				var_7_1 = true
 			else
-				slot1 = true
+				var_7_0 = true
 			end
 		end
 
-		if slot0._target.originData.data and slot3.lostTarget == true then
-			gohelper.setActive(slot0._target.avatar.goTrackItem, false)
-			gohelper.setActive(slot0._target.avatar.goTrack, false)
+		local var_7_4 = arg_7_0._target.originData.data
+
+		if var_7_4 and var_7_4.lostTarget == true then
+			gohelper.setActive(arg_7_0._target.avatar.goTrackItem, false)
+			gohelper.setActive(arg_7_0._target.avatar.goTrack, false)
 
 			return
 		end
 
-		gohelper.setActive(slot0._target.avatar.goTrackItem, slot2 or slot0._itemTrackMark)
-		gohelper.setActive(slot0._target.avatar.goTrack, slot1)
+		gohelper.setActive(arg_7_0._target.avatar.goTrackItem, var_7_1 or arg_7_0._itemTrackMark)
+		gohelper.setActive(arg_7_0._target.avatar.goTrack, var_7_0)
 	end
 end
 
-function slot0.addSource(slot0, slot1)
-	slot0._srcList = slot0._srcList or {}
+function var_0_0.addSource(arg_8_0, arg_8_1)
+	arg_8_0._srcList = arg_8_0._srcList or {}
 
-	table.insert(slot0._srcList, slot1)
-	slot0:refreshSource()
+	table.insert(arg_8_0._srcList, arg_8_1)
+	arg_8_0:refreshSource()
 end
 
-function slot0.removeSource(slot0, slot1)
-	if slot0._srcList then
-		tabletool.removeValue(slot0._srcList, slot1)
+function var_0_0.removeSource(arg_9_0, arg_9_1)
+	if arg_9_0._srcList then
+		tabletool.removeValue(arg_9_0._srcList, arg_9_1)
 	end
 
-	slot0:refreshSource()
+	arg_9_0:refreshSource()
 end
 
-function slot0.setItemTrackMark(slot0, slot1)
-	slot0._itemTrackMark = slot1
+function var_0_0.setItemTrackMark(arg_10_0, arg_10_1)
+	arg_10_0._itemTrackMark = arg_10_1
 end
 
-function slot0.setMarkAttract(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._attractEnemyMap) do
-		if ActivityChessGameController.instance.interacts:get(slot5) ~= nil then
-			slot7.goToObject:setItemTrackMark(slot1)
-			slot7.goToObject:refreshTarget()
+function var_0_0.setMarkAttract(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._attractEnemyMap) do
+		local var_11_0 = ActivityChessGameController.instance.interacts:get(iter_11_0)
+
+		if var_11_0 ~= nil then
+			var_11_0.goToObject:setItemTrackMark(arg_11_1)
+			var_11_0.goToObject:refreshTarget()
 		end
 	end
 end
 
-function slot0.onAvatarLoaded(slot0)
-	if not slot0._target.avatar.loader then
+function var_0_0.onAvatarLoaded(arg_12_0)
+	local var_12_0 = arg_12_0._target.avatar.loader
+
+	if not var_12_0 then
 		return
 	end
 
-	slot0._target.avatar.goTracked = gohelper.findChild(slot1:getInstGO(), "piecea/vx_tracked")
-	slot0._target.avatar.goTrack = gohelper.findChild(slot1:getInstGO(), "piecea/vx_track")
-	slot0._target.avatar.goTrackItem = gohelper.findChild(slot1:getInstGO(), "piecea/vx_wenao")
+	arg_12_0._target.avatar.goTracked = gohelper.findChild(var_12_0:getInstGO(), "piecea/vx_tracked")
+	arg_12_0._target.avatar.goTrack = gohelper.findChild(var_12_0:getInstGO(), "piecea/vx_track")
+	arg_12_0._target.avatar.goTrackItem = gohelper.findChild(var_12_0:getInstGO(), "piecea/vx_wenao")
 
-	slot0:refreshSource()
-	slot0:refreshTarget()
+	arg_12_0:refreshSource()
+	arg_12_0:refreshTarget()
 end
 
-function slot0.dispose(slot0)
-	slot0:deleteRelation()
+function var_0_0.dispose(arg_13_0)
+	arg_13_0:deleteRelation()
 end
 
-return slot0
+return var_0_0

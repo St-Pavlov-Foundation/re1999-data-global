@@ -1,91 +1,112 @@
-module("modules.logic.herogroup.view.HeroGroupFightRuleDescView", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupFightRuleDescView", package.seeall)
 
-slot0 = class("HeroGroupFightRuleDescView", BaseView)
+local var_0_0 = class("HeroGroupFightRuleDescView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btncloserule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closerule")
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "bg/#go_ruleitem")
-	slot0._goruleDescList = gohelper.findChild(slot0.viewGO, "bg/#go_ruleDescList")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btncloserule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closerule")
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "bg")
+	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "bg/#go_ruleitem")
+	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0.viewGO, "bg/#go_ruleDescList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloserule:AddClickListener(slot0._btncloseruleOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloserule:AddClickListener(arg_2_0._btncloseruleOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloserule:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloserule:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rulesimagelineList = slot0:getUserDataTb_()
-	slot0._cloneRuleGos = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._rulesimagelineList = arg_4_0:getUserDataTb_()
+	arg_4_0._cloneRuleGos = arg_4_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._goruleitem, false)
+	gohelper.setActive(arg_4_0._goruleitem, false)
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:_refreshUI()
 end
 
-function slot0._btncloseruleOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseruleOnClick(arg_6_0)
+	arg_6_0:closeThis()
 
-	if slot0._isHardMode then
+	if arg_6_0._isHardMode then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeHideRuleDesc)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = slot0.viewParam.ruleList
+function var_0_0._refreshUI(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam.ruleList
 
-	if slot0.viewParam.offSet then
-		recthelper.setAnchor(slot0._gobg.transform, slot0.viewParam.offSet[1], slot0.viewParam.offSet[2])
+	if arg_7_0.viewParam.offSet then
+		recthelper.setAnchor(arg_7_0._gobg.transform, arg_7_0.viewParam.offSet[1], arg_7_0.viewParam.offSet[2])
 	end
 
-	if slot0.viewParam.pivot then
-		slot0._gobg.transform.pivot = slot0.viewParam.pivot
+	if arg_7_0.viewParam.pivot then
+		arg_7_0._gobg.transform.pivot = arg_7_0.viewParam.pivot
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if lua_rule.configDict[slot6[2]] then
-			slot0:_setRuleDescItem(slot9, slot6[1])
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = iter_7_1[1]
+		local var_7_2 = iter_7_1[2]
+		local var_7_3 = lua_rule.configDict[var_7_2]
+
+		if var_7_3 then
+			arg_7_0:_setRuleDescItem(var_7_3, var_7_1)
 		end
 
-		if slot5 == #slot1 then
-			gohelper.setActive(slot0._rulesimagelineList[slot5], false)
+		if iter_7_0 == #var_7_0 then
+			gohelper.setActive(arg_7_0._rulesimagelineList[iter_7_0], false)
 		end
 	end
 end
 
-function slot0._setRuleDescItem(slot0, slot1, slot2)
-	slot4 = gohelper.clone(slot0._goruleitem, slot0._goruleDescList, slot1.id)
-
-	gohelper.setActive(slot4, true)
-	table.insert(slot0._cloneRuleGos, slot4)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot4, "icon"), slot1.icon)
-	table.insert(slot0._rulesimagelineList, gohelper.findChild(slot4, "line"))
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot4, "tag"), "wz_" .. slot2)
-
-	slot8 = gohelper.findChildText(slot4, "desc")
-
-	SkillHelper.addHyperLinkClick(slot8)
-
-	slot8.text = formatLuaLang("fight_rule_desc", ({
+function var_0_0._setRuleDescItem(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = {
 		"#6680bd",
 		"#d05b4c",
 		"#c7b376"
-	})[slot2], luaLang("dungeon_add_rule_target_" .. slot2), SkillHelper.buildDesc(slot1.desc, nil, "#6680bd"))
+	}
+	local var_8_1 = gohelper.clone(arg_8_0._goruleitem, arg_8_0._goruleDescList, arg_8_1.id)
+
+	gohelper.setActive(var_8_1, true)
+	table.insert(arg_8_0._cloneRuleGos, var_8_1)
+
+	local var_8_2 = gohelper.findChildImage(var_8_1, "icon")
+
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_8_2, arg_8_1.icon)
+
+	local var_8_3 = gohelper.findChild(var_8_1, "line")
+
+	table.insert(arg_8_0._rulesimagelineList, var_8_3)
+
+	local var_8_4 = gohelper.findChildImage(var_8_1, "tag")
+
+	UISpriteSetMgr.instance:setCommonSprite(var_8_4, "wz_" .. arg_8_2)
+
+	local var_8_5 = gohelper.findChildText(var_8_1, "desc")
+
+	SkillHelper.addHyperLinkClick(var_8_5)
+
+	local var_8_6 = arg_8_1.desc
+	local var_8_7 = SkillHelper.buildDesc(var_8_6, nil, "#6680bd")
+	local var_8_8 = luaLang("dungeon_add_rule_target_" .. arg_8_2)
+	local var_8_9 = var_8_0[arg_8_2]
+
+	var_8_5.text = formatLuaLang("fight_rule_desc", var_8_9, var_8_8, var_8_7)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

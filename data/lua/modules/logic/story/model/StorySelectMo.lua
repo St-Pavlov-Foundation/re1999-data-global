@@ -1,19 +1,19 @@
-module("modules.logic.story.model.StorySelectMo", package.seeall)
+﻿module("modules.logic.story.model.StorySelectMo", package.seeall)
 
-slot0 = pureTable("StorySelectMo")
+local var_0_0 = pureTable("StorySelectMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.name = ""
-	slot0.index = 0
-	slot0.stepId = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.name = ""
+	arg_1_0.index = 0
+	arg_1_0.stepId = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.name = slot1.name
-	slot0.index = slot1.index
-	slot0.stepId = slot1.stepId
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.name = arg_2_1.name
+	arg_2_0.index = arg_2_1.index
+	arg_2_0.stepId = arg_2_1.stepId
 end
 
-return slot0
+return var_0_0

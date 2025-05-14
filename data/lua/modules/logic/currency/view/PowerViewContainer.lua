@@ -1,33 +1,34 @@
-module("modules.logic.currency.view.PowerViewContainer", package.seeall)
+﻿module("modules.logic.currency.view.PowerViewContainer", package.seeall)
 
-slot0 = class("PowerViewContainer", BaseViewContainer)
+local var_0_0 = class("PowerViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, PowerView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_righttop"))
+	table.insert(var_1_0, PowerView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
 
-	return slot1
+	return var_1_0
 end
 
-slot1 = {
+local var_0_1 = {
 	duration = 0.01
 }
 
-function slot0.playOpenTransition(slot0)
-	uv0.super.playOpenTransition(slot0, uv1)
+function var_0_0.playOpenTransition(arg_2_0)
+	var_0_0.super.playOpenTransition(arg_2_0, var_0_1)
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot2 = CurrencyEnum.CurrencyType
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	local var_3_0 = CurrencyEnum.CurrencyType
+	local var_3_1 = {
+		var_3_0.Diamond,
+		var_3_0.FreeDiamondCoupon
+	}
 
 	return {
-		CurrencyView.New({
-			slot2.Diamond,
-			slot2.FreeDiamondCoupon
-		})
+		CurrencyView.New(var_3_1)
 	}
 end
 
-return slot0
+return var_0_0

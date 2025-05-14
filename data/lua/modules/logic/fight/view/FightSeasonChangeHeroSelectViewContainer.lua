@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightSeasonChangeHeroSelectViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightSeasonChangeHeroSelectViewContainer", package.seeall)
 
-slot0 = class("FightSeasonChangeHeroSelectViewContainer", BaseViewContainer)
+local var_0_0 = class("FightSeasonChangeHeroSelectViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightSeasonChangeHeroSelectView.New()
 	}
 end
 
-return slot0
+return var_0_0

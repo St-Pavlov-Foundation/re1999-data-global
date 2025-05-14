@@ -1,77 +1,86 @@
-module("modules.logic.rouge.map.controller.RougeMapDLCResHelper", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougeMapDLCResHelper", package.seeall)
 
-slot0 = class("RougeMapDLCResHelper")
+local var_0_0 = class("RougeMapDLCResHelper")
 
-function slot0.handleLoadMapDLCRes(slot0, ...)
-	if not uv0._getMapDLCResHandle(slot0) then
+function var_0_0.handleLoadMapDLCRes(arg_1_0, ...)
+	local var_1_0 = var_0_0._getMapDLCResHandle(arg_1_0)
+
+	if not var_1_0 then
 		return
 	end
 
-	slot1(...)
+	var_1_0(...)
 end
 
-function slot0._getMapDLCResHandle(slot0)
-	uv0._initHandleLoadMapDLCRes()
+function var_0_0._getMapDLCResHandle(arg_2_0)
+	var_0_0._initHandleLoadMapDLCRes()
 
-	return uv0._mapDLCResLoadHandleMap[slot0]
+	return var_0_0._mapDLCResLoadHandleMap[arg_2_0]
 end
 
-function slot0._loadMapDLCResHandle_101(slot0, slot1)
-	slot1.fogPrefab = slot0:getAssetItem(RougeMapEnum.FogMaterialUrl):GetResource()
+function var_0_0._loadMapDLCResHandle_101(arg_3_0, arg_3_1)
+	arg_3_1.fogPrefab = arg_3_0:getAssetItem(RougeMapEnum.FogMaterialUrl):GetResource()
 end
 
-function slot0._initHandleLoadMapDLCRes()
-	if not uv0._mapDLCResLoadHandleMap then
-		uv0._mapDLCResLoadHandleMap = {
-			[RougeDLCEnum.DLCEnum.DLC_101] = uv0._loadMapDLCResHandle_101
+function var_0_0._initHandleLoadMapDLCRes()
+	if not var_0_0._mapDLCResLoadHandleMap then
+		var_0_0._mapDLCResLoadHandleMap = {
+			[RougeDLCEnum.DLCEnum.DLC_101] = var_0_0._loadMapDLCResHandle_101
 		}
 	end
 end
 
-function slot0.handleCreateMapDLC(slot0, ...)
-	if not uv0._getCreateMapDLCHandle(slot0) then
+function var_0_0.handleCreateMapDLC(arg_5_0, ...)
+	local var_5_0 = var_0_0._getCreateMapDLCHandle(arg_5_0)
+
+	if not var_5_0 then
 		return
 	end
 
-	slot1(...)
+	var_5_0(...)
 end
 
-function slot0._getCreateMapDLCHandle(slot0)
-	uv0._initHandleCreateMapDLC()
+function var_0_0._getCreateMapDLCHandle(arg_6_0)
+	var_0_0._initHandleCreateMapDLC()
 
-	return uv0._mapDLCHandleMap[slot0]
+	return var_0_0._mapDLCHandleMap[arg_6_0]
 end
 
-function slot0._createMapDLCHandle_101(slot0)
-	MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0.fogPrefab, gohelper.findChild(slot0.mapGo, "root/BackGround"), "fog"), RougeMapFogEffect)
+function var_0_0._createMapDLCHandle_101(arg_7_0)
+	local var_7_0 = gohelper.findChild(arg_7_0.mapGo, "root/BackGround")
+	local var_7_1 = gohelper.clone(arg_7_0.fogPrefab, var_7_0, "fog")
+
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, RougeMapFogEffect)
 end
 
-function slot0._initHandleCreateMapDLC()
-	if not uv0._mapDLCHandleMap then
-		uv0._mapDLCHandleMap = {
-			[RougeDLCEnum.DLCEnum.DLC_101] = uv0._createMapDLCHandle_101
+function var_0_0._initHandleCreateMapDLC()
+	if not var_0_0._mapDLCHandleMap then
+		var_0_0._mapDLCHandleMap = {
+			[RougeDLCEnum.DLCEnum.DLC_101] = var_0_0._createMapDLCHandle_101
 		}
 	end
 end
 
-function slot0.addMapDLCRes(slot0, slot1, slot2)
-	uv0._initMapDLCResUrl()
+function var_0_0.addMapDLCRes(arg_9_0, arg_9_1, arg_9_2)
+	var_0_0._initMapDLCResUrl()
 
-	slot3 = RougeMapHelper._mapDLCResUrlMap[slot0]
-	slot4 = {}
+	local var_9_0 = RougeMapHelper._mapDLCResUrlMap[arg_9_0]
+	local var_9_1 = {}
 
-	for slot8, slot9 in ipairs(slot1 or {}) do
-		for slot14, slot15 in ipairs(slot3 and slot3[slot9] or {}) do
-			if not slot4[slot15] then
-				slot2:addPath(slot15)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1 or {}) do
+		local var_9_2 = var_9_0 and var_9_0[iter_9_1]
 
-				slot4[slot15] = true
+		for iter_9_2, iter_9_3 in ipairs(var_9_2 or {}) do
+			if not var_9_1[iter_9_3] then
+				arg_9_2:addPath(iter_9_3)
+
+				var_9_1[iter_9_3] = true
 			end
 		end
 	end
 end
 
-function slot0._initMapDLCResUrl()
+function var_0_0._initMapDLCResUrl()
 	if not RougeMapHelper._mapDLCResUrlMap then
 		RougeMapHelper._mapDLCResUrlMap = {
 			[RougeMapEnum.MapType.Normal] = {
@@ -83,4 +92,4 @@ function slot0._initMapDLCResUrl()
 	end
 end
 
-return slot0
+return var_0_0

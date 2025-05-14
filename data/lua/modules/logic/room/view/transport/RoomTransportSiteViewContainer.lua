@@ -1,81 +1,87 @@
-module("modules.logic.room.view.transport.RoomTransportSiteViewContainer", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportSiteViewContainer", package.seeall)
 
-slot0 = class("RoomTransportSiteViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomTransportSiteViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_building"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = RoomTransportBuildingItem.prefabPath
-	slot1.cellClass = RoomTransportBuildingItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 540
-	slot1.cellHeight = 180
-	slot1.cellSpaceV = 10
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_buildingskin"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = RoomTransportBuildingSkinItem.prefabPath
-	slot2.cellClass = RoomTransportBuildingSkinItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 196
-	slot2.cellHeight = 140
-	slot2.cellSpaceV = 10
-	slot3 = ListScrollParam.New()
-	slot3.scrollGOPath = "go_content/#go_right/#go_critterlist/#scroll_critter"
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot3.prefabUrl = RoomTransportCritterItem.prefabPath
-	slot3.cellClass = RoomTransportCritterItem
-	slot3.scrollDir = ScrollEnum.ScrollDirV
-	slot3.lineCount = 1
-	slot3.cellWidth = 640
-	slot3.cellHeight = 175
-	slot3.cellSpaceV = 10
-	slot4 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	table.insert(slot4, TabViewGroup.New(1, "go_content/#go_BackBtns"))
-	table.insert(slot4, RoomTransportSiteView.New())
-	table.insert(slot4, LuaListScrollView.New(RoomTransportBuildingListModel.instance, slot1))
-	table.insert(slot4, LuaListScrollView.New(RoomTransportBuildingSkinListModel.instance, slot2))
+	var_1_0.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_building"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = RoomTransportBuildingItem.prefabPath
+	var_1_0.cellClass = RoomTransportBuildingItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 540
+	var_1_0.cellHeight = 180
+	var_1_0.cellSpaceV = 10
 
-	return slot4
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_buildingskin"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = RoomTransportBuildingSkinItem.prefabPath
+	var_1_1.cellClass = RoomTransportBuildingSkinItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 196
+	var_1_1.cellHeight = 140
+	var_1_1.cellSpaceV = 10
+
+	local var_1_2 = ListScrollParam.New()
+
+	var_1_2.scrollGOPath = "go_content/#go_right/#go_critterlist/#scroll_critter"
+	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_2.prefabUrl = RoomTransportCritterItem.prefabPath
+	var_1_2.cellClass = RoomTransportCritterItem
+	var_1_2.scrollDir = ScrollEnum.ScrollDirV
+	var_1_2.lineCount = 1
+	var_1_2.cellWidth = 640
+	var_1_2.cellHeight = 175
+	var_1_2.cellSpaceV = 10
+
+	local var_1_3 = {}
+
+	table.insert(var_1_3, TabViewGroup.New(1, "go_content/#go_BackBtns"))
+	table.insert(var_1_3, RoomTransportSiteView.New())
+	table.insert(var_1_3, LuaListScrollView.New(RoomTransportBuildingListModel.instance, var_1_0))
+	table.insert(var_1_3, LuaListScrollView.New(RoomTransportBuildingSkinListModel.instance, var_1_1))
+
+	return var_1_3
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.RoomTransportHelp)
 
-		slot0.navigateView:setOverrideClose(slot0._overrideCloseFunc, slot0)
-		NavigateMgr.instance:addEscape(slot0.viewName, slot0._overrideCloseFunc, slot0)
+		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		NavigateMgr.instance:addEscape(arg_2_0.viewName, arg_2_0._overrideCloseFunc, arg_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0._overrideCloseFunc(slot0)
+function var_0_0._overrideCloseFunc(arg_3_0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterListView) then
 		ViewMgr.instance:closeView(ViewName.RoomCritterListView)
 
 		return
 	end
 
-	slot0:closeThis()
+	arg_3_0:closeThis()
 end
 
-function slot0.setUseBuildingUid(slot0, slot1)
-	slot0.useBuildingUid = slot1
+function var_0_0.setUseBuildingUid(arg_4_0, arg_4_1)
+	arg_4_0.useBuildingUid = arg_4_1
 end
 
-function slot0.getUseBuildingUid(slot0)
-	return slot0.useBuildingUid
+function var_0_0.getUseBuildingUid(arg_5_0)
+	return arg_5_0.useBuildingUid
 end
 
-return slot0
+return var_0_0

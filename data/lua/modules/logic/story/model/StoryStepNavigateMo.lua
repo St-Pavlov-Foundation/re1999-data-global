@@ -1,10 +1,10 @@
-module("modules.logic.story.model.StoryStepNavigateMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepNavigateMo", package.seeall)
 
-slot0 = pureTable("StoryStepNavigateMo")
+local var_0_0 = pureTable("StoryStepNavigateMo")
 
-function slot0.ctor(slot0)
-	slot0.navigateType = 1
-	slot0.navigateTxts = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.navigateType = 1
+	arg_1_0.navigateTxts = {
 		"",
 		"",
 		"",
@@ -14,15 +14,15 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.navigateChapterEn = ""
-	slot0.navigateLogo = ""
+	arg_1_0.navigateChapterEn = ""
+	arg_1_0.navigateLogo = ""
 end
 
-function slot0.init(slot0, slot1)
-	slot0.navigateType = slot1[1]
-	slot0.navigateTxts = slot1[2]
-	slot0.navigateChapterEn = slot1[3]
-	slot0.navigateLogo = slot1[4]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.navigateType = arg_2_1[1]
+	arg_2_0.navigateTxts = arg_2_1[2]
+	arg_2_0.navigateChapterEn = arg_2_1[3]
+	arg_2_0.navigateLogo = arg_2_1[4]
 end
 
-return slot0
+return var_0_0

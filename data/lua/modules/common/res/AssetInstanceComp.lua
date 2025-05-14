@@ -1,17 +1,17 @@
-module("modules.common.res.AssetInstanceComp", package.seeall)
+﻿module("modules.common.res.AssetInstanceComp", package.seeall)
 
-slot0 = class("AssetInstanceComp", LuaCompBase)
+local var_0_0 = class("AssetInstanceComp", LuaCompBase)
 
-function slot0.setAsset(slot0, slot1)
-	slot0._assetMO = slot1
+function var_0_0.setAsset(arg_1_0, arg_1_1)
+	arg_1_0._assetMO = arg_1_1
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._assetMO then
-		slot0._assetMO:release()
+function var_0_0.onDestroy(arg_2_0)
+	if arg_2_0._assetMO then
+		arg_2_0._assetMO:release()
 	end
 
-	slot0._assetMO = nil
+	arg_2_0._assetMO = nil
 end
 
-return slot0
+return var_0_0

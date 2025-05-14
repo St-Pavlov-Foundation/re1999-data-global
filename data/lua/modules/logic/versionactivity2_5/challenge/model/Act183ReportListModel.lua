@@ -1,26 +1,29 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183ReportListModel", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183ReportListModel", package.seeall)
 
-slot0 = class("Act183ReportListModel", MixScrollModel)
+local var_0_0 = class("Act183ReportListModel", MixScrollModel)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._activityId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._activityId = arg_1_1
 
-	table.sort(slot2, slot0._recordSortFunc)
-	slot0:setList(slot2)
+	table.sort(arg_1_2, arg_1_0._recordSortFunc)
+	arg_1_0:setList(arg_1_2)
 end
 
-function slot0._recordSortFunc(slot0, slot1)
-	if slot0:getFinishedTime() ~= slot1:getFinishedTime() then
-		return slot3 < slot2
+function var_0_0._recordSortFunc(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getFinishedTime()
+	local var_2_1 = arg_2_1:getFinishedTime()
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_1 < var_2_0
 	end
 
-	return slot0:getGroupId() < slot1:getGroupId()
+	return arg_2_0:getGroupId() < arg_2_1:getGroupId()
 end
 
-function slot0.getActivityId(slot0)
-	return slot0._activityId
+function var_0_0.getActivityId(arg_3_0)
+	return arg_3_0._activityId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

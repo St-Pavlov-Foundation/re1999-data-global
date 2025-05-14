@@ -1,31 +1,33 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaMoveStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaMoveStep", package.seeall)
 
-slot0 = class("TianShiNaNaMoveStep", TianShiNaNaStepBase)
+local var_0_0 = class("TianShiNaNaMoveStep", TianShiNaNaStepBase)
 
-function slot0.onStart(slot0)
-	if not TianShiNaNaEntityMgr.instance:getEntity(slot0._data.id) then
-		logError("步骤Move 找不到元件ID" .. slot0._data.id)
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = TianShiNaNaEntityMgr.instance:getEntity(arg_1_0._data.id)
+
+	if not var_1_0 then
+		logError("步骤Move 找不到元件ID" .. arg_1_0._data.id)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._isPlayer = TianShiNaNaModel.instance:getHeroMo().co.id == slot0._data.id
+	arg_1_0._isPlayer = TianShiNaNaModel.instance:getHeroMo().co.id == arg_1_0._data.id
 
-	if slot0._isPlayer then
+	if arg_1_0._isPlayer then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_foot)
 	end
 
-	slot1:moveTo(slot0._data.x, slot0._data.y, slot0._data.direction, slot0._onMoveEnd, slot0)
+	var_1_0:moveTo(arg_1_0._data.x, arg_1_0._data.y, arg_1_0._data.direction, arg_1_0._onMoveEnd, arg_1_0)
 end
 
-function slot0._onMoveEnd(slot0)
-	if slot0._isPlayer then
+function var_0_0._onMoveEnd(arg_2_0)
+	if arg_2_0._isPlayer then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.stop_ui_youyu_foot)
-		TianShiNaNaEffectPool.instance:getFromPool(slot0._data.x, slot0._data.y, 1, 0, 0.4)
+		TianShiNaNaEffectPool.instance:getFromPool(arg_2_0._data.x, arg_2_0._data.y, 1, 0, 0.4)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

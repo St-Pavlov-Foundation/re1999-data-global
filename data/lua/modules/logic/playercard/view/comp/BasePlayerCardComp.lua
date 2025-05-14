@@ -1,51 +1,55 @@
-module("modules.logic.playercard.view.comp.BasePlayerCardComp", package.seeall)
+﻿module("modules.logic.playercard.view.comp.BasePlayerCardComp", package.seeall)
 
-slot0 = class("BasePlayerCardComp", LuaCompBase)
+local var_0_0 = class("BasePlayerCardComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	if slot1 then
-		for slot5, slot6 in pairs(slot1) do
-			slot0[slot5] = slot6
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	if arg_1_1 then
+		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
+			arg_1_0[iter_1_0] = iter_1_1
 		end
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0.goSelect = gohelper.setActive(slot1, "#go_select")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.viewGO = arg_2_1
+	arg_2_0.goSelect = gohelper.setActive(arg_2_1, "#go_select")
 
-	slot0:setEditMode(false)
-	slot0:onInitView()
+	arg_2_0:setEditMode(false)
+	arg_2_0:onInitView()
 end
 
-function slot0.refreshView(slot0, slot1)
-	slot0.cardInfo = slot1
+function var_0_0.refreshView(arg_3_0, arg_3_1)
+	arg_3_0.cardInfo = arg_3_1
 
-	slot0:onRefreshView()
+	arg_3_0:onRefreshView()
 end
 
-function slot0.isPlayerSelf(slot0)
-	return slot0.cardInfo and slot0.cardInfo:isSelf()
+function var_0_0.isPlayerSelf(arg_4_0)
+	return arg_4_0.cardInfo and arg_4_0.cardInfo:isSelf()
 end
 
-function slot0.getPlayerInfo(slot0)
-	return slot0.cardInfo and slot0.cardInfo:getPlayerInfo()
+function var_0_0.getPlayerInfo(arg_5_0)
+	return arg_5_0.cardInfo and arg_5_0.cardInfo:getPlayerInfo()
 end
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_6_0)
+	return
 end
 
-function slot0.onRefreshView(slot0)
+function var_0_0.onRefreshView(arg_7_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_8_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_9_0)
+	return
 end
 
-function slot0.setEditMode(slot0, slot1)
-	gohelper.setActive(slot0.goSelect, slot1)
+function var_0_0.setEditMode(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0.goSelect, arg_10_1)
 end
 
-return slot0
+return var_0_0

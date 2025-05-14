@@ -1,53 +1,53 @@
-module("modules.logic.store.view.RoomStoreGoodsItem", package.seeall)
+﻿module("modules.logic.store.view.RoomStoreGoodsItem", package.seeall)
 
-slot0 = class("RoomStoreGoodsItem", NormalStoreGoodsItem)
-slot1 = {
+local var_0_0 = class("RoomStoreGoodsItem", NormalStoreGoodsItem)
+local var_0_1 = {
 	MaterialEnum.MaterialType.Equip,
 	MaterialEnum.MaterialType.Item
 }
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_1_0, arg_1_1)
+	var_0_0.super.onUpdateMO(arg_1_0, arg_1_1)
 end
 
-function slot0.refreshRare(slot0)
-	slot1 = false
-	slot2 = {
-		anchorX = -9.5,
-		anchorY = -2,
-		width = 354.5,
-		height = 280
-	}
+function var_0_0.refreshRare(arg_2_0)
+	local var_2_0 = false
+	local var_2_1 = {}
 
-	if slot0._mo:getIsActGoods() then
-		UISpriteSetMgr.instance:setStoreGoodsSprite(slot0._rare, FurnaceTreasureEnum.RareBgName)
+	var_2_1.anchorX = -9.5
+	var_2_1.anchorY = -2
+	var_2_1.width = 354.5
+	var_2_1.height = 280
 
-		slot1 = true
-	elseif slot0.itemConfig then
-		if slot0.itemConfig.subType == 23 then
-			slot0:_setSpecialBg(slot2)
+	if arg_2_0._mo:getIsActGoods() then
+		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_2_0._rare, FurnaceTreasureEnum.RareBgName)
 
-			slot1 = true
+		var_2_0 = true
+	elseif arg_2_0.itemConfig then
+		if arg_2_0.itemConfig.subType == 23 then
+			arg_2_0:_setSpecialBg(var_2_1)
+
+			var_2_0 = true
 		else
-			UISpriteSetMgr.instance:setStoreGoodsSprite(slot0._rare, "rare" .. slot0.itemConfig.rare)
+			UISpriteSetMgr.instance:setStoreGoodsSprite(arg_2_0._rare, "rare" .. arg_2_0.itemConfig.rare)
 
-			slot1 = true
+			var_2_0 = true
 		end
 	end
 
-	recthelper.setAnchor(slot0._rare.transform, slot2.anchorX, slot2.anchorY)
-	recthelper.setWidth(slot0._rare.transform, slot2.width)
-	recthelper.setHeight(slot0._rare.transform, slot2.height)
-	gohelper.setActive(slot0._rare.gameObject, slot1)
+	recthelper.setAnchor(arg_2_0._rare.transform, var_2_1.anchorX, var_2_1.anchorY)
+	recthelper.setWidth(arg_2_0._rare.transform, var_2_1.width)
+	recthelper.setHeight(arg_2_0._rare.transform, var_2_1.height)
+	gohelper.setActive(arg_2_0._rare.gameObject, var_2_0)
 end
 
-function slot0._setSpecialBg(slot0, slot1)
-	UISpriteSetMgr.instance:setRoomSprite(slot0._rare, "room_qualityframe_" .. slot0.itemConfig.rare)
+function var_0_0._setSpecialBg(arg_3_0, arg_3_1)
+	UISpriteSetMgr.instance:setRoomSprite(arg_3_0._rare, "room_qualityframe_" .. arg_3_0.itemConfig.rare)
 
-	slot1.anchorX = 4.5
-	slot1.anchorY = 29
-	slot1.width = 335
-	slot1.height = 310
+	arg_3_1.anchorX = 4.5
+	arg_3_1.anchorY = 29
+	arg_3_1.width = 335
+	arg_3_1.height = 310
 end
 
-return slot0
+return var_0_0

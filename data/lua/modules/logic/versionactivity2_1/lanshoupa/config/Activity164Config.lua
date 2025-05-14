@@ -1,17 +1,17 @@
-module("modules.logic.versionactivity2_1.lanshoupa.config.Activity164Config", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.config.Activity164Config", package.seeall)
 
-slot0 = class("Activity164Config", BaseConfig)
+local var_0_0 = class("Activity164Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._act164Episode = nil
-	slot0._act164Task = nil
-	slot0._episodeListDict = {}
-	slot0._chapterIdListDict = {}
-	slot0._chapterEpisodeListDict = {}
-	slot0._bubbleListDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._act164Episode = nil
+	arg_1_0._act164Task = nil
+	arg_1_0._episodeListDict = {}
+	arg_1_0._chapterIdListDict = {}
+	arg_1_0._chapterEpisodeListDict = {}
+	arg_1_0._bubbleListDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity164_episode",
 		"activity164_task",
@@ -21,128 +21,132 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity164_episode" then
-		slot0._act164Episode = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity164_episode" then
+		arg_3_0._act164Episode = arg_3_2
 
-		slot0:_initEpisodeList()
-	elseif slot1 == "activity164_task" then
-		slot0._act164Task = slot2
-	elseif slot1 == "activity164_story" then
-		slot0._act164Story = slot2
-	elseif slot1 == "activity164_tips" then
-		slot0._act164Tips = slot2
-	elseif slot1 == "activity164_bubble" then
-		slot0._act164Bubble = slot2
+		arg_3_0:_initEpisodeList()
+	elseif arg_3_1 == "activity164_task" then
+		arg_3_0._act164Task = arg_3_2
+	elseif arg_3_1 == "activity164_story" then
+		arg_3_0._act164Story = arg_3_2
+	elseif arg_3_1 == "activity164_tips" then
+		arg_3_0._act164Tips = arg_3_2
+	elseif arg_3_1 == "activity164_bubble" then
+		arg_3_0._act164Bubble = arg_3_2
 	end
 end
 
-function slot0._initEpisodeList(slot0)
-	for slot4, slot5 in pairs(slot0._act164Episode.configDict) do
-		slot0._episodeListDict[slot4] = slot0._episodeListDict[slot4] or {}
+function var_0_0._initEpisodeList(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._act164Episode.configDict) do
+		arg_4_0._episodeListDict[iter_4_0] = arg_4_0._episodeListDict[iter_4_0] or {}
 
-		for slot9, slot10 in pairs(slot5) do
-			table.insert(slot0._episodeListDict[slot4], slot10)
+		for iter_4_2, iter_4_3 in pairs(iter_4_1) do
+			table.insert(arg_4_0._episodeListDict[iter_4_0], iter_4_3)
 		end
 
-		table.sort(slot0._episodeListDict[slot4], uv0.sortEpisode)
+		table.sort(arg_4_0._episodeListDict[iter_4_0], var_0_0.sortEpisode)
 	end
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	slot2 = {}
+function var_0_0.getTaskByActId(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	for slot6, slot7 in ipairs(slot0._act164Task.configList) do
-		if slot7.activityId == slot1 then
-			table.insert(slot2, slot7)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._act164Task.configList) do
+		if iter_5_1.activityId == arg_5_1 then
+			table.insert(var_5_0, iter_5_1)
 		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getEpisodeCo(slot0, slot1, slot2)
-	if slot0._act164Episode.configDict[slot1] then
-		return slot0._act164Episode.configDict[slot1][slot2]
+function var_0_0.getEpisodeCo(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0._act164Episode.configDict[arg_6_1] then
+		return arg_6_0._act164Episode.configDict[arg_6_1][arg_6_2]
 	end
 
 	return nil
 end
 
-function slot0.getEpisodeIndex(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot0._episodeListDict[slot1]) do
-		if slot8.id == slot2 then
-			return slot7
+function var_0_0.getEpisodeIndex(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0._episodeListDict[arg_7_1]
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.id == arg_7_2 then
+			return iter_7_0
 		end
 	end
 end
 
-function slot0.getEpisodeCoDict(slot0, slot1)
-	return slot0._act164Episode.configDict[slot1]
+function var_0_0.getEpisodeCoDict(arg_8_0, arg_8_1)
+	return arg_8_0._act164Episode.configDict[arg_8_1]
 end
 
-function slot0.getEpisodeCoList(slot0, slot1)
-	return slot0._episodeListDict[slot1]
+function var_0_0.getEpisodeCoList(arg_9_0, arg_9_1)
+	return arg_9_0._episodeListDict[arg_9_1]
 end
 
-function slot0.getTipsCo(slot0, slot1, slot2)
-	if slot0._act164Tips.configDict[slot1] then
-		return slot0._act164Tips.configDict[slot1][slot2]
+function var_0_0.getTipsCo(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_0._act164Tips.configDict[arg_10_1] then
+		return arg_10_0._act164Tips.configDict[arg_10_1][arg_10_2]
 	end
 
 	return nil
 end
 
-function slot0.getBubbleCo(slot0, slot1, slot2)
-	if slot0._act164Bubble.configDict[slot1] then
-		return slot0._act164Bubble.configDict[slot1][slot2]
+function var_0_0.getBubbleCo(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_0._act164Bubble.configDict[arg_11_1] then
+		return arg_11_0._act164Bubble.configDict[arg_11_1][arg_11_2]
 	end
 
 	return nil
 end
 
-function slot0.getBubbleCoByGroup(slot0, slot1, slot2)
-	return slot0._act164Bubble.configDict[slot1][slot2]
+function var_0_0.getBubbleCoByGroup(arg_12_0, arg_12_1, arg_12_2)
+	return arg_12_0._act164Bubble.configDict[arg_12_1][arg_12_2]
 end
 
-function slot0._initBubbleConfig(slot0)
-	for slot4, slot5 in pairs(slot0._act164Bubble.configDict) do
-		slot0._bubbleListDict[slot4] = slot5
+function var_0_0._initBubbleConfig(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._act164Bubble.configDict) do
+		arg_13_0._bubbleListDict[iter_13_0] = iter_13_1
 
-		for slot9, slot10 in ipairs(slot5) do
-			slot0._bubbleListDict[slot4][slot9] = slot0._bubbleListDict[slot4][slot9] or {}
+		for iter_13_2, iter_13_3 in ipairs(iter_13_1) do
+			arg_13_0._bubbleListDict[iter_13_0][iter_13_2] = arg_13_0._bubbleListDict[iter_13_0][iter_13_2] or {}
 
-			table.insert(slot0._bubbleListDict[slot4][slot9], slot10)
+			table.insert(arg_13_0._bubbleListDict[iter_13_0][iter_13_2], iter_13_3)
 		end
 	end
 end
 
-function slot0.sortEpisode(slot0, slot1)
-	if slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+function var_0_0.sortEpisode(arg_14_0, arg_14_1)
+	if arg_14_0.id ~= arg_14_1.id then
+		return arg_14_0.id < arg_14_1.id
 	end
 end
 
-function slot0.getStoryList(slot0, slot1, slot2)
-	return lua_activity164_story.configDict[slot1] and slot3[slot2]
+function var_0_0.getStoryList(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = lua_activity164_story.configDict[arg_15_1]
+
+	return var_15_0 and var_15_0[arg_15_2]
 end
 
-function slot0.getTaskList(slot0)
-	if slot0._task_list then
-		return slot0._task_list
+function var_0_0.getTaskList(arg_16_0)
+	if arg_16_0._task_list then
+		return arg_16_0._task_list
 	end
 
-	slot0._task_list = {}
+	arg_16_0._task_list = {}
 
-	for slot4, slot5 in pairs(lua_activity164_task.configDict) do
-		if Activity164Model.instance:getCurActivityID() == slot5.activityId then
-			table.insert(slot0._task_list, slot5)
+	for iter_16_0, iter_16_1 in pairs(lua_activity164_task.configDict) do
+		if Activity164Model.instance:getCurActivityID() == iter_16_1.activityId then
+			table.insert(arg_16_0._task_list, iter_16_1)
 		end
 	end
 
-	return slot0._task_list
+	return arg_16_0._task_list
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

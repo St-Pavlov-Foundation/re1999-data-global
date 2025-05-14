@@ -1,33 +1,38 @@
-module("modules.logic.scene.explore.comp.ExploreSceneSpineMat", package.seeall)
+﻿module("modules.logic.scene.explore.comp.ExploreSceneSpineMat", package.seeall)
 
-slot0 = class("ExploreSceneSpineMat", BaseSceneComp)
+local var_0_0 = class("ExploreSceneSpineMat", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0:_setLevelCO(slot2)
-	ExploreController.instance:registerCallback(ExploreEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:_setLevelCO(arg_1_2)
+	ExploreController.instance:registerCallback(ExploreEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0.onSceneClose(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+function var_0_0.onSceneClose(arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
 
-	slot0._spineColor = nil
+	arg_3_0._spineColor = nil
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if slot0._spineColor and slot1 then
-		MaterialUtil.setMainColor(slot1.unitSpawn.spineRenderer:getReplaceMat(), slot0._spineColor)
+function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
+	if arg_4_0._spineColor and arg_4_1 then
+		local var_4_0 = arg_4_1.unitSpawn.spineRenderer:getReplaceMat()
+
+		MaterialUtil.setMainColor(var_4_0, arg_4_0._spineColor)
 	end
 end
 
-function slot0._setLevelCO(slot0, slot1)
-	slot0._spineColor = nil
+function var_0_0._setLevelCO(arg_5_0, arg_5_1)
+	arg_5_0._spineColor = nil
 
-	if lua_scene_level.configDict[slot1].spineR ~= 0 or slot2.spineG ~= 0 or slot2.spineB ~= 0 then
-		slot0._spineColor = Color.New(slot2.spineR, slot2.spineG, slot2.spineB, 1)
+	local var_5_0 = lua_scene_level.configDict[arg_5_1]
+
+	if var_5_0.spineR ~= 0 or var_5_0.spineG ~= 0 or var_5_0.spineB ~= 0 then
+		arg_5_0._spineColor = Color.New(var_5_0.spineR, var_5_0.spineG, var_5_0.spineB, 1)
 	end
 end
 
-return slot0
+return var_0_0

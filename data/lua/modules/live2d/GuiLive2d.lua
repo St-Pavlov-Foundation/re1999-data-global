@@ -1,273 +1,285 @@
-module("modules.live2d.GuiLive2d", package.seeall)
+﻿module("modules.live2d.GuiLive2d", package.seeall)
 
-slot0 = class("GuiLive2d", BaseLive2d)
-slot1 = "live2d/custom/live2d_camera.prefab"
-slot2 = "live2d/custom/uiimage.mat"
-slot3 = UnityEngine.SystemInfo
-slot4 = typeof(ZProj.Live2dUseInvisible)
-slot0.DefaultLive2dCameraSize = 6.5
+local var_0_0 = class("GuiLive2d", BaseLive2d)
+local var_0_1 = "live2d/custom/live2d_camera.prefab"
+local var_0_2 = "live2d/custom/uiimage.mat"
+local var_0_3 = UnityEngine.SystemInfo
+local var_0_4 = typeof(ZProj.Live2dUseInvisible)
 
-function slot0.Create(slot0, slot1)
-	slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
-	slot2._isStory = slot1
-	slot2._scale = 88
+var_0_0.DefaultLive2dCameraSize = 6.5
 
-	return slot2
+function var_0_0.Create(arg_1_0, arg_1_1)
+	local var_1_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+
+	var_1_0._isStory = arg_1_1
+	var_1_0._scale = 88
+
+	return var_1_0
 end
 
-slot5 = 1.34
-slot6 = 400
+local var_0_5 = 1.34
+local var_0_6 = 400
 
-function slot0.ctor(slot0)
-	slot2 = UnityEngine.Screen.dpi
-	slot0._qualityScale = 1
+function var_0_0.ctor(arg_2_0)
+	local var_2_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality() or ModuleEnum.Performance.High
+	local var_2_1 = UnityEngine.Screen.dpi
 
-	if (GameGlobalMgr.instance:getScreenState():getLocalQuality() or ModuleEnum.Performance.High) ~= ModuleEnum.Performance.Low and slot2 > 1 and slot2 < uv0 then
-		slot0._qualityScale = uv0 / slot2
-		slot0._qualityScale = Mathf.Clamp(slot0._qualityScale, 1, 1.5)
+	arg_2_0._qualityScale = 1
+
+	if var_2_0 ~= ModuleEnum.Performance.Low and var_2_1 > 1 and var_2_1 < var_0_6 then
+		arg_2_0._qualityScale = var_0_6 / var_2_1
+		arg_2_0._qualityScale = Mathf.Clamp(arg_2_0._qualityScale, 1, 1.5)
 	end
 
-	slot0._adapterScaleOnCreate = math.min(GameUtil.getAdapterScale(), uv1)
+	arg_2_0._adapterScaleOnCreate = math.min(GameUtil.getAdapterScale(), var_0_5)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenResize, arg_4_0)
 end
 
-function slot0._onScreenResize(slot0)
-	if slot0._rawImageGo then
-		slot0:setSpineScale(slot0._rawImageGo)
-	end
-end
-
-function slot0.hideModel(slot0)
-	slot0:_setCameraVisible(false)
-	gohelper.setActive(slot0._spineGo, false)
-end
-
-function slot0.showModel(slot0)
-	slot0:_setCameraVisible(true)
-	gohelper.setActive(slot0._spineGo, true)
-
-	if gohelper.isNil(slot0:getSpineGo()) == false then
-		slot0:play(slot0:getCurBody(), true)
-	end
-
-	if not slot0._uiEffectGos then
-		slot0:_addDelayProcessEffect()
+function var_0_0._onScreenResize(arg_5_0)
+	if arg_5_0._rawImageGo then
+		arg_5_0:setSpineScale(arg_5_0._rawImageGo)
 	end
 end
 
-function slot0._addDelayProcessEffect(slot0)
-	slot0._repeatCount = 0
-	slot0._repeatNum = 5
-
-	TaskDispatcher.cancelTask(slot0._delayProcessEffect, slot0)
-	TaskDispatcher.runRepeat(slot0._delayProcessEffect, slot0, 0, slot0._repeatNum)
+function var_0_0.hideModel(arg_6_0)
+	arg_6_0:_setCameraVisible(false)
+	gohelper.setActive(arg_6_0._spineGo, false)
 end
 
-function slot0._delayProcessEffect(slot0)
-	slot0._repeatCount = slot0._repeatCount + 1
+function var_0_0.showModel(arg_7_0)
+	arg_7_0:_setCameraVisible(true)
+	gohelper.setActive(arg_7_0._spineGo, true)
 
-	if slot0._repeatCount < slot0._repeatNum then
+	if gohelper.isNil(arg_7_0:getSpineGo()) == false then
+		arg_7_0:play(arg_7_0:getCurBody(), true)
+	end
+
+	if not arg_7_0._uiEffectGos then
+		arg_7_0:_addDelayProcessEffect()
+	end
+end
+
+function var_0_0._addDelayProcessEffect(arg_8_0)
+	arg_8_0._repeatCount = 0
+	arg_8_0._repeatNum = 5
+
+	TaskDispatcher.cancelTask(arg_8_0._delayProcessEffect, arg_8_0)
+	TaskDispatcher.runRepeat(arg_8_0._delayProcessEffect, arg_8_0, 0, arg_8_0._repeatNum)
+end
+
+function var_0_0._delayProcessEffect(arg_9_0)
+	arg_9_0._repeatCount = arg_9_0._repeatCount + 1
+
+	if arg_9_0._repeatCount < arg_9_0._repeatNum then
 		return
 	end
 
-	slot0:_doProcessEffect()
+	arg_9_0:_doProcessEffect()
 end
 
-function slot0.cancelCamera(slot0)
-	slot0._cancelCamera = true
+function var_0_0.cancelCamera(arg_10_0)
+	arg_10_0._cancelCamera = true
 end
 
-function slot0.isCancelCamera(slot0)
-	return slot0._cancelCamera
+function var_0_0.isCancelCamera(arg_11_0)
+	return arg_11_0._cancelCamera
 end
 
-function slot0._setCameraVisible(slot0, slot1)
-	slot0._cameraVisible = slot1
+function var_0_0._setCameraVisible(arg_12_0, arg_12_1)
+	arg_12_0._cameraVisible = arg_12_1
 
-	if slot0._cameraGo then
-		gohelper.setActive(slot0._cameraGo, slot1)
+	if arg_12_0._cameraGo then
+		gohelper.setActive(arg_12_0._cameraGo, arg_12_1)
 	end
 
-	if slot0._rawImageGo then
-		gohelper.setActive(slot0._rawImageGo, slot1)
-	end
-end
-
-function slot0.setLocalScale(slot0, slot1)
-	slot0._scale = slot1
-
-	if slot0._spineTr then
-		transformhelper.setLocalScale(slot0._spineTr, slot0._scale, slot0._scale, 1)
+	if arg_12_0._rawImageGo then
+		gohelper.setActive(arg_12_0._rawImageGo, arg_12_1)
 	end
 end
 
-function slot0.setCameraSize(slot0, slot1)
-	slot0._cameraSize = slot1
-end
+function var_0_0.setLocalScale(arg_13_0, arg_13_1)
+	arg_13_0._scale = arg_13_1
 
-function slot0.setCameraLayer(slot0, slot1)
-	slot0._cameraLayer = slot1
-
-	if slot0._camera and slot0._cameraLayer then
-		slot0._camera.cullingMask = bit.lshift(1, slot0._cameraLayer)
+	if arg_13_0._spineTr then
+		transformhelper.setLocalScale(arg_13_0._spineTr, arg_13_0._scale, arg_13_0._scale, 1)
 	end
 end
 
-function slot0._onResLoaded(slot0)
-	uv0.super._onResLoaded(slot0)
-	transformhelper.setLocalScale(slot0._spineTr, slot0._scale, slot0._scale, 1)
-	slot0:_initSkinUiEffect()
+function var_0_0.setCameraSize(arg_14_0, arg_14_1)
+	arg_14_0._cameraSize = arg_14_1
+end
 
-	if not slot0._cancelCamera then
-		slot0:_initCamera()
+function var_0_0.setCameraLayer(arg_15_0, arg_15_1)
+	arg_15_0._cameraLayer = arg_15_1
+
+	if arg_15_0._camera and arg_15_0._cameraLayer then
+		arg_15_0._camera.cullingMask = bit.lshift(1, arg_15_0._cameraLayer)
 	end
 end
 
-function slot0._initSkinUiEffect(slot0)
-	slot0._tempVec2 = slot0._tempVec2 or Vector2.New()
-	slot0._uiEffectGos = nil
-	slot0._uiEffectGosClone = nil
-	slot0._uiEffectList = nil
-	slot0._uiEffectConfig = nil
-	slot0._uiEffectInitVisible = nil
-	slot0._uiEffectRealtime = nil
-	slot0._hasProcessModelEffect = nil
+function var_0_0._onResLoaded(arg_16_0)
+	var_0_0.super._onResLoaded(arg_16_0)
+	transformhelper.setLocalScale(arg_16_0._spineTr, arg_16_0._scale, arg_16_0._scale, 1)
+	arg_16_0:_initSkinUiEffect()
 
-	for slot4, slot5 in ipairs(lua_skin_ui_effect.configList) do
-		if not slot0:_skip(slot5.id) and string.find(slot0._resPath, slot5.id) then
-			slot0._uiEffectConfig = slot5
-			slot0._uiEffectList = string.split(slot5.effect, "|")
-			slot0._uiEffectRealtime = string.splitToNumber(slot5.realtime, "|")
-			slot0._uiEffectInitVisible = {}
+	if not arg_16_0._cancelCamera then
+		arg_16_0:_initCamera()
+	end
+end
+
+function var_0_0._initSkinUiEffect(arg_17_0)
+	arg_17_0._tempVec2 = arg_17_0._tempVec2 or Vector2.New()
+	arg_17_0._uiEffectGos = nil
+	arg_17_0._uiEffectGosClone = nil
+	arg_17_0._uiEffectList = nil
+	arg_17_0._uiEffectConfig = nil
+	arg_17_0._uiEffectInitVisible = nil
+	arg_17_0._uiEffectRealtime = nil
+	arg_17_0._hasProcessModelEffect = nil
+
+	for iter_17_0, iter_17_1 in ipairs(lua_skin_ui_effect.configList) do
+		if not arg_17_0:_skip(iter_17_1.id) and string.find(arg_17_0._resPath, iter_17_1.id) then
+			arg_17_0._uiEffectConfig = iter_17_1
+			arg_17_0._uiEffectList = string.split(iter_17_1.effect, "|")
+			arg_17_0._uiEffectRealtime = string.splitToNumber(iter_17_1.realtime, "|")
+			arg_17_0._uiEffectInitVisible = {}
 
 			break
 		end
 	end
 end
 
-function slot0._skip(slot0, slot1)
-	return slot1 == 304802
+function var_0_0._skip(arg_18_0, arg_18_1)
+	return arg_18_1 == 304802
 end
 
-function slot0.hideModelEffect(slot0)
-	if not slot0._uiEffectGos then
+function var_0_0.hideModelEffect(arg_19_0)
+	if not arg_19_0._uiEffectGos then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._uiEffectGos) do
-		if slot0._uiEffectInitVisible[slot4] then
-			gohelper.setActive(slot5, false)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._uiEffectGos) do
+		if arg_19_0._uiEffectInitVisible[iter_19_0] then
+			gohelper.setActive(iter_19_1, false)
 		end
 	end
 end
 
-function slot0.showModelEffect(slot0)
-	if not slot0._uiEffectGos then
+function var_0_0.showModelEffect(arg_20_0)
+	if not arg_20_0._uiEffectGos then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._uiEffectGos) do
-		if slot0._uiEffectInitVisible[slot4] then
-			gohelper.setActive(slot5, true)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0._uiEffectGos) do
+		if arg_20_0._uiEffectInitVisible[iter_20_0] then
+			gohelper.setActive(iter_20_1, true)
 		end
 	end
 end
 
-function slot0.processModelEffect(slot0)
-	slot0._hasProcessModelEffect = true
+function var_0_0.processModelEffect(arg_21_0)
+	arg_21_0._hasProcessModelEffect = true
 
-	slot0:_doProcessEffect()
+	arg_21_0:_doProcessEffect()
 end
 
-function slot0._processEffect(slot0)
-	if slot0._uiEffectList then
-		for slot4, slot5 in ipairs(slot0._uiEffectList) do
-			if gohelper.findChild(slot0._spineGo, slot5) then
-				slot0._uiEffectInitVisible[slot4] = slot6.gameObject.activeSelf
+function var_0_0._processEffect(arg_22_0)
+	if arg_22_0._uiEffectList then
+		for iter_22_0, iter_22_1 in ipairs(arg_22_0._uiEffectList) do
+			local var_22_0 = gohelper.findChild(arg_22_0._spineGo, iter_22_1)
 
-				gohelper.setActive(slot6.gameObject, false)
+			if var_22_0 then
+				arg_22_0._uiEffectInitVisible[iter_22_0] = var_22_0.gameObject.activeSelf
+
+				gohelper.setActive(var_22_0.gameObject, false)
 			end
 		end
 	end
 
-	slot0:_addDelayProcessEffect()
+	arg_22_0:_addDelayProcessEffect()
 end
 
-function slot0._doProcessEffect(slot0)
-	if gohelper.isNil(slot0._spineGo) then
+function var_0_0._doProcessEffect(arg_23_0)
+	if gohelper.isNil(arg_23_0._spineGo) then
 		return
 	end
 
-	if not slot0._spineGo.activeInHierarchy then
+	if not arg_23_0._spineGo.activeInHierarchy then
 		return
 	end
 
-	if slot0._uiEffectGos or not slot0._camera then
+	if arg_23_0._uiEffectGos or not arg_23_0._camera then
 		return
 	end
 
-	slot0._hasProcessModelEffect = false
-	slot0._uiEffectGos = slot0:getUserDataTb_()
-	slot0._uiEffectGosClone = slot0:getUserDataTb_()
+	arg_23_0._hasProcessModelEffect = false
+	arg_23_0._uiEffectGos = arg_23_0:getUserDataTb_()
+	arg_23_0._uiEffectGosClone = arg_23_0:getUserDataTb_()
 
-	if slot0._uiEffectList then
-		for slot4, slot5 in ipairs(slot0._uiEffectList) do
-			slot6, slot0._uiEffectGosClone[slot4] = slot0:_initSkinUiEffectGo(slot5, slot0._uiEffectInitVisible[slot4], slot4)
+	if arg_23_0._uiEffectList then
+		for iter_23_0, iter_23_1 in ipairs(arg_23_0._uiEffectList) do
+			local var_23_0, var_23_1 = arg_23_0:_initSkinUiEffectGo(iter_23_1, arg_23_0._uiEffectInitVisible[iter_23_0], iter_23_0)
 
-			if slot6 then
-				table.insert(slot0._uiEffectGos, slot6)
+			if var_23_0 then
+				table.insert(arg_23_0._uiEffectGos, var_23_0)
+
+				arg_23_0._uiEffectGosClone[iter_23_0] = var_23_1
 			end
 		end
 	end
 end
 
-function slot0._onBodyEffectShow(slot0, slot1)
-	if slot0._hasProcessModelEffect then
-		slot0:_doProcessEffect()
+function var_0_0._onBodyEffectShow(arg_24_0, arg_24_1)
+	if arg_24_0._hasProcessModelEffect then
+		arg_24_0:_doProcessEffect()
 	end
 
-	TaskDispatcher.cancelTask(slot0._realtimeAdjustPos, slot0)
+	TaskDispatcher.cancelTask(arg_24_0._realtimeAdjustPos, arg_24_0)
 
-	if slot1 and slot0._uiEffectGosClone and next(slot0._uiEffectGosClone) then
-		TaskDispatcher.runRepeat(slot0._realtimeAdjustPos, slot0, 0.1)
+	if arg_24_1 and arg_24_0._uiEffectGosClone and next(arg_24_0._uiEffectGosClone) then
+		TaskDispatcher.runRepeat(arg_24_0._realtimeAdjustPos, arg_24_0, 0.1)
 	end
 end
 
-function slot0._realtimeAdjustPos(slot0)
-	slot1 = false
+function var_0_0._realtimeAdjustPos(arg_25_0)
+	local var_25_0 = false
 
-	if slot0._uiEffectGos then
-		for slot5, slot6 in ipairs(slot0._uiEffectGos) do
-			if slot0._uiEffectGosClone[slot5] and slot6.activeSelf then
-				slot1 = true
+	if arg_25_0._uiEffectGos then
+		for iter_25_0, iter_25_1 in ipairs(arg_25_0._uiEffectGos) do
+			local var_25_1 = arg_25_0._uiEffectGosClone[iter_25_0]
 
-				slot0:_adjustPos(slot7, slot6)
+			if var_25_1 and iter_25_1.activeSelf then
+				var_25_0 = true
+
+				arg_25_0:_adjustPos(var_25_1, iter_25_1)
 			end
 		end
 	end
 
-	if not slot1 then
-		TaskDispatcher.cancelTask(slot0._realtimeAdjustPos, slot0)
+	if not var_25_0 then
+		TaskDispatcher.cancelTask(arg_25_0._realtimeAdjustPos, arg_25_0)
 	end
 end
 
-function slot0._initSkinUiEffectGo(slot0, slot1, slot2, slot3)
-	if gohelper.isNil(gohelper.findChild(slot0._spineGo, slot1)) then
+function var_0_0._initSkinUiEffectGo(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = gohelper.findChild(arg_26_0._spineGo, arg_26_1)
+
+	if gohelper.isNil(var_26_0) then
 		if SLFramework.FrameworkSettings.IsEditor then
-			if string.find(slot1, "#") then
-				logError(string.format("%s 分隔符使用错误，#要改为|", slot1))
+			if string.find(arg_26_1, "#") then
+				logError(string.format("%s 分隔符使用错误，#要改为|", arg_26_1))
 
 				return
 			end
 
-			logError(string.format("找不到特效节点：%s,请检查路径", slot1))
+			logError(string.format("找不到特效节点：%s,请检查路径", arg_26_1))
 
 			return
 		end
@@ -275,227 +287,257 @@ function slot0._initSkinUiEffectGo(slot0, slot1, slot2, slot3)
 		return
 	end
 
-	if slot2 then
-		gohelper.setActive(slot4.gameObject, true)
+	if arg_26_2 then
+		gohelper.setActive(var_26_0.gameObject, true)
 	end
 
-	for slot10 = 0, slot4.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.MaskableGraphic), true).Length - 1 do
-		slot11 = slot6[slot10]
-		slot11.enabled = true
+	local var_26_1 = LayerMask.NameToLayer("UI")
+	local var_26_2 = var_26_0.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.MaskableGraphic), true)
 
-		gohelper.setLayer(slot11.gameObject, LayerMask.NameToLayer("UI"))
+	for iter_26_0 = 0, var_26_2.Length - 1 do
+		local var_26_3 = var_26_2[iter_26_0]
+
+		var_26_3.enabled = true
+
+		gohelper.setLayer(var_26_3.gameObject, var_26_1)
 	end
 
-	if slot0._uiEffectRealtime and slot0._uiEffectRealtime[slot3] == 1 then
-		slot8 = slot4.transform
-		slot9 = gohelper.create3d(slot8.parent.gameObject, slot4.name .. "_Clone")
-		slot9.transform.localPosition = slot8.localPosition
+	if arg_26_0._uiEffectRealtime and arg_26_0._uiEffectRealtime[arg_26_3] == 1 then
+		local var_26_4 = var_26_0.transform
+		local var_26_5 = gohelper.create3d(var_26_4.parent.gameObject, var_26_0.name .. "_Clone")
 
-		gohelper.setActive(slot9, false)
+		var_26_5.transform.localPosition = var_26_4.localPosition
 
-		slot10 = slot0:_getEffectScale()
+		gohelper.setActive(var_26_5, false)
 
-		transformhelper.setLocalScale(slot4.transform, slot10, slot10, slot10)
+		local var_26_6 = arg_26_0:_getEffectScale()
 
-		return slot4, slot9
+		transformhelper.setLocalScale(var_26_0.transform, var_26_6, var_26_6, var_26_6)
+
+		return var_26_0, var_26_5
 	end
 
-	slot0:_adjustPos(slot4, slot4)
+	arg_26_0:_adjustPos(var_26_0, var_26_0)
 
-	slot8 = slot0:_getEffectScale()
+	local var_26_7 = arg_26_0:_getEffectScale()
 
-	transformhelper.setLocalScale(slot4.transform, slot8, slot8, slot8)
+	transformhelper.setLocalScale(var_26_0.transform, var_26_7, var_26_7, var_26_7)
 
-	return slot4
+	return var_26_0
 end
 
-function slot0._getEffectScale(slot0)
-	if slot0._uiEffectConfig.scale <= 0 then
+function var_0_0._getEffectScale(arg_27_0)
+	local var_27_0 = arg_27_0._uiEffectConfig.scale
+
+	if var_27_0 <= 0 then
 		if SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("id:%d特效scale值错误：%s,不能配小于0的值，正常值是1以上。", slot0._uiEffectConfig.id, slot1))
+			logError(string.format("id:%d特效scale值错误：%s,不能配小于0的值，正常值是1以上。", arg_27_0._uiEffectConfig.id, var_27_0))
 		end
 
-		slot1 = 1
+		var_27_0 = 1
 	end
 
-	return slot1
+	return var_27_0
 end
 
-function slot0._adjustPos(slot0, slot1, slot2)
-	slot3 = slot0._camera:WorldToViewportPoint(slot1.transform.position)
-	slot0._tempVec2.x = slot3.x
-	slot0._tempVec2.y = slot3.y
-	slot5 = slot0._rawImageGo.transform
-	slot7 = slot5.position + slot5:TransformVector((slot0._tempVec2 - slot5.pivot):Scale(slot5.rect.size))
+function var_0_0._adjustPos(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = arg_28_0._camera:WorldToViewportPoint(arg_28_1.transform.position)
 
-	transformhelper.setPosXY(slot2.transform, slot7.x, slot7.y)
+	arg_28_0._tempVec2.x = var_28_0.x
+	arg_28_0._tempVec2.y = var_28_0.y
+
+	local var_28_1 = arg_28_0._tempVec2
+	local var_28_2 = arg_28_0._rawImageGo.transform
+	local var_28_3 = (var_28_1 - var_28_2.pivot):Scale(var_28_2.rect.size)
+	local var_28_4 = var_28_2.position + var_28_2:TransformVector(var_28_3)
+
+	transformhelper.setPosXY(arg_28_2.transform, var_28_4.x, var_28_4.y)
 end
 
-function slot0.setCameraLoadedCallback(slot0, slot1, slot2)
-	slot0.cameraCallback = slot1
-	slot0.cameraCallbackObj = slot2
+function var_0_0.setCameraLoadedCallback(arg_29_0, arg_29_1, arg_29_2)
+	arg_29_0.cameraCallback = arg_29_1
+	arg_29_0.cameraCallbackObj = arg_29_2
 end
 
-function slot0._initCamera(slot0)
-	if slot0._guiL2dLoader then
-		if slot0._cameraGo then
-			slot0:_onCameraLoaded()
+function var_0_0._initCamera(arg_30_0)
+	if arg_30_0._guiL2dLoader then
+		if arg_30_0._cameraGo then
+			arg_30_0:_onCameraLoaded()
 		end
 
 		return
 	end
 
-	slot2 = UnityEngine.GameObject.New("live2d_camera_root").transform
-	slot2.parent = slot0._gameTr.parent
+	local var_30_0 = UnityEngine.GameObject.New("live2d_camera_root").transform
 
-	transformhelper.setLocalScale(slot2, 1, 1, 1)
-	transformhelper.setLocalPos(slot2, 0, 0, 0)
+	var_30_0.parent = arg_30_0._gameTr.parent
 
-	slot0._guiL2dLoader = MultiAbLoader.New()
+	transformhelper.setLocalScale(var_30_0, 1, 1, 1)
+	transformhelper.setLocalPos(var_30_0, 0, 0, 0)
 
-	slot0._guiL2dLoader:addPath(uv0)
-	slot0._guiL2dLoader:addPath(uv1)
-	slot0._guiL2dLoader:startLoad(slot0._loadL2dResFinish, slot0)
+	arg_30_0._guiL2dLoader = MultiAbLoader.New()
+
+	arg_30_0._guiL2dLoader:addPath(var_0_1)
+	arg_30_0._guiL2dLoader:addPath(var_0_2)
+	arg_30_0._guiL2dLoader:startLoad(arg_30_0._loadL2dResFinish, arg_30_0)
 end
 
-function slot0.openBloomView(slot0, slot1)
-	slot0._openBloomView = slot1
+function var_0_0.openBloomView(arg_31_0, arg_31_1)
+	arg_31_0._openBloomView = arg_31_1
 end
 
-function slot0.getTextureSizeByCameraSize(slot0)
-	return math.floor(slot0 / uv0.DefaultLive2dCameraSize * 1600)
+function var_0_0.getTextureSizeByCameraSize(arg_32_0)
+	local var_32_0 = 1600
+	local var_32_1 = arg_32_0 / var_0_0.DefaultLive2dCameraSize * var_32_0
+
+	return math.floor(var_32_1)
 end
 
-function slot0._getRT(slot0, slot1)
-	if slot0._openBloomView and slot0._skinId and lua_skin_ui_bloom.configDict[slot0._skinId] and slot2[slot0._openBloomView] == 1 then
-		return UnityEngine.RenderTexture.GetTemporary(slot1, slot1, 0, UnityEngine.RenderTextureFormat.ARGBHalf)
+function var_0_0._getRT(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0._openBloomView and arg_33_0._skinId and lua_skin_ui_bloom.configDict[arg_33_0._skinId]
+
+	if var_33_0 and var_33_0[arg_33_0._openBloomView] == 1 then
+		return UnityEngine.RenderTexture.GetTemporary(arg_33_1, arg_33_1, 0, UnityEngine.RenderTextureFormat.ARGBHalf)
 	end
 
-	return UnityEngine.RenderTexture.GetTemporary(slot1, slot1, 0, UnityEngine.RenderTextureFormat.ARGB32)
+	return UnityEngine.RenderTexture.GetTemporary(arg_33_1, arg_33_1, 0, UnityEngine.RenderTextureFormat.ARGB32)
 end
 
-function slot0._loadL2dResFinish(slot0)
-	slot0._cameraGo = gohelper.clone(slot0._guiL2dLoader:getAssetItem(uv0):GetResource(), slot0._gameTr.parent.gameObject)
-	slot0._camera = slot0._cameraGo:GetComponent(typeof(UnityEngine.Camera))
+function var_0_0._loadL2dResFinish(arg_34_0)
+	local var_34_0 = arg_34_0._guiL2dLoader:getAssetItem(var_0_1)
 
-	if slot0._cameraLayer then
-		slot0:setCameraLayer(slot0._cameraLayer)
+	arg_34_0._cameraGo = gohelper.clone(var_34_0:GetResource(), arg_34_0._gameTr.parent.gameObject)
+
+	local var_34_1 = arg_34_0._cameraGo:GetComponent(typeof(UnityEngine.Camera))
+
+	arg_34_0._camera = var_34_1
+
+	if arg_34_0._cameraLayer then
+		arg_34_0:setCameraLayer(arg_34_0._cameraLayer)
 	end
 
-	if slot0._cameraSize > 0 then
-		slot2.orthographicSize = slot0._cameraSize
+	if arg_34_0._cameraSize > 0 then
+		var_34_1.orthographicSize = arg_34_0._cameraSize
 	end
 
-	if uv2.maxTextureSize < uv1.getTextureSizeByCameraSize(slot2.orthographicSize) * slot0._adapterScaleOnCreate * slot0._qualityScale then
-		slot4 = slot5
+	local var_34_2 = var_0_0.getTextureSizeByCameraSize(var_34_1.orthographicSize) * arg_34_0._adapterScaleOnCreate * arg_34_0._qualityScale
+	local var_34_3 = var_0_3.maxTextureSize
+
+	if var_34_3 < var_34_2 then
+		var_34_2 = var_34_3
 	end
 
-	slot0._rt = slot0._rt or slot0:_getRT(slot4)
-	slot2.targetTexture = slot0._rt
-	slot0._rawImageGo = UnityEngine.GameObject.New("live2d_rawImage")
-	slot0._rawImageTransform = slot0._rawImageGo.transform
-	slot0._rawImageTransform.parent = slot0._gameTr.parent
+	arg_34_0._rt = arg_34_0._rt or arg_34_0:_getRT(var_34_2)
+	var_34_1.targetTexture = arg_34_0._rt
+	arg_34_0._rawImageGo = UnityEngine.GameObject.New("live2d_rawImage")
+	arg_34_0._rawImageTransform = arg_34_0._rawImageGo.transform
+	arg_34_0._rawImageTransform.parent = arg_34_0._gameTr.parent
 
-	slot0:setSpineScale(slot0._rawImageGo)
-	transformhelper.setLocalPos(slot0._rawImageTransform, 0, 1000, 0)
+	arg_34_0:setSpineScale(arg_34_0._rawImageGo)
+	transformhelper.setLocalPos(arg_34_0._rawImageTransform, 0, 1000, 0)
 
-	slot6 = gohelper.onceAddComponent(slot0._rawImageGo, gohelper.Type_RawImage)
-	slot6.texture = slot0._rt
-	slot6.raycastTarget = false
+	local var_34_4 = gohelper.onceAddComponent(arg_34_0._rawImageGo, gohelper.Type_RawImage)
 
-	slot6:SetNativeSize()
+	var_34_4.texture = arg_34_0._rt
+	var_34_4.raycastTarget = false
 
-	slot0._mat = UnityEngine.Object.Instantiate(slot0._guiL2dLoader:getAssetItem(uv3):GetResource())
+	var_34_4:SetNativeSize()
 
-	if slot0._uiMaskBuffer ~= nil then
-		slot0:setImageUIMask(slot0._uiMaskBuffer)
+	local var_34_5 = arg_34_0._guiL2dLoader:getAssetItem(var_0_2)
+
+	arg_34_0._mat = UnityEngine.Object.Instantiate(var_34_5:GetResource())
+
+	if arg_34_0._uiMaskBuffer ~= nil then
+		arg_34_0:setImageUIMask(arg_34_0._uiMaskBuffer)
 	end
 
-	slot6.material = slot0._mat
+	var_34_4.material = arg_34_0._mat
 
-	slot0:_setMaterialToInvisible(slot0._mat)
-	slot0:_onCameraLoaded()
+	arg_34_0:_setMaterialToInvisible(arg_34_0._mat)
+	arg_34_0:_onCameraLoaded()
 end
 
-function slot0._isAfterLive2d(slot0)
-	return slot0._uiEffectConfig and slot0._uiEffectConfig.id == 307502
+function var_0_0._isAfterLive2d(arg_35_0)
+	return arg_35_0._uiEffectConfig and arg_35_0._uiEffectConfig.id == 307502
 end
 
-function slot0._setMaterialToInvisible(slot0, slot1)
-	if gohelper.isNil(slot0._spineGo) then
+function var_0_0._setMaterialToInvisible(arg_36_0, arg_36_1)
+	if gohelper.isNil(arg_36_0._spineGo) then
 		return
 	end
 
-	if not slot0._spineGo:GetComponent(uv0) then
+	local var_36_0 = arg_36_0._spineGo:GetComponent(var_0_4)
+
+	if not var_36_0 then
 		return
 	end
 
-	slot2:SetRawImageMaterial(slot1)
+	var_36_0:SetRawImageMaterial(arg_36_1)
 
-	slot2.isInUI = true
+	var_36_0.isInUI = true
 end
 
-function slot0.setSpineScale(slot0, slot1)
-	slot2 = GameUtil.getAdapterScale() / (slot0._adapterScaleOnCreate or 1) / (slot0._qualityScale or 1)
+function var_0_0.setSpineScale(arg_37_0, arg_37_1)
+	local var_37_0 = GameUtil.getAdapterScale() / (arg_37_0._adapterScaleOnCreate or 1) / (arg_37_0._qualityScale or 1)
 
-	transformhelper.setLocalScale(slot1.transform, slot2, slot2, slot2)
+	transformhelper.setLocalScale(arg_37_1.transform, var_37_0, var_37_0, var_37_0)
 end
 
-function slot0._onCameraLoaded(slot0)
-	if slot0:_isAfterLive2d() then
-		gohelper.setSiblingAfter(slot0._rawImageGo, slot0._gameObj)
+function var_0_0._onCameraLoaded(arg_38_0)
+	if arg_38_0:_isAfterLive2d() then
+		gohelper.setSiblingAfter(arg_38_0._rawImageGo, arg_38_0._gameObj)
 	else
-		gohelper.setAsFirstSibling(slot0._rawImageGo)
+		gohelper.setAsFirstSibling(arg_38_0._rawImageGo)
 	end
 
-	if slot0._cameraVisible == nil then
-		slot0._cameraVisible = true
+	if arg_38_0._cameraVisible == nil then
+		arg_38_0._cameraVisible = true
 	end
 
-	slot0:_setCameraVisible(slot0._cameraVisible)
-	slot0:_processEffect()
+	arg_38_0:_setCameraVisible(arg_38_0._cameraVisible)
+	arg_38_0:_processEffect()
 
-	if slot0.cameraCallback then
-		slot0.cameraCallback(slot0.cameraCallbackObj, slot0)
+	if arg_38_0.cameraCallback then
+		arg_38_0.cameraCallback(arg_38_0.cameraCallbackObj, arg_38_0)
 	end
 end
 
-function slot0.setImageUIMask(slot0, slot1)
-	if slot0._mat then
-		if slot1 == true then
-			slot0._mat:EnableKeyword("_UIMASK_ON")
+function var_0_0.setImageUIMask(arg_39_0, arg_39_1)
+	if arg_39_0._mat then
+		if arg_39_1 == true then
+			arg_39_0._mat:EnableKeyword("_UIMASK_ON")
 		else
-			slot0._mat:DisableKeyword("_UIMASK_ON")
+			arg_39_0._mat:DisableKeyword("_UIMASK_ON")
 		end
 	else
-		slot0._uiMaskBuffer = slot1
+		arg_39_0._uiMaskBuffer = arg_39_1
 	end
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_40_0)
+	var_0_0.super.onDestroy(arg_40_0)
 
-	if slot0._guiL2dLoader then
-		slot0._guiL2dLoader:dispose()
+	if arg_40_0._guiL2dLoader then
+		arg_40_0._guiL2dLoader:dispose()
 
-		slot0._guiL2dLoader = nil
+		arg_40_0._guiL2dLoader = nil
 	end
 
-	slot0._mat = nil
+	arg_40_0._mat = nil
 
-	if slot0._rt then
-		UnityEngine.RenderTexture.ReleaseTemporary(slot0._rt)
+	if arg_40_0._rt then
+		UnityEngine.RenderTexture.ReleaseTemporary(arg_40_0._rt)
 
-		slot0._rt = nil
+		arg_40_0._rt = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayProcessEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._realtimeAdjustPos, slot0)
+	TaskDispatcher.cancelTask(arg_40_0._delayProcessEffect, arg_40_0)
+	TaskDispatcher.cancelTask(arg_40_0._realtimeAdjustPos, arg_40_0)
 
-	slot0._uiEffectGos = nil
-	slot0._uiEffectGosClone = nil
-	slot0._rawImageGo = nil
-	slot0._cameraGo = nil
+	arg_40_0._uiEffectGos = nil
+	arg_40_0._uiEffectGosClone = nil
+	arg_40_0._rawImageGo = nil
+	arg_40_0._cameraGo = nil
 end
 
-return slot0
+return var_0_0

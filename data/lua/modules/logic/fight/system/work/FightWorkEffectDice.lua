@@ -1,51 +1,54 @@
-module("modules.logic.fight.system.work.FightWorkEffectDice", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectDice", package.seeall)
 
-slot0 = class("FightWorkEffectDice", FightEffectBase)
-slot1 = nil
+local var_0_0 = class("FightWorkEffectDice", FightEffectBase)
+local var_0_1
 
-function slot0.onStart(slot0)
-	if uv0 then
-		table.insert(uv0, {
-			slot0._fightStepMO,
-			slot0._actEffectMO
+function var_0_0.onStart(arg_1_0)
+	if var_0_1 then
+		table.insert(var_0_1, {
+			arg_1_0._fightStepMO,
+			arg_1_0._actEffectMO
 		})
 	else
-		uv0 = {}
+		var_0_1 = {}
 
-		table.insert(uv0, {
-			slot0._fightStepMO,
-			slot0._actEffectMO
+		table.insert(var_0_1, {
+			arg_1_0._fightStepMO,
+			arg_1_0._actEffectMO
 		})
-		TaskDispatcher.runDelay(slot0._delayStart, slot0, 0.01)
+		TaskDispatcher.runDelay(arg_1_0._delayStart, arg_1_0, 0.01)
 	end
 end
 
-function slot0._delayStart(slot0)
-	FightController.instance:registerCallback(FightEvent.OnDiceEnd, slot0._onDiceEnd, slot0)
-	slot0:com_registTimer(slot0._delayDone, 10)
+function var_0_0._delayStart(arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnDiceEnd, arg_2_0._onDiceEnd, arg_2_0)
+	arg_2_0:com_registTimer(arg_2_0._delayDone, 10)
 
-	slot1 = ViewName.FightDiceView
+	local var_2_0 = ViewName.FightDiceView
+	local var_2_1 = FightModel.instance:getFightParam()
+	local var_2_2 = DungeonConfig.instance:getEpisodeCO(var_2_1.episodeId)
+	local var_2_3 = var_2_2 and var_2_2.type
 
-	if Activity104Model.instance:isSeasonEpisodeType(DungeonConfig.instance:getEpisodeCO(FightModel.instance:getFightParam().episodeId) and slot3.type) then
-		slot1 = ViewName.FightSeasonDiceView
+	if Activity104Model.instance:isSeasonEpisodeType(var_2_3) then
+		var_2_0 = ViewName.FightSeasonDiceView
 	end
 
-	ViewMgr.instance:openView(slot1, uv0)
+	ViewMgr.instance:openView(var_2_0, var_0_1)
 
-	uv0 = nil
+	var_0_1 = nil
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._onDiceEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onDiceEnd(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnDiceEnd, slot0._onDiceEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._delayStart, slot0)
+function var_0_0.clearWork(arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnDiceEnd, arg_5_0._onDiceEnd, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayStart, arg_5_0)
 end
 
-return slot0
+return var_0_0

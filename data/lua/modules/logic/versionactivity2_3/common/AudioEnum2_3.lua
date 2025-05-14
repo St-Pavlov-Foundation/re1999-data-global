@@ -1,17 +1,18 @@
-module("modules.logic.versionactivity2_3.common.AudioEnum2_3", package.seeall)
+﻿module("modules.logic.versionactivity2_3.common.AudioEnum2_3", package.seeall)
 
-slot0 = AudioEnum
-slot0.VersionActivity2_3Store = {
+local var_0_0 = AudioEnum
+
+var_0_0.VersionActivity2_3Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-slot0.VersionActivity2_3Enter = {
+var_0_0.VersionActivity2_3Enter = {
 	play_ui_jinye_open = 20230011,
 	play_ui_jinye_unfold = 20230012
 }
-slot0.Act174 = {
+var_0_0.Act174 = {
 	play_ui_home_door_effect_put = 20233014,
 	play_ui_shenghuo_dqq_fight_result = 20233005,
 	play_artificial_buff_curses_up = 20233013,
@@ -30,7 +31,14 @@ slot0.Act174 = {
 	play_ui_shenghuo_dqq_fight_end = 20233001,
 	play_ui_shenghuo_dqq_win = 20233004
 }
-slot2 = {
+
+local var_0_1 = {
+	stop_ui_bus_2000048 = 2000048,
+	ui_shenghuo_discovery_amb_20234001 = 20234001,
+	Act2_3DungeonBgm = 20230001,
+	play_ui_shenghuo_preheat_amb_20234003 = 20234003
+}
+local var_0_2 = {
 	play_ui_tags_2000013 = 2000013,
 	Act176_RecyclePlane = 20211501,
 	play_ui_common_click_25050217 = 25050217,
@@ -48,7 +56,8 @@ slot2 = {
 	Act176_UnlockNewEpisode = 20200203,
 	play_ui_wulu_atticletter_write_loop_25005507 = 25005507
 }
-slot0.CharacterDestinyStone = {
+
+var_0_0.CharacterDestinyStone = {
 	play_ui_fate_lifestone_unlock = 20231007,
 	play_ui_molu_sky_open = 20231002,
 	play_ui_leimi_smalluncharted_refresh = 20231003,
@@ -61,28 +70,24 @@ slot0.CharacterDestinyStone = {
 	play_ui_fate_slots_full = 20231005
 }
 
-for slot6, slot7 in pairs({
-	stop_ui_bus_2000048 = 2000048,
-	ui_shenghuo_discovery_amb_20234001 = 20234001,
-	Act2_3DungeonBgm = 20230001,
-	play_ui_shenghuo_preheat_amb_20234003 = 20234003
-}) do
-	if isDebugBuild and slot0.Bgm[slot6] then
-		logError("AudioEnum.Bgm重复定义" .. slot6)
+for iter_0_0, iter_0_1 in pairs(var_0_1) do
+	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
+		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
 	end
 
-	slot0.Bgm[slot6] = slot7
+	var_0_0.Bgm[iter_0_0] = iter_0_1
 end
 
-for slot6, slot7 in pairs(slot2) do
-	if isDebugBuild and slot0.UI[slot6] then
-		logError("AudioEnum.UI重复定义" .. slot6)
+for iter_0_2, iter_0_3 in pairs(var_0_2) do
+	if isDebugBuild and var_0_0.UI[iter_0_2] then
+		logError("AudioEnum.UI重复定义" .. iter_0_2)
 	end
 
-	slot0.UI[slot6] = slot7
+	var_0_0.UI[iter_0_2] = iter_0_3
 end
 
-function slot0.activate()
+function var_0_0.activate()
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,25 +1,25 @@
-module("modules.logic.battlepass.controller.BpController", package.seeall)
+﻿module("modules.logic.battlepass.controller.BpController", package.seeall)
 
-slot0 = class("BpController", BaseController)
+local var_0_0 = class("BpController", BaseController)
 
-function slot0.addConstEvents(slot0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0._onUpdateTaskList, slot0)
-	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, slot0._onDeleteTaskList, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0.dailyRefresh, slot0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, slot0._getBpInfo, slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_1_0._onUpdateTaskList, arg_1_0)
+	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, arg_1_0._onDeleteTaskList, arg_1_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0.dailyRefresh, arg_1_0)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._getBpInfo, arg_1_0)
 end
 
-function slot0.openBattlePassView(slot0, slot1, slot2, slot3)
-	slot0._isOpenSp = slot1
-	slot0._isOpenCharge = slot3
-	slot0._openViewParam = slot2
+function var_0_0.openBattlePassView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._isOpenSp = arg_2_1
+	arg_2_0._isOpenCharge = arg_2_3
+	arg_2_0._openViewParam = arg_2_2
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_permit_enter_button)
 
 	if not BpModel.instance:hasGetInfo() then
-		slot0:registerCallback(BpEvent.OnGetInfo, slot0._onGetInfo, slot0)
+		arg_2_0:registerCallback(BpEvent.OnGetInfo, arg_2_0._onGetInfo, arg_2_0)
 	elseif not BpModel.instance:isEnd() then
-		slot0:_openBpView()
+		arg_2_0:_openBpView()
 	else
 		GameFacade.showToast(ToastEnum.BattlePass)
 
@@ -29,45 +29,44 @@ function slot0.openBattlePassView(slot0, slot1, slot2, slot3)
 	BpRpc.instance:sendGetBpInfoRequest(true)
 end
 
-function slot0.dailyRefresh(slot0)
+function var_0_0.dailyRefresh(arg_3_0)
 	if not BpModel.instance:isEnd() and ViewMgr.instance:isOpen(ViewName.BpView) then
 		BpRpc.instance:sendGetBpInfoRequest(true)
 	end
 end
 
-function slot0._openBpView(slot0)
-	if slot0._isOpenSp then
+function var_0_0._openBpView(arg_4_0)
+	if arg_4_0._isOpenSp then
 		if BpModel.instance.firstShowSp then
 			ViewMgr.instance:openView(ViewName.BPSPFaceView)
 		else
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0.onViewOpen, slot0)
-			ViewMgr.instance:openView(ViewName.BpSPView, slot0._openViewParam)
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_4_0.onViewOpen, arg_4_0)
+			ViewMgr.instance:openView(ViewName.BpSPView, arg_4_0._openViewParam)
 		end
 	else
-		module_views_preloader.BpViewPreLoad(function ()
+		module_views_preloader.BpViewPreLoad(function()
 			if BpModel.instance:isEnd() then
 				return
 			end
 
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, uv0.onViewOpen, uv0)
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_4_0.onViewOpen, arg_4_0)
 
-			slot0 = uv0._openViewParam or {}
+			local var_5_0 = arg_4_0._openViewParam or {}
 
 			if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTaskMain) then
-				slot0.defaultTabIds = {
-					[2] = 2
-				}
+				var_5_0.defaultTabIds = {}
+				var_5_0.defaultTabIds[2] = 2
 			end
 
-			slot0.isPlayDayFirstAnim = not BpModel.instance.firstShow and not uv0._isOpenCharge
+			var_5_0.isPlayDayFirstAnim = not BpModel.instance.firstShow and not arg_4_0._isOpenCharge
 
 			if BpModel.instance.firstShow then
-				uv0._isOpenCharge = nil
+				arg_4_0._isOpenCharge = nil
 			end
 
-			ViewMgr.instance:openView(ViewName.BpView, slot0)
+			ViewMgr.instance:openView(ViewName.BpView, var_5_0)
 
-			if uv0._isOpenCharge then
+			if arg_4_0._isOpenCharge then
 				if BpModel.instance:isBpChargeEnd() then
 					return
 				end
@@ -78,29 +77,29 @@ function slot0._openBpView(slot0)
 	end
 end
 
-function slot0.onViewOpen(slot0, slot1)
-	if slot1 == ViewName.BpView then
+function var_0_0.onViewOpen(arg_6_0, arg_6_1)
+	if arg_6_1 == ViewName.BpView then
 		ViewMgr.instance:closeView(ViewName.BpSPView, true)
-	elseif slot1 == ViewName.BpSPView then
+	elseif arg_6_1 == ViewName.BpSPView then
 		ViewMgr.instance:closeView(ViewName.BpView, true)
 	else
 		return
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0.onViewOpen, slot0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_6_0.onViewOpen, arg_6_0)
 end
 
-function slot0._onGetInfo(slot0)
-	slot0:unregisterCallback(BpEvent.OnGetInfo, slot0._onGetInfo, slot0)
+function var_0_0._onGetInfo(arg_7_0)
+	arg_7_0:unregisterCallback(BpEvent.OnGetInfo, arg_7_0._onGetInfo, arg_7_0)
 
 	if BpModel.instance:isEnd() then
 		return
 	end
 
-	slot0:_openBpView()
+	arg_7_0:_openBpView()
 end
 
-function slot0._getBpInfo(slot0)
+function var_0_0._getBpInfo(arg_8_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BP) then
 		return
 	end
@@ -108,38 +107,42 @@ function slot0._getBpInfo(slot0)
 	BpRpc.instance:sendGetBpInfoRequest(false)
 end
 
-function slot0.onCheckBpEndTime(slot0)
-	if not BpModel.instance:isEnd() and BpModel.instance.endTime - ServerTime.now() > 0 then
-		TaskDispatcher.cancelTask(slot0._onBpClose, slot0)
-		TaskDispatcher.runDelay(slot0._onBpClose, slot0, slot1)
+function var_0_0.onCheckBpEndTime(arg_9_0)
+	if not BpModel.instance:isEnd() then
+		local var_9_0 = BpModel.instance.endTime - ServerTime.now()
+
+		if var_9_0 > 0 then
+			TaskDispatcher.cancelTask(arg_9_0._onBpClose, arg_9_0)
+			TaskDispatcher.runDelay(arg_9_0._onBpClose, arg_9_0, var_9_0)
+		end
 	end
 end
 
-function slot0.onBpLevelUp(slot0)
-	slot0._isLevelUp = true
+function var_0_0.onBpLevelUp(arg_10_0)
+	arg_10_0._isLevelUp = true
 
-	TaskDispatcher.runDelay(slot0._showLevelUpView, slot0, 0.1)
+	TaskDispatcher.runDelay(arg_10_0._showLevelUpView, arg_10_0, 0.1)
 end
 
-function slot0.needShowLevelUp(slot0)
-	return slot0._isLevelUp
+function var_0_0.needShowLevelUp(arg_11_0)
+	return arg_11_0._isLevelUp
 end
 
-function slot0.pauseShowLevelUp(slot0)
-	TaskDispatcher.cancelTask(slot0._showLevelUpView, slot0)
+function var_0_0.pauseShowLevelUp(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._showLevelUpView, arg_12_0)
 
-	slot0._isLevelUp = nil
+	arg_12_0._isLevelUp = nil
 end
 
-function slot0._showLevelUpView(slot0)
-	TaskDispatcher.cancelTask(slot0._showLevelUpView, slot0)
+function var_0_0._showLevelUpView(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._showLevelUpView, arg_13_0)
 
-	slot0._isLevelUp = nil
+	arg_13_0._isLevelUp = nil
 
 	ViewMgr.instance:openView(ViewName.BpLevelupTipView)
 end
 
-function slot0._onBpClose(slot0)
+function var_0_0._onBpClose(arg_14_0)
 	if ViewMgr.instance:isOpen(ViewName.BpView) then
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
@@ -157,31 +160,31 @@ function slot0._onBpClose(slot0)
 
 	BpModel.instance.endTime = 0
 
-	slot0:dispatchEvent(BpEvent.OnGetInfo)
+	arg_14_0:dispatchEvent(BpEvent.OnGetInfo)
 end
 
-function slot0._onUpdateTaskList(slot0, slot1)
-	if BpTaskModel.instance:updateInfo(slot1.taskInfo) then
-		uv0.instance:dispatchEvent(BpEvent.OnTaskUpdate)
-		uv0.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
+function var_0_0._onUpdateTaskList(arg_15_0, arg_15_1)
+	if BpTaskModel.instance:updateInfo(arg_15_1.taskInfo) then
+		var_0_0.instance:dispatchEvent(BpEvent.OnTaskUpdate)
+		var_0_0.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 	end
 end
 
-function slot0._onDeleteTaskList(slot0, slot1)
-	if BpTaskModel.instance:deleteInfo(slot1.taskIds) then
-		uv0.instance:dispatchEvent(BpEvent.OnTaskUpdate)
-		uv0.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
+function var_0_0._onDeleteTaskList(arg_16_0, arg_16_1)
+	if BpTaskModel.instance:deleteInfo(arg_16_1.taskIds) then
+		var_0_0.instance:dispatchEvent(BpEvent.OnTaskUpdate)
+		var_0_0.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 	end
 end
 
-function slot0._showCommonPropView(slot0, slot1)
+function var_0_0._showCommonPropView(arg_17_0, arg_17_1)
 	if BpModel.instance.lockAlertBonus then
-		BpModel.instance.cacheBonus = slot1
+		BpModel.instance.cacheBonus = arg_17_1
 	else
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView, slot1)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView, arg_17_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

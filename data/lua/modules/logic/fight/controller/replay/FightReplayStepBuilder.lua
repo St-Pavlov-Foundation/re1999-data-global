@@ -1,45 +1,40 @@
-module("modules.logic.fight.controller.replay.FightReplayStepBuilder", package.seeall)
+﻿module("modules.logic.fight.controller.replay.FightReplayStepBuilder", package.seeall)
 
-slot0 = class("FightReplayStepBuilder")
+local var_0_0 = class("FightReplayStepBuilder")
 
-function slot0.buildReplaySequence()
-	slot0 = FlowSequence.New()
+function var_0_0.buildReplaySequence()
+	local var_1_0 = FlowSequence.New()
+	local var_1_1 = FightReplayModel.instance:getList()
 
-	for slot5, slot6 in ipairs(FightReplayModel.instance:getList()) do
-		slot0:addWork(FightReplayWorkWaitCardStage.New())
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		var_1_0:addWork(FightReplayWorkWaitCardStage.New())
 
-		for slot10, slot11 in ipairs(slot6.clothSkillOpers) do
-			slot0:addWork(FightReplayWorkClothSkill.New(slot11))
+		for iter_1_2, iter_1_3 in ipairs(iter_1_1.clothSkillOpers) do
+			var_1_0:addWork(FightReplayWorkClothSkill.New(iter_1_3))
 		end
 
-		slot10 = FightModel.instance
-		slot11 = slot10
-
-		slot0:addWork(WorkWaitSeconds.New(0.1 / slot10.getSpeed(slot11)))
-
-		function slot10()
+		var_1_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
+		var_1_0:addWork(FunctionWork.New(function()
 			FightController.instance:setCurStage(FightEnum.Stage.Card)
-		end
+		end))
 
-		slot0:addWork(FunctionWork.New(slot10))
-
-		for slot10, slot11 in ipairs(slot6.opers) do
-			if slot11:isMoveCard() then
-				slot0:addWork(FightReplayWorkMoveCard.New(slot11))
-			elseif slot11:isPlayCard() then
-				slot0:addWork(FightReplayWorkPlayCard.New(slot11))
-			elseif slot11:isMoveUniversal() then
-				slot0:addWork(FightReplayWorkMoveUniversal.New(slot11))
-			elseif slot11:isPlayerFinisherSkill() then
-				slot0:addWork(FightReplyWorkPlayerFinisherSkill.New(slot11))
+		for iter_1_4, iter_1_5 in ipairs(iter_1_1.opers) do
+			if iter_1_5:isMoveCard() then
+				var_1_0:addWork(FightReplayWorkMoveCard.New(iter_1_5))
+			elseif iter_1_5:isPlayCard() then
+				var_1_0:addWork(FightReplayWorkPlayCard.New(iter_1_5))
+			elseif iter_1_5:isMoveUniversal() then
+				var_1_0:addWork(FightReplayWorkMoveUniversal.New(iter_1_5))
+			elseif iter_1_5:isPlayerFinisherSkill() then
+				var_1_0:addWork(FightReplyWorkPlayerFinisherSkill.New(iter_1_5))
 			end
 		end
 
-		slot0:addWork(FightReplayWorkWaitRoundEnd.New())
-		slot0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
+		var_1_0:addWork(FightReplayWorkWaitRoundEnd.New())
+		var_1_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
 	end
 
-	return slot0
+	return var_1_0
 end
 
-return slot0
+return var_0_0

@@ -1,81 +1,81 @@
-module("modules.logic.weekwalk.model.WeekwalkInfoMO", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekwalkInfoMO", package.seeall)
 
-slot0 = pureTable("WeekwalkInfoMO")
+local var_0_0 = pureTable("WeekwalkInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.time = slot1.time
-	slot0.endTime = slot1.endTime
-	slot0.maxLayer = slot1.maxLayer
-	slot0.issueId = slot1.issueId
-	slot0.isPopDeepRule = slot1.isPopDeepRule
-	slot0.isOpenDeep = slot1.isOpenDeep
-	slot0.isPopShallowSettle = slot1.isPopShallowSettle
-	slot0.isPopDeepSettle = slot1.isPopDeepSettle
-	slot0.deepProgress = slot1.deepProgress
-	slot0._mapInfos = {}
-	slot0._mapInfosMap = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.time = arg_1_1.time
+	arg_1_0.endTime = arg_1_1.endTime
+	arg_1_0.maxLayer = arg_1_1.maxLayer
+	arg_1_0.issueId = arg_1_1.issueId
+	arg_1_0.isPopDeepRule = arg_1_1.isPopDeepRule
+	arg_1_0.isOpenDeep = arg_1_1.isOpenDeep
+	arg_1_0.isPopShallowSettle = arg_1_1.isPopShallowSettle
+	arg_1_0.isPopDeepSettle = arg_1_1.isPopDeepSettle
+	arg_1_0.deepProgress = arg_1_1.deepProgress
+	arg_1_0._mapInfos = {}
+	arg_1_0._mapInfosMap = {}
 
-	if slot1.mapInfo then
-		for slot5, slot6 in ipairs(slot1.mapInfo) do
-			slot7 = MapInfoMO.New()
+	if arg_1_1.mapInfo then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_1.mapInfo) do
+			local var_1_0 = MapInfoMO.New()
 
-			slot7:init(slot6)
+			var_1_0:init(iter_1_1)
 
-			slot0._mapInfosMap[slot6.id] = slot7
+			arg_1_0._mapInfosMap[iter_1_1.id] = var_1_0
 
-			table.insert(slot0._mapInfos, slot7)
+			table.insert(arg_1_0._mapInfos, var_1_0)
 		end
 	end
 
-	table.sort(slot0._mapInfos, uv0._sort)
+	table.sort(arg_1_0._mapInfos, var_0_0._sort)
 end
 
-function slot0._sort(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0._sort(arg_2_0, arg_2_1)
+	return arg_2_0.id < arg_2_1.id
 end
 
-function slot0.getMapInfos(slot0)
-	return slot0._mapInfos
+function var_0_0.getMapInfos(arg_3_0)
+	return arg_3_0._mapInfos
 end
 
-function slot0.getNotFinishedMap(slot0)
-	slot1 = #slot0._mapInfos
+function var_0_0.getNotFinishedMap(arg_4_0)
+	local var_4_0 = #arg_4_0._mapInfos
 
-	return slot0._mapInfos[slot1], slot1
+	return arg_4_0._mapInfos[var_4_0], var_4_0
 end
 
-function slot0.getNameIndexByBattleId(slot0, slot1)
-	slot2 = nil
+function var_0_0.getNameIndexByBattleId(arg_5_0, arg_5_1)
+	local var_5_0
 
-	for slot6, slot7 in ipairs(slot0._mapInfos) do
-		if slot7:getBattleInfo(slot1) then
-			slot2 = slot7
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._mapInfos) do
+		if iter_5_1:getBattleInfo(arg_5_1) then
+			var_5_0 = iter_5_1
 
 			break
 		end
 	end
 
-	if not slot2 then
+	if not var_5_0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(lua_weekwalk.configList) do
-		if slot7.id == slot2.id then
-			return lua_weekwalk_scene.configDict[slot2.sceneId].battleName, slot7.layer
+	for iter_5_2, iter_5_3 in ipairs(lua_weekwalk.configList) do
+		if iter_5_3.id == var_5_0.id then
+			return lua_weekwalk_scene.configDict[var_5_0.sceneId].battleName, iter_5_3.layer
 		end
 	end
 end
 
-function slot0.getMapInfo(slot0, slot1)
-	return slot0._mapInfosMap[slot1]
+function var_0_0.getMapInfo(arg_6_0, arg_6_1)
+	return arg_6_0._mapInfosMap[arg_6_1]
 end
 
-function slot0.getMapInfoByLayer(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._mapInfos) do
-		if slot6:getLayer() == slot1 then
-			return slot6
+function var_0_0.getMapInfoByLayer(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._mapInfos) do
+		if iter_7_1:getLayer() == arg_7_1 then
+			return iter_7_1
 		end
 	end
 end
 
-return slot0
+return var_0_0

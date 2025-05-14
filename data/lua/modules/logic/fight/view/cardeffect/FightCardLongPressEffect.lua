@@ -1,78 +1,85 @@
-module("modules.logic.fight.view.cardeffect.FightCardLongPressEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardLongPressEffect", package.seeall)
 
-slot0 = class("FightCardLongPressEffect", BaseWork)
+local var_0_0 = class("FightCardLongPressEffect", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	slot0._dragItem = slot1.handCardItemList[slot1.index]
-	slot0._cardCount = slot1.cardCount
+	arg_2_0._dragItem = arg_2_1.handCardItemList[arg_2_1.index]
+	arg_2_0._cardCount = arg_2_1.cardCount
 
-	gohelper.setAsLastSibling(slot0._dragItem.go)
+	gohelper.setAsLastSibling(arg_2_0._dragItem.go)
 
-	slot2 = 0.033
-	slot0._sequence = FlowSequence.New()
+	local var_2_0 = 0.033
 
-	slot0._sequence:addWork(TweenWork.New({
+	arg_2_0._sequence = FlowSequence.New()
+
+	arg_2_0._sequence:addWork(TweenWork.New({
 		from = 1,
 		type = "DOTweenFloat",
 		to = 0.9,
-		t = slot2 * 3,
-		frameCb = slot0._tweenFrameScale,
-		cbObj = slot0
+		t = var_2_0 * 3,
+		frameCb = arg_2_0._tweenFrameScale,
+		cbObj = arg_2_0
 	}))
-	slot0._sequence:addWork(TweenWork.New({
+	arg_2_0._sequence:addWork(TweenWork.New({
 		from = 0.9,
 		type = "DOTweenFloat",
 		to = 1.2,
-		t = slot2 * 4,
-		frameCb = slot0._tweenFrameScale,
-		cbObj = slot0
+		t = var_2_0 * 4,
+		frameCb = arg_2_0._tweenFrameScale,
+		cbObj = arg_2_0
 	}))
-	slot0._sequence:registerDoneListener(slot0._onWorkDone, slot0)
-	slot0._sequence:start()
+	arg_2_0._sequence:registerDoneListener(arg_2_0._onWorkDone, arg_2_0)
+	arg_2_0._sequence:start()
 end
 
-function slot0._tweenFrameScale(slot0, slot1)
-	slot0._dragScale = slot1
+function var_0_0._tweenFrameScale(arg_3_0, arg_3_1)
+	arg_3_0._dragScale = arg_3_1
 
-	slot0:_updateDragHandCards()
+	arg_3_0:_updateDragHandCards()
 end
 
-function slot0.onStop(slot0)
-	uv0.super.onStop(slot0)
-	slot0._sequence:stop()
+function var_0_0.onStop(arg_4_0)
+	var_0_0.super.onStop(arg_4_0)
+	arg_4_0._sequence:stop()
 end
 
-function slot0._onWorkDone(slot0)
-	slot0._sequence:unregisterDoneListener(slot0._onWorkDone, slot0)
+function var_0_0._onWorkDone(arg_5_0)
+	arg_5_0._sequence:unregisterDoneListener(arg_5_0._onWorkDone, arg_5_0)
 
-	if slot0.context.handCardItemList[slot0.context.index].cardInfoMO and slot1.cardInfoMO.skillId then
-		FightController.instance:dispatchEvent(FightEvent.ShowCardSkillTips, slot2, slot1.cardInfoMO.uid, slot1.cardInfoMO)
+	local var_5_0 = arg_5_0.context.handCardItemList[arg_5_0.context.index]
+	local var_5_1 = var_5_0.cardInfoMO and var_5_0.cardInfoMO.skillId
+
+	if var_5_1 then
+		FightController.instance:dispatchEvent(FightEvent.ShowCardSkillTips, var_5_1, var_5_0.cardInfoMO.uid, var_5_0.cardInfoMO)
 	end
 
-	slot0:onDone(true)
+	arg_5_0:onDone(true)
 end
 
-function slot0._updateDragHandCards(slot0)
-	slot2 = slot0._dragItem
-	slot4 = slot0._dragScale
+function var_0_0._updateDragHandCards(arg_6_0)
+	local var_6_0 = arg_6_0.context.index
+	local var_6_1 = arg_6_0._dragItem
+	local var_6_2 = arg_6_0._cardCount
+	local var_6_3 = arg_6_0._dragScale
+	local var_6_4 = arg_6_0.context.handCardItemList
+	local var_6_5 = FightViewHandCard.HandCardHeight * (var_6_3 - 1) / 2
 
-	recthelper.setAnchorY(slot2.tr, FightViewHandCard.HandCardHeight * (slot4 - 1) / 2)
+	recthelper.setAnchorY(var_6_1.tr, var_6_5)
+	transformhelper.setLocalScale(var_6_1.tr, var_6_3, var_6_3, 1)
 
-	slot10 = slot4
+	for iter_6_0 = 1, var_6_2 do
+		local var_6_6 = var_6_4[iter_6_0]
+		local var_6_7 = recthelper.getAnchorX(var_6_6.tr)
+		local var_6_8 = FightViewHandCard.calcCardPosXDraging(iter_6_0, var_6_2, var_6_0, var_6_3)
 
-	transformhelper.setLocalScale(slot2.tr, slot4, slot10, 1)
-
-	for slot10 = 1, slot0._cardCount do
-		slot11 = slot0.context.handCardItemList[slot10]
-		slot12 = recthelper.getAnchorX(slot11.tr)
-
-		recthelper.setAnchorX(slot11.tr, FightViewHandCard.calcCardPosXDraging(slot10, slot3, slot0.context.index, slot4))
+		recthelper.setAnchorX(var_6_6.tr, var_6_8)
 	end
 end
 
-return slot0
+return var_0_0

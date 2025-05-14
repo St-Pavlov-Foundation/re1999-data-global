@@ -1,53 +1,55 @@
-module("modules.logic.story.view.StoryActivityChapterClose1_5", package.seeall)
+﻿module("modules.logic.story.view.StoryActivityChapterClose1_5", package.seeall)
 
-slot0 = class("StoryActivityChapterClose1_5", StoryActivityChapterBase)
+local var_0_0 = class("StoryActivityChapterClose1_5", StoryActivityChapterBase)
 
-function slot0.onCtor(slot0)
-	slot0.assetPath = "ui/viewres/story/v1a5/storyactivitychapterclose.prefab"
+function var_0_0.onCtor(arg_1_0)
+	arg_1_0.assetPath = "ui/viewres/story/v1a5/storyactivitychapterclose.prefab"
 end
 
-function slot0.onInitView(slot0)
-	slot0._simageIcon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG/title")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._simageIcon = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_FullBG/title")
 end
 
-function slot0.onUpdateView(slot0)
-	slot0._audioId = AudioEnum.Story.Activity1_3_Chapter_End
+function var_0_0.onUpdateView(arg_3_0)
+	local var_3_0 = tonumber(arg_3_0.data) == 2
 
-	if not (tonumber(slot0.data) == 2) then
-		slot0._simageIcon:LoadImage("singlebg_lang/txt_v1a5_storyactivityopenclose/txt_v1a5_story_continue.png")
+	arg_3_0._audioId = AudioEnum.Story.Activity1_3_Chapter_End
+
+	if not var_3_0 then
+		arg_3_0._simageIcon:LoadImage("singlebg_lang/txt_v1a5_storyactivityopenclose/txt_v1a5_story_continue.png")
 	else
-		slot0._simageIcon:LoadImage("singlebg_lang/txt_v1a5_storyactivityopenclose/txt_v1a5_story_end.png")
+		arg_3_0._simageIcon:LoadImage("singlebg_lang/txt_v1a5_storyactivityopenclose/txt_v1a5_story_end.png")
 	end
 
-	slot0:_playAudio()
+	arg_3_0:_playAudio()
 end
 
-function slot0._playAudio(slot0)
-	if slot0._audioId then
-		AudioEffectMgr.instance:playAudio(slot0._audioId)
-	end
-end
-
-function slot0.onHide(slot0)
-	if slot0._audioId then
-		AudioEffectMgr.instance:stopAudio(slot0._audioId)
-
-		slot0._audioId = nil
+function var_0_0._playAudio(arg_4_0)
+	if arg_4_0._audioId then
+		AudioEffectMgr.instance:playAudio(arg_4_0._audioId)
 	end
 end
 
-function slot0.onDestory(slot0)
-	if slot0._simageIcon then
-		slot0._simageIcon:UnLoadImage()
+function var_0_0.onHide(arg_5_0)
+	if arg_5_0._audioId then
+		AudioEffectMgr.instance:stopAudio(arg_5_0._audioId)
+
+		arg_5_0._audioId = nil
 	end
-
-	if slot0._audioId then
-		AudioEffectMgr.instance:stopAudio(slot0._audioId)
-
-		slot0._audioId = nil
-	end
-
-	uv0.super.onDestory(slot0)
 end
 
-return slot0
+function var_0_0.onDestory(arg_6_0)
+	if arg_6_0._simageIcon then
+		arg_6_0._simageIcon:UnLoadImage()
+	end
+
+	if arg_6_0._audioId then
+		AudioEffectMgr.instance:stopAudio(arg_6_0._audioId)
+
+		arg_6_0._audioId = nil
+	end
+
+	var_0_0.super.onDestory(arg_6_0)
+end
+
+return var_0_0

@@ -1,276 +1,296 @@
-module("modules.logic.rouge.view.RougeHeroGroupEditItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeHeroGroupEditItem", package.seeall)
 
-slot0 = class("RougeHeroGroupEditItem", RougeLuaCompBase)
+local var_0_0 = class("RougeHeroGroupEditItem", RougeLuaCompBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._go = slot1
-	slot0._heroGOParent = gohelper.findChild(slot1, "hero")
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(slot0._heroGOParent)
+	arg_1_0._go = arg_1_1
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
+	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
 
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
 
-	slot0._gohp = gohelper.findChild(slot1, "#go_hp")
+	arg_1_0._gohp = gohelper.findChild(arg_1_1, "#go_hp")
 
-	gohelper.setActive(slot0._gohp, false)
+	gohelper.setActive(arg_1_0._gohp, false)
 
-	slot0._goassit = gohelper.findChild(slot1, "assit")
-	slot0._sliderhp = gohelper.findChildSlider(slot1, "#go_hp/#slider_hp")
-	slot0._godead = gohelper.findChild(slot1, "#go_dead")
-	slot0._goframehp = gohelper.findChild(slot1, "frame_hp")
-	slot0._itemAnimator = gohelper.onceAddComponent(slot1, gohelper.Type_Animator)
+	arg_1_0._goassit = gohelper.findChild(arg_1_1, "assit")
+	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_1, "#go_hp/#slider_hp")
+	arg_1_0._godead = gohelper.findChild(arg_1_1, "#go_dead")
+	arg_1_0._goframehp = gohelper.findChild(arg_1_1, "frame_hp")
+	arg_1_0._itemAnimator = gohelper.onceAddComponent(arg_1_1, gohelper.Type_Animator)
 
-	slot0:_initCapacity()
-	slot0:_initObj(slot1)
+	arg_1_0:_initCapacity()
+	arg_1_0:_initObj(arg_1_1)
 end
 
-function slot0._initCapacity(slot0)
-	slot0._gopoint = gohelper.findChild(slot0._go, "volume/point")
+function var_0_0._initCapacity(arg_2_0)
+	arg_2_0._gopoint = gohelper.findChild(arg_2_0._go, "volume/point")
 
-	gohelper.setActive(slot0._gopoint, false)
+	gohelper.setActive(arg_2_0._gopoint, false)
 
-	slot0._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._go, RougeCapacityComp)
+	arg_2_0._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._go, RougeCapacityComp)
 
-	slot0._capacityComp:setSpriteType("rouge_team_volume_3", "rouge_team_volume_3")
-	slot0._capacityComp:setPoint(slot0._gopoint)
-	slot0._capacityComp:initCapacity()
+	arg_2_0._capacityComp:setSpriteType("rouge_team_volume_3", "rouge_team_volume_3")
+	arg_2_0._capacityComp:setPoint(arg_2_0._gopoint)
+	arg_2_0._capacityComp:initCapacity()
 end
 
-function slot0._initObj(slot0, slot1)
-	slot0._heroItem:_setTxtWidth("_nameCnTxt", 180)
+function var_0_0._initObj(arg_3_0, arg_3_1)
+	arg_3_0._heroItem:_setTxtWidth("_nameCnTxt", 180)
 
-	slot0._animator = slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
-	slot0._isSelect = false
-	slot0._enableDeselect = true
+	arg_3_0._animator = arg_3_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_3_0._isSelect = false
+	arg_3_0._enableDeselect = true
 
-	transformhelper.setLocalScale(slot1.transform, 0.8, 0.8, 1)
-	slot0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
-	slot0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 36.1)
-	slot0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
-	slot0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
+	transformhelper.setLocalScale(arg_3_1.transform, 0.8, 0.8, 1)
+	arg_3_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
+	arg_3_0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 36.1)
+	arg_3_0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
+	arg_3_0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
+	arg_3_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
+	arg_3_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
+	arg_3_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
 
-	slot0._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
-	slot0._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance
-	slot0._heroSingleGroupModel = RougeHeroSingleGroupModel.instance
-	slot0._heroGroupModel = RougeHeroGroupModel.instance
+	arg_3_0._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
+	arg_3_0._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance
+	arg_3_0._heroSingleGroupModel = RougeHeroSingleGroupModel.instance
+	arg_3_0._heroGroupModel = RougeHeroGroupModel.instance
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, slot0._onSkinChanged, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, slot0.updateTrialRepeat, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnSwitchHeroGroupEditMode, slot0._onSwitchHeroGroupEditMode, slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_4_0._onSkinChanged, arg_4_0)
+	arg_4_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, arg_4_0.updateTrialRepeat, arg_4_0)
+	arg_4_0:addEventCb(RougeController.instance, RougeEvent.OnSwitchHeroGroupEditMode, arg_4_0._onSwitchHeroGroupEditMode, arg_4_0)
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	return
 end
 
-function slot0._onSkinChanged(slot0)
-	slot0._heroItem:updateHero()
+function var_0_0._onSkinChanged(arg_6_0)
+	arg_6_0._heroItem:updateHero()
 end
 
-function slot0.setAdventureBuff(slot0, slot1)
-	slot0._heroItem:setAdventureBuff(slot1)
+function var_0_0.setAdventureBuff(arg_7_0, arg_7_1)
+	arg_7_0._heroItem:setAdventureBuff(arg_7_1)
 end
 
-function slot0.updateLimitStatus(slot0)
-	if slot0._heroGroupQuickEditListModel.adventure then
-		gohelper.setActive(slot0._gohp, false)
-		slot0._heroItem:setInjury(WeekWalkModel.instance:getCurMapHeroCd(slot0._mo.config.id) > 0)
+function var_0_0.updateLimitStatus(arg_8_0)
+	if arg_8_0._heroGroupQuickEditListModel.adventure then
+		gohelper.setActive(arg_8_0._gohp, false)
+
+		local var_8_0 = WeekWalkModel.instance:getCurMapHeroCd(arg_8_0._mo.config.id)
+
+		arg_8_0._heroItem:setInjury(var_8_0 > 0)
 	else
-		gohelper.setActive(slot0._gohp, false)
+		gohelper.setActive(arg_8_0._gohp, false)
 
-		if slot0._heroGroupModel:isRestrict(slot0._mo.uid) then
-			slot0._heroItem:setRestrict(true)
+		if arg_8_0._heroGroupModel:isRestrict(arg_8_0._mo.uid) then
+			arg_8_0._heroItem:setRestrict(true)
 		else
-			slot0._heroItem:setRestrict(false)
+			arg_8_0._heroItem:setRestrict(false)
 		end
 	end
 end
 
-function slot0._updateCapacity(slot0, slot1)
-	slot0._capacity = RougeConfig1.instance:getRoleCapacity(slot1.config.rare)
+function var_0_0._updateCapacity(arg_9_0, arg_9_1)
+	arg_9_0._capacity = RougeConfig1.instance:getRoleCapacity(arg_9_1.config.rare)
 
-	if slot0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.FightAssit and RougeController.instance:useHalfCapacity() then
-		slot2 = RougeConfig1.instance:getRoleHalfCapacity(slot1.config.rare)
+	if arg_9_0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.FightAssit and RougeController.instance:useHalfCapacity() then
+		local var_9_0 = RougeConfig1.instance:getRoleHalfCapacity(arg_9_1.config.rare)
 
-		slot0._capacityComp:updateMaxNumAndOpaqueNum(slot0._capacity, slot2)
+		arg_9_0._capacityComp:updateMaxNumAndOpaqueNum(arg_9_0._capacity, var_9_0)
 
-		slot0._capacity = slot2
+		arg_9_0._capacity = var_9_0
 
 		return
 	end
 
-	slot0._capacityComp:updateMaxNumAndOpaqueNum(slot0._capacity, slot0._capacity)
+	arg_9_0._capacityComp:updateMaxNumAndOpaqueNum(arg_9_0._capacity, arg_9_0._capacity)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._mo = arg_10_1
 
-	slot0._heroItem:onUpdateMO(slot1)
-	slot0:_updateCapacity(slot1)
+	arg_10_0._heroItem:onUpdateMO(arg_10_1)
+	arg_10_0:_updateCapacity(arg_10_1)
 
-	if not slot1:isTrial() and slot1.level < RougeHeroGroupBalanceHelper.getHeroBalanceLv(slot1.heroId) then
-		slot0._heroItem:setBalanceLv(slot2)
+	if not arg_10_1:isTrial() then
+		local var_10_0 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(arg_10_1.heroId)
+
+		if var_10_0 > arg_10_1.level then
+			arg_10_0._heroItem:setBalanceLv(var_10_0)
+		end
 	end
 
-	slot0:updateTrialTag()
-	slot0:updateTrialRepeat()
+	arg_10_0:updateTrialTag()
+	arg_10_0:updateTrialRepeat()
 
-	slot3 = slot0._heroGroupEditListModel:getTeamPosIndex(slot0._mo.uid)
+	local var_10_1 = arg_10_0._heroGroupEditListModel:isInTeamHero(arg_10_0._mo.uid)
+	local var_10_2 = arg_10_0._heroGroupEditListModel:getTeamPosIndex(arg_10_0._mo.uid)
+	local var_10_3 = arg_10_0._heroGroupEditListModel:getHeroGroupEditType()
 
-	if slot0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.FightAssit or slot4 == RougeEnum.HeroGroupEditType.Fight then
-		slot5 = slot0._heroGroupEditListModel:isInTeamHero(slot0._mo.uid) == 1 and slot3 and RougeEnum.FightTeamNormalHeroNum < slot3
+	if var_10_3 == RougeEnum.HeroGroupEditType.FightAssit or var_10_3 == RougeEnum.HeroGroupEditType.Fight then
+		local var_10_4 = var_10_1 == 1 and var_10_2 and var_10_2 > RougeEnum.FightTeamNormalHeroNum
 
-		gohelper.setActive(slot0._goassit, slot5)
+		gohelper.setActive(arg_10_0._goassit, var_10_4)
 
-		if slot5 then
-			slot2 = nil
+		if var_10_4 then
+			var_10_1 = nil
 		end
 	else
-		gohelper.setActive(slot0._goassit, false)
+		gohelper.setActive(arg_10_0._goassit, false)
 	end
 
-	slot0._heroItem:setNewShow(false)
-	slot0._heroItem:setInteam(slot2)
-	slot0:_updateHp()
-	slot0:tickUpdateDLCs(slot1)
+	arg_10_0._heroItem:setNewShow(false)
+	arg_10_0._heroItem:setInteam(var_10_1)
+	arg_10_0:_updateHp()
+	arg_10_0:tickUpdateDLCs(arg_10_1)
 end
 
-function slot0._isHideHp(slot0)
-	if slot0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.Init or slot0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.SelectHero then
+function var_0_0._isHideHp(arg_11_0)
+	if arg_11_0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.Init or arg_11_0._heroGroupEditListModel:getHeroGroupEditType() == RougeEnum.HeroGroupEditType.SelectHero then
 		return true
 	end
 end
 
-function slot0._updateHp(slot0)
-	if slot0:_isHideHp() then
+function var_0_0._updateHp(arg_12_0)
+	if arg_12_0:_isHideHp() then
 		return
 	end
 
-	if not RougeModel.instance:getTeamInfo():getHeroHp(slot0._mo.heroId) then
+	local var_12_0 = RougeModel.instance:getTeamInfo():getHeroHp(arg_12_0._mo.heroId)
+
+	if not var_12_0 then
 		return
 	end
 
-	slot3 = slot2 and slot2.life or 0
+	local var_12_1 = var_12_0 and var_12_0.life or 0
 
-	gohelper.setActive(slot0._gohp, true)
-	slot0._sliderhp:SetValue(slot3 / 1000)
+	gohelper.setActive(arg_12_0._gohp, true)
+	arg_12_0._sliderhp:SetValue(var_12_1 / 1000)
 
-	slot4 = slot3 <= 0
+	local var_12_2 = var_12_1 <= 0
 
-	gohelper.setActive(slot0._godead, slot4)
-	slot0._heroItem:setDamage(slot4)
+	gohelper.setActive(arg_12_0._godead, var_12_2)
+	arg_12_0._heroItem:setDamage(var_12_2)
 
-	slot0._heroItem._isInjury = false
-	slot0._isDead = slot4
+	arg_12_0._heroItem._isInjury = false
+	arg_12_0._isDead = var_12_2
 end
 
-function slot0.updateTrialTag(slot0)
-	slot1 = nil
+function var_0_0.updateTrialTag(arg_13_0)
+	local var_13_0
 
-	if slot0._mo:isTrial() then
-		slot1 = luaLang("herogroup_trial_tag0")
+	if arg_13_0._mo:isTrial() then
+		var_13_0 = luaLang("herogroup_trial_tag0")
 	end
 
-	slot0._heroItem:setTrialTxt(slot1)
+	arg_13_0._heroItem:setTrialTxt(var_13_0)
 end
 
-function slot0.updateTrialRepeat(slot0)
-	if slot0._heroSingleGroupModel:getById(slot0._view.viewContainer.viewParam.singleGroupMOId) and not slot1:isEmpty() and (slot1.trial and slot1:getTrialCO().heroId == slot0._mo.heroId or not slot1.trial and (not slot1:getHeroCO() or slot1:getHeroCO().id == slot0._mo.heroId)) then
-		if not slot1.trial and not slot1.aid and not slot1:getHeroCO() then
-			logError("编队界面角色不存在 uid：" .. tostring(slot1.id))
+function var_0_0.updateTrialRepeat(arg_14_0)
+	local var_14_0 = arg_14_0._heroSingleGroupModel:getById(arg_14_0._view.viewContainer.viewParam.singleGroupMOId)
+
+	if var_14_0 and not var_14_0:isEmpty() and (var_14_0.trial and var_14_0:getTrialCO().heroId == arg_14_0._mo.heroId or not var_14_0.trial and (not var_14_0:getHeroCO() or var_14_0:getHeroCO().id == arg_14_0._mo.heroId)) then
+		if not var_14_0.trial and not var_14_0.aid and not var_14_0:getHeroCO() then
+			logError("编队界面角色不存在 uid：" .. tostring(var_14_0.id))
 		end
 
-		slot0._heroItem:setTrialRepeat(false)
+		arg_14_0._heroItem:setTrialRepeat(false)
 
 		return
 	end
 
-	slot0._heroItem:setTrialRepeat(slot0._heroGroupEditListModel:isRepeatHero(slot0._mo.heroId, slot0._mo.uid))
+	local var_14_1 = arg_14_0._heroGroupEditListModel:isRepeatHero(arg_14_0._mo.heroId, arg_14_0._mo.uid)
+
+	arg_14_0._heroItem:setTrialRepeat(var_14_1)
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
-	slot2 = slot0:_isHideHp()
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	arg_15_0._isSelect = arg_15_1
 
-	slot0._heroItem:setSelect(slot1 and slot2)
-	gohelper.setActive(slot0._goframehp, slot1 and not slot2)
+	local var_15_0 = arg_15_0:_isHideHp()
 
-	if slot1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, slot0._mo)
+	arg_15_0._heroItem:setSelect(arg_15_1 and var_15_0)
+	gohelper.setActive(arg_15_0._goframehp, arg_15_1 and not var_15_0)
+
+	if arg_15_1 then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_15_0._mo)
 	end
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_16_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if slot0._isDead then
+	if arg_16_0._isDead then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast04)
 
 		return
 	end
 
-	if slot0._heroItem:getIsRepeat() then
+	if arg_16_0._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	if not slot0._heroGroupEditListModel:canAddCapacity(slot0._view.viewContainer.viewParam.singleGroupMOId, slot0._mo) then
+	if not arg_16_0._heroGroupEditListModel:canAddCapacity(arg_16_0._view.viewContainer.viewParam.singleGroupMOId, arg_16_0._mo) then
 		GameFacade.showToast(ToastEnum.RougeTeamCapacityFull)
 
 		return
 	end
 
-	slot1 = slot0._heroSingleGroupModel:getById(slot0._view.viewContainer.viewParam.singleGroupMOId)
+	local var_16_0 = arg_16_0._heroSingleGroupModel:getById(arg_16_0._view.viewContainer.viewParam.singleGroupMOId)
 
-	if slot0._mo:isTrial() and not slot0._heroSingleGroupModel:isInGroup(slot0._mo.uid) and (slot1:isEmpty() or not slot1.trial) and slot0._heroGroupEditListModel:isTrialLimit() then
+	if arg_16_0._mo:isTrial() and not arg_16_0._heroSingleGroupModel:isInGroup(arg_16_0._mo.uid) and (var_16_0:isEmpty() or not var_16_0.trial) and arg_16_0._heroGroupEditListModel:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if slot0._mo.isPosLock or not slot1:isEmpty() and slot1.trialPos then
+	if arg_16_0._mo.isPosLock or not var_16_0:isEmpty() and var_16_0.trialPos then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if slot0._heroGroupModel:isRestrict(slot0._mo.uid) then
-		if not string.nilorempty(slot0._heroGroupModel:getCurrentBattleConfig() and slot2.restrictReason) then
-			ToastController.instance:showToastWithString(slot3)
+	if arg_16_0._heroGroupModel:isRestrict(arg_16_0._mo.uid) then
+		local var_16_1 = arg_16_0._heroGroupModel:getCurrentBattleConfig()
+		local var_16_2 = var_16_1 and var_16_1.restrictReason
+
+		if not string.nilorempty(var_16_2) then
+			ToastController.instance:showToastWithString(var_16_2)
 		end
 
 		return
 	end
 
-	if slot0._isSelect and slot0._enableDeselect and not slot0._mo.isPosLock then
-		slot0._view:selectCell(slot0._index, false)
+	if arg_16_0._isSelect and arg_16_0._enableDeselect and not arg_16_0._mo.isPosLock then
+		arg_16_0._view:selectCell(arg_16_0._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		slot0._view:selectCell(slot0._index, true)
+		arg_16_0._view:selectCell(arg_16_0._index, true)
 	end
 end
 
-function slot0.enableDeselect(slot0, slot1)
-	slot0._enableDeselect = slot1
+function var_0_0.enableDeselect(arg_17_0, arg_17_1)
+	arg_17_0._enableDeselect = arg_17_1
 end
 
-function slot0._onSwitchHeroGroupEditMode(slot0)
-	slot0._itemAnimator:Play("rougeherogroupedititem_open", 0, 0)
-	slot0._animator:Play("open", 0, 0)
+function var_0_0._onSwitchHeroGroupEditMode(arg_18_0)
+	arg_18_0._itemAnimator:Play("rougeherogroupedititem_open", 0, 0)
+	arg_18_0._animator:Play("open", 0, 0)
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_19_0)
+	var_0_0.super.onDestroy(arg_19_0)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_20_0)
+	return arg_20_0._animator
 end
 
-return slot0
+return var_0_0

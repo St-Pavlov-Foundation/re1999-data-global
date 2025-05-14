@@ -1,17 +1,20 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessBeginStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessBeginStep", package.seeall)
 
-slot0 = class("EliminateTeamChessBeginStep", EliminateTeamChessStepBase)
+local var_0_0 = class("EliminateTeamChessBeginStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data.time
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data.time
 
-	EliminateChessController.instance:openNoticeView(false, false, true, false, 0, slot1, nil, )
-	TaskDispatcher.runDelay(slot0._onDone, slot0, slot1)
+	EliminateChessController.instance:openNoticeView(false, false, true, false, 0, var_1_0, nil, nil)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_0)
 end
 
-function slot0._onDone(slot0)
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessRoundBegin, string.format("%s_%s", EliminateLevelModel.instance:getLevelId(), EliminateLevelModel.instance:getRoundNumber()))
-	uv0.super._onDone(slot0)
+function var_0_0._onDone(arg_2_0)
+	local var_2_0 = EliminateLevelModel.instance:getRoundNumber()
+	local var_2_1 = EliminateLevelModel.instance:getLevelId()
+
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessRoundBegin, string.format("%s_%s", var_2_1, var_2_0))
+	var_0_0.super._onDone(arg_2_0)
 end
 
-return slot0
+return var_0_0

@@ -1,14 +1,17 @@
-module("modules.logic.video.adjust.AvProUGUIListPlayer_adjust", package.seeall)
+﻿module("modules.logic.video.adjust.AvProUGUIListPlayer_adjust", package.seeall)
 
-slot0 = class("AvProUGUIListPlayer_adjust")
+local var_0_0 = class("AvProUGUIListPlayer_adjust")
 
-function slot0.SetEventListener(slot0, slot1, slot2)
+function var_0_0.SetEventListener(arg_1_0, arg_1_1, arg_1_2)
+	return
 end
 
-function slot0.SetMediaPath(slot0, slot1, slot2)
+function var_0_0.SetMediaPath(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0.Clear(slot0)
+function var_0_0.Clear(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

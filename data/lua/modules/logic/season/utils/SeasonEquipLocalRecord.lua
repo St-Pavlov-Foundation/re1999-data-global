@@ -1,56 +1,60 @@
-module("modules.logic.season.utils.SeasonEquipLocalRecord", package.seeall)
+﻿module("modules.logic.season.utils.SeasonEquipLocalRecord", package.seeall)
 
-slot0 = class("SeasonEquipLocalRecord")
+local var_0_0 = class("SeasonEquipLocalRecord")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.activityId = slot1
-	slot0.reasonKey = slot2
-	slot0._list = nil
-	slot0._dict = nil
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.activityId = arg_1_1
+	arg_1_0.reasonKey = arg_1_2
+	arg_1_0._list = nil
+	arg_1_0._dict = nil
 
-	slot0:initLocalSave()
+	arg_1_0:initLocalSave()
 end
 
-function slot0.initLocalSave(slot0)
-	slot0._dict = {}
+function var_0_0.initLocalSave(arg_2_0)
+	arg_2_0._dict = {}
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(slot0:getLocalKey(), "")) then
-		slot0._list = cjson.decode(slot1)
+	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0:getLocalKey(), "")
 
-		for slot5, slot6 in ipairs(slot0._list) do
-			slot0._dict[slot6] = 1
+	if not string.nilorempty(var_2_0) then
+		arg_2_0._list = cjson.decode(var_2_0)
+
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0._list) do
+			arg_2_0._dict[iter_2_1] = 1
 		end
 	else
-		slot0._list = {}
+		arg_2_0._list = {}
 	end
 end
 
-function slot0.recordAllItem(slot0)
-	for slot5, slot6 in pairs(Activity104Model.instance:getAllItemMo(slot0.activityId) or {}) do
-		slot0:add(slot5)
+function var_0_0.recordAllItem(arg_3_0)
+	local var_3_0 = Activity104Model.instance:getAllItemMo(arg_3_0.activityId) or {}
+
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		arg_3_0:add(iter_3_0)
 	end
 
-	slot0:save()
+	arg_3_0:save()
 end
 
-function slot0.add(slot0, slot1)
-	if not slot0._dict[slot1] then
-		table.insert(slot0._list, slot1)
+function var_0_0.add(arg_4_0, arg_4_1)
+	if not arg_4_0._dict[arg_4_1] then
+		table.insert(arg_4_0._list, arg_4_1)
 
-		slot0._dict[slot1] = 1
+		arg_4_0._dict[arg_4_1] = 1
 	end
 end
 
-function slot0.contain(slot0, slot1)
-	return slot0._dict[slot1]
+function var_0_0.contain(arg_5_0, arg_5_1)
+	return arg_5_0._dict[arg_5_1]
 end
 
-function slot0.save(slot0)
-	PlayerPrefsHelper.setString(slot0:getLocalKey(), cjson.encode(slot0._list))
+function var_0_0.save(arg_6_0)
+	PlayerPrefsHelper.setString(arg_6_0:getLocalKey(), cjson.encode(arg_6_0._list))
 end
 
-function slot0.getLocalKey(slot0)
-	return tostring(slot0.reasonKey) .. "#" .. tostring(slot0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getLocalKey(arg_7_0)
+	return tostring(arg_7_0.reasonKey) .. "#" .. tostring(arg_7_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return slot0
+return var_0_0

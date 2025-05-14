@@ -1,217 +1,220 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessMallView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessMallView", package.seeall)
 
-slot0 = class("AutoChessMallView", BaseView)
+local var_0_0 = class("AutoChessMallView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goViewSelf = gohelper.findChild(slot0.viewGO, "#go_ViewSelf")
-	slot0._goFrame = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_Frame")
-	slot0._goMallItem = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_MallItem")
-	slot0._txtCoin = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/Coin/#txt_Coin")
-	slot0._goStarProgress = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_StarProgress")
-	slot0._imageFreeP = gohelper.findChildImage(slot0.viewGO, "#go_ViewSelf/#go_StarProgress/#image_FreeP")
-	slot0._txtFreeP = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/#go_StarProgress/#txt_FreeP")
-	slot0._goRound = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_Round")
-	slot0._txtRound = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/#go_Round/#txt_Round")
-	slot0._btnStartFight = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewSelf/#btn_StartFight")
-	slot0._goStartLight = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#btn_StartFight/#go_StartLight")
-	slot0._btnCheckEnemy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewSelf/#btn_CheckEnemy")
-	slot0._goCheckCost = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#btn_CheckEnemy/#go_CheckCost")
-	slot0._txtCheckCost = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/#btn_CheckEnemy/#go_CheckCost/#txt_CheckCost")
-	slot0._btnLederSkill = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewSelf/#btn_LederSkill")
-	slot0._simageLeaderSkill = gohelper.findChildSingleImage(slot0.viewGO, "#go_ViewSelf/#btn_LederSkill/#simage_LeaderSkill")
-	slot0._txtLeaderSkillCost = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/#btn_LederSkill/#txt_LeaderSkillCost")
-	slot0._imageLeaderSkillCost = gohelper.findChildImage(slot0.viewGO, "#go_ViewSelf/#btn_LederSkill/#txt_LeaderSkillCost/#image_LeaderSkillCost")
-	slot0._goSkillLock = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#btn_LederSkill/#go_SkillLock")
-	slot0._goLeaderSkillLight = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#btn_LederSkill/#go_LeaderSkillLight")
-	slot0._goLeaderEnergyP = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_LeaderEnergyP")
-	slot0._txtLeaderEnergyP = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/#go_LeaderEnergyP/#txt_LeaderEnergyP")
-	slot0._goChargeRoot = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot")
-	slot0._imageLevel = gohelper.findChildImage(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#image_Level")
-	slot0._txtMallLvl = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#image_Level/#txt_MallLvl")
-	slot0._goChargeFrame = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_ChargeFrame")
-	slot0._goFreeFrame = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_ChargeFrame/#go_FreeFrame")
-	slot0._btnFresh = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#btn_Fresh")
-	slot0._txtFreshCost = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#btn_Fresh/#txt_FreshCost")
-	slot0._goLockBtns = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_LockBtns")
-	slot0._btnLock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_LockBtns/#btn_Lock")
-	slot0._btnUnlock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_LockBtns/#btn_Unlock")
-	slot0._goChargeContent = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_ChargeContent")
-	slot0._goCheckSell = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_CheckSell")
-	slot0._txtSellPrice = gohelper.findChildText(slot0.viewGO, "#go_ViewSelf/#go_CheckSell/cost/#txt_SellPrice")
-	slot0._goChessAvatar = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/#go_ChessAvatar")
-	slot0._goViewEnemy = gohelper.findChild(slot0.viewGO, "#go_ViewEnemy")
-	slot0._btnBack = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ViewEnemy/#btn_Back")
-	slot0._goLeaderEnergyE = gohelper.findChild(slot0.viewGO, "#go_ViewEnemy/#go_LeaderEnergyE")
-	slot0._txtLeaderEnergyE = gohelper.findChildText(slot0.viewGO, "#go_ViewEnemy/#go_LeaderEnergyE/#txt_LeaderEnergyE")
-	slot0._goPickView = gohelper.findChild(slot0.viewGO, "#go_PickView")
-	slot0._btnBackPick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_PickView/#btn_BackPick")
-	slot0._goexcessive = gohelper.findChild(slot0.viewGO, "#go_excessive")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goViewSelf = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf")
+	arg_1_0._goFrame = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_Frame")
+	arg_1_0._goMallItem = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_MallItem")
+	arg_1_0._txtCoin = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/Coin/#txt_Coin")
+	arg_1_0._goStarProgress = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_StarProgress")
+	arg_1_0._imageFreeP = gohelper.findChildImage(arg_1_0.viewGO, "#go_ViewSelf/#go_StarProgress/#image_FreeP")
+	arg_1_0._txtFreeP = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/#go_StarProgress/#txt_FreeP")
+	arg_1_0._goRound = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_Round")
+	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/#go_Round/#txt_Round")
+	arg_1_0._btnStartFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewSelf/#btn_StartFight")
+	arg_1_0._goStartLight = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#btn_StartFight/#go_StartLight")
+	arg_1_0._btnCheckEnemy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewSelf/#btn_CheckEnemy")
+	arg_1_0._goCheckCost = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#btn_CheckEnemy/#go_CheckCost")
+	arg_1_0._txtCheckCost = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/#btn_CheckEnemy/#go_CheckCost/#txt_CheckCost")
+	arg_1_0._btnLederSkill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewSelf/#btn_LederSkill")
+	arg_1_0._simageLeaderSkill = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ViewSelf/#btn_LederSkill/#simage_LeaderSkill")
+	arg_1_0._txtLeaderSkillCost = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/#btn_LederSkill/#txt_LeaderSkillCost")
+	arg_1_0._imageLeaderSkillCost = gohelper.findChildImage(arg_1_0.viewGO, "#go_ViewSelf/#btn_LederSkill/#txt_LeaderSkillCost/#image_LeaderSkillCost")
+	arg_1_0._goSkillLock = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#btn_LederSkill/#go_SkillLock")
+	arg_1_0._goLeaderSkillLight = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#btn_LederSkill/#go_LeaderSkillLight")
+	arg_1_0._goLeaderEnergyP = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_LeaderEnergyP")
+	arg_1_0._txtLeaderEnergyP = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/#go_LeaderEnergyP/#txt_LeaderEnergyP")
+	arg_1_0._goChargeRoot = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot")
+	arg_1_0._imageLevel = gohelper.findChildImage(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#image_Level")
+	arg_1_0._txtMallLvl = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#image_Level/#txt_MallLvl")
+	arg_1_0._goChargeFrame = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_ChargeFrame")
+	arg_1_0._goFreeFrame = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_ChargeFrame/#go_FreeFrame")
+	arg_1_0._btnFresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#btn_Fresh")
+	arg_1_0._txtFreshCost = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#btn_Fresh/#txt_FreshCost")
+	arg_1_0._goLockBtns = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_LockBtns")
+	arg_1_0._btnLock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_LockBtns/#btn_Lock")
+	arg_1_0._btnUnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_LockBtns/#btn_Unlock")
+	arg_1_0._goChargeContent = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/Bottom/#go_ChargeRoot/#go_ChargeContent")
+	arg_1_0._goCheckSell = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_CheckSell")
+	arg_1_0._txtSellPrice = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewSelf/#go_CheckSell/cost/#txt_SellPrice")
+	arg_1_0._goChessAvatar = gohelper.findChild(arg_1_0.viewGO, "#go_ViewSelf/#go_ChessAvatar")
+	arg_1_0._goViewEnemy = gohelper.findChild(arg_1_0.viewGO, "#go_ViewEnemy")
+	arg_1_0._btnBack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ViewEnemy/#btn_Back")
+	arg_1_0._goLeaderEnergyE = gohelper.findChild(arg_1_0.viewGO, "#go_ViewEnemy/#go_LeaderEnergyE")
+	arg_1_0._txtLeaderEnergyE = gohelper.findChildText(arg_1_0.viewGO, "#go_ViewEnemy/#go_LeaderEnergyE/#txt_LeaderEnergyE")
+	arg_1_0._goPickView = gohelper.findChild(arg_1_0.viewGO, "#go_PickView")
+	arg_1_0._btnBackPick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_PickView/#btn_BackPick")
+	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnStartFight:AddClickListener(slot0._btnStartFightOnClick, slot0)
-	slot0._btnCheckEnemy:AddClickListener(slot0._btnCheckEnemyOnClick, slot0)
-	slot0._btnLederSkill:AddClickListener(slot0._btnLederSkillOnClick, slot0)
-	slot0._btnFresh:AddClickListener(slot0._btnFreshOnClick, slot0)
-	slot0._btnLock:AddClickListener(slot0._btnLockOnClick, slot0)
-	slot0._btnUnlock:AddClickListener(slot0._btnUnlockOnClick, slot0)
-	slot0._btnBack:AddClickListener(slot0._btnBackOnClick, slot0)
-	slot0._btnBackPick:AddClickListener(slot0._btnBackPickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnStartFight:AddClickListener(arg_2_0._btnStartFightOnClick, arg_2_0)
+	arg_2_0._btnCheckEnemy:AddClickListener(arg_2_0._btnCheckEnemyOnClick, arg_2_0)
+	arg_2_0._btnLederSkill:AddClickListener(arg_2_0._btnLederSkillOnClick, arg_2_0)
+	arg_2_0._btnFresh:AddClickListener(arg_2_0._btnFreshOnClick, arg_2_0)
+	arg_2_0._btnLock:AddClickListener(arg_2_0._btnLockOnClick, arg_2_0)
+	arg_2_0._btnUnlock:AddClickListener(arg_2_0._btnUnlockOnClick, arg_2_0)
+	arg_2_0._btnBack:AddClickListener(arg_2_0._btnBackOnClick, arg_2_0)
+	arg_2_0._btnBackPick:AddClickListener(arg_2_0._btnBackPickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnStartFight:RemoveClickListener()
-	slot0._btnCheckEnemy:RemoveClickListener()
-	slot0._btnLederSkill:RemoveClickListener()
-	slot0._btnFresh:RemoveClickListener()
-	slot0._btnLock:RemoveClickListener()
-	slot0._btnUnlock:RemoveClickListener()
-	slot0._btnBack:RemoveClickListener()
-	slot0._btnBackPick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnStartFight:RemoveClickListener()
+	arg_3_0._btnCheckEnemy:RemoveClickListener()
+	arg_3_0._btnLederSkill:RemoveClickListener()
+	arg_3_0._btnFresh:RemoveClickListener()
+	arg_3_0._btnLock:RemoveClickListener()
+	arg_3_0._btnUnlock:RemoveClickListener()
+	arg_3_0._btnBack:RemoveClickListener()
+	arg_3_0._btnBackPick:RemoveClickListener()
 end
 
-function slot0._btnBackPickOnClick(slot0)
+function var_0_0._btnBackPickOnClick(arg_4_0)
 	if AutoChessController.instance:isClickDisable() then
 		return
 	end
 
-	gohelper.setActive(slot0._btnLederSkill, true)
-	gohelper.setActive(slot0._goLeaderEnergyP, true)
-	gohelper.setActive(slot0._goStarProgress, true)
-	gohelper.setActive(slot0._btnCheckEnemy, true)
-	gohelper.setActive(slot0._btnStartFight, true)
-	gohelper.setActive(slot0._goRound, true)
-	gohelper.setActive(slot0._btnFresh, true)
-	gohelper.setActive(slot0._goLockBtns, true)
-	gohelper.setActive(slot0._goPickView, false)
-	ViewMgr.instance:openView(ViewName.AutoChessForcePickView, slot0.freeMall)
+	gohelper.setActive(arg_4_0._btnLederSkill, true)
+	gohelper.setActive(arg_4_0._goLeaderEnergyP, true)
+	gohelper.setActive(arg_4_0._goStarProgress, true)
+	gohelper.setActive(arg_4_0._btnCheckEnemy, true)
+	gohelper.setActive(arg_4_0._btnStartFight, true)
+	gohelper.setActive(arg_4_0._goRound, true)
+	gohelper.setActive(arg_4_0._btnFresh, true)
+	gohelper.setActive(arg_4_0._goLockBtns, true)
+	gohelper.setActive(arg_4_0._goPickView, false)
+	ViewMgr.instance:openView(ViewName.AutoChessForcePickView, arg_4_0.freeMall)
 end
 
-function slot0._btnCheckEnemyOnClick(slot0)
+function var_0_0._btnCheckEnemyOnClick(arg_5_0)
 	if AutoChessController.instance:isClickDisable(GuideModel.GuideFlag.AutoChessEnablePreviewEnemy) then
 		return
 	end
 
-	if slot0.chessMo.preview then
-		slot0:previewCallback(0, 0)
-	elseif slot0.previewCostEnough then
-		AutoChessRpc.instance:sendAutoChessPreviewFightRequest(slot0.moduleId, slot0.previewCallback, slot0)
+	if arg_5_0.chessMo.preview then
+		arg_5_0:previewCallback(0, 0)
+	elseif arg_5_0.previewCostEnough then
+		AutoChessRpc.instance:sendAutoChessPreviewFightRequest(arg_5_0.moduleId, arg_5_0.previewCallback, arg_5_0)
 	else
 		GameFacade.showToast(ToastEnum.AutoChessCoinNotEnough)
 	end
 end
 
-function slot0._btnLederSkillOnClick(slot0)
+function var_0_0._btnLederSkillOnClick(arg_6_0)
 	if AutoChessController.instance:isClickDisable(GuideModel.GuideFlag.AutoChessEnableUseSkill) then
 		return
 	end
 
-	if slot0:checkCanUseLeaderSkill(true) then
-		slot0.animBtnSkill:Play("click", 0, 0)
-		AutoChessRpc.instance:sendAutoChessUseMasterSkillRequest(slot0.moduleId, slot0.chessMo.svrFight.mySideMaster.skill.id)
+	if arg_6_0:checkCanUseLeaderSkill(true) then
+		arg_6_0.animBtnSkill:Play("click", 0, 0)
+
+		local var_6_0 = arg_6_0.chessMo.svrFight.mySideMaster
+
+		AutoChessRpc.instance:sendAutoChessUseMasterSkillRequest(arg_6_0.moduleId, var_6_0.skill.id)
 	end
 end
 
-function slot0._btnBackOnClick(slot0)
+function var_0_0._btnBackOnClick(arg_7_0)
 	if AutoChessController.instance:isClickDisable() then
 		return
 	end
 
-	slot0.checkingEnemy = false
+	arg_7_0.checkingEnemy = false
 
-	slot0.animSwitch:Play("story", 0, 0)
+	arg_7_0.animSwitch:Play("story", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_pkls_game_reopen)
-	TaskDispatcher.runDelay(slot0.delaySwitch, slot0, 0.35)
+	TaskDispatcher.runDelay(arg_7_0.delaySwitch, arg_7_0, 0.35)
 end
 
-function slot0.previewCallback(slot0, slot1, slot2)
-	if slot2 == 0 then
-		slot0.checkingEnemy = true
+function var_0_0.previewCallback(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 == 0 then
+		arg_8_0.checkingEnemy = true
 
-		slot0.animSwitch:Play("hard", 0, 0)
+		arg_8_0.animSwitch:Play("hard", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_pkls_game_reopen)
-		TaskDispatcher.runDelay(slot0.delaySwitch, slot0, 0.35)
+		TaskDispatcher.runDelay(arg_8_0.delaySwitch, arg_8_0, 0.35)
 	end
 end
 
-function slot0.delaySwitch(slot0)
-	if slot0.checkingEnemy then
-		gohelper.setActive(slot0._goCheckCost, false)
-		gohelper.setActive(slot0._goViewSelf, false)
-		gohelper.setActive(slot0._goViewEnemy, true)
+function var_0_0.delaySwitch(arg_9_0)
+	if arg_9_0.checkingEnemy then
+		gohelper.setActive(arg_9_0._goCheckCost, false)
+		gohelper.setActive(arg_9_0._goViewSelf, false)
+		gohelper.setActive(arg_9_0._goViewEnemy, true)
 		AutoChessController.instance:dispatchEvent(AutoChessEvent.CheckEnemyTeam, true)
 		AutoChessController.instance:dispatchEvent(AutoChessEvent.ZClickPreviewEnemy, true)
 	else
-		gohelper.setActive(slot0._goViewSelf, true)
-		gohelper.setActive(slot0._goViewEnemy, false)
+		gohelper.setActive(arg_9_0._goViewSelf, true)
+		gohelper.setActive(arg_9_0._goViewEnemy, false)
 		AutoChessController.instance:dispatchEvent(AutoChessEvent.CheckEnemyTeam, false)
 		AutoChessController.instance:dispatchEvent(AutoChessEvent.ZClickBackSelf, false)
 	end
 end
 
-function slot0._btnFreshOnClick(slot0)
-	if slot0.freshCost <= tonumber(slot0.chessMo.svrMall.coin) then
+function var_0_0._btnFreshOnClick(arg_10_0)
+	if tonumber(arg_10_0.chessMo.svrMall.coin) >= arg_10_0.freshCost then
 		AutoChessHelper.lockScreen("AutoChessMallViewFreshStore", true)
 		AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_mln_details_open)
-		gohelper.addChildPosStay(slot0._goChargeRoot, slot0.freeItem.go)
-		slot0.animBtnFresh:Play("click", 0, 0)
-		slot0.animBottom:Play("flushed", 0, 0)
-		TaskDispatcher.runDelay(slot0.delayRefreshStore, slot0, 0.16)
-		TaskDispatcher.runDelay(slot0.delaySetFreeItem, slot0, 0.4)
+		gohelper.addChildPosStay(arg_10_0._goChargeRoot, arg_10_0.freeItem.go)
+		arg_10_0.animBtnFresh:Play("click", 0, 0)
+		arg_10_0.animBottom:Play("flushed", 0, 0)
+		TaskDispatcher.runDelay(arg_10_0.delayRefreshStore, arg_10_0, 0.16)
+		TaskDispatcher.runDelay(arg_10_0.delaySetFreeItem, arg_10_0, 0.4)
 	else
 		GameFacade.showToast(ToastEnum.AutoChessCoinNotEnough)
 	end
 end
 
-function slot0.delayRefreshStore(slot0)
-	AutoChessRpc.instance:sendAutoChessRefreshMallRequest(slot0.moduleId)
+function var_0_0.delayRefreshStore(arg_11_0)
+	AutoChessRpc.instance:sendAutoChessRefreshMallRequest(arg_11_0.moduleId)
 end
 
-function slot0.delaySetFreeItem(slot0)
-	gohelper.addChildPosStay(slot0._goChargeContent, slot0.freeItem.go)
+function var_0_0.delaySetFreeItem(arg_12_0)
+	gohelper.addChildPosStay(arg_12_0._goChargeContent, arg_12_0.freeItem.go)
 	AutoChessHelper.lockScreen("AutoChessMallViewFreshStore", false)
 end
 
-function slot0._btnLockOnClick(slot0)
+function var_0_0._btnLockOnClick(arg_13_0)
 	if AutoChessController.instance:isClickDisable() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_chess_lock)
-	AutoChessRpc.instance:sendAutoChessFreezeItemRequest(slot0.moduleId, slot0.chargeMall.mallId, 0, AutoChessEnum.FreeZeType.Freeze, slot0.freezeReply, slot0)
+	AutoChessRpc.instance:sendAutoChessFreezeItemRequest(arg_13_0.moduleId, arg_13_0.chargeMall.mallId, 0, AutoChessEnum.FreeZeType.Freeze, arg_13_0.freezeReply, arg_13_0)
 end
 
-function slot0._btnUnlockOnClick(slot0)
+function var_0_0._btnUnlockOnClick(arg_14_0)
 	if AutoChessController.instance:isClickDisable() then
 		return
 	end
 
-	AutoChessRpc.instance:sendAutoChessFreezeItemRequest(slot0.moduleId, slot0.chargeMall.mallId, 0, AutoChessEnum.FreeZeType.UnFreeze, slot0.freezeReply, slot0)
+	AutoChessRpc.instance:sendAutoChessFreezeItemRequest(arg_14_0.moduleId, arg_14_0.chargeMall.mallId, 0, AutoChessEnum.FreeZeType.UnFreeze, arg_14_0.freezeReply, arg_14_0)
 end
 
-function slot0._btnStartFightOnClick(slot0)
+function var_0_0._btnStartFightOnClick(arg_15_0)
 	if AutoChessController.instance:isClickDisable() then
 		return
 	end
 
-	if #AutoChessHelper.getMallRegionByType(slot0.chessMo.svrMall.regions, AutoChessEnum.MallType.Free).items ~= 0 then
-		GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessFreeChessClean, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, slot0._fightYesCallback, nil, , slot0)
+	if #AutoChessHelper.getMallRegionByType(arg_15_0.chessMo.svrMall.regions, AutoChessEnum.MallType.Free).items ~= 0 then
+		GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessFreeChessClean, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, arg_15_0._fightYesCallback, nil, nil, arg_15_0)
 	else
-		slot0:_fightYesCallback()
+		arg_15_0:_fightYesCallback()
 	end
 end
 
-function slot0._fightYesCallback(slot0)
-	AutoChessRpc.instance:sendAutoChessEnterFightRequest(slot0.moduleId)
+function var_0_0._fightYesCallback(arg_16_0)
+	AutoChessRpc.instance:sendAutoChessEnterFightRequest(arg_16_0.moduleId)
 end
 
-function slot0._overrideClose(slot0)
-	if slot0._btnBack.gameObject.activeInHierarchy then
-		slot0:_btnBackOnClick()
+function var_0_0._overrideClose(arg_17_0)
+	if arg_17_0._btnBack.gameObject.activeInHierarchy then
+		arg_17_0:_btnBackOnClick()
 
 		return
 	end
@@ -219,384 +222,432 @@ function slot0._overrideClose(slot0)
 	AutoChessController.instance:exitGame()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.animFreeFrame = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom/Left/FreeFrame"):GetComponent(gohelper.Type_Animator)
-	slot0.animBottom = gohelper.findChild(slot0.viewGO, "#go_ViewSelf/Bottom"):GetComponent(gohelper.Type_Animator)
-	slot0.animBtnFresh = slot0._btnFresh.gameObject:GetComponent(gohelper.Type_Animator)
-	slot0.animSwitch = slot0._goexcessive:GetComponent(gohelper.Type_Animator)
-	slot0.animCoin = slot0._txtCoin.gameObject:GetComponent(gohelper.Type_Animator)
-	slot0.animStarProgress = slot0._goStarProgress:GetComponent(gohelper.Type_Animator)
-	slot0.animBtnSkill = slot0._btnLederSkill.gameObject:GetComponent(gohelper.Type_Animator)
+function var_0_0._editableInitView(arg_18_0)
+	arg_18_0.animFreeFrame = gohelper.findChild(arg_18_0.viewGO, "#go_ViewSelf/Bottom/Left/FreeFrame"):GetComponent(gohelper.Type_Animator)
+	arg_18_0.animBottom = gohelper.findChild(arg_18_0.viewGO, "#go_ViewSelf/Bottom"):GetComponent(gohelper.Type_Animator)
+	arg_18_0.animBtnFresh = arg_18_0._btnFresh.gameObject:GetComponent(gohelper.Type_Animator)
+	arg_18_0.animSwitch = arg_18_0._goexcessive:GetComponent(gohelper.Type_Animator)
+	arg_18_0.animCoin = arg_18_0._txtCoin.gameObject:GetComponent(gohelper.Type_Animator)
+	arg_18_0.animStarProgress = arg_18_0._goStarProgress:GetComponent(gohelper.Type_Animator)
+	arg_18_0.animBtnSkill = arg_18_0._btnLederSkill.gameObject:GetComponent(gohelper.Type_Animator)
 
-	slot0:initMallItemList()
+	arg_18_0:initMallItemList()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_19_0)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_shopping_enter)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.StartFight, slot0.closeThis, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateMallData, slot0.refreshUI, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.DragChessEntity, slot0.onDragChess, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.DragChessEntityEnd, slot0.onDragChessEnd, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.MallCoinChange, slot0.refreshCoinRelative, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.ForcePickViewBoard, slot0.onViewBoard, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.ForcePickReply, slot0.onForcePickReply, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateMallRegion, slot0.onMallRegionChange, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateMasterSkill, slot0.refreshLeaderSkillRelative, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateLeaderEnergy, slot0.refreshLeaderEnergy, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.DrageMallItem, slot0.onDragMallItem, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.DrageMallItemEnd, slot0.onDragMallItemEnd, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.BuyChessReply, slot0.onBuyReply, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.BuildReply, slot0.onBuildReply, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.StartBuyStepFinih, slot0.onStartBuyFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	AutoChessGameModel.instance:setChessAvatar(slot0._goChessAvatar)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.StartFight, arg_19_0.closeThis, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateMallData, arg_19_0.refreshUI, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.DragChessEntity, arg_19_0.onDragChess, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.DragChessEntityEnd, arg_19_0.onDragChessEnd, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.MallCoinChange, arg_19_0.refreshCoinRelative, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.ForcePickViewBoard, arg_19_0.onViewBoard, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.ForcePickReply, arg_19_0.onForcePickReply, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateMallRegion, arg_19_0.onMallRegionChange, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateMasterSkill, arg_19_0.refreshLeaderSkillRelative, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.UpdateLeaderEnergy, arg_19_0.refreshLeaderEnergy, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.DrageMallItem, arg_19_0.onDragMallItem, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.DrageMallItemEnd, arg_19_0.onDragMallItemEnd, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.BuyChessReply, arg_19_0.onBuyReply, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.BuildReply, arg_19_0.onBuildReply, arg_19_0)
+	arg_19_0:addEventCb(AutoChessController.instance, AutoChessEvent.StartBuyStepFinih, arg_19_0.onStartBuyFinish, arg_19_0)
+	arg_19_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_19_0.onCloseView, arg_19_0)
+	AutoChessGameModel.instance:setChessAvatar(arg_19_0._goChessAvatar)
 
-	slot0.moduleId = AutoChessModel.instance:getCurModuleId()
-	slot0.chessMo = AutoChessModel.instance:getChessMo()
+	arg_19_0.moduleId = AutoChessModel.instance:getCurModuleId()
+	arg_19_0.chessMo = AutoChessModel.instance:getChessMo()
 
-	if slot0.viewParam and slot0.viewParam.firstOpen then
-		slot0.startBuyEnd = true
+	if arg_19_0.viewParam and arg_19_0.viewParam.firstOpen then
+		arg_19_0.startBuyEnd = true
 	end
 
-	slot0:refreshUI()
-	slot0:checkStartProgressAnim()
-	slot0:setGuideButtonStatus()
+	arg_19_0:refreshUI()
+	arg_19_0:checkStartProgressAnim()
+	arg_19_0:setGuideButtonStatus()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
 	AutoChessGameModel.instance.avatar = nil
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.onDestroyView(arg_21_0)
+	if arg_21_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_21_0._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.delaySetFreeItem, slot0)
-	TaskDispatcher.cancelTask(slot0.checkForcePick, slot0)
-	TaskDispatcher.cancelTask(slot0.starProgressFinish, slot0)
-	TaskDispatcher.cancelTask(slot0.recordItemPos, slot0)
-	TaskDispatcher.cancelTask(slot0.delaySwitch, slot0)
+	TaskDispatcher.cancelTask(arg_21_0.delaySetFreeItem, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.checkForcePick, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.starProgressFinish, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.recordItemPos, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.delaySwitch, arg_21_0)
 end
 
-function slot0.initMallItemList(slot0)
-	slot0.chargeFrameList = slot0:getUserDataTb_()
-	slot0.chargeItemList = {}
+function var_0_0.initMallItemList(arg_22_0)
+	arg_22_0.chargeFrameList = arg_22_0:getUserDataTb_()
+	arg_22_0.chargeItemList = {}
 
-	for slot4 = 1, 7 do
-		if slot4 == 1 then
-			slot0.freeItem = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._goMallItem, slot0._goChargeContent, "freeItem" .. slot4), AutoChessMallItem, slot0)
+	for iter_22_0 = 1, 7 do
+		if iter_22_0 == 1 then
+			local var_22_0 = gohelper.clone(arg_22_0._goMallItem, arg_22_0._goChargeContent, "freeItem" .. iter_22_0)
+
+			arg_22_0.freeItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_0, AutoChessMallItem, arg_22_0)
 		end
 
-		slot0.chargeFrameList[slot4] = gohelper.clone(slot0._goFrame, slot0._goChargeFrame, "chargeFrame" .. slot4).transform
-		slot0.chargeItemList[slot4] = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._goMallItem, slot0._goChargeContent, "chargeItem" .. slot4), AutoChessMallItem, slot0)
+		local var_22_1 = gohelper.clone(arg_22_0._goFrame, arg_22_0._goChargeFrame, "chargeFrame" .. iter_22_0)
+
+		arg_22_0.chargeFrameList[iter_22_0] = var_22_1.transform
+
+		local var_22_2 = gohelper.clone(arg_22_0._goMallItem, arg_22_0._goChargeContent, "chargeItem" .. iter_22_0)
+		local var_22_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_2, AutoChessMallItem, arg_22_0)
+
+		arg_22_0.chargeItemList[iter_22_0] = var_22_3
 	end
 
-	gohelper.setActive(slot0._goFrame, false)
-	gohelper.setActive(slot0._goMallItem, false)
-	TaskDispatcher.runDelay(slot0.recordItemPos, slot0, 0.01)
+	gohelper.setActive(arg_22_0._goFrame, false)
+	gohelper.setActive(arg_22_0._goMallItem, false)
+	TaskDispatcher.runDelay(arg_22_0.recordItemPos, arg_22_0, 0.01)
 end
 
-function slot0.recordItemPos(slot0)
-	for slot4 = 1, 7 do
-		if slot4 == 1 then
-			slot5, slot6 = recthelper.getAnchor(slot0._goFreeFrame.transform)
+function var_0_0.recordItemPos(arg_23_0)
+	for iter_23_0 = 1, 7 do
+		if iter_23_0 == 1 then
+			local var_23_0, var_23_1 = recthelper.getAnchor(arg_23_0._goFreeFrame.transform)
 
-			slot0.freeItem:setPos(slot5, slot6)
+			arg_23_0.freeItem:setPos(var_23_0, var_23_1)
 		end
 
-		slot5, slot6 = recthelper.getAnchor(slot0.chargeFrameList[slot4])
+		local var_23_2, var_23_3 = recthelper.getAnchor(arg_23_0.chargeFrameList[iter_23_0])
 
-		slot0.chargeItemList[slot4]:setPos(slot5, slot6)
+		arg_23_0.chargeItemList[iter_23_0]:setPos(var_23_2, var_23_3)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = slot0.chessMo.svrMall
+function var_0_0.refreshUI(arg_24_0)
+	local var_24_0 = arg_24_0.chessMo.svrMall
 
-	slot0:refreshMallItem(slot1)
+	arg_24_0:refreshMallItem(var_24_0)
 
-	slot4 = lua_auto_chess_mall.configDict[AutoChessHelper.getMallRegionByType(slot1.regions, AutoChessEnum.MallType.Normal).mallId] and slot3.showLevel or 0
+	local var_24_1 = AutoChessHelper.getMallRegionByType(var_24_0.regions, AutoChessEnum.MallType.Normal)
+	local var_24_2 = lua_auto_chess_mall.configDict[var_24_1.mallId]
+	local var_24_3 = var_24_2 and var_24_2.showLevel or 0
 
-	UISpriteSetMgr.instance:setAutoChessSprite(slot0._imageLevel, "v2a5_autochess_quality3_" .. slot4)
+	UISpriteSetMgr.instance:setAutoChessSprite(arg_24_0._imageLevel, "v2a5_autochess_quality3_" .. var_24_3)
 
-	slot0._txtMallLvl.text = "Lv." .. slot4
-	slot0._txtSellPrice.text = lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.ChessSellPrice].value
+	arg_24_0._txtMallLvl.text = "Lv." .. var_24_3
 
-	gohelper.setActive(slot0._goCheckCost, not slot0.chessMo.preview)
-	slot0:refreshLeaderEnergy()
-	slot0:refreshCoinRelative()
-	slot0:refreshRoundRelative()
-	slot0:refreshLeaderSkillRelative()
-	slot0:refreshMallLock()
+	local var_24_4 = AutoChessEnum.ConstKey.ChessSellPrice
+
+	arg_24_0._txtSellPrice.text = lua_auto_chess_const.configDict[var_24_4].value
+
+	gohelper.setActive(arg_24_0._goCheckCost, not arg_24_0.chessMo.preview)
+	arg_24_0:refreshLeaderEnergy()
+	arg_24_0:refreshCoinRelative()
+	arg_24_0:refreshRoundRelative()
+	arg_24_0:refreshLeaderSkillRelative()
+	arg_24_0:refreshMallLock()
 end
 
-function slot0.checkStartProgressAnim(slot0)
-	slot0.maxStarCnt = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.RewardMaxStar].value)
+function var_0_0.checkStartProgressAnim(arg_25_0)
+	local var_25_0 = AutoChessEnum.ConstKey.RewardMaxStar
 
-	if slot0:playStartProgressAnim() == 0 then
-		slot0:refreshStarProgress()
+	arg_25_0.maxStarCnt = tonumber(lua_auto_chess_const.configDict[var_25_0].value)
 
-		slot0.starProgressEnd = true
+	local var_25_1 = arg_25_0:playStartProgressAnim()
 
-		slot0:checkPopUp()
+	if var_25_1 == 0 then
+		arg_25_0:refreshStarProgress()
+
+		arg_25_0.starProgressEnd = true
+
+		arg_25_0:checkPopUp()
 	else
-		TaskDispatcher.runDelay(slot0.starProgressFinish, slot0, slot2)
+		TaskDispatcher.runDelay(arg_25_0.starProgressFinish, arg_25_0, var_25_1)
 	end
 end
 
-function slot0.refreshRoundRelative(slot0)
-	slot1 = slot0.chessMo.sceneRound
+function var_0_0.refreshRoundRelative(arg_26_0)
+	local var_26_0 = arg_26_0.chessMo.sceneRound
 
-	if slot0.chessMo.svrMall.freeRefreshCount > 0 then
-		slot0.freshCost = 0
+	if arg_26_0.chessMo.svrMall.freeRefreshCount > 0 then
+		arg_26_0.freshCost = 0
 	else
-		slot0.freshCost = tonumber(lua_auto_chess_mall_refresh.configDict[slot1].cost)
+		arg_26_0.freshCost = tonumber(lua_auto_chess_mall_refresh.configDict[var_26_0].cost)
 	end
 
-	slot0._txtFreshCost.text = slot0.freshCost
-	slot0._txtRound.text = string.format("%d/%d", slot1, lua_auto_chess_episode.configDict[AutoChessModel.instance.episodeId].maxRound)
+	arg_26_0._txtFreshCost.text = arg_26_0.freshCost
+
+	local var_26_1 = AutoChessModel.instance.episodeId
+	local var_26_2 = lua_auto_chess_episode.configDict[var_26_1]
+
+	arg_26_0._txtRound.text = string.format("%d/%d", var_26_0, var_26_2.maxRound)
 end
 
-function slot0.refreshMallLock(slot0)
-	slot1 = slot0.chargeMall.items[1] and slot0.chargeMall.items[1].freeze and true or false
+function var_0_0.refreshMallLock(arg_27_0)
+	local var_27_0 = arg_27_0.chargeMall.items[1] and arg_27_0.chargeMall.items[1].freeze and true or false
 
-	gohelper.setActive(slot0._btnLock, not slot1)
-	gohelper.setActive(slot0._btnUnlock, slot1)
+	gohelper.setActive(arg_27_0._btnLock, not var_27_0)
+	gohelper.setActive(arg_27_0._btnUnlock, var_27_0)
 end
 
-function slot0.refreshLeaderSkillRelative(slot0)
-	ZProj.UGUIHelper.SetGrayscale(slot0._simageLeaderSkill.gameObject, not slot0.chessMo.svrFight.mySideMaster.skill.canUse)
-	gohelper.setActive(slot0._goSkillLock, not slot0.chessMo.svrFight.mySideMaster.skill.unlock)
-	slot0:refreshLeaderSkillLight()
+function var_0_0.refreshLeaderSkillRelative(arg_28_0)
+	ZProj.UGUIHelper.SetGrayscale(arg_28_0._simageLeaderSkill.gameObject, not arg_28_0.chessMo.svrFight.mySideMaster.skill.canUse)
+	gohelper.setActive(arg_28_0._goSkillLock, not arg_28_0.chessMo.svrFight.mySideMaster.skill.unlock)
+	arg_28_0:refreshLeaderSkillLight()
 end
 
-function slot0.refreshLeaderSkillLight(slot0)
-	gohelper.setActive(slot0._goLeaderSkillLight, slot0:checkCanUseLeaderSkill())
+function var_0_0.refreshLeaderSkillLight(arg_29_0)
+	local var_29_0 = arg_29_0:checkCanUseLeaderSkill()
+
+	gohelper.setActive(arg_29_0._goLeaderSkillLight, var_29_0)
 end
 
-function slot0.refreshLeaderEnergy(slot0)
-	slot3 = lua_auto_chess_master.configDict[slot0.chessMo.svrFight.mySideMaster.id]
+function var_0_0.refreshLeaderEnergy(arg_30_0)
+	local var_30_0 = arg_30_0.chessMo.svrFight
+	local var_30_1 = var_30_0.mySideMaster.id
+	local var_30_2 = lua_auto_chess_master.configDict[var_30_1]
 
-	slot0._simageLeaderSkill:LoadImage(ResUrl.getAutoChessIcon(slot3.skillIcon, "skillicon"))
+	arg_30_0._simageLeaderSkill:LoadImage(ResUrl.getAutoChessIcon(var_30_2.skillIcon, "skillicon"))
 
-	if not string.nilorempty(lua_auto_chess_master_skill.configDict[slot3.skillId].cost) then
-		slot6 = string.split(slot5, "#")
+	local var_30_3 = lua_auto_chess_master_skill.configDict[var_30_2.skillId].cost
 
-		UISpriteSetMgr.instance:setAutoChessSprite(slot0._imageLeaderSkillCost, "v2a5_autochess_cost" .. slot6[1])
+	if not string.nilorempty(var_30_3) then
+		local var_30_4 = string.split(var_30_3, "#")
+		local var_30_5 = "v2a5_autochess_cost" .. var_30_4[1]
 
-		slot0._txtLeaderSkillCost.text = tonumber(slot6[2]) ~= 0 and slot6[2] or luaLang("autochess_mallview_nocost")
+		UISpriteSetMgr.instance:setAutoChessSprite(arg_30_0._imageLeaderSkillCost, var_30_5)
+
+		arg_30_0._txtLeaderSkillCost.text = tonumber(var_30_4[2]) ~= 0 and var_30_4[2] or luaLang("autochess_mallview_nocost")
 	else
-		slot0._txtLeaderSkillCost.text = luaLang("autochess_mallview_nocost")
+		arg_30_0._txtLeaderSkillCost.text = luaLang("autochess_mallview_nocost")
 	end
 
-	slot6 = AutoChessHelper.getBuffEnergy(slot1.mySideMaster.buffContainer.buffs)
-	slot0._txtLeaderEnergyP.text = slot6
+	local var_30_6 = AutoChessHelper.getBuffEnergy(var_30_0.mySideMaster.buffContainer.buffs)
 
-	gohelper.setActive(slot0._goLeaderEnergyP, slot6 ~= 0)
+	arg_30_0._txtLeaderEnergyP.text = var_30_6
 
-	slot6 = AutoChessHelper.getBuffEnergy(slot1.enemyMaster.buffContainer.buffs)
-	slot0._txtLeaderEnergyE.text = slot6
+	gohelper.setActive(arg_30_0._goLeaderEnergyP, var_30_6 ~= 0)
 
-	gohelper.setActive(slot0._goLeaderEnergyE, slot6 ~= 0)
+	local var_30_7 = AutoChessHelper.getBuffEnergy(var_30_0.enemyMaster.buffContainer.buffs)
+
+	arg_30_0._txtLeaderEnergyE.text = var_30_7
+
+	gohelper.setActive(arg_30_0._goLeaderEnergyE, var_30_7 ~= 0)
 end
 
-function slot0.refreshCoinRelative(slot0)
-	slot0._txtCoin.text = slot0.chessMo.svrMall.coin
-	slot0.previewCostEnough = slot0.chessMo:checkCostEnough(AutoChessStrEnum.CostType.Coin, slot0.chessMo.previewCoin)
-	slot0._txtCheckCost.text = slot0.previewCostEnough and slot2 or string.format("<color=#BD2C2C>%s</color>", slot2)
+function var_0_0.refreshCoinRelative(arg_31_0)
+	local var_31_0 = arg_31_0.chessMo.svrMall
 
-	gohelper.setActive(slot0._goStartLight, slot1.coin == 0)
-	slot0:refreshLeaderSkillLight()
+	arg_31_0._txtCoin.text = var_31_0.coin
+
+	local var_31_1 = arg_31_0.chessMo.previewCoin
+
+	arg_31_0.previewCostEnough = arg_31_0.chessMo:checkCostEnough(AutoChessStrEnum.CostType.Coin, var_31_1)
+
+	local var_31_2 = arg_31_0.previewCostEnough and var_31_1 or string.format("<color=#BD2C2C>%s</color>", var_31_1)
+
+	arg_31_0._txtCheckCost.text = var_31_2
+
+	gohelper.setActive(arg_31_0._goStartLight, var_31_0.coin == 0)
+	arg_31_0:refreshLeaderSkillLight()
 end
 
-function slot0.refreshMallItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.regions) do
-		if lua_auto_chess_mall.configDict[slot6.mallId].type == AutoChessEnum.MallType.Normal then
-			slot0.chargeMall = slot6
+function var_0_0.refreshMallItem(arg_32_0, arg_32_1)
+	for iter_32_0, iter_32_1 in ipairs(arg_32_1.regions) do
+		local var_32_0 = lua_auto_chess_mall.configDict[iter_32_1.mallId]
 
-			table.sort(slot6.items, function (slot0, slot1)
-				return lua_auto_chess_mall_item.configDict[slot0.id].order < lua_auto_chess_mall_item.configDict[slot1.id].order
+		if var_32_0.type == AutoChessEnum.MallType.Normal then
+			arg_32_0.chargeMall = iter_32_1
+
+			table.sort(iter_32_1.items, function(arg_33_0, arg_33_1)
+				local var_33_0 = lua_auto_chess_mall_item.configDict[arg_33_0.id]
+				local var_33_1 = lua_auto_chess_mall_item.configDict[arg_33_1.id]
+
+				return var_33_0.order < var_33_1.order
 			end)
 
-			for slot11 = 1, 7 do
-				slot0.chargeItemList[slot11]:setData(slot6.mallId, slot6.items[slot11])
-				gohelper.setActive(slot0.chargeFrameList[slot11].gameObject, slot11 <= slot7.capacity)
+			for iter_32_2 = 1, 7 do
+				arg_32_0.chargeItemList[iter_32_2]:setData(iter_32_1.mallId, iter_32_1.items[iter_32_2])
+				gohelper.setActive(arg_32_0.chargeFrameList[iter_32_2].gameObject, iter_32_2 <= var_32_0.capacity)
 			end
 		else
-			slot0.freeMall = slot6
+			arg_32_0.freeMall = iter_32_1
 
-			slot0.freeItem:setData(slot6.mallId, slot6.items[1], true)
+			arg_32_0.freeItem:setData(iter_32_1.mallId, iter_32_1.items[1], true)
 		end
 	end
 end
 
-function slot0.onStartBuyFinish(slot0)
-	slot0.startBuyEnd = true
+function var_0_0.onStartBuyFinish(arg_34_0)
+	arg_34_0.startBuyEnd = true
 
-	slot0:checkPopUp()
+	arg_34_0:checkPopUp()
 end
 
-function slot0.starProgressFinish(slot0)
-	slot0.starProgressEnd = true
+function var_0_0.starProgressFinish(arg_35_0)
+	arg_35_0.starProgressEnd = true
 
-	slot0:checkPopUp()
+	arg_35_0:checkPopUp()
 end
 
-function slot0.checkPopUp(slot0)
-	if not slot0.starProgressEnd or not slot0.startBuyEnd then
+function var_0_0.checkPopUp(arg_36_0)
+	if not arg_36_0.starProgressEnd or not arg_36_0.startBuyEnd then
 		return
 	end
 
-	if slot0.chessMo.mallUpgrade then
+	if arg_36_0.chessMo.mallUpgrade then
 		ViewMgr.instance:openView(ViewName.AutoChessMallLevelUpView)
 
-		slot0.chessMo.mallUpgrade = false
+		arg_36_0.chessMo.mallUpgrade = false
 	else
-		slot0:checkForcePick()
+		arg_36_0:checkForcePick()
 	end
 end
 
-function slot0.checkForcePick(slot0)
-	if #slot0.freeMall.selectItems > 0 then
-		ViewMgr.instance:openView(ViewName.AutoChessForcePickView, slot0.freeMall)
+function var_0_0.checkForcePick(arg_37_0)
+	if #arg_37_0.freeMall.selectItems > 0 then
+		ViewMgr.instance:openView(ViewName.AutoChessForcePickView, arg_37_0.freeMall)
 	end
 end
 
-function slot0.onDragChess(slot0)
-	gohelper.setActive(slot0._goCheckSell, true)
-	gohelper.setActive(slot0._goChargeRoot, false)
+function var_0_0.onDragChess(arg_38_0)
+	gohelper.setActive(arg_38_0._goCheckSell, true)
+	gohelper.setActive(arg_38_0._goChargeRoot, false)
 end
 
-function slot0.onDragChessEnd(slot0)
-	gohelper.setActive(slot0._goCheckSell, false)
-	gohelper.setActive(slot0._goChargeRoot, true)
+function var_0_0.onDragChessEnd(arg_39_0)
+	gohelper.setActive(arg_39_0._goCheckSell, false)
+	gohelper.setActive(arg_39_0._goChargeRoot, true)
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot1 == ViewName.AutoChessMallLevelUpView then
-		slot0:checkForcePick()
+function var_0_0.onCloseView(arg_40_0, arg_40_1)
+	if arg_40_1 == ViewName.AutoChessMallLevelUpView then
+		arg_40_0:checkForcePick()
 	end
 end
 
-function slot0.onViewBoard(slot0)
-	gohelper.setActive(slot0._btnLederSkill, false)
-	gohelper.setActive(slot0._goLeaderEnergyP, false)
-	gohelper.setActive(slot0._goStarProgress, false)
-	gohelper.setActive(slot0._btnCheckEnemy, false)
-	gohelper.setActive(slot0._btnStartFight, false)
-	gohelper.setActive(slot0._goRound, false)
-	gohelper.setActive(slot0._btnFresh, false)
-	gohelper.setActive(slot0._goLockBtns, false)
-	gohelper.setActive(slot0._goPickView, true)
+function var_0_0.onViewBoard(arg_41_0)
+	gohelper.setActive(arg_41_0._btnLederSkill, false)
+	gohelper.setActive(arg_41_0._goLeaderEnergyP, false)
+	gohelper.setActive(arg_41_0._goStarProgress, false)
+	gohelper.setActive(arg_41_0._btnCheckEnemy, false)
+	gohelper.setActive(arg_41_0._btnStartFight, false)
+	gohelper.setActive(arg_41_0._goRound, false)
+	gohelper.setActive(arg_41_0._btnFresh, false)
+	gohelper.setActive(arg_41_0._goLockBtns, false)
+	gohelper.setActive(arg_41_0._goPickView, true)
 end
 
-function slot0.onForcePickReply(slot0, slot1)
-	if not slot1 then
-		slot0.animFreeFrame:Play("open", 0, 0)
-		slot0:refreshMallItem(slot0.chessMo.svrMall)
-		slot0:checkForcePick()
+function var_0_0.onForcePickReply(arg_42_0, arg_42_1)
+	if not arg_42_1 then
+		arg_42_0.animFreeFrame:Play("open", 0, 0)
+		arg_42_0:refreshMallItem(arg_42_0.chessMo.svrMall)
+		arg_42_0:checkForcePick()
 	end
 end
 
-function slot0.onMallRegionChange(slot0)
-	slot0.freeMall = AutoChessHelper.getMallRegionByType(slot0.chessMo.svrMall.regions, AutoChessEnum.MallType.Free)
+function var_0_0.onMallRegionChange(arg_43_0)
+	arg_43_0.freeMall = AutoChessHelper.getMallRegionByType(arg_43_0.chessMo.svrMall.regions, AutoChessEnum.MallType.Free)
 
-	slot0.freeItem:setData(slot0.freeMall.mallId, slot0.freeMall.items[1], true)
-	slot0:checkForcePick()
+	arg_43_0.freeItem:setData(arg_43_0.freeMall.mallId, arg_43_0.freeMall.items[1], true)
+	arg_43_0:checkForcePick()
 end
 
-function slot0.onDragMallItem(slot0, slot1, slot2)
-	if slot2 ~= 0 then
-		slot0._txtCoin.text = string.format("%d(-%d)", slot0.chessMo.svrMall.coin, slot2)
+function var_0_0.onDragMallItem(arg_44_0, arg_44_1, arg_44_2)
+	if arg_44_2 ~= 0 then
+		arg_44_0._txtCoin.text = string.format("%d(-%d)", arg_44_0.chessMo.svrMall.coin, arg_44_2)
 
-		slot0.animCoin:Play("loop", 0, 0)
+		arg_44_0.animCoin:Play("loop", 0, 0)
 	end
 end
 
-function slot0.onDragMallItemEnd(slot0)
-	slot0._txtCoin.text = slot0.chessMo.svrMall.coin
+function var_0_0.onDragMallItemEnd(arg_45_0)
+	arg_45_0._txtCoin.text = arg_45_0.chessMo.svrMall.coin
 
-	slot0.animCoin:Play("idle", 0, 0)
+	arg_45_0.animCoin:Play("idle", 0, 0)
 end
 
-function slot0.onBuyReply(slot0)
-	slot0:refreshUI()
+function var_0_0.onBuyReply(arg_46_0)
+	arg_46_0:refreshUI()
 
-	if #slot0.freeMall.selectItems > 0 then
-		TaskDispatcher.runDelay(slot0.checkForcePick, slot0, 1.5)
+	if #arg_46_0.freeMall.selectItems > 0 then
+		TaskDispatcher.runDelay(arg_46_0.checkForcePick, arg_46_0, 1.5)
 	else
-		slot0:checkForcePick()
+		arg_46_0:checkForcePick()
 	end
 end
 
-function slot0.onBuildReply(slot0)
-	slot0:refreshUI()
+function var_0_0.onBuildReply(arg_47_0)
+	arg_47_0:refreshUI()
 
-	if #slot0.freeMall.selectItems > 0 then
-		TaskDispatcher.runDelay(slot0.checkForcePick, slot0, 1.5)
+	if #arg_47_0.freeMall.selectItems > 0 then
+		TaskDispatcher.runDelay(arg_47_0.checkForcePick, arg_47_0, 1.5)
 	else
-		slot0:checkForcePick()
+		arg_47_0:checkForcePick()
 	end
 end
 
-function slot0.freezeReply(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0.freezeReply(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
+	if arg_48_2 ~= 0 then
 		return
 	end
 
-	slot4 = slot3.type == AutoChessEnum.FreeZeType.Freeze
+	local var_48_0 = arg_48_3.type == AutoChessEnum.FreeZeType.Freeze
 
-	gohelper.setActive(slot0._btnLock, not slot4)
-	gohelper.setActive(slot0._btnUnlock, slot4)
+	gohelper.setActive(arg_48_0._btnLock, not var_48_0)
+	gohelper.setActive(arg_48_0._btnUnlock, var_48_0)
 
-	for slot8, slot9 in ipairs(slot0.chargeItemList) do
-		slot9:setLock(slot4)
+	for iter_48_0, iter_48_1 in ipairs(arg_48_0.chargeItemList) do
+		iter_48_1:setLock(var_48_0)
 	end
 end
 
-function slot0.checkCanUseLeaderSkill(slot0, slot1)
-	slot2 = slot0.chessMo.svrFight.mySideMaster
-	slot3 = lua_auto_chess_master.configDict[slot2.id]
+function var_0_0.checkCanUseLeaderSkill(arg_49_0, arg_49_1)
+	local var_49_0 = arg_49_0.chessMo.svrFight.mySideMaster
+	local var_49_1 = lua_auto_chess_master.configDict[var_49_0.id]
+	local var_49_2 = var_49_0.skill.id
+	local var_49_3 = lua_auto_chess_master_skill.configDict[var_49_2]
 
-	if lua_auto_chess_master_skill.configDict[slot2.skill.id].type == AutoChessStrEnum.SkillType.Passive then
-		if slot1 then
+	if var_49_3.type == AutoChessStrEnum.SkillType.Passive then
+		if arg_49_1 then
 			GameFacade.showToast(ToastEnum.AutoChessMasterSkill1)
 		end
 
 		return false
 	else
-		if not slot2.skill.unlock then
-			if slot1 then
+		if not var_49_0.skill.unlock then
+			if arg_49_1 then
 				GameFacade.showToast(ToastEnum.AutoChessMasterSkill4)
 			end
 
 			return false
 		end
 
-		if not slot2.skill.canUse then
-			if slot1 then
+		if not var_49_0.skill.canUse then
+			if arg_49_1 then
 				GameFacade.showToast(ToastEnum.AutoChessMasterSkill2)
 			end
 
 			return false
 		end
 
-		if slot3.roundTriggerCountLimit ~= 0 then
-			slot8 = 0
+		local var_49_4 = var_49_1.roundTriggerCountLimit
 
-			for slot12, slot13 in ipairs(slot0.chessMo.svrFight.mySideMaster.skill.roundUseCounts) do
-				if slot13.round == slot0.chessMo.sceneRound then
-					slot8 = slot13.count
+		if var_49_4 ~= 0 then
+			local var_49_5 = arg_49_0.chessMo.svrFight.mySideMaster.skill.roundUseCounts
+			local var_49_6 = 0
+
+			for iter_49_0, iter_49_1 in ipairs(var_49_5) do
+				if iter_49_1.round == arg_49_0.chessMo.sceneRound then
+					var_49_6 = iter_49_1.count
 
 					break
 				end
 			end
 
-			if slot6 <= slot8 then
-				if slot1 then
+			if var_49_4 <= var_49_6 then
+				if arg_49_1 then
 					GameFacade.showToast(ToastEnum.AutoChessMasterSkill2)
 				end
 
@@ -604,13 +655,18 @@ function slot0.checkCanUseLeaderSkill(slot0, slot1)
 			end
 		end
 
-		if slot3.totalTriggerCountLimit ~= 0 then
-			for slot12, slot13 in ipairs(slot0.chessMo.svrFight.mySideMaster.skill.roundUseCounts) do
-				slot8 = 0 + slot13.count
+		local var_49_7 = var_49_1.totalTriggerCountLimit
+
+		if var_49_7 ~= 0 then
+			local var_49_8 = arg_49_0.chessMo.svrFight.mySideMaster.skill.roundUseCounts
+			local var_49_9 = 0
+
+			for iter_49_2, iter_49_3 in ipairs(var_49_8) do
+				var_49_9 = var_49_9 + iter_49_3.count
 			end
 
-			if slot6 <= slot8 then
-				if slot1 then
+			if var_49_7 <= var_49_9 then
+				if arg_49_1 then
 					GameFacade.showToast(ToastEnum.AutoChessMasterSkill3)
 				end
 
@@ -618,10 +674,10 @@ function slot0.checkCanUseLeaderSkill(slot0, slot1)
 			end
 		end
 
-		slot7 = string.split(slot5.cost, "#")
+		local var_49_10 = string.split(var_49_3.cost, "#")
 
-		if not slot0.chessMo:checkCostEnough(slot7[1], tonumber(slot7[2])) then
-			if slot1 then
+		if not arg_49_0.chessMo:checkCostEnough(var_49_10[1], tonumber(var_49_10[2])) then
+			if arg_49_1 then
 				GameFacade.showToast(ToastEnum.AutoChessCoinNotEnough)
 			end
 
@@ -632,29 +688,34 @@ function slot0.checkCanUseLeaderSkill(slot0, slot1)
 	return true
 end
 
-function slot0.refreshStarProgress(slot0)
-	slot1 = slot0.chessMo.svrMall.rewardProgress
-	slot0._imageFreeP.fillAmount = slot1 / slot0.maxStarCnt
-	slot0._txtFreeP.text = string.format("%d/%d", slot1, slot0.maxStarCnt)
+function var_0_0.refreshStarProgress(arg_50_0)
+	local var_50_0 = arg_50_0.chessMo.svrMall.rewardProgress
+
+	arg_50_0._imageFreeP.fillAmount = var_50_0 / arg_50_0.maxStarCnt
+	arg_50_0._txtFreeP.text = string.format("%d/%d", var_50_0, arg_50_0.maxStarCnt)
 end
 
-function slot0.playStartProgressAnim(slot0)
-	if not slot0.chessMo.lastRewardProgress then
+function var_0_0.playStartProgressAnim(arg_51_0)
+	local var_51_0 = arg_51_0.chessMo.lastRewardProgress
+
+	if not var_51_0 then
 		return 0
 	end
 
-	slot0.chessMo.lastRewardProgress = nil
+	local var_51_1 = arg_51_0.chessMo.svrMall.rewardProgress
 
-	if slot0.chessMo.svrMall.rewardProgress - slot1 > 0 then
-		slot0.animStarProgress:Play("add", 0, 0)
+	arg_51_0.chessMo.lastRewardProgress = nil
 
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot1, slot2, 0.67, slot0._tweenFrameCb, slot0._tweenFinish, slot0)
+	if var_51_1 - var_51_0 > 0 then
+		arg_51_0.animStarProgress:Play("add", 0, 0)
+
+		arg_51_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_51_0, var_51_1, 0.67, arg_51_0._tweenFrameCb, arg_51_0._tweenFinish, arg_51_0)
 
 		return 0.67
-	elseif slot2 - slot1 < 0 then
-		slot0.animStarProgress:Play("add", 0, 0)
+	elseif var_51_1 - var_51_0 < 0 then
+		arg_51_0.animStarProgress:Play("add", 0, 0)
 
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot1, slot0.maxStarCnt, 0.67, slot0._tweenFrameCb, slot0._tweenFinish, slot0)
+		arg_51_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_51_0, arg_51_0.maxStarCnt, 0.67, arg_51_0._tweenFrameCb, arg_51_0._tweenFinish, arg_51_0)
 
 		return 0.67
 	end
@@ -662,24 +723,29 @@ function slot0.playStartProgressAnim(slot0)
 	return 0
 end
 
-function slot0._tweenFrameCb(slot0, slot1)
-	slot0._imageFreeP.fillAmount = slot1 / slot0.maxStarCnt
-	slot0._txtFreeP.text = string.format("%d/%d", slot1, slot0.maxStarCnt)
+function var_0_0._tweenFrameCb(arg_52_0, arg_52_1)
+	arg_52_0._imageFreeP.fillAmount = arg_52_1 / arg_52_0.maxStarCnt
+	arg_52_0._txtFreeP.text = string.format("%d/%d", arg_52_1, arg_52_0.maxStarCnt)
 end
 
-function slot0._tweenFinish(slot0)
-	slot0:refreshStarProgress()
+function var_0_0._tweenFinish(arg_53_0)
+	arg_53_0:refreshStarProgress()
 end
 
-function slot0.setGuideButtonStatus(slot0)
-	gohelper.setActive(slot0._btnCheckEnemy, GuideModel.instance:isGuideFinish(25403))
-	gohelper.setActive(slot0._goLockBtns, GuideModel.instance:isGuideFinish(25404))
+function var_0_0.setGuideButtonStatus(arg_54_0)
+	local var_54_0 = GuideModel.instance:isGuideFinish(25403)
 
-	slot1 = GuideModel.instance:isGuideFinish(25406) or GuideModel.instance:isGuideFinish(25407)
+	gohelper.setActive(arg_54_0._btnCheckEnemy, var_54_0)
 
-	gohelper.setActive(slot0._goStarProgress, slot1)
-	gohelper.setActive(slot0._btnFresh, slot1)
-	gohelper.setActive(slot0._btnLederSkill, slot1)
+	local var_54_1 = GuideModel.instance:isGuideFinish(25404)
+
+	gohelper.setActive(arg_54_0._goLockBtns, var_54_1)
+
+	local var_54_2 = GuideModel.instance:isGuideFinish(25406) or GuideModel.instance:isGuideFinish(25407)
+
+	gohelper.setActive(arg_54_0._goStarProgress, var_54_2)
+	gohelper.setActive(arg_54_0._btnFresh, var_54_2)
+	gohelper.setActive(arg_54_0._btnLederSkill, var_54_2)
 end
 
-return slot0
+return var_0_0

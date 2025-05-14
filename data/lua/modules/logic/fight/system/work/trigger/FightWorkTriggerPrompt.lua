@@ -1,23 +1,24 @@
-module("modules.logic.fight.system.work.trigger.FightWorkTriggerPrompt", package.seeall)
+﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerPrompt", package.seeall)
 
-slot0 = class("FightWorkTriggerPrompt", BaseWork)
+local var_0_0 = class("FightWorkTriggerPrompt", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._fightStepMO = slot1
-	slot0._actEffectMO = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._actEffectMO = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	slot0._config = lua_trigger_action.configDict[slot0._actEffectMO.effectNum]
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
 
-	if slot0._config then
-		FightController.instance:dispatchEvent(FightEvent.ShowFightPrompt, tonumber(slot0._config.param1), tonumber(slot0._config.param2))
+	if arg_2_0._config then
+		FightController.instance:dispatchEvent(FightEvent.ShowFightPrompt, tonumber(arg_2_0._config.param1), tonumber(arg_2_0._config.param2))
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

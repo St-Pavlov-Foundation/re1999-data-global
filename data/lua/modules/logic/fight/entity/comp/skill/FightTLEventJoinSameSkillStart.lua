@@ -1,23 +1,25 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillStart", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillStart", package.seeall)
 
-slot0 = class("FightTLEventJoinSameSkillStart")
+local var_0_0 = class("FightTLEventJoinSameSkillStart")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if not FightModel.instance:canParallelSkill(slot1) then
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if not FightModel.instance:canParallelSkill(arg_1_1) then
 		return
 	end
 
-	slot0._attacker = FightHelper.getEntity(slot1.fromId)
+	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
-	if slot0._attacker and slot0._attacker.skill then
-		slot0._attacker.skill:recordSameSkillStartParam(slot3)
+	if arg_1_0._attacker and arg_1_0._attacker.skill then
+		arg_1_0._attacker.skill:recordSameSkillStartParam(arg_1_3)
 	end
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_2_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

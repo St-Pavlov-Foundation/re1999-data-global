@@ -1,88 +1,92 @@
-module("modules.logic.social.model.SocialListModel", package.seeall)
+﻿module("modules.logic.social.model.SocialListModel", package.seeall)
 
-slot0 = class("SocialListModel")
+local var_0_0 = class("SocialListModel")
 
-function slot0.ctor(slot0)
-	slot0._models = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._models = {}
 end
 
-function slot0.reInit(slot0)
-	for slot4, slot5 in pairs(slot0._models) do
-		slot5:clear()
+function var_0_0.reInit(arg_2_0)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._models) do
+		iter_2_1:clear()
 	end
 end
 
-function slot0.getModel(slot0, slot1)
-	if not slot0._models[slot1] then
-		slot0._models[slot1] = ListScrollModel.New()
+function var_0_0.getModel(arg_3_0, arg_3_1)
+	if not arg_3_0._models[arg_3_1] then
+		arg_3_0._models[arg_3_1] = ListScrollModel.New()
 	end
 
-	return slot0._models[slot1]
+	return arg_3_0._models[arg_3_1]
 end
 
-function slot0.setModelList(slot0, slot1, slot2)
-	slot3 = slot0:getModel(slot1)
-	slot4 = {}
+function var_0_0.setModelList(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0:getModel(arg_4_1)
+	local var_4_1 = {}
 
-	if slot2 then
-		for slot8, slot9 in pairs(slot2) do
-			table.insert(slot4, slot9)
+	if arg_4_2 then
+		for iter_4_0, iter_4_1 in pairs(arg_4_2) do
+			table.insert(var_4_1, iter_4_1)
 		end
 	end
 
-	if slot1 == SocialEnum.Type.Friend then
-		table.sort(slot4, uv0.sortFriend)
+	if arg_4_1 == SocialEnum.Type.Friend then
+		table.sort(var_4_1, var_0_0.sortFriend)
 	else
-		table.sort(slot4, uv0.sort)
+		table.sort(var_4_1, var_0_0.sort)
 	end
 
-	slot3:setList(slot4)
+	var_4_0:setList(var_4_1)
 end
 
-function slot0.sortFriendList(slot0)
-	slot0:getModel(SocialEnum.Type.Friend):sort(uv0.sortFriend)
+function var_0_0.sortFriendList(arg_5_0)
+	arg_5_0:getModel(SocialEnum.Type.Friend):sort(var_0_0.sortFriend)
 end
 
-function slot0.sortFriend(slot0, slot1)
-	slot3 = SocialMessageModel.instance:getUnReadLastMsgTime(slot1.userId)
+function var_0_0.sortFriend(arg_6_0, arg_6_1)
+	local var_6_0 = SocialMessageModel.instance:getUnReadLastMsgTime(arg_6_0.userId)
+	local var_6_1 = SocialMessageModel.instance:getUnReadLastMsgTime(arg_6_1.userId)
 
-	if SocialMessageModel.instance:getUnReadLastMsgTime(slot0.userId) ~= 0 and slot3 ~= 0 then
-		return slot3 < slot2
-	elseif slot2 ~= 0 or slot3 ~= 0 then
-		return slot2 ~= 0
+	if var_6_0 ~= 0 and var_6_1 ~= 0 then
+		return var_6_1 < var_6_0
+	elseif var_6_0 ~= 0 or var_6_1 ~= 0 then
+		return var_6_0 ~= 0
 	else
-		return uv0.sort(slot0, slot1)
+		return var_0_0.sort(arg_6_0, arg_6_1)
 	end
 end
 
-function slot0.sort(slot0, slot1)
-	if tonumber(slot0.time) == 0 and tonumber(slot1.time) ~= 0 then
+function var_0_0.sort(arg_7_0, arg_7_1)
+	local var_7_0 = tonumber(arg_7_0.time)
+	local var_7_1 = tonumber(arg_7_1.time)
+
+	if var_7_0 == 0 and var_7_1 ~= 0 then
 		return true
-	elseif slot3 == 0 and slot2 ~= 0 then
+	elseif var_7_1 == 0 and var_7_0 ~= 0 then
 		return false
 	end
 
-	if slot3 < slot2 then
+	if var_7_1 < var_7_0 then
 		return true
-	elseif slot2 < slot3 then
+	elseif var_7_0 < var_7_1 then
 		return false
 	end
 
-	if slot1.level < slot0.level then
+	if arg_7_0.level > arg_7_1.level then
 		return true
-	elseif slot0.level < slot1.level then
+	elseif arg_7_0.level < arg_7_1.level then
 		return false
 	end
 
-	if tonumber(slot0.userId) < tonumber(slot1.userId) then
+	if tonumber(arg_7_0.userId) < tonumber(arg_7_1.userId) then
 		return true
-	elseif tonumber(slot1.userId) < tonumber(slot0.userId) then
+	elseif tonumber(arg_7_0.userId) > tonumber(arg_7_1.userId) then
 		return false
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

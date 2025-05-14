@@ -1,42 +1,46 @@
-module("modules.logic.room.view.layout.RoomLayoutItemTipsContainer", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutItemTipsContainer", package.seeall)
 
-slot0 = class("RoomLayoutItemTipsContainer", BaseViewContainer)
+local var_0_0 = class("RoomLayoutItemTipsContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomLayoutItemTips.New())
+	table.insert(var_1_0, RoomLayoutItemTips.New())
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_content/#scroll_ItemList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "#go_content/#go_normalitem"
-	slot2.cellClass = RoomLayoutItemTipsItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 550
-	slot2.cellHeight = 52
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(RoomLayoutItemListModel.instance, slot2))
+	var_1_1.scrollGOPath = "#go_content/#scroll_ItemList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "#go_content/#go_normalitem"
+	var_1_1.cellClass = RoomLayoutItemTipsItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 550
+	var_1_1.cellHeight = 52
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(RoomLayoutItemListModel.instance, var_1_1))
+
+	return var_1_0
 end
 
-function slot0.getTipsHeight(slot0)
-	slot2 = 0
-	slot3 = 12.5
-	slot4 = 52
-	slot5 = 88
-	slot6 = 20
+function var_0_0.getTipsHeight(arg_2_0)
+	local var_2_0 = RoomLayoutItemListModel.instance:getCount()
+	local var_2_1 = 0
+	local var_2_2 = 12.5
+	local var_2_3 = 52
+	local var_2_4 = 88
+	local var_2_5 = 20
 
-	if RoomLayoutItemListModel.instance:getCount() > 0 then
-		slot1 = slot1 + 0.5
+	if var_2_0 > 0 then
+		var_2_0 = var_2_0 + 0.5
 	end
 
-	return math.min(slot3, math.max(slot2, slot1)) * slot4 + slot5 + slot6
+	local var_2_6 = math.max(var_2_1, var_2_0)
+
+	return math.min(var_2_2, var_2_6) * var_2_3 + var_2_4 + var_2_5
 end
 
-return slot0
+return var_0_0

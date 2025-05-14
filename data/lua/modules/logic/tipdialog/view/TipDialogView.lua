@@ -1,344 +1,375 @@
-module("modules.logic.tipdialog.view.TipDialogView", package.seeall)
+﻿module("modules.logic.tipdialog.view.TipDialogView", package.seeall)
 
-slot0 = class("TipDialogView", BaseView)
+local var_0_0 = class("TipDialogView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_next")
-	slot0._gotopcontent = gohelper.findChild(slot0.viewGO, "go_normalcontent")
-	slot0._godialogbg = gohelper.findChild(slot0.viewGO, "go_normalcontent/#go_dialogbg")
-	slot0._godialoghead = gohelper.findChild(slot0.viewGO, "go_normalcontent/#go_dialoghead")
-	slot0._simagehead = gohelper.findChildSingleImage(slot0.viewGO, "go_normalcontent/#go_dialoghead/#image_headicon")
-	slot0._txtdialogdesc = gohelper.findChildText(slot0.viewGO, "go_normalcontent/txt_contentcn")
-	slot0._gobottomcontent = gohelper.findChild(slot0.viewGO, "#go_bottomcontent")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_bottomcontent/#go_content")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_bottomcontent/#go_content/#simage_bg")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "#go_bottomcontent/#go_content/#txt_info")
-	slot0._gooptions = gohelper.findChild(slot0.viewGO, "#go_bottomcontent/#go_content/#go_options")
-	slot0._gotalkitem = gohelper.findChild(slot0.viewGO, "#go_bottomcontent/#go_content/#go_options/#go_talkitem")
-	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_bottomcontent/#btn_skip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_next")
+	arg_1_0._gotopcontent = gohelper.findChild(arg_1_0.viewGO, "go_normalcontent")
+	arg_1_0._godialogbg = gohelper.findChild(arg_1_0.viewGO, "go_normalcontent/#go_dialogbg")
+	arg_1_0._godialoghead = gohelper.findChild(arg_1_0.viewGO, "go_normalcontent/#go_dialoghead")
+	arg_1_0._simagehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_normalcontent/#go_dialoghead/#image_headicon")
+	arg_1_0._txtdialogdesc = gohelper.findChildText(arg_1_0.viewGO, "go_normalcontent/txt_contentcn")
+	arg_1_0._gobottomcontent = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent/#go_content")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#simage_bg")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#txt_info")
+	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#go_options")
+	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#go_options/#go_talkitem")
+	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_bottomcontent/#btn_skip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
+	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnext:RemoveClickListener()
-	slot0._btnskip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnnext:RemoveClickListener()
+	arg_3_0._btnskip:RemoveClickListener()
 end
 
-function slot0._btnskipOnClick(slot0)
+function var_0_0._btnskipOnClick(arg_4_0)
+	return
 end
 
-function slot0._btnnextOnClick(slot0)
-	if not slot0._btnnext.gameObject.activeInHierarchy or slot0._finishClose then
+function var_0_0._btnnextOnClick(arg_5_0)
+	if not arg_5_0._btnnext.gameObject.activeInHierarchy or arg_5_0._finishClose then
 		return
 	end
 
-	if not slot0:_checkClickCd() then
+	if not arg_5_0:_checkClickCd() then
 		return
 	end
 
-	slot0:_playNextSectionOrDialog()
+	arg_5_0:_playNextSectionOrDialog()
 end
 
-function slot0._checkClickCd(slot0)
-	if Time.time - slot0._time < 0.5 then
+function var_0_0._checkClickCd(arg_6_0)
+	if Time.time - arg_6_0._time < 0.5 then
 		return
 	end
 
-	slot0._time = Time.time
+	arg_6_0._time = Time.time
 
 	return true
 end
 
-function slot0._editableInitView(slot0)
-	slot0._ori_txtWidth = recthelper.getWidth(slot0._txtdialogdesc.gameObject.transform)
-	slot0._ori_bgWidth = recthelper.getWidth(slot0._godialogbg.transform)
-	slot0._time = Time.time
-	slot0._optionBtnList = slot0:getUserDataTb_()
-	slot0._dialogItemList = slot0:getUserDataTb_()
-	slot0._dialogItemCacheList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_7_0)
+	local var_7_0 = arg_7_0._txtdialogdesc.gameObject.transform
+	local var_7_1 = arg_7_0._godialogbg.transform
 
-	gohelper.addUIClickAudio(slot0._btnnext.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
+	arg_7_0._ori_txtWidth = recthelper.getWidth(var_7_0)
+	arg_7_0._ori_bgWidth = recthelper.getWidth(var_7_1)
+	arg_7_0._time = Time.time
+	arg_7_0._optionBtnList = arg_7_0:getUserDataTb_()
+	arg_7_0._dialogItemList = arg_7_0:getUserDataTb_()
+	arg_7_0._dialogItemCacheList = arg_7_0:getUserDataTb_()
 
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0._nexticon = gohelper.findChild(slot0.viewGO, "#go_content/nexticon")
-	slot0._tmpFadeIn = MonoHelper.addLuaComOnceToGo(slot0.viewGO, TMPFadeIn)
+	gohelper.addUIClickAudio(arg_7_0._btnnext.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
+
+	arg_7_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_7_0.viewGO)
+	arg_7_0._nexticon = gohelper.findChild(arg_7_0.viewGO, "#go_content/nexticon")
+	arg_7_0._tmpFadeIn = MonoHelper.addLuaComOnceToGo(arg_7_0.viewGO, TMPFadeIn)
 end
 
-function slot0.onOpen(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("bg_wz.png"))
-	NavigateMgr.instance:addSpace(ViewName.TipDialogView, slot0._onSpace, slot0)
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("bg_wz.png"))
+	NavigateMgr.instance:addSpace(ViewName.TipDialogView, arg_8_0._onSpace, arg_8_0)
 
-	if slot0.viewParam.auto == nil then
-		-- Nothing
+	if arg_8_0.viewParam.auto == nil then
+		-- block empty
 	end
 
-	slot0._auto = slot0.viewParam.auto
-	slot0._autoTime = slot0.viewParam.autoplayTime ~= nil and slot0.viewParam.autoplayTime or 0.5
+	arg_8_0._auto = arg_8_0.viewParam.auto
+	arg_8_0._autoTime = arg_8_0.viewParam.autoplayTime ~= nil and arg_8_0.viewParam.autoplayTime or 0.5
 
-	gohelper.setActive(slot0._btnnext, not slot0._auto)
-	slot0:_playStory(slot0.viewParam.dialogId)
+	gohelper.setActive(arg_8_0._btnnext, not arg_8_0._auto)
+	arg_8_0:_playStory(arg_8_0.viewParam.dialogId)
 
-	if slot0._auto then
-		TaskDispatcher.runDelay(slot0._playNextSectionOrDialog, slot0, slot0._autoTime)
+	if arg_8_0._auto then
+		TaskDispatcher.runDelay(arg_8_0._playNextSectionOrDialog, arg_8_0, arg_8_0._autoTime)
 	end
 
-	if slot0.viewParam.widthPercentage then
-		slot0:calTxtWightAndSetBgWight(slot1)
+	local var_8_0 = arg_8_0.viewParam.widthPercentage
+
+	if var_8_0 then
+		arg_8_0:calTxtWightAndSetBgWight(var_8_0)
 	end
 end
 
-function slot0._onSpace(slot0)
-	if not slot0._btnnext.gameObject.activeInHierarchy then
+function var_0_0._onSpace(arg_9_0)
+	if not arg_9_0._btnnext.gameObject.activeInHierarchy then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
-	slot0:_btnnextOnClick()
+	arg_9_0:_btnnextOnClick()
 end
 
-function slot0._playNextSectionOrDialog(slot0)
-	if slot0._auto then
-		TaskDispatcher.runDelay(slot0._playNextSectionOrDialog, slot0, slot0._autoTime)
+function var_0_0._playNextSectionOrDialog(arg_10_0)
+	if arg_10_0._auto then
+		TaskDispatcher.runDelay(arg_10_0._playNextSectionOrDialog, arg_10_0, arg_10_0._autoTime)
 	end
 
-	if slot0._dialogIndex <= #slot0._sectionList then
-		slot0:_playNextDialog()
+	if #arg_10_0._sectionList >= arg_10_0._dialogIndex then
+		arg_10_0:_playNextDialog()
 
 		return
 	end
 
-	if table.remove(slot0._sectionStack) then
-		slot0:_playSection(slot1[1], slot1[2])
+	local var_10_0 = table.remove(arg_10_0._sectionStack)
+
+	if var_10_0 then
+		arg_10_0:_playSection(var_10_0[1], var_10_0[2])
 	else
-		slot0:_refreshDialogBtnState()
+		arg_10_0:_refreshDialogBtnState()
 	end
 end
 
-function slot0._playStory(slot0, slot1)
-	slot0._sectionStack = {}
-	slot0._optionId = 0
-	slot0._mainSectionId = "0"
-	slot0._sectionId = slot0._mainSectionId
-	slot0._dialogIndex = nil
-	slot0._dialogId = slot1
+function var_0_0._playStory(arg_11_0, arg_11_1)
+	arg_11_0._sectionStack = {}
+	arg_11_0._optionId = 0
+	arg_11_0._mainSectionId = "0"
+	arg_11_0._sectionId = arg_11_0._mainSectionId
+	arg_11_0._dialogIndex = nil
+	arg_11_0._dialogId = arg_11_1
 
-	slot0:_playSection(slot0._sectionId, slot0._dialogIndex)
+	arg_11_0:_playSection(arg_11_0._sectionId, arg_11_0._dialogIndex)
 end
 
-function slot0._playSection(slot0, slot1, slot2)
-	slot0:_setSectionData(slot1, slot2)
-	slot0:_playNextDialog()
+function var_0_0._playSection(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:_setSectionData(arg_12_1, arg_12_2)
+	arg_12_0:_playNextDialog()
 end
 
-function slot0._setSectionData(slot0, slot1, slot2)
-	slot0._sectionList = TipDialogConfig.instance:getDialog(slot0._dialogId, slot1)
+function var_0_0._setSectionData(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._sectionList = TipDialogConfig.instance:getDialog(arg_13_0._dialogId, arg_13_1)
 
-	if slot0._sectionList and not string.nilorempty(slot0._sectionList.option_param) then
-		slot0._option_param = slot0._sectionList.option_param
+	if arg_13_0._sectionList and not string.nilorempty(arg_13_0._sectionList.option_param) then
+		arg_13_0._option_param = arg_13_0._sectionList.option_param
 	end
 
-	slot0._dialogIndex = slot2 or 1
-	slot0._sectionId = slot1
+	arg_13_0._dialogIndex = arg_13_2 or 1
+	arg_13_0._sectionId = arg_13_1
 end
 
-function slot0._playNextDialog(slot0)
-	if not slot0._sectionList[slot0._dialogIndex] then
+function var_0_0._playNextDialog(arg_14_0)
+	local var_14_0 = arg_14_0._sectionList[arg_14_0._dialogIndex]
+
+	if not var_14_0 then
 		return
 	end
 
-	if slot1.type == TipDialogEnum.dialogType.dialog then
-		slot0:_showDialog(TipDialogEnum.dialogType.dialog, slot1, slot1.speaker)
+	if var_14_0.type == TipDialogEnum.dialogType.dialog then
+		arg_14_0:_showDialog(TipDialogEnum.dialogType.dialog, var_14_0, var_14_0.speaker)
 
-		slot0._dialogIndex = slot0._dialogIndex + 1
+		arg_14_0._dialogIndex = arg_14_0._dialogIndex + 1
 
-		if #slot0._sectionStack > 0 and #slot0._sectionList < slot0._dialogIndex then
-			slot2 = table.remove(slot0._sectionStack)
+		if #arg_14_0._sectionStack > 0 and #arg_14_0._sectionList < arg_14_0._dialogIndex then
+			local var_14_1 = table.remove(arg_14_0._sectionStack)
 
-			slot0:_setSectionData(slot2[1], slot2[2])
+			arg_14_0:_setSectionData(var_14_1[1], var_14_1[2])
 		end
 
-		slot0:_refreshDialogBtnState()
-	elseif slot1.type == TipDialogEnum.dialogType.talk then
-		slot0:_showTalk(TipDialogEnum.dialogType.talk, slot1)
+		arg_14_0:_refreshDialogBtnState()
+	elseif var_14_0.type == TipDialogEnum.dialogType.talk then
+		arg_14_0:_showTalk(TipDialogEnum.dialogType.talk, var_14_0)
 
-		slot0._dialogIndex = slot0._dialogIndex + 1
+		arg_14_0._dialogIndex = arg_14_0._dialogIndex + 1
 
-		if #slot0._sectionStack > 0 and #slot0._sectionList < slot0._dialogIndex then
-			slot2 = table.remove(slot0._sectionStack)
+		if #arg_14_0._sectionStack > 0 and #arg_14_0._sectionList < arg_14_0._dialogIndex then
+			local var_14_2 = table.remove(arg_14_0._sectionStack)
 
-			slot0:_setSectionData(slot2[1], slot2[2])
+			arg_14_0:_setSectionData(var_14_2[1], var_14_2[2])
 		end
 
-		slot0:_refreshDialogBtnState()
+		arg_14_0:_refreshDialogBtnState()
 	end
 end
 
-function slot0._showDialog(slot0, slot1, slot2, slot3)
-	slot0:_playAudio(slot2)
-	gohelper.setActive(slot0._gobottomcontent, true)
-	gohelper.setActive(slot0._gotopcontent, false)
+function var_0_0._showDialog(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_0:_playAudio(arg_15_2)
+	gohelper.setActive(arg_15_0._gobottomcontent, true)
+	gohelper.setActive(arg_15_0._gotopcontent, false)
 
-	slot5 = slot0:_addDialogItem(slot1, slot2.content, slot3)
+	local var_15_0 = arg_15_2.content
+	local var_15_1 = arg_15_0:_addDialogItem(arg_15_1, var_15_0, arg_15_3)
 end
 
-function slot0._showTalk(slot0, slot1, slot2)
-	gohelper.setActive(slot0._gobottomcontent, false)
-	gohelper.setActive(slot0._gotopcontent, true)
-	slot0._tmpFadeIn:playNormalText(slot2.content)
+function var_0_0._showTalk(arg_16_0, arg_16_1, arg_16_2)
+	gohelper.setActive(arg_16_0._gobottomcontent, false)
+	gohelper.setActive(arg_16_0._gotopcontent, true)
+	arg_16_0._tmpFadeIn:playNormalText(arg_16_2.content)
 
-	slot3 = string.splitToNumber(slot2.pos, "#")
+	local var_16_0 = string.splitToNumber(arg_16_2.pos, "#")
 
-	recthelper.setAnchor(slot0._gotopcontent.transform, slot3[1], slot3[2])
-	slot0._simagehead:LoadImage(string.format("singlebg/headicon_small/%s.png", slot2.icon))
-	slot0:_playAudio(slot2)
+	recthelper.setAnchor(arg_16_0._gotopcontent.transform, var_16_0[1], var_16_0[2])
+
+	local var_16_1 = string.format("singlebg/headicon_small/%s.png", arg_16_2.icon)
+
+	arg_16_0._simagehead:LoadImage(var_16_1)
+	arg_16_0:_playAudio(arg_16_2)
 end
 
-function slot0._playAudio(slot0, slot1)
-	if slot0._audioId and slot0._audioId > 0 then
-		AudioEffectMgr.instance:stopAudio(slot0._audioId, 0)
+function var_0_0._playAudio(arg_17_0, arg_17_1)
+	if arg_17_0._audioId and arg_17_0._audioId > 0 then
+		AudioEffectMgr.instance:stopAudio(arg_17_0._audioId, 0)
 	end
 
-	slot0._audioId = slot1.audio
+	arg_17_0._audioId = arg_17_1.audio
 
-	if slot0._audioId > 0 then
-		AudioEffectMgr.instance:playAudio(slot0._audioId)
+	if arg_17_0._audioId > 0 then
+		AudioEffectMgr.instance:playAudio(arg_17_0._audioId)
 	end
 end
 
-function slot0._skipOption(slot0, slot1, slot2)
-	slot3 = 1
+function var_0_0._skipOption(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = 1
+	local var_18_1 = var_18_0
+	local var_18_2 = arg_18_2[var_18_0]
+	local var_18_3 = arg_18_1[var_18_0]
 
-	slot0:_onOptionClick({
-		slot2[slot3],
-		slot1[slot3],
-		slot3
+	arg_18_0:_onOptionClick({
+		var_18_2,
+		var_18_3,
+		var_18_1
 	})
 end
 
-function slot0._refreshDialogBtnState(slot0, slot1)
-	if slot1 then
-		gohelper.setActive(slot0._gooptions, true)
+function var_0_0._refreshDialogBtnState(arg_19_0, arg_19_1)
+	if arg_19_1 then
+		gohelper.setActive(arg_19_0._gooptions, true)
 	else
-		slot0:_playCloseTalkItemEffect()
+		arg_19_0:_playCloseTalkItemEffect()
 	end
 
-	gohelper.setActive(slot0._txtinfo, not slot1)
+	gohelper.setActive(arg_19_0._txtinfo, not arg_19_1)
 
-	if not slot0._auto then
-		gohelper.setActive(slot0._btnnext, not slot1)
+	if not arg_19_0._auto then
+		gohelper.setActive(arg_19_0._btnnext, not arg_19_1)
 	end
 
-	if slot1 then
+	if arg_19_1 then
 		return
 	end
 
-	slot3 = not (#slot0._sectionStack > 0 or slot0._dialogIndex <= #slot0._sectionList)
+	local var_19_0 = not (#arg_19_0._sectionStack > 0 or #arg_19_0._sectionList >= arg_19_0._dialogIndex)
 
-	if slot0._isFinish then
-		SLFramework.AnimatorPlayer.Get(slot0.viewGO):Play(UIAnimationName.Close, slot0._fadeOutDone, slot0)
+	if arg_19_0._isFinish then
+		SLFramework.AnimatorPlayer.Get(arg_19_0.viewGO):Play(UIAnimationName.Close, arg_19_0._fadeOutDone, arg_19_0)
 
-		slot0._finishClose = true
+		arg_19_0._finishClose = true
 
-		if slot0._auto then
-			TaskDispatcher.cancelTask(slot0._playNextSectionOrDialog, slot0)
+		if arg_19_0._auto then
+			TaskDispatcher.cancelTask(arg_19_0._playNextSectionOrDialog, arg_19_0)
 		end
 	end
 
-	slot0._isFinish = slot3
+	arg_19_0._isFinish = var_19_0
 end
 
-function slot0._fadeOutDone(slot0)
-	slot0:closeThis()
+function var_0_0._fadeOutDone(arg_20_0)
+	arg_20_0:closeThis()
 end
 
-function slot0._playCloseTalkItemEffect(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[1]:GetComponent(typeof(UnityEngine.Animator)):Play("weekwalk_options_out")
+function var_0_0._playCloseTalkItemEffect(arg_21_0)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._optionBtnList) do
+		iter_21_1[1]:GetComponent(typeof(UnityEngine.Animator)):Play("weekwalk_options_out")
 	end
 
-	TaskDispatcher.runDelay(slot0._hideOption, slot0, 0.133)
+	TaskDispatcher.runDelay(arg_21_0._hideOption, arg_21_0, 0.133)
 end
 
-function slot0._hideOption(slot0)
-	gohelper.setActive(slot0._gooptions, false)
+function var_0_0._hideOption(arg_22_0)
+	gohelper.setActive(arg_22_0._gooptions, false)
 end
 
-function slot0._onOptionClick(slot0, slot1)
-	slot0._skipOptionParams = nil
+function var_0_0._onOptionClick(arg_23_0, arg_23_1)
+	arg_23_0._skipOptionParams = nil
 
-	if not slot0:_checkClickCd() then
+	if not arg_23_0:_checkClickCd() then
 		return
 	end
 
-	slot0:_showDialog("option", string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", slot1[2]))
+	local var_23_0 = arg_23_1[1]
+	local var_23_1 = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", arg_23_1[2])
 
-	slot0._showOption = true
-	slot0._optionId = slot1[3]
+	arg_23_0:_showDialog("option", var_23_1)
 
-	slot0:_checkOption(slot1[1])
+	arg_23_0._showOption = true
+	arg_23_0._optionId = arg_23_1[3]
+
+	arg_23_0:_checkOption(var_23_0)
 end
 
-function slot0._checkOption(slot0, slot1)
-	if not TipDialogConfig.instance:getDialog(slot0._dialogId, slot1) then
-		slot0:_playNextSectionOrDialog()
+function var_0_0._checkOption(arg_24_0, arg_24_1)
+	if not TipDialogConfig.instance:getDialog(arg_24_0._dialogId, arg_24_1) then
+		arg_24_0:_playNextSectionOrDialog()
 
 		return
 	end
 
-	if slot0._dialogIndex <= #slot0._sectionList then
-		table.insert(slot0._sectionStack, {
-			slot0._sectionId,
-			slot0._dialogIndex
+	if #arg_24_0._sectionList >= arg_24_0._dialogIndex then
+		table.insert(arg_24_0._sectionStack, {
+			arg_24_0._sectionId,
+			arg_24_0._dialogIndex
 		})
 	end
 
-	slot0:_playSection(slot1)
+	arg_24_0:_playSection(arg_24_1)
 end
 
-function slot0._addDialogItem(slot0, slot1, slot2, slot3)
-	slot0._txtinfo.text = slot2
+function var_0_0._addDialogItem(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	arg_25_0._txtinfo.text = arg_25_2
 
-	slot0._animatorPlayer:Play(UIAnimationName.Click, slot0._animDone, slot0)
-	gohelper.setActive(slot0._nexticon, true)
+	arg_25_0._animatorPlayer:Play(UIAnimationName.Click, arg_25_0._animDone, arg_25_0)
+	gohelper.setActive(arg_25_0._nexticon, true)
 end
 
-function slot0._animDone(slot0)
+function var_0_0._animDone(arg_26_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[2]:RemoveClickListener()
+function var_0_0.onClose(arg_27_0)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._optionBtnList) do
+		iter_27_1[2]:RemoveClickListener()
 	end
 
-	TaskDispatcher.cancelTask(slot0._hideOption, slot0)
-	TaskDispatcher.cancelTask(slot0._playNextSectionOrDialog, slot0)
+	TaskDispatcher.cancelTask(arg_27_0._hideOption, arg_27_0)
+	TaskDispatcher.cancelTask(arg_27_0._playNextSectionOrDialog, arg_27_0)
 
-	if slot0.viewParam.callback then
-		slot1(slot0.viewParam.callbackTarget)
+	local var_27_0 = arg_27_0.viewParam.callback
+	local var_27_1 = arg_27_0.viewParam.callbackTarget
+
+	if var_27_0 then
+		var_27_0(var_27_1)
 	end
 end
 
-function slot0.calTxtWightAndSetBgWight(slot0, slot1)
-	slot2 = slot0._txtdialogdesc.gameObject.transform
-	slot3 = slot0._godialogbg.transform
-	slot4 = recthelper.getWidth(slot2)
-	slot5 = recthelper.getWidth(slot3)
-	slot6 = slot5 - slot4
+function var_0_0.calTxtWightAndSetBgWight(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._txtdialogdesc.gameObject.transform
+	local var_28_1 = arg_28_0._godialogbg.transform
+	local var_28_2 = recthelper.getWidth(var_28_0)
+	local var_28_3 = recthelper.getWidth(var_28_1)
+	local var_28_4 = var_28_3 - var_28_2
 
-	recthelper.setWidth(slot2, slot4 * slot1)
-	recthelper.setWidth(slot3, (slot5 + slot4 * slot1 - slot0._ori_txtWidth) * 1)
+	recthelper.setWidth(var_28_0, var_28_2 * arg_28_1)
+
+	local var_28_5 = var_28_2 * arg_28_1 - arg_28_0._ori_txtWidth
+
+	arg_28_1 = 1
+
+	local var_28_6 = (var_28_3 + var_28_5) * arg_28_1
+
+	recthelper.setWidth(var_28_1, var_28_6)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_29_0)
+	arg_29_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

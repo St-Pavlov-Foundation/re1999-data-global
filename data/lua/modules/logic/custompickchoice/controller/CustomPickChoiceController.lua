@@ -1,54 +1,58 @@
-module("modules.logic.custompickchoice.controller.CustomPickChoiceController", package.seeall)
+﻿module("modules.logic.custompickchoice.controller.CustomPickChoiceController", package.seeall)
 
-slot0 = class("CustomPickChoiceController", BaseController)
+local var_0_0 = class("CustomPickChoiceController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._pickHandler = nil
-	slot0._pickHandlerObj = nil
-	slot0._showMsgBoxFunc = nil
-	slot0._showMsgBoxFuncObj = nil
-	slot0._tmpViewParam = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._pickHandler = nil
+	arg_1_0._pickHandlerObj = nil
+	arg_1_0._showMsgBoxFunc = nil
+	arg_1_0._showMsgBoxFuncObj = nil
+	arg_1_0._tmpViewParam = nil
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_4_0)
+	arg_4_0:onInit()
 end
 
-function slot0.openCustomPickChoiceView(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0._pickHandler = slot2
-	slot0._pickHandlerObj = slot3
-	slot0._showMsgBoxFunc = slot5
-	slot0._showMsgBoxFuncObj = slot6
+function var_0_0.openCustomPickChoiceView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7)
+	arg_5_0._pickHandler = arg_5_2
+	arg_5_0._pickHandlerObj = arg_5_3
+	arg_5_0._showMsgBoxFunc = arg_5_5
+	arg_5_0._showMsgBoxFuncObj = arg_5_6
 
-	CustomPickChoiceListModel.instance:initData(slot1, slot7)
-	ViewMgr.instance:openView(ViewName.CustomPickChoiceView, slot4)
+	CustomPickChoiceListModel.instance:initData(arg_5_1, arg_5_7)
+	ViewMgr.instance:openView(ViewName.CustomPickChoiceView, arg_5_4)
 end
 
-function slot0.openNewBiePickChoiceView(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0._pickHandler = slot2
-	slot0._pickHandlerObj = slot3
-	slot0._showMsgBoxFunc = slot5
-	slot0._showMsgBoxFuncObj = slot6
+function var_0_0.openNewBiePickChoiceView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
+	arg_6_0._pickHandler = arg_6_2
+	arg_6_0._pickHandlerObj = arg_6_3
+	arg_6_0._showMsgBoxFunc = arg_6_5
+	arg_6_0._showMsgBoxFuncObj = arg_6_6
 
-	CustomPickChoiceListModel.instance:initData(slot1, slot7)
-	ViewMgr.instance:openView(ViewName.NewbieCustomPickView, slot4)
+	CustomPickChoiceListModel.instance:initData(arg_6_1, arg_6_7)
+	ViewMgr.instance:openView(ViewName.NewbieCustomPickView, arg_6_4)
 end
 
-function slot0.onOpenView(slot0)
-	slot0:dispatchEvent(CustomPickChoiceEvent.onCustomPickListChanged)
+function var_0_0.onOpenView(arg_7_0)
+	arg_7_0:dispatchEvent(CustomPickChoiceEvent.onCustomPickListChanged)
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot4 = CustomPickChoiceListModel.instance:getMaxSelectCount()
+function var_0_0.setSelect(arg_8_0, arg_8_1)
+	local var_8_0 = CustomPickChoiceListModel.instance:isHeroIdSelected(arg_8_1)
+	local var_8_1 = CustomPickChoiceListModel.instance:getSelectCount()
+	local var_8_2 = CustomPickChoiceListModel.instance:getMaxSelectCount()
 
-	if not CustomPickChoiceListModel.instance:isHeroIdSelected(slot1) and slot4 <= CustomPickChoiceListModel.instance:getSelectCount() then
-		if slot4 > 1 then
+	if not var_8_0 and var_8_2 <= var_8_1 then
+		if var_8_2 > 1 then
 			GameFacade.showToast(ToastEnum.CustomPickPleaseCancel)
 
 			return
@@ -57,68 +61,84 @@ function slot0.setSelect(slot0, slot1)
 		end
 	end
 
-	CustomPickChoiceListModel.instance:setSelectId(slot1)
-	slot0:dispatchEvent(CustomPickChoiceEvent.onCustomPickListChanged)
+	CustomPickChoiceListModel.instance:setSelectId(arg_8_1)
+	arg_8_0:dispatchEvent(CustomPickChoiceEvent.onCustomPickListChanged)
 end
 
-function slot0.tryChoice(slot0, slot1)
-	slot2 = CustomPickChoiceListModel.instance:getMaxSelectCount()
+function var_0_0.tryChoice(arg_9_0, arg_9_1)
+	local var_9_0 = CustomPickChoiceListModel.instance:getMaxSelectCount()
+	local var_9_1 = CustomPickChoiceListModel.instance:getSelectCount()
 
-	if not CustomPickChoiceListModel.instance:getSelectCount() or slot2 < slot3 then
+	if not var_9_1 or var_9_0 < var_9_1 then
 		return false
 	end
 
-	if slot3 < slot2 then
+	if var_9_1 < var_9_0 then
 		GameFacade.showToast(ToastEnum.CustomPickMoreSelect)
 
 		return false
 	end
 
-	slot0._tmpViewParam = slot1
+	arg_9_0._tmpViewParam = arg_9_1
 
-	if slot0._showMsgBoxFunc then
-		if slot0._showMsgBoxFuncObj then
-			slot0._showMsgBoxFunc(slot0._showMsgBoxFuncObj, slot0.realChoice, slot0)
+	if arg_9_0._showMsgBoxFunc then
+		if arg_9_0._showMsgBoxFuncObj then
+			arg_9_0._showMsgBoxFunc(arg_9_0._showMsgBoxFuncObj, arg_9_0.realChoice, arg_9_0)
 		else
-			slot0._showMsgBoxFunc(slot0.realChoice, slot0)
+			arg_9_0._showMsgBoxFunc(arg_9_0.realChoice, arg_9_0)
 		end
 	else
-		slot4 = nil
-		slot5 = false
+		local var_9_2
+		local var_9_3 = false
+		local var_9_4 = CustomPickChoiceListModel.instance:getSelectIds()
 
-		if CustomPickChoiceListModel.instance:getSelectIds() then
-			for slot10, slot11 in ipairs(slot6) do
-				if not slot5 and HeroModel.instance:getByHeroId(slot11) then
-					slot5 = true
+		if var_9_4 then
+			for iter_9_0, iter_9_1 in ipairs(var_9_4) do
+				local var_9_5 = HeroModel.instance:getByHeroId(iter_9_1)
+
+				if not var_9_3 and var_9_5 then
+					var_9_3 = true
 				end
 
-				if HeroConfig.instance:getHeroCO(slot11) then
-					slot14 = slot13 and slot13.name or ""
-					slot4 = string.nilorempty(slot4) and slot14 or GameUtil.getSubPlaceholderLuaLang(luaLang("custompickchoice_select_heros"), {
-						slot14,
-						slot14
-					})
+				local var_9_6 = HeroConfig.instance:getHeroCO(iter_9_1)
+
+				if var_9_6 then
+					local var_9_7 = var_9_6 and var_9_6.name or ""
+
+					if string.nilorempty(var_9_2) then
+						var_9_2 = var_9_7
+					else
+						var_9_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("custompickchoice_select_heros"), {
+							var_9_2,
+							var_9_7
+						})
+					end
 				end
 			end
 		end
 
-		GameFacade.showMessageBox(slot5 and MessageBoxIdDefine.CustomPickChoiceHasHero or MessageBoxIdDefine.CustomPickChoiceConfirm, MsgBoxEnum.BoxType.Yes_No, slot0.realChoice, nil, , slot0, nil, , slot4)
+		local var_9_8 = var_9_3 and MessageBoxIdDefine.CustomPickChoiceHasHero or MessageBoxIdDefine.CustomPickChoiceConfirm
+
+		GameFacade.showMessageBox(var_9_8, MsgBoxEnum.BoxType.Yes_No, arg_9_0.realChoice, nil, nil, arg_9_0, nil, nil, var_9_2)
 	end
 end
 
-function slot0.realChoice(slot0)
-	if not slot0._pickHandler then
+function var_0_0.realChoice(arg_10_0)
+	if not arg_10_0._pickHandler then
 		return
 	end
 
-	slot0._pickHandler(slot0._pickHandlerObj, slot0._tmpViewParam, CustomPickChoiceListModel.instance:getSelectIds())
+	local var_10_0 = CustomPickChoiceListModel.instance:getSelectIds()
 
-	slot0._tmpViewParam = nil
+	arg_10_0._pickHandler(arg_10_0._pickHandlerObj, arg_10_0._tmpViewParam, var_10_0)
+
+	arg_10_0._tmpViewParam = nil
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_11_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,23 +1,23 @@
-module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114TravelFlow", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114TravelFlow", package.seeall)
 
-slot0 = class("Activity114TravelFlow", Activity114BaseFlow)
+local var_0_0 = class("Activity114TravelFlow", Activity114BaseFlow)
 
-function slot0.addSkipWork(slot0)
+function var_0_0.addSkipWork(arg_1_0)
 	if Activity114Model.instance.serverData.battleEventId > 0 then
-		slot0.context.result = Activity114Enum.Result.Fail
+		arg_1_0.context.result = Activity114Enum.Result.Fail
 
-		slot0:addWork(Activity114FightResultWork.New())
-		slot0:addWork(Activity114OpenAttrViewWork.New())
+		arg_1_0:addWork(Activity114FightResultWork.New())
+		arg_1_0:addWork(Activity114OpenAttrViewWork.New())
 
 		return
 	end
 
-	uv0.super.addSkipWork(slot0)
+	var_0_0.super.addSkipWork(arg_1_0)
 end
 
-function slot0.addEventWork(slot0)
-	slot0:addWork(Activity114CheckWork.New())
-	slot0:addWork(Activity114CheckOrAnswerWork.New())
+function var_0_0.addEventWork(arg_2_0)
+	arg_2_0:addWork(Activity114CheckWork.New())
+	arg_2_0:addWork(Activity114CheckOrAnswerWork.New())
 end
 
-return slot0
+return var_0_0

@@ -1,28 +1,30 @@
-module("modules.logic.fight.model.mo.FightRoundOperRecordMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightRoundOperRecordMO", package.seeall)
 
-slot0 = pureTable("FightRoundOperRecordMO")
+local var_0_0 = pureTable("FightRoundOperRecordMO")
 
-function slot0.ctor(slot0)
-	slot0.clothSkillOpers = {}
-	slot0.opers = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.clothSkillOpers = {}
+	arg_1_0.opers = {}
 end
 
-function slot0.init(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.clothSkillOpers) do
-		table.insert(slot0.clothSkillOpers, {
-			skillId = slot6.skillId,
-			fromId = slot6.fromId,
-			toId = slot6.toId,
-			type = slot6.type
-		})
+function var_0_0.init(arg_2_0, arg_2_1)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.clothSkillOpers) do
+		local var_2_0 = {
+			skillId = iter_2_1.skillId,
+			fromId = iter_2_1.fromId,
+			toId = iter_2_1.toId,
+			type = iter_2_1.type
+		}
+
+		table.insert(arg_2_0.clothSkillOpers, var_2_0)
 	end
 
-	for slot5, slot6 in ipairs(slot1.opers) do
-		slot7 = FightBeginRoundOp.New()
+	for iter_2_2, iter_2_3 in ipairs(arg_2_1.opers) do
+		local var_2_1 = FightBeginRoundOp.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.opers, slot7)
+		var_2_1:init(iter_2_3)
+		table.insert(arg_2_0.opers, var_2_1)
 	end
 end
 
-return slot0
+return var_0_0

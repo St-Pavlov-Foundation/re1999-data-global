@@ -1,57 +1,59 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_ScoreTaskAchievementContainer", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_ScoreTaskAchievementContainer", package.seeall)
 
-slot0 = class("V1a4_BossRush_ScoreTaskAchievementContainer", BaseViewContainer)
+local var_0_0 = class("V1a4_BossRush_ScoreTaskAchievementContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot2 = ListScrollParam.New()
-	slot2.cellClass = V1a4_BossRush_ScoreTaskAchievementItem
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.scrollGOPath = "#scroll_ScoreList"
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 964
-	slot2.cellHeight = 162
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
-	slot2.sortMode = ScrollEnum.ScrollSortDown
-	slot0._scoreTaskAchievement = V1a4_BossRush_ScoreTaskAchievement.New()
-	slot0._taskScrollView = LuaListScrollView.New(V1a4_BossRush_ScoreTaskAchievementListModel.instance, slot2)
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = V1a4_BossRush_ScoreTaskAchievementListModel.instance
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.cellClass = V1a4_BossRush_ScoreTaskAchievementItem
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.scrollGOPath = "#scroll_ScoreList"
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 964
+	var_1_1.cellHeight = 162
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+	var_1_1.sortMode = ScrollEnum.ScrollSortDown
+	arg_1_0._scoreTaskAchievement = V1a4_BossRush_ScoreTaskAchievement.New()
+	arg_1_0._taskScrollView = LuaListScrollView.New(var_1_0, var_1_1)
 
 	return {
-		slot0._scoreTaskAchievement,
-		slot0._taskScrollView,
-		TabViewGroup.New(1, "top_left")
+		arg_1_0._scoreTaskAchievement,
+		arg_1_0._taskScrollView,
+		(TabViewGroup.New(1, "top_left"))
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, 100, slot0._closeCallback, nil, , slot0)
+		}, 100, arg_2_0._closeCallback, nil, nil, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.setActiveBlock(slot0, slot1, slot2)
-	if not slot0._scoreTaskAchievement then
+function var_0_0.setActiveBlock(arg_3_0, arg_3_1, arg_3_2)
+	if not arg_3_0._scoreTaskAchievement then
 		return
 	end
 
-	slot0._scoreTaskAchievement:setActiveBlock(slot1, slot2)
+	arg_3_0._scoreTaskAchievement:setActiveBlock(arg_3_1, arg_3_2)
 end
 
-function slot0.onContainerInit(slot0)
-	slot0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0._taskScrollView)
+function var_0_0.onContainerInit(arg_4_0)
+	arg_4_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_4_0._taskScrollView)
 
-	slot0.taskAnimRemoveItem:setMoveInterval(0)
+	arg_4_0.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-return slot0
+return var_0_0

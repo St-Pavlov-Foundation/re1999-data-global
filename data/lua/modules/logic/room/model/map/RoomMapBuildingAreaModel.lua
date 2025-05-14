@@ -1,142 +1,170 @@
-module("modules.logic.room.model.map.RoomMapBuildingAreaModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomMapBuildingAreaModel", package.seeall)
 
-slot0 = class("RoomMapBuildingAreaModel", BaseModel)
+local var_0_0 = class("RoomMapBuildingAreaModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._areaBuildingDict = nil
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._areaBuildingDict = nil
 end
 
-function slot0.init(slot0)
-	slot0:clear()
-	slot0:refreshBuildingAreaMOList()
+function var_0_0.init(arg_5_0)
+	arg_5_0:clear()
+	arg_5_0:refreshBuildingAreaMOList()
 end
 
-function slot0.refreshBuildingAreaMOList(slot0)
-	slot1 = {}
-	slot0._bType2UIdDict = {}
+function var_0_0.refreshBuildingAreaMOList(arg_6_0)
+	local var_6_0 = {}
 
-	for slot6, slot7 in ipairs(RoomMapBuildingModel.instance:getBuildingMOList()) do
-		if slot7:isBuildingArea() and slot7:isAreaMainBuilding() then
-			if not slot0:getById(slot7.uid) then
-				RoomMapBuildingAreaMO.New():init(slot7)
+	arg_6_0._bType2UIdDict = {}
+
+	local var_6_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		if iter_6_1:isBuildingArea() and iter_6_1:isAreaMainBuilding() then
+			local var_6_2 = arg_6_0:getById(iter_6_1.uid)
+
+			if not var_6_2 then
+				var_6_2 = RoomMapBuildingAreaMO.New()
+
+				var_6_2:init(iter_6_1)
 			else
-				slot8:clearBuildingMOList()
+				var_6_2:clearBuildingMOList()
 			end
 
-			table.insert(slot1, slot8)
+			table.insert(var_6_0, var_6_2)
 
-			if slot7.config then
-				slot0._bType2UIdDict[slot7.config.buildingType] = slot8.id
+			if iter_6_1.config then
+				arg_6_0._bType2UIdDict[iter_6_1.config.buildingType] = var_6_2.id
 			end
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_6_0:setList(var_6_0)
 end
 
-function slot0.getTempAreaMO(slot0)
-	if not RoomMapBuildingModel.instance:getTempBuildingMO() or not slot1:isBuildingArea() or not slot1:isAreaMainBuilding() then
+function var_0_0.getTempAreaMO(arg_7_0)
+	local var_7_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+
+	if not var_7_0 or not var_7_0:isBuildingArea() or not var_7_0:isAreaMainBuilding() then
 		return nil
 	end
 
-	if not slot0._tempAreaMO then
-		slot0._tempAreaMO = RoomMapBuildingAreaMO.New()
+	if not arg_7_0._tempAreaMO then
+		arg_7_0._tempAreaMO = RoomMapBuildingAreaMO.New()
 	end
 
-	if slot0._tempAreaMO.id ~= slot1.uid or slot0._tempAreaMO.mainBuildingMO ~= slot1 then
-		slot0._tempAreaMO:init(slot1)
+	if arg_7_0._tempAreaMO.id ~= var_7_0.uid or arg_7_0._tempAreaMO.mainBuildingMO ~= var_7_0 then
+		arg_7_0._tempAreaMO:init(var_7_0)
 	end
 
-	return slot0._tempAreaMO
+	return arg_7_0._tempAreaMO
 end
 
-function slot0.refreshAreaMOByBType(slot0, slot1)
-	slot0:_refreshAreaMOById(slot0._bType2UIdDict[slot1])
+function var_0_0.refreshAreaMOByBType(arg_8_0, arg_8_1)
+	arg_8_0:_refreshAreaMOById(arg_8_0._bType2UIdDict[arg_8_1])
 end
 
-function slot0.refreshAreaMOByBId(slot0, slot1)
-	if RoomConfig.instance:getBuildingConfig(slot1) then
-		slot0:refreshAreaMOByBType(slot2.buildingType)
-	end
-end
+function var_0_0.refreshAreaMOByBId(arg_9_0, arg_9_1)
+	local var_9_0 = RoomConfig.instance:getBuildingConfig(arg_9_1)
 
-function slot0.refreshAreaMOByBUId(slot0, slot1)
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) and slot2.config then
-		slot0:refreshAreaMOByBType(slot2.config.buildingType)
+	if var_9_0 then
+		arg_9_0:refreshAreaMOByBType(var_9_0.buildingType)
 	end
 end
 
-function slot0._refreshAreaMOById(slot0, slot1)
-	if slot0:getById(slot1) then
-		slot2:clearBuildingMOList()
+function var_0_0.refreshAreaMOByBUId(arg_10_0, arg_10_1)
+	local var_10_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_10_1)
+
+	if var_10_0 and var_10_0.config then
+		arg_10_0:refreshAreaMOByBType(var_10_0.config.buildingType)
 	end
 end
 
-function slot0.getAreaMOByBType(slot0, slot1)
-	return slot0:getById(slot0._bType2UIdDict[slot1])
-end
+function var_0_0._refreshAreaMOById(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getById(arg_11_1)
 
-function slot0.getAreaMOByBId(slot0, slot1)
-	if RoomConfig.instance:getBuildingConfig(slot1) then
-		return slot0:getAreaMOByBType(slot2.buildingType)
+	if var_11_0 then
+		var_11_0:clearBuildingMOList()
 	end
 end
 
-function slot0.getAreaMOByBUId(slot0, slot1)
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1) and slot2.config then
-		slot0:getAreaMOByBType(slot2.config.buildingType)
+function var_0_0.getAreaMOByBType(arg_12_0, arg_12_1)
+	return arg_12_0:getById(arg_12_0._bType2UIdDict[arg_12_1])
+end
+
+function var_0_0.getAreaMOByBId(arg_13_0, arg_13_1)
+	local var_13_0 = RoomConfig.instance:getBuildingConfig(arg_13_1)
+
+	if var_13_0 then
+		return arg_13_0:getAreaMOByBType(var_13_0.buildingType)
 	end
 end
 
-function slot0.getBuildingType2AreaMODict(slot0)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		-- Nothing
+function var_0_0.getAreaMOByBUId(arg_14_0, arg_14_1)
+	local var_14_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_14_1)
+
+	if var_14_0 and var_14_0.config then
+		arg_14_0:getAreaMOByBType(var_14_0.config.buildingType)
+	end
+end
+
+function var_0_0.getBuildingType2AreaMODict(arg_15_0)
+	local var_15_0 = {}
+	local var_15_1 = arg_15_0:getList()
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
+		var_15_0[iter_15_1:getBuildingType()] = iter_15_1
 	end
 
-	return {
-		[slot7:getBuildingType()] = slot7
-	}
+	return var_15_0
 end
 
-function slot0.getBuildingUidByType(slot0, slot1)
-	return slot0._bType2UIdDict[slot1]
+function var_0_0.getBuildingUidByType(arg_16_0, arg_16_1)
+	return arg_16_0._bType2UIdDict[arg_16_1]
 end
 
-function slot0.logTest(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if slot6.mainBuildingMO then
-			slot0:_logByBuildingId(slot7.buildingId, slot6:getRangesHexPointList())
+function var_0_0.logTest(arg_17_0)
+	local var_17_0 = arg_17_0:getList()
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		local var_17_1 = iter_17_1.mainBuildingMO
+
+		if var_17_1 then
+			arg_17_0:_logByBuildingId(var_17_1.buildingId, iter_17_1:getRangesHexPointList())
 		end
 	end
 end
 
-function slot0._logByBuildingId(slot0, slot1, slot2)
-	if not RoomConfig.instance:getBuildingConfig(slot1) then
+function var_0_0._logByBuildingId(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = RoomConfig.instance:getBuildingConfig(arg_18_1)
+
+	if not var_18_0 then
 		return
 	end
 
-	for slot8, slot9 in ipairs(slot2) do
-		if slot9 then
-			slot4 = string.format("%s (%s,%s)", string.format("name:%s id:%s -->", slot3.name, slot1), slot9.x, slot9.y)
+	local var_18_1 = string.format("name:%s id:%s -->", var_18_0.name, arg_18_1)
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_2) do
+		if iter_18_1 then
+			var_18_1 = string.format("%s (%s,%s)", var_18_1, iter_18_1.x, iter_18_1.y)
 		end
 	end
 
-	logNormal(slot4)
+	logNormal(var_18_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

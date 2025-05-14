@@ -1,13 +1,14 @@
-slot0 = pureTable("Season123CardPackageItemMO")
+﻿local var_0_0 = pureTable("Season123CardPackageItemMO")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.itemId = slot1
-	slot0.count = 1
-	slot0.config = Season123Config.instance:getSeasonEquipCo(slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1
+	arg_2_0.itemId = arg_2_1
+	arg_2_0.count = 1
+	arg_2_0.config = Season123Config.instance:getSeasonEquipCo(arg_2_1)
 end
 
-return slot0
+return var_0_0

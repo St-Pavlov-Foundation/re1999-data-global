@@ -1,20 +1,24 @@
-module("modules.logic.scene.main.comp.MainSceneViewComp", package.seeall)
+﻿module("modules.logic.scene.main.comp.MainSceneViewComp", package.seeall)
 
-slot0 = class("MainSceneViewComp", BaseSceneComp)
+local var_0_0 = class("MainSceneViewComp", BaseSceneComp)
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
+function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	if DungeonController.instance:needShowDungeonView() then
-		if DungeonController.instance:showDungeonView() then
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, slot3)
+		local var_1_0 = DungeonController.instance:showDungeonView()
+
+		if var_1_0 then
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_1_0)
 		end
-	elseif not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
+	elseif GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
+		-- block empty
+	else
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.MainView)
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_2_0)
 	ViewMgr.instance:closeView(ViewName.MainView)
 end
 
-return slot0
+return var_0_0

@@ -1,114 +1,116 @@
-module("modules.logic.rouge.model.RougeGameRecordInfoMO", package.seeall)
+﻿module("modules.logic.rouge.model.RougeGameRecordInfoMO", package.seeall)
 
-slot0 = pureTable("RougeGameRecordInfoMO")
+local var_0_0 = pureTable("RougeGameRecordInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.maxDifficulty = slot1.maxDifficulty
-	slot0.passEndIdMap = slot0:_listToMap(slot1.passEndId)
-	slot0.passLayerIdMap = slot0:_listToMap(slot1.passLayerId)
-	slot0.passEventIdMap = slot0:_listToMap(slot1.passEventId)
-	slot0.passEndIdMap = slot0:_listToMap(slot1.passEndId)
-	slot0.passEntrustMap = slot0:_listToMap(slot1.passEntrustId)
-	slot0.lastGameTime = math.ceil((tonumber(slot1.lastGameTime) or 0) / 1000)
-	slot0.passCollections = slot0:_listToMap(slot1.passCollections)
-	slot0.unlockStoryIds = slot0:_listToMap(slot1.unlockStoryIds)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.maxDifficulty = arg_1_1.maxDifficulty
+	arg_1_0.passEndIdMap = arg_1_0:_listToMap(arg_1_1.passEndId)
+	arg_1_0.passLayerIdMap = arg_1_0:_listToMap(arg_1_1.passLayerId)
+	arg_1_0.passEventIdMap = arg_1_0:_listToMap(arg_1_1.passEventId)
+	arg_1_0.passEndIdMap = arg_1_0:_listToMap(arg_1_1.passEndId)
+	arg_1_0.passEntrustMap = arg_1_0:_listToMap(arg_1_1.passEntrustId)
+	arg_1_0.lastGameTime = math.ceil((tonumber(arg_1_1.lastGameTime) or 0) / 1000)
+	arg_1_0.passCollections = arg_1_0:_listToMap(arg_1_1.passCollections)
+	arg_1_0.unlockStoryIds = arg_1_0:_listToMap(arg_1_1.unlockStoryIds)
 
-	slot0:_updateVersionIds(slot1.dlcVersionIds)
+	arg_1_0:_updateVersionIds(arg_1_1.dlcVersionIds)
 
-	slot0.unlockSkillMap = GameUtil.rpcInfosToMap(slot1.unlockSkills, RougeUnlockSkillMO, "type")
+	arg_1_0.unlockSkillMap = GameUtil.rpcInfosToMap(arg_1_1.unlockSkills, RougeUnlockSkillMO, "type")
 end
 
-function slot0._listToMap(slot0, slot1)
-	if not slot1 then
+function var_0_0._listToMap(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return {}
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		-- Nothing
+	local var_2_0 = {}
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		var_2_0[iter_2_1] = iter_2_1
 	end
 
-	return {
-		[slot7] = slot7
-	}
+	return var_2_0
 end
 
-function slot0.collectionIsPass(slot0, slot1)
-	return slot0.passCollections[slot1]
+function var_0_0.collectionIsPass(arg_3_0, arg_3_1)
+	return arg_3_0.passCollections[arg_3_1]
 end
 
-function slot0.storyIsPass(slot0, slot1)
-	return slot0.unlockStoryIds[slot1]
+function var_0_0.storyIsPass(arg_4_0, arg_4_1)
+	return arg_4_0.unlockStoryIds[arg_4_1]
 end
 
-function slot0.passedLayerId(slot0, slot1)
-	return slot0.passLayerIdMap and slot0.passLayerIdMap[slot1]
+function var_0_0.passedLayerId(arg_5_0, arg_5_1)
+	return arg_5_0.passLayerIdMap and arg_5_0.passLayerIdMap[arg_5_1]
 end
 
-function slot0.passedEventId(slot0, slot1)
-	return slot0.passEventIdMap and slot0.passEventIdMap[slot1]
+function var_0_0.passedEventId(arg_6_0, arg_6_1)
+	return arg_6_0.passEventIdMap and arg_6_0.passEventIdMap[arg_6_1]
 end
 
-function slot0.passAnyOneEnd(slot0)
-	return tabletool.len(slot0.passEndIdMap) > 0
+function var_0_0.passAnyOneEnd(arg_7_0)
+	return tabletool.len(arg_7_0.passEndIdMap) > 0
 end
 
-function slot0.passEndId(slot0, slot1)
-	return slot0.passEndIdMap and slot0.passEndIdMap[slot1]
+function var_0_0.passEndId(arg_8_0, arg_8_1)
+	return arg_8_0.passEndIdMap and arg_8_0.passEndIdMap[arg_8_1]
 end
 
-function slot0.passEntrustId(slot0, slot1)
-	return slot0.passEntrustMap and slot0.passEntrustMap[slot1]
+function var_0_0.passEntrustId(arg_9_0, arg_9_1)
+	return arg_9_0.passEntrustMap and arg_9_0.passEntrustMap[arg_9_1]
 end
 
-function slot0.passLayerId(slot0, slot1)
-	return slot0.passLayerIdMap and slot0.passLayerIdMap[slot1]
+function var_0_0.passLayerId(arg_10_0, arg_10_1)
+	return arg_10_0.passLayerIdMap and arg_10_0.passLayerIdMap[arg_10_1]
 end
 
-function slot0.lastGameEndTimestamp(slot0)
-	return slot0.lastGameTime
+function var_0_0.lastGameEndTimestamp(arg_11_0)
+	return arg_11_0.lastGameTime
 end
 
-function slot0.isSelectDLC(slot0, slot1)
-	return slot0.versionIds and slot0.versionIds[slot1] ~= nil
+function var_0_0.isSelectDLC(arg_12_0, arg_12_1)
+	return arg_12_0.versionIds and arg_12_0.versionIds[arg_12_1] ~= nil
 end
 
-function slot0._updateVersionIds(slot0, slot1)
-	slot0.versionIds = slot0:_listToMap(slot1)
+function var_0_0._updateVersionIds(arg_13_0, arg_13_1)
+	arg_13_0.versionIds = arg_13_0:_listToMap(arg_13_1)
 end
 
-function slot0.getVersionIds(slot0)
-	slot1 = {}
+function var_0_0.getVersionIds(arg_14_0)
+	local var_14_0 = {}
 
-	for slot5, slot6 in pairs(slot0.versionIds) do
-		table.insert(slot1, slot6)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.versionIds) do
+		table.insert(var_14_0, iter_14_1)
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.isSkillUnlock(slot0, slot1, slot2)
-	slot3 = slot0.unlockSkillMap and slot0.unlockSkillMap[slot1]
+function var_0_0.isSkillUnlock(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0.unlockSkillMap and arg_15_0.unlockSkillMap[arg_15_1]
 
-	return slot3 and slot3:isSkillUnlock(slot2)
+	return var_15_0 and var_15_0:isSkillUnlock(arg_15_2)
 end
 
-function slot0.updateSkillUnlockInfo(slot0, slot1, slot2)
-	if not slot1 and slot2 then
+function var_0_0.updateSkillUnlockInfo(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_1 and arg_16_2 then
 		return
 	end
 
-	if not (slot0.unlockSkillMap and slot0.unlockSkillMap[slot1]) then
-		slot3 = RougeUnlockSkillMO.New()
+	local var_16_0 = arg_16_0.unlockSkillMap and arg_16_0.unlockSkillMap[arg_16_1]
 
-		slot3:init({
-			type = slot1,
+	if not var_16_0 then
+		var_16_0 = RougeUnlockSkillMO.New()
+
+		var_16_0:init({
+			type = arg_16_1,
 			ids = {}
 		})
 
-		slot0.unlockSkillMap[slot1] = slot3
+		arg_16_0.unlockSkillMap[arg_16_1] = var_16_0
 	end
 
-	slot3:onNewSkillUnlock(slot2)
+	var_16_0:onNewSkillUnlock(arg_16_2)
 end
 
-return slot0
+return var_0_0

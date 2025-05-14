@@ -1,31 +1,33 @@
-module("modules.logic.player.model.PlayerClothListViewModel", package.seeall)
+﻿module("modules.logic.player.model.PlayerClothListViewModel", package.seeall)
 
-slot0 = class("PlayerClothListViewModel", ListScrollModel)
+local var_0_0 = class("PlayerClothListViewModel", ListScrollModel)
 
-function slot0.setGroupModel(slot0, slot1)
-	slot0._groupModel = slot1
+function var_0_0.setGroupModel(arg_1_0, arg_1_1)
+	arg_1_0._groupModel = arg_1_1
 end
 
-function slot0.getGroupModel(slot0)
-	return slot0._groupModel
+function var_0_0.getGroupModel(arg_2_0)
+	return arg_2_0._groupModel
 end
 
-function slot0.update(slot0)
-	slot1 = PlayerClothModel.instance:getList()
+function var_0_0.update(arg_3_0)
+	local var_3_0 = PlayerClothModel.instance:getList()
+	local var_3_1 = {}
+	local var_3_2 = PlayerClothModel.instance:getSpEpisodeClothID()
 
-	if PlayerClothModel.instance:getSpEpisodeClothID() then
-		table.insert({}, PlayerClothModel.instance:getById(slot3))
+	if var_3_2 then
+		table.insert(var_3_1, PlayerClothModel.instance:getById(var_3_2))
 	else
-		for slot7, slot8 in ipairs(slot1) do
-			if PlayerClothModel.instance:hasCloth(slot8.id) then
-				table.insert(slot2, slot8)
+		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+			if PlayerClothModel.instance:hasCloth(iter_3_1.id) then
+				table.insert(var_3_1, iter_3_1)
 			end
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_3_0:setList(var_3_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

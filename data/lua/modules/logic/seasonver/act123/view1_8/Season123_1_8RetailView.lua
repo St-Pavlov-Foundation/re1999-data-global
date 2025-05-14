@@ -1,179 +1,203 @@
-module("modules.logic.seasonver.act123.view1_8.Season123_1_8RetailView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8RetailView", package.seeall)
 
-slot0 = class("Season123_1_8RetailView", BaseView)
+local var_0_0 = class("Season123_1_8RetailView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "bottom/#btn_start/#image_icon")
-	slot0._txtenemylevelnum = gohelper.findChildText(slot0.viewGO, "bottom/txt_enemylevel/#txt_enemylevelnum")
-	slot0._btncelebrity = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtns/#go_celebrity/#btn_celebrity")
-	slot0._btncards = gohelper.findChildButtonWithAudio(slot0.viewGO, "rightbtns/#go_cards/#btn_cards")
-	slot0._gocards = gohelper.findChild(slot0.viewGO, "rightbtns/#go_cards")
-	slot0._gohasget = gohelper.findChild(slot0.viewGO, "rightbtns/#go_cards/#go_hasget")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_start")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "bottom/rewards/rewardlist/#scroll_celebritycard/scrollcontent_seasoncelebritycarditem/#go_rewarditem")
-	slot0._txtlevelname = gohelper.findChildText(slot0.viewGO, "bottom/#txt_levelname")
-	slot0._txtcostnum = gohelper.findChildText(slot0.viewGO, "bottom/#btn_start/#txt_num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "bottom/#btn_start/#image_icon")
+	arg_1_0._txtenemylevelnum = gohelper.findChildText(arg_1_0.viewGO, "bottom/txt_enemylevel/#txt_enemylevelnum")
+	arg_1_0._btncelebrity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_celebrity/#btn_celebrity")
+	arg_1_0._btncards = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_cards/#btn_cards")
+	arg_1_0._gocards = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_cards")
+	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_cards/#go_hasget")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_start")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "bottom/rewards/rewardlist/#scroll_celebritycard/scrollcontent_seasoncelebritycarditem/#go_rewarditem")
+	arg_1_0._txtlevelname = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_levelname")
+	arg_1_0._txtcostnum = gohelper.findChildText(arg_1_0.viewGO, "bottom/#btn_start/#txt_num")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncelebrity:AddClickListener(slot0._btncelebrityOnClick, slot0)
-	slot0._btncards:AddClickListener(slot0._btncardsOnClick, slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncelebrity:AddClickListener(arg_2_0._btncelebrityOnClick, arg_2_0)
+	arg_2_0._btncards:AddClickListener(arg_2_0._btncardsOnClick, arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncelebrity:RemoveClickListener()
-	slot0._btncards:RemoveClickListener()
-	slot0._btnstart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncelebrity:RemoveClickListener()
+	arg_3_0._btncards:RemoveClickListener()
+	arg_3_0._btnstart:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtcardPackageNum = gohelper.findChildText(slot0.viewGO, "rightbtns/#go_cards/#go_hasget/#txt_num")
-	slot0._rewardItems = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._txtcardPackageNum = gohelper.findChildText(arg_4_0.viewGO, "rightbtns/#go_cards/#go_hasget/#txt_num")
+	arg_4_0._rewardItems = {}
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
 	Season123RetailController.instance:onCloseView()
 
-	if slot0._rewardItems then
-		for slot4, slot5 in ipairs(slot0._rewardItems) do
-			slot5.btnrewardicon:RemoveClickListener()
+	if arg_5_0._rewardItems then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._rewardItems) do
+			iter_5_1.btnrewardicon:RemoveClickListener()
 		end
 
-		slot0._rewardItems = nil
+		arg_5_0._rewardItems = nil
 	end
 
 	Season123Controller.instance:dispatchEvent(Season123Event.SetRetailScene, false)
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.viewParam.actId
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.actId
 
-	slot0:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, slot0.refreshUI, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.handleItemChanged, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.handleItemChanged, slot0)
-	Season123RetailController.instance:onOpenView(slot1)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_6_0.handleItemChanged, arg_6_0)
+	arg_6_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_6_0.handleItemChanged, arg_6_0)
+	Season123RetailController.instance:onOpenView(var_6_0)
 
-	if not ActivityModel.instance:getActMO(slot1) or not slot2:isOpen() or slot2:isExpired() then
+	local var_6_1 = ActivityModel.instance:getActMO(var_6_0)
+
+	if not var_6_1 or not var_6_1:isOpen() or var_6_1:isExpired() then
 		return
 	end
 
-	slot0:initIconUI()
-	slot0:refreshUI()
+	arg_6_0:initIconUI()
+	arg_6_0:refreshUI()
 	Season123Controller.instance:dispatchEvent(Season123Event.SetRetailScene, true)
 	Season123Controller.instance:dispatchEvent(Season123Event.SwitchRetailPrefab, Season123RetailModel.instance.retailId)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshInfo()
-	slot0:refreshCardPackageUI()
-	slot0:refreshRecommendLv()
-	slot0:refreshRewards()
-	slot0:refreshTicket()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshInfo()
+	arg_8_0:refreshCardPackageUI()
+	arg_8_0:refreshRecommendLv()
+	arg_8_0:refreshRewards()
+	arg_8_0:refreshTicket()
 end
 
-function slot0.refreshInfo(slot0)
-	if Season123RetailModel.instance.retailCO then
-		slot0._txtlevelname.text = tostring(slot1.desc)
+function var_0_0.refreshInfo(arg_9_0)
+	local var_9_0 = Season123RetailModel.instance.retailCO
+
+	if var_9_0 then
+		arg_9_0._txtlevelname.text = tostring(var_9_0.desc)
 	end
 end
 
-function slot0.initIconUI(slot0)
-	slot0.viewContainer:refreshCurrencyType()
+function var_0_0.initIconUI(arg_10_0)
+	arg_10_0.viewContainer:refreshCurrencyType()
 
-	if Season123Config.instance:getEquipItemCoin(Season123RetailModel.instance.activityId, Activity123Enum.Const.UttuTicketsCoin) then
-		if not CurrencyConfig.instance:getCurrencyCo(slot2) then
+	local var_10_0 = Season123RetailModel.instance.activityId
+	local var_10_1 = Season123Config.instance:getEquipItemCoin(var_10_0, Activity123Enum.Const.UttuTicketsCoin)
+
+	if var_10_1 then
+		local var_10_2 = CurrencyConfig.instance:getCurrencyCo(var_10_1)
+
+		if not var_10_2 then
 			return
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageicon, tostring(slot3.icon) .. "_1")
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._imageicon, tostring(var_10_2.icon) .. "_1")
 	else
-		logNormal("Season123 ticketId is nil : " .. tostring(slot1))
+		logNormal("Season123 ticketId is nil : " .. tostring(var_10_0))
 	end
 end
 
-function slot0.refreshRecommendLv(slot0)
-	if Season123RetailModel.instance:getRecommentLevel() then
-		slot0._txtenemylevelnum.text = HeroConfig.instance:getLevelDisplayVariant(slot1)
+function var_0_0.refreshRecommendLv(arg_11_0)
+	local var_11_0 = Season123RetailModel.instance:getRecommentLevel()
+
+	if var_11_0 then
+		arg_11_0._txtenemylevelnum.text = HeroConfig.instance:getLevelDisplayVariant(var_11_0)
 	else
-		slot0._txtenemylevelnum.text = luaLang("common_none")
+		arg_11_0._txtenemylevelnum.text = luaLang("common_none")
 	end
 end
 
-function slot0.refreshRewards(slot0)
-	for slot5, slot6 in ipairs(Season123RetailModel.instance.rewardIcons) do
-		gohelper.setActive(slot0:getOrCreateRewardItem(slot5).go, true)
+function var_0_0.refreshRewards(arg_12_0)
+	local var_12_0 = Season123RetailModel.instance.rewardIcons
 
-		if not string.nilorempty(slot6) then
-			slot7.simageicon:LoadImage(slot6)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_1 = arg_12_0:getOrCreateRewardItem(iter_12_0)
+
+		gohelper.setActive(var_12_1.go, true)
+
+		if not string.nilorempty(iter_12_1) then
+			var_12_1.simageicon:LoadImage(iter_12_1)
 		end
 	end
 
-	if #slot0._rewardItems > #slot1 then
-		for slot5 = #slot1, #slot0._rewardItems do
-			gohelper.setActive(slot0._rewardItems[slot5].go, false)
+	if #arg_12_0._rewardItems > #var_12_0 then
+		for iter_12_2 = #var_12_0, #arg_12_0._rewardItems do
+			gohelper.setActive(arg_12_0._rewardItems[iter_12_2].go, false)
 		end
 	end
 end
 
-function slot0.refreshCardPackageUI(slot0)
-	slot0._gocards:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = Season123CardPackageModel.instance.packageCount == 0 and 0.5 or 1
-	slot0._txtcardPackageNum.text = slot1
+function var_0_0.refreshCardPackageUI(arg_13_0)
+	local var_13_0 = Season123CardPackageModel.instance.packageCount
 
-	gohelper.setActive(slot0._gohasget, slot1 > 0)
+	arg_13_0._gocards:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = var_13_0 == 0 and 0.5 or 1
+	arg_13_0._txtcardPackageNum.text = var_13_0
+
+	gohelper.setActive(arg_13_0._gohasget, var_13_0 > 0)
 end
 
-function slot0.getOrCreateRewardItem(slot0, slot1)
-	if not slot0._rewardItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._gorewarditem, "item" .. tostring(slot1))
-		slot2.simageicon = gohelper.findChildSingleImage(slot2.go, "#simage_rewardicon")
-		slot2.btnrewardicon = gohelper.findChildButtonWithAudio(slot2.go, "#btn_rewardicon")
+function var_0_0.getOrCreateRewardItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._rewardItems[arg_14_1]
 
-		slot2.btnrewardicon:AddClickListener(slot0.onClickIcon, slot0, slot1)
+	if not var_14_0 then
+		var_14_0 = arg_14_0:getUserDataTb_()
+		var_14_0.go = gohelper.cloneInPlace(arg_14_0._gorewarditem, "item" .. tostring(arg_14_1))
+		var_14_0.simageicon = gohelper.findChildSingleImage(var_14_0.go, "#simage_rewardicon")
+		var_14_0.btnrewardicon = gohelper.findChildButtonWithAudio(var_14_0.go, "#btn_rewardicon")
 
-		slot2.txtrare = gohelper.findChildText(slot2.go, "rare/#go_rare1/txt")
-		slot2.txtrare.text = luaLang("dungeon_prob_flag1")
-		slot0._rewardItems[slot1] = slot2
+		var_14_0.btnrewardicon:AddClickListener(arg_14_0.onClickIcon, arg_14_0, arg_14_1)
+
+		var_14_0.txtrare = gohelper.findChildText(var_14_0.go, "rare/#go_rare1/txt")
+		var_14_0.txtrare.text = luaLang("dungeon_prob_flag1")
+		arg_14_0._rewardItems[arg_14_1] = var_14_0
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.refreshTicket(slot0)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcostnum, Season123RetailModel.instance:getUTTUTicketNum() <= 0 and "#800015" or "#070706")
+function var_0_0.refreshTicket(arg_15_0)
+	local var_15_0 = Season123RetailModel.instance:getUTTUTicketNum()
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0._txtcostnum, var_15_0 <= 0 and "#800015" or "#070706")
 end
 
-function slot0.handleItemChanged(slot0)
-	slot0:refreshCardPackageUI()
-	slot0:refreshTicket()
+function var_0_0.handleItemChanged(arg_16_0)
+	arg_16_0:refreshCardPackageUI()
+	arg_16_0:refreshTicket()
 end
 
-function slot0._btncelebrityOnClick(slot0)
-	Season123Controller.instance:openSeasonEquipBookView(slot0.viewParam.actId)
+function var_0_0._btncelebrityOnClick(arg_17_0)
+	Season123Controller.instance:openSeasonEquipBookView(arg_17_0.viewParam.actId)
 end
 
-function slot0._btncardsOnClick(slot0)
+function var_0_0._btncardsOnClick(arg_18_0)
 	Season123Controller.instance:openSeasonCardPackageView({
-		actId = slot0.viewParam.actId
+		actId = arg_18_0.viewParam.actId
 	})
 end
 
-function slot0.onClickIcon(slot0, slot1)
-	if Season123RetailModel.instance.rewardIconCfgs[slot1] then
-		MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2])
+function var_0_0.onClickIcon(arg_19_0, arg_19_1)
+	local var_19_0 = Season123RetailModel.instance.rewardIconCfgs[arg_19_1]
+
+	if var_19_0 then
+		MaterialTipController.instance:showMaterialInfo(var_19_0[1], var_19_0[2])
 	end
 end
 
-function slot0._btnstartOnClick(slot0)
+function var_0_0._btnstartOnClick(arg_20_0)
 	Season123RetailController.instance:enterRetailFightScene()
 end
 
-return slot0
+return var_0_0

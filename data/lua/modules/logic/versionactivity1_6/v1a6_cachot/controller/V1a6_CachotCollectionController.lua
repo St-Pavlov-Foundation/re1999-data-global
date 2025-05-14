@@ -1,41 +1,45 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotCollectionController", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotCollectionController", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionController", BaseController)
+local var_0_0 = class("V1a6_CachotCollectionController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2)
-	V1a6_CachotCollectionListModel.instance:onInitData(slot1, slot2)
-	slot0:selectFirstCollection()
-	uv0.instance:dispatchEvent(V1a6_CachotEvent.OnSwitchCategory)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2)
+	V1a6_CachotCollectionListModel.instance:onInitData(arg_1_1, arg_1_2)
+	arg_1_0:selectFirstCollection()
+	var_0_0.instance:dispatchEvent(V1a6_CachotEvent.OnSwitchCategory)
 end
 
-function slot0.onCloseView(slot0)
-	if V1a6_CachotCollectionListModel.instance:getNewCollectionAndClickList() and #slot1 > 0 then
-		RogueRpc.instance:sendRogueCollectionNewRequest(V1a6_CachotEnum.ActivityId, slot1)
+function var_0_0.onCloseView(arg_2_0)
+	local var_2_0 = V1a6_CachotCollectionListModel.instance:getNewCollectionAndClickList()
+
+	if var_2_0 and #var_2_0 > 0 then
+		RogueRpc.instance:sendRogueCollectionNewRequest(V1a6_CachotEnum.ActivityId, var_2_0)
 	end
 
 	V1a6_CachotCollectionListModel.instance:release()
 end
 
-function slot0.selectFirstCollection(slot0)
-	slot0:onSelectCollection(V1a6_CachotCollectionListModel.instance:getCurCategoryFirstCollection())
+function var_0_0.selectFirstCollection(arg_3_0)
+	local var_3_0 = V1a6_CachotCollectionListModel.instance:getCurCategoryFirstCollection()
+
+	arg_3_0:onSelectCollection(var_3_0)
 end
 
-function slot0.onSelectCollection(slot0, slot1)
-	V1a6_CachotCollectionListModel.instance:markSelectCollecionId(slot1)
-	uv0.instance:dispatchEvent(V1a6_CachotEvent.OnSelectCollectionItem)
+function var_0_0.onSelectCollection(arg_4_0, arg_4_1)
+	V1a6_CachotCollectionListModel.instance:markSelectCollecionId(arg_4_1)
+	var_0_0.instance:dispatchEvent(V1a6_CachotEvent.OnSelectCollectionItem)
 end
 
-function slot0.onSwitchCategory(slot0, slot1)
-	if slot1 ~= V1a6_CachotCollectionListModel.instance:getCurCategory() then
+function var_0_0.onSwitchCategory(arg_5_0, arg_5_1)
+	if arg_5_1 ~= V1a6_CachotCollectionListModel.instance:getCurCategory() then
 		V1a6_CachotCollectionListModel.instance:resetCurPlayAnimCellIndex()
-		V1a6_CachotCollectionListModel.instance:switchCategory(slot1)
-		slot0:selectFirstCollection()
-		uv0.instance:dispatchEvent(V1a6_CachotEvent.OnSwitchCategory)
+		V1a6_CachotCollectionListModel.instance:switchCategory(arg_5_1)
+		arg_5_0:selectFirstCollection()
+		var_0_0.instance:dispatchEvent(V1a6_CachotEvent.OnSwitchCategory)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

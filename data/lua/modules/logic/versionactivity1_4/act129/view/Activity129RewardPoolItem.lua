@@ -1,69 +1,75 @@
-module("modules.logic.versionactivity1_4.act129.view.Activity129RewardPoolItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.view.Activity129RewardPoolItem", package.seeall)
 
-slot0 = class("Activity129RewardPoolItem", LuaCompBase)
+local var_0_0 = class("Activity129RewardPoolItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.goItem = slot1.goItem
-	slot0.itemList = slot1.itemList
-	slot0.rare = slot1.rare
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.goItem = arg_1_1.goItem
+	arg_1_0.itemList = arg_1_1.itemList
+	arg_1_0.rare = arg_1_1.rare
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.goGrid = gohelper.findChild(slot0.go, "Grid")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.goGrid = gohelper.findChild(arg_2_0.go, "Grid")
 end
 
-function slot0.setDict(slot0, slot1, slot2, slot3)
-	if not slot1 then
-		gohelper.setActive(slot0.go, false)
+function var_0_0.setDict(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if not arg_3_1 then
+		gohelper.setActive(arg_3_0.go, false)
 
 		return
 	end
 
-	slot0.actId = slot2
-	slot0.poolId = slot3
-	slot0.isNull = true
-	slot0.count = 0
-	slot4 = 1
+	arg_3_0.actId = arg_3_2
+	arg_3_0.poolId = arg_3_3
+	arg_3_0.isNull = true
+	arg_3_0.count = 0
 
-	for slot8, slot9 in pairs(slot1) do
-		for slot13, slot14 in ipairs(slot9) do
-			slot0:tryAddReward(slot14, slot8, slot4)
+	local var_3_0 = 1
 
-			slot4 = slot4 + 1
+	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
+		for iter_3_2, iter_3_3 in ipairs(iter_3_1) do
+			arg_3_0:tryAddReward(iter_3_3, iter_3_0, var_3_0)
+
+			var_3_0 = var_3_0 + 1
 		end
 	end
 
-	gohelper.setActive(slot0.go, not slot0.isNull)
-	slot0:caleHeight()
+	gohelper.setActive(arg_3_0.go, not arg_3_0.isNull)
+	arg_3_0:caleHeight()
 end
 
-function slot0.caleHeight(slot0)
-	recthelper.setHeight(slot0.go.transform, math.ceil(slot0.count / 4) * 200 + 75)
+function var_0_0.caleHeight(arg_4_0)
+	local var_4_0 = math.ceil(arg_4_0.count / 4) * 200 + 75
+
+	recthelper.setHeight(arg_4_0.go.transform, var_4_0)
 end
 
-function slot0.tryAddReward(slot0, slot1, slot2, slot3)
-	if slot0.rare ~= slot2 then
+function var_0_0.tryAddReward(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_0.rare ~= arg_5_2 then
 		return
 	end
 
-	slot4 = slot0.itemList[slot3] or slot0:createReward(slot3)
+	local var_5_0 = arg_5_0.itemList[arg_5_3] or arg_5_0:createReward(arg_5_3)
 
-	gohelper.addChild(slot0.goGrid, slot4.go)
-	slot4:setData(slot1, slot0.actId, slot0.poolId, slot2)
+	gohelper.addChild(arg_5_0.goGrid, var_5_0.go)
+	var_5_0:setData(arg_5_1, arg_5_0.actId, arg_5_0.poolId, arg_5_2)
 
-	slot0.isNull = false
-	slot0.count = slot0.count + 1
+	arg_5_0.isNull = false
+	arg_5_0.count = arg_5_0.count + 1
 end
 
-function slot0.createReward(slot0, slot1)
-	slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0.goItem, slot0.goGrid), Activity129RewardItem)
-	slot0.itemList[slot1] = slot3
+function var_0_0.createReward(arg_6_0, arg_6_1)
+	local var_6_0 = gohelper.clone(arg_6_0.goItem, arg_6_0.goGrid)
+	local var_6_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, Activity129RewardItem)
 
-	return slot3
+	arg_6_0.itemList[arg_6_1] = var_6_1
+
+	return var_6_1
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

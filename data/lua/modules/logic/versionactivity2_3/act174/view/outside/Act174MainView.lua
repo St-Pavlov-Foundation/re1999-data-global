@@ -1,261 +1,293 @@
-module("modules.logic.versionactivity2_3.act174.view.outside.Act174MainView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.outside.Act174MainView", package.seeall)
 
-slot0 = class("Act174MainView", BaseView)
+local var_0_0 = class("Act174MainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goachieve = gohelper.findChild(slot0.viewGO, "#go_achieve")
-	slot0.badgeGoParent = gohelper.findChild(slot0.viewGO, "#go_achieve/scroll_achieve/viewport/content")
-	slot0.badgeGo = gohelper.findChild(slot0.viewGO, "#go_achieve/scroll_achieve/viewport/content/go_achievementicon")
-	slot0._btnBadge = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_achieve/scroll_achieve/#btn_Badge")
-	slot0._gorule = gohelper.findChild(slot0.viewGO, "#go_rule")
-	slot0._btnrule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rule/#btn_rule")
-	slot0._btnEndGame = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_EndGame")
-	slot0._btnShop = gohelper.findChildButtonWithAudio(slot0.viewGO, "layout/#btn_Shop")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "layout/#btn_Shop/#txt_num")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "layout/#go_progress")
-	slot0._txtRound = gohelper.findChildText(slot0.viewGO, "layout/#go_progress/#txt_Round")
-	slot0._goHp = gohelper.findChild(slot0.viewGO, "layout/#go_progress/#go_Hp")
-	slot0._imageHpPercent = gohelper.findChildImage(slot0.viewGO, "layout/#go_progress/#go_Hp/bg/#image_HpPercent")
-	slot0._btnEnterGame = gohelper.findChildButtonWithAudio(slot0.viewGO, "layout/#btn_EnterGame")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goachieve = gohelper.findChild(arg_1_0.viewGO, "#go_achieve")
+	arg_1_0.badgeGoParent = gohelper.findChild(arg_1_0.viewGO, "#go_achieve/scroll_achieve/viewport/content")
+	arg_1_0.badgeGo = gohelper.findChild(arg_1_0.viewGO, "#go_achieve/scroll_achieve/viewport/content/go_achievementicon")
+	arg_1_0._btnBadge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_achieve/scroll_achieve/#btn_Badge")
+	arg_1_0._gorule = gohelper.findChild(arg_1_0.viewGO, "#go_rule")
+	arg_1_0._btnrule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rule/#btn_rule")
+	arg_1_0._btnEndGame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_EndGame")
+	arg_1_0._btnShop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_Shop")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "layout/#btn_Shop/#txt_num")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "layout/#go_progress")
+	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_progress/#txt_Round")
+	arg_1_0._goHp = gohelper.findChild(arg_1_0.viewGO, "layout/#go_progress/#go_Hp")
+	arg_1_0._imageHpPercent = gohelper.findChildImage(arg_1_0.viewGO, "layout/#go_progress/#go_Hp/bg/#image_HpPercent")
+	arg_1_0._btnEnterGame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_EnterGame")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnBadge:AddClickListener(slot0._btnBadgeOnClick, slot0)
-	slot0._btnrule:AddClickListener(slot0._btnruleOnClick, slot0)
-	slot0._btnEndGame:AddClickListener(slot0._btnEndGameOnClick, slot0)
-	slot0._btnShop:AddClickListener(slot0._btnShopOnClick, slot0)
-	slot0._btnEnterGame:AddClickListener(slot0._btnEnterGameOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnBadge:AddClickListener(arg_2_0._btnBadgeOnClick, arg_2_0)
+	arg_2_0._btnrule:AddClickListener(arg_2_0._btnruleOnClick, arg_2_0)
+	arg_2_0._btnEndGame:AddClickListener(arg_2_0._btnEndGameOnClick, arg_2_0)
+	arg_2_0._btnShop:AddClickListener(arg_2_0._btnShopOnClick, arg_2_0)
+	arg_2_0._btnEnterGame:AddClickListener(arg_2_0._btnEnterGameOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnBadge:RemoveClickListener()
-	slot0._btnrule:RemoveClickListener()
-	slot0._btnEndGame:RemoveClickListener()
-	slot0._btnShop:RemoveClickListener()
-	slot0._btnEnterGame:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnBadge:RemoveClickListener()
+	arg_3_0._btnrule:RemoveClickListener()
+	arg_3_0._btnEndGame:RemoveClickListener()
+	arg_3_0._btnShop:RemoveClickListener()
+	arg_3_0._btnEnterGame:RemoveClickListener()
 end
 
-function slot0._btnEndGameOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act174EndGameConfirm, MsgBoxEnum.BoxType.Yes_No, slot0.endGame, nil, , slot0)
+function var_0_0._btnEndGameOnClick(arg_4_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act174EndGameConfirm, MsgBoxEnum.BoxType.Yes_No, arg_4_0.endGame, nil, nil, arg_4_0)
 end
 
-function slot0._btnBadgeOnClick(slot0)
+function var_0_0._btnBadgeOnClick(arg_5_0)
 	ViewMgr.instance:openView(ViewName.Act174BadgeWallView)
 end
 
-function slot0._btnruleOnClick(slot0)
+function var_0_0._btnruleOnClick(arg_6_0)
 	ViewMgr.instance:openView(ViewName.Act174RotationView)
 end
 
-function slot0._btnShopOnClick(slot0)
+function var_0_0._btnShopOnClick(arg_7_0)
 	Activity174Controller.instance:openStoreView(VersionActivity2_3Enum.ActivityId.Act174Store)
 end
 
-function slot0._btnEnterGameOnClick(slot0, slot1)
-	if slot0.actInfo:getGameInfo() and slot2:isInGame() then
-		if slot2.state == Activity174Enum.GameState.ForceSelect then
-			Activity174Controller.instance:openForcePickView(slot2:getForceBagsInfo())
-		elseif slot3 == Activity174Enum.GameState.BeforeFight then
+function var_0_0._btnEnterGameOnClick(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.actInfo:getGameInfo()
+
+	if var_8_0 and var_8_0:isInGame() then
+		local var_8_1 = var_8_0.state
+
+		if var_8_1 == Activity174Enum.GameState.ForceSelect then
+			Activity174Controller.instance:openForcePickView(var_8_0:getForceBagsInfo())
+		elseif var_8_1 == Activity174Enum.GameState.BeforeFight then
 			Activity174Controller.instance:openFightReadyView()
-		elseif slot3 == Activity174Enum.GameState.Free then
+		elseif var_8_1 == Activity174Enum.GameState.Free then
 			Activity174Controller.instance:openGameView()
-		elseif slot3 == Activity174Enum.GameState.AfterFight then
+		elseif var_8_1 == Activity174Enum.GameState.AfterFight then
 			Activity174Controller.instance:openFightResultView()
-		elseif slot3 == Activity174Enum.GameState.EnterEndless then
+		elseif var_8_1 == Activity174Enum.GameState.EnterEndless then
 			Activity174Controller.instance:openEndLessView()
 		else
-			logError("GameState need do" .. slot3)
+			logError("GameState need do" .. var_8_1)
 		end
 
-		if not slot1 and (slot3 == Activity174Enum.GameState.Free or slot3 == Activity174Enum.GameState.BeforeFight) then
+		if not arg_8_1 and (var_8_1 == Activity174Enum.GameState.Free or var_8_1 == Activity174Enum.GameState.BeforeFight) then
 			AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shenghuo_dqq_match_start)
 		end
 	else
-		Activity174Rpc.instance:sendStart174GameRequest(slot0.actId, slot0.enterGameCallback, slot0)
+		Activity174Rpc.instance:sendStart174GameRequest(arg_8_0.actId, arg_8_0.enterGameCallback, arg_8_0)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_9_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0.actId = arg_11_0.viewParam.actId
 
-	if slot0.viewParam.exitFromFight then
-		slot0:_onOpen()
+	if arg_11_0.viewParam.exitFromFight then
+		arg_11_0:_onOpen()
 	else
-		Activity174Rpc.instance:sendGetAct174InfoRequest(slot0.actId, slot0._onOpen, slot0)
+		Activity174Rpc.instance:sendGetAct174InfoRequest(arg_11_0.actId, arg_11_0._onOpen, arg_11_0)
 	end
 end
 
-function slot0._onOpen(slot0)
-	slot0.actInfo = Activity174Model.instance:getActInfo()
+function var_0_0._onOpen(arg_12_0)
+	arg_12_0.actInfo = Activity174Model.instance:getActInfo()
 
-	if not slot0:checkGameEndInfo() then
-		if slot0.viewParam and slot0.viewParam.exitFromFight then
-			slot0:_nextReply()
+	if not arg_12_0:checkGameEndInfo() then
+		if arg_12_0.viewParam and arg_12_0.viewParam.exitFromFight then
+			arg_12_0:_nextReply()
 		else
 			AudioMgr.instance:trigger(AudioEnum.Summon.Play_UI_CallFor_Open)
 		end
 	end
 
-	slot0:checkSeason()
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateBadgeMo, slot0.refreshBadge, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, slot0.refreshUI, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshCurrency, slot0)
-	slot0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0.dailyRefresh, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.EndGame, slot0.checkGameEndInfo, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.ClickStartGame, slot0._btnEnterGameOnClick, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.EnterNextAct174FightReply, slot0._nextReply, slot0)
+	arg_12_0:checkSeason()
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateBadgeMo, arg_12_0.refreshBadge, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_12_0.refreshUI, arg_12_0)
+	arg_12_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_12_0.refreshCurrency, arg_12_0)
+	arg_12_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_12_0.dailyRefresh, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.EndGame, arg_12_0.checkGameEndInfo, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.ClickStartGame, arg_12_0._btnEnterGameOnClick, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.EnterNextAct174FightReply, arg_12_0._nextReply, arg_12_0)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, slot0.refreshUI, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshCurrency, slot0)
-	slot0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0.dailyRefresh, slot0)
-	slot0:removeEventCb(Activity174Controller.instance, Activity174Event.EndGame, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity174Controller.instance, Activity174Event.EnterNextAct174FightReply, slot0._nextReply, slot0)
+function var_0_0.onClose(arg_13_0)
+	arg_13_0:removeEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_13_0.refreshUI, arg_13_0)
+	arg_13_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0.refreshCurrency, arg_13_0)
+	arg_13_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_13_0.dailyRefresh, arg_13_0)
+	arg_13_0:removeEventCb(Activity174Controller.instance, Activity174Event.EndGame, arg_13_0.refreshUI, arg_13_0)
+	arg_13_0:removeEventCb(Activity174Controller.instance, Activity174Event.EnterNextAct174FightReply, arg_13_0._nextReply, arg_13_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.ruleHeroIconList) do
-		slot5:UnLoadImage()
+function var_0_0.onDestroyView(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.ruleHeroIconList) do
+		iter_14_1:UnLoadImage()
 	end
 
-	for slot4, slot5 in pairs(slot0.badgeItemDic) do
-		slot5.simageIcon:UnLoadImage()
+	for iter_14_2, iter_14_3 in pairs(arg_14_0.badgeItemDic) do
+		iter_14_3.simageIcon:UnLoadImage()
 	end
 end
 
-function slot0.checkGameEndInfo(slot0)
-	if slot0.actInfo:getGameEndInfo() then
+function var_0_0.checkGameEndInfo(arg_15_0)
+	if arg_15_0.actInfo:getGameEndInfo() then
 		Activity174Controller.instance:openSettlementView()
-		slot0:refreshUI()
+		arg_15_0:refreshUI()
 
 		return true
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = slot0.actInfo:getGameInfo():isInGame()
+function var_0_0.refreshUI(arg_16_0)
+	local var_16_0 = arg_16_0.actInfo:getGameInfo()
+	local var_16_1 = var_16_0:isInGame()
 
-	gohelper.setActive(slot0._btnEndGame, slot2)
-	gohelper.setActive(slot0._goprogress, slot2)
+	gohelper.setActive(arg_16_0._btnEndGame, var_16_1)
+	gohelper.setActive(arg_16_0._goprogress, var_16_1)
 
-	if slot2 then
-		slot3, slot4 = Activity174Config.instance:getMaxRound(slot0.actId, slot1.gameCount)
-		slot0._txtRound.text = string.format("%s/%s", slot1.gameCount, slot3)
-		slot0._imageHpPercent.fillAmount = slot1.hp / tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
+	if var_16_1 then
+		local var_16_2, var_16_3 = Activity174Config.instance:getMaxRound(arg_16_0.actId, var_16_0.gameCount)
 
-		gohelper.setActive(slot0._goHp, not slot4)
+		arg_16_0._txtRound.text = string.format("%s/%s", var_16_0.gameCount, var_16_2)
+
+		local var_16_4 = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
+
+		arg_16_0._imageHpPercent.fillAmount = var_16_0.hp / var_16_4
+
+		gohelper.setActive(arg_16_0._goHp, not var_16_3)
 	end
 
-	slot0:initRule()
-	slot0:refreshBadge()
-	slot0:refreshCurrency()
+	arg_16_0:initRule()
+	arg_16_0:refreshBadge()
+	arg_16_0:refreshCurrency()
 end
 
-function slot0.refreshCurrency(slot0)
-	slot0._txtnum.text = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a3DouQuQu).quantity
+function var_0_0.refreshCurrency(arg_17_0)
+	local var_17_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a3DouQuQu)
+
+	arg_17_0._txtnum.text = var_17_0.quantity
 end
 
-function slot0.enterGameCallback(slot0)
+function var_0_0.enterGameCallback(arg_18_0)
 	Activity174Model.instance:clearUnlockNewTeamTipCache()
-	Activity174Controller.instance:openForcePickView(slot0.actInfo:getGameInfo().forceBagInfo)
+
+	local var_18_0 = arg_18_0.actInfo:getGameInfo()
+
+	Activity174Controller.instance:openForcePickView(var_18_0.forceBagInfo)
 end
 
-function slot0.endGame(slot0)
-	Activity174Rpc.instance:sendEndAct174GameRequest(slot0.actId, slot0.endGameCallback, slot0)
+function var_0_0.endGame(arg_19_0)
+	Activity174Rpc.instance:sendEndAct174GameRequest(arg_19_0.actId, arg_19_0.endGameCallback, arg_19_0)
 end
 
-function slot0.endGameCallback(slot0)
-	if slot0.actInfo:getGameEndInfo() then
+function var_0_0.endGameCallback(arg_20_0)
+	if arg_20_0.actInfo:getGameEndInfo() then
 		Activity174Controller.instance:openSettlementView()
 
-		for slot6, slot7 in pairs(slot0.actInfo:getBadgeScoreChangeDic()) do
-			slot0:refreshBadgeItem(slot6, slot0.actInfo:getBadgeMo(slot6))
+		local var_20_0 = arg_20_0.actInfo:getBadgeScoreChangeDic()
+
+		for iter_20_0, iter_20_1 in pairs(var_20_0) do
+			local var_20_1 = arg_20_0.actInfo:getBadgeMo(iter_20_0)
+
+			arg_20_0:refreshBadgeItem(iter_20_0, var_20_1)
 		end
 
-		slot0:refreshUI()
+		arg_20_0:refreshUI()
 	else
 		logError("gameEndInfo is nil")
 	end
 end
 
-function slot0.refreshBadge(slot0)
-	slot0.badgeItemDic = {}
+function var_0_0.refreshBadge(arg_21_0)
+	arg_21_0.badgeItemDic = {}
 
-	gohelper.CreateObjList(slot0, slot0._onSetBadgeItem, slot0.actInfo:getBadgeMoList(), slot0.badgeGoParent, slot0.badgeGo)
+	local var_21_0 = arg_21_0.actInfo:getBadgeMoList()
+
+	gohelper.CreateObjList(arg_21_0, arg_21_0._onSetBadgeItem, var_21_0, arg_21_0.badgeGoParent, arg_21_0.badgeGo)
 end
 
-function slot0._onSetBadgeItem(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot5 = slot2.id
-	slot4.simageIcon = gohelper.findChildSingleImage(slot1, "root/image_icon")
-	slot4.txtNum = gohelper.findChildText(slot1, "root/txt_num")
-	slot0.badgeItemDic[slot5] = slot4
+function var_0_0._onSetBadgeItem(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	local var_22_0 = arg_22_0:getUserDataTb_()
+	local var_22_1 = arg_22_2.id
 
-	slot0:refreshBadgeItem(slot5, slot2)
+	var_22_0.simageIcon = gohelper.findChildSingleImage(arg_22_1, "root/image_icon")
+	var_22_0.txtNum = gohelper.findChildText(arg_22_1, "root/txt_num")
+	arg_22_0.badgeItemDic[var_22_1] = var_22_0
+
+	arg_22_0:refreshBadgeItem(var_22_1, arg_22_2)
 end
 
-function slot0.refreshBadgeItem(slot0, slot1, slot2)
-	slot3 = slot0.badgeItemDic[slot1]
+function var_0_0.refreshBadgeItem(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = arg_23_0.badgeItemDic[arg_23_1]
+	local var_23_1 = arg_23_2:getState()
+	local var_23_2 = ResUrl.getAct174BadgeIcon(arg_23_2.config.icon, var_23_1)
 
-	slot3.simageIcon:LoadImage(ResUrl.getAct174BadgeIcon(slot2.config.icon, slot2:getState()))
+	var_23_0.simageIcon:LoadImage(var_23_2)
 
-	slot3.txtNum.text = slot2.count
+	var_23_0.txtNum.text = arg_23_2.count
 end
 
-function slot0.initRule(slot0)
-	slot3 = {}
+function var_0_0.initRule(arg_24_0)
+	local var_24_0 = arg_24_0.actInfo:getRuleHeroCoList()
+	local var_24_1 = #var_24_0
+	local var_24_2 = {}
 
-	for slot7 = 0, 2 do
-		table.insert(slot3, slot1[#slot0.actInfo:getRuleHeroCoList() - slot7])
+	for iter_24_0 = 0, 2 do
+		table.insert(var_24_2, var_24_0[var_24_1 - iter_24_0])
 	end
 
-	table.sort(slot3, Activity174Helper.sortActivity174RoleCo)
+	table.sort(var_24_2, Activity174Helper.sortActivity174RoleCo)
 
-	slot0.ruleHeroIconList = {}
+	arg_24_0.ruleHeroIconList = {}
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot9 = gohelper.findChild(slot0._gorule, "role/" .. slot7)
-		slot11 = gohelper.findChildSingleImage(slot9, "heroicon")
+	for iter_24_1, iter_24_2 in ipairs(var_24_2) do
+		local var_24_3 = gohelper.findChild(arg_24_0._gorule, "role/" .. iter_24_1)
+		local var_24_4 = gohelper.findChildImage(var_24_3, "rare")
+		local var_24_5 = gohelper.findChildSingleImage(var_24_3, "heroicon")
+		local var_24_6 = gohelper.findChildImage(var_24_3, "career")
+		local var_24_7 = gohelper.findChildText(var_24_3, "name")
 
-		slot11:LoadImage(ResUrl.getHeadIconSmall(slot8.skinId))
-		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot9, "rare"), "bgequip" .. tostring(CharacterEnum.Color[slot8.rare]))
-		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot9, "career"), "lssx_" .. tostring(slot8.career))
+		var_24_5:LoadImage(ResUrl.getHeadIconSmall(iter_24_2.skinId))
+		UISpriteSetMgr.instance:setCommonSprite(var_24_4, "bgequip" .. tostring(CharacterEnum.Color[iter_24_2.rare]))
+		UISpriteSetMgr.instance:setCommonSprite(var_24_6, "lssx_" .. tostring(iter_24_2.career))
 
-		gohelper.findChildText(slot9, "name").text = slot8.name
-		slot0.ruleHeroIconList[slot7] = slot11
+		var_24_7.text = iter_24_2.name
+		arg_24_0.ruleHeroIconList[iter_24_1] = var_24_5
 	end
 end
 
-function slot0.dailyRefresh(slot0)
-	Activity174Rpc.instance:sendGetAct174InfoRequest(slot0.actId, slot0.checkSeason, slot0)
+function var_0_0.dailyRefresh(arg_25_0)
+	Activity174Rpc.instance:sendGetAct174InfoRequest(arg_25_0.actId, arg_25_0.checkSeason, arg_25_0)
 end
 
-function slot0.checkSeason(slot0)
-	slot0:refreshUI()
+function var_0_0.checkSeason(arg_26_0)
+	arg_26_0:refreshUI()
 
-	if not slot0.actInfo:getGameInfo():isInGame() then
+	local var_26_0 = arg_26_0.actInfo:getGameInfo()
+
+	if not var_26_0:isInGame() then
 		return
 	end
 
-	if slot0.actInfo.season ~= slot1.season then
-		Activity174Rpc.instance:sendChangeSeasonEndAct174Request(slot0.actId, slot0.seasonChangeEnd, slot0)
+	if arg_26_0.actInfo.season ~= var_26_0.season then
+		Activity174Rpc.instance:sendChangeSeasonEndAct174Request(arg_26_0.actId, arg_26_0.seasonChangeEnd, arg_26_0)
 	end
 end
 
-function slot0.seasonChangeEnd(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0.seasonChangeEnd(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	if arg_27_2 == 0 then
 		Activity174Controller.instance:dispatchEvent(Activity174Event.SeasonChange)
 
 		if Activity174Model.instance:getActInfo():getGameEndInfo() then
@@ -264,14 +296,16 @@ function slot0.seasonChangeEnd(slot0, slot1, slot2, slot3)
 	end
 end
 
-function slot0._nextReply(slot0)
-	if slot0.actInfo:getGameInfo().gameCount > Activity174Config.instance:getMaxRound(slot0.actId, 1) + 1 then
+function var_0_0._nextReply(arg_28_0)
+	local var_28_0 = Activity174Config.instance:getMaxRound(arg_28_0.actId, 1)
+
+	if arg_28_0.actInfo:getGameInfo().gameCount > var_28_0 + 1 then
 		Activity174Controller.instance:openEndLessView({
 			showScore = true
 		})
 	else
-		slot0:_btnEnterGameOnClick(true)
+		arg_28_0:_btnEnterGameOnClick(true)
 	end
 end
 
-return slot0
+return var_0_0

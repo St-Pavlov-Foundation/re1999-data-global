@@ -1,59 +1,60 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114MainView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114MainView", package.seeall)
 
-slot0 = class("Activity114MainView", BaseView)
+local var_0_0 = class("Activity114MainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_rightbg")
-	slot0._sliderAttentionNow = gohelper.findChildImage(slot0.viewGO, "#go_time/attentionBar/#image_attention")
-	slot0._sliderAttention = gohelper.findChildImage(slot0.viewGO, "#go_time/attentionBar/#image_attention2")
-	slot0._btnattrtips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_attr/#go_attrdetail/attrtitle/#btn_attrtips")
-	slot0._goattrtips = gohelper.findChild(slot0.viewGO, "#go_attrtips")
-	slot0._btncloseattrtips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_attrtips/#btn_closeTips")
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
+	arg_1_0._sliderAttentionNow = gohelper.findChildImage(arg_1_0.viewGO, "#go_time/attentionBar/#image_attention")
+	arg_1_0._sliderAttention = gohelper.findChildImage(arg_1_0.viewGO, "#go_time/attentionBar/#image_attention2")
+	arg_1_0._btnattrtips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_attr/#go_attrdetail/attrtitle/#btn_attrtips")
+	arg_1_0._goattrtips = gohelper.findChild(arg_1_0.viewGO, "#go_attrtips")
+	arg_1_0._btncloseattrtips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_attrtips/#btn_closeTips")
+	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnattrtips:AddClickListener(slot0._openTips, slot0)
-	slot0._btncloseattrtips:AddClickListener(slot0._closeTips, slot0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnAttentionUpdate, slot0.updateAttention, slot0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessEnd, slot0.onEventEnd, slot0)
-	slot0.viewContainer:registerCallback(Activity114Event.EduSelectAttrChange, slot0.updateAttention, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnattrtips:AddClickListener(arg_2_0._openTips, arg_2_0)
+	arg_2_0._btncloseattrtips:AddClickListener(arg_2_0._closeTips, arg_2_0)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnAttentionUpdate, arg_2_0.updateAttention, arg_2_0)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessEnd, arg_2_0.onEventEnd, arg_2_0)
+	arg_2_0.viewContainer:registerCallback(Activity114Event.EduSelectAttrChange, arg_2_0.updateAttention, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnattrtips:RemoveClickListener()
-	slot0._btncloseattrtips:RemoveClickListener()
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnAttentionUpdate, slot0.updateAttention, slot0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventProcessEnd, slot0.onEventEnd, slot0)
-	slot0.viewContainer:unregisterCallback(Activity114Event.EduSelectAttrChange, slot0.updateAttention, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnattrtips:RemoveClickListener()
+	arg_3_0._btncloseattrtips:RemoveClickListener()
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnAttentionUpdate, arg_3_0.updateAttention, arg_3_0)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventProcessEnd, arg_3_0.onEventEnd, arg_3_0)
+	arg_3_0.viewContainer:unregisterCallback(Activity114Event.EduSelectAttrChange, arg_3_0.updateAttention, arg_3_0)
 end
 
-function slot0._openTips(slot0)
+function var_0_0._openTips(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
-	gohelper.setActive(slot0._goattrtips, true)
+	gohelper.setActive(arg_4_0._goattrtips, true)
 end
 
-function slot0._closeTips(slot0)
+function var_0_0._closeTips(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_close)
-	gohelper.setActive(slot0._goattrtips, false)
+	gohelper.setActive(arg_5_0._goattrtips, false)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Copies)
-	slot0._viewAnim:Play("open", 0, 0)
-	slot0:addChildView(Activity114TimeView.New())
-	slot0:addChildView(Activity114AttrView.New("#go_attr"))
-	slot0:addChildView(Activity114OperView.New("#go_oper"))
-	slot0:addChildView(Activity114EduOperView.New("#go_eduSelect"))
-	gohelper.setActive(slot0._goattrtips, false)
-	slot0._simagerightbg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("main/img_youce.png"))
+	arg_7_0._viewAnim:Play("open", 0, 0)
+	arg_7_0:addChildView(Activity114TimeView.New())
+	arg_7_0:addChildView(Activity114AttrView.New("#go_attr"))
+	arg_7_0:addChildView(Activity114OperView.New("#go_oper"))
+	arg_7_0:addChildView(Activity114EduOperView.New("#go_eduSelect"))
+	gohelper.setActive(arg_7_0._goattrtips, false)
+	arg_7_0._simagerightbg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("main/img_youce.png"))
 
 	if not Activity114Model.instance.serverData.isEnterSchool then
 		Activity114Model.instance.serverData.isEnterSchool = true
@@ -61,123 +62,138 @@ function slot0.onOpen(slot0)
 		Activity114Rpc.instance:enterSchool(Activity114Model.instance.id)
 	end
 
-	slot0:updateAttention()
-	slot0:onEventEnd(true)
+	arg_7_0:updateAttention()
+	arg_7_0:onEventEnd(true)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._viewAnim.enabled = true
+function var_0_0.onOpenFinish(arg_8_0)
+	arg_8_0._viewAnim.enabled = true
 end
 
-function slot0.onEventEnd(slot0, slot1)
-	slot2 = Activity114Model.instance.preEventType
-	slot3 = Activity114Model.instance.preResult
+function var_0_0.onEventEnd(arg_9_0, arg_9_1)
+	local var_9_0 = Activity114Model.instance.preEventType
+	local var_9_1 = Activity114Model.instance.preResult
+
 	Activity114Model.instance.preEventType = nil
 	Activity114Model.instance.preResult = nil
 
 	if not Activity114Model.instance.serverData.isEnterSchool then
-		slot0.viewContainer:switchTab(Activity114Enum.TabIndex.EnterView)
-		Activity114Controller.instance:dispatchEvent(Activity114Event.GuideBegin, tostring(Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.WeekEndGuideId)))
+		arg_9_0.viewContainer:switchTab(Activity114Enum.TabIndex.EnterView)
+
+		local var_9_2 = Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.WeekEndGuideId)
+
+		Activity114Controller.instance:dispatchEvent(Activity114Event.GuideBegin, tostring(var_9_2))
 
 		return
 	end
 
 	if Activity114Model.instance.serverData.checkEventId > 0 then
-		slot4 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.checkEventId)
+		local var_9_3 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.checkEventId)
+		local var_9_4 = {
+			type = var_9_3.config.eventType,
+			eventId = var_9_3.config.id
+		}
 
-		Activity114Model.instance:buildFlowAndSkipWork({
-			type = slot4.config.eventType,
-			eventId = slot4.config.id
-		})
+		Activity114Model.instance:buildFlowAndSkipWork(var_9_4)
 
 		return
 	end
 
 	if Activity114Model.instance.serverData.testEventId > 0 then
-		slot4 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.testEventId)
+		local var_9_5 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.testEventId)
+		local var_9_6 = {
+			type = var_9_5.config.eventType,
+			eventId = var_9_5.config.id
+		}
 
-		Activity114Model.instance:buildFlowAndSkipWork({
-			type = slot4.config.eventType,
-			eventId = slot4.config.id
-		})
+		Activity114Model.instance:buildFlowAndSkipWork(var_9_6)
 
 		return
 	end
 
-	if not Activity114Config.instance:getRoundCo(Activity114Model.instance.id, Activity114Model.instance.serverData.day, Activity114Model.instance.serverData.round) then
+	local var_9_7 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, Activity114Model.instance.serverData.day, Activity114Model.instance.serverData.round)
+
+	if not var_9_7 then
 		logError(string.format("没有回合天数配置？？？day:%d round:%d", Activity114Model.instance.serverData.day, Activity114Model.instance.serverData.round))
 
 		return
 	end
 
-	if not Activity114Model.instance.serverData.isReadRoundStory and Activity114Model.instance.serverData.week == 1 and not string.nilorempty(slot4.preStoryId) then
+	if not Activity114Model.instance.serverData.isReadRoundStory and Activity114Model.instance.serverData.week == 1 and not string.nilorempty(var_9_7.preStoryId) then
 		Activity114Model.instance:beginStoryFlow()
 
 		return
 	end
 
-	if slot4.type == Activity114Enum.RoundType.KeyDay then
-		if string.nilorempty(slot4.eventId) then
+	if var_9_7.type == Activity114Enum.RoundType.KeyDay then
+		if string.nilorempty(var_9_7.eventId) then
 			logError("关键天事件没配？？" .. Activity114Model.instance.serverData.day .. "#" .. Activity114Model.instance.serverData.round)
 
 			return
 		end
 
-		slot7 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, string.splitToNumber(slot4.eventId, "#")[Activity114Model.instance.serverData.week] or slot5[1])
+		local var_9_8 = string.splitToNumber(var_9_7.eventId, "#")
+		local var_9_9 = var_9_8[Activity114Model.instance.serverData.week] or var_9_8[1]
+		local var_9_10 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, var_9_9)
+		local var_9_11 = {
+			type = var_9_10.config.eventType,
+			eventId = var_9_10.config.id
+		}
 
-		Activity114Model.instance:beginEvent({
-			type = slot7.config.eventType,
-			eventId = slot7.config.id
-		})
+		Activity114Model.instance:beginEvent(var_9_11)
 
 		return
 	end
 
-	if not slot1 then
-		slot0:_playOpenAnim()
+	if not arg_9_1 then
+		arg_9_0:_playOpenAnim()
 	end
 
-	Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventEndWithResult, slot2, slot3)
+	Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventEndWithResult, var_9_0, var_9_1)
 end
 
-function slot0.updateAttention(slot0)
-	slot1, slot2 = nil
-	slot2 = Activity114Model.instance.serverData.attention / 100
+function var_0_0.updateAttention(arg_10_0)
+	local var_10_0
+	local var_10_1
+	local var_10_2 = Activity114Model.instance.serverData.attention / 100
+	local var_10_3 = var_10_2
 
 	if Activity114Model.instance.eduSelectAttr then
-		slot2 = (Activity114Model.instance.serverData.attention + (Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, Activity114Model.instance.eduSelectAttr) and slot3.successVerify[Activity114Enum.AddAttrType.Attention] or 0)) / 100
+		local var_10_4 = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, Activity114Model.instance.eduSelectAttr)
+		local var_10_5 = var_10_4 and var_10_4.successVerify[Activity114Enum.AddAttrType.Attention] or 0
+
+		var_10_3 = (Activity114Model.instance.serverData.attention + var_10_5) / 100
 	end
 
-	if slot1 > slot2 then
-		slot1 = slot2
-		slot2 = slot1
+	if var_10_3 < var_10_2 then
+		var_10_3, var_10_2 = var_10_2, var_10_3
 	end
 
-	slot0._sliderAttentionNow.fillAmount = slot2
-	slot0._sliderAttention.fillAmount = slot1
+	arg_10_0._sliderAttentionNow.fillAmount = var_10_3
+	arg_10_0._sliderAttention.fillAmount = var_10_2
 end
 
-function slot0._playOpenAnim(slot0)
+function var_0_0._playOpenAnim(arg_11_0)
 	Activity114Model.instance.isPlayingOpenAnim = true
 
-	slot0.viewContainer:dispatchEvent(Activity114Event.MainViewAnimBegin)
-	slot0._viewAnim:Play(UIAnimationName.Open, 0, 0)
-	TaskDispatcher.runDelay(function ()
+	arg_11_0.viewContainer:dispatchEvent(Activity114Event.MainViewAnimBegin)
+	arg_11_0._viewAnim:Play(UIAnimationName.Open, 0, 0)
+	TaskDispatcher.runDelay(function()
 		Activity114Model.instance.isPlayingOpenAnim = false
 
-		uv0.viewContainer:dispatchEvent(Activity114Event.MainViewAnimEnd)
+		arg_11_0.viewContainer:dispatchEvent(Activity114Event.MainViewAnimEnd)
 	end, nil, 0.833)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
 	Activity114Model.instance.isPlayingOpenAnim = false
 
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Close)
-	slot0._viewAnim:Play(UIAnimationName.Close, 0, 0)
+	arg_13_0._viewAnim:Play(UIAnimationName.Close, 0, 0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagerightbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0._simagerightbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

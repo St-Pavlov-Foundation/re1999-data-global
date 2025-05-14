@@ -1,70 +1,71 @@
-module("modules.logic.fight.model.FightStatModel", package.seeall)
+﻿module("modules.logic.fight.model.FightStatModel", package.seeall)
 
-slot0 = class("FightStatModel", ListScrollModel)
+local var_0_0 = class("FightStatModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._totalHarm = 0
-	slot0._totalHurt = 0
-	slot0._totalHeal = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._totalHarm = 0
+	arg_1_0._totalHurt = 0
+	arg_1_0._totalHeal = 0
 end
 
-function slot0.setAtkStatInfo(slot0, slot1)
-	slot0._totalHarm = 0
-	slot0._totalHurt = 0
-	slot0._totalHeal = 0
-	slot2 = {}
+function var_0_0.setAtkStatInfo(arg_2_0, arg_2_1)
+	arg_2_0._totalHarm = 0
+	arg_2_0._totalHurt = 0
+	arg_2_0._totalHeal = 0
 
-	for slot6, slot7 in ipairs(slot1) do
-		if not slot0:checkShield(slot7) and (slot7.entityMO or FightDataHelper.entityMgr:getById(slot7.heroUid)) then
-			slot9 = FightStatMO.New()
+	local var_2_0 = {}
 
-			slot9:init(slot7)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		if not arg_2_0:checkShield(iter_2_1) and (iter_2_1.entityMO or FightDataHelper.entityMgr:getById(iter_2_1.heroUid)) then
+			local var_2_1 = FightStatMO.New()
 
-			slot9.entityMO = slot7.entityMO
-			slot9.fromOtherFight = slot7.entityMO and true or false
+			var_2_1:init(iter_2_1)
 
-			table.insert(slot2, slot9)
+			var_2_1.entityMO = iter_2_1.entityMO
+			var_2_1.fromOtherFight = iter_2_1.entityMO and true or false
 
-			slot0._totalHarm = slot0._totalHarm + slot9.harm
-			slot0._totalHurt = slot0._totalHurt + slot9.hurt
-			slot0._totalHeal = slot0._totalHeal + slot9.heal
+			table.insert(var_2_0, var_2_1)
+
+			arg_2_0._totalHarm = arg_2_0._totalHarm + var_2_1.harm
+			arg_2_0._totalHurt = arg_2_0._totalHurt + var_2_1.hurt
+			arg_2_0._totalHeal = arg_2_0._totalHeal + var_2_1.heal
 		end
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		if slot0.harm ~= slot1.harm then
-			return slot1.harm < slot0.harm
+	table.sort(var_2_0, function(arg_3_0, arg_3_1)
+		if arg_3_0.harm ~= arg_3_1.harm then
+			return arg_3_0.harm > arg_3_1.harm
 		else
-			return slot0.entityId < slot1.entityId
+			return arg_3_0.entityId < arg_3_1.entityId
 		end
 	end)
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.checkShield(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkShield(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return true
 	end
 
-	if slot1.heroUid == FightEntityScene.MySideId or slot1.heroUid == FightEntityScene.EnemySideId then
+	if arg_4_1.heroUid == FightEntityScene.MySideId or arg_4_1.heroUid == FightEntityScene.EnemySideId then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getTotalHarm(slot0)
-	return slot0._totalHarm
+function var_0_0.getTotalHarm(arg_5_0)
+	return arg_5_0._totalHarm
 end
 
-function slot0.getTotalHurt(slot0)
-	return slot0._totalHurt
+function var_0_0.getTotalHurt(arg_6_0)
+	return arg_6_0._totalHurt
 end
 
-function slot0.getTotalHeal(slot0)
-	return slot0._totalHeal
+function var_0_0.getTotalHeal(arg_7_0)
+	return arg_7_0._totalHeal
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

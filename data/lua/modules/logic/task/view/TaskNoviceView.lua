@@ -1,594 +1,691 @@
-module("modules.logic.task.view.TaskNoviceView", package.seeall)
+﻿module("modules.logic.task.view.TaskNoviceView", package.seeall)
 
-slot0 = class("TaskNoviceView", BaseView)
+local var_0_0 = class("TaskNoviceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goright = gohelper.findChild(slot0.viewGO, "#go_right")
-	slot0._gotaskitemcontent = gohelper.findChild(slot0.viewGO, "#go_right/viewport/#go_taskitemcontent")
-	slot0._gogrowitemcontent = gohelper.findChild(slot0.viewGO, "#go_right/viewport/#go_taskitemcontent/#go_growitemcontent")
-	slot0._gogrowtip = gohelper.findChild(slot0.viewGO, "#go_right/viewport/#go_taskitemcontent/#go_growitemcontent/#go_growtip")
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#go_left")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_left/#simage_leftbg")
-	slot0._simageren = gohelper.findChildSingleImage(slot0.viewGO, "#go_left/#simage_ren")
-	slot0._btnshowdetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/title/#btn_showdetail")
-	slot0._gotex = gohelper.findChild(slot0.viewGO, "#go_left/title/ani/tex")
-	slot0._gotexzh = gohelper.findChild(slot0.viewGO, "#go_left/title/ani/tex_zh")
-	slot0._goactlist = gohelper.findChild(slot0.viewGO, "#go_left/act/actlistscroll/Viewport/#go_actlist")
-	slot0._goactitem = gohelper.findChild(slot0.viewGO, "#go_left/act/actlistscroll/Viewport/#go_actlist/#go_actitem")
-	slot0._txtstagename = gohelper.findChildText(slot0.viewGO, "#go_left/#txt_stagename")
-	slot0._goflag = gohelper.findChild(slot0.viewGO, "#go_left/curprogresslist/#go_flag")
-	slot0._txtcurprogress = gohelper.findChildText(slot0.viewGO, "#go_left/#txt_stagename/#txt_curprogress")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_left/rewardscroll/Viewport/#go_rewards")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "#go_left/rewardscroll/Viewport/#go_rewards/#go_rewarditem")
-	slot0._golingqumax = gohelper.findChild(slot0.viewGO, "#go_left/#lingqumax")
-	slot0._gohasreceive = gohelper.findChild(slot0.viewGO, "#go_left/#go_hasreceive")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_right")
+	arg_1_0._gotaskitemcontent = gohelper.findChild(arg_1_0.viewGO, "#go_right/viewport/#go_taskitemcontent")
+	arg_1_0._gogrowitemcontent = gohelper.findChild(arg_1_0.viewGO, "#go_right/viewport/#go_taskitemcontent/#go_growitemcontent")
+	arg_1_0._gogrowtip = gohelper.findChild(arg_1_0.viewGO, "#go_right/viewport/#go_taskitemcontent/#go_growitemcontent/#go_growtip")
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_left/#simage_leftbg")
+	arg_1_0._simageren = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_left/#simage_ren")
+	arg_1_0._btnshowdetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/title/#btn_showdetail")
+	arg_1_0._gotex = gohelper.findChild(arg_1_0.viewGO, "#go_left/title/ani/tex")
+	arg_1_0._gotexzh = gohelper.findChild(arg_1_0.viewGO, "#go_left/title/ani/tex_zh")
+	arg_1_0._goactlist = gohelper.findChild(arg_1_0.viewGO, "#go_left/act/actlistscroll/Viewport/#go_actlist")
+	arg_1_0._goactitem = gohelper.findChild(arg_1_0.viewGO, "#go_left/act/actlistscroll/Viewport/#go_actlist/#go_actitem")
+	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.viewGO, "#go_left/#txt_stagename")
+	arg_1_0._goflag = gohelper.findChild(arg_1_0.viewGO, "#go_left/curprogresslist/#go_flag")
+	arg_1_0._txtcurprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_left/#txt_stagename/#txt_curprogress")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_left/rewardscroll/Viewport/#go_rewards")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#go_left/rewardscroll/Viewport/#go_rewards/#go_rewarditem")
+	arg_1_0._golingqumax = gohelper.findChild(arg_1_0.viewGO, "#go_left/#lingqumax")
+	arg_1_0._gohasreceive = gohelper.findChild(arg_1_0.viewGO, "#go_left/#go_hasreceive")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnshowdetail:AddClickListener(slot0._btnshowDetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnshowdetail:AddClickListener(arg_2_0._btnshowDetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnshowdetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnshowdetail:RemoveClickListener()
 end
 
-function slot0._btnshowDetailOnClick(slot0)
+function var_0_0._btnshowDetailOnClick(arg_4_0)
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, 302303, false, nil, false)
 end
 
-function slot0._onUpdateTaskList(slot0)
-	for slot6 = 1, #TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice) do
-		if slot1[slot6].config.minTypeId == TaskEnum.TaskMinType.GrowBack then
-			slot2 = 0 + 1
+function var_0_0._onUpdateTaskList(arg_5_0)
+	local var_5_0 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice)
+	local var_5_1 = 0
+
+	for iter_5_0 = 1, #var_5_0 do
+		if var_5_0[iter_5_0].config.minTypeId == TaskEnum.TaskMinType.GrowBack then
+			var_5_1 = var_5_1 + 1
 		end
 	end
 
-	TaskModel.instance:setNoviceTaskCurStage(TaskModel.instance:getNoviceTaskMaxUnlockStage())
-	TaskDispatcher.runDelay(slot0._onCheckRefreshNovice, slot0, 0.2)
+	local var_5_2 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
+
+	TaskModel.instance:setNoviceTaskCurStage(var_5_2)
+	TaskDispatcher.runDelay(arg_5_0._onCheckRefreshNovice, arg_5_0, 0.2)
 end
 
-function slot0._onCheckRefreshNovice(slot0)
+function var_0_0._onCheckRefreshNovice(arg_6_0)
 	if TaskModel.instance:couldGetTaskNoviceStageReward() then
 		return
 	end
 
-	slot0:_refreshNovice()
+	arg_6_0:_refreshNovice()
 end
 
-function slot0._onPlayActState(slot0, slot1)
-	if slot1.taskType ~= TaskEnum.TaskType.Novice then
+function var_0_0._onPlayActState(arg_7_0, arg_7_1)
+	if arg_7_1.taskType ~= TaskEnum.TaskType.Novice then
 		return
 	end
 
-	if slot1.force then
-		slot0:_refreshNovice()
+	if arg_7_1.force then
+		arg_7_0:_refreshNovice()
 
 		return
 	end
 
-	if slot1.growCount then
-		gohelper.setActive(slot0._gogrowitemcontent, slot1.growCount > 1)
-		gohelper.setActive(slot0._gogrowtip, slot1.growCount > 1)
+	if arg_7_1.growCount then
+		gohelper.setActive(arg_7_0._gogrowitemcontent, arg_7_1.growCount > 1)
+		gohelper.setActive(arg_7_0._gogrowtip, arg_7_1.growCount > 1)
 	end
 
-	TaskDispatcher.cancelTask(slot0._flagPlayUpdate, slot0)
+	TaskDispatcher.cancelTask(arg_7_0._flagPlayUpdate, arg_7_0)
 
-	if slot1.num < 1 then
+	if arg_7_1.num < 1 then
 		return
 	end
 
-	slot3 = TaskModel.instance:getNoviceTaskCurSelectStage()
+	local var_7_0 = TaskModel.instance:getNoviceTaskCurStage()
+	local var_7_1 = TaskModel.instance:getNoviceTaskCurSelectStage()
+	local var_7_2 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
 
-	if TaskModel.instance:getNoviceTaskCurStage() < TaskModel.instance:getNoviceTaskMaxUnlockStage() then
+	if var_7_0 < var_7_2 then
 		return
 	end
 
-	if slot4 < slot3 then
-		TaskModel.instance:setNoviceTaskCurStage(slot4)
-		TaskModel.instance:setNoviceTaskCurSelectStage(slot4)
-		slot0:_refreshStageInfo()
-		slot0:_refreshActItem()
-		slot0:_refreshProgressItem()
+	if var_7_2 < var_7_1 then
+		TaskModel.instance:setNoviceTaskCurStage(var_7_2)
+		TaskModel.instance:setNoviceTaskCurSelectStage(var_7_2)
+		arg_7_0:_refreshStageInfo()
+		arg_7_0:_refreshActItem()
+		arg_7_0:_refreshProgressItem()
 	end
 
-	slot7 = 0
-	slot7 = TaskModel.instance:getCurStageMaxActDot() < TaskModel.instance:getCurStageActDotGetNum() + slot1.num and slot5 + slot1.num - slot6 or slot1.num
-	slot0._totalAct = slot5 + slot7
+	local var_7_3 = TaskModel.instance:getCurStageActDotGetNum()
+	local var_7_4 = TaskModel.instance:getCurStageMaxActDot()
+	local var_7_5 = 0
 
-	if slot7 > 0 then
-		slot0._flagPlayCount = 0
+	if var_7_4 < var_7_3 + arg_7_1.num then
+		var_7_5 = var_7_3 + arg_7_1.num - var_7_4
+	else
+		var_7_5 = arg_7_1.num
+	end
 
-		TaskDispatcher.runRepeat(slot0._flagPlayUpdate, slot0, 0.06, slot7)
+	arg_7_0._totalAct = var_7_3 + var_7_5
+
+	if var_7_5 > 0 then
+		arg_7_0._flagPlayCount = 0
+
+		TaskDispatcher.runRepeat(arg_7_0._flagPlayUpdate, arg_7_0, 0.06, var_7_5)
 	end
 end
 
-function slot0._flagPlayUpdate(slot0)
-	slot1 = TaskModel.instance:getCurStageActDotGetNum()
-	slot2 = TaskModel.instance:getCurStageMaxActDot()
-	slot0._flagPlayCount = slot0._flagPlayCount + 1
+function var_0_0._flagPlayUpdate(arg_8_0)
+	local var_8_0 = TaskModel.instance:getCurStageActDotGetNum()
+	local var_8_1 = TaskModel.instance:getCurStageMaxActDot()
 
-	gohelper.setActive(slot0._noviceFlags[slot0._flagPlayCount + slot1].go, true)
-	slot0._noviceFlags[slot0._flagPlayCount + slot1].ani:Play("play")
+	arg_8_0._flagPlayCount = arg_8_0._flagPlayCount + 1
 
-	if slot0._totalAct <= slot0._flagPlayCount + slot1 then
-		TaskDispatcher.cancelTask(slot0._flagPlayUpdate, slot0)
+	gohelper.setActive(arg_8_0._noviceFlags[arg_8_0._flagPlayCount + var_8_0].go, true)
+	arg_8_0._noviceFlags[arg_8_0._flagPlayCount + var_8_0].ani:Play("play")
 
-		for slot6 = slot1, slot0._totalAct - 1 do
-			UISpriteSetMgr.instance:setCommonSprite(slot0._noviceFlags[slot6 + 1].img, "logo_huoyuedu")
+	if arg_8_0._flagPlayCount + var_8_0 >= arg_8_0._totalAct then
+		TaskDispatcher.cancelTask(arg_8_0._flagPlayUpdate, arg_8_0)
+
+		for iter_8_0 = var_8_0, arg_8_0._totalAct - 1 do
+			UISpriteSetMgr.instance:setCommonSprite(arg_8_0._noviceFlags[iter_8_0 + 1].img, "logo_huoyuedu")
 		end
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._noviceTaskAni = slot0._goleft:GetComponent(typeof(UnityEngine.Animator))
-	slot0._noviceReceiveAni = slot0._gohasreceive:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._noviceTaskAni = arg_9_0._goleft:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._noviceReceiveAni = arg_9_0._gohasreceive:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0._simageleftbg:LoadImage(ResUrl.getTaskBg("bg_yusijia"))
-	slot0._simageren:LoadImage(ResUrl.getTaskBg("bg_yusijiaren"))
+	arg_9_0._simageleftbg:LoadImage(ResUrl.getTaskBg("bg_yusijia"))
+	arg_9_0._simageren:LoadImage(ResUrl.getTaskBg("bg_yusijiaren"))
 
-	slot0._taskItems = {}
-	slot0._actItems = {}
-	slot0._pointItems = {}
-	slot0._extraRewardItems = {}
-	slot0._initActPos = transformhelper.getLocalPos(slot0._goactlist.transform)
+	arg_9_0._taskItems = {}
+	arg_9_0._actItems = {}
+	arg_9_0._pointItems = {}
+	arg_9_0._extraRewardItems = {}
+	arg_9_0._initActPos = transformhelper.getLocalPos(arg_9_0._goactlist.transform)
 
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0._onUpdateTaskList, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.RefreshActState, slot0._onPlayActState, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._onGetBonus, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, slot0._onShowTaskFinished, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnRefreshActItem, slot0._onRefreshRewardActItem, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_9_0._onUpdateTaskList, arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.RefreshActState, arg_9_0._onPlayActState, arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_9_0._onGetBonus, arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, arg_9_0._onShowTaskFinished, arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_9_0._onFinishTask, arg_9_0)
+	arg_9_0:addEventCb(TaskController.instance, TaskEvent.OnRefreshActItem, arg_9_0._onRefreshRewardActItem, arg_9_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_9_0._onCloseViewFinish, arg_9_0)
 
-	slot2 = false
+	local var_9_0 = LangSettings.instance:getCurLangShortcut()
+	local var_9_1 = false
 
-	if LangSettings.instance:getCurLangShortcut() == "zh" or slot1 == "tw" then
-		slot2 = true
+	if var_9_0 == "zh" or var_9_0 == "tw" then
+		var_9_1 = true
 	end
 
-	gohelper.setActive(slot0._gotex, not slot2)
-	gohelper.setActive(slot0._gotexzh, slot2)
+	gohelper.setActive(arg_9_0._gotex, not var_9_1)
+	gohelper.setActive(arg_9_0._gotexzh, var_9_1)
 end
 
-function slot0._onRefreshRewardActItem(slot0, slot1)
-	slot3 = TaskModel.instance:getNoviceTaskCurStage()
+function var_0_0._onRefreshRewardActItem(arg_10_0, arg_10_1)
+	local var_10_0 = TaskModel.instance:getNoviceTaskCurSelectStage()
+	local var_10_1 = TaskModel.instance:getNoviceTaskCurStage()
+	local var_10_2 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
 
-	if TaskModel.instance:getNoviceTaskMaxUnlockStage() < TaskModel.instance:getNoviceTaskCurSelectStage() then
-		slot0:_refreshStageInfo()
-		slot0:_refreshActItem()
-		slot0:_refreshProgressItem()
-		TaskModel.instance:setNoviceTaskCurStage(slot4)
+	if var_10_2 < var_10_0 then
+		arg_10_0:_refreshStageInfo()
+		arg_10_0:_refreshActItem()
+		arg_10_0:_refreshProgressItem()
+		TaskModel.instance:setNoviceTaskCurStage(var_10_2)
 
-		if slot1 and not slot1.isFinishClick then
-			TaskDispatcher.runDelay(slot0._setNoviceTaskItem, slot0, 0.5)
+		if arg_10_1 and not arg_10_1.isFinishClick then
+			TaskDispatcher.runDelay(arg_10_0._setNoviceTaskItem, arg_10_0, 0.5)
 
 			return
 		end
 	end
 
-	if not slot1 or not slot1.isActClick then
+	if not arg_10_1 or not arg_10_1.isActClick then
 		if not TaskModel.instance:couldGetTaskNoviceStageReward() then
-			TaskModel.instance:setNoviceTaskCurSelectStage(slot4)
-			TaskModel.instance:setNoviceTaskCurStage(slot4)
+			TaskModel.instance:setNoviceTaskCurSelectStage(var_10_2)
+			TaskModel.instance:setNoviceTaskCurStage(var_10_2)
 		end
 
-		slot0:_refreshStageInfo()
-		slot0:_refreshActItem()
-		slot0:_refreshProgressItem()
-		TaskModel.instance:setNoviceTaskCurSelectStage(slot4)
-		TaskModel.instance:setNoviceTaskCurStage(slot4)
+		arg_10_0:_refreshStageInfo()
+		arg_10_0:_refreshActItem()
+		arg_10_0:_refreshProgressItem()
+		TaskModel.instance:setNoviceTaskCurSelectStage(var_10_2)
+		TaskModel.instance:setNoviceTaskCurStage(var_10_2)
 
 		if TaskModel.instance:couldGetTaskNoviceStageReward() then
 			return
 		end
 
-		TaskDispatcher.runDelay(slot0._setNoviceTaskItem, slot0, 0.5)
+		TaskDispatcher.runDelay(arg_10_0._setNoviceTaskItem, arg_10_0, 0.5)
 
 		return
 	end
 
-	slot0:_refreshStageInfo()
-	slot0:_refreshActItem()
-	slot0:_refreshProgressItem()
+	arg_10_0:_refreshStageInfo()
+	arg_10_0:_refreshActItem()
+	arg_10_0:_refreshProgressItem()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshNovice()
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0:_refreshNovice()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_12_0)
 	TaskModel.instance:setHasTaskNoviceStageReward(false)
 
-	if TaskModel.instance:getRefreshCount() == 0 and TaskView.getInitTaskType() ~= TaskEnum.TaskType.Novice then
+	local var_12_0 = TaskModel.instance:getRefreshCount()
+	local var_12_1 = TaskView.getInitTaskType()
+
+	if var_12_0 == 0 and var_12_1 ~= TaskEnum.TaskType.Novice then
 		return
 	end
 
-	TaskModel.instance:setNoviceTaskCurSelectStage(TaskModel.instance:getNoviceTaskCurStage())
+	local var_12_2 = TaskModel.instance:getNoviceTaskCurStage()
 
-	if #slot0._taskItems < 1 then
-		slot0:_refreshNovice()
+	TaskModel.instance:setNoviceTaskCurSelectStage(var_12_2)
+
+	if #arg_12_0._taskItems < 1 then
+		arg_12_0:_refreshNovice()
 	end
 end
 
-function slot0._onShowTaskFinished(slot0, slot1)
-	if slot1 == TaskEnum.TaskType.Novice then
+function var_0_0._onShowTaskFinished(arg_13_0, arg_13_1)
+	if arg_13_1 == TaskEnum.TaskType.Novice then
 		return
 	end
 
-	slot0:_refreshNovice()
+	arg_13_0:_refreshNovice()
 end
 
-function slot0._onFinishTask(slot0, slot1)
-	if not TaskConfig.instance:gettaskNoviceConfig(slot1) then
+function var_0_0._onFinishTask(arg_14_0, arg_14_1)
+	if not TaskConfig.instance:gettaskNoviceConfig(arg_14_1) then
 		return
 	end
 
-	TaskController.instance:dispatchEvent(TaskEvent.OnRefreshActItem, {
-		isFinishClick = true
-	})
+	local var_14_0 = {}
+
+	var_14_0.isFinishClick = true
+
+	TaskController.instance:dispatchEvent(TaskEvent.OnRefreshActItem, var_14_0)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.CommonPropView or slot1 == ViewName.CharacterSkinGainView then
-		if TaskModel.instance:couldGetTaskNoviceStageReward() and PopupController.instance:getPopupCount() == 0 then
-			TaskDispatcher.runDelay(slot0._onWaitShowGetStageReward, slot0, 0.1)
+function var_0_0._onCloseViewFinish(arg_15_0, arg_15_1)
+	if arg_15_1 == ViewName.CommonPropView or arg_15_1 == ViewName.CharacterSkinGainView then
+		local var_15_0 = PopupController.instance:getPopupCount()
+
+		if TaskModel.instance:couldGetTaskNoviceStageReward() and var_15_0 == 0 then
+			TaskDispatcher.runDelay(arg_15_0._onWaitShowGetStageReward, arg_15_0, 0.1)
 		end
 	end
 end
 
-function slot0._onWaitShowGetStageReward(slot0)
+function var_0_0._onWaitShowGetStageReward(arg_16_0)
 	if ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		return
 	end
 
-	gohelper.setActive(slot0._golingqumax, true)
+	gohelper.setActive(arg_16_0._golingqumax, true)
 	UIBlockMgr.instance:startBlock("taskstageani")
-	TaskDispatcher.runDelay(slot0._showStageReward, slot0, 1.3)
+	TaskDispatcher.runDelay(arg_16_0._showStageReward, arg_16_0, 1.3)
 end
 
-function slot0._showStageReward(slot0)
+function var_0_0._showStageReward(arg_17_0)
 	UIBlockMgr.instance:endBlock("taskstageani")
-	gohelper.setActive(slot0._golingqumax, false)
+	gohelper.setActive(arg_17_0._golingqumax, false)
 
-	slot1 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
+	local var_17_0 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
 
-	TaskModel.instance:setNoviceTaskCurSelectStage(slot1)
+	TaskModel.instance:setNoviceTaskCurSelectStage(var_17_0)
 
-	slot2 = {}
-	slot7 = nil
+	local var_17_1 = {}
+	local var_17_2 = var_17_0 == TaskModel.instance:getMaxStage(TaskEnum.TaskType.Novice)
 
-	for slot11, slot12 in ipairs(string.split(TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, slot1 == TaskModel.instance:getMaxStage(TaskEnum.TaskType.Novice) and TaskModel.instance:getStageMaxActDot(slot1) <= TaskModel.instance:getStageActDotGetNum(slot1) and slot1 or slot1 - 1).bonus, "|")) do
-		if string.splitToNumber(slot12, "#")[1] == MaterialEnum.MaterialType.PowerPotion then
-			for slot18, slot19 in pairs(ItemPowerModel.instance:getLatestPowerChange()) do
-				if tonumber(slot19.itemid) == tonumber(slot12.materilId) then
-					slot7 = slot19.uid
+	var_17_2 = var_17_2 and TaskModel.instance:getStageActDotGetNum(var_17_0) >= TaskModel.instance:getStageMaxActDot(var_17_0)
+
+	local var_17_3 = var_17_2 and var_17_0 or var_17_0 - 1
+	local var_17_4 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, var_17_3)
+	local var_17_5 = string.split(var_17_4.bonus, "|")
+	local var_17_6
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_5) do
+		local var_17_7 = string.splitToNumber(iter_17_1, "#")
+
+		if var_17_7[1] == MaterialEnum.MaterialType.PowerPotion then
+			local var_17_8 = ItemPowerModel.instance:getLatestPowerChange()
+
+			for iter_17_2, iter_17_3 in pairs(var_17_8) do
+				if tonumber(iter_17_3.itemid) == tonumber(iter_17_1.materilId) then
+					local var_17_9 = iter_17_3.uid
 				end
 			end
 		end
 
-		MaterialDataMO.New():initValue(slot13[1], slot13[2], slot13[3])
+		local var_17_10 = MaterialDataMO.New()
 
-		if slot13[1] ~= MaterialEnum.MaterialType.Faith then
-			table.insert(slot2, slot14)
+		var_17_10:initValue(var_17_7[1], var_17_7[2], var_17_7[3])
+
+		if var_17_7[1] ~= MaterialEnum.MaterialType.Faith then
+			table.insert(var_17_1, var_17_10)
 		end
 	end
 
 	TaskModel.instance:setHasTaskNoviceStageReward(false)
-	TaskDispatcher.runDelay(slot0._onCheckRefreshNovice, slot0, 0.2)
+	TaskDispatcher.runDelay(arg_17_0._onCheckRefreshNovice, arg_17_0, 0.2)
 
-	if TaskModel.instance:getTaskNoviceStageParam() then
-		TaskController.instance:getRewardByLine(MaterialEnum.GetApproach.NoviceStageReward, ViewName.CharacterSkinGainView, slot8)
+	local var_17_11 = TaskModel.instance:getTaskNoviceStageParam()
+
+	if var_17_11 then
+		TaskController.instance:getRewardByLine(MaterialEnum.GetApproach.NoviceStageReward, ViewName.CharacterSkinGainView, var_17_11)
 		TaskModel.instance:setTaskNoviceStageHeroParam()
 	end
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot2)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_17_1)
 end
 
-function slot0._onGetBonus(slot0)
-	TaskDispatcher.runDelay(slot0._onCheckRefreshNovice, slot0, 0.1)
+function var_0_0._onGetBonus(arg_18_0)
+	TaskDispatcher.runDelay(arg_18_0._onCheckRefreshNovice, arg_18_0, 0.1)
 end
 
-function slot0._refreshNovice(slot0)
-	slot1 = TaskModel.instance:getRefreshCount() < 2
-	slot0._noviceTaskAni.enabled = slot1
+function var_0_0._refreshNovice(arg_19_0)
+	local var_19_0 = TaskModel.instance:getRefreshCount() < 2
 
-	slot0:_refreshStageInfo(slot1)
-	slot0:_refreshActItem(slot1)
-	slot0:_refreshProgressItem(slot1)
-	slot0:_setNoviceTaskItem(slot1)
+	arg_19_0._noviceTaskAni.enabled = var_19_0
+
+	arg_19_0:_refreshStageInfo(var_19_0)
+	arg_19_0:_refreshActItem(var_19_0)
+	arg_19_0:_refreshProgressItem(var_19_0)
+	arg_19_0:_setNoviceTaskItem(var_19_0)
 end
 
-function slot0._refreshStageInfo(slot0, slot1)
-	slot2 = TaskModel.instance:getNoviceTaskCurSelectStage()
-	slot6 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, slot2)
+function var_0_0._refreshStageInfo(arg_20_0, arg_20_1)
+	local var_20_0 = TaskModel.instance:getNoviceTaskCurSelectStage()
+	local var_20_1 = TaskModel.instance:getStageMaxActDot(var_20_0)
+	local var_20_2 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
+	local var_20_3 = TaskModel.instance:getStageActDotGetNum(var_20_0)
+	local var_20_4 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, var_20_0)
+	local var_20_5 = TaskModel.instance:couldGetTaskNoviceStageReward()
+	local var_20_6 = var_20_0 < var_20_2 and true or var_20_1 <= var_20_3
 
-	if not TaskModel.instance:couldGetTaskNoviceStageReward() and (slot2 < TaskModel.instance:getNoviceTaskMaxUnlockStage() and true or TaskModel.instance:getStageMaxActDot(slot2) <= TaskModel.instance:getStageActDotGetNum(slot2)) then
-		gohelper.setActive(slot0._gohasreceive, true)
+	var_20_6 = not var_20_5 and var_20_6
 
-		if slot1 then
-			slot0._noviceReceiveAni:Play(UIAnimationName.Open)
+	if var_20_6 then
+		gohelper.setActive(arg_20_0._gohasreceive, true)
+
+		if arg_20_1 then
+			arg_20_0._noviceReceiveAni:Play(UIAnimationName.Open)
 		else
-			slot0._noviceReceiveAni:Play(UIAnimationName.Idle)
+			arg_20_0._noviceReceiveAni:Play(UIAnimationName.Idle)
 		end
 	else
-		gohelper.setActive(slot0._gohasreceive, false)
+		gohelper.setActive(arg_20_0._gohasreceive, false)
 	end
 
-	slot0._txtstagename.text = slot6.desc
-	slot0._extraRewardItems = slot0._extraRewardItems or {}
+	arg_20_0._txtstagename.text = var_20_4.desc
+	arg_20_0._extraRewardItems = arg_20_0._extraRewardItems or {}
 
-	for slot13 = 1, #string.split(slot6.bonus, "|") do
-		if not slot0._extraRewardItems[slot13] then
-			slot14 = {
-				parentGo = gohelper.cloneInPlace(slot0._gorewarditem)
+	local var_20_7 = string.split(var_20_4.bonus, "|")
+
+	for iter_20_0 = 1, #var_20_7 do
+		local var_20_8 = arg_20_0._extraRewardItems[iter_20_0]
+
+		if not var_20_8 then
+			var_20_8 = {
+				parentGo = gohelper.cloneInPlace(arg_20_0._gorewarditem)
 			}
-			slot14.itemGo = gohelper.findChild(slot14.parentGo, "rewarditem")
-			slot14.canvasGroup = slot14.itemGo:GetComponent(typeof(UnityEngine.CanvasGroup))
-			slot14.itemIcon = IconMgr.instance:getCommonItemIcon(slot14.itemGo)
+			var_20_8.itemGo = gohelper.findChild(var_20_8.parentGo, "rewarditem")
+			var_20_8.canvasGroup = var_20_8.itemGo:GetComponent(typeof(UnityEngine.CanvasGroup))
+			var_20_8.itemIcon = IconMgr.instance:getCommonItemIcon(var_20_8.itemGo)
 
-			table.insert(slot0._extraRewardItems, slot14)
+			table.insert(arg_20_0._extraRewardItems, var_20_8)
 		end
 
-		gohelper.setActive(slot14.parentGo, true)
+		gohelper.setActive(var_20_8.parentGo, true)
 
-		slot15 = string.splitToNumber(slot9[slot13], "#")
+		local var_20_9 = string.splitToNumber(var_20_7[iter_20_0], "#")
 
-		slot14.itemIcon:setMOValue(slot15[1], slot15[2], slot15[3], nil, true)
-		slot14.itemIcon:isShowCount(slot15[1] ~= MaterialEnum.MaterialType.Hero)
-		slot14.itemIcon:setCountFontSize(45)
-		slot14.itemIcon:showStackableNum2()
-		slot14.itemIcon:hideEquipLvAndCount()
+		var_20_8.itemIcon:setMOValue(var_20_9[1], var_20_9[2], var_20_9[3], nil, true)
+		var_20_8.itemIcon:isShowCount(var_20_9[1] ~= MaterialEnum.MaterialType.Hero)
+		var_20_8.itemIcon:setCountFontSize(45)
+		var_20_8.itemIcon:showStackableNum2()
+		var_20_8.itemIcon:hideEquipLvAndCount()
 
-		slot14.canvasGroup.alpha = slot8 and 0.7 or 1
+		var_20_8.canvasGroup.alpha = var_20_6 and 0.7 or 1
 
-		slot14.itemIcon:setItemColor(slot8 and "#3F3F3F" or nil)
+		var_20_8.itemIcon:setItemColor(var_20_6 and "#3F3F3F" or nil)
 	end
 
-	for slot13 = #slot9 + 1, #slot0._extraRewardItems do
-		gohelper.setActive(slot0._extraRewardItems[slot13].parentGo, false)
+	for iter_20_1 = #var_20_7 + 1, #arg_20_0._extraRewardItems do
+		local var_20_10 = arg_20_0._extraRewardItems[iter_20_1]
+
+		gohelper.setActive(var_20_10.parentGo, false)
 	end
 end
 
-function slot0._refreshActItem(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._actItems) do
-		slot6:destroy()
+function var_0_0._refreshActItem(arg_21_0, arg_21_1)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._actItems) do
+		iter_21_1:destroy()
 	end
 
-	slot0._actItems = {}
-	slot3 = nil
+	arg_21_0._actItems = {}
 
-	for slot7 = 1, TaskModel.instance:getMaxStage(TaskEnum.TaskType.Novice) do
-		slot3 = TaskNoviceActItem.New()
+	local var_21_0 = TaskModel.instance:getMaxStage(TaskEnum.TaskType.Novice)
+	local var_21_1
 
-		slot3:init(gohelper.cloneInPlace(slot0._goactitem), slot7)
-		table.insert(slot0._actItems, slot3)
+	for iter_21_2 = 1, var_21_0 do
+		local var_21_2 = gohelper.cloneInPlace(arg_21_0._goactitem)
+		local var_21_3 = TaskNoviceActItem.New()
+
+		var_21_3:init(var_21_2, iter_21_2)
+		table.insert(arg_21_0._actItems, var_21_3)
 	end
 
-	if slot0._actTweenId then
-		ZProj.TweenHelper.KillById(slot0._actTweenId)
+	if arg_21_0._actTweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._actTweenId)
 	end
 
-	TaskDispatcher.runDelay(slot0._showActItems, slot0, 0.1)
+	TaskDispatcher.runDelay(arg_21_0._showActItems, arg_21_0, 0.1)
 end
 
-function slot0._showActItems(slot0)
-	slot3 = 0
+function var_0_0._showActItems(arg_22_0)
+	local var_22_0 = TaskModel.instance:getNoviceTaskCurSelectStage()
+	local var_22_1 = TaskModel.instance:getMaxStage(TaskEnum.TaskType.Novice)
+	local var_22_2 = 0
 
-	if TaskModel.instance:getNoviceTaskCurSelectStage() >= TaskModel.instance:getMaxStage(TaskEnum.TaskType.Novice) - 1 then
-		slot5 = slot0._goactlist:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-		slot6 = slot5.spacing
-		slot3 = transformhelper.getLocalPos(slot0._actItems[slot2 - 3].go.transform) - transformhelper.getLocalPos(slot0._actItems[1].go.transform) + 4 * recthelper.getWidth(slot0._actItems[1].go.transform) + 3 * slot5.spacing + slot5.padding.left - recthelper.getWidth(gohelper.findChild(slot0.viewGO, "#go_left/act/actlistscroll").transform)
-	elseif slot1 > 1 then
-		slot3 = transformhelper.getLocalPos(slot0._actItems[slot1 - 1].go.transform) - transformhelper.getLocalPos(slot0._actItems[1].go.transform)
+	if var_22_0 >= var_22_1 - 1 then
+		local var_22_3 = recthelper.getWidth(arg_22_0._actItems[1].go.transform)
+		local var_22_4 = arg_22_0._goactlist:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+		local var_22_5 = var_22_4.spacing
+		local var_22_6 = gohelper.findChild(arg_22_0.viewGO, "#go_left/act/actlistscroll")
+		local var_22_7 = recthelper.getWidth(var_22_6.transform)
+
+		var_22_2 = transformhelper.getLocalPos(arg_22_0._actItems[var_22_1 - 3].go.transform) - transformhelper.getLocalPos(arg_22_0._actItems[1].go.transform) + (4 * var_22_3 + 3 * var_22_4.spacing + var_22_4.padding.left - var_22_7)
+	elseif var_22_0 > 1 then
+		var_22_2 = transformhelper.getLocalPos(arg_22_0._actItems[var_22_0 - 1].go.transform) - transformhelper.getLocalPos(arg_22_0._actItems[1].go.transform)
 	end
 
-	if slot0._hasEnterNovice then
-		slot0._actTweenId = ZProj.TweenHelper.DOLocalMoveX(slot0._goactlist.transform, slot0._initActPos - slot3, 0.5)
+	if arg_22_0._hasEnterNovice then
+		arg_22_0._actTweenId = ZProj.TweenHelper.DOLocalMoveX(arg_22_0._goactlist.transform, arg_22_0._initActPos - var_22_2, 0.5)
 	else
-		slot0._hasEnterNovice = true
+		arg_22_0._hasEnterNovice = true
 
-		transformhelper.setLocalPosXY(slot0._goactlist.transform, slot0._initActPos - slot3, 0)
+		transformhelper.setLocalPosXY(arg_22_0._goactlist.transform, arg_22_0._initActPos - var_22_2, 0)
 	end
 end
 
-function slot0._refreshProgressItem(slot0, slot1)
-	if slot0._noviceFlags then
-		for slot5, slot6 in pairs(slot0._noviceFlags) do
-			gohelper.destroy(slot6.go)
+function var_0_0._refreshProgressItem(arg_23_0, arg_23_1)
+	if arg_23_0._noviceFlags then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0._noviceFlags) do
+			gohelper.destroy(iter_23_1.go)
 		end
 	end
 
-	slot0._noviceFlags = slot0:getUserDataTb_()
-	slot2 = TaskModel.instance:getNoviceTaskCurStage()
-	slot3 = TaskModel.instance:getNoviceTaskCurSelectStage()
-	slot7 = slot3 < TaskModel.instance:getNoviceTaskMaxUnlockStage() and TaskModel.instance:getStageMaxActDot(slot3) or TaskModel.instance:getStageActDotGetNum(slot3)
+	arg_23_0._noviceFlags = arg_23_0:getUserDataTb_()
 
-	if slot4 < slot3 then
-		slot6 = TaskModel.instance:getStageActDotGetNum(slot3)
-		slot5 = TaskModel.instance:getStageMaxActDot(slot3)
-		slot7 = 0
+	local var_23_0 = TaskModel.instance:getNoviceTaskCurStage()
+	local var_23_1 = TaskModel.instance:getNoviceTaskCurSelectStage()
+	local var_23_2 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
+	local var_23_3 = TaskModel.instance:getStageMaxActDot(var_23_1)
+	local var_23_4 = TaskModel.instance:getStageActDotGetNum(var_23_1)
+	local var_23_5 = var_23_1 < var_23_2 and var_23_3 or var_23_4
+
+	if var_23_2 < var_23_1 then
+		var_23_4 = TaskModel.instance:getStageActDotGetNum(var_23_1)
+		var_23_3 = TaskModel.instance:getStageMaxActDot(var_23_1)
+		var_23_5 = 0
 	end
 
-	for slot11 = 1, slot5 do
-		slot12 = gohelper.cloneInPlace(slot0._goflag)
+	for iter_23_2 = 1, var_23_3 do
+		local var_23_6 = gohelper.cloneInPlace(arg_23_0._goflag)
 
-		gohelper.setActive(slot12, not slot1)
+		gohelper.setActive(var_23_6, not arg_23_1)
 
-		slot13 = {
-			go = slot12
+		local var_23_7 = {
+			go = var_23_6
 		}
-		slot13.idle = gohelper.findChild(slot13.go, "idle")
 
-		gohelper.setActive(slot13.idle, true)
+		var_23_7.idle = gohelper.findChild(var_23_7.go, "idle")
 
-		slot13.img = gohelper.findChildImage(slot13.go, "idle")
-		slot14 = slot3 < slot4 and true or slot11 <= slot6
+		gohelper.setActive(var_23_7.idle, true)
 
-		if slot4 < slot3 then
-			slot14 = false
+		var_23_7.img = gohelper.findChildImage(var_23_7.go, "idle")
+
+		local var_23_8 = var_23_1 < var_23_2 and true or iter_23_2 <= var_23_4
+
+		if var_23_2 < var_23_1 then
+			var_23_8 = false
 		end
 
-		UISpriteSetMgr.instance:setCommonSprite(slot13.img, slot14 and "logo_huoyuedu" or "logo_huoyuedu_dis")
+		local var_23_9 = var_23_8 and "logo_huoyuedu" or "logo_huoyuedu_dis"
 
-		slot13.play = gohelper.findChild(slot13.go, "play")
+		UISpriteSetMgr.instance:setCommonSprite(var_23_7.img, var_23_9)
 
-		gohelper.setActive(slot13.play, false)
+		var_23_7.play = gohelper.findChild(var_23_7.go, "play")
 
-		slot13.ani = slot13.go:GetComponent(typeof(UnityEngine.Animator))
+		gohelper.setActive(var_23_7.play, false)
 
-		slot13.ani:Play(UIAnimationName.Idle)
-		table.insert(slot0._noviceFlags, slot13)
+		var_23_7.ani = var_23_7.go:GetComponent(typeof(UnityEngine.Animator))
+
+		var_23_7.ani:Play(UIAnimationName.Idle)
+		table.insert(arg_23_0._noviceFlags, var_23_7)
 	end
 
-	slot0._txtcurprogress.text = string.format("%s/%s", slot7, slot5)
+	arg_23_0._txtcurprogress.text = string.format("%s/%s", var_23_5, var_23_3)
 
-	if slot1 then
-		slot0._flagopenCount = 0
+	if arg_23_1 then
+		arg_23_0._flagopenCount = 0
 
-		TaskDispatcher.cancelTask(slot0._flagOpenUpdate, slot0)
-		TaskDispatcher.runRepeat(slot0._flagOpenUpdate, slot0, 0.03, slot5)
+		TaskDispatcher.cancelTask(arg_23_0._flagOpenUpdate, arg_23_0)
+		TaskDispatcher.runRepeat(arg_23_0._flagOpenUpdate, arg_23_0, 0.03, var_23_3)
 	end
 end
 
-function slot0._flagOpenUpdate(slot0)
-	slot0._flagopenCount = slot0._flagopenCount + 1
+function var_0_0._flagOpenUpdate(arg_24_0)
+	arg_24_0._flagopenCount = arg_24_0._flagopenCount + 1
 
-	gohelper.setActive(slot0._noviceFlags[slot0._flagopenCount].go, true)
-	slot0._noviceFlags[slot0._flagopenCount].ani:Play(UIAnimationName.Open)
+	gohelper.setActive(arg_24_0._noviceFlags[arg_24_0._flagopenCount].go, true)
+	arg_24_0._noviceFlags[arg_24_0._flagopenCount].ani:Play(UIAnimationName.Open)
 end
 
-function slot0._setNoviceTaskItem(slot0, slot1)
-	if slot0._taskItems then
-		for slot5, slot6 in pairs(slot0._taskItems) do
-			if slot6.go then
-				slot6:destroy()
+function var_0_0._setNoviceTaskItem(arg_25_0, arg_25_1)
+	if arg_25_0._taskItems then
+		for iter_25_0, iter_25_1 in pairs(arg_25_0._taskItems) do
+			if iter_25_1.go then
+				iter_25_1:destroy()
 			end
 		end
 
-		slot0._taskItems = {}
+		arg_25_0._taskItems = {}
 	end
 
-	gohelper.setActive(slot0._gogrowitemcontent, false)
+	gohelper.setActive(arg_25_0._gogrowitemcontent, false)
 
-	if slot1 then
+	local var_25_0 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice)
+
+	if arg_25_1 then
 		UIBlockMgr.instance:startBlock("taskani")
 
-		slot0._repeatCount = 0
+		arg_25_0._repeatCount = 0
 
-		TaskDispatcher.runRepeat(slot0.showByLine, slot0, 0.04, #TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice))
+		TaskDispatcher.runRepeat(arg_25_0.showByLine, arg_25_0, 0.04, #var_25_0)
 	else
-		for slot6 = 1, #slot2 do
-			table.insert(slot0._taskItems, slot0:getItem(slot2[slot6], slot6, false))
+		for iter_25_2 = 1, #var_25_0 do
+			local var_25_1 = arg_25_0:getItem(var_25_0[iter_25_2], iter_25_2, false)
+
+			table.insert(arg_25_0._taskItems, var_25_1)
 		end
 	end
 end
 
-function slot0.showByLine(slot0)
-	slot0._repeatCount = slot0._repeatCount + 1
-	slot1 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice)
+function var_0_0.showByLine(arg_26_0)
+	arg_26_0._repeatCount = arg_26_0._repeatCount + 1
 
-	table.insert(slot0._taskItems, slot0:getItem(slot1[slot0._repeatCount], slot0._repeatCount, true))
+	local var_26_0 = TaskListModel.instance:getTaskList(TaskEnum.TaskType.Novice)
+	local var_26_1 = arg_26_0:getItem(var_26_0[arg_26_0._repeatCount], arg_26_0._repeatCount, true)
 
-	if slot0._repeatCount >= #slot1 then
+	table.insert(arg_26_0._taskItems, var_26_1)
+
+	if arg_26_0._repeatCount >= #var_26_0 then
 		UIBlockMgr.instance:endBlock("taskani")
-		TaskDispatcher.cancelTask(slot0.showByLine, slot0)
-		TaskDispatcher.runDelay(slot0._onStartTaskFinished, slot0, 0.5)
+		TaskDispatcher.cancelTask(arg_26_0.showByLine, arg_26_0)
+		TaskDispatcher.runDelay(arg_26_0._onStartTaskFinished, arg_26_0, 0.5)
 	end
 end
 
-function slot0._onStartTaskFinished(slot0)
-	TaskModel.instance:setRefreshCount(TaskModel.instance:getRefreshCount() + 1)
+function var_0_0._onStartTaskFinished(arg_27_0)
+	local var_27_0 = TaskModel.instance:getRefreshCount()
+
+	TaskModel.instance:setRefreshCount(var_27_0 + 1)
 	TaskController.instance:dispatchEvent(TaskEvent.OnShowTaskFinished, TaskEnum.TaskType.Novice)
 end
 
-function slot0.getItem(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0.getItem(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	local var_28_0 = {}
 
-	if slot1.type == TaskEnum.TaskType.Novice and slot1.config.chapter ~= 0 then
-		slot6 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[4], slot0._gotaskitemcontent, "item" .. slot2)
+	if arg_28_1.type == TaskEnum.TaskType.Novice and arg_28_1.config.chapter ~= 0 then
+		local var_28_1 = arg_28_0.viewContainer:getSetting().otherRes[4]
+		local var_28_2 = arg_28_0:getResInst(var_28_1, arg_28_0._gotaskitemcontent, "item" .. arg_28_2)
 
-		gohelper.setSiblingBefore(slot6, slot0._gogrowitemcontent)
-		TaskListNoviceSpItem.New():init(slot6, slot2, slot1, slot3, slot0._goright)
-	elseif slot1.config.minTypeId == TaskEnum.TaskMinType.GrowBack then
-		gohelper.setActive(slot0._gogrowitemcontent, true)
-		gohelper.setActive(slot0._gogrowtip, true)
-		TaskListNoviceGrowItem.New():init(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[3], slot0._gogrowitemcontent, "item" .. slot2), slot2, slot1, slot3, slot0._goright)
+		var_28_0 = TaskListNoviceSpItem.New()
+
+		gohelper.setSiblingBefore(var_28_2, arg_28_0._gogrowitemcontent)
+		var_28_0:init(var_28_2, arg_28_2, arg_28_1, arg_28_3, arg_28_0._goright)
+	elseif arg_28_1.config.minTypeId == TaskEnum.TaskMinType.GrowBack then
+		gohelper.setActive(arg_28_0._gogrowitemcontent, true)
+		gohelper.setActive(arg_28_0._gogrowtip, true)
+
+		local var_28_3 = arg_28_0.viewContainer:getSetting().otherRes[3]
+		local var_28_4 = arg_28_0:getResInst(var_28_3, arg_28_0._gogrowitemcontent, "item" .. arg_28_2)
+
+		var_28_0 = TaskListNoviceGrowItem.New()
+
+		var_28_0:init(var_28_4, arg_28_2, arg_28_1, arg_28_3, arg_28_0._goright)
 	else
-		TaskListNoviceNormalItem.New():init(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._gotaskitemcontent, "item" .. slot2), slot2, slot1, slot3, slot0._goright)
+		local var_28_5 = arg_28_0.viewContainer:getSetting().otherRes[2]
+		local var_28_6 = arg_28_0:getResInst(var_28_5, arg_28_0._gotaskitemcontent, "item" .. arg_28_2)
+
+		var_28_0 = TaskListNoviceNormalItem.New()
+
+		var_28_0:init(var_28_6, arg_28_2, arg_28_1, arg_28_3, arg_28_0._goright)
 	end
 
-	return slot4
+	return var_28_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_29_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_30_0)
 	UIBlockMgr.instance:endBlock("taskstageani")
 	TaskModel.instance:setNoviceTaskCurStage(0)
 
-	if slot0._extraRewardItems then
-		for slot4, slot5 in pairs(slot0._extraRewardItems) do
-			gohelper.destroy(slot5.itemIcon.go)
-			gohelper.destroy(slot5.parentGo)
-			slot5.itemIcon:onDestroy()
+	if arg_30_0._extraRewardItems then
+		for iter_30_0, iter_30_1 in pairs(arg_30_0._extraRewardItems) do
+			gohelper.destroy(iter_30_1.itemIcon.go)
+			gohelper.destroy(iter_30_1.parentGo)
+			iter_30_1.itemIcon:onDestroy()
 		end
 
-		slot0._extraRewardItems = nil
+		arg_30_0._extraRewardItems = nil
 	end
 
-	slot0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0._onUpdateTaskList, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.RefreshActState, slot0._onPlayActState, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._onGetBonus, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, slot0._onShowTaskFinished, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.OnRefreshActItem, slot0._onRefreshRewardActItem, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._flagOpenUpdate, slot0)
-	TaskDispatcher.cancelTask(slot0._flagPlayUpdate, slot0)
-	TaskDispatcher.cancelTask(slot0._onCheckRefreshNovice, slot0)
-	TaskDispatcher.cancelTask(slot0._showStageReward, slot0)
-	TaskDispatcher.cancelTask(slot0._showActItems, slot0)
-	TaskDispatcher.cancelTask(slot0._setNoviceTaskItem, slot0)
-	TaskDispatcher.cancelTask(slot0._onWaitShowGetStageReward, slot0)
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simageren:UnLoadImage()
+	arg_30_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_30_0._onUpdateTaskList, arg_30_0)
+	arg_30_0:removeEventCb(TaskController.instance, TaskEvent.RefreshActState, arg_30_0._onPlayActState, arg_30_0)
+	arg_30_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_30_0._onGetBonus, arg_30_0)
+	arg_30_0:removeEventCb(TaskController.instance, TaskEvent.OnShowTaskFinished, arg_30_0._onShowTaskFinished, arg_30_0)
+	arg_30_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_30_0._onFinishTask, arg_30_0)
+	arg_30_0:removeEventCb(TaskController.instance, TaskEvent.OnRefreshActItem, arg_30_0._onRefreshRewardActItem, arg_30_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_30_0._onCloseViewFinish, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._flagOpenUpdate, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._flagPlayUpdate, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._onCheckRefreshNovice, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._showStageReward, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._showActItems, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._setNoviceTaskItem, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._onWaitShowGetStageReward, arg_30_0)
+	arg_30_0._simageleftbg:UnLoadImage()
+	arg_30_0._simageren:UnLoadImage()
 
-	if slot0._actTweenId then
-		ZProj.TweenHelper.KillById(slot0._actTweenId)
+	if arg_30_0._actTweenId then
+		ZProj.TweenHelper.KillById(arg_30_0._actTweenId)
 
-		slot0._actTweenId = nil
+		arg_30_0._actTweenId = nil
 	end
 
-	if slot0._taskItems then
-		for slot4, slot5 in ipairs(slot0._taskItems) do
-			if slot5.go then
-				slot5:destroy()
+	if arg_30_0._taskItems then
+		for iter_30_2, iter_30_3 in ipairs(arg_30_0._taskItems) do
+			if iter_30_3.go then
+				iter_30_3:destroy()
 			end
 		end
 
-		slot0._taskItems = nil
+		arg_30_0._taskItems = nil
 	end
 
-	if slot0._actItems then
-		for slot4, slot5 in pairs(slot0._actItems) do
-			slot5:destroy()
+	if arg_30_0._actItems then
+		for iter_30_4, iter_30_5 in pairs(arg_30_0._actItems) do
+			iter_30_5:destroy()
 		end
 
-		slot0._actItems = nil
+		arg_30_0._actItems = nil
 	end
 
-	if slot0._pointItems then
-		for slot4, slot5 in pairs(slot0._pointItems) do
-			slot5:destroy()
+	if arg_30_0._pointItems then
+		for iter_30_6, iter_30_7 in pairs(arg_30_0._pointItems) do
+			iter_30_7:destroy()
 		end
 
-		slot0._pointItems = nil
+		arg_30_0._pointItems = nil
 	end
 end
 
-return slot0
+return var_0_0

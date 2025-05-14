@@ -1,13 +1,14 @@
-module("modules.logic.critter.model.CritterIncubateMO", package.seeall)
+﻿module("modules.logic.critter.model.CritterIncubateMO", package.seeall)
 
-slot0 = pureTable("CritterIncubateMO")
-slot1 = {}
+local var_0_0 = pureTable("CritterIncubateMO")
+local var_0_1 = {}
 
-function slot0.init(slot0, slot1)
-	slot1 = slot1 or uv0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_1 = arg_1_1 or var_0_1
 end
 
-function slot0.getTempChildMOList(slot0)
+function var_0_0.getTempChildMOList(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

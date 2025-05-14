@@ -1,87 +1,96 @@
-module("modules.logic.versionactivity.view.VersionActivityMainView", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityMainView", package.seeall)
 
-slot0 = class("VersionActivityMainView", BaseView)
+local var_0_0 = class("VersionActivityMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnenter = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_enter")
-	slot0._gostamp = gohelper.findChild(slot0.viewGO, "leftcontent/#go_stamp")
-	slot0._txtstampNum = gohelper.findChildText(slot0.viewGO, "leftcontent/#go_stamp/#txt_stampNum")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "leftcontent/#go_stamp/#go_reddot")
-	slot0._btnstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftcontent/#btn_store")
-	slot0._txtendtime = gohelper.findChildText(slot0.viewGO, "leftcontent/#txt_endtime")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_enter")
+	arg_1_0._gostamp = gohelper.findChild(arg_1_0.viewGO, "leftcontent/#go_stamp")
+	arg_1_0._txtstampNum = gohelper.findChildText(arg_1_0.viewGO, "leftcontent/#go_stamp/#txt_stampNum")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "leftcontent/#go_stamp/#go_reddot")
+	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftcontent/#btn_store")
+	arg_1_0._txtendtime = gohelper.findChildText(arg_1_0.viewGO, "leftcontent/#txt_endtime")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnenter:AddClickListener(slot0._btnenterOnClick, slot0)
-	slot0._btnstore:AddClickListener(slot0._btnstoreOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnenter:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
+	arg_2_0._btnstore:AddClickListener(arg_2_0._btnstoreOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnenter:RemoveClickListener()
-	slot0._btnstore:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnenter:RemoveClickListener()
+	arg_3_0._btnstore:RemoveClickListener()
 end
 
-function slot0._btnenterOnClick(slot0)
+function var_0_0._btnenterOnClick(arg_4_0)
 	VersionActivityDungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function slot0._btnstoreOnClick(slot0)
+function var_0_0._btnstoreOnClick(arg_5_0)
 	VersionActivityController.instance:openLeiMiTeBeiStoreView()
 end
 
-function slot0.enterTaskView(slot0)
+function var_0_0.enterTaskView(arg_6_0)
 	VersionActivityController.instance:openLeiMiTeBeiTaskView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.taskClick = gohelper.getClick(slot0._gostamp)
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0.taskClick = gohelper.getClick(arg_7_0._gostamp)
 
-	slot0.taskClick:AddClickListener(slot0.enterTaskView, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshTaskUI, slot0)
+	arg_7_0.taskClick:AddClickListener(arg_7_0.enterTaskView, arg_7_0)
+	arg_7_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_7_0.refreshTaskUI, arg_7_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshTaskUI()
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.LeiMiTeBeiTask)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:refreshTaskUI()
+	RedDotController.instance:addRedDot(arg_9_0._goreddot, RedDotEnum.DotNode.LeiMiTeBeiTask)
 
-	if ActivityModel.instance:getActivityInfo()[VersionActivityEnum.ActivityId.Act113] then
-		slot0._txtendtime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity_baozhi_time"), {
-			slot1:getEndTimeStr(),
-			slot1:getRemainTimeStr()
-		})
+	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivityEnum.ActivityId.Act113]
+
+	if var_9_0 then
+		local var_9_1 = {
+			var_9_0:getEndTimeStr(),
+			var_9_0:getRemainTimeStr()
+		}
+
+		arg_9_0._txtendtime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity_baozhi_time"), var_9_1)
 	end
 end
 
-function slot0.refreshTaskUI(slot0)
-	slot0._txtstampNum.text = string.format("%s/%s", slot0:getFinishTaskCount(), VersionActivityConfig.instance:getAct113TaskCount())
+function var_0_0.refreshTaskUI(arg_10_0)
+	arg_10_0._txtstampNum.text = string.format("%s/%s", arg_10_0:getFinishTaskCount(), VersionActivityConfig.instance:getAct113TaskCount())
 end
 
-function slot0.getFinishTaskCount(slot0)
-	slot0.finishTaskCount = 0
-	slot1 = nil
+function var_0_0.getFinishTaskCount(arg_11_0)
+	arg_11_0.finishTaskCount = 0
 
-	for slot5, slot6 in ipairs(lua_activity113_task.configList) do
-		if TaskModel.instance:getTaskById(slot6.id) and slot6.maxFinishCount <= slot1.finishCount then
-			slot0.finishTaskCount = slot0.finishTaskCount + 1
+	local var_11_0
+
+	for iter_11_0, iter_11_1 in ipairs(lua_activity113_task.configList) do
+		local var_11_1 = TaskModel.instance:getTaskById(iter_11_1.id)
+
+		if var_11_1 and var_11_1.finishCount >= iter_11_1.maxFinishCount then
+			arg_11_0.finishTaskCount = arg_11_0.finishTaskCount + 1
 		end
 	end
 
-	return slot0.finishTaskCount
+	return arg_11_0.finishTaskCount
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.taskClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0.taskClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

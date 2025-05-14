@@ -1,106 +1,111 @@
-module("modules.logic.scene.fight.comp.FightSceneDeadEntityMgrComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneDeadEntityMgrComp", package.seeall)
 
-slot0 = class("FightSceneDeadEntityMgrComp", BaseSceneComp)
+local var_0_0 = class("FightSceneDeadEntityMgrComp", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._entityDic = {}
-	slot0._entityVisible = {}
-	slot0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._entityDic = {}
+	arg_1_0._entityVisible = {}
+	arg_1_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	FightController.instance:registerCallback(FightEvent.EntrustEntity, slot0._onEntrustEntity, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:registerCallback(FightEvent.OnCameraFocusChanged, slot0._onCameraFocusChanged, slot0)
-	FightController.instance:registerCallback(FightEvent.ReleaseAllEntrustedEntity, slot0._releaseAllEntity, slot0)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	FightController.instance:registerCallback(FightEvent.EntrustEntity, arg_2_0._onEntrustEntity, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStageBefore, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ReleaseAllEntrustedEntity, arg_2_0._releaseAllEntity, arg_2_0)
 end
 
-function slot0._onLevelLoaded(slot0)
-	slot0._fightScene = GameSceneMgr.instance:getCurScene()
-	slot0._sceneObj = slot0._fightScene.level:getSceneGo()
+function var_0_0._onLevelLoaded(arg_3_0)
+	arg_3_0._fightScene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._sceneObj = arg_3_0._fightScene.level:getSceneGo()
 end
 
-function slot0._onEntrustEntity(slot0, slot1)
-	if slot0._entityDic[slot1.id] then
-		slot0:_releaseEntity(slot0._entityDic[slot2])
+function var_0_0._onEntrustEntity(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.id
+
+	if arg_4_0._entityDic[var_4_0] then
+		arg_4_0:_releaseEntity(arg_4_0._entityDic[var_4_0])
 	end
 
-	slot0._entityDic[slot2] = slot1
-	slot0._entityVisible[slot2] = 0
+	arg_4_0._entityDic[var_4_0] = arg_4_1
+	arg_4_0._entityVisible[var_4_0] = 0
 
-	slot1.spine:play(lua_fight_dead_entity_mgr.configDict[slot1:getMO().skin].loopActName, true, true)
+	local var_4_1 = arg_4_1:getMO()
+	local var_4_2 = lua_fight_dead_entity_mgr.configDict[var_4_1.skin]
 
-	ZProj.TransformListener.Get(slot1.go).enabled = false
+	arg_4_1.spine:play(var_4_2.loopActName, true, true)
+
+	ZProj.TransformListener.Get(arg_4_1.go).enabled = false
 end
 
-slot1 = {
+local var_0_1 = {
 	["670403_die"] = true
 }
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2, slot3, slot4)
-	if uv0[slot4] then
+function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	if var_0_1[arg_5_4] then
 		return
 	end
 
-	for slot8, slot9 in pairs(slot0._entityDic) do
-		slot0._entityVisible[slot9.id] = (slot0._entityVisible[slot9.id] or 0) + 1
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._entityDic) do
+		arg_5_0._entityVisible[iter_5_1.id] = (arg_5_0._entityVisible[iter_5_1.id] or 0) + 1
 
-		slot9:setVisibleByPos(false)
+		iter_5_1:setVisibleByPos(false)
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0)
-	for slot4, slot5 in pairs(slot0._entityDic) do
-		if slot0._entityVisible[slot5.id] then
-			slot0._entityVisible[slot5.id] = slot0._entityVisible[slot5.id] - 1
+function var_0_0._onSkillPlayFinish(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._entityDic) do
+		if arg_6_0._entityVisible[iter_6_1.id] then
+			arg_6_0._entityVisible[iter_6_1.id] = arg_6_0._entityVisible[iter_6_1.id] - 1
 
-			if slot0._entityVisible[slot5.id] < 0 then
-				slot0._entityVisible[slot5.id] = 0
+			if arg_6_0._entityVisible[iter_6_1.id] < 0 then
+				arg_6_0._entityVisible[iter_6_1.id] = 0
 			end
 		end
 
-		if slot0._entityVisible[slot5.id] == 0 then
-			slot5:setVisibleByPos(true)
-			slot0._entityMgr:adjustSpineLookRotation(slot5)
+		if arg_6_0._entityVisible[iter_6_1.id] == 0 then
+			iter_6_1:setVisibleByPos(true)
+			arg_6_0._entityMgr:adjustSpineLookRotation(iter_6_1)
 		end
 	end
 end
 
-function slot0._onCameraFocusChanged(slot0, slot1)
-	if slot1 then
-		slot0:_onSkillPlayStart()
+function var_0_0._onCameraFocusChanged(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		arg_7_0:_onSkillPlayStart()
 	else
-		slot0:_onSkillPlayFinish()
+		arg_7_0:_onSkillPlayFinish()
 	end
 end
 
-function slot0._releaseEntity(slot0, slot1)
-	slot0._entityMgr:destroyUnit(slot1)
+function var_0_0._releaseEntity(arg_8_0, arg_8_1)
+	arg_8_0._entityMgr:destroyUnit(arg_8_1)
 
-	slot0._entityDic[slot1.id] = nil
-	slot0._entityVisible[slot1.id] = nil
+	arg_8_0._entityDic[arg_8_1.id] = nil
+	arg_8_0._entityVisible[arg_8_1.id] = nil
 end
 
-function slot0._releaseAllEntity(slot0)
-	for slot4, slot5 in pairs(slot0._entityDic) do
-		slot0:_releaseEntity(slot5)
+function var_0_0._releaseAllEntity(arg_9_0)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._entityDic) do
+		arg_9_0:_releaseEntity(iter_9_1)
 	end
 end
 
-function slot0._onRestartStageBefore(slot0)
-	slot0:_releaseAllEntity()
+function var_0_0._onRestartStageBefore(arg_10_0)
+	arg_10_0:_releaseAllEntity()
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	FightController.instance:unregisterCallback(FightEvent.EntrustEntity, slot0._onEntrustEntity, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCameraFocusChanged, slot0._onCameraFocusChanged, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ReleaseAllEntrustedEntity, slot0._releaseAllEntity, slot0)
-	slot0:_releaseAllEntity()
+function var_0_0.onSceneClose(arg_11_0, arg_11_1, arg_11_2)
+	FightController.instance:unregisterCallback(FightEvent.EntrustEntity, arg_11_0._onEntrustEntity, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_11_0._onRestartStageBefore, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_11_0._onSkillPlayStart, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_11_0._onSkillPlayFinish, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCameraFocusChanged, arg_11_0._onCameraFocusChanged, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.ReleaseAllEntrustedEntity, arg_11_0._releaseAllEntity, arg_11_0)
+	arg_11_0:_releaseAllEntity()
 end
 
-return slot0
+return var_0_0

@@ -1,124 +1,153 @@
-module("modules.logic.ressplit.work.ResSplitRoomWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitRoomWork", package.seeall)
 
-slot0 = class("ResSplitRoomWork", BaseWork)
+local var_0_0 = class("ResSplitRoomWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = "scenes/m_s07_xiaowu/prefab/building/"
-	slot4 = {}
-	slot5 = {}
-	slot6 = {}
-	slot7 = {}
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = "scenes/m_s07_xiaowu/prefab/building/"
+	local var_1_1 = ResSplitConfig.instance:getAppIncludeConfig()
+	local var_1_2 = {}
+	local var_1_3 = {}
+	local var_1_4 = {}
+	local var_1_5 = {}
 
-	for slot11, slot12 in pairs(ResSplitConfig.instance:getAppIncludeConfig()) do
-		for slot16, slot17 in pairs(slot12.roomTheme) do
-			slot7[slot17] = true
+	for iter_1_0, iter_1_1 in pairs(var_1_1) do
+		for iter_1_2, iter_1_3 in pairs(iter_1_1.roomTheme) do
+			var_1_5[iter_1_3] = true
 		end
 	end
 
-	for slot12, slot13 in pairs(RoomConfig.instance:getThemeConfigList()) do
-		if slot7[slot13.id] ~= true then
-			slot15 = string.splitToNumber(slot13.packages, "|")
+	local var_1_6 = RoomConfig.instance:getThemeConfigList()
 
-			for slot19, slot20 in pairs(string.splitToNumber(slot13.building, "|")) do
-				slot4[slot20] = true
+	for iter_1_4, iter_1_5 in pairs(var_1_6) do
+		if var_1_5[iter_1_5.id] ~= true then
+			local var_1_7 = string.splitToNumber(iter_1_5.building, "|")
+			local var_1_8 = string.splitToNumber(iter_1_5.packages, "|")
+
+			for iter_1_6, iter_1_7 in pairs(var_1_7) do
+				var_1_2[iter_1_7] = true
 			end
 
-			for slot19, slot20 in pairs(slot15) do
-				slot5[slot20] = true
-			end
-		end
-	end
-
-	slot9 = {}
-	slot10 = {}
-	slot11 = {}
-
-	for slot15, slot16 in pairs(lua_block_package_data.packageDict) do
-		for slot20, slot21 in pairs(slot16) do
-			if slot5[slot15] == nil then
-				slot9[slot21.defineId] = true
-			elseif slot9[slot21.defineId] == nil then
-				slot9[slot21.defineId] = false
+			for iter_1_8, iter_1_9 in pairs(var_1_8) do
+				var_1_3[iter_1_9] = true
 			end
 		end
 	end
 
-	for slot16, slot17 in pairs(slot9) do
-		if slot17 or tonumber(string.split(RoomConfig.instance:getBlockDefineConfig(slot16).prefabPath, "/")[1]) == nil then
-			-- Nothing
+	local var_1_9 = {}
+	local var_1_10 = {}
+	local var_1_11 = {}
+
+	for iter_1_10, iter_1_11 in pairs(lua_block_package_data.packageDict) do
+		for iter_1_12, iter_1_13 in pairs(iter_1_11) do
+			if var_1_3[iter_1_10] == nil then
+				var_1_9[iter_1_13.defineId] = true
+			elseif var_1_9[iter_1_13.defineId] == nil then
+				var_1_9[iter_1_13.defineId] = false
+			end
+		end
+	end
+
+	local var_1_12 = {}
+
+	for iter_1_14, iter_1_15 in pairs(var_1_9) do
+		local var_1_13 = RoomConfig.instance:getBlockDefineConfig(iter_1_14)
+		local var_1_14 = string.split(var_1_13.prefabPath, "/")[1]
+
+		if iter_1_15 or tonumber(var_1_14) == nil then
+			var_1_12[var_1_14] = true
 		else
-			slot12[slot19] = false
+			var_1_12[var_1_14] = false
 		end
 	end
 
-	for slot16, slot17 in pairs({
-		[slot19] = true
-	}) do
-		slot18 = "room/block/" .. slot16
+	for iter_1_16, iter_1_17 in pairs(var_1_12) do
+		local var_1_15 = "room/block/" .. iter_1_16
 
-		if slot17 then
-			slot10[slot18] = true
+		if iter_1_17 then
+			var_1_10[var_1_15] = true
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.InnerRoomAB, slot18, true)
+			ResSplitModel.instance:setExclude(ResSplitEnum.InnerRoomAB, var_1_15, true)
 		else
-			slot11[slot18] = true
+			var_1_11[var_1_15] = true
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot18, true)
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, var_1_15, true)
 		end
 	end
 
-	for slot16, slot17 in pairs(slot4) do
-		slot19 = ResUrl.getRoomRes(RoomConfig.instance:getBuildingConfig(slot16).path)
-		slot11[slot19] = true
+	for iter_1_18, iter_1_19 in pairs(var_1_2) do
+		local var_1_16 = RoomConfig.instance:getBuildingConfig(iter_1_18)
+		local var_1_17 = ResUrl.getRoomRes(var_1_16.path)
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+		var_1_11[var_1_17] = true
+
+		ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, var_1_17, true)
 	end
 
-	for slot17, slot18 in pairs(RoomConfig.instance:getBuildingConfigList()) do
-		if not tabletool.indexOf(slot4, slot18.id) then
-			slot19 = ResUrl.getRoomRes(slot18.path)
-			slot11[slot19] = true
+	local var_1_18 = RoomConfig.instance:getBuildingConfigList()
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+	for iter_1_20, iter_1_21 in pairs(var_1_18) do
+		if not tabletool.indexOf(var_1_2, iter_1_21.id) then
+			local var_1_19 = ResUrl.getRoomRes(iter_1_21.path)
+
+			var_1_11[var_1_19] = true
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, var_1_19, true)
 		end
 	end
 
-	for slot17, slot18 in pairs(RoomConfig.instance:getAllBuildingSkinList()) do
-		if not tabletool.indexOf(slot4, slot18.buildingId) then
-			slot19 = ResUrl.getRoomRes(slot18.path)
-			slot11[slot19] = true
+	local var_1_20 = RoomConfig.instance:getAllBuildingSkinList()
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+	for iter_1_22, iter_1_23 in pairs(var_1_20) do
+		if not tabletool.indexOf(var_1_2, iter_1_23.buildingId) then
+			local var_1_21 = ResUrl.getRoomRes(iter_1_23.path)
+
+			var_1_11[var_1_21] = true
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, var_1_21, true)
 		end
 	end
 
-	for slot17, slot18 in pairs(RoomConfig.instance:getVehicleConfigList()) do
-		slot19 = ResUrl.getRoomRes(slot18.path)
-		slot11[slot19] = true
+	local var_1_22 = RoomConfig.instance:getVehicleConfigList()
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+	for iter_1_24, iter_1_25 in pairs(var_1_22) do
+		local var_1_23 = ResUrl.getRoomRes(iter_1_25.path)
+
+		var_1_11[var_1_23] = true
+
+		ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, var_1_23, true)
 	end
 
-	for slot17, slot18 in pairs(lua_room_skin.configList) do
-		if slot18.itemId ~= 0 then
-			slot19 = slot18.model
-			slot11[slot19] = true
+	local var_1_24 = lua_room_skin.configList
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, slot19, true)
+	for iter_1_26, iter_1_27 in pairs(var_1_24) do
+		if iter_1_27.itemId ~= 0 then
+			local var_1_25 = iter_1_27.model
+
+			var_1_11[var_1_25] = true
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.OutRoomAB, var_1_25, true)
 		end
 	end
 
-	slot15 = SLFramework.FileHelper.GetUnityPath(SLFramework.FrameworkSettings.FullAssetRootDir)
+	local var_1_26 = SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.FullAssetRootDir .. "/scenes/m_s07_xiaowu/prefab", true)
+	local var_1_27 = SLFramework.FileHelper.GetUnityPath(SLFramework.FrameworkSettings.FullAssetRootDir)
 
-	for slot19 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.FullAssetRootDir .. "/scenes/m_s07_xiaowu/prefab", true).Length - 1 do
-		if not string.find(slot14[slot19], ".meta") and not string.find(slot20, "scenes/m_s07_xiaowu/prefab/block/") and slot11[string.sub(slot20, string.find(slot20, "scenes/m_s07_xiaowu/prefab"), string.len(slot20))] == nil then
-			slot10[slot20] = true
+	for iter_1_28 = 0, var_1_26.Length - 1 do
+		local var_1_28 = var_1_26[iter_1_28]
 
-			ResSplitModel.instance:setExclude(ResSplitEnum.InnerRoomAB, slot20, true)
+		if not string.find(var_1_28, ".meta") and not string.find(var_1_28, "scenes/m_s07_xiaowu/prefab/block/") then
+			local var_1_29 = string.find(var_1_28, "scenes/m_s07_xiaowu/prefab")
+			local var_1_30 = string.sub(var_1_28, var_1_29, string.len(var_1_28))
+
+			if var_1_11[var_1_30] == nil then
+				var_1_10[var_1_30] = true
+
+				ResSplitModel.instance:setExclude(ResSplitEnum.InnerRoomAB, var_1_30, true)
+			end
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

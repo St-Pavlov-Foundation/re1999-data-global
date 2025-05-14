@@ -1,3 +1,3 @@
-module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType12", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType12", package.seeall)
 
-return class("FightRestartAbandonType12", FightRestartAbandonType1)
+return (class("FightRestartAbandonType12", FightRestartAbandonType1))

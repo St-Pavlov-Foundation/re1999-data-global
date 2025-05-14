@@ -1,110 +1,114 @@
-module("modules.logic.currency.view.CurrencyExchangeView", package.seeall)
+﻿module("modules.logic.currency.view.CurrencyExchangeView", package.seeall)
 
-slot0 = class("CurrencyExchangeView", BaseView)
+local var_0_0 = class("CurrencyExchangeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagehuawen1 = gohelper.findChildSingleImage(slot0.viewGO, "tipbg/#simage_huawen1")
-	slot0._simagehuawen2 = gohelper.findChildSingleImage(slot0.viewGO, "tipbg/#simage_huawen2")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._btnyes = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_yes")
-	slot0._btnno = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_no")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagehuawen1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "tipbg/#simage_huawen1")
+	arg_1_0._simagehuawen2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "tipbg/#simage_huawen2")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
+	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnyes:AddClickListener(slot0._btnyesOnClick, slot0)
-	slot0._btnno:AddClickListener(slot0._btnnoOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
+	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnyes:RemoveClickListener()
-	slot0._btnno:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnyes:RemoveClickListener()
+	arg_3_0._btnno:RemoveClickListener()
 end
 
-slot1 = MsgBoxEnum.CloseType
-slot2 = MsgBoxEnum.BoxType
+local var_0_1 = MsgBoxEnum.CloseType
+local var_0_2 = MsgBoxEnum.BoxType
 
-function slot0._btnyesOnClick(slot0)
-	slot0:_closeInvokeCallback(uv0.Yes)
+function var_0_0._btnyesOnClick(arg_4_0)
+	arg_4_0:_closeInvokeCallback(var_0_1.Yes)
 end
 
-function slot0._btnnoOnClick(slot0)
-	slot0:_closeInvokeCallback(uv0.No)
+function var_0_0._btnnoOnClick(arg_5_0)
+	arg_5_0:_closeInvokeCallback(var_0_1.No)
 end
 
-function slot0._closeInvokeCallback(slot0, slot1)
-	slot2 = false
+function var_0_0._closeInvokeCallback(arg_6_0, arg_6_1)
+	local var_6_0 = false
 
-	if slot1 == uv0.Yes then
-		if slot0.viewParam.isExchangeStep then
-			slot2 = CurrencyController.instance:checkExchangeFreeDiamond(slot0.viewParam.needDiamond, slot0.viewParam.srcType, slot0.viewParam.callback, slot0.viewParam.callbackObj, slot0.viewParam.jumpCallBack, slot0.viewParam.jumpCallbackObj)
+	if arg_6_1 == var_0_1.Yes then
+		if arg_6_0.viewParam.isExchangeStep then
+			var_6_0 = CurrencyController.instance:checkExchangeFreeDiamond(arg_6_0.viewParam.needDiamond, arg_6_0.viewParam.srcType, arg_6_0.viewParam.callback, arg_6_0.viewParam.callbackObj, arg_6_0.viewParam.jumpCallBack, arg_6_0.viewParam.jumpCallbackObj)
 		else
-			if slot0.viewParam.jumpCallBack then
-				slot0.viewParam.jumpCallBack(slot0.viewParam.jumpCallbackObj)
+			if arg_6_0.viewParam.jumpCallBack then
+				arg_6_0.viewParam.jumpCallBack(arg_6_0.viewParam.jumpCallbackObj)
 			end
 
 			StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
 		end
 
-		if slot0.viewParam.yesCallback then
-			slot0.viewParam.yesCallback()
+		if arg_6_0.viewParam.yesCallback then
+			arg_6_0.viewParam.yesCallback()
 		end
-	elseif slot0.viewParam.noCallback then
-		slot0.viewParam.noCallback()
+	elseif arg_6_0.viewParam.noCallback then
+		arg_6_0.viewParam.noCallback()
 	end
 
-	if not slot2 then
-		slot0:closeThis()
+	if not var_6_0 then
+		arg_6_0:closeThis()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
-	slot0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
+	arg_7_0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
 
-	slot0._goNo = slot0._btnno.gameObject
-	slot0._goYes = slot0._btnyes.gameObject
+	arg_7_0._goNo = arg_7_0._btnno.gameObject
+	arg_7_0._goYes = arg_7_0._btnyes.gameObject
 
-	gohelper.addUIClickAudio(slot0._btnyes.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
-	gohelper.addUIClickAudio(slot0._btnno.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+	gohelper.addUIClickAudio(arg_7_0._btnyes.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+	gohelper.addUIClickAudio(arg_7_0._btnno.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:onOpen()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagehuawen1:UnLoadImage()
-	slot0._simagehuawen2:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simagehuawen1:UnLoadImage()
+	arg_9_0._simagehuawen2:UnLoadImage()
 end
 
-function slot0.onOpen(slot0)
-	if not string.nilorempty(slot0.viewParam.msg) and slot0.viewParam.extra and #slot0.viewParam.extra > 0 then
-		slot0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(slot0.viewParam.msg, slot0.viewParam.extra)
+function var_0_0.onOpen(arg_10_0)
+	if not string.nilorempty(arg_10_0.viewParam.msg) and arg_10_0.viewParam.extra and #arg_10_0.viewParam.extra > 0 then
+		local var_10_0 = arg_10_0.viewParam.msg
+		local var_10_1 = GameUtil.getSubPlaceholderLuaLang(var_10_0, arg_10_0.viewParam.extra)
+
+		arg_10_0._txtdesc.text = var_10_1
 	else
-		slot0._txtdesc.text = slot0.viewParam.msg or ""
+		arg_10_0._txtdesc.text = arg_10_0.viewParam.msg or ""
 	end
 
-	if slot0.viewParam.openCallback then
-		slot0.viewParam.openCallback(slot0)
+	if arg_10_0.viewParam.openCallback then
+		arg_10_0.viewParam.openCallback(arg_10_0)
 	end
 
-	gohelper.setActive(slot0._goNo, true)
-	recthelper.setAnchorX(slot0._goYes.transform, 248)
-	recthelper.setAnchorX(slot0._goNo.transform, -248)
-	NavigateMgr.instance:addEscape(ViewName.CurrencyExchangeView, slot0._onEscapeBtnClick, slot0)
+	gohelper.setActive(arg_10_0._goNo, true)
+	recthelper.setAnchorX(arg_10_0._goYes.transform, 248)
+	recthelper.setAnchorX(arg_10_0._goNo.transform, -248)
+	NavigateMgr.instance:addEscape(ViewName.CurrencyExchangeView, arg_10_0._onEscapeBtnClick, arg_10_0)
 end
 
-function slot0._onEscapeBtnClick(slot0)
-	if slot0._goNo.gameObject.activeInHierarchy then
-		slot0:_closeInvokeCallback(uv0.No)
+function var_0_0._onEscapeBtnClick(arg_11_0)
+	if arg_11_0._goNo.gameObject.activeInHierarchy then
+		arg_11_0:_closeInvokeCallback(var_0_1.No)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,40 +1,43 @@
-module("modules.logic.rouge.view.RougeCollectionListDropdownItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionListDropdownItem", package.seeall)
 
-slot0 = class("RougeCollectionListDropdownItem", ListScrollCellExtend)
+local var_0_0 = class("RougeCollectionListDropdownItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._simageruanpan = gohelper.findChildSingleImage(slot0.viewGO, "simage_ruanpan")
-	slot0._imageruanpan = gohelper.findChildImage(slot0.viewGO, "simage_ruanpan")
-	slot0._color = slot0._imageruanpan.color
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageruanpan = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_ruanpan")
+	arg_1_0._imageruanpan = gohelper.findChildImage(arg_1_0.viewGO, "simage_ruanpan")
+	arg_1_0._color = arg_1_0._imageruanpan.color
 end
 
-function slot0.addEvents(slot0)
-	slot0._click = gohelper.getClickWithDefaultAudio(slot0.viewGO)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click = gohelper.getClickWithDefaultAudio(arg_2_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_4_0)
+	return
 end
 
-function slot0._onClick(slot0)
-	RougeController.instance:dispatchEvent(RougeEvent.OnClickCollectionDropItem, slot0._mo)
+function var_0_0._onClick(arg_5_0)
+	RougeController.instance:dispatchEvent(RougeEvent.OnClickCollectionDropItem, arg_5_0._mo)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	slot0._simageruanpan:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot0._mo.id), slot0._onLoadImage, slot0)
-	slot0:_onLoadImage()
+	arg_6_0._simageruanpan:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_6_0._mo.id), arg_6_0._onLoadImage, arg_6_0)
+	arg_6_0:_onLoadImage()
 end
 
-function slot0._onLoadImage(slot0)
-	slot0._color.a = RougeFavoriteModel.instance:collectionIsUnlock(slot0._mo.id) and 1 or 0.8
-	slot0._imageruanpan.color = slot0._color
+function var_0_0._onLoadImage(arg_7_0)
+	local var_7_0 = RougeFavoriteModel.instance:collectionIsUnlock(arg_7_0._mo.id)
+
+	arg_7_0._color.a = var_7_0 and 1 or 0.8
+	arg_7_0._imageruanpan.color = arg_7_0._color
 end
 
-return slot0
+return var_0_0

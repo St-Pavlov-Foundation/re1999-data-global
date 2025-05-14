@@ -1,190 +1,205 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleView", package.seeall)
 
-slot0 = class("AergusiDialogRoleView", BaseView)
+local var_0_0 = class("AergusiDialogRoleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gochesscontainer = gohelper.findChild(slot0.viewGO, "#go_chesscontainer")
-	slot0._goleftchessitem = gohelper.findChild(slot0.viewGO, "#go_chesscontainer/#go_leftchessitem")
-	slot0._gorightchessitem = gohelper.findChild(slot0.viewGO, "#go_chesscontainer/#go_rightchessitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gochesscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer")
+	arg_1_0._goleftchessitem = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer/#go_leftchessitem")
+	arg_1_0._gorightchessitem = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer/#go_rightchessitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_addEvents()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:_addEvents()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initRoleItem()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:_initRoleItem()
 end
 
-function slot0._initRoleItem(slot0)
-	gohelper.setActive(slot0._goleftchessitem, false)
-	gohelper.setActive(slot0._gorightchessitem, false)
+function var_0_0._initRoleItem(arg_6_0)
+	gohelper.setActive(arg_6_0._goleftchessitem, false)
+	gohelper.setActive(arg_6_0._gorightchessitem, false)
 
-	slot0._episodeConfig = AergusiConfig.instance:getEpisodeConfig(nil, slot0.viewParam.episodeId)
+	arg_6_0._episodeConfig = AergusiConfig.instance:getEpisodeConfig(nil, arg_6_0.viewParam.episodeId)
 
-	if slot0._episodeConfig.playerPieces ~= "" then
-		slot0._rightRoleItem = AergusiDialogRoleRightItem.New()
+	if arg_6_0._episodeConfig.playerPieces ~= "" then
+		arg_6_0._rightRoleItem = AergusiDialogRoleRightItem.New()
 
-		slot0._rightRoleItem:init(slot0._gorightchessitem, slot0._episodeConfig.playerPieces)
+		arg_6_0._rightRoleItem:init(arg_6_0._gorightchessitem, arg_6_0._episodeConfig.playerPieces)
 	end
 
-	if slot0._episodeConfig.opponentPieces ~= "" then
-		slot0._leftRoleItem = AergusiDialogRoleLeftItem.New()
+	if arg_6_0._episodeConfig.opponentPieces ~= "" then
+		arg_6_0._leftRoleItem = AergusiDialogRoleLeftItem.New()
 
-		slot0._leftRoleItem:init(slot0._goleftchessitem, slot0._episodeConfig.opponentPieces)
+		arg_6_0._leftRoleItem:init(arg_6_0._goleftchessitem, arg_6_0._episodeConfig.opponentPieces)
 	end
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, slot0._onEnterNextStep, slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, slot0._onStartAutoBubbleDialog, slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, slot0._onDialogAskFail, slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, slot0._onDialogStartErrorBubble, slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, slot0._onDialogNotKeyAsk, slot0)
+function var_0_0._addEvents(arg_7_0)
+	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, arg_7_0._onEnterNextStep, arg_7_0)
+	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, arg_7_0._onStartAutoBubbleDialog, arg_7_0)
+	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, arg_7_0._onDialogAskFail, arg_7_0)
+	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, arg_7_0._onDialogStartErrorBubble, arg_7_0)
+	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, arg_7_0._onDialogNotKeyAsk, arg_7_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, slot0._onEnterNextStep, slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, slot0._onStartAutoBubbleDialog, slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, slot0._onDialogAskFail, slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, slot0._onDialogStartErrorBubble, slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, slot0._onDialogNotKeyAsk, slot0)
+function var_0_0._removeEvents(arg_8_0)
+	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, arg_8_0._onEnterNextStep, arg_8_0)
+	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, arg_8_0._onStartAutoBubbleDialog, arg_8_0)
+	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, arg_8_0._onDialogAskFail, arg_8_0)
+	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, arg_8_0._onDialogStartErrorBubble, arg_8_0)
+	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, arg_8_0._onDialogNotKeyAsk, arg_8_0)
 end
 
-function slot0._onEnterNextStep(slot0, slot1)
-	slot0._stepCo = slot1
+function var_0_0._onEnterNextStep(arg_9_0, arg_9_1)
+	arg_9_0._stepCo = arg_9_1
 
-	if slot0._rightRoleItem then
-		slot0._rightRoleItem:hideTalking()
+	if arg_9_0._rightRoleItem then
+		arg_9_0._rightRoleItem:hideTalking()
 	end
 
-	if slot0._leftRoleItem then
-		slot0._leftRoleItem:hideTalking()
+	if arg_9_0._leftRoleItem then
+		arg_9_0._leftRoleItem:hideTalking()
 	end
 
-	if slot0._stepCo.pos == AergusiEnum.DialogType.NormalLeft then
-		if slot0._leftRoleItem then
-			slot0._leftRoleItem:showTalking()
+	if arg_9_0._stepCo.pos == AergusiEnum.DialogType.NormalLeft then
+		if arg_9_0._leftRoleItem then
+			arg_9_0._leftRoleItem:showTalking()
 		end
-	elseif slot0._stepCo.pos == AergusiEnum.DialogType.NormalRight and slot0._rightRoleItem then
-		slot0._rightRoleItem:showTalking()
+	elseif arg_9_0._stepCo.pos == AergusiEnum.DialogType.NormalRight and arg_9_0._rightRoleItem then
+		arg_9_0._rightRoleItem:showTalking()
 	end
 end
 
-function slot0._onStartAutoBubbleDialog(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._playNextAutoBubble, slot0)
+function var_0_0._onStartAutoBubbleDialog(arg_10_0, arg_10_1)
+	TaskDispatcher.cancelTask(arg_10_0._playNextAutoBubble, arg_10_0)
 
-	slot0._autoCallback = slot1.callback
-	slot0._autoCallbackObj = slot1.callbackObj
-	slot0._stepCo = slot1.stepCo
+	arg_10_0._autoCallback = arg_10_1.callback
+	arg_10_0._autoCallbackObj = arg_10_1.callbackObj
+	arg_10_0._stepCo = arg_10_1.stepCo
 
-	if slot0._stepCo.condition ~= "" and string.splitToNumber(slot0._stepCo.condition, "#")[1] == AergusiEnum.OperationType.AutoBubble then
-		slot0:_playBubbleGroup(slot2[2])
+	if arg_10_0._stepCo.condition ~= "" then
+		local var_10_0 = string.splitToNumber(arg_10_0._stepCo.condition, "#")
 
-		return
+		if var_10_0[1] == AergusiEnum.OperationType.AutoBubble then
+			arg_10_0:_playBubbleGroup(var_10_0[2])
+
+			return
+		end
 	end
 
-	slot0:_autoFinishCallback()
+	arg_10_0:_autoFinishCallback()
 end
 
-function slot0._onDialogAskFail(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._playNextAutoBubble, slot0)
+function var_0_0._onDialogAskFail(arg_11_0, arg_11_1)
+	TaskDispatcher.cancelTask(arg_11_0._playNextAutoBubble, arg_11_0)
 
-	slot0._stepCo = slot1
+	arg_11_0._stepCo = arg_11_1
 
-	slot0:_playBubbleGroup(AergusiConfig.instance:getEvidenceConfig(slot0._stepCo.id).tips)
+	local var_11_0 = AergusiConfig.instance:getEvidenceConfig(arg_11_0._stepCo.id).tips
+
+	arg_11_0:_playBubbleGroup(var_11_0)
 end
 
-function slot0._onDialogStartErrorBubble(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._playNextAutoBubble, slot0)
+function var_0_0._onDialogStartErrorBubble(arg_12_0, arg_12_1)
+	TaskDispatcher.cancelTask(arg_12_0._playNextAutoBubble, arg_12_0)
 
-	slot0._autoCallback = slot1.callback
-	slot0._autoCallbackObj = slot1.callbackObj
+	arg_12_0._autoCallback = arg_12_1.callback
+	arg_12_0._autoCallbackObj = arg_12_1.callbackObj
 
-	slot0:_playBubbleGroup(slot1.bubbleId)
+	arg_12_0:_playBubbleGroup(arg_12_1.bubbleId)
 end
 
-function slot0._onDialogNotKeyAsk(slot0, slot1)
-	slot0:_playBubbleGroup(slot1)
+function var_0_0._onDialogNotKeyAsk(arg_13_0, arg_13_1)
+	arg_13_0:_playBubbleGroup(arg_13_1)
 end
 
-function slot0._playBubbleGroup(slot0, slot1)
+function var_0_0._playBubbleGroup(arg_14_0, arg_14_1)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	slot0._playIndex = 1
-	slot0._bubbleId = slot1
+	arg_14_0._playIndex = 1
+	arg_14_0._bubbleId = arg_14_1
 
-	slot0:_playNextAutoBubble()
+	arg_14_0:_playNextAutoBubble()
 end
 
-function slot0._playNextAutoBubble(slot0)
-	if slot0._rightRoleItem then
-		slot0._rightRoleItem:hideBubble()
-		slot0._rightRoleItem:hideTalking()
+function var_0_0._playNextAutoBubble(arg_15_0)
+	if arg_15_0._rightRoleItem then
+		arg_15_0._rightRoleItem:hideBubble()
+		arg_15_0._rightRoleItem:hideTalking()
 	end
 
-	if slot0._leftRoleItem then
-		slot0._leftRoleItem:hideBubble()
-		slot0._leftRoleItem:hideTalking()
+	if arg_15_0._leftRoleItem then
+		arg_15_0._leftRoleItem:hideBubble()
+		arg_15_0._leftRoleItem:hideTalking()
 	end
 
-	if slot0._playIndex > #AergusiDialogModel.instance:getBubbleStepList(slot0._bubbleId) then
-		slot0:_autoFinishCallback()
+	local var_15_0 = AergusiDialogModel.instance:getBubbleStepList(arg_15_0._bubbleId)
+
+	if arg_15_0._playIndex > #var_15_0 then
+		arg_15_0:_autoFinishCallback()
 
 		return
 	else
-		if AergusiConfig.instance:getBubbleConfig(slot0._bubbleId, slot1[slot0._playIndex].stepId).direction == AergusiEnum.DialogBubblePos.Left then
-			if slot0._leftRoleItem then
-				slot0._leftRoleItem:showBubble(slot1[slot0._playIndex])
+		local var_15_1 = AergusiConfig.instance:getBubbleConfig(arg_15_0._bubbleId, var_15_0[arg_15_0._playIndex].stepId)
+
+		if var_15_1.direction == AergusiEnum.DialogBubblePos.Left then
+			if arg_15_0._leftRoleItem then
+				arg_15_0._leftRoleItem:showBubble(var_15_0[arg_15_0._playIndex])
 			end
-		elseif slot0._rightRoleItem then
-			slot0._rightRoleItem:showBubble(slot1[slot0._playIndex])
+		elseif arg_15_0._rightRoleItem then
+			arg_15_0._rightRoleItem:showBubble(var_15_0[arg_15_0._playIndex])
 		end
 
-		TaskDispatcher.runDelay(slot0._playNextAutoBubble, slot0, 0.05 * LuaUtil.getStrLen(slot2.content) + 1)
+		local var_15_2 = 0.05 * LuaUtil.getStrLen(var_15_1.content) + 1
+
+		TaskDispatcher.runDelay(arg_15_0._playNextAutoBubble, arg_15_0, var_15_2)
 	end
 
-	slot0._playIndex = slot0._playIndex + 1
+	arg_15_0._playIndex = arg_15_0._playIndex + 1
 end
 
-function slot0._autoFinishCallback(slot0)
-	if slot0._autoCallback then
-		slot0._autoCallback(slot0._autoCallbackObj)
+function var_0_0._autoFinishCallback(arg_16_0)
+	if arg_16_0._autoCallback then
+		arg_16_0._autoCallback(arg_16_0._autoCallbackObj)
 
-		slot0._autoCallback = nil
-		slot0._autoCallbackObj = nil
+		arg_16_0._autoCallback = nil
+		arg_16_0._autoCallbackObj = nil
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._playNextAutoBubble, slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._playNextAutoBubble, arg_18_0)
 
-	if slot0._rightRoleItem then
-		slot0._rightRoleItem:destroy()
+	if arg_18_0._rightRoleItem then
+		arg_18_0._rightRoleItem:destroy()
 
-		slot0._rightRoleItem = nil
+		arg_18_0._rightRoleItem = nil
 	end
 
-	if slot0._leftRoleItem then
-		slot0._leftRoleItem:destroy()
+	if arg_18_0._leftRoleItem then
+		arg_18_0._leftRoleItem:destroy()
 
-		slot0._leftRoleItem = nil
+		arg_18_0._leftRoleItem = nil
 	end
 
-	slot0:_removeEvents()
+	arg_18_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

@@ -1,97 +1,107 @@
-module("modules.logic.bgmswitch.controller.BGMSwitchProgress", package.seeall)
+﻿module("modules.logic.bgmswitch.controller.BGMSwitchProgress", package.seeall)
 
-slot0 = class("BGMSwitchProgress")
-slot1 = 0.03
+local var_0_0 = class("BGMSwitchProgress")
+local var_0_1 = 0.03
 
-function slot0.playMainBgm(slot0, slot1)
-	slot0._bgmCO = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(slot1)
+function var_0_0.playMainBgm(arg_1_0, arg_1_1)
+	arg_1_0._bgmCO = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(arg_1_1)
 
-	if not slot0._bgmCO then
-		slot0._progressTimeSec = 0
+	if not arg_1_0._bgmCO then
+		arg_1_0._progressTimeSec = 0
 
-		WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, slot0._onWeatherChange, slot0)
-		AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, slot0._onTriggerEvent, slot0)
-		TaskDispatcher.cancelTask(slot0._onTick, slot0)
+		WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, arg_1_0._onWeatherChange, arg_1_0)
+		AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, arg_1_0._onTriggerEvent, arg_1_0)
+		TaskDispatcher.cancelTask(arg_1_0._onTick, arg_1_0)
 
 		return
 	end
 
-	WeatherController.instance:registerCallback(WeatherEvent.WeatherChanged, slot0._onWeatherChange, slot0)
-	AudioMgr.instance:registerCallback(AudioMgr.Evt_Trigger, slot0._onTriggerEvent, slot0)
-	TaskDispatcher.runRepeat(slot0._onTick, slot0, uv0)
+	WeatherController.instance:registerCallback(WeatherEvent.WeatherChanged, arg_1_0._onWeatherChange, arg_1_0)
+	AudioMgr.instance:registerCallback(AudioMgr.Evt_Trigger, arg_1_0._onTriggerEvent, arg_1_0)
+	TaskDispatcher.runRepeat(arg_1_0._onTick, arg_1_0, var_0_1)
 
-	slot0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(slot0._bgmCO)
-	slot0._progressTimeSec = 0
+	arg_1_0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(arg_1_0._bgmCO)
+	arg_1_0._progressTimeSec = 0
 
-	slot0:_updateGMProgress()
+	arg_1_0:_updateGMProgress()
 end
 
-function slot0.stopMainBgm(slot0)
-	WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, slot0._onWeatherChange, slot0)
-	AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, slot0._onTriggerEvent, slot0)
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
+function var_0_0.stopMainBgm(arg_2_0)
+	WeatherController.instance:unregisterCallback(WeatherEvent.WeatherChanged, arg_2_0._onWeatherChange, arg_2_0)
+	AudioMgr.instance:unregisterCallback(AudioMgr.Evt_Trigger, arg_2_0._onTriggerEvent, arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._onTick, arg_2_0)
 
-	slot0._progressTimeSec = 0
+	arg_2_0._progressTimeSec = 0
 
-	slot0:_updateGMProgress()
+	arg_2_0:_updateGMProgress()
 end
 
-function slot0.getProgress(slot0)
-	return slot0._progressTimeSec
+function var_0_0.getProgress(arg_3_0)
+	return arg_3_0._progressTimeSec
 end
 
-function slot0._onWeatherChange(slot0)
-	if slot0._bgmCO and slot0._bgmCO.isReport == 1 then
-		slot2 = WeatherController.instance:getCurLightMode()
+function var_0_0._onWeatherChange(arg_4_0)
+	if arg_4_0._bgmCO and arg_4_0._bgmCO.isReport == 1 then
+		local var_4_0 = WeatherController.instance:getPrevLightMode()
+		local var_4_1 = WeatherController.instance:getCurLightMode()
 
-		if WeatherController.instance:getPrevLightMode() and slot2 and slot1 ~= slot2 then
-			slot0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(slot0._bgmCO)
-			slot0._progressTimeSec = 0
+		if var_4_0 and var_4_1 and var_4_0 ~= var_4_1 then
+			arg_4_0._bgmAudioLength = BGMSwitchModel.instance:getReportBgmAudioLength(arg_4_0._bgmCO)
+			arg_4_0._progressTimeSec = 0
 		end
 	end
 end
 
-function slot0._onTriggerEvent(slot0, slot1)
-	if slot1 == AudioEnum.UI.Pause_MainMusic then
-		TaskDispatcher.cancelTask(slot0._onTick, slot0)
-		slot0:_updateGMProgress()
-	elseif slot1 == AudioEnum.UI.Resume_MainMusic then
-		TaskDispatcher.runRepeat(slot0._onTick, slot0, uv0)
-		slot0:_updateGMProgress()
+function var_0_0._onTriggerEvent(arg_5_0, arg_5_1)
+	if arg_5_1 == AudioEnum.UI.Pause_MainMusic then
+		TaskDispatcher.cancelTask(arg_5_0._onTick, arg_5_0)
+		arg_5_0:_updateGMProgress()
+	elseif arg_5_1 == AudioEnum.UI.Resume_MainMusic then
+		TaskDispatcher.runRepeat(arg_5_0._onTick, arg_5_0, var_0_1)
+		arg_5_0:_updateGMProgress()
 	end
 end
 
-function slot0._onTick(slot0)
-	if not BGMSwitchController.instance:getPlayingId() then
+function var_0_0._onTick(arg_6_0)
+	local var_6_0 = BGMSwitchController.instance:getPlayingId()
+
+	if not var_6_0 then
 		return
 	end
 
-	if AudioMgr.instance:getSourcePlayPosition(slot1) / 1000 < 0 then
+	local var_6_1 = AudioMgr.instance:getSourcePlayPosition(var_6_0) / 1000
+
+	if var_6_1 < 0 then
 		return
 	end
 
-	slot0._progressTimeSec = slot2
+	local var_6_2 = arg_6_0._bgmAudioLength and arg_6_0._bgmAudioLength > 0 and arg_6_0._bgmAudioLength or 10
 
-	if (slot0._bgmAudioLength and slot0._bgmAudioLength > 0 and slot0._bgmAudioLength or 10) <= slot2 + 0.5 then
-		slot0._progressTimeSec = 0
+	arg_6_0._progressTimeSec = var_6_1
 
-		if BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId and not ViewMgr.instance:isOpen(ViewName.BGMSwitchView) then
+	if var_6_2 <= var_6_1 + 0.5 then
+		local var_6_3 = BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId
+		local var_6_4 = ViewMgr.instance:isOpen(ViewName.BGMSwitchView)
+
+		arg_6_0._progressTimeSec = 0
+
+		if var_6_3 and not var_6_4 then
 			BGMSwitchController.instance:checkStartMainBGM(false)
 		end
 
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmProgressEnd)
 	end
 
-	slot0:_updateGMProgress()
+	arg_6_0:_updateGMProgress()
 end
 
-slot0.WeatherLight = {
+var_0_0.WeatherLight = {
 	"白天",
 	"阴天",
 	"黄昏",
 	"夜晚"
 }
-slot0.WeatherEffect = {
+var_0_0.WeatherEffect = {
 	"天气无",
 	"阳光明媚",
 	"小雨",
@@ -104,45 +114,55 @@ slot0.WeatherEffect = {
 	"夜晚烟花"
 }
 
-function slot0._updateGMProgress(slot0)
+function var_0_0._updateGMProgress(arg_7_0)
 	if not isDebugBuild then
 		return
 	end
 
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewBGMProgress, 0) == 0 then
-		gohelper.setActive(slot0._progressGO, false)
+		gohelper.setActive(arg_7_0._progressGO, false)
 
 		return
 	end
 
-	if not slot0._progressText then
-		slot0._progressGO = GMController.instance:getGMNode("mainview", ViewMgr.instance:getUILayer(UILayerName.Top))
-		slot0._progressGO.name = "bgm_progress"
+	if not arg_7_0._progressText then
+		arg_7_0._progressGO = GMController.instance:getGMNode("mainview", ViewMgr.instance:getUILayer(UILayerName.Top))
+		arg_7_0._progressGO.name = "bgm_progress"
 
-		if slot0._progressGO then
-			slot1 = gohelper.findChildImage(slot0._progressGO, "#btn_gm")
-			slot1.raycastTarget = false
-			slot1.color = Color.New(1, 1, 1, 0.3)
+		if arg_7_0._progressGO then
+			local var_7_0 = gohelper.findChildImage(arg_7_0._progressGO, "#btn_gm")
 
-			recthelper.setWidth(slot1.transform, 500)
+			var_7_0.raycastTarget = false
+			var_7_0.color = Color.New(1, 1, 1, 0.3)
 
-			slot0._progressText = gohelper.findChildText(slot0._progressGO, "#btn_gm/Text")
+			recthelper.setWidth(var_7_0.transform, 500)
+
+			arg_7_0._progressText = gohelper.findChildText(arg_7_0._progressGO, "#btn_gm/Text")
 		end
 	end
 
-	slot1 = slot0._progressTimeSec ~= nil
+	local var_7_1 = arg_7_0._progressTimeSec ~= nil
 
-	gohelper.setActive(slot0._progressGO, slot1)
+	gohelper.setActive(arg_7_0._progressGO, var_7_1)
 
-	if slot1 and slot0._progressText and slot0._bgmCO then
-		slot2 = ""
+	if var_7_1 and arg_7_0._progressText and arg_7_0._bgmCO then
+		local var_7_2 = ""
 
-		if slot0._bgmCO.id == 1001 then
-			slot2 = uv0.WeatherLight[WeatherController.instance:getCurrReport() and slot3.lightMode or 1] .. "-" .. uv0.WeatherEffect[slot3 and slot3.effect or 1]
+		if arg_7_0._bgmCO.id == 1001 then
+			local var_7_3 = WeatherController.instance:getCurrReport()
+			local var_7_4 = var_7_3 and var_7_3.lightMode or 1
+			local var_7_5 = var_7_3 and var_7_3.effect or 1
+			local var_7_6 = var_0_0.WeatherLight[var_7_4]
+			local var_7_7 = var_0_0.WeatherEffect[var_7_5]
+
+			var_7_2 = var_7_6 .. "-" .. var_7_7
 		end
 
-		slot0._progressText.text = string.format("bgm:%s %s\n%.1f/%.1f s", slot0._bgmCO.audioName, slot2, slot0._progressTimeSec > 0 and slot0._progressTimeSec or 0, slot0._bgmAudioLength)
+		local var_7_8 = arg_7_0._progressTimeSec > 0 and arg_7_0._progressTimeSec or 0
+		local var_7_9 = arg_7_0._bgmAudioLength
+
+		arg_7_0._progressText.text = string.format("bgm:%s %s\n%.1f/%.1f s", arg_7_0._bgmCO.audioName, var_7_2, var_7_8, var_7_9)
 	end
 end
 
-return slot0
+return var_0_0

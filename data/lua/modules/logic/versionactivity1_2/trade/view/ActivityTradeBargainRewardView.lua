@@ -1,116 +1,121 @@
-module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainRewardView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainRewardView", package.seeall)
 
-slot0 = class("ActivityTradeBargainRewardView", BaseView)
+local var_0_0 = class("ActivityTradeBargainRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollrewards = gohelper.findChild(slot0.viewGO, "#scroll_rewards")
-	slot0._gogetall = gohelper.findChild(slot0.viewGO, "#scroll_rewards/Viewport/Content/#go_getall")
-	slot0._simagegetallbg = gohelper.findChildSingleImage(slot0.viewGO, "#scroll_rewards/Viewport/Content/#go_getall/#simage_getallbg")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "#scroll_rewards/Viewport/Content/#go_rewarditem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollrewards = gohelper.findChild(arg_1_0.viewGO, "#scroll_rewards")
+	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#scroll_rewards/Viewport/Content/#go_getall")
+	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_rewards/Viewport/Content/#go_getall/#simage_getallbg")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#scroll_rewards/Viewport/Content/#go_rewarditem")
 
-	gohelper.setActive(slot0._gorewarditem, false)
+	gohelper.setActive(arg_1_0._gorewarditem, false)
 
-	slot0._btnClaimall = gohelper.findChildButtonWithAudio(slot0._gogetall, "btn_claimall")
+	arg_1_0._btnClaimall = gohelper.findChildButtonWithAudio(arg_1_0._gogetall, "btn_claimall")
 
-	slot0._btnClaimall:AddClickListener(slot0.onClickGetAllReward, slot0)
+	arg_1_0._btnClaimall:AddClickListener(arg_1_0.onClickGetAllReward, arg_1_0)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rewardItems = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._rewardItems = {}
 
-	slot0._simagegetallbg:LoadImage(ResUrl.getVersionTradeBargainBg("img_yijian"))
+	arg_4_0._simagegetallbg:LoadImage(ResUrl.getVersionTradeBargainBg("img_yijian"))
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
 	UIBlockMgr.instance:endBlock("BargainReward")
-	TaskDispatcher.cancelTask(slot0._sendGetBonus, slot0)
-	slot0._simagegetallbg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_5_0._sendGetBonus, arg_5_0)
+	arg_5_0._simagegetallbg:UnLoadImage()
 
-	if slot0._rewardItems then
-		for slot4, slot5 in pairs(slot0._rewardItems) do
-			slot5:destory()
+	if arg_5_0._rewardItems then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._rewardItems) do
+			iter_5_1:destory()
 		end
 
-		slot0._rewardItems = nil
+		arg_5_0._rewardItems = nil
 	end
 
-	slot0._btnClaimall:RemoveClickListener()
+	arg_5_0._btnClaimall:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewContainer:getActId()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0.actId = arg_6_0.viewContainer:getActId()
 
-	slot0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveGetBonus, slot0.onFinish, slot0)
-	slot0:_refreshUI()
+	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveGetBonus, arg_6_0.onFinish, arg_6_0)
+	arg_6_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveGetBonus, slot0.onFinish, slot0)
+function var_0_0.onClose(arg_7_0)
+	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveGetBonus, arg_7_0.onFinish, arg_7_0)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	if slot1 ~= slot0.actId then
+function var_0_0.refreshUI(arg_8_0, arg_8_1)
+	if arg_8_1 ~= arg_8_0.actId then
 		return
 	end
 
-	slot0:refreshRewardItems()
+	arg_8_0:refreshRewardItems()
 end
 
-function slot0._refreshUI(slot0)
-	slot0:refreshRewardItems()
+function var_0_0._refreshUI(arg_9_0)
+	arg_9_0:refreshRewardItems()
 end
 
-function slot0.onFinish(slot0, slot1, slot2)
-	if slot1 ~= slot0.actId then
+function var_0_0.onFinish(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= arg_10_0.actId then
 		return
 	end
 
-	slot0:refreshRewardItems()
+	arg_10_0:refreshRewardItems()
 end
 
-function slot0.refreshRewardItems(slot0)
-	slot1, slot2 = Activity117Model.instance:getRewardList(slot0.actId)
+function var_0_0.refreshRewardItems(arg_11_0)
+	local var_11_0, var_11_1 = Activity117Model.instance:getRewardList(arg_11_0.actId)
 
-	gohelper.setActive(slot0._gogetall, slot2 > 1)
+	gohelper.setActive(arg_11_0._gogetall, var_11_1 > 1)
 
-	slot6 = #slot0._rewardItems
+	for iter_11_0 = 1, math.max(#var_11_0, #arg_11_0._rewardItems) do
+		local var_11_2 = arg_11_0._rewardItems[iter_11_0]
 
-	for slot6 = 1, math.max(#slot1, slot6) do
-		if not slot0._rewardItems[slot6] then
-			slot0._rewardItems[slot6] = ActivityTradeBargainRewardItem.New(gohelper.cloneInPlace(slot0._gorewarditem, "reward_item" .. tostring(slot6)), slot0._scrollrewards)
+		if not var_11_2 then
+			local var_11_3 = gohelper.cloneInPlace(arg_11_0._gorewarditem, "reward_item" .. tostring(iter_11_0))
+
+			var_11_2 = ActivityTradeBargainRewardItem.New(var_11_3, arg_11_0._scrollrewards)
+			arg_11_0._rewardItems[iter_11_0] = var_11_2
 		end
 
-		slot7:setData(slot1[slot6])
+		var_11_2:setData(var_11_0[iter_11_0])
 	end
 end
 
-function slot0.onClickGetAllReward(slot0)
-	for slot4, slot5 in ipairs(slot0._rewardItems) do
-		if slot5.data and slot5.data:getStatus() == Activity117Enum.Status.CanGet then
-			slot5:onFinish()
+function var_0_0.onClickGetAllReward(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._rewardItems) do
+		if iter_12_1.data and iter_12_1.data:getStatus() == Activity117Enum.Status.CanGet then
+			iter_12_1:onFinish()
 		end
 	end
 
 	UIBlockMgr.instance:startBlock("BargainReward")
-	TaskDispatcher.cancelTask(slot0._sendGetBonus, slot0)
-	TaskDispatcher.runDelay(slot0._sendGetBonus, slot0, 0.6)
+	TaskDispatcher.cancelTask(arg_12_0._sendGetBonus, arg_12_0)
+	TaskDispatcher.runDelay(arg_12_0._sendGetBonus, arg_12_0, 0.6)
 end
 
-function slot0._sendGetBonus(slot0)
+function var_0_0._sendGetBonus(arg_13_0)
 	UIBlockMgr.instance:endBlock("BargainReward")
-	Activity117Rpc.instance:sendAct117GetBonusRequest(slot0.actId)
+	Activity117Rpc.instance:sendAct117GetBonusRequest(arg_13_0.actId)
 end
 
-return slot0
+return var_0_0

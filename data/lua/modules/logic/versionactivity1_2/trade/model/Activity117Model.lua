@@ -1,174 +1,209 @@
-module("modules.logic.versionactivity1_2.trade.model.Activity117Model", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.model.Activity117Model", package.seeall)
 
-slot0 = class("Activity117Model", BaseModel)
+local var_0_0 = class("Activity117Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._actDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._actDict = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._actDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._actDict = {}
 end
 
-function slot0.release(slot0)
-	slot0._actDict = {}
+function var_0_0.release(arg_3_0)
+	arg_3_0._actDict = {}
 end
 
-function slot0.initAct(slot0, slot1)
-	slot0:getActData(slot1, true)
+function var_0_0.initAct(arg_4_0, arg_4_1)
+	arg_4_0:getActData(arg_4_1, true)
 end
 
-function slot0.getActData(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.getActData(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_1 then
 		return
 	end
 
-	if not slot0._actDict[slot1] and slot2 then
-		slot3 = Activity117MO.New()
+	local var_5_0 = arg_5_0._actDict[arg_5_1]
 
-		slot3:init(slot1)
+	if not var_5_0 and arg_5_2 then
+		var_5_0 = Activity117MO.New()
 
-		slot0._actDict[slot1] = slot3
+		var_5_0:init(arg_5_1)
+
+		arg_5_0._actDict[arg_5_1] = var_5_0
 	end
 
-	return slot3
+	return var_5_0
 end
 
-function slot0.onReceiveInfos(slot0, slot1)
-	if not slot0:getActData(slot1.activityId) then
+function var_0_0.onReceiveInfos(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getActData(arg_6_1.activityId)
+
+	if not var_6_0 then
 		return
 	end
 
-	slot2:onInitServerData(slot1)
+	var_6_0:onInitServerData(arg_6_1)
 end
 
-function slot0.onNegotiateResult(slot0, slot1)
-	if not slot0:getActData(slot1.activityId) then
+function var_0_0.onNegotiateResult(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getActData(arg_7_1.activityId)
+
+	if not var_7_0 then
 		return
 	end
 
-	slot2:onNegotiateResult(slot1)
+	var_7_0:onNegotiateResult(arg_7_1)
 end
 
-function slot0.onDealSuccess(slot0, slot1)
-	if not slot0:getActData(slot1.activityId) then
+function var_0_0.onDealSuccess(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getActData(arg_8_1.activityId)
+
+	if not var_8_0 then
 		return
 	end
 
-	slot2:onDealSuccess(slot1)
+	var_8_0:onDealSuccess(arg_8_1)
 end
 
-function slot0.onOrderPush(slot0, slot1)
-	if not slot0:getActData(slot1.activityId) then
+function var_0_0.onOrderPush(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getActData(arg_9_1.activityId)
+
+	if not var_9_0 then
 		return
 	end
 
-	slot2:onOrderPush(slot1)
+	var_9_0:onOrderPush(arg_9_1)
 end
 
-function slot0.updateRewardDatas(slot0, slot1)
-	if not slot0:getActData(slot1.activityId) then
+function var_0_0.updateRewardDatas(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getActData(arg_10_1.activityId)
+
+	if not var_10_0 then
 		return
 	end
 
-	slot2:updateHasGetBonusIds(slot1.bonusIds)
+	var_10_0:updateHasGetBonusIds(arg_10_1.bonusIds)
 end
 
-function slot0.getOrderDataById(slot0, slot1, slot2)
-	if not slot0:getActData(slot1) then
+function var_0_0.getOrderDataById(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0:getActData(arg_11_1)
+
+	if not var_11_0 then
 		return
 	end
 
-	return slot3:getOrderData(slot2)
+	return var_11_0:getOrderData(arg_11_2)
 end
 
-function slot0.getOrderList(slot0, slot1, slot2)
-	if not slot0:getActData(slot1) then
+function var_0_0.getOrderList(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getActData(arg_12_1)
+
+	if not var_12_0 then
 		return
 	end
 
-	return slot3:getOrderList(slot2)
+	return var_12_0:getOrderList(arg_12_2)
 end
 
-function slot0.getRewardList(slot0, slot1)
-	if not slot0:getActData(slot1) then
+function var_0_0.getRewardList(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getActData(arg_13_1)
+
+	if not var_13_0 then
 		return
 	end
 
-	return slot2:getRewardList()
+	return var_13_0:getRewardList()
 end
 
-function slot0.getRemainDay(slot0, slot1)
-	if not slot0:getActData(slot1) then
+function var_0_0.getRemainDay(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getActData(arg_14_1)
+
+	if not var_14_0 then
 		return 0
 	end
 
-	return slot2:getRemainDay()
+	return var_14_0:getRemainDay()
 end
 
-function slot0.getCurrentScore(slot0, slot1)
-	if not slot0:getActData(slot1) then
+function var_0_0.getCurrentScore(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getActData(arg_15_1)
+
+	if not var_15_0 then
 		return 0
 	end
 
-	return slot2:getCurrentScore()
+	return var_15_0:getCurrentScore()
 end
 
-function slot0.getNextScore(slot0, slot1, slot2)
-	if not slot0:getActData(slot1) then
+function var_0_0.getNextScore(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0:getActData(arg_16_1)
+
+	if not var_16_0 then
 		return 0
 	end
 
-	return slot3:getNextScore(slot2)
+	return var_16_0:getNextScore(arg_16_2)
 end
 
-function slot0.setSelectOrder(slot0, slot1, slot2)
-	if not slot0:getActData(slot1) then
+function var_0_0.setSelectOrder(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0:getActData(arg_17_1)
+
+	if not var_17_0 then
 		return
 	end
 
-	slot3:setSelectOrder(slot2)
+	var_17_0:setSelectOrder(arg_17_2)
 end
 
-function slot0.getSelectOrder(slot0, slot1)
-	if not slot0:getActData(slot1) then
+function var_0_0.getSelectOrder(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0:getActData(arg_18_1)
+
+	if not var_18_0 then
 		return
 	end
 
-	return slot2:getSelectOrder()
+	return var_18_0:getSelectOrder()
 end
 
-function slot0.isSelectOrder(slot0, slot1)
-	return slot0:getSelectOrder(slot1) ~= nil
+function var_0_0.isSelectOrder(arg_19_0, arg_19_1)
+	return arg_19_0:getSelectOrder(arg_19_1) ~= nil
 end
 
-function slot0.setInQuote(slot0, slot1, slot2)
-	if not slot0:getActData(slot1) then
+function var_0_0.setInQuote(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0:getActData(arg_20_1)
+
+	if not var_20_0 then
 		return
 	end
 
-	slot3:setInQuote(slot2)
+	var_20_0:setInQuote(arg_20_2)
 end
 
-function slot0.isInQuote(slot0, slot1)
-	if not slot0:getActData(slot1) then
+function var_0_0.isInQuote(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:getActData(arg_21_1)
+
+	if not var_21_0 then
 		return
 	end
 
-	return slot2:isInQuote()
+	return var_21_0:isInQuote()
 end
 
-function slot0.getFinishOrderCount(slot0, slot1)
-	if not slot0:getActData(slot1) then
+function var_0_0.getFinishOrderCount(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getActData(arg_22_1)
+
+	if not var_22_0 then
 		return
 	end
 
-	return slot2:getFinishOrderCount()
+	return var_22_0:getFinishOrderCount()
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_23_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

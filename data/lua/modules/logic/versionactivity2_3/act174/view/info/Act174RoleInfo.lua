@@ -1,50 +1,55 @@
-module("modules.logic.versionactivity2_3.act174.view.info.Act174RoleInfo", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.info.Act174RoleInfo", package.seeall)
 
-slot0 = class("Act174RoleInfo", BaseView)
+local var_0_0 = class("Act174RoleInfo", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goRoot = gohelper.findChild(slot0.viewGO, "root")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.goRoot = gohelper.findChild(arg_5_0.viewGO, "root")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam then
-		slot1 = slot0.viewParam.pos or Vector2.New(0, 0)
+function var_0_0.onOpen(arg_7_0)
+	if arg_7_0.viewParam then
+		local var_7_0 = arg_7_0.viewParam.pos or Vector2.New(0, 0)
 
-		recthelper.setAnchor(slot0.goRoot.transform, slot1.x, slot1.y)
+		recthelper.setAnchor(arg_7_0.goRoot.transform, var_7_0.x, var_7_0.y)
 
-		slot2 = Activity174Config.instance:getRoleCo(slot0.viewParam.roleId)
+		local var_7_1 = Activity174Config.instance:getRoleCo(arg_7_0.viewParam.roleId)
 
-		if not slot0.characterItem then
-			slot0.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.goRoot, Act174CharacterInfo, slot0)
+		if not arg_7_0.characterItem then
+			arg_7_0.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.goRoot, Act174CharacterInfo, arg_7_0)
 		end
 
-		slot0.characterItem:setData(slot2, slot0.viewParam.itemId)
+		arg_7_0.characterItem:setData(var_7_1, arg_7_0.viewParam.itemId)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

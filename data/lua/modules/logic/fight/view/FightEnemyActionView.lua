@@ -1,228 +1,272 @@
-module("modules.logic.fight.view.FightEnemyActionView", package.seeall)
+﻿module("modules.logic.fight.view.FightEnemyActionView", package.seeall)
 
-slot0 = class("FightEnemyActionView", BaseView)
-slot1 = "buff/buff_outline_orange"
+local var_0_0 = class("FightEnemyActionView", BaseView)
+local var_0_1 = "buff/buff_outline_orange"
 
-function slot0.onInitView(slot0)
-	slot0._txtskillname = gohelper.findChildText(slot0.viewGO, "skill/#txt_skillname")
-	slot0._scrollskill = gohelper.findChildScrollRect(slot0.viewGO, "skill/#scroll_skill")
-	slot0._txtskilldec = gohelper.findChildText(slot0.viewGO, "skill/#scroll_skill/viewport/content/#txt_skilldec")
-	slot0._btnclose = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#btn_close")
-	slot0._scrollcard = gohelper.findChildScrollRect(slot0.viewGO, "card/#scroll_card")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtskillname = gohelper.findChildText(arg_1_0.viewGO, "skill/#txt_skillname")
+	arg_1_0._scrollskill = gohelper.findChildScrollRect(arg_1_0.viewGO, "skill/#scroll_skill")
+	arg_1_0._txtskilldec = gohelper.findChildText(arg_1_0.viewGO, "skill/#scroll_skill/viewport/content/#txt_skilldec")
+	arg_1_0._btnclose = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "card/#scroll_card")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.cardPrefab = slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes[1])
-	slot0.goCardItem = gohelper.findChild(slot0.viewGO, "card/#scroll_card/viewport/content/carditem")
+function var_0_0._editableInitView(arg_5_0)
+	local var_5_0 = arg_5_0.viewContainer:getSetting().otherRes[1]
 
-	gohelper.setActive(slot0.goCardItem, false)
+	arg_5_0.cardPrefab = arg_5_0.viewContainer:getRes(var_5_0)
+	arg_5_0.goCardItem = gohelper.findChild(arg_5_0.viewGO, "card/#scroll_card/viewport/content/carditem")
 
-	slot0.cardItemList = {}
-	slot0.unitCamera = CameraMgr.instance:getUnitCamera()
-	slot0.tempVector4 = Vector4(0, 0, 0, 0)
-	slot0.startVector3 = Vector3(0, 0, 0)
-	slot0.targetVector3 = Vector3(0, 0, 0)
+	gohelper.setActive(arg_5_0.goCardItem, false)
 
-	slot0:initRate()
-	slot0:initLine()
-	slot0:initSelectItem()
-	SkillHelper.addHyperLinkClick(slot0._txtskilldec)
-	slot0:addEventCb(FightController.instance, FightEvent.OnEnemyActionStatusChange, slot0.onEnemyActionStatusChange, slot0)
+	arg_5_0.cardItemList = {}
+	arg_5_0.unitCamera = CameraMgr.instance:getUnitCamera()
+	arg_5_0.tempVector4 = Vector4(0, 0, 0, 0)
+	arg_5_0.startVector3 = Vector3(0, 0, 0)
+	arg_5_0.targetVector3 = Vector3(0, 0, 0)
+
+	arg_5_0:initRate()
+	arg_5_0:initLine()
+	arg_5_0:initSelectItem()
+	SkillHelper.addHyperLinkClick(arg_5_0._txtskilldec)
+	arg_5_0:addEventCb(FightController.instance, FightEvent.OnEnemyActionStatusChange, arg_5_0.onEnemyActionStatusChange, arg_5_0)
 end
 
-function slot0.initRate(slot0)
-	if UnityEngine.Screen.width / UnityEngine.Screen.height - 1.7777777777777777 > 0.01 then
-		slot5 = recthelper.getHeight(slot0.viewGO.transform)
-		slot0.halfPxHeight = slot5 / 2
-		slot0.hRate = slot5 / slot3
-		slot6 = slot4 * slot5
-		slot0.halfPxWidth = slot6 / 2
-		slot0.wRate = slot6 / slot2
+function var_0_0.initRate(arg_6_0)
+	local var_6_0 = 1.7777777777777777
+	local var_6_1 = UnityEngine.Screen.width
+	local var_6_2 = UnityEngine.Screen.height
+	local var_6_3 = var_6_1 / var_6_2
+
+	if var_6_3 - var_6_0 > 0.01 then
+		local var_6_4 = recthelper.getHeight(arg_6_0.viewGO.transform)
+
+		arg_6_0.halfPxHeight = var_6_4 / 2
+		arg_6_0.hRate = var_6_4 / var_6_2
+
+		local var_6_5 = var_6_3 * var_6_4
+
+		arg_6_0.halfPxWidth = var_6_5 / 2
+		arg_6_0.wRate = var_6_5 / var_6_1
 	else
-		slot5 = recthelper.getWidth(slot0.viewGO.transform)
-		slot0.halfPxWidth = slot5 / 2
-		slot0.wRate = slot5 / slot2
-		slot6 = slot5 / slot4
-		slot0.halfPxHeight = slot6 / 2
-		slot0.hRate = slot6 / slot3
+		local var_6_6 = recthelper.getWidth(arg_6_0.viewGO.transform)
+
+		arg_6_0.halfPxWidth = var_6_6 / 2
+		arg_6_0.wRate = var_6_6 / var_6_1
+
+		local var_6_7 = var_6_6 / var_6_3
+
+		arg_6_0.halfPxHeight = var_6_7 / 2
+		arg_6_0.hRate = var_6_7 / var_6_2
 	end
 end
 
-function slot0.initLine(slot0)
-	slot0.goRedFullLine = gohelper.findChild(slot0.viewGO, "lineContainer/red_fullline")
+function var_0_0.initLine(arg_7_0)
+	arg_7_0.goRedFullLine = gohelper.findChild(arg_7_0.viewGO, "lineContainer/red_fullline")
 
-	gohelper.setActive(slot0.goRedFullLine, false)
+	gohelper.setActive(arg_7_0.goRedFullLine, false)
 
-	slot0.goRedDottedLine = gohelper.findChild(slot0.viewGO, "lineContainer/red_dottedline")
+	arg_7_0.goRedDottedLine = gohelper.findChild(arg_7_0.viewGO, "lineContainer/red_dottedline")
 
-	gohelper.setActive(slot0.goRedDottedLine, false)
+	gohelper.setActive(arg_7_0.goRedDottedLine, false)
 
-	slot0.goYellowFullLine = gohelper.findChild(slot0.viewGO, "lineContainer/yellow_fullline")
+	arg_7_0.goYellowFullLine = gohelper.findChild(arg_7_0.viewGO, "lineContainer/yellow_fullline")
 
-	gohelper.setActive(slot0.goYellowFullLine, false)
+	gohelper.setActive(arg_7_0.goYellowFullLine, false)
 
-	slot0.goYellowDottedLine = gohelper.findChild(slot0.viewGO, "lineContainer/yellow_dottedline")
+	arg_7_0.goYellowDottedLine = gohelper.findChild(arg_7_0.viewGO, "lineContainer/yellow_dottedline")
 
-	gohelper.setActive(slot0.goYellowDottedLine, false)
+	gohelper.setActive(arg_7_0.goYellowDottedLine, false)
 
-	slot0.redFullLineList = slot0:getUserDataTb_()
+	arg_7_0.redFullLineList = arg_7_0:getUserDataTb_()
 
-	table.insert(slot0.redFullLineList, slot0.goRedFullLine)
+	table.insert(arg_7_0.redFullLineList, arg_7_0.goRedFullLine)
 
-	slot0.redDottedLineList = slot0:getUserDataTb_()
+	arg_7_0.redDottedLineList = arg_7_0:getUserDataTb_()
 
-	table.insert(slot0.redDottedLineList, slot0.goRedDottedLine)
+	table.insert(arg_7_0.redDottedLineList, arg_7_0.goRedDottedLine)
 
-	slot0.yellowFullLineList = slot0:getUserDataTb_()
+	arg_7_0.yellowFullLineList = arg_7_0:getUserDataTb_()
 
-	table.insert(slot0.yellowFullLineList, slot0.goYellowFullLine)
+	table.insert(arg_7_0.yellowFullLineList, arg_7_0.goYellowFullLine)
 
-	slot0.yellowDottedLineList = slot0:getUserDataTb_()
+	arg_7_0.yellowDottedLineList = arg_7_0:getUserDataTb_()
 
-	table.insert(slot0.yellowDottedLineList, slot0.goYellowDottedLine)
+	table.insert(arg_7_0.yellowDottedLineList, arg_7_0.goYellowDottedLine)
 
-	slot0.fullLineColor2LineList = {
-		[FightEnum.SkillLineColor.Red] = slot0.redFullLineList,
-		[FightEnum.SkillLineColor.Yellow] = slot0.yellowFullLineList
+	arg_7_0.fullLineColor2LineList = {
+		[FightEnum.SkillLineColor.Red] = arg_7_0.redFullLineList,
+		[FightEnum.SkillLineColor.Yellow] = arg_7_0.yellowFullLineList
 	}
-	slot0.dottedLineColor2LineList = {
-		[FightEnum.SkillLineColor.Red] = slot0.redDottedLineList,
-		[FightEnum.SkillLineColor.Yellow] = slot0.yellowDottedLineList
+	arg_7_0.dottedLineColor2LineList = {
+		[FightEnum.SkillLineColor.Red] = arg_7_0.redDottedLineList,
+		[FightEnum.SkillLineColor.Yellow] = arg_7_0.yellowDottedLineList
 	}
 end
 
-function slot0.initSelectItem(slot0)
-	slot0.goSelectContainer = gohelper.findChild(slot0.viewGO, "selectcontainer")
+function var_0_0.initSelectItem(arg_8_0)
+	arg_8_0.goSelectContainer = gohelper.findChild(arg_8_0.viewGO, "selectcontainer")
 
-	gohelper.setActive(slot0.goSelectContainer, true)
+	gohelper.setActive(arg_8_0.goSelectContainer, true)
 
-	slot0.selectContainerTr = slot0.goSelectContainer:GetComponent(gohelper.Type_RectTransform)
-	slot0.goSelectItem = gohelper.findChild(slot0.viewGO, "selectcontainer/selectitem")
-	slot0.selectGoList = slot0:getUserDataTb_()
+	arg_8_0.selectContainerTr = arg_8_0.goSelectContainer:GetComponent(gohelper.Type_RectTransform)
+	arg_8_0.goSelectItem = gohelper.findChild(arg_8_0.viewGO, "selectcontainer/selectitem")
+	arg_8_0.selectGoList = arg_8_0:getUserDataTb_()
 
-	table.insert(slot0.selectGoList, slot0.goSelectItem)
+	table.insert(arg_8_0.selectGoList, arg_8_0.goSelectItem)
 end
 
-function slot0.onEnemyActionStatusChange(slot0, slot1)
-	if slot1 == FightEnum.EnemyActionStatus.Select then
+function var_0_0.onEnemyActionStatusChange(arg_9_0, arg_9_1)
+	if arg_9_1 == FightEnum.EnemyActionStatus.Select then
 		return
 	end
 
-	slot0:closeThis()
+	arg_9_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_10_0)
 	FightViewPartVisible.set(false, false, false, false, false)
-	slot0:initBossList()
+	arg_10_0:initBossList()
 
-	slot0.cardList = tabletool.copy(FightModel.instance:getCurRoundMO() and slot1:getAIUseCardMOList() or {})
+	local var_10_0 = FightModel.instance:getCurRoundMO()
+	local var_10_1 = var_10_0 and var_10_0:getAIUseCardMOList() or {}
 
-	slot0:filterValidCard()
-	slot0:refreshCardList()
-	slot0:selectCard(slot0.cardList[1])
+	arg_10_0.cardList = tabletool.copy(var_10_1)
+
+	arg_10_0:filterValidCard()
+	arg_10_0:refreshCardList()
+	arg_10_0:selectCard(arg_10_0.cardList[1])
 end
 
-function slot0.filterValidCard(slot0)
-	for slot5 = #slot0.cardList, 1, -1 do
-		if not FightDataHelper.entityMgr:getById(slot0.cardList[slot5].uid) then
-			table.remove(slot0.cardList, slot5)
+function var_0_0.filterValidCard(arg_11_0)
+	for iter_11_0 = #arg_11_0.cardList, 1, -1 do
+		local var_11_0 = arg_11_0.cardList[iter_11_0]
+
+		if not FightDataHelper.entityMgr:getById(var_11_0.uid) then
+			table.remove(arg_11_0.cardList, iter_11_0)
 		end
 	end
 end
 
-function slot0.initBossList(slot0)
-	slot2 = FightModel.instance:getBattleId() and lua_battle.configDict[slot1]
+function var_0_0.initBossList(arg_12_0)
+	local var_12_0 = FightModel.instance:getBattleId()
+	local var_12_1 = var_12_0 and lua_battle.configDict[var_12_0]
+	local var_12_2 = var_12_1 and var_12_1.monsterGroupIds
 
-	if not string.nilorempty(slot2 and slot2.monsterGroupIds) then
-		slot0.groupBossIdList = {}
+	if not string.nilorempty(var_12_2) then
+		arg_12_0.groupBossIdList = {}
 
-		for slot8, slot9 in ipairs(string.splitToNumber(slot3, "#")) do
-			slot0.groupBossIdList[slot8] = lua_monster_group.configDict[slot9] and string.splitToNumber(slot10.bossId, "#")
+		local var_12_3 = string.splitToNumber(var_12_2, "#")
+
+		for iter_12_0, iter_12_1 in ipairs(var_12_3) do
+			local var_12_4 = lua_monster_group.configDict[iter_12_1]
+			local var_12_5 = var_12_4 and string.splitToNumber(var_12_4.bossId, "#")
+
+			arg_12_0.groupBossIdList[iter_12_0] = var_12_5
 		end
 	end
 end
 
-function slot0.refreshCardList(slot0)
-	for slot4, slot5 in ipairs(slot0.cardList) do
-		if FightDataHelper.entityMgr:getById(slot5.uid) then
-			slot0:refreshCardItem(slot0:getCardItem(slot5))
+function var_0_0.refreshCardList(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.cardList) do
+		if FightDataHelper.entityMgr:getById(iter_13_1.uid) then
+			local var_13_0 = arg_13_0:getCardItem(iter_13_1)
+
+			arg_13_0:refreshCardItem(var_13_0)
 		end
 	end
 end
 
-function slot0.getCardItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0.goCardItem)
+function var_0_0.getCardItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getUserDataTb_()
 
-	gohelper.setActive(slot2.go, true)
+	var_14_0.go = gohelper.cloneInPlace(arg_14_0.goCardItem)
 
-	slot2.imageQualityBg = gohelper.findChildImage(slot2.go, "go_enemy/#image_qualitybg")
-	slot2.simageHeadIcon = gohelper.findChildSingleImage(slot2.go, "go_enemy/#simage_enemyicon")
-	slot2.imageHeadIcon = gohelper.findChildImage(slot2.go, "go_enemy/#simage_enemyicon")
-	slot2.imageQualityBg = gohelper.findChildImage(slot2.go, "go_enemy/#image_qualitybg")
-	slot2.goSelectBig = gohelper.findChild(slot2.go, "select_big")
-	slot2.goSelectSmall = gohelper.findChild(slot2.go, "select_small")
-	slot2.click = gohelper.findChildClickWithDefaultAudio(slot2.go, "clickarea")
+	gohelper.setActive(var_14_0.go, true)
 
-	slot2.click:AddClickListener(slot0.onClickCard, slot0, slot1)
+	var_14_0.imageQualityBg = gohelper.findChildImage(var_14_0.go, "go_enemy/#image_qualitybg")
+	var_14_0.simageHeadIcon = gohelper.findChildSingleImage(var_14_0.go, "go_enemy/#simage_enemyicon")
+	var_14_0.imageHeadIcon = gohelper.findChildImage(var_14_0.go, "go_enemy/#simage_enemyicon")
+	var_14_0.imageQualityBg = gohelper.findChildImage(var_14_0.go, "go_enemy/#image_qualitybg")
+	var_14_0.goSelectBig = gohelper.findChild(var_14_0.go, "select_big")
+	var_14_0.goSelectSmall = gohelper.findChild(var_14_0.go, "select_small")
+	var_14_0.click = gohelper.findChildClickWithDefaultAudio(var_14_0.go, "clickarea")
 
-	slot2.goCard = gohelper.findChild(slot2.go, "go_card")
-	slot2.actionCardItem = FightEnemyActionCardItem.get(gohelper.clone(slot0.cardPrefab, slot2.goCard), slot1)
-	slot2.cardMo = slot1
+	var_14_0.click:AddClickListener(arg_14_0.onClickCard, arg_14_0, arg_14_1)
 
-	table.insert(slot0.cardItemList, slot2)
+	var_14_0.goCard = gohelper.findChild(var_14_0.go, "go_card")
 
-	return slot2
+	local var_14_1 = gohelper.clone(arg_14_0.cardPrefab, var_14_0.goCard)
+
+	var_14_0.actionCardItem = FightEnemyActionCardItem.get(var_14_1, arg_14_1)
+	var_14_0.cardMo = arg_14_1
+
+	table.insert(arg_14_0.cardItemList, var_14_0)
+
+	return var_14_0
 end
 
-function slot0.refreshCardItem(slot0, slot1)
-	if not FightDataHelper.entityMgr:getById(slot1.cardMo.uid) then
-		logError("刷新卡牌未找到entity 数据 : " .. tostring(slot2.uid))
+function var_0_0.refreshCardItem(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.cardMo
+	local var_15_1 = FightDataHelper.entityMgr:getById(var_15_0.uid)
+
+	if not var_15_1 then
+		logError("刷新卡牌未找到entity 数据 : " .. tostring(var_15_0.uid))
 
 		return
 	end
 
-	slot5 = slot3.modelId
+	local var_15_2 = var_15_1.skin
+	local var_15_3 = var_15_1.modelId
+	local var_15_4 = var_15_2 and FightConfig.instance:getSkinCO(var_15_2)
 
-	if slot3.skin and FightConfig.instance:getSkinCO(slot4) then
-		slot1.simageHeadIcon:LoadImage(ResUrl.monsterHeadIcon(slot6.headIcon))
+	if var_15_4 then
+		arg_15_1.simageHeadIcon:LoadImage(ResUrl.monsterHeadIcon(var_15_4.headIcon))
 
-		if not FightEntityDataHelper.isPlayerUid(slot3.id) then
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(slot3:getCO().heartVariantId), slot1.imageHeadIcon)
+		if not FightEntityDataHelper.isPlayerUid(var_15_1.id) then
+			local var_15_5 = var_15_1:getCO()
+			local var_15_6 = IconMaterialMgr.instance:getMaterialPathWithRound(var_15_5.heartVariantId)
+
+			IconMaterialMgr.instance:loadMaterialAddSet(var_15_6, arg_15_1.imageHeadIcon)
 		end
 	end
 
-	UISpriteSetMgr.instance:setFightSprite(slot1.imageQualityBg, slot0:isBoss(slot5) and "fight_enemyaction_headbg3" or "fight_enemyaction_headbg1")
-	slot1.actionCardItem:refreshCard()
+	local var_15_7 = arg_15_0:isBoss(var_15_3) and "fight_enemyaction_headbg3" or "fight_enemyaction_headbg1"
+
+	UISpriteSetMgr.instance:setFightSprite(arg_15_1.imageQualityBg, var_15_7)
+	arg_15_1.actionCardItem:refreshCard()
 end
 
-function slot0.isBoss(slot0, slot1)
-	if not slot0.groupBossIdList then
+function var_0_0.isBoss(arg_16_0, arg_16_1)
+	if not arg_16_0.groupBossIdList then
 		return false
 	end
 
-	if not slot0.groupBossIdList[FightModel.instance:getCurWaveId()] then
+	local var_16_0 = FightModel.instance:getCurWaveId()
+	local var_16_1 = arg_16_0.groupBossIdList[var_16_0]
+
+	if not var_16_1 then
 		return false
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if slot1 == slot8 then
+	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+		if arg_16_1 == iter_16_1 then
 			return true
 		end
 	end
@@ -230,359 +274,468 @@ function slot0.isBoss(slot0, slot1)
 	return false
 end
 
-function slot0.selectCard(slot0, slot1)
-	if FightHelper.isSameCardMo(slot1, slot0.selectCardMo) then
+function var_0_0.selectCard(arg_17_0, arg_17_1)
+	if FightHelper.isSameCardMo(arg_17_1, arg_17_0.selectCardMo) then
 		return
 	end
 
-	slot0.selectCardMo = slot1
+	arg_17_0.selectCardMo = arg_17_1
 
-	FightController.instance:dispatchEvent(FightEvent.OnSelectMonsterCardMo, slot0.selectCardMo)
-	slot0:refreshSelectStatus()
-	slot0:refreshSelectText()
-	slot0:refreshSelectLine()
-	slot0:refreshEnemyOutLine()
+	FightController.instance:dispatchEvent(FightEvent.OnSelectMonsterCardMo, arg_17_0.selectCardMo)
+	arg_17_0:refreshSelectStatus()
+	arg_17_0:refreshSelectText()
+	arg_17_0:refreshSelectLine()
+	arg_17_0:refreshEnemyOutLine()
 end
 
-function slot0.refreshSelectStatus(slot0)
-	for slot4, slot5 in ipairs(slot0.cardList) do
-		if slot0.cardItemList[slot4] then
-			if slot5 == slot0.selectCardMo then
-				slot8 = slot5:isUniqueSkill()
+function var_0_0.refreshSelectStatus(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.cardList) do
+		local var_18_0 = arg_18_0.cardItemList[iter_18_0]
 
-				gohelper.setActive(slot6.goSelectBig, slot8)
-				gohelper.setActive(slot6.goSelectSmall, not slot8)
+		if var_18_0 then
+			if iter_18_1 == arg_18_0.selectCardMo then
+				local var_18_1 = iter_18_1:isUniqueSkill()
+
+				gohelper.setActive(var_18_0.goSelectBig, var_18_1)
+				gohelper.setActive(var_18_0.goSelectSmall, not var_18_1)
 			else
-				gohelper.setActive(slot6.goSelectBig, false)
-				gohelper.setActive(slot6.goSelectSmall, false)
+				gohelper.setActive(var_18_0.goSelectBig, false)
+				gohelper.setActive(var_18_0.goSelectSmall, false)
 			end
 		end
 	end
 end
 
-function slot0.refreshSelectText(slot0)
-	if not lua_skill.configDict[slot0.selectCardMo.skillId] then
+function var_0_0.refreshSelectText(arg_19_0)
+	local var_19_0 = lua_skill.configDict[arg_19_0.selectCardMo.skillId]
+
+	if not var_19_0 then
 		return
 	end
 
-	slot0._txtskillname.text = slot1.name
-	slot0._txtskilldec.text = SkillHelper.getSkillDesc(FightDataHelper.entityMgr:getById(slot0.selectCardMo.uid) and slot2:getEntityName() or nil, slot1)
+	local var_19_1 = FightDataHelper.entityMgr:getById(arg_19_0.selectCardMo.uid)
+
+	arg_19_0._txtskillname.text = var_19_0.name
+	arg_19_0._txtskilldec.text = SkillHelper.getSkillDesc(var_19_1 and var_19_1:getEntityName() or nil, var_19_0)
 end
 
-function slot0.refreshSelectLine(slot0)
-	if not lua_skill.configDict[slot0.selectCardMo.skillId] then
+function var_0_0.refreshSelectLine(arg_20_0)
+	local var_20_0 = lua_skill.configDict[arg_20_0.selectCardMo.skillId]
+
+	if not var_20_0 then
 		return
 	end
 
-	slot0:hideAllLine()
-	slot0:hideAllSelectUI()
+	local var_20_1 = arg_20_0:getTargetType()
 
-	if slot0:getTargetType() == FightEnum.SkillTargetType.Single then
-		slot0:drawSingleLine()
-	elseif slot2 == FightEnum.SkillTargetType.Multi then
-		slot0:drawMultiLine(slot1.targetLimit)
-	elseif slot2 == FightEnum.SkillTargetType.Side then
-		slot0:drawSideLine(slot1.targetLimit)
+	arg_20_0:hideAllLine()
+	arg_20_0:hideAllSelectUI()
+
+	if var_20_1 == FightEnum.SkillTargetType.Single then
+		arg_20_0:drawSingleLine()
+	elseif var_20_1 == FightEnum.SkillTargetType.Multi then
+		arg_20_0:drawMultiLine(var_20_0.targetLimit)
+	elseif var_20_1 == FightEnum.SkillTargetType.Side then
+		arg_20_0:drawSideLine(var_20_0.targetLimit)
 	else
 		logError("暂不支持全场")
 	end
 end
 
-function slot0.refreshEnemyOutLine(slot0)
-	if not slot0.selectCardMo then
+function var_0_0.refreshEnemyOutLine(arg_21_0)
+	if not arg_21_0.selectCardMo then
 		return
 	end
 
-	slot0:hideAllOutLine()
+	arg_21_0:hideAllOutLine()
 
-	if not FightHelper.getEntity(slot0.selectCardMo.uid) then
+	local var_21_0 = FightHelper.getEntity(arg_21_0.selectCardMo.uid)
+
+	if not var_21_0 then
 		return
 	end
 
-	if slot1.effect:getEffectWrap(uv0) then
-		slot2:setActive(true)
+	local var_21_1 = var_21_0.effect:getEffectWrap(var_0_1)
+
+	if var_21_1 then
+		var_21_1:setActive(true)
 	else
-		slot2 = slot1.effect:addHangEffect(uv0, ModuleEnum.SpineHangPointRoot, nil, , , true)
+		local var_21_2 = var_21_0.effect:addHangEffect(var_0_1, ModuleEnum.SpineHangPointRoot, nil, nil, nil, true)
 
-		slot2:setActive(true)
-		slot2:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot2)
+		var_21_2:setActive(true)
+		var_21_2:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(var_21_0.id, var_21_2)
 	end
 end
 
-function slot0.hideAllOutLine(slot0)
-	for slot6, slot7 in pairs(GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(SceneTag.UnitMonster)) do
-		if slot7.effect:getEffectWrap(uv0) then
-			slot8:setActive(false)
+function var_0_0.hideAllOutLine(arg_22_0)
+	local var_22_0 = GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(SceneTag.UnitMonster)
+
+	for iter_22_0, iter_22_1 in pairs(var_22_0) do
+		local var_22_1 = iter_22_1.effect:getEffectWrap(var_0_1)
+
+		if var_22_1 then
+			var_22_1:setActive(false)
 		end
 	end
 end
 
-function slot0.getTargetType(slot0)
-	if not lua_skill.configDict[slot0.selectCardMo.skillId] then
+function var_0_0.getTargetType(arg_23_0)
+	local var_23_0 = lua_skill.configDict[arg_23_0.selectCardMo.skillId]
+
+	if not var_23_0 then
 		return FightEnum.SkillTargetType.Single
 	end
 
-	slot3 = slot1.logicTarget and lua_ai_monster_target.configDict[slot2]
+	local var_23_1 = var_23_0.logicTarget
+	local var_23_2 = var_23_1 and lua_ai_monster_target.configDict[var_23_1]
 
-	return slot3 and slot3.targetNumber or FightEnum.SkillTargetType.Single
+	return var_23_2 and var_23_2.targetNumber or FightEnum.SkillTargetType.Single
 end
 
-function slot0.getLineColor(slot0)
-	if not lua_skill.configDict[slot0.selectCardMo.skillId] then
+function var_0_0.getLineColor(arg_24_0)
+	local var_24_0 = lua_skill.configDict[arg_24_0.selectCardMo.skillId]
+
+	if not var_24_0 then
 		return FightEnum.SkillLineColor.Red
 	end
 
-	slot3 = slot1.showTag and lua_ai_monster_card_tag.configDict[slot2]
+	local var_24_1 = var_24_0.showTag
+	local var_24_2 = var_24_1 and lua_ai_monster_card_tag.configDict[var_24_1]
 
-	return slot3 and slot3.lineColor or FightEnum.SkillLineColor.Red
+	return var_24_2 and var_24_2.lineColor or FightEnum.SkillLineColor.Red
 end
 
-slot0.StartParam = UnityEngine.Shader.PropertyToID("_StartVec")
-slot0.TargetParam = UnityEngine.Shader.PropertyToID("_EndVec")
+var_0_0.StartParam = UnityEngine.Shader.PropertyToID("_StartVec")
+var_0_0.TargetParam = UnityEngine.Shader.PropertyToID("_EndVec")
 
-function slot0.drawSingleLine(slot0)
-	slot3 = slot0:getEntityTopScreenPos(slot0.selectCardMo.targetUid)
+function var_0_0.drawSingleLine(arg_25_0)
+	local var_25_0 = arg_25_0.selectCardMo.targetUid
+	local var_25_1 = arg_25_0:getCardScreenPos(arg_25_0.selectCardMo)
+	local var_25_2 = arg_25_0:getEntityTopScreenPos(var_25_0)
 
-	if not slot0:getCardScreenPos(slot0.selectCardMo) or not slot3 then
+	if not var_25_1 or not var_25_2 then
 		return
 	end
 
-	slot4 = slot0:getLineColor()
+	local var_25_3 = arg_25_0:getLineColor()
+	local var_25_4 = arg_25_0:canUseSkill(arg_25_0.selectCardMo) and arg_25_0.fullLineColor2LineList[var_25_3] or arg_25_0.dottedLineColor2LineList[var_25_3]
+	local var_25_5 = arg_25_0:getLineGo(1, var_25_4)
 
-	slot0:drawLine(slot0:getLineGo(1, slot0:canUseSkill(slot0.selectCardMo) and slot0.fullLineColor2LineList[slot4] or slot0.dottedLineColor2LineList[slot4]), slot2, slot3)
-	slot0:showSelectUI(1, slot1)
+	arg_25_0:drawLine(var_25_5, var_25_1, var_25_2)
+	arg_25_0:showSelectUI(1, var_25_0)
 end
 
-function slot0.drawMultiLine(slot0, slot1)
-	if not slot0:getCardScreenPos(slot0.selectCardMo) then
+function var_0_0.drawMultiLine(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getCardScreenPos(arg_26_0.selectCardMo)
+
+	if not var_26_0 then
 		return
 	end
 
-	slot3 = nil
-	slot4 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_26_1
+	local var_26_2 = GameSceneMgr.instance:getCurScene().entityMgr
 
-	for slot11, slot12 in pairs((slot1 ~= FightEnum.TargetLimit.EnemySide or slot4:getTagUnitDict(SceneTag.UnitPlayer)) and slot4:getTagUnitDict(SceneTag.UnitMonster)) do
-		if not slot12.isSub then
-			if slot0:getEntityTopScreenPos(slot11) then
-				slot7 = 0 + 1
+	if arg_26_1 == FightEnum.TargetLimit.EnemySide then
+		var_26_1 = var_26_2:getTagUnitDict(SceneTag.UnitPlayer)
+	else
+		var_26_1 = var_26_2:getTagUnitDict(SceneTag.UnitMonster)
+	end
 
-				slot0:drawLine(slot0:getLineGo(slot7, (slot0:canUseSkill(slot0.selectCardMo) and slot0.selectCardMo.targetUid == slot11 and slot0.fullLineColor2LineList or slot0.dottedLineColor2LineList)[slot0:getLineColor()]), slot2, slot15)
-				slot0:showSelectUI(slot7, slot12.id)
+	local var_26_3 = arg_26_0:getLineColor()
+	local var_26_4 = arg_26_0:canUseSkill(arg_26_0.selectCardMo)
+	local var_26_5 = 0
+
+	for iter_26_0, iter_26_1 in pairs(var_26_1) do
+		if not iter_26_1.isSub then
+			local var_26_6 = (var_26_4 and arg_26_0.selectCardMo.targetUid == iter_26_0 and arg_26_0.fullLineColor2LineList or arg_26_0.dottedLineColor2LineList)[var_26_3]
+			local var_26_7 = arg_26_0:getEntityTopScreenPos(iter_26_0)
+
+			if var_26_7 then
+				var_26_5 = var_26_5 + 1
+
+				local var_26_8 = arg_26_0:getLineGo(var_26_5, var_26_6)
+
+				arg_26_0:drawLine(var_26_8, var_26_0, var_26_7)
+				arg_26_0:showSelectUI(var_26_5, iter_26_1.id)
 			end
 		end
 	end
 end
 
-function slot0.drawSideLine(slot0, slot1)
-	if not slot0:getCardScreenPos(slot0.selectCardMo) then
+function var_0_0.drawSideLine(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:getCardScreenPos(arg_27_0.selectCardMo)
+
+	if not var_27_0 then
 		return
 	end
 
-	slot3 = nil
-	slot4 = GameSceneMgr.instance:getCurScene().entityMgr
-	slot5 = slot0:getLineColor()
+	local var_27_1
+	local var_27_2 = GameSceneMgr.instance:getCurScene().entityMgr
 
-	for slot11, slot12 in pairs((slot1 ~= FightEnum.TargetLimit.EnemySide or slot4:getTagUnitDict(SceneTag.UnitPlayer)) and slot4:getTagUnitDict(SceneTag.UnitMonster)) do
-		if not slot12.isSub then
-			if slot0:getEntityTopScreenPos(slot11) then
-				slot7 = 0 + 1
+	if arg_27_1 == FightEnum.TargetLimit.EnemySide then
+		var_27_1 = var_27_2:getTagUnitDict(SceneTag.UnitPlayer)
+	else
+		var_27_1 = var_27_2:getTagUnitDict(SceneTag.UnitMonster)
+	end
 
-				slot0:drawLine(slot0:getLineGo(slot7, slot0:canUseSkill(slot0.selectCardMo) and slot0.fullLineColor2LineList[slot5] or slot0.dottedLineColor2LineList[slot5]), slot2, slot14)
-				slot0:showSelectUI(slot7, slot12.id)
+	local var_27_3 = arg_27_0:getLineColor()
+	local var_27_4 = arg_27_0:canUseSkill(arg_27_0.selectCardMo)
+	local var_27_5 = 0
+
+	for iter_27_0, iter_27_1 in pairs(var_27_1) do
+		if not iter_27_1.isSub then
+			local var_27_6 = var_27_4 and arg_27_0.fullLineColor2LineList[var_27_3] or arg_27_0.dottedLineColor2LineList[var_27_3]
+			local var_27_7 = arg_27_0:getEntityTopScreenPos(iter_27_0)
+
+			if var_27_7 then
+				var_27_5 = var_27_5 + 1
+
+				local var_27_8 = arg_27_0:getLineGo(var_27_5, var_27_6)
+
+				arg_27_0:drawLine(var_27_8, var_27_0, var_27_7)
+				arg_27_0:showSelectUI(var_27_5, iter_27_1.id)
 			end
 		end
 	end
 end
 
-function slot0.drawLine(slot0, slot1, slot2, slot3)
-	slot0:setArrowPosition(slot1, slot2, slot3)
+function var_0_0.drawLine(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	arg_28_0:setArrowPosition(arg_28_1, arg_28_2, arg_28_3)
 
-	slot2, slot3 = slot0:getFormatPos(slot2, slot3)
+	arg_28_2, arg_28_3 = arg_28_0:getFormatPos(arg_28_2, arg_28_3)
 
-	if not gohelper.isNil(gohelper.findChild(slot1, "fulllineeffect")) and slot4:GetComponent(typeof(UnityEngine.Renderer)) and slot5.material then
-		slot0:setMatByScreenPos(slot6, uv0.StartParam, slot2)
-		slot0:setMatByScreenPos(slot6, uv0.TargetParam, slot3)
+	local var_28_0 = gohelper.findChild(arg_28_1, "fulllineeffect")
+
+	if not gohelper.isNil(var_28_0) then
+		local var_28_1 = var_28_0:GetComponent(typeof(UnityEngine.Renderer))
+		local var_28_2 = var_28_1 and var_28_1.material
+
+		if var_28_2 then
+			arg_28_0:setMatByScreenPos(var_28_2, var_0_0.StartParam, arg_28_2)
+			arg_28_0:setMatByScreenPos(var_28_2, var_0_0.TargetParam, arg_28_3)
+		end
 	end
 
-	slot6 = slot1:GetComponent(typeof(UnityEngine.Renderer)).material
+	local var_28_3 = arg_28_1:GetComponent(typeof(UnityEngine.Renderer)).material
 
-	slot0:setMatByScreenPos(slot6, uv0.StartParam, slot2)
-	slot0:setMatByScreenPos(slot6, uv0.TargetParam, slot3)
+	arg_28_0:setMatByScreenPos(var_28_3, var_0_0.StartParam, arg_28_2)
+	arg_28_0:setMatByScreenPos(var_28_3, var_0_0.TargetParam, arg_28_3)
 end
 
-slot0.Orient = {
+var_0_0.Orient = {
 	Right = 1,
 	Left = 2
 }
-slot0.RotationZ = 140
+var_0_0.RotationZ = 140
 
-function slot0.setArrowPosition(slot0, slot1, slot2, slot3)
-	if gohelper.findChild(slot1, "#tou") then
-		transformhelper.setLocalRotation(slot4.transform, 0, 0, (slot2.x <= slot3.x and uv0.Orient.Right or uv0.Orient.Left) == uv0.Orient.Right and -uv0.RotationZ or uv0.RotationZ)
+function var_0_0.setArrowPosition(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	local var_29_0 = gohelper.findChild(arg_29_1, "#tou")
 
-		slot7, slot8 = recthelper.screenPosToAnchorPos2(slot3, slot1.transform)
+	if var_29_0 then
+		local var_29_1 = (arg_29_2.x <= arg_29_3.x and var_0_0.Orient.Right or var_0_0.Orient.Left) == var_0_0.Orient.Right and -var_0_0.RotationZ or var_0_0.RotationZ
 
-		recthelper.setAnchor(slot4.transform, slot7, slot8)
+		transformhelper.setLocalRotation(var_29_0.transform, 0, 0, var_29_1)
+
+		local var_29_2, var_29_3 = recthelper.screenPosToAnchorPos2(arg_29_3, arg_29_1.transform)
+
+		recthelper.setAnchor(var_29_0.transform, var_29_2, var_29_3)
 	end
 end
 
-function slot0.setMatByScreenPos(slot0, slot1, slot2, slot3)
-	slot0.tempVector4:Set(slot3.x * slot0.wRate - slot0.halfPxWidth, slot3.y * slot0.hRate - slot0.halfPxHeight, 0, 0)
-	slot1:SetVector(slot2, slot0.tempVector4)
+function var_0_0.setMatByScreenPos(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	local var_30_0 = arg_30_3.x * arg_30_0.wRate - arg_30_0.halfPxWidth
+	local var_30_1 = arg_30_3.y * arg_30_0.hRate - arg_30_0.halfPxHeight
+
+	arg_30_0.tempVector4:Set(var_30_0, var_30_1, 0, 0)
+	arg_30_1:SetVector(arg_30_2, arg_30_0.tempVector4)
 end
 
-function slot0.getFormatPos(slot0, slot1, slot2)
-	if slot2.x < slot1.x then
-		return slot2, slot1
+function var_0_0.getFormatPos(arg_31_0, arg_31_1, arg_31_2)
+	if arg_31_1.x > arg_31_2.x then
+		return arg_31_2, arg_31_1
 	end
 
-	return slot1, slot2
+	return arg_31_1, arg_31_2
 end
 
-function slot0.getLineGo(slot0, slot1, slot2)
-	if not slot2[slot1] then
-		table.insert(slot2, gohelper.cloneInPlace(slot2[1]))
+function var_0_0.getLineGo(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = arg_32_2[arg_32_1]
+
+	if not var_32_0 then
+		var_32_0 = gohelper.cloneInPlace(arg_32_2[1])
+
+		table.insert(arg_32_2, var_32_0)
 	end
 
-	gohelper.setActive(slot3, true)
+	gohelper.setActive(var_32_0, true)
 
-	return slot3
+	return var_32_0
 end
 
-function slot0.getCardScreenPos(slot0, slot1)
-	if not FightHelper.getEntity(slot1.uid) then
+function var_0_0.getCardScreenPos(arg_33_0, arg_33_1)
+	local var_33_0 = FightHelper.getEntity(arg_33_1.uid)
+
+	if not var_33_0 then
 		return
 	end
 
-	if not (slot2.nameUI and slot3:getOpCtrl()) then
+	local var_33_1 = var_33_0.nameUI
+	local var_33_2 = var_33_1 and var_33_1:getOpCtrl()
+
+	if not var_33_2 then
 		return
 	end
 
-	for slot9, slot10 in ipairs(slot4:getOpItemList()) do
-		if FightHelper.isSameCardMo(slot10.cardInfoMO, slot1) then
-			slot12, slot13 = recthelper.uiPosToScreenPos2(slot10.topPosRectTr)
+	local var_33_3 = var_33_2:getOpItemList()
 
-			slot0.startVector3:Set(slot12, slot13)
+	for iter_33_0, iter_33_1 in ipairs(var_33_3) do
+		if FightHelper.isSameCardMo(iter_33_1.cardInfoMO, arg_33_1) then
+			local var_33_4 = iter_33_1.topPosRectTr
+			local var_33_5, var_33_6 = recthelper.uiPosToScreenPos2(var_33_4)
 
-			return slot0.startVector3
+			arg_33_0.startVector3:Set(var_33_5, var_33_6)
+
+			return arg_33_0.startVector3
 		end
 	end
 end
 
-function slot0.getEntityTopScreenPos(slot0, slot1)
-	if not FightHelper.getEntity(slot1) then
+function var_0_0.getEntityTopScreenPos(arg_34_0, arg_34_1)
+	local var_34_0 = FightHelper.getEntity(arg_34_1)
+
+	if not var_34_0 then
 		return
 	end
 
-	if not slot2.nameUI then
+	local var_34_1 = var_34_0.nameUI
+
+	if not var_34_1 then
 		return
 	end
 
-	slot5, slot6 = recthelper.uiPosToScreenPos2(slot3.careerTopRectTr)
+	local var_34_2 = var_34_1.careerTopRectTr
+	local var_34_3, var_34_4 = recthelper.uiPosToScreenPos2(var_34_2)
 
-	slot0.targetVector3:Set(slot5, slot6)
+	arg_34_0.targetVector3:Set(var_34_3, var_34_4)
 
-	return slot0.targetVector3
+	return arg_34_0.targetVector3
 end
 
-function slot0.hideAllLine(slot0)
-	slot0:hideLineList(slot0.redFullLineList)
-	slot0:hideLineList(slot0.redDottedLineList)
-	slot0:hideLineList(slot0.yellowFullLineList)
-	slot0:hideLineList(slot0.yellowDottedLineList)
+function var_0_0.hideAllLine(arg_35_0)
+	arg_35_0:hideLineList(arg_35_0.redFullLineList)
+	arg_35_0:hideLineList(arg_35_0.redDottedLineList)
+	arg_35_0:hideLineList(arg_35_0.yellowFullLineList)
+	arg_35_0:hideLineList(arg_35_0.yellowDottedLineList)
 end
 
-function slot0.hideLineList(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		gohelper.setActive(slot6, false)
-	end
-end
-
-function slot0.hideAllSelectUI(slot0)
-	for slot4, slot5 in ipairs(slot0.selectGoList) do
-		gohelper.setActive(slot5, false)
+function var_0_0.hideLineList(arg_36_0, arg_36_1)
+	for iter_36_0, iter_36_1 in ipairs(arg_36_1) do
+		gohelper.setActive(iter_36_1, false)
 	end
 end
 
-function slot0.showSelectUI(slot0, slot1, slot2)
-	if not slot0.selectGoList[slot1] then
-		table.insert(slot0.selectGoList, gohelper.cloneInPlace(slot0.goSelectItem))
+function var_0_0.hideAllSelectUI(arg_37_0)
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0.selectGoList) do
+		gohelper.setActive(iter_37_1, false)
+	end
+end
+
+function var_0_0.showSelectUI(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = arg_38_0.selectGoList[arg_38_1]
+
+	if not var_38_0 then
+		var_38_0 = gohelper.cloneInPlace(arg_38_0.goSelectItem)
+
+		table.insert(arg_38_0.selectGoList, var_38_0)
 	end
 
-	if not FightHelper.getEntity(slot2) then
-		gohelper.setActive(slot3, false)
+	local var_38_1 = FightHelper.getEntity(arg_38_2)
 
-		return
-	end
-
-	gohelper.setActive(slot3, true)
-
-	if FightHelper.isAssembledMonster(slot4) then
-		slot7 = lua_fight_assembled_monster.configDict[slot4:getMO().skin]
-		slot8, slot9, slot10 = transformhelper.getPos(slot4.go.transform)
-		slot11, slot12 = recthelper.worldPosToAnchorPosXYZ(slot8 + slot7.selectPos[1], slot9 + slot7.selectPos[2], slot10, slot0.selectContainerTr)
-
-		recthelper.setAnchor(slot3:GetComponent(gohelper.Type_RectTransform), slot11, slot12)
-
-		return
-	end
-
-	if slot4:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle) and slot6.name == ModuleEnum.SpineHangPoint.mountmiddle then
-		slot7, slot8, slot9 = transformhelper.getPos(slot6.transform)
-		slot10, slot11 = recthelper.worldPosToAnchorPosXYZ(slot7, slot8, slot9, slot0.selectContainerTr)
-
-		recthelper.setAnchor(slot5, slot10, slot11)
+	if not var_38_1 then
+		gohelper.setActive(var_38_0, false)
 
 		return
 	end
 
-	slot7, slot8, slot9, slot10 = slot0:_calcRect(slot4)
+	gohelper.setActive(var_38_0, true)
 
-	recthelper.setAnchor(slot5, (slot7 + slot9) / 2, (slot8 + slot10) / 2)
+	local var_38_2 = var_38_0:GetComponent(gohelper.Type_RectTransform)
+
+	if FightHelper.isAssembledMonster(var_38_1) then
+		local var_38_3 = var_38_1:getMO()
+		local var_38_4 = lua_fight_assembled_monster.configDict[var_38_3.skin]
+		local var_38_5, var_38_6, var_38_7 = transformhelper.getPos(var_38_1.go.transform)
+		local var_38_8, var_38_9 = recthelper.worldPosToAnchorPosXYZ(var_38_5 + var_38_4.selectPos[1], var_38_6 + var_38_4.selectPos[2], var_38_7, arg_38_0.selectContainerTr)
+
+		recthelper.setAnchor(var_38_2, var_38_8, var_38_9)
+
+		return
+	end
+
+	local var_38_10 = var_38_1:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle)
+
+	if var_38_10 and var_38_10.name == ModuleEnum.SpineHangPoint.mountmiddle then
+		local var_38_11, var_38_12, var_38_13 = transformhelper.getPos(var_38_10.transform)
+		local var_38_14, var_38_15 = recthelper.worldPosToAnchorPosXYZ(var_38_11, var_38_12, var_38_13, arg_38_0.selectContainerTr)
+
+		recthelper.setAnchor(var_38_2, var_38_14, var_38_15)
+
+		return
+	end
+
+	local var_38_16, var_38_17, var_38_18, var_38_19 = arg_38_0:_calcRect(var_38_1)
+
+	recthelper.setAnchor(var_38_2, (var_38_16 + var_38_18) / 2, (var_38_17 + var_38_19) / 2)
 end
 
-function slot0._calcRect(slot0, slot1)
-	slot3, slot4, slot5 = transformhelper.getPos(slot1:getHangPoint(ModuleEnum.SpineHangPoint.BodyStatic).transform)
-	slot6, slot7 = FightHelper.getEntityBoxSizeOffsetV2(slot1)
-	slot8 = slot1:isMySide() and 1 or -1
-	slot9, slot10 = recthelper.worldPosToAnchorPosXYZ(slot3 - slot6.x * 0.5, slot4 - slot6.y * 0.5 * slot8, slot5, slot0.selectContainerTr)
-	slot11, slot12 = recthelper.worldPosToAnchorPosXYZ(slot3 + slot6.x * 0.5, slot4 + slot6.y * 0.5 * slot8, slot5, slot0.selectContainerTr)
+function var_0_0._calcRect(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_1:getHangPoint(ModuleEnum.SpineHangPoint.BodyStatic)
+	local var_39_1, var_39_2, var_39_3 = transformhelper.getPos(var_39_0.transform)
+	local var_39_4, var_39_5 = FightHelper.getEntityBoxSizeOffsetV2(arg_39_1)
+	local var_39_6 = arg_39_1:isMySide() and 1 or -1
+	local var_39_7, var_39_8 = recthelper.worldPosToAnchorPosXYZ(var_39_1 - var_39_4.x * 0.5, var_39_2 - var_39_4.y * 0.5 * var_39_6, var_39_3, arg_39_0.selectContainerTr)
+	local var_39_9, var_39_10 = recthelper.worldPosToAnchorPosXYZ(var_39_1 + var_39_4.x * 0.5, var_39_2 + var_39_4.y * 0.5 * var_39_6, var_39_3, arg_39_0.selectContainerTr)
 
-	return slot9, slot10, slot11, slot12
+	return var_39_7, var_39_8, var_39_9, var_39_10
 end
 
-function slot0.canUseSkill(slot0, slot1)
-	slot2 = slot1.skillId
+function var_0_0.canUseSkill(arg_40_0, arg_40_1)
+	local var_40_0 = arg_40_1.skillId
+	local var_40_1 = FightHelper.getEntity(arg_40_1.uid)
 
-	if not FightHelper.getEntity(slot1.uid) then
+	if not var_40_1 then
 		return true
 	end
 
-	slot4 = slot3:getMO()
+	local var_40_2 = var_40_1:getMO()
+	local var_40_3 = FightViewHandCardItemLock.canUseCardSkill(var_40_1.id, var_40_0)
 
-	if FightCardModel.instance:isUniqueSkill(slot3.id, slot2) then
-		slot5 = FightViewHandCardItemLock.canUseCardSkill(slot3.id, slot2) and slot4:getUniqueSkillPoint() <= slot4.exPoint
+	if FightCardModel.instance:isUniqueSkill(var_40_1.id, var_40_0) then
+		local var_40_4 = var_40_2.exPoint
+		local var_40_5 = var_40_2:getUniqueSkillPoint()
+
+		var_40_3 = var_40_3 and var_40_5 <= var_40_4
 	end
 
-	return slot5
+	return var_40_3
 end
 
-function slot0.onClickCard(slot0, slot1)
-	slot0:selectCard(slot1)
+function var_0_0.onClickCard(arg_41_0, arg_41_1)
+	arg_41_0:selectCard(arg_41_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_42_0)
 	FightViewPartVisible.set(true, true, true, false, false)
-	slot0:hideAllOutLine()
+	arg_42_0:hideAllOutLine()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.cardItemList) do
-		slot5.click:RemoveClickListener()
-		slot5.simageHeadIcon:UnLoadImage()
-		slot5.actionCardItem:destroy()
+function var_0_0.onDestroyView(arg_43_0)
+	for iter_43_0, iter_43_1 in ipairs(arg_43_0.cardItemList) do
+		iter_43_1.click:RemoveClickListener()
+		iter_43_1.simageHeadIcon:UnLoadImage()
+		iter_43_1.actionCardItem:destroy()
 	end
 end
 
-return slot0
+return var_0_0

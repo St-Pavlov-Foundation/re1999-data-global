@@ -1,12 +1,12 @@
-module("modules.logic.weekwalk.model.WeekWalkTarotListModel", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekWalkTarotListModel", package.seeall)
 
-slot0 = class("WeekWalkTarotListModel", ListScrollModel)
+local var_0_0 = class("WeekWalkTarotListModel", ListScrollModel)
 
-function slot0.setTarotList(slot0, slot1)
-	slot0:clear()
-	slot0:setList(slot1)
+function var_0_0.setTarotList(arg_1_0, arg_1_1)
+	arg_1_0:clear()
+	arg_1_0:setList(arg_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

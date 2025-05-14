@@ -1,117 +1,126 @@
-module("modules.ugui.uieffect.UIEffectLoader", package.seeall)
+﻿module("modules.ugui.uieffect.UIEffectLoader", package.seeall)
 
-slot0 = class("UIEffectLoader")
+local var_0_0 = class("UIEffectLoader")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-slot1 = SLFramework.EffectPhotographerPool.Instance
+local var_0_1 = SLFramework.EffectPhotographerPool.Instance
 
-function slot0.Init(slot0, slot1, slot2, slot3)
-	slot0._effectPath = slot1
-	slot0._width = slot2
-	slot0._height = slot3
-	slot0._photographer = uv0:Get(slot2, slot3)
-	slot0._refCount = 0
+function var_0_0.Init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._effectPath = arg_2_1
+	arg_2_0._width = arg_2_2
+	arg_2_0._height = arg_2_3
+	arg_2_0._photographer = var_0_1:Get(arg_2_2, arg_2_3)
+	arg_2_0._refCount = 0
 end
 
-function slot0.startLoad(slot0)
-	if slot0._loader then
+function var_0_0.startLoad(arg_3_0)
+	if arg_3_0._loader then
 		return
 	end
 
-	slot2 = MultiAbLoader.New()
-	slot0._loader = slot2
+	local var_3_0 = arg_3_0._effectPath
+	local var_3_1 = MultiAbLoader.New()
 
-	slot2:addPath(slot0._effectPath)
-	slot2:addPath("ui/materials/dynamic/ui_photo_additive.mat")
-	slot2:startLoad(function (slot0)
-		if uv0:CheckDispose() then
+	arg_3_0._loader = var_3_1
+
+	var_3_1:addPath(var_3_0)
+
+	local var_3_2 = "ui/materials/dynamic/ui_photo_additive.mat"
+
+	var_3_1:addPath(var_3_2)
+	var_3_1:startLoad(function(arg_4_0)
+		if arg_3_0:CheckDispose() then
 			return
 		end
 
-		slot3 = gohelper.clone(uv1:getAssetItem(uv2):GetResource(uv2), nil, uv2)
+		local var_4_0 = var_3_1:getAssetItem(var_3_0):GetResource(var_3_0)
+		local var_4_1 = gohelper.clone(var_4_0, nil, var_3_0)
 
-		slot3:SetActive(false)
-		SLFramework.GameObjectHelper.SetLayer(slot3, uv3.DefaultEffectLayer, true)
-		slot3.transform:SetParent(uv0._photographer.effectRootGo.transform, false)
-		slot3:SetActive(true)
+		var_4_1:SetActive(false)
+		SLFramework.GameObjectHelper.SetLayer(var_4_1, var_0_1.DefaultEffectLayer, true)
+		var_4_1.transform:SetParent(arg_3_0._photographer.effectRootGo.transform, false)
+		var_4_1:SetActive(true)
 
-		uv0._effectGo = slot3
+		arg_3_0._effectGo = var_4_1
 
-		if uv0._loadcallback ~= nil then
-			uv0._loadcallback(uv0._callbackTarget)
+		if arg_3_0._loadcallback ~= nil then
+			arg_3_0._loadcallback(arg_3_0._callbackTarget)
 		end
 
-		uv0._material = uv1:getAssetItem(uv4):GetResource(uv4)
+		local var_4_2 = var_3_1:getAssetItem(var_3_2):GetResource(var_3_2)
 
-		for slot8, slot9 in ipairs(uv0._rawImageList) do
-			slot9.material = slot4
+		arg_3_0._material = var_4_2
+
+		for iter_4_0, iter_4_1 in ipairs(arg_3_0._rawImageList) do
+			iter_4_1.material = var_4_2
 		end
 	end)
 end
 
-function slot0.GetPhotographer(slot0)
-	slot0._refCount = slot0._refCount + 1
+function var_0_0.GetPhotographer(arg_5_0)
+	arg_5_0._refCount = arg_5_0._refCount + 1
 
-	return slot0._photographer
+	return arg_5_0._photographer
 end
 
-function slot0.getEffectGo(slot0)
-	return slot0._effectGo
+function var_0_0.getEffectGo(arg_6_0)
+	return arg_6_0._effectGo
 end
 
-function slot0.getEffect(slot0, slot1, slot2, slot3)
-	slot1.texture = slot0:GetPhotographer().renderTexture
+function var_0_0.getEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_1.texture = arg_7_0:GetPhotographer().renderTexture
 
-	if slot0._material then
-		slot1.material = slot0._material
+	if arg_7_0._material then
+		arg_7_1.material = arg_7_0._material
 
 		return
 	end
 
-	slot0._rawImageList = slot0._rawImageList or {}
+	arg_7_0._rawImageList = arg_7_0._rawImageList or {}
 
-	table.insert(slot0._rawImageList, slot1)
+	table.insert(arg_7_0._rawImageList, arg_7_1)
 
-	slot0._loadcallback = slot2
-	slot0._callbackTarget = slot3
+	arg_7_0._loadcallback = arg_7_2
+	arg_7_0._callbackTarget = arg_7_3
 
-	slot0:startLoad()
+	arg_7_0:startLoad()
 end
 
-function slot0.ReduceRef(slot0)
-	slot0._refCount = slot0._refCount - 1
+function var_0_0.ReduceRef(arg_8_0)
+	arg_8_0._refCount = arg_8_0._refCount - 1
 
-	slot0:CheckDispose()
+	arg_8_0:CheckDispose()
 end
 
-function slot0.CheckDispose(slot0)
-	if slot0._refCount <= 0 then
-		if not slot0._loader then
+function var_0_0.CheckDispose(arg_9_0)
+	if arg_9_0._refCount <= 0 then
+		if not arg_9_0._loader then
 			return true
 		end
 
-		slot0._loader:dispose()
+		arg_9_0._loader:dispose()
 
-		slot0._loader = nil
-		slot0._rawImageList = nil
-		slot0._material = nil
+		arg_9_0._loader = nil
+		arg_9_0._rawImageList = nil
+		arg_9_0._material = nil
 
-		uv0:Put(slot0._photographer)
+		var_0_1:Put(arg_9_0._photographer)
 
-		slot0._photographer = nil
+		arg_9_0._photographer = nil
 
-		if slot0._effectGo then
-			gohelper.destroy(slot0._effectGo)
+		if arg_9_0._effectGo then
+			gohelper.destroy(arg_9_0._effectGo)
 
-			slot0._effectGo = nil
+			arg_9_0._effectGo = nil
 		end
 
-		UIEffectManager.instance:_delEffectLoader(slot0._effectPath, slot0._width, slot0._height)
+		UIEffectManager.instance:_delEffectLoader(arg_9_0._effectPath, arg_9_0._width, arg_9_0._height)
 
 		return true
 	end
 end
 
-return slot0
+return var_0_0

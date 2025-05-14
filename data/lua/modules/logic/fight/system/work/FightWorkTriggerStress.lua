@@ -1,30 +1,40 @@
-module("modules.logic.fight.system.work.FightWorkTriggerStress", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkTriggerStress", package.seeall)
 
-slot0 = class("FightWorkTriggerStress", FightEffectBase)
+local var_0_0 = class("FightWorkTriggerStress", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.targetId
+
+	if not FightDataHelper.entityMgr:getById(var_1_0) then
+		return arg_1_0:onDone(true)
 	end
 
-	if not (FightEnum.StressBehaviourConstId[slot0._actEffectMO.effectNum] and lua_stress_const.configDict[slot4]) then
-		return slot0:onDone(true)
+	local var_1_1 = arg_1_0._actEffectMO.effectNum
+	local var_1_2 = FightEnum.StressBehaviourConstId[var_1_1]
+	local var_1_3 = var_1_2 and lua_stress_const.configDict[var_1_2]
+
+	if not var_1_3 then
+		return arg_1_0:onDone(true)
 	end
 
-	if slot0:checkNeedWaitTimeLineHandle(slot0._actEffectMO) then
-		FightModel.instance:recordDelayHandleStressBehaviour(slot0._actEffectMO)
+	if arg_1_0:checkNeedWaitTimeLineHandle(arg_1_0._actEffectMO) then
+		FightModel.instance:recordDelayHandleStressBehaviour(arg_1_0._actEffectMO)
 	else
-		FightFloatMgr.instance:float(slot1, FightEnum.FloatType.stress, slot5.value2, tonumber(slot5.value))
-		FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, slot1, slot3)
+		local var_1_4 = tonumber(var_1_3.value)
+		local var_1_5 = var_1_3.value2
+
+		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_5, var_1_4)
+		FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, var_1_0, var_1_1)
 	end
 
-	return slot0:onDone(true)
+	return arg_1_0:onDone(true)
 end
 
-function slot0.checkNeedWaitTimeLineHandle(slot0, slot1)
-	slot3 = slot1.configEffect and lua_stress_rule.configDict[slot2]
+function var_0_0.checkNeedWaitTimeLineHandle(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.configEffect
+	local var_2_1 = var_2_0 and lua_stress_rule.configDict[var_2_0]
 
-	return slot3 and slot3.type == "triggerSkill"
+	return var_2_1 and var_2_1.type == "triggerSkill"
 end
 
-return slot0
+return var_0_0

@@ -1,89 +1,94 @@
-module("modules.logic.prototest.model.ProtoParamHelper", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoParamHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.buildProtoParamsByProto(slot0, slot1)
-	slot4 = {}
+function var_0_0.buildProtoParamsByProto(arg_1_0, arg_1_1)
+	local var_1_0 = getmetatable(arg_1_0)._descriptor.fields
+	local var_1_1 = {}
 
-	for slot8, slot9 in ipairs(getmetatable(slot0)._descriptor.fields) do
-		slot11 = ProtoTestCaseParamMO.New()
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_2 = arg_1_0._fields[iter_1_1]
+		local var_1_3 = ProtoTestCaseParamMO.New()
 
-		slot11:initProto(slot1, slot9, slot0._fields[slot9])
-		table.insert(slot4, slot11)
+		var_1_3:initProto(arg_1_1, iter_1_1, var_1_2)
+		table.insert(var_1_1, var_1_3)
 	end
 
-	table.sort(slot4, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(var_1_1, function(arg_2_0, arg_2_1)
+		return arg_2_0.id < arg_2_1.id
 	end)
 
-	return slot4
+	return var_1_1
 end
 
-function slot0.buildRepeatedParamsByProto(slot0, slot1)
-	slot2 = {}
+function var_0_0.buildRepeatedParamsByProto(arg_3_0, arg_3_1)
+	local var_3_0 = {}
 
-	for slot6, slot7 in ipairs(slot0) do
-		slot8 = ProtoTestCaseParamMO.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0) do
+		local var_3_1 = ProtoTestCaseParamMO.New()
 
-		slot8:initProtoRepeated(slot1, slot6, slot7)
-		table.insert(slot2, slot8)
+		var_3_1:initProtoRepeated(arg_3_1, iter_3_0, iter_3_1)
+		table.insert(var_3_0, var_3_1)
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(var_3_0, function(arg_4_0, arg_4_1)
+		return arg_4_0.id < arg_4_1.id
 	end)
 
-	return slot2
+	return var_3_0
 end
 
-slot1 = nil
-slot2 = {}
+local var_0_1
+local var_0_2 = {}
 
-function slot0.buildProtoByStructName(slot0)
-	uv0._firstInitProtoDict()
+function var_0_0.buildProtoByStructName(arg_5_0)
+	var_0_0._firstInitProtoDict()
 
-	if uv1[slot0] then
-		return uv1[slot0]()
+	if var_0_2[arg_5_0] then
+		return var_0_2[arg_5_0]()
 	end
 
-	for slot4, slot5 in ipairs(uv2) do
-		if slot5[slot0] then
-			uv1[slot0] = slot5[slot0]
+	for iter_5_0, iter_5_1 in ipairs(var_0_1) do
+		if iter_5_1[arg_5_0] then
+			var_0_2[arg_5_0] = iter_5_1[arg_5_0]
 
-			return uv1[slot0]()
+			return var_0_2[arg_5_0]()
 		end
 	end
 end
 
-function slot0._firstInitProtoDict()
-	if not uv0 then
-		uv0 = {}
+function var_0_0._firstInitProtoDict()
+	if not var_0_1 then
+		var_0_1 = {}
 
-		for slot3, slot4 in pairs(moduleNameToPath) do
-			if string.find(slot3, "_pb") then
-				if not moduleNameToTables[slot3] then
-					callWithCatch(function ()
-						slot0 = _G[uv0]
+		for iter_6_0, iter_6_1 in pairs(moduleNameToPath) do
+			if string.find(iter_6_0, "_pb") then
+				if not moduleNameToTables[iter_6_0] then
+					callWithCatch(function()
+						local var_7_0 = _G[iter_6_0]
 					end)
 				end
 
-				table.insert(uv0, moduleNameToTables[slot3])
+				table.insert(var_0_1, moduleNameToTables[iter_6_0])
 			end
 		end
 	end
 end
 
-function slot0.buildValueMOsByStructName(slot0)
-	slot1 = {}
+function var_0_0.buildValueMOsByStructName(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = var_0_0.buildProtoByStructName(arg_8_0)
+	local var_8_2 = getmetatable(var_8_1)._descriptor.fields
 
-	for slot8, slot9 in ipairs(getmetatable(uv0.buildProtoByStructName(slot0))._descriptor.fields) do
-		slot11 = ProtoTestCaseParamMO.New()
+	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
+		local var_8_3 = var_8_1._fields[iter_8_1]
+		local var_8_4 = ProtoTestCaseParamMO.New()
 
-		slot11:initProto(nil, slot9, slot2._fields[slot9])
-		table.insert(slot1, slot11)
+		var_8_4:initProto(nil, iter_8_1, var_8_3)
+		table.insert(var_8_0, var_8_4)
 	end
 
-	return slot1
+	return var_8_0
 end
 
-return slot0
+return var_0_0

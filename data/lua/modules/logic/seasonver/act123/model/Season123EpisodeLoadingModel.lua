@@ -1,81 +1,95 @@
-module("modules.logic.seasonver.act123.model.Season123EpisodeLoadingModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EpisodeLoadingModel", package.seeall)
 
-slot0 = class("Season123EpisodeLoadingModel", BaseModel)
+local var_0_0 = class("Season123EpisodeLoadingModel", BaseModel)
 
-function slot0.release(slot0)
-	slot0.activityId = nil
-	slot0.stage = nil
-	slot0.layer = nil
-	slot0._layerDict = nil
+function var_0_0.release(arg_1_0)
+	arg_1_0.activityId = nil
+	arg_1_0.stage = nil
+	arg_1_0.layer = nil
+	arg_1_0._layerDict = nil
 
-	slot0:clear()
+	arg_1_0:clear()
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.activityId = slot1
-	slot0.stage = slot2
-	slot0.layer = slot3
-	slot0._layerDict = {}
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.stage = arg_2_2
+	arg_2_0.layer = arg_2_3
+	arg_2_0._layerDict = {}
 
-	slot0:initEpisodeList()
+	arg_2_0:initEpisodeList()
 end
 
-slot0.AnimCount = 7
-slot0.EmptyStyleCount = 3
-slot0.TargetEpisodeOrder = 5
+var_0_0.AnimCount = 7
+var_0_0.EmptyStyleCount = 3
+var_0_0.TargetEpisodeOrder = 5
 
-function slot0.initEpisodeList(slot0)
-	slot1 = {}
+function var_0_0.initEpisodeList(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = Season123Config.instance:getSeasonEpisodeByStage(arg_3_0.activityId, arg_3_0.stage)
 
-	logNormal("episode list length : " .. tostring(#Season123Config.instance:getSeasonEpisodeByStage(slot0.activityId, slot0.stage)))
+	logNormal("episode list length : " .. tostring(#var_3_1))
 
-	if Season123Model.instance:getActInfo(slot0.activityId):getStageMO(slot0.stage) then
-		for slot9 = 1, uv0.AnimCount do
-			if (slot0.layer - uv0.TargetEpisodeOrder + slot9) % (#slot2 + 1) == 0 then
-				Season123EpisodeLoadingMO.New():init(slot9, nil, , 1)
+	local var_3_2 = Season123Model.instance:getActInfo(arg_3_0.activityId):getStageMO(arg_3_0.stage)
+
+	if var_3_2 then
+		local var_3_3 = #var_3_1
+
+		for iter_3_0 = 1, var_0_0.AnimCount do
+			local var_3_4 = (arg_3_0.layer - var_0_0.TargetEpisodeOrder + iter_3_0) % (var_3_3 + 1)
+			local var_3_5 = Season123EpisodeLoadingMO.New()
+
+			if var_3_4 == 0 then
+				var_3_5:init(iter_3_0, nil, nil, 1)
 			else
-				slot12 = slot2[slot10]
+				local var_3_6 = var_3_1[var_3_4]
+				local var_3_7 = var_3_2.episodeMap[var_3_6.layer]
 
-				slot11:init(slot9, slot4.episodeMap[slot12.layer], slot12)
+				var_3_5:init(iter_3_0, var_3_7, var_3_6)
 
-				if not slot0._layerDict[slot12.layer] then
-					slot0._layerDict[slot12.layer] = slot11
+				if not arg_3_0._layerDict[var_3_6.layer] then
+					arg_3_0._layerDict[var_3_6.layer] = var_3_5
 				end
 			end
 
-			table.insert(slot1, slot11)
+			table.insert(var_3_0, var_3_5)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	slot2 = Season123Model.instance:getActInfo(slot0.activityId)
+function var_0_0.isEpisodeUnlock(arg_4_0, arg_4_1)
+	local var_4_0 = Season123Model.instance:getActInfo(arg_4_0.activityId)
+	local var_4_1 = arg_4_0._layerDict[arg_4_1]
 
-	if slot0._layerDict[slot1] and slot3.isFinished then
+	if var_4_1 and var_4_1.isFinished then
 		return true
 	end
 
-	if slot1 <= 1 then
-		if not slot2 then
+	if arg_4_1 <= 1 then
+		if not var_4_0 then
 			return false
 		end
 
-		return slot0.stage == slot2.stage
+		return arg_4_0.stage == var_4_0.stage
 	end
 
-	if not slot0._layerDict[slot1 - 1] or not slot4.isFinished then
+	local var_4_2 = arg_4_0._layerDict[arg_4_1 - 1]
+
+	if not var_4_2 or not var_4_2.isFinished then
 		return false
 	end
 
 	return true
 end
 
-function slot0.inCurrentStage(slot0)
-	return Season123Model.instance:getActInfo(slot0.activityId) ~= nil and not slot1:isNotInStage() and slot1.stage == uv0.instance.stage
+function var_0_0.inCurrentStage(arg_5_0)
+	local var_5_0 = Season123Model.instance:getActInfo(arg_5_0.activityId)
+
+	return var_5_0 ~= nil and not var_5_0:isNotInStage() and var_5_0.stage == var_0_0.instance.stage
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

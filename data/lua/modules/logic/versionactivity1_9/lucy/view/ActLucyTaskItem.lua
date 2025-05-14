@@ -1,161 +1,169 @@
-module("modules.logic.versionactivity1_9.lucy.view.ActLucyTaskItem", package.seeall)
+﻿module("modules.logic.versionactivity1_9.lucy.view.ActLucyTaskItem", package.seeall)
 
-slot0 = class("ActLucyTaskItem", ListScrollCellExtend)
+local var_0_0 = class("ActLucyTaskItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
-	slot0._simagenormalbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_normal/#simage_normalbg")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_normal/progress/#txt_num")
-	slot0._txttotal = gohelper.findChildText(slot0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	slot0._txttaskdes = gohelper.findChildText(slot0.viewGO, "#go_normal/#txt_taskdes")
-	slot0._scrollreward = gohelper.findChild(slot0.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
-	slot0._btnnotfinishbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_notfinishbg")
-	slot0._btnfinishbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_finishbg", AudioEnum.UI.play_ui_task_slide)
-	slot0._goallfinish = gohelper.findChild(slot0.viewGO, "#go_normal/#go_allfinish")
-	slot0._gogetall = gohelper.findChild(slot0.viewGO, "#go_getall")
-	slot0._simagegetallbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_getall/#simage_getallbg")
-	slot0._btngetall = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
+	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
+	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
+	arg_1_0._scrollreward = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
+	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
+	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg", AudioEnum.UI.play_ui_task_slide)
+	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
+	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
+	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
+	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnotfinishbg:AddClickListener(slot0._btnnotfinishbgOnClick, slot0)
-	slot0._btnfinishbg:AddClickListener(slot0._btnfinishbgOnClick, slot0)
-	slot0._btngetall:AddClickListener(slot0._btngetallOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
+	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
+	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnotfinishbg:RemoveClickListener()
-	slot0._btnfinishbg:RemoveClickListener()
-	slot0._btngetall:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnnotfinishbg:RemoveClickListener()
+	arg_3_0._btnfinishbg:RemoveClickListener()
+	arg_3_0._btngetall:RemoveClickListener()
 end
 
-function slot0._btnnotfinishbgOnClick(slot0)
-	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.TabSwitch, slot0._actTaskMO.config.listenerType ~= "StoryFinish")
+function var_0_0._btnnotfinishbgOnClick(arg_4_0)
+	local var_4_0 = arg_4_0._actTaskMO.config.listenerType ~= "StoryFinish"
+
+	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.TabSwitch, var_4_0)
 	ViewMgr.instance:closeView(ViewName.ActLucyTaskView)
 end
 
-function slot0._btnfinishbgOnClick(slot0)
-	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, slot0._actTaskMO) then
-		slot0:_onOneClickClaimReward()
+function var_0_0._btnfinishbgOnClick(arg_5_0)
+	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, arg_5_0._actTaskMO) then
+		arg_5_0:_onOneClickClaimReward()
 	end
 end
 
-function slot0._btngetallOnClick(slot0)
-	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, slot0._actTaskMO) then
+function var_0_0._btngetallOnClick(arg_6_0)
+	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, arg_6_0._actTaskMO) then
 		RoleActivityController.instance:dispatchEvent(RoleActivityEvent.OneClickClaimReward)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0.viewTrs = slot0.viewGO.transform
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0.viewTrs = arg_7_0.viewGO.transform
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0:addEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, slot0._onOneClickClaimReward, slot0)
+function var_0_0._editableAddEvents(arg_8_0)
+	arg_8_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, arg_8_0._onOneClickClaimReward, arg_8_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0:removeEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, slot0._onOneClickClaimReward, slot0)
+function var_0_0._editableRemoveEvents(arg_9_0)
+	arg_9_0:removeEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, arg_9_0._onOneClickClaimReward, arg_9_0)
 end
 
-function slot0._onOneClickClaimReward(slot0)
-	if slot0._actTaskMO.hasFinished or slot0._actTaskMO.id == 0 then
-		slot0._playFinishAnin = true
+function var_0_0._onOneClickClaimReward(arg_10_0)
+	if arg_10_0._actTaskMO.hasFinished or arg_10_0._actTaskMO.id == 0 then
+		arg_10_0._playFinishAnin = true
 
-		slot0._animator:Play("finish", 0, 0)
+		arg_10_0._animator:Play("finish", 0, 0)
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_11_0)
+	return arg_11_0._animator
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._scrollreward.parentGameObject = slot0._view._csListScroll.gameObject
-	slot0._actTaskMO = slot1
+function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+	arg_12_0._scrollreward.parentGameObject = arg_12_0._view._csListScroll.gameObject
+	arg_12_0._actTaskMO = arg_12_1
 
-	slot0:_refreshUI()
-	slot0:_moveByRankDiff(RoleActivityTaskListModel.instance.instance:getRankDiff(slot1))
+	local var_12_0 = RoleActivityTaskListModel.instance.instance:getRankDiff(arg_12_1)
+
+	arg_12_0:_refreshUI()
+	arg_12_0:_moveByRankDiff(var_12_0)
 end
 
-function slot0._moveByRankDiff(slot0, slot1)
-	if slot1 and slot1 ~= 0 then
-		if slot0._rankDiffMoveId then
-			ZProj.TweenHelper.KillById(slot0._rankDiffMoveId)
+function var_0_0._moveByRankDiff(arg_13_0, arg_13_1)
+	if arg_13_1 and arg_13_1 ~= 0 then
+		if arg_13_0._rankDiffMoveId then
+			ZProj.TweenHelper.KillById(arg_13_0._rankDiffMoveId)
 
-			slot0._rankDiffMoveId = nil
+			arg_13_0._rankDiffMoveId = nil
 		end
 
-		slot2, slot3, slot4 = transformhelper.getLocalPos(slot0.viewTrs)
+		local var_13_0, var_13_1, var_13_2 = transformhelper.getLocalPos(arg_13_0.viewTrs)
 
-		transformhelper.setLocalPosXY(slot0.viewTrs, slot2, 165 * slot1)
+		transformhelper.setLocalPosXY(arg_13_0.viewTrs, var_13_0, 165 * arg_13_1)
 
-		slot0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(slot0.viewTrs, 0, RoleActivityEnum.AnimatorTime.TaskRewardMoveUp)
+		arg_13_0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_13_0.viewTrs, 0, RoleActivityEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	if not slot0._actTaskMO then
+function var_0_0._refreshUI(arg_14_0)
+	local var_14_0 = arg_14_0._actTaskMO
+
+	if not var_14_0 then
 		return
 	end
 
-	slot2 = slot1.id ~= 0
+	local var_14_1 = var_14_0.id ~= 0
 
-	gohelper.setActive(slot0._gogetall, not slot2)
-	gohelper.setActive(slot0._gonormal, slot2)
+	gohelper.setActive(arg_14_0._gogetall, not var_14_1)
+	gohelper.setActive(arg_14_0._gonormal, var_14_1)
 
-	if slot2 then
-		if slot0._playFinishAnin then
-			slot0._playFinishAnin = false
+	if var_14_1 then
+		if arg_14_0._playFinishAnin then
+			arg_14_0._playFinishAnin = false
 
-			slot0._animator:Play("idle", 0, 1)
+			arg_14_0._animator:Play("idle", 0, 1)
 		end
 
-		gohelper.setActive(slot0._goallfinish, false)
-		gohelper.setActive(slot0._btnnotfinishbg, false)
-		gohelper.setActive(slot0._btnfinishbg, false)
+		gohelper.setActive(arg_14_0._goallfinish, false)
+		gohelper.setActive(arg_14_0._btnnotfinishbg, false)
+		gohelper.setActive(arg_14_0._btnfinishbg, false)
 
-		if slot1.finishCount > 0 or slot1.preFinish then
-			gohelper.setActive(slot0._goallfinish, true)
-		elseif slot1.hasFinished then
-			gohelper.setActive(slot0._btnfinishbg, true)
+		if var_14_0.finishCount > 0 or var_14_0.preFinish then
+			gohelper.setActive(arg_14_0._goallfinish, true)
+		elseif var_14_0.hasFinished then
+			gohelper.setActive(arg_14_0._btnfinishbg, true)
 		else
-			gohelper.setActive(slot0._btnnotfinishbg, true)
+			gohelper.setActive(arg_14_0._btnnotfinishbg, true)
 		end
 
-		slot0._txtnum.text = slot1.progress
-		slot0._txttotal.text = slot1.config.maxProgress
-		slot0._txttaskdes.text = slot1.config.taskDesc
-		slot3 = ItemModel.instance:getItemDataListByConfigStr(slot1.config.bonus)
-		slot0.item_list = slot3
+		arg_14_0._txtnum.text = var_14_0.progress
+		arg_14_0._txttotal.text = var_14_0.config.maxProgress
+		arg_14_0._txttaskdes.text = var_14_0.config.taskDesc
 
-		IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onItemShow, slot3, slot0._gorewards)
+		local var_14_2 = ItemModel.instance:getItemDataListByConfigStr(var_14_0.config.bonus)
+
+		arg_14_0.item_list = var_14_2
+
+		IconMgr.instance:getCommonPropItemIconList(arg_14_0, arg_14_0._onItemShow, var_14_2, arg_14_0._gorewards)
 	end
 
-	slot0._scrollreward.horizontalNormalizedPosition = 0
+	arg_14_0._scrollreward.horizontalNormalizedPosition = 0
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:setConsume(true)
-	slot1:showStackableNum2()
-	slot1:isShowEffect(true)
-	slot1:setAutoPlay(true)
-	slot1:setCountFontSize(48)
+function var_0_0._onItemShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_1:onUpdateMO(arg_15_2)
+	arg_15_1:setConsume(true)
+	arg_15_1:showStackableNum2()
+	arg_15_1:isShowEffect(true)
+	arg_15_1:setAutoPlay(true)
+	arg_15_1:setCountFontSize(48)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._rankDiffMoveId then
-		ZProj.TweenHelper.KillById(slot0._rankDiffMoveId)
+function var_0_0.onDestroyView(arg_16_0)
+	if arg_16_0._rankDiffMoveId then
+		ZProj.TweenHelper.KillById(arg_16_0._rankDiffMoveId)
 
-		slot0._rankDiffMoveId = nil
+		arg_16_0._rankDiffMoveId = nil
 	end
 end
 
-return slot0
+return var_0_0

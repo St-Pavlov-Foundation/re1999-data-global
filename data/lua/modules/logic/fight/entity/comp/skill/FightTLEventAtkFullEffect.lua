@@ -1,154 +1,168 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventAtkFullEffect", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkFullEffect", package.seeall)
 
-slot0 = class("FightTLEventAtkFullEffect")
+local var_0_0 = class("FightTLEventAtkFullEffect")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if not FightHelper.detectTimelinePlayEffectCondition(slot1, slot3[4]) then
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[4]) then
 		return
 	end
 
-	slot0._attacker = FightHelper.getEntity(slot1.fromId)
+	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
-	if not slot0._attacker then
+	if not arg_1_0._attacker then
 		return
 	end
 
-	if not string.nilorempty(slot3[10]) then
-		slot0._attacker.effect:_onInvokeTokenRelease(slot3[10])
+	if not string.nilorempty(arg_1_3[10]) then
+		arg_1_0._attacker.effect:_onInvokeTokenRelease(arg_1_3[10])
 
 		return
 	end
 
-	slot4 = slot3[1]
-	slot6 = 0
-	slot7 = 0
+	local var_1_0 = arg_1_3[1]
+	local var_1_1 = 0
+	local var_1_2 = 0
+	local var_1_3 = 0
 
-	if slot3[2] then
-		if string.split(slot3[2], ",")[1] then
-			slot5 = tonumber(slot8[1]) or 0
+	if arg_1_3[2] then
+		local var_1_4 = string.split(arg_1_3[2], ",")
+
+		var_1_1 = var_1_4[1] and tonumber(var_1_4[1]) or var_1_1
+
+		if not arg_1_0._attacker:isMySide() and arg_1_3[5] ~= "1" then
+			var_1_1 = -var_1_1
 		end
 
-		if not slot0._attacker:isMySide() and slot3[5] ~= "1" then
-			slot5 = -slot5
-		end
-
-		if slot8[2] then
-			slot6 = tonumber(slot8[2]) or slot6
-		end
-
-		if slot8[3] then
-			slot7 = tonumber(slot8[3]) or slot7
-		end
+		var_1_2 = var_1_4[2] and tonumber(var_1_4[2]) or var_1_2
+		var_1_3 = var_1_4[3] and tonumber(var_1_4[3]) or var_1_3
 	end
 
-	if not string.nilorempty(slot3[6]) then
-		for slot15, slot16 in ipairs(GameUtil.splitString2(slot3[6], true)) do
-			if GameSceneMgr.instance:getCurScene():getCurLevelId() == slot16[1] and FightHelper.getEntityStanceId(slot0._attacker:getMO()) == slot16[2] then
-				slot5 = slot5 + slot16[3] or 0
-				slot6 = slot6 + slot16[4] or 0
-				slot7 = slot7 + slot16[5] or 0
+	if not string.nilorempty(arg_1_3[6]) then
+		local var_1_5 = GameUtil.splitString2(arg_1_3[6], true)
+		local var_1_6 = GameSceneMgr.instance:getCurScene():getCurLevelId()
+		local var_1_7 = FightHelper.getEntityStanceId(arg_1_0._attacker:getMO())
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_5) do
+			if var_1_6 == iter_1_1[1] and var_1_7 == iter_1_1[2] then
+				var_1_1 = var_1_1 + iter_1_1[3] or 0
+				var_1_2 = var_1_2 + iter_1_1[4] or 0
+				var_1_3 = var_1_3 + iter_1_1[5] or 0
 			end
 		end
 	end
 
-	if not string.nilorempty(slot3[7]) and FightDataHelper.entityMgr:getNormalList(slot0._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide)[1] then
-		for slot17, slot18 in ipairs(GameUtil.splitString2(slot3[7], true)) do
-			if GameSceneMgr.instance:getCurScene():getCurLevelId() == slot18[1] and FightHelper.getEntityStanceId(slot9) == slot18[2] then
-				slot5 = slot5 + slot18[3] or 0
-				slot6 = slot6 + slot18[4] or 0
-				slot7 = slot7 + slot18[5] or 0
+	if not string.nilorempty(arg_1_3[7]) then
+		local var_1_8 = arg_1_0._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+		local var_1_9 = FightDataHelper.entityMgr:getNormalList(var_1_8)[1]
+
+		if var_1_9 then
+			local var_1_10 = GameUtil.splitString2(arg_1_3[7], true)
+			local var_1_11 = GameSceneMgr.instance:getCurScene():getCurLevelId()
+			local var_1_12 = FightHelper.getEntityStanceId(var_1_9)
+
+			for iter_1_2, iter_1_3 in ipairs(var_1_10) do
+				if var_1_11 == iter_1_3[1] and var_1_12 == iter_1_3[2] then
+					var_1_1 = var_1_1 + iter_1_3[3] or 0
+					var_1_2 = var_1_2 + iter_1_3[4] or 0
+					var_1_3 = var_1_3 + iter_1_3[5] or 0
+				end
 			end
 		end
 	end
 
-	if string.nilorempty(slot4) then
+	if string.nilorempty(var_1_0) then
 		logError("atk effect name is nil")
 	else
-		slot0._releaseTime = nil
+		arg_1_0._releaseTime = nil
 
-		if not string.nilorempty(slot3[11]) and slot3[11] ~= "0" then
-			slot0._releaseTime = tonumber(slot3[11]) / FightModel.instance:getSpeed()
+		if not string.nilorempty(arg_1_3[11]) and arg_1_3[11] ~= "0" then
+			arg_1_0._releaseTime = tonumber(arg_1_3[11]) / FightModel.instance:getSpeed()
 		end
 
-		slot0._effectWrap = slot0._attacker.effect:addGlobalEffect(slot4, nil, slot0._releaseTime)
-		slot8 = true
+		arg_1_0._effectWrap = arg_1_0._attacker.effect:addGlobalEffect(var_1_0, nil, arg_1_0._releaseTime)
 
-		if slot3[13] == "1" then
-			gohelper.addChild(CameraMgr.instance:getMainCameraGO(), slot0._effectWrap.containerGO)
+		local var_1_13 = true
 
-			slot8 = false
+		if arg_1_3[13] == "1" then
+			local var_1_14 = CameraMgr.instance:getMainCameraGO()
+
+			gohelper.addChild(var_1_14, arg_1_0._effectWrap.containerGO)
+
+			var_1_13 = false
 		end
 
-		if (tonumber(slot3[3]) or -1) == -1 then
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot0._attacker.id, slot0._effectWrap)
+		local var_1_15 = tonumber(arg_1_3[3]) or -1
+
+		if var_1_15 == -1 then
+			FightRenderOrderMgr.instance:onAddEffectWrap(arg_1_0._attacker.id, arg_1_0._effectWrap)
 		else
-			FightRenderOrderMgr.instance:setEffectOrder(slot0._effectWrap, slot9)
+			FightRenderOrderMgr.instance:setEffectOrder(arg_1_0._effectWrap, var_1_15)
 		end
 
-		if slot8 then
-			slot0._effectWrap:setWorldPos(slot5, slot6, slot7)
+		if var_1_13 then
+			arg_1_0._effectWrap:setWorldPos(var_1_1, var_1_2, var_1_3)
 		else
-			slot0._effectWrap:setLocalPos(slot5, slot6, slot7)
+			arg_1_0._effectWrap:setLocalPos(var_1_1, var_1_2, var_1_3)
 		end
 
-		slot0._releaseByServer = tonumber(slot3[8])
+		arg_1_0._releaseByServer = tonumber(arg_1_3[8])
 
-		if slot0._releaseByServer then
-			slot0._attacker.effect:addServerRelease(slot0._releaseByServer, slot0._effectWrap)
+		if arg_1_0._releaseByServer then
+			arg_1_0._attacker.effect:addServerRelease(arg_1_0._releaseByServer, arg_1_0._effectWrap)
 		end
 
-		slot0._tokenRelease = not string.nilorempty(slot3[9])
+		arg_1_0._tokenRelease = not string.nilorempty(arg_1_3[9])
 
-		if slot0._tokenRelease then
-			slot0._attacker.effect:addTokenRelease(slot3[9], slot0._effectWrap)
+		if arg_1_0._tokenRelease then
+			arg_1_0._attacker.effect:addTokenRelease(arg_1_3[9], arg_1_0._effectWrap)
 		end
 
-		slot0._roundRelease = not string.nilorempty(slot3[12])
+		arg_1_0._roundRelease = not string.nilorempty(arg_1_3[12])
 
-		if slot0._roundRelease then
-			slot0._attacker.effect:addRoundRelease(tonumber(slot3[12]), slot0._effectWrap)
+		if arg_1_0._roundRelease then
+			arg_1_0._attacker.effect:addRoundRelease(tonumber(arg_1_3[12]), arg_1_0._effectWrap)
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_removeEffect()
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	arg_2_0:_removeEffect()
 end
 
-function slot0.reset(slot0)
-	slot0:_removeEffect()
+function var_0_0.reset(arg_3_0)
+	arg_3_0:_removeEffect()
 end
 
-function slot0.dispose(slot0)
-	slot0:_removeEffect()
+function var_0_0.dispose(arg_4_0)
+	arg_4_0:_removeEffect()
 end
 
-function slot0._removeEffect(slot0)
-	slot1 = true
+function var_0_0._removeEffect(arg_5_0)
+	local var_5_0 = true
 
-	if slot0._releaseByServer then
-		slot1 = false
+	if arg_5_0._releaseByServer then
+		var_5_0 = false
 	end
 
-	if slot0._tokenRelease then
-		slot1 = false
+	if arg_5_0._tokenRelease then
+		var_5_0 = false
 	end
 
-	if slot0._releaseTime then
-		slot1 = false
+	if arg_5_0._releaseTime then
+		var_5_0 = false
 	end
 
-	if slot0._roundRelease then
-		slot1 = false
+	if arg_5_0._roundRelease then
+		var_5_0 = false
 	end
 
-	if slot1 and slot0._effectWrap then
-		slot0._attacker.effect:removeEffect(slot0._effectWrap)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._attacker.id, slot0._effectWrap)
+	if var_5_0 and arg_5_0._effectWrap then
+		arg_5_0._attacker.effect:removeEffect(arg_5_0._effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_5_0._attacker.id, arg_5_0._effectWrap)
 	end
 
-	slot0._effectWrap = nil
-	slot0._attacker = nil
+	arg_5_0._effectWrap = nil
+	arg_5_0._attacker = nil
 end
 
-return slot0
+return var_0_0

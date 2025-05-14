@@ -1,97 +1,108 @@
-module("modules.logic.activity.view.ActivityNormalView", package.seeall)
+﻿module("modules.logic.activity.view.ActivityNormalView", package.seeall)
 
-slot0 = class("ActivityNormalView", BaseView)
+local var_0_0 = class("ActivityNormalView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gosubview = gohelper.findChild(slot0.viewGO, "#go_subview")
-	slot0._scrollactivitylist = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_activitylist")
-	slot0._gorule = gohelper.findChild(slot0.viewGO, "#go_rule")
-	slot0._scrollruledesc = gohelper.findChildScrollRect(slot0.viewGO, "#go_rule/#scroll_ruledesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
+	arg_1_0._scrollactivitylist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_activitylist")
+	arg_1_0._gorule = gohelper.findChild(arg_1_0.viewGO, "#go_rule")
+	arg_1_0._scrollruledesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rule/#scroll_ruledesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewName = nil
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._viewName = nil
 end
 
-slot1 = {}
+local var_0_1 = {}
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
-	slot0:_refreshView()
-	NavigateMgr.instance:addEscape(ViewName.ActivityNormalView, slot0._btncloseOnClick, slot0)
+	arg_5_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_5_0._refreshView, arg_5_0)
+	arg_5_0:_refreshView()
+	NavigateMgr.instance:addEscape(ViewName.ActivityNormalView, arg_5_0._btncloseOnClick, arg_5_0)
 end
 
-function slot0._refreshView(slot0)
-	if not ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Normal) or not next(slot1) then
-		slot0:closeThis()
+function var_0_0._refreshView(arg_6_0)
+	local var_6_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Normal)
+
+	if not var_6_0 or not next(var_6_0) then
+		arg_6_0:closeThis()
 	end
 
-	slot2 = {}
+	local var_6_1 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		table.insert(slot2, {
-			id = slot7,
-			co = ActivityConfig.instance:getActivityCo(slot7),
+	for iter_6_0, iter_6_1 in pairs(var_6_0) do
+		local var_6_2 = {
+			id = iter_6_1,
+			co = ActivityConfig.instance:getActivityCo(iter_6_1),
 			type = ActivityEnum.ActivityType.Normal
-		})
+		}
+
+		table.insert(var_6_1, var_6_2)
 	end
 
-	ActivityNormalCategoryListModel.instance:setCategoryList(slot2)
-	slot0:_openSubView()
+	ActivityNormalCategoryListModel.instance:setCategoryList(var_6_1)
+	arg_6_0:_openSubView()
 end
 
-function slot0._openSubView(slot0)
+function var_0_0._openSubView(arg_7_0)
 	if ViewMgr.instance:isOpen(ViewName.ActivityTipView) then
 		ViewMgr.instance:closeView(ViewName.ActivityTipView, true)
 	end
 
-	if slot0._viewName then
-		ViewMgr.instance:closeView(slot0._viewName, true)
+	if arg_7_0._viewName then
+		ViewMgr.instance:closeView(arg_7_0._viewName, true)
 	end
 
-	slot0._viewName = uv0[ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Normal)]
+	local var_7_0 = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Normal)
 
-	if not slot0._viewName then
+	arg_7_0._viewName = var_0_1[var_7_0]
+
+	if not arg_7_0._viewName then
 		return
 	end
 
-	if not ActivityConfig.instance:getActivityCo(slot1).banner or slot2 == "" then
-		gohelper.setActive(slot0._simagebg.gameObject, false)
+	local var_7_1 = ActivityConfig.instance:getActivityCo(var_7_0).banner
+
+	if not var_7_1 or var_7_1 == "" then
+		gohelper.setActive(arg_7_0._simagebg.gameObject, false)
 	else
-		gohelper.setActive(slot0._simagebg.gameObject, true)
-		slot0._simagebg:LoadImage(ResUrl.getActivityBg(slot2))
+		gohelper.setActive(arg_7_0._simagebg.gameObject, true)
+		arg_7_0._simagebg:LoadImage(ResUrl.getActivityBg(var_7_1))
 	end
 
-	ViewMgr.instance:openView(slot0._viewName, slot0._gosubview, true)
+	ViewMgr.instance:openView(arg_7_0._viewName, arg_7_0._gosubview, true)
 end
 
-function slot0.closeSubView(slot0)
-	if slot0._viewName then
-		ViewMgr.instance:closeView(slot0._viewName, true)
+function var_0_0.closeSubView(arg_8_0)
+	if arg_8_0._viewName then
+		ViewMgr.instance:closeView(arg_8_0._viewName, true)
 
-		slot0._viewName = nil
+		arg_8_0._viewName = nil
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
 	ActivityModel.instance:setTargetActivityCategoryId(0)
-	slot0:closeSubView()
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
+	arg_9_0:closeSubView()
+	arg_9_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_9_0._refreshView, arg_9_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

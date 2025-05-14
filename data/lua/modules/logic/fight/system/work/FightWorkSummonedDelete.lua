@@ -1,39 +1,43 @@
-module("modules.logic.fight.system.work.FightWorkSummonedDelete", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSummonedDelete", package.seeall)
 
-slot0 = class("FightWorkSummonedDelete", FightEffectBase)
+local var_0_0 = class("FightWorkSummonedDelete", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0._entityId = slot0._actEffectMO.targetId
-	slot0._uid = slot0._actEffectMO.reserveId
-	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
-	slot1 = slot0._entityMO and slot0._entityMO:getSummonedInfo()
-	slot0._oldValue = slot1 and slot1:getData(slot0._uid)
+function var_0_0.beforePlayEffectData(arg_1_0)
+	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
+	arg_1_0._uid = arg_1_0._actEffectMO.reserveId
+	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
+
+	local var_1_0 = arg_1_0._entityMO and arg_1_0._entityMO:getSummonedInfo()
+
+	arg_1_0._oldValue = var_1_0 and var_1_0:getData(arg_1_0._uid)
 end
 
-function slot0.onStart(slot0)
-	if not slot0._oldValue then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if not arg_2_0._oldValue then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if FightConfig.instance:getSummonedConfig(slot0._oldValue.summonedId, slot0._oldValue.level) then
-		slot0:com_registTimer(slot0._delayDone, slot1.closeTime / 1000 / FightModel.instance:getSpeed())
-		FightController.instance:dispatchEvent(FightEvent.PlayRemoveSummoned, slot0._entityId, slot0._uid)
+	local var_2_0 = FightConfig.instance:getSummonedConfig(arg_2_0._oldValue.summonedId, arg_2_0._oldValue.level)
+
+	if var_2_0 then
+		arg_2_0:com_registTimer(arg_2_0._delayDone, var_2_0.closeTime / 1000 / FightModel.instance:getSpeed())
+		FightController.instance:dispatchEvent(FightEvent.PlayRemoveSummoned, arg_2_0._entityId, arg_2_0._uid)
 
 		return
 	end
 
-	logError("挂件表找不到id:" .. slot0._oldValue.summonedId .. "  等级:" .. slot0._oldValue.level)
-	slot0:onDone(true)
+	logError("挂件表找不到id:" .. arg_2_0._oldValue.summonedId .. "  等级:" .. arg_2_0._oldValue.level)
+	arg_2_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:dispatchEvent(FightEvent.SummonedDelete, slot0._entityId, slot0._uid)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.SummonedDelete, arg_4_0._entityId, arg_4_0._uid)
 end
 
-return slot0
+return var_0_0

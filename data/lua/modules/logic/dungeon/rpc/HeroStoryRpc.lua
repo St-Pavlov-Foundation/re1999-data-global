@@ -1,223 +1,240 @@
-module("modules.logic.dungeon.rpc.HeroStoryRpc", package.seeall)
+﻿module("modules.logic.dungeon.rpc.HeroStoryRpc", package.seeall)
 
-slot0 = class("HeroStoryRpc", BaseRpc)
+local var_0_0 = class("HeroStoryRpc", BaseRpc)
 
-function slot0.sendGetHeroStoryRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(HeroStoryModule_pb.GetHeroStoryRequest(), slot1, slot2)
+function var_0_0.sendGetHeroStoryRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = HeroStoryModule_pb.GetHeroStoryRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetHeroStoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetHeroStoryReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onGetHeroStoryReply(slot2)
+	RoleStoryModel.instance:onGetHeroStoryReply(arg_2_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.UpdateInfo)
 end
 
-function slot0.sendUnlocHeroStoryRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroStoryModule_pb.UnlocHeroStoryRequest()
-	slot4.storyId = slot1
+function var_0_0.sendUnlocHeroStoryRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = HeroStoryModule_pb.UnlocHeroStoryRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_3_0.storyId = arg_3_1
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
 end
 
-function slot0.onReceiveUnlocHeroStoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUnlocHeroStoryReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onUnlocHeroStoryReply(slot2)
+	RoleStoryModel.instance:onUnlocHeroStoryReply(arg_4_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.UpdateInfo)
 end
 
-function slot0.sendGetHeroStoryBonusRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroStoryModule_pb.GetHeroStoryBonusRequest()
-	slot4.storyId = slot1
+function var_0_0.sendGetHeroStoryBonusRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = HeroStoryModule_pb.GetHeroStoryBonusRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_5_0.storyId = arg_5_1
+
+	return arg_5_0:sendMsg(var_5_0, arg_5_2, arg_5_3)
 end
 
-function slot0.onReceiveGetHeroStoryBonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetHeroStoryBonusReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onGetHeroStoryBonusReply(slot2)
+	RoleStoryModel.instance:onGetHeroStoryBonusReply(arg_6_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.UpdateInfo)
 end
 
-function slot0.onReceiveHeroStoryUpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryUpdatePush(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onHeroStoryUpdatePush(slot2)
+	RoleStoryModel.instance:onHeroStoryUpdatePush(arg_7_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.UpdateInfo)
 end
 
-function slot0.sendUpdateHeroStoryStatusRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroStoryModule_pb.UpdateHeroStoryStatusRequest()
-	slot4.storyId = slot1
+function var_0_0.sendUpdateHeroStoryStatusRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = HeroStoryModule_pb.UpdateHeroStoryStatusRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_8_0.storyId = arg_8_1
+
+	return arg_8_0:sendMsg(var_8_0, arg_8_2, arg_8_3)
 end
 
-function slot0.onReceiveUpdateHeroStoryStatusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUpdateHeroStoryStatusReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onUpdateHeroStoryStatusReply(slot2)
+	RoleStoryModel.instance:onUpdateHeroStoryStatusReply(arg_9_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.StoryNewChange)
 end
 
-function slot0.sendExchangeTicketRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(HeroStoryModule_pb.ExchangeTicketRequest(), slot1, slot2)
+function var_0_0.sendExchangeTicketRequest(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = HeroStoryModule_pb.ExchangeTicketRequest()
+
+	return arg_10_0:sendMsg(var_10_0, arg_10_1, arg_10_2)
 end
 
-function slot0.onReceiveExchangeTicketReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveExchangeTicketReply(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onExchangeTicketReply(slot2)
+	RoleStoryModel.instance:onExchangeTicketReply(arg_11_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ExchangeTick)
 end
 
-function slot0.sendGetScoreBonusRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroStoryModule_pb.GetScoreBonusRequest()
+function var_0_0.sendGetScoreBonusRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = HeroStoryModule_pb.GetScoreBonusRequest()
 
-	for slot8, slot9 in ipairs(slot1) do
-		table.insert(slot4.bonusId, slot9)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+		table.insert(var_12_0.bonusId, iter_12_1)
 	end
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	return arg_12_0:sendMsg(var_12_0, arg_12_2, arg_12_3)
 end
 
-function slot0.onReceiveGetScoreBonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetScoreBonusReply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onGetScoreBonusReply(slot2)
+	RoleStoryModel.instance:onGetScoreBonusReply(arg_13_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.GetScoreBonus)
 end
 
-function slot0.onReceiveHeroStoryScorePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryScorePush(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onHeroStoryScorePush(slot2)
+	RoleStoryModel.instance:onHeroStoryScorePush(arg_14_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ScoreUpdate)
 	RedDotRpc.instance:sendGetRedDotInfosRequest({
 		1116
 	})
 end
 
-function slot0.sendGetChallengeBonusRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(HeroStoryModule_pb.GetChallengeBonusRequest(), slot1, slot2)
+function var_0_0.sendGetChallengeBonusRequest(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = HeroStoryModule_pb.GetChallengeBonusRequest()
+
+	return arg_15_0:sendMsg(var_15_0, arg_15_1, arg_15_2)
 end
 
-function slot0.onReceiveGetChallengeBonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetChallengeBonusReply(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onGetChallengeBonusReply(slot2)
+	RoleStoryModel.instance:onGetChallengeBonusReply(arg_16_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.GetChallengeBonus)
 end
 
-function slot0.onReceiveHeroStoryTicketPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryTicketPush(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onHeroStoryTicketPush(slot2)
+	RoleStoryModel.instance:onHeroStoryTicketPush(arg_17_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.PowerChange)
 end
 
-function slot0.onReceiveHeroStoryWeekTaskPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryWeekTaskPush(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onHeroStoryWeekTaskPush(slot2)
+	RoleStoryModel.instance:onHeroStoryWeekTaskPush(arg_18_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.WeekTaskChange)
 end
 
-function slot0.sendHeroStoryWeekTaskGetRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(HeroStoryModule_pb.HeroStoryWeekTaskGetRequest(), slot1, slot2)
+function var_0_0.sendHeroStoryWeekTaskGetRequest(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = HeroStoryModule_pb.HeroStoryWeekTaskGetRequest()
+
+	return arg_19_0:sendMsg(var_19_0, arg_19_1, arg_19_2)
 end
 
-function slot0.onReceiveHeroStoryWeekTaskGetReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryWeekTaskGetReply(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onHeroStoryWeekTaskGetReply(slot2)
+	RoleStoryModel.instance:onHeroStoryWeekTaskGetReply(arg_20_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.WeekTaskChange)
 end
 
-function slot0.sendHeroStoryDispatchRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = HeroStoryModule_pb.HeroStoryDispatchRequest()
-	slot6.storyId = slot1
-	slot6.dispatchId = slot2
+function var_0_0.sendHeroStoryDispatchRequest(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5)
+	local var_21_0 = HeroStoryModule_pb.HeroStoryDispatchRequest()
 
-	for slot10, slot11 in ipairs(slot3) do
-		table.insert(slot6.heroIds, slot11)
+	var_21_0.storyId = arg_21_1
+	var_21_0.dispatchId = arg_21_2
+
+	for iter_21_0, iter_21_1 in ipairs(arg_21_3) do
+		table.insert(var_21_0.heroIds, iter_21_1)
 	end
 
-	return slot0:sendMsg(slot6, slot4, slot5)
+	return arg_21_0:sendMsg(var_21_0, arg_21_4, arg_21_5)
 end
 
-function slot0.onReceiveHeroStoryDispatchReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryDispatchReply(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_1 ~= 0 then
 		return
 	end
 
-	ServerTime.update(math.floor(tonumber(slot2.startTime) / 1000))
-	RoleStoryModel.instance:onHeroStoryDispatchReply(slot2)
+	local var_22_0 = tonumber(arg_22_2.startTime)
+	local var_22_1 = math.floor(var_22_0 / 1000)
+
+	ServerTime.update(var_22_1)
+	RoleStoryModel.instance:onHeroStoryDispatchReply(arg_22_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.DispatchSuccess)
 end
 
-function slot0.sendHeroStoryDispatchResetRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = HeroStoryModule_pb.HeroStoryDispatchResetRequest()
-	slot5.storyId = slot1
-	slot5.dispatchId = slot2
+function var_0_0.sendHeroStoryDispatchResetRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+	local var_23_0 = HeroStoryModule_pb.HeroStoryDispatchResetRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_23_0.storyId = arg_23_1
+	var_23_0.dispatchId = arg_23_2
+
+	return arg_23_0:sendMsg(var_23_0, arg_23_3, arg_23_4)
 end
 
-function slot0.onReceiveHeroStoryDispatchResetReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryDispatchResetReply(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_1 ~= 0 then
 		return
 	end
 
 	GameFacade.showToast(ToastEnum.RoleStoryDispatchReset)
-	RoleStoryModel.instance:onHeroStoryDispatchResetReply(slot2)
+	RoleStoryModel.instance:onHeroStoryDispatchResetReply(arg_24_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.DispatchReset)
 end
 
-function slot0.sendHeroStoryDispatchCompleteRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = HeroStoryModule_pb.HeroStoryDispatchCompleteRequest()
-	slot5.storyId = slot1
-	slot5.dispatchId = slot2
+function var_0_0.sendHeroStoryDispatchCompleteRequest(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4)
+	local var_25_0 = HeroStoryModule_pb.HeroStoryDispatchCompleteRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_25_0.storyId = arg_25_1
+	var_25_0.dispatchId = arg_25_2
+
+	return arg_25_0:sendMsg(var_25_0, arg_25_3, arg_25_4)
 end
 
-function slot0.onReceiveHeroStoryDispatchCompleteReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroStoryDispatchCompleteReply(arg_26_0, arg_26_1, arg_26_2)
+	if arg_26_1 ~= 0 then
 		return
 	end
 
-	RoleStoryModel.instance:onHeroStoryDispatchCompleteReply(slot2)
+	RoleStoryModel.instance:onHeroStoryDispatchCompleteReply(arg_26_2)
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.DispatchFinish)
-	slot0:sendGetHeroStoryRequest()
+	arg_26_0:sendGetHeroStoryRequest()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

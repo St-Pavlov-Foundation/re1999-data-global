@@ -1,33 +1,33 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114ViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114ViewContainer", package.seeall)
 
-slot0 = class("Activity114ViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity114ViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._nowTabIndex = slot0.viewParam and type(slot0.viewParam) == "table" and slot0.viewParam.defaultTabIds and slot0.viewParam.defaultTabIds[2] or 1
-	slot0._activity114Live2dView = Activity114Live2dView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._nowTabIndex = arg_1_0.viewParam and type(arg_1_0.viewParam) == "table" and arg_1_0.viewParam.defaultTabIds and arg_1_0.viewParam.defaultTabIds[2] or 1
+	arg_1_0._activity114Live2dView = Activity114Live2dView.New()
 
 	return {
-		slot0._activity114Live2dView,
+		arg_1_0._activity114Live2dView,
 		Activity114View.New(),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_content")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, 167)
 
-		slot2:setOverrideClose(slot0.onClickClose, slot0)
+		var_2_0:setOverrideClose(arg_2_0.onClickClose, arg_2_0)
 
 		return {
-			slot2
+			var_2_0
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			Activity114EnterView.New(),
 			Activity114TaskView.New(),
@@ -36,7 +36,7 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	Activity114Model.instance:beginStat()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_2Enum.ActivityId.JieXiKa)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
@@ -45,55 +45,57 @@ function slot0.onContainerInit(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_open)
 end
 
-function slot0.onClickClose(slot0)
-	if slot0._nowTabIndex ~= Activity114Enum.TabIndex.EnterView then
-		slot0:switchTab(Activity114Enum.TabIndex.EnterView)
+function var_0_0.onClickClose(arg_4_0)
+	if arg_4_0._nowTabIndex ~= Activity114Enum.TabIndex.EnterView then
+		arg_4_0:switchTab(Activity114Enum.TabIndex.EnterView)
 	else
-		slot0:closeThis()
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0.onContainerClose(slot0)
+function var_0_0.onContainerClose(arg_5_0)
 	Activity114Model.instance:endStat()
 end
 
-function slot0.getActivity114Live2d(slot0)
-	return slot0._activity114Live2dView:getUISpine()
+function var_0_0.getActivity114Live2d(arg_6_0)
+	return arg_6_0._activity114Live2dView:getUISpine()
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0._nowTabIndex = slot1
+function var_0_0.switchTab(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._nowTabIndex
 
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1, slot0._nowTabIndex)
+	arg_7_0._nowTabIndex = arg_7_1
+
+	arg_7_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_7_1, var_7_0)
 end
 
-function slot0.playOpenTransition(slot0)
-	slot1 = nil
+function var_0_0.playOpenTransition(arg_8_0)
+	local var_8_0
 
-	if slot0._nowTabIndex ~= Activity114Enum.TabIndex.EnterView then
-		if slot0._nowTabIndex == Activity114Enum.TabIndex.MainView then
-			-- Nothing
-		elseif slot0._nowTabIndex == Activity114Enum.TabIndex.MainView then
-			slot1.anim = "quest_open"
+	if arg_8_0._nowTabIndex ~= Activity114Enum.TabIndex.EnterView then
+		var_8_0 = {}
+
+		if arg_8_0._nowTabIndex == Activity114Enum.TabIndex.MainView then
+			var_8_0.anim = "start_open"
+		elseif arg_8_0._nowTabIndex == Activity114Enum.TabIndex.MainView then
+			var_8_0.anim = "quest_open"
 		end
 	end
 
-	uv0.super.playOpenTransition(slot0, {
-		anim = "start_open"
-	})
+	var_0_0.super.playOpenTransition(arg_8_0, var_8_0)
 end
 
-function slot0.onPlayCloseTransitionFinish(slot0)
-	if slot0.openViewName then
-		ViewMgr.instance:openView(slot0.openViewName)
+function var_0_0.onPlayCloseTransitionFinish(arg_9_0)
+	if arg_9_0.openViewName then
+		ViewMgr.instance:openView(arg_9_0.openViewName)
 
-		slot0.openViewName = nil
+		arg_9_0.openViewName = nil
 
-		TaskDispatcher.cancelTask(slot0.onPlayCloseTransitionFinish, slot0)
-		slot0:_cancelBlock()
+		TaskDispatcher.cancelTask(arg_9_0.onPlayCloseTransitionFinish, arg_9_0)
+		arg_9_0:_cancelBlock()
 	else
-		uv0.super.onPlayCloseTransitionFinish(slot0)
+		var_0_0.super.onPlayCloseTransitionFinish(arg_9_0)
 	end
 end
 
-return slot0
+return var_0_0

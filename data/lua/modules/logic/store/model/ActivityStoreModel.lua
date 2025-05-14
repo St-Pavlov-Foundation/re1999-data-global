@@ -1,48 +1,57 @@
-module("modules.logic.store.model.ActivityStoreModel", package.seeall)
+﻿module("modules.logic.store.model.ActivityStoreModel", package.seeall)
 
-slot0 = class("ActivityStoreModel", BaseModel)
+local var_0_0 = class("ActivityStoreModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.activityGoodsInfosDict = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.activityGoodsInfosDict = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.initActivityGoodsInfos(slot0, slot1, slot2)
-	slot0.activityGoodsInfosDict = slot0.activityGoodsInfosDict or {}
-	slot4 = nil
+function var_0_0.initActivityGoodsInfos(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.activityGoodsInfosDict = arg_3_0.activityGoodsInfosDict or {}
 
-	for slot8, slot9 in ipairs(slot2) do
-		ActivityStoreMo.New():init(slot1, slot9)
+	local var_3_0 = {}
+	local var_3_1
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
+		local var_3_2 = ActivityStoreMo.New()
+
+		var_3_2:init(arg_3_1, iter_3_1)
+
+		var_3_0[var_3_2.id] = var_3_2
 	end
 
-	slot0.activityGoodsInfosDict[slot1] = {
-		[slot4.id] = slot4
-	}
+	arg_3_0.activityGoodsInfosDict[arg_3_1] = var_3_0
 end
 
-function slot0.updateActivityGoodsInfos(slot0, slot1, slot2)
-	if not slot0.activityGoodsInfosDict[slot1][slot2.id] then
-		slot4 = ActivityStoreMo.New()
+function var_0_0.updateActivityGoodsInfos(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0.activityGoodsInfosDict[arg_4_1]
+	local var_4_1 = var_4_0[arg_4_2.id]
 
-		slot4:init(slot1, slot2)
+	if not var_4_1 then
+		var_4_1 = ActivityStoreMo.New()
 
-		slot3[slot4.id] = slot4
+		var_4_1:init(arg_4_1, arg_4_2)
+
+		var_4_0[var_4_1.id] = var_4_1
 	else
-		slot4:updateData(slot2)
+		var_4_1:updateData(arg_4_2)
 	end
 end
 
-function slot0.getActivityGoodsBuyCount(slot0, slot1, slot2)
-	if not slot0.activityGoodsInfosDict or not slot3[slot1] or not slot3[slot1][slot2] then
+function var_0_0.getActivityGoodsBuyCount(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0.activityGoodsInfosDict
+
+	if not var_5_0 or not var_5_0[arg_5_1] or not var_5_0[arg_5_1][arg_5_2] then
 		return 0
 	end
 
-	return slot3[slot1][slot2].buyCount or 0
+	return var_5_0[arg_5_1][arg_5_2].buyCount or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,43 +1,46 @@
-module("modules.logic.seasonver.act123.view1_8.Season123_1_8TaskViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8TaskViewContainer", package.seeall)
 
-slot0 = class("Season123_1_8TaskViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_1_8TaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	slot0:buildScrollViews()
-	table.insert(slot1, slot0.scrollView)
-	table.insert(slot1, Season123_1_8TaskView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	arg_1_0:buildScrollViews()
+	table.insert(var_1_0, arg_1_0.scrollView)
+	table.insert(var_1_0, Season123_1_8TaskView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = NavigateButtonsView.New({
+		true,
+		true,
+		false
+	})
+
 	return {
-		NavigateButtonsView.New({
-			true,
-			true,
-			false
-		})
+		var_2_0
 	}
 end
 
-function slot0.buildScrollViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_tasklist"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = Season123_1_8TaskItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1112
-	slot1.cellHeight = 140
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 18.9
-	slot1.startSpace = 0
-	slot1.frameUpdateMs = 100
-	slot0.scrollView = LuaListScrollView.New(Season123TaskModel.instance, slot1)
+function var_0_0.buildScrollViews(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
+
+	var_3_0.scrollGOPath = "#scroll_tasklist"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+	var_3_0.cellClass = Season123_1_8TaskItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirV
+	var_3_0.lineCount = 1
+	var_3_0.cellWidth = 1112
+	var_3_0.cellHeight = 140
+	var_3_0.cellSpaceH = 0
+	var_3_0.cellSpaceV = 18.9
+	var_3_0.startSpace = 0
+	var_3_0.frameUpdateMs = 100
+	arg_3_0.scrollView = LuaListScrollView.New(Season123TaskModel.instance, var_3_0)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.datatrack.DataTrackController", package.seeall)
+﻿module("modules.logic.datatrack.DataTrackController", package.seeall)
 
-slot0 = class("DataTrackController", BaseController)
+local var_0_0 = class("DataTrackController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
 	SDKDataTrackExt.activateExtend()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

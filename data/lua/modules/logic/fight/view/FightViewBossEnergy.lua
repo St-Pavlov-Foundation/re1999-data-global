@@ -1,65 +1,69 @@
-module("modules.logic.fight.view.FightViewBossEnergy", package.seeall)
+﻿module("modules.logic.fight.view.FightViewBossEnergy", package.seeall)
 
-slot0 = class("FightViewBossEnergy", BaseViewExtended)
+local var_0_0 = class("FightViewBossEnergy", BaseViewExtended)
 
-function slot0.ctor(slot0, slot1)
-	slot0._bossEntityMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._bossEntityMO = arg_1_1
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onInitView(slot0)
-	slot0._imghpbar = gohelper.findChildImage(slot0.viewGO, "image_hpbarbg/image_hpbarfg")
-	slot0._imgSignEnergyContainer = gohelper.findChild(slot0.viewGO, "image_hpbarbg/divide")
-	slot0._imgSignEnergyItem = gohelper.findChild(slot0.viewGO, "image_hpbarbg/divide/#go_divide1")
-	slot0._txtnum = gohelper.findChildTextMesh(slot0.viewGO, "image_hpbarbg/#txt_num")
-	slot0._gomax = gohelper.findChild(slot0.viewGO, "image_hpbarbg/max")
-	slot0._gobreak = gohelper.findChild(slot0.viewGO, "image_hpbarbg/breakthrough")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._imghpbar = gohelper.findChildImage(arg_2_0.viewGO, "image_hpbarbg/image_hpbarfg")
+	arg_2_0._imgSignEnergyContainer = gohelper.findChild(arg_2_0.viewGO, "image_hpbarbg/divide")
+	arg_2_0._imgSignEnergyItem = gohelper.findChild(arg_2_0.viewGO, "image_hpbarbg/divide/#go_divide1")
+	arg_2_0._txtnum = gohelper.findChildTextMesh(arg_2_0.viewGO, "image_hpbarbg/#txt_num")
+	arg_2_0._gomax = gohelper.findChild(arg_2_0.viewGO, "image_hpbarbg/max")
+	arg_2_0._gobreak = gohelper.findChild(arg_2_0.viewGO, "image_hpbarbg/breakthrough")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PowerChange, slot0._onPowerChange, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_3_0._onPowerChange, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.PowerChange, slot0._onPowerChange, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.PowerChange, arg_4_0._onPowerChange, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._gobreak, false)
+function var_0_0.onOpen(arg_5_0)
+	gohelper.setActive(arg_5_0._gobreak, false)
 
-	slot2 = {}
+	local var_5_0 = arg_5_0._bossEntityMO:getCO()
+	local var_5_1 = {}
 
-	if not string.nilorempty(slot0._bossEntityMO:getCO().energySign) then
-		slot2 = string.splitToNumber(slot1.energySign, "#")
+	if not string.nilorempty(var_5_0.energySign) then
+		var_5_1 = string.splitToNumber(var_5_0.energySign, "#")
 	end
 
-	gohelper.CreateObjList(slot0, slot0._bossEnergySignShow, slot2, slot0._imgSignEnergyContainer, slot0._imgSignEnergyItem)
-	slot0:_setValue(slot0._bossEntityMO:getPowerInfo(FightEnum.PowerType.Energy).num / 1000, false)
+	gohelper.CreateObjList(arg_5_0, arg_5_0._bossEnergySignShow, var_5_1, arg_5_0._imgSignEnergyContainer, arg_5_0._imgSignEnergyItem)
+
+	local var_5_2 = arg_5_0._bossEntityMO:getPowerInfo(FightEnum.PowerType.Energy)
+
+	arg_5_0:_setValue(var_5_2.num / 1000, false)
 end
 
-function slot0._bossEnergySignShow(slot0, slot1, slot2, slot3)
-	recthelper.setAnchorX(slot1.transform, slot2 / 1000 * recthelper.getWidth(slot1.transform.parent.parent))
+function var_0_0._bossEnergySignShow(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	recthelper.setAnchorX(arg_6_1.transform, arg_6_2 / 1000 * recthelper.getWidth(arg_6_1.transform.parent.parent))
 end
 
-function slot0._onPowerChange(slot0, slot1, slot2, slot3, slot4)
-	if slot0._bossEntityMO.id == slot1 and FightEnum.PowerType.Energy == slot2 and slot3 ~= slot4 then
-		slot0:_setValue(slot4 / 1000, true)
+function var_0_0._onPowerChange(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	if arg_7_0._bossEntityMO.id == arg_7_1 and FightEnum.PowerType.Energy == arg_7_2 and arg_7_3 ~= arg_7_4 then
+		arg_7_0:_setValue(arg_7_4 / 1000, true)
 	end
 end
 
-function slot0._setValue(slot0, slot1, slot2)
-	if slot2 then
-		ZProj.TweenHelper.KillByObj(slot0._imghpbar)
-		ZProj.TweenHelper.DOFillAmount(slot0._imghpbar, slot1, 0.2)
+function var_0_0._setValue(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 then
+		ZProj.TweenHelper.KillByObj(arg_8_0._imghpbar)
+		ZProj.TweenHelper.DOFillAmount(arg_8_0._imghpbar, arg_8_1, 0.2)
 	else
-		slot0._imghpbar.fillAmount = slot1
+		arg_8_0._imghpbar.fillAmount = arg_8_1
 	end
 
-	slot0._txtnum.text = string.format("%s%%", math.floor(slot1 * 1000) / 10)
+	arg_8_0._txtnum.text = string.format("%s%%", math.floor(arg_8_1 * 1000) / 10)
 
-	gohelper.setActive(slot0._gomax, slot1 == 1)
-	gohelper.setActive(slot0._gobreak, slot1 > 1)
+	gohelper.setActive(arg_8_0._gomax, arg_8_1 == 1)
+	gohelper.setActive(arg_8_0._gobreak, arg_8_1 > 1)
 end
 
-return slot0
+return var_0_0

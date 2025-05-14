@@ -1,35 +1,35 @@
-module("modules.logic.explore.map.unit.ExploreBagItemRewardUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreBagItemRewardUnit", package.seeall)
 
-slot0 = class("ExploreBagItemRewardUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreBagItemRewardUnit", ExploreBaseDisplayUnit)
 
-function slot0.needInteractAnim(slot0)
+function var_0_0.needInteractAnim(arg_1_0)
 	return true
 end
 
-function slot0.playAnim(slot0, slot1)
-	if slot1 == ExploreAnimEnum.AnimName.exit then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.checkHavePopup, slot0)
+function var_0_0.playAnim(arg_2_0, arg_2_1)
+	if arg_2_1 == ExploreAnimEnum.AnimName.exit then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0.checkHavePopup, arg_2_0)
 	else
-		uv0.super.playAnim(slot0, slot1)
+		var_0_0.super.playAnim(arg_2_0, arg_2_1)
 	end
 end
 
-function slot0.checkHavePopup(slot0)
+function var_0_0.checkHavePopup(arg_3_0)
 	if PopupController.instance:getPopupCount() > 0 or ViewMgr.instance:isOpen(ViewName.ExploreGetItemView) or ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		return true
 	else
-		slot0:onPopupEnd()
+		arg_3_0:onPopupEnd()
 	end
 end
 
-function slot0.onPopupEnd(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0.checkHavePopup, slot0)
-	slot0.animComp:playAnim(ExploreAnimEnum.AnimName.exit)
+function var_0_0.onPopupEnd(arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0.checkHavePopup, arg_4_0)
+	arg_4_0.animComp:playAnim(ExploreAnimEnum.AnimName.exit)
 end
 
-function slot0.onDestroy(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0.checkHavePopup, slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0.checkHavePopup, arg_5_0)
+	var_0_0.super.onDestroy(arg_5_0)
 end
 
-return slot0
+return var_0_0

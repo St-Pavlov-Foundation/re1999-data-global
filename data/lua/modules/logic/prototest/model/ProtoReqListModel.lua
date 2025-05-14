@@ -1,44 +1,49 @@
-module("modules.logic.prototest.model.ProtoReqListModel", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoReqListModel", package.seeall)
 
-slot0 = class("ProtoReqListModel", ListScrollModel)
+local var_0_0 = class("ProtoReqListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._reqList = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._reqList = nil
 end
 
-function slot0.getFilterList(slot0, slot1)
-	slot0:_checkInitReqList()
+function var_0_0.getFilterList(arg_2_0, arg_2_1)
+	arg_2_0:_checkInitReqList()
 
-	slot2 = {}
-	slot1 = string.lower(slot1)
+	local var_2_0 = {}
 
-	for slot6, slot7 in ipairs(slot0._reqList) do
-		if string.nilorempty(slot1) or string.find(slot7.cmdStr, slot1) or string.find(slot7.reqLower, slot1) or string.find(slot7.moduleLower, slot1) then
-			table.insert(slot2, slot7)
+	arg_2_1 = string.lower(arg_2_1)
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._reqList) do
+		if string.nilorempty(arg_2_1) or string.find(iter_2_1.cmdStr, arg_2_1) or string.find(iter_2_1.reqLower, arg_2_1) or string.find(iter_2_1.moduleLower, arg_2_1) then
+			table.insert(var_2_0, iter_2_1)
 		end
 	end
 
-	return slot2
+	return var_2_0
 end
 
-function slot0._checkInitReqList(slot0)
-	if slot0._reqList then
+function var_0_0._checkInitReqList(arg_3_0)
+	if arg_3_0._reqList then
 		return
 	end
 
-	slot0._reqList = {}
+	arg_3_0._reqList = {}
 
-	if LuaSocketMgr.instance:getCmdSettingDict() then
-		for slot5, slot6 in pairs(slot1) do
-			if #slot6 >= 3 then
-				table.insert(slot0._reqList, {
-					cmd = slot5,
-					cmdStr = tostring(slot5),
-					req = slot6[2],
-					reqLower = string.lower(slot6[2]),
-					module = slot6[1],
-					moduleLower = string.lower(slot6[1])
-				})
+	local var_3_0 = LuaSocketMgr.instance:getCmdSettingDict()
+
+	if var_3_0 then
+		for iter_3_0, iter_3_1 in pairs(var_3_0) do
+			if #iter_3_1 >= 3 then
+				local var_3_1 = {
+					cmd = iter_3_0,
+					cmdStr = tostring(iter_3_0),
+					req = iter_3_1[2],
+					reqLower = string.lower(iter_3_1[2]),
+					module = iter_3_1[1],
+					moduleLower = string.lower(iter_3_1[1])
+				}
+
+				table.insert(arg_3_0._reqList, var_3_1)
 			end
 		end
 	else
@@ -46,6 +51,6 @@ function slot0._checkInitReqList(slot0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

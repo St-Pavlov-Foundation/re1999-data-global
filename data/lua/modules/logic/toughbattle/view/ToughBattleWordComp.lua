@@ -1,159 +1,179 @@
-module("modules.logic.toughbattle.view.ToughBattleWordComp", package.seeall)
+﻿module("modules.logic.toughbattle.view.ToughBattleWordComp", package.seeall)
 
-slot0 = class("ToughBattleWordComp", LuaCompBase)
-slot1 = "<size=40><alpha=#00>.<alpha=#ff></size>"
+local var_0_0 = class("ToughBattleWordComp", LuaCompBase)
+local var_0_1 = "<size=40><alpha=#00>.<alpha=#ff></size>"
 
-function slot2(slot0)
-	slot1 = nil
+local function var_0_2(arg_1_0)
+	local var_1_0
 
 	if LangSettings.instance:isEn() then
-		slot5 = 1
+		var_1_0 = {
+			string.byte(arg_1_0, 1, -1)
+		}
 
-		for slot5 = 1, #{
-			string.byte(slot0, slot5, -1)
-		} do
-			if slot1[slot5] == 32 then
-				slot1[slot5] = uv0
+		for iter_1_0 = 1, #var_1_0 do
+			if var_1_0[iter_1_0] == 32 then
+				var_1_0[iter_1_0] = var_0_1
 			else
-				slot1[slot5] = string.char(slot1[slot5])
+				var_1_0[iter_1_0] = string.char(var_1_0[iter_1_0])
 			end
 		end
 	else
-		slot1 = LuaUtil.getUCharArr(slot0)
+		var_1_0 = LuaUtil.getUCharArr(arg_1_0)
 	end
 
-	return slot1 or {}
+	return var_1_0 or {}
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0._co = slot1.co
-	slot0._res = slot1.res
+function var_0_0.ctor(arg_2_0, arg_2_1)
+	arg_2_0._co = arg_2_1.co
+	arg_2_0._res = arg_2_1.res
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._sign = gohelper.findChild(slot1, "sign")
-	slot0._line1 = gohelper.findChild(slot1, "line1")
-	slot0._line2 = gohelper.findChild(slot1, "line2")
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.go = arg_3_1
+	arg_3_0._sign = gohelper.findChild(arg_3_1, "sign")
+	arg_3_0._line1 = gohelper.findChild(arg_3_1, "line1")
+	arg_3_0._line2 = gohelper.findChild(arg_3_1, "line2")
 
-	slot0:createTxt()
+	arg_3_0:createTxt()
 end
 
-function slot0.createTxt(slot0)
-	slot0._allAnimWork = {}
-	slot2, slot3 = slot0:getRes(slot0._sign, true)
+function var_0_0.createTxt(arg_4_0)
+	local var_4_0 = ToughBattleEnum.WordTxtOpen + ToughBattleEnum.WordTxtIdle + ToughBattleEnum.WordTxtClose
 
-	slot3:LoadImage(ResUrl.getSignature(slot0._co.sign))
+	arg_4_0._allAnimWork = {}
 
-	for slot9 = 1, #uv0(string.split(slot0._co.desc, "\n")[1]) do
-		slot10, slot11 = slot0:getRes(slot0._line1, false)
-		slot11.text = slot5[slot9]
+	local var_4_1, var_4_2 = arg_4_0:getRes(arg_4_0._sign, true)
 
-		recthelper.setWidth(slot11.transform.parent, slot11.preferredWidth)
-		table.insert(slot0._allAnimWork, {
+	var_4_2:LoadImage(ResUrl.getSignature(arg_4_0._co.sign))
+
+	local var_4_3 = string.split(arg_4_0._co.desc, "\n")
+	local var_4_4 = var_0_2(var_4_3[1])
+
+	for iter_4_0 = 1, #var_4_4 do
+		local var_4_5, var_4_6 = arg_4_0:getRes(arg_4_0._line1, false)
+
+		var_4_6.text = var_4_4[iter_4_0]
+
+		local var_4_7 = var_4_6.transform.parent
+
+		recthelper.setWidth(var_4_7, var_4_6.preferredWidth)
+		table.insert(arg_4_0._allAnimWork, {
 			playAnim = "open",
-			anim = slot10,
-			time = (slot9 - 1) * ToughBattleEnum.WordTxtInterval
+			anim = var_4_5,
+			time = (iter_4_0 - 1) * ToughBattleEnum.WordTxtInterval
 		})
-		table.insert(slot0._allAnimWork, {
+		table.insert(arg_4_0._allAnimWork, {
 			playAnim = "close",
-			anim = slot10,
-			time = (slot9 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordTxtOpen + ToughBattleEnum.WordTxtIdle + ToughBattleEnum.WordTxtClose - ToughBattleEnum.WordTxtClose
+			anim = var_4_5,
+			time = (iter_4_0 - 1) * ToughBattleEnum.WordTxtInterval + var_4_0 - ToughBattleEnum.WordTxtClose
 		})
 	end
 
-	for slot10 = 1, #uv0(slot4[2]) do
-		slot11, slot12 = slot0:getRes(slot0._line2, false)
-		slot12.text = slot6[slot10]
+	local var_4_8 = var_0_2(var_4_3[2])
 
-		recthelper.setWidth(slot12.transform.parent, slot12.preferredWidth)
-		table.insert(slot0._allAnimWork, {
+	for iter_4_1 = 1, #var_4_8 do
+		local var_4_9, var_4_10 = arg_4_0:getRes(arg_4_0._line2, false)
+
+		var_4_10.text = var_4_8[iter_4_1]
+
+		local var_4_11 = var_4_10.transform.parent
+
+		recthelper.setWidth(var_4_11, var_4_10.preferredWidth)
+		table.insert(arg_4_0._allAnimWork, {
 			playAnim = "open",
-			anim = slot11,
-			time = (slot10 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay
+			anim = var_4_9,
+			time = (iter_4_1 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay
 		})
-		table.insert(slot0._allAnimWork, {
+		table.insert(arg_4_0._allAnimWork, {
 			playAnim = "close",
-			anim = slot11,
-			time = (slot10 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay + slot1 - ToughBattleEnum.WordTxtClose
+			anim = var_4_9,
+			time = (iter_4_1 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay + var_4_0 - ToughBattleEnum.WordTxtClose
 		})
 	end
 
-	table.insert(slot0._allAnimWork, {
+	table.insert(arg_4_0._allAnimWork, {
 		playAnim = "open",
 		time = 0,
-		anim = slot2
+		anim = var_4_1
 	})
 
-	slot7 = slot1 + ToughBattleEnum.WordTxtInterval * (#slot5 - 1)
-	slot8 = 0
+	local var_4_12 = var_4_0 + ToughBattleEnum.WordTxtInterval * (#var_4_4 - 1)
+	local var_4_13 = 0
 
-	if #slot6 > 0 then
-		slot8 = slot1 + ToughBattleEnum.WordTxtInterval * (#slot6 - 1)
+	if #var_4_8 > 0 then
+		var_4_13 = var_4_0 + ToughBattleEnum.WordTxtInterval * (#var_4_8 - 1)
 	end
 
-	slot9 = math.max(slot7, slot8)
+	local var_4_14 = math.max(var_4_12, var_4_13)
 
-	table.insert(slot0._allAnimWork, {
+	table.insert(arg_4_0._allAnimWork, {
 		playAnim = "close",
-		anim = slot2,
-		time = slot9 - ToughBattleEnum.WordTxtClose
+		anim = var_4_1,
+		time = var_4_14 - ToughBattleEnum.WordTxtClose
 	})
-	table.insert(slot0._allAnimWork, {
+	table.insert(arg_4_0._allAnimWork, {
 		destroy = true,
-		time = slot9
+		time = var_4_14
 	})
-	table.sort(slot0._allAnimWork, uv1.sortAnim)
-	slot0:nextStep()
+	table.sort(arg_4_0._allAnimWork, var_0_0.sortAnim)
+	arg_4_0:nextStep()
 end
 
-function slot0.nextStep(slot0)
-	TaskDispatcher.cancelTask(slot0.nextStep, slot0)
+function var_0_0.nextStep(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.nextStep, arg_5_0)
 
-	if not table.remove(slot0._allAnimWork, 1) then
+	local var_5_0 = table.remove(arg_5_0._allAnimWork, 1)
+
+	if not var_5_0 then
 		return
 	end
 
-	if slot1.destroy then
-		gohelper.destroy(slot0.go)
+	if var_5_0.destroy then
+		gohelper.destroy(arg_5_0.go)
 
 		return
-	elseif slot1.playAnim == "open" then
-		slot1.anim.enabled = true
+	elseif var_5_0.playAnim == "open" then
+		var_5_0.anim.enabled = true
 	else
-		slot1.anim:Play(slot1.playAnim, 0, 0)
+		var_5_0.anim:Play(var_5_0.playAnim, 0, 0)
 	end
 
-	if not slot0._allAnimWork[1] then
+	local var_5_1 = arg_5_0._allAnimWork[1]
+
+	if not var_5_1 then
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0.nextStep, slot0, slot2.time - slot1.time)
+	TaskDispatcher.runDelay(arg_5_0.nextStep, arg_5_0, var_5_1.time - var_5_0.time)
 end
 
-function slot0.sortAnim(slot0, slot1)
-	return slot0.time < slot1.time
+function var_0_0.sortAnim(arg_6_0, arg_6_1)
+	return arg_6_0.time < arg_6_1.time
 end
 
-slot3 = typeof(UnityEngine.Animator)
+local var_0_3 = typeof(UnityEngine.Animator)
 
-function slot0.getRes(slot0, slot1, slot2)
-	slot3 = gohelper.clone(slot0._res, slot1)
-	slot6 = slot3:GetComponent(uv0)
+function var_0_0.getRes(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = gohelper.clone(arg_7_0._res, arg_7_1)
+	local var_7_1 = gohelper.findChildSingleImage(var_7_0, "img")
+	local var_7_2 = gohelper.findChildTextMesh(var_7_0, "txt")
+	local var_7_3 = var_7_0:GetComponent(var_0_3)
 
-	gohelper.setActive(gohelper.findChildSingleImage(slot3, "img"), slot2)
-	gohelper.setActive(gohelper.findChildTextMesh(slot3, "txt"), not slot2)
-	gohelper.setActive(slot3, true)
-	slot6:Play("open", 0, 0)
-	slot6:Update(0)
+	gohelper.setActive(var_7_1, arg_7_2)
+	gohelper.setActive(var_7_2, not arg_7_2)
+	gohelper.setActive(var_7_0, true)
+	var_7_3:Play("open", 0, 0)
+	var_7_3:Update(0)
 
-	slot6.enabled = false
+	var_7_3.enabled = false
 
-	return slot6, slot2 and slot4 or slot5
+	return var_7_3, arg_7_2 and var_7_1 or var_7_2
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.nextStep, slot0)
+function var_0_0.onDestroy(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.nextStep, arg_8_0)
 end
 
-return slot0
+return var_0_0

@@ -1,12 +1,12 @@
-module("modules.logic.character.model.HeroEquipAttributeMO", package.seeall)
+﻿module("modules.logic.character.model.HeroEquipAttributeMO", package.seeall)
 
-slot0 = pureTable("HeroEquipAttributeMO")
+local var_0_0 = pureTable("HeroEquipAttributeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.equipAttr = HeroAttributeMO.New()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.equipAttr = HeroAttributeMO.New()
 
-	slot0.equipAttr:init(slot1.equipAttr)
+	arg_1_0.equipAttr:init(arg_1_1.equipAttr)
 end
 
-return slot0
+return var_0_0

@@ -1,110 +1,123 @@
-module("modules.logic.summon.model.SummonPoolDetailCategoryListModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonPoolDetailCategoryListModel", package.seeall)
 
-slot0 = class("SummonPoolDetailCategoryListModel", ListScrollModel)
+local var_0_0 = class("SummonPoolDetailCategoryListModel", ListScrollModel)
 
-function slot0.initCategory(slot0)
-	slot1 = {}
+function var_0_0.initCategory(arg_1_0)
+	local var_1_0 = {}
 
-	for slot5 = 1, 2 do
-		table.insert(slot1, slot0:packMo(uv0.getName(slot5), uv0.getNameEn(slot5), slot5))
+	for iter_1_0 = 1, 2 do
+		table.insert(var_1_0, arg_1_0:packMo(var_0_0.getName(iter_1_0), var_0_0.getNameEn(iter_1_0), iter_1_0))
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.packMo(slot0, slot1, slot2, slot3)
-	slot0._moList = slot0._moList or {}
+function var_0_0.packMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._moList = arg_2_0._moList or {}
 
-	if not slot0._moList[slot3] then
-		slot4 = {}
-		slot0._moList[slot3] = slot4
-		slot4.enName = slot2
-		slot4.resIndex = slot3
+	local var_2_0 = arg_2_0._moList[arg_2_3]
+
+	if not var_2_0 then
+		var_2_0 = {}
+		arg_2_0._moList[arg_2_3] = var_2_0
+		var_2_0.enName = arg_2_2
+		var_2_0.resIndex = arg_2_3
 	end
 
-	slot4.cnName = slot1
+	var_2_0.cnName = arg_2_1
 
-	return slot4
+	return var_2_0
 end
 
-function slot0.setJumpLuckyBag(slot0, slot1)
-	slot0._jumpLuckyBagId = slot1
+function var_0_0.setJumpLuckyBag(arg_3_0, arg_3_1)
+	arg_3_0._jumpLuckyBagId = arg_3_1
 end
 
-function slot0.getJumpLuckyBag(slot0)
-	return slot0._jumpLuckyBagId
+function var_0_0.getJumpLuckyBag(arg_4_0)
+	return arg_4_0._jumpLuckyBagId
 end
 
-function slot0.getName(slot0)
-	if not uv0.nameDict then
-		uv0.nameDict = {
-			[1.0] = "p_summon_pool_detail",
-			[2.0] = "p_summon_pool_probability"
+function var_0_0.getName(arg_5_0)
+	if not var_0_0.nameDict then
+		var_0_0.nameDict = {
+			[1] = "p_summon_pool_detail",
+			[2] = "p_summon_pool_probability"
 		}
 	end
 
-	return luaLang(uv0.nameDict[slot0])
+	return luaLang(var_0_0.nameDict[arg_5_0])
 end
 
-function slot0.getNameEn(slot0)
-	if not uv0.nameEnDict then
-		uv0.nameEnDict = {
-			[1.0] = "p_summon_pool_detailEn",
-			[2.0] = "p_summon_pool_probabilityEn"
+function var_0_0.getNameEn(arg_6_0)
+	if not var_0_0.nameEnDict then
+		var_0_0.nameEnDict = {
+			[1] = "p_summon_pool_detailEn",
+			[2] = "p_summon_pool_probabilityEn"
 		}
 	end
 
-	return luaLang(uv0.nameEnDict[slot0])
+	return luaLang(var_0_0.nameEnDict[arg_6_0])
 end
 
-function slot0.buildProbUpDict(slot0)
-	slot2 = {
+function var_0_0.buildProbUpDict(arg_7_0)
+	local var_7_0 = SummonConfig.instance:getSummonPool(arg_7_0)
+	local var_7_1 = {
 		5,
 		4
 	}
-	slot3 = {}
-	slot4 = {}
-	slot5 = false
+	local var_7_2 = {}
+	local var_7_3 = {}
+	local var_7_4 = false
 
-	if not string.nilorempty(SummonConfig.instance:getSummonPool(slot0).upWeight) then
-		for slot10, slot11 in ipairs(string.split(slot1.upWeight, "|")) do
-			slot13 = string.splitToNumber(slot11, "#")
-			slot3[slot2[slot10]] = slot13
+	if not string.nilorempty(var_7_0.upWeight) then
+		local var_7_5 = string.split(var_7_0.upWeight, "|")
 
-			tabletool.addValues(slot4, slot13)
+		for iter_7_0, iter_7_1 in ipairs(var_7_5) do
+			local var_7_6 = var_7_1[iter_7_0]
+			local var_7_7 = string.splitToNumber(iter_7_1, "#")
 
-			slot5 = true
+			var_7_2[var_7_6] = var_7_7
+
+			tabletool.addValues(var_7_3, var_7_7)
+
+			var_7_4 = true
 		end
 	end
 
-	return slot3, slot4, slot5
+	return var_7_2, var_7_3, var_7_4
 end
 
-function slot0.buildLuckyBagDict(slot0)
-	slot1 = SummonConfig.instance:getSummonPool(slot0)
-	slot3 = {}
-	slot4 = {}
+function var_0_0.buildLuckyBagDict(arg_8_0)
+	local var_8_0 = SummonConfig.instance:getSummonPool(arg_8_0)
+	local var_8_1 = SummonConfig.instance:getSummonLuckyBag(arg_8_0)
+	local var_8_2 = {}
+	local var_8_3 = {}
 
-	for slot8, slot9 in ipairs(SummonConfig.instance:getSummonLuckyBag(slot0)) do
-		table.insert(slot3, slot9)
-		table.insert(slot4, SummonConfig.instance:getLuckyBagHeroIds(slot0, slot9))
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		table.insert(var_8_2, iter_8_1)
+		table.insert(var_8_3, SummonConfig.instance:getLuckyBagHeroIds(arg_8_0, iter_8_1))
 	end
 
-	return slot3, slot4
+	return var_8_2, var_8_3
 end
 
-function slot0.buildCustomPickDict(slot0)
-	slot1 = {}
+function var_0_0.buildCustomPickDict(arg_9_0)
+	local var_9_0 = {}
+	local var_9_1 = SummonMainModel.instance:getPoolServerMO(arg_9_0)
 
-	if SummonMainModel.instance:getPoolServerMO(slot0) and slot2.customPickMO and slot2.customPickMO.pickHeroIds then
-		for slot7 = 1, #slot2.customPickMO.pickHeroIds do
-			table.insert(slot1, slot2.customPickMO.pickHeroIds[slot7])
+	if var_9_1 and var_9_1.customPickMO and var_9_1.customPickMO.pickHeroIds then
+		local var_9_2 = #var_9_1.customPickMO.pickHeroIds
+
+		for iter_9_0 = 1, var_9_2 do
+			local var_9_3 = var_9_1.customPickMO.pickHeroIds[iter_9_0]
+
+			table.insert(var_9_0, var_9_3)
 		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,43 +1,46 @@
-slot0 = pureTable("Activity104RetailMo")
+﻿local var_0_0 = pureTable("Activity104RetailMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.state = 0
-	slot0.advancedId = 0
-	slot0.star = 0
-	slot0.showActivity104EquipIds = {}
-	slot0.position = 0
-	slot0.advancedRare = 0
-	slot0.tag = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.state = 0
+	arg_1_0.advancedId = 0
+	arg_1_0.star = 0
+	arg_1_0.showActivity104EquipIds = {}
+	arg_1_0.position = 0
+	arg_1_0.advancedRare = 0
+	arg_1_0.tag = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.state = slot1.state
-	slot0.advancedId = slot1.advancedId
-	slot0.star = slot1.star
-	slot0.showActivity104EquipIds = slot0:_buildEquipList(slot1.showActivity104EquipIds)
-	slot0.position = slot1.position
-	slot0.advancedRare = slot1.advancedRare
-	slot0.tag = slot1.tag
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.state = arg_2_1.state
+	arg_2_0.advancedId = arg_2_1.advancedId
+	arg_2_0.star = arg_2_1.star
+	arg_2_0.showActivity104EquipIds = arg_2_0:_buildEquipList(arg_2_1.showActivity104EquipIds)
+	arg_2_0.position = arg_2_1.position
+	arg_2_0.advancedRare = arg_2_1.advancedRare
+	arg_2_0.tag = arg_2_1.tag
 end
 
-function slot0._buildEquipList(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildEquipList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot2, slot7)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		table.insert(var_3_0, iter_3_1)
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		if SeasonConfig.instance:getSeasonEquipCo(slot0).isOptional ~= SeasonConfig.instance:getSeasonEquipCo(slot1).isOptional then
-			return slot3.isOptional < slot2.isOptional
+	table.sort(var_3_0, function(arg_4_0, arg_4_1)
+		local var_4_0 = SeasonConfig.instance:getSeasonEquipCo(arg_4_0)
+		local var_4_1 = SeasonConfig.instance:getSeasonEquipCo(arg_4_1)
+
+		if var_4_0.isOptional ~= var_4_1.isOptional then
+			return var_4_0.isOptional > var_4_1.isOptional
 		else
-			return slot3.rare < slot2.rare
+			return var_4_0.rare > var_4_1.rare
 		end
 	end)
 
-	return slot2
+	return var_3_0
 end
 
-return slot0
+return var_0_0

@@ -1,27 +1,27 @@
-module("modules.logic.versionactivity2_5.warmup.view.V2a5_WarmUpLeftView_Day", package.seeall)
+﻿module("modules.logic.versionactivity2_5.warmup.view.V2a5_WarmUpLeftView_Day", package.seeall)
 
-slot0 = class("V2a5_WarmUpLeftView_Day", RougeSimpleItemBase)
+local var_0_0 = class("V2a5_WarmUpLeftView_Day", RougeSimpleItemBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	var_0_0.super._editableInitView(arg_2_0)
 end
 
-function slot0._internal_setEpisode(slot0, slot1)
-	slot0._episodeId = slot1
+function var_0_0._internal_setEpisode(arg_3_0, arg_3_1)
+	arg_3_0._episodeId = arg_3_1
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0.viewGO, arg_4_1)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_5_0)
+	var_0_0.super.onDestroyView(arg_5_0)
+	arg_5_0:__onDispose()
 end
 
-return slot0
+return var_0_0

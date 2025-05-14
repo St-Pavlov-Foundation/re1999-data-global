@@ -1,168 +1,197 @@
-module("modules.logic.character.view.destiny.CharacterDestinySlotAttrItem", package.seeall)
+﻿module("modules.logic.character.view.destiny.CharacterDestinySlotAttrItem", package.seeall)
 
-slot0 = class("CharacterDestinySlotAttrItem", LuaCompBase)
+local var_0_0 = class("CharacterDestinySlotAttrItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._gospecialbg = gohelper.findChild(slot0.viewGO, "#go_specialbg")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
-	slot0._txtunlocktips = gohelper.findChildText(slot0.viewGO, "#go_lock/#txt_unlocktips")
-	slot0._txtlockname = gohelper.findChildText(slot0.viewGO, "#go_lock/layout/#txt_lockname")
-	slot0._imagelockicon = gohelper.findChildImage(slot0.viewGO, "#go_lock/layout/#txt_lockname/#image_lockicon")
-	slot0._txtlockcur = gohelper.findChildText(slot0.viewGO, "#go_lock/layout/num/#txt_lockcur")
-	slot0._golockarrow = gohelper.findChild(slot0.viewGO, "#go_lock/layout/num/#go_lockarrow")
-	slot0._txtlocknext = gohelper.findChildText(slot0.viewGO, "#go_lock/layout/num/#txt_locknext")
-	slot0._gounlock = gohelper.findChild(slot0.viewGO, "#go_unlock")
-	slot0._txtunlockname = gohelper.findChildText(slot0.viewGO, "#go_unlock/#txt_unlockname")
-	slot0._imageunlockicon = gohelper.findChildImage(slot0.viewGO, "#go_unlock/#txt_unlockname/#image_unlockicon")
-	slot0._txtunlockcur = gohelper.findChildText(slot0.viewGO, "#go_unlock/num/#txt_unlockcur")
-	slot0._gounlockarrow = gohelper.findChild(slot0.viewGO, "#go_unlock/num/#go_unlockarrow")
-	slot0._txtunlocknext = gohelper.findChildText(slot0.viewGO, "#go_unlock/num/#txt_unlocknext")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gospecialbg = gohelper.findChild(arg_1_0.viewGO, "#go_specialbg")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+	arg_1_0._txtunlocktips = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/#txt_unlocktips")
+	arg_1_0._txtlockname = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/layout/#txt_lockname")
+	arg_1_0._imagelockicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_lock/layout/#txt_lockname/#image_lockicon")
+	arg_1_0._txtlockcur = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/layout/num/#txt_lockcur")
+	arg_1_0._golockarrow = gohelper.findChild(arg_1_0.viewGO, "#go_lock/layout/num/#go_lockarrow")
+	arg_1_0._txtlocknext = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/layout/num/#txt_locknext")
+	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_unlock")
+	arg_1_0._txtunlockname = gohelper.findChildText(arg_1_0.viewGO, "#go_unlock/#txt_unlockname")
+	arg_1_0._imageunlockicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_unlock/#txt_unlockname/#image_unlockicon")
+	arg_1_0._txtunlockcur = gohelper.findChildText(arg_1_0.viewGO, "#go_unlock/num/#txt_unlockcur")
+	arg_1_0._gounlockarrow = gohelper.findChild(arg_1_0.viewGO, "#go_unlock/num/#go_unlockarrow")
+	arg_1_0._txtunlocknext = gohelper.findChildText(arg_1_0.viewGO, "#go_unlock/num/#txt_unlocknext")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._lockItem = slot0:getUserDataTb_()
-	slot0._golockItem = gohelper.findChild(slot0.viewGO, "#go_lock/layout")
-	slot0._levelup = gohelper.findChild(slot0.viewGO, "#leveup")
-	slot0._lockItem[1] = slot0:__getLockItem(slot0._golockItem)
+function var_0_0.init(arg_5_0, arg_5_1)
+	arg_5_0.viewGO = arg_5_1
+	arg_5_0._lockItem = arg_5_0:getUserDataTb_()
+	arg_5_0._golockItem = gohelper.findChild(arg_5_0.viewGO, "#go_lock/layout")
+	arg_5_0._levelup = gohelper.findChild(arg_5_0.viewGO, "#leveup")
+	arg_5_0._lockItem[1] = arg_5_0:__getLockItem(arg_5_0._golockItem)
 
-	slot0:onInitView()
-	gohelper.setActive(slot1, true)
-	gohelper.setActive(slot0._levelup, false)
+	arg_5_0:onInitView()
+	gohelper.setActive(arg_5_1, true)
+	gohelper.setActive(arg_5_0._levelup, false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_6_0)
+	arg_6_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_7_0)
+	arg_7_0:removeEvents()
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._levelupAnimCallback, slot0)
+function var_0_0.onDestroy(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._levelupAnimCallback, arg_8_0)
 end
 
-function slot0.onUpdateBaseAttrMO(slot0, slot1, slot2, slot3, slot4)
-	slot7 = slot2.curNum or 0
-	slot0._txtunlockname.text = HeroConfig.instance:getHeroAttributeCO(slot2.attrId).name
-	slot0._txtunlockcur.text = slot0:_showAttrValue(slot7, slot5.showType)
-	slot0._txtunlocknext.text = slot0:_showAttrValue(slot7 + (slot2.nextNum or 0), slot5.showType)
-	slot9 = slot2.attrId
-	slot0.attrId = slot9
+function var_0_0.onUpdateBaseAttrMO(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = HeroConfig.instance:getHeroAttributeCO(arg_9_2.attrId)
+	local var_9_1 = var_9_0.name
+	local var_9_2 = arg_9_2.curNum or 0
+	local var_9_3 = arg_9_2.nextNum or 0
 
-	if CharacterDestinyEnum.DestinyUpBaseParseOffAttr[slot9] then
-		slot9 = CharacterDestinyEnum.DestinyUpBaseParseOffAttr[slot9]
+	arg_9_0._txtunlockname.text = var_9_1
+	arg_9_0._txtunlockcur.text = arg_9_0:_showAttrValue(var_9_2, var_9_0.showType)
+	arg_9_0._txtunlocknext.text = arg_9_0:_showAttrValue(var_9_2 + var_9_3, var_9_0.showType)
+
+	local var_9_4 = arg_9_2.attrId
+
+	arg_9_0.attrId = var_9_4
+
+	if CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_9_4] then
+		var_9_4 = CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_9_4]
 	end
 
-	CharacterController.instance:SetAttriIcon(slot0._imageunlockicon, slot9)
-	gohelper.setActive(slot0._gounlockarrow, slot8 > 0)
-	gohelper.setActive(slot0._txtunlocknext.gameObject, slot8 > 0)
-	gohelper.setActive(slot0._gounlock, true)
-	gohelper.setActive(slot0._golock, false)
-	recthelper.setAnchorY(slot0._gospecialbg.transform, 0)
+	CharacterController.instance:SetAttriIcon(arg_9_0._imageunlockicon, var_9_4)
+	gohelper.setActive(arg_9_0._gounlockarrow, var_9_3 > 0)
+	gohelper.setActive(arg_9_0._txtunlocknext.gameObject, var_9_3 > 0)
+	gohelper.setActive(arg_9_0._gounlock, true)
+	gohelper.setActive(arg_9_0._golock, false)
+	recthelper.setAnchorY(arg_9_0._gospecialbg.transform, 0)
 
-	if slot3 then
-		recthelper.setHeight(slot0._gospecialbg.transform, slot0:_getSpecialBgHeight(slot4))
+	if arg_9_3 then
+		local var_9_5 = arg_9_0:_getSpecialBgHeight(arg_9_4)
+
+		recthelper.setHeight(arg_9_0._gospecialbg.transform, var_9_5)
 	end
 
-	gohelper.setActive(slot0._gospecialbg, slot3)
+	gohelper.setActive(arg_9_0._gospecialbg, arg_9_3)
 end
 
-function slot0.onUpdateSpecailAttrMO(slot0, slot1, slot2, slot3, slot4)
-	slot0:onUpdateBaseAttrMO(slot1, slot2, slot3, slot4)
+function var_0_0.onUpdateSpecailAttrMO(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	arg_10_0:onUpdateBaseAttrMO(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 end
 
-function slot0.onUpdateLockSpecialAttrMO(slot0, slot1, slot2, slot3)
-	if slot3 then
-		slot4 = 1
-		slot5 = 0
+function var_0_0.onUpdateLockSpecialAttrMO(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_3 then
+		local var_11_0 = 1
+		local var_11_1 = 0
 
-		for slot9, slot10 in pairs(slot3) do
-			if slot0:_getLockItem(slot4) then
-				slot14.nameTxt.text = HeroConfig.instance:getHeroAttributeCO(slot10.attrId).name
-				slot14.curNumTxt.text = slot0:_showAttrValue(slot10.curNum or 0, slot11.showType)
+		for iter_11_0, iter_11_1 in pairs(arg_11_3) do
+			local var_11_2 = HeroConfig.instance:getHeroAttributeCO(iter_11_1.attrId)
+			local var_11_3 = var_11_2.name
+			local var_11_4 = iter_11_1.curNum or 0
+			local var_11_5 = arg_11_0:_getLockItem(var_11_0)
 
-				if (LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpSpecialAttr, slot10.attrId) or LuaUtil.tableContains(CharacterEnum.UpAttrIdList, slot15)) and not slot0._gospecialbg.activeSelf then
-					recthelper.setAnchorY(slot0._gospecialbg.transform, -50 - (slot4 - 1) * 53)
-					gohelper.setActive(slot0._gospecialbg, true)
+			if var_11_5 then
+				var_11_5.nameTxt.text = var_11_3
+				var_11_5.curNumTxt.text = arg_11_0:_showAttrValue(var_11_4, var_11_2.showType)
 
-					slot5 = slot4
+				local var_11_6 = iter_11_1.attrId
+
+				if (LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpSpecialAttr, var_11_6) or LuaUtil.tableContains(CharacterEnum.UpAttrIdList, var_11_6)) and not arg_11_0._gospecialbg.activeSelf then
+					recthelper.setAnchorY(arg_11_0._gospecialbg.transform, -50 - (var_11_0 - 1) * 53)
+					gohelper.setActive(arg_11_0._gospecialbg, true)
+
+					var_11_1 = var_11_0
 				end
 
-				if CharacterDestinyEnum.DestinyUpBaseParseOffAttr[slot15] then
-					slot15 = CharacterDestinyEnum.DestinyUpBaseParseOffAttr[slot15]
+				if CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_11_6] then
+					var_11_6 = CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_11_6]
 				end
 
-				CharacterController.instance:SetAttriIcon(slot14.iconImage, slot15)
+				CharacterController.instance:SetAttriIcon(var_11_5.iconImage, var_11_6)
 			end
 
-			slot4 = slot4 + 1
+			var_11_0 = var_11_0 + 1
 		end
 
-		if slot5 > 0 and slot0._gospecialbg.activeSelf then
-			recthelper.setHeight(slot0._gospecialbg.transform, slot0:_getSpecialBgHeight(slot4 - slot5))
+		if var_11_1 > 0 and arg_11_0._gospecialbg.activeSelf then
+			local var_11_7 = arg_11_0:_getSpecialBgHeight(var_11_0 - var_11_1)
+
+			recthelper.setHeight(arg_11_0._gospecialbg.transform, var_11_7)
 		end
 
-		slot0._txtunlocktips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("character_destinyslot_unlockrank"), CharacterDestinyEnum.RomanNum[slot2])
+		local var_11_8 = luaLang("character_destinyslot_unlockrank")
+		local var_11_9 = CharacterDestinyEnum.RomanNum[arg_11_2]
+
+		arg_11_0._txtunlocktips.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_8, var_11_9)
 	end
 
-	gohelper.setActive(slot0._gounlock, false)
-	gohelper.setActive(slot0._golock, true)
+	gohelper.setActive(arg_11_0._gounlock, false)
+	gohelper.setActive(arg_11_0._golock, true)
 end
 
-function slot0._getSpecialBgHeight(slot0, slot1)
-	return 50 + slot1 * 70
+function var_0_0._getSpecialBgHeight(arg_12_0, arg_12_1)
+	return 50 + arg_12_1 * 70
 end
 
-function slot0._showAttrValue(slot0, slot1, slot2)
-	return slot2 == 1 and GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("percent"), slot1) or slot1
+function var_0_0._showAttrValue(arg_13_0, arg_13_1, arg_13_2)
+	return arg_13_2 == 1 and GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("percent"), arg_13_1) or arg_13_1
 end
 
-function slot0._getLockItem(slot0, slot1)
-	if not slot0._lockItem[slot1] then
-		slot0._lockItem[slot1] = slot0:__getLockItem(gohelper.cloneInPlace(slot0._golockItem))
+function var_0_0._getLockItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._lockItem[arg_14_1]
+
+	if not var_14_0 then
+		local var_14_1 = gohelper.cloneInPlace(arg_14_0._golockItem)
+
+		var_14_0 = arg_14_0:__getLockItem(var_14_1)
+		arg_14_0._lockItem[arg_14_1] = var_14_0
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.__getLockItem(slot0, slot1)
-	if not slot1 then
+function var_0_0.__getLockItem(arg_15_0, arg_15_1)
+	if not arg_15_1 then
 		return
 	end
 
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.nameTxt = gohelper.findChildText(slot1, "#txt_lockname")
-	slot2.iconImage = gohelper.findChildImage(slot1, "#txt_lockname/#image_lockicon")
-	slot2.curNumTxt = gohelper.findChildText(slot1, "num/#txt_lockcur")
-	slot2.arrowGo = gohelper.findChild(slot1, "num/#go_lockarrow")
-	slot2.nextNumTxt = gohelper.findChildText(slot1, "num/#txt_locknext")
+	local var_15_0 = arg_15_0:getUserDataTb_()
 
-	return slot2
+	var_15_0.go = arg_15_1
+	var_15_0.nameTxt = gohelper.findChildText(arg_15_1, "#txt_lockname")
+	var_15_0.iconImage = gohelper.findChildImage(arg_15_1, "#txt_lockname/#image_lockicon")
+	var_15_0.curNumTxt = gohelper.findChildText(arg_15_1, "num/#txt_lockcur")
+	var_15_0.arrowGo = gohelper.findChild(arg_15_1, "num/#go_lockarrow")
+	var_15_0.nextNumTxt = gohelper.findChildText(arg_15_1, "num/#txt_locknext")
+
+	return var_15_0
 end
 
-function slot0.playLevelUpAnim(slot0)
-	gohelper.setActive(slot0._levelup, true)
-	TaskDispatcher.runDelay(slot0._levelupAnimCallback, slot0, 1)
+function var_0_0.playLevelUpAnim(arg_16_0)
+	gohelper.setActive(arg_16_0._levelup, true)
+	TaskDispatcher.runDelay(arg_16_0._levelupAnimCallback, arg_16_0, 1)
 end
 
-function slot0._levelupAnimCallback(slot0)
-	gohelper.setActive(slot0._levelup, false)
+function var_0_0._levelupAnimCallback(arg_17_0)
+	gohelper.setActive(arg_17_0._levelup, false)
 end
 
-return slot0
+return var_0_0

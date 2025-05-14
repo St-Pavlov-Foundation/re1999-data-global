@@ -1,27 +1,27 @@
-module("modules.logic.activity.model.chessmap.ActivityChessGameInteractMO", package.seeall)
+﻿module("modules.logic.activity.model.chessmap.ActivityChessGameInteractMO", package.seeall)
 
-slot0 = pureTable("ActivityChessGameInteractMO")
+local var_0_0 = pureTable("ActivityChessGameInteractMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot2.id
-	slot0.actId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_2.id
+	arg_1_0.actId = arg_1_1
 
-	slot0:updateMO(slot2)
+	arg_1_0:updateMO(arg_1_2)
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.posX = slot1.x
-	slot0.posY = slot1.y
-	slot0.direction = slot1.direction or 6
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.posX = arg_2_1.x
+	arg_2_0.posY = arg_2_1.y
+	arg_2_0.direction = arg_2_1.direction or 6
 
-	if not string.nilorempty(slot1.data) then
-		slot0.data = cjson.decode(slot1.data)
+	if not string.nilorempty(arg_2_1.data) then
+		arg_2_0.data = cjson.decode(arg_2_1.data)
 	end
 end
 
-function slot0.setXY(slot0, slot1, slot2)
-	slot0.posX = slot1
-	slot0.posY = slot2
+function var_0_0.setXY(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.posX = arg_3_1
+	arg_3_0.posY = arg_3_2
 end
 
-return slot0
+return var_0_0

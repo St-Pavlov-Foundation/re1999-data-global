@@ -1,113 +1,129 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadHeroGroupSpineWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadHeroGroupSpineWork", package.seeall)
 
-slot0 = class("FightPreloadHeroGroupSpineWork", BaseWork)
+local var_0_0 = class("FightPreloadHeroGroupSpineWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	if slot0:_getSpineUrlList() and #slot2 > 0 then
-		slot0._loader = SequenceAbLoader.New()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0:_getSpineUrlList()
 
-		slot0._loader:setPathList(slot2)
-		slot0._loader:setConcurrentCount(10)
-		slot0._loader:setLoadFailCallback(slot0._onPreloadOneFail)
-		slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	if var_1_0 and #var_1_0 > 0 then
+		arg_1_0._loader = SequenceAbLoader.New()
+
+		arg_1_0._loader:setPathList(var_1_0)
+		arg_1_0._loader:setConcurrentCount(10)
+		arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
+		arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onPreloadFinish(slot0)
-	slot0._needCreateList = {}
-	slot0._hasCreateList = {}
+function var_0_0._onPreloadFinish(arg_2_0)
+	local var_2_0 = arg_2_0._loader:getAssetItemDict()
 
-	for slot5, slot6 in pairs(slot0._loader:getAssetItemDict()) do
-		FightSpinePool.setAssetItem(slot5, slot6)
-		table.insert(slot0._needCreateList, slot5)
-		slot0.context.callback(slot0.context.callbackObj, slot6)
+	arg_2_0._needCreateList = {}
+	arg_2_0._hasCreateList = {}
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		FightSpinePool.setAssetItem(iter_2_0, iter_2_1)
+		table.insert(arg_2_0._needCreateList, iter_2_0)
+		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
 	end
 
-	if #slot0._needCreateList > 0 then
-		TaskDispatcher.runRepeat(slot0._createSpineGO, slot0, 0.1, slot2)
+	local var_2_1 = #arg_2_0._needCreateList
+
+	if var_2_1 > 0 then
+		TaskDispatcher.runRepeat(arg_2_0._createSpineGO, arg_2_0, 0.1, var_2_1)
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._createSpineGO(slot0)
-	slot1 = table.remove(slot0._needCreateList)
-	slot2 = FightSpinePool.getSpine(slot1)
+function var_0_0._createSpineGO(arg_3_0)
+	local var_3_0 = table.remove(arg_3_0._needCreateList)
+	local var_3_1 = FightSpinePool.getSpine(var_3_0)
 
-	gohelper.setActive(slot2, false)
-	gohelper.addChild(GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer(), slot2)
-	table.insert(slot0._hasCreateList, {
-		slot1,
-		slot2
+	gohelper.setActive(var_3_1, false)
+
+	local var_3_2 = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
+
+	gohelper.addChild(var_3_2, var_3_1)
+	table.insert(arg_3_0._hasCreateList, {
+		var_3_0,
+		var_3_1
 	})
 
-	if #slot0._needCreateList == 0 then
-		FightPreloadController.instance:cacheFirstPreloadSpine(slot0._hasCreateList)
-		TaskDispatcher.cancelTask(slot0._createSpineGO, slot0)
-		slot0:_returnSpineToPool()
-		slot0:onDone(true)
+	if #arg_3_0._needCreateList == 0 then
+		FightPreloadController.instance:cacheFirstPreloadSpine(arg_3_0._hasCreateList)
+		TaskDispatcher.cancelTask(arg_3_0._createSpineGO, arg_3_0)
+		arg_3_0:_returnSpineToPool()
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._returnSpineToPool(slot0)
-	if slot0._hasCreateList then
-		for slot4, slot5 in ipairs(slot0._hasCreateList) do
-			slot5[1] = nil
-			slot5[2] = nil
+function var_0_0._returnSpineToPool(arg_4_0)
+	if arg_4_0._hasCreateList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._hasCreateList) do
+			local var_4_0 = iter_4_1[1]
+			local var_4_1 = iter_4_1[2]
 
-			FightSpinePool.putSpine(slot5[1], slot5[2])
+			iter_4_1[1] = nil
+			iter_4_1[2] = nil
+
+			FightSpinePool.putSpine(var_4_0, var_4_1)
 		end
 	end
 
-	slot0._needCreateList = nil
-	slot0._hasCreateList = nil
+	arg_4_0._needCreateList = nil
+	arg_4_0._hasCreateList = nil
 end
 
-function slot0._onPreloadOneFail(slot0, slot1, slot2)
-	logError("战斗Spine加载失败：" .. slot2.ResPath)
+function var_0_0._onPreloadOneFail(arg_5_0, arg_5_1, arg_5_2)
+	logError("战斗Spine加载失败：" .. arg_5_2.ResPath)
 end
 
-function slot0.clearWork(slot0)
-	slot0:_returnSpineToPool()
-	TaskDispatcher.cancelTask(slot0._createSpineGO, slot0)
+function var_0_0.clearWork(arg_6_0)
+	arg_6_0:_returnSpineToPool()
+	TaskDispatcher.cancelTask(arg_6_0._createSpineGO, arg_6_0)
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_6_0._loader then
+		arg_6_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_6_0._loader = nil
 	end
 end
 
-function slot0._getSpineUrlList(slot0)
-	slot1 = {}
+function var_0_0._getSpineUrlList(arg_7_0)
+	local var_7_0 = {}
 
-	for slot5 = 1, 3 do
-		slot6 = HeroSingleGroupModel.instance:getById(slot5)
-		slot8 = slot6:getMonsterCO()
-		slot9 = nil
+	for iter_7_0 = 1, 3 do
+		local var_7_1 = HeroSingleGroupModel.instance:getById(iter_7_0)
+		local var_7_2 = var_7_1:getHeroMO()
+		local var_7_3 = var_7_1:getMonsterCO()
+		local var_7_4
 
-		if slot6:getHeroMO() then
-			slot9 = slot7.skin
-		elseif slot8 then
-			slot9 = slot8.skinId
+		if var_7_2 then
+			var_7_4 = var_7_2.skin
+		elseif var_7_3 then
+			var_7_4 = var_7_3.skinId
 		end
 
-		if slot9 then
-			slot10 = true
+		if var_7_4 then
+			local var_7_5 = true
 
-			if FightHelper.getZongMaoShaLiMianJuPath(slot9) then
-				slot10 = false
+			if FightHelper.getZongMaoShaLiMianJuPath(var_7_4) then
+				var_7_5 = false
 			end
 
-			if slot10 then
-				table.insert(slot1, ResUrl.getSpineFightPrefabBySkin(FightConfig.instance:getSkinCO(slot9)))
+			if var_7_5 then
+				local var_7_6 = FightConfig.instance:getSkinCO(var_7_4)
+				local var_7_7 = ResUrl.getSpineFightPrefabBySkin(var_7_6)
+
+				table.insert(var_7_0, var_7_7)
 			end
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-return slot0
+return var_0_0

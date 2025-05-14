@@ -1,25 +1,27 @@
-module("modules.logic.guide.controller.action.impl.GuideActionOpenCommonPropView", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionOpenCommonPropView", package.seeall)
 
-slot0 = class("GuideActionOpenCommonPropView", BaseGuideAction)
+local var_0_0 = class("GuideActionOpenCommonPropView", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	slot4 = {}
+	local var_2_0 = arg_2_0.actionParam
+	local var_2_1 = GameUtil.splitString2(var_2_0, false, "$", ",")
+	local var_2_2 = {}
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0.actionParam, false, "$", ",")) do
-		slot10 = MaterialDataMO.New()
+	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+		local var_2_3 = MaterialDataMO.New()
 
-		slot10:initValue(slot9[1], slot9[2], slot9[3])
-		table.insert(slot4, slot10)
+		var_2_3:initValue(iter_2_1[1], iter_2_1[2], iter_2_1[3])
+		table.insert(var_2_2, var_2_3)
 	end
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot4)
-	slot0:onDone(true)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_2_2)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

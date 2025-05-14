@@ -1,16 +1,20 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerElevator", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerElevator", package.seeall)
 
-slot0 = class("ExploreTriggerElevator", ExploreTriggerBase)
+local var_0_0 = class("ExploreTriggerElevator", ExploreTriggerBase)
 
-function slot0.handle(slot0, slot1, slot2)
-	if string.splitToNumber(slot1, "#")[1] ~= 0 then
-		ExploreMapTriggerController.instance:getMap():getUnit(slot4):movingElevator(slot3[2], slot3[3])
+function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = string.splitToNumber(arg_1_1, "#")
+	local var_1_1 = var_1_0[1]
+
+	if var_1_1 ~= 0 then
+		ExploreMapTriggerController.instance:getMap():getUnit(var_1_1):movingElevator(var_1_0[2], var_1_0[3])
 	end
 
-	slot0:onStepDone(true)
+	arg_1_0:onStepDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

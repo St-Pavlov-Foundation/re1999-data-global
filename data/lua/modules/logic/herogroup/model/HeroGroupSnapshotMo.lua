@@ -1,59 +1,64 @@
-module("modules.logic.herogroup.model.HeroGroupSnapshotMo", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupSnapshotMo", package.seeall)
 
-slot0 = pureTable("HeroGroupSnapshotMo")
+local var_0_0 = pureTable("HeroGroupSnapshotMo")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.groupInfoDict = {}
-	slot0.groupInfoList = {}
-	slot0.selectIndex = 1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.groupInfoDict = {}
+	arg_1_0.groupInfoList = {}
+	arg_1_0.selectIndex = 1
 end
 
-function slot0.updateGroupInfoList(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateGroupInfoList(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return
 	end
 
-	for slot5 = 1, #slot1 do
-		slot0:updateGroupInfo(slot1[slot5])
+	for iter_2_0 = 1, #arg_2_1 do
+		arg_2_0:updateGroupInfo(arg_2_1[iter_2_0])
 	end
 end
 
-function slot0.updateGroupInfo(slot0, slot1)
-	if not slot0.groupInfoDict[slot1.groupId] then
-		slot2 = HeroGroupMO.New()
-		slot0.groupInfoDict[slot1.groupId] = slot2
+function var_0_0.updateGroupInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.groupInfoDict[arg_3_1.groupId]
 
-		table.insert(slot0.groupInfoList, slot2)
+	if not var_3_0 then
+		var_3_0 = HeroGroupMO.New()
+		arg_3_0.groupInfoDict[arg_3_1.groupId] = var_3_0
+
+		table.insert(arg_3_0.groupInfoList, var_3_0)
 	end
 
-	slot2:init(slot1)
+	var_3_0:init(arg_3_1)
 end
 
-function slot0.getHeroGroupSnapshotList(slot0)
-	return slot0.groupInfoList
+function var_0_0.getHeroGroupSnapshotList(arg_4_0)
+	return arg_4_0.groupInfoList
 end
 
-function slot0.getHeroGroupInfo(slot0, slot1, slot2)
-	if slot0.groupInfoDict[slot1] == nil and slot2 then
-		slot0.groupInfoDict[slot1] = HeroGroupModel.instance:generateTempGroup(nil, , true)
+function var_0_0.getHeroGroupInfo(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0.groupInfoDict[arg_5_1]
+
+	if var_5_0 == nil and arg_5_2 then
+		var_5_0 = HeroGroupModel.instance:generateTempGroup(nil, nil, true)
+		arg_5_0.groupInfoDict[arg_5_1] = var_5_0
 	end
 
-	return slot3
+	return var_5_0
 end
 
-function slot0.setSelectIndex(slot0, slot1)
-	if slot0.selectIndex == slot1 then
+function var_0_0.setSelectIndex(arg_6_0, arg_6_1)
+	if arg_6_0.selectIndex == arg_6_1 then
 		return
 	end
 
-	slot0.selectIndex = slot1
+	arg_6_0.selectIndex = arg_6_1
 
 	return true
 end
 
-function slot0.getSelectIndex(slot0)
-	return slot0.selectIndex
+function var_0_0.getSelectIndex(arg_7_0)
+	return arg_7_0.selectIndex
 end
 
-return slot0
+return var_0_0

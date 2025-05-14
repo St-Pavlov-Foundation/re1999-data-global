@@ -1,38 +1,38 @@
-module("modules.logic.character.view.CharacterTalentStyleNavigateButtonsView", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentStyleNavigateButtonsView", package.seeall)
 
-slot0 = class("CharacterTalentStyleNavigateButtonsView", NavigateButtonsView)
+local var_0_0 = class("CharacterTalentStyleNavigateButtonsView", NavigateButtonsView)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0._btnstat = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_stat")
+	arg_1_0._btnstat = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_stat")
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0._btnstat:AddClickListener(slot0._btnstatOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0._btnstat:AddClickListener(arg_2_0._btnstatOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0._btnstat:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	arg_3_0._btnstat:RemoveClickListener()
 end
 
-function slot0._btnstatOnClick(slot0)
-	if slot0._overrideStatFunc then
-		slot0._overrideStatFunc(slot0._overrideStatObj)
+function var_0_0._btnstatOnClick(arg_4_0)
+	if arg_4_0._overrideStatFunc then
+		arg_4_0._overrideStatFunc(arg_4_0._overrideStatObj)
 	end
 end
 
-function slot0.setOverrideStat(slot0, slot1, slot2)
-	slot0._overrideStatFunc = slot1
-	slot0._overrideStatObj = slot2
+function var_0_0.setOverrideStat(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._overrideStatFunc = arg_5_1
+	arg_5_0._overrideStatObj = arg_5_2
 end
 
-function slot0.showStatBtn(slot0, slot1)
-	if slot0._btnstat then
-		gohelper.setActive(slot0._btnstat.gameObject, slot1)
+function var_0_0.showStatBtn(arg_6_0, arg_6_1)
+	if arg_6_0._btnstat then
+		gohelper.setActive(arg_6_0._btnstat.gameObject, arg_6_1)
 	end
 end
 
-return slot0
+return var_0_0

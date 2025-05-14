@@ -1,412 +1,507 @@
-module("modules.logic.dungeon.view.map.DungeonMapChapterLayout", package.seeall)
+﻿module("modules.logic.dungeon.view.map.DungeonMapChapterLayout", package.seeall)
 
-slot0 = class("DungeonMapChapterLayout", BaseChildView)
+local var_0_0 = class("DungeonMapChapterLayout", BaseChildView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = slot0.viewGO.transform
-	slot2 = Vector2(0, 1)
-	slot1.pivot = slot2
-	slot1.anchorMin = slot2
-	slot1.anchorMax = slot2
-	slot0.defaultY = 100
+function var_0_0._editableInitView(arg_4_0)
+	local var_4_0 = arg_4_0.viewGO.transform
+	local var_4_1 = Vector2(0, 1)
 
-	recthelper.setAnchorY(slot1, slot0.defaultY)
+	var_4_0.pivot = var_4_1
+	var_4_0.anchorMin = var_4_1
+	var_4_0.anchorMax = var_4_1
+	arg_4_0.defaultY = 100
 
-	slot0._ContentTransform = slot0.viewParam[1].transform
-	slot0._rawWidth = recthelper.getWidth(slot1)
-	slot0._rawHeight = recthelper.getHeight(slot1)
+	recthelper.setAnchorY(var_4_0, arg_4_0.defaultY)
 
-	recthelper.setSize(slot0._ContentTransform, slot0._rawWidth, slot0._rawHeight)
+	arg_4_0._ContentTransform = arg_4_0.viewParam[1].transform
+	arg_4_0._rawWidth = recthelper.getWidth(var_4_0)
+	arg_4_0._rawHeight = recthelper.getHeight(var_4_0)
 
-	slot0._episodeItemList = slot0:getUserDataTb_()
-	slot3 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
-	slot4 = 600
-	slot0._offsetX = (slot3 - slot4) / 2 + slot4
-	slot0._constDungeonNormalPosX = slot3 - slot0._offsetX
-	slot0._constDungeonNormalPosY = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalPosY)
-	slot0._constDungeonNormalDeltaX = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalDeltaX) - 220
-	slot0._constDungeonSPDeltaX = CommonConfig.instance:getConstNum(ConstEnum.DungeonSPDeltaX)
-	slot0._timelineAnimation = gohelper.findChildComponent(slot0.viewGO, "timeline", typeof(UnityEngine.Animation))
+	recthelper.setSize(arg_4_0._ContentTransform, arg_4_0._rawWidth, arg_4_0._rawHeight)
+
+	arg_4_0._episodeItemList = arg_4_0:getUserDataTb_()
+
+	local var_4_2 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local var_4_3 = 600
+
+	arg_4_0._offsetX = (var_4_2 - var_4_3) / 2 + var_4_3
+	arg_4_0._constDungeonNormalPosX = var_4_2 - arg_4_0._offsetX
+	arg_4_0._constDungeonNormalPosY = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalPosY)
+	arg_4_0._constDungeonNormalDeltaX = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalDeltaX) - 220
+	arg_4_0._constDungeonSPDeltaX = CommonConfig.instance:getConstNum(ConstEnum.DungeonSPDeltaX)
+	arg_4_0._timelineAnimation = gohelper.findChildComponent(arg_4_0.viewGO, "timeline", typeof(UnityEngine.Animation))
 
 	if ViewMgr.instance:isOpening(ViewName.DungeonMapLevelView) then
-		slot0._timelineAnimation:Play("timeline_mask")
+		arg_4_0._timelineAnimation:Play("timeline_mask")
 	end
 
-	if slot0.viewGO:GetComponent(typeof(UnityEngine.Animator)) then
-		slot5:Play(UIAnimationName.Open)
+	local var_4_4 = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if var_4_4 then
+		var_4_4:Play(UIAnimationName.Open)
 	end
 end
 
-function slot0.CheckVision(slot0)
-	slot1, slot2, slot3, slot4 = nil
+function var_0_0.CheckVision(arg_5_0)
+	local var_5_0
+	local var_5_1
+	local var_5_2
+	local var_5_3
+	local var_5_4 = recthelper.getAnchorX(arg_5_0._ContentTransform)
 
-	for slot9, slot10 in ipairs(slot0._episodeItemList) do
-		if slot10.scrollVisiblePosX < recthelper.getAnchorX(slot0._ContentTransform) then
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._episodeItemList) do
+		if var_5_4 > iter_5_1.scrollVisiblePosX then
 			break
 		end
 
-		if slot10.unfinishedMap then
-			slot4 = slot10
+		if iter_5_1.unfinishedMap then
+			var_5_3 = iter_5_1
 		end
 
-		if slot10.starNum2 == false then
-			slot1 = slot1 or slot10
+		if iter_5_1.starNum2 == false then
+			var_5_0 = var_5_0 or iter_5_1
 		end
 
-		if slot10.starNum3 == false then
-			slot2 = slot2 or slot10
+		if iter_5_1.starNum3 == false then
+			var_5_1 = var_5_1 or iter_5_1
 		end
 
-		if slot10.starNum4 == false then
-			slot3 = slot3 or slot10
+		if iter_5_1.starNum4 == false then
+			var_5_2 = var_5_2 or iter_5_1
 		end
 	end
 
-	if not slot0._tempParam then
-		slot0._tempParam = {}
+	if not arg_5_0._tempParam then
+		arg_5_0._tempParam = {}
 	end
 
-	slot0._tempParam[1] = slot1 or slot2 or slot3
-	slot0._tempParam[2] = slot4
+	arg_5_0._tempParam[1] = var_5_0 or var_5_1 or var_5_2
+	arg_5_0._tempParam[2] = var_5_3
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnCheckVision, slot0._tempParam)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnCheckVision, arg_5_0._tempParam)
 end
 
-function slot0.isSpecial(slot0, slot1)
-	return slot1.id == 10217
+function var_0_0.isSpecial(arg_6_0, arg_6_1)
+	return arg_6_1.id == 10217
 end
 
-function slot0.getFocusMap(slot0, slot1)
-	slot2, slot3, slot4, slot5 = nil
-	slot6 = false
+function var_0_0.getFocusMap(arg_7_0, arg_7_1)
+	local var_7_0
+	local var_7_1
+	local var_7_2
+	local var_7_3
+	local var_7_4 = false
+	local var_7_5 = DungeonConfig.instance:getChapterEpisodeCOList(arg_7_0)
 
-	for slot11, slot12 in ipairs(DungeonConfig.instance:getChapterEpisodeCOList(slot0)) do
-		if DungeonModel.instance:getEpisodeInfo(slot12.id) then
-			slot14 = DungeonModel.instance:isFinishElementList(slot12)
+	for iter_7_0, iter_7_1 in ipairs(var_7_5) do
+		local var_7_6 = DungeonModel.instance:getEpisodeInfo(iter_7_1.id)
 
-			if slot12.id == DungeonModel.instance.lastSendEpisodeId then
-				slot2 = slot12
+		if var_7_6 then
+			local var_7_7 = DungeonModel.instance:isFinishElementList(iter_7_1)
+
+			if iter_7_1.id == DungeonModel.instance.lastSendEpisodeId then
+				var_7_0 = iter_7_1
 			end
 
-			if slot14 then
-				slot5 = slot12
+			if var_7_7 then
+				var_7_3 = iter_7_1
 			end
 
-			if slot13.isNew and not slot3 then
-				if slot2 and slot14 and not slot6 then
-					slot2 = slot12
+			if var_7_6.isNew and not var_7_1 then
+				var_7_1 = iter_7_1
+
+				if var_7_0 and var_7_7 and not var_7_4 then
+					var_7_0 = var_7_1
 				end
 			end
 
-			if slot1 and slot12.id == slot1 then
-				slot6 = true
-				slot2 = slot12
+			if arg_7_1 and iter_7_1.id == arg_7_1 then
+				var_7_4 = true
+				var_7_0 = iter_7_1
 			end
 
-			if not slot4 and not DungeonModel.instance:hasPassLevelAndStory(slot12.id) and slot14 then
-				slot4 = slot12
+			if not var_7_2 and not DungeonModel.instance:hasPassLevelAndStory(iter_7_1.id) and var_7_7 then
+				var_7_2 = iter_7_1
 			end
 		end
 	end
 
-	return DungeonMapEpisodeItem.getMap(slot2 or slot4 or slot5)
+	var_7_0 = var_7_0 or var_7_2 or var_7_3
+
+	return DungeonMapEpisodeItem.getMap(var_7_0)
 end
 
-function slot0.onRefresh(slot0, slot1)
-	slot2 = slot0.viewGO.transform
-	slot0._ContentTransform = slot0.viewParam[1].transform
-	slot0._ScrollView = slot0.viewParam[2]
-	slot0._scrollTrans = slot0.viewParam[3].transform
-	slot0._dungeonChapterView = slot0.viewParam[4]
-	slot0._chapter = slot0.viewParam[5]
-	slot3 = "default"
+function var_0_0.onRefresh(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.viewGO.transform
 
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, string.format("%s", slot3)).gameObject, true)
+	arg_8_0._ContentTransform = arg_8_0.viewParam[1].transform
+	arg_8_0._ScrollView = arg_8_0.viewParam[2]
+	arg_8_0._scrollTrans = arg_8_0.viewParam[3].transform
+	arg_8_0._dungeonChapterView = arg_8_0.viewParam[4]
+	arg_8_0._chapter = arg_8_0.viewParam[5]
 
-	slot0._golevellist = gohelper.findChild(slot0.viewGO, string.format("%s/go_levellist", slot3))
-	slot0._gotemplatenormal = gohelper.findChild(slot0.viewGO, string.format("%s/go_levellist/#go_templatenormal", slot3))
-	slot0._gotemplatesp = gohelper.findChild(slot0.viewGO, string.format("%s/go_levellist/#go_templatesp", slot3))
-	slot5 = DungeonConfig.instance:getChapterEpisodeCOList(DungeonModel.instance.curLookChapterId)
-	slot0._levelItemList = slot0._levelItemList or slot0:getUserDataTb_()
-	slot6, slot7, slot8, slot9, slot10, slot11, slot12, slot13 = nil
-	slot14 = false
-	slot15, slot16 = DungeonConfig.instance:getChapterIndex(DungeonModel.instance.curChapterType, DungeonModel.instance.curLookChapterId)
+	local var_8_1 = "default"
+	local var_8_2 = gohelper.findChild(arg_8_0.viewGO, string.format("%s", var_8_1))
 
-	slot0:_initLevelList()
+	gohelper.setActive(var_8_2.gameObject, true)
 
-	slot17 = 0
-	slot18 = 0
-	slot19 = nil
-	slot0._episodeOpenCount = 0
-	slot0._episodeCount = slot5 and #slot5 or 0
+	arg_8_0._golevellist = gohelper.findChild(arg_8_0.viewGO, string.format("%s/go_levellist", var_8_1))
+	arg_8_0._gotemplatenormal = gohelper.findChild(arg_8_0.viewGO, string.format("%s/go_levellist/#go_templatenormal", var_8_1))
+	arg_8_0._gotemplatesp = gohelper.findChild(arg_8_0.viewGO, string.format("%s/go_levellist/#go_templatesp", var_8_1))
 
-	gohelper.setActive(slot0._scrollTrans, slot0._episodeCount ~= 0)
+	local var_8_3 = DungeonConfig.instance:getChapterEpisodeCOList(DungeonModel.instance.curLookChapterId)
 
-	if slot0._episodeCount == 0 then
+	arg_8_0._levelItemList = arg_8_0._levelItemList or arg_8_0:getUserDataTb_()
+
+	local var_8_4
+	local var_8_5
+	local var_8_6
+	local var_8_7
+	local var_8_8
+	local var_8_9
+	local var_8_10
+	local var_8_11
+	local var_8_12 = false
+	local var_8_13, var_8_14 = DungeonConfig.instance:getChapterIndex(DungeonModel.instance.curChapterType, DungeonModel.instance.curLookChapterId)
+
+	arg_8_0:_initLevelList()
+
+	local var_8_15 = 0
+	local var_8_16 = 0
+	local var_8_17
+
+	arg_8_0._episodeOpenCount = 0
+	arg_8_0._episodeCount = var_8_3 and #var_8_3 or 0
+
+	gohelper.setActive(arg_8_0._scrollTrans, arg_8_0._episodeCount ~= 0)
+
+	if arg_8_0._episodeCount == 0 then
+		local var_8_18 = DungeonConfig.instance:getChapterMapCfg(DungeonModel.instance.curLookChapterId, 0)
+
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeMap, {
-			DungeonConfig.instance:getChapterMapCfg(DungeonModel.instance.curLookChapterId, 0)
+			var_8_18
 		})
 	end
 
-	if slot5 then
-		for slot23, slot24 in ipairs(slot5) do
-			slot25 = slot24.type == DungeonEnum.EpisodeType.Sp
-			slot26 = slot24 and DungeonModel.instance:getEpisodeInfo(slot24.id) or nil
-			slot27 = slot0:_isSpShow(slot24, slot5[slot23 + 1])
-			slot28 = slot26 and not slot25 and slot0:_getLevelContainer(slot24)
+	if var_8_3 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_3) do
+			local var_8_19 = iter_8_1.type == DungeonEnum.EpisodeType.Sp
 
-			if slot26 and slot28 then
-				if not slot25 then
-					slot0._episodeOpenCount = slot25 and slot17 + 1 or slot18 + 1
+			if var_8_19 then
+				var_8_15 = var_8_15 + 1
+				var_8_17 = var_8_15
+			else
+				var_8_16 = var_8_16 + 1
+				var_8_17 = var_8_16
+			end
+
+			local var_8_20 = iter_8_1 and DungeonModel.instance:getEpisodeInfo(iter_8_1.id) or nil
+			local var_8_21 = arg_8_0:_isSpShow(iter_8_1, var_8_3[iter_8_0 + 1])
+			local var_8_22 = var_8_20 and not var_8_19 and arg_8_0:_getLevelContainer(iter_8_1)
+
+			if var_8_20 and var_8_22 then
+				if not var_8_19 then
+					arg_8_0._episodeOpenCount = var_8_17
 				end
 
-				slot29 = nil
-				slot28.name = slot24.id
-				slot30 = DungeonModel.instance:isFinishElementList(slot24)
+				local var_8_23
 
-				if not slot0._levelItemList[slot24.id] then
-					slot31 = DungeonMapEpisodeItem.New()
+				if var_8_22.childCount == 0 then
+					local var_8_24 = arg_8_0._dungeonChapterView.viewContainer:getSetting().otherRes[1]
 
-					slot31:initView((slot28.childCount ~= 0 or slot0._dungeonChapterView:getResInst(slot0._dungeonChapterView.viewContainer:getSetting().otherRes[1], slot28.gameObject)) and slot28:GetChild(0).gameObject, {
-						slot24,
-						slot26,
-						slot0._ContentTransform,
-						slot19
-					})
-					table.insert(slot0._episodeItemList, slot31)
-
-					slot0._levelItemList[slot24.id] = slot31
+					var_8_23 = arg_8_0._dungeonChapterView:getResInst(var_8_24, var_8_22.gameObject)
 				else
-					slot31:updateParam(slot32)
+					var_8_23 = var_8_22:GetChild(0).gameObject
 				end
 
-				if slot24.id == DungeonModel.instance.lastSendEpisodeId then
+				var_8_22.name = iter_8_1.id
+
+				local var_8_25 = DungeonModel.instance:isFinishElementList(iter_8_1)
+				local var_8_26 = arg_8_0._levelItemList[iter_8_1.id]
+				local var_8_27 = {
+					iter_8_1,
+					var_8_20,
+					arg_8_0._ContentTransform,
+					var_8_17
+				}
+
+				if not var_8_26 then
+					var_8_26 = DungeonMapEpisodeItem.New()
+
+					var_8_26:initView(var_8_23, var_8_27)
+					table.insert(arg_8_0._episodeItemList, var_8_26)
+
+					arg_8_0._levelItemList[iter_8_1.id] = var_8_26
+				else
+					var_8_26:updateParam(var_8_27)
+				end
+
+				if iter_8_1.id == DungeonModel.instance.lastSendEpisodeId then
 					DungeonModel.instance.lastSendEpisodeId = nil
-					slot10 = slot29
+					var_8_8 = var_8_23
 				end
 
-				if not slot12 or recthelper.getAnchorX(slot12) <= recthelper.getAnchorX(slot28) then
-					slot12 = slot28
-					slot11 = slot29
+				if not var_8_10 or recthelper.getAnchorX(var_8_22) >= recthelper.getAnchorX(var_8_10) then
+					var_8_10 = var_8_22
+					var_8_9 = var_8_23
 				end
 
-				if not slot25 and not slot31:isLock() and slot30 then
-					slot13 = slot29
+				if not var_8_19 and not var_8_26:isLock() and var_8_25 then
+					var_8_11 = var_8_23
 				end
 
-				if slot26.isNew then
-					slot26.isNew = false
+				if var_8_20.isNew then
+					var_8_20.isNew = false
 
-					if not slot7 then
-						if not slot25 and slot10 and slot30 and not slot14 then
-							slot10 = slot29
+					if not var_8_5 then
+						var_8_5 = var_8_23
 
-							slot31:showUnlockAnim()
+						if not var_8_19 and var_8_8 and var_8_25 and not var_8_12 then
+							var_8_8 = var_8_5
+
+							var_8_26:showUnlockAnim()
 						end
 					end
 				end
 
-				if slot1 and slot24.id == slot1 then
-					slot14 = true
-					slot10 = slot29
+				if arg_8_1 and iter_8_1.id == arg_8_1 then
+					var_8_12 = true
+					var_8_8 = var_8_23
 				end
 
-				if not slot25 and not slot6 and not slot31:isLock() and not DungeonModel.instance:hasPassLevelAndStory(slot24.chainEpisode ~= 0 and slot24.chainEpisode or slot24.id) and slot30 then
-					slot6 = slot29
+				local var_8_28 = iter_8_1.chainEpisode ~= 0 and iter_8_1.chainEpisode or iter_8_1.id
+
+				if not var_8_19 and not var_8_4 and not var_8_26:isLock() and not DungeonModel.instance:hasPassLevelAndStory(var_8_28) and var_8_25 then
+					var_8_4 = var_8_23
 				end
 
-				slot34 = DungeonConfig.instance:getHardEpisode(slot24.id)
+				local var_8_29 = DungeonConfig.instance:getHardEpisode(iter_8_1.id)
 
-				if DungeonModel.instance:isOpenHardDungeon(slot24.chapterId) and not slot25 and not slot9 and slot34 and not DungeonModel.instance:hasPassLevelAndStory(slot34.id) then
-					-- Nothing
+				if DungeonModel.instance:isOpenHardDungeon(iter_8_1.chapterId) and not var_8_19 and not var_8_7 and var_8_29 and not DungeonModel.instance:hasPassLevelAndStory(var_8_29.id) then
+					-- block empty
 				end
 
-				if not slot25 and not slot8 and slot34 and slot26.star == DungeonEnum.StarType.Normal then
-					-- Nothing
+				if not var_8_19 and not var_8_6 and var_8_29 and var_8_20.star == DungeonEnum.StarType.Normal then
+					-- block empty
 				end
-			elseif slot26 and not slot28 then
-				-- Nothing
+			elseif var_8_20 and not var_8_22 then
+				-- block empty
 			end
 		end
 	end
 
-	slot10 = slot10 or slot6 or slot13 or slot0._episodeItemList[1] and slot0._episodeItemList[1].viewGO
-
-	if slot11 then
-		slot21 = recthelper.rectToRelativeAnchorPos(slot11.transform.position, slot2).x + slot0._offsetX
-
-		recthelper.setSize(slot0._ContentTransform, slot21, slot0._rawHeight)
-
-		slot0._contentWidth = slot21
+	if not var_8_8 then
+		var_8_8 = var_8_4 or var_8_11
+		var_8_8 = var_8_8 or arg_8_0._episodeItemList[1] and arg_8_0._episodeItemList[1].viewGO
 	end
 
-	slot0:setFocusItem(slot10, false)
+	if var_8_9 then
+		local var_8_30 = recthelper.rectToRelativeAnchorPos(var_8_9.transform.position, var_8_0).x + arg_8_0._offsetX
+
+		recthelper.setSize(arg_8_0._ContentTransform, var_8_30, arg_8_0._rawHeight)
+
+		arg_8_0._contentWidth = var_8_30
+	end
+
+	arg_8_0:setFocusItem(var_8_8, false)
 end
 
-function slot0.setFocusItem(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.setFocusItem(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_1 then
 		return
 	end
 
-	slot5 = recthelper.getWidth(slot0._scrollTrans)
-	slot6 = recthelper.getHeight(slot0._scrollTrans)
+	local var_9_0 = arg_9_0.viewGO.transform
+	local var_9_1 = recthelper.rectToRelativeAnchorPos(arg_9_1.transform.position, var_9_0)
+	local var_9_2 = recthelper.getWidth(arg_9_0._scrollTrans)
+	local var_9_3 = recthelper.getHeight(arg_9_0._scrollTrans)
+	local var_9_4 = -var_9_1.x + arg_9_0._constDungeonNormalPosX
 
-	if slot2 then
-		ZProj.TweenHelper.DOAnchorPosX(slot0._ContentTransform, -recthelper.rectToRelativeAnchorPos(slot1.transform.position, slot0.viewGO.transform).x + slot0._constDungeonNormalPosX, 0.26)
+	if arg_9_2 then
+		ZProj.TweenHelper.DOAnchorPosX(arg_9_0._ContentTransform, var_9_4, 0.26)
 	else
-		recthelper.setAnchorX(slot0._ContentTransform, slot7)
+		recthelper.setAnchorX(arg_9_0._ContentTransform, var_9_4)
 	end
 
-	slot0:CheckVision()
+	arg_9_0:CheckVision()
 
-	for slot11, slot12 in ipairs(slot0._episodeItemList) do
-		if slot12.viewGO == slot1 then
-			DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeFocusEpisodeItem, slot12)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._episodeItemList) do
+		if iter_9_1.viewGO == arg_9_1 then
+			DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeFocusEpisodeItem, iter_9_1)
 
 			break
 		end
 	end
 end
 
-function slot0.setFocusEpisodeItem(slot0, slot1, slot2)
-	if slot2 then
+function var_0_0.setFocusEpisodeItem(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = -arg_10_1.scrollContentPosX + arg_10_0._constDungeonNormalPosX
+
+	if arg_10_2 then
+		local var_10_1 = DungeonMapModel.instance.focusEpisodeTweenDuration or 0.26
+
 		DungeonMapModel.instance.focusEpisodeTweenDuration = nil
 
-		ZProj.TweenHelper.DOAnchorPosX(slot0._ContentTransform, -slot1.scrollContentPosX + slot0._constDungeonNormalPosX, DungeonMapModel.instance.focusEpisodeTweenDuration or 0.26)
+		ZProj.TweenHelper.DOAnchorPosX(arg_10_0._ContentTransform, var_10_0, var_10_1)
 	else
-		recthelper.setAnchorX(slot0._ContentTransform, slot3)
+		recthelper.setAnchorX(arg_10_0._ContentTransform, var_10_0)
 	end
 
-	slot0:CheckVision()
+	arg_10_0:CheckVision()
 end
 
-function slot0.setFocusEpisodeId(slot0, slot1, slot2)
-	if slot0._levelItemList[slot1] and slot3.viewGO then
-		slot0:setFocusItem(slot3.viewGO, slot2)
+function var_0_0.setFocusEpisodeId(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0._levelItemList[arg_11_1]
+
+	if var_11_0 and var_11_0.viewGO then
+		arg_11_0:setFocusItem(var_11_0.viewGO, arg_11_2)
 	end
 end
 
-function slot0.changeFocusEpisodeItem(slot0, slot1)
-	if not slot0._levelItemList[slot1] then
+function var_0_0.changeFocusEpisodeItem(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._levelItemList[arg_12_1]
+
+	if not var_12_0 then
 		return
 	end
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeFocusEpisodeItem, slot2)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeFocusEpisodeItem, var_12_0)
 end
 
-function slot0._initLevelList(slot0)
-	slot2 = slot0._golevellist.transform.childCount
+function var_0_0._initLevelList(arg_13_0)
+	local var_13_0 = arg_13_0._golevellist.transform.childCount
 
-	if not slot0._itemTransformList then
-		slot0._itemTransformList = slot0:getUserDataTb_()
-		slot0._rawGoList = slot0:getUserDataTb_()
+	if not arg_13_0._itemTransformList then
+		arg_13_0._itemTransformList = arg_13_0:getUserDataTb_()
+		arg_13_0._rawGoList = arg_13_0:getUserDataTb_()
 	end
 end
 
-function slot0._isSpShow(slot0, slot1, slot2)
-	if slot1.type == DungeonEnum.EpisodeType.Sp and slot2 and slot2.preEpisode == slot1.id and slot2.type ~= DungeonEnum.EpisodeType.Sp then
-		slot3 = false
+function var_0_0._isSpShow(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_1.type == DungeonEnum.EpisodeType.Sp
+
+	if var_14_0 and arg_14_2 and arg_14_2.preEpisode == arg_14_1.id and arg_14_2.type ~= DungeonEnum.EpisodeType.Sp then
+		var_14_0 = false
 	end
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.getEpisodeCount(slot0)
-	return slot0._episodeCount
+function var_0_0.getEpisodeCount(arg_15_0)
+	return arg_15_0._episodeCount
 end
 
-function slot0._getLevelContainer(slot0, slot1)
-	if slot0._itemTransformList[slot1.id] then
-		return slot3
+function var_0_0._getLevelContainer(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.id
+	local var_16_1 = arg_16_0._itemTransformList[var_16_0]
+
+	if var_16_1 then
+		return var_16_1
 	end
 
-	if not slot3 and #slot0._rawGoList > 0 then
-		slot3 = table.remove(slot0._rawGoList, 1)
+	if not var_16_1 and #arg_16_0._rawGoList > 0 then
+		var_16_1 = table.remove(arg_16_0._rawGoList, 1)
 	end
 
-	if not slot3 then
-		slot7 = gohelper.cloneInPlace(slot0._gotemplatenormal, slot2)
+	if not var_16_1 then
+		local var_16_2 = arg_16_1.preEpisode
+		local var_16_3 = arg_16_0._itemTransformList[var_16_2]
+		local var_16_4 = var_16_3 and recthelper.getAnchorX(var_16_3)
+		local var_16_5 = gohelper.cloneInPlace(arg_16_0._gotemplatenormal, var_16_0)
 
-		gohelper.setActive(slot7, true)
+		gohelper.setActive(var_16_5, true)
 
-		if slot0._itemTransformList[slot1.preEpisode] and recthelper.getAnchorX(slot5) then
-			recthelper.setAnchorX(slot7.transform, slot6 + slot0._levelItemList[slot4]:getMaxWidth() + slot0._constDungeonNormalDeltaX)
+		var_16_1 = var_16_5.transform
+
+		if var_16_4 then
+			local var_16_6 = arg_16_0._levelItemList[var_16_2]
+
+			recthelper.setAnchorX(var_16_1, var_16_4 + var_16_6:getMaxWidth() + arg_16_0._constDungeonNormalDeltaX)
 		else
-			recthelper.setAnchorX(slot3, slot0._constDungeonNormalPosX)
+			recthelper.setAnchorX(var_16_1, arg_16_0._constDungeonNormalPosX)
 		end
 
-		recthelper.setAnchorY(slot3, slot0._constDungeonNormalPosY)
+		recthelper.setAnchorY(var_16_1, arg_16_0._constDungeonNormalPosY)
 	end
 
-	slot0._itemTransformList[slot2] = slot3
+	arg_16_0._itemTransformList[var_16_0] = var_16_1
 
-	return slot3
+	return var_16_1
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_17_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_18_0._onOpenView, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_18_0._onCloseView, arg_18_0)
 
 	if GamepadController.instance:isOpen() then
-		slot0:addEventCb(GamepadController.instance, GamepadEvent.KeyUp, slot0._onGamepadKeyUp, slot0)
+		arg_18_0:addEventCb(GamepadController.instance, GamepadEvent.KeyUp, arg_18_0._onGamepadKeyUp, arg_18_0)
 	end
 
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, slot0._onChangeFocusEpisodeItem, slot0)
+	arg_18_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, arg_18_0._onChangeFocusEpisodeItem, arg_18_0)
 end
 
-function slot0._onChangeFocusEpisodeItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._episodeItemList) do
-		if slot6 == slot1 then
-			slot0._focusIndex = slot5
+function var_0_0._onChangeFocusEpisodeItem(arg_19_0, arg_19_1)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._episodeItemList) do
+		if iter_19_1 == arg_19_1 then
+			arg_19_0._focusIndex = iter_19_0
 		end
 	end
 end
 
-function slot0._onGamepadKeyUp(slot0, slot1)
-	slot2 = ViewMgr.instance:getOpenViewNameList()
+function var_0_0._onGamepadKeyUp(arg_20_0, arg_20_1)
+	local var_20_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_20_1 = var_20_0[#var_20_0]
 
-	if (slot2[#slot2] == ViewName.DungeonMapView or slot3 == ViewName.DungeonMapLevelView) and slot0._focusIndex and not DungeonMapModel.instance:getMapInteractiveItemVisible() and (slot1 == GamepadEnum.KeyCode.LB or slot1 == GamepadEnum.KeyCode.RB) and slot0._focusIndex + (slot1 == GamepadEnum.KeyCode.LB and -1 or 1) > 0 and slot5 <= #slot0._episodeItemList then
-		slot0._episodeItemList[slot5]:onClickHandler()
+	if (var_20_1 == ViewName.DungeonMapView or var_20_1 == ViewName.DungeonMapLevelView) and arg_20_0._focusIndex and not DungeonMapModel.instance:getMapInteractiveItemVisible() and (arg_20_1 == GamepadEnum.KeyCode.LB or arg_20_1 == GamepadEnum.KeyCode.RB) then
+		local var_20_2 = arg_20_1 == GamepadEnum.KeyCode.LB and -1 or 1
+		local var_20_3 = arg_20_0._focusIndex + var_20_2
+
+		if var_20_3 > 0 and var_20_3 <= #arg_20_0._episodeItemList then
+			arg_20_0._episodeItemList[var_20_3]:onClickHandler()
+		end
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.DungeonMapLevelView then
-		slot0._timelineAnimation:Play("timeline_mask")
+function var_0_0._onOpenView(arg_21_0, arg_21_1)
+	if arg_21_1 == ViewName.DungeonMapLevelView then
+		arg_21_0._timelineAnimation:Play("timeline_mask")
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.DungeonMapLevelView then
-		slot0._timelineAnimation:Play("timeline_reset")
+function var_0_0._onCloseView(arg_22_0, arg_22_1)
+	if arg_22_1 == ViewName.DungeonMapLevelView then
+		arg_22_0._timelineAnimation:Play("timeline_reset")
 	end
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in pairs(slot0._levelItemList) do
-		slot5:destroyView()
+function var_0_0.onClose(arg_23_0)
+	for iter_23_0, iter_23_1 in pairs(arg_23_0._levelItemList) do
+		iter_23_1:destroyView()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.onDestroyView(arg_24_0)
+	if arg_24_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_24_0._tweenId)
 	end
 end
 
-return slot0
+return var_0_0

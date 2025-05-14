@@ -1,110 +1,127 @@
-module("modules.logic.scene.pushbox.logic.PushBoxStepDataMgr", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxStepDataMgr", package.seeall)
 
-slot0 = class("PushBoxStepDataMgr", UserDataDispose)
-slot0.StepType = {
+local var_0_0 = class("PushBoxStepDataMgr", UserDataDispose)
+
+var_0_0.StepType = {
 	PushBox = 2,
 	Move = 1
 }
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._game_mgr = slot1
-	slot0._scene = slot1._scene
-	slot0._scene_root = slot1._scene_root
+	arg_1_0._game_mgr = arg_1_1
+	arg_1_0._scene = arg_1_1._scene
+	arg_1_0._scene_root = arg_1_1._scene_root
 end
 
-function slot0.init(slot0)
-	slot0._step_data = {}
+function var_0_0.init(arg_2_0)
+	arg_2_0._step_data = {}
 end
 
-function slot0._onRevertStep(slot0)
-	if not table.remove(slot0._step_data) then
+function var_0_0._onRevertStep(arg_3_0)
+	local var_3_0 = table.remove(arg_3_0._step_data)
+
+	if not var_3_0 then
 		GameFacade.showToast(ToastEnum.PushBoxGame)
 
 		return
 	end
 
-	slot0._game_mgr.character:revertDirection(slot1.characterDirection)
+	arg_3_0._game_mgr.character:revertDirection(var_3_0.characterDirection)
 
-	if slot1.step_type == uv0.StepType.Move then
-		slot0._game_mgr.character:revertMove(slot1.from_x, slot1.from_y)
-	elseif slot1.step_type == uv0.StepType.PushBox then
-		slot0._game_mgr:pushBox(slot1.to_x, slot1.to_y, slot1.from_x, slot1.from_y)
-		slot0._game_mgr.character:revertMove(slot1.character_pos_x, slot1.character_pos_y)
+	if var_3_0.step_type == var_0_0.StepType.Move then
+		arg_3_0._game_mgr.character:revertMove(var_3_0.from_x, var_3_0.from_y)
+	elseif var_3_0.step_type == var_0_0.StepType.PushBox then
+		arg_3_0._game_mgr:pushBox(var_3_0.to_x, var_3_0.to_y, var_3_0.from_x, var_3_0.from_y)
+		arg_3_0._game_mgr.character:revertMove(var_3_0.character_pos_x, var_3_0.character_pos_y)
 	end
 
-	if slot0:getLastStep() then
-		slot0._game_mgr:setWarning(slot2.warning)
-		PushBoxController.instance:dispatchEvent(PushBoxEvent.RevertStep, slot2)
+	local var_3_1 = arg_3_0:getLastStep()
+
+	if var_3_1 then
+		arg_3_0._game_mgr:setWarning(var_3_1.warning)
+		PushBoxController.instance:dispatchEvent(PushBoxEvent.RevertStep, var_3_1)
 	else
-		slot0._game_mgr:setWarning(0)
+		arg_3_0._game_mgr:setWarning(0)
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.StartElement)
 	end
 end
 
-function slot0.markStepData(slot0)
-	slot1 = slot0:getLastStep()
-	slot1.warning = slot0._game_mgr:getCurWarning()
-	slot1.characterDirection = slot0._game_mgr.character:getDirection()
-	slot1.enemy_direction = {}
+function var_0_0.markStepData(arg_4_0)
+	local var_4_0 = arg_4_0:getLastStep()
 
-	for slot6, slot7 in ipairs(slot0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Enemy)) do
-		table.insert(slot1.enemy_direction, {
-			pos_x = slot7:getPosX(),
-			pos_y = slot7:getPosY(),
-			index = slot7:getIndex()
-		})
+	var_4_0.warning = arg_4_0._game_mgr:getCurWarning()
+	var_4_0.characterDirection = arg_4_0._game_mgr.character:getDirection()
+
+	local var_4_1 = arg_4_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Enemy)
+
+	var_4_0.enemy_direction = {}
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		local var_4_2 = {
+			pos_x = iter_4_1:getPosX(),
+			pos_y = iter_4_1:getPosY(),
+			index = iter_4_1:getIndex()
+		}
+
+		table.insert(var_4_0.enemy_direction, var_4_2)
 	end
 
-	slot1.fan_time = {}
+	var_4_0.fan_time = {}
 
-	for slot6, slot7 in ipairs(slot0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Fan)) do
-		if slot7._start_time then
-			-- Nothing
+	local var_4_3 = arg_4_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Fan)
+
+	for iter_4_2, iter_4_3 in ipairs(var_4_3) do
+		local var_4_4 = {
+			active = iter_4_3:getState(),
+			pos_x = iter_4_3:getPosX(),
+			pos_y = iter_4_3:getPosY()
+		}
+
+		if iter_4_3._start_time then
+			var_4_4.left_time = arg_4_0._game_mgr:getConfig().fan_duration - (Time.realtimeSinceStartup - iter_4_3._start_time)
 		end
 
-		table.insert(slot1.fan_time, {
-			active = slot7:getState(),
-			pos_x = slot7:getPosX(),
-			pos_y = slot7:getPosY(),
-			left_time = slot0._game_mgr:getConfig().fan_duration - (Time.realtimeSinceStartup - slot7._start_time)
-		})
+		table.insert(var_4_0.fan_time, var_4_4)
 	end
 end
 
-function slot0.getLastStep(slot0)
-	return slot0._step_data[#slot0._step_data]
+function var_0_0.getLastStep(arg_5_0)
+	return arg_5_0._step_data[#arg_5_0._step_data]
 end
 
-function slot0.getStepCount(slot0)
-	return slot0._step_data and #slot0._step_data or 0
+function var_0_0.getStepCount(arg_6_0)
+	return arg_6_0._step_data and #arg_6_0._step_data or 0
 end
 
-function slot0.moveCharacter(slot0, slot1, slot2)
-	table.insert(slot0._step_data, {
-		step_type = uv0.StepType.Move,
-		from_x = slot1,
-		from_y = slot2
-	})
+function var_0_0.moveCharacter(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = {
+		step_type = var_0_0.StepType.Move,
+		from_x = arg_7_1,
+		from_y = arg_7_2
+	}
+
+	table.insert(arg_7_0._step_data, var_7_0)
 end
 
-function slot0.pushBox(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot0._game_mgr.character
+function var_0_0.pushBox(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	local var_8_0 = arg_8_0._game_mgr.character
+	local var_8_1 = {
+		step_type = var_0_0.StepType.PushBox,
+		from_x = arg_8_1,
+		from_y = arg_8_2,
+		to_x = arg_8_3,
+		to_y = arg_8_4,
+		character_pos_x = var_8_0:getPosX(),
+		character_pos_y = var_8_0:getPosY()
+	}
 
-	table.insert(slot0._step_data, {
-		step_type = uv0.StepType.PushBox,
-		from_x = slot1,
-		from_y = slot2,
-		to_x = slot3,
-		to_y = slot4,
-		character_pos_x = slot5:getPosX(),
-		character_pos_y = slot5:getPosY()
-	})
+	table.insert(arg_8_0._step_data, var_8_1)
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_9_0)
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

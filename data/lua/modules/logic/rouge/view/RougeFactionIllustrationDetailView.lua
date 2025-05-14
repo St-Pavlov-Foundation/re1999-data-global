@@ -1,121 +1,132 @@
-module("modules.logic.rouge.view.RougeFactionIllustrationDetailView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionIllustrationDetailView", package.seeall)
 
-slot0 = class("RougeFactionIllustrationDetailView", BaseView)
+local var_0_0 = class("RougeFactionIllustrationDetailView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "#go_progress")
-	slot0._goprogressitem = gohelper.findChild(slot0.viewGO, "#go_progress/#go_progressitem")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "Middle/#scroll_view")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "Middle/#scroll_view/Viewport/#go_Content")
-	slot0._btnRight = gohelper.findChildButtonWithAudio(slot0.viewGO, "Middle/#btn_Right")
-	slot0._btnLeft = gohelper.findChildButtonWithAudio(slot0.viewGO, "Middle/#btn_Left")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
+	arg_1_0._goprogressitem = gohelper.findChild(arg_1_0.viewGO, "#go_progress/#go_progressitem")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "Middle/#scroll_view")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Middle/#scroll_view/Viewport/#go_Content")
+	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_Right")
+	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_Left")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnRight:AddClickListener(slot0._btnRightOnClick, slot0)
-	slot0._btnLeft:AddClickListener(slot0._btnLeftOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
+	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnRight:RemoveClickListener()
-	slot0._btnLeft:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnRight:RemoveClickListener()
+	arg_3_0._btnLeft:RemoveClickListener()
 end
 
-slot1 = 0.3
+local var_0_1 = 0.3
 
-function slot0._btnRightOnClick(slot0)
-	slot0._index = slot0._index + 1
+function var_0_0._btnRightOnClick(arg_4_0)
+	arg_4_0._index = arg_4_0._index + 1
 
-	if slot0._num < slot0._index then
-		slot0._index = 1
+	if arg_4_0._index > arg_4_0._num then
+		arg_4_0._index = 1
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayUpdateInfo, slot0)
-	TaskDispatcher.runDelay(slot0._delayUpdateInfo, slot0, uv0)
-	slot0._aniamtor:Play("switch_l", 0, 0)
+	TaskDispatcher.cancelTask(arg_4_0._delayUpdateInfo, arg_4_0)
+	TaskDispatcher.runDelay(arg_4_0._delayUpdateInfo, arg_4_0, var_0_1)
+	arg_4_0._aniamtor:Play("switch_l", 0, 0)
 end
 
-function slot0._btnLeftOnClick(slot0)
-	slot0._index = slot0._index - 1
+function var_0_0._btnLeftOnClick(arg_5_0)
+	arg_5_0._index = arg_5_0._index - 1
 
-	if slot0._index < 1 then
-		slot0._index = slot0._num
+	if arg_5_0._index < 1 then
+		arg_5_0._index = arg_5_0._num
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayUpdateInfo, slot0)
-	TaskDispatcher.runDelay(slot0._delayUpdateInfo, slot0, uv0)
-	slot0._aniamtor:Play("switch_r", 0, 0)
+	TaskDispatcher.cancelTask(arg_5_0._delayUpdateInfo, arg_5_0)
+	TaskDispatcher.runDelay(arg_5_0._delayUpdateInfo, arg_5_0, var_0_1)
+	arg_5_0._aniamtor:Play("switch_r", 0, 0)
 end
 
-function slot0._delayUpdateInfo(slot0)
-	slot0:_updateInfo(slot0._list[slot0._index])
+function var_0_0._delayUpdateInfo(arg_6_0)
+	arg_6_0:_updateInfo(arg_6_0._list[arg_6_0._index])
 end
 
-function slot0._editableInitView(slot0)
-	slot0._item = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goContent), RougeFactionIllustrationDetailItem)
-	slot0._list = {}
+function var_0_0._editableInitView(arg_7_0)
+	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes[1]
+	local var_7_1 = arg_7_0:getResInst(var_7_0, arg_7_0._goContent)
 
-	for slot7, slot8 in ipairs(RougeOutsideModel.instance:getSeasonStyleInfoList()) do
-		if slot8.isUnLocked then
-			table.insert(slot0._list, slot8.styleCO)
+	arg_7_0._item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, RougeFactionIllustrationDetailItem)
+
+	local var_7_2 = RougeOutsideModel.instance:getSeasonStyleInfoList()
+
+	arg_7_0._list = {}
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+		if iter_7_1.isUnLocked then
+			table.insert(arg_7_0._list, iter_7_1.styleCO)
 		end
 	end
 
-	slot0._num = #slot0._list
-	slot0._aniamtor = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
+	arg_7_0._num = #arg_7_0._list
+	arg_7_0._aniamtor = gohelper.onceAddComponent(arg_7_0.viewGO, gohelper.Type_Animator)
 
-	slot0:_initProgressItems()
+	arg_7_0:_initProgressItems()
 end
 
-function slot0._initProgressItems(slot0)
-	slot0._itemList = slot0:getUserDataTb_()
+function var_0_0._initProgressItems(arg_8_0)
+	arg_8_0._itemList = arg_8_0:getUserDataTb_()
 
-	for slot4 = 1, slot0._num do
-		slot5 = gohelper.cloneInPlace(slot0._goprogressitem)
-		slot6 = slot0:getUserDataTb_()
-		slot6.empty = gohelper.findChild(slot5, "empty")
-		slot6.light = gohelper.findChild(slot5, "light")
+	for iter_8_0 = 1, arg_8_0._num do
+		local var_8_0 = gohelper.cloneInPlace(arg_8_0._goprogressitem)
+		local var_8_1 = arg_8_0:getUserDataTb_()
 
-		gohelper.setActive(slot5, true)
+		var_8_1.empty = gohelper.findChild(var_8_0, "empty")
+		var_8_1.light = gohelper.findChild(var_8_0, "light")
 
-		slot0._itemList[slot4] = slot6
+		gohelper.setActive(var_8_0, true)
+
+		arg_8_0._itemList[iter_8_0] = var_8_1
 	end
 end
 
-function slot0._showProgressItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._itemList) do
-		gohelper.setActive(slot6.empty, slot5 ~= slot1)
-		gohelper.setActive(slot6.light, slot5 == slot1)
+function var_0_0._showProgressItem(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._itemList) do
+		gohelper.setActive(iter_9_1.empty, iter_9_0 ~= arg_9_1)
+		gohelper.setActive(iter_9_1.light, iter_9_0 == arg_9_1)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._index = tabletool.indexOf(slot0._list, slot0.viewParam) or 1
+function var_0_0.onOpen(arg_11_0)
+	local var_11_0 = arg_11_0.viewParam
 
-	slot0:_updateInfo(slot1)
+	arg_11_0._index = tabletool.indexOf(arg_11_0._list, var_11_0) or 1
+
+	arg_11_0:_updateInfo(var_11_0)
 end
 
-function slot0._updateInfo(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0._updateInfo(arg_12_0, arg_12_1)
+	arg_12_0._mo = arg_12_1
 
-	slot0._item:onUpdateMO(slot1)
-	slot0:_showProgressItem(slot0._index)
+	arg_12_0._item:onUpdateMO(arg_12_1)
+	arg_12_0:_showProgressItem(arg_12_0._index)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._delayUpdateInfo, slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._delayUpdateInfo, arg_14_0)
 end
 
-return slot0
+return var_0_0

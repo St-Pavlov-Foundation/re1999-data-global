@@ -1,462 +1,537 @@
-module("modules.logic.scene.room.fsm.action.RoomActionShowTimeCharacterBuilding", package.seeall)
+﻿module("modules.logic.scene.room.fsm.action.RoomActionShowTimeCharacterBuilding", package.seeall)
 
-slot0 = class("RoomActionShowTimeCharacterBuilding", RoomBaseFsmAction)
+local var_0_0 = class("RoomActionShowTimeCharacterBuilding", RoomBaseFsmAction)
 
-function slot0.checkInteract(slot0)
-	if RoomCharacterController.instance:getPlayingInteractionParam() and slot1.id == slot0._interationId then
+function var_0_0.checkInteract(arg_1_0)
+	local var_1_0 = RoomCharacterController.instance:getPlayingInteractionParam()
+
+	if var_1_0 and var_1_0.id == arg_1_0._interationId then
 		return true
 	end
 
 	return false
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot0._heroId = slot1.heroId
-	slot0._buildingId = slot1.buildingId
-	slot0._buildingUid = slot1.buildingUid
-	slot0._interationId = slot1.id
-	slot0._cameraId = slot1.cameraId
-	slot0._faithOp = slot1.faithOp
-	slot0._interaTionCfg = RoomConfig.instance:getCharacterInteractionConfig(slot1.id)
-	slot0._roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(slot0._heroId)
-	slot0._characterId = slot0._roomCharacterMO.id
-	slot0._skinId = slot0._roomCharacterMO.skinId
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._heroAnimName, slot0._heroAnimDelay = slot0:_splitAnimState(slot0._interaTionCfg.heroAnimState)
-	slot0._effectCfgList = slot0._heroAnimName and RoomConfig.instance:getCharacterEffectListByAnimName(slot0._skinId, slot0._heroAnimName)
-	slot0._interactSpineList = {}
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	arg_2_0._param = arg_2_1
+	arg_2_0._heroId = arg_2_1.heroId
+	arg_2_0._buildingId = arg_2_1.buildingId
+	arg_2_0._buildingUid = arg_2_1.buildingUid
+	arg_2_0._interationId = arg_2_1.id
+	arg_2_0._cameraId = arg_2_1.cameraId
+	arg_2_0._faithOp = arg_2_1.faithOp
+	arg_2_0._interaTionCfg = RoomConfig.instance:getCharacterInteractionConfig(arg_2_1.id)
+	arg_2_0._roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(arg_2_0._heroId)
+	arg_2_0._characterId = arg_2_0._roomCharacterMO.id
+	arg_2_0._skinId = arg_2_0._roomCharacterMO.skinId
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_2_0._heroAnimName, arg_2_0._heroAnimDelay = arg_2_0:_splitAnimState(arg_2_0._interaTionCfg.heroAnimState)
+	arg_2_0._effectCfgList = arg_2_0._heroAnimName and RoomConfig.instance:getCharacterEffectListByAnimName(arg_2_0._skinId, arg_2_0._heroAnimName)
+	arg_2_0._interactSpineList = {}
 
-	if not string.nilorempty(slot0._interaTionCfg.buildingInsideSpines) then
-		slot0._interactSpineList = string.split(slot2, "#")
+	local var_2_0 = arg_2_0._interaTionCfg.buildingInsideSpines
+
+	if not string.nilorempty(var_2_0) then
+		arg_2_0._interactSpineList = string.split(var_2_0, "#")
 	end
 
-	RoomCharacterController.instance:startDialogInteraction(RoomConfig.instance:getCharacterInteractionConfig(slot1.id), slot1.buildingUid)
-	slot0:onDone()
-	TaskDispatcher.cancelTask(slot0._onInteractionFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayLoadDone, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayNextCamera, slot0)
+	local var_2_1 = RoomConfig.instance:getCharacterInteractionConfig(arg_2_1.id)
 
-	slot0._isCameraDone = true
+	RoomCharacterController.instance:startDialogInteraction(var_2_1, arg_2_1.buildingUid)
+	arg_2_0:onDone()
+	TaskDispatcher.cancelTask(arg_2_0._onInteractionFinish, arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._onDelayLoadDone, arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._onDelayNextCamera, arg_2_0)
 
-	if slot0:checkInteract() then
-		slot0._isCameraDone = false
+	arg_2_0._isCameraDone = true
 
-		slot0:tweenCamera(slot0._heroId, slot0._buildingUid, slot0._cameraId)
+	if arg_2_0:checkInteract() then
+		arg_2_0._isCameraDone = false
+
+		arg_2_0:tweenCamera(arg_2_0._heroId, arg_2_0._buildingUid, arg_2_0._cameraId)
 		ViewMgr.instance:openView(ViewName.RoomBuildingInteractionView)
 	end
 
-	slot0:_loaderEffect()
-	slot0:setInteractBuildingSideIsActive(RoomEnum.EntityChildKey.InSideKey, true)
+	arg_2_0:_loaderEffect()
+	arg_2_0:setInteractBuildingSideIsActive(RoomEnum.EntityChildKey.InSideKey, true)
 
-	slot0._delayCameraParam = nil
-	slot0._nextCameraParams = slot0:_getNextCameraParams(slot0._cameraId)
+	arg_2_0._delayCameraParam = nil
+	arg_2_0._nextCameraParams = arg_2_0:_getNextCameraParams(arg_2_0._cameraId)
 end
 
-function slot0._splitAnimState(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0._splitAnimState(arg_3_0, arg_3_1)
+	if string.nilorempty(arg_3_1) then
 		return nil, 0
 	end
 
-	return slot2[1], #string.split(slot1, "#") > 1 and tonumber(slot2[2]) or 0
+	local var_3_0 = string.split(arg_3_1, "#")
+	local var_3_1 = #var_3_0 > 1 and tonumber(var_3_0[2]) or 0
+
+	return var_3_0[1], var_3_1
 end
 
-function slot0._loaderEffect(slot0, slot1)
-	slot3 = slot0._interactSpineList and #slot0._interactSpineList > 0
+function var_0_0._loaderEffect(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._effectCfgList and #arg_4_0._effectCfgList > 0
+	local var_4_1 = arg_4_0._interactSpineList and #arg_4_0._interactSpineList > 0
 
-	if slot0._effectCfgList and #slot0._effectCfgList > 0 or slot3 then
-		slot0._isLoaderDone = false
+	if var_4_0 or var_4_1 then
+		arg_4_0._isLoaderDone = false
 
-		if slot0._loader == nil then
-			slot0._loader = SequenceAbLoader.New()
+		if arg_4_0._loader == nil then
+			arg_4_0._loader = SequenceAbLoader.New()
 		end
 
-		if slot0._scene.charactermgr:getCharacterEntity(slot0._characterId, SceneTag.RoomCharacter) then
-			slot4.characterspine:addResToLoader(slot0._loader)
-			slot4.characterspineeffect:addResToLoader(slot0._loader)
+		local var_4_2 = arg_4_0._scene.charactermgr:getCharacterEntity(arg_4_0._characterId, SceneTag.RoomCharacter)
+
+		if var_4_2 then
+			var_4_2.characterspine:addResToLoader(arg_4_0._loader)
+			var_4_2.characterspineeffect:addResToLoader(arg_4_0._loader)
 		end
 
-		if slot2 then
-			for slot8, slot9 in ipairs(slot0._effectCfgList) do
-				slot0._loader:addPath(slot0:_getEffecResAb(slot9.effectRes))
+		if var_4_0 then
+			for iter_4_0, iter_4_1 in ipairs(arg_4_0._effectCfgList) do
+				arg_4_0._loader:addPath(arg_4_0:_getEffecResAb(iter_4_1.effectRes))
 			end
 		end
 
-		if slot3 then
-			for slot8, slot9 in ipairs(slot0._interactSpineList) do
-				slot0._loader:addPath(ResUrl.getSpineBxhyPrefab(slot9))
+		if var_4_1 then
+			for iter_4_2, iter_4_3 in ipairs(arg_4_0._interactSpineList) do
+				local var_4_3 = ResUrl.getSpineBxhyPrefab(iter_4_3)
+
+				arg_4_0._loader:addPath(var_4_3)
 			end
 		end
 
-		slot0._loader:setConcurrentCount(10)
-		slot0._loader:setLoadFailCallback(slot0._onLoadOneFail)
-		slot0._loader:startLoad(slot0._onLoadFinish, slot0)
-	elseif slot0._loader == nil then
-		slot0._isLoaderDone = true
+		arg_4_0._loader:setConcurrentCount(10)
+		arg_4_0._loader:setLoadFailCallback(arg_4_0._onLoadOneFail)
+		arg_4_0._loader:startLoad(arg_4_0._onLoadFinish, arg_4_0)
+	elseif arg_4_0._loader == nil then
+		arg_4_0._isLoaderDone = true
 	end
 end
 
-function slot0._onLoadOneFail(slot0, slot1, slot2)
-	logError("RoomActionShowTimeCharacterBuilding: 加载失败, url: " .. slot2.ResPath)
+function var_0_0._onLoadOneFail(arg_5_0, arg_5_1, arg_5_2)
+	logError("RoomActionShowTimeCharacterBuilding: 加载失败, url: " .. arg_5_2.ResPath)
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	TaskDispatcher.runDelay(slot0._onDelayLoadDone, slot0, 0.001)
+function var_0_0._onLoadFinish(arg_6_0, arg_6_1)
+	TaskDispatcher.runDelay(arg_6_0._onDelayLoadDone, arg_6_0, 0.001)
 end
 
-function slot0._onDelayLoadDone(slot0)
-	if not slot0._isLoaderDone then
-		slot0._isLoaderDone = true
+function var_0_0._onDelayLoadDone(arg_7_0)
+	if not arg_7_0._isLoaderDone then
+		arg_7_0._isLoaderDone = true
 
-		slot0:_checkNext(true)
+		arg_7_0:_checkNext(true)
 	end
 end
 
-function slot0._runTweenCamera(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = slot0._scene
-	slot12 = slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding)
-	slot13 = slot12:transformPoint(string.splitToNumber(slot0:_getCameraConfig(slot2).focusXYZ, "#") and slot8[1] or 0, slot8 and slot8[2] or 0, slot8 and slot8[3] or 0)
-	slot15 = RoomEnum.CameraState.InteractionCharacterBuilding
-	slot16 = {
-		focusX = slot13.x,
-		focusY = slot13.z,
-		zoom = slot6.camera:getZoomInitValue(slot15),
-		rotate = RoomRotateHelper.getMod(tonumber(slot7.rotate) + slot12:getMO().rotate * 60, 360) * Mathf.Deg2Rad
+function var_0_0._runTweenCamera(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	local var_8_0 = arg_8_0._scene
+	local var_8_1 = arg_8_0:_getCameraConfig(arg_8_2)
+	local var_8_2 = string.splitToNumber(var_8_1.focusXYZ, "#")
+	local var_8_3 = var_8_2 and var_8_2[1] or 0
+	local var_8_4 = var_8_2 and var_8_2[2] or 0
+	local var_8_5 = var_8_2 and var_8_2[3] or 0
+	local var_8_6 = arg_8_0._scene.buildingmgr:getBuildingEntity(arg_8_1, SceneTag.RoomBuilding)
+	local var_8_7 = var_8_6:transformPoint(var_8_3, var_8_4, var_8_5)
+	local var_8_8 = tonumber(var_8_1.rotate) + var_8_6:getMO().rotate * 60
+	local var_8_9 = RoomRotateHelper.getMod(var_8_8, 360) * Mathf.Deg2Rad
+	local var_8_10 = RoomEnum.CameraState.InteractionCharacterBuilding
+	local var_8_11 = {
+		focusX = var_8_7.x,
+		focusY = var_8_7.z,
+		zoom = var_8_0.camera:getZoomInitValue(var_8_10),
+		rotate = var_8_9
 	}
 
-	slot6.camera:setCharacterbuildingInteractionById(slot2)
-	slot6.camera:switchCameraState(slot15, slot16, slot3, slot4, slot5)
+	var_8_0.camera:setCharacterbuildingInteractionById(arg_8_2)
+	var_8_0.camera:switchCameraState(var_8_10, var_8_11, arg_8_3, arg_8_4, arg_8_5)
 
-	return slot16
+	return var_8_11
 end
 
-function slot0._getNextCameraParams(slot0, slot1)
-	if not slot0:_getCameraConfig(slot1) or string.nilorempty(slot2.nextCameraParams) then
+function var_0_0._getNextCameraParams(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:_getCameraConfig(arg_9_1)
+
+	if not var_9_0 or string.nilorempty(var_9_0.nextCameraParams) then
 		return nil
 	end
 
-	if not GameUtil.splitString2(slot2.nextCameraParams, true) or #slot3 < 1 then
+	local var_9_1 = GameUtil.splitString2(var_9_0.nextCameraParams, true)
+
+	if not var_9_1 or #var_9_1 < 1 then
 		return nil
 	end
 
-	slot4 = {}
+	local var_9_2 = {}
 
-	for slot8, slot9 in ipairs(slot3) do
-		if slot9 and #slot9 > 0 then
-			table.insert(slot4, {
-				cameraId = slot9[1],
-				delay = slot9[2] or 0
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if iter_9_1 and #iter_9_1 > 0 then
+			table.insert(var_9_2, {
+				cameraId = iter_9_1[1],
+				delay = iter_9_1[2] or 0
 			})
 		end
 	end
 
-	return slot4
+	return var_9_2
 end
 
-function slot0._getCameraConfig(slot0, slot1)
-	if slot0._param and slot0._param._debugCameraCfgDict then
-		return slot0._param._debugCameraCfgDict[slot1]
+function var_0_0._getCameraConfig(arg_10_0, arg_10_1)
+	if arg_10_0._param and arg_10_0._param._debugCameraCfgDict then
+		return arg_10_0._param._debugCameraCfgDict[arg_10_1]
 	end
 
-	return RoomConfig.instance:getCharacterBuildingInteractCameraConfig(slot1)
+	return (RoomConfig.instance:getCharacterBuildingInteractCameraConfig(arg_10_1))
 end
 
-function slot0._checkNextCamera(slot0)
-	if slot0._delayCameraParam == nil and slot0._nextCameraParams and #slot0._nextCameraParams > 0 then
-		slot0._delayCameraParam = slot0._nextCameraParams[1]
+function var_0_0._checkNextCamera(arg_11_0)
+	if arg_11_0._delayCameraParam == nil and arg_11_0._nextCameraParams and #arg_11_0._nextCameraParams > 0 then
+		arg_11_0._delayCameraParam = arg_11_0._nextCameraParams[1]
 
-		table.remove(slot0._nextCameraParams, 1)
-		TaskDispatcher.cancelTask(slot0._onDelayNextCamera, slot0)
+		table.remove(arg_11_0._nextCameraParams, 1)
+		TaskDispatcher.cancelTask(arg_11_0._onDelayNextCamera, arg_11_0)
 
-		if slot0._delayCameraParam.delay and slot0._delayCameraParam.delay > 0 then
-			TaskDispatcher.runDelay(slot0._onDelayNextCamera, slot0, slot0._delayCameraParam.delay)
+		if arg_11_0._delayCameraParam.delay and arg_11_0._delayCameraParam.delay > 0 then
+			TaskDispatcher.runDelay(arg_11_0._onDelayNextCamera, arg_11_0, arg_11_0._delayCameraParam.delay)
 		else
-			slot0:_onDelayNextCamera()
+			arg_11_0:_onDelayNextCamera()
 		end
 	end
 end
 
-function slot0._onDelayNextCamera(slot0)
-	if slot0._delayCameraParam and slot0:checkInteract() then
-		slot0._delayCameraParam = nil
+function var_0_0._onDelayNextCamera(arg_12_0)
+	if arg_12_0._delayCameraParam and arg_12_0:checkInteract() then
+		local var_12_0 = arg_12_0._delayCameraParam.cameraId
 
-		if slot0._scene.camera:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
-			slot0:_runTweenCamera(slot0._buildingUid, slot0._delayCameraParam.cameraId, nil, slot0._checkNextCamera, slot0)
+		arg_12_0._delayCameraParam = nil
+
+		local var_12_1 = arg_12_0._scene.camera:getCameraState()
+
+		if var_12_1 == RoomEnum.CameraState.InteractionCharacterBuilding then
+			arg_12_0:_runTweenCamera(arg_12_0._buildingUid, var_12_0, nil, arg_12_0._checkNextCamera, arg_12_0)
 		else
-			logNormal(string.format("camera state is [%s], not [%s].", slot2, RoomEnum.CameraState.InteractionCharacterBuilding))
+			logNormal(string.format("camera state is [%s], not [%s].", var_12_1, RoomEnum.CameraState.InteractionCharacterBuilding))
 		end
 	end
 end
 
-function slot0.tweenCamera(slot0, slot1, slot2, slot3)
-	slot4 = slot0._scene
-	slot7 = RoomCharacterController.instance:getPlayingInteractionParam()
+function var_0_0.tweenCamera(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = arg_13_0._scene
+	local var_13_1 = RoomCharacterModel.instance:getCharacterMOById(arg_13_1).currentPosition
+	local var_13_2 = RoomCharacterController.instance:getPlayingInteractionParam()
 
-	table.insert(slot7.positionList, RoomCharacterModel.instance:getCharacterMOById(slot1).currentPosition)
+	table.insert(var_13_2.positionList, var_13_1)
 
-	slot7.cameraParam = slot0:_runTweenCamera(slot2, slot3, nil, slot0.interactionCameraDone, slot0)
+	var_13_2.cameraParam = arg_13_0:_runTweenCamera(arg_13_2, arg_13_3, nil, arg_13_0.interactionCameraDone, arg_13_0)
 end
 
-function slot0.interactionCameraDone(slot0)
-	slot0._isCameraDone = true
+function var_0_0.interactionCameraDone(arg_14_0)
+	arg_14_0._isCameraDone = true
 
-	slot0:_checkNext()
+	arg_14_0:_checkNext()
 end
 
-function slot0._checkNext(slot0, slot1)
-	if not slot0._isLoaderDone then
+function var_0_0._checkNext(arg_15_0, arg_15_1)
+	if not arg_15_0._isLoaderDone then
 		return
 	end
 
-	if slot0._isCameraDone then
-		slot0:playInteraction()
-		slot0:playIneteractionEffect()
-		slot0:createInteractionSpine()
-		slot0:_checkNextCamera()
+	if arg_15_0._isCameraDone then
+		arg_15_0:playInteraction()
+		arg_15_0:playIneteractionEffect()
+		arg_15_0:createInteractionSpine()
+		arg_15_0:_checkNextCamera()
 	end
 end
 
-function slot0.playInteraction(slot0)
-	slot0:endState()
+function var_0_0.playInteraction(arg_16_0)
+	arg_16_0:endState()
 
-	if slot0._scene.buildingmgr:getBuildingEntity(slot0._buildingUid, SceneTag.RoomBuilding) and not string.nilorempty(slot0._interaTionCfg.buildingAnimState) then
-		slot1:playAnimator(slot0._interaTionCfg.buildingAnimState)
+	local var_16_0 = arg_16_0._scene.buildingmgr:getBuildingEntity(arg_16_0._buildingUid, SceneTag.RoomBuilding)
+
+	if var_16_0 and not string.nilorempty(arg_16_0._interaTionCfg.buildingAnimState) then
+		var_16_0:playAnimator(arg_16_0._interaTionCfg.buildingAnimState)
 	end
 
-	if slot0._faithOp == RoomCharacterEnum.ShowTimeFaithOp.FaithAll then
-		RoomCharacterController.instance:gainAllCharacterFaith(nil, , slot0._characterId)
-	elseif slot0._faithOp == RoomCharacterEnum.ShowTimeFaithOp.FaithOne then
+	if arg_16_0._faithOp == RoomCharacterEnum.ShowTimeFaithOp.FaithAll then
+		RoomCharacterController.instance:gainAllCharacterFaith(nil, nil, arg_16_0._characterId)
+	elseif arg_16_0._faithOp == RoomCharacterEnum.ShowTimeFaithOp.FaithOne then
 		RoomCharacterController.instance:gainCharacterFaith({
-			slot0._characterId
+			arg_16_0._characterId
 		})
 	end
 
-	TaskDispatcher.cancelTask(slot0._onInteractionFinish, slot0)
-	TaskDispatcher.runDelay(slot0._onInteractionFinish, slot0, slot0:_getShowTime())
-	TaskDispatcher.cancelTask(slot0._onPlayHeroAnimState, slot0)
+	local var_16_1 = arg_16_0:_getShowTime()
 
-	if slot0._heroAnimDelay and slot0._heroAnimDelay > 0 then
-		TaskDispatcher.runDelay(slot0._onPlayHeroAnimState, slot0, slot0._heroAnimDelay)
+	TaskDispatcher.cancelTask(arg_16_0._onInteractionFinish, arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0._onInteractionFinish, arg_16_0, var_16_1)
+	TaskDispatcher.cancelTask(arg_16_0._onPlayHeroAnimState, arg_16_0)
+
+	if arg_16_0._heroAnimDelay and arg_16_0._heroAnimDelay > 0 then
+		TaskDispatcher.runDelay(arg_16_0._onPlayHeroAnimState, arg_16_0, arg_16_0._heroAnimDelay)
 	else
-		slot0:_onPlayHeroAnimState()
+		arg_16_0:_onPlayHeroAnimState()
 	end
 
-	if slot0._interaTionCfg.buildingAudio and slot0._interaTionCfg.buildingAudio ~= 0 and slot1 then
-		slot1:playAudio(slot0._interaTionCfg.buildingAudio)
+	if arg_16_0._interaTionCfg.buildingAudio and arg_16_0._interaTionCfg.buildingAudio ~= 0 and var_16_0 then
+		var_16_0:playAudio(arg_16_0._interaTionCfg.buildingAudio)
 	end
 
-	if slot0._interaTionCfg.buildingInside then
-		TaskDispatcher.cancelTask(slot0.moveCharacterInsideBuilding, slot0)
+	if arg_16_0._interaTionCfg.buildingInside then
+		TaskDispatcher.cancelTask(arg_16_0.moveCharacterInsideBuilding, arg_16_0)
 
-		if slot0._interaTionCfg.delayEnterBuilding and slot0._interaTionCfg.delayEnterBuilding > 0 then
-			TaskDispatcher.runDelay(slot0.moveCharacterInsideBuilding, slot0, slot0._interaTionCfg.delayEnterBuilding)
+		if arg_16_0._interaTionCfg.delayEnterBuilding and arg_16_0._interaTionCfg.delayEnterBuilding > 0 then
+			TaskDispatcher.runDelay(arg_16_0.moveCharacterInsideBuilding, arg_16_0, arg_16_0._interaTionCfg.delayEnterBuilding)
 		else
-			slot0:moveCharacterInsideBuilding()
+			arg_16_0:moveCharacterInsideBuilding()
 		end
 	end
 end
 
-function slot0._onPlayHeroAnimState(slot0)
-	if slot0._scene.charactermgr:getCharacterEntity(slot0._characterId, SceneTag.RoomCharacter) and not string.nilorempty(slot0._heroAnimName) then
-		slot1.characterspine:play(slot0._heroAnimName, false, true)
+function var_0_0._onPlayHeroAnimState(arg_17_0)
+	local var_17_0 = arg_17_0._scene.charactermgr:getCharacterEntity(arg_17_0._characterId, SceneTag.RoomCharacter)
+
+	if var_17_0 and not string.nilorempty(arg_17_0._heroAnimName) then
+		var_17_0.characterspine:play(arg_17_0._heroAnimName, false, true)
 	end
 end
 
-function slot0.moveCharacterInsideBuilding(slot0)
-	slot3 = slot0._scene.buildingmgr:getBuildingEntity(slot0._buildingUid, SceneTag.RoomBuilding) and slot2:getPlayerInsideInteractionNode()
+function var_0_0.moveCharacterInsideBuilding(arg_18_0)
+	local var_18_0 = arg_18_0._scene.charactermgr:getCharacterEntity(arg_18_0._characterId, SceneTag.RoomCharacter)
+	local var_18_1 = arg_18_0._scene.buildingmgr:getBuildingEntity(arg_18_0._buildingUid, SceneTag.RoomBuilding)
+	local var_18_2 = var_18_1 and var_18_1:getPlayerInsideInteractionNode()
 
-	if not slot0._scene.charactermgr:getCharacterEntity(slot0._characterId, SceneTag.RoomCharacter) or gohelper.isNil(slot3) then
+	if not var_18_0 or gohelper.isNil(var_18_2) then
 		return
 	end
 
-	slot4, slot5, slot6 = transformhelper.getPos(slot3.transform)
+	local var_18_3, var_18_4, var_18_5 = transformhelper.getPos(var_18_2.transform)
 
-	slot1:setLocalPos(slot4, slot5, slot6)
-	slot0._roomCharacterMO:setIsFreeze(true)
+	var_18_0:setLocalPos(var_18_3, var_18_4, var_18_5)
+	arg_18_0._roomCharacterMO:setIsFreeze(true)
 end
 
-function slot0.setInteractBuildingSideIsActive(slot0, slot1, slot2)
-	if slot0._scene.buildingmgr:getBuildingEntity(slot0._buildingUid, SceneTag.RoomBuilding) then
-		slot3:setSideIsActive(slot1, slot2)
+function var_0_0.setInteractBuildingSideIsActive(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0._scene.buildingmgr:getBuildingEntity(arg_19_0._buildingUid, SceneTag.RoomBuilding)
+
+	if var_19_0 then
+		var_19_0:setSideIsActive(arg_19_1, arg_19_2)
 	end
 end
 
-function slot0._getShowTime(slot0)
-	if slot0._interaTionCfg and slot0._interaTionCfg.showtime and slot0._interaTionCfg.showtime ~= 0 then
-		return slot0._interaTionCfg.showtime * 0.001
+function var_0_0._getShowTime(arg_20_0)
+	if arg_20_0._interaTionCfg and arg_20_0._interaTionCfg.showtime and arg_20_0._interaTionCfg.showtime ~= 0 then
+		return arg_20_0._interaTionCfg.showtime * 0.001
 	end
 
 	return 8
 end
 
-function slot0.playIneteractionEffect(slot0)
-	if not slot0._effectCfgList then
+function var_0_0.playIneteractionEffect(arg_21_0)
+	local var_21_0 = arg_21_0._effectCfgList
+
+	if not var_21_0 then
 		return
 	end
 
-	slot3 = slot0._scene.charactermgr:getCharacterEntity(slot0._characterId, SceneTag.RoomCharacter)
-	slot4 = slot3.characterspine:getCharacterGO()
-	slot0._interationGOs = slot0._interationGOs or {}
-	slot0._interationGODict = slot0._interationGODict or {}
+	local var_21_1 = arg_21_0._scene.charactermgr:getCharacterEntity(arg_21_0._characterId, SceneTag.RoomCharacter)
+	local var_21_2 = var_21_1.characterspine:getCharacterGO()
+	local var_21_3 = var_21_1.characterspineeffect
 
-	for slot9, slot10 in ipairs(slot1) do
-		if not slot3.characterspineeffect:isHasEffectGO(slot10.animName) then
-			if gohelper.isNil(slot0._interationGODict["effect_" .. slot10.id]) then
-				slot12 = gohelper.clone(slot0._loader:getAssetItem(slot0:_getEffecResAb(slot10.effectRes)):GetResource(slot0:_getEffecRes(slot10.effectRes)), gohelper.findChild(slot4, RoomCharacterHelper.getSpinePointPath(slot10.point)) or slot4 or slot3.containerGO, slot11)
+	arg_21_0._interationGOs = arg_21_0._interationGOs or {}
+	arg_21_0._interationGODict = arg_21_0._interationGODict or {}
 
-				table.insert(slot0._interationGOs, slot12)
+	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+		if not var_21_3:isHasEffectGO(iter_21_1.animName) then
+			local var_21_4 = "effect_" .. iter_21_1.id
+			local var_21_5 = arg_21_0._interationGODict[var_21_4]
 
-				slot0._interationGODict[slot11] = slot12
+			if gohelper.isNil(var_21_5) then
+				local var_21_6 = RoomCharacterHelper.getSpinePointPath(iter_21_1.point)
+				local var_21_7 = gohelper.findChild(var_21_2, var_21_6) or var_21_2 or var_21_1.containerGO
+				local var_21_8 = arg_21_0:_getEffecRes(iter_21_1.effectRes)
+				local var_21_9 = arg_21_0:_getEffecResAb(iter_21_1.effectRes)
+				local var_21_10 = arg_21_0._loader:getAssetItem(var_21_9):GetResource(var_21_8)
+
+				var_21_5 = gohelper.clone(var_21_10, var_21_7, var_21_4)
+
+				table.insert(arg_21_0._interationGOs, var_21_5)
+
+				arg_21_0._interationGODict[var_21_4] = var_21_5
 			else
-				gohelper.setActive(slot12, false)
-				gohelper.setActive(slot12, true)
+				gohelper.setActive(var_21_5, false)
+				gohelper.setActive(var_21_5, true)
 			end
 		end
 	end
 end
 
-function slot0.createInteractionSpine(slot0)
-	if not slot0._interactSpineList or #slot1 <= 0 or not slot0._scene.buildingmgr:getBuildingEntity(slot0._buildingUid, SceneTag.RoomBuilding) then
+function var_0_0.createInteractionSpine(arg_22_0)
+	local var_22_0 = arg_22_0._interactSpineList
+	local var_22_1 = arg_22_0._scene.buildingmgr:getBuildingEntity(arg_22_0._buildingUid, SceneTag.RoomBuilding)
+
+	if not var_22_0 or #var_22_0 <= 0 or not var_22_1 then
 		return
 	end
 
-	slot0._interactionSpineGODict = slot0._interactionSpineGODict or {}
+	arg_22_0._interactionSpineGODict = arg_22_0._interactionSpineGODict or {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if gohelper.isNil(slot0._interactionSpineGODict[slot7]) then
-			if slot0._loader:getAssetItem(ResUrl.getSpineBxhyPrefab(slot7)) and slot11:GetResource(slot10) then
-				slot8 = gohelper.clone(slot12, slot2:getSpineWidgetNode(slot6), slot7)
-				slot0._interactionSpineGODict[slot7] = slot8
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		local var_22_2 = arg_22_0._interactionSpineGODict[iter_22_1]
 
-				if slot8:GetComponent(typeof(Spine.Unity.SkeletonAnimation)) then
-					slot13:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
+		if gohelper.isNil(var_22_2) then
+			local var_22_3 = var_22_1:getSpineWidgetNode(iter_22_0)
+			local var_22_4 = ResUrl.getSpineBxhyPrefab(iter_22_1)
+			local var_22_5 = arg_22_0._loader:getAssetItem(var_22_4)
+			local var_22_6 = var_22_5 and var_22_5:GetResource(var_22_4)
+
+			if var_22_6 then
+				var_22_2 = gohelper.clone(var_22_6, var_22_3, iter_22_1)
+				arg_22_0._interactionSpineGODict[iter_22_1] = var_22_2
+
+				local var_22_7 = var_22_2:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
+
+				if var_22_7 then
+					var_22_7:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
 				end
 			end
 		else
-			gohelper.setActive(slot8, false)
-			gohelper.setActive(slot8, true)
+			gohelper.setActive(var_22_2, false)
+			gohelper.setActive(var_22_2, true)
 		end
 	end
 end
 
-function slot0.playInteractionSpineAnim(slot0)
-	if not slot0._interactSpineList or #slot1 <= 0 then
+function var_0_0.playInteractionSpineAnim(arg_23_0)
+	local var_23_0 = arg_23_0._interactSpineList
+
+	if not var_23_0 or #var_23_0 <= 0 then
 		return
 	end
 
-	slot0._interactionSpineGODict = slot0._interactionSpineGODict or {}
+	arg_23_0._interactionSpineGODict = arg_23_0._interactionSpineGODict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = nil
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		local var_23_1
+		local var_23_2 = arg_23_0._interactionSpineGODict[iter_23_1]
 
-		if not gohelper.isNil(slot0._interactionSpineGODict[slot6]) then
-			slot7 = slot8:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
+		if not gohelper.isNil(var_23_2) then
+			var_23_1 = var_23_2:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
 		end
 
-		if slot7 then
-			slot7:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
+		if var_23_1 then
+			var_23_1:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
 		end
 	end
 end
 
-function slot0._clearLoader(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0._clearLoader(arg_24_0)
+	if arg_24_0._loader then
+		arg_24_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_24_0._loader = nil
 	end
 
-	if slot0._interationGOs then
-		for slot5 = 1, #slot0._interationGOs do
-			slot0._interationGOs[slot5] = nil
+	if arg_24_0._interationGOs then
+		local var_24_0 = #arg_24_0._interationGOs
 
-			gohelper.destroy(slot0._interationGOs[slot5])
+		for iter_24_0 = 1, var_24_0 do
+			local var_24_1 = arg_24_0._interationGOs[iter_24_0]
+
+			arg_24_0._interationGOs[iter_24_0] = nil
+
+			gohelper.destroy(var_24_1)
 		end
 
-		slot0._interationGOs = nil
+		arg_24_0._interationGOs = nil
 	end
 
-	if slot0._interationGODict then
-		for slot4, slot5 in pairs(slot0._interationGODict) do
-			slot0._interationGODict[slot4] = nil
+	if arg_24_0._interationGODict then
+		for iter_24_1, iter_24_2 in pairs(arg_24_0._interationGODict) do
+			arg_24_0._interationGODict[iter_24_1] = nil
 		end
 
-		slot0._interationGODict = nil
+		arg_24_0._interationGODict = nil
 	end
 
-	if slot0._interactionSpineGODict then
-		for slot4, slot5 in pairs(slot0._interactionSpineGODict) do
-			gohelper.destroy(slot5)
+	if arg_24_0._interactionSpineGODict then
+		for iter_24_3, iter_24_4 in pairs(arg_24_0._interactionSpineGODict) do
+			gohelper.destroy(iter_24_4)
 		end
 
-		slot0._interactionSpineGODict = nil
+		arg_24_0._interactionSpineGODict = nil
 	end
 end
 
-function slot0._getEffecRes(slot0, slot1)
-	return RoomResHelper.getCharacterEffectPath(slot1)
+function var_0_0._getEffecRes(arg_25_0, arg_25_1)
+	return RoomResHelper.getCharacterEffectPath(arg_25_1)
 end
 
-function slot0._getEffecResAb(slot0, slot1)
-	return RoomResHelper.getCharacterEffectABPath(slot1)
+function var_0_0._getEffecResAb(arg_26_0, arg_26_1)
+	return RoomResHelper.getCharacterEffectABPath(arg_26_1)
 end
 
-function slot0._onInteractionFinish(slot0)
-	if slot0:checkInteract() then
+function var_0_0._onInteractionFinish(arg_27_0)
+	local var_27_0 = arg_27_0:checkInteract()
+
+	if var_27_0 then
 		RoomCharacterController.instance:endInteraction()
 		ViewMgr.instance:closeView(ViewName.RoomBuildingInteractionView)
 	end
 
-	slot2 = slot0._scene.camera
+	local var_27_1 = arg_27_0._scene.camera
 
-	if slot1 and slot2:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
-		slot3 = slot0._roomCharacterMO.currentPosition
+	if var_27_0 and var_27_1:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
+		local var_27_2 = arg_27_0._roomCharacterMO.currentPosition
 
-		slot2:switchCameraState(RoomEnum.CameraState.Normal, {
-			focusX = slot3.x,
-			focusY = slot3.z
-		}, nil, slot0.insideBuildingInteractFinish, slot0)
+		var_27_1:switchCameraState(RoomEnum.CameraState.Normal, {
+			focusX = var_27_2.x,
+			focusY = var_27_2.z
+		}, nil, arg_27_0.insideBuildingInteractFinish, arg_27_0)
 	else
-		slot0:insideBuildingInteractFinish()
+		arg_27_0:insideBuildingInteractFinish()
 	end
 
-	slot0:_clearLoader()
+	arg_27_0:_clearLoader()
 
-	if slot0._interaTionCfg.buildingInside then
-		slot0._roomCharacterMO:setIsFreeze(false)
-		RoomCharacterController.instance:correctCharacterHeight(slot0._roomCharacterMO)
+	if arg_27_0._interaTionCfg.buildingInside then
+		arg_27_0._roomCharacterMO:setIsFreeze(false)
+		RoomCharacterController.instance:correctCharacterHeight(arg_27_0._roomCharacterMO)
 	end
 end
 
-function slot0.insideBuildingInteractFinish(slot0)
-	if not slot0._interaTionCfg.buildingInside then
+function var_0_0.insideBuildingInteractFinish(arg_28_0)
+	if not arg_28_0._interaTionCfg.buildingInside then
 		return
 	end
 
-	slot0:setInteractBuildingSideIsActive(RoomEnum.EntityChildKey.InSideKey, false)
+	arg_28_0:setInteractBuildingSideIsActive(RoomEnum.EntityChildKey.InSideKey, false)
 end
 
-function slot0.onDone(slot0)
+function var_0_0.onDone(arg_29_0)
+	return
 end
 
-function slot0.endState(slot0)
-	if slot0.fsmTransition then
-		slot0.fsmTransition:endState()
+function var_0_0.endState(arg_30_0)
+	if arg_30_0.fsmTransition then
+		arg_30_0.fsmTransition:endState()
 	end
 end
 
-function slot0.stop(slot0)
-	slot0:endState()
+function var_0_0.stop(arg_31_0)
+	arg_31_0:endState()
 end
 
-function slot0.clear(slot0)
-	slot0:endState()
-	slot0:_clearLoader()
-	TaskDispatcher.cancelTask(slot0._onInteractionFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayLoadDone, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayNextCamera, slot0)
-	TaskDispatcher.cancelTask(slot0._onPlayHeroAnimState, slot0)
-	TaskDispatcher.cancelTask(slot0.moveCharacterInsideBuilding)
+function var_0_0.clear(arg_32_0)
+	arg_32_0:endState()
+	arg_32_0:_clearLoader()
+	TaskDispatcher.cancelTask(arg_32_0._onInteractionFinish, arg_32_0)
+	TaskDispatcher.cancelTask(arg_32_0._onDelayLoadDone, arg_32_0)
+	TaskDispatcher.cancelTask(arg_32_0._onDelayNextCamera, arg_32_0)
+	TaskDispatcher.cancelTask(arg_32_0._onPlayHeroAnimState, arg_32_0)
+	TaskDispatcher.cancelTask(arg_32_0.moveCharacterInsideBuilding)
 end
 
-return slot0
+return var_0_0

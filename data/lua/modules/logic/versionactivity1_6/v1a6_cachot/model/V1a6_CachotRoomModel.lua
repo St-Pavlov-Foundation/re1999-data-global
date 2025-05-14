@@ -1,29 +1,29 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotRoomModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotRoomModel", package.seeall)
 
-slot0 = class("V1a6_CachotRoomModel", BaseModel)
+local var_0_0 = class("V1a6_CachotRoomModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._isPlayerMoving = false
-	slot0._layer = 0
-	slot0._room = 0
-	slot0._roomEvents = {}
-	slot0.isFromDramaToDrama = false
-	slot0.isLockPlayerMove = false
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._isPlayerMoving = false
+	arg_1_0._layer = 0
+	arg_1_0._room = 0
+	arg_1_0._roomEvents = {}
+	arg_1_0.isFromDramaToDrama = false
+	arg_1_0.isLockPlayerMove = false
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.clear(slot0)
-	slot0._layer = 0
-	slot0._room = 0
-	slot0._roomEvents = {}
+function var_0_0.clear(arg_3_0)
+	arg_3_0._layer = 0
+	arg_3_0._room = 0
+	arg_3_0._roomEvents = {}
 
-	slot0:clearRoomChangeStatus()
+	arg_3_0:clearRoomChangeStatus()
 end
 
-slot1 = {
+local var_0_1 = {
 	{
 		2
 	},
@@ -38,113 +38,118 @@ slot1 = {
 	}
 }
 
-function slot0.setLayerAndRoom(slot0, slot1, slot2)
-	if slot1 == slot0._layer and slot2 == slot0._room then
+function var_0_0.setLayerAndRoom(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == arg_4_0._layer and arg_4_2 == arg_4_0._room then
 		return
 	end
 
-	V1a6_CachotStatController.instance:statFinishRoom(slot0._room, slot0._layer)
+	V1a6_CachotStatController.instance:statFinishRoom(arg_4_0._room, arg_4_0._layer)
 	V1a6_CachotStatController.instance:statEnterRoom()
 
-	slot0._isRoomChange = slot0._room and slot0._room ~= 0
-	slot0._isLayerChange = slot0._layer and slot0._layer ~= 0 and slot1 > 1 and slot0._layer ~= slot1
-	slot0._layer = slot1
-	slot0._room = slot2
+	arg_4_0._isRoomChange = arg_4_0._room and arg_4_0._room ~= 0
+	arg_4_0._isLayerChange = arg_4_0._layer and arg_4_0._layer ~= 0 and arg_4_1 > 1 and arg_4_0._layer ~= arg_4_1
+	arg_4_0._layer = arg_4_1
+	arg_4_0._room = arg_4_2
 
-	slot0:refreshRoomEvents()
+	arg_4_0:refreshRoomEvents()
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChange)
 end
 
-function slot0.getRoomIsChange(slot0)
-	return slot0._isRoomChange
+function var_0_0.getRoomIsChange(arg_5_0)
+	return arg_5_0._isRoomChange
 end
 
-function slot0.getLayerIsChange(slot0)
-	return slot0._isLayerChange
+function var_0_0.getLayerIsChange(arg_6_0)
+	return arg_6_0._isLayerChange
 end
 
-function slot0.clearRoomChangeStatus(slot0)
-	slot0._isRoomChange = false
-	slot0._isLayerChange = false
+function var_0_0.clearRoomChangeStatus(arg_7_0)
+	arg_7_0._isRoomChange = false
+	arg_7_0._isLayerChange = false
 end
 
-function slot0.refreshRoomEvents(slot0)
-	if not V1a6_CachotModel.instance:getRogueInfo() then
+function var_0_0.refreshRoomEvents(arg_8_0)
+	local var_8_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not var_8_0 then
 		return
 	end
 
-	slot0._roomEvents = {}
+	arg_8_0._roomEvents = {}
 
-	if slot1.isFinish then
+	if var_8_0.isFinish then
 		return
 	end
 
-	slot2 = false
-	slot3 = {
-		[slot8.eventId] = true
-	}
+	local var_8_1 = false
+	local var_8_2 = {}
 
-	for slot7, slot8 in ipairs(slot1.currentEvents) do
-		if slot8.status ~= 0 then
-			slot2 = true
+	for iter_8_0, iter_8_1 in ipairs(var_8_0.currentEvents) do
+		if iter_8_1.status ~= 0 then
+			var_8_2[iter_8_1.eventId] = true
+			var_8_1 = true
 		end
 	end
 
-	for slot8 = 1, math.min(#slot1.currentEvents, 3) do
-		slot9 = slot1.currentEvents[slot8]
+	local var_8_3 = #var_8_0.currentEvents
+	local var_8_4 = math.min(var_8_3, 3)
 
-		if not slot2 or slot3[slot9.eventId] then
-			slot9.index = uv0[slot4][slot8]
+	for iter_8_2 = 1, var_8_4 do
+		local var_8_5 = var_8_0.currentEvents[iter_8_2]
 
-			table.insert(slot0._roomEvents, slot9)
+		if not var_8_1 or var_8_2[var_8_5.eventId] then
+			var_8_5.index = var_0_1[var_8_4][iter_8_2]
+
+			table.insert(arg_8_0._roomEvents, var_8_5)
 		end
 	end
 
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomEventChange)
 end
 
-function slot0.tryAddSelectEvent(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._roomEvents) do
-		if slot6.eventId == slot1.eventId then
-			slot6:init(slot1)
+function var_0_0.tryAddSelectEvent(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._roomEvents) do
+		if iter_9_1.eventId == arg_9_1.eventId then
+			iter_9_1:init(arg_9_1)
 
 			break
 		end
 	end
 
-	slot2 = nil
+	local var_9_0
+	local var_9_1 = V1a6_CachotModel.instance:getRogueInfo()
 
-	for slot7, slot8 in ipairs(V1a6_CachotModel.instance:getRogueInfo().selectedEvents) do
-		if slot8.eventId == slot1.eventId then
-			slot2 = slot8
+	for iter_9_2, iter_9_3 in ipairs(var_9_1.selectedEvents) do
+		if iter_9_3.eventId == arg_9_1.eventId then
+			var_9_0 = iter_9_3
 
-			slot8:init(slot1)
+			iter_9_3:init(arg_9_1)
 
 			break
 		end
 	end
 
-	if not slot2 then
-		slot4 = RogueEventMO.New()
+	if not var_9_0 then
+		local var_9_2 = RogueEventMO.New()
 
-		slot4:init(slot1)
-		table.insert(slot3.selectedEvents, slot4)
-		slot0:refreshRoomEvents()
+		var_9_2:init(arg_9_1)
+		table.insert(var_9_1.selectedEvents, var_9_2)
+		arg_9_0:refreshRoomEvents()
 
-		return slot4
+		return var_9_2
 	else
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.SelectEventChange, slot2)
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.SelectEventChange, var_9_0)
 	end
 end
 
-slot2 = nil
+local var_0_2
 
-function slot0.tryRemoveSelectEvent(slot0, slot1)
-	if not uv0 then
-		uv0 = tonumber(lua_rogue_const.configDict[V1a6_CachotEnum.Const.ChangeConclusion].value)
+function var_0_0.tryRemoveSelectEvent(arg_10_0, arg_10_1)
+	if not var_0_2 then
+		var_0_2 = tonumber(lua_rogue_const.configDict[V1a6_CachotEnum.Const.ChangeConclusion].value)
 	end
 
-	if slot1.eventId == uv0 then
+	if arg_10_1.eventId == var_0_2 then
 		V1a6_CachotEventController.instance:setPause(true, V1a6_CachotEnum.EventPauseType.Tips)
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CachotTips, ViewName.V1a6_CachotTipsView, {
 			str = lua_rogue_const.configDict[V1a6_CachotEnum.Const.ChangeConclusion].value2,
@@ -152,90 +157,98 @@ function slot0.tryRemoveSelectEvent(slot0, slot1)
 		})
 	end
 
-	for slot6, slot7 in ipairs(V1a6_CachotModel.instance:getRogueInfo().selectedEvents) do
-		if slot7.eventId == slot1.eventId then
-			slot7:init(slot1)
-			table.remove(slot2.selectedEvents, slot6)
-			V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.SelectEventRemove, slot7)
+	local var_10_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0.selectedEvents) do
+		if iter_10_1.eventId == arg_10_1.eventId then
+			iter_10_1:init(arg_10_1)
+			table.remove(var_10_0.selectedEvents, iter_10_0)
+			V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.SelectEventRemove, iter_10_1)
 
 			break
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._roomEvents) do
-		if slot7.eventId == slot1.eventId then
-			slot7:init(slot1)
-			slot0:refreshRoomEvents()
+	for iter_10_2, iter_10_3 in pairs(arg_10_0._roomEvents) do
+		if iter_10_3.eventId == arg_10_1.eventId then
+			iter_10_3:init(arg_10_1)
+			arg_10_0:refreshRoomEvents()
 		end
 	end
 end
 
-function slot0.getNowBattleEventMo(slot0)
+function var_0_0.getNowBattleEventMo(arg_11_0)
 	if ActivityHelper.getActivityStatus(V1a6_CachotEnum.ActivityId) ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	if not V1a6_CachotModel.instance:getRogueInfo() then
+	local var_11_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not var_11_0 then
 		return
 	end
 
-	slot3 = nil
+	local var_11_1
 
-	for slot7 = 1, #slot2.selectedEvents do
-		if lua_rogue_event.configDict[slot2.selectedEvents[slot7].eventId].type == V1a6_CachotEnum.EventType.Battle then
-			slot3 = slot2.selectedEvents[slot7]
+	for iter_11_0 = 1, #var_11_0.selectedEvents do
+		local var_11_2 = var_11_0.selectedEvents[iter_11_0].eventId
+
+		if lua_rogue_event.configDict[var_11_2].type == V1a6_CachotEnum.EventType.Battle then
+			var_11_1 = var_11_0.selectedEvents[iter_11_0]
 
 			break
 		end
 	end
 
-	return slot3
+	return var_11_1
 end
 
-function slot0.getNowTopEventMo(slot0)
-	if not V1a6_CachotModel.instance:getRogueInfo() or #slot1.selectedEvents == 0 then
+function var_0_0.getNowTopEventMo(arg_12_0)
+	local var_12_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not var_12_0 or #var_12_0.selectedEvents == 0 then
 		return
 	end
 
-	return slot1.selectedEvents[#slot1.selectedEvents]
+	return var_12_0.selectedEvents[#var_12_0.selectedEvents]
 end
 
-function slot0.getIsMoving(slot0)
-	return slot0._isPlayerMoving
+function var_0_0.getIsMoving(arg_13_0)
+	return arg_13_0._isPlayerMoving
 end
 
-function slot0.setIsMoving(slot0, slot1)
-	if slot0._isPlayerMoving == slot1 then
+function var_0_0.setIsMoving(arg_14_0, arg_14_1)
+	if arg_14_0._isPlayerMoving == arg_14_1 then
 		return
 	end
 
-	slot0._isPlayerMoving = slot1
+	arg_14_0._isPlayerMoving = arg_14_1
 
-	if slot1 then
+	if arg_14_1 then
 		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerBeginMove)
 	else
 		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerStopMove)
 	end
 end
 
-function slot0.getRoomEventMos(slot0)
-	return slot0._roomEvents
+function var_0_0.getRoomEventMos(arg_15_0)
+	return arg_15_0._roomEvents
 end
 
-function slot0.getNearEventMo(slot0)
-	return slot0._nearEventMo
+function var_0_0.getNearEventMo(arg_16_0)
+	return arg_16_0._nearEventMo
 end
 
-function slot0.setNearEventMo(slot0, slot1)
-	if slot1 == slot0._nearEventMo then
+function var_0_0.setNearEventMo(arg_17_0, arg_17_1)
+	if arg_17_1 == arg_17_0._nearEventMo then
 		return
 	end
 
-	slot0._nearEventMo = slot1
+	arg_17_0._nearEventMo = arg_17_1
 
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.NearEventMoChange, slot1)
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.NearEventMoChange, arg_17_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

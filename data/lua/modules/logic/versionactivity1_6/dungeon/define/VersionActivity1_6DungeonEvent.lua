@@ -1,18 +1,19 @@
-module("modules.logic.versionactivity1_6.dungeon.define.VersionActivity1_6DungeonEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.define.VersionActivity1_6DungeonEvent", package.seeall)
 
-slot0 = _M
-slot0.OnMapPosChanged = 10
-slot0.OnClickElement = 11
-slot0.OnHideInteractUI = 12
-slot0.FocusElement = 13
-slot0.OnAddOneElement = 14
-slot0.OnRemoveElement = 15
-slot0.OnRecycleAllElement = 16
-slot0.DungeonBossFightScoreChange = 21
-slot0.DungeonBossInfoUpdated = 22
-slot0.DungeonBossOrder = 23
-slot0.SkillPointReturnBack = 31
-slot0.SetSkillBtnActive = 901
-slot0.SetBossBtnActive = 902
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnMapPosChanged = 10
+var_0_0.OnClickElement = 11
+var_0_0.OnHideInteractUI = 12
+var_0_0.FocusElement = 13
+var_0_0.OnAddOneElement = 14
+var_0_0.OnRemoveElement = 15
+var_0_0.OnRecycleAllElement = 16
+var_0_0.DungeonBossFightScoreChange = 21
+var_0_0.DungeonBossInfoUpdated = 22
+var_0_0.DungeonBossOrder = 23
+var_0_0.SkillPointReturnBack = 31
+var_0_0.SetSkillBtnActive = 901
+var_0_0.SetBossBtnActive = 902
+
+return var_0_0

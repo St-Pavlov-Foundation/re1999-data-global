@@ -1,36 +1,38 @@
-module("modules.logic.chessgame.game.ChessInteractMgr", package.seeall)
+﻿module("modules.logic.chessgame.game.ChessInteractMgr", package.seeall)
 
-slot0 = class("ChessInteractMgr")
+local var_0_0 = class("ChessInteractMgr")
 
-function slot0.ctor(slot0)
-	slot0._list = {}
-	slot0._dict = {}
-	slot0._showList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._list = {}
+	arg_1_0._dict = {}
+	arg_1_0._showList = {}
 end
 
-function slot0.add(slot0, slot1)
-	slot2 = slot1.id
+function var_0_0.add(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.id
 
-	slot0:remove(slot2)
+	arg_2_0:remove(var_2_0)
 
-	slot0._dict[slot2] = slot1
+	arg_2_0._dict[var_2_0] = arg_2_1
 
-	table.insert(slot0._list, slot1)
+	table.insert(arg_2_0._list, arg_2_1)
 
-	if slot1:isShow() and slot1:checkHaveAvatarPath() then
-		table.insert(slot0._showList, slot1)
+	if arg_2_1:isShow() and arg_2_1:checkHaveAvatarPath() then
+		table.insert(arg_2_0._showList, arg_2_1)
 	end
 end
 
-function slot0.remove(slot0, slot1)
-	if slot0._dict[slot1] then
-		slot0._dict[slot1] = nil
+function var_0_0.remove(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0._dict[arg_3_1]
 
-		for slot6, slot7 in ipairs(slot0._list) do
-			if slot7 == slot2 then
-				table.remove(slot0._list, slot6)
-				table.remove(slot0._showList, slot6)
-				slot7:dispose()
+	if var_3_0 then
+		arg_3_0._dict[arg_3_1] = nil
+
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0._list) do
+			if iter_3_1 == var_3_0 then
+				table.remove(arg_3_0._list, iter_3_0)
+				table.remove(arg_3_0._showList, iter_3_0)
+				iter_3_1:dispose()
 
 				return true
 			end
@@ -40,73 +42,75 @@ function slot0.remove(slot0, slot1)
 	return false
 end
 
-function slot0.getList(slot0)
-	return slot0._list
+function var_0_0.getList(arg_4_0)
+	return arg_4_0._list
 end
 
-function slot0.get(slot0, slot1)
-	if slot0._dict then
-		return slot0._dict[slot1]
+function var_0_0.get(arg_5_0, arg_5_1)
+	if arg_5_0._dict then
+		return arg_5_0._dict[arg_5_1]
 	end
 
 	return nil
 end
 
-function slot0.hideCompById(slot0, slot1)
-	if slot0._dict and slot0._dict[slot1] then
-		slot0._dict[slot1]:hideSelf()
+function var_0_0.hideCompById(arg_6_0, arg_6_1)
+	if arg_6_0._dict and arg_6_0._dict[arg_6_1] then
+		arg_6_0._dict[arg_6_1]:hideSelf()
 	end
 end
 
-function slot0.getMainPlayer(slot0)
-	slot1 = nil
+function var_0_0.getMainPlayer(arg_7_0)
+	local var_7_0
 
-	for slot5, slot6 in ipairs(slot0._list) do
-		if slot6.objType == ChessGameEnum.InteractType.Role then
-			return slot6
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._list) do
+		if iter_7_1.objType == ChessGameEnum.InteractType.Role then
+			return iter_7_1
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.removeAll(slot0)
-	for slot4, slot5 in ipairs(slot0._list) do
-		slot5:dispose()
+function var_0_0.removeAll(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._list) do
+		iter_8_1:dispose()
 	end
 
-	slot0._list = {}
-	slot0._dict = {}
-	slot0._showList = {}
+	arg_8_0._list = {}
+	arg_8_0._dict = {}
+	arg_8_0._showList = {}
 end
 
-function slot0.checkCompleletedLoaded(slot0, slot1)
-	slot0._checkDict = slot0._checkDict or {}
+function var_0_0.checkCompleletedLoaded(arg_9_0, arg_9_1)
+	arg_9_0._checkDict = arg_9_0._checkDict or {}
 
-	table.insert(slot0._checkDict, slot1)
+	table.insert(arg_9_0._checkDict, arg_9_1)
 
-	if #slot0._checkDict == #slot0._showList then
-		slot0:_onAllInteractLoadCompleleted()
-	end
-end
-
-function slot0._onAllInteractLoadCompleleted(slot0)
-	slot0._checkDict = nil
-
-	if slot0:getMainPlayer() then
-		slot1:getHandler():calCanWalkArea()
+	if #arg_9_0._checkDict == #arg_9_0._showList then
+		arg_9_0:_onAllInteractLoadCompleleted()
 	end
 end
 
-function slot0.dispose(slot0)
-	if slot0._list then
-		for slot4, slot5 in ipairs(slot0._list) do
-			slot5:dispose()
+function var_0_0._onAllInteractLoadCompleleted(arg_10_0)
+	arg_10_0._checkDict = nil
+
+	local var_10_0 = arg_10_0:getMainPlayer()
+
+	if var_10_0 then
+		var_10_0:getHandler():calCanWalkArea()
+	end
+end
+
+function var_0_0.dispose(arg_11_0)
+	if arg_11_0._list then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0._list) do
+			iter_11_1:dispose()
 		end
 
-		slot0._list = nil
-		slot0._dict = nil
+		arg_11_0._list = nil
+		arg_11_0._dict = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,31 +1,33 @@
-module("modules.logic.rouge.map.work.WaitLimiterResultViewDoneWork", package.seeall)
+﻿module("modules.logic.rouge.map.work.WaitLimiterResultViewDoneWork", package.seeall)
 
-slot0 = class("WaitLimiterResultViewDoneWork", BaseWork)
+local var_0_0 = class("WaitLimiterResultViewDoneWork", BaseWork)
 
-function slot0.onStart(slot0)
-	if not slot0:_checkIsNeedOpenRougeLimiterResultView() then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not arg_1_0:_checkIsNeedOpenRougeLimiterResultView() then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0.onCloseViewDone, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0.onCloseViewDone, arg_1_0)
 	RougeDLCController101.instance:openRougeLimiterResultView()
 end
 
-function slot0._checkIsNeedOpenRougeLimiterResultView(slot0)
-	return (RougeModel.instance:getRougeResult() and slot1:getLimiterResultMo()) ~= nil
+function var_0_0._checkIsNeedOpenRougeLimiterResultView(arg_2_0)
+	local var_2_0 = RougeModel.instance:getRougeResult()
+
+	return (var_2_0 and var_2_0:getLimiterResultMo()) ~= nil
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onCloseViewDone, slot0)
+function var_0_0.clearWork(arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0.onCloseViewDone, arg_3_0)
 end
 
-function slot0.onCloseViewDone(slot0, slot1)
-	if slot1 == ViewName.RougeLimiterResultView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-		slot0:onDone(true)
+function var_0_0.onCloseViewDone(arg_4_0, arg_4_1)
+	if arg_4_1 == ViewName.RougeLimiterResultView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
+		arg_4_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

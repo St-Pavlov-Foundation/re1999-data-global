@@ -1,12 +1,12 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotCollectionConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotCollectionConfig", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionConfig", BaseConfig)
+local var_0_0 = class("V1a6_CachotCollectionConfig", BaseConfig)
 
-function slot0.onInit(slot0)
-	slot0._collectionConfigTable = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._collectionConfigTable = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"rogue_collection",
 		"rogue_collection_enchant",
@@ -14,121 +14,145 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "rogue_collection" then
-		slot0:onRogueCollectionConfigLoaded(slot2)
-	elseif slot1 == "rogue_collection_enchant" then
-		slot0._enchantConfigTable = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "rogue_collection" then
+		arg_3_0:onRogueCollectionConfigLoaded(arg_3_2)
+	elseif arg_3_1 == "rogue_collection_enchant" then
+		arg_3_0._enchantConfigTable = arg_3_2
 	end
 end
 
-function slot0.onRogueCollectionConfigLoaded(slot0, slot1)
-	slot0._collectionConfigTable = slot1
-	slot0._collectionTypeMap = slot0._collectionTypeMap or {}
-	slot0._collectionGroupMap = slot0._collectionGroupMap or {}
+function var_0_0.onRogueCollectionConfigLoaded(arg_4_0, arg_4_1)
+	arg_4_0._collectionConfigTable = arg_4_1
+	arg_4_0._collectionTypeMap = arg_4_0._collectionTypeMap or {}
+	arg_4_0._collectionGroupMap = arg_4_0._collectionGroupMap or {}
 
-	if slot1.configDict then
-		for slot5, slot6 in ipairs(slot1.configList) do
-			slot0._collectionTypeMap[slot6.type] = slot0._collectionTypeMap[slot6.type] or {}
-			slot0._collectionGroupMap[slot6.group] = slot0._collectionGroupMap[slot6.group] or {}
+	if arg_4_1.configDict then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1.configList) do
+			arg_4_0._collectionTypeMap[iter_4_1.type] = arg_4_0._collectionTypeMap[iter_4_1.type] or {}
+			arg_4_0._collectionGroupMap[iter_4_1.group] = arg_4_0._collectionGroupMap[iter_4_1.group] or {}
 
-			table.insert(slot0._collectionTypeMap[slot6.type], slot6)
-			table.insert(slot0._collectionGroupMap[slot6.group], slot6)
+			table.insert(arg_4_0._collectionTypeMap[iter_4_1.type], iter_4_1)
+			table.insert(arg_4_0._collectionGroupMap[iter_4_1.group], iter_4_1)
 		end
 	end
 end
 
-function slot0.getAllConfig(slot0)
-	return slot0._collectionConfigTable.configList
+function var_0_0.getAllConfig(arg_5_0)
+	return arg_5_0._collectionConfigTable.configList
 end
 
-function slot0.getCollectionConfig(slot0, slot1)
-	if slot0._collectionConfigTable.configDict then
-		return slot0._collectionConfigTable.configDict[slot1]
+function var_0_0.getCollectionConfig(arg_6_0, arg_6_1)
+	if arg_6_0._collectionConfigTable.configDict then
+		return arg_6_0._collectionConfigTable.configDict[arg_6_1]
 	end
 end
 
-function slot0.getCollectionConfigsByType(slot0, slot1)
-	return slot0._collectionTypeMap and slot0._collectionTypeMap[slot1]
+function var_0_0.getCollectionConfigsByType(arg_7_0, arg_7_1)
+	return arg_7_0._collectionTypeMap and arg_7_0._collectionTypeMap[arg_7_1]
 end
 
-function slot0.getCollectionSkillsByConfig(slot0, slot1)
-	if slot1 and slot1.skills then
-		slot3 = {}
+function var_0_0.getCollectionSkillsByConfig(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1 and arg_8_1.skills
 
-		if GameUtil.splitString2(slot2, true) then
-			for slot8 = 1, #slot4 do
-				table.insert(slot3, slot4[slot8][3])
+	if var_8_0 then
+		local var_8_1 = {}
+		local var_8_2 = GameUtil.splitString2(var_8_0, true)
+
+		if var_8_2 then
+			for iter_8_0 = 1, #var_8_2 do
+				local var_8_3 = var_8_2[iter_8_0][3]
+
+				table.insert(var_8_1, var_8_3)
 			end
 		end
 
-		return slot3
+		return var_8_1
 	end
 end
 
-function slot0.getCollectionSkillsInfo(slot0, slot1)
-	slot3 = {}
-	slot4 = {}
-	slot5 = {}
+function var_0_0.getCollectionSkillsInfo(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1 and arg_9_1.skills
+	local var_9_1 = {}
+	local var_9_2 = {}
+	local var_9_3 = {}
 
-	if slot1 and slot1.skills and GameUtil.splitString2(slot2, true) then
-		for slot10 = 1, #slot6 do
-			table.insert(slot3, slot11)
+	if var_9_0 then
+		local var_9_4 = GameUtil.splitString2(var_9_0, true)
 
-			if HeroSkillModel.instance:getEffectTagDescIdList(lua_rule.configDict[slot6[slot10][3]] and slot12.desc) then
-				for slot18, slot19 in ipairs(slot14) do
-					if not slot5[slot19] then
-						table.insert(slot4, slot19)
+		if var_9_4 then
+			for iter_9_0 = 1, #var_9_4 do
+				local var_9_5 = var_9_4[iter_9_0][3]
+				local var_9_6 = lua_rule.configDict[var_9_5]
+				local var_9_7 = var_9_6 and var_9_6.desc
+				local var_9_8 = HeroSkillModel.instance:getEffectTagDescIdList(var_9_7)
 
-						slot5[slot19] = true
+				table.insert(var_9_1, var_9_5)
+
+				if var_9_8 then
+					for iter_9_1, iter_9_2 in ipairs(var_9_8) do
+						if not var_9_3[iter_9_2] then
+							table.insert(var_9_2, iter_9_2)
+
+							var_9_3[iter_9_2] = true
+						end
 					end
 				end
 			end
 		end
 	end
 
-	return slot3, slot4
+	return var_9_1, var_9_2
 end
 
-function slot0.getCollectionSkillsContent(slot0, slot1, slot2, slot3, slot4)
-	slot2 = slot2 or "#4e6698"
-	slot6 = ""
+function var_0_0.getCollectionSkillsContent(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	arg_10_2 = arg_10_2 or "#4e6698"
 
-	if slot1 and slot1.skills then
-		slot7 = {}
+	local var_10_0 = arg_10_1 and arg_10_1.skills
+	local var_10_1 = ""
 
-		if GameUtil.splitString2(slot5, true) then
-			for slot12 = 1, #slot8 do
-				if lua_rule.configDict[slot8[slot12][3]] then
-					table.insert(slot7, slot14.desc)
+	if var_10_0 then
+		local var_10_2 = {}
+		local var_10_3 = GameUtil.splitString2(var_10_0, true)
+
+		if var_10_3 then
+			for iter_10_0 = 1, #var_10_3 do
+				local var_10_4 = var_10_3[iter_10_0][3]
+				local var_10_5 = lua_rule.configDict[var_10_4]
+
+				if var_10_5 then
+					table.insert(var_10_2, var_10_5.desc)
 				end
 			end
 		end
 
-		slot6 = table.concat(slot7, "\n")
+		var_10_1 = table.concat(var_10_2, "\n")
 	end
 
-	if not string.nilorempty(HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot6, slot2)) then
-		slot6 = slot6 .. "\n" .. slot7
+	local var_10_6 = HeroSkillModel.instance:getEffectTagDescFromDescRecursion(var_10_1, arg_10_2)
+
+	if not string.nilorempty(var_10_6) then
+		var_10_1 = var_10_1 .. "\n" .. var_10_6
 	end
 
-	return HeroSkillModel.instance:skillDesToSpot(slot6, slot3, slot4)
+	return (HeroSkillModel.instance:skillDesToSpot(var_10_1, arg_10_3, arg_10_4))
 end
 
-function slot0.getCollectionSpDescsByConfig(slot0, slot1)
-	slot3 = {}
+function var_0_0.getCollectionSpDescsByConfig(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1 and arg_11_1.spdesc
+	local var_11_1 = {}
 
-	if not string.nilorempty(slot1 and slot1.spdesc) then
-		slot3 = string.split(slot2, "#")
+	if not string.nilorempty(var_11_0) then
+		var_11_1 = string.split(var_11_0, "#")
 	end
 
-	return slot3
+	return var_11_1
 end
 
-function slot0.getCollectionsByGroupId(slot0, slot1)
-	return slot0._collectionGroupMap and slot0._collectionGroupMap[slot1]
+function var_0_0.getCollectionsByGroupId(arg_12_0, arg_12_1)
+	return arg_12_0._collectionGroupMap and arg_12_0._collectionGroupMap[arg_12_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

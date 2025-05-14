@@ -1,166 +1,176 @@
-module("modules.audio.PlayHeroVoice", package.seeall)
+﻿module("modules.audio.PlayHeroVoice", package.seeall)
 
-slot0 = class("PlayHeroVoice")
+local var_0_0 = class("PlayHeroVoice")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	if slot1 and slot1.audio then
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	if arg_2_1 and arg_2_1.audio then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_Hero_Voc_Bus)
 	end
 
-	slot0._voiceConfig = slot1
-	slot0._txtContent = slot2
-	slot0._txtEnContent = slot3
-	slot0._goContentBg = slot4
-	slot0._hasAudio = AudioConfig.instance:getAudioCOById(slot1.audio)
-	slot0._showEnContent = LangSettings.instance:langCaptionsActive()
+	arg_2_0._voiceConfig = arg_2_1
+	arg_2_0._txtContent = arg_2_2
+	arg_2_0._txtEnContent = arg_2_3
+	arg_2_0._goContentBg = arg_2_4
+	arg_2_0._hasAudio = AudioConfig.instance:getAudioCOById(arg_2_1.audio)
+	arg_2_0._showEnContent = LangSettings.instance:langCaptionsActive()
 
-	if slot0._txtContent then
-		slot0._contentStart = Time.time
-		slot0._contentList = {}
+	if arg_2_0._txtContent then
+		arg_2_0._contentStart = Time.time
+		arg_2_0._contentList = {}
 
-		slot0:_initContent(slot0._contentList, slot0:getContent(slot1))
+		arg_2_0:_initContent(arg_2_0._contentList, arg_2_0:getContent(arg_2_1))
 	end
 
-	if slot0._txtEnContent then
-		slot0._enContentStart = Time.time
-		slot0._enContentList = {}
+	if arg_2_0._txtEnContent then
+		arg_2_0._enContentStart = Time.time
+		arg_2_0._enContentList = {}
 
-		slot0:_initContent(slot0._enContentList, slot0:getContent(slot1, LanguageEnum.LanguageStoryType.EN))
-		gohelper.setActive(slot0._txtEnContent.gameObject, slot0._showEnContent)
+		arg_2_0:_initContent(arg_2_0._enContentList, arg_2_0:getContent(arg_2_1, LanguageEnum.LanguageStoryType.EN))
+		gohelper.setActive(arg_2_0._txtEnContent.gameObject, arg_2_0._showEnContent)
 	end
 
-	slot0:playVoice()
-	TaskDispatcher.runRepeat(slot0._showContent, slot0, 0.1)
+	arg_2_0:playVoice()
+	TaskDispatcher.runRepeat(arg_2_0._showContent, arg_2_0, 0.1)
 end
 
-function slot0._showContent(slot0)
-	slot0:_showOneLang(slot0._contentList, slot0._contentStart, slot0._txtContent)
+function var_0_0._showContent(arg_3_0)
+	arg_3_0:_showOneLang(arg_3_0._contentList, arg_3_0._contentStart, arg_3_0._txtContent)
 
-	if slot0._showEnContent then
-		slot0:_showOneLang(slot0._enContentList, slot0._enContentStart, slot0._txtEnContent)
+	if arg_3_0._showEnContent then
+		arg_3_0:_showOneLang(arg_3_0._enContentList, arg_3_0._enContentStart, arg_3_0._txtEnContent)
 	end
 
-	slot0:_checkTxtEnd()
+	arg_3_0:_checkTxtEnd()
 end
 
-function slot0._showOneLang(slot0, slot1, slot2, slot3)
-	if slot1 then
-		if not slot1[1] then
+function var_0_0._showOneLang(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_1 then
+		local var_4_0 = arg_4_1[1]
+
+		if not var_4_0 then
 			return
 		end
 
-		slot5 = slot4[2] or 0
+		local var_4_1 = var_4_0[2] or 0
 
-		if slot4 and not slot4[2] then
-			logError("没有配置时间 audio:" .. slot0._voiceConfig.audio)
+		if var_4_0 and not var_4_0[2] then
+			logError("没有配置时间 audio:" .. arg_4_0._voiceConfig.audio)
 		end
 
-		if slot5 <= Time.time - slot2 then
-			slot3.text = slot4[1]
+		if var_4_1 <= Time.time - arg_4_2 then
+			arg_4_3.text = var_4_0[1]
 
-			table.remove(slot1, 1)
+			table.remove(arg_4_1, 1)
 		end
 	end
 end
 
-function slot0._checkTxtEnd(slot0)
-	if slot0._hasAudio then
+function var_0_0._checkTxtEnd(arg_5_0)
+	if arg_5_0._hasAudio then
 		return
 	end
 
-	if slot0:_contentListEmpty() and slot0._voiceConfig.displayTime > 0 then
-		TaskDispatcher.cancelTask(slot0._showContent, slot0)
-		TaskDispatcher.runDelay(slot0._onTxtEnd, slot0, slot0._voiceConfig.displayTime)
+	if arg_5_0:_contentListEmpty() and arg_5_0._voiceConfig.displayTime > 0 then
+		TaskDispatcher.cancelTask(arg_5_0._showContent, arg_5_0)
+		TaskDispatcher.runDelay(arg_5_0._onTxtEnd, arg_5_0, arg_5_0._voiceConfig.displayTime)
 	end
 end
 
-function slot0._onTxtEnd(slot0)
-	TaskDispatcher.cancelTask(slot0._onTxtEnd, slot0)
-	slot0:onVoiceTxtStop()
+function var_0_0._onTxtEnd(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._onTxtEnd, arg_6_0)
+	arg_6_0:onVoiceTxtStop()
 end
 
-function slot0.getContent(slot0, slot1, slot2)
-	return SpineVoiceTextHelper.getSeparateContent(slot1, slot2 or GameLanguageMgr.instance:getLanguageTypeStoryIndex(), GameLanguageMgr.instance:getStoryIndexByShortCut(GameConfig:GetCurVoiceShortcut()))
+function var_0_0.getContent(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_2 or GameLanguageMgr.instance:getLanguageTypeStoryIndex()
+	local var_7_1 = GameConfig:GetCurVoiceShortcut()
+	local var_7_2 = GameLanguageMgr.instance:getStoryIndexByShortCut(var_7_1)
+
+	return (SpineVoiceTextHelper.getSeparateContent(arg_7_1, var_7_0, var_7_2))
 end
 
-function slot0.getVoiceLang(slot0, slot1)
-	if slot0._hasAudio then
-		slot0._lang = AudioMgr.instance:getLangByAudioId(slot1.audio)
+function var_0_0.getVoiceLang(arg_8_0, arg_8_1)
+	if arg_8_0._hasAudio then
+		arg_8_0._lang = AudioMgr.instance:getLangByAudioId(arg_8_1.audio)
 	else
-		slot0._lang = AudioMgr.instance:getCurLang()
+		arg_8_0._lang = AudioMgr.instance:getCurLang()
 	end
 
-	return slot0._lang
+	return arg_8_0._lang
 end
 
-function slot0.contentListIsEmpty(slot0)
-	return (not slot0._contentList or #slot0._contentList == 0) and (not slot0._enContentList or #slot0._enContentList == 0)
+function var_0_0.contentListIsEmpty(arg_9_0)
+	return (not arg_9_0._contentList or #arg_9_0._contentList == 0) and (not arg_9_0._enContentList or #arg_9_0._enContentList == 0)
 end
 
-function slot0._initContent(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(string.split(slot2, "|")) do
-		if slot8 ~= "" then
-			slot9 = string.split(slot8, "#")
-			slot9[2] = tonumber(slot9[2])
+function var_0_0._initContent(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = string.split(arg_10_2, "|")
 
-			table.insert(slot1, slot9)
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		if iter_10_1 ~= "" then
+			local var_10_1 = string.split(iter_10_1, "#")
+
+			var_10_1[2] = tonumber(var_10_1[2])
+
+			table.insert(arg_10_1, var_10_1)
 		end
 	end
 end
 
-function slot0.removeTaskActions(slot0)
-	TaskDispatcher.cancelTask(slot0._showContent, slot0)
-	TaskDispatcher.cancelTask(slot0._onTxtEnd, slot0)
+function var_0_0.removeTaskActions(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._showContent, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._onTxtEnd, arg_11_0)
 end
 
-function slot0.onVoiceTxtStop(slot0)
-	slot0:removeTaskActions()
+function var_0_0.onVoiceTxtStop(arg_12_0)
+	arg_12_0:removeTaskActions()
 
-	if not gohelper.isNil(slot0._txtContent) then
-		slot0._txtContent.text = ""
+	if not gohelper.isNil(arg_12_0._txtContent) then
+		arg_12_0._txtContent.text = ""
 	end
 
-	if not gohelper.isNil(slot0._txtEnContent) then
-		slot0._txtEnContent.text = ""
+	if not gohelper.isNil(arg_12_0._txtEnContent) then
+		arg_12_0._txtEnContent.text = ""
 	end
 end
 
-function slot0.playVoice(slot0)
-	if slot0._hasAudio then
-		slot0._emitter = ZProj.AudioEmitter.Get(slot0._goContentBg)
+function var_0_0.playVoice(arg_13_0)
+	if arg_13_0._hasAudio then
+		arg_13_0._emitter = ZProj.AudioEmitter.Get(arg_13_0._goContentBg)
 
-		if not slot0._emitter then
-			slot0:_onVoiceEnd()
+		if not arg_13_0._emitter then
+			arg_13_0:_onVoiceEnd()
 
 			return
 		end
 
-		slot0._emitter:Emitter(slot0._voiceConfig.audio, slot0._onEmitterCallback, slot0)
+		arg_13_0._emitter:Emitter(arg_13_0._voiceConfig.audio, arg_13_0._onEmitterCallback, arg_13_0)
 	else
-		slot0:_onVoiceEnd()
+		arg_13_0:_onVoiceEnd()
 	end
 end
 
-function slot0._onEmitterCallback(slot0, slot1, slot2)
-	if slot1 == AudioEnum.AkCallbackType.AK_Duration then
-		-- Nothing
-	elseif slot1 == AudioEnum.AkCallbackType.AK_EndOfEvent then
-		slot0:_onVoiceEnd()
+function var_0_0._onEmitterCallback(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == AudioEnum.AkCallbackType.AK_Duration then
+		-- block empty
+	elseif arg_14_1 == AudioEnum.AkCallbackType.AK_EndOfEvent then
+		arg_14_0:_onVoiceEnd()
 	end
 end
 
-function slot0._onVoiceEnd(slot0)
-	slot0:onVoiceTxtStop()
+function var_0_0._onVoiceEnd(arg_15_0)
+	arg_15_0:onVoiceTxtStop()
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_16_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_Hero_Voc_Bus)
-	slot0:_onVoiceEnd()
+	arg_16_0:_onVoiceEnd()
 
-	slot0._emitter = nil
+	arg_16_0._emitter = nil
 end
 
-return slot0
+return var_0_0

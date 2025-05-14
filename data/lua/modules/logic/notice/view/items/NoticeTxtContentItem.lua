@@ -1,86 +1,101 @@
-module("modules.logic.notice.view.items.NoticeTxtContentItem", package.seeall)
+﻿module("modules.logic.notice.view.items.NoticeTxtContentItem", package.seeall)
 
-slot0 = class("NoticeTxtContentItem", NoticeContentBaseItem)
+local var_0_0 = class("NoticeTxtContentItem", NoticeContentBaseItem)
 
-function slot0.init(slot0, slot1, slot2)
-	uv0.super.init(slot0, slot1, slot2)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
 
-	slot0.txtContent = gohelper.findChildText(slot1, "#txt_content", typeof(TMPro.TextMeshProUGUI))
-	slot0.goContent = slot0.txtContent.gameObject
-	slot0.hyperLinkClick = gohelper.onceAddComponent(slot0.txtContent.gameObject, typeof(ZProj.TMPHyperLinkClick))
+	arg_1_0.txtContent = gohelper.findChildText(arg_1_1, "#txt_content", typeof(TMPro.TextMeshProUGUI))
+	arg_1_0.goContent = arg_1_0.txtContent.gameObject
+	arg_1_0.hyperLinkClick = gohelper.onceAddComponent(arg_1_0.txtContent.gameObject, typeof(ZProj.TMPHyperLinkClick))
 end
 
-function slot0.addEventListeners(slot0)
-	slot0.hyperLinkClick:SetClickListener(slot0._onClickTextMeshProLink, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0.hyperLinkClick:SetClickListener(arg_2_0._onClickTextMeshProLink, arg_2_0)
 end
 
-function slot0._onClickTextMeshProLink(slot0, slot1)
-	logNormal(string.format("on click hyper link, type : %s, link : %s", slot0.mo.linkType, slot0.mo.link))
+function var_0_0._onClickTextMeshProLink(arg_3_0, arg_3_1)
+	logNormal(string.format("on click hyper link, type : %s, link : %s", arg_3_0.mo.linkType, arg_3_0.mo.link))
 
-	if not string.nilorempty(slot0.mo.link) then
-		if ViewMgr.instance:getContainer(ViewName.NoticeView) then
-			slot2:trackNoticeJump(slot0.mo)
+	if not string.nilorempty(arg_3_0.mo.link) then
+		local var_3_0 = ViewMgr.instance:getContainer(ViewName.NoticeView)
+
+		if var_3_0 then
+			var_3_0:trackNoticeJump(arg_3_0.mo)
 		end
 
-		slot0:jump(slot0.mo.linkType, slot0.mo.link, slot0.mo.link1)
+		arg_3_0:jump(arg_3_0.mo.linkType, arg_3_0.mo.link, arg_3_0.mo.link1)
 	end
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.goContent, true)
+function var_0_0.show(arg_4_0)
+	gohelper.setActive(arg_4_0.goContent, true)
 
-	slot0.txtContent.text = slot0:formatTime(slot0.mo.content)
+	local var_4_0 = arg_4_0.mo.content
+
+	arg_4_0.txtContent.text = arg_4_0:formatTime(var_4_0)
 end
 
-function slot0.formatTime(slot0, slot1)
-	slot2 = nil
+function var_0_0.formatTime(arg_5_0, arg_5_1)
+	local var_5_0
+	local var_5_1 = NoticeEnum.FindTimePattern
+	local var_5_2 = 1
 
 	while true do
-		slot5, slot6, slot7, slot8, slot9 = string.find(slot1, NoticeEnum.FindTimePattern, 1)
+		local var_5_3, var_5_4, var_5_5, var_5_6, var_5_7 = string.find(arg_5_1, var_5_1, var_5_2)
 
-		if not slot5 then
+		if not var_5_3 then
 			break
 		end
 
-		slot10, slot11, slot12 = NoticeHelper.getTimeMatchIndexAndTimeTable(slot9)
+		local var_5_8, var_5_9, var_5_10 = NoticeHelper.getTimeMatchIndexAndTimeTable(var_5_7)
 
-		if not slot10 then
-			slot10 = NoticeEnum.FindTimeType.MD_HM
-			slot11 = 1
+		if not var_5_8 then
+			var_5_8 = NoticeEnum.FindTimeType.MD_HM
+			var_5_9 = 1
 		end
 
-		table.insert(slot2 or {}, {
-			s = slot5,
-			e = slot6,
-			content = NoticeHelper.buildTimeByType(slot10, slot11, os.date("*t", TimeUtil.getTimeStamp(slot12, tonumber(slot8))))
+		var_5_0 = var_5_0 or {}
+
+		local var_5_11 = os.date("*t", TimeUtil.getTimeStamp(var_5_10, tonumber(var_5_6)))
+
+		table.insert(var_5_0, {
+			s = var_5_3,
+			e = var_5_4,
+			content = NoticeHelper.buildTimeByType(var_5_8, var_5_9, var_5_11)
 		})
 
-		slot4 = slot6 + 1
+		var_5_2 = var_5_4 + 1
 	end
 
-	if not slot2 then
-		return slot1
+	if not var_5_0 then
+		return arg_5_1
 	end
 
-	slot5 = {}
-	slot6 = 1
+	local var_5_12 = {}
+	local var_5_13 = 1
 
-	if slot2 then
-		for slot10, slot11 in ipairs(slot2) do
-			table.insert(slot5, slot1:sub(slot6, slot11.s - 1))
-			table.insert(slot5, slot11.content)
+	if var_5_0 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+			local var_5_14 = iter_5_1.s
+			local var_5_15 = iter_5_1.e
+			local var_5_16 = arg_5_1:sub(var_5_13, var_5_14 - 1)
+			local var_5_17 = iter_5_1.content
 
-			slot6 = slot11.e + 1
+			table.insert(var_5_12, var_5_16)
+			table.insert(var_5_12, var_5_17)
+
+			var_5_13 = var_5_15 + 1
 		end
 	end
 
-	table.insert(slot5, slot1:sub(slot6))
+	table.insert(var_5_12, arg_5_1:sub(var_5_13))
 
-	return table.concat(slot5)
+	return table.concat(var_5_12)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.goContent, false)
+function var_0_0.hide(arg_6_0)
+	gohelper.setActive(arg_6_0.goContent, false)
 end
 
-return slot0
+return var_0_0

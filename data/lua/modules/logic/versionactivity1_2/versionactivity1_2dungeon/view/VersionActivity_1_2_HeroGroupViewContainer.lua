@@ -1,12 +1,12 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupViewContainer", package.seeall)
 
-slot0 = class("VersionActivity_1_2_HeroGroupViewContainer", HeroGroupFightViewContainer)
+local var_0_0 = class("VersionActivity_1_2_HeroGroupViewContainer", HeroGroupFightViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
 
 	return {
-		slot0._heroGroupFightView,
+		arg_1_0._heroGroupFightView,
 		VersionActivity_1_2_HeroGroupBuildView.New(),
 		VersionActivity_1_2_HeroGroupListView.New(),
 		HeroGroupFightViewLevel.New(),
@@ -17,4 +17,4 @@ function slot0.buildViews(slot0)
 	}
 end
 
-return slot0
+return var_0_0

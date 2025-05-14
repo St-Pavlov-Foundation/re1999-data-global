@@ -1,6 +1,6 @@
-module("modules.logic.fight.controller.FightMsgId", package.seeall)
+﻿module("modules.logic.fight.controller.FightMsgId", package.seeall)
 
-for slot5, slot6 in pairs({
+local var_0_0 = {
 	PlayDouQuQu = GameUtil.getMsgId(),
 	SetBossEvolution = GameUtil.getMsgId(),
 	RestartGame = GameUtil.getMsgId(),
@@ -40,12 +40,13 @@ for slot5, slot6 in pairs({
 	RegistPlayAtOperationView = GameUtil.getMsgId(),
 	EntrustFightWork = GameUtil.getMsgId(),
 	GMDouQuQuSkip2IndexRound = GameUtil.getMsgId()
-}) do
-	-- Nothing
+}
+local var_0_1 = {}
+
+for iter_0_0, iter_0_1 in pairs(var_0_0) do
+	var_0_1[iter_0_1] = iter_0_0
 end
 
-slot0.id2Name = {
-	[slot6] = slot5
-}
+var_0_0.id2Name = var_0_1
 
-return slot0
+return var_0_0

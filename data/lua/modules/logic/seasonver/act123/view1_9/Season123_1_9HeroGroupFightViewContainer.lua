@@ -1,8 +1,8 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9HeroGroupFightViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9HeroGroupFightViewContainer", package.seeall)
 
-slot0 = class("Season123_1_9HeroGroupFightViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_1_9HeroGroupFightViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123_1_9HeroGroupFightView.New(),
 		Season123_1_9HeroGroupListView.New(),
@@ -13,38 +13,38 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.getSeasonHeroGroupFightView(slot0)
-	return slot0._views[1]
+function var_0_0.getSeasonHeroGroupFightView(arg_2_0)
+	return arg_2_0._views[1]
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			false,
 			true
-		}, HelpEnum.HelpId.Season1_9HerogroupHelp, slot0._closeCallback, nil, , slot0)
+		}, HelpEnum.HelpId.Season1_9HerogroupHelp, arg_3_0._closeCallback, nil, nil, arg_3_0)
 
-		slot0._navigateButtonsView:setHelpId(HelpEnum.HelpId.Season1_9HerogroupHelp)
-		slot0._navigateButtonsView:setCloseCheck(slot0.defaultOverrideCloseCheck, slot0)
+		arg_3_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.Season1_9HerogroupHelp)
+		arg_3_0._navigateButtonsView:setCloseCheck(arg_3_0.defaultOverrideCloseCheck, arg_3_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_3_0._navigateButtonsView
 		}
 	end
 end
 
-function slot0._closeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._closeCallback(arg_4_0)
+	arg_4_0:closeThis()
 
-	if slot0:handleVersionActivityCloseCall() then
+	if arg_4_0:handleVersionActivityCloseCall() then
 		return
 	end
 
 	MainController.instance:enterMainScene(true, false)
 end
 
-function slot0.handleVersionActivityCloseCall(slot0)
+function var_0_0.handleVersionActivityCloseCall(arg_5_0)
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -52,4 +52,4 @@ function slot0.handleVersionActivityCloseCall(slot0)
 	end
 end
 
-return slot0
+return var_0_0

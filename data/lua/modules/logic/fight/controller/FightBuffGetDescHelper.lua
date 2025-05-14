@@ -1,95 +1,122 @@
-module("modules.logic.fight.controller.FightBuffGetDescHelper", package.seeall)
+﻿module("modules.logic.fight.controller.FightBuffGetDescHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.getBuffDesc(slot0)
-	if not slot0 then
+function var_0_0.getBuffDesc(arg_1_0)
+	if not arg_1_0 then
 		return ""
 	end
 
-	if not lua_skill_buff.configDict[slot0.buffId] then
+	local var_1_0 = lua_skill_buff.configDict[arg_1_0.buffId]
+
+	if not var_1_0 then
 		return ""
 	end
 
-	if string.nilorempty(slot0.actCommonParams) then
-		return uv0.buildDesc(slot1.desc)
+	if string.nilorempty(arg_1_0.actCommonParams) then
+		return var_0_0.buildDesc(var_1_0.desc)
 	end
 
-	for slot6, slot7 in ipairs(string.split(slot0.actCommonParams, "|")) do
-		if lua_buff_act.configDict[tonumber(string.split(slot7, "#")[1])] and uv0.getBuffFeatureHandle(slot10.type) then
-			return uv0.buildDesc(slot11(slot0, slot1, slot10, slot8))
+	local var_1_1 = string.split(arg_1_0.actCommonParams, "|")
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_2 = string.split(iter_1_1, "#")
+		local var_1_3 = tonumber(var_1_2[1])
+		local var_1_4 = lua_buff_act.configDict[var_1_3]
+		local var_1_5 = var_1_4 and var_0_0.getBuffFeatureHandle(var_1_4.type)
+
+		if var_1_5 then
+			local var_1_6 = var_1_5(arg_1_0, var_1_0, var_1_4, var_1_2)
+
+			return var_0_0.buildDesc(var_1_6)
 		end
 	end
 
-	return uv0.buildDesc(slot1.desc)
+	return var_0_0.buildDesc(var_1_0.desc)
 end
 
-function slot0.buildDesc(slot0)
-	return SkillHelper.buildDesc(slot0, "#D65F3C", "#485E92")
+function var_0_0.buildDesc(arg_2_0)
+	return SkillHelper.buildDesc(arg_2_0, "#D65F3C", "#485E92")
 end
 
-function slot0.getBuffFeatureHandle(slot0)
-	if not uv0.FeatureHandleDict then
-		uv0.FeatureHandleDict = {
-			[FightEnum.BuffFeature.InjuryBank] = uv0.getInjuryBankDesc,
-			[FightEnum.BuffFeature.AttrFixFromInjuryBank] = uv0.getAttrFixFromInjuryBankDesc,
-			[FightEnum.BuffFeature.ModifyAttrByBuffLayer] = uv0.getModifyAttrByBuffLayerDesc,
-			[FightEnum.BuffFeature.ResistancesAttr] = uv0.getResistancesAttrDesc,
-			[FightEnum.BuffFeature.FixAttrTeamEnergyAndBuff] = uv0.getFixAttrTeamEnergyAndBuffDesc,
-			[FightEnum.BuffFeature.FixAttrTeamEnergy] = uv0.getFixAttrTeamEnergyDesc,
-			[FightEnum.BuffFeature.StorageDamage] = uv0.getStorageDamageDesc
+function var_0_0.getBuffFeatureHandle(arg_3_0)
+	if not var_0_0.FeatureHandleDict then
+		var_0_0.FeatureHandleDict = {
+			[FightEnum.BuffFeature.InjuryBank] = var_0_0.getInjuryBankDesc,
+			[FightEnum.BuffFeature.AttrFixFromInjuryBank] = var_0_0.getAttrFixFromInjuryBankDesc,
+			[FightEnum.BuffFeature.ModifyAttrByBuffLayer] = var_0_0.getModifyAttrByBuffLayerDesc,
+			[FightEnum.BuffFeature.ResistancesAttr] = var_0_0.getResistancesAttrDesc,
+			[FightEnum.BuffFeature.FixAttrTeamEnergyAndBuff] = var_0_0.getFixAttrTeamEnergyAndBuffDesc,
+			[FightEnum.BuffFeature.FixAttrTeamEnergy] = var_0_0.getFixAttrTeamEnergyDesc,
+			[FightEnum.BuffFeature.StorageDamage] = var_0_0.getStorageDamageDesc
 		}
 	end
 
-	return uv0.FeatureHandleDict[slot0]
+	return var_0_0.FeatureHandleDict[arg_3_0]
 end
 
-function slot0.getInjuryBankDesc(slot0, slot1, slot2, slot3)
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(slot1.desc, slot3[2], slot3[3])
+function var_0_0.getInjuryBankDesc(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(arg_4_1.desc, arg_4_3[2], arg_4_3[3])
 end
 
-function slot0.getAttrFixFromInjuryBankDesc(slot0, slot1, slot2, slot3)
-	slot4 = tonumber(slot3[2]) or 0
+function var_0_0.getAttrFixFromInjuryBankDesc(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = tonumber(arg_5_3[2]) or 0
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, slot4 < 1 and 1 or math.floor(slot4))
+	var_5_0 = var_5_0 < 1 and 1 or math.floor(var_5_0)
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_5_1.desc, var_5_0)
 end
 
-function slot0.getModifyAttrByBuffLayerDesc(slot0, slot1, slot2, slot3)
-	if tonumber(slot3[2] or 0) < 1 then
-		slot4 = 1
+function var_0_0.getModifyAttrByBuffLayerDesc(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = tonumber(arg_6_3[2] or 0)
+
+	if var_6_0 < 1 then
+		var_6_0 = 1
 	end
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, math.floor(slot4))
+	local var_6_1 = math.floor(var_6_0)
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_6_1.desc, var_6_1)
 end
 
-function slot0.getResistancesAttrDesc(slot0, slot1, slot2, slot3)
-	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, math.floor(tonumber(slot3[3]) / 10) .. "%%")
+function var_0_0.getResistancesAttrDesc(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = tonumber(arg_7_3[3])
+	local var_7_1 = math.floor(var_7_0 / 10)
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_7_1.desc, var_7_1 .. "%%")
 end
 
-function slot0.getFixAttrTeamEnergyAndBuffDesc(slot0, slot1, slot2, slot3)
-	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, tonumber(slot3[2]))
+function var_0_0.getFixAttrTeamEnergyAndBuffDesc(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = tonumber(arg_8_3[2])
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_8_1.desc, var_8_0)
 end
 
-function slot0.getFixAttrTeamEnergyDesc(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot1.features) then
-		return slot1.desc
+function var_0_0.getFixAttrTeamEnergyDesc(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = arg_9_1.features
+
+	if string.nilorempty(var_9_0) then
+		return arg_9_1.desc
 	end
 
-	slot5 = 0
+	local var_9_1 = 0
+	local var_9_2 = FightStrUtil.instance:getSplitString2Cache(var_9_0, true)
 
-	for slot10, slot11 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot4, true)) do
-		if slot11[1] == slot2.id then
-			slot5 = slot11[3] + slot11[4] * tonumber(slot3[2])
+	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
+		if iter_9_1[1] == arg_9_2.id then
+			var_9_1 = iter_9_1[3] + iter_9_1[4] * tonumber(arg_9_3[2])
 
 			break
 		end
 	end
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, slot5 / 10 .. "%%")
+	local var_9_3 = var_9_1 / 10
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_9_1.desc, var_9_3 .. "%%")
 end
 
-function slot0.getStorageDamageDesc(slot0, slot1, slot2, slot3)
-	return GameUtil.getSubPlaceholderLuaLangOneParam(slot1.desc, slot3[2])
+function var_0_0.getStorageDamageDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_10_1.desc, arg_10_3[2])
 end
 
-return slot0
+return var_0_0

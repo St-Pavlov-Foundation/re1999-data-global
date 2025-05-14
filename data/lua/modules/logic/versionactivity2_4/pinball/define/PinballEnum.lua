@@ -1,18 +1,19 @@
-module("modules.logic.versionactivity2_4.pinball.define.PinballEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.define.PinballEnum", package.seeall)
 
-slot0 = _M
-slot0.Shape = {
+local var_0_0 = _M
+
+var_0_0.Shape = {
 	Rect = 1,
 	Circle = 2
 }
-slot0.Dir = {
+var_0_0.Dir = {
 	Down = -1,
 	Up = 1,
 	Right = -2,
 	Left = 2,
 	None = 0
 }
-slot0.UnitType = {
+var_0_0.UnitType = {
 	MarblesElasticity = 5,
 	MarblesDivision = 2,
 	TriggerBlackHole = 101,
@@ -30,41 +31,41 @@ slot0.UnitType = {
 	TriggerNone = 105,
 	CommonEffect = 302
 }
-slot0.UnitLayers = {
+var_0_0.UnitLayers = {
 	{
-		slot0.UnitType.TriggerBlackHole
+		var_0_0.UnitType.TriggerBlackHole
 	},
 	{
-		slot0.UnitType.ResStone,
-		slot0.UnitType.ResFood,
-		slot0.UnitType.ResWood,
-		slot0.UnitType.ResMine,
-		slot0.UnitType.ResSmallFood
+		var_0_0.UnitType.ResStone,
+		var_0_0.UnitType.ResFood,
+		var_0_0.UnitType.ResWood,
+		var_0_0.UnitType.ResMine,
+		var_0_0.UnitType.ResSmallFood
 	},
 	{
-		slot0.UnitType.TriggerRefresh
+		var_0_0.UnitType.TriggerRefresh
 	},
 	{
-		slot0.UnitType.TriggerObstacle,
-		slot0.UnitType.TriggerElasticity,
-		slot0.UnitType.TriggerNone
+		var_0_0.UnitType.TriggerObstacle,
+		var_0_0.UnitType.TriggerElasticity,
+		var_0_0.UnitType.TriggerNone
 	}
 }
-slot0.UnitTypeToLayer = {}
+var_0_0.UnitTypeToLayer = {}
 
-for slot4, slot5 in pairs(slot0.UnitLayers) do
-	for slot9, slot10 in pairs(slot5) do
-		slot0.UnitTypeToLayer[slot10] = slot4
+for iter_0_0, iter_0_1 in pairs(var_0_0.UnitLayers) do
+	for iter_0_2, iter_0_3 in pairs(iter_0_1) do
+		var_0_0.UnitTypeToLayer[iter_0_3] = iter_0_0
 	end
 end
 
-slot0.BuildingType = {
+var_0_0.BuildingType = {
 	Food = 4,
 	Talent = 2,
 	MainCity = 1,
 	House = 3
 }
-slot0.ResType = {
+var_0_0.ResType = {
 	Complaint = 12,
 	Play = 11,
 	Mine = 2,
@@ -73,21 +74,21 @@ slot0.ResType = {
 	Stone = 3,
 	Wood = 1
 }
-slot0.OperType = {
+var_0_0.OperType = {
 	Rest = 2,
 	Episode = 1,
 	None = 0
 }
-slot0.BuildingOperType = {
+var_0_0.BuildingOperType = {
 	Remove = 3,
 	Upgrade = 2,
 	Build = 1
 }
-slot0.ConditionType = {
+var_0_0.ConditionType = {
 	Score = 2,
 	Talent = 1
 }
-slot0.TalentEffectType = {
+var_0_0.TalentEffectType = {
 	MarblesNum = 2,
 	UnlockMarbles = 1,
 	AddResPer = 4,
@@ -97,7 +98,7 @@ slot0.TalentEffectType = {
 	PlayDec = 6,
 	MarblesHoleNum = 3
 }
-slot0.BuildingEffectType = {
+var_0_0.BuildingEffectType = {
 	CostFood = 5,
 	AddScore = 1,
 	AddFood = 2,
@@ -106,7 +107,7 @@ slot0.BuildingEffectType = {
 	TriggerBubble = 3,
 	UnlockTalent = 4
 }
-slot0.ConstId = {
+var_0_0.ConstId = {
 	NoPlayAddComplaint = 9,
 	PlayEnoughSubComplaint = 12,
 	ComplaintLimit = 5,
@@ -122,10 +123,10 @@ slot0.ConstId = {
 	EpisodeCost = 13,
 	ComplaintThreshold = 6
 }
-slot0.UnitTypeToName = {}
+var_0_0.UnitTypeToName = {}
 
-for slot4, slot5 in pairs(slot0.UnitType) do
-	slot0.UnitTypeToName[slot5] = slot4
+for iter_0_4, iter_0_5 in pairs(var_0_0.UnitType) do
+	var_0_0.UnitTypeToName[iter_0_5] = iter_0_4
 end
 
-return slot0
+return var_0_0

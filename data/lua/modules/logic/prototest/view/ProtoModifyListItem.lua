@@ -1,57 +1,61 @@
-module("modules.logic.prototest.view.ProtoModifyListItem", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoModifyListItem", package.seeall)
 
-slot0 = class("ProtoModifyListItem", ListScrollCell)
+local var_0_0 = class("ProtoModifyListItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._txtKey = gohelper.findChildText(slot1, "txtKey")
-	slot0._txtValue = gohelper.findChildText(slot1, "txtValue")
-	slot0._btnRemove = gohelper.findChildButtonWithAudio(slot1, "btnRemove")
-	slot0._btnAdd = gohelper.findChildButtonWithAudio(slot1, "btnAdd")
-	slot0._click = gohelper.getClick(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._txtKey = gohelper.findChildText(arg_1_1, "txtKey")
+	arg_1_0._txtValue = gohelper.findChildText(arg_1_1, "txtValue")
+	arg_1_0._btnRemove = gohelper.findChildButtonWithAudio(arg_1_1, "btnRemove")
+	arg_1_0._btnAdd = gohelper.findChildButtonWithAudio(arg_1_1, "btnAdd")
+	arg_1_0._click = gohelper.getClick(arg_1_1)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnRemove:AddClickListener(slot0._onClickRemove, slot0)
-	slot0._btnAdd:AddClickListener(slot0._onClickAdd, slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnRemove:AddClickListener(arg_2_0._onClickRemove, arg_2_0)
+	arg_2_0._btnAdd:AddClickListener(arg_2_0._onClickAdd, arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnRemove:RemoveClickListener()
-	slot0._btnAdd:RemoveClickListener()
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnRemove:RemoveClickListener()
+	arg_3_0._btnAdd:RemoveClickListener()
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	if isTypeOf(slot1, ProtoTestCaseParamMO) then
-		slot0._txtKey.text = (slot1.repeated and "[" .. slot1.key .. "]" or slot1.key) .. "  <color=#A42316>" .. ProtoEnum.LabelType[slot1.pLabel] .. " - " .. (slot1.pType == ProtoEnum.ParamType.proto and slot1.struct or ProtoEnum.ParamType[slot1.pType]) .. "</color>"
-		slot0._txtValue.text = slot1:getParamDescLine()
+	if isTypeOf(arg_4_1, ProtoTestCaseParamMO) then
+		local var_4_0 = arg_4_1.repeated and "[" .. arg_4_1.key .. "]" or arg_4_1.key
+		local var_4_1 = ProtoEnum.LabelType[arg_4_1.pLabel]
+		local var_4_2 = arg_4_1.pType == ProtoEnum.ParamType.proto and arg_4_1.struct or ProtoEnum.ParamType[arg_4_1.pType]
 
-		gohelper.setActive(slot0._txtKey.gameObject, true)
-		gohelper.setActive(slot0._txtValue.gameObject, true)
-		gohelper.setActive(slot0._btnRemove.gameObject, slot1.repeated)
-		gohelper.setActive(slot0._btnAdd.gameObject, false)
+		arg_4_0._txtKey.text = var_4_0 .. "  <color=#A42316>" .. var_4_1 .. " - " .. var_4_2 .. "</color>"
+		arg_4_0._txtValue.text = arg_4_1:getParamDescLine()
+
+		gohelper.setActive(arg_4_0._txtKey.gameObject, true)
+		gohelper.setActive(arg_4_0._txtValue.gameObject, true)
+		gohelper.setActive(arg_4_0._btnRemove.gameObject, arg_4_1.repeated)
+		gohelper.setActive(arg_4_0._btnAdd.gameObject, false)
 	else
-		gohelper.setActive(slot0._txtKey.gameObject, false)
-		gohelper.setActive(slot0._txtValue.gameObject, false)
-		gohelper.setActive(slot0._btnRemove.gameObject, false)
-		gohelper.setActive(slot0._btnAdd.gameObject, true)
+		gohelper.setActive(arg_4_0._txtKey.gameObject, false)
+		gohelper.setActive(arg_4_0._txtValue.gameObject, false)
+		gohelper.setActive(arg_4_0._btnRemove.gameObject, false)
+		gohelper.setActive(arg_4_0._btnAdd.gameObject, true)
 	end
 end
 
-function slot0._onClickThis(slot0)
-	ProtoTestMgr.instance:dispatchEvent(ProtoEnum.OnClickModifyItem, slot0._mo.id)
+function var_0_0._onClickThis(arg_5_0)
+	ProtoTestMgr.instance:dispatchEvent(ProtoEnum.OnClickModifyItem, arg_5_0._mo.id)
 end
 
-function slot0._onClickRemove(slot0)
-	ProtoModifyModel.instance:removeRepeatedParam(slot0._mo.id)
+function var_0_0._onClickRemove(arg_6_0)
+	ProtoModifyModel.instance:removeRepeatedParam(arg_6_0._mo.id)
 end
 
-function slot0._onClickAdd(slot0)
+function var_0_0._onClickAdd(arg_7_0)
 	ProtoModifyModel.instance:addRepeatedParam()
 	ProtoTestCaseModel.instance:onModelUpdate()
 end
 
-return slot0
+return var_0_0

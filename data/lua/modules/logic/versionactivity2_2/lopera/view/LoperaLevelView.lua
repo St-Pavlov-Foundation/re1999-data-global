@@ -1,778 +1,910 @@
-module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelView", package.seeall)
 
-slot0 = class("LoperaLevelView", BaseView)
-slot1 = "<sprite=0>"
-slot2 = {
+local var_0_0 = class("LoperaLevelView", BaseView)
+local var_0_1 = "<sprite=0>"
+local var_0_2 = {
 	SelectDir = 1,
 	OptionDesc = 3,
 	SelectOption = 2
 }
-slot3 = LoperaEnum.MapCfgIdx
-slot4 = LoperaEnum.DirEnum
-slot5 = VersionActivity2_2Enum.ActivityId.Lopera
-slot6 = "singlebg/v2a2_lopera_singlebg/"
-slot7 = "v2a2_lopera_levelmap1.png"
-slot8 = "<color=#403933>%s</color>"
-slot9 = "<color=#b25712>%s</color>"
-slot10 = 1.5
-slot11 = 0.75
-slot12 = "LoperaLevelViewMovingBlock"
-slot13 = 150
+local var_0_3 = LoperaEnum.MapCfgIdx
+local var_0_4 = LoperaEnum.DirEnum
+local var_0_5 = VersionActivity2_2Enum.ActivityId.Lopera
+local var_0_6 = "singlebg/v2a2_lopera_singlebg/"
+local var_0_7 = "v2a2_lopera_levelmap1.png"
+local var_0_8 = "<color=#403933>%s</color>"
+local var_0_9 = "<color=#b25712>%s</color>"
+local var_0_10 = 1.5
+local var_0_11 = 0.75
+local var_0_12 = "LoperaLevelViewMovingBlock"
+local var_0_13 = 150
 
-function slot0.onInitView(slot0)
-	slot0._goDir = gohelper.findChild(slot0.viewGO, "#go_Compass")
-	slot0._btnN = gohelper.findChildClick(slot0._goDir, "Compass/ClickArea/clickN")
-	slot0._btnW = gohelper.findChildClick(slot0._goDir, "Compass/ClickArea/clickW")
-	slot0._btnE = gohelper.findChildClick(slot0._goDir, "Compass/ClickArea/clickE")
-	slot0._btnS = gohelper.findChildClick(slot0._goDir, "Compass/ClickArea/clickS")
-	slot0._goNPress = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG1/#go_N")
-	slot0._goWPress = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG1/#go_W")
-	slot0._goEPress = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG1/#go_E")
-	slot0._goSPress = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG1/#go_S")
-	slot0._goNNormal = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG2/#go_N")
-	slot0._goWNormal = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG2/#go_W")
-	slot0._goENormal = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG2/#go_E")
-	slot0._goSNormal = gohelper.findChild(slot0._goDir, "Compass/#go_CompassFG2/#go_S")
-	slot0._txtPowerCostNum = gohelper.findChildText(slot0._goDir, "image_PowerIcon/#txt_PowerNum")
-	slot0._btnAlchemy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Smelt")
-	slot0._goSmeltRed = gohelper.findChild(slot0.viewGO, "#btn_Smelt/#go_reddot")
-	slot0._goSmeltBtn = gohelper.findChild(slot0.viewGO, "#btn_Smelt")
-	slot0._goOption = gohelper.findChild(slot0.viewGO, "#go_Question")
-	slot0._goOptionItemRoot = gohelper.findChild(slot0._goOption, "List")
-	slot0._goOptionItem = gohelper.findChild(slot0._goOption, "List/#go_Item")
-	slot0._bgRoot = gohelper.findChild(slot0.viewGO, "BG")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "BG/bg")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "BG/bg1")
-	slot0._bgAnimator = slot0._bgRoot:GetComponent(gohelper.Type_Animator)
-	slot0._textLocation = gohelper.findChildText(slot0.viewGO, "TargetList/Title/image_TitleBG/#txt_Title")
-	slot0._goLocationEffect = gohelper.findChild(slot0.viewGO, "TargetList/Title/vx_hint1")
-	slot0._textStageName = gohelper.findChildText(slot0.viewGO, "TargetList/Title/image_TitleBG/txt_TitleEn")
-	slot0._textActionPoint = gohelper.findChildText(slot0.viewGO, "TargetList/mainTarget/#txt_TargetDesc")
-	slot0._gpActionPointEffect = gohelper.findChild(slot0.viewGO, "TargetList/mainTarget/vx_hint2")
-	slot0._eventDescRoot = gohelper.findChild(slot0.viewGO, "#go_Descr")
-	slot0._btnEventDesc = gohelper.findChildButtonWithAudio(slot0._eventDescRoot, "btn_descClose")
-	slot0._btnEventDescViewPort = gohelper.findChildButtonWithAudio(slot0._eventDescRoot, "Scroll View/Viewport")
-	slot0._textEventDesc = gohelper.findChildText(slot0.viewGO, "#go_Descr/Scroll View/Viewport/#txt_Descr")
-	slot0._goDescArrow = gohelper.findChild(slot0.viewGO, "#go_Descr/#go_ArrowTips")
-	slot0._goBuff = gohelper.findChild(slot0.viewGO, "#btn_State")
-	slot0._btnState = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_State")
-	slot0._goBuffItemRoot = gohelper.findChild(slot0.viewGO, "#btn_State/#go_StateBG")
-	slot0._goBuffInfoItem = gohelper.findChild(slot0.viewGO, "#btn_State/#go_StateBG/#txt_State")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goDir = gohelper.findChild(arg_1_0.viewGO, "#go_Compass")
+	arg_1_0._btnN = gohelper.findChildClick(arg_1_0._goDir, "Compass/ClickArea/clickN")
+	arg_1_0._btnW = gohelper.findChildClick(arg_1_0._goDir, "Compass/ClickArea/clickW")
+	arg_1_0._btnE = gohelper.findChildClick(arg_1_0._goDir, "Compass/ClickArea/clickE")
+	arg_1_0._btnS = gohelper.findChildClick(arg_1_0._goDir, "Compass/ClickArea/clickS")
+	arg_1_0._goNPress = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG1/#go_N")
+	arg_1_0._goWPress = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG1/#go_W")
+	arg_1_0._goEPress = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG1/#go_E")
+	arg_1_0._goSPress = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG1/#go_S")
+	arg_1_0._goNNormal = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG2/#go_N")
+	arg_1_0._goWNormal = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG2/#go_W")
+	arg_1_0._goENormal = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG2/#go_E")
+	arg_1_0._goSNormal = gohelper.findChild(arg_1_0._goDir, "Compass/#go_CompassFG2/#go_S")
+	arg_1_0._txtPowerCostNum = gohelper.findChildText(arg_1_0._goDir, "image_PowerIcon/#txt_PowerNum")
+	arg_1_0._btnAlchemy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Smelt")
+	arg_1_0._goSmeltRed = gohelper.findChild(arg_1_0.viewGO, "#btn_Smelt/#go_reddot")
+	arg_1_0._goSmeltBtn = gohelper.findChild(arg_1_0.viewGO, "#btn_Smelt")
+	arg_1_0._goOption = gohelper.findChild(arg_1_0.viewGO, "#go_Question")
+	arg_1_0._goOptionItemRoot = gohelper.findChild(arg_1_0._goOption, "List")
+	arg_1_0._goOptionItem = gohelper.findChild(arg_1_0._goOption, "List/#go_Item")
+	arg_1_0._bgRoot = gohelper.findChild(arg_1_0.viewGO, "BG")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "BG/bg")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "BG/bg1")
+	arg_1_0._bgAnimator = arg_1_0._bgRoot:GetComponent(gohelper.Type_Animator)
+	arg_1_0._textLocation = gohelper.findChildText(arg_1_0.viewGO, "TargetList/Title/image_TitleBG/#txt_Title")
+	arg_1_0._goLocationEffect = gohelper.findChild(arg_1_0.viewGO, "TargetList/Title/vx_hint1")
+	arg_1_0._textStageName = gohelper.findChildText(arg_1_0.viewGO, "TargetList/Title/image_TitleBG/txt_TitleEn")
+	arg_1_0._textActionPoint = gohelper.findChildText(arg_1_0.viewGO, "TargetList/mainTarget/#txt_TargetDesc")
+	arg_1_0._gpActionPointEffect = gohelper.findChild(arg_1_0.viewGO, "TargetList/mainTarget/vx_hint2")
+	arg_1_0._eventDescRoot = gohelper.findChild(arg_1_0.viewGO, "#go_Descr")
+	arg_1_0._btnEventDesc = gohelper.findChildButtonWithAudio(arg_1_0._eventDescRoot, "btn_descClose")
+	arg_1_0._btnEventDescViewPort = gohelper.findChildButtonWithAudio(arg_1_0._eventDescRoot, "Scroll View/Viewport")
+	arg_1_0._textEventDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_Descr/Scroll View/Viewport/#txt_Descr")
+	arg_1_0._goDescArrow = gohelper.findChild(arg_1_0.viewGO, "#go_Descr/#go_ArrowTips")
+	arg_1_0._goBuff = gohelper.findChild(arg_1_0.viewGO, "#btn_State")
+	arg_1_0._btnState = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_State")
+	arg_1_0._goBuffItemRoot = gohelper.findChild(arg_1_0.viewGO, "#btn_State/#go_StateBG")
+	arg_1_0._goBuffInfoItem = gohelper.findChild(arg_1_0.viewGO, "#btn_State/#go_StateBG/#txt_State")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnN:AddClickListener(slot0._onClickDir, slot0, uv0.North)
-	slot0._btnN:AddClickDownListener(slot0._onClickDirDown, slot0, uv0.North)
-	slot0._btnN:AddClickUpListener(slot0._onClickDirUp, slot0, uv0.North)
-	slot0._btnW:AddClickListener(slot0._onClickDir, slot0, uv0.West)
-	slot0._btnW:AddClickDownListener(slot0._onClickDirDown, slot0, uv0.West)
-	slot0._btnW:AddClickUpListener(slot0._onClickDirUp, slot0, uv0.West)
-	slot0._btnE:AddClickListener(slot0._onClickDir, slot0, uv0.East)
-	slot0._btnE:AddClickDownListener(slot0._onClickDirDown, slot0, uv0.East)
-	slot0._btnE:AddClickUpListener(slot0._onClickDirUp, slot0, uv0.East)
-	slot0._btnS:AddClickListener(slot0._onClickDir, slot0, uv0.South)
-	slot0._btnS:AddClickDownListener(slot0._onClickDirDown, slot0, uv0.South)
-	slot0._btnS:AddClickUpListener(slot0._onClickDirUp, slot0, uv0.South)
-	slot0._btnAlchemy:AddClickListener(slot0._onClickAlchemy, slot0)
-	slot0._btnEventDesc:AddClickListener(slot0._onClickOptionResult, slot0)
-	slot0._btnEventDescViewPort:AddClickListener(slot0._onClickOptionResult, slot0)
-	slot0._btnState:AddClickListener(slot0._onClickBtnState, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnN:AddClickListener(arg_2_0._onClickDir, arg_2_0, var_0_4.North)
+	arg_2_0._btnN:AddClickDownListener(arg_2_0._onClickDirDown, arg_2_0, var_0_4.North)
+	arg_2_0._btnN:AddClickUpListener(arg_2_0._onClickDirUp, arg_2_0, var_0_4.North)
+	arg_2_0._btnW:AddClickListener(arg_2_0._onClickDir, arg_2_0, var_0_4.West)
+	arg_2_0._btnW:AddClickDownListener(arg_2_0._onClickDirDown, arg_2_0, var_0_4.West)
+	arg_2_0._btnW:AddClickUpListener(arg_2_0._onClickDirUp, arg_2_0, var_0_4.West)
+	arg_2_0._btnE:AddClickListener(arg_2_0._onClickDir, arg_2_0, var_0_4.East)
+	arg_2_0._btnE:AddClickDownListener(arg_2_0._onClickDirDown, arg_2_0, var_0_4.East)
+	arg_2_0._btnE:AddClickUpListener(arg_2_0._onClickDirUp, arg_2_0, var_0_4.East)
+	arg_2_0._btnS:AddClickListener(arg_2_0._onClickDir, arg_2_0, var_0_4.South)
+	arg_2_0._btnS:AddClickDownListener(arg_2_0._onClickDirDown, arg_2_0, var_0_4.South)
+	arg_2_0._btnS:AddClickUpListener(arg_2_0._onClickDirUp, arg_2_0, var_0_4.South)
+	arg_2_0._btnAlchemy:AddClickListener(arg_2_0._onClickAlchemy, arg_2_0)
+	arg_2_0._btnEventDesc:AddClickListener(arg_2_0._onClickOptionResult, arg_2_0)
+	arg_2_0._btnEventDescViewPort:AddClickListener(arg_2_0._onClickOptionResult, arg_2_0)
+	arg_2_0._btnState:AddClickListener(arg_2_0._onClickBtnState, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnN:RemoveClickListener()
-	slot0._btnN:RemoveClickDownListener()
-	slot0._btnN:RemoveClickUpListener()
-	slot0._btnW:RemoveClickListener()
-	slot0._btnW:RemoveClickDownListener()
-	slot0._btnW:RemoveClickUpListener()
-	slot0._btnE:RemoveClickListener()
-	slot0._btnE:RemoveClickDownListener()
-	slot0._btnE:RemoveClickUpListener()
-	slot0._btnS:RemoveClickListener()
-	slot0._btnS:RemoveClickDownListener()
-	slot0._btnS:RemoveClickUpListener()
-	slot0._btnAlchemy:RemoveClickListener()
-	slot0._btnEventDesc:RemoveClickListener()
-	slot0._btnEventDescViewPort:RemoveClickListener()
-	slot0._btnState:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnN:RemoveClickListener()
+	arg_3_0._btnN:RemoveClickDownListener()
+	arg_3_0._btnN:RemoveClickUpListener()
+	arg_3_0._btnW:RemoveClickListener()
+	arg_3_0._btnW:RemoveClickDownListener()
+	arg_3_0._btnW:RemoveClickUpListener()
+	arg_3_0._btnE:RemoveClickListener()
+	arg_3_0._btnE:RemoveClickDownListener()
+	arg_3_0._btnE:RemoveClickUpListener()
+	arg_3_0._btnS:RemoveClickListener()
+	arg_3_0._btnS:RemoveClickDownListener()
+	arg_3_0._btnS:RemoveClickUpListener()
+	arg_3_0._btnAlchemy:RemoveClickListener()
+	arg_3_0._btnEventDesc:RemoveClickListener()
+	arg_3_0._btnEventDescViewPort:RemoveClickListener()
+	arg_3_0._btnState:RemoveClickListener()
 end
 
-function slot0._onClickAlchemy(slot0)
+function var_0_0._onClickAlchemy(arg_4_0)
 	LoperaController.instance:openSmeltView()
 end
 
-function slot0._onClickDir(slot0, slot1)
-	if not slot0._moveAbleDirs[slot1] then
+function var_0_0._onClickDir(arg_5_0, arg_5_1)
+	if not arg_5_0._moveAbleDirs[arg_5_1] then
 		return
 	end
 
-	slot0._dir = slot1
+	arg_5_0._dir = arg_5_1
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Lopera.play_ui_common_click)
-	LoperaController.instance:moveToDir(slot1)
+	LoperaController.instance:moveToDir(arg_5_1)
 end
 
-function slot0._onClickDirDown(slot0, slot1)
-	if not slot0._moveAbleDirs[slot1] then
+function var_0_0._onClickDirDown(arg_6_0, arg_6_1)
+	if not arg_6_0._moveAbleDirs[arg_6_1] then
 		return
 	end
 
-	gohelper.setActive(slot0._dirBtnPressStatsGos[slot1], true)
+	gohelper.setActive(arg_6_0._dirBtnPressStatsGos[arg_6_1], true)
 end
 
-function slot0._onClickDirUp(slot0, slot1)
-	if not slot0._moveAbleDirs[slot1] then
+function var_0_0._onClickDirUp(arg_7_0, arg_7_1)
+	if not arg_7_0._moveAbleDirs[arg_7_1] then
 		return
 	end
 
-	gohelper.setActive(slot0._dirBtnPressStatsGos[slot1], false)
+	gohelper.setActive(arg_7_0._dirBtnPressStatsGos[arg_7_1], false)
 end
 
-function slot0._onClickOptionResult(slot0)
-	if slot0._curState == uv0.OptionDesc then
-		if slot0._isShowingDescTyping then
-			slot0._isShowingDescTyping = false
+function var_0_0._onClickOptionResult(arg_8_0)
+	if arg_8_0._curState == var_0_2.OptionDesc then
+		if arg_8_0._isShowingDescTyping then
+			arg_8_0._isShowingDescTyping = false
 
-			if slot0._tweenId then
-				ZProj.TweenHelper.KillById(slot0._tweenId, true)
+			if arg_8_0._tweenId then
+				ZProj.TweenHelper.KillById(arg_8_0._tweenId, true)
 
-				slot0._tweenId = nil
+				arg_8_0._tweenId = nil
 			end
 
-			if slot0._moveRectTweenId then
-				ZProj.TweenHelper.KillById(slot0._moveRectTweenId)
+			if arg_8_0._moveRectTweenId then
+				ZProj.TweenHelper.KillById(arg_8_0._moveRectTweenId)
 
-				slot0._moveRectTweenId = nil
+				arg_8_0._moveRectTweenId = nil
 			end
 
-			slot0._textEventDesc.text = slot0._descContent
+			arg_8_0._textEventDesc.text = arg_8_0._descContent
 
-			if uv1 < slot0._textEventDesc.preferredHeight then
-				recthelper.setHeight(slot0._textEventDesc.transform, slot1 - uv1)
+			local var_8_0 = arg_8_0._textEventDesc.preferredHeight
+
+			if var_8_0 > var_0_13 then
+				local var_8_1 = arg_8_0._textEventDesc.transform
+
+				recthelper.setHeight(var_8_1, var_8_0 - var_0_13)
 			end
 		else
-			slot0:_changeLevelState(uv0.SelectDir)
+			arg_8_0:_changeLevelState(var_0_2.SelectDir)
 		end
 	end
 end
 
-function slot0._onClickBtnState(slot0)
-	gohelper.setActive(slot0._goBuffItemRoot, not slot0._goBuffItemRoot.activeSelf)
+function var_0_0._onClickBtnState(arg_9_0)
+	gohelper.setActive(arg_9_0._goBuffItemRoot, not arg_9_0._goBuffItemRoot.activeSelf)
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.viewParam
+function var_0_0.onOpen(arg_10_0)
+	local var_10_0 = arg_10_0.viewParam
 
-	slot0:addEventCb(LoperaController.instance, LoperaEvent.ExitGame, slot0.onExitGame, slot0)
-	slot0:addEventCb(LoperaController.instance, LoperaEvent.EpisodeMove, slot0._onMoveInEpisode, slot0)
-	slot0:addEventCb(LoperaController.instance, LoperaEvent.SelectOption, slot0._onSelectedOption, slot0)
-	slot0:addEventCb(LoperaController.instance, LoperaEvent.EpisodeFinish, slot0._onGetToDestination, slot0)
-	slot0:addEventCb(LoperaController.instance, LoperaEvent.ComposeDone, slot0._onSmeltResult, slot0)
+	arg_10_0:addEventCb(LoperaController.instance, LoperaEvent.ExitGame, arg_10_0.onExitGame, arg_10_0)
+	arg_10_0:addEventCb(LoperaController.instance, LoperaEvent.EpisodeMove, arg_10_0._onMoveInEpisode, arg_10_0)
+	arg_10_0:addEventCb(LoperaController.instance, LoperaEvent.SelectOption, arg_10_0._onSelectedOption, arg_10_0)
+	arg_10_0:addEventCb(LoperaController.instance, LoperaEvent.EpisodeFinish, arg_10_0._onGetToDestination, arg_10_0)
+	arg_10_0:addEventCb(LoperaController.instance, LoperaEvent.ComposeDone, arg_10_0._onSmeltResult, arg_10_0)
 
-	slot0._redDotComp = RedDotController.instance:addNotEventRedDot(slot0._goSmeltRed, slot0._hasSmeltRed, slot0)
-	slot2 = Activity168Model.instance:getCurGameState()
-	slot0._curEventId = slot2.eventId
-	slot0._curActionPoint = Activity168Model.instance:getCurActionPoint()
-	slot0._moveAbleDirs = {}
-	slot0._endLessId = slot2.endlessId
-	slot0._isEndLess = slot0._endLessId > 0
-	slot0._curEpisode = Activity168Model.instance:getCurEpisodeId()
-	slot3 = Activity168Config.instance:getEpisodeCfg(uv0, slot0._curEpisode)
+	arg_10_0._redDotComp = RedDotController.instance:addNotEventRedDot(arg_10_0._goSmeltRed, arg_10_0._hasSmeltRed, arg_10_0)
 
-	slot0:_initBgView()
+	local var_10_1 = Activity168Model.instance:getCurGameState()
 
-	slot0._dirBtnNormalStateGos = slot0:getUserDataTb_()
-	slot0._dirBtnNormalStateGos[uv1.North] = slot0._goNNormal
-	slot0._dirBtnNormalStateGos[uv1.South] = slot0._goSNormal
-	slot0._dirBtnNormalStateGos[uv1.West] = slot0._goWNormal
-	slot0._dirBtnNormalStateGos[uv1.East] = slot0._goENormal
-	slot0._dirBtnPressStatsGos = slot0:getUserDataTb_()
-	slot0._dirBtnPressStatsGos[uv1.North] = slot0._goNPress
-	slot0._dirBtnPressStatsGos[uv1.South] = slot0._goSPress
-	slot0._dirBtnPressStatsGos[uv1.West] = slot0._goWPress
-	slot0._dirBtnPressStatsGos[uv1.East] = slot0._goEPress
+	arg_10_0._curEventId = var_10_1.eventId
+	arg_10_0._curActionPoint = Activity168Model.instance:getCurActionPoint()
+	arg_10_0._moveAbleDirs = {}
+	arg_10_0._endLessId = var_10_1.endlessId
+	arg_10_0._isEndLess = arg_10_0._endLessId > 0
+	arg_10_0._curEpisode = Activity168Model.instance:getCurEpisodeId()
 
-	slot0:_resetDirPressState()
+	local var_10_2 = Activity168Config.instance:getEpisodeCfg(var_0_5, arg_10_0._curEpisode)
 
-	slot0._showTipsRoundNum = Activity168Config.instance:getConstCfg(uv0, 6).value1
+	arg_10_0:_initBgView()
 
-	if slot0._curEventId ~= 0 then
-		slot0._curState = slot2.option <= 0 and uv2.SelectOption or uv2.SelectDir
+	arg_10_0._dirBtnNormalStateGos = arg_10_0:getUserDataTb_()
+	arg_10_0._dirBtnNormalStateGos[var_0_4.North] = arg_10_0._goNNormal
+	arg_10_0._dirBtnNormalStateGos[var_0_4.South] = arg_10_0._goSNormal
+	arg_10_0._dirBtnNormalStateGos[var_0_4.West] = arg_10_0._goWNormal
+	arg_10_0._dirBtnNormalStateGos[var_0_4.East] = arg_10_0._goENormal
+	arg_10_0._dirBtnPressStatsGos = arg_10_0:getUserDataTb_()
+	arg_10_0._dirBtnPressStatsGos[var_0_4.North] = arg_10_0._goNPress
+	arg_10_0._dirBtnPressStatsGos[var_0_4.South] = arg_10_0._goSPress
+	arg_10_0._dirBtnPressStatsGos[var_0_4.West] = arg_10_0._goWPress
+	arg_10_0._dirBtnPressStatsGos[var_0_4.East] = arg_10_0._goEPress
+
+	arg_10_0:_resetDirPressState()
+
+	arg_10_0._showTipsRoundNum = Activity168Config.instance:getConstCfg(var_0_5, 6).value1
+
+	if arg_10_0._curEventId ~= 0 then
+		arg_10_0._curState = var_10_1.option <= 0 and var_0_2.SelectOption or var_0_2.SelectDir
 	else
-		slot0._curState = uv2.SelectDir
+		arg_10_0._curState = var_0_2.SelectDir
 	end
 
-	slot4 = slot2.round == 1
+	local var_10_3 = var_10_1.round == 1
 
-	if not slot0._isEndLess then
-		slot0._curMapCfg = Activity168Config.instance:getMapCfg(slot3.mapId)
-		slot0._curCellIdx = (slot4 and Activity168Config.instance:getMapStartCell() or Activity168Config.instance:getMapCellByCoord({
-			slot2.x,
-			slot2.y
-		}))[uv3.id] + 1
+	if arg_10_0._isEndLess then
+		-- block empty
+	else
+		local var_10_4 = var_10_2.mapId
+
+		arg_10_0._curMapCfg = Activity168Config.instance:getMapCfg(var_10_4)
+		arg_10_0._curCellIdx = (var_10_3 and Activity168Config.instance:getMapStartCell() or Activity168Config.instance:getMapCellByCoord({
+			var_10_1.x,
+			var_10_1.y
+		}))[var_0_3.id] + 1
 	end
 
-	if slot4 then
+	if var_10_3 then
 		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaPlayStory, "")
 	end
 
-	slot0:_initLeftInfoView()
-	slot0:updatePowerInfoView()
-	slot0:updateLocationInfoView()
-	slot0:_changeLevelState(slot0._curState)
+	arg_10_0:_initLeftInfoView()
+	arg_10_0:updatePowerInfoView()
+	arg_10_0:updateLocationInfoView()
+	arg_10_0:_changeLevelState(arg_10_0._curState)
 end
 
-function slot0.onExitGame(slot0)
-	slot0:closeThis()
+function var_0_0.onExitGame(arg_11_0)
+	arg_11_0:closeThis()
 end
 
-function slot0.updateStateView(slot0)
-	if slot0._redDotComp then
-		slot0._redDotComp:refreshRedDot()
+function var_0_0.updateStateView(arg_12_0)
+	if arg_12_0._redDotComp then
+		arg_12_0._redDotComp:refreshRedDot()
 	end
 
-	if Activity168Model.instance:getCurActionPoint() ~= slot0._curActionPoint then
-		slot0:updatePowerInfoView()
+	if Activity168Model.instance:getCurActionPoint() ~= arg_12_0._curActionPoint then
+		arg_12_0:updatePowerInfoView()
 	end
 
-	slot0._curActionPoint = Activity168Model.instance:getCurActionPoint()
+	arg_12_0._curActionPoint = Activity168Model.instance:getCurActionPoint()
 
-	if slot0._curState == uv0.SelectDir then
-		gohelper.setActive(slot0._goDir, true)
-		gohelper.setActive(slot0._goOption, false)
-		gohelper.setActive(slot0._eventDescRoot, false)
-		slot0:updateLeftInfoView()
-		slot0:_resetDirPressState()
-		slot0:updateDirView()
+	if arg_12_0._curState == var_0_2.SelectDir then
+		gohelper.setActive(arg_12_0._goDir, true)
+		gohelper.setActive(arg_12_0._goOption, false)
+		gohelper.setActive(arg_12_0._eventDescRoot, false)
+		arg_12_0:updateLeftInfoView()
+		arg_12_0:_resetDirPressState()
+		arg_12_0:updateDirView()
 
-		if Activity168Model.instance:getCurMoveCost(Activity168Config.instance:getConstCfg(uv1, LoperaEnum.OriStepCostId).value1) <= slot0._curActionPoint then
-			slot0:refreshDestinationTips()
+		local var_12_0 = Activity168Config.instance:getConstCfg(var_0_5, LoperaEnum.OriStepCostId).value1
+
+		if Activity168Model.instance:getCurMoveCost(var_12_0) <= arg_12_0._curActionPoint then
+			arg_12_0:refreshDestinationTips()
 		end
-	elseif slot0._curState == uv0.SelectOption then
-		slot0:_refreshOptionStateView()
-	elseif slot0._curState == uv0.OptionDesc then
-		gohelper.setActive(slot0._goOption, false)
-		slot0:updateOptionReusltDescView()
-		slot0:updateLeftInfoView()
+	elseif arg_12_0._curState == var_0_2.SelectOption then
+		arg_12_0:_refreshOptionStateView()
+	elseif arg_12_0._curState == var_0_2.OptionDesc then
+		gohelper.setActive(arg_12_0._goOption, false)
+		arg_12_0:updateOptionReusltDescView()
+		arg_12_0:updateLeftInfoView()
 	end
 end
 
-function slot0._refreshOptionStateView(slot0)
-	gohelper.setActive(slot0._goDir, false)
-	gohelper.setActive(slot0._eventDescRoot, true)
-	slot0:updateLeftInfoView()
-	slot0:updateEventDescView()
-	slot0:createEventOptions()
-	slot0:_playEventAni()
-	TaskDispatcher.runDelay(slot0._delayShowOptionList, slot0, uv0)
+function var_0_0._refreshOptionStateView(arg_13_0)
+	gohelper.setActive(arg_13_0._goDir, false)
+	gohelper.setActive(arg_13_0._eventDescRoot, true)
+	arg_13_0:updateLeftInfoView()
+	arg_13_0:updateEventDescView()
+	arg_13_0:createEventOptions()
+	arg_13_0:_playEventAni()
+	TaskDispatcher.runDelay(arg_13_0._delayShowOptionList, arg_13_0, var_0_11)
 end
 
-function slot0._delayShowOptionList(slot0)
-	gohelper.setActive(slot0._goOption, true)
+function var_0_0._delayShowOptionList(arg_14_0)
+	gohelper.setActive(arg_14_0._goOption, true)
 end
 
-function slot0._initLeftInfoView(slot0)
-	slot0._curEpisode = Activity168Model.instance:getCurEpisodeId()
-	slot0._textStageName.text = Activity168Config.instance:getEpisodeCfg(uv0, slot0._curEpisode).orderId
+function var_0_0._initLeftInfoView(arg_15_0)
+	arg_15_0._curEpisode = Activity168Model.instance:getCurEpisodeId()
+
+	local var_15_0 = Activity168Config.instance:getEpisodeCfg(var_0_5, arg_15_0._curEpisode)
+
+	arg_15_0._textStageName.text = var_15_0.orderId
 end
 
-function slot0.updateLeftInfoView(slot0)
-	slot0:updateBuffInfoView()
+function var_0_0.updateLeftInfoView(arg_16_0)
+	arg_16_0:updateBuffInfoView()
 end
 
-function slot0.updatePowerInfoView(slot0)
-	if Activity168Model.instance:getCurActionPoint() < 0 then
-		slot1 = 0
-	end
+function var_0_0.updatePowerInfoView(arg_17_0)
+	local var_17_0 = Activity168Model.instance:getCurActionPoint()
 
-	slot0._textActionPoint.text = formatLuaLang("remain", string.format(" <color=#ffd06b>%s</color>", slot1))
+	var_17_0 = var_17_0 < 0 and 0 or var_17_0
 
-	gohelper.setActive(slot0._gpActionPointEffect, false)
-	gohelper.setActive(slot0._gpActionPointEffect, true)
-	slot0:_playViewAudio(AudioEnum.VersionActivity2_2Lopera.play_ui_molu_exit_appear)
+	local var_17_1 = string.format(" <color=#ffd06b>%s</color>", var_17_0)
+	local var_17_2 = formatLuaLang("remain", var_17_1)
+
+	arg_17_0._textActionPoint.text = var_17_2
+
+	gohelper.setActive(arg_17_0._gpActionPointEffect, false)
+	gohelper.setActive(arg_17_0._gpActionPointEffect, true)
+	arg_17_0:_playViewAudio(AudioEnum.VersionActivity2_2Lopera.play_ui_molu_exit_appear)
 end
 
-function slot0.updateLocationInfoView(slot0)
-	if slot0._isEndLess then
-		slot0._textLocation.text = luaLang("p_v2a2_lopera_endless_location")
+function var_0_0.updateLocationInfoView(arg_18_0)
+	if arg_18_0._isEndLess then
+		arg_18_0._textLocation.text = luaLang("p_v2a2_lopera_endless_location")
 	else
-		slot0._textLocation.text = slot0._curMapCfg[slot0._curCellIdx][uv0.name]
+		local var_18_0 = arg_18_0._curMapCfg[arg_18_0._curCellIdx]
 
-		if not string.nilorempty(slot0._textLocation.text) then
-			slot0._textLocation.text = luaLang(string.format("LoperaLevelView_%s_%s", Activity168Config.instance:getEpisodeCfg(uv1, slot0._curEpisode).mapId, slot1[uv0.id]))
+		arg_18_0._textLocation.text = var_18_0[var_0_3.name]
+
+		if not string.nilorempty(arg_18_0._textLocation.text) then
+			local var_18_1 = Activity168Config.instance:getEpisodeCfg(var_0_5, arg_18_0._curEpisode).mapId
+			local var_18_2 = string.format("LoperaLevelView_%s_%s", var_18_1, var_18_0[var_0_3.id])
+
+			arg_18_0._textLocation.text = luaLang(var_18_2)
 		end
 
-		gohelper.setActive(slot0._goLocationEffect, false)
-		gohelper.setActive(slot0._goLocationEffect, true)
-		slot0:_playViewAudio(AudioEnum.VersionActivity2_2Lopera.play_ui_checkpoint_elementappear)
+		gohelper.setActive(arg_18_0._goLocationEffect, false)
+		gohelper.setActive(arg_18_0._goLocationEffect, true)
+		arg_18_0:_playViewAudio(AudioEnum.VersionActivity2_2Lopera.play_ui_checkpoint_elementappear)
 	end
 end
 
-function slot0.updateBuffInfoView(slot0)
-	slot2 = {}
+function var_0_0.updateBuffInfoView(arg_19_0)
+	local var_19_0 = Activity168Model.instance:getCurGameState().buffs
+	local var_19_1 = {}
 
-	for slot6, slot7 in ipairs(Activity168Model.instance:getCurGameState().buffs) do
-		slot2[#slot2 + 1] = {
-			id = slot7.id,
-			round = slot7.round,
-			ext = slot7.ext
+	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+		local var_19_2 = {
+			id = iter_19_1.id,
+			round = iter_19_1.round,
+			ext = iter_19_1.ext
 		}
+
+		var_19_1[#var_19_1 + 1] = var_19_2
 	end
 
-	gohelper.setActive(slot0._goBuff, #slot2 > 0)
-	gohelper.CreateObjList(slot0, slot0._createBuffItem, slot2, slot0._goBuffItemRoot, slot0._goBuffInfoItem)
+	gohelper.setActive(arg_19_0._goBuff, #var_19_1 > 0)
+	gohelper.CreateObjList(arg_19_0, arg_19_0._createBuffItem, var_19_1, arg_19_0._goBuffItemRoot, arg_19_0._goBuffInfoItem)
 end
 
-function slot0._createBuffItem(slot0, slot1, slot2, slot3)
-	gohelper.onceAddComponent(slot1, gohelper.Type_TextMesh).text = GameUtil.getSubPlaceholderLuaLang(luaLang("lopera_buff_info_desc1"), {
-		string.splitToNumber(Activity168Config.instance:getOptionEffectCfg(slot2.id).effectParams, "#")[1] > 0 and "+" .. slot8 or slot8,
-		slot2.round
-	})
+function var_0_0._createBuffItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	local var_20_0 = gohelper.onceAddComponent(arg_20_1, gohelper.Type_TextMesh)
+	local var_20_1 = Activity168Config.instance:getOptionEffectCfg(arg_20_2.id).effectParams
+	local var_20_2 = string.splitToNumber(var_20_1, "#")[1]
+	local var_20_3 = var_20_2 > 0 and "+" .. var_20_2 or var_20_2
+	local var_20_4 = arg_20_2.round
+	local var_20_5 = luaLang("lopera_buff_info_desc1")
+	local var_20_6 = {
+		var_20_3,
+		var_20_4
+	}
+
+	var_20_0.text = GameUtil.getSubPlaceholderLuaLang(var_20_5, var_20_6)
 end
 
-function slot0.updateDirView(slot0)
-	slot1 = nil
-	slot1 = (not slot0._isEndLess or Activity168Model.instance:getCurGameState().dirs) and string.splitToNumber(slot0._curMapCfg[slot0._curCellIdx][uv0.dir], "#")
+function var_0_0.updateDirView(arg_21_0)
+	local var_21_0
 
-	for slot5, slot6 in ipairs(slot0._dirBtnNormalStateGos) do
-		gohelper.setActive(slot6, false)
+	if arg_21_0._isEndLess then
+		var_21_0 = Activity168Model.instance:getCurGameState().dirs
+	else
+		local var_21_1 = arg_21_0._curMapCfg[arg_21_0._curCellIdx][var_0_3.dir]
+
+		var_21_0 = string.splitToNumber(var_21_1, "#")
 	end
 
-	slot0._moveAbleDirs = {}
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._moveAbleDirs[slot6] = true
-
-		gohelper.setActive(slot0._dirBtnNormalStateGos[slot6], true)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._dirBtnNormalStateGos) do
+		gohelper.setActive(iter_21_1, false)
 	end
 
-	slot0._txtPowerCostNum.text = Activity168Model.instance:getCurMoveCost(Activity168Config.instance:getConstCfg(uv1, LoperaEnum.OriStepCostId).value1) <= 0 and 0 or "-" .. math.abs(slot3)
+	arg_21_0._moveAbleDirs = {}
+
+	for iter_21_2, iter_21_3 in ipairs(var_21_0) do
+		arg_21_0._moveAbleDirs[iter_21_3] = true
+
+		gohelper.setActive(arg_21_0._dirBtnNormalStateGos[iter_21_3], true)
+	end
+
+	local var_21_2 = Activity168Config.instance:getConstCfg(var_0_5, LoperaEnum.OriStepCostId).value1
+	local var_21_3 = Activity168Model.instance:getCurMoveCost(var_21_2)
+
+	arg_21_0._txtPowerCostNum.text = var_21_3 <= 0 and 0 or "-" .. math.abs(var_21_3)
 end
 
-function slot0._resetDirPressState(slot0)
-	for slot4, slot5 in pairs(slot0._dirBtnPressStatsGos) do
-		gohelper.setActive(slot5, false)
+function var_0_0._resetDirPressState(arg_22_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._dirBtnPressStatsGos) do
+		gohelper.setActive(iter_22_1, false)
 	end
 end
 
-function slot0._initBgView(slot0)
-	slot1 = nil
+function var_0_0._initBgView(arg_23_0)
+	local var_23_0
 
-	gohelper.setActive(slot0._bgRoot, true)
+	gohelper.setActive(arg_23_0._bgRoot, true)
 
-	if slot0._isEndLess and uv1 .. Activity168Config.instance:getEndlessLevelCfg(uv0, slot0._endLessId).scene .. ".png" or uv1 .. uv2 then
-		slot0._simagebg:LoadImage(slot1)
-		slot0._simagebg1:LoadImage(slot1)
+	if arg_23_0._isEndLess then
+		local var_23_1 = Activity168Config.instance:getEndlessLevelCfg(var_0_5, arg_23_0._endLessId).scene
+
+		var_23_0 = var_0_6 .. var_23_1 .. ".png"
+	else
+		var_23_0 = var_0_6 .. var_0_7
+	end
+
+	if var_23_0 then
+		arg_23_0._simagebg:LoadImage(var_23_0)
+		arg_23_0._simagebg1:LoadImage(var_23_0)
 	end
 end
 
-function slot0.updateEventDescView(slot0)
-	slot2 = ""
+function var_0_0.updateEventDescView(arg_24_0)
+	local var_24_0 = Activity168Config.instance:getEventCfg(VersionActivity2_2Enum.ActivityId.Lopera, arg_24_0._curEventId)
+	local var_24_1 = ""
 
-	if Activity168Config.instance:getEventCfg(VersionActivity2_2Enum.ActivityId.Lopera, slot0._curEventId) then
-		slot2 = string.format(uv0, slot1.name)
+	if var_24_0 then
+		var_24_1 = string.format(var_0_8, var_24_0.name)
 	end
 
-	slot0:beginShowDescContent(slot2)
-	gohelper.setActive(slot0._goDescArrow, false)
-	gohelper.setActive(slot0._btnEventDesc.gameObject, false)
+	arg_24_0:beginShowDescContent(var_24_1)
+	gohelper.setActive(arg_24_0._goDescArrow, false)
+	gohelper.setActive(arg_24_0._btnEventDesc.gameObject, false)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Lopera.play_ui_mIn_unlock)
 end
 
-function slot0.beginShowDescContent(slot0, slot1)
-	slot0._isShowingDescTyping = true
-	slot0._descContent = slot1
-	slot0._tweenTime = 0
-	slot0._separateChars = slot0:getSeparateChars(slot1)
-	slot2 = #slot0._separateChars
+function var_0_0.beginShowDescContent(arg_25_0, arg_25_1)
+	arg_25_0._isShowingDescTyping = true
+	arg_25_0._descContent = arg_25_1
+	arg_25_0._tweenTime = 0
+	arg_25_0._separateChars = arg_25_0:getSeparateChars(arg_25_1)
 
-	slot0:_destroyTween()
+	local var_25_0 = #arg_25_0._separateChars
+	local var_25_1 = var_25_0 * 0.02
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, slot2, slot2 * 0.02, slot0._onTweenFrameCallback, slot0._onTypingTweenFinish, slot0, nil, EaseType.Linear)
+	arg_25_0:_destroyTween()
+
+	arg_25_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, var_25_0, var_25_1, arg_25_0._onTweenFrameCallback, arg_25_0._onTypingTweenFinish, arg_25_0, nil, EaseType.Linear)
 end
 
-function slot0._onTweenFrameCallback(slot0, slot1)
-	if slot0._finsihShowTxt or slot1 - slot0._tweenTime < 1 then
+function var_0_0._onTweenFrameCallback(arg_26_0, arg_26_1)
+	if arg_26_0._finsihShowTxt or arg_26_1 - arg_26_0._tweenTime < 1 then
 		return
 	end
 
-	if slot1 <= #slot0._separateChars then
-		slot0._textEventDesc.text = slot0._separateChars[math.floor(slot1)]
+	if arg_26_1 <= #arg_26_0._separateChars then
+		local var_26_0 = math.floor(arg_26_1)
 
-		if uv0 < slot0._textEventDesc.preferredHeight and not slot0._moveRectTweenId then
-			slot4 = slot0._textEventDesc.transform
-			slot0._moveRectTweenId = ZProj.TweenHelper.DOLocalMoveY(slot4, slot3 - uv0, 0.25, nil, )
+		arg_26_0._textEventDesc.text = arg_26_0._separateChars[var_26_0]
 
-			recthelper.setHeight(slot4, slot3 - uv0)
+		local var_26_1 = arg_26_0._textEventDesc.preferredHeight
+
+		if var_26_1 > var_0_13 and not arg_26_0._moveRectTweenId then
+			local var_26_2 = arg_26_0._textEventDesc.transform
+
+			arg_26_0._moveRectTweenId = ZProj.TweenHelper.DOLocalMoveY(var_26_2, var_26_1 - var_0_13, 0.25, nil, nil)
+
+			recthelper.setHeight(var_26_2, var_26_1 - var_0_13)
 		end
 	else
-		slot0._textEventDesc.text = slot0._descContent
+		arg_26_0._textEventDesc.text = arg_26_0._descContent
 	end
 
-	slot0._tweenTime = slot1
+	arg_26_0._tweenTime = arg_26_1
 end
 
-function slot0._onTypingTweenFinish(slot0)
-	slot0:_destroyTween()
+function var_0_0._onTypingTweenFinish(arg_27_0)
+	arg_27_0:_destroyTween()
 
-	slot0._isShowingDescTyping = false
-	slot0._textEventDesc.text = slot0._descContent
+	arg_27_0._isShowingDescTyping = false
+	arg_27_0._textEventDesc.text = arg_27_0._descContent
 end
 
-function slot0.updateOptionReusltDescView(slot0)
-	if not Activity168Config.instance:getEventOptionCfg(VersionActivity2_2Enum.ActivityId.Lopera, slot0._curOptionId) then
+function var_0_0.updateOptionReusltDescView(arg_28_0)
+	local var_28_0 = Activity168Config.instance:getEventOptionCfg(VersionActivity2_2Enum.ActivityId.Lopera, arg_28_0._curOptionId)
+
+	if not var_28_0 then
 		return
 	end
 
-	slot2 = ""
+	local var_28_1 = ""
+	local var_28_2 = string.format(var_0_8, var_28_0.desc)
+	local var_28_3 = Activity168Config.instance:getOptionEffectCfg(var_28_0.effectId)
 
-	if Activity168Config.instance:getOptionEffectCfg(slot1.effectId) then
-		slot2 = string.format(uv0, slot1.desc) .. "\n" .. luaLang("lopera_event_effect_title")
-		slot2 = slot3.effectType == LoperaEnum.EffectType.ActionPointChange and slot2 .. uv1 .. slot3.effectParams or slot2 .. GameUtil.getSubPlaceholderLuaLang(luaLang("lopera_event_effect_buff_info"), {
-			uv1,
-			string.splitToNumber(slot3.effectParams, "#")[1] > 0 and "+" .. slot4[1] or slot4[1],
-			slot4[2]
-		})
+	if var_28_3 then
+		var_28_2 = var_28_2 .. "\n" .. luaLang("lopera_event_effect_title")
+
+		if var_28_3.effectType == LoperaEnum.EffectType.ActionPointChange then
+			var_28_2 = var_28_2 .. var_0_1 .. var_28_3.effectParams
+		else
+			local var_28_4 = string.splitToNumber(var_28_3.effectParams, "#")
+			local var_28_5 = var_28_4[1] > 0 and "+" .. var_28_4[1] or var_28_4[1]
+			local var_28_6 = var_28_4[2]
+			local var_28_7 = luaLang("lopera_event_effect_buff_info")
+			local var_28_8 = {
+				var_0_1,
+				var_28_5,
+				var_28_6
+			}
+			local var_28_9 = GameUtil.getSubPlaceholderLuaLang(var_28_7, var_28_8)
+
+			var_28_2 = var_28_2 .. var_28_9
+		end
 	end
 
-	if Activity168Model.instance:getItemChangeDict() then
-		slot5 = ""
+	local var_28_10 = Activity168Model.instance:getItemChangeDict()
 
-		for slot9, slot10 in pairs(slot4) do
-			if slot10 > 0 then
-				slot5 = slot5 .. (slot5 == "" and "" or luaLang("sep_overseas")) .. Activity168Config.instance:getGameItemCfg(uv2, slot9).name .. luaLang("multiple") .. slot10
+	if var_28_10 then
+		local var_28_11 = ""
+
+		for iter_28_0, iter_28_1 in pairs(var_28_10) do
+			local var_28_12 = Activity168Config.instance:getGameItemCfg(var_0_5, iter_28_0)
+
+			if iter_28_1 > 0 then
+				var_28_11 = var_28_11 .. (var_28_11 == "" and "" or luaLang("sep_overseas")) .. var_28_12.name .. luaLang("multiple") .. iter_28_1
 			end
 		end
 
-		slot2 = slot2 .. "\n" .. luaLang("p_seasonsettlementview_rewards") .. string.format(uv3, slot5)
+		local var_28_13 = string.format(var_0_9, var_28_11)
+
+		var_28_2 = var_28_2 .. "\n" .. luaLang("p_seasonsettlementview_rewards") .. var_28_13
 	end
 
-	slot0:beginShowDescContent(slot2)
+	arg_28_0:beginShowDescContent(var_28_2)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Lopera.play_ui_mIn_unlock)
-	gohelper.setActive(slot0._goDescArrow, false)
-	gohelper.setActive(slot0._goDescArrow, true)
-	gohelper.setActive(slot0._btnEventDesc.gameObject, true)
+	gohelper.setActive(arg_28_0._goDescArrow, false)
+	gohelper.setActive(arg_28_0._goDescArrow, true)
+	gohelper.setActive(arg_28_0._btnEventDesc.gameObject, true)
 end
 
-function slot0.createEventOptions(slot0)
-	slot1 = {
+function var_0_0.createEventOptions(arg_29_0)
+	local var_29_0 = {
 		0
 	}
+	local var_29_1 = Activity168Config.instance:getEventCfg(VersionActivity2_2Enum.ActivityId.Lopera, arg_29_0._curEventId)
+	local var_29_2 = string.splitToNumber(var_29_1.optionIds, "#")
 
-	for slot7, slot8 in ipairs(string.splitToNumber(Activity168Config.instance:getEventCfg(VersionActivity2_2Enum.ActivityId.Lopera, slot0._curEventId).optionIds, "#")) do
-		slot1[#slot1 + 1] = Activity168Config.instance:getEventOptionCfg(VersionActivity2_2Enum.ActivityId.Lopera, slot8)
+	for iter_29_0, iter_29_1 in ipairs(var_29_2) do
+		local var_29_3 = Activity168Config.instance:getEventOptionCfg(VersionActivity2_2Enum.ActivityId.Lopera, iter_29_1)
+
+		var_29_0[#var_29_0 + 1] = var_29_3
 	end
 
-	gohelper.CreateObjList(slot0, slot0._createOption, slot1, slot0._goOptionItemRoot, slot0._goOptionItem, LoperaLevelOptionItem, 2)
+	gohelper.CreateObjList(arg_29_0, arg_29_0._createOption, var_29_0, arg_29_0._goOptionItemRoot, arg_29_0._goOptionItem, LoperaLevelOptionItem, 2)
 end
 
-function slot0._createOption(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
+function var_0_0._createOption(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	arg_30_1:onUpdateMO(arg_30_2)
 
-	slot1._view = slot0
+	arg_30_1._view = arg_30_0
 end
 
-function slot0._changeLevelState(slot0, slot1)
-	slot0._curState = slot1
+function var_0_0._changeLevelState(arg_31_0, arg_31_1)
+	arg_31_0._curState = arg_31_1
 
-	if slot0._waitPopResult then
-		slot0:_onGetToDestination(slot0._resultParams)
+	if arg_31_0._waitPopResult then
+		arg_31_0:_onGetToDestination(arg_31_0._resultParams)
 
-		slot0._waitPopResult = nil
+		arg_31_0._waitPopResult = nil
 	end
 
-	slot0:updateStateView()
+	arg_31_0:updateStateView()
 end
 
-function slot0.refreshDestinationTips(slot0)
-	slot1 = {}
+function var_0_0.refreshDestinationTips(arg_32_0)
+	local var_32_0 = {}
+	local var_32_1 = Activity168Model.instance:getCurGameState().round
 
-	if slot0._isEndLess then
-		if Activity168Model.instance:getCurGameState().round ~= 1 then
+	if arg_32_0._isEndLess then
+		if var_32_1 ~= 1 then
 			return
 		end
 
-		slot1.isEndLess = slot0._isEndLess
+		var_32_0.isEndLess = arg_32_0._isEndLess
 
-		ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, slot1)
+		ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, var_32_0)
 
 		return
 	end
 
-	if slot0._curMapCfg[slot0._curCellIdx][uv0.destination] then
+	if arg_32_0._curMapCfg[arg_32_0._curCellIdx][var_0_3.destination] then
 		return
 	end
 
-	slot1.mapId = Activity168Config.instance:getEpisodeCfg(uv1, slot0._curEpisode).mapId
+	var_32_0.mapId = Activity168Config.instance:getEpisodeCfg(var_0_5, arg_32_0._curEpisode).mapId
 
-	if slot3 == 1 then
-		slot1.isBeginning = true
+	if var_32_1 == 1 then
+		var_32_0.isBeginning = true
 
-		ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, slot1)
-	elseif slot3 > 0 and slot3 % slot0._showTipsRoundNum == 0 and not slot0._isEndLess then
-		slot1.cellIdx = slot0._curCellIdx
+		ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, var_32_0)
+	elseif var_32_1 > 0 and var_32_1 % arg_32_0._showTipsRoundNum == 0 and not arg_32_0._isEndLess then
+		var_32_0.cellIdx = arg_32_0._curCellIdx
 
-		ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, slot1)
+		ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, var_32_0)
 	end
 end
 
-function slot0.refreshFinishTips(slot0)
-	slot1 = {
-		mapId = Activity168Config.instance:getEpisodeCfg(uv0, slot0._curEpisode).mapId,
-		isFinished = true
+function var_0_0.refreshFinishTips(arg_33_0)
+	local var_33_0 = {
+		mapId = Activity168Config.instance:getEpisodeCfg(var_0_5, arg_33_0._curEpisode).mapId
 	}
+
+	var_33_0.isFinished = true
 
 	if ViewMgr.instance:isOpen(ViewName.LoperaLevelTipsView) then
 		ViewMgr.instance:closeView(ViewName.LoperaLevelTipsView)
 	end
 
-	ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, slot1)
+	ViewMgr.instance:openView(ViewName.LoperaLevelTipsView, var_33_0)
 end
 
-function slot0._onGetToDestination(slot0, slot1)
-	gohelper.setActive(slot0._goSmeltBtn, false)
+function var_0_0._onGetToDestination(arg_34_0, arg_34_1)
+	gohelper.setActive(arg_34_0._goSmeltBtn, false)
 
-	slot0._resultParams = slot1
+	arg_34_0._resultParams = arg_34_1
 
-	if slot0._curState == uv0.OptionDesc then
-		slot0._waitPopResult = true
+	if arg_34_0._curState == var_0_2.OptionDesc then
+		arg_34_0._waitPopResult = true
 
 		return
 	end
 
-	if LoperaEnum.ResultEnum.Quit == slot1.settleReason then
+	local var_34_0 = arg_34_1.settleReason
+
+	if LoperaEnum.ResultEnum.Quit == var_34_0 then
 		return
-	elseif LoperaEnum.ResultEnum.PowerUseup == slot2 then
-		LoperaController.instance:openGameResultView(slot1)
+	elseif LoperaEnum.ResultEnum.PowerUseup == var_34_0 then
+		LoperaController.instance:openGameResultView(arg_34_1)
 
 		return
 	end
 
-	if slot0._playingMoving then
-		TaskDispatcher.runDelay(slot0._doFinishAction, slot0, uv1)
+	if arg_34_0._playingMoving then
+		TaskDispatcher.runDelay(arg_34_0._doFinishAction, arg_34_0, var_0_10)
 	else
-		slot0:_doFinishAction()
+		arg_34_0:_doFinishAction()
 	end
 end
 
-function slot0._doFinishAction(slot0)
-	if slot0._isEndLess then
-		LoperaController.instance:openGameResultView(slot0._resultParams)
+function var_0_0._doFinishAction(arg_35_0)
+	if arg_35_0._isEndLess then
+		LoperaController.instance:openGameResultView(arg_35_0._resultParams)
 	else
-		slot0:_playFinishStory()
+		arg_35_0:_playFinishStory()
 	end
 end
 
-function slot0._playFinishStory(slot0)
-	if Activity168Config.instance:getMapEndCell()[uv0.storyId] == 0 then
-		slot0:_onFinishStoryEnd()
-	else
-		StoryController.instance:playStory(slot2, nil, slot0._onFinishStoryEnd, slot0)
+function var_0_0._playFinishStory(arg_36_0)
+	local var_36_0 = Activity168Config.instance:getMapEndCell()[var_0_3.storyId]
 
-		slot0._playingCellStory = true
+	if var_36_0 == 0 then
+		arg_36_0:_onFinishStoryEnd()
+	else
+		StoryController.instance:playStory(var_36_0, nil, arg_36_0._onFinishStoryEnd, arg_36_0)
+
+		arg_36_0._playingCellStory = true
 	end
 end
 
-function slot0._onFinishStoryEnd(slot0)
-	slot0._playingCellStory = false
+function var_0_0._onFinishStoryEnd(arg_37_0)
+	arg_37_0._playingCellStory = false
 
-	LoperaController.instance:openGameResultView(slot0._resultParams)
-	slot0:refreshFinishTips()
+	LoperaController.instance:openGameResultView(arg_37_0._resultParams)
+	arg_37_0:refreshFinishTips()
 end
 
-function slot0._onMoveInEpisode(slot0)
-	UIBlockMgr.instance:startBlock(uv0)
-	slot0:_playMoveAni()
-	TaskDispatcher.runDelay(slot0._onMoveEnd, slot0, uv1)
+function var_0_0._onMoveInEpisode(arg_38_0)
+	UIBlockMgr.instance:startBlock(var_0_12)
+	arg_38_0:_playMoveAni()
+	TaskDispatcher.runDelay(arg_38_0._onMoveEnd, arg_38_0, var_0_10)
 end
 
-function slot0._playMoveAni(slot0)
-	slot0._playingMoving = true
-	slot1 = true
+function var_0_0._playMoveAni(arg_39_0)
+	arg_39_0._playingMoving = true
 
-	if slot0._isEndLess and true or not Activity168Config.instance:getMapCellByCoord(slot0:_addDirCoord(slot0._curMapCfg[slot0._curCellIdx][uv0.coord], slot0._dir))[uv0.destination] then
-		if slot0._endLessId == 2 then
+	local var_39_0 = true
+	local var_39_1
+
+	if arg_39_0._isEndLess then
+		var_39_1 = true
+	else
+		local var_39_2 = arg_39_0._curMapCfg[arg_39_0._curCellIdx][var_0_3.coord]
+		local var_39_3 = arg_39_0:_addDirCoord(var_39_2, arg_39_0._dir)
+
+		var_39_1 = not Activity168Config.instance:getMapCellByCoord(var_39_3)[var_0_3.destination]
+	end
+
+	if var_39_1 then
+		if arg_39_0._endLessId == 2 then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Lopera.play_ui_youyu_steps_wood)
 		else
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Lopera.play_ui_youyu_steps_jungle)
 		end
 	end
 
-	slot0._bgAnimator:Play("move", 0, 0)
+	arg_39_0._bgAnimator:Play("move", 0, 0)
 end
 
-function slot0._playEventAni(slot0)
-	slot0._bgAnimator:Play("wiggle", 0, 0)
+function var_0_0._playEventAni(arg_40_0)
+	arg_40_0._bgAnimator:Play("wiggle", 0, 0)
 end
 
-function slot0._onMoveEnd(slot0)
-	UIBlockMgr.instance:endBlock(uv0)
+function var_0_0._onMoveEnd(arg_41_0)
+	UIBlockMgr.instance:endBlock(var_0_12)
 
-	slot0._playingMoving = false
-	slot0._curEventId = Activity168Model.instance:getCurGameState().eventId
+	arg_41_0._playingMoving = false
+	arg_41_0._curEventId = Activity168Model.instance:getCurGameState().eventId
 
-	if slot0._isEndLess then
-		slot0:_changeLevelState(slot0._curEventId and slot0._curEventId ~= 0 and uv1.SelectOption or uv1.SelectDir)
+	if arg_41_0._isEndLess then
+		local var_41_0 = arg_41_0._curEventId and arg_41_0._curEventId ~= 0 and var_0_2.SelectOption or var_0_2.SelectDir
+
+		arg_41_0:_changeLevelState(var_41_0)
 	else
-		slot4 = Activity168Config.instance:getMapCellByCoord(slot0:_addDirCoord(slot0._curMapCfg[slot0._curCellIdx][uv2.coord], slot0._dir))
-		slot0._curCellIdx = slot4[uv2.id] + 1
-		slot8 = Activity168Model.instance:getCurGameState().round
-		slot9 = true
+		local var_41_1 = arg_41_0._curMapCfg[arg_41_0._curCellIdx][var_0_3.coord]
+		local var_41_2 = arg_41_0:_addDirCoord(var_41_1, arg_41_0._dir)
+		local var_41_3 = Activity168Config.instance:getMapCellByCoord(var_41_2)
 
-		if slot4[uv2.storyId] and slot5 ~= 0 and slot4[uv2.storyEvent] == 0 and not slot4[uv2.destination] then
-			for slot15, slot16 in pairs(string.splitToNumber(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Version2_2LoperaPlayStory, ""), "#")) do
-				if slot16 == slot5 then
-					slot9 = false
+		arg_41_0._curCellIdx = var_41_3[var_0_3.id] + 1
+
+		local var_41_4 = var_41_3[var_0_3.storyId]
+		local var_41_5 = var_41_3[var_0_3.storyEvent]
+		local var_41_6 = Activity168Model.instance:getCurGameState().round
+		local var_41_7 = true
+
+		if var_41_4 and var_41_4 ~= 0 and var_41_5 == 0 and not var_41_3[var_0_3.destination] then
+			local var_41_8 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Version2_2LoperaPlayStory, "")
+			local var_41_9 = string.splitToNumber(var_41_8, "#")
+
+			for iter_41_0, iter_41_1 in pairs(var_41_9) do
+				if iter_41_1 == var_41_4 then
+					var_41_7 = false
 
 					break
 				end
 			end
 
-			if slot4[uv2.start] and slot8 > 1 then
-				slot9 = false
+			if var_41_3[var_0_3.start] and var_41_6 > 1 then
+				var_41_7 = false
 			end
 
-			if slot9 then
-				GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaPlayStory, slot10 .. "#" .. slot5)
-				StoryController.instance:playStory(slot5, nil, slot0._onPlayCellStoryEnd, slot0)
+			if var_41_7 then
+				local var_41_10 = var_41_8 .. "#" .. var_41_4
 
-				slot0._playingCellStory = true
+				GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaPlayStory, var_41_10)
+				StoryController.instance:playStory(var_41_4, nil, arg_41_0._onPlayCellStoryEnd, arg_41_0)
+
+				arg_41_0._playingCellStory = true
 			else
-				slot0:_onPlayCellStoryEnd()
+				arg_41_0:_onPlayCellStoryEnd()
 			end
-		elseif slot0._curEventId and slot0._curEventId ~= 0 then
-			slot0:_changeLevelState(uv1.SelectOption)
+		elseif arg_41_0._curEventId and arg_41_0._curEventId ~= 0 then
+			arg_41_0:_changeLevelState(var_0_2.SelectOption)
 		else
-			slot0:_changeLevelState(uv1.SelectDir)
+			arg_41_0:_changeLevelState(var_0_2.SelectDir)
 		end
 
-		slot0:updateLocationInfoView()
+		arg_41_0:updateLocationInfoView()
 	end
 end
 
-function slot0._onPlayCellStoryEnd(slot0)
-	slot0._playingCellStory = false
+function var_0_0._onPlayCellStoryEnd(arg_42_0)
+	arg_42_0._playingCellStory = false
 
-	slot0:_changeLevelState(uv0.SelectOption)
+	arg_42_0:_changeLevelState(var_0_2.SelectOption)
 end
 
-function slot0._onSelectedOption(slot0)
-	if slot0._isEndLess then
-		slot0._curOptionId = Activity168Model.instance:getCurGameState().option
-	else
-		slot0._curOptionId = slot1.option
+function var_0_0._onSelectedOption(arg_43_0)
+	local var_43_0 = Activity168Model.instance:getCurGameState()
 
-		if slot0._curMapCfg[slot0._curCellIdx] and slot2[uv0.storyId] and slot2[uv0.storyId] ~= 0 then
-			if slot0._curEventId == slot2[uv0.storyEvent] then
-				StoryController.instance:playStory(slot2[uv0.storyId], nil, , slot0)
+	if arg_43_0._isEndLess then
+		arg_43_0._curOptionId = var_43_0.option
+	else
+		arg_43_0._curOptionId = var_43_0.option
+
+		local var_43_1 = arg_43_0._curMapCfg[arg_43_0._curCellIdx]
+
+		if var_43_1 and var_43_1[var_0_3.storyId] and var_43_1[var_0_3.storyId] ~= 0 then
+			local var_43_2 = var_43_1[var_0_3.storyId]
+			local var_43_3 = var_43_1[var_0_3.storyEvent]
+
+			if arg_43_0._curEventId == var_43_3 then
+				StoryController.instance:playStory(var_43_2, nil, nil, arg_43_0)
 			end
 		end
 	end
 
-	slot0:_changeLevelState(uv1.OptionDesc)
+	arg_43_0:_changeLevelState(var_0_2.OptionDesc)
 end
 
-function slot0._hasSmeltRed(slot0)
+function var_0_0._hasSmeltRed(arg_44_0)
 	return LoperaController.instance:checkAnyComposable()
 end
 
-function slot0._onSmeltResult(slot0)
-	if slot0._redDotComp then
-		slot0._redDotComp:refreshRedDot()
+function var_0_0._onSmeltResult(arg_45_0)
+	if arg_45_0._redDotComp then
+		arg_45_0._redDotComp:refreshRedDot()
 	end
 end
 
-function slot0._playViewAudio(slot0, slot1)
-	if slot0._playingCellStory then
+function var_0_0._playViewAudio(arg_46_0, arg_46_1)
+	if arg_46_0._playingCellStory then
 		return
 	end
 
-	slot2 = ViewMgr.instance:getOpenViewNameList()
+	local var_46_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_46_1 = var_46_0[#var_46_0]
 
-	if slot2[#slot2] ~= ViewName.LoperaLevelView and slot3 ~= ViewName.LoperaLevelTipsView then
+	if var_46_1 ~= ViewName.LoperaLevelView and var_46_1 ~= ViewName.LoperaLevelTipsView then
 		return
 	end
 
-	AudioMgr.instance:trigger(slot1)
+	AudioMgr.instance:trigger(arg_46_1)
 end
 
-function slot0._addDirCoord(slot0, slot1, slot2)
-	slot3 = {
-		slot1[1],
-		slot1[2]
+function var_0_0._addDirCoord(arg_47_0, arg_47_1, arg_47_2)
+	local var_47_0 = {
+		arg_47_1[1],
+		arg_47_1[2]
 	}
 
-	if slot2 == uv0.North then
-		slot3[2] = slot3[2] + 1
+	if arg_47_2 == var_0_4.North then
+		var_47_0[2] = var_47_0[2] + 1
 	end
 
-	if slot2 == uv0.South then
-		slot3[2] = slot3[2] - 1
+	if arg_47_2 == var_0_4.South then
+		var_47_0[2] = var_47_0[2] - 1
 	end
 
-	if slot2 == uv0.West then
-		slot3[1] = slot3[1] - 1
+	if arg_47_2 == var_0_4.West then
+		var_47_0[1] = var_47_0[1] - 1
 	end
 
-	if slot2 == uv0.East then
-		slot3[1] = slot3[1] + 1
+	if arg_47_2 == var_0_4.East then
+		var_47_0[1] = var_47_0[1] + 1
 	end
 
-	return slot3
+	return var_47_0
 end
 
-function slot0.getSeparateChars(slot0, slot1)
-	slot2 = {}
+function var_0_0.getSeparateChars(arg_48_0, arg_48_1)
+	local var_48_0 = {}
 
-	if not string.nilorempty(slot1) then
-		slot4 = ""
+	if not string.nilorempty(arg_48_1) then
+		local var_48_1 = string.split(arg_48_1, "\n")
+		local var_48_2 = ""
 
-		for slot8 = 1, #string.split(slot1, "\n") do
-			slot9 = false
+		for iter_48_0 = 1, #var_48_1 do
+			local var_48_3 = false
 
-			if not string.nilorempty(slot3[slot8]) then
-				for slot14 = 1, #LuaUtil.getUCharArr(slot3[slot8]) do
-					if slot10[slot14] == "<" then
-						slot9 = true
-					elseif slot10[slot14] == ">" then
-						slot9 = false
+			if not string.nilorempty(var_48_1[iter_48_0]) then
+				local var_48_4 = LuaUtil.getUCharArr(var_48_1[iter_48_0])
+
+				for iter_48_1 = 1, #var_48_4 do
+					if var_48_4[iter_48_1] == "<" then
+						var_48_3 = true
+					elseif var_48_4[iter_48_1] == ">" then
+						var_48_3 = false
 					end
 
-					if not slot9 then
-						table.insert(slot2, slot4 .. slot10[slot14])
+					var_48_2 = var_48_2 .. var_48_4[iter_48_1]
+
+					if not var_48_3 then
+						table.insert(var_48_0, var_48_2)
 					end
 				end
 
-				table.insert(slot2, slot4 .. "\n")
+				var_48_2 = var_48_2 .. "\n"
+
+				table.insert(var_48_0, var_48_2)
 			end
 		end
 	end
 
-	return slot2
+	return var_48_0
 end
 
-function slot0._destroyTween(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._destroyTween(arg_49_0)
+	if arg_49_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_49_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_49_0._tweenId = nil
 	end
 
-	if slot0._moveRectTweenId then
-		ZProj.TweenHelper.KillById(slot0._moveRectTweenId)
+	if arg_49_0._moveRectTweenId then
+		ZProj.TweenHelper.KillById(arg_49_0._moveRectTweenId)
 
-		slot0._moveRectTweenId = nil
+		arg_49_0._moveRectTweenId = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagebg1:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._doFinishAction, slot0)
-	TaskDispatcher.cancelTask(slot0._onMoveEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._delayShowOptionList, slot0)
-	slot0:_destroyTween()
+function var_0_0.onDestroyView(arg_50_0)
+	arg_50_0._simagebg:UnLoadImage()
+	arg_50_0._simagebg1:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_50_0._doFinishAction, arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._onMoveEnd, arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._delayShowOptionList, arg_50_0)
+	arg_50_0:_destroyTween()
 end
 
-return slot0
+return var_0_0

@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.FightWorkAct174First", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkAct174First", package.seeall)
 
-slot0 = class("FightWorkAct174First", FightEffectBase)
+local var_0_0 = class("FightWorkAct174First", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:com_registTimer(slot0._delayAfterPerformance, FightEnum.PerformanceTime.DouQuQuXianHouShou)
-	slot0:com_sendMsg(FightMsgId.ShowDouQuQuXianHouShou, slot0._actEffectMO)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, FightEnum.PerformanceTime.DouQuQuXianHouShou)
+	arg_1_0:com_sendMsg(FightMsgId.ShowDouQuQuXianHouShou, arg_1_0._actEffectMO)
 end
 
-return slot0
+return var_0_0

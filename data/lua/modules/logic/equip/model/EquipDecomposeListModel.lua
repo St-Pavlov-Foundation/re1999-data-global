@@ -1,238 +1,252 @@
-module("modules.logic.equip.model.EquipDecomposeListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipDecomposeListModel", package.seeall)
 
-slot0 = class("EquipDecomposeListModel", ListScrollModel)
+local var_0_0 = class("EquipDecomposeListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-slot0.SortTag = {
+var_0_0.SortTag = {
 	Rare = 2,
 	Level = 1
 }
-slot0.DefaultFilterRare = 4
+var_0_0.DefaultFilterRare = 4
 
-function slot0.checkEquipCanDecompose(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkEquipCanDecompose(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return false
 	end
 
-	if slot1.level > 1 then
+	if arg_3_1.level > 1 then
 		return false
 	end
 
-	if not EquipHelper.isNormalEquip(slot1.config) then
+	local var_3_0 = arg_3_1.config
+
+	if not EquipHelper.isNormalEquip(var_3_0) then
 		return false
 	end
 
-	if uv0.DefaultFilterRare <= slot2.rare then
+	if var_3_0.rare >= var_0_0.DefaultFilterRare then
 		return false
 	end
 
-	if not slot0.filterMo then
+	if not arg_3_0.filterMo then
 		return true
 	end
 
-	return slot0.filterMo:checkIsIncludeTag(slot1.config)
+	return arg_3_0.filterMo:checkIsIncludeTag(arg_3_1.config)
 end
 
-function slot0.getSortTag(slot0)
-	return slot0.sortTag
+function var_0_0.getSortTag(arg_4_0)
+	return arg_4_0.sortTag
 end
 
-function slot0.getSortIsAscend(slot0, slot1)
-	if slot1 == uv0.SortTag.Level then
-		return slot0.levelAscend
+function var_0_0.getSortIsAscend(arg_5_0, arg_5_1)
+	if arg_5_1 == var_0_0.SortTag.Level then
+		return arg_5_0.levelAscend
 	else
-		return slot0.rareAscend
+		return arg_5_0.rareAscend
 	end
 end
 
-function slot0.isEmpty(slot0)
-	return #slot0.equipList == 0
+function var_0_0.isEmpty(arg_6_0)
+	return #arg_6_0.equipList == 0
 end
 
-function slot0.getEquipData(slot0)
-	if slot0.equipList then
-		tabletool.clear(slot0.equipList)
+function var_0_0.getEquipData(arg_7_0)
+	if arg_7_0.equipList then
+		tabletool.clear(arg_7_0.equipList)
 	else
-		slot0.equipList = {}
+		arg_7_0.equipList = {}
 	end
 
-	for slot4, slot5 in ipairs(EquipModel.instance:getEquips()) do
-		if slot0:checkEquipCanDecompose(slot5) then
-			table.insert(slot0.equipList, slot5)
+	for iter_7_0, iter_7_1 in ipairs(EquipModel.instance:getEquips()) do
+		if arg_7_0:checkEquipCanDecompose(iter_7_1) then
+			table.insert(arg_7_0.equipList, iter_7_1)
 		end
 	end
 end
 
-function slot0.initEquipData(slot0)
-	slot0.selectedEquipDict = {}
-	slot0.selectedEquipCount = 0
-	slot0.sortTag = uv0.SortTag.Rare
+function var_0_0.initEquipData(arg_8_0)
+	arg_8_0.selectedEquipDict = {}
+	arg_8_0.selectedEquipCount = 0
+	arg_8_0.sortTag = var_0_0.SortTag.Rare
 
-	slot0:resetLevelSortStatus()
-	slot0:resetRareSortStatus()
-	slot0:getEquipData()
-	slot0:sortEquipList()
+	arg_8_0:resetLevelSortStatus()
+	arg_8_0:resetRareSortStatus()
+	arg_8_0:getEquipData()
+	arg_8_0:sortEquipList()
 end
 
-function slot0.updateEquipData(slot0, slot1)
-	slot0:clearSelectEquip()
+function var_0_0.updateEquipData(arg_9_0, arg_9_1)
+	arg_9_0:clearSelectEquip()
 
-	slot0.filterMo = slot1
+	arg_9_0.filterMo = arg_9_1
 
-	slot0:getEquipData()
-	slot0:sortEquipList()
+	arg_9_0:getEquipData()
+	arg_9_0:sortEquipList()
 end
 
-function slot0.resetLevelSortStatus(slot0)
-	slot0.levelAscend = false
+function var_0_0.resetLevelSortStatus(arg_10_0)
+	arg_10_0.levelAscend = false
 end
 
-function slot0.resetRareSortStatus(slot0)
-	slot0.rareAscend = false
+function var_0_0.resetRareSortStatus(arg_11_0)
+	arg_11_0.rareAscend = false
 end
 
-function slot0.changeLevelSortStatus(slot0)
-	slot0.sortTag = uv0.SortTag.Level
-	slot0.levelAscend = not slot0.levelAscend
+function var_0_0.changeLevelSortStatus(arg_12_0)
+	arg_12_0.sortTag = var_0_0.SortTag.Level
+	arg_12_0.levelAscend = not arg_12_0.levelAscend
 
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipDecomposeSortStatusChange)
 end
 
-function slot0.changeRareStatus(slot0)
-	slot0.sortTag = uv0.SortTag.Rare
-	slot0.rareAscend = not slot0.rareAscend
+function var_0_0.changeRareStatus(arg_13_0)
+	arg_13_0.sortTag = var_0_0.SortTag.Rare
+	arg_13_0.rareAscend = not arg_13_0.rareAscend
 
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipDecomposeSortStatusChange)
 end
 
-function slot0.sortEquipList(slot0)
-	if slot0.sortTag == uv0.SortTag.Level then
-		table.sort(slot0.equipList, uv0.sortByLv)
+function var_0_0.sortEquipList(arg_14_0)
+	if arg_14_0.sortTag == var_0_0.SortTag.Level then
+		table.sort(arg_14_0.equipList, var_0_0.sortByLv)
 	else
-		table.sort(slot0.equipList, uv0.sortByRare)
+		table.sort(arg_14_0.equipList, var_0_0.sortByRare)
 	end
 end
 
-function slot0.sortByLv(slot0, slot1)
-	if slot0.level ~= slot1.level then
-		if uv0.instance.levelAscend then
-			return slot0.level < slot1.level
+function var_0_0.sortByLv(arg_15_0, arg_15_1)
+	if arg_15_0.level ~= arg_15_1.level then
+		if var_0_0.instance.levelAscend then
+			return arg_15_0.level < arg_15_1.level
 		else
-			return slot1.level < slot0.level
+			return arg_15_0.level > arg_15_1.level
 		end
 	end
 
-	if slot0.config.rare ~= slot1.config.rare then
-		if uv0.instance.rareAscend then
-			return slot2.rare < slot3.rare
+	local var_15_0 = arg_15_0.config
+	local var_15_1 = arg_15_1.config
+
+	if var_15_0.rare ~= var_15_1.rare then
+		if var_0_0.instance.rareAscend then
+			return var_15_0.rare < var_15_1.rare
 		else
-			return slot3.rare < slot2.rare
+			return var_15_0.rare > var_15_1.rare
 		end
 	end
 
-	if slot2.id ~= slot3.id then
-		return slot2.id < slot3.id
+	if var_15_0.id ~= var_15_1.id then
+		return var_15_0.id < var_15_1.id
 	end
 
-	return slot0.id < slot1.id
+	return arg_15_0.id < arg_15_1.id
 end
 
-function slot0.sortByRare(slot0, slot1)
-	if slot0.config.rare ~= slot1.config.rare then
-		if uv0.instance.rareAscend then
-			return slot2.rare < slot3.rare
+function var_0_0.sortByRare(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.config
+	local var_16_1 = arg_16_1.config
+
+	if var_16_0.rare ~= var_16_1.rare then
+		if var_0_0.instance.rareAscend then
+			return var_16_0.rare < var_16_1.rare
 		else
-			return slot3.rare < slot2.rare
+			return var_16_0.rare > var_16_1.rare
 		end
 	end
 
-	if slot0.level ~= slot1.level then
-		if uv0.instance.levelAscend then
-			return slot0.level < slot1.level
+	if arg_16_0.level ~= arg_16_1.level then
+		if var_0_0.instance.levelAscend then
+			return arg_16_0.level < arg_16_1.level
 		else
-			return slot1.level < slot0.level
+			return arg_16_0.level > arg_16_1.level
 		end
 	end
 
-	if slot2.id ~= slot3.id then
-		return slot2.id < slot3.id
+	if var_16_0.id ~= var_16_1.id then
+		return var_16_0.id < var_16_1.id
 	end
 
-	return slot0.id < slot1.id
+	return arg_16_0.id < arg_16_1.id
 end
 
-function slot0.refreshEquip(slot0)
-	slot0:setList(slot0.equipList)
+function var_0_0.refreshEquip(arg_17_0)
+	arg_17_0:setList(arg_17_0.equipList)
 end
 
-function slot0.getSelectCount(slot0)
-	return slot0.selectedEquipCount
+function var_0_0.getSelectCount(arg_18_0)
+	return arg_18_0.selectedEquipCount
 end
 
-function slot0.isSelect(slot0, slot1)
-	return slot0.selectedEquipDict[slot1]
+function var_0_0.isSelect(arg_19_0, arg_19_1)
+	return arg_19_0.selectedEquipDict[arg_19_1]
 end
 
-function slot0.selectEquipMo(slot0, slot1)
-	if EquipEnum.DecomposeMaxCount <= slot0.selectedEquipCount then
+function var_0_0.selectEquipMo(arg_20_0, arg_20_1)
+	if arg_20_0.selectedEquipCount >= EquipEnum.DecomposeMaxCount then
 		return
 	end
 
-	if slot0.selectedEquipDict[slot1.id] then
+	if arg_20_0.selectedEquipDict[arg_20_1.id] then
 		return
 	end
 
-	slot0.selectedEquipDict[slot1.id] = true
-	slot0.selectedEquipCount = slot0.selectedEquipCount + 1
+	arg_20_0.selectedEquipDict[arg_20_1.id] = true
+	arg_20_0.selectedEquipCount = arg_20_0.selectedEquipCount + 1
 
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipDecomposeSelectEquipChange)
 end
 
-function slot0.desSelectEquipMo(slot0, slot1)
-	if not slot0.selectedEquipDict[slot1.id] then
+function var_0_0.desSelectEquipMo(arg_21_0, arg_21_1)
+	if not arg_21_0.selectedEquipDict[arg_21_1.id] then
 		return
 	end
 
-	slot0.selectedEquipDict[slot1.id] = nil
-	slot0.selectedEquipCount = slot0.selectedEquipCount - 1
+	arg_21_0.selectedEquipDict[arg_21_1.id] = nil
+	arg_21_0.selectedEquipCount = arg_21_0.selectedEquipCount - 1
 
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipDecomposeSelectEquipChange)
 end
 
-function slot0.getDecomposeEquipCount(slot0)
-	return math.floor(slot0:getAddExp() / 100)
+function var_0_0.getDecomposeEquipCount(arg_22_0)
+	local var_22_0 = arg_22_0:getAddExp()
+
+	return math.floor(var_22_0 / 100)
 end
 
-function slot0.getAddExp(slot0)
-	slot1 = 0
+function var_0_0.getAddExp(arg_23_0)
+	local var_23_0 = 0
 
-	if slot0.selectedEquipDict then
-		for slot5, slot6 in pairs(slot0.selectedEquipDict) do
-			slot1 = slot1 + EquipConfig.instance:getIncrementalExp(EquipModel.instance:getEquip(tostring(slot5)))
+	if arg_23_0.selectedEquipDict then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0.selectedEquipDict) do
+			local var_23_1 = EquipModel.instance:getEquip(tostring(iter_23_0))
+
+			var_23_0 = var_23_0 + EquipConfig.instance:getIncrementalExp(var_23_1)
 		end
 	end
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.fastAddEquip(slot0)
-	tabletool.clear(slot0.selectedEquipDict)
+function var_0_0.fastAddEquip(arg_24_0)
+	tabletool.clear(arg_24_0.selectedEquipDict)
 
-	slot0.selectedEquipCount = 0
+	arg_24_0.selectedEquipCount = 0
 
-	for slot4, slot5 in ipairs(slot0.equipList) do
-		if not slot5.isLock then
-			if slot5.config.rare <= slot0.filterRare then
-				slot0.selectedEquipCount = slot0.selectedEquipCount + 1
-				slot0.selectedEquipDict[slot5.id] = true
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0.equipList) do
+		if not iter_24_1.isLock then
+			if iter_24_1.config.rare <= arg_24_0.filterRare then
+				arg_24_0.selectedEquipCount = arg_24_0.selectedEquipCount + 1
+				arg_24_0.selectedEquipDict[iter_24_1.id] = true
 			end
 
-			if EquipEnum.DecomposeMaxCount <= slot0.selectedEquipCount then
+			if arg_24_0.selectedEquipCount >= EquipEnum.DecomposeMaxCount then
 				break
 			end
 		end
@@ -241,23 +255,23 @@ function slot0.fastAddEquip(slot0)
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipDecomposeSelectEquipChange)
 end
 
-function slot0.setFilterRare(slot0, slot1)
-	slot0.filterRare = slot1
+function var_0_0.setFilterRare(arg_25_0, arg_25_1)
+	arg_25_0.filterRare = arg_25_1
 end
 
-function slot0.clearSelectEquip(slot0)
-	tabletool.clear(slot0.selectedEquipDict)
+function var_0_0.clearSelectEquip(arg_26_0)
+	tabletool.clear(arg_26_0.selectedEquipDict)
 
-	slot0.selectedEquipCount = 0
+	arg_26_0.selectedEquipCount = 0
 
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipDecomposeSelectEquipChange)
 end
 
-function slot0.clear(slot0)
-	tabletool.clear(slot0.equipList)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_27_0)
+	tabletool.clear(arg_27_0.equipList)
+	var_0_0.super.clear(arg_27_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

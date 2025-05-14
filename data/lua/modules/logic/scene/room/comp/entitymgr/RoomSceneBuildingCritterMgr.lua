@@ -1,220 +1,270 @@
-module("modules.logic.scene.room.comp.entitymgr.RoomSceneBuildingCritterMgr", package.seeall)
+﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneBuildingCritterMgr", package.seeall)
 
-slot0 = class("RoomSceneBuildingCritterMgr", BaseSceneUnitMgr)
+local var_0_0 = class("RoomSceneBuildingCritterMgr", BaseSceneUnitMgr)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	slot0:addEventListeners()
-	slot0:refreshAllCritterEntities()
+	arg_2_0:addEventListeners()
+	arg_2_0:refreshAllCritterEntities()
 end
 
-function slot0.addEventListeners(slot0)
-	if slot0._isInitAddEvent then
+function var_0_0.addEventListeners(arg_3_0)
+	if arg_3_0._isInitAddEvent then
 		return
 	end
 
-	slot0._isInitAddEvent = true
+	arg_3_0._isInitAddEvent = true
 
-	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureInfoUpdate, slot0._startRefreshAllTask, slot0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureBuildingInfoChange, slot0._startRefreshAllTask, slot0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.CritterWorkInfoChange, slot0._startRefreshAllTask, slot0)
-	CritterController.instance:registerCallback(CritterEvent.CritterBuildingChangeRestingCritter, slot0._startRefreshAllTask, slot0)
+	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureInfoUpdate, arg_3_0._startRefreshAllTask, arg_3_0)
+	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._startRefreshAllTask, arg_3_0)
+	ManufactureController.instance:registerCallback(ManufactureEvent.CritterWorkInfoChange, arg_3_0._startRefreshAllTask, arg_3_0)
+	CritterController.instance:registerCallback(CritterEvent.CritterBuildingChangeRestingCritter, arg_3_0._startRefreshAllTask, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	if not slot0._isInitAddEvent then
+function var_0_0.removeEventListeners(arg_4_0)
+	if not arg_4_0._isInitAddEvent then
 		return
 	end
 
-	slot0._isInitAddEvent = false
+	arg_4_0._isInitAddEvent = false
 
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureInfoUpdate, slot0._startRefreshAllTask, slot0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingInfoChange, slot0._startRefreshAllTask, slot0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.CritterWorkInfoChange, slot0._startRefreshAllTask, slot0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterBuildingChangeRestingCritter, slot0._startRefreshAllTask, slot0)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureInfoUpdate, arg_4_0._startRefreshAllTask, arg_4_0)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingInfoChange, arg_4_0._startRefreshAllTask, arg_4_0)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.CritterWorkInfoChange, arg_4_0._startRefreshAllTask, arg_4_0)
+	CritterController.instance:unregisterCallback(CritterEvent.CritterBuildingChangeRestingCritter, arg_4_0._startRefreshAllTask, arg_4_0)
 end
 
-function slot0._startRefreshAllTask(slot0)
-	if not slot0._isHasWaitRefreshAllTask then
-		slot0._isHasWaitRefreshAllTask = true
+function var_0_0._startRefreshAllTask(arg_5_0)
+	if not arg_5_0._isHasWaitRefreshAllTask then
+		arg_5_0._isHasWaitRefreshAllTask = true
 
-		TaskDispatcher.runDelay(slot0._onRunRefreshAllTask, slot0, 0.1)
+		TaskDispatcher.runDelay(arg_5_0._onRunRefreshAllTask, arg_5_0, 0.1)
 	end
 end
 
-function slot0._stopRefreshAllTask(slot0)
-	if slot0._isHasWaitRefreshAllTask then
-		slot0._isHasWaitRefreshAllTask = false
+function var_0_0._stopRefreshAllTask(arg_6_0)
+	if arg_6_0._isHasWaitRefreshAllTask then
+		arg_6_0._isHasWaitRefreshAllTask = false
 
-		TaskDispatcher.cancelTask(slot0._onRunRefreshAllTask, slot0)
+		TaskDispatcher.cancelTask(arg_6_0._onRunRefreshAllTask, arg_6_0)
 	end
 end
 
-function slot0._onRunRefreshAllTask(slot0)
-	slot0._isHasWaitRefreshAllTask = false
+function var_0_0._onRunRefreshAllTask(arg_7_0)
+	arg_7_0._isHasWaitRefreshAllTask = false
 
-	slot0:refreshAllCritterEntities()
+	arg_7_0:refreshAllCritterEntities()
 end
 
-function slot0.refreshAllCritterEntities(slot0)
-	slot3 = {}
+function var_0_0.refreshAllCritterEntities(arg_8_0)
+	local var_8_0 = RoomModel.instance:getGameMode() == RoomEnum.GameMode.Ob
+	local var_8_1 = {}
+	local var_8_2 = arg_8_0:getRoomCritterEntityDict()
+	local var_8_3 = RoomCritterModel.instance
 
-	for slot9, slot10 in pairs(slot0:getRoomCritterEntityDict()) do
-		slot11, slot12 = nil
+	for iter_8_0, iter_8_1 in pairs(var_8_2) do
+		local var_8_4
+		local var_8_5
 
-		if RoomModel.instance:getGameMode() == RoomEnum.GameMode.Ob and RoomCritterModel.instance:getCritterMOById(slot10.id) then
-			slot11, slot12 = slot13:getStayBuilding()
+		if var_8_0 then
+			local var_8_6 = var_8_3:getCritterMOById(iter_8_1.id)
+
+			if var_8_6 then
+				var_8_4, var_8_5 = var_8_6:getStayBuilding()
+			end
 		end
 
-		if slot11 and slot12 then
-			if slot0._scene.buildingmgr:getBuildingEntity(slot11, SceneTag.RoomBuilding) and not gohelper.isNil(slot13:getCritterPoint(slot12)) then
-				slot15, slot16, slot17 = transformhelper.getPos(slot14.transform)
+		if var_8_4 and var_8_5 then
+			local var_8_7 = arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_4, SceneTag.RoomBuilding)
 
-				slot10:setLocalPos(slot15, slot16, slot17)
-				slot10.critterspine:refreshAnimState()
+			if var_8_7 then
+				local var_8_8 = var_8_7:getCritterPoint(var_8_5)
+
+				if not gohelper.isNil(var_8_8) then
+					local var_8_9, var_8_10, var_8_11 = transformhelper.getPos(var_8_8.transform)
+
+					iter_8_1:setLocalPos(var_8_9, var_8_10, var_8_11)
+					iter_8_1.critterspine:refreshAnimState()
+				end
 			end
 		else
-			slot3[#slot3 + 1] = slot10
+			var_8_1[#var_8_1 + 1] = iter_8_1
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot3) do
-		slot0:destroyCritter(slot10)
+	for iter_8_2, iter_8_3 in ipairs(var_8_1) do
+		arg_8_0:destroyCritter(iter_8_3)
 	end
 
-	if slot2 then
-		for slot10, slot11 in ipairs(slot5:getRoomBuildingCritterList() or {}) do
-			if not slot0:getCritterEntity(slot11:getId()) then
-				slot0:spawnRoomCritter(slot11)
+	if var_8_0 then
+		local var_8_12 = var_8_3:getRoomBuildingCritterList() or {}
+
+		for iter_8_4, iter_8_5 in ipairs(var_8_12) do
+			local var_8_13 = iter_8_5:getId()
+
+			if not arg_8_0:getCritterEntity(var_8_13) then
+				arg_8_0:spawnRoomCritter(iter_8_5)
 			end
 		end
 	end
 end
 
-function slot0.spawnRoomCritter(slot0, slot1)
-	if not RoomController.instance:isObMode() and not RoomController.instance:isVisitMode() or not slot1 then
+function var_0_0.spawnRoomCritter(arg_9_0, arg_9_1)
+	local var_9_0 = RoomController.instance:isObMode()
+	local var_9_1 = RoomController.instance:isVisitMode()
+
+	if not var_9_0 and not var_9_1 or not arg_9_1 then
 		return
 	end
 
-	slot4, slot5 = slot1:getStayBuilding()
+	local var_9_2, var_9_3 = arg_9_1:getStayBuilding()
 
-	if not slot4 or not slot5 then
+	if not var_9_2 or not var_9_3 then
 		return
 	end
 
-	slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.create3d(slot0._scene.go.critterRoot, string.format("%s", slot1.id)), RoomCritterEntity, slot1.id)
-	slot9 = {
+	local var_9_4 = arg_9_0._scene.go.critterRoot
+	local var_9_5 = gohelper.create3d(var_9_4, string.format("%s", arg_9_1.id))
+	local var_9_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_5, RoomCritterEntity, arg_9_1.id)
+	local var_9_7 = {
 		z = 0,
 		x = 0,
-		y = 0,
-		x = transformhelper.getPos(slot11.transform)
+		y = 0
 	}
+	local var_9_8 = arg_9_0._scene.buildingmgr:getBuildingEntity(var_9_2, SceneTag.RoomBuilding)
 
-	if slot0._scene.buildingmgr:getBuildingEntity(slot4, SceneTag.RoomBuilding) then
-		if not gohelper.isNil(slot10:getCritterPoint(slot5)) then
-			-- Nothing
+	if var_9_8 then
+		local var_9_9 = var_9_8:getCritterPoint(var_9_3)
+
+		if not gohelper.isNil(var_9_9) then
+			local var_9_10, var_9_11, var_9_12 = transformhelper.getPos(var_9_9.transform)
+
+			var_9_7.x = var_9_10
+			var_9_7.y = var_9_11
+			var_9_7.z = var_9_12
 		else
-			logError(string.format("RoomSceneBuildingCritterMgr:spawnRoomCritter error, no critter point, buildingUid:%s,index:%s", slot4, slot5 + 1))
+			logError(string.format("RoomSceneBuildingCritterMgr:spawnRoomCritter error, no critter point, buildingUid:%s,index:%s", var_9_2, var_9_3 + 1))
 		end
 	end
 
-	slot8:setLocalPos(slot9.x, slot9.y, slot9.z)
+	var_9_6:setLocalPos(var_9_7.x, var_9_7.y, var_9_7.z)
 
-	if slot1:isRestingCritter() then
-		slot8.critterspine:setScale(CritterEnum.CritterScaleInSeatSlot)
+	if arg_9_1:isRestingCritter() then
+		var_9_6.critterspine:setScale(CritterEnum.CritterScaleInSeatSlot)
 	end
 
-	slot0:addUnit(slot8)
-	gohelper.addChild(slot6, slot7)
+	arg_9_0:addUnit(var_9_6)
+	gohelper.addChild(var_9_4, var_9_5)
 
-	return slot8
+	return var_9_6
 end
 
-function slot0.refreshAllCritterEntityPos(slot0)
-	if not slot0._scene then
+function var_0_0.refreshAllCritterEntityPos(arg_10_0)
+	if not arg_10_0._scene then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0:getRoomCritterEntityDict()) do
-		slot8, slot9 = nil
+	local var_10_0 = arg_10_0:getRoomCritterEntityDict()
 
-		if slot6:getMO() then
-			slot8, slot9 = slot7:getStayBuilding()
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		local var_10_1 = iter_10_1:getMO()
+		local var_10_2
+		local var_10_3
+
+		if var_10_1 then
+			var_10_2, var_10_3 = var_10_1:getStayBuilding()
 		end
 
-		if not slot8 or not slot9 then
+		if not var_10_2 or not var_10_3 then
 			return
 		end
 
-		if gohelper.isNil(slot0._scene.buildingmgr:getBuildingEntity(slot8, SceneTag.RoomBuilding) and slot10:getCritterPoint(slot9)) then
+		local var_10_4 = arg_10_0._scene.buildingmgr:getBuildingEntity(var_10_2, SceneTag.RoomBuilding)
+		local var_10_5 = var_10_4 and var_10_4:getCritterPoint(var_10_3)
+
+		if gohelper.isNil(var_10_5) then
 			return
 		end
 
-		slot12, slot13, slot14 = transformhelper.getPos(slot11.transform)
+		local var_10_6, var_10_7, var_10_8 = transformhelper.getPos(var_10_5.transform)
 
-		slot6:setLocalPos(slot12, slot13, slot14)
+		iter_10_1:setLocalPos(var_10_6, var_10_7, var_10_8)
 	end
 end
 
-function slot0.refreshCritterPosByBuilding(slot0, slot1)
-	if not slot0._scene then
+function var_0_0.refreshCritterPosByBuilding(arg_11_0, arg_11_1)
+	if not arg_11_0._scene then
 		return
 	end
 
-	slot2 = RoomMapBuildingModel.instance:getBuildingMOById(slot1)
+	local var_11_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_11_1)
+	local var_11_1 = arg_11_0._scene.buildingmgr:getBuildingEntity(arg_11_1, SceneTag.RoomBuilding)
 
-	if not slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) or not slot2 then
+	if not var_11_1 or not var_11_0 then
 		return
 	end
 
-	slot4 = nil
+	local var_11_2
 
-	if not (ManufactureConfig.instance:isManufactureBuilding(slot2.buildingId) and ManufactureModel.instance:getManufactureMOById(slot1) and slot6:getSlot2CritterDict() or ManufactureModel.instance:getCritterBuildingMOById(slot1) and slot6:getSeatSlot2CritterDict()) then
+	if ManufactureConfig.instance:isManufactureBuilding(var_11_0.buildingId) then
+		local var_11_3 = ManufactureModel.instance:getManufactureMOById(arg_11_1)
+
+		var_11_2 = var_11_3 and var_11_3:getSlot2CritterDict()
+	else
+		local var_11_4 = ManufactureModel.instance:getCritterBuildingMOById(arg_11_1)
+
+		var_11_2 = var_11_4 and var_11_4:getSeatSlot2CritterDict()
+	end
+
+	if not var_11_2 then
 		return
 	end
 
-	for slot9, slot10 in pairs(slot4) do
-		slot12 = slot3:getCritterPoint(slot9)
+	for iter_11_0, iter_11_1 in pairs(var_11_2) do
+		local var_11_5 = arg_11_0:getCritterEntity(iter_11_1)
+		local var_11_6 = var_11_1:getCritterPoint(iter_11_0)
 
-		if not slot0:getCritterEntity(slot10) or gohelper.isNil(slot12) then
+		if not var_11_5 or gohelper.isNil(var_11_6) then
 			return
 		end
 
-		slot13, slot14, slot15 = transformhelper.getPos(slot12.transform)
+		local var_11_7, var_11_8, var_11_9 = transformhelper.getPos(var_11_6.transform)
 
-		slot11:setLocalPos(slot13, slot14, slot15)
+		var_11_5:setLocalPos(var_11_7, var_11_8, var_11_9)
 	end
 end
 
-function slot0.destroyCritter(slot0, slot1)
-	slot0:removeUnit(slot1:getTag(), slot1.id)
+function var_0_0.destroyCritter(arg_12_0, arg_12_1)
+	arg_12_0:removeUnit(arg_12_1:getTag(), arg_12_1.id)
 end
 
-function slot0._onUpdate(slot0)
+function var_0_0._onUpdate(arg_13_0)
+	return
 end
 
-function slot0.getCritterEntity(slot0, slot1, slot2)
-	slot3 = (not slot2 or slot2 == SceneTag.RoomCharacter) and slot0:getTagUnitDict(SceneTag.RoomCharacter)
+function var_0_0.getCritterEntity(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = (not arg_14_2 or arg_14_2 == SceneTag.RoomCharacter) and arg_14_0:getTagUnitDict(SceneTag.RoomCharacter)
 
-	return slot3 and slot3[slot1]
+	return var_14_0 and var_14_0[arg_14_1]
 end
 
-function slot0.getRoomCritterEntityDict(slot0)
-	return slot0._tagUnitDict[SceneTag.RoomCharacter] or {}
+function var_0_0.getRoomCritterEntityDict(arg_15_0)
+	return arg_15_0._tagUnitDict[SceneTag.RoomCharacter] or {}
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
-	slot0:removeEventListeners()
-	slot0:_stopRefreshAllTask()
+function var_0_0.onSceneClose(arg_16_0)
+	var_0_0.super.onSceneClose(arg_16_0)
+	arg_16_0:removeEventListeners()
+	arg_16_0:_stopRefreshAllTask()
 end
 
-return slot0
+return var_0_0

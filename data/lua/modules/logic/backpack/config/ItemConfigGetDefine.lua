@@ -1,111 +1,113 @@
-module("modules.logic.backpack.config.ItemConfigGetDefine", package.seeall)
+﻿module("modules.logic.backpack.config.ItemConfigGetDefine", package.seeall)
 
-slot0 = class("ItemConfigGetDefine", BaseConfig)
+local var_0_0 = class("ItemConfigGetDefine", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._defineList = {
-		[MaterialEnum.MaterialType.Item] = uv0._getItem,
-		[MaterialEnum.MaterialType.Currency] = uv0._getCurrency,
-		[MaterialEnum.MaterialType.PowerPotion] = uv0._getPowerPotion,
-		[MaterialEnum.MaterialType.HeroSkin] = uv0._getHeroSkin,
-		[MaterialEnum.MaterialType.Hero] = uv0._getHero,
-		[MaterialEnum.MaterialType.Equip] = uv0._getEquip,
-		[MaterialEnum.MaterialType.PlayerCloth] = uv0._getPlayerCloth,
-		[MaterialEnum.MaterialType.Building] = uv0._getBuilding,
-		[MaterialEnum.MaterialType.Formula] = uv0._getFormula,
-		[MaterialEnum.MaterialType.BlockPackage] = uv0._getBlockPackage,
-		[MaterialEnum.MaterialType.SpecialBlock] = uv0._getSpecialBlock,
-		[MaterialEnum.MaterialType.RoomTheme] = uv0._getRoomTheme,
-		[MaterialEnum.MaterialType.Explore] = uv0._getExplore,
-		[MaterialEnum.MaterialType.EquipCard] = uv0._getEquipCard,
-		[MaterialEnum.MaterialType.Antique] = uv0._getAntique,
-		[MaterialEnum.MaterialType.V1a5AiZiLa] = uv0._getV1a5AiZiLaItem,
-		[MaterialEnum.MaterialType.Season123EquipCard] = uv0._getSeason123EquipCard,
-		[MaterialEnum.MaterialType.NewInsight] = uv0._getNewInsight,
-		[MaterialEnum.MaterialType.Critter] = uv0._getCritter
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._defineList = {
+		[MaterialEnum.MaterialType.Item] = var_0_0._getItem,
+		[MaterialEnum.MaterialType.Currency] = var_0_0._getCurrency,
+		[MaterialEnum.MaterialType.PowerPotion] = var_0_0._getPowerPotion,
+		[MaterialEnum.MaterialType.HeroSkin] = var_0_0._getHeroSkin,
+		[MaterialEnum.MaterialType.Hero] = var_0_0._getHero,
+		[MaterialEnum.MaterialType.Equip] = var_0_0._getEquip,
+		[MaterialEnum.MaterialType.PlayerCloth] = var_0_0._getPlayerCloth,
+		[MaterialEnum.MaterialType.Building] = var_0_0._getBuilding,
+		[MaterialEnum.MaterialType.Formula] = var_0_0._getFormula,
+		[MaterialEnum.MaterialType.BlockPackage] = var_0_0._getBlockPackage,
+		[MaterialEnum.MaterialType.SpecialBlock] = var_0_0._getSpecialBlock,
+		[MaterialEnum.MaterialType.RoomTheme] = var_0_0._getRoomTheme,
+		[MaterialEnum.MaterialType.Explore] = var_0_0._getExplore,
+		[MaterialEnum.MaterialType.EquipCard] = var_0_0._getEquipCard,
+		[MaterialEnum.MaterialType.Antique] = var_0_0._getAntique,
+		[MaterialEnum.MaterialType.V1a5AiZiLa] = var_0_0._getV1a5AiZiLaItem,
+		[MaterialEnum.MaterialType.Season123EquipCard] = var_0_0._getSeason123EquipCard,
+		[MaterialEnum.MaterialType.NewInsight] = var_0_0._getNewInsight,
+		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritter
 	}
 end
 
-function slot0._getItem(slot0)
-	return ItemConfig.instance:getItemCo(slot0)
+function var_0_0._getItem(arg_2_0)
+	return ItemConfig.instance:getItemCo(arg_2_0)
 end
 
-function slot0._getCurrency(slot0)
-	return CurrencyConfig.instance:getCurrencyCo(slot0)
+function var_0_0._getCurrency(arg_3_0)
+	return CurrencyConfig.instance:getCurrencyCo(arg_3_0)
 end
 
-function slot0._getPowerPotion(slot0)
-	return ItemConfig.instance:getPowerItemCo(slot0)
+function var_0_0._getPowerPotion(arg_4_0)
+	return ItemConfig.instance:getPowerItemCo(arg_4_0)
 end
 
-function slot0._getHeroSkin(slot0)
-	return SkinConfig.instance:getSkinCo(slot0)
+function var_0_0._getHeroSkin(arg_5_0)
+	return SkinConfig.instance:getSkinCo(arg_5_0)
 end
 
-function slot0._getHero(slot0)
-	return HeroConfig.instance:getHeroCO(slot0)
+function var_0_0._getHero(arg_6_0)
+	return HeroConfig.instance:getHeroCO(arg_6_0)
 end
 
-function slot0._getEquip(slot0)
-	return EquipConfig.instance:getEquipCo(slot0)
+function var_0_0._getEquip(arg_7_0)
+	return EquipConfig.instance:getEquipCo(arg_7_0)
 end
 
-function slot0._getPlayerCloth(slot0)
-	return PlayerConfig.instance:getPlayerClothConfig(slot0)
+function var_0_0._getPlayerCloth(arg_8_0)
+	return PlayerConfig.instance:getPlayerClothConfig(arg_8_0)
 end
 
-function slot0._getBuilding(slot0)
-	return RoomConfig.instance:getBuildingConfig(slot0)
+function var_0_0._getBuilding(arg_9_0)
+	return RoomConfig.instance:getBuildingConfig(arg_9_0)
 end
 
-function slot0._getFormula(slot0)
-	return RoomConfig.instance:getFormulaConfig(slot0)
+function var_0_0._getFormula(arg_10_0)
+	return RoomConfig.instance:getFormulaConfig(arg_10_0)
 end
 
-function slot0._getBlockPackage(slot0)
-	return RoomConfig.instance:getBlockPackageConfig(slot0)
+function var_0_0._getBlockPackage(arg_11_0)
+	return RoomConfig.instance:getBlockPackageConfig(arg_11_0)
 end
 
-function slot0._getSpecialBlock(slot0)
-	return RoomConfig.instance:getSpecialBlockConfig(slot0)
+function var_0_0._getSpecialBlock(arg_12_0)
+	return RoomConfig.instance:getSpecialBlockConfig(arg_12_0)
 end
 
-function slot0._getRoomTheme(slot0)
-	return RoomConfig.instance:getThemeConfig(slot0)
+function var_0_0._getRoomTheme(arg_13_0)
+	return RoomConfig.instance:getThemeConfig(arg_13_0)
 end
 
-function slot0._getV1a5AiZiLaItem(slot0)
-	return AiZiLaConfig.instance:getItemCo(slot0)
+function var_0_0._getV1a5AiZiLaItem(arg_14_0)
+	return AiZiLaConfig.instance:getItemCo(arg_14_0)
 end
 
-function slot0._getExplore(slot0)
-	return ExploreConfig.instance:getItemCo(slot0)
+function var_0_0._getExplore(arg_15_0)
+	return ExploreConfig.instance:getItemCo(arg_15_0)
 end
 
-function slot0._getEquipCard(slot0)
-	return SeasonConfig.instance:getSeasonEquipCo(slot0)
+function var_0_0._getEquipCard(arg_16_0)
+	return SeasonConfig.instance:getSeasonEquipCo(arg_16_0)
 end
 
-function slot0._getAntique(slot0)
-	return AntiqueConfig.instance:getAntiqueCo(slot0)
+function var_0_0._getAntique(arg_17_0)
+	return AntiqueConfig.instance:getAntiqueCo(arg_17_0)
 end
 
-function slot0._getSeason123EquipCard(slot0)
-	return Season123Config.instance:getSeasonEquipCo(slot0)
+function var_0_0._getSeason123EquipCard(arg_18_0)
+	return Season123Config.instance:getSeasonEquipCo(arg_18_0)
 end
 
-function slot0._getNewInsight(slot0)
-	return ItemConfig.instance:getInsightItemCo(slot0)
+function var_0_0._getNewInsight(arg_19_0)
+	return ItemConfig.instance:getInsightItemCo(arg_19_0)
 end
 
-function slot0._getCritter(slot0)
-	return CritterConfig.instance:getCritterCfg(slot0)
+function var_0_0._getCritter(arg_20_0)
+	return CritterConfig.instance:getCritterCfg(arg_20_0)
 end
 
-function slot0.getItemConfigFunc(slot0, slot1)
-	return slot0._defineList[tonumber(slot1)]
+function var_0_0.getItemConfigFunc(arg_21_0, arg_21_1)
+	arg_21_1 = tonumber(arg_21_1)
+
+	return arg_21_0._defineList[arg_21_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

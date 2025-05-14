@@ -1,175 +1,195 @@
-module("modules.logic.meilanni.view.MeilanniDialogBtnView", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniDialogBtnView", package.seeall)
 
-slot0 = class("MeilanniDialogBtnView", BaseView)
+local var_0_0 = class("MeilanniDialogBtnView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gooptions = gohelper.findChild(slot0.viewGO, "top_right/btncontain/#go_btntype1")
-	slot0._gotalkitem = gohelper.findChild(slot0.viewGO, "top_right/btncontain/#go_btntype1/#btn_templateclick")
-	slot0._gobtnpos1 = gohelper.findChild(slot0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos1")
-	slot0._gobtnpos2 = gohelper.findChild(slot0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos2")
-	slot0._gobtnpos3 = gohelper.findChild(slot0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos3")
-	slot0._btnend = gohelper.findChildButtonWithAudio(slot0.viewGO, "top_right/btncontain/#btn_end")
-	slot0._txtendinfo = gohelper.findChildText(slot0.viewGO, "top_right/btncontain/#btn_end/layout/txt_info")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1")
+	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#btn_templateclick")
+	arg_1_0._gobtnpos1 = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos1")
+	arg_1_0._gobtnpos2 = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos2")
+	arg_1_0._gobtnpos3 = gohelper.findChild(arg_1_0.viewGO, "top_right/btncontain/#go_btntype1/#go_btnpos3")
+	arg_1_0._btnend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top_right/btncontain/#btn_end")
+	arg_1_0._txtendinfo = gohelper.findChildText(arg_1_0.viewGO, "top_right/btncontain/#btn_end/layout/txt_info")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnend:AddClickListener(slot0._btnendOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnend:AddClickListener(arg_2_0._btnendOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnend:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnend:RemoveClickListener()
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._optionBtnList = slot0:getUserDataTb_()
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0._gooptions)
-	slot0._endPlayer = SLFramework.AnimatorPlayer.Get(slot0._btnend.gameObject)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._optionBtnList = arg_5_0:getUserDataTb_()
+	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0._gooptions)
+	arg_5_0._endPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0._btnend.gameObject)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.startShowDialogOptionBtn, slot0._startShowDialogOptionBtn, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.refreshDialogBtnState, slot0._refreshDialogBtnState, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogOptionBtn, slot0._showDialogOptionBtn, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogEndBtn, slot0._showDialogEndBtn, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, slot0._dialogClose, slot0)
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, slot0._resetMap, slot0)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.startShowDialogOptionBtn, arg_7_0._startShowDialogOptionBtn, arg_7_0)
+	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.refreshDialogBtnState, arg_7_0._refreshDialogBtnState, arg_7_0)
+	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogOptionBtn, arg_7_0._showDialogOptionBtn, arg_7_0)
+	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.showDialogEndBtn, arg_7_0._showDialogEndBtn, arg_7_0)
+	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.dialogClose, arg_7_0._dialogClose, arg_7_0)
+	arg_7_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_7_0._resetMap, arg_7_0)
 end
 
-function slot0._onAnimDone(slot0)
-	gohelper.setActive(slot0._gooptions, slot0._showOption)
+function var_0_0._onAnimDone(arg_8_0)
+	gohelper.setActive(arg_8_0._gooptions, arg_8_0._showOption)
 end
 
-function slot0._refreshDialogBtnState(slot0, slot1)
-	slot0._showOption = slot1
+function var_0_0._refreshDialogBtnState(arg_9_0, arg_9_1)
+	arg_9_0._showOption = arg_9_1
 
-	if not slot1 then
-		if not slot0._gooptions.activeSelf then
+	if not arg_9_1 then
+		if not arg_9_0._gooptions.activeSelf then
 			return
 		end
 
-		slot0._animatorPlayer:Play("close", slot0._onAnimDone, slot0)
+		arg_9_0._animatorPlayer:Play("close", arg_9_0._onAnimDone, arg_9_0)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gooptions, slot1)
-	slot0._animatorPlayer:Play("open", slot0._onAnimDone, slot0)
+	gohelper.setActive(arg_9_0._gooptions, arg_9_1)
+	arg_9_0._animatorPlayer:Play("open", arg_9_0._onAnimDone, arg_9_0)
 end
 
-function slot0._onEndAnimDone(slot0)
-	gohelper.setActive(slot0._btnend, slot0._showEndBtn)
+function var_0_0._onEndAnimDone(arg_10_0)
+	gohelper.setActive(arg_10_0._btnend, arg_10_0._showEndBtn)
 end
 
-function slot0._refreshEndBtnState(slot0, slot1)
-	slot0._showEndBtn = slot1
+function var_0_0._refreshEndBtnState(arg_11_0, arg_11_1)
+	arg_11_0._showEndBtn = arg_11_1
 
-	if not slot1 then
-		if not slot0._btnend.gameObject.activeSelf then
+	if not arg_11_1 then
+		if not arg_11_0._btnend.gameObject.activeSelf then
 			return
 		end
 
-		slot0._endPlayer:Play("close", slot0._onEndAnimDone, slot0)
+		arg_11_0._endPlayer:Play("close", arg_11_0._onEndAnimDone, arg_11_0)
 
 		return
 	end
 
-	gohelper.setActive(slot0._btnend, slot1)
-	slot0._endPlayer:Play("open", slot0._onEndAnimDone, slot0)
+	gohelper.setActive(arg_11_0._btnend, arg_11_1)
+	arg_11_0._endPlayer:Play("open", arg_11_0._onEndAnimDone, arg_11_0)
 end
 
-function slot0._startShowDialogOptionBtn(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		gohelper.setActive(slot5[1], false)
+function var_0_0._startShowDialogOptionBtn(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._optionBtnList) do
+		gohelper.setActive(iter_12_1[1], false)
 	end
 end
 
-function slot0._showDialogOptionBtn(slot0, slot1)
-	slot2 = slot1[1]
-	slot3 = slot2[1]
-	slot5 = slot2[6]
-	slot6 = slot2[2]
-	slot0._optionCallbackTarget = slot1[2]
-	slot0._optionCallback = slot1[3]
+function var_0_0._showDialogOptionBtn(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1[1]
+	local var_13_1 = var_13_0[1]
+	local var_13_2 = var_13_0[5]
+	local var_13_3 = var_13_0[6]
+	local var_13_4 = var_13_0[2]
+	local var_13_5 = var_13_0[3]
 
-	if slot2[5] < 3 then
-		slot7 = slot2[3] + 1
+	arg_13_0._optionCallbackTarget = arg_13_1[2]
+	arg_13_0._optionCallback = arg_13_1[3]
+
+	if var_13_2 < 3 then
+		var_13_5 = var_13_5 + 1
 	end
 
-	slot8 = slot0._optionBtnList[slot7] and slot0._optionBtnList[slot7][1] or gohelper.clone(slot0._gotalkitem, slot0["_gobtnpos" .. slot7])
+	local var_13_6 = arg_13_0._optionBtnList[var_13_5] and arg_13_0._optionBtnList[var_13_5][1] or gohelper.clone(arg_13_0._gotalkitem, arg_13_0["_gobtnpos" .. var_13_5])
 
-	gohelper.setActive(slot8, true)
+	gohelper.setActive(var_13_6, true)
 
-	gohelper.findChildText(slot8, "layout/txt_info").text = ":" .. slot6
+	local var_13_7 = var_13_4
 
-	UISpriteSetMgr.instance:setMeilanniSprite(gohelper.findChildImage(slot8, "layout/txt_info/image_icon"), slot5 or "bg_xuanzhe_1")
-	UISpriteSetMgr.instance:setMeilanniSprite(slot8:GetComponent(gohelper.Type_Image), slot3 == -1 and "btn000" or "btn001")
-	gohelper.findButtonWithAudio(slot8, AudioEnum.WeekWalk.play_artificial_ui_talkchoose):AddClickListener(slot0._onOptionClick, slot0, slot2)
+	gohelper.findChildText(var_13_6, "layout/txt_info").text = ":" .. var_13_7
 
-	if not slot0._optionBtnList[slot7] then
-		slot0._optionBtnList[slot7] = {
-			slot8,
-			slot13
+	local var_13_8 = gohelper.findChildImage(var_13_6, "layout/txt_info/image_icon")
+
+	UISpriteSetMgr.instance:setMeilanniSprite(var_13_8, var_13_3 or "bg_xuanzhe_1")
+
+	local var_13_9 = var_13_6:GetComponent(gohelper.Type_Image)
+
+	UISpriteSetMgr.instance:setMeilanniSprite(var_13_9, var_13_1 == -1 and "btn000" or "btn001")
+
+	local var_13_10 = gohelper.findButtonWithAudio(var_13_6, AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
+
+	var_13_10:AddClickListener(arg_13_0._onOptionClick, arg_13_0, var_13_0)
+
+	if not arg_13_0._optionBtnList[var_13_5] then
+		arg_13_0._optionBtnList[var_13_5] = {
+			var_13_6,
+			var_13_10
 		}
-		slot8.name = "talkitem_" .. tostring(slot7)
+		var_13_6.name = "talkitem_" .. tostring(var_13_5)
 	end
 end
 
-function slot0._onOptionClick(slot0, slot1)
-	slot0._optionCallback(slot0._optionCallbackTarget, slot1)
+function var_0_0._onOptionClick(arg_14_0, arg_14_1)
+	arg_14_0._optionCallback(arg_14_0._optionCallbackTarget, arg_14_1)
 end
 
-function slot0._showDialogEndBtn(slot0, slot1)
-	slot0._txtendinfo.text = slot1[1]
-	slot0._callbackTarget = slot1[2]
-	slot0._callback = slot1[3]
+function var_0_0._showDialogEndBtn(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1[1]
 
-	if not slot1[4] then
-		slot0:_refreshEndBtnState(true)
+	arg_15_0._txtendinfo.text = var_15_0
+	arg_15_0._callbackTarget = arg_15_1[2]
+	arg_15_0._callback = arg_15_1[3]
+
+	local var_15_1 = arg_15_1[4]
+
+	if not var_15_1 then
+		arg_15_0:_refreshEndBtnState(true)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayShowEndBtn, slot0)
-	TaskDispatcher.runDelay(slot0._delayShowEndBtn, slot0, slot3)
+	TaskDispatcher.cancelTask(arg_15_0._delayShowEndBtn, arg_15_0)
+	TaskDispatcher.runDelay(arg_15_0._delayShowEndBtn, arg_15_0, var_15_1)
 end
 
-function slot0._delayShowEndBtn(slot0)
-	slot0:_refreshEndBtnState(true)
+function var_0_0._delayShowEndBtn(arg_16_0)
+	arg_16_0:_refreshEndBtnState(true)
 end
 
-function slot0._btnendOnClick(slot0)
-	slot0._callback(slot0._callbackTarget)
+function var_0_0._btnendOnClick(arg_17_0)
+	arg_17_0._callback(arg_17_0._callbackTarget)
 end
 
-function slot0._dialogClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayShowEndBtn, slot0)
-	slot0:_refreshEndBtnState(false)
-	slot0:_refreshDialogBtnState(false)
+function var_0_0._dialogClose(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._delayShowEndBtn, arg_18_0)
+	arg_18_0:_refreshEndBtnState(false)
+	arg_18_0:_refreshDialogBtnState(false)
 end
 
-function slot0._resetMap(slot0)
-	slot0:_dialogClose()
+function var_0_0._resetMap(arg_19_0)
+	arg_19_0:_dialogClose()
 end
 
-function slot0.onClose(slot0)
-	slot0:_dialogClose()
+function var_0_0.onClose(arg_20_0)
+	arg_20_0:_dialogClose()
 
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[2]:RemoveClickListener()
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._optionBtnList) do
+		iter_20_1[2]:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	return
 end
 
-return slot0
+return var_0_0

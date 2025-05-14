@@ -1,12 +1,12 @@
-module("modules.logic.character.config.EffectivenessConfig", package.seeall)
+﻿module("modules.logic.character.config.EffectivenessConfig", package.seeall)
 
-slot0 = class("EffectivenessConfig", BaseConfig)
+local var_0_0 = class("EffectivenessConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.subValue = 0.7
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.subValue = 0.7
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"hero_effectiveness",
 		"equip_effectiveness",
@@ -15,90 +15,123 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-slot0.HeroRareRareEnum = {
+var_0_0.HeroRareRareEnum = {
 	SR = 4,
 	Other = 3,
 	SSR = 5
 }
-slot0.EquipRareRareEnum = {
+var_0_0.EquipRareRareEnum = {
 	SR = 4,
 	Other = 3,
 	SSR = 5
 }
 
-function slot0.calculateHeroEffectiveness(slot0, slot1, slot2)
-	slot3 = lua_hero_effectiveness.configDict[slot1.level]
-	slot5 = nil
-	slot5 = (slot1.config.rare ~= uv0.HeroRareRareEnum.SSR or slot3.ssr) and (slot4.rare ~= uv0.HeroRareRareEnum.SR or slot3.sr) and slot3.r
+function var_0_0.calculateHeroEffectiveness(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = lua_hero_effectiveness.configDict[arg_4_1.level]
+	local var_4_1 = arg_4_1.config
+	local var_4_2
 
-	if slot2 then
-		return slot5 * slot0.subValue
+	if var_4_1.rare == var_0_0.HeroRareRareEnum.SSR then
+		var_4_2 = var_4_0.ssr
+	elseif var_4_1.rare == var_0_0.HeroRareRareEnum.SR then
+		var_4_2 = var_4_0.sr
+	else
+		var_4_2 = var_4_0.r
 	end
 
-	return slot5
+	if arg_4_2 then
+		return var_4_2 * arg_4_0.subValue
+	end
+
+	return var_4_2
 end
 
-function slot0.calculateHeroAverageEffectiveness(slot0, slot1, slot2)
-	for slot7 = 1, #slot1 do
-		slot3 = 0 + slot0:calculateHeroEffectiveness(slot1[slot7])
+function var_0_0.calculateHeroAverageEffectiveness(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = 0
+
+	for iter_5_0 = 1, #arg_5_1 do
+		var_5_0 = var_5_0 + arg_5_0:calculateHeroEffectiveness(arg_5_1[iter_5_0])
 	end
 
-	for slot7 = 1, #slot2 do
-		slot3 = slot3 + slot0:calculateHeroEffectiveness(slot2[slot7], true)
+	for iter_5_1 = 1, #arg_5_2 do
+		var_5_0 = var_5_0 + arg_5_0:calculateHeroEffectiveness(arg_5_2[iter_5_1], true)
 	end
 
-	return slot3 / (#slot1 + #slot2)
+	return var_5_0 / (#arg_5_1 + #arg_5_2)
 end
 
-function slot0.calculateEquipEffectiveness(slot0, slot1, slot2)
-	slot3 = lua_equip_effectiveness.configDict[slot1.level]
-	slot5 = nil
-	slot5 = (slot1.config.rare ~= uv0.EquipRareRareEnum.SSR or slot3.ssr) and (slot4.rare ~= uv0.EquipRareRareEnum.SR or slot3.sr) and slot3.r
+function var_0_0.calculateEquipEffectiveness(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = lua_equip_effectiveness.configDict[arg_6_1.level]
+	local var_6_1 = arg_6_1.config
+	local var_6_2
 
-	if slot2 then
-		return slot5 * slot0.subValue
+	if var_6_1.rare == var_0_0.EquipRareRareEnum.SSR then
+		var_6_2 = var_6_0.ssr
+	elseif var_6_1.rare == var_0_0.EquipRareRareEnum.SR then
+		var_6_2 = var_6_0.sr
+	else
+		var_6_2 = var_6_0.r
 	end
 
-	return slot5
+	if arg_6_2 then
+		return var_6_2 * arg_6_0.subValue
+	end
+
+	return var_6_2
 end
 
-function slot0.calculateEquipAverageEffectiveness(slot0, slot1)
-	slot2 = 0
+function var_0_0.calculateEquipAverageEffectiveness(arg_7_0, arg_7_1)
+	local var_7_0 = 0
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot2 = slot6 == 4 and slot2 + slot0:calculateEquipEffectiveness(slot7, true) or slot2 + slot0:calculateEquipEffectiveness(slot7)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		if iter_7_0 == 4 then
+			var_7_0 = var_7_0 + arg_7_0:calculateEquipEffectiveness(iter_7_1, true)
+		else
+			var_7_0 = var_7_0 + arg_7_0:calculateEquipEffectiveness(iter_7_1)
+		end
 	end
 
-	return #slot1 ~= 0 and slot2 / #slot1 or 0
+	return #arg_7_1 ~= 0 and var_7_0 / #arg_7_1 or 0
 end
 
-function slot0.calculateTalentEffectiveness(slot0, slot1, slot2)
-	slot3 = lua_talent_effectiveness.configDict[slot1.talent]
-	slot5 = nil
-	slot5 = (slot1.config.rare ~= uv0.HeroRareRareEnum.SSR or slot3.ssr) and (slot4.rare ~= uv0.HeroRareRareEnum.SR or slot3.sr) and slot3.r
+function var_0_0.calculateTalentEffectiveness(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = lua_talent_effectiveness.configDict[arg_8_1.talent]
+	local var_8_1 = arg_8_1.config
+	local var_8_2
 
-	if slot2 then
-		return slot5 * slot0.subValue
+	if var_8_1.rare == var_0_0.HeroRareRareEnum.SSR then
+		var_8_2 = var_8_0.ssr
+	elseif var_8_1.rare == var_0_0.HeroRareRareEnum.SR then
+		var_8_2 = var_8_0.sr
+	else
+		var_8_2 = var_8_0.r
 	end
 
-	return slot5
+	if arg_8_2 then
+		return var_8_2 * arg_8_0.subValue
+	end
+
+	return var_8_2
 end
 
-function slot0.calculateTalentAverageEffectiveness(slot0, slot1, slot2)
-	for slot7 = 1, #slot1 do
-		slot3 = 0 + slot0:calculateTalentEffectiveness(slot1[slot7])
+function var_0_0.calculateTalentAverageEffectiveness(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = 0
+
+	for iter_9_0 = 1, #arg_9_1 do
+		var_9_0 = var_9_0 + arg_9_0:calculateTalentEffectiveness(arg_9_1[iter_9_0])
 	end
 
-	for slot7 = 1, #slot2 do
-		slot3 = slot3 + slot0:calculateTalentEffectiveness(slot2[slot7], true)
+	for iter_9_1 = 1, #arg_9_2 do
+		var_9_0 = var_9_0 + arg_9_0:calculateTalentEffectiveness(arg_9_2[iter_9_1], true)
 	end
 
-	return slot3 / (#slot1 + #slot2)
+	return var_9_0 / (#arg_9_1 + #arg_9_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,6 +1,8 @@
-module("modules.logic.gift.controller.GiftEvent", package.seeall)
+﻿module("modules.logic.gift.controller.GiftEvent", package.seeall)
 
-return {
-	MultipleChoice = 1,
-	InsightHeroChoose = 20001
-}
+local var_0_0 = {}
+
+var_0_0.MultipleChoice = 1
+var_0_0.InsightHeroChoose = 20001
+
+return var_0_0

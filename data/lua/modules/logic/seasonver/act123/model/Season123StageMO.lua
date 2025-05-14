@@ -1,72 +1,78 @@
-module("modules.logic.seasonver.act123.model.Season123StageMO", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123StageMO", package.seeall)
 
-slot0 = pureTable("Season123StageMO")
+local var_0_0 = pureTable("Season123StageMO")
 
-function slot0.init(slot0, slot1)
-	slot0.stage = slot1.stage
-	slot0.isPass = slot1.isPass == 1
-	slot0.episodeMap = slot0.episodeMap or {}
-	slot0.minRound = slot1.minRound
-	slot0.state = slot1.state or 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.stage = arg_1_1.stage
+	arg_1_0.isPass = arg_1_1.isPass == 1
+	arg_1_0.episodeMap = arg_1_0.episodeMap or {}
+	arg_1_0.minRound = arg_1_1.minRound
+	arg_1_0.state = arg_1_1.state or 0
 
-	slot0:updateEpisodes(slot1.act123Episodes)
-	slot0:initAssistHeroMO(slot1)
+	arg_1_0:updateEpisodes(arg_1_1.act123Episodes)
+	arg_1_0:initAssistHeroMO(arg_1_1)
 end
 
-function slot0.updateEpisodes(slot0, slot1)
-	slot2 = {}
+function var_0_0.updateEpisodes(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	for slot6 = 1, #slot1 do
-		if not slot0.episodeMap[slot1[slot6].layer] then
-			slot8 = Season123EpisodeMO.New()
-			slot0.episodeMap[slot7.layer] = slot8
+	for iter_2_0 = 1, #arg_2_1 do
+		local var_2_1 = arg_2_1[iter_2_0]
+		local var_2_2 = arg_2_0.episodeMap[var_2_1.layer]
 
-			slot8:init(slot7)
+		if not var_2_2 then
+			var_2_2 = Season123EpisodeMO.New()
+			arg_2_0.episodeMap[var_2_1.layer] = var_2_2
+
+			var_2_2:init(var_2_1)
 		else
-			slot8:update(slot7)
+			var_2_2:update(var_2_1)
 		end
 
-		slot2[slot8] = true
+		var_2_0[var_2_2] = true
 	end
 
-	for slot6, slot7 in pairs(slot0.episodeMap) do
-		if not slot2[slot7] then
-			slot0.episodeMap[slot6] = nil
+	for iter_2_1, iter_2_2 in pairs(arg_2_0.episodeMap) do
+		if not var_2_0[iter_2_2] then
+			arg_2_0.episodeMap[iter_2_1] = nil
 		end
 	end
 end
 
-function slot0.initAssistHeroMO(slot0, slot1)
-	logNormal("info.assistHeroInfo.heroUid = [" .. tostring(slot1.assistHeroInfo.heroUid) .. "], type = " .. type(slot1.assistHeroInfo.heroUid))
+function var_0_0.initAssistHeroMO(arg_3_0, arg_3_1)
+	logNormal("info.assistHeroInfo.heroUid = [" .. tostring(arg_3_1.assistHeroInfo.heroUid) .. "], type = " .. type(arg_3_1.assistHeroInfo.heroUid))
 
-	if slot1.assistHeroInfo and tostring(slot1.assistHeroInfo.heroUid) ~= "0" and slot1.assistHeroInfo.heroId and slot1.assistHeroInfo.heroId ~= 0 then
-		slot0._assistMO = Season123AssistHeroMO.New()
+	if arg_3_1.assistHeroInfo and tostring(arg_3_1.assistHeroInfo.heroUid) ~= "0" and arg_3_1.assistHeroInfo.heroId and arg_3_1.assistHeroInfo.heroId ~= 0 then
+		arg_3_0._assistMO = Season123AssistHeroMO.New()
 
-		slot0._assistMO:init(slot1.assistHeroInfo)
+		arg_3_0._assistMO:init(arg_3_1.assistHeroInfo)
 
-		slot0._assistHeroMO = Season123HeroUtils.createHeroMOByAssistMO(slot0._assistMO)
+		arg_3_0._assistHeroMO = Season123HeroUtils.createHeroMOByAssistMO(arg_3_0._assistMO)
 	end
 end
 
-function slot0.getAssistHeroMO(slot0)
-	return slot0._assistHeroMO, slot0._assistMO
+function var_0_0.getAssistHeroMO(arg_4_0)
+	return arg_4_0._assistHeroMO, arg_4_0._assistMO
 end
 
-function slot0.alreadyPass(slot0)
-	return slot0.isPass
+function var_0_0.alreadyPass(arg_5_0)
+	return arg_5_0.isPass
 end
 
-function slot0.isFinishNow(slot0)
-	return slot0.state == 2
+function var_0_0.isFinishNow(arg_6_0)
+	return arg_6_0.state == 2
 end
 
-function slot0.isNeverTry(slot0)
-	return slot0.state == 0
+function var_0_0.isNeverTry(arg_7_0)
+	return arg_7_0.state == 0
 end
 
-function slot0.updateReduceEpisodeRoundState(slot0, slot1, slot2)
-	slot0.reduceState = slot0.reduceState or {}
-	slot0.reduceState[slot1] = slot0.episodeMap[slot1] and slot2 or false
+function var_0_0.updateReduceEpisodeRoundState(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.reduceState = arg_8_0.reduceState or {}
+
+	local var_8_0 = arg_8_0.episodeMap[arg_8_1]
+
+	arg_8_0.reduceState[arg_8_1] = var_8_0 and arg_8_2 or false
 end
 
-return slot0
+return var_0_0

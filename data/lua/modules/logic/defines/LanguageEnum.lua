@@ -1,7 +1,8 @@
-module("modules.logic.defines.LanguageEnum", package.seeall)
+﻿module("modules.logic.defines.LanguageEnum", package.seeall)
 
-slot0 = _M
-slot0.LanguageStoryType = {
+local var_0_0 = _M
+
+var_0_0.LanguageStoryType = {
 	KR = 4,
 	DE = 6,
 	JP = 5,
@@ -11,7 +12,7 @@ slot0.LanguageStoryType = {
 	FR = 7,
 	EN = 3
 }
-slot0.LanguageStoryType2Key = {
+var_0_0.LanguageStoryType2Key = {
 	"cn",
 	"tw",
 	"en",
@@ -21,7 +22,7 @@ slot0.LanguageStoryType2Key = {
 	"fr",
 	"thai"
 }
-slot0.Lang2KeyEFun = {
+var_0_0.Lang2KeyEFun = {
 	jp = "ja-JP",
 	kr = "ko-KR",
 	zh = "zh-CN",
@@ -29,7 +30,7 @@ slot0.Lang2KeyEFun = {
 	thai = "th-TH",
 	en = "en-US"
 }
-slot0.Lang2KeyGlobal = {
+var_0_0.Lang2KeyGlobal = {
 	jp = "ja_JP",
 	kr = "ko_KR",
 	zh = "zh_CN",
@@ -38,4 +39,4 @@ slot0.Lang2KeyGlobal = {
 	en = "en"
 }
 
-return slot0
+return var_0_0

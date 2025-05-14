@@ -1,245 +1,273 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaModel", package.seeall)
 
-slot0 = class("AiZiLaModel", BaseModel)
+local var_0_0 = class("AiZiLaModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._epsiodeItemModelDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._epsiodeItemModelDict = {}
 
-	slot0:_clearData()
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._curEpisodeId = 0
-	slot0._curActivityId = VersionActivity1_5Enum.ActivityId.AiZiLa
-	slot0._unlockEventIds = {}
-	slot0._optionEventIds = {}
-	slot0._selectEventIds = {}
-	slot0._collectItemIds = {}
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._curEpisodeId = 0
+	arg_4_0._curActivityId = VersionActivity1_5Enum.ActivityId.AiZiLa
+	arg_4_0._unlockEventIds = {}
+	arg_4_0._optionEventIds = {}
+	arg_4_0._selectEventIds = {}
+	arg_4_0._collectItemIds = {}
 
-	slot0:_clearModel()
+	arg_4_0:_clearModel()
 end
 
-function slot0._clearModel(slot0)
-	slot0._itemModel = slot0:_clearOrCreateModel(slot0._itemModel)
-	slot0._equipModel = slot0:_clearOrCreateModel(slot0._equipModel)
-	slot0._episodeModel = slot0:_clearOrCreateModel(slot0._episodeModel)
-	slot0._epsiodeItemModelDict = slot0._epsiodeItemModelDict or {}
+function var_0_0._clearModel(arg_5_0)
+	arg_5_0._itemModel = arg_5_0:_clearOrCreateModel(arg_5_0._itemModel)
+	arg_5_0._equipModel = arg_5_0:_clearOrCreateModel(arg_5_0._equipModel)
+	arg_5_0._episodeModel = arg_5_0:_clearOrCreateModel(arg_5_0._episodeModel)
+	arg_5_0._epsiodeItemModelDict = arg_5_0._epsiodeItemModelDict or {}
 
-	for slot4, slot5 in pairs(slot0._epsiodeItemModelDict) do
-		slot5:clear()
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._epsiodeItemModelDict) do
+		iter_5_1:clear()
 	end
 end
 
-function slot0._clearOrCreateModel(slot0, slot1)
-	return AiZiLaHelper.clearOrCreateModel(slot1)
+function var_0_0._clearOrCreateModel(arg_6_0, arg_6_1)
+	return AiZiLaHelper.clearOrCreateModel(arg_6_1)
 end
 
-function slot0.setCurEpisodeId(slot0, slot1)
-	slot0._curEpisodeId = slot1
+function var_0_0.setCurEpisodeId(arg_7_0, arg_7_1)
+	arg_7_0._curEpisodeId = arg_7_1
 end
 
-function slot0.getCurEpisodeId(slot0)
-	return slot0._curEpisodeId
+function var_0_0.getCurEpisodeId(arg_8_0)
+	return arg_8_0._curEpisodeId
 end
 
-function slot0.getCurActivityID(slot0)
-	return slot0._curActivityId
+function var_0_0.getCurActivityID(arg_9_0)
+	return arg_9_0._curActivityId
 end
 
-function slot0.isEpisodeClear(slot0, slot1)
+function var_0_0.isEpisodeClear(arg_10_0, arg_10_1)
 	return false
 end
 
-function slot0.isEpisodeLock(slot0, slot1)
-	return slot0:getEpisodeMO(slot1) == nil
+function var_0_0.isEpisodeLock(arg_11_0, arg_11_1)
+	return arg_11_0:getEpisodeMO(arg_11_1) == nil
 end
 
-function slot0.getEquipMO(slot0, slot1)
-	return slot0._equipModel:getById(slot1)
+function var_0_0.getEquipMO(arg_12_0, arg_12_1)
+	return arg_12_0._equipModel:getById(arg_12_1)
 end
 
-function slot0.getEquipMOList(slot0)
-	return slot0._equipModel:getList()
+function var_0_0.getEquipMOList(arg_13_0)
+	return arg_13_0._equipModel:getList()
 end
 
-function slot0.getEpisodeMO(slot0, slot1)
-	return slot0._episodeModel:getById(slot1)
+function var_0_0.getEpisodeMO(arg_14_0, arg_14_1)
+	return arg_14_0._episodeModel:getById(arg_14_1)
 end
 
-function slot0.getRecordMOList(slot0)
-	if not slot0._recordMOList then
-		slot0._recordMOList = {}
+function var_0_0.getRecordMOList(arg_15_0)
+	if not arg_15_0._recordMOList then
+		arg_15_0._recordMOList = {}
 
-		for slot5, slot6 in ipairs(AiZiLaConfig.instance:getRecordEventList(VersionActivity1_5Enum.ActivityId.AiZiLa) or {}) do
-			slot7 = AiZiLaRecordMO.New()
+		local var_15_0 = AiZiLaConfig.instance:getRecordEventList(VersionActivity1_5Enum.ActivityId.AiZiLa) or {}
 
-			slot7:init(slot6)
-			table.insert(slot0._recordMOList, slot7)
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			local var_15_1 = AiZiLaRecordMO.New()
+
+			var_15_1:init(iter_15_1)
+			table.insert(arg_15_0._recordMOList, var_15_1)
 		end
 	end
 
-	return slot0._recordMOList
+	return arg_15_0._recordMOList
 end
 
-function slot0.getHandbookMOList(slot0)
-	if not slot0._handbookMOList then
-		slot0._handbookMOList = {}
+function var_0_0.getHandbookMOList(arg_16_0)
+	if not arg_16_0._handbookMOList then
+		arg_16_0._handbookMOList = {}
 
-		for slot5, slot6 in ipairs(AiZiLaConfig.instance:getItemList() or {}) do
-			slot7 = AiZiLaHandbookMO.New()
+		local var_16_0 = AiZiLaConfig.instance:getItemList() or {}
 
-			slot7:init(slot6.id)
-			table.insert(slot0._handbookMOList, slot7)
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			local var_16_1 = AiZiLaHandbookMO.New()
+
+			var_16_1:init(iter_16_1.id)
+			table.insert(arg_16_0._handbookMOList, var_16_1)
 		end
 	end
 
-	return slot0._handbookMOList
+	return arg_16_0._handbookMOList
 end
 
-function slot0._updateIdDict(slot0, slot1, slot2)
-	if slot2 and #slot2 > 0 then
-		for slot6, slot7 in ipairs(slot2) do
-			if slot1[slot7] == nil then
-				slot1[slot7] = true
+function var_0_0._updateIdDict(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 and #arg_17_2 > 0 then
+		for iter_17_0, iter_17_1 in ipairs(arg_17_2) do
+			if arg_17_1[iter_17_1] == nil then
+				arg_17_1[iter_17_1] = true
 			end
 		end
 	end
 end
 
-function slot0._isHasIdDict(slot0, slot1, slot2)
-	if slot1[slot2] then
+function var_0_0._isHasIdDict(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1[arg_18_2] then
 		return true
 	end
 
 	return false
 end
 
-function slot0._updateMOModel(slot0, slot1, slot2, slot3, slot4)
-	return AiZiLaHelper.updateMOModel(slot1, slot2, slot3, slot4)
+function var_0_0._updateMOModel(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	return AiZiLaHelper.updateMOModel(arg_19_1, arg_19_2, arg_19_3, arg_19_4)
 end
 
-function slot0._updateEpsiodeModel(slot0, slot1)
-	slot0:_updateMOModel(AiZiLaEpsiodeMO, slot0._episodeModel, slot1.episodeId, slot1)
+function var_0_0._updateEpsiodeModel(arg_20_0, arg_20_1)
+	arg_20_0:_updateMOModel(AiZiLaEpsiodeMO, arg_20_0._episodeModel, arg_20_1.episodeId, arg_20_1)
 end
 
-function slot0._updateItemModel(slot0, slot1)
-	return slot0:_updateMOModel(AiZiLaItemMO, slot0._itemModel, slot1.uid, slot1)
+function var_0_0._updateItemModel(arg_21_0, arg_21_1)
+	return arg_21_0:_updateMOModel(AiZiLaItemMO, arg_21_0._itemModel, arg_21_1.uid, arg_21_1)
 end
 
-function slot0._updateEquipModel(slot0, slot1)
-	if not AiZiLaConfig.instance:getEquipCo(VersionActivity1_5Enum.ActivityId.AiZiLa, slot1) then
-		logError(string.format("[144_爱兹拉角色活动 export_装备] 找不到装备 id:%s", slot1))
+function var_0_0._updateEquipModel(arg_22_0, arg_22_1)
+	local var_22_0 = AiZiLaConfig.instance:getEquipCo(VersionActivity1_5Enum.ActivityId.AiZiLa, arg_22_1)
 
-		return slot0._equipModel
+	if not var_22_0 then
+		logError(string.format("[144_爱兹拉角色活动 export_装备] 找不到装备 id:%s", arg_22_1))
+
+		return arg_22_0._equipModel
 	end
 
-	slot0:_checkEquipUpLevelRed()
+	local var_22_1 = arg_22_0:_updateMOModel(AiZiLaEquipMO, arg_22_0._equipModel, var_22_0.typeId, arg_22_1)
 
-	return slot0:_updateMOModel(AiZiLaEquipMO, slot0._equipModel, slot2.typeId, slot1)
+	arg_22_0:_checkEquipUpLevelRed()
+
+	return var_22_1
 end
 
-function slot0.getItemQuantity(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0._itemModel:getList()) do
-		if slot8.itemId == slot1 then
-			slot3 = 0 + slot8.quantity
+function var_0_0.getItemQuantity(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0._itemModel:getList()
+	local var_23_1 = 0
+
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		if iter_23_1.itemId == arg_23_1 then
+			var_23_1 = var_23_1 + iter_23_1.quantity
 		end
 	end
 
-	return slot3
+	return var_23_1
 end
 
-function slot0.isSelectOptionId(slot0, slot1)
-	return slot0:_isHasIdDict(slot0._optionEventIds, slot1)
+function var_0_0.isSelectOptionId(arg_24_0, arg_24_1)
+	return arg_24_0:_isHasIdDict(arg_24_0._optionEventIds, arg_24_1)
 end
 
-function slot0.isSelectEventId(slot0, slot1)
-	return slot0:_isHasIdDict(slot0._selectEventIds, slot1)
+function var_0_0.isSelectEventId(arg_25_0, arg_25_1)
+	return arg_25_0:_isHasIdDict(arg_25_0._selectEventIds, arg_25_1)
 end
 
-function slot0.isUnlockEventId(slot0, slot1)
-	return slot0:_isHasIdDict(slot0._unlockEventIds, slot1)
+function var_0_0.isUnlockEventId(arg_26_0, arg_26_1)
+	return arg_26_0:_isHasIdDict(arg_26_0._unlockEventIds, arg_26_1)
 end
 
-function slot0.isCollectItemId(slot0, slot1)
-	return slot0:_isHasIdDict(slot0._collectItemIds, slot1)
+function var_0_0.isCollectItemId(arg_27_0, arg_27_1)
+	return arg_27_0:_isHasIdDict(arg_27_0._collectItemIds, arg_27_1)
 end
 
-function slot0.getInfosReply(slot0, slot1)
-	slot0:_clearData()
+function var_0_0.getInfosReply(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_1.Act144InfoNO
 
-	for slot7, slot8 in ipairs(slot1.Act144InfoNO.act144Episodes or {}) do
-		slot0:_updateEpsiodeModel(slot8)
+	arg_28_0:_clearData()
+
+	local var_28_1 = var_28_0.act144Episodes or {}
+
+	for iter_28_0, iter_28_1 in ipairs(var_28_1) do
+		arg_28_0:_updateEpsiodeModel(iter_28_1)
 	end
 
-	for slot8, slot9 in ipairs(slot2.act144Items or {}) do
-		slot0:_updateItemModel(slot9)
+	local var_28_2 = var_28_0.act144Items or {}
+
+	for iter_28_2, iter_28_3 in ipairs(var_28_2) do
+		arg_28_0:_updateItemModel(iter_28_3)
 	end
 
-	for slot9, slot10 in ipairs(slot2.equipIds or {}) do
-		slot0:_updateEquipModel(slot10)
+	local var_28_3 = var_28_0.equipIds or {}
+
+	for iter_28_4, iter_28_5 in ipairs(var_28_3) do
+		arg_28_0:_updateEquipModel(iter_28_5)
 	end
 
-	slot0:_updateIdDict(slot0._optionEventIds, slot2.optionIds)
-	slot0:_updateIdDict(slot0._unlockEventIds, slot2.unlockEventIds)
-	slot0:_updateIdDict(slot0._selectEventIds, slot2.selectEventIds)
-	slot0:_updateIdDict(slot0._collectItemIds, slot2.collectItemIds)
-	slot0:checkItemRed()
-	slot0:checkRecordRed()
+	arg_28_0:_updateIdDict(arg_28_0._optionEventIds, var_28_0.optionIds)
+	arg_28_0:_updateIdDict(arg_28_0._unlockEventIds, var_28_0.unlockEventIds)
+	arg_28_0:_updateIdDict(arg_28_0._selectEventIds, var_28_0.selectEventIds)
+	arg_28_0:_updateIdDict(arg_28_0._collectItemIds, var_28_0.collectItemIds)
+	arg_28_0:checkItemRed()
+	arg_28_0:checkRecordRed()
 end
 
-function slot0.enterEpisodeReply(slot0, slot1)
+function var_0_0.enterEpisodeReply(arg_29_0, arg_29_1)
+	return
 end
 
-function slot0.selectOptionReply(slot0, slot1)
-	slot0:_updateIdDict(slot0._optionEventIds, slot1.optionIds)
-	slot0:_updateIdDict(slot0._unlockEventIds, slot1.unlockEventIds)
-	slot0:_updateIdDict(slot0._selectEventIds, slot1.selectEventIds)
-	slot0:checkRecordRed()
+function var_0_0.selectOptionReply(arg_30_0, arg_30_1)
+	arg_30_0:_updateIdDict(arg_30_0._optionEventIds, arg_30_1.optionIds)
+	arg_30_0:_updateIdDict(arg_30_0._unlockEventIds, arg_30_1.unlockEventIds)
+	arg_30_0:_updateIdDict(arg_30_0._selectEventIds, arg_30_1.selectEventIds)
+	arg_30_0:checkRecordRed()
 end
 
-function slot0.settleEpisodeReply(slot0, slot1)
+function var_0_0.settleEpisodeReply(arg_31_0, arg_31_1)
+	return
 end
 
-function slot0.settlePush(slot0, slot1)
-	slot0:_updateIdDict(slot0._collectItemIds, slot1.collectItemIds)
-	slot0:checkItemRed()
+function var_0_0.settlePush(arg_32_0, arg_32_1)
+	arg_32_0:_updateIdDict(arg_32_0._collectItemIds, arg_32_1.collectItemIds)
+	arg_32_0:checkItemRed()
 end
 
-function slot0.nextDayReply(slot0, slot1)
+function var_0_0.nextDayReply(arg_33_0, arg_33_1)
+	return
 end
 
-function slot0.upgradeEquipReply(slot0, slot1)
-	slot0:_updateEquipModel(slot1.newEquipId)
+function var_0_0.upgradeEquipReply(arg_34_0, arg_34_1)
+	arg_34_0:_updateEquipModel(arg_34_1.newEquipId)
 end
 
-function slot0.episodePush(slot0, slot1)
-	slot0:_updateEpsiodeModel(slot1.act144Episode)
+function var_0_0.episodePush(arg_35_0, arg_35_1)
+	arg_35_0:_updateEpsiodeModel(arg_35_1.act144Episode)
 end
 
-function slot0.itemChangePush(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1.deleteAct144Items or {}) do
-		slot0._itemModel:remove(slot0._itemModel:getById(slot7.uid))
+function var_0_0.itemChangePush(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_1.deleteAct144Items or {}
+
+	for iter_36_0, iter_36_1 in ipairs(var_36_0) do
+		arg_36_0._itemModel:remove(arg_36_0._itemModel:getById(iter_36_1.uid))
 	end
 
-	for slot7, slot8 in ipairs(slot1.updateAct144Items or {}) do
-		slot0:_updateItemModel(slot8)
+	local var_36_1 = arg_36_1.updateAct144Items or {}
+
+	for iter_36_2, iter_36_3 in ipairs(var_36_1) do
+		arg_36_0:_updateItemModel(iter_36_3)
 	end
 
-	slot0:_checkEquipUpLevelRed()
+	arg_36_0:_checkEquipUpLevelRed()
 end
 
-function slot0.isHasEquipUpLevel(slot0)
-	for slot5, slot6 in ipairs(slot0._equipModel:getList()) do
-		if slot6:isCanUpLevel() then
+function var_0_0.isHasEquipUpLevel(arg_37_0)
+	local var_37_0 = arg_37_0._equipModel:getList()
+
+	for iter_37_0, iter_37_1 in ipairs(var_37_0) do
+		if iter_37_1:isCanUpLevel() then
 			return true
 		end
 	end
@@ -247,70 +275,76 @@ function slot0.isHasEquipUpLevel(slot0)
 	return false
 end
 
-function slot0._checkEquipUpLevelRed(slot0)
-	table.insert({}, {
+function var_0_0._checkEquipUpLevelRed(arg_38_0)
+	local var_38_0 = {}
+
+	table.insert(var_38_0, {
 		id = RedDotEnum.DotNode.V1a5AiZiLaEquip,
-		value = slot0:isHasEquipUpLevel() and 1 or 0
+		value = arg_38_0:isHasEquipUpLevel() and 1 or 0
 	})
-	RedDotRpc.instance:clientAddRedDotGroupList(slot1, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(var_38_0, true)
 end
 
-function slot0.checkItemRed(slot0)
-	slot1 = {}
+function var_0_0.checkItemRed(arg_39_0)
+	local var_39_0 = {}
 
-	slot0:_addRedMOList(RedDotEnum.DotNode.V1a5AiZiLaHandbookNew, slot0:getHandbookMOList(), RedDotEnum.DotNode.V1a5AiZiLaHandbook, slot1)
-	RedDotRpc.instance:clientAddRedDotGroupList(slot1, true)
+	arg_39_0:_addRedMOList(RedDotEnum.DotNode.V1a5AiZiLaHandbookNew, arg_39_0:getHandbookMOList(), RedDotEnum.DotNode.V1a5AiZiLaHandbook, var_39_0)
+	RedDotRpc.instance:clientAddRedDotGroupList(var_39_0, true)
 end
 
-function slot0.finishItemRed(slot0)
-	for slot5, slot6 in ipairs(slot0:getHandbookMOList()) do
-		if slot6:isHasRed() then
-			slot6:finishRed()
+function var_0_0.finishItemRed(arg_40_0)
+	local var_40_0 = arg_40_0:getHandbookMOList()
+
+	for iter_40_0, iter_40_1 in ipairs(var_40_0) do
+		if iter_40_1:isHasRed() then
+			iter_40_1:finishRed()
 		end
 	end
 
-	slot0:checkItemRed()
+	arg_40_0:checkItemRed()
 end
 
-function slot0.checkRecordRed(slot0)
-	slot1 = {}
+function var_0_0.checkRecordRed(arg_41_0)
+	local var_41_0 = {}
+	local var_41_1 = arg_41_0:getRecordMOList()
 
-	for slot6, slot7 in ipairs(slot0:getRecordMOList()) do
-		slot0:_addRedMOList(RedDotEnum.DotNode.V1a5AiZiLaRecordEventNew, slot7:getEventMOList(), nil, slot1)
+	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
+		arg_41_0:_addRedMOList(RedDotEnum.DotNode.V1a5AiZiLaRecordEventNew, iter_41_1:getEventMOList(), nil, var_41_0)
 	end
 
-	slot0:_addRedMOList(RedDotEnum.DotNode.V1a5AiZiLaRecordNew, slot2, RedDotEnum.DotNode.V1a5AiZiLaRecord, slot1)
-	RedDotRpc.instance:clientAddRedDotGroupList(slot1, true)
+	arg_41_0:_addRedMOList(RedDotEnum.DotNode.V1a5AiZiLaRecordNew, var_41_1, RedDotEnum.DotNode.V1a5AiZiLaRecord, var_41_0)
+	RedDotRpc.instance:clientAddRedDotGroupList(var_41_0, true)
 end
 
-function slot0._addRedMOList(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot4 or {}
-	slot6 = false
+function var_0_0._addRedMOList(arg_42_0, arg_42_1, arg_42_2, arg_42_3, arg_42_4)
+	local var_42_0 = arg_42_4 or {}
+	local var_42_1 = false
 
-	for slot10, slot11 in ipairs(slot2) do
-		slot13 = slot11:getRedUid()
+	for iter_42_0, iter_42_1 in ipairs(arg_42_2) do
+		local var_42_2 = iter_42_1:isHasRed()
+		local var_42_3 = iter_42_1:getRedUid()
 
-		if slot11:isHasRed() then
-			slot6 = true
+		if var_42_2 then
+			var_42_1 = true
 		end
 
-		table.insert(slot5, {
-			id = slot1,
-			uid = slot13,
-			value = slot12 and 1 or 0
+		table.insert(var_42_0, {
+			id = arg_42_1,
+			uid = var_42_3,
+			value = var_42_2 and 1 or 0
 		})
 	end
 
-	if slot3 then
-		table.insert(slot5, {
-			id = slot3,
-			value = slot6 and 1 or 0
+	if arg_42_3 then
+		table.insert(var_42_0, {
+			id = arg_42_3,
+			value = var_42_1 and 1 or 0
 		})
 	end
 
-	return slot5
+	return var_42_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

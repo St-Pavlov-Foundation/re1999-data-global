@@ -1,107 +1,114 @@
-module("modules.common.unit.UnitMoverBezier3", package.seeall)
+﻿module("modules.common.unit.UnitMoverBezier3", package.seeall)
 
-slot0 = class("UnitMoverBezier3", LuaCompBase)
+local var_0_0 = class("UnitMoverBezier3", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0._timeScale = 1
-	slot0._currTime = 0
-	slot0._duration = 0
-	slot0._getTimeFunction = nil
-	slot0._getTimeObject = nil
-	slot0._start = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._timeScale = 1
+	arg_1_0._currTime = 0
+	arg_1_0._duration = 0
+	arg_1_0._getTimeFunction = nil
+	arg_1_0._getTimeObject = nil
+	arg_1_0._start = nil
 
-	LuaEventSystem.addEventMechanism(slot0)
+	LuaEventSystem.addEventMechanism(arg_1_0)
 end
 
-function slot0.setEaseType(slot0, slot1)
-	slot0._easeType = slot1 or EaseType.Linear
+function var_0_0.setEaseType(arg_2_0, arg_2_1)
+	arg_2_0._easeType = arg_2_1 or EaseType.Linear
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	slot0._timeScale = slot1
+function var_0_0.setTimeScale(arg_3_0, arg_3_1)
+	arg_3_0._timeScale = arg_3_1
 end
 
-function slot0.simpleMove(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0:setPosDirectly(slot1.x, slot1.y, slot1.z)
+function var_0_0.simpleMove(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+	arg_4_0:setPosDirectly(arg_4_1.x, arg_4_1.y, arg_4_1.z)
 
-	slot0.p1 = slot1
-	slot0.p2 = slot2
-	slot0.p3 = slot3
-	slot0.p4 = slot4
-	slot0.startPos = slot1
-	slot0.endPos = slot4
-	slot0._duration = slot5
-	slot0._currTime = 0
-	slot0._start = true
+	arg_4_0.p1 = arg_4_1
+	arg_4_0.p2 = arg_4_2
+	arg_4_0.p3 = arg_4_3
+	arg_4_0.p4 = arg_4_4
+	arg_4_0.startPos = arg_4_1
+	arg_4_0.endPos = arg_4_4
+	arg_4_0._duration = arg_4_5
+	arg_4_0._currTime = 0
+	arg_4_0._start = true
 end
 
-function slot0.setPosDirectly(slot0, slot1, slot2, slot3)
-	slot0._posX = slot1
-	slot0._posY = slot2
-	slot0._posZ = slot3
+function var_0_0.setPosDirectly(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0._posX = arg_5_1
+	arg_5_0._posY = arg_5_2
+	arg_5_0._posZ = arg_5_3
 
-	slot0:updatePrePos()
-	slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
+	arg_5_0:updatePrePos()
+	arg_5_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_5_0)
 end
 
-function slot0.updatePrePos(slot0)
-	slot0.prePosX = slot0._posX
-	slot0.prePosY = slot0._posY
-	slot0.prePosZ = slot0._posZ
+function var_0_0.updatePrePos(arg_6_0)
+	arg_6_0.prePosX = arg_6_0._posX
+	arg_6_0.prePosY = arg_6_0._posY
+	arg_6_0.prePosZ = arg_6_0._posZ
 end
 
-function slot0.setGetTimeFunction(slot0, slot1, slot2)
-	slot0._getTimeFunction = slot1
-	slot0._getTimeObject = slot2
+function var_0_0.setGetTimeFunction(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._getTimeFunction = arg_7_1
+	arg_7_0._getTimeObject = arg_7_2
 end
 
-function slot0.getPos(slot0)
-	return slot0._posX, slot0._posY, slot0._posZ
+function var_0_0.getPos(arg_8_0)
+	return arg_8_0._posX, arg_8_0._posY, arg_8_0._posZ
 end
 
-function slot0.getPrePos(slot0)
-	return slot0.prePosX, slot0.prePosY, slot0.prePosZ
+function var_0_0.getPrePos(arg_9_0)
+	return arg_9_0.prePosX, arg_9_0.prePosY, arg_9_0.prePosZ
 end
 
-function slot0.onUpdate(slot0)
-	if not slot0._start then
+function var_0_0.onUpdate(arg_10_0)
+	if not arg_10_0._start then
 		return
 	end
 
-	slot0:updatePrePos()
+	arg_10_0:updatePrePos()
 
-	if slot0._getTimeFunction then
-		slot0._currTime = slot0._getTimeFunction(slot0._getTimeObject)
+	if arg_10_0._getTimeFunction then
+		arg_10_0._currTime = arg_10_0._getTimeFunction(arg_10_0._getTimeObject)
 	else
-		slot0._currTime = slot0._currTime + Time.deltaTime * slot0._timeScale
+		arg_10_0._currTime = arg_10_0._currTime + Time.deltaTime * arg_10_0._timeScale
 	end
 
-	if slot0._duration <= slot0._currTime then
-		slot0._posX = slot0.endPos.x
-		slot0._posY = slot0.endPos.y
-		slot0._posZ = slot0.endPos.z
+	if arg_10_0._currTime >= arg_10_0._duration then
+		arg_10_0._posX = arg_10_0.endPos.x
+		arg_10_0._posY = arg_10_0.endPos.y
+		arg_10_0._posZ = arg_10_0.endPos.z
 
-		slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
-		slot0:dispatchEvent(UnitMoveEvent.Arrive, slot0)
+		arg_10_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_10_0)
+		arg_10_0:dispatchEvent(UnitMoveEvent.Arrive, arg_10_0)
 
-		slot0._start = nil
+		arg_10_0._start = nil
 	else
-		slot2 = LuaTween.tween(slot0._currTime / slot0._duration, 0, 1, 1, slot0._easeType)
-		slot0._posX = slot0:calculateValue(slot2, slot0.p1.x, slot0.p2.x, slot0.p3.x, slot0.p4.x)
-		slot0._posY = slot0:calculateValue(slot2, slot0.p1.y, slot0.p2.y, slot0.p3.y, slot0.p4.y)
-		slot0._posZ = slot0:calculateValue(slot2, slot0.p1.z, slot0.p2.z, slot0.p3.z, slot0.p4.z)
+		local var_10_0 = arg_10_0._currTime / arg_10_0._duration
+		local var_10_1 = LuaTween.tween(var_10_0, 0, 1, 1, arg_10_0._easeType)
 
-		slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
+		arg_10_0._posX = arg_10_0:calculateValue(var_10_1, arg_10_0.p1.x, arg_10_0.p2.x, arg_10_0.p3.x, arg_10_0.p4.x)
+		arg_10_0._posY = arg_10_0:calculateValue(var_10_1, arg_10_0.p1.y, arg_10_0.p2.y, arg_10_0.p3.y, arg_10_0.p4.y)
+		arg_10_0._posZ = arg_10_0:calculateValue(var_10_1, arg_10_0.p1.z, arg_10_0.p2.z, arg_10_0.p3.z, arg_10_0.p4.z)
+
+		arg_10_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_10_0)
 	end
 end
 
-function slot0.calculateValue(slot0, slot1, slot2, slot3, slot4, slot5)
-	return (1 - slot1) * (1 - slot1) * (1 - slot1) * slot2 + 3 * slot1 * (1 - slot1) * (1 - slot1) * slot3 + 3 * slot1 * slot1 * (1 - slot1) * slot4 + slot1 * slot1 * slot1 * slot5
+function var_0_0.calculateValue(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	local var_11_0 = (1 - arg_11_1) * (1 - arg_11_1) * (1 - arg_11_1) * arg_11_2
+	local var_11_1 = 3 * arg_11_1 * (1 - arg_11_1) * (1 - arg_11_1) * arg_11_3
+	local var_11_2 = 3 * arg_11_1 * arg_11_1 * (1 - arg_11_1) * arg_11_4
+	local var_11_3 = arg_11_1 * arg_11_1 * arg_11_1 * arg_11_5
+
+	return var_11_0 + var_11_1 + var_11_2 + var_11_3
 end
 
-function slot0.onDestroy(slot0)
-	slot0._start = nil
-	slot0._animationCurve = nil
+function var_0_0.onDestroy(arg_12_0)
+	arg_12_0._start = nil
+	arg_12_0._animationCurve = nil
 end
 
-return slot0
+return var_0_0

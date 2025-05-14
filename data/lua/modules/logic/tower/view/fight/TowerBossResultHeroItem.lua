@@ -1,90 +1,118 @@
-module("modules.logic.tower.view.fight.TowerBossResultHeroItem", package.seeall)
+﻿module("modules.logic.tower.view.fight.TowerBossResultHeroItem", package.seeall)
 
-slot0 = class("TowerBossResultHeroItem", LuaCompBase)
+local var_0_0 = class("TowerBossResultHeroItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gohero = gohelper.findChild(slot1, "heroitemani")
-	slot0._simageheroicon = gohelper.findChildSingleImage(slot1, "heroitemani/hero/charactericon")
-	slot0._imagecareer = gohelper.findChildImage(slot1, "heroitemani/hero/career")
-	slot0._gorank1 = gohelper.findChild(slot1, "heroitemani/hero/vertical/layout/rankobj/rank1")
-	slot0._gorank2 = gohelper.findChild(slot1, "heroitemani/hero/vertical/layout/rankobj/rank2")
-	slot0._gorank3 = gohelper.findChild(slot1, "heroitemani/hero/vertical/layout/rankobj/rank3")
-	slot0._txtlv = gohelper.findChildText(slot1, "heroitemani/hero/vertical/layout/lv/lvnum")
-	slot0._gostar1 = gohelper.findChild(slot1, "heroitemani/hero/vertical/#go_starList/star1")
-	slot0._gostar2 = gohelper.findChild(slot1, "heroitemani/hero/vertical/#go_starList/star2")
-	slot0._gostar3 = gohelper.findChild(slot1, "heroitemani/hero/vertical/#go_starList/star3")
-	slot0._gostar4 = gohelper.findChild(slot1, "heroitemani/hero/vertical/#go_starList/star4")
-	slot0._gostar5 = gohelper.findChild(slot1, "heroitemani/hero/vertical/#go_starList/star5")
-	slot0._gostar6 = gohelper.findChild(slot1, "heroitemani/hero/vertical/#go_starList/star6")
-	slot0._goequip = gohelper.findChild(slot1, "heroitemani/equip")
-	slot0._imageequiprare = gohelper.findChildImage(slot1, "heroitemani/equip/equiprare")
-	slot0._imageequipicon = gohelper.findChildImage(slot1, "heroitemani/equip/equipicon")
-	slot0._txtequiplvl = gohelper.findChildText(slot1, "heroitemani/equip/equiplv/txtequiplv")
-	slot0._goEmpty = gohelper.findChild(slot1, "empty")
-	slot0._emptyEquipGo = gohelper.findChild(slot1, "heroitemani/emptyequip")
-	slot0._goFakeEquip = gohelper.findChild(slot1, "heroitemani/hero/vertical/fakeequip")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gohero = gohelper.findChild(arg_1_1, "heroitemani")
+	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_1, "heroitemani/hero/charactericon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_1, "heroitemani/hero/career")
+	arg_1_0._gorank1 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank1")
+	arg_1_0._gorank2 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank2")
+	arg_1_0._gorank3 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank3")
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_1, "heroitemani/hero/vertical/layout/lv/lvnum")
+	arg_1_0._gostar1 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star1")
+	arg_1_0._gostar2 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star2")
+	arg_1_0._gostar3 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star3")
+	arg_1_0._gostar4 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star4")
+	arg_1_0._gostar5 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star5")
+	arg_1_0._gostar6 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star6")
+	arg_1_0._goequip = gohelper.findChild(arg_1_1, "heroitemani/equip")
+	arg_1_0._imageequiprare = gohelper.findChildImage(arg_1_1, "heroitemani/equip/equiprare")
+	arg_1_0._imageequipicon = gohelper.findChildImage(arg_1_1, "heroitemani/equip/equipicon")
+	arg_1_0._txtequiplvl = gohelper.findChildText(arg_1_1, "heroitemani/equip/equiplv/txtequiplv")
+	arg_1_0._goEmpty = gohelper.findChild(arg_1_1, "empty")
+	arg_1_0._emptyEquipGo = gohelper.findChild(arg_1_1, "heroitemani/emptyequip")
+	arg_1_0._goFakeEquip = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/fakeequip")
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
+	gohelper.setActive(arg_2_0.go, true)
 
-	slot0.heroMo = slot1
-	slot0.equipMo = slot2
+	arg_2_0.heroMo = arg_2_1
+	arg_2_0.equipMo = arg_2_2
 
-	slot0:_refreshHero()
-	slot0:_refreshEquip()
-	gohelper.setActive(slot0._gohero, slot1 ~= nil)
-	gohelper.setActive(slot0._goEmpty, slot1 == nil)
-	gohelper.setActive(slot0._emptyEquipGo, false)
+	arg_2_0:_refreshHero()
+	arg_2_0:_refreshEquip()
+	gohelper.setActive(arg_2_0._gohero, arg_2_1 ~= nil)
+	gohelper.setActive(arg_2_0._goEmpty, arg_2_1 == nil)
+	gohelper.setActive(arg_2_0._emptyEquipGo, false)
 end
 
-function slot0._refreshHero(slot0)
-	if not slot0.heroMo then
+function var_0_0._refreshHero(arg_3_0)
+	local var_3_0 = arg_3_0.heroMo
+
+	if not var_3_0 then
 		return
 	end
 
-	slot0._simageheroicon:LoadImage(ResUrl.getHeadIconMiddle(FightConfig.instance:getSkinCO(slot1.skin).retangleIcon))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. tostring(slot1.config.career))
+	local var_3_1 = FightConfig.instance:getSkinCO(var_3_0.skin)
+	local var_3_2 = ResUrl.getHeadIconMiddle(var_3_1.retangleIcon)
 
-	slot0._txtlv.text, slot7 = HeroConfig.instance:getShowLevel(slot1.level or 0)
+	arg_3_0._simageheroicon:LoadImage(var_3_2)
 
-	slot0:_refreshLevelList()
-	slot0:_refreshStarList()
+	local var_3_3 = "lssx_" .. tostring(var_3_0.config.career)
+
+	UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareer, var_3_3)
+
+	local var_3_4 = var_3_0.level or 0
+	local var_3_5, var_3_6 = HeroConfig.instance:getShowLevel(var_3_4)
+
+	arg_3_0._txtlv.text = var_3_5
+
+	arg_3_0:_refreshLevelList()
+	arg_3_0:_refreshStarList()
 end
 
-function slot0._refreshEquip(slot0)
-	gohelper.setActive(slot0._goequip, slot0.equipMo ~= nil)
-	gohelper.setActive(slot0._goFakeEquip, slot1 ~= nil)
+function var_0_0._refreshEquip(arg_4_0)
+	local var_4_0 = arg_4_0.equipMo
 
-	if not slot1 then
+	gohelper.setActive(arg_4_0._goequip, var_4_0 ~= nil)
+	gohelper.setActive(arg_4_0._goFakeEquip, var_4_0 ~= nil)
+
+	if not var_4_0 then
 		return
 	end
 
-	slot2 = slot1.config
+	local var_4_1 = var_4_0.config
+	local var_4_2 = var_4_1.icon
 
-	UISpriteSetMgr.instance:setHerogroupEquipIconSprite(slot0._imageequipicon, slot2.icon)
-	UISpriteSetMgr.instance:setHeroGroupSprite(slot0._imageequiprare, "bianduixingxian_" .. tostring(slot2.rare))
+	UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_4_0._imageequipicon, var_4_2)
 
-	slot0._txtequiplvl.text = slot1.level
+	local var_4_3 = "bianduixingxian_" .. tostring(var_4_1.rare)
+
+	UISpriteSetMgr.instance:setHeroGroupSprite(arg_4_0._imageequiprare, var_4_3)
+
+	local var_4_4 = var_4_0.level
+
+	arg_4_0._txtequiplvl.text = var_4_4
 end
 
-function slot0._refreshLevelList(slot0)
-	slot3, slot4 = HeroConfig.instance:getShowLevel(slot0.heroMo and slot1.level or 0)
+function var_0_0._refreshLevelList(arg_5_0)
+	local var_5_0 = arg_5_0.heroMo
+	local var_5_1 = var_5_0 and var_5_0.level or 0
+	local var_5_2, var_5_3 = HeroConfig.instance:getShowLevel(var_5_1)
 
-	for slot8 = 1, 3 do
-		gohelper.setActive(slot0["_gorank" .. slot8], slot8 == slot4 - 1)
+	for iter_5_0 = 1, 3 do
+		local var_5_4 = "_gorank" .. iter_5_0
+
+		gohelper.setActive(arg_5_0[var_5_4], iter_5_0 == var_5_3 - 1)
 	end
 end
 
-function slot0._refreshStarList(slot0)
-	for slot6 = 1, 6 do
-		gohelper.setActive(slot0["_gostar" .. slot6], slot6 <= (slot0.heroMo.config and slot1.config.rare or -1) + 1)
+function var_0_0._refreshStarList(arg_6_0)
+	local var_6_0 = arg_6_0.heroMo
+	local var_6_1 = var_6_0.config and var_6_0.config.rare or -1
+
+	for iter_6_0 = 1, 6 do
+		local var_6_2 = "_gostar" .. iter_6_0
+
+		gohelper.setActive(arg_6_0[var_6_2], iter_6_0 <= var_6_1 + 1)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0._simageheroicon:UnLoadImage()
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0._simageheroicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

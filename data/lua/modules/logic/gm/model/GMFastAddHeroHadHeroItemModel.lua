@@ -1,60 +1,61 @@
-module("modules.logic.gm.model.GMFastAddHeroHadHeroItemModel", package.seeall)
+﻿module("modules.logic.gm.model.GMFastAddHeroHadHeroItemModel", package.seeall)
 
-slot0 = class("GMFastAddHeroHadHeroItemModel", ListScrollModel)
-slot0.ShowType = {
+local var_0_0 = class("GMFastAddHeroHadHeroItemModel", ListScrollModel)
+
+var_0_0.ShowType = {
 	Equip = 2,
 	Hero = 1
 }
 
-function slot0.refreshList(slot0, slot1)
-	table.sort(slot1, slot0._sortMo)
-	slot0:setList(slot1)
+function var_0_0.refreshList(arg_1_0, arg_1_1)
+	table.sort(arg_1_1, arg_1_0._sortMo)
+	arg_1_0:setList(arg_1_1)
 end
 
-function slot0._sortMo(slot0, slot1)
-	if slot0.config.id ~= slot1.config.id then
-		return slot0.config.id < slot1.config.id
+function var_0_0._sortMo(arg_2_0, arg_2_1)
+	if arg_2_0.config.id ~= arg_2_1.config.id then
+		return arg_2_0.config.id < arg_2_1.config.id
 	end
 
-	return slot0.uid < slot1.uid
+	return arg_2_0.uid < arg_2_1.uid
 end
 
-function slot0.setShowType(slot0, slot1)
-	slot0.showType = slot1
+function var_0_0.setShowType(arg_3_0, arg_3_1)
+	arg_3_0.showType = arg_3_1
 end
 
-function slot0.getShowType(slot0)
-	return slot0.showType
+function var_0_0.getShowType(arg_4_0)
+	return arg_4_0.showType
 end
 
-function slot0.changeShowType(slot0)
-	if slot0.showType == uv0.ShowType.Hero then
-		slot0.showType = uv0.ShowType.Equip
+function var_0_0.changeShowType(arg_5_0)
+	if arg_5_0.showType == var_0_0.ShowType.Hero then
+		arg_5_0.showType = var_0_0.ShowType.Equip
 	else
-		slot0.showType = uv0.ShowType.Hero
+		arg_5_0.showType = var_0_0.ShowType.Hero
 	end
 end
 
-function slot0.setFastAddHeroView(slot0, slot1)
-	slot0.fastAddHeroView = slot1
+function var_0_0.setFastAddHeroView(arg_6_0, arg_6_1)
+	arg_6_0.fastAddHeroView = arg_6_1
 end
 
-function slot0.changeSelectHeroItem(slot0, slot1)
-	if slot0.fastAddHeroView then
-		slot0.fastAddHeroView:changeSelectHeroItemMo(slot1)
+function var_0_0.changeSelectHeroItem(arg_7_0, arg_7_1)
+	if arg_7_0.fastAddHeroView then
+		arg_7_0.fastAddHeroView:changeSelectHeroItemMo(arg_7_1)
 	end
 end
 
-function slot0.setSelectMo(slot0, slot1)
-	slot0.selectMo = slot1
+function var_0_0.setSelectMo(arg_8_0, arg_8_1)
+	arg_8_0.selectMo = arg_8_1
 
 	GMController.instance:dispatchEvent(GMController.Event.ChangeSelectHeroItem)
 end
 
-function slot0.getSelectMo(slot0)
-	return slot0.selectMo
+function var_0_0.getSelectMo(arg_9_0)
+	return arg_9_0.selectMo
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

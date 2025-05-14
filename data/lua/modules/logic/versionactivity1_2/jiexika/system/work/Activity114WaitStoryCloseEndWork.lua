@@ -1,26 +1,26 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114WaitStoryCloseEndWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114WaitStoryCloseEndWork", package.seeall)
 
-slot0 = class("Activity114WaitStoryCloseEndWork", Activity114BaseWork)
+local var_0_0 = class("Activity114WaitStoryCloseEndWork", Activity114BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if ViewMgr.instance:isOpen(ViewName.StoryView) or ViewMgr.instance:isOpen(ViewName.StoryHeroView) then
-		ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, slot0._onCloseViewFinish, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0)
+function var_0_0._onCloseViewFinish(arg_2_0)
 	if ViewMgr.instance:isOpen(ViewName.StoryView) or ViewMgr.instance:isOpen(ViewName.StoryHeroView) then
 		return
 	end
 
-	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, slot0._onCloseViewFinish, slot0)
-	slot0:onDone(true)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_3_0)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 end
 
-return slot0
+return var_0_0

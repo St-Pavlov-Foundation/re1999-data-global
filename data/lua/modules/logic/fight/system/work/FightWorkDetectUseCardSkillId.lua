@@ -1,15 +1,16 @@
-module("modules.logic.fight.system.work.FightWorkDetectUseCardSkillId", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDetectUseCardSkillId", package.seeall)
 
-slot0 = class("FightWorkDetectUseCardSkillId", FightWorkItem)
+local var_0_0 = class("FightWorkDetectUseCardSkillId", FightWorkItem)
 
-function slot0.onStart(slot0)
-	slot1 = slot0:com_registWorkDoneFlowSequence()
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
 
-	slot1:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.DetectHaveCardAfterEndOperation))
-	slot1:start()
+	var_1_0:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.DetectHaveCardAfterEndOperation))
+	var_1_0:start()
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

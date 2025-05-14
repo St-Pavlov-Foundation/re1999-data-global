@@ -1,39 +1,39 @@
-module("modules.logic.bossrush.view.V1a4_BossRushMainViewContainer", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRushMainViewContainer", package.seeall)
 
-slot0 = class("V1a4_BossRushMainViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a4_BossRushMainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = HelpShowView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = HelpShowView.New()
 
-	slot1:setHelpId(HelpEnum.HelpId.BossRushViewHelp)
-	slot1:setDelayTime(0.5)
+	var_1_0:setHelpId(HelpEnum.HelpId.BossRushViewHelp)
+	var_1_0:setDelayTime(0.5)
 
 	return {
 		V1a4_BossRushMainView.New(),
 		TabViewGroup.New(1, "top_left"),
-		slot1
+		var_1_0
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
-		}, 14601, slot0._closeCallback, nil, , slot0)
+		}, 14601, arg_2_0._closeCallback, nil, nil, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_7Enum.ActivityId.BossRush)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_7Enum.ActivityId.BossRush
 	})
 end
 
-return slot0
+return var_0_0

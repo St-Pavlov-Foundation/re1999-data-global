@@ -1,35 +1,35 @@
-module("modules.logic.task.model.TaskActivityMo", package.seeall)
+﻿module("modules.logic.task.model.TaskActivityMo", package.seeall)
 
-slot0 = pureTable("TaskActivityMo")
+local var_0_0 = pureTable("TaskActivityMo")
 
-function slot0.ctor(slot0)
-	slot0.typeId = 0
-	slot0.defineId = 0
-	slot0.value = 0
-	slot0.gainValue = 0
-	slot0.expiryTime = 0
-	slot0.config = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.typeId = 0
+	arg_1_0.defineId = 0
+	arg_1_0.value = 0
+	arg_1_0.gainValue = 0
+	arg_1_0.expiryTime = 0
+	arg_1_0.config = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:update(slot1)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:update(arg_2_1)
 
-	slot0.config = slot2
+	arg_2_0.config = arg_2_2
 end
 
-function slot0.update(slot0, slot1)
-	slot0.typeId = slot1.typeId
-	slot0.defineId = slot1.defineId
-	slot0.value = slot1.value
-	slot0.gainValue = slot1.gainValue
-	slot0.expiryTime = slot1.expiryTime
+function var_0_0.update(arg_3_0, arg_3_1)
+	arg_3_0.typeId = arg_3_1.typeId
+	arg_3_0.defineId = arg_3_1.defineId
+	arg_3_0.value = arg_3_1.value
+	arg_3_0.gainValue = arg_3_1.gainValue
+	arg_3_0.expiryTime = arg_3_1.expiryTime
 end
 
-function slot0.getbonus(slot0, slot1, slot2)
-	if slot1 == slot0.typeId then
-		slot0.defineId = slot2
-		slot0.gainValue = slot0.gainValue + slot0.config.needActivity
+function var_0_0.getbonus(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == arg_4_0.typeId then
+		arg_4_0.defineId = arg_4_2
+		arg_4_0.gainValue = arg_4_0.gainValue + arg_4_0.config.needActivity
 	end
 end
 
-return slot0
+return var_0_0

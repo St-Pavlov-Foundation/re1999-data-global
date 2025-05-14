@@ -1,105 +1,116 @@
-module("modules.logic.weekwalk.view.WeekWalkLayerRewardView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkLayerRewardView", package.seeall)
 
-slot0 = class("WeekWalkLayerRewardView", BaseView)
+local var_0_0 = class("WeekWalkLayerRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._txttitlecn = gohelper.findChildText(slot0.viewGO, "#txt_titlecn")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_titlecn/#txt_name")
-	slot0._txtstar = gohelper.findChildText(slot0.viewGO, "#txt_star")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "right/#scroll_reward")
-	slot0._gorewardcontent = gohelper.findChild(slot0.viewGO, "right/#scroll_reward/viewport/#go_rewardcontent")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtdeeptip = gohelper.findChildText(slot0.viewGO, "#txt_deeptip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._txttitlecn = gohelper.findChildText(arg_1_0.viewGO, "#txt_titlecn")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_titlecn/#txt_name")
+	arg_1_0._txtstar = gohelper.findChildText(arg_1_0.viewGO, "#txt_star")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_reward")
+	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_reward/viewport/#go_rewardcontent")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtdeeptip = gohelper.findChildText(arg_1_0.viewGO, "#txt_deeptip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, slot0._onWeekwalkTaskUpdate, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetTaskReward, slot0._getTaskBouns, slot0)
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("img_bg_black.png"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_5_0._onWeekwalkTaskUpdate, arg_5_0)
+	arg_5_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetTaskReward, arg_5_0._getTaskBouns, arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("img_bg_black.png"))
 end
 
-function slot0._updateTask(slot0)
-	WeekWalkTaskListModel.instance:showLayerTaskList(WeekWalkRewardView.getTaskType(slot0._mapId), slot0._mapId)
+function var_0_0._updateTask(arg_6_0)
+	local var_6_0 = WeekWalkRewardView.getTaskType(arg_6_0._mapId)
+
+	WeekWalkTaskListModel.instance:showLayerTaskList(var_6_0, arg_6_0._mapId)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._mapId = slot0.viewParam.mapId
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._mapId = arg_8_0.viewParam.mapId
 
-	gohelper.setActive(slot0._txtdeeptip.gameObject, not WeekWalkModel.isShallowMap(slot0._mapId))
-	slot0:_updateTask()
-	slot0:_updateInfo()
+	gohelper.setActive(arg_8_0._txtdeeptip.gameObject, not WeekWalkModel.isShallowMap(arg_8_0._mapId))
+	arg_8_0:_updateTask()
+	arg_8_0:_updateInfo()
 end
 
-function slot0._onWeekwalkTaskUpdate(slot0)
-	if not slot0._getTaskBonusItem then
+function var_0_0._onWeekwalkTaskUpdate(arg_9_0)
+	if not arg_9_0._getTaskBonusItem then
 		return
 	end
 
-	slot0._getTaskBonusItem:playOutAnim()
+	arg_9_0._getTaskBonusItem:playOutAnim()
 
-	slot0._getTaskBonusItem = nil
+	arg_9_0._getTaskBonusItem = nil
 
 	UIBlockMgr.instance:startBlock("WeekWalkLayerRewardView bonus")
-	TaskDispatcher.runDelay(slot0._showRewards, slot0, 0.3)
+	TaskDispatcher.runDelay(arg_9_0._showRewards, arg_9_0, 0.3)
 end
 
-function slot0._getTaskBouns(slot0, slot1)
-	slot0._getTaskBonusItem = slot1
+function var_0_0._getTaskBouns(arg_10_0, arg_10_1)
+	arg_10_0._getTaskBonusItem = arg_10_1
 end
 
-function slot0._showRewards(slot0)
-	slot0:_updateTask()
-	slot0:_updateInfo()
+function var_0_0._showRewards(arg_11_0)
+	arg_11_0:_updateTask()
+	arg_11_0:_updateInfo()
 	UIBlockMgr.instance:endBlock("WeekWalkLayerRewardView bonus")
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, WeekWalkTaskListModel.instance:getTaskRewardList())
+
+	local var_11_0 = WeekWalkTaskListModel.instance:getTaskRewardList()
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_11_0)
 end
 
-function slot0._updateInfo(slot0)
-	slot2 = 0
+function var_0_0._updateInfo(arg_12_0)
+	local var_12_0 = WeekWalkTaskListModel.instance:getList()
+	local var_12_1 = 0
+	local var_12_2 = 0
 
-	for slot7, slot8 in ipairs(WeekWalkTaskListModel.instance:getList()) do
-		if slot8.maxProgress then
-			slot3 = math.max(0, slot8.maxProgress)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		if iter_12_1.maxProgress then
+			var_12_2 = math.max(var_12_2, iter_12_1.maxProgress)
 		end
 	end
 
-	slot0._txtname.text = lua_weekwalk_scene.configDict[lua_weekwalk.configDict[slot0._mapId].sceneId].name
-	slot0._txttitlecn.text = luaLang(WeekWalkModel.instance.isShallowMap(slot0._mapId) and "p_weekwalklayerrewardview_shallowtitle" or "p_weekwalklayerrewardview_deeptitle")
-	slot0._mapInfo = WeekWalkModel.instance:getMapInfo(slot0._mapId)
+	local var_12_3 = lua_weekwalk.configDict[arg_12_0._mapId].sceneId
+	local var_12_4 = lua_weekwalk_scene.configDict[var_12_3]
 
-	if slot0._mapInfo then
-		slot2 = slot0._mapInfo:getCurStarInfo()
+	arg_12_0._txtname.text = var_12_4.name
+	arg_12_0._txttitlecn.text = luaLang(WeekWalkModel.instance.isShallowMap(arg_12_0._mapId) and "p_weekwalklayerrewardview_shallowtitle" or "p_weekwalklayerrewardview_deeptitle")
+	arg_12_0._mapInfo = WeekWalkModel.instance:getMapInfo(arg_12_0._mapId)
+
+	if arg_12_0._mapInfo then
+		var_12_1 = arg_12_0._mapInfo:getCurStarInfo()
 	end
 
-	slot0._txtstar.text = string.format("%s/%s", slot2, slot3)
+	arg_12_0._txtstar.text = string.format("%s/%s", var_12_1, var_12_2)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._showRewards, slot0)
+function var_0_0.onClose(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._showRewards, arg_13_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

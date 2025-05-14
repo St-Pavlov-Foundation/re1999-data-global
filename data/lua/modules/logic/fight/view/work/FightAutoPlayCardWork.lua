@@ -1,36 +1,39 @@
-module("modules.logic.fight.view.work.FightAutoPlayCardWork", package.seeall)
+﻿module("modules.logic.fight.view.work.FightAutoPlayCardWork", package.seeall)
 
-slot0 = class("FightAutoPlayCardWork", BaseWork)
+local var_0_0 = class("FightAutoPlayCardWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._beginRoundOp = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._beginRoundOp = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	if slot0._beginRoundOp then
-		FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, slot0._beginRoundOp.toId)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if arg_2_0._beginRoundOp then
+		FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, arg_2_0._beginRoundOp.toId)
 	end
 
-	FightController.instance:registerCallback(FightEvent.PlayCardOver, slot0._onPlayCardOver, slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
+	FightController.instance:registerCallback(FightEvent.PlayCardOver, arg_2_0._onPlayCardOver, arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
 
-	if slot0._beginRoundOp then
-		FightController.instance:dispatchEvent(FightEvent.PlayHandCard, FightCardModel.instance:getHandCards()[slot0._beginRoundOp.param1] and slot2 or 1, slot0._beginRoundOp.toId, slot0._beginRoundOp.param2)
+	if arg_2_0._beginRoundOp then
+		local var_2_0 = arg_2_0._beginRoundOp.param1
+		local var_2_1 = FightCardModel.instance:getHandCards()[var_2_0]
+
+		FightController.instance:dispatchEvent(FightEvent.PlayHandCard, var_2_1 and var_2_0 or 1, arg_2_0._beginRoundOp.toId, arg_2_0._beginRoundOp.param2)
 	end
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_3_0)
 	logError("自动战斗打牌超时")
 	FightController.instance:dispatchEvent(FightEvent.ForceEndAutoCardFlow)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.PlayCardOver, slot0._onPlayCardOver, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.PlayCardOver, arg_4_0._onPlayCardOver, arg_4_0)
 end
 
-function slot0._onPlayCardOver(slot0)
-	slot0:onDone(true)
+function var_0_0._onPlayCardOver(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-return slot0
+return var_0_0

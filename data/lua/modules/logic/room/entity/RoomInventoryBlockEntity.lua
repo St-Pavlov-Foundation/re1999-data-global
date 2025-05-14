@@ -1,89 +1,108 @@
-module("modules.logic.room.entity.RoomInventoryBlockEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomInventoryBlockEntity", package.seeall)
 
-slot0 = class("RoomInventoryBlockEntity", RoomBaseBlockEntity)
+local var_0_0 = class("RoomInventoryBlockEntity", RoomBaseBlockEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1.entityId)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1.entityId)
 
-	slot0.isWaterReform = slot1.isWaterReform
+	arg_1_0.isWaterReform = arg_1_1.isWaterReform
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.RoomInventoryBlock
 end
 
-function slot0.init(slot0, slot1)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 end
 
-function slot0.initComponents(slot0)
-	uv0.super.initComponents(slot0)
+function var_0_0.initComponents(arg_4_0)
+	var_0_0.super.initComponents(arg_4_0)
 end
 
-function slot0.onReviseResParams(slot0, slot1)
-	slot1.layer = UnityLayer.SceneOrthogonalOpaque
-	slot1.batch = false
-	slot1.highlight = false
-	slot1.isInventory = true
+function var_0_0.onReviseResParams(arg_5_0, arg_5_1)
+	arg_5_1.layer = UnityLayer.SceneOrthogonalOpaque
+	arg_5_1.batch = false
+	arg_5_1.highlight = false
+	arg_5_1.isInventory = true
 end
 
-function slot0.onEffectRebuild(slot0)
-	uv0.super.onEffectRebuild(slot0)
-	slot0:_refreshLinkGO()
-	slot0._scene.inventorymgr:refreshInventoryBlock()
+function var_0_0.onEffectRebuild(arg_6_0)
+	var_0_0.super.onEffectRebuild(arg_6_0)
+	arg_6_0:_refreshLinkGO()
+	arg_6_0._scene.inventorymgr:refreshInventoryBlock()
 end
 
-function slot0._refreshLinkGO(slot0)
-	if not slot0:getMO() then
+function var_0_0._refreshLinkGO(arg_7_0)
+	local var_7_0 = arg_7_0:getMO()
+
+	if not var_7_0 then
 		return
 	end
 
-	slot2 = RoomEnum.EffectKey.BlockLandKey
+	local var_7_1 = RoomEnum.EffectKey.BlockLandKey
+	local var_7_2 = var_7_0:getResourceList()
 
-	for slot7 = 1, #slot1:getResourceList() do
-		if RoomResourceEnum.ResourceLinkGOPath[slot3[slot7]] and RoomResourceEnum.ResourceLinkGOPath[slot8][slot7] and slot0.effect:getGameObjectByPath(slot2, RoomResourceEnum.ResourceLinkGOPath[slot8][slot7]) then
-			gohelper.setActive(slot9, false)
+	for iter_7_0 = 1, #var_7_2 do
+		local var_7_3 = var_7_2[iter_7_0]
+
+		if RoomResourceEnum.ResourceLinkGOPath[var_7_3] and RoomResourceEnum.ResourceLinkGOPath[var_7_3][iter_7_0] then
+			local var_7_4 = arg_7_0.effect:getGameObjectByPath(var_7_1, RoomResourceEnum.ResourceLinkGOPath[var_7_3][iter_7_0])
+
+			if var_7_4 then
+				gohelper.setActive(var_7_4, false)
+			end
 		end
 	end
 
-	if RoomBlockEnum.BlockLinkEffectGOPath[slot1:getDefineBlockType()] and slot0.effect:getGameObjectByPath(slot2, RoomBlockEnum.BlockLinkEffectGOPath[slot4]) then
-		gohelper.setActive(slot5, false)
+	local var_7_5 = var_7_0:getDefineBlockType()
+
+	if RoomBlockEnum.BlockLinkEffectGOPath[var_7_5] then
+		local var_7_6 = arg_7_0.effect:getGameObjectByPath(var_7_1, RoomBlockEnum.BlockLinkEffectGOPath[var_7_5])
+
+		if var_7_6 then
+			gohelper.setActive(var_7_6, false)
+		end
 	end
 
-	if slot0.effect:getGameObjectsByName(slot2, RoomEnum.EntityChildKey.NightLightGOKey) then
-		for slot9, slot10 in ipairs(slot5) do
-			gohelper.setActive(slot10, false)
+	local var_7_7 = arg_7_0.effect:getGameObjectsByName(var_7_1, RoomEnum.EntityChildKey.NightLightGOKey)
+
+	if var_7_7 then
+		for iter_7_1, iter_7_2 in ipairs(var_7_7) do
+			gohelper.setActive(iter_7_2, false)
 		end
 	end
 end
 
-function slot0.refreshRotation(slot0, slot1)
-	uv0.super.refreshRotation(slot0, slot1)
-	slot0._scene.inventorymgr:refreshInventoryBlock()
+function var_0_0.refreshRotation(arg_8_0, arg_8_1)
+	var_0_0.super.refreshRotation(arg_8_0, arg_8_1)
+	arg_8_0._scene.inventorymgr:refreshInventoryBlock()
 end
 
-function slot0.getMO(slot0)
-	if slot0.isWaterReform then
-		if not slot0._waterBlockMO then
-			slot1 = RoomBlockMO.New()
+function var_0_0.getMO(arg_9_0)
+	if arg_9_0.isWaterReform then
+		if not arg_9_0._waterBlockMO then
+			local var_9_0 = RoomBlockMO.New()
+			local var_9_1 = RoomConfig.instance:getWaterTypeByBlockId(arg_9_0.id)
+			local var_9_2 = RoomConfig.instance:getWaterReformTypeBlockCfg(var_9_1)
 
-			slot1:init(RoomConfig.instance:getWaterReformTypeBlockCfg(RoomConfig.instance:getWaterTypeByBlockId(slot0.id)))
+			var_9_0:init(var_9_2)
 
-			slot1.blockState = RoomBlockEnum.BlockState.WaterReform
+			var_9_0.blockState = RoomBlockEnum.BlockState.WaterReform
 
-			if slot1.defineId == RoomBlockEnum.EmptyDefineId then
-				slot1.rotate = math.random(0, 6)
+			if var_9_0.defineId == RoomBlockEnum.EmptyDefineId then
+				var_9_0.rotate = math.random(0, 6)
 			end
 
-			slot0._waterBlockMO = slot1
+			arg_9_0._waterBlockMO = var_9_0
 		end
 
-		return slot0._waterBlockMO
+		return arg_9_0._waterBlockMO
 	else
-		return RoomInventoryBlockModel.instance:getInventoryBlockMOById(slot0.id)
+		return RoomInventoryBlockModel.instance:getInventoryBlockMOById(arg_9_0.id)
 	end
 end
 
-return slot0
+return var_0_0

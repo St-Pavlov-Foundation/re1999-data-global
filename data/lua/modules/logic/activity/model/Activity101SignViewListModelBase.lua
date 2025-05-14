@@ -1,39 +1,46 @@
-module("modules.logic.activity.model.Activity101SignViewListModelBase", package.seeall)
+﻿module("modules.logic.activity.model.Activity101SignViewListModelBase", package.seeall)
 
-slot0 = class("Activity101SignViewListModelBase", ListScrollModel)
+local var_0_0 = class("Activity101SignViewListModelBase", ListScrollModel)
 
-function slot0.getViewportItemCount(slot0)
+function var_0_0.getViewportItemCount(arg_1_0)
 	return 7.2
 end
 
-function slot0.setList(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot1[slot6] then
-			slot8.__isPlayedOpenAnim = slot7.__isPlayedOpenAnim
+function var_0_0.setList(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getList()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		local var_2_1 = arg_2_1[iter_2_0]
+
+		if var_2_1 then
+			var_2_1.__isPlayedOpenAnim = iter_2_1.__isPlayedOpenAnim
 		end
 	end
 
-	uv0.super.setList(slot0, slot1)
+	var_0_0.super.setList(arg_2_0, arg_2_1)
 end
 
-function slot0.setDefaultPinStartIndex(slot0, slot1, slot2)
-	slot2 = slot2 or 1
+function var_0_0.setDefaultPinStartIndex(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_2 = arg_3_2 or 1
 
-	if not slot1 or #slot1 == 0 then
-		slot0:setStartPinIndex(1)
+	if not arg_3_1 or #arg_3_1 == 0 then
+		arg_3_0:setStartPinIndex(1)
 
 		return
 	end
 
-	slot0:setStartPinIndex(math.max(1, math.ceil(#slot1 - slot0:getViewportItemCount())) < slot2 and slot4 or 1)
+	local var_3_0 = #arg_3_1
+	local var_3_1 = math.max(1, math.ceil(var_3_0 - arg_3_0:getViewportItemCount()))
+
+	arg_3_0:setStartPinIndex(var_3_1 < arg_3_2 and var_3_1 or 1)
 end
 
-function slot0.setStartPinIndex(slot0, slot1)
-	slot0._startPinIndex = slot1
+function var_0_0.setStartPinIndex(arg_4_0, arg_4_1)
+	arg_4_0._startPinIndex = arg_4_1
 end
 
-function slot0.getStartPinIndex(slot0)
-	return slot0._startPinIndex or 1
+function var_0_0.getStartPinIndex(arg_5_0)
+	return arg_5_0._startPinIndex or 1
 end
 
-return slot0
+return var_0_0

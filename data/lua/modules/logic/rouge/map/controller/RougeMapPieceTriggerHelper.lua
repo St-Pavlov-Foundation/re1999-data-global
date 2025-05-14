@@ -1,169 +1,190 @@
-module("modules.logic.rouge.map.controller.RougeMapPieceTriggerHelper", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougeMapPieceTriggerHelper", package.seeall)
 
-slot0 = class("RougeMapPieceTriggerHelper")
+local var_0_0 = class("RougeMapPieceTriggerHelper")
 
-function slot0.triggerHandle(slot0, slot1)
-	uv0._initHandle()
+function var_0_0.triggerHandle(arg_1_0, arg_1_1)
+	var_0_0._initHandle()
 
-	if not lua_rouge_piece_select.configDict[slot1] then
-		logError("not found rouge_piece_select config .. " .. tostring(slot1))
+	local var_1_0 = lua_rouge_piece_select.configDict[arg_1_1]
 
-		return
-	end
-
-	if not uv0.handleDict[slot2.triggerType] then
-		logError("not found handle .. " .. tostring(slot3))
+	if not var_1_0 then
+		logError("not found rouge_piece_select config .. " .. tostring(arg_1_1))
 
 		return
 	end
 
-	slot4(slot0, slot2)
+	local var_1_1 = var_1_0.triggerType
+	local var_1_2 = var_0_0.handleDict[var_1_1]
+
+	if not var_1_2 then
+		logError("not found handle .. " .. tostring(var_1_1))
+
+		return
+	end
+
+	var_1_2(arg_1_0, var_1_0)
 end
 
-function slot0.getTip(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.getTip(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
 		return ""
 	end
 
-	uv0._initGetTipHandle()
+	var_0_0._initGetTipHandle()
 
-	if not lua_rouge_piece_select.configDict[slot1] then
-		logError("not found rouge_piece_select config .. " .. tostring(slot1))
+	local var_2_0 = lua_rouge_piece_select.configDict[arg_2_1]
+
+	if not var_2_0 then
+		logError("not found rouge_piece_select config .. " .. tostring(arg_2_1))
 
 		return
 	end
 
-	return uv0.getTipHandleDict[slot3.triggerType] or uv0.defaultGetPieceTip(slot0, slot3, slot2)
+	local var_2_1 = var_2_0.triggerType
+
+	return (var_0_0.getTipHandleDict[var_2_1] or var_0_0.defaultGetPieceTip)(arg_2_0, var_2_0, arg_2_2)
 end
 
-function slot0.getChoiceStatus(slot0, slot1)
-	uv0._initGetStatusHandle()
+function var_0_0.getChoiceStatus(arg_3_0, arg_3_1)
+	var_0_0._initGetStatusHandle()
 
-	if not lua_rouge_piece_select.configDict[slot1] then
+	local var_3_0 = lua_rouge_piece_select.configDict[arg_3_1]
+
+	if not var_3_0 then
 		return RougeMapEnum.ChoiceStatus.Normal
 	end
 
-	return uv0.getStatusHandleDict[slot2.triggerType] or uv0.defaultGetStatus(slot0, slot2)
+	local var_3_1 = var_3_0.triggerType
+
+	return (var_0_0.getStatusHandleDict[var_3_1] or var_0_0.defaultGetStatus)(arg_3_0, var_3_0)
 end
 
-function slot0._initHandle()
-	if uv0.handleDict then
+function var_0_0._initHandle()
+	if var_0_0.handleDict then
 		return
 	end
 
-	uv0.handleDict = {
-		[RougeMapEnum.PieceTriggerType.Empty] = uv0.handleEmpty,
-		[RougeMapEnum.PieceTriggerType.AcceptEntrust] = uv0.handleAcceptEntrust,
-		[RougeMapEnum.PieceTriggerType.Reward] = uv0.handleReward,
-		[RougeMapEnum.PieceTriggerType.Compound] = uv0.handleCompound,
-		[RougeMapEnum.PieceTriggerType.Shop] = uv0.handleShop,
-		[RougeMapEnum.PieceTriggerType.Exchange] = uv0.handleExchange,
-		[RougeMapEnum.PieceTriggerType.EndFight] = uv0.handleEndFight,
-		[RougeMapEnum.PieceTriggerType.LevelUpSp] = uv0.handleLevelUpSp
+	var_0_0.handleDict = {
+		[RougeMapEnum.PieceTriggerType.Empty] = var_0_0.handleEmpty,
+		[RougeMapEnum.PieceTriggerType.AcceptEntrust] = var_0_0.handleAcceptEntrust,
+		[RougeMapEnum.PieceTriggerType.Reward] = var_0_0.handleReward,
+		[RougeMapEnum.PieceTriggerType.Compound] = var_0_0.handleCompound,
+		[RougeMapEnum.PieceTriggerType.Shop] = var_0_0.handleShop,
+		[RougeMapEnum.PieceTriggerType.Exchange] = var_0_0.handleExchange,
+		[RougeMapEnum.PieceTriggerType.EndFight] = var_0_0.handleEndFight,
+		[RougeMapEnum.PieceTriggerType.LevelUpSp] = var_0_0.handleLevelUpSp
 	}
 end
 
-function slot0.handleEmpty()
+function var_0_0.handleEmpty()
 	logNormal("empty 类型")
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onExitPieceChoiceEvent)
 end
 
-function slot0.handleAcceptEntrust(slot0, slot1)
+function var_0_0.handleAcceptEntrust(arg_6_0, arg_6_1)
 	logNormal("接受委托")
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onExitPieceChoiceEvent)
 end
 
-function slot0.handleReward(slot0, slot1)
+function var_0_0.handleReward(arg_7_0, arg_7_1)
 	logNormal("奖励")
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onExitPieceChoiceEvent)
 end
 
-function slot0.handleCompound(slot0, slot1)
+function var_0_0.handleCompound(arg_8_0, arg_8_1)
 	logNormal("合成")
 	ViewMgr.instance:openView(ViewName.RougeCollectionCompositeView)
 end
 
-function slot0.handleShop(slot0, slot1)
+function var_0_0.handleShop(arg_9_0, arg_9_1)
 	logNormal("休整购物")
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceViewStatusChange, RougeMapEnum.PieceChoiceViewStatus.Store)
 end
 
-function slot0.handleExchange(slot0, slot1)
+function var_0_0.handleExchange(arg_10_0, arg_10_1)
 	logNormal("交换")
 	RougePopController.instance:addPopViewWithViewName(ViewName.RougeMapCollectionExchangeView)
 end
 
-function slot0.handleEndFight(slot0, slot1)
+function var_0_0.handleEndFight(arg_11_0, arg_11_1)
 	logNormal("结局战斗")
 
-	slot3 = string.splitToNumber(slot1.triggerParam, "#")
+	local var_11_0 = RougeMapEnum.ChapterId
+	local var_11_1 = string.splitToNumber(arg_11_1.triggerParam, "#")
+	local var_11_2 = var_11_1[1]
 
-	RougeMapModel.instance:setEndId(slot3[2])
-	DungeonFightController.instance:enterFight(RougeMapEnum.ChapterId, slot3[1])
+	RougeMapModel.instance:setEndId(var_11_1[2])
+	DungeonFightController.instance:enterFight(var_11_0, var_11_2)
 end
 
-function slot0.handleLevelUpSp(slot0, slot1)
+function var_0_0.handleLevelUpSp(arg_12_0, arg_12_1)
 	logNormal("专武升级")
-	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionLevelUpView, {
+
+	local var_12_0 = arg_12_0.triggerStr and arg_12_0.triggerStr.collectionLevelUpNum or 0
+	local var_12_1 = {
 		closeBtnVisible = true,
-		maxLevelUpNum = slot0.triggerStr and slot0.triggerStr.collectionLevelUpNum or 0
-	})
+		maxLevelUpNum = var_12_0
+	}
+
+	RougePopController.instance:addPopViewWithViewName(ViewName.RougeCollectionLevelUpView, var_12_1)
 end
 
-function slot0._initGetTipHandle()
-	if uv0.getTipHandleDict then
+function var_0_0._initGetTipHandle()
+	if var_0_0.getTipHandleDict then
 		return
 	end
 
-	uv0.getTipHandleDict = {
-		[RougeMapEnum.PieceTriggerType.Exchange] = uv0.getExchangeTip
+	var_0_0.getTipHandleDict = {
+		[RougeMapEnum.PieceTriggerType.Exchange] = var_0_0.getExchangeTip
 	}
 end
 
-function slot0.defaultGetPieceTip(slot0, slot1, slot2)
-	if slot2 ~= RougeMapEnum.ChoiceStatus.Lock then
+function var_0_0.defaultGetPieceTip(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_2 ~= RougeMapEnum.ChoiceStatus.Lock then
 		return ""
 	end
 
-	return RougeMapUnlockHelper.getLockTips(slot1.unlockType, slot1.unlockParam)
+	return RougeMapUnlockHelper.getLockTips(arg_14_1.unlockType, arg_14_1.unlockParam)
 end
 
-function slot0.getExchangeTip(slot0, slot1, slot2)
-	if slot2 == RougeMapEnum.ChoiceStatus.Lock then
-		return RougeMapUnlockHelper.getLockTips(slot1.unlockType, slot1.unlockParam)
+function var_0_0.getExchangeTip(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_2 == RougeMapEnum.ChoiceStatus.Lock then
+		return RougeMapUnlockHelper.getLockTips(arg_15_1.unlockType, arg_15_1.unlockParam)
 	end
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_remain_exchange_time"), RougeMapModel.instance:getExchangeMaxDisplaceNum() - (slot0.triggerStr and slot0.triggerStr.displaceNum or 0))
+	local var_15_0 = RougeMapModel.instance:getExchangeMaxDisplaceNum() - (arg_15_0.triggerStr and arg_15_0.triggerStr.displaceNum or 0)
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_remain_exchange_time"), var_15_0)
 end
 
-function slot0._initGetStatusHandle()
-	if uv0.getStatusHandleDict then
+function var_0_0._initGetStatusHandle()
+	if var_0_0.getStatusHandleDict then
 		return
 	end
 
-	uv0.getStatusHandleDict = {
-		[RougeMapEnum.PieceTriggerType.Exchange] = uv0.getExchangeStatus
+	var_0_0.getStatusHandleDict = {
+		[RougeMapEnum.PieceTriggerType.Exchange] = var_0_0.getExchangeStatus
 	}
 end
 
-function slot0.defaultGetStatus(slot0, slot1)
-	if RougeMapUnlockHelper.checkIsUnlock(slot1.unlockType, slot1.unlockParam) then
+function var_0_0.defaultGetStatus(arg_17_0, arg_17_1)
+	if RougeMapUnlockHelper.checkIsUnlock(arg_17_1.unlockType, arg_17_1.unlockParam) then
 		return RougeMapEnum.ChoiceStatus.Normal
 	end
 
 	return RougeMapEnum.ChoiceStatus.Lock
 end
 
-function slot0.getExchangeStatus(slot0, slot1)
-	if not RougeMapUnlockHelper.checkIsUnlock(slot1.unlockType, slot1.unlockParam) then
+function var_0_0.getExchangeStatus(arg_18_0, arg_18_1)
+	if not RougeMapUnlockHelper.checkIsUnlock(arg_18_1.unlockType, arg_18_1.unlockParam) then
 		return RougeMapEnum.ChoiceStatus.Lock
 	end
 
-	if RougeMapModel.instance:getExchangeMaxDisplaceNum() - (slot0.triggerStr and slot0.triggerStr.displaceNum or 0) < 1 then
+	if RougeMapModel.instance:getExchangeMaxDisplaceNum() - (arg_18_0.triggerStr and arg_18_0.triggerStr.displaceNum or 0) < 1 then
 		return RougeMapEnum.ChoiceStatus.Bought
 	end
 
 	return RougeMapEnum.ChoiceStatus.Normal
 end
 
-return slot0
+return var_0_0

@@ -1,99 +1,113 @@
-module("modules.logic.social.model.SocialMessageListModel", package.seeall)
+﻿module("modules.logic.social.model.SocialMessageListModel", package.seeall)
 
-slot0 = class("SocialMessageListModel", MixScrollModel)
+local var_0_0 = class("SocialMessageListModel", MixScrollModel)
 
-function slot0.setMessageList(slot0, slot1)
-	slot0._moList = {}
-	slot2 = 0
-	slot3 = ServerTime.now()
+function var_0_0.setMessageList(arg_1_0, arg_1_1)
+	arg_1_0._moList = {}
 
-	if slot1 then
-		for slot7, slot8 in pairs(slot1) do
-			if TimeUtil.getDiffDay(slot3, tonumber(slot8.sendTime) / 1000) >= 1 then
-				if slot2 == 0 or TimeUtil.getDiffDay(slot2, slot9) >= 1 then
-					table.insert(slot0._moList, {
-						chattime = TimeUtil.timestampToString2(slot9)
-					})
+	local var_1_0 = 0
+	local var_1_1 = ServerTime.now()
 
-					slot2 = slot9
+	if arg_1_1 then
+		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
+			local var_1_2 = tonumber(iter_1_1.sendTime) / 1000
+
+			if TimeUtil.getDiffDay(var_1_1, var_1_2) >= 1 then
+				if var_1_0 == 0 or TimeUtil.getDiffDay(var_1_0, var_1_2) >= 1 then
+					local var_1_3 = {
+						chattime = TimeUtil.timestampToString2(var_1_2)
+					}
+
+					table.insert(arg_1_0._moList, var_1_3)
+
+					var_1_0 = var_1_2
 				end
-			elseif slot9 - slot2 >= 300 or slot2 == 0 or TimeUtil.getDiffDay(slot2, slot9) >= 1 then
-				table.insert(slot0._moList, {
-					chattime = TimeUtil.timestampToString4(slot9)
-				})
+			elseif var_1_2 - var_1_0 >= 300 or var_1_0 == 0 or TimeUtil.getDiffDay(var_1_0, var_1_2) >= 1 then
+				local var_1_4 = {
+					chattime = TimeUtil.timestampToString4(var_1_2)
+				}
 
-				slot2 = slot9
+				table.insert(arg_1_0._moList, var_1_4)
+
+				var_1_0 = var_1_2
 			end
 
-			table.insert(slot0._moList, slot8)
+			table.insert(arg_1_0._moList, iter_1_1)
 
-			if SocialConfig.instance:isMsgViolation(slot8.content) then
-				table.insert(slot0._moList, {
-					showWarm = 1
-				})
+			if SocialConfig.instance:isMsgViolation(iter_1_1.content) then
+				local var_1_5 = {}
+
+				var_1_5.showWarm = 1
+
+				table.insert(arg_1_0._moList, var_1_5)
 			end
 		end
 	end
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-function slot0._sortFunction(slot0, slot1)
-	return slot0.sendTime < slot1.sendTime
+function var_0_0._sortFunction(arg_2_0, arg_2_1)
+	return arg_2_0.sendTime < arg_2_1.sendTime
 end
 
-function slot0.getInfoList(slot0, slot1)
-	if not slot0:getList() or #slot2 <= 0 then
+function var_0_0.getInfoList(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getList()
+
+	if not var_3_0 or #var_3_0 <= 0 then
 		return {}
 	end
 
-	slot3 = gohelper.findChildText(slot1, "#txt_contentself")
-	slot4 = gohelper.findChildText(slot1, "#txt_contentothers")
-	slot5 = gohelper.findChildText(slot1, "#txt_warm")
-	slot6 = nil
-	slot7 = {}
+	local var_3_1 = gohelper.findChildText(arg_3_1, "#txt_contentself")
+	local var_3_2 = gohelper.findChildText(arg_3_1, "#txt_contentothers")
+	local var_3_3 = gohelper.findChildText(arg_3_1, "#txt_warm")
+	local var_3_4
+	local var_3_5 = {}
 
-	for slot11, slot12 in ipairs(slot2) do
-		slot13 = 1
-		slot14 = 0
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		local var_3_6 = 1
+		local var_3_7 = 0
 
-		if slot12.chattime then
-			slot14 = 48
-		elseif slot12.showWarm then
-			if not slot6 and slot5 then
-				slot5.text = luaLang("socialmessageitem_warningtips")
-				slot6 = 62.9 + slot5.preferredHeight
-				slot5.text = ""
+		if iter_3_1.chattime then
+			var_3_7 = 48
+		elseif iter_3_1.showWarm then
+			if not var_3_4 and var_3_3 then
+				var_3_3.text = luaLang("socialmessageitem_warningtips")
+				var_3_4 = 62.9 + var_3_3.preferredHeight
+				var_3_3.text = ""
 			end
 
-			if not slot6 then
-				slot14 = 0
-			end
+			var_3_7 = var_3_4 or 0
 		else
-			slot15 = PlayerModel.instance:getMyUserId()
-			slot16 = 0
+			local var_3_8 = PlayerModel.instance:getMyUserId()
+			local var_3_9 = 0
+			local var_3_10 = var_3_0[iter_3_0 + 1]
 
-			if slot2[slot11 + 1] then
-				if slot17.senderId == slot15 and slot12.senderId ~= slot15 then
-					slot16 = 13
-				elseif slot17.senderId ~= slot15 and slot12.senderId == slot15 then
-					slot16 = 13
+			if var_3_10 then
+				if var_3_10.senderId == var_3_8 and iter_3_1.senderId ~= var_3_8 then
+					var_3_9 = 13
+				elseif var_3_10.senderId ~= var_3_8 and iter_3_1.senderId == var_3_8 then
+					var_3_9 = 13
 				end
 			end
 
-			if slot12:isHasOp() then
-				slot18 = (slot15 == slot12.senderId and GameUtil.getTextHeightByLine(slot3, slot12.content, 37.1) or GameUtil.getTextHeightByLine(slot4, slot12.content, 37.1)) + 40
+			local var_3_11 = var_3_8 == iter_3_1.senderId and GameUtil.getTextHeightByLine(var_3_1, iter_3_1.content, 37.1) or GameUtil.getTextHeightByLine(var_3_2, iter_3_1.content, 37.1)
+
+			if iter_3_1:isHasOp() then
+				var_3_11 = var_3_11 + 40
 			end
 
-			slot14 = math.max(slot18 + 82.9, 120) - slot16
+			var_3_7 = math.max(var_3_11 + 82.9, 120) - var_3_9
 		end
 
-		table.insert(slot7, SLFramework.UGUI.MixCellInfo.New(slot13, slot14, nil))
+		local var_3_12 = SLFramework.UGUI.MixCellInfo.New(var_3_6, var_3_7, nil)
+
+		table.insert(var_3_5, var_3_12)
 	end
 
-	return slot7
+	return var_3_5
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

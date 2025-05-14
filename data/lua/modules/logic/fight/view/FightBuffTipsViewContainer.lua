@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightBuffTipsViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightBuffTipsViewContainer", package.seeall)
 
-slot0 = class("FightBuffTipsViewContainer", BaseViewContainer)
+local var_0_0 = class("FightBuffTipsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightBuffTipsView.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,42 +1,50 @@
-module("modules.logic.fight.system.work.FightWorkEffectExpointMaxAdd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectExpointMaxAdd", package.seeall)
 
-slot0 = class("FightWorkEffectExpointMaxAdd", FightEffectBase)
+local var_0_0 = class("FightWorkEffectExpointMaxAdd", FightEffectBase)
 
-function slot0.onStart(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, slot0._actEffectMO.targetId, slot0._actEffectMO.effectNum)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.targetId
+
+	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, var_1_0, arg_1_0._actEffectMO.effectNum)
+	arg_1_0:onDone(true)
 end
 
-function slot0._startAddExpointMax(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot0:onDone(true)
+function var_0_0._startAddExpointMax(arg_2_0)
+	local var_2_0 = arg_2_0._actEffectMO.targetId
+	local var_2_1 = FightHelper.getEntity(var_2_0)
+
+	if not var_2_1 then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if not slot2:getMO() then
-		slot0:onDone(true)
+	local var_2_2 = var_2_1:getMO()
+
+	if not var_2_2 then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot3:hasBuffFeature(FightEnum.BuffType_SpExPointMaxAdd) then
-		slot0:onDone(true)
+	if var_2_2:hasBuffFeature(FightEnum.BuffType_SpExPointMaxAdd) then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	slot3:changeExpointMaxAdd(slot0._actEffectMO.effectNum)
-	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, slot1, slot0._actEffectMO.effectNum)
-	slot0:_onDone()
+	var_2_2:changeExpointMaxAdd(arg_2_0._actEffectMO.effectNum)
+	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, var_2_0, arg_2_0._actEffectMO.effectNum)
+	arg_2_0:_onDone()
 end
 
-function slot0._onDone(slot0)
-	slot0:clearWork()
-	slot0:onDone(true)
+function var_0_0._onDone(arg_3_0)
+	arg_3_0:clearWork()
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

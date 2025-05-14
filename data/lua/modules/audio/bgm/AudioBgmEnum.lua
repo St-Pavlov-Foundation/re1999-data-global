@@ -1,7 +1,8 @@
-module("modules.audio.bgm.AudioBgmEnum", package.seeall)
+﻿module("modules.audio.bgm.AudioBgmEnum", package.seeall)
 
-slot0 = _M
-slot0.Layer = {
+local var_0_0 = _M
+
+var_0_0.Layer = {
 	Act_GeTian = 602,
 	VersionActivity1_2Main = 200,
 	FairyLand = 904,
@@ -84,9 +85,9 @@ slot0.Layer = {
 	Meilanni = 15,
 	Act_QuNiang = 601
 }
-slot0.UsageType = {
+var_0_0.UsageType = {
 	View = 2,
 	Scene = 1
 }
 
-return slot0
+return var_0_0

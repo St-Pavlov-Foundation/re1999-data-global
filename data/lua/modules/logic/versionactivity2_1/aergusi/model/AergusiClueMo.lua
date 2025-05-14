@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity2_1.aergusi.model.AergusiClueMo", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.model.AergusiClueMo", package.seeall)
 
-slot0 = class("AergusiClueMo")
+local var_0_0 = class("AergusiClueMo")
 
-function slot0.ctor(slot0)
-	slot0.clueId = 0
-	slot0.status = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.clueId = 0
+	arg_1_0.status = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.clueId = slot1.clueId
-	slot0.status = slot1.status
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.clueId = arg_2_1.clueId
+	arg_2_0.status = arg_2_1.status
 end
 
-return slot0
+return var_0_0

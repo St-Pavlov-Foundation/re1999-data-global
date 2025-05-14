@@ -1,143 +1,150 @@
-module("modules.logic.handbook.view.HandbookCGView", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookCGView", package.seeall)
 
-slot0 = class("HandbookCGView", BaseView)
+local var_0_0 = class("HandbookCGView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simagelbwz4 = gohelper.findChildSingleImage(slot0.viewGO, "icon/#simage_lbwz4")
-	slot0._btnchange = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_change")
-	slot0._scrollcg = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_cg")
-	slot0.verticalScrollPixelList = {}
-	slot0._lastSelectId = nil
-	slot0._ischanged = false
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simagelbwz4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "icon/#simage_lbwz4")
+	arg_1_0._btnchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_change")
+	arg_1_0._scrollcg = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_cg")
+	arg_1_0.verticalScrollPixelList = {}
+	arg_1_0._lastSelectId = nil
+	arg_1_0._ischanged = false
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._scrollcg:AddOnValueChanged(slot0._onValueChange, slot0)
-	slot0._btnchange:AddClickListener(slot0._btnchangeOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._scrollcg:AddOnValueChanged(arg_2_0._onValueChange, arg_2_0)
+	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._scrollcg:RemoveOnValueChanged()
-	slot0._btnchange:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._scrollcg:RemoveOnValueChanged()
+	arg_3_0._btnchange:RemoveClickListener()
 end
 
-function slot0._btnchangeOnClick(slot0)
+function var_0_0._btnchangeOnClick(arg_4_0)
 	HandbookController.instance:openStoryView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getHandbookBg("full/bg_lb"))
-	slot0._simagelbwz4:LoadImage(ResUrl.getHandbookBg("bg_lbwz4"))
-	gohelper.addUIClickAudio(slot0._btnchange.gameObject, AudioEnum.UI.play_ui_screenplay_plot_switch)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getHandbookBg("full/bg_lb"))
+	arg_5_0._simagelbwz4:LoadImage(ResUrl.getHandbookBg("bg_lbwz4"))
+	gohelper.addUIClickAudio(arg_5_0._btnchange.gameObject, AudioEnum.UI.play_ui_screenplay_plot_switch)
 
-	slot0._selectItemList = {}
+	arg_5_0._selectItemList = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
 
-	slot0._csScroll = slot0.viewContainer:getCsScroll()._csMixScroll
+	arg_6_0._csScroll = arg_6_0.viewContainer:getCsScroll()._csMixScroll
 
-	slot0:_refreshBtnList()
+	arg_6_0:_refreshBtnList()
 
-	slot0._scrollcg.verticalNormalizedPosition = 1
+	arg_6_0._scrollcg.verticalNormalizedPosition = 1
 end
 
-function slot0._refreshBtnList(slot0)
-	for slot4 = 1, 2 do
-		if not slot0._selectItemList[slot4] then
-			slot5 = slot0:getUserDataTb_()
-			slot5.go = gohelper.findChild(slot0.viewGO, "#scroll_btnlist/viewport/content/item" .. slot4)
-			slot5.gobeselected = gohelper.findChild(slot5.go, "beselected")
-			slot5.gounselected = gohelper.findChild(slot5.go, "unselected")
-			slot5.chapternamecn1 = gohelper.findChildText(slot5.go, "beselected/chapternamecn")
-			slot5.chapternameen1 = gohelper.findChildText(slot5.go, "beselected/chapternameen")
-			slot5.chapternamecn2 = gohelper.findChildText(slot5.go, "unselected/chapternamecn")
-			slot5.chapternameen2 = gohelper.findChildText(slot5.go, "unselected/chapternameen")
-			slot5.btnclick = gohelper.findChildButtonWithAudio(slot5.go, "btnclick", AudioEnum.UI.Play_UI_Universal_Click)
+function var_0_0._refreshBtnList(arg_7_0)
+	for iter_7_0 = 1, 2 do
+		local var_7_0 = arg_7_0._selectItemList[iter_7_0]
 
-			slot5.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot5)
-			table.insert(slot0._selectItemList, slot5)
+		if not var_7_0 then
+			var_7_0 = arg_7_0:getUserDataTb_()
+			var_7_0.go = gohelper.findChild(arg_7_0.viewGO, "#scroll_btnlist/viewport/content/item" .. iter_7_0)
+			var_7_0.gobeselected = gohelper.findChild(var_7_0.go, "beselected")
+			var_7_0.gounselected = gohelper.findChild(var_7_0.go, "unselected")
+			var_7_0.chapternamecn1 = gohelper.findChildText(var_7_0.go, "beselected/chapternamecn")
+			var_7_0.chapternameen1 = gohelper.findChildText(var_7_0.go, "beselected/chapternameen")
+			var_7_0.chapternamecn2 = gohelper.findChildText(var_7_0.go, "unselected/chapternamecn")
+			var_7_0.chapternameen2 = gohelper.findChildText(var_7_0.go, "unselected/chapternameen")
+			var_7_0.btnclick = gohelper.findChildButtonWithAudio(var_7_0.go, "btnclick", AudioEnum.UI.Play_UI_Universal_Click)
+
+			var_7_0.btnclick:AddClickListener(arg_7_0._btnclickOnClick, arg_7_0, var_7_0)
+			table.insert(arg_7_0._selectItemList, var_7_0)
 		end
 
-		slot5.selectId = slot4
+		var_7_0.selectId = iter_7_0
 
-		gohelper.setActive(slot5.go, true)
+		gohelper.setActive(var_7_0.go, true)
 	end
 
-	if #slot0._selectItemList > 0 then
-		slot0:_btnclickOnClick(slot0._selectItemList[1])
+	if #arg_7_0._selectItemList > 0 then
+		arg_7_0:_btnclickOnClick(arg_7_0._selectItemList[1])
 	else
 		HandbookCGTripleListModel.instance:clearStoryList()
 	end
 end
 
-function slot0._btnclickOnClick(slot0, slot1)
-	slot0._ischanged = true
+function var_0_0._btnclickOnClick(arg_8_0, arg_8_1)
+	arg_8_0._ischanged = true
 
-	if slot0._lastSelectId == slot1.selectId then
+	local var_8_0 = arg_8_1.selectId
+
+	if arg_8_0._lastSelectId == var_8_0 then
 		return
 	else
-		slot0._lastSelectId = slot2
+		arg_8_0._lastSelectId = var_8_0
 	end
 
-	slot3 = {}
-	slot4 = {}
+	local var_8_1 = {}
+	local var_8_2 = {}
 
-	if slot2 == HandbookEnum.CGType.Dungeon then
-		slot4 = HandbookConfig.instance:getDungeonCGList()
-	elseif slot2 == HandbookEnum.CGType.Role then
-		slot4 = HandbookConfig.instance:getRoleCGList()
+	if var_8_0 == HandbookEnum.CGType.Dungeon then
+		var_8_2 = HandbookConfig.instance:getDungeonCGList()
+	elseif var_8_0 == HandbookEnum.CGType.Role then
+		var_8_2 = HandbookConfig.instance:getRoleCGList()
 	end
 
-	slot3.cgList = slot4
-	slot3.cgType = slot2
+	var_8_1.cgList = var_8_2
+	var_8_1.cgType = var_8_0
 
-	HandbookCGTripleListModel.instance:setCGList(slot3)
+	HandbookCGTripleListModel.instance:setCGList(var_8_1)
 
-	for slot8, slot9 in ipairs(slot0._selectItemList) do
-		gohelper.setActive(slot9.gobeselected, slot2 == slot9.selectId)
-		gohelper.setActive(slot9.gounselected, slot2 ~= slot9.selectId)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._selectItemList) do
+		gohelper.setActive(iter_8_1.gobeselected, var_8_0 == iter_8_1.selectId)
+		gohelper.setActive(iter_8_1.gounselected, var_8_0 ~= iter_8_1.selectId)
 	end
 
-	if slot0.verticalScrollPixelList[slot0._lastSelectId] then
-		slot0._csScroll.VerticalScrollPixel = slot5
+	local var_8_3 = arg_8_0.verticalScrollPixelList[arg_8_0._lastSelectId]
+
+	if var_8_3 then
+		arg_8_0._csScroll.VerticalScrollPixel = var_8_3
 	else
-		slot0._scrollcg.verticalNormalizedPosition = 1
+		arg_8_0._scrollcg.verticalNormalizedPosition = 1
 	end
 
-	slot0._ischanged = false
+	arg_8_0._ischanged = false
 end
 
-function slot0._onValueChange(slot0)
-	if slot0._ischanged then
+function var_0_0._onValueChange(arg_9_0)
+	if arg_9_0._ischanged then
 		return
 	end
 
-	slot0.verticalScrollPixelList[slot0._lastSelectId] = slot0._csScroll.VerticalScrollPixel
+	arg_9_0.verticalScrollPixelList[arg_9_0._lastSelectId] = arg_9_0._csScroll.VerticalScrollPixel
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.HandbookStoryView then
+function var_0_0._onOpenViewFinish(arg_10_0, arg_10_1)
+	if arg_10_1 == ViewName.HandbookStoryView then
 		ViewMgr.instance:closeView(ViewName.HandbookCGView, true)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0._selectItemList) do
-		slot5.btnclick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._selectItemList) do
+		iter_12_1.btnclick:RemoveClickListener()
 	end
 
-	slot0._simagebg:UnLoadImage()
-	slot0._simagelbwz4:UnLoadImage()
+	arg_12_0._simagebg:UnLoadImage()
+	arg_12_0._simagelbwz4:UnLoadImage()
 end
 
-return slot0
+return var_0_0

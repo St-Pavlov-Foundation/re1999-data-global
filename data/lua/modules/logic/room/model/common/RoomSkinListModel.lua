@@ -1,89 +1,103 @@
-module("modules.logic.room.model.common.RoomSkinListModel", package.seeall)
+﻿module("modules.logic.room.model.common.RoomSkinListModel", package.seeall)
 
-slot0 = class("RoomSkinListModel", ListScrollModel)
+local var_0_0 = class("RoomSkinListModel", ListScrollModel)
 
-function slot1(slot0, slot1)
-	if RoomConfig.instance:getRoomSkinPriority(slot0.id) ~= RoomConfig.instance:getRoomSkinPriority(slot1.id) then
-		return slot5 < slot4
+local function var_0_1(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0.id
+	local var_1_1 = arg_1_1.id
+	local var_1_2 = RoomConfig.instance:getRoomSkinPriority(var_1_0)
+	local var_1_3 = RoomConfig.instance:getRoomSkinPriority(var_1_1)
+
+	if var_1_2 ~= var_1_3 then
+		return var_1_3 < var_1_2
 	end
 
-	if RoomConfig.instance:getRoomSkinRare(slot2) ~= RoomConfig.instance:getRoomSkinRare(slot3) then
-		return slot7 < slot6
+	local var_1_4 = RoomConfig.instance:getRoomSkinRare(var_1_0)
+	local var_1_5 = RoomConfig.instance:getRoomSkinRare(var_1_1)
+
+	if var_1_4 ~= var_1_5 then
+		return var_1_5 < var_1_4
 	end
 
-	return slot2 < slot3
+	return var_1_0 < var_1_1
 end
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-function slot0.clear(slot0)
-	slot0:_clearData()
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_4_0)
+	arg_4_0:_clearData()
+	var_0_0.super.clear(arg_4_0)
 end
 
-function slot0._clearData(slot0)
-	slot0:_setSelectPartId()
-	slot0:setCurPreviewSkinId()
+function var_0_0._clearData(arg_5_0)
+	arg_5_0:_setSelectPartId()
+	arg_5_0:setCurPreviewSkinId()
 end
 
-function slot0._setSelectPartId(slot0, slot1)
-	if not slot1 then
+function var_0_0._setSelectPartId(arg_6_0, arg_6_1)
+	if not arg_6_1 then
 		return
 	end
 
-	slot0._selectPartId = slot1
+	arg_6_0._selectPartId = arg_6_1
 end
 
-function slot0.setRoomSkinList(slot0, slot1)
-	slot0:_setSelectPartId(slot1)
+function var_0_0.setRoomSkinList(arg_7_0, arg_7_1)
+	arg_7_0:_setSelectPartId(arg_7_1)
 
-	slot3 = {}
+	local var_7_0 = arg_7_0:getSelectPartId()
+	local var_7_1 = {}
+	local var_7_2 = RoomConfig.instance:getSkinIdList(var_7_0)
 
-	for slot8, slot9 in ipairs(RoomConfig.instance:getSkinIdList(slot0:getSelectPartId())) do
-		slot3[#slot3 + 1] = {
-			id = slot9
+	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+		local var_7_3 = {
+			id = iter_7_1
 		}
+
+		var_7_1[#var_7_1 + 1] = var_7_3
 	end
 
-	table.sort(slot3, uv0)
-	slot0:setList(slot3)
+	table.sort(var_7_1, var_0_1)
+	arg_7_0:setList(var_7_1)
 end
 
-function slot0.setCurPreviewSkinId(slot0, slot1)
-	slot0._curPreviewSkinId = slot1
+function var_0_0.setCurPreviewSkinId(arg_8_0, arg_8_1)
+	arg_8_0._curPreviewSkinId = arg_8_1
 
-	if not slot1 then
+	if not arg_8_1 then
 		return
 	end
 
-	slot2 = nil
+	local var_8_0
+	local var_8_1 = arg_8_0:getList()
 
-	for slot7, slot8 in ipairs(slot0:getList()) do
-		if slot8.id == slot1 then
-			slot2 = slot8
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		if iter_8_1.id == arg_8_1 then
+			var_8_0 = iter_8_1
 
 			break
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0._scrollViews) do
-		slot8:setSelect(slot2)
+	for iter_8_2, iter_8_3 in ipairs(arg_8_0._scrollViews) do
+		iter_8_3:setSelect(var_8_0)
 	end
 end
 
-function slot0.getCurPreviewSkinId(slot0)
-	return slot0._curPreviewSkinId
+function var_0_0.getCurPreviewSkinId(arg_9_0)
+	return arg_9_0._curPreviewSkinId
 end
 
-function slot0.getSelectPartId(slot0)
-	return slot0._selectPartId
+function var_0_0.getSelectPartId(arg_10_0)
+	return arg_10_0._selectPartId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

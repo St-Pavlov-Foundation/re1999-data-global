@@ -1,18 +1,18 @@
-module("modules.logic.versionactivity1_6.act148.model.Activity148Mo", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act148.model.Activity148Mo", package.seeall)
 
-slot0 = pureTable("Activity148Mo")
+local var_0_0 = pureTable("Activity148Mo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._lv = slot2
-	slot0._type = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._lv = arg_1_2
+	arg_1_0._type = arg_1_1
 end
 
-function slot0.getLevel(slot0)
-	return slot0._lv
+function var_0_0.getLevel(arg_2_0)
+	return arg_2_0._lv
 end
 
-function slot0.updateByServerData(slot0, slot1)
-	slot0._lv = slot1.level
+function var_0_0.updateByServerData(arg_3_0, arg_3_1)
+	arg_3_0._lv = arg_3_1.level
 end
 
-return slot0
+return var_0_0

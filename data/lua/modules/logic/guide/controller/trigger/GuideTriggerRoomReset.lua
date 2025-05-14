@@ -1,20 +1,20 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerRoomReset", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomReset", package.seeall)
 
-slot0 = class("GuideTriggerRoomReset", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerRoomReset", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	RoomMapController.instance:registerCallback(RoomEvent.Reset, slot0._onReset, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	RoomMapController.instance:registerCallback(RoomEvent.Reset, arg_1_0._onReset, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
 	return GameSceneMgr.instance:getCurSceneType() == SceneType.Room
 end
 
-function slot0._onReset(slot0)
+function var_0_0._onReset(arg_3_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		slot0:checkStartGuide()
+		arg_3_0:checkStartGuide()
 	end
 end
 
-return slot0
+return var_0_0

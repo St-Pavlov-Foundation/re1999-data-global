@@ -1,64 +1,64 @@
-module("modules.logic.summon.view.variant.SummonCharacterProbUpVerBeta1", package.seeall)
+﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVerBeta1", package.seeall)
 
-slot0 = class("SummonCharacterProbUpVerBeta1", SummonMainCharacterProbUp)
-slot0.SIMAGE_COUNT = 3
-slot0.preloadList = {
+local var_0_0 = class("SummonCharacterProbUpVerBeta1", SummonMainCharacterProbUp)
+
+var_0_0.SIMAGE_COUNT = 3
+var_0_0.preloadList = {
 	ResUrl.getSummonCoverBg("hero/full/bg2"),
 	ResUrl.getSummonCoverBg("hero/full/mask"),
 	ResUrl.getSummonCoverBg("hero/leftdown"),
 	ResUrl.getSummonCoverBg("hero/rightup")
 }
 
-for slot5 = 1, slot0.SIMAGE_COUNT do
-	table.insert(slot0.preloadList, ({
-		ResUrl.getSummonCoverBg("hero/bolinyidong"),
-		ResUrl.getSummonCoverBg("hero/tannante"),
-		ResUrl.getSummonCoverBg("hero/kaige")
-	})[slot5])
+local var_0_1 = {
+	ResUrl.getSummonCoverBg("hero/bolinyidong"),
+	ResUrl.getSummonCoverBg("hero/tannante"),
+	ResUrl.getSummonCoverBg("hero/kaige")
+}
+
+for iter_0_0 = 1, var_0_0.SIMAGE_COUNT do
+	table.insert(var_0_0.preloadList, var_0_1[iter_0_0])
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageleft = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_left")
-	slot0._simageright = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_right")
-	slot0._simagejian = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_ad3/#simage_jian")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_mask")
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simageleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_left")
+	arg_1_0._simageright = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_right")
+	arg_1_0._simagejian = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_ad3/#simage_jian")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_mask")
 
-	for slot4 = 1, uv0.SIMAGE_COUNT do
-		slot0["_simagead" .. slot4] = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_ad" .. slot4)
+	for iter_1_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_1_0["_simagead" .. iter_1_0] = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_ad" .. iter_1_0)
 	end
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.refreshSingleImage(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getSummonCoverBg("hero/full/bg2"))
-	slot0._simagemask:LoadImage(ResUrl.getSummonCoverBg("hero/full/mask"))
-	slot0._simageleft:LoadImage(ResUrl.getSummonCoverBg("hero/leftdown"))
-	slot0._simageright:LoadImage(ResUrl.getSummonCoverBg("hero/rightup"))
-	slot0._simagejian:LoadImage(ResUrl.getSummonCoverBg("hero/tianshi"))
+function var_0_0.refreshSingleImage(arg_2_0)
+	arg_2_0._simagebg:LoadImage(ResUrl.getSummonCoverBg("hero/full/bg2"))
+	arg_2_0._simagemask:LoadImage(ResUrl.getSummonCoverBg("hero/full/mask"))
+	arg_2_0._simageleft:LoadImage(ResUrl.getSummonCoverBg("hero/leftdown"))
+	arg_2_0._simageright:LoadImage(ResUrl.getSummonCoverBg("hero/rightup"))
+	arg_2_0._simagejian:LoadImage(ResUrl.getSummonCoverBg("hero/tianshi"))
+	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 
-	slot4 = "title_img_deco"
-
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon(slot4))
-
-	for slot4 = 1, uv0.SIMAGE_COUNT do
-		slot0["_simagead" .. slot4]:LoadImage(uv1[slot4], slot0._adLoaded, slot0)
+	for iter_2_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_2_0["_simagead" .. iter_2_0]:LoadImage(var_0_1[iter_2_0], arg_2_0._adLoaded, arg_2_0)
 	end
 end
 
-function slot0.unloadSingleImage(slot0)
-	for slot4 = 1, uv0.SIMAGE_COUNT do
-		slot0["_simagead" .. slot4]:UnLoadImage()
+function var_0_0.unloadSingleImage(arg_3_0)
+	for iter_3_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_3_0["_simagead" .. iter_3_0]:UnLoadImage()
 	end
 
-	slot0._simagebg:UnLoadImage()
-	slot0._simageleft:UnLoadImage()
-	slot0._simageright:UnLoadImage()
-	slot0._simagejian:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
-	slot0._simageline:UnLoadImage()
-	slot0._simagecurrency1:UnLoadImage()
-	slot0._simagecurrency10:UnLoadImage()
+	arg_3_0._simagebg:UnLoadImage()
+	arg_3_0._simageleft:UnLoadImage()
+	arg_3_0._simageright:UnLoadImage()
+	arg_3_0._simagejian:UnLoadImage()
+	arg_3_0._simagemask:UnLoadImage()
+	arg_3_0._simageline:UnLoadImage()
+	arg_3_0._simagecurrency1:UnLoadImage()
+	arg_3_0._simagecurrency10:UnLoadImage()
 end
 
-return slot0
+return var_0_0

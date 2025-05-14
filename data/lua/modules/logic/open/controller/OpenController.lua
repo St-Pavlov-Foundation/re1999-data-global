@@ -1,26 +1,27 @@
-module("modules.logic.open.controller.OpenController", package.seeall)
+﻿module("modules.logic.open.controller.OpenController", package.seeall)
 
-slot0 = class("OpenController", BaseController)
+local var_0_0 = class("OpenController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	uv0.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, slot0._onCheckFuncUnlock, slot0)
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot0)
-	uv0.instance:registerCallback(OpenEvent.NewFuncUnlock, slot0._newFuncUnlock, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	var_0_0.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_2_0._onCheckFuncUnlock, arg_2_0)
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_2_0._onCheckFuncUnlock, arg_2_0)
+	var_0_0.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_2_0._newFuncUnlock, arg_2_0)
 end
 
-function slot0.reInit(slot0)
-	TaskDispatcher.cancelTask(slot0._delayCheckFuncUnlock, slot0)
+function var_0_0.reInit(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._delayCheckFuncUnlock, arg_3_0)
 end
 
-function slot0._onCheckFuncUnlock(slot0)
-	TaskDispatcher.cancelTask(slot0._delayCheckFuncUnlock, slot0)
-	TaskDispatcher.runDelay(slot0._delayCheckFuncUnlock, slot0, 0.2)
+function var_0_0._onCheckFuncUnlock(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayCheckFuncUnlock, arg_4_0)
+	TaskDispatcher.runDelay(arg_4_0._delayCheckFuncUnlock, arg_4_0, 0.2)
 end
 
-function slot0._delayCheckFuncUnlock(slot0)
+function var_0_0._delayCheckFuncUnlock(arg_5_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		FriendRpc.instance:sendLoadFriendInfosRequest()
 	end
@@ -60,7 +61,7 @@ function slot0._delayCheckFuncUnlock(slot0)
 	end
 
 	MailRpc.instance:sendGetAllMailsRequest()
-	ActivityRpc.instance:sendGetActivityInfosRequest(function ()
+	ActivityRpc.instance:sendGetActivityInfosRequest(function()
 		ActivityController.instance:updateAct101Infos()
 	end)
 	HandbookRpc.instance:sendGetHandbookInfoRequest()
@@ -75,22 +76,22 @@ function slot0._delayCheckFuncUnlock(slot0)
 	UserSettingRpc.instance:sendGetSettingInfosRequest()
 end
 
-function slot0._newFuncUnlock(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6 == OpenEnum.UnlockFunc.Talent then
-			HeroRpc.instance:sendHeroInfoListRequest(slot0._heroInfoUpdate, slot0)
-		elseif slot6 == OpenEnum.UnlockFunc.WeekWalk then
+function var_0_0._newFuncUnlock(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		if iter_7_1 == OpenEnum.UnlockFunc.Talent then
+			HeroRpc.instance:sendHeroInfoListRequest(arg_7_0._heroInfoUpdate, arg_7_0)
+		elseif iter_7_1 == OpenEnum.UnlockFunc.WeekWalk then
 			WeekwalkRpc.instance:sendGetWeekwalkInfoRequest()
-		elseif slot6 == OpenEnum.UnlockFunc.Explore then
+		elseif iter_7_1 == OpenEnum.UnlockFunc.Explore then
 			ExploreRpc.instance:sendGetExploreSimpleInfoRequest()
 		end
 	end
 end
 
-function slot0._heroInfoUpdate(slot0)
+function var_0_0._heroInfoUpdate(arg_8_0)
 	CharacterController.instance:tryStatAllTalent()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

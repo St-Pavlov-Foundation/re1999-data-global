@@ -1,50 +1,51 @@
-module("modules.logic.explore.map.unit.ExploreLightReceiverUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreLightReceiverUnit", package.seeall)
 
-slot0 = class("ExploreLightReceiverUnit", ExploreBaseLightUnit)
+local var_0_0 = class("ExploreLightReceiverUnit", ExploreBaseLightUnit)
 
-function slot0.getLightRecvDirs(slot0)
-	if slot0.mo.isPhoticDir then
-		-- Nothing
-	end
-
-	return {
-		[ExploreHelper.getDir(slot0.mo.unitDir)] = true,
-		[ExploreHelper.getDir(slot0.mo.unitDir + 180)] = true
+function var_0_0.getLightRecvDirs(arg_1_0)
+	local var_1_0 = {
+		[ExploreHelper.getDir(arg_1_0.mo.unitDir)] = true
 	}
+
+	if arg_1_0.mo.isPhoticDir then
+		var_1_0[ExploreHelper.getDir(arg_1_0.mo.unitDir + 180)] = true
+	end
+
+	return var_1_0
 end
 
-function slot0.onLightEnter(slot0, slot1)
-	slot2 = ExploreController.instance:getMapLight()
+function var_0_0.onLightEnter(arg_2_0, arg_2_1)
+	local var_2_0 = ExploreController.instance:getMapLight()
 
-	slot2:beginCheckStatusChange(slot0.id, false)
-	slot2:endCheckStatus()
+	var_2_0:beginCheckStatusChange(arg_2_0.id, false)
+	var_2_0:endCheckStatus()
 end
 
-function slot0.haveLight(slot0)
-	return ExploreController.instance:getMapLight():haveLight(slot0)
+function var_0_0.haveLight(arg_3_0)
+	return ExploreController.instance:getMapLight():haveLight(arg_3_0)
 end
 
-function slot0.onLightChange(slot0, slot1, slot2)
-	if not slot0.mo.isPhoticDir then
+function var_0_0.onLightChange(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0.mo.isPhoticDir then
 		return
 	end
 
-	if slot2 then
-		slot0.lightComp:addLight(slot1.dir)
+	if arg_4_2 then
+		arg_4_0.lightComp:addLight(arg_4_1.dir)
 	else
-		slot0.lightComp:removeLightByDir(slot1.dir)
+		arg_4_0.lightComp:removeLightByDir(arg_4_1.dir)
 	end
 end
 
-function slot0.onLightExit(slot0, slot1)
-	if slot1 and not slot0:getLightRecvDirs()[ExploreHelper.getDir(slot1.dir - 180)] then
+function var_0_0.onLightExit(arg_5_0, arg_5_1)
+	if arg_5_1 and not arg_5_0:getLightRecvDirs()[ExploreHelper.getDir(arg_5_1.dir - 180)] then
 		return
 	end
 
-	slot2 = ExploreController.instance:getMapLight()
+	local var_5_0 = ExploreController.instance:getMapLight()
 
-	slot2:beginCheckStatusChange(slot0.id, true)
-	slot2:endCheckStatus()
+	var_5_0:beginCheckStatusChange(arg_5_0.id, true)
+	var_5_0:endCheckStatus()
 end
 
-return slot0
+return var_0_0

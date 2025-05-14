@@ -1,70 +1,89 @@
-module("modules.logic.critter.model.CritterFilterModel", package.seeall)
+﻿module("modules.logic.critter.model.CritterFilterModel", package.seeall)
 
-slot0 = class("CritterFilterModel")
+local var_0_0 = class("CritterFilterModel")
 
-function slot0.generateFilterMO(slot0, slot1)
-	slot0.filterMODict = slot0.filterMODict or {}
-	slot2 = CritterFilterMO.New()
+function var_0_0.generateFilterMO(arg_1_0, arg_1_1)
+	arg_1_0.filterMODict = arg_1_0.filterMODict or {}
 
-	slot2:init(slot1)
+	local var_1_0 = CritterFilterMO.New()
 
-	slot0.filterMODict[slot1] = slot2
+	var_1_0:init(arg_1_1)
 
-	return slot2
+	arg_1_0.filterMODict[arg_1_1] = var_1_0
+
+	return var_1_0
 end
 
-function slot0.getFilterMO(slot0, slot1, slot2)
-	if not (slot0.filterMODict and slot0.filterMODict[slot1]) and slot1 and slot2 then
-		slot3 = slot0:generateFilterMO(slot1)
+function var_0_0.getFilterMO(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_0.filterMODict and arg_2_0.filterMODict[arg_2_1]
+
+	if not var_2_0 and arg_2_1 and arg_2_2 then
+		var_2_0 = arg_2_0:generateFilterMO(arg_2_1)
 	end
 
-	return slot3
+	return var_2_0
 end
 
-function slot0.clear(slot0, slot1)
-	if slot0.filterMODict then
-		slot0.filterMODict[slot1] = nil
-	end
-end
-
-function slot0.reset(slot0, slot1)
-	if slot0.filterMODict and slot0.filterMODict[slot1] then
-		slot2:init(slot1)
+function var_0_0.clear(arg_3_0, arg_3_1)
+	if arg_3_0.filterMODict then
+		arg_3_0.filterMODict[arg_3_1] = nil
 	end
 end
 
-function slot0.applyMO(slot0, slot1)
-	if not slot0.filterMODict[slot1.viewName] then
-		slot0.filterMODict[slot2] = slot1
+function var_0_0.reset(arg_4_0, arg_4_1)
+	if arg_4_0.filterMODict then
+		local var_4_0 = arg_4_0.filterMODict[arg_4_1]
 
-		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, slot2)
+		if var_4_0 then
+			var_4_0:init(arg_4_1)
+		end
+	end
+end
+
+function var_0_0.applyMO(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.viewName
+	local var_5_1 = arg_5_0.filterMODict[var_5_0]
+
+	if not var_5_1 then
+		arg_5_0.filterMODict[var_5_0] = arg_5_1
+
+		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, var_5_0)
 
 		return
 	end
 
-	if not slot0:isSameFilterDict(slot3:getFilterCategoryDict(), slot1:getFilterCategoryDict()) then
-		slot3:updateMo(slot1)
-		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, slot2)
+	local var_5_2 = var_5_1:getFilterCategoryDict()
+	local var_5_3 = arg_5_1:getFilterCategoryDict()
+
+	if not arg_5_0:isSameFilterDict(var_5_2, var_5_3) then
+		var_5_1:updateMo(arg_5_1)
+		CritterController.instance:dispatchEvent(CritterEvent.CritterChangeFilterType, var_5_0)
 	end
 end
 
-function slot0.isSameFilterDict(slot0, slot1, slot2)
-	if type(slot1) ~= type(slot2) then
+function var_0_0.isSameFilterDict(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = type(arg_6_1)
+
+	if var_6_0 ~= type(arg_6_2) then
 		return false
 	end
 
-	if slot3 ~= "table" then
-		return slot1 == slot2
+	if var_6_0 ~= "table" then
+		return arg_6_1 == arg_6_2
 	end
 
-	for slot8, slot9 in pairs(slot1) do
-		if slot2[slot8] == nil or not slot0:isSameFilterDict(slot9, slot10) then
+	for iter_6_0, iter_6_1 in pairs(arg_6_1) do
+		local var_6_1 = arg_6_2[iter_6_0]
+
+		if var_6_1 == nil or not arg_6_0:isSameFilterDict(iter_6_1, var_6_1) then
 			return false
 		end
 	end
 
-	for slot8, slot9 in pairs(slot2) do
-		if slot1[slot8] == nil or not slot0:isSameFilterDict(slot10, slot9) then
+	for iter_6_2, iter_6_3 in pairs(arg_6_2) do
+		local var_6_2 = arg_6_1[iter_6_2]
+
+		if var_6_2 == nil or not arg_6_0:isSameFilterDict(var_6_2, iter_6_3) then
 			return false
 		end
 	end
@@ -72,6 +91,6 @@ function slot0.isSameFilterDict(slot0, slot1, slot2)
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

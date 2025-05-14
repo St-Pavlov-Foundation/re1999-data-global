@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_critter_tag_effect", package.seeall)
+﻿module("modules.configs.excel2json.lua_critter_tag_effect", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	catalogue = 3,
 	target = 2,
 	previewCondition = 5,
@@ -9,13 +10,13 @@ slot1 = {
 	parameter = 7,
 	condition = 4
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {}
+local var_0_3 = {}
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

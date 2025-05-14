@@ -1,234 +1,265 @@
-module("modules.logic.handbook.view.HandbookCGDetailView", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookCGDetailView", package.seeall)
 
-slot0 = class("HandbookCGDetailView", BaseView)
+local var_0_0 = class("HandbookCGDetailView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
-	slot0._goui = gohelper.findChild(slot0.viewGO, "#go_ui")
-	slot0._simagecg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_cg")
-	slot0._simagezone = gohelper.findChildSingleImage(slot0.viewGO, "#simage_cg/#simage_zone")
-	slot0._simagecgold = gohelper.findChildSingleImage(slot0.viewGO, "#simage_cgold")
-	slot0._simagezoneold = gohelper.findChildSingleImage(slot0.viewGO, "#simage_cgold/#simage_zoneold")
-	slot0._btnprev = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ui/#btn_prev")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ui/#btn_next")
-	slot0._txttitleNameEn = gohelper.findChildText(slot0.viewGO, "#go_ui/desc/#txt_titleNameEn")
-	slot0._txttitleName = gohelper.findChildText(slot0.viewGO, "#go_ui/desc/#txt_titleName")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_ui/desc/#scroll_desc/Viewport/Content/#txt_desc")
-	slot0._txtcurindex = gohelper.findChildText(slot0.viewGO, "#go_ui/page/#txt_curindex")
-	slot0._txttotalpage = gohelper.findChildText(slot0.viewGO, "#go_ui/page/#txt_curindex/#txt_totalpage")
-	slot0._godrag = gohelper.findChild(slot0.viewGO, "#btn_click/#go_drag")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+	arg_1_0._goui = gohelper.findChild(arg_1_0.viewGO, "#go_ui")
+	arg_1_0._simagecg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_cg")
+	arg_1_0._simagezone = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_cg/#simage_zone")
+	arg_1_0._simagecgold = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_cgold")
+	arg_1_0._simagezoneold = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_cgold/#simage_zoneold")
+	arg_1_0._btnprev = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#btn_prev")
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#btn_next")
+	arg_1_0._txttitleNameEn = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/desc/#txt_titleNameEn")
+	arg_1_0._txttitleName = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/desc/#txt_titleName")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/desc/#scroll_desc/Viewport/Content/#txt_desc")
+	arg_1_0._txtcurindex = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/page/#txt_curindex")
+	arg_1_0._txttotalpage = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/page/#txt_curindex/#txt_totalpage")
+	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#btn_click/#go_drag")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnprev:AddClickListener(slot0._btnprevOnClick, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnprev:AddClickListener(arg_2_0._btnprevOnClick, arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnprev:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnprev:RemoveClickListener()
+	arg_3_0._btnnext:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0:_setUIActive(not slot0._uiActive)
+function var_0_0._btnclickOnClick(arg_4_0)
+	arg_4_0:_setUIActive(not arg_4_0._uiActive)
 end
 
-function slot0._btnprevOnClick(slot0)
-	if not HandbookModel.instance:getPrevCG(slot0._cgId, slot0._cgType) then
+function var_0_0._btnprevOnClick(arg_5_0)
+	local var_5_0 = HandbookModel.instance:getPrevCG(arg_5_0._cgId, arg_5_0._cgType)
+
+	if not var_5_0 then
 		return
 	end
 
-	slot0._cgId = slot1.id
+	arg_5_0._cgId = var_5_0.id
 
-	slot0:_refreshUI()
+	arg_5_0:_refreshUI()
 end
 
-function slot0._btnnextOnClick(slot0)
-	if not HandbookModel.instance:getNextCG(slot0._cgId, slot0._cgType) then
+function var_0_0._btnnextOnClick(arg_6_0)
+	local var_6_0 = HandbookModel.instance:getNextCG(arg_6_0._cgId, arg_6_0._cgType)
+
+	if not var_6_0 then
 		return
 	end
 
-	slot0._cgId = slot1.id
+	arg_6_0._cgId = var_6_0.id
 
-	slot0:_refreshUI()
+	arg_6_0:_refreshUI()
 end
 
-function slot0._setUIActive(slot0, slot1)
-	slot0._uiActive = slot1
+function var_0_0._setUIActive(arg_7_0, arg_7_1)
+	arg_7_0._uiActive = arg_7_1
 
-	gohelper.setActive(slot0._goui, slot0._uiActive)
+	gohelper.setActive(arg_7_0._goui, arg_7_0._uiActive)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._cimagecg = slot0._simagecg.gameObject:GetComponent(typeof(UnityEngine.UI.CustomImage))
-	slot0._imageZone = gohelper.findChildImage(slot0.viewGO, "#simage_cg/#simage_zone")
-	slot0._cimagecgold = slot0._simagecgold.gameObject:GetComponent(typeof(UnityEngine.UI.CustomImage))
-	slot0._imageZoneOld = gohelper.findChildImage(slot0.viewGO, "#simage_cgold/#simage_zoneold")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._cimagecg = arg_8_0._simagecg.gameObject:GetComponent(typeof(UnityEngine.UI.CustomImage))
+	arg_8_0._imageZone = gohelper.findChildImage(arg_8_0.viewGO, "#simage_cg/#simage_zone")
+	arg_8_0._cimagecgold = arg_8_0._simagecgold.gameObject:GetComponent(typeof(UnityEngine.UI.CustomImage))
+	arg_8_0._imageZoneOld = gohelper.findChildImage(arg_8_0.viewGO, "#simage_cgold/#simage_zoneold")
 
-	gohelper.setActive(slot0._simagecg.gameObject, false)
-	gohelper.setActive(slot0._simagecgold.gameObject, false)
+	gohelper.setActive(arg_8_0._simagecg.gameObject, false)
+	gohelper.setActive(arg_8_0._simagecgold.gameObject, false)
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._godrag)
+	arg_8_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_8_0._godrag)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	gohelper.addUIClickAudio(slot0._btnprev.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
-	gohelper.addUIClickAudio(slot0._btnnext.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
+	arg_8_0._drag:AddDragBeginListener(arg_8_0._onDragBegin, arg_8_0)
+	arg_8_0._drag:AddDragEndListener(arg_8_0._onDragEnd, arg_8_0)
+	gohelper.addUIClickAudio(arg_8_0._btnprev.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
+	gohelper.addUIClickAudio(arg_8_0._btnnext.gameObject, AudioEnum.UI.play_ui_screenplay_photo_click)
 
-	slot0.loadedCgList = {}
+	arg_8_0.loadedCgList = {}
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._startPos = slot2.position.x
+function var_0_0._onDragBegin(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._startPos = arg_9_2.position.x
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if slot0._startPos < slot2.position.x and slot3 - slot0._startPos >= 100 then
-		slot0:_btnprevOnClick()
-	elseif slot3 < slot0._startPos and slot0._startPos - slot3 >= 100 then
-		slot0:_btnnextOnClick()
+function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_2.position.x
+
+	if var_10_0 > arg_10_0._startPos and var_10_0 - arg_10_0._startPos >= 100 then
+		arg_10_0:_btnprevOnClick()
+	elseif var_10_0 < arg_10_0._startPos and arg_10_0._startPos - var_10_0 >= 100 then
+		arg_10_0:_btnnextOnClick()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._cgId = slot0.viewParam.id
-	slot0._cgType = slot0.viewParam.cgType
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0._cgId = arg_11_0.viewParam.id
+	arg_11_0._cgType = arg_11_0.viewParam.cgType
 
-	slot0:_refreshUI()
+	arg_11_0:_refreshUI()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._cgId = slot0.viewParam
-	slot0._cgType = slot0.viewParam.cgType
+function var_0_0.onUpdateParam(arg_12_0)
+	arg_12_0._cgId = arg_12_0.viewParam
+	arg_12_0._cgType = arg_12_0.viewParam.cgType
 
-	slot0:_refreshUI()
+	arg_12_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	if not HandbookModel.instance:isRead(HandbookEnum.Type.CG, slot0._cgId) then
-		HandbookRpc.instance:sendHandbookReadRequest(HandbookEnum.Type.CG, slot0._cgId)
+function var_0_0._refreshUI(arg_13_0)
+	if not HandbookModel.instance:isRead(HandbookEnum.Type.CG, arg_13_0._cgId) then
+		HandbookRpc.instance:sendHandbookReadRequest(HandbookEnum.Type.CG, arg_13_0._cgId)
 	end
 
-	slot0:_setUIActive(true)
+	arg_13_0:_setUIActive(true)
+
+	local var_13_0 = HandbookConfig.instance:getCGConfig(arg_13_0._cgId, arg_13_0._cgType)
+	local var_13_1 = StoryBgZoneModel.instance:getBgZoneByPath(var_13_0.image)
+
 	UIBlockMgr.instance:startBlock("loadZone")
 
-	if StoryBgZoneModel.instance:getBgZoneByPath(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType).image) then
-		slot0._simagezone:LoadImage(ResUrl.getStoryRes(slot3.path), slot0._onZoneImageLoaded, slot0)
+	if var_13_1 then
+		arg_13_0._simagezone:LoadImage(ResUrl.getStoryRes(var_13_1.path), arg_13_0._onZoneImageLoaded, arg_13_0)
 	else
-		gohelper.setActive(slot0._simagezone.gameObject, false)
+		gohelper.setActive(arg_13_0._simagezone.gameObject, false)
 
-		slot0._cimagecg.vecInSide = Vector4.zero
+		arg_13_0._cimagecg.vecInSide = Vector4.zero
 
-		slot0:_startLoadOriginImg()
+		arg_13_0:_startLoadOriginImg()
 	end
 
-	slot0._txttitleName.text = slot2.name
-	slot0._txttitleNameEn.text = slot2.nameEn
-	slot0._txtdesc.text = slot2.desc
-	slot0._txtcurindex.text = HandbookModel.instance:getCGUnlockIndex(slot0._cgId, slot0._cgType)
-	slot0._txttotalpage.text = "/" .. HandbookModel.instance:getCGUnlockCount(nil, slot0._cgType)
+	arg_13_0._txttitleName.text = var_13_0.name
+	arg_13_0._txttitleNameEn.text = var_13_0.nameEn
+	arg_13_0._txtdesc.text = var_13_0.desc
+	arg_13_0._txtcurindex.text = HandbookModel.instance:getCGUnlockIndex(arg_13_0._cgId, arg_13_0._cgType)
+	arg_13_0._txttotalpage.text = "/" .. HandbookModel.instance:getCGUnlockCount(nil, arg_13_0._cgType)
 end
 
-function slot0._startLoadOriginImg(slot0)
-	slot0._simagecg:LoadImage(slot0:getImageName(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType)), slot0.onLoadedImage, slot0)
+function var_0_0._startLoadOriginImg(arg_14_0)
+	local var_14_0 = HandbookConfig.instance:getCGConfig(arg_14_0._cgId, arg_14_0._cgType)
+
+	arg_14_0._simagecg:LoadImage(arg_14_0:getImageName(var_14_0), arg_14_0.onLoadedImage, arg_14_0)
 end
 
-function slot0._onZoneImageLoaded(slot0)
-	slot0._imageZone:SetNativeSize()
-	slot0:_startLoadOriginImg()
+function var_0_0._onZoneImageLoaded(arg_15_0)
+	arg_15_0._imageZone:SetNativeSize()
+	arg_15_0:_startLoadOriginImg()
 end
 
-function slot0.getImageName(slot0, slot1)
-	if not tabletool.indexOf(slot0.loadedCgList, slot1.id) then
-		table.insert(slot0.loadedCgList, slot1.id)
+function var_0_0.getImageName(arg_16_0, arg_16_1)
+	if not tabletool.indexOf(arg_16_0.loadedCgList, arg_16_1.id) then
+		table.insert(arg_16_0.loadedCgList, arg_16_1.id)
 	end
 
-	slot0.lastLoadImageId = slot1.id
+	arg_16_0.lastLoadImageId = arg_16_1.id
 
-	if StoryBgZoneModel.instance:getBgZoneByPath(slot1.image) then
-		return ResUrl.getStoryRes(slot2.sourcePath)
+	local var_16_0 = StoryBgZoneModel.instance:getBgZoneByPath(arg_16_1.image)
+
+	if var_16_0 then
+		return ResUrl.getStoryRes(var_16_0.sourcePath)
 	end
 
-	return ResUrl.getStoryBg(slot1.image)
+	return ResUrl.getStoryBg(arg_16_1.image)
 end
 
-function slot0.onLoadedImage(slot0)
-	if StoryBgZoneModel.instance:getBgZoneByPath(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType).image) then
-		gohelper.setActive(slot0._simagezone.gameObject, true)
-		transformhelper.setLocalPosXY(slot0._simagezone.gameObject.transform, slot2.offsetX, slot2.offsetY)
+function var_0_0.onLoadedImage(arg_17_0)
+	local var_17_0 = HandbookConfig.instance:getCGConfig(arg_17_0._cgId, arg_17_0._cgType)
+	local var_17_1 = StoryBgZoneModel.instance:getBgZoneByPath(var_17_0.image)
 
-		slot4 = StoryBgZoneModel.instance:getBgZoneByPath(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType).image)
-		slot0._cimagecg.vecInSide = Vector4(recthelper.getWidth(slot0._imageZone.transform), recthelper.getHeight(slot0._imageZone.transform), slot4.offsetX, slot4.offsetY)
+	if var_17_1 then
+		gohelper.setActive(arg_17_0._simagezone.gameObject, true)
+		transformhelper.setLocalPosXY(arg_17_0._simagezone.gameObject.transform, var_17_1.offsetX, var_17_1.offsetY)
 
-		slot0:_loadOldZoneImage()
+		local var_17_2 = HandbookConfig.instance:getCGConfig(arg_17_0._cgId, arg_17_0._cgType)
+		local var_17_3 = StoryBgZoneModel.instance:getBgZoneByPath(var_17_2.image)
+		local var_17_4 = Vector4(recthelper.getWidth(arg_17_0._imageZone.transform), recthelper.getHeight(arg_17_0._imageZone.transform), var_17_3.offsetX, var_17_3.offsetY)
+
+		arg_17_0._cimagecg.vecInSide = var_17_4
+
+		arg_17_0:_loadOldZoneImage()
 	else
-		gohelper.setActive(slot0._simagezoneold.gameObject, false)
-		slot0:_startLoadOldImg()
+		gohelper.setActive(arg_17_0._simagezoneold.gameObject, false)
+		arg_17_0:_startLoadOldImg()
 	end
 
-	gohelper.setActive(slot0._simagecg.gameObject, true)
+	gohelper.setActive(arg_17_0._simagecg.gameObject, true)
 
-	if #slot0.loadedCgList <= 10 then
+	if #arg_17_0.loadedCgList <= 10 then
 		return
 	end
 
-	slot0.loadedCgList = {
-		slot0.lastLoadImageId
+	arg_17_0.loadedCgList = {
+		arg_17_0.lastLoadImageId
 	}
 
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, slot0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_17_0)
 end
 
-function slot0._loadOldZoneImage(slot0)
-	if StoryBgZoneModel.instance:getBgZoneByPath(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType).image) then
-		slot0._simagezoneold:LoadImage(ResUrl.getStoryRes(slot2.path), slot0._onZoneImageOldLoaded, slot0)
+function var_0_0._loadOldZoneImage(arg_18_0)
+	local var_18_0 = HandbookConfig.instance:getCGConfig(arg_18_0._cgId, arg_18_0._cgType)
+	local var_18_1 = StoryBgZoneModel.instance:getBgZoneByPath(var_18_0.image)
+
+	if var_18_1 then
+		arg_18_0._simagezoneold:LoadImage(ResUrl.getStoryRes(var_18_1.path), arg_18_0._onZoneImageOldLoaded, arg_18_0)
 	else
-		gohelper.setActive(slot0._simagezoneold.gameObject, false)
+		gohelper.setActive(arg_18_0._simagezoneold.gameObject, false)
 
-		slot0._cimagecgold.vecInSide = Vector4.zero
+		arg_18_0._cimagecgold.vecInSide = Vector4.zero
 
-		slot0:_startLoadOldImg()
+		arg_18_0:_startLoadOldImg()
 	end
 end
 
-function slot0._onZoneImageOldLoaded(slot0)
-	slot0._imageZoneOld:SetNativeSize()
-	slot0:_startLoadOldImg()
+function var_0_0._onZoneImageOldLoaded(arg_19_0)
+	arg_19_0._imageZoneOld:SetNativeSize()
+	arg_19_0:_startLoadOldImg()
 end
 
-function slot0._startLoadOldImg(slot0)
-	slot0._simagecgold:LoadImage(slot0:getImageName(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType)), slot0._onLoadOldFinished, slot0)
+function var_0_0._startLoadOldImg(arg_20_0)
+	local var_20_0 = HandbookConfig.instance:getCGConfig(arg_20_0._cgId, arg_20_0._cgType)
+
+	arg_20_0._simagecgold:LoadImage(arg_20_0:getImageName(var_20_0), arg_20_0._onLoadOldFinished, arg_20_0)
 end
 
-function slot0._onLoadOldFinished(slot0)
+function var_0_0._onLoadOldFinished(arg_21_0)
 	UIBlockMgr.instance:endBlock("loadZone")
 
-	if StoryBgZoneModel.instance:getBgZoneByPath(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType).image) then
-		gohelper.setActive(slot0._simagezoneold.gameObject, true)
-		transformhelper.setLocalPosXY(slot0._simagezoneold.gameObject.transform, slot2.offsetX, slot2.offsetY)
+	local var_21_0 = HandbookConfig.instance:getCGConfig(arg_21_0._cgId, arg_21_0._cgType)
+	local var_21_1 = StoryBgZoneModel.instance:getBgZoneByPath(var_21_0.image)
 
-		slot4 = StoryBgZoneModel.instance:getBgZoneByPath(HandbookConfig.instance:getCGConfig(slot0._cgId, slot0._cgType).image)
-		slot0._cimagecgold.vecInSide = Vector4(recthelper.getWidth(slot0._imageZoneOld.transform), recthelper.getHeight(slot0._imageZoneOld.transform), slot4.offsetX, slot4.offsetY)
+	if var_21_1 then
+		gohelper.setActive(arg_21_0._simagezoneold.gameObject, true)
+		transformhelper.setLocalPosXY(arg_21_0._simagezoneold.gameObject.transform, var_21_1.offsetX, var_21_1.offsetY)
+
+		local var_21_2 = HandbookConfig.instance:getCGConfig(arg_21_0._cgId, arg_21_0._cgType)
+		local var_21_3 = StoryBgZoneModel.instance:getBgZoneByPath(var_21_2.image)
+		local var_21_4 = Vector4(recthelper.getWidth(arg_21_0._imageZoneOld.transform), recthelper.getHeight(arg_21_0._imageZoneOld.transform), var_21_3.offsetX, var_21_3.offsetY)
+
+		arg_21_0._cimagecgold.vecInSide = var_21_4
 	end
 
-	gohelper.setActive(slot0._simagecg.gameObject, false)
-	gohelper.setActive(slot0._simagecgold.gameObject, true)
+	gohelper.setActive(arg_21_0._simagecg.gameObject, false)
+	gohelper.setActive(arg_21_0._simagecgold.gameObject, true)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_22_0)
 	UIBlockMgr.instance:endBlock("loadZone")
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
+	arg_22_0._drag:RemoveDragBeginListener()
+	arg_22_0._drag:RemoveDragEndListener()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagecg:UnLoadImage()
+function var_0_0.onDestroyView(arg_23_0)
+	arg_23_0._simagecg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

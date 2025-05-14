@@ -1,93 +1,105 @@
-module("modules.logic.seasonver.act123.controller.Season123EpisodeDetailController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EpisodeDetailController", package.seeall)
 
-slot0 = class("Season123EpisodeDetailController", BaseController)
+local var_0_0 = class("Season123EpisodeDetailController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3)
-	Season123Controller.instance:registerCallback(Season123Event.StartEnterBattle, slot0.handleStartEnterBattle, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.StageInfoChanged, slot0.handleDataChanged, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.GetActInfo, slot0.handleDataChanged, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.OnResetSucc, slot0.handleDataChanged, slot0)
-	Season123EpisodeDetailModel.instance:init(slot1, slot2, slot3)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	Season123Controller.instance:registerCallback(Season123Event.StartEnterBattle, arg_1_0.handleStartEnterBattle, arg_1_0)
+	Season123Controller.instance:registerCallback(Season123Event.StageInfoChanged, arg_1_0.handleDataChanged, arg_1_0)
+	Season123Controller.instance:registerCallback(Season123Event.GetActInfo, arg_1_0.handleDataChanged, arg_1_0)
+	Season123Controller.instance:registerCallback(Season123Event.OnResetSucc, arg_1_0.handleDataChanged, arg_1_0)
+	Season123EpisodeDetailModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
 	Season123Controller.instance:checkAndHandleEffectEquip({
-		actId = slot1,
-		stage = slot2,
-		layer = slot3
+		actId = arg_1_1,
+		stage = arg_1_2,
+		layer = arg_1_3
 	})
 end
 
-function slot0.onCloseView(slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.StartEnterBattle, slot0.handleStartEnterBattle, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.StageInfoChanged, slot0.handleDataChanged, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfo, slot0.handleDataChanged, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.OnResetSucc, slot0.handleDataChanged, slot0)
+function var_0_0.onCloseView(arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.StartEnterBattle, arg_2_0.handleStartEnterBattle, arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.StageInfoChanged, arg_2_0.handleDataChanged, arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfo, arg_2_0.handleDataChanged, arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnResetSucc, arg_2_0.handleDataChanged, arg_2_0)
 	Season123EpisodeDetailModel.instance:release()
 end
 
-function slot0.canSwitchLayer(slot0, slot1)
-	if slot1 then
-		if not Season123EpisodeDetailModel.instance:isEpisodeUnlock(Season123EpisodeDetailModel.instance.layer + 1) then
+function var_0_0.canSwitchLayer(arg_3_0, arg_3_1)
+	local var_3_0 = Season123EpisodeDetailModel.instance.layer
+
+	if arg_3_1 then
+		local var_3_1 = var_3_0 + 1
+
+		if not Season123EpisodeDetailModel.instance:isEpisodeUnlock(var_3_1) then
 			return false
 		end
-	elseif slot2 < 2 then
+	elseif var_3_0 < 2 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.switchLayer(slot0, slot1)
-	slot2 = Season123EpisodeDetailModel.instance.layer
-	Season123EpisodeDetailModel.instance.layer = slot1 and slot2 + 1 or slot2 - 1
+function var_0_0.switchLayer(arg_4_0, arg_4_1)
+	local var_4_0 = Season123EpisodeDetailModel.instance.layer
+	local var_4_1 = arg_4_1 and var_4_0 + 1 or var_4_0 - 1
+
+	Season123EpisodeDetailModel.instance.layer = var_4_1
 
 	Season123Controller.instance:dispatchEvent(Season123Event.DetailSwitchLayer, {
-		isNext = slot1
+		isNext = arg_4_1
 	})
 end
 
-function slot0.checkEnterFightScene(slot0)
-	if slot0:isStageNeedClean() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, slot0.checkCleanNextLayers, nil, , slot0, nil, )
+function var_0_0.checkEnterFightScene(arg_5_0)
+	if arg_5_0:isStageNeedClean() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, arg_5_0.checkCleanNextLayers, nil, nil, arg_5_0, nil, nil)
 
 		return
 	end
 
-	slot0:checkCleanNextLayers()
+	arg_5_0:checkCleanNextLayers()
 end
 
-function slot0.checkCleanNextLayers(slot0)
-	if slot0:isNextLayersNeedClean() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanLayer, MsgBoxEnum.BoxType.Yes_No, slot0.enterFightScene, nil, , slot0, nil, )
+function var_0_0.checkCleanNextLayers(arg_6_0)
+	if arg_6_0:isNextLayersNeedClean() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanLayer, MsgBoxEnum.BoxType.Yes_No, arg_6_0.enterFightScene, nil, nil, arg_6_0, nil, nil)
 
 		return
 	end
 
-	slot0:enterFightScene()
+	arg_6_0:enterFightScene()
 end
 
-function slot0.isStageNeedClean(slot0)
-	slot2 = Season123EpisodeDetailModel.instance.stage
+function var_0_0.isStageNeedClean(arg_7_0)
+	local var_7_0 = Season123EpisodeDetailModel.instance.activityId
+	local var_7_1 = Season123EpisodeDetailModel.instance.stage
+	local var_7_2 = Season123Model.instance:getActInfo(var_7_0)
 
-	if not Season123Model.instance:getActInfo(Season123EpisodeDetailModel.instance.activityId) then
+	if not var_7_2 then
 		return false
 	end
 
-	return slot3.stage ~= 0 and slot3.stage ~= slot2
+	return var_7_2.stage ~= 0 and var_7_2.stage ~= var_7_1
 end
 
-function slot0.isNextLayersNeedClean(slot0)
-	slot2 = Season123EpisodeDetailModel.instance.stage
-	slot3 = Season123EpisodeDetailModel.instance.layer
+function var_0_0.isNextLayersNeedClean(arg_8_0)
+	local var_8_0 = Season123EpisodeDetailModel.instance.activityId
+	local var_8_1 = Season123EpisodeDetailModel.instance.stage
+	local var_8_2 = Season123EpisodeDetailModel.instance.layer
+	local var_8_3 = Season123Model.instance:getActInfo(var_8_0)
 
-	if not Season123Model.instance:getActInfo(Season123EpisodeDetailModel.instance.activityId) then
+	if not var_8_3 then
 		return false
 	end
 
-	if not slot4.stageMap[slot2] or not slot5.episodeMap then
+	local var_8_4 = var_8_3.stageMap[var_8_1]
+
+	if not var_8_4 or not var_8_4.episodeMap then
 		return false
 	end
 
-	for slot9, slot10 in pairs(slot5.episodeMap) do
-		if slot3 <= slot10.layer and slot10:isFinished() then
+	for iter_8_0, iter_8_1 in pairs(var_8_4.episodeMap) do
+		if var_8_2 <= iter_8_1.layer and iter_8_1:isFinished() then
 			return true
 		end
 	end
@@ -95,88 +107,111 @@ function slot0.isNextLayersNeedClean(slot0)
 	return false
 end
 
-function slot0.enterFightScene(slot0)
-	slot3 = Season123EpisodeDetailModel.instance.layer
+function var_0_0.enterFightScene(arg_9_0)
+	local var_9_0 = Season123EpisodeDetailModel.instance.activityId
+	local var_9_1 = Season123EpisodeDetailModel.instance.stage
+	local var_9_2 = Season123EpisodeDetailModel.instance.layer
 
-	if slot0:isStageNeedClean() then
-		Activity123Rpc.instance:sendAct123ResetOtherStageRequest(Season123EpisodeDetailModel.instance.activityId, Season123EpisodeDetailModel.instance.stage, slot0.handleResetOtherStage, slot0)
-
-		return
-	end
-
-	slot0:handleResetOtherStage()
-end
-
-function slot0.handleResetOtherStage(slot0)
-	slot2 = Season123EpisodeDetailModel.instance.stage
-	slot3 = Season123EpisodeDetailModel.instance.layer
-
-	if not Season123Model.instance:getActInfo(Season123EpisodeDetailModel.instance.activityId) then
-		return
-	end
-
-	if not slot4:getStageMO(slot2) then
-		return
-	end
-
-	if slot5.episodeMap[slot3 + 1] and slot5.episodeMap[slot3 + 1]:isFinished() then
-		Activity123Rpc.instance:sendAct123ResetHighLayerRequest(slot1, slot2, slot3, slot0.enterBattle, slot0)
+	if arg_9_0:isStageNeedClean() then
+		Activity123Rpc.instance:sendAct123ResetOtherStageRequest(var_9_0, var_9_1, arg_9_0.handleResetOtherStage, arg_9_0)
 
 		return
 	end
 
-	slot0:enterBattle()
+	arg_9_0:handleResetOtherStage()
 end
 
-function slot0.enterBattle(slot0)
-	if Season123Config.instance:getSeasonEpisodeCo(Season123EpisodeDetailModel.instance.activityId, Season123EpisodeDetailModel.instance.stage, Season123EpisodeDetailModel.instance.layer) then
-		Season123EpisodeDetailModel.instance.lastSendEpisodeCfg = slot4
-		slot6 = Season123EpisodeDetailModel.instance:getByIndex(slot3).cfg.episodeId
+function var_0_0.handleResetOtherStage(arg_10_0)
+	local var_10_0 = Season123EpisodeDetailModel.instance.activityId
+	local var_10_1 = Season123EpisodeDetailModel.instance.stage
+	local var_10_2 = Season123EpisodeDetailModel.instance.layer
+	local var_10_3 = Season123Model.instance:getActInfo(var_10_0)
 
-		slot0:startBattle(slot1, slot2, slot3, slot4.episodeId)
+	if not var_10_3 then
+		return
+	end
+
+	local var_10_4 = var_10_3:getStageMO(var_10_1)
+
+	if not var_10_4 then
+		return
+	end
+
+	if var_10_4.episodeMap[var_10_2 + 1] and var_10_4.episodeMap[var_10_2 + 1]:isFinished() then
+		Activity123Rpc.instance:sendAct123ResetHighLayerRequest(var_10_0, var_10_1, var_10_2, arg_10_0.enterBattle, arg_10_0)
+
+		return
+	end
+
+	arg_10_0:enterBattle()
+end
+
+function var_0_0.enterBattle(arg_11_0)
+	local var_11_0 = Season123EpisodeDetailModel.instance.activityId
+	local var_11_1 = Season123EpisodeDetailModel.instance.stage
+	local var_11_2 = Season123EpisodeDetailModel.instance.layer
+	local var_11_3 = Season123Config.instance:getSeasonEpisodeCo(var_11_0, var_11_1, var_11_2)
+
+	if var_11_3 then
+		Season123EpisodeDetailModel.instance.lastSendEpisodeCfg = var_11_3
+
+		local var_11_4 = Season123EpisodeDetailModel.instance:getByIndex(var_11_2).cfg.episodeId
+
+		arg_11_0:startBattle(var_11_0, var_11_1, var_11_2, var_11_3.episodeId)
 	end
 end
 
-function slot0.startBattle(slot0, slot1, slot2, slot3, slot4)
-	logNormal(string.format("startBattle with actId = %s, stage = %s, layer = %s, episodeId = %s", slot1, slot2, slot3, slot4))
-	Season123Model.instance:setBattleContext(slot1, slot2, slot3, slot4)
-	DungeonFightController.instance:enterSeasonFight(DungeonConfig.instance:getEpisodeCO(slot4).chapterId, slot4)
+function var_0_0.startBattle(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	logNormal(string.format("startBattle with actId = %s, stage = %s, layer = %s, episodeId = %s", arg_12_1, arg_12_2, arg_12_3, arg_12_4))
+
+	local var_12_0 = DungeonConfig.instance:getEpisodeCO(arg_12_4)
+
+	Season123Model.instance:setBattleContext(arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	DungeonFightController.instance:enterSeasonFight(var_12_0.chapterId, arg_12_4)
 end
 
-function slot0.handleStartEnterBattle(slot0, slot1)
+function var_0_0.handleStartEnterBattle(arg_13_0, arg_13_1)
 	if not Season123EpisodeDetailModel.instance.lastSendEpisodeCfg then
 		return
 	end
 
-	if Season123EpisodeDetailModel.instance.lastSendEpisodeCfg and slot1.actId == Season123EpisodeDetailModel.instance.activityId and slot1.layer == slot2.layer then
-		if DungeonConfig.instance:getEpisodeCO(slot2.episodeId) then
-			DungeonFightController.instance:enterSeasonFight(slot5.chapterId, slot5.id)
+	local var_13_0 = Season123EpisodeDetailModel.instance.lastSendEpisodeCfg
+	local var_13_1 = arg_13_1.actId
+	local var_13_2 = arg_13_1.layer
+
+	if var_13_0 and var_13_1 == Season123EpisodeDetailModel.instance.activityId and var_13_2 == var_13_0.layer then
+		local var_13_3 = DungeonConfig.instance:getEpisodeCO(var_13_0.episodeId)
+
+		if var_13_3 then
+			DungeonFightController.instance:enterSeasonFight(var_13_3.chapterId, var_13_3.id)
 		else
-			logError(string.format("episode cfg not found ! id = [%s]", slot2.episodeId))
+			logError(string.format("episode cfg not found ! id = [%s]", var_13_0.episodeId))
 		end
 	end
 end
 
-function slot0.handleDataChanged(slot0)
+function var_0_0.handleDataChanged(arg_14_0)
+	local var_14_0 = Season123EpisodeDetailModel.instance.layer
+
 	Season123EpisodeDetailModel.instance:initEpisodeList()
 
-	if not Season123EpisodeDetailModel.instance:isEpisodeUnlock(Season123EpisodeDetailModel.instance.layer) then
-		for slot5 = slot1, 1, -1 do
-			if Season123EpisodeDetailModel.instance:isEpisodeUnlock(slot5) then
-				Season123EpisodeDetailModel.instance.layer = slot5
+	if not Season123EpisodeDetailModel.instance:isEpisodeUnlock(var_14_0) then
+		for iter_14_0 = var_14_0, 1, -1 do
+			if Season123EpisodeDetailModel.instance:isEpisodeUnlock(iter_14_0) then
+				Season123EpisodeDetailModel.instance.layer = iter_14_0
 
 				break
 			end
 		end
 	end
 
-	slot0:notifyView()
+	arg_14_0:notifyView()
 end
 
-function slot0.notifyView(slot0)
+function var_0_0.notifyView(arg_15_0)
 	Season123Controller.instance:dispatchEvent(Season123Event.RefreshDetailView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

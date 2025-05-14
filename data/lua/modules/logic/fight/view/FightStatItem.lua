@@ -1,375 +1,425 @@
-module("modules.logic.fight.view.FightStatItem", package.seeall)
+﻿module("modules.logic.fight.view.FightStatItem", package.seeall)
 
-slot0 = class("FightStatItem", ListScrollCell)
+local var_0_0 = class("FightStatItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._heroIcon = gohelper.findChildSingleImage(slot1, "heroinfo/hero/icon")
-	slot0._career = gohelper.findChildImage(slot1, "heroinfo/career")
-	slot0._rare = gohelper.findChildImage(slot1, "heroinfo/rare")
-	slot0.goLayout = gohelper.findChild(slot1, "heroinfo/layout")
-	slot0.goRare = gohelper.findChild(slot1, "heroinfo/rare")
-	slot0.goCareer = gohelper.findChild(slot1, "heroinfo/career")
-	slot0._gorankobj = gohelper.findChild(slot1, "heroinfo/layout/rankobj")
-	slot0._rankGOs = slot0:getUserDataTb_()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._heroIcon = gohelper.findChildSingleImage(arg_1_1, "heroinfo/hero/icon")
+	arg_1_0._career = gohelper.findChildImage(arg_1_1, "heroinfo/career")
+	arg_1_0._rare = gohelper.findChildImage(arg_1_1, "heroinfo/rare")
+	arg_1_0.goLayout = gohelper.findChild(arg_1_1, "heroinfo/layout")
+	arg_1_0.goRare = gohelper.findChild(arg_1_1, "heroinfo/rare")
+	arg_1_0.goCareer = gohelper.findChild(arg_1_1, "heroinfo/career")
+	arg_1_0._gorankobj = gohelper.findChild(arg_1_1, "heroinfo/layout/rankobj")
+	arg_1_0._rankGOs = arg_1_0:getUserDataTb_()
 
-	for slot5 = 1, 3 do
-		slot0._rankGOs[slot5] = gohelper.findChildImage(slot0._gorankobj, "rank" .. tostring(slot5))
+	for iter_1_0 = 1, 3 do
+		arg_1_0._rankGOs[iter_1_0] = gohelper.findChildImage(arg_1_0._gorankobj, "rank" .. tostring(iter_1_0))
 	end
 
-	slot0._txtLv = gohelper.findChildText(slot1, "heroinfo/layout/txtLv")
-	slot0._txtName = gohelper.findChildText(slot1, "heroinfo/txtName")
-	slot0._txtHarm = gohelper.findChildText(slot1, "data/txtHarm")
-	slot0._txtHurt = gohelper.findChildText(slot1, "data/txtHurt")
-	slot0._txtHeal = gohelper.findChildText(slot1, "data/txtHeal")
-	slot0._txtHarmRate = gohelper.findChildText(slot1, "data/txtHarmRate")
-	slot0._txtHurtRate = gohelper.findChildText(slot1, "data/txtHurtRate")
-	slot0._txtHealRate = gohelper.findChildText(slot1, "data/txtHealRate")
-	slot0._imgProgressHarm = gohelper.findChildImage(slot1, "data/progressHarm/progress")
-	slot0._imgProgressHurt = gohelper.findChildImage(slot1, "data/progressHurt/progress")
-	slot0._imgProgressHeal = gohelper.findChildImage(slot1, "data/progressHeal/progress")
-	slot0._godata = gohelper.findChild(slot1, "data")
-	slot0._goskill = gohelper.findChild(slot1, "skill")
-	slot0._scrollUseSkill = gohelper.findChild(slot1, "skill/scroll_useskill"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._goskillContent = gohelper.findChild(slot1, "skill/scroll_useskill/Viewport/Content")
-	slot0._goskillItem = gohelper.findChild(slot1, "skill/scroll_useskill/Viewport/Content/skillItem")
-	slot0._goscrolluseskill = gohelper.findChild(slot1, "skill/scroll_useskill")
-	slot0._goskillempty = gohelper.findChild(slot1, "skill/go_skillempty")
-	slot0._skillItems = slot0:getUserDataTb_()
+	arg_1_0._txtLv = gohelper.findChildText(arg_1_1, "heroinfo/layout/txtLv")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "heroinfo/txtName")
+	arg_1_0._txtHarm = gohelper.findChildText(arg_1_1, "data/txtHarm")
+	arg_1_0._txtHurt = gohelper.findChildText(arg_1_1, "data/txtHurt")
+	arg_1_0._txtHeal = gohelper.findChildText(arg_1_1, "data/txtHeal")
+	arg_1_0._txtHarmRate = gohelper.findChildText(arg_1_1, "data/txtHarmRate")
+	arg_1_0._txtHurtRate = gohelper.findChildText(arg_1_1, "data/txtHurtRate")
+	arg_1_0._txtHealRate = gohelper.findChildText(arg_1_1, "data/txtHealRate")
+	arg_1_0._imgProgressHarm = gohelper.findChildImage(arg_1_1, "data/progressHarm/progress")
+	arg_1_0._imgProgressHurt = gohelper.findChildImage(arg_1_1, "data/progressHurt/progress")
+	arg_1_0._imgProgressHeal = gohelper.findChildImage(arg_1_1, "data/progressHeal/progress")
+	arg_1_0._godata = gohelper.findChild(arg_1_1, "data")
+	arg_1_0._goskill = gohelper.findChild(arg_1_1, "skill")
+	arg_1_0._scrollUseSkill = gohelper.findChild(arg_1_1, "skill/scroll_useskill"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0._goskillContent = gohelper.findChild(arg_1_1, "skill/scroll_useskill/Viewport/Content")
+	arg_1_0._goskillItem = gohelper.findChild(arg_1_1, "skill/scroll_useskill/Viewport/Content/skillItem")
+	arg_1_0._goscrolluseskill = gohelper.findChild(arg_1_1, "skill/scroll_useskill")
+	arg_1_0._goskillempty = gohelper.findChild(arg_1_1, "skill/go_skillempty")
+	arg_1_0._skillItems = arg_1_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._goskillItem, false)
+	gohelper.setActive(arg_1_0._goskillItem, false)
 
-	slot0._statType = FightEnum.FightStatType.DataView
+	arg_1_0._statType = FightEnum.FightStatType.DataView
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SwitchInfoState, slot0._refreshInfoUI, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.SwitchInfoState, arg_2_0._refreshInfoUI, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SwitchInfoState, slot0._refreshInfoUI, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.SwitchInfoState, arg_3_0._refreshInfoUI, arg_3_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0.entityMO = slot1.entityMO or FightDataHelper.entityMgr:getById(slot1.entityId)
-	slot2 = ViewMgr.instance:isOpen(ViewName.Act174FightResultView)
-	slot3 = slot0._mo.fromOtherFight
-	slot4 = lua_character.configDict[slot0.entityMO.modelId]
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
+	arg_4_0.entityMO = arg_4_1.entityMO or FightDataHelper.entityMgr:getById(arg_4_1.entityId)
 
-	gohelper.setActive(slot0.goLayout, true)
-	gohelper.setActive(slot0.goRare, true)
-	gohelper.setActive(slot0.goCareer, true)
+	local var_4_0 = ViewMgr.instance:isOpen(ViewName.Act174FightResultView)
+	local var_4_1 = arg_4_0._mo.fromOtherFight
+	local var_4_2 = lua_character.configDict[arg_4_0.entityMO.modelId]
 
-	if slot0.entityMO:isAssistBoss() then
-		slot0:refreshAssistBossInfo()
-	elseif slot0.entityMO:isASFDEmitter() then
-		slot0:refreshASFDInfo()
-	elseif slot2 then
-		slot0:refreshAct174Info()
-	elseif not slot4 then
-		slot0._txtName.text = FightConfig.instance:getNewMonsterConfig(lua_monster.configDict[slot0.entityMO.modelId]) and slot5.highPriorityName or slot5.name
+	gohelper.setActive(arg_4_0.goLayout, true)
+	gohelper.setActive(arg_4_0.goRare, true)
+	gohelper.setActive(arg_4_0.goCareer, true)
 
-		if slot5 then
-			slot6, slot7 = HeroConfig.instance:getShowLevel(slot5.level)
-			slot0._txtLv.text = string.format("<size=20>Lv.</size>%d", slot6)
+	if arg_4_0.entityMO:isAssistBoss() then
+		arg_4_0:refreshAssistBossInfo()
+	elseif arg_4_0.entityMO:isASFDEmitter() then
+		arg_4_0:refreshASFDInfo()
+	elseif var_4_0 then
+		arg_4_0:refreshAct174Info()
+	elseif not var_4_2 then
+		local var_4_3 = lua_monster.configDict[arg_4_0.entityMO.modelId]
 
-			gohelper.setActive(slot0._gorankobj, slot7 > 1)
+		arg_4_0._txtName.text = FightConfig.instance:getNewMonsterConfig(var_4_3) and var_4_3.highPriorityName or var_4_3.name
 
-			for slot11 = 1, 3 do
-				gohelper.setActive(slot0._rankGOs[slot11], slot7 > 1 and slot11 == slot7 - 1 or false)
+		if var_4_3 then
+			local var_4_4, var_4_5 = HeroConfig.instance:getShowLevel(var_4_3.level)
+
+			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_4)
+
+			gohelper.setActive(arg_4_0._gorankobj, var_4_5 > 1)
+
+			for iter_4_0 = 1, 3 do
+				gohelper.setActive(arg_4_0._rankGOs[iter_4_0], var_4_5 > 1 and iter_4_0 == var_4_5 - 1 or false)
 			end
 
-			slot0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot5.skinId).retangleIcon))
-			UISpriteSetMgr.instance:setCommonSprite(slot0._career, "lssx_" .. tostring(slot5.career))
-			UISpriteSetMgr.instance:setCommonSprite(slot0._rare, "bgequip" .. 1)
+			local var_4_6 = FightConfig.instance:getSkinCO(var_4_3.skinId)
+
+			arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_6.retangleIcon))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_3.career))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. 1)
 		end
 	else
-		slot0._txtName.text = slot4 and slot4.name or ""
+		local var_4_7 = arg_4_0.entityMO:getTrialAttrCo()
 
-		if slot0.entityMO:getTrialAttrCo() then
-			slot0._txtName.text = slot5.name
+		arg_4_0._txtName.text = var_4_2 and var_4_2.name or ""
+
+		if var_4_7 then
+			arg_4_0._txtName.text = var_4_7.name
 		end
 
-		if not slot3 and FightReplayModel.instance:isReplay() then
-			slot6, slot7 = HeroConfig.instance:getShowLevel(slot0.entityMO.level)
-			slot0._txtLv.text = string.format("<size=20>Lv.</size>%d", slot6)
+		if not var_4_1 and FightReplayModel.instance:isReplay() then
+			local var_4_8, var_4_9 = HeroConfig.instance:getShowLevel(arg_4_0.entityMO.level)
 
-			gohelper.setActive(slot0._gorankobj, slot7 > 1)
+			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_8)
 
-			for slot11 = 1, 3 do
-				gohelper.setActive(slot0._rankGOs[slot11], slot7 > 1 and slot11 == slot7 - 1 or false)
+			gohelper.setActive(arg_4_0._gorankobj, var_4_9 > 1)
+
+			for iter_4_1 = 1, 3 do
+				gohelper.setActive(arg_4_0._rankGOs[iter_4_1], var_4_9 > 1 and iter_4_1 == var_4_9 - 1 or false)
 			end
 
-			slot0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot0.entityMO.skin).retangleIcon))
-			UISpriteSetMgr.instance:setCommonSprite(slot0._career, "lssx_" .. tostring(slot4.career))
-			UISpriteSetMgr.instance:setCommonSprite(slot0._rare, "bgequip" .. CharacterEnum.Star[slot4.rare])
+			local var_4_10 = FightConfig.instance:getSkinCO(arg_4_0.entityMO.skin)
+
+			arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_10.retangleIcon))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_2.career))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. CharacterEnum.Star[var_4_2.rare])
 		else
-			if not HeroModel.instance:getByHeroId(slot0.entityMO.modelId) and slot4 or tonumber(slot0.entityMO.uid) < 0 or slot3 then
-				slot6 = HeroMo.New()
+			local var_4_11 = HeroModel.instance:getByHeroId(arg_4_0.entityMO.modelId)
 
-				slot6:initFromConfig(slot4)
+			if not var_4_11 and var_4_2 or tonumber(arg_4_0.entityMO.uid) < 0 or var_4_1 then
+				var_4_11 = HeroMo.New()
 
-				slot6.level = slot0.entityMO.level
-				slot6.skin = slot0.entityMO.skin
+				var_4_11:initFromConfig(var_4_2)
+
+				var_4_11.level = arg_4_0.entityMO.level
+				var_4_11.skin = arg_4_0.entityMO.skin
 			end
 
-			if slot6 then
-				slot8 = nil
+			if var_4_11 then
+				local var_4_12 = HeroGroupBalanceHelper.getHeroBalanceLv(var_4_11.heroId)
+				local var_4_13
 
-				if HeroGroupBalanceHelper.getHeroBalanceLv(slot6.heroId) and slot6.level < slot7 and not slot3 then
-					slot8 = true
+				if var_4_12 and var_4_12 > var_4_11.level and not var_4_1 then
+					var_4_13 = true
 
-					for slot12 = 1, 3 do
-						SLFramework.UGUI.GuiHelper.SetColor(slot0._rankGOs[slot12], "#547a99")
+					for iter_4_2 = 1, 3 do
+						SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._rankGOs[iter_4_2], "#547a99")
 					end
 				else
-					for slot12 = 1, 3 do
-						SLFramework.UGUI.GuiHelper.SetColor(slot0._rankGOs[slot12], "#342929")
+					for iter_4_3 = 1, 3 do
+						SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._rankGOs[iter_4_3], "#342929")
 					end
 				end
 
-				slot10, slot11 = HeroConfig.instance:getShowLevel(slot8 and slot7 or (slot0.entityMO and slot0.entityMO.level or slot6.level))
-				slot0._txtLv.text = (slot8 and "<color=#547a99>" or "") .. string.format("<size=20>Lv.</size>%d", slot10)
+				local var_4_14 = arg_4_0.entityMO and arg_4_0.entityMO.level or var_4_11.level
+				local var_4_15, var_4_16 = HeroConfig.instance:getShowLevel(var_4_13 and var_4_12 or var_4_14)
 
-				gohelper.setActive(slot0._gorankobj, slot11 > 1)
+				arg_4_0._txtLv.text = (var_4_13 and "<color=#547a99>" or "") .. string.format("<size=20>Lv.</size>%d", var_4_15)
 
-				for slot15 = 1, 3 do
-					gohelper.setActive(slot0._rankGOs[slot15], slot11 > 1 and slot15 == slot11 - 1 or false)
+				gohelper.setActive(arg_4_0._gorankobj, var_4_16 > 1)
+
+				for iter_4_4 = 1, 3 do
+					gohelper.setActive(arg_4_0._rankGOs[iter_4_4], var_4_16 > 1 and iter_4_4 == var_4_16 - 1 or false)
 				end
 
-				slot0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot0.entityMO and slot0.entityMO.skin or slot6.skin).retangleIcon))
-				UISpriteSetMgr.instance:setCommonSprite(slot0._career, "lssx_" .. tostring(slot6.config.career))
-				UISpriteSetMgr.instance:setCommonSprite(slot0._rare, "bgequip" .. CharacterEnum.Star[slot6.config.rare])
+				local var_4_17 = arg_4_0.entityMO and arg_4_0.entityMO.skin or var_4_11.skin
+				local var_4_18 = FightConfig.instance:getSkinCO(var_4_17)
+
+				arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_18.retangleIcon))
+				UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_11.config.career))
+				UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. CharacterEnum.Star[var_4_11.config.rare])
 			end
 		end
 	end
 
-	slot0._txtHarm.text = slot1.harm
-	slot0._txtHurt.text = slot1.hurt
-	slot0._txtHeal.text = slot1.heal
-	slot6 = FightStatModel.instance:getTotalHurt()
-	slot7 = FightStatModel.instance:getTotalHeal()
-	slot0._txtHarmRate.text = string.format("%.2f%%", (FightStatModel.instance:getTotalHarm() > 0 and slot1.harm / slot5 or 0) * 100)
-	slot0._txtHurtRate.text = string.format("%.2f%%", (slot6 > 0 and slot1.hurt / slot6 or 0) * 100)
-	slot0._txtHealRate.text = string.format("%.2f%%", (slot7 > 0 and slot1.heal / slot7 or 0) * 100)
+	arg_4_0._txtHarm.text = arg_4_1.harm
+	arg_4_0._txtHurt.text = arg_4_1.hurt
+	arg_4_0._txtHeal.text = arg_4_1.heal
 
-	if not slot0._tweenHarm then
-		slot0._tweenHarm = ZProj.TweenHelper.DOFillAmount(slot0._imgProgressHarm, slot8, slot8 * 2)
-		slot0._tweenHurt = ZProj.TweenHelper.DOFillAmount(slot0._imgProgressHurt, slot9, slot9 * 2)
-		slot0._tweenHeal = ZProj.TweenHelper.DOFillAmount(slot0._imgProgressHeal, slot10, slot10 * 2)
+	local var_4_19 = FightStatModel.instance:getTotalHarm()
+	local var_4_20 = FightStatModel.instance:getTotalHurt()
+	local var_4_21 = FightStatModel.instance:getTotalHeal()
+	local var_4_22 = var_4_19 > 0 and arg_4_1.harm / var_4_19 or 0
+	local var_4_23 = var_4_20 > 0 and arg_4_1.hurt / var_4_20 or 0
+	local var_4_24 = var_4_21 > 0 and arg_4_1.heal / var_4_21 or 0
+
+	arg_4_0._txtHarmRate.text = string.format("%.2f%%", var_4_22 * 100)
+	arg_4_0._txtHurtRate.text = string.format("%.2f%%", var_4_23 * 100)
+	arg_4_0._txtHealRate.text = string.format("%.2f%%", var_4_24 * 100)
+
+	if not arg_4_0._tweenHarm then
+		arg_4_0._tweenHarm = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHarm, var_4_22, var_4_22 * 2)
+		arg_4_0._tweenHurt = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHurt, var_4_23, var_4_23 * 2)
+		arg_4_0._tweenHeal = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHeal, var_4_24, var_4_24 * 2)
 	else
-		slot0._imgProgressHarm.fillAmount = slot8
-		slot0._imgProgressHurt.fillAmount = slot9
-		slot0._imgProgressHeal.fillAmount = slot10
+		arg_4_0._imgProgressHarm.fillAmount = var_4_22
+		arg_4_0._imgProgressHurt.fillAmount = var_4_23
+		arg_4_0._imgProgressHeal.fillAmount = var_4_24
 	end
 
-	slot0:_refreshInfoUI(slot0._statType)
+	arg_4_0:_refreshInfoUI(arg_4_0._statType)
 end
 
-function slot0._refreshInfoUI(slot0, slot1)
-	if slot0._view.viewContainer.fightStatView:getStatType() and slot3 ~= slot1 then
-		slot2 = slot3
+function var_0_0._refreshInfoUI(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1
+	local var_5_1 = arg_5_0._view.viewContainer.fightStatView:getStatType()
+
+	if var_5_1 and var_5_1 ~= var_5_0 then
+		var_5_0 = var_5_1
 	end
 
-	slot0._scrollUseSkill.parentGameObject = slot0._view._csListScroll.gameObject
-	slot0._statType = slot2 or slot0._statType
+	arg_5_0._scrollUseSkill.parentGameObject = arg_5_0._view._csListScroll.gameObject
+	arg_5_0._statType = var_5_0 or arg_5_0._statType
 
-	gohelper.setActive(slot0._godata, slot2 == FightEnum.FightStatType.DataView)
-	gohelper.setActive(slot0._goskill, slot2 == FightEnum.FightStatType.SkillView)
-	gohelper.setActive(slot0._goscrolluseskill, GameUtil.getTabLen(slot0._mo.cards) > 0)
-	gohelper.setActive(slot0._goskillempty, GameUtil.getTabLen(slot0._mo.cards) == 0)
+	gohelper.setActive(arg_5_0._godata, var_5_0 == FightEnum.FightStatType.DataView)
+	gohelper.setActive(arg_5_0._goskill, var_5_0 == FightEnum.FightStatType.SkillView)
+	gohelper.setActive(arg_5_0._goscrolluseskill, GameUtil.getTabLen(arg_5_0._mo.cards) > 0)
+	gohelper.setActive(arg_5_0._goskillempty, GameUtil.getTabLen(arg_5_0._mo.cards) == 0)
 
-	slot5 = GameUtil.getTabLen(slot0._skillItems)
+	local var_5_2 = GameUtil.getTabLen(arg_5_0._mo.cards)
+	local var_5_3 = GameUtil.getTabLen(arg_5_0._skillItems)
 
-	if GameUtil.getTabLen(slot0._mo.cards) > 0 and slot2 == FightEnum.FightStatType.SkillView then
-		slot0:_sortCard()
+	if var_5_2 > 0 and var_5_0 == FightEnum.FightStatType.SkillView then
+		arg_5_0:_sortCard()
 
-		for slot9, slot10 in ipairs(slot0._mo.cards) do
-			if not slot0._skillItems[slot9] then
-				slot11 = slot0:getUserDataTb_()
-				slot15 = "skillitem" .. slot9
-				slot11.go = gohelper.clone(slot0._goskillItem, slot0._goskillContent, slot15)
-				slot11.skillIconGo = slot0:getUserDataTb_()
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._mo.cards) do
+			local var_5_4 = arg_5_0._skillItems[iter_5_0]
 
-				for slot15 = 1, 4 do
-					slot16 = gohelper.findChild(slot11.go, "skillicon" .. slot15)
-					slot17 = slot0:getUserDataTb_()
-					slot17.go = slot16
-					slot17.imgIcon = gohelper.findChildSingleImage(slot16, "imgIcon")
-					slot17.tag = gohelper.findChildSingleImage(slot16, "tag/tagIcon")
-					slot17.count = gohelper.findChildText(slot16, "count/txt_count")
-					slot17.goStar = gohelper.findChildText(slot16, "star")
-					slot11.skillIconGo[slot15] = slot17
+			if not var_5_4 then
+				var_5_4 = arg_5_0:getUserDataTb_()
+				var_5_4.go = gohelper.clone(arg_5_0._goskillItem, arg_5_0._goskillContent, "skillitem" .. iter_5_0)
+				var_5_4.skillIconGo = arg_5_0:getUserDataTb_()
+
+				for iter_5_2 = 1, 4 do
+					local var_5_5 = gohelper.findChild(var_5_4.go, "skillicon" .. iter_5_2)
+					local var_5_6 = arg_5_0:getUserDataTb_()
+
+					var_5_6.go = var_5_5
+					var_5_6.imgIcon = gohelper.findChildSingleImage(var_5_5, "imgIcon")
+					var_5_6.tag = gohelper.findChildSingleImage(var_5_5, "tag/tagIcon")
+					var_5_6.count = gohelper.findChildText(var_5_5, "count/txt_count")
+					var_5_6.goStar = gohelper.findChildText(var_5_5, "star")
+					var_5_4.skillIconGo[iter_5_2] = var_5_6
 				end
 
-				table.insert(slot0._skillItems, slot11)
+				table.insert(arg_5_0._skillItems, var_5_4)
 			end
 
-			for slot15, slot16 in ipairs(slot11.skillIconGo) do
-				slot16.isUniqueSkill = slot0.entityMO:isUniqueSkill(slot10.skillId)
+			for iter_5_3, iter_5_4 in ipairs(var_5_4.skillIconGo) do
+				iter_5_4.isUniqueSkill = arg_5_0.entityMO:isUniqueSkill(iter_5_1.skillId)
 
-				gohelper.setActive(slot16.goStar, true)
+				gohelper.setActive(iter_5_4.goStar, true)
 			end
 
-			gohelper.setActive(slot11.go, true)
-			slot0:_setSkillCardInfo(slot11, slot10)
+			gohelper.setActive(var_5_4.go, true)
+			arg_5_0:_setSkillCardInfo(var_5_4, iter_5_1)
 		end
 	end
 
-	if slot4 < slot5 then
-		for slot9 = slot4 + 1, slot5 do
-			gohelper.setActive(slot0._skillItems[slot9] and slot10.go, false)
+	if var_5_2 < var_5_3 then
+		for iter_5_5 = var_5_2 + 1, var_5_3 do
+			local var_5_7 = arg_5_0._skillItems[iter_5_5]
+
+			gohelper.setActive(var_5_7 and var_5_7.go, false)
 		end
 	end
 end
 
-function slot0._sortCard(slot0)
-	slot1 = {}
+function var_0_0._sortCard(arg_6_0)
+	local var_6_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._mo.cards) do
-		for slot10, slot11 in ipairs(slot0.entityMO.skillGroup1) do
-			if slot11 == slot6.skillId then
-				slot1[slot11] = 1
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._mo.cards) do
+		for iter_6_2, iter_6_3 in ipairs(arg_6_0.entityMO.skillGroup1) do
+			if iter_6_3 == iter_6_1.skillId then
+				var_6_0[iter_6_3] = 1
 			end
 		end
 
-		for slot10, slot11 in ipairs(slot0.entityMO.skillGroup2) do
-			if slot11 == slot6.skillId then
-				slot1[slot11] = 2
+		for iter_6_4, iter_6_5 in ipairs(arg_6_0.entityMO.skillGroup2) do
+			if iter_6_5 == iter_6_1.skillId then
+				var_6_0[iter_6_5] = 2
 			end
 		end
 
-		if slot0.entityMO:isUniqueSkill(slot6.skillId) then
-			slot1[slot6.skillId] = 0
+		if arg_6_0.entityMO:isUniqueSkill(iter_6_1.skillId) then
+			var_6_0[iter_6_1.skillId] = 0
 		end
 	end
 
-	table.sort(slot0._mo.cards, function (slot0, slot1)
-		if uv0[slot0.skillId] ~= uv0[slot1.skillId] then
-			slot3 = uv0[slot1.skillId]
+	table.sort(arg_6_0._mo.cards, function(arg_7_0, arg_7_1)
+		if var_6_0[arg_7_0.skillId] ~= var_6_0[arg_7_1.skillId] then
+			local var_7_0 = var_6_0[arg_7_0.skillId]
+			local var_7_1 = var_6_0[arg_7_1.skillId]
 
-			if uv0[slot0.skillId] and slot3 then
-				return slot2 < slot3
+			if var_7_0 and var_7_1 then
+				return var_7_0 < var_7_1
 			else
-				return slot2 and true or false
+				return var_7_0 and true or false
 			end
 		else
-			return uv1.entityMO:getSkillLv(slot0.skillId) < uv1.entityMO:getSkillLv(slot1.skillId)
+			return arg_6_0.entityMO:getSkillLv(arg_7_0.skillId) < arg_6_0.entityMO:getSkillLv(arg_7_1.skillId)
 		end
 
 		return false
 	end)
 end
 
-function slot0._setSkillCardInfo(slot0, slot1, slot2)
-	if FightHelper.isASFDSkill(slot2.skillId) then
-		return slot0:refreshASFDSkill(slot1, slot2)
+function var_0_0._setSkillCardInfo(arg_8_0, arg_8_1, arg_8_2)
+	if FightHelper.isASFDSkill(arg_8_2.skillId) then
+		return arg_8_0:refreshASFDSkill(arg_8_1, arg_8_2)
 	end
 
-	slot3 = slot0.entityMO:getSkillLv(slot2.skillId)
-	slot4 = lua_skill.configDict[slot2.skillId]
+	local var_8_0 = arg_8_0.entityMO:getSkillLv(arg_8_2.skillId)
+	local var_8_1 = lua_skill.configDict[arg_8_2.skillId]
 
-	for slot8, slot9 in ipairs(slot1.skillIconGo) do
-		gohelper.setActive(slot9.go, slot8 == slot3)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1.skillIconGo) do
+		gohelper.setActive(iter_8_1.go, iter_8_0 == var_8_0)
 
-		if slot8 == slot3 then
-			slot9.imgIcon:LoadImage(ResUrl.getSkillIcon(slot4.icon))
+		if iter_8_0 == var_8_0 then
+			local var_8_2 = ResUrl.getSkillIcon(var_8_1.icon)
 
-			if not slot9.isUniqueSkill then
-				slot9.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot4.showTag))
+			iter_8_1.imgIcon:LoadImage(var_8_2)
+
+			if not iter_8_1.isUniqueSkill then
+				iter_8_1.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_8_1.showTag))
 			end
 
-			slot9.count.text = slot2.useCount
+			iter_8_1.count.text = arg_8_2.useCount
 
-			gohelper.setActive(slot1.goStar, false)
+			gohelper.setActive(arg_8_1.goStar, false)
 		end
 	end
 end
 
-function slot0.refreshASFDSkill(slot0, slot1, slot2)
-	slot3 = 1
+function var_0_0.refreshASFDSkill(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = 1
 
-	for slot7, slot8 in ipairs(slot1.skillIconGo) do
-		gohelper.setActive(slot8.go, slot7 == slot3)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1.skillIconGo) do
+		gohelper.setActive(iter_9_1.go, iter_9_0 == var_9_0)
 
-		if slot7 == slot3 then
-			slot8.imgIcon:LoadImage(ResUrl.getSkillIcon(FightASFDConfig.instance.normalSkillIcon))
-			slot8.tag:LoadImage(ResUrl.getAttributeIcon("attribute_asfd"))
+		if iter_9_0 == var_9_0 then
+			local var_9_1 = ResUrl.getSkillIcon(FightASFDConfig.instance.normalSkillIcon)
 
-			slot8.count.text = slot2.useCount
+			iter_9_1.imgIcon:LoadImage(var_9_1)
+			iter_9_1.tag:LoadImage(ResUrl.getAttributeIcon("attribute_asfd"))
+
+			iter_9_1.count.text = arg_9_2.useCount
 		end
 	end
 end
 
-function slot0.refreshAssistBossInfo(slot0)
-	if not TowerConfig.instance:getAssistBossConfig(slot0.entityMO.modelId) then
+function var_0_0.refreshAssistBossInfo(arg_10_0)
+	local var_10_0 = TowerConfig.instance:getAssistBossConfig(arg_10_0.entityMO.modelId)
+
+	if not var_10_0 then
 		return
 	end
 
-	slot0._txtName.text = slot1.name
-	slot4, slot5 = HeroConfig.instance:getShowLevel(TowerModel.instance:getFightFinishParam() and slot2.teamLevel or 0)
-	slot0._txtLv.text = string.format("<size=20>LV.</size>%d", slot4)
+	arg_10_0._txtName.text = var_10_0.name
 
-	gohelper.setActive(slot0._gorankobj, slot5 > 1)
+	local var_10_1 = TowerModel.instance:getFightFinishParam()
+	local var_10_2 = var_10_1 and var_10_1.teamLevel or 0
+	local var_10_3, var_10_4 = HeroConfig.instance:getShowLevel(var_10_2)
 
-	for slot9 = 1, 3 do
-		gohelper.setActive(slot0._rankGOs[slot9], slot5 > 1 and slot9 == slot5 - 1 or false)
+	arg_10_0._txtLv.text = string.format("<size=20>LV.</size>%d", var_10_3)
+
+	gohelper.setActive(arg_10_0._gorankobj, var_10_4 > 1)
+
+	for iter_10_0 = 1, 3 do
+		gohelper.setActive(arg_10_0._rankGOs[iter_10_0], var_10_4 > 1 and iter_10_0 == var_10_4 - 1 or false)
 	end
 
-	slot0._heroIcon:LoadImage(ResUrl.monsterHeadIcon(FightConfig.instance:getSkinCO(slot1.skinId).headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._career, "lssx_" .. tostring(slot1.career))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._rare, "bgequip" .. 6)
+	local var_10_5 = FightConfig.instance:getSkinCO(var_10_0.skinId)
+
+	arg_10_0._heroIcon:LoadImage(ResUrl.monsterHeadIcon(var_10_5.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._career, "lssx_" .. tostring(var_10_0.career))
+	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._rare, "bgequip" .. 6)
 end
 
-function slot0.refreshASFDInfo(slot0)
-	slot0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(FightASFDConfig.instance.headIcon))
+function var_0_0.refreshASFDInfo(arg_11_0)
+	arg_11_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(FightASFDConfig.instance.headIcon))
 
-	slot0._txtName.text = FightASFDConfig.instance:getSkillCo().name
+	local var_11_0 = FightASFDConfig.instance:getSkillCo()
 
-	gohelper.setActive(slot0.goLayout, false)
-	gohelper.setActive(slot0.goRare, false)
-	gohelper.setActive(slot0.goCareer, false)
+	arg_11_0._txtName.text = var_11_0.name
+
+	gohelper.setActive(arg_11_0.goLayout, false)
+	gohelper.setActive(arg_11_0.goRare, false)
+	gohelper.setActive(arg_11_0.goCareer, false)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._tweenHarm then
-		ZProj.TweenHelper.KillById(slot0._tweenHarm)
-		ZProj.TweenHelper.KillById(slot0._tweenHurt)
-		ZProj.TweenHelper.KillById(slot0._tweenHeal)
+function var_0_0.onDestroy(arg_12_0)
+	if arg_12_0._tweenHarm then
+		ZProj.TweenHelper.KillById(arg_12_0._tweenHarm)
+		ZProj.TweenHelper.KillById(arg_12_0._tweenHurt)
+		ZProj.TweenHelper.KillById(arg_12_0._tweenHeal)
 	end
 
-	slot0._tweenHarm = nil
-	slot0._tweenHurt = nil
-	slot0._tweenHeal = nil
+	arg_12_0._tweenHarm = nil
+	arg_12_0._tweenHurt = nil
+	arg_12_0._tweenHeal = nil
 
-	for slot4, slot5 in pairs(slot0._skillItems) do
-		if slot5 then
-			for slot9, slot10 in pairs(slot5.skillIconGo) do
-				slot10.imgIcon:UnLoadImage()
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._skillItems) do
+		if iter_12_1 then
+			for iter_12_2, iter_12_3 in pairs(iter_12_1.skillIconGo) do
+				iter_12_3.imgIcon:UnLoadImage()
 
-				if not slot10.isUniqueSkill then
-					slot10.tag:UnLoadImage()
+				if not iter_12_3.isUniqueSkill then
+					iter_12_3.tag:UnLoadImage()
 				end
 			end
 		end
 	end
 
-	slot0._heroIcon:UnLoadImage()
+	arg_12_0._heroIcon:UnLoadImage()
 end
 
-function slot0.refreshAct174Info(slot0)
-	gohelper.setActive(slot0._txtLv.gameObject.transform.parent, false)
-	recthelper.setAnchorY(slot0._txtName.gameObject.transform, 0)
+function var_0_0.refreshAct174Info(arg_13_0)
+	gohelper.setActive(arg_13_0._txtLv.gameObject.transform.parent, false)
+	recthelper.setAnchorY(arg_13_0._txtName.gameObject.transform, 0)
 
-	if slot0.entityMO.modelId then
-		slot2 = Activity174Config.instance:getRoleCoByHeroId(slot1)
+	local var_13_0 = arg_13_0.entityMO.modelId
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0._career, "lssx_" .. tostring(slot2.career))
-		UISpriteSetMgr.instance:setCommonSprite(slot0._rare, "bgequip" .. CharacterEnum.Color[slot2.rare])
-		slot0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(slot2.skinId))
+	if var_13_0 then
+		local var_13_1 = Activity174Config.instance:getRoleCoByHeroId(var_13_0)
 
-		slot0._txtName.text = slot2.name
+		UISpriteSetMgr.instance:setCommonSprite(arg_13_0._career, "lssx_" .. tostring(var_13_1.career))
+		UISpriteSetMgr.instance:setCommonSprite(arg_13_0._rare, "bgequip" .. CharacterEnum.Color[var_13_1.rare])
+		arg_13_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_13_1.skinId))
+
+		arg_13_0._txtName.text = var_13_1.name
 	end
 end
 
-return slot0
+return var_0_0

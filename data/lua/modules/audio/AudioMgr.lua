@@ -1,196 +1,216 @@
-module("modules.audio.AudioMgr", package.seeall)
+﻿module("modules.audio.AudioMgr", package.seeall)
 
-slot0 = class("AudioMgr")
-slot0.GMOpenLog = nil
-slot0.Evt_ChangeFinish = 1
-slot0.Evt_Trigger = 2
+local var_0_0 = class("AudioMgr")
 
-function slot0.ctor(slot0)
+var_0_0.GMOpenLog = nil
+var_0_0.Evt_ChangeFinish = 1
+var_0_0.Evt_Trigger = 2
+
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 	ActivityHelper.activateClass("AudioEnum%d_%d", 1, 5)
 
-	slot0._onInited = slot1
-	slot0._onInitedObj = slot2
-	slot0.csharpInst = ZProj.AudioManager.Instance
+	arg_2_0._onInited = arg_2_1
+	arg_2_0._onInitedObj = arg_2_2
+	arg_2_0.csharpInst = ZProj.AudioManager.Instance
 
-	AudioConfig.instance:InitCSByConfig(slot0.csharpInst)
-	slot0.csharpInst:InitFromLua(slot0._onInitCS, slot0)
+	AudioConfig.instance:InitCSByConfig(arg_2_0.csharpInst)
+	arg_2_0.csharpInst:InitFromLua(arg_2_0._onInitCS, arg_2_0)
 
-	slot0.csharpInst.autoSwitchToDefault = false
+	arg_2_0.csharpInst.autoSwitchToDefault = false
 end
 
-function slot0._onInitCS(slot0, slot1)
-	slot2 = GameConfig:GetCurVoiceShortcut()
+function var_0_0._onInitCS(arg_3_0, arg_3_1)
+	local var_3_0 = GameConfig:GetCurVoiceShortcut()
 
-	logNormal("AudioMgr:init, voiceType = " .. slot2)
-	slot0:changeLang(slot2)
+	logNormal("AudioMgr:init, voiceType = " .. var_3_0)
+	arg_3_0:changeLang(var_3_0)
 
-	if slot0._onInited then
-		slot0._onInited = nil
-		slot0._onInitedObj = nil
+	if arg_3_0._onInited then
+		local var_3_1 = arg_3_0._onInited
+		local var_3_2 = arg_3_0._onInitedObj
 
-		if slot0._onInitedObj then
-			slot0._onInited(slot4, slot1)
+		arg_3_0._onInited = nil
+		arg_3_0._onInitedObj = nil
+
+		if var_3_2 then
+			var_3_1(var_3_2, arg_3_1)
 		else
-			slot3(slot1)
+			var_3_1(arg_3_1)
 		end
 	end
 end
 
-function slot0.initSoundVolume(slot0)
-	slot2 = SettingsModel.instance:getVoiceValue()
+function var_0_0.initSoundVolume(arg_4_0)
+	local var_4_0 = SettingsModel.instance:getMusicValue()
+	local var_4_1 = SettingsModel.instance:getVoiceValue()
+	local var_4_2 = SettingsModel.instance:getEffectValue()
+	local var_4_3 = SettingsModel.instance:getGlobalAudioVolume()
 
-	slot0:setRTPCValue(AudioEnum.Volume.Music_Volume, SettingsModel.instance:getMusicValue())
-	slot0:setRTPCValue(AudioEnum.Volume.Voc_Volume, slot2)
-	slot0:setRTPCValue(AudioEnum.Volume.SFX_Volume, SettingsModel.instance:getEffectValue())
-	slot0:setRTPCValue(AudioEnum.Volume.Global_Volume, SettingsModel.instance:getGlobalAudioVolume())
+	arg_4_0:setRTPCValue(AudioEnum.Volume.Music_Volume, var_4_0)
+	arg_4_0:setRTPCValue(AudioEnum.Volume.Voc_Volume, var_4_1)
+	arg_4_0:setRTPCValue(AudioEnum.Volume.SFX_Volume, var_4_2)
+	arg_4_0:setRTPCValue(AudioEnum.Volume.Global_Volume, var_4_3)
 
-	if slot2 > 0 then
-		slot0:setState(slot0:getIdFromString("Voc_Volume_M"), slot0:getIdFromString("no"))
+	if var_4_1 > 0 then
+		arg_4_0:setState(arg_4_0:getIdFromString("Voc_Volume_M"), arg_4_0:getIdFromString("no"))
 	else
-		slot0:setState(slot0:getIdFromString("Voc_Volume_M"), slot0:getIdFromString("yes"))
+		arg_4_0:setState(arg_4_0:getIdFromString("Voc_Volume_M"), arg_4_0:getIdFromString("yes"))
 	end
 end
 
-function slot0.changeEarMode(slot0)
-	slot1 = SDKMgr.instance:isEarphoneContact()
+function var_0_0.changeEarMode(arg_5_0)
+	local var_5_0 = SDKMgr.instance:isEarphoneContact()
 
-	logNormal("isEarConnect : " .. tostring(slot1))
-	slot0:setRTPCValue(AudioEnum.EarRTPC, slot1 and 0 or 1)
+	logNormal("isEarConnect : " .. tostring(var_5_0))
+	arg_5_0:setRTPCValue(AudioEnum.EarRTPC, var_5_0 and 0 or 1)
 end
 
-function slot0.trigger(slot0, slot1, slot2)
-	if AudioConfig.instance:getAudioCOById(slot1) == nil then
-		logError("AudioManager.TriggerAudio, audio cfg is null for audioId = " .. slot1)
+function var_0_0.trigger(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = AudioConfig.instance:getAudioCOById(arg_6_1)
+
+	if var_6_0 == nil then
+		logError("AudioManager.TriggerAudio, audio cfg is null for audioId = " .. arg_6_1)
 
 		return
 	end
 
-	slot4 = slot3.eventName
-	slot5 = slot3.bankName
+	local var_6_1 = var_6_0.eventName
+	local var_6_2 = var_6_0.bankName
 
 	if SettingsModel.instance:isZhRegion() == false then
-		if string.nilorempty(slot3.eventName_Overseas) == false then
-			slot4 = slot3.eventName_Overseas
+		if string.nilorempty(var_6_0.eventName_Overseas) == false then
+			var_6_1 = var_6_0.eventName_Overseas
 		end
 
-		if string.nilorempty(slot3.bankName_Overseas) == false then
-			slot5 = slot3.bankName_Overseas
+		if string.nilorempty(var_6_0.bankName_Overseas) == false then
+			var_6_2 = var_6_0.bankName_Overseas
 		end
 	end
 
-	slot0:dispatchEvent(uv0.Evt_Trigger, slot1)
+	local var_6_3 = arg_6_0.csharpInst:TriggerEvent(var_6_1, var_6_2, arg_6_2)
 
-	return slot0.csharpInst:TriggerEvent(slot4, slot5, slot2)
+	arg_6_0:dispatchEvent(var_0_0.Evt_Trigger, arg_6_1)
+
+	return var_6_3
 end
 
-function slot0.triggerEx(slot0, slot1, slot2, slot3)
-	slot0:dispatchEvent(uv0.Evt_Trigger, slot1)
+function var_0_0.triggerEx(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_0.csharpInst:TriggerAudioEx(arg_7_1, arg_7_2, arg_7_3)
 
-	return slot0.csharpInst:TriggerAudioEx(slot1, slot2, slot3)
+	arg_7_0:dispatchEvent(var_0_0.Evt_Trigger, arg_7_1)
+
+	return var_7_0
 end
 
-function slot0.getSourcePlayPosition(slot0, slot1)
-	return slot0.csharpInst:GetSourcePlayPosition(slot1)
+function var_0_0.getSourcePlayPosition(arg_8_0, arg_8_1)
+	return arg_8_0.csharpInst:GetSourcePlayPosition(arg_8_1)
 end
 
-function slot0.getLangByAudioId(slot0, slot1)
-	return slot0.csharpInst:GetLangByAudioId(slot1)
+function var_0_0.getLangByAudioId(arg_9_0, arg_9_1)
+	return arg_9_0.csharpInst:GetLangByAudioId(arg_9_1)
 end
 
-function slot0.setSwitch(slot0, slot1, slot2, slot3)
-	slot0.csharpInst:SetSwitch(slot1, slot2, slot3)
-	slot0:addNormalLog("#00BBFF", "触发Switch : " .. tostring(slot1) .. ", " .. tostring(slot2))
+function var_0_0.setSwitch(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0.csharpInst:SetSwitch(arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0:addNormalLog("#00BBFF", "触发Switch : " .. tostring(arg_10_1) .. ", " .. tostring(arg_10_2))
 end
 
-function slot0.setState(slot0, slot1, slot2)
-	slot0.csharpInst:SetState(slot1, slot2)
+function var_0_0.setState(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0.csharpInst:SetState(arg_11_1, arg_11_2)
 end
 
-function slot0.getSwitch(slot0, slot1, slot2)
-	return slot0.csharpInst:GetSwitch(slot1, slot2)
+function var_0_0.getSwitch(arg_12_0, arg_12_1, arg_12_2)
+	return arg_12_0.csharpInst:GetSwitch(arg_12_1, arg_12_2)
 end
 
-function slot0.getIdFromString(slot0, slot1)
-	slot0._idCache = slot0._idCache or {}
+function var_0_0.getIdFromString(arg_13_0, arg_13_1)
+	arg_13_0._idCache = arg_13_0._idCache or {}
 
-	if not slot0._idCache[slot1] then
-		slot0._idCache[slot1] = slot0.csharpInst:GetIDFromString(slot1)
+	local var_13_0 = arg_13_0._idCache[arg_13_1]
+
+	if not var_13_0 then
+		var_13_0 = arg_13_0.csharpInst:GetIDFromString(arg_13_1)
+		arg_13_0._idCache[arg_13_1] = var_13_0
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.setRTPCValue(slot0, slot1, slot2)
-	if not slot0.csharpInst then
+function var_0_0.setRTPCValue(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_0.csharpInst then
 		return
 	end
 
-	slot0.csharpInst:SetRTPCValue(slot1, slot2)
+	arg_14_0.csharpInst:SetRTPCValue(arg_14_1, arg_14_2)
 end
 
-function slot0.setRTPCValueByPlayingID(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0.csharpInst then
+function var_0_0.setRTPCValueByPlayingID(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
+	if not arg_15_0.csharpInst then
 		return
 	end
 
-	if slot4 then
-		slot0.csharpInst:SetRTPCValueByPlayingID(slot1, slot2, slot3, slot4, slot5, slot6)
+	if arg_15_4 then
+		arg_15_0.csharpInst:SetRTPCValueByPlayingID(arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
 	else
-		slot0.csharpInst:SetRTPCValueByPlayingID(slot1, slot2, slot3)
+		arg_15_0.csharpInst:SetRTPCValueByPlayingID(arg_15_1, arg_15_2, arg_15_3)
 	end
 end
 
-function slot0.setGameObjectOutputBusVolume(slot0, slot1, slot2)
-	slot0.csharpInst:SetGameObjectOutputBusVolume(slot1, slot2)
+function var_0_0.setGameObjectOutputBusVolume(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0.csharpInst:SetGameObjectOutputBusVolume(arg_16_1, arg_16_2)
 end
 
-function slot0.stopPlayingID(slot0, slot1)
-	slot0.csharpInst:StopPlayingID(slot1)
+function var_0_0.stopPlayingID(arg_17_0, arg_17_1)
+	arg_17_0.csharpInst:StopPlayingID(arg_17_1)
 end
 
-function slot0.getRTPCValue(slot0, slot1, slot2, slot3)
-	return slot0.csharpInst:GetRTPCValue(slot1, slot2, slot3)
+function var_0_0.getRTPCValue(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	return arg_18_0.csharpInst:GetRTPCValue(arg_18_1, arg_18_2, arg_18_3)
 end
 
-function slot0.changeLang(slot0, slot1)
-	slot0.csharpInst:SwitchLanguage(slot1, slot0._onChangeFinish, slot0)
+function var_0_0.changeLang(arg_19_0, arg_19_1)
+	arg_19_0.csharpInst:SwitchLanguage(arg_19_1, arg_19_0._onChangeFinish, arg_19_0)
 end
 
-function slot0._onChangeFinish(slot0)
+function var_0_0._onChangeFinish(arg_20_0)
 	logNormal("_onChangeFinish ----------------->!")
-	slot0:changeEarMode()
-	slot0:dispatchEvent(uv0.Evt_ChangeFinish)
+	arg_20_0:changeEarMode()
+	arg_20_0:dispatchEvent(var_0_0.Evt_ChangeFinish)
 end
 
-function slot0.getCurLang(slot0)
-	return slot0.csharpInst:GetCurLang()
+function var_0_0.getCurLang(arg_21_0)
+	return arg_21_0.csharpInst:GetCurLang()
 end
 
-function slot0.clearUnusedBanks(slot0)
-	slot0.csharpInst:UnloadUnusedBanks()
+function var_0_0.clearUnusedBanks(arg_22_0)
+	arg_22_0.csharpInst:UnloadUnusedBanks()
 end
 
-function slot0.addAudioLog(slot0, slot1, slot2, slot3)
-	if slot1 and uv0.GMOpenLog then
-		logNormal(string.format("<color=%s>GMAudioLog %s：%d %s</color>\n%s", slot2, slot3, slot1, AudioConfig.instance:getAudioCOById(slot1) and slot4.eventName or "event=nil", debug.traceback()))
+function var_0_0.addAudioLog(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	if arg_23_1 and var_0_0.GMOpenLog then
+		local var_23_0 = AudioConfig.instance:getAudioCOById(arg_23_1)
+		local var_23_1 = var_23_0 and var_23_0.eventName or "event=nil"
+
+		logNormal(string.format("<color=%s>GMAudioLog %s：%d %s</color>\n%s", arg_23_2, arg_23_3, arg_23_1, var_23_1, debug.traceback()))
 	end
 end
 
-function slot0.addNormalLog(slot0, slot1, slot2)
-	if uv0.GMOpenLog then
-		logNormal(string.format("<color=%s>GMAudioLog %s</color>\n%s", slot1, slot2, debug.traceback()))
+function var_0_0.addNormalLog(arg_24_0, arg_24_1, arg_24_2)
+	if var_0_0.GMOpenLog then
+		logNormal(string.format("<color=%s>GMAudioLog %s</color>\n%s", arg_24_1, arg_24_2, debug.traceback()))
 	end
 end
 
-function slot0.useDefaultBGM(slot0)
+function var_0_0.useDefaultBGM(arg_25_0)
 	return VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

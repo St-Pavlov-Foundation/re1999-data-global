@@ -1,123 +1,132 @@
-module("modules.logic.fight.entity.FightEntityAssembledMonsterMain", package.seeall)
+﻿module("modules.logic.fight.entity.FightEntityAssembledMonsterMain", package.seeall)
 
-slot0 = class("FightEntityAssembledMonsterMain", FightEntityMonster)
+local var_0_0 = class("FightEntityAssembledMonsterMain", FightEntityMonster)
 
-function slot0.getHangPoint(slot0, slot1, slot2)
-	if not slot2 and not string.nilorempty(slot1) and ModuleEnum.SpineHangPointRoot ~= slot1 then
-		slot1 = string.format("%s_part_%d", slot1, slot0:getPartIndex())
+function var_0_0.getHangPoint(arg_1_0, arg_1_1, arg_1_2)
+	if not arg_1_2 and not string.nilorempty(arg_1_1) and ModuleEnum.SpineHangPointRoot ~= arg_1_1 then
+		arg_1_1 = string.format("%s_part_%d", arg_1_1, arg_1_0:getPartIndex())
 	end
 
-	return uv0.super.getHangPoint(slot0, slot1)
+	return var_0_0.super.getHangPoint(arg_1_0, arg_1_1)
 end
 
-function slot0.getBuffAnim(slot0)
-	slot1 = {}
-	slot2 = {
-		[slot10.uid] = slot9
-	}
+function var_0_0.getBuffAnim(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = {}
+	local var_2_2 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-	for slot7, slot8 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do
-		if (isTypeOf(slot8, uv0) or isTypeOf(slot8, FightEntityAssembledMonsterSub)) and slot8.buff then
-			slot9, slot10 = slot8.buff:getBuffAnim()
+	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+		if (isTypeOf(iter_2_1, var_0_0) or isTypeOf(iter_2_1, FightEntityAssembledMonsterSub)) and iter_2_1.buff then
+			local var_2_3, var_2_4 = iter_2_1.buff:getBuffAnim()
 
-			if slot9 then
-				table.insert(slot1, slot10)
+			if var_2_3 then
+				table.insert(var_2_0, var_2_4)
+
+				var_2_1[var_2_4.uid] = var_2_3
 			end
 		end
 	end
 
-	if #slot1 > 0 then
-		table.sort(slot1, FightBuffComp.buffCompareFuncAni)
+	if #var_2_0 > 0 then
+		table.sort(var_2_0, FightBuffComp.buffCompareFuncAni)
 
-		return slot2[slot1[1].uid]
+		return var_2_1[var_2_0[1].uid]
 	end
 end
 
-function slot0.getDefaultMatName(slot0)
-	slot1 = {}
-	slot2 = {
-		[slot10.uid] = slot9
-	}
+function var_0_0.getDefaultMatName(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = {}
+	local var_3_2 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-	for slot7, slot8 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do
-		if (isTypeOf(slot8, uv0) or isTypeOf(slot8, FightEntityAssembledMonsterSub)) and slot8.buff then
-			slot9, slot10 = slot8.buff:getBuffMatName()
+	for iter_3_0, iter_3_1 in ipairs(var_3_2) do
+		if (isTypeOf(iter_3_1, var_0_0) or isTypeOf(iter_3_1, FightEntityAssembledMonsterSub)) and iter_3_1.buff then
+			local var_3_3, var_3_4 = iter_3_1.buff:getBuffMatName()
 
-			if slot9 then
-				table.insert(slot1, slot10)
+			if var_3_3 then
+				table.insert(var_3_0, var_3_4)
+
+				var_3_1[var_3_4.uid] = var_3_3
 			end
 		end
 	end
 
-	if #slot1 > 0 then
-		table.sort(slot1, FightBuffComp.buffCompareFuncMat)
+	if #var_3_0 > 0 then
+		table.sort(var_3_0, FightBuffComp.buffCompareFuncMat)
 
-		return slot2[slot1[1].uid]
+		return var_3_1[var_3_0[1].uid]
 	end
 end
 
-function slot0.setAlpha(slot0, slot1, slot2)
-	slot0:setAlphaData(slot0.id, slot1, slot2)
+function var_0_0.setAlpha(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:setAlphaData(arg_4_0.id, arg_4_1, arg_4_2)
 end
 
-function slot0.setAlphaData(slot0, slot1, slot2, slot3)
-	slot0._alphaDic = slot0._alphaDic or {}
-	slot0._alphaDic[slot1] = slot2
+function var_0_0.setAlphaData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0._alphaDic = arg_5_0._alphaDic or {}
+	arg_5_0._alphaDic[arg_5_1] = arg_5_2
 
-	for slot7, slot8 in pairs(slot0._alphaDic) do
-		if slot8 ~= slot2 then
-			uv0.super.setAlpha(slot0, 1, 0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._alphaDic) do
+		if iter_5_1 ~= arg_5_2 then
+			var_0_0.super.setAlpha(arg_5_0, 1, 0)
 
-			if FightHelper.getEntity(slot7) ~= slot0 then
-				slot9.super.setAlpha(slot9, 1, 0)
+			local var_5_0 = FightHelper.getEntity(iter_5_0)
+
+			if var_5_0 ~= arg_5_0 then
+				var_5_0.super.setAlpha(var_5_0, 1, 0)
 			end
 
 			return
 		end
 	end
 
-	slot7 = slot3
+	var_0_0.super.setAlpha(arg_5_0, arg_5_2, arg_5_3)
 
-	uv0.super.setAlpha(slot0, slot2, slot7)
+	for iter_5_2, iter_5_3 in pairs(arg_5_0._alphaDic) do
+		local var_5_1 = FightHelper.getEntity(iter_5_2)
 
-	for slot7, slot8 in pairs(slot0._alphaDic) do
-		if FightHelper.getEntity(slot7) ~= slot0 then
-			slot9.super.setAlpha(slot9, slot2, slot3)
+		if var_5_1 ~= arg_5_0 then
+			var_5_1.super.setAlpha(var_5_1, arg_5_2, arg_5_3)
 		end
 	end
 end
 
-function slot0.initComponents(slot0)
-	uv0.super.initComponents(slot0)
+function var_0_0.initComponents(arg_6_0)
+	var_0_0.super.initComponents(arg_6_0)
 end
 
-function slot0.getSpineClass(slot0)
+function var_0_0.getSpineClass(arg_7_0)
 	return FightAssembledMonsterSpine
 end
 
-function slot0.getPartIndex(slot0)
-	if slot0:getMO() then
-		return lua_fight_assembled_monster.configDict[slot1.skin].part
+function var_0_0.getPartIndex(arg_8_0)
+	local var_8_0 = arg_8_0:getMO()
+
+	if var_8_0 then
+		return lua_fight_assembled_monster.configDict[var_8_0.skin].part
 	end
 end
 
-function slot0.killAllSubMonster(slot0)
-	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do
-		if FightHelper.isAssembledMonster(slot7) and slot7 ~= slot0 then
-			GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(slot7:getTag(), slot7.id)
+function var_0_0.killAllSubMonster(arg_9_0)
+	local var_9_0 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_9_1 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-			slot8 = FightDataHelper.entityMgr:getById(slot7.id)
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if FightHelper.isAssembledMonster(iter_9_1) and iter_9_1 ~= arg_9_0 then
+			var_9_0:removeUnit(iter_9_1:getTag(), iter_9_1.id)
 
-			slot8:setDead()
-			FightDataHelper.entityMgr:addDeadUid(slot8.id)
+			local var_9_2 = FightDataHelper.entityMgr:getById(iter_9_1.id)
 
-			slot0._alphaDic[slot7.id] = nil
+			var_9_2:setDead()
+			FightDataHelper.entityMgr:addDeadUid(var_9_2.id)
+
+			arg_9_0._alphaDic[iter_9_1.id] = nil
 		end
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	uv0.super.beforeDestroy(slot0)
+function var_0_0.beforeDestroy(arg_10_0)
+	var_0_0.super.beforeDestroy(arg_10_0)
 end
 
-return slot0
+return var_0_0

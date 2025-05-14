@@ -1,284 +1,334 @@
-module("modules.logic.turnback.view.TurnbackTaskView", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackTaskView", package.seeall)
 
-slot0 = class("TurnbackTaskView", BaseView)
+local var_0_0 = class("TurnbackTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._goprocessIcon = gohelper.findChild(slot0.viewGO, "left/title/#go_progressIcon")
-	slot0._gonoprocessIcon = gohelper.findChild(slot0.viewGO, "left/title/#go_noprogressIcon")
-	slot0._txtactiveNum = gohelper.findChildText(slot0.viewGO, "left/title/#txt_activeNum")
-	slot0._imageactiveIcon = gohelper.findChildImage(slot0.viewGO, "left/title/#txt_activeNum/icon")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "left/#scroll_reward")
-	slot0._gobar = gohelper.findChild(slot0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent/#go_bar")
-	slot0._imageprogress = gohelper.findChildImage(slot0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent/#go_bar/#image_progress")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent")
-	slot0._gorewardItem = gohelper.findChild(slot0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent/#go_rewardItem")
-	slot0._txtremainTime = gohelper.findChildText(slot0.viewGO, "right/#txt_remainTime")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "right/desc_scroll/viewport/#txt_desc")
-	slot0._scrolltask = gohelper.findChildScrollRect(slot0.viewGO, "right/#scroll_task")
-	slot0._gotaskViewport = gohelper.findChild(slot0.viewGO, "right/#scroll_task/Viewport")
-	slot0._gotaskContent = gohelper.findChild(slot0.viewGO, "right/#scroll_task/Viewport/#go_taskContent")
-	slot0._godaytime = gohelper.findChild(slot0.viewGO, "right/#go_daytime")
-	slot0._gotoggleGroup = gohelper.findChild(slot0.viewGO, "right/taskToggleGroup")
-	slot0._toggleGroup = slot0._gotoggleGroup:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
-	slot0._btnstory = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_story")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
+	arg_1_0._goprocessIcon = gohelper.findChild(arg_1_0.viewGO, "left/title/#go_progressIcon")
+	arg_1_0._gonoprocessIcon = gohelper.findChild(arg_1_0.viewGO, "left/title/#go_noprogressIcon")
+	arg_1_0._txtactiveNum = gohelper.findChildText(arg_1_0.viewGO, "left/title/#txt_activeNum")
+	arg_1_0._imageactiveIcon = gohelper.findChildImage(arg_1_0.viewGO, "left/title/#txt_activeNum/icon")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_reward")
+	arg_1_0._gobar = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent/#go_bar")
+	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent/#go_bar/#image_progress")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent")
+	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_reward/Viewport/#go_rewardContent/#go_rewardItem")
+	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_remainTime")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/desc_scroll/viewport/#txt_desc")
+	arg_1_0._scrolltask = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_task")
+	arg_1_0._gotaskViewport = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_task/Viewport")
+	arg_1_0._gotaskContent = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_task/Viewport/#go_taskContent")
+	arg_1_0._godaytime = gohelper.findChild(arg_1_0.viewGO, "right/#go_daytime")
+	arg_1_0._gotoggleGroup = gohelper.findChild(arg_1_0.viewGO, "right/taskToggleGroup")
+	arg_1_0._toggleGroup = arg_1_0._gotoggleGroup:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
+	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_story")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 
-	slot0._txtdaytime = gohelper.findChildText(slot0.viewGO, "right/#go_daytime/txt")
-	slot0._txtdaytime.text = ServerTime.ReplaceUTCStr(luaLang("p_turnbacktaskview_txt_time"))
+	arg_1_0._txtdaytime = gohelper.findChildText(arg_1_0.viewGO, "right/#go_daytime/txt")
+	arg_1_0._txtdaytime.text = ServerTime.ReplaceUTCStr(luaLang("p_turnbacktaskview_txt_time"))
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, slot0._playGetRewardFinishAnim, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshTaskRedDot, slot0._refreshRedDot, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, slot0._refreshRemainTime, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0._refreshUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._playEndStory, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._refreshBonusPoint, slot0)
-	slot0._btnstory:AddClickListener(slot0._btnstoryOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, arg_2_0._playGetRewardFinishAnim, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshTaskRedDot, arg_2_0._refreshRedDot, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_2_0._refreshRemainTime, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0._refreshUI, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._playEndStory, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._refreshBonusPoint, arg_2_0)
+	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, slot0._playGetRewardFinishAnim, slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshTaskRedDot, slot0._refreshRedDot, slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, slot0._refreshRemainTime, slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0._refreshUI, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._playEndStory, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._refreshBonusPoint, slot0)
-	slot0._btnstory:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, arg_3_0._playGetRewardFinishAnim, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshTaskRedDot, arg_3_0._refreshRedDot, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_3_0._refreshRemainTime, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0._refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._playEndStory, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._refreshBonusPoint, arg_3_0)
+	arg_3_0._btnstory:RemoveClickListener()
 end
 
-slot1 = {
+local var_0_1 = {
 	TurnbackEnum.TaskLoopType.Day,
 	TurnbackEnum.TaskLoopType.Long
 }
-slot2 = 4
+local var_0_2 = 4
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getTurnbackIcon("turnback_taskfullbg"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getTurnbackIcon("turnback_taskfullbg"))
 
-	slot0._isFirstEnter = true
+	arg_4_0._isFirstEnter = true
 
-	gohelper.setActive(slot0._gorewardItem, false)
+	gohelper.setActive(arg_4_0._gorewardItem, false)
 
-	slot0._rewardItemTab = slot0:getUserDataTb_()
-	slot0._taskToggleWraps = slot0:getUserDataTb_()
-	slot0._toggleRedDotTab = slot0:getUserDataTb_()
+	arg_4_0._rewardItemTab = arg_4_0:getUserDataTb_()
+	arg_4_0._taskToggleWraps = arg_4_0:getUserDataTb_()
+	arg_4_0._toggleRedDotTab = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.viewConfig = TurnbackConfig.instance:getTurnbackSubModuleCo(slot0.viewParam.actId)
-	slot0.curTaskLoopType = TurnbackEnum.TaskLoopType.Day
-	slot0.curTurnbackId = TurnbackModel.instance:getCurTurnbackId()
-	slot0.bonusPointType, slot0.bonusPointId = TurnbackConfig.instance:getBonusPointCo(slot0.curTurnbackId)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.parent
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageactiveIcon, CurrencyConfig.instance:getCurrencyCo(slot0.bonusPointId).icon .. "_1")
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-	slot0:_initComp()
-	slot0:_createTaskBonusItem()
-	slot0:_onToggleValueChanged(1, true)
-	slot0:_refreshUI()
+	arg_6_0.viewConfig = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_6_0.viewParam.actId)
+	arg_6_0.curTaskLoopType = TurnbackEnum.TaskLoopType.Day
+	arg_6_0.curTurnbackId = TurnbackModel.instance:getCurTurnbackId()
+	arg_6_0.bonusPointType, arg_6_0.bonusPointId = TurnbackConfig.instance:getBonusPointCo(arg_6_0.curTurnbackId)
 
-	slot0._isFirstEnter = false
+	local var_6_1 = CurrencyConfig.instance:getCurrencyCo(arg_6_0.bonusPointId)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_6_0._imageactiveIcon, var_6_1.icon .. "_1")
+	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	arg_6_0:_initComp()
+	arg_6_0:_createTaskBonusItem()
+	arg_6_0:_onToggleValueChanged(1, true)
+	arg_6_0:_refreshUI()
+
+	arg_6_0._isFirstEnter = false
 end
 
-function slot0._initComp(slot0)
-	for slot6 = 1, slot0._gotoggleGroup.transform.childCount do
-		if slot1:GetChild(slot6 - 1):GetComponent(typeof(UnityEngine.UI.Toggle)) then
-			slot9 = gohelper.onceAddComponent(slot7, typeof(SLFramework.UGUI.ToggleWrap))
+function var_0_0._initComp(arg_7_0)
+	local var_7_0 = arg_7_0._gotoggleGroup.transform
+	local var_7_1 = var_7_0.childCount
 
-			slot9:AddOnValueChanged(slot0._onToggleValueChanged, slot0, slot6)
+	for iter_7_0 = 1, var_7_1 do
+		local var_7_2 = var_7_0:GetChild(iter_7_0 - 1)
 
-			slot0._taskToggleWraps[slot6] = slot9
+		if var_7_2:GetComponent(typeof(UnityEngine.UI.Toggle)) then
+			local var_7_3 = gohelper.onceAddComponent(var_7_2, typeof(SLFramework.UGUI.ToggleWrap))
+
+			var_7_3:AddOnValueChanged(arg_7_0._onToggleValueChanged, arg_7_0, iter_7_0)
+
+			arg_7_0._taskToggleWraps[iter_7_0] = var_7_3
 		end
 	end
 
-	for slot6 = 1, 2 do
-		slot0._toggleRedDotTab[slot6] = gohelper.findChild(slot0.viewGO, "right/redDot/#go_reddot" .. slot6)
+	for iter_7_1 = 1, 2 do
+		arg_7_0._toggleRedDotTab[iter_7_1] = gohelper.findChild(arg_7_0.viewGO, "right/redDot/#go_reddot" .. iter_7_1)
 	end
 
-	slot0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0.viewContainer._scrollView)
+	arg_7_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_7_0.viewContainer._scrollView)
 
-	slot0._taskAnimRemoveItem:setMoveInterval(0)
-	slot0._taskAnimRemoveItem:setMoveAnimationTime(TurnbackEnum.TaskMaskTime - TurnbackEnum.TaskGetAnimTime)
+	arg_7_0._taskAnimRemoveItem:setMoveInterval(0)
+	arg_7_0._taskAnimRemoveItem:setMoveAnimationTime(TurnbackEnum.TaskMaskTime - TurnbackEnum.TaskGetAnimTime)
 end
 
-function slot0._createTaskBonusItem(slot0)
-	for slot5 = 1, GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-		if not slot0._rewardItemTab[slot5] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = gohelper.clone(slot0._gorewardItem, slot0._gorewardContent, "rewardItem" .. slot5)
-			slot7.item = MonoHelper.addNoUpdateLuaComOnceToGo(slot7.go, TurnbackTaskBonusItem, {
-				index = slot5,
-				parentScrollGO = slot0._scrollreward.gameObject
+function var_0_0._createTaskBonusItem(arg_8_0)
+	local var_8_0 = GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_8_0.curTurnbackId))
+
+	for iter_8_0 = 1, var_8_0 do
+		if not arg_8_0._rewardItemTab[iter_8_0] then
+			local var_8_1 = arg_8_0:getUserDataTb_()
+
+			var_8_1.go = gohelper.clone(arg_8_0._gorewardItem, arg_8_0._gorewardContent, "rewardItem" .. iter_8_0)
+			var_8_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1.go, TurnbackTaskBonusItem, {
+				index = iter_8_0,
+				parentScrollGO = arg_8_0._scrollreward.gameObject
 			})
 
-			gohelper.setActive(slot7.go, true)
-			table.insert(slot0._rewardItemTab, slot7)
+			gohelper.setActive(var_8_1.go, true)
+			table.insert(arg_8_0._rewardItemTab, var_8_1)
 		end
 	end
 
-	for slot5 = slot1 + 1, #slot0._rewardItemTab do
-		gohelper.setActive(slot0._rewardItemTab[slot5].go, false)
+	for iter_8_1 = var_8_0 + 1, #arg_8_0._rewardItemTab do
+		gohelper.setActive(arg_8_0._rewardItemTab[iter_8_1].go, false)
 	end
 end
 
-function slot0._refreshTaskProcessBar(slot0, slot1)
-	slot6 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)
-	slot7 = GameUtil.getTabLen(slot6)
+function var_0_0._refreshTaskProcessBar(arg_9_0, arg_9_1)
+	local var_9_0 = 26
+	local var_9_1 = 52
+	local var_9_2 = 98
+	local var_9_3 = 25
+	local var_9_4 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_9_0.curTurnbackId)
+	local var_9_5 = GameUtil.getTabLen(var_9_4)
+	local var_9_6 = var_9_0 + (var_9_5 - 1) * var_9_2 + var_9_5 * var_9_1 + var_9_3
 
-	recthelper.setHeight(slot0._gobar.transform, 26 + (slot7 - 1) * 98 + slot7 * 52 + 25)
+	recthelper.setHeight(arg_9_0._gobar.transform, var_9_6)
 
-	slot9 = 0
-	slot10 = 0
-	slot11 = 0
-	slot12 = 0
-	slot13 = 0
+	local var_9_7 = 0
+	local var_9_8 = 0
+	local var_9_9 = 0
+	local var_9_10 = 0
+	local var_9_11 = 0
 
-	for slot17, slot18 in ipairs(slot6) do
-		if slot18.needPoint <= slot1 then
-			slot9 = slot17
-			slot10 = slot18.needPoint
-			slot11 = slot18.needPoint
-		elseif slot11 <= slot10 then
-			slot11 = slot18.needPoint
+	for iter_9_0, iter_9_1 in ipairs(var_9_4) do
+		if arg_9_1 >= iter_9_1.needPoint then
+			var_9_7 = iter_9_0
+			var_9_8 = iter_9_1.needPoint
+			var_9_9 = iter_9_1.needPoint
+		elseif var_9_9 <= var_9_8 then
+			var_9_9 = iter_9_1.needPoint
 		end
 	end
 
-	if slot11 ~= slot10 then
-		slot12 = (slot1 - slot10) / (slot11 - slot10)
+	if var_9_9 ~= var_9_8 then
+		var_9_10 = (arg_9_1 - var_9_8) / (var_9_9 - var_9_8)
 	end
 
-	if slot9 == slot7 then
-		slot13 = (slot9 == 0 and slot2 * slot12 or slot2 + slot9 * slot3 + (slot9 - 1) * slot4 + slot12 * slot4) + slot5
+	if var_9_7 == 0 then
+		var_9_11 = var_9_0 * var_9_10
+	else
+		var_9_11 = var_9_0 + var_9_7 * var_9_1 + (var_9_7 - 1) * var_9_2 + var_9_10 * var_9_2
 	end
 
-	recthelper.setHeight(slot0._imageprogress.transform, slot13)
+	if var_9_7 == var_9_5 then
+		var_9_11 = var_9_11 + var_9_3
+	end
+
+	recthelper.setHeight(arg_9_0._imageprogress.transform, var_9_11)
 end
 
-function slot0._onToggleValueChanged(slot0, slot1, slot2)
-	if slot2 then
-		if not slot0._isFirstEnter then
+function var_0_0._onToggleValueChanged(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_2 then
+		if not arg_10_0._isFirstEnter then
 			AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_switch)
 		end
 
-		slot0.curTaskLoopType = uv0[slot1]
+		arg_10_0.curTaskLoopType = var_0_1[arg_10_1]
 
-		TurnbackTaskModel.instance:refreshList(slot0.curTaskLoopType)
+		TurnbackTaskModel.instance:refreshList(arg_10_0.curTaskLoopType)
 
-		slot0._scrolltask.verticalNormalizedPosition = 1
+		arg_10_0._scrolltask.verticalNormalizedPosition = 1
 	end
 
-	for slot6 = 1, #slot0._taskToggleWraps do
-		SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0._taskToggleWraps[slot6].gameObject, "txt"), slot0.curTaskLoopType == uv0[slot6] and "#E99B56" or "#ffffff")
-		ZProj.UGUIHelper.SetColorAlpha(slot7, slot0.curTaskLoopType == uv0[slot6] and 1 or 0.3)
-		gohelper.setActive(gohelper.findChild(slot0._taskToggleWraps[slot6].gameObject, "Background/go_normal"), slot0.curTaskLoopType ~= uv0[slot6])
-		gohelper.setActive(gohelper.findChild(slot0._taskToggleWraps[slot6].gameObject, "Background/go_select"), slot0.curTaskLoopType == uv0[slot6])
+	for iter_10_0 = 1, #arg_10_0._taskToggleWraps do
+		local var_10_0 = gohelper.findChildText(arg_10_0._taskToggleWraps[iter_10_0].gameObject, "txt")
+
+		SLFramework.UGUI.GuiHelper.SetColor(var_10_0, arg_10_0.curTaskLoopType == var_0_1[iter_10_0] and "#E99B56" or "#ffffff")
+		ZProj.UGUIHelper.SetColorAlpha(var_10_0, arg_10_0.curTaskLoopType == var_0_1[iter_10_0] and 1 or 0.3)
+
+		local var_10_1 = gohelper.findChild(arg_10_0._taskToggleWraps[iter_10_0].gameObject, "Background/go_normal")
+		local var_10_2 = gohelper.findChild(arg_10_0._taskToggleWraps[iter_10_0].gameObject, "Background/go_select")
+
+		gohelper.setActive(var_10_1, arg_10_0.curTaskLoopType ~= var_0_1[iter_10_0])
+		gohelper.setActive(var_10_2, arg_10_0.curTaskLoopType == var_0_1[iter_10_0])
 	end
 
-	gohelper.setActive(slot0._godaytime, slot0.curTaskLoopType == TurnbackEnum.TaskLoopType.Day)
-	recthelper.setAnchorY(slot0._scrolltask.gameObject.transform, slot0.curTaskLoopType == TurnbackEnum.TaskLoopType.Day and 0 or 50)
-	recthelper.setHeight(slot0._scrolltask.gameObject.transform, TurnbackTaskModel.instance:getCount() <= uv1 and 496 or 683)
+	gohelper.setActive(arg_10_0._godaytime, arg_10_0.curTaskLoopType == TurnbackEnum.TaskLoopType.Day)
+	recthelper.setAnchorY(arg_10_0._scrolltask.gameObject.transform, arg_10_0.curTaskLoopType == TurnbackEnum.TaskLoopType.Day and 0 or 50)
 
-	if slot3 <= uv1 then
-		slot0._gotaskViewport.transform.offsetMin = Vector2(0, 0)
+	local var_10_3 = TurnbackTaskModel.instance:getCount()
+
+	recthelper.setHeight(arg_10_0._scrolltask.gameObject.transform, var_10_3 <= var_0_2 and 496 or 683)
+
+	if var_10_3 <= var_0_2 then
+		arg_10_0._gotaskViewport.transform.offsetMin = Vector2(0, 0)
 	else
-		slot0._gotaskViewport.transform.offsetMin = Vector2(0, slot0.viewContainer._scrollView._param.cellHeight + slot0.viewContainer._scrollView._param.cellSpaceV)
+		arg_10_0._gotaskViewport.transform.offsetMin = Vector2(0, arg_10_0.viewContainer._scrollView._param.cellHeight + arg_10_0.viewContainer._scrollView._param.cellSpaceV)
 	end
 end
 
-function slot0._btnstoryOnClick(slot0)
-	if TurnbackModel.instance:getCurTurnbackMo() and slot1.config and slot1.config.endStory then
-		StoryController.instance:playStory(slot2)
+function var_0_0._btnstoryOnClick(arg_11_0)
+	local var_11_0 = TurnbackModel.instance:getCurTurnbackMo()
+	local var_11_1 = var_11_0 and var_11_0.config and var_11_0.config.endStory
+
+	if var_11_1 then
+		StoryController.instance:playStory(var_11_1)
 	else
-		logError(string.format("TurnbackTaskView endStoryId is nil", slot2))
+		logError(string.format("TurnbackTaskView endStoryId is nil", var_11_1))
 	end
 end
 
-function slot0._refreshUI(slot0)
-	slot2 = CurrencyModel.instance:getCurrency(slot0.bonusPointId) and slot1.quantity or 0
+function var_0_0._refreshUI(arg_12_0)
+	local var_12_0 = CurrencyModel.instance:getCurrency(arg_12_0.bonusPointId)
+	local var_12_1 = var_12_0 and var_12_0.quantity or 0
 
-	slot0:_refreshTaskProcessBar(slot2)
+	arg_12_0:_refreshTaskProcessBar(var_12_1)
 
-	slot0._txtactiveNum.text = slot2
-	slot0._txtdesc.text = slot0.viewConfig.actDesc
+	arg_12_0._txtactiveNum.text = var_12_1
+	arg_12_0._txtdesc.text = arg_12_0.viewConfig.actDesc
 
-	gohelper.setActive(slot0._goprocessIcon, slot2 > 0)
-	gohelper.setActive(slot0._gonoprocessIcon, slot2 == 0)
-	slot0:_refreshRemainTime()
-	slot0:_refreshRedDot()
-	slot0:_refreshStoryBtn()
+	gohelper.setActive(arg_12_0._goprocessIcon, var_12_1 > 0)
+	gohelper.setActive(arg_12_0._gonoprocessIcon, var_12_1 == 0)
+	arg_12_0:_refreshRemainTime()
+	arg_12_0:_refreshRedDot()
+	arg_12_0:_refreshStoryBtn()
 end
 
-function slot0._refreshRedDot(slot0)
-	for slot5, slot6 in pairs(slot0._toggleRedDotTab) do
-		gohelper.setActive(slot6, TurnbackTaskModel.instance:getTaskLoopTypeDotState()[uv0[slot5]])
+function var_0_0._refreshRedDot(arg_13_0)
+	local var_13_0 = TurnbackTaskModel.instance:getTaskLoopTypeDotState()
+
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._toggleRedDotTab) do
+		local var_13_1 = var_0_1[iter_13_0]
+
+		gohelper.setActive(iter_13_1, var_13_0[var_13_1])
 	end
 end
 
-function slot0._refreshRemainTime(slot0)
-	slot0._txtremainTime.text = TurnbackController.instance:refreshRemainTime()
+function var_0_0._refreshRemainTime(arg_14_0)
+	arg_14_0._txtremainTime.text = TurnbackController.instance:refreshRemainTime()
 end
 
-function slot0._refreshStoryBtn(slot0)
-	gohelper.setActive(slot0._btnstory, TurnbackConfig.instance:getTurnbackCo(slot0.curTurnbackId) and StoryModel.instance:isStoryFinished(slot1.endStory) and slot0:_canPlayEndStory())
+function var_0_0._refreshStoryBtn(arg_15_0)
+	local var_15_0 = TurnbackConfig.instance:getTurnbackCo(arg_15_0.curTurnbackId)
+	local var_15_1 = var_15_0 and StoryModel.instance:isStoryFinished(var_15_0.endStory) and arg_15_0:_canPlayEndStory()
+
+	gohelper.setActive(arg_15_0._btnstory, var_15_1)
 end
 
-function slot0._refreshBonusPoint(slot0, slot1)
-	if slot1[slot0.bonusPointId] then
-		slot0:_refreshUI()
+function var_0_0._refreshBonusPoint(arg_16_0, arg_16_1)
+	if arg_16_1[arg_16_0.bonusPointId] then
+		arg_16_0:_refreshUI()
 		TurnbackController.instance:dispatchEvent(TurnbackEvent.RefreshTaskRewardItem)
 	end
 end
 
-function slot0._playGetRewardFinishAnim(slot0, slot1)
-	if not TurnbackModel.instance:isInOpenTime() or not slot1 then
-		TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
+function var_0_0._playGetRewardFinishAnim(arg_17_0, arg_17_1)
+	if not TurnbackModel.instance:isInOpenTime() or not arg_17_1 then
+		TaskDispatcher.cancelTask(arg_17_0.delayPlayFinishAnim, arg_17_0)
 
 		return
 	end
 
-	if slot1 then
-		slot0.removeIndexTab = {
-			slot1
+	if arg_17_1 then
+		arg_17_0.removeIndexTab = {
+			arg_17_1
 		}
 	end
 
-	TaskDispatcher.runDelay(slot0.delayPlayFinishAnim, slot0, TurnbackEnum.TaskGetAnimTime)
+	TaskDispatcher.runDelay(arg_17_0.delayPlayFinishAnim, arg_17_0, TurnbackEnum.TaskGetAnimTime)
 end
 
-function slot0.delayPlayFinishAnim(slot0)
-	slot0._taskAnimRemoveItem:removeByIndexs(slot0.removeIndexTab)
+function var_0_0.delayPlayFinishAnim(arg_18_0)
+	arg_18_0._taskAnimRemoveItem:removeByIndexs(arg_18_0.removeIndexTab)
 end
 
-function slot0._playEndStory(slot0, slot1)
-	if slot1 == ViewName.CommonPropView and slot0:_canPlayEndStory() and not StoryModel.instance:isStoryFinished(TurnbackModel.instance:getCurTurnbackMo().config.endStory) then
-		StoryController.instance:playStory(slot2, nil, slot0._refreshStoryBtn, slot0)
+function var_0_0._playEndStory(arg_19_0, arg_19_1)
+	if arg_19_1 == ViewName.CommonPropView and arg_19_0:_canPlayEndStory() then
+		local var_19_0 = TurnbackModel.instance:getCurTurnbackMo().config.endStory
+
+		if not StoryModel.instance:isStoryFinished(var_19_0) then
+			StoryController.instance:playStory(var_19_0, nil, arg_19_0._refreshStoryBtn, arg_19_0)
+		end
 	end
 end
 
-function slot0._canPlayEndStory(slot0)
-	slot1 = TurnbackModel.instance:getCurTurnbackMo()
+function var_0_0._canPlayEndStory(arg_20_0)
+	local var_20_0 = TurnbackModel.instance:getCurTurnbackMo()
+	local var_20_1 = GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(var_20_0.id))
 
-	return #slot1.hasGetTaskBonus == GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot1.id))
+	return #var_20_0.hasGetTaskBonus == var_20_1
 end
 
-function slot0.onClose(slot0)
-	for slot4 = 1, #slot0._taskToggleWraps do
-		slot0._taskToggleWraps[slot4]:RemoveOnValueChanged()
+function var_0_0.onClose(arg_21_0)
+	for iter_21_0 = 1, #arg_21_0._taskToggleWraps do
+		arg_21_0._taskToggleWraps[iter_21_0]:RemoveOnValueChanged()
 	end
 
-	slot0._simagebg:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
+	arg_21_0._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_21_0.delayPlayFinishAnim, arg_21_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_22_0)
+	return
 end
 
-return slot0
+return var_0_0

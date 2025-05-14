@@ -1,11 +1,12 @@
-module("modules.logic.signin.config.SignInEnum", package.seeall)
+﻿module("modules.logic.signin.config.SignInEnum", package.seeall)
 
-slot0 = _M
-slot1 = "ui/viewres/signin/"
-slot2 = "ui/viewres/lifecircle/"
-slot0.ResPath = {
-	lifecirclesignview = slot2 .. "lifecirclesignview.prefab",
-	lifecirclesignrewardsitem = slot2 .. "lifecirclesignrewardsitem.prefab"
+local var_0_0 = _M
+local var_0_1 = "ui/viewres/signin/"
+local var_0_2 = "ui/viewres/lifecircle/"
+
+var_0_0.ResPath = {
+	lifecirclesignview = var_0_2 .. "lifecirclesignview.prefab",
+	lifecirclesignrewardsitem = var_0_2 .. "lifecirclesignrewardsitem.prefab"
 }
 
-return slot0
+return var_0_0

@@ -1,39 +1,39 @@
-module("modules.logic.tower.view.fight.work.TowerBossResultShowLevChangeWork", package.seeall)
+﻿module("modules.logic.tower.view.fight.work.TowerBossResultShowLevChangeWork", package.seeall)
 
-slot0 = class("TowerBossResultShowLevChangeWork", BaseWork)
-slot1 = 2
+local var_0_0 = class("TowerBossResultShowLevChangeWork", BaseWork)
+local var_0_1 = 2
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.goBossLevChange = slot1
-	slot0.goBoss = slot2
-	slot0.isBossLevChange = slot3
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.goBossLevChange = arg_1_1
+	arg_1_0.goBoss = arg_1_2
+	arg_1_0.isBossLevChange = arg_1_3
 end
 
-function slot0.onStart(slot0)
-	gohelper.setActive(slot0.goBossLevChange, true)
-	gohelper.setActive(slot0.goBoss, true)
+function var_0_0.onStart(arg_2_0)
+	gohelper.setActive(arg_2_0.goBossLevChange, true)
+	gohelper.setActive(arg_2_0.goBoss, true)
 
-	if not slot0.isBossLevChange then
-		slot0:onDone(true)
+	if not arg_2_0.isBossLevChange then
+		arg_2_0:onDone(true)
 	else
-		TaskDispatcher.runDelay(slot0._triggerAudio, slot0, 0.8)
+		TaskDispatcher.runDelay(arg_2_0._triggerAudio, arg_2_0, 0.8)
 	end
 
-	TaskDispatcher.runDelay(slot0._delayFinish, slot0, uv0)
+	TaskDispatcher.runDelay(arg_2_0._delayFinish, arg_2_0, var_0_1)
 end
 
-function slot0._triggerAudio(slot0)
+function var_0_0._triggerAudio(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_level_up)
 end
 
-function slot0._delayFinish(slot0)
-	slot0:onDone(true)
+function var_0_0._delayFinish(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	gohelper.setActive(slot0.goBossLevChange, false)
-	TaskDispatcher.cancelTask(slot0._delayFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._triggerAudio, slot0)
+function var_0_0.clearWork(arg_5_0)
+	gohelper.setActive(arg_5_0.goBossLevChange, false)
+	TaskDispatcher.cancelTask(arg_5_0._delayFinish, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._triggerAudio, arg_5_0)
 end
 
-return slot0
+return var_0_0

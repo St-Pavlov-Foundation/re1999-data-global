@@ -1,87 +1,102 @@
-module("modules.logic.gm.view.GMFightEntityItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntityItem", package.seeall)
 
-slot0 = class("GMFightEntityItem", ListScrollCell)
+local var_0_0 = class("GMFightEntityItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._btn = gohelper.findChildButtonWithAudio(slot1, "btn")
-	slot0._selectImg = gohelper.findChildImage(slot1, "btn")
-	slot0._icon = gohelper.findChildSingleImage(slot1, "image")
-	slot0._imgIcon = gohelper.findChildImage(slot1, "image")
-	slot0._imgCareer = gohelper.findChildImage(slot1, "image/career")
-	slot0._txtName = gohelper.findChildText(slot1, "btn/name")
-	slot0._txtId = gohelper.findChildText(slot1, "btn/id")
-	slot0._txtUid = gohelper.findChildText(slot1, "btn/uid")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_1, "btn")
+	arg_1_0._selectImg = gohelper.findChildImage(arg_1_1, "btn")
+	arg_1_0._icon = gohelper.findChildSingleImage(arg_1_1, "image")
+	arg_1_0._imgIcon = gohelper.findChildImage(arg_1_1, "image")
+	arg_1_0._imgCareer = gohelper.findChildImage(arg_1_1, "image/career")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "btn/name")
+	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "btn/id")
+	arg_1_0._txtUid = gohelper.findChildText(arg_1_1, "btn/uid")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btn:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btn:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btn:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btn:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0._icon:UnLoadImage()
+	arg_4_0._icon:UnLoadImage()
 
-	slot2 = slot0._mo:isMonster() and lua_monster.configDict[slot0._mo.modelId] or lua_character.configDict[slot0._mo.modelId]
-
-	if slot0._mo:isCharacter() then
-		slot0._icon:LoadImage(ResUrl.getHeadIconSmall(FightConfig.instance:getSkinCO(slot1.originSkin).retangleIcon))
-	elseif slot0._mo:isMonster() then
-		gohelper.getSingleImage(slot0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot3.headIcon))
-
-		slot0._imgIcon.enabled = true
+	if not arg_4_0._mo:isMonster() or not lua_monster.configDict[arg_4_0._mo.modelId] then
+		local var_4_0 = lua_character.configDict[arg_4_0._mo.modelId]
 	end
 
-	if slot1:getCareer() ~= 0 then
-		UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imgCareer, "sxy_" .. tostring(slot4))
+	local var_4_1 = FightConfig.instance:getSkinCO(arg_4_1.originSkin)
+
+	if arg_4_0._mo:isCharacter() then
+		local var_4_2 = ResUrl.getHeadIconSmall(var_4_1.retangleIcon)
+
+		arg_4_0._icon:LoadImage(var_4_2)
+	elseif arg_4_0._mo:isMonster() then
+		gohelper.getSingleImage(arg_4_0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_4_1.headIcon))
+
+		arg_4_0._imgIcon.enabled = true
 	end
 
-	slot8 = FightDataHelper.entityMgr:isDeadUid(slot0._mo.id)
-	slot9 = slot0._mo.side == FightEnum.EntitySide.MySide
-	slot10 = FightDataHelper.entityMgr:isSp(slot0._mo.id) and "特殊怪" or (FightDataHelper.entityMgr:isSub(slot0._mo.id) and "<color=#FFA500>替补</color>" or "") .. (slot0._mo:isCharacter() and "角色" or "怪物")
+	local var_4_3 = arg_4_1:getCareer()
 
-	if slot0._mo.id == FightEntityScene.MySideId then
-		slot0._txtName.text = "维尔汀"
-	elseif slot0._mo.id == FightEntityScene.EnemySideId then
-		slot0._txtName.text = "敌方维尔汀"
+	if var_4_3 ~= 0 then
+		UISpriteSetMgr.instance:setEnemyInfoSprite(arg_4_0._imgCareer, "sxy_" .. tostring(var_4_3))
+	end
+
+	local var_4_4 = arg_4_0._mo:isCharacter()
+	local var_4_5 = FightDataHelper.entityMgr:isSp(arg_4_0._mo.id)
+	local var_4_6 = FightDataHelper.entityMgr:isSub(arg_4_0._mo.id)
+	local var_4_7 = FightDataHelper.entityMgr:isDeadUid(arg_4_0._mo.id)
+	local var_4_8
+
+	var_4_8 = arg_4_0._mo.side == FightEnum.EntitySide.MySide
+
+	local var_4_9 = var_4_5 and "特殊怪" or (var_4_6 and "<color=#FFA500>替补</color>" or "") .. (var_4_4 and "角色" or "怪物")
+
+	if arg_4_0._mo.id == FightEntityScene.MySideId then
+		arg_4_0._txtName.text = "维尔汀"
+	elseif arg_4_0._mo.id == FightEntityScene.EnemySideId then
+		arg_4_0._txtName.text = "敌方维尔汀"
 	else
-		slot0._txtName.text = string.format("%s--%s", slot10, slot0._mo:getEntityName())
+		arg_4_0._txtName.text = string.format("%s--%s", var_4_9, arg_4_0._mo:getEntityName())
 	end
 
-	slot0._txtId.text = "ID" .. tostring(slot0._mo.id)
-	slot0._txtUid.text = "UID" .. tostring(slot0._mo.modelId)
-	slot11 = slot8 and "#AAAAAA" or slot5 and "#539450" or "#9C4F30"
+	arg_4_0._txtId.text = "ID" .. tostring(arg_4_0._mo.id)
+	arg_4_0._txtUid.text = "UID" .. tostring(arg_4_0._mo.modelId)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtName, slot11)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtId, slot11)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtUid, slot11)
-	ZProj.UGUIHelper.SetGrayscale(slot0._icon.gameObject, slot8)
+	local var_4_10 = var_4_7 and "#AAAAAA" or var_4_4 and "#539450" or "#9C4F30"
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtName, var_4_10)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtId, var_4_10)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtUid, var_4_10)
+	ZProj.UGUIHelper.SetGrayscale(arg_4_0._icon.gameObject, var_4_7)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._icon:UnLoadImage()
+function var_0_0.onDestroy(arg_5_0)
+	arg_5_0._icon:UnLoadImage()
 end
 
-function slot0._onClickThis(slot0)
-	if not slot0._isSelect then
-		slot0._view:setSelect(slot0._mo)
-	end
-end
-
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
-
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._selectImg, slot1 and "#9ADEF0" or "#FFFFFF")
-
-	if slot1 then
-		GMFightEntityModel.instance:setEntityMO(slot0._mo)
-		GMController.instance:dispatchEvent(GMFightEntityView.Evt_SelectHero, slot0._mo)
+function var_0_0._onClickThis(arg_6_0)
+	if not arg_6_0._isSelect then
+		arg_6_0._view:setSelect(arg_6_0._mo)
 	end
 end
 
-return slot0
+function var_0_0.onSelect(arg_7_0, arg_7_1)
+	arg_7_0._isSelect = arg_7_1
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._selectImg, arg_7_1 and "#9ADEF0" or "#FFFFFF")
+
+	if arg_7_1 then
+		GMFightEntityModel.instance:setEntityMO(arg_7_0._mo)
+		GMController.instance:dispatchEvent(GMFightEntityView.Evt_SelectHero, arg_7_0._mo)
+	end
+end
+
+return var_0_0

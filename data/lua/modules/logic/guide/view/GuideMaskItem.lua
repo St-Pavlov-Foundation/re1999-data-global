@@ -1,415 +1,465 @@
-module("modules.logic.guide.view.GuideMaskItem", package.seeall)
+﻿module("modules.logic.guide.view.GuideMaskItem", package.seeall)
 
-slot0 = class("GuideMaskItem", LuaCompBase)
-slot1 = Vector2.zero
-slot2 = 16
-slot3 = 16
+local var_0_0 = class("GuideMaskItem", LuaCompBase)
+local var_0_1 = Vector2.zero
+local var_0_2 = 16
+local var_0_3 = 16
 
-function slot0.ctor(slot0, slot1)
-	slot0._maskView = slot1
-	slot0._viewTrs = nil
-	slot0._targetGO = nil
-	slot0._targetTrs = nil
-	slot0._targetIs2D = false
-	slot0._globalTouch = nil
-	slot0._root2DTrs = nil
-	slot0._uiCamera = nil
-	slot0._maskOpenTime = 0
-	slot0._exceptionClickCount = 0
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._maskView = arg_1_1
+	arg_1_0._viewTrs = nil
+	arg_1_0._targetGO = nil
+	arg_1_0._targetTrs = nil
+	arg_1_0._targetIs2D = false
+	arg_1_0._globalTouch = nil
+	arg_1_0._root2DTrs = nil
+	arg_1_0._uiCamera = nil
+	arg_1_0._maskOpenTime = 0
+	arg_1_0._exceptionClickCount = 0
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._updateMaskPosAndSize, slot0)
-	TaskDispatcher.cancelTask(slot0._showArrow, slot0)
-	slot0:removeEventCb(GuideController.instance, GuideEvent.SetMaskOffset, slot0._setMaskOffset, slot0)
-	slot0:removeEventCb(GuideController.instance, GuideEvent.SetMaskPosition, slot0._setMaskCustomPos, slot0)
+function var_0_0.onDestroy(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._updateMaskPosAndSize, arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._showArrow, arg_2_0)
+	arg_2_0:removeEventCb(GuideController.instance, GuideEvent.SetMaskOffset, arg_2_0._setMaskOffset, arg_2_0)
+	arg_2_0:removeEventCb(GuideController.instance, GuideEvent.SetMaskPosition, arg_2_0._setMaskCustomPos, arg_2_0)
 end
 
-function slot0.init(slot0, slot1)
-	slot0._cacheEffects = slot0:getUserDataTb_()
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0._cacheEffects = arg_3_0:getUserDataTb_()
 
-	slot0:onInitView()
-	slot0:addEventCb(GuideController.instance, GuideEvent.SetMaskOffset, slot0._setMaskOffset, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.SetMaskPosition, slot0._setMaskCustomPos, slot0)
+	arg_3_0:onInitView()
+	arg_3_0:addEventCb(GuideController.instance, GuideEvent.SetMaskOffset, arg_3_0._setMaskOffset, arg_3_0)
+	arg_3_0:addEventCb(GuideController.instance, GuideEvent.SetMaskPosition, arg_3_0._setMaskCustomPos, arg_3_0)
 end
 
-function slot0.onInitView(slot0)
-	slot0._uiCamera = CameraMgr.instance:getUICamera()
-	slot0._unitCamera = CameraMgr.instance:getUnitCamera()
-	slot0._mainCamera = CameraMgr.instance:getMainCamera()
-	slot0._root2DTrs = ViewMgr.instance:getTopUICanvas().transform
+function var_0_0.onInitView(arg_4_0)
+	arg_4_0._uiCamera = CameraMgr.instance:getUICamera()
+	arg_4_0._unitCamera = CameraMgr.instance:getUnitCamera()
+	arg_4_0._mainCamera = CameraMgr.instance:getMainCamera()
+	arg_4_0._root2DTrs = ViewMgr.instance:getTopUICanvas().transform
 end
 
-function slot0.addEventListeners(slot0)
-	if slot0._csGuideMaskHole then
-		slot0._csGuideMaskHole:InitPointerLuaFunction(slot0._onPointerClick, slot0)
+function var_0_0.addEventListeners(arg_5_0)
+	if arg_5_0._csGuideMaskHole then
+		arg_5_0._csGuideMaskHole:InitPointerLuaFunction(arg_5_0._onPointerClick, arg_5_0)
 	end
 end
 
-function slot0.removeEventListeners(slot0)
-	if slot0._csGuideMaskHole then
-		slot0._csGuideMaskHole:InitPointerLuaFunction(nil, )
+function var_0_0.removeEventListeners(arg_6_0)
+	if arg_6_0._csGuideMaskHole then
+		arg_6_0._csGuideMaskHole:InitPointerLuaFunction(nil, nil)
 	end
 end
 
-function slot0.initTargetGo(slot0)
-	slot0._targetGO = gohelper.find(slot0._goPath)
+function var_0_0.initTargetGo(arg_7_0)
+	arg_7_0._targetGO = gohelper.find(arg_7_0._goPath)
 
-	if slot0._targetGO then
-		slot0._targetTrs = slot0._targetGO.transform
-		slot0._targetIs2D = slot0._targetGO:GetComponent("RectTransform") ~= nil
-		slot1 = slot0._targetGO.transform.parent
+	if arg_7_0._targetGO then
+		arg_7_0._targetTrs = arg_7_0._targetGO.transform
+		arg_7_0._targetIs2D = arg_7_0._targetGO:GetComponent("RectTransform") ~= nil
 
-		while slot0._targetIs2D and not gohelper.isNil(slot1) do
-			if slot1:GetComponent("RectTransform") == nil then
-				slot0._targetIs2D = false
+		local var_7_0 = arg_7_0._targetGO.transform.parent
+
+		while arg_7_0._targetIs2D and not gohelper.isNil(var_7_0) do
+			if var_7_0:GetComponent("RectTransform") == nil then
+				arg_7_0._targetIs2D = false
 
 				break
 			end
 
-			slot1 = slot1.parent
+			var_7_0 = var_7_0.parent
 		end
 	end
 end
 
-function slot0.setPrevUIInfo(slot0, slot1)
-	slot0._prevUIInfo = slot1
+function var_0_0.setPrevUIInfo(arg_8_0, arg_8_1)
+	arg_8_0._prevUIInfo = arg_8_1
 end
 
-function slot0.updateUI(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._maskOpenTime = ServerTime.now()
-	slot6 = slot2.uiInfo
-	slot0._uiType = slot6.uiType
-	slot0._rotation = slot6.rotation
-	slot0._width = slot6.width
-	slot0._height = slot6.height
-	slot0._arrowOffsetX = slot6.arrowOffsetX
-	slot0._arrowOffsetY = slot6.arrowOffsetY
-	slot0._maskAlpha = slot6.maskAlpha
-	slot0._imgAlpha = slot6.imgAlpha
-	slot0._goPath = slot2.goPath
-	slot0._posX = slot2.uiOffset[1] or 0
-	slot0._posY = slot2.uiOffset[2] or 0
-	slot0._touchGoPath = slot2.touchGOPath
-	slot0._enableClick = slot2.enableClick
-	slot0._enableDrag = slot2.enableDrag
-	slot0._enablePress = slot2.enablePress
-	slot0._enableHoleClick = slot2.enableHoleClick
-	slot0._showMask = slot2.showMask
-	slot0._isStepEditor = slot2._isStepEditor
+function var_0_0.updateUI(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+	arg_9_0._maskOpenTime = ServerTime.now()
 
-	slot0:removeEventListeners()
+	local var_9_0 = arg_9_2.uiInfo
 
-	slot0._csGuideMaskHole = slot3
+	arg_9_0._uiType = var_9_0.uiType
+	arg_9_0._rotation = var_9_0.rotation
+	arg_9_0._width = var_9_0.width
+	arg_9_0._height = var_9_0.height
+	arg_9_0._arrowOffsetX = var_9_0.arrowOffsetX
+	arg_9_0._arrowOffsetY = var_9_0.arrowOffsetY
+	arg_9_0._maskAlpha = var_9_0.maskAlpha
+	arg_9_0._imgAlpha = var_9_0.imgAlpha
+	arg_9_0._goPath = arg_9_2.goPath
+	arg_9_0._posX = arg_9_2.uiOffset[1] or 0
+	arg_9_0._posY = arg_9_2.uiOffset[2] or 0
+	arg_9_0._touchGoPath = arg_9_2.touchGOPath
+	arg_9_0._enableClick = arg_9_2.enableClick
+	arg_9_0._enableDrag = arg_9_2.enableDrag
+	arg_9_0._enablePress = arg_9_2.enablePress
+	arg_9_0._enableHoleClick = arg_9_2.enableHoleClick
+	arg_9_0._showMask = arg_9_2.showMask
+	arg_9_0._isStepEditor = arg_9_2._isStepEditor
 
-	slot0:addEventListeners()
+	arg_9_0:removeEventListeners()
 
-	slot0._holeImg = slot4
-	slot0._typeGo = slot5
-	slot0._viewTrs = slot1.transform
+	arg_9_0._csGuideMaskHole = arg_9_3
 
-	slot0:initTargetGo()
+	arg_9_0:addEventListeners()
 
-	slot0._globalTouch = not string.nilorempty(slot0._touchGoPath) and gohelper.find(slot0._touchGoPath) or nil
+	arg_9_0._holeImg = arg_9_4
+	arg_9_0._typeGo = arg_9_5
+	arg_9_0._viewTrs = arg_9_1.transform
 
-	TaskDispatcher.cancelTask(slot0._updateMaskPosAndSize, slot0)
-	TaskDispatcher.runRepeat(slot0._updateMaskPosAndSize, slot0, 0.01)
-	slot0:_updateMaskPosAndSize()
-	slot0:_updateMaskAlpha()
-	slot0:_updateEnableClick()
-	slot0:_updateEnableDrag()
-	slot0:_updateEnablePress()
-	slot0:_updateEnableTargetClick()
+	arg_9_0:initTargetGo()
+
+	arg_9_0._globalTouch = not string.nilorempty(arg_9_0._touchGoPath) and gohelper.find(arg_9_0._touchGoPath) or nil
+
+	TaskDispatcher.cancelTask(arg_9_0._updateMaskPosAndSize, arg_9_0)
+	TaskDispatcher.runRepeat(arg_9_0._updateMaskPosAndSize, arg_9_0, 0.01)
+	arg_9_0:_updateMaskPosAndSize()
+	arg_9_0:_updateMaskAlpha()
+	arg_9_0:_updateEnableClick()
+	arg_9_0:_updateEnableDrag()
+	arg_9_0:_updateEnablePress()
+	arg_9_0:_updateEnableTargetClick()
 end
 
-function slot0._getHoleEffect(slot0, slot1)
-	if not slot0._cacheEffects[slot0._maskView.viewContainer:getSetting().otherRes[slot1 and 1 or 2]] then
-		slot0._cacheEffects[slot2] = MonoHelper.addLuaComOnceToGo(slot0._maskView:getResInst(slot2), GuideHoleEffect)
+function var_0_0._getHoleEffect(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._maskView.viewContainer:getSetting().otherRes[arg_10_1 and 1 or 2]
+	local var_10_1 = arg_10_0._cacheEffects[var_10_0]
+
+	if not var_10_1 then
+		local var_10_2 = arg_10_0._maskView:getResInst(var_10_0)
+
+		var_10_1 = MonoHelper.addLuaComOnceToGo(var_10_2, GuideHoleEffect)
+		arg_10_0._cacheEffects[var_10_0] = var_10_1
 	end
 
-	slot3:setVisible(false)
+	var_10_1:setVisible(false)
 
-	return slot3
+	return var_10_1
 end
 
-function slot0._updateHoleAlpha(slot0, slot1)
-	if slot0._holeEffect then
-		slot0._holeEffect:setVisible(false)
+function var_0_0._updateHoleAlpha(arg_11_0, arg_11_1)
+	if arg_11_0._holeEffect then
+		arg_11_0._holeEffect:setVisible(false)
 
-		slot0._holeEffect = nil
+		arg_11_0._holeEffect = nil
 	end
 
-	if slot0._holeImg then
-		slot1 = slot1 or slot2.color
-		slot1.a = 0
-		slot2.color = slot1
+	local var_11_0 = arg_11_0._holeImg
 
-		slot0:_setArrow(slot2)
+	if var_11_0 then
+		arg_11_1 = arg_11_1 or var_11_0.color
+		arg_11_1.a = 0
+		var_11_0.color = arg_11_1
 
-		if slot0._imgAlpha > 0 then
-			slot0._holeEffect = slot0:_getHoleEffect(slot0._showMask)
-			slot0._holeEffect.showMask = slot0._showMask
+		arg_11_0:_setArrow(var_11_0)
 
-			slot0._holeEffect:addToParent(slot0._holeImg.gameObject)
+		if arg_11_0._imgAlpha > 0 then
+			arg_11_0._holeEffect = arg_11_0:_getHoleEffect(arg_11_0._showMask)
+			arg_11_0._holeEffect.showMask = arg_11_0._showMask
+
+			arg_11_0._holeEffect:addToParent(arg_11_0._holeImg.gameObject)
 		end
 	end
 end
 
-function slot0._updateHoleTrans(slot0, slot1, slot2, slot3, slot4)
-	if slot0._holeImg then
-		slot6 = slot5.transform
+function var_0_0._updateHoleTrans(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	local var_12_0 = arg_12_0._holeImg
 
-		recthelper.setSize(slot6, slot0:_isRectangle() and slot1 - uv0, slot7 and slot2 - uv1)
-		transformhelper.setLocalPosXY(slot6, slot3, slot4)
+	if var_12_0 then
+		local var_12_1 = var_12_0.transform
+		local var_12_2 = arg_12_0:_isRectangle()
+		local var_12_3 = var_12_2 and arg_12_1 - var_0_2
+		local var_12_4 = var_12_2 and arg_12_2 - var_0_3
+
+		recthelper.setSize(var_12_1, var_12_3, var_12_4)
+		transformhelper.setLocalPosXY(var_12_1, arg_12_3, arg_12_4)
 	end
 
-	if slot0._holeEffect then
-		slot0._holeEffect:setSize(slot1, slot2, slot0._isStepEditor)
+	if arg_12_0._holeEffect then
+		arg_12_0._holeEffect:setSize(arg_12_1, arg_12_2, arg_12_0._isStepEditor)
 	end
 end
 
-function slot0._updateMaskAlpha(slot0)
-	slot2 = nil
+function var_0_0._updateMaskAlpha(arg_13_0)
+	local var_13_0 = arg_13_0._csGuideMaskHole
+	local var_13_1
 
-	if slot0._csGuideMaskHole then
-		if slot0._prevUIInfo and slot0._prevUIInfo.maskAlpha ~= slot0._maskAlpha then
-			slot0._fadeId = ZProj.TweenHelper.DoFade(slot1, slot0._prevUIInfo.maskAlpha, slot0._maskAlpha, 0.3)
-			slot0._prevUIInfo = nil
+	if var_13_0 then
+		if arg_13_0._prevUIInfo and arg_13_0._prevUIInfo.maskAlpha ~= arg_13_0._maskAlpha then
+			arg_13_0._fadeId = ZProj.TweenHelper.DoFade(var_13_0, arg_13_0._prevUIInfo.maskAlpha, arg_13_0._maskAlpha, 0.3)
+			arg_13_0._prevUIInfo = nil
 		else
-			slot2 = slot1.color
-			slot2.a = slot0._maskAlpha
-			slot1.color = slot2
+			var_13_1 = var_13_0.color
+			var_13_1.a = arg_13_0._maskAlpha
+			var_13_0.color = var_13_1
 		end
 	end
 
-	slot0:_updateHoleAlpha(slot2)
+	arg_13_0:_updateHoleAlpha(var_13_1)
 end
 
-function slot0._updateEnableClick(slot0)
-	if slot0._csGuideMaskHole then
-		slot1.enableClick = slot0._enableClick
+function var_0_0._updateEnableClick(arg_14_0)
+	local var_14_0 = arg_14_0._csGuideMaskHole
+
+	if var_14_0 then
+		var_14_0.enableClick = arg_14_0._enableClick
 	end
 end
 
-function slot0._updateEnableTargetClick(slot0)
-	if slot0._csGuideMaskHole then
-		slot1.enableTargetClick = slot0:_hasArrow()
+function var_0_0._updateEnableTargetClick(arg_15_0)
+	local var_15_0 = arg_15_0._csGuideMaskHole
+
+	if var_15_0 then
+		var_15_0.enableTargetClick = arg_15_0:_hasArrow()
 	end
 end
 
-function slot0._updateEnableDrag(slot0)
-	if slot0._csGuideMaskHole then
-		slot1.enableDrag = slot0._enableDrag
+function var_0_0._updateEnableDrag(arg_16_0)
+	local var_16_0 = arg_16_0._csGuideMaskHole
+
+	if var_16_0 then
+		var_16_0.enableDrag = arg_16_0._enableDrag
 	end
 end
 
-function slot0._updateEnablePress(slot0)
-	if slot0._csGuideMaskHole then
-		slot1.enablePress = slot0._enablePress
+function var_0_0._updateEnablePress(arg_17_0)
+	local var_17_0 = arg_17_0._csGuideMaskHole
+
+	if var_17_0 then
+		var_17_0.enablePress = arg_17_0._enablePress
 	end
 end
 
-function slot0._setArrow(slot0, slot1)
-	if not slot0:_hasArrow() then
+function var_0_0._setArrow(arg_18_0, arg_18_1)
+	if not arg_18_0:_hasArrow() then
 		return
 	end
 
-	slot0._arrow = gohelper.findChild(slot1.gameObject, "arrow")
+	arg_18_0._arrow = gohelper.findChild(arg_18_1.gameObject, "arrow")
 
-	if slot0._arrow then
-		transformhelper.setLocalPosXY(slot0._arrow.transform, slot0._arrowOffsetX, slot0._arrowOffsetY)
-		transformhelper.setLocalRotation(slot0._arrow.transform, 0, 0, slot0._rotation)
-		TaskDispatcher.cancelTask(slot0._showArrow, slot0)
-		gohelper.setActive(slot0._arrow, false)
-		TaskDispatcher.runDelay(slot0._showArrow, slot0, 0.5)
+	if arg_18_0._arrow then
+		transformhelper.setLocalPosXY(arg_18_0._arrow.transform, arg_18_0._arrowOffsetX, arg_18_0._arrowOffsetY)
+		transformhelper.setLocalRotation(arg_18_0._arrow.transform, 0, 0, arg_18_0._rotation)
+		TaskDispatcher.cancelTask(arg_18_0._showArrow, arg_18_0)
+		gohelper.setActive(arg_18_0._arrow, false)
+		TaskDispatcher.runDelay(arg_18_0._showArrow, arg_18_0, 0.5)
 	end
 end
 
-function slot0._showArrow(slot0)
-	gohelper.setActive(slot0._arrow, true)
+function var_0_0._showArrow(arg_19_0)
+	gohelper.setActive(arg_19_0._arrow, true)
 end
 
-function slot0._hasArrow(slot0)
-	return slot0._uiType == GuideEnum.uiTypeArrow or slot0._uiType == GuideEnum.uiTypePressArrow
+function var_0_0._hasArrow(arg_20_0)
+	return arg_20_0._uiType == GuideEnum.uiTypeArrow or arg_20_0._uiType == GuideEnum.uiTypePressArrow
 end
 
-function slot0._isRectangle(slot0)
-	return slot0._uiType == GuideEnum.uiTypeRectangle or slot0._uiType == GuideEnum.uiTypeArrow or slot0._uiType == GuideEnum.uiTypePressArrow
+function var_0_0._isRectangle(arg_21_0)
+	return arg_21_0._uiType == GuideEnum.uiTypeRectangle or arg_21_0._uiType == GuideEnum.uiTypeArrow or arg_21_0._uiType == GuideEnum.uiTypePressArrow
 end
 
-function slot0._updateMaskPosAndSize(slot0)
-	slot1 = slot0._width
-	slot2 = slot0._height
-	slot3 = slot0._posX
-	slot4 = slot0._posY
+function var_0_0._updateMaskPosAndSize(arg_22_0)
+	local var_22_0 = arg_22_0._width
+	local var_22_1 = arg_22_0._height
+	local var_22_2 = arg_22_0._posX
+	local var_22_3 = arg_22_0._posY
+	local var_22_4 = arg_22_0._csGuideMaskHole
 
-	if slot0._csGuideMaskHole and slot5.customAdjustSize then
-		slot6 = slot5.sizeOffset
-		slot3 = slot6.x
-		slot4 = slot6.y
-		slot7 = slot5.size
-		slot1 = slot7.x
-		slot2 = slot7.y
+	if var_22_4 and var_22_4.customAdjustSize then
+		local var_22_5 = var_22_4.sizeOffset
+
+		var_22_2 = var_22_5.x
+		var_22_3 = var_22_5.y
+
+		local var_22_6 = var_22_4.size
+
+		var_22_0 = var_22_6.x
+		var_22_1 = var_22_6.y
 	end
 
-	if not gohelper.isNil(slot0._targetGO) then
-		if slot1 == -1 then
-			if slot0:_isRectangle() then
-				slot1 = recthelper.getWidth(slot0._targetGO.transform) + uv0
+	local var_22_7 = arg_22_0:_isRectangle()
+
+	if not gohelper.isNil(arg_22_0._targetGO) then
+		if var_22_0 == -1 then
+			var_22_0 = recthelper.getWidth(arg_22_0._targetGO.transform)
+
+			if var_22_7 then
+				var_22_0 = var_22_0 + var_0_2
 			end
 		end
 
-		if slot2 == -1 then
-			if slot6 then
-				slot2 = recthelper.getHeight(slot0._targetGO.transform) + uv1
+		if var_22_1 == -1 then
+			var_22_1 = recthelper.getHeight(arg_22_0._targetGO.transform)
+
+			if var_22_7 then
+				var_22_1 = var_22_1 + var_0_3
 			end
 		end
 	else
-		slot1 = math.max(slot1, 0)
-		slot2 = math.max(slot2, 0)
+		var_22_0 = math.max(var_22_0, 0)
+		var_22_1 = math.max(var_22_1, 0)
 	end
 
-	if not gohelper.isNil(slot0._targetGO) then
-		if slot0._targetIs2D then
-			if not gohelper.isNil(slot0._root2DTrs) and not gohelper.isNil(slot0._targetTrs) then
-				slot7 = ZProj.GuideMaskHole.CalculateRelativeRectTransformBounds(slot0._root2DTrs, slot0._targetTrs)
-				slot3 = slot3 + slot7.center.x
-				slot4 = slot4 + slot7.center.y
+	if not gohelper.isNil(arg_22_0._targetGO) then
+		if arg_22_0._targetIs2D then
+			if not gohelper.isNil(arg_22_0._root2DTrs) and not gohelper.isNil(arg_22_0._targetTrs) then
+				local var_22_8 = ZProj.GuideMaskHole.CalculateRelativeRectTransformBounds(arg_22_0._root2DTrs, arg_22_0._targetTrs)
+
+				var_22_2 = var_22_2 + var_22_8.center.x
+				var_22_3 = var_22_3 + var_22_8.center.y
 			end
 		else
-			slot0._pos = slot0._pos or Vector3.New()
-			slot0._pos.x, slot0._pos.y, slot0._pos.z = transformhelper.getPos(slot0._targetTrs)
-			slot7 = slot0._unitCamera
+			arg_22_0._pos = arg_22_0._pos or Vector3.New()
+			arg_22_0._pos.x, arg_22_0._pos.y, arg_22_0._pos.z = transformhelper.getPos(arg_22_0._targetTrs)
+
+			local var_22_9 = arg_22_0._unitCamera
 
 			if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MaskUseMainCamera) then
-				slot7 = slot0._mainCamera
+				var_22_9 = arg_22_0._mainCamera
 			end
 
-			slot3 = slot3 + recthelper.worldPosToAnchorPos(slot0._pos, slot0._viewTrs, slot0._uiCamera, slot7).x + (slot0._externalOffset and slot0._externalOffset.x or 0)
-			slot4 = slot4 + slot8.y + (slot0._externalOffset and slot0._externalOffset.y or 0)
+			local var_22_10 = recthelper.worldPosToAnchorPos(arg_22_0._pos, arg_22_0._viewTrs, arg_22_0._uiCamera, var_22_9)
+
+			var_22_2 = var_22_2 + var_22_10.x + (arg_22_0._externalOffset and arg_22_0._externalOffset.x or 0)
+			var_22_3 = var_22_3 + var_22_10.y + (arg_22_0._externalOffset and arg_22_0._externalOffset.y or 0)
 		end
 
-		if slot0._customPos then
-			slot3 = slot0._customPos.x
-			slot4 = slot0._customPos.y
+		if arg_22_0._customPos then
+			var_22_2 = arg_22_0._customPos.x
+			var_22_3 = arg_22_0._customPos.y
 		end
 
-		slot0:_updateHoleTrans(slot1, slot2, slot3, slot4)
+		arg_22_0:_updateHoleTrans(var_22_0, var_22_1, var_22_2, var_22_3)
 	else
-		slot0:initTargetGo()
+		arg_22_0:initTargetGo()
 	end
 
-	if slot5 then
-		slot5:SetTarget(slot0._targetTrs, slot0:getTempVector2(slot3, slot4), uv2, slot0._globalTouch)
+	if var_22_4 then
+		var_22_4:SetTarget(arg_22_0._targetTrs, arg_22_0:getTempVector2(var_22_2, var_22_3), var_0_1, arg_22_0._globalTouch)
 
-		if slot0._enableHoleClick then
-			if slot6 then
-				slot1 = math.max(0, slot1 - uv0)
-				slot2 = math.max(0, slot2 - uv1)
+		if arg_22_0._enableHoleClick then
+			if var_22_7 then
+				var_22_0 = math.max(0, var_22_0 - var_0_2)
+				var_22_1 = math.max(0, var_22_1 - var_0_3)
 			end
 
-			slot5.size = slot0:getTempVector2(slot1, slot2)
+			var_22_4.size = arg_22_0:getTempVector2(var_22_0, var_22_1)
 
-			if slot0._lastPosX ~= slot3 or slot0._lastPosY ~= slot4 then
-				slot0._lastPosX = slot3
-				slot0._lastPosY = slot4
+			if arg_22_0._lastPosX ~= var_22_2 or arg_22_0._lastPosY ~= var_22_3 then
+				arg_22_0._lastPosX = var_22_2
+				arg_22_0._lastPosY = var_22_3
 
-				slot0._csGuideMaskHole:RefreshMesh()
+				arg_22_0._csGuideMaskHole:RefreshMesh()
 			end
 		else
-			slot5.size = uv2
+			var_22_4.size = var_0_1
 		end
-	elseif not gohelper.isNil(slot0._typeGo) then
-		recthelper.setAnchor(slot7.transform, slot3, slot4)
+	else
+		local var_22_11 = arg_22_0._typeGo
+
+		if not gohelper.isNil(var_22_11) then
+			recthelper.setAnchor(var_22_11.transform, var_22_2, var_22_3)
+		end
 	end
 end
 
-function slot0.getTempVector2(slot0, slot1, slot2)
-	slot0._tempVec2 = slot0._tempVec2 or Vector2.New()
-	slot0._tempVec2.x = slot1
-	slot0._tempVec2.y = slot2
+function var_0_0.getTempVector2(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0._tempVec2 = arg_23_0._tempVec2 or Vector2.New()
+	arg_23_0._tempVec2.x = arg_23_1
+	arg_23_0._tempVec2.y = arg_23_2
 
-	return slot0._tempVec2
+	return arg_23_0._tempVec2
 end
 
-function slot0._onClickOutside(slot0)
-	if slot0._uiType ~= GuideEnum.uiTypeArrow or slot0._maskAlpha ~= 0 or not slot0._arrow then
+function var_0_0._onClickOutside(arg_24_0)
+	if arg_24_0._uiType ~= GuideEnum.uiTypeArrow or arg_24_0._maskAlpha ~= 0 or not arg_24_0._arrow then
 		return
 	end
 
-	if not slot0._animator then
-		slot0._animator = slot0._arrow:GetComponentInChildren(typeof(UnityEngine.Animator))
+	if not arg_24_0._animator then
+		arg_24_0._animator = arg_24_0._arrow:GetComponentInChildren(typeof(UnityEngine.Animator))
 	end
 
-	if slot0._animator then
-		slot0._animator:Play("guide_shark")
+	if arg_24_0._animator then
+		arg_24_0._animator:Play("guide_shark")
 	end
 end
 
-function slot0._onPointerClick(slot0, slot1)
+function var_0_0._onPointerClick(arg_25_0, arg_25_1)
 	if GuideController.EnableLog then
-		logNormal("guidelog: GuideMaskItem._onPointerClick " .. (slot1 and "true" or "false") .. debug.traceback("", 2))
+		logNormal("guidelog: GuideMaskItem._onPointerClick " .. (arg_25_1 and "true" or "false") .. debug.traceback("", 2))
 	end
 
-	if not gohelper.isNil(slot0._targetGO) and not GuideUtil.isGOShowInScreen(slot0._targetGO) then
-		slot0._exceptionClickCount = slot0._exceptionClickCount + 1
-		slot3 = slot0._maskView:getUiInfo() and slot2.guideId
-		slot4 = slot2 and slot2.stepId
+	if not gohelper.isNil(arg_25_0._targetGO) and not GuideUtil.isGOShowInScreen(arg_25_0._targetGO) then
+		arg_25_0._exceptionClickCount = arg_25_0._exceptionClickCount + 1
 
-		if slot0._exceptionClickCount >= 5 and ServerTime.now() - slot0._maskOpenTime > 5 then
-			slot0._exceptionClickCount = 0
+		local var_25_0 = arg_25_0._maskView:getUiInfo()
+		local var_25_1 = var_25_0 and var_25_0.guideId
+		local var_25_2 = var_25_0 and var_25_0.stepId
 
-			logError(string.format("目标GameObject不在视野，跳过指引 %s_%s", tostring(slot3), tostring(slot4)))
+		if arg_25_0._exceptionClickCount >= 5 and ServerTime.now() - arg_25_0._maskOpenTime > 5 then
+			arg_25_0._exceptionClickCount = 0
+
+			logError(string.format("目标GameObject不在视野，跳过指引 %s_%s", tostring(var_25_1), tostring(var_25_2)))
 			GuideController.instance:disableGuides()
-			GameFacade.showMessageBox(MessageBoxIdDefine.GuideSureToSkip, MsgBoxEnum.BoxType.Yes_No, function ()
-				uv0:_onClickYes()
-			end, function ()
-				uv0:_onClickNo()
+			GameFacade.showMessageBox(MessageBoxIdDefine.GuideSureToSkip, MsgBoxEnum.BoxType.Yes_No, function()
+				arg_25_0:_onClickYes()
+			end, function()
+				arg_25_0:_onClickNo()
 			end)
 		end
 
-		logError(string.format("目标GameObject不在视野，直接响应点击 %s_%s", tostring(slot3), tostring(slot4)))
+		logError(string.format("目标GameObject不在视野，直接响应点击 %s_%s", tostring(var_25_1), tostring(var_25_2)))
 		GuideViewMgr.instance:onClickCallback(true)
 		GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, true)
 
 		return
 	end
 
-	if slot1 then
+	if arg_25_1 then
 		GuideViewMgr.instance:disableHoleClick()
 	end
 
-	GuideViewMgr.instance:onClickCallback(slot1)
-	GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, slot1)
+	GuideViewMgr.instance:onClickCallback(arg_25_1)
+	GuideController.instance:dispatchEvent(GuideEvent.OnClickGuideMask, arg_25_1)
 end
 
-function slot0._onClickNo(slot0)
+function var_0_0._onClickNo(arg_28_0)
 	GuideController.instance:enableGuides()
 end
 
-function slot0._onClickYes(slot0)
-	if GuideModel.instance:getDoingGuideId() then
-		GuideController.instance:oneKeyFinishGuide(slot1, true)
+function var_0_0._onClickYes(arg_29_0)
+	local var_29_0 = GuideModel.instance:getDoingGuideId()
+
+	if var_29_0 then
+		GuideController.instance:oneKeyFinishGuide(var_29_0, true)
 		GuideStepController.instance:clearStep()
 	end
 
 	GuideController.instance:enableGuides()
 end
 
-function slot0._setMaskOffset(slot0, slot1)
-	slot0._externalOffset = slot1
+function var_0_0._setMaskOffset(arg_30_0, arg_30_1)
+	arg_30_0._externalOffset = arg_30_1
 
-	slot0:_updateMaskPosAndSize()
+	arg_30_0:_updateMaskPosAndSize()
 end
 
-function slot0._setMaskCustomPos(slot0, slot1, slot2)
-	if slot2 then
-		slot1 = recthelper.worldPosToAnchorPos(slot1, slot0._viewTrs, CameraMgr.instance:getUICamera(), CameraMgr.instance:getMainCamera())
+function var_0_0._setMaskCustomPos(arg_31_0, arg_31_1, arg_31_2)
+	if arg_31_2 then
+		local var_31_0 = CameraMgr.instance:getUICamera()
+		local var_31_1 = CameraMgr.instance:getMainCamera()
+
+		arg_31_1 = recthelper.worldPosToAnchorPos(arg_31_1, arg_31_0._viewTrs, var_31_0, var_31_1)
 	end
 
-	slot0._customPos = slot1
+	arg_31_0._customPos = arg_31_1
 
-	slot0:_updateMaskPosAndSize()
+	arg_31_0:_updateMaskPosAndSize()
 end
 
-return slot0
+return var_0_0

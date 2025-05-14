@@ -1,91 +1,92 @@
-module("modules.logic.character.model.CharacterBackpackCardListModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterBackpackCardListModel", package.seeall)
 
-slot0 = class("CharacterBackpackCardListModel", ListScrollModel)
+local var_0_0 = class("CharacterBackpackCardListModel", ListScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._characterFirstToShow = nil
+	arg_1_0._characterFirstToShow = nil
 end
 
-function slot0.updateModel(slot0)
-	slot0.moList = slot0.moList or {}
+function var_0_0.updateModel(arg_2_0)
+	arg_2_0.moList = arg_2_0.moList or {}
 
-	slot0:setList(slot0.moList)
+	arg_2_0:setList(arg_2_0.moList)
 end
 
-function slot0.setFirstShowCharacter(slot0, slot1)
-	slot0._characterFirstToShow = slot1
+function var_0_0.setFirstShowCharacter(arg_3_0, arg_3_1)
+	arg_3_0._characterFirstToShow = arg_3_1
 end
 
-function slot0._doCharacterFirst(slot0, slot1)
-	if not slot0._characterFirstToShow then
+function var_0_0._doCharacterFirst(arg_4_0, arg_4_1)
+	if not arg_4_0._characterFirstToShow then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6.heroId == slot0._characterFirstToShow then
-			table.remove(slot1, slot5)
-			table.insert(slot1, 1, slot6)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		if iter_4_1.heroId == arg_4_0._characterFirstToShow then
+			table.remove(arg_4_1, iter_4_0)
+			table.insert(arg_4_1, 1, iter_4_1)
 
 			break
 		end
 	end
 end
 
-function slot0.setCharacterCardList(slot0, slot1)
-	slot0.moList = slot1 or {}
+function var_0_0.setCharacterCardList(arg_5_0, arg_5_1)
+	arg_5_0.moList = arg_5_1 or {}
 
-	slot0:_doCharacterFirst(slot0.moList)
-	slot0:setList(slot0.moList)
+	arg_5_0:_doCharacterFirst(arg_5_0.moList)
+	arg_5_0:setList(arg_5_0.moList)
 end
 
-function slot0.getCharacterCardList(slot0)
-	return slot0:getList()
+function var_0_0.getCharacterCardList(arg_6_0)
+	return arg_6_0:getList()
 end
 
-function slot0.setCharacterViewDragMOList(slot0, slot1)
-	slot0.characterViewDragMOList = {}
+function var_0_0.setCharacterViewDragMOList(arg_7_0, arg_7_1)
+	arg_7_1 = arg_7_1 or arg_7_0.moList
+	arg_7_0.characterViewDragMOList = {}
 
-	if not (slot1 or slot0.moList) then
+	if not arg_7_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.characterViewDragMOList, slot6)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		table.insert(arg_7_0.characterViewDragMOList, iter_7_1)
 	end
 end
 
-function slot0.getNextCharacterCard(slot0, slot1)
-	slot2 = nil
+function var_0_0.getNextCharacterCard(arg_8_0, arg_8_1)
+	local var_8_0
 
-	if slot0.characterViewDragMOList then
-		for slot6, slot7 in ipairs(slot0.characterViewDragMOList) do
-			if slot7.heroId == slot1 then
-				return slot6 ~= #slot0.characterViewDragMOList and slot0.characterViewDragMOList[slot6 + 1] or slot0.characterViewDragMOList[1]
+	if arg_8_0.characterViewDragMOList then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0.characterViewDragMOList) do
+			if iter_8_1.heroId == arg_8_1 then
+				return iter_8_0 ~= #arg_8_0.characterViewDragMOList and arg_8_0.characterViewDragMOList[iter_8_0 + 1] or arg_8_0.characterViewDragMOList[1]
 			end
 		end
 	end
 end
 
-function slot0.getLastCharacterCard(slot0, slot1)
-	slot2 = nil
+function var_0_0.getLastCharacterCard(arg_9_0, arg_9_1)
+	local var_9_0
 
-	if slot0.characterViewDragMOList then
-		for slot6, slot7 in pairs(slot0.characterViewDragMOList) do
-			if slot7.heroId == slot1 then
-				return slot6 ~= 1 and slot0.characterViewDragMOList[slot6 - 1] or slot0.characterViewDragMOList[#slot0.characterViewDragMOList]
+	if arg_9_0.characterViewDragMOList then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0.characterViewDragMOList) do
+			if iter_9_1.heroId == arg_9_1 then
+				return iter_9_0 ~= 1 and arg_9_0.characterViewDragMOList[iter_9_0 - 1] or arg_9_0.characterViewDragMOList[#arg_9_0.characterViewDragMOList]
 			end
 		end
 	end
 end
 
-function slot0.clearCardList(slot0)
-	slot0.moList = nil
+function var_0_0.clearCardList(arg_10_0)
+	arg_10_0.moList = nil
 
-	slot0:clear()
+	arg_10_0:clear()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

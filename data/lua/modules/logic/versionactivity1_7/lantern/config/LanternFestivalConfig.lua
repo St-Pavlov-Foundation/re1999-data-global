@@ -1,49 +1,51 @@
-module("modules.logic.versionactivity1_7.lantern.config.LanternFestivalConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.config.LanternFestivalConfig", package.seeall)
 
-slot0 = class("LanternFestivalConfig", BaseConfig)
+local var_0_0 = class("LanternFestivalConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"activity154",
 		"activity154_options"
 	}
 end
 
-function slot0.onInit(slot0)
-	slot0._actCfgDict = nil
-	slot0._actOptions = {}
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._actCfgDict = nil
+	arg_2_0._actOptions = {}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity154" then
-		slot0._actCfgDict = slot2.configDict
-	elseif slot1 == "activity154_options" then
-		slot0._actOptions = slot2.configDict
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity154" then
+		arg_3_0._actCfgDict = arg_3_2.configDict
+	elseif arg_3_1 == "activity154_options" then
+		arg_3_0._actOptions = arg_3_2.configDict
 	end
 end
 
-function slot0.getAct154Co(slot0, slot1, slot2)
-	return slot0._actCfgDict[slot1 or ActivityEnum.Activity.LanternFestival][slot2]
+function var_0_0.getAct154Co(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_1 = arg_4_1 or ActivityEnum.Activity.LanternFestival
+
+	return arg_4_0._actCfgDict[arg_4_1][arg_4_2]
 end
 
-function slot0.getPuzzleCo(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._actCfgDict[ActivityEnum.Activity.LanternFestival]) do
-		if slot6.puzzleId == slot1 then
-			return slot6
+function var_0_0.getPuzzleCo(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._actCfgDict[ActivityEnum.Activity.LanternFestival]) do
+		if iter_5_1.puzzleId == arg_5_1 then
+			return iter_5_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.getAct154Cos(slot0)
-	return slot0._actCfgDict[ActivityEnum.Activity.LanternFestival]
+function var_0_0.getAct154Cos(arg_6_0)
+	return arg_6_0._actCfgDict[ActivityEnum.Activity.LanternFestival]
 end
 
-function slot0.getAct154Options(slot0, slot1)
-	return slot0._actOptions[slot1]
+function var_0_0.getAct154Options(arg_7_0, arg_7_1)
+	return arg_7_0._actOptions[arg_7_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

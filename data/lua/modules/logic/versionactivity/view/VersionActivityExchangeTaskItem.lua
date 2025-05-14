@@ -1,104 +1,111 @@
-module("modules.logic.versionactivity.view.VersionActivityExchangeTaskItem", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityExchangeTaskItem", package.seeall)
 
-slot0 = class("VersionActivityExchangeTaskItem", LuaCompBase)
+local var_0_0 = class("VersionActivityExchangeTaskItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.viewGO = slot1
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "simage_bg")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._txtcurcount = gohelper.findChildText(slot0.viewGO, "#txt_curcount")
-	slot0._txttotalcount = gohelper.findChildText(slot0.viewGO, "#txt_totalcount")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_rewards")
-	slot0._btnreceive = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_receive")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "#go_finish")
-	slot0._goblackmask = gohelper.findChild(slot0.viewGO, "#go_mask")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_bg")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._txtcurcount = gohelper.findChildText(arg_1_0.viewGO, "#txt_curcount")
+	arg_1_0._txttotalcount = gohelper.findChildText(arg_1_0.viewGO, "#txt_totalcount")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_rewards")
+	arg_1_0._btnreceive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_receive")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
+	arg_1_0._goblackmask = gohelper.findChild(arg_1_0.viewGO, "#go_mask")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnreceive:AddClickListener(slot0._btnreceiveOnClick, slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnreceive:AddClickListener(arg_2_0._btnreceiveOnClick, arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnreceive:RemoveClickListener()
-	slot0._btnjump:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnreceive:RemoveClickListener()
+	arg_3_0._btnjump:RemoveClickListener()
 end
 
-function slot0._btnreceiveOnClick(slot0)
-	slot0._animator:Play("finish")
+function var_0_0._btnreceiveOnClick(arg_4_0)
+	arg_4_0._animator:Play("finish")
 	UIBlockMgr.instance:startBlock("VersionActivityExchangeTaskItem")
-	TaskDispatcher.runDelay(slot0.sendRewardRequest, slot0, 0.6)
+	TaskDispatcher.runDelay(arg_4_0.sendRewardRequest, arg_4_0, 0.6)
 end
 
-function slot0._btnjumpOnClick(slot0)
-	GameFacade.jump(slot0.mo.config.jumpId)
+function var_0_0._btnjumpOnClick(arg_5_0)
+	GameFacade.jump(arg_5_0.mo.config.jumpId)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.icon = IconMgr.instance:getCommonItemIcon(slot0._gorewards)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0.icon = IconMgr.instance:getCommonItemIcon(arg_6_0._gorewards)
 
-	slot0.icon:setCountFontSize(36)
-	slot0._simagebg:LoadImage(ResUrl.getVersionActivityExchangeIcon("bg_rwdi"))
+	arg_6_0.icon:setCountFontSize(36)
+	arg_6_0._simagebg:LoadImage(ResUrl.getVersionActivityExchangeIcon("bg_rwdi"))
 
-	slot0._animator = slot0.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0._animator = arg_6_0.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.sendRewardRequest(slot0)
+function var_0_0.sendRewardRequest(arg_7_0)
 	UIBlockMgr.instance:endBlock("VersionActivityExchangeTaskItem")
-	Activity112Rpc.instance:sendReceiveAct112TaskRewardRequest(slot0.mo.actId, slot0.mo.id)
+	Activity112Rpc.instance:sendReceiveAct112TaskRewardRequest(arg_7_0.mo.actId, arg_7_0.mo.id)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	slot0.mo = slot1
-	slot0._txtdesc.text = slot1.config.desc
-	slot0._txtcurcount.text = slot1.progress
-	slot0._txttotalcount.text = slot1.config.maxProgress
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0.mo = arg_8_1
+	arg_8_0._txtdesc.text = arg_8_1.config.desc
+	arg_8_0._txtcurcount.text = arg_8_1.progress
+	arg_8_0._txttotalcount.text = arg_8_1.config.maxProgress
 
-	slot0:_setCurCountFontSize()
+	arg_8_0:_setCurCountFontSize()
 
-	slot4 = GameUtil.splitString2(slot1.config.bonus, true)[1]
+	local var_8_0 = GameUtil.splitString2(arg_8_1.config.bonus, true)[1]
 
-	slot0.icon:setMOValue(slot4[1], slot4[2], slot4[3])
-	slot0.icon:isShowCount(true)
-	gohelper.setActive(slot0._btnjump.gameObject, slot1.progress < slot1.config.maxProgress and slot1.hasGetBonus == false)
-	gohelper.setActive(slot0._btnreceive.gameObject, slot1.config.maxProgress <= slot1.progress and slot1.hasGetBonus == false)
-	gohelper.setActive(slot0._gofinish, slot1.hasGetBonus)
-	gohelper.setActive(slot0._goblackmask, slot1.hasGetBonus)
+	arg_8_0.icon:setMOValue(var_8_0[1], var_8_0[2], var_8_0[3])
+	arg_8_0.icon:isShowCount(true)
+	gohelper.setActive(arg_8_0._btnjump.gameObject, arg_8_1.config.maxProgress > arg_8_1.progress and arg_8_1.hasGetBonus == false)
+	gohelper.setActive(arg_8_0._btnreceive.gameObject, arg_8_1.config.maxProgress <= arg_8_1.progress and arg_8_1.hasGetBonus == false)
+	gohelper.setActive(arg_8_0._gofinish, arg_8_1.hasGetBonus)
+	gohelper.setActive(arg_8_0._goblackmask, arg_8_1.hasGetBonus)
 
-	if slot3 then
-		slot0._animator:Play(UIAnimationName.Open, 0, 0)
-		slot0._animator:Update(0)
+	if arg_8_3 then
+		arg_8_0._animator:Play(UIAnimationName.Open, 0, 0)
+		arg_8_0._animator:Update(0)
 
-		if slot0._animator:GetCurrentAnimatorStateInfo(0).length <= 0 then
-			slot6 = 1
+		local var_8_1 = arg_8_0._animator:GetCurrentAnimatorStateInfo(0).length
+
+		if var_8_1 <= 0 then
+			var_8_1 = 1
 		end
 
-		slot0._animator:Play(UIAnimationName.Open, 0, -0.06 * (slot2 - 1) / slot6)
-		slot0._animator:Update(0)
+		arg_8_0._animator:Play(UIAnimationName.Open, 0, -0.06 * (arg_8_2 - 1) / var_8_1)
+		arg_8_0._animator:Update(0)
 	else
-		slot0._animator:Play(UIAnimationName.Open, 0, 1)
-		slot0._animator:Update(0)
+		arg_8_0._animator:Play(UIAnimationName.Open, 0, 1)
+		arg_8_0._animator:Update(0)
 	end
 end
 
-function slot0._setCurCountFontSize(slot0)
-	slot3 = 0.7
+function var_0_0._setCurCountFontSize(arg_9_0)
+	local var_9_0 = 0.35
+	local var_9_1 = 0.7
+	local var_9_2 = var_9_1
+	local var_9_3 = 6
+	local var_9_4 = #arg_9_0._txtcurcount.text
+	local var_9_5 = 3
 
-	if #slot0._txtcurcount.text > 3 then
-		slot3 = slot2 - (slot2 - 0.35) / (6 - slot6) * (slot5 - slot6)
+	if var_9_5 < var_9_4 then
+		var_9_2 = var_9_1 - (var_9_1 - var_9_0) / (var_9_3 - var_9_5) * (var_9_4 - var_9_5)
 	end
 
-	transformhelper.setLocalScale(slot0._txtcurcount.transform, slot3, slot3, 1)
+	transformhelper.setLocalScale(arg_9_0._txtcurcount.transform, var_9_2, var_9_2, 1)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

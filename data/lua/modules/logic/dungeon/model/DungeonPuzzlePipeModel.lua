@@ -1,127 +1,135 @@
-module("modules.logic.dungeon.model.DungeonPuzzlePipeModel", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonPuzzlePipeModel", package.seeall)
 
-slot0 = class("DungeonPuzzlePipeModel", BaseModel)
-slot0.constWidth = 7
-slot0.constHeight = 5
-slot0.constEntry = 0
+local var_0_0 = class("DungeonPuzzlePipeModel", BaseModel)
 
-function slot0.reInit(slot0)
-	slot0:release()
+var_0_0.constWidth = 7
+var_0_0.constHeight = 5
+var_0_0.constEntry = 0
+
+function var_0_0.reInit(arg_1_0)
+	arg_1_0:release()
 end
 
-function slot0.release(slot0)
-	slot0._cfgElement = nil
-	slot0._startX = nil
-	slot0._startY = nil
-	slot0._gridDatas = nil
-	slot0._isGameClear = false
-	slot0._entryList = nil
+function var_0_0.release(arg_2_0)
+	arg_2_0._cfgElement = nil
+	arg_2_0._startX = nil
+	arg_2_0._startY = nil
+	arg_2_0._gridDatas = nil
+	arg_2_0._isGameClear = false
+	arg_2_0._entryList = nil
 end
 
-function slot0.initByElementCo(slot0, slot1)
-	slot0._cfgElement = slot1
+function var_0_0.initByElementCo(arg_3_0, arg_3_1)
+	arg_3_0._cfgElement = arg_3_1
 
-	if slot0._cfgElement then
-		slot0:initData()
+	if arg_3_0._cfgElement then
+		arg_3_0:initData()
 
-		if not string.nilorempty(slot0._cfgElement.param) then
-			slot0:initPuzzle(slot0._cfgElement.param)
+		if not string.nilorempty(arg_3_0._cfgElement.param) then
+			arg_3_0:initPuzzle(arg_3_0._cfgElement.param)
 		end
 	end
 end
 
-function slot0.initData(slot0)
-	slot0._gridDatas = {}
-	slot1, slot2 = slot0:getGameSize()
-	slot3 = nil
+function var_0_0.initData(arg_4_0)
+	arg_4_0._gridDatas = {}
 
-	for slot7 = 1, slot1 do
-		for slot11 = 1, slot2 do
-			slot0._gridDatas[slot7] = slot0._gridDatas[slot7] or {}
-			slot3 = DungeonPuzzlePipeMO.New()
+	local var_4_0, var_4_1 = arg_4_0:getGameSize()
+	local var_4_2
 
-			slot3:init(slot7, slot11)
+	for iter_4_0 = 1, var_4_0 do
+		for iter_4_1 = 1, var_4_1 do
+			arg_4_0._gridDatas[iter_4_0] = arg_4_0._gridDatas[iter_4_0] or {}
 
-			slot0._gridDatas[slot7][slot11] = slot3
+			local var_4_3 = DungeonPuzzlePipeMO.New()
+
+			var_4_3:init(iter_4_0, iter_4_1)
+
+			arg_4_0._gridDatas[iter_4_0][iter_4_1] = var_4_3
 		end
 	end
 
-	slot0._startX = -slot1 * 0.5 - 0.5
-	slot0._startY = -slot2 * 0.5 - 0.5
+	arg_4_0._startX = -var_4_0 * 0.5 - 0.5
+	arg_4_0._startY = -var_4_1 * 0.5 - 0.5
 end
 
-function slot0.initPuzzle(slot0, slot1)
-	slot0._entryList = {}
-	slot3 = 0
-	slot4, slot5 = slot0:getGameSize()
+function var_0_0.initPuzzle(arg_5_0, arg_5_1)
+	arg_5_0._entryList = {}
 
-	if #string.splitToNumber(slot1, ",") >= slot4 * slot5 then
-		slot6 = 1
+	local var_5_0 = string.splitToNumber(arg_5_1, ",")
+	local var_5_1 = 0
+	local var_5_2, var_5_3 = arg_5_0:getGameSize()
 
-		for slot10 = 1, slot4 do
-			for slot14 = 1, slot5 do
-				slot15 = slot2[slot6]
-				slot0._gridDatas[slot10][slot14].value = slot15
+	if #var_5_0 >= var_5_2 * var_5_3 then
+		local var_5_4 = 1
 
-				if slot15 == uv0.constEntry then
-					table.insert(slot0._entryList, slot16)
+		for iter_5_0 = 1, var_5_2 do
+			for iter_5_1 = 1, var_5_3 do
+				local var_5_5 = var_5_0[var_5_4]
+				local var_5_6 = arg_5_0._gridDatas[iter_5_0][iter_5_1]
+
+				var_5_6.value = var_5_5
+
+				if var_5_5 == var_0_0.constEntry then
+					table.insert(arg_5_0._entryList, var_5_6)
 				end
 
-				slot6 = slot6 + 1
+				var_5_4 = var_5_4 + 1
 			end
 		end
 	end
 end
 
-function slot0.resetEntryConnect(slot0)
-	slot1, slot2 = slot0:getGameSize()
+function var_0_0.resetEntryConnect(arg_6_0)
+	local var_6_0, var_6_1 = arg_6_0:getGameSize()
 
-	for slot6 = 1, slot1 do
-		for slot10 = 1, slot2 do
-			slot0._gridDatas[slot6][slot10]:cleanEntrySet()
+	for iter_6_0 = 1, var_6_0 do
+		for iter_6_1 = 1, var_6_1 do
+			arg_6_0._gridDatas[iter_6_0][iter_6_1]:cleanEntrySet()
 		end
 	end
 end
 
-function slot0.setGameClear(slot0, slot1)
-	slot0._isGameClear = slot1
+function var_0_0.setGameClear(arg_7_0, arg_7_1)
+	arg_7_0._isGameClear = arg_7_1
 end
 
-function slot0.getData(slot0, slot1, slot2)
-	return slot0._gridDatas[slot1][slot2]
+function var_0_0.getData(arg_8_0, arg_8_1, arg_8_2)
+	return arg_8_0._gridDatas[arg_8_1][arg_8_2]
 end
 
-function slot0.getGameSize(slot0)
-	return uv0.constWidth, uv0.constHeight
+function var_0_0.getGameSize(arg_9_0)
+	return var_0_0.constWidth, var_0_0.constHeight
 end
 
-function slot0.getGameClear(slot0)
-	return slot0._isGameClear
+function var_0_0.getGameClear(arg_10_0)
+	return arg_10_0._isGameClear
 end
 
-function slot0.getEntryList(slot0)
-	return slot0._entryList
+function var_0_0.getEntryList(arg_11_0)
+	return arg_11_0._entryList
 end
 
-function slot0.getElementCo(slot0)
-	return slot0._cfgElement
+function var_0_0.getElementCo(arg_12_0)
+	return arg_12_0._cfgElement
 end
 
-function slot0.getRelativePosition(slot0, slot1, slot2, slot3, slot4)
-	return (slot0._startX + slot1) * slot3, (slot0._startY + slot2) * slot4
+function var_0_0.getRelativePosition(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	return (arg_13_0._startX + arg_13_1) * arg_13_3, (arg_13_0._startY + arg_13_2) * arg_13_4
 end
 
-function slot0.getIndexByTouchPos(slot0, slot1, slot2, slot3, slot4)
-	slot6 = math.floor((slot2 - (slot0._startY + 0.5) * slot4) / slot4)
-	slot7, slot8 = slot0:getGameSize()
+function var_0_0.getIndexByTouchPos(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	local var_14_0 = math.floor((arg_14_1 - (arg_14_0._startX + 0.5) * arg_14_3) / arg_14_3)
+	local var_14_1 = math.floor((arg_14_2 - (arg_14_0._startY + 0.5) * arg_14_4) / arg_14_4)
+	local var_14_2, var_14_3 = arg_14_0:getGameSize()
 
-	if math.floor((slot1 - (slot0._startX + 0.5) * slot3) / slot3) >= 0 and slot5 < slot7 and slot6 >= 0 and slot6 < slot8 then
-		return slot5 + 1, slot6 + 1
+	if var_14_0 >= 0 and var_14_0 < var_14_2 and var_14_1 >= 0 and var_14_1 < var_14_3 then
+		return var_14_0 + 1, var_14_1 + 1
 	end
 
 	return -1, -1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

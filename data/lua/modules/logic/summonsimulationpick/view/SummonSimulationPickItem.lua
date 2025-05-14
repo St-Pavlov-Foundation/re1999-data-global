@@ -1,77 +1,89 @@
-module("modules.logic.summonsimulationpick.view.SummonSimulationPickItem", package.seeall)
+﻿module("modules.logic.summonsimulationpick.view.SummonSimulationPickItem", package.seeall)
 
-slot0 = class("SummonSimulationPickItem", LuaCompBase)
+local var_0_0 = class("SummonSimulationPickItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._imageicon = gohelper.findChildImage(slot1, "heroicon/#image_icon")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "heroicon/#image_icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._heroItems = {}
-	slot0._goheroItem = gohelper.findChild(slot0._go, "#scroll_result/Viewport/content/#go_heroitem")
-	slot0._root = gohelper.findChild(slot0._go, "#scroll_result/Viewport/content")
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._heroItems = {}
+	arg_2_0._goheroItem = gohelper.findChild(arg_2_0._go, "#scroll_result/Viewport/content/#go_heroitem")
+	arg_2_0._root = gohelper.findChild(arg_2_0._go, "#scroll_result/Viewport/content")
 
-	gohelper.setActive(slot0._goheroItem, false)
+	gohelper.setActive(arg_2_0._goheroItem, false)
 end
 
-function slot0.refreshData(slot0, slot1, slot2)
-	slot0.selectType = slot2
-	slot4 = #slot0._heroItems
-	slot5 = slot1 and #slot1 or 0
+function var_0_0.refreshData(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.selectType = arg_3_2
 
-	for slot9 = 1, slot5 do
-		slot10 = nil
+	local var_3_0 = arg_3_0._heroItems
+	local var_3_1 = #var_3_0
+	local var_3_2 = arg_3_1 and #arg_3_1 or 0
 
-		if slot4 < slot9 then
-			slot10 = SummonSimulationPickListItem.New()
+	for iter_3_0 = 1, var_3_2 do
+		local var_3_3
 
-			slot10:init(slot0:getItem())
-			table.insert(slot3, slot10)
+		if var_3_1 < iter_3_0 then
+			local var_3_4 = arg_3_0:getItem()
+
+			var_3_3 = SummonSimulationPickListItem.New()
+
+			var_3_3:init(var_3_4)
+			table.insert(var_3_0, var_3_3)
 		else
-			slot10 = slot3[slot9]
+			var_3_3 = var_3_0[iter_3_0]
 		end
 
-		gohelper.setActive(slot10.go, true)
-		slot10:setData(slot1[slot9], slot0.selectType)
+		gohelper.setActive(var_3_3.go, true)
+
+		local var_3_5 = arg_3_1[iter_3_0]
+
+		var_3_3:setData(var_3_5, arg_3_0.selectType)
 	end
 
-	if slot5 < slot4 then
-		for slot9 = slot5 + 1, slot4 do
-			gohelper.setActive(slot3[slot9].go, false)
+	if var_3_2 < var_3_1 then
+		for iter_3_1 = var_3_2 + 1, var_3_1 do
+			local var_3_6 = var_3_0[iter_3_1]
+
+			gohelper.setActive(var_3_6.go, false)
 		end
 	end
 end
 
-function slot0.getItem(slot0)
-	return gohelper.clone(slot0._goheroItem, slot0._root)
+function var_0_0.getItem(arg_4_0)
+	local var_4_0 = arg_4_0._goheroItem
+
+	return (gohelper.clone(var_4_0, arg_4_0._root))
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0._go, slot1)
+function var_0_0.setActive(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._go, arg_5_1)
 end
 
-function slot0.setParent(slot0, slot1)
-	slot0._go.transform.parent = slot1.transform
+function var_0_0.setParent(arg_6_0, arg_6_1)
+	arg_6_0._go.transform.parent = arg_6_1.transform
 
-	transformhelper.setLocalPosXY(slot0._go.transform, 0, 0)
+	transformhelper.setLocalPosXY(arg_6_0._go.transform, 0, 0)
 end
 
-function slot0.getTransform(slot0)
-	return slot0._go.transform
+function var_0_0.getTransform(arg_7_0)
+	return arg_7_0._go.transform
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in ipairs(slot0._heroItems) do
-		slot5:onDestroy()
+function var_0_0.onDestroy(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._heroItems) do
+		iter_8_1:onDestroy()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

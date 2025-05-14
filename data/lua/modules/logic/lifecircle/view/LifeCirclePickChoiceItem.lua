@@ -1,35 +1,35 @@
-module("modules.logic.lifecircle.view.LifeCirclePickChoiceItem", package.seeall)
+﻿module("modules.logic.lifecircle.view.LifeCirclePickChoiceItem", package.seeall)
 
-slot0 = class("LifeCirclePickChoiceItem", RougeSimpleItemBase)
+local var_0_0 = class("LifeCirclePickChoiceItem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "role/#image_rare")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "role/#simage_icon")
-	slot0._imagecareer = gohelper.findChildImage(slot0.viewGO, "role/#image_career")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "role/#txt_name")
-	slot0._goexskill = gohelper.findChild(slot0.viewGO, "role/#go_exskill")
-	slot0._imageexskill = gohelper.findChildImage(slot0.viewGO, "role/#go_exskill/#image_exskill")
-	slot0._goRank = gohelper.findChild(slot0.viewGO, "role/#go_Rank")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "role/#image_rare")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_icon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "role/#image_career")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "role/#txt_name")
+	arg_1_0._goexskill = gohelper.findChild(arg_1_0.viewGO, "role/#go_exskill")
+	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_0.viewGO, "role/#go_exskill/#image_exskill")
+	arg_1_0._goRank = gohelper.findChild(arg_1_0.viewGO, "role/#go_Rank")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnLongPress:AddLongPressListener(slot0._onLongClickItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnLongPress:AddLongPressListener(arg_2_0._onLongClickItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnLongPress:RemoveLongPressListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnLongPress:RemoveLongPressListener()
 end
 
-slot1 = SLFramework.UGUI.UILongPressListener
-slot2 = {
+local var_0_1 = SLFramework.UGUI.UILongPressListener
+local var_0_2 = {
 	0.2,
 	0.4,
 	0.6,
@@ -37,132 +37,139 @@ slot2 = {
 	1
 }
 
-function slot0.ctor(slot0, ...)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	arg_4_0:__onInit()
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_5_0)
+	var_0_0.super.onDestroyView(arg_5_0)
+	arg_5_0:__onDispose()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0:_isCustomSelect() then
-		slot0:setSelected(not slot0:isSelected())
+function var_0_0._btnclickOnClick(arg_6_0)
+	if arg_6_0:_isCustomSelect() then
+		arg_6_0:setSelected(not arg_6_0:isSelected())
 	else
-		slot0:_showSummonHeroDetailView()
+		arg_6_0:_showSummonHeroDetailView()
 	end
 end
 
-function slot0._onLongClickItem(slot0)
-	slot0:_showSummonHeroDetailView()
+function var_0_0._onLongClickItem(arg_7_0)
+	arg_7_0:_showSummonHeroDetailView()
 end
 
-function slot0._showSummonHeroDetailView(slot0)
+function var_0_0._showSummonHeroDetailView(arg_8_0)
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-		heroId = slot0:heroId()
+		heroId = arg_8_0:heroId()
 	})
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function slot0._isCustomSelect(slot0)
-	return slot0:parent():isCustomSelect()
+function var_0_0._isCustomSelect(arg_9_0)
+	return arg_9_0:parent():isCustomSelect()
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_10_0)
+	var_0_0.super._editableInitView(arg_10_0)
 
-	slot0._btnLongPress = uv1.Get(slot0._btnclick.gameObject)
+	arg_10_0._btnLongPress = var_0_1.Get(arg_10_0._btnclick.gameObject)
 
-	slot0._btnLongPress:SetLongPressTime({
+	arg_10_0._btnLongPress:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	slot0._goranks = slot0:getUserDataTb_()
+	arg_10_0._goranks = arg_10_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		slot0._goranks[slot4] = gohelper.findChild(slot0._goRank, "rank" .. slot4)
+	for iter_10_0 = 1, 3 do
+		arg_10_0._goranks[iter_10_0] = gohelper.findChild(arg_10_0._goRank, "rank" .. iter_10_0)
 	end
 
-	slot0:setSelected(false)
+	arg_10_0:setSelected(false)
 end
 
-function slot0.setSelected(slot0, slot1)
-	if slot0:isSelected() == slot1 then
+function var_0_0.setSelected(arg_11_0, arg_11_1)
+	if arg_11_0:isSelected() == arg_11_1 then
 		return
 	end
 
-	slot0._staticData.isSelected = slot1
+	arg_11_0._staticData.isSelected = arg_11_1
 
-	slot0:onSelect(slot1)
+	arg_11_0:onSelect(arg_11_1)
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0:_setActive_goselect(slot1)
-	slot0:parent():onItemSelected(slot0, slot1)
+function var_0_0.onSelect(arg_12_0, arg_12_1)
+	arg_12_0:_setActive_goselect(arg_12_1)
+	arg_12_0:parent():onItemSelected(arg_12_0, arg_12_1)
 end
 
-function slot0.setData(slot0, slot1)
-	uv0.super.setData(slot0, slot1)
-	slot0:_refreshHero()
-	slot0:_refreshSkin()
-	slot0:_refreshRank()
-	slot0:_refreshExSkill()
+function var_0_0.setData(arg_13_0, arg_13_1)
+	var_0_0.super.setData(arg_13_0, arg_13_1)
+	arg_13_0:_refreshHero()
+	arg_13_0:_refreshSkin()
+	arg_13_0:_refreshRank()
+	arg_13_0:_refreshExSkill()
 end
 
-function slot0._refreshHero(slot0)
-	slot1 = slot0:_heroCO()
+function var_0_0._refreshHero(arg_14_0)
+	local var_14_0 = arg_14_0:_heroCO()
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. slot1.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[slot1.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(arg_14_0._imagecareer, "lssx_" .. var_14_0.career)
+	UISpriteSetMgr.instance:setCommonSprite(arg_14_0._imagerare, "bgequip" .. tostring(CharacterEnum.Color[var_14_0.rare]))
 
-	slot0._txtname.text = slot1.name
+	arg_14_0._txtname.text = var_14_0.name
 end
 
-function slot0._refreshSkin(slot0)
-	GameUtil.loadSImage(slot0._simageicon, ResUrl.getRoomHeadIcon(slot0:_skinCO().headIcon))
+function var_0_0._refreshSkin(arg_15_0)
+	local var_15_0 = arg_15_0:_skinCO()
+
+	GameUtil.loadSImage(arg_15_0._simageicon, ResUrl.getRoomHeadIcon(var_15_0.headIcon))
 end
 
-function slot0._refreshExSkill(slot0)
-	if not slot0._mo:hasHero() or slot0._mo:getSkillLevel() <= 0 then
-		gohelper.setActive(slot0._goexskill, false)
+function var_0_0._refreshExSkill(arg_16_0)
+	if not arg_16_0._mo:hasHero() or arg_16_0._mo:getSkillLevel() <= 0 then
+		gohelper.setActive(arg_16_0._goexskill, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goexskill, true)
+	gohelper.setActive(arg_16_0._goexskill, true)
 
-	slot0._imageexskill.fillAmount = uv0[slot0._mo:getSkillLevel()] or 1
+	arg_16_0._imageexskill.fillAmount = var_0_2[arg_16_0._mo:getSkillLevel()] or 1
 end
 
-function slot0._refreshRank(slot0)
-	for slot7 = 1, 3 do
-		slot8 = slot7 == slot0._mo.rank - 1
+function var_0_0._refreshRank(arg_17_0)
+	local var_17_0 = arg_17_0._mo.rank - 1
+	local var_17_1 = false
 
-		gohelper.setActive(slot0._goranks[slot7], slot8)
+	for iter_17_0 = 1, 3 do
+		local var_17_2 = iter_17_0 == var_17_0
 
-		slot3 = false or slot8
+		gohelper.setActive(arg_17_0._goranks[iter_17_0], var_17_2)
+
+		var_17_1 = var_17_1 or var_17_2
 	end
 
-	gohelper.setActive(slot0._goRank, slot3)
+	gohelper.setActive(arg_17_0._goRank, var_17_1)
 end
 
-function slot0._heroCO(slot0)
-	return HeroConfig.instance:getHeroCO(slot0:heroId())
+function var_0_0._heroCO(arg_18_0)
+	return HeroConfig.instance:getHeroCO(arg_18_0:heroId())
 end
 
-function slot0._skinCO(slot0)
-	return SkinConfig.instance:getSkinCo(slot0:_heroCO().skinId)
+function var_0_0._skinCO(arg_19_0)
+	local var_19_0 = arg_19_0:_heroCO()
+
+	return SkinConfig.instance:getSkinCo(var_19_0.skinId)
 end
 
-function slot0._setActive_goselect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0._setActive_goselect(arg_20_0, arg_20_1)
+	gohelper.setActive(arg_20_0._goselect, arg_20_1)
 end
 
-function slot0.heroId(slot0)
-	return slot0._mo.id
+function var_0_0.heroId(arg_21_0)
+	return arg_21_0._mo.id
 end
 
-return slot0
+return var_0_0

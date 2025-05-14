@@ -1,181 +1,186 @@
-module("modules.logic.room.view.common.RoomBlockPackageGetView", package.seeall)
+﻿module("modules.logic.room.view.common.RoomBlockPackageGetView", package.seeall)
 
-slot0 = class("RoomBlockPackageGetView", BaseView)
+local var_0_0 = class("RoomBlockPackageGetView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
-	slot0._simagebgicon1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bgicon1")
-	slot0._simagebgicon2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bgicon2")
-	slot0._simageblockpackageicon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_blockpackageicon")
-	slot0._simagetipshui = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_tipsmask/#simage_tips_hui")
-	slot0._simagetipsbai = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_tipsmask/#simage_tips_bai")
-	slot0._gocobrand = gohelper.findChild(slot0.viewGO, "bg/#go_cobrand")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
+	arg_1_0._simagebgicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgicon1")
+	arg_1_0._simagebgicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgicon2")
+	arg_1_0._simageblockpackageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_blockpackageicon")
+	arg_1_0._simagetipshui = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_tipsmask/#simage_tips_hui")
+	arg_1_0._simagetipsbai = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_tipsmask/#simage_tips_bai")
+	arg_1_0._gocobrand = gohelper.findChild(arg_1_0.viewGO, "bg/#go_cobrand")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	if not slot0._canClick then
+function var_0_0._btncloseOnClick(arg_4_0)
+	if not arg_4_0._canClick then
 		return
 	end
 
-	slot0:_next()
+	arg_4_0:_next()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebgicon1:LoadImage(ResUrl.getRoomGetIcon("xw_texiao1"))
-	slot0._simagebgicon2:LoadImage(ResUrl.getRoomGetIcon("xw_texiao2"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebgicon1:LoadImage(ResUrl.getRoomGetIcon("xw_texiao1"))
+	arg_5_0._simagebgicon2:LoadImage(ResUrl.getRoomGetIcon("xw_texiao2"))
 
-	slot0._txtname1 = gohelper.findChildText(slot0.viewGO, "bg/simage_tipsmask/#simage_tips_hui/#txt_name")
-	slot0._txtname2 = gohelper.findChildText(slot0.viewGO, "bg/simage_tipsmask/#simage_tips_bai/#txt_name")
+	arg_5_0._txtname1 = gohelper.findChildText(arg_5_0.viewGO, "bg/simage_tipsmask/#simage_tips_hui/#txt_name")
+	arg_5_0._txtname2 = gohelper.findChildText(arg_5_0.viewGO, "bg/simage_tipsmask/#simage_tips_bai/#txt_name")
 
-	gohelper.removeUIClickAudio(slot0._btnclose.gameObject)
+	gohelper.removeUIClickAudio(arg_5_0._btnclose.gameObject)
 
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocobrand, RoomSourcesCobrandLogoItem, slot0)
-	slot0.cobrandLogoItem.__view = slot0
+	arg_5_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0.viewGO)
+	arg_5_0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._gocobrand, RoomSourcesCobrandLogoItem, arg_5_0)
+	arg_5_0.cobrandLogoItem.__view = arg_5_0
 end
 
-function slot0._refreshUI(slot0)
-	slot3 = slot0._item.itemType == MaterialEnum.MaterialType.BlockPackage
-	slot4 = slot1 == MaterialEnum.MaterialType.Building
-	slot5 = slot1 == MaterialEnum.MaterialType.RoomTheme
+function var_0_0._refreshUI(arg_6_0)
+	local var_6_0 = arg_6_0._item.itemType
+	local var_6_1 = arg_6_0._item.itemId
+	local var_6_2 = var_6_0 == MaterialEnum.MaterialType.BlockPackage
+	local var_6_3 = var_6_0 == MaterialEnum.MaterialType.Building
+	local var_6_4 = var_6_0 == MaterialEnum.MaterialType.RoomTheme
 
-	gohelper.setActive(slot0._txtname1.gameObject, slot3 or slot4 or slot5)
-	gohelper.setActive(slot0._txtname2.gameObject, slot3 or slot4 or slot5)
-	gohelper.setActive(slot0._simageblockpackageicon.gameObject, slot3 or slot4 or slot5)
+	gohelper.setActive(arg_6_0._txtname1.gameObject, var_6_2 or var_6_3 or var_6_4)
+	gohelper.setActive(arg_6_0._txtname2.gameObject, var_6_2 or var_6_3 or var_6_4)
+	gohelper.setActive(arg_6_0._simageblockpackageicon.gameObject, var_6_2 or var_6_3 or var_6_4)
 
-	slot6 = nil
+	local var_6_5
 
-	if slot3 then
-		slot6 = RoomConfig.instance:getBlockPackageConfig(slot0._item.itemId)
-		slot0._txtname1.text = slot6.name
-		slot0._txtname2.text = slot6.name
+	if var_6_2 then
+		var_6_5 = RoomConfig.instance:getBlockPackageConfig(var_6_1)
+		arg_6_0._txtname1.text = var_6_5.name
+		arg_6_0._txtname2.text = var_6_5.name
 
-		slot0._simageblockpackageicon:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(slot6.rewardIcon))
-		slot0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
-		slot0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
-	elseif slot4 then
-		slot7 = nil
+		arg_6_0._simageblockpackageicon:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(var_6_5.rewardIcon))
+		arg_6_0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
+		arg_6_0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_1"))
+	elseif var_6_3 then
+		local var_6_6
+		local var_6_7 = arg_6_0._item.roomBuildingLevel
 
-		if slot0._item.roomBuildingLevel and slot8 > 0 then
-			slot7 = RoomConfig.instance:getLevelGroupConfig(slot2, slot8) and slot9.rewardIcon
+		if var_6_7 and var_6_7 > 0 then
+			local var_6_8 = RoomConfig.instance:getLevelGroupConfig(var_6_1, var_6_7)
+
+			var_6_6 = var_6_8 and var_6_8.rewardIcon
 		end
 
-		slot6 = RoomConfig.instance:getBuildingConfig(slot2)
+		var_6_5 = RoomConfig.instance:getBuildingConfig(var_6_1)
 
-		if string.nilorempty(slot7) then
-			slot7 = slot6.rewardIcon
+		if string.nilorempty(var_6_6) then
+			var_6_6 = var_6_5.rewardIcon
 		end
 
-		slot0._txtname1.text = slot6.name
-		slot0._txtname2.text = slot6.name
+		arg_6_0._txtname1.text = var_6_5.name
+		arg_6_0._txtname2.text = var_6_5.name
 
-		slot0._simageblockpackageicon:LoadImage(ResUrl.getRoomBuildingRewardIcon(slot7))
-		slot0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
-		slot0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
-	elseif slot5 then
-		slot6 = RoomConfig.instance:getThemeConfig(slot2)
-		slot0._txtname1.text = slot6.name
-		slot0._txtname2.text = slot6.name
+		arg_6_0._simageblockpackageicon:LoadImage(ResUrl.getRoomBuildingRewardIcon(var_6_6))
+		arg_6_0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
+		arg_6_0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode"))
+	elseif var_6_4 then
+		var_6_5 = RoomConfig.instance:getThemeConfig(var_6_1)
+		arg_6_0._txtname1.text = var_6_5.name
+		arg_6_0._txtname2.text = var_6_5.name
 
-		slot0._simageblockpackageicon:LoadImage(ResUrl.getRoomThemeRewardIcon(slot6.rewardIcon))
-		slot0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
-		slot0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
+		arg_6_0._simageblockpackageicon:LoadImage(ResUrl.getRoomThemeRewardIcon(var_6_5.rewardIcon))
+		arg_6_0._simagetipshui:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
+		arg_6_0._simagetipsbai:LoadImage(ResUrl.getRoomIconLangPath("xw_huode_2"))
 	else
-		logError("不支持的物品类型, itemType: " .. tostring(slot1))
+		logError("不支持的物品类型, itemType: " .. tostring(var_6_0))
 	end
 
-	slot0.cobrandLogoItem:setSourcesTypeStr(slot6 and slot6.sourcesType)
+	arg_6_0.cobrandLogoItem:setSourcesTypeStr(var_6_5 and var_6_5.sourcesType)
 end
 
-function slot0._onEscape(slot0)
-	slot0:_btncloseOnClick()
+function var_0_0._onEscape(arg_7_0)
+	arg_7_0:_btncloseOnClick()
 end
 
-function slot0._next(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._refreshUI, slot0)
+function var_0_0._next(arg_8_0, arg_8_1)
+	TaskDispatcher.cancelTask(arg_8_0._refreshUI, arg_8_0)
 
-	slot0._itemIndex = slot0._itemIndex + 1
-	slot0._item = slot0.viewParam and slot0.viewParam.itemList and slot0.viewParam.itemList[slot0._itemIndex]
+	arg_8_0._itemIndex = arg_8_0._itemIndex + 1
+	arg_8_0._item = arg_8_0.viewParam and arg_8_0.viewParam.itemList and arg_8_0.viewParam.itemList[arg_8_0._itemIndex]
 
-	if not slot0._item then
-		slot0:closeThis()
+	if not arg_8_0._item then
+		arg_8_0:closeThis()
 
 		return
 	end
 
-	if slot0._itemIndex > 1 then
-		TaskDispatcher.runDelay(slot0._animDone, slot0, 5)
+	if arg_8_0._itemIndex > 1 then
+		TaskDispatcher.runDelay(arg_8_0._animDone, arg_8_0, 5)
 
-		slot0._canClick = false
+		arg_8_0._canClick = false
 
-		slot0._animatorPlayer:Play("all", slot0._animDone, slot0)
-		TaskDispatcher.runDelay(slot0._refreshUI, slot0, 0.5)
-	elseif slot1 then
-		TaskDispatcher.runDelay(slot0._animDone, slot0, 5)
+		arg_8_0._animatorPlayer:Play("all", arg_8_0._animDone, arg_8_0)
+		TaskDispatcher.runDelay(arg_8_0._refreshUI, arg_8_0, 0.5)
+	elseif arg_8_1 then
+		TaskDispatcher.runDelay(arg_8_0._animDone, arg_8_0, 5)
 
-		slot0._canClick = false
+		arg_8_0._canClick = false
 
-		slot0._animatorPlayer:Play(UIAnimationName.Open, slot0._animDone, slot0)
-		slot0:_refreshUI()
+		arg_8_0._animatorPlayer:Play(UIAnimationName.Open, arg_8_0._animDone, arg_8_0)
+		arg_8_0:_refreshUI()
 	else
-		slot0:_refreshUI()
+		arg_8_0:_refreshUI()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_open)
 end
 
-function slot0.onOpen(slot0)
-	slot0._itemIndex = 0
-	slot0._canClick = true
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._itemIndex = 0
+	arg_9_0._canClick = true
 
-	slot0:_next()
-	NavigateMgr.instance:addEscape(ViewName.RoomBlockPackageGetView, slot0._onEscape, slot0)
+	arg_9_0:_next()
+	NavigateMgr.instance:addEscape(ViewName.RoomBlockPackageGetView, arg_9_0._onEscape, arg_9_0)
 end
 
-function slot0._animDone(slot0)
-	TaskDispatcher.cancelTask(slot0._animDone, slot0)
+function var_0_0._animDone(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._animDone, arg_10_0)
 
-	slot0._canClick = true
+	arg_10_0._canClick = true
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._itemIndex = 0
-	slot0._canClick = true
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0._itemIndex = 0
+	arg_11_0._canClick = true
 
-	slot0:_next(true)
+	arg_11_0:_next(true)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._animDone, slot0)
-	TaskDispatcher.cancelTask(slot0._refreshUI, slot0)
+function var_0_0.onClose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._animDone, arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._refreshUI, arg_12_0)
 
-	if slot0.viewContainer:isManualClose() then
+	if arg_12_0.viewContainer:isManualClose() then
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_close)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._animDone, slot0)
-	TaskDispatcher.cancelTask(slot0._refreshUI, slot0)
-	slot0._simagebgicon1:UnLoadImage()
-	slot0._simagebgicon2:UnLoadImage()
-	slot0._simageblockpackageicon:UnLoadImage()
-	slot0._simagetipshui:UnLoadImage()
-	slot0._simagetipsbai:UnLoadImage()
-	slot0.cobrandLogoItem:onDestroy()
+function var_0_0.onDestroyView(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._animDone, arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._refreshUI, arg_13_0)
+	arg_13_0._simagebgicon1:UnLoadImage()
+	arg_13_0._simagebgicon2:UnLoadImage()
+	arg_13_0._simageblockpackageicon:UnLoadImage()
+	arg_13_0._simagetipshui:UnLoadImage()
+	arg_13_0._simagetipsbai:UnLoadImage()
+	arg_13_0.cobrandLogoItem:onDestroy()
 end
 
-return slot0
+return var_0_0

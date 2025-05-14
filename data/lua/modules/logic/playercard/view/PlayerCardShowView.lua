@@ -1,67 +1,75 @@
-module("modules.logic.playercard.view.PlayerCardShowView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardShowView", package.seeall)
 
-slot0 = class("PlayerCardShowView", BaseView)
+local var_0_0 = class("PlayerCardShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0.btnConfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0.txtNum = gohelper.findChildTextMesh(slot0.viewGO, "#go_bottom/#txt_num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0.btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0.txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_bottom/#txt_num")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClose, slot0.onClickBtnClose, slot0)
-	slot0:addClickCb(slot0.btnConfirm, slot0.onClickBtnConfirm, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectNumChange, slot0._onNumChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickBtnClose, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnConfirm, arg_2_0.onClickBtnConfirm, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectNumChange, arg_2_0._onNumChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickBtnClose(slot0)
-	slot0:closeThis()
+function var_0_0.onClickBtnClose(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onClickBtnConfirm(slot0)
+function var_0_0.onClickBtnConfirm(arg_5_0)
 	PlayerCardProgressModel.instance:confirmData()
-	slot0:closeThis()
+	arg_5_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateParam()
-	PlayerCardProgressModel.instance:initSelectData(slot0:getCardInfo())
-	slot0:refreshView()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:_updateParam()
+
+	local var_6_0 = arg_6_0:getCardInfo()
+
+	PlayerCardProgressModel.instance:initSelectData(var_6_0)
+	arg_6_0:refreshView()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_updateParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:_updateParam()
+	arg_7_0:refreshView()
 end
 
-function slot0._updateParam(slot0)
-	slot0.userId = PlayerModel.instance:getMyUserId()
+function var_0_0._updateParam(arg_8_0)
+	arg_8_0.userId = PlayerModel.instance:getMyUserId()
 end
 
-function slot0.getCardInfo(slot0)
-	return PlayerCardModel.instance:getCardInfo(slot0.userId)
+function var_0_0.getCardInfo(arg_9_0)
+	return PlayerCardModel.instance:getCardInfo(arg_9_0.userId)
 end
 
-function slot0.refreshView(slot0)
+function var_0_0.refreshView(arg_10_0)
 	PlayerCardProgressModel.instance:refreshList()
-	slot0:refreshNum()
+	arg_10_0:refreshNum()
 end
 
-function slot0._onNumChange(slot0)
-	slot0:refreshNum()
+function var_0_0._onNumChange(arg_11_0)
+	arg_11_0:refreshNum()
 end
 
-function slot0.refreshNum(slot0)
-	slot0.txtNum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
-		PlayerCardProgressModel.instance:getSelectNum(),
-		PlayerCardEnum.MaxCardNum
+function var_0_0.refreshNum(arg_12_0)
+	local var_12_0 = PlayerCardProgressModel.instance:getSelectNum()
+	local var_12_1 = PlayerCardEnum.MaxCardNum
+
+	arg_12_0.txtNum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
+		var_12_0,
+		var_12_1
 	})
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

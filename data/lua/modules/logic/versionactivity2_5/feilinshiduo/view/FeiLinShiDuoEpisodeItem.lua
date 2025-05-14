@@ -1,162 +1,169 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoEpisodeItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoEpisodeItem", package.seeall)
 
-slot0 = class("FeiLinShiDuoEpisodeItem", LuaCompBase)
+local var_0_0 = class("FeiLinShiDuoEpisodeItem", LuaCompBase)
 
-function slot0.onInit(slot0, slot1)
-	slot0._go = slot1
-	slot0._goGet = gohelper.findChild(slot0._go, "unlock/Reward/#go_Get")
-	slot0._gostagenormal = gohelper.findChild(slot0._go, "unlock/#go_stagenormal")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0._go, "unlock/#btn_click")
-	slot0._btnGameClick = gohelper.findChildButtonWithAudio(slot0._go, "unlock/#go_gameEpisode/#btn_gameClick")
-	slot0._gostar = gohelper.findChild(slot0._go, "unlock/star/#go_star")
-	slot0._gostarIdle = gohelper.findChild(slot0._go, "unlock/star/star_idle")
-	slot0._imageStar = gohelper.findChildImage(slot0._go, "unlock/star/#go_star/#image_Star")
-	slot0._txtstagename = gohelper.findChildText(slot0._go, "unlock/#txt_stagename")
-	slot0._txtstageNum = gohelper.findChildText(slot0._go, "unlock/#txt_stageNum")
-	slot0._goGameEpisode = gohelper.findChild(slot0._go, "unlock/#go_gameEpisode")
-	slot0._goGameFinished = gohelper.findChild(slot0._go, "unlock/#go_gameEpisode/#go_gameFinished")
-	slot0._goStageLock = gohelper.findChild(slot0._go, "unlock/#go_stageLock")
-	slot0._animPlayer = SLFramework.AnimatorPlayer.Get(slot0._go)
-	slot0._animGamePlayer = SLFramework.AnimatorPlayer.Get(slot0._goGameEpisode)
+function var_0_0.onInit(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._goGet = gohelper.findChild(arg_1_0._go, "unlock/Reward/#go_Get")
+	arg_1_0._gostagenormal = gohelper.findChild(arg_1_0._go, "unlock/#go_stagenormal")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0._go, "unlock/#btn_click")
+	arg_1_0._btnGameClick = gohelper.findChildButtonWithAudio(arg_1_0._go, "unlock/#go_gameEpisode/#btn_gameClick")
+	arg_1_0._gostar = gohelper.findChild(arg_1_0._go, "unlock/star/#go_star")
+	arg_1_0._gostarIdle = gohelper.findChild(arg_1_0._go, "unlock/star/star_idle")
+	arg_1_0._imageStar = gohelper.findChildImage(arg_1_0._go, "unlock/star/#go_star/#image_Star")
+	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0._go, "unlock/#txt_stagename")
+	arg_1_0._txtstageNum = gohelper.findChildText(arg_1_0._go, "unlock/#txt_stageNum")
+	arg_1_0._goGameEpisode = gohelper.findChild(arg_1_0._go, "unlock/#go_gameEpisode")
+	arg_1_0._goGameFinished = gohelper.findChild(arg_1_0._go, "unlock/#go_gameEpisode/#go_gameFinished")
+	arg_1_0._goStageLock = gohelper.findChild(arg_1_0._go, "unlock/#go_stageLock")
+	arg_1_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0._go)
+	arg_1_0._animGamePlayer = SLFramework.AnimatorPlayer.Get(arg_1_0._goGameEpisode)
 end
 
-function slot0.setInfo(slot0, slot1, slot2)
-	slot0.index = slot1
-	slot0.actId = slot2.activityId
-	slot0.episodeId = slot2.episodeId
-	slot0.config = slot2
-	slot0.preEpisodeId = slot2.preEpisodeId
+function var_0_0.setInfo(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.index = arg_2_1
+	arg_2_0.actId = arg_2_2.activityId
+	arg_2_0.episodeId = arg_2_2.episodeId
+	arg_2_0.config = arg_2_2
+	arg_2_0.preEpisodeId = arg_2_2.preEpisodeId
 
-	slot0:refreshUI()
+	arg_2_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtstagename.text = slot0.config.name
-	slot0._txtstageNum.text = string.format("0%s", slot0.index)
+function var_0_0.refreshUI(arg_3_0)
+	arg_3_0._txtstagename.text = arg_3_0.config.name
+	arg_3_0._txtstageNum.text = string.format("0%s", arg_3_0.index)
 
-	slot0:isShowItem(true)
+	arg_3_0:isShowItem(true)
 
-	slot1 = FeiLinShiDuoModel.instance:getEpisodeFinishState(slot0.episodeId)
-	slot0.isUnlock = FeiLinShiDuoModel.instance:isUnlock(slot0.actId, slot0.episodeId)
+	local var_3_0 = FeiLinShiDuoModel.instance:getEpisodeFinishState(arg_3_0.episodeId)
 
-	gohelper.setActive(slot0._goStageLock, not slot0.isUnlock)
-	gohelper.setActive(slot0._gostar, slot1)
-	gohelper.setActive(slot0._gostarIdle, slot1)
+	arg_3_0.isUnlock = FeiLinShiDuoModel.instance:isUnlock(arg_3_0.actId, arg_3_0.episodeId)
 
-	if slot1 then
-		slot0._animPlayer:Play("finish_idle", nil, slot0)
+	gohelper.setActive(arg_3_0._goStageLock, not arg_3_0.isUnlock)
+	gohelper.setActive(arg_3_0._gostar, var_3_0)
+	gohelper.setActive(arg_3_0._gostarIdle, var_3_0)
+
+	if var_3_0 then
+		arg_3_0._animPlayer:Play("finish_idle", nil, arg_3_0)
 	end
 
-	slot0.gameEpisodeConfig = FeiLinShiDuoConfig.instance:getGameEpisode(slot0.episodeId)
+	arg_3_0.gameEpisodeConfig = FeiLinShiDuoConfig.instance:getGameEpisode(arg_3_0.episodeId)
 
-	gohelper.setActive(slot0._goGameEpisode, slot1 and slot0.gameEpisodeConfig)
-	gohelper.setActive(slot0._goGameFinished, slot1 and (slot0.gameEpisodeConfig and FeiLinShiDuoModel.instance:getEpisodeFinishState(slot0.gameEpisodeConfig.episodeId)))
+	gohelper.setActive(arg_3_0._goGameEpisode, var_3_0 and arg_3_0.gameEpisodeConfig)
+
+	local var_3_1 = arg_3_0.gameEpisodeConfig and FeiLinShiDuoModel.instance:getEpisodeFinishState(arg_3_0.gameEpisodeConfig.episodeId)
+
+	gohelper.setActive(arg_3_0._goGameFinished, var_3_0 and var_3_1)
 end
 
-function slot0.isShowItem(slot0, slot1)
-	gohelper.setActive(slot0._go, slot1)
+function var_0_0.isShowItem(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0._go, arg_4_1)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnGameClick:AddClickListener(slot0._btnGameClickOnClick, slot0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim, slot0.playEpisodeItemFinishAnim, slot0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, slot0.playEpisodeItemUnlockAnim, slot0)
+function var_0_0.addEventListeners(arg_5_0)
+	arg_5_0._btnclick:AddClickListener(arg_5_0._btnclickOnClick, arg_5_0)
+	arg_5_0._btnGameClick:AddClickListener(arg_5_0._btnGameClickOnClick, arg_5_0)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim, arg_5_0.playEpisodeItemFinishAnim, arg_5_0)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, arg_5_0.playEpisodeItemUnlockAnim, arg_5_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnGameClick:RemoveClickListener()
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim, slot0.playEpisodeItemFinishAnim, slot0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, slot0.playEpisodeItemUnlockAnim, slot0)
+function var_0_0.removeEventListeners(arg_6_0)
+	arg_6_0._btnclick:RemoveClickListener()
+	arg_6_0._btnGameClick:RemoveClickListener()
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.EpisodeItemPlayFinishAnim, arg_6_0.playEpisodeItemFinishAnim, arg_6_0)
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, arg_6_0.playEpisodeItemUnlockAnim, arg_6_0)
 end
 
-function slot0._btnclickOnClick(slot0)
-	if not slot0:checkIsOpen() then
+function var_0_0._btnclickOnClick(arg_7_0)
+	if not arg_7_0:checkIsOpen() then
 		return
 	end
 
-	FeiLinShiDuoModel.instance:setCurEpisodeId(slot0.episodeId)
-	FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.SelectEpisode, slot0.index, slot0.episodeId, false)
-	FeiLinShiDuoStatHelper.instance:initEpisodeStartTime(slot0.episodeId)
+	FeiLinShiDuoModel.instance:setCurEpisodeId(arg_7_0.episodeId)
+	FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.SelectEpisode, arg_7_0.index, arg_7_0.episodeId, false)
+	FeiLinShiDuoStatHelper.instance:initEpisodeStartTime(arg_7_0.episodeId)
 end
 
-function slot0._btnGameClickOnClick(slot0)
-	if not slot0:checkIsOpen() then
+function var_0_0._btnGameClickOnClick(arg_8_0)
+	if not arg_8_0:checkIsOpen() then
 		return
 	end
 
-	FeiLinShiDuoModel.instance:setCurEpisodeId(slot0.episodeId)
-	FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.SelectEpisode, slot0.index, slot0.episodeId, true)
+	FeiLinShiDuoModel.instance:setCurEpisodeId(arg_8_0.episodeId)
+	FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.SelectEpisode, arg_8_0.index, arg_8_0.episodeId, true)
 end
 
-function slot0.checkIsOpen(slot0)
-	slot2 = true
+function var_0_0.checkIsOpen(arg_9_0)
+	local var_9_0 = ActivityModel.instance:getActMO(arg_9_0.actId)
+	local var_9_1 = true
 
-	if ActivityModel.instance:getActMO(slot0.actId) == nil then
-		logError("not such activity id: " .. slot0.actId)
+	if var_9_0 == nil then
+		logError("not such activity id: " .. arg_9_0.actId)
 
-		slot2 = false
+		var_9_1 = false
 	end
 
-	if not slot1:isOpen() or slot1:isExpired() then
+	if not var_9_0:isOpen() or var_9_0:isExpired() then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
-		slot2 = false
+		var_9_1 = false
 	end
 
-	slot0.isUnlock = FeiLinShiDuoModel.instance:isUnlock(slot0.actId, slot0.episodeId)
+	arg_9_0.isUnlock = FeiLinShiDuoModel.instance:isUnlock(arg_9_0.actId, arg_9_0.episodeId)
 
-	if not slot0.isUnlock then
+	if not arg_9_0.isUnlock then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
-		slot2 = false
+		var_9_1 = false
 	end
 
-	return slot2
+	return var_9_1
 end
 
-function slot0.playEpisodeItemFinishAnim(slot0, slot1)
-	slot0.curFinishEpisodeId = slot1
-	slot0.finishGameConfig = FeiLinShiDuoConfig.instance:getGameEpisode(slot1)
+function var_0_0.playEpisodeItemFinishAnim(arg_10_0, arg_10_1)
+	arg_10_0.curFinishEpisodeId = arg_10_1
+	arg_10_0.finishGameConfig = FeiLinShiDuoConfig.instance:getGameEpisode(arg_10_1)
 
-	if slot1 == slot0.episodeId then
-		gohelper.setActive(slot0._gostar, true)
-		slot0._animPlayer:Play("finish", nil, slot0)
+	if arg_10_1 == arg_10_0.episodeId then
+		gohelper.setActive(arg_10_0._gostar, true)
+		arg_10_0._animPlayer:Play("finish", nil, arg_10_0)
 		UIBlockMgr.instance:startBlock("FeiLinShiDuoEpisodeItemAnim")
 		UIBlockMgrExtend.setNeedCircleMv(false)
-		slot0:playNextEpisodeShowAnim()
+		arg_10_0:playNextEpisodeShowAnim()
 
-		if slot1 == FeiLinShiDuoModel.instance:getLastEpisodeId() then
+		if arg_10_1 == FeiLinShiDuoModel.instance:getLastEpisodeId() then
 			FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.SwitchBG, true)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_jinye_story_star)
-	elseif slot0.gameEpisodeConfig and slot0.gameEpisodeConfig.episodeId == slot1 then
-		gohelper.setActive(slot0._goGameEpisode, true)
-		slot0._animGamePlayer:Play("finish_idle", nil, slot0)
-		gohelper.setActive(slot0._goGameFinished, true)
-		slot0:playNextEpisodeUnlockAnim()
+	elseif arg_10_0.gameEpisodeConfig and arg_10_0.gameEpisodeConfig.episodeId == arg_10_1 then
+		gohelper.setActive(arg_10_0._goGameEpisode, true)
+		arg_10_0._animGamePlayer:Play("finish_idle", nil, arg_10_0)
+		gohelper.setActive(arg_10_0._goGameFinished, true)
+		arg_10_0:playNextEpisodeUnlockAnim()
 	end
 end
 
-function slot0.playNextEpisodeShowAnim(slot0)
-	gohelper.setActive(slot0._gostarIdle, true)
+function var_0_0.playNextEpisodeShowAnim(arg_11_0)
+	gohelper.setActive(arg_11_0._gostarIdle, true)
 
-	if slot0.finishGameConfig then
-		gohelper.setActive(slot0._goGameEpisode, true)
-		slot0._animGamePlayer:Play("open", slot0.playGameShowAnimFinish, slot0)
+	if arg_11_0.finishGameConfig then
+		gohelper.setActive(arg_11_0._goGameEpisode, true)
+		arg_11_0._animGamePlayer:Play("open", arg_11_0.playGameShowAnimFinish, arg_11_0)
 	else
-		slot0:playNextEpisodeUnlockAnim()
+		arg_11_0:playNextEpisodeUnlockAnim()
 	end
 end
 
-function slot0.playNextEpisodeUnlockAnim(slot0)
-	slot0._animPlayer:Play("finish_idle", nil, slot0)
+function var_0_0.playNextEpisodeUnlockAnim(arg_12_0)
+	arg_12_0._animPlayer:Play("finish_idle", nil, arg_12_0)
 
-	if FeiLinShiDuoConfig.instance:getNextEpisode(slot0.curFinishEpisodeId) then
-		FeiLinShiDuoModel.instance:setCurEpisodeId(slot1.episodeId)
-		FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, slot1.episodeId)
+	local var_12_0 = FeiLinShiDuoConfig.instance:getNextEpisode(arg_12_0.curFinishEpisodeId)
+
+	if var_12_0 then
+		FeiLinShiDuoModel.instance:setCurEpisodeId(var_12_0.episodeId)
+		FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, var_12_0.episodeId)
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_leimi_level_difficulty)
 	else
 		FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.SwitchBG, false)
@@ -165,24 +172,25 @@ function slot0.playNextEpisodeUnlockAnim(slot0)
 	end
 end
 
-function slot0.playGameShowAnimFinish(slot0)
+function var_0_0.playGameShowAnimFinish(arg_13_0)
 	UIBlockMgr.instance:endBlock("FeiLinShiDuoEpisodeItemAnim")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.playEpisodeItemUnlockAnim(slot0, slot1)
-	if slot1 == slot0.episodeId then
-		slot0._animPlayer:Play("unlock", slot0.playUnlockAnimFinish, slot0)
-		gohelper.setActive(slot0._goStageLock, false)
+function var_0_0.playEpisodeItemUnlockAnim(arg_14_0, arg_14_1)
+	if arg_14_1 == arg_14_0.episodeId then
+		arg_14_0._animPlayer:Play("unlock", arg_14_0.playUnlockAnimFinish, arg_14_0)
+		gohelper.setActive(arg_14_0._goStageLock, false)
 	end
 end
 
-function slot0.playUnlockAnimFinish(slot0)
+function var_0_0.playUnlockAnimFinish(arg_15_0)
 	UIBlockMgr.instance:endBlock("FeiLinShiDuoEpisodeItemAnim")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

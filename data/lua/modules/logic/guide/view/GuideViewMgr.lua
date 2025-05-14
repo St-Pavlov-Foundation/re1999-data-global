@@ -1,109 +1,116 @@
-module("modules.logic.guide.view.GuideViewMgr", package.seeall)
+﻿module("modules.logic.guide.view.GuideViewMgr", package.seeall)
 
-slot0 = class("GuideViewMgr")
+local var_0_0 = class("GuideViewMgr")
 
-function slot0.open(slot0, slot1, slot2)
-	slot0.guideId = slot1
-	slot0.stepId = slot2
-	slot0.viewParam = GuideViewParam.New()
+function var_0_0.open(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.guideId = arg_1_1
+	arg_1_0.stepId = arg_1_2
+	arg_1_0.viewParam = GuideViewParam.New()
 
-	slot0.viewParam:setStep(slot0.guideId, slot0.stepId)
+	arg_1_0.viewParam:setStep(arg_1_0.guideId, arg_1_0.stepId)
 
-	if string.find(slot0.viewParam.goPath, "/MESSAGE") then
-		ViewMgr.instance:openView(ViewName.GuideView2, slot0.viewParam, true)
+	if string.find(arg_1_0.viewParam.goPath, "/MESSAGE") then
+		ViewMgr.instance:openView(ViewName.GuideView2, arg_1_0.viewParam, true)
 	else
-		ViewMgr.instance:openView(ViewName.GuideView, slot0.viewParam, true)
+		ViewMgr.instance:openView(ViewName.GuideView, arg_1_0.viewParam, true)
 	end
 end
 
-function slot0.close(slot0)
-	slot0.viewParam = nil
+function var_0_0.close(arg_2_0)
+	arg_2_0.viewParam = nil
 
 	ViewMgr.instance:closeView(ViewName.GuideView, true)
 	ViewMgr.instance:closeView(ViewName.GuideView2, true)
 end
 
-function slot0.enableHoleClick(slot0)
-	if slot0.viewParam then
-		slot0.viewParam.enableHoleClick = true
+function var_0_0.enableHoleClick(arg_3_0)
+	if arg_3_0.viewParam then
+		arg_3_0.viewParam.enableHoleClick = true
 
 		GuideController.instance:dispatchEvent(GuideEvent.UpdateMaskView)
 	end
 end
 
-function slot0.disableHoleClick(slot0)
-	if slot0.viewParam then
-		slot0.viewParam.enableHoleClick = false
+function var_0_0.disableHoleClick(arg_4_0)
+	if arg_4_0.viewParam then
+		arg_4_0.viewParam.enableHoleClick = false
 
 		GuideController.instance:dispatchEvent(GuideEvent.UpdateMaskView)
 	end
 end
 
-function slot0.setHoleClickCallback(slot0, slot1, slot2)
-	slot0._clickCallback = slot1
-	slot0._clickCallbackTarget = slot2
+function var_0_0.setHoleClickCallback(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._clickCallback = arg_5_1
+	arg_5_0._clickCallbackTarget = arg_5_2
 end
 
-function slot0.enableClick(slot0, slot1)
-	if slot0.viewParam then
-		slot0.viewParam.enableClick = slot1
+function var_0_0.enableClick(arg_6_0, arg_6_1)
+	if arg_6_0.viewParam then
+		arg_6_0.viewParam.enableClick = arg_6_1
 
 		GuideController.instance:dispatchEvent(GuideEvent.UpdateMaskView)
 	end
 end
 
-function slot0.enablePress(slot0, slot1)
-	if slot0.viewParam then
-		slot0.viewParam.enablePress = slot1
+function var_0_0.enablePress(arg_7_0, arg_7_1)
+	if arg_7_0.viewParam then
+		arg_7_0.viewParam.enablePress = arg_7_1
 
 		GuideController.instance:dispatchEvent(GuideEvent.UpdateMaskView)
 	end
 end
 
-function slot0.enableDrag(slot0, slot1)
-	if slot0.viewParam then
-		slot0.viewParam.enableDrag = slot1
+function var_0_0.enableDrag(arg_8_0, arg_8_1)
+	if arg_8_0.viewParam then
+		arg_8_0.viewParam.enableDrag = arg_8_1
 
 		GuideController.instance:dispatchEvent(GuideEvent.UpdateMaskView)
 	end
 end
 
-function slot0.setMaskAlpha(slot0, slot1)
-	if slot0.viewParam then
-		slot0.viewParam.maskAlpha = slot1
+function var_0_0.setMaskAlpha(arg_9_0, arg_9_1)
+	if arg_9_0.viewParam then
+		arg_9_0.viewParam.maskAlpha = arg_9_1
 
 		GuideController.instance:dispatchEvent(GuideEvent.UpdateMaskView)
 	end
 end
 
-function slot0.enableSpaceBtn(slot0, slot1)
-	if slot0.viewParam then
-		slot0.viewParam.enableSpaceBtn = slot1
+function var_0_0.enableSpaceBtn(arg_10_0, arg_10_1)
+	if arg_10_0.viewParam then
+		arg_10_0.viewParam.enableSpaceBtn = arg_10_1
 	end
 end
 
-function slot0.onClickCallback(slot0, slot1)
-	if slot0._clickCallback then
+function var_0_0.onClickCallback(arg_11_0, arg_11_1)
+	if arg_11_0._clickCallback then
 		if GuideController.EnableLog then
-			logNormal("guidelog: " .. ((slot0.guideId or "nil") .. "_" .. (slot0.stepId or "nil")) .. " GuideViewMgr.onClickCallback inside " .. (slot1 and "true" or "false") .. debug.traceback("", 2))
+			local var_11_0 = (arg_11_0.guideId or "nil") .. "_" .. (arg_11_0.stepId or "nil")
+
+			logNormal("guidelog: " .. var_11_0 .. " GuideViewMgr.onClickCallback inside " .. (arg_11_1 and "true" or "false") .. debug.traceback("", 2))
 		end
 
-		if slot0._clickCallbackTarget then
-			slot0._clickCallback(slot0._clickCallbackTarget, slot1)
+		if arg_11_0._clickCallbackTarget then
+			arg_11_0._clickCallback(arg_11_0._clickCallbackTarget, arg_11_1)
 		else
-			slot0._clickCallback(slot1)
+			arg_11_0._clickCallback(arg_11_1)
 		end
 	elseif GuideController.EnableLog then
-		logNormal("guidelog: " .. ((slot0.guideId or "nil") .. "_" .. (slot0.stepId or "nil")) .. "GuideViewMgr.onClickCallback callback not exist inside " .. (slot1 and "true" or "false") .. debug.traceback("", 2))
+		local var_11_1 = (arg_11_0.guideId or "nil") .. "_" .. (arg_11_0.stepId or "nil")
+
+		logNormal("guidelog: " .. var_11_1 .. "GuideViewMgr.onClickCallback callback not exist inside " .. (arg_11_1 and "true" or "false") .. debug.traceback("", 2))
 	end
 end
 
-function slot0.isGuidingGO(slot0, slot1)
+function var_0_0.isGuidingGO(arg_12_0, arg_12_1)
 	if ViewMgr.instance:isOpen(ViewName.GuideView) then
-		return gohelper.find(uv0.instance.viewParam and slot2.goPath) == slot1
+		local var_12_0 = var_0_0.instance.viewParam
+		local var_12_1 = var_12_0 and var_12_0.goPath
+
+		return gohelper.find(var_12_1) == arg_12_1
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

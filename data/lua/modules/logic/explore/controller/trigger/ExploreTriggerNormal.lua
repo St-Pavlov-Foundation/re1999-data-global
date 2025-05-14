@@ -1,13 +1,13 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerNormal", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerNormal", package.seeall)
 
-slot0 = class("ExploreTriggerNormal", ExploreTriggerBase)
+local var_0_0 = class("ExploreTriggerNormal", ExploreTriggerBase)
 
-function slot0.handle(slot0, slot1, slot2)
-	slot0:sendTriggerRequest()
+function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:sendTriggerRequest()
 end
 
-function slot0.onReply(slot0, slot1, slot2, slot3)
-	slot0:onDone(true)
+function var_0_0.onReply(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

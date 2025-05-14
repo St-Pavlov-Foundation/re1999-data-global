@@ -1,4 +1,4 @@
-module("modules.logic.common.defines.UIAnimationEvtName", package.seeall)
+﻿module("modules.logic.common.defines.UIAnimationEvtName", package.seeall)
 
 return {
 	onOpenEnd = "onOpenEnd",

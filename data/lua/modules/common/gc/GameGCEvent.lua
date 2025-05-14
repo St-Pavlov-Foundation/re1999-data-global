@@ -1,13 +1,15 @@
-module("modules.common.gc.GameGCEvent", package.seeall)
+﻿module("modules.common.gc.GameGCEvent", package.seeall)
 
-return {
-	FullGC = 1,
-	DelayFullGC = 2,
-	ResGC = 3,
-	CancelDelayFullGC = 4,
-	StoryGC = 5,
-	AudioGC = 6,
-	DelayAudioGC = 7,
-	CancelDelayAudioGC = 8,
-	OnFullGC = 11
-}
+local var_0_0 = {}
+
+var_0_0.FullGC = 1
+var_0_0.DelayFullGC = 2
+var_0_0.ResGC = 3
+var_0_0.CancelDelayFullGC = 4
+var_0_0.StoryGC = 5
+var_0_0.AudioGC = 6
+var_0_0.DelayAudioGC = 7
+var_0_0.CancelDelayAudioGC = 8
+var_0_0.OnFullGC = 11
+
+return var_0_0

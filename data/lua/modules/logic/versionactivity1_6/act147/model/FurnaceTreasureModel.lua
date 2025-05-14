@@ -1,183 +1,216 @@
-module("modules.logic.versionactivity1_6.act147.model.FurnaceTreasureModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act147.model.FurnaceTreasureModel", package.seeall)
 
-slot0 = class("FurnaceTreasureModel", BaseModel)
+local var_0_0 = class("FurnaceTreasureModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:resetData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:resetData()
 end
 
-function slot0.reInit(slot0)
-	slot0:resetData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:resetData()
 end
 
-function slot0._checkServerData(slot0, slot1)
-	slot2 = false
+function var_0_0._checkServerData(arg_3_0, arg_3_1)
+	local var_3_0 = false
 
-	if slot1 then
-		slot2 = slot0:_checkActId(slot1.activityId)
+	if arg_3_1 then
+		local var_3_1 = arg_3_1.activityId
+
+		var_3_0 = arg_3_0:_checkActId(var_3_1)
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0._checkActId(slot0, slot1)
-	slot2 = false
+function var_0_0._checkActId(arg_4_0, arg_4_1)
+	local var_4_0 = false
 
-	if slot1 then
-		slot2 = slot1 == slot0:getActId()
+	if arg_4_1 then
+		var_4_0 = arg_4_1 == arg_4_0:getActId()
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.getActId(slot0)
-	return ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act147) and slot1[1]
+function var_0_0.getActId(arg_5_0)
+	local var_5_0 = ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act147)
+
+	return var_5_0 and var_5_0[1]
 end
 
-function slot0.isActivityOpen(slot0)
-	return ActivityModel.instance:isActOnLine(slot0:getActId())
+function var_0_0.isActivityOpen(arg_6_0)
+	local var_6_0 = arg_6_0:getActId()
+
+	return (ActivityModel.instance:isActOnLine(var_6_0))
 end
 
-function slot0._checkGoodsData(slot0, slot1, slot2)
-	if not slot1 or not slot2 and not slot0:isActivityOpen() then
-		return false
+function var_0_0._checkGoodsData(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = false
+	local var_7_1 = arg_7_0:isActivityOpen()
+
+	if not arg_7_1 or not arg_7_2 and not var_7_1 then
+		return var_7_0
 	end
 
-	if slot0._store2GoodsData[slot1] and slot0._store2GoodsData[slot1][slot2] then
-		slot3 = true
+	if arg_7_0._store2GoodsData[arg_7_1] and arg_7_0._store2GoodsData[arg_7_1][arg_7_2] then
+		var_7_0 = true
 	else
-		logError(string.format("FurnaceTreasureModel:_checkGoodsData error,data is nil, storeId:%s, goodsId:%s", slot1, slot2))
+		logError(string.format("FurnaceTreasureModel:_checkGoodsData error,data is nil, storeId:%s, goodsId:%s", arg_7_1, arg_7_2))
 	end
 
-	return slot3
+	return var_7_0
 end
 
-function slot0.getGoodsPoolId(slot0, slot1, slot2)
-	if not slot0:_checkGoodsData(slot1, slot2) then
-		return 0
+function var_0_0.getGoodsPoolId(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = 0
+
+	if not arg_8_0:_checkGoodsData(arg_8_1, arg_8_2) then
+		return var_8_0
 	end
 
-	return slot0._store2GoodsData[slot1][slot2].poolId
+	return arg_8_0._store2GoodsData[arg_8_1][arg_8_2].poolId
 end
 
-function slot0.getGoodsRemainCount(slot0, slot1, slot2)
-	if not slot0:_checkGoodsData(slot1, slot2) then
-		return 0
+function var_0_0.getGoodsRemainCount(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = 0
+
+	if not arg_9_0:_checkGoodsData(arg_9_1, arg_9_2) then
+		return var_9_0
 	end
 
-	return slot0._store2GoodsData[slot1][slot2].remainCount
+	return arg_9_0._store2GoodsData[arg_9_1][arg_9_2].remainCount
 end
 
-function slot0.getGoodsListByStoreId(slot0, slot1)
-	slot2 = {}
+function var_0_0.getGoodsListByStoreId(arg_10_0, arg_10_1)
+	local var_10_0 = {}
+	local var_10_1 = arg_10_0:isActivityOpen()
 
-	if slot1 and slot0:isActivityOpen() and slot0._store2GoodsData[slot1] then
-		for slot7, slot8 in pairs(slot0._store2GoodsData[slot1]) do
-			slot2[#slot2 + 1] = slot7
+	if arg_10_1 and var_10_1 and arg_10_0._store2GoodsData[arg_10_1] then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0._store2GoodsData[arg_10_1]) do
+			var_10_0[#var_10_0 + 1] = iter_10_0
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getCostItem(slot0, slot1)
-	if not FurnaceTreasureEnum.StoreId2CostItem[slot1] then
-		logError(string.format("FurnaceTreasureModel:getCostItem error, no store cost item, storeId:%s", slot1))
+function var_0_0.getCostItem(arg_11_0, arg_11_1)
+	local var_11_0 = FurnaceTreasureEnum.StoreId2CostItem[arg_11_1]
+
+	if not var_11_0 then
+		logError(string.format("FurnaceTreasureModel:getCostItem error, no store cost item, storeId:%s", arg_11_1))
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0.getTotalRemainCount(slot0)
-	return slot0._totalRemainCount
+function var_0_0.getTotalRemainCount(arg_12_0)
+	return arg_12_0._totalRemainCount
 end
 
-function slot0.getSpinePlayData(slot0, slot1)
-	if slot1 and FurnaceTreasureEnum.Pool2SpinePlayData[slot1] then
-		-- Nothing
-	end
-
-	return {
-		motion = FurnaceTreasureEnum.BeginnerViewSpinePlayData,
-		motion = FurnaceTreasureEnum.Pool2SpinePlayData[slot1]
+function var_0_0.getSpinePlayData(arg_13_0, arg_13_1)
+	local var_13_0 = {
+		motion = FurnaceTreasureEnum.BeginnerViewSpinePlayData
 	}
+
+	if arg_13_1 and FurnaceTreasureEnum.Pool2SpinePlayData[arg_13_1] then
+		var_13_0.motion = FurnaceTreasureEnum.Pool2SpinePlayData[arg_13_1]
+	end
+
+	return var_13_0
 end
 
-function slot0.setServerData(slot0, slot1, slot2)
-	if not slot0:_checkServerData(slot1) then
+function var_0_0.setServerData(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_0:_checkServerData(arg_14_1) then
 		return
 	end
 
-	if slot2 then
-		slot0:resetData()
+	if arg_14_2 then
+		arg_14_0:resetData()
 	end
 
-	if slot1.act147Goods then
-		for slot7, slot8 in ipairs(slot1.act147Goods) do
-			slot0:setGoodsData(slot8)
+	if arg_14_1.act147Goods then
+		for iter_14_0, iter_14_1 in ipairs(arg_14_1.act147Goods) do
+			arg_14_0:setGoodsData(iter_14_1)
 		end
 	end
 
-	slot0:setTotalRemainCount(slot1.totalRemainCount)
+	arg_14_0:setTotalRemainCount(arg_14_1.totalRemainCount)
 	FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 end
 
-function slot0.setGoodsData(slot0, slot1)
-	slot3 = slot1.id
-	slot4 = slot1.remainCount
-	slot5 = slot1.poolId
+function var_0_0.setGoodsData(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.belongStoreId
+	local var_15_1 = arg_15_1.id
+	local var_15_2 = arg_15_1.remainCount
+	local var_15_3 = arg_15_1.poolId
+	local var_15_4 = arg_15_0._store2GoodsData[var_15_0]
 
-	if not slot0._store2GoodsData[slot1.belongStoreId] then
-		slot0._store2GoodsData[slot2] = {}
+	if not var_15_4 then
+		var_15_4 = {}
+		arg_15_0._store2GoodsData[var_15_0] = var_15_4
 	end
 
-	if not slot6[slot3] then
-		slot6[slot3] = {
-			poolId = slot5
+	if not var_15_4[var_15_1] then
+		var_15_4[var_15_1] = {
+			poolId = var_15_3
 		}
 	end
 
-	slot0:setGoodsRemainCount(slot2, slot3, slot4)
+	arg_15_0:setGoodsRemainCount(var_15_0, var_15_1, var_15_2)
 end
 
-function slot0.updateGoodsData(slot0, slot1)
-	if not slot0:_checkActId(slot1.activityId) then
+function var_0_0.updateGoodsData(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.activityId
+
+	if not arg_16_0:_checkActId(var_16_0) then
 		return
 	end
 
-	slot0:setGoodsRemainCount(slot1.storeId, slot1.goodsId, slot1.remainCount)
+	local var_16_1 = arg_16_1.goodsId
+	local var_16_2 = arg_16_1.remainCount
+	local var_16_3 = arg_16_1.storeId
+
+	arg_16_0:setGoodsRemainCount(var_16_3, var_16_1, var_16_2)
 	FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 end
 
-function slot0.setGoodsRemainCount(slot0, slot1, slot2, slot3)
-	if not (slot0._store2GoodsData[slot1] and slot4[slot2] or nil) then
+function var_0_0.setGoodsRemainCount(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = arg_17_0._store2GoodsData[arg_17_1]
+	local var_17_1 = var_17_0 and var_17_0[arg_17_2] or nil
+
+	if not var_17_1 then
 		return
 	end
 
-	slot5.remainCount = slot3
+	var_17_1.remainCount = arg_17_3
 end
 
-function slot0.setTotalRemainCount(slot0, slot1)
-	slot0._totalRemainCount = slot1 or 0
+function var_0_0.setTotalRemainCount(arg_18_0, arg_18_1)
+	arg_18_1 = arg_18_1 or 0
+	arg_18_0._totalRemainCount = arg_18_1
 end
 
-function slot0.decreaseTotalRemainCount(slot0, slot1)
-	if slot0:_checkActId(slot1) then
-		slot0:setTotalRemainCount(slot0:getTotalRemainCount(slot0:getActId()) - 1)
+function var_0_0.decreaseTotalRemainCount(arg_19_0, arg_19_1)
+	if arg_19_0:_checkActId(arg_19_1) then
+		local var_19_0 = arg_19_0:getActId()
+		local var_19_1 = arg_19_0:getTotalRemainCount(var_19_0) - 1
+
+		arg_19_0:setTotalRemainCount(var_19_1)
 		FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 	end
 end
 
-function slot0.resetData(slot0, slot1)
-	slot0._store2GoodsData = {}
+function var_0_0.resetData(arg_20_0, arg_20_1)
+	arg_20_0._store2GoodsData = {}
 
-	slot0:setTotalRemainCount()
+	arg_20_0:setTotalRemainCount()
 
-	if slot1 then
+	if arg_20_1 then
 		FurnaceTreasureController.instance:dispatchEvent(FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

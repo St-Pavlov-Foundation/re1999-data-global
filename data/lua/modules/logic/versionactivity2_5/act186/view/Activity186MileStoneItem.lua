@@ -1,162 +1,181 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186MileStoneItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186MileStoneItem", package.seeall)
 
-slot0 = class("Activity186MileStoneItem", ListScrollCellExtend)
+local var_0_0 = class("Activity186MileStoneItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0.transform = slot0.viewGO.transform
-	slot0.txtValue = gohelper.findChildTextMesh(slot0.viewGO, "txt_pointvalue")
-	slot0.goStatus = gohelper.findChild(slot0.viewGO, "#image_status")
-	slot0.goStatusGrey = gohelper.findChild(slot0.viewGO, "#image_statusgrey")
-	slot0.rewardList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.transform = arg_1_0.viewGO.transform
+	arg_1_0.txtValue = gohelper.findChildTextMesh(arg_1_0.viewGO, "txt_pointvalue")
+	arg_1_0.goStatus = gohelper.findChild(arg_1_0.viewGO, "#image_status")
+	arg_1_0.goStatusGrey = gohelper.findChild(arg_1_0.viewGO, "#image_statusgrey")
+	arg_1_0.rewardList = {}
 
-	for slot4 = 1, 2 do
-		slot0:getOrCreateRewardItem(slot4)
+	for iter_1_0 = 1, 2 do
+		arg_1_0:getOrCreateRewardItem(iter_1_0)
 	end
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	if not slot1 then
-		gohelper.setActive(slot0.viewGO, false)
+	if not arg_5_1 then
+		gohelper.setActive(arg_5_0.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_5_0.viewGO, true)
 
-	slot0.actMo = Activity186Model.instance:getById(slot0._mo.activityId)
+	arg_5_0.actMo = Activity186Model.instance:getById(arg_5_0._mo.activityId)
 
-	slot0:refreshValue()
-	slot0:refreshReward()
+	arg_5_0:refreshValue()
+	arg_5_0:refreshReward()
 end
 
-function slot0.refreshValue(slot0)
-	slot3 = slot0.actMo:getMilestoneRewardStatus(slot0._mo.rewardId) == Activity186Enum.RewardStatus.Canget or slot2 == Activity186Enum.RewardStatus.Hasget
+function var_0_0.refreshValue(arg_6_0)
+	local var_6_0 = arg_6_0._mo.isLoopBonus
+	local var_6_1 = arg_6_0.actMo:getMilestoneRewardStatus(arg_6_0._mo.rewardId)
+	local var_6_2 = var_6_1 == Activity186Enum.RewardStatus.Canget or var_6_1 == Activity186Enum.RewardStatus.Hasget
 
-	if slot0._mo.isLoopBonus then
-		slot0.txtValue.text = "∞"
-	elseif slot3 then
-		slot0.txtValue.text = string.format("<color=#BF5E26>%s</color>", slot0.actMo:getMilestoneValue(slot0._mo.rewardId))
+	if var_6_0 then
+		arg_6_0.txtValue.text = "∞"
 	else
-		slot0.txtValue.text = slot4
+		local var_6_3 = arg_6_0.actMo:getMilestoneValue(arg_6_0._mo.rewardId)
+
+		if var_6_2 then
+			arg_6_0.txtValue.text = string.format("<color=#BF5E26>%s</color>", var_6_3)
+		else
+			arg_6_0.txtValue.text = var_6_3
+		end
 	end
 
-	gohelper.setActive(slot0.goStatus, slot3)
-	gohelper.setActive(slot0.goStatusGrey, not slot3)
+	gohelper.setActive(arg_6_0.goStatus, var_6_2)
+	gohelper.setActive(arg_6_0.goStatusGrey, not var_6_2)
 end
 
-function slot0.refreshReward(slot0)
-	slot1 = GameUtil.splitString2(slot0._mo.bonus, true)
-	slot2 = #slot1
-	slot7 = #slot0.rewardList
+function var_0_0.refreshReward(arg_7_0)
+	local var_7_0 = GameUtil.splitString2(arg_7_0._mo.bonus, true)
+	local var_7_1 = #var_7_0
+	local var_7_2 = arg_7_0.actMo:getMilestoneRewardStatus(arg_7_0._mo.rewardId)
 
-	for slot7 = 1, math.max(#slot1, slot7) do
-		slot0:updateRewardItem(slot0:getOrCreateRewardItem(slot7), slot1[slot7], slot0.actMo:getMilestoneRewardStatus(slot0._mo.rewardId))
+	for iter_7_0 = 1, math.max(#var_7_0, #arg_7_0.rewardList) do
+		arg_7_0:updateRewardItem(arg_7_0:getOrCreateRewardItem(iter_7_0), var_7_0[iter_7_0], var_7_2)
 	end
 
-	slot0.itemWidth = slot2 * 210 + (slot2 - 1) * 10
+	arg_7_0.itemWidth = var_7_1 * 210 + (var_7_1 - 1) * 10
 
-	recthelper.setWidth(slot0.transform, slot0.itemWidth)
+	recthelper.setWidth(arg_7_0.transform, arg_7_0.itemWidth)
 end
 
-function slot0.getOrCreateRewardItem(slot0, slot1)
-	if not slot0.rewardList[slot1] then
-		if not gohelper.findChild(slot0.viewGO, "#go_rewards/#go_reward" .. slot1) then
+function var_0_0.getOrCreateRewardItem(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.rewardList[arg_8_1]
+
+	if not var_8_0 then
+		local var_8_1 = gohelper.findChild(arg_8_0.viewGO, "#go_rewards/#go_reward" .. arg_8_1)
+
+		if not var_8_1 then
 			return
 		end
 
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = slot3
-		slot2.imgCircle = gohelper.findChildImage(slot3, "#image_circle")
-		slot2.imgQuality = gohelper.findChildImage(slot3, "#image_quality")
-		slot2.goIcon = gohelper.findChild(slot3, "go_icon")
-		slot2.goCanget = gohelper.findChild(slot3, "go_canget")
-		slot2.goReceive = gohelper.findChild(slot3, "go_receive")
-		slot2.txtNum = gohelper.findChildTextMesh(slot3, "#txt_num")
-		slot0.rewardList[slot1] = slot2
+		var_8_0 = arg_8_0:getUserDataTb_()
+		var_8_0.go = var_8_1
+		var_8_0.imgCircle = gohelper.findChildImage(var_8_1, "#image_circle")
+		var_8_0.imgQuality = gohelper.findChildImage(var_8_1, "#image_quality")
+		var_8_0.goIcon = gohelper.findChild(var_8_1, "go_icon")
+		var_8_0.goCanget = gohelper.findChild(var_8_1, "go_canget")
+		var_8_0.goReceive = gohelper.findChild(var_8_1, "go_receive")
+		var_8_0.txtNum = gohelper.findChildTextMesh(var_8_1, "#txt_num")
+		arg_8_0.rewardList[arg_8_1] = var_8_0
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.updateRewardItem(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0.updateRewardItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if not arg_9_1 then
 		return
 	end
 
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+	if not arg_9_2 then
+		gohelper.setActive(arg_9_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(arg_9_1.go, true)
 
-	slot4 = ItemModel.instance:getItemConfigAndIcon(slot2[1], slot2[2])
+	local var_9_0 = ItemModel.instance:getItemConfigAndIcon(arg_9_2[1], arg_9_2[2])
 
-	UISpriteSetMgr.instance:setUiFBSprite(slot1.imgQuality, "bg_pinjidi_" .. slot4.rare)
-	UISpriteSetMgr.instance:setUiFBSprite(slot1.imgCircle, "bg_pinjidi_lanse_" .. slot4.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_9_1.imgQuality, "bg_pinjidi_" .. var_9_0.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_9_1.imgCircle, "bg_pinjidi_lanse_" .. var_9_0.rare)
 
-	if not slot1.itemIcon then
-		slot1.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot1.goIcon)
+	if not arg_9_1.itemIcon then
+		arg_9_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_9_1.goIcon)
 	end
 
-	slot1.itemIcon:setMOValue(slot2[1], slot2[2], slot2[3])
-	slot1.itemIcon:setScale(0.7)
-	slot1.itemIcon:isShowQuality(false)
-	slot1.itemIcon:isShowEquipAndItemCount(false)
-	gohelper.setActive(slot1.goCanget, slot3 == Activity186Enum.RewardStatus.Canget)
-	gohelper.setActive(slot1.goReceive, slot3 == Activity186Enum.RewardStatus.Hasget)
-	slot1.itemIcon:customOnClickCallback(uv0.onClickItemIcon, {
-		actId = slot0._mo.activityId,
-		status = slot3,
-		itemCo = slot2
-	})
+	arg_9_1.itemIcon:setMOValue(arg_9_2[1], arg_9_2[2], arg_9_2[3])
+	arg_9_1.itemIcon:setScale(0.7)
+	arg_9_1.itemIcon:isShowQuality(false)
+	arg_9_1.itemIcon:isShowEquipAndItemCount(false)
+	gohelper.setActive(arg_9_1.goCanget, arg_9_3 == Activity186Enum.RewardStatus.Canget)
+	gohelper.setActive(arg_9_1.goReceive, arg_9_3 == Activity186Enum.RewardStatus.Hasget)
 
-	if slot2[2] == 171504 then
-		slot1.txtNum.text = ""
+	local var_9_1 = {
+		actId = arg_9_0._mo.activityId,
+		status = arg_9_3,
+		itemCo = arg_9_2
+	}
+
+	arg_9_1.itemIcon:customOnClickCallback(var_0_0.onClickItemIcon, var_9_1)
+
+	if arg_9_2[2] == 171504 then
+		arg_9_1.txtNum.text = ""
 	else
-		slot1.txtNum.text = string.format("×%s", slot2[3])
+		arg_9_1.txtNum.text = string.format("×%s", arg_9_2[3])
 	end
 end
 
-function slot0.onClickItemIcon(slot0)
-	if not ActivityModel.instance:isActOnLine(slot0.actId) then
+function var_0_0.onClickItemIcon(arg_10_0)
+	local var_10_0 = arg_10_0.actId
+
+	if not ActivityModel.instance:isActOnLine(var_10_0) then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	if slot0.status == Activity186Enum.RewardStatus.Canget then
-		Activity186Rpc.instance:sendGetAct186MilestoneRewardRequest(slot1)
+	if arg_10_0.status == Activity186Enum.RewardStatus.Canget then
+		Activity186Rpc.instance:sendGetAct186MilestoneRewardRequest(var_10_0)
 
 		return
 	end
 
-	slot3 = slot0.itemCo
+	local var_10_1 = arg_10_0.itemCo
 
-	MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2])
+	MaterialTipController.instance:showMaterialInfo(var_10_1[1], var_10_1[2])
 end
 
-function slot0.getItemWidth(slot0)
-	return slot0.itemWidth
+function var_0_0.getItemWidth(arg_11_0)
+	return arg_11_0.itemWidth
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

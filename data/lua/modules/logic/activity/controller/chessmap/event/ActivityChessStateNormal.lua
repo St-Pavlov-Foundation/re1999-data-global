@@ -1,54 +1,58 @@
-module("modules.logic.activity.controller.chessmap.event.ActivityChessStateNormal", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateNormal", package.seeall)
 
-slot0 = class("ActivityChessStateNormal", ActivityChessStateBase)
+local var_0_0 = class("ActivityChessStateNormal", ActivityChessStateBase)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
 	logNormal("ActivityChessStateNormal start")
 end
 
-function slot0.onClickPos(slot0, slot1, slot2, slot3)
-	slot4, slot5 = ActivityChessGameController.instance:searchInteractByPos(slot1, slot2, ActivityChessGameController.filterSelectable)
+function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0, var_2_1 = ActivityChessGameController.instance:searchInteractByPos(arg_2_1, arg_2_2, ActivityChessGameController.filterSelectable)
+	local var_2_2 = ActivityChessGameController.instance:getClickStatus()
 
-	if ActivityChessGameController.instance:getClickStatus() == ActivityChessEnum.SelectPosStatus.None then
-		slot0:onClickInNoneStatus(slot4, slot5, slot3)
-	elseif slot6 == ActivityChessEnum.SelectPosStatus.SelectObjWaitPos then
-		slot0:onClickInSelectObjWaitPosStatus(slot1, slot2, slot4, slot5, slot3)
+	if var_2_2 == ActivityChessEnum.SelectPosStatus.None then
+		arg_2_0:onClickInNoneStatus(var_2_0, var_2_1, arg_2_3)
+	elseif var_2_2 == ActivityChessEnum.SelectPosStatus.SelectObjWaitPos then
+		arg_2_0:onClickInSelectObjWaitPosStatus(arg_2_1, arg_2_2, var_2_0, var_2_1, arg_2_3)
 	end
 end
 
-function slot0.onClickInNoneStatus(slot0, slot1, slot2, slot3)
-	if slot1 >= 1 then
-		if (slot1 > 1 and slot2[1] or slot2).objType ~= ActivityChessEnum.InteractType.Player then
+function var_0_0.onClickInNoneStatus(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 >= 1 then
+		local var_3_0 = arg_3_1 > 1 and arg_3_2[1] or arg_3_2
+
+		if var_3_0.objType ~= ActivityChessEnum.InteractType.Player then
 			GameFacade.showToast(ToastEnum.ChessCanNotSelect)
 		else
-			if slot0._lastSelectObj ~= slot4 and slot3 then
-				if slot4.config.avatar == ActivityChessEnum.RoleAvatar.Apple then
+			if arg_3_0._lastSelectObj ~= var_3_0 and arg_3_3 then
+				if var_3_0.config.avatar == ActivityChessEnum.RoleAvatar.Apple then
 					AudioMgr.instance:trigger(AudioEnum.ChessGame.SelectApple)
-				elseif slot4.config.avatar == ActivityChessEnum.RoleAvatar.PKLS then
+				elseif var_3_0.config.avatar == ActivityChessEnum.RoleAvatar.PKLS then
 					AudioMgr.instance:trigger(AudioEnum.ChessGame.SelectPKLS)
-				elseif slot4.config.avatar == ActivityChessEnum.RoleAvatar.WJYS then
+				elseif var_3_0.config.avatar == ActivityChessEnum.RoleAvatar.WJYS then
 					AudioMgr.instance:trigger(AudioEnum.ChessGame.SelectWJYS)
 				end
 			end
 
-			ActivityChessGameController.instance:setSelectObj(slot4)
+			ActivityChessGameController.instance:setSelectObj(var_3_0)
 
-			slot0._lastSelectObj = ActivityChessGameController.instance:getSelectObj()
+			arg_3_0._lastSelectObj = ActivityChessGameController.instance:getSelectObj()
 		end
 	end
 end
 
-function slot0.onClickInSelectObjWaitPosStatus(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = ActivityChessGameController.instance:getSelectObj()
-	slot0._lastSelectObj = slot6
+function var_0_0.onClickInSelectObjWaitPosStatus(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+	local var_4_0 = ActivityChessGameController.instance:getSelectObj()
 
-	if slot6 and slot6:getHandler() then
-		if slot6:getHandler():onSelectPos(slot1, slot2) then
-			slot0:onClickPos(slot1, slot2, slot5)
+	arg_4_0._lastSelectObj = var_4_0
+
+	if var_4_0 and var_4_0:getHandler() then
+		if var_4_0:getHandler():onSelectPos(arg_4_1, arg_4_2) then
+			arg_4_0:onClickPos(arg_4_1, arg_4_2, arg_4_5)
 		end
 	else
 		logError("select obj missing!")
 	end
 end
 
-return slot0
+return var_0_0

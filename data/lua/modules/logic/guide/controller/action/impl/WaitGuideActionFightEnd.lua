@@ -1,37 +1,41 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEnd", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEnd", package.seeall)
 
-slot0 = class("WaitGuideActionFightEnd", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionFightEnd", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	if string.find(slot0.actionParam, ",") then
-		slot0._episodeIdList = string.splitToNumber(slot0.actionParam, ",")
+	if string.find(arg_1_0.actionParam, ",") then
+		arg_1_0._episodeIdList = string.splitToNumber(arg_1_0.actionParam, ",")
 	else
-		slot0._episodeId = tonumber(slot0.actionParam)
+		arg_1_0._episodeId = tonumber(arg_1_0.actionParam)
 	end
 
-	FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._endFight, slot0)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_1_0._endFight, arg_1_0)
 end
 
-function slot0._endFight(slot0)
-	if slot0._episodeId then
-		if DungeonModel.instance:getEpisodeInfo(slot0._episodeId) and DungeonEnum.StarType.None < slot1.star then
-			slot0:onDone(true)
+function var_0_0._endFight(arg_2_0)
+	if arg_2_0._episodeId then
+		local var_2_0 = DungeonModel.instance:getEpisodeInfo(arg_2_0._episodeId)
+
+		if var_2_0 and var_2_0.star > DungeonEnum.StarType.None then
+			arg_2_0:onDone(true)
 		end
-	elseif slot0._episodeIdList then
-		for slot4, slot5 in ipairs(slot0._episodeIdList) do
-			if DungeonModel.instance:getEpisodeInfo(slot5) and DungeonEnum.StarType.None < slot6.star then
-				slot0:onDone(true)
+	elseif arg_2_0._episodeIdList then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0._episodeIdList) do
+			local var_2_1 = DungeonModel.instance:getEpisodeInfo(iter_2_1)
+
+			if var_2_1 and var_2_1.star > DungeonEnum.StarType.None then
+				arg_2_0:onDone(true)
 			end
 		end
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, slot0._endFight, slot0)
+function var_0_0.clearWork(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_3_0._endFight, arg_3_0)
 end
 
-return slot0
+return var_0_0

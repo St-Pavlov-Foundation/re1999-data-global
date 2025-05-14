@@ -1,170 +1,186 @@
-module("modules.logic.chessgame.game.event.ChessEventMgr", package.seeall)
+﻿module("modules.logic.chessgame.game.event.ChessEventMgr", package.seeall)
 
-slot0 = class("ChessEventMgr")
+local var_0_0 = class("ChessEventMgr")
 
-function slot0.ctor(slot0)
-	slot0._stepList = {}
-	slot0._stepPool = nil
-	slot0._curStep = nil
-	slot0._curEventData = nil
-	slot0._curEvent = nil
-	slot0._flow = nil
-	slot0._lastWork = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._stepList = {}
+	arg_1_0._stepPool = nil
+	arg_1_0._curStep = nil
+	arg_1_0._curEventData = nil
+	arg_1_0._curEvent = nil
+	arg_1_0._flow = nil
+	arg_1_0._lastWork = nil
 end
 
-slot0.EventClzMap = {
+var_0_0.EventClzMap = {
 	[ChessGameEnum.GameEventType.Normal] = ChessStateNormal
 }
 
-function slot0.setCurEvent(slot0, slot1)
-	if slot1 ~= nil and not string.nilorempty(slot1.param) then
-		slot0._curEventData = cjson.decode(slot1.param)
+function var_0_0.setCurEvent(arg_2_0, arg_2_1)
+	if arg_2_1 ~= nil and not string.nilorempty(arg_2_1.param) then
+		arg_2_0._curEventData = cjson.decode(arg_2_1.param)
 	else
-		slot0._curEventData = nil
+		arg_2_0._curEventData = nil
 	end
 
-	slot0:buildEventState()
+	arg_2_0:buildEventState()
 end
 
-function slot0.setCurEventByObj(slot0, slot1)
-	if slot1 then
-		slot0._curEventData = slot1
+function var_0_0.setCurEventByObj(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		arg_3_0._curEventData = arg_3_1
 	else
-		slot0._curEventData = nil
+		arg_3_0._curEventData = nil
 	end
 
-	slot0:buildEventState()
+	arg_3_0:buildEventState()
 end
 
-function slot0.buildEventState(slot0)
-	slot1 = nil
-	slot1 = (slot0._curEventData or ChessGameEnum.GameEventType.Normal) and slot0._curEventData.eventType
+function var_0_0.buildEventState(arg_4_0)
+	local var_4_0
 
-	if slot0._curEvent and slot0._curEvent:getStateType() == slot1 then
+	if not arg_4_0._curEventData then
+		var_4_0 = ChessGameEnum.GameEventType.Normal
+	else
+		var_4_0 = arg_4_0._curEventData.eventType
+	end
+
+	if arg_4_0._curEvent and arg_4_0._curEvent:getStateType() == var_4_0 then
 		return
 	end
 
-	if uv0.EventClzMap[slot1] then
-		slot0:disposeEventState()
+	local var_4_1 = var_0_0.EventClzMap[var_4_0]
 
-		slot0._curEvent = slot2.New()
+	if var_4_1 then
+		arg_4_0:disposeEventState()
 
-		slot0._curEvent:init(slot1, slot0._curEventData)
-		slot0._curEvent:start()
+		arg_4_0._curEvent = var_4_1.New()
+
+		arg_4_0._curEvent:init(var_4_0, arg_4_0._curEventData)
+		arg_4_0._curEvent:start()
 	end
 end
 
-function slot0.setLockEvent(slot0)
-	slot0:disposeEventState()
+function var_0_0.setLockEvent(arg_5_0)
+	arg_5_0:disposeEventState()
 
-	slot0._curEventData = nil
-	slot0._curEvent = ChessStateLock.New()
+	arg_5_0._curEventData = nil
+	arg_5_0._curEvent = ChessStateLock.New()
 
-	slot0._curEvent:init()
-	slot0._curEvent:start()
+	arg_5_0._curEvent:init()
+	arg_5_0._curEvent:start()
 end
 
-function slot0.disposeEventState(slot0)
-	if slot0._curEvent ~= nil then
-		slot0._curEvent:dispose()
+function var_0_0.disposeEventState(arg_6_0)
+	if arg_6_0._curEvent ~= nil then
+		arg_6_0._curEvent:dispose()
 
-		slot0._curEvent = nil
+		arg_6_0._curEvent = nil
 	end
 end
 
-function slot0.getCurEvent(slot0)
-	return slot0._curEvent
+function var_0_0.getCurEvent(arg_7_0)
+	return arg_7_0._curEvent
 end
 
-function slot0.insertStepList(slot0, slot1)
-	slot0._flow = FlowSequence.New()
+function var_0_0.insertStepList(arg_8_0, arg_8_1)
+	arg_8_0._flow = FlowSequence.New()
 
-	for slot6 = 1, #slot1 do
-		slot0:insertStep2(slot0._flow, slot1[slot6])
+	local var_8_0 = #arg_8_1
+
+	for iter_8_0 = 1, var_8_0 do
+		local var_8_1 = arg_8_1[iter_8_0]
+
+		arg_8_0:insertStep2(arg_8_0._flow, var_8_1)
 	end
 
-	slot0._flow:addWork(ChessCheckIsCatch.New())
+	arg_8_0._flow:addWork(ChessCheckIsCatch.New())
 
-	slot0._moveFlow = nil
+	arg_8_0._moveFlow = nil
 
-	slot0._flow:registerDoneListener(slot0._onFlowDone, slot0)
-	slot0._flow:start(ChessGameModel.instance:getCatchObj())
+	arg_8_0._flow:registerDoneListener(arg_8_0._onFlowDone, arg_8_0)
+
+	local var_8_2 = ChessGameModel.instance:getCatchObj()
+
+	arg_8_0._flow:start(var_8_2)
 end
 
-function slot0._onFlowDone(slot0)
+function var_0_0._onFlowDone(arg_9_0)
 	if not ChessGameModel.instance:isTalking() then
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameMapDataUpdate)
 	end
 
-	slot0._flow = nil
-	slot0._lastWork = nil
+	arg_9_0._flow = nil
+	arg_9_0._lastWork = nil
 end
 
-function slot0.isPlayingFlow(slot0)
-	if slot0._flow then
+function var_0_0.isPlayingFlow(arg_10_0)
+	if arg_10_0._flow then
 		return true
 	end
 end
 
-function slot0.stopFlow(slot0)
-	if slot0._flow and slot0._flow.status == WorkStatus.Running then
-		slot0._flow:stop()
+function var_0_0.stopFlow(arg_11_0)
+	if arg_11_0._flow and arg_11_0._flow.status == WorkStatus.Running then
+		arg_11_0._flow:stop()
 	end
 
-	slot0._flow = nil
+	arg_11_0._flow = nil
 end
 
-function slot0.insertStep2(slot0, slot1, slot2)
-	if slot0:buildStep(slot2).originData.stepType == ChessGameEnum.StepType.Move then
-		if slot0._lastWork and slot0._lastWork.originData.id == slot3.originData.id then
-			slot0._moveFlow = nil
+function var_0_0.insertStep2(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:buildStep(arg_12_2)
 
-			slot1:addWork(slot3)
+	if var_12_0.originData.stepType == ChessGameEnum.StepType.Move then
+		if arg_12_0._lastWork and arg_12_0._lastWork.originData.id == var_12_0.originData.id then
+			arg_12_0._moveFlow = nil
 
-			slot0._lastWork = slot3
+			arg_12_1:addWork(var_12_0)
+
+			arg_12_0._lastWork = var_12_0
 		else
-			if not slot0._moveFlow then
-				slot0._moveFlow = FlowParallel.New()
+			if not arg_12_0._moveFlow then
+				arg_12_0._moveFlow = FlowParallel.New()
 
-				slot1:addWork(slot0._moveFlow)
+				arg_12_1:addWork(arg_12_0._moveFlow)
 
-				slot0._lastWork = slot3
+				arg_12_0._lastWork = var_12_0
 			end
 
-			slot0._moveFlow:addWork(slot3)
+			arg_12_0._moveFlow:addWork(var_12_0)
 
-			slot0._lastWork = slot3
+			arg_12_0._lastWork = var_12_0
 		end
 	else
-		slot0._moveFlow = nil
+		arg_12_0._moveFlow = nil
 
-		slot1:addWork(slot3)
+		arg_12_1:addWork(var_12_0)
 
-		slot0._lastWork = slot3
+		arg_12_0._lastWork = var_12_0
 	end
 end
 
-function slot0.isNeedBlock(slot0)
-	if slot0._stepList then
-		for slot4 = 1, #slot0._stepList do
-			if slot0:_chekNeedBlock(slot0._stepList[slot4]) then
+function var_0_0.isNeedBlock(arg_13_0)
+	if arg_13_0._stepList then
+		for iter_13_0 = 1, #arg_13_0._stepList do
+			if arg_13_0:_chekNeedBlock(arg_13_0._stepList[iter_13_0]) then
 				return true
 			end
 		end
 	end
 
-	if slot0:_chekNeedBlock(slot0._curStep) then
+	if arg_13_0:_chekNeedBlock(arg_13_0._curStep) then
 		return true
 	end
 
 	return false
 end
 
-function slot0._chekNeedBlock(slot0, slot1)
-	slot2 = slot1 and slot1.originData and slot1.originData.stepType
+function var_0_0._chekNeedBlock(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1 and arg_14_1.originData and arg_14_1.originData.stepType
 
-	if not slot0._needBlockStepMap then
-		slot0._needBlockStepMap = {
+	if not arg_14_0._needBlockStepMap then
+		arg_14_0._needBlockStepMap = {
 			[ChessGameEnum.StepType.Story] = true,
 			[ChessGameEnum.StepType.Move] = true,
 			[ChessGameEnum.StepType.InteractDelete] = true,
@@ -173,10 +189,10 @@ function slot0._chekNeedBlock(slot0, slot1)
 		}
 	end
 
-	return slot0._needBlockStepMap[slot2]
+	return arg_14_0._needBlockStepMap[var_14_0]
 end
 
-slot0.StepClzMap = {
+var_0_0.StepClzMap = {
 	[ChessGameEnum.StepType.UpdateRound] = ChessStepUpdateRound,
 	[ChessGameEnum.StepType.Move] = ChessStepMove,
 	[ChessGameEnum.StepType.Transport] = ChessStepTransport,
@@ -196,81 +212,85 @@ slot0.StepClzMap = {
 	[ChessGameEnum.StepType.RefreshTarget] = ChessStepRefreshTarget
 }
 
-function slot0.buildStep(slot0, slot1)
-	slot3 = ChessModel.instance:getActId()
+function var_0_0.buildStep(arg_15_0, arg_15_1)
+	local var_15_0 = cjson.decode(arg_15_1.param)
+	local var_15_1 = ChessModel.instance:getActId()
+	local var_15_2 = var_0_0.StepClzMap[var_15_0.stepType]
 
-	if uv0.StepClzMap[cjson.decode(slot1.param).stepType] then
-		slot5 = nil
-		slot0._stepPool = slot0._stepPool or {}
+	if var_15_2 then
+		local var_15_3
 
-		if slot0._stepPool[slot4] ~= nil and #slot0._stepPool[slot4] >= 1 then
-			slot6 = #slot0._stepPool[slot4]
-			slot5 = slot0._stepPool[slot4][slot6]
-			slot0._stepPool[slot4][slot6] = nil
+		arg_15_0._stepPool = arg_15_0._stepPool or {}
+
+		if arg_15_0._stepPool[var_15_2] ~= nil and #arg_15_0._stepPool[var_15_2] >= 1 then
+			local var_15_4 = #arg_15_0._stepPool[var_15_2]
+
+			var_15_3 = arg_15_0._stepPool[var_15_2][var_15_4]
+			arg_15_0._stepPool[var_15_2][var_15_4] = nil
 		else
-			slot5 = slot4.New()
+			var_15_3 = var_15_2.New()
 		end
 
-		slot5:init(slot2)
+		var_15_3:init(var_15_0)
 
-		return slot5
+		return var_15_3
 	end
 end
 
-function slot0.nextStep(slot0)
-	slot0:recycleCurStep()
+function var_0_0.nextStep(arg_16_0)
+	arg_16_0:recycleCurStep()
 
-	if not slot0._isStepStarting then
-		slot0._isStepStarting = true
+	if not arg_16_0._isStepStarting then
+		arg_16_0._isStepStarting = true
 
-		while slot0._stepList and #slot0._stepList > 0 and slot0._curStep == nil do
-			slot0._curStep = slot0._stepList[1]
+		while arg_16_0._stepList and #arg_16_0._stepList > 0 and arg_16_0._curStep == nil do
+			arg_16_0._curStep = arg_16_0._stepList[1]
 
-			table.remove(slot0._stepList, 1)
-			slot0._curStep:start()
+			table.remove(arg_16_0._stepList, 1)
+			arg_16_0._curStep:start()
 		end
 
-		slot0._isStepStarting = false
+		arg_16_0._isStepStarting = false
 	end
 end
 
-function slot0.recycleCurStep(slot0)
-	if slot0._curStep then
-		slot0._curStep:dispose()
+function var_0_0.recycleCurStep(arg_17_0)
+	if arg_17_0._curStep then
+		arg_17_0._curStep:dispose()
 
-		slot0._stepPool[slot0._curStep.class] = slot0._stepPool[slot0._curStep.class] or {}
+		arg_17_0._stepPool[arg_17_0._curStep.class] = arg_17_0._stepPool[arg_17_0._curStep.class] or {}
 
-		table.insert(slot0._stepPool[slot0._curStep.class], slot0._curStep)
+		table.insert(arg_17_0._stepPool[arg_17_0._curStep.class], arg_17_0._curStep)
 
-		slot0._curStep = nil
+		arg_17_0._curStep = nil
 	end
 end
 
-function slot0.disposeAllStep(slot0)
-	if slot0._curStep then
-		slot0._curStep:dispose()
+function var_0_0.disposeAllStep(arg_18_0)
+	if arg_18_0._curStep then
+		arg_18_0._curStep:dispose()
 
-		slot0._curStep = nil
+		arg_18_0._curStep = nil
 	end
 
-	if slot0._stepList then
-		for slot4, slot5 in pairs(slot0._stepList) do
-			slot5:dispose()
+	if arg_18_0._stepList then
+		for iter_18_0, iter_18_1 in pairs(arg_18_0._stepList) do
+			iter_18_1:dispose()
 		end
 
-		slot0._stepList = nil
+		arg_18_0._stepList = nil
 	end
 
-	slot0._stepPool = nil
-	slot0._isStepStarting = false
+	arg_18_0._stepPool = nil
+	arg_18_0._isStepStarting = false
 end
 
-function slot0.removeAll(slot0)
-	slot0._stepList = nil
-	slot0._curStep = nil
+function var_0_0.removeAll(arg_19_0)
+	arg_19_0._stepList = nil
+	arg_19_0._curStep = nil
 
-	slot0:disposeAllStep()
-	slot0:disposeEventState()
+	arg_19_0:disposeAllStep()
+	arg_19_0:disposeEventState()
 end
 
-return slot0
+return var_0_0

@@ -1,83 +1,83 @@
-module("modules.logic.main.view.MainThumbnailBtnView", package.seeall)
+﻿module("modules.logic.main.view.MainThumbnailBtnView", package.seeall)
 
-slot0 = class("MainThumbnailBtnView", BaseView)
+local var_0_0 = class("MainThumbnailBtnView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnhandbook = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_handbook")
-	slot0._btnsocial = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_social")
-	slot0._gosocialreddot = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content/#btn_social/#go_socialreddot")
-	slot0._btnbell = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_bell")
-	slot0._btnplayercard = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_playercard")
-	slot0._btnfeedback = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_feedback")
-	slot0._gobelllreddot = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content/#btn_bell/#go_belllreddot")
-	slot0._btncalendar = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_calendar")
-	slot0._gocalendarreddot = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content/#btn_calendar/#go_calendarreddot")
-	slot0._btnsetting = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_setting")
-	slot0._btnzhoubian = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_zhoubian")
-	slot0._btnachievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_achievement")
-	slot0._goachievementreddot = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content/#btn_achievement/#go_achievementreddot")
-	slot0._btnrecordvideo = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/btn_content/#go_content/#btn_recordvideo")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/#btn_left")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/#btn_right")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content")
-	slot0._gobtncontent1 = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content/#go_btncontent1")
-	slot0._gobtncontent2 = gohelper.findChild(slot0.viewGO, "btns/btn_content/#go_content/#go_btncontent2")
-	slot0._goscroll = gohelper.findChild(slot0.viewGO, "btns/#go_scroll")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_handbook")
+	arg_1_0._btnsocial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_social")
+	arg_1_0._gosocialreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_social/#go_socialreddot")
+	arg_1_0._btnbell = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_bell")
+	arg_1_0._btnplayercard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_playercard")
+	arg_1_0._btnfeedback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_feedback")
+	arg_1_0._gobelllreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_bell/#go_belllreddot")
+	arg_1_0._btncalendar = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_calendar")
+	arg_1_0._gocalendarreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_calendar/#go_calendarreddot")
+	arg_1_0._btnsetting = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_setting")
+	arg_1_0._btnzhoubian = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_zhoubian")
+	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_achievement")
+	arg_1_0._goachievementreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_achievement/#go_achievementreddot")
+	arg_1_0._btnrecordvideo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_recordvideo")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_left")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_right")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content")
+	arg_1_0._gobtncontent1 = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#go_btncontent1")
+	arg_1_0._gobtncontent2 = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#go_btncontent2")
+	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "btns/#go_scroll")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnhandbook:AddClickListener(slot0._btnhandbookOnClick, slot0)
-	slot0._btnsocial:AddClickListener(slot0._btnsocialOnClick, slot0)
-	slot0._btnplayercard:AddClickListener(slot0._btnplayercardOnClick, slot0)
-	slot0._btnbell:AddClickListener(slot0._btnbellOnClick, slot0)
-	slot0._btncalendar:AddClickListener(slot0._btncalendarOnClick, slot0)
-	slot0._btnsetting:AddClickListener(slot0._btnsettingOnClick, slot0)
-	slot0._btnzhoubian:AddClickListener(slot0._btnzhoubianOnClick, slot0)
-	slot0._btnfeedback:AddClickListener(slot0._btnfeedbackOnClick, slot0)
-	slot0._btnachievement:AddClickListener(slot0._btnachievementOnClick, slot0)
-	slot0._btnrecordvideo:AddClickListener(slot0._btnrecordvideoOnClick, slot0)
-	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
-	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterBook, slot0._btnhandbookOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterAchievement, slot0._btnachievementOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFriend, slot0._btnsocialOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterTravelCollection, slot0._btnplayercardOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterNotice, slot0._btnbellOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSetting, slot0._btnsettingOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFeedback, slot0._btnfeedbackOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSign, slot0._btncalendarOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterStore, slot0._btnzhoubianOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnhandbook:AddClickListener(arg_2_0._btnhandbookOnClick, arg_2_0)
+	arg_2_0._btnsocial:AddClickListener(arg_2_0._btnsocialOnClick, arg_2_0)
+	arg_2_0._btnplayercard:AddClickListener(arg_2_0._btnplayercardOnClick, arg_2_0)
+	arg_2_0._btnbell:AddClickListener(arg_2_0._btnbellOnClick, arg_2_0)
+	arg_2_0._btncalendar:AddClickListener(arg_2_0._btncalendarOnClick, arg_2_0)
+	arg_2_0._btnsetting:AddClickListener(arg_2_0._btnsettingOnClick, arg_2_0)
+	arg_2_0._btnzhoubian:AddClickListener(arg_2_0._btnzhoubianOnClick, arg_2_0)
+	arg_2_0._btnfeedback:AddClickListener(arg_2_0._btnfeedbackOnClick, arg_2_0)
+	arg_2_0._btnachievement:AddClickListener(arg_2_0._btnachievementOnClick, arg_2_0)
+	arg_2_0._btnrecordvideo:AddClickListener(arg_2_0._btnrecordvideoOnClick, arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterBook, arg_2_0._btnhandbookOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterAchievement, arg_2_0._btnachievementOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFriend, arg_2_0._btnsocialOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterTravelCollection, arg_2_0._btnplayercardOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterNotice, arg_2_0._btnbellOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSetting, arg_2_0._btnsettingOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFeedback, arg_2_0._btnfeedbackOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSign, arg_2_0._btncalendarOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterStore, arg_2_0._btnzhoubianOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnhandbook:RemoveClickListener()
-	slot0._btnsocial:RemoveClickListener()
-	slot0._btnplayercard:RemoveClickListener()
-	slot0._btnbell:RemoveClickListener()
-	slot0._btncalendar:RemoveClickListener()
-	slot0._btnsetting:RemoveClickListener()
-	slot0._btnzhoubian:RemoveClickListener()
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
-	slot0._btnfeedback:RemoveClickListener()
-	slot0._btnachievement:RemoveClickListener()
-	slot0._btnrecordvideo:RemoveClickListener()
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterBook, slot0._btnhandbookOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterAchievement, slot0._btnachievementOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFriend, slot0._btnsocialOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterTravelCollection, slot0._btnplayercardOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterNotice, slot0._btnbellOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSetting, slot0._btnsettingOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFeedback, slot0._btnfeedbackOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSign, slot0._btncalendarOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterStore, slot0._btnzhoubianOnClick, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnhandbook:RemoveClickListener()
+	arg_3_0._btnsocial:RemoveClickListener()
+	arg_3_0._btnplayercard:RemoveClickListener()
+	arg_3_0._btnbell:RemoveClickListener()
+	arg_3_0._btncalendar:RemoveClickListener()
+	arg_3_0._btnsetting:RemoveClickListener()
+	arg_3_0._btnzhoubian:RemoveClickListener()
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
+	arg_3_0._btnfeedback:RemoveClickListener()
+	arg_3_0._btnachievement:RemoveClickListener()
+	arg_3_0._btnrecordvideo:RemoveClickListener()
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterBook, arg_3_0._btnhandbookOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterAchievement, arg_3_0._btnachievementOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFriend, arg_3_0._btnsocialOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterTravelCollection, arg_3_0._btnplayercardOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterNotice, arg_3_0._btnbellOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSetting, arg_3_0._btnsettingOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterFeedback, arg_3_0._btnfeedbackOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSign, arg_3_0._btncalendarOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterStore, arg_3_0._btnzhoubianOnClick, arg_3_0)
 end
 
-function slot0._btnhandbookOnClick(slot0)
+function var_0_0._btnhandbookOnClick(arg_4_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Handbook) then
 		HandbookController.instance:openView()
 	else
@@ -85,7 +85,7 @@ function slot0._btnhandbookOnClick(slot0)
 	end
 end
 
-function slot0._btnsocialOnClick(slot0)
+function var_0_0._btnsocialOnClick(arg_5_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		SocialController.instance:openSocialView()
 	else
@@ -93,7 +93,7 @@ function slot0._btnsocialOnClick(slot0)
 	end
 end
 
-function slot0._btnbellOnClick(slot0)
+function var_0_0._btnbellOnClick(arg_6_0)
 	if VersionValidator.instance:isInReviewing() then
 		logWarn("in reviewing ...")
 
@@ -107,17 +107,19 @@ function slot0._btnbellOnClick(slot0)
 	end
 end
 
-function slot0._btncalendarOnClick(slot0)
+function var_0_0._btncalendarOnClick(arg_7_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SignIn) then
-		SignInController.instance:openSignInDetailView({
-			isBirthday = false
-		})
+		local var_7_0 = {}
+
+		var_7_0.isBirthday = false
+
+		SignInController.instance:openSignInDetailView(var_7_0)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.SignIn))
 	end
 end
 
-function slot0._btnsettingOnClick(slot0)
+function var_0_0._btnsettingOnClick(arg_8_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Setting) then
 		SettingsController.instance:openView()
 	else
@@ -125,15 +127,20 @@ function slot0._btnsettingOnClick(slot0)
 	end
 end
 
-function slot0._btnzhoubianOnClick(slot0)
-	if GameUtil.openDeepLink(SettingsModel.instance:extractByRegion(CommonConfig.instance:getConstStr(ConstEnum.MallWebUrl)), SettingsModel.instance:extractByRegion(CommonConfig.instance:getConstStr(ConstEnum.MallDeepLink))) then
+function var_0_0._btnzhoubianOnClick(arg_9_0)
+	local var_9_0 = CommonConfig.instance:getConstStr(ConstEnum.MallWebUrl)
+	local var_9_1 = CommonConfig.instance:getConstStr(ConstEnum.MallDeepLink)
+	local var_9_2 = SettingsModel.instance:extractByRegion(var_9_0)
+	local var_9_3 = SettingsModel.instance:extractByRegion(var_9_1)
+
+	if GameUtil.openDeepLink(var_9_2, var_9_3) then
 		return
 	end
 
-	GameUtil.openURL(slot1)
+	GameUtil.openURL(var_9_2)
 end
 
-function slot0._btnfeedbackOnClick(slot0)
+function var_0_0._btnfeedbackOnClick(arg_10_0)
 	if GameFacade.isExternalTest() then
 		return
 	end
@@ -145,7 +152,7 @@ function slot0._btnfeedbackOnClick(slot0)
 	ViewMgr.instance:openView(ViewName.FeedBackView)
 end
 
-function slot0._btnachievementOnClick(slot0)
+function var_0_0._btnachievementOnClick(arg_11_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		ViewMgr.instance:openView(ViewName.AchievementEntryView)
 	else
@@ -155,64 +162,69 @@ function slot0._btnachievementOnClick(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_open)
 end
 
-function slot0._btnrecordvideoOnClick(slot0)
+function var_0_0._btnrecordvideoOnClick(arg_12_0)
 	if SettingsShowHelper.canShowRecordVideo() then
 		SDKMgr.instance:openVideosPage()
 	end
 end
 
-function slot0._btnplayercardOnClick(slot0)
+function var_0_0._btnplayercardOnClick(arg_13_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
+		local var_13_0 = PlayerModel.instance:getPlayinfo()
+
 		PlayerCardController.instance:openPlayerCardView({
-			userId = PlayerModel.instance:getPlayinfo().userId
+			userId = var_13_0.userId
 		})
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.PlayerCard))
 	end
 end
 
-function slot0._btnleftOnClick(slot0)
-	slot0:setTargetPageIndex(slot0:getTargetPageIndex() - 1)
-	slot0:_updatePage()
+function var_0_0._btnleftOnClick(arg_14_0)
+	arg_14_0:setTargetPageIndex(arg_14_0:getTargetPageIndex() - 1)
+	arg_14_0:_updatePage()
 end
 
-function slot0._btnrightOnClick(slot0)
-	slot0:setTargetPageIndex(slot0:getTargetPageIndex() + 1)
-	slot0:_updatePage()
+function var_0_0._btnrightOnClick(arg_15_0)
+	arg_15_0:setTargetPageIndex(arg_15_0:getTargetPageIndex() + 1)
+	arg_15_0:_updatePage()
 end
 
-function slot0.setTargetPageIndex(slot0, slot1)
-	slot0._targetPageIndex = slot1
+function var_0_0.setTargetPageIndex(arg_16_0, arg_16_1)
+	arg_16_0._targetPageIndex = arg_16_1
 end
 
-function slot0.getTargetPageIndex(slot0)
-	return slot0._targetPageIndex
+function var_0_0.getTargetPageIndex(arg_17_0)
+	return arg_17_0._targetPageIndex
 end
 
-function slot0._updatePage(slot0)
-	slot0:_updatePageBtns()
-	ZProj.TweenHelper.DOAnchorPosX(slot0._gocontent.transform, (1 - slot0:getTargetPageIndex()) * slot0._space, 0.25)
+function var_0_0._updatePage(arg_18_0)
+	arg_18_0:_updatePageBtns()
+
+	local var_18_0 = (1 - arg_18_0:getTargetPageIndex()) * arg_18_0._space
+
+	ZProj.TweenHelper.DOAnchorPosX(arg_18_0._gocontent.transform, var_18_0, 0.25)
 end
 
-function slot0._updatePageBtns(slot0)
-	gohelper.setActive(slot0._btnleft.gameObject, slot0:getTargetPageIndex() > 1)
-	gohelper.setActive(slot0._btnright.gameObject, slot0:getTargetPageIndex() < slot0._pageNum and slot0._pageNum > 1)
+function var_0_0._updatePageBtns(arg_19_0)
+	gohelper.setActive(arg_19_0._btnleft.gameObject, arg_19_0:getTargetPageIndex() > 1)
+	gohelper.setActive(arg_19_0._btnright.gameObject, arg_19_0:getTargetPageIndex() < arg_19_0._pageNum and arg_19_0._pageNum > 1)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._checkOpen, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, slot0._checkOpen, slot0)
-	slot0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, slot0._onRefreshNoticeRedDot, slot0)
-	slot0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, slot0._onRefreshNoticeRedDot, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, slot0._onRefreshNoticeRedDot, slot0)
+function var_0_0.onOpen(arg_20_0)
+	arg_20_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_20_0._checkOpen, arg_20_0)
+	arg_20_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_20_0._checkOpen, arg_20_0)
+	arg_20_0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
+	arg_20_0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
+	arg_20_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
 end
 
-function slot0._checkOpen(slot0)
-	slot0:_checkZhouBianOpen()
+function var_0_0._checkOpen(arg_21_0)
+	arg_21_0:_checkZhouBianOpen()
 end
 
-function slot0._checkZhouBianOpen(slot0)
-	if slot0._isGamePad then
+function var_0_0._checkZhouBianOpen(arg_22_0)
+	if arg_22_0._isGamePad then
 		return
 	end
 
@@ -224,7 +236,9 @@ function slot0._checkZhouBianOpen(slot0)
 		return
 	end
 
-	if slot0._btnzhoubian.gameObject.activeSelf then
+	local var_22_0 = arg_22_0._btnzhoubian.gameObject
+
+	if var_22_0.activeSelf then
 		return
 	end
 
@@ -236,168 +250,178 @@ function slot0._checkZhouBianOpen(slot0)
 		return
 	end
 
-	slot0._btnNum = slot0._btnNum + 1
-	slot0._pageNum = math.ceil(slot0._btnNum / 8)
+	arg_22_0._btnNum = arg_22_0._btnNum + 1
+	arg_22_0._pageNum = math.ceil(arg_22_0._btnNum / 8)
 
-	gohelper.addChild(slot0._gobtncontent2, slot1)
-	gohelper.setActive(slot1, true)
-	slot0:_initDrag(slot1)
-	slot0:_updatePageBtns()
+	gohelper.addChild(arg_22_0._gobtncontent2, var_22_0)
+	gohelper.setActive(var_22_0, true)
+	arg_22_0:_initDrag(var_22_0)
+	arg_22_0:_updatePageBtns()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scrollList = slot0:getUserDataTb_()
-	slot0._btnGoList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_23_0)
+	arg_23_0._scrollList = arg_23_0:getUserDataTb_()
+	arg_23_0._btnGoList = arg_23_0:getUserDataTb_()
 
-	table.insert(slot0._btnGoList, slot0._btnhandbook.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnachievement.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnsocial.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnplayercard.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnbell.gameObject)
-	table.insert(slot0._btnGoList, slot0._btncalendar.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnsetting.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnfeedback.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnrecordvideo.gameObject)
-	table.insert(slot0._btnGoList, slot0._btnzhoubian.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnhandbook.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnachievement.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnsocial.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnplayercard.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnbell.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btncalendar.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnsetting.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnfeedback.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnrecordvideo.gameObject)
+	table.insert(arg_23_0._btnGoList, arg_23_0._btnzhoubian.gameObject)
 
-	slot0._isGamePad = SDKNativeUtil.isGamePad()
+	arg_23_0._isGamePad = SDKNativeUtil.isGamePad()
 
-	slot0:_refreshBtns()
-	slot0:_refreshRedDot()
-	slot0:initBtnAudio()
-	slot0:_initDrag(slot0._goscroll)
-	gohelper.addUIClickAudio(slot0._btnzhoubian.gameObject, AudioEnum.UI.play_ui_admission_open)
+	arg_23_0:_refreshBtns()
+	arg_23_0:_refreshRedDot()
+	arg_23_0:initBtnAudio()
+	arg_23_0:_initDrag(arg_23_0._goscroll)
+	gohelper.addUIClickAudio(arg_23_0._btnzhoubian.gameObject, AudioEnum.UI.play_ui_admission_open)
 end
 
-function slot0._initDrag(slot0, slot1)
-	slot2 = SLFramework.UGUI.UIDragListener.Get(slot1)
+function var_0_0._initDrag(arg_24_0, arg_24_1)
+	local var_24_0 = SLFramework.UGUI.UIDragListener.Get(arg_24_1)
 
-	slot2:AddDragBeginListener(slot0._onScrollDragBegin, slot0)
-	slot2:AddDragEndListener(slot0._onScrollDragEnd, slot0)
+	var_24_0:AddDragBeginListener(arg_24_0._onScrollDragBegin, arg_24_0)
+	var_24_0:AddDragEndListener(arg_24_0._onScrollDragEnd, arg_24_0)
 
-	slot0._scrollList[slot1] = slot2
+	arg_24_0._scrollList[arg_24_1] = var_24_0
 end
 
-function slot0._onScrollDragBegin(slot0, slot1, slot2)
-	slot0._scrollStartPos = slot2.position
+function var_0_0._onScrollDragBegin(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0._scrollStartPos = arg_25_2.position
 end
 
-function slot0._onScrollDragEnd(slot0, slot1, slot2)
-	if not slot0._scrollStartPos then
+function var_0_0._onScrollDragEnd(arg_26_0, arg_26_1, arg_26_2)
+	if not arg_26_0._scrollStartPos then
 		return
 	end
 
-	slot3 = slot2.position
-	slot0._scrollStartPos = nil
+	local var_26_0 = arg_26_2.position
+	local var_26_1 = var_26_0.x - arg_26_0._scrollStartPos.x
+	local var_26_2 = var_26_0.y - arg_26_0._scrollStartPos.y
 
-	if math.abs(slot3.x - slot0._scrollStartPos.x) < math.abs(slot3.y - slot0._scrollStartPos.y) then
+	arg_26_0._scrollStartPos = nil
+
+	if math.abs(var_26_1) < math.abs(var_26_2) then
 		return
 	end
 
-	slot7 = slot0:getTargetPageIndex() < slot0._pageNum
+	local var_26_3 = arg_26_0:getTargetPageIndex()
+	local var_26_4 = var_26_3 < arg_26_0._pageNum
+	local var_26_5 = var_26_3 > 1
 
-	if slot4 > 100 and slot6 > 1 then
-		slot0:setTargetPageIndex(slot6 - 1)
-		slot0:_updatePage()
-	elseif slot4 < -100 and slot7 then
-		slot0:setTargetPageIndex(slot6 + 1)
-		slot0:_updatePage()
+	if var_26_1 > 100 and var_26_5 then
+		arg_26_0:setTargetPageIndex(var_26_3 - 1)
+		arg_26_0:_updatePage()
+	elseif var_26_1 < -100 and var_26_4 then
+		arg_26_0:setTargetPageIndex(var_26_3 + 1)
+		arg_26_0:_updatePage()
 	end
 end
 
-function slot0.initBtnAudio(slot0)
-	slot1 = AudioEnum.UI
+function var_0_0.initBtnAudio(arg_27_0)
+	local var_27_0 = AudioEnum.UI
 
-	gohelper.addUIClickAudio(slot0._btnhandbook.gameObject, slot1.play_ui_screenplay_open)
-	gohelper.addUIClickAudio(slot0._btncalendar.gameObject, slot1.Play_UI_Tipsopen)
-	gohelper.addUIClickAudio(slot0._btnbell.gameObject, slot1.play_ui_notice_open)
-	gohelper.addUIClickAudio(slot0._btnfeedback.gameObject, slot1.play_ui_feedback_open)
+	gohelper.addUIClickAudio(arg_27_0._btnhandbook.gameObject, var_27_0.play_ui_screenplay_open)
+	gohelper.addUIClickAudio(arg_27_0._btncalendar.gameObject, var_27_0.Play_UI_Tipsopen)
+	gohelper.addUIClickAudio(arg_27_0._btnbell.gameObject, var_27_0.play_ui_notice_open)
+	gohelper.addUIClickAudio(arg_27_0._btnfeedback.gameObject, var_27_0.play_ui_feedback_open)
 end
 
-function slot0._refreshRedDot(slot0)
-	RedDotController.instance:addRedDot(slot0._gosocialreddot, RedDotEnum.DotNode.FriendBtn)
-	RedDotController.instance:addRedDot(slot0._gocalendarreddot, RedDotEnum.DotNode.SignInBtn, nil, slot0._checkSignInRed, slot0)
-	RedDotController.instance:addRedDot(slot0._goachievementreddot, RedDotEnum.DotNode.AchievementEntry)
+function var_0_0._refreshRedDot(arg_28_0)
+	RedDotController.instance:addRedDot(arg_28_0._gosocialreddot, RedDotEnum.DotNode.FriendBtn)
+	RedDotController.instance:addRedDot(arg_28_0._gocalendarreddot, RedDotEnum.DotNode.SignInBtn, nil, arg_28_0._checkSignInRed, arg_28_0)
+	RedDotController.instance:addRedDot(arg_28_0._goachievementreddot, RedDotEnum.DotNode.AchievementEntry)
 
-	slot0.noticeRedDot = RedDotController.instance:addNotEventRedDot(slot0._gobelllreddot, NoticeModel.hasNotRedNotice, NoticeModel.instance)
+	arg_28_0.noticeRedDot = RedDotController.instance:addNotEventRedDot(arg_28_0._gobelllreddot, NoticeModel.hasNotRedNotice, NoticeModel.instance)
 end
 
-function slot0._checkSignInRed(slot0, slot1)
-	slot1:defaultRefreshDot()
+function var_0_0._checkSignInRed(arg_29_0, arg_29_1)
+	arg_29_1:defaultRefreshDot()
 
-	if not slot1.show then
-		slot1.show = LifeCircleController.instance:isShowRed()
+	if not arg_29_1.show then
+		arg_29_1.show = LifeCircleController.instance:isShowRed()
 
-		slot1:showRedDot(RedDotEnum.Style.Normal)
+		arg_29_1:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 
-function slot0._onRefreshNoticeRedDot(slot0)
-	slot0.noticeRedDot:refreshRedDot()
+function var_0_0._onRefreshNoticeRedDot(arg_30_0)
+	arg_30_0.noticeRedDot:refreshRedDot()
 end
 
-function slot0._isShowPlayerCardRedDot(slot0)
-	gohelper.setActive(slot0._goreddotplayercard, PlayerCardModel.instance:getShowRed())
+function var_0_0._isShowPlayerCardRedDot(arg_31_0)
+	gohelper.setActive(arg_31_0._goreddotplayercard, PlayerCardModel.instance:getShowRed())
 
 	return PlayerCardModel.instance:getShowRed()
 end
 
-slot1 = 8
+local var_0_1 = 8
 
-function slot0._refreshBtns(slot0)
-	for slot4, slot5 in ipairs(slot0._btnGoList) do
-		gohelper.setActive(slot5, true)
+function var_0_0._refreshBtns(arg_32_0)
+	for iter_32_0, iter_32_1 in ipairs(arg_32_0._btnGoList) do
+		gohelper.setActive(iter_32_1, true)
 	end
 
-	slot2 = not GameFacade.isExternalTest()
+	local var_32_0 = not VersionValidator.instance:isInReviewing()
+	local var_32_1 = not GameFacade.isExternalTest()
+	local var_32_2 = not SDKMgr.getShowNotice or SDKMgr.instance:getShowNotice()
+	local var_32_3 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Notice)
 
-	gohelper.setActive(slot0._btnbell.gameObject, not VersionValidator.instance:isInReviewing() and slot2 and (not SDKMgr.getShowNotice or SDKMgr.instance:getShowNotice()) and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Notice))
-	gohelper.setActive(slot0._btnsetting.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Setting))
-	gohelper.setActive(slot0._btncalendar.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SignIn))
-	gohelper.setActive(slot0._btnsocial.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Friend) and slot0._isGamePad == false)
-	gohelper.setActive(slot0._btnhandbook.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Handbook))
-	gohelper.setActive(slot0._btnplayercard.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.PlayerCard))
-	gohelper.setActive(slot0._btnfeedback.gameObject, slot0._isGamePad == false and slot2)
+	gohelper.setActive(arg_32_0._btnbell.gameObject, var_32_0 and var_32_1 and var_32_2 and var_32_3)
+	gohelper.setActive(arg_32_0._btnsetting.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Setting))
+	gohelper.setActive(arg_32_0._btncalendar.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SignIn))
+	gohelper.setActive(arg_32_0._btnsocial.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Friend) and arg_32_0._isGamePad == false)
+	gohelper.setActive(arg_32_0._btnhandbook.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Handbook))
+	gohelper.setActive(arg_32_0._btnplayercard.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.PlayerCard))
+	gohelper.setActive(arg_32_0._btnfeedback.gameObject, arg_32_0._isGamePad == false and var_32_1)
 
 	if VersionValidator.instance:isInReviewing() then
-		gohelper.setActive(slot0._btnfeedback.gameObject, false)
+		gohelper.setActive(arg_32_0._btnfeedback.gameObject, false)
 	end
 
 	if GameChannelConfig.isEfun() then
-		gohelper.setActive(slot0._btnfeedback.gameObject, false)
+		gohelper.setActive(arg_32_0._btnfeedback.gameObject, false)
 	end
 
-	gohelper.setActive(slot0._btnrecordvideo, SettingsShowHelper.canShowRecordVideo())
-	gohelper.setActive(slot0._btnzhoubian.gameObject, not slot0._isGamePad and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ZhouBian) and ActivityModel.instance:isActOnLine(10004))
+	gohelper.setActive(arg_32_0._btnrecordvideo, SettingsShowHelper.canShowRecordVideo())
+	gohelper.setActive(arg_32_0._btnzhoubian.gameObject, not arg_32_0._isGamePad and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ZhouBian) and ActivityModel.instance:isActOnLine(10004))
 
-	slot5 = 0
+	local var_32_4 = 0
 
-	for slot9, slot10 in ipairs(slot0._btnGoList) do
-		if slot10.activeSelf then
-			if slot5 + 1 <= uv0 then
-				gohelper.addChild(slot0._gobtncontent1, slot10)
+	for iter_32_2, iter_32_3 in ipairs(arg_32_0._btnGoList) do
+		if iter_32_3.activeSelf then
+			var_32_4 = var_32_4 + 1
+
+			if var_32_4 <= var_0_1 then
+				gohelper.addChild(arg_32_0._gobtncontent1, iter_32_3)
 			else
-				gohelper.addChild(slot0._gobtncontent2, slot10)
+				gohelper.addChild(arg_32_0._gobtncontent2, iter_32_3)
 			end
 
-			slot0:_initDrag(slot10)
+			arg_32_0:_initDrag(iter_32_3)
 		end
 	end
 
-	slot0._btnNum = slot5
-	slot0._pageNum = math.ceil(slot0._btnNum / uv0)
-	slot0._space = recthelper.getWidth(slot0._gobtncontent1.transform)
+	arg_32_0._btnNum = var_32_4
+	arg_32_0._pageNum = math.ceil(arg_32_0._btnNum / var_0_1)
+	arg_32_0._space = recthelper.getWidth(arg_32_0._gobtncontent1.transform)
 
-	slot0:setTargetPageIndex(1)
-	slot0:_updatePageBtns()
-	slot0:_checkZhouBianOpen()
+	arg_32_0:setTargetPageIndex(1)
+	arg_32_0:_updatePageBtns()
+	arg_32_0:_checkZhouBianOpen()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._scrollList) do
-		slot5:RemoveDragBeginListener()
-		slot5:RemoveDragEndListener()
+function var_0_0.onDestroyView(arg_33_0)
+	for iter_33_0, iter_33_1 in pairs(arg_33_0._scrollList) do
+		iter_33_1:RemoveDragBeginListener()
+		iter_33_1:RemoveDragEndListener()
 	end
 end
 
-return slot0
+return var_0_0

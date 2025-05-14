@@ -1,72 +1,78 @@
-module("modules.logic.fight.system.work.FightWorkTrigger", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkTrigger", package.seeall)
 
-slot0 = class("FightWorkTrigger", FightEffectBase)
+local var_0_0 = class("FightWorkTrigger", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._actEffectMO.effectNum
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.effectNum
 
-	if slot0._actEffectMO.configEffect == -1 and slot1 == 4150002 then
-		slot2 = false
+	if arg_1_0._actEffectMO.configEffect == -1 and var_1_0 == 4150002 then
+		local var_1_1 = false
 
-		if slot0._fightStepMO.actEffectMOs then
-			slot3 = false
+		if arg_1_0._fightStepMO.actEffectMOs then
+			local var_1_2 = false
 
-			for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
-				if slot8 == slot0._actEffectMO then
-					slot3 = slot7
-					slot2 = true
+			for iter_1_0, iter_1_1 in ipairs(arg_1_0._fightStepMO.actEffectMOs) do
+				if iter_1_1 == arg_1_0._actEffectMO then
+					var_1_2 = iter_1_0
+					var_1_1 = true
 				end
 			end
 
-			for slot7 = slot3 + 1, #slot0._fightStepMO.actEffectMOs do
-				if slot0._fightStepMO.actEffectMOs[slot7].effectType == FightEnum.EffectType.TRIGGER and slot8.configEffect == -1 and slot8.effectNum == 4150002 then
-					slot2 = false
+			for iter_1_2 = var_1_2 + 1, #arg_1_0._fightStepMO.actEffectMOs do
+				local var_1_3 = arg_1_0._fightStepMO.actEffectMOs[iter_1_2]
+
+				if var_1_3.effectType == FightEnum.EffectType.TRIGGER and var_1_3.configEffect == -1 and var_1_3.effectNum == 4150002 then
+					var_1_1 = false
 				end
 			end
 		end
 
-		if slot2 then
-			slot0:cancelFightWorkSafeTimer()
-			slot0:com_registTimer(slot0._yuranDelayDone, 0.3)
+		if var_1_1 then
+			arg_1_0:cancelFightWorkSafeTimer()
+			arg_1_0:com_registTimer(arg_1_0._yuranDelayDone, 0.3)
 		else
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		end
 
 		return
 	end
 
-	if lua_trigger_action.configDict[slot1] then
-		if _G["FightWorkTrigger" .. slot2.actionType] then
-			slot0:cancelFightWorkSafeTimer()
+	local var_1_4 = lua_trigger_action.configDict[var_1_0]
 
-			slot0._work = slot3.New(slot0._fightStepMO, slot0._actEffectMO)
+	if var_1_4 then
+		local var_1_5 = _G["FightWorkTrigger" .. var_1_4.actionType]
 
-			slot0._work:registerDoneListener(slot0._onWorkDone, slot0)
-			slot0._work:onStart(slot0.context)
+		if var_1_5 then
+			arg_1_0:cancelFightWorkSafeTimer()
+
+			arg_1_0._work = var_1_5.New(arg_1_0._fightStepMO, arg_1_0._actEffectMO)
+
+			arg_1_0._work:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
+			arg_1_0._work:onStart(arg_1_0.context)
 		else
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		end
 	else
-		logError("触发器行为表找不到id:" .. slot1)
-		slot0:onDone(true)
+		logError("触发器行为表找不到id:" .. var_1_0)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._yuranDelayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._yuranDelayDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onWorkDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onWorkDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._work then
-		slot0._work:unregisterDoneListener(slot0._onWorkDone, slot0)
-		slot0._work:onStop()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._work then
+		arg_4_0._work:unregisterDoneListener(arg_4_0._onWorkDone, arg_4_0)
+		arg_4_0._work:onStop()
 
-		slot0._work = nil
+		arg_4_0._work = nil
 	end
 end
 
-return slot0
+return var_0_0

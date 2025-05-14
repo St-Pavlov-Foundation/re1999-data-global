@@ -1,62 +1,66 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterView", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterView", package.seeall)
 
-slot0 = class("RougeLimiterView", BaseView)
-slot0.DefaultBackgroundImageName = "rouge_dlc1_fullbg1"
-slot1 = {
+local var_0_0 = class("RougeLimiterView", BaseView)
+
+var_0_0.DefaultBackgroundImageName = "rouge_dlc1_fullbg1"
+
+local var_0_1 = {
 	Locked2Unlocked = "light",
 	Unlocked = "idle",
 	Locked = "idlegray"
 }
-slot2 = {
+local var_0_2 = {
 	"idle",
 	"1to2",
 	"2to3",
 	"3to4",
 	Default = "idle",
-	[5.0] = "4to5"
+	[5] = "4to5"
 }
-slot3 = {
+local var_0_3 = {
 	Positive = 1,
 	Reverse = -1
 }
-slot4 = {
-	[slot3.Positive] = 0,
-	[slot3.Reverse] = 1
+local var_0_4 = {
+	[var_0_3.Positive] = 0,
+	[var_0_3.Reverse] = 1
 }
-slot5 = {
-	[slot2[1]] = AudioEnum.UI.LimiterStageChanged_1,
-	[slot2[2]] = AudioEnum.UI.LimiterStageChanged_2,
-	[slot2[3]] = AudioEnum.UI.LimiterStageChanged_3,
-	[slot2[4]] = AudioEnum.UI.LimiterStageChanged_4,
-	[slot2[5]] = AudioEnum.UI.LimiterStageChanged_5
+local var_0_5 = {
+	[var_0_2[1]] = AudioEnum.UI.LimiterStageChanged_1,
+	[var_0_2[2]] = AudioEnum.UI.LimiterStageChanged_2,
+	[var_0_2[3]] = AudioEnum.UI.LimiterStageChanged_3,
+	[var_0_2[4]] = AudioEnum.UI.LimiterStageChanged_4,
+	[var_0_2[5]] = AudioEnum.UI.LimiterStageChanged_5
 }
 
-function slot0.onInitView(slot0)
-	slot0._gobuffdec = gohelper.findChild(slot0.viewGO, "#go_buffdec")
-	slot0._gochoosebuff = gohelper.findChild(slot0.viewGO, "#go_choosebuff")
-	slot0._gosmallbuffitem = gohelper.findChild(slot0.viewGO, "#go_choosebuff/SmallBuffView/Viewport/Content/#go_smallbuffitem")
-	slot0._golimiteritem = gohelper.findChild(slot0.viewGO, "Right/#go_limiteritem")
-	slot0._goRightTop = gohelper.findChild(slot0.viewGO, "#go_RightTop")
-	slot0._txtpoint = gohelper.findChildText(slot0.viewGO, "#go_RightTop/point/#txt_point")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_RightTop/point/#btn_click")
-	slot0._goLeftTop = gohelper.findChild(slot0.viewGO, "#go_LeftTop")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_RightTop/#btn_reset")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobuffdec = gohelper.findChild(arg_1_0.viewGO, "#go_buffdec")
+	arg_1_0._gochoosebuff = gohelper.findChild(arg_1_0.viewGO, "#go_choosebuff")
+	arg_1_0._gosmallbuffitem = gohelper.findChild(arg_1_0.viewGO, "#go_choosebuff/SmallBuffView/Viewport/Content/#go_smallbuffitem")
+	arg_1_0._golimiteritem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_limiteritem")
+	arg_1_0._goRightTop = gohelper.findChild(arg_1_0.viewGO, "#go_RightTop")
+	arg_1_0._txtpoint = gohelper.findChildText(arg_1_0.viewGO, "#go_RightTop/point/#txt_point")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_RightTop/point/#btn_click")
+	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_RightTop/#btn_reset")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreset:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreset:RemoveClickListener()
 end
 
-function slot0._btnresetOnClick(slot0)
-	if not RougeDLCModel101.instance:getSelectLimiterGroupIds() or #slot1 <= 0 then
+function var_0_0._btnresetOnClick(arg_4_0)
+	local var_4_0 = RougeDLCModel101.instance:getSelectLimiterGroupIds()
+
+	if not var_4_0 or #var_4_0 <= 0 then
 		return
 	end
 
@@ -64,149 +68,192 @@ function slot0._btnresetOnClick(slot0)
 	RougeDLCController101.instance:openRougeLimiterView()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnreset.gameObject, AudioEnum.UI.ResetRougeLimiter)
-	slot0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, slot0._onUpdateLimiterGroup, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewCallBack, slot0)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.addUIClickAudio(arg_5_0._btnreset.gameObject, AudioEnum.UI.ResetRougeLimiter)
+	arg_5_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, arg_5_0._onUpdateLimiterGroup, arg_5_0)
+	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_5_0._onCloseViewCallBack, arg_5_0)
 
-	slot0._godifficultybg = gohelper.findChild(slot0.viewGO, "difficulty_bg")
-	slot0._bgAnimator = gohelper.onceAddComponent(slot0._godifficultybg, gohelper.Type_Animator)
+	arg_5_0._godifficultybg = gohelper.findChild(arg_5_0.viewGO, "difficulty_bg")
+	arg_5_0._bgAnimator = gohelper.onceAddComponent(arg_5_0._godifficultybg, gohelper.Type_Animator)
 end
 
-function slot0.onOpen(slot0)
-	slot0:onInit()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:onInit()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onInit()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:onInit()
 end
 
-function slot0.onInit(slot0)
-	slot0:initDebuffs()
-	slot0:initBuffEntry()
-	slot0:refreshBackGroundBg()
+function var_0_0.onInit(arg_8_0)
+	arg_8_0:initDebuffs()
+	arg_8_0:initBuffEntry()
+	arg_8_0:refreshBackGroundBg()
 end
 
-function slot0.initDebuffs(slot0)
-	if RougeDLCConfig101.instance:getAllVersionLimiterGroupCos(RougeModel.instance:getVersion()) then
-		slot0:initBuffIcons(slot2)
-		slot0:initLines(slot2)
+function var_0_0.initDebuffs(arg_9_0)
+	local var_9_0 = RougeModel.instance:getVersion()
+	local var_9_1 = RougeDLCConfig101.instance:getAllVersionLimiterGroupCos(var_9_0)
+
+	if var_9_1 then
+		arg_9_0:initBuffIcons(var_9_1)
+		arg_9_0:initLines(var_9_1)
 	end
 
 	RougeDLCModel101.instance:resetLimiterGroupNewUnlockInfo()
 end
 
-function slot0.initBuffIcons(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:_getOrCreatelimiterGroupItem(slot6.id):onUpdateMO(slot6)
+function var_0_0.initBuffIcons(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+		arg_10_0:_getOrCreatelimiterGroupItem(iter_10_1.id):onUpdateMO(iter_10_1)
 	end
 end
 
-function slot0.refreshBackGroundBg(slot0)
-	if slot0._riskCo == RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(RougeDLCModel101.instance:getTotalRiskValue()) then
+function var_0_0.refreshBackGroundBg(arg_11_0)
+	local var_11_0 = RougeDLCModel101.instance:getTotalRiskValue()
+	local var_11_1 = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(var_11_0)
+
+	if arg_11_0._riskCo == var_11_1 then
 		return
 	end
 
-	slot3, slot4, slot5 = slot0:getTargetBgAnimStateInfo(slot0._riskCo, slot2)
+	local var_11_2, var_11_3, var_11_4 = arg_11_0:getTargetBgAnimStateInfo(arg_11_0._riskCo, var_11_1)
 
-	slot0._bgAnimator:SetFloat("speed", slot4)
-	slot0._bgAnimator:Play(slot3, 0, slot5)
+	arg_11_0._bgAnimator:SetFloat("speed", var_11_3)
+	arg_11_0._bgAnimator:Play(var_11_2, 0, var_11_4)
 
-	if uv0[slot3] then
-		AudioMgr.instance:trigger(slot6)
+	local var_11_5 = var_0_5[var_11_2]
+
+	if var_11_5 then
+		AudioMgr.instance:trigger(var_11_5)
 	end
 
-	slot0._riskCo = slot2
+	arg_11_0._riskCo = var_11_1
 end
 
-function slot0.getTargetBgAnimStateInfo(slot0, slot1, slot2)
-	slot6 = nil
-	slot6 = (not RougeDLCHelper101.isLimiterRisker(slot1, slot2) and RougeDLCHelper101.isNearLimiter(slot1, slot2) or uv1.Positive) and uv1.Reverse
+function var_0_0.getTargetBgAnimStateInfo(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = RougeDLCHelper101.isLimiterRisker(arg_12_1, arg_12_2)
+	local var_12_1 = RougeDLCHelper101.isNearLimiter(arg_12_1, arg_12_2)
+	local var_12_2 = ""
+	local var_12_3
 
-	return "", slot6, uv2[slot6]
+	if var_12_0 or not var_12_1 then
+		local var_12_4 = arg_12_2 and arg_12_2.id or 0
+
+		var_12_2 = var_0_2[var_12_4] or var_0_2.Default
+		var_12_3 = var_0_3.Positive
+	else
+		local var_12_5 = arg_12_1 and arg_12_1.id or 0
+
+		var_12_2 = var_0_2[var_12_5] or var_0_2.Default
+		var_12_3 = var_0_3.Reverse
+	end
+
+	local var_12_6 = var_0_4[var_12_3]
+
+	return var_12_2, var_12_3, var_12_6
 end
 
-function slot0._getOrCreatelimiterGroupItem(slot0, slot1)
-	slot0._limiterGroupItemTab = slot0._limiterGroupItemTab or slot0:getUserDataTb_()
+function var_0_0._getOrCreatelimiterGroupItem(arg_13_0, arg_13_1)
+	arg_13_0._limiterGroupItemTab = arg_13_0._limiterGroupItemTab or arg_13_0:getUserDataTb_()
 
-	if not slot0._limiterGroupItemTab[slot1] then
-		if gohelper.isNil(gohelper.findChild(slot0.viewGO, "Left/BuffView/Viewport/Content/" .. slot1)) then
-			slot4 = gohelper.create2d(gohelper.findChild(slot0.viewGO, "Left/BuffView/Viewport/Content"), slot1)
+	local var_13_0 = arg_13_0._limiterGroupItemTab[arg_13_1]
 
-			logError("无法找到指定的限制器组挂点,已创建临时节点代替。挂点路径:" .. slot3)
+	if not var_13_0 then
+		local var_13_1 = "Left/BuffView/Viewport/Content/" .. arg_13_1
+		local var_13_2 = gohelper.findChild(arg_13_0.viewGO, var_13_1)
+
+		if gohelper.isNil(var_13_2) then
+			local var_13_3 = gohelper.findChild(arg_13_0.viewGO, "Left/BuffView/Viewport/Content")
+
+			var_13_2 = gohelper.create2d(var_13_3, arg_13_1)
+
+			logError("无法找到指定的限制器组挂点,已创建临时节点代替。挂点路径:" .. var_13_1)
 		end
 
-		slot0._limiterGroupItemTab[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes.LimiterGroupItem, slot4, "debuffitem_" .. slot1), RougeLimiterGroupItem)
+		local var_13_4 = arg_13_0.viewContainer:getSetting().otherRes.LimiterGroupItem
+		local var_13_5 = arg_13_0:getResInst(var_13_4, var_13_2, "debuffitem_" .. arg_13_1)
+
+		var_13_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_5, RougeLimiterGroupItem)
+		arg_13_0._limiterGroupItemTab[arg_13_1] = var_13_0
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.initLines(slot0, slot1)
-	if not slot1 then
+function var_0_0.initLines(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	slot0:initUnlockMap(slot1)
+	arg_14_0:initUnlockMap(arg_14_1)
 
-	for slot5, slot6 in pairs(slot0._unlockMap) do
-		for slot10, slot11 in pairs(slot6) do
-			if not gohelper.isNil(gohelper.findChild(slot0.viewGO, string.format("Left/BuffView/Viewport/Content/%s_%s", slot5, slot10))) then
-				gohelper.setActive(slot14, true)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._unlockMap) do
+		for iter_14_2, iter_14_3 in pairs(iter_14_1) do
+			local var_14_0 = RougeDLCModel101.instance:getCurLimiterGroupState(iter_14_2) == RougeDLCEnum101.LimitState.Unlocked
+			local var_14_1 = gohelper.findChild(arg_14_0.viewGO, string.format("Left/BuffView/Viewport/Content/%s_%s", iter_14_0, iter_14_2))
 
-				slot15 = uv0.Locked
+			if not gohelper.isNil(var_14_1) then
+				gohelper.setActive(var_14_1, true)
 
-				if RougeDLCModel101.instance:getCurLimiterGroupState(slot10) == RougeDLCEnum101.LimitState.Unlocked then
-					slot15 = RougeDLCModel101.instance:isLimiterGroupNewUnlocked(slot10) and uv0.Locked2Unlocked or uv0.Unlocked
+				local var_14_2 = var_0_1.Locked
+
+				if var_14_0 then
+					var_14_2 = RougeDLCModel101.instance:isLimiterGroupNewUnlocked(iter_14_2) and var_0_1.Locked2Unlocked or var_0_1.Unlocked
 				end
 
-				gohelper.onceAddComponent(slot14, gohelper.Type_Animator):Play(slot15, 0, 0)
+				gohelper.onceAddComponent(var_14_1, gohelper.Type_Animator):Play(var_14_2, 0, 0)
 			else
-				logError(string.format("缺少限制器连接线:%s ---> %s", slot5, slot10))
+				logError(string.format("缺少限制器连接线:%s ---> %s", iter_14_0, iter_14_2))
 			end
 		end
 	end
 end
 
-function slot0.initUnlockMap(slot0, slot1)
-	slot0._unlockMap = {}
+function var_0_0.initUnlockMap(arg_15_0, arg_15_1)
+	arg_15_0._unlockMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot8, slot9 = string.match(slot6.unlockCondition, "^(.*):(.+)$")
+	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
+		local var_15_0 = iter_15_1.unlockCondition
+		local var_15_1, var_15_2 = string.match(var_15_0, "^(.*):(.+)$")
+		local var_15_3 = string.splitToNumber(var_15_2, "#")
 
-		if string.splitToNumber(slot9, "#") then
-			for slot13, slot14 in ipairs(slot9) do
-				slot0._unlockMap[slot14] = slot0._unlockMap[slot14] or {}
-				slot0._unlockMap[slot14][slot6.id] = true
+		if var_15_3 then
+			for iter_15_2, iter_15_3 in ipairs(var_15_3) do
+				arg_15_0._unlockMap[iter_15_3] = arg_15_0._unlockMap[iter_15_3] or {}
+				arg_15_0._unlockMap[iter_15_3][iter_15_1.id] = true
 			end
 		end
 	end
 end
 
-function slot0.initBuffEntry(slot0)
-	if not slot0._buffEntry then
-		slot0._gobufficon = slot0:getResInst(slot0.viewContainer:getSetting().otherRes.LimiterItem, slot0._golimiteritem, "#go_bufficon")
-		slot0._buffEntry = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gobufficon, RougeLimiterBuffEntry)
+function var_0_0.initBuffEntry(arg_16_0)
+	if not arg_16_0._buffEntry then
+		local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes.LimiterItem
+
+		arg_16_0._gobufficon = arg_16_0:getResInst(var_16_0, arg_16_0._golimiteritem, "#go_bufficon")
+		arg_16_0._buffEntry = MonoHelper.addNoUpdateLuaComOnceToGo(arg_16_0._gobufficon, RougeLimiterBuffEntry)
 	end
 
-	slot0._buffEntry:refreshUI(true)
+	arg_16_0._buffEntry:refreshUI(true)
 end
 
-function slot0._onUpdateLimiterGroup(slot0)
-	slot0:refreshBackGroundBg()
+function var_0_0._onUpdateLimiterGroup(arg_17_0)
+	arg_17_0:refreshBackGroundBg()
 end
 
-function slot0._onCloseViewCallBack(slot0, slot1)
-	if slot0._buffEntry then
-		slot0._buffEntry:selectBuffEntry()
+function var_0_0._onCloseViewCallBack(arg_18_0, arg_18_1)
+	if arg_18_0._buffEntry then
+		arg_18_0._buffEntry:selectBuffEntry()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
 	RougeDLCController101.instance:try2SaveLimiterSetting()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

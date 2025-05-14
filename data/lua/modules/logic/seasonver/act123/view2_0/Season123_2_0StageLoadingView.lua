@@ -1,48 +1,55 @@
-module("modules.logic.seasonver.act123.view2_0.Season123_2_0StageLoadingView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0StageLoadingView", package.seeall)
 
-slot0 = class("Season123_2_0StageLoadingView", BaseView)
+local var_0_0 = class("Season123_2_0StageLoadingView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.handleDelayAnimTransition, slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.handleDelayAnimTransition, arg_5_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.handleOpenView, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0.handleOpenView, arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_leimi_map_upgrade)
-	logNormal(string.format("Season123_2_0StageLoadingView actId=%s, stage=%s", slot0.viewParam.actId, slot0.viewParam.stage))
-	TaskDispatcher.runDelay(slot0.handleDelayAnimTransition, slot0, 2.5)
+
+	local var_6_0 = arg_6_0.viewParam.actId
+	local var_6_1 = arg_6_0.viewParam.stage
+
+	logNormal(string.format("Season123_2_0StageLoadingView actId=%s, stage=%s", var_6_0, var_6_1))
+	TaskDispatcher.runDelay(arg_6_0.handleDelayAnimTransition, arg_6_0, 2.5)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
 	Season123Controller.instance:dispatchEvent(Season123Event.EnterEpiosdeList, true)
 end
 
-function slot0.handleDelayAnimTransition(slot0)
+function var_0_0.handleDelayAnimTransition(arg_8_0)
 	ViewMgr.instance:openView(Season123Controller.instance:getEpisodeListViewName(), {
-		actId = slot0.viewParam.actId,
-		stage = slot0.viewParam.stage
+		actId = arg_8_0.viewParam.actId,
+		stage = arg_8_0.viewParam.stage
 	})
 end
 
-function slot0.handleOpenView(slot0, slot1)
-	if slot1 == Season123Controller.instance:getEpisodeListViewName() then
-		slot0:closeThis()
+function var_0_0.handleOpenView(arg_9_0, arg_9_1)
+	if arg_9_1 == Season123Controller.instance:getEpisodeListViewName() then
+		arg_9_0:closeThis()
 	end
 end
 
-return slot0
+return var_0_0

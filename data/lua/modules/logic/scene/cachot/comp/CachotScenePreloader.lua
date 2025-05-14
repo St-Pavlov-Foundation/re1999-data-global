@@ -1,66 +1,72 @@
-module("modules.logic.scene.cachot.comp.CachotScenePreloader", package.seeall)
+﻿module("modules.logic.scene.cachot.comp.CachotScenePreloader", package.seeall)
 
-slot0 = class("CachotScenePreloader", BaseSceneComp)
-slot0.DoorEffectPath = "effects/prefabs_cachot/v1a6_dilao_men.prefab"
-slot0.LightPath = "scenes/v1a6_m_s16_dilao_zjm/v1a6_m_s16_scene_light.prefab"
-slot0.EventItem = "ui/viewres/versionactivity_1_6/v1a6_cachot/v1a6_cachot_roomeventitem.prefab"
-slot0.RoleTransEffect = "effects/prefabs_cachot/v1a6_dilao_chuansong.prefab"
-slot0.RoleBornEffect = "effects/prefabs_cachot/v1a6_fangjianchusheng.prefab"
+local var_0_0 = class("CachotScenePreloader", BaseSceneComp)
 
-function slot0.init(slot0, slot1, slot2)
-	if not slot0._abLoader then
-		slot0._abLoader = MultiAbLoader.New()
+var_0_0.DoorEffectPath = "effects/prefabs_cachot/v1a6_dilao_men.prefab"
+var_0_0.LightPath = "scenes/v1a6_m_s16_dilao_zjm/v1a6_m_s16_scene_light.prefab"
+var_0_0.EventItem = "ui/viewres/versionactivity_1_6/v1a6_cachot/v1a6_cachot_roomeventitem.prefab"
+var_0_0.RoleTransEffect = "effects/prefabs_cachot/v1a6_dilao_chuansong.prefab"
+var_0_0.RoleBornEffect = "effects/prefabs_cachot/v1a6_fangjianchusheng.prefab"
 
-		slot0:_addLightAsset(slot0._abLoader)
-		slot0:_addMainSceneEffect(slot0._abLoader)
-		slot0:_addRoomSceneAsset(slot0._abLoader)
-		slot0._abLoader:startLoad(slot0._onLoadedFinish, slot0)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	if not arg_1_0._abLoader then
+		arg_1_0._abLoader = MultiAbLoader.New()
+
+		arg_1_0:_addLightAsset(arg_1_0._abLoader)
+		arg_1_0:_addMainSceneEffect(arg_1_0._abLoader)
+		arg_1_0:_addRoomSceneAsset(arg_1_0._abLoader)
+		arg_1_0._abLoader:startLoad(arg_1_0._onLoadedFinish, arg_1_0)
 	end
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0._addMainSceneEffect(slot0, slot1)
-	slot1:addPath(uv0.DoorEffectPath)
-	slot1:addPath(uv0.RoleTransEffect)
-	slot1:addPath(uv0.RoleBornEffect)
+function var_0_0._addMainSceneEffect(arg_3_0, arg_3_1)
+	arg_3_1:addPath(var_0_0.DoorEffectPath)
+	arg_3_1:addPath(var_0_0.RoleTransEffect)
+	arg_3_1:addPath(var_0_0.RoleBornEffect)
 end
 
-function slot0._addRoomSceneAsset(slot0, slot1)
-	slot1:addPath(uv0.EventItem)
+function var_0_0._addRoomSceneAsset(arg_4_0, arg_4_1)
+	arg_4_1:addPath(var_0_0.EventItem)
 end
 
-function slot0._addLightAsset(slot0, slot1)
-	slot1:addPath(uv0.LightPath)
+function var_0_0._addLightAsset(arg_5_0, arg_5_1)
+	arg_5_1:addPath(var_0_0.LightPath)
 end
 
-function slot0._onLoadedFinish(slot0)
-	slot0:dispatchEvent(V1a6_CachotEvent.ScenePreloaded)
+function var_0_0._onLoadedFinish(arg_6_0)
+	arg_6_0:dispatchEvent(V1a6_CachotEvent.ScenePreloaded)
 end
 
-function slot0.getResByPath(slot0, slot1)
-	if not slot0._abLoader:getAssetItem(slot1) or not slot2.IsLoadSuccess then
-		logError("资源加载失败 。。。 " .. slot1)
+function var_0_0.getResByPath(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._abLoader:getAssetItem(arg_7_1)
+
+	if not var_7_0 or not var_7_0.IsLoadSuccess then
+		logError("资源加载失败 。。。 " .. arg_7_1)
 
 		return
 	end
 
-	return slot2:GetResource()
+	return var_7_0:GetResource()
 end
 
-function slot0.getResInst(slot0, slot1, slot2, slot3)
-	if slot0:getResByPath(slot1) then
-		return gohelper.clone(slot4, slot2, slot3)
+function var_0_0.getResInst(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_0:getResByPath(arg_8_1)
+
+	if var_8_0 then
+		return gohelper.clone(var_8_0, arg_8_2, arg_8_3)
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	if slot0._abLoader then
-		slot0._abLoader:dispose()
+function var_0_0.onSceneClose(arg_9_0)
+	if arg_9_0._abLoader then
+		arg_9_0._abLoader:dispose()
 
-		slot0._abLoader = nil
+		arg_9_0._abLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

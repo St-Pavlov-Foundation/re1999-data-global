@@ -1,63 +1,78 @@
-module("modules.logic.dungeon.model.DungeonAssistModel", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonAssistModel", package.seeall)
 
-slot0 = class("DungeonAssistModel", BaseModel)
+local var_0_0 = class("DungeonAssistModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getAssistList(slot0, slot1, slot2)
-	if not slot1 or not slot0._assistTypeDict then
-		return {}
+function var_0_0.getAssistList(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = {}
+
+	if not arg_3_1 or not arg_3_0._assistTypeDict then
+		return var_3_0
 	end
 
-	if slot2 then
-		slot3 = (slot0._assistTypeDict[slot1] or {})[slot2] or {}
+	local var_3_1 = arg_3_0._assistTypeDict[arg_3_1] or {}
+
+	if arg_3_2 then
+		var_3_0 = var_3_1[arg_3_2] or {}
 	else
-		for slot8, slot9 in pairs(slot4) do
-			tabletool.addValues(slot3, slot9)
+		for iter_3_0, iter_3_1 in pairs(var_3_1) do
+			tabletool.addValues(var_3_0, iter_3_1)
 		end
 	end
 
-	return slot3
+	return var_3_0
 end
 
-function slot0.setAssistHeroCareersByServerData(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.setAssistHeroCareersByServerData(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_1 or not arg_4_2 then
 		return
 	end
 
-	if not slot0._assistTypeDict then
-		slot0._assistTypeDict = {}
+	if not arg_4_0._assistTypeDict then
+		arg_4_0._assistTypeDict = {}
 	end
 
-	slot0._assistTypeDict[slot1] = {}
+	local var_4_0 = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot3[slot8.career] = {}
-		slot11 = {}
+	arg_4_0._assistTypeDict[arg_4_1] = var_4_0
 
-		for slot15, slot16 in ipairs(slot8.assistHeroInfos) do
-			if not slot11[slot16.heroUid] then
-				if DungeonAssistHeroMO.New():init(slot1, slot16) then
-					slot10[#slot10 + 1] = slot18
+	for iter_4_0, iter_4_1 in ipairs(arg_4_2) do
+		local var_4_1 = iter_4_1.career
+		local var_4_2 = {}
+
+		var_4_0[var_4_1] = var_4_2
+
+		local var_4_3 = {}
+
+		for iter_4_2, iter_4_3 in ipairs(iter_4_1.assistHeroInfos) do
+			local var_4_4 = iter_4_3.heroUid
+
+			if not var_4_3[var_4_4] then
+				local var_4_5 = DungeonAssistHeroMO.New()
+
+				if var_4_5:init(arg_4_1, iter_4_3) then
+					var_4_2[#var_4_2 + 1] = var_4_5
 				end
 
-				slot11[slot17] = true
+				var_4_3[var_4_4] = true
 			end
 		end
 	end
 end
 
-function slot0.clear(slot0)
-	slot0._assistTypeDict = {}
+function var_0_0.clear(arg_5_0)
+	arg_5_0._assistTypeDict = {}
 
-	uv0.super.clear(slot0)
+	var_0_0.super.clear(arg_5_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

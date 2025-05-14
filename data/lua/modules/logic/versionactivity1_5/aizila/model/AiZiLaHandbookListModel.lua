@@ -1,32 +1,38 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaHandbookListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaHandbookListModel", package.seeall)
 
-slot0 = class("AiZiLaHandbookListModel", ListScrollModel)
+local var_0_0 = class("AiZiLaHandbookListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	slot1 = {}
+function var_0_0.init(arg_1_0)
+	local var_1_0 = {}
 
-	tabletool.addValues(slot1, AiZiLaModel.instance:getHandbookMOList())
-	table.sort(slot1, uv0.sortFunc)
-	slot0:setList(slot1)
+	tabletool.addValues(var_1_0, AiZiLaModel.instance:getHandbookMOList())
+	table.sort(var_1_0, var_0_0.sortFunc)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	if uv0.getSortIdx(slot0) ~= uv0.getSortIdx(slot1) then
-		return slot2 < slot3
+function var_0_0.sortFunc(arg_2_0, arg_2_1)
+	local var_2_0 = var_0_0.getSortIdx(arg_2_0)
+	local var_2_1 = var_0_0.getSortIdx(arg_2_1)
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_0 < var_2_1
 	end
 
-	if slot0:getConfig().rare ~= slot1:getConfig().rare then
-		return slot5.rare < slot4.rare
+	local var_2_2 = arg_2_0:getConfig()
+	local var_2_3 = arg_2_1:getConfig()
+
+	if var_2_2.rare ~= var_2_3.rare then
+		return var_2_2.rare > var_2_3.rare
 	end
 
-	if slot0.itemId ~= slot1.itemId then
-		return slot0.itemId < slot1.itemId
+	if arg_2_0.itemId ~= arg_2_1.itemId then
+		return arg_2_0.itemId < arg_2_1.itemId
 	end
 end
 
-function slot0.getSortIdx(slot0)
-	if AiZiLaModel.instance:isCollectItemId(slot0.itemId) then
-		if slot0:getQuantity() > 0 then
+function var_0_0.getSortIdx(arg_3_0)
+	if AiZiLaModel.instance:isCollectItemId(arg_3_0.itemId) then
+		if arg_3_0:getQuantity() > 0 then
 			return 1
 		end
 
@@ -36,26 +42,28 @@ function slot0.getSortIdx(slot0)
 	return 100
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectItemId))
+function var_0_0._refreshSelect(arg_4_0)
+	local var_4_0 = arg_4_0:getById(arg_4_0._selectItemId)
+
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
+		iter_4_1:setSelect(var_4_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectItemId = slot1
+function var_0_0.setSelect(arg_5_0, arg_5_1)
+	arg_5_0._selectItemId = arg_5_1
 
-	slot0:_refreshSelect()
+	arg_5_0:_refreshSelect()
 end
 
-function slot0.getSelect(slot0)
-	return slot0._selectItemId
+function var_0_0.getSelect(arg_6_0)
+	return arg_6_0._selectItemId
 end
 
-function slot0.getSelectMO(slot0)
-	return slot0:getById(slot0._selectItemId)
+function var_0_0.getSelectMO(arg_7_0)
+	return arg_7_0:getById(arg_7_0._selectItemId)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

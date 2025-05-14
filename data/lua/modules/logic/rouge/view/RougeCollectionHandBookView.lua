@@ -1,205 +1,245 @@
-module("modules.logic.rouge.view.RougeCollectionHandBookView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionHandBookView", package.seeall)
 
-slot0 = class("RougeCollectionHandBookView", BaseView)
+local var_0_0 = class("RougeCollectionHandBookView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_fullbg")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_filter")
-	slot0._scrollcollection = gohelper.findChildScrollRect(slot0.viewGO, "Left/#scroll_collection")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "Left/#scroll_collection/Viewport/Content/item/smalltitle/txt_Title/#txt_TitleEn")
-	slot0._gocollectionitem = gohelper.findChild(slot0.viewGO, "Left/#scroll_collection/Viewport/Content/#go_collectionitem")
-	slot0._imagebg = gohelper.findChildImage(slot0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#image_bg")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#txt_num")
-	slot0._simagecollection = gohelper.findChildSingleImage(slot0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#simage_collection")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "Right/top/#simage_icon")
-	slot0._txtcollectionname = gohelper.findChildText(slot0.viewGO, "Right/top/#txt_collectionname")
-	slot0._gobasetags = gohelper.findChild(slot0.viewGO, "Right/top/tags/#go_basetags")
-	slot0._gobasetagitem = gohelper.findChild(slot0.viewGO, "Right/top/tags/#go_basetags/#go_basetagitem")
-	slot0._goextratags = gohelper.findChild(slot0.viewGO, "Right/top/tags/#go_extratags")
-	slot0._goextratagitem = gohelper.findChild(slot0.viewGO, "Right/top/tags/#go_extratags/#go_extratagitem")
-	slot0._goshapecell = gohelper.findChild(slot0.viewGO, "Right/top/layout/shape/#go_shapecell")
-	slot0._scrollcollectiondesc = gohelper.findChildScrollRect(slot0.viewGO, "Right/top/#scroll_collectiondesc")
-	slot0._godescContent = gohelper.findChild(slot0.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent")
-	slot0._godescitem = gohelper.findChild(slot0.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
-	slot0._btnhandbook = gohelper.findChildButtonWithAudio(slot0.viewGO, "Bottom/#btn_handbook")
-	slot0._goholecontainer = gohelper.findChild(slot0.viewGO, "Right/top/layout/#go_holecontainer")
-	slot0._goholeitem = gohelper.findChild(slot0.viewGO, "Right/top/layout/#go_holecontainer/#go_holeitem")
-	slot0._gocompositelayout = gohelper.findChild(slot0.viewGO, "Right/top/need/#go_compositelayout")
-	slot0._gocompositeitem = gohelper.findChild(slot0.viewGO, "Right/top/need/#go_compositelayout/#go_compositeitem")
-	slot0._gocancomposite = gohelper.findChild(slot0.viewGO, "Right/top/layout/#go_cancomposite")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
+	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_filter")
+	arg_1_0._scrollcollection = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_collection")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/smalltitle/txt_Title/#txt_TitleEn")
+	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/#go_collectionitem")
+	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#image_bg")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#txt_num")
+	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#simage_collection")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/top/#simage_icon")
+	arg_1_0._txtcollectionname = gohelper.findChildText(arg_1_0.viewGO, "Right/top/#txt_collectionname")
+	arg_1_0._gobasetags = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_basetags")
+	arg_1_0._gobasetagitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_basetags/#go_basetagitem")
+	arg_1_0._goextratags = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_extratags")
+	arg_1_0._goextratagitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_extratags/#go_extratagitem")
+	arg_1_0._goshapecell = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/shape/#go_shapecell")
+	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/top/#scroll_collectiondesc")
+	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent")
+	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
+	arg_1_0._btnhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Bottom/#btn_handbook")
+	arg_1_0._goholecontainer = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/#go_holecontainer")
+	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/#go_holecontainer/#go_holeitem")
+	arg_1_0._gocompositelayout = gohelper.findChild(arg_1_0.viewGO, "Right/top/need/#go_compositelayout")
+	arg_1_0._gocompositeitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/need/#go_compositelayout/#go_compositeitem")
+	arg_1_0._gocancomposite = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/#go_cancomposite")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfilter:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfilter:RemoveClickListener()
 end
 
-function slot0._btnfilterOnClick(slot0)
-	RougeController.instance:openRougeCollectionFilterView({
-		confirmCallback = slot0.onConfirmTagFilterCallback,
-		confirmCallbackObj = slot0,
-		baseSelectMap = slot0._baseTagSelectMap,
-		extraSelectMap = slot0._extraTagSelectMap
-	})
+function var_0_0._btnfilterOnClick(arg_4_0)
+	local var_4_0 = {
+		confirmCallback = arg_4_0.onConfirmTagFilterCallback,
+		confirmCallbackObj = arg_4_0,
+		baseSelectMap = arg_4_0._baseTagSelectMap,
+		extraSelectMap = arg_4_0._extraTagSelectMap
+	}
+
+	RougeController.instance:openRougeCollectionFilterView(var_4_0)
 end
 
-function slot0.onConfirmTagFilterCallback(slot0, slot1, slot2)
-	slot0:filterCompositeList(slot1, slot2)
-	slot0:refreshFilterButtonUI()
+function var_0_0.onConfirmTagFilterCallback(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0:filterCompositeList(arg_5_1, arg_5_2)
+	arg_5_0:refreshFilterButtonUI()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnSelectCollectionHandBookItem, slot0._onSelectHandBookItem, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:addEventCb(RougeController.instance, RougeEvent.OnSelectCollectionHandBookItem, arg_6_0._onSelectHandBookItem, arg_6_0)
+	arg_6_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_6_0._onSwitchCollectionInfoType, arg_6_0)
 
-	slot0._compositeItemTab = slot0:getUserDataTb_()
-	slot0._collectionCellTab = slot0:getUserDataTb_()
-	slot0._itemInstTab = slot0:getUserDataTb_()
-	slot0._baseTagSelectMap = {}
-	slot0._extraTagSelectMap = {}
-	slot0._goshapecontainer = gohelper.findChild(slot0.viewGO, "Right/top/layout/shape")
-	slot0._aniamtor = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
-	slot0._goright = gohelper.findChild(slot0.viewGO, "Right")
-	slot0._rightAnimator = gohelper.onceAddComponent(slot0._goright, gohelper.Type_Animator)
+	arg_6_0._compositeItemTab = arg_6_0:getUserDataTb_()
+	arg_6_0._collectionCellTab = arg_6_0:getUserDataTb_()
+	arg_6_0._itemInstTab = arg_6_0:getUserDataTb_()
+	arg_6_0._baseTagSelectMap = {}
+	arg_6_0._extraTagSelectMap = {}
+	arg_6_0._goshapecontainer = gohelper.findChild(arg_6_0.viewGO, "Right/top/layout/shape")
+	arg_6_0._aniamtor = gohelper.onceAddComponent(arg_6_0.viewGO, gohelper.Type_Animator)
+	arg_6_0._goright = gohelper.findChild(arg_6_0.viewGO, "Right")
+	arg_6_0._rightAnimator = gohelper.onceAddComponent(arg_6_0._goright, gohelper.Type_Animator)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	RougeCollectionHandBookListModel.instance:onInit()
-	slot0:refreshSelectCollectionInfo()
-	slot0._aniamtor:Play("open", 0, 0)
+	arg_7_0:refreshSelectCollectionInfo()
+	arg_7_0._aniamtor:Play("open", 0, 0)
 end
 
-function slot0.refreshSelectCollectionInfo(slot0)
-	gohelper.setActive(slot0._goright, RougeCollectionHandBookListModel.instance:getById(RougeCollectionHandBookListModel.instance:getCurSelectCellId()) ~= nil)
-	gohelper.setActive(slot0._goempty, slot2 == nil)
+function var_0_0.refreshSelectCollectionInfo(arg_8_0)
+	local var_8_0 = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
+	local var_8_1 = RougeCollectionHandBookListModel.instance:getById(var_8_0)
 
-	if not slot2 then
+	gohelper.setActive(arg_8_0._goright, var_8_1 ~= nil)
+	gohelper.setActive(arg_8_0._goempty, var_8_1 == nil)
+
+	if not var_8_1 then
 		return
 	end
 
-	if not RougeCollectionConfig.instance:getCollectionCfg(slot2.product) then
+	local var_8_2 = var_8_1.product
+	local var_8_3 = RougeCollectionConfig.instance:getCollectionCfg(var_8_2)
+
+	if not var_8_3 then
 		return
 	end
 
-	slot0._productId = slot3
+	arg_8_0._productId = var_8_2
 
-	slot0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot3))
+	arg_8_0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_8_2))
 
-	slot0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(slot3)
+	arg_8_0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(var_8_2)
 
-	slot0:refrehsCollectionDesc()
-	gohelper.CreateObjList(slot0, slot0.refreshCollectionTagIcon, slot4.tags, slot0._gobasetags, slot0._gobasetagitem)
-	gohelper.CreateNumObjList(slot0._goholecontainer, slot0._goholeitem, slot4.holeNum)
-	gohelper.setActive(slot0._goholecontainer, slot4.holeNum > 0)
-	gohelper.CreateObjList(slot0, slot0.refreshCompositeItem, RougeCollectionConfig.instance:getCollectionCompositeIds(slot1) or {}, slot0._gocompositelayout, slot0._gocompositeitem)
-	RougeCollectionHelper.loadShapeGrid(slot3, slot0._goshapecontainer, slot0._goshapecell, slot0._collectionCellTab, false)
-	gohelper.setActive(slot0._gocancomposite, RougeCollectionModel.instance:checkIsCanCompositeCollection(slot1))
+	arg_8_0:refrehsCollectionDesc()
+	gohelper.CreateObjList(arg_8_0, arg_8_0.refreshCollectionTagIcon, var_8_3.tags, arg_8_0._gobasetags, arg_8_0._gobasetagitem)
+	gohelper.CreateNumObjList(arg_8_0._goholecontainer, arg_8_0._goholeitem, var_8_3.holeNum)
+	gohelper.setActive(arg_8_0._goholecontainer, var_8_3.holeNum > 0)
+
+	local var_8_4 = RougeCollectionConfig.instance:getCollectionCompositeIds(var_8_0) or {}
+
+	gohelper.CreateObjList(arg_8_0, arg_8_0.refreshCompositeItem, var_8_4, arg_8_0._gocompositelayout, arg_8_0._gocompositeitem)
+	RougeCollectionHelper.loadShapeGrid(var_8_2, arg_8_0._goshapecontainer, arg_8_0._goshapecell, arg_8_0._collectionCellTab, false)
+
+	local var_8_5 = RougeCollectionModel.instance:checkIsCanCompositeCollection(var_8_0)
+
+	gohelper.setActive(arg_8_0._gocancomposite, var_8_5)
 end
 
-function slot0.refrehsCollectionDesc(slot0)
-	RougeCollectionDescHelper.setCollectionDescInfos2(slot0._productId, nil, slot0._godescContent, slot0._itemInstTab)
+function var_0_0.refrehsCollectionDesc(arg_9_0)
+	RougeCollectionDescHelper.setCollectionDescInfos2(arg_9_0._productId, nil, arg_9_0._godescContent, arg_9_0._itemInstTab)
 end
 
-function slot0.refreshCollectionTagIcon(slot0, slot1, slot2, slot3)
-	UISpriteSetMgr.instance:setRougeSprite(gohelper.findChildImage(slot1, "image_tagicon"), lua_rouge_tag.configDict[slot2].iconUrl)
-	UISpriteSetMgr.instance:setRougeSprite(gohelper.findChildImage(slot1, "image_tagframe"), "rouge_collection_tagframe_1")
+function var_0_0.refreshCollectionTagIcon(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = gohelper.findChildImage(arg_10_1, "image_tagicon")
+	local var_10_1 = gohelper.findChildImage(arg_10_1, "image_tagframe")
+	local var_10_2 = lua_rouge_tag.configDict[arg_10_2]
+
+	UISpriteSetMgr.instance:setRougeSprite(var_10_0, var_10_2.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(var_10_1, "rouge_collection_tagframe_1")
 end
 
-function slot0.refreshCompositeItem(slot0, slot1, slot2, slot3)
-	if not RougeCollectionConfig.instance:getCollectionCfg(slot2) then
+function var_0_0.refreshCompositeItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_11_2)
+
+	if not var_11_0 then
 		return
 	end
 
-	gohelper.findChildSingleImage(slot1, "normal/#simage_collection"):LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot2))
+	local var_11_1 = gohelper.findChildSingleImage(arg_11_1, "normal/#simage_collection")
 
-	gohelper.findChildText(slot1, "normal/#txt_num").text = tostring(RougeEnum.CompositeCollectionCostCount)
+	var_11_1:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_11_2))
 
-	UISpriteSetMgr.instance:setRougeSprite(gohelper.findChildImage(slot1, "normal/#image_bg"), "rouge_episode_collectionbg_" .. tostring(slot4.showRare))
+	gohelper.findChildText(arg_11_1, "normal/#txt_num").text = tostring(RougeEnum.CompositeCollectionCostCount)
 
-	slot0._compositeItemTab[slot3] = slot0._compositeItemTab[slot3] or slot0:getUserDataTb_()
-	slot0._compositeItemTab[slot3].icon = slot5
-	slot8 = gohelper.findChildButtonWithAudio(slot1, "normal/#btn_click")
+	local var_11_2 = gohelper.findChildImage(arg_11_1, "normal/#image_bg")
 
-	slot8:RemoveClickListener()
-	slot8:AddClickListener(slot0.clickCompositeItemCallBack, slot0, slot2)
+	UISpriteSetMgr.instance:setRougeSprite(var_11_2, "rouge_episode_collectionbg_" .. tostring(var_11_0.showRare))
 
-	slot0._compositeItemTab[slot3].btnClick = slot8
+	arg_11_0._compositeItemTab[arg_11_3] = arg_11_0._compositeItemTab[arg_11_3] or arg_11_0:getUserDataTb_()
+	arg_11_0._compositeItemTab[arg_11_3].icon = var_11_1
+
+	local var_11_3 = gohelper.findChildButtonWithAudio(arg_11_1, "normal/#btn_click")
+
+	var_11_3:RemoveClickListener()
+	var_11_3:AddClickListener(arg_11_0.clickCompositeItemCallBack, arg_11_0, arg_11_2)
+
+	arg_11_0._compositeItemTab[arg_11_3].btnClick = var_11_3
 end
 
-function slot0.clickCompositeItemCallBack(slot0, slot1)
-	RougeController.instance:openRougeCollectionTipView({
-		collectionCfgId = slot1,
+function var_0_0.clickCompositeItemCallBack(arg_12_0, arg_12_1)
+	local var_12_0 = {
+		collectionCfgId = arg_12_1,
 		viewPosition = RougeEnum.CollectionTipPos.HandBook
-	})
+	}
+
+	RougeController.instance:openRougeCollectionTipView(var_12_0)
 end
 
-function slot0.releaseCompositeIconSingleImages(slot0)
-	if slot0._compositeItemTab then
-		for slot4, slot5 in pairs(slot0._compositeItemTab) do
-			if slot5 and slot5.icon then
-				slot5.icon:UnLoadImage()
+function var_0_0.releaseCompositeIconSingleImages(arg_13_0)
+	if arg_13_0._compositeItemTab then
+		for iter_13_0, iter_13_1 in pairs(arg_13_0._compositeItemTab) do
+			if iter_13_1 and iter_13_1.icon then
+				iter_13_1.icon:UnLoadImage()
 			end
 
-			if slot5 and slot5.btnClick then
-				slot5.btnClick:RemoveClickListener()
+			if iter_13_1 and iter_13_1.btnClick then
+				iter_13_1.btnClick:RemoveClickListener()
 			end
 		end
 	end
 end
 
-function slot0._onSelectHandBookItem(slot0, slot1)
-	if slot1 == RougeCollectionHandBookListModel.instance:getCurSelectCellId() then
+function var_0_0._onSelectHandBookItem(arg_14_0, arg_14_1)
+	if arg_14_1 == RougeCollectionHandBookListModel.instance:getCurSelectCellId() then
 		return
 	end
 
-	RougeCollectionHandBookListModel.instance:selectCell(RougeCollectionHandBookListModel.instance:getIndex(RougeCollectionHandBookListModel.instance:getById(slot1)), true)
-	slot0:delay2SwitchHandBookItem(uv0.DelayTime2SwitchCollection)
-	slot0._rightAnimator:Play("switch", 0, 0)
+	local var_14_0 = RougeCollectionHandBookListModel.instance:getById(arg_14_1)
+	local var_14_1 = RougeCollectionHandBookListModel.instance:getIndex(var_14_0)
+
+	RougeCollectionHandBookListModel.instance:selectCell(var_14_1, true)
+	arg_14_0:delay2SwitchHandBookItem(var_0_0.DelayTime2SwitchCollection)
+	arg_14_0._rightAnimator:Play("switch", 0, 0)
 end
 
-slot0.DelayTime2SwitchCollection = 0.3
+var_0_0.DelayTime2SwitchCollection = 0.3
 
-function slot0.delay2SwitchHandBookItem(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0.refreshSelectCollectionInfo, slot0)
-	TaskDispatcher.runDelay(slot0.refreshSelectCollectionInfo, slot0, slot1 or 0)
+function var_0_0.delay2SwitchHandBookItem(arg_15_0, arg_15_1)
+	arg_15_1 = arg_15_1 or 0
+
+	TaskDispatcher.cancelTask(arg_15_0.refreshSelectCollectionInfo, arg_15_0)
+	TaskDispatcher.runDelay(arg_15_0.refreshSelectCollectionInfo, arg_15_0, arg_15_1)
 end
 
-function slot0.filterCompositeList(slot0, slot1, slot2)
-	RougeCollectionHandBookListModel.instance:updateFilterMap(slot1, slot2)
+function var_0_0.filterCompositeList(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
 
-	if RougeCollectionHandBookListModel.instance:getCurSelectCellId() ~= RougeCollectionHandBookListModel.instance:getCurSelectCellId() then
-		slot0:refreshSelectCollectionInfo()
+	RougeCollectionHandBookListModel.instance:updateFilterMap(arg_16_1, arg_16_2)
+
+	if var_16_0 ~= RougeCollectionHandBookListModel.instance:getCurSelectCellId() then
+		arg_16_0:refreshSelectCollectionInfo()
 	end
 end
 
-function slot0.refreshFilterButtonUI(slot0)
-	slot0:_setFilterSelected(RougeCollectionHandBookListModel.instance:isFiltering())
+function var_0_0.refreshFilterButtonUI(arg_17_0)
+	local var_17_0 = RougeCollectionHandBookListModel.instance:isFiltering()
+
+	arg_17_0:_setFilterSelected(var_17_0)
 end
 
-function slot0._setFilterSelected(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot0._btnfilter.gameObject, "select"), slot1)
-	gohelper.setActive(gohelper.findChild(slot0._btnfilter.gameObject, "unselect"), not slot1)
+function var_0_0._setFilterSelected(arg_18_0, arg_18_1)
+	local var_18_0 = gohelper.findChild(arg_18_0._btnfilter.gameObject, "unselect")
+	local var_18_1 = gohelper.findChild(arg_18_0._btnfilter.gameObject, "select")
+
+	gohelper.setActive(var_18_1, arg_18_1)
+	gohelper.setActive(var_18_0, not arg_18_1)
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
-	slot0:refrehsCollectionDesc()
+function var_0_0._onSwitchCollectionInfoType(arg_19_0)
+	arg_19_0:refrehsCollectionDesc()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
-	slot0:releaseCompositeIconSingleImages()
-	TaskDispatcher.cancelTask(slot0.refreshSelectCollectionInfo, slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0._simageicon:UnLoadImage()
+	arg_21_0:releaseCompositeIconSingleImages()
+	TaskDispatcher.cancelTask(arg_21_0.refreshSelectCollectionInfo, arg_21_0)
 end
 
-return slot0
+return var_0_0

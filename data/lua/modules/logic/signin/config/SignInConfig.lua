@@ -1,15 +1,15 @@
-module("modules.logic.signin.config.SignInConfig", package.seeall)
+﻿module("modules.logic.signin.config.SignInConfig", package.seeall)
 
-slot0 = class("SignInConfig", BaseConfig)
+local var_0_0 = class("SignInConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._signMonthRewards = nil
-	slot0._signRewards = nil
-	slot0._signDesc = nil
-	slot0._goldRewards = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._signMonthRewards = nil
+	arg_1_0._signRewards = nil
+	arg_1_0._signDesc = nil
+	arg_1_0._goldRewards = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"sign_in_addup_bonus",
 		"sign_in_bonus",
@@ -19,58 +19,60 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "sign_in_addup_bonus" then
-		slot0._signMonthRewards = slot2
-	elseif slot1 == "sign_in_bonus" then
-		slot0._signRewards = slot2
-	elseif slot1 == "sign_in_word" then
-		slot0._signDesc = slot2
-	elseif slot1 == "activity143_bonus" then
-		slot0._goldRewards = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "sign_in_addup_bonus" then
+		arg_3_0._signMonthRewards = arg_3_2
+	elseif arg_3_1 == "sign_in_bonus" then
+		arg_3_0._signRewards = arg_3_2
+	elseif arg_3_1 == "sign_in_word" then
+		arg_3_0._signDesc = arg_3_2
+	elseif arg_3_1 == "activity143_bonus" then
+		arg_3_0._goldRewards = arg_3_2
 	end
 end
 
-function slot0.getSignMonthReward(slot0, slot1)
-	return slot0._signMonthRewards.configDict[slot1]
+function var_0_0.getSignMonthReward(arg_4_0, arg_4_1)
+	return arg_4_0._signMonthRewards.configDict[arg_4_1]
 end
 
-function slot0.getSignMonthRewards(slot0)
-	return slot0._signMonthRewards.configDict
+function var_0_0.getSignMonthRewards(arg_5_0)
+	return arg_5_0._signMonthRewards.configDict
 end
 
-function slot0.getSignRewards(slot0, slot1)
-	return slot0._signRewards.configDict[slot1]
+function var_0_0.getSignRewards(arg_6_0, arg_6_1)
+	return arg_6_0._signRewards.configDict[arg_6_1]
 end
 
-function slot0.getSignDesc(slot0, slot1)
-	return slot0._signDesc.configDict[slot1]
+function var_0_0.getSignDesc(arg_7_0, arg_7_1)
+	return arg_7_0._signDesc.configDict[arg_7_1]
 end
 
-function slot0.getGoldReward(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._goldRewards.configDict[ActivityEnum.Activity.DailyAllowance]) do
-		if slot6.day == slot1 then
-			return slot6.bonus
+function var_0_0.getGoldReward(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._goldRewards.configDict[ActivityEnum.Activity.DailyAllowance]) do
+		if iter_8_1.day == arg_8_1 then
+			return iter_8_1.bonus
 		end
 	end
 end
 
-function slot0.getSignDescByDate(slot0, slot1)
-	for slot6, slot7 in pairs(slot0._signDesc.configDict) do
-		if slot7.signindate == os.date("%Y-%m-%d 00:00:00", slot1) then
-			return slot7.signinword
+function var_0_0.getSignDescByDate(arg_9_0, arg_9_1)
+	local var_9_0 = os.date("%Y-%m-%d 00:00:00", arg_9_1)
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._signDesc.configDict) do
+		if iter_9_1.signindate == var_9_0 then
+			return iter_9_1.signinword
 		end
 	end
 end
 
-function slot0.getSignInLifeTimeBonusCO(slot0, slot1)
-	return lua_sign_in_lifetime_bonus.configList[slot1]
+function var_0_0.getSignInLifeTimeBonusCO(arg_10_0, arg_10_1)
+	return lua_sign_in_lifetime_bonus.configList[arg_10_1]
 end
 
-function slot0.getSignInLifeTimeBonusCount(slot0)
+function var_0_0.getSignInLifeTimeBonusCount(arg_11_0)
 	return #lua_sign_in_lifetime_bonus.configList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,55 +1,65 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessRemoveStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessRemoveStep", package.seeall)
 
-slot0 = class("TeamChessRemoveStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessRemoveStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data
-	slot0.strongholdId = slot1.strongholdId
-	slot0.uid = slot1.uid
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
 
-	if slot1.targetStrongholdId ~= nil then
-		slot3 = slot0:calMoveOtherChessTime(EliminateTeamChessEnum.soliderChessOutAniTime) + EliminateTeamChessEnum.chessShowMoveStateAniTime
-		slot5 = EliminateTeamChessModel.instance:sourceStrongHoldInRight(slot0.strongholdId, slot2) and -1 or 1
-		slot7, slot8, slot9 = TeamChessUnitEntityMgr.instance:getEntity(slot0.uid):getTopPosXYZ()
+	arg_1_0.strongholdId = var_1_0.strongholdId
+	arg_1_0.uid = var_1_0.uid
 
-		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, EliminateTeamChessEnum.VxEffectType.Move, slot7, slot8, slot9, slot5, slot5, slot5)
-		TaskDispatcher.runDelay(slot0._playRemoveChess, slot0, EliminateTeamChessEnum.chessShowMoveStateAniTime)
+	local var_1_1 = var_1_0.targetStrongholdId
+	local var_1_2 = EliminateTeamChessEnum.soliderChessOutAniTime
+	local var_1_3 = arg_1_0:calMoveOtherChessTime(var_1_2)
+
+	if var_1_1 ~= nil then
+		var_1_3 = var_1_3 + EliminateTeamChessEnum.chessShowMoveStateAniTime
+
+		local var_1_4 = EliminateTeamChessModel.instance:sourceStrongHoldInRight(arg_1_0.strongholdId, var_1_1) and -1 or 1
+		local var_1_5, var_1_6, var_1_7 = TeamChessUnitEntityMgr.instance:getEntity(arg_1_0.uid):getTopPosXYZ()
+
+		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, EliminateTeamChessEnum.VxEffectType.Move, var_1_5, var_1_6, var_1_7, var_1_4, var_1_4, var_1_4)
+		TaskDispatcher.runDelay(arg_1_0._playRemoveChess, arg_1_0, EliminateTeamChessEnum.chessShowMoveStateAniTime)
 	else
-		slot0:_playRemoveChess()
+		arg_1_0:_playRemoveChess()
 	end
 
-	TaskDispatcher.runDelay(slot0._onDone, slot0, slot3)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
 end
 
-function slot0.calMoveOtherChessTime(slot0, slot1)
-	slot4 = false
-	slot5 = 0
-	slot6 = 0
+function var_0_0.calMoveOtherChessTime(arg_2_0, arg_2_1)
+	local var_2_0 = EliminateTeamChessModel.instance:getStronghold(arg_2_0.strongholdId)
+	local var_2_1 = var_2_0:getChess(arg_2_0.uid)
+	local var_2_2 = false
+	local var_2_3 = 0
+	local var_2_4 = 0
 
-	if EliminateTeamChessModel.instance:getStronghold(slot0.strongholdId):getChess(slot0.uid).teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
-		slot5 = slot2:getMySideIndexByUid(slot0.uid)
-		slot6 = slot2:getPlayerSoliderCount()
+	if var_2_1.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		var_2_3 = var_2_0:getMySideIndexByUid(arg_2_0.uid)
+		var_2_4 = var_2_0:getPlayerSoliderCount()
 	end
 
-	if slot3.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		slot5 = slot2:getEnemySideIndexByUid(slot0.uid)
-		slot6 = slot2:getEnemySoliderCount()
+	if var_2_1.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		var_2_3 = var_2_0:getEnemySideIndexByUid(arg_2_0.uid)
+		var_2_4 = var_2_0:getEnemySoliderCount()
 	end
 
-	if slot6 > 1 and slot5 ~= slot6 then
-		slot1 = slot1 + EliminateTeamChessEnum.teamChessPlaceStep
+	if var_2_4 > 1 and var_2_3 ~= var_2_4 then
+		arg_2_1 = arg_2_1 + EliminateTeamChessEnum.teamChessPlaceStep
 	end
 
-	return slot1
+	return arg_2_1
 end
 
-function slot0._playRemoveChess(slot0)
-	TaskDispatcher.cancelTask(slot0._playRemoveChess, slot0)
+function var_0_0._playRemoveChess(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._playRemoveChess, arg_3_0)
 
-	slot1 = EliminateTeamChessModel.instance:getStronghold(slot0.strongholdId)
+	local var_3_0 = EliminateTeamChessModel.instance:getStronghold(arg_3_0.strongholdId)
+	local var_3_1 = var_3_0:getMySideIndexByUid(arg_3_0.uid)
+	local var_3_2 = var_3_0:getChess(arg_3_0.uid)
 
-	EliminateTeamChessModel.instance:removeStrongholdChess(slot0.strongholdId, slot0.uid)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.RemoveStrongholdChess, slot0.strongholdId, slot0.uid, slot1:getMySideIndexByUid(slot0.uid), slot1:getChess(slot0.uid).teamType)
+	EliminateTeamChessModel.instance:removeStrongholdChess(arg_3_0.strongholdId, arg_3_0.uid)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.RemoveStrongholdChess, arg_3_0.strongholdId, arg_3_0.uid, var_3_1, var_3_2.teamType)
 end
 
-return slot0
+return var_0_0

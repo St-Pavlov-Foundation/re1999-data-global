@@ -1,43 +1,43 @@
-module("modules.logic.teach.config.TeachNoteConfig", package.seeall)
+﻿module("modules.logic.teach.config.TeachNoteConfig", package.seeall)
 
-slot0 = class("TeachNoteConfig", BaseConfig)
+local var_0_0 = class("TeachNoteConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.topicConfig = nil
-	slot0.levelConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.topicConfig = nil
+	arg_1_0.levelConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"instruction_topic",
 		"instruction_level"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "instruction_topic" then
-		slot0.topicConfig = slot2
-	elseif slot1 == "instruction_level" then
-		slot0.levelConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "instruction_topic" then
+		arg_3_0.topicConfig = arg_3_2
+	elseif arg_3_1 == "instruction_level" then
+		arg_3_0.levelConfig = arg_3_2
 	end
 end
 
-function slot0.getInstructionTopicCos(slot0)
-	return slot0.topicConfig.configDict
+function var_0_0.getInstructionTopicCos(arg_4_0)
+	return arg_4_0.topicConfig.configDict
 end
 
-function slot0.getInstructionLevelCos(slot0)
-	return slot0.levelConfig.configDict
+function var_0_0.getInstructionLevelCos(arg_5_0)
+	return arg_5_0.levelConfig.configDict
 end
 
-function slot0.getInstructionTopicCO(slot0, slot1)
-	return slot0.topicConfig.configDict[slot1]
+function var_0_0.getInstructionTopicCO(arg_6_0, arg_6_1)
+	return arg_6_0.topicConfig.configDict[arg_6_1]
 end
 
-function slot0.getInstructionLevelCO(slot0, slot1)
-	return slot0.levelConfig.configDict[slot1]
+function var_0_0.getInstructionLevelCO(arg_7_0, arg_7_1)
+	return arg_7_0.levelConfig.configDict[arg_7_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

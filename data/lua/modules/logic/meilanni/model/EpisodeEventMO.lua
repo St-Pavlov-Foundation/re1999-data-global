@@ -1,85 +1,103 @@
-module("modules.logic.meilanni.model.EpisodeEventMO", package.seeall)
+﻿module("modules.logic.meilanni.model.EpisodeEventMO", package.seeall)
 
-slot0 = pureTable("EpisodeEventMO")
+local var_0_0 = pureTable("EpisodeEventMO")
 
-function slot0.init(slot0, slot1)
-	slot0.eventId = slot1.eventId
-	slot0.isFinish = slot1.isFinish
-	slot0.option = slot1.option
-	slot0.index = slot1.index
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.eventId = arg_1_1.eventId
+	arg_1_0.isFinish = arg_1_1.isFinish
+	arg_1_0.option = arg_1_1.option
+	arg_1_0.index = arg_1_1.index
 
-	slot0:_initHistorySelect(slot1)
-	slot0:_initHistorylist(slot1)
+	arg_1_0:_initHistorySelect(arg_1_1)
+	arg_1_0:_initHistorylist(arg_1_1)
 
-	slot0.config = MeilanniConfig.instance:getElementConfig(slot0.eventId)
+	arg_1_0.config = MeilanniConfig.instance:getElementConfig(arg_1_0.eventId)
 
-	if not slot0.config then
-		logError(string.format("EpisodeEventMO no config id:%s", slot0.eventId))
+	if not arg_1_0.config then
+		logError(string.format("EpisodeEventMO no config id:%s", arg_1_0.eventId))
 
 		return
 	end
 
-	slot0.interactParam = GameUtil.splitString2(slot0.config.interactParam, true, "|", "#")
+	arg_1_0.interactParam = GameUtil.splitString2(arg_1_0.config.interactParam, true, "|", "#")
 end
 
-function slot0._initHistorySelect(slot0, slot1)
-	slot0.historySelect = {}
+function var_0_0._initHistorySelect(arg_2_0, arg_2_1)
+	arg_2_0.historySelect = {}
 
-	for slot5, slot6 in ipairs(slot1.historySelect) do
-		slot0.historySelect[slot6] = slot6
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.historySelect) do
+		arg_2_0.historySelect[iter_2_1] = iter_2_1
 	end
 end
 
-function slot0.optionIsSelected(slot0, slot1)
-	return slot0.historySelect[slot1]
+function var_0_0.optionIsSelected(arg_3_0, arg_3_1)
+	return arg_3_0.historySelect[arg_3_1]
 end
 
-function slot0._initHistorylist(slot0, slot1)
-	slot0.historylist = {}
+function var_0_0._initHistorylist(arg_4_0, arg_4_1)
+	arg_4_0.historylist = {}
 
-	for slot5, slot6 in ipairs(slot1.historylist) do
-		slot7 = EventHistoryMO.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.historylist) do
+		local var_4_0 = EventHistoryMO.New()
 
-		slot7:init(slot6)
+		var_4_0:init(iter_4_1)
 
-		slot0.historylist[slot7.index] = slot7
+		arg_4_0.historylist[var_4_0.index] = var_4_0
 	end
 end
 
-function slot0.getSkipDialog(slot0)
-	for slot4, slot5 in ipairs(slot0.interactParam) do
-		if slot5[1] == MeilanniEnum.ElementType.Dialog and lua_activity108_dialog.configDict[slot5[2]] and slot7[-1] then
-			return slot8
+function var_0_0.getSkipDialog(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.interactParam) do
+		if iter_5_1[1] == MeilanniEnum.ElementType.Dialog then
+			local var_5_0 = iter_5_1[2]
+			local var_5_1 = lua_activity108_dialog.configDict[var_5_0]
+			local var_5_2 = var_5_1 and var_5_1[-1]
+
+			if var_5_2 then
+				return var_5_2
+			end
 		end
 	end
 end
 
-function slot0.getType(slot0)
-	return slot0.interactParam[slot0.index + 1] and slot1[1]
+function var_0_0.getType(arg_6_0)
+	local var_6_0 = arg_6_0.interactParam[arg_6_0.index + 1]
+
+	return var_6_0 and var_6_0[1]
 end
 
-function slot0.getNextType(slot0)
-	return slot0.interactParam[slot0.index + 2] and slot1[1]
+function var_0_0.getNextType(arg_7_0)
+	local var_7_0 = arg_7_0.interactParam[arg_7_0.index + 2]
+
+	return var_7_0 and var_7_0[1]
 end
 
-function slot0.getParam(slot0)
-	return slot0.interactParam[slot0.index + 1] and slot1[2]
+function var_0_0.getParam(arg_8_0)
+	local var_8_0 = arg_8_0.interactParam[arg_8_0.index + 1]
+
+	return var_8_0 and var_8_0[2]
 end
 
-function slot0.getPrevParam(slot0)
-	return slot0.interactParam[slot0.index] and slot1[2]
+function var_0_0.getPrevParam(arg_9_0)
+	local var_9_0 = arg_9_0.interactParam[arg_9_0.index]
+
+	return var_9_0 and var_9_0[2]
 end
 
-function slot0.getBattleId(slot0)
-	return tonumber(slot0:getParam())
+function var_0_0.getBattleId(arg_10_0)
+	local var_10_0 = arg_10_0:getParam()
+
+	return tonumber(var_10_0)
 end
 
-function slot0.getConfigBattleId(slot0)
-	for slot4, slot5 in ipairs(slot0.interactParam) do
-		if slot5[1] == MeilanniEnum.ElementType.Battle then
-			return tonumber(slot5[2])
+function var_0_0.getConfigBattleId(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.interactParam) do
+		if iter_11_1[1] == MeilanniEnum.ElementType.Battle then
+			local var_11_0 = iter_11_1[2]
+
+			return tonumber(var_11_0)
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,159 +1,170 @@
-module("modules.logic.gm.view.GMSubViewCommon", package.seeall)
+﻿module("modules.logic.gm.view.GMSubViewCommon", package.seeall)
 
-slot0 = class("GMSubViewCommon", GMSubViewBase)
+local var_0_0 = class("GMSubViewCommon", GMSubViewBase)
 
-function slot0.ctor(slot0)
-	slot0.tabName = "其他"
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.tabName = "其他"
 end
 
 require("tolua.reflection")
 tolua.loadassembly("UnityEngine.UI")
 
-slot1 = tolua.findtype("UnityEngine.UI.InputField+LineType")
-slot2 = System.Enum.Parse(slot1, "MultiLineSubmit")
-slot3 = System.Enum.Parse(slot1, "MultiLineNewline")
+local var_0_1 = tolua.findtype("UnityEngine.UI.InputField+LineType")
+local var_0_2 = System.Enum.Parse(var_0_1, "MultiLineSubmit")
+local var_0_3 = System.Enum.Parse(var_0_1, "MultiLineNewline")
 
-function slot0.initViewContent(slot0)
-	if slot0._inited then
+function var_0_0.initViewContent(arg_2_0)
+	if arg_2_0._inited then
 		return
 	end
 
-	GMSubViewBase.initViewContent(slot0)
-	slot0:addTitleSplitLine("服务端GM多行输入")
+	GMSubViewBase.initViewContent(arg_2_0)
+	arg_2_0:addTitleSplitLine("服务端GM多行输入")
 
-	slot0._gmInput = slot0:addInputText("L0", "", "GM ...", nil, , {
+	arg_2_0._gmInput = arg_2_0:addInputText("L0", "", "GM ...", nil, nil, {
 		w = 1000,
 		h = 500
 	})
-	slot0._gmInput.inputField.lineType = uv0
+	arg_2_0._gmInput.inputField.lineType = var_0_3
 
-	slot0._gmInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewMultiServerGM, ""))
-	slot0:addButton("L0", "发送", slot0._onClickOk, slot0)
-	slot0:addTitleSplitLine("检查")
-	slot0:addButton("L1", "资源完整性验证", slot0._onClickCheckMD5, slot0)
-	slot0:addButton("L1", "配置描述Tag检测", slot0._onClickCheckSkillTag, slot0)
-	slot0:addButton("L1", "扫描无用配置", slot0._onClickCheckUnuseConfig, slot0)
+	arg_2_0._gmInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewMultiServerGM, ""))
+	arg_2_0:addButton("L0", "发送", arg_2_0._onClickOk, arg_2_0)
+	arg_2_0:addTitleSplitLine("检查")
+	arg_2_0:addButton("L1", "资源完整性验证", arg_2_0._onClickCheckMD5, arg_2_0)
+	arg_2_0:addButton("L1", "配置描述Tag检测", arg_2_0._onClickCheckSkillTag, arg_2_0)
+	arg_2_0:addButton("L1", "扫描无用配置", arg_2_0._onClickCheckUnuseConfig, arg_2_0)
 
-	slot0._langDrop = slot0:addDropDown("L1", "UI多语言", nil, slot0._onLangDropChange, slot0)
+	arg_2_0._langDrop = arg_2_0:addDropDown("L1", "UI多语言", nil, arg_2_0._onLangDropChange, arg_2_0)
 
-	slot0:addButton("L1.2", "多语言文本查找", slot0._onClickLangTxtSearch, slot0)
-	slot0:addTitleSplitLine("报错提示")
-	slot0:addButton("L5", "开启报错提示", slot0._onClickShowLog, slot0)
-	slot0:addButton("L5", "关闭报错提示", slot0._onClickHideLog, slot0)
-	slot0:addTitleSplitLine("BGM")
-	slot0:addButton("L2", "显示BGM播放进度", slot0._onClickBGMProgress, slot0)
-	slot0:addButton("L2", "视频资源列表", slot0._onClickVideoList, slot0)
-	slot0:addTitleSplitLine("剧情")
+	arg_2_0:addButton("L1.2", "多语言文本查找", arg_2_0._onClickLangTxtSearch, arg_2_0)
+	arg_2_0:addTitleSplitLine("报错提示")
+	arg_2_0:addButton("L5", "开启报错提示", arg_2_0._onClickShowLog, arg_2_0)
+	arg_2_0:addButton("L5", "关闭报错提示", arg_2_0._onClickHideLog, arg_2_0)
+	arg_2_0:addTitleSplitLine("BGM")
+	arg_2_0:addButton("L2", "显示BGM播放进度", arg_2_0._onClickBGMProgress, arg_2_0)
+	arg_2_0:addButton("L2", "视频资源列表", arg_2_0._onClickVideoList, arg_2_0)
+	arg_2_0:addTitleSplitLine("剧情")
 
-	slot0._inpClearStoryValue = slot0:addInputText("L3", "", "剧情id", nil, , {
+	arg_2_0._inpClearStoryValue = arg_2_0:addInputText("L3", "", "剧情id", nil, nil, {
 		w = 1000
 	})
 
-	slot0:addButton("L3", "重置剧情", slot0._onClickClearStory, slot0)
+	arg_2_0:addButton("L3", "重置剧情", arg_2_0._onClickClearStory, arg_2_0)
 
-	slot0._inpFinishStoryValue = slot0:addInputText("L4", "", "剧情id", nil, , {
+	arg_2_0._inpFinishStoryValue = arg_2_0:addInputText("L4", "", "剧情id", nil, nil, {
 		w = 1000
 	})
 
-	slot0:addButton("L4", "完成剧情", slot0._onClickFinishStory, slot0)
-	slot0:addButton("L5", "监听按键", slot0._onClickListenKeyboard, slot0)
-	slot0:addTitleSplitLine("内置浏览器")
+	arg_2_0:addButton("L4", "完成剧情", arg_2_0._onClickFinishStory, arg_2_0)
+	arg_2_0:addButton("L5", "监听按键", arg_2_0._onClickListenKeyboard, arg_2_0)
+	arg_2_0:addTitleSplitLine("内置浏览器")
 
-	slot0._inpUrl = slot0:addInputText("L6", "", "url", nil, , {
+	arg_2_0._inpUrl = arg_2_0:addInputText("L6", "", "url", nil, nil, {
 		w = 1000
 	})
 
-	slot0:addButton("L6", "打开链接", slot0._onClickOpenWebView, slot0)
+	arg_2_0:addButton("L6", "打开链接", arg_2_0._onClickOpenWebView, arg_2_0)
 
-	slot0.recordUserToggle = slot0:addToggle("L6", "携带用\n户信息", nil, , {
+	arg_2_0.recordUserToggle = arg_2_0:addToggle("L6", "携带用\n户信息", nil, nil, {
 		fsize = 20
 	})
 
-	slot0:addTitleSplitLine("按键")
+	arg_2_0:addTitleSplitLine("按键")
 
-	slot0._switchKeyToggle = slot0:addToggle("L7", "切换按键功能", slot0._switchKeyInput, slot0, {
+	arg_2_0._switchKeyToggle = arg_2_0:addToggle("L7", "切换按键功能", arg_2_0._switchKeyInput, arg_2_0, {
 		fsize = 40
 	})
-	slot0._switchKeyToggle.isOn = UnityEngine.PlayerPrefs.GetInt("PCInputSwitch", 0) == 1
-	slot0.langList = {}
-	slot0.langShortCutList = {}
-	slot0.curUILang = LangSettings.instance:getCurLang()
-	slot1 = 0
-	slot2 = 0
+	arg_2_0._switchKeyToggle.isOn = UnityEngine.PlayerPrefs.GetInt("PCInputSwitch", 0) == 1
+	arg_2_0.langList = {}
+	arg_2_0.langShortCutList = {}
+	arg_2_0.curUILang = LangSettings.instance:getCurLang()
 
-	for slot6, slot7 in pairs(LangSettings.shortcutTab) do
-		table.insert(slot0.langList, slot6)
-		table.insert(slot0.langShortCutList, slot7)
+	local var_2_0 = 0
+	local var_2_1 = 0
 
-		if slot6 == slot0.curUILang then
-			slot1 = slot2
+	for iter_2_0, iter_2_1 in pairs(LangSettings.shortcutTab) do
+		table.insert(arg_2_0.langList, iter_2_0)
+		table.insert(arg_2_0.langShortCutList, iter_2_1)
+
+		if iter_2_0 == arg_2_0.curUILang then
+			var_2_0 = var_2_1
 		end
 
-		slot2 = slot2 + 1
+		var_2_1 = var_2_1 + 1
 	end
 
-	slot0._langDrop:ClearOptions()
-	slot0._langDrop:AddOptions(slot0.langShortCutList)
-	slot0._langDrop:SetValue(slot1)
+	arg_2_0._langDrop:ClearOptions()
+	arg_2_0._langDrop:AddOptions(arg_2_0.langShortCutList)
+	arg_2_0._langDrop:SetValue(var_2_0)
 end
 
-function slot0._onClickOpenWebView(slot0)
-	if string.nilorempty(slot0._inpUrl:GetText()) then
+function var_0_0._onClickOpenWebView(arg_3_0)
+	local var_3_0 = arg_3_0._inpUrl:GetText()
+
+	if string.nilorempty(var_3_0) then
 		return
 	end
 
-	WebViewController.instance:openWebView(slot1, slot0.recordUserToggle.isOn)
+	WebViewController.instance:openWebView(var_3_0, arg_3_0.recordUserToggle.isOn)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	TaskDispatcher.cancelTask(slot0._tickListenKeyboard, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	var_0_0.super.removeEvents(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._tickListenKeyboard, arg_4_0)
 end
 
-function slot0._onClickOk(slot0)
-	if string.nilorempty(slot0._gmInput:GetText()) then
+function var_0_0._onClickOk(arg_5_0)
+	local var_5_0 = arg_5_0._gmInput:GetText()
+
+	if string.nilorempty(var_5_0) then
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewMultiServerGM, slot1)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewMultiServerGM, var_5_0)
 
-	for slot6, slot7 in ipairs(string.split(slot1, "\n")) do
-		if not string.nilorempty(string.trim(slot7)) then
-			GMRpc.instance:sendGMRequest(slot7)
+	local var_5_1 = string.split(var_5_0, "\n")
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		iter_5_1 = string.trim(iter_5_1)
+
+		if not string.nilorempty(iter_5_1) then
+			GMRpc.instance:sendGMRequest(iter_5_1)
 		end
 	end
 end
 
-function slot0._onClickShowLog(slot0)
+function var_0_0._onClickShowLog(arg_6_0)
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewShowErrorAlert, 1)
 end
 
-function slot0._onClickHideLog(slot0)
+function var_0_0._onClickHideLog(arg_7_0)
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewShowErrorAlert, 0)
 end
 
-function slot0._onClickCheckMD5(slot0)
+function var_0_0._onClickCheckMD5(arg_8_0)
 	MessageBoxController.instance:showMsgBoxByStr("正在验证资源完整性", MsgBoxEnum.BoxType.Yes)
 
-	slot1 = ResCheckMgr.instance:_getAllLocalLang()
-	slot2, slot3 = ResCheckMgr.instance:_getDLCInfo(slot1)
-	slot0.eventDispatcher = SLFramework.GameLuaEventDispatcher.Instance
+	local var_8_0 = ResCheckMgr.instance:_getAllLocalLang()
+	local var_8_1, var_8_2 = ResCheckMgr.instance:_getDLCInfo(var_8_0)
 
-	slot0.eventDispatcher:AddListener(slot0.eventDispatcher.ResChecker_Finish, slot0._onResCheckFinish, slot0)
-	SLFramework.ResChecker.Instance:CheckAllRes(slot1, slot2, slot3)
+	arg_8_0.eventDispatcher = SLFramework.GameLuaEventDispatcher.Instance
+
+	arg_8_0.eventDispatcher:AddListener(arg_8_0.eventDispatcher.ResChecker_Finish, arg_8_0._onResCheckFinish, arg_8_0)
+	SLFramework.ResChecker.Instance:CheckAllRes(var_8_0, var_8_1, var_8_2)
 end
 
-function slot0._onResCheckFinish(slot0, slot1)
-	slot2 = nil
+function var_0_0._onResCheckFinish(arg_9_0, arg_9_1)
+	local var_9_0
+	local var_9_1 = arg_9_1 and "验证通过" or "资源完整性验证失败！！请查看日志"
 
-	slot0.eventDispatcher:RemoveListener(slot0.eventDispatcher.ResChecker_Finish)
+	arg_9_0.eventDispatcher:RemoveListener(arg_9_0.eventDispatcher.ResChecker_Finish)
 
-	slot0.eventDispatcher = nil
+	arg_9_0.eventDispatcher = nil
 
-	MessageBoxController.instance:showSystemMsgBoxByStr(slot1 and "验证通过" or "资源完整性验证失败！！请查看日志", MsgBoxEnum.BoxType.Yes)
+	MessageBoxController.instance:showSystemMsgBoxByStr(var_9_1, MsgBoxEnum.BoxType.Yes)
 end
 
-function slot0._onClickBGMProgress(slot0)
+function var_0_0._onClickBGMProgress(arg_10_0)
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewBGMProgress, 0) == 0 then
 		GameFacade.showToast(ToastEnum.IconId, "show bgm progress")
 		PlayerPrefsHelper.setNumber(PlayerPrefsKey.GMToolViewBGMProgress, 1)
@@ -163,75 +174,89 @@ function slot0._onClickBGMProgress(slot0)
 	end
 end
 
-function slot0._onClickVideoList(slot0)
+function var_0_0._onClickVideoList(arg_11_0)
 	ViewMgr.instance:openView(ViewName.GMVideoList)
 end
 
-function slot0._onClickClearRougeStories(slot0)
-	for slot4, slot5 in ipairs(lua_rouge_story_list.configList) do
-		for slot10, slot11 in ipairs(string.splitToNumber(slot5.storyIdList, "#")) do
-			GMRpc.instance:sendGMRequest(string.format("delete story %s", slot11))
+function var_0_0._onClickClearRougeStories(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(lua_rouge_story_list.configList) do
+		local var_12_0 = string.splitToNumber(iter_12_1.storyIdList, "#")
+
+		for iter_12_2, iter_12_3 in ipairs(var_12_0) do
+			GMRpc.instance:sendGMRequest(string.format("delete story %s", iter_12_3))
 		end
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function slot0._onClickFinishRougeStories(slot0)
-	for slot4, slot5 in ipairs(lua_rouge_story_list.configList) do
-		for slot10, slot11 in ipairs(string.splitToNumber(slot5.storyIdList, "#")) do
-			StoryRpc.instance:sendUpdateStoryRequest(slot11, -1, 0)
+function var_0_0._onClickFinishRougeStories(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(lua_rouge_story_list.configList) do
+		local var_13_0 = string.splitToNumber(iter_13_1.storyIdList, "#")
+
+		for iter_13_2, iter_13_3 in ipairs(var_13_0) do
+			StoryRpc.instance:sendUpdateStoryRequest(iter_13_3, -1, 0)
 		end
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function slot0._onClickClearStory(slot0)
-	for slot5, slot6 in ipairs(string.splitToNumber(slot0._inpClearStoryValue:GetText(), "#")) do
-		GMRpc.instance:sendGMRequest(string.format("delete story %s", slot6))
+function var_0_0._onClickClearStory(arg_14_0)
+	local var_14_0 = string.splitToNumber(arg_14_0._inpClearStoryValue:GetText(), "#")
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		GMRpc.instance:sendGMRequest(string.format("delete story %s", iter_14_1))
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function slot0._onClickFinishStory(slot0)
-	for slot5, slot6 in ipairs(string.splitToNumber(slot0._inpFinishStoryValue:GetText(), "#")) do
-		StoryRpc.instance:sendUpdateStoryRequest(slot6, -1, 0)
+function var_0_0._onClickFinishStory(arg_15_0)
+	local var_15_0 = string.splitToNumber(arg_15_0._inpFinishStoryValue:GetText(), "#")
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		StoryRpc.instance:sendUpdateStoryRequest(iter_15_1, -1, 0)
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function slot0._onClickListenKeyboard(slot0)
-	if not slot0._keyCodes then
-		slot0._keyCodeStrs = {}
-		slot0._keyCodes = {}
+function var_0_0._onClickListenKeyboard(arg_16_0)
+	if not arg_16_0._keyCodes then
+		arg_16_0._keyCodeStrs = {}
+		arg_16_0._keyCodes = {}
 
-		for slot5 = 8, 329 do
-			if UnityEngine.KeyCode.IntToEnum(slot5) then
-				table.insert(slot0._keyCodes, slot6)
-				table.insert(slot0._keyCodeStrs, slot6:ToString())
+		local var_16_0 = UnityEngine.KeyCode
+
+		for iter_16_0 = 8, 329 do
+			local var_16_1 = var_16_0.IntToEnum(iter_16_0)
+
+			if var_16_1 then
+				local var_16_2 = var_16_1:ToString()
+
+				table.insert(arg_16_0._keyCodes, var_16_1)
+				table.insert(arg_16_0._keyCodeStrs, var_16_2)
 			end
 		end
 	end
 
-	TaskDispatcher.cancelTask(slot0._tickListenKeyboard, slot0)
-	TaskDispatcher.runRepeat(slot0._tickListenKeyboard, slot0, 0.01)
+	TaskDispatcher.cancelTask(arg_16_0._tickListenKeyboard, arg_16_0)
+	TaskDispatcher.runRepeat(arg_16_0._tickListenKeyboard, arg_16_0, 0.01)
 	GameFacade.showToast(ToastEnum.IconId, "请按下键盘，按键码将复制到粘贴板")
 end
 
-slot4 = UnityEngine.Input
+local var_0_4 = UnityEngine.Input
 
-function slot0._tickListenKeyboard(slot0)
-	if uv0.anyKey then
-		for slot4, slot5 in ipairs(slot0._keyCodes) do
-			if uv0.GetKey(slot5) then
-				slot6 = slot0._keyCodeStrs[slot4]
+function var_0_0._tickListenKeyboard(arg_17_0)
+	if var_0_4.anyKey then
+		for iter_17_0, iter_17_1 in ipairs(arg_17_0._keyCodes) do
+			if var_0_4.GetKey(iter_17_1) then
+				local var_17_0 = arg_17_0._keyCodeStrs[iter_17_0]
 
-				logError(slot6)
-				GameFacade.showToast(ToastEnum.IconId, slot6)
-				ZProj.GameHelper.SetSystemBuffer(slot6)
+				logError(var_17_0)
+				GameFacade.showToast(ToastEnum.IconId, var_17_0)
+				ZProj.GameHelper.SetSystemBuffer(var_17_0)
 
 				break
 			end
@@ -239,116 +264,141 @@ function slot0._tickListenKeyboard(slot0)
 	end
 end
 
-function slot0._onClickCheckSkillTag(slot0)
-	slot1 = {}
+function var_0_0._onClickCheckSkillTag(arg_18_0)
+	local var_18_0 = {}
 
-	for slot5, slot6 in ipairs(lua_skill_eff_desc.configList) do
-		if slot1[slot6.name] and slot6.name ~= "？？？" then
-			logError(string.format("技能Tag 重复 [%s] %d -> %d", slot6.name, slot6.id, slot1[slot6.name]))
+	for iter_18_0, iter_18_1 in ipairs(lua_skill_eff_desc.configList) do
+		if var_18_0[iter_18_1.name] and iter_18_1.name ~= "？？？" then
+			logError(string.format("技能Tag 重复 [%s] %d -> %d", iter_18_1.name, iter_18_1.id, var_18_0[iter_18_1.name]))
 		end
 
-		slot1[slot6.name] = slot6.id
+		var_18_0[iter_18_1.name] = iter_18_1.id
 	end
 
 	FightConfig.instance:setGetDescFlag(true)
-	slot0:_checkDescHaveTag(slot1, "skill_effect", "desc")
-	slot0:_checkDescHaveTag(slot1, "skill_buff", "desc", slot0._isCheckBuff)
-	slot0:_checkDescHaveTag(slot1, "skill_eff_desc", "desc")
-	slot0:_checkDescHaveTag(slot1, "equip_skill", "baseDesc")
-	slot0:_checkDescHaveTag(slot1, "rule", "desc")
-	slot0:_checkDescHaveTag(slot1, "rouge_desc", "desc")
+	arg_18_0:_checkDescHaveTag(var_18_0, "skill_effect", "desc")
+	arg_18_0:_checkDescHaveTag(var_18_0, "skill_buff", "desc", arg_18_0._isCheckBuff)
+	arg_18_0:_checkDescHaveTag(var_18_0, "skill_eff_desc", "desc")
+	arg_18_0:_checkDescHaveTag(var_18_0, "equip_skill", "baseDesc")
+	arg_18_0:_checkDescHaveTag(var_18_0, "rule", "desc")
+	arg_18_0:_checkDescHaveTag(var_18_0, "rouge_desc", "desc")
 	FightConfig.instance:setGetDescFlag(false)
 end
 
-function slot0._onClickCheckUnuseConfig(slot0)
-	slot1 = {}
+function var_0_0._onClickCheckUnuseConfig(arg_19_0)
+	local var_19_0 = {}
 
-	for slot5, slot6 in ipairs(ModuleMgr.instance._moduleSettingList) do
-		if slot6.config then
-			for slot11, slot12 in ipairs(slot7) do
-				if _G[slot12] and slot13.instance:reqConfigNames() then
-					for slot18, slot19 in ipairs(slot14) do
-						slot1[slot19] = true
+	for iter_19_0, iter_19_1 in ipairs(ModuleMgr.instance._moduleSettingList) do
+		local var_19_1 = iter_19_1.config
+
+		if var_19_1 then
+			for iter_19_2, iter_19_3 in ipairs(var_19_1) do
+				local var_19_2 = _G[iter_19_3]
+
+				if var_19_2 then
+					local var_19_3 = var_19_2.instance:reqConfigNames()
+
+					if var_19_3 then
+						for iter_19_4, iter_19_5 in ipairs(var_19_3) do
+							var_19_0[iter_19_5] = true
+						end
 					end
 				end
 			end
 		end
 	end
 
-	for slot9 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/configs/excel2json/").Length - 1 do
-		if not string.find(slot3[slot9], ".meta") and not slot1[string.gsub(SLFramework.FileHelper.GetFileName(slot10, false), "json_", "")] then
-			slot4 = "" .. slot11 .. "\n"
+	local var_19_4 = SLFramework.FrameworkSettings.AssetRootDir .. "/configs/excel2json/"
+	local var_19_5 = SLFramework.FileHelper.GetDirFilePaths(var_19_4)
+	local var_19_6 = ""
+	local var_19_7 = var_19_5.Length
+
+	for iter_19_6 = 0, var_19_7 - 1 do
+		local var_19_8 = var_19_5[iter_19_6]
+
+		if not string.find(var_19_8, ".meta") then
+			local var_19_9 = SLFramework.FileHelper.GetFileName(var_19_8, false)
+
+			if not var_19_0[string.gsub(var_19_9, "json_", "")] then
+				var_19_6 = var_19_6 .. var_19_9 .. "\n"
+			end
 		end
 	end
 
-	logError(slot4)
+	logError(var_19_6)
 end
 
-function slot0._isCheckBuff(slot0, slot1)
-	if slot1 and slot1.isNoShow == 1 then
+function var_0_0._isCheckBuff(arg_20_0, arg_20_1)
+	if arg_20_1 and arg_20_1.isNoShow == 1 then
 		return false
 	end
 
 	return true
 end
 
-function slot0._checkDescHaveTag(slot0, slot1, slot2, slot3, slot4)
-	if not _G["lua_" .. slot2] then
-		logError(slot2 .. "配置不存在 !!!!!!!!!!!!!")
+function var_0_0._checkDescHaveTag(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
+	local var_21_0 = _G["lua_" .. arg_21_2]
+
+	if not var_21_0 then
+		logError(arg_21_2 .. "配置不存在 !!!!!!!!!!!!!")
 
 		return
 	end
 
-	for slot9, slot10 in ipairs(slot5.configList) do
-		if not slot4 or slot4(slot0, slot10) then
-			if slot10[slot3]:find("不外显") then
-				-- Nothing
-			elseif type(slot11) == "string" then
-				string.gsub(slot11, "%[(.-)%]", function (slot0)
-					if not uv0[slot0] then
-						logError(string.format("%s.%s id:%s tag不存在 ->  %s\n%s", uv1, uv2, uv3[1], slot0, uv4))
-					end
+	for iter_21_0, iter_21_1 in ipairs(var_21_0.configList) do
+		local var_21_1 = iter_21_1[arg_21_3]
 
-					return slot0
-				end)
-				string.gsub(slot11, "【(.-)】", function (slot0)
-					if not uv0[slot0] then
-						logError(string.format("%s.%s id:%s tag不存在 ->  %s\n%s", uv1, uv2, uv3[1], slot0, uv4))
-					end
+		if arg_21_4 and not arg_21_4(arg_21_0, iter_21_1) or var_21_1:find("不外显") then
+			-- block empty
+		elseif type(var_21_1) == "string" then
+			string.gsub(var_21_1, "%[(.-)%]", function(arg_22_0)
+				if not arg_21_1[arg_22_0] then
+					logError(string.format("%s.%s id:%s tag不存在 ->  %s\n%s", arg_21_2, arg_21_3, iter_21_1[1], arg_22_0, var_21_1))
+				end
 
-					return slot0
-				end)
-			else
-				logError(slot2 .. "." .. slot3 .. "配置字段不存在 !!!!!!!!!!!!!")
+				return arg_22_0
+			end)
+			string.gsub(var_21_1, "【(.-)】", function(arg_23_0)
+				if not arg_21_1[arg_23_0] then
+					logError(string.format("%s.%s id:%s tag不存在 ->  %s\n%s", arg_21_2, arg_21_3, iter_21_1[1], arg_23_0, var_21_1))
+				end
 
-				break
-			end
+				return arg_23_0
+			end)
+		else
+			logError(arg_21_2 .. "." .. arg_21_3 .. "配置字段不存在 !!!!!!!!!!!!!")
+
+			break
 		end
 	end
 end
 
-function slot0._onClickLangTxtSearch(slot0, slot1)
+function var_0_0._onClickLangTxtSearch(arg_24_0, arg_24_1)
 	ViewMgr.instance:openView(ViewName.GMLangTxtView)
 end
 
-function slot0._onLangDropChange(slot0, slot1)
-	if slot0.langList[slot1 + 1] == slot0.curLang then
+function var_0_0._onLangDropChange(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0.langList[arg_25_1 + 1]
+
+	if var_25_0 == arg_25_0.curLang then
 		return
 	end
 
-	GameConfig:SetCurLangType(slot0.langShortCutList[slot1 + 1])
+	local var_25_1 = GameConfig:GetCurLangType()
 
-	LangSettings.instance._curLang = slot2
-	LangSettings.instance._captionsActive = LangSettings._captionsSetting[slot2] ~= false
+	GameConfig:SetCurLangType(arg_25_0.langShortCutList[arg_25_1 + 1])
 
-	UnityEngine.PlayerPrefs.SetInt("CurLanguageType", GameConfig:GetCurLangType())
+	LangSettings.instance._curLang = var_25_0
+	LangSettings.instance._captionsActive = LangSettings._captionsSetting[var_25_0] ~= false
+
+	UnityEngine.PlayerPrefs.SetInt("CurLanguageType", var_25_1)
 	UnityEngine.PlayerPrefs.Save()
 end
 
-function slot0._switchKeyInput(slot0, slot1, slot2)
-	UnityEngine.PlayerPrefs.SetInt("PCInputSwitch", slot2 and 1 or 0)
+function var_0_0._switchKeyInput(arg_26_0, arg_26_1, arg_26_2)
+	UnityEngine.PlayerPrefs.SetInt("PCInputSwitch", arg_26_2 and 1 or 0)
 	UnityEngine.PlayerPrefs.Save()
 	PCInputController.instance:Switch()
 end
 
-return slot0
+return var_0_0

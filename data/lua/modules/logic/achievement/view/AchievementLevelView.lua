@@ -1,230 +1,263 @@
-module("modules.logic.achievement.view.AchievementLevelView", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementLevelView", package.seeall)
 
-slot0 = class("AchievementLevelView", BaseView)
+local var_0_0 = class("AchievementLevelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageblur = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blur")
-	slot0._btncloseview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeview")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "layout/#txt_desc")
-	slot0._txtextradesc = gohelper.findChildText(slot0.viewGO, "layout/#txt_extradesc")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_next")
-	slot0._btnprev = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_prev")
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_container")
-	slot0._txtpage = gohelper.findChildText(slot0.viewGO, "#txt_page")
-	slot0._goTips = gohelper.findChild(slot0.viewGO, "layout/#go_Tips")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
+	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "layout/#txt_desc")
+	arg_1_0._txtextradesc = gohelper.findChildText(arg_1_0.viewGO, "layout/#txt_extradesc")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_next")
+	arg_1_0._btnprev = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_prev")
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_container")
+	arg_1_0._txtpage = gohelper.findChildText(arg_1_0.viewGO, "#txt_page")
+	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "layout/#go_Tips")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloseview:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnprev:AddClickListener(slot0._btnprevOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
+	arg_2_0._btnprev:AddClickListener(arg_2_0._btnprevOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloseview:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
-	slot0._btnprev:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloseview:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnnext:RemoveClickListener()
+	arg_3_0._btnprev:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getAchievementIcon("achievement_detailpanelbg"))
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._btncloseOnClick, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getAchievementIcon("achievement_detailpanelbg"))
+	NavigateMgr.instance:addEscape(arg_4_0.viewName, arg_4_0._btncloseOnClick, arg_4_0)
 
-	slot0._btnnextCanvasGroup = gohelper.onceAddComponent(slot0._btnnext.gameObject, typeof(UnityEngine.CanvasGroup))
-	slot0._btnprevCanvasGroup = gohelper.onceAddComponent(slot0._btnprev.gameObject, typeof(UnityEngine.CanvasGroup))
+	arg_4_0._btnnextCanvasGroup = gohelper.onceAddComponent(arg_4_0._btnnext.gameObject, typeof(UnityEngine.CanvasGroup))
+	arg_4_0._btnprevCanvasGroup = gohelper.onceAddComponent(arg_4_0._btnprev.gameObject, typeof(UnityEngine.CanvasGroup))
 
-	slot0:checkInitItems()
+	arg_4_0:checkInitItems()
 
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "layout/#go_Tips/image_TipsBG/txt_Tips")
+	arg_4_0._txtTips = gohelper.findChildText(arg_4_0.viewGO, "layout/#go_Tips/image_TipsBG/txt_Tips")
 end
 
-function slot0.onDestroyView(slot0)
-	NavigateMgr.instance:removeEscape(slot0.viewName)
+function var_0_0.onDestroyView(arg_5_0)
+	NavigateMgr.instance:removeEscape(arg_5_0.viewName)
 	AchievementLevelController.instance:onCloseView()
 
-	if slot0._items then
-		for slot4, slot5 in pairs(slot0._items) do
-			slot5.icon:dispose()
+	if arg_5_0._items then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._items) do
+			iter_5_1.icon:dispose()
 		end
 
-		slot0._items = nil
+		arg_5_0._items = nil
 	end
 
-	slot0._simagebg:UnLoadImage()
+	arg_5_0._simagebg:UnLoadImage()
 end
 
-function slot0.onOpen(slot0)
-	AchievementLevelController.instance:onOpenView(slot0.viewParam.achievementId, slot0.viewParam.achievementIds)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.achievementId
+	local var_6_1 = arg_6_0.viewParam.achievementIds
 
-	slot0._newTaskCache = {}
+	AchievementLevelController.instance:onOpenView(var_6_0, var_6_1)
 
-	slot0:addEventCb(AchievementLevelController.instance, AchievementEvent.LevelViewUpdated, slot0.refreshUI, slot0)
-	slot0:addEventCb(AchievementController.instance, AchievementEvent.UpdateAchievements, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+	arg_6_0._newTaskCache = {}
+
+	arg_6_0:addEventCb(AchievementLevelController.instance, AchievementEvent.LevelViewUpdated, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(AchievementController.instance, AchievementEvent.UpdateAchievements, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshInfo()
-	slot0:refreshSelected()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshInfo()
+	arg_8_0:refreshSelected()
 end
 
-slot0.BtnNormalAlpha = 1
-slot0.BtnDisableAlpha = 0.3
+var_0_0.BtnNormalAlpha = 1
+var_0_0.BtnDisableAlpha = 0.3
 
-function slot0.refreshInfo(slot0)
-	if not AchievementLevelModel.instance:getCurrentTask() then
-		slot0._txtdesc.text = ""
-		slot0._txtextradesc.text = ""
+function var_0_0.refreshInfo(arg_9_0)
+	local var_9_0 = AchievementLevelModel.instance:getCurrentTask()
+
+	if not var_9_0 then
+		arg_9_0._txtdesc.text = ""
+		arg_9_0._txtextradesc.text = ""
 
 		logError("cannot find AchievementTaskConfig, achievementId = " .. tostring(AchievementLevelModel.instance:getAchievement()))
 
 		return
 	end
 
-	slot0._txtdesc.text = slot1.desc
-	slot0._txtextradesc.text = slot1.extraDesc
+	arg_9_0._txtdesc.text = var_9_0.desc
+	arg_9_0._txtextradesc.text = var_9_0.extraDesc
 
-	if AchievementConfig.instance:getAchievement(slot1.achievementId) then
-		slot0._txtname.text = slot2.name
+	local var_9_1 = AchievementConfig.instance:getAchievement(var_9_0.achievementId)
 
-		slot0:updateUpGradeTipsVisible(slot1.id, slot2.groupId)
+	if var_9_1 then
+		arg_9_0._txtname.text = var_9_1.name
+
+		arg_9_0:updateUpGradeTipsVisible(var_9_0.id, var_9_1.groupId)
 	else
-		slot0._txtname.text = ""
+		arg_9_0._txtname.text = ""
 	end
 
-	slot0._txtpage.text = string.format("%s/%s", AchievementLevelModel.instance:getCurPageIndex(), AchievementLevelModel.instance:getTotalPageCount())
-	slot0._btnnextCanvasGroup.alpha = AchievementLevelModel.instance:hasNext() and uv0.BtnNormalAlpha or uv0.BtnDisableAlpha
-	slot0._btnprevCanvasGroup.alpha = AchievementLevelModel.instance:hasPrev() and uv0.BtnNormalAlpha or uv0.BtnDisableAlpha
+	arg_9_0._txtpage.text = string.format("%s/%s", AchievementLevelModel.instance:getCurPageIndex(), AchievementLevelModel.instance:getTotalPageCount())
+	arg_9_0._btnnextCanvasGroup.alpha = AchievementLevelModel.instance:hasNext() and var_0_0.BtnNormalAlpha or var_0_0.BtnDisableAlpha
+	arg_9_0._btnprevCanvasGroup.alpha = AchievementLevelModel.instance:hasPrev() and var_0_0.BtnNormalAlpha or var_0_0.BtnDisableAlpha
 end
 
-function slot0.updateUpGradeTipsVisible(slot0, slot1, slot2)
-	slot4 = false
+function var_0_0.updateUpGradeTipsVisible(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = AchievementConfig.instance:getGroup(arg_10_2)
+	local var_10_1 = false
 
-	if AchievementConfig.instance:getGroup(slot2) and slot3.unLockAchievement == slot1 then
-		slot4 = not AchievementModel.instance:isAchievementTaskFinished(slot1)
+	if var_10_0 and var_10_0.unLockAchievement == arg_10_1 then
+		var_10_1 = not AchievementModel.instance:isAchievementTaskFinished(arg_10_1)
 	end
 
-	gohelper.setActive(slot0._goTips, slot4)
+	gohelper.setActive(arg_10_0._goTips, var_10_1)
 
-	slot0._txtTips.text = formatLuaLang("achievementlevelview_upgradetips", slot3 and slot3.name or "")
+	arg_10_0._txtTips.text = formatLuaLang("achievementlevelview_upgradetips", var_10_0 and var_10_0.name or "")
 end
 
-slot0.UnFinishIconColor = "#4D4D4D"
-slot0.FinishIconColor = "#FFFFFF"
+var_0_0.UnFinishIconColor = "#4D4D4D"
+var_0_0.FinishIconColor = "#FFFFFF"
 
-function slot0.refreshSelected(slot0)
-	for slot5, slot6 in ipairs(slot0._items) do
-		if AchievementLevelModel.instance:getTaskByIndex(slot5) then
-			gohelper.setActive(slot6.go, true)
-			slot6.icon:setData(slot7)
-			gohelper.setActive(slot6.goselect, slot7 == AchievementLevelModel.instance:getCurrentTask())
+function var_0_0.refreshSelected(arg_11_0)
+	local var_11_0 = true
 
-			slot9 = AchievementModel.instance:getById(slot7.id) and slot8.hasFinished
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._items) do
+		local var_11_1 = AchievementLevelModel.instance:getTaskByIndex(iter_11_0)
 
-			gohelper.setActive(slot6.gounachieve, not slot9)
-			gohelper.setActive(slot6.goachieve, slot9)
-			gohelper.setActive(slot6.goarrow1, not slot9)
-			gohelper.setActive(slot6.goarrow2, slot9)
+		if var_11_1 then
+			gohelper.setActive(iter_11_1.go, true)
+			iter_11_1.icon:setData(var_11_1)
+			gohelper.setActive(iter_11_1.goselect, var_11_1 == AchievementLevelModel.instance:getCurrentTask())
 
-			if not slot9 then
-				slot6.txtunachieve.text = slot0:getUnAchievementTip(slot8, slot7, true)
+			local var_11_2 = AchievementModel.instance:getById(var_11_1.id)
+			local var_11_3 = var_11_2 and var_11_2.hasFinished
+
+			gohelper.setActive(iter_11_1.gounachieve, not var_11_3)
+			gohelper.setActive(iter_11_1.goachieve, var_11_3)
+			gohelper.setActive(iter_11_1.goarrow1, not var_11_3)
+			gohelper.setActive(iter_11_1.goarrow2, var_11_3)
+
+			if not var_11_3 then
+				iter_11_1.txtunachieve.text = arg_11_0:getUnAchievementTip(var_11_2, var_11_1, var_11_0)
 			else
-				if slot8.isNew then
-					slot0._newTaskCache[slot8.id] = true
+				if var_11_2.isNew then
+					arg_11_0._newTaskCache[var_11_2.id] = true
 				end
 
-				if slot6.goarrow2Animator then
-					slot6.goarrow2Animator:Play("arrow_open", 0, slot0._newTaskCache[slot8.id] and 0 or 1)
+				if iter_11_1.goarrow2Animator then
+					local var_11_4 = arg_11_0._newTaskCache[var_11_2.id] and 0 or 1
+
+					iter_11_1.goarrow2Animator:Play("arrow_open", 0, var_11_4)
 				end
 			end
 
-			slot6.txttime.text = slot9 and TimeUtil.localTime2ServerTimeString(slot8.finishTime) or ""
+			iter_11_1.txttime.text = var_11_3 and TimeUtil.localTime2ServerTimeString(var_11_2.finishTime) or ""
 
-			slot6.icon:setIconColor(slot9 and uv0.FinishIconColor or uv0.UnFinishIconColor)
-			slot6.icon:setSelectIconVisible(false)
+			iter_11_1.icon:setIconColor(var_11_3 and var_0_0.FinishIconColor or var_0_0.UnFinishIconColor)
+			iter_11_1.icon:setSelectIconVisible(false)
 
-			slot1 = slot9
+			var_11_0 = var_11_3
 		else
-			gohelper.setActive(slot6.go, false)
+			gohelper.setActive(iter_11_1.go, false)
 		end
 	end
 end
 
-function slot0.getUnAchievementTip(slot0, slot1, slot2, slot3)
-	slot4 = ""
+function var_0_0.getUnAchievementTip(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = ""
 
-	return (not slot3 or GameUtil.getSubPlaceholderLuaLang(luaLang("achievementlevelview_taskprogress"), {
-		slot1 and slot1.progress or 0,
-		slot2 and slot2.maxProgress or 0
-	})) and luaLang("p_achievementlevelview_unget")
+	if arg_12_3 then
+		local var_12_1 = arg_12_2 and arg_12_2.maxProgress or 0
+		local var_12_2 = arg_12_1 and arg_12_1.progress or 0
+		local var_12_3 = {
+			var_12_2,
+			var_12_1
+		}
+
+		var_12_0 = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementlevelview_taskprogress"), var_12_3)
+	else
+		var_12_0 = luaLang("p_achievementlevelview_unget")
+	end
+
+	return var_12_0
 end
 
-slot0.MaxItemCount = 3
+var_0_0.MaxItemCount = 3
 
-function slot0.checkInitItems(slot0)
-	if slot0._items then
+function var_0_0.checkInitItems(arg_13_0)
+	if arg_13_0._items then
 		return
 	end
 
-	slot0._items = {}
+	arg_13_0._items = {}
 
-	for slot4 = 1, uv0.MaxItemCount do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "#simage_bg/#go_container/#go_icon" .. tostring(slot4))
-		slot5.goselect = gohelper.findChild(slot5.go, "go_select")
-		slot5.goachieve = gohelper.findChild(slot5.go, "go_achieve")
-		slot5.txttime = gohelper.findChildText(slot5.go, "go_achieve/txt_time")
-		slot5.gounachieve = gohelper.findChild(slot5.go, "go_unachieve")
-		slot5.txtunachieve = gohelper.findChildText(slot5.go, "go_unachieve/unachieve")
-		slot5.goarrow1 = gohelper.findChild(slot5.go, "go_arrow/#go_arrow1")
-		slot5.goarrow2 = gohelper.findChild(slot5.go, "go_arrow/#go_arrow2")
-		slot5.goarrow2Animator = gohelper.onceAddComponent(slot5.goarrow2, gohelper.Type_Animator)
-		slot5.icon = AchievementMainIcon.New()
+	for iter_13_0 = 1, var_0_0.MaxItemCount do
+		local var_13_0 = arg_13_0:getUserDataTb_()
 
-		slot5.icon:init(slot0:getResInst(AchievementEnum.MainIconPath, gohelper.findChild(slot5.go, "go_pos"), "icon"))
-		slot5.icon:setNameTxtVisible(false)
-		slot5.icon:setClickCall(slot0.onClickIcon, slot0, slot4)
+		var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "#simage_bg/#go_container/#go_icon" .. tostring(iter_13_0))
+		var_13_0.goselect = gohelper.findChild(var_13_0.go, "go_select")
+		var_13_0.goachieve = gohelper.findChild(var_13_0.go, "go_achieve")
+		var_13_0.txttime = gohelper.findChildText(var_13_0.go, "go_achieve/txt_time")
+		var_13_0.gounachieve = gohelper.findChild(var_13_0.go, "go_unachieve")
+		var_13_0.txtunachieve = gohelper.findChildText(var_13_0.go, "go_unachieve/unachieve")
+		var_13_0.goarrow1 = gohelper.findChild(var_13_0.go, "go_arrow/#go_arrow1")
+		var_13_0.goarrow2 = gohelper.findChild(var_13_0.go, "go_arrow/#go_arrow2")
+		var_13_0.goarrow2Animator = gohelper.onceAddComponent(var_13_0.goarrow2, gohelper.Type_Animator)
 
-		slot0._items[slot4] = slot5
+		local var_13_1 = gohelper.findChild(var_13_0.go, "go_pos")
+		local var_13_2 = arg_13_0:getResInst(AchievementEnum.MainIconPath, var_13_1, "icon")
+
+		var_13_0.icon = AchievementMainIcon.New()
+
+		var_13_0.icon:init(var_13_2)
+		var_13_0.icon:setNameTxtVisible(false)
+		var_13_0.icon:setClickCall(arg_13_0.onClickIcon, arg_13_0, iter_13_0)
+
+		arg_13_0._items[iter_13_0] = var_13_0
 	end
 end
 
-function slot0.onClickIcon(slot0, slot1)
-	if AchievementLevelModel.instance:getTaskByIndex(slot1) then
-		slot0._newTaskCache = {}
+function var_0_0.onClickIcon(arg_14_0, arg_14_1)
+	local var_14_0 = AchievementLevelModel.instance:getTaskByIndex(arg_14_1)
 
-		AchievementLevelController.instance:selectTask(slot2.id)
+	if var_14_0 then
+		arg_14_0._newTaskCache = {}
+
+		AchievementLevelController.instance:selectTask(var_14_0.id)
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_15_0)
+	arg_15_0:closeThis()
 end
 
-function slot0._btnnextOnClick(slot0)
-	slot0._newTaskCache = {}
+function var_0_0._btnnextOnClick(arg_16_0)
+	arg_16_0._newTaskCache = {}
 
 	AchievementLevelController.instance:scrollTask(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_weiqicard_switch)
 end
 
-function slot0._btnprevOnClick(slot0)
-	slot0._newTaskCache = {}
+function var_0_0._btnprevOnClick(arg_17_0)
+	arg_17_0._newTaskCache = {}
 
 	AchievementLevelController.instance:scrollTask(false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_weiqicard_switch)
 end
 
-return slot0
+return var_0_0

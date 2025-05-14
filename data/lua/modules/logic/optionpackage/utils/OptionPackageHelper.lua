@@ -1,27 +1,38 @@
-module("modules.logic.optionpackage.utils.OptionPackageHelper", package.seeall)
+﻿module("modules.logic.optionpackage.utils.OptionPackageHelper", package.seeall)
 
 return {
-	formatLangPackName = function (slot0, slot1)
-		return string.format("%s-%s", slot0, slot1)
+	formatLangPackName = function(arg_1_0, arg_1_1)
+		return string.format("%s-%s", arg_1_0, arg_1_1)
 	end,
-	getLeftSizeMBorGB = function (slot0, slot1)
-		slot5 = "GB"
+	getLeftSizeMBorGB = function(arg_2_0, arg_2_1)
+		arg_2_1 = arg_2_1 or 0
 
-		if math.max(0, slot0 - (slot1 or 0)) / 1073741824 < 0.1 then
-			slot5 = "MB"
+		local var_2_0 = math.max(0, arg_2_0 - arg_2_1)
+		local var_2_1 = 1073741824
+		local var_2_2 = var_2_0 / var_2_1
+		local var_2_3 = "GB"
 
-			if slot2 / 1048576 < 0.01 then
-				slot4 = 0.01
+		if var_2_2 < 0.1 then
+			var_2_1 = 1048576
+			var_2_2 = var_2_0 / var_2_1
+			var_2_3 = "MB"
+
+			if var_2_2 < 0.01 then
+				var_2_2 = 0.01
 			end
 		end
 
-		return slot4, math.max(0.01, slot0 / slot3), slot5
+		return var_2_2, math.max(0.01, arg_2_0 / var_2_1), var_2_3
 	end,
-	getLeftSizeMBNum = function (slot0, slot1)
-		if math.max(0, slot0 - (slot1 or 0)) / 1048576 < 0.01 then
-			slot4 = 0.01
+	getLeftSizeMBNum = function(arg_3_0, arg_3_1)
+		arg_3_1 = arg_3_1 or 0
+
+		local var_3_0 = math.max(0, arg_3_0 - arg_3_1) / 1048576
+
+		if var_3_0 < 0.01 then
+			var_3_0 = 0.01
 		end
 
-		return slot4
+		return var_3_0
 	end
 }

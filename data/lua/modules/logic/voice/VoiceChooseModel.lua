@@ -1,46 +1,53 @@
-module("modules.logic.voice.VoiceChooseModel", package.seeall)
+﻿module("modules.logic.voice.VoiceChooseModel", package.seeall)
 
-slot0 = class("VoiceChooseModel", ListScrollModel)
+local var_0_0 = class("VoiceChooseModel", ListScrollModel)
 
-function slot0.initModel(slot0, slot1)
-	slot3 = {}
+function var_0_0.initModel(arg_1_0, arg_1_1)
+	local var_1_0 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_1_1 = {}
+	local var_1_2 = SLFramework.GameUpdate.OptionalUpdate.Instance
 
-	for slot8 = 1, #HotUpdateVoiceMgr.instance:getSupportVoiceLangs() do
-		slot9 = slot2[slot8]
-		slot11 = SLFramework.GameUpdate.OptionalUpdate.Instance:GetLocalVersion(slot9)
+	for iter_1_0 = 1, #var_1_0 do
+		local var_1_3 = var_1_0[iter_1_0]
+		local var_1_4 = GameConfig:GetDefaultVoiceShortcut()
+		local var_1_5 = var_1_2:GetLocalVersion(var_1_3)
 
-		if slot9 == GameConfig:GetDefaultVoiceShortcut() then
-			table.insert(slot3, 1, {
-				lang = slot9,
-				choose = slot9 == slot1
+		if var_1_3 == var_1_4 then
+			table.insert(var_1_1, 1, {
+				lang = var_1_3,
+				choose = var_1_3 == arg_1_1
 			})
-		elseif not string.nilorempty(slot11) then
-			table.insert(slot3, {
-				lang = slot9,
-				choose = slot9 == slot1
+		elseif not string.nilorempty(var_1_5) then
+			table.insert(var_1_1, {
+				lang = var_1_3,
+				choose = var_1_3 == arg_1_1
 			})
 		end
 	end
 
-	slot0:setList(slot3)
+	arg_1_0:setList(var_1_1)
 end
 
-function slot0.getChoose(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if slot6.choose then
-			return slot6.lang
+function var_0_0.getChoose(arg_2_0)
+	local var_2_0 = arg_2_0:getList()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		if iter_2_1.choose then
+			return iter_2_1.lang
 		end
 	end
 end
 
-function slot0.choose(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		slot7.choose = slot7.lang == slot1
+function var_0_0.choose(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getList()
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		iter_3_1.choose = iter_3_1.lang == arg_3_1
 	end
 
-	slot0:onModelUpdate()
+	arg_3_0:onModelUpdate()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,108 +1,122 @@
-module("modules.logic.versionactivity2_5.enter.view.subview.VersionActivity2_5LiangYueEnterView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.enter.view.subview.VersionActivity2_5LiangYueEnterView", package.seeall)
 
-slot0 = class("VersionActivity2_5LiangYueEnterView", VersionActivityEnterBaseSubView)
+local var_0_0 = class("VersionActivity2_5LiangYueEnterView", VersionActivityEnterBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Right/#txt_Descr")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Right/#simage_Title")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	slot0._btnEnter = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Enter")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "Right/#btn_Enter/#go_reddot")
-	slot0._btnLocked = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Locked")
-	slot0._txtUnLocked = gohelper.findChildText(slot0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
-	slot0._goTry = gohelper.findChild(slot0.viewGO, "Right/#go_Try")
-	slot0._goTips = gohelper.findChild(slot0.viewGO, "Right/#go_Try/#go_Tips")
-	slot0._simageReward = gohelper.findChildSingleImage(slot0.viewGO, "Right/#go_Try/#go_Tips/#simage_Reward")
-	slot0._txtNum = gohelper.findChildText(slot0.viewGO, "Right/#go_Try/#go_Tips/#txt_Num")
-	slot0._btnitem = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_Try/#go_Tips/#btn_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Descr")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
+	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
+	arg_1_0._txtUnLocked = gohelper.findChildText(arg_1_0.viewGO, "Right/#btn_Locked/#txt_UnLocked")
+	arg_1_0._goTry = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Try")
+	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Try/#go_Tips")
+	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#simage_Reward")
+	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#txt_Num")
+	arg_1_0._btnitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/#go_Tips/#btn_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnEnter:AddClickListener(slot0._btnEnterOnClick, slot0)
-	slot0._btnLocked:AddClickListener(slot0._btnLockedOnClick, slot0)
-	slot0._btnitem:AddClickListener(slot0._btnitemOnClick, slot0)
-	slot0._btnTrial:AddClickListener(slot0._btnTrialOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
+	arg_2_0._btnLocked:AddClickListener(arg_2_0._btnLockedOnClick, arg_2_0)
+	arg_2_0._btnitem:AddClickListener(arg_2_0._btnitemOnClick, arg_2_0)
+	arg_2_0._btnTrial:AddClickListener(arg_2_0._btnTrialOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnEnter:RemoveClickListener()
-	slot0._btnLocked:RemoveClickListener()
-	slot0._btnitem:RemoveClickListener()
-	slot0._btnTrial:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnEnter:RemoveClickListener()
+	arg_3_0._btnLocked:RemoveClickListener()
+	arg_3_0._btnitem:RemoveClickListener()
+	arg_3_0._btnTrial:RemoveClickListener()
 end
 
-function slot0._btnEnterOnClick(slot0)
-	LiangYueController.instance:enterLevelView(slot0.actId)
+function var_0_0._btnEnterOnClick(arg_4_0)
+	LiangYueController.instance:enterLevelView(arg_4_0.actId)
 end
 
-function slot0._btnLockedOnClick(slot0)
-	slot1, slot2 = OpenHelper.getToastIdAndParam(slot0.actCo.openId)
+function var_0_0._btnLockedOnClick(arg_5_0)
+	local var_5_0, var_5_1 = OpenHelper.getToastIdAndParam(arg_5_0.actCo.openId)
 
-	if slot1 and slot1 ~= 0 then
-		GameFacade.showToast(slot1)
+	if var_5_0 and var_5_0 ~= 0 then
+		GameFacade.showToast(var_5_0)
 	end
 end
 
-function slot0._btnitemOnClick(slot0)
+function var_0_0._btnitemOnClick(arg_6_0)
+	return
 end
 
-function slot0._btnTrialOnClick(slot0)
-	if ActivityHelper.getActivityStatus(slot0.actId) == ActivityEnum.ActivityStatus.Normal then
-		if slot0.actCo.tryoutEpisode <= 0 then
+function var_0_0._btnTrialOnClick(arg_7_0)
+	if ActivityHelper.getActivityStatus(arg_7_0.actId) == ActivityEnum.ActivityStatus.Normal then
+		local var_7_0 = arg_7_0.actCo.tryoutEpisode
+
+		if var_7_0 <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		DungeonFightController.instance:enterFight(DungeonConfig.instance:getEpisodeCO(slot1).chapterId, slot1)
+		local var_7_1 = DungeonConfig.instance:getEpisodeCO(var_7_0)
+
+		DungeonFightController.instance:enterFight(var_7_1.chapterId, var_7_0)
 	else
-		slot0:_clickLock()
+		arg_7_0:_clickLock()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnTrial = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_Try/image_TryBtn")
-	slot0.actId = VersionActivity2_5Enum.ActivityId.LiangYue
-	slot0.actCo = ActivityConfig.instance:getActivityCo(slot0.actId)
-	slot0._txtDescr.text = slot0.actCo.actDesc
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._btnTrial = gohelper.findChildButtonWithAudio(arg_8_0.viewGO, "Right/#go_Try/image_TryBtn")
+	arg_8_0.actId = VersionActivity2_5Enum.ActivityId.LiangYue
+	arg_8_0.actCo = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
+	arg_8_0._txtDescr.text = arg_8_0.actCo.actDesc
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.V2a5_Act184)
-	uv0.super.onOpen(slot0)
-	slot0:_refreshTime()
-	TaskDispatcher.runRepeat(slot0._refreshTime, slot0, TimeUtil.OneMinuteSecond)
+function var_0_0.onOpen(arg_10_0)
+	RedDotController.instance:addRedDot(arg_10_0._goreddot, RedDotEnum.DotNode.V2a5_Act184)
+	var_0_0.super.onOpen(arg_10_0)
+	arg_10_0:_refreshTime()
+	TaskDispatcher.runRepeat(arg_10_0._refreshTime, arg_10_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0._refreshTime(slot0)
-	if ActivityModel.instance:getActivityInfo()[slot0.actId] then
-		gohelper.setActive(slot0._txtLimitTime.gameObject, slot2:getRealEndTimeStamp() - ServerTime.now() > 0)
+function var_0_0._refreshTime(arg_11_0)
+	local var_11_0 = arg_11_0.actId
+	local var_11_1 = ActivityModel.instance:getActivityInfo()[var_11_0]
 
-		if slot3 > 0 then
-			slot0._txtLimitTime.text = TimeUtil.SecondToActivityTimeFormat(slot3)
+	if var_11_1 then
+		local var_11_2 = var_11_1:getRealEndTimeStamp() - ServerTime.now()
+
+		gohelper.setActive(arg_11_0._txtLimitTime.gameObject, var_11_2 > 0)
+
+		if var_11_2 > 0 then
+			local var_11_3 = TimeUtil.SecondToActivityTimeFormat(var_11_2)
+
+			arg_11_0._txtLimitTime.text = var_11_3
 		end
 
-		slot4 = ActivityHelper.getActivityStatus(slot1) ~= ActivityEnum.ActivityStatus.Normal
+		local var_11_4 = ActivityHelper.getActivityStatus(var_11_0) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(slot0._btnEnter, not slot4)
-		gohelper.setActive(slot0._btnLocked, slot4)
+		gohelper.setActive(arg_11_0._btnEnter, not var_11_4)
+		gohelper.setActive(arg_11_0._btnLocked, var_11_4)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshTime, slot0)
+function var_0_0.onClose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._refreshTime, arg_12_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

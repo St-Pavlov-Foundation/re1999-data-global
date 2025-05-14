@@ -1,82 +1,90 @@
-module("modules.logic.settings.view.SettingsOtherView", package.seeall)
+﻿module("modules.logic.settings.view.SettingsOtherView", package.seeall)
 
-slot0 = class("SettingsOtherView", BaseView)
+local var_0_0 = class("SettingsOtherView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goscreenshot = gohelper.findChild(slot0.viewGO, "#go_screenshot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goscreenshot = gohelper.findChild(arg_1_0.viewGO, "#go_screenshot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._itemTableDict = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._itemTableDict = {}
 
-	slot0:_initItem(slot0._goscreenshot, "screenshot")
+	arg_4_0:_initItem(arg_4_0._goscreenshot, "screenshot")
 end
 
-function slot0._initItem(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.btn = gohelper.findChildButtonWithAudio(slot1, "switch/btn")
-	slot3.off = gohelper.findChild(slot1, "switch/btn/off")
-	slot3.on = gohelper.findChild(slot1, "switch/btn/on")
+function var_0_0._initItem(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getUserDataTb_()
 
-	slot3.btn:AddClickListener(slot0._onSwitchClick, slot0, slot2)
+	var_5_0.btn = gohelper.findChildButtonWithAudio(arg_5_1, "switch/btn")
+	var_5_0.off = gohelper.findChild(arg_5_1, "switch/btn/off")
+	var_5_0.on = gohelper.findChild(arg_5_1, "switch/btn/on")
 
-	slot0._itemTableDict[slot2] = slot3
+	var_5_0.btn:AddClickListener(arg_5_0._onSwitchClick, arg_5_0, arg_5_2)
+
+	arg_5_0._itemTableDict[arg_5_2] = var_5_0
 end
 
-function slot0._onSwitchClick(slot0, slot1)
+function var_0_0._onSwitchClick(arg_6_0, arg_6_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if slot1 == "screenshot" then
-		SettingsModel.instance:setScreenshotSwitch(not SettingsModel.instance:getScreenshotSwitch())
+	if arg_6_1 == "screenshot" then
+		local var_6_0 = not SettingsModel.instance:getScreenshotSwitch()
+
+		SettingsModel.instance:setScreenshotSwitch(var_6_0)
 	end
 
-	slot0:_refreshSwitchUI(slot1)
+	arg_6_0:_refreshSwitchUI(arg_6_1)
 end
 
-function slot0._refreshSwitchUI(slot0, slot1)
-	if not slot0._itemTableDict[slot1] then
+function var_0_0._refreshSwitchUI(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._itemTableDict[arg_7_1]
+
+	if not var_7_0 then
 		return
 	end
 
-	slot3 = false
+	local var_7_1 = false
 
-	if slot1 == "screenshot" then
-		slot3 = SettingsModel.instance:getScreenshotSwitch()
+	if arg_7_1 == "screenshot" then
+		var_7_1 = SettingsModel.instance:getScreenshotSwitch()
 	end
 
-	gohelper.setActive(slot2.on, slot3)
-	gohelper.setActive(slot2.off, not slot3)
+	gohelper.setActive(var_7_0.on, var_7_1)
+	gohelper.setActive(var_7_0.off, not var_7_1)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshSwitchUI("screenshot")
+function var_0_0._refreshUI(arg_10_0)
+	arg_10_0:_refreshSwitchUI("screenshot")
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._itemTableDict) do
-		slot5.btn:RemoveClickListener()
+function var_0_0.onDestroyView(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._itemTableDict) do
+		iter_12_1.btn:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

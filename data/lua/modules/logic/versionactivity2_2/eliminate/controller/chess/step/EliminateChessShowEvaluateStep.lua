@@ -1,20 +1,22 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowEvaluateStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowEvaluateStep", package.seeall)
 
-slot0 = class("EliminateChessShowEvaluateStep", EliminateChessStepBase)
+local var_0_0 = class("EliminateChessShowEvaluateStep", EliminateChessStepBase)
 
-function slot0.onStart(slot0)
-	if EliminateChessModel.instance:calEvaluateLevel() == nil then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = EliminateChessModel.instance:calEvaluateLevel()
+
+	if var_1_0 == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	EliminateChessController.instance:openNoticeView(false, false, false, true, slot1, EliminateEnum.ShowEvaluateTime, slot0._onPlayEnd, slot0)
+	EliminateChessController.instance:openNoticeView(false, false, false, true, var_1_0, EliminateEnum.ShowEvaluateTime, arg_1_0._onPlayEnd, arg_1_0)
 	EliminateChessModel.instance:clearTotalCount()
 end
 
-function slot0._onPlayEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onPlayEnd(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

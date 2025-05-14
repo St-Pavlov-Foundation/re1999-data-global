@@ -1,21 +1,27 @@
-module("modules.logic.fight.system.work.FightWorkCorrectData", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCorrectData", package.seeall)
 
-slot0 = class("FightWorkCorrectData", BaseWork)
+local var_0_0 = class("FightWorkCorrectData", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	if FightModel.instance:getCurRoundMO() and slot2._exPointMODict then
-		for slot7, slot8 in pairs(slot3) do
-			if FightDataHelper.entityMgr:getById(slot7) and slot8.currentHp and slot8.currentHp ~= slot9.currentHp then
-				slot9:setHp(slot8.currentHp)
-				FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, slot7)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = FightModel.instance:getCurRoundMO()
+	local var_1_1 = var_1_0 and var_1_0._exPointMODict
+
+	if var_1_1 then
+		for iter_1_0, iter_1_1 in pairs(var_1_1) do
+			local var_1_2 = FightDataHelper.entityMgr:getById(iter_1_0)
+
+			if var_1_2 and iter_1_1.currentHp and iter_1_1.currentHp ~= var_1_2.currentHp then
+				var_1_2:setHp(iter_1_1.currentHp)
+				FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, iter_1_0)
 			end
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

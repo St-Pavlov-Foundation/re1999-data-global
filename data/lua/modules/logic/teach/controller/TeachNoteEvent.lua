@@ -1,10 +1,11 @@
-module("modules.logic.teach.controller.TeachNoteEvent", package.seeall)
+﻿module("modules.logic.teach.controller.TeachNoteEvent", package.seeall)
 
-slot0 = _M
-slot0.ClickTopicItem = 1001
-slot0.GetServerTopicInfo = 2001
-slot0.GetServerTopicReward = 2002
-slot0.GetServerTeachNoteFinalReward = 2003
-slot0.GetServerSetOpenSuccess = 2004
+local var_0_0 = _M
 
-return slot0
+var_0_0.ClickTopicItem = 1001
+var_0_0.GetServerTopicInfo = 2001
+var_0_0.GetServerTopicReward = 2002
+var_0_0.GetServerTeachNoteFinalReward = 2003
+var_0_0.GetServerSetOpenSuccess = 2004
+
+return var_0_0

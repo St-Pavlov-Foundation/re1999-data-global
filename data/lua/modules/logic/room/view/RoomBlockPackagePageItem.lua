@@ -1,33 +1,33 @@
-module("modules.logic.room.view.RoomBlockPackagePageItem", package.seeall)
+﻿module("modules.logic.room.view.RoomBlockPackagePageItem", package.seeall)
 
-slot0 = class("RoomBlockPackagePageItem", LuaCompBase)
+local var_0_0 = class("RoomBlockPackagePageItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._goselect = gohelper.findChild(slot0._go, "go_select")
-	slot0._goitem = gohelper.findChild(slot0._go, "image")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._goselect = gohelper.findChild(arg_1_0._go, "go_select")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0._go, "image")
 end
 
-function slot0.getGO(slot0)
-	return slot0._go
+function var_0_0.getGO(arg_2_0)
+	return arg_2_0._go
 end
 
-function slot0.setShowIcon(slot0, slot1)
-	slot0._isShowIcon = slot1
+function var_0_0.setShowIcon(arg_3_0, arg_3_1)
+	arg_3_0._isShowIcon = arg_3_1
 
-	gohelper.setActive(slot0._imageIcon.gameObject, slot1 and true or false)
+	gohelper.setActive(arg_3_0._imageIcon.gameObject, arg_3_1 and true or false)
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.setSelect(arg_4_0, arg_4_1)
+	arg_4_0._isSelect = arg_4_1
 
-	gohelper.setActive(slot0._goselect, slot1 and true or false)
+	gohelper.setActive(arg_4_0._goselect, arg_4_1 and true or false)
 end
 
-function slot0.beforeDestroy(slot0)
-	gohelper.setActive(slot0._goitem, false)
-	gohelper.setActive(slot0._goselect, false)
-	gohelper.setActive(slot0._go, true)
+function var_0_0.beforeDestroy(arg_5_0)
+	gohelper.setActive(arg_5_0._goitem, false)
+	gohelper.setActive(arg_5_0._goselect, false)
+	gohelper.setActive(arg_5_0._go, true)
 end
 
-return slot0
+return var_0_0

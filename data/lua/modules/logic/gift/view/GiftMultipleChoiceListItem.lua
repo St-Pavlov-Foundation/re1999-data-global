@@ -1,80 +1,82 @@
-module("modules.logic.gift.view.GiftMultipleChoiceListItem", package.seeall)
+﻿module("modules.logic.gift.view.GiftMultipleChoiceListItem", package.seeall)
 
-slot0 = class("GiftMultipleChoiceListItem", ListScrollCell)
+local var_0_0 = class("GiftMultipleChoiceListItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._itemPos = gohelper.findChild(slot1, "itemPos")
-	slot0._name = gohelper.findChildText(slot1, "name")
-	slot0._choose = gohelper.findChild(slot1, "mask")
-	slot0._clickGO = gohelper.findChild(slot1, "click")
-	slot0._goneed = gohelper.findChild(slot1, "#go_needtag")
-	slot0._clickitem = gohelper.getClick(slot0._clickGO)
-	slot0._longclickItem = SLFramework.UGUI.UILongPressListener.Get(slot0._clickGO)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._itemPos = gohelper.findChild(arg_1_1, "itemPos")
+	arg_1_0._name = gohelper.findChildText(arg_1_1, "name")
+	arg_1_0._choose = gohelper.findChild(arg_1_1, "mask")
+	arg_1_0._clickGO = gohelper.findChild(arg_1_1, "click")
+	arg_1_0._goneed = gohelper.findChild(arg_1_1, "#go_needtag")
+	arg_1_0._clickitem = gohelper.getClick(arg_1_0._clickGO)
+	arg_1_0._longclickItem = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._clickGO)
 
-	slot0._longclickItem:SetLongPressTime({
+	arg_1_0._longclickItem:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	slot0._rightClick = SLFramework.UGUI.UIRightClickListener.Get(slot0._clickGO)
+	arg_1_0._rightClick = SLFramework.UGUI.UIRightClickListener.Get(arg_1_0._clickGO)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._clickitem:AddClickListener(slot0._onClickItem, slot0)
-	slot0._longclickItem:AddLongPressListener(slot0._onLongClickItem, slot0)
-	slot0._rightClick:AddClickListener(slot0._onRightClickItem, slot0)
-	GiftController.instance:registerCallback(GiftEvent.MultipleChoice, slot0._refreshItem, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._clickitem:AddClickListener(arg_2_0._onClickItem, arg_2_0)
+	arg_2_0._longclickItem:AddLongPressListener(arg_2_0._onLongClickItem, arg_2_0)
+	arg_2_0._rightClick:AddClickListener(arg_2_0._onRightClickItem, arg_2_0)
+	GiftController.instance:registerCallback(GiftEvent.MultipleChoice, arg_2_0._refreshItem, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._clickitem:RemoveClickListener()
-	slot0._longclickItem:RemoveLongPressListener()
-	slot0._rightClick:RemoveClickListener()
-	GiftController.instance:unregisterCallback(GiftEvent.MultipleChoice, slot0._refreshItem, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._clickitem:RemoveClickListener()
+	arg_3_0._longclickItem:RemoveLongPressListener()
+	arg_3_0._rightClick:RemoveClickListener()
+	GiftController.instance:unregisterCallback(GiftEvent.MultipleChoice, arg_3_0._refreshItem, arg_3_0)
 end
 
-function slot0._refreshItem(slot0)
-	gohelper.setActive(slot0._choose, slot0._mo.index == GiftModel.instance:getMultipleChoiceIndex())
+function var_0_0._refreshItem(arg_4_0)
+	gohelper.setActive(arg_4_0._choose, arg_4_0._mo.index == GiftModel.instance:getMultipleChoiceIndex())
 end
 
-function slot0._onClickItem(slot0)
-	gohelper.setActive(slot0._choose, true)
-	GiftModel.instance:setMultipleChoiceIndex(slot0._mo.index)
-	GiftModel.instance:setMultipleChoiceId(slot0._mo.materilId)
+function var_0_0._onClickItem(arg_5_0)
+	gohelper.setActive(arg_5_0._choose, true)
+	GiftModel.instance:setMultipleChoiceIndex(arg_5_0._mo.index)
+	GiftModel.instance:setMultipleChoiceId(arg_5_0._mo.materilId)
 	GiftController.instance:dispatchEvent(GiftEvent.MultipleChoice)
 end
 
-function slot0._onRightClickItem(slot0)
+function var_0_0._onRightClickItem(arg_6_0)
 	GameGlobalMgr.instance:playTouchEffect()
-	slot0:_onLongClickItem()
+	arg_6_0:_onLongClickItem()
 end
 
-function slot0._onLongClickItem(slot0)
-	MaterialTipController.instance:showMaterialInfo(slot0._mo.materilType, slot0._mo.materilId)
+function var_0_0._onLongClickItem(arg_7_0)
+	MaterialTipController.instance:showMaterialInfo(arg_7_0._mo.materilType, arg_7_0._mo.materilId)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2, slot3 = ItemModel.instance:getItemConfigAndIcon(slot0._mo.materilType, slot0._mo.materilId)
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	if slot0._mo.materilType == MaterialEnum.MaterialType.Equip then
-		slot0._itemIcon = IconMgr.instance:getCommonEquipIcon(slot0._itemPos)
+	local var_8_0, var_8_1 = ItemModel.instance:getItemConfigAndIcon(arg_8_0._mo.materilType, arg_8_0._mo.materilId)
 
-		slot0._itemIcon:setMOValue(slot0._mo.materilType, slot0._mo.materilId, slot0._mo.quantity, nil, true)
-		slot0._itemIcon:hideLv(true)
+	if arg_8_0._mo.materilType == MaterialEnum.MaterialType.Equip then
+		arg_8_0._itemIcon = IconMgr.instance:getCommonEquipIcon(arg_8_0._itemPos)
+
+		arg_8_0._itemIcon:setMOValue(arg_8_0._mo.materilType, arg_8_0._mo.materilId, arg_8_0._mo.quantity, nil, true)
+		arg_8_0._itemIcon:hideLv(true)
 	else
-		slot0._itemIcon = IconMgr.instance:getCommonItemIcon(slot0._itemPos)
+		arg_8_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_8_0._itemPos)
 
-		slot0._itemIcon:setMOValue(slot0._mo.materilType, slot0._mo.materilId, slot0._mo.quantity, nil, true)
+		arg_8_0._itemIcon:setMOValue(arg_8_0._mo.materilType, arg_8_0._mo.materilId, arg_8_0._mo.quantity, nil, true)
 	end
 
-	slot0._name.text = slot2.name
+	arg_8_0._name.text = var_8_0.name
 
-	gohelper.setActive(slot0._goneed, GiftModel.instance:isGiftNeed(slot0._mo.materilId))
-	slot0:_refreshItem()
+	gohelper.setActive(arg_8_0._goneed, GiftModel.instance:isGiftNeed(arg_8_0._mo.materilId))
+	arg_8_0:_refreshItem()
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,201 +1,240 @@
-module("modules.logic.room.view.manufacture.RoomOneKeyAddPopView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomOneKeyAddPopView", package.seeall)
 
-slot0 = class("RoomOneKeyAddPopView", BaseView)
-slot1 = 1
+local var_0_0 = class("RoomOneKeyAddPopView", BaseView)
+local var_0_1 = 1
 
-function slot0.onInitView(slot0)
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "right/#go_addPop/#txt_title")
-	slot0._btncloseAdd = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_addPop/#btn_closeAdd")
-	slot0._gotabparent = gohelper.findChild(slot0.viewGO, "right/#go_addPop/#go_tabList")
-	slot0._gotabitem = gohelper.findChild(slot0.viewGO, "right/#go_addPop/#go_tabList/#go_tabItem")
-	slot0._btnmin = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_addPop/#go_num/#btn_min")
-	slot0._btnsub = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_addPop/#go_num/#btn_sub")
-	slot0._inputvalue = gohelper.findChildTextMeshInputField(slot0.viewGO, "right/#go_addPop/#go_num/valuebg/#input_value")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_addPop/#go_num/#btn_add")
-	slot0._btnmax = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_addPop/#go_num/#btn_max")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "right/#go_addPop/#txt_title")
+	arg_1_0._btncloseAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_addPop/#btn_closeAdd")
+	arg_1_0._gotabparent = gohelper.findChild(arg_1_0.viewGO, "right/#go_addPop/#go_tabList")
+	arg_1_0._gotabitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_addPop/#go_tabList/#go_tabItem")
+	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_addPop/#go_num/#btn_min")
+	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_addPop/#go_num/#btn_sub")
+	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "right/#go_addPop/#go_num/valuebg/#input_value")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_addPop/#go_num/#btn_add")
+	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_addPop/#go_num/#btn_max")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloseAdd:AddClickListener(slot0._btncloseAddOnClick, slot0)
-	slot0._btnmin:AddClickListener(slot0._btnminOnClick, slot0)
-	slot0._btnsub:AddClickListener(slot0._btnsubOnClick, slot0)
-	slot0._inputvalue:AddOnValueChanged(slot0._onInputValueChange, slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btnmax:AddClickListener(slot0._btnmaxOnClick, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, slot0.refreshCount, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0, LuaEventSystem.High)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloseAdd:AddClickListener(arg_2_0._btncloseAddOnClick, arg_2_0)
+	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
+	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
+	arg_2_0._inputvalue:AddOnValueChanged(arg_2_0._onInputValueChange, arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, arg_2_0.refreshCount, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0, LuaEventSystem.High)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloseAdd:RemoveClickListener()
-	slot0._btnmin:RemoveClickListener()
-	slot0._btnsub:RemoveClickListener()
-	slot0._inputvalue:RemoveOnValueChanged()
-	slot0._btnadd:RemoveClickListener()
-	slot0._btnmax:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, slot0.refreshCount, slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloseAdd:RemoveClickListener()
+	arg_3_0._btnmin:RemoveClickListener()
+	arg_3_0._btnsub:RemoveClickListener()
+	arg_3_0._inputvalue:RemoveOnValueChanged()
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btnmax:RemoveClickListener()
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, arg_3_0.refreshCount, arg_3_0)
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
 
-	if slot0.tabItemList then
-		for slot4, slot5 in ipairs(slot0.tabItemList) do
-			slot5.click:RemoveClickListener()
+	if arg_3_0.tabItemList then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0.tabItemList) do
+			iter_3_1.click:RemoveClickListener()
 		end
 	end
 end
 
-function slot0._btncloseAddOnClick(slot0)
-	slot0.viewContainer:oneKeyViewSetAddPopActive(false)
+function var_0_0._btncloseAddOnClick(arg_4_0)
+	arg_4_0.viewContainer:oneKeyViewSetAddPopActive(false)
 end
 
-function slot0._tabItemOnClick(slot0, slot1)
-	if slot0._selectTabIndex == slot1 then
+function var_0_0._tabItemOnClick(arg_5_0, arg_5_1)
+	if arg_5_0._selectTabIndex == arg_5_1 then
 		return
 	end
 
-	if not (slot0.tabItemList and slot0.tabItemList[slot1]) then
+	local var_5_0 = arg_5_0.tabItemList and arg_5_0.tabItemList[arg_5_1]
+
+	if not var_5_0 then
 		return
 	end
 
-	if slot0.tabItemList[slot0._selectTabIndex] then
-		gohelper.setActive(slot3.goSelected, false)
-		gohelper.setActive(slot3.goUnselected, true)
-		SLFramework.UGUI.GuiHelper.SetColor(slot3.icon, "#5C5B5A")
+	local var_5_1 = arg_5_0.tabItemList[arg_5_0._selectTabIndex]
+
+	if var_5_1 then
+		gohelper.setActive(var_5_1.goSelected, false)
+		gohelper.setActive(var_5_1.goUnselected, true)
+		SLFramework.UGUI.GuiHelper.SetColor(var_5_1.icon, "#5C5B5A")
 	end
 
-	gohelper.setActive(slot2.goSelected, true)
-	gohelper.setActive(slot2.goUnselected, false)
-	SLFramework.UGUI.GuiHelper.SetColor(slot2.icon, "#BB693D")
+	gohelper.setActive(var_5_0.goSelected, true)
+	gohelper.setActive(var_5_0.goUnselected, false)
+	SLFramework.UGUI.GuiHelper.SetColor(var_5_0.icon, "#BB693D")
 
-	slot0._selectTabIndex = slot1
-	slot0._txttitle.text = RoomMapBuildingModel.instance:getBuildingMOById(slot2.idList[1]) and slot4.config.useDesc or ""
+	arg_5_0._selectTabIndex = arg_5_1
 
-	OneKeyAddPopListModel.instance:setOneKeyFormulaItemList(slot2.idList)
+	local var_5_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_5_0.idList[1])
+	local var_5_3 = var_5_2 and var_5_2.config.useDesc or ""
+
+	arg_5_0._txttitle.text = var_5_3
+
+	OneKeyAddPopListModel.instance:setOneKeyFormulaItemList(var_5_0.idList)
 end
 
-function slot0._btnminOnClick(slot0)
-	slot0:changeCount(OneKeyAddPopListModel.MINI_COUNT)
+function var_0_0._btnminOnClick(arg_6_0)
+	arg_6_0:changeCount(OneKeyAddPopListModel.MINI_COUNT)
 end
 
-function slot0._btnsubOnClick(slot0)
-	slot1, slot2 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+function var_0_0._btnsubOnClick(arg_7_0)
+	local var_7_0, var_7_1 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-	slot0:changeCount(slot2 - 1)
+	arg_7_0:changeCount(var_7_1 - 1)
 end
 
-function slot0._onInputValueChange(slot0, slot1)
-	slot0:changeCount(tonumber(slot1))
+function var_0_0._onInputValueChange(arg_8_0, arg_8_1)
+	arg_8_0:changeCount(tonumber(arg_8_1))
 end
 
-function slot0._btnaddOnClick(slot0)
-	slot1, slot2 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+function var_0_0._btnaddOnClick(arg_9_0)
+	local var_9_0, var_9_1 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-	slot0:changeCount(slot2 + 1)
+	arg_9_0:changeCount(var_9_1 + 1)
 end
 
-function slot0._btnmaxOnClick(slot0)
-	slot0:changeCount(ManufactureModel.instance:getMaxCanProductCount(OneKeyAddPopListModel.instance:getSelectedManufactureItem()))
+function var_0_0._btnmaxOnClick(arg_10_0)
+	local var_10_0 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+	local var_10_1 = ManufactureModel.instance:getMaxCanProductCount(var_10_0)
+
+	arg_10_0:changeCount(var_10_1)
 end
 
-function slot0.changeCount(slot0, slot1)
-	if not OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
+function var_0_0.changeCount(arg_11_0, arg_11_1)
+	local var_11_0 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+
+	if not var_11_0 then
 		GameFacade.showToast(ToastEnum.RoomNotSelectedManufactureItem)
 
 		return
 	end
 
-	ManufactureController.instance:oneKeySelectCustomManufactureItem(slot2, Mathf.Clamp(slot1 or OneKeyAddPopListModel.MINI_COUNT, OneKeyAddPopListModel.MINI_COUNT, ManufactureModel.instance:getMaxCanProductCount(slot2)), true)
+	arg_11_1 = arg_11_1 or OneKeyAddPopListModel.MINI_COUNT
+
+	local var_11_1 = ManufactureModel.instance:getMaxCanProductCount(var_11_0)
+
+	arg_11_1 = Mathf.Clamp(arg_11_1, OneKeyAddPopListModel.MINI_COUNT, var_11_1)
+
+	ManufactureController.instance:oneKeySelectCustomManufactureItem(var_11_0, arg_11_1, true)
 end
 
-function slot0._onItemChanged(slot0)
+function var_0_0._onItemChanged(arg_12_0)
 	ManufactureController.instance:updateTraceNeedItemDict()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._btncloseAdd, false)
+function var_0_0._editableInitView(arg_13_0)
+	gohelper.setActive(arg_13_0._btncloseAdd, false)
 	ManufactureController.instance:updateTraceNeedItemDict()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_14_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:initTab()
-	slot0:_tabItemOnClick(slot0:getDefaultTabIndex())
-	slot0:refreshCount()
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0:initTab()
+
+	local var_15_0 = arg_15_0:getDefaultTabIndex()
+
+	arg_15_0:_tabItemOnClick(var_15_0)
+	arg_15_0:refreshCount()
 end
 
-function slot0.getDefaultTabIndex(slot0)
-	if not OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
-		return uv0
+function var_0_0.getDefaultTabIndex(arg_16_0)
+	local var_16_0 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+
+	if not var_16_0 then
+		return var_0_1
 	end
 
-	slot3 = {
-		[slot8] = true
-	}
+	local var_16_1 = ManufactureConfig.instance:getManufactureItemBelongBuildingList(var_16_0)
+	local var_16_2 = {}
 
-	for slot7, slot8 in ipairs(ManufactureConfig.instance:getManufactureItemBelongBuildingList(slot1)) do
-		-- Nothing
+	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+		var_16_2[iter_16_1] = true
 	end
 
-	for slot7, slot8 in ipairs(slot0.tabItemList) do
-		for slot12, slot13 in ipairs(slot8.idList) do
-			if RoomMapBuildingModel.instance:getBuildingMOById(slot13) and slot3[slot14.buildingId] then
-				return slot7
+	for iter_16_2, iter_16_3 in ipairs(arg_16_0.tabItemList) do
+		for iter_16_4, iter_16_5 in ipairs(iter_16_3.idList) do
+			local var_16_3 = RoomMapBuildingModel.instance:getBuildingMOById(iter_16_5)
+
+			if var_16_3 and var_16_2[var_16_3.buildingId] then
+				return iter_16_2
 			end
 		end
 	end
 
-	return uv0
+	return var_0_1
 end
 
-function slot0.initTab(slot0)
-	if slot0.tabItemList then
-		for slot4, slot5 in ipairs(slot0.tabItemList) do
-			slot5.click:removeClickListener()
+function var_0_0.initTab(arg_17_0)
+	if arg_17_0.tabItemList then
+		for iter_17_0, iter_17_1 in ipairs(arg_17_0.tabItemList) do
+			iter_17_1.click:removeClickListener()
 		end
 	end
 
-	slot0.tabItemList = {}
+	arg_17_0.tabItemList = {}
 
-	gohelper.CreateObjList(slot0, slot0.onSetTabItem, OneKeyAddPopListModel.instance:getTabDataList(), slot0._gotabparent, slot0._gotabitem)
+	local var_17_0 = OneKeyAddPopListModel.instance:getTabDataList()
+
+	gohelper.CreateObjList(arg_17_0, arg_17_0.onSetTabItem, var_17_0, arg_17_0._gotabparent, arg_17_0._gotabitem)
 end
 
-function slot0.onSetTabItem(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot4.go = slot1
-	slot4.idList = slot2
-	slot4.icon = gohelper.findChildImage(slot1, "#simage_icon")
-	slot4.goSelected = gohelper.findChild(slot1, "#go_selected")
-	slot4.goUnselected = gohelper.findChild(slot1, "#go_unselected")
-	slot4.click = gohelper.findChildClickWithDefaultAudio(slot1, "#btn_click")
+function var_0_0.onSetTabItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = arg_18_0:getUserDataTb_()
 
-	slot4.click:AddClickListener(slot0._tabItemOnClick, slot0, slot3)
+	var_18_0.go = arg_18_1
+	var_18_0.idList = arg_18_2
+	var_18_0.icon = gohelper.findChildImage(arg_18_1, "#simage_icon")
+	var_18_0.goSelected = gohelper.findChild(arg_18_1, "#go_selected")
+	var_18_0.goUnselected = gohelper.findChild(arg_18_1, "#go_unselected")
+	var_18_0.click = gohelper.findChildClickWithDefaultAudio(arg_18_1, "#btn_click")
 
-	slot5 = nil
+	var_18_0.click:AddClickListener(arg_18_0._tabItemOnClick, arg_18_0, arg_18_3)
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot4.idList[1]) then
-		slot5 = (#slot4.idList <= 1 or RoomConfig.instance:getBuildingTypeIcon(RoomConfig.instance:getBuildingType(slot6.buildingId))) and ManufactureConfig.instance:getManufactureBuildingIcon(slot7)
+	local var_18_1
+	local var_18_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_18_0.idList[1])
+
+	if var_18_2 then
+		local var_18_3 = var_18_2.buildingId
+		local var_18_4 = RoomConfig.instance:getBuildingType(var_18_3)
+
+		if #var_18_0.idList > 1 then
+			var_18_1 = RoomConfig.instance:getBuildingTypeIcon(var_18_4)
+		else
+			var_18_1 = ManufactureConfig.instance:getManufactureBuildingIcon(var_18_3)
+		end
 	end
 
-	UISpriteSetMgr.instance:setRoomSprite(slot4.icon, slot5)
+	UISpriteSetMgr.instance:setRoomSprite(var_18_0.icon, var_18_1)
 
-	slot0.tabItemList[slot3] = slot4
+	arg_18_0.tabItemList[arg_18_3] = var_18_0
 end
 
-function slot0.refreshCount(slot0)
-	slot1, slot2 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+function var_0_0.refreshCount(arg_19_0)
+	local var_19_0, var_19_1 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-	slot0._inputvalue:SetTextWithoutNotify(tostring(slot2))
+	arg_19_0._inputvalue:SetTextWithoutNotify(tostring(var_19_1))
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	return
 end
 
-return slot0
+return var_0_0

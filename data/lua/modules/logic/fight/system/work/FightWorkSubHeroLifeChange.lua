@@ -1,15 +1,16 @@
-module("modules.logic.fight.system.work.FightWorkSubHeroLifeChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSubHeroLifeChange", package.seeall)
 
-slot0 = class("FightWorkSubHeroLifeChange", FightEffectBase)
+local var_0_0 = class("FightWorkSubHeroLifeChange", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0._entityId = slot0._actEffectMO.targetId
+function var_0_0.onStart(arg_1_0)
+	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
 
-	FightController.instance:dispatchEvent(FightEvent.ChangeSubEntityHp, slot0._entityId, slot0._actEffectMO.effectNum)
-	slot0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.ChangeSubEntityHp, arg_1_0._entityId, arg_1_0._actEffectMO.effectNum)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

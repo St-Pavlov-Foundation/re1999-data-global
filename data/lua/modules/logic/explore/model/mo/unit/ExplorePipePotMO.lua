@@ -1,21 +1,21 @@
-module("modules.logic.explore.model.mo.unit.ExplorePipePotMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExplorePipePotMO", package.seeall)
 
-slot0 = class("ExplorePipePotMO", ExploreBaseUnitMO)
+local var_0_0 = class("ExplorePipePotMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.pipeColor = tonumber(slot0.specialDatas[1])
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.pipeColor = tonumber(arg_1_0.specialDatas[1])
 end
 
-function slot0.getBindPotId(slot0)
-	return slot0:getInteractInfoMO().statusInfo.bindInteractId or 0
+function var_0_0.getBindPotId(arg_2_0)
+	return arg_2_0:getInteractInfoMO().statusInfo.bindInteractId or 0
 end
 
-function slot0.getColor(slot0)
-	return slot0.pipeColor
+function var_0_0.getColor(arg_3_0)
+	return arg_3_0.pipeColor
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_4_0)
 	return ExplorePipePotUnit
 end
 
-return slot0
+return var_0_0

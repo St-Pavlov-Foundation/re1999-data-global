@@ -1,168 +1,182 @@
-module("modules.logic.scene.cachot.comp.CachotPlayerComp", package.seeall)
+﻿module("modules.logic.scene.cachot.comp.CachotPlayerComp", package.seeall)
 
-slot0 = class("CachotPlayerComp", BaseSceneComp)
-slot1 = 0.05
-slot2 = 0.1
-slot3 = 0.02
-slot4 = 0.3
-slot5 = 1
+local var_0_0 = class("CachotPlayerComp", BaseSceneComp)
+local var_0_1 = 0.05
+local var_0_2 = 0.1
+local var_0_3 = 0.02
+local var_0_4 = 0.3
+local var_0_5 = 1
 
-function slot0.init(slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.PlayerMove, slot0.onPlayerMove, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.PlayerStopMove, slot0.onStopMove, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.PlayerMoveTo, slot0.moveToPos, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChangeAnimEnd, slot0._resetPlayerPos, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChangeBegin, slot0._clearAsset, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, slot0._beginTriggerEvent, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-	slot0._levelComp:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0.onSceneLevelLoaded, slot0)
+function var_0_0.init(arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.PlayerMove, arg_1_0.onPlayerMove, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.PlayerStopMove, arg_1_0.onStopMove, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.PlayerMoveTo, arg_1_0.moveToPos, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChangeAnimEnd, arg_1_0._resetPlayerPos, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChangeBegin, arg_1_0._clearAsset, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_1_0._beginTriggerEvent, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseViewFinish, arg_1_0)
+	arg_1_0._levelComp:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_1_0.onSceneLevelLoaded, arg_1_0)
 
-	if slot0._levelComp:getSceneGo() then
-		slot0:onSceneLevelLoaded()
+	if arg_1_0._levelComp:getSceneGo() then
+		arg_1_0:onSceneLevelLoaded()
 	end
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot0._roomComp = slot0._scene.room
-	slot0._levelComp = slot0._scene.level
-	slot0._preloadComp = slot0._scene.preloader
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
+	arg_2_0._roomComp = arg_2_0._scene.room
+	arg_2_0._levelComp = arg_2_0._scene.level
+	arg_2_0._preloadComp = arg_2_0._scene.preloader
 end
 
-function slot0.onSceneLevelLoaded(slot0)
-	slot2 = lua_scene_level.configDict[slot0:getCurScene():getCurLevelId()]
-	slot0._sceneGo = slot0._levelComp:getSceneGo()
-	slot3 = slot0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
-	slot3.enabled = false
+function var_0_0.onSceneLevelLoaded(arg_3_0)
+	local var_3_0 = arg_3_0:getCurScene():getCurLevelId()
+	local var_3_1 = lua_scene_level.configDict[var_3_0]
 
-	for slot8 = 0, slot3.runtimeAnimatorController.animationClips.Length - 1 do
-		if slot4[slot8].name:find("_role_middle$") then
-			slot0._playerAnim = slot4[slot8]
-		elseif slot9:find("_role_left$") then
-			slot0._playerAnimLeft = slot4[slot8]
-		elseif slot9:find("_role_right$") then
-			slot0._playerAnimRight = slot4[slot8]
+	arg_3_0._sceneGo = arg_3_0._levelComp:getSceneGo()
+
+	local var_3_2 = arg_3_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+
+	var_3_2.enabled = false
+
+	local var_3_3 = var_3_2.runtimeAnimatorController.animationClips
+
+	for iter_3_0 = 0, var_3_3.Length - 1 do
+		local var_3_4 = var_3_3[iter_3_0].name
+
+		if var_3_4:find("_role_middle$") then
+			arg_3_0._playerAnim = var_3_3[iter_3_0]
+		elseif var_3_4:find("_role_left$") then
+			arg_3_0._playerAnimLeft = var_3_3[iter_3_0]
+		elseif var_3_4:find("_role_right$") then
+			arg_3_0._playerAnimRight = var_3_3[iter_3_0]
 		else
-			slot0._sceneAnim = slot4[slot8]
+			arg_3_0._sceneAnim = var_3_3[iter_3_0]
 		end
 	end
 
-	slot0._playerSpeed = tonumber(V1a6_CachotConfig.instance:getConstConfig(V1a6_CachotEnum.Const.MoveSpeed).value) or 3
-	slot0._animLen = slot0._playerAnim.length
-	slot0._animLeftLen = slot0._playerAnimLeft.length
-	slot0._animRightLen = slot0._playerAnimRight.length
+	arg_3_0._playerSpeed = tonumber(V1a6_CachotConfig.instance:getConstConfig(V1a6_CachotEnum.Const.MoveSpeed).value) or 3
+	arg_3_0._animLen = arg_3_0._playerAnim.length
+	arg_3_0._animLeftLen = arg_3_0._playerAnimLeft.length
+	arg_3_0._animRightLen = arg_3_0._playerAnimRight.length
 
-	slot0:_setAnimValForce(slot0:_getDefaultVal(slot2) - slot0._animLeftLen)
+	local var_3_5 = arg_3_0:_getDefaultVal(var_3_1) - arg_3_0._animLeftLen
 
-	slot0._playerGo = gohelper.findChild(slot0._sceneGo, "Obj-Plant/role/body")
-	slot0._player = CachotPlayer.Create(slot0._playerGo)
+	arg_3_0:_setAnimValForce(var_3_5)
 
-	slot0._player:setDir(false)
+	arg_3_0._playerGo = gohelper.findChild(arg_3_0._sceneGo, "Obj-Plant/role/body")
+	arg_3_0._player = CachotPlayer.Create(arg_3_0._playerGo)
+
+	arg_3_0._player:setDir(false)
 
 	if ViewMgr.instance:isOpen(ViewName.LoadingView) or ViewMgr.instance:isOpen(ViewName.V1a6_CachotLoadingView) or ViewMgr.instance:isOpen(ViewName.V1a6_CachotLayerChangeView) then
-		slot0._player:setActive(false)
+		arg_3_0._player:setActive(false)
 	else
-		slot0._player:setActive(true)
-		slot0._player:playEnterAnim(not V1a6_CachotModel.instance:isInRogue())
+		arg_3_0._player:setActive(true)
+		arg_3_0._player:playEnterAnim(not V1a6_CachotModel.instance:isInRogue())
 	end
 
 	if not V1a6_CachotModel.instance:isInRogue() then
-		slot0._doorEffect = CachotDoorEffect.Create(slot0._preloadComp:getResInst(CachotScenePreloader.DoorEffectPath, gohelper.findChild(slot0._sceneGo, "Obj-Plant/all/diffuse/near_b/effects/trigger/effect_door")))
+		local var_3_6 = gohelper.findChild(arg_3_0._sceneGo, "Obj-Plant/all/diffuse/near_b/effects/trigger/effect_door")
+
+		arg_3_0._doorEffect = CachotDoorEffect.Create(arg_3_0._preloadComp:getResInst(CachotScenePreloader.DoorEffectPath, var_3_6))
 	end
 
-	TaskDispatcher.runRepeat(slot0._cameraFollow, slot0, 0, -1)
+	TaskDispatcher.runRepeat(arg_3_0._cameraFollow, arg_3_0, 0, -1)
 end
 
-function slot0._getDefaultVal(slot0, slot1)
-	if V1a6_CachotModel.instance:getRogueInfo() and lua_rogue_room.configDict[slot2.room].type == 0 then
+function var_0_0._getDefaultVal(arg_4_0, arg_4_1)
+	local var_4_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if var_4_0 and lua_rogue_room.configDict[var_4_0.room].type == 0 then
 		return tonumber(lua_rogue_const.configDict[V1a6_CachotEnum.Const.FirstRoomValue].value)
 	end
 
-	return tonumber(slot1.cardCamera) or 0
+	return tonumber(arg_4_1.cardCamera) or 0
 end
 
-function slot0._clearAsset(slot0)
-	slot0._sceneAnim = nil
-	slot0._playerAnim = nil
-	slot0._playerAnimLeft = nil
-	slot0._playerAnimRight = nil
-	slot0._sceneGo = nil
+function var_0_0._clearAsset(arg_5_0)
+	arg_5_0._sceneAnim = nil
+	arg_5_0._playerAnim = nil
+	arg_5_0._playerAnimLeft = nil
+	arg_5_0._playerAnimRight = nil
+	arg_5_0._sceneGo = nil
 
-	TaskDispatcher.cancelTask(slot0._cameraFollow, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._cameraFollow, arg_5_0)
 
-	slot0._targetTr = nil
+	arg_5_0._targetTr = nil
 
-	TaskDispatcher.cancelTask(slot0._everyFrameMove, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._everyFrameMove, arg_5_0)
 	V1a6_CachotRoomModel.instance:setNearEventMo(nil)
 end
 
-function slot0.onPlayerMove(slot0, slot1)
+function var_0_0.onPlayerMove(arg_6_0, arg_6_1)
 	if V1a6_CachotRoomModel.instance.isLockPlayerMove then
 		return false
 	end
 
-	if not slot0._player or not slot0._player:isCanMove() then
+	if not arg_6_0._player or not arg_6_0._player:isCanMove() then
 		return
 	end
 
-	if not slot0._sceneAnim then
+	if not arg_6_0._sceneAnim then
 		return
 	end
 
-	if slot0._targetTr then
-		slot0._targetTr = nil
+	if arg_6_0._targetTr then
+		arg_6_0._targetTr = nil
 
-		TaskDispatcher.cancelTask(slot0._everyFrameMove, slot0)
+		TaskDispatcher.cancelTask(arg_6_0._everyFrameMove, arg_6_0)
 	end
 
-	slot0._playerVal = slot0._playerVal + slot1 * UnityEngine.Time.deltaTime * slot0._playerSpeed
-	slot0._playerVal = Mathf.Clamp(slot0._playerVal, -slot0._animLeftLen, slot0._animLen + slot0._animRightLen)
+	arg_6_0._playerVal = arg_6_0._playerVal + arg_6_1 * UnityEngine.Time.deltaTime * arg_6_0._playerSpeed
+	arg_6_0._playerVal = Mathf.Clamp(arg_6_0._playerVal, -arg_6_0._animLeftLen, arg_6_0._animLen + arg_6_0._animRightLen)
 
-	slot0:_setPlayerDir(slot1 > 0)
-	slot0._player:setIsMove(true)
-	slot0:_movePlayer()
+	arg_6_0:_setPlayerDir(arg_6_1 > 0)
+	arg_6_0._player:setIsMove(true)
+	arg_6_0:_movePlayer()
 end
 
-function slot0._movePlayer(slot0)
-	if slot0._playerVal < 0 then
-		slot0._playerAnimLeft:SampleAnimation(slot0._sceneGo, slot0._animLeftLen + slot0._playerVal)
-	elseif slot0._animLen < slot0._playerVal then
-		slot0._playerAnimRight:SampleAnimation(slot0._sceneGo, slot0._playerVal - slot0._animLen)
-		slot0:_checkStartGame()
+function var_0_0._movePlayer(arg_7_0)
+	if arg_7_0._playerVal < 0 then
+		arg_7_0._playerAnimLeft:SampleAnimation(arg_7_0._sceneGo, arg_7_0._animLeftLen + arg_7_0._playerVal)
+	elseif arg_7_0._playerVal > arg_7_0._animLen then
+		arg_7_0._playerAnimRight:SampleAnimation(arg_7_0._sceneGo, arg_7_0._playerVal - arg_7_0._animLen)
+		arg_7_0:_checkStartGame()
 	else
-		slot0._playerAnim:SampleAnimation(slot0._sceneGo, slot0._playerVal)
+		arg_7_0._playerAnim:SampleAnimation(arg_7_0._sceneGo, arg_7_0._playerVal)
 	end
 
 	if V1a6_CachotModel.instance:isInRogue() then
-		slot0:_checkNearEvent()
-	elseif slot0._doorEffect then
-		slot0._doorEffect:setIsInDoor(slot0._playerVal > slot0._animLen + 0.5 * slot0._animRightLen)
+		arg_7_0:_checkNearEvent()
+	elseif arg_7_0._doorEffect then
+		arg_7_0._doorEffect:setIsInDoor(arg_7_0._playerVal > arg_7_0._animLen + 0.5 * arg_7_0._animRightLen)
 	end
 end
 
-function slot0._checkStartGame(slot0)
+function var_0_0._checkStartGame(arg_8_0)
 	if V1a6_CachotModel.instance:isInRogue() then
 		return
 	end
 
-	if slot0._playerVal == slot0._animLen + slot0._animRightLen then
+	if arg_8_0._playerVal == arg_8_0._animLen + arg_8_0._animRightLen then
 		ViewMgr.instance:closeView(ViewName.V1a6_CachotMainView)
-		slot0._player:showEffect(V1a6_CachotEnum.PlayerEffect.RoleTransEffect)
-		slot0._player:setActive(false)
+		arg_8_0._player:showEffect(V1a6_CachotEnum.PlayerEffect.RoleTransEffect)
+		arg_8_0._player:setActive(false)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_entrance_teleport)
-		TaskDispatcher.runDelay(slot0._onEffectFinish, slot0, 0.6)
+		TaskDispatcher.runDelay(arg_8_0._onEffectFinish, arg_8_0, 0.6)
 	end
 end
 
-function slot0._onEffectFinish(slot0)
-	TaskDispatcher.cancelTask(slot0._onEffectFinish, slot0)
+function var_0_0._onEffectFinish(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._onEffectFinish, arg_9_0)
 	V1a6_CachotController.instance:openV1a6_CachotDifficultyView()
-	slot0._doorEffect:hideEffect()
-	slot0._player:hideEffect(V1a6_CachotEnum.PlayerEffect.RoleTransEffect)
+	arg_9_0._doorEffect:hideEffect()
+	arg_9_0._player:hideEffect(V1a6_CachotEnum.PlayerEffect.RoleTransEffect)
 end
 
-function slot0.moveToPos(slot0, slot1)
-	if not slot0._player or not slot0._player:isCanMove() then
+function var_0_0.moveToPos(arg_10_0, arg_10_1)
+	if not arg_10_0._player or not arg_10_0._player:isCanMove() then
 		return
 	end
 
@@ -170,156 +184,179 @@ function slot0.moveToPos(slot0, slot1)
 		return false
 	end
 
-	if math.abs(slot1.position.x - slot0._player:getPos().x) < uv0 then
+	local var_10_0 = arg_10_0._player:getPos()
+	local var_10_1 = arg_10_1.position
+
+	if math.abs(var_10_1.x - var_10_0.x) < var_0_4 then
 		return
 	end
 
-	slot0._targetTr = slot1
+	arg_10_0._targetTr = arg_10_1
 
-	slot0:_setPlayerDir(slot2.x < slot3.x)
-	slot0._player:setIsMove(true)
-	TaskDispatcher.runRepeat(slot0._everyFrameMove, slot0, 0, -1)
+	arg_10_0:_setPlayerDir(var_10_1.x > var_10_0.x)
+	arg_10_0._player:setIsMove(true)
+	TaskDispatcher.runRepeat(arg_10_0._everyFrameMove, arg_10_0, 0, -1)
 end
 
-function slot0._cameraFollow(slot0)
-	if not slot0._sceneAnim then
+function var_0_0._cameraFollow(arg_11_0)
+	if not arg_11_0._sceneAnim then
 		return
 	end
 
-	if math.abs(slot0._playerVal - slot0._cameraVal) < uv0 then
+	local var_11_0 = math.abs(arg_11_0._playerVal - arg_11_0._cameraVal)
+
+	if var_11_0 < var_0_3 then
 		return
 	end
 
-	slot2 = nil
-	slot2 = slot0._cameraVal <= slot0._playerVal and 1 or -1
+	local var_11_1
+	local var_11_2 = arg_11_0._playerVal >= arg_11_0._cameraVal and 1 or -1
+	local var_11_3 = var_11_0 * var_0_1
 
-	if uv2 < slot1 * uv1 then
-		slot3 = uv2
+	if var_11_3 > var_0_2 then
+		var_11_3 = var_0_2
 	end
 
-	slot0._cameraVal = slot3 * slot2 + slot0._cameraVal
-	slot0._cameraVal = Mathf.Clamp(slot0._cameraVal, 0, slot0._animLen)
+	arg_11_0._cameraVal = var_11_3 * var_11_2 + arg_11_0._cameraVal
+	arg_11_0._cameraVal = Mathf.Clamp(arg_11_0._cameraVal, 0, arg_11_0._animLen)
 
-	slot0._sceneAnim:SampleAnimation(slot0._sceneGo, slot0._cameraVal)
+	arg_11_0._sceneAnim:SampleAnimation(arg_11_0._sceneGo, arg_11_0._cameraVal)
 end
 
-function slot0._everyFrameMove(slot0)
-	if math.abs(slot0._targetTr.position.x - slot0._player:getPos().x) < uv0 then
-		slot0._targetTr = nil
+function var_0_0._everyFrameMove(arg_12_0)
+	local var_12_0 = arg_12_0._player:getPos()
+	local var_12_1 = arg_12_0._targetTr.position
 
-		TaskDispatcher.cancelTask(slot0._everyFrameMove, slot0)
-		slot0:onStopMove()
+	if math.abs(var_12_1.x - var_12_0.x) < var_0_4 then
+		arg_12_0._targetTr = nil
+
+		TaskDispatcher.cancelTask(arg_12_0._everyFrameMove, arg_12_0)
+		arg_12_0:onStopMove()
 
 		return
 	end
 
-	slot0._playerVal = slot0._playerVal + UnityEngine.Time.deltaTime * slot0._playerSpeed * (slot1.x < slot2.x and 1 or -1)
-	slot0._playerVal = Mathf.Clamp(slot0._playerVal, -slot0._animLeftLen, slot0._animLen + slot0._animRightLen)
+	arg_12_0._playerVal = arg_12_0._playerVal + UnityEngine.Time.deltaTime * arg_12_0._playerSpeed * (var_12_1.x > var_12_0.x and 1 or -1)
+	arg_12_0._playerVal = Mathf.Clamp(arg_12_0._playerVal, -arg_12_0._animLeftLen, arg_12_0._animLen + arg_12_0._animRightLen)
 
-	slot0:_movePlayer()
+	arg_12_0:_movePlayer()
 end
 
-function slot0._checkNearEvent(slot0)
-	slot3 = nil
+function var_0_0._checkNearEvent(arg_13_0)
+	local var_13_0 = arg_13_0._player:getPos()
+	local var_13_1 = V1a6_CachotRoomModel.instance:getNearEventMo()
+	local var_13_2
 
-	if V1a6_CachotRoomModel.instance:getNearEventMo() and math.abs(slot0._levelComp:getEventTr(slot2.index).position.x - slot0._player:getPos().x) <= uv0 then
-		return
+	if var_13_1 then
+		local var_13_3 = arg_13_0._levelComp:getEventTr(var_13_1.index)
+
+		if math.abs(var_13_3.position.x - var_13_0.x) <= var_0_5 then
+			return
+		end
 	end
 
-	for slot8, slot9 in pairs(V1a6_CachotRoomModel.instance:getRoomEventMos()) do
-		if math.abs(slot0._levelComp:getEventTr(slot9.index).position.x - slot1.x) <= uv0 then
-			slot3 = slot9
+	local var_13_4 = V1a6_CachotRoomModel.instance:getRoomEventMos()
+
+	for iter_13_0, iter_13_1 in pairs(var_13_4) do
+		local var_13_5 = arg_13_0._levelComp:getEventTr(iter_13_1.index)
+
+		if math.abs(var_13_5.position.x - var_13_0.x) <= var_0_5 then
+			var_13_2 = iter_13_1
 
 			break
 		end
 	end
 
-	V1a6_CachotRoomModel.instance:setNearEventMo(slot3)
+	V1a6_CachotRoomModel.instance:setNearEventMo(var_13_2)
 end
 
-function slot0._setPlayerDir(slot0, slot1)
-	slot0._player:setDir(not slot1)
+function var_0_0._setPlayerDir(arg_14_0, arg_14_1)
+	arg_14_0._player:setDir(not arg_14_1)
 end
 
-function slot0._beginTriggerEvent(slot0)
-	slot0:onStopMove()
+function var_0_0._beginTriggerEvent(arg_15_0)
+	arg_15_0:onStopMove()
 
-	slot0._targetTr = nil
+	arg_15_0._targetTr = nil
 
-	TaskDispatcher.cancelTask(slot0._everyFrameMove, slot0)
-	slot0._player:playTriggerAnim()
+	TaskDispatcher.cancelTask(arg_15_0._everyFrameMove, arg_15_0)
+	arg_15_0._player:playTriggerAnim()
 end
 
-function slot0.onStopMove(slot0)
-	slot0._player:setIsMove(false)
+function var_0_0.onStopMove(arg_16_0)
+	arg_16_0._player:setIsMove(false)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.V1a6_CachotDifficultyView then
-		if slot0._player then
-			slot0._player:setActive(true)
+function var_0_0._onCloseViewFinish(arg_17_0, arg_17_1)
+	if arg_17_1 == ViewName.V1a6_CachotDifficultyView then
+		if arg_17_0._player then
+			arg_17_0._player:setActive(true)
 		end
 
-		slot0:_resetPlayerPos()
-	elseif (slot1 == ViewName.LoadingView or slot1 == ViewName.V1a6_CachotLoadingView or slot1 == ViewName.V1a6_CachotLayerChangeView) and slot0._player then
-		slot0._player:setActive(true)
-		slot0._player:playEnterAnim(not V1a6_CachotModel.instance:isInRogue())
+		arg_17_0:_resetPlayerPos()
+	elseif (arg_17_1 == ViewName.LoadingView or arg_17_1 == ViewName.V1a6_CachotLoadingView or arg_17_1 == ViewName.V1a6_CachotLayerChangeView) and arg_17_0._player then
+		arg_17_0._player:setActive(true)
+		arg_17_0._player:playEnterAnim(not V1a6_CachotModel.instance:isInRogue())
 	end
 end
 
-function slot0._resetPlayerPos(slot0)
-	slot0:_setAnimValForce(slot0:_getDefaultVal(lua_scene_level.configDict[slot0:getCurScene():getCurLevelId()]) - slot0._animLeftLen)
-	slot0._player:hideEffect(V1a6_CachotEnum.PlayerEffect.RoleTransEffect)
-	slot0:_movePlayer()
+function var_0_0._resetPlayerPos(arg_18_0)
+	local var_18_0 = arg_18_0:getCurScene():getCurLevelId()
+	local var_18_1 = lua_scene_level.configDict[var_18_0]
+	local var_18_2 = arg_18_0:_getDefaultVal(var_18_1) - arg_18_0._animLeftLen
+
+	arg_18_0:_setAnimValForce(var_18_2)
+	arg_18_0._player:hideEffect(V1a6_CachotEnum.PlayerEffect.RoleTransEffect)
+	arg_18_0:_movePlayer()
 end
 
-function slot0._setAnimValForce(slot0, slot1)
-	slot0._playerVal = slot1
-	slot0._cameraVal = Mathf.Clamp(slot1, 0, slot0._animLen)
+function var_0_0._setAnimValForce(arg_19_0, arg_19_1)
+	arg_19_0._playerVal = arg_19_1
+	arg_19_0._cameraVal = Mathf.Clamp(arg_19_1, 0, arg_19_0._animLen)
 
-	if slot1 < 0 then
-		slot0._sceneAnim:SampleAnimation(slot0._sceneGo, 0)
-		slot0._playerAnimLeft:SampleAnimation(slot0._sceneGo, slot0._animLeftLen + slot1)
-	elseif slot0._animLen < slot1 then
-		slot0._sceneAnim:SampleAnimation(slot0._sceneGo, 1)
-		slot0._playerAnimRight:SampleAnimation(slot0._sceneGo, slot1 - slot0._animLen)
+	if arg_19_1 < 0 then
+		arg_19_0._sceneAnim:SampleAnimation(arg_19_0._sceneGo, 0)
+		arg_19_0._playerAnimLeft:SampleAnimation(arg_19_0._sceneGo, arg_19_0._animLeftLen + arg_19_1)
+	elseif arg_19_1 > arg_19_0._animLen then
+		arg_19_0._sceneAnim:SampleAnimation(arg_19_0._sceneGo, 1)
+		arg_19_0._playerAnimRight:SampleAnimation(arg_19_0._sceneGo, arg_19_1 - arg_19_0._animLen)
 	else
-		slot0._playerAnim:SampleAnimation(slot0._sceneGo, slot1)
-		slot0._sceneAnim:SampleAnimation(slot0._sceneGo, slot1)
+		arg_19_0._playerAnim:SampleAnimation(arg_19_0._sceneGo, arg_19_1)
+		arg_19_0._sceneAnim:SampleAnimation(arg_19_0._sceneGo, arg_19_1)
 	end
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_20_0)
 	V1a6_CachotRoomModel.instance:setNearEventMo(nil)
-	TaskDispatcher.cancelTask(slot0._everyFrameMove, slot0)
-	TaskDispatcher.cancelTask(slot0._cameraFollow, slot0)
-	TaskDispatcher.cancelTask(slot0._onEffectFinish, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.PlayerMove, slot0.onPlayerMove, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.PlayerStopMove, slot0.onStopMove, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.PlayerMoveTo, slot0.moveToPos, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomChangeAnimEnd, slot0._resetPlayerPos, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomChangeBegin, slot0._clearAsset, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, slot0._beginTriggerEvent, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-	slot0._levelComp:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0.onSceneLevelLoaded, slot0)
+	TaskDispatcher.cancelTask(arg_20_0._everyFrameMove, arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._cameraFollow, arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._onEffectFinish, arg_20_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.PlayerMove, arg_20_0.onPlayerMove, arg_20_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.PlayerStopMove, arg_20_0.onStopMove, arg_20_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.PlayerMoveTo, arg_20_0.moveToPos, arg_20_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomChangeAnimEnd, arg_20_0._resetPlayerPos, arg_20_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomChangeBegin, arg_20_0._clearAsset, arg_20_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_20_0._beginTriggerEvent, arg_20_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_20_0._onCloseViewFinish, arg_20_0)
+	arg_20_0._levelComp:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_20_0.onSceneLevelLoaded, arg_20_0)
 
-	if slot0._player then
-		slot0._player:dispose()
+	if arg_20_0._player then
+		arg_20_0._player:dispose()
 
-		slot0._player = nil
+		arg_20_0._player = nil
 	end
 
-	if slot0._doorEffect then
-		slot0._doorEffect:dispose()
+	if arg_20_0._doorEffect then
+		arg_20_0._doorEffect:dispose()
 
-		slot0._doorEffect = nil
+		arg_20_0._doorEffect = nil
 	end
 
-	gohelper.destroy(slot0._playerGo)
+	gohelper.destroy(arg_20_0._playerGo)
 
-	slot0._playerGo = nil
-	slot0._targetTr = nil
-	slot0._scene = nil
+	arg_20_0._playerGo = nil
+	arg_20_0._targetTr = nil
+	arg_20_0._scene = nil
 end
 
-return slot0
+return var_0_0

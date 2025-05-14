@@ -1,15 +1,17 @@
-module("modules.logic.fight.system.work.FightWorkRoundOffset", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRoundOffset", package.seeall)
 
-slot0 = class("FightWorkRoundOffset", FightEffectBase)
+local var_0_0 = class("FightWorkRoundOffset", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot2 = slot0._actEffectMO.effectNum
-	FightModel.instance.maxRound = FightModel.instance:getMaxRound() + slot2
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightModel.instance:getMaxRound()
+	local var_1_1 = arg_1_0._actEffectMO.effectNum
 
-	FightModel.instance:setRoundOffset(slot2)
+	FightModel.instance.maxRound = var_1_0 + var_1_1
+
+	FightModel.instance:setRoundOffset(var_1_1)
 	FightController.instance:dispatchEvent(FightEvent.RefreshUIRound)
 
-	return slot0:onDone(true)
+	return arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

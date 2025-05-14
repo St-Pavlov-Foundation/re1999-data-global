@@ -1,54 +1,55 @@
-module("modules.logic.room.config.RoomLogConfig", package.seeall)
+﻿module("modules.logic.room.config.RoomLogConfig", package.seeall)
 
-slot0 = class("RoomLogConfig", BaseConfig)
+local var_0_0 = class("RoomLogConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._logList = nil
-	slot0._logDict = nil
-	slot0._logTagList = nil
-	slot0._logTagDict = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._logList = nil
+	arg_1_0._logDict = nil
+	arg_1_0._logTagList = nil
+	arg_1_0._logTagDict = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"log_room_character",
 		"log_room_tag"
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_3_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "log_room_character" then
-		slot0._logList = slot2.configList
-		slot0._logDict = slot2.configDict
+function var_0_0.onConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == "log_room_character" then
+		arg_4_0._logList = arg_4_2.configList
+		arg_4_0._logDict = arg_4_2.configDict
 
-		for slot6, slot7 in ipairs(slot0._logList) do
-			slot0._logDict[slot7.id] = slot7
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._logList) do
+			arg_4_0._logDict[iter_4_1.id] = iter_4_1
 		end
-	elseif slot1 == "log_room_tag" then
-		slot0._logTagList = slot2.configList
-		slot0._logTagDict = slot2.configDict
+	elseif arg_4_1 == "log_room_tag" then
+		arg_4_0._logTagList = arg_4_2.configList
+		arg_4_0._logTagDict = arg_4_2.configDict
 	end
 end
 
-function slot0.getLogList(slot0)
-	return slot0._logList
+function var_0_0.getLogList(arg_5_0)
+	return arg_5_0._logList
 end
 
-function slot0.getLogConfigById(slot0, slot1)
-	return slot0._logDict[slot1]
+function var_0_0.getLogConfigById(arg_6_0, arg_6_1)
+	return arg_6_0._logDict[arg_6_1]
 end
 
-function slot0.getLogTagList(slot0)
-	return slot0._logTagList
+function var_0_0.getLogTagList(arg_7_0)
+	return arg_7_0._logTagList
 end
 
-function slot0.getLogTagConfigById(slot0, slot1)
-	return slot0._logTagDict[slot1]
+function var_0_0.getLogTagConfigById(arg_8_0, arg_8_1)
+	return arg_8_0._logTagDict[arg_8_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

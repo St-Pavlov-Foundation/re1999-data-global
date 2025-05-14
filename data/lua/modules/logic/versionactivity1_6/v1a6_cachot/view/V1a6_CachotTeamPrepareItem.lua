@@ -1,12 +1,16 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPrepareItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPrepareItem", package.seeall)
 
-slot0 = class("V1a6_CachotTeamPrepareItem", V1a6_CachotTeamItem)
+local var_0_0 = class("V1a6_CachotTeamPrepareItem", V1a6_CachotTeamItem)
 
-function slot0.showNone(slot0)
-	gohelper.setActive(slot0._gorole, false)
-	gohelper.setActive(slot0._goheart, false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg_normal"), false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg_none"), true)
+function var_0_0.showNone(arg_1_0)
+	gohelper.setActive(arg_1_0._gorole, false)
+	gohelper.setActive(arg_1_0._goheart, false)
+
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "bg_normal")
+	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "bg_none")
+
+	gohelper.setActive(var_1_0, false)
+	gohelper.setActive(var_1_1, true)
 end
 
-return slot0
+return var_0_0

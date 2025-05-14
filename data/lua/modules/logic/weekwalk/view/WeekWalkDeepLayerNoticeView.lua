@@ -1,161 +1,192 @@
-module("modules.logic.weekwalk.view.WeekWalkDeepLayerNoticeView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkDeepLayerNoticeView", package.seeall)
 
-slot0 = class("WeekWalkDeepLayerNoticeView", BaseView)
+local var_0_0 = class("WeekWalkDeepLayerNoticeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg2")
-	slot0._txtlastprogress = gohelper.findChildText(slot0.viewGO, "rule/#txt_lastprogress")
-	slot0._imageruleicon = gohelper.findChildImage(slot0.viewGO, "rule/ruleinfo/#image_ruleicon")
-	slot0._imageruletag = gohelper.findChildImage(slot0.viewGO, "rule/ruleinfo/#image_ruletag")
-	slot0._txtruledesc = gohelper.findChildText(slot0.viewGO, "rule/ruleinfo/#txt_ruledesc")
-	slot0._simageruledescicon = gohelper.findChildSingleImage(slot0.viewGO, "rule/ruleinfo/mask/#simage_ruledescicon")
-	slot0._scrollrewards = gohelper.findChildScrollRect(slot0.viewGO, "rewards/#scroll_rewards")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "rewards/#scroll_rewards/Viewport/Content/#go_rewarditem")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "rewards/#btn_start")
-	slot0._btnruledetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "rule/ruleinfo/#btn_ruledetail")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
+	arg_1_0._txtlastprogress = gohelper.findChildText(arg_1_0.viewGO, "rule/#txt_lastprogress")
+	arg_1_0._imageruleicon = gohelper.findChildImage(arg_1_0.viewGO, "rule/ruleinfo/#image_ruleicon")
+	arg_1_0._imageruletag = gohelper.findChildImage(arg_1_0.viewGO, "rule/ruleinfo/#image_ruletag")
+	arg_1_0._txtruledesc = gohelper.findChildText(arg_1_0.viewGO, "rule/ruleinfo/#txt_ruledesc")
+	arg_1_0._simageruledescicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "rule/ruleinfo/mask/#simage_ruledescicon")
+	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "rewards/#scroll_rewards")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "rewards/#scroll_rewards/Viewport/Content/#go_rewarditem")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rewards/#btn_start")
+	arg_1_0._btnruledetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rule/ruleinfo/#btn_ruledetail")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0._btnruledetail:AddClickListener(slot0._btnruledetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0._btnruledetail:AddClickListener(arg_2_0._btnruledetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnstart:RemoveClickListener()
-	slot0._btnruledetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btnruledetail:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnstartOnClick(slot0)
-	slot0:openWeekWalkView()
+function var_0_0._btnstartOnClick(arg_5_0)
+	arg_5_0:openWeekWalkView()
 end
 
-function slot0._btnruledetailOnClick(slot0)
+function var_0_0._btnruledetailOnClick(arg_6_0)
 	WeekWalkController.instance:openWeekWalkRuleView()
 end
 
-function slot0.openWeekWalkView(slot0)
-	module_views_preloader.WeekWalkLayerViewPreload(function ()
-		uv0:delayOpenWeekWalkView()
+function var_0_0.openWeekWalkView(arg_7_0)
+	module_views_preloader.WeekWalkLayerViewPreload(function()
+		arg_7_0:delayOpenWeekWalkView()
 	end)
 end
 
-function slot0.delayOpenWeekWalkView(slot0)
-	slot0:closeThis()
+function var_0_0.delayOpenWeekWalkView(arg_9_0)
+	arg_9_0:closeThis()
 	WeekWalkController.instance:openWeekWalkLayerView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._info = WeekWalkModel.instance:getInfo()
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._info = WeekWalkModel.instance:getInfo()
 
-	if slot0._info.isPopDeepSettle then
-		slot0._info.isPopDeepSettle = false
+	if arg_10_0._info.isPopDeepSettle then
+		arg_10_0._info.isPopDeepSettle = false
 
 		WeekwalkRpc.instance:sendMarkPopDeepSettleRequest()
 	end
 
-	slot0._simagebg1:LoadImage(ResUrl.getWeekWalkBg("full/beijing_shen.jpg"))
-	slot0._simagemask:LoadImage(ResUrl.getWeekWalkBg("zhezhao.png"))
-	slot0._simagebg2:LoadImage(ResUrl.getWeekWalkBg("shenmian_tcdi.png"))
+	arg_10_0._simagebg1:LoadImage(ResUrl.getWeekWalkBg("full/beijing_shen.jpg"))
+	arg_10_0._simagemask:LoadImage(ResUrl.getWeekWalkBg("zhezhao.png"))
+	arg_10_0._simagebg2:LoadImage(ResUrl.getWeekWalkBg("shenmian_tcdi.png"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0._getRewardList(slot0)
-	slot1 = {}
+function var_0_0._getRewardList(arg_12_0)
+	local var_12_0 = {}
 
-	for slot5, slot6 in ipairs(lua_task_weekwalk.configList) do
-		if slot6.minTypeId == 4 and WeekWalkTaskListModel.instance:checkPeriods(slot6) then
-			slot11 = "#"
+	for iter_12_0, iter_12_1 in ipairs(lua_task_weekwalk.configList) do
+		if iter_12_1.minTypeId == 4 and WeekWalkTaskListModel.instance:checkPeriods(iter_12_1) then
+			local var_12_1 = GameUtil.splitString2(iter_12_1.bonus, true, "|", "#")
 
-			for slot11, slot12 in ipairs(GameUtil.splitString2(slot6.bonus, true, "|", slot11)) do
-				slot15 = slot12[3]
+			for iter_12_2, iter_12_3 in ipairs(var_12_1) do
+				local var_12_2 = iter_12_3[1]
+				local var_12_3 = iter_12_3[2]
+				local var_12_4 = iter_12_3[3]
+				local var_12_5 = string.format("%s_%s", var_12_2, var_12_3)
+				local var_12_6 = var_12_0[var_12_5]
 
-				if not slot1[string.format("%s_%s", slot12[1], slot12[2])] then
-					slot1[slot16] = slot12
+				if not var_12_6 then
+					var_12_0[var_12_5] = iter_12_3
 				else
-					slot17[3] = slot17[3] + slot15
-					slot1[slot16] = slot17
+					var_12_6[3] = var_12_6[3] + var_12_4
+					var_12_0[var_12_5] = var_12_6
 				end
 			end
 		end
 	end
 
-	slot2 = {}
+	local var_12_7 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		table.insert(slot2, slot7)
+	for iter_12_4, iter_12_5 in pairs(var_12_0) do
+		table.insert(var_12_7, iter_12_5)
 	end
 
-	table.sort(slot2, DungeonWeekWalkView._sort)
+	table.sort(var_12_7, DungeonWeekWalkView._sort)
 
-	return slot2
+	return var_12_7
 end
 
-function slot0._showRewardList(slot0)
-	for slot5, slot6 in ipairs(slot0:_getRewardList()) do
-		slot7 = gohelper.cloneInPlace(slot0._gorewarditem)
+function var_0_0._showRewardList(arg_13_0)
+	local var_13_0 = arg_13_0:_getRewardList()
 
-		gohelper.setActive(slot7, true)
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_1 = gohelper.cloneInPlace(arg_13_0._gorewarditem)
 
-		slot8 = IconMgr.instance:getCommonItemIcon(gohelper.findChild(slot7, "go_item"))
+		gohelper.setActive(var_13_1, true)
 
-		slot8:setMOValue(slot6[1], slot6[2], slot6[3])
-		slot8:isShowCount(true)
-		slot8:setCountFontSize(31)
+		local var_13_2 = IconMgr.instance:getCommonItemIcon(gohelper.findChild(var_13_1, "go_item"))
+
+		var_13_2:setMOValue(iter_13_1[1], iter_13_1[2], iter_13_1[3])
+		var_13_2:isShowCount(true)
+		var_13_2:setCountFontSize(31)
 	end
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam and slot0.viewParam.openFromGuide then
-		gohelper.findChildText(slot0.viewGO, "rule/resettip").text = luaLang("p_weekwalkdeeplayernoticeview_title_open")
+function var_0_0.onOpen(arg_14_0)
+	if arg_14_0.viewParam and arg_14_0.viewParam.openFromGuide then
+		gohelper.findChildText(arg_14_0.viewGO, "rule/resettip").text = luaLang("p_weekwalkdeeplayernoticeview_title_open")
 
-		recthelper.setAnchorY(gohelper.findChild(slot0.viewGO, "rewards").transform, -208)
-		gohelper.setActive(slot0._txtlastprogress, false)
+		local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "rewards")
+
+		recthelper.setAnchorY(var_14_0.transform, -208)
+		gohelper.setActive(arg_14_0._txtlastprogress, false)
 	end
 
-	slot3 = string.splitToNumber(slot0._info.deepProgress, "#")
-	slot5 = slot3[2]
+	local var_14_1 = arg_14_0._info.deepProgress
+	local var_14_2 = string.splitToNumber(var_14_1, "#")
+	local var_14_3 = var_14_2[1]
+	local var_14_4 = var_14_2[2]
 
-	if slot3[1] and slot5 then
-		slot0._txtlastprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkdeeplayernoticeview_lastprogress"), {
-			lua_weekwalk_scene.configDict[lua_weekwalk.configDict[slot4].sceneId].name,
-			"0" .. (slot5 or 1)
-		})
+	if var_14_3 and var_14_4 then
+		local var_14_5 = lua_weekwalk.configDict[var_14_3]
+		local var_14_6 = lua_weekwalk_scene.configDict[var_14_5.sceneId]
+		local var_14_7 = {
+			var_14_6.name,
+			"0" .. (var_14_4 or 1)
+		}
+
+		arg_14_0._txtlastprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("weekwalkdeeplayernoticeview_lastprogress"), var_14_7)
 	else
-		slot0._txtlastprogress.text = luaLang("weekwalkdeeplayernoticeview_noprogress")
+		arg_14_0._txtlastprogress.text = luaLang("weekwalkdeeplayernoticeview_noprogress")
 	end
 
-	slot0:_showRewardList()
+	arg_14_0:_showRewardList()
 
-	slot9 = nil
-	slot9 = (not (lua_weekwalk_rule.configDict[slot0._info.issueId].isCn == 1) or ResUrl.getWeekWalkIconLangPath(slot7.icon)) and ResUrl.getWeekWalkBg("rule/" .. slot7.icon .. ".png")
+	local var_14_8 = arg_14_0._info.issueId
+	local var_14_9 = lua_weekwalk_rule.configDict[var_14_8]
+	local var_14_10 = var_14_9.isCn == 1
+	local var_14_11
 
-	slot0._simageruledescicon:LoadImage(ResUrl.getWeekWalkBg("rule/" .. slot7.icon .. ".png"))
+	if var_14_10 then
+		local var_14_12 = ResUrl.getWeekWalkIconLangPath(var_14_9.icon)
+	else
+		local var_14_13 = ResUrl.getWeekWalkBg("rule/" .. var_14_9.icon .. ".png")
+	end
 
-	if string.nilorempty(slot7.additionRule) then
+	local var_14_14 = ResUrl.getWeekWalkBg("rule/" .. var_14_9.icon .. ".png")
+
+	arg_14_0._simageruledescicon:LoadImage(var_14_14)
+
+	local var_14_15 = var_14_9.additionRule
+
+	if string.nilorempty(var_14_15) then
 		return
 	end
 
-	slot15 = "#"
-	slot11 = GameUtil.splitString2(slot10, true, "|", slot15)
-	slot0._ruleList = slot11
+	local var_14_16 = GameUtil.splitString2(var_14_15, true, "|", "#")
 
-	for slot15, slot16 in ipairs(slot11) do
-		slot0:_setRuleDescItem(lua_rule.configDict[slot16[2]], slot16[1])
+	arg_14_0._ruleList = var_14_16
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_16) do
+		local var_14_17 = iter_14_1[1]
+		local var_14_18 = iter_14_1[2]
+		local var_14_19 = lua_rule.configDict[var_14_18]
+
+		arg_14_0:_setRuleDescItem(var_14_19, var_14_17)
 
 		break
 	end
@@ -163,28 +194,34 @@ function slot0.onOpen(slot0)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_installation_open)
 end
 
-function slot0._setRuleDescItem(slot0, slot1, slot2)
-	slot3 = {
+function var_0_0._setRuleDescItem(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = {
 		"#6384E5",
 		"#D05B4C",
 		"#C7b376"
 	}
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot0._imageruleicon, slot1.icon)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imageruletag, "wz_" .. slot2)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_15_0._imageruleicon, arg_15_1.icon)
+	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._imageruletag, "wz_" .. arg_15_2)
 
-	slot0._txtruledesc.text = formatLuaLang("fight_rule_desc", slot3[slot2], luaLang("dungeon_add_rule_target_" .. slot2), string.gsub(slot1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>") .. ("\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot1.desc, slot3[1])))
+	local var_15_1 = string.gsub(arg_15_1.desc, "%【(.-)%】", "<color=#FF906A>[%1]</color>")
+	local var_15_2 = "\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(arg_15_1.desc, var_15_0[1])
+	local var_15_3 = luaLang("dungeon_add_rule_target_" .. arg_15_2)
+	local var_15_4 = var_15_0[arg_15_2]
+	local var_15_5 = var_15_1 .. var_15_2
+
+	arg_15_0._txtruledesc.text = formatLuaLang("fight_rule_desc", var_15_4, var_15_3, var_15_5)
 end
 
-function slot0.onClose(slot0)
-	slot0._simageruledescicon:UnLoadImage()
+function var_0_0.onClose(arg_16_0)
+	arg_16_0._simageruledescicon:UnLoadImage()
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_settlement_close)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0._simagebg1:UnLoadImage()
+	arg_17_0._simagemask:UnLoadImage()
+	arg_17_0._simagebg2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

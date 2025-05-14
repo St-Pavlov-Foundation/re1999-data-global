@@ -1,13 +1,13 @@
-module("modules.logic.fight.system.work.FightWorkEffectMiss", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectMiss", package.seeall)
 
-slot0 = class("FightWorkEffectMiss", FightEffectBase)
+local var_0_0 = class("FightWorkEffectMiss", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		FightFloatMgr.instance:float(slot0._actEffectMO.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good)
+function var_0_0.onStart(arg_1_0)
+	if FightHelper.getEntity(arg_1_0._actEffectMO.targetId) then
+		FightFloatMgr.instance:float(arg_1_0._actEffectMO.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

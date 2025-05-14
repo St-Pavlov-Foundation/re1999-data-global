@@ -1,109 +1,112 @@
-module("modules.logic.rouge.map.model.listmodel.RougeLossCollectionListModel", package.seeall)
+﻿module("modules.logic.rouge.map.model.listmodel.RougeLossCollectionListModel", package.seeall)
 
-slot0 = class("RougeLossCollectionListModel", ListScrollModel)
+local var_0_0 = class("RougeLossCollectionListModel", ListScrollModel)
 
-function slot0.setLossType(slot0, slot1)
-	slot0.lossType = slot1
+function var_0_0.setLossType(arg_1_0, arg_1_1)
+	arg_1_0.lossType = arg_1_1
 end
 
-function slot0.getLossType(slot0)
-	return slot0.lossType
+function var_0_0.getLossType(arg_2_0)
+	return arg_2_0.lossType
 end
 
-function slot0.initList(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.maxSelectCount = slot1
-	slot0.selectCount = 0
-	slot0.selectMoList = {}
-	slot0.allMoList = {}
-	slot0.baseTagFilterMap = slot3
-	slot0.extraTagFilterMap = slot4
+function var_0_0.initList(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	arg_3_0.maxSelectCount = arg_3_1
+	arg_3_0.selectCount = 0
+	arg_3_0.selectMoList = {}
+	arg_3_0.allMoList = {}
+	arg_3_0.baseTagFilterMap = arg_3_3
+	arg_3_0.extraTagFilterMap = arg_3_4
 
-	for slot9, slot10 in ipairs(slot2) do
-		slot0:addCollection(slot10.id, slot10.cfgId, slot5)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
+		arg_3_0:addCollection(iter_3_1.id, iter_3_1.cfgId, arg_3_5)
 
-		for slot16, slot17 in ipairs(slot10:getAllEnchantId()) do
-			slot0:addCollection(slot17, slot10:getAllEnchantCfgId()[slot16], slot5)
+		local var_3_0 = iter_3_1:getAllEnchantId()
+		local var_3_1 = iter_3_1:getAllEnchantCfgId()
+
+		for iter_3_2, iter_3_3 in ipairs(var_3_0) do
+			arg_3_0:addCollection(iter_3_3, var_3_1[iter_3_2], arg_3_5)
 		end
 	end
 
-	slot0.showMoList = {}
+	arg_3_0.showMoList = {}
 
-	slot0:filterCollection()
+	arg_3_0:filterCollection()
 end
 
-function slot0.addCollection(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 then
+function var_0_0.addCollection(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if not arg_4_1 or not arg_4_2 then
 		return
 	end
 
-	if slot1 == 0 or slot2 == 0 then
+	if arg_4_1 == 0 or arg_4_2 == 0 then
 		return
 	end
 
-	if slot3 then
-		if not RougeCollectionHelper.isUniqueCollection(slot2) then
-			table.insert(slot0.allMoList, {
-				uid = slot1,
-				collectionId = slot2
+	if arg_4_3 then
+		if not RougeCollectionHelper.isUniqueCollection(arg_4_2) then
+			table.insert(arg_4_0.allMoList, {
+				uid = arg_4_1,
+				collectionId = arg_4_2
 			})
 		end
 	else
-		table.insert(slot0.allMoList, {
-			uid = slot1,
-			collectionId = slot2
+		table.insert(arg_4_0.allMoList, {
+			uid = arg_4_1,
+			collectionId = arg_4_2
 		})
 	end
 end
 
-function slot0.filterCollection(slot0)
-	tabletool.clear(slot0.showMoList)
+function var_0_0.filterCollection(arg_5_0)
+	tabletool.clear(arg_5_0.showMoList)
 
-	for slot4, slot5 in ipairs(slot0.allMoList) do
-		if RougeCollectionHelper.checkCollectionHasAnyOneTag(slot5.collectionId, nil, slot0.baseTagFilterMap, slot0.extraTagFilterMap) then
-			table.insert(slot0.showMoList, slot5)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.allMoList) do
+		if RougeCollectionHelper.checkCollectionHasAnyOneTag(iter_5_1.collectionId, nil, arg_5_0.baseTagFilterMap, arg_5_0.extraTagFilterMap) then
+			table.insert(arg_5_0.showMoList, iter_5_1)
 		end
 	end
 end
 
-function slot0.refresh(slot0)
-	slot0:setList(slot0.showMoList)
+function var_0_0.refresh(arg_6_0)
+	arg_6_0:setList(arg_6_0.showMoList)
 end
 
-function slot0.getSelectMoList(slot0)
-	return slot0.selectMoList
+function var_0_0.getSelectMoList(arg_7_0)
+	return arg_7_0.selectMoList
 end
 
-function slot0.checkCanSelect(slot0)
-	return #slot0.selectMoList < slot0.maxSelectCount
+function var_0_0.checkCanSelect(arg_8_0)
+	return #arg_8_0.selectMoList < arg_8_0.maxSelectCount
 end
 
-function slot0.getSelectCount(slot0)
-	return slot0.selectCount
+function var_0_0.getSelectCount(arg_9_0)
+	return arg_9_0.selectCount
 end
 
-function slot0.selectMo(slot0, slot1)
-	if slot0.maxSelectCount <= slot0.selectCount then
+function var_0_0.selectMo(arg_10_0, arg_10_1)
+	if arg_10_0.selectCount >= arg_10_0.maxSelectCount then
 		return
 	end
 
-	if tabletool.indexOf(slot0.selectMoList, slot1) then
+	if tabletool.indexOf(arg_10_0.selectMoList, arg_10_1) then
 		return
 	end
 
-	slot0.selectCount = slot0.selectCount + 1
+	arg_10_0.selectCount = arg_10_0.selectCount + 1
 
-	tabletool.removeValue(slot0.showMoList, slot1)
-	table.insert(slot0.selectMoList, slot1)
+	tabletool.removeValue(arg_10_0.showMoList, arg_10_1)
+	table.insert(arg_10_0.selectMoList, arg_10_1)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectLossCollectionChange)
 end
 
-function slot0.deselectMo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.selectMoList) do
-		if slot6 == slot1 then
-			slot0.selectCount = slot0.selectCount - 1
+function var_0_0.deselectMo(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.selectMoList) do
+		if iter_11_1 == arg_11_1 then
+			arg_11_0.selectCount = arg_11_0.selectCount - 1
 
-			table.remove(slot0.selectMoList, slot5)
-			table.insert(slot0.showMoList, slot1)
+			table.remove(arg_11_0.selectMoList, iter_11_0)
+			table.insert(arg_11_0.showMoList, arg_11_1)
 			RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectLossCollectionChange)
 
 			return
@@ -111,21 +114,21 @@ function slot0.deselectMo(slot0, slot1)
 	end
 end
 
-function slot0.isFiltering(slot0)
-	return not GameUtil.tabletool_dictIsEmpty(slot0.baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(slot0.extraTagFilterMap)
+function var_0_0.isFiltering(arg_12_0)
+	return not GameUtil.tabletool_dictIsEmpty(arg_12_0.baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(arg_12_0.extraTagFilterMap)
 end
 
-function slot0.clear(slot0)
-	slot0.maxSelectCount = nil
-	slot0.selectCount = nil
-	slot0.selectMoList = nil
-	slot0.allMoList = nil
-	slot0.showMoList = nil
-	slot0.baseTagFilterMap = nil
-	slot0.extraTagFilterMap = nil
-	slot0.lossType = nil
+function var_0_0.clear(arg_13_0)
+	arg_13_0.maxSelectCount = nil
+	arg_13_0.selectCount = nil
+	arg_13_0.selectMoList = nil
+	arg_13_0.allMoList = nil
+	arg_13_0.showMoList = nil
+	arg_13_0.baseTagFilterMap = nil
+	arg_13_0.extraTagFilterMap = nil
+	arg_13_0.lossType = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,112 +1,121 @@
-module("modules.logic.versionactivity1_9.roomgift.config.RoomGiftConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_9.roomgift.config.RoomGiftConfig", package.seeall)
 
-slot0 = class("RoomGiftConfig", BaseConfig)
+local var_0_0 = class("RoomGiftConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"activity159",
 		"activity159_critter"
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot1(slot0)
-	slot1 = nil
+local function var_0_1(arg_4_0)
+	local var_4_0
 
-	if not string.nilorempty(slot0) then
-		slot1 = lua_activity159_critter.configDict[slot0]
+	if not string.nilorempty(arg_4_0) then
+		var_4_0 = lua_activity159_critter.configDict[arg_4_0]
 	end
 
-	if not slot1 then
-		logError(string.format("RoomGiftConfig.getRoomGiftSpineCfg error, no cfg, name:%s", slot0))
+	if not var_4_0 then
+		logError(string.format("RoomGiftConfig.getRoomGiftSpineCfg error, no cfg, name:%s", arg_4_0))
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.getAllRoomGiftSpineList(slot0)
-	slot1 = {}
+function var_0_0.getAllRoomGiftSpineList(arg_5_0)
+	local var_5_0 = {}
 
-	for slot5, slot6 in ipairs(lua_activity159_critter.configList) do
-		slot1[#slot1 + 1] = slot6.name
+	for iter_5_0, iter_5_1 in ipairs(lua_activity159_critter.configList) do
+		var_5_0[#var_5_0 + 1] = iter_5_1.name
 	end
 
-	return slot1
+	return var_5_0
 end
 
-function slot0.getRoomGiftSpineRes(slot0, slot1)
-	slot2 = nil
+function var_0_0.getRoomGiftSpineRes(arg_6_0, arg_6_1)
+	local var_6_0
+	local var_6_1 = var_0_1(arg_6_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.res
+	if var_6_1 then
+		var_6_0 = var_6_1.res
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.getRoomGiftSpineAnim(slot0, slot1)
-	slot2 = nil
+function var_0_0.getRoomGiftSpineAnim(arg_7_0, arg_7_1)
+	local var_7_0
+	local var_7_1 = var_0_1(arg_7_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.anim
+	if var_7_1 then
+		var_7_0 = var_7_1.anim
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getRoomGiftSpineStartPos(slot0, slot1)
-	slot2 = {
+function var_0_0.getRoomGiftSpineStartPos(arg_8_0, arg_8_1)
+	local var_8_0 = {
 		0,
 		0,
 		0
 	}
+	local var_8_1 = var_0_1(arg_8_1)
 
-	if uv0(slot1) then
-		slot2 = string.splitToNumber(slot3.startPos, "#")
+	if var_8_1 then
+		var_8_0 = string.splitToNumber(var_8_1.startPos, "#")
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getRoomGiftSpineScale(slot0, slot1)
-	slot2 = 1
+function var_0_0.getRoomGiftSpineScale(arg_9_0, arg_9_1)
+	local var_9_0 = 1
+	local var_9_1 = var_0_1(arg_9_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.scale
+	if var_9_1 then
+		var_9_0 = var_9_1.scale
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot2(slot0, slot1, slot2)
-	slot3 = nil
+local function var_0_2(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0
 
-	if slot0 and slot1 then
-		slot3 = lua_activity159.configDict[slot0] and slot4[slot1]
+	if arg_10_0 and arg_10_1 then
+		local var_10_1 = lua_activity159.configDict[arg_10_0]
+
+		var_10_0 = var_10_1 and var_10_1[arg_10_1]
 	end
 
-	if not slot3 and slot2 then
-		logError(string.format("RoomGiftConfig:getActivity159Cfg error, cfg is nil, actId:%s  day:%s", slot0, slot1))
+	if not var_10_0 and arg_10_2 then
+		logError(string.format("RoomGiftConfig:getActivity159Cfg error, cfg is nil, actId:%s  day:%s", arg_10_0, arg_10_1))
 	end
 
-	return slot3
+	return var_10_0
 end
 
-function slot0.getRoomGiftBonus(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.getRoomGiftBonus(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0
+	local var_11_1 = var_0_2(arg_11_1, arg_11_2)
 
-	if uv0(slot1, slot2) then
-		slot3 = slot4.bonus
+	if var_11_1 then
+		var_11_0 = var_11_1.bonus
 	end
 
-	return slot3
+	return var_11_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

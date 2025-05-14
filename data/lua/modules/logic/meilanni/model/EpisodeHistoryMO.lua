@@ -1,10 +1,10 @@
-module("modules.logic.meilanni.model.EpisodeHistoryMO", package.seeall)
+﻿module("modules.logic.meilanni.model.EpisodeHistoryMO", package.seeall)
 
-slot0 = pureTable("EpisodeHistoryMO")
+local var_0_0 = pureTable("EpisodeHistoryMO")
 
-function slot0.init(slot0, slot1)
-	slot0.eventId = slot1.eventId
-	slot0.index = slot1.index
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.eventId = arg_1_1.eventId
+	arg_1_0.index = arg_1_1.index
 end
 
-return slot0
+return var_0_0

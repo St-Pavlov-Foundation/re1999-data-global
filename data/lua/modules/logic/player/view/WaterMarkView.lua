@@ -1,70 +1,79 @@
-module("modules.logic.player.view.WaterMarkView", package.seeall)
+﻿module("modules.logic.player.view.WaterMarkView", package.seeall)
 
-slot0 = class("WaterMarkView", BaseView)
+local var_0_0 = class("WaterMarkView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goWaterMarkTemplate = gohelper.findChild(slot0.viewGO, "#txt_template")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goWaterMarkTemplate = gohelper.findChild(arg_1_0.viewGO, "#txt_template")
 
-	gohelper.setActive(slot0.goWaterMarkTemplate, false)
+	gohelper.setActive(arg_1_0.goWaterMarkTemplate, false)
 
-	slot0.goWaterMarkList = slot0:getUserDataTb_()
-	slot1 = ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp)
-	slot0.maxHeight = recthelper.getHeight(slot1.transform)
-	slot0.maxWidth = recthelper.getWidth(slot1.transform)
-	slot0.hInterval = 50
-	slot0.wInterval = 200
+	arg_1_0.goWaterMarkList = arg_1_0:getUserDataTb_()
+
+	local var_1_0 = ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp)
+
+	arg_1_0.maxWidth, arg_1_0.maxHeight = recthelper.getWidth(var_1_0.transform), recthelper.getHeight(var_1_0.transform)
+	arg_1_0.wInterval, arg_1_0.hInterval = 200, 50
 end
 
-function slot0.onOpen(slot0)
-	slot0:updateWaterMark(slot0.viewParam.userId)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0:updateWaterMark(arg_2_0.viewParam.userId)
 end
 
-function slot0.updateWaterMark(slot0, slot1)
-	if slot1 == slot0.userId then
+function var_0_0.updateWaterMark(arg_3_0, arg_3_1)
+	if arg_3_1 == arg_3_0.userId then
 		return
 	end
 
-	slot0.userId = slot1
-	slot2 = slot0.wInterval
-	slot3 = slot0.hInterval
-	slot4, slot5 = nil
-	slot6 = 0
+	arg_3_0.userId = arg_3_1
 
-	while slot3 <= slot0.maxHeight do
-		if not slot0.goWaterMarkList[slot6 + 1] then
-			table.insert(slot0.goWaterMarkList, gohelper.cloneInPlace(slot0.goWaterMarkTemplate):GetComponent(gohelper.Type_TextMesh))
+	local var_3_0 = arg_3_0.wInterval
+	local var_3_1 = arg_3_0.hInterval
+	local var_3_2
+	local var_3_3
+	local var_3_4 = 0
+
+	while var_3_1 <= arg_3_0.maxHeight do
+		var_3_4 = var_3_4 + 1
+
+		local var_3_5 = arg_3_0.goWaterMarkList[var_3_4]
+
+		if not var_3_5 then
+			var_3_5 = gohelper.cloneInPlace(arg_3_0.goWaterMarkTemplate):GetComponent(gohelper.Type_TextMesh)
+
+			table.insert(arg_3_0.goWaterMarkList, var_3_5)
 		end
 
-		gohelper.setActive(slot4.gameObject, true)
+		gohelper.setActive(var_3_5.gameObject, true)
 
-		slot4.text = slot0.userId
-		slot4.color = slot6 % 2 == 0 and Color.New(1, 1, 1, 0.16) or Color.New(0, 0, 0, 0.16)
+		var_3_5.text = arg_3_0.userId
+		var_3_5.color = var_3_4 % 2 == 0 and Color.New(1, 1, 1, 0.16) or Color.New(0, 0, 0, 0.16)
 
-		recthelper.setAnchor(slot4.gameObject.transform, slot2, slot3)
-		transformhelper.setLocalRotation(slot4.gameObject.transform, 0, 0, -25)
+		recthelper.setAnchor(var_3_5.gameObject.transform, var_3_0, var_3_1)
+		transformhelper.setLocalRotation(var_3_5.gameObject.transform, 0, 0, -25)
 
-		slot3 = slot3 + slot0.hInterval
+		var_3_1 = var_3_1 + arg_3_0.hInterval
+		var_3_0 = var_3_0 + arg_3_0.wInterval
 
-		if slot0.maxWidth <= slot2 + slot0.wInterval then
-			slot2 = slot2 - slot0.maxWidth
+		if var_3_0 >= arg_3_0.maxWidth then
+			var_3_0 = var_3_0 - arg_3_0.maxWidth
 		end
 	end
 
-	for slot10 = slot6 + 1, #slot0.goWaterMarkList do
-		gohelper.setActive(slot0.goWaterMarkList[slot10].gameObject, false)
+	for iter_3_0 = var_3_4 + 1, #arg_3_0.goWaterMarkList do
+		gohelper.setActive(arg_3_0.goWaterMarkList[iter_3_0].gameObject, false)
 	end
 end
 
-function slot0.hideWaterMark(slot0)
-	gohelper.setActive(slot0.viewGO, false)
+function var_0_0.hideWaterMark(arg_4_0)
+	gohelper.setActive(arg_4_0.viewGO, false)
 end
 
-function slot0.showWaterMark(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0.showWaterMark(arg_5_0)
+	gohelper.setActive(arg_5_0.viewGO, true)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.goWaterMarkList = nil
+function var_0_0.onDestroyView(arg_6_0)
+	arg_6_0.goWaterMarkList = nil
 end
 
-return slot0
+return var_0_0

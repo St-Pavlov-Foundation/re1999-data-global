@@ -1,40 +1,45 @@
-module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskListModel", package.seeall)
+﻿module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskListModel", package.seeall)
 
-slot0 = class("Activity109ChessGameTaskListModel", ListScrollModel)
+local var_0_0 = class("Activity109ChessGameTaskListModel", ListScrollModel)
 
-function slot0.init(slot0, slot1)
-	slot3 = Activity106Config.instance:getTaskByActId(slot1)
-	slot4 = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity109)
+	local var_1_1 = Activity106Config.instance:getTaskByActId(arg_1_1)
+	local var_1_2 = {}
 
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity109) ~= nil then
-		for slot8, slot9 in ipairs(slot3) do
-			slot10 = Activity109ChessGameTaskMO.New()
+	if var_1_0 ~= nil then
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			local var_1_3 = Activity109ChessGameTaskMO.New()
+			local var_1_4 = var_1_0[iter_1_1.id]
 
-			slot10:init(slot2[slot9.id])
-			table.insert(slot4, slot10)
+			var_1_3:init(var_1_4)
+			table.insert(var_1_2, var_1_3)
 		end
 
-		table.sort(slot4, uv0.sortMO)
+		table.sort(var_1_2, var_0_0.sortMO)
 	end
 
-	slot0:setList(slot4)
+	arg_1_0:setList(var_1_2)
 end
 
-function slot0.sortMO(slot0, slot1)
-	if slot0:alreadyGotReward() ~= slot1:alreadyGotReward() then
-		return slot3
+function var_0_0.sortMO(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:alreadyGotReward()
+	local var_2_1 = arg_2_1:alreadyGotReward()
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_1
 	else
-		return slot0.id < slot1.id
+		return arg_2_0.id < arg_2_1.id
 	end
 end
 
-function slot0.createMO(slot0, slot1, slot2)
+function var_0_0.createMO(arg_3_0, arg_3_1, arg_3_2)
 	return {
-		config = slot2.config,
-		originTaskMO = slot2
+		config = arg_3_2.config,
+		originTaskMO = arg_3_2
 	}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,25 +1,25 @@
-module("modules.ugui.icon.common.CommonHeroHelper", package.seeall)
+﻿module("modules.ugui.icon.common.CommonHeroHelper", package.seeall)
 
-slot0 = class("CommonHeroHelper")
+local var_0_0 = class("CommonHeroHelper")
 
-function slot0.setGrayState(slot0, slot1, slot2)
-	slot0:_getGrayStateTab()[slot1] = slot2
+function var_0_0.setGrayState(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:_getGrayStateTab()[arg_1_1] = arg_1_2
 end
 
-function slot0.getGrayState(slot0, slot1)
-	return slot0:_getGrayStateTab()[slot1]
+function var_0_0.getGrayState(arg_2_0, arg_2_1)
+	return arg_2_0:_getGrayStateTab()[arg_2_1]
 end
 
-function slot0._getGrayStateTab(slot0)
-	slot0.grayTab = slot0.grayTab or {}
+function var_0_0._getGrayStateTab(arg_3_0)
+	arg_3_0.grayTab = arg_3_0.grayTab or {}
 
-	return slot0.grayTab
+	return arg_3_0.grayTab
 end
 
-function slot0.resetGrayState(slot0)
-	slot0.grayTab = {}
+function var_0_0.resetGrayState(arg_4_0)
+	arg_4_0.grayTab = {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

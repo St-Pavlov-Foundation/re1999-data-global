@@ -1,250 +1,300 @@
-module("modules.logic.playercard.controller.PlayerCardController", package.seeall)
+﻿module("modules.logic.playercard.controller.PlayerCardController", package.seeall)
 
-slot0 = class("PlayerCardController", BaseController)
+local var_0_0 = class("PlayerCardController", BaseController)
 
-function slot0.reInit(slot0)
-	slot0.viewParam = nil
+function var_0_0.reInit(arg_1_0)
+	arg_1_0.viewParam = nil
 end
 
-function slot0.openPlayerCardView(slot0, slot1)
-	slot0.viewParam = slot1 or {}
-	slot2 = slot1 and slot1.userId or PlayerModel.instance:getMyUserId()
-	slot0.viewParam.userId = slot2
+function var_0_0.openPlayerCardView(arg_2_0, arg_2_1)
+	arg_2_0.viewParam = arg_2_1 or {}
 
-	if PlayerModel.instance:isPlayerSelf(slot2) then
-		PlayerCardRpc.instance:sendGetPlayerCardInfoRequest(slot0._openPlayerCardView, slot0)
+	local var_2_0 = arg_2_1 and arg_2_1.userId or PlayerModel.instance:getMyUserId()
+	local var_2_1 = PlayerModel.instance:isPlayerSelf(var_2_0)
+
+	arg_2_0.viewParam.userId = var_2_0
+
+	if var_2_1 then
+		PlayerCardRpc.instance:sendGetPlayerCardInfoRequest(arg_2_0._openPlayerCardView, arg_2_0)
 	else
-		PlayerCardRpc.instance:sendGetOtherPlayerCardInfoRequest(slot2, slot0._openPlayerCardView, slot0)
+		PlayerCardRpc.instance:sendGetOtherPlayerCardInfoRequest(var_2_0, arg_2_0._openPlayerCardView, arg_2_0)
 	end
 end
 
-function slot0._openPlayerCardView(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._openPlayerCardView(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_2 ~= 0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.NewPlayerCardContentView, slot0.viewParam)
+	ViewMgr.instance:openView(ViewName.NewPlayerCardContentView, arg_3_0.viewParam)
 end
 
-function slot0.playChangeEffectAudio(slot0)
+function var_0_0.playChangeEffectAudio(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_seal_cutting_eft)
 end
 
-function slot0.saveAchievement(slot0)
-	slot1, slot2 = PlayerCardAchievementSelectListModel.instance:getSaveRequestParam()
+function var_0_0.saveAchievement(arg_5_0)
+	local var_5_0, var_5_1 = PlayerCardAchievementSelectListModel.instance:getSaveRequestParam()
 
-	PlayerCardRpc.instance:sendSetPlayerCardShowAchievementRequest(slot1, slot2)
+	PlayerCardRpc.instance:sendSetPlayerCardShowAchievementRequest(var_5_0, var_5_1)
 end
 
-function slot0.statStart(slot0)
+function var_0_0.statStart(arg_6_0)
 	if not PlayerCardModel.instance:getCardInfo():isSelf() then
 		return
 	end
 
-	slot0.startTime = ServerTime.now()
+	arg_6_0.startTime = ServerTime.now()
 end
 
-function slot0.statEnd(slot0)
-	if not PlayerCardModel.instance:getCardInfo():isSelf() then
+function var_0_0.statEnd(arg_7_0)
+	local var_7_0 = PlayerCardModel.instance:getCardInfo()
+
+	if not var_7_0:isSelf() then
 		return
 	end
 
-	slot3, slot4, slot5, slot6 = slot0:getStatHeroCover(slot1.heroCover)
-	slot7, slot8, slot9 = slot0:getStatAchievement()
-	slot12, slot13 = slot0:getStatCritter()
+	local var_7_1 = var_7_0.heroCover
+	local var_7_2, var_7_3, var_7_4, var_7_5 = arg_7_0:getStatHeroCover(var_7_1)
+	local var_7_6, var_7_7, var_7_8 = arg_7_0:getStatAchievement()
+	local var_7_9 = arg_7_0:getStatProgress()
+	local var_7_10 = arg_7_0:getStatBaseInfo()
+	local var_7_11, var_7_12 = arg_7_0:getStatCritter()
+	local var_7_13 = arg_7_0:getSkinName()
+	local var_7_14 = arg_7_0:getHeadName()
 
 	StatController.instance:track(StatEnum.EventName.ExitPlayerCard, {
-		[StatEnum.EventProperties.Time] = slot0:getUseTime(),
-		[StatEnum.EventProperties.HeroId] = slot3,
-		[StatEnum.EventProperties.skinId] = slot4,
-		[StatEnum.EventProperties.HeroName] = slot5,
-		[StatEnum.EventProperties.skinName] = slot6,
-		[StatEnum.EventProperties.DisplaySingleAchievementName] = slot7,
-		[StatEnum.EventProperties.DisplayGroupAchievementName] = slot8,
-		[StatEnum.EventProperties.MedalNum] = slot9,
-		[StatEnum.EventProperties.GameProgress] = slot0:getStatProgress(),
-		[StatEnum.EventProperties.BaseInfomation] = slot0:getStatBaseInfo(),
-		[StatEnum.EventProperties.CritterId] = slot12,
-		[StatEnum.EventProperties.CritterName] = slot13,
-		[StatEnum.EventProperties.PlayerCardSkinName] = slot0:getSkinName(),
-		[StatEnum.EventProperties.HeadName] = slot0:getHeadName()
+		[StatEnum.EventProperties.Time] = arg_7_0:getUseTime(),
+		[StatEnum.EventProperties.HeroId] = var_7_2,
+		[StatEnum.EventProperties.skinId] = var_7_3,
+		[StatEnum.EventProperties.HeroName] = var_7_4,
+		[StatEnum.EventProperties.skinName] = var_7_5,
+		[StatEnum.EventProperties.DisplaySingleAchievementName] = var_7_6,
+		[StatEnum.EventProperties.DisplayGroupAchievementName] = var_7_7,
+		[StatEnum.EventProperties.MedalNum] = var_7_8,
+		[StatEnum.EventProperties.GameProgress] = var_7_9,
+		[StatEnum.EventProperties.BaseInfomation] = var_7_10,
+		[StatEnum.EventProperties.CritterId] = var_7_11,
+		[StatEnum.EventProperties.CritterName] = var_7_12,
+		[StatEnum.EventProperties.PlayerCardSkinName] = var_7_13,
+		[StatEnum.EventProperties.HeadName] = var_7_14
 	})
 end
 
-function slot0.statSetHeroCover(slot0, slot1)
-	slot2, slot3, slot4, slot5 = slot0:getStatHeroCover(slot1)
+function var_0_0.statSetHeroCover(arg_8_0, arg_8_1)
+	local var_8_0, var_8_1, var_8_2, var_8_3 = arg_8_0:getStatHeroCover(arg_8_1)
 
 	StatController.instance:track(StatEnum.EventName.PlaycardSetHeroCover, {
-		[StatEnum.EventProperties.HeroId] = slot2,
-		[StatEnum.EventProperties.skinId] = slot3,
-		[StatEnum.EventProperties.HeroName] = slot4,
-		[StatEnum.EventProperties.skinName] = slot5
+		[StatEnum.EventProperties.HeroId] = var_8_0,
+		[StatEnum.EventProperties.skinId] = var_8_1,
+		[StatEnum.EventProperties.HeroName] = var_8_2,
+		[StatEnum.EventProperties.skinName] = var_8_3
 	})
 end
 
-function slot0.getStatHeroCover(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "#")
-	slot4 = slot2[2]
-	slot5 = ""
-	slot6 = ""
+function var_0_0.getStatHeroCover(arg_9_0, arg_9_1)
+	local var_9_0 = string.splitToNumber(arg_9_1, "#")
+	local var_9_1 = var_9_0[1]
+	local var_9_2 = var_9_0[2]
+	local var_9_3 = ""
+	local var_9_4 = ""
 
-	if not string.nilorempty(slot2[1]) then
-		slot5 = HeroConfig.instance:getHeroCO(slot3).name
+	if not string.nilorempty(var_9_1) then
+		var_9_3 = HeroConfig.instance:getHeroCO(var_9_1).name
 	end
 
-	if not string.nilorempty(slot4) then
-		slot6 = SkinConfig.instance:getSkinCo(slot4).name
+	if not string.nilorempty(var_9_2) then
+		var_9_4 = SkinConfig.instance:getSkinCo(var_9_2).name
 	end
 
-	return slot3, slot4, slot5, slot6
+	return var_9_1, var_9_2, var_9_3, var_9_4
 end
 
-function slot0.statSetAchievement(slot0)
-	slot1, slot2, slot3 = slot0:getStatAchievement()
+function var_0_0.statSetAchievement(arg_10_0)
+	local var_10_0, var_10_1, var_10_2 = arg_10_0:getStatAchievement()
 
 	StatController.instance:track(StatEnum.EventName.PlaycardDisplayMedal, {
-		[StatEnum.EventProperties.DisplaySingleAchievementName] = slot1,
-		[StatEnum.EventProperties.DisplayGroupAchievementName] = slot2,
-		[StatEnum.EventProperties.MedalNum] = slot3
+		[StatEnum.EventProperties.DisplaySingleAchievementName] = var_10_0,
+		[StatEnum.EventProperties.DisplayGroupAchievementName] = var_10_1,
+		[StatEnum.EventProperties.MedalNum] = var_10_2
 	})
 end
 
-function slot0.getStatAchievement(slot0)
-	if not PlayerCardModel.instance:getShowAchievement() or string.nilorempty(slot1) then
-		return nil, , 
+function var_0_0.getStatAchievement(arg_11_0)
+	local var_11_0 = PlayerCardModel.instance:getShowAchievement()
+
+	if not var_11_0 or string.nilorempty(var_11_0) then
+		return nil, nil, nil
 	end
 
-	slot2, slot3 = AchievementUtils.decodeShowStr(slot1)
+	local var_11_1, var_11_2 = AchievementUtils.decodeShowStr(var_11_0)
+	local var_11_3 = arg_11_0:getAchievementNameListByTaskId(var_11_1)
+	local var_11_4 = arg_11_0:getGroupNameListByTaskId(var_11_2)
+	local var_11_5 = PlayerCardModel.instance:getCardInfo().achievementCount
 
-	return slot0:getAchievementNameListByTaskId(slot2), slot0:getGroupNameListByTaskId(slot3), PlayerCardModel.instance:getCardInfo().achievementCount
+	return var_11_3, var_11_4, var_11_5
 end
 
-function slot0.statSetProgress(slot0)
+function var_0_0.statSetProgress(arg_12_0)
+	local var_12_0 = arg_12_0:getStatProgress()
+
 	StatController.instance:track(StatEnum.EventName.PlaycardSetGameProgress, {
-		[StatEnum.EventProperties.GameProgress] = slot0:getStatProgress()
+		[StatEnum.EventProperties.GameProgress] = var_12_0
 	})
 end
 
-function slot0.getStatProgress(slot0)
-	slot1 = {}
+function var_0_0.getStatProgress(arg_13_0)
+	local var_13_0 = {}
+	local var_13_1 = PlayerCardModel.instance:getCardInfo()
+	local var_13_2 = var_13_1:getProgressSetting()
 
-	if PlayerCardModel.instance:getCardInfo():getProgressSetting() and #slot3 > 0 then
-		for slot7, slot8 in ipairs(slot3) do
-			slot9 = slot8[2]
+	if var_13_2 and #var_13_2 > 0 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_2) do
+			local var_13_3 = iter_13_1[2]
+			local var_13_4 = PlayerCardConfig.instance:getCardProgressById(var_13_3).name
+			local var_13_5 = var_13_1:getProgressByIndex(var_13_3)
 
-			table.insert(slot1, PlayerCardConfig.instance:getCardProgressById(slot9).name)
-			table.insert(slot1, slot2:getProgressByIndex(slot9))
+			table.insert(var_13_0, var_13_4)
+			table.insert(var_13_0, var_13_5)
 		end
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.getStatBaseInfo(slot0)
-	slot1 = {}
-	slot2 = PlayerCardModel.instance:getCardInfo()
+function var_0_0.getStatBaseInfo(arg_14_0)
+	local var_14_0 = {}
+	local var_14_1 = PlayerCardModel.instance:getCardInfo()
+	local var_14_2 = PlayerCardConfig.instance:getCardBaseInfoById(1).name
+	local var_14_3 = var_14_1:getBaseInfoByIndex(1)
 
-	table.insert(slot1, PlayerCardConfig.instance:getCardBaseInfoById(1).name)
-	table.insert(slot1, slot2:getBaseInfoByIndex(1))
+	table.insert(var_14_0, var_14_2)
+	table.insert(var_14_0, var_14_3)
 
-	if slot2:getBaseInfoSetting() and #slot6 > 0 then
-		for slot10, slot11 in ipairs(slot6) do
-			slot12 = slot11[2]
+	local var_14_4 = var_14_1:getBaseInfoSetting()
 
-			table.insert(slot1, PlayerCardConfig.instance:getCardBaseInfoById(slot12).name)
-			table.insert(slot1, slot2:getBaseInfoByIndex(slot12))
+	if var_14_4 and #var_14_4 > 0 then
+		for iter_14_0, iter_14_1 in ipairs(var_14_4) do
+			local var_14_5 = iter_14_1[2]
+			local var_14_6 = PlayerCardConfig.instance:getCardBaseInfoById(var_14_5).name
+			local var_14_7 = var_14_1:getBaseInfoByIndex(var_14_5)
+
+			table.insert(var_14_0, var_14_6)
+			table.insert(var_14_0, var_14_7)
 		end
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.statSetBaseInfo(slot0)
+function var_0_0.statSetBaseInfo(arg_15_0)
+	local var_15_0 = arg_15_0:getStatBaseInfo()
+
 	StatController.instance:track(StatEnum.EventName.PlaycardSetBasicInfomation, {
-		[StatEnum.EventProperties.BaseInfomation] = slot0:getStatBaseInfo()
+		[StatEnum.EventProperties.BaseInfomation] = var_15_0
 	})
 end
 
-function slot0.statSetCritter(slot0)
-	slot1, slot2 = slot0:getStatCritter()
+function var_0_0.statSetCritter(arg_16_0)
+	local var_16_0, var_16_1 = arg_16_0:getStatCritter()
 
 	StatController.instance:track(StatEnum.EventName.PlaycardSetCritter, {
-		[StatEnum.EventProperties.CritterId] = slot1,
-		[StatEnum.EventProperties.CritterName] = slot2
+		[StatEnum.EventProperties.CritterId] = var_16_0,
+		[StatEnum.EventProperties.CritterName] = var_16_1
 	})
 end
 
-function slot0.getStatCritter(slot0)
-	slot2 = ""
-	slot3 = nil
+function var_0_0.getStatCritter(arg_17_0)
+	local var_17_0 = PlayerCardModel.instance:getCritterOpen()
+	local var_17_1 = ""
+	local var_17_2
 
-	if PlayerCardModel.instance:getCritterOpen() then
-		slot5, slot6 = PlayerCardModel.instance:getCardInfo():getCritter()
+	if var_17_0 then
+		local var_17_3, var_17_4 = PlayerCardModel.instance:getCardInfo():getCritter()
 
-		if not string.nilorempty(slot5) then
-			slot3 = CritterConfig.instance:getCritterName(slot5)
+		if not string.nilorempty(var_17_3) then
+			var_17_2 = CritterConfig.instance:getCritterName(var_17_3)
 		end
 	end
 
-	return slot2, slot3
+	return var_17_1, var_17_2
 end
 
-function slot0.getAchievementNameListByTaskId(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0.getAchievementNameListByTaskId(arg_18_0, arg_18_1)
+	local var_18_0 = {}
+	local var_18_1 = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot7, slot8 in ipairs(slot1) do
-			if AchievementConfig.instance:getTask(slot8) and not slot3[slot9.achievementId] then
-				table.insert(slot2, AchievementConfig.instance:getAchievement(slot9.achievementId) and slot10.name or "")
+	if arg_18_1 and #arg_18_1 > 0 then
+		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+			local var_18_2 = AchievementConfig.instance:getTask(iter_18_1)
 
-				slot3[slot9.achievementId] = true
+			if var_18_2 and not var_18_1[var_18_2.achievementId] then
+				local var_18_3 = AchievementConfig.instance:getAchievement(var_18_2.achievementId)
+				local var_18_4 = var_18_3 and var_18_3.name or ""
+
+				table.insert(var_18_0, var_18_4)
+
+				var_18_1[var_18_2.achievementId] = true
 			end
 		end
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.getUseTime(slot0)
-	slot1 = 0
+function var_0_0.getUseTime(arg_19_0)
+	local var_19_0 = 0
 
-	if slot0.startTime then
-		slot1 = ServerTime.now() - slot0.startTime
+	if arg_19_0.startTime then
+		var_19_0 = ServerTime.now() - arg_19_0.startTime
 	end
 
-	return slot1
+	return var_19_0
 end
 
-function slot0.getGroupNameListByTaskId(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0.getGroupNameListByTaskId(arg_20_0, arg_20_1)
+	local var_20_0 = {}
+	local var_20_1 = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot7, slot8 in ipairs(slot1) do
-			if AchievementConfig.instance:getTask(slot8) and AchievementConfig.instance:getGroup(AchievementConfig.instance:getAchievement(slot9.achievementId) and slot10.groupId) and not slot3[slot11] then
-				table.insert(slot2, slot12 and slot12.name or "")
+	if arg_20_1 and #arg_20_1 > 0 then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
+			local var_20_2 = AchievementConfig.instance:getTask(iter_20_1)
 
-				slot3[slot11] = true
+			if var_20_2 then
+				local var_20_3 = AchievementConfig.instance:getAchievement(var_20_2.achievementId)
+				local var_20_4 = var_20_3 and var_20_3.groupId
+				local var_20_5 = AchievementConfig.instance:getGroup(var_20_4)
+
+				if var_20_5 and not var_20_1[var_20_4] then
+					local var_20_6 = var_20_5 and var_20_5.name or ""
+
+					table.insert(var_20_0, var_20_6)
+
+					var_20_1[var_20_4] = true
+				end
 			end
 		end
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.getSkinName(slot0)
-	if PlayerCardModel.instance:getCardInfo():getThemeId() ~= 0 then
-		return ItemConfig.instance:getItemCo(slot2).name
+function var_0_0.getSkinName(arg_21_0)
+	local var_21_0 = PlayerCardModel.instance:getCardInfo():getThemeId()
+
+	if var_21_0 ~= 0 then
+		return ItemConfig.instance:getItemCo(var_21_0).name
 	end
 
 	return "默认"
 end
 
-function slot0.getHeadName(slot0)
-	return lua_item.configDict[PlayerModel.instance:getPlayinfo().portrait].name
+function var_0_0.getHeadName(arg_22_0)
+	local var_22_0 = PlayerModel.instance:getPlayinfo().portrait
+
+	return lua_item.configDict[var_22_0].name
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,81 +1,98 @@
-module("modules.logic.minors.view.DateOfBirthSelectionViewItem", package.seeall)
+﻿module("modules.logic.minors.view.DateOfBirthSelectionViewItem", package.seeall)
 
-slot0 = class("DateOfBirthSelectionViewItem", ListScrollCellExtend)
+local var_0_0 = class("DateOfBirthSelectionViewItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._dropdown = gohelper.findChildDropdown(slot0.viewGO, "")
-	slot0._arrowTran = gohelper.findChild(slot0.viewGO, "arrow").transform
-	slot0._dropdownClick = gohelper.getClick(slot0.viewGO, "")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._dropdown = gohelper.findChildDropdown(arg_1_0.viewGO, "")
+	arg_1_0._arrowTran = gohelper.findChild(arg_1_0.viewGO, "arrow").transform
+	arg_1_0._dropdownClick = gohelper.getClick(arg_1_0.viewGO, "")
 end
 
-function slot0.addEvents(slot0)
-	slot0._dropdownClick:AddClickListener(slot0._onDropdownClick, slot0)
-	slot0._dropdown:AddOnValueChanged(slot0._onDropDownValueChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._dropdownClick:AddClickListener(arg_2_0._onDropdownClick, arg_2_0)
+	arg_2_0._dropdown:AddOnValueChanged(arg_2_0._onDropDownValueChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._dropdown:RemoveOnValueChanged()
-	slot0._dropdownClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._dropdown:RemoveOnValueChanged()
+	arg_3_0._dropdownClick:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0:_refresh()
+	arg_4_0:_refresh()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-function slot0._onDropDownValueChange(slot0)
-	slot1 = slot0._mo
+function var_0_0._onDropDownValueChange(arg_6_0)
+	local var_6_0 = arg_6_0._mo
+	local var_6_1 = var_6_0._parent
+	local var_6_2 = var_6_0.type
+	local var_6_3 = arg_6_0._dropdown:GetValue()
 
-	if slot1._parent:getDropDownSelectedIndex(slot1.type) ~= slot0._dropdown:GetValue() then
-		slot2:onClickDropDownOption(slot3, slot4)
+	if var_6_1:getDropDownSelectedIndex(var_6_2) ~= var_6_3 then
+		var_6_1:onClickDropDownOption(var_6_2, var_6_3)
 	end
 end
 
-function slot0._refresh(slot0)
-	slot0._dropdown:ClearOptions()
+function var_0_0._refresh(arg_7_0)
+	arg_7_0._dropdown:ClearOptions()
 
-	slot0._options = slot0:_getOptions()
+	arg_7_0._options = arg_7_0:_getOptions()
 
-	slot0._dropdown:AddOptions(slot0._options)
-	slot0._dropdown:SetValue(slot0:_getSelectedIndex())
+	arg_7_0._dropdown:AddOptions(arg_7_0._options)
+	arg_7_0._dropdown:SetValue(arg_7_0:_getSelectedIndex())
 end
 
-function slot0._getOptions(slot0)
-	slot1 = slot0._mo
+function var_0_0._getOptions(arg_8_0)
+	local var_8_0 = arg_8_0._mo
+	local var_8_1 = var_8_0.type
 
-	return slot1._parent:getDropDownOption(slot1.type)
+	return var_8_0._parent:getDropDownOption(var_8_1)
 end
 
-function slot0._getSelectedIndex(slot0)
-	slot1 = slot0._mo
+function var_0_0._getSelectedIndex(arg_9_0)
+	local var_9_0 = arg_9_0._mo
+	local var_9_1 = var_9_0.type
 
-	return slot1._parent:getDropDownSelectedIndex(slot1.type)
+	return var_9_0._parent:getDropDownSelectedIndex(var_9_1)
 end
 
-slot1 = UnityEngine.UI.ScrollRect
-slot4 = 5
-slot5 = 12 + 73
+local var_0_1 = UnityEngine.UI.ScrollRect
+local var_0_2 = 12
+local var_0_3 = 73
+local var_0_4 = 5
+local var_0_5 = var_0_2 + var_0_3
 
-function slot0._onDropdownClick(slot0)
-	slot1 = slot0._dropdown:GetValue()
+function var_0_0._onDropdownClick(arg_10_0)
+	local var_10_0 = arg_10_0._dropdown:GetValue()
+	local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "Dropdown List")
 
-	if not gohelper.findChild(slot0.viewGO, "Dropdown List") then
+	if not var_10_1 then
 		return
 	end
 
-	if not slot2:GetComponent(typeof(uv0)) then
+	local var_10_2 = var_10_1:GetComponent(typeof(var_0_1))
+
+	if not var_10_2 then
 		return
 	end
 
-	if not slot3.content then
+	local var_10_3 = var_10_2.content
+
+	if not var_10_3 then
 		return
 	end
 
-	recthelper.setAnchorY(slot4, math.min(math.max(0, ((slot0._options and #slot0._options or 0) - uv2) * uv1), slot1 * uv1))
+	local var_10_4 = arg_10_0._options and #arg_10_0._options or 0
+	local var_10_5 = var_10_0 * var_0_5
+	local var_10_6 = math.max(0, (var_10_4 - var_0_4) * var_0_5)
+
+	recthelper.setAnchorY(var_10_3, math.min(var_10_6, var_10_5))
 end
 
-return slot0
+return var_0_0

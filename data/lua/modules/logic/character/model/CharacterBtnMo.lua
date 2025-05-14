@@ -1,17 +1,17 @@
-module("modules.logic.character.model.CharacterBtnMo", package.seeall)
+﻿module("modules.logic.character.model.CharacterBtnMo", package.seeall)
 
-slot0 = pureTable("CharacterBtnMo")
+local var_0_0 = pureTable("CharacterBtnMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.name = ""
-	slot0.icon = ""
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.name = ""
+	arg_1_0.icon = ""
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.name = slot1.name
-	slot0.icon = slot1.iconres
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.name = arg_2_1.name
+	arg_2_0.icon = arg_2_1.iconres
 end
 
-return slot0
+return var_0_0

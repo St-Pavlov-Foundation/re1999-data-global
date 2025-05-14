@@ -1,21 +1,23 @@
-module("modules.logic.versionactivity1_3.buff.controller.VersionActivity1_3BuffController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.buff.controller.VersionActivity1_3BuffController", package.seeall)
 
-slot0 = class("VersionActivity1_3BuffController", BaseController)
+local var_0_0 = class("VersionActivity1_3BuffController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.openBuffView(slot0)
+function var_0_0.openBuffView(arg_3_0)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_3BuffView)
 end
 
-function slot0.openFairyLandView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.VersionActivity1_3FairyLandView, slot1)
+function var_0_0.openFairyLandView(arg_4_0, arg_4_1)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_3FairyLandView, arg_4_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

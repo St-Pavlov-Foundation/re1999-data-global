@@ -1,28 +1,28 @@
-module("modules.logic.dungeon.view.DungeonHuaRongView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonHuaRongView", package.seeall)
 
-slot0 = class("DungeonHuaRongView", BaseView)
+local var_0_0 = class("DungeonHuaRongView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_container/#go_item")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_container/#go_item/#simage_bg")
-	slot0._txtnumber = gohelper.findChildText(slot0.viewGO, "#go_container/#go_item/#txt_number")
-	slot0._btnshowsteps = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_showsteps")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_item")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/#go_item/#simage_bg")
+	arg_1_0._txtnumber = gohelper.findChildText(arg_1_0.viewGO, "#go_container/#go_item/#txt_number")
+	arg_1_0._btnshowsteps = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_showsteps")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnshowsteps:AddClickListener(slot0._btnshowstepsOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnshowsteps:AddClickListener(arg_2_0._btnshowstepsOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnshowsteps:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnshowsteps:RemoveClickListener()
 end
 
-slot0.originData = {
+var_0_0.originData = {
 	0,
 	1,
 	2,
@@ -40,204 +40,213 @@ slot0.originData = {
 	14,
 	15
 }
-slot0.moveDuration = 0.5
+var_0_0.moveDuration = 0.5
 
-function slot0._btnshowstepsOnClick(slot0)
-	for slot5 = 1, #slot0.clickedPoses do
-		slot1 = "" .. "\n" .. string.format("Vector2(%s, %s),", slot0.clickedPoses[slot5].x, slot0.clickedPoses[slot5].y)
+function var_0_0._btnshowstepsOnClick(arg_4_0)
+	local var_4_0 = ""
+
+	for iter_4_0 = 1, #arg_4_0.clickedPoses do
+		var_4_0 = var_4_0 .. "\n" .. string.format("Vector2(%s, %s),", arg_4_0.clickedPoses[iter_4_0].x, arg_4_0.clickedPoses[iter_4_0].y)
 	end
 
-	logWarn(slot1)
+	logWarn(var_4_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.gridLayoutComp = slot0._gocontainer:GetComponent(gohelper.Type_GridLayoutGroup)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.gridLayoutComp = arg_5_0._gocontainer:GetComponent(gohelper.Type_GridLayoutGroup)
 
-	gohelper.setActive(slot0._goitem, false)
-	gohelper.setActive(slot0._btnshowsteps.gameObject, SLFramework.FrameworkSettings.IsEditor)
+	gohelper.setActive(arg_5_0._goitem, false)
+	gohelper.setActive(arg_5_0._btnshowsteps.gameObject, SLFramework.FrameworkSettings.IsEditor)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._callBack = slot0.viewParam.callBack
-	slot0._callBackObject = slot0.viewParam.callBackObject
-	slot0.itemList = slot0:getEmpty4x4List()
-	slot0.clickList = {}
-	slot0.emptyPos = Vector2(0, 0)
-	slot0.boardData = slot0:initBoardData(uv0.originData)
-	slot0.movingCount = 0
-	slot0._succ = false
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._callBack = arg_7_0.viewParam.callBack
+	arg_7_0._callBackObject = arg_7_0.viewParam.callBackObject
+	arg_7_0.itemList = arg_7_0:getEmpty4x4List()
+	arg_7_0.clickList = {}
+	arg_7_0.emptyPos = Vector2(0, 0)
+	arg_7_0.boardData = arg_7_0:initBoardData(var_0_0.originData)
+	arg_7_0.movingCount = 0
+	arg_7_0._succ = false
 
-	slot0:resetMoveProperties()
-	slot0:refreshBoard(slot0.boardData)
+	arg_7_0:resetMoveProperties()
+	arg_7_0:refreshBoard(arg_7_0.boardData)
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot0.clickedPoses = {}
+		arg_7_0.clickedPoses = {}
 	end
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0.gridLayoutComp.enabled = false
+function var_0_0.onOpenFinish(arg_8_0)
+	arg_8_0.gridLayoutComp.enabled = false
 end
 
-function slot0.initBoardData(slot0, slot1)
-	slot2 = slot0:getEmpty4x4List(0)
+function var_0_0.initBoardData(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getEmpty4x4List(0)
 
-	for slot6 = 1, #slot1 do
-		slot7, slot8 = slot0:_numTo4x4Pos(slot6)
-		slot2[slot7][slot8] = slot1[slot6]
+	for iter_9_0 = 1, #arg_9_1 do
+		local var_9_1, var_9_2 = arg_9_0:_numTo4x4Pos(iter_9_0)
+
+		var_9_0[var_9_1][var_9_2] = arg_9_1[iter_9_0]
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.refreshBoard(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		for slot9 = 1, #slot1[slot5] do
-			slot10 = slot0:getUserDataTb_()
-			slot10.pos = Vector2(slot5, slot9)
-			slot10.data = slot1[slot5][slot9]
-			slot10.go = gohelper.clone(slot0._goitem, slot0._gocontainer, string.format("item%s_%s", slot5, slot9))
+function var_0_0.refreshBoard(arg_10_0, arg_10_1)
+	for iter_10_0 = 1, #arg_10_1 do
+		for iter_10_1 = 1, #arg_10_1[iter_10_0] do
+			local var_10_0 = arg_10_0:getUserDataTb_()
 
-			gohelper.setActive(slot10.go, true)
+			var_10_0.pos = Vector2(iter_10_0, iter_10_1)
+			var_10_0.data = arg_10_1[iter_10_0][iter_10_1]
+			var_10_0.go = gohelper.clone(arg_10_0._goitem, arg_10_0._gocontainer, string.format("item%s_%s", iter_10_0, iter_10_1))
 
-			slot10.txtnumber = gohelper.findChildText(slot10.go, "#txt_number")
-			slot10.simagebg = gohelper.findChildSingleImage(slot10.go, "#simage_bg")
-			slot10.click = gohelper.getClick(slot10.go)
+			gohelper.setActive(var_10_0.go, true)
 
-			slot10.click:AddClickListener(slot0._onClickItem, slot0, slot10)
+			var_10_0.txtnumber = gohelper.findChildText(var_10_0.go, "#txt_number")
+			var_10_0.simagebg = gohelper.findChildSingleImage(var_10_0.go, "#simage_bg")
+			var_10_0.click = gohelper.getClick(var_10_0.go)
 
-			if slot1[slot5][slot9] ~= 0 then
-				slot10.txtnumber.text = slot1[slot5][slot9]
+			var_10_0.click:AddClickListener(arg_10_0._onClickItem, arg_10_0, var_10_0)
 
-				gohelper.setActive(slot10.txtnumber.gameObject, true)
-				gohelper.setActive(slot10.simagebg.gameObject, true)
+			if arg_10_1[iter_10_0][iter_10_1] ~= 0 then
+				var_10_0.txtnumber.text = arg_10_1[iter_10_0][iter_10_1]
+
+				gohelper.setActive(var_10_0.txtnumber.gameObject, true)
+				gohelper.setActive(var_10_0.simagebg.gameObject, true)
 			else
-				slot0.emptyPos = Vector2(slot5, slot9)
+				arg_10_0.emptyPos = Vector2(iter_10_0, iter_10_1)
 
-				gohelper.setActive(slot10.txtnumber.gameObject, false)
-				gohelper.setActive(slot10.simagebg.gameObject, false)
+				gohelper.setActive(var_10_0.txtnumber.gameObject, false)
+				gohelper.setActive(var_10_0.simagebg.gameObject, false)
 			end
 
-			slot0.itemList[slot5][slot9] = slot10
+			arg_10_0.itemList[iter_10_0][iter_10_1] = var_10_0
 
-			table.insert(slot0.clickList, slot10.click)
+			table.insert(arg_10_0.clickList, var_10_0.click)
 		end
 	end
 end
 
-function slot0._onClickItem(slot0, slot1)
-	if slot0.movingCount ~= 0 then
+function var_0_0._onClickItem(arg_11_0, arg_11_1)
+	if arg_11_0.movingCount ~= 0 then
 		return
 	end
 
-	slot3 = slot1.pos.y
+	local var_11_0 = arg_11_1.pos.x
+	local var_11_1 = arg_11_1.pos.y
 
-	if slot1.pos.x == slot0.emptyPos.x and slot3 == slot0.emptyPos.y then
+	if var_11_0 == arg_11_0.emptyPos.x and var_11_1 == arg_11_0.emptyPos.y then
 		return
 	end
 
-	if slot2 ~= slot0.emptyPos.x and slot3 ~= slot0.emptyPos.y then
+	if var_11_0 ~= arg_11_0.emptyPos.x and var_11_1 ~= arg_11_0.emptyPos.y then
 		return
 	end
 
-	slot0:resetMoveProperties()
+	arg_11_0:resetMoveProperties()
 
-	slot0.clickAnchorPos = slot1.go.transform.anchoredPosition
+	arg_11_0.clickAnchorPos = arg_11_1.go.transform.anchoredPosition
 
-	if slot2 == slot0.emptyPos.x then
-		if slot0.emptyPos.y < slot3 then
-			for slot7 = slot0.emptyPos.y + 1, slot3 do
-				table.insert(slot0.currSrcTransform, slot0.itemList[slot2][slot7].go.transform)
-				table.insert(slot0.currDestTransforms, slot0.itemList[slot2][slot7 - 1].go.transform)
-				table.insert(slot0.currSrcPos, Vector2(slot2, slot7))
-				table.insert(slot0.currDestPos, Vector2(slot2, slot7 - 1))
+	if var_11_0 == arg_11_0.emptyPos.x then
+		if var_11_1 > arg_11_0.emptyPos.y then
+			for iter_11_0 = arg_11_0.emptyPos.y + 1, var_11_1 do
+				table.insert(arg_11_0.currSrcTransform, arg_11_0.itemList[var_11_0][iter_11_0].go.transform)
+				table.insert(arg_11_0.currDestTransforms, arg_11_0.itemList[var_11_0][iter_11_0 - 1].go.transform)
+				table.insert(arg_11_0.currSrcPos, Vector2(var_11_0, iter_11_0))
+				table.insert(arg_11_0.currDestPos, Vector2(var_11_0, iter_11_0 - 1))
 			end
 		else
-			for slot7 = slot0.emptyPos.y - 1, slot3, -1 do
-				table.insert(slot0.currSrcTransform, slot0.itemList[slot2][slot7].go.transform)
-				table.insert(slot0.currDestTransforms, slot0.itemList[slot2][slot7 + 1].go.transform)
-				table.insert(slot0.currSrcPos, Vector2(slot2, slot7))
-				table.insert(slot0.currDestPos, Vector2(slot2, slot7 + 1))
+			for iter_11_1 = arg_11_0.emptyPos.y - 1, var_11_1, -1 do
+				table.insert(arg_11_0.currSrcTransform, arg_11_0.itemList[var_11_0][iter_11_1].go.transform)
+				table.insert(arg_11_0.currDestTransforms, arg_11_0.itemList[var_11_0][iter_11_1 + 1].go.transform)
+				table.insert(arg_11_0.currSrcPos, Vector2(var_11_0, iter_11_1))
+				table.insert(arg_11_0.currDestPos, Vector2(var_11_0, iter_11_1 + 1))
 			end
 		end
 	end
 
-	if slot3 == slot0.emptyPos.y then
-		if slot0.emptyPos.x < slot2 then
-			for slot7 = slot0.emptyPos.x + 1, slot2 do
-				table.insert(slot0.currSrcTransform, slot0.itemList[slot7][slot3].go.transform)
-				table.insert(slot0.currDestTransforms, slot0.itemList[slot7 - 1][slot3].go.transform)
-				table.insert(slot0.currSrcPos, Vector2(slot7, slot3))
-				table.insert(slot0.currDestPos, Vector2(slot7 - 1, slot3))
+	if var_11_1 == arg_11_0.emptyPos.y then
+		if var_11_0 > arg_11_0.emptyPos.x then
+			for iter_11_2 = arg_11_0.emptyPos.x + 1, var_11_0 do
+				table.insert(arg_11_0.currSrcTransform, arg_11_0.itemList[iter_11_2][var_11_1].go.transform)
+				table.insert(arg_11_0.currDestTransforms, arg_11_0.itemList[iter_11_2 - 1][var_11_1].go.transform)
+				table.insert(arg_11_0.currSrcPos, Vector2(iter_11_2, var_11_1))
+				table.insert(arg_11_0.currDestPos, Vector2(iter_11_2 - 1, var_11_1))
 			end
 		else
-			for slot7 = slot0.emptyPos.x - 1, slot2, -1 do
-				table.insert(slot0.currSrcTransform, slot0.itemList[slot7][slot3].go.transform)
-				table.insert(slot0.currDestTransforms, slot0.itemList[slot7 + 1][slot3].go.transform)
-				table.insert(slot0.currSrcPos, Vector2(slot7, slot3))
-				table.insert(slot0.currDestPos, Vector2(slot7 + 1, slot3))
+			for iter_11_3 = arg_11_0.emptyPos.x - 1, var_11_0, -1 do
+				table.insert(arg_11_0.currSrcTransform, arg_11_0.itemList[iter_11_3][var_11_1].go.transform)
+				table.insert(arg_11_0.currDestTransforms, arg_11_0.itemList[iter_11_3 + 1][var_11_1].go.transform)
+				table.insert(arg_11_0.currSrcPos, Vector2(iter_11_3, var_11_1))
+				table.insert(arg_11_0.currDestPos, Vector2(iter_11_3 + 1, var_11_1))
 			end
 		end
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		table.insert(slot0.clickedPoses, slot1.pos)
+		table.insert(arg_11_0.clickedPoses, arg_11_1.pos)
 	end
 
-	slot0:moveItems(slot0.currSrcTransform, slot0.currDestTransforms)
+	arg_11_0:moveItems(arg_11_0.currSrcTransform, arg_11_0.currDestTransforms)
 end
 
-function slot0.moveItems(slot0, slot1, slot2)
-	slot0.movingCount = #slot1
+function var_0_0.moveItems(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0.movingCount = #arg_12_1
 
-	for slot6 = 1, #slot1 do
-		slot7, slot8 = recthelper.getAnchor(slot2[slot6])
+	for iter_12_0 = 1, #arg_12_1 do
+		local var_12_0, var_12_1 = recthelper.getAnchor(arg_12_2[iter_12_0])
 
-		ZProj.TweenHelper.DOAnchorPos(slot1[slot6], slot7, slot8, uv0.moveDuration, slot0.moveDoneCallback, slot0)
-	end
-end
-
-function slot0.moveDoneCallback(slot0)
-	slot0.movingCount = slot0.movingCount - 1
-
-	if slot0.movingCount == 0 then
-		slot0:changeBoardData()
-		slot0:checkSuccess()
-		slot0:resetMoveProperties()
+		ZProj.TweenHelper.DOAnchorPos(arg_12_1[iter_12_0], var_12_0, var_12_1, var_0_0.moveDuration, arg_12_0.moveDoneCallback, arg_12_0)
 	end
 end
 
-function slot0.changeBoardData(slot0)
-	slot0.emptyPos = slot0.currSrcPos[#slot0.currSrcPos]
-	slot0.itemList[slot0.emptyPos.x][slot0.emptyPos.y].go.transform.anchoredPosition = slot0.clickAnchorPos
+function var_0_0.moveDoneCallback(arg_13_0)
+	arg_13_0.movingCount = arg_13_0.movingCount - 1
 
-	for slot6 = 1, #slot0.currDestPos do
-		slot0.itemList[slot0.currDestPos[slot6].x][slot0.currDestPos[slot6].y] = slot0.itemList[slot0.currSrcPos[slot6].x][slot0.currSrcPos[slot6].y]
-		slot0.itemList[slot0.currDestPos[slot6].x][slot0.currDestPos[slot6].y].pos = Vector2(slot0.currDestPos[slot6].x, slot0.currDestPos[slot6].y)
+	if arg_13_0.movingCount == 0 then
+		arg_13_0:changeBoardData()
+		arg_13_0:checkSuccess()
+		arg_13_0:resetMoveProperties()
 	end
-
-	slot0.itemList[slot1.x][slot1.y] = slot2
 end
 
-function slot0.checkSuccess(slot0)
-	if slot0:isValidBoard() then
+function var_0_0.changeBoardData(arg_14_0)
+	local var_14_0 = arg_14_0.currSrcPos[#arg_14_0.currSrcPos]
+	local var_14_1 = arg_14_0.itemList[arg_14_0.emptyPos.x][arg_14_0.emptyPos.y]
+
+	arg_14_0.emptyPos = var_14_0
+	var_14_1.go.transform.anchoredPosition = arg_14_0.clickAnchorPos
+
+	for iter_14_0 = 1, #arg_14_0.currDestPos do
+		arg_14_0.itemList[arg_14_0.currDestPos[iter_14_0].x][arg_14_0.currDestPos[iter_14_0].y] = arg_14_0.itemList[arg_14_0.currSrcPos[iter_14_0].x][arg_14_0.currSrcPos[iter_14_0].y]
+		arg_14_0.itemList[arg_14_0.currDestPos[iter_14_0].x][arg_14_0.currDestPos[iter_14_0].y].pos = Vector2(arg_14_0.currDestPos[iter_14_0].x, arg_14_0.currDestPos[iter_14_0].y)
+	end
+
+	arg_14_0.itemList[var_14_0.x][var_14_0.y] = var_14_1
+end
+
+function var_0_0.checkSuccess(arg_15_0)
+	if arg_15_0:isValidBoard() then
 		logWarn("success")
 
-		slot0._succ = true
+		arg_15_0._succ = true
 
-		for slot4, slot5 in ipairs(slot0.clickList) do
-			slot5:RemoveClickListener()
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0.clickList) do
+			iter_15_1:RemoveClickListener()
 		end
 	end
 end
 
-function slot0.isValidBoard(slot0)
-	for slot4 = 1, 4 do
-		for slot8 = 1, 4 do
-			if slot0.itemList[slot4][slot8].data + 1 ~= slot0:_4x4ToNumPos(slot4, slot8) then
+function var_0_0.isValidBoard(arg_16_0)
+	for iter_16_0 = 1, 4 do
+		for iter_16_1 = 1, 4 do
+			if arg_16_0.itemList[iter_16_0][iter_16_1].data + 1 ~= arg_16_0:_4x4ToNumPos(iter_16_0, iter_16_1) then
 				return false
 			end
 		end
@@ -246,53 +255,57 @@ function slot0.isValidBoard(slot0)
 	return true
 end
 
-function slot0.resetMoveProperties(slot0)
-	slot0.currSrcTransform = {}
-	slot0.currSrcPos = {}
-	slot0.currDestTransforms = {}
-	slot0.currDestPos = {}
-	slot0.clickAnchorPos = nil
+function var_0_0.resetMoveProperties(arg_17_0)
+	arg_17_0.currSrcTransform = {}
+	arg_17_0.currSrcPos = {}
+	arg_17_0.currDestTransforms = {}
+	arg_17_0.currDestPos = {}
+	arg_17_0.clickAnchorPos = nil
 end
 
-function slot0.getEmpty4x4List(slot0, slot1)
-	for slot6 = 1, 4 do
-		for slot10 = 1, 4 do
-			table.insert(slot2[slot6], slot1 or 0)
+function var_0_0.getEmpty4x4List(arg_18_0, arg_18_1)
+	local var_18_0 = {}
+
+	for iter_18_0 = 1, 4 do
+		var_18_0[iter_18_0] = {}
+
+		for iter_18_1 = 1, 4 do
+			table.insert(var_18_0[iter_18_0], arg_18_1 or 0)
 		end
 	end
 
-	return {
-		[slot6] = {}
-	}
+	return var_18_0
 end
 
-function slot0._numTo4x4Pos(slot0, slot1)
-	slot2 = math.ceil(slot1 / 4)
+function var_0_0._numTo4x4Pos(arg_19_0, arg_19_1)
+	local var_19_0 = math.ceil(arg_19_1 / 4)
+	local var_19_1 = arg_19_1 % 4
 
-	if slot1 % 4 == 0 then
-		slot3 = 4
+	if var_19_1 == 0 then
+		var_19_1 = 4
 	end
 
-	return slot2, slot3
+	return var_19_0, var_19_1
 end
 
-function slot0._4x4ToNumPos(slot0, slot1, slot2)
-	return (slot1 - 1) * 4 + slot2
+function var_0_0._4x4ToNumPos(arg_20_0, arg_20_1, arg_20_2)
+	return (arg_20_1 - 1) * 4 + arg_20_2
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in ipairs(slot0.clickList) do
-		slot5:RemoveClickListener()
+function var_0_0.onClose(arg_21_0)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.clickList) do
+		iter_21_1:RemoveClickListener()
 	end
 
-	slot0.itemList = {}
+	arg_21_0.itemList = {}
 
-	if slot0._callBack then
-		slot0._callBack(slot0._callBackObject, slot0._succ)
+	if arg_21_0._callBack then
+		arg_21_0._callBack(arg_21_0._callBackObject, arg_21_0._succ)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_22_0)
+	return
 end
 
-return slot0
+return var_0_0

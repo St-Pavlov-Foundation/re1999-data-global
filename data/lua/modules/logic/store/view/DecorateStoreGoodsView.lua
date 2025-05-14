@@ -1,425 +1,462 @@
-module("modules.logic.store.view.DecorateStoreGoodsView", package.seeall)
+﻿module("modules.logic.store.view.DecorateStoreGoodsView", package.seeall)
 
-slot0 = class("DecorateStoreGoodsView", BaseView)
+local var_0_0 = class("DecorateStoreGoodsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageblur = gohelper.findChildSingleImage(slot0.viewGO, "view/#simage_blur")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "view/bg/#simage_rightbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "view/bg/#simage_leftbg")
-	slot0._txtgoodsNameCn = gohelper.findChildText(slot0.viewGO, "view/common/title/#txt_goodsNameCn")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/common/#btn_buy")
-	slot0._godiscount = gohelper.findChild(slot0.viewGO, "view/common/#btn_buy/#go_discount")
-	slot0._txtdiscount = gohelper.findChildText(slot0.viewGO, "view/common/#btn_buy/#go_discount/#txt_discount")
-	slot0._godiscount2 = gohelper.findChild(slot0.viewGO, "view/common/#btn_buy/#go_discount2")
-	slot0._txtdiscount2 = gohelper.findChildText(slot0.viewGO, "view/common/#btn_buy/#go_discount2/#txt_discount")
-	slot0._gocost = gohelper.findChild(slot0.viewGO, "view/common/cost")
-	slot0._btncost1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/common/cost/#btn_cost1")
-	slot0._gounselect1 = gohelper.findChild(slot0.viewGO, "view/common/cost/#btn_cost1/unselect")
-	slot0._imageiconunselect1 = gohelper.findChildImage(slot0.viewGO, "view/common/cost/#btn_cost1/unselect/icon/simage_icon")
-	slot0._txtcurpriceunselect1 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost1/unselect/txt_Num")
-	slot0._txtoriginalpriceunselect1 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost1/unselect/#txt_original_price")
-	slot0._goselect1 = gohelper.findChild(slot0.viewGO, "view/common/cost/#btn_cost1/select")
-	slot0._imageiconselect1 = gohelper.findChildImage(slot0.viewGO, "view/common/cost/#btn_cost1/select/icon/simage_icon")
-	slot0._txtcurpriceselect1 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost1/select/txt_Num")
-	slot0._txtoriginalpriceselect1 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost1/select/#txt_original_price")
-	slot0._btncost2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/common/cost/#btn_cost2")
-	slot0._gounselect2 = gohelper.findChild(slot0.viewGO, "view/common/cost/#btn_cost2/unselect")
-	slot0._imageiconunselect2 = gohelper.findChildImage(slot0.viewGO, "view/common/cost/#btn_cost2/unselect/icon/simage_icon")
-	slot0._txtcurpriceunselect2 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost2/unselect/txt_Num")
-	slot0._txtoriginalpriceunselect2 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost2/unselect/#txt_original_price")
-	slot0._goselect2 = gohelper.findChild(slot0.viewGO, "view/common/cost/#btn_cost2/select")
-	slot0._imageiconselect2 = gohelper.findChildImage(slot0.viewGO, "view/common/cost/#btn_cost2/select/icon/simage_icon")
-	slot0._txtcurpriceselect2 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost2/select/txt_Num")
-	slot0._txtoriginalpriceselect2 = gohelper.findChildText(slot0.viewGO, "view/common/cost/#btn_cost2/select/#txt_original_price")
-	slot0._gocostsingle = gohelper.findChild(slot0.viewGO, "view/common/cost_single")
-	slot0._imageiconsingle = gohelper.findChildImage(slot0.viewGO, "view/common/cost_single/simage_material")
-	slot0._txtcurpricesingle = gohelper.findChildText(slot0.viewGO, "view/common/cost_single/#txt_materialNum")
-	slot0._txtoriginalpricesingle = gohelper.findChildText(slot0.viewGO, "view/common/cost_single/#txt_price")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "view/normal")
-	slot0._gonormalremain = gohelper.findChild(slot0.viewGO, "view/normal/info/remain")
-	slot0._gonormalleftbg = gohelper.findChild(slot0.viewGO, "view/normal/info/remain/#go_leftbg")
-	slot0._txtnormalleftremain = gohelper.findChildText(slot0.viewGO, "view/normal/info/remain/#go_leftbg/#txt_remain")
-	slot0._gonormalrightbg = gohelper.findChild(slot0.viewGO, "view/normal/info/remain/#go_rightbg")
-	slot0._txtnormalrightremain = gohelper.findChildText(slot0.viewGO, "view/normal/info/remain/#go_rightbg/#txt_remaintime")
-	slot0._txtgoodsUseDesc = gohelper.findChildText(slot0.viewGO, "view/normal/info/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
-	slot0._txtgoodsDesc = gohelper.findChildText(slot0.viewGO, "view/normal/info/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	slot0._gonormaldetail = gohelper.findChild(slot0.viewGO, "view/normal_detail")
-	slot0._godetailremain = gohelper.findChild(slot0.viewGO, "view/normal_detail/remain")
-	slot0._godetailleftbg = gohelper.findChild(slot0.viewGO, "view/normal_detail/remain/#go_leftbg")
-	slot0._txtdetailleftremain = gohelper.findChildText(slot0.viewGO, "view/normal_detail/remain/#go_leftbg/#txt_remain")
-	slot0._godetailrightbg = gohelper.findChild(slot0.viewGO, "view/normal_detail/remain/#go_rightbg")
-	slot0._txtdetailrightremain = gohelper.findChildText(slot0.viewGO, "view/normal_detail/remain/#go_rightbg/#txt_remaintime")
-	slot0._gonormaldetailinfo = gohelper.findChild(slot0.viewGO, "view/normal_detail/info")
-	slot0._txtnormaldetailUseDesc = gohelper.findChildText(slot0.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
-	slot0._txtnormaldetaildesc = gohelper.findChildText(slot0.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/#btn_close")
-	slot0._simagetype1 = gohelper.findChildSingleImage(slot0.viewGO, "view/right/type1")
-	slot0._simagetype2 = gohelper.findChildSingleImage(slot0.viewGO, "view/right/type2")
-	slot0._goType3 = gohelper.findChild(slot0.viewGO, "view/right/type3")
-	slot0._simagetype3 = gohelper.findChildSingleImage(slot0.viewGO, "view/right/type3/#simage_icon")
-	slot0._gohadnumber = gohelper.findChild(slot0.viewGO, "view/right/type3/#go_hadnumber")
-	slot0._txttype3num = gohelper.findChildText(slot0.viewGO, "view/right/type3/#go_hadnumber/#txt_hadnumber")
-	slot0._btnicon = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/right/#btn_click")
-	slot0._gotopright = gohelper.findChild(slot0.viewGO, "#go_topright")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_blur")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_rightbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_leftbg")
+	arg_1_0._txtgoodsNameCn = gohelper.findChildText(arg_1_0.viewGO, "view/common/title/#txt_goodsNameCn")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/#btn_buy")
+	arg_1_0._godiscount = gohelper.findChild(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount")
+	arg_1_0._txtdiscount = gohelper.findChildText(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount/#txt_discount")
+	arg_1_0._godiscount2 = gohelper.findChild(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount2")
+	arg_1_0._txtdiscount2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/#btn_buy/#go_discount2/#txt_discount")
+	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "view/common/cost")
+	arg_1_0._btncost1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/cost/#btn_cost1")
+	arg_1_0._gounselect1 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect")
+	arg_1_0._imageiconunselect1 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect/icon/simage_icon")
+	arg_1_0._txtcurpriceunselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect/txt_Num")
+	arg_1_0._txtoriginalpriceunselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/unselect/#txt_original_price")
+	arg_1_0._goselect1 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select")
+	arg_1_0._imageiconselect1 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select/icon/simage_icon")
+	arg_1_0._txtcurpriceselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select/txt_Num")
+	arg_1_0._txtoriginalpriceselect1 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost1/select/#txt_original_price")
+	arg_1_0._btncost2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/common/cost/#btn_cost2")
+	arg_1_0._gounselect2 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect")
+	arg_1_0._imageiconunselect2 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect/icon/simage_icon")
+	arg_1_0._txtcurpriceunselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect/txt_Num")
+	arg_1_0._txtoriginalpriceunselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/unselect/#txt_original_price")
+	arg_1_0._goselect2 = gohelper.findChild(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select")
+	arg_1_0._imageiconselect2 = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select/icon/simage_icon")
+	arg_1_0._txtcurpriceselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select/txt_Num")
+	arg_1_0._txtoriginalpriceselect2 = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost/#btn_cost2/select/#txt_original_price")
+	arg_1_0._gocostsingle = gohelper.findChild(arg_1_0.viewGO, "view/common/cost_single")
+	arg_1_0._imageiconsingle = gohelper.findChildImage(arg_1_0.viewGO, "view/common/cost_single/simage_material")
+	arg_1_0._txtcurpricesingle = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost_single/#txt_materialNum")
+	arg_1_0._txtoriginalpricesingle = gohelper.findChildText(arg_1_0.viewGO, "view/common/cost_single/#txt_price")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "view/normal")
+	arg_1_0._gonormalremain = gohelper.findChild(arg_1_0.viewGO, "view/normal/info/remain")
+	arg_1_0._gonormalleftbg = gohelper.findChild(arg_1_0.viewGO, "view/normal/info/remain/#go_leftbg")
+	arg_1_0._txtnormalleftremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal/info/remain/#go_leftbg/#txt_remain")
+	arg_1_0._gonormalrightbg = gohelper.findChild(arg_1_0.viewGO, "view/normal/info/remain/#go_rightbg")
+	arg_1_0._txtnormalrightremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal/info/remain/#go_rightbg/#txt_remaintime")
+	arg_1_0._txtgoodsUseDesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal/info/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
+	arg_1_0._txtgoodsDesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal/info/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	arg_1_0._gonormaldetail = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail")
+	arg_1_0._godetailremain = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/remain")
+	arg_1_0._godetailleftbg = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/remain/#go_leftbg")
+	arg_1_0._txtdetailleftremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/remain/#go_leftbg/#txt_remain")
+	arg_1_0._godetailrightbg = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/remain/#go_rightbg")
+	arg_1_0._txtdetailrightremain = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/remain/#go_rightbg/#txt_remaintime")
+	arg_1_0._gonormaldetailinfo = gohelper.findChild(arg_1_0.viewGO, "view/normal_detail/info")
+	arg_1_0._txtnormaldetailUseDesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsUseDesc")
+	arg_1_0._txtnormaldetaildesc = gohelper.findChildText(arg_1_0.viewGO, "view/normal_detail/info/goodsDesc/Viewport/Content/#txt_goodsDesc")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_close")
+	arg_1_0._simagetype1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/right/type1")
+	arg_1_0._simagetype2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/right/type2")
+	arg_1_0._goType3 = gohelper.findChild(arg_1_0.viewGO, "view/right/type3")
+	arg_1_0._simagetype3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/right/type3/#simage_icon")
+	arg_1_0._gohadnumber = gohelper.findChild(arg_1_0.viewGO, "view/right/type3/#go_hadnumber")
+	arg_1_0._txttype3num = gohelper.findChildText(arg_1_0.viewGO, "view/right/type3/#go_hadnumber/#txt_hadnumber")
+	arg_1_0._btnicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/right/#btn_click")
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0._btncost1:AddClickListener(slot0._btncost1OnClick, slot0)
-	slot0._btncost2:AddClickListener(slot0._btncost2OnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnicon:AddClickListener(slot0._btniconOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	arg_2_0._btncost1:AddClickListener(arg_2_0._btncost1OnClick, arg_2_0)
+	arg_2_0._btncost2:AddClickListener(arg_2_0._btncost2OnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnicon:AddClickListener(arg_2_0._btniconOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbuy:RemoveClickListener()
-	slot0._btncost1:RemoveClickListener()
-	slot0._btncost2:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnicon:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbuy:RemoveClickListener()
+	arg_3_0._btncost1:RemoveClickListener()
+	arg_3_0._btncost2:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnicon:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btniconOnClick(slot0)
-	slot1 = string.splitToNumber(slot0._goodConfig.product, "#")
+function var_0_0._btniconOnClick(arg_5_0)
+	local var_5_0 = string.splitToNumber(arg_5_0._goodConfig.product, "#")
 
-	MaterialTipController.instance:showMaterialInfo(slot1[1], slot1[2])
+	MaterialTipController.instance:showMaterialInfo(var_5_0[1], var_5_0[2])
 end
 
-function slot0._btncost1OnClick(slot0)
+function var_0_0._btncost1OnClick(arg_6_0)
 	if DecorateStoreModel.instance:getCurCostIndex() == 1 then
 		return
 	end
 
 	DecorateStoreModel.instance:setCurCostIndex(1)
-	slot0:_refreshCost()
+	arg_6_0:_refreshCost()
 end
 
-function slot0._btncost2OnClick(slot0)
+function var_0_0._btncost2OnClick(arg_7_0)
 	if DecorateStoreModel.instance:getCurCostIndex() == 2 then
 		return
 	end
 
 	DecorateStoreModel.instance:setCurCostIndex(2)
-	slot0:_refreshCost()
+	arg_7_0:_refreshCost()
 end
 
-function slot0._btnbuyOnClick(slot0)
-	if string.nilorempty(slot0._mo.config.cost) and string.nilorempty(slot0._mo.config.cost2) then
-		slot0:_buyGood()
+function var_0_0._btnbuyOnClick(arg_8_0)
+	if string.nilorempty(arg_8_0._mo.config.cost) and string.nilorempty(arg_8_0._mo.config.cost2) then
+		arg_8_0:_buyGood()
 
 		return
 	end
 
-	if (DecorateStoreModel.instance:getGoodItemLimitTime(slot0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(slot0._mo.goodsId) or 100) == 0 then
-		slot3 = 100
-	end
+	local var_8_0 = DecorateStoreModel.instance:getGoodItemLimitTime(arg_8_0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(arg_8_0._mo.goodsId) or 100
 
-	if DecorateStoreModel.instance:getCurCostIndex() == 1 then
-		slot5 = string.splitToNumber(slot0._mo.config.cost, "#")
-		slot0._costType = slot5[1]
-		slot0._costId = slot5[2]
-		slot0._costQuantity = 0.01 * slot3 * slot5[3]
+	var_8_0 = var_8_0 == 0 and 100 or var_8_0
+
+	local var_8_1 = DecorateStoreModel.instance:getCurCostIndex()
+
+	if var_8_1 == 1 then
+		local var_8_2 = string.splitToNumber(arg_8_0._mo.config.cost, "#")
+
+		arg_8_0._costType = var_8_2[1]
+		arg_8_0._costId = var_8_2[2]
+		arg_8_0._costQuantity = 0.01 * var_8_0 * var_8_2[3]
 	else
-		slot5 = string.splitToNumber(slot0._mo.config.cost2, "#")
-		slot0._costType = slot5[1]
-		slot0._costId = slot5[2]
-		slot0._costQuantity = 0.01 * slot3 * slot5[3]
+		local var_8_3 = string.splitToNumber(arg_8_0._mo.config.cost2, "#")
+
+		arg_8_0._costType = var_8_3[1]
+		arg_8_0._costId = var_8_3[2]
+		arg_8_0._costQuantity = 0.01 * var_8_0 * var_8_3[3]
 	end
 
-	if slot0._costType == MaterialEnum.MaterialType.Currency and slot0._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-		if CurrencyController.instance:checkFreeDiamondEnough(slot0._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, slot0._buyGoods, slot0, slot0.closeThis, slot0) then
-			slot0:_buyGood(slot4)
+	if arg_8_0._costType == MaterialEnum.MaterialType.Currency and arg_8_0._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+		if CurrencyController.instance:checkFreeDiamondEnough(arg_8_0._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, arg_8_0._buyGoods, arg_8_0, arg_8_0.closeThis, arg_8_0) then
+			arg_8_0:_buyGood(var_8_1)
 		end
-	elseif slot0._costType == MaterialEnum.MaterialType.Currency and slot0._costId == CurrencyEnum.CurrencyType.Diamond then
-		if CurrencyController.instance:checkDiamondEnough(slot0._costQuantity, slot0.closeThis, slot0) then
-			slot0:_buyGood(slot4)
+	elseif arg_8_0._costType == MaterialEnum.MaterialType.Currency and arg_8_0._costId == CurrencyEnum.CurrencyType.Diamond then
+		if CurrencyController.instance:checkDiamondEnough(arg_8_0._costQuantity, arg_8_0.closeThis, arg_8_0) then
+			arg_8_0:_buyGood(var_8_1)
 		end
-	elseif slot0._costType == MaterialEnum.MaterialType.Currency and slot0._costId == CurrencyEnum.CurrencyType.OldTravelTicket then
-		if CurrencyModel.instance:getCurrency(slot0._costId) then
-			if slot0._costQuantity <= slot5.quantity then
-				slot0:_buyGood(slot4)
+	elseif arg_8_0._costType == MaterialEnum.MaterialType.Currency and arg_8_0._costId == CurrencyEnum.CurrencyType.OldTravelTicket then
+		local var_8_4 = CurrencyModel.instance:getCurrency(arg_8_0._costId)
+
+		if var_8_4 then
+			if var_8_4.quantity >= arg_8_0._costQuantity then
+				arg_8_0:_buyGood(var_8_1)
 			else
 				GameFacade.showToast(ToastEnum.CurrencyNotEnough)
 
 				return false
 			end
 		end
-	elseif ItemModel.instance:goodsIsEnough(slot0._costType, slot0._costId, slot0._costQuantity) then
-		slot0:_buyGood(slot4)
+	elseif ItemModel.instance:goodsIsEnough(arg_8_0._costType, arg_8_0._costId, arg_8_0._costQuantity) then
+		arg_8_0:_buyGood(var_8_1)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.DecorateStoreCurrencyNotEnough, MsgBoxEnum.BoxType.Yes_No, slot0._storeCurrencyNotEnoughCallback, nil, , slot0, nil)
+		GameFacade.showMessageBox(MessageBoxIdDefine.DecorateStoreCurrencyNotEnough, MsgBoxEnum.BoxType.Yes_No, arg_8_0._storeCurrencyNotEnoughCallback, nil, nil, arg_8_0, nil)
 	end
 end
 
-function slot0._storeCurrencyNotEnoughCallback(slot0)
+function var_0_0._storeCurrencyNotEnoughCallback(arg_9_0)
 	GameFacade.jump(JumpEnum.JumpId.GlowCharge)
 end
 
-function slot0._buyGood(slot0, slot1)
-	StoreController.instance:buyGoods(slot0._mo, 1, slot0._buyCallback, slot0, slot1)
+function var_0_0._buyGood(arg_10_0, arg_10_1)
+	StoreController.instance:buyGoods(arg_10_0._mo, 1, arg_10_0._buyCallback, arg_10_0, arg_10_1)
 end
 
-function slot0._buyCallback(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		slot0:closeThis()
+function var_0_0._buyCallback(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_2 == 0 then
+		arg_11_0:closeThis()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnbuy.gameObject, AudioEnum.UI.Store_Good_Click)
+function var_0_0._editableInitView(arg_12_0)
+	gohelper.addUIClickAudio(arg_12_0._btnbuy.gameObject, AudioEnum.UI.Store_Good_Click)
 	DecorateStoreModel.instance:setCurCostIndex(1)
 end
 
-function slot0._refreshUI(slot0)
-	slot0._goodConfig = StoreConfig.instance:getGoodsConfig(slot0._mo.goodsId)
-	slot0._curItemType = DecorateStoreModel.getItemType(tonumber(slot0._goodConfig.storeId))
+function var_0_0._refreshUI(arg_13_0)
+	arg_13_0._goodConfig = StoreConfig.instance:getGoodsConfig(arg_13_0._mo.goodsId)
+	arg_13_0._curItemType = DecorateStoreModel.getItemType(tonumber(arg_13_0._goodConfig.storeId))
 
-	slot0:_refreshIcon()
-	slot0:_refreshGoodDetail()
-	slot0:_refreshCost()
+	arg_13_0:_refreshIcon()
+	arg_13_0:_refreshGoodDetail()
+	arg_13_0:_refreshCost()
 end
 
-function slot0._refreshIcon(slot0)
-	gohelper.setActive(slot0._simagetype1.gameObject, false)
-	gohelper.setActive(slot0._simagetype2.gameObject, false)
-	gohelper.setActive(slot0._goType3, false)
+function var_0_0._refreshIcon(arg_14_0)
+	local var_14_0 = DecorateStoreConfig.instance:getDecorateConfig(arg_14_0._mo.goodsId)
 
-	if not string.nilorempty(DecorateStoreConfig.instance:getDecorateConfig(slot0._mo.goodsId).buylmg) then
-		if slot0._curItemType == DecorateStoreEnum.DecorateItemType.Skin then
-			slot0._simagetype2:LoadImage(ResUrl.getDecorateStoreImg(slot1.buylmg))
-			gohelper.setActive(slot0._simagetype2.gameObject, true)
+	gohelper.setActive(arg_14_0._simagetype1.gameObject, false)
+	gohelper.setActive(arg_14_0._simagetype2.gameObject, false)
+	gohelper.setActive(arg_14_0._goType3, false)
+
+	if not string.nilorempty(var_14_0.buylmg) then
+		local var_14_1 = ResUrl.getDecorateStoreImg(var_14_0.buylmg)
+
+		if arg_14_0._curItemType == DecorateStoreEnum.DecorateItemType.Skin then
+			arg_14_0._simagetype2:LoadImage(var_14_1)
+			gohelper.setActive(arg_14_0._simagetype2.gameObject, true)
 		else
-			slot0._simagetype1:LoadImage(slot2)
-			gohelper.setActive(slot0._simagetype1.gameObject, true)
+			arg_14_0._simagetype1:LoadImage(var_14_1)
+			gohelper.setActive(arg_14_0._simagetype1.gameObject, true)
 		end
 	else
-		slot2 = string.splitToNumber(slot0._goodConfig.product, "#")
-		slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot2[1], slot2[2], true)
+		local var_14_2 = string.splitToNumber(arg_14_0._goodConfig.product, "#")
+		local var_14_3, var_14_4 = ItemModel.instance:getItemConfigAndIcon(var_14_2[1], var_14_2[2], true)
+		local var_14_5 = ItemModel.instance:getItemCount(var_14_2[2])
 
-		gohelper.setActive(slot0._goType3, true)
-		gohelper.setActive(slot0._gohadnumber, slot1.maxbuycountType == DecorateStoreEnum.MaxBuyTipType.SoldOut)
-		slot0._simagetype3:LoadImage(slot4)
+		gohelper.setActive(arg_14_0._goType3, true)
+		gohelper.setActive(arg_14_0._gohadnumber, var_14_0.maxbuycountType == DecorateStoreEnum.MaxBuyTipType.SoldOut)
+		arg_14_0._simagetype3:LoadImage(var_14_4)
 
-		if slot1.maxbuycountType == DecorateStoreEnum.MaxBuyTipType.SoldOut then
-			slot0._txttype3num.text = ItemModel.instance:getItemCount(slot2[2])
+		if var_14_0.maxbuycountType == DecorateStoreEnum.MaxBuyTipType.SoldOut then
+			arg_14_0._txttype3num.text = var_14_5
 		end
 	end
 end
 
-function slot0._refreshGoodDetail(slot0)
-	slot1 = string.splitToNumber(slot0._goodConfig.product, "#")
-	slot2 = ItemModel.instance:getItemConfig(slot1[1], slot1[2])
-	slot0._txtgoodsNameCn.text = slot0._mo.config.name
+function var_0_0._refreshGoodDetail(arg_15_0)
+	local var_15_0 = string.splitToNumber(arg_15_0._goodConfig.product, "#")
+	local var_15_1 = ItemModel.instance:getItemConfig(var_15_0[1], var_15_0[2])
 
-	gohelper.setActive(slot0._gonormal, slot0._curItemType == DecorateStoreEnum.DecorateItemType.Skin)
-	gohelper.setActive(slot0._gonormaldetail, slot0._curItemType ~= DecorateStoreEnum.DecorateItemType.Skin)
+	arg_15_0._txtgoodsNameCn.text = arg_15_0._mo.config.name
 
-	if slot0._curItemType == DecorateStoreEnum.DecorateItemType.Skin then
-		if slot0._mo:getOfflineTime() > 0 then
-			gohelper.setActive(slot0._gonormalremain, true)
+	gohelper.setActive(arg_15_0._gonormal, arg_15_0._curItemType == DecorateStoreEnum.DecorateItemType.Skin)
+	gohelper.setActive(arg_15_0._gonormaldetail, arg_15_0._curItemType ~= DecorateStoreEnum.DecorateItemType.Skin)
 
-			slot0._txtnormalrightremain.text = string.format("%s%s", TimeUtil.secondToRoughTime(math.floor(slot3 - ServerTime.now())))
+	if arg_15_0._curItemType == DecorateStoreEnum.DecorateItemType.Skin then
+		local var_15_2 = arg_15_0._mo:getOfflineTime()
+
+		if var_15_2 > 0 then
+			local var_15_3 = math.floor(var_15_2 - ServerTime.now())
+
+			gohelper.setActive(arg_15_0._gonormalremain, true)
+
+			arg_15_0._txtnormalrightremain.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_15_3))
 		else
-			gohelper.setActive(slot0._gonormalremain, false)
+			gohelper.setActive(arg_15_0._gonormalremain, false)
 		end
 
-		if slot0._goodConfig.maxBuyCount and slot0._goodConfig.maxBuyCount > 0 then
-			gohelper.setActive(slot0._gonormalleftbg, true)
+		if arg_15_0._goodConfig.maxBuyCount and arg_15_0._goodConfig.maxBuyCount > 0 then
+			gohelper.setActive(arg_15_0._gonormalleftbg, true)
 
-			slot0._txtnormalleftremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
-				slot0._goodConfig.maxBuyCount
+			arg_15_0._txtnormalleftremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
+				arg_15_0._goodConfig.maxBuyCount
 			})
 		else
-			gohelper.setActive(slot0._gonormalleftbg, false)
+			gohelper.setActive(arg_15_0._gonormalleftbg, false)
 		end
 
-		slot4 = SkinConfig.instance:getSkinCo(slot1[2])
-		slot0._txtgoodsUseDesc.text = string.format(CommonConfig.instance:getConstStr(ConstEnum.StoreSkinGood), lua_character.configDict[slot4.characterId].name)
-		slot0._txtgoodsDesc.text = slot4.skinDescription
+		local var_15_4 = SkinConfig.instance:getSkinCo(var_15_0[2])
+		local var_15_5 = lua_character.configDict[var_15_4.characterId].name
+
+		arg_15_0._txtgoodsUseDesc.text = string.format(CommonConfig.instance:getConstStr(ConstEnum.StoreSkinGood), var_15_5)
+		arg_15_0._txtgoodsDesc.text = var_15_4.skinDescription
 	else
-		if slot0._mo:getOfflineTime() > 0 then
-			gohelper.setActive(slot0._godetailrightbg, true)
+		local var_15_6 = arg_15_0._mo:getOfflineTime()
 
-			slot0._txtdetailrightremain.text = string.format("%s%s", TimeUtil.secondToRoughTime(math.floor(slot3 - ServerTime.now())))
+		if var_15_6 > 0 then
+			local var_15_7 = math.floor(var_15_6 - ServerTime.now())
+
+			gohelper.setActive(arg_15_0._godetailrightbg, true)
+
+			arg_15_0._txtdetailrightremain.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_15_7))
 		else
-			gohelper.setActive(slot0._godetailrightbg, false)
+			gohelper.setActive(arg_15_0._godetailrightbg, false)
 		end
 
-		if slot0._goodConfig.maxBuyCount and slot0._goodConfig.maxBuyCount > 0 then
-			gohelper.setActive(slot0._godetailleftbg, true)
+		if arg_15_0._goodConfig.maxBuyCount and arg_15_0._goodConfig.maxBuyCount > 0 then
+			gohelper.setActive(arg_15_0._godetailleftbg, true)
 
-			slot0._txtdetailleftremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
-				slot0._goodConfig.maxBuyCount
+			arg_15_0._txtdetailleftremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
+				arg_15_0._goodConfig.maxBuyCount
 			})
 		else
-			gohelper.setActive(slot0._godetailleftbg, false)
+			gohelper.setActive(arg_15_0._godetailleftbg, false)
 		end
 
-		slot0._txtnormaldetailUseDesc.text = slot2.useDesc
-		slot0._txtnormaldetaildesc.text = slot2.desc
+		arg_15_0._txtnormaldetailUseDesc.text = var_15_1.useDesc
+		arg_15_0._txtnormaldetaildesc.text = var_15_1.desc
 	end
 
-	gohelper.setActive(slot0._godetailremain, slot0._godetailleftbg.gameObject.activeSelf and slot0._godetailrightbg.gameObject.activeSelf)
+	local var_15_8 = arg_15_0._godetailleftbg.gameObject.activeSelf and arg_15_0._godetailrightbg.gameObject.activeSelf
+
+	gohelper.setActive(arg_15_0._godetailremain, var_15_8)
 end
 
-function slot0._refreshCost(slot0)
-	gohelper.setActive(slot0._btncost1, not string.nilorempty(slot0._goodConfig.cost))
-	gohelper.setActive(slot0._btncost2, not string.nilorempty(slot0._goodConfig.cost2))
+function var_0_0._refreshCost(arg_16_0)
+	gohelper.setActive(arg_16_0._btncost1, not string.nilorempty(arg_16_0._goodConfig.cost))
+	gohelper.setActive(arg_16_0._btncost2, not string.nilorempty(arg_16_0._goodConfig.cost2))
 
-	if string.nilorempty(slot0._goodConfig.cost) then
-		gohelper.setActive(slot0._gocost, false)
+	if string.nilorempty(arg_16_0._goodConfig.cost) then
+		gohelper.setActive(arg_16_0._gocost, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gocost, true)
+	gohelper.setActive(arg_16_0._gocost, true)
 
-	slot1 = DecorateStoreModel.instance:getCurCostIndex()
+	local var_16_0 = DecorateStoreModel.instance:getCurCostIndex()
+	local var_16_1 = DecorateStoreConfig.instance:getDecorateConfig(arg_16_0._mo.goodsId)
+	local var_16_2 = var_16_1.offTag > 0 and var_16_1.offTag or 100
 
-	if (DecorateStoreConfig.instance:getDecorateConfig(slot0._mo.goodsId).offTag > 0 and slot2.offTag or 100) > 0 and slot3 < 100 then
-		gohelper.setActive(slot0._godiscount, true)
+	if var_16_2 > 0 and var_16_2 < 100 then
+		gohelper.setActive(arg_16_0._godiscount, true)
 
-		slot0._txtdiscount.text = string.format("-%s%%", slot3)
+		arg_16_0._txtdiscount.text = string.format("-%s%%", var_16_2)
 	else
-		gohelper.setActive(slot0._godiscount, false)
+		gohelper.setActive(arg_16_0._godiscount, false)
 	end
 
-	if (DecorateStoreModel.instance:getGoodItemLimitTime(slot0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(slot0._mo.goodsId) or 100) == 0 then
-		slot5 = 100
-	end
+	local var_16_3 = DecorateStoreModel.instance:getGoodItemLimitTime(arg_16_0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(arg_16_0._mo.goodsId) or 100
 
-	if slot5 > 0 and slot5 < 100 then
-		gohelper.setActive(slot0._godiscount, false)
-		gohelper.setActive(slot0._godiscount2, true)
+	var_16_3 = var_16_3 == 0 and 100 or var_16_3
 
-		slot0._txtdiscount2.text = string.format("-%s%%", slot5)
+	if var_16_3 > 0 and var_16_3 < 100 then
+		gohelper.setActive(arg_16_0._godiscount, false)
+		gohelper.setActive(arg_16_0._godiscount2, true)
+
+		arg_16_0._txtdiscount2.text = string.format("-%s%%", var_16_3)
 	else
-		gohelper.setActive(slot0._godiscount2, false)
+		gohelper.setActive(arg_16_0._godiscount2, false)
 	end
 
-	if (DecorateStoreModel.instance:getGoodItemLimitTime(slot0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(slot0._mo.goodsId) or 100) == 0 then
-		slot8 = 100
-	end
+	local var_16_4 = DecorateStoreModel.instance:getGoodItemLimitTime(arg_16_0._mo.goodsId) > 0 and DecorateStoreModel.instance:getGoodDiscount(arg_16_0._mo.goodsId) or 100
 
-	slot9 = string.split(slot0._goodConfig.cost, "#")
+	var_16_4 = var_16_4 == 0 and 100 or var_16_4
 
-	if string.nilorempty(slot0._mo.config.cost2) then
-		gohelper.setActive(slot0._gocost, false)
-		gohelper.setActive(slot0._gocostsingle, true)
+	local var_16_5 = string.split(arg_16_0._goodConfig.cost, "#")
 
-		slot10, slot11 = ItemModel.instance:getItemConfigAndIcon(slot9[1], slot9[2])
+	if string.nilorempty(arg_16_0._mo.config.cost2) then
+		gohelper.setActive(arg_16_0._gocost, false)
+		gohelper.setActive(arg_16_0._gocostsingle, true)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageiconsingle, slot10.icon .. "_1", true)
+		local var_16_6, var_16_7 = ItemModel.instance:getItemConfigAndIcon(var_16_5[1], var_16_5[2])
 
-		slot0._txtcurpricesingle.text = 0.01 * slot8 * slot9[3]
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconsingle, var_16_6.icon .. "_1", true)
 
-		if slot2.originalCost1 > 0 then
-			gohelper.setActive(slot0._txtoriginalpricesingle.gameObject, true)
+		arg_16_0._txtcurpricesingle.text = 0.01 * var_16_4 * var_16_5[3]
 
-			slot0._txtoriginalpricesingle.text = slot2.originalCost1
+		if var_16_1.originalCost1 > 0 then
+			gohelper.setActive(arg_16_0._txtoriginalpricesingle.gameObject, true)
+
+			arg_16_0._txtoriginalpricesingle.text = var_16_1.originalCost1
 		else
-			gohelper.setActive(slot0._txtoriginalpricesingle.gameObject, false)
+			gohelper.setActive(arg_16_0._txtoriginalpricesingle.gameObject, false)
 		end
 	else
-		gohelper.setActive(slot0._gocost, true)
-		gohelper.setActive(slot0._gocostsingle, false)
+		gohelper.setActive(arg_16_0._gocost, true)
+		gohelper.setActive(arg_16_0._gocostsingle, false)
 
-		slot10, slot11 = ItemModel.instance:getItemConfigAndIcon(slot9[1], slot9[2])
-		slot0._txtcurpriceunselect1.text = 0.01 * slot8 * slot9[3]
-		slot0._txtcurpriceselect1.text = 0.01 * slot8 * slot9[3]
+		local var_16_8, var_16_9 = ItemModel.instance:getItemConfigAndIcon(var_16_5[1], var_16_5[2])
 
-		if slot2.originalCost1 > 0 then
-			gohelper.setActive(slot0._txtoriginalpriceselect1.gameObject, true)
-			gohelper.setActive(slot0._txtoriginalpriceunselect1.gameObject, true)
+		arg_16_0._txtcurpriceunselect1.text = 0.01 * var_16_4 * var_16_5[3]
+		arg_16_0._txtcurpriceselect1.text = 0.01 * var_16_4 * var_16_5[3]
 
-			slot0._txtoriginalpriceselect1.text = slot2.originalCost1
-			slot0._txtoriginalpriceunselect1.text = slot2.originalCost1
+		if var_16_1.originalCost1 > 0 then
+			gohelper.setActive(arg_16_0._txtoriginalpriceselect1.gameObject, true)
+			gohelper.setActive(arg_16_0._txtoriginalpriceunselect1.gameObject, true)
+
+			arg_16_0._txtoriginalpriceselect1.text = var_16_1.originalCost1
+			arg_16_0._txtoriginalpriceunselect1.text = var_16_1.originalCost1
 		else
-			gohelper.setActive(slot0._txtoriginalpriceselect1.gameObject, false)
-			gohelper.setActive(slot0._txtoriginalpriceunselect1.gameObject, false)
+			gohelper.setActive(arg_16_0._txtoriginalpriceselect1.gameObject, false)
+			gohelper.setActive(arg_16_0._txtoriginalpriceunselect1.gameObject, false)
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageiconselect1, slot10.icon .. "_1", true)
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageiconunselect1, slot10.icon .. "_1", true)
-		gohelper.setActive(slot0._goselect1, slot1 == 1)
-		gohelper.setActive(slot0._gounselect1, slot1 ~= 1)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconselect1, var_16_8.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconunselect1, var_16_8.icon .. "_1", true)
+		gohelper.setActive(arg_16_0._goselect1, var_16_0 == 1)
+		gohelper.setActive(arg_16_0._gounselect1, var_16_0 ~= 1)
 
-		if string.nilorempty(slot0._goodConfig.cost2) then
-			gohelper.setActive(slot0._txtoriginalpriceselect2.gameObject, false)
-			gohelper.setActive(slot0._txtoriginalpriceunselect2.gameObject, false)
+		if string.nilorempty(arg_16_0._goodConfig.cost2) then
+			gohelper.setActive(arg_16_0._txtoriginalpriceselect2.gameObject, false)
+			gohelper.setActive(arg_16_0._txtoriginalpriceunselect2.gameObject, false)
 
 			return
 		end
 
-		slot12 = string.split(slot0._goodConfig.cost2, "#")
-		slot13, slot14 = ItemModel.instance:getItemConfigAndIcon(slot12[1], slot12[2])
-		slot0._txtcurpriceunselect2.text = 0.01 * slot8 * slot12[3]
-		slot0._txtcurpriceselect2.text = 0.01 * slot8 * slot12[3]
+		local var_16_10 = string.split(arg_16_0._goodConfig.cost2, "#")
+		local var_16_11, var_16_12 = ItemModel.instance:getItemConfigAndIcon(var_16_10[1], var_16_10[2])
 
-		if slot2.originalCost2 > 0 then
-			gohelper.setActive(slot0._txtoriginalpriceselect2.gameObject, true)
-			gohelper.setActive(slot0._txtoriginalpriceunselect2.gameObject, true)
+		arg_16_0._txtcurpriceunselect2.text = 0.01 * var_16_4 * var_16_10[3]
+		arg_16_0._txtcurpriceselect2.text = 0.01 * var_16_4 * var_16_10[3]
 
-			slot0._txtoriginalpriceselect2.text = slot2.originalCost2
-			slot0._txtoriginalpriceunselect2.text = slot2.originalCost2
+		if var_16_1.originalCost2 > 0 then
+			gohelper.setActive(arg_16_0._txtoriginalpriceselect2.gameObject, true)
+			gohelper.setActive(arg_16_0._txtoriginalpriceunselect2.gameObject, true)
+
+			arg_16_0._txtoriginalpriceselect2.text = var_16_1.originalCost2
+			arg_16_0._txtoriginalpriceunselect2.text = var_16_1.originalCost2
 		else
-			gohelper.setActive(slot0._txtoriginalpriceselect2.gameObject, false)
-			gohelper.setActive(slot0._txtoriginalpriceunselect2.gameObject, false)
+			gohelper.setActive(arg_16_0._txtoriginalpriceselect2.gameObject, false)
+			gohelper.setActive(arg_16_0._txtoriginalpriceunselect2.gameObject, false)
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageiconselect2, slot13.icon .. "_1", true)
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageiconunselect2, slot13.icon .. "_1", true)
-		gohelper.setActive(slot0._goselect2, slot1 == 2)
-		gohelper.setActive(slot0._gounselect2, slot1 ~= 2)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconselect2, var_16_11.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconunselect2, var_16_11.icon .. "_1", true)
+		gohelper.setActive(arg_16_0._goselect2, var_16_0 == 2)
+		gohelper.setActive(arg_16_0._gounselect2, var_16_0 ~= 2)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._mo = slot0.viewParam
+function var_0_0.onOpen(arg_17_0)
+	arg_17_0._mo = arg_17_0.viewParam
 
-	slot0:_setCurrency()
-	slot0:_refreshUI()
+	arg_17_0:_setCurrency()
+	arg_17_0:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
 end
 
-function slot0._setCurrency(slot0)
-	if slot0._mo.config.cost ~= "" then
-		table.insert({}, string.splitToNumber(slot0._mo.config.cost, "#")[2])
+function var_0_0._setCurrency(arg_18_0)
+	local var_18_0 = {}
+
+	if arg_18_0._mo.config.cost ~= "" then
+		local var_18_1 = string.splitToNumber(arg_18_0._mo.config.cost, "#")
+
+		table.insert(var_18_0, var_18_1[2])
 	end
 
-	if slot0._mo.config.cost2 ~= "" then
-		table.insert(slot1, string.splitToNumber(slot0._mo.config.cost2, "#")[2])
+	if arg_18_0._mo.config.cost2 ~= "" then
+		local var_18_2 = string.splitToNumber(arg_18_0._mo.config.cost2, "#")
+
+		table.insert(var_18_0, var_18_2[2])
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		if slot6 == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			table.insert(slot1, CurrencyEnum.CurrencyType.Diamond)
+	for iter_18_0, iter_18_1 in pairs(var_18_0) do
+		if iter_18_1 == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			table.insert(var_18_0, CurrencyEnum.CurrencyType.Diamond)
 		end
 	end
 
-	slot0.viewContainer:setCurrencyType(LuaUtil.getReverseArrTab(slot1))
+	local var_18_3 = LuaUtil.getReverseArrTab(var_18_0)
+
+	arg_18_0.viewContainer:setCurrencyType(var_18_3)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._mo = slot0.viewParam
+function var_0_0.onUpdateParam(arg_20_0)
+	arg_20_0._mo = arg_20_0.viewParam
 
-	slot0:_refreshUI()
+	arg_20_0:_refreshUI()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetype1:UnLoadImage()
-	slot0._simagetype2:UnLoadImage()
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0._simagetype1:UnLoadImage()
+	arg_21_0._simagetype2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,76 +1,82 @@
-module("modules.logic.settings.view.SettingsRoleVoiceListItem", package.seeall)
+﻿module("modules.logic.settings.view.SettingsRoleVoiceListItem", package.seeall)
 
-slot0 = class("SettingsRoleVoiceListItem", ListScrollCell)
-slot0.PressColor = GameUtil.parseColor("#C8C8C8")
+local var_0_0 = class("SettingsRoleVoiceListItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._heroGO = slot1
-	slot0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._heroGO, CommonHeroItem)
+var_0_0.PressColor = GameUtil.parseColor("#C8C8C8")
 
-	slot0._heroItem:hideFavor(true)
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
-	slot0:_initObj()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._heroGO = arg_1_1
+	arg_1_0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._heroGO, CommonHeroItem)
+
+	arg_1_0._heroItem:hideFavor(true)
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+	arg_1_0:_initObj()
 end
 
-function slot0._initObj(slot0)
-	slot0._animator = slot0._heroGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initObj(arg_2_0)
+	arg_2_0._animator = arg_2_0._heroGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot0._selectframe, false)
+	gohelper.setActive(arg_2_0._selectframe, false)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0._heroItem:onUpdateMO(slot1)
-	slot0._heroItem:setNewShow(false)
-	slot0._heroItem:setRankObjActive(false)
-	slot0._heroItem:setLevelContentShow(false)
-	slot0._heroItem:setExSkillActive(false)
+	arg_5_0._heroItem:onUpdateMO(arg_5_1)
+	arg_5_0._heroItem:setNewShow(false)
+	arg_5_0._heroItem:setRankObjActive(false)
+	arg_5_0._heroItem:setLevelContentShow(false)
+	arg_5_0._heroItem:setExSkillActive(false)
 
-	slot3, slot4 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot1.heroId)
+	local var_5_0 = arg_5_1.heroId
+	local var_5_1, var_5_2 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_5_0)
+	local var_5_3 = luaLang(LangSettings.shortcutTab[var_5_1])
 
-	slot0._heroItem:setCenterTxt(luaLang(LangSettings.shortcutTab[slot3]))
+	arg_5_0._heroItem:setCenterTxt(var_5_3)
 end
 
-function slot0._onrefreshItem(slot0)
+function var_0_0._onrefreshItem(arg_6_0)
+	return
 end
 
-function slot0._onItemClick(slot0)
-	slot1 = not slot0._isSelect
+function var_0_0._onItemClick(arg_7_0)
+	local var_7_0 = not arg_7_0._isSelect
 
-	slot0._view:selectCell(slot0._index, slot1)
+	arg_7_0._view:selectCell(arg_7_0._index, var_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	SettingsRoleVoiceController.instance:dispatchEvent(SettingsEvent.OnSetVoiceRoleSelected, slot0._mo, slot1)
+	SettingsRoleVoiceController.instance:dispatchEvent(SettingsEvent.OnSetVoiceRoleSelected, arg_7_0._mo, var_7_0)
 end
 
-function slot0.onSelect(slot0, slot1)
-	if slot0._view.viewContainer:isBatchEditMode() then
-		slot0._isSelect = slot1
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	if arg_8_0._view.viewContainer:isBatchEditMode() then
+		arg_8_0._isSelect = arg_8_1
 
-		slot0._heroItem:setSelect(slot1)
+		arg_8_0._heroItem:setSelect(arg_8_1)
 	else
-		slot0._isSelect = slot1
+		arg_8_0._isSelect = arg_8_1
 
-		slot0._heroItem:setSelect(slot1)
+		arg_8_0._heroItem:setSelect(arg_8_1)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._heroItem then
-		slot0._heroItem:onDestroy()
+function var_0_0.onDestroy(arg_9_0)
+	if arg_9_0._heroItem then
+		arg_9_0._heroItem:onDestroy()
 
-		slot0._heroItem = nil
+		arg_9_0._heroItem = nil
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_10_0)
+	return arg_10_0._animator
 end
 
-return slot0
+return var_0_0

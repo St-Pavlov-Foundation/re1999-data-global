@@ -1,19 +1,19 @@
-module("modules.logic.fight.system.work.FightWorkFunction", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFunction", package.seeall)
 
-slot0 = class("FightWorkFunction", FightWorkItem)
+local var_0_0 = class("FightWorkFunction", FightWorkItem)
 
-function slot0.onAwake(slot0, slot1, slot2, ...)
-	slot0._func = slot1
-	slot0._target = slot2
-	slot0._param = {
+function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2, ...)
+	arg_1_0._func = arg_1_1
+	arg_1_0._target = arg_1_2
+	arg_1_0._param = {
 		...
 	}
-	slot0._paramCount = select("#", ...)
+	arg_1_0._paramCount = select("#", ...)
 end
 
-function slot0.onStart(slot0)
-	slot0._func(slot0._target, unpack(slot0._param, 1, slot0._paramCount))
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._func(arg_2_0._target, unpack(arg_2_0._param, 1, arg_2_0._paramCount))
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

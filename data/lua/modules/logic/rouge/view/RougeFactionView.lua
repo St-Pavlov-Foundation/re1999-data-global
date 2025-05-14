@@ -1,395 +1,449 @@
-module("modules.logic.rouge.view.RougeFactionView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionView", package.seeall)
 
-slot0 = class("RougeFactionView", BaseView)
+local var_0_0 = class("RougeFactionView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_view")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_Content")
-	slot0._gorougepageprogress = gohelper.findChild(slot0.viewGO, "#go_rougepageprogress")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_start")
-	slot0._godifficultytips = gohelper.findChild(slot0.viewGO, "#go_difficultytips")
-	slot0._txtDifficultyTiitle = gohelper.findChildText(slot0.viewGO, "#go_difficultytips/#txt_DifficultyTiitle")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
-	slot0._goblock = gohelper.findChild(slot0.viewGO, "#go_block")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_Content")
+	arg_1_0._gorougepageprogress = gohelper.findChild(arg_1_0.viewGO, "#go_rougepageprogress")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
+	arg_1_0._godifficultytips = gohelper.findChild(arg_1_0.viewGO, "#go_difficultytips")
+	arg_1_0._txtDifficultyTiitle = gohelper.findChildText(arg_1_0.viewGO, "#go_difficultytips/#txt_DifficultyTiitle")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstart:RemoveClickListener()
 end
 
-slot1 = "RougeFactionView:_btnstartOnClick"
+local var_0_1 = "RougeFactionView:_btnstartOnClick"
 
-function slot0._btnstartOnClick(slot0)
-	if not slot0._lastSelectedIndex then
+function var_0_0._btnstartOnClick(arg_4_0)
+	if not arg_4_0._lastSelectedIndex then
 		return
 	end
 
-	UIBlockHelper.instance:startBlock(uv0, 1, slot0.viewName)
+	UIBlockHelper.instance:startBlock(var_0_1, 1, arg_4_0.viewName)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_preparation_open_20190325)
 
-	slot1 = RougeConfig1.instance:season()
-	slot2 = slot0:_selectedStyle()
-	slot3 = false
-	slot4 = false
+	local var_4_0 = RougeConfig1.instance:season()
+	local var_4_1 = arg_4_0:_selectedStyle()
+	local var_4_2 = false
+	local var_4_3 = false
 
-	slot0._itemList[slot0._lastSelectedIndex]:setOnCloseEndCb(function ()
-		uv0 = true
+	arg_4_0._itemList[arg_4_0._lastSelectedIndex]:setOnCloseEndCb(function()
+		var_4_2 = true
 
-		if not uv1 then
+		if not var_4_3 then
 			return
 		end
 
-		UIBlockHelper.instance:endBlock(uv2)
+		UIBlockHelper.instance:endBlock(var_0_1)
 		RougeController.instance:openRougeInitTeamView()
 	end)
 
-	for slot9, slot10 in ipairs(slot0._itemList) do
-		slot10:playClose()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._itemList) do
+		iter_4_1:playClose()
 	end
 
-	RougeRpc.instance:sendEnterRougeSelectStyleRequest(slot1, slot2, function (slot0, slot1)
-		if slot1 ~= 0 then
-			logError("RougeFactionView:_btnstartOnClick resultCode=" .. tostring(slot1))
+	RougeRpc.instance:sendEnterRougeSelectStyleRequest(var_4_0, var_4_1, function(arg_6_0, arg_6_1)
+		if arg_6_1 ~= 0 then
+			logError("RougeFactionView:_btnstartOnClick resultCode=" .. tostring(arg_6_1))
 
 			return
 		end
 
-		uv0 = true
+		var_4_3 = true
 
-		if not uv1 then
+		if not var_4_2 then
 			return
 		end
 
-		UIBlockHelper.instance:endBlock(uv2)
+		UIBlockHelper.instance:endBlock(var_0_1)
 		RougeController.instance:openRougeInitTeamView()
 	end)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnstartGo = slot0._btnstart.gameObject
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._btnstartGo = arg_7_0._btnstart.gameObject
 
-	slot0:_initScrollView()
-	slot0:_setActiveBtnStart(false)
+	arg_7_0:_initScrollView()
+	arg_7_0:_setActiveBtnStart(false)
 end
 
-function slot0._initScrollView(slot0)
-	slot0._scrollViewGo = slot0._scrollview.gameObject
-	slot0._scrollViewTrans = slot0._scrollViewGo.transform
-	slot0._scrollViewLimitScrollCmp = slot0._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
-	slot0._goContentHLayout = slot0._goContent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
-	slot0._drag = UIDragListenerHelper.New()
+function var_0_0._initScrollView(arg_8_0)
+	arg_8_0._scrollViewGo = arg_8_0._scrollview.gameObject
+	arg_8_0._scrollViewTrans = arg_8_0._scrollViewGo.transform
+	arg_8_0._scrollViewLimitScrollCmp = arg_8_0._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
+	arg_8_0._goContentHLayout = arg_8_0._goContent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+	arg_8_0._drag = UIDragListenerHelper.New()
 
-	slot0._drag:createByScrollRect(slot0._scrollViewLimitScrollCmp)
-	slot0._drag:registerCallback(slot0._drag.EventDragging, slot0._onDragging, slot0)
+	arg_8_0._drag:createByScrollRect(arg_8_0._scrollViewLimitScrollCmp)
+	arg_8_0._drag:registerCallback(arg_8_0._drag.EventDragging, arg_8_0._onDragging, arg_8_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_setActiveBlock(false)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0:_setActiveBlock(false)
+	arg_9_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	slot0._lastSelectedIndex = false
-	slot0._dataList = RougeOutsideModel.instance:getStyleInfoList(slot0:_versionList())
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._lastSelectedIndex = false
+	arg_10_0._dataList = RougeOutsideModel.instance:getStyleInfoList(arg_10_0:_versionList())
 
-	slot0:_initDifficultyTips()
-	slot0:_initPageProgress()
-	slot0:onUpdateParam()
-	slot0:_onSelectIndex(nil)
-	slot0.viewContainer:registerCallback(RougeEvent.RougeFactionView_OnSelectIndex, slot0._onSelectIndex, slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	arg_10_0:_initDifficultyTips()
+	arg_10_0:_initPageProgress()
+	arg_10_0:onUpdateParam()
+	arg_10_0:_onSelectIndex(nil)
+	arg_10_0.viewContainer:registerCallback(RougeEvent.RougeFactionView_OnSelectIndex, arg_10_0._onSelectIndex, arg_10_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_10_0._onScreenResize, arg_10_0)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0:_onScreenResize()
-	slot0:_tweenOpenAnim()
+function var_0_0.onOpenFinish(arg_11_0)
+	arg_11_0:_onScreenResize()
+	arg_11_0:_tweenOpenAnim()
 	ViewMgr.instance:closeView(ViewName.RougeDifficultyView)
 	ViewMgr.instance:closeView(ViewName.RougeCollectionGiftView)
 end
 
-function slot0._getNewUnlockStateList(slot0)
-	for slot6, slot7 in ipairs(slot0._dataList) do
-		if not nil and slot9 then
-			slot2 = slot6
+function var_0_0._getNewUnlockStateList(arg_12_0)
+	local var_12_0 = {}
+	local var_12_1
+
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._dataList) do
+		local var_12_2 = iter_12_1.style
+		local var_12_3 = RougeOutsideModel.instance:getIsNewUnlockStyle(var_12_2)
+
+		var_12_0[iter_12_0] = var_12_3
+
+		if not var_12_1 and var_12_3 then
+			var_12_1 = iter_12_0
 		end
 	end
 
-	return {
-		[slot6] = RougeOutsideModel.instance:getIsNewUnlockStyle(slot7.style)
-	}, slot2
+	return var_12_0, var_12_1
 end
 
-function slot0._tweenOpenAnim(slot0)
-	UIBlockHelper.instance:startBlock("RougeFactionView:_tweenOpenAnim", 1, slot0.viewName)
+function var_0_0._tweenOpenAnim(arg_13_0)
+	UIBlockHelper.instance:startBlock("RougeFactionView:_tweenOpenAnim", 1, arg_13_0.viewName)
 
-	slot2, slot3 = slot0:_getNewUnlockStateList()
-	slot3 = slot3 or 1
+	local var_13_0 = arg_13_0:_getItemList()
+	local var_13_1, var_13_2 = arg_13_0:_getNewUnlockStateList()
 
-	slot0:_focusIndex(slot3)
-	slot0:_getItemList()[slot3]:setOnOpenEndCb(function ()
+	var_13_2 = var_13_2 or 1
+
+	local var_13_3 = var_13_0[var_13_2]
+
+	local function var_13_4()
 		UIBlockHelper.instance:endBlock("RougeFactionView:_tweenOpenAnim")
-	end)
-
-	if slot2[slot3] then
-		slot4:setOnOpenEndCb(nil)
-		slot4:setOnUnlockEndCb(slot5)
-	else
-		slot4:setOnOpenEndCb(slot5)
 	end
 
-	for slot9, slot10 in ipairs(slot1) do
-		if slot9 == 1 then
+	arg_13_0:_focusIndex(var_13_2)
+	var_13_3:setOnOpenEndCb(var_13_4)
+
+	if var_13_1[var_13_2] then
+		var_13_3:setOnOpenEndCb(nil)
+		var_13_3:setOnUnlockEndCb(var_13_4)
+	else
+		var_13_3:setOnOpenEndCb(var_13_4)
+	end
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		if iter_13_0 == 1 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_clearing_open)
 		end
 
-		if (slot2 and slot2[slot9] or nil) ~= nil then
-			slot10:playOpen(slot11)
+		local var_13_5 = var_13_1 and var_13_1[iter_13_0] or nil
 
-			if slot11 then
-				RougeOutsideModel.instance:setIsNewUnlockStyle(slot0._dataList[slot9].style, false)
+		if var_13_5 ~= nil then
+			local var_13_6 = arg_13_0._dataList[iter_13_0].style
+
+			iter_13_1:playOpen(var_13_5)
+
+			if var_13_5 then
+				RougeOutsideModel.instance:setIsNewUnlockStyle(var_13_6, false)
 			end
 		else
-			slot10:playOpen()
+			iter_13_1:playOpen()
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_clearTweenId()
-	slot0.viewContainer:unregisterCallback(RougeEvent.RougeFactionView_OnSelectIndex, slot0._onSelectIndex, slot0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+function var_0_0.onClose(arg_15_0)
+	arg_15_0:_clearTweenId()
+	arg_15_0.viewContainer:unregisterCallback(RougeEvent.RougeFactionView_OnSelectIndex, arg_15_0._onSelectIndex, arg_15_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_15_0._onScreenResize, arg_15_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clearTweenId()
-	GameUtil.onDestroyViewMember(slot0, "_drag")
-	GameUtil.onDestroyViewMemberList(slot0, "_itemList")
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0:_clearTweenId()
+	GameUtil.onDestroyViewMember(arg_16_0, "_drag")
+	GameUtil.onDestroyViewMemberList(arg_16_0, "_itemList")
 end
 
-function slot0._difficulty(slot0)
-	if not slot0.viewParam then
+function var_0_0._difficulty(arg_17_0)
+	if not arg_17_0.viewParam then
 		return RougeModel.instance:getDifficulty()
 	end
 
-	return slot0.viewParam.selectedDifficulty or RougeModel.instance:getDifficulty()
+	return arg_17_0.viewParam.selectedDifficulty or RougeModel.instance:getDifficulty()
 end
 
-function slot0._versionList(slot0)
-	if not slot0.viewParam then
+function var_0_0._versionList(arg_18_0)
+	if not arg_18_0.viewParam then
 		return RougeModel.instance:getVersion()
 	end
 
-	return slot0.viewParam.versionList or RougeModel.instance:getVersion()
+	return arg_18_0.viewParam.versionList or RougeModel.instance:getVersion()
 end
 
-function slot0._getDataList(slot0)
-	if not slot0._dataList then
-		slot0._dataList = RougeOutsideModel.instance:getStyleInfoList(slot0:_versionList())
+function var_0_0._getDataList(arg_19_0)
+	if not arg_19_0._dataList then
+		arg_19_0._dataList = RougeOutsideModel.instance:getStyleInfoList(arg_19_0:_versionList())
 	end
 
-	return slot0._dataList
+	return arg_19_0._dataList
 end
 
-function slot0._getDataListCount(slot0)
-	return #slot0:_getDataList()
+function var_0_0._getDataListCount(arg_20_0)
+	return #arg_20_0:_getDataList()
 end
 
-function slot0._validateIndex(slot0, slot1)
-	return GameUtil.clamp(slot1, 1, slot0:_getDataListCount())
+function var_0_0._validateIndex(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:_getDataListCount()
+
+	return GameUtil.clamp(arg_21_1, 1, var_21_0)
 end
 
-function slot0._getItemList(slot0)
-	if not slot0._itemList then
-		slot0:_refreshList()
+function var_0_0._getItemList(arg_22_0)
+	if not arg_22_0._itemList then
+		arg_22_0:_refreshList()
 	end
 
-	return slot0._itemList
+	return arg_22_0._itemList
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshList()
+function var_0_0._refresh(arg_23_0)
+	arg_23_0:_refreshList()
 end
 
-function slot0._refreshList(slot0)
-	slot0._itemDataList = slot0:_getDataList()
+function var_0_0._refreshList(arg_24_0)
+	local var_24_0 = arg_24_0:_getDataList()
 
-	if not slot0._itemList then
-		slot0._itemList = {}
+	arg_24_0._itemDataList = var_24_0
+
+	if not arg_24_0._itemList then
+		arg_24_0._itemList = {}
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._itemList[slot5] then
-			slot7 = slot0:_create_RougeFactionItem()
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		local var_24_1 = arg_24_0._itemList[iter_24_0]
 
-			slot7:setIndex(slot5)
-			table.insert(slot0._itemList, slot7)
+		if not var_24_1 then
+			var_24_1 = arg_24_0:_create_RougeFactionItem()
+
+			var_24_1:setIndex(iter_24_0)
+			table.insert(arg_24_0._itemList, var_24_1)
 		end
 
-		slot7:setData(slot6)
-		slot7:playIdle()
-		slot7:setSelected(slot0._lastSelectedIndex == slot5)
+		var_24_1:setData(iter_24_1)
+		var_24_1:playIdle()
+		var_24_1:setSelected(arg_24_0._lastSelectedIndex == iter_24_0)
 	end
 end
 
-function slot0._onSelectIndex(slot0, slot1)
-	if not slot0._itemList then
+function var_0_0._onSelectIndex(arg_25_0, arg_25_1)
+	if not arg_25_0._itemList then
 		return
 	end
 
-	if slot0._lastSelectedIndex then
-		slot0._itemList[slot0._lastSelectedIndex]:setSelected(false)
+	if arg_25_0._lastSelectedIndex then
+		arg_25_0._itemList[arg_25_0._lastSelectedIndex]:setSelected(false)
 	end
 
-	if slot0._lastSelectedIndex == slot1 then
-		slot1 = nil
+	if arg_25_0._lastSelectedIndex == arg_25_1 then
+		arg_25_1 = nil
 
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190321)
 	end
 
-	if slot1 then
-		slot0._itemList[slot1]:setSelected(true)
-		slot0.viewContainer:rebuildLayout()
-		slot0:_focusIndex(slot1, true)
+	if arg_25_1 then
+		arg_25_0._itemList[arg_25_1]:setSelected(true)
+		arg_25_0.viewContainer:rebuildLayout()
+		arg_25_0:_focusIndex(arg_25_1, true)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190321)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_help_switch_20190322)
 	end
 
-	slot0._lastSelectedIndex = slot1
+	arg_25_0._lastSelectedIndex = arg_25_1
 
-	slot0:_setActiveBtnStart(slot1 and true or false)
+	arg_25_0:_setActiveBtnStart(arg_25_1 and true or false)
 end
 
-function slot0._setActiveBtnStart(slot0, slot1)
-	gohelper.setActive(slot0._btnstartGo, slot1)
+function var_0_0._setActiveBtnStart(arg_26_0, arg_26_1)
+	gohelper.setActive(arg_26_0._btnstartGo, arg_26_1)
 end
 
-function slot0._clearTweenId(slot0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId")
+function var_0_0._clearTweenId(arg_27_0)
+	GameUtil.onDestroyViewMember_TweenId(arg_27_0, "_tweenId")
 end
 
-function slot0._create_RougeFactionItem(slot0)
-	slot1 = RougeFactionItem
+function var_0_0._create_RougeFactionItem(arg_28_0)
+	local var_28_0 = RougeFactionItem
+	local var_28_1 = arg_28_0.viewContainer:getResInst(RougeEnum.ResPath.rougefactionitem, arg_28_0._goContent, var_28_0.__cname)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(RougeEnum.ResPath.rougefactionitem, slot0._goContent, slot1.__cname), slot1, {
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+	return MonoHelper.addNoUpdateLuaComOnceToGo(var_28_1, var_28_0, {
+		parent = arg_28_0,
+		baseViewContainer = arg_28_0.viewContainer
 	})
 end
 
-function slot0._selectedStyle(slot0)
-	if not slot0._lastSelectedIndex then
+function var_0_0._selectedStyle(arg_29_0)
+	if not arg_29_0._lastSelectedIndex then
 		return
 	end
 
-	return slot0._itemList[slot0._lastSelectedIndex]:style()
+	return arg_29_0._itemList[arg_29_0._lastSelectedIndex]:style()
 end
 
-function slot0._initPageProgress(slot0)
-	slot1 = RougePageProgress
-	slot0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, slot0._gorougepageprogress, slot1.__cname), slot1)
+function var_0_0._initPageProgress(arg_30_0)
+	local var_30_0 = RougePageProgress
+	local var_30_1 = arg_30_0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, arg_30_0._gorougepageprogress, var_30_0.__cname)
 
-	slot0._pageProgress:setData()
+	arg_30_0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(var_30_1, var_30_0)
+
+	arg_30_0._pageProgress:setData()
 end
 
-function slot0._initDifficultyTips(slot0)
-	slot1 = slot0:_difficulty()
-	slot0._txtDifficultyTiitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rougefactionview_txtDifficultyTiitle"), RougeConfig1.instance:getDifficultyCOTitle(slot1))
+function var_0_0._initDifficultyTips(arg_31_0)
+	local var_31_0 = arg_31_0:_difficulty()
 
-	gohelper.setActive(gohelper.findChild(slot0._godifficultytips, "green"), RougeConfig1.instance:getRougeDifficultyViewStyleIndex(slot1) == 1)
-	gohelper.setActive(gohelper.findChild(slot0._godifficultytips, "orange"), slot2 == 2)
-	gohelper.setActive(gohelper.findChild(slot0._godifficultytips, "red"), slot2 == 3)
+	arg_31_0._txtDifficultyTiitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rougefactionview_txtDifficultyTiitle"), RougeConfig1.instance:getDifficultyCOTitle(var_31_0))
+
+	local var_31_1 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(var_31_0)
+	local var_31_2 = gohelper.findChild(arg_31_0._godifficultytips, "red")
+	local var_31_3 = gohelper.findChild(arg_31_0._godifficultytips, "orange")
+	local var_31_4 = gohelper.findChild(arg_31_0._godifficultytips, "green")
+
+	gohelper.setActive(var_31_4, var_31_1 == 1)
+	gohelper.setActive(var_31_3, var_31_1 == 2)
+	gohelper.setActive(var_31_2, var_31_1 == 3)
 end
 
-function slot0._focusIndex(slot0, slot1, slot2, slot3)
-	if slot2 then
-		slot0:_clearTweenId()
+function var_0_0._focusIndex(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	arg_32_3 = arg_32_3 or 0.3
 
-		slot0._tweenId = ZProj.TweenHelper.DOAnchorPosX(slot0.viewContainer:getScrollContentTranform(), -slot0:_calcFocusIndexPosX(slot1), slot3 or 0.3)
+	local var_32_0 = arg_32_0.viewContainer:getScrollContentTranform()
+	local var_32_1 = arg_32_0:_calcFocusIndexPosX(arg_32_1)
+
+	if arg_32_2 then
+		arg_32_0:_clearTweenId()
+
+		arg_32_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(var_32_0, -var_32_1, arg_32_3)
 	else
-		recthelper.setAnchorX(slot4, -slot5)
+		recthelper.setAnchorX(var_32_0, -var_32_1)
 	end
 end
 
-function slot0._calcFocusIndexPosX(slot0, slot1)
-	slot3 = slot0:_getMaxScrollX()
+function var_0_0._calcFocusIndexPosX(arg_33_0, arg_33_1)
+	local var_33_0 = 0
+	local var_33_1 = arg_33_0:_getMaxScrollX()
 
-	if slot1 <= 1 then
-		return 0, slot3
+	if arg_33_1 <= 1 then
+		return var_33_0, var_33_1
 	end
 
-	return GameUtil.clamp(slot0._itemList[slot1]:posX() - slot0._goContentHLayout.padding.left - slot0:_getViewportW() * 0.5, 0, slot3), slot3
+	local var_33_2 = arg_33_0._itemList[arg_33_1]
+	local var_33_3 = arg_33_0._goContentHLayout.padding.left
+	local var_33_4 = arg_33_0:_getViewportW() * 0.5
+
+	return GameUtil.clamp(var_33_2:posX() - var_33_3 - var_33_4, 0, var_33_1), var_33_1
 end
 
-function slot0._getViewportW(slot0)
-	return recthelper.getWidth(slot0._scrollViewTrans)
+function var_0_0._getViewportW(arg_34_0)
+	return recthelper.getWidth(arg_34_0._scrollViewTrans)
 end
 
-function slot0._getViewportH(slot0)
-	return recthelper.getHeight(slot0._scrollViewTrans)
+function var_0_0._getViewportH(arg_35_0)
+	return recthelper.getHeight(arg_35_0._scrollViewTrans)
 end
 
-function slot0._getViewportWH(slot0)
-	return slot0:_getViewportW(), slot0:_getViewportH()
+function var_0_0._getViewportWH(arg_36_0)
+	return arg_36_0:_getViewportW(), arg_36_0:_getViewportH()
 end
 
-function slot0._getMaxScrollX(slot0)
-	return math.max(0, slot0:_calcContentWidth() - slot0:_getViewportWH())
+function var_0_0._getMaxScrollX(arg_37_0)
+	local var_37_0 = arg_37_0:_getViewportWH()
+	local var_37_1 = arg_37_0:_calcContentWidth()
+
+	return math.max(0, var_37_1 - var_37_0)
 end
 
-function slot0._calcContentWidth(slot0)
-	return recthelper.getWidth(slot0.viewContainer:getScrollContentTranform())
+function var_0_0._calcContentWidth(arg_38_0)
+	return recthelper.getWidth(arg_38_0.viewContainer:getScrollContentTranform())
 end
 
-function slot0._setActiveBlock(slot0, slot1)
-	gohelper.setActive(slot0._goblock, slot1)
+function var_0_0._setActiveBlock(arg_39_0, arg_39_1)
+	gohelper.setActive(arg_39_0._goblock, arg_39_1)
 end
 
-function slot0._onScreenResize(slot0)
-	slot0.viewContainer:rebuildLayout()
+function var_0_0._onScreenResize(arg_40_0)
+	arg_40_0.viewContainer:rebuildLayout()
 
-	if slot0._lastSelectedIndex then
-		slot0:_focusIndex(slot0._lastSelectedIndex, true, 0.1)
+	if arg_40_0._lastSelectedIndex then
+		arg_40_0:_focusIndex(arg_40_0._lastSelectedIndex, true, 0.1)
 	end
 end
 
-function slot0._calcSpaceOffset(slot0)
-	slot1 = slot0.viewContainer:getListScrollParam()
+function var_0_0._calcSpaceOffset(arg_41_0)
+	local var_41_0 = arg_41_0.viewContainer:getListScrollParam()
+	local var_41_1 = arg_41_0:_getViewportW()
+	local var_41_2 = var_41_0.cellWidth
+	local var_41_3 = var_41_0.startSpace
+	local var_41_4 = var_41_1 * 0.5 - var_41_2 * 0.5 - var_41_3
 
-	return math.max(0, slot0:_getViewportW() * 0.5 - slot1.cellWidth * 0.5 - slot1.startSpace)
+	return math.max(0, var_41_4)
 end
 
-function slot0._contentPosX(slot0)
-	return recthelper.getAnchorX(slot0.viewContainer:getScrollContentTranform())
+function var_0_0._contentPosX(arg_42_0)
+	return recthelper.getAnchorX(arg_42_0.viewContainer:getScrollContentTranform())
 end
 
-slot2 = 139
+local var_0_2 = 139
 
-function slot0._onDragging(slot0)
-	slot1 = slot0.viewContainer:getListScrollParamStep()
+function var_0_0._onDragging(arg_43_0)
+	local var_43_0 = arg_43_0.viewContainer:getListScrollParamStep()
+	local var_43_1 = arg_43_0:_contentPosX()
 
-	if slot0:_contentPosX() >= 0 then
+	if var_43_1 >= 0 then
 		return
 	end
 
-	if GameUtil.clamp(-slot2, 0, slot0:_getMaxScrollX()) < uv0 then
+	local var_43_2 = GameUtil.clamp(-var_43_1, 0, arg_43_0:_getMaxScrollX())
+
+	if var_43_2 < var_0_2 then
 		return
 	end
 
-	if slot0._lastScrollIndex == nil then
-		slot0._lastScrollIndex = math.ceil((slot3 - uv0) / slot1)
-	elseif slot0._lastScrollIndex ~= slot4 then
-		slot0._lastScrollIndex = slot4
+	local var_43_3 = var_43_2 - var_0_2
+	local var_43_4 = math.ceil(var_43_3 / var_43_0)
+
+	if arg_43_0._lastScrollIndex == nil then
+		arg_43_0._lastScrollIndex = var_43_4
+	elseif arg_43_0._lastScrollIndex ~= var_43_4 then
+		arg_43_0._lastScrollIndex = var_43_4
 
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_chain_20190320)
 	end
 end
 
-return slot0
+return var_0_0

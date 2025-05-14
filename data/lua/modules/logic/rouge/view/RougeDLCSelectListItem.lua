@@ -1,113 +1,129 @@
-module("modules.logic.rouge.view.RougeDLCSelectListItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeDLCSelectListItem", package.seeall)
 
-slot0 = class("RougeDLCSelectListItem", MixScrollCell)
+local var_0_0 = class("RougeDLCSelectListItem", MixScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._goselectedequip = gohelper.findChild(slot0.viewGO, "go_info/go_selected_equip")
-	slot0._gounselectequip = gohelper.findChild(slot0.viewGO, "go_info/go_unselect_equip")
-	slot0._goselectedunequip = gohelper.findChild(slot0.viewGO, "go_info/go_selected_unequip")
-	slot0._gounselectunequip = gohelper.findChild(slot0.viewGO, "go_info/go_unselect_unequip")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_info/btn_click")
-	slot0._txtsekectedequip = gohelper.findChildText(slot0.viewGO, "go_info/go_selected_equip/txt_title")
-	slot0._txtunselectequip = gohelper.findChildText(slot0.viewGO, "go_info/go_unselect_equip/txt_title")
-	slot0._txtselectedunequip = gohelper.findChildText(slot0.viewGO, "go_info/go_selected_unequip/txt_title")
-	slot0._txtunselectunequip = gohelper.findChildText(slot0.viewGO, "go_info/go_unselect_unequip/txt_title")
-	slot0._txtsekectedequipen = gohelper.findChildText(slot0.viewGO, "go_info/go_selected_equip/en")
-	slot0._txtunselectequipen = gohelper.findChildText(slot0.viewGO, "go_info/go_unselect_equip/en")
-	slot0._txtselectedunequipen = gohelper.findChildText(slot0.viewGO, "go_info/go_selected_unequip/en")
-	slot0._txtunselectunequipen = gohelper.findChildText(slot0.viewGO, "go_info/go_unselect_unequip/en")
-	slot0._golater = gohelper.findChild(slot0.viewGO, "go_later")
-	slot0._goequipedeffect = gohelper.findChild(slot0.viewGO, "go_info/go_selected_equip/click")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._goselectedequip = gohelper.findChild(arg_1_0.viewGO, "go_info/go_selected_equip")
+	arg_1_0._gounselectequip = gohelper.findChild(arg_1_0.viewGO, "go_info/go_unselect_equip")
+	arg_1_0._goselectedunequip = gohelper.findChild(arg_1_0.viewGO, "go_info/go_selected_unequip")
+	arg_1_0._gounselectunequip = gohelper.findChild(arg_1_0.viewGO, "go_info/go_unselect_unequip")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_info/btn_click")
+	arg_1_0._txtsekectedequip = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_selected_equip/txt_title")
+	arg_1_0._txtunselectequip = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_unselect_equip/txt_title")
+	arg_1_0._txtselectedunequip = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_selected_unequip/txt_title")
+	arg_1_0._txtunselectunequip = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_unselect_unequip/txt_title")
+	arg_1_0._txtsekectedequipen = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_selected_equip/en")
+	arg_1_0._txtunselectequipen = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_unselect_equip/en")
+	arg_1_0._txtselectedunequipen = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_selected_unequip/en")
+	arg_1_0._txtunselectunequipen = gohelper.findChildText(arg_1_0.viewGO, "go_info/go_unselect_unequip/en")
+	arg_1_0._golater = gohelper.findChild(arg_1_0.viewGO, "go_later")
+	arg_1_0._goequipedeffect = gohelper.findChild(arg_1_0.viewGO, "go_info/go_selected_equip/click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	RougeDLCSelectListModel.instance:selectCell(slot0._index)
+function var_0_0._btnclickOnClick(arg_4_0)
+	RougeDLCSelectListModel.instance:selectCell(arg_4_0._index)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeDLCController.instance, RougeEvent.OnSelectDLC, slot0._onSelectDLC, slot0)
-	slot0:addEventCb(RougeDLCController.instance, RougeEvent.OnGetVersionInfo, slot0._onGetVersionInfo, slot0)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0:addEventCb(RougeDLCController.instance, RougeEvent.OnSelectDLC, arg_5_0._onSelectDLC, arg_5_0)
+	arg_5_0:addEventCb(RougeDLCController.instance, RougeEvent.OnGetVersionInfo, arg_5_0._onGetVersionInfo, arg_5_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._mo = arg_6_1
 
-	slot0:refreshUI()
+	arg_6_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtsekectedequip.text = slot0._mo.name
-	slot0._txtunselectequip.text = slot0._mo.name
-	slot0._txtselectedunequip.text = slot0._mo.name
-	slot0._txtunselectunequip.text = slot0._mo.name
-	slot0._txtsekectedequipen.text = slot0._mo.enName
-	slot0._txtunselectequipen.text = slot0._mo.enName
-	slot0._txtselectedunequipen.text = slot0._mo.enName
-	slot0._txtunselectunequipen.text = slot0._mo.enName
-	slot0._isSelect = RougeDLCSelectListModel.instance:getCurSelectIndex() == slot0._index
-	slot0._isEquiped = RougeDLCSelectListModel.instance:isAddDLC(slot0._mo.id)
+function var_0_0.refreshUI(arg_7_0)
+	arg_7_0._txtsekectedequip.text = arg_7_0._mo.name
+	arg_7_0._txtunselectequip.text = arg_7_0._mo.name
+	arg_7_0._txtselectedunequip.text = arg_7_0._mo.name
+	arg_7_0._txtunselectunequip.text = arg_7_0._mo.name
+	arg_7_0._txtsekectedequipen.text = arg_7_0._mo.enName
+	arg_7_0._txtunselectequipen.text = arg_7_0._mo.enName
+	arg_7_0._txtselectedunequipen.text = arg_7_0._mo.enName
+	arg_7_0._txtunselectunequipen.text = arg_7_0._mo.enName
+	arg_7_0._isSelect = RougeDLCSelectListModel.instance:getCurSelectIndex() == arg_7_0._index
+	arg_7_0._isEquiped = RougeDLCSelectListModel.instance:isAddDLC(arg_7_0._mo.id)
 
-	slot0:setSelectUI()
-	slot0:setLaterFlagVisible()
+	arg_7_0:setSelectUI()
+	arg_7_0:setLaterFlagVisible()
 end
 
-function slot0._onSelectDLC(slot0, slot1)
-	slot2 = slot0._mo and slot0._mo.id == slot1
-	slot0._isSelect = slot2
+function var_0_0._onSelectDLC(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._mo and arg_8_0._mo.id == arg_8_1
+	local var_8_1 = var_8_0 or arg_8_0._isSelect
 
-	if slot2 or slot0._isSelect then
-		slot0:setSelectUI()
+	arg_8_0._isSelect = var_8_0
+
+	if var_8_1 then
+		arg_8_0:setSelectUI()
 	end
 end
 
-function slot0._onGetVersionInfo(slot0)
-	slot0:setSelectUI()
+function var_0_0._onGetVersionInfo(arg_9_0)
+	arg_9_0:setSelectUI()
 end
 
-function slot0.setSelectUI(slot0)
-	slot1 = RougeDLCSelectListModel.instance:isAddDLC(slot0._mo.id)
+function var_0_0.setSelectUI(arg_10_0)
+	local var_10_0 = RougeDLCSelectListModel.instance:isAddDLC(arg_10_0._mo.id)
 
-	gohelper.setActive(slot0._goselectedequip, slot0._isSelect and slot1)
-	gohelper.setActive(slot0._gounselectequip, not slot0._isSelect and slot1)
-	gohelper.setActive(slot0._goselectedunequip, slot0._isSelect and not slot1)
-	gohelper.setActive(slot0._gounselectunequip, not slot0._isSelect and not slot1)
-	gohelper.setActive(slot0._goequipedeffect, slot0._isEquiped ~= slot1 and slot1)
-	slot0:setTabIcon(slot0._goselectedequip, true, true)
-	slot0:setTabIcon(slot0._gounselectequip, false, true)
-	slot0:setTabIcon(slot0._goselectedunequip, true, false)
-	slot0:setTabIcon(slot0._gounselectunequip, false, false)
+	gohelper.setActive(arg_10_0._goselectedequip, arg_10_0._isSelect and var_10_0)
+	gohelper.setActive(arg_10_0._gounselectequip, not arg_10_0._isSelect and var_10_0)
+	gohelper.setActive(arg_10_0._goselectedunequip, arg_10_0._isSelect and not var_10_0)
+	gohelper.setActive(arg_10_0._gounselectunequip, not arg_10_0._isSelect and not var_10_0)
+	gohelper.setActive(arg_10_0._goequipedeffect, arg_10_0._isEquiped ~= var_10_0 and var_10_0)
+	arg_10_0:setTabIcon(arg_10_0._goselectedequip, true, true)
+	arg_10_0:setTabIcon(arg_10_0._gounselectequip, false, true)
+	arg_10_0:setTabIcon(arg_10_0._goselectedunequip, true, false)
+	arg_10_0:setTabIcon(arg_10_0._gounselectunequip, false, false)
 
-	slot0._isEquiped = slot1
+	arg_10_0._isEquiped = var_10_0
 end
 
-function slot0.setTabIcon(slot0, slot1, slot2, slot3)
-	if not gohelper.findChildImage(slot1, "icon") then
+function var_0_0.setTabIcon(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = gohelper.findChildImage(arg_11_1, "icon")
+
+	if not var_11_0 then
 		return
 	end
 
-	slot6 = ""
+	local var_11_1 = string.format("rouge_dlc%s_leftlogo", arg_11_0._mo.id)
+	local var_11_2 = ""
 
-	UISpriteSetMgr.instance:setRouge4Sprite(slot4, string.format("rouge_dlc%s_leftlogo", slot0._mo.id) .. (slot2 and (slot3 and "1" or "2") or slot3 and "2" or "3"))
+	if arg_11_2 then
+		var_11_2 = arg_11_3 and "1" or "2"
+	else
+		var_11_2 = arg_11_3 and "2" or "3"
+	end
+
+	local var_11_3 = var_11_1 .. var_11_2
+
+	UISpriteSetMgr.instance:setRouge4Sprite(var_11_0, var_11_3)
 end
 
-function slot0.setLaterFlagVisible(slot0)
-	gohelper.setActive(slot0._golater, RougeDLCSelectListModel.instance:getCount() <= slot0._index)
+function var_0_0.setLaterFlagVisible(arg_12_0)
+	local var_12_0 = arg_12_0._index >= RougeDLCSelectListModel.instance:getCount()
+
+	gohelper.setActive(arg_12_0._golater, var_12_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

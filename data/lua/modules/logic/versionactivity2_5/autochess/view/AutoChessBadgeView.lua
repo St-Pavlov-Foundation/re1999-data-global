@@ -1,89 +1,95 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessBadgeView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessBadgeView", package.seeall)
 
-slot0 = class("AutoChessBadgeView", BaseView)
+local var_0_0 = class("AutoChessBadgeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollBadge = gohelper.findChildScrollRect(slot0.viewGO, "root/#scroll_Badge")
-	slot0._goBadgeContent = gohelper.findChild(slot0.viewGO, "root/#scroll_Badge/viewport/#go_BadgeContent")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollBadge = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_Badge")
+	arg_1_0._goBadgeContent = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_Badge/viewport/#go_BadgeContent")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scrollBadgeGo = slot0._scrollBadge.gameObject
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._scrollBadgeGo)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._scrollBadgeGo = arg_4_0._scrollBadge.gameObject
+	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._scrollBadgeGo)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBeginHandler, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEndHandler, slot0)
+	arg_4_0._drag:AddDragBeginListener(arg_4_0._onDragBeginHandler, arg_4_0)
+	arg_4_0._drag:AddDragEndListener(arg_4_0._onDragEndHandler, arg_4_0)
 
-	slot0._touch = SLFramework.UGUI.UIClickListener.Get(slot0._scrollBadgeGo)
+	arg_4_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_4_0._scrollBadgeGo)
 
-	slot0._touch:AddClickDownListener(slot0._onClickDownHandler, slot0)
+	arg_4_0._touch:AddClickDownListener(arg_4_0._onClickDownHandler, arg_4_0)
 
-	slot0._audioScroll = MonoHelper.addLuaComOnceToGo(slot0._scrollBadgeGo, DungeonMapEpisodeAudio, slot0._scrollBadge)
+	arg_4_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_4_0._scrollBadgeGo, DungeonMapEpisodeAudio, arg_4_0._scrollBadge)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_page_turn)
 
-	slot0.actId = Activity182Model.instance:getCurActId()
-	slot0.actMo = Activity182Model.instance:getActMo()
-	slot0.rankCoList = lua_auto_chess_rank.configDict[slot0.actId]
-	slot0.curIndex = 0
+	arg_6_0.actId = Activity182Model.instance:getCurActId()
+	arg_6_0.actMo = Activity182Model.instance:getActMo()
+	arg_6_0.rankCoList = lua_auto_chess_rank.configDict[arg_6_0.actId]
+	arg_6_0.curIndex = 0
 
-	slot0:delayInit()
-	TaskDispatcher.runRepeat(slot0.delayInit, slot0, 0.1)
+	arg_6_0:delayInit()
+	TaskDispatcher.runRepeat(arg_6_0.delayInit, arg_6_0, 0.1)
 end
 
-function slot0.delayInit(slot0)
-	slot0.curIndex = slot0.curIndex + 1
+function var_0_0.delayInit(arg_7_0)
+	arg_7_0.curIndex = arg_7_0.curIndex + 1
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.BadgeItemPath, slot0._goBadgeContent), AutoChessBadgeItem):setData(slot0.rankCoList[slot0.curIndex].rankId, slot0.actMo.score, AutoChessBadgeItem.ShowType.BadgeView)
+	local var_7_0 = arg_7_0.rankCoList[arg_7_0.curIndex]
+	local var_7_1 = arg_7_0:getResInst(AutoChessEnum.BadgeItemPath, arg_7_0._goBadgeContent)
 
-	if slot0.curIndex >= #slot0.rankCoList then
-		TaskDispatcher.cancelTask(slot0.delayInit, slot0)
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, AutoChessBadgeItem):setData(var_7_0.rankId, arg_7_0.actMo.score, AutoChessBadgeItem.ShowType.BadgeView)
+
+	if arg_7_0.curIndex >= #arg_7_0.rankCoList then
+		TaskDispatcher.cancelTask(arg_7_0.delayInit, arg_7_0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.delayInit, slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.delayInit, arg_8_0)
 
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragEndListener()
+	if arg_8_0._drag then
+		arg_8_0._drag:RemoveDragBeginListener()
+		arg_8_0._drag:RemoveDragEndListener()
 
-		slot0._drag = nil
+		arg_8_0._drag = nil
 	end
 
-	if slot0._touch then
-		slot0._touch:RemoveClickDownListener()
+	if arg_8_0._touch then
+		arg_8_0._touch:RemoveClickDownListener()
 
-		slot0._touch = nil
+		arg_8_0._touch = nil
 	end
 end
 
-function slot0._onDragBeginHandler(slot0)
-	slot0._audioScroll:onDragBegin()
+function var_0_0._onDragBeginHandler(arg_9_0)
+	arg_9_0._audioScroll:onDragBegin()
 end
 
-function slot0._onDragEndHandler(slot0)
-	slot0._audioScroll:onDragEnd()
+function var_0_0._onDragEndHandler(arg_10_0)
+	arg_10_0._audioScroll:onDragEnd()
 end
 
-function slot0._onClickDownHandler(slot0)
-	slot0._audioScroll:onClickDown()
+function var_0_0._onClickDownHandler(arg_11_0)
+	arg_11_0._audioScroll:onClickDown()
 end
 
-return slot0
+return var_0_0

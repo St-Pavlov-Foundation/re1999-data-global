@@ -1,46 +1,51 @@
-module("modules.logic.explore.controller.steps.ExploreUpdateUnitStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreUpdateUnitStep", package.seeall)
 
-slot0 = class("ExploreUpdateUnitStep", ExploreStepBase)
+local var_0_0 = class("ExploreUpdateUnitStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data.interact
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data.interact
 
-	ExploreModel.instance:updateInteractInfo(slot1, nil, true)
+	ExploreModel.instance:updateInteractInfo(var_1_0, nil, true)
 
-	if ExploreHelper.getBit(slot1.status, ExploreEnum.InteractIndex.IsEnter) <= 0 then
-		ExploreStepController.instance:insertClientStep({
+	if ExploreHelper.getBit(var_1_0.status, ExploreEnum.InteractIndex.IsEnter) <= 0 then
+		local var_1_1 = {
 			stepType = ExploreEnum.StepType.DelUnit,
-			interact = slot0._data.interact
-		}, 1)
-		slot0:onDone()
+			interact = arg_1_0._data.interact
+		}
+
+		ExploreStepController.instance:insertClientStep(var_1_1, 1)
+		arg_1_0:onDone()
 
 		return
 	end
 
-	if ExploreController.instance:getMap():getUnit(slot1.id, true) then
-		slot3:checkShowIcon()
+	local var_1_2 = ExploreController.instance:getMap()
+	local var_1_3 = var_1_2:getUnit(var_1_0.id, true)
 
-		if (not slot3.nodePos or slot3.nodePos.x ~= slot1.posx or slot3.nodePos.y ~= slot1.posy) and slot2:getNowStatus() == ExploreEnum.MapStatus.Normal then
-			slot3:setPosByNode({
-				x = slot1.posx,
-				y = slot1.posy
+	if var_1_3 then
+		var_1_3:checkShowIcon()
+
+		if (not var_1_3.nodePos or var_1_3.nodePos.x ~= var_1_0.posx or var_1_3.nodePos.y ~= var_1_0.posy) and var_1_2:getNowStatus() == ExploreEnum.MapStatus.Normal then
+			var_1_3:setPosByNode({
+				x = var_1_0.posx,
+				y = var_1_0.posy
 			})
 		end
 
 		if ExploreHeroResetFlow.instance:isReseting() then
-			slot3.mo.unitDir = slot1.dir
+			var_1_3.mo.unitDir = var_1_0.dir
 
-			slot3:updateRotationRoot()
+			var_1_3:updateRotationRoot()
 		end
 	else
-		ExploreController.instance:updateUnit(slot1)
+		ExploreController.instance:updateUnit(var_1_0)
 
-		slot4 = slot2:getUnit(slot1.id)
+		local var_1_4 = var_1_2:getUnit(var_1_0.id)
 
-		slot2:checkUnitNear(slot4.nodePos, slot4)
+		var_1_2:checkUnitNear(var_1_4.nodePos, var_1_4)
 	end
 
-	slot0:onDone()
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

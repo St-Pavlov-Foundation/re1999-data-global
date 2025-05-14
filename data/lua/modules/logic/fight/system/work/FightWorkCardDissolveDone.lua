@@ -1,37 +1,37 @@
-module("modules.logic.fight.system.work.FightWorkCardDissolveDone", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCardDissolveDone", package.seeall)
 
-slot0 = class("FightWorkCardDissolveDone", BaseWork)
+local var_0_0 = class("FightWorkCardDissolveDone", BaseWork)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if FightCardModel.instance:isDissolving() then
-		TaskDispatcher.runDelay(slot0._timeOut, slot0, 10)
-		TaskDispatcher.runRepeat(slot0._frameCheck, slot0, 0.01, 300)
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, slot0._onCombineCardEnd, slot0)
+		TaskDispatcher.runDelay(arg_1_0._timeOut, arg_1_0, 10)
+		TaskDispatcher.runRepeat(arg_1_0._frameCheck, arg_1_0, 0.01, 300)
+		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_1_0._onCombineCardEnd, arg_1_0)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._frameCheck(slot0)
+function var_0_0._frameCheck(arg_2_0)
 	if not FightCardModel.instance:isDissolving() then
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onCombineCardEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onCombineCardEnd(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._timeOut(slot0)
+function var_0_0._timeOut(arg_4_0)
 	logNormal("FightWorkCardDissolveDone 奇怪，超时结束 done")
 	FightCardModel.instance:setDissolving(false)
-	slot0:onDone(true)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, slot0._onCombineCardEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._timeOut, slot0)
-	TaskDispatcher.cancelTask(slot0._frameCheck, slot0)
+function var_0_0.clearWork(arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_5_0._onCombineCardEnd, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._timeOut, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._frameCheck, arg_5_0)
 end
 
-return slot0
+return var_0_0

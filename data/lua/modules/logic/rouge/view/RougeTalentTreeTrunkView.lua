@@ -1,171 +1,190 @@
-module("modules.logic.rouge.view.RougeTalentTreeTrunkView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeTalentTreeTrunkView", package.seeall)
 
-slot0 = class("RougeTalentTreeTrunkView", BaseView)
+local var_0_0 = class("RougeTalentTreeTrunkView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simageallfininshedlight = gohelper.findChildSingleImage(slot0.viewGO, "#simage_allfininshed_light")
-	slot0._btnoverview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_overview")
-	slot0._gotoprighttips = gohelper.findChild(slot0.viewGO, "#go_topright/tips")
-	slot0._txttoprighttips = gohelper.findChildText(slot0.viewGO, "#go_topright/tips/#txt_tips")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_topright/#txt_num")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_topright/#btn_click")
-	slot0._btnempty = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_empty")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._treenodeList = {}
-	slot0._treeLightList = {}
-	slot0._orderToDelayTime = {}
-	slot0._orderToLightList = {}
-	slot0._flexibleTime = 0.2
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simageallfininshedlight = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_allfininshed_light")
+	arg_1_0._btnoverview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_overview")
+	arg_1_0._gotoprighttips = gohelper.findChild(arg_1_0.viewGO, "#go_topright/tips")
+	arg_1_0._txttoprighttips = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/tips/#txt_tips")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#txt_num")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_click")
+	arg_1_0._btnempty = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_empty")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._treenodeList = {}
+	arg_1_0._treeLightList = {}
+	arg_1_0._orderToDelayTime = {}
+	arg_1_0._orderToLightList = {}
+	arg_1_0._flexibleTime = 0.2
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnoverview:AddClickListener(slot0._btnoverviewOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnempty:AddClickListener(slot0._btnclickEmpty, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._refreshUI, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.enterTalentView, slot0._onClickTalentTreeItem, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.reallyExitTalentView, slot0._onBackView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnoverview:AddClickListener(arg_2_0._btnoverviewOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnempty:AddClickListener(arg_2_0._btnclickEmpty, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_2_0._refreshUI, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.enterTalentView, arg_2_0._onClickTalentTreeItem, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.reallyExitTalentView, arg_2_0._onBackView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnoverview:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnempty:RemoveClickListener()
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._refreshUI, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.enterTalentView, slot0._onClickTalentTreeItem, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.reallyExitTalentView, slot0._onBackView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnoverview:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnempty:RemoveClickListener()
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_3_0._refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.enterTalentView, arg_3_0._onClickTalentTreeItem, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.reallyExitTalentView, arg_3_0._onBackView, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._season = RougeOutsideModel.instance:season()
-	slot0._config = RougeTalentConfig.instance:getRougeTalentDict(slot0._season)
-	slot0._lightconfig = RougeTalentConfig.instance:getBranchLightConfigByTalent(999)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._season = RougeOutsideModel.instance:season()
+
+	local var_4_0 = 999
+
+	arg_4_0._config = RougeTalentConfig.instance:getRougeTalentDict(arg_4_0._season)
+	arg_4_0._lightconfig = RougeTalentConfig.instance:getBranchLightConfigByTalent(var_4_0)
 end
 
-function slot0._refreshUI(slot0)
-	for slot4, slot5 in ipairs(slot0._treenodeList) do
-		slot5.component:refreshItem()
+function var_0_0._refreshUI(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._treenodeList) do
+		iter_5_1.component:refreshItem()
 	end
 
-	for slot4, slot5 in ipairs(slot0._treeLightList) do
-		slot0:_refreshLight(slot5)
+	for iter_5_2, iter_5_3 in ipairs(arg_5_0._treeLightList) do
+		arg_5_0:_refreshLight(iter_5_3)
 	end
 
-	slot0._txtnum.text = RougeTalentModel.instance:getTalentPoint()
-	slot0._txttoprighttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_talenttree_remaintalent"), {
-		RougeTalentModel.instance:getHadAllTalentPoint(),
-		RougeConfig.instance:getOutSideConstValueByID(RougeEnum.OutsideConst.SkillPointLimit)
-	})
+	arg_5_0._txtnum.text = RougeTalentModel.instance:getTalentPoint()
+
+	local var_5_0 = RougeConfig.instance:getOutSideConstValueByID(RougeEnum.OutsideConst.SkillPointLimit)
+	local var_5_1 = RougeTalentModel.instance:getHadAllTalentPoint()
+	local var_5_2 = {
+		var_5_1,
+		var_5_0
+	}
+
+	arg_5_0._txttoprighttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_talenttree_remaintalent"), var_5_2)
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0._isopentips = not slot0._isopentips
+function var_0_0._btnclickOnClick(arg_6_0)
+	arg_6_0._isopentips = not arg_6_0._isopentips
 
-	gohelper.setActive(slot0._gotoprighttips, slot0._isopentips)
+	gohelper.setActive(arg_6_0._gotoprighttips, arg_6_0._isopentips)
 end
 
-function slot0._btnclickEmpty(slot0)
-	if slot0._isopentips then
-		slot0._isopentips = false
+function var_0_0._btnclickEmpty(arg_7_0)
+	if arg_7_0._isopentips then
+		arg_7_0._isopentips = false
 
-		gohelper.setActive(slot0._gotoprighttips, slot0._isopentips)
+		gohelper.setActive(arg_7_0._gotoprighttips, arg_7_0._isopentips)
 	end
 end
 
-function slot0.onOpen(slot0)
-	RougeOutsideRpc.instance:sendGetRougeOutSideInfoRequest(slot0._season)
-	RougeOutsideRpc.instance:sendRougeMarkGeniusNewStageRequest(slot0._season)
+function var_0_0.onOpen(arg_8_0)
+	RougeOutsideRpc.instance:sendGetRougeOutSideInfoRequest(arg_8_0._season)
+	RougeOutsideRpc.instance:sendRougeMarkGeniusNewStageRequest(arg_8_0._season)
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenTalentTrunkTreeView)
 
-	slot0._txtnum.text = RougeTalentModel.instance:getTalentPoint()
+	arg_8_0._txtnum.text = RougeTalentModel.instance:getTalentPoint()
 
-	slot0:_initItem()
-	slot0:_initLight()
+	arg_8_0:_initItem()
+	arg_8_0:_initLight()
 end
 
-function slot0._initItem(slot0)
-	for slot4, slot5 in ipairs(slot0._config) do
-		if not slot0._treenodeList[slot4] then
-			slot6 = slot0:getUserDataTb_()
-			slot9 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes.branchitem, gohelper.findChild(slot0.viewGO, "item/#go_item" .. slot4), "treenode" .. tostring(slot4))
-			slot10 = MonoHelper.addNoUpdateLuaComOnceToGo(slot9, RougeTalentTreeItem)
+function var_0_0._initItem(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._config) do
+		if not arg_9_0._treenodeList[iter_9_0] then
+			local var_9_0 = arg_9_0:getUserDataTb_()
+			local var_9_1 = gohelper.findChild(arg_9_0.viewGO, "item/#go_item" .. iter_9_0)
+			local var_9_2 = arg_9_0.viewContainer:getSetting().otherRes.branchitem
+			local var_9_3 = arg_9_0:getResInst(var_9_2, var_9_1, "treenode" .. tostring(iter_9_0))
+			local var_9_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_3, RougeTalentTreeItem)
 
-			slot10:initcomp(slot9, slot5, slot4)
+			var_9_4:initcomp(var_9_3, iter_9_1, iter_9_0)
 
-			slot6.go = slot9
-			slot6.component = slot10
-			slot0._treenodeList[slot4] = slot6
+			var_9_0.go = var_9_3
+			var_9_0.component = var_9_4
+			arg_9_0._treenodeList[iter_9_0] = var_9_0
 		end
 	end
 end
 
-function slot0._initLight(slot0)
-	for slot4, slot5 in ipairs(slot0._lightconfig) do
-		if not slot0._treeLightList[slot4] then
-			slot6 = slot0:getUserDataTb_()
+function var_0_0._initLight(arg_10_0)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._lightconfig) do
+		local var_10_0 = arg_10_0._treeLightList[iter_10_0]
 
-			if not gohelper.findChild(slot0.viewGO, "light/" .. slot5.lightname) then
-				logError("genuis_branch_light " .. slot0._tabIndex .. " not config!!!!")
+		if not var_10_0 then
+			var_10_0 = arg_10_0:getUserDataTb_()
+
+			local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "light/" .. iter_10_1.lightname)
+
+			if not var_10_1 then
+				logError("genuis_branch_light " .. arg_10_0._tabIndex .. " not config!!!!")
 			end
 
-			slot8 = slot7:GetComponent(typeof(UnityEngine.Animator))
+			local var_10_2 = var_10_1:GetComponent(typeof(UnityEngine.Animator))
 
-			if slot5.pos then
-				slot9 = {}
+			if iter_10_1.pos then
+				local var_10_3 = {}
+				local var_10_4 = string.splitToNumber(iter_10_1.pos, "|")
 
-				if string.splitToNumber(slot5.pos, "|") then
-					slot6.posList = slot9
+				if var_10_4 then
+					var_10_0.posList = var_10_4
 				end
 			end
 
-			slot6.name = slot5.lightname
-			slot6.go = slot7
-			slot6.index = slot4
+			var_10_0.name = iter_10_1.lightname
+			var_10_0.go = var_10_1
+			var_10_0.index = iter_10_0
 
-			gohelper.setActive(slot6.go, false)
+			gohelper.setActive(var_10_0.go, false)
 
-			slot6.animator = slot8
-			slot6.talent = slot5.talent
-			slot6.order = slot5.order
-			slot6.allLight = slot0:_checkCanLight(slot6)
-			slot6.isPlayAnim = false
+			var_10_0.animator = var_10_2
+			var_10_0.talent = iter_10_1.talent
+			var_10_0.order = iter_10_1.order
+			var_10_0.allLight = arg_10_0:_checkCanLight(var_10_0)
+			var_10_0.isPlayAnim = false
 
-			if slot8 then
-				for slot13 = 0, slot6.animator.runtimeAnimatorController.animationClips.Length - 1 do
-					if slot9[slot13].name:find("_light$") then
-						slot6.animtime = slot9[slot13].length
-						slot6.animCilp = slot9[slot13]
+			if var_10_2 then
+				local var_10_5 = var_10_0.animator.runtimeAnimatorController.animationClips
+
+				for iter_10_2 = 0, var_10_5.Length - 1 do
+					if var_10_5[iter_10_2].name:find("_light$") then
+						var_10_0.animtime = var_10_5[iter_10_2].length
+						var_10_0.animCilp = var_10_5[iter_10_2]
 					end
 				end
 			end
 		end
 
-		table.insert(slot0._treeLightList, slot6)
+		table.insert(arg_10_0._treeLightList, var_10_0)
 
-		if not slot0._orderToLightList[slot5.order] then
-			slot0._orderToLightList[slot5.order] = {}
+		if not arg_10_0._orderToLightList[iter_10_1.order] then
+			arg_10_0._orderToLightList[iter_10_1.order] = {}
 		end
 
-		table.insert(slot0._orderToLightList[slot5.order], slot6)
+		table.insert(arg_10_0._orderToLightList[iter_10_1.order], var_10_0)
 	end
 
-	for slot4, slot5 in ipairs(slot0._treeLightList) do
-		slot0:_refreshLight(slot5)
+	for iter_10_3, iter_10_4 in ipairs(arg_10_0._treeLightList) do
+		arg_10_0:_refreshLight(iter_10_4)
 	end
 end
 
-function slot0._checkCanLight(slot0, slot1)
-	if slot1.order == 1 then
+function var_0_0._checkCanLight(arg_11_0, arg_11_1)
+	if arg_11_1.order == 1 then
 		return true
 	end
 
-	for slot6, slot7 in ipairs(slot1.posList) do
-		if not RougeTalentModel.instance:checkBigNodeLock(slot7) then
+	local var_11_0 = arg_11_1.posList
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if not RougeTalentModel.instance:checkBigNodeLock(iter_11_1) then
 			return true
 		end
 	end
@@ -173,166 +192,181 @@ function slot0._checkCanLight(slot0, slot1)
 	return false
 end
 
-function slot0._getDelayTime(slot0, slot1)
-	if not slot1.animator then
+function var_0_0._getDelayTime(arg_12_0, arg_12_1)
+	if not arg_12_1.animator then
 		return 0
 	end
 
-	slot2 = 0
+	local var_12_0 = 0
+	local var_12_1 = arg_12_1.order
 
-	if slot0._orderToDelayTime[slot1.order] then
-		return slot0._orderToDelayTime[slot3]
+	if arg_12_0._orderToDelayTime[var_12_1] then
+		return arg_12_0._orderToDelayTime[var_12_1]
 	end
 
-	slot4 = nil
+	local var_12_2
 
-	for slot8 = 1, #slot0._treeLightList do
-		if slot8 > 1 and slot3 > 1 then
-			slot4 = slot0._treeLightList[slot8 - 1]
+	for iter_12_0 = 1, #arg_12_0._treeLightList do
+		if iter_12_0 > 1 and var_12_1 > 1 then
+			local var_12_3 = arg_12_0._treeLightList[iter_12_0 - 1]
 
-			if slot0._orderToDelayTime[slot3 - 1] then
-				slot2 = slot0._orderToDelayTime[slot3 - 1] + slot1.animtime - slot0._flexibleTime
+			if arg_12_0._orderToDelayTime[var_12_1 - 1] then
+				var_12_0 = arg_12_0._orderToDelayTime[var_12_1 - 1] + arg_12_1.animtime - arg_12_0._flexibleTime
 
 				break
 			else
-				slot2 = slot1.animtime - slot0._flexibleTime
+				var_12_0 = arg_12_1.animtime - arg_12_0._flexibleTime
 
 				break
 			end
 		end
 	end
 
-	if slot2 > 0 then
-		slot0._orderToDelayTime[slot3] = slot2
+	if var_12_0 > 0 then
+		arg_12_0._orderToDelayTime[var_12_1] = var_12_0
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0._btnoverviewOnClick(slot0)
+function var_0_0._btnoverviewOnClick(arg_13_0)
 	ViewMgr.instance:openView(ViewName.RougeTalentTreeOverview)
 end
 
-function slot0._onClickTalentTreeItem(slot0, slot1)
-	if slot0._inAnim then
+function var_0_0._onClickTalentTreeItem(arg_14_0, arg_14_1)
+	if arg_14_0._inAnim then
 		return
 	end
 
-	slot0._inAnim = true
+	arg_14_0._inAnim = true
 
-	slot0._animator:Update(0)
-	slot0._animator:Play("click", 0, 0)
+	arg_14_0._animator:Update(0)
+	arg_14_0._animator:Play("click", 0, 0)
 
-	function slot0._openCallBack()
-		TaskDispatcher.cancelTask(uv0._openCallBack, uv0)
+	local var_14_0 = 0.5
 
-		uv0._inAnim = false
+	function arg_14_0._openCallBack()
+		TaskDispatcher.cancelTask(arg_14_0._openCallBack, arg_14_0)
 
-		RougeTalentModel.instance:setCurrentSelectIndex(uv1)
-		ViewMgr.instance:openView(ViewName.RougeTalentTreeView, uv1)
+		arg_14_0._inAnim = false
+
+		RougeTalentModel.instance:setCurrentSelectIndex(arg_14_1)
+		ViewMgr.instance:openView(ViewName.RougeTalentTreeView, arg_14_1)
 	end
 
-	TaskDispatcher.runDelay(slot0._openCallBack, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_14_0._openCallBack, arg_14_0, var_14_0)
 end
 
-function slot0._refreshLight(slot0, slot1)
-	slot3 = RougeTalentModel.instance:getNextNeedUnlockTalent()
-	slot4 = false
+function var_0_0._refreshLight(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:_checkCanLight(arg_16_1)
+	local var_16_1 = RougeTalentModel.instance:getNextNeedUnlockTalent()
+	local var_16_2 = false
 
-	if not slot0:_checkCanLight(slot1) then
-		for slot8, slot9 in ipairs(slot3) do
-			for slot13, slot14 in ipairs(slot1.posList) do
-				if slot9 == slot14 then
-					slot4 = true
+	if not var_16_0 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+			for iter_16_2, iter_16_3 in ipairs(arg_16_1.posList) do
+				if iter_16_1 == iter_16_3 then
+					var_16_2 = true
 
 					break
 				end
 			end
 		end
 
-		if not slot4 then
-			gohelper.setActive(slot1.go, false)
-		elseif slot0:_getLightPer(slot1) > 0 then
-			gohelper.setActive(slot1.go, true)
-			slot1.animator:Update(0)
-			slot1.animator:Play("light", 0, slot5 * slot1.animtime)
-
-			slot1.animator.speed = 0
+		if not var_16_2 then
+			gohelper.setActive(arg_16_1.go, false)
 		else
-			gohelper.setActive(slot1.go, false)
+			local var_16_3 = arg_16_0:_getLightPer(arg_16_1)
+
+			if var_16_3 > 0 then
+				gohelper.setActive(arg_16_1.go, true)
+				arg_16_1.animator:Update(0)
+				arg_16_1.animator:Play("light", 0, var_16_3 * arg_16_1.animtime)
+
+				arg_16_1.animator.speed = 0
+			else
+				gohelper.setActive(arg_16_1.go, false)
+			end
 		end
 	else
-		gohelper.setActive(slot1.go, true)
-		slot1.animator:Update(0)
-		slot1.animator:Play("idle", 0, 0)
+		gohelper.setActive(arg_16_1.go, true)
+		arg_16_1.animator:Update(0)
+		arg_16_1.animator:Play("idle", 0, 0)
 	end
 end
 
-function slot0._getLightPer(slot0, slot1)
-	slot3 = nil
-	slot4 = 0
-	slot5 = 0
+function var_0_0._getLightPer(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._orderToLightList[arg_17_1.order - 1]
+	local var_17_1
+	local var_17_2 = 0
+	local var_17_3 = 0
 
-	for slot9, slot10 in ipairs(slot0._orderToLightList[slot1.order - 1]) do
-		if #slot10.posList == 0 then
-			slot3 = slot10
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		if #iter_17_1.posList == 0 then
+			var_17_1 = iter_17_1
 
 			break
 		end
 
-		for slot14, slot15 in ipairs(slot10.posList) do
-			if slot4 < slot15 then
-				slot4 = slot15
-				slot5 = slot14
-				slot3 = slot10
+		for iter_17_2, iter_17_3 in ipairs(iter_17_1.posList) do
+			if var_17_2 < iter_17_3 then
+				var_17_2 = iter_17_3
+				var_17_3 = iter_17_2
+				var_17_1 = iter_17_1
 			end
 		end
 	end
 
-	slot6 = RougeOutsideModel.instance:season()
-	slot11 = RougeTalentConfig.instance:getConfigByTalent(slot6, slot3.posList[slot5] or 1).cost or 0
+	local var_17_4 = RougeOutsideModel.instance:season()
+	local var_17_5 = var_17_1.posList[var_17_3] or 1
+	local var_17_6 = RougeTalentConfig.instance:getConfigByTalent(var_17_4, var_17_5)
+	local var_17_7 = RougeTalentConfig.instance:getConfigByTalent(var_17_4, arg_17_1.posList[1])
+	local var_17_8 = RougeTalentModel.instance:getHadAllTalentPoint()
+	local var_17_9 = var_17_6.cost or 0
 
-	return (RougeTalentModel.instance:getHadAllTalentPoint() - slot11) / (RougeTalentConfig.instance:getConfigByTalent(slot6, slot1.posList[1]).cost - slot11)
+	return (var_17_8 - var_17_9) / (var_17_7.cost - var_17_9)
 end
 
-function slot0._checkBeforeBranchAllLightReturnDelayTime(slot0, slot1)
-	slot2 = 0
-	slot3 = slot1
+function var_0_0._checkBeforeBranchAllLightReturnDelayTime(arg_18_0, arg_18_1)
+	local var_18_0 = 0
+	local var_18_1 = arg_18_1
 
-	while slot3.index > 2 and slot3.order > 2 do
-		slot2 = slot2 + slot0:getBeforeLightAniTime(slot3)
-		slot3 = slot0._treeLightList[slot3.index - 1]
+	while var_18_1.index > 2 and var_18_1.order > 2 do
+		var_18_0 = var_18_0 + arg_18_0:getBeforeLightAniTime(var_18_1)
+		var_18_1 = arg_18_0._treeLightList[var_18_1.index - 1]
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.getBeforeLightAniTime(slot0, slot1)
-	slot2 = 0
+function var_0_0.getBeforeLightAniTime(arg_19_0, arg_19_1)
+	local var_19_0 = 0
+	local var_19_1 = arg_19_0._treeLightList[arg_19_1.index - 1]
 
-	if slot0._treeLightList[slot1.index - 1].allLight and not slot3.isPlayAnim then
-		slot2 = slot1.animtime - slot0._flexibleTime
+	if var_19_1.allLight and not var_19_1.isPlayAnim then
+		var_19_0 = arg_19_1.animtime - arg_19_0._flexibleTime
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0._onBackView(slot0)
-	slot0._animator:Update(0)
-	slot0._animator:Play("back", 0, 0)
+function var_0_0._onBackView(arg_20_0)
+	arg_20_0._animator:Update(0)
+	arg_20_0._animator:Play("back", 0, 0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_21_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._treenodeList and #slot0._treenodeList > 0 then
-		for slot4, slot5 in ipairs(slot0._treenodeList) do
-			slot5.component:dispose()
+function var_0_0.onDestroyView(arg_22_0)
+	if arg_22_0._treenodeList and #arg_22_0._treenodeList > 0 then
+		for iter_22_0, iter_22_1 in ipairs(arg_22_0._treenodeList) do
+			iter_22_1.component:dispose()
 		end
 
-		slot0._treenodeList = nil
+		arg_22_0._treenodeList = nil
 	end
 end
 
-return slot0
+return var_0_0

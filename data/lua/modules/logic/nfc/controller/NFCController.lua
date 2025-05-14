@@ -1,21 +1,25 @@
-module("modules.logic.nfc.controller.NFCController", package.seeall)
+﻿module("modules.logic.nfc.controller.NFCController", package.seeall)
 
-slot0 = class("NFCController", BaseController)
+local var_0_0 = class("NFCController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.onNFCRead(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.onNFCRead(arg_5_0, arg_5_1)
+	if arg_5_1 == nil then
 		logNormal("参数为空")
 
 		return
@@ -63,44 +67,52 @@ function slot0.onNFCRead(slot0, slot1)
 		return
 	end
 
-	if not WebViewController.urlParse(slot1) then
+	local var_5_0 = WebViewController.urlParse(arg_5_1)
+
+	if not var_5_0 then
 		logNormal("未读取出参数")
 
 		return
 	end
 
-	if not slot3.ver or not slot3.id then
+	if not var_5_0.ver or not var_5_0.id then
 		logNormal("卡片缺少版本号和id")
 
 		return
 	end
 
-	if not tonumber(slot3.ver) or slot4 ~= NFCEnum.NFCVersion.BGMSwitch then
+	local var_5_1 = tonumber(var_5_0.ver)
+
+	if not var_5_1 or var_5_1 ~= NFCEnum.NFCVersion.BGMSwitch then
 		logNormal("卡片版本信息错误")
 
 		return
 	end
 
-	if not NFCConfig.instance:getNFCRecognizeCo(tonumber(slot3.id)) then
+	local var_5_2 = var_5_0.id
+	local var_5_3 = tonumber(var_5_2)
+	local var_5_4 = NFCConfig.instance:getNFCRecognizeCo(var_5_3)
+
+	if not var_5_4 then
 		logNormal("找不到nfc表")
 
 		return
 	end
 
-	if slot7.type == OpenEnum.UnlockFunc.BGMSwitch then
-		slot0:openReadBGMSwitch(slot7)
+	if var_5_4.type == OpenEnum.UnlockFunc.BGMSwitch then
+		arg_5_0:openReadBGMSwitch(var_5_4)
 	end
 end
 
-function slot0.openReadBGMSwitch(slot0, slot1)
-	if not uv0.instance:isInMainView() then
+function var_0_0.openReadBGMSwitch(arg_6_0, arg_6_1)
+	if not var_0_0.instance:isInMainView() then
 		GameFacade.showToast(ToastEnum.NFCNotInMainView)
 
 		return
 	end
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch) then
-		GameFacade.showToast(slot1.unlockId)
+		GameFacade.showToast(arg_6_1.unlockId)
 
 		return
 	end
@@ -111,64 +123,73 @@ function slot0.openReadBGMSwitch(slot0, slot1)
 		return
 	end
 
-	if not ViewMgr.instance:isOpen(ViewName.BGMSwitchView) then
-		BGMSwitchController.instance:openBGMSwitchView(ViewMgr.instance:isOpen(ViewName.MainThumbnailView))
+	local var_6_0 = ViewMgr.instance:isOpen(ViewName.BGMSwitchView)
+
+	if not var_6_0 then
+		local var_6_1 = ViewMgr.instance:isOpen(ViewName.MainThumbnailView)
+
+		BGMSwitchController.instance:openBGMSwitchView(var_6_1)
 		BGMSwitchModel.instance:setEggHideState(true)
 	end
 
-	if not BGMSwitchModel.instance:getBgmInfo(slot1.param) then
-		GameFacade.showToast(slot1.unclaimedId)
+	local var_6_2 = arg_6_1.param
+
+	if not BGMSwitchModel.instance:getBgmInfo(var_6_2) then
+		GameFacade.showToast(arg_6_1.unclaimedId)
 
 		return
 	end
 
-	slot0._curBgmId = slot4
+	arg_6_0._curBgmId = var_6_2
 
-	if not slot3 then
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0.onBgmSwitchViewOpen, slot0)
+	if not var_6_0 then
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_6_0.onBgmSwitchViewOpen, arg_6_0)
 	else
-		if BGMSwitchModel.instance:getCurBgm() ~= nil and slot4 == slot6 then
+		local var_6_3 = BGMSwitchModel.instance:getCurBgm()
+
+		if var_6_3 ~= nil and var_6_2 == var_6_3 then
 			logNormal("正在播放该BGM")
 
 			return
 		end
 
-		slot0:setCurBGM(slot0._curBgmId, true)
+		arg_6_0:setCurBGM(arg_6_0._curBgmId, true)
 	end
 end
 
-function slot0.onBgmSwitchViewOpen(slot0, slot1)
-	if slot1 == ViewName.BGMSwitchView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.onBgmSwitchViewOpen, slot0)
-		slot0:setCurBGM(slot0._curBgmId)
+function var_0_0.onBgmSwitchViewOpen(arg_7_0, arg_7_1)
+	if arg_7_1 == ViewName.BGMSwitchView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0.onBgmSwitchViewOpen, arg_7_0)
+		arg_7_0:setCurBGM(arg_7_0._curBgmId)
 	end
 end
 
-function slot0.setCurBGM(slot0, slot1, slot2)
-	BGMSwitchModel.instance:setCurBgm(slot1)
-	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ItemSelected, slot1, slot2)
+function var_0_0.setCurBGM(arg_8_0, arg_8_1, arg_8_2)
+	BGMSwitchModel.instance:setCurBgm(arg_8_1)
+	BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ItemSelected, arg_8_1, arg_8_2)
 end
 
-function slot0.isInMainView(slot0)
-	slot2 = {}
+function var_0_0.isInMainView(arg_9_0)
+	local var_9_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_9_1 = {}
 
-	for slot6, slot7 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		slot8 = ViewMgr.instance:getSetting(slot7)
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_2 = ViewMgr.instance:getSetting(iter_9_1)
 
-		if slot7 ~= ViewName.MainView and slot7 ~= ViewName.BGMSwitchView and slot8.viewType == ViewType.Full and slot8.layer ~= UILayerName.Message then
-			table.insert(slot2, slot7)
+		if iter_9_1 ~= ViewName.MainView and iter_9_1 ~= ViewName.BGMSwitchView and var_9_2.viewType == ViewType.Full and var_9_2.layer ~= UILayerName.Message then
+			table.insert(var_9_1, iter_9_1)
 		end
 	end
 
-	slot3 = true
+	local var_9_3 = true
 
-	if #slot2 > 0 then
-		slot3 = false
+	if #var_9_1 > 0 then
+		var_9_3 = false
 	end
 
-	return slot3
+	return var_9_3
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

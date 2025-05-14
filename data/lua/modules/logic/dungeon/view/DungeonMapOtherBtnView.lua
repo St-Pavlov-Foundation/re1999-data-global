@@ -1,77 +1,80 @@
-module("modules.logic.dungeon.view.DungeonMapOtherBtnView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonMapOtherBtnView", package.seeall)
 
-slot0 = class("DungeonMapOtherBtnView", BaseView)
+local var_0_0 = class("DungeonMapOtherBtnView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotopright = gohelper.findChild(slot0.viewGO, "#go_topright")
-	slot0._btnequipstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_topright/#btn_equipstore")
-	slot0._txtequipstore = gohelper.findChildText(slot0.viewGO, "#go_topright/#btn_equipstore/#txt_equipstore")
-	slot0._txtequipstoreen = gohelper.findChildText(slot0.viewGO, "#go_topright/#btn_equipstore/#txt_equipstoreen")
-	slot0._gorolestory = gohelper.findChild(slot0.viewGO, "#go_rolestory")
-	slot0._btnrolestory = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rolestory/#btn_review")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._btnequipstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_equipstore")
+	arg_1_0._txtequipstore = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_equipstore/#txt_equipstore")
+	arg_1_0._txtequipstoreen = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_equipstore/#txt_equipstoreen")
+	arg_1_0._gorolestory = gohelper.findChild(arg_1_0.viewGO, "#go_rolestory")
+	arg_1_0._btnrolestory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolestory/#btn_review")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnequipstore:AddClickListener(slot0._btnEquipStoreOnClick, slot0)
-	slot0._btnrolestory:AddClickListener(slot0._btnRoleStoryOnClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnequipstore:AddClickListener(arg_2_0._btnEquipStoreOnClick, arg_2_0)
+	arg_2_0._btnrolestory:AddClickListener(arg_2_0._btnRoleStoryOnClick, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseView, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnequipstore:RemoveClickListener()
-	slot0._btnrolestory:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnequipstore:RemoveClickListener()
+	arg_3_0._btnrolestory:RemoveClickListener()
 end
 
-function slot0._btnRoleStoryOnClick(slot0)
+function var_0_0._btnRoleStoryOnClick(arg_4_0)
 	RoleStoryController.instance:openReviewView()
 end
 
-function slot0._btnEquipStoreOnClick(slot0)
+function var_0_0._btnEquipStoreOnClick(arg_5_0)
 	StoreController.instance:openStoreView(StoreEnum.SummonEquipExchange)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.DungeonMapLevelView then
-		slot0:refreshUI()
+function var_0_0._onOpenView(arg_7_0, arg_7_1)
+	if arg_7_1 == ViewName.DungeonMapLevelView then
+		arg_7_0:refreshUI()
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.DungeonMapLevelView then
-		slot0:refreshUI()
+function var_0_0._onCloseView(arg_8_0, arg_8_1)
+	if arg_8_1 == ViewName.DungeonMapLevelView then
+		arg_8_0:refreshUI()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshUI()
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0:refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtequipstore.text = luaLang("equip_store_name")
-	slot0._txtequipstoreen.text = "PSYCHUBE SHOP"
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._txtequipstore.text = luaLang("equip_store_name")
+	arg_10_0._txtequipstoreen.text = "PSYCHUBE SHOP"
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0.isEquipDungeon = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Equip
+function var_0_0.refreshUI(arg_11_0)
+	arg_11_0.isEquipDungeon = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Equip
 
-	gohelper.setActive(slot0._gotopright, slot0.isEquipDungeon and not ViewMgr.instance:isOpen(ViewName.DungeonMapLevelView))
-	gohelper.setActive(slot0._gorolestory, not ViewMgr.instance:isOpen(ViewName.DungeonMapLevelView) and DungeonModel.instance:chapterListIsRoleStory() and RoleStoryModel.instance:isShowReplayStoryBtn())
+	gohelper.setActive(arg_11_0._gotopright, arg_11_0.isEquipDungeon and not ViewMgr.instance:isOpen(ViewName.DungeonMapLevelView))
+	gohelper.setActive(arg_11_0._gorolestory, not ViewMgr.instance:isOpen(ViewName.DungeonMapLevelView) and DungeonModel.instance:chapterListIsRoleStory() and RoleStoryModel.instance:isShowReplayStoryBtn())
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

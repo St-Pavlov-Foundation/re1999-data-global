@@ -1,42 +1,42 @@
-module("modules.logic.gift.model.GiftModel", package.seeall)
+﻿module("modules.logic.gift.model.GiftModel", package.seeall)
 
-slot0 = class("GiftModel", BaseModel)
+local var_0_0 = class("GiftModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._multipleChoiceIndex = 0
-	slot0._multipleChoiceId = 0
-	slot0._needProps = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._multipleChoiceIndex = 0
+	arg_1_0._multipleChoiceId = 0
+	arg_1_0._needProps = {}
 end
 
-function slot0.reset(slot0)
-	slot0._multipleChoiceIndex = 0
-	slot0._multipleChoiceId = 0
-	slot0._needProps = {}
+function var_0_0.reset(arg_2_0)
+	arg_2_0._multipleChoiceIndex = 0
+	arg_2_0._multipleChoiceId = 0
+	arg_2_0._needProps = {}
 end
 
-function slot0.setMultipleChoiceIndex(slot0, slot1)
-	slot0._multipleChoiceIndex = slot1
+function var_0_0.setMultipleChoiceIndex(arg_3_0, arg_3_1)
+	arg_3_0._multipleChoiceIndex = arg_3_1
 end
 
-function slot0.getMultipleChoiceIndex(slot0)
-	return slot0._multipleChoiceIndex
+function var_0_0.getMultipleChoiceIndex(arg_4_0)
+	return arg_4_0._multipleChoiceIndex
 end
 
-function slot0.setMultipleChoiceId(slot0, slot1)
-	slot0._multipleChoiceId = slot1
+function var_0_0.setMultipleChoiceId(arg_5_0, arg_5_1)
+	arg_5_0._multipleChoiceId = arg_5_1
 end
 
-function slot0.getMultipleChoiceId(slot0)
-	return slot0._multipleChoiceId
+function var_0_0.getMultipleChoiceId(arg_6_0)
+	return arg_6_0._multipleChoiceId
 end
 
-function slot0.setNeedGift(slot0, slot1)
-	table.insert(slot0._needProps, slot1)
+function var_0_0.setNeedGift(arg_7_0, arg_7_1)
+	table.insert(arg_7_0._needProps, arg_7_1)
 end
 
-function slot0.isGiftNeed(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._needProps) do
-		if slot6 == slot1 then
+function var_0_0.isGiftNeed(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._needProps) do
+		if iter_8_1 == arg_8_1 then
 			return true
 		end
 	end
@@ -44,6 +44,6 @@ function slot0.isGiftNeed(slot0, slot1)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

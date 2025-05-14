@@ -1,85 +1,91 @@
-module("modules.logic.settings.view.SettingsCategoryListItem", package.seeall)
+﻿module("modules.logic.settings.view.SettingsCategoryListItem", package.seeall)
 
-slot0 = class("SettingsCategoryListItem", ListScrollCellExtend)
+local var_0_0 = class("SettingsCategoryListItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gooff = gohelper.findChild(slot0.viewGO, "#go_off")
-	slot0._txtitemcn1 = gohelper.findChildText(slot0.viewGO, "#go_off/#txt_itemcn1")
-	slot0._txtitemen1 = gohelper.findChildText(slot0.viewGO, "#go_off/#txt_itemen1")
-	slot0._goon = gohelper.findChild(slot0.viewGO, "#go_on")
-	slot0._txtitemcn2 = gohelper.findChildText(slot0.viewGO, "#go_on/#txt_itemcn2")
-	slot0._txtitemen2 = gohelper.findChildText(slot0.viewGO, "#go_on/#txt_itemen2")
-	slot0._btnselect = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_select")
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gooff = gohelper.findChild(arg_1_0.viewGO, "#go_off")
+	arg_1_0._txtitemcn1 = gohelper.findChildText(arg_1_0.viewGO, "#go_off/#txt_itemcn1")
+	arg_1_0._txtitemen1 = gohelper.findChildText(arg_1_0.viewGO, "#go_off/#txt_itemen1")
+	arg_1_0._goon = gohelper.findChild(arg_1_0.viewGO, "#go_on")
+	arg_1_0._txtitemcn2 = gohelper.findChildText(arg_1_0.viewGO, "#go_on/#txt_itemcn2")
+	arg_1_0._txtitemen2 = gohelper.findChildText(arg_1_0.viewGO, "#go_on/#txt_itemen2")
+	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_select")
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnselect:AddClickListener(slot0._btnselectOnClick, slot0)
-	SettingsController.instance:registerCallback(SettingsEvent.PlayCloseCategoryAnim, slot0._playCloseAnim, slot0)
-	SettingsController.instance:registerCallback(SettingsEvent.OnChangeLangTxt, slot0._onChangeLangTxt, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
+	SettingsController.instance:registerCallback(SettingsEvent.PlayCloseCategoryAnim, arg_2_0._playCloseAnim, arg_2_0)
+	SettingsController.instance:registerCallback(SettingsEvent.OnChangeLangTxt, arg_2_0._onChangeLangTxt, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnselect:RemoveClickListener()
-	SettingsController.instance:unregisterCallback(SettingsEvent.PlayCloseCategoryAnim, slot0._playCloseAnim, slot0)
-	SettingsController.instance:unregisterCallback(SettingsEvent.OnChangeLangTxt, slot0._onChangeLangTxt, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnselect:RemoveClickListener()
+	SettingsController.instance:unregisterCallback(SettingsEvent.PlayCloseCategoryAnim, arg_3_0._playCloseAnim, arg_3_0)
+	SettingsController.instance:unregisterCallback(SettingsEvent.OnChangeLangTxt, arg_3_0._onChangeLangTxt, arg_3_0)
 end
 
-function slot0._btnselectOnClick(slot0)
-	SettingsController.instance:dispatchEvent(SettingsEvent.SelectCategory, slot0._mo.id)
+function var_0_0._btnselectOnClick(arg_4_0)
+	SettingsController.instance:dispatchEvent(SettingsEvent.SelectCategory, arg_4_0._mo.id)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot0:_isSelected()
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	gohelper.setActive(slot0._gooff, not slot2)
-	gohelper.setActive(slot0._goon, slot2)
+	local var_8_0 = arg_8_0:_isSelected()
 
-	if slot2 then
-		slot0._txtitemcn2.text = luaLang(slot1.name)
-		slot0._txtitemen2.text = slot1.subname
+	gohelper.setActive(arg_8_0._gooff, not var_8_0)
+	gohelper.setActive(arg_8_0._goon, var_8_0)
+
+	if var_8_0 then
+		arg_8_0._txtitemcn2.text = luaLang(arg_8_1.name)
+		arg_8_0._txtitemen2.text = arg_8_1.subname
 	else
-		slot0._txtitemcn1.text = luaLang(slot1.name)
-		slot0._txtitemen1.text = slot1.subname
+		arg_8_0._txtitemcn1.text = luaLang(arg_8_1.name)
+		arg_8_0._txtitemen1.text = arg_8_1.subname
 	end
 end
 
-function slot0._onChangeLangTxt(slot0, slot1)
-	if slot0:_isSelected() then
-		slot0._txtitemcn2.text = luaLang(slot0._mo.name)
-		slot0._txtitemen2.text = slot0._mo.subname
+function var_0_0._onChangeLangTxt(arg_9_0, arg_9_1)
+	if arg_9_0:_isSelected() then
+		arg_9_0._txtitemcn2.text = luaLang(arg_9_0._mo.name)
+		arg_9_0._txtitemen2.text = arg_9_0._mo.subname
 	else
-		slot0._txtitemcn1.text = luaLang(slot0._mo.name)
-		slot0._txtitemen1.text = slot0._mo.subname
+		arg_9_0._txtitemcn1.text = luaLang(arg_9_0._mo.name)
+		arg_9_0._txtitemen1.text = arg_9_0._mo.subname
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0._isSelected(slot0)
-	return slot0._mo.id == SettingsModel.instance:getCurCategoryId()
+function var_0_0._isSelected(arg_12_0)
+	return arg_12_0._mo.id == SettingsModel.instance:getCurCategoryId()
 end
 
-function slot0._playCloseAnim(slot0)
-	slot0._anim:Play("settingitem_out", 0, 0)
+function var_0_0._playCloseAnim(arg_13_0)
+	arg_13_0._anim:Play("settingitem_out", 0, 0)
 end
 
-return slot0
+return var_0_0

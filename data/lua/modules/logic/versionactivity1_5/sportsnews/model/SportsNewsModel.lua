@@ -1,83 +1,96 @@
-module("modules.logic.versionactivity1_5.sportsnews.model.SportsNewsModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.model.SportsNewsModel", package.seeall)
 
-slot0 = class("SportsNewsModel", BaseModel)
+local var_0_0 = class("SportsNewsModel", BaseModel)
 
-function slot0.finishOrder(slot0, slot1, slot2)
-	Activity106Rpc.instance:sendGet106OrderBonusRequest(slot1, slot2, 1, function ()
+function var_0_0.finishOrder(arg_1_0, arg_1_1, arg_1_2)
+	Activity106Rpc.instance:sendGet106OrderBonusRequest(arg_1_1, arg_1_2, 1, function()
 		ActivityWarmUpController.instance:dispatchEvent(ActivityWarmUpEvent.PlayOrderFinish, {
-			actId = uv0,
-			orderId = uv1
+			actId = arg_1_1,
+			orderId = arg_1_2
 		})
-	end, slot0)
+	end, arg_1_0)
 end
 
-function slot0.onReadEnd(slot0, slot1, slot2)
-	SportsNewsRpc.instance:sendFinishReadTaskRequest(slot1, slot2)
-	slot0:finishOrder(slot1, slot2)
+function var_0_0.onReadEnd(arg_3_0, arg_3_1, arg_3_2)
+	SportsNewsRpc.instance:sendFinishReadTaskRequest(arg_3_1, arg_3_2)
+	arg_3_0:finishOrder(arg_3_1, arg_3_2)
 end
 
-function slot0.getSelectedDayTask(slot0, slot1)
-	return ActivityWarmUpTaskListModel.instance._taskGroup and ActivityWarmUpTaskListModel.instance._taskGroup[slot1]
+function var_0_0.getSelectedDayTask(arg_4_0, arg_4_1)
+	return ActivityWarmUpTaskListModel.instance._taskGroup and ActivityWarmUpTaskListModel.instance._taskGroup[arg_4_1]
 end
 
-function slot0.getJumpToTab(slot0, slot1)
-	if not slot0._JumpOrderId then
+function var_0_0.getJumpToTab(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._JumpOrderId
+
+	if not var_5_0 then
 		return nil
 	end
 
-	return uv0.instance:getDayByOrderId(slot1, slot2)
+	return (var_0_0.instance:getDayByOrderId(arg_5_1, var_5_0))
 end
 
-function slot0.setJumpToOrderId(slot0, slot1)
-	slot0._JumpOrderId = slot1
+function var_0_0.setJumpToOrderId(arg_6_0, arg_6_1)
+	arg_6_0._JumpOrderId = arg_6_1
 end
 
-function slot0.getDayByOrderId(slot0, slot1, slot2)
-	return Activity106Config.instance:getActivityWarmUpOrderCo(slot1, slot2) and slot3.openDay
+function var_0_0.getDayByOrderId(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = Activity106Config.instance:getActivityWarmUpOrderCo(arg_7_1, arg_7_2)
+
+	return var_7_0 and var_7_0.openDay
 end
 
-function slot0.getPrefs(slot0, slot1)
-	return PlayerPrefsHelper.getNumber(slot0:getPrefsKey(slot1), 0)
+function var_0_0.getPrefs(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getPrefsKey(arg_8_1)
+
+	return (PlayerPrefsHelper.getNumber(var_8_0, 0))
 end
 
-function slot0.setPrefs(slot0, slot1)
-	PlayerPrefsHelper.setNumber(slot0:getPrefsKey(slot1), 1)
+function var_0_0.setPrefs(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getPrefsKey(arg_9_1)
+
+	PlayerPrefsHelper.setNumber(var_9_0, 1)
 end
 
-function slot0.getPrefsKey(slot0, slot1)
-	return string.format("%s#%s#%s", VersionActivity1_5Enum.ActivityId.SportsNews, PlayerModel.instance:getPlayinfo().userId, slot1)
+function var_0_0.getPrefsKey(arg_10_0, arg_10_1)
+	local var_10_0 = VersionActivity1_5Enum.ActivityId.SportsNews
+	local var_10_1 = PlayerModel.instance:getPlayinfo().userId
+
+	return string.format("%s#%s#%s", var_10_0, var_10_1, arg_10_1)
 end
 
-function slot0.hasCanFinishOrder(slot0)
-	slot1 = {}
+function var_0_0.hasCanFinishOrder(arg_11_0)
+	local var_11_0 = {}
+	local var_11_1 = ActivityWarmUpModel.instance:getAllOrders()
 
-	for slot6, slot7 in pairs(ActivityWarmUpModel.instance:getAllOrders()) do
-		slot8 = false
+	for iter_11_0, iter_11_1 in pairs(var_11_1) do
+		local var_11_2 = false
 
-		if slot7.cfg.listenerType == "ReadTask" then
-			if slot7.status ~= ActivityWarmUpEnum.OrderStatus.Finished then
-				slot8 = true
+		if iter_11_1.cfg.listenerType == "ReadTask" then
+			if iter_11_1.status ~= ActivityWarmUpEnum.OrderStatus.Finished then
+				var_11_2 = true
 			end
-		elseif slot7.status == ActivityWarmUpEnum.OrderStatus.Collected then
-			slot8 = true
+		elseif iter_11_1.status == ActivityWarmUpEnum.OrderStatus.Collected then
+			var_11_2 = true
 		end
 
-		if slot8 then
-			slot10 = {
-				slot7.id
+		if var_11_2 then
+			local var_11_3 = iter_11_1.cfg.openDay
+			local var_11_4 = {
+				iter_11_1.id
 			}
 
-			if not slot1[slot7.cfg.openDay] then
-				slot1[slot9] = {}
+			if not var_11_0[var_11_3] then
+				var_11_0[var_11_3] = {}
 			end
 
-			table.insert(slot1[slot9], slot10)
+			table.insert(var_11_0[var_11_3], var_11_4)
 		end
 	end
 
-	return slot1
+	return var_11_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

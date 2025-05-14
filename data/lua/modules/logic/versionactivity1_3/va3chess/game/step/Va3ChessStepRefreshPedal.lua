@@ -1,13 +1,21 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepRefreshPedal", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepRefreshPedal", package.seeall)
 
-slot0 = class("Va3ChessStepRefreshPedal", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepRefreshPedal", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	if slot0.originData.id and slot1 > 0 and Va3ChessGameController.instance.interacts and slot3:get(slot1) and slot4.originData then
-		slot4.originData:setPedalStatus(slot0.originData.pedalStatus)
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+	local var_1_1 = arg_1_0.originData.pedalStatus
+
+	if var_1_0 and var_1_0 > 0 then
+		local var_1_2 = Va3ChessGameController.instance.interacts
+		local var_1_3 = var_1_2 and var_1_2:get(var_1_0)
+
+		if var_1_3 and var_1_3.originData then
+			var_1_3.originData:setPedalStatus(var_1_1)
+		end
 	end
 
-	slot0:finish()
+	arg_1_0:finish()
 end
 
-return slot0
+return var_0_0

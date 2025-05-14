@@ -1,221 +1,239 @@
-module("modules.logic.versionactivity1_2.yaxian.view.YaXianRewardView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianRewardView", package.seeall)
 
-slot0 = class("YaXianRewardView", BaseView)
+local var_0_0 = class("YaXianRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btncloseview = gohelper.findChildButton(slot0.viewGO, "#btn_closeview")
-	slot0._simageblackbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blackbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_leftbg")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "#go_tips")
-	slot0._txttipsinfo = gohelper.findChildText(slot0.viewGO, "#go_tips/#txt_tipsinfo")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_reward")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content")
-	slot0._gobottom = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom")
-	slot0._gograyline = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_grayline")
-	slot0._gonormalline = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_normalline")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_arrow")
-	slot0._gotarget = gohelper.findChild(slot0.viewGO, "#go_target")
-	slot0._txtprogress = gohelper.findChildText(slot0.viewGO, "progresstip/#txt_progress")
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btncloseview = gohelper.findChildButton(arg_1_0.viewGO, "#btn_closeview")
+	arg_1_0._simageblackbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blackbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
+	arg_1_0._txttipsinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_tipsinfo")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content")
+	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom")
+	arg_1_0._gograyline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_grayline")
+	arg_1_0._gonormalline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_normalline")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_arrow")
+	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_target")
+	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "progresstip/#txt_progress")
+	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloseview:AddClickListener(slot0._btncloseviewOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloseview:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloseview:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseviewOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseviewOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0.initTargetRewardItem(slot0)
-	slot0.targetRewardItem = YaXianRewardItem.New(slot0:getResInst(slot0.itemPath, slot0.goTargetRewardItemContainer, "item"))
+function var_0_0.initTargetRewardItem(arg_6_0)
+	local var_6_0 = arg_6_0:getResInst(arg_6_0.itemPath, arg_6_0.goTargetRewardItemContainer, "item")
 
-	slot0.targetRewardItem:init()
-	slot0.targetRewardItem:show()
+	arg_6_0.targetRewardItem = YaXianRewardItem.New(var_6_0)
+
+	arg_6_0.targetRewardItem:init()
+	arg_6_0.targetRewardItem:show()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getYaXianImage("img_deco_zhizhuwang"))
-	slot0._simageblackbg:LoadImage(ResUrl.getYaXianImage("img_tanchuang_bg"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._simagebg:LoadImage(ResUrl.getYaXianImage("img_deco_zhizhuwang"))
+	arg_7_0._simageblackbg:LoadImage(ResUrl.getYaXianImage("img_tanchuang_bg"))
 
-	slot0.progressIcon = gohelper.findChildImage(slot0.viewGO, "progresstip/icon")
+	arg_7_0.progressIcon = gohelper.findChildImage(arg_7_0.viewGO, "progresstip/icon")
 
-	UISpriteSetMgr.instance:setYaXianSprite(slot0.progressIcon, "icon_zhanluedian_get")
+	UISpriteSetMgr.instance:setYaXianSprite(arg_7_0.progressIcon, "icon_zhanluedian_get")
 
-	slot0.goTargetRewardItemContainer = gohelper.findChild(slot0.viewGO, "#go_target/#go_targetRewardItemContainer")
-	slot0.contentTransform = slot0._gocontent.transform
-	slot0.scrollWidth = recthelper.getWidth(slot0._scrollreward.transform)
-	slot0.grayLineTransform = slot0._gograyline.transform
-	slot0.normalLineTransform = slot0._gonormalline.transform
-	slot0.arrowTransform = slot0._goarrow.transform
-	slot0.itemPath = slot0.viewContainer:getSetting().otherRes[1]
-	slot0.rewardItemList = {}
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._scrollreward.gameObject)
+	arg_7_0.goTargetRewardItemContainer = gohelper.findChild(arg_7_0.viewGO, "#go_target/#go_targetRewardItemContainer")
+	arg_7_0.contentTransform = arg_7_0._gocontent.transform
+	arg_7_0.scrollWidth = recthelper.getWidth(arg_7_0._scrollreward.transform)
+	arg_7_0.grayLineTransform = arg_7_0._gograyline.transform
+	arg_7_0.normalLineTransform = arg_7_0._gonormalline.transform
+	arg_7_0.arrowTransform = arg_7_0._goarrow.transform
+	arg_7_0.itemPath = arg_7_0.viewContainer:getSetting().otherRes[1]
+	arg_7_0.rewardItemList = {}
+	arg_7_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_7_0._scrollreward.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBeginHandler, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEndHandler, slot0)
+	arg_7_0._drag:AddDragBeginListener(arg_7_0._onDragBeginHandler, arg_7_0)
+	arg_7_0._drag:AddDragEndListener(arg_7_0._onDragEndHandler, arg_7_0)
 
-	slot0._touch = SLFramework.UGUI.UIClickListener.Get(slot0._scrollreward.gameObject)
+	arg_7_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_7_0._scrollreward.gameObject)
 
-	slot0._touch:AddClickDownListener(slot0._onClickDownHandler, slot0)
+	arg_7_0._touch:AddClickDownListener(arg_7_0._onClickDownHandler, arg_7_0)
 
-	slot0._audioScroll = MonoHelper.addLuaComOnceToGo(slot0._scrollreward.gameObject, DungeonMapEpisodeAudio, slot0._scrollreward)
+	arg_7_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_7_0._scrollreward.gameObject, DungeonMapEpisodeAudio, arg_7_0._scrollreward)
 
-	slot0:initTargetRewardItem()
-	slot0._scrollreward:AddOnValueChanged(slot0.onValueChanged, slot0)
+	arg_7_0:initTargetRewardItem()
+	arg_7_0._scrollreward:AddOnValueChanged(arg_7_0.onValueChanged, arg_7_0)
 end
 
-function slot0._onDragBeginHandler(slot0)
-	slot0._audioScroll:onDragBegin()
+function var_0_0._onDragBeginHandler(arg_8_0)
+	arg_8_0._audioScroll:onDragBegin()
 end
 
-function slot0._onDragEndHandler(slot0)
-	slot0._audioScroll:onDragEnd()
+function var_0_0._onDragEndHandler(arg_9_0)
+	arg_9_0._audioScroll:onDragEnd()
 end
 
-function slot0._onClickDownHandler(slot0)
-	slot0._audioScroll:onClickDown()
+function var_0_0._onClickDownHandler(arg_10_0)
+	arg_10_0._audioScroll:onClickDown()
 end
 
-function slot0.onValueChanged(slot0)
-	slot0:refreshTargetRewardItem()
+function var_0_0.onValueChanged(arg_11_0)
+	arg_11_0:refreshTargetRewardItem()
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtprogress.text = YaXianModel.instance:getScore()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._txtprogress.text = YaXianModel.instance:getScore()
 
-	slot0:refreshItems()
-	slot0:refreshContentWidth()
-	slot0:refreshLineWidthAndArrowAnchor()
-	slot0:refreshTargetRewardItem()
-	TaskDispatcher.runDelay(slot0.senGetBonusRequest, slot0, 1)
+	arg_12_0:refreshItems()
+	arg_12_0:refreshContentWidth()
+	arg_12_0:refreshLineWidthAndArrowAnchor()
+	arg_12_0:refreshTargetRewardItem()
+	TaskDispatcher.runDelay(arg_12_0.senGetBonusRequest, arg_12_0, 1)
 end
 
-function slot0.refreshItems(slot0)
-	slot2, slot3 = nil
+function var_0_0.refreshItems(arg_13_0)
+	local var_13_0 = lua_activity115_bonus.configList
+	local var_13_1
+	local var_13_2
 
-	for slot7, slot8 in ipairs(lua_activity115_bonus.configList) do
-		if not slot0.rewardItemList[slot7] then
-			slot2 = YaXianRewardItem.New(slot0:getResInst(slot0.itemPath, slot0._gobottom, "item" .. slot8.id))
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_3 = arg_13_0.rewardItemList[iter_13_0]
 
-			slot2:init()
-			table.insert(slot0.rewardItemList, slot2)
+		if not var_13_3 then
+			local var_13_4 = arg_13_0:getResInst(arg_13_0.itemPath, arg_13_0._gobottom, "item" .. iter_13_1.id)
+
+			var_13_3 = YaXianRewardItem.New(var_13_4)
+
+			var_13_3:init()
+			table.insert(arg_13_0.rewardItemList, var_13_3)
 		end
 
-		slot2:update(slot7, slot8)
+		var_13_3:update(iter_13_0, iter_13_1)
 	end
 
-	for slot7 = #slot1 + 1, #slot0.rewardItemList do
-		slot0.rewardItemList[slot7]:hide()
+	for iter_13_2 = #var_13_0 + 1, #arg_13_0.rewardItemList do
+		arg_13_0.rewardItemList[iter_13_2]:hide()
 	end
 end
 
-function slot0.refreshContentWidth(slot0)
-	slot0.contentWidth = #lua_activity115_bonus.configList * (YaXianEnum.RewardEnum.RewardItemWidth + YaXianEnum.RewardEnum.IntervalX) + YaXianEnum.RewardEnum.RewardContentOffsetX
+function var_0_0.refreshContentWidth(arg_14_0)
+	arg_14_0.contentWidth = #lua_activity115_bonus.configList * (YaXianEnum.RewardEnum.RewardItemWidth + YaXianEnum.RewardEnum.IntervalX) + YaXianEnum.RewardEnum.RewardContentOffsetX
 
-	recthelper.setWidth(slot0.contentTransform, slot0.contentWidth)
+	recthelper.setWidth(arg_14_0.contentTransform, arg_14_0.contentWidth)
 end
 
-function slot0.calculateNormalWidth(slot0)
-	slot0.normalLineWidth = 0
-	slot1 = YaXianModel.instance:getScore()
-	slot2 = false
-	slot3 = 0
+function var_0_0.calculateNormalWidth(arg_15_0)
+	arg_15_0.normalLineWidth = 0
 
-	for slot7, slot8 in ipairs(slot0.rewardItemList) do
-		if slot1 < slot8.config.needScore then
-			slot10 = slot0.rewardItemList[slot7 - 1] and slot9:getAnchorPosX() or 0
-			slot11 = slot9 and slot9.config.needScore or 0
-			slot0.normalLineWidth = slot10 + (slot1 - slot11) / (slot8.config.needScore - slot11) * (slot8:getAnchorPosX() - slot10)
-			slot3 = slot7
-			slot2 = true
+	local var_15_0 = YaXianModel.instance:getScore()
+	local var_15_1 = false
+	local var_15_2 = 0
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.rewardItemList) do
+		if var_15_0 < iter_15_1.config.needScore then
+			local var_15_3 = arg_15_0.rewardItemList[iter_15_0 - 1]
+			local var_15_4 = var_15_3 and var_15_3:getAnchorPosX() or 0
+			local var_15_5 = var_15_3 and var_15_3.config.needScore or 0
+			local var_15_6 = iter_15_1:getAnchorPosX()
+
+			arg_15_0.normalLineWidth = var_15_4 + (var_15_0 - var_15_5) / (iter_15_1.config.needScore - var_15_5) * (var_15_6 - var_15_4)
+			var_15_2 = iter_15_0
+			var_15_1 = true
 
 			break
 		end
 	end
 
-	if not slot2 then
-		slot0.normalLineWidth = slot0.contentWidth
-		slot3 = #slot0.rewardItemList
+	if not var_15_1 then
+		arg_15_0.normalLineWidth = arg_15_0.contentWidth
+		var_15_2 = #arg_15_0.rewardItemList
 	end
 
-	slot0._scrollreward.horizontalNormalizedPosition = (slot3 - 4) / (#slot0.rewardItemList - 4)
+	local var_15_7 = #arg_15_0.rewardItemList - 4
+
+	arg_15_0._scrollreward.horizontalNormalizedPosition = (var_15_2 - 4) / var_15_7
 end
 
-function slot0.refreshLineWidthAndArrowAnchor(slot0)
-	slot0:calculateNormalWidth()
-	recthelper.setWidth(slot0.grayLineTransform, slot0.contentWidth)
-	recthelper.setWidth(slot0.normalLineTransform, slot0.normalLineWidth)
-	recthelper.setAnchorX(slot0.arrowTransform, slot0.normalLineWidth)
+function var_0_0.refreshLineWidthAndArrowAnchor(arg_16_0)
+	arg_16_0:calculateNormalWidth()
+	recthelper.setWidth(arg_16_0.grayLineTransform, arg_16_0.contentWidth)
+	recthelper.setWidth(arg_16_0.normalLineTransform, arg_16_0.normalLineWidth)
+	recthelper.setAnchorX(arg_16_0.arrowTransform, arg_16_0.normalLineWidth)
 end
 
-function slot0.refreshTargetRewardItem(slot0)
-	slot1 = slot0:getTargetRewardConfig()
+function var_0_0.refreshTargetRewardItem(arg_17_0)
+	local var_17_0 = arg_17_0:getTargetRewardConfig()
 
-	if slot0.targetRewardItem.config and slot0.targetRewardItem.config.id == slot1.id then
+	if arg_17_0.targetRewardItem.config and arg_17_0.targetRewardItem.config.id == var_17_0.id then
 		return
 	end
 
-	slot0.targetRewardItem:updateByTarget(slot1)
+	arg_17_0.targetRewardItem:updateByTarget(var_17_0)
 end
 
-function slot0.getTargetRewardConfig(slot0)
-	for slot5, slot6 in ipairs(slot0.rewardItemList) do
-		if slot6:isImportItem() and -(recthelper.getAnchorX(slot0.contentTransform) - slot0.scrollWidth - YaXianEnum.RewardEnum.HalfRewardItemWidth) <= slot6:getAnchorPosX() then
-			return slot6.config
+function var_0_0.getTargetRewardConfig(arg_18_0)
+	local var_18_0 = -(recthelper.getAnchorX(arg_18_0.contentTransform) - arg_18_0.scrollWidth - YaXianEnum.RewardEnum.HalfRewardItemWidth)
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.rewardItemList) do
+		if iter_18_1:isImportItem() and var_18_0 <= iter_18_1:getAnchorPosX() then
+			return iter_18_1.config
 		end
 	end
 
-	for slot5 = #lua_activity115_bonus.configList, 1, -1 do
-		if lua_activity115_bonus.configList[slot5].important ~= 0 then
-			return slot6
+	for iter_18_2 = #lua_activity115_bonus.configList, 1, -1 do
+		local var_18_1 = lua_activity115_bonus.configList[iter_18_2]
+
+		if var_18_1.important ~= 0 then
+			return var_18_1
 		end
 	end
 end
 
-function slot0.senGetBonusRequest(slot0)
+function var_0_0.senGetBonusRequest(arg_19_0)
 	Activity115Rpc.instance:sendAct115BonusRequest()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_insight_close)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageblackbg:UnLoadImage()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0._simagebg:UnLoadImage()
+	arg_21_0._simageblackbg:UnLoadImage()
+	arg_21_0._drag:RemoveDragBeginListener()
+	arg_21_0._drag:RemoveDragEndListener()
 
-	slot0._drag = nil
+	arg_21_0._drag = nil
 
-	slot0._touch:RemoveClickDownListener()
+	arg_21_0._touch:RemoveClickDownListener()
 
-	slot0._touch = nil
+	arg_21_0._touch = nil
 
-	for slot4, slot5 in ipairs(slot0.rewardItemList) do
-		slot5:onDestroy()
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.rewardItemList) do
+		iter_21_1:onDestroy()
 	end
 
-	slot0.targetRewardItem:onDestroy()
-	slot0._scrollreward:RemoveOnValueChanged()
+	arg_21_0.targetRewardItem:onDestroy()
+	arg_21_0._scrollreward:RemoveOnValueChanged()
 
-	slot0.rewardItemList = nil
+	arg_21_0.rewardItemList = nil
 end
 
-return slot0
+return var_0_0

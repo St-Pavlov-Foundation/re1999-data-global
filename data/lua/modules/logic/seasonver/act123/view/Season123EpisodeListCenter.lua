@@ -1,96 +1,106 @@
-module("modules.logic.seasonver.act123.view.Season123EpisodeListCenter", package.seeall)
+﻿module("modules.logic.seasonver.act123.view.Season123EpisodeListCenter", package.seeall)
 
-slot0 = class("Season123EpisodeListCenter", UserDataDispose)
+local var_0_0 = class("Season123EpisodeListCenter", UserDataDispose)
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:__onInit()
 end
 
-function slot0.dispose(slot0)
-	slot0:__onDispose()
+function var_0_0.dispose(arg_2_0)
+	arg_2_0:__onDispose()
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.viewGO = arg_3_1
 
-	slot0:initComponent()
+	arg_3_0:initComponent()
 end
 
-function slot0.initComponent(slot0)
-	slot0._txtpassround = gohelper.findChildText(slot0.viewGO, "#go_time/#txt_time")
-	slot0._txtmapname = gohelper.findChildText(slot0.viewGO, "#txt_mapname")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_time")
-	slot0._tftime = slot0._gotime.transform
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "progress")
-	slot0._progressActives = slot0:getUserDataTb_()
-	slot0._progressDeactives = slot0:getUserDataTb_()
-	slot0._progressHard = slot0:getUserDataTb_()
+function var_0_0.initComponent(arg_4_0)
+	arg_4_0._txtpassround = gohelper.findChildText(arg_4_0.viewGO, "#go_time/#txt_time")
+	arg_4_0._txtmapname = gohelper.findChildText(arg_4_0.viewGO, "#txt_mapname")
+	arg_4_0._gotime = gohelper.findChild(arg_4_0.viewGO, "#go_time")
+	arg_4_0._tftime = arg_4_0._gotime.transform
+	arg_4_0._goprogress = gohelper.findChild(arg_4_0.viewGO, "progress")
+	arg_4_0._progressActives = arg_4_0:getUserDataTb_()
+	arg_4_0._progressDeactives = arg_4_0:getUserDataTb_()
+	arg_4_0._progressHard = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, Activity123Enum.SeasonStageStepCount do
-		slot0._progressActives[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/light", slot4))
-		slot0._progressDeactives[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/dark", slot4))
-		slot0._progressHard[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/red", slot4))
+	for iter_4_0 = 1, Activity123Enum.SeasonStageStepCount do
+		arg_4_0._progressActives[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/light", iter_4_0))
+		arg_4_0._progressDeactives[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/dark", iter_4_0))
+		arg_4_0._progressHard[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/red", iter_4_0))
 	end
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot0._actId = slot1
-	slot0._stageId = slot2
+function var_0_0.initData(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._actId = arg_5_1
+	arg_5_0._stageId = arg_5_2
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0._stageId then
+function var_0_0.refreshUI(arg_6_0)
+	if not arg_6_0._stageId then
 		return
 	end
 
-	if Season123Config.instance:getStageCo(slot0._actId, slot0._stageId) then
-		slot0._txtmapname.text = slot1.name
+	local var_6_0 = Season123Config.instance:getStageCo(arg_6_0._actId, arg_6_0._stageId)
+
+	if var_6_0 then
+		arg_6_0._txtmapname.text = var_6_0.name
 	end
 
-	slot0:refreshRound()
-	slot0:refreshProgress()
+	arg_6_0:refreshRound()
+	arg_6_0:refreshProgress()
 end
 
-function slot0.refreshRound(slot0)
-	if Season123Model.instance:getActInfo(slot0._actId) then
-		if slot1:getStageMO(slot0._stageId) then
-			gohelper.setActive(slot0._gotime, true)
+function var_0_0.refreshRound(arg_7_0)
+	local var_7_0 = Season123Model.instance:getActInfo(arg_7_0._actId)
 
-			slot0._txtpassround.text = tostring(slot1:getTotalRound(slot0._stageId))
+	if var_7_0 then
+		if var_7_0:getStageMO(arg_7_0._stageId) then
+			local var_7_1 = var_7_0:getTotalRound(arg_7_0._stageId)
+
+			gohelper.setActive(arg_7_0._gotime, true)
+
+			arg_7_0._txtpassround.text = tostring(var_7_1)
 		else
-			gohelper.setActive(slot0._gotime, false)
+			gohelper.setActive(arg_7_0._gotime, false)
 		end
 	else
-		gohelper.setActive(slot0._gotime, false)
+		gohelper.setActive(arg_7_0._gotime, false)
 	end
 end
 
-slot0.NoStarTimeAnchorY = -176
-slot0.WithStarTimeAnchorY = -86
+var_0_0.NoStarTimeAnchorY = -176
+var_0_0.WithStarTimeAnchorY = -86
 
-function slot0.refreshProgress(slot0)
-	slot1 = Season123EpisodeListModel.instance:stageIsPassed()
+function var_0_0.refreshProgress(arg_8_0)
+	local var_8_0 = Season123EpisodeListModel.instance:stageIsPassed()
 
-	gohelper.setActive(slot0._goprogress, slot1)
+	gohelper.setActive(arg_8_0._goprogress, var_8_0)
 
-	if slot1 then
-		slot3, slot4 = Season123ProgressUtils.getStageProgressStep(slot0._actId, slot0._stageId)
-		slot2 = slot1 and slot4 > 0
+	local var_8_1 = var_8_0
 
-		for slot8 = 1, Activity123Enum.SeasonStageStepCount do
-			slot9 = slot8 <= slot3
+	if var_8_0 then
+		local var_8_2, var_8_3 = Season123ProgressUtils.getStageProgressStep(arg_8_0._actId, arg_8_0._stageId)
 
-			gohelper.setActive(slot0._progressActives[slot8], slot9 and slot8 < slot4)
-			gohelper.setActive(slot0._progressDeactives[slot8], not slot9 and slot8 <= slot4)
-			gohelper.setActive(slot0._progressHard[slot8], slot8 == slot4 and slot3 == slot4)
+		var_8_1 = var_8_1 and var_8_3 > 0
+
+		for iter_8_0 = 1, Activity123Enum.SeasonStageStepCount do
+			local var_8_4 = iter_8_0 <= var_8_2
+			local var_8_5 = iter_8_0 <= var_8_3
+
+			gohelper.setActive(arg_8_0._progressActives[iter_8_0], var_8_4 and iter_8_0 < var_8_3)
+			gohelper.setActive(arg_8_0._progressDeactives[iter_8_0], not var_8_4 and var_8_5)
+			gohelper.setActive(arg_8_0._progressHard[iter_8_0], iter_8_0 == var_8_3 and var_8_2 == var_8_3)
 		end
 	end
 
-	if slot2 then
-		recthelper.setAnchorY(slot0._tftime, uv0.WithStarTimeAnchorY)
+	if var_8_1 then
+		recthelper.setAnchorY(arg_8_0._tftime, var_0_0.WithStarTimeAnchorY)
 	else
-		recthelper.setAnchorY(slot0._tftime, uv0.NoStarTimeAnchorY)
+		recthelper.setAnchorY(arg_8_0._tftime, var_0_0.NoStarTimeAnchorY)
 	end
 end
 
-return slot0
+return var_0_0

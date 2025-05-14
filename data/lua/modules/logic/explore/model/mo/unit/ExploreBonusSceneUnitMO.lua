@@ -1,17 +1,19 @@
-module("modules.logic.explore.model.mo.unit.ExploreBonusSceneUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreBonusSceneUnitMO", package.seeall)
 
-slot0 = class("ExploreBonusSceneUnitMO", ExploreBaseUnitMO)
+local var_0_0 = class("ExploreBonusSceneUnitMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.triggerEffects = tabletool.copy(slot0.triggerEffects)
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.triggerEffects = tabletool.copy(arg_1_0.triggerEffects)
 
-	if slot0.triggerEffects[1] and slot0.triggerEffects[1][1] == ExploreEnum.TriggerEvent.Dialogue then
-		table.insert(slot0.triggerEffects, 2, {
-			ExploreEnum.TriggerEvent.OpenBonusView
-		})
+	local var_1_0 = {
+		ExploreEnum.TriggerEvent.OpenBonusView
+	}
+
+	if arg_1_0.triggerEffects[1] and arg_1_0.triggerEffects[1][1] == ExploreEnum.TriggerEvent.Dialogue then
+		table.insert(arg_1_0.triggerEffects, 2, var_1_0)
 	else
-		table.insert(slot0.triggerEffects, 1, slot1)
+		table.insert(arg_1_0.triggerEffects, 1, var_1_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,306 +1,312 @@
-module("modules.logic.rouge.map.map.itemcomp.RougeMapNodeItem", package.seeall)
+﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapNodeItem", package.seeall)
 
-slot0 = class("RougeMapNodeItem", RougeMapBaseItem)
+local var_0_0 = class("RougeMapNodeItem", RougeMapBaseItem)
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	uv0.super.init(slot0)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.init(arg_1_0)
 
-	slot0.episodeItem = slot3
-	slot0.posType = slot3.posType
-	slot0.parentGo = slot3.go
-	slot0.nodeMo = slot1
-	slot0.map = slot2
-	slot0.nodeId = slot0.nodeMo.nodeId
-	slot0.select = false
+	arg_1_0.episodeItem = arg_1_3
+	arg_1_0.posType = arg_1_3.posType
+	arg_1_0.parentGo = arg_1_3.go
+	arg_1_0.nodeMo = arg_1_1
+	arg_1_0.map = arg_1_2
+	arg_1_0.nodeId = arg_1_0.nodeMo.nodeId
+	arg_1_0.select = false
 
-	slot0:updateData()
-	slot0:setId(slot0.nodeMo.nodeId)
-	slot0:createGo()
-	slot0:createNodeBg()
-	slot0:createIcon()
-	slot0:checkNodeFog()
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, slot0.onUpdateMapInfo, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectNode, slot0.onSelectNode, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, slot0.onCloseFullView, slot0)
+	arg_1_0:updateData()
+	arg_1_0:setId(arg_1_0.nodeMo.nodeId)
+	arg_1_0:createGo()
+	arg_1_0:createNodeBg()
+	arg_1_0:createIcon()
+	arg_1_0:checkNodeFog()
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, arg_1_0.onUpdateMapInfo, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectNode, arg_1_0.onSelectNode, arg_1_0)
+	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_1_0.onCloseViewFinish, arg_1_0)
+	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_1_0.onCloseFullView, arg_1_0)
 end
 
-function slot0.updateData(slot0)
-	slot0.eventId = slot0.nodeMo.eventId
-	slot0.eventCo = slot0.nodeMo:getEventCo()
-	slot0.arriveStatus = slot0.nodeMo.arriveStatus
+function var_0_0.updateData(arg_2_0)
+	arg_2_0.eventId = arg_2_0.nodeMo.eventId
+	arg_2_0.eventCo = arg_2_0.nodeMo:getEventCo()
+	arg_2_0.arriveStatus = arg_2_0.nodeMo.arriveStatus
 end
 
-function slot0.createGo(slot0)
-	slot0.go = gohelper.create3d(slot0.parentGo, slot0.nodeId)
-	slot0.tr = slot0.go:GetComponent(gohelper.Type_Transform)
-	slot1, slot2, slot3 = RougeMapHelper.getNodeLocalPos(slot0.nodeMo.index, slot0.posType)
+function var_0_0.createGo(arg_3_0)
+	arg_3_0.go = gohelper.create3d(arg_3_0.parentGo, arg_3_0.nodeId)
+	arg_3_0.tr = arg_3_0.go:GetComponent(gohelper.Type_Transform)
 
-	slot0.nodeMo:setPos(slot1, slot2, slot3)
-	transformhelper.setLocalPos(slot0.tr, slot1, slot2, slot3)
+	local var_3_0, var_3_1, var_3_2 = RougeMapHelper.getNodeLocalPos(arg_3_0.nodeMo.index, arg_3_0.posType)
+
+	arg_3_0.nodeMo:setPos(var_3_0, var_3_1, var_3_2)
+	transformhelper.setLocalPos(arg_3_0.tr, var_3_0, var_3_1, var_3_2)
 end
 
-function slot0.createNodeBg(slot0)
-	slot1, slot2 = nil
+function var_0_0.createNodeBg(arg_4_0)
+	local var_4_0
+	local var_4_1
 
-	if slot0.nodeMo:checkIsNormal() then
-		slot1 = slot0.map:getNodeBgPrefab(slot0.eventCo, slot0.arriveStatus)
-		slot2 = RougeMapEnum.NodeBgOffset[slot0.arriveStatus]
+	if arg_4_0.nodeMo:checkIsNormal() then
+		var_4_0 = arg_4_0.map:getNodeBgPrefab(arg_4_0.eventCo, arg_4_0.arriveStatus)
+		var_4_1 = RougeMapEnum.NodeBgOffset[arg_4_0.arriveStatus]
 	else
-		slot1 = slot0.map.startBgPrefab
-		slot2 = RougeMapEnum.StartBgOffset
+		var_4_0 = arg_4_0.map.startBgPrefab
+		var_4_1 = RougeMapEnum.StartBgOffset
 	end
 
-	slot0.nodeBgGo = gohelper.clone(slot1, slot0.go, "bg")
-	slot0.nodeBgTr = slot0.nodeBgGo:GetComponent(gohelper.Type_Transform)
-	slot0.nodeBgAnimator = slot0.nodeBgGo:GetComponent(gohelper.Type_Animator)
-	slot0.nodeBgAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.nodeBgGo)
+	arg_4_0.nodeBgGo = gohelper.clone(var_4_0, arg_4_0.go, "bg")
+	arg_4_0.nodeBgTr = arg_4_0.nodeBgGo:GetComponent(gohelper.Type_Transform)
+	arg_4_0.nodeBgAnimator = arg_4_0.nodeBgGo:GetComponent(gohelper.Type_Animator)
+	arg_4_0.nodeBgAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_4_0.nodeBgGo)
 
-	transformhelper.setLocalScale(slot0.nodeBgTr, RougeMapEnum.Scale.NodeBg, RougeMapEnum.Scale.NodeBg, 1)
-	transformhelper.setLocalPos(slot0.nodeBgTr, slot2.x, slot2.y, slot0:getBgOffsetZ())
-	slot0:playNodeBgAnim("open")
+	transformhelper.setLocalScale(arg_4_0.nodeBgTr, RougeMapEnum.Scale.NodeBg, RougeMapEnum.Scale.NodeBg, 1)
+	transformhelper.setLocalPos(arg_4_0.nodeBgTr, var_4_1.x, var_4_1.y, arg_4_0:getBgOffsetZ())
+	arg_4_0:playNodeBgAnim("open")
 end
 
-function slot0.createIcon(slot0)
-	if slot0.nodeMo:checkIsNormal() then
-		slot0.iconGo = gohelper.clone(slot0.map:getNodeIconPrefab(slot0.eventCo), slot0.go, "icon")
-		slot0.iconTr = slot0.iconGo:GetComponent(gohelper.Type_Transform)
-		slot0.iconAnimator = slot0.iconGo:GetComponent(gohelper.Type_Animator)
-		slot0.iconAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.iconGo)
+function var_0_0.createIcon(arg_5_0)
+	if arg_5_0.nodeMo:checkIsNormal() then
+		local var_5_0 = arg_5_0.map:getNodeIconPrefab(arg_5_0.eventCo)
 
-		transformhelper.setLocalScale(slot0.iconTr, RougeMapEnum.Scale.Icon, RougeMapEnum.Scale.Icon, 1)
-		slot0:updateIconPos()
+		arg_5_0.iconGo = gohelper.clone(var_5_0, arg_5_0.go, "icon")
+		arg_5_0.iconTr = arg_5_0.iconGo:GetComponent(gohelper.Type_Transform)
+		arg_5_0.iconAnimator = arg_5_0.iconGo:GetComponent(gohelper.Type_Animator)
+		arg_5_0.iconAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_5_0.iconGo)
 
-		if slot0.arriveStatus == RougeMapEnum.Arrive.CantArrive then
-			slot0:playIconAnim("overdue")
+		transformhelper.setLocalScale(arg_5_0.iconTr, RougeMapEnum.Scale.Icon, RougeMapEnum.Scale.Icon, 1)
+		arg_5_0:updateIconPos()
+
+		if arg_5_0.arriveStatus == RougeMapEnum.Arrive.CantArrive then
+			arg_5_0:playIconAnim("overdue")
 		else
-			slot0:playIconAnim("open")
+			arg_5_0:playIconAnim("open")
 		end
 	else
-		slot0.iconGo = nil
-		slot0.iconTr = nil
-		slot0.iconAnimator = nil
+		arg_5_0.iconGo = nil
+		arg_5_0.iconTr = nil
+		arg_5_0.iconAnimator = nil
 	end
 end
 
-function slot0.updateIconPos(slot0)
-	if slot0.eventCo then
-		slot1 = RougeMapEnum.IconOffset[slot0.arriveStatus]
+function var_0_0.updateIconPos(arg_6_0)
+	if arg_6_0.eventCo then
+		local var_6_0 = RougeMapEnum.IconOffset[arg_6_0.arriveStatus]
 
-		transformhelper.setLocalPos(slot0.iconTr, slot1.x, slot1.y, slot0:getIconOffsetZ())
+		transformhelper.setLocalPos(arg_6_0.iconTr, var_6_0.x, var_6_0.y, arg_6_0:getIconOffsetZ())
 	end
 end
 
-function slot0.getIconOffsetZ(slot0)
-	return slot0:getBgOffsetZ() - RougeMapEnum.NodeIconOffsetZInterval
+function var_0_0.getIconOffsetZ(arg_7_0)
+	return arg_7_0:getBgOffsetZ() - RougeMapEnum.NodeIconOffsetZInterval
 end
 
-function slot0.getBgOffsetZ(slot0)
-	return -(slot0.nodeMo.index - 1) * (RougeMapEnum.NodeOffsetZInterval + RougeMapEnum.NodeIconOffsetZInterval)
+function var_0_0.getBgOffsetZ(arg_8_0)
+	return -(arg_8_0.nodeMo.index - 1) * (RougeMapEnum.NodeOffsetZInterval + RougeMapEnum.NodeIconOffsetZInterval)
 end
 
-function slot0.getScenePos(slot0)
-	return slot0.nodeBgTr.position
+function var_0_0.getScenePos(arg_9_0)
+	return arg_9_0.nodeBgTr.position
 end
 
-function slot0.getMapPos(slot0)
-	slot1, slot2, slot3 = RougeMapHelper.getNodeContainerPos(slot0.nodeMo.episodeId, slot0.nodeMo:getEpisodePos())
+function var_0_0.getMapPos(arg_10_0)
+	local var_10_0, var_10_1, var_10_2 = RougeMapHelper.getNodeContainerPos(arg_10_0.nodeMo.episodeId, arg_10_0.nodeMo:getEpisodePos())
 
-	return slot1, slot2, slot3
+	return var_10_0, var_10_1, var_10_2
 end
 
-function slot0.getActorPos(slot0)
-	slot1, slot2, slot3 = slot0:getMapPos()
+function var_0_0.getActorPos(arg_11_0)
+	local var_11_0, var_11_1, var_11_2 = arg_11_0:getMapPos()
 
-	return RougeMapEnum.ActorOffset.x + slot1, RougeMapEnum.ActorOffset.y + slot2, slot3
+	return RougeMapEnum.ActorOffset.x + var_11_0, RougeMapEnum.ActorOffset.y + var_11_1, var_11_2
 end
 
-function slot0.getClickArea(slot0)
-	if not slot0.nodeMo:checkIsNormal() then
+function var_0_0.getClickArea(arg_12_0)
+	if not arg_12_0.nodeMo:checkIsNormal() then
 		return RougeMapEnum.StartClickArea
 	end
 
-	return RougeMapEnum.ClickArea[slot0.arriveStatus]
+	return RougeMapEnum.ClickArea[arg_12_0.arriveStatus]
 end
 
-function slot0.onClick(slot0)
-	logNormal(string.format("on click node id : %s, arrive status : %s", slot0.nodeId, slot0.arriveStatus))
+function var_0_0.onClick(arg_13_0)
+	logNormal(string.format("on click node id : %s, arrive status : %s", arg_13_0.nodeId, arg_13_0.arriveStatus))
 
-	if slot0.arriveStatus == RougeMapEnum.Arrive.CantArrive or slot0.arriveStatus == RougeMapEnum.Arrive.NotArrive or slot0.arriveStatus == RougeMapEnum.Arrive.ArrivingFinish or slot0.arriveStatus == RougeMapEnum.Arrive.Arrived then
+	if arg_13_0.arriveStatus == RougeMapEnum.Arrive.CantArrive or arg_13_0.arriveStatus == RougeMapEnum.Arrive.NotArrive or arg_13_0.arriveStatus == RougeMapEnum.Arrive.ArrivingFinish or arg_13_0.arriveStatus == RougeMapEnum.Arrive.Arrived then
 		return
 	end
 
-	if not slot0.eventCo then
+	if not arg_13_0.eventCo then
 		return
 	end
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectNode, slot0.nodeMo)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectNode, arg_13_0.nodeMo)
 end
 
-function slot0.updateNode(slot0)
-	slot0.arriveStatus = slot0:getArriveStatus()
+function var_0_0.updateNode(arg_14_0)
+	arg_14_0.arriveStatus = arg_14_0:getArriveStatus()
 
-	slot0:checkNodeFog()
+	arg_14_0:checkNodeFog()
 
-	if slot0.fog then
+	if arg_14_0.fog then
 		return
 	end
 
-	if slot0.nodeBgAnimator then
-		slot0:playNodeBgAnim("close", slot0._updateNodeBg)
+	if arg_14_0.nodeBgAnimator then
+		arg_14_0:playNodeBgAnim("close", arg_14_0._updateNodeBg)
 	else
-		slot0:_updateNodeBg()
+		arg_14_0:_updateNodeBg()
 	end
 
-	if slot0.iconAnimator then
-		slot0:playIconAnim("close", slot0._updateIcon)
+	if arg_14_0.iconAnimator then
+		arg_14_0:playIconAnim("close", arg_14_0._updateIcon)
 	else
-		slot0:_updateIcon()
+		arg_14_0:_updateIcon()
 	end
 end
 
-function slot0._updateNodeBg(slot0)
-	gohelper.destroy(slot0.nodeBgGo)
-	slot0:createNodeBg()
+function var_0_0._updateNodeBg(arg_15_0)
+	gohelper.destroy(arg_15_0.nodeBgGo)
+	arg_15_0:createNodeBg()
 end
 
-function slot0._updateIcon(slot0)
-	gohelper.destroy(slot0.iconGo)
-	slot0:createIcon()
+function var_0_0._updateIcon(arg_16_0)
+	gohelper.destroy(arg_16_0.iconGo)
+	arg_16_0:createIcon()
 end
 
-function slot0.onUpdateMapInfo(slot0)
+function var_0_0.onUpdateMapInfo(arg_17_0)
 	if not RougeMapHelper.checkMapViewOnTop() then
-		slot0.waitUpdate = true
+		arg_17_0.waitUpdate = true
 
 		return
 	end
 
-	slot0.waitUpdate = nil
+	arg_17_0.waitUpdate = nil
 
-	if slot0.eventId ~= slot0.nodeMo.eventId then
-		slot0.eventId = slot0.nodeMo.eventId
-		slot0.eventCo = slot0.nodeMo:getEventCo()
+	if arg_17_0.eventId ~= arg_17_0.nodeMo.eventId then
+		arg_17_0.eventId = arg_17_0.nodeMo.eventId
+		arg_17_0.eventCo = arg_17_0.nodeMo:getEventCo()
 
-		slot0:updateNode()
-
-		return
-	end
-
-	if slot0.arriveStatus ~= slot0:getArriveStatus() then
-		slot0:updateNode()
+		arg_17_0:updateNode()
 
 		return
 	end
 
-	if slot0.fog ~= slot0.nodeMo.fog then
-		slot0:updateNode()
+	if arg_17_0.arriveStatus ~= arg_17_0:getArriveStatus() then
+		arg_17_0:updateNode()
+
+		return
+	end
+
+	if arg_17_0.fog ~= arg_17_0.nodeMo.fog then
+		arg_17_0:updateNode()
 
 		return
 	end
 end
 
-function slot0.getArriveStatus(slot0)
-	if slot0.select then
+function var_0_0.getArriveStatus(arg_18_0)
+	if arg_18_0.select then
 		return RougeMapEnum.NodeSelectArriveStatus
 	end
 
-	return slot0.nodeMo.arriveStatus
+	return arg_18_0.nodeMo.arriveStatus
 end
 
-function slot0.checkNodeFog(slot0)
-	slot0.fog = slot0.nodeMo.fog
+function var_0_0.checkNodeFog(arg_19_0)
+	arg_19_0.fog = arg_19_0.nodeMo.fog
 
-	gohelper.setActive(slot0.go, not slot0.fog)
+	gohelper.setActive(arg_19_0.go, not arg_19_0.fog)
 end
 
-function slot0.onSelectNode(slot0, slot1)
-	if slot0.select == (slot1 == slot0.nodeMo) then
+function var_0_0.onSelectNode(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_1 == arg_20_0.nodeMo
+
+	if arg_20_0.select == var_20_0 then
 		return
 	end
 
-	slot0.select = slot2
+	arg_20_0.select = var_20_0
 
-	if slot0.arriveStatus ~= slot0:getArriveStatus() then
-		slot0:updateNode()
+	if arg_20_0.arriveStatus ~= arg_20_0:getArriveStatus() then
+		arg_20_0:updateNode()
 	end
 
-	if slot0.select then
+	if arg_20_0.select then
 		AudioMgr.instance:trigger(AudioEnum.UI.SelectNode)
 	end
 end
 
-function slot0.onCloseViewFinish(slot0, slot1)
-	if slot0.waitUpdate then
-		slot0:onUpdateMapInfo()
-		slot0:checkNodeFog()
+function var_0_0.onCloseViewFinish(arg_21_0, arg_21_1)
+	if arg_21_0.waitUpdate then
+		arg_21_0:onUpdateMapInfo()
+		arg_21_0:checkNodeFog()
 	end
 end
 
-function slot0.onCloseFullView(slot0)
-	if not slot0.playingBgAnim and slot0.nodeBgAnimator then
-		slot0.nodeBgAnimator:Play("idle", 0, 1)
+function var_0_0.onCloseFullView(arg_22_0)
+	if not arg_22_0.playingBgAnim and arg_22_0.nodeBgAnimator then
+		arg_22_0.nodeBgAnimator:Play("idle", 0, 1)
 	end
 
-	if not slot0.playingIconAnim and slot0.iconAnimator then
-		if slot0.arriveStatus == RougeMapEnum.Arrive.CantArrive then
-			slot0.iconAnimator:Play("overdue", 0, 1)
+	if not arg_22_0.playingIconAnim and arg_22_0.iconAnimator then
+		if arg_22_0.arriveStatus == RougeMapEnum.Arrive.CantArrive then
+			arg_22_0.iconAnimator:Play("overdue", 0, 1)
 		else
-			slot0.iconAnimator:Play("idle", 0, 1)
+			arg_22_0.iconAnimator:Play("idle", 0, 1)
 		end
 	end
 end
 
-function slot0.setLineItem(slot0, slot1)
-	slot0.lineItem = slot1
+function var_0_0.setLineItem(arg_23_0, arg_23_1)
+	arg_23_0.lineItem = arg_23_1
 end
 
-function slot0.getLineItem(slot0)
-	return slot0.lineItem
+function var_0_0.getLineItem(arg_24_0)
+	return arg_24_0.lineItem
 end
 
-function slot0.playNodeBgAnim(slot0, slot1, slot2)
-	if not slot0.nodeBgAnimator then
+function var_0_0.playNodeBgAnim(arg_25_0, arg_25_1, arg_25_2)
+	if not arg_25_0.nodeBgAnimator then
 		return
 	end
 
-	slot0.playingBgAnim = true
+	arg_25_0.playingBgAnim = true
 
-	slot0.nodeBgAnimatorPlayer:Play(slot1, slot2 or slot0.disableNodeBgAnimator, slot0)
+	arg_25_0.nodeBgAnimatorPlayer:Play(arg_25_1, arg_25_2 or arg_25_0.disableNodeBgAnimator, arg_25_0)
 end
 
-function slot0.playIconAnim(slot0, slot1, slot2)
-	if not slot0.iconAnimator then
+function var_0_0.playIconAnim(arg_26_0, arg_26_1, arg_26_2)
+	if not arg_26_0.iconAnimator then
 		return
 	end
 
-	slot0.playingIconAnim = true
+	arg_26_0.playingIconAnim = true
 
-	slot0.iconAnimatorPlayer:Play(slot1, slot2 or slot0.disableIconAnimator, slot0)
+	arg_26_0.iconAnimatorPlayer:Play(arg_26_1, arg_26_2 or arg_26_0.disableIconAnimator, arg_26_0)
 end
 
-function slot0.disableNodeBgAnimator(slot0)
-	if slot0.nodeBgAnimator then
-		slot0.playingBgAnim = false
+function var_0_0.disableNodeBgAnimator(arg_27_0)
+	if arg_27_0.nodeBgAnimator then
+		arg_27_0.playingBgAnim = false
 	end
 end
 
-function slot0.disableIconAnimator(slot0)
-	if slot0.iconAnimator then
-		slot0.playingIconAnim = false
+function var_0_0.disableIconAnimator(arg_28_0)
+	if arg_28_0.iconAnimator then
+		arg_28_0.playingIconAnim = false
 	end
 end
 
-function slot0.destroy(slot0)
-	if slot0.nodeBgAnimatorPlayer then
-		slot0.nodeBgAnimatorPlayer:Stop()
+function var_0_0.destroy(arg_29_0)
+	if arg_29_0.nodeBgAnimatorPlayer then
+		arg_29_0.nodeBgAnimatorPlayer:Stop()
 	end
 
-	if slot0.iconAnimatorPlayer then
-		slot0.iconAnimatorPlayer:Stop()
+	if arg_29_0.iconAnimatorPlayer then
+		arg_29_0.iconAnimatorPlayer:Stop()
 	end
 
-	uv0.super.destroy(slot0)
+	var_0_0.super.destroy(arg_29_0)
 end
 
-return slot0
+return var_0_0

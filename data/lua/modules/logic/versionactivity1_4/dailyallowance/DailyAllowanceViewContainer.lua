@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_4.dailyallowance.DailyAllowanceViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_4.dailyallowance.DailyAllowanceViewContainer", package.seeall)
 
-slot0 = class("DailyAllowanceViewContainer", BaseViewContainer)
+local var_0_0 = class("DailyAllowanceViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		DailyAllowanceView.New()
 	}
 end
 
-return slot0
+return var_0_0

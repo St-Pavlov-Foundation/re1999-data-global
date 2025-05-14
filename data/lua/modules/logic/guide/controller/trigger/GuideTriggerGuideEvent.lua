@@ -1,18 +1,18 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerGuideEvent", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerGuideEvent", package.seeall)
 
-slot0 = class("GuideTriggerGuideEvent", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerGuideEvent", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	GuideController.instance:registerCallback(GuideEvent.TriggerActive, slot0._onTriggerActive, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	GuideController.instance:registerCallback(GuideEvent.TriggerActive, arg_1_0._onTriggerActive, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return slot1 == GuideEnum.EventTrigger[slot2]
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	return arg_2_1 == GuideEnum.EventTrigger[arg_2_2]
 end
 
-function slot0._onTriggerActive(slot0, slot1)
-	slot0:checkStartGuide(slot1)
+function var_0_0._onTriggerActive(arg_3_0, arg_3_1)
+	arg_3_0:checkStartGuide(arg_3_1)
 end
 
-return slot0
+return var_0_0

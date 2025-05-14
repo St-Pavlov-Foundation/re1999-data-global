@@ -1,22 +1,22 @@
-module("modules.logic.battlepass.flow.BpWaitBonusAnimWork", package.seeall)
+﻿module("modules.logic.battlepass.flow.BpWaitBonusAnimWork", package.seeall)
 
-slot0 = class("BpWaitBonusAnimWork", BaseWork)
+local var_0_0 = class("BpWaitBonusAnimWork", BaseWork)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if not BpModel.instance.preStatus or not ViewMgr.instance:isOpen(ViewName.BpView) then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	else
-		BpController.instance:registerCallback(BpEvent.BonusAnimEnd, slot0.onAnimDone, slot0)
+		BpController.instance:registerCallback(BpEvent.BonusAnimEnd, arg_1_0.onAnimDone, arg_1_0)
 		BpController.instance:dispatchEvent(BpEvent.ForcePlayBonusAnim)
 	end
 end
 
-function slot0.onAnimDone(slot0)
-	slot0:onDone(true)
+function var_0_0.onAnimDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	BpController.instance:unregisterCallback(BpEvent.BonusAnimEnd, slot0.onAnimDone, slot0)
+function var_0_0.clearWork(arg_3_0)
+	BpController.instance:unregisterCallback(BpEvent.BonusAnimEnd, arg_3_0.onAnimDone, arg_3_0)
 end
 
-return slot0
+return var_0_0

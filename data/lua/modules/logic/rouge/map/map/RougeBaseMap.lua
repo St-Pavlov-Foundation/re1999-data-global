@@ -1,118 +1,126 @@
-module("modules.logic.rouge.map.map.RougeBaseMap", package.seeall)
+﻿module("modules.logic.rouge.map.map.RougeBaseMap", package.seeall)
 
-slot0 = class("RougeBaseMap", UserDataDispose)
+local var_0_0 = class("RougeBaseMap", UserDataDispose)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._createDoneFinish = false
-	slot0._openViewFinish = ViewMgr.instance:isOpenFinish(ViewName.RougeMapView)
+	arg_1_0._createDoneFinish = false
+	arg_1_0._openViewFinish = ViewMgr.instance:isOpenFinish(ViewName.RougeMapView)
 
 	RougeMapTipPopController.instance:init()
 	RougeMapVoiceTriggerController.instance:init()
 
-	slot0.mapGo = slot1
+	arg_1_0.mapGo = arg_1_1
 
-	slot0:initMap()
-	slot0:createMapNodeContainer()
-	RougeMapController.instance:registerMap(slot0)
+	arg_1_0:initMap()
+	arg_1_0:createMapNodeContainer()
+	RougeMapController.instance:registerMap(arg_1_0)
 
-	slot0.mapItemList = {}
-	slot0.mapItemDict = {}
+	arg_1_0.mapItemList = {}
+	arg_1_0.mapItemDict = {}
 
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.triggerInteract, slot0.onTriggerInteract, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onCreateMapDone, slot0.onCreateMapDone, slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0.onScreenSizeChanged, slot0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.triggerInteract, arg_1_0.onTriggerInteract, arg_1_0)
+	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_1_0.onOpenViewFinish, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onCreateMapDone, arg_1_0.onCreateMapDone, arg_1_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0.onScreenSizeChanged, arg_1_0)
 end
 
-function slot0.onScreenSizeChanged(slot0)
-	slot0:updateCameraSize()
+function var_0_0.onScreenSizeChanged(arg_2_0)
+	arg_2_0:updateCameraSize()
 end
 
-function slot0.updateCameraSize(slot0)
-	RougeMapModel.instance:setCameraSize(slot0:getCameraSize())
+function var_0_0.updateCameraSize(arg_3_0)
+	local var_3_0 = arg_3_0:getCameraSize()
+
+	RougeMapModel.instance:setCameraSize(var_3_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.focusChangeCameraSize)
 end
 
-function slot0.getCameraSize(slot0)
+function var_0_0.getCameraSize(arg_4_0)
 	return RougeMapModel.instance:getCameraSize()
 end
 
-function slot0.initMap(slot0)
-	slot0.mapTransform = slot0.mapGo.transform
+function var_0_0.initMap(arg_5_0)
+	arg_5_0.mapTransform = arg_5_0.mapGo.transform
 
-	RougeMapModel.instance:setMapSize(gohelper.findChild(slot0.mapGo, "root/size"):GetComponent(typeof(UnityEngine.BoxCollider)).size)
+	local var_5_0 = gohelper.findChild(arg_5_0.mapGo, "root/size"):GetComponent(typeof(UnityEngine.BoxCollider)).size
+
+	RougeMapModel.instance:setMapSize(var_5_0)
 end
 
-function slot0.createMapNodeContainer(slot0)
-	slot0.goLayerPiecesContainer = gohelper.create3d(slot0.mapGo, "layerPiecesContainer")
-	slot0.trLayerPiecesContainer = slot0.goLayerPiecesContainer.transform
+function var_0_0.createMapNodeContainer(arg_6_0)
+	arg_6_0.goLayerPiecesContainer = gohelper.create3d(arg_6_0.mapGo, "layerPiecesContainer")
+	arg_6_0.trLayerPiecesContainer = arg_6_0.goLayerPiecesContainer.transform
 
-	transformhelper.setLocalPos(slot0.goLayerPiecesContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PiecesContainer)
+	transformhelper.setLocalPos(arg_6_0.goLayerPiecesContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PiecesContainer)
 end
 
-function slot0.handleOtherRes(slot0, slot1)
+function var_0_0.handleOtherRes(arg_7_0, arg_7_1)
+	return
 end
 
-function slot0.handleDLCRes(slot0, slot1, slot2)
+function var_0_0.handleDLCRes(arg_8_0, arg_8_1, arg_8_2)
+	return
 end
 
-function slot0.createMap(slot0)
+function var_0_0.createMap(arg_9_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onCreateMapDone)
 end
 
-function slot0.onCreateMapDone(slot0)
-	slot0._createDoneFinish = true
+function var_0_0.onCreateMapDone(arg_10_0)
+	arg_10_0._createDoneFinish = true
 
-	slot0:startCreateMapDoneFlow()
+	arg_10_0:startCreateMapDoneFlow()
 end
 
-function slot0.onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.RougeMapView then
-		slot0._openViewFinish = true
+function var_0_0.onOpenViewFinish(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.RougeMapView then
+		arg_11_0._openViewFinish = true
 
-		slot0:startCreateMapDoneFlow()
+		arg_11_0:startCreateMapDoneFlow()
 	end
 end
 
-function slot0.startCreateMapDoneFlow(slot0)
-	if not slot0._createDoneFinish or not slot0._openViewFinish then
+function var_0_0.startCreateMapDoneFlow(arg_12_0)
+	if not arg_12_0._createDoneFinish or not arg_12_0._openViewFinish then
 		return
 	end
 
 	RougeMapModel.instance:setMapState(RougeMapEnum.MapState.WaitFlow)
 
-	slot0.onCreateMapDoneFlow = FlowSequence.New()
+	arg_12_0.onCreateMapDoneFlow = FlowSequence.New()
 
-	slot0:addStoryFlow()
-	slot0.onCreateMapDoneFlow:addWork(WaitPopViewDoneWork.New())
-	slot0.onCreateMapDoneFlow:addWork(WaitRougeInteractDoneWork.New())
-	slot0.onCreateMapDoneFlow:addWork(WaitRougeCollectionEffectDoneWork.New())
-	slot0.onCreateMapDoneFlow:addWork(WaitRougeNodeChangeAnimDoneWork.New())
-	slot0.onCreateMapDoneFlow:addWork(WaitRougeActorMoveToEndDoneWork.New())
-	slot0.onCreateMapDoneFlow:registerDoneListener(slot0.onCreateMapDoneFlowDone, slot0)
-	slot0.onCreateMapDoneFlow:start()
+	arg_12_0:addStoryFlow()
+	arg_12_0.onCreateMapDoneFlow:addWork(WaitPopViewDoneWork.New())
+	arg_12_0.onCreateMapDoneFlow:addWork(WaitRougeInteractDoneWork.New())
+	arg_12_0.onCreateMapDoneFlow:addWork(WaitRougeCollectionEffectDoneWork.New())
+	arg_12_0.onCreateMapDoneFlow:addWork(WaitRougeNodeChangeAnimDoneWork.New())
+	arg_12_0.onCreateMapDoneFlow:addWork(WaitRougeActorMoveToEndDoneWork.New())
+	arg_12_0.onCreateMapDoneFlow:registerDoneListener(arg_12_0.onCreateMapDoneFlowDone, arg_12_0)
+	arg_12_0.onCreateMapDoneFlow:start()
 end
 
-function slot0.addStoryFlow(slot0)
+function var_0_0.addStoryFlow(arg_13_0)
 	if not RougeMapModel.instance:isNormalLayer() then
 		return
 	end
 
-	if RougeMapModel.instance:getLayerCo().startStoryId == 0 then
+	local var_13_0 = RougeMapModel.instance:getLayerCo().startStoryId
+
+	if var_13_0 == 0 then
 		return
 	end
 
-	if StoryModel.instance:isStoryFinished(slot2) then
+	if StoryModel.instance:isStoryFinished(var_13_0) then
 		return
 	end
 
-	slot0.onCreateMapDoneFlow:addWork(WaitRougeStoryDoneWork.New(slot2))
+	arg_13_0.onCreateMapDoneFlow:addWork(WaitRougeStoryDoneWork.New(var_13_0))
 end
 
-function slot0.onCreateMapDoneFlowDone(slot0)
-	slot0:clearFlow()
+function var_0_0.onCreateMapDoneFlowDone(arg_14_0)
+	arg_14_0:clearFlow()
 	RougeMapModel.instance:setMapState(RougeMapEnum.MapState.Normal)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onCreateMapDoneFlowDone)
 
@@ -123,69 +131,67 @@ function slot0.onCreateMapDoneFlowDone(slot0)
 	end
 end
 
-function slot0.onTriggerInteract(slot0)
+function var_0_0.onTriggerInteract(arg_15_0)
 	RougeMapInteractHelper.triggerInteractive()
 end
 
-function slot0.getMapItemList(slot0)
-	return slot0.mapItemList
+function var_0_0.getMapItemList(arg_16_0)
+	return arg_16_0.mapItemList
 end
 
-function slot0.addMapItem(slot0, slot1)
-	table.insert(slot0.mapItemList, slot1)
+function var_0_0.addMapItem(arg_17_0, arg_17_1)
+	table.insert(arg_17_0.mapItemList, arg_17_1)
 
-	slot0.mapItemDict[slot1.id] = slot1
+	arg_17_0.mapItemDict[arg_17_1.id] = arg_17_1
 end
 
-function slot0.addMapItemList(slot0, slot1)
-	if not slot1 then
+function var_0_0.addMapItemList(arg_18_0, arg_18_1)
+	if not arg_18_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:addMapItem(slot6)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		arg_18_0:addMapItem(iter_18_1)
 	end
 end
 
-function slot0.getMapItem(slot0, slot1)
-	return slot0.mapItemDict[slot1]
+function var_0_0.getMapItem(arg_19_0, arg_19_1)
+	return arg_19_0.mapItemDict[arg_19_1]
 end
 
-function slot0.getActorComp(slot0)
-	return slot0.actorComp
+function var_0_0.getActorComp(arg_20_0)
+	return arg_20_0.actorComp
 end
 
-function slot0.getActorPos(slot0)
+function var_0_0.getActorPos(arg_21_0)
+	return
 end
 
-function slot0.clearFlow(slot0)
-	if slot0.onCreateMapDoneFlow then
-		slot0.onCreateMapDoneFlow:destroy()
+function var_0_0.clearFlow(arg_22_0)
+	if arg_22_0.onCreateMapDoneFlow then
+		arg_22_0.onCreateMapDoneFlow:destroy()
 	end
 
-	slot0.onCreateMapDoneFlow = nil
+	arg_22_0.onCreateMapDoneFlow = nil
 end
 
-function slot0.destroy(slot0)
-	slot4 = slot0.onScreenSizeChanged
-	slot5 = slot0
+function var_0_0.destroy(arg_23_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_23_0.onScreenSizeChanged, arg_23_0)
 
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot4, slot5)
-
-	for slot4, slot5 in ipairs(slot0.mapItemList) do
-		slot5:destroy()
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0.mapItemList) do
+		iter_23_1:destroy()
 	end
 
-	slot0.mapItemList = nil
-	slot0.mapItemDict = nil
+	arg_23_0.mapItemList = nil
+	arg_23_0.mapItemDict = nil
 
-	if slot0.actorComp then
-		slot0.actorComp:destroy()
+	if arg_23_0.actorComp then
+		arg_23_0.actorComp:destroy()
 	end
 
-	slot0:clearFlow()
+	arg_23_0:clearFlow()
 	RougeMapController.instance:unregisterMap()
-	slot0:__onDispose()
+	arg_23_0:__onDispose()
 end
 
-return slot0
+return var_0_0

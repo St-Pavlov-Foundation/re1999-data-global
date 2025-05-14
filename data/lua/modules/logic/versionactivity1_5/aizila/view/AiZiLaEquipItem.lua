@@ -1,82 +1,90 @@
-module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEquipItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEquipItem", package.seeall)
 
-slot0 = class("AiZiLaEquipItem", LuaCompBase)
+local var_0_0 = class("AiZiLaEquipItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._gounSelected = gohelper.findChild(slot0.viewGO, "go_unSelected")
-	slot0._txtunlevel = gohelper.findChildText(slot0.viewGO, "go_unSelected/txt_unlevel")
-	slot0._txtunname = gohelper.findChildText(slot0.viewGO, "go_unSelected/txt_unname")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "go_selected")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "go_selected/txt_level")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "go_selected/txt_name")
-	slot0._goLeUp = gohelper.findChild(slot0.viewGO, "image_LvUp")
-	slot0._btnClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_Click")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._gounSelected = gohelper.findChild(arg_1_0.viewGO, "go_unSelected")
+	arg_1_0._txtunlevel = gohelper.findChildText(arg_1_0.viewGO, "go_unSelected/txt_unlevel")
+	arg_1_0._txtunname = gohelper.findChildText(arg_1_0.viewGO, "go_unSelected/txt_unname")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "go_selected")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "go_selected/txt_level")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "go_selected/txt_name")
+	arg_1_0._goLeUp = gohelper.findChild(arg_1_0.viewGO, "image_LvUp")
+	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_Click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnClick:AddClickListener(slot0._btnClickOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnClick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnClick:RemoveClickListener()
 end
 
-function slot0._btnClickOnClick(slot0)
-	AiZiLaController.instance:dispatchEvent(AiZiLaEvent.UISelectEquipType, slot0:getTypeId())
+function var_0_0._btnClickOnClick(arg_4_0)
+	AiZiLaController.instance:dispatchEvent(AiZiLaEvent.UISelectEquipType, arg_4_0:getTypeId())
 end
 
-function slot0._editableInitView(slot0)
-	slot0._govxrefresh = gohelper.findChild(slot0.viewGO, "vx_refresh")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._govxrefresh = gohelper.findChild(arg_5_0.viewGO, "vx_refresh")
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_6_0)
+	return
 end
 
-function slot0.setName(slot0, slot1)
-	slot0._txtunname.text = slot1
-	slot0._txtname.text = slot1
+function var_0_0.setName(arg_7_0, arg_7_1)
+	arg_7_0._txtunname.text = arg_7_1
+	arg_7_0._txtname.text = arg_7_1
 end
 
-function slot0.setCfg(slot0, slot1)
-	slot0._config = slot1
-	slot0._typeId = slot1.typeId
+function var_0_0.setCfg(arg_8_0, arg_8_1)
+	arg_8_0._config = arg_8_1
+	arg_8_0._typeId = arg_8_1.typeId
 
-	slot0:setName(slot1.name)
+	arg_8_0:setName(arg_8_1.name)
 end
 
-function slot0.getTypeId(slot0)
-	return slot0._typeId
+function var_0_0.getTypeId(arg_9_0)
+	return arg_9_0._typeId
 end
 
-function slot0.refreshUpLevel(slot0)
-	slot0:refreshUI()
-	gohelper.setActive(slot0._govxrefresh, false)
-	gohelper.setActive(slot0._govxrefresh, true)
+function var_0_0.refreshUpLevel(arg_10_0)
+	arg_10_0:refreshUI()
+	gohelper.setActive(arg_10_0._govxrefresh, false)
+	gohelper.setActive(arg_10_0._govxrefresh, true)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot2 = AiZiLaModel.instance:getEquipMO(slot0._typeId)
+function var_0_0.refreshUI(arg_11_0, arg_11_1)
+	local var_11_0 = AiZiLaModel.instance:getEquipMO(arg_11_0._typeId)
 
-	gohelper.setActive(slot0._txtlevel, slot2)
-	gohelper.setActive(slot0._txtunlevel, slot2)
-	gohelper.setActive(slot0._goLeUp, slot1 ~= true and slot2 and slot2:isCanUpLevel())
+	gohelper.setActive(arg_11_0._txtlevel, var_11_0)
+	gohelper.setActive(arg_11_0._txtunlevel, var_11_0)
+	gohelper.setActive(arg_11_0._goLeUp, arg_11_1 ~= true and var_11_0 and var_11_0:isCanUpLevel())
 
-	if slot2 and slot0._lastLevel ~= (slot2:getConfig() and slot3.level) then
-		slot0._lastLevel = slot4
-		slot5 = string.format("Lv.%s", slot4)
-		slot0._txtlevel.text = slot5
-		slot0._txtunlevel.text = slot5
+	if var_11_0 then
+		local var_11_1 = var_11_0:getConfig()
+		local var_11_2 = var_11_1 and var_11_1.level
+
+		if arg_11_0._lastLevel ~= var_11_2 then
+			arg_11_0._lastLevel = var_11_2
+
+			local var_11_3 = string.format("Lv.%s", var_11_2)
+
+			arg_11_0._txtlevel.text = var_11_3
+			arg_11_0._txtunlevel.text = var_11_3
+		end
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot1)
-	gohelper.setActive(slot0._gounSelected, not slot1)
+function var_0_0.onSelect(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._goselected, arg_12_1)
+	gohelper.setActive(arg_12_0._gounSelected, not arg_12_1)
 end
 
-return slot0
+return var_0_0

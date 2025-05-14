@@ -1,25 +1,34 @@
-module("modules.logic.seasonver.act166.controller.Season166BaseSpotController", package.seeall)
+﻿module("modules.logic.seasonver.act166.controller.Season166BaseSpotController", package.seeall)
 
-slot0 = class("Season166BaseSpotController", BaseController)
+local var_0_0 = class("Season166BaseSpotController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.enterBaseSpotFightScene(slot0, slot1)
-	if Season166BaseSpotModel.instance.curEpisodeId then
-		slot0:startBattle(slot1.actId, slot2)
+function var_0_0.enterBaseSpotFightScene(arg_3_0, arg_3_1)
+	local var_3_0 = Season166BaseSpotModel.instance.curEpisodeId
+
+	if var_3_0 then
+		arg_3_0:startBattle(arg_3_1.actId, var_3_0)
 	end
 end
 
-function slot0.startBattle(slot0, slot1, slot2)
-	logNormal(string.format("startBattle with actId = %s, episodeId = %s", slot1, slot2))
-	Season166Model.instance:setBattleContext(slot1, slot2, Season166BaseSpotModel.instance.curBaseSpotId, Season166BaseSpotModel.instance.talentId)
-	DungeonFightController.instance:enterSeasonFight(DungeonConfig.instance:getEpisodeCO(slot2).chapterId, slot2)
+function var_0_0.startBattle(arg_4_0, arg_4_1, arg_4_2)
+	logNormal(string.format("startBattle with actId = %s, episodeId = %s", arg_4_1, arg_4_2))
+
+	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_2)
+	local var_4_1 = Season166BaseSpotModel.instance.curBaseSpotId
+	local var_4_2 = Season166BaseSpotModel.instance.talentId
+
+	Season166Model.instance:setBattleContext(arg_4_1, arg_4_2, var_4_1, var_4_2)
+	DungeonFightController.instance:enterSeasonFight(var_4_0.chapterId, arg_4_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

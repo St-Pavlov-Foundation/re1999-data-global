@@ -1,337 +1,384 @@
-module("modules.logic.store.view.PackageStoreView", package.seeall)
+﻿module("modules.logic.store.view.PackageStoreView", package.seeall)
 
-slot0 = class("PackageStoreView", BaseView)
+local var_0_0 = class("PackageStoreView", BaseView)
 
-function slot0._setActivtSoldOut(slot0, slot1)
-	gohelper.setActive(slot0._simageSoldoutGo, slot1)
+function var_0_0._setActivtSoldOut(arg_1_0, arg_1_1)
+	gohelper.setActive(arg_1_0._simageSoldoutGo, arg_1_1)
 end
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gostorecategoryitem = gohelper.findChild(slot0.viewGO, "left/scroll_category/viewport/categorycontent/#go_storecategoryitem")
-	slot0._scrollprop = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_prop")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_bg")
+	arg_2_0._gostorecategoryitem = gohelper.findChild(arg_2_0.viewGO, "left/scroll_category/viewport/categorycontent/#go_storecategoryitem")
+	arg_2_0._scrollprop = gohelper.findChildScrollRect(arg_2_0.viewGO, "#scroll_prop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_3_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageSoldoutGo = gohelper.findChild(slot0.viewGO, "#simage_soldout")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simageSoldoutGo = gohelper.findChild(arg_5_0.viewGO, "#simage_soldout")
 
-	gohelper.setActive(slot0._gostorecategoryitem, false)
+	gohelper.setActive(arg_5_0._gostorecategoryitem, false)
 
-	slot0._categoryItemContainer = {}
-	slot0._horizontalNormalizedPosition = 0
-	slot0._scrollprop.horizontalNormalizedPosition = 0
+	arg_5_0._categoryItemContainer = {}
+	arg_5_0._horizontalNormalizedPosition = 0
+	arg_5_0._scrollprop.horizontalNormalizedPosition = 0
 
-	slot0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_shangpindiban"))
+	arg_5_0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_shangpindiban"))
 end
 
-function slot0._refreshTabs(slot0, slot1, slot2, slot3)
-	slot4 = slot0._selectSecondTabId
-	slot5 = slot0._selectThirdTabId
-	slot0._selectSecondTabId = 0
-	slot0._selectThirdTabId = 0
+function var_0_0._refreshTabs(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_0._selectSecondTabId
+	local var_6_1 = arg_6_0._selectThirdTabId
 
-	if not StoreModel.instance:isTabOpen(slot1) then
-		slot1 = slot0.viewContainer:getSelectFirstTabId()
+	arg_6_0._selectSecondTabId = 0
+	arg_6_0._selectThirdTabId = 0
+
+	if not StoreModel.instance:isTabOpen(arg_6_1) then
+		arg_6_1 = arg_6_0.viewContainer:getSelectFirstTabId()
 	end
 
-	slot6 = nil
-	slot6, slot0._selectSecondTabId, slot0._selectThirdTabId = StoreModel.instance:jumpTabIdToSelectTabId(slot1)
-	slot8 = StoreConfig.instance:getTabConfig(slot0._selectSecondTabId)
-	slot9 = StoreConfig.instance:getTabConfig(slot0.viewContainer:getSelectFirstTabId())
+	local var_6_2
+	local var_6_3
 
-	if StoreConfig.instance:getTabConfig(slot0._selectThirdTabId) and not string.nilorempty(slot7.showCost) then
-		slot0.viewContainer:setCurrencyType(slot7.showCost)
-	elseif slot8 and not string.nilorempty(slot8.showCost) then
-		slot0.viewContainer:setCurrencyType(slot8.showCost)
-	elseif slot9 and not string.nilorempty(slot9.showCost) then
-		slot0.viewContainer:setCurrencyType(slot9.showCost)
+	var_6_3, arg_6_0._selectSecondTabId, arg_6_0._selectThirdTabId = StoreModel.instance:jumpTabIdToSelectTabId(arg_6_1)
+
+	local var_6_4 = StoreConfig.instance:getTabConfig(arg_6_0._selectThirdTabId)
+	local var_6_5 = StoreConfig.instance:getTabConfig(arg_6_0._selectSecondTabId)
+	local var_6_6 = StoreConfig.instance:getTabConfig(arg_6_0.viewContainer:getSelectFirstTabId())
+
+	if var_6_4 and not string.nilorempty(var_6_4.showCost) then
+		arg_6_0.viewContainer:setCurrencyType(var_6_4.showCost)
+	elseif var_6_5 and not string.nilorempty(var_6_5.showCost) then
+		arg_6_0.viewContainer:setCurrencyType(var_6_5.showCost)
+	elseif var_6_6 and not string.nilorempty(var_6_6.showCost) then
+		arg_6_0.viewContainer:setCurrencyType(var_6_6.showCost)
 	else
-		slot0.viewContainer:setCurrencyType(nil)
+		arg_6_0.viewContainer:setCurrencyType(nil)
 	end
 
-	if not slot2 and slot4 == slot0._selectSecondTabId and slot5 == slot0._selectThirdTabId then
+	if not arg_6_2 and var_6_0 == arg_6_0._selectSecondTabId and var_6_1 == arg_6_0._selectThirdTabId then
 		return
 	end
 
-	slot0:_refreshAllSecondTabs()
-	StoreController.instance:readTab(slot1)
-	slot0:_onRefreshRedDot()
+	arg_6_0:_refreshAllSecondTabs()
+	StoreController.instance:readTab(arg_6_1)
+	arg_6_0:_onRefreshRedDot()
 
-	slot0._resetScrollPos = true
+	arg_6_0._resetScrollPos = true
 
-	slot0:_refreshGoods(true, slot3)
+	arg_6_0:_refreshGoods(true, arg_6_3)
 end
 
-function slot0._refreshAllSecondTabs(slot0)
-	if StoreModel.instance:getSecondTabs(slot0._selectFirstTabId, true, true) and #slot1 > 0 then
-		for slot5 = 1, #slot1 do
-			slot0:_refreshSecondTabs(slot5, slot1[slot5])
-			gohelper.setActive(slot0._categoryItemContainer[slot5].go, #StoreModel.instance:getPackageGoodValidList(slot1[slot5].id) > 0)
+function var_0_0._refreshAllSecondTabs(arg_7_0)
+	local var_7_0 = StoreModel.instance:getSecondTabs(arg_7_0._selectFirstTabId, true, true)
+
+	if var_7_0 and #var_7_0 > 0 then
+		for iter_7_0 = 1, #var_7_0 do
+			arg_7_0:_refreshSecondTabs(iter_7_0, var_7_0[iter_7_0])
+
+			local var_7_1 = StoreModel.instance:getPackageGoodValidList(var_7_0[iter_7_0].id)
+
+			gohelper.setActive(arg_7_0._categoryItemContainer[iter_7_0].go, #var_7_1 > 0)
 		end
 
-		for slot5 = #slot1 + 1, #slot0._categoryItemContainer do
-			gohelper.setActive(slot0._categoryItemContainer[slot5].go, false)
+		for iter_7_1 = #var_7_0 + 1, #arg_7_0._categoryItemContainer do
+			gohelper.setActive(arg_7_0._categoryItemContainer[iter_7_1].go, false)
 		end
 	else
-		for slot5 = 1, #slot0._categoryItemContainer do
-			gohelper.setActive(slot0._categoryItemContainer[slot5].go, false)
+		for iter_7_2 = 1, #arg_7_0._categoryItemContainer do
+			gohelper.setActive(arg_7_0._categoryItemContainer[iter_7_2].go, false)
 		end
 	end
 end
 
-function slot0._refreshSecondTabs(slot0, slot1, slot2)
-	slot3 = slot0._categoryItemContainer[slot1] or slot0:initCategoryItemTable(slot1)
-	slot3.tabId = slot2.id
-	slot3.txt_itemcn1.text = slot2.name
-	slot3.txt_itemcn2.text = slot2.name
-	slot3.txt_itemen1.text = slot2.nameEn
-	slot3.txt_itemen2.text = slot2.nameEn
-	slot4 = slot0._selectSecondTabId == slot2.id
+function var_0_0._refreshSecondTabs(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._categoryItemContainer[arg_8_1] or arg_8_0:initCategoryItemTable(arg_8_1)
 
-	gohelper.setActive(slot3.go_unselected, not slot4)
-	gohelper.setActive(slot3.go_selected, slot4)
-	gohelper.setActive(slot3.go_line, slot4 and #StoreModel.instance:getThirdTabs(slot2.id, true, true) > 0)
+	var_8_0.tabId = arg_8_2.id
+	var_8_0.txt_itemcn1.text = arg_8_2.name
+	var_8_0.txt_itemcn2.text = arg_8_2.name
+	var_8_0.txt_itemen1.text = arg_8_2.nameEn
+	var_8_0.txt_itemen2.text = arg_8_2.nameEn
 
-	if slot4 and slot5 and #slot5 > 0 then
-		for slot9 = 1, #slot5 do
-			slot0:_refreshThirdTabs(slot3, slot9, slot5[slot9])
-			gohelper.setActive(slot3.childItemContainer[slot9].go, true)
+	local var_8_1 = arg_8_0._selectSecondTabId == arg_8_2.id
+
+	gohelper.setActive(var_8_0.go_unselected, not var_8_1)
+	gohelper.setActive(var_8_0.go_selected, var_8_1)
+
+	local var_8_2 = StoreModel.instance:getThirdTabs(arg_8_2.id, true, true)
+
+	gohelper.setActive(var_8_0.go_line, var_8_1 and #var_8_2 > 0)
+
+	if var_8_1 and var_8_2 and #var_8_2 > 0 then
+		for iter_8_0 = 1, #var_8_2 do
+			arg_8_0:_refreshThirdTabs(var_8_0, iter_8_0, var_8_2[iter_8_0])
+			gohelper.setActive(var_8_0.childItemContainer[iter_8_0].go, true)
 		end
 
-		for slot9 = #slot5 + 1, #slot3.childItemContainer do
-			gohelper.setActive(slot3.childItemContainer[slot9].go, false)
+		for iter_8_1 = #var_8_2 + 1, #var_8_0.childItemContainer do
+			gohelper.setActive(var_8_0.childItemContainer[iter_8_1].go, false)
 		end
 	else
-		for slot9 = 1, #slot3.childItemContainer do
-			gohelper.setActive(slot3.childItemContainer[slot9].go, false)
+		for iter_8_2 = 1, #var_8_0.childItemContainer do
+			gohelper.setActive(var_8_0.childItemContainer[iter_8_2].go, false)
 		end
 	end
 end
 
-function slot0.initCategoryItemTable(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0._gostorecategoryitem, "item" .. slot1)
-	slot2.go_unselected = gohelper.findChild(slot2.go, "go_unselected")
-	slot2.go_selected = gohelper.findChild(slot2.go, "go_selected")
-	slot2.go_line = gohelper.findChild(slot2.go, "go_line")
-	slot2.go_reddot = gohelper.findChild(slot2.go, "#go_tabreddot1")
-	slot2.txt_itemcn1 = gohelper.findChildText(slot2.go, "go_unselected/txt_itemcn1")
-	slot2.txt_itemen1 = gohelper.findChildText(slot2.go, "go_unselected/txt_itemen1")
-	slot2.txt_itemcn2 = gohelper.findChildText(slot2.go, "go_selected/txt_itemcn2")
-	slot2.txt_itemen2 = gohelper.findChildText(slot2.go, "go_selected/txt_itemen2")
-	slot2.go_childcategory = gohelper.findChild(slot2.go, "go_childcategory")
-	slot2.go_childItem = gohelper.findChild(slot2.go, "go_childcategory/go_childitem")
-	slot2.childItemContainer = {}
-	slot2.btnGO = gohelper.findChild(slot2.go, "clickArea")
-	slot2.btn = gohelper.getClickWithAudio(slot2.go, AudioEnum.UI.play_ui_bank_open)
-	slot2.tabId = 0
+function var_0_0.initCategoryItemTable(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	slot2.btn:AddClickListener(function (slot0)
-		slot1 = slot0.tabId
+	var_9_0.go = gohelper.cloneInPlace(arg_9_0._gostorecategoryitem, "item" .. arg_9_1)
+	var_9_0.go_unselected = gohelper.findChild(var_9_0.go, "go_unselected")
+	var_9_0.go_selected = gohelper.findChild(var_9_0.go, "go_selected")
+	var_9_0.go_line = gohelper.findChild(var_9_0.go, "go_line")
+	var_9_0.go_reddot = gohelper.findChild(var_9_0.go, "#go_tabreddot1")
+	var_9_0.txt_itemcn1 = gohelper.findChildText(var_9_0.go, "go_unselected/txt_itemcn1")
+	var_9_0.txt_itemen1 = gohelper.findChildText(var_9_0.go, "go_unselected/txt_itemen1")
+	var_9_0.txt_itemcn2 = gohelper.findChildText(var_9_0.go, "go_selected/txt_itemcn2")
+	var_9_0.txt_itemen2 = gohelper.findChildText(var_9_0.go, "go_selected/txt_itemen2")
+	var_9_0.go_childcategory = gohelper.findChild(var_9_0.go, "go_childcategory")
+	var_9_0.go_childItem = gohelper.findChild(var_9_0.go, "go_childcategory/go_childitem")
+	var_9_0.childItemContainer = {}
+	var_9_0.btnGO = gohelper.findChild(var_9_0.go, "clickArea")
+	var_9_0.btn = gohelper.getClickWithAudio(var_9_0.go, AudioEnum.UI.play_ui_bank_open)
+	var_9_0.tabId = 0
 
-		uv0:_refreshTabs(slot1)
-		StoreController.instance:statSwitchStore(slot1)
-	end, slot2)
-	table.insert(slot0._categoryItemContainer, slot2)
-	gohelper.setActive(slot2.go_childItem, false)
+	var_9_0.btn:AddClickListener(function(arg_10_0)
+		local var_10_0 = arg_10_0.tabId
 
-	return slot2
+		arg_9_0:_refreshTabs(var_10_0)
+		StoreController.instance:statSwitchStore(var_10_0)
+	end, var_9_0)
+	table.insert(arg_9_0._categoryItemContainer, var_9_0)
+	gohelper.setActive(var_9_0.go_childItem, false)
+
+	return var_9_0
 end
 
-function slot0._refreshThirdTabs(slot0, slot1, slot2, slot3)
-	if not slot1.childItemContainer[slot2] then
-		slot4 = slot0:getUserDataTb_()
-		slot4.go = gohelper.cloneInPlace(slot1.go_childItem, "item" .. slot2)
-		slot4.go_unselected = gohelper.findChild(slot4.go, "go_unselected")
-		slot4.go_selected = gohelper.findChild(slot4.go, "go_selected")
-		slot4.go_subreddot1 = gohelper.findChild(slot4.go, "go_unselected/txt_itemcn1/go_subcatereddot")
-		slot4.go_subreddot2 = gohelper.findChild(slot4.go, "go_selected/txt_itemcn2/go_subcatereddot")
-		slot4.txt_itemcn1 = gohelper.findChildText(slot4.go, "go_unselected/txt_itemcn1")
-		slot4.txt_itemen1 = gohelper.findChildText(slot4.go, "go_unselected/txt_itemen1")
-		slot4.txt_itemcn2 = gohelper.findChildText(slot4.go, "go_selected/txt_itemcn2")
-		slot4.txt_itemen2 = gohelper.findChildText(slot4.go, "go_selected/txt_itemen2")
-		slot4.btnGO = gohelper.findChild(slot4.go, "clickArea")
-		slot4.btn = gohelper.getClick(slot4.btnGO)
-		slot4.tabId = 0
+function var_0_0._refreshThirdTabs(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = arg_11_1.childItemContainer[arg_11_2]
 
-		slot4.btn:AddClickListener(function (slot0)
-			slot1 = slot0.tabId
+	if not var_11_0 then
+		var_11_0 = arg_11_0:getUserDataTb_()
+		var_11_0.go = gohelper.cloneInPlace(arg_11_1.go_childItem, "item" .. arg_11_2)
+		var_11_0.go_unselected = gohelper.findChild(var_11_0.go, "go_unselected")
+		var_11_0.go_selected = gohelper.findChild(var_11_0.go, "go_selected")
+		var_11_0.go_subreddot1 = gohelper.findChild(var_11_0.go, "go_unselected/txt_itemcn1/go_subcatereddot")
+		var_11_0.go_subreddot2 = gohelper.findChild(var_11_0.go, "go_selected/txt_itemcn2/go_subcatereddot")
+		var_11_0.txt_itemcn1 = gohelper.findChildText(var_11_0.go, "go_unselected/txt_itemcn1")
+		var_11_0.txt_itemen1 = gohelper.findChildText(var_11_0.go, "go_unselected/txt_itemen1")
+		var_11_0.txt_itemcn2 = gohelper.findChildText(var_11_0.go, "go_selected/txt_itemcn2")
+		var_11_0.txt_itemen2 = gohelper.findChildText(var_11_0.go, "go_selected/txt_itemen2")
+		var_11_0.btnGO = gohelper.findChild(var_11_0.go, "clickArea")
+		var_11_0.btn = gohelper.getClick(var_11_0.btnGO)
+		var_11_0.tabId = 0
 
-			uv0:_refreshTabs(slot1, nil, true)
-			StoreController.instance:statSwitchStore(slot1)
-		end, slot4)
-		table.insert(slot1.childItemContainer, slot4)
+		var_11_0.btn:AddClickListener(function(arg_12_0)
+			local var_12_0 = arg_12_0.tabId
+
+			arg_11_0:_refreshTabs(var_12_0, nil, true)
+			StoreController.instance:statSwitchStore(var_12_0)
+		end, var_11_0)
+		table.insert(arg_11_1.childItemContainer, var_11_0)
 	end
 
-	slot4.tabId = slot3.id
-	slot4.txt_itemcn1.text = slot3.name
-	slot4.txt_itemcn2.text = slot3.name
-	slot4.txt_itemen1.text = slot3.nameEn
-	slot4.txt_itemen2.text = slot3.nameEn
-	slot5 = slot0._selectThirdTabId == slot3.id
+	var_11_0.tabId = arg_11_3.id
+	var_11_0.txt_itemcn1.text = arg_11_3.name
+	var_11_0.txt_itemcn2.text = arg_11_3.name
+	var_11_0.txt_itemen1.text = arg_11_3.nameEn
+	var_11_0.txt_itemen2.text = arg_11_3.nameEn
 
-	gohelper.setActive(slot4.go_unselected, not slot5)
-	gohelper.setActive(slot4.go_selected, slot5)
+	local var_11_1 = arg_11_0._selectThirdTabId == arg_11_3.id
+
+	gohelper.setActive(var_11_0.go_unselected, not var_11_1)
+	gohelper.setActive(var_11_0.go_selected, var_11_1)
 end
 
-function slot0._refreshGoods(slot0, slot1, slot2)
-	slot0:_setActivtSoldOut(false)
+function var_0_0._refreshGoods(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0:_setActivtSoldOut(false)
 
-	slot0.storeId = 0
-	slot0.storeId = StoreConfig.instance:getTabConfig(slot0._selectThirdTabId) and slot3.storeId or 0
+	arg_13_0.storeId = 0
 
-	if slot0.storeId == 0 then
-		slot0.storeId = StoreConfig.instance:getTabConfig(slot0._selectSecondTabId) and slot4.storeId or 0
+	local var_13_0 = StoreConfig.instance:getTabConfig(arg_13_0._selectThirdTabId)
+
+	arg_13_0.storeId = var_13_0 and var_13_0.storeId or 0
+
+	if arg_13_0.storeId == 0 then
+		local var_13_1 = StoreConfig.instance:getTabConfig(arg_13_0._selectSecondTabId)
+
+		arg_13_0.storeId = var_13_1 and var_13_1.storeId or 0
 	end
 
-	if slot0.storeId == 0 then
+	if arg_13_0.storeId == 0 then
 		StorePackageGoodsItemListModel.instance:setMOList()
-		slot0:_setActivtSoldOut(true)
-	elseif slot0.storeId == StoreEnum.StoreId.RecommendPackage then
-		StoreModel.instance:setCurPackageStore(slot0.storeId)
-		StorePackageGoodsItemListModel.instance:setMOList(nil, StoreModel.instance:getRecommendPackageList(true))
-		slot0:updateRecommendPackageList(slot2)
-	elseif slot1 then
-		StoreModel.instance:setCurPackageStore(slot0.storeId)
+		arg_13_0:_setActivtSoldOut(true)
+	elseif arg_13_0.storeId == StoreEnum.StoreId.RecommendPackage then
+		StoreModel.instance:setCurPackageStore(arg_13_0.storeId)
+
+		local var_13_2 = StoreModel.instance:getRecommendPackageList(true)
+
+		StorePackageGoodsItemListModel.instance:setMOList(nil, var_13_2)
+		arg_13_0:updateRecommendPackageList(arg_13_2)
+	elseif arg_13_1 then
+		StoreModel.instance:setCurPackageStore(arg_13_0.storeId)
 		StoreModel.instance:setPackageStoreRpcNum(2)
-		StorePackageGoodsItemListModel.instance:setMOList(StoreModel.instance:getStoreMO(slot0.storeId), StoreModel.instance:storeId2PackageGoodMoList(slot0.storeId))
+
+		local var_13_3 = StoreModel.instance:storeId2PackageGoodMoList(arg_13_0.storeId)
+
+		StorePackageGoodsItemListModel.instance:setMOList(StoreModel.instance:getStoreMO(arg_13_0.storeId), var_13_3)
 		StoreRpc.instance:sendGetStoreInfosRequest({
-			slot0.storeId
+			arg_13_0.storeId
 		})
 		ChargeRpc.instance:sendGetChargeInfoRequest()
-		slot0.viewContainer:playNormalStoreAnimation()
+		arg_13_0.viewContainer:playNormalStoreAnimation()
 	end
 end
 
-function slot0._onRefreshRedDot(slot0)
-	for slot4, slot5 in pairs(slot0._categoryItemContainer) do
-		if slot5.tabId == StoreEnum.StoreId.RecommendPackage then
-			gohelper.setActive(slot5.go_reddot, StoreModel.instance:isTabFirstRedDotShow(slot5.tabId))
+function var_0_0._onRefreshRedDot(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._categoryItemContainer) do
+		if iter_14_1.tabId == StoreEnum.StoreId.RecommendPackage then
+			gohelper.setActive(iter_14_1.go_reddot, StoreModel.instance:isTabFirstRedDotShow(iter_14_1.tabId))
 		else
-			gohelper.setActive(slot5.go_reddot, StoreModel.instance:isPackageStoreTabRedDotShow(slot5.tabId))
+			gohelper.setActive(iter_14_1.go_reddot, StoreModel.instance:isPackageStoreTabRedDotShow(iter_14_1.tabId))
 		end
 
-		for slot9, slot10 in pairs(slot5.childItemContainer) do
-			gohelper.setActive(slot10.go_subreddot1, StoreModel.instance:isTabSecondRedDotShow(slot10.tabId))
-			gohelper.setActive(slot10.go_subreddot2, StoreModel.instance:isTabSecondRedDotShow(slot10.tabId))
+		for iter_14_2, iter_14_3 in pairs(iter_14_1.childItemContainer) do
+			gohelper.setActive(iter_14_3.go_subreddot1, StoreModel.instance:isTabSecondRedDotShow(iter_14_3.tabId))
+			gohelper.setActive(iter_14_3.go_subreddot2, StoreModel.instance:isTabSecondRedDotShow(iter_14_3.tabId))
 		end
 	end
 end
 
-function slot0._beforeUpdatePackageStore(slot0)
-	slot0._horizontalNormalizedPosition = slot0._scrollprop.horizontalNormalizedPosition
+function var_0_0._beforeUpdatePackageStore(arg_15_0)
+	arg_15_0._horizontalNormalizedPosition = arg_15_0._scrollprop.horizontalNormalizedPosition
 end
 
-function slot0._afterUpdatePackageStore(slot0)
-	slot0._scrollprop.horizontalNormalizedPosition = slot0._horizontalNormalizedPosition
+function var_0_0._afterUpdatePackageStore(arg_16_0)
+	arg_16_0._scrollprop.horizontalNormalizedPosition = arg_16_0._horizontalNormalizedPosition
 end
 
-function slot0.onOpen(slot0)
-	slot0._selectFirstTabId = slot0.viewContainer:getSelectFirstTabId()
+function var_0_0.onOpen(arg_17_0)
+	arg_17_0._selectFirstTabId = arg_17_0.viewContainer:getSelectFirstTabId()
 
-	slot0:_refreshTabs(slot0.viewContainer:getJumpTabId(), true, true)
-	slot0:addEventCb(StoreController.instance, StoreEvent.BeforeUpdatePackageStore, slot0._beforeUpdatePackageStore, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.AfterUpdatePackageStore, slot0._afterUpdatePackageStore, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, slot0._updateInfo, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._updateInfo, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._onRefreshRedDot, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, slot0.onUpdatePackageGoodsList, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, slot0.onPackageGoodsListEmpty, slot0)
+	local var_17_0 = arg_17_0.viewContainer:getJumpTabId()
+	local var_17_1 = arg_17_0.viewContainer:getJumpGoodsId()
 
-	if slot0.viewContainer:getJumpGoodsId() then
-		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(slot2)))
+	arg_17_0:_refreshTabs(var_17_0, true, true)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.BeforeUpdatePackageStore, arg_17_0._beforeUpdatePackageStore, arg_17_0)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.AfterUpdatePackageStore, arg_17_0._afterUpdatePackageStore, arg_17_0)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_17_0._updateInfo, arg_17_0)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_17_0._updateInfo, arg_17_0)
+	arg_17_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_17_0._onRefreshRedDot, arg_17_0)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_17_0.onUpdatePackageGoodsList, arg_17_0)
+	arg_17_0:addEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, arg_17_0.onPackageGoodsListEmpty, arg_17_0)
+
+	if var_17_1 then
+		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(var_17_1)))
 	end
 end
 
-function slot0._updateInfo(slot0)
-	slot0:_refreshGoods(false)
+function var_0_0._updateInfo(arg_18_0)
+	arg_18_0:_refreshGoods(false)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.BeforeUpdatePackageStore, slot0._beforeUpdatePackageStore, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.AfterUpdatePackageStore, slot0._afterUpdatePackageStore, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, slot0._updateInfo, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._updateInfo, slot0)
-	slot0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._onRefreshRedDot, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, slot0.onUpdatePackageGoodsList, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, slot0.onPackageGoodsListEmpty, slot0)
+function var_0_0.onClose(arg_19_0)
+	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.BeforeUpdatePackageStore, arg_19_0._beforeUpdatePackageStore, arg_19_0)
+	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.AfterUpdatePackageStore, arg_19_0._afterUpdatePackageStore, arg_19_0)
+	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_19_0._updateInfo, arg_19_0)
+	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_19_0._updateInfo, arg_19_0)
+	arg_19_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_19_0._onRefreshRedDot, arg_19_0)
+	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_19_0.onUpdatePackageGoodsList, arg_19_0)
+	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, arg_19_0.onPackageGoodsListEmpty, arg_19_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._selectFirstTabId = slot0.viewContainer:getSelectFirstTabId()
+function var_0_0.onUpdateParam(arg_20_0)
+	arg_20_0._selectFirstTabId = arg_20_0.viewContainer:getSelectFirstTabId()
 
-	slot0:_refreshTabs(slot0.viewContainer:getJumpTabId())
+	local var_20_0 = arg_20_0.viewContainer:getJumpTabId()
+	local var_20_1 = arg_20_0.viewContainer:getJumpGoodsId()
 
-	if slot0.viewContainer:getJumpGoodsId() then
-		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(slot2)))
+	arg_20_0:_refreshTabs(var_20_0)
+
+	if var_20_1 then
+		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(var_20_1)))
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._categoryItemContainer and #slot0._categoryItemContainer > 0 then
-		for slot4 = 1, #slot0._categoryItemContainer do
-			slot5 = slot0._categoryItemContainer[slot4]
+function var_0_0.onDestroyView(arg_21_0)
+	if arg_21_0._categoryItemContainer and #arg_21_0._categoryItemContainer > 0 then
+		for iter_21_0 = 1, #arg_21_0._categoryItemContainer do
+			local var_21_0 = arg_21_0._categoryItemContainer[iter_21_0]
 
-			slot5.btn:RemoveClickListener()
+			var_21_0.btn:RemoveClickListener()
 
-			if slot5.childItemContainer and #slot5.childItemContainer > 0 then
-				for slot9 = 1, #slot5.childItemContainer do
-					slot5.childItemContainer[slot9].btn:RemoveClickListener()
+			if var_21_0.childItemContainer and #var_21_0.childItemContainer > 0 then
+				for iter_21_1 = 1, #var_21_0.childItemContainer do
+					var_21_0.childItemContainer[iter_21_1].btn:RemoveClickListener()
 				end
 			end
 		end
 	end
 
-	slot0._simagebg:UnLoadImage()
+	arg_21_0._simagebg:UnLoadImage()
 end
 
-function slot0.onUpdatePackageGoodsList(slot0)
-	slot0:_refreshAllSecondTabs()
-	slot0:_onRefreshRedDot()
-	slot0:refreshScrollViewPos(false)
+function var_0_0.onUpdatePackageGoodsList(arg_22_0)
+	arg_22_0:_refreshAllSecondTabs()
+	arg_22_0:_onRefreshRedDot()
+	arg_22_0:refreshScrollViewPos(false)
 end
 
-function slot0.updateRecommendPackageList(slot0, slot1)
-	if (not StorePackageGoodsItemListModel.instance:getList() or #slot3 == 0) and StoreModel.instance:getCurBuyPackageId() == nil then
-		slot0:_refreshTabs(StoreEnum.StoreId.Package, true)
+function var_0_0.updateRecommendPackageList(arg_23_0, arg_23_1)
+	local var_23_0 = StoreModel.instance:getCurBuyPackageId()
+	local var_23_1 = StorePackageGoodsItemListModel.instance:getList()
+
+	if (not var_23_1 or #var_23_1 == 0) and var_23_0 == nil then
+		arg_23_0:_refreshTabs(StoreEnum.StoreId.Package, true)
 
 		return
 	end
 
-	slot0:_onRefreshRedDot()
-	slot0:refreshScrollViewPos(slot1)
+	arg_23_0:_onRefreshRedDot()
+	arg_23_0:refreshScrollViewPos(arg_23_1)
 end
 
-function slot0.onPackageGoodsListEmpty(slot0)
-	slot0:_refreshTabs(slot0.storeId or StoreEnum.StoreId.Package, false)
-	slot0:_setActivtSoldOut(true)
+function var_0_0.onPackageGoodsListEmpty(arg_24_0)
+	arg_24_0:_refreshTabs(arg_24_0.storeId or StoreEnum.StoreId.Package, false)
+	arg_24_0:_setActivtSoldOut(true)
 end
 
-function slot0.refreshScrollViewPos(slot0, slot1)
-	if slot1 or StoreModel.instance:isPackageStoreTabRedDotShow(slot0._selectSecondTabId) then
-		for slot7, slot8 in ipairs(StorePackageGoodsItemListModel.instance:getList()) do
-			if StoreModel.instance:isGoodsItemRedDotShow(slot8.goodsId) then
-				slot0._scrollprop.horizontalNormalizedPosition = (slot7 - 1) / (#slot3 - 1)
+function var_0_0.refreshScrollViewPos(arg_25_0, arg_25_1)
+	local var_25_0 = StoreModel.instance:isPackageStoreTabRedDotShow(arg_25_0._selectSecondTabId)
+
+	if arg_25_1 or var_25_0 then
+		local var_25_1 = StorePackageGoodsItemListModel.instance:getList()
+
+		for iter_25_0, iter_25_1 in ipairs(var_25_1) do
+			local var_25_2 = iter_25_1.goodsId
+
+			if StoreModel.instance:isGoodsItemRedDotShow(var_25_2) then
+				arg_25_0._scrollprop.horizontalNormalizedPosition = (iter_25_0 - 1) / (#var_25_1 - 1)
 
 				return
 			end
 		end
 	end
 
-	if slot0._resetScrollPos then
-		slot0._scrollprop.horizontalNormalizedPosition = 0
-		slot0._resetScrollPos = false
+	if arg_25_0._resetScrollPos then
+		arg_25_0._scrollprop.horizontalNormalizedPosition = 0
+		arg_25_0._resetScrollPos = false
 	end
 end
 
-return slot0
+return var_0_0

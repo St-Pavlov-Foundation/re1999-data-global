@@ -1,25 +1,25 @@
-module("modules.logic.fight.flow.FightViewHandCardParallelFlow", package.seeall)
+﻿module("modules.logic.fight.flow.FightViewHandCardParallelFlow", package.seeall)
 
-slot0 = class("FlowSequence", FlowParallel)
+local var_0_0 = class("FlowSequence", FlowParallel)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowCreate, slot0)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowCreate, arg_1_0)
 end
 
-function slot0.start(slot0, slot1)
-	uv0.super.start(slot0, slot1)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowStart, slot0)
+function var_0_0.start(arg_2_0, arg_2_1)
+	var_0_0.super.start(arg_2_0, arg_2_1)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowStart, arg_2_0)
 end
 
-function slot0.onDone(slot0, slot1)
-	uv0.super.onDone(slot0, slot1)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, slot0)
+function var_0_0.onDone(arg_3_0, arg_3_1)
+	var_0_0.super.onDone(arg_3_0, arg_3_1)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, arg_3_0)
 end
 
-function slot0.stop(slot0)
-	uv0.super.stop(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, slot0)
+function var_0_0.stop(arg_4_0)
+	var_0_0.super.stop(arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowEnd, arg_4_0)
 end
 
-return slot0
+return var_0_0

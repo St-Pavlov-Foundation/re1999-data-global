@@ -1,124 +1,138 @@
-module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalView", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalView", package.seeall)
 
-slot0 = class("LanternFestivalView", BaseView)
+local var_0_0 = class("LanternFestivalView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_PanelBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Root/#txt_Descr")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "Root/#scroll_ItemList")
-	slot0._goPuzzlePicClose = gohelper.findChild(slot0.viewGO, "Root/Right/#go_PuzzlePicClose")
-	slot0._goPuzzlePicOpen = gohelper.findChild(slot0.viewGO, "Root/Right/#go_PuzzlePicOpen")
-	slot0._imagePuzzlePic = gohelper.findChildImage(slot0.viewGO, "Root/Right/#go_PuzzlePicOpen/#image_PuzzlePic")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/#btn_Close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Descr")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+	arg_1_0._goPuzzlePicClose = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicClose")
+	arg_1_0._goPuzzlePicOpen = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicOpen")
+	arg_1_0._imagePuzzlePic = gohelper.findChildImage(arg_1_0.viewGO, "Root/Right/#go_PuzzlePicOpen/#image_PuzzlePic")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnCloseOnClick(slot0)
+function var_0_0._btnCloseOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goContentRoot = gohelper.findChild(slot0.viewGO, "Root/#scroll_ItemList/Viewport/Content")
-	slot0._goClose = gohelper.findChild(slot0.viewGO, "Close")
-	slot0._bgClick = gohelper.getClickWithAudio(slot0._goClose)
-	slot0._mapAnimator = slot0._goPuzzlePicOpen:GetComponent(typeof(UnityEngine.Animator))
-	slot0._viewAni = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._viewAni.enabled = true
-	slot0._items = {}
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goContentRoot = gohelper.findChild(arg_5_0.viewGO, "Root/#scroll_ItemList/Viewport/Content")
+	arg_5_0._goClose = gohelper.findChild(arg_5_0.viewGO, "Close")
+	arg_5_0._bgClick = gohelper.getClickWithAudio(arg_5_0._goClose)
+	arg_5_0._mapAnimator = arg_5_0._goPuzzlePicOpen:GetComponent(typeof(UnityEngine.Animator))
+	arg_5_0._viewAni = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_5_0._viewAni.enabled = true
+	arg_5_0._items = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
-	slot0:addCustomEvents()
+	arg_7_0:addCustomEvents()
 	LanternFestivalModel.instance:setCurPuzzleId(0)
-	slot0:refreshItems()
-	slot0:_getRemainTimeStr()
-	TaskDispatcher.runRepeat(slot0._getRemainTimeStr, slot0, 1)
+	arg_7_0:refreshItems()
+	arg_7_0:_getRemainTimeStr()
+	TaskDispatcher.runRepeat(arg_7_0._getRemainTimeStr, arg_7_0, 1)
 end
 
-function slot0.addCustomEvents(slot0)
-	slot0._bgClick:AddClickListener(slot0._btnCloseOnClick, slot0)
-	slot0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.SelectPuzzleItem, slot0.refreshItems, slot0)
-	slot0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.PuzzleRewardGet, slot0.refreshItems, slot0)
-	slot0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.InfosRefresh, slot0.refreshItems, slot0)
-	slot0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.ShowUnlockNewPuzzle, slot0._showUnlockPuzzle, slot0)
+function var_0_0.addCustomEvents(arg_8_0)
+	arg_8_0._bgClick:AddClickListener(arg_8_0._btnCloseOnClick, arg_8_0)
+	arg_8_0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.SelectPuzzleItem, arg_8_0.refreshItems, arg_8_0)
+	arg_8_0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.PuzzleRewardGet, arg_8_0.refreshItems, arg_8_0)
+	arg_8_0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.InfosRefresh, arg_8_0.refreshItems, arg_8_0)
+	arg_8_0:addEventCb(LanternFestivalController.instance, LanternFestivalEvent.ShowUnlockNewPuzzle, arg_8_0._showUnlockPuzzle, arg_8_0)
 end
 
-function slot0._getRemainTimeStr(slot0)
-	slot0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(ActivityEnum.Activity.LanternFestival)
+function var_0_0._getRemainTimeStr(arg_9_0)
+	local var_9_0 = ActivityEnum.Activity.LanternFestival
+
+	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(var_9_0)
 end
 
-function slot0._showUnlockPuzzle(slot0, slot1)
-	LanternFestivalModel.instance:setCurPuzzleId(slot1)
-	slot0:refreshItems()
+function var_0_0._showUnlockPuzzle(arg_10_0, arg_10_1)
+	LanternFestivalModel.instance:setCurPuzzleId(arg_10_1)
+	arg_10_0:refreshItems()
 	AudioMgr.instance:trigger(AudioEnum.LanternFestival.play_ui_jinye_spools_open)
-	slot0._mapAnimator:Play("open", 0, 0)
+	arg_10_0._mapAnimator:Play("open", 0, 0)
 end
 
-function slot0.refreshItems(slot0)
-	for slot6, slot7 in ipairs(LanternFestivalConfig.instance:getAct154Cos()) do
-		if not slot0._items[slot7.puzzleId] then
-			slot9 = LanternFestivalItem.New()
+function var_0_0.refreshItems(arg_11_0)
+	local var_11_0 = arg_11_0.viewContainer:getSetting().otherRes[1]
+	local var_11_1 = LanternFestivalConfig.instance:getAct154Cos()
 
-			slot9:init(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goContentRoot), slot6, slot7.puzzleId)
+	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+		if not arg_11_0._items[iter_11_1.puzzleId] then
+			local var_11_2 = arg_11_0:getResInst(var_11_0, arg_11_0._goContentRoot)
+			local var_11_3 = LanternFestivalItem.New()
 
-			slot0._items[slot7.puzzleId] = slot9
+			var_11_3:init(var_11_2, iter_11_0, iter_11_1.puzzleId)
+
+			arg_11_0._items[iter_11_1.puzzleId] = var_11_3
 		else
-			slot0._items[slot7.puzzleId]:refresh(slot6, slot7.puzzleId)
+			arg_11_0._items[iter_11_1.puzzleId]:refresh(iter_11_0, iter_11_1.puzzleId)
 		end
 	end
 
-	slot3 = LanternFestivalModel.instance:isAllPuzzleUnSolved()
+	local var_11_4 = LanternFestivalModel.instance:isAllPuzzleUnSolved()
 
-	gohelper.setActive(slot0._goPuzzlePicClose, slot3)
-	gohelper.setActive(slot0._goPuzzlePicOpen, not slot3)
+	gohelper.setActive(arg_11_0._goPuzzlePicClose, var_11_4)
+	gohelper.setActive(arg_11_0._goPuzzlePicOpen, not var_11_4)
 
-	if LanternFestivalModel.instance:getPuzzleState(LanternFestivalModel.instance:getCurPuzzleId()) == LanternFestivalEnum.PuzzleState.Solved or slot5 == LanternFestivalEnum.PuzzleState.RewardGet then
-		UISpriteSetMgr.instance:setV1a7LanternSprite(slot0._imagePuzzlePic, LanternFestivalConfig.instance:getPuzzleCo(slot4).puzzleIcon)
+	local var_11_5 = LanternFestivalModel.instance:getCurPuzzleId()
+	local var_11_6 = LanternFestivalModel.instance:getPuzzleState(var_11_5)
+
+	if var_11_6 == LanternFestivalEnum.PuzzleState.Solved or var_11_6 == LanternFestivalEnum.PuzzleState.RewardGet then
+		local var_11_7 = LanternFestivalConfig.instance:getPuzzleCo(var_11_5)
+
+		UISpriteSetMgr.instance:setV1a7LanternSprite(arg_11_0._imagePuzzlePic, var_11_7.puzzleIcon)
 	end
 
-	slot0._txtDescr.text = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.LanternFestival).actDesc
+	local var_11_8 = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.LanternFestival)
+
+	arg_11_0._txtDescr.text = var_11_8.actDesc
 end
 
-function slot0.onClose(slot0)
-	slot0._viewAni.enabled = false
+function var_0_0.onClose(arg_12_0)
+	arg_12_0._viewAni.enabled = false
 
-	slot0:removeCustomEvents()
+	arg_12_0:removeCustomEvents()
 end
 
-function slot0.removeCustomEvents(slot0)
-	slot0._bgClick:RemoveClickListener()
-	slot0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.SelectPuzzleItem, slot0.refreshItems, slot0)
-	slot0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.PuzzleRewardGet, slot0.refreshItems, slot0)
-	slot0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.InfosRefresh, slot0.refreshItems, slot0)
-	slot0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.ShowUnlockNewPuzzle, slot0._showUnlockPuzzle, slot0)
+function var_0_0.removeCustomEvents(arg_13_0)
+	arg_13_0._bgClick:RemoveClickListener()
+	arg_13_0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.SelectPuzzleItem, arg_13_0.refreshItems, arg_13_0)
+	arg_13_0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.PuzzleRewardGet, arg_13_0.refreshItems, arg_13_0)
+	arg_13_0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.InfosRefresh, arg_13_0.refreshItems, arg_13_0)
+	arg_13_0:removeEventCb(LanternFestivalController.instance, LanternFestivalEvent.ShowUnlockNewPuzzle, arg_13_0._showUnlockPuzzle, arg_13_0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._getRemainTimeStr, slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._getRemainTimeStr, arg_14_0)
 
-	if slot0._items then
-		for slot4, slot5 in pairs(slot0._items) do
-			slot5:destroy()
+	if arg_14_0._items then
+		for iter_14_0, iter_14_1 in pairs(arg_14_0._items) do
+			iter_14_1:destroy()
 		end
 	end
 end
 
-return slot0
+return var_0_0

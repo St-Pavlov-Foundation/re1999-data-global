@@ -1,20 +1,21 @@
-module("modules.logic.dialogue.view.items.DialogueSystemMessageItem", package.seeall)
+﻿module("modules.logic.dialogue.view.items.DialogueSystemMessageItem", package.seeall)
 
-slot0 = class("DialogueSystemMessageItem", DialogueItem)
+local var_0_0 = class("DialogueSystemMessageItem", DialogueItem)
 
-function slot0.initView(slot0)
-	slot0.txtSystemMessage = gohelper.findChildText(slot0.go, "#txt_systemmessage")
+function var_0_0.initView(arg_1_0)
+	arg_1_0.txtSystemMessage = gohelper.findChildText(arg_1_0.go, "#txt_systemmessage")
 end
 
-function slot0.refresh(slot0)
-	slot0.txtSystemMessage.text = slot0.stepCo.content
+function var_0_0.refresh(arg_2_0)
+	arg_2_0.txtSystemMessage.text = arg_2_0.stepCo.content
 end
 
-function slot0.calculateHeight(slot0)
-	slot0.height = DialogueEnum.MinHeight[DialogueEnum.Type.SystemMessage]
+function var_0_0.calculateHeight(arg_3_0)
+	arg_3_0.height = DialogueEnum.MinHeight[DialogueEnum.Type.SystemMessage]
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

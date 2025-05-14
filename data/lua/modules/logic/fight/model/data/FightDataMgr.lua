@@ -1,109 +1,111 @@
-module("modules.logic.fight.model.data.FightDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightDataMgr", package.seeall)
 
-slot0 = class("FightDataMgr", BaseModel)
+local var_0_0 = class("FightDataMgr", BaseModel)
 
-function slot0.registMgr(slot0, slot1)
-	slot2 = slot1.New()
-	slot2.dataMgr = slot0
+function var_0_0.registMgr(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1.New()
 
-	table.insert(slot0.mgrList, slot2)
+	var_1_0.dataMgr = arg_1_0
 
-	return slot2
+	table.insert(arg_1_0.mgrList, var_1_0)
+
+	return var_1_0
 end
 
-function slot0.initDataMgr(slot0)
-	slot0.mgrList = {}
+function var_0_0.initDataMgr(arg_2_0)
+	arg_2_0.mgrList = {}
 
-	slot0:initTrueDataMgr()
-	slot0:initTempDataMgr()
+	arg_2_0:initTrueDataMgr()
+	arg_2_0:initTempDataMgr()
 end
 
-function slot0.initTrueDataMgr(slot0)
-	slot0.calMgr = slot0:registMgr(FightCalculateDataMgr)
-	slot0.cacheFightMgr = slot0:registMgr(FightCacheFightDataMgr)
-	slot0.entityMgr = slot0:registMgr(FightEntityDataMgr)
-	slot0.entityExMgr = slot0:registMgr(FightEntityEXDataMgr)
-	slot0.handCardMgr = slot0:registMgr(FightHandCardDataMgr)
-	slot0.fieldMgr = slot0:registMgr(FightFieldDataMgr)
-	slot0.paTaMgr = slot0:registMgr(FightPaTaDataMgr)
-	slot0.playCardMgr = slot0:registMgr(FightPlayCardDataMgr)
-	slot0.ASFDDataMgr = slot0:registMgr(FightASFDDataMgr)
-	slot0.teamDataMgr = slot0:registMgr(FightTeamDataMgr)
+function var_0_0.initTrueDataMgr(arg_3_0)
+	arg_3_0.calMgr = arg_3_0:registMgr(FightCalculateDataMgr)
+	arg_3_0.cacheFightMgr = arg_3_0:registMgr(FightCacheFightDataMgr)
+	arg_3_0.entityMgr = arg_3_0:registMgr(FightEntityDataMgr)
+	arg_3_0.entityExMgr = arg_3_0:registMgr(FightEntityEXDataMgr)
+	arg_3_0.handCardMgr = arg_3_0:registMgr(FightHandCardDataMgr)
+	arg_3_0.fieldMgr = arg_3_0:registMgr(FightFieldDataMgr)
+	arg_3_0.paTaMgr = arg_3_0:registMgr(FightPaTaDataMgr)
+	arg_3_0.playCardMgr = arg_3_0:registMgr(FightPlayCardDataMgr)
+	arg_3_0.ASFDDataMgr = arg_3_0:registMgr(FightASFDDataMgr)
+	arg_3_0.teamDataMgr = arg_3_0:registMgr(FightTeamDataMgr)
 end
 
-function slot0.initTempDataMgr(slot0)
-	slot0.stageMgr = slot0:registMgr(FightStageMgr)
-	slot0.operationMgr = slot0:registMgr(FightOperationDataMgr)
-	slot0.simulationMgr = slot0:registMgr(FightSimulationDataMgr)
-	slot0.tempMgr = slot0:registMgr(FightTempDataMgr)
-	slot0.LYDataMgr = slot0:registMgr(FightLYDataMgr)
+function var_0_0.initTempDataMgr(arg_4_0)
+	arg_4_0.stageMgr = arg_4_0:registMgr(FightStageMgr)
+	arg_4_0.operationMgr = arg_4_0:registMgr(FightOperationDataMgr)
+	arg_4_0.simulationMgr = arg_4_0:registMgr(FightSimulationDataMgr)
+	arg_4_0.tempMgr = arg_4_0:registMgr(FightTempDataMgr)
+	arg_4_0.LYDataMgr = arg_4_0:registMgr(FightLYDataMgr)
 end
 
-function slot0.cancelOperation(slot0)
-	for slot4, slot5 in ipairs(slot0.mgrList) do
-		if slot5.onCancelOperation then
-			slot5:onCancelOperation()
+function var_0_0.cancelOperation(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.mgrList) do
+		if iter_5_1.onCancelOperation then
+			iter_5_1:onCancelOperation()
 		end
 	end
 end
 
-function slot0.enterStage(slot0, slot1, slot2)
-	slot3 = slot0.stageMgr:getCurStage()
-	slot7 = slot2
+function var_0_0.enterStage(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0.stageMgr:getCurStage()
 
-	slot0.stageMgr:enterStage(slot1, slot7)
+	arg_6_0.stageMgr:enterStage(arg_6_1, arg_6_2)
 
-	for slot7, slot8 in ipairs(slot0.mgrList) do
-		if slot8.onEnterStage then
-			slot8:onEnterStage(slot1)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.mgrList) do
+		if iter_6_1.onEnterStage then
+			iter_6_1:onEnterStage(arg_6_1)
 		end
 
-		if slot8.onStageChanged then
-			slot8:onStageChanged(slot1, slot3)
-		end
-	end
-end
-
-function slot0.exitStage(slot0, slot1)
-	slot0.stageMgr:exitStage(slot1)
-
-	for slot5, slot6 in ipairs(slot0.mgrList) do
-		if slot6.onExitStage then
-			slot6:onExitStage(slot1)
-		end
-
-		if slot6.onStageChanged then
-			slot6:onStageChanged(slot0.stageMgr:getCurStage(), slot1)
+		if iter_6_1.onStageChanged then
+			iter_6_1:onStageChanged(arg_6_1, var_6_0)
 		end
 	end
 end
 
-function slot0.updateFightData(slot0, slot1)
-	slot0.calMgr:updateFightData(slot1)
+function var_0_0.exitStage(arg_7_0, arg_7_1)
+	arg_7_0.stageMgr:exitStage(arg_7_1)
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.mgrList) do
+		if iter_7_1.onExitStage then
+			iter_7_1:onExitStage(arg_7_1)
+		end
+
+		if iter_7_1.onStageChanged then
+			local var_7_0 = arg_7_0.stageMgr:getCurStage()
+
+			iter_7_1:onStageChanged(var_7_0, arg_7_1)
+		end
+	end
 end
 
-function slot0.getEntityById(slot0, slot1)
-	return slot0.entityMgr:getById(slot1)
+function var_0_0.updateFightData(arg_8_0, arg_8_1)
+	arg_8_0.calMgr:updateFightData(arg_8_1)
 end
 
-function slot0.beforePlayRoundProto(slot0, slot1)
-	FightDataModel.instance.cacheRoundProto = slot1
-
-	slot0.calMgr:beforePlayRoundProto(slot1)
+function var_0_0.getEntityById(arg_9_0, arg_9_1)
+	return arg_9_0.entityMgr:getById(arg_9_1)
 end
 
-function slot0.afterPlayRoundProto(slot0, slot1)
-	slot0.calMgr:afterPlayRoundProto(slot1)
+function var_0_0.beforePlayRoundProto(arg_10_0, arg_10_1)
+	FightDataModel.instance.cacheRoundProto = arg_10_1
+
+	arg_10_0.calMgr:beforePlayRoundProto(arg_10_1)
 end
 
-function slot0.dealRoundProto(slot0, slot1)
-	slot0.calMgr:playStepProto(slot1.fightStep)
-	slot0.calMgr:playStepProto(slot1.nextRoundBeginStep)
-	slot0.calMgr:dealExPointInfo(slot1.exPointInfo)
+function var_0_0.afterPlayRoundProto(arg_11_0, arg_11_1)
+	arg_11_0.calMgr:afterPlayRoundProto(arg_11_1)
 end
 
-slot0.instance = slot0.New()
+function var_0_0.dealRoundProto(arg_12_0, arg_12_1)
+	arg_12_0.calMgr:playStepProto(arg_12_1.fightStep)
+	arg_12_0.calMgr:playStepProto(arg_12_1.nextRoundBeginStep)
+	arg_12_0.calMgr:dealExPointInfo(arg_12_1.exPointInfo)
+end
 
-slot0.instance:initDataMgr()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+var_0_0.instance:initDataMgr()
+
+return var_0_0

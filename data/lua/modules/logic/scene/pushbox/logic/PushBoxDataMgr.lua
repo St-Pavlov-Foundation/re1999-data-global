@@ -1,37 +1,37 @@
-module("modules.logic.scene.pushbox.logic.PushBoxDataMgr", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxDataMgr", package.seeall)
 
-slot0 = class("PushBoxDataMgr", UserDataDispose)
+local var_0_0 = class("PushBoxDataMgr", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._game_mgr = slot1
-	slot0._scene = slot1._scene
-	slot0._scene_root = slot1._scene_root
+	arg_1_0._game_mgr = arg_1_1
+	arg_1_0._scene = arg_1_1._scene
+	arg_1_0._scene_root = arg_1_1._scene_root
 end
 
-function slot0.init(slot0)
-	slot0.warning = 0
+function var_0_0.init(arg_2_0)
+	arg_2_0.warning = 0
 end
 
-function slot0.setWarning(slot0, slot1)
-	slot0.warning = slot1
+function var_0_0.setWarning(arg_3_0, arg_3_1)
+	arg_3_0.warning = arg_3_1
 end
 
-function slot0.getCurWarning(slot0)
-	return slot0.warning
+function var_0_0.getCurWarning(arg_4_0)
+	return arg_4_0.warning
 end
 
-function slot0.changeWarning(slot0, slot1)
-	slot0.warning = slot0.warning + slot1
+function var_0_0.changeWarning(arg_5_0, arg_5_1)
+	arg_5_0.warning = arg_5_0.warning + arg_5_1
 end
 
-function slot0.gameOver(slot0)
-	return slot0.warning >= 100
+function var_0_0.gameOver(arg_6_0)
+	return arg_6_0.warning >= 100
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_7_0)
+	arg_7_0:__onDispose()
 end
 
-return slot0
+return var_0_0

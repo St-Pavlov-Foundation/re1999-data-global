@@ -1,182 +1,200 @@
-module("modules.logic.fight.view.FightViewASFDEnergy", package.seeall)
+﻿module("modules.logic.fight.view.FightViewASFDEnergy", package.seeall)
 
-slot0 = class("FightViewASFDEnergy", BaseView)
+local var_0_0 = class("FightViewASFDEnergy", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goASFD = gohelper.findChild(slot0.viewGO, "root/asfd_icon")
-	slot0.txtASFDEnergy = gohelper.findChildText(slot0.viewGO, "root/asfd_icon/#txt_Num")
-	slot0.goClick = gohelper.findChild(slot0.viewGO, "root/asfd_icon/#click")
-	slot0.goFlyContainer = gohelper.findChild(slot0.viewGO, "root/asfd_icon/#go_fly_container")
-	slot0.goFlyItem = gohelper.findChild(slot0.viewGO, "root/asfd_icon/#go_fly_container/#go_fly_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goASFD = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon")
+	arg_1_0.txtASFDEnergy = gohelper.findChildText(arg_1_0.viewGO, "root/asfd_icon/#txt_Num")
+	arg_1_0.goClick = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon/#click")
+	arg_1_0.goFlyContainer = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon/#go_fly_container")
+	arg_1_0.goFlyItem = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon/#go_fly_container/#go_fly_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.goASFD)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_4_0.goASFD)
 
-	slot0:_hideASFD()
+	arg_4_0:_hideASFD()
 
-	slot0.flyItemList = {}
+	arg_4_0.flyItemList = {}
 
-	table.insert(slot0.flyItemList, slot0:createFlyItem(slot0.goFlyItem))
-	gohelper.setActive(slot0.goFlyItem, false)
-	gohelper.setActive(slot0.goClick, false)
-	gohelper.setActive(slot0.goFlyContainer, false)
+	table.insert(arg_4_0.flyItemList, arg_4_0:createFlyItem(arg_4_0.goFlyItem))
+	gohelper.setActive(arg_4_0.goFlyItem, false)
+	gohelper.setActive(arg_4_0.goClick, false)
+	gohelper.setActive(arg_4_0.goFlyContainer, false)
 
-	slot0.rectFlyContainer = slot0.goFlyContainer:GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.rectFlyContainer = arg_4_0.goFlyContainer:GetComponent(gohelper.Type_RectTransform)
 
-	slot0:addEventCb(FightController.instance, FightEvent.ASFD_TeamEnergyChange, slot0.onTeamEnergyChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.StageChanged, slot0.stageChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, slot0.startAllocateCardEnergy, slot0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.ASFD_TeamEnergyChange, arg_4_0.onTeamEnergyChange, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.stageChange, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.ASFD_StartAllocateCardEnergy, arg_4_0.startAllocateCardEnergy, arg_4_0)
 
-	slot0.handCardView = slot0.viewContainer.fightViewHandCard
-	slot0.tweenIdList = {}
+	arg_4_0.handCardView = arg_4_0.viewContainer.fightViewHandCard
+	arg_4_0.tweenIdList = {}
 end
 
-slot0.FlyDuration = 0.3
+var_0_0.FlyDuration = 0.3
 
-function slot0.startAllocateCardEnergy(slot0)
-	tabletool.clear(slot0.tweenIdList)
+function var_0_0.startAllocateCardEnergy(arg_5_0)
+	local var_5_0 = FightCardModel.instance:getHandCardData()
 
-	slot0.flyCount = 0
-	slot0.arrivedCount = 0
-	slot0.tempVector2 = slot0.tempVector2 or Vector2()
+	tabletool.clear(arg_5_0.tweenIdList)
 
-	gohelper.setActive(slot0.goFlyContainer, true)
+	arg_5_0.flyCount = 0
+	arg_5_0.arrivedCount = 0
+	arg_5_0.tempVector2 = arg_5_0.tempVector2 or Vector2()
 
-	for slot5, slot6 in ipairs(FightCardModel.instance:getHandCardData()) do
-		if slot6.energy and slot6.energy > 0 and slot0.handCardView:getHandCardItem(slot5) then
-			slot0.flyCount = slot0.flyCount + 1
-			slot8, slot9 = slot7:getASFDScreenPos()
+	gohelper.setActive(arg_5_0.goFlyContainer, true)
 
-			slot0.tempVector2:Set(slot8, slot9)
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		if iter_5_1.energy and iter_5_1.energy > 0 then
+			local var_5_1 = arg_5_0.handCardView:getHandCardItem(iter_5_0)
 
-			slot10, slot11 = recthelper.screenPosToAnchorPos2(slot0.tempVector2, slot0.rectFlyContainer)
-			slot12 = slot0:getFlyItem(slot0.flyCount)
+			if var_5_1 then
+				arg_5_0.flyCount = arg_5_0.flyCount + 1
 
-			recthelper.setAnchor(slot12.rectTr, 0, 0)
-			table.insert(slot0.tweenIdList, ZProj.TweenHelper.DOAnchorPos(slot12.rectTr, slot10, slot11, uv0.FlyDuration, slot0.onFlyDone, slot0))
+				local var_5_2, var_5_3 = var_5_1:getASFDScreenPos()
+
+				arg_5_0.tempVector2:Set(var_5_2, var_5_3)
+
+				local var_5_4, var_5_5 = recthelper.screenPosToAnchorPos2(arg_5_0.tempVector2, arg_5_0.rectFlyContainer)
+				local var_5_6 = arg_5_0:getFlyItem(arg_5_0.flyCount)
+
+				recthelper.setAnchor(var_5_6.rectTr, 0, 0)
+
+				local var_5_7 = ZProj.TweenHelper.DOAnchorPos(var_5_6.rectTr, var_5_4, var_5_5, var_0_0.FlyDuration, arg_5_0.onFlyDone, arg_5_0)
+
+				table.insert(arg_5_0.tweenIdList, var_5_7)
+			end
 		end
 	end
 
-	slot0.animatorPlayer:Play("close", slot0._hideASFD, slot0)
+	arg_5_0.animatorPlayer:Play("close", arg_5_0._hideASFD, arg_5_0)
 
-	if slot0.flyCount < 1 then
+	if arg_5_0.flyCount < 1 then
 		FightController.instance:dispatchEvent(FightEvent.ASFD_AllocateCardEnergyDone)
 	end
 end
 
-function slot0.onFlyDone(slot0)
-	slot0.arrivedCount = slot0.arrivedCount + 1
+function var_0_0.onFlyDone(arg_6_0)
+	arg_6_0.arrivedCount = arg_6_0.arrivedCount + 1
 
-	if slot0.arrivedCount < slot0.flyCount then
+	if arg_6_0.arrivedCount < arg_6_0.flyCount then
 		return
 	end
 
 	AudioMgr.instance:trigger(20248002)
-	tabletool.clear(slot0.tweenIdList)
+	tabletool.clear(arg_6_0.tweenIdList)
 
-	for slot4, slot5 in ipairs(slot0.flyItemList) do
-		slot0:resetFlyItem(slot5)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.flyItemList) do
+		arg_6_0:resetFlyItem(iter_6_1)
 	end
 
-	gohelper.setActive(slot0.goFlyContainer, false)
+	gohelper.setActive(arg_6_0.goFlyContainer, false)
 	FightController.instance:dispatchEvent(FightEvent.ASFD_AllocateCardEnergyDone)
 end
 
-function slot0.onTeamEnergyChange(slot0, slot1, slot2, slot3)
-	if slot1 ~= FightEnum.EntitySide.MySide then
+function var_0_0.onTeamEnergyChange(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_1 ~= FightEnum.EntitySide.MySide then
 		return
 	end
 
-	if slot3 <= 0 then
-		return slot0:showASFD()
+	if arg_7_3 <= 0 then
+		return arg_7_0:showASFD()
 	end
 
 	AudioMgr.instance:trigger(20248001)
 
-	if slot0.goASFD.activeInHierarchy then
-		slot0:playClickAnim()
+	if arg_7_0.goASFD.activeInHierarchy then
+		arg_7_0:playClickAnim()
 	else
-		slot0:showASFD()
+		arg_7_0:showASFD()
 	end
 
-	slot0.txtASFDEnergy.text = slot3
+	arg_7_0.txtASFDEnergy.text = arg_7_3
 end
 
-function slot0.playClickAnim(slot0)
-	gohelper.setActive(slot0.goClick, false)
-	gohelper.setActive(slot0.goClick, true)
+function var_0_0.playClickAnim(arg_8_0)
+	gohelper.setActive(arg_8_0.goClick, false)
+	gohelper.setActive(arg_8_0.goClick, true)
 end
 
-function slot0.hideASFD(slot0)
-	if slot0.goASFD.activeInHierarchy then
-		gohelper.setActive(slot0.goASFD, false)
-		slot0.animatorPlayer:Play("close", slot0._hideASFD, slot0)
-	end
-end
-
-function slot0._hideASFD(slot0)
-	gohelper.setActive(slot0.goASFD, false)
-end
-
-function slot0.showASFD(slot0)
-	gohelper.setActive(slot0.goASFD, true)
-end
-
-function slot0.stageChange(slot0)
-	if FightDataHelper.stageMgr:getCurStage() ~= FightStageMgr.StageType.Enter and slot1 ~= FightStageMgr.StageType.Play then
-		slot0:hideASFD()
+function var_0_0.hideASFD(arg_9_0)
+	if arg_9_0.goASFD.activeInHierarchy then
+		gohelper.setActive(arg_9_0.goASFD, false)
+		arg_9_0.animatorPlayer:Play("close", arg_9_0._hideASFD, arg_9_0)
 	end
 end
 
-function slot0.createFlyItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.rectTr = slot1:GetComponent(gohelper.Type_RectTransform)
-
-	return slot2
+function var_0_0._hideASFD(arg_10_0)
+	gohelper.setActive(arg_10_0.goASFD, false)
 end
 
-function slot0.getFlyItem(slot0, slot1)
-	if slot0.flyItemList[slot1] then
-		gohelper.setActive(slot2.go, true)
+function var_0_0.showASFD(arg_11_0)
+	gohelper.setActive(arg_11_0.goASFD, true)
+end
 
-		return slot2
+function var_0_0.stageChange(arg_12_0)
+	local var_12_0 = FightDataHelper.stageMgr:getCurStage()
+
+	if var_12_0 ~= FightStageMgr.StageType.Enter and var_12_0 ~= FightStageMgr.StageType.Play then
+		arg_12_0:hideASFD()
+	end
+end
+
+function var_0_0.createFlyItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getUserDataTb_()
+
+	var_13_0.go = arg_13_1
+	var_13_0.rectTr = arg_13_1:GetComponent(gohelper.Type_RectTransform)
+
+	return var_13_0
+end
+
+function var_0_0.getFlyItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.flyItemList[arg_14_1]
+
+	if var_14_0 then
+		gohelper.setActive(var_14_0.go, true)
+
+		return var_14_0
 	end
 
-	slot2 = slot0:createFlyItem(gohelper.cloneInPlace(slot0.goFlyItem))
+	local var_14_1 = gohelper.cloneInPlace(arg_14_0.goFlyItem)
+	local var_14_2 = arg_14_0:createFlyItem(var_14_1)
 
-	gohelper.setActive(slot2.go, true)
-	table.insert(slot0.flyItemList, slot2)
+	gohelper.setActive(var_14_2.go, true)
+	table.insert(arg_14_0.flyItemList, var_14_2)
 
-	return slot2
+	return var_14_2
 end
 
-function slot0.resetFlyItem(slot0, slot1)
-	recthelper.setAnchor(slot1.rectTr, 0, 0)
-	gohelper.setActive(slot1.go, false)
+function var_0_0.resetFlyItem(arg_15_0, arg_15_1)
+	recthelper.setAnchor(arg_15_1.rectTr, 0, 0)
+	gohelper.setActive(arg_15_1.go, false)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:hideASFD()
+function var_0_0.onUpdateParam(arg_16_0)
+	arg_16_0:hideASFD()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.tweenIdList) do
-		ZProj.TweenHelper.KillById(slot5)
+function var_0_0.onDestroyView(arg_17_0)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0.tweenIdList) do
+		ZProj.TweenHelper.KillById(iter_17_1)
 	end
 
-	tabletool.clear(slot0.tweenIdList)
+	tabletool.clear(arg_17_0.tweenIdList)
 end
 
-return slot0
+return var_0_0

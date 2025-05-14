@@ -1,111 +1,134 @@
-module("modules.common.activity.ActivityStageHelper", package.seeall)
+﻿module("modules.common.activity.ActivityStageHelper", package.seeall)
 
-slot0 = class("ActivityStageHelper")
-slot1 = {}
-slot2 = false
+local var_0_0 = class("ActivityStageHelper")
+local var_0_1 = {}
+local var_0_2 = false
 
-function slot0.initActivityStage()
-	uv0 = true
+function var_0_0.initActivityStage()
+	var_0_2 = true
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), "")) then
-		slot2 = nil
+	local var_1_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), "")
 
-		for slot6, slot7 in ipairs(string.split(slot0, ";")) do
-			if not string.nilorempty(slot7) then
-				slot2 = string.splitToNumber(slot7, "#")
-				uv1[slot2[1]] = slot2
+	if not string.nilorempty(var_1_0) then
+		local var_1_1 = string.split(var_1_0, ";")
+		local var_1_2
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			if not string.nilorempty(iter_1_1) then
+				local var_1_3 = string.splitToNumber(iter_1_1, "#")
+
+				var_0_1[var_1_3[1]] = var_1_3
 			end
 		end
 	end
 end
 
-function slot0.checkActivityStageHasChange(slot0)
-	if not uv0 then
-		uv1.initActivityStage()
+function var_0_0.checkActivityStageHasChange(arg_2_0)
+	if not var_0_2 then
+		var_0_0.initActivityStage()
 	end
 
-	for slot4, slot5 in ipairs(slot0) do
-		if uv1.checkOneActivityStageHasChange(slot5) then
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
+		if var_0_0.checkOneActivityStageHasChange(iter_2_1) then
 			return true
 		end
 	end
 end
 
-function slot0.checkOneActivityStageHasChange(slot0)
-	if not uv0 then
-		uv1.initActivityStage()
+function var_0_0.checkOneActivityStageHasChange(arg_3_0)
+	if not var_0_2 then
+		var_0_0.initActivityStage()
 	end
 
-	if ActivityHelper.getActivityStatus(slot0) ~= ActivityEnum.ActivityStatus.Normal then
+	if ActivityHelper.getActivityStatus(arg_3_0) ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	if not uv2[slot0] then
+	local var_3_0 = var_0_1[arg_3_0]
+
+	if not var_3_0 then
 		return true
 	end
 
-	if not ActivityModel.instance:getActivityInfo()[slot0] then
+	local var_3_1 = ActivityModel.instance:getActivityInfo()[arg_3_0]
+
+	if not var_3_1 then
 		return false
 	end
 
-	return slot2[2] ~= (slot3:isOpen() and 1 or 0) or slot2[3] ~= slot3:getCurrentStage() or slot2[4] ~= (slot3:isUnlock() and 1 or 0)
+	local var_3_2 = var_3_1:isOpen() and 1 or 0
+	local var_3_3 = var_3_1:getCurrentStage()
+	local var_3_4 = var_3_1:isUnlock() and 1 or 0
+
+	return var_3_0[2] ~= var_3_2 or var_3_0[3] ~= var_3_3 or var_3_0[4] ~= var_3_4
 end
 
-function slot0.recordActivityStage(slot0)
-	if not uv0 then
-		uv1.initActivityStage()
+function var_0_0.recordActivityStage(arg_4_0)
+	if not var_0_2 then
+		var_0_0.initActivityStage()
 	end
 
-	for slot4, slot5 in ipairs(slot0) do
-		uv1.recordOneActivityStage(slot5)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0) do
+		var_0_0.recordOneActivityStage(iter_4_1)
 	end
 end
 
-function slot0.recordOneActivityStage(slot0)
-	if not uv0 then
-		uv1.initActivityStage()
+function var_0_0.recordOneActivityStage(arg_5_0)
+	if not var_0_2 then
+		var_0_0.initActivityStage()
 	end
 
-	if not uv1.checkOneActivityStageHasChange(slot0) then
+	if not var_0_0.checkOneActivityStageHasChange(arg_5_0) then
 		return
 	end
 
-	slot2 = false
-	slot5, slot6 = nil
+	local var_5_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), "")
+	local var_5_1 = false
+	local var_5_2 = {}
+	local var_5_3 = string.split(var_5_0, ";")
+	local var_5_4
+	local var_5_5
 
-	for slot10, slot11 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), ""), ";")) do
-		if not string.nilorempty(slot11) then
-			if string.splitToNumber(slot11, "#") and slot5[1] == slot0 then
-				slot2 = true
+	for iter_5_0, iter_5_1 in ipairs(var_5_3) do
+		if not string.nilorempty(iter_5_1) then
+			local var_5_6 = string.splitToNumber(iter_5_1, "#")
 
-				table.insert({}, uv1._buildActPlayerPrefsString(slot0))
+			if var_5_6 and var_5_6[1] == arg_5_0 then
+				var_5_1 = true
+				var_5_5 = var_0_0._buildActPlayerPrefsString(arg_5_0)
+
+				table.insert(var_5_2, var_5_5)
 			else
-				table.insert(slot3, slot11)
+				table.insert(var_5_2, iter_5_1)
 			end
 		end
 	end
 
-	if not slot2 then
-		table.insert(slot3, uv1._buildActPlayerPrefsString(slot0))
+	if not var_5_1 then
+		var_5_5 = var_0_0._buildActPlayerPrefsString(arg_5_0)
+
+		table.insert(var_5_2, var_5_5)
 	end
 
-	uv2[slot0] = string.splitToNumber(slot6, "#")
+	var_0_1[arg_5_0] = string.splitToNumber(var_5_5, "#")
 
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), table.concat(slot3, ";"))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), table.concat(var_5_2, ";"))
 	ActivityController.instance:dispatchEvent(ActivityEvent.ChangeActivityStage)
 end
 
-function slot0._buildActPlayerPrefsString(slot0)
-	if not ActivityModel.instance:getActivityInfo()[slot0] then
+function var_0_0._buildActPlayerPrefsString(arg_6_0)
+	local var_6_0 = ActivityModel.instance:getActivityInfo()[arg_6_0]
+
+	if not var_6_0 then
 		return
 	end
 
-	return string.format("%s#%s#%s#%s", slot0, slot1:isOpen() and 1 or 0, slot1:getCurrentStage(), slot1:isUnlock() and 1 or 0)
+	return string.format("%s#%s#%s#%s", arg_6_0, var_6_0:isOpen() and 1 or 0, var_6_0:getCurrentStage(), var_6_0:isUnlock() and 1 or 0)
 end
 
-function slot0.clear()
-	uv0 = {}
-	uv1 = false
+function var_0_0.clear()
+	var_0_1 = {}
+	var_0_2 = false
 end
 
-return slot0
+return var_0_0

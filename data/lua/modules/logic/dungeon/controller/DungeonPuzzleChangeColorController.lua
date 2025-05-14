@@ -1,21 +1,23 @@
-module("modules.logic.dungeon.controller.DungeonPuzzleChangeColorController", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonPuzzleChangeColorController", package.seeall)
 
-slot0 = class("DungeonPuzzleChangeColorController", BaseController)
+local var_0_0 = class("DungeonPuzzleChangeColorController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.enterDecryptChangeColor(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.DungeonPuzzleChangeColorView, slot1)
+function var_0_0.enterDecryptChangeColor(arg_3_0, arg_3_1)
+	ViewMgr.instance:openView(ViewName.DungeonPuzzleChangeColorView, arg_3_1)
 end
 
-function slot0.openDecryptTipView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.DecryptPropTipView, slot1)
+function var_0_0.openDecryptTipView(arg_4_0, arg_4_1)
+	ViewMgr.instance:openView(ViewName.DecryptPropTipView, arg_4_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

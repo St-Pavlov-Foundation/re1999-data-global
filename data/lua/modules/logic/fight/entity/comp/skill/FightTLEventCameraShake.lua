@@ -1,11 +1,15 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventCameraShake", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraShake", package.seeall)
 
-slot0 = class("FightTLEventCameraShake")
+local var_0_0 = class("FightTLEventCameraShake")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = tonumber(arg_1_3[1]) or 0
+	local var_1_1 = tonumber(arg_1_3[2]) or 0
+	local var_1_2 = tonumber(arg_1_3[3]) or 0
+
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		GameSceneMgr.instance:getCurScene().camera:shake(slot2, tonumber(slot3[1]) or 0, tonumber(slot3[3]) or 0, tonumber(slot3[2]) or 0)
+		GameSceneMgr.instance:getCurScene().camera:shake(arg_1_2, var_1_0, var_1_2, var_1_1)
 	end
 end
 
-return slot0
+return var_0_0

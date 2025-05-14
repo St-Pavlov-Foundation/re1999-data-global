@@ -1,20 +1,20 @@
-module("modules.logic.room.utils.RoomWaveHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomWaveHelper", package.seeall)
 
 return {
-	getWaveList = function (slot0, slot1)
-		slot2 = 0
-		slot3 = true
+	getWaveList = function(arg_1_0, arg_1_1)
+		local var_1_0 = 0
+		local var_1_1 = true
 
-		for slot7, slot8 in ipairs(slot0) do
-			if not slot8 then
-				slot3 = false
-				slot2 = slot7
+		for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
+			if not iter_1_1 then
+				var_1_1 = false
+				var_1_0 = iter_1_0
 
 				break
 			end
 		end
 
-		if slot3 then
+		if var_1_1 then
 			return {
 				RoomScenePreloader.ResEffectWaveList[6]
 			}, {
@@ -24,37 +24,42 @@ return {
 			}
 		end
 
-		slot4 = {}
-		slot5 = {}
-		slot6 = {}
-		slot9 = slot2
+		local var_1_2 = {}
+		local var_1_3 = {}
+		local var_1_4 = {}
+		local var_1_5 = 0
+		local var_1_6 = false
+		local var_1_7 = var_1_0
 
-		for slot13 = slot2, slot2 + 5 do
-			slot8 = false or slot1[slot14]
+		for iter_1_2 = var_1_0, var_1_0 + 5 do
+			local var_1_8 = (iter_1_2 - 1) % 6 + 1
+			local var_1_9 = arg_1_0[var_1_8]
 
-			if slot0[(slot13 - 1) % 6 + 1] then
-				slot7 = 0 + 1
+			var_1_6 = var_1_6 or arg_1_1[var_1_8]
+
+			if var_1_9 then
+				var_1_5 = var_1_5 + 1
 			end
 
-			if (not slot15 or slot13 == slot2 + 5) and slot7 > 0 then
-				if slot8 then
-					table.insert(slot4, RoomScenePreloader.ResEffectWaveWithRiverList[slot7])
-					table.insert(slot6, RoomScenePreloader.ResEffectWaveWithRiverList[slot7])
+			if (not var_1_9 or iter_1_2 == var_1_0 + 5) and var_1_5 > 0 then
+				if var_1_6 then
+					table.insert(var_1_2, RoomScenePreloader.ResEffectWaveWithRiverList[var_1_5])
+					table.insert(var_1_4, RoomScenePreloader.ResEffectWaveWithRiverList[var_1_5])
 				else
-					table.insert(slot4, RoomScenePreloader.ResEffectWaveList[slot7])
-					table.insert(slot6, RoomScenePreloader.ResEffectWaveList[slot7])
+					table.insert(var_1_2, RoomScenePreloader.ResEffectWaveList[var_1_5])
+					table.insert(var_1_4, RoomScenePreloader.ResEffectWaveList[var_1_5])
 				end
 
-				table.insert(slot5, slot9)
+				table.insert(var_1_3, var_1_7)
 			end
 
-			if not slot15 then
-				slot9 = slot14 % 6 + 1
-				slot7 = 0
-				slot8 = false
+			if not var_1_9 then
+				var_1_7 = var_1_8 % 6 + 1
+				var_1_5 = 0
+				var_1_6 = false
 			end
 		end
 
-		return slot4, slot5, slot4
+		return var_1_2, var_1_3, var_1_2
 	end
 }

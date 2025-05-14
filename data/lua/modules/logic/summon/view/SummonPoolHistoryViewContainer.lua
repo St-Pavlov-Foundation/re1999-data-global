@@ -1,41 +1,43 @@
-module("modules.logic.summon.view.SummonPoolHistoryViewContainer", package.seeall)
+﻿module("modules.logic.summon.view.SummonPoolHistoryViewContainer", package.seeall)
 
-slot0 = class("SummonPoolHistoryViewContainer", BaseViewContainer)
+local var_0_0 = class("SummonPoolHistoryViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, SummonPoolHistoryView.New())
-	table.insert(slot1, slot0:_createScrollView())
+	table.insert(var_1_0, SummonPoolHistoryView.New())
+	table.insert(var_1_0, arg_1_0:_createScrollView())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-function slot0._createScrollView(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "allbg/left/scroll_pooltype"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "allbg/left/pooltypeitem"
-	slot1.cellClass = SummonPoolHistoryTypeItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 380
-	slot1.cellHeight = 116
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 8
-	slot1.startSpace = 0
+function var_0_0._createScrollView(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
 
-	for slot6 = 1, 10 do
+	var_3_0.scrollGOPath = "allbg/left/scroll_pooltype"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_3_0.prefabUrl = "allbg/left/pooltypeitem"
+	var_3_0.cellClass = SummonPoolHistoryTypeItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirV
+	var_3_0.lineCount = 1
+	var_3_0.cellWidth = 380
+	var_3_0.cellHeight = 116
+	var_3_0.cellSpaceH = 0
+	var_3_0.cellSpaceV = 8
+	var_3_0.startSpace = 0
+
+	local var_3_1 = {}
+
+	for iter_3_0 = 1, 10 do
+		var_3_1[iter_3_0] = (iter_3_0 - 1) * 0.03
 	end
 
-	return LuaListScrollViewWithAnimator.New(SummonPoolHistoryTypeListModel.instance, slot1, {
-		[slot6] = (slot6 - 1) * 0.03
-	})
+	return LuaListScrollViewWithAnimator.New(SummonPoolHistoryTypeListModel.instance, var_3_0, var_3_1)
 end
 
-return slot0
+return var_0_0

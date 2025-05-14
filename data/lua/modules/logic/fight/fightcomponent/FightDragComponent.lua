@@ -1,53 +1,65 @@
-module("modules.logic.fight.fightcomponent.FightDragComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightDragComponent", package.seeall)
 
-slot0 = class("FightDragComponent", FightBaseClass)
+local var_0_0 = class("FightDragComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._dragDic = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._dragDic = {}
 end
 
-function slot0.registDragBegin(slot0, slot1, slot2, slot3, slot4)
-	slot0._dragDic[slot1:GetInstanceID()] = slot1
+function var_0_0.registDragBegin(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = arg_2_1:GetInstanceID()
 
-	slot1:AddDragBeginListener(slot2, slot3, slot4)
+	arg_2_0._dragDic[var_2_0] = arg_2_1
+
+	arg_2_1:AddDragBeginListener(arg_2_2, arg_2_3, arg_2_4)
 end
 
-function slot0.registDrag(slot0, slot1, slot2, slot3, slot4)
-	slot0._dragDic[slot1:GetInstanceID()] = slot1
+function var_0_0.registDrag(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = arg_3_1:GetInstanceID()
 
-	slot1:AddDragListener(slot2, slot3, slot4)
+	arg_3_0._dragDic[var_3_0] = arg_3_1
+
+	arg_3_1:AddDragListener(arg_3_2, arg_3_3, arg_3_4)
 end
 
-function slot0.registDragEnd(slot0, slot1, slot2, slot3, slot4)
-	slot0._dragDic[slot1:GetInstanceID()] = slot1
+function var_0_0.registDragEnd(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local var_4_0 = arg_4_1:GetInstanceID()
 
-	slot1:AddDragEndListener(slot2, slot3, slot4)
+	arg_4_0._dragDic[var_4_0] = arg_4_1
+
+	arg_4_1:AddDragEndListener(arg_4_2, arg_4_3, arg_4_4)
 end
 
-function slot0.removeDragBegin(slot0, slot1)
-	if slot0._dragDic[slot1:GetInstanceID()] then
-		slot0._dragDic[slot2]:RemoveDragBeginListener()
+function var_0_0.removeDragBegin(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1:GetInstanceID()
+
+	if arg_5_0._dragDic[var_5_0] then
+		arg_5_0._dragDic[var_5_0]:RemoveDragBeginListener()
 	end
 end
 
-function slot0.removeDrag(slot0, slot1)
-	if slot0._dragDic[slot1:GetInstanceID()] then
-		slot0._dragDic[slot2]:RemoveDragListener()
+function var_0_0.removeDrag(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1:GetInstanceID()
+
+	if arg_6_0._dragDic[var_6_0] then
+		arg_6_0._dragDic[var_6_0]:RemoveDragListener()
 	end
 end
 
-function slot0.removeDragEnd(slot0, slot1)
-	if slot0._dragDic[slot1:GetInstanceID()] then
-		slot0._dragDic[slot2]:RemoveDragEndListener()
+function var_0_0.removeDragEnd(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1:GetInstanceID()
+
+	if arg_7_0._dragDic[var_7_0] then
+		arg_7_0._dragDic[var_7_0]:RemoveDragEndListener()
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4, slot5 in pairs(slot0._dragDic) do
-		slot5:RemoveDragBeginListener()
-		slot5:RemoveDragListener()
-		slot5:RemoveDragEndListener()
+function var_0_0.onDestructor(arg_8_0)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._dragDic) do
+		iter_8_1:RemoveDragBeginListener()
+		iter_8_1:RemoveDragListener()
+		iter_8_1:RemoveDragEndListener()
 	end
 end
 
-return slot0
+return var_0_0

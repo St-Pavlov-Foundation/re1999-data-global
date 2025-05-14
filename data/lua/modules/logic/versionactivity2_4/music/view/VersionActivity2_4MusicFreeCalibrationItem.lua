@@ -1,75 +1,83 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationItem", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeCalibrationItem", ListScrollCellExtend)
+local var_0_0 = class("VersionActivity2_4MusicFreeCalibrationItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._btnnote = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_note")
-	slot0._imageopen = gohelper.findChild(slot0.viewGO, "#btn_note/#image_open")
-	slot0._imageicon1 = gohelper.findChildImage(slot0.viewGO, "#btn_note/#image_open/#image_icon1")
-	slot0._txtname1 = gohelper.findChildText(slot0.viewGO, "#btn_note/#image_open/#txt_name1")
-	slot0._imageclose = gohelper.findChildImage(slot0.viewGO, "#btn_note/#image_close")
-	slot0._imageicon2 = gohelper.findChildImage(slot0.viewGO, "#btn_note/#image_close/#image_icon2")
-	slot0._txtname2 = gohelper.findChildText(slot0.viewGO, "#btn_note/#image_close/#txt_name2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnnote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_note")
+	arg_1_0._imageopen = gohelper.findChild(arg_1_0.viewGO, "#btn_note/#image_open")
+	arg_1_0._imageicon1 = gohelper.findChildImage(arg_1_0.viewGO, "#btn_note/#image_open/#image_icon1")
+	arg_1_0._txtname1 = gohelper.findChildText(arg_1_0.viewGO, "#btn_note/#image_open/#txt_name1")
+	arg_1_0._imageclose = gohelper.findChildImage(arg_1_0.viewGO, "#btn_note/#image_close")
+	arg_1_0._imageicon2 = gohelper.findChildImage(arg_1_0.viewGO, "#btn_note/#image_close/#image_icon2")
+	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.viewGO, "#btn_note/#image_close/#txt_name2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnote:AddClickListener(slot0._btnnoteOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnnote:AddClickListener(arg_2_0._btnnoteOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnote:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnnote:RemoveClickListener()
 end
 
-function slot0._btnnoteOnClick(slot0)
-	slot0._isOpen = not slot0._isOpen
+function var_0_0._btnnoteOnClick(arg_4_0)
+	arg_4_0._isOpen = not arg_4_0._isOpen
 
-	slot0:_updateStatus()
+	arg_4_0:_updateStatus()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._id = slot1
-	slot0._isOpen = VersionActivity2_4MusicFreeModel.instance:getAccompany(slot1) == VersionActivity2_4MusicEnum.AccompanyStatus.Open
-	slot2 = slot0:_getName()
-	slot0._txtname1.text = slot2
-	slot0._txtname2.text = slot2
-	slot3 = VersionActivity2_4MusicFreeModel.instance:getAccompanyIcon(slot1)
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._id = arg_8_1
+	arg_8_0._isOpen = VersionActivity2_4MusicFreeModel.instance:getAccompany(arg_8_1) == VersionActivity2_4MusicEnum.AccompanyStatus.Open
 
-	UISpriteSetMgr.instance:setMusicSprite(slot0._imageicon1, slot3)
-	UISpriteSetMgr.instance:setMusicSprite(slot0._imageicon2, slot3)
-	slot0:_updateStatus()
+	local var_8_0 = arg_8_0:_getName()
+
+	arg_8_0._txtname1.text = var_8_0
+	arg_8_0._txtname2.text = var_8_0
+
+	local var_8_1 = VersionActivity2_4MusicFreeModel.instance:getAccompanyIcon(arg_8_1)
+
+	UISpriteSetMgr.instance:setMusicSprite(arg_8_0._imageicon1, var_8_1)
+	UISpriteSetMgr.instance:setMusicSprite(arg_8_0._imageicon2, var_8_1)
+	arg_8_0:_updateStatus()
 end
 
-function slot0._updateStatus(slot0)
-	gohelper.setActive(slot0._imageopen, slot0._isOpen)
-	gohelper.setActive(slot0._imageclose, not slot0._isOpen)
+function var_0_0._updateStatus(arg_9_0)
+	gohelper.setActive(arg_9_0._imageopen, arg_9_0._isOpen)
+	gohelper.setActive(arg_9_0._imageclose, not arg_9_0._isOpen)
 
-	slot1 = slot0._isOpen and VersionActivity2_4MusicEnum.AccompanyStatus.Open or VersionActivity2_4MusicEnum.AccompanyStatus.Close
+	local var_9_0 = arg_9_0._isOpen and VersionActivity2_4MusicEnum.AccompanyStatus.Open or VersionActivity2_4MusicEnum.AccompanyStatus.Close
 
-	VersionActivity2_4MusicFreeModel.instance:setAccompany(slot0._id, slot1)
-	AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[slot0._id], slot1)
+	VersionActivity2_4MusicFreeModel.instance:setAccompany(arg_9_0._id, var_9_0)
+	AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[arg_9_0._id], var_9_0)
 end
 
-function slot0._getName(slot0)
-	return luaLang("MusicAccompany" .. slot0._id)
+function var_0_0._getName(arg_10_0)
+	return luaLang("MusicAccompany" .. arg_10_0._id)
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

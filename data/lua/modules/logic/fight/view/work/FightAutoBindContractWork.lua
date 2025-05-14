@@ -1,67 +1,75 @@
-module("modules.logic.fight.view.work.FightAutoBindContractWork", package.seeall)
+﻿module("modules.logic.fight.view.work.FightAutoBindContractWork", package.seeall)
 
-slot0 = class("FightAutoBindContractWork", BaseWork)
+local var_0_0 = class("FightAutoBindContractWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
 
-	if string.nilorempty(FightModel.instance.notifyEntityId) then
-		return slot0:onDone(true)
+	local var_2_0 = FightModel.instance.notifyEntityId
+
+	if string.nilorempty(var_2_0) then
+		return arg_2_0:onDone(true)
 	end
 
-	if not FightHelper.getEntity(slot1) then
-		return slot0:onDone(true)
+	if not FightHelper.getEntity(var_2_0) then
+		return arg_2_0:onDone(true)
 	end
 
-	if not FightModel.instance.canContractList or #slot3 < 1 then
-		return slot0:onDone(true)
+	local var_2_1 = FightModel.instance.canContractList
+
+	if not var_2_1 or #var_2_1 < 1 then
+		return arg_2_0:onDone(true)
 	end
 
-	return slot0:autoContract(slot3, slot1)
+	return arg_2_0:autoContract(var_2_1, var_2_0)
 end
 
-function slot0.autoContract(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.autoContract(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0
+	local var_3_1 = 0
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9 ~= slot2 then
-			slot11 = FightDataHelper.entityMgr:getById(slot9) and slot10.attrMO
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		if iter_3_1 ~= arg_3_2 then
+			local var_3_2 = FightDataHelper.entityMgr:getById(iter_3_1)
+			local var_3_3 = var_3_2 and var_3_2.attrMO
+			local var_3_4 = var_3_3 and var_3_3.attack
 
-			if slot11 and slot11.attack and 0 < slot12 then
-				slot3 = slot9
-				slot4 = slot12
+			if var_3_4 and var_3_1 < var_3_4 then
+				var_3_0 = iter_3_1
+				var_3_1 = var_3_4
 			end
 		end
 	end
 
-	if not slot3 then
-		return slot0:onDone(true)
+	if not var_3_0 then
+		return arg_3_0:onDone(true)
 	end
 
-	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, slot0._onRespUseClothSkillFail, slot0)
-	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0._onClothSkillRoundSequenceFinish, slot0)
-	FightRpc.instance:sendUseClothSkillRequest(0, slot2, slot3, FightEnum.ClothSkillType.Contract)
+	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_3_0._onRespUseClothSkillFail, arg_3_0)
+	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_3_0._onClothSkillRoundSequenceFinish, arg_3_0)
+	FightRpc.instance:sendUseClothSkillRequest(0, arg_3_2, var_3_0, FightEnum.ClothSkillType.Contract)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(false)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(false)
 end
 
-function slot0._onRespUseClothSkillFail(slot0)
-	slot0:onDone(false)
+function var_0_0._onRespUseClothSkillFail(arg_5_0)
+	arg_5_0:onDone(false)
 end
 
-function slot0._onClothSkillRoundSequenceFinish(slot0)
-	slot0:onDone(true)
+function var_0_0._onClothSkillRoundSequenceFinish(arg_6_0)
+	arg_6_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, slot0._onRespUseClothSkillFail, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0._onClothSkillRoundSequenceFinish, slot0)
+function var_0_0.clearWork(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0._delayDone, arg_7_0)
+	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, arg_7_0._onRespUseClothSkillFail, arg_7_0)
+	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_7_0._onClothSkillRoundSequenceFinish, arg_7_0)
 end
 
-return slot0
+return var_0_0

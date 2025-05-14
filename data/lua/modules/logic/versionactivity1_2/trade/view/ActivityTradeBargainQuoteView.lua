@@ -1,66 +1,70 @@
-module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainQuoteView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainQuoteView", package.seeall)
 
-slot0 = class("ActivityTradeBargainQuoteView", BaseView)
+local var_0_0 = class("ActivityTradeBargainQuoteView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotrade = gohelper.findChild(slot0.viewGO, "#go_trade")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotrade = gohelper.findChild(arg_1_0.viewGO, "#go_trade")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.tradeItem = ActivityQuoteTradeItem.New(slot0._gotrade)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.tradeItem = ActivityQuoteTradeItem.New(arg_4_0._gotrade)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.tradeItem then
-		slot0.tradeItem:destory()
+function var_0_0.onDestroyView(arg_5_0)
+	if arg_5_0.tradeItem then
+		arg_5_0.tradeItem:destory()
 
-		slot0.tradeItem = nil
+		arg_5_0.tradeItem = nil
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, slot0.onNegotiate, slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, arg_6_0.onNegotiate, arg_6_0)
+	arg_6_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, slot0.onNegotiate, slot0)
+function var_0_0.onClose(arg_7_0)
+	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveInfos, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.RefreshQuoteView, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveDeal, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:removeEventCb(Activity117Controller.instance, Activity117Event.ReceiveNegotiate, arg_7_0.onNegotiate, arg_7_0)
 end
 
-function slot0._refreshUI(slot0)
-	slot0.tradeItem:refresh(slot0.viewContainer:getActId())
+function var_0_0._refreshUI(arg_8_0)
+	local var_8_0 = arg_8_0.viewContainer:getActId()
+
+	arg_8_0.tradeItem:refresh(var_8_0)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	if slot1 ~= slot0.viewContainer:getActId() then
+function var_0_0.refreshUI(arg_9_0, arg_9_1)
+	if arg_9_1 ~= arg_9_0.viewContainer:getActId() then
 		return
 	end
 
-	slot0:_refreshUI()
+	arg_9_0:_refreshUI()
 end
 
-function slot0.onNegotiate(slot0, slot1)
-	if slot1 ~= slot0.viewContainer:getActId() then
+function var_0_0.onNegotiate(arg_10_0, arg_10_1)
+	if arg_10_1 ~= arg_10_0.viewContainer:getActId() then
 		return
 	end
 
-	slot0.tradeItem:onNegotiate()
+	arg_10_0.tradeItem:onNegotiate()
 end
 
-return slot0
+return var_0_0

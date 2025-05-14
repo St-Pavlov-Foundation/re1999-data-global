@@ -1,7 +1,8 @@
-module("modules.logic.gm.view.GMPostProcessView", package.seeall)
+﻿module("modules.logic.gm.view.GMPostProcessView", package.seeall)
 
-slot0 = class("GMPostProcessView", BaseView)
-slot0.Pos = {
+local var_0_0 = class("GMPostProcessView", BaseView)
+
+var_0_0.Pos = {
 	Normal = {
 		x = 0,
 		y = 0
@@ -15,73 +16,77 @@ slot0.Pos = {
 		y = 451
 	}
 }
-slot0.SrcHeight = {
+var_0_0.SrcHeight = {
 	Large = 1027,
 	Hide = 568,
 	Normal = 568
 }
-slot0.State = {
+var_0_0.State = {
 	Large = "Large",
 	Hide = "Hide",
 	Normal = "Normal"
 }
 
-function slot0.onInitView(slot0)
-	slot0._state = uv0.State.Normal
-	slot0._btnNormal = gohelper.findChildButtonWithAudio(slot0.viewGO, "Title/btnNormal")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Title/btnClose")
-	slot0._btnHide = gohelper.findChildButtonWithAudio(slot0.viewGO, "Title/btnHide")
-	slot0._btnLarge = gohelper.findChildButtonWithAudio(slot0.viewGO, "Title/btnLarge")
-	slot0._scrollGO = gohelper.findChild(slot0.viewGO, "scroll")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._state = var_0_0.State.Normal
+	arg_1_0._btnNormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/btnNormal")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/btnClose")
+	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/btnHide")
+	arg_1_0._btnLarge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/btnLarge")
+	arg_1_0._scrollGO = gohelper.findChild(arg_1_0.viewGO, "scroll")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnNormal:AddClickListener(slot0._onClickNormal, slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnHide:AddClickListener(slot0._onClickHide, slot0)
-	slot0._btnLarge:AddClickListener(slot0._onClickLarge, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnNormal:AddClickListener(arg_2_0._onClickNormal, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
+	arg_2_0._btnLarge:AddClickListener(arg_2_0._onClickLarge, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnNormal:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnHide:RemoveClickListener()
-	slot0._btnLarge:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnNormal:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnHide:RemoveClickListener()
+	arg_3_0._btnLarge:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateUI()
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:_updateUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
+	return
 end
 
-function slot0._updateUI(slot0)
-	gohelper.setActive(slot0._btnNormal.gameObject, slot0._state == uv0.State.Large)
-	gohelper.setActive(slot0._btnLarge.gameObject, slot0._state ~= uv0.State.Large)
+function var_0_0._updateUI(arg_6_0)
+	gohelper.setActive(arg_6_0._btnNormal.gameObject, arg_6_0._state == var_0_0.State.Large)
+	gohelper.setActive(arg_6_0._btnLarge.gameObject, arg_6_0._state ~= var_0_0.State.Large)
 
-	slot1 = uv0.Pos[slot0._state]
+	local var_6_0 = var_0_0.Pos[arg_6_0._state]
 
-	recthelper.setAnchor(slot0.viewGO.transform, slot1.x, slot1.y)
-	recthelper.setHeight(slot0._scrollGO.transform, uv0.SrcHeight[slot0._state])
+	recthelper.setAnchor(arg_6_0.viewGO.transform, var_6_0.x, var_6_0.y)
+
+	local var_6_1 = var_0_0.SrcHeight[arg_6_0._state]
+
+	recthelper.setHeight(arg_6_0._scrollGO.transform, var_6_1)
 end
 
-function slot0._onClickNormal(slot0)
-	slot0._state = uv0.State.Normal
+function var_0_0._onClickNormal(arg_7_0)
+	arg_7_0._state = var_0_0.State.Normal
 
-	slot0:_updateUI()
+	arg_7_0:_updateUI()
 end
 
-function slot0._onClickHide(slot0)
-	slot0._state = uv0.State.Hide
+function var_0_0._onClickHide(arg_8_0)
+	arg_8_0._state = var_0_0.State.Hide
 
-	slot0:_updateUI()
+	arg_8_0:_updateUI()
 end
 
-function slot0._onClickLarge(slot0)
-	slot0._state = uv0.State.Large
+function var_0_0._onClickLarge(arg_9_0)
+	arg_9_0._state = var_0_0.State.Large
 
-	slot0:_updateUI()
+	arg_9_0:_updateUI()
 end
 
-return slot0
+return var_0_0

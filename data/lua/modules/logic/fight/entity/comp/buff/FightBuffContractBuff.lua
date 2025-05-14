@@ -1,16 +1,17 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffContractBuff", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffContractBuff", package.seeall)
 
-slot0 = class("FightBuffContractBuff")
+local var_0_0 = class("FightBuffContractBuff")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onBuffStart(slot0, slot1, slot2)
-	FightModel.instance:setContractEntityUid(slot1.id)
+function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+	FightModel.instance:setContractEntityUid(arg_2_1.id)
 end
 
-function slot0.onBuffEnd(slot0)
+function var_0_0.onBuffEnd(arg_3_0)
 	FightModel.instance:setContractEntityUid(nil)
 end
 
-return slot0
+return var_0_0

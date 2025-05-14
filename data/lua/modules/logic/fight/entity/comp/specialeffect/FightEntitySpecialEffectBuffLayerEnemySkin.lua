@@ -1,321 +1,361 @@
-module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayerEnemySkin", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayerEnemySkin", package.seeall)
 
-slot0 = class("FightEntitySpecialEffectBuffLayerEnemySkin", FightEntitySpecialEffectBase)
-slot1 = 3000
+local var_0_0 = class("FightEntitySpecialEffectBuffLayerEnemySkin", FightEntitySpecialEffectBase)
+local var_0_1 = 3000
 
-function slot0.initClass(slot0)
-	slot0._effectWraps = {}
-	slot0._buffId2Config = {}
-	slot0._oldLayer = {}
-	slot0._buffType = {}
-	slot0.playCount = 0
-	slot0.hideWhenPlayTimeline = {}
+function var_0_0.initClass(arg_1_0)
+	arg_1_0._effectWraps = {}
+	arg_1_0._buffId2Config = {}
+	arg_1_0._oldLayer = {}
+	arg_1_0._buffType = {}
+	arg_1_0.playCount = 0
+	arg_1_0.hideWhenPlayTimeline = {}
 
-	slot0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, slot0._onSetBuffEffectVisible, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, slot0._onBeforeDeadEffect, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, slot0._onBeforeEnterStepBehaviour, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, slot0._onSkillEditorRefreshBuff, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0, LuaEventSystem.High)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, slot0.onBeforePlayTimeline, slot0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, arg_1_0._onSetBuffEffectVisible, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_1_0._onBeforeDeadEffect, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_1_0._onBeforeEnterStepBehaviour, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, arg_1_0._onSkillEditorRefreshBuff, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0, LuaEventSystem.High)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, arg_1_0.onBeforePlayTimeline, arg_1_0)
 end
 
-function slot0.onBeforePlayTimeline(slot0, slot1)
-	if slot0._entity.id == slot1 then
-		slot0.playCount = slot0.playCount + 1
+function var_0_0.onBeforePlayTimeline(arg_2_0, arg_2_1)
+	if arg_2_0._entity.id == arg_2_1 then
+		arg_2_0.playCount = arg_2_0.playCount + 1
 
-		for slot5, slot6 in ipairs(slot0.hideWhenPlayTimeline) do
-			slot6:setActive(false, "FightEntitySpecialEffectBuffLayerEnemySkin_onBeforePlayTimeline")
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0.hideWhenPlayTimeline) do
+			iter_2_1:setActive(false, "FightEntitySpecialEffectBuffLayerEnemySkin_onBeforePlayTimeline")
 		end
 	end
 end
 
-function slot0.afterPlayTimeline(slot0)
-	slot0.playCount = slot0.playCount - 1
+function var_0_0.afterPlayTimeline(arg_3_0)
+	arg_3_0.playCount = arg_3_0.playCount - 1
 
-	if slot0.playCount == 0 then
-		for slot4, slot5 in ipairs(slot0.hideWhenPlayTimeline) do
-			slot5:setActive(true, "FightEntitySpecialEffectBuffLayerEnemySkin_afterPlayTimeline")
+	if arg_3_0.playCount == 0 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0.hideWhenPlayTimeline) do
+			iter_3_1:setActive(true, "FightEntitySpecialEffectBuffLayerEnemySkin_afterPlayTimeline")
 		end
 	end
 end
 
-function slot0._onBeforeEnterStepBehaviour(slot0)
-	if slot0._entity:getMO() then
-		for slot6, slot7 in pairs(slot1:getBuffDic()) do
-			slot0:_onBuffUpdate(slot0._entity.id, FightEnum.EffectType.BUFFADD, slot7.buffId, slot7.uid, nil, slot7)
+function var_0_0._onBeforeEnterStepBehaviour(arg_4_0)
+	local var_4_0 = arg_4_0._entity:getMO()
+
+	if var_4_0 then
+		local var_4_1 = var_4_0:getBuffDic()
+
+		for iter_4_0, iter_4_1 in pairs(var_4_1) do
+			arg_4_0:_onBuffUpdate(arg_4_0._entity.id, FightEnum.EffectType.BUFFADD, iter_4_1.buffId, iter_4_1.uid, nil, iter_4_1)
 		end
 	end
 end
 
-function slot0._onSkillEditorRefreshBuff(slot0)
-	slot0:_releaseAllEffect()
-	slot0:_onBeforeEnterStepBehaviour()
+function var_0_0._onSkillEditorRefreshBuff(arg_5_0)
+	arg_5_0:_releaseAllEffect()
+	arg_5_0:_onBeforeEnterStepBehaviour()
 end
 
-function slot0._onSetBuffEffectVisible(slot0, slot1, slot2, slot3)
-	if slot0._entity.id == slot1 and slot0._effectWraps then
-		for slot7, slot8 in pairs(slot0._effectWraps) do
-			for slot12, slot13 in pairs(slot8) do
-				slot13:setActive(slot2, slot3 or "FightEntitySpecialEffectBuffLayerEnemySkin")
+function var_0_0._onSetBuffEffectVisible(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_0._entity.id == arg_6_1 and arg_6_0._effectWraps then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._effectWraps) do
+			for iter_6_2, iter_6_3 in pairs(iter_6_1) do
+				iter_6_3:setActive(arg_6_2, arg_6_3 or "FightEntitySpecialEffectBuffLayerEnemySkin")
 			end
 		end
 	end
 end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2, slot3)
-	if slot1:getMO() and slot4.id == slot0._entity.id and FightCardDataHelper.isBigSkill(slot2) then
-		slot0:_onSetBuffEffectVisible(slot4.id, false, "FightEntitySpecialEffectBuffLayerEnemySkin_onSkillPlayStart")
+function var_0_0._onSkillPlayStart(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_1:getMO()
+
+	if var_7_0 and var_7_0.id == arg_7_0._entity.id and FightCardDataHelper.isBigSkill(arg_7_2) then
+		arg_7_0:_onSetBuffEffectVisible(var_7_0.id, false, "FightEntitySpecialEffectBuffLayerEnemySkin_onSkillPlayStart")
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
-	if slot1:getMO() and slot4.id == slot0._entity.id then
-		if FightCardDataHelper.isBigSkill(slot2) then
-			slot0:_onSetBuffEffectVisible(slot4.id, true, "FightEntitySpecialEffectBuffLayerEnemySkin_onSkillPlayStart")
+function var_0_0._onSkillPlayFinish(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_1:getMO()
+
+	if var_8_0 and var_8_0.id == arg_8_0._entity.id then
+		if FightCardDataHelper.isBigSkill(arg_8_2) then
+			arg_8_0:_onSetBuffEffectVisible(var_8_0.id, true, "FightEntitySpecialEffectBuffLayerEnemySkin_onSkillPlayStart")
 		end
 
-		slot0:afterPlayTimeline()
+		arg_8_0:afterPlayTimeline()
 	end
 end
 
-function slot0.sortList(slot0, slot1)
-	return slot1.layer < slot0.layer
+function var_0_0.sortList(arg_9_0, arg_9_1)
+	return arg_9_0.layer > arg_9_1.layer
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if slot1 ~= slot0._entity.id then
+function var_0_0._onBuffUpdate(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
+	if arg_10_1 ~= arg_10_0._entity.id then
 		return
 	end
 
-	if lua_fight_buff_layer_effect_enemy_skin.configDict[slot3] then
-		if slot2 == FightEnum.EffectType.BUFFDEL or slot2 == FightEnum.EffectType.BUFFDELNOEFFECT then
-			if not slot0._buffType[slot4] then
+	if lua_fight_buff_layer_effect_enemy_skin.configDict[arg_10_3] then
+		if arg_10_2 == FightEnum.EffectType.BUFFDEL or arg_10_2 == FightEnum.EffectType.BUFFDELNOEFFECT then
+			local var_10_0 = arg_10_0._buffType[arg_10_4]
+
+			if not var_10_0 then
 				return
 			end
 
-			if slot7 == FightEnum.BuffType.LayerSalveHalo then
+			if var_10_0 == FightEnum.BuffType.LayerSalveHalo then
 				return
 			end
 
-			slot0:_refreshEffect(slot3, nil, 0, slot2)
+			arg_10_0:_refreshEffect(arg_10_3, nil, 0, arg_10_2)
 
 			return
 		end
 
-		if not slot6 then
+		if not arg_10_6 then
 			return
 		end
 
-		slot0._buffType[slot4] = slot6.type
+		arg_10_0._buffType[arg_10_4] = arg_10_6.type
 
-		if slot6.type == FightEnum.BuffType.LayerSalveHalo then
+		if arg_10_6.type == FightEnum.BuffType.LayerSalveHalo then
 			return
 		end
 
-		if not slot0._entity:getMO() then
+		local var_10_1 = arg_10_0._entity:getMO()
+
+		if not var_10_1 then
 			return
 		end
 
-		slot8 = slot7.side == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
-		slot10 = slot0:checkRefreshEffect(FightDataHelper.entityMgr:getOriginNormalList(slot8), slot6, slot1, slot2) or slot0:checkRefreshEffect(FightDataHelper.entityMgr:getOriginSpList(slot8), slot6, slot1, slot2)
+		local var_10_2 = var_10_1.side == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+		local var_10_3 = FightDataHelper.entityMgr:getOriginNormalList(var_10_2)
+
+		if not arg_10_0:checkRefreshEffect(var_10_3, arg_10_6, arg_10_1, arg_10_2) then
+			local var_10_4 = FightDataHelper.entityMgr:getOriginSpList(var_10_2)
+			local var_10_5 = arg_10_0:checkRefreshEffect(var_10_4, arg_10_6, arg_10_1, arg_10_2)
+		end
 	end
 end
 
-function slot0.checkRefreshEffect(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot2.buffId
+function var_0_0.checkRefreshEffect(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	local var_11_0 = arg_11_2.buffId
 
-	for slot9, slot10 in ipairs(slot1) do
-		if lua_fight_buff_layer_effect_enemy_skin.configDict[slot5][slot10.originSkin] or lua_fight_buff_layer_effect_enemy_skin.configDict[slot5][0] then
-			slot12 = {}
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		local var_11_1 = lua_fight_buff_layer_effect_enemy_skin.configDict[var_11_0][iter_11_1.originSkin] or lua_fight_buff_layer_effect_enemy_skin.configDict[var_11_0][0]
 
-			for slot16, slot17 in pairs(slot11) do
-				table.insert(slot12, slot17)
+		if var_11_1 then
+			local var_11_2 = {}
+
+			for iter_11_2, iter_11_3 in pairs(var_11_1) do
+				table.insert(var_11_2, iter_11_3)
 			end
 
-			table.sort(slot12, uv0.sortList)
+			table.sort(var_11_2, var_0_0.sortList)
 
-			slot13 = slot2 and slot2.layer or 0
+			local var_11_3 = arg_11_2 and arg_11_2.layer or 0
+			local var_11_4 = lua_skill_buff.configDict[var_11_0]
 
-			if FightSkillBuffMgr.instance:buffIsStackerBuff(lua_skill_buff.configDict[slot5]) then
-				slot13 = FightSkillBuffMgr.instance:getStackedCount(slot3, slot2)
+			if FightSkillBuffMgr.instance:buffIsStackerBuff(var_11_4) then
+				var_11_3 = FightSkillBuffMgr.instance:getStackedCount(arg_11_3, arg_11_2)
 			end
 
-			slot0:_refreshEffect(slot5, slot12, slot13, slot4)
+			arg_11_0:_refreshEffect(var_11_0, var_11_2, var_11_3, arg_11_4)
 
 			return true
 		end
 	end
 end
 
-function slot0._refreshEffect(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._effectWraps then
+function var_0_0._refreshEffect(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	if not arg_12_0._effectWraps then
 		return
 	end
 
-	if not slot0._effectWraps[slot1] then
-		slot0._effectWraps[slot1] = {}
+	if not arg_12_0._effectWraps[arg_12_1] then
+		arg_12_0._effectWraps[arg_12_1] = {}
 	end
 
-	slot5 = slot0._oldLayer[slot1] or 0
-	slot0._oldLayer[slot1] = slot3
+	local var_12_0 = arg_12_0._oldLayer[arg_12_1] or 0
 
-	if (slot4 == FightEnum.EffectType.BUFFDEL or slot4 == FightEnum.EffectType.BUFFDELNOEFFECT) and slot3 == 0 then
-		if slot0._buffId2Config[slot1] and not string.nilorempty(slot6.destroyEffect) then
-			slot8 = slot0._entity.effect:addHangEffect(slot6.destroyEffect, slot6.destroyEffectRoot, nil, (slot6.releaseDestroyEffectTime > 0 and slot6.releaseDestroyEffectTime or uv0) / 1000)
+	arg_12_0._oldLayer[arg_12_1] = arg_12_3
 
-			slot8:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot8)
+	if (arg_12_4 == FightEnum.EffectType.BUFFDEL or arg_12_4 == FightEnum.EffectType.BUFFDELNOEFFECT) and arg_12_3 == 0 then
+		local var_12_1 = arg_12_0._buffId2Config[arg_12_1]
 
-			if slot6.destroyEffectAudio > 0 then
-				AudioMgr.instance:trigger(slot6.destroyEffectAudio)
+		if var_12_1 and not string.nilorempty(var_12_1.destroyEffect) then
+			local var_12_2 = var_12_1.releaseDestroyEffectTime > 0 and var_12_1.releaseDestroyEffectTime or var_0_1
+			local var_12_3 = arg_12_0._entity.effect:addHangEffect(var_12_1.destroyEffect, var_12_1.destroyEffectRoot, nil, var_12_2 / 1000)
+
+			var_12_3:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(arg_12_0._entity.id, var_12_3)
+
+			if var_12_1.destroyEffectAudio > 0 then
+				AudioMgr.instance:trigger(var_12_1.destroyEffectAudio)
 			end
 		end
 
-		slot0:_releaseBuffIdEffect(slot1)
+		arg_12_0:_releaseBuffIdEffect(arg_12_1)
 
 		return
 	end
 
-	slot6 = nil
+	local var_12_4
 
-	for slot10, slot11 in ipairs(slot2) do
-		if slot11.layer <= slot3 then
-			slot6 = slot11
+	for iter_12_0, iter_12_1 in ipairs(arg_12_2) do
+		if arg_12_3 >= iter_12_1.layer then
+			var_12_4 = iter_12_1
 
 			break
 		end
 	end
 
-	if not slot6 then
-		slot0:_releaseBuffIdEffect(slot1)
+	if not var_12_4 then
+		arg_12_0:_releaseBuffIdEffect(arg_12_1)
 
 		return
 	end
 
-	slot0._buffId2Config[slot1] = slot6
-	slot9 = slot0._buffId2Config[slot1] ~= slot6
+	local var_12_5 = var_12_4.layer
+	local var_12_6 = arg_12_0._buffId2Config[arg_12_1]
 
-	if not slot0._effectWraps[slot1][slot6.layer] and not string.nilorempty(slot6.loopEffect) then
-		slot10 = slot0._entity.effect:addHangEffect(slot6.loopEffect, slot6.loopEffectRoot)
+	arg_12_0._buffId2Config[arg_12_1] = var_12_4
 
-		slot10:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot10)
+	local var_12_7 = var_12_6 ~= var_12_4
 
-		slot0._effectWraps[slot1][slot7] = slot10
+	if not arg_12_0._effectWraps[arg_12_1][var_12_5] and not string.nilorempty(var_12_4.loopEffect) then
+		local var_12_8 = arg_12_0._entity.effect:addHangEffect(var_12_4.loopEffect, var_12_4.loopEffectRoot)
 
-		slot10:setActive(false)
+		var_12_8:setLocalPos(0, 0, 0)
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_12_0._entity.id, var_12_8)
 
-		if slot6.hideWhenPlayTimeline == 1 then
-			table.insert(slot0.hideWhenPlayTimeline, slot10)
+		arg_12_0._effectWraps[arg_12_1][var_12_5] = var_12_8
+
+		var_12_8:setActive(false)
+
+		if var_12_4.hideWhenPlayTimeline == 1 then
+			table.insert(arg_12_0.hideWhenPlayTimeline, var_12_8)
 		end
 	end
 
-	if slot9 then
-		slot0:_hideEffect(slot1)
+	if var_12_7 then
+		arg_12_0:_hideEffect(arg_12_1)
 
-		if not string.nilorempty(slot6.createEffect) then
-			slot11 = slot0._entity.effect:addHangEffect(slot6.createEffect, slot6.createEffectRoot, nil, (slot6.releaseCreateEffectTime > 0 and slot6.releaseCreateEffectTime or uv0) / 1000)
+		if not string.nilorempty(var_12_4.createEffect) then
+			local var_12_9 = var_12_4.releaseCreateEffectTime > 0 and var_12_4.releaseCreateEffectTime or var_0_1
+			local var_12_10 = arg_12_0._entity.effect:addHangEffect(var_12_4.createEffect, var_12_4.createEffectRoot, nil, var_12_9 / 1000)
 
-			slot11:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot11)
+			var_12_10:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(arg_12_0._entity.id, var_12_10)
 
-			if slot6.createAudio > 0 then
-				AudioMgr.instance:trigger(slot6.createAudio)
+			if var_12_4.createAudio > 0 then
+				AudioMgr.instance:trigger(var_12_4.createAudio)
 			end
 		end
 
-		if slot6.delayTimeBeforeLoop > 0 then
-			TaskDispatcher.runDelay(function ()
-				uv0:_refreshEffectState(uv1)
-			end, slot0, slot6.delayTimeBeforeLoop / 1000)
+		if var_12_4.delayTimeBeforeLoop > 0 then
+			TaskDispatcher.runDelay(function()
+				arg_12_0:_refreshEffectState(arg_12_1)
+			end, arg_12_0, var_12_4.delayTimeBeforeLoop / 1000)
 		else
-			slot0:_refreshEffectState(slot1)
+			arg_12_0:_refreshEffectState(arg_12_1)
 		end
 	else
-		if slot6.loopEffectAudio > 0 then
-			AudioMgr.instance:trigger(slot6.loopEffectAudio)
+		if var_12_4.loopEffectAudio > 0 then
+			AudioMgr.instance:trigger(var_12_4.loopEffectAudio)
 		end
 
-		slot0:_refreshEffectState(slot1)
+		arg_12_0:_refreshEffectState(arg_12_1)
 
-		if slot4 == FightEnum.EffectType.BUFFUPDATE and slot5 < slot3 then
-			if not string.nilorempty(slot6.addLayerEffect) then
-				slot11 = slot0._entity.effect:addHangEffect(slot6.addLayerEffect, slot6.addLayerEffectRoot, nil, (slot6.releaseAddLayerEffectTime > 0 and slot6.releaseAddLayerEffectTime or uv0) / 1000)
+		if arg_12_4 == FightEnum.EffectType.BUFFUPDATE and var_12_0 < arg_12_3 then
+			if not string.nilorempty(var_12_4.addLayerEffect) then
+				local var_12_11 = var_12_4.releaseAddLayerEffectTime > 0 and var_12_4.releaseAddLayerEffectTime or var_0_1
+				local var_12_12 = arg_12_0._entity.effect:addHangEffect(var_12_4.addLayerEffect, var_12_4.addLayerEffectRoot, nil, var_12_11 / 1000)
 
-				slot11:setLocalPos(0, 0, 0)
-				FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot11)
+				var_12_12:setLocalPos(0, 0, 0)
+				FightRenderOrderMgr.instance:onAddEffectWrap(arg_12_0._entity.id, var_12_12)
 			end
 
-			if slot6.addLayerAudio > 0 then
-				AudioMgr.instance:trigger(slot6.addLayerAudio)
+			if var_12_4.addLayerAudio > 0 then
+				AudioMgr.instance:trigger(var_12_4.addLayerAudio)
 			end
 		end
 	end
 end
 
-function slot0._refreshEffectState(slot0, slot1)
-	if not slot0 then
+function var_0_0._refreshEffectState(arg_14_0, arg_14_1)
+	if not arg_14_0 then
 		return
 	end
 
-	if slot0._effectWraps and slot0._effectWraps[slot1] then
-		for slot7, slot8 in pairs(slot2) do
-			slot8:setActive(slot0._buffId2Config[slot1].layer == slot7)
+	if arg_14_0._effectWraps then
+		local var_14_0 = arg_14_0._effectWraps[arg_14_1]
+
+		if var_14_0 then
+			local var_14_1 = arg_14_0._buffId2Config[arg_14_1].layer
+
+			for iter_14_0, iter_14_1 in pairs(var_14_0) do
+				iter_14_1:setActive(var_14_1 == iter_14_0)
+			end
 		end
 	end
 end
 
-function slot0._hideEffect(slot0, slot1)
-	if slot0._effectWraps and slot0._effectWraps[slot1] then
-		for slot6, slot7 in pairs(slot2) do
-			slot7:setActive(false)
+function var_0_0._hideEffect(arg_15_0, arg_15_1)
+	if arg_15_0._effectWraps then
+		local var_15_0 = arg_15_0._effectWraps[arg_15_1]
+
+		if var_15_0 then
+			for iter_15_0, iter_15_1 in pairs(var_15_0) do
+				iter_15_1:setActive(false)
+			end
 		end
 	end
 end
 
-function slot0._releaseAllEffect(slot0)
-	if slot0._effectWraps then
-		for slot4, slot5 in pairs(slot0._effectWraps) do
-			slot0:_releaseBuffIdEffect(slot4)
+function var_0_0._releaseAllEffect(arg_16_0)
+	if arg_16_0._effectWraps then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0._effectWraps) do
+			arg_16_0:_releaseBuffIdEffect(iter_16_0)
 		end
 
-		slot0._effectWraps = nil
+		arg_16_0._effectWraps = nil
 	end
 end
 
-function slot0._releaseBuffIdEffect(slot0, slot1)
-	if slot0._effectWraps then
-		for slot5, slot6 in pairs(slot0._effectWraps[slot1]) do
-			slot0:_releaseEffect(slot6)
+function var_0_0._releaseBuffIdEffect(arg_17_0, arg_17_1)
+	if arg_17_0._effectWraps then
+		for iter_17_0, iter_17_1 in pairs(arg_17_0._effectWraps[arg_17_1]) do
+			arg_17_0:_releaseEffect(iter_17_1)
 		end
 
-		slot0._effectWraps[slot1] = nil
+		arg_17_0._effectWraps[arg_17_1] = nil
 	end
 end
 
-function slot0._releaseEffect(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.hideWhenPlayTimeline) do
-		if slot6 == slot1 then
-			table.remove(slot0.hideWhenPlayTimeline, slot5)
+function var_0_0._releaseEffect(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.hideWhenPlayTimeline) do
+		if iter_18_1 == arg_18_1 then
+			table.remove(arg_18_0.hideWhenPlayTimeline, iter_18_0)
 
 			break
 		end
 	end
 
-	slot0._entity.effect:removeEffect(slot1)
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._entity.id, slot1)
+	arg_18_0._entity.effect:removeEffect(arg_18_1)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_18_0._entity.id, arg_18_1)
 end
 
-function slot0._onBeforeDeadEffect(slot0, slot1)
-	if slot1 == slot0._entity.id then
-		slot0:_releaseAllEffect()
+function var_0_0._onBeforeDeadEffect(arg_19_0, arg_19_1)
+	if arg_19_1 == arg_19_0._entity.id then
+		arg_19_0:_releaseAllEffect()
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:_releaseAllEffect()
+function var_0_0.releaseSelf(arg_20_0)
+	arg_20_0:_releaseAllEffect()
 end
 
-return slot0
+return var_0_0

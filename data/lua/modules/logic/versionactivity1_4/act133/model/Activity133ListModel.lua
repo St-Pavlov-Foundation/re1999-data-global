@@ -1,40 +1,49 @@
-module("modules.logic.versionactivity1_4.act133.model.Activity133ListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.model.Activity133ListModel", package.seeall)
 
-slot0 = class("Activity133ListModel", ListScrollModel)
+local var_0_0 = class("Activity133ListModel", ListScrollModel)
 
-function slot0.init(slot0, slot1)
-	slot2 = {}
-	slot0.scrollgo = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0 = {}
 
-	for slot7, slot8 in ipairs(Activity133Config.instance:getBonusCoList()) do
-		slot9 = Activity133ListMO.New()
+	arg_1_0.scrollgo = arg_1_1
 
-		slot9:init(slot8[1])
-		table.insert(slot2, slot9)
+	local var_1_1 = Activity133Config.instance:getBonusCoList()
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_2 = Activity133ListMO.New()
+
+		var_1_2:init(iter_1_1[1])
+		table.insert(var_1_0, var_1_2)
 	end
 
-	table.sort(slot2, uv0._sortFunction)
+	table.sort(var_1_0, var_0_0._sortFunction)
 
-	for slot7, slot8 in ipairs(slot2) do
-		if not Activity133Model.instance:checkBonusReceived(slot8.id) and tonumber(string.splitToNumber(slot8.config.needTokens, "#")[3]) <= CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity then
-			slot8.showRed = true
+	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
+		if not Activity133Model.instance:checkBonusReceived(iter_1_3.id) then
+			local var_1_3 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity
+			local var_1_4 = string.splitToNumber(iter_1_3.config.needTokens, "#")
 
-			break
+			if var_1_3 >= tonumber(var_1_4[3]) then
+				iter_1_3.showRed = true
+
+				break
+			end
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+function var_0_0._sortFunction(arg_2_0, arg_2_1)
+	if arg_2_0.id ~= arg_2_1.id then
+		return arg_2_0.id < arg_2_1.id
 	end
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,86 +1,88 @@
-module("modules.logic.story.view.StorySelectListItem", package.seeall)
+﻿module("modules.logic.story.view.StorySelectListItem", package.seeall)
 
-slot0 = class("StorySelectListItem")
-slot1 = 0.6
-slot2 = 0.9
-slot3 = 1.25
-slot4 = 0.5
-slot5 = 300
-slot6 = 0.5
+local var_0_0 = class("StorySelectListItem")
+local var_0_1 = 0.6
+local var_0_2 = 0.9
+local var_0_3 = 1.25
+local var_0_4 = 0.5
+local var_0_5 = 300
+local var_0_6 = 0.5
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.viewGO = gohelper.cloneInPlace(slot1)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.viewGO = gohelper.cloneInPlace(arg_1_1)
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_1_0.viewGO, true)
 
-	slot0.viewParam = slot2
-	slot0._btnselect = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnselect")
-	slot0._gobgdark = gohelper.findChild(slot0.viewGO, "bgdark")
-	slot0._txtcontentdark = gohelper.findChildText(slot0.viewGO, "bgdark/txtcontentdark")
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "bgdark/icon")
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "bgdark/bg")
+	arg_1_0.viewParam = arg_1_2
+	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnselect")
+	arg_1_0._gobgdark = gohelper.findChild(arg_1_0.viewGO, "bgdark")
+	arg_1_0._txtcontentdark = gohelper.findChildText(arg_1_0.viewGO, "bgdark/txtcontentdark")
+	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "bgdark/icon")
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "bgdark/bg")
 
-	slot0._btnselect:AddClickListener(slot0._btnselectOnClick, slot0)
-	slot0:_refreshItem()
+	arg_1_0._btnselect:AddClickListener(arg_1_0._btnselectOnClick, arg_1_0)
+	arg_1_0:_refreshItem()
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnselect:RemoveClickListener()
+function var_0_0.removeEvents(arg_2_0)
+	arg_2_0._btnselect:RemoveClickListener()
 end
 
-function slot0.getOptionIndex(slot0)
-	return slot0.viewParam.index
+function var_0_0.getOptionIndex(arg_3_0)
+	return arg_3_0.viewParam.index
 end
 
-function slot0._btnselectOnClick(slot0)
-	StoryModel.instance:addLog({
-		stepId = slot0.viewParam.stepId,
-		index = slot0.viewParam.index
-	})
-	StoryController.instance:dispatchEvent(StoryEvent.OnSelectOptionView, slot0.viewParam.index)
+function var_0_0._btnselectOnClick(arg_4_0)
+	local var_4_0 = {
+		stepId = arg_4_0.viewParam.stepId,
+		index = arg_4_0.viewParam.index
+	}
+
+	StoryModel.instance:addLog(var_4_0)
+	StoryController.instance:dispatchEvent(StoryEvent.OnSelectOptionView, arg_4_0.viewParam.index)
 end
 
-function slot0.onSelectOptionView(slot0)
-	ZProj.TweenHelper.DOFadeCanvasGroup(slot0.viewGO, 1, 0, uv0, slot0._onSelectOption, slot0)
-	ZProj.TweenHelper.DOScale(slot0.viewGO.transform, uv1, uv1, 1, uv2)
+function var_0_0.onSelectOptionView(arg_5_0)
+	ZProj.TweenHelper.DOFadeCanvasGroup(arg_5_0.viewGO, 1, 0, var_0_2, arg_5_0._onSelectOption, arg_5_0)
+	ZProj.TweenHelper.DOScale(arg_5_0.viewGO.transform, var_0_3, var_0_3, 1, var_0_4)
 end
 
-function slot0._onSelectOption(slot0)
-	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, slot0.viewParam.index)
-	StoryController.instance:playStep(slot0.viewParam.id)
-	slot0:destroy()
+function var_0_0._onSelectOption(arg_6_0)
+	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, arg_6_0.viewParam.index)
+	StoryController.instance:playStep(arg_6_0.viewParam.id)
+	arg_6_0:destroy()
 end
 
-function slot0.onSelectOtherOptionView(slot0)
-	ZProj.UGUIHelper.SetGrayscale(slot0._goicon, true)
-	ZProj.UGUIHelper.SetGrayscale(slot0._gobg, true)
-	ZProj.UGUIHelper.SetGrayscale(slot0._txtcontentdark.gameObject, true)
-	ZProj.TweenHelper.DOLocalMoveX(slot0.viewGO.transform, uv0, uv1)
-	ZProj.TweenHelper.DOFadeCanvasGroup(slot0.viewGO, 1, 0, uv2, slot0._OnSelectOtherOption, slot0)
+function var_0_0.onSelectOtherOptionView(arg_7_0)
+	ZProj.UGUIHelper.SetGrayscale(arg_7_0._goicon, true)
+	ZProj.UGUIHelper.SetGrayscale(arg_7_0._gobg, true)
+	ZProj.UGUIHelper.SetGrayscale(arg_7_0._txtcontentdark.gameObject, true)
+	ZProj.TweenHelper.DOLocalMoveX(arg_7_0.viewGO.transform, var_0_5, var_0_6)
+	ZProj.TweenHelper.DOFadeCanvasGroup(arg_7_0.viewGO, 1, 0, var_0_2, arg_7_0._OnSelectOtherOption, arg_7_0)
 end
 
-function slot0._OnSelectOtherOption(slot0)
-	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, slot0.viewParam.index)
-	slot0:destroy()
+function var_0_0._OnSelectOtherOption(arg_8_0)
+	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, arg_8_0.viewParam.index)
+	arg_8_0:destroy()
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.viewParam = slot1
+function var_0_0.reset(arg_9_0, arg_9_1)
+	arg_9_0.viewParam = arg_9_1
 
-	slot0:_refreshItem()
+	arg_9_0:_refreshItem()
 end
 
-function slot0._refreshItem(slot0)
-	ZProj.TweenHelper.KillByObj(slot0.viewGO)
-	ZProj.TweenHelper.DOFadeCanvasGroup(slot0.viewGO, 0, 1, uv0)
+function var_0_0._refreshItem(arg_10_0)
+	ZProj.TweenHelper.KillByObj(arg_10_0.viewGO)
+	ZProj.TweenHelper.DOFadeCanvasGroup(arg_10_0.viewGO, 0, 1, var_0_1)
 
-	slot0._txtcontentdark.text = tonumber(slot0.viewParam.name) and luaLang(slot0.viewParam.name) or slot0.viewParam.name
+	arg_10_0._txtcontentdark.text = tonumber(arg_10_0.viewParam.name) and luaLang(arg_10_0.viewParam.name) or arg_10_0.viewParam.name
 end
 
-function slot0.destroy(slot0)
-	slot0:removeEvents()
-	ZProj.TweenHelper.KillByObj(slot0.viewGO)
-	gohelper.destroy(slot0.viewGO)
+function var_0_0.destroy(arg_11_0)
+	arg_11_0:removeEvents()
+	ZProj.TweenHelper.KillByObj(arg_11_0.viewGO)
+	gohelper.destroy(arg_11_0.viewGO)
 end
 
-return slot0
+return var_0_0

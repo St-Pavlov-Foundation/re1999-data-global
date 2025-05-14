@@ -1,50 +1,52 @@
-module("modules.logic.currency.controller.CurrencyJumpHandler", package.seeall)
+﻿module("modules.logic.currency.controller.CurrencyJumpHandler", package.seeall)
 
-slot0 = class("CurrencyJumpHandler")
+local var_0_0 = class("CurrencyJumpHandler")
 
-function slot0.JumpByCurrency(slot0)
-	if not uv0._handlerMap then
-		uv0._handlerMap = {
-			[CurrencyEnum.CurrencyType.Power] = uv0.handlePower,
-			[CurrencyEnum.CurrencyType.Diamond] = uv0.handlePayDiamond,
-			[CurrencyEnum.CurrencyType.FreeDiamondCoupon] = uv0.handleFreeDiamond,
-			[CurrencyEnum.CurrencyType.Gold] = uv0.handleGold,
-			[CurrencyEnum.CurrencyType.DryForest] = uv0.handleDryForest,
-			[CurrencyEnum.CurrencyType.RoomCritterTrain] = uv0.handleRoomCritterTrain
+function var_0_0.JumpByCurrency(arg_1_0)
+	if not var_0_0._handlerMap then
+		var_0_0._handlerMap = {
+			[CurrencyEnum.CurrencyType.Power] = var_0_0.handlePower,
+			[CurrencyEnum.CurrencyType.Diamond] = var_0_0.handlePayDiamond,
+			[CurrencyEnum.CurrencyType.FreeDiamondCoupon] = var_0_0.handleFreeDiamond,
+			[CurrencyEnum.CurrencyType.Gold] = var_0_0.handleGold,
+			[CurrencyEnum.CurrencyType.DryForest] = var_0_0.handleDryForest,
+			[CurrencyEnum.CurrencyType.RoomCritterTrain] = var_0_0.handleRoomCritterTrain
 		}
 	end
 
-	if uv0._handlerMap[slot0] then
-		slot1()
+	local var_1_0 = var_0_0._handlerMap[arg_1_0]
+
+	if var_1_0 then
+		var_1_0()
 	end
 end
 
-function slot0.handleGold()
+function var_0_0.handleGold()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.SummonExchange)
 end
 
-function slot0.handlePower()
+function var_0_0.handlePower()
 	CurrencyController.instance:openPowerView()
 end
 
-function slot0.handleFreeDiamond()
+function var_0_0.handleFreeDiamond()
 	ViewMgr.instance:openView(ViewName.CurrencyDiamondExchangeView)
 end
 
-function slot0.handlePayDiamond()
+function var_0_0.handlePayDiamond()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
 end
 
-function slot0.handleDryForest()
+function var_0_0.handleDryForest()
 	MaterialTipController.instance:showMaterialInfo(2, CurrencyEnum.CurrencyType.DryForest)
 end
 
-function slot0.handleRoomCritterTrain()
+function var_0_0.handleRoomCritterTrain()
 	GameFacade.jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function slot0.clearHandlers()
-	uv0._handlerMap = nil
+function var_0_0.clearHandlers()
+	var_0_0._handlerMap = nil
 end
 
-return slot0
+return var_0_0

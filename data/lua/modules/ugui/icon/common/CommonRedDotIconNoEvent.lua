@@ -1,61 +1,61 @@
-module("modules.ugui.icon.common.CommonRedDotIconNoEvent", package.seeall)
+﻿module("modules.ugui.icon.common.CommonRedDotIconNoEvent", package.seeall)
 
-slot0 = class("CommonRedDotIconNoEvent", LuaCompBase)
+local var_0_0 = class("CommonRedDotIconNoEvent", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot5 = slot1
-	slot0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot5)
-	slot0.typeGoDict = slot0:getUserDataTb_()
-	slot0.isShowRedDot = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, arg_1_1)
+	arg_1_0.typeGoDict = arg_1_0:getUserDataTb_()
+	arg_1_0.isShowRedDot = false
 
-	for slot5, slot6 in pairs(RedDotEnum.Style) do
-		slot0.typeGoDict[slot6] = gohelper.findChild(slot0.go, "type" .. slot6)
+	for iter_1_0, iter_1_1 in pairs(RedDotEnum.Style) do
+		arg_1_0.typeGoDict[iter_1_1] = gohelper.findChild(arg_1_0.go, "type" .. iter_1_1)
 
-		gohelper.setActive(slot0.typeGoDict[slot6], false)
+		gohelper.setActive(arg_1_0.typeGoDict[iter_1_1], false)
 	end
 end
 
-function slot0.onStart(slot0)
-	slot0:refreshRedDot()
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:refreshRedDot()
 end
 
-function slot0.setCheckShowRedDotFunc(slot0, slot1, slot2)
-	slot0.checkFunc = slot1
-	slot0.checkFuncObj = slot2
+function var_0_0.setCheckShowRedDotFunc(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.checkFunc = arg_3_1
+	arg_3_0.checkFuncObj = arg_3_2
 
-	slot0:refreshRedDot()
+	arg_3_0:refreshRedDot()
 end
 
-function slot0.setShowType(slot0, slot1)
-	slot0.showType = slot1 or RedDotEnum.Style.Normal
+function var_0_0.setShowType(arg_4_0, arg_4_1)
+	arg_4_0.showType = arg_4_1 or RedDotEnum.Style.Normal
 end
 
-function slot0.refreshRedDot(slot0)
-	if not slot0.checkFunc then
-		gohelper.setActive(slot0.go, false)
+function var_0_0.refreshRedDot(arg_5_0)
+	if not arg_5_0.checkFunc then
+		gohelper.setActive(arg_5_0.go, false)
 
 		return
 	end
 
-	slot1 = slot0.checkFunc(slot0.checkFuncObj)
-	slot0.isShowRedDot = slot1
+	local var_5_0 = arg_5_0.checkFunc(arg_5_0.checkFuncObj)
 
-	gohelper.setActive(slot0.go, slot1)
+	arg_5_0.isShowRedDot = var_5_0
 
-	if slot1 then
-		for slot5, slot6 in pairs(RedDotEnum.Style) do
-			gohelper.setActive(slot0.typeGoDict[slot6], slot0.showType == slot6)
+	gohelper.setActive(arg_5_0.go, var_5_0)
+
+	if var_5_0 then
+		for iter_5_0, iter_5_1 in pairs(RedDotEnum.Style) do
+			gohelper.setActive(arg_5_0.typeGoDict[iter_5_1], arg_5_0.showType == iter_5_1)
 		end
 	end
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.go.transform, slot1, slot1, slot1)
+function var_0_0.setScale(arg_6_0, arg_6_1)
+	transformhelper.setLocalScale(arg_6_0.go.transform, arg_6_1, arg_6_1, arg_6_1)
 end
 
-function slot0.onDestroy(slot0)
-	slot0.checkFunc = nil
-	slot0.checkFuncObj = nil
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0.checkFunc = nil
+	arg_7_0.checkFuncObj = nil
 end
 
-return slot0
+return var_0_0

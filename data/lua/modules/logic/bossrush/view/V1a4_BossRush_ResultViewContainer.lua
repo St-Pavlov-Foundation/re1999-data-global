@@ -1,14 +1,15 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_ResultViewContainer", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_ResultViewContainer", package.seeall)
 
-slot0 = class("V1a4_BossRush_ResultViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a4_BossRush_ResultViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
-		V1a4_BossRush_ResultView.New()
+		(V1a4_BossRush_ResultView.New())
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-return slot0
+return var_0_0

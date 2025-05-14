@@ -1,173 +1,185 @@
-module("modules.logic.fight.view.indicator.FightIndicatorView", package.seeall)
+﻿module("modules.logic.fight.view.indicator.FightIndicatorView", package.seeall)
 
-slot0 = class("FightIndicatorView", FightIndicatorBaseView)
-slot0.PrefabPath = "ui/sceneui/fight/seasoncelebritycardi.prefab"
-slot0.EffectDuration = 1.667
-slot0.EffectDurationForDot = 0.8
-slot0.MaxIndicatorCount = 5
+local var_0_0 = class("FightIndicatorView", FightIndicatorBaseView)
 
-function slot0.initView(slot0, slot1, slot2, slot3)
-	uv0.super.initView(slot0, slot1, slot2, slot3)
+var_0_0.PrefabPath = "ui/sceneui/fight/seasoncelebritycardi.prefab"
+var_0_0.EffectDuration = 1.667
+var_0_0.EffectDurationForDot = 0.8
+var_0_0.MaxIndicatorCount = 5
 
-	slot0.totalIndicatorNum = uv0.MaxIndicatorCount
-	slot0.goIndicatorContainer = gohelper.findChild(slot0.goIndicatorRoot, "fight_indicator")
+function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+
+	arg_1_0.totalIndicatorNum = var_0_0.MaxIndicatorCount
+	arg_1_0.goIndicatorContainer = gohelper.findChild(arg_1_0.goIndicatorRoot, "fight_indicator")
 end
 
-function slot0.startLoadPrefab(slot0)
-	gohelper.setActive(slot0.goIndicatorContainer, true)
+function var_0_0.startLoadPrefab(arg_2_0)
+	gohelper.setActive(arg_2_0.goIndicatorContainer, true)
 
-	slot0.loader = PrefabInstantiate.Create(slot0.goIndicatorContainer)
+	arg_2_0.loader = PrefabInstantiate.Create(arg_2_0.goIndicatorContainer)
 
-	slot0.loader:startLoad(uv0.PrefabPath, slot0.loadCallback, slot0)
+	arg_2_0.loader:startLoad(var_0_0.PrefabPath, arg_2_0.loadCallback, arg_2_0)
 end
 
-function slot0.loadCallback(slot0)
-	slot0.loadDone = true
-	slot0.instanceGo = slot0.loader:getInstGO()
+function var_0_0.loadCallback(arg_3_0)
+	arg_3_0.loadDone = true
+	arg_3_0.instanceGo = arg_3_0.loader:getInstGO()
 
-	slot0:initNode()
-	slot0:onIndicatorChange()
+	arg_3_0:initNode()
+	arg_3_0:onIndicatorChange()
 end
 
-function slot0.initNode(slot0)
-	slot0.init = true
-	slot0.goDownOne = gohelper.findChild(slot0.instanceGo, "down_one")
-	slot0.goDownAll = gohelper.findChild(slot0.instanceGo, "down_all")
-	slot0.goUpOne = gohelper.findChild(slot0.instanceGo, "up_one")
-	slot0.goUpAll = gohelper.findChild(slot0.instanceGo, "up_all")
-	slot0.pointContainer = gohelper.findChild(slot0.instanceGo, "pointContainer")
-	slot0.goDotItemList = {}
-	slot5 = slot0
+function var_0_0.initNode(arg_4_0)
+	arg_4_0.init = true
+	arg_4_0.goDownOne = gohelper.findChild(arg_4_0.instanceGo, "down_one")
+	arg_4_0.goDownAll = gohelper.findChild(arg_4_0.instanceGo, "down_all")
+	arg_4_0.goUpOne = gohelper.findChild(arg_4_0.instanceGo, "up_one")
+	arg_4_0.goUpAll = gohelper.findChild(arg_4_0.instanceGo, "up_all")
+	arg_4_0.pointContainer = gohelper.findChild(arg_4_0.instanceGo, "pointContainer")
 
-	table.insert(slot0.goDotItemList, slot0.createDotItem(slot5, gohelper.findChild(slot0.instanceGo, "pointContainer/dot_item")))
+	local var_4_0 = gohelper.findChild(arg_4_0.instanceGo, "pointContainer/dot_item")
 
-	for slot5 = 2, slot0.totalIndicatorNum do
-		table.insert(slot0.goDotItemList, slot0:createDotItem(gohelper.cloneInPlace(slot1)))
+	arg_4_0.goDotItemList = {}
+
+	table.insert(arg_4_0.goDotItemList, arg_4_0:createDotItem(var_4_0))
+
+	for iter_4_0 = 2, arg_4_0.totalIndicatorNum do
+		var_4_0 = gohelper.cloneInPlace(var_4_0)
+
+		table.insert(arg_4_0.goDotItemList, arg_4_0:createDotItem(var_4_0))
 	end
 
-	slot0.simageIcon = gohelper.findChildSingleImage(slot0.instanceGo, "card/#go_rare5/image_icon")
-	slot0.simageSignature = gohelper.findChildSingleImage(slot0.instanceGo, "card/#go_rare5/simage_signature")
+	arg_4_0.simageIcon = gohelper.findChildSingleImage(arg_4_0.instanceGo, "card/#go_rare5/image_icon")
+	arg_4_0.simageSignature = gohelper.findChildSingleImage(arg_4_0.instanceGo, "card/#go_rare5/simage_signature")
 
-	gohelper.setActive(gohelper.findChild(slot0.instanceGo, "card/#go_rare5/image_career"), false)
-	slot0:loadImage()
+	local var_4_1 = gohelper.findChild(arg_4_0.instanceGo, "card/#go_rare5/image_career")
+
+	gohelper.setActive(var_4_1, false)
+	arg_4_0:loadImage()
 end
 
-function slot0.createDotItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.goDot = slot1
-	slot2.goDarkIcon = gohelper.findChild(slot1, "dark_icon")
-	slot2.goBrightIcon = gohelper.findChild(slot1, "bright_icon")
-	slot2.goEffect = gohelper.findChild(slot1, "effect")
-	slot2.goEffectOne = gohelper.findChild(slot1, "effect/one")
-	slot2.goEffectAll = gohelper.findChild(slot1, "effect/all")
+function var_0_0.createDotItem(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getUserDataTb_()
 
-	return slot2
+	var_5_0.goDot = arg_5_1
+	var_5_0.goDarkIcon = gohelper.findChild(arg_5_1, "dark_icon")
+	var_5_0.goBrightIcon = gohelper.findChild(arg_5_1, "bright_icon")
+	var_5_0.goEffect = gohelper.findChild(arg_5_1, "effect")
+	var_5_0.goEffectOne = gohelper.findChild(arg_5_1, "effect/one")
+	var_5_0.goEffectAll = gohelper.findChild(arg_5_1, "effect/all")
+
+	return var_5_0
 end
 
-function slot0.loadImage(slot0)
-	slot1 = slot0:getCardConfig()
+function var_0_0.loadImage(arg_6_0)
+	local var_6_0 = arg_6_0:getCardConfig()
 
-	slot0.simageIcon:LoadImage(ResUrl.getSeasonCelebrityCard(slot1.icon))
+	arg_6_0.simageIcon:LoadImage(ResUrl.getSeasonCelebrityCard(var_6_0.icon))
 
-	if not string.nilorempty(slot1.signIcon) then
-		slot0.simageSignature:LoadImage(ResUrl.getSignature(slot1.signIcon, "characterget"))
+	if not string.nilorempty(var_6_0.signIcon) then
+		arg_6_0.simageSignature:LoadImage(ResUrl.getSignature(var_6_0.signIcon, "characterget"))
 	end
 end
 
-function slot0.getCardConfig(slot0)
-	return SeasonConfig.instance:getSeasonEquipCo(slot0:getCardId())
+function var_0_0.getCardConfig(arg_7_0)
+	return SeasonConfig.instance:getSeasonEquipCo(arg_7_0:getCardId())
 end
 
-function slot0.getCardId(slot0)
+function var_0_0.getCardId(arg_8_0)
 	return 11549
 end
 
-function slot0.onIndicatorChange(slot0)
-	if not slot0.loadDone then
+function var_0_0.onIndicatorChange(arg_9_0)
+	if not arg_9_0.loadDone then
 		return
 	end
 
-	if FightDataHelper.fieldMgr:getIndicatorNum(slot0.indicatorId) <= 0 or slot0.totalIndicatorNum < slot1 then
+	local var_9_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_9_0.indicatorId)
+
+	if var_9_0 <= 0 or var_9_0 > arg_9_0.totalIndicatorNum then
 		return
 	end
 
-	slot0.indicatorNum = slot1
+	arg_9_0.indicatorNum = var_9_0
 
-	slot0:playEffect()
+	arg_9_0:playEffect()
 end
 
-function slot0.playEffect(slot0)
-	gohelper.setActive(slot0.goIndicatorContainer, true)
-	slot0:resetEffect()
-	slot0:refreshDotItemNode()
+function var_0_0.playEffect(arg_10_0)
+	gohelper.setActive(arg_10_0.goIndicatorContainer, true)
+	arg_10_0:resetEffect()
+	arg_10_0:refreshDotItemNode()
 
-	if slot0.indicatorNum == slot0.totalIndicatorNum then
+	if arg_10_0.indicatorNum == arg_10_0.totalIndicatorNum then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_buff_accrued_number_2)
-		gohelper.setActive(slot0.goDownAll, true)
-		gohelper.setActive(slot0.goUpAll, true)
+		gohelper.setActive(arg_10_0.goDownAll, true)
+		gohelper.setActive(arg_10_0.goUpAll, true)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_buff_accrued_number_1)
-		gohelper.setActive(slot0.goDownOne, true)
-		gohelper.setActive(slot0.goUpOne, true)
+		gohelper.setActive(arg_10_0.goDownOne, true)
+		gohelper.setActive(arg_10_0.goUpOne, true)
 	end
 
-	TaskDispatcher.runDelay(slot0.playEffectDone, slot0, uv0.EffectDuration)
+	TaskDispatcher.runDelay(arg_10_0.playEffectDone, arg_10_0, var_0_0.EffectDuration)
 
-	if slot0.goDotItemList[slot0.indicatorNum] then
-		gohelper.setActive(slot1.goEffect, true)
+	local var_10_0 = arg_10_0.goDotItemList[arg_10_0.indicatorNum]
 
-		slot2 = slot0.indicatorNum == slot0.totalIndicatorNum
+	if var_10_0 then
+		gohelper.setActive(var_10_0.goEffect, true)
 
-		gohelper.setActive(slot1.goEffectOne, not slot2)
-		gohelper.setActive(slot1.goEffectAll, slot2)
-	end
-end
+		local var_10_1 = arg_10_0.indicatorNum == arg_10_0.totalIndicatorNum
 
-function slot0.refreshDotItemNode(slot0)
-	slot1 = nil
-
-	for slot5 = 1, slot0.totalIndicatorNum do
-		slot1 = slot0.goDotItemList[slot5]
-
-		gohelper.setActive(slot1.goEffectOne, false)
-		gohelper.setActive(slot1.goEffectAll, false)
-		gohelper.setActive(slot1.goBrightIcon, slot5 <= slot0.indicatorNum)
-		gohelper.setActive(slot1.goDarkIcon, slot0.indicatorNum < slot5)
+		gohelper.setActive(var_10_0.goEffectOne, not var_10_1)
+		gohelper.setActive(var_10_0.goEffectAll, var_10_1)
 	end
 end
 
-function slot0.playEffectDone(slot0)
-	gohelper.setActive(slot0.goIndicatorContainer, false)
-	slot0:resetEffect()
+function var_0_0.refreshDotItemNode(arg_11_0)
+	local var_11_0
+
+	for iter_11_0 = 1, arg_11_0.totalIndicatorNum do
+		local var_11_1 = arg_11_0.goDotItemList[iter_11_0]
+
+		gohelper.setActive(var_11_1.goEffectOne, false)
+		gohelper.setActive(var_11_1.goEffectAll, false)
+		gohelper.setActive(var_11_1.goBrightIcon, iter_11_0 <= arg_11_0.indicatorNum)
+		gohelper.setActive(var_11_1.goDarkIcon, iter_11_0 > arg_11_0.indicatorNum)
+	end
 end
 
-function slot0.resetEffect(slot0)
-	gohelper.setActive(slot0.goDownOne, false)
-	gohelper.setActive(slot0.goDownAll, false)
-	gohelper.setActive(slot0.goUpOne, false)
-	gohelper.setActive(slot0.goUpAll, false)
+function var_0_0.playEffectDone(arg_12_0)
+	gohelper.setActive(arg_12_0.goIndicatorContainer, false)
+	arg_12_0:resetEffect()
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.playEffectDone, slot0)
-
-	slot0.goDotItemList = nil
-
-	if slot0.loader then
-		slot0.loader:onDestroy()
-
-		slot0.loader = nil
-	end
-
-	if gohelper.isNil(slot0.simageIcon) then
-		slot0.simageIcon:UnLoadImage()
-	end
-
-	if gohelper.isNil(slot0.simageSignature) then
-		slot0.simageSignature:UnLoadImage()
-	end
-
-	uv0.super.onDestroy(slot0)
+function var_0_0.resetEffect(arg_13_0)
+	gohelper.setActive(arg_13_0.goDownOne, false)
+	gohelper.setActive(arg_13_0.goDownAll, false)
+	gohelper.setActive(arg_13_0.goUpOne, false)
+	gohelper.setActive(arg_13_0.goUpAll, false)
 end
 
-return slot0
+function var_0_0.onDestroy(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0.playEffectDone, arg_14_0)
+
+	arg_14_0.goDotItemList = nil
+
+	if arg_14_0.loader then
+		arg_14_0.loader:onDestroy()
+
+		arg_14_0.loader = nil
+	end
+
+	if gohelper.isNil(arg_14_0.simageIcon) then
+		arg_14_0.simageIcon:UnLoadImage()
+	end
+
+	if gohelper.isNil(arg_14_0.simageSignature) then
+		arg_14_0.simageSignature:UnLoadImage()
+	end
+
+	var_0_0.super.onDestroy(arg_14_0)
+end
+
+return var_0_0

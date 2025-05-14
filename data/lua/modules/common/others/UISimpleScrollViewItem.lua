@@ -1,109 +1,114 @@
-module("modules.common.others.UISimpleScrollViewItem", package.seeall)
+﻿module("modules.common.others.UISimpleScrollViewItem", package.seeall)
 
-slot0 = class("UISimpleScrollViewItem", UserDataDispose)
+local var_0_0 = class("UISimpleScrollViewItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0._parentClass = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._parentClass = arg_1_1
 end
 
-function slot0.startLogic(slot0, slot1, slot2)
-	slot0._obj_root = slot1
-	slot0._csListScroll = SLFramework.UGUI.ListScrollView.Get(slot1)
-	slot0._scroll_param = slot2 or ListScrollParam.New()
+function var_0_0.startLogic(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._obj_root = arg_2_1
+	arg_2_0._csListScroll = SLFramework.UGUI.ListScrollView.Get(arg_2_1)
+	arg_2_0._scroll_param = arg_2_2 or ListScrollParam.New()
 end
 
-function slot0.useDefaultParam(slot0, slot1, slot2, slot3)
-	slot0._scroll_param.scrollDir = slot1
-	slot0._scroll_param.lineCount = slot2
-	slot3 = slot3 or slot0._obj_root:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
-	slot0._scroll_param.cellWidth = slot3.cellSize.x
-	slot0._scroll_param.cellHeight = slot3.cellSize.y
-	slot0._scroll_param.cellSpaceH = slot3.spacing.x
-	slot0._scroll_param.cellSpaceV = slot3.spacing.y
+function var_0_0.useDefaultParam(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0._scroll_param.scrollDir = arg_3_1
+	arg_3_0._scroll_param.lineCount = arg_3_2
+	arg_3_3 = arg_3_3 or arg_3_0._obj_root:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
+	arg_3_0._scroll_param.cellWidth = arg_3_3.cellSize.x
+	arg_3_0._scroll_param.cellHeight = arg_3_3.cellSize.y
+	arg_3_0._scroll_param.cellSpaceH = arg_3_3.spacing.x
+	arg_3_0._scroll_param.cellSpaceV = arg_3_3.spacing.y
 
-	slot0:setSpace(0, 0)
+	arg_3_0:setSpace(0, 0)
 end
 
-function slot0.setCreateParam(slot0, slot1, slot2)
-	slot0._scroll_param.frameUpdateMs = slot1
-	slot0._scroll_param.minUpdateCountInFrame = slot2
+function var_0_0.setCreateParam(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._scroll_param.frameUpdateMs = arg_4_1
+	arg_4_0._scroll_param.minUpdateCountInFrame = arg_4_2
 end
 
-function slot0.setSpace(slot0, slot1, slot2)
-	slot0._scroll_param.startSpace = slot1
-	slot0._scroll_param.endSpace = slot2
+function var_0_0.setSpace(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._scroll_param.startSpace = arg_5_1
+	arg_5_0._scroll_param.endSpace = arg_5_2
 end
 
-function slot0.setClass(slot0, slot1)
-	slot0._tar_class = slot1
+function var_0_0.setClass(arg_6_0, arg_6_1)
+	arg_6_0._tar_class = arg_6_1
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._data = slot1
+function var_0_0.setData(arg_7_0, arg_7_1)
+	arg_7_0._data = arg_7_1
 
-	if not slot0._init_finish then
-		slot0._init_finish = true
+	if not arg_7_0._init_finish then
+		arg_7_0._init_finish = true
 
-		slot0:useScrollParam()
+		arg_7_0:useScrollParam()
 	end
 
-	slot0._csListScroll:UpdateTotalCount(#slot0._data)
+	arg_7_0._csListScroll:UpdateTotalCount(#arg_7_0._data)
 end
 
-function slot0.useScrollParam(slot0)
-	slot0._csListScroll:Init(slot0._scroll_param.scrollDir, slot0._scroll_param.lineCount, slot0._scroll_param.cellWidth, slot0._scroll_param.cellHeight, slot0._scroll_param.cellSpaceH, slot0._scroll_param.cellSpaceV, slot0._scroll_param.startSpace, slot0._scroll_param.endSpace, slot0._scroll_param.sortMode, slot0._scroll_param.frameUpdateMs, slot0._scroll_param.minUpdateCountInFrame, slot0._onUpdateCell, slot0.onUpdateFinish, nil, slot0)
+function var_0_0.useScrollParam(arg_8_0)
+	arg_8_0._csListScroll:Init(arg_8_0._scroll_param.scrollDir, arg_8_0._scroll_param.lineCount, arg_8_0._scroll_param.cellWidth, arg_8_0._scroll_param.cellHeight, arg_8_0._scroll_param.cellSpaceH, arg_8_0._scroll_param.cellSpaceV, arg_8_0._scroll_param.startSpace, arg_8_0._scroll_param.endSpace, arg_8_0._scroll_param.sortMode, arg_8_0._scroll_param.frameUpdateMs, arg_8_0._scroll_param.minUpdateCountInFrame, arg_8_0._onUpdateCell, arg_8_0.onUpdateFinish, nil, arg_8_0)
 end
 
-function slot0.setObjItem(slot0, slot1)
-	slot0._obj_item = slot1
+function var_0_0.setObjItem(arg_9_0, arg_9_1)
+	arg_9_0._obj_item = arg_9_1
 end
 
-function slot0.setItemViewGOPath(slot0, slot1)
-	slot0._viewGO_path = slot1
+function var_0_0.setItemViewGOPath(arg_10_0, arg_10_1)
+	arg_10_0._viewGO_path = arg_10_1
 end
 
-function slot0.setUpdateFinishCallback(slot0, slot1)
-	slot0._finish_callback = slot1
+function var_0_0.setUpdateFinishCallback(arg_11_0, arg_11_1)
+	arg_11_0._finish_callback = arg_11_1
 end
 
-function slot0._onUpdateCell(slot0, slot1, slot2)
-	slot0._item_list = slot0._item_list or {}
+function var_0_0._onUpdateCell(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._item_list = arg_12_0._item_list or {}
 
-	if not slot0._item_list[slot2 + 1] then
-		if slot0._obj_item then
-			if slot0._viewGO_path then
-				slot5 = gohelper.findChild(gohelper.clone(slot0._obj_item, slot1, LuaListScrollView.PrefabInstName), slot0._viewGO_path)
+	local var_12_0 = arg_12_2 + 1
+	local var_12_1 = arg_12_0._item_list[var_12_0]
+
+	if not var_12_1 then
+		if arg_12_0._obj_item then
+			local var_12_2 = gohelper.clone(arg_12_0._obj_item, arg_12_1, LuaListScrollView.PrefabInstName)
+
+			if arg_12_0._viewGO_path then
+				var_12_2 = gohelper.findChild(var_12_2, arg_12_0._viewGO_path)
 			end
 
-			slot4 = slot0._parentClass:openSubView(slot0._tar_class, slot5)
+			var_12_1 = arg_12_0._parentClass:openSubView(arg_12_0._tar_class, var_12_2)
 		else
-			slot4 = slot0._parentClass:openSubView(slot0._tar_class, slot1)
+			var_12_1 = arg_12_0._parentClass:openSubView(arg_12_0._tar_class, arg_12_1)
 		end
 
-		slot0._item_list[slot3] = slot4
+		arg_12_0._item_list[var_12_0] = var_12_1
 	end
 
-	slot4._index = slot3
+	var_12_1._index = var_12_0
 
-	slot4:onScrollItemRefreshData(slot0._data[slot3])
+	var_12_1:onScrollItemRefreshData(arg_12_0._data[var_12_0])
 end
 
-function slot0.onUpdateFinish(slot0)
-	if slot0._finish_callback then
-		slot0._finish_callback(slot0._parentClass)
+function var_0_0.onUpdateFinish(arg_13_0)
+	if arg_13_0._finish_callback then
+		arg_13_0._finish_callback(arg_13_0._parentClass)
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	slot0._item_list = nil
-	slot0.tar_class = nil
-	slot0._parentClass = nil
-	slot0._finish_callback = nil
-	slot0._data = nil
-	slot0._tar_class = nil
-	slot0._scroll_param = nil
+function var_0_0.releaseSelf(arg_14_0)
+	arg_14_0._item_list = nil
+	arg_14_0.tar_class = nil
+	arg_14_0._parentClass = nil
+	arg_14_0._finish_callback = nil
+	arg_14_0._data = nil
+	arg_14_0._tar_class = nil
+	arg_14_0._scroll_param = nil
 
-	slot0._csListScroll:Clear()
+	arg_14_0._csListScroll:Clear()
 end
 
-return slot0
+return var_0_0

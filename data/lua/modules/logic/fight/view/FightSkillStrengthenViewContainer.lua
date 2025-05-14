@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightSkillStrengthenViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightSkillStrengthenViewContainer", package.seeall)
 
-slot0 = class("FightSkillStrengthenViewContainer", BaseViewContainer)
+local var_0_0 = class("FightSkillStrengthenViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightSkillStrengthenView.New()
 	}
 end
 
-return slot0
+return var_0_0

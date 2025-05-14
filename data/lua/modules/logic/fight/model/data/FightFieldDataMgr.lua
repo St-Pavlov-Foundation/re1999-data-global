@@ -1,130 +1,139 @@
-module("modules.logic.fight.model.data.FightFieldDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightFieldDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightFieldDataMgr")
+local var_0_0 = FightDataClass("FightFieldDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0.actPoint = 0
-	slot0.moveNum = 0
-	slot0.extraMoveAct = 0
-	slot0.deckNum = 0
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.actPoint = 0
+	arg_1_0.moveNum = 0
+	arg_1_0.extraMoveAct = 0
+	arg_1_0.deckNum = 0
 end
 
-function slot0.onStageChanged(slot0)
-	slot0.extraMoveAct = 0
+function var_0_0.onStageChanged(arg_2_0)
+	arg_2_0.extraMoveAct = 0
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0.version = slot1.version
-	slot0.fightActType = slot1.fightActType or FightEnum.FightActType.Normal
-	slot0.curRound = slot1.curRound
-	slot0.maxRound = slot1.maxRound
-	slot0.isFinish = slot1.isFinish
-	slot0.curWave = slot1.curWave
-	slot0.battleId = slot1.battleId
-	slot0.magicCircle = FightDataHelper.coverData(FightMagicCircleInfoData.New(slot1.magicCircle), slot0.magicCircle)
-	slot0.isRecord = slot1.isRecord
-	slot0.episodeId = slot1.episodeId
-	slot0.episodeCo = DungeonConfig.instance:getEpisodeCO(slot0.episodeId)
-	slot0.lastChangeHeroUid = slot1.lastChangeHeroUid
-	slot0.progress = slot1.progress
-	slot0.progressMax = slot1.progressMax
-	slot0.param = FightDataHelper.coverData(FightParamData.New(slot1.param), slot0.param)
-	slot0.indicatorDict = slot0:buildIndicators(slot1)
-	slot0.playerFinisherInfo = slot0:buildPlayerFinisherInfo(slot1)
-	slot0.customData = FightDataHelper.coverData(FightCustomData.New(slot1.customData), slot0.customData)
+function var_0_0.updateData(arg_3_0, arg_3_1)
+	arg_3_0.version = arg_3_1.version
+	arg_3_0.fightActType = arg_3_1.fightActType or FightEnum.FightActType.Normal
+	arg_3_0.curRound = arg_3_1.curRound
+	arg_3_0.maxRound = arg_3_1.maxRound
+	arg_3_0.isFinish = arg_3_1.isFinish
+	arg_3_0.curWave = arg_3_1.curWave
+	arg_3_0.battleId = arg_3_1.battleId
+	arg_3_0.magicCircle = FightDataHelper.coverData(FightMagicCircleInfoData.New(arg_3_1.magicCircle), arg_3_0.magicCircle)
+	arg_3_0.isRecord = arg_3_1.isRecord
+	arg_3_0.episodeId = arg_3_1.episodeId
+	arg_3_0.episodeCo = DungeonConfig.instance:getEpisodeCO(arg_3_0.episodeId)
+	arg_3_0.lastChangeHeroUid = arg_3_1.lastChangeHeroUid
+	arg_3_0.progress = arg_3_1.progress
+	arg_3_0.progressMax = arg_3_1.progressMax
+	arg_3_0.param = FightDataHelper.coverData(FightParamData.New(arg_3_1.param), arg_3_0.param)
+	arg_3_0.indicatorDict = arg_3_0:buildIndicators(arg_3_1)
+	arg_3_0.playerFinisherInfo = arg_3_0:buildPlayerFinisherInfo(arg_3_1)
+	arg_3_0.customData = FightDataHelper.coverData(FightCustomData.New(arg_3_1.customData), arg_3_0.customData)
 end
 
-function slot0.buildIndicators(slot0, slot1)
-	slot2 = {}
+function var_0_0.buildIndicators(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	if slot1:HasField("attacker") then
-		for slot6, slot7 in ipairs(slot1.attacker.indicators) do
-			slot8 = tonumber(slot7.inticatorId)
-			slot2[slot8] = {
-				id = slot8,
-				num = slot7.num
+	if arg_4_1:HasField("attacker") then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1.attacker.indicators) do
+			local var_4_1 = tonumber(iter_4_1.inticatorId)
+
+			var_4_0[var_4_1] = {
+				id = var_4_1,
+				num = iter_4_1.num
 			}
 		end
 	end
 
-	return FightDataHelper.coverData(slot2, slot0.indicatorDict)
+	return FightDataHelper.coverData(var_4_0, arg_4_0.indicatorDict)
 end
 
-function slot0.buildPlayerFinisherInfo(slot0, slot1)
-	slot2 = nil
+function var_0_0.buildPlayerFinisherInfo(arg_5_0, arg_5_1)
+	local var_5_0
 
-	if slot1:HasField("attacker") and slot1.attacker:HasField("playerFinisherInfo") then
-		slot2 = slot1.attacker.playerFinisherInfo
+	if arg_5_1:HasField("attacker") and arg_5_1.attacker:HasField("playerFinisherInfo") then
+		var_5_0 = arg_5_1.attacker.playerFinisherInfo
 	end
 
-	return slot0:setPlayerFinisherInfo(slot2)
+	return arg_5_0:setPlayerFinisherInfo(var_5_0)
 end
 
-function slot0.setPlayerFinisherInfo(slot0, slot1)
-	if slot1 then
-		slot3 = slot1
+function var_0_0.setPlayerFinisherInfo(arg_6_0, arg_6_1)
+	local var_6_0 = {
+		skills = {}
+	}
 
-		for slot8, slot9 in ipairs(slot3.skills) do
-			table.insert(({
-				skills = {},
-				roundUseLimit = 0,
-				roundUseLimit = slot3.roundUseLimit
-			}).skills, {
-				skillId = slot9.skillId,
-				needPower = slot9.needPower
-			})
+	var_6_0.roundUseLimit = 0
+
+	if arg_6_1 then
+		local var_6_1 = arg_6_1
+
+		var_6_0.roundUseLimit = var_6_1.roundUseLimit
+
+		local var_6_2 = var_6_0.skills
+
+		for iter_6_0, iter_6_1 in ipairs(var_6_1.skills) do
+			local var_6_3 = {
+				skillId = iter_6_1.skillId,
+				needPower = iter_6_1.needPower
+			}
+
+			table.insert(var_6_2, var_6_3)
 		end
 	end
 
-	return FightDataHelper.coverData(slot2, slot0.playerFinisherInfo)
+	return FightDataHelper.coverData(var_6_0, arg_6_0.playerFinisherInfo)
 end
 
-function slot0.getIndicatorNum(slot0, slot1)
-	slot2 = slot0.indicatorDict and slot0.indicatorDict[slot1]
+function var_0_0.getIndicatorNum(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.indicatorDict and arg_7_0.indicatorDict[arg_7_1]
 
-	return slot2 and slot2.num or 0
+	return var_7_0 and var_7_0.num or 0
 end
 
-function slot0.isDouQuQu(slot0)
-	return slot0.fightActType == FightEnum.FightActType.Act174
+function var_0_0.isDouQuQu(arg_8_0)
+	return arg_8_0.fightActType == FightEnum.FightActType.Act174
 end
 
-function slot0.isSeason2(slot0)
-	return slot0.fightActType == FightEnum.FightActType.Season2
+function var_0_0.isSeason2(arg_9_0)
+	return arg_9_0.fightActType == FightEnum.FightActType.Season2
 end
 
-function slot0.isDungeonType(slot0, slot1)
-	return slot0.episodeCo and slot0.episodeCo.type == slot1
+function var_0_0.isDungeonType(arg_10_0, arg_10_1)
+	return arg_10_0.episodeCo and arg_10_0.episodeCo.type == arg_10_1
 end
 
-function slot0.isPaTa(slot0)
-	return slot0:isDungeonType(DungeonEnum.EpisodeType.TowerBoss) or slot0:isDungeonType(DungeonEnum.EpisodeType.TowerLimited) or slot0:isDungeonType(DungeonEnum.EpisodeType.TowerPermanent)
+function var_0_0.isPaTa(arg_11_0)
+	return arg_11_0:isDungeonType(DungeonEnum.EpisodeType.TowerBoss) or arg_11_0:isDungeonType(DungeonEnum.EpisodeType.TowerLimited) or arg_11_0:isDungeonType(DungeonEnum.EpisodeType.TowerPermanent)
 end
 
-function slot0.isTowerLimited(slot0)
-	return slot0:isDungeonType(DungeonEnum.EpisodeType.TowerLimited)
+function var_0_0.isTowerLimited(arg_12_0)
+	return arg_12_0:isDungeonType(DungeonEnum.EpisodeType.TowerLimited)
 end
 
-function slot0.isAct183(slot0)
-	return slot0:isDungeonType(DungeonEnum.EpisodeType.Act183)
+function var_0_0.isAct183(arg_13_0)
+	return arg_13_0:isDungeonType(DungeonEnum.EpisodeType.Act183)
 end
 
-function slot0.dealCardInfoPush(slot0, slot1)
-	slot0.actPoint = slot1.actPoint
-	slot0.moveNum = slot1.moveNum
-	slot0.extraMoveAct = slot1.extraMoveAct
+function var_0_0.dealCardInfoPush(arg_14_0, arg_14_1)
+	arg_14_0.actPoint = arg_14_1.actPoint
+	arg_14_0.moveNum = arg_14_1.moveNum
+	arg_14_0.extraMoveAct = arg_14_1.extraMoveAct
 end
 
-function slot0.isUnlimitMoveCard(slot0)
-	return slot0.extraMoveAct == -1
+function var_0_0.isUnlimitMoveCard(arg_15_0)
+	return arg_15_0.extraMoveAct == -1
 end
 
-function slot0.dirSetDeckNum(slot0, slot1)
-	slot0.deckNum = slot1
+function var_0_0.dirSetDeckNum(arg_16_0, arg_16_1)
+	arg_16_0.deckNum = arg_16_1
 end
 
-function slot0.changeDeckNum(slot0, slot1)
-	slot0.deckNum = slot0.deckNum + slot1
+function var_0_0.changeDeckNum(arg_17_0, arg_17_1)
+	arg_17_0.deckNum = arg_17_0.deckNum + arg_17_1
 end
 
-return slot0
+return var_0_0

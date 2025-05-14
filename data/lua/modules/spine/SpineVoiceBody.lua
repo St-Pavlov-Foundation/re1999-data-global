@@ -1,296 +1,347 @@
-module("modules.spine.SpineVoiceBody", package.seeall)
+﻿module("modules.spine.SpineVoiceBody", package.seeall)
 
-slot0 = class("SpineVoiceBody")
+local var_0_0 = class("SpineVoiceBody")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	slot0:removeTaskActions()
+function var_0_0.onDestroy(arg_2_0)
+	arg_2_0:removeTaskActions()
 
-	slot0._spineVoice = nil
-	slot0._voiceConfig = nil
-	slot0._spine = nil
+	arg_2_0._spineVoice = nil
+	arg_2_0._voiceConfig = nil
+	arg_2_0._spine = nil
 end
 
-function slot0.setBodyAnimation(slot0, slot1, slot2, slot3)
-	slot4 = slot0._spine:getCurBody()
+function var_0_0.setBodyAnimation(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_0._spine:getCurBody()
+	local var_3_1 = arg_3_0:_getPlayMotionMixTime(arg_3_1)
 
-	if slot0:_getPlayMotionMixTime(slot1) then
-		slot3 = slot5
+	if var_3_1 then
+		arg_3_3 = var_3_1
 	end
 
-	slot0:_setBodyAnimation(slot1, slot2, slot3, slot0._motionCutList[slot4])
+	arg_3_0:_setBodyAnimation(arg_3_1, arg_3_2, arg_3_3, arg_3_0._motionCutList[var_3_0])
 end
 
-function slot0._getPlayMotionMixTime(slot0, slot1)
-	if not slot0._motionPlayCutList[slot1] then
+function var_0_0._getPlayMotionMixTime(arg_4_0, arg_4_1)
+	if not arg_4_0._motionPlayCutList[arg_4_1] then
 		return
 	end
 
-	if slot0._motionPlayCutConfig.whenStopped == 1 and slot0._isVoiceStopping then
+	if arg_4_0._motionPlayCutConfig.whenStopped == 1 and arg_4_0._isVoiceStopping then
 		return 0
 	end
 
-	if slot0._motionPlayCutConfig.whenNotStopped == 1 and not slot0._isVoiceStopping then
+	if arg_4_0._motionPlayCutConfig.whenNotStopped == 1 and not arg_4_0._isVoiceStopping then
 		return 0
 	end
 end
 
-function slot0._setBodyAnimation(slot0, slot1, slot2, slot3, slot4)
-	if slot4 then
-		if not slot0._onlyVoiceStopCut then
-			slot3 = 0
+function var_0_0._setBodyAnimation(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	if arg_5_4 then
+		if not arg_5_0._onlyVoiceStopCut then
+			arg_5_3 = 0
 		end
 
-		if slot0._onlyVoiceStopCut and slot0._isVoiceStopping then
-			slot3 = 0
+		if arg_5_0._onlyVoiceStopCut and arg_5_0._isVoiceStopping then
+			arg_5_3 = 0
 		end
 	end
 
-	if slot1 ~= slot0._spine:getCurBody() then
-		slot0._spine:setBodyAnimation(slot1, slot2, slot3 or 0.2)
+	if arg_5_1 ~= arg_5_0._spine:getCurBody() then
+		arg_5_0._spine:setBodyAnimation(arg_5_1, arg_5_2, arg_5_3 or 0.2)
 	end
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0._spineVoice = slot1
-	slot0._voiceConfig = slot2
-	slot0._spine = slot3
-	slot0._skinId = slot3 and slot3._skinId
+function var_0_0.init(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._spineVoice = arg_6_1
+	arg_6_0._voiceConfig = arg_6_2
+	arg_6_0._spine = arg_6_3
+	arg_6_0._skinId = arg_6_3 and arg_6_3._skinId
 
-	slot0:_initCutMotion(slot2)
-	slot0:_initPlayCutMotion(slot2)
+	arg_6_0:_initCutMotion(arg_6_2)
+	arg_6_0:_initPlayCutMotion(arg_6_2)
 
-	slot0._onlyVoiceStopCut = slot0._motionCutConfig and slot0._motionCutConfig.onlyStopCut == 1
+	arg_6_0._onlyVoiceStopCut = arg_6_0._motionCutConfig and arg_6_0._motionCutConfig.onlyStopCut == 1
 
-	slot0:playBodyActionList(slot0:getMotion(slot2))
+	local var_6_0 = arg_6_0:getMotion(arg_6_2)
+
+	arg_6_0:playBodyActionList(var_6_0)
 end
 
-function slot0.getMotion(slot0, slot1)
-	if slot0._spineVoice:getVoiceLang() == "zh" then
-		return slot1.motion
+function var_0_0.getMotion(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._spineVoice:getVoiceLang()
+
+	if var_7_0 == "zh" then
+		return arg_7_1.motion
 	else
-		return slot1[slot2 .. "motion"] or slot1.motion
+		return arg_7_1[var_7_0 .. "motion"] or arg_7_1.motion
 	end
 end
 
-function slot0._getHeroId(slot0, slot1)
-	if slot1.storyHeroIndex then
-		return lua_story_hero_to_character.configDict[slot1.storyHeroIndex] and slot2.heroId
+function var_0_0._getHeroId(arg_8_0, arg_8_1)
+	if arg_8_1.storyHeroIndex then
+		local var_8_0 = lua_story_hero_to_character.configDict[arg_8_1.storyHeroIndex]
+
+		return var_8_0 and var_8_0.heroId
 	end
 
-	return slot1.heroId
+	return arg_8_1.heroId
 end
 
-function slot0._initCutMotion(slot0, slot1)
-	slot0._motionCutList = {}
-	slot0._motionCutConfig = nil
+function var_0_0._initCutMotion(arg_9_0, arg_9_1)
+	arg_9_0._motionCutList = {}
+	arg_9_0._motionCutConfig = nil
 
-	if not lua_character_motion_cut.configDict[slot0:_getHeroId(slot1)] then
+	local var_9_0 = lua_character_motion_cut.configDict[arg_9_0:_getHeroId(arg_9_1)]
+
+	if not var_9_0 then
 		return
 	end
 
-	if not (slot0._skinId and slot2[slot0._skinId] or slot2[1]) then
+	var_9_0 = arg_9_0._skinId and var_9_0[arg_9_0._skinId] or var_9_0[1]
+
+	if not var_9_0 then
 		return
 	end
 
-	slot0._motionCutConfig = slot2
+	arg_9_0._motionCutConfig = var_9_0
 
-	for slot8, slot9 in ipairs(string.split(slot2.motion, "|")) do
-		slot0._motionCutList["b_" .. slot9] = true
-	end
-end
+	local var_9_1 = var_9_0.motion
+	local var_9_2 = string.split(var_9_1, "|")
 
-function slot0._initPlayCutMotion(slot0, slot1)
-	slot0._motionPlayCutList = {}
-	slot0._motionPlayCutConfig = nil
-
-	if not lua_character_motion_play_cut.configDict[slot0:_getHeroId(slot1)] then
-		return
-	end
-
-	if not (slot0._skinId and slot2[slot0._skinId] or slot2[1]) then
-		return
-	end
-
-	slot0._motionPlayCutConfig = slot2
-
-	for slot8, slot9 in ipairs(string.split(slot2.motion, "|")) do
-		slot0._motionPlayCutList["b_" .. slot9] = true
+	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
+		arg_9_0._motionCutList["b_" .. iter_9_1] = true
 	end
 end
 
-function slot0._configValidity(slot0, slot1, slot2)
-	for slot6 = #slot1, 1, -1 do
-		slot9 = true
+function var_0_0._initPlayCutMotion(arg_10_0, arg_10_1)
+	arg_10_0._motionPlayCutList = {}
+	arg_10_0._motionPlayCutConfig = nil
 
-		if string.split(slot1[slot6], "#")[2] and slot2:hasAnimation("b_" .. slot8[1]) then
-			slot9 = false
+	local var_10_0 = lua_character_motion_play_cut.configDict[arg_10_0:_getHeroId(arg_10_1)]
+
+	if not var_10_0 then
+		return
+	end
+
+	var_10_0 = arg_10_0._skinId and var_10_0[arg_10_0._skinId] or var_10_0[1]
+
+	if not var_10_0 then
+		return
+	end
+
+	arg_10_0._motionPlayCutConfig = var_10_0
+
+	local var_10_1 = var_10_0.motion
+	local var_10_2 = string.split(var_10_1, "|")
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
+		arg_10_0._motionPlayCutList["b_" .. iter_10_1] = true
+	end
+end
+
+function var_0_0._configValidity(arg_11_0, arg_11_1, arg_11_2)
+	for iter_11_0 = #arg_11_1, 1, -1 do
+		local var_11_0 = arg_11_1[iter_11_0]
+		local var_11_1 = string.split(var_11_0, "#")
+		local var_11_2 = true
+
+		if var_11_1[2] then
+			local var_11_3 = "b_" .. var_11_1[1]
+
+			if arg_11_2:hasAnimation(var_11_3) then
+				var_11_2 = false
+			end
 		end
 
-		if slot9 then
+		if var_11_2 then
 			if SLFramework.FrameworkSettings.IsEditor then
-				logWarn(string.format("编辑器下的调试log，无需在意。 id：%s 语音 body 无效的配置：%s motion:%s", slot0._voiceConfig.audio, slot7, slot0._motion))
+				logWarn(string.format("编辑器下的调试log，无需在意。 id：%s 语音 body 无效的配置：%s motion:%s", arg_11_0._voiceConfig.audio, var_11_0, arg_11_0._motion))
 			end
 
-			table.remove(slot1, slot6)
+			table.remove(arg_11_1, iter_11_0)
 		end
 	end
 end
 
-function slot0.playBodyActionList(slot0, slot1)
-	slot0._bodyStart = 0
-	slot0._motion = slot1
+function var_0_0.playBodyActionList(arg_12_0, arg_12_1)
+	arg_12_0._bodyStart = 0
+	arg_12_0._motion = arg_12_1
 
-	if not string.nilorempty(slot1) then
-		slot0._bodyList = string.split(slot1, "|")
+	if not string.nilorempty(arg_12_1) then
+		arg_12_0._bodyList = string.split(arg_12_1, "|")
 
-		slot0:_configValidity(slot0._bodyList, slot0._spine)
+		arg_12_0:_configValidity(arg_12_0._bodyList, arg_12_0._spine)
 	else
-		slot0._bodyList = {}
+		arg_12_0._bodyList = {}
 	end
 
-	slot0._appointIdleName = nil
-	slot0._appointIdleMixTime = nil
+	arg_12_0._appointIdleName = nil
+	arg_12_0._appointIdleMixTime = nil
 
-	slot0:_playBodyAction()
+	arg_12_0:_playBodyAction()
 end
 
-function slot0._checkAppointIdle(slot0)
-	if slot0._spineVoice:getInStory() and #slot0._bodyList > 0 and string.split(slot0._bodyList[1], "#")[3] == "-2" then
-		slot0._appointIdleName = "b_" .. slot2[1]
-		slot0._appointIdleMixTime = tonumber(slot2[4])
+function var_0_0._checkAppointIdle(arg_13_0)
+	if arg_13_0._spineVoice:getInStory() and #arg_13_0._bodyList > 0 then
+		local var_13_0 = arg_13_0._bodyList[1]
+		local var_13_1 = string.split(var_13_0, "#")
 
-		table.remove(slot0._bodyList, 1)
+		if var_13_1[3] == "-2" then
+			arg_13_0._appointIdleName = "b_" .. var_13_1[1]
+			arg_13_0._appointIdleMixTime = tonumber(var_13_1[4])
+
+			table.remove(arg_13_0._bodyList, 1)
+		end
 	end
 end
 
-function slot0._playBodyAction(slot0)
-	slot0._bodyActionName = nil
-	slot0._playBodyName = nil
-	slot0._nextActionStartTime = nil
-	slot1 = true
-	slot2 = true
+function var_0_0._playBodyAction(arg_14_0)
+	arg_14_0._bodyActionName = nil
+	arg_14_0._playBodyName = nil
+	arg_14_0._nextActionStartTime = nil
 
-	slot0:_checkAppointIdle()
-	TaskDispatcher.cancelTask(slot0._bodyActionDelay, slot0)
+	local var_14_0 = true
+	local var_14_1 = true
 
-	if #slot0._bodyList > 0 and string.split(table.remove(slot0._bodyList, 1), "#")[2] then
-		slot0._bodyActionName = "b_" .. slot4[1]
-		slot0._actionLoop = slot4[3] == "-1"
-		slot0._mixTime = slot4[4] and tonumber(slot4[4])
-		slot0._bodyStartTime = Time.time
+	arg_14_0:_checkAppointIdle()
+	TaskDispatcher.cancelTask(arg_14_0._bodyActionDelay, arg_14_0)
 
-		if tonumber(slot4[2]) - slot0._bodyStart > 0 then
-			TaskDispatcher.runDelay(slot0._bodyActionDelay, slot0, slot6)
-		else
-			slot1 = false
+	if #arg_14_0._bodyList > 0 then
+		local var_14_2 = table.remove(arg_14_0._bodyList, 1)
+		local var_14_3 = string.split(var_14_2, "#")
 
-			if slot0._onlyVoiceStopCut then
-				TaskDispatcher.runDelay(slot0._bodyActionDelay, slot0, 0)
+		if var_14_3[2] then
+			arg_14_0._bodyActionName = "b_" .. var_14_3[1]
+			arg_14_0._actionLoop = var_14_3[3] == "-1"
+			arg_14_0._mixTime = var_14_3[4] and tonumber(var_14_3[4])
+
+			local var_14_4 = tonumber(var_14_3[2]) - arg_14_0._bodyStart
+
+			arg_14_0._bodyStartTime = Time.time
+
+			if var_14_4 > 0 then
+				TaskDispatcher.runDelay(arg_14_0._bodyActionDelay, arg_14_0, var_14_4)
 			else
-				slot0:_bodyActionDelay()
+				var_14_0 = false
+
+				if arg_14_0._onlyVoiceStopCut then
+					TaskDispatcher.runDelay(arg_14_0._bodyActionDelay, arg_14_0, 0)
+				else
+					arg_14_0:_bodyActionDelay()
+				end
 			end
+
+			var_14_1 = false
 		end
-
-		slot2 = false
 	end
 
-	if slot1 then
-		slot0:setNormal()
+	if var_14_0 then
+		arg_14_0:setNormal()
 	end
 
-	slot0:_startCheckLoopEnd()
+	arg_14_0:_startCheckLoopEnd()
 
-	if slot2 then
-		slot0:_onBodyEnd()
+	if var_14_1 then
+		arg_14_0:_onBodyEnd()
 	end
 end
 
-function slot0._startCheckLoopEnd(slot0)
-	slot0._nextActionStartTime = nil
+function var_0_0._startCheckLoopEnd(arg_15_0)
+	arg_15_0._nextActionStartTime = nil
 
-	TaskDispatcher.cancelTask(slot0._checkLoopActionEnd, slot0)
+	TaskDispatcher.cancelTask(arg_15_0._checkLoopActionEnd, arg_15_0)
 
-	if not slot0._actionLoop then
+	if not arg_15_0._actionLoop then
 		return
 	end
 
-	if #slot0._bodyList > 0 and string.split(slot0._bodyList[1], "#")[2] then
-		slot0._nextActionStartTime = slot0._bodyStartTime + tonumber(slot2[2]) - slot0._bodyStart
+	if #arg_15_0._bodyList > 0 then
+		local var_15_0 = arg_15_0._bodyList[1]
+		local var_15_1 = string.split(var_15_0, "#")
+
+		if var_15_1[2] then
+			local var_15_2 = tonumber(var_15_1[2]) - arg_15_0._bodyStart
+
+			arg_15_0._nextActionStartTime = arg_15_0._bodyStartTime + var_15_2
+		end
 	end
 
-	if slot0._nextActionStartTime then
-		TaskDispatcher.runRepeat(slot0._checkLoopActionEnd, slot0, 0)
-	end
-end
-
-function slot0._checkLoopActionEnd(slot0)
-	if not slot0._nextActionStartTime then
-		TaskDispatcher.cancelTask(slot0._checkLoopActionEnd, slot0)
-
-		return
-	end
-
-	if slot0._nextActionStartTime <= Time.time then
-		TaskDispatcher.cancelTask(slot0._checkLoopActionEnd, slot0)
-
-		slot0._bodyStart = slot0._bodyStart + Time.time - slot0._bodyStartTime
-
-		slot0:_playBodyAction()
+	if arg_15_0._nextActionStartTime then
+		TaskDispatcher.runRepeat(arg_15_0._checkLoopActionEnd, arg_15_0, 0)
 	end
 end
 
-function slot0._onBodyEnd(slot0)
-	slot0._spineVoice:_onComponentStop(slot0)
-end
-
-function slot0.setNormal(slot0)
-	if slot0._appointIdleName then
-		slot0:setBodyAnimation(slot0._appointIdleName, true, slot0._appointIdleMixTime)
-
-		slot0._appointIdleMixTime = nil
+function var_0_0._checkLoopActionEnd(arg_16_0)
+	if not arg_16_0._nextActionStartTime then
+		TaskDispatcher.cancelTask(arg_16_0._checkLoopActionEnd, arg_16_0)
 
 		return
 	end
 
-	slot0:setBodyAnimation(slot0._spineVoice:getInStory() and StoryAnimName.B_IDLE or CharacterVoiceController.instance:getIdle(slot0._voiceConfig.heroId), true)
+	if arg_16_0._nextActionStartTime <= Time.time then
+		TaskDispatcher.cancelTask(arg_16_0._checkLoopActionEnd, arg_16_0)
+
+		arg_16_0._bodyStart = arg_16_0._bodyStart + (Time.time - arg_16_0._bodyStartTime)
+
+		arg_16_0:_playBodyAction()
+	end
 end
 
-function slot0._bodyActionDelay(slot0)
-	if slot0._lastBodyActionName and slot0._motionCutList[slot0._lastBodyActionName] then
-		slot0:_setBodyAnimation(slot0._bodyActionName, slot0._actionLoop, slot0._mixTime, true)
+function var_0_0._onBodyEnd(arg_17_0)
+	arg_17_0._spineVoice:_onComponentStop(arg_17_0)
+end
+
+function var_0_0.setNormal(arg_18_0)
+	if arg_18_0._appointIdleName then
+		arg_18_0:setBodyAnimation(arg_18_0._appointIdleName, true, arg_18_0._appointIdleMixTime)
+
+		arg_18_0._appointIdleMixTime = nil
+
+		return
+	end
+
+	local var_18_0 = arg_18_0._spineVoice:getInStory() and StoryAnimName.B_IDLE or CharacterVoiceController.instance:getIdle(arg_18_0._voiceConfig.heroId)
+
+	arg_18_0:setBodyAnimation(var_18_0, true)
+end
+
+function var_0_0._bodyActionDelay(arg_19_0)
+	if arg_19_0._lastBodyActionName and arg_19_0._motionCutList[arg_19_0._lastBodyActionName] then
+		arg_19_0:_setBodyAnimation(arg_19_0._bodyActionName, arg_19_0._actionLoop, arg_19_0._mixTime, true)
 	else
-		slot0:setBodyAnimation(slot0._bodyActionName, slot0._actionLoop, slot0._mixTime)
+		arg_19_0:setBodyAnimation(arg_19_0._bodyActionName, arg_19_0._actionLoop, arg_19_0._mixTime)
 	end
 
-	slot0._lastBodyActionName = slot0._bodyActionName
-	slot0._playBodyName = slot0._bodyActionName
+	arg_19_0._lastBodyActionName = arg_19_0._bodyActionName
+	arg_19_0._playBodyName = arg_19_0._bodyActionName
 end
 
-function slot0.checkBodyEnd(slot0, slot1)
-	if slot1 == slot0._playBodyName and not slot0._actionLoop then
-		slot0._bodyStart = slot0._bodyStart + Time.time - slot0._bodyStartTime
+function var_0_0.checkBodyEnd(arg_20_0, arg_20_1)
+	if arg_20_1 == arg_20_0._playBodyName and not arg_20_0._actionLoop then
+		arg_20_0._bodyStart = arg_20_0._bodyStart + (Time.time - arg_20_0._bodyStartTime)
 
-		slot0:_playBodyAction()
+		arg_20_0:_playBodyAction()
 
 		return true
 	end
 end
 
-function slot0.removeTaskActions(slot0)
-	TaskDispatcher.cancelTask(slot0._bodyActionDelay, slot0)
-	TaskDispatcher.cancelTask(slot0._checkLoopActionEnd, slot0)
+function var_0_0.removeTaskActions(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._bodyActionDelay, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._checkLoopActionEnd, arg_21_0)
 end
 
-function slot0.onVoiceStop(slot0)
-	slot0._isVoiceStopping = true
+function var_0_0.onVoiceStop(arg_22_0)
+	arg_22_0._isVoiceStopping = true
 
-	slot0:removeTaskActions()
-	slot0:setNormal()
+	arg_22_0:removeTaskActions()
+	arg_22_0:setNormal()
 
-	slot0._isVoiceStopping = false
+	arg_22_0._isVoiceStopping = false
 end
 
-return slot0
+return var_0_0

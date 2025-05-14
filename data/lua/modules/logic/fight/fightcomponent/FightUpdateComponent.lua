@@ -1,27 +1,27 @@
-module("modules.logic.fight.fightcomponent.FightUpdateComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightUpdateComponent", package.seeall)
 
-slot0 = class("FightUpdateComponent", FightBaseClass)
+local var_0_0 = class("FightUpdateComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._updateItemList = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._updateItemList = {}
 end
 
-function slot0.registUpdate(slot0, slot1, slot2, slot3)
-	slot4 = FightUpdateMgr.registUpdate(slot1, slot2, slot3)
+function var_0_0.registUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = FightUpdateMgr.registUpdate(arg_2_1, arg_2_2, arg_2_3)
 
-	table.insert(slot0._updateItemList, slot4)
+	table.insert(arg_2_0._updateItemList, var_2_0)
 
-	return slot4
+	return var_2_0
 end
 
-function slot0.cancelUpdate(slot0, slot1)
-	return FightUpdateMgr.cancelUpdate(slot1)
+function var_0_0.cancelUpdate(arg_3_0, arg_3_1)
+	return FightUpdateMgr.cancelUpdate(arg_3_1)
 end
 
-function slot0.onDestructor(slot0)
-	for slot4, slot5 in ipairs(slot0._updateItemList) do
-		slot5.isDone = true
+function var_0_0.onDestructor(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._updateItemList) do
+		iter_4_1.isDone = true
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,32 +1,33 @@
-module("modules.logic.dialogue.model.DialogueModel", package.seeall)
+﻿module("modules.logic.dialogue.model.DialogueModel", package.seeall)
 
-slot0 = class("DialogueModel", ListScrollModel)
+local var_0_0 = class("DialogueModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0.dialogueDict = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.dialogueDict = nil
 end
 
-function slot0.initDialogue(slot0, slot1)
-	slot0.dialogueDict = {}
+function var_0_0.initDialogue(arg_3_0, arg_3_1)
+	arg_3_0.dialogueDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.dialogueDict[slot6] = true
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		arg_3_0.dialogueDict[iter_3_1] = true
 	end
 end
 
-function slot0.updateDialogueInfo(slot0, slot1)
-	slot0.dialogueDict[slot1] = true
+function var_0_0.updateDialogueInfo(arg_4_0, arg_4_1)
+	arg_4_0.dialogueDict[arg_4_1] = true
 
-	DialogueController.instance:dispatchEvent(DialogueEvent.OnDialogueInfoChange, slot1)
+	DialogueController.instance:dispatchEvent(DialogueEvent.OnDialogueInfoChange, arg_4_1)
 end
 
-function slot0.isFinishDialogue(slot0, slot1)
-	return slot0.dialogueDict and slot0.dialogueDict[slot1]
+function var_0_0.isFinishDialogue(arg_5_0, arg_5_1)
+	return arg_5_0.dialogueDict and arg_5_0.dialogueDict[arg_5_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

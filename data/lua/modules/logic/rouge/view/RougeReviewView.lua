@@ -1,195 +1,225 @@
-module("modules.logic.rouge.view.RougeReviewView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeReviewView", package.seeall)
 
-slot0 = class("RougeReviewView", BaseView)
+local var_0_0 = class("RougeReviewView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_view")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_content")
-	slot0._goMask = gohelper.findChild(slot0.viewGO, "#go_Mask")
-	slot0._simageMask = gohelper.findChildSingleImage(slot0.viewGO, "#go_Mask/#simage_Mask")
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "#go_Mask/#txt_Tips")
-	slot0._goLeftTop = gohelper.findChild(slot0.viewGO, "#go_LeftTop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content")
+	arg_1_0._goMask = gohelper.findChild(arg_1_0.viewGO, "#go_Mask")
+	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Mask/#simage_Mask")
+	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Mask/#txt_Tips")
+	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._initStoryStatus(slot0)
-	slot0._unlockStageId = 0
+function var_0_0._initStoryStatus(arg_4_0)
+	arg_4_0._unlockStageId = 0
 
-	for slot5, slot6 in ipairs(RougeFavoriteConfig.instance:getStoryList()) do
-		if slot0:_sotryListIsPass(slot6.storyIdList) then
-			slot0._unlockStageId = slot6.config.stageId
+	local var_4_0 = RougeFavoriteConfig.instance:getStoryList()
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if arg_4_0:_sotryListIsPass(iter_4_1.storyIdList) then
+			arg_4_0._unlockStageId = iter_4_1.config.stageId
 		end
 	end
 end
 
-function slot0._sotryListIsPass(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if RougeOutsideModel.instance:storyIsPass(slot6) then
+function var_0_0._sotryListIsPass(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		if RougeOutsideModel.instance:storyIsPass(iter_5_1) then
 			return true
 		end
 	end
 end
 
-function slot0._initStoryItems(slot0)
-	slot1 = RougeFavoriteConfig.instance:getStoryList()
-	slot0.storyList = slot1
-	slot2 = slot0.viewContainer:getSetting().otherRes[1]
-	slot3 = false
-	slot5 = slot0:_splitStorysToStageList(slot1) and #slot4 or 0
-	slot0._unlockStageCount = 0
+function var_0_0._initStoryItems(arg_6_0)
+	local var_6_0 = RougeFavoriteConfig.instance:getStoryList()
 
-	for slot9 = 1, slot5 - 1 do
-		slot11 = slot0:_getStoryItem(slot9, slot2)
+	arg_6_0.storyList = var_6_0
 
-		slot11.item:setMaxUnlockStateId(slot0._unlockStageId)
-		slot11.item:onUpdateMO(slot4[slot9][1], slot9 >= slot5 - 1, slot0, slot4[slot9 + 1], slot2)
+	local var_6_1 = arg_6_0.viewContainer:getSetting().otherRes[1]
+	local var_6_2 = false
+	local var_6_3 = arg_6_0:_splitStorysToStageList(var_6_0)
+	local var_6_4 = var_6_3 and #var_6_3 or 0
 
-		if not slot11.item:isUnlock() then
-			slot3 = false
+	arg_6_0._unlockStageCount = 0
+
+	for iter_6_0 = 1, var_6_4 - 1 do
+		local var_6_5 = var_6_3[iter_6_0][1]
+		local var_6_6 = arg_6_0:_getStoryItem(iter_6_0, var_6_1)
+		local var_6_7 = var_6_3[iter_6_0 + 1]
+
+		var_6_2 = iter_6_0 >= var_6_4 - 1
+
+		var_6_6.item:setMaxUnlockStateId(arg_6_0._unlockStageId)
+		var_6_6.item:onUpdateMO(var_6_5, var_6_2, arg_6_0, var_6_7, var_6_1)
+
+		if not var_6_6.item:isUnlock() then
+			var_6_2 = false
 
 			break
 		end
 
-		slot0._unlockStageCount = slot0._unlockStageCount + 1
+		arg_6_0._unlockStageCount = arg_6_0._unlockStageCount + 1
 	end
 
-	gohelper.setActive(slot0._goMask, not slot3)
+	gohelper.setActive(arg_6_0._goMask, not var_6_2)
 
-	slot0._isEnd = slot3
+	arg_6_0._isEnd = var_6_2
 end
 
-function slot0._getStoryItem(slot0, slot1, slot2)
-	if not slot0._storyItemList[slot1] then
-		slot3 = {
-			go = slot0:getResInst(slot2, slot0._gocontent, "item" .. slot1)
+function var_0_0._getStoryItem(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0._storyItemList[arg_7_1]
+
+	if not var_7_0 then
+		var_7_0 = {
+			go = arg_7_0:getResInst(arg_7_2, arg_7_0._gocontent, "item" .. arg_7_1)
 		}
-		slot3.item = MonoHelper.addNoUpdateLuaComOnceToGo(slot3.go, RougeReviewItem)
+		var_7_0.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0.go, RougeReviewItem)
 
-		slot3.item:setIndex(slot1)
-		table.insert(slot0._storyItemList, slot3)
+		var_7_0.item:setIndex(arg_7_1)
+		table.insert(arg_7_0._storyItemList, var_7_0)
 	end
 
-	return slot3
+	return var_7_0
 end
 
-function slot0._splitStorysToStageList(slot0, slot1)
-	slot2 = {}
-	slot3 = 1
+function var_0_0._splitStorysToStageList(arg_8_0, arg_8_1)
+	local var_8_0 = {}
+	local var_8_1 = 1
+	local var_8_2 = #arg_8_1
 
-	while slot3 <= #slot1 do
-		slot5, slot6 = slot0:_findNextSameStageStory(slot3, slot1)
-		slot3 = slot5 + 1
+	while var_8_1 <= var_8_2 do
+		local var_8_3, var_8_4 = arg_8_0:_findNextSameStageStory(var_8_1, arg_8_1)
 
-		table.insert(slot2, slot6)
+		var_8_1 = var_8_3 + 1
+
+		table.insert(var_8_0, var_8_4)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0._findNextSameStageStory(slot0, slot1, slot2)
-	slot4, slot5 = nil
+function var_0_0._findNextSameStageStory(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_2 and #arg_9_2 or 0
+	local var_9_1
+	local var_9_2
 
-	for slot9 = slot1, slot2 and #slot2 or 0 do
-		slot10 = slot2[slot9].config.stageId
+	for iter_9_0 = arg_9_1, var_9_0 do
+		local var_9_3 = arg_9_2[iter_9_0].config.stageId
 
-		if slot5 and slot5 ~= slot10 then
+		if var_9_2 and var_9_2 ~= var_9_3 then
 			break
 		end
 
-		slot5 = slot10
+		var_9_2 = var_9_3
+		var_9_1 = var_9_1 or {}
 
-		table.insert(slot4 or {}, slot2[slot9])
+		table.insert(var_9_1, arg_9_2[iter_9_0])
 	end
 
-	slot6 = slot4 and #slot4 or 0
+	local var_9_4 = var_9_1 and #var_9_1 or 0
+	local var_9_5 = arg_9_1 + var_9_4 - 1
 
-	if not slot6 or slot6 <= 0 then
-		slot7 = slot1 + slot6 - 1 + 1
+	if not var_9_4 or var_9_4 <= 0 then
+		var_9_5 = var_9_5 + 1
 	end
 
-	return slot7, slot4
+	return var_9_5, var_9_1
 end
 
-function slot0._editableInitView(slot0)
-	slot0._initX = 220
-	slot0._initY = -450
-	slot0._itemContentWidth = 700
-	slot0._itemIconWidth = 400
-	slot0._storyItemList = slot0:getUserDataTb_()
-	slot0._horizontalLayoutGroup = slot0._gocontent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._initX = 220
+	arg_10_0._initY = -450
+	arg_10_0._itemContentWidth = 700
+	arg_10_0._itemIconWidth = 400
+	arg_10_0._storyItemList = arg_10_0:getUserDataTb_()
+	arg_10_0._horizontalLayoutGroup = arg_10_0._gocontent:GetComponent(gohelper.Type_HorizontalLayoutGroup)
 end
 
-function slot0._resetPos(slot0)
-	slot0._rootWidth = recthelper.getWidth(slot0.viewGO.transform)
-	slot0._viewportWidth = recthelper.getWidth(slot0._scrollview.transform)
-	slot0._curViewportWidth = slot0._viewportWidth
-	slot1 = (slot0._unlockStageCount - 1) * slot0._itemContentWidth + slot0._itemIconWidth
+function var_0_0._resetPos(arg_11_0)
+	arg_11_0._rootWidth = recthelper.getWidth(arg_11_0.viewGO.transform)
+	arg_11_0._viewportWidth = recthelper.getWidth(arg_11_0._scrollview.transform)
+	arg_11_0._curViewportWidth = arg_11_0._viewportWidth
 
-	if slot0._isEnd then
-		slot1 = slot1 + math.max(slot0._viewportWidth - slot1, 0) + slot0._itemContentWidth + slot0._itemIconWidth
+	local var_11_0 = (arg_11_0._unlockStageCount - 1) * arg_11_0._itemContentWidth + arg_11_0._itemIconWidth
+	local var_11_1 = math.max(arg_11_0._viewportWidth - var_11_0, 0)
+	local var_11_2 = var_11_0 + var_11_1
+
+	if arg_11_0._isEnd then
+		var_11_2 = var_11_2 + arg_11_0._itemContentWidth + arg_11_0._itemIconWidth
 	end
 
-	for slot6, slot7 in ipairs(slot0._storyItemList) do
-		recthelper.setAnchor(slot7.go.transform, (slot6 - 1) * slot0._itemContentWidth + slot0._initX + slot2, slot0._initY)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._storyItemList) do
+		local var_11_3 = iter_11_1.go
+
+		recthelper.setAnchor(var_11_3.transform, (iter_11_0 - 1) * arg_11_0._itemContentWidth + arg_11_0._initX + var_11_1, arg_11_0._initY)
 	end
 
-	recthelper.setWidth(slot0._gocontent.transform, slot1)
+	recthelper.setWidth(arg_11_0._gocontent.transform, var_11_2)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initStoryStatus()
-	slot0:_initStoryItems()
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0:_initStoryStatus()
+	arg_13_0:_initStoryItems()
 
-	if not slot0._isEnd then
-		slot1 = slot0._scrollview.transform.offsetMax
-		slot1.x = -670
-		slot0._scrollview.transform.offsetMax = slot1
+	if not arg_13_0._isEnd then
+		local var_13_0 = arg_13_0._scrollview.transform.offsetMax
+
+		var_13_0.x = -670
+		arg_13_0._scrollview.transform.offsetMax = var_13_0
 	end
 
-	slot0:_resetPos()
+	arg_13_0:_resetPos()
 
-	slot0._scrollview.horizontalNormalizedPosition = 1
-	slot0._scrollX = 1
+	arg_13_0._scrollview.horizontalNormalizedPosition = 1
+	arg_13_0._scrollX = 1
 
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio2)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenSizeChange, slot0)
-	slot0._scrollview:AddOnValueChanged(slot0._onScrollRectValueChanged, slot0)
+	arg_13_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_13_0._onScreenSizeChange, arg_13_0)
+	arg_13_0._scrollview:AddOnValueChanged(arg_13_0._onScrollRectValueChanged, arg_13_0)
 end
 
-function slot0._onScrollRectValueChanged(slot0, slot1, slot2)
-	if slot0._curViewportWidth == recthelper.getWidth(slot0._scrollview.transform) then
-		slot0._scrollX = slot1
+function var_0_0._onScrollRectValueChanged(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0._curViewportWidth == recthelper.getWidth(arg_14_0._scrollview.transform) then
+		arg_14_0._scrollX = arg_14_1
 	end
 end
 
-function slot0._onScreenSizeChange(slot0)
-	slot0:_resetPos()
+function var_0_0._onScreenSizeChange(arg_15_0)
+	arg_15_0:_resetPos()
 
-	slot0._scrollview.horizontalNormalizedPosition = slot0._scrollX
+	arg_15_0._scrollview.horizontalNormalizedPosition = arg_15_0._scrollX
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
 	if RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Story) > 0 then
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(RougeOutsideModel.instance:season(), RougeEnum.FavoriteType.Story, 0)
+		local var_16_0 = RougeOutsideModel.instance:season()
+
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_16_0, RougeEnum.FavoriteType.Story, 0)
 	end
 
-	slot0._scrollview:RemoveOnValueChanged()
+	arg_16_0._scrollview:RemoveOnValueChanged()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

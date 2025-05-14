@@ -1,19 +1,19 @@
-module("modules.logic.fight.model.mo.FightExPointInfoMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightExPointInfoMO", package.seeall)
 
-slot0 = pureTable("FightExPointInfoMO")
+local var_0_0 = pureTable("FightExPointInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.uid = slot1.uid
-	slot0.exPoint = slot1.exPoint
-	slot0.powerInfos = slot1.powerInfos
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.uid = arg_1_1.uid
+	arg_1_0.exPoint = arg_1_1.exPoint
+	arg_1_0.powerInfos = arg_1_1.powerInfos
 
-	if slot1.HasField then
-		if slot1:HasField("currentHp") then
-			slot0.currentHp = slot1.currentHp
+	if arg_1_1.HasField then
+		if arg_1_1:HasField("currentHp") then
+			arg_1_0.currentHp = arg_1_1.currentHp
 		end
 	else
-		slot0.currentHp = slot1.currentHp
+		arg_1_0.currentHp = arg_1_1.currentHp
 	end
 end
 
-return slot0
+return var_0_0

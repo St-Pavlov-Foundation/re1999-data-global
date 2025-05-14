@@ -1,42 +1,44 @@
-module("modules.logic.versionactivity1_7.lantern.rpc.Activity154Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.rpc.Activity154Rpc", package.seeall)
 
-slot0 = class("Activity154Rpc", BaseRpc)
+local var_0_0 = class("Activity154Rpc", BaseRpc)
 
-function slot0.sendGet154InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity154Module_pb.Get154InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet154InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity154Module_pb.Get154InfosRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet154InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet154InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	LanternFestivalModel.instance:setActivity154Infos(slot2)
+	LanternFestivalModel.instance:setActivity154Infos(arg_2_2)
 	LanternFestivalController.instance:dispatchEvent(LanternFestivalEvent.InfosRefresh)
 end
 
-function slot0.sendAnswer154PuzzleRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity154Module_pb.Answer154PuzzleRequest()
-	slot6.activityId = slot1
-	slot6.puzzleId = slot2
-	slot6.optionId = slot3
+function var_0_0.sendAnswer154PuzzleRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = Activity154Module_pb.Answer154PuzzleRequest()
 
-	return slot0:sendMsg(slot6, slot4, slot5)
+	var_3_0.activityId = arg_3_1
+	var_3_0.puzzleId = arg_3_2
+	var_3_0.optionId = arg_3_3
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
 end
 
-function slot0.onReceiveAnswer154PuzzleReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAnswer154PuzzleReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	LanternFestivalModel.instance:updatePuzzleInfo(slot2.info)
+	LanternFestivalModel.instance:updatePuzzleInfo(arg_4_2.info)
 	LanternFestivalModel.instance:setCurPuzzleId(0)
 	LanternFestivalController.instance:dispatchEvent(LanternFestivalEvent.PuzzleRewardGet)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

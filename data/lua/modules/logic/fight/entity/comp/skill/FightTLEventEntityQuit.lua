@@ -1,42 +1,49 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityQuit", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityQuit", package.seeall)
 
-slot0 = class("FightTLEventEntityQuit")
+local var_0_0 = class("FightTLEventEntityQuit")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot5 = slot1.toId
-	slot6 = GameSceneMgr.instance:getCurScene().entityMgr
-	slot7 = nil
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_1.fromId
+	local var_1_1 = arg_1_1.toId
+	local var_1_2 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_1_3
 
-	if slot3[1] == "1" then
-		slot7 = slot1.fromId
-	elseif slot3[1] == "2" then
-		slot7 = slot5
+	if arg_1_3[1] == "1" then
+		var_1_3 = var_1_0
+	elseif arg_1_3[1] == "2" then
+		var_1_3 = var_1_1
 	end
 
-	if slot6:getEntity(slot7) then
-		slot6:removeUnit(slot8:getTag(), slot8.id)
+	local var_1_4 = var_1_2:getEntity(var_1_3)
+
+	if var_1_4 then
+		var_1_2:removeUnit(var_1_4:getTag(), var_1_4.id)
 	end
 
-	slot9 = FightDataHelper.entityMgr:getById(slot7)
+	local var_1_5 = FightDataHelper.entityMgr:getById(var_1_3)
+	local var_1_6 = FightEntityModel.instance:getModel(var_1_5.side)
+	local var_1_7 = FightEntityModel.instance:getSubModel(var_1_5.side)
 
-	if slot3[2] == "1" then
-		FightEntityModel.instance:getModel(slot9.side):remove(slot9)
-		FightEntityModel.instance:getSubModel(slot9.side):remove(slot9)
+	if arg_1_3[2] == "1" then
+		var_1_6:remove(var_1_5)
+		var_1_7:remove(var_1_5)
 	end
 
-	if slot3[3] == "1" and slot8 and not slot8.isDead then
-		slot11:addAt(slot9, slot1.subIndex or logError("找不到替补的数据下标"))
+	if arg_1_3[3] == "1" and var_1_4 and not var_1_4.isDead then
+		var_1_7:addAt(var_1_5, arg_1_1.subIndex or logError("找不到替补的数据下标"))
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:dispose()
+function var_0_0.reset(arg_2_0)
+	arg_2_0:dispose()
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_3_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

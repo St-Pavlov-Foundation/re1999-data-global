@@ -1,26 +1,27 @@
-module("modules.logic.rouge.map.work.WaitRougeActorMoveToEndDoneWork", package.seeall)
+﻿module("modules.logic.rouge.map.work.WaitRougeActorMoveToEndDoneWork", package.seeall)
 
-slot0 = class("WaitRougeActorMoveToEndDoneWork", BaseWork)
+local var_0_0 = class("WaitRougeActorMoveToEndDoneWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if not RougeMapModel.instance:needPlayMoveToEndAnim() then
-		return slot0:onDone(true)
+		return arg_2_0:onDone(true)
 	end
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeActorMoveToEnd)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onEndActorMoveToEnd, slot0.onEndActorMoveToEnd, slot0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onEndActorMoveToEnd, arg_2_0.onEndActorMoveToEnd, arg_2_0)
 end
 
-function slot0.onEndActorMoveToEnd(slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onEndActorMoveToEnd, slot0.onEndActorMoveToEnd, slot0)
-	slot0:onDone(true)
+function var_0_0.onEndActorMoveToEnd(arg_3_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onEndActorMoveToEnd, arg_3_0.onEndActorMoveToEnd, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onEndActorMoveToEnd, slot0.onEndActorMoveToEnd, slot0)
+function var_0_0.clearWork(arg_4_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onEndActorMoveToEnd, arg_4_0.onEndActorMoveToEnd, arg_4_0)
 end
 
-return slot0
+return var_0_0

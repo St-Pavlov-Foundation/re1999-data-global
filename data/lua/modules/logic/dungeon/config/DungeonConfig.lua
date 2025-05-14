@@ -1,23 +1,23 @@
-module("modules.logic.dungeon.config.DungeonConfig", package.seeall)
+﻿module("modules.logic.dungeon.config.DungeonConfig", package.seeall)
 
-slot0 = class("DungeonConfig", BaseConfig)
+local var_0_0 = class("DungeonConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._chapterConfig = nil
-	slot0._episodeConfig = nil
-	slot0._bonusConfig = nil
-	slot0._chapterEpisodeDict = nil
-	slot0._chpaterNonSpEpisodeDict = nil
-	slot0._episodeIndex = {}
-	slot0._chapterListByType = {}
-	slot0._lvConfig = nil
-	slot0._interactConfig = nil
-	slot0._colorConfig = nil
-	slot0._dispatchConfig = nil
-	slot0._rewardConfigDict = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._chapterConfig = nil
+	arg_1_0._episodeConfig = nil
+	arg_1_0._bonusConfig = nil
+	arg_1_0._chapterEpisodeDict = nil
+	arg_1_0._chpaterNonSpEpisodeDict = nil
+	arg_1_0._episodeIndex = {}
+	arg_1_0._chapterListByType = {}
+	arg_1_0._lvConfig = nil
+	arg_1_0._interactConfig = nil
+	arg_1_0._colorConfig = nil
+	arg_1_0._dispatchConfig = nil
+	arg_1_0._rewardConfigDict = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"chapter_map_element",
 		"chapter_map",
@@ -44,621 +44,753 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "chapter" then
-		slot0._chapterConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "chapter" then
+		arg_3_0._chapterConfig = arg_3_2
 
-		slot0:_initChapterList()
-	elseif slot1 == "episode" then
-		slot0._episodeConfig = slot2
+		arg_3_0:_initChapterList()
+	elseif arg_3_1 == "episode" then
+		arg_3_0._episodeConfig = arg_3_2
 
-		slot0:_rebuildEpisodeConfigs()
-		slot0:_initEpisodeList()
-	elseif slot1 == "bonus" then
-		slot0._bonusConfig = slot2
-	elseif slot1 == "reward_group" then
-		slot0._rewardConfigDict = {}
+		arg_3_0:_rebuildEpisodeConfigs()
+		arg_3_0:_initEpisodeList()
+	elseif arg_3_1 == "bonus" then
+		arg_3_0._bonusConfig = arg_3_2
+	elseif arg_3_1 == "reward_group" then
+		arg_3_0._rewardConfigDict = {}
 
-		for slot6, slot7 in ipairs(slot2.configList) do
-			if not slot0._rewardConfigDict[slot7.group] then
-				slot0._rewardConfigDict[slot7.group] = {}
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
+			if not arg_3_0._rewardConfigDict[iter_3_1.group] then
+				arg_3_0._rewardConfigDict[iter_3_1.group] = {}
 			end
 
-			table.insert(slot0._rewardConfigDict[slot7.group], slot7)
+			table.insert(arg_3_0._rewardConfigDict[iter_3_1.group], iter_3_1)
 		end
-	elseif slot1 == "chapter_divide" then
-		slot0:_initChapterDivide()
-	elseif slot1 == "chapter_point_reward" then
-		slot0:_initChapterPointReward()
-	elseif slot1 == "chapter_map_element" then
-		slot0:_initElement()
-	elseif slot1 == "chapter_map_element_dialog" then
-		slot0:_initDialog()
-	elseif slot1 == "chapter_map" then
-		slot0:_initChapterMap()
-	elseif slot1 == "chapter_puzzle_square" then
-		slot0:_initPuzzleSquare(slot2)
-	elseif slot1 == "chapter_puzzle_changecolor" then
-		slot0._lvConfig = slot2
-	elseif slot1 == "chapter_puzzle_changecolor_interact" then
-		slot0._interactConfig = slot2
-	elseif slot1 == "chapter_puzzle_changecolor_color" then
-		slot0._colorConfig = slot2
+	elseif arg_3_1 == "chapter_divide" then
+		arg_3_0:_initChapterDivide()
+	elseif arg_3_1 == "chapter_point_reward" then
+		arg_3_0:_initChapterPointReward()
+	elseif arg_3_1 == "chapter_map_element" then
+		arg_3_0:_initElement()
+	elseif arg_3_1 == "chapter_map_element_dialog" then
+		arg_3_0:_initDialog()
+	elseif arg_3_1 == "chapter_map" then
+		arg_3_0:_initChapterMap()
+	elseif arg_3_1 == "chapter_puzzle_square" then
+		arg_3_0:_initPuzzleSquare(arg_3_2)
+	elseif arg_3_1 == "chapter_puzzle_changecolor" then
+		arg_3_0._lvConfig = arg_3_2
+	elseif arg_3_1 == "chapter_puzzle_changecolor_interact" then
+		arg_3_0._interactConfig = arg_3_2
+	elseif arg_3_1 == "chapter_puzzle_changecolor_color" then
+		arg_3_0._colorConfig = arg_3_2
 	end
 end
 
-function slot0._initElement(slot0)
-	if slot0._elementFightList then
+function var_0_0._initElement(arg_4_0)
+	if arg_4_0._elementFightList then
 		return
 	end
 
-	slot0._elementFightList = {}
-	slot0._mapGuidepostDict = {}
-	slot0._mapIdToElements = {}
+	arg_4_0._elementFightList = {}
+	arg_4_0._mapGuidepostDict = {}
+	arg_4_0._mapIdToElements = {}
 
-	for slot4, slot5 in ipairs(lua_chapter_map_element.configList) do
-		if slot5.type == DungeonEnum.ElementType.Fight then
-			if slot0._elementFightList[tonumber(slot5.param)] then
-				logError(string.format("chapter_map_element.json element fight id:%s 参数：%s 重复配置了", slot5.id, slot6))
+	for iter_4_0, iter_4_1 in ipairs(lua_chapter_map_element.configList) do
+		if iter_4_1.type == DungeonEnum.ElementType.Fight then
+			local var_4_0 = tonumber(iter_4_1.param)
+
+			if arg_4_0._elementFightList[var_4_0] then
+				logError(string.format("chapter_map_element.json element fight id:%s 参数：%s 重复配置了", iter_4_1.id, var_4_0))
 			end
 
-			if slot6 then
-				slot0._elementFightList[slot6] = slot5
+			if var_4_0 then
+				arg_4_0._elementFightList[var_4_0] = iter_4_1
 			else
-				logError(string.format("战斗元件id：%s,没有配参数：%s", slot5.id, slot5.param))
+				logError(string.format("战斗元件id：%s,没有配参数：%s", iter_4_1.id, iter_4_1.param))
 			end
-		elseif slot5.type == DungeonEnum.ElementType.Guidepost then
-			slot0._mapGuidepostDict[slot5.mapId] = slot5.id
+		elseif iter_4_1.type == DungeonEnum.ElementType.Guidepost then
+			arg_4_0._mapGuidepostDict[iter_4_1.mapId] = iter_4_1.id
 		end
 
-		if not slot0._mapIdToElements[slot5.mapId] then
-			slot0._mapIdToElements[slot5.mapId] = {}
+		local var_4_1 = arg_4_0._mapIdToElements[iter_4_1.mapId]
+
+		if not var_4_1 then
+			var_4_1 = {}
+			arg_4_0._mapIdToElements[iter_4_1.mapId] = var_4_1
 		end
 
-		table.insert(slot6, slot5)
+		table.insert(var_4_1, iter_4_1)
 	end
 end
 
-function slot0.getMapElements(slot0, slot1)
-	return slot0._mapIdToElements and slot0._mapIdToElements[slot1]
+function var_0_0.getMapElements(arg_5_0, arg_5_1)
+	return arg_5_0._mapIdToElements and arg_5_0._mapIdToElements[arg_5_1]
 end
 
-function slot0.getMapGuidepost(slot0, slot1)
-	return slot0._mapGuidepostDict[slot1]
+function var_0_0.getMapGuidepost(arg_6_0, arg_6_1)
+	return arg_6_0._mapGuidepostDict[arg_6_1]
 end
 
-function slot0.getElementEpisode(slot0, slot1)
-	if not slot0._elementFightList[slot1] then
+function var_0_0.getElementEpisode(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._elementFightList[arg_7_1]
+
+	if not var_7_0 then
 		return nil
 	end
 
-	return slot0._chapterMapEpisodeDic[slot2.mapId]
+	local var_7_1 = var_7_0.mapId
+
+	return arg_7_0._chapterMapEpisodeDic[var_7_1]
 end
 
-function slot0.getEpisodeIdByMapId(slot0, slot1)
-	return slot0._chapterMapEpisodeDic[slot1]
+function var_0_0.getEpisodeIdByMapId(arg_8_0, arg_8_1)
+	return arg_8_0._chapterMapEpisodeDic[arg_8_1]
 end
 
-function slot0.getDispatchCfg(slot0, slot1)
-	slot2 = nil
+function var_0_0.getDispatchCfg(arg_9_0, arg_9_1)
+	local var_9_0
 
-	if slot1 then
-		slot2 = lua_chapter_map_element_dispatch.configDict[slot1]
+	if arg_9_1 then
+		var_9_0 = lua_chapter_map_element_dispatch.configDict[arg_9_1]
 	end
 
-	if not slot2 then
-		logError(string.format("DungeonConfig:getDispatchCfg error, cfg is nil, dispatchId: %s", slot1))
+	if not var_9_0 then
+		logError(string.format("DungeonConfig:getDispatchCfg error, cfg is nil, dispatchId: %s", arg_9_1))
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0._initDialog(slot0)
-	if slot0._dialogList then
+function var_0_0._initDialog(arg_10_0)
+	if arg_10_0._dialogList then
 		return
 	end
 
-	slot0._dialogList = {}
-	slot1 = nil
+	arg_10_0._dialogList = {}
 
-	for slot6, slot7 in ipairs(lua_chapter_map_element_dialog.configList) do
-		if not slot0._dialogList[slot7.id] then
-			slot1 = 0
-			slot0._dialogList[slot7.id] = {}
+	local var_10_0
+	local var_10_1 = 0
+
+	for iter_10_0, iter_10_1 in ipairs(lua_chapter_map_element_dialog.configList) do
+		local var_10_2 = arg_10_0._dialogList[iter_10_1.id]
+
+		if not var_10_2 then
+			var_10_2 = {}
+			var_10_0 = var_10_1
+			arg_10_0._dialogList[iter_10_1.id] = var_10_2
 		end
 
-		if slot7.type == "selector" then
-			slot1 = slot7.param
-		elseif slot7.type == "selectorend" then
-			slot1 = slot2
+		if iter_10_1.type == "selector" then
+			var_10_0 = iter_10_1.param
+		elseif iter_10_1.type == "selectorend" then
+			var_10_0 = var_10_1
 		else
-			slot8[slot1] = slot8[slot1] or {}
+			var_10_2[var_10_0] = var_10_2[var_10_0] or {}
 
-			table.insert(slot8[slot1], slot7)
+			table.insert(var_10_2[var_10_0], iter_10_1)
 		end
 	end
 end
 
-function slot0.getDialog(slot0, slot1, slot2)
-	return slot0._dialogList[slot1] and slot3[slot2]
+function var_0_0.getDialog(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0._dialogList[arg_11_1]
+
+	return var_11_0 and var_11_0[arg_11_2]
 end
 
-function slot0._initChapterDivide(slot0)
-	slot0._chapterDivide = {}
+function var_0_0._initChapterDivide(arg_12_0)
+	arg_12_0._chapterDivide = {}
 
-	for slot4, slot5 in ipairs(lua_chapter_divide.configList) do
-		for slot9, slot10 in ipairs(slot5.chapterId) do
-			slot0._chapterDivide[slot10] = slot5.sectionId
+	for iter_12_0, iter_12_1 in ipairs(lua_chapter_divide.configList) do
+		for iter_12_2, iter_12_3 in ipairs(iter_12_1.chapterId) do
+			arg_12_0._chapterDivide[iter_12_3] = iter_12_1.sectionId
 		end
 	end
 end
 
-function slot0.getChapterDivideSectionId(slot0, slot1)
-	return slot0._chapterDivide[slot1]
+function var_0_0.getChapterDivideSectionId(arg_13_0, arg_13_1)
+	return arg_13_0._chapterDivide[arg_13_1]
 end
 
-function slot0._initChapterPointReward(slot0)
-	if slot0._chapterPointReward then
+function var_0_0._initChapterPointReward(arg_14_0)
+	if arg_14_0._chapterPointReward then
 		return
 	end
 
-	slot0._chapterPointReward = {}
+	arg_14_0._chapterPointReward = {}
 
-	for slot4, slot5 in ipairs(lua_chapter_point_reward.configList) do
-		slot0._chapterPointReward[slot5.chapterId] = slot0._chapterPointReward[slot5.chapterId] or {}
+	for iter_14_0, iter_14_1 in ipairs(lua_chapter_point_reward.configList) do
+		arg_14_0._chapterPointReward[iter_14_1.chapterId] = arg_14_0._chapterPointReward[iter_14_1.chapterId] or {}
 
-		table.insert(slot0._chapterPointReward[slot5.chapterId], slot5)
+		table.insert(arg_14_0._chapterPointReward[iter_14_1.chapterId], iter_14_1)
 	end
 end
 
-function slot0.getChapterPointReward(slot0, slot1)
-	return slot0._chapterPointReward[slot1]
+function var_0_0.getChapterPointReward(arg_15_0, arg_15_1)
+	return arg_15_0._chapterPointReward[arg_15_1]
 end
 
-function slot0._initChapterMap(slot0)
-	if slot0._chapterMapList then
+function var_0_0._initChapterMap(arg_16_0)
+	if arg_16_0._chapterMapList then
 		return
 	end
 
-	slot0._chapterMapList = {}
-	slot0._chapterMapEpisodeDic = {}
+	arg_16_0._chapterMapList = {}
+	arg_16_0._chapterMapEpisodeDic = {}
 
-	for slot4, slot5 in ipairs(lua_chapter_map.configList) do
-		slot0._chapterMapList[slot5.chapterId] = slot0._chapterMapList[slot5.chapterId] or {}
+	for iter_16_0, iter_16_1 in ipairs(lua_chapter_map.configList) do
+		arg_16_0._chapterMapList[iter_16_1.chapterId] = arg_16_0._chapterMapList[iter_16_1.chapterId] or {}
 
-		if string.nilorempty(slot5.unlockCondition) then
-			slot0._chapterMapList[slot5.chapterId][0] = slot5
+		if string.nilorempty(iter_16_1.unlockCondition) then
+			arg_16_0._chapterMapList[iter_16_1.chapterId][0] = iter_16_1
 		else
-			slot0._chapterMapList[slot5.chapterId][tonumber(string.gsub(slot5.unlockCondition, "EpisodeFinish=", ""))] = slot5
+			local var_16_0 = string.gsub(iter_16_1.unlockCondition, "EpisodeFinish=", "")
+			local var_16_1 = tonumber(var_16_0)
+
+			arg_16_0._chapterMapList[iter_16_1.chapterId][var_16_1] = iter_16_1
 		end
 	end
 end
 
-function slot0._mapConnectEpisode(slot0, slot1)
-	if not slot0._chapterMapList[slot1.chapterId] then
+function var_0_0._mapConnectEpisode(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._chapterMapList[arg_17_1.chapterId]
+
+	if not var_17_0 then
 		return
 	end
 
-	if not slot2[(slot1.preEpisode <= 0 or slot0:getEpisodeCO(slot1.preEpisode).chapterId ~= slot1.chapterId) and 0 or slot1.preEpisode2] then
+	local var_17_1 = arg_17_1.preEpisode <= 0
+
+	var_17_1 = var_17_1 or arg_17_0:getEpisodeCO(arg_17_1.preEpisode).chapterId ~= arg_17_1.chapterId
+
+	local var_17_2 = var_17_0[var_17_1 and 0 or arg_17_1.preEpisode2]
+
+	if not var_17_2 then
 		return
 	end
 
-	slot0._chapterMapEpisodeDic[slot5.id] = slot1.id
+	arg_17_0._chapterMapEpisodeDic[var_17_2.id] = arg_17_1.id
 end
 
-function slot0.getChapterMapCfg(slot0, slot1, slot2)
-	if slot0._chapterMapList[slot1] and slot3[slot2] then
-		return slot4
+function var_0_0.getChapterMapCfg(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0._chapterMapList[arg_18_1]
+	local var_18_1 = var_18_0 and var_18_0[arg_18_2]
+
+	if var_18_1 then
+		return var_18_1
 	end
 
-	return slot3 and slot3[slot0._backwardChainDict[slot2]]
+	arg_18_2 = arg_18_0._backwardChainDict[arg_18_2]
+
+	return var_18_0 and var_18_0[arg_18_2]
 end
 
-function slot0.getEpisodeIdByMapCo(slot0, slot1)
-	if not slot0._chapterMapList then
+function var_0_0.getEpisodeIdByMapCo(arg_19_0, arg_19_1)
+	if not arg_19_0._chapterMapList then
 		return
 	end
 
-	if not slot0._chapterMapList[slot1.chapterId] then
+	local var_19_0 = arg_19_1.chapterId
+	local var_19_1 = arg_19_0._chapterMapList[var_19_0]
+
+	if not var_19_1 then
 		return
 	end
 
-	for slot7, slot8 in pairs(slot3) do
-		if slot0:getChapterMapCfg(slot2, slot7) and slot9.id == slot1.id then
-			for slot14, slot15 in ipairs(slot0:getChapterEpisodeCOList(slot2)) do
-				if slot15.preEpisode == slot7 then
-					return slot15.id
+	for iter_19_0, iter_19_1 in pairs(var_19_1) do
+		local var_19_2 = arg_19_0:getChapterMapCfg(var_19_0, iter_19_0)
+
+		if var_19_2 and var_19_2.id == arg_19_1.id then
+			local var_19_3 = arg_19_0:getChapterEpisodeCOList(var_19_0)
+
+			for iter_19_2, iter_19_3 in ipairs(var_19_3) do
+				if iter_19_3.preEpisode == iter_19_0 then
+					return iter_19_3.id
 				end
 			end
 		end
 	end
 end
 
-function slot0.getChapterMapElement(slot0, slot1)
-	return lua_chapter_map_element.configDict[slot1]
+function var_0_0.getChapterMapElement(arg_20_0, arg_20_1)
+	return lua_chapter_map_element.configDict[arg_20_1]
 end
 
-function slot0.isDispatchElement(slot0, slot1)
-	slot2 = false
+function var_0_0.isDispatchElement(arg_21_0, arg_21_1)
+	local var_21_0 = false
+	local var_21_1 = arg_21_1 and arg_21_0:getChapterMapElement(arg_21_1)
 
-	if slot1 and slot0:getChapterMapElement(slot1) then
-		slot2 = slot3.type == DungeonEnum.ElementType.Dispatch
+	if var_21_1 then
+		var_21_0 = var_21_1.type == DungeonEnum.ElementType.Dispatch
 	end
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.getElementDispatchId(slot0, slot1)
-	slot2 = nil
+function var_0_0.getElementDispatchId(arg_22_0, arg_22_1)
+	local var_22_0
 
-	if slot0:isDispatchElement(slot1) then
-		slot2 = slot0:getChapterMapElement(slot1) and slot4.param or nil
+	if arg_22_0:isDispatchElement(arg_22_1) then
+		local var_22_1 = arg_22_0:getChapterMapElement(arg_22_1)
+
+		var_22_0 = var_22_1 and var_22_1.param or nil
 	end
 
-	return tonumber(slot2)
+	return tonumber(var_22_0)
 end
 
-function slot0.getHardEpisode(slot0, slot1)
-	if not slot0._normalHardMap then
-		slot0._normalHardMap = {}
+function var_0_0.getHardEpisode(arg_23_0, arg_23_1)
+	if not arg_23_0._normalHardMap then
+		arg_23_0._normalHardMap = {}
 
-		for slot5, slot6 in ipairs(lua_episode.configList) do
-			if slot0:getChapterCO(slot6.chapterId) and slot7.type == DungeonEnum.ChapterType.Hard then
-				slot0._normalHardMap[slot6.preEpisode] = slot6
+		for iter_23_0, iter_23_1 in ipairs(lua_episode.configList) do
+			local var_23_0 = arg_23_0:getChapterCO(iter_23_1.chapterId)
+
+			if var_23_0 and var_23_0.type == DungeonEnum.ChapterType.Hard then
+				arg_23_0._normalHardMap[iter_23_1.preEpisode] = iter_23_1
 			end
 		end
 	end
 
-	return slot0._normalHardMap[slot1]
+	return arg_23_0._normalHardMap[arg_23_1]
 end
 
-function slot0.getNormalEpisodeId(slot0, slot1)
-	if slot0:getChapterCO(slot0:getEpisodeCO(slot1).chapterId).type == DungeonEnum.ChapterType.Simple then
-		return slot2.normalEpisodeId
+function var_0_0.getNormalEpisodeId(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:getEpisodeCO(arg_24_1)
+
+	if arg_24_0:getChapterCO(var_24_0.chapterId).type == DungeonEnum.ChapterType.Simple then
+		return var_24_0.normalEpisodeId
 	else
-		slot0:getHardEpisode(slot1)
+		arg_24_0:getHardEpisode(arg_24_1)
 
-		for slot7, slot8 in pairs(slot0._normalHardMap) do
-			if slot8.id == slot1 then
-				return slot7
+		for iter_24_0, iter_24_1 in pairs(arg_24_0._normalHardMap) do
+			if iter_24_1.id == arg_24_1 then
+				return iter_24_0
 			end
 		end
 	end
 
-	return slot1
+	return arg_24_1
 end
 
-function slot0.getChapterCOList(slot0)
-	return slot0._chapterConfig.configList
+function var_0_0.getChapterCOList(arg_25_0)
+	return arg_25_0._chapterConfig.configList
 end
 
-function slot0.getFirstChapterCO(slot0)
-	return slot0:getChapterCOList()[1]
+function var_0_0.getFirstChapterCO(arg_26_0)
+	return arg_26_0:getChapterCOList()[1]
 end
 
-function slot0.getChapterCOListByType(slot0, slot1)
-	if slot0._chapterListByType[slot1] then
-		return slot0._chapterListByType[slot1]
+function var_0_0.getChapterCOListByType(arg_27_0, arg_27_1)
+	if arg_27_0._chapterListByType[arg_27_1] then
+		return arg_27_0._chapterListByType[arg_27_1]
 	end
 
-	slot2 = {}
+	local var_27_0 = {}
 
-	for slot6, slot7 in ipairs(slot0:getChapterCOList()) do
-		if slot7.type == slot1 then
-			table.insert(slot2, slot7)
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0:getChapterCOList()) do
+		if iter_27_1.type == arg_27_1 then
+			table.insert(var_27_0, iter_27_1)
 		end
 	end
 
-	slot0._chapterListByType[slot1] = slot2
+	arg_27_0._chapterListByType[arg_27_1] = var_27_0
 
-	return slot2
+	return var_27_0
 end
 
-function slot0.getChapterIndex(slot0, slot1, slot2)
-	if slot0:getChapterCOListByType(slot1) then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot8.id == slot2 then
-				if slot1 == DungeonEnum.ChapterType.Simple then
-					return slot7 + 3, #slot3
+function var_0_0.getChapterIndex(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = arg_28_0:getChapterCOListByType(arg_28_1)
+
+	if var_28_0 then
+		for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+			if iter_28_1.id == arg_28_2 then
+				if arg_28_1 == DungeonEnum.ChapterType.Simple then
+					return iter_28_0 + 3, #var_28_0
 				end
 
-				return slot7, #slot3
+				return iter_28_0, #var_28_0
 			end
 		end
 	end
 
-	return nil, 
+	return nil, nil
 end
 
-function slot0.episodeSortFunction(slot0, slot1)
-	if not slot0 and slot1 then
+function var_0_0.episodeSortFunction(arg_29_0, arg_29_1)
+	if not arg_29_0 and arg_29_1 then
 		return true
 	end
 
-	if not slot1 then
+	if not arg_29_1 then
 		return false
 	end
 
-	if not uv0.instance:getEpisodeCO(slot0) or not uv0.instance:getEpisodeCO(slot1) then
+	local var_29_0 = var_0_0.instance:getEpisodeCO(arg_29_0)
+	local var_29_1 = var_0_0.instance:getEpisodeCO(arg_29_1)
+
+	if not var_29_0 or not var_29_1 then
 		return false
 	end
 
-	if (uv0.instance:getChapterCO(slot2.chapterId).type == DungeonEnum.ChapterType.Normal or slot8 == DungeonEnum.ChapterType.Hard) and (slot8 == DungeonEnum.ChapterType.Normal or slot8 == DungeonEnum.ChapterType.Hard) then
-		if uv0.instance:getChapterIndex(slot8, slot4) ~= uv0.instance:getChapterIndex(uv0.instance:getChapterCO(slot3.chapterId).type, slot5) then
-			return slot10 < slot11
-		elseif slot8 ~= slot9 then
-			return slot8 == DungeonEnum.ChapterType.Normal
+	local var_29_2 = var_29_0.chapterId
+	local var_29_3 = var_29_1.chapterId
+	local var_29_4 = var_0_0.instance:getChapterCO(var_29_2)
+	local var_29_5 = var_0_0.instance:getChapterCO(var_29_3)
+	local var_29_6 = var_29_4.type
+	local var_29_7 = var_29_5.type
+
+	if (var_29_6 == DungeonEnum.ChapterType.Normal or var_29_6 == DungeonEnum.ChapterType.Hard) and (var_29_6 == DungeonEnum.ChapterType.Normal or var_29_6 == DungeonEnum.ChapterType.Hard) then
+		local var_29_8 = var_0_0.instance:getChapterIndex(var_29_6, var_29_2)
+		local var_29_9 = var_0_0.instance:getChapterIndex(var_29_7, var_29_3)
+
+		if var_29_8 ~= var_29_9 then
+			return var_29_8 < var_29_9
+		elseif var_29_6 ~= var_29_7 then
+			return var_29_6 == DungeonEnum.ChapterType.Normal
 		else
-			slot12, slot13 = uv0.instance:getChapterEpisodeIndexWithSP(slot4, slot0)
-			slot14, slot15 = uv0.instance:getChapterEpisodeIndexWithSP(slot5, slot1)
+			local var_29_10, var_29_11 = var_0_0.instance:getChapterEpisodeIndexWithSP(var_29_2, arg_29_0)
+			local var_29_12, var_29_13 = var_0_0.instance:getChapterEpisodeIndexWithSP(var_29_3, arg_29_1)
 
-			if slot13 ~= DungeonEnum.EpisodeType.Sp and slot15 == DungeonEnum.EpisodeType.Sp then
+			if var_29_11 ~= DungeonEnum.EpisodeType.Sp and var_29_13 == DungeonEnum.EpisodeType.Sp then
 				return true
 			else
-				return slot12 < slot14
+				return var_29_10 < var_29_12
 			end
 		end
-	elseif slot8 ~= slot9 then
-		return slot8 < slot9
+	elseif var_29_6 ~= var_29_7 then
+		return var_29_6 < var_29_7
 	else
-		slot10, slot11 = uv0.instance:getChapterEpisodeIndexWithSP(slot4, slot0)
-		slot12, slot13 = uv0.instance:getChapterEpisodeIndexWithSP(slot5, slot1)
+		local var_29_14, var_29_15 = var_0_0.instance:getChapterEpisodeIndexWithSP(var_29_2, arg_29_0)
+		local var_29_16, var_29_17 = var_0_0.instance:getChapterEpisodeIndexWithSP(var_29_3, arg_29_1)
 
-		if slot11 ~= DungeonEnum.EpisodeType.Sp and slot13 == DungeonEnum.EpisodeType.Sp then
+		if var_29_15 ~= DungeonEnum.EpisodeType.Sp and var_29_17 == DungeonEnum.EpisodeType.Sp then
 			return true
 		else
-			return slot10 < slot12
+			return var_29_14 < var_29_16
 		end
 	end
 end
 
-function slot0.getChapterFrontSpNum(slot0, slot1)
-	if slot0:getChapterCO(slot1) and slot2.preChapter > 0 then
-		slot3 = 0 + slot0:getChapterFrontSpNum(slot2.preChapter) + slot0:getChapterSpNum(slot2.preChapter)
+function var_0_0.getChapterFrontSpNum(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0:getChapterCO(arg_30_1)
+	local var_30_1 = 0
+
+	if var_30_0 and var_30_0.preChapter > 0 then
+		var_30_1 = var_30_1 + arg_30_0:getChapterFrontSpNum(var_30_0.preChapter)
+		var_30_1 = var_30_1 + arg_30_0:getChapterSpNum(var_30_0.preChapter)
 	end
 
-	return slot3
+	return var_30_1
 end
 
-function slot0.getChapterEpisodeIndexWithSP(slot0, slot1, slot2)
-	slot6, slot7 = nil
+function var_0_0.getChapterEpisodeIndexWithSP(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0:getChapterEpisodeCOList(arg_31_1)
+	local var_31_1 = 0
+	local var_31_2 = 0
+	local var_31_3
+	local var_31_4
 
-	for slot11, slot12 in ipairs(slot0:getChapterEpisodeCOList(slot1)) do
-		slot7 = slot12.type
-		slot6 = slot12.type == DungeonEnum.EpisodeType.Sp and 0 + 1 or 0 + 1
+	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
+		local var_31_5 = iter_31_1.type == DungeonEnum.EpisodeType.Sp
 
-		if slot12.id == slot2 then
+		var_31_4 = iter_31_1.type
+
+		if var_31_5 then
+			var_31_1 = var_31_1 + 1
+			var_31_3 = var_31_1
+		else
+			var_31_2 = var_31_2 + 1
+			var_31_3 = var_31_2
+		end
+
+		if iter_31_1.id == arg_31_2 then
 			break
 		end
 	end
 
-	if slot7 == DungeonEnum.EpisodeType.Sp then
-		slot6 = slot6 + slot0:getChapterFrontSpNum(slot1)
+	if var_31_4 == DungeonEnum.EpisodeType.Sp then
+		var_31_3 = var_31_3 + arg_31_0:getChapterFrontSpNum(arg_31_1)
 	end
 
-	return slot6, slot7
+	return var_31_3, var_31_4
 end
 
-function slot0.getEpisodeIndex(slot0, slot1)
-	for slot8, slot9 in ipairs(slot0:getChapterEpisodeCOList(slot0:getEpisodeCO(slot1).chapterId)) do
-		slot4 = 0 + 1
+function var_0_0.getEpisodeIndex(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_0:getEpisodeCO(arg_32_1)
+	local var_32_1 = arg_32_0:getChapterEpisodeCOList(var_32_0.chapterId)
+	local var_32_2 = 0
 
-		if slot9.id == slot1 then
+	for iter_32_0, iter_32_1 in ipairs(var_32_1) do
+		var_32_2 = var_32_2 + 1
+
+		if iter_32_1.id == arg_32_1 then
 			break
 		end
 	end
 
-	return slot4
+	return var_32_2
 end
 
-function slot0.getEpisodeDisplay(slot0, slot1)
-	if not slot1 or slot1 == 0 then
+function var_0_0.getEpisodeDisplay(arg_33_0, arg_33_1)
+	if not arg_33_1 or arg_33_1 == 0 then
 		return nil
 	end
 
-	slot3 = slot0:getEpisodeCO(slot1) and slot0:getChapterCO(slot2.chapterId)
+	local var_33_0 = arg_33_0:getEpisodeCO(arg_33_1)
+	local var_33_1 = var_33_0 and arg_33_0:getChapterCO(var_33_0.chapterId)
 
-	if not slot2 or not slot3 then
+	if not var_33_0 or not var_33_1 then
 		return nil
 	end
 
-	slot4 = slot3.chapterIndex
-	slot5, slot6 = slot0:getChapterEpisodeIndexWithSP(slot3.id, slot2.id)
+	local var_33_2 = var_33_1.chapterIndex
+	local var_33_3, var_33_4 = arg_33_0:getChapterEpisodeIndexWithSP(var_33_1.id, var_33_0.id)
 
-	if slot6 == DungeonEnum.EpisodeType.Sp then
-		slot4 = "SP"
+	if var_33_4 == DungeonEnum.EpisodeType.Sp then
+		var_33_2 = "SP"
 	end
 
-	return string.format("%s-%s", slot4, slot5)
+	return string.format("%s-%s", var_33_2, var_33_3)
 end
 
-function slot0.getChapterCO(slot0, slot1)
-	return slot0._chapterConfig.configDict[slot1]
+function var_0_0.getChapterCO(arg_34_0, arg_34_1)
+	return arg_34_0._chapterConfig.configDict[arg_34_1]
 end
 
-function slot0.getEpisodeCO(slot0, slot1)
-	if not slot0._episodeConfig.configDict[slot1] then
-		logNormal("dungeon no episode:" .. tostring(slot1))
+function var_0_0.getEpisodeCO(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0._episodeConfig.configDict[arg_35_1]
+
+	if not var_35_0 then
+		logNormal("dungeon no episode:" .. tostring(arg_35_1))
 	end
 
-	return slot2
+	return var_35_0
 end
 
-function slot0.getEpisodeAdditionRule(slot0, slot1)
-	slot3 = slot0:getEpisodeBattleId(slot1) and lua_battle.configDict[slot2]
+function var_0_0.getEpisodeAdditionRule(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0:getEpisodeBattleId(arg_36_1)
+	local var_36_1 = var_36_0 and lua_battle.configDict[var_36_0]
 
-	return slot3 and slot3.additionRule
+	return var_36_1 and var_36_1.additionRule
 end
 
-function slot0.getBattleAdditionRule(slot0, slot1)
-	slot2 = slot1 and lua_battle.configDict[slot1]
+function var_0_0.getBattleAdditionRule(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_1 and lua_battle.configDict[arg_37_1]
 
-	return slot2 and slot2.additionRule
+	return var_37_0 and var_37_0.additionRule
 end
 
-function slot0.getEpisodeAdvancedCondition(slot0, slot1, slot2)
-	slot3 = slot2 or slot0:getEpisodeBattleId(slot1)
-	slot4 = slot3 and lua_battle.configDict[slot3]
+function var_0_0.getEpisodeAdvancedCondition(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = arg_38_2 or arg_38_0:getEpisodeBattleId(arg_38_1)
+	local var_38_1 = var_38_0 and lua_battle.configDict[var_38_0]
 
-	return slot4 and slot4.advancedCondition
+	return var_38_1 and var_38_1.advancedCondition
 end
 
-function slot0.getEpisodeAdvancedCondition2(slot0, slot1, slot2, slot3)
-	slot4 = slot3 or slot0:getEpisodeBattleId(slot1)
-	slot5 = slot4 and lua_battle.configDict[slot4]
+function var_0_0.getEpisodeAdvancedCondition2(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
+	local var_39_0 = arg_39_3 or arg_39_0:getEpisodeBattleId(arg_39_1)
+	local var_39_1 = var_39_0 and lua_battle.configDict[var_39_0]
+	local var_39_2 = var_39_1 and var_39_1.advancedCondition
 
-	if not (slot5 and slot5.advancedCondition) then
-		return slot6
+	if not var_39_2 then
+		return var_39_2
 	end
 
-	return string.splitToNumber(slot6, "|")[slot2]
+	return string.splitToNumber(var_39_2, "|")[arg_39_2]
 end
 
-function slot0.getEpisodeCondition(slot0, slot1, slot2)
-	if not lua_battle.configDict[slot2 or slot0:getEpisodeBattleId(slot1)] then
+function var_0_0.getEpisodeCondition(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = arg_40_2 or arg_40_0:getEpisodeBattleId(arg_40_1)
+	local var_40_1 = lua_battle.configDict[var_40_0]
+
+	if not var_40_1 then
 		return ""
 	else
-		return slot4.winCondition
+		return var_40_1.winCondition
 	end
 end
 
-function slot0.getBattleCo(slot0, slot1, slot2)
-	return lua_battle.configDict[slot2 or slot0:getEpisodeBattleId(slot1)]
+function var_0_0.getBattleCo(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = arg_41_2 or arg_41_0:getEpisodeBattleId(arg_41_1)
+
+	return lua_battle.configDict[var_41_0]
 end
 
-function slot0.getEpisodeBattleId(slot0, slot1)
-	if not slot0:getEpisodeCO(slot1) then
+function var_0_0.getEpisodeBattleId(arg_42_0, arg_42_1)
+	local var_42_0 = arg_42_0:getEpisodeCO(arg_42_1)
+
+	if not var_42_0 then
 		return nil
 	end
 
-	if slot2.firstBattleId and slot3 > 0 then
-		if DungeonModel.instance:getEpisodeInfo(slot1) and slot4.star <= DungeonEnum.StarType.None then
-			return slot3
+	local var_42_1 = var_42_0.firstBattleId
+
+	if var_42_1 and var_42_1 > 0 then
+		local var_42_2 = DungeonModel.instance:getEpisodeInfo(arg_42_1)
+
+		if var_42_2 and var_42_2.star <= DungeonEnum.StarType.None then
+			return var_42_1
 		end
 
-		if HeroGroupBalanceHelper.isClickBalance() and FightModel.instance:getFightParam() and slot5.battleId == slot3 then
-			return slot3
+		if HeroGroupBalanceHelper.isClickBalance() then
+			local var_42_3 = FightModel.instance:getFightParam()
+
+			if var_42_3 and var_42_3.battleId == var_42_1 then
+				return var_42_1
+			end
 		end
 	end
 
 	if FightModel.instance:getFightParam() then
-		if slot2.type == DungeonEnum.EpisodeType.WeekWalk then
+		if var_42_0.type == DungeonEnum.EpisodeType.WeekWalk then
 			return FightModel.instance:getFightParam().battleId
-		elseif slot2.type == DungeonEnum.EpisodeType.Meilanni then
+		elseif var_42_0.type == DungeonEnum.EpisodeType.Meilanni then
 			return FightModel.instance:getFightParam().battleId
-		elseif slot2.type == DungeonEnum.EpisodeType.Dog then
+		elseif var_42_0.type == DungeonEnum.EpisodeType.Dog then
 			return FightModel.instance:getFightParam().battleId
-		elseif slot2.type == DungeonEnum.EpisodeType.Jiexika then
+		elseif var_42_0.type == DungeonEnum.EpisodeType.Jiexika then
 			return FightModel.instance:getFightParam().battleId
-		elseif slot2.type == DungeonEnum.EpisodeType.YaXian then
+		elseif var_42_0.type == DungeonEnum.EpisodeType.YaXian then
 			return FightModel.instance:getFightParam().battleId
-		elseif slot2.type == DungeonEnum.EpisodeType.Explore then
+		elseif var_42_0.type == DungeonEnum.EpisodeType.Explore then
 			return FightModel.instance:getFightParam().battleId
-		elseif slot2.type == DungeonEnum.EpisodeType.Act1_3Role2Chess then
+		elseif var_42_0.type == DungeonEnum.EpisodeType.Act1_3Role2Chess then
 			return FightModel.instance:getFightParam().battleId
 		end
 	end
 
-	return slot2.battleId
+	return var_42_0.battleId
 end
 
-function slot0.getBonusCO(slot0, slot1)
-	return slot0._bonusConfig.configDict[slot1]
+function var_0_0.getBonusCO(arg_43_0, arg_43_1)
+	return arg_43_0._bonusConfig.configDict[arg_43_1]
 end
 
-function slot0.isNewReward(slot0, slot1, slot2)
-	if not lua_episode.configDict[slot1] then
+function var_0_0.isNewReward(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = lua_episode.configDict[arg_44_1]
+
+	if not var_44_0 then
 		return
 	end
 
-	if not lua_reward.configDict[slot3[slot2]] then
+	if not lua_reward.configDict[var_44_0[arg_44_2]] then
 		return
 	end
 
 	return true
 end
 
-function slot0.getRewardItems(slot0, slot1)
-	if not lua_reward.configDict[slot1] then
+function var_0_0.getRewardItems(arg_45_0, arg_45_1)
+	local var_45_0 = lua_reward.configDict[arg_45_1]
+
+	if not var_45_0 then
 		return {}
 	end
 
-	slot0._cacheRewardResults = slot0._cacheRewardResults or {}
+	arg_45_0._cacheRewardResults = arg_45_0._cacheRewardResults or {}
 
-	if slot0._cacheRewardResults[slot1] then
-		return slot0._cacheRewardResults[slot1]
+	if arg_45_0._cacheRewardResults[arg_45_1] then
+		return arg_45_0._cacheRewardResults[arg_45_1]
 	end
 
-	slot3 = {}
-	slot4 = {}
+	local var_45_1 = {}
+	local var_45_2 = {}
 
-	for slot8 = 1, math.huge do
-		if not slot2["rewardGroup" .. slot8] then
+	for iter_45_0 = 1, math.huge do
+		local var_45_3 = var_45_0["rewardGroup" .. iter_45_0]
+
+		if not var_45_3 then
 			break
 		end
 
-		if string.match(slot9, "^(.+):") and slot0._rewardConfigDict[slot10] then
-			for slot15, slot16 in ipairs(slot11) do
-				if slot16.label ~= "none" then
-					slot4[slot16.materialType] = slot4[slot16.materialType] or {}
+		local var_45_4 = string.match(var_45_3, "^(.+):")
 
-					if not slot4[slot16.materialType][slot16.materialId] then
-						slot4[slot16.materialType][slot16.materialId] = true
+		if var_45_4 then
+			local var_45_5 = arg_45_0._rewardConfigDict[var_45_4]
 
-						table.insert(slot3, {
-							slot16.materialType,
-							slot16.materialId,
-							slot16.shownum == 1 and tonumber(slot16.count) or 0,
-							tagType = DungeonEnum.RewardProbability[slot16.label]
-						})
+			if var_45_5 then
+				for iter_45_1, iter_45_2 in ipairs(var_45_5) do
+					if iter_45_2.label ~= "none" then
+						var_45_2[iter_45_2.materialType] = var_45_2[iter_45_2.materialType] or {}
+
+						if not var_45_2[iter_45_2.materialType][iter_45_2.materialId] then
+							var_45_2[iter_45_2.materialType][iter_45_2.materialId] = true
+
+							table.insert(var_45_1, {
+								iter_45_2.materialType,
+								iter_45_2.materialId,
+								iter_45_2.shownum == 1 and tonumber(iter_45_2.count) or 0,
+								tagType = DungeonEnum.RewardProbability[iter_45_2.label]
+							})
+						end
 					end
 				end
 			end
 		end
 	end
 
-	table.sort(slot3, uv0._rewardSort)
+	table.sort(var_45_1, var_0_0._rewardSort)
 
-	slot0._cacheRewardResults[slot1] = slot3
+	arg_45_0._cacheRewardResults[arg_45_1] = var_45_1
 
-	return slot3
+	return var_45_1
 end
 
-function slot0._rewardSort(slot0, slot1)
-	if ItemModel.instance:getItemConfig(slot0[1], slot0[2]).rare ~= ItemModel.instance:getItemConfig(slot1[1], slot1[2]).rare then
-		return slot3.rare < slot2.rare
+function var_0_0._rewardSort(arg_46_0, arg_46_1)
+	local var_46_0 = ItemModel.instance:getItemConfig(arg_46_0[1], arg_46_0[2])
+	local var_46_1 = ItemModel.instance:getItemConfig(arg_46_1[1], arg_46_1[2])
+
+	if var_46_0.rare ~= var_46_1.rare then
+		return var_46_0.rare > var_46_1.rare
 	else
-		return slot3.id < slot2.id
+		return var_46_0.id > var_46_1.id
 	end
 end
 
-function slot0.getMaterialSource(slot0, slot1, slot2)
-	if not slot0._materialSourceDict then
-		slot0._materialSourceDict = {}
+function var_0_0.getMaterialSource(arg_47_0, arg_47_1, arg_47_2)
+	if not arg_47_0._materialSourceDict then
+		arg_47_0._materialSourceDict = {}
 
-		for slot6, slot7 in ipairs(lua_episode.configList) do
-			if lua_chapter.configDict[slot7.chapterId] and (slot8.type == DungeonEnum.ChapterType.Normal or slot8.type == DungeonEnum.ChapterType.Hard or slot8.type == DungeonEnum.ChapterType.Simple) and lua_reward.configDict[slot7.reward] then
-				for slot14 = 1, math.huge do
-					if not slot10["rewardGroup" .. slot14] then
-						break
-					end
+		for iter_47_0, iter_47_1 in ipairs(lua_episode.configList) do
+			local var_47_0 = lua_chapter.configDict[iter_47_1.chapterId]
 
-					if string.match(slot15, "^(.+):") and slot0._rewardConfigDict[slot16] then
-						for slot21, slot22 in ipairs(slot17) do
-							if slot22.label ~= "none" then
-								if not slot0._materialSourceDict[slot22.materialType] then
-									slot0._materialSourceDict[slot22.materialType] = {}
-								end
+			if var_47_0 and (var_47_0.type == DungeonEnum.ChapterType.Normal or var_47_0.type == DungeonEnum.ChapterType.Hard or var_47_0.type == DungeonEnum.ChapterType.Simple) then
+				local var_47_1 = iter_47_1.reward
+				local var_47_2 = lua_reward.configDict[var_47_1]
 
-								if not slot0._materialSourceDict[slot22.materialType][slot22.materialId] then
-									slot0._materialSourceDict[slot22.materialType][slot22.materialId] = {}
-								end
+				if var_47_2 then
+					for iter_47_2 = 1, math.huge do
+						local var_47_3 = var_47_2["rewardGroup" .. iter_47_2]
 
-								if not tabletool.indexOf(slot0._materialSourceDict[slot22.materialType][slot22.materialId], slot7.id) then
-									table.insert(slot0._materialSourceDict[slot22.materialType][slot22.materialId], {
-										episodeId = slot7.id,
-										probability = DungeonEnum.RewardProbabilityToMaterialProbability[slot22.label]
-									})
+						if not var_47_3 then
+							break
+						end
+
+						local var_47_4 = string.match(var_47_3, "^(.+):")
+
+						if var_47_4 then
+							local var_47_5 = arg_47_0._rewardConfigDict[var_47_4]
+
+							if var_47_5 then
+								for iter_47_3, iter_47_4 in ipairs(var_47_5) do
+									if iter_47_4.label ~= "none" then
+										if not arg_47_0._materialSourceDict[iter_47_4.materialType] then
+											arg_47_0._materialSourceDict[iter_47_4.materialType] = {}
+										end
+
+										if not arg_47_0._materialSourceDict[iter_47_4.materialType][iter_47_4.materialId] then
+											arg_47_0._materialSourceDict[iter_47_4.materialType][iter_47_4.materialId] = {}
+										end
+
+										if not tabletool.indexOf(arg_47_0._materialSourceDict[iter_47_4.materialType][iter_47_4.materialId], iter_47_1.id) then
+											table.insert(arg_47_0._materialSourceDict[iter_47_4.materialType][iter_47_4.materialId], {
+												episodeId = iter_47_1.id,
+												probability = DungeonEnum.RewardProbabilityToMaterialProbability[iter_47_4.label]
+											})
+										end
+									end
 								end
 							end
 						end
@@ -668,129 +800,146 @@ function slot0.getMaterialSource(slot0, slot1, slot2)
 		end
 	end
 
-	if not slot0._materialSourceDict[slot1] then
+	if not arg_47_0._materialSourceDict[arg_47_1] then
 		return
 	end
 
-	return slot0._materialSourceDict[slot1][slot2]
+	return arg_47_0._materialSourceDict[arg_47_1][arg_47_2]
 end
 
-function slot0._initChapterList(slot0)
-	slot0._normalChapterList = {}
-	slot0._exploreChapterList = {}
-	slot0._chapterUnlockMap = {}
+function var_0_0._initChapterList(arg_48_0)
+	arg_48_0._normalChapterList = {}
+	arg_48_0._exploreChapterList = {}
+	arg_48_0._chapterUnlockMap = {}
 
-	for slot5, slot6 in ipairs(slot0._chapterConfig.configList) do
-		if slot6.type == DungeonEnum.ChapterType.Normal then
-			table.insert(slot0._normalChapterList, slot6)
+	local var_48_0 = arg_48_0._chapterConfig.configList
 
-			slot0._chapterUnlockMap[slot6.preChapter] = slot6
-		elseif slot6.type == DungeonEnum.ChapterType.Explore then
-			table.insert(slot0._exploreChapterList, slot6)
+	for iter_48_0, iter_48_1 in ipairs(var_48_0) do
+		if iter_48_1.type == DungeonEnum.ChapterType.Normal then
+			table.insert(arg_48_0._normalChapterList, iter_48_1)
+
+			arg_48_0._chapterUnlockMap[iter_48_1.preChapter] = iter_48_1
+		elseif iter_48_1.type == DungeonEnum.ChapterType.Explore then
+			table.insert(arg_48_0._exploreChapterList, iter_48_1)
 		end
 	end
 end
 
-function slot0.getUnlockChapterConfig(slot0, slot1)
-	return slot0._chapterUnlockMap[slot1]
+function var_0_0.getUnlockChapterConfig(arg_49_0, arg_49_1)
+	return arg_49_0._chapterUnlockMap[arg_49_1]
 end
 
-function slot0.getNormalChapterList(slot0)
-	return slot0._normalChapterList
+function var_0_0.getNormalChapterList(arg_50_0)
+	return arg_50_0._normalChapterList
 end
 
-function slot0.getExploreChapterList(slot0)
-	return slot0._exploreChapterList
+function var_0_0.getExploreChapterList(arg_51_0)
+	return arg_51_0._exploreChapterList
 end
 
-function slot0._rebuildEpisodeConfigs(slot0)
-	slot1 = {
+function var_0_0._rebuildEpisodeConfigs(arg_52_0)
+	local var_52_0 = {
 		preEpisode2 = "preEpisode",
 		normalEpisodeId = "id"
 	}
-	slot2 = {
+	local var_52_1 = {
 		"beforeStory",
 		"story",
 		"afterStory"
 	}
+	local var_52_2 = {}
+	local var_52_3 = {}
+	local var_52_4 = getmetatable(lua_episode.configList[1])
+	local var_52_5 = {
+		__index = function(arg_53_0, arg_53_1)
+			local var_53_0 = var_52_0[arg_53_1] or arg_53_1
+			local var_53_1 = var_52_4.__index(arg_53_0, var_53_0)
 
-	for slot10, slot11 in ipairs(lua_episode.configList) do
-		setmetatable(slot11, {
-			__index = function (slot0, slot1)
-				slot3 = uv1.__index(slot0, uv0[slot1] or slot1)
+			if arg_53_1 == "preEpisode" and var_53_1 > 0 or arg_53_1 == "normalEpisodeId" then
+				return var_52_2[var_53_1] or var_53_1
+			end
 
-				if slot1 == "preEpisode" and slot3 > 0 or slot1 == "normalEpisodeId" then
-					return uv2[slot3] or slot3
+			if tabletool.indexOf(var_52_1, arg_53_1) then
+				local var_53_2 = var_52_4.__index(arg_53_0, "chainEpisode")
+
+				if var_53_2 > 0 and lua_episode.configDict[var_53_2] then
+					return lua_episode.configDict[var_53_2][arg_53_1]
 				end
+			end
 
-				if tabletool.indexOf(uv3, slot1) and uv1.__index(slot0, "chainEpisode") > 0 and lua_episode.configDict[slot4] then
-					return lua_episode.configDict[slot4][slot1]
-				end
+			return var_53_1
+		end,
+		__newindex = var_52_4.__newindex
+	}
 
-				return slot3
-			end,
-			__newindex = getmetatable(lua_episode.configList[1]).__newindex
-		})
+	for iter_52_0, iter_52_1 in ipairs(lua_episode.configList) do
+		setmetatable(iter_52_1, var_52_5)
 
-		if slot11.chainEpisode > 0 then
-			-- Nothing
+		if iter_52_1.chainEpisode > 0 then
+			var_52_2[iter_52_1.chainEpisode] = iter_52_1.id
+			var_52_3[iter_52_1.id] = iter_52_1.chainEpisode
 		end
 	end
 
-	slot0._chainEpisodeDict = {
-		[slot11.chainEpisode] = slot11.id
-	}
-	slot0._backwardChainDict = {
-		[slot11.id] = slot11.chainEpisode
-	}
+	arg_52_0._chainEpisodeDict = var_52_2
+	arg_52_0._backwardChainDict = var_52_3
 end
 
-function slot0._initEpisodeList(slot0)
-	slot0._unlockEpisodeList = {}
-	slot0._chapterSpStats = {}
-	slot0._chapterEpisodeDict = {}
-	slot0._chpaterNonSpEpisodeDict = {}
-	slot0._episodeElementListDict = {}
-	slot0._episodeUnlockDict = {}
+function var_0_0._initEpisodeList(arg_54_0)
+	arg_54_0._unlockEpisodeList = {}
+	arg_54_0._chapterSpStats = {}
+	arg_54_0._chapterEpisodeDict = {}
+	arg_54_0._chpaterNonSpEpisodeDict = {}
+	arg_54_0._episodeElementListDict = {}
+	arg_54_0._episodeUnlockDict = {}
 
-	for slot5, slot6 in ipairs(slot0._episodeConfig.configList) do
-		if not slot0._chapterEpisodeDict[slot6.chapterId] then
-			slot0._chapterEpisodeDict[slot6.chapterId] = {}
+	local var_54_0 = arg_54_0._episodeConfig.configList
+
+	for iter_54_0, iter_54_1 in ipairs(var_54_0) do
+		local var_54_1 = arg_54_0._chapterEpisodeDict[iter_54_1.chapterId]
+
+		if not var_54_1 then
+			var_54_1 = {}
+			arg_54_0._chapterEpisodeDict[iter_54_1.chapterId] = var_54_1
 		end
 
-		table.insert(slot7, slot6)
-		slot0:_setEpisodeIndex(slot6)
+		table.insert(var_54_1, iter_54_1)
+		arg_54_0:_setEpisodeIndex(iter_54_1)
 
-		if slot6.preEpisode > 0 then
-			if not string.nilorempty(slot6.elementList) then
-				slot0._episodeElementListDict[slot6.preEpisode] = slot6.elementList
+		if iter_54_1.preEpisode > 0 then
+			if not string.nilorempty(iter_54_1.elementList) then
+				arg_54_0._episodeElementListDict[iter_54_1.preEpisode] = iter_54_1.elementList
 			end
 
-			if slot0:getChapterCO(slot6.chapterId) and slot8.type ~= DungeonEnum.ChapterType.Hard then
-				slot0._episodeUnlockDict[slot6.preEpisode] = slot6.id
+			local var_54_2 = arg_54_0:getChapterCO(iter_54_1.chapterId)
+
+			if var_54_2 and var_54_2.type ~= DungeonEnum.ChapterType.Hard then
+				arg_54_0._episodeUnlockDict[iter_54_1.preEpisode] = iter_54_1.id
 			end
 		end
 
-		if slot6.unlockEpisode > 0 then
-			slot8 = slot0._unlockEpisodeList[slot6.unlockEpisode] or {}
-			slot0._unlockEpisodeList[slot6.unlockEpisode] = slot8
+		if iter_54_1.unlockEpisode > 0 then
+			local var_54_3 = arg_54_0._unlockEpisodeList[iter_54_1.unlockEpisode] or {}
 
-			table.insert(slot8, slot6.id)
+			arg_54_0._unlockEpisodeList[iter_54_1.unlockEpisode] = var_54_3
+
+			table.insert(var_54_3, iter_54_1.id)
 		end
 
-		if slot6.type == DungeonEnum.EpisodeType.Sp then
-			slot0._chapterSpStats[slot6.chapterId] = (slot0._chapterSpStats[slot6.chapterId] or 0) + 1
+		if iter_54_1.type == DungeonEnum.EpisodeType.Sp then
+			local var_54_4 = (arg_54_0._chapterSpStats[iter_54_1.chapterId] or 0) + 1
+
+			arg_54_0._chapterSpStats[iter_54_1.chapterId] = var_54_4
 		end
 
-		slot0:_mapConnectEpisode(slot6)
+		arg_54_0:_mapConnectEpisode(iter_54_1)
 	end
 end
 
-function slot0._initVersionActivityEpisodeList(slot0)
-	slot0.versionActivityPreEpisodeDict = {}
-	slot2 = nil
+function var_0_0._initVersionActivityEpisodeList(arg_55_0)
+	arg_55_0.versionActivityPreEpisodeDict = {}
 
-	for slot6, slot7 in ipairs({
+	local var_55_0 = {
 		VersionActivityEnum.DungeonChapterId.LeiMiTeBei3,
 		VersionActivityEnum.DungeonChapterId.LeiMiTeBei4,
 		VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal2,
@@ -813,608 +962,729 @@ function slot0._initVersionActivityEpisodeList(slot0)
 		VersionActivity2_4DungeonEnum.DungeonChapterId.Story3,
 		VersionActivity2_5DungeonEnum.DungeonChapterId.Story2,
 		VersionActivity2_5DungeonEnum.DungeonChapterId.Story3
-	}) do
-		for slot11, slot12 in ipairs(slot0._chapterEpisodeDict[slot7]) do
-			slot0.versionActivityPreEpisodeDict[slot12.preEpisode] = slot12
+	}
+	local var_55_1
+
+	for iter_55_0, iter_55_1 in ipairs(var_55_0) do
+		local var_55_2 = arg_55_0._chapterEpisodeDict[iter_55_1]
+
+		for iter_55_2, iter_55_3 in ipairs(var_55_2) do
+			arg_55_0.versionActivityPreEpisodeDict[iter_55_3.preEpisode] = iter_55_3
 		end
 	end
 end
 
-function slot0.getVersionActivityEpisodeCoByPreEpisodeId(slot0, slot1)
-	if not slot0.versionActivityPreEpisodeDict then
-		slot0:_initVersionActivityEpisodeList()
+function var_0_0.getVersionActivityEpisodeCoByPreEpisodeId(arg_56_0, arg_56_1)
+	if not arg_56_0.versionActivityPreEpisodeDict then
+		arg_56_0:_initVersionActivityEpisodeList()
 	end
 
-	return slot0.versionActivityPreEpisodeDict[slot1]
+	return arg_56_0.versionActivityPreEpisodeDict[arg_56_1]
 end
 
-function slot0.getVersionActivityBrotherEpisodeByEpisodeCo(slot0, slot1)
-	if not ActivityConfig.instance:getActIdByChapterId(slot1.chapterId) then
+function var_0_0.getVersionActivityBrotherEpisodeByEpisodeCo(arg_57_0, arg_57_1)
+	local var_57_0 = ActivityConfig.instance:getActIdByChapterId(arg_57_1.chapterId)
+
+	if not var_57_0 then
 		return {
-			slot1
+			arg_57_1
 		}
 	end
 
-	slot3 = {}
+	local var_57_1 = {}
+	local var_57_2 = ActivityConfig.instance:getActivityDungeonConfig(var_57_0)
 
-	while slot1.chapterId ~= ActivityConfig.instance:getActivityDungeonConfig(slot2).story1ChapterId do
-		slot1 = slot0:getEpisodeCO(slot1.preEpisode)
+	while arg_57_1.chapterId ~= var_57_2.story1ChapterId do
+		arg_57_1 = arg_57_0:getEpisodeCO(arg_57_1.preEpisode)
 	end
 
-	while slot1 do
-		table.insert(slot3, slot1)
+	while arg_57_1 do
+		table.insert(var_57_1, arg_57_1)
 
-		slot1 = slot0:getVersionActivityEpisodeCoByPreEpisodeId(slot1.id)
+		arg_57_1 = arg_57_0:getVersionActivityEpisodeCoByPreEpisodeId(arg_57_1.id)
 	end
 
-	return slot3
+	return var_57_1
 end
 
-function slot0._initVersionActivityEpisodeLevelList(slot0, slot1, slot2)
-	if not slot0._versionActivityEpisodeLevelList then
-		slot0._versionActivityEpisodeLevelList = {}
+function var_0_0._initVersionActivityEpisodeLevelList(arg_58_0, arg_58_1, arg_58_2)
+	if not arg_58_0._versionActivityEpisodeLevelList then
+		arg_58_0._versionActivityEpisodeLevelList = {}
 	end
 
-	slot3 = {}
+	local var_58_0 = {}
 
-	while slot2 ~= slot1 do
-		for slot8, slot9 in ipairs(slot0:getChapterEpisodeCOList(slot2)) do
-			slot3[slot9.preEpisode] = slot9.id
-			slot2 = slot0:getEpisodeCO(slot9.preEpisode).chapterId
+	while arg_58_2 ~= arg_58_1 do
+		local var_58_1 = arg_58_0:getChapterEpisodeCOList(arg_58_2)
+
+		for iter_58_0, iter_58_1 in ipairs(var_58_1) do
+			var_58_0[iter_58_1.preEpisode] = iter_58_1.id
+			arg_58_2 = arg_58_0:getEpisodeCO(iter_58_1.preEpisode).chapterId
 		end
 	end
 
-	for slot8, slot9 in ipairs(slot0:getChapterEpisodeCOList(slot1)) do
-		slot0._versionActivityEpisodeLevelList[slot9.id] = {
-			slot9.id
+	local var_58_2 = arg_58_0:getChapterEpisodeCOList(arg_58_1)
+
+	for iter_58_2, iter_58_3 in ipairs(var_58_2) do
+		arg_58_0._versionActivityEpisodeLevelList[iter_58_3.id] = {
+			iter_58_3.id
 		}
 
-		if slot3[slot9.id] then
-			slot10 = slot9.id
+		if var_58_0[iter_58_3.id] then
+			local var_58_3 = iter_58_3.id
 
-			while slot3[slot10] do
-				table.insert(slot0._versionActivityEpisodeLevelList[slot9.id], slot3[slot10])
+			while var_58_0[var_58_3] do
+				table.insert(arg_58_0._versionActivityEpisodeLevelList[iter_58_3.id], var_58_0[var_58_3])
 
-				slot10 = slot3[slot10]
+				var_58_3 = var_58_0[var_58_3]
 			end
 		end
 	end
 
-	for slot8, slot9 in pairs(slot0._versionActivityEpisodeLevelList) do
-		if #slot9 > 0 then
-			for slot13, slot14 in ipairs(slot9) do
-				if slot14 ~= slot8 then
-					slot0._versionActivityEpisodeLevelList[slot14] = slot9
+	for iter_58_4, iter_58_5 in pairs(arg_58_0._versionActivityEpisodeLevelList) do
+		if #iter_58_5 > 0 then
+			for iter_58_6, iter_58_7 in ipairs(iter_58_5) do
+				if iter_58_7 ~= iter_58_4 then
+					arg_58_0._versionActivityEpisodeLevelList[iter_58_7] = iter_58_5
 				end
 			end
 		end
 	end
 end
 
-function slot0.get1_2VersionActivityEpisodeCoList(slot0, slot1)
-	if slot0._versionActivityEpisodeLevelList and slot0._versionActivityEpisodeLevelList[slot1] then
-		return slot0._versionActivityEpisodeLevelList[slot1]
+function var_0_0.get1_2VersionActivityEpisodeCoList(arg_59_0, arg_59_1)
+	if arg_59_0._versionActivityEpisodeLevelList and arg_59_0._versionActivityEpisodeLevelList[arg_59_1] then
+		return arg_59_0._versionActivityEpisodeLevelList[arg_59_1]
 	end
 
-	slot0:_initVersionActivityEpisodeLevelList(VersionActivity1_2DungeonEnum.DungeonChapterId2StartChapterId[slot0:getEpisodeCO(slot1).chapterId] or slot2.chapterId, VersionActivity1_2DungeonEnum.DungeonChapterId2EndChapterId[slot2.chapterId] or slot2.chapterId)
+	local var_59_0 = arg_59_0:getEpisodeCO(arg_59_1)
+	local var_59_1 = VersionActivity1_2DungeonEnum.DungeonChapterId2StartChapterId[var_59_0.chapterId] or var_59_0.chapterId
+	local var_59_2 = VersionActivity1_2DungeonEnum.DungeonChapterId2EndChapterId[var_59_0.chapterId] or var_59_0.chapterId
 
-	return slot0._versionActivityEpisodeLevelList[slot1]
+	arg_59_0:_initVersionActivityEpisodeLevelList(var_59_1, var_59_2)
+
+	return arg_59_0._versionActivityEpisodeLevelList[arg_59_1]
 end
 
-function slot0.get1_2VersionActivityFirstLevelEpisodeId(slot0, slot1)
-	if VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[slot0:getEpisodeCO(slot1).chapterId] then
-		while VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[slot3] ~= slot3 do
-			slot3 = uv0.instance:getEpisodeCO(slot2.preEpisode).chapterId
+function var_0_0.get1_2VersionActivityFirstLevelEpisodeId(arg_60_0, arg_60_1)
+	local var_60_0 = arg_60_0:getEpisodeCO(arg_60_1)
+	local var_60_1 = var_60_0.chapterId
+
+	if VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[var_60_1] then
+		while VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[var_60_1] ~= var_60_1 do
+			var_60_0 = var_0_0.instance:getEpisodeCO(var_60_0.preEpisode)
+			var_60_1 = var_60_0.chapterId
 		end
 	end
 
-	return slot2.id
+	return var_60_0.id
 end
 
-function slot0.getElementList(slot0, slot1)
-	return slot0._episodeElementListDict[slot1] or ""
+function var_0_0.getElementList(arg_61_0, arg_61_1)
+	return arg_61_0._episodeElementListDict[arg_61_1] or ""
 end
 
-function slot0.getUnlockEpisodeId(slot0, slot1)
-	return slot0._episodeUnlockDict[slot1]
+function var_0_0.getUnlockEpisodeId(arg_62_0, arg_62_1)
+	return arg_62_0._episodeUnlockDict[arg_62_1]
 end
 
-function slot0.getChapterSpNum(slot0, slot1)
-	return slot0._chapterSpStats[slot1] or 0
+function var_0_0.getChapterSpNum(arg_63_0, arg_63_1)
+	return arg_63_0._chapterSpStats[arg_63_1] or 0
 end
 
-function slot0.getUnlockEpisodeList(slot0, slot1)
-	return slot0._unlockEpisodeList[slot1]
+function var_0_0.getUnlockEpisodeList(arg_64_0, arg_64_1)
+	return arg_64_0._unlockEpisodeList[arg_64_1]
 end
 
-function slot0.getChapterEpisodeCOList(slot0, slot1)
-	if slot0._chapterEpisodeDict[slot1] and not slot2._sort then
-		slot2._sort = true
+function var_0_0.getChapterEpisodeCOList(arg_65_0, arg_65_1)
+	local var_65_0 = arg_65_0._chapterEpisodeDict[arg_65_1]
 
-		table.sort(slot2, function (slot0, slot1)
-			return uv0:_getEpisodeIndex(slot0, SLFramework.FrameworkSettings.IsEditor and {}) < uv0:_getEpisodeIndex(slot1, SLFramework.FrameworkSettings.IsEditor and {})
+	if var_65_0 and not var_65_0._sort then
+		var_65_0._sort = true
+
+		table.sort(var_65_0, function(arg_66_0, arg_66_1)
+			local var_66_0 = SLFramework.FrameworkSettings.IsEditor and {}
+			local var_66_1 = SLFramework.FrameworkSettings.IsEditor and {}
+
+			return arg_65_0:_getEpisodeIndex(arg_66_0, var_66_0) < arg_65_0:_getEpisodeIndex(arg_66_1, var_66_1)
 		end)
 	end
 
-	return slot2
+	return var_65_0
 end
 
-function slot0.getChapterNonSpEpisodeCOList(slot0, slot1)
-	if not slot0._chpaterNonSpEpisodeDict[slot1] then
-		slot0._chpaterNonSpEpisodeDict[slot1] = {}
+function var_0_0.getChapterNonSpEpisodeCOList(arg_67_0, arg_67_1)
+	local var_67_0 = arg_67_0._chpaterNonSpEpisodeDict[arg_67_1]
 
-		for slot7, slot8 in ipairs(slot0:getChapterEpisodeCOList(slot1)) do
-			if slot8.type ~= DungeonEnum.EpisodeType.Sp then
-				table.insert(slot2, slot8)
+	if not var_67_0 then
+		var_67_0 = {}
+		arg_67_0._chpaterNonSpEpisodeDict[arg_67_1] = var_67_0
+
+		local var_67_1 = arg_67_0:getChapterEpisodeCOList(arg_67_1)
+
+		for iter_67_0, iter_67_1 in ipairs(var_67_1) do
+			if iter_67_1.type ~= DungeonEnum.EpisodeType.Sp then
+				table.insert(var_67_0, iter_67_1)
 			end
 		end
 	end
 
-	return slot2
+	return var_67_0
 end
 
-function slot0.getChapterLastNonSpEpisode(slot0, slot1)
-	return slot0:getChapterNonSpEpisodeCOList(slot1) and slot2[#slot2]
+function var_0_0.getChapterLastNonSpEpisode(arg_68_0, arg_68_1)
+	local var_68_0 = arg_68_0:getChapterNonSpEpisodeCOList(arg_68_1)
+
+	return var_68_0 and var_68_0[#var_68_0]
 end
 
-function slot0._setEpisodeIndex(slot0, slot1)
-	if slot1.preEpisode > 0 then
-		if slot0._episodeIndex[slot1.preEpisode] then
-			slot0._episodeIndex[slot1.id] = slot2 + 1
+function var_0_0._setEpisodeIndex(arg_69_0, arg_69_1)
+	if arg_69_1.preEpisode > 0 then
+		local var_69_0 = arg_69_0._episodeIndex[arg_69_1.preEpisode]
+
+		if var_69_0 then
+			arg_69_0._episodeIndex[arg_69_1.id] = var_69_0 + 1
 		end
 	else
-		slot0._episodeIndex[slot1.id] = 0
+		arg_69_0._episodeIndex[arg_69_1.id] = 0
 	end
 end
 
-function slot0._getEpisodeIndex(slot0, slot1, slot2)
-	if slot2 then
-		slot2[slot1] = true
+function var_0_0._getEpisodeIndex(arg_70_0, arg_70_1, arg_70_2)
+	if arg_70_2 then
+		arg_70_2[arg_70_1] = true
 	end
 
-	if slot0._episodeIndex[slot1.id] then
-		return slot3
+	local var_70_0 = arg_70_0._episodeIndex[arg_70_1.id]
+
+	if var_70_0 then
+		return var_70_0
 	end
 
-	slot4 = slot0:getEpisodeCO(slot1.preEpisode)
+	local var_70_1 = arg_70_0:getEpisodeCO(arg_70_1.preEpisode)
 
-	if slot2 and slot2[slot4] then
-		logError(string.format("_getEpisodeIndex: %s前置互相依赖了", slot4.id))
+	if arg_70_2 and arg_70_2[var_70_1] then
+		logError(string.format("_getEpisodeIndex: %s前置互相依赖了", var_70_1.id))
 
 		return 0
 	end
 
-	slot5 = slot0:_getEpisodeIndex(slot4, slot2) + 1
-	slot0._episodeIndex[slot1.id] = slot5
+	local var_70_2 = arg_70_0:_getEpisodeIndex(var_70_1, arg_70_2) + 1
 
-	return slot5
+	arg_70_0._episodeIndex[arg_70_1.id] = var_70_2
+
+	return var_70_2
 end
 
-function slot0.isPreChapterList(slot0, slot1, slot2)
-	if slot1 == slot2 then
+function var_0_0.isPreChapterList(arg_71_0, arg_71_1, arg_71_2)
+	if arg_71_1 == arg_71_2 then
 		return false
 	end
 
-	slot3 = slot0:getChapterCO(slot2)
-	slot4 = {}
+	local var_71_0 = arg_71_0:getChapterCO(arg_71_2)
+	local var_71_1 = {}
 
-	while slot3 and slot3.preChapter ~= 0 do
-		if slot3.preChapter == slot1 then
+	while var_71_0 and var_71_0.preChapter ~= 0 do
+		if var_71_0.preChapter == arg_71_1 then
 			return true
 		end
 
-		if slot4[slot3.preChapter] then
+		if var_71_1[var_71_0.preChapter] then
 			break
 		end
 
-		slot4[slot3.preChapter] = true
-		slot3 = slot0:getChapterCO(slot3.preChapter)
+		var_71_1[var_71_0.preChapter] = true
+		var_71_0 = arg_71_0:getChapterCO(var_71_0.preChapter)
 	end
 
 	return false
 end
 
-function slot0.isPreEpisodeList(slot0, slot1, slot2)
-	if slot1 == slot2 then
+function var_0_0.isPreEpisodeList(arg_72_0, arg_72_1, arg_72_2)
+	if arg_72_1 == arg_72_2 then
 		return false
 	end
 
-	if slot1 == 0 or slot2 == 0 then
+	if arg_72_1 == 0 or arg_72_2 == 0 then
 		return false
 	end
 
-	slot4 = slot0:getEpisodeCO(slot2)
+	local var_72_0 = arg_72_0:getEpisodeCO(arg_72_1)
+	local var_72_1 = arg_72_0:getEpisodeCO(arg_72_2)
 
-	if not slot0:getEpisodeCO(slot1) or not slot4 then
+	if not var_72_0 or not var_72_1 then
 		return false
 	end
 
-	if slot0:isPreChapterList(slot3.chapterId, slot4.chapterId) then
+	if arg_72_0:isPreChapterList(var_72_0.chapterId, var_72_1.chapterId) then
 		return true
 	end
 
-	slot5 = slot4
-	slot6 = {}
+	local var_72_2 = var_72_1
+	local var_72_3 = {}
 
-	while slot5 and slot5.preEpisode ~= 0 do
-		if slot5.preEpisode == slot1 then
+	while var_72_2 and var_72_2.preEpisode ~= 0 do
+		if var_72_2.preEpisode == arg_72_1 then
 			return true
 		end
 
-		if slot6[slot5.preEpisode] then
+		if var_72_3[var_72_2.preEpisode] then
 			break
 		end
 
-		slot6[slot5.preEpisode] = true
-		slot5 = slot0:getEpisodeCO(slot5.preEpisode)
+		var_72_3[var_72_2.preEpisode] = true
+		var_72_2 = arg_72_0:getEpisodeCO(var_72_2.preEpisode)
 	end
 
 	return false
 end
 
-function slot0.getMonsterListFromGroupID(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
-	slot4 = {}
+function var_0_0.getMonsterListFromGroupID(arg_73_0, arg_73_1)
+	local var_73_0 = {}
+	local var_73_1 = {}
+	local var_73_2 = {}
+	local var_73_3 = string.splitToNumber(arg_73_1, "#")
 
-	for slot9, slot10 in ipairs(string.splitToNumber(slot1, "#")) do
-		slot11 = lua_monster_group.configDict[slot10]
+	for iter_73_0, iter_73_1 in ipairs(var_73_3) do
+		local var_73_4 = lua_monster_group.configDict[iter_73_1]
+		local var_73_5 = string.splitToNumber(var_73_4.monster, "#")
+		local var_73_6 = var_73_4.bossId
 
-		for slot17, slot18 in ipairs(string.splitToNumber(slot11.monster, "#")) do
-			if slot18 and lua_monster.configDict[slot18] and lua_monster.configDict[slot18] then
-				table.insert(slot2, slot19)
+		for iter_73_2, iter_73_3 in ipairs(var_73_5) do
+			if iter_73_3 and lua_monster.configDict[iter_73_3] then
+				local var_73_7 = lua_monster.configDict[iter_73_3]
 
-				if FightHelper.isBossId(slot11.bossId, slot18) then
-					table.insert(slot4, slot19)
-				else
-					table.insert(slot3, slot19)
+				if var_73_7 then
+					table.insert(var_73_0, var_73_7)
+
+					if FightHelper.isBossId(var_73_6, iter_73_3) then
+						table.insert(var_73_2, var_73_7)
+					else
+						table.insert(var_73_1, var_73_7)
+					end
 				end
 			end
 		end
 	end
 
-	return slot2, slot3, slot4
+	return var_73_0, var_73_1, var_73_2
 end
 
-function slot0.getCareersFromBattle(slot0, slot1)
-	slot2 = {}
-	slot3 = 0
+function var_0_0.getCareersFromBattle(arg_74_0, arg_74_1)
+	local var_74_0 = {}
+	local var_74_1 = 0
+	local var_74_2 = lua_battle.configDict[arg_74_1]
 
-	if lua_battle.configDict[slot1] then
-		slot5 = {}
-		slot6, slot7, slot8 = slot0:getMonsterListFromGroupID(slot4.monsterGroupIds)
+	if var_74_2 then
+		local var_74_3 = {}
+		local var_74_4, var_74_5, var_74_6 = arg_74_0:getMonsterListFromGroupID(var_74_2.monsterGroupIds)
 
-		table.sort(slot7, function (slot0, slot1)
-			return slot0.level < slot1.level
+		table.sort(var_74_5, function(arg_75_0, arg_75_1)
+			return arg_75_0.level < arg_75_1.level
 		end)
-		table.sort(slot8, function (slot0, slot1)
-			return slot0.level < slot1.level
-		end)
-
-		for slot12, slot13 in ipairs(slot7) do
-			slot3 = slot3 + 1
-
-			if not slot5[slot13.career] then
-				slot5[slot13.career] = {}
-			end
-
-			slot5[slot13.career].score = slot3
-			slot5[slot13.career].isBoss = false
-		end
-
-		for slot12, slot13 in ipairs(slot8) do
-			slot3 = slot3 + 1
-
-			if not slot5[slot13.career] then
-				slot5[slot13.career] = {}
-			end
-
-			slot5[slot13.career].score = slot3
-			slot5[slot13.career].isBoss = true
-		end
-
-		for slot12, slot13 in pairs(slot5) do
-			table.insert(slot2, {
-				career = slot12,
-				score = slot13.score,
-				isBoss = slot13.isBoss
-			})
-		end
-
-		table.sort(slot2, function (slot0, slot1)
-			return slot0.score < slot1.score
-		end)
-	end
-
-	return slot2
-end
-
-function slot0.getBossMonsterIdDict(slot0, slot1)
-	slot2 = {}
-
-	if slot1 then
-		slot3, slot4, slot5 = slot0:getMonsterListFromGroupID(slot1.monsterGroupIds)
-
-		if slot5 then
-			for slot9 = 1, #slot5 do
-				slot2[slot5[slot9].id] = true
-			end
-		end
-	end
-
-	return slot2
-end
-
-function slot0.getBattleDisplayMonsterIds(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
-
-	for slot8 = #string.splitToNumber(slot1.monsterGroupIds, "#"), 1, -1 do
-		slot10 = lua_monster_group.configDict[slot4[slot8]]
-		slot13 = 100
-		slot14 = {}
-
-		for slot18, slot19 in ipairs(string.splitToNumber(slot10.monster, "#")) do
-			if FightHelper.isBossId(slot10.bossId, slot19) then
-				slot13 = slot18
-			end
-		end
-
-		for slot18, slot19 in ipairs(slot11) do
-			if slot19 and lua_monster.configDict[slot19] then
-				table.insert(slot14, {
-					id = slot19,
-					distance = math.abs(slot18 - slot13)
-				})
-			end
-		end
-
-		table.sort(slot14, function (slot0, slot1)
-			return slot0.distance < slot1.distance
+		table.sort(var_74_6, function(arg_76_0, arg_76_1)
+			return arg_76_0.level < arg_76_1.level
 		end)
 
-		for slot18, slot19 in ipairs(slot14) do
-			if not slot3[slot19.id] then
-				slot3[slot19.id] = true
+		for iter_74_0, iter_74_1 in ipairs(var_74_5) do
+			var_74_1 = var_74_1 + 1
 
-				table.insert(slot2, slot19.id)
+			if not var_74_3[iter_74_1.career] then
+				var_74_3[iter_74_1.career] = {}
+			end
+
+			var_74_3[iter_74_1.career].score = var_74_1
+			var_74_3[iter_74_1.career].isBoss = false
+		end
+
+		for iter_74_2, iter_74_3 in ipairs(var_74_6) do
+			var_74_1 = var_74_1 + 1
+
+			if not var_74_3[iter_74_3.career] then
+				var_74_3[iter_74_3.career] = {}
+			end
+
+			var_74_3[iter_74_3.career].score = var_74_1
+			var_74_3[iter_74_3.career].isBoss = true
+		end
+
+		for iter_74_4, iter_74_5 in pairs(var_74_3) do
+			local var_74_7 = {
+				career = iter_74_4,
+				score = iter_74_5.score,
+				isBoss = iter_74_5.isBoss
+			}
+
+			table.insert(var_74_0, var_74_7)
+		end
+
+		table.sort(var_74_0, function(arg_77_0, arg_77_1)
+			return arg_77_0.score < arg_77_1.score
+		end)
+	end
+
+	return var_74_0
+end
+
+function var_0_0.getBossMonsterIdDict(arg_78_0, arg_78_1)
+	local var_78_0 = {}
+
+	if arg_78_1 then
+		local var_78_1, var_78_2, var_78_3 = arg_78_0:getMonsterListFromGroupID(arg_78_1.monsterGroupIds)
+
+		if var_78_3 then
+			for iter_78_0 = 1, #var_78_3 do
+				var_78_0[var_78_3[iter_78_0].id] = true
 			end
 		end
 	end
 
-	for slot8, slot9 in ipairs(slot4) do
-		for slot16, slot17 in ipairs(string.nilorempty(lua_monster_group.configDict[slot9].spMonster) and {} or string.split(slot10.spMonster, "#")) do
-			if not slot3[slot17] then
-				slot3[slot17] = true
+	return var_78_0
+end
 
-				table.insert(slot2, tonumber(slot17))
+function var_0_0.getBattleDisplayMonsterIds(arg_79_0, arg_79_1)
+	local var_79_0 = {}
+	local var_79_1 = {}
+	local var_79_2 = string.splitToNumber(arg_79_1.monsterGroupIds, "#")
+
+	for iter_79_0 = #var_79_2, 1, -1 do
+		local var_79_3 = var_79_2[iter_79_0]
+		local var_79_4 = lua_monster_group.configDict[var_79_3]
+		local var_79_5 = string.splitToNumber(var_79_4.monster, "#")
+		local var_79_6 = var_79_4.bossId
+		local var_79_7 = 100
+		local var_79_8 = {}
+
+		for iter_79_1, iter_79_2 in ipairs(var_79_5) do
+			if FightHelper.isBossId(var_79_6, iter_79_2) then
+				var_79_7 = iter_79_1
+			end
+		end
+
+		for iter_79_3, iter_79_4 in ipairs(var_79_5) do
+			if iter_79_4 and lua_monster.configDict[iter_79_4] then
+				local var_79_9 = {
+					id = iter_79_4,
+					distance = math.abs(iter_79_3 - var_79_7)
+				}
+
+				table.insert(var_79_8, var_79_9)
+			end
+		end
+
+		table.sort(var_79_8, function(arg_80_0, arg_80_1)
+			return arg_80_0.distance < arg_80_1.distance
+		end)
+
+		for iter_79_5, iter_79_6 in ipairs(var_79_8) do
+			if not var_79_1[iter_79_6.id] then
+				var_79_1[iter_79_6.id] = true
+
+				table.insert(var_79_0, iter_79_6.id)
 			end
 		end
 	end
 
-	return slot2
-end
+	for iter_79_7, iter_79_8 in ipairs(var_79_2) do
+		local var_79_10 = lua_monster_group.configDict[iter_79_8]
+		local var_79_11 = string.nilorempty(var_79_10.spMonster) and {} or string.split(var_79_10.spMonster, "#")
 
-function slot0.getNormalChapterId(slot0, slot1)
-	if slot0:getChapterCO(slot0:getEpisodeCO(slot1).chapterId).type == DungeonEnum.ChapterType.Hard then
-		slot3 = slot0:getChapterCO(slot0:getEpisodeCO(slot2.preEpisode).chapterId)
+		for iter_79_9, iter_79_10 in ipairs(var_79_11) do
+			if not var_79_1[iter_79_10] then
+				var_79_1[iter_79_10] = true
+
+				table.insert(var_79_0, tonumber(iter_79_10))
+			end
+		end
 	end
 
-	return slot3.id
+	return var_79_0
 end
 
-function slot0.getChapterTypeByEpisodeId(slot0, slot1)
-	return slot0:getChapterCO(slot0:getEpisodeCO(slot1).chapterId).type
+function var_0_0.getNormalChapterId(arg_81_0, arg_81_1)
+	local var_81_0 = arg_81_0:getEpisodeCO(arg_81_1)
+	local var_81_1 = arg_81_0:getChapterCO(var_81_0.chapterId)
+
+	if var_81_1.type == DungeonEnum.ChapterType.Hard then
+		local var_81_2 = arg_81_0:getEpisodeCO(var_81_0.preEpisode)
+
+		var_81_1 = arg_81_0:getChapterCO(var_81_2.chapterId)
+	end
+
+	return var_81_1.id
 end
 
-function slot0.getFirstEpisodeWinConditionText(slot0, slot1, slot2)
-	if string.nilorempty(slot0:getEpisodeCondition(slot1, slot2)) then
+function var_0_0.getChapterTypeByEpisodeId(arg_82_0, arg_82_1)
+	local var_82_0 = arg_82_0:getEpisodeCO(arg_82_1)
+
+	return arg_82_0:getChapterCO(var_82_0.chapterId).type
+end
+
+function var_0_0.getFirstEpisodeWinConditionText(arg_83_0, arg_83_1, arg_83_2)
+	local var_83_0 = arg_83_0:getEpisodeCondition(arg_83_1, arg_83_2)
+
+	if string.nilorempty(var_83_0) then
 		return ""
 	end
 
-	return slot0:getWinConditionText(GameUtil.splitString2(slot3, false, "|", "#")[1]) or "winCondition error:" .. slot3
+	local var_83_1 = GameUtil.splitString2(var_83_0, false, "|", "#")
+
+	return arg_83_0:getWinConditionText(var_83_1[1]) or "winCondition error:" .. var_83_0
 end
 
-function slot0.getEpisodeWinConditionTextList(slot0, slot1)
-	if string.nilorempty(slot0:getEpisodeCondition(slot1)) then
+function var_0_0.getEpisodeWinConditionTextList(arg_84_0, arg_84_1)
+	local var_84_0 = arg_84_0:getEpisodeCondition(arg_84_1)
+
+	if string.nilorempty(var_84_0) then
 		return {
 			""
 		}
 	end
 
-	slot3 = {}
-	slot8 = "#"
+	local var_84_1 = {}
+	local var_84_2 = GameUtil.splitString2(var_84_0, false, "|", "#")
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, false, "|", slot8)) do
-		table.insert(slot3, slot0:getWinConditionText(slot9) or "winCondition error:" .. slot2)
+	for iter_84_0, iter_84_1 in ipairs(var_84_2) do
+		table.insert(var_84_1, arg_84_0:getWinConditionText(iter_84_1) or "winCondition error:" .. var_84_0)
 	end
 
-	return slot3
+	return var_84_1
 end
 
-function slot0.getWinConditionText(slot0, slot1)
-	if not slot1 then
+function var_0_0.getWinConditionText(arg_85_0, arg_85_1)
+	if not arg_85_1 then
 		return nil
 	end
 
-	if tonumber(slot1[1]) == 1 or slot2 == 10 then
-		return luaLang("dungeon_beat_all")
-	elseif slot2 == 2 then
-		if lua_monster.configDict[tonumber(slot1[2])] then
-			return formatLuaLang("dungeon_win_protect", string.format("<color=#ff0000>%s</color>", slot4.name))
-		end
-	elseif slot2 == 3 or slot2 == 9 then
-		slot4 = {}
+	local var_85_0 = tonumber(arg_85_1[1])
 
-		for slot8, slot9 in ipairs(string.split(slot1[2], "&")) do
-			if lua_monster.configDict[tonumber(slot9)] then
-				table.insert(slot4, string.format("<color=#ff0000>%s</color>", FightConfig.instance:getNewMonsterConfig(slot11) and slot11.highPriorityName or slot11.name))
+	if var_85_0 == 1 or var_85_0 == 10 then
+		return luaLang("dungeon_beat_all")
+	elseif var_85_0 == 2 then
+		local var_85_1 = tonumber(arg_85_1[2])
+		local var_85_2 = lua_monster.configDict[var_85_1]
+
+		if var_85_2 then
+			return formatLuaLang("dungeon_win_protect", string.format("<color=#ff0000>%s</color>", var_85_2.name))
+		end
+	elseif var_85_0 == 3 or var_85_0 == 9 then
+		local var_85_3 = string.split(arg_85_1[2], "&")
+		local var_85_4 = {}
+
+		for iter_85_0, iter_85_1 in ipairs(var_85_3) do
+			local var_85_5 = tonumber(iter_85_1)
+			local var_85_6 = lua_monster.configDict[var_85_5]
+
+			if var_85_6 then
+				local var_85_7 = FightConfig.instance:getNewMonsterConfig(var_85_6) and var_85_6.highPriorityName or var_85_6.name
+
+				table.insert(var_85_4, string.format("<color=#ff0000>%s</color>", var_85_7))
 			end
 		end
 
-		if #slot4 > 0 then
-			return formatLuaLang("dungeon_win_3", table.concat(slot4, luaLang("else")))
+		if #var_85_4 > 0 then
+			return formatLuaLang("dungeon_win_3", table.concat(var_85_4, luaLang("else")))
 		end
-	elseif slot2 == 4 then
-		-- Nothing
-	elseif slot2 == 5 then
-		if lua_monster.configDict[tonumber(slot1[2])] then
-			return GameUtil.getSubPlaceholderLuaLang(luaLang("dungeon_win_5"), {
-				string.format("<color=#ff0000>%s</color>", slot4.name),
-				tonumber(slot1[3]) / 10 .. "%"
-			})
+	elseif var_85_0 == 4 then
+		-- block empty
+	elseif var_85_0 == 5 then
+		local var_85_8 = tonumber(arg_85_1[2])
+		local var_85_9 = lua_monster.configDict[var_85_8]
+
+		if var_85_9 then
+			local var_85_10 = {
+				string.format("<color=#ff0000>%s</color>", var_85_9.name),
+				tonumber(arg_85_1[3]) / 10 .. "%"
+			}
+
+			return (GameUtil.getSubPlaceholderLuaLang(luaLang("dungeon_win_5"), var_85_10))
 		end
-	elseif slot2 == 6 then
-		return formatLuaLang("dungeon_win_6", slot1[2])
-	elseif slot2 == 7 then
+	elseif var_85_0 == 6 then
+		return formatLuaLang("dungeon_win_6", arg_85_1[2])
+	elseif var_85_0 == 7 then
 		return luaLang("dungeon_beat_all_without_die")
-	elseif slot2 == 8 then
-		return formatLuaLang("dungeon_win_8", slot1[3])
-	elseif slot2 == 13 and lua_monster.configDict[tonumber(slot1[2])] then
-		return formatLuaLang("fight_charge_monster_energy", slot4.name)
+	elseif var_85_0 == 8 then
+		return formatLuaLang("dungeon_win_8", arg_85_1[3])
+	elseif var_85_0 == 13 then
+		local var_85_11 = tonumber(arg_85_1[2])
+		local var_85_12 = lua_monster.configDict[var_85_11]
+
+		if var_85_12 then
+			return formatLuaLang("fight_charge_monster_energy", var_85_12.name)
+		end
 	end
 
 	return nil
 end
 
-function slot0.getEpisodeAdvancedConditionText(slot0, slot1, slot2)
-	if LuaUtil.isEmptyStr(slot0:getEpisodeAdvancedCondition(slot1, slot2)) == false then
-		return lua_condition.configDict[string.splitToNumber(slot3, "|")[1]].desc
+function var_0_0.getEpisodeAdvancedConditionText(arg_86_0, arg_86_1, arg_86_2)
+	local var_86_0 = arg_86_0:getEpisodeAdvancedCondition(arg_86_1, arg_86_2)
+
+	if LuaUtil.isEmptyStr(var_86_0) == false then
+		local var_86_1 = string.splitToNumber(var_86_0, "|")[1]
+
+		return lua_condition.configDict[var_86_1].desc
 	else
 		return ""
 	end
 end
 
-function slot0.getEpisodeAdvancedCondition2Text(slot0, slot1, slot2)
-	if LuaUtil.isEmptyStr(slot0:getEpisodeAdvancedCondition(slot1, slot2)) == false then
-		if not string.splitToNumber(slot3, "|")[2] then
+function var_0_0.getEpisodeAdvancedCondition2Text(arg_87_0, arg_87_1, arg_87_2)
+	local var_87_0 = arg_87_0:getEpisodeAdvancedCondition(arg_87_1, arg_87_2)
+
+	if LuaUtil.isEmptyStr(var_87_0) == false then
+		local var_87_1 = string.splitToNumber(var_87_0, "|")[2]
+
+		if not var_87_1 then
 			return ""
 		end
 
-		return lua_condition.configDict[slot5].desc
+		return lua_condition.configDict[var_87_1].desc
 	else
 		return ""
 	end
 end
 
-function slot0.getEpisodeFailedReturnCost(slot0, slot1, slot2)
-	slot2 = slot2 or 1
+function var_0_0.getEpisodeFailedReturnCost(arg_88_0, arg_88_1, arg_88_2)
+	arg_88_2 = arg_88_2 or 1
 
-	if not slot0:getEpisodeCO(slot1) then
+	local var_88_0 = arg_88_0:getEpisodeCO(arg_88_1)
+
+	if not var_88_0 then
 		return 0
 	end
 
-	if string.split(slot3.cost, "#")[2] == string.split(slot3.failCost, "#")[2] and slot4[3] and slot5[3] then
-		return slot2 * slot4[3] - slot5[3]
+	local var_88_1 = string.split(var_88_0.cost, "#")
+	local var_88_2 = string.split(var_88_0.failCost, "#")
+
+	if var_88_1[2] == var_88_2[2] and var_88_1[3] and var_88_2[3] then
+		return arg_88_2 * var_88_1[3] - var_88_2[3]
 	else
 		return 0
 	end
 end
 
-function slot0.getEndBattleCost(slot0, slot1, slot2)
-	if not slot0:getEpisodeCO(slot1) then
+function var_0_0.getEndBattleCost(arg_89_0, arg_89_1, arg_89_2)
+	local var_89_0 = arg_89_0:getEpisodeCO(arg_89_1)
+
+	if not var_89_0 then
 		return 0
 	end
 
-	if slot2 then
-		return string.split(slot3.failCost, "#")[3]
+	if arg_89_2 then
+		return string.split(var_89_0.failCost, "#")[3]
 	else
-		return string.split(slot3.cost, "#")[3]
+		return string.split(var_89_0.cost, "#")[3]
 	end
 end
 
-function slot0.getDungeonEveryDayCount(slot0, slot1)
-	slot4 = 0
+function var_0_0.getDungeonEveryDayCount(arg_90_0, arg_90_1)
+	local var_90_0 = CommonConfig.instance:getConstStr(ConstEnum.DungeonMaxCount)
+	local var_90_1 = GameUtil.splitString2(var_90_0, true, "|", "#")
+	local var_90_2 = 0
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(CommonConfig.instance:getConstStr(ConstEnum.DungeonMaxCount), true, "|", "#")) do
-		if slot9[1] == slot1 then
-			slot4 = slot9[2]
+	for iter_90_0, iter_90_1 in ipairs(var_90_1) do
+		local var_90_3 = iter_90_1[1]
+		local var_90_4 = iter_90_1[2]
+
+		if var_90_3 == arg_90_1 then
+			var_90_2 = var_90_4
 
 			break
 		end
 	end
 
-	return slot4
+	return var_90_2
 end
 
-function slot0.getDungeonEveryDayItem(slot0, slot1)
-	slot4 = 0
+function var_0_0.getDungeonEveryDayItem(arg_91_0, arg_91_1)
+	local var_91_0 = CommonConfig.instance:getConstStr(ConstEnum.DungeonItem)
+	local var_91_1 = GameUtil.splitString2(var_91_0, true, "|", "#")
+	local var_91_2 = 0
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(CommonConfig.instance:getConstStr(ConstEnum.DungeonItem), true, "|", "#")) do
-		if slot9[1] == slot1 then
-			slot4 = slot9[2]
+	for iter_91_0, iter_91_1 in ipairs(var_91_1) do
+		local var_91_3 = iter_91_1[1]
+		local var_91_4 = iter_91_1[2]
+
+		if var_91_3 == arg_91_1 then
+			var_91_2 = var_91_4
 
 			break
 		end
 	end
 
-	return slot4
+	return var_91_2
 end
 
-function slot0.getPuzzleQuestionCo(slot0, slot1)
-	return lua_chapter_puzzle_question.configDict[slot1]
+function var_0_0.getPuzzleQuestionCo(arg_92_0, arg_92_1)
+	return lua_chapter_puzzle_question.configDict[arg_92_1]
 end
 
-function slot0._initPuzzleSquare(slot0, slot1)
-	slot0._puzzle_square_data = {}
+function var_0_0._initPuzzleSquare(arg_93_0, arg_93_1)
+	arg_93_0._puzzle_square_data = {}
 
-	for slot5, slot6 in pairs(slot1.configDict) do
-		if not slot0._puzzle_square_data[slot6.group] then
-			slot0._puzzle_square_data[slot6.group] = {}
+	for iter_93_0, iter_93_1 in pairs(arg_93_1.configDict) do
+		if not arg_93_0._puzzle_square_data[iter_93_1.group] then
+			arg_93_0._puzzle_square_data[iter_93_1.group] = {}
 		end
 
-		table.insert(slot0._puzzle_square_data[slot6.group], slot6)
+		table.insert(arg_93_0._puzzle_square_data[iter_93_1.group], iter_93_1)
 	end
 end
 
-function slot0.getPuzzleSquareDebrisGroupList(slot0, slot1)
-	return slot0._puzzle_square_data[slot1]
+function var_0_0.getPuzzleSquareDebrisGroupList(arg_94_0, arg_94_1)
+	return arg_94_0._puzzle_square_data[arg_94_1]
 end
 
-function slot0.getPuzzleSquareData(slot0, slot1)
-	return lua_chapter_puzzle_square.configDict[slot1]
+function var_0_0.getPuzzleSquareData(arg_95_0, arg_95_1)
+	return lua_chapter_puzzle_square.configDict[arg_95_1]
 end
 
-function slot0.getDecryptCo(slot0, slot1)
-	return slot0._decryptConfig.configDict[slot1]
+function var_0_0.getDecryptCo(arg_96_0, arg_96_1)
+	return arg_96_0._decryptConfig.configDict[arg_96_1]
 end
 
-function slot0.getDecryptChangeColorCo(slot0, slot1)
-	return slot0._lvConfig.configDict[slot1]
+function var_0_0.getDecryptChangeColorCo(arg_97_0, arg_97_1)
+	return arg_97_0._lvConfig.configDict[arg_97_1]
 end
 
-function slot0.getDecryptChangeColorInteractCos(slot0)
-	return slot0._interactConfig.configDict
+function var_0_0.getDecryptChangeColorInteractCos(arg_98_0)
+	return arg_98_0._interactConfig.configDict
 end
 
-function slot0.getDecryptChangeColorInteractCo(slot0, slot1)
-	return slot0._interactConfig.configDict[slot1]
+function var_0_0.getDecryptChangeColorInteractCo(arg_99_0, arg_99_1)
+	return arg_99_0._interactConfig.configDict[arg_99_1]
 end
 
-function slot0.getDecryptChangeColorColorCos(slot0)
-	return slot0._colorConfig.configDict
+function var_0_0.getDecryptChangeColorColorCos(arg_100_0)
+	return arg_100_0._colorConfig.configDict
 end
 
-function slot0.getDecryptChangeColorColorCo(slot0, slot1)
-	return slot0._colorConfig.configDict[slot1]
+function var_0_0.getDecryptChangeColorColorCo(arg_101_0, arg_101_1)
+	return arg_101_0._colorConfig.configDict[arg_101_1]
 end
 
-function slot0.isLeiMiTeBeiChapterType(slot0, slot1)
-	if not slot1 then
+function var_0_0.isLeiMiTeBeiChapterType(arg_102_0, arg_102_1)
+	if not arg_102_1 then
 		return false
 	end
 
-	return slot1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei or slot1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBeiHard or slot1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei3 or slot1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei4 or slot1.chapterId == VersionActivityEnum.DungeonChapterId.ElementFight
+	return arg_102_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei or arg_102_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBeiHard or arg_102_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei3 or arg_102_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei4 or arg_102_1.chapterId == VersionActivityEnum.DungeonChapterId.ElementFight
 end
 
-function slot0.getElementFightEpisodeToNormalEpisodeId(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_chapter_map_element.configList) do
-		if slot6.type == 2 and slot6.param == tostring(slot1.id) then
-			for slot12, slot13 in pairs(slot0._chapterMapList[VersionActivityEnum.DungeonChapterId.LeiMiTeBei]) do
-				if slot13.id == slot6.mapId then
-					for slot18, slot19 in ipairs(uv0.instance:getChapterEpisodeCOList(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)) do
-						if slot19.preEpisode == slot12 then
-							return slot19.id
+function var_0_0.getElementFightEpisodeToNormalEpisodeId(arg_103_0, arg_103_1)
+	for iter_103_0, iter_103_1 in ipairs(lua_chapter_map_element.configList) do
+		if iter_103_1.type == 2 and iter_103_1.param == tostring(arg_103_1.id) then
+			local var_103_0 = iter_103_1.mapId
+			local var_103_1 = arg_103_0._chapterMapList[VersionActivityEnum.DungeonChapterId.LeiMiTeBei]
+
+			for iter_103_2, iter_103_3 in pairs(var_103_1) do
+				if iter_103_3.id == var_103_0 then
+					local var_103_2 = var_0_0.instance:getChapterEpisodeCOList(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
+
+					for iter_103_4, iter_103_5 in ipairs(var_103_2) do
+						if iter_103_5.preEpisode == iter_103_2 then
+							return iter_103_5.id
 						end
 					end
 				end
@@ -1425,14 +1695,19 @@ function slot0.getElementFightEpisodeToNormalEpisodeId(slot0, slot1)
 	return nil
 end
 
-function slot0.getActivityElementFightEpisodeToNormalEpisodeId(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(lua_chapter_map_element.configList) do
-		if slot7.type == 2 and tonumber(slot7.param) == slot1.id then
-			for slot13, slot14 in pairs(slot0._chapterMapList[slot2]) do
-				if slot14.id == slot7.mapId then
-					for slot19, slot20 in ipairs(uv0.instance:getChapterEpisodeCOList(slot2)) do
-						if slot20.preEpisode == slot13 then
-							return slot20.id
+function var_0_0.getActivityElementFightEpisodeToNormalEpisodeId(arg_104_0, arg_104_1, arg_104_2)
+	for iter_104_0, iter_104_1 in ipairs(lua_chapter_map_element.configList) do
+		if iter_104_1.type == 2 and tonumber(iter_104_1.param) == arg_104_1.id then
+			local var_104_0 = iter_104_1.mapId
+			local var_104_1 = arg_104_0._chapterMapList[arg_104_2]
+
+			for iter_104_2, iter_104_3 in pairs(var_104_1) do
+				if iter_104_3.id == var_104_0 then
+					local var_104_2 = var_0_0.instance:getChapterEpisodeCOList(arg_104_2)
+
+					for iter_104_4, iter_104_5 in ipairs(var_104_2) do
+						if iter_104_5.preEpisode == iter_104_2 then
+							return iter_104_5.id
 						end
 					end
 				end
@@ -1443,117 +1718,145 @@ function slot0.getActivityElementFightEpisodeToNormalEpisodeId(slot0, slot1, slo
 	return nil
 end
 
-function slot0.isActivity1_2Map(slot0, slot1)
-	if uv0.instance:getEpisodeCO(slot1) and lua_chapter.configDict[slot2.chapterId] and (slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or slot4.type == DungeonEnum.ChapterType.Activity1_2DungeonHard) then
-		return true
+function var_0_0.isActivity1_2Map(arg_105_0, arg_105_1)
+	local var_105_0 = var_0_0.instance:getEpisodeCO(arg_105_1)
+
+	if var_105_0 then
+		local var_105_1 = var_105_0.chapterId
+		local var_105_2 = lua_chapter.configDict[var_105_1]
+
+		if var_105_2 and (var_105_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or var_105_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or var_105_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or var_105_2.type == DungeonEnum.ChapterType.Activity1_2DungeonHard) then
+			return true
+		end
 	end
 end
 
-function slot0.getEpisodeLevelIndex(slot0, slot1)
-	if not slot1 then
+function var_0_0.getEpisodeLevelIndex(arg_106_0, arg_106_1)
+	if not arg_106_1 then
 		return 0
 	end
 
-	return slot0:getEpisodeLevelIndexByEpisodeId(slot1.id)
+	return arg_106_0:getEpisodeLevelIndexByEpisodeId(arg_106_1.id)
 end
 
-function slot0.getEpisodeLevelIndexByEpisodeId(slot0, slot1)
-	if not slot1 or type(slot1) ~= "number" then
+function var_0_0.getEpisodeLevelIndexByEpisodeId(arg_107_0, arg_107_1)
+	if not arg_107_1 or type(arg_107_1) ~= "number" then
 		return 0
 	end
 
-	return slot1 % 100
+	return arg_107_1 % 100
 end
 
-function slot0.getExtendStory(slot0, slot1)
-	if not slot0._episodeExtendStoryDict then
-		slot0._episodeExtendStoryDict = {}
+function var_0_0.getExtendStory(arg_108_0, arg_108_1)
+	if not arg_108_0._episodeExtendStoryDict then
+		arg_108_0._episodeExtendStoryDict = {}
 
-		if lua_const.configDict[ConstEnum.EpisodeExtendStory] and not string.nilorempty(slot2.value) then
-			for slot7, slot8 in ipairs(GameUtil.splitString2(slot2.value, true)) do
-				slot0._episodeExtendStoryDict[slot8[1]] = {
-					slot8[2],
-					slot8[3]
+		local var_108_0 = lua_const.configDict[ConstEnum.EpisodeExtendStory]
+
+		if var_108_0 and not string.nilorempty(var_108_0.value) then
+			local var_108_1 = GameUtil.splitString2(var_108_0.value, true)
+
+			for iter_108_0, iter_108_1 in ipairs(var_108_1) do
+				arg_108_0._episodeExtendStoryDict[iter_108_1[1]] = {
+					iter_108_1[2],
+					iter_108_1[3]
 				}
 			end
 		end
 	end
 
-	if not slot0._episodeExtendStoryDict[slot1] then
+	if not arg_108_0._episodeExtendStoryDict[arg_108_1] then
 		return nil
 	end
 
-	slot2, slot3 = unpack(slot0._episodeExtendStoryDict[slot1])
+	local var_108_2, var_108_3 = unpack(arg_108_0._episodeExtendStoryDict[arg_108_1])
 
-	if not slot2 or not DungeonMapModel.instance:elementIsFinished(slot2) then
+	if not var_108_2 or not DungeonMapModel.instance:elementIsFinished(var_108_2) then
 		return nil
 	end
 
-	return slot3
+	return var_108_3
 end
 
-function slot0.getSimpleEpisode(slot0, slot1)
-	if slot1.chainEpisode ~= 0 then
-		return slot0:getEpisodeCO(slot2)
+function var_0_0.getSimpleEpisode(arg_109_0, arg_109_1)
+	local var_109_0 = arg_109_1.chainEpisode
+
+	if var_109_0 ~= 0 then
+		return arg_109_0:getEpisodeCO(var_109_0)
 	end
 end
 
-function slot0.getVersionActivityDungeonNormalEpisode(slot0, slot1, slot2, slot3)
-	if slot0:getEpisodeCO(slot1).chapterId == slot2 then
-		slot4 = slot0:getEpisodeCO(slot1 - 10000)
+function var_0_0.getVersionActivityDungeonNormalEpisode(arg_110_0, arg_110_1, arg_110_2, arg_110_3)
+	local var_110_0 = arg_110_0:getEpisodeCO(arg_110_1)
+
+	if var_110_0.chapterId == arg_110_2 then
+		arg_110_1 = arg_110_1 - 10000
+		var_110_0 = arg_110_0:getEpisodeCO(arg_110_1)
 	else
-		while slot4.chapterId ~= slot3 do
-			slot4 = slot0:getEpisodeCO(slot4.preEpisode)
+		while var_110_0.chapterId ~= arg_110_3 do
+			var_110_0 = arg_110_0:getEpisodeCO(var_110_0.preEpisode)
 		end
 	end
 
-	return slot4
+	return var_110_0
 end
 
-function slot0.getEpisodeByElement(slot0, slot1)
-	if not lua_chapter_map_element.configDict[slot1] then
+function var_0_0.getEpisodeByElement(arg_111_0, arg_111_1)
+	local var_111_0 = lua_chapter_map_element.configDict[arg_111_1]
+
+	if not var_111_0 then
 		return
 	end
 
-	return slot0:getEpisodeIdByMapCo(lua_chapter_map.configDict[slot2.mapId])
+	local var_111_1 = var_111_0.mapId
+	local var_111_2 = lua_chapter_map.configDict[var_111_1]
+
+	return (arg_111_0:getEpisodeIdByMapCo(var_111_2))
 end
 
-function slot0.getRewardGroupCOList(slot0, slot1)
-	return slot0._rewardConfigDict[slot1]
+function var_0_0.getRewardGroupCOList(arg_112_0, arg_112_1)
+	return arg_112_0._rewardConfigDict[arg_112_1]
 end
 
-function slot0.calcRewardGroupRateInfoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.calcRewardGroupRateInfoList(arg_113_0, arg_113_1)
+	local var_113_0 = {}
 
-	slot0:_calcRewardGroupRateInfoList(slot2, slot1)
+	arg_113_0:_calcRewardGroupRateInfoList(var_113_0, arg_113_1)
 
-	return slot2
+	return var_113_0
 end
 
-function slot0._calcRewardGroupRateInfoList(slot0, slot1, slot2)
-	if not slot0:getRewardGroupCOList(slot2) or #slot3 == 0 then
+function var_0_0._calcRewardGroupRateInfoList(arg_114_0, arg_114_1, arg_114_2)
+	local var_114_0 = arg_114_0:getRewardGroupCOList(arg_114_2)
+
+	if not var_114_0 or #var_114_0 == 0 then
 		return
 	end
 
-	slot5 = #slot1
+	local var_114_1 = 0
+	local var_114_2 = #arg_114_1
 
-	for slot9, slot10 in ipairs(slot3) do
-		slot11 = tonumber(slot10.count) or 0
-		slot4 = 0 + slot11
+	for iter_114_0, iter_114_1 in ipairs(var_114_0) do
+		local var_114_3 = tonumber(iter_114_1.count) or 0
 
-		table.insert(slot1, {
-			weight = slot11,
-			materialType = slot10.materialType,
-			materialId = slot10.materialId
+		var_114_1 = var_114_1 + var_114_3
+
+		table.insert(arg_114_1, {
+			weight = var_114_3,
+			materialType = iter_114_1.materialType,
+			materialId = iter_114_1.materialId
 		})
 	end
 
-	for slot10 = slot5 + 1, #slot1 do
-		slot11 = slot1[slot10]
-		slot11.rate = slot4 == 0 and 0 or slot11.weight / slot4
+	local var_114_4 = #arg_114_1
+
+	for iter_114_2 = var_114_2 + 1, var_114_4 do
+		local var_114_5 = arg_114_1[iter_114_2]
+
+		var_114_5.rate = var_114_1 == 0 and 0 or var_114_5.weight / var_114_1
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

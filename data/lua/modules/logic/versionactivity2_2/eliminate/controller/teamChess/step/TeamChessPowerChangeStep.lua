@@ -1,36 +1,40 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPowerChangeStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPowerChangeStep", package.seeall)
 
-slot0 = class("TeamChessPowerChangeStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessPowerChangeStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data
-	slot2 = slot1.needShowDamage
-	slot3 = slot1.reasonId
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
+	local var_1_1 = var_1_0.needShowDamage
+	local var_1_2 = var_1_0.reasonId
 
-	if slot1.uid == nil or slot1.diffValue == nil then
-		slot0:onDone(true)
+	if var_1_0.uid == nil or var_1_0.diffValue == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot4 = EliminateTeamChessEnum.teamChessPowerChangeStepTime
-	slot5 = EliminateTeamChessEnum.HpDamageType.Chess
+	local var_1_3 = EliminateTeamChessEnum.teamChessPowerChangeStepTime
+	local var_1_4 = EliminateTeamChessEnum.HpDamageType.Chess
 
-	if slot3 ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(slot3)) then
-		slot4 = EliminateTeamChessEnum.teamChessGrowUpToChangePowerStepTime
-		slot5 = EliminateTeamChessEnum.HpDamageType.GrowUpToChess
+	if var_1_2 ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(var_1_2)) then
+		var_1_3 = EliminateTeamChessEnum.teamChessGrowUpToChangePowerStepTime
+		var_1_4 = EliminateTeamChessEnum.HpDamageType.GrowUpToChess
 	end
 
-	EliminateTeamChessModel.instance:updateChessPower(slot1.uid, slot1.diffValue)
+	EliminateTeamChessModel.instance:updateChessPower(var_1_0.uid, var_1_0.diffValue)
 
-	if slot2 and TeamChessUnitEntityMgr.instance:getEntity(slot1.uid) ~= nil then
-		slot7, slot8, slot9 = slot6:getTopPosXYZ()
+	if var_1_1 then
+		local var_1_5 = TeamChessUnitEntityMgr.instance:getEntity(var_1_0.uid)
 
-		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, slot1.diffValue, slot7, slot8 + 0.5, slot5)
+		if var_1_5 ~= nil then
+			local var_1_6, var_1_7, var_1_8 = var_1_5:getTopPosXYZ()
+
+			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, var_1_0.diffValue, var_1_6, var_1_7 + 0.5, var_1_4)
+		end
 	end
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessPowerChange, slot1.uid, slot1.diffValue)
-	TaskDispatcher.runDelay(slot0._onDone, slot0, slot4)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessPowerChange, var_1_0.uid, var_1_0.diffValue)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
 end
 
-return slot0
+return var_0_0

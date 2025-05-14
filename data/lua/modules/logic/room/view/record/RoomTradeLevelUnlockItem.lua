@@ -1,125 +1,136 @@
-module("modules.logic.room.view.record.RoomTradeLevelUnlockItem", package.seeall)
+﻿module("modules.logic.room.view.record.RoomTradeLevelUnlockItem", package.seeall)
 
-slot0 = class("RoomTradeLevelUnlockItem", BaseView)
+local var_0_0 = class("RoomTradeLevelUnlockItem", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._imagebg = gohelper.findChildImage(slot0.viewGO, "normal/#image_bg")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "normal/prop/#txt_num")
-	slot0._goprop = gohelper.findChild(slot0.viewGO, "normal/prop")
-	slot0._imagepropicon = gohelper.findChildSingleImage(slot0.viewGO, "normal/prop/propicon")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "normal/#image_icon")
-	slot0._simagepropicon = gohelper.findChildSingleImage(slot0.viewGO, "normal/prop/propicon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "normal/txt/#txt_name")
-	slot0._gonum = gohelper.findChild(slot0.viewGO, "normal/txt/#go_num")
-	slot0._txtcur = gohelper.findChildText(slot0.viewGO, "normal/txt/#go_num/#txt_cur")
-	slot0._txtnext = gohelper.findChildText(slot0.viewGO, "normal/txt/#go_num/#txt_next")
-	slot0._goup = gohelper.findChild(slot0.viewGO, "normal/go_up")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "normal/go_new")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "normal/#image_bg")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "normal/prop/#txt_num")
+	arg_1_0._goprop = gohelper.findChild(arg_1_0.viewGO, "normal/prop")
+	arg_1_0._imagepropicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "normal/prop/propicon")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "normal/#image_icon")
+	arg_1_0._simagepropicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "normal/prop/propicon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "normal/txt/#txt_name")
+	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "normal/txt/#go_num")
+	arg_1_0._txtcur = gohelper.findChildText(arg_1_0.viewGO, "normal/txt/#go_num/#txt_cur")
+	arg_1_0._txtnext = gohelper.findChildText(arg_1_0.viewGO, "normal/txt/#go_num/#txt_next")
+	arg_1_0._goup = gohelper.findChild(arg_1_0.viewGO, "normal/go_up")
+	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "normal/go_new")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_4_0, arg_4_1)
+	arg_4_0.viewGO = arg_4_1
 
-	slot0:onInitView()
+	arg_4_0:onInitView()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_5_0)
+	arg_5_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_6_0)
+	arg_6_0:removeEvents()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._imagebg.gameObject)
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._click = SLFramework.UGUI.UIClickListener.Get(arg_7_0._imagebg.gameObject)
 
-	slot0._click:AddClickListener(slot0._btnClickOnClick, slot0)
+	arg_7_0._click:AddClickListener(arg_7_0._btnClickOnClick, arg_7_0)
 end
 
-function slot0._btnClickOnClick(slot0)
-	if not slot0._mo or not slot0._mo.type then
+function var_0_0._btnClickOnClick(arg_8_0)
+	if not arg_8_0._mo or not arg_8_0._mo.type then
 		return
 	end
 
-	if slot0._co.itemType == 1 and slot0._mo.buildingId then
-		MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Building, slot0._mo.buildingId)
-	elseif slot0._mo.type == RoomTradeEnum.LevelUnlock.GetBouns then
-		slot1 = string.split(slot0._mo.bouns, "#")
+	if arg_8_0._co.itemType == 1 and arg_8_0._mo.buildingId then
+		MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Building, arg_8_0._mo.buildingId)
+	elseif arg_8_0._mo.type == RoomTradeEnum.LevelUnlock.GetBouns then
+		local var_8_0 = string.split(arg_8_0._mo.bouns, "#")
 
-		MaterialTipController.instance:showMaterialInfo(slot1[1], slot1[2])
+		MaterialTipController.instance:showMaterialInfo(var_8_0[1], var_8_0[2])
 	end
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_9_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	slot0._imagepropicon:UnLoadImage()
-	slot0._simagepropicon:UnLoadImage()
+function var_0_0.onDestroy(arg_10_0)
+	arg_10_0._imagepropicon:UnLoadImage()
+	arg_10_0._simagepropicon:UnLoadImage()
 
-	if slot0._click then
-		slot0._click:RemoveClickListener()
+	if arg_10_0._click then
+		arg_10_0._click:RemoveClickListener()
 	end
 end
 
-function slot0.onRefreshMo(slot0, slot1)
-	slot0._co = RoomTradeConfig.instance:getLevelUnlockCo(slot1.type)
-	slot0._mo = slot1
+function var_0_0.onRefreshMo(arg_11_0, arg_11_1)
+	arg_11_0._co = RoomTradeConfig.instance:getLevelUnlockCo(arg_11_1.type)
+	arg_11_0._mo = arg_11_1
 
-	if slot0._co then
-		slot0._txtname.text = slot0._co.name
+	if arg_11_0._co then
+		arg_11_0._txtname.text = arg_11_0._co.name
 
-		gohelper.setActive(slot0._goup, slot0._co.type == 2)
-		gohelper.setActive(slot0._gonew.gameObject, slot0._co.type == 1)
+		gohelper.setActive(arg_11_0._goup, arg_11_0._co.type == 2)
+		gohelper.setActive(arg_11_0._gonew.gameObject, arg_11_0._co.type == 1)
 
-		if slot1.type == RoomTradeEnum.LevelUnlock.GetBouns then
-			if not string.nilorempty(slot1.bouns) then
-				slot2 = string.split(slot1.bouns, "#")
-				slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot2[1], slot2[2])
+		if arg_11_1.type == RoomTradeEnum.LevelUnlock.GetBouns then
+			if not string.nilorempty(arg_11_1.bouns) then
+				local var_11_0 = string.split(arg_11_1.bouns, "#")
+				local var_11_1, var_11_2 = ItemModel.instance:getItemConfigAndIcon(var_11_0[1], var_11_0[2])
 
-				if not string.nilorempty(slot4) then
-					slot0._imagepropicon:LoadImage(slot4)
+				if not string.nilorempty(var_11_2) then
+					arg_11_0._imagepropicon:LoadImage(var_11_2)
 				end
 
-				slot0._txtnum.text = luaLang("multiple") .. slot2[3]
+				arg_11_0._txtnum.text = luaLang("multiple") .. var_11_0[3]
 			end
-		elseif slot0._co.itemType == 1 and slot1.buildingId then
-			if not string.nilorempty(RoomTradeTaskModel.instance:getBuildingTaskIcon(slot1.buildingId)) then
-				slot0._simagepropicon:LoadImage(slot2)
+		elseif arg_11_0._co.itemType == 1 and arg_11_1.buildingId then
+			local var_11_3 = RoomTradeTaskModel.instance:getBuildingTaskIcon(arg_11_1.buildingId)
+
+			if not string.nilorempty(var_11_3) then
+				arg_11_0._simagepropicon:LoadImage(var_11_3)
 			end
 
-			recthelper.setWidth(slot0._simagepropicon.transform, 308)
-			recthelper.setHeight(slot0._simagepropicon.transform, 277.2)
+			recthelper.setWidth(arg_11_0._simagepropicon.transform, 308)
+			recthelper.setHeight(arg_11_0._simagepropicon.transform, 277.2)
 
-			slot0._txtnum.text = ""
-		elseif not string.nilorempty(slot0._co.icon) then
-			UISpriteSetMgr.instance:setCritterSprite(slot0._imageicon, slot2)
+			arg_11_0._txtnum.text = ""
+		else
+			local var_11_4 = arg_11_0._co.icon
+
+			if not string.nilorempty(var_11_4) then
+				UISpriteSetMgr.instance:setCritterSprite(arg_11_0._imageicon, var_11_4)
+			end
 		end
 
-		slot2 = slot1.type == RoomTradeEnum.LevelUnlock.GetBouns or slot0._co.itemType == 1
+		local var_11_5 = arg_11_1.type == RoomTradeEnum.LevelUnlock.GetBouns or arg_11_0._co.itemType == 1
 
-		gohelper.setActive(slot0._goprop, slot2)
-		gohelper.setActive(slot0._imageicon.gameObject, not slot2)
+		gohelper.setActive(arg_11_0._goprop, var_11_5)
+		gohelper.setActive(arg_11_0._imageicon.gameObject, not var_11_5)
 	end
 
-	if LuaUtil.tableNotEmpty(slot1.num) then
-		slot0._txtcur.text = slot1.num.last
-		slot0._txtnext.text = slot1.num.cur
+	local var_11_6 = LuaUtil.tableNotEmpty(arg_11_1.num)
+
+	if var_11_6 then
+		arg_11_0._txtcur.text = arg_11_1.num.last
+		arg_11_0._txtnext.text = arg_11_1.num.cur
 	end
 
-	recthelper.setAnchorY(slot0._imageicon.transform, slot2 and 0 or 8)
-	gohelper.setActive(slot0._gonum, slot2)
+	recthelper.setAnchorY(arg_11_0._imageicon.transform, var_11_6 and 0 or 8)
+	gohelper.setActive(arg_11_0._gonum, var_11_6)
 end
 
-return slot0
+return var_0_0

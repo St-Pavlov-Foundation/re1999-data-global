@@ -1,142 +1,155 @@
-module("modules.logic.fight.model.FightPlayCardModel", package.seeall)
+﻿module("modules.logic.fight.model.FightPlayCardModel", package.seeall)
 
-slot0 = class("FightPlayCardModel", BaseModel)
+local var_0_0 = class("FightPlayCardModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._clientSkillOpAll = {}
-	slot0._clientSkillOpList = {}
-	slot0._serverSkillOpList = {}
-	slot0._usedCards = {}
-	slot0._curIndex = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._clientSkillOpAll = {}
+	arg_1_0._clientSkillOpList = {}
+	arg_1_0._serverSkillOpList = {}
+	arg_1_0._usedCards = {}
+	arg_1_0._curIndex = 0
 end
 
-function slot0.getCurIndex(slot0)
-	return slot0._curIndex
+function var_0_0.getCurIndex(arg_2_0)
+	return arg_2_0._curIndex
 end
 
-function slot0.playCard(slot0, slot1)
-	slot0._curIndex = slot1
+function var_0_0.playCard(arg_3_0, arg_3_1)
+	arg_3_0._curIndex = arg_3_1
 end
 
-function slot0.clearUsedCards(slot0)
-	slot0._usedCards = {}
-	slot0._curIndex = 0
+function var_0_0.clearUsedCards(arg_4_0)
+	arg_4_0._usedCards = {}
+	arg_4_0._curIndex = 0
 end
 
-function slot0.setUsedCard(slot0, slot1)
-	slot0:clearUsedCards()
+function var_0_0.setUsedCard(arg_5_0, arg_5_1)
+	arg_5_0:clearUsedCards()
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = FightCardInfoMO.New()
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = FightCardInfoMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0._usedCards, slot7)
+		var_5_0:init(iter_5_1)
+		table.insert(arg_5_0._usedCards, var_5_0)
 	end
 end
 
-function slot0.addUseCard(slot0, slot1, slot2)
-	if slot0._usedCards then
-		slot3 = FightCardInfoMO.New()
+function var_0_0.addUseCard(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0._usedCards then
+		local var_6_0 = FightCardInfoMO.New()
 
-		slot3:init(slot2)
-		table.insert(slot0._usedCards, slot1, slot3)
+		var_6_0:init(arg_6_2)
+		table.insert(arg_6_0._usedCards, arg_6_1, var_6_0)
 	end
 end
 
-function slot0.getUsedCards(slot0)
-	return slot0._usedCards
+function var_0_0.getUsedCards(arg_7_0)
+	return arg_7_0._usedCards
 end
 
-function slot0.updateClientOps(slot0)
-	slot0._clientSkillOpAll = {}
-	slot0._clientSkillOpList = {}
+function var_0_0.updateClientOps(arg_8_0)
+	arg_8_0._clientSkillOpAll = {}
+	arg_8_0._clientSkillOpList = {}
 
-	for slot5, slot6 in ipairs(FightCardModel.instance:getCardOps()) do
-		if slot6:isPlayCard() then
-			slot0:buildDisplayMOByOp(slot6)
+	local var_8_0 = FightCardModel.instance:getCardOps()
 
-			if slot6:needCopyCard() then
-				slot0:buildDisplayMOByOp(slot6).isCopyCard = true
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		if iter_8_1:isPlayCard() then
+			arg_8_0:buildDisplayMOByOp(iter_8_1)
+
+			if iter_8_1:needCopyCard() then
+				arg_8_0:buildDisplayMOByOp(iter_8_1).isCopyCard = true
 			end
 		end
 	end
 end
 
-function slot0.buildDisplayMOByOp(slot0, slot1)
-	slot2 = FightSkillDisplayMO.New()
-	slot2.entityId = slot1.belongToEntityId
-	slot2.skillId = slot1.skillId
-	slot2.targetId = slot1.toId
+function var_0_0.buildDisplayMOByOp(arg_9_0, arg_9_1)
+	local var_9_0 = FightSkillDisplayMO.New()
 
-	table.insert(slot0._clientSkillOpAll, 1, slot2)
-	table.insert(slot0._clientSkillOpList, 1, slot2)
+	var_9_0.entityId = arg_9_1.belongToEntityId
+	var_9_0.skillId = arg_9_1.skillId
+	var_9_0.targetId = arg_9_1.toId
 
-	return slot2
+	table.insert(arg_9_0._clientSkillOpAll, 1, var_9_0)
+	table.insert(arg_9_0._clientSkillOpList, 1, var_9_0)
+
+	return var_9_0
 end
 
-function slot0.updateFightRound(slot0, slot1)
-	slot0._serverSkillOpList = {}
+function var_0_0.updateFightRound(arg_10_0, arg_10_1)
+	arg_10_0._serverSkillOpList = {}
 
-	for slot5, slot6 in ipairs(slot1.fightStepMOs) do
-		if FightDataHelper.entityMgr:getById(slot6.fromId) and slot7.side == FightEnum.EntitySide.MySide and slot9 and (slot6.actType == FightEnum.ActType.SKILL and FightCardModel.instance:isActiveSkill(slot6.fromId, slot6.actId) or false) then
-			slot11 = FightSkillDisplayMO.New()
-			slot11.entityId = slot6.fromId
-			slot11.skillId = slot6.actId
-			slot11.targetId = slot6.toId
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1.fightStepMOs) do
+		local var_10_0 = FightDataHelper.entityMgr:getById(iter_10_1.fromId)
+		local var_10_1 = var_10_0 and var_10_0.side == FightEnum.EntitySide.MySide
+		local var_10_2 = iter_10_1.actType == FightEnum.ActType.SKILL
+		local var_10_3 = var_10_2 and FightCardModel.instance:isActiveSkill(iter_10_1.fromId, iter_10_1.actId) or false
 
-			table.insert(slot0._serverSkillOpList, 1, slot11)
+		if var_10_1 and var_10_2 and var_10_3 then
+			local var_10_4 = FightSkillDisplayMO.New()
+
+			var_10_4.entityId = iter_10_1.fromId
+			var_10_4.skillId = iter_10_1.actId
+			var_10_4.targetId = iter_10_1.toId
+
+			table.insert(arg_10_0._serverSkillOpList, 1, var_10_4)
 		end
 	end
 end
 
-function slot0.onEndRound(slot0)
-	slot0._clientSkillOpAll = {}
-	slot0._clientSkillOpList = {}
-	slot0._serverSkillOpList = {}
+function var_0_0.onEndRound(arg_11_0)
+	arg_11_0._clientSkillOpAll = {}
+	arg_11_0._clientSkillOpList = {}
+	arg_11_0._serverSkillOpList = {}
 end
 
-function slot0.checkClientSkillMatch(slot0, slot1, slot2)
-	if slot0._clientSkillOpList[#slot0._clientSkillOpList] and slot3.entityId == slot1 and slot3.skillId == slot2 then
+function var_0_0.checkClientSkillMatch(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._clientSkillOpList[#arg_12_0._clientSkillOpList]
+
+	if var_12_0 and var_12_0.entityId == arg_12_1 and var_12_0.skillId == arg_12_2 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.removeClientSkillOnce(slot0)
-	return table.remove(slot0._clientSkillOpList, #slot0._clientSkillOpList)
+function var_0_0.removeClientSkillOnce(arg_13_0)
+	return table.remove(arg_13_0._clientSkillOpList, #arg_13_0._clientSkillOpList)
 end
 
-function slot0.onPlayOneSkillId(slot0, slot1, slot2)
-	if slot0:checkClientSkillMatch(slot1, slot2) then
-		table.remove(slot0._clientSkillOpList, #slot0._clientSkillOpList)
+function var_0_0.onPlayOneSkillId(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0:checkClientSkillMatch(arg_14_1, arg_14_2) then
+		table.remove(arg_14_0._clientSkillOpList, #arg_14_0._clientSkillOpList)
 	else
-		logError("Play skill card not match: " .. slot2 .. " " .. (slot0._clientSkillOpList[#slot0._clientSkillOpList] and slot3.skillId or "nil"))
+		local var_14_0 = arg_14_0._clientSkillOpList[#arg_14_0._clientSkillOpList]
+
+		logError("Play skill card not match: " .. arg_14_2 .. " " .. (var_14_0 and var_14_0.skillId or "nil"))
 	end
 
-	table.remove(slot0._serverSkillOpList, #slot0._serverSkillOpList)
+	table.remove(arg_14_0._serverSkillOpList, #arg_14_0._serverSkillOpList)
 end
 
-function slot0.getClientSkillOpAll(slot0)
-	return slot0._clientSkillOpAll
+function var_0_0.getClientSkillOpAll(arg_15_0)
+	return arg_15_0._clientSkillOpAll
 end
 
-function slot0.getClientLeftSkillOpList(slot0)
-	return slot0._clientSkillOpList
+function var_0_0.getClientLeftSkillOpList(arg_16_0)
+	return arg_16_0._clientSkillOpList
 end
 
-function slot0.clearClientLeftSkillOpList(slot0)
-	slot0._clientSkillOpList = {}
+function var_0_0.clearClientLeftSkillOpList(arg_17_0)
+	arg_17_0._clientSkillOpList = {}
 end
 
-function slot0.getServerLeftSkillOpList(slot0)
-	return slot0._serverSkillOpList
+function var_0_0.getServerLeftSkillOpList(arg_18_0)
+	return arg_18_0._serverSkillOpList
 end
 
-function slot0.isPlayerHasSkillToPlay(slot0, slot1)
+function var_0_0.isPlayerHasSkillToPlay(arg_19_0, arg_19_1)
 	if FightModel.instance:getVersion() >= 1 then
-		for slot6 = slot0._curIndex + 1, #slot0._usedCards do
-			if slot0._usedCards[slot6].uid == slot1 then
+		for iter_19_0 = arg_19_0._curIndex + 1, #arg_19_0._usedCards do
+			if arg_19_0._usedCards[iter_19_0].uid == arg_19_1 then
 				return true
 			end
 		end
@@ -144,13 +157,13 @@ function slot0.isPlayerHasSkillToPlay(slot0, slot1)
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._serverSkillOpList) do
-		if slot7.entityId == slot1 then
+	for iter_19_1, iter_19_2 in ipairs(arg_19_0._serverSkillOpList) do
+		if iter_19_2.entityId == arg_19_1 then
 			return true
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

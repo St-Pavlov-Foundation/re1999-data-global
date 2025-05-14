@@ -1,51 +1,53 @@
-module("modules.ugui.icon.common.CommonRedDotTag", package.seeall)
+﻿module("modules.ugui.icon.common.CommonRedDotTag", package.seeall)
 
-slot0 = class("CommonRedDotTag", LuaCompBase)
+local var_0_0 = class("CommonRedDotTag", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, slot0.refreshRelateDot, slot0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_1_0.refreshRelateDot, arg_1_0)
 end
 
-function slot0.refreshDot(slot0)
-	if slot0.overrideFunc then
-		slot1, slot2 = pcall(slot0.overrideFunc, slot0.overrideFuncObj, slot0)
+function var_0_0.refreshDot(arg_2_0)
+	if arg_2_0.overrideFunc then
+		local var_2_0, var_2_1 = pcall(arg_2_0.overrideFunc, arg_2_0.overrideFuncObj, arg_2_0)
 
-		if not slot1 then
-			logError(string.format("CommonRedDotTag:overrideFunc dotId:%s error:%s", slot0.dotId, slot2))
+		if not var_2_0 then
+			logError(string.format("CommonRedDotTag:overrideFunc dotId:%s error:%s", arg_2_0.dotId, var_2_1))
 		end
 
 		return
 	end
 
-	if slot0.reverse then
-		slot1 = not RedDotModel.instance:isDotShow(slot0.dotId, 0)
+	local var_2_2 = RedDotModel.instance:isDotShow(arg_2_0.dotId, 0)
+
+	if arg_2_0.reverse then
+		var_2_2 = not var_2_2
 	end
 
-	gohelper.setActive(slot0.go, slot1)
+	gohelper.setActive(arg_2_0.go, var_2_2)
 end
 
-function slot0.refreshRelateDot(slot0, slot1)
-	slot0:refreshDot()
+function var_0_0.refreshRelateDot(arg_3_0, arg_3_1)
+	arg_3_0:refreshDot()
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.go.transform, slot1, slot1, slot1)
+function var_0_0.setScale(arg_4_0, arg_4_1)
+	transformhelper.setLocalScale(arg_4_0.go.transform, arg_4_1, arg_4_1, arg_4_1)
 end
 
-function slot0.setId(slot0, slot1, slot2)
-	slot0.dotId = slot1
-	slot0.reverse = slot2
+function var_0_0.setId(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.dotId = arg_5_1
+	arg_5_0.reverse = arg_5_2
 end
 
-function slot0.overrideRefreshDotFunc(slot0, slot1, slot2)
-	slot0.overrideFunc = slot1
-	slot0.overrideFuncObj = slot2
+function var_0_0.overrideRefreshDotFunc(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.overrideFunc = arg_6_1
+	arg_6_0.overrideFuncObj = arg_6_2
 end
 
-function slot0.onDestroy(slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, slot0.refreshRelateDot, slot0)
+function var_0_0.onDestroy(arg_7_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_7_0.refreshRelateDot, arg_7_0)
 end
 
-return slot0
+return var_0_0

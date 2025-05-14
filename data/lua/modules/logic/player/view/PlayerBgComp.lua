@@ -1,103 +1,117 @@
-module("modules.logic.player.view.PlayerBgComp", package.seeall)
+﻿module("modules.logic.player.view.PlayerBgComp", package.seeall)
 
-slot0 = class("PlayerBgComp", LuaCompBase)
+local var_0_0 = class("PlayerBgComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gobg = gohelper.findChild(slot1, "#go_bg")
-	slot0._gospine = gohelper.findChild(slot1, "#go_spine")
-	slot0._gospine2 = gohelper.findChild(slot1, "dynamiccontainer/#go_spine")
-	slot0._black = gohelper.findChild(slot1, "#go_black")
-	slot0._uiSpine = GuiSpine.Create(slot0._gospine, true)
-	slot0._uiSpine2 = GuiModelAgent.Create(slot0._gospine2, true)
-	slot0._bgLoader = PrefabInstantiate.Create(slot0._gobg)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gobg = gohelper.findChild(arg_1_1, "#go_bg")
+	arg_1_0._gospine = gohelper.findChild(arg_1_1, "#go_spine")
+	arg_1_0._gospine2 = gohelper.findChild(arg_1_1, "dynamiccontainer/#go_spine")
+	arg_1_0._black = gohelper.findChild(arg_1_1, "#go_black")
+	arg_1_0._uiSpine = GuiSpine.Create(arg_1_0._gospine, true)
+	arg_1_0._uiSpine2 = GuiModelAgent.Create(arg_1_0._gospine2, true)
+	arg_1_0._bgLoader = PrefabInstantiate.Create(arg_1_0._gobg)
 end
 
-function slot0.showBg(slot0, slot1)
-	slot0._bgCo = slot1
+function var_0_0.showBg(arg_2_0, arg_2_1)
+	arg_2_0._bgCo = arg_2_1
 
-	slot0:_loadSpine()
+	arg_2_0:_loadSpine()
 
-	if slot0._bgLoader:getPath() ~= string.format("ui/viewres/player/bg/%s.prefab", slot1.bgEffect) then
-		slot0._bgLoader:dispose()
-		slot0._bgLoader:startLoad(slot3)
+	local var_2_0 = arg_2_0._bgLoader:getPath()
+	local var_2_1 = string.format("ui/viewres/player/bg/%s.prefab", arg_2_1.bgEffect)
+
+	if var_2_0 ~= var_2_1 then
+		arg_2_0._bgLoader:dispose()
+		arg_2_0._bgLoader:startLoad(var_2_1)
 	end
 
-	gohelper.setActive(slot0._black, slot1.item ~= 0)
+	gohelper.setActive(arg_2_0._black, arg_2_1.item ~= 0)
 end
 
-function slot0.setPlayerInfo(slot0, slot1, slot2)
-	slot0._otherPlayerInfo = slot1
-	slot0._otherPlayerHeroCover = slot2
+function var_0_0.setPlayerInfo(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._otherPlayerInfo = arg_3_1
+	arg_3_0._otherPlayerHeroCover = arg_3_2
 end
 
-function slot0._loadSpine(slot0)
-	gohelper.setActive(slot0._gospine, slot0._bgCo.item == 0)
-	gohelper.setActive(slot0._gospine2, slot0._bgCo.item ~= 0)
+function var_0_0._loadSpine(arg_4_0)
+	gohelper.setActive(arg_4_0._gospine, arg_4_0._bgCo.item == 0)
+	gohelper.setActive(arg_4_0._gospine2, arg_4_0._bgCo.item ~= 0)
 
-	if slot0._bgCo.item == 0 then
-		if slot0._uiSpine:getResPath() ~= ResUrl.getRolesCgStory(CommonConfig.instance:getConstStr(ConstEnum.PlayerViewSpine)) then
-			slot0._uiSpine:setResPath(slot2, slot0._onSpineLoaded, slot0)
+	if arg_4_0._bgCo.item == 0 then
+		local var_4_0 = CommonConfig.instance:getConstStr(ConstEnum.PlayerViewSpine)
+		local var_4_1 = ResUrl.getRolesCgStory(var_4_0)
+
+		if arg_4_0._uiSpine:getResPath() ~= var_4_1 then
+			arg_4_0._uiSpine:setResPath(var_4_1, arg_4_0._onSpineLoaded, arg_4_0)
 		end
 	else
-		slot1 = nil
+		local var_4_2
 
-		if slot0._otherPlayerHeroCover then
-			slot2 = string.splitToNumber(slot0._otherPlayerHeroCover, "#")
+		if arg_4_0._otherPlayerHeroCover then
+			local var_4_3 = string.splitToNumber(arg_4_0._otherPlayerHeroCover, "#")
+			local var_4_4 = var_4_3[1]
+			local var_4_5 = var_4_3[2]
 
-			if not lua_skin.configDict[slot2[2]] then
-				slot1 = lua_skin[(lua_character.configDict[slot2[1]] or lua_character.configDict[3028]).skinId]
+			var_4_2 = lua_skin.configDict[var_4_5]
+
+			if not var_4_2 then
+				local var_4_6 = lua_character.configDict[var_4_4] or lua_character.configDict[3028]
+
+				var_4_2 = lua_skin[var_4_6.skinId]
 			end
 		else
-			slot2, slot3 = CharacterSwitchListModel.instance:getMainHero()
-			slot4 = HeroModel.instance:getByHeroId(slot2)
-			slot1 = SkinConfig.instance:getSkinCo(slot3 or slot4 and slot4.skin)
+			local var_4_7, var_4_8 = CharacterSwitchListModel.instance:getMainHero()
+			local var_4_9 = HeroModel.instance:getByHeroId(var_4_7)
+
+			var_4_2 = SkinConfig.instance:getSkinCo(var_4_8 or var_4_9 and var_4_9.skin)
 		end
 
-		if slot1 == slot0._nowSkinCo then
+		if var_4_2 == arg_4_0._nowSkinCo then
 			return
 		end
 
-		slot0._nowSkinCo = slot1
+		arg_4_0._nowSkinCo = var_4_2
 
-		slot0._uiSpine2:setResPath(slot1, slot0._onSpineLoaded2, slot0)
+		arg_4_0._uiSpine2:setResPath(var_4_2, arg_4_0._onSpineLoaded2, arg_4_0)
 
-		slot2 = SkinConfig.instance:getSkinOffset(slot1.characterViewOffset)
+		local var_4_10 = SkinConfig.instance:getSkinOffset(var_4_2.characterViewOffset)
 
-		recthelper.setAnchor(slot0._gospine2.transform, tonumber(slot2[1]), tonumber(slot2[2]))
-		transformhelper.setLocalScale(slot0._gospine2.transform, tonumber(slot2[3]), tonumber(slot2[3]), tonumber(slot2[3]))
+		recthelper.setAnchor(arg_4_0._gospine2.transform, tonumber(var_4_10[1]), tonumber(var_4_10[2]))
+		transformhelper.setLocalScale(arg_4_0._gospine2.transform, tonumber(var_4_10[3]), tonumber(var_4_10[3]), tonumber(var_4_10[3]))
 	end
 end
 
-function slot0._onSpineLoaded(slot0)
-	slot0._uiSpine:changeLookDir(SpineLookDir.Left)
+function var_0_0._onSpineLoaded(arg_5_0)
+	arg_5_0._uiSpine:changeLookDir(SpineLookDir.Left)
 
-	slot1 = slot0._otherPlayerInfo or PlayerModel.instance:getPlayinfo()
+	local var_5_0 = arg_5_0._otherPlayerInfo or PlayerModel.instance:getPlayinfo()
+	local var_5_1 = CommonConfig.instance:getConstNum(ConstEnum.PlayerViewEyeEpisodeId)
 
-	if CommonConfig.instance:getConstNum(ConstEnum.PlayerViewEyeEpisodeId) == slot1.lastEpisodeId or DungeonConfig.instance:isPreEpisodeList(slot2, slot1.lastEpisodeId) then
-		slot0._uiSpine:SetAnimation(BaseSpine.FaceTrackIndex, "b_idle", true, 0)
+	if var_5_1 == var_5_0.lastEpisodeId or DungeonConfig.instance:isPreEpisodeList(var_5_1, var_5_0.lastEpisodeId) then
+		arg_5_0._uiSpine:SetAnimation(BaseSpine.FaceTrackIndex, "b_idle", true, 0)
 	else
-		slot0._uiSpine:SetAnimation(BaseSpine.FaceTrackIndex, "b_idle_1", true, 0)
+		arg_5_0._uiSpine:SetAnimation(BaseSpine.FaceTrackIndex, "b_idle_1", true, 0)
 	end
 end
 
-function slot0._onSpineLoaded2(slot0)
-	slot0._uiSpine2:setModelVisible(true)
+function var_0_0._onSpineLoaded2(arg_6_0)
+	arg_6_0._uiSpine2:setModelVisible(true)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._uiSpine then
-		gohelper.destroy(slot0._gospine)
+function var_0_0.onDestroy(arg_7_0)
+	if arg_7_0._uiSpine then
+		gohelper.destroy(arg_7_0._gospine)
 
-		slot0._gospine = nil
-		slot0._uiSpine = nil
+		arg_7_0._gospine = nil
+		arg_7_0._uiSpine = nil
 	end
 
-	if slot0._bgLoader then
-		slot0._bgLoader:dispose()
+	if arg_7_0._bgLoader then
+		arg_7_0._bgLoader:dispose()
 
-		slot0._bgLoader = nil
+		arg_7_0._bgLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

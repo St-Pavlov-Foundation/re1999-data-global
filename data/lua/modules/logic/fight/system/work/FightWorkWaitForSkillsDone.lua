@@ -1,42 +1,47 @@
-module("modules.logic.fight.system.work.FightWorkWaitForSkillsDone", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkWaitForSkillsDone", package.seeall)
 
-slot0 = class("FightWorkWaitForSkillsDone", BaseWork)
+local var_0_0 = class("FightWorkWaitForSkillsDone", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._skillFlowList = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._skillFlowList = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	if slot0:_checkDone() then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if arg_2_0:_checkDone() then
+		arg_2_0:onDone(true)
 	else
-		TaskDispatcher.runRepeat(slot0._onTick, slot0, 0.1)
-		TaskDispatcher.runDelay(slot0._timeOut, slot0, 5 / Mathf.Clamp(math.min(FightModel.instance:getSpeed(), FightModel.instance:getUISpeed()), 0.01, 1))
+		local var_2_0 = FightModel.instance:getSpeed()
+		local var_2_1 = FightModel.instance:getUISpeed()
+		local var_2_2 = math.min(var_2_0, var_2_1)
+		local var_2_3 = 5 / Mathf.Clamp(var_2_2, 0.01, 1)
+
+		TaskDispatcher.runRepeat(arg_2_0._onTick, arg_2_0, 0.1)
+		TaskDispatcher.runDelay(arg_2_0._timeOut, arg_2_0, var_2_3)
 	end
 end
 
-function slot0._onTick(slot0)
-	if slot0:_checkDone() then
-		slot0:onDone(true)
+function var_0_0._onTick(arg_3_0)
+	if arg_3_0:_checkDone() then
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._timeOut(slot0)
-	if slot0._skillFlowList then
-		for slot4, slot5 in ipairs(slot0._skillFlowList) do
-			if not slot5:hasDone() then
-				logError("检测回合技能完成超时，技能id = " .. slot5._fightStepMO.actId)
+function var_0_0._timeOut(arg_4_0)
+	if arg_4_0._skillFlowList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._skillFlowList) do
+			if not iter_4_1:hasDone() then
+				logError("检测回合技能完成超时，技能id = " .. iter_4_1._fightStepMO.actId)
 			end
 		end
 	end
 
-	slot0:onDone(true)
+	arg_4_0:onDone(true)
 end
 
-function slot0._checkDone(slot0)
-	if slot0._skillFlowList then
-		for slot4, slot5 in ipairs(slot0._skillFlowList) do
-			if not slot5:hasDone() then
+function var_0_0._checkDone(arg_5_0)
+	if arg_5_0._skillFlowList then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._skillFlowList) do
+			if not iter_5_1:hasDone() then
 				return false
 			end
 		end
@@ -45,12 +50,12 @@ function slot0._checkDone(slot0)
 	return true
 end
 
-function slot0.clearWork(slot0)
-	slot0._skillFlowList = nil
+function var_0_0.clearWork(arg_6_0)
+	arg_6_0._skillFlowList = nil
 
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
-	TaskDispatcher.cancelTask(slot0._timeOut, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._onTick, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._timeOut, arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_6_0._onCombineDone, arg_6_0)
 end
 
-return slot0
+return var_0_0

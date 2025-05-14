@@ -1,42 +1,50 @@
-module("modules.logic.summon.view.custompick.variant.SummonStrongOneCustomPick25", package.seeall)
+﻿module("modules.logic.summon.view.custompick.variant.SummonStrongOneCustomPick25", package.seeall)
 
-slot0 = class("SummonStrongOneCustomPick25", SummonStrongOneCustomPickView)
-slot0.preloadList = {
+local var_0_0 = class("SummonStrongOneCustomPick25", SummonStrongOneCustomPickView)
+
+var_0_0.preloadList = {
 	"singlebg/summon/heroversion_2_3/v2a3_selfselectsix/v2a3_selfselectsix_fullbg.png",
 	"singlebg/summon/heroversion_2_5/v2a5_selfselectsix2/v2a5_selfselectsix_role.png"
 }
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0._btncheck1 = gohelper.findChildButton(slot0.viewGO, "#go_ui/current/#go_unselected/#btn_check_1")
-	slot0._btncheck2 = gohelper.findChildButton(slot0.viewGO, "#go_ui/current/#go_selected/#btn_check_2")
+	arg_1_0._btncheck1 = gohelper.findChildButton(arg_1_0.viewGO, "#go_ui/current/#go_unselected/#btn_check_1")
+	arg_1_0._btncheck2 = gohelper.findChildButton(arg_1_0.viewGO, "#go_ui/current/#go_selected/#btn_check_2")
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0._btncheck1:AddClickListener(slot0._btnOpenOnClick1, slot0)
-	slot0._btncheck2:AddClickListener(slot0._btnOpenOnClick2, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0._btncheck1:AddClickListener(arg_2_0._btnOpenOnClick1, arg_2_0)
+	arg_2_0._btncheck2:AddClickListener(arg_2_0._btnOpenOnClick2, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0._btncheck1:RemoveClickListener()
-	slot0._btncheck2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	arg_3_0._btncheck1:RemoveClickListener()
+	arg_3_0._btncheck2:RemoveClickListener()
 end
 
-function slot0._btnOpenOnClick1(slot0)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, {
+function var_0_0._btnOpenOnClick1(arg_4_0)
+	local var_4_0 = SummonMainModel.instance:getCurPool()
+	local var_4_1 = SummonConfig.instance:getStrongCustomChoiceIds(var_4_0.id)
+	local var_4_2 = {
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect,
-		heroId = SummonConfig.instance:getStrongCustomChoiceIds(SummonMainModel.instance:getCurPool().id)
-	})
+		heroId = var_4_1
+	}
+
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_4_2)
 end
 
-function slot0._btnOpenOnClick2(slot0)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, {
+function var_0_0._btnOpenOnClick2(arg_5_0)
+	local var_5_0 = SummonMainModel.instance:getCurPool()
+	local var_5_1 = {
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect,
-		heroId = slot0:getPickHeroIds(SummonMainModel.instance:getCurPool())
-	})
+		heroId = arg_5_0:getPickHeroIds(var_5_0)
+	}
+
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_5_1)
 end
 
-return slot0
+return var_0_0

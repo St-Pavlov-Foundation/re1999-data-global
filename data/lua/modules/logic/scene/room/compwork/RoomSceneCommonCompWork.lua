@@ -1,29 +1,29 @@
-module("modules.logic.scene.room.compwork.RoomSceneCommonCompWork", package.seeall)
+﻿module("modules.logic.scene.room.compwork.RoomSceneCommonCompWork", package.seeall)
 
-slot0 = class("RoomSceneCommonCompWork", BaseWork)
+local var_0_0 = class("RoomSceneCommonCompWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._comp = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._comp = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	slot2 = slot1.sceneId
-	slot3 = slot1.levelId
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.sceneId
+	local var_2_1 = arg_2_1.levelId
 
-	if not slot0._comp then
+	if not arg_2_0._comp then
 		logError("RoomSceneCommonCompWork: 没有comp")
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot0._comp.init then
-		slot0._comp:init(slot2, slot3)
-		slot0:onDone(true)
+	if arg_2_0._comp.init then
+		arg_2_0._comp:init(var_2_0, var_2_1)
+		arg_2_0:onDone(true)
 	else
-		logError(string.format("%s: 没有init", slot0._comp.__cname))
-		slot0:onDone(true)
+		logError(string.format("%s: 没有init", arg_2_0._comp.__cname))
+		arg_2_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

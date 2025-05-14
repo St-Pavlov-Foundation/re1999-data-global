@@ -1,7 +1,8 @@
-module("modules.logic.gm.model.GMPostProcessModel", package.seeall)
+﻿module("modules.logic.gm.model.GMPostProcessModel", package.seeall)
 
-slot0 = class("GMPostProcessModel", MixScrollModel)
-slot0.Interfaces = {
+local var_0_0 = class("GMPostProcessModel", MixScrollModel)
+
+var_0_0.Interfaces = {
 	{
 		{
 			val = "LocalBloomActive",
@@ -182,24 +183,25 @@ slot0.Interfaces = {
 	}
 }
 
-function slot0.onInit(slot0)
-	slot0:addList(uv0.Interfaces)
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:addList(var_0_0.Interfaces)
 
-	slot0.ppType = 2
+	arg_1_0.ppType = 2
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getInfoList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	for slot6, slot7 in ipairs(uv0.Interfaces) do
-		slot9 = 65 * #slot7 + 50
+	for iter_2_0, iter_2_1 in ipairs(var_0_0.Interfaces) do
+		local var_2_1 = 65 * #iter_2_1 + 50
+		local var_2_2 = SLFramework.UGUI.MixCellInfo.New(iter_2_0, var_2_1, var_2_1)
 
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot6, slot9, slot9))
+		table.insert(var_2_0, var_2_2)
 	end
 
-	return slot2
+	return var_2_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

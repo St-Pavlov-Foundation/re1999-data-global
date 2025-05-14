@@ -1,16 +1,16 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.V1a2_HeroGroupFightViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.V1a2_HeroGroupFightViewContainer", package.seeall)
 
-slot0 = class("V1a2_HeroGroupFightViewContainer", HeroGroupFightViewContainer)
+local var_0_0 = class("V1a2_HeroGroupFightViewContainer", HeroGroupFightViewContainer)
 
-function slot0.defineFightView(slot0)
-	uv0.super.defineFightView(slot0)
+function var_0_0.defineFightView(arg_1_0)
+	var_0_0.super.defineFightView(arg_1_0)
 
-	slot0._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
+	arg_1_0._heroGroupFightView = VersionActivity_1_2_HeroGroupView.New()
 end
 
-function slot0.addLastViews(slot0, slot1)
-	uv0.super.addLastViews(slot0)
-	table.insert(slot1, VersionActivity_1_2_HeroGroupBuildView.New())
+function var_0_0.addLastViews(arg_2_0, arg_2_1)
+	var_0_0.super.addLastViews(arg_2_0)
+	table.insert(arg_2_1, VersionActivity_1_2_HeroGroupBuildView.New())
 end
 
-return slot0
+return var_0_0

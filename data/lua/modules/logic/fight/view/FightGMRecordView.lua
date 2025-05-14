@@ -1,62 +1,68 @@
-module("modules.logic.fight.view.FightGMRecordView", package.seeall)
+﻿module("modules.logic.fight.view.FightGMRecordView", package.seeall)
 
-slot0 = class("FightGMRecordView", BaseView)
-slot1 = "保存战斗录像"
+local var_0_0 = class("FightGMRecordView", BaseView)
+local var_0_1 = "保存战斗录像"
 
-function slot0.ctor(slot0)
-	slot0._goGM = nil
-	slot0._btnGM = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._goGM = nil
+	arg_1_0._btnGM = nil
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_2_0)
 	if not isDebugBuild and not GMBattleModel.instance.enableGMFightRecord then
 		return
 	end
 
-	slot0._goGM = GMController.instance:getGMNode("mainview", slot0.viewGO)
-	slot0._goGM.name = "gm_fight_record"
+	arg_2_0._goGM = GMController.instance:getGMNode("mainview", arg_2_0.viewGO)
+	arg_2_0._goGM.name = "gm_fight_record"
 
-	if slot0._goGM then
-		recthelper.setWidth(gohelper.findChildImage(slot0._goGM, "#btn_gm").transform, 200)
+	if arg_2_0._goGM then
+		local var_2_0 = gohelper.findChildImage(arg_2_0._goGM, "#btn_gm")
 
-		slot0._txtName = gohelper.findChildText(slot0._goGM, "#btn_gm/Text")
-		slot0._txtName.text = uv0
-		slot0._btnGM = gohelper.findChildClickWithAudio(slot0._goGM, "#btn_gm")
+		recthelper.setWidth(var_2_0.transform, 200)
 
-		slot0._btnGM:AddClickListener(slot0._onClickGM, slot0)
+		arg_2_0._txtName = gohelper.findChildText(arg_2_0._goGM, "#btn_gm/Text")
+		arg_2_0._txtName.text = var_0_1
+		arg_2_0._btnGM = gohelper.findChildClickWithAudio(arg_2_0._goGM, "#btn_gm")
+
+		arg_2_0._btnGM:AddClickListener(arg_2_0._onClickGM, arg_2_0)
 	end
 end
 
-function slot0._onClickGM(slot0)
-	uv0.saveRecord()
+function var_0_0._onClickGM(arg_3_0)
+	var_0_0.saveRecord()
 end
 
-function slot0.saveRecord()
+function var_0_0.saveRecord()
 	if GMBattleModel.instance.fightRecordMsg then
-		slot0 = ProtoTestCaseMO.New()
+		local var_4_0 = ProtoTestCaseMO.New()
 
-		slot0:initFromProto(-12599, GMBattleModel.instance.fightRecordMsg)
+		var_4_0:initFromProto(-12599, GMBattleModel.instance.fightRecordMsg)
 
-		slot0:serialize().struct = "FightWithRecordAllRequest"
+		local var_4_1 = var_4_0:serialize()
 
-		for slot6, slot7 in pairs(FightModel.instance:getFightParam()) do
-			if type(slot7) ~= "table" then
-				-- Nothing
+		var_4_1.struct = "FightWithRecordAllRequest"
+
+		local var_4_2 = {}
+
+		for iter_4_0, iter_4_1 in pairs(FightModel.instance:getFightParam()) do
+			if type(iter_4_1) ~= "table" then
+				var_4_2[iter_4_0] = iter_4_1
 			end
 		end
 
-		slot1.fightParam = {
-			[slot6] = slot7
-		}
+		var_4_1.fightParam = var_4_2
 
-		WindowsUtil.saveContentToFile(uv0, cjson.encode(slot1), "fightrecord", "json")
+		local var_4_3 = cjson.encode(var_4_1)
+
+		WindowsUtil.saveContentToFile(var_0_1, var_4_3, "fightrecord", "json")
 	end
 end
 
-function slot0.removeEvents(slot0)
-	if slot0._btnGM then
-		slot0._btnGM:RemoveClickListener()
+function var_0_0.removeEvents(arg_5_0)
+	if arg_5_0._btnGM then
+		arg_5_0._btnGM:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

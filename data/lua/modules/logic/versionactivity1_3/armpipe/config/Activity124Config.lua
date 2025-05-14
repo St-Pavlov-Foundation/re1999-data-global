@@ -1,69 +1,71 @@
-module("modules.logic.versionactivity1_3.armpipe.config.Activity124Config", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.config.Activity124Config", package.seeall)
 
-slot0 = class("Activity124Config", BaseConfig)
+local var_0_0 = class("Activity124Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._act124Map = nil
-	slot0._act124Episode = nil
-	slot0._episodeListDict = {}
-	slot0._chapterIdListDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._act124Map = nil
+	arg_1_0._act124Episode = nil
+	arg_1_0._episodeListDict = {}
+	arg_1_0._chapterIdListDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity124_map",
 		"activity124_episode"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity124_map" then
-		slot0._act124Map = slot2
-	elseif slot1 == "activity124_episode" then
-		slot0._act124Episode = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity124_map" then
+		arg_3_0._act124Map = arg_3_2
+	elseif arg_3_1 == "activity124_episode" then
+		arg_3_0._act124Episode = arg_3_2
 	end
 end
 
-function slot0.getMapCo(slot0, slot1, slot2)
-	if slot0._act124Map.configDict[slot1] then
-		return slot0._act124Map.configDict[slot1][slot2]
+function var_0_0.getMapCo(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._act124Map.configDict[arg_4_1] then
+		return arg_4_0._act124Map.configDict[arg_4_1][arg_4_2]
 	end
 
 	return nil
 end
 
-function slot0.getEpisodeCo(slot0, slot1, slot2)
-	if slot0._act124Episode.configDict[slot1] then
-		return slot0._act124Episode.configDict[slot1][slot2]
+function var_0_0.getEpisodeCo(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._act124Episode.configDict[arg_5_1] then
+		return arg_5_0._act124Episode.configDict[arg_5_1][arg_5_2]
 	end
 
 	return nil
 end
 
-function slot0.getEpisodeList(slot0, slot1)
-	if slot0._episodeListDict[slot1] then
-		return slot0._episodeListDict[slot1]
+function var_0_0.getEpisodeList(arg_6_0, arg_6_1)
+	if arg_6_0._episodeListDict[arg_6_1] then
+		return arg_6_0._episodeListDict[arg_6_1]
 	end
 
-	slot0._episodeListDict[slot1] = {}
+	local var_6_0 = {}
 
-	if slot0._act124Episode and slot0._act124Episode.configDict[slot1] then
-		for slot6, slot7 in pairs(slot0._act124Episode.configDict[slot1]) do
-			table.insert(slot2, slot7)
+	arg_6_0._episodeListDict[arg_6_1] = var_6_0
+
+	if arg_6_0._act124Episode and arg_6_0._act124Episode.configDict[arg_6_1] then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._act124Episode.configDict[arg_6_1]) do
+			table.insert(var_6_0, iter_6_1)
 		end
 
-		table.sort(slot2, uv0.sortEpisode)
+		table.sort(var_6_0, var_0_0.sortEpisode)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.sortEpisode(slot0, slot1)
-	if slot0.episodeId ~= slot1.episodeId then
-		return slot0.episodeId < slot1.episodeId
+function var_0_0.sortEpisode(arg_7_0, arg_7_1)
+	if arg_7_0.episodeId ~= arg_7_1.episodeId then
+		return arg_7_0.episodeId < arg_7_1.episodeId
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

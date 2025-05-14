@@ -1,142 +1,152 @@
-module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapWindowView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapWindowView", package.seeall)
 
-slot0 = class("EliminateMapWindowView", BaseView)
+local var_0_0 = class("EliminateMapWindowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "window/bottom/node1/#go_select")
-	slot0._txtindex = gohelper.findChildText(slot0.viewGO, "window/bottom/node1/info/#txt_nodename/#txt_index")
-	slot0._txtnodenameen = gohelper.findChildText(slot0.viewGO, "window/bottom/node1/info/#txt_nodename/#txt_nodename_en")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "window/title/#simage_title")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "window/title/#txt_time")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "window/bottom/node1/#go_select")
+	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "window/bottom/node1/info/#txt_nodename/#txt_index")
+	arg_1_0._txtnodenameen = gohelper.findChildText(arg_1_0.viewGO, "window/bottom/node1/info/#txt_nodename/#txt_nodename_en")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/title/#simage_title")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "window/title/#txt_time")
 
-	gohelper.setActive(slot0._txttime, false)
+	gohelper.setActive(arg_1_0._txttime, false)
 
-	slot0._simagebottom = gohelper.findChildSingleImage(slot0.viewGO, "window/bottom/#simage_bottom")
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#go_left")
+	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/bottom/#simage_bottom")
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot0.UnlockKey = "EliminateMapWindowViewUnlockKey"
+var_0_0.UnlockKey = "EliminateMapWindowViewUnlockKey"
 
-function slot0.onRewardClick(slot0)
+function var_0_0.onRewardClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.EliminateTaskView)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goexcessive = gohelper.findChild(slot0.viewGO, "excessive")
-	slot0._rewardAnimator = gohelper.findChild(slot0.viewGO, "window/righttop/reward/ani"):GetComponent("Animator")
-	slot0.rewardClick = gohelper.findChildClick(slot0.viewGO, "window/righttop/reward/clickArea")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goexcessive = gohelper.findChild(arg_5_0.viewGO, "excessive")
+	arg_5_0._rewardAnimator = gohelper.findChild(arg_5_0.viewGO, "window/righttop/reward/ani"):GetComponent("Animator")
+	arg_5_0.rewardClick = gohelper.findChildClick(arg_5_0.viewGO, "window/righttop/reward/clickArea")
 
-	slot0.rewardClick:AddClickListener(slot0.onRewardClick, slot0)
+	arg_5_0.rewardClick:AddClickListener(arg_5_0.onRewardClick, arg_5_0)
 	EliminateTaskListModel.instance:initTask()
 	EliminateTaskListModel.instance:sortTaskMoList()
 
-	slot0.goRedDot = gohelper.findChild(slot0.viewGO, "window/righttop/reward/reddot")
-	slot5 = slot0._isShowRedDot
-	slot0._redDotComp = RedDotController.instance:addNotEventRedDot(slot0.goRedDot, slot5, slot0)
-	slot0.chapterNodeList = {}
-	slot0.chapterAnimatorList = slot0:getUserDataTb_()
+	arg_5_0.goRedDot = gohelper.findChild(arg_5_0.viewGO, "window/righttop/reward/reddot")
+	arg_5_0._redDotComp = RedDotController.instance:addNotEventRedDot(arg_5_0.goRedDot, arg_5_0._isShowRedDot, arg_5_0)
+	arg_5_0.chapterNodeList = {}
+	arg_5_0.chapterAnimatorList = arg_5_0:getUserDataTb_()
 
-	for slot5 = 1, EliminateMapModel.getChapterNum() do
-		slot6 = slot0:getUserDataTb_()
-		slot6.index = slot5
-		slot6.go = gohelper.findChild(slot0.viewGO, "window/bottom/node" .. slot5)
-		slot6.goSelect = gohelper.findChild(slot6.go, "#go_unlock/#go_select")
-		slot6.goUnSelect = gohelper.findChild(slot6.go, "#go_unlock/#go_unselect")
-		slot6.goLock = gohelper.findChild(slot6.go, "#go_lock")
-		slot6.goUnLock = gohelper.findChild(slot6.go, "#go_unlock")
-		slot6.goUnLockCanvasGroup = slot6.goUnLock:GetComponent(typeof(UnityEngine.CanvasGroup))
-		slot6.click = gohelper.findChildClick(slot6.go, "clickarea")
+	for iter_5_0 = 1, EliminateMapModel.getChapterNum() do
+		local var_5_0 = arg_5_0:getUserDataTb_()
 
-		slot6.click:AddClickListener(slot0.onClickChapterItem, slot0, slot6)
-		table.insert(slot0.chapterAnimatorList, slot6.goLock:GetComponent(typeof(UnityEngine.Animator)))
-		table.insert(slot0.chapterNodeList, slot6)
+		var_5_0.index = iter_5_0
+		var_5_0.go = gohelper.findChild(arg_5_0.viewGO, "window/bottom/node" .. iter_5_0)
+		var_5_0.goSelect = gohelper.findChild(var_5_0.go, "#go_unlock/#go_select")
+		var_5_0.goUnSelect = gohelper.findChild(var_5_0.go, "#go_unlock/#go_unselect")
+		var_5_0.goLock = gohelper.findChild(var_5_0.go, "#go_lock")
+		var_5_0.goUnLock = gohelper.findChild(var_5_0.go, "#go_unlock")
+		var_5_0.goUnLockCanvasGroup = var_5_0.goUnLock:GetComponent(typeof(UnityEngine.CanvasGroup))
+		var_5_0.click = gohelper.findChildClick(var_5_0.go, "clickarea")
+
+		var_5_0.click:AddClickListener(arg_5_0.onClickChapterItem, arg_5_0, var_5_0)
+		table.insert(arg_5_0.chapterAnimatorList, var_5_0.goLock:GetComponent(typeof(UnityEngine.Animator)))
+		table.insert(arg_5_0.chapterNodeList, var_5_0)
 	end
 
-	slot0:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnSelectChapterChange, slot0.onSelectChapterChange, slot0)
-	slot0:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnUpdateEpisodeInfo, slot0.onUpdateEpisodeInfo, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(EliminateMapController.instance, EliminateMapEvent.UpdateTask, slot0._updateTaskHandler, slot0, LuaEventSystem.Low)
+	arg_5_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnSelectChapterChange, arg_5_0.onSelectChapterChange, arg_5_0)
+	arg_5_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnUpdateEpisodeInfo, arg_5_0.onUpdateEpisodeInfo, arg_5_0)
+	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0, LuaEventSystem.Low)
+	arg_5_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.UpdateTask, arg_5_0._updateTaskHandler, arg_5_0, LuaEventSystem.Low)
 end
 
-function slot0._isShowRedDot(slot0)
+function var_0_0._isShowRedDot(arg_6_0)
 	return EliminateTaskListModel.instance:getFinishTaskCount() > 0
 end
 
-function slot0._updateTaskHandler(slot0)
+function var_0_0._updateTaskHandler(arg_7_0)
 	EliminateTaskListModel.instance:initTask()
 	EliminateTaskListModel.instance:sortTaskMoList()
-	slot0._rewardAnimator:Play(EliminateTaskListModel.instance:getFinishTaskCount() > 0 and "loop" or "idle")
-	slot0._redDotComp:refreshRedDot()
+
+	local var_7_0 = EliminateTaskListModel.instance:getFinishTaskCount() > 0
+
+	arg_7_0._rewardAnimator:Play(var_7_0 and "loop" or "idle")
+	arg_7_0._redDotComp:refreshRedDot()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.lastCanFightChapterId = EliminateMapModel.instance:getLastCanFightChapterId()
-	slot0.chapterCoList = EliminateMapModel.getChapterConfigList()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.lastCanFightChapterId = EliminateMapModel.instance:getLastCanFightChapterId()
+	arg_9_0.chapterCoList = EliminateMapModel.getChapterConfigList()
 
-	slot0:refreshUI()
-	slot0:_updateTaskHandler()
+	arg_9_0:refreshUI()
+	arg_9_0:_updateTaskHandler()
 end
 
-function slot0.refreshUI(slot0)
-	slot0.chapterId = slot0.viewContainer.chapterId
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0.chapterId = arg_10_0.viewContainer.chapterId
 
-	slot0:refreshChapterUI()
+	arg_10_0:refreshChapterUI()
 end
 
-function slot0.refreshChapterUI(slot0)
-	for slot4, slot5 in ipairs(slot0.chapterCoList) do
-		slot0:refreshChapterItem(slot5, slot0.chapterNodeList[slot4])
+function var_0_0.refreshChapterUI(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.chapterCoList) do
+		arg_11_0:refreshChapterItem(iter_11_1, arg_11_0.chapterNodeList[iter_11_0])
 	end
 
-	if slot0:isPlayedChapterUnlockAnimation(slot0.chapterId) then
+	if arg_11_0:isPlayedChapterUnlockAnimation(arg_11_0.chapterId) then
 		return
 	end
 
-	slot0:playChapterUnlockAnimation(slot0.chapterId, slot0.unlockAnimationDone)
+	arg_11_0:playChapterUnlockAnimation(arg_11_0.chapterId, arg_11_0.unlockAnimationDone)
 end
 
-function slot0.refreshChapterItem(slot0, slot1, slot2)
-	slot3 = slot0.chapterId == slot1.id
+function var_0_0.refreshChapterItem(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0.chapterId == arg_12_1.id
 
-	gohelper.setActive(slot2.goSelect, slot3)
-	gohelper.setActive(slot2.goUnSelect, not slot3)
+	gohelper.setActive(arg_12_2.goSelect, var_12_0)
+	gohelper.setActive(arg_12_2.goUnSelect, not var_12_0)
 
-	slot4 = EliminateMapModel.instance:checkChapterIsUnlock(slot1.id)
+	local var_12_1 = EliminateMapModel.instance:checkChapterIsUnlock(arg_12_1.id)
 
-	gohelper.setActive(slot2.goLock, not slot4)
-	gohelper.setActive(slot2.goUnLock, true)
+	gohelper.setActive(arg_12_2.goLock, not var_12_1)
+	gohelper.setActive(arg_12_2.goUnLock, true)
 
-	slot2.goUnLockCanvasGroup.alpha = slot4 and 1 or 0.5
+	arg_12_2.goUnLockCanvasGroup.alpha = var_12_1 and 1 or 0.5
 end
 
-function slot0.onClickChapterItem(slot0, slot1)
-	if slot0.chapterId == slot0.chapterCoList[slot1.index].id then
+function var_0_0.onClickChapterItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0.chapterCoList[arg_13_1.index]
+
+	if arg_13_0.chapterId == var_13_0.id then
 		return
 	end
 
-	if EliminateMapModel.instance:getChapterStatus(slot2.id) == EliminateMapEnum.ChapterStatus.notOpen then
-		slot4, slot5 = OpenHelper.getToastIdAndParam(slot2.openId)
+	local var_13_1 = EliminateMapModel.instance:getChapterStatus(var_13_0.id)
 
-		GameFacade.showToastWithTableParam(slot4, slot5)
+	if var_13_1 == EliminateMapEnum.ChapterStatus.notOpen then
+		local var_13_2, var_13_3 = OpenHelper.getToastIdAndParam(var_13_0.openId)
+
+		GameFacade.showToastWithTableParam(var_13_2, var_13_3)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_search_clear)
 
 		return
 	end
 
-	if slot3 == EliminateMapEnum.ChapterStatus.Lock then
+	if var_13_1 == EliminateMapEnum.ChapterStatus.Lock then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_search_clear)
 		GameFacade.showToast(ToastEnum.ConditionLock)
 
@@ -144,145 +154,155 @@ function slot0.onClickChapterItem(slot0, slot1)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_skin_tag)
-	slot0.viewContainer:changeChapterId(slot2.id)
+	arg_13_0.viewContainer:changeChapterId(var_13_0.id)
 end
 
-function slot0.onSelectChapterChange(slot0)
-	slot0:refreshUI()
+function var_0_0.onSelectChapterChange(arg_14_0)
+	arg_14_0:refreshUI()
 end
 
-function slot0.onUpdateEpisodeInfo(slot0)
-	slot0:_updateTaskHandler()
+function var_0_0.onUpdateEpisodeInfo(arg_15_0)
+	arg_15_0:_updateTaskHandler()
 
-	if EliminateMapModel.instance:getLastCanFightChapterId() == slot0.lastCanFightChapterId then
-		slot0.nextChapterId = nil
+	local var_15_0 = EliminateMapModel.instance:getLastCanFightChapterId()
+
+	if var_15_0 == arg_15_0.lastCanFightChapterId then
+		arg_15_0.nextChapterId = nil
 
 		return
 	end
 
-	if not EliminateMapModel.instance:checkChapterIsUnlock(slot1) then
-		slot0.nextChapterId = nil
+	if not EliminateMapModel.instance:checkChapterIsUnlock(var_15_0) then
+		arg_15_0.nextChapterId = nil
 
 		return
 	end
 
-	slot0.nextChapterId = slot1
-	slot0.lastCanFightChapterId = slot1
+	arg_15_0.nextChapterId = var_15_0
+	arg_15_0.lastCanFightChapterId = var_15_0
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.EliminateLevelView and slot0.nextChapterId then
-		UIBlockMgr.instance:startBlock(uv0.UnlockKey)
-		TaskDispatcher.runDelay(slot0._delayUnlock, slot0, EliminateMapEnum.MapViewOpenAnimLength)
+function var_0_0._onCloseViewFinish(arg_16_0, arg_16_1)
+	if arg_16_1 == ViewName.EliminateLevelView and arg_16_0.nextChapterId then
+		UIBlockMgr.instance:startBlock(var_0_0.UnlockKey)
+		TaskDispatcher.runDelay(arg_16_0._delayUnlock, arg_16_0, EliminateMapEnum.MapViewOpenAnimLength)
 	end
 end
 
-function slot0._delayUnlock(slot0)
-	slot0:playChapterUnlockAnimation(slot0.nextChapterId, slot0.unlockAnimationDoneNeedSwitchChapter)
+function var_0_0._delayUnlock(arg_17_0)
+	arg_17_0:playChapterUnlockAnimation(arg_17_0.nextChapterId, arg_17_0.unlockAnimationDoneNeedSwitchChapter)
 end
 
-function slot0.playChapterUnlockAnimation(slot0, slot1, slot2)
-	if not slot1 then
-		UIBlockMgr.instance:endBlock(uv0.UnlockKey)
+function var_0_0.playChapterUnlockAnimation(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_1 then
+		UIBlockMgr.instance:endBlock(var_0_0.UnlockKey)
 
 		return
 	end
 
-	if not ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		UIBlockMgr.instance:endBlock(uv0.UnlockKey)
+	if not ViewHelper.instance:checkViewOnTheTop(arg_18_0.viewName) then
+		UIBlockMgr.instance:endBlock(var_0_0.UnlockKey)
 
 		return
 	end
 
-	slot0.nextChapterId = nil
+	arg_18_0.nextChapterId = nil
 
-	gohelper.setActive(slot0.chapterNodeList[slot1].goLock, true)
+	local var_18_0 = arg_18_0.chapterNodeList[arg_18_1]
 
-	slot0.playingUnlockAnimationChapterId = slot1
-	slot0._unlockChapterId = slot1
+	gohelper.setActive(var_18_0.goLock, true)
 
-	if slot0.chapterAnimatorList[slot1] then
-		UIBlockMgr.instance:startBlock(uv0.UnlockKey)
+	arg_18_0.playingUnlockAnimationChapterId = arg_18_1
+	arg_18_0._unlockChapterId = arg_18_1
 
-		slot0.unlockCallback = slot2
+	if arg_18_0.chapterAnimatorList[arg_18_1] then
+		UIBlockMgr.instance:startBlock(var_0_0.UnlockKey)
 
-		TaskDispatcher.cancelTask(slot0._delayUnlockChapter, slot0)
-		TaskDispatcher.runDelay(slot0._delayUnlockChapter, slot0, 1)
-		TaskDispatcher.runDelay(slot0.unlockCallback, slot0, EliminateMapEnum.MapViewChapterUnlockDuration)
-		gohelper.setActive(slot0._goexcessive, false)
-		gohelper.setActive(slot0._goexcessive, true)
-	elseif slot2 then
-		slot2(slot0)
+		arg_18_0.unlockCallback = arg_18_2
+
+		TaskDispatcher.cancelTask(arg_18_0._delayUnlockChapter, arg_18_0)
+		TaskDispatcher.runDelay(arg_18_0._delayUnlockChapter, arg_18_0, 1)
+		TaskDispatcher.runDelay(arg_18_0.unlockCallback, arg_18_0, EliminateMapEnum.MapViewChapterUnlockDuration)
+		gohelper.setActive(arg_18_0._goexcessive, false)
+		gohelper.setActive(arg_18_0._goexcessive, true)
+	elseif arg_18_2 then
+		arg_18_2(arg_18_0)
 	end
 end
 
-function slot0._delayUnlockChapter(slot0)
-	slot0._unlockChapterId = nil
+function var_0_0._delayUnlockChapter(arg_19_0)
+	local var_19_0 = arg_19_0.chapterAnimatorList[arg_19_0._unlockChapterId]
 
-	if slot0.chapterAnimatorList[slot0._unlockChapterId] then
-		gohelper.setActive(slot1, true)
-		slot1:Play(UIAnimationName.Unlock)
+	arg_19_0._unlockChapterId = nil
+
+	if var_19_0 then
+		gohelper.setActive(var_19_0, true)
+		var_19_0:Play(UIAnimationName.Unlock)
 	end
 end
 
-function slot0.unlockAnimationDone(slot0)
-	UIBlockMgr.instance:endBlock(uv0.UnlockKey)
-	slot0:recordPlayChapterUnlockAnimation(slot0.playingUnlockAnimationChapterId)
+function var_0_0.unlockAnimationDone(arg_20_0)
+	UIBlockMgr.instance:endBlock(var_0_0.UnlockKey)
+	arg_20_0:recordPlayChapterUnlockAnimation(arg_20_0.playingUnlockAnimationChapterId)
 
-	slot0.playingUnlockAnimationChapterId = nil
-	slot0.unlockCallback = nil
+	arg_20_0.playingUnlockAnimationChapterId = nil
+	arg_20_0.unlockCallback = nil
 end
 
-function slot0.unlockAnimationDoneNeedSwitchChapter(slot0)
-	slot0:unlockAnimationDone()
+function var_0_0.unlockAnimationDoneNeedSwitchChapter(arg_21_0)
+	local var_21_0 = arg_21_0.playingUnlockAnimationChapterId
+
+	arg_21_0:unlockAnimationDone()
 	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.UnlockChapterAnimDone)
-	slot0.viewContainer:changeChapterId(slot0.playingUnlockAnimationChapterId)
+	arg_21_0.viewContainer:changeChapterId(var_21_0)
 end
 
-function slot0.initPlayedChapterUnlockAnimationList(slot0)
-	if slot0.playedChapterIdList then
+function var_0_0.initPlayedChapterUnlockAnimationList(arg_22_0)
+	if arg_22_0.playedChapterIdList then
 		return
 	end
 
-	if string.nilorempty(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EliminateChapterUnlockAnimationKey))) then
-		slot0.playedChapterIdList = {}
+	local var_22_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EliminateChapterUnlockAnimationKey))
+
+	if string.nilorempty(var_22_0) then
+		arg_22_0.playedChapterIdList = {}
 	end
 
-	slot0.playedChapterIdList = string.splitToNumber(slot1, ";")
+	arg_22_0.playedChapterIdList = string.splitToNumber(var_22_0, ";")
 end
 
-function slot0.isPlayedChapterUnlockAnimation(slot0, slot1)
-	slot0:initPlayedChapterUnlockAnimationList()
+function var_0_0.isPlayedChapterUnlockAnimation(arg_23_0, arg_23_1)
+	arg_23_0:initPlayedChapterUnlockAnimationList()
 
 	return true
 end
 
-function slot0.recordPlayChapterUnlockAnimation(slot0, slot1)
-	if tabletool.indexOf(slot0.playedChapterIdList, slot1) then
+function var_0_0.recordPlayChapterUnlockAnimation(arg_24_0, arg_24_1)
+	if tabletool.indexOf(arg_24_0.playedChapterIdList, arg_24_1) then
 		return
 	end
 
-	table.insert(slot0.playedChapterIdList, slot1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EliminateChapterUnlockAnimationKey), table.concat(slot0.playedChapterIdList, ";"))
+	table.insert(arg_24_0.playedChapterIdList, arg_24_1)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EliminateChapterUnlockAnimationKey), table.concat(arg_24_0.playedChapterIdList, ";"))
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayUnlockChapter, slot0)
+function var_0_0.onClose(arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._delayUnlockChapter, arg_25_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebottom:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._delayUnlock, slot0)
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0._simagebottom:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_26_0._delayUnlock, arg_26_0)
 
-	if slot0.unlockCallback then
-		TaskDispatcher.cancelTask(slot0.unlockCallback, slot0)
+	if arg_26_0.unlockCallback then
+		TaskDispatcher.cancelTask(arg_26_0.unlockCallback, arg_26_0)
 	end
 
-	slot0.rewardClick:RemoveClickListener()
+	arg_26_0.rewardClick:RemoveClickListener()
 
-	for slot4, slot5 in ipairs(slot0.chapterNodeList) do
-		slot5.click:RemoveClickListener()
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0.chapterNodeList) do
+		iter_26_1.click:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

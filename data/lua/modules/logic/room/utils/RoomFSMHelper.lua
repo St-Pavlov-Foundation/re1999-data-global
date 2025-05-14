@@ -1,13 +1,17 @@
-module("modules.logic.room.utils.RoomFSMHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomFSMHelper", package.seeall)
 
 return {
-	isCanJompTo = function (slot0)
-		if slot0 == RoomEnum.FSMEditState.PlaceConfirm then
+	isCanJompTo = function(arg_1_0)
+		if arg_1_0 == RoomEnum.FSMEditState.PlaceConfirm then
 			if RoomMapBlockModel.instance:getTempBlockMO() then
 				return true
 			end
-		elseif slot0 == RoomEnum.FSMEditState.BackConfirm and RoomMapBlockModel.instance:getBackBlockModel() and slot1:getCount() > 0 then
-			return true
+		elseif arg_1_0 == RoomEnum.FSMEditState.BackConfirm then
+			local var_1_0 = RoomMapBlockModel.instance:getBackBlockModel()
+
+			if var_1_0 and var_1_0:getCount() > 0 then
+				return true
+			end
 		end
 
 		return false

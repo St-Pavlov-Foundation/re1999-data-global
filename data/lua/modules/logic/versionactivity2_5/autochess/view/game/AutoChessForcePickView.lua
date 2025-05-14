@@ -1,93 +1,108 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessForcePickView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessForcePickView", package.seeall)
 
-slot0 = class("AutoChessForcePickView", BaseView)
+local var_0_0 = class("AutoChessForcePickView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goView = gohelper.findChild(slot0.viewGO, "#go_View")
-	slot0._btnGiveUp = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_View/#btn_GiveUp")
-	slot0._btnView = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_View/#btn_View")
-	slot0._txtTip = gohelper.findChildText(slot0.viewGO, "#go_View/panelbg/#txt_Tip")
-	slot0._txtWarningTip = gohelper.findChildText(slot0.viewGO, "#go_View/panelbg/#txt_WarningTip")
-	slot0._goCardRoot = gohelper.findChild(slot0.viewGO, "#go_View/Card/Viewport/#go_CardRoot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goView = gohelper.findChild(arg_1_0.viewGO, "#go_View")
+	arg_1_0._btnGiveUp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_View/#btn_GiveUp")
+	arg_1_0._btnView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_View/#btn_View")
+	arg_1_0._txtTip = gohelper.findChildText(arg_1_0.viewGO, "#go_View/panelbg/#txt_Tip")
+	arg_1_0._txtWarningTip = gohelper.findChildText(arg_1_0.viewGO, "#go_View/panelbg/#txt_WarningTip")
+	arg_1_0._goCardRoot = gohelper.findChild(arg_1_0.viewGO, "#go_View/Card/Viewport/#go_CardRoot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnGiveUp:AddClickListener(slot0._btnGiveUpOnClick, slot0)
-	slot0._btnView:AddClickListener(slot0._btnViewOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnGiveUp:AddClickListener(arg_2_0._btnGiveUpOnClick, arg_2_0)
+	arg_2_0._btnView:AddClickListener(arg_2_0._btnViewOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnGiveUp:RemoveClickListener()
-	slot0._btnView:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnGiveUp:RemoveClickListener()
+	arg_3_0._btnView:RemoveClickListener()
 end
 
-function slot0.onClickModalMask(slot0)
+function var_0_0.onClickModalMask(arg_4_0)
+	return
 end
 
-function slot0._btnGiveUpOnClick(slot0)
-	GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpForcePick, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, slot0._yesCallback, nil, , slot0)
+function var_0_0._btnGiveUpOnClick(arg_5_0)
+	GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpForcePick, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, arg_5_0._yesCallback, nil, nil, arg_5_0)
 end
 
-function slot0._yesCallback(slot0)
-	AutoChessRpc.instance:sendAutoChessMallRegionSelectItemRequest(AutoChessModel.instance:getCurModuleId(), 0)
-	slot0:closeThis()
+function var_0_0._yesCallback(arg_6_0)
+	local var_6_0 = AutoChessModel.instance:getCurModuleId()
+
+	AutoChessRpc.instance:sendAutoChessMallRegionSelectItemRequest(var_6_0, 0)
+	arg_6_0:closeThis()
 end
 
-function slot0._btnViewOnClick(slot0)
+function var_0_0._btnViewOnClick(arg_7_0)
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.ForcePickViewBoard)
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.contentSizeFitter = slot0._goCardRoot:GetComponent(gohelper.Type_ContentSizeFitter)
-	slot0.layoutGroup = slot0._goCardRoot:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.contentSizeFitter = arg_8_0._goCardRoot:GetComponent(gohelper.Type_ContentSizeFitter)
+	arg_8_0.layoutGroup = arg_8_0._goCardRoot:GetComponent(gohelper.Type_HorizontalLayoutGroup)
 end
 
-function slot0.onOpen(slot0)
-	if not slot0.viewParam then
+function var_0_0.onOpen(arg_9_0)
+	if not arg_9_0.viewParam then
 		return
 	end
 
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.ForcePickReply, slot0.closeThis, slot0)
+	arg_9_0:addEventCb(AutoChessController.instance, AutoChessEvent.ForcePickReply, arg_9_0.closeThis, arg_9_0)
 
-	slot0.freeMall = slot0.viewParam
+	arg_9_0.freeMall = arg_9_0.viewParam
 
-	slot0:refreshUI()
-	TaskDispatcher.runDelay(slot0.delayDisabled, slot0, 0.1)
+	arg_9_0:refreshUI()
+	TaskDispatcher.runDelay(arg_9_0.delayDisabled, arg_9_0, 0.1)
 end
 
-function slot0.delayDisabled(slot0)
-	slot0.contentSizeFitter.enabled = false
-	slot0.layoutGroup.enabled = false
+function var_0_0.delayDisabled(arg_10_0)
+	arg_10_0.contentSizeFitter.enabled = false
+	arg_10_0.layoutGroup.enabled = false
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.delayDisabled, slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.delayDisabled, arg_12_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtTip.text = luaLang("autochess_forcepick_tip")
+function var_0_0.refreshUI(arg_13_0)
+	local var_13_0 = #arg_13_0.freeMall.items
 
-	if #slot0.freeMall.items ~= 0 then
-		slot0._txtWarningTip.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("autochess_forcepick_warningtip"), AutoChessConfig.instance:getChessCoByItemId(slot0.freeMall.items[1].id).name)
+	arg_13_0._txtTip.text = luaLang("autochess_forcepick_tip")
+
+	if var_13_0 ~= 0 then
+		local var_13_1 = AutoChessConfig.instance:getChessCoByItemId(arg_13_0.freeMall.items[1].id)
+		local var_13_2 = luaLang("autochess_forcepick_warningtip")
+
+		arg_13_0._txtWarningTip.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_2, var_13_1.name)
 	end
 
-	for slot6, slot7 in ipairs(slot0.freeMall.selectItems) do
-		MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.ChessCardPath, slot0._goCardRoot, "card" .. slot7), AutoChessCard):setData({
+	local var_13_3 = arg_13_0.freeMall.selectItems
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_3) do
+		local var_13_4 = arg_13_0:getResInst(AutoChessEnum.ChessCardPath, arg_13_0._goCardRoot, "card" .. iter_13_1)
+		local var_13_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_4, AutoChessCard)
+		local var_13_6 = {
 			type = AutoChessCard.ShowType.ForcePick,
-			itemId = slot7
-		})
+			itemId = iter_13_1
+		}
+
+		var_13_5:setData(var_13_6)
 	end
 
-	gohelper.setActive(slot0._txtTip, slot1 == 0)
-	gohelper.setActive(slot0._txtWarningTip, slot1 ~= 0)
+	gohelper.setActive(arg_13_0._txtTip, var_13_0 == 0)
+	gohelper.setActive(arg_13_0._txtWarningTip, var_13_0 ~= 0)
 end
 
-return slot0
+return var_0_0

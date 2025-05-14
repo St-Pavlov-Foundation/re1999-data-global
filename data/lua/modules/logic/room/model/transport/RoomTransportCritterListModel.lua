@@ -1,37 +1,42 @@
-module("modules.logic.room.model.transport.RoomTransportCritterListModel", package.seeall)
+﻿module("modules.logic.room.model.transport.RoomTransportCritterListModel", package.seeall)
 
-slot0 = class("RoomTransportCritterListModel", ListScrollModel)
+local var_0_0 = class("RoomTransportCritterListModel", ListScrollModel)
 
-function slot0.setCritterList(slot0)
-	slot1 = {}
+function var_0_0.setCritterList(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = CritterModel.instance:getAllCritters()
 
-	for slot6 = 1, #CritterModel.instance:getAllCritters() do
-		if slot2[slot6] and slot7:isMaturity() then
-			table.insert(slot1, slot7)
+	for iter_1_0 = 1, #var_1_1 do
+		local var_1_2 = var_1_1[iter_1_0]
+
+		if var_1_2 and var_1_2:isMaturity() then
+			table.insert(var_1_0, var_1_2)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.getSelect(slot0)
-	return slot0._selectId
+function var_0_0.getSelect(arg_2_0)
+	return arg_2_0._selectId
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectId))
+function var_0_0._refreshSelect(arg_3_0)
+	local var_3_0 = arg_3_0:getById(arg_3_0._selectId)
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._scrollViews) do
+		iter_3_1:setSelect(var_3_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	if slot0._selectId ~= slot1 then
-		slot0._selectId = slot1
+function var_0_0.setSelect(arg_4_0, arg_4_1)
+	if arg_4_0._selectId ~= arg_4_1 then
+		arg_4_0._selectId = arg_4_1
 
-		slot0:_refreshSelect()
+		arg_4_0:_refreshSelect()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

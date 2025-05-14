@@ -1,34 +1,36 @@
-module("modules.logic.seasonver.act123.model.Season123StoreModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123StoreModel", package.seeall)
 
-slot0 = class("Season123StoreModel", ListScrollModel)
+local var_0_0 = class("Season123StoreModel", ListScrollModel)
 
-function slot0.OnInit(slot0)
-	slot0:reInit()
+function var_0_0.OnInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.storeItemList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.storeItemList = {}
 end
 
-function slot0.setStoreItemList(slot0, slot1)
-	slot0.storeItemList = tabletool.copy(slot1)
+function var_0_0.setStoreItemList(arg_3_0, arg_3_1)
+	arg_3_0.storeItemList = tabletool.copy(arg_3_1)
 
-	table.sort(slot0.storeItemList, uv0.sortGoods)
-	slot0:setList(slot0.storeItemList)
+	table.sort(arg_3_0.storeItemList, var_0_0.sortGoods)
+	arg_3_0:setList(arg_3_0.storeItemList)
 end
 
-function slot0.sortGoods(slot0, slot1)
-	if (slot0.maxBuyCount ~= 0 and slot0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.activityId, slot0.id) <= 0) ~= (slot1.maxBuyCount ~= 0 and slot1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot1.activityId, slot1.id) <= 0) then
-		if slot2 then
+function var_0_0.sortGoods(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.maxBuyCount ~= 0 and arg_4_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_4_0.activityId, arg_4_0.id) <= 0
+
+	if var_4_0 ~= (arg_4_1.maxBuyCount ~= 0 and arg_4_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_4_1.activityId, arg_4_1.id) <= 0) then
+		if var_4_0 then
 			return false
 		end
 
 		return true
 	end
 
-	return slot0.id < slot1.id
+	return arg_4_0.id < arg_4_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

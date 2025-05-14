@@ -1,24 +1,27 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotTeamPreviewPrepareListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotTeamPreviewPrepareListModel", package.seeall)
 
-slot0 = class("V1a6_CachotTeamPreviewPrepareListModel", ListScrollModel)
+local var_0_0 = class("V1a6_CachotTeamPreviewPrepareListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.initList(slot0)
-	slot3 = V1a6_CachotModel.instance:getRogueInfo().teamInfo:getSupportHeros()
+function var_0_0.initList(arg_3_0)
+	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo().teamInfo:getSupportHeros()
+	local var_3_1 = math.ceil(#var_3_0 / 4)
+	local var_3_2 = math.max(var_3_1, 1)
 
-	for slot8 = #slot3 + 1, math.max(math.ceil(#slot3 / 4), 1) * 4 do
-		table.insert(slot3, HeroSingleGroupMO.New())
+	for iter_3_0 = #var_3_0 + 1, var_3_2 * 4 do
+		table.insert(var_3_0, HeroSingleGroupMO.New())
 	end
 
-	slot0:setList(slot3)
+	arg_3_0:setList(var_3_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

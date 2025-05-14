@@ -1,18 +1,19 @@
-module("modules.logic.achievement.controller.AchievementEntryController", package.seeall)
+﻿module("modules.logic.achievement.controller.AchievementEntryController", package.seeall)
 
-slot0 = class("AchievementEntryController", BaseController)
+local var_0_0 = class("AchievementEntryController", BaseController)
 
-function slot0.onOpenView(slot0)
+function var_0_0.onOpenView(arg_1_0)
 	AchievementEntryModel.instance:initData()
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
+	return
 end
 
-function slot0.updateAchievementState(slot0)
+function var_0_0.updateAchievementState(arg_3_0)
 	AchievementEntryModel.instance:initData()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

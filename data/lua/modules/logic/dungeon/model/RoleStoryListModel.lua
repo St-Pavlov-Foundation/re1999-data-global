@@ -1,45 +1,52 @@
-module("modules.logic.dungeon.model.RoleStoryListModel", package.seeall)
+﻿module("modules.logic.dungeon.model.RoleStoryListModel", package.seeall)
 
-slot0 = class("RoleStoryListModel", ListScrollModel)
+local var_0_0 = class("RoleStoryListModel", ListScrollModel)
 
-function slot0.markUnlockOrder(slot0)
-	slot0.unlockOrderDict = {}
-	slot2 = {}
+function var_0_0.markUnlockOrder(arg_1_0)
+	arg_1_0.unlockOrderDict = {}
 
-	if RoleStoryConfig.instance:getStoryList() then
-		for slot6, slot7 in ipairs(slot1) do
-			if RoleStoryModel.instance:getMoById(slot7.id):isResidentTime() then
-				slot0.unlockOrderDict[slot7.id] = slot8.hasUnlock and 1 or 0
+	local var_1_0 = RoleStoryConfig.instance:getStoryList()
+	local var_1_1 = {}
+
+	if var_1_0 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			local var_1_2 = RoleStoryModel.instance:getMoById(iter_1_1.id)
+
+			if var_1_2:isResidentTime() then
+				arg_1_0.unlockOrderDict[iter_1_1.id] = var_1_2.hasUnlock and 1 or 0
 			end
 		end
 	end
 end
 
-function slot0.refreshList(slot0)
-	if #slot0._scrollViews == 0 then
+function var_0_0.refreshList(arg_2_0)
+	if #arg_2_0._scrollViews == 0 then
 		return
 	end
 
-	slot2 = {}
+	local var_2_0 = RoleStoryConfig.instance:getStoryList()
+	local var_2_1 = {}
 
-	if RoleStoryConfig.instance:getStoryList() then
-		for slot6, slot7 in ipairs(slot1) do
-			if RoleStoryModel.instance:getMoById(slot7.id):isResidentTime() then
-				slot8.unlockOrder = slot0.unlockOrderDict[slot7.id] or 0
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+			local var_2_2 = RoleStoryModel.instance:getMoById(iter_2_1.id)
 
-				table.insert(slot2, slot8)
+			if var_2_2:isResidentTime() then
+				var_2_2.unlockOrder = arg_2_0.unlockOrderDict[iter_2_1.id] or 0
+
+				table.insert(var_2_1, var_2_2)
 			end
 		end
 	end
 
-	table.sort(slot2, SortUtil.tableKeyUpper({
+	table.sort(var_2_1, SortUtil.tableKeyUpper({
 		"unlockOrder",
 		"getRewardOrder",
 		"order"
 	}))
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

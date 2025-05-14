@@ -1,124 +1,150 @@
-module("modules.logic.optionpackage.controller.OptionPackageController", package.seeall)
+﻿module("modules.logic.optionpackage.controller.OptionPackageController", package.seeall)
 
-slot0 = class("OptionPackageController", BaseController)
+local var_0_0 = class("OptionPackageController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
-	slot0._optionalUpdateInst = slot0._optionalUpdate.Instance
-	slot0._initialized = false
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
+	arg_1_0._optionalUpdateInst = arg_1_0._optionalUpdate.Instance
+	arg_1_0._initialized = false
 
 	if not HotUpdateVoiceMgr then
 		return
 	end
 
-	slot0._initialized = true
-	slot0._downloader = OptionPackageDownloader.New()
-	slot0._httpWorker = OptionPackageHttpWorker.New()
-	slot0._adapter = DownloadOptPackAdapter.New()
+	arg_1_0._initialized = true
+	arg_1_0._downloader = OptionPackageDownloader.New()
+	arg_1_0._httpWorker = OptionPackageHttpWorker.New()
+	arg_1_0._adapter = DownloadOptPackAdapter.New()
 end
 
-function slot0.onInitFinish(slot0)
-	if not slot0._initialized then
+function var_0_0.onInitFinish(arg_2_0)
+	if not arg_2_0._initialized then
 		return
 	end
 
-	slot0:_startHttpWorker()
+	arg_2_0:_startHttpWorker()
 
-	slot0._localPackageNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+	arg_2_0._localPackageNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList()
 
-	slot0:_updateLocalVersion()
+	arg_2_0:_updateLocalVersion()
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0._startHttpWorker(slot0)
+function var_0_0._startHttpWorker(arg_5_0)
 	logNormal("OptionPackageController:_startHttpWorker()")
 
-	if #OptionPackageEnum.PackageNameList < 1 then
+	local var_5_0 = OptionPackageEnum.PackageNameList
+
+	if #var_5_0 < 1 then
 		return
 	end
 
-	slot2 = {}
-	slot4 = {}
+	local var_5_1 = {}
+	local var_5_2 = OptionPackageModel.instance:getSupportVoiceLangs()
+	local var_5_3 = {}
 
-	tabletool.addValues(slot4, OptionPackageEnum.NeedPackLangList)
-	tabletool.addValues(slot4, OptionPackageModel.instance:getSupportVoiceLangs())
+	tabletool.addValues(var_5_3, OptionPackageEnum.NeedPackLangList)
+	tabletool.addValues(var_5_3, var_5_2)
 
-	if slot4 and #slot4 > 0 then
-		table.insert(slot2, OptionPackageHttpGetter.New(OptionPackageEnum.SourceType.OptResVoice, HotUpdateOptionPackageMgr.instance:formatLangPackList(slot4, slot1)))
+	if var_5_3 and #var_5_3 > 0 then
+		local var_5_4 = HotUpdateOptionPackageMgr.instance:formatLangPackList(var_5_3, var_5_0)
+
+		table.insert(var_5_1, OptionPackageHttpGetter.New(OptionPackageEnum.SourceType.OptResVoice, var_5_4))
 	end
 
-	slot0._httpWorkerRequestCount = 0
+	arg_5_0._httpWorkerRequestCount = 0
 
-	slot0._httpWorker:start(slot2, slot0._onHttpWorkerDone, slot0)
+	arg_5_0._httpWorker:start(var_5_1, arg_5_0._onHttpWorkerDone, arg_5_0)
 end
 
-function slot0._onHttpWorkerDone(slot0, slot1)
-	if not slot1 and slot0._httpWorkerRequestCount < 3 then
-		slot0._httpWorkerRequestCount = slot0._httpWorkerRequestCount + 1
+function var_0_0._onHttpWorkerDone(arg_6_0, arg_6_1)
+	if not arg_6_1 and arg_6_0._httpWorkerRequestCount < 3 then
+		arg_6_0._httpWorkerRequestCount = arg_6_0._httpWorkerRequestCount + 1
 
-		slot0._httpWorker:againGetHttp(slot0._onHttpWorkerDone, slot0)
-
-		return
-	end
-
-	if not slot1 then
-		slot0:_endHttpBlock()
+		arg_6_0._httpWorker:againGetHttp(arg_6_0._onHttpWorkerDone, arg_6_0)
 
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0._httpWorker:getHttpResult()) do
-		if not OptionPackageModel.instance:getPackageMO(slot6) and string.split(slot6, "-") and #slot9 > 1 then
-			slot8 = OptionPackageMO.New()
+	if not arg_6_1 then
+		arg_6_0:_endHttpBlock()
 
-			slot8:init(slot9[2], slot9[1])
-			OptionPackageModel.instance:addPackageMO(slot8)
+		return
+	end
+
+	local var_6_0 = arg_6_0._httpWorker:getHttpResult()
+
+	for iter_6_0, iter_6_1 in pairs(var_6_0) do
+		local var_6_1 = OptionPackageModel.instance:getPackageMO(iter_6_0)
+
+		if not var_6_1 then
+			local var_6_2 = string.split(iter_6_0, "-")
+
+			if var_6_2 and #var_6_2 > 1 then
+				var_6_1 = OptionPackageMO.New()
+
+				local var_6_3 = var_6_2[1]
+				local var_6_4 = var_6_2[2]
+
+				var_6_1:init(var_6_4, var_6_3)
+				OptionPackageModel.instance:addPackageMO(var_6_1)
+			end
 		end
 
-		if slot8 then
-			logNormal(string.format("packMO:setPackInfo() langPackName :%s localVersion:%s", slot6, slot8.localVersion))
-			slot8:setPackInfo(slot7)
+		if var_6_1 then
+			logNormal(string.format("packMO:setPackInfo() langPackName :%s localVersion:%s", iter_6_0, var_6_1.localVersion))
+			var_6_1:setPackInfo(iter_6_1)
 
-			if #slot8.downloadResList.names > 0 then
-				slot9 = slot8.downloadResList
+			if #var_6_1.downloadResList.names > 0 then
+				local var_6_5 = var_6_1.downloadResList
 
-				slot0._optionalUpdateInst:InitBreakPointInfo(slot9.names, slot9.hashs, slot9.orders, slot9.lengths)
-				slot8:setLocalSize(tonumber(slot0._optionalUpdateInst:GetRecvSize()))
+				arg_6_0._optionalUpdateInst:InitBreakPointInfo(var_6_5.names, var_6_5.hashs, var_6_5.orders, var_6_5.lengths)
+
+				local var_6_6 = arg_6_0._optionalUpdateInst:GetRecvSize()
+				local var_6_7 = tonumber(var_6_6)
+
+				var_6_1:setLocalSize(var_6_7)
 			end
 		end
 	end
 
-	slot0:_endHttpBlock()
+	arg_6_0:_endHttpBlock()
 end
 
-function slot0._updateLocalVersion(slot0)
-	for slot5, slot6 in ipairs(OptionPackageModel.instance:getPackageMOList()) do
-		if slot6 then
-			slot6:setLocalVersion(slot0:getLocalVersionInt(slot6.langPack))
+function var_0_0._updateLocalVersion(arg_7_0)
+	local var_7_0 = OptionPackageModel.instance:getPackageMOList()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1 then
+			local var_7_1 = arg_7_0:getLocalVersionInt(iter_7_1.langPack)
+
+			iter_7_1:setLocalVersion(var_7_1)
 		end
 	end
 end
 
-slot0.OPTION_PACKAGE_HTTP_REQUEST = "OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST"
+var_0_0.OPTION_PACKAGE_HTTP_REQUEST = "OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST"
 
-function slot0._startHttpBlock(slot0)
-	UIBlockMgr.instance:startBlock(uv0.OPTION_PACKAGE_HTTP_REQUEST)
-	TaskDispatcher.cancelTask(slot0._endHttpBlock, slot0)
-	TaskDispatcher.runDelay(slot0._endHttpBlock, slot0, 10)
+function var_0_0._startHttpBlock(arg_8_0)
+	UIBlockMgr.instance:startBlock(var_0_0.OPTION_PACKAGE_HTTP_REQUEST)
+	TaskDispatcher.cancelTask(arg_8_0._endHttpBlock, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0._endHttpBlock, arg_8_0, 10)
 end
 
-function slot0._endHttpBlock(slot0)
-	TaskDispatcher.cancelTask(slot0._endHttpBlock, slot0)
-	UIBlockMgr.instance:endBlock(uv0.OPTION_PACKAGE_HTTP_REQUEST)
+function var_0_0._endHttpBlock(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._endHttpBlock, arg_9_0)
+	UIBlockMgr.instance:endBlock(var_0_0.OPTION_PACKAGE_HTTP_REQUEST)
 end
 
-function slot0.checkNeedDownload(slot0, slot1)
-	if not slot0._initialized or not OptionPackageEnum.HasPackageNameDict[slot1] then
+function var_0_0.checkNeedDownload(arg_10_0, arg_10_1)
+	if not arg_10_0._initialized or not OptionPackageEnum.HasPackageNameDict[arg_10_1] then
 		return false
 	end
 
@@ -126,26 +152,30 @@ function slot0.checkNeedDownload(slot0, slot1)
 		return false
 	end
 
-	slot2, slot3 = slot0._httpWorker:checkWorkDone()
+	local var_10_0, var_10_1 = arg_10_0._httpWorker:checkWorkDone()
 
-	if not slot2 then
-		slot0:_startHttpBlock()
-
-		return true
-	end
-
-	if slot2 and not slot3 then
-		slot0._httpWorker:againGetHttp(slot0._onHttpWorkerDone, slot0)
-		slot0:_startHttpBlock()
+	if not var_10_0 then
+		arg_10_0:_startHttpBlock()
 
 		return true
 	end
 
-	if OptionPackageModel.instance:getPackageSetMO(slot1):isNeedDownload(OptionPackageModel.instance:getNeedVoiceLangList()) then
-		slot6, slot7 = slot4:getDownloadSize(slot5)
-		slot8, slot9, slot10 = OptionPackageHelper.getLeftSizeMBorGB(slot6, slot7)
+	if var_10_0 and not var_10_1 then
+		arg_10_0._httpWorker:againGetHttp(arg_10_0._onHttpWorkerDone, arg_10_0)
+		arg_10_0:_startHttpBlock()
 
-		slot0:_showDownloadMsgBox(slot1, formatLuaLang("OptionPackageController_checkNeedDownload", slot8, slot10))
+		return true
+	end
+
+	local var_10_2 = OptionPackageModel.instance:getPackageSetMO(arg_10_1)
+	local var_10_3 = OptionPackageModel.instance:getNeedVoiceLangList()
+
+	if var_10_2:isNeedDownload(var_10_3) then
+		local var_10_4, var_10_5 = var_10_2:getDownloadSize(var_10_3)
+		local var_10_6, var_10_7, var_10_8 = OptionPackageHelper.getLeftSizeMBorGB(var_10_4, var_10_5)
+		local var_10_9 = formatLuaLang("OptionPackageController_checkNeedDownload", var_10_6, var_10_8)
+
+		arg_10_0:_showDownloadMsgBox(arg_10_1, var_10_9)
 
 		return true
 	end
@@ -153,109 +183,120 @@ function slot0.checkNeedDownload(slot0, slot1)
 	return false
 end
 
-function slot0._showDownloadMsgBox(slot0, slot1, slot2)
-	slot0._downloadPackName = slot1
-	slot5 = "确定下载"
-	slot6 = "YES DOWNLOAD"
-	slot7 = "取消下载"
-	slot8 = "CANCEL DOWNLOAD"
+function var_0_0._showDownloadMsgBox(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._downloadPackName = arg_11_1
 
-	MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.ForbidLogin, MsgBoxEnum.BoxType.Yes_No, uv0._downloaderYes, uv0._downloaderNo, nil, , , , slot2)
+	local var_11_0 = MessageBoxIdDefine.ForbidLogin
+	local var_11_1 = MsgBoxEnum.BoxType.Yes_No
+	local var_11_2 = "确定下载"
+	local var_11_3 = "YES DOWNLOAD"
+	local var_11_4 = "取消下载"
+	local var_11_5 = "CANCEL DOWNLOAD"
+	local var_11_6 = var_0_0._downloaderYes
+	local var_11_7 = var_0_0._downloaderNo
+
+	MessageBoxController.instance:showSystemMsgBox(var_11_0, var_11_1, var_11_6, var_11_7, nil, nil, nil, nil, arg_11_2)
 end
 
-function slot0.stopDownload(slot0)
-	if slot0._downloader then
-		slot0._downloader:cancelDownload()
+function var_0_0.stopDownload(arg_12_0)
+	if arg_12_0._downloader then
+		arg_12_0._downloader:cancelDownload()
 	end
 
-	uv0.instance._downloadPackName = nil
+	var_0_0.instance._downloadPackName = nil
 
-	slot0:_updateLocalVersion()
+	arg_12_0:_updateLocalVersion()
 	ViewMgr.instance:closeView(ViewName.OptionPackageDownloadView)
 end
 
-function slot0._downloaderNo()
-	uv0.instance._downloadPackName = nil
+function var_0_0._downloaderNo()
+	var_0_0.instance._downloadPackName = nil
 end
 
-function slot0._downloaderYes()
-	uv0.instance:_onStartDownload()
+function var_0_0._downloaderYes()
+	var_0_0.instance:_onStartDownload()
 end
 
-function slot0._onStartDownload(slot0)
-	slot1 = slot0._downloadPackName
-	slot0._downloadPackName = nil
-	slot4 = OptionPackageModel.instance:getPackageSetMO(slot1):getDownloadInfoListTb(OptionPackageModel.instance:getNeedVoiceLangList())
+function var_0_0._onStartDownload(arg_15_0)
+	local var_15_0 = arg_15_0._downloadPackName
 
-	slot0._adapter:setDownloder(slot0._downloader, slot0._httpWorker)
+	arg_15_0._downloadPackName = nil
+
+	local var_15_1 = OptionPackageModel.instance:getPackageSetMO(var_15_0)
+	local var_15_2 = OptionPackageModel.instance:getNeedVoiceLangList()
+	local var_15_3 = var_15_1:getDownloadInfoListTb(var_15_2)
+
+	arg_15_0._adapter:setDownloder(arg_15_0._downloader, arg_15_0._httpWorker)
 	ViewMgr.instance:openView(ViewName.OptionPackageDownloadView)
+	arg_15_0._downloader:start(var_15_3, arg_15_0._onDownloadFinish, arg_15_0, arg_15_0._adapter)
+	OptionPackageModel.instance:addLocalPackSetName(var_15_0)
 
-	slot9 = slot0
-	slot10 = slot0._adapter
+	local var_15_4 = {}
 
-	slot0._downloader:start(slot4, slot0._onDownloadFinish, slot9, slot10)
-	OptionPackageModel.instance:addLocalPackSetName(slot1)
-
-	slot5 = {}
-
-	for slot9, slot10 in pairs(slot4) do
-		if slot10 and slot10.res and #slot10.res > 0 then
-			table.insert(slot5, slot9)
+	for iter_15_0, iter_15_1 in pairs(var_15_3) do
+		if iter_15_1 and iter_15_1.res and #iter_15_1.res > 0 then
+			table.insert(var_15_4, iter_15_0)
 		end
 	end
 
-	SDKDataTrackMgr.instance:trackOptionPackConfirmDownload({
-		resource_type = slot5
-	})
+	local var_15_5 = {
+		resource_type = var_15_4
+	}
+
+	SDKDataTrackMgr.instance:trackOptionPackConfirmDownload(var_15_5)
 end
 
-function slot0._onDownloadFinish(slot0)
+function var_0_0._onDownloadFinish(arg_16_0)
 	GameFacade.showToast(ToastEnum.VersionResDownloadSuccess)
-	slot0:_updateLocalVersion()
+	arg_16_0:_updateLocalVersion()
 	ViewMgr.instance:closeView(ViewName.OptionPackageDownloadView)
 end
 
-function slot0.getLocalVersionInt(slot0, slot1)
-	if not slot0._initialized then
+function var_0_0.getLocalVersionInt(arg_17_0, arg_17_1)
+	if not arg_17_0._initialized then
 		return 0
 	end
 
-	if not string.nilorempty(slot0._optionalUpdateInst:GetLocalVersion(slot1)) then
-		return tonumber(slot2)
+	local var_17_0 = arg_17_0._optionalUpdateInst:GetLocalVersion(arg_17_1)
+
+	if not string.nilorempty(var_17_0) then
+		return tonumber(var_17_0)
 	end
 
 	return 0
 end
 
-function slot0.getPackItemState(slot0, slot1, slot2)
-	if not slot0._initialized then
+function var_0_0.getPackItemState(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_0._initialized then
 		return OptionPackageEnum.UpdateState.AlreadyLatest
 	end
 
-	return slot0._optionalUpdateInst:GetPackItemState(slot1, slot2)
+	return arg_18_0._optionalUpdateInst:GetPackItemState(arg_18_1, arg_18_2)
 end
 
-function slot0._getPackageName(slot0, slot1)
-	if not slot0._initialized or not OptionPackageEnum.HasPackageNameDict[slot1] then
+function var_0_0._getPackageName(arg_19_0, arg_19_1)
+	if not arg_19_0._initialized or not OptionPackageEnum.HasPackageNameDict[arg_19_1] then
 		return
 	end
 
-	if not tabletool.indexOf(HotUpdateOptionPackageMgr.instance:getPackageNameList(), slot1) then
-		-- Nothing
+	local var_19_0 = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+
+	if not tabletool.indexOf(var_19_0, arg_19_1) then
+		-- block empty
 	end
 end
 
-function OptionPackageHttpWorker.againGetHttp(slot0, slot1, slot2)
-	slot0._httpGetterOnFinshFunc = slot1
-	slot0._httpGetterOnFinshObj = slot2
+function OptionPackageHttpWorker.againGetHttp(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0._httpGetterOnFinshFunc = arg_20_1
+	arg_20_0._httpGetterOnFinshObj = arg_20_2
 
-	for slot6, slot7 in pairs(slot0._httpGetterList) do
-		if not slot0._httpGetterFinishDict[slot7:getHttpId()] then
-			slot7:start(slot0._onHttpGetterFinish, slot0)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._httpGetterList) do
+		if not arg_20_0._httpGetterFinishDict[iter_20_1:getHttpId()] then
+			iter_20_1:start(arg_20_0._onHttpGetterFinish, arg_20_0)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,42 +1,45 @@
-module("modules.logic.character.view.destiny.CharacterDestinySlotViewContainer", package.seeall)
+﻿module("modules.logic.character.view.destiny.CharacterDestinySlotViewContainer", package.seeall)
 
-slot0 = class("CharacterDestinySlotViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterDestinySlotViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, CharacterDestinySlotView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, CharacterDestinySlotView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.setCurDestinySlot(slot0, slot1)
-	slot0._destinySlot = slot1
+function var_0_0.setCurDestinySlot(arg_3_0, arg_3_1)
+	arg_3_0._destinySlot = arg_3_1
 end
 
-function slot0.playCloseTransition(slot0)
-	ZProj.ProjAnimatorPlayer.Get(slot0.viewGO):Play(slot0._destinySlot and slot0._destinySlot:isUnlockSlot() and CharacterDestinyEnum.SlotViewAnim.CloseUnlock or CharacterDestinyEnum.SlotViewAnim.CloseLock, slot0.onCloseAnimDone, slot0)
+function var_0_0.playCloseTransition(arg_4_0)
+	local var_4_0 = ZProj.ProjAnimatorPlayer.Get(arg_4_0.viewGO)
+	local var_4_1 = arg_4_0._destinySlot and arg_4_0._destinySlot:isUnlockSlot() and CharacterDestinyEnum.SlotViewAnim.CloseUnlock or CharacterDestinyEnum.SlotViewAnim.CloseLock
+
+	var_4_0:Play(var_4_1, arg_4_0.onCloseAnimDone, arg_4_0)
 end
 
-function slot0.onCloseAnimDone(slot0)
-	slot0:onPlayCloseTransitionFinish()
+function var_0_0.onCloseAnimDone(arg_5_0)
+	arg_5_0:onPlayCloseTransitionFinish()
 
-	slot0._destinySlot = nil
+	arg_5_0._destinySlot = nil
 end
 
-return slot0
+return var_0_0

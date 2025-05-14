@@ -1,27 +1,27 @@
-module("modules.logic.gm.view.GM_CharacterViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GM_CharacterViewContainer", package.seeall)
 
-slot0 = class("GM_CharacterViewContainer", BaseViewContainer)
+local var_0_0 = class("GM_CharacterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		GM_CharacterView.New()
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	ViewMgr.instance:closeView(slot0.viewName)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	ViewMgr.instance:closeView(arg_2_0.viewName)
 end
 
-function slot0.addEvents(slot0)
-	GMController.instance:registerCallback(GMEvent.CharacterView_ShowAllTabIdUpdate, slot0._gm_showAllTabIdUpdate, slot0)
-	GMController.instance:registerCallback(GMEvent.CharacterView_OnClickCheckFace, slot0._gm_onClickCheckFace, slot0)
-	GMController.instance:registerCallback(GMEvent.CharacterView_OnClickCheckMouth, slot0._gm_onClickCheckMouth, slot0)
+function var_0_0.addEvents(arg_3_0)
+	GMController.instance:registerCallback(GMEvent.CharacterView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+	GMController.instance:registerCallback(GMEvent.CharacterView_OnClickCheckFace, arg_3_0._gm_onClickCheckFace, arg_3_0)
+	GMController.instance:registerCallback(GMEvent.CharacterView_OnClickCheckMouth, arg_3_0._gm_onClickCheckMouth, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterView_ShowAllTabIdUpdate, slot0._gm_showAllTabIdUpdate, slot0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterView_OnClickCheckFace, slot0._gm_onClickCheckFace, slot0)
-	GMController.instance:unregisterCallback(GMEvent.CharacterView_OnClickCheckMouth, slot0._gm_onClickCheckMouth, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	GMController.instance:unregisterCallback(GMEvent.CharacterView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+	GMController.instance:unregisterCallback(GMEvent.CharacterView_OnClickCheckFace, arg_4_0._gm_onClickCheckFace, arg_4_0)
+	GMController.instance:unregisterCallback(GMEvent.CharacterView_OnClickCheckMouth, arg_4_0._gm_onClickCheckMouth, arg_4_0)
 end
 
-return slot0
+return var_0_0

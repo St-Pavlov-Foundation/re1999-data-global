@@ -1,42 +1,48 @@
-module("modules.logic.social.model.SocialMessageMO", package.seeall)
+﻿module("modules.logic.social.model.SocialMessageMO", package.seeall)
 
-slot0 = pureTable("SocialMessageMO")
+local var_0_0 = pureTable("SocialMessageMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.msgId
-	slot0.msgId = slot1.msgId
-	slot0.channelType = slot1.channelType
-	slot0.senderId = slot1.senderId
-	slot0.senderName = slot1.senderName
-	slot0.portrait = slot1.portrait
-	slot0.content = slot1.content
-	slot0.sendTime = slot1.sendTime
-	slot0.level = slot1.level
-	slot0.recipientId = slot1.recipientId
-	slot0.msgType = slot1.msgType
-	slot0.extData = slot1.extData
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.msgId
+	arg_1_0.msgId = arg_1_1.msgId
+	arg_1_0.channelType = arg_1_1.channelType
+	arg_1_0.senderId = arg_1_1.senderId
+	arg_1_0.senderName = arg_1_1.senderName
+	arg_1_0.portrait = arg_1_1.portrait
+	arg_1_0.content = arg_1_1.content
+	arg_1_0.sendTime = arg_1_1.sendTime
+	arg_1_0.level = arg_1_1.level
+	arg_1_0.recipientId = arg_1_1.recipientId
+	arg_1_0.msgType = arg_1_1.msgType
+	arg_1_0.extData = arg_1_1.extData
 end
 
-function slot0.getSenderName(slot0)
-	return SocialModel.instance:getPlayerMO(slot0.senderId) and slot1.name or slot0.senderName
+function var_0_0.getSenderName(arg_2_0)
+	local var_2_0 = SocialModel.instance:getPlayerMO(arg_2_0.senderId)
+
+	return var_2_0 and var_2_0.name or arg_2_0.senderName
 end
 
-function slot0.getPortrait(slot0)
-	return SocialModel.instance:getPlayerMO(slot0.senderId) and slot1.portrait or slot0.portrait
+function var_0_0.getPortrait(arg_3_0)
+	local var_3_0 = SocialModel.instance:getPlayerMO(arg_3_0.senderId)
+
+	return var_3_0 and var_3_0.portrait or arg_3_0.portrait
 end
 
-function slot0.getLevel(slot0)
-	return SocialModel.instance:getPlayerMO(slot0.senderId) and slot1.level or slot0.level
+function var_0_0.getLevel(arg_4_0)
+	local var_4_0 = SocialModel.instance:getPlayerMO(arg_4_0.senderId)
+
+	return var_4_0 and var_4_0.level or arg_4_0.level
 end
 
-function slot0.isHasOp(slot0)
-	if ChatEnum.MsgType.RoomSeekShare == slot0.msgType then
-		return slot0.recipientId == PlayerModel.instance:getMyUserId()
-	elseif ChatEnum.MsgType.RoomShareCode == slot0.msgType then
+function var_0_0.isHasOp(arg_5_0)
+	if ChatEnum.MsgType.RoomSeekShare == arg_5_0.msgType then
+		return arg_5_0.recipientId == PlayerModel.instance:getMyUserId()
+	elseif ChatEnum.MsgType.RoomShareCode == arg_5_0.msgType then
 		return true
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

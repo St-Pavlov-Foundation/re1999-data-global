@@ -1,60 +1,61 @@
-module("modules.logic.act189.view.ShortenActViewContainer_impl", package.seeall)
+﻿module("modules.logic.act189.view.ShortenActViewContainer_impl", package.seeall)
 
-slot0 = class("ShortenActViewContainer_impl", Activity189BaseViewContainer)
+local var_0_0 = class("ShortenActViewContainer_impl", Activity189BaseViewContainer)
 
-function slot0.initTaskScrollView(slot0, slot1)
-	if slot0.__taskScrollView then
-		return slot0.__taskScrollView
+function var_0_0.initTaskScrollView(arg_1_0, arg_1_1)
+	if arg_1_0.__taskScrollView then
+		return arg_1_0.__taskScrollView
 	end
 
-	if not slot1 then
-		slot1 = ListScrollParam.New()
-		slot1.scrollGOPath = "root/right/#scroll_tasklist"
-		slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-		slot1.cellClass = ShortenAct_TaskItem
-		slot1.scrollDir = ScrollEnum.ScrollDirV
-		slot1.lineCount = 1
-		slot1.cellWidth = 872
-		slot1.cellHeight = 132
-		slot1.cellSpaceH = 0
-		slot1.cellSpaceV = 16
+	if not arg_1_1 then
+		arg_1_1 = ListScrollParam.New()
+		arg_1_1.scrollGOPath = "root/right/#scroll_tasklist"
+		arg_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+		arg_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+		arg_1_1.cellClass = ShortenAct_TaskItem
+		arg_1_1.scrollDir = ScrollEnum.ScrollDirV
+		arg_1_1.lineCount = 1
+		arg_1_1.cellWidth = 872
+		arg_1_1.cellHeight = 132
+		arg_1_1.cellSpaceH = 0
+		arg_1_1.cellSpaceV = 16
 	end
 
-	for slot6 = 1, 5 do
+	local var_1_0 = {}
+
+	for iter_1_0 = 1, 5 do
+		var_1_0[iter_1_0] = (iter_1_0 - 1) * 0.06
 	end
 
-	slot0.__taskScrollView = LuaListScrollViewWithAnimator.New(Activity189_TaskListModel.instance, slot1, {
-		[slot6] = (slot6 - 1) * 0.06
-	})
-	slot0.notPlayAnimation = true
+	arg_1_0.__taskScrollView = LuaListScrollViewWithAnimator.New(Activity189_TaskListModel.instance, arg_1_1, var_1_0)
+	arg_1_0.notPlayAnimation = true
 
-	return slot0.__taskScrollView
+	return arg_1_0.__taskScrollView
 end
 
-function slot0.taskScrollView(slot0)
-	return slot0.__taskScrollView or slot0:initTaskScrollView()
+function var_0_0.taskScrollView(arg_2_0)
+	return arg_2_0.__taskScrollView or arg_2_0:initTaskScrollView()
 end
 
-function slot0.onContainerInit(slot0)
-	uv0.super.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
+	var_0_0.super.onContainerInit(arg_3_0)
 
-	slot0.__taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0:taskScrollView())
+	arg_3_0.__taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0:taskScrollView())
 
-	slot0.__taskAnimRemoveItem:setMoveInterval(0)
+	arg_3_0.__taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function slot0.onContainerClose(slot0)
-	uv0.super.onContainerClose(slot0)
+function var_0_0.onContainerClose(arg_4_0)
+	var_0_0.super.onContainerClose(arg_4_0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.removeByIndex(slot0, slot1, slot2, slot3)
-	slot0.__taskAnimRemoveItem:removeByIndex(slot1, slot2, slot3)
+function var_0_0.removeByIndex(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0.__taskAnimRemoveItem:removeByIndex(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0.actId(slot0)
+function var_0_0.actId(arg_6_0)
 	return ShortenActConfig.instance:getActivityId()
 end
 
-return slot0
+return var_0_0

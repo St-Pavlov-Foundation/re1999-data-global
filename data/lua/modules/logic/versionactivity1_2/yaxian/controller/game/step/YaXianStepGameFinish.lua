@@ -1,16 +1,16 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepGameFinish", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepGameFinish", package.seeall)
 
-slot0 = class("YaXianStepGameFinish", YaXianStepBase)
+local var_0_0 = class("YaXianStepGameFinish", YaXianStepBase)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
 	YaXianGameController.instance:setSelectObj(nil)
 	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianGameEnum.ActivityId)
 	YaXianGameController.instance:updateAllPosInteractActive()
-	TaskDispatcher.runDelay(slot0.openResultView, slot0, YaXianGameEnum.StepFinishDelay)
+	TaskDispatcher.runDelay(arg_1_0.openResultView, arg_1_0, YaXianGameEnum.StepFinishDelay)
 end
 
-function slot0.openResultView(slot0)
-	if slot0.originData.win then
+function var_0_0.openResultView(arg_2_0)
+	if arg_2_0.originData.win then
 		logNormal("game victory!")
 		YaXianGameController.instance:gameVictory()
 	else
@@ -18,11 +18,11 @@ function slot0.openResultView(slot0)
 		YaXianGameController.instance:gameOver()
 	end
 
-	slot0:finish()
+	arg_2_0:finish()
 end
 
-function slot0.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0.openResultView, slot0)
+function var_0_0.dispose(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0.openResultView, arg_3_0)
 end
 
-return slot0
+return var_0_0

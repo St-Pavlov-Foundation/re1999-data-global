@@ -1,43 +1,46 @@
-module("modules.logic.versionactivity1_4.act133.view.Activity133TaskViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.view.Activity133TaskViewContainer", package.seeall)
 
-slot0 = class("Activity133TaskViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity133TaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "main/#scroll_view"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = Activity133TaskItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 1300
-	slot2.cellHeight = 160
-	slot2.cellSpaceV = 10
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	for slot7 = 1, 5 do
+	var_1_1.scrollGOPath = "main/#scroll_view"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = Activity133TaskItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 1300
+	var_1_1.cellHeight = 160
+	var_1_1.cellSpaceV = 10
+	var_1_1.startSpace = 0
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 5 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
 	end
 
-	slot0._scrollview = LuaListScrollViewWithAnimator.New(Activity133TaskListModel.instance, slot2, {
-		[slot7] = (slot7 - 1) * 0.06
-	})
+	arg_1_0._scrollview = LuaListScrollViewWithAnimator.New(Activity133TaskListModel.instance, var_1_1, var_1_2)
 
-	table.insert(slot1, slot0._scrollview)
-	table.insert(slot1, Activity133TaskView.New())
+	table.insert(var_1_0, arg_1_0._scrollview)
+	table.insert(var_1_0, Activity133TaskView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.onContainerInit(slot0)
-	slot0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0._scrollview)
+function var_0_0.onContainerInit(arg_3_0)
+	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._scrollview)
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

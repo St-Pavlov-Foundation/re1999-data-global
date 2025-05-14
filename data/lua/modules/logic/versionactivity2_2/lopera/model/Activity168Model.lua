@@ -1,193 +1,207 @@
-module("modules.logic.versionactivity2_2.lopera.model.Activity168Model", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.model.Activity168Model", package.seeall)
 
-slot0 = class("Activity168Model", BaseModel)
+local var_0_0 = class("Activity168Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._passEpisodes = {}
-	slot0._unlockEpisodes = {}
-	slot0._episodeDatas = {}
-	slot0._itemDatas = {}
-	slot0._unLockCount = 0
-	slot0._finishedCount = 0
-	slot0._curActionPoint = 0
-	slot0._curGameState = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._passEpisodes = {}
+	arg_1_0._unlockEpisodes = {}
+	arg_1_0._episodeDatas = {}
+	arg_1_0._itemDatas = {}
+	arg_1_0._unLockCount = 0
+	arg_1_0._finishedCount = 0
+	arg_1_0._curActionPoint = 0
+	arg_1_0._curGameState = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._passEpisodes = {}
-	slot0._unlockEpisodes = {}
-	slot0._episodeDatas = {}
-	slot0._itemDatas = {}
-	slot0._unLockCount = 0
-	slot0._finishedCount = 0
-	slot0._curActionPoint = 0
-	slot0._curGameState = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._passEpisodes = {}
+	arg_2_0._unlockEpisodes = {}
+	arg_2_0._episodeDatas = {}
+	arg_2_0._itemDatas = {}
+	arg_2_0._unLockCount = 0
+	arg_2_0._finishedCount = 0
+	arg_2_0._curActionPoint = 0
+	arg_2_0._curGameState = nil
 end
 
-function slot0.setCurActId(slot0, slot1)
-	slot0._curActId = slot1
+function var_0_0.setCurActId(arg_3_0, arg_3_1)
+	arg_3_0._curActId = arg_3_1
 end
 
-function slot0.getCurActId(slot0)
-	return slot0._curActId
+function var_0_0.getCurActId(arg_4_0)
+	return arg_4_0._curActId
 end
 
-function slot0.setCurEpisodeId(slot0, slot1)
-	slot0._curEpisodeId = slot1
+function var_0_0.setCurEpisodeId(arg_5_0, arg_5_1)
+	arg_5_0._curEpisodeId = arg_5_1
 end
 
-function slot0.getCurEpisodeId(slot0)
-	return slot0._curEpisodeId
+function var_0_0.getCurEpisodeId(arg_6_0)
+	return arg_6_0._curEpisodeId
 end
 
-function slot0.setCurBattleEpisodeId(slot0, slot1)
-	slot0._curBattleEpisodeId = slot1
+function var_0_0.setCurBattleEpisodeId(arg_7_0, arg_7_1)
+	arg_7_0._curBattleEpisodeId = arg_7_1
 end
 
-function slot0.getCurBattleEpisodeId(slot0)
-	return slot0._curBattleEpisodeId
+function var_0_0.getCurBattleEpisodeId(arg_8_0)
+	return arg_8_0._curBattleEpisodeId
 end
 
-function slot0.setCurActionPoint(slot0, slot1)
-	slot0._curActionPoint = slot1
+function var_0_0.setCurActionPoint(arg_9_0, arg_9_1)
+	arg_9_0._curActionPoint = arg_9_1
 end
 
-function slot0.getCurActionPoint(slot0)
-	return slot0._curActionPoint
+function var_0_0.getCurActionPoint(arg_10_0)
+	return arg_10_0._curActionPoint
 end
 
-function slot0.setCurGameState(slot0, slot1)
-	slot0._curGameState = slot1
+function var_0_0.setCurGameState(arg_11_0, arg_11_1)
+	arg_11_0._curGameState = arg_11_1
 end
 
-function slot0.getCurGameState(slot0)
-	return slot0._curGameState
+function var_0_0.getCurGameState(arg_12_0)
+	return arg_12_0._curGameState
 end
 
-function slot0.isEpisodeFinish(slot0, slot1)
-	return slot0._passEpisodes[slot1]
+function var_0_0.isEpisodeFinish(arg_13_0, arg_13_1)
+	return arg_13_0._passEpisodes[arg_13_1]
 end
 
-function slot0.onGetActInfoReply(slot0, slot1)
-	slot0._unLockCount = 0
-	slot0._finishedCount = 0
+function var_0_0.onGetActInfoReply(arg_14_0, arg_14_1)
+	arg_14_0._unLockCount = 0
+	arg_14_0._finishedCount = 0
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = slot6.episodeId
-		slot0._episodeDatas[slot7] = slot6
-		slot0._unlockEpisodes[slot7] = true
-		slot0._unLockCount = slot0._unLockCount + 1
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		local var_14_0 = iter_14_1.episodeId
 
-		if slot6.isFinished then
-			slot0._passEpisodes[slot7] = true
-			slot0._finishedCount = slot0._finishedCount + 1
+		arg_14_0._episodeDatas[var_14_0] = iter_14_1
+		arg_14_0._unlockEpisodes[var_14_0] = true
+		arg_14_0._unLockCount = arg_14_0._unLockCount + 1
+
+		if iter_14_1.isFinished then
+			arg_14_0._passEpisodes[var_14_0] = true
+			arg_14_0._finishedCount = arg_14_0._finishedCount + 1
 		end
 
-		if slot6.act168Game then
-			slot0:onItemInfoUpdate(slot7, slot6.act168Game.act168Items)
+		if iter_14_1.act168Game then
+			arg_14_0:onItemInfoUpdate(var_14_0, iter_14_1.act168Game.act168Items)
 		end
 	end
 end
 
-function slot0.onEpisodeInfoUpdate(slot0, slot1)
-	slot2 = slot1.episodeId
-	slot0._episodeDatas[slot2] = slot1
+function var_0_0.onEpisodeInfoUpdate(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.episodeId
 
-	if not slot0._passEpisodes[slot2] and slot1.isFinished then
-		slot0._passEpisodes[slot2] = true
-		slot0._finishedCount = slot0._finishedCount + 1
+	arg_15_0._episodeDatas[var_15_0] = arg_15_1
+
+	if not arg_15_0._passEpisodes[var_15_0] and arg_15_1.isFinished then
+		arg_15_0._passEpisodes[var_15_0] = true
+		arg_15_0._finishedCount = arg_15_0._finishedCount + 1
 	end
 
-	if not slot0._unlockEpisodes[slot2] then
-		slot0._unlockEpisodes[slot2] = true
-		slot0._unLockCount = slot0._unLockCount + 1
+	if not arg_15_0._unlockEpisodes[var_15_0] then
+		arg_15_0._unlockEpisodes[var_15_0] = true
+		arg_15_0._unLockCount = arg_15_0._unLockCount + 1
 	end
 
-	if slot1.act168Game then
-		slot0:onItemInfoUpdate(slot2, slot1.act168Game.act168Items)
+	if arg_15_1.act168Game then
+		arg_15_0:onItemInfoUpdate(var_15_0, arg_15_1.act168Game.act168Items)
 	end
 end
 
-function slot0.getUnlockCount(slot0)
-	return slot0._unLockCount and slot0._unLockCount or 10
+function var_0_0.getUnlockCount(arg_16_0)
+	return arg_16_0._unLockCount and arg_16_0._unLockCount or 10
 end
 
-function slot0.getFinishedCount(slot0)
-	return slot0._finishedCount
+function var_0_0.getFinishedCount(arg_17_0)
+	return arg_17_0._finishedCount
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	return slot0._unlockEpisodes[slot1]
+function var_0_0.isEpisodeUnlock(arg_18_0, arg_18_1)
+	return arg_18_0._unlockEpisodes[arg_18_1]
 end
 
-function slot0.isEpisodeFinished(slot0, slot1)
-	return slot0._passEpisodes[slot1]
+function var_0_0.isEpisodeFinished(arg_19_0, arg_19_1)
+	return arg_19_0._passEpisodes[arg_19_1]
 end
 
-function slot0.getEpisodeData(slot0, slot1)
-	return slot0._episodeDatas[slot1]
+function var_0_0.getEpisodeData(arg_20_0, arg_20_1)
+	return arg_20_0._episodeDatas[arg_20_1]
 end
 
-function slot0.getCurMoveCost(slot0, slot1)
-	slot1 = slot1 or 1
+function var_0_0.getCurMoveCost(arg_21_0, arg_21_1)
+	arg_21_1 = arg_21_1 or 1
 
-	if slot0:getCurGameState() and slot2.buffs then
-		for slot7, slot8 in ipairs(slot3) do
-			slot1 = slot8.ext + slot1
+	local var_21_0 = arg_21_0:getCurGameState()
+	local var_21_1 = var_21_0 and var_21_0.buffs
+
+	if var_21_1 then
+		for iter_21_0, iter_21_1 in ipairs(var_21_1) do
+			arg_21_1 = iter_21_1.ext + arg_21_1
 		end
 	end
 
-	return slot1
+	return arg_21_1
 end
 
-function slot0.clearEpisodeItemInfo(slot0, slot1)
-	slot0._itemDatas[slot1] = {}
+function var_0_0.clearEpisodeItemInfo(arg_22_0, arg_22_1)
+	arg_22_0._itemDatas[arg_22_1] = {}
 end
 
-function slot0.onItemInfoUpdate(slot0, slot1, slot2, slot3, slot4)
-	slot0._itemChanged = slot0._itemChanged or {}
-	slot0._itemDatas[slot1] = slot0._itemDatas[slot1] or {}
-	slot5 = slot0._itemDatas[slot1]
+function var_0_0.onItemInfoUpdate(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+	arg_23_0._itemChanged = arg_23_0._itemChanged or {}
+	arg_23_0._itemDatas[arg_23_1] = arg_23_0._itemDatas[arg_23_1] or {}
 
-	if slot2 then
-		for slot9, slot10 in ipairs(slot2) do
-			slot5[slot11] = slot10.count
+	local var_23_0 = arg_23_0._itemDatas[arg_23_1]
 
-			if slot4 then
-				slot0._itemChanged[slot11] = slot12 - (slot5[slot10.itemId] or 0)
+	if arg_23_2 then
+		for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
+			local var_23_1 = iter_23_1.itemId
+			local var_23_2 = iter_23_1.count
+			local var_23_3 = var_23_0[var_23_1] or 0
+
+			var_23_0[var_23_1] = var_23_2
+
+			if arg_23_4 then
+				arg_23_0._itemChanged[var_23_1] = var_23_2 - var_23_3
 			end
 		end
 	end
 
-	if slot3 then
-		for slot9, slot10 in ipairs(slot3) do
-			slot11 = slot10.itemId
+	if arg_23_3 then
+		for iter_23_2, iter_23_3 in ipairs(arg_23_3) do
+			local var_23_4 = iter_23_3.itemId
 
-			if slot4 then
-				slot0._itemChanged[slot11] = -slot10.count
+			if arg_23_4 then
+				arg_23_0._itemChanged[var_23_4] = -iter_23_3.count
 			end
 
-			slot5[slot11] = 0
+			var_23_0[var_23_4] = 0
 		end
 	end
 end
 
-function slot0.getItemCount(slot0, slot1)
-	return slot0._itemDatas[slot0:getCurEpisodeId()] and slot0._itemDatas[slot2][slot1] or 0
+function var_0_0.getItemCount(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:getCurEpisodeId()
+
+	return arg_24_0._itemDatas[var_24_0] and arg_24_0._itemDatas[var_24_0][arg_24_1] or 0
 end
 
-function slot0.clearItemChangeDict(slot0)
-	slot0._itemChanged = {}
+function var_0_0.clearItemChangeDict(arg_25_0)
+	arg_25_0._itemChanged = {}
 end
 
-function slot0.getItemChangeDict(slot0)
-	return slot0._itemChanged
+function var_0_0.getItemChangeDict(arg_26_0)
+	return arg_26_0._itemChanged
 end
 
-function slot0.getCurEpisodeItems(slot0)
-	return slot0._itemDatas[slot0:getCurEpisodeId()]
+function var_0_0.getCurEpisodeItems(arg_27_0)
+	local var_27_0 = arg_27_0:getCurEpisodeId()
+
+	return arg_27_0._itemDatas[var_27_0]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

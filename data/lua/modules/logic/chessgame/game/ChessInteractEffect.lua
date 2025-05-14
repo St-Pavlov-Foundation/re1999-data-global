@@ -1,87 +1,95 @@
-module("modules.logic.chessgame.game.ChessInteractEffect", package.seeall)
+﻿module("modules.logic.chessgame.game.ChessInteractEffect", package.seeall)
 
-slot0 = class("ChessInteractEffect")
+local var_0_0 = class("ChessInteractEffect")
 
-function slot0.ctor(slot0, slot1)
-	slot0._target = slot1
-	slot0.effectGoDict = {}
-	slot0.assetItemList = {}
-	slot0.loadedEffectTypeList = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._target = arg_1_1
+	arg_1_0.effectGoDict = {}
+	arg_1_0.assetItemList = {}
+	arg_1_0.loadedEffectTypeList = {}
 end
 
-function slot0.onAvatarLoaded(slot0)
-	if not slot0._target.avatar.loader then
+function var_0_0.onAvatarLoaded(arg_2_0)
+	local var_2_0 = arg_2_0._target.avatar.loader
+
+	if not var_2_0 then
 		return
 	end
 
-	slot0.effectGoContainer = slot1:getInstGO()
+	arg_2_0.effectGoContainer = var_2_0:getInstGO()
 end
 
-function slot0.showEffect(slot0, slot1)
-	slot0.showEffectType = slot1
+function var_0_0.showEffect(arg_3_0, arg_3_1)
+	arg_3_0.showEffectType = arg_3_1
 
-	if not slot0.effectGoDict[slot0.showEffectType] then
-		slot0:loadEffect()
+	if not arg_3_0.effectGoDict[arg_3_0.showEffectType] then
+		arg_3_0:loadEffect()
 
 		return
 	end
 
-	slot0:_realShowEffect()
+	arg_3_0:_realShowEffect()
 end
 
-function slot0._realShowEffect(slot0)
-	slot1 = slot0.effectGoDict[slot0.showEffectType]
+function var_0_0._realShowEffect(arg_4_0)
+	local var_4_0 = arg_4_0.effectGoDict[arg_4_0.showEffectType]
 
-	gohelper.setActive(slot1, false)
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(var_4_0, false)
+	gohelper.setActive(var_4_0, true)
 end
 
-function slot0.loadEffect(slot0)
-	if tabletool.indexOf(slot0.loadedEffectTypeList, slot0.showEffectType) then
+function var_0_0.loadEffect(arg_5_0)
+	local var_5_0 = arg_5_0.showEffectType
+
+	if tabletool.indexOf(arg_5_0.loadedEffectTypeList, var_5_0) then
 		return
 	end
 
-	table.insert(slot0.loadedEffectTypeList, slot1)
-	loadAbAsset(ChessGameEnum.EffectPath[slot1], true, slot0._onLoadCallback, slot0)
+	table.insert(arg_5_0.loadedEffectTypeList, var_5_0)
+
+	local var_5_1 = ChessGameEnum.EffectPath[var_5_0]
+
+	loadAbAsset(var_5_1, true, arg_5_0._onLoadCallback, arg_5_0)
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		table.insert(slot0.assetItemList, slot1)
-		slot1:Retain()
+function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
+	if arg_6_1.IsLoadSuccess then
+		table.insert(arg_6_0.assetItemList, arg_6_1)
+		arg_6_1:Retain()
 
-		slot2 = gohelper.clone(slot1:GetResource(), slot0.effectGoContainer)
-		slot0.effectGoDict[slot0.showEffectType] = slot2
+		local var_6_0 = gohelper.clone(arg_6_1:GetResource(), arg_6_0.effectGoContainer)
 
-		gohelper.setActive(slot2, false)
-		slot0:showEffect(slot0.showEffectType)
+		arg_6_0.effectGoDict[arg_6_0.showEffectType] = var_6_0
+
+		gohelper.setActive(var_6_0, false)
+		arg_6_0:showEffect(arg_6_0.showEffectType)
 	end
 end
 
-function slot0.dispose(slot0)
-	for slot4, slot5 in ipairs(slot0.loadedEffectTypeList) do
-		removeAssetLoadCb(ChessGameEnum.EffectPath[slot5], slot0._onLoadCallback, slot0)
+function var_0_0.dispose(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.loadedEffectTypeList) do
+		removeAssetLoadCb(ChessGameEnum.EffectPath[iter_7_1], arg_7_0._onLoadCallback, arg_7_0)
 	end
 
-	for slot4, slot5 in ipairs(slot0.assetItemList) do
-		slot5:Release()
+	for iter_7_2, iter_7_3 in ipairs(arg_7_0.assetItemList) do
+		iter_7_3:Release()
 
-		slot0.assetItemList[slot4] = nil
+		arg_7_0.assetItemList[iter_7_2] = nil
 	end
 
-	slot0.assetItemList = {}
+	arg_7_0.assetItemList = {}
 
-	for slot4, slot5 in pairs(slot0.effectGoDict) do
-		if not gohelper.isNil(slot5) then
-			gohelper.destroy(slot5)
+	for iter_7_4, iter_7_5 in pairs(arg_7_0.effectGoDict) do
+		if not gohelper.isNil(iter_7_5) then
+			gohelper.destroy(iter_7_5)
 		end
 
-		slot0.effectGoDict[slot4] = nil
+		arg_7_0.effectGoDict[iter_7_4] = nil
 	end
 
-	slot0.effectGoDict = {}
-	slot0._target = nil
-	slot0.effectGoContainer = nil
+	arg_7_0.effectGoDict = {}
+	arg_7_0._target = nil
+	arg_7_0.effectGoContainer = nil
 end
 
-return slot0
+return var_0_0

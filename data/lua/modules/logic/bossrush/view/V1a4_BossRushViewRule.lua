@@ -1,49 +1,49 @@
-module("modules.logic.bossrush.view.V1a4_BossRushViewRule", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRushViewRule", package.seeall)
 
-slot0 = class("V1a4_BossRushViewRule", WeekWalkEnemyInfoViewRule)
+local var_0_0 = class("V1a4_BossRushViewRule", WeekWalkEnemyInfoViewRule)
 
-function slot0.onInitView(slot0)
-	if not slot0.viewContainer:diffRootChild(slot0) then
-		uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	if not arg_1_0.viewContainer:diffRootChild(arg_1_0) then
+		var_0_0.super.onInitView(arg_1_0)
 	end
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._addRuleItem(slot0, slot1, slot2)
-	slot3 = gohelper.clone(slot0._goruletemp, slot0._gorulelist, slot1.id)
+function var_0_0._addRuleItem(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = gohelper.clone(arg_2_0._goruletemp, arg_2_0._gorulelist, arg_2_1.id)
 
-	table.insert(slot0._childGoList, slot3)
-	gohelper.setActive(slot3, true)
+	table.insert(arg_2_0._childGoList, var_2_0)
+	gohelper.setActive(var_2_0, true)
 
-	slot4 = gohelper.findChildImage(slot3, "#image_tagicon")
+	local var_2_1 = gohelper.findChildImage(var_2_0, "#image_tagicon")
 
-	UISpriteSetMgr.instance:setCommonSprite(slot4, "wz_" .. slot2)
+	UISpriteSetMgr.instance:setCommonSprite(var_2_1, "wz_" .. arg_2_2)
 
-	slot5 = gohelper.findChildImage(slot3, "")
+	local var_2_2 = gohelper.findChildImage(var_2_0, "")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(slot5, slot1.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_2_2, arg_2_1.icon)
 
-	slot4.maskable = true
-	slot5.maskable = true
+	var_2_1.maskable = true
+	var_2_2.maskable = true
 end
 
-function slot0._btnadditionRuleOnClick(slot0)
+function var_0_0._btnadditionRuleOnClick(arg_3_0)
 	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
 		offSet = {
 			-180,
 			0
 		},
-		ruleList = slot0._ruleList,
-		closeCb = slot0._btncloseruleOnClick,
-		closeCbObj = slot0
+		ruleList = arg_3_0._ruleList,
+		closeCb = arg_3_0._btncloseruleOnClick,
+		closeCbObj = arg_3_0
 	})
 
-	if slot0._isHardMode then
+	if arg_3_0._isHardMode then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeShowRuleDesc)
 	end
 end
 
-return slot0
+return var_0_0

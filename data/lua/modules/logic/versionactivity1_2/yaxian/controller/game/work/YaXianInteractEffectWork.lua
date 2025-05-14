@@ -1,22 +1,22 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.work.YaXianInteractEffectWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.work.YaXianInteractEffectWork", package.seeall)
 
-slot0 = class("YaXianInteractEffectWork", BaseWork)
+local var_0_0 = class("YaXianInteractEffectWork", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0.interactItem = YaXianGameController.instance:getInteractItem(slot1)
-	slot0.effectType = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.interactItem = YaXianGameController.instance:getInteractItem(arg_1_1)
+	arg_1_0.effectType = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	slot0.interactItem:showEffect(slot0.effectType, slot0.effectDoneCallback, slot0)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0.interactItem:showEffect(arg_2_0.effectType, arg_2_0.effectDoneCallback, arg_2_0)
 end
 
-function slot0.effectDoneCallback(slot0)
-	slot0:onDone(true)
+function var_0_0.effectDoneCallback(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	slot0.interactItem:cancelEffectTask()
+function var_0_0.clearWork(arg_4_0)
+	arg_4_0.interactItem:cancelEffectTask()
 end
 
-return slot0
+return var_0_0

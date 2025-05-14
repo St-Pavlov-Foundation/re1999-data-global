@@ -1,11 +1,11 @@
-module("modules.logic.explore.controller.steps.ExploreUpdateCoinStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreUpdateCoinStep", package.seeall)
 
-slot0 = class("ExploreUpdateCoinStep", ExploreStepBase)
+local var_0_0 = class("ExploreUpdateCoinStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	ExploreSimpleModel.instance:onGetCoin(slot0._data.id, slot0._data.num)
+function var_0_0.onStart(arg_1_0)
+	ExploreSimpleModel.instance:onGetCoin(arg_1_0._data.id, arg_1_0._data.num)
 	ExploreController.instance:dispatchEvent(ExploreEvent.CoinCountUpdate)
-	slot0:onDone()
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

@@ -1,170 +1,180 @@
-module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameSceneView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameSceneView", package.seeall)
 
-slot0 = class("YaXianGameSceneView", BaseView)
+local var_0_0 = class("YaXianGameSceneView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotouch = gohelper.findChild(slot0.viewGO, "#go_touch")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotouch = gohelper.findChild(arg_1_0.viewGO, "#go_touch")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.InteractObjectCreated, slot0.createOrUpdateInteractObj, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.DeleteInteractObj, slot0.deleteInteractObj, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, slot0.onUpdateEffectInfo, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnSelectInteract, slot0.onSelectInteract, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnCancelSelectInteract, slot0.onCancelSelectInteract, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnRevert, slot0.onRevert, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, slot0.resetMapView, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.UpdateRound, slot0.onUpdateRound, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnInteractLoadDone, slot0.checkAllInteractLoadDone, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.SetInteractObjActive, slot0.setInteractObjActive, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.GuideClickTile, slot0._guideClickTile, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.InteractObjectCreated, arg_2_0.createOrUpdateInteractObj, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.DeleteInteractObj, arg_2_0.deleteInteractObj, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, arg_2_0.onUpdateEffectInfo, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnSelectInteract, arg_2_0.onSelectInteract, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnCancelSelectInteract, arg_2_0.onCancelSelectInteract, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnRevert, arg_2_0.onRevert, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, arg_2_0.resetMapView, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.UpdateRound, arg_2_0.onUpdateRound, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnInteractLoadDone, arg_2_0.checkAllInteractLoadDone, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.SetInteractObjActive, arg_2_0.setInteractObjActive, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.GuideClickTile, arg_2_0._guideClickTile, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot0.BLOCK_KEY = "YaXianGameSceneViewLoading"
+var_0_0.BLOCK_KEY = "YaXianGameSceneViewLoading"
 
-function slot0._editableInitView(slot0)
-	slot0._tfTouch = slot0._gotouch.transform
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._gotouch)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._tfTouch = arg_4_0._gotouch.transform
+	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0._gotouch)
 
-	slot0._click:AddClickListener(slot0.onClickContainer, slot0)
+	arg_4_0._click:AddClickListener(arg_4_0.onClickContainer, arg_4_0)
 
-	slot0._baseTiles = {}
-	slot0._baseTilePool = {}
-	slot0._interactItemList = {}
-	slot0._baffleItems = {}
-	slot0._baffleItemPool = {}
-	slot0.loadDoneInteractList = {}
-	slot0.needLoadInteractIdList = {}
+	arg_4_0._baseTiles = {}
+	arg_4_0._baseTilePool = {}
+	arg_4_0._interactItemList = {}
+	arg_4_0._baffleItems = {}
+	arg_4_0._baffleItemPool = {}
+	arg_4_0.loadDoneInteractList = {}
+	arg_4_0.needLoadInteractIdList = {}
 
-	MainCameraMgr.instance:addView(slot0.viewName, slot0.initCamera, nil, slot0)
-	slot0:createSceneRoot()
-	slot0:addEvents()
-	slot0:initSceneTree()
-	slot0:loadRes()
+	MainCameraMgr.instance:addView(arg_4_0.viewName, arg_4_0.initCamera, nil, arg_4_0)
+	arg_4_0:createSceneRoot()
+	arg_4_0:addEvents()
+	arg_4_0:initSceneTree()
+	arg_4_0:loadRes()
 end
 
-function slot0.initSceneTree(slot0)
-	YaXianGameController.instance:initSceneTree(slot0._gotouch, slot0._sceneOffsetY)
+function var_0_0.initSceneTree(arg_5_0)
+	YaXianGameController.instance:initSceneTree(arg_5_0._gotouch, arg_5_0._sceneOffsetY)
 end
 
-function slot0.createSceneRoot(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("YaXianScene")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+function var_0_0.createSceneRoot(arg_6_0)
+	local var_6_0 = CameraMgr.instance:getMainCameraTrs().parent
+	local var_6_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
+	arg_6_0._sceneRoot = UnityEngine.GameObject.New("YaXianScene")
 
-	slot0._sceneOffsetY = slot4
+	local var_6_2, var_6_3, var_6_4 = transformhelper.getLocalPos(var_6_0)
 
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	transformhelper.setLocalPos(arg_6_0._sceneRoot.transform, 0, var_6_3, 0)
+
+	arg_6_0._sceneOffsetY = var_6_3
+
+	gohelper.addChild(var_6_1, arg_6_0._sceneRoot)
 end
 
-function slot0.initCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
-	slot1.orthographicSize = 7.5 * GameUtil.getAdapterScale(true)
+function var_0_0.initCamera(arg_7_0)
+	local var_7_0 = CameraMgr.instance:getMainCamera()
+
+	var_7_0.orthographic = true
+	var_7_0.orthographicSize = 7.5 * GameUtil.getAdapterScale(true)
 end
 
-function slot0.loadRes(slot0)
-	UIBlockMgr.instance:startBlock(uv0.BLOCK_KEY)
+function var_0_0.loadRes(arg_8_0)
+	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
 
-	slot0._loader = MultiAbLoader.New()
-	slot0.sceneUrl = slot0:getCurrentSceneUrl()
+	arg_8_0._loader = MultiAbLoader.New()
+	arg_8_0.sceneUrl = arg_8_0:getCurrentSceneUrl()
 
-	slot0._loader:addPath(slot0.sceneUrl)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.GroundItem)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.DirItem)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.AlarmItem)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.TargetItem)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.GreenLine)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.RedLine)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.GreedLineHalf)
-	slot0._loader:addPath(YaXianGameEnum.SceneResPath.RedLineHalf)
-	slot0._loader:startLoad(slot0.onLoadResCompleted, slot0)
+	arg_8_0._loader:addPath(arg_8_0.sceneUrl)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.GroundItem)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.DirItem)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.AlarmItem)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.TargetItem)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.GreenLine)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.RedLine)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.GreedLineHalf)
+	arg_8_0._loader:addPath(YaXianGameEnum.SceneResPath.RedLineHalf)
+	arg_8_0._loader:startLoad(arg_8_0.onLoadResCompleted, arg_8_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:createAllMapElement()
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0:createAllMapElement()
 end
 
-function slot0.onOpen(slot0)
-	slot0:createAllMapElement()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:createAllMapElement()
 end
 
-function slot0.getCurrentSceneUrl(slot0)
-	if YaXianConfig.instance:getMapConfig(YaXianGameModel.instance:getActId(), YaXianGameModel.instance:getMapId()) and not string.nilorempty(slot3.bgPath) then
-		return string.format(YaXianGameEnum.SceneResPath.SceneFormatPath, slot3.bgPath)
+function var_0_0.getCurrentSceneUrl(arg_11_0)
+	local var_11_0 = YaXianGameModel.instance:getMapId()
+	local var_11_1 = YaXianGameModel.instance:getActId()
+	local var_11_2 = YaXianConfig.instance:getMapConfig(var_11_1, var_11_0)
+
+	if var_11_2 and not string.nilorempty(var_11_2.bgPath) then
+		return string.format(YaXianGameEnum.SceneResPath.SceneFormatPath, var_11_2.bgPath)
 	else
 		return YaXianGameEnum.SceneResPath.DefaultScene
 	end
 end
 
-function slot0.onLoadResCompleted(slot0, slot1)
-	if slot1:getAssetItem(slot0.sceneUrl) then
-		slot0._sceneGo = gohelper.clone(slot2:GetResource(), slot0._sceneRoot, "scene")
+function var_0_0.onLoadResCompleted(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1:getAssetItem(arg_12_0.sceneUrl)
 
-		slot0.viewContainer:setRootSceneGo(slot0._sceneGo)
+	if var_12_0 then
+		arg_12_0._sceneGo = gohelper.clone(var_12_0:GetResource(), arg_12_0._sceneRoot, "scene")
 
-		slot0._sceneBackground = UnityEngine.GameObject.New("backgroundContainer")
-		slot0._interactContainer = UnityEngine.GameObject.New("interactContainer")
+		arg_12_0.viewContainer:setRootSceneGo(arg_12_0._sceneGo)
 
-		slot0._sceneBackground.transform:SetParent(slot0._sceneGo.transform, false)
-		slot0._interactContainer.transform:SetParent(slot0._sceneGo.transform, false)
-		transformhelper.setLocalPos(slot0._sceneBackground.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.Background)
-		transformhelper.setLocalPos(slot0._interactContainer.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.Interact)
+		arg_12_0._sceneBackground = UnityEngine.GameObject.New("backgroundContainer")
+		arg_12_0._interactContainer = UnityEngine.GameObject.New("interactContainer")
 
-		slot0.groundPrefab = slot0._loader:getAssetItem(YaXianGameEnum.SceneResPath.GroundItem):GetResource()
-		slot0.mainResLoadDone = true
+		arg_12_0._sceneBackground.transform:SetParent(arg_12_0._sceneGo.transform, false)
+		arg_12_0._interactContainer.transform:SetParent(arg_12_0._sceneGo.transform, false)
+		transformhelper.setLocalPos(arg_12_0._sceneBackground.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.Background)
+		transformhelper.setLocalPos(arg_12_0._interactContainer.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.Interact)
 
-		slot0:createAllMapElement()
+		arg_12_0.groundPrefab = arg_12_0._loader:getAssetItem(YaXianGameEnum.SceneResPath.GroundItem):GetResource()
+		arg_12_0.mainResLoadDone = true
+
+		arg_12_0:createAllMapElement()
 	end
 
-	UIBlockMgr.instance:endBlock(uv0.BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
 end
 
-function slot0.createAllMapElement(slot0)
-	if slot0.mainResLoadDone and BaseViewContainer.Status_Opening <= slot0.viewContainer._viewStatus then
-		YaXianGameController.instance:dispatchEvent(YaXianEvent.MainResLoadDone, slot0._loader)
-		slot0:fillChessBoardBase()
-		slot0:createAllInteractObjs()
-		slot0:createAllBaffleObjs()
-		slot0:checkAllInteractLoadDone()
+function var_0_0.createAllMapElement(arg_13_0)
+	if arg_13_0.mainResLoadDone and arg_13_0.viewContainer._viewStatus >= BaseViewContainer.Status_Opening then
+		YaXianGameController.instance:dispatchEvent(YaXianEvent.MainResLoadDone, arg_13_0._loader)
+		arg_13_0:fillChessBoardBase()
+		arg_13_0:createAllInteractObjs()
+		arg_13_0:createAllBaffleObjs()
+		arg_13_0:checkAllInteractLoadDone()
 	end
 end
 
-function slot0.checkAllInteractLoadDone(slot0, slot1)
-	if slot1 and not tabletool.indexOf(slot0.loadDoneInteractList, slot1) then
-		table.insert(slot0.loadDoneInteractList, slot1)
+function var_0_0.checkAllInteractLoadDone(arg_14_0, arg_14_1)
+	if arg_14_1 and not tabletool.indexOf(arg_14_0.loadDoneInteractList, arg_14_1) then
+		table.insert(arg_14_0.loadDoneInteractList, arg_14_1)
 	end
 
-	if #slot0.loadDoneInteractList ~= #slot0.needLoadInteractIdList then
+	if #arg_14_0.loadDoneInteractList ~= #arg_14_0.needLoadInteractIdList then
 		return
 	end
 
-	slot2 = {
-		[slot7] = true
-	}
+	local var_14_0 = {}
 
-	for slot6, slot7 in ipairs(slot0.loadDoneInteractList) do
-		-- Nothing
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.loadDoneInteractList) do
+		var_14_0[iter_14_1] = true
 	end
 
-	for slot6, slot7 in ipairs(slot0.needLoadInteractIdList) do
-		if not slot2[slot7] then
+	for iter_14_2, iter_14_3 in ipairs(arg_14_0.needLoadInteractIdList) do
+		if not var_14_0[iter_14_3] then
 			return
 		end
 	end
 
-	slot0.featureInteractMo = YaXianGameModel.instance:getNeedFeatureInteractMo()
+	arg_14_0.featureInteractMo = YaXianGameModel.instance:getNeedFeatureInteractMo()
 
-	if slot0.featureInteractMo then
-		TaskDispatcher.runDelay(slot0.playFeatureAnimation, slot0, 1)
+	if arg_14_0.featureInteractMo then
+		TaskDispatcher.runDelay(arg_14_0.playFeatureAnimation, arg_14_0, 1)
 
 		return
 	end
@@ -172,327 +182,364 @@ function slot0.checkAllInteractLoadDone(slot0, slot1)
 	YaXianGameModel.instance:setGameLoadDone(true)
 	YaXianGameController.instance:updateAllPosInteractActive()
 	YaXianGameController.instance:autoSelectPlayer()
-	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnGameLoadDone, tostring(YaXianGameModel.instance:getEpisodeId()))
+
+	local var_14_1 = YaXianGameModel.instance:getEpisodeId()
+
+	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnGameLoadDone, tostring(var_14_1))
 end
 
-function slot0.playFeatureAnimation(slot0)
-	slot0.featureInteractItem = slot0:findInteractItem(slot0.featureInteractMo.id)
+function var_0_0.playFeatureAnimation(arg_15_0)
+	arg_15_0.featureInteractItem = arg_15_0:findInteractItem(arg_15_0.featureInteractMo.id)
 
-	slot0.featureInteractItem:getHandler():moveTo(YaXianGameModel.instance.featurePrePosX, YaXianGameModel.instance.featurePrePosY, slot0.featureAnimationDone, slot0)
+	arg_15_0.featureInteractItem:getHandler():moveTo(YaXianGameModel.instance.featurePrePosX, YaXianGameModel.instance.featurePrePosY, arg_15_0.featureAnimationDone, arg_15_0)
 end
 
-function slot0.featureAnimationDone(slot0)
-	slot0.featureInteractItem:getHandler():faceTo(YaXianGameModel.instance.featurePreDirection)
+function var_0_0.featureAnimationDone(arg_16_0)
+	arg_16_0.featureInteractItem:getHandler():faceTo(YaXianGameModel.instance.featurePreDirection)
 	YaXianGameModel.instance:clearFeatureInteract()
 	YaXianGameController.instance:updateAllPosInteractActive()
 	YaXianGameModel.instance:setGameLoadDone(true)
 	YaXianGameController.instance:autoSelectPlayer()
-	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnGameLoadDone, tostring(YaXianGameModel.instance:getEpisodeId()))
+
+	local var_16_0 = YaXianGameModel.instance:getEpisodeId()
+
+	YaXianGameController.instance:dispatchEvent(YaXianEvent.OnGameLoadDone, tostring(var_16_0))
 end
 
-function slot0.fillChessBoardBase(slot0)
-	slot0:recycleBaseTiles()
+function var_0_0.fillChessBoardBase(arg_17_0)
+	arg_17_0:recycleBaseTiles()
 
-	slot1 = 8
-	slot6 = ", h = "
+	local var_17_0 = 8
+	local var_17_1 = 8
 
-	logNormal("fill w = " .. tostring(slot1) .. slot6 .. tostring(8))
+	logNormal("fill w = " .. tostring(var_17_0) .. ", h = " .. tostring(var_17_1))
 
-	for slot6 = 1, slot1 do
-		slot0._baseTiles[slot6] = slot0._baseTiles[slot6] or {}
+	for iter_17_0 = 1, var_17_0 do
+		arg_17_0._baseTiles[iter_17_0] = arg_17_0._baseTiles[iter_17_0] or {}
 
-		for slot10 = 1, slot2 do
-			slot11 = slot0:createTileBaseItem(slot6 - 1, slot10 - 1)
-			slot0._baseTiles[slot6][slot10] = slot11
+		for iter_17_1 = 1, var_17_1 do
+			local var_17_2 = arg_17_0:createTileBaseItem(iter_17_0 - 1, iter_17_1 - 1)
 
-			gohelper.setActive(slot11.go, YaXianGameModel.instance:getBaseTile(slot6 - 1, slot10 - 1) ~= 0)
+			arg_17_0._baseTiles[iter_17_0][iter_17_1] = var_17_2
+
+			local var_17_3 = YaXianGameModel.instance:getBaseTile(iter_17_0 - 1, iter_17_1 - 1)
+
+			gohelper.setActive(var_17_2.go, var_17_3 ~= 0)
 		end
 	end
 end
 
-function slot0.createTileBaseItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.createTileBaseItem(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0
+	local var_18_1 = #arg_18_0._baseTilePool
 
-	if #slot0._baseTilePool > 0 then
-		slot3 = slot0._baseTilePool[slot4]
-		slot0._baseTilePool[slot4] = nil
+	if var_18_1 > 0 then
+		var_18_0 = arg_18_0._baseTilePool[var_18_1]
+		arg_18_0._baseTilePool[var_18_1] = nil
 	end
 
-	if not slot3 then
-		slot3 = slot0:getUserDataTb_()
-		slot5 = gohelper.clone(slot0.groundPrefab, slot0._sceneBackground, "tilebase_" .. slot1 .. "_" .. slot2)
-		slot3.go = slot5
-		slot3.sceneTf = slot5.transform
+	if not var_18_0 then
+		var_18_0 = arg_18_0:getUserDataTb_()
+
+		local var_18_2 = gohelper.clone(arg_18_0.groundPrefab, arg_18_0._sceneBackground, "tilebase_" .. arg_18_1 .. "_" .. arg_18_2)
+
+		var_18_0.go = var_18_2
+		var_18_0.sceneTf = var_18_2.transform
 	else
-		slot3.go.name = "tilebase_" .. slot1 .. "_" .. slot2
+		var_18_0.go.name = "tilebase_" .. arg_18_1 .. "_" .. arg_18_2
 	end
 
-	slot0:setTileBasePosition(slot3, slot1, slot2)
+	arg_18_0:setTileBasePosition(var_18_0, arg_18_1, arg_18_2)
 
-	return slot3
+	return var_18_0
 end
 
-function slot0.setTileBasePosition(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6 = YaXianGameHelper.calcTilePosInScene(slot2, slot3)
+function var_0_0.setTileBasePosition(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0, var_19_1, var_19_2 = YaXianGameHelper.calcTilePosInScene(arg_19_2, arg_19_3)
 
-	transformhelper.setLocalPos(slot1.sceneTf, slot4, slot5, slot6)
+	transformhelper.setLocalPos(arg_19_1.sceneTf, var_19_0, var_19_1, var_19_2)
 end
 
-function slot0.createAllBaffleObjs(slot0)
-	for slot5, slot6 in ipairs(YaXianGameModel.instance:getBaffleList()) do
-		slot0:createBaffleItem(slot6)
+function var_0_0.createAllBaffleObjs(arg_20_0)
+	local var_20_0 = YaXianGameModel.instance:getBaffleList()
+
+	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+		arg_20_0:createBaffleItem(iter_20_1)
 	end
 end
 
-function slot0.createBaffleItem(slot0, slot1)
-	slot2 = nil
+function var_0_0.createBaffleItem(arg_21_0, arg_21_1)
+	local var_21_0
+	local var_21_1 = #arg_21_0._baffleItemPool
 
-	if #slot0._baffleItemPool > 0 then
-		slot2 = slot0._baffleItemPool[slot3]
-		slot0._baffleItemPool[slot3] = nil
+	if var_21_1 > 0 then
+		var_21_0 = arg_21_0._baffleItemPool[var_21_1]
+		arg_21_0._baffleItemPool[var_21_1] = nil
 	end
 
-	if not slot2 then
-		YaXianBaffleObject.New(slot0._interactContainer.transform):init()
+	if not var_21_0 then
+		var_21_0 = YaXianBaffleObject.New(arg_21_0._interactContainer.transform)
+
+		var_21_0:init()
 	end
 
-	slot2:updatePos(slot1)
-	table.insert(slot0._baffleItems, slot2)
+	var_21_0:updatePos(arg_21_1)
+	table.insert(arg_21_0._baffleItems, var_21_0)
 end
 
-function slot0.createAllInteractObjs(slot0)
-	for slot6, slot7 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
-		slot0:addNeedLoadInteractList(slot7.id)
+function var_0_0.createAllInteractObjs(arg_22_0)
+	local var_22_0 = YaXianGameModel.instance:getInteractMoList()
+	local var_22_1 = YaXianGameModel.instance:getPlayerInteractMo()
 
-		if slot7 == YaXianGameModel.instance:getPlayerInteractMo() then
-			slot0.playerInteractItem = slot0:createOrUpdateInteractObj(slot7)
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		local var_22_2 = arg_22_0:createOrUpdateInteractObj(iter_22_1)
+
+		arg_22_0:addNeedLoadInteractList(iter_22_1.id)
+
+		if iter_22_1 == var_22_1 then
+			arg_22_0.playerInteractItem = var_22_2
 		end
 	end
 
-	YaXianGameController.instance:setInteractItemList(slot0._interactItemList)
-	YaXianGameController.instance:setPlayerInteractItem(slot0.playerInteractItem)
+	YaXianGameController.instance:setInteractItemList(arg_22_0._interactItemList)
+	YaXianGameController.instance:setPlayerInteractItem(arg_22_0.playerInteractItem)
 end
 
-function slot0.createOrUpdateInteractObj(slot0, slot1)
-	if not slot0:findInteractItem(slot1.id) then
-		slot2 = YaXianInteractObject.New(slot0._interactContainer.transform)
+function var_0_0.createOrUpdateInteractObj(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:findInteractItem(arg_23_1.id)
 
-		slot2:init(slot1)
-		slot2:loadAvatar()
-		slot2:updateInteractPos()
-		table.insert(slot0._interactItemList, slot2)
+	if not var_23_0 then
+		var_23_0 = YaXianInteractObject.New(arg_23_0._interactContainer.transform)
+
+		var_23_0:init(arg_23_1)
+		var_23_0:loadAvatar()
+		var_23_0:updateInteractPos()
+		table.insert(arg_23_0._interactItemList, var_23_0)
 	else
-		slot2:renewSelf()
-		slot2:updateInteractMo(slot1)
+		var_23_0:renewSelf()
+		var_23_0:updateInteractMo(arg_23_1)
 	end
 
-	return slot2
+	return var_23_0
 end
 
-function slot0.addNeedLoadInteractList(slot0, slot1)
-	if not tabletool.indexOf(slot0.needLoadInteractIdList, slot1) then
-		table.insert(slot0.needLoadInteractIdList, slot1)
+function var_0_0.addNeedLoadInteractList(arg_24_0, arg_24_1)
+	if not tabletool.indexOf(arg_24_0.needLoadInteractIdList, arg_24_1) then
+		table.insert(arg_24_0.needLoadInteractIdList, arg_24_1)
 	end
 end
 
-function slot0.findInteractItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._interactItemList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.findInteractItem(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_0._interactItemList) do
+		if iter_25_1.id == arg_25_1 then
+			return iter_25_1
 		end
 	end
 end
 
-function slot0.getPlayerInteractItem(slot0)
-	return slot0.playerInteractItem
+function var_0_0.getPlayerInteractItem(arg_26_0)
+	return arg_26_0.playerInteractItem
 end
 
-function slot0.deleteInteractObj(slot0, slot1)
-	if not slot0:findInteractItem(slot1) then
+function var_0_0.deleteInteractObj(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:findInteractItem(arg_27_1)
+
+	if not var_27_0 then
 		return
 	end
 
-	slot2:deleteSelf()
-	YaXianGameModel.instance:removeObjectById(slot1)
+	var_27_0:deleteSelf()
+	YaXianGameModel.instance:removeObjectById(arg_27_1)
 end
 
-function slot0.setInteractObjActive(slot0, slot1)
-	slot2 = string.split(slot1, "_")
-	slot4 = tonumber(slot2[2]) == 1
+function var_0_0.setInteractObjActive(arg_28_0, arg_28_1)
+	local var_28_0 = string.split(arg_28_1, "_")
+	local var_28_1 = tonumber(var_28_0[1])
+	local var_28_2 = tonumber(var_28_0[2]) == 1
+	local var_28_3 = arg_28_0:findInteractItem(var_28_1)
 
-	if not slot0:findInteractItem(tonumber(slot2[1])) then
+	if not var_28_3 then
 		return
 	end
 
-	slot5:setActive(slot4)
+	var_28_3:setActive(var_28_2)
 end
 
-function slot0.onClickContainer(slot0, slot1, slot2)
+function var_0_0.onClickContainer(arg_29_0, arg_29_1, arg_29_2)
 	if not YaXianGameController.instance:isSelectingPlayer() then
 		return
 	end
 
-	slot3 = recthelper.screenPosToAnchorPos(slot2, slot0._tfTouch)
-	slot4, slot5 = YaXianGameController.instance:getNearestScenePos(slot3.x, slot3.y)
+	local var_29_0 = recthelper.screenPosToAnchorPos(arg_29_2, arg_29_0._tfTouch)
+	local var_29_1, var_29_2 = YaXianGameController.instance:getNearestScenePos(var_29_0.x, var_29_0.y)
 
-	if slot4 then
-		logNormal("click Scene tileX, tileY : " .. tostring(slot4) .. ", " .. tostring(slot5))
-		slot0:onClickChessPos(slot4, slot5)
+	if var_29_1 then
+		logNormal("click Scene tileX, tileY : " .. tostring(var_29_1) .. ", " .. tostring(var_29_2))
+		arg_29_0:onClickChessPos(var_29_1, var_29_2)
 	end
 end
 
-function slot0.onClickChessPos(slot0, slot1, slot2)
+function var_0_0.onClickChessPos(arg_30_0, arg_30_1, arg_30_2)
 	if not YaXianGameController.instance:isSelectingPlayer() then
 		return
 	end
 
-	slot0.playerInteractItem:getHandler():onSelectPos(slot1, slot2)
+	arg_30_0.playerInteractItem:getHandler():onSelectPos(arg_30_1, arg_30_2)
 end
 
-function slot0._guideClickTile(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "_")
+function var_0_0._guideClickTile(arg_31_0, arg_31_1)
+	local var_31_0 = string.splitToNumber(arg_31_1, "_")
+	local var_31_1 = var_31_0[1]
+	local var_31_2 = var_31_0[2]
 
-	slot0:onClickChessPos(slot2[1], slot2[2])
+	arg_31_0:onClickChessPos(var_31_1, var_31_2)
 end
 
-function slot0.recycleBaseTiles(slot0)
-	for slot4, slot5 in pairs(slot0._baseTiles) do
-		for slot9, slot10 in pairs(slot5) do
-			table.insert(slot0._baseTilePool, slot0._baseTiles[slot4][slot9])
+function var_0_0.recycleBaseTiles(arg_32_0)
+	for iter_32_0, iter_32_1 in pairs(arg_32_0._baseTiles) do
+		for iter_32_2, iter_32_3 in pairs(iter_32_1) do
+			table.insert(arg_32_0._baseTilePool, arg_32_0._baseTiles[iter_32_0][iter_32_2])
 		end
 	end
 
-	slot0._baseTiles = {}
+	arg_32_0._baseTiles = {}
 end
 
-function slot0.recycleAllBaffleItem(slot0)
-	slot1 = nil
+function var_0_0.recycleAllBaffleItem(arg_33_0)
+	local var_33_0
 
-	for slot5 = 1, #slot0._baffleItems do
-		slot1 = slot0._baffleItems[slot5]
+	for iter_33_0 = 1, #arg_33_0._baffleItems do
+		local var_33_1 = arg_33_0._baffleItems[iter_33_0]
 
-		slot1:recycle()
-		table.insert(slot0._baffleItemPool, slot1)
+		var_33_1:recycle()
+		table.insert(arg_33_0._baffleItemPool, var_33_1)
 
-		slot0._baffleItems[slot5] = nil
+		arg_33_0._baffleItems[iter_33_0] = nil
 	end
 end
 
-function slot0.recycleAllInteract(slot0)
-	for slot4, slot5 in ipairs(slot0._interactItemList) do
-		slot5:deleteSelf()
+function var_0_0.recycleAllInteract(arg_34_0)
+	for iter_34_0, iter_34_1 in ipairs(arg_34_0._interactItemList) do
+		iter_34_1:deleteSelf()
 	end
 end
 
-function slot0.disposeInteractItem(slot0)
-	for slot4, slot5 in ipairs(slot0._interactItemList) do
-		slot5:dispose()
+function var_0_0.disposeInteractItem(arg_35_0)
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0._interactItemList) do
+		iter_35_1:dispose()
 	end
 
-	slot0._interactItemList = nil
+	arg_35_0._interactItemList = nil
 end
 
-function slot0.disposeBaffle(slot0)
-	slot1 = nil
+function var_0_0.disposeBaffle(arg_36_0)
+	local var_36_0
 
-	for slot5 = 1, #slot0._baffleItems do
-		slot0._baffleItems[slot5]:dispose()
+	for iter_36_0 = 1, #arg_36_0._baffleItems do
+		arg_36_0._baffleItems[iter_36_0]:dispose()
 	end
 
-	for slot5 = 1, #slot0._baffleItemPool do
-		slot0._baffleItemPool[slot5]:dispose()
+	for iter_36_1 = 1, #arg_36_0._baffleItemPool do
+		arg_36_0._baffleItemPool[iter_36_1]:dispose()
 	end
 
-	slot0._baffleItems = nil
-	slot0._baffleItemPool = nil
+	arg_36_0._baffleItems = nil
+	arg_36_0._baffleItemPool = nil
 end
 
-function slot0.disposeSceneRoot(slot0)
-	if slot0._sceneRoot then
-		gohelper.destroy(slot0._sceneRoot)
+function var_0_0.disposeSceneRoot(arg_37_0)
+	if arg_37_0._sceneRoot then
+		gohelper.destroy(arg_37_0._sceneRoot)
 
-		slot0._sceneRoot = nil
-	end
-end
-
-function slot0.releaseLoader(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
-
-		slot0._loader = nil
+		arg_37_0._sceneRoot = nil
 	end
 end
 
-function slot0.resetMapView(slot0)
+function var_0_0.releaseLoader(arg_38_0)
+	if arg_38_0._loader then
+		arg_38_0._loader:dispose()
+
+		arg_38_0._loader = nil
+	end
+end
+
+function var_0_0.resetMapView(arg_39_0)
 	YaXianGameModel.instance:setGameLoadDone(false)
-	slot0:recycleBaseTiles()
-	slot0:recycleAllInteract()
-	slot0:recycleAllBaffleItem()
+	arg_39_0:recycleBaseTiles()
+	arg_39_0:recycleAllInteract()
+	arg_39_0:recycleAllBaffleItem()
 end
 
-function slot0.onUpdateEffectInfo(slot0)
-	if YaXianGameModel.instance:isShowVisibleStatus() and YaXianGameModel.instance:isShowThroughStatus() then
-		slot0.playerInteractItem:playAnimation(YaXianGameEnum.InteractAnimationName.TwoEffect)
+function var_0_0.onUpdateEffectInfo(arg_40_0)
+	local var_40_0 = YaXianGameModel.instance:isShowVisibleStatus()
+	local var_40_1 = YaXianGameModel.instance:isShowThroughStatus()
+
+	if var_40_0 and var_40_1 then
+		arg_40_0.playerInteractItem:playAnimation(YaXianGameEnum.InteractAnimationName.TwoEffect)
 
 		return
 	end
 
-	if slot1 then
-		slot0.playerInteractItem:playAnimation(YaXianGameEnum.InteractAnimationName.InVisible)
+	if var_40_0 then
+		arg_40_0.playerInteractItem:playAnimation(YaXianGameEnum.InteractAnimationName.InVisible)
 
 		return
 	end
 
-	if slot2 then
-		slot0.playerInteractItem:playAnimation(YaXianGameEnum.InteractAnimationName.ThroughWall)
+	if var_40_1 then
+		arg_40_0.playerInteractItem:playAnimation(YaXianGameEnum.InteractAnimationName.ThroughWall)
 
 		return
 	end
 
-	slot0.playerInteractItem:stopAnimation()
+	arg_40_0.playerInteractItem:stopAnimation()
 end
 
-function slot0.onSelectInteract(slot0, slot1)
-	if slot0:findInteractItem(slot1) and not slot2.delete and slot2:getHandler() then
-		slot2:getHandler():onSelectCall()
+function var_0_0.onSelectInteract(arg_41_0, arg_41_1)
+	local var_41_0 = arg_41_0:findInteractItem(arg_41_1)
+
+	if var_41_0 and not var_41_0.delete and var_41_0:getHandler() then
+		var_41_0:getHandler():onSelectCall()
 	end
 end
 
-function slot0.onCancelSelectInteract(slot0, slot1)
-	if slot0:findInteractItem(slot1) and not slot2.delete and slot2:getHandler() then
-		slot2:getHandler():onCancelSelect()
+function var_0_0.onCancelSelectInteract(arg_42_0, arg_42_1)
+	local var_42_0 = arg_42_0:findInteractItem(arg_42_1)
+
+	if var_42_0 and not var_42_0.delete and var_42_0:getHandler() then
+		var_42_0:getHandler():onCancelSelect()
 	end
 end
 
-function slot0.onUpdateRound(slot0)
+function var_0_0.onUpdateRound(arg_43_0)
 	YaXianGameController.instance:updateAllPosInteractActive()
 	YaXianGameController.instance:autoSelectPlayer()
 end
 
-function slot0.onRevert(slot0)
+function var_0_0.onRevert(arg_44_0)
 	YaXianGameController.instance:setSelectObj()
-	slot0:createAllInteractObjs()
-	slot0:checkAllInteractLoadDone()
+	arg_44_0:createAllInteractObjs()
+	arg_44_0:checkAllInteractLoadDone()
 	YaXianGameController.instance:updateAllPosInteractActive()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.playFeatureAnimation, slot0)
+function var_0_0.onClose(arg_45_0)
+	TaskDispatcher.cancelTask(arg_45_0.playFeatureAnimation, arg_45_0)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._click then
-		slot0._click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_46_0)
+	if arg_46_0._click then
+		arg_46_0._click:RemoveClickListener()
 
-		slot0._click = nil
+		arg_46_0._click = nil
 	end
 
-	slot0._baseTiles = nil
+	arg_46_0._baseTiles = nil
 
-	slot0:disposeInteractItem()
-	slot0:disposeBaffle()
-	slot0:disposeSceneRoot()
-	slot0:releaseLoader()
+	arg_46_0:disposeInteractItem()
+	arg_46_0:disposeBaffle()
+	arg_46_0:disposeSceneRoot()
+	arg_46_0:releaseLoader()
 end
 
-return slot0
+return var_0_0

@@ -1,344 +1,404 @@
-module("modules.logic.gm.view.rouge.RougeMiddleLayerEditMap", package.seeall)
+﻿module("modules.logic.gm.view.rouge.RougeMiddleLayerEditMap", package.seeall)
 
-slot0 = class("RougeMiddleLayerEditMap", RougeBaseMap)
+local var_0_0 = class("RougeMiddleLayerEditMap", RougeBaseMap)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0.tempVector1 = Vector3.New(0, 0, 0)
-	slot0.tempVector2 = Vector3.New(0, 0, 0)
+	arg_1_0.tempVector1 = Vector3.New(0, 0, 0)
+	arg_1_0.tempVector2 = Vector3.New(0, 0, 0)
 
-	slot0:initReflection()
+	arg_1_0:initReflection()
 end
 
-function slot0.initReflection(slot0)
+function var_0_0.initReflection(arg_2_0)
 	require("tolua.reflection")
 	tolua.loadassembly("Assembly-CSharp")
 
-	slot1 = tolua.findtype("UnityEngine.LineRenderer")
-	slot0.lineCompProperty = tolua.getproperty(slot1, "positionCount")
-	slot0.lineCompMethod = tolua.getmethod(slot1, "SetPosition", typeof("System.Int32"), typeof(Vector3))
+	local var_2_0 = tolua.findtype("UnityEngine.LineRenderer")
+	local var_2_1 = tolua.getproperty(var_2_0, "positionCount")
+
+	arg_2_0.lineCompMethod, arg_2_0.lineCompProperty = tolua.getmethod(var_2_0, "SetPosition", typeof("System.Int32"), typeof(Vector3)), var_2_1
 end
 
-function slot0.initMap(slot0)
-	uv0.super.initMap(slot0)
-	RougeMapModel.instance:setCameraSize(RougeMapModel.instance:getMapSize().y / 2)
-	transformhelper.setLocalPos(slot0.mapTransform, 0, 0, RougeMapEnum.OffsetZ.Map)
+function var_0_0.initMap(arg_3_0)
+	var_0_0.super.initMap(arg_3_0)
+
+	local var_3_0 = RougeMapModel.instance:getMapSize()
+
+	RougeMapModel.instance:setCameraSize(var_3_0.y / 2)
+	transformhelper.setLocalPos(arg_3_0.mapTransform, 0, 0, RougeMapEnum.OffsetZ.Map)
 end
 
-function slot0.createMapNodeContainer(slot0)
-	slot0.layerPointContainer = gohelper.create3d(slot0.mapGo, "layerPointContainer")
-	slot0.goLayerLinePathContainer = gohelper.create3d(slot0.mapGo, "layerLinePathContainer")
+function var_0_0.createMapNodeContainer(arg_4_0)
+	arg_4_0.layerPointContainer = gohelper.create3d(arg_4_0.mapGo, "layerPointContainer")
+	arg_4_0.goLayerLinePathContainer = gohelper.create3d(arg_4_0.mapGo, "layerLinePathContainer")
 
-	transformhelper.setLocalPos(slot0.layerPointContainer.transform, 0, 0, RougeMapEnum.OffsetZ.NodeContainer)
-	transformhelper.setLocalPos(slot0.goLayerLinePathContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PathContainer)
-	uv0.super.createMapNodeContainer(slot0)
+	transformhelper.setLocalPos(arg_4_0.layerPointContainer.transform, 0, 0, RougeMapEnum.OffsetZ.NodeContainer)
+	transformhelper.setLocalPos(arg_4_0.goLayerLinePathContainer.transform, 0, 0, RougeMapEnum.OffsetZ.PathContainer)
+	var_0_0.super.createMapNodeContainer(arg_4_0)
 end
 
-function slot0.handleOtherRes(slot0, slot1)
-	slot0.linePrefab = slot1:getAssetItem(RougeMapEnum.LineResPath):GetResource()
-	slot0.pointPrefab = slot1:getAssetItem(RougeMapEnum.RedNodeResPath):GetResource()
-	slot0.pathPointPrefab = slot1:getAssetItem(RougeMapEnum.GreenNodeResPath):GetResource()
-	slot0.leavePrefab = slot1:getAssetItem(RougeMapEnum.MiddleLayerLeavePath):GetResource()
+function var_0_0.handleOtherRes(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1:getAssetItem(RougeMapEnum.RedNodeResPath):GetResource()
+	local var_5_1 = arg_5_1:getAssetItem(RougeMapEnum.GreenNodeResPath):GetResource()
+	local var_5_2
+
+	arg_5_0.linePrefab, var_5_2 = arg_5_1:getAssetItem(RougeMapEnum.LineResPath):GetResource(), arg_5_1:getAssetItem(RougeMapEnum.MiddleLayerLeavePath):GetResource()
+	arg_5_0.pointPrefab = var_5_0
+	arg_5_0.pathPointPrefab = var_5_1
+	arg_5_0.leavePrefab = var_5_2
 end
 
-function slot0.createMap(slot0)
-	slot0:initPoints()
-	slot0:initPathPoints()
-	slot0:initLeavePoint()
-	slot0:initLines()
-	slot0:initMapLine()
+function var_0_0.createMap(arg_6_0)
+	arg_6_0:initPoints()
+	arg_6_0:initPathPoints()
+	arg_6_0:initLeavePoint()
+	arg_6_0:initLines()
+	arg_6_0:initMapLine()
 end
 
-function slot0.initPoints(slot0)
-	slot0.pointItemDict = {}
+function var_0_0.initPoints(arg_7_0)
+	arg_7_0.pointItemDict = {}
 
-	for slot5, slot6 in pairs(RougeMapEditModel.instance:getPointsDict()) do
-		slot0:createPoint(slot5, slot6, RougeMapEnum.MiddleLayerPointType.Pieces)
+	local var_7_0 = RougeMapEditModel.instance:getPointsDict()
+
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		arg_7_0:createPoint(iter_7_0, iter_7_1, RougeMapEnum.MiddleLayerPointType.Pieces)
 	end
 end
 
-function slot0.initPathPoints(slot0)
-	slot0.pathPointItemDict = {}
+function var_0_0.initPathPoints(arg_8_0)
+	arg_8_0.pathPointItemDict = {}
 
-	for slot5, slot6 in pairs(RougeMapEditModel.instance:getPathPointsDict()) do
-		slot0:createPoint(slot5, slot6, RougeMapEnum.MiddleLayerPointType.Path)
+	local var_8_0 = RougeMapEditModel.instance:getPathPointsDict()
+
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		arg_8_0:createPoint(iter_8_0, iter_8_1, RougeMapEnum.MiddleLayerPointType.Path)
 	end
 end
 
-function slot0.initLeavePoint(slot0)
-	if not RougeMapEditModel.instance:getLeavePos() then
+function var_0_0.initLeavePoint(arg_9_0)
+	local var_9_0 = RougeMapEditModel.instance:getLeavePos()
+
+	if not var_9_0 then
 		return
 	end
 
-	slot0:createLeavePoint(slot1)
+	arg_9_0:createLeavePoint(var_9_0)
 end
 
-function slot0.initLines(slot0)
-	slot0.lineList = {}
+function var_0_0.initLines(arg_10_0)
+	arg_10_0.lineList = {}
 
-	for slot5, slot6 in ipairs(RougeMapEditModel.instance:getLineList()) do
-		table.insert(slot0.lineList, slot0:createLine(RougeMapEnum.MiddleLayerPointType.Path, slot6.startId, RougeMapEnum.MiddleLayerPointType.Path, slot6.endId, "path"))
+	local var_10_0 = RougeMapEditModel.instance:getLineList()
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		local var_10_1 = arg_10_0:createLine(RougeMapEnum.MiddleLayerPointType.Path, iter_10_1.startId, RougeMapEnum.MiddleLayerPointType.Path, iter_10_1.endId, "path")
+
+		table.insert(arg_10_0.lineList, var_10_1)
 	end
 end
 
-function slot0.initMapLine(slot0)
-	slot0.mapLineList = {}
+function var_0_0.initMapLine(arg_11_0)
+	arg_11_0.mapLineList = {}
 
-	for slot5, slot6 in ipairs(RougeMapEditModel.instance:getMapLineList()) do
-		slot7 = RougeMapEnum.MiddleLayerPointType.Pieces
+	local var_11_0 = RougeMapEditModel.instance:getMapLineList()
 
-		if slot6.startId == RougeMapEnum.LeaveId then
-			slot7 = RougeMapEnum.MiddleLayerPointType.Leave
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = RougeMapEnum.MiddleLayerPointType.Pieces
+
+		if iter_11_1.startId == RougeMapEnum.LeaveId then
+			var_11_1 = RougeMapEnum.MiddleLayerPointType.Leave
 		end
 
-		table.insert(slot0.mapLineList, slot0:createLine(slot7, slot6.startId, RougeMapEnum.MiddleLayerPointType.Path, slot6.endId, "map"))
+		local var_11_2 = arg_11_0:createLine(var_11_1, iter_11_1.startId, RougeMapEnum.MiddleLayerPointType.Path, iter_11_1.endId, "map")
+
+		table.insert(arg_11_0.mapLineList, var_11_2)
 	end
 end
 
-function slot0.createLeavePoint(slot0, slot1)
-	slot0.goLeave = slot0.goLeave or gohelper.clone(slot0.leavePrefab, slot0.layerPointContainer)
-	slot0.trLeave = slot0.goLeave.transform
+function var_0_0.createLeavePoint(arg_12_0, arg_12_1)
+	arg_12_0.goLeave = arg_12_0.goLeave or gohelper.clone(arg_12_0.leavePrefab, arg_12_0.layerPointContainer)
+	arg_12_0.trLeave = arg_12_0.goLeave.transform
 
-	gohelper.setActive(slot0.goLeave, true)
-	transformhelper.setLocalPos(slot0.trLeave, slot1.x, slot1.y, 0)
-	transformhelper.setLocalScale(slot0.trLeave, RougeMapEditModel.Radius, RougeMapEditModel.Radius, RougeMapEditModel.Radius)
+	gohelper.setActive(arg_12_0.goLeave, true)
+	transformhelper.setLocalPos(arg_12_0.trLeave, arg_12_1.x, arg_12_1.y, 0)
+	transformhelper.setLocalScale(arg_12_0.trLeave, RougeMapEditModel.Radius, RougeMapEditModel.Radius, RougeMapEditModel.Radius)
 end
 
-function slot0.createPoint(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
+function var_0_0.createPoint(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = arg_13_0:getUserDataTb_()
 
-	if slot3 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		slot4.go = gohelper.clone(slot0.pointPrefab, slot0.layerPointContainer)
-		slot0.pointItemDict[slot1] = slot4
+	if arg_13_3 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		var_13_0.go = gohelper.clone(arg_13_0.pointPrefab, arg_13_0.layerPointContainer)
+		arg_13_0.pointItemDict[arg_13_1] = var_13_0
 	else
-		slot4.go = gohelper.clone(slot0.pathPointPrefab, slot0.layerPointContainer)
-		slot0.pathPointItemDict[slot1] = slot4
+		var_13_0.go = gohelper.clone(arg_13_0.pathPointPrefab, arg_13_0.layerPointContainer)
+		arg_13_0.pathPointItemDict[arg_13_1] = var_13_0
 	end
 
-	gohelper.setActive(slot4.go, true)
+	gohelper.setActive(var_13_0.go, true)
 
-	slot4.go.name = string.format("%s_%s", slot3, slot1)
-	slot4.scenePos = slot2
-	slot4.transform = slot4.go.transform
-	slot4.id = slot1
+	local var_13_1 = string.format("%s_%s", arg_13_3, arg_13_1)
 
-	transformhelper.setLocalPos(slot4.transform, slot2.x, slot2.y, 0)
-	transformhelper.setLocalScale(slot4.transform, RougeMapEditModel.Radius, RougeMapEditModel.Radius, RougeMapEditModel.Radius)
+	var_13_0.go.name = var_13_1
+	var_13_0.scenePos = arg_13_2
+	var_13_0.transform = var_13_0.go.transform
+	var_13_0.id = arg_13_1
+
+	transformhelper.setLocalPos(var_13_0.transform, arg_13_2.x, arg_13_2.y, 0)
+	transformhelper.setLocalScale(var_13_0.transform, RougeMapEditModel.Radius, RougeMapEditModel.Radius, RougeMapEditModel.Radius)
 end
 
-function slot0.createLine(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = slot0:getUserDataTb_()
-	slot8 = gohelper.clone(slot0.linePrefab, slot0.goLayerLinePathContainer, string.format("%s___%s_%s", slot5, slot2, slot4))
+function var_0_0.createLine(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
+	local var_14_0 = arg_14_0:getUserDataTb_()
+	local var_14_1 = string.format("%s___%s_%s", arg_14_5, arg_14_2, arg_14_4)
+	local var_14_2 = gohelper.clone(arg_14_0.linePrefab, arg_14_0.goLayerLinePathContainer, var_14_1)
 
-	gohelper.setActive(slot8, true)
+	gohelper.setActive(var_14_2, true)
 
-	slot6.lineGo = slot8
-	slot6.startId = slot2
-	slot6.endId = slot4
+	var_14_0.lineGo = var_14_2
+	var_14_0.startId = arg_14_2
+	var_14_0.endId = arg_14_4
 
-	slot0:drawLineById(slot6.lineGo, slot1, slot2, slot3, slot4)
+	arg_14_0:drawLineById(var_14_0.lineGo, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 
-	return slot6
+	return var_14_0
 end
 
-function slot0.drawLineById(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0:drawLine(slot1, slot0:getPointPos(slot2, slot3), slot0:getPointPos(slot4, slot5))
+function var_0_0.drawLineById(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	local var_15_0 = arg_15_0:getPointPos(arg_15_2, arg_15_3)
+	local var_15_1 = arg_15_0:getPointPos(arg_15_4, arg_15_5)
+
+	arg_15_0:drawLine(arg_15_1, var_15_0, var_15_1)
 end
 
-function slot0.drawLine(slot0, slot1, slot2, slot3)
-	slot0.tempVector1:Set(slot2.x, slot2.y, slot2.z)
-	slot0.tempVector2:Set(slot3.x, slot3.y, slot3.z)
+function var_0_0.drawLine(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	arg_16_0.tempVector1:Set(arg_16_2.x, arg_16_2.y, arg_16_2.z)
+	arg_16_0.tempVector2:Set(arg_16_3.x, arg_16_3.y, arg_16_3.z)
 
-	slot4 = slot1:GetComponent("LineRenderer")
+	local var_16_0 = arg_16_1:GetComponent("LineRenderer")
 
-	slot0.lineCompProperty:Set(slot4, 2, nil)
-	slot0.lineCompMethod:Call(slot4, 0, slot0.tempVector1)
-	slot0.lineCompMethod:Call(slot4, 1, slot0.tempVector2)
+	arg_16_0.lineCompProperty:Set(var_16_0, 2, nil)
+	arg_16_0.lineCompMethod:Call(var_16_0, 0, arg_16_0.tempVector1)
+	arg_16_0.lineCompMethod:Call(var_16_0, 1, arg_16_0.tempVector2)
 end
 
-function slot0.getPointPos(slot0, slot1, slot2)
-	if slot1 == RougeMapEnum.MiddleLayerPointType.Leave then
+function var_0_0.getPointPos(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 == RougeMapEnum.MiddleLayerPointType.Leave then
 		return RougeMapEditModel.instance:getLeavePos()
-	elseif slot1 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		return RougeMapEditModel.instance:getPointPos(slot2)
-	elseif slot1 == RougeMapEnum.MiddleLayerPointType.Path then
-		return RougeMapEditModel.instance:getPathPointPos(slot2)
+	elseif arg_17_1 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		return RougeMapEditModel.instance:getPointPos(arg_17_2)
+	elseif arg_17_1 == RougeMapEnum.MiddleLayerPointType.Path then
+		return RougeMapEditModel.instance:getPathPointPos(arg_17_2)
 	end
 end
 
-function slot0.addPoint(slot0, slot1)
-	slot1.z = 0
+function var_0_0.addPoint(arg_18_0, arg_18_1)
+	arg_18_1.z = 0
 
-	slot0:createPoint(RougeMapEditModel.instance:addPoint(slot1), slot1, RougeMapEnum.MiddleLayerPointType.Pieces)
+	local var_18_0 = RougeMapEditModel.instance:addPoint(arg_18_1)
+
+	arg_18_0:createPoint(var_18_0, arg_18_1, RougeMapEnum.MiddleLayerPointType.Pieces)
 end
 
-function slot0.addPathPoint(slot0, slot1)
-	slot1.z = 0
+function var_0_0.addPathPoint(arg_19_0, arg_19_1)
+	arg_19_1.z = 0
 
-	slot0:createPoint(RougeMapEditModel.instance:addPathPoint(slot1), slot1, RougeMapEnum.MiddleLayerPointType.Path)
+	local var_19_0 = RougeMapEditModel.instance:addPathPoint(arg_19_1)
+
+	arg_19_0:createPoint(var_19_0, arg_19_1, RougeMapEnum.MiddleLayerPointType.Path)
 end
 
-function slot0.addLeavePoint(slot0, slot1)
+function var_0_0.addLeavePoint(arg_20_0, arg_20_1)
 	if RougeMapEditModel.instance:getLeavePos() then
 		GameFacade.showToastString("离开点只能有一个。")
 
 		return
 	end
 
-	slot1.z = 0
+	arg_20_1.z = 0
 
-	RougeMapEditModel.instance:setLeavePoint(slot1)
-	slot0:createLeavePoint(slot1)
+	RougeMapEditModel.instance:setLeavePoint(arg_20_1)
+	arg_20_0:createLeavePoint(arg_20_1)
 end
 
-function slot0.deletePoint(slot0, slot1, slot2)
-	if slot1 == RougeMapEnum.MiddleLayerPointType.Leave then
+function var_0_0.deletePoint(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_1 == RougeMapEnum.MiddleLayerPointType.Leave then
 		RougeMapEditModel.instance:deleteLeavePoint()
-		gohelper.setActive(slot0.goLeave, false)
+		gohelper.setActive(arg_21_0.goLeave, false)
 
-		for slot6 = #slot0.mapLineList, 1, -1 do
-			if slot0.mapLineList[slot6].startId == slot2 then
-				RougeMapEditModel.instance:removeMapLine(slot6)
-				table.remove(slot0.mapLineList, slot6)
-				gohelper.destroy(slot7.lineGo)
+		for iter_21_0 = #arg_21_0.mapLineList, 1, -1 do
+			local var_21_0 = arg_21_0.mapLineList[iter_21_0]
+
+			if var_21_0.startId == arg_21_2 then
+				RougeMapEditModel.instance:removeMapLine(iter_21_0)
+				table.remove(arg_21_0.mapLineList, iter_21_0)
+				gohelper.destroy(var_21_0.lineGo)
 			end
 		end
 
 		return
 	end
 
-	slot3 = nil
+	local var_21_1
 
-	if not ((slot1 ~= RougeMapEnum.MiddleLayerPointType.Pieces or slot0.pointItemDict) and slot0.pathPointItemDict)[slot2] then
+	if arg_21_1 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		var_21_1 = arg_21_0.pointItemDict
+	else
+		var_21_1 = arg_21_0.pathPointItemDict
+	end
+
+	local var_21_2 = var_21_1[arg_21_2]
+
+	if not var_21_2 then
 		return
 	end
 
-	RougeMapEditModel.instance:deletePoint(slot2, slot1)
+	RougeMapEditModel.instance:deletePoint(arg_21_2, arg_21_1)
 
-	slot3[slot2] = nil
+	var_21_1[arg_21_2] = nil
 
-	gohelper.destroy(slot4.go)
+	gohelper.destroy(var_21_2.go)
 
-	if slot1 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		for slot8 = #slot0.mapLineList, 1, -1 do
-			if slot0.mapLineList[slot8].startId == slot2 then
-				RougeMapEditModel.instance:removeMapLine(slot8)
-				table.remove(slot0.mapLineList, slot8)
-				gohelper.destroy(slot9.lineGo)
+	if arg_21_1 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		for iter_21_1 = #arg_21_0.mapLineList, 1, -1 do
+			local var_21_3 = arg_21_0.mapLineList[iter_21_1]
+
+			if var_21_3.startId == arg_21_2 then
+				RougeMapEditModel.instance:removeMapLine(iter_21_1)
+				table.remove(arg_21_0.mapLineList, iter_21_1)
+				gohelper.destroy(var_21_3.lineGo)
 			end
 		end
 	else
-		for slot8 = #slot0.lineList, 1, -1 do
-			if slot0.lineList[slot8].startId == slot2 or slot9.endId == slot2 then
-				RougeMapEditModel.instance:removeLine(slot8)
-				table.remove(slot0.lineList, slot8)
-				gohelper.destroy(slot9.lineGo)
+		for iter_21_2 = #arg_21_0.lineList, 1, -1 do
+			local var_21_4 = arg_21_0.lineList[iter_21_2]
+
+			if var_21_4.startId == arg_21_2 or var_21_4.endId == arg_21_2 then
+				RougeMapEditModel.instance:removeLine(iter_21_2)
+				table.remove(arg_21_0.lineList, iter_21_2)
+				gohelper.destroy(var_21_4.lineGo)
 			end
 		end
 
-		for slot8 = #slot0.mapLineList, 1, -1 do
-			if slot0.mapLineList[slot8].endId == slot2 then
-				RougeMapEditModel.instance:removeMapLine(slot8)
-				table.remove(slot0.mapLineList, slot8)
-				gohelper.destroy(slot9.lineGo)
+		for iter_21_3 = #arg_21_0.mapLineList, 1, -1 do
+			local var_21_5 = arg_21_0.mapLineList[iter_21_3]
+
+			if var_21_5.endId == arg_21_2 then
+				RougeMapEditModel.instance:removeMapLine(iter_21_3)
+				table.remove(arg_21_0.mapLineList, iter_21_3)
+				gohelper.destroy(var_21_5.lineGo)
 			end
 		end
 	end
 end
 
-function slot0.setPointPos(slot0, slot1, slot2, slot3, slot4)
-	slot5 = nil
+function var_0_0.setPointPos(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	local var_22_0
 
-	if not ((slot2 ~= RougeMapEnum.MiddleLayerPointType.Pieces or slot0.pointItemDict[slot1]) and slot0.pathPointItemDict[slot1]) then
+	if arg_22_2 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		var_22_0 = arg_22_0.pointItemDict[arg_22_1]
+	else
+		var_22_0 = arg_22_0.pathPointItemDict[arg_22_1]
+	end
+
+	if not var_22_0 then
 		return
 	end
 
-	transformhelper.setLocalPos(slot5.transform, slot3, slot4, 0)
-	slot5.scenePos:Set(slot3, slot4)
+	transformhelper.setLocalPos(var_22_0.transform, arg_22_3, arg_22_4, 0)
+	var_22_0.scenePos:Set(arg_22_3, arg_22_4)
 
-	if slot2 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		for slot9, slot10 in ipairs(slot0.mapLineList) do
-			if slot10.startId == slot1 then
-				slot0:drawLineById(slot10.lineGo, RougeMapEnum.MiddleLayerPointType.Pieces, slot10.startId, RougeMapEnum.MiddleLayerPointType.Path, slot10.endId)
+	if arg_22_2 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		for iter_22_0, iter_22_1 in ipairs(arg_22_0.mapLineList) do
+			if iter_22_1.startId == arg_22_1 then
+				arg_22_0:drawLineById(iter_22_1.lineGo, RougeMapEnum.MiddleLayerPointType.Pieces, iter_22_1.startId, RougeMapEnum.MiddleLayerPointType.Path, iter_22_1.endId)
 			end
 		end
 	else
-		for slot9, slot10 in ipairs(slot0.mapLineList) do
-			if slot10.endId == slot1 then
-				slot0:drawLineById(slot10.lineGo, RougeMapEnum.MiddleLayerPointType.Pieces, slot10.startId, RougeMapEnum.MiddleLayerPointType.Path, slot10.endId)
+		for iter_22_2, iter_22_3 in ipairs(arg_22_0.mapLineList) do
+			if iter_22_3.endId == arg_22_1 then
+				arg_22_0:drawLineById(iter_22_3.lineGo, RougeMapEnum.MiddleLayerPointType.Pieces, iter_22_3.startId, RougeMapEnum.MiddleLayerPointType.Path, iter_22_3.endId)
 			end
 		end
 
-		for slot9, slot10 in ipairs(slot0.lineList) do
-			if slot10.startId == slot1 or slot10.endId == slot1 then
-				slot0:drawLineById(slot10.lineGo, RougeMapEnum.MiddleLayerPointType.Path, slot10.startId, RougeMapEnum.MiddleLayerPointType.Path, slot10.endId)
+		for iter_22_4, iter_22_5 in ipairs(arg_22_0.lineList) do
+			if iter_22_5.startId == arg_22_1 or iter_22_5.endId == arg_22_1 then
+				arg_22_0:drawLineById(iter_22_5.lineGo, RougeMapEnum.MiddleLayerPointType.Path, iter_22_5.startId, RougeMapEnum.MiddleLayerPointType.Path, iter_22_5.endId)
 			end
 		end
 	end
 end
 
-function slot0.createEditingLine(slot0, slot1, slot2)
-	slot0.editLineGo = gohelper.clone(slot0.linePrefab, slot0.goLayerLinePathContainer, string.format("%s_%s_edit", slot2, slot1))
+function var_0_0.createEditingLine(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = string.format("%s_%s_edit", arg_23_2, arg_23_1)
 
-	gohelper.setActive(slot0.editLineGo, true)
+	arg_23_0.editLineGo = gohelper.clone(arg_23_0.linePrefab, arg_23_0.goLayerLinePathContainer, var_23_0)
 
-	slot0.startPos = slot0:getPos(slot1, slot2)
+	gohelper.setActive(arg_23_0.editLineGo, true)
+
+	arg_23_0.startPos = arg_23_0:getPos(arg_23_1, arg_23_2)
 end
 
-function slot0.getPos(slot0, slot1, slot2)
-	if slot2 == RougeMapEnum.MiddleLayerPointType.Leave then
+function var_0_0.getPos(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_2 == RougeMapEnum.MiddleLayerPointType.Leave then
 		return RougeMapEditModel.instance:getLeavePos()
-	elseif slot2 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		return RougeMapEditModel.instance:getPointPos(slot1)
+	elseif arg_24_2 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		return RougeMapEditModel.instance:getPointPos(arg_24_1)
 	else
-		return RougeMapEditModel.instance:getPathPointPos(slot1)
+		return RougeMapEditModel.instance:getPathPointPos(arg_24_1)
 	end
 end
 
-function slot0.exitEditLine(slot0)
-	gohelper.destroy(slot0.editLineGo)
+function var_0_0.exitEditLine(arg_25_0)
+	gohelper.destroy(arg_25_0.editLineGo)
 
-	slot0.editLineGo = nil
-	slot0.startPos = nil
+	arg_25_0.editLineGo = nil
+	arg_25_0.startPos = nil
 end
 
-function slot0.addLine(slot0, slot1, slot2, slot3, slot4)
-	slot1, slot2, slot7, slot4 = RougeMapHelper.formatLineParam(slot1, slot2, slot3, slot4)
+function var_0_0.addLine(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
+	arg_26_1, arg_26_2, arg_26_3, arg_26_4 = RougeMapHelper.formatLineParam(arg_26_1, arg_26_2, arg_26_3, arg_26_4)
 
-	RougeMapEditModel.instance:addLine(slot1, slot2, slot7, slot4)
+	RougeMapEditModel.instance:addLine(arg_26_1, arg_26_2, arg_26_3, arg_26_4)
 
-	slot5 = slot0:getUserDataTb_()
-	slot5.lineGo = slot0.editLineGo
-	slot5.startId = slot2
-	slot5.endId = slot4
-	slot6 = nil
+	local var_26_0 = arg_26_0:getUserDataTb_()
 
-	if slot1 == RougeMapEnum.MiddleLayerPointType.Pieces or slot1 == RougeMapEnum.MiddleLayerPointType.Leave then
-		table.insert(slot0.mapLineList, slot5)
+	var_26_0.lineGo = arg_26_0.editLineGo
+	var_26_0.startId = arg_26_2
+	var_26_0.endId = arg_26_4
 
-		slot6 = "map"
+	local var_26_1
+
+	if arg_26_1 == RougeMapEnum.MiddleLayerPointType.Pieces or arg_26_1 == RougeMapEnum.MiddleLayerPointType.Leave then
+		table.insert(arg_26_0.mapLineList, var_26_0)
+
+		var_26_1 = "map"
 	else
-		table.insert(slot0.lineList, slot5)
+		table.insert(arg_26_0.lineList, var_26_0)
 
-		slot6 = "path"
+		var_26_1 = "path"
 	end
 
-	slot0.editLineGo.name = string.format("%s___%s_%s", slot6, slot2, slot4)
+	local var_26_2 = string.format("%s___%s_%s", var_26_1, arg_26_2, arg_26_4)
 
-	slot0:drawLineById(slot0.editLineGo, slot1, slot2, slot3, slot4)
+	arg_26_0.editLineGo.name = var_26_2
 
-	slot0.editLineGo = nil
+	arg_26_0:drawLineById(arg_26_0.editLineGo, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
+
+	arg_26_0.editLineGo = nil
 end
 
-function slot0.updateDrawingLine(slot0, slot1)
-	if not slot0.editLineGo then
+function var_0_0.updateDrawingLine(arg_27_0, arg_27_1)
+	if not arg_27_0.editLineGo then
 		return
 	end
 
-	slot1.z = 0
+	arg_27_1.z = 0
 
-	slot0:drawLine(slot0.editLineGo, slot0.startPos, slot1)
+	arg_27_0:drawLine(arg_27_0.editLineGo, arg_27_0.startPos, arg_27_1)
 end
 
-return slot0
+return var_0_0

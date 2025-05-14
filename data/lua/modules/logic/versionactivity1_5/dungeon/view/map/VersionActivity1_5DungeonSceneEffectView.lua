@@ -1,173 +1,188 @@
-module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonSceneEffectView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonSceneEffectView", package.seeall)
 
-slot0 = class("VersionActivity1_5DungeonSceneEffectView", BaseView)
+local var_0_0 = class("VersionActivity1_5DungeonSceneEffectView", BaseView)
 
-function slot0.onInitView(slot0, slot1)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0, arg_1_1)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.dayTimeEffectGoPool = nil
-	slot0.nightEffectGoPool = nil
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.dayTimeEffectGoPool = nil
+	arg_4_0.nightEffectGoPool = nil
 
-	slot0:createScenePoolRoot()
-	slot0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, slot0.onDisposeOldMap, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, slot0.onLoadSceneFinish, slot0)
+	arg_4_0:createScenePoolRoot()
+	arg_4_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, arg_4_0.onDisposeOldMap, arg_4_0)
+	arg_4_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_4_0.onLoadSceneFinish, arg_4_0)
 end
 
-function slot0.createScenePoolRoot(slot0)
-	slot0.effectPoolRoot = UnityEngine.GameObject.New("effectPoolRoot")
+function var_0_0.createScenePoolRoot(arg_5_0)
+	local var_5_0 = CameraMgr.instance:getSceneRoot()
+	local var_5_1 = gohelper.findChild(var_5_0, VersionActivity1_5DungeonEnum.SceneRootName)
 
-	gohelper.addChild(gohelper.findChild(CameraMgr.instance:getSceneRoot(), VersionActivity1_5DungeonEnum.SceneRootName), slot0.effectPoolRoot)
-	gohelper.setActive(slot0.effectPoolRoot, false)
-	transformhelper.setLocalPos(slot0.effectPoolRoot.transform, 0, 0, 0)
+	arg_5_0.effectPoolRoot = UnityEngine.GameObject.New("effectPoolRoot")
+
+	gohelper.addChild(var_5_1, arg_5_0.effectPoolRoot)
+	gohelper.setActive(arg_5_0.effectPoolRoot, false)
+	transformhelper.setLocalPos(arg_5_0.effectPoolRoot.transform, 0, 0, 0)
 end
 
-function slot0.onDisposeOldMap(slot0)
-	slot0:recycleEffectGo()
+function var_0_0.onDisposeOldMap(arg_6_0)
+	arg_6_0:recycleEffectGo()
 end
 
-function slot0.onLoadSceneFinish(slot0, slot1)
-	slot0.sceneGo = slot1.mapSceneGo
-	slot0.mapConfig = slot1.mapConfig
-	slot0.goEffectRoot = gohelper.findChild(slot0.sceneGo, "SceneEffect")
+function var_0_0.onLoadSceneFinish(arg_7_0, arg_7_1)
+	arg_7_0.sceneGo = arg_7_1.mapSceneGo
+	arg_7_0.mapConfig = arg_7_1.mapConfig
+	arg_7_0.goEffectRoot = gohelper.findChild(arg_7_0.sceneGo, "SceneEffect")
 
-	slot0:addSceneEffect()
+	arg_7_0:addSceneEffect()
 end
 
-function slot0.addSceneEffect(slot0)
-	if not slot0.activityDungeonMo:isHardMode() then
-		gohelper.setActive(slot0.goEffectRoot, false)
+function var_0_0.addSceneEffect(arg_8_0)
+	if not arg_8_0.activityDungeonMo:isHardMode() then
+		gohelper.setActive(arg_8_0.goEffectRoot, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goEffectRoot, true)
+	gohelper.setActive(arg_8_0.goEffectRoot, true)
 
-	if VersionActivity1_5DungeonEnum.MapId2Light[slot0.mapConfig.id] then
-		if not slot0.dayTimeEffectGo then
-			slot0:createDayTimeGo()
+	if VersionActivity1_5DungeonEnum.MapId2Light[arg_8_0.mapConfig.id] then
+		if not arg_8_0.dayTimeEffectGo then
+			arg_8_0:createDayTimeGo()
 		else
-			slot0:refreshEffect()
+			arg_8_0:refreshEffect()
 		end
-	elseif not slot0.nightEffectGo then
-		slot0:createNightTimeGo()
+	elseif not arg_8_0.nightEffectGo then
+		arg_8_0:createNightTimeGo()
 	else
-		slot0:refreshEffect()
+		arg_8_0:refreshEffect()
 	end
 end
 
-function slot0.getEffectLoader(slot0)
-	if slot0.effectLoader then
-		return slot0.effectLoader
+function var_0_0.getEffectLoader(arg_9_0)
+	if arg_9_0.effectLoader then
+		return arg_9_0.effectLoader
 	end
 
-	slot0.effectLoader = MultiAbLoader.New()
+	arg_9_0.effectLoader = MultiAbLoader.New()
 
-	slot0.effectLoader:addPath(VersionActivity1_5DungeonEnum.SceneEffect.DayTime)
-	slot0.effectLoader:addPath(VersionActivity1_5DungeonEnum.SceneEffect.Night)
-	slot0.effectLoader:startLoad(slot0.onEffectLoadDone, slot0)
+	arg_9_0.effectLoader:addPath(VersionActivity1_5DungeonEnum.SceneEffect.DayTime)
+	arg_9_0.effectLoader:addPath(VersionActivity1_5DungeonEnum.SceneEffect.Night)
+	arg_9_0.effectLoader:startLoad(arg_9_0.onEffectLoadDone, arg_9_0)
 
-	return slot0.effectLoader
+	return arg_9_0.effectLoader
 end
 
-function slot0.onEffectLoadDone(slot0)
-	slot0:createDayTimeGo()
-	slot0:createNightTimeGo()
+function var_0_0.onEffectLoadDone(arg_10_0)
+	arg_10_0:createDayTimeGo()
+	arg_10_0:createNightTimeGo()
 end
 
-function slot0.createDayTimeGo(slot0)
-	if not VersionActivity1_5DungeonEnum.MapId2Light[slot0.mapConfig.id] then
+function var_0_0.createDayTimeGo(arg_11_0)
+	if not VersionActivity1_5DungeonEnum.MapId2Light[arg_11_0.mapConfig.id] then
 		return
 	end
 
-	if slot0.dayTimeEffectGoPool then
-		slot0.dayTimeEffectGo = slot0.dayTimeEffectGoPool
-		slot0.dayTimeEffectGoPool = nil
+	if arg_11_0.dayTimeEffectGoPool then
+		arg_11_0.dayTimeEffectGo = arg_11_0.dayTimeEffectGoPool
+		arg_11_0.dayTimeEffectGoPool = nil
 
-		gohelper.addChild(slot0.goEffectRoot, slot0.dayTimeEffectGo)
-		slot0:refreshEffect()
-
-		return
-	end
-
-	if slot0:getEffectLoader().isLoading then
-		return
-	end
-
-	slot0.dayTimeEffectGo = gohelper.clone(slot1:getAssetItem(VersionActivity1_5DungeonEnum.SceneEffect.DayTime):GetResource(), slot0.goEffectRoot)
-
-	slot0:refreshEffect()
-end
-
-function slot0.createNightTimeGo(slot0)
-	if VersionActivity1_5DungeonEnum.MapId2Light[slot0.mapConfig.id] then
-		return
-	end
-
-	if slot0.nightEffectGoPool then
-		slot0.nightEffectGo = slot0.nightEffectGoPool
-		slot0.nightEffectGoPool = nil
-
-		gohelper.addChild(slot0.goEffectRoot, slot0.nightEffectGo)
-		slot0:refreshEffect()
+		gohelper.addChild(arg_11_0.goEffectRoot, arg_11_0.dayTimeEffectGo)
+		arg_11_0:refreshEffect()
 
 		return
 	end
 
-	if slot0:getEffectLoader().isLoading then
+	local var_11_0 = arg_11_0:getEffectLoader()
+
+	if var_11_0.isLoading then
 		return
 	end
 
-	slot0.nightEffectGo = gohelper.clone(slot1:getAssetItem(VersionActivity1_5DungeonEnum.SceneEffect.Night):GetResource(), slot0.goEffectRoot)
+	local var_11_1 = var_11_0:getAssetItem(VersionActivity1_5DungeonEnum.SceneEffect.DayTime):GetResource()
 
-	slot0:refreshEffect()
+	arg_11_0.dayTimeEffectGo = gohelper.clone(var_11_1, arg_11_0.goEffectRoot)
+
+	arg_11_0:refreshEffect()
 end
 
-function slot0.refreshEffect(slot0)
-	if not slot0.activityDungeonMo:isHardMode() then
-		gohelper.setActive(slot0.goEffectRoot, false)
+function var_0_0.createNightTimeGo(arg_12_0)
+	if VersionActivity1_5DungeonEnum.MapId2Light[arg_12_0.mapConfig.id] then
+		return
+	end
+
+	if arg_12_0.nightEffectGoPool then
+		arg_12_0.nightEffectGo = arg_12_0.nightEffectGoPool
+		arg_12_0.nightEffectGoPool = nil
+
+		gohelper.addChild(arg_12_0.goEffectRoot, arg_12_0.nightEffectGo)
+		arg_12_0:refreshEffect()
 
 		return
 	end
 
-	if slot0.dayTimeEffectGo then
-		gohelper.setActive(slot0.dayTimeEffectGo, VersionActivity1_5DungeonEnum.MapId2Light[slot0.mapConfig.id])
+	local var_12_0 = arg_12_0:getEffectLoader()
+
+	if var_12_0.isLoading then
+		return
 	end
 
-	if slot0.nightEffectGo then
-		gohelper.setActive(slot0.nightEffectGo, not slot1)
+	local var_12_1 = var_12_0:getAssetItem(VersionActivity1_5DungeonEnum.SceneEffect.Night):GetResource()
+
+	arg_12_0.nightEffectGo = gohelper.clone(var_12_1, arg_12_0.goEffectRoot)
+
+	arg_12_0:refreshEffect()
+end
+
+function var_0_0.refreshEffect(arg_13_0)
+	if not arg_13_0.activityDungeonMo:isHardMode() then
+		gohelper.setActive(arg_13_0.goEffectRoot, false)
+
+		return
+	end
+
+	local var_13_0 = VersionActivity1_5DungeonEnum.MapId2Light[arg_13_0.mapConfig.id]
+
+	if arg_13_0.dayTimeEffectGo then
+		gohelper.setActive(arg_13_0.dayTimeEffectGo, var_13_0)
+	end
+
+	if arg_13_0.nightEffectGo then
+		gohelper.setActive(arg_13_0.nightEffectGo, not var_13_0)
 	end
 end
 
-function slot0.recycleEffectGo(slot0)
-	if slot0.dayTimeEffectGo then
-		gohelper.addChild(slot0.effectPoolRoot, slot0.dayTimeEffectGo)
+function var_0_0.recycleEffectGo(arg_14_0)
+	if arg_14_0.dayTimeEffectGo then
+		gohelper.addChild(arg_14_0.effectPoolRoot, arg_14_0.dayTimeEffectGo)
 
-		slot0.dayTimeEffectGoPool = slot0.dayTimeEffectGo
-		slot0.dayTimeEffectGo = nil
+		arg_14_0.dayTimeEffectGoPool = arg_14_0.dayTimeEffectGo
+		arg_14_0.dayTimeEffectGo = nil
 	end
 
-	if slot0.nightEffectGo then
-		gohelper.addChild(slot0.effectPoolRoot, slot0.nightEffectGo)
+	if arg_14_0.nightEffectGo then
+		gohelper.addChild(arg_14_0.effectPoolRoot, arg_14_0.nightEffectGo)
 
-		slot0.nightEffectGoPool = slot0.nightEffectGo
-		slot0.nightEffectGo = nil
-	end
-end
-
-function slot0.onDestroy(slot0)
-	if slot0.effectLoader then
-		slot0.effectLoader:dispose()
+		arg_14_0.nightEffectGoPool = arg_14_0.nightEffectGo
+		arg_14_0.nightEffectGo = nil
 	end
 end
 
-return slot0
+function var_0_0.onDestroy(arg_15_0)
+	if arg_15_0.effectLoader then
+		arg_15_0.effectLoader:dispose()
+	end
+end
+
+return var_0_0

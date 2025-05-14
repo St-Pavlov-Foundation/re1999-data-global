@@ -1,42 +1,43 @@
-module("modules.logic.seasonver.act166.view.Season166MainViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166MainViewContainer", package.seeall)
 
-slot0 = class("Season166MainViewContainer", BaseViewContainer)
+local var_0_0 = class("Season166MainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.Season166MainSceneView = Season166MainSceneView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.Season166MainSceneView)
-	table.insert(slot1, Season166MainView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
+	arg_1_0.Season166MainSceneView = Season166MainSceneView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.Season166MainSceneView)
+	table.insert(var_1_0, Season166MainView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		}, HelpEnum.HelpId.Season166TrainHelp)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.getMainSceneView(slot0)
-	return slot0.Season166MainSceneView
+function var_0_0.getMainSceneView(arg_3_0)
+	return arg_3_0.Season166MainSceneView
 end
 
-function slot0.setOverrideCloseClick(slot0, slot1, slot2)
-	slot0.navigateView:setOverrideClose(slot1, slot2)
+function var_0_0.setOverrideCloseClick(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.navigateView:setOverrideClose(arg_4_1, arg_4_2)
 end
 
-function slot0.setHelpBtnShowState(slot0, slot1)
-	slot0.navigateView:setHelpVisible(slot1)
+function var_0_0.setHelpBtnShowState(arg_5_0, arg_5_1)
+	arg_5_0.navigateView:setHelpVisible(arg_5_1)
 end
 
-return slot0
+return var_0_0

@@ -1,153 +1,162 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameOperView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameOperView", package.seeall)
 
-slot0 = class("WuErLiXiGameOperView", BaseView)
+local var_0_0 = class("WuErLiXiGameOperView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotarget = gohelper.findChild(slot0.viewGO, "#go_Target")
-	slot0._goright = gohelper.findChild(slot0.viewGO, "#go_Right")
-	slot0._goactunitroot = gohelper.findChild(slot0.viewGO, "#go_Right/ActUnits")
-	slot0._goactunits = gohelper.findChild(slot0.viewGO, "#go_Right/ActUnits/#go_actunits")
-	slot0._goactunititem = gohelper.findChild(slot0.viewGO, "#go_Right/ActUnits/#go_actunits/#go_actunititem")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_Right/Btns")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Right/Btns/#btn_reset")
-	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Right/Btns/#btn_skip")
-	slot0._btnunittips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Right/Btns/#btn_unittips")
-	slot0._gounittipnew = gohelper.findChild(slot0.viewGO, "#go_Right/Btns/#btn_unittips/#go_new")
-	slot0._godragitem = gohelper.findChild(slot0.viewGO, "#go_dragitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_Target")
+	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_Right")
+	arg_1_0._goactunitroot = gohelper.findChild(arg_1_0.viewGO, "#go_Right/ActUnits")
+	arg_1_0._goactunits = gohelper.findChild(arg_1_0.viewGO, "#go_Right/ActUnits/#go_actunits")
+	arg_1_0._goactunititem = gohelper.findChild(arg_1_0.viewGO, "#go_Right/ActUnits/#go_actunits/#go_actunititem")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Btns")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Right/Btns/#btn_reset")
+	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Right/Btns/#btn_skip")
+	arg_1_0._btnunittips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Right/Btns/#btn_unittips")
+	arg_1_0._gounittipnew = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Btns/#btn_unittips/#go_new")
+	arg_1_0._godragitem = gohelper.findChild(arg_1_0.viewGO, "#go_dragitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
-	slot0._btnunittips:AddClickListener(slot0._btnunittipsOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+	arg_2_0._btnunittips:AddClickListener(arg_2_0._btnunittipsOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnskip:RemoveClickListener()
-	slot0._btnunittips:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnskip:RemoveClickListener()
+	arg_3_0._btnunittips:RemoveClickListener()
 end
 
-function slot0._btnresetOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.WuErLiXiResetConfirm, MsgBoxEnum.BoxType.Yes_No, slot0._onChooseReset, nil, , slot0)
+function var_0_0._btnresetOnClick(arg_4_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.WuErLiXiResetConfirm, MsgBoxEnum.BoxType.Yes_No, arg_4_0._onChooseReset, nil, nil, arg_4_0)
 end
 
-function slot0._onChooseReset(slot0)
+function var_0_0._onChooseReset(arg_5_0)
 	StatController.instance:track(StatEnum.EventName.WuErLiXiGameOperation, {
-		[StatEnum.EventProperties.MapId] = tostring(slot0._mapId),
+		[StatEnum.EventProperties.MapId] = tostring(arg_5_0._mapId),
 		[StatEnum.EventProperties.OperationType] = "reset",
 		[StatEnum.EventProperties.DouQuQuFightUseTime] = ServerTime.now() - WuErLiXiMapModel.instance:getMapStartTime(),
 		[StatEnum.EventProperties.Result] = "unsuccess",
 		[StatEnum.EventProperties.WuErLiXiMapInfo] = WuErLiXiMapModel.instance:getStatMapInfos(),
 		[StatEnum.EventProperties.WuErLiXiOperationInfo] = WuErLiXiMapModel.instance:getStatOperationInfos()
 	})
-	WuErLiXiMapModel.instance:resetMap(slot0._mapId)
+	WuErLiXiMapModel.instance:resetMap(arg_5_0._mapId)
 	WuErLiXiMapModel.instance:clearSelectUnit()
-	slot0:_onMapReset()
+	arg_5_0:_onMapReset()
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.MapResetClicked)
 end
 
-function slot0._btnskipOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.WuErLiXiSkipConfirm, MsgBoxEnum.BoxType.Yes_No, slot0._onChooseClose, nil, , slot0)
+function var_0_0._btnskipOnClick(arg_6_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.WuErLiXiSkipConfirm, MsgBoxEnum.BoxType.Yes_No, arg_6_0._onChooseClose, nil, nil, arg_6_0)
 end
 
-function slot0._onChooseClose(slot0)
-	if slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj)
+function var_0_0._onChooseClose(arg_7_0)
+	if arg_7_0.viewParam.callback then
+		arg_7_0.viewParam.callback(arg_7_0.viewParam.callbackObj)
 	end
 
 	StatController.instance:track(StatEnum.EventName.WuErLiXiGameOperation, {
-		[StatEnum.EventProperties.MapId] = tostring(slot0._mapId),
+		[StatEnum.EventProperties.MapId] = tostring(arg_7_0._mapId),
 		[StatEnum.EventProperties.OperationType] = "skip",
 		[StatEnum.EventProperties.DouQuQuFightUseTime] = ServerTime.now() - WuErLiXiMapModel.instance:getMapStartTime(),
 		[StatEnum.EventProperties.Result] = "unsuccess",
 		[StatEnum.EventProperties.WuErLiXiMapInfo] = WuErLiXiMapModel.instance:getStatMapInfos(),
 		[StatEnum.EventProperties.WuErLiXiOperationInfo] = WuErLiXiMapModel.instance:getStatOperationInfos()
 	})
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0._btnunittipsOnClick(slot0)
+function var_0_0._btnunittipsOnClick(arg_8_0)
 	WuErLiXiMapModel.instance:setReadNewElement()
 	ViewMgr.instance:openView(ViewName.WuErLiXiUnitTipView)
-	slot0:_refreshBtns()
+	arg_8_0:_refreshBtns()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_addEvents()
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0:_addEvents()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaced, slot0._onNodeChange, slot0)
-	slot0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaceBack, slot0._onNodeChange, slot0)
+function var_0_0._addEvents(arg_10_0)
+	arg_10_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaced, arg_10_0._onNodeChange, arg_10_0)
+	arg_10_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaceBack, arg_10_0._onNodeChange, arg_10_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaced, slot0._onNodeChange, slot0)
-	slot0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaceBack, slot0._onNodeChange, slot0)
+function var_0_0._removeEvents(arg_11_0)
+	arg_11_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaced, arg_11_0._onNodeChange, arg_11_0)
+	arg_11_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.NodeUnitPlaceBack, arg_11_0._onNodeChange, arg_11_0)
 end
 
-function slot0._onNodeChange(slot0)
-	slot0:_refreshActUnits()
+function var_0_0._onNodeChange(arg_12_0)
+	arg_12_0:_refreshActUnits()
 end
 
-function slot0._onMapReset(slot0)
-	slot0:_refreshActUnits()
+function var_0_0._onMapReset(arg_13_0)
+	arg_13_0:_refreshActUnits()
 end
 
-function slot0.onOpen(slot0)
-	slot0._actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
-	slot0._mapId = WuErLiXiConfig.instance:getEpisodeCo(slot0._actId, slot0.viewParam.episodeId).mapId
-	slot0._mapMo = WuErLiXiMapModel.instance:getMap(slot0._mapId)
-	slot0._actUnitItems = {}
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0._actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
+	arg_14_0._mapId = WuErLiXiConfig.instance:getEpisodeCo(arg_14_0._actId, arg_14_0.viewParam.episodeId).mapId
+	arg_14_0._mapMo = WuErLiXiMapModel.instance:getMap(arg_14_0._mapId)
+	arg_14_0._actUnitItems = {}
 
-	slot0:_refreshBtns()
-	slot0:_refreshActUnits()
+	arg_14_0:_refreshBtns()
+	arg_14_0:_refreshActUnits()
 end
 
-function slot0._refreshBtns(slot0)
-	slot2 = WuErLiXiModel.instance:getEpisodeStatus(slot0.viewParam.episodeId)
+function var_0_0._refreshBtns(arg_15_0)
+	local var_15_0 = WuErLiXiModel.instance:isEpisodePass(arg_15_0.viewParam.episodeId)
+	local var_15_1 = WuErLiXiModel.instance:getEpisodeStatus(arg_15_0.viewParam.episodeId)
+	local var_15_2 = var_15_0 or var_15_1 == WuErLiXiEnum.EpisodeStatus.AfterStory or var_15_1 == WuErLiXiEnum.EpisodeStatus.Finished
 
-	gohelper.setActive(slot0._btnskip.gameObject, WuErLiXiModel.instance:isEpisodePass(slot0.viewParam.episodeId) or slot2 == WuErLiXiEnum.EpisodeStatus.AfterStory or slot2 == WuErLiXiEnum.EpisodeStatus.Finished)
-	gohelper.setActive(slot0._gounittipnew, WuErLiXiMapModel.instance:hasElementNew())
+	gohelper.setActive(arg_15_0._btnskip.gameObject, var_15_2)
+
+	local var_15_3 = WuErLiXiMapModel.instance:hasElementNew()
+
+	gohelper.setActive(arg_15_0._gounittipnew, var_15_3)
 end
 
-function slot0._refreshActUnits(slot0)
-	slot1 = {}
+function var_0_0._refreshActUnits(arg_16_0)
+	local var_16_0 = {}
+	local var_16_1 = WuErLiXiMapModel.instance:getMapLimitActUnits(arg_16_0._mapId)
 
-	for slot6, slot7 in ipairs(WuErLiXiMapModel.instance:getMapLimitActUnits(slot0._mapId)) do
-		if not slot0._actUnitItems[slot7.id] then
-			slot0._actUnitItems[slot7.id] = WuErLiXiGameActUnitItem.New()
+	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+		if not arg_16_0._actUnitItems[iter_16_1.id] then
+			local var_16_2 = gohelper.cloneInPlace(arg_16_0._goactunititem)
 
-			slot0._actUnitItems[slot7.id]:init(gohelper.cloneInPlace(slot0._goactunititem), slot0._godragitem)
-			slot0._actUnitItems[slot7.id]:setItem(slot7)
+			arg_16_0._actUnitItems[iter_16_1.id] = WuErLiXiGameActUnitItem.New()
+
+			arg_16_0._actUnitItems[iter_16_1.id]:init(var_16_2, arg_16_0._godragitem)
+			arg_16_0._actUnitItems[iter_16_1.id]:setItem(iter_16_1)
 		else
-			slot0._actUnitItems[slot7.id]:resetItem()
+			arg_16_0._actUnitItems[iter_16_1.id]:resetItem()
 		end
 
-		slot1[slot7.id] = true
+		var_16_0[iter_16_1.id] = true
 	end
 
-	for slot6, slot7 in pairs(slot0._actUnitItems) do
-		if not slot1[slot6] then
-			slot7:hide()
+	for iter_16_2, iter_16_3 in pairs(arg_16_0._actUnitItems) do
+		if not var_16_0[iter_16_2] then
+			iter_16_3:hide()
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0:_removeEvents()
 
-	for slot4, slot5 in pairs(slot0._actUnitItems) do
-		slot5:destroy()
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._actUnitItems) do
+		iter_18_1:destroy()
 	end
 end
 
-return slot0
+return var_0_0

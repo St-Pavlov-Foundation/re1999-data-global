@@ -1,102 +1,110 @@
-module("modules.logic.video.AvProMgr", package.seeall)
+﻿module("modules.logic.video.AvProMgr", package.seeall)
 
-slot0 = class("AvProMgr")
-slot0.Type_AvProUGUIPlayer = typeof(ZProj.AvProUGUIPlayer)
-slot0.Type_DisplayUGUI = typeof(RenderHeads.Media.AVProVideo.DisplayUGUI)
+local var_0_0 = class("AvProMgr")
 
-function slot0.preload(slot0, slot1, slot2)
-	slot0._callback = slot1
-	slot0._callbackObj = slot2
-	slot0._resDict = {}
-	slot0._loader = MultiAbLoader.New()
+var_0_0.Type_AvProUGUIPlayer = typeof(ZProj.AvProUGUIPlayer)
+var_0_0.Type_DisplayUGUI = typeof(RenderHeads.Media.AVProVideo.DisplayUGUI)
 
-	slot0._loader:setPathList(AvProMgrConfig.getPreloadList())
-	slot0._loader:setOneFinishCallback(slot0._onOnePreloadCallback, slot0)
-	slot0._loader:startLoad(slot0._onPreloadCallback, slot0)
+function var_0_0.preload(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._callback = arg_1_1
+	arg_1_0._callbackObj = arg_1_2
+	arg_1_0._resDict = {}
+	arg_1_0._loader = MultiAbLoader.New()
+
+	arg_1_0._loader:setPathList(AvProMgrConfig.getPreloadList())
+	arg_1_0._loader:setOneFinishCallback(arg_1_0._onOnePreloadCallback, arg_1_0)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadCallback, arg_1_0)
 end
 
-function slot0._onOnePreloadCallback(slot0, slot1, slot2)
-	slot0._resDict[slot2.ResPath] = slot2
+function var_0_0._onOnePreloadCallback(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._resDict[arg_2_2.ResPath] = arg_2_2
 end
 
-function slot0._onPreloadCallback(slot0)
-	if slot0._callback then
-		slot0._callback(slot0._callbackObj)
+function var_0_0._onPreloadCallback(arg_3_0)
+	if arg_3_0._callback then
+		arg_3_0._callback(arg_3_0._callbackObj)
 	end
 
-	slot0._callback = nil
-	slot0._callbackObj = nil
+	arg_3_0._callback = nil
+	arg_3_0._callbackObj = nil
 end
 
-function slot0._getGOInstance(slot0, slot1, slot2, slot3)
+function var_0_0._getGOInstance(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	if SettingsModel.instance:getVideoEnabled() == false then
-		slot1 = AvProMgrConfig.UrlVideoDisable
+		arg_4_1 = AvProMgrConfig.UrlVideoDisable
 	end
 
-	if slot0._resDict[slot1] then
-		if slot4:GetResource(slot1) then
-			return gohelper.clone(slot5, slot2, slot3)
+	local var_4_0 = arg_4_0._resDict[arg_4_1]
+
+	if var_4_0 then
+		local var_4_1 = var_4_0:GetResource(arg_4_1)
+
+		if var_4_1 then
+			return gohelper.clone(var_4_1, arg_4_2, arg_4_3)
 		else
-			logError(slot1 .. " prefab not in ab")
+			logError(arg_4_1 .. " prefab not in ab")
 		end
 	end
 
-	logError(slot1 .. " videoPrefab need preload")
+	logError(arg_4_1 .. " videoPrefab need preload")
 end
 
-function slot0.swicthVideoUrl(slot0, slot1, slot2)
+function var_0_0.swicthVideoUrl(arg_5_0, arg_5_1, arg_5_2)
 	if SettingsModel.instance:getVideoCompatible() then
-		return slot2
+		return arg_5_2
 	end
 
-	return slot1
+	return arg_5_1
 end
 
-function slot0.getVideoPlayer(slot0, slot1, slot2)
-	slot4 = slot0:_getGOInstance(slot0:swicthVideoUrl(AvProMgrConfig.UrlVideo, AvProMgrConfig.UrlVideoCompatible), slot1, slot2)
+function var_0_0.getVideoPlayer(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:swicthVideoUrl(AvProMgrConfig.UrlVideo, AvProMgrConfig.UrlVideoCompatible)
+	local var_6_1 = arg_6_0:_getGOInstance(var_6_0, arg_6_1, arg_6_2)
 
 	if SettingsModel.instance:getVideoEnabled() == false then
-		return AvProUGUIPlayer_adjust.instance, nil, slot4
+		return AvProUGUIPlayer_adjust.instance, nil, var_6_1
 	end
 
-	slot6 = slot4:GetComponent(uv0.Type_DisplayUGUI)
-	slot6.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+	local var_6_2 = var_6_1:GetComponent(var_0_0.Type_AvProUGUIPlayer)
+	local var_6_3 = var_6_1:GetComponent(var_0_0.Type_DisplayUGUI)
 
-	return slot4:GetComponent(uv0.Type_AvProUGUIPlayer), slot6, slot4
+	var_6_3.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+
+	return var_6_2, var_6_3, var_6_1
 end
 
-function slot0.getFightUrl(slot0)
-	if SettingsModel.instance:getVideoEnabled() == false then
-		return AvProMgrConfig.UrlVideoDisable
-	end
-
-	return slot0:swicthVideoUrl(AvProMgrConfig.UrlFightVideo, AvProMgrConfig.UrlFightVideoCompatible)
-end
-
-function slot0.getStoryUrl(slot0)
+function var_0_0.getFightUrl(arg_7_0)
 	if SettingsModel.instance:getVideoEnabled() == false then
 		return AvProMgrConfig.UrlVideoDisable
 	end
 
-	return slot0:swicthVideoUrl(AvProMgrConfig.UrlStoryVideo, AvProMgrConfig.UrlStoryVideoCompatible)
+	return arg_7_0:swicthVideoUrl(AvProMgrConfig.UrlFightVideo, AvProMgrConfig.UrlFightVideoCompatible)
 end
 
-function slot0.getNicknameUrl(slot0)
+function var_0_0.getStoryUrl(arg_8_0)
 	if SettingsModel.instance:getVideoEnabled() == false then
 		return AvProMgrConfig.UrlVideoDisable
 	end
 
-	return slot0:swicthVideoUrl(AvProMgrConfig.UrlNicknameVideo, AvProMgrConfig.UrlNicknameVideoCompatible)
+	return arg_8_0:swicthVideoUrl(AvProMgrConfig.UrlStoryVideo, AvProMgrConfig.UrlStoryVideoCompatible)
 end
 
-function slot0.getRolesprefabUrl(slot0, slot1)
+function var_0_0.getNicknameUrl(arg_9_0)
+	if SettingsModel.instance:getVideoEnabled() == false then
+		return AvProMgrConfig.UrlVideoDisable
+	end
+
+	return arg_9_0:swicthVideoUrl(AvProMgrConfig.UrlNicknameVideo, AvProMgrConfig.UrlNicknameVideoCompatible)
+end
+
+function var_0_0.getRolesprefabUrl(arg_10_0, arg_10_1)
 	if SettingsModel.instance:getVideoCompatible() or BootNativeUtil.isWindows() then
-		return AvProMgrConfig.URLRolesprefabDict[slot1] or slot1
+		return AvProMgrConfig.URLRolesprefabDict[arg_10_1] or arg_10_1
 	end
 
-	return slot1
+	return arg_10_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

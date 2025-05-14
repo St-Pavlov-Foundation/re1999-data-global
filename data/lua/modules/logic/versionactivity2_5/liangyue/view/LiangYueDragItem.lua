@@ -1,163 +1,193 @@
-module("modules.logic.versionactivity2_5.liangyue.view.LiangYueDragItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueDragItem", package.seeall)
 
-slot0 = class("LiangYueDragItem", LuaCompBase)
+local var_0_0 = class("LiangYueDragItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.rectTran = slot1.transform
-	slot0._image_illustration = gohelper.findChildSingleImage(slot1, "Piece")
-	slot0._image_illustration_frame = gohelper.findChildSingleImage(slot1, "PieceFrame")
-	slot0._txtNum = gohelper.findChildTextMesh(slot1, "Tips/image_NumBG/#txt_Num")
-	slot0._goTips = gohelper.findChild(slot1, "Tips")
-	slot0._goTargetIconOneRow = gohelper.findChild(slot1, "Tips/TargetIconOneRow")
-	slot0._goTargetIconTwoColumn = gohelper.findChild(slot1, "Tips/TargetIconTwoColumn")
-	slot0._goTargetIconOneColumn = gohelper.findChild(slot1, "Tips/TargetIconOneColumn")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.rectTran = arg_1_1.transform
+	arg_1_0._image_illustration = gohelper.findChildSingleImage(arg_1_1, "Piece")
+	arg_1_0._image_illustration_frame = gohelper.findChildSingleImage(arg_1_1, "PieceFrame")
+	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "Tips/image_NumBG/#txt_Num")
+	arg_1_0._goTips = gohelper.findChild(arg_1_1, "Tips")
+	arg_1_0._goTargetIconOneRow = gohelper.findChild(arg_1_1, "Tips/TargetIconOneRow")
+	arg_1_0._goTargetIconTwoColumn = gohelper.findChild(arg_1_1, "Tips/TargetIconTwoColumn")
+	arg_1_0._goTargetIconOneColumn = gohelper.findChild(arg_1_1, "Tips/TargetIconOneColumn")
 
-	slot0:initComp()
+	arg_1_0:initComp()
 end
 
-function slot0.initComp(slot0)
-	slot0._iconHeight = recthelper.getHeight(slot0._image_illustration.transform)
-	slot0._iconWidth = recthelper.getWidth(slot0._image_illustration.transform)
-	slot0._attributeItemList = {}
+function var_0_0.initComp(arg_2_0)
+	arg_2_0._iconHeight = recthelper.getHeight(arg_2_0._image_illustration.transform)
+	arg_2_0._iconWidth = recthelper.getWidth(arg_2_0._image_illustration.transform)
+	arg_2_0._attributeItemList = {}
 
-	for slot5, slot6 in ipairs({
-		slot0._goTargetIconOneColumn,
-		slot0._goTargetIconTwoColumn,
-		slot0._goTargetIconOneRow
-	}) do
-		slot7 = LiangYueAttributeItem.New()
+	local var_2_0 = {
+		arg_2_0._goTargetIconOneColumn,
+		arg_2_0._goTargetIconTwoColumn,
+		arg_2_0._goTargetIconOneRow
+	}
 
-		slot7:init(slot6)
-		table.insert(slot0._attributeItemList, slot7)
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		local var_2_1 = LiangYueAttributeItem.New()
+
+		var_2_1:init(iter_2_1)
+		table.insert(arg_2_0._attributeItemList, var_2_1)
 	end
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0.setActive(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0.go, arg_3_1)
 end
 
-function slot0.setInfo(slot0, slot1, slot2, slot3, slot4)
-	slot0.id = slot1
-	slot0.config = slot2
-	slot0.isStatic = slot3
-	slot0.isFinish = slot4
+function var_0_0.setInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	arg_4_0.id = arg_4_1
+	arg_4_0.config = arg_4_2
+	arg_4_0.isStatic = arg_4_3
+	arg_4_0.isFinish = arg_4_4
 
-	slot0._image_illustration:LoadImage(ResUrl.getV2a5LiangYueImg(string.format("v2a5_liangyue_game_list_piece%s", slot2.imageId)), slot0.onIllustrationLoadBack, slot0)
+	local var_4_0 = string.format("v2a5_liangyue_game_list_piece%s", arg_4_2.imageId)
 
-	if slot3 then
-		slot0._image_illustration_frame:LoadImage(ResUrl.getV2a5LiangYueImg(string.format("v2a5_liangyue_game_pieceframe%s", slot2.imageId)), slot0.onIllustrationBgLoadBack, slot0)
+	arg_4_0._image_illustration:LoadImage(ResUrl.getV2a5LiangYueImg(var_4_0), arg_4_0.onIllustrationLoadBack, arg_4_0)
+
+	if arg_4_3 then
+		local var_4_1 = string.format("v2a5_liangyue_game_pieceframe%s", arg_4_2.imageId)
+
+		arg_4_0._image_illustration_frame:LoadImage(ResUrl.getV2a5LiangYueImg(var_4_1), arg_4_0.onIllustrationBgLoadBack, arg_4_0)
 	end
 
-	gohelper.setActive(slot0._goTips, slot3 and not slot4)
-	gohelper.setActive(slot0._image_illustration_frame.gameObject, slot3)
+	gohelper.setActive(arg_4_0._goTips, arg_4_3 and not arg_4_4)
+	gohelper.setActive(arg_4_0._image_illustration_frame.gameObject, arg_4_3)
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0._txtNum.text = slot1
+function var_0_0.setIndex(arg_5_0, arg_5_1)
+	arg_5_0._txtNum.text = arg_5_1
 end
 
-function slot0.setAttributeState(slot0, slot1)
-	gohelper.setActive(slot0._goTips, slot1)
+function var_0_0.setAttributeState(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._goTips, arg_6_1)
 end
 
-function slot0.onIllustrationBgLoadBack(slot0)
-	ZProj.UGUIHelper.SetImageSize(slot0._image_illustration_frame.gameObject)
+function var_0_0.onIllustrationBgLoadBack(arg_7_0)
+	ZProj.UGUIHelper.SetImageSize(arg_7_0._image_illustration_frame.gameObject)
 end
 
-function slot0.onIllustrationLoadBack(slot0)
-	slot1 = slot0._image_illustration.transform
+function var_0_0.onIllustrationLoadBack(arg_8_0)
+	local var_8_0 = arg_8_0._image_illustration.transform
 
-	ZProj.UGUIHelper.SetImageSize(slot1.gameObject)
+	ZProj.UGUIHelper.SetImageSize(var_8_0.gameObject)
 
-	slot2 = recthelper.getWidth(slot1)
-	slot3 = recthelper.getHeight(slot1)
-	slot0.width = slot2
-	slot0.height = slot3
+	local var_8_1 = recthelper.getWidth(var_8_0)
+	local var_8_2 = recthelper.getHeight(var_8_0)
 
-	recthelper.setSize(slot0.go.transform, slot2, slot3)
+	arg_8_0.width = var_8_1
+	arg_8_0.height = var_8_2
 
-	if not slot0.isStatic or slot0.isFinish then
+	recthelper.setSize(arg_8_0.go.transform, var_8_1, var_8_2)
+
+	local var_8_3 = arg_8_0.isStatic
+
+	if not var_8_3 or arg_8_0.isFinish then
 		return
 	end
 
-	slot5 = slot0.config
+	local var_8_4 = arg_8_0.config
 
-	slot0:setAttributeInfo(slot5.activityId, slot5.id, slot4)
+	arg_8_0:setAttributeInfo(var_8_4.activityId, var_8_4.id, var_8_3)
 end
 
-function slot0.setAttributeInfo(slot0, slot1, slot2, slot3)
-	slot5 = LiangYueConfig.instance:getIllustrationShape(slot1, slot2)
-	slot7 = #slot5
+function var_0_0.setAttributeInfo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = LiangYueConfig.instance:getIllustrationAttribute(arg_9_1, arg_9_2)
+	local var_9_1 = LiangYueConfig.instance:getIllustrationShape(arg_9_1, arg_9_2)
+	local var_9_2 = #var_9_1[1]
+	local var_9_3 = #var_9_1
+	local var_9_4 = Mathf.Clamp(var_9_2, LiangYueEnum.AttributeType.OneColumn, LiangYueEnum.AttributeType.OneRow)
+	local var_9_5 = arg_9_0._attributeItemList[var_9_4]
 
-	slot0._attributeItemList[Mathf.Clamp(#slot5[1], LiangYueEnum.AttributeType.OneColumn, LiangYueEnum.AttributeType.OneRow)]:setInfo(LiangYueConfig.instance:getIllustrationAttribute(slot1, slot2))
+	var_9_5:setInfo(var_9_0)
 
-	if slot0._shapeId == slot2 then
+	if arg_9_0._shapeId == arg_9_2 then
 		return
 	end
 
-	slot0._shapeId = slot2
+	arg_9_0._shapeId = arg_9_2
 
-	for slot13, slot14 in ipairs(slot0._attributeItemList) do
-		slot14:setActive(slot13 == slot8)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._attributeItemList) do
+		iter_9_1:setActive(iter_9_0 == var_9_4)
 	end
 
-	for slot13, slot14 in ipairs(slot5) do
-		for slot19, slot20 in ipairs(slot14) do
-			if slot20 == 1 and 0 + 1 == slot6 then
-				slot0._currentItem = slot9
+	for iter_9_2, iter_9_3 in ipairs(var_9_1) do
+		local var_9_6 = 0
 
-				slot9:setItemPos(slot13, slot7)
-				logNormal("第一个最宽的行索引: " .. slot13)
+		for iter_9_4, iter_9_5 in ipairs(iter_9_3) do
+			if iter_9_5 == 1 then
+				var_9_6 = var_9_6 + 1
 
-				if slot3 then
-					slot0:delayRefreshInfo()
+				if var_9_6 == var_9_2 then
+					arg_9_0._currentItem = var_9_5
+
+					var_9_5:setItemPos(iter_9_2, var_9_3)
+					logNormal("第一个最宽的行索引: " .. iter_9_2)
+
+					if arg_9_3 then
+						arg_9_0:delayRefreshInfo()
+					end
+
+					return
 				end
-
-				return
 			end
 		end
 	end
 
 	logError("can not find fixable row")
 
-	slot0._currentItem = slot9
+	arg_9_0._currentItem = var_9_5
 
-	slot9:setItemPos(1, slot7)
+	var_9_5:setItemPos(1, var_9_3)
 
-	if slot3 then
-		slot0:delayRefreshInfo()
+	if arg_9_3 then
+		arg_9_0:delayRefreshInfo()
 	end
 end
 
-function slot0.delayRefreshInfo(slot0)
-	ZProj.UGUIHelper.RebuildLayout(slot0._currentItem.go.transform)
-	slot0:setAttributeState(false)
-	TaskDispatcher.runDelay(slot0.setItemPosY, slot0, 0.1)
+function var_0_0.delayRefreshInfo(arg_10_0)
+	ZProj.UGUIHelper.RebuildLayout(arg_10_0._currentItem.go.transform)
+	arg_10_0:setAttributeState(false)
+	TaskDispatcher.runDelay(arg_10_0.setItemPosY, arg_10_0, 0.1)
 end
 
-function slot0.setItemPosY(slot0)
-	TaskDispatcher.cancelTask(slot0.setItemPosY, slot0)
-	slot0:setAttributeState(true)
+function var_0_0.setItemPosY(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0.setItemPosY, arg_11_0)
+	arg_11_0:setAttributeState(true)
 
-	if slot0._currentItem == nil then
+	local var_11_0 = arg_11_0._currentItem
+
+	if var_11_0 == nil then
 		logError("没有找到对应的数值组件")
 
 		return
 	end
 
-	slot4 = slot0.height / slot1.columnCount
-	slot5 = 0
+	local var_11_1 = var_11_0.yPos
+	local var_11_2 = var_11_0.columnCount
+	local var_11_3 = arg_11_0.height / var_11_2
+	local var_11_4 = 0
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._currentItem.go.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_11_0._currentItem.go.transform)
 
-	slot6 = LiangYueEnum.AttributeOffset
+	local var_11_5 = LiangYueEnum.AttributeOffset
+	local var_11_6 = arg_11_0.height * 0.5
 
-	recthelper.setAnchorY(slot0._goTips.transform, (slot1.yPos <= 1 and (slot3 - slot2 + 1) * slot4 - slot6 or (slot3 - slot2) * slot4 + slot6) - slot0.height * 0.5)
+	if var_11_1 <= 1 then
+		var_11_4 = (var_11_2 - var_11_1 + 1) * var_11_3 - var_11_5
+	else
+		var_11_4 = (var_11_2 - var_11_1) * var_11_3 + var_11_5
+	end
+
+	recthelper.setAnchorY(arg_11_0._goTips.transform, var_11_4 - var_11_6)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.setItemPosY, slot0)
+function var_0_0.onDestroy(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.setItemPosY, arg_12_0)
 end
 
-return slot0
+return var_0_0

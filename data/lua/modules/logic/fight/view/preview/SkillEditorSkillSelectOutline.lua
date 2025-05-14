@@ -1,102 +1,106 @@
-module("modules.logic.fight.view.preview.SkillEditorSkillSelectOutline", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorSkillSelectOutline", package.seeall)
 
-slot0 = class("SkillEditorSkillSelectOutline", BaseView)
-slot1 = "buff/buff_outline"
+local var_0_0 = class("SkillEditorSkillSelectOutline", BaseView)
+local var_0_1 = "buff/buff_outline"
 
-function slot0.onInitView(slot0)
-	slot0._effectWrapDict = {}
-	slot0._enableOutline = false
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._effectWrapDict = {}
+	arg_1_0._enableOutline = false
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectEntity, slot0._onSelectEntity, slot0)
-	slot0:addEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnClickOutline, slot0._onClickOutline, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, slot0._beforeEntityDestroy, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectEntity, arg_2_0._onSelectEntity, arg_2_0)
+	arg_2_0:addEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnClickOutline, arg_2_0._onClickOutline, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_2_0._onSpineLoaded, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, arg_2_0._beforeEntityDestroy, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectEntity, slot0._onSelectEntity, slot0)
-	slot0:removeEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnClickOutline, slot0._onClickOutline, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, slot0._beforeEntityDestroy, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnSelectEntity, arg_3_0._onSelectEntity, arg_3_0)
+	arg_3_0:removeEventCb(SkillEditorMgr.instance, SkillEditorMgr.OnClickOutline, arg_3_0._onClickOutline, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, arg_3_0._beforeEntityDestroy, arg_3_0)
 end
 
-function slot0._beforeEntityDestroy(slot0, slot1)
-	slot2 = slot1 and slot1.id
+function var_0_0._beforeEntityDestroy(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1 and arg_4_1.id
 
-	if slot2 and slot0._effectWrapDict[slot2] then
-		slot0._effectWrapDict[slot2] = nil
+	if var_4_0 and arg_4_0._effectWrapDict[var_4_0] then
+		arg_4_0._effectWrapDict[var_4_0] = nil
 	end
 end
 
-function slot0._onClickOutline(slot0)
-	slot0._enableOutline = not slot0._enableOutline
+function var_0_0._onClickOutline(arg_5_0)
+	arg_5_0._enableOutline = not arg_5_0._enableOutline
 
-	if slot0._enableOutline then
-		slot0:_updateOutline()
+	if arg_5_0._enableOutline then
+		arg_5_0:_updateOutline()
 	else
-		for slot4, slot5 in pairs(slot0._effectWrapDict) do
-			if not gohelper.isNil(slot5.containerGO) then
-				slot5:setActive(false)
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._effectWrapDict) do
+			if not gohelper.isNil(iter_5_1.containerGO) then
+				iter_5_1:setActive(false)
 			else
-				FightRenderOrderMgr.instance:onRemoveEffectWrap(slot4, slot5)
+				FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_5_0, iter_5_1)
 
-				slot0._effectWrapDict[slot4] = nil
+				arg_5_0._effectWrapDict[iter_5_0] = nil
 			end
 		end
 	end
 end
 
-function slot0._onSpineLoaded(slot0, slot1, slot2)
-	TaskDispatcher.cancelTask(slot0._refreshOnLoad, slot0)
-	TaskDispatcher.runDelay(slot0._refreshOnLoad, slot0, 0.1)
+function var_0_0._onSpineLoaded(arg_6_0, arg_6_1, arg_6_2)
+	TaskDispatcher.cancelTask(arg_6_0._refreshOnLoad, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._refreshOnLoad, arg_6_0, 0.1)
 end
 
-function slot0._refreshOnLoad(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._effectWrapDict) do
-		if not gohelper.isNil(slot7.containerGO) and slot7.containerGO.activeSelf then
-			slot7:setActive(false)
-			slot7:setActive(true)
+function var_0_0._refreshOnLoad(arg_7_0, arg_7_1, arg_7_2)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._effectWrapDict) do
+		if not gohelper.isNil(iter_7_1.containerGO) and iter_7_1.containerGO.activeSelf then
+			iter_7_1:setActive(false)
+			iter_7_1:setActive(true)
 		end
 	end
 end
 
-function slot0._onSelectEntity(slot0, slot1, slot2)
-	if not slot0._enableOutline then
+function var_0_0._onSelectEntity(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0._enableOutline then
 		return
 	end
 
-	if slot1 ~= FightEnum.EntitySide.EnemySide then
+	if arg_8_1 ~= FightEnum.EntitySide.EnemySide then
 		return
 	end
 
-	slot0:_updateOutline()
+	arg_8_0:_updateOutline()
 end
 
-function slot0._updateOutline(slot0)
-	slot2 = GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitMonster, SkillEditorView.selectPosId[FightEnum.EntitySide.EnemySide]).id
-	slot3 = FightHelper.getEntity(slot2)
+function var_0_0._updateOutline(arg_9_0)
+	local var_9_0 = GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitMonster, SkillEditorView.selectPosId[FightEnum.EntitySide.EnemySide]).id
+	local var_9_1 = FightHelper.getEntity(var_9_0)
 
-	if not slot0._effectWrapDict[slot2] and FightHelper.getEntity(slot2) and slot5.effect then
-		slot6 = slot5.effect:addHangEffect(uv0, ModuleEnum.SpineHangPointRoot, nil, , , true)
+	if not arg_9_0._effectWrapDict[var_9_0] then
+		local var_9_2 = FightHelper.getEntity(var_9_0)
 
-		slot6:setLocalPos(0, 0, 0)
+		if var_9_2 and var_9_2.effect then
+			local var_9_3 = var_9_2.effect:addHangEffect(var_0_1, ModuleEnum.SpineHangPointRoot, nil, nil, nil, true)
 
-		slot0._effectWrapDict[slot2] = slot6
+			var_9_3:setLocalPos(0, 0, 0)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot2, slot6)
+			arg_9_0._effectWrapDict[var_9_0] = var_9_3
+
+			FightRenderOrderMgr.instance:onAddEffectWrap(var_9_0, var_9_3)
+		end
 	end
 
-	for slot8, slot9 in pairs(slot0._effectWrapDict) do
-		if not gohelper.isNil(slot9.containerGO) then
-			slot9:setActive(slot8 == slot2)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._effectWrapDict) do
+		if not gohelper.isNil(iter_9_1.containerGO) then
+			iter_9_1:setActive(iter_9_0 == var_9_0)
 		else
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(slot8, slot9)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_9_0, iter_9_1)
 
-			slot0._effectWrapDict[slot2] = nil
+			arg_9_0._effectWrapDict[var_9_0] = nil
 		end
 	end
 end
 
-return slot0
+return var_0_0

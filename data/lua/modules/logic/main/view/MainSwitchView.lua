@@ -1,84 +1,92 @@
-module("modules.logic.main.view.MainSwitchView", package.seeall)
+﻿module("modules.logic.main.view.MainSwitchView", package.seeall)
 
-slot0 = class("MainSwitchView", BaseView)
+local var_0_0 = class("MainSwitchView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._scrollcategory = gohelper.findChildScrollRect(slot0.viewGO, "Tab/#scroll_category")
-	slot0._gocategoryitem1 = gohelper.findChild(slot0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem1")
-	slot0._gocategoryitem2 = gohelper.findChild(slot0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "Tab/#scroll_category")
+	arg_1_0._gocategoryitem1 = gohelper.findChild(arg_1_0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem1")
+	arg_1_0._gocategoryitem2 = gohelper.findChild(arg_1_0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gotab = gohelper.findChild(slot0.viewGO, "Tab")
-	slot0._goswitchloading = gohelper.findChild(slot0.viewGO, "loadingmainview")
-	slot0._switchAniamtor = slot0._goswitchloading:GetComponent("Animator")
-	slot0._rootAnimator = slot0.viewGO:GetComponent("Animator")
-	slot0._tabCanvasGroup = slot0._gotab:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._btnsCanvasGroup = slot0._gobtns:GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gotab = gohelper.findChild(arg_4_0.viewGO, "Tab")
+	arg_4_0._goswitchloading = gohelper.findChild(arg_4_0.viewGO, "loadingmainview")
+	arg_4_0._switchAniamtor = arg_4_0._goswitchloading:GetComponent("Animator")
+	arg_4_0._rootAnimator = arg_4_0.viewGO:GetComponent("Animator")
+	arg_4_0._tabCanvasGroup = arg_4_0._gotab:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_4_0._btnsCanvasGroup = arg_4_0._gobtns:GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	MainSwitchCategoryListModel.instance:initCategoryList()
 
-	slot0._itemList = slot0:getUserDataTb_()
+	arg_6_0._itemList = arg_6_0:getUserDataTb_()
 
-	for slot5, slot6 in ipairs(MainSwitchCategoryListModel.instance:getList()) do
-		slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0["_gocategoryitem" .. slot5], MainSwitchCategoryItem)
+	local var_6_0 = MainSwitchCategoryListModel.instance:getList()
 
-		slot8:onUpdateMO(slot6)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = arg_6_0["_gocategoryitem" .. iter_6_0]
+		local var_6_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, MainSwitchCategoryItem)
 
-		slot0._itemList[slot5] = slot8
+		var_6_2:onUpdateMO(iter_6_1)
+
+		arg_6_0._itemList[iter_6_0] = var_6_2
 	end
 
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, slot0._itemClick, slot0)
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, slot0._onSceneSwitchUIVisible, slot0)
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.BeforeStartSwitchScene, slot0._onStartSwitchScene, slot0)
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.CloseSwitchSceneLoading, slot0._onCloseSwitchSceneLoading, slot0)
+	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, arg_6_0._itemClick, arg_6_0)
+	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
+	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.BeforeStartSwitchScene, arg_6_0._onStartSwitchScene, arg_6_0)
+	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.CloseSwitchSceneLoading, arg_6_0._onCloseSwitchSceneLoading, arg_6_0)
 end
 
-function slot0._onStartSwitchScene(slot0)
-	gohelper.setActive(slot0._goswitchloading, true)
-	slot0._switchAniamtor:Play("open", 0, 0)
+function var_0_0._onStartSwitchScene(arg_7_0)
+	gohelper.setActive(arg_7_0._goswitchloading, true)
+	arg_7_0._switchAniamtor:Play("open", 0, 0)
 end
 
-function slot0._onCloseSwitchSceneLoading(slot0)
-	slot0._switchAniamtor:Play("close", 0, 0)
+function var_0_0._onCloseSwitchSceneLoading(arg_8_0)
+	arg_8_0._switchAniamtor:Play("close", 0, 0)
 end
 
-function slot0._onSceneSwitchUIVisible(slot0, slot1)
-	slot0._tabCanvasGroup.blocksRaycasts = slot1
-	slot0._btnsCanvasGroup.blocksRaycasts = slot1
+function var_0_0._onSceneSwitchUIVisible(arg_9_0, arg_9_1)
+	arg_9_0._tabCanvasGroup.blocksRaycasts = arg_9_1
+	arg_9_0._btnsCanvasGroup.blocksRaycasts = arg_9_1
 
-	slot0._rootAnimator:Play(slot1 and "open" or "close", 0, 0)
+	arg_9_0._rootAnimator:Play(arg_9_1 and "open" or "close", 0, 0)
 end
 
-function slot0._itemClick(slot0, slot1)
-	slot0.viewContainer:switchTab(slot1)
+function var_0_0._itemClick(arg_10_0, arg_10_1)
+	arg_10_0.viewContainer:switchTab(arg_10_1)
 
-	for slot5, slot6 in pairs(slot0._itemList) do
-		slot6:refreshStatus()
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._itemList) do
+		iter_10_1:refreshStatus()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

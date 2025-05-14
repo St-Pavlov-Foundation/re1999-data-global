@@ -1,14 +1,14 @@
-module("modules.common.res.AssetLoadCbMO", package.seeall)
+﻿module("modules.common.res.AssetLoadCbMO", package.seeall)
 
-slot0 = class("AssetLoadCbMO")
+local var_0_0 = class("AssetLoadCbMO")
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._loadedCb = slot1
-	slot0._loadedObj = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._loadedCb = arg_1_1
+	arg_1_0._loadedObj = arg_1_2
 end
 
-function slot0.call(slot0, ...)
-	slot0._loadedCb(slot0._loadedObj, ...)
+function var_0_0.call(arg_2_0, ...)
+	arg_2_0._loadedCb(arg_2_0._loadedObj, ...)
 end
 
-return slot0
+return var_0_0

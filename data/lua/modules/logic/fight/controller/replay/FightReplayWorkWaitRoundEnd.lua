@@ -1,20 +1,21 @@
-module("modules.logic.fight.controller.replay.FightReplayWorkWaitRoundEnd", package.seeall)
+﻿module("modules.logic.fight.controller.replay.FightReplayWorkWaitRoundEnd", package.seeall)
 
-slot0 = class("FightReplayWorkWaitRoundEnd", BaseWork)
+local var_0_0 = class("FightReplayWorkWaitRoundEnd", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, slot0._onRoundEnd, slot0)
+function var_0_0.onStart(arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundEnd, arg_2_0)
 end
 
-function slot0._onRoundEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onRoundEnd(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, slot0._onRoundEnd, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_4_0._onRoundEnd, arg_4_0)
 end
 
-return slot0
+return var_0_0

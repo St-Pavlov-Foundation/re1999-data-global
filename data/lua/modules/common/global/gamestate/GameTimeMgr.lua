@@ -1,44 +1,47 @@
-module("modules.common.global.gamestate.GameTimeMgr", package.seeall)
+﻿module("modules.common.global.gamestate.GameTimeMgr", package.seeall)
 
-slot0 = class("GameTimeMgr")
-slot0.TimeScaleType = {
+local var_0_0 = class("GameTimeMgr")
+
+var_0_0.TimeScaleType = {
 	GM = "GM",
 	FightKillEnemy = "FightKillEnemy",
 	FightTLEventSpeed = "FightTLEventSpeed"
 }
 
-function slot0.ctor(slot0)
-	slot0._timeScaleDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._timeScaleDict = {}
 end
 
-function slot0.init(slot0)
-	slot0._timeScaleDict = {}
+function var_0_0.init(arg_2_0)
+	arg_2_0._timeScaleDict = {}
 end
 
-function slot0.setTimeScale(slot0, slot1, slot2)
-	if uv0.TimeScaleType[slot1] then
-		slot0._timeScaleDict[slot1] = slot2 or 1
+function var_0_0.setTimeScale(arg_3_0, arg_3_1, arg_3_2)
+	if var_0_0.TimeScaleType[arg_3_1] then
+		arg_3_0._timeScaleDict[arg_3_1] = arg_3_2 or 1
 	else
-		logError("没有定义时间缩放类型, timeScaleType: " .. tostring(slot1))
+		logError("没有定义时间缩放类型, timeScaleType: " .. tostring(arg_3_1))
 	end
 
-	for slot7, slot8 in pairs(slot0._timeScaleDict) do
-		slot3 = 1 * slot8
+	local var_3_0 = 1
+
+	for iter_3_0, iter_3_1 in pairs(arg_3_0._timeScaleDict) do
+		var_3_0 = var_3_0 * iter_3_1
 	end
 
-	if math.abs(Time.timeScale - slot3) > 0.01 then
-		logNormal("游戏速度变更: " .. tostring(slot3))
+	if math.abs(Time.timeScale - var_3_0) > 0.01 then
+		logNormal("游戏速度变更: " .. tostring(var_3_0))
 	end
 
-	Time.timeScale = slot3
+	Time.timeScale = var_3_0
 
-	return slot3
+	return var_3_0
 end
 
-function slot0.getTimeScale(slot0, slot1)
-	return slot0._timeScaleDict[slot1] or 1
+function var_0_0.getTimeScale(arg_4_0, arg_4_1)
+	return arg_4_0._timeScaleDict[arg_4_1] or 1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,86 +1,88 @@
-module("modules.logic.fight.view.preview.SkillEditorAutoPlaySkillSelectItem", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorAutoPlaySkillSelectItem", package.seeall)
 
-slot0 = class("SkillEditorAutoPlaySkillSelectItem", ListScrollCell)
+local var_0_0 = class("SkillEditorAutoPlaySkillSelectItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._text = gohelper.findChildText(slot1, "Text")
-	slot0._click = gohelper.findChildButtonWithAudio(slot1, "imgRemove")
-	slot0._btnUseSkin = gohelper.findChildButtonWithAudio(slot1, "btn_skin")
-	slot0._goNoUseImg = gohelper.findChild(slot1, "btn_skin/nouse")
-	slot0._goUseImg = gohelper.findChild(slot1, "btn_skin/use")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
+	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_1, "imgRemove")
+	arg_1_0._btnUseSkin = gohelper.findChildButtonWithAudio(arg_1_1, "btn_skin")
+	arg_1_0._goNoUseImg = gohelper.findChild(arg_1_1, "btn_skin/nouse")
+	arg_1_0._goUseImg = gohelper.findChild(arg_1_1, "btn_skin/use")
 
-	gohelper.setActive(slot1, true)
-	gohelper.setActive(slot0._goNoUseImg, true)
-	gohelper.setActive(slot0._goUseImg, false)
+	gohelper.setActive(arg_1_1, true)
+	gohelper.setActive(arg_1_0._goNoUseImg, true)
+	gohelper.setActive(arg_1_0._goUseImg, false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
-	slot0._btnUseSkin:AddClickListener(slot0._openSelectScroll, slot0)
-	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._SelectAutoPlaySkin, slot0._selectSkin, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+	arg_2_0._btnUseSkin:AddClickListener(arg_2_0._openSelectScroll, arg_2_0)
+	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._SelectAutoPlaySkin, arg_2_0._selectSkin, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
-	slot0._btnUseSkin:RemoveClickListener()
-	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._SelectAutoPlaySkin, slot0._selectSkin, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	arg_3_0._btnUseSkin:RemoveClickListener()
+	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._SelectAutoPlaySkin, arg_3_0._selectSkin, arg_3_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot1.co
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	if slot1.type == SkillEditorMgr.SelectType.Hero then
-		slot0._text.text = slot2.skinId .. (slot2.name and "\n" .. slot2.name or "")
-	elseif slot1.type == SkillEditorMgr.SelectType.Monster then
-		slot4 = FightConfig.instance:getSkinCO(slot2.skinId) and slot3.name or nil
+	local var_4_0 = arg_4_1.co
 
-		if not slot3 then
-			logError("皮肤表找不到id,怪物模型id：", slot2.skinId)
+	if arg_4_1.type == SkillEditorMgr.SelectType.Hero then
+		arg_4_0._text.text = var_4_0.skinId .. (var_4_0.name and "\n" .. var_4_0.name or "")
+	elseif arg_4_1.type == SkillEditorMgr.SelectType.Monster then
+		local var_4_1 = FightConfig.instance:getSkinCO(var_4_0.skinId)
+		local var_4_2 = var_4_1 and var_4_1.name or nil
+
+		if not var_4_1 then
+			logError("皮肤表找不到id,怪物模型id：", var_4_0.skinId)
 		end
 
-		slot0._text.text = slot2.skinId .. (slot4 and "\n" .. slot4 or "")
-	elseif slot1.type == SkillEditorMgr.SelectType.Group then
-		slot3 = string.splitToNumber(slot2.monster, "#")
-		slot4 = lua_monster.configDict[slot3[1]]
+		arg_4_0._text.text = var_4_0.skinId .. (var_4_2 and "\n" .. var_4_2 or "")
+	elseif arg_4_1.type == SkillEditorMgr.SelectType.Group then
+		local var_4_3 = string.splitToNumber(var_4_0.monster, "#")
+		local var_4_4 = lua_monster.configDict[var_4_3[1]]
 
-		for slot8 = 2, #slot3 do
-			if tabletool.indexOf(string.splitToNumber(slot2.bossId, "#"), slot3[slot8]) then
-				slot4 = lua_monster.configDict[slot3[slot8]]
+		for iter_4_0 = 2, #var_4_3 do
+			if tabletool.indexOf(string.splitToNumber(var_4_0.bossId, "#"), var_4_3[iter_4_0]) then
+				var_4_4 = lua_monster.configDict[var_4_3[iter_4_0]]
 
 				break
 			end
 		end
 
-		slot0._text.text = slot2.id .. (slot4 and slot4.name and "\n" .. slot4.name or "")
+		arg_4_0._text.text = var_4_0.id .. (var_4_4 and var_4_4.name and "\n" .. var_4_4.name or "")
 	else
-		slot0._text.text = slot2.id .. (slot2.name and "\n" .. slot2.name or "")
+		arg_4_0._text.text = var_4_0.id .. (var_4_0.name and "\n" .. var_4_0.name or "")
 	end
 end
 
-function slot0._openSelectScroll(slot0)
-	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._OpenAutoPlaySkin, slot0._mo)
+function var_0_0._openSelectScroll(arg_5_0)
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._OpenAutoPlaySkin, arg_5_0._mo)
 end
 
-function slot0._selectSkin(slot0, slot1)
-	if slot0._mo.co.id == slot1.roleid then
-		slot2 = slot0._mo.skinId ~= slot1.skinid
+function var_0_0._selectSkin(arg_6_0, arg_6_1)
+	if arg_6_0._mo.co.id == arg_6_1.roleid then
+		local var_6_0 = arg_6_0._mo.skinId ~= arg_6_1.skinid
 
-		gohelper.setActive(slot0._goNoUseImg, not slot2)
-		gohelper.setActive(slot0._goUseImg, slot2)
+		gohelper.setActive(arg_6_0._goNoUseImg, not var_6_0)
+		gohelper.setActive(arg_6_0._goUseImg, var_6_0)
 
-		if slot2 then
-			slot0._mo.skinId = slot1.skinid
+		if var_6_0 then
+			arg_6_0._mo.skinId = arg_6_1.skinid
 		else
-			slot0._mo.skinId = slot0._mo.co.skinId
+			arg_6_0._mo.skinId = arg_6_0._mo.co.skinId
 		end
 
-		SkillEditorToolAutoPlaySkillSelectModel.instance:addAt(slot0._mo, slot0._index)
+		SkillEditorToolAutoPlaySkillSelectModel.instance:addAt(arg_6_0._mo, arg_6_0._index)
 	end
 end
 
-function slot0._onClickThis(slot0)
-	SkillEditorToolAutoPlaySkillSelectModel.instance:removeAt(slot0._index)
+function var_0_0._onClickThis(arg_7_0)
+	SkillEditorToolAutoPlaySkillSelectModel.instance:removeAt(arg_7_0._index)
 end
 
-return slot0
+return var_0_0

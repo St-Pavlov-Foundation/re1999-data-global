@@ -1,438 +1,492 @@
-module("modules.logic.room.entity.comp.RoomVehicleMoveComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomVehicleMoveComp", package.seeall)
 
-slot0 = class("RoomVehicleMoveComp", LuaCompBase)
+local var_0_0 = class("RoomVehicleMoveComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0.moveSpeed = 0.2
-	slot0.rotationSpeed = 90
-	slot0.maxRotationAngle = 150
-	slot0.endPathWaitTime = 0
-	slot0.radius = 0.1
-	slot0.crossloadMaxWaitTime = 15
-	slot0._crossloadEndTime = 0
-	slot0._endNodeResourcePointOffest = 0.42
-	slot0._isStop = false
-	slot0._isWalking = false
-	slot0._moveParams = {}
-	slot0._rotationParams = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.moveSpeed = 0.2
+	arg_1_0.rotationSpeed = 90
+	arg_1_0.maxRotationAngle = 150
+	arg_1_0.endPathWaitTime = 0
+	arg_1_0.radius = 0.1
+	arg_1_0.crossloadMaxWaitTime = 15
+	arg_1_0._crossloadEndTime = 0
+	arg_1_0._endNodeResourcePointOffest = 0.42
+	arg_1_0._isStop = false
+	arg_1_0._isWalking = false
+	arg_1_0._moveParams = {}
+	arg_1_0._rotationParams = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.targetTrs = slot0.go.transform
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._seeker = ZProj.AStarSeekWrap.Get(slot0.go)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.targetTrs = arg_2_0.go.transform
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_2_0._seeker = ZProj.AStarSeekWrap.Get(arg_2_0.go)
 
-	slot0:initVehicleParam()
+	arg_2_0:initVehicleParam()
 
-	for slot5 = 0, 31 do
-		slot0._seeker:SetTagTraversable(slot5, RoomAStarHelper.walkableTag(slot0._resId, slot5))
+	for iter_2_0 = 0, 31 do
+		arg_2_0._seeker:SetTagTraversable(iter_2_0, RoomAStarHelper.walkableTag(arg_2_0._resId, iter_2_0))
 	end
 
-	slot0:_delayFindPath()
+	arg_2_0:_delayFindPath()
 end
 
-function slot0.initVehicleParam(slot0)
-	slot0._mo = slot0:getVehicleMO()
-	slot0._resId = slot0._mo and slot0._mo.resourceId
+function var_0_0.initVehicleParam(arg_3_0)
+	arg_3_0._mo = arg_3_0:getVehicleMO()
+	arg_3_0._resId = arg_3_0._mo and arg_3_0._mo.resourceId
 
-	if slot0._mo and slot0._mo:getReplaceDefideCfg() then
-		slot0.moveSpeed = slot1.moveSpeed * 0.01
-		slot0.rotationSpeed = slot1.rotationSpeed
-		slot0.endPathWaitTime = slot1.endPathWaitTime and slot1.endPathWaitTime * 0.001 or slot0.endPathWaitTime or 0
-		slot0._useType = slot1.useType
+	local var_3_0 = arg_3_0._mo and arg_3_0._mo:getReplaceDefideCfg()
 
-		if slot1.radius and slot1.radius > 0 then
-			slot2 = RoomBlockEnum.BlockSize * math.sqrt(3) * 0.5
-			slot0._endNodeResourcePointOffest = math.max(0.1, (1 - math.min(slot1.radius * 0.01, slot2) / slot2) * 0.5)
+	if var_3_0 then
+		arg_3_0.moveSpeed = var_3_0.moveSpeed * 0.01
+		arg_3_0.rotationSpeed = var_3_0.rotationSpeed
+		arg_3_0.endPathWaitTime = var_3_0.endPathWaitTime and var_3_0.endPathWaitTime * 0.001 or arg_3_0.endPathWaitTime or 0
+		arg_3_0._useType = var_3_0.useType
+
+		if var_3_0.radius and var_3_0.radius > 0 then
+			local var_3_1 = RoomBlockEnum.BlockSize * math.sqrt(3) * 0.5
+			local var_3_2 = (1 - math.min(var_3_0.radius * 0.01, var_3_1) / var_3_1) * 0.5
+
+			arg_3_0._endNodeResourcePointOffest = math.max(0.1, var_3_2)
 		end
 	end
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
-	if not gohelper.isNil(slot0._seeker) then
-		slot0._seeker:RemoveOnPathCall()
+function var_0_0.removeEventListeners(arg_5_0)
+	if not gohelper.isNil(arg_5_0._seeker) then
+		arg_5_0._seeker:RemoveOnPathCall()
 	end
 
-	slot0._seeker = nil
+	arg_5_0._seeker = nil
 end
 
-function slot0._reset(slot0)
-	slot0._isInitPosition = false
-	slot0._mo = slot0:getVehicleMO()
-	slot0._resId = slot0._mo and slot0._mo.resourceId or slot0._resId
+function var_0_0._reset(arg_6_0)
+	arg_6_0._isInitPosition = false
+	arg_6_0._mo = arg_6_0:getVehicleMO()
+	arg_6_0._resId = arg_6_0._mo and arg_6_0._mo.resourceId or arg_6_0._resId
 
-	if slot0.pathList and #slot0.pathList > 0 then
-		for slot4 = #slot0.pathList, 1, -1 do
-			RoomVectorPool.instance:recycle(slot0.pathList[slot4])
-			table.remove(slot0.pathList, slot4)
+	if arg_6_0.pathList and #arg_6_0.pathList > 0 then
+		for iter_6_0 = #arg_6_0.pathList, 1, -1 do
+			RoomVectorPool.instance:recycle(arg_6_0.pathList[iter_6_0])
+			table.remove(arg_6_0.pathList, iter_6_0)
 		end
 	end
 end
 
-function slot0._delayFindPath(slot0, slot1)
-	slot0:_returnFindPath()
+function var_0_0._delayFindPath(arg_7_0, arg_7_1)
+	arg_7_0:_returnFindPath()
 
-	slot0._delayFindPathing = true
-	slot2 = slot1 or 0.5
+	arg_7_0._delayFindPathing = true
 
-	TaskDispatcher.runDelay(slot0._onDelayFindPath, slot0, slot2)
+	local var_7_0 = arg_7_1 or 0.5
 
-	if slot2 > 0 and (not slot0.pathList or #slot0.pathList <= 0) then
-		slot0:_setIsWalking(false, slot1)
+	TaskDispatcher.runDelay(arg_7_0._onDelayFindPath, arg_7_0, var_7_0)
+
+	if var_7_0 > 0 and (not arg_7_0.pathList or #arg_7_0.pathList <= 0) then
+		arg_7_0:_setIsWalking(false, arg_7_1)
 	end
 end
 
-function slot0._setIsWalking(slot0, slot1, slot2)
-	if slot0._isWalking == slot1 then
+function var_0_0._setIsWalking(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0._isWalking == arg_8_1 then
 		return
 	end
 
-	slot0._isWalking = slot1
-	slot3 = slot0:getVehicleMO() or slot0._mo
+	arg_8_0._isWalking = arg_8_1
 
-	if slot3 and slot3:getReplaceDefideCfg() then
-		slot5 = slot4.audioStop
+	local var_8_0 = arg_8_0:getVehicleMO() or arg_8_0._mo
+	local var_8_1 = var_8_0 and var_8_0:getReplaceDefideCfg()
 
-		if slot0._isWalking then
-			slot5 = slot4.audioWalk
+	if var_8_1 then
+		local var_8_2 = var_8_1.audioStop
+
+		if arg_8_0._isWalking then
+			var_8_2 = var_8_1.audioWalk
 		end
 
-		if slot5 and slot5 ~= 0 then
-			RoomHelper.audioExtendTrigger(slot5, slot0.go)
+		if var_8_2 and var_8_2 ~= 0 then
+			RoomHelper.audioExtendTrigger(var_8_2, arg_8_0.go)
 		end
 	end
 
-	if slot0.entity then
-		slot0.entity:dispatchEvent(slot0._isWalking and RoomEvent.VehicleStartMove or RoomEvent.VehicleStopMove, slot2)
+	if arg_8_0.entity then
+		local var_8_3 = arg_8_0._isWalking and RoomEvent.VehicleStartMove or RoomEvent.VehicleStopMove
+
+		arg_8_0.entity:dispatchEvent(var_8_3, arg_8_2)
 	end
 end
 
-function slot0._onDelayFindPath(slot0)
-	slot0._delayFindPathing = false
+function var_0_0._onDelayFindPath(arg_9_0)
+	arg_9_0._delayFindPathing = false
 
-	slot0:findPath()
+	arg_9_0:findPath()
 end
 
-function slot0._returnFindPath(slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayFindPath, slot0)
+function var_0_0._returnFindPath(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._onDelayFindPath, arg_10_0)
 end
 
-function slot0.findPath(slot0)
-	if not slot0._seeker then
+function var_0_0.findPath(arg_11_0)
+	if not arg_11_0._seeker then
 		return
 	end
 
-	if not (slot0:getVehicleMO() or slot0._mo) then
-		slot0:_delayFindPath()
+	local var_11_0 = arg_11_0:getVehicleMO() or arg_11_0._mo
+
+	if not var_11_0 then
+		arg_11_0:_delayFindPath()
 		logError("RoomVehicleMoveComp: 没有MO数据")
 
 		return
 	end
 
-	slot3 = slot2:getCurNode()
-	slot4 = slot2.enterDirection
-	slot5, slot6, slot7 = slot2:findNextWeightNode()
+	local var_11_1 = var_11_0:getCurNode()
+	local var_11_2 = var_11_0.enterDirection
+	local var_11_3, var_11_4, var_11_5 = var_11_0:findNextWeightNode()
 
-	if not (slot5 and slot5.hexPoint) then
-		slot0:_delayFindPath()
+	if not (var_11_3 and var_11_3.hexPoint) then
+		arg_11_0:_delayFindPath()
 		logError("RoomVehicleMoveComp: 没有位置信息")
 
 		return
 	end
 
-	if slot2:getAreaNode() and #slot9 > 1 and tabletool.indexOf(slot9, slot5) then
-		slot0:_followTrunAround()
-		slot0:_delayFindPath()
+	local var_11_6 = var_11_0:getAreaNode()
+
+	if var_11_6 and #var_11_6 > 1 and tabletool.indexOf(var_11_6, var_11_3) then
+		arg_11_0:_followTrunAround()
+		arg_11_0:_delayFindPath()
 
 		return
 	end
 
-	slot10 = slot6
+	local var_11_7 = var_11_4
 
-	if slot5:isEndNode() then
-		if slot5 == slot3 then
-			if slot2:findEndDir(slot5, slot6) == slot6 then
-				slot10 = 0
+	if var_11_3:isEndNode() then
+		var_11_7 = var_11_0:findEndDir(var_11_3, var_11_4)
+
+		if var_11_3 == var_11_1 then
+			if var_11_7 == var_11_4 then
+				var_11_7 = 0
 			end
 
-			slot6 = slot10
+			var_11_4 = var_11_7
 		end
 	end
 
-	slot11, slot12 = slot0:_isCrossload(slot3, slot4, slot7)
+	local var_11_8, var_11_9 = arg_11_0:_isCrossload(var_11_1, var_11_2, var_11_5)
 
-	if not slot11 then
-		slot11, slot12 = slot0:_isCrossload(slot5, slot6, slot10)
+	if not var_11_8 then
+		var_11_8, var_11_9 = arg_11_0:_isCrossload(var_11_3, var_11_4, var_11_7)
 	end
 
-	if slot11 then
-		slot13, slot14 = RoomCrossLoadController.instance:crossload(slot12, slot0._resId)
-		slot15 = slot13 == slot0._resId
+	if var_11_8 then
+		local var_11_10, var_11_11 = RoomCrossLoadController.instance:crossload(var_11_9, arg_11_0._resId)
+		local var_11_12
 
-		if slot0._crossloadEndTime <= 0 then
-			slot0._crossloadEndTime = Time.time + 15
+		var_11_12 = var_11_10 == arg_11_0._resId
+
+		if arg_11_0._crossloadEndTime <= 0 then
+			arg_11_0._crossloadEndTime = Time.time + 15
 		end
 
-		if slot13 ~= slot0._resId and slot0._crossloadEndTime < Time.time then
-			slot0._crossloadEndTime = 0
+		if var_11_10 ~= arg_11_0._resId and arg_11_0._crossloadEndTime < Time.time then
+			arg_11_0._crossloadEndTime = 0
 
-			slot2:moveToNode(slot5, slot6, true)
+			var_11_0:moveToNode(var_11_3, var_11_4, true)
 		end
 
-		if slot13 ~= slot0._resId or not slot14 then
-			slot0:_delayFindPath()
+		if var_11_10 ~= arg_11_0._resId or not var_11_11 then
+			arg_11_0:_delayFindPath()
 
 			return
 		end
 	else
-		slot0._crossloadEndTime = 0
+		arg_11_0._crossloadEndTime = 0
 	end
 
-	if slot5:isEndNode() and slot10 ~= slot6 then
-		table.insert({
-			slot10
-		}, slot6)
+	local var_11_13 = {
+		var_11_7
+	}
+
+	if var_11_3:isEndNode() and var_11_7 ~= var_11_4 then
+		table.insert(var_11_13, var_11_4)
 	end
 
-	if slot0._useType == RoomVehicleEnum.UseType.Aircraft then
-		slot15 = slot5.hexPoint
-		slot16, slot17 = HexMath.hexXYToPosXY(slot15.x, slot15.y, RoomBlockEnum.BlockSize)
+	local var_11_14 = {
+		nextNode = var_11_3,
+		nextEnterDire = var_11_4,
+		direList = var_11_13,
+		isCrossLoad = var_11_8,
+		buildingUid = var_11_9
+	}
 
-		slot0:_setPathV3ListParam({
-			nextNode = slot5,
-			nextEnterDire = slot6,
-			direList = slot13,
-			isCrossLoad = slot11,
-			buildingUid = slot12
-		}, {
-			Vector3(slot16, RoomBuildingEnum.VehicleInitOffestY, slot17)
-		})
+	if arg_11_0._useType == RoomVehicleEnum.UseType.Aircraft then
+		local var_11_15 = var_11_3.hexPoint
+		local var_11_16, var_11_17 = HexMath.hexXYToPosXY(var_11_15.x, var_11_15.y, RoomBlockEnum.BlockSize)
+		local var_11_18 = {
+			Vector3(var_11_16, RoomBuildingEnum.VehicleInitOffestY, var_11_17)
+		}
+
+		arg_11_0:_setPathV3ListParam(var_11_14, var_11_18)
 	else
-		slot0:_startFindPath(slot14, slot5:isEndNode() and slot0._endNodeResourcePointOffest)
+		arg_11_0:_startFindPath(var_11_14, var_11_3:isEndNode() and arg_11_0._endNodeResourcePointOffest)
 	end
 end
 
-function slot0._startFindPath(slot0, slot1, slot2)
-	if slot0._seeker and slot1 and #slot1.direList > 0 then
-		table.remove(slot1.direList, 1)
+function var_0_0._startFindPath(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._seeker
 
-		slot5 = HexMath.resourcePointToPosition(ResourcePoint.New(slot1.nextNode.hexPoint, slot1.direList[1]), RoomBlockEnum.BlockSize, slot2 or 0.4)
+	if var_12_0 and arg_12_1 and #arg_12_1.direList > 0 then
+		local var_12_1 = arg_12_1.direList[1]
 
-		slot3:RemoveOnPathCall()
-		slot3:AddOnPathCall(slot0._onPathCall, slot0, slot1)
-		slot3:StartPath(slot0.targetTrs.localPosition, Vector3(slot5.x, 0, slot5.y))
+		table.remove(arg_12_1.direList, 1)
+
+		local var_12_2 = HexMath.resourcePointToPosition(ResourcePoint.New(arg_12_1.nextNode.hexPoint, var_12_1), RoomBlockEnum.BlockSize, arg_12_2 or 0.4)
+
+		var_12_0:RemoveOnPathCall()
+		var_12_0:AddOnPathCall(arg_12_0._onPathCall, arg_12_0, arg_12_1)
+		var_12_0:StartPath(arg_12_0.targetTrs.localPosition, Vector3(var_12_2.x, 0, var_12_2.y))
 	end
 end
 
-function slot0._onPathCall(slot0, slot1, slot2, slot3, slot4)
-	slot5 = nil
+function var_0_0._onPathCall(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	local var_13_0
 
-	if not slot3 then
-		slot5 = RoomVectorPool.instance:packPosList(slot2)
+	if not arg_13_3 then
+		var_13_0 = RoomVectorPool.instance:packPosList(arg_13_2)
 	end
 
-	slot0:_setPathV3ListParam(slot1, slot5, slot3)
+	arg_13_0:_setPathV3ListParam(arg_13_1, var_13_0, arg_13_3)
 
-	if slot3 then
-		if #slot1.direList > 0 then
-			slot0:_startFindPath(slot1)
+	if arg_13_3 then
+		if #arg_13_1.direList > 0 then
+			arg_13_0:_startFindPath(arg_13_1)
 		else
-			slot0:_delayFindPath()
+			arg_13_0:_delayFindPath()
 		end
 	end
 end
 
-function slot0._setPathV3ListParam(slot0, slot1, slot2, slot3)
-	if slot1 and slot1.nextNode and (#slot1.direList < 1 or not slot3) then
-		slot4 = slot0:getVehicleMO() or slot0._mo
-		slot5 = slot4.enterDirection
+function var_0_0._setPathV3ListParam(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if arg_14_1 and arg_14_1.nextNode and (#arg_14_1.direList < 1 or not arg_14_3) then
+		local var_14_0 = arg_14_0:getVehicleMO() or arg_14_0._mo
+		local var_14_1 = var_14_0.enterDirection
 
-		slot4:moveToNode(slot1.nextNode, slot1.nextEnterDire, slot3 and true or false)
+		var_14_0:moveToNode(arg_14_1.nextNode, arg_14_1.nextEnterDire, arg_14_3 and true or false)
 
-		slot6 = slot4:getReplaceDefideCfg()
+		local var_14_2 = var_14_0:getReplaceDefideCfg()
 
-		if slot1.isCrossLoad and RoomConfig.instance:getAudioExtendConfig(slot6.audioCrossload) then
-			RoomHelper.audioExtendTrigger(slot6.audioCrossload, slot0.go)
-		elseif slot1.nextEnterDire ~= slot5 and RoomConfig.instance:getAudioExtendConfig(slot6.audioTurn) then
-			RoomHelper.audioExtendTrigger(slot6.audioTurn, slot0.go)
+		if arg_14_1.isCrossLoad and RoomConfig.instance:getAudioExtendConfig(var_14_2.audioCrossload) then
+			RoomHelper.audioExtendTrigger(var_14_2.audioCrossload, arg_14_0.go)
+		elseif arg_14_1.nextEnterDire ~= var_14_1 and RoomConfig.instance:getAudioExtendConfig(var_14_2.audioTurn) then
+			RoomHelper.audioExtendTrigger(var_14_2.audioTurn, arg_14_0.go)
 		end
 	end
 
-	if not slot3 then
-		slot0.pathList = slot2
+	if not arg_14_3 then
+		arg_14_0.pathList = arg_14_2
 
-		slot0:_moveNext()
+		arg_14_0:_moveNext()
 	end
 end
 
-function slot0._isCrossload(slot0, slot1, slot2, slot3)
-	if slot1 then
-		return RoomCrossLoadController.instance:isEnterBuilingCrossLoad(slot1.hexPoint.x, slot1.hexPoint.y, slot2, slot3)
+function var_0_0._isCrossload(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if arg_15_1 then
+		return RoomCrossLoadController.instance:isEnterBuilingCrossLoad(arg_15_1.hexPoint.x, arg_15_1.hexPoint.y, arg_15_2, arg_15_3)
 	end
 end
 
-function slot0._moveNext(slot0)
-	if not slot0._isInitPosition and #slot0.pathList > 1 then
-		slot0._isInitPosition = true
-		slot1 = slot0.pathList[1]
-		slot2, slot3, slot4 = transformhelper.getLocalPos(slot0.targetTrs)
+function var_0_0._moveNext(arg_16_0)
+	if not arg_16_0._isInitPosition and #arg_16_0.pathList > 1 then
+		arg_16_0._isInitPosition = true
 
-		transformhelper.setLocalPos(slot0.targetTrs, slot2, slot1.y, slot4)
+		local var_16_0 = arg_16_0.pathList[1]
+		local var_16_1, var_16_2, var_16_3 = transformhelper.getLocalPos(arg_16_0.targetTrs)
 
-		if Vector3.Distance(Vector3(slot2, slot1.y, slot4), slot1) <= 0.001 then
-			table.remove(slot0.pathList, 1)
-			RoomVectorPool.instance:recycle(slot1)
+		transformhelper.setLocalPos(arg_16_0.targetTrs, var_16_1, var_16_0.y, var_16_3)
+
+		if Vector3.Distance(Vector3(var_16_1, var_16_0.y, var_16_3), var_16_0) <= 0.001 then
+			table.remove(arg_16_0.pathList, 1)
+			RoomVectorPool.instance:recycle(var_16_0)
 		end
 	end
 
-	if #slot0.pathList > 0 then
-		slot1 = slot0.pathList[1]
+	if #arg_16_0.pathList > 0 then
+		local var_16_4 = arg_16_0.pathList[1]
 
-		table.remove(slot0.pathList, 1)
-		slot0:_moveTo(slot1.x, slot1.y, slot1.z)
-		RoomVectorPool.instance:recycle(slot1)
+		table.remove(arg_16_0.pathList, 1)
+		arg_16_0:_moveTo(var_16_4.x, var_16_4.y, var_16_4.z)
+		RoomVectorPool.instance:recycle(var_16_4)
 	end
 end
 
-function slot0._moveTo(slot0, slot1, slot2, slot3)
-	slot0:_killMoveToTween()
+function var_0_0._moveTo(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_0:_killMoveToTween()
 
-	slot4 = slot0.targetTrs.position
-	slot8 = slot0._moveParams
-	slot8.originalX = slot4.x
-	slot8.originalY = slot4.y
-	slot8.originalZ = slot4.z
-	slot8.x = slot1
-	slot8.y = slot2
-	slot8.z = slot3
-	slot0._tweenId = slot0._scene.tween:tweenFloat(0, 1, Vector3.Distance(slot4, Vector3(slot1, slot2, slot3)) / slot0.moveSpeed, slot0._frameCallback, slot0._finishCallback, slot0, slot8)
+	local var_17_0 = arg_17_0.targetTrs.position
+	local var_17_1 = Vector3(arg_17_1, arg_17_2, arg_17_3)
+	local var_17_2 = Vector3.Distance(var_17_0, var_17_1) / arg_17_0.moveSpeed
+	local var_17_3 = arg_17_0._moveParams
 
-	if math.abs(slot1 - slot8.originalX) > 1e-06 or math.abs(slot3 - slot8.originalZ) > 1e-06 then
-		if Quaternion.Angle(slot0.targetTrs.rotation, Quaternion.LookRotation(Vector3(slot1 - slot8.originalX, slot2 - slot8.originalY, slot3 - slot8.originalZ), Vector3.up)) < slot0.maxRotationAngle then
-			slot14 = slot0._rotationParams
-			slot14.fromRotation = slot11
-			slot14.toRotation = slot10
-			slot14.angle = slot12
-			slot0._tweenRotionId = slot0._scene.tween:tweenFloat(0, 1, slot12 / slot0.rotationSpeed, slot0._frameRotationCallback, nil, slot0, slot14)
+	var_17_3.originalX = var_17_0.x
+	var_17_3.originalY = var_17_0.y
+	var_17_3.originalZ = var_17_0.z
+	var_17_3.x = arg_17_1
+	var_17_3.y = arg_17_2
+	var_17_3.z = arg_17_3
+	arg_17_0._tweenId = arg_17_0._scene.tween:tweenFloat(0, 1, var_17_2, arg_17_0._frameCallback, arg_17_0._finishCallback, arg_17_0, var_17_3)
+
+	if math.abs(arg_17_1 - var_17_3.originalX) > 1e-06 or math.abs(arg_17_3 - var_17_3.originalZ) > 1e-06 then
+		local var_17_4 = Vector3(arg_17_1 - var_17_3.originalX, arg_17_2 - var_17_3.originalY, arg_17_3 - var_17_3.originalZ)
+		local var_17_5 = Quaternion.LookRotation(var_17_4, Vector3.up)
+		local var_17_6 = arg_17_0.targetTrs.rotation
+		local var_17_7 = Quaternion.Angle(var_17_6, var_17_5)
+
+		if var_17_7 < arg_17_0.maxRotationAngle then
+			local var_17_8 = var_17_7 / arg_17_0.rotationSpeed
+			local var_17_9 = arg_17_0._rotationParams
+
+			var_17_9.fromRotation = var_17_6
+			var_17_9.toRotation = var_17_5
+			var_17_9.angle = var_17_7
+			arg_17_0._tweenRotionId = arg_17_0._scene.tween:tweenFloat(0, 1, var_17_8, arg_17_0._frameRotationCallback, nil, arg_17_0, var_17_9)
 		else
-			slot0.targetTrs:LookAt(slot5)
-			slot0.entity.vehiclefollow:updateFollower()
+			arg_17_0.targetTrs:LookAt(var_17_1)
+			arg_17_0.entity.vehiclefollow:updateFollower()
 
-			if slot0._mo and slot0._mo:getReplaceDefideCfg() then
-				RoomHelper.audioExtendTrigger(slot13.audioTurnAround, slot0.go)
+			local var_17_10 = arg_17_0._mo and arg_17_0._mo:getReplaceDefideCfg()
+
+			if var_17_10 then
+				RoomHelper.audioExtendTrigger(var_17_10.audioTurnAround, arg_17_0.go)
 			end
 		end
 	else
-		slot0.targetTrs:LookAt(slot5)
+		arg_17_0.targetTrs:LookAt(var_17_1)
 	end
 
-	slot0:_setIsWalking(true)
+	arg_17_0:_setIsWalking(true)
 end
 
-function slot0._killMoveToTween(slot0)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0._killMoveToTween(arg_18_0)
+	if arg_18_0._tweenId then
+		arg_18_0._scene.tween:killById(arg_18_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_18_0._tweenId = nil
 	end
 
-	if slot0._tweenRotionId then
-		slot0._scene.tween:killById(slot0._tweenRotionId)
+	if arg_18_0._tweenRotionId then
+		arg_18_0._scene.tween:killById(arg_18_0._tweenRotionId)
 
-		slot0._tweenRotionId = nil
+		arg_18_0._tweenRotionId = nil
 	end
 end
 
-function slot0._frameCallback(slot0, slot1, slot2)
-	transformhelper.setPos(slot0.targetTrs, slot2.originalX + (slot2.x - slot2.originalX) * slot1, slot2.originalY + (slot2.y - slot2.originalY) * slot1, slot2.originalZ + (slot2.z - slot2.originalZ) * slot1)
-	slot0.entity.vehiclefollow:updateFollower()
+function var_0_0._frameCallback(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_2.originalX + (arg_19_2.x - arg_19_2.originalX) * arg_19_1
+	local var_19_1 = arg_19_2.originalY + (arg_19_2.y - arg_19_2.originalY) * arg_19_1
+	local var_19_2 = arg_19_2.originalZ + (arg_19_2.z - arg_19_2.originalZ) * arg_19_1
+
+	transformhelper.setPos(arg_19_0.targetTrs, var_19_0, var_19_1, var_19_2)
+	arg_19_0.entity.vehiclefollow:updateFollower()
 end
 
-function slot0._frameRotationCallback(slot0, slot1, slot2)
-	slot0.targetTrs.rotation = Quaternion.RotateTowards(slot2.fromRotation, slot2.toRotation, slot1 * slot2.angle)
+function var_0_0._frameRotationCallback(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = Quaternion.RotateTowards(arg_20_2.fromRotation, arg_20_2.toRotation, arg_20_1 * arg_20_2.angle)
+
+	arg_20_0.targetTrs.rotation = var_20_0
 end
 
-function slot0._finishCallback(slot0, slot1)
-	transformhelper.setPos(slot0.targetTrs, slot1.x, slot1.y, slot1.z)
-	slot0.entity.vehiclefollow:addFollerPathPos(slot1.x, slot1.y, slot1.z)
+function var_0_0._finishCallback(arg_21_0, arg_21_1)
+	transformhelper.setPos(arg_21_0.targetTrs, arg_21_1.x, arg_21_1.y, arg_21_1.z)
+	arg_21_0.entity.vehiclefollow:addFollerPathPos(arg_21_1.x, arg_21_1.y, arg_21_1.z)
 
-	if #slot0.pathList <= 0 then
-		if slot0:_isCurNodeIsEndNode() then
-			slot0:_followTrunAround()
+	if #arg_21_0.pathList <= 0 then
+		local var_21_0 = arg_21_0:_isCurNodeIsEndNode()
+
+		if var_21_0 then
+			arg_21_0:_followTrunAround()
 		end
 
-		if slot0.endPathWaitTime > 0 and slot2 then
-			slot0:_delayFindPath(slot0.endPathWaitTime)
+		if arg_21_0.endPathWaitTime > 0 and var_21_0 then
+			arg_21_0:_delayFindPath(arg_21_0.endPathWaitTime)
 		else
-			slot0:findPath()
+			arg_21_0:findPath()
 		end
 	else
-		slot0:_moveNext()
+		arg_21_0:_moveNext()
 	end
 end
 
-function slot0._followTrunAround(slot0)
-	if slot0.entity.vehiclefollow:turnAround() then
-		slot0._isInitPosition = false
+function var_0_0._followTrunAround(arg_22_0)
+	if arg_22_0.entity.vehiclefollow:turnAround() then
+		arg_22_0._isInitPosition = false
 	end
 end
 
-function slot0._isCurNodeIsEndNode(slot0)
-	if (slot0:getVehicleMO() or slot0._mo) and slot1:getCurNode() and slot2:isEndNode() then
-		return true
+function var_0_0._isCurNodeIsEndNode(arg_23_0)
+	local var_23_0 = arg_23_0:getVehicleMO() or arg_23_0._mo
+
+	if var_23_0 then
+		local var_23_1 = var_23_0:getCurNode()
+
+		if var_23_1 and var_23_1:isEndNode() then
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.getIsStop(slot0)
-	return slot0._isStop
+function var_0_0.getIsStop(arg_24_0)
+	return arg_24_0._isStop
 end
 
-function slot0.stop(slot0)
-	if slot0._isStop then
+function var_0_0.stop(arg_25_0)
+	if arg_25_0._isStop then
 		return
 	end
 
-	slot0._isStop = true
+	arg_25_0._isStop = true
 
-	if not gohelper.isNil(slot0._seeker) then
-		slot0._seeker:RemoveOnPathCall()
+	if not gohelper.isNil(arg_25_0._seeker) then
+		arg_25_0._seeker:RemoveOnPathCall()
 	end
 
-	slot0:_killMoveToTween()
-	slot0:_returnFindPath()
-	slot0:_setIsWalking(false)
+	arg_25_0:_killMoveToTween()
+	arg_25_0:_returnFindPath()
+	arg_25_0:_setIsWalking(false)
 end
 
-function slot0.restart(slot0)
-	if not slot0._isStop then
+function var_0_0.restart(arg_26_0)
+	if not arg_26_0._isStop then
 		return
 	end
 
-	slot0._isStop = false
+	arg_26_0._isStop = false
 
-	slot0:_reset()
-	slot0:_delayFindPath()
+	arg_26_0:_reset()
+	arg_26_0:_delayFindPath()
 end
 
-function slot0.getVehicleMO(slot0)
-	return slot0.entity:getVehicleMO()
+function var_0_0.getVehicleMO(arg_27_0)
+	return arg_27_0.entity:getVehicleMO()
 end
 
-function slot0.getSeeker(slot0)
-	return slot0._seeker
+function var_0_0.getSeeker(arg_28_0)
+	return arg_28_0._seeker
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
-	slot0:_returnFindPath()
-	slot0:_killMoveToTween()
+function var_0_0.beforeDestroy(arg_29_0)
+	arg_29_0:removeEventListeners()
+	arg_29_0:_returnFindPath()
+	arg_29_0:_killMoveToTween()
 end
 
-return slot0
+return var_0_0

@@ -1,60 +1,65 @@
-module("modules.logic.versionactivity1_4.act128.rpc.Activity128Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act128.rpc.Activity128Rpc", package.seeall)
 
-slot0 = class("Activity128Rpc", BaseRpc)
+local var_0_0 = class("Activity128Rpc", BaseRpc)
 
-function slot0.sendGet128InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity128Module_pb.Get128InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet128InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity128Module_pb.Get128InfosRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet128InfosReply(slot0, slot1, slot2)
-	slot0:_onReceiveGet128InfosReply(slot1, slot2)
+function var_0_0.onReceiveGet128InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:_onReceiveGet128InfosReply(arg_2_1, arg_2_2)
 end
 
-function slot0.sendAct128GetTotalRewardsRequest(slot0, slot1, slot2)
-	slot3 = Activity128Module_pb.Act128GetTotalRewardsRequest()
-	slot3.activityId = slot1
-	slot3.bossId = slot2
+function var_0_0.sendAct128GetTotalRewardsRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = Activity128Module_pb.Act128GetTotalRewardsRequest()
 
-	return slot0:sendMsg(slot3)
+	var_3_0.activityId = arg_3_1
+	var_3_0.bossId = arg_3_2
+
+	return arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveAct128GetTotalRewardsReply(slot0, slot1, slot2)
-	slot0:_onReceiveAct128GetTotalRewardsReply(slot1, slot2)
+function var_0_0.onReceiveAct128GetTotalRewardsReply(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:_onReceiveAct128GetTotalRewardsReply(arg_4_1, arg_4_2)
 end
 
-function slot0.sendAct128DoublePointRequest(slot0, slot1, slot2)
-	slot3 = Activity128Module_pb.Act128DoublePointRequest()
-	slot3.activityId = slot1
-	slot3.bossId = slot2
+function var_0_0.sendAct128DoublePointRequest(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = Activity128Module_pb.Act128DoublePointRequest()
 
-	return slot0:sendMsg(slot3)
+	var_5_0.activityId = arg_5_1
+	var_5_0.bossId = arg_5_2
+
+	return arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveAct128DoublePointReply(slot0, slot1, slot2)
-	slot0:_onReceiveAct128DoublePointReply(slot1, slot2)
+function var_0_0.onReceiveAct128DoublePointReply(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0:_onReceiveAct128DoublePointReply(arg_6_1, arg_6_2)
 end
 
-function slot0.onReceiveAct128InfoUpdatePush(slot0, slot1, slot2)
-	slot0:_onReceiveAct128InfoUpdatePush(slot1, slot2)
+function var_0_0.onReceiveAct128InfoUpdatePush(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:_onReceiveAct128InfoUpdatePush(arg_7_1, arg_7_2)
 end
 
-function slot0.sendAct128EvaluateRequest(slot0, slot1, slot2)
+function var_0_0.sendAct128EvaluateRequest(arg_8_0, arg_8_1, arg_8_2)
+	return
 end
 
-function slot0.sendAct128GetTotalSingleRewardRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity128Module_pb.Act128GetTotalSingleRewardRequest()
-	slot4.activityId = slot1
-	slot4.bossId = slot2
-	slot4.rewardId = slot3
+function var_0_0.sendAct128GetTotalSingleRewardRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = Activity128Module_pb.Act128GetTotalSingleRewardRequest()
 
-	return slot0:sendMsg(slot4)
+	var_9_0.activityId = arg_9_1
+	var_9_0.bossId = arg_9_2
+	var_9_0.rewardId = arg_9_3
+
+	return arg_9_0:sendMsg(var_9_0)
 end
 
-function slot0.onReceiveAct128GetTotalSingleRewardReply(slot0, slot1, slot2)
-	slot0:_onReceiveAct128GetTotalSingleRewardReply(slot1, slot2)
+function var_0_0.onReceiveAct128GetTotalSingleRewardReply(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:_onReceiveAct128GetTotalSingleRewardReply(arg_10_1, arg_10_2)
 end
 
-return slot0
+return var_0_0

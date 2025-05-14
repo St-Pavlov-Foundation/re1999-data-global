@@ -1,14 +1,14 @@
-module("modules.logic.weekwalk.model.WeekwalkPrayInfoMO", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekwalkPrayInfoMO", package.seeall)
 
-slot0 = pureTable("WeekwalkPrayInfoMO")
+local var_0_0 = pureTable("WeekwalkPrayInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.sacrificeHeroId = slot1.sacrificeHeroId
-	slot0.blessingHeroId = slot1.blessingHeroId
-	slot0.heroAttribute = slot1.heroAttribute
-	slot0.heroExAttribute = slot1.heroExAttribute
-	slot0.passiveSkills = slot1.passiveSkills
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.sacrificeHeroId = arg_1_1.sacrificeHeroId
+	arg_1_0.blessingHeroId = arg_1_1.blessingHeroId
+	arg_1_0.heroAttribute = arg_1_1.heroAttribute
+	arg_1_0.heroExAttribute = arg_1_1.heroExAttribute
+	arg_1_0.passiveSkills = arg_1_1.passiveSkills
 end
 
-return slot0
+return var_0_0

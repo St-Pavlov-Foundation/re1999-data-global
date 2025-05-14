@@ -1,386 +1,487 @@
-module("modules.logic.resonance.view.CharacterTalentUseLayoutView", package.seeall)
+﻿module("modules.logic.resonance.view.CharacterTalentUseLayoutView", package.seeall)
 
-slot0 = class("CharacterTalentUseLayoutView", BaseView)
+local var_0_0 = class("CharacterTalentUseLayoutView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttip = gohelper.findChildText(slot0.viewGO, "#txt_tip")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._gocubelayout = gohelper.findChild(slot0.viewGO, "#go_cubelayout")
-	slot0._gocurlayout = gohelper.findChild(slot0.viewGO, "#go_cubelayout/#go_curlayout")
-	slot0._gosharelayout = gohelper.findChild(slot0.viewGO, "#go_cubelayout/#go_sharelayout")
-	slot0._gomeshItem = gohelper.findChild(slot0.viewGO, "#go_cubelayout/#go_meshItem")
-	slot0._gochessitem = gohelper.findChild(slot0.viewGO, "#go_cubelayout/#go_chessitem")
-	slot0._goattr = gohelper.findChild(slot0.viewGO, "#go_attr")
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_attr/panel/attributeItem/#go_bg")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_attr/panel/attributeItem/#image_icon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_attr/panel/attributeItem/#txt_name")
-	slot0._txtcur = gohelper.findChildText(slot0.viewGO, "#go_attr/panel/attributeItem/#txt_cur")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_attr/panel/attributeItem/#txt_num")
-	slot0._imagechange = gohelper.findChildImage(slot0.viewGO, "#go_attr/panel/attributeItem/#txt_num/#image_change")
-	slot0._btnyes = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_yes")
-	slot0._btnno = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_no")
-	slot0._btncheck = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_check")
-	slot0._txtcube = gohelper.findChildText(slot0.viewGO, "#btn_check/#txt_cube")
-	slot0._txtattr = gohelper.findChildText(slot0.viewGO, "#btn_check/#txt_attr")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "#txt_tip")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._gocubelayout = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout")
+	arg_1_0._gocurlayout = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_curlayout")
+	arg_1_0._gosharelayout = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_sharelayout")
+	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_meshItem")
+	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "#go_cubelayout/#go_chessitem")
+	arg_1_0._goattr = gohelper.findChild(arg_1_0.viewGO, "#go_attr")
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#go_bg")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#image_icon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_name")
+	arg_1_0._txtcur = gohelper.findChildText(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_cur")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_num")
+	arg_1_0._imagechange = gohelper.findChildImage(arg_1_0.viewGO, "#go_attr/panel/attributeItem/#txt_num/#image_change")
+	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
+	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
+	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_check")
+	arg_1_0._txtcube = gohelper.findChildText(arg_1_0.viewGO, "#btn_check/#txt_cube")
+	arg_1_0._txtattr = gohelper.findChildText(arg_1_0.viewGO, "#btn_check/#txt_attr")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnyes:AddClickListener(slot0._btnyesOnClick, slot0)
-	slot0._btnno:AddClickListener(slot0._btnnoOnClick, slot0)
-	slot0._btncheck:AddClickListener(slot0._btncheckOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
+	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnyes:RemoveClickListener()
-	slot0._btnno:RemoveClickListener()
-	slot0._btncheck:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnyes:RemoveClickListener()
+	arg_3_0._btnno:RemoveClickListener()
+	arg_3_0._btncheck:RemoveClickListener()
 end
 
-function slot0._btnyesOnClick(slot0)
-	if string.nilorempty(slot0._code) then
+function var_0_0._btnyesOnClick(arg_4_0)
+	if string.nilorempty(arg_4_0._code) then
 		return
 	end
 
-	HeroRpc.instance:setPutTalentCubeBatchRequest(slot0._heroMo.heroId, slot0._shareDataList, slot0._heroMo.useTalentTemplateId, HeroResonaceModel.instance:_isUnlockTalentStyle(slot0._heroMo.heroId, slot0._shareStyle) and slot0._shareStyle or 0)
+	local var_4_0 = arg_4_0._heroMo.useTalentTemplateId
+	local var_4_1 = HeroResonaceModel.instance:_isUnlockTalentStyle(arg_4_0._heroMo.heroId, arg_4_0._shareStyle) and arg_4_0._shareStyle or 0
+
+	HeroRpc.instance:setPutTalentCubeBatchRequest(arg_4_0._heroMo.heroId, arg_4_0._shareDataList, var_4_0, var_4_1)
 end
 
-function slot0._btnnoOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnnoOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btncheckOnClick(slot0)
-	slot0:_activeAttrPanel(not slot0._isShowAttrPanel)
+function var_0_0._btncheckOnClick(arg_6_0)
+	arg_6_0:_activeAttrPanel(not arg_6_0._isShowAttrPanel)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onUseShareCode, slot0)
+function var_0_0._addEvents(arg_10_0)
+	arg_10_0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_10_0._onUseShareCode, arg_10_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onUseShareCode, slot0)
+function var_0_0._removeEvents(arg_11_0)
+	arg_11_0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_11_0._onUseShareCode, arg_11_0)
 end
 
-function slot0._onUseShareCode(slot0)
-	ToastController.instance:showToast(ToastEnum.CharacterTalentShareCodeSuccessPastedUse, HeroResonaceModel.instance:getSpecialCn(slot0._heroMo))
-	slot0:closeThis()
+function var_0_0._onUseShareCode(arg_12_0)
+	local var_12_0 = HeroResonaceModel.instance:getSpecialCn(arg_12_0._heroMo)
+
+	ToastController.instance:showToast(ToastEnum.CharacterTalentShareCodeSuccessPastedUse, var_12_0)
+	arg_12_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvents()
-	gohelper.setActive(slot0._txtdesc.gameObject, false)
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0:_addEvents()
+	gohelper.setActive(arg_13_0._txtdesc.gameObject, false)
 
-	slot0._code = slot0.viewParam.code
-	slot0._heroMo = slot0.viewParam.heroMo
-	slot0._defaultWidth = 56.2
-	slot0._defaultSize = 6
+	arg_13_0._code = arg_13_0.viewParam.code
+	arg_13_0._heroMo = arg_13_0.viewParam.heroMo
+	arg_13_0._defaultWidth = 56.2
+	arg_13_0._defaultSize = 6
 
-	recthelper.setWidth(slot0._gomeshItem.transform, slot0._defaultWidth)
-	recthelper.setHeight(slot0._gomeshItem.transform, slot0._defaultWidth)
+	recthelper.setWidth(arg_13_0._gomeshItem.transform, arg_13_0._defaultWidth)
+	recthelper.setHeight(arg_13_0._gomeshItem.transform, arg_13_0._defaultWidth)
 
-	if not string.nilorempty(slot0._code) then
-		slot0:_showShareLayout()
-		slot0:_showUseLayout()
+	if not string.nilorempty(arg_13_0._code) then
+		arg_13_0:_showShareLayout()
+		arg_13_0:_showUseLayout()
 	end
 
-	slot0._attrItems = slot0:getUserDataTb_()
-	slot0._attrItemPrefab = gohelper.findChild(slot0.viewGO, "#go_attr/panel/attributeItem")
+	arg_13_0._attrItems = arg_13_0:getUserDataTb_()
+	arg_13_0._attrItemPrefab = gohelper.findChild(arg_13_0.viewGO, "#go_attr/panel/attributeItem")
 
-	slot0:_initAttr()
+	arg_13_0:_initAttr()
 
-	slot0._txttip.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("p_charactertalentuselayoutview_txt_title"), HeroResonaceModel.instance:getSpecialCn(slot0._heroMo))
+	local var_13_0 = HeroResonaceModel.instance:getSpecialCn(arg_13_0._heroMo)
+	local var_13_1 = luaLang("p_charactertalentuselayoutview_txt_title")
+
+	arg_13_0._txttip.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_1, var_13_0)
 end
 
-function slot0._showShareLayout(slot0)
-	slot0._shareDataList, slot0._shareStyle = HeroResonaceModel.instance:decodeLayoutShareCode(slot0._code)
+function var_0_0._showShareLayout(arg_14_0)
+	arg_14_0._shareDataList, arg_14_0._shareStyle = HeroResonaceModel.instance:decodeLayoutShareCode(arg_14_0._code)
 
-	if not slot0._shareDataList then
+	if not arg_14_0._shareDataList then
 		return
 	end
 
-	if not slot0._shareCubeItems then
-		slot0._shareCubeItems = slot0:getUserDataTb_()
+	if not arg_14_0._shareCubeItems then
+		arg_14_0._shareCubeItems = arg_14_0:getUserDataTb_()
 	end
 
-	if not slot0._shareMeshItems then
-		slot0._shareMeshItems = slot0:getUserDataTb_()
+	if not arg_14_0._shareMeshItems then
+		arg_14_0._shareMeshItems = arg_14_0:getUserDataTb_()
 	end
 
-	slot0._sharemeshObj = gohelper.findChild(slot0._gosharelayout, "mesh")
-	slot0._sharecubeObj = gohelper.findChild(slot0._gosharelayout, "cube")
+	arg_14_0._sharemeshObj = gohelper.findChild(arg_14_0._gosharelayout, "mesh")
+	arg_14_0._sharecubeObj = gohelper.findChild(arg_14_0._gosharelayout, "cube")
 
-	slot0:_setMesh(1)
-	gohelper.CreateObjList(slot0, slot0._onShareCubeItemShow, slot0._shareDataList, slot0._sharecubeObj, slot0._gochessitem)
-	slot0:_refreshMeshLine(slot0._shareMeshItems)
+	arg_14_0:_setMesh(1)
+	gohelper.CreateObjList(arg_14_0, arg_14_0._onShareCubeItemShow, arg_14_0._shareDataList, arg_14_0._sharecubeObj, arg_14_0._gochessitem)
+	arg_14_0:_refreshMeshLine(arg_14_0._shareMeshItems)
 end
 
-function slot0._showUseLayout(slot0)
-	if not slot0._heroMo.talentCubeInfos.data_list or not slot0._heroMo then
+function var_0_0._showUseLayout(arg_15_0)
+	local var_15_0 = arg_15_0._heroMo.talentCubeInfos.data_list
+
+	if not var_15_0 or not arg_15_0._heroMo then
 		return
 	end
 
-	slot0._usemeshObj = gohelper.findChild(slot0._gocurlayout, "mesh")
-	slot0._usecubeObj = gohelper.findChild(slot0._gocurlayout, "cube")
+	arg_15_0._usemeshObj = gohelper.findChild(arg_15_0._gocurlayout, "mesh")
+	arg_15_0._usecubeObj = gohelper.findChild(arg_15_0._gocurlayout, "cube")
 
-	if not slot0._useCubeItems then
-		slot0._useCubeItems = slot0:getUserDataTb_()
+	if not arg_15_0._useCubeItems then
+		arg_15_0._useCubeItems = arg_15_0:getUserDataTb_()
 	end
 
-	if not slot0._useMeshItems then
-		slot0._useMeshItems = slot0:getUserDataTb_()
+	if not arg_15_0._useMeshItems then
+		arg_15_0._useMeshItems = arg_15_0:getUserDataTb_()
 	end
 
-	slot0:_setMesh(2)
-	gohelper.CreateObjList(slot0, slot0._onUseCubeItemShow, slot1, slot0._usecubeObj, slot0._gochessitem)
-	slot0:_refreshMeshLine(slot0._useMeshItems)
+	arg_15_0:_setMesh(2)
+	gohelper.CreateObjList(arg_15_0, arg_15_0._onUseCubeItemShow, var_15_0, arg_15_0._usecubeObj, arg_15_0._gochessitem)
+	arg_15_0:_refreshMeshLine(arg_15_0._useMeshItems)
 end
 
-function slot0._setMesh(slot0, slot1)
-	slot2 = string.splitToNumber(HeroResonanceConfig.instance:getTalentAllShape(slot0._heroMo.heroId, slot0._heroMo.talent), ",")
-	slot3 = slot2[1]
-	slot5 = slot1 == 1 and slot0._shareMeshItems or slot0._useMeshItems
-	slot6 = slot1 == 1 and slot0._sharemeshObj or slot0._usemeshObj
-	slot7 = slot1 == 1 and slot0._gosharelayout or slot0._gocurlayout
+function var_0_0._setMesh(arg_16_0, arg_16_1)
+	local var_16_0 = string.splitToNumber(HeroResonanceConfig.instance:getTalentAllShape(arg_16_0._heroMo.heroId, arg_16_0._heroMo.talent), ",")
+	local var_16_1 = var_16_0[1]
+	local var_16_2 = var_16_0[2]
+	local var_16_3 = arg_16_1 == 1 and arg_16_0._shareMeshItems or arg_16_0._useMeshItems
+	local var_16_4 = arg_16_1 == 1 and arg_16_0._sharemeshObj or arg_16_0._usemeshObj
 
-	for slot11 = 0, slot2[2] - 1 do
-		slot5[slot11] = slot0:getUserDataTb_()
+	if arg_16_1 ~= 1 or not arg_16_0._gosharelayout then
+		local var_16_5 = arg_16_0._gocurlayout
+	end
 
-		if not slot5[slot11] then
-			slot5[slot11] = slot0:getUserDataTb_()
+	for iter_16_0 = 0, var_16_2 - 1 do
+		var_16_3[iter_16_0] = arg_16_0:getUserDataTb_()
+
+		local var_16_6 = var_16_3[iter_16_0]
+
+		if not var_16_6 then
+			var_16_6 = arg_16_0:getUserDataTb_()
+			var_16_3[iter_16_0] = var_16_6
 		end
 
-		for slot16 = 0, slot3 - 1 do
-			if not slot12[slot16] then
-				slot17 = slot0:getUserDataTb_()
-				slot19 = gohelper.clone(slot0._gomeshItem, slot6, string.format("mesh_%s_%s", slot16, slot11))
-				slot17.go = slot19
-				slot17.top = gohelper.findChild(slot19, "top")
-				slot17.bottom = gohelper.findChild(slot19, "bottom")
-				slot17.left = gohelper.findChild(slot19, "left")
-				slot17.right = gohelper.findChild(slot19, "right")
-				slot12[slot16] = slot17
+		for iter_16_1 = 0, var_16_1 - 1 do
+			local var_16_7 = var_16_6[iter_16_1]
+
+			if not var_16_7 then
+				var_16_7 = arg_16_0:getUserDataTb_()
+
+				local var_16_8 = string.format("mesh_%s_%s", iter_16_1, iter_16_0)
+				local var_16_9 = gohelper.clone(arg_16_0._gomeshItem, var_16_4, var_16_8)
+
+				var_16_7.go = var_16_9
+				var_16_7.top = gohelper.findChild(var_16_9, "top")
+				var_16_7.bottom = gohelper.findChild(var_16_9, "bottom")
+				var_16_7.left = gohelper.findChild(var_16_9, "left")
+				var_16_7.right = gohelper.findChild(var_16_9, "right")
+				var_16_6[iter_16_1] = var_16_7
 			end
 
-			recthelper.setAnchor(slot17.go.transform, (slot16 - (slot3 - 1) / 2) * slot0._defaultWidth, ((slot4 - 1) / 2 - slot11) * slot0._defaultWidth)
-			gohelper.setActive(slot17.go, true)
+			local var_16_10 = iter_16_1 - (var_16_1 - 1) / 2
+			local var_16_11 = (var_16_2 - 1) / 2 - iter_16_0
+
+			recthelper.setAnchor(var_16_7.go.transform, var_16_10 * arg_16_0._defaultWidth, var_16_11 * arg_16_0._defaultWidth)
+			gohelper.setActive(var_16_7.go, true)
 		end
 	end
 end
 
-function slot0._onShareCubeItemShow(slot0, slot1, slot2, slot3)
-	slot0:_onCubeItemShow(slot1, slot2, slot3, 1)
+function var_0_0._onShareCubeItemShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_0:_onCubeItemShow(arg_17_1, arg_17_2, arg_17_3, 1)
 
-	if slot0._heroMo.talentCubeInfos.own_main_cube_id == slot2.cubeId and slot0._shareStyle and slot0._shareStyle > 0 then
-		slot5, slot6 = HeroResonaceModel.instance:_isUnlockTalentStyle(slot0._heroMo.heroId, slot0._shareStyle)
+	if arg_17_0._heroMo.talentCubeInfos.own_main_cube_id == arg_17_2.cubeId and arg_17_0._shareStyle and arg_17_0._shareStyle > 0 then
+		local var_17_0, var_17_1 = HeroResonaceModel.instance:_isUnlockTalentStyle(arg_17_0._heroMo.heroId, arg_17_0._shareStyle)
 
-		if not slot5 then
-			slot7 = TalentStyleModel.instance:getCubeMoByStyle(slot0._heroMo.heroId, 0)
-			slot0._txtdesc.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("character_copy_talentLayout_use_tip"), slot6 and slot6:getStyleTag(), slot7 and slot7:getStyleTag())
+		if not var_17_0 then
+			local var_17_2 = TalentStyleModel.instance:getCubeMoByStyle(arg_17_0._heroMo.heroId, 0)
+			local var_17_3 = var_17_1 and var_17_1:getStyleTag()
+			local var_17_4 = var_17_2 and var_17_2:getStyleTag()
+			local var_17_5 = luaLang("character_copy_talentLayout_use_tip")
+
+			arg_17_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_17_5, var_17_3, var_17_4)
 		else
-			slot0:_showMainStyleCube(tonumber(slot2.cubeId .. slot0._shareStyle), slot2.cubeId, slot0._shareCubeItems[slot3])
+			local var_17_6 = tonumber(arg_17_2.cubeId .. arg_17_0._shareStyle)
+			local var_17_7 = arg_17_0._shareCubeItems[arg_17_3]
+
+			arg_17_0:_showMainStyleCube(var_17_6, arg_17_2.cubeId, var_17_7)
 		end
 
-		gohelper.setActive(slot0._txtdesc.gameObject, not slot5)
+		gohelper.setActive(arg_17_0._txtdesc.gameObject, not var_17_0)
 	end
 end
 
-function slot0._onUseCubeItemShow(slot0, slot1, slot2, slot3)
-	slot0:_onCubeItemShow(slot1, slot2, slot3, 2)
+function var_0_0._onUseCubeItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	arg_18_0:_onCubeItemShow(arg_18_1, arg_18_2, arg_18_3, 2)
 
-	slot5 = slot0._heroMo:getHeroUseStyleCubeId()
+	local var_18_0 = arg_18_0._heroMo.talentCubeInfos.own_main_cube_id
+	local var_18_1 = arg_18_0._heroMo:getHeroUseStyleCubeId()
 
-	if slot2.cubeId == slot0._heroMo.talentCubeInfos.own_main_cube_id and slot5 ~= slot4 then
-		slot0:_showMainStyleCube(slot5, slot4, slot0._useCubeItems[slot3])
+	if arg_18_2.cubeId == var_18_0 and var_18_1 ~= var_18_0 then
+		local var_18_2 = arg_18_0._useCubeItems[arg_18_3]
+
+		arg_18_0:_showMainStyleCube(var_18_1, var_18_0, var_18_2)
 	end
 end
 
-function slot0._showMainStyleCube(slot0, slot1, slot2, slot3)
-	if not HeroResonanceConfig.instance:getCubeConfig(slot1) then
+function var_0_0._showMainStyleCube(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0 = HeroResonanceConfig.instance:getCubeConfig(arg_19_1)
+
+	if not var_19_0 then
 		return
 	end
 
-	if not string.nilorempty(slot4.icon) then
-		slot9 = HeroResonanceConfig.instance:getCubeConfig(slot2)
+	local var_19_1 = var_19_0.icon
 
-		if slot3 then
-			UISpriteSetMgr.instance:setCharacterTalentSprite(slot3.image, "ky_" .. slot5, true)
-			UISpriteSetMgr.instance:setCharacterTalentSprite(slot3.icon, slot7, true)
-			UISpriteSetMgr.instance:setCharacterTalentSprite(slot3.glow_icon, "mk_" .. slot5, true)
+	if not string.nilorempty(var_19_1) then
+		local var_19_2 = "ky_" .. var_19_1
+		local var_19_3 = "mk_" .. var_19_1
+		local var_19_4 = var_19_3
+		local var_19_5 = HeroResonanceConfig.instance:getCubeConfig(arg_19_2)
 
-			if slot9 and string.split(slot9.icon, "_") then
-				UISpriteSetMgr.instance:setCharacterTalentSprite(slot3.cell_icon, "gz_" .. slot10[#slot10], true)
-				gohelper.setActive(slot3.cell_icon.gameObject, true)
+		if arg_19_3 then
+			UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.image, var_19_2, true)
+			UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.icon, var_19_3, true)
+			UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.glow_icon, var_19_4, true)
+
+			local var_19_6 = var_19_5 and string.split(var_19_5.icon, "_")
+
+			if var_19_6 then
+				local var_19_7 = "gz_" .. var_19_6[#var_19_6]
+
+				UISpriteSetMgr.instance:setCharacterTalentSprite(arg_19_3.cell_icon, var_19_7, true)
+				gohelper.setActive(arg_19_3.cell_icon.gameObject, true)
 			end
 		end
 	end
 end
 
-function slot0._onCubeItemShow(slot0, slot1, slot2, slot3, slot4)
-	slot11 = slot4 == 1 and slot0._shareMeshItems or slot0._useMeshItems
-	slot12 = slot2.cubeId
-	slot13 = HeroResonanceConfig.instance:getCubeMatrix(slot12)
-	slot14 = HeroResonanceConfig.instance:getCubeConfig(slot12).icon
+function var_0_0._onCubeItemShow(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
+	local var_20_0 = arg_20_1.transform
+	local var_20_1 = var_20_0:GetComponent(gohelper.Type_Image)
+	local var_20_2 = gohelper.findChildImage(arg_20_1, "icon")
+	local var_20_3 = gohelper.findChildImage(arg_20_1, "glow")
+	local var_20_4 = gohelper.findChildImage(arg_20_1, "cell")
+	local var_20_5 = arg_20_4 == 1 and arg_20_0._shareCubeItems or arg_20_0._useCubeItems
+	local var_20_6 = arg_20_4 == 1 and arg_20_0._shareMeshItems or arg_20_0._useMeshItems
+	local var_20_7 = arg_20_2.cubeId
+	local var_20_8 = HeroResonanceConfig.instance:getCubeMatrix(var_20_7)
+	local var_20_9 = HeroResonanceConfig.instance:getCubeConfig(var_20_7).icon
 
-	UISpriteSetMgr.instance:setCharacterTalentSprite(slot1.transform:GetComponent(gohelper.Type_Image), "ky_" .. slot14, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(gohelper.findChildImage(slot1, "icon"), slot14, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(gohelper.findChildImage(slot1, "glow"), "glow_" .. slot14, true)
-	gohelper.setActive(gohelper.findChildImage(slot1, "cell").gameObject, false)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(var_20_1, "ky_" .. var_20_9, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(var_20_2, var_20_9, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(var_20_3, "glow_" .. var_20_9, true)
+	gohelper.setActive(var_20_4.gameObject, false)
 
-	if not (slot4 == 1 and slot0._shareCubeItems or slot0._useCubeItems)[slot3] then
-		slot10[slot3] = slot0:getUserDataTb_()
+	if not var_20_5[arg_20_3] then
+		var_20_5[arg_20_3] = arg_20_0:getUserDataTb_()
 	end
 
-	slot15 = slot0:getUserDataTb_()
-	slot15.go = slot1
-	slot15.image = slot6
-	slot15.icon = slot7
-	slot15.glow_icon = slot8
-	slot15.cell_icon = slot9
-	slot10[slot3] = slot15
+	local var_20_10 = arg_20_0:getUserDataTb_()
 
-	if slot11[slot2.posY][slot2.posX] then
-		transformhelper.setLocalRotation(slot5, 0, 0, -slot2.direction * 90)
+	var_20_10.go = arg_20_1
+	var_20_10.image = var_20_1
+	var_20_10.icon = var_20_2
+	var_20_10.glow_icon = var_20_3
+	var_20_10.cell_icon = var_20_4
+	var_20_5[arg_20_3] = var_20_10
 
-		slot19 = slot0._defaultWidth * GameUtil.getTabLen(slot13[0])
-		slot20 = slot0._defaultWidth * GameUtil.getTabLen(slot13)
-		slot21 = slot2.direction % 2 == 0
+	local var_20_11 = var_20_6[arg_20_2.posY][arg_20_2.posX]
 
-		recthelper.setAnchor(slot5, slot16.go.transform.anchoredPosition.x + (slot21 and slot19 or slot20) / 2 - slot0._defaultWidth / 2, slot16.go.transform.anchoredPosition.y + -(slot21 and slot20 or slot19) / 2 + slot0._defaultWidth / 2)
+	if var_20_11 then
+		local var_20_12 = var_20_11.go.transform.anchoredPosition.x
+		local var_20_13 = var_20_11.go.transform.anchoredPosition.y
+
+		transformhelper.setLocalRotation(var_20_0, 0, 0, -arg_20_2.direction * 90)
+
+		local var_20_14 = arg_20_0._defaultWidth * GameUtil.getTabLen(var_20_8[0])
+		local var_20_15 = arg_20_0._defaultWidth * GameUtil.getTabLen(var_20_8)
+		local var_20_16 = arg_20_2.direction % 2 == 0
+		local var_20_17 = var_20_12 + (var_20_16 and var_20_14 or var_20_15) / 2
+		local var_20_18 = var_20_13 + -(var_20_16 and var_20_15 or var_20_14) / 2
+		local var_20_19 = var_20_17 - arg_20_0._defaultWidth / 2
+		local var_20_20 = var_20_18 + arg_20_0._defaultWidth / 2
+
+		recthelper.setAnchor(var_20_0, var_20_19, var_20_20)
 	end
 
-	for slot21, slot22 in pairs(HeroResonaceModel.instance:rotationMatrix(slot13, slot2.direction)) do
-		for slot26, slot27 in pairs(slot22) do
-			if slot27 == 1 and slot11[slot2.posY + slot21] and slot11[slot2.posY + slot21][slot2.posX + slot26] then
-				slot28.data = slot2
+	local var_20_21 = HeroResonaceModel.instance:rotationMatrix(var_20_8, arg_20_2.direction)
+
+	for iter_20_0, iter_20_1 in pairs(var_20_21) do
+		for iter_20_2, iter_20_3 in pairs(iter_20_1) do
+			if iter_20_3 == 1 and var_20_6[arg_20_2.posY + iter_20_0] then
+				local var_20_22 = var_20_6[arg_20_2.posY + iter_20_0][arg_20_2.posX + iter_20_2]
+
+				if var_20_22 then
+					var_20_22.data = arg_20_2
+				end
 			end
 		end
 	end
 end
 
-function slot0._refreshMeshLine(slot0, slot1)
-	if not slot1 then
+function var_0_0._refreshMeshLine(arg_21_0, arg_21_1)
+	if not arg_21_1 then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		for slot10, slot11 in pairs(slot6) do
-			if not slot11 then
+	for iter_21_0, iter_21_1 in pairs(arg_21_1) do
+		for iter_21_2, iter_21_3 in pairs(iter_21_1) do
+			if not iter_21_3 then
 				return
 			end
 
-			if slot1[slot5][slot10 - 1] and slot11.data and slot11.data == slot12.data then
-				gohelper.setActive(slot11.left, false)
-				gohelper.setActive(slot12.right, false)
+			local var_21_0 = arg_21_1[iter_21_0][iter_21_2 - 1]
+
+			if var_21_0 and iter_21_3.data and iter_21_3.data == var_21_0.data then
+				gohelper.setActive(iter_21_3.left, false)
+				gohelper.setActive(var_21_0.right, false)
 			end
 
-			if slot1[slot5 - 1] and slot1[slot5 - 1][slot10] and slot11.data and slot11.data == slot13.data then
-				gohelper.setActive(slot11.top, false)
-				gohelper.setActive(slot13.bottom, false)
+			local var_21_1 = arg_21_1[iter_21_0 - 1] and arg_21_1[iter_21_0 - 1][iter_21_2]
+
+			if var_21_1 and iter_21_3.data and iter_21_3.data == var_21_1.data then
+				gohelper.setActive(iter_21_3.top, false)
+				gohelper.setActive(var_21_1.bottom, false)
 			end
 
-			if slot1[slot5][slot10 + 1] and slot11.data and slot11.data == slot14.data then
-				gohelper.setActive(slot11.right, false)
-				gohelper.setActive(slot14.left, false)
+			local var_21_2 = arg_21_1[iter_21_0][iter_21_2 + 1]
+
+			if var_21_2 and iter_21_3.data and iter_21_3.data == var_21_2.data then
+				gohelper.setActive(iter_21_3.right, false)
+				gohelper.setActive(var_21_2.left, false)
 			end
 
-			if slot1[slot5 + 1] and slot1[slot5 + 1][slot10] and slot11.data and slot11.data == slot15.data then
-				gohelper.setActive(slot11.bottom, false)
-				gohelper.setActive(slot15.top, false)
+			local var_21_3 = arg_21_1[iter_21_0 + 1] and arg_21_1[iter_21_0 + 1][iter_21_2]
+
+			if var_21_3 and iter_21_3.data and iter_21_3.data == var_21_3.data then
+				gohelper.setActive(iter_21_3.bottom, false)
+				gohelper.setActive(var_21_3.top, false)
 			end
 		end
 	end
 end
 
-function slot0._activeAttrPanel(slot0, slot1)
-	slot0._isShowAttrPanel = slot1
+function var_0_0._activeAttrPanel(arg_22_0, arg_22_1)
+	arg_22_0._isShowAttrPanel = arg_22_1
 
-	gohelper.setActive(slot0._gocubelayout, not slot1)
-	gohelper.setActive(slot0._goattr, slot1)
-	gohelper.setActive(slot0._txtcube.gameObject, not slot1)
-	gohelper.setActive(slot0._txtattr.gameObject, slot1)
+	gohelper.setActive(arg_22_0._gocubelayout, not arg_22_1)
+	gohelper.setActive(arg_22_0._goattr, arg_22_1)
+	gohelper.setActive(arg_22_0._txtcube.gameObject, not arg_22_1)
+	gohelper.setActive(arg_22_0._txtattr.gameObject, arg_22_1)
 end
 
-function slot0._initAttr(slot0)
-	slot3 = math.min(math.ceil(#HeroResonaceModel.instance:getShareTalentAttrInfos(slot0._heroMo, slot0._shareDataList, slot0._shareStyle) * 0.5) > 5 and 120 + 20 * (slot2 - 5) or 120, 240)
+function var_0_0._initAttr(arg_23_0)
+	local var_23_0 = HeroResonaceModel.instance:getShareTalentAttrInfos(arg_23_0._heroMo, arg_23_0._shareDataList, arg_23_0._shareStyle)
+	local var_23_1 = math.ceil(#var_23_0 * 0.5)
+	local var_23_2 = var_23_1 > 5 and 120 + 20 * (var_23_1 - 5) or 120
+	local var_23_3 = math.min(var_23_2, 240)
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = slot0:_getAttrItem(slot7)
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		local var_23_4 = arg_23_0:_getAttrItem(iter_23_0)
+		local var_23_5 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_23_1.key))
+		local var_23_6 = iter_23_1.value or 0
+		local var_23_7 = iter_23_1.shareValue or 0
 
-		if HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(slot8.key)).type ~= 1 then
-			slot11 = tonumber(string.format("%.3f", (slot8.value or 0) / 10)) .. "%"
-			slot12 = tonumber(string.format("%.3f", (slot8.shareValue or 0) / 10)) .. "%"
+		if var_23_5.type ~= 1 then
+			var_23_6 = tonumber(string.format("%.3f", var_23_6 / 10)) .. "%"
+			var_23_7 = tonumber(string.format("%.3f", var_23_7 / 10)) .. "%"
 		else
-			slot11 = math.floor(slot11)
-			slot12 = math.floor(slot12)
+			var_23_6 = math.floor(var_23_6)
+			var_23_7 = math.floor(var_23_7)
 		end
 
-		slot9.txtname.text = slot10.name
-		slot9.txtcur.text = slot11
-		slot9.txtnum.text = slot12
-		slot13 = 0
+		var_23_4.txtname.text = var_23_5.name
+		var_23_4.txtcur.text = var_23_6
+		var_23_4.txtnum.text = var_23_7
 
-		if math.floor(slot8.shareValue) < math.floor(slot8.value) then
-			slot13 = 2
-		elseif slot14 < slot15 then
-			slot13 = 1
+		local var_23_8 = 0
+		local var_23_9 = math.floor(iter_23_1.value)
+		local var_23_10 = math.floor(iter_23_1.shareValue)
+
+		if var_23_10 < var_23_9 then
+			var_23_8 = 2
+		elseif var_23_9 < var_23_10 then
+			var_23_8 = 1
 		end
 
-		slot16 = HeroResonanceEnum.AttrChange[slot13]
-		slot9.txtnum.color = GameUtil.parseColor(slot16.NumColor)
+		local var_23_11 = HeroResonanceEnum.AttrChange[var_23_8]
 
-		if not string.nilorempty(slot16.ChangeImage) then
-			UISpriteSetMgr.instance:setUiCharacterSprite(slot9.imagechange, slot16.ChangeImage, true)
+		var_23_4.txtnum.color = GameUtil.parseColor(var_23_11.NumColor)
+
+		local var_23_12 = not string.nilorempty(var_23_11.ChangeImage)
+
+		if var_23_12 then
+			UISpriteSetMgr.instance:setUiCharacterSprite(var_23_4.imagechange, var_23_11.ChangeImage, true)
 		end
 
-		gohelper.setActive(slot9.imagechange.gameObject, slot17)
-		UISpriteSetMgr.instance:setCommonSprite(slot9.imageicon, "icon_att_" .. slot10.id, true)
-		gohelper.setActive(slot9.goBg, (slot7 - 1) % slot2 % 2 == 1)
-		recthelper.setAnchor(slot9.go.transform, slot7 <= slot2 and -360 or 360, slot3 - slot18 * 60)
+		gohelper.setActive(var_23_4.imagechange.gameObject, var_23_12)
+		UISpriteSetMgr.instance:setCommonSprite(var_23_4.imageicon, "icon_att_" .. var_23_5.id, true)
+
+		local var_23_13 = (iter_23_0 - 1) % var_23_1
+
+		gohelper.setActive(var_23_4.goBg, var_23_13 % 2 == 1)
+
+		local var_23_14 = iter_23_0 <= var_23_1 and -360 or 360
+		local var_23_15 = var_23_3 - var_23_13 * 60
+
+		recthelper.setAnchor(var_23_4.go.transform, var_23_14, var_23_15)
 	end
 
-	for slot7 = 1, #slot0._attrItems do
-		gohelper.setActive(slot0._attrItems[slot7].go, slot7 <= #slot1)
+	for iter_23_2 = 1, #arg_23_0._attrItems do
+		gohelper.setActive(arg_23_0._attrItems[iter_23_2].go, iter_23_2 <= #var_23_0)
 	end
 
-	gohelper.setActive(slot0._attrItemPrefab, false)
-	slot0:_activeAttrPanel(false)
+	gohelper.setActive(arg_23_0._attrItemPrefab, false)
+	arg_23_0:_activeAttrPanel(false)
 end
 
-function slot0._getAttrItem(slot0, slot1)
-	if not slot0._attrItems[slot1] then
-		slot3 = gohelper.cloneInPlace(slot0._attrItemPrefab, "item_" .. slot1)
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = slot3
-		slot2.goBg = gohelper.findChild(slot3, "#go_bg")
-		slot2.imageicon = gohelper.findChildImage(slot3, "#image_icon")
-		slot2.txtname = gohelper.findChildText(slot3, "#txt_name")
-		slot2.txtcur = gohelper.findChildText(slot3, "#txt_cur")
-		slot2.txtnum = gohelper.findChildText(slot3, "#txt_num")
-		slot2.imagechange = gohelper.findChildImage(slot3, "#txt_num/#image_change")
-		slot0._attrItems[slot1] = slot2
+function var_0_0._getAttrItem(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0._attrItems[arg_24_1]
+
+	if not var_24_0 then
+		local var_24_1 = gohelper.cloneInPlace(arg_24_0._attrItemPrefab, "item_" .. arg_24_1)
+
+		var_24_0 = arg_24_0:getUserDataTb_()
+		var_24_0.go = var_24_1
+		var_24_0.goBg = gohelper.findChild(var_24_1, "#go_bg")
+		var_24_0.imageicon = gohelper.findChildImage(var_24_1, "#image_icon")
+		var_24_0.txtname = gohelper.findChildText(var_24_1, "#txt_name")
+		var_24_0.txtcur = gohelper.findChildText(var_24_1, "#txt_cur")
+		var_24_0.txtnum = gohelper.findChildText(var_24_1, "#txt_num")
+		var_24_0.imagechange = gohelper.findChildImage(var_24_1, "#txt_num/#image_change")
+		arg_24_0._attrItems[arg_24_1] = var_24_0
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_25_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

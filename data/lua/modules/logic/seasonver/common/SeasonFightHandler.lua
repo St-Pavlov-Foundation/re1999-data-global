@@ -1,18 +1,25 @@
-module("modules.logic.seasonver.common.SeasonFightHandler", package.seeall)
+﻿module("modules.logic.seasonver.common.SeasonFightHandler", package.seeall)
 
-slot0 = class("SeasonFightHandler")
-slot0.SeasonFightRuleTipViewList = {
+local var_0_0 = class("SeasonFightHandler")
+
+var_0_0.SeasonFightRuleTipViewList = {
 	ViewName.SeasonFightRuleTipView,
 	Season123Controller.instance:getFightRuleTipViewName()
 }
 
-function slot0.getSeasonEquips(slot0, slot1)
-	slot2 = nil
+function var_0_0.getSeasonEquips(arg_1_0, arg_1_1)
+	local var_1_0
 
-	return (not Season123Controller.isEpisodeFromSeason123(slot1.episodeId) or Season123HeroGroupUtils.getAllHeroActivity123Equips(slot0)) and slot0:getAllHeroActivity104Equips()
+	if Season123Controller.isEpisodeFromSeason123(arg_1_1.episodeId) then
+		var_1_0 = Season123HeroGroupUtils.getAllHeroActivity123Equips(arg_1_0)
+	else
+		var_1_0 = arg_1_0:getAllHeroActivity104Equips()
+	end
+
+	return var_1_0
 end
 
-function slot0.closeSeasonFightRuleTipView()
+function var_0_0.closeSeasonFightRuleTipView()
 	Activity104Controller.instance:closeSeasonView(Activity104Enum.ViewName.FightRuleTipView)
 
 	if ViewMgr.instance:isOpen(Season123Controller.instance:getFightRuleTipViewName()) then
@@ -20,97 +27,116 @@ function slot0.closeSeasonFightRuleTipView()
 	end
 end
 
-function slot0.openSeasonFightRuleTipView(slot0)
-	slot1 = false
+function var_0_0.openSeasonFightRuleTipView(arg_3_0)
+	local var_3_0 = false
 
-	if Activity104Model.instance:isSeasonEpisodeType(slot0) then
+	if Activity104Model.instance:isSeasonEpisodeType(arg_3_0) then
 		Activity104Controller.instance:openSeasonFightRuleTipView()
 
-		slot1 = true
-	elseif Season123Controller.isSeason123EpisodeType(slot0) then
+		var_3_0 = true
+	elseif Season123Controller.isSeason123EpisodeType(arg_3_0) then
 		Season123Controller.instance:openFightTipViewName()
 
-		slot1 = true
+		var_3_0 = true
 	end
 
-	return slot1
+	return var_3_0
 end
 
-function slot0.canSeasonShowTips(slot0, slot1)
-	slot2 = true
+function var_0_0.canSeasonShowTips(arg_4_0, arg_4_1)
+	local var_4_0 = true
 
-	if Activity104Model.instance:isSeasonEpisodeType(slot1) then
-		slot2 = SeasonConfig.instance:filterRule(GameUtil.splitString2(slot0, true, "|", "#")) and #slot3 > 0
-	elseif Season123Controller.isSeason123EpisodeType(slot1) then
-		if Season123Model.instance:getBattleContext() then
-			if slot4.stage then
-				slot3 = Season123Config.instance:filterRule(Season123HeroGroupModel.filterRule(slot4.actId, GameUtil.splitString2(slot0, true, "|", "#")), slot4.stage)
+	if Activity104Model.instance:isSeasonEpisodeType(arg_4_1) then
+		local var_4_1 = GameUtil.splitString2(arg_4_0, true, "|", "#")
+		local var_4_2 = SeasonConfig.instance:filterRule(var_4_1)
+
+		var_4_0 = var_4_2 and #var_4_2 > 0
+	elseif Season123Controller.isSeason123EpisodeType(arg_4_1) then
+		local var_4_3 = GameUtil.splitString2(arg_4_0, true, "|", "#")
+		local var_4_4 = Season123Model.instance:getBattleContext()
+
+		if var_4_4 then
+			var_4_3 = Season123HeroGroupModel.filterRule(var_4_4.actId, var_4_3)
+
+			if var_4_4.stage then
+				var_4_3 = Season123Config.instance:filterRule(var_4_3, var_4_4.stage)
 			end
 		end
 
-		slot2 = slot3 and #slot3 > 0
+		var_4_0 = var_4_3 and #var_4_3 > 0
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.checkSeasonAndOpenGroupFightView(slot0, slot1)
-	slot2 = false
+function var_0_0.checkSeasonAndOpenGroupFightView(arg_5_0, arg_5_1)
+	local var_5_0 = false
 
-	if Activity104Model.instance:isSeasonEpisodeType(slot1.type) then
-		Activity104HeroGroupController.instance:openGroupFightView(slot0.battleId, slot0.episodeId)
+	if Activity104Model.instance:isSeasonEpisodeType(arg_5_1.type) then
+		Activity104HeroGroupController.instance:openGroupFightView(arg_5_0.battleId, arg_5_0.episodeId)
 
-		slot2 = true
-	elseif Season123Controller.isSeason123EpisodeType(slot1.type) then
-		Season123HeroGroupController.instance:openHeroGroupView(slot0.battleId, slot0.episodeId)
+		var_5_0 = true
+	elseif Season123Controller.isSeason123EpisodeType(arg_5_1.type) then
+		Season123HeroGroupController.instance:openHeroGroupView(arg_5_0.battleId, arg_5_0.episodeId)
 
-		slot2 = true
-	elseif Season166Controller.isSeason166EpisodeType(slot1.type) then
-		Season166HeroGroupController.instance:openHeroGroupView(slot0.battleId, slot0.episodeId)
+		var_5_0 = true
+	elseif Season166Controller.isSeason166EpisodeType(arg_5_1.type) then
+		Season166HeroGroupController.instance:openHeroGroupView(arg_5_0.battleId, arg_5_0.episodeId)
 
-		slot2 = true
+		var_5_0 = true
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.checkProcessFightReconnect(slot0)
+function var_0_0.checkProcessFightReconnect(arg_6_0)
 	Season123Controller.instance:checkProcessFightReconnect()
 	Season166Controller.instance:checkProcessFightReconnect()
 
-	if slot0.episodeId == Activity104Enum.SeasonEpisodeId and slot0.data ~= "" then
-		slot1 = string.split(slot0.data, "#")
-		slot2 = tonumber(slot1[2])
-		slot3 = tonumber(slot1[3])
+	if arg_6_0.episodeId == Activity104Enum.SeasonEpisodeId and arg_6_0.data ~= "" then
+		local var_6_0 = string.split(arg_6_0.data, "#")
+		local var_6_1 = tonumber(var_6_0[2])
+		local var_6_2 = tonumber(var_6_0[3])
+		local var_6_3 = {}
 
-		for slot8 = 4, #slot1 do
-			if tonumber(slot1[slot8]) then
-				table.insert({}, tonumber(slot1[slot8]))
+		for iter_6_0 = 4, #var_6_0 do
+			if tonumber(var_6_0[iter_6_0]) then
+				table.insert(var_6_3, tonumber(var_6_0[iter_6_0]))
 			end
 		end
 
-		FightController.instance:setFightParamByEpisodeBattleId(slot0.episodeId, FightModel.instance:getBattleId())
+		FightController.instance:setFightParamByEpisodeBattleId(arg_6_0.episodeId, FightModel.instance:getBattleId())
 	end
 end
 
-function slot0.loadSeasonCondition(slot0, slot1, slot2, slot3)
-	slot4 = DungeonModel.instance.curSendEpisodeId
+function var_0_0.loadSeasonCondition(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = DungeonModel.instance.curSendEpisodeId
 
-	if slot0 == DungeonEnum.EpisodeType.SeasonRetail then
-		gohelper.setActive(slot1, false)
+	if arg_7_0 == DungeonEnum.EpisodeType.SeasonRetail then
+		gohelper.setActive(arg_7_1, false)
 
-		for slot12, slot13 in ipairs(Activity104Model.instance:getAllRetailMo()) do
-			if slot13.id == slot4 then
-				if lua_condition.configDict[slot13.advancedId] then
-					gohelper.setActive(slot1, true)
+		local var_7_1 = Activity104Model.instance:getAllRetailMo()
+		local var_7_2 = DungeonModel.instance.curSendChapterId
+		local var_7_3 = DungeonConfig.instance:getChapterCO(var_7_2)
+		local var_7_4 = var_7_3 and var_7_3.type == DungeonEnum.ChapterType.Hard
 
-					gohelper.findChildText(slot2, "").text = slot14.desc
-					gohelper.findChildText(slot3, "passtargetTip/tip").text = luaLang("season_retail_special_rule_title")
-					slot15 = Activity104Model.instance:getEpisodeRetail(slot4)
-					slot18 = gohelper.findChildImage(slot3, "desc/star")
+		for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+			if iter_7_1.id == var_7_0 then
+				local var_7_5 = lua_condition.configDict[iter_7_1.advancedId]
 
-					UISpriteSetMgr.instance:setCommonSprite(slot18, DungeonConfig.instance:getChapterCO(DungeonModel.instance.curSendChapterId) and slot7.type == DungeonEnum.ChapterType.Hard and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001")
-					SLFramework.UGUI.GuiHelper.SetColor(slot18, "#87898C")
+				if var_7_5 then
+					gohelper.setActive(arg_7_1, true)
+
+					gohelper.findChildText(arg_7_2, "").text = var_7_5.desc
+					gohelper.findChildText(arg_7_3, "passtargetTip/tip").text = luaLang("season_retail_special_rule_title")
+
+					local var_7_6 = Activity104Model.instance:getEpisodeRetail(var_7_0)
+					local var_7_7 = "#87898C"
+					local var_7_8 = var_7_4 and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001"
+					local var_7_9 = gohelper.findChildImage(arg_7_3, "desc/star")
+
+					UISpriteSetMgr.instance:setCommonSprite(var_7_9, var_7_8)
+					SLFramework.UGUI.GuiHelper.SetColor(var_7_9, var_7_7)
 				end
 
 				break
@@ -118,24 +144,31 @@ function slot0.loadSeasonCondition(slot0, slot1, slot2, slot3)
 		end
 
 		return true
-	elseif slot0 == DungeonEnum.EpisodeType.Season166Base then
-		if Season166Model.instance:getBattleContext() and slot5.baseId and slot5.baseId > 0 then
-			gohelper.setActive(slot2, false)
+	elseif arg_7_0 == DungeonEnum.EpisodeType.Season166Base then
+		local var_7_10 = Season166Model.instance:getBattleContext()
 
-			for slot9 = 1, 3 do
-				slot10 = gohelper.clone(slot2, slot3, "desc" .. slot9)
-				slot11 = Season166Config.instance:getSeasonScoreCo(slot5.actId, slot9)
-				slot13 = gohelper.findChildImage(slot10, "star")
+		if var_7_10 and var_7_10.baseId and var_7_10.baseId > 0 then
+			gohelper.setActive(arg_7_2, false)
 
-				gohelper.setActive(slot10, true)
+			for iter_7_2 = 1, 3 do
+				local var_7_11 = gohelper.clone(arg_7_2, arg_7_3, "desc" .. iter_7_2)
+				local var_7_12 = Season166Config.instance:getSeasonScoreCo(var_7_10.actId, iter_7_2)
+				local var_7_13 = gohelper.findChildText(var_7_11, "")
+				local var_7_14 = gohelper.findChildImage(var_7_11, "star")
 
-				gohelper.findChildText(slot10, "").text = GameUtil.getSubPlaceholderLuaLang(luaLang("season166_herogroup_fightScoreTarget"), {
-					slot11.needScore
+				gohelper.setActive(var_7_11, true)
+
+				local var_7_15 = luaLang("season166_herogroup_fightScoreTarget")
+
+				var_7_13.text = GameUtil.getSubPlaceholderLuaLang(var_7_15, {
+					var_7_12.needScore
 				})
 
-				UISpriteSetMgr.instance:setSeason166Sprite(slot13, slot11.needScore <= Season166BaseSpotModel.instance:getBaseSpotMaxScore(slot5.actId, slot5.baseId) and "season166_result_inclinedbulb2" or "season166_result_inclinedbulb1", true)
-				transformhelper.setLocalScale(slot13.transform, 0.5, 0.5, 0.5)
-				SLFramework.UGUI.GuiHelper.SetColor(slot13, "#FFFFFF")
+				local var_7_16 = Season166BaseSpotModel.instance:getBaseSpotMaxScore(var_7_10.actId, var_7_10.baseId) >= var_7_12.needScore
+
+				UISpriteSetMgr.instance:setSeason166Sprite(var_7_14, var_7_16 and "season166_result_inclinedbulb2" or "season166_result_inclinedbulb1", true)
+				transformhelper.setLocalScale(var_7_14.transform, 0.5, 0.5, 0.5)
+				SLFramework.UGUI.GuiHelper.SetColor(var_7_14, "#FFFFFF")
 			end
 
 			return true
@@ -147,4 +180,4 @@ function slot0.loadSeasonCondition(slot0, slot1, slot2, slot3)
 	return false
 end
 
-return slot0
+return var_0_0

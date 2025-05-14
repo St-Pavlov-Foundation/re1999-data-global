@@ -1,129 +1,145 @@
-module("modules.logic.fight.view.FightSkillTargetView", package.seeall)
+﻿module("modules.logic.fight.view.FightSkillTargetView", package.seeall)
 
-slot0 = class("FightSkillTargetView", BaseView)
+local var_0_0 = class("FightSkillTargetView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._groupGO = gohelper.findChild(slot0.viewGO, "group")
-	slot0._txtDesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._itemList = {}
-	slot0._targetLimit = nil
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._groupGO = gohelper.findChild(arg_1_0.viewGO, "group")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._itemList = {}
+	arg_1_0._targetLimit = nil
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SimulateSelectSkillTargetInView, slot0._simulateSelect, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.SimulateSelectSkillTargetInView, arg_2_0._simulateSelect, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot4 = FightEvent.SimulateSelectSkillTargetInView
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.SimulateSelectSkillTargetInView, arg_3_0._simulateSelect, arg_3_0)
 
-	slot0:removeEventCb(FightController.instance, slot4, slot0._simulateSelect, slot0)
+	for iter_3_0 = 1, #arg_3_0._itemList do
+		local var_3_0 = arg_3_0._itemList[iter_3_0]
 
-	for slot4 = 1, #slot0._itemList do
-		gohelper.getClick(slot0._itemList[slot4].go):RemoveClickListener()
+		gohelper.getClick(var_3_0.go):RemoveClickListener()
 	end
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
 	PostProcessingMgr.instance:setBlurWeight(1)
-	slot0._simagebg:LoadImage(ResUrl.getFightSkillTargetcIcon("full/zhandouxuanzedi_007"))
+	arg_4_0._simagebg:LoadImage(ResUrl.getFightSkillTargetcIcon("full/zhandouxuanzedi_007"))
 
-	slot0._targetLimit = slot0.viewParam.targetLimit
+	arg_4_0._targetLimit = arg_4_0.viewParam.targetLimit
 
-	if slot0.viewParam.desc then
-		slot0._txtDesc.text = slot0.viewParam.desc
+	if arg_4_0.viewParam.desc then
+		arg_4_0._txtDesc.text = arg_4_0.viewParam.desc
 	else
-		slot0._txtDesc.text = luaLang("select_skill_target")
+		arg_4_0._txtDesc.text = luaLang("select_skill_target")
 	end
 
-	if not slot0._targetLimit then
-		slot0._targetLimit = {}
+	if not arg_4_0._targetLimit then
+		local var_4_0 = arg_4_0.viewParam.skillId
 
-		for slot6, slot7 in ipairs(FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, slot0.viewParam.skillId, slot0.viewParam.fromId)) do
-			if FightDataHelper.entityMgr:getById(slot7).entityType == 3 then
-				-- Nothing
-			elseif not slot8:hasBuffFeature(FightEnum.BuffType_CantSelect) then
-				if slot8:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
-					-- Nothing
-				elseif DungeonModel.instance.curSendChapterId ~= DungeonEnum.ChapterId.RoleDuDuGu or slot8.originSkin ~= CharacterEnum.DefaultSkinId.DuDuGu then
-					table.insert(slot0._targetLimit, slot7)
-				end
+		arg_4_0._targetLimit = {}
+
+		local var_4_1 = FightHelper.getTargetLimits(FightEnum.EntitySide.MySide, var_4_0, arg_4_0.viewParam.fromId)
+
+		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+			local var_4_2 = FightDataHelper.entityMgr:getById(iter_4_1)
+
+			if var_4_2.entityType == 3 then
+				-- block empty
+			elseif var_4_2:hasBuffFeature(FightEnum.BuffType_CantSelect) or var_4_2:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
+				-- block empty
+			elseif DungeonModel.instance.curSendChapterId ~= DungeonEnum.ChapterId.RoleDuDuGu or var_4_2.originSkin ~= CharacterEnum.DefaultSkinId.DuDuGu then
+				table.insert(arg_4_0._targetLimit, iter_4_1)
 			end
 		end
 	end
 
-	table.sort(slot0._targetLimit, uv0._sortByStandPos)
+	table.sort(arg_4_0._targetLimit, var_0_0._sortByStandPos)
 
-	for slot5, slot6 in ipairs(slot0._targetLimit) do
-		if not slot0._itemList[slot5] then
-			slot7 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._groupGO, "item" .. slot5), FightSkillTargetItem)
+	local var_4_3 = arg_4_0.viewContainer:getSetting().otherRes[1]
 
-			table.insert(slot0._itemList, slot7)
-			gohelper.getClick(slot7.go):AddClickListener(slot0._onClickItem, slot0, slot5)
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0._targetLimit) do
+		local var_4_4 = arg_4_0._itemList[iter_4_2]
+
+		if not var_4_4 then
+			local var_4_5 = arg_4_0:getResInst(var_4_3, arg_4_0._groupGO, "item" .. iter_4_2)
+
+			var_4_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_5, FightSkillTargetItem)
+
+			table.insert(arg_4_0._itemList, var_4_4)
+			gohelper.getClick(var_4_4.go):AddClickListener(arg_4_0._onClickItem, arg_4_0, iter_4_2)
 		end
 
-		gohelper.setActive(slot7.go, true)
-		slot7:onUpdateMO(slot6)
+		gohelper.setActive(var_4_4.go, true)
+		var_4_4:onUpdateMO(iter_4_3)
 	end
 
-	for slot5 = #slot0._targetLimit + 1, #slot0._itemList do
-		gohelper.setActive(slot0._itemList[slot5].go, false)
+	for iter_4_4 = #arg_4_0._targetLimit + 1, #arg_4_0._itemList do
+		gohelper.setActive(arg_4_0._itemList[iter_4_4].go, false)
 	end
 
-	if slot0.viewParam.mustSelect then
-		slot0._mustSelect = true
+	if arg_4_0.viewParam.mustSelect then
+		arg_4_0._mustSelect = true
 
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onBtnEsc, slot0)
+		NavigateMgr.instance:addEscape(arg_4_0.viewContainer.viewName, arg_4_0._onBtnEsc, arg_4_0)
 	end
 end
 
-function slot0._onBtnEsc(slot0)
+function var_0_0._onBtnEsc(arg_5_0)
+	return
 end
 
-function slot0._sortByStandPos(slot0, slot1)
-	slot3 = FightDataHelper.entityMgr:getById(slot1)
+function var_0_0._sortByStandPos(arg_6_0, arg_6_1)
+	local var_6_0 = FightDataHelper.entityMgr:getById(arg_6_0)
+	local var_6_1 = FightDataHelper.entityMgr:getById(arg_6_1)
 
-	if FightDataHelper.entityMgr:getById(slot0) and slot3 then
-		return math.abs(slot2.position) < math.abs(slot3.position)
+	if var_6_0 and var_6_1 then
+		return math.abs(var_6_0.position) < math.abs(var_6_1.position)
 	else
-		return math.abs(tonumber(slot0)) < math.abs(tonumber(slot1))
+		return math.abs(tonumber(arg_6_0)) < math.abs(tonumber(arg_6_1))
 	end
 end
 
-function slot0._onClickItem(slot0, slot1)
-	slot0:closeThis()
+function var_0_0._onClickItem(arg_7_0, arg_7_1)
+	arg_7_0:closeThis()
 
-	if slot0.viewParam.callbackObj then
-		slot0.viewParam.callback(slot4, slot0._targetLimit[slot1])
+	local var_7_0 = arg_7_0._targetLimit[arg_7_1]
+	local var_7_1 = arg_7_0.viewParam.callback
+	local var_7_2 = arg_7_0.viewParam.callbackObj
+
+	if var_7_2 then
+		var_7_1(var_7_2, var_7_0)
 	else
-		slot3(slot2)
+		var_7_1(var_7_0)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onClose(arg_8_0)
+	arg_8_0._simagebg:UnLoadImage()
 	PostProcessingMgr.instance:setBlurWeight(0)
 end
 
-function slot0.onClickModalMask(slot0)
-	if slot0._mustSelect then
+function var_0_0.onClickModalMask(arg_9_0)
+	if arg_9_0._mustSelect then
 		return
 	end
 
-	slot0:closeThis()
+	arg_9_0:closeThis()
 end
 
-function slot0._simulateSelect(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._targetLimit) do
-		if slot6 == slot1 then
-			slot0:_onClickItem(slot5)
+function var_0_0._simulateSelect(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._targetLimit) do
+		if iter_10_1 == arg_10_1 then
+			arg_10_0:_onClickItem(iter_10_0)
 
 			return
 		end
 	end
 
-	slot0:_onClickItem(1)
-	logError("模拟选中entity失败，不存在的entityId = " .. slot1 .. "，只有：" .. cjson.encode(slot0._targetLimit))
+	arg_10_0:_onClickItem(1)
+	logError("模拟选中entity失败，不存在的entityId = " .. arg_10_1 .. "，只有：" .. cjson.encode(arg_10_0._targetLimit))
 end
 
-return slot0
+return var_0_0

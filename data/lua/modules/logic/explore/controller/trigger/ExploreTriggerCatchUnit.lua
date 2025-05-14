@@ -1,41 +1,43 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerCatchUnit", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerCatchUnit", package.seeall)
 
-slot0 = class("ExploreTriggerCatchUnit", ExploreTriggerBase)
-slot1 = ExploreEnum.TriggerEvent.CatchUnit .. "#1"
-slot2 = ExploreEnum.TriggerEvent.CatchUnit .. "#0"
+local var_0_0 = class("ExploreTriggerCatchUnit", ExploreTriggerBase)
+local var_0_1 = ExploreEnum.TriggerEvent.CatchUnit .. "#1"
+local var_0_2 = ExploreEnum.TriggerEvent.CatchUnit .. "#0"
 
-function slot0.handle(slot0, slot1, slot2)
+function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
 	if ExploreModel.instance:hasUseItemOrUnit() then
-		slot0:onDone(false)
+		arg_1_0:onDone(false)
 		logError("catchUnit fail inusing id:" .. ExploreModel.instance:getUseItemUid())
 
 		return
 	end
 
-	slot0:sendTriggerRequest(uv0)
+	arg_1_0:sendTriggerRequest(var_0_1)
 end
 
-function slot0.cancel(slot0, slot1, slot2)
-	slot4 = ExploreController.instance:getMap():getHero()
-	slot5 = ExploreHelper.dirToXY(slot4.dir)
-	slot6 = slot4.nodePos
+function var_0_0.cancel(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = ExploreController.instance:getMap():getHero()
+	local var_2_1 = ExploreHelper.dirToXY(var_2_0.dir)
+	local var_2_2 = var_2_0.nodePos
+	local var_2_3 = var_0_2 .. "#" .. var_2_2.x + var_2_1.x .. "#" .. var_2_2.y + var_2_1.y
 
-	slot0:sendTriggerRequest(uv0 .. "#" .. slot6.x + slot5.x .. "#" .. slot6.y + slot5.y)
+	arg_2_0:sendTriggerRequest(var_2_3)
 end
 
-function slot0.onReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		slot5 = 0
+function var_0_0.onReply(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_2 == 0 then
+		local var_3_0 = string.splitToNumber(arg_3_3.params, "#")
+		local var_3_1 = 0
 
-		if string.splitToNumber(slot3.params, "#")[2] == 1 then
-			slot5 = slot0.unitId
+		if var_3_0[2] == 1 then
+			var_3_1 = arg_3_0.unitId
 		end
 
-		ExploreModel.instance:setUseItemUid(slot5)
-		slot0:onStepDone(true)
+		ExploreModel.instance:setUseItemUid(var_3_1)
+		arg_3_0:onStepDone(true)
 	else
-		slot0:onDone(false)
+		arg_3_0:onDone(false)
 	end
 end
 
-return slot0
+return var_0_0

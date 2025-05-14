@@ -1,41 +1,50 @@
-module("modules.logic.playercard.view.comp.PlayerCardAssit", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardAssit", package.seeall)
 
-slot0 = class("PlayerCardAssit", BasePlayerCardComp)
+local var_0_0 = class("PlayerCardAssit", BasePlayerCardComp)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(PlayerController.instance, PlayerEvent.SetShowHero, slot0.onRefreshView, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.SetShowHero, arg_2_0.onRefreshView, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(PlayerController.instance, PlayerEvent.SetShowHero, slot0.onRefreshView, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.SetShowHero, arg_3_0.onRefreshView, arg_3_0)
 end
 
-function slot0.onRefreshView(slot0)
-	slot0:_initPlayerShowCard(slot0:getPlayerInfo().showHeros)
+function var_0_0.onRefreshView(arg_4_0)
+	local var_4_0 = arg_4_0:getPlayerInfo()
+
+	arg_4_0:_initPlayerShowCard(var_4_0.showHeros)
 end
 
-function slot0._initPlayerShowCard(slot0, slot1)
-	for slot5 = 1, 3 do
-		slot0:getOrCreateItem(slot5):setData(slot1[slot5], slot0:isPlayerSelf(), slot0.compType)
+function var_0_0._initPlayerShowCard(arg_5_0, arg_5_1)
+	for iter_5_0 = 1, 3 do
+		arg_5_0:getOrCreateItem(iter_5_0):setData(arg_5_1[iter_5_0], arg_5_0:isPlayerSelf(), arg_5_0.compType)
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1)
-	if not slot0.items then
-		slot0.items = {}
+function var_0_0.getOrCreateItem(arg_6_0, arg_6_1)
+	if not arg_6_0.items then
+		arg_6_0.items = {}
 	end
 
-	if not slot0.items[slot1] then
-		slot0.items[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChild(slot0.viewGO, "layout/#go_assithero" .. slot1), PlayerCardAssitItem)
+	local var_6_0 = arg_6_0.items[arg_6_1]
+
+	if not var_6_0 then
+		local var_6_1 = gohelper.findChild(arg_6_0.viewGO, "layout/#go_assithero" .. arg_6_1)
+
+		var_6_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, PlayerCardAssitItem)
+		arg_6_0.items[arg_6_1] = var_6_0
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,74 +1,79 @@
-module("modules.logic.tower.view.bosstower.TowerBossSpEpisodeItem", package.seeall)
+﻿module("modules.logic.tower.view.bosstower.TowerBossSpEpisodeItem", package.seeall)
 
-slot0 = class("TowerBossSpEpisodeItem", LuaCompBase)
+local var_0_0 = class("TowerBossSpEpisodeItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0.transform = slot1.transform
-	slot0.goOpen = gohelper.findChild(slot0.viewGO, "goOpen")
-	slot0.goUnopen = gohelper.findChild(slot0.viewGO, "goUnopen")
-	slot0.goSelect1 = gohelper.findChild(slot0.viewGO, "goOpen/goSelect")
-	slot0.goSelect2 = gohelper.findChild(slot0.viewGO, "goOpen/goSelect2")
-	slot0.txtCurEpisode = gohelper.findChildTextMesh(slot0.viewGO, "goOpen/txtCurEpisode")
-	slot0.goLock = gohelper.findChild(slot0.viewGO, "goOpen/goLock")
-	slot0.btnClick = gohelper.findButtonWithAudio(slot0.viewGO)
-	slot0.towerType = TowerEnum.TowerType.Boss
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0.transform = arg_1_1.transform
+	arg_1_0.goOpen = gohelper.findChild(arg_1_0.viewGO, "goOpen")
+	arg_1_0.goUnopen = gohelper.findChild(arg_1_0.viewGO, "goUnopen")
+	arg_1_0.goSelect1 = gohelper.findChild(arg_1_0.viewGO, "goOpen/goSelect")
+	arg_1_0.goSelect2 = gohelper.findChild(arg_1_0.viewGO, "goOpen/goSelect2")
+	arg_1_0.txtCurEpisode = gohelper.findChildTextMesh(arg_1_0.viewGO, "goOpen/txtCurEpisode")
+	arg_1_0.goLock = gohelper.findChild(arg_1_0.viewGO, "goOpen/goLock")
+	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.viewGO)
+	arg_1_0.towerType = TowerEnum.TowerType.Boss
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addClickCb(slot0.btnClick, slot0._onBtnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0._onBtnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeClickCb(slot0.btnClick)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0.btnClick)
 end
 
-function slot0._onBtnClick(slot0)
-	slot0.parentView:onClickEpisode(slot0.layerId)
+function var_0_0._onBtnClick(arg_4_0)
+	arg_4_0.parentView:onClickEpisode(arg_4_0.layerId)
 end
 
-function slot0.updateItem(slot0, slot1, slot2, slot3)
-	slot0.parentView = slot3
-	slot0.layerId = slot1
-	slot0.index = slot2
+function var_0_0.updateItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0.parentView = arg_5_3
+	arg_5_0.layerId = arg_5_1
+	arg_5_0.index = arg_5_2
 
-	if not slot1 then
-		gohelper.setActive(slot0.viewGO, false)
+	if not arg_5_1 then
+		gohelper.setActive(arg_5_0.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_5_0.viewGO, true)
 
-	slot6 = slot0.parentView.towerMo:isSpLayerOpen(slot0.layerId)
+	local var_5_0 = arg_5_0.parentView.towerMo
+	local var_5_1 = arg_5_0.parentView.episodeMo
+	local var_5_2 = var_5_0:isSpLayerOpen(arg_5_0.layerId)
 
-	gohelper.setActive(slot0.goUnopen, not slot6)
-	gohelper.setActive(slot0.goOpen, slot6)
+	gohelper.setActive(arg_5_0.goUnopen, not var_5_2)
+	gohelper.setActive(arg_5_0.goOpen, var_5_2)
 
-	if slot6 then
-		slot0.txtCurEpisode.text = tostring(slot2)
+	if var_5_2 then
+		arg_5_0.txtCurEpisode.text = tostring(arg_5_2)
 
-		gohelper.setActive(slot0.goLock, not slot4:isLayerUnlock(slot0.layerId, slot0.parentView.episodeMo))
-		slot0:updateSelect()
+		local var_5_3 = var_5_0:isLayerUnlock(arg_5_0.layerId, var_5_1)
+
+		gohelper.setActive(arg_5_0.goLock, not var_5_3)
+		arg_5_0:updateSelect()
 	end
 end
 
-function slot0.updateSelect(slot0)
-	if not slot0.layerId then
+function var_0_0.updateSelect(arg_6_0)
+	if not arg_6_0.layerId then
 		return
 	end
 
-	slot1 = slot0.parentView:isSelectEpisode(slot0.layerId)
+	local var_6_0 = arg_6_0.parentView:isSelectEpisode(arg_6_0.layerId)
 
-	gohelper.setActive(slot0.goSelect1, slot1)
-	gohelper.setActive(slot0.goSelect2, slot1)
+	gohelper.setActive(arg_6_0.goSelect1, var_6_0)
+	gohelper.setActive(arg_6_0.goSelect2, var_6_0)
 
-	slot2 = slot1 and 1 or 0.85
+	local var_6_1 = var_6_0 and 1 or 0.85
 
-	transformhelper.setLocalScale(slot0.transform, slot2, slot2, 1)
+	transformhelper.setLocalScale(arg_6_0.transform, var_6_1, var_6_1, 1)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

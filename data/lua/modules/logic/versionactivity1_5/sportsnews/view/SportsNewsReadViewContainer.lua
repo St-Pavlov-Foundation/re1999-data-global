@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsReadViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsReadViewContainer", package.seeall)
 
-slot0 = class("SportsNewsReadViewContainer", BaseViewContainer)
+local var_0_0 = class("SportsNewsReadViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, SportsNewsReadView.New())
+	table.insert(var_1_0, SportsNewsReadView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

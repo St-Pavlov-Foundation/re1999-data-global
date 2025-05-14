@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameViewContainer", package.seeall)
 
-slot0 = class("WuErLiXiGameViewContainer", BaseViewContainer)
+local var_0_0 = class("WuErLiXiGameViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		WuErLiXiGameView.New(),
 		WuErLiXiGameMapView.New(),
@@ -11,31 +11,31 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot2:setOverrideClose(slot0.defaultOverrideCloseClick, slot0)
+		var_2_0:setOverrideClose(arg_2_0.defaultOverrideCloseClick, arg_2_0)
 
 		return {
-			slot2
+			var_2_0
 		}
 	end
 end
 
-function slot0.defaultOverrideCloseClick(slot0)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.WuErLiXiMapEscapeConfirm, MsgBoxEnum.BoxType.Yes_No, slot0._onCloseGameView, nil, , slot0)
+function var_0_0.defaultOverrideCloseClick(arg_3_0)
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.WuErLiXiMapEscapeConfirm, MsgBoxEnum.BoxType.Yes_No, arg_3_0._onCloseGameView, nil, nil, arg_3_0)
 end
 
-function slot0._onCloseGameView(slot0)
-	slot0._mapId = WuErLiXiConfig.instance:getEpisodeCo(VersionActivity2_4Enum.ActivityId.WuErLiXi, slot0.viewParam.episodeId).mapId
+function var_0_0._onCloseGameView(arg_4_0)
+	arg_4_0._mapId = WuErLiXiConfig.instance:getEpisodeCo(VersionActivity2_4Enum.ActivityId.WuErLiXi, arg_4_0.viewParam.episodeId).mapId
 
 	StatController.instance:track(StatEnum.EventName.WuErLiXiGameOperation, {
-		[StatEnum.EventProperties.MapId] = tostring(slot0._mapId),
+		[StatEnum.EventProperties.MapId] = tostring(arg_4_0._mapId),
 		[StatEnum.EventProperties.OperationType] = "Escape",
 		[StatEnum.EventProperties.DouQuQuFightUseTime] = ServerTime.now() - WuErLiXiMapModel.instance:getMapStartTime(),
 		[StatEnum.EventProperties.Result] = "unsuccess",
@@ -43,7 +43,7 @@ function slot0._onCloseGameView(slot0)
 		[StatEnum.EventProperties.WuErLiXiOperationInfo] = WuErLiXiMapModel.instance:getStatOperationInfos()
 	})
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.OnBackToLevel)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

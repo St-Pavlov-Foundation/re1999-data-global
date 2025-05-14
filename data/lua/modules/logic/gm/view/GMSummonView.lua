@@ -1,96 +1,111 @@
-module("modules.logic.gm.view.GMSummonView", package.seeall)
+﻿module("modules.logic.gm.view.GMSummonView", package.seeall)
 
-slot0 = class("GMSummonView", BaseView)
-slot0._Type2Name = {
+local var_0_0 = class("GMSummonView", BaseView)
+
+var_0_0._Type2Name = {
 	AllSummon = 3,
 	DiffRarity = 1,
 	UpSummon = 2
 }
 
-function slot0.onInitView(slot0)
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "node/infoScroll/Viewport/#go_Content")
-	slot0._click = gohelper.findChildButton(slot0.viewGO, "node/close")
-	slot0._itemList = {}
-	slot0._paragraphItems = slot0:getUserDataTb_()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "node/infoScroll/Viewport/#go_Content")
+	arg_1_0._click = gohelper.findChildButton(arg_1_0.viewGO, "node/close")
+	arg_1_0._itemList = {}
+	arg_1_0._paragraphItems = arg_1_0:getUserDataTb_()
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._click:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0._poolId, slot0._totalCount, slot0._star6TotalCount, slot0._star5TotalCount = GMSummonModel.instance:getAllInfo()
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0._poolId, arg_4_0._totalCount, arg_4_0._star6TotalCount, arg_4_0._star5TotalCount = GMSummonModel.instance:getAllInfo()
 
-	slot0:_initView()
+	arg_4_0:_initView()
 end
 
-function slot0._initView(slot0)
-	slot0:cleanParagraphs()
+function var_0_0._initView(arg_5_0)
+	arg_5_0:cleanParagraphs()
 
-	for slot4 = 1, 3 do
-		slot5 = slot0._itemList[slot4] or slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "node/infoScroll/Viewport/#go_Content/#go_infoItem" .. slot4)
-		slot5.txtdesctitle = gohelper.findChildText(slot5.go, "desctitle/#txt_desctitle")
+	for iter_5_0 = 1, 3 do
+		local var_5_0 = arg_5_0._itemList[iter_5_0] or arg_5_0:getUserDataTb_()
 
-		slot0:_createParagraphUI(slot4, slot5)
+		var_5_0.go = gohelper.findChild(arg_5_0.viewGO, "node/infoScroll/Viewport/#go_Content/#go_infoItem" .. iter_5_0)
+		var_5_0.txtdesctitle = gohelper.findChildText(var_5_0.go, "desctitle/#txt_desctitle")
+
+		arg_5_0:_createParagraphUI(iter_5_0, var_5_0)
 	end
 end
 
-function slot0._createParagraphUI(slot0, slot1, slot2)
-	if slot1 == uv0._Type2Name.DiffRarity then
-		for slot7, slot8 in ipairs(GMSummonModel.instance:getDiffRaritySummonHeroInfo()) do
-			slot0:createParaItem(slot2.go).text = slot8.star .. "星：" .. slot8.per * 100 .. "% (" .. slot8.num .. "/" .. slot0._totalCount .. ")"
+function var_0_0._createParagraphUI(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == var_0_0._Type2Name.DiffRarity then
+		local var_6_0 = GMSummonModel.instance:getDiffRaritySummonHeroInfo()
+
+		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+			arg_6_0:createParaItem(arg_6_2.go).text = iter_6_1.star .. "星：" .. iter_6_1.per * 100 .. "% (" .. iter_6_1.num .. "/" .. arg_6_0._totalCount .. ")"
 		end
-	elseif slot1 == uv0._Type2Name.UpSummon then
-		slot3, slot4 = GMSummonModel.instance:getUpHeroInfo()
-		slot0:createParaItem(slot2.go).text = "UP角色"
+	elseif arg_6_1 == var_0_0._Type2Name.UpSummon then
+		local var_6_1, var_6_2 = GMSummonModel.instance:getUpHeroInfo()
 
-		slot0:createUPParaItem(slot2.go, slot3)
+		arg_6_0:createParaItem(arg_6_2.go).text = "UP角色"
 
-		slot0:createParaItem(slot2.go).text = "\n非UP角色"
+		arg_6_0:createUPParaItem(arg_6_2.go, var_6_1)
 
-		slot0:createUPParaItem(slot2.go, slot4)
-	elseif slot1 == uv0._Type2Name.AllSummon then
-		for slot7, slot8 in ipairs(GMSummonModel.instance:getAllSummonHeroInfo()) do
-			slot0:createParaItem(slot2.go).text = "(" .. slot8.star .. "星)" .. GMSummonModel.instance:getTargetName(slot8.id) .. "：" .. slot8.per * 100 .. "% (" .. slot8.num .. "/" .. slot0._totalCount .. ")"
+		arg_6_0:createParaItem(arg_6_2.go).text = "\n非UP角色"
+
+		arg_6_0:createUPParaItem(arg_6_2.go, var_6_2)
+	elseif arg_6_1 == var_0_0._Type2Name.AllSummon then
+		local var_6_3 = GMSummonModel.instance:getAllSummonHeroInfo()
+
+		for iter_6_2, iter_6_3 in ipairs(var_6_3) do
+			local var_6_4 = arg_6_0:createParaItem(arg_6_2.go)
+			local var_6_5 = GMSummonModel.instance:getTargetName(iter_6_3.id)
+
+			var_6_4.text = "(" .. iter_6_3.star .. "星)" .. var_6_5 .. "：" .. iter_6_3.per * 100 .. "% (" .. iter_6_3.num .. "/" .. arg_6_0._totalCount .. ")"
 		end
 	end
 end
 
-function slot0.createUPParaItem(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if slot7.star == 6 then
-			slot0:createParaItem(slot1).text = "(" .. slot7.star .. "星)" .. GMSummonModel.instance:getTargetName(slot7.id) .. "：" .. slot7.per * 100 .. "% (" .. slot7.num .. "/" .. slot0._star6TotalCount .. ")"
-		elseif slot7.star == 5 then
-			slot8.text = "(" .. slot7.star .. "星)" .. slot9 .. "：" .. slot7.per * 100 .. "% (" .. slot7.num .. "/" .. slot0._star5TotalCount .. ")"
+function var_0_0.createUPParaItem(arg_7_0, arg_7_1, arg_7_2)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
+		local var_7_0 = arg_7_0:createParaItem(arg_7_1)
+		local var_7_1 = GMSummonModel.instance:getTargetName(iter_7_1.id)
+
+		if iter_7_1.star == 6 then
+			var_7_0.text = "(" .. iter_7_1.star .. "星)" .. var_7_1 .. "：" .. iter_7_1.per * 100 .. "% (" .. iter_7_1.num .. "/" .. arg_7_0._star6TotalCount .. ")"
+		elseif iter_7_1.star == 5 then
+			var_7_0.text = "(" .. iter_7_1.star .. "星)" .. var_7_1 .. "：" .. iter_7_1.per * 100 .. "% (" .. iter_7_1.num .. "/" .. arg_7_0._star5TotalCount .. ")"
 		end
 	end
 end
 
-function slot0.createParaItem(slot0, slot1)
-	slot2 = nil
-	slot2 = gohelper.cloneInPlace(gohelper.findChild(slot1, "#txt_descContent"), "para_1")
+function var_0_0.createParaItem(arg_8_0, arg_8_1)
+	local var_8_0
+	local var_8_1 = gohelper.findChild(arg_8_1, "#txt_descContent")
+	local var_8_2 = gohelper.cloneInPlace(var_8_1, "para_1")
+	local var_8_3 = var_8_2:GetComponent(gohelper.Type_TextMesh)
 
-	gohelper.setActive(slot2, true)
-	table.insert(slot0._paragraphItems, slot2)
+	gohelper.setActive(var_8_2, true)
+	table.insert(arg_8_0._paragraphItems, var_8_2)
 
-	return slot2:GetComponent(gohelper.Type_TextMesh)
+	return var_8_3
 end
 
-function slot0.cleanParagraphs(slot0)
-	for slot4 = #slot0._paragraphItems, 1, -1 do
-		gohelper.destroy(slot0._paragraphItems[slot4])
+function var_0_0.cleanParagraphs(arg_9_0)
+	for iter_9_0 = #arg_9_0._paragraphItems, 1, -1 do
+		gohelper.destroy(arg_9_0._paragraphItems[iter_9_0])
 
-		slot0._paragraphItems[slot4] = nil
+		arg_9_0._paragraphItems[iter_9_0] = nil
 	end
 end
 
-return slot0
+return var_0_0

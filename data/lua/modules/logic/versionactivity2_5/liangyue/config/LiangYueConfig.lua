@@ -1,257 +1,286 @@
-module("modules.logic.versionactivity2_5.liangyue.config.LiangYueConfig", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.config.LiangYueConfig", package.seeall)
 
-slot0 = class("LiangYueConfig", BaseConfig)
-slot0.EPISODE_CONFIG_NAME = "activity184_episode"
-slot0.PUZZLE_CONFIG_NAME = "activity184_puzzle_episode"
-slot0.ILLUSTRATION_CONFIG_NAME = "activity184_illustration"
-slot0.TASK_CONFIG_NAME = "activity184_task"
+local var_0_0 = class("LiangYueConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+var_0_0.EPISODE_CONFIG_NAME = "activity184_episode"
+var_0_0.PUZZLE_CONFIG_NAME = "activity184_puzzle_episode"
+var_0_0.ILLUSTRATION_CONFIG_NAME = "activity184_illustration"
+var_0_0.TASK_CONFIG_NAME = "activity184_task"
+
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
-		slot0.EPISODE_CONFIG_NAME,
-		slot0.ILLUSTRATION_CONFIG_NAME,
-		slot0.PUZZLE_CONFIG_NAME,
-		slot0.TASK_CONFIG_NAME
+		arg_1_0.EPISODE_CONFIG_NAME,
+		arg_1_0.ILLUSTRATION_CONFIG_NAME,
+		arg_1_0.PUZZLE_CONFIG_NAME,
+		arg_1_0.TASK_CONFIG_NAME
 	}
 end
 
-function slot0.onInit(slot0)
-	slot0._noGameEpisodeDic = {}
-	slot0._afterGameEpisodeDic = {}
-	slot0._taskDict = {}
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._noGameEpisodeDic = {}
+	arg_2_0._afterGameEpisodeDic = {}
+	arg_2_0._taskDict = {}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == slot0.EPISODE_CONFIG_NAME then
-		slot0._episodeConfig = slot2
-	elseif slot1 == slot0.TASK_CONFIG_NAME then
-		slot0._taskConfig = slot2
-	elseif slot1 == slot0.ILLUSTRATION_CONFIG_NAME then
-		slot0._illustrationConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == arg_3_0.EPISODE_CONFIG_NAME then
+		arg_3_0._episodeConfig = arg_3_2
+	elseif arg_3_1 == arg_3_0.TASK_CONFIG_NAME then
+		arg_3_0._taskConfig = arg_3_2
+	elseif arg_3_1 == arg_3_0.ILLUSTRATION_CONFIG_NAME then
+		arg_3_0._illustrationConfig = arg_3_2
 
-		slot0:initIllustrationConfig()
-	elseif slot1 == slot0.PUZZLE_CONFIG_NAME then
-		slot0._episodePuzzleConfig = slot2
+		arg_3_0:initIllustrationConfig()
+	elseif arg_3_1 == arg_3_0.PUZZLE_CONFIG_NAME then
+		arg_3_0._episodePuzzleConfig = arg_3_2
 
-		slot0:initPuzzleEpisodeConfig()
+		arg_3_0:initPuzzleEpisodeConfig()
 	end
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	if not slot0._taskDict[slot1] then
-		slot2 = {}
+function var_0_0.getTaskByActId(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._taskDict[arg_4_1]
 
-		for slot6, slot7 in ipairs(slot0._taskConfig.configList) do
-			if slot7.activityId == slot1 then
-				table.insert(slot2, slot7)
+	if not var_4_0 then
+		var_4_0 = {}
+
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._taskConfig.configList) do
+			if iter_4_1.activityId == arg_4_1 then
+				table.insert(var_4_0, iter_4_1)
 			end
 		end
 
-		slot0._taskDict[slot1] = slot2
+		arg_4_0._taskDict[arg_4_1] = var_4_0
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.initPuzzleEpisodeConfig(slot0)
-	slot0._episodeStaticIllustrationDic = {}
+function var_0_0.initPuzzleEpisodeConfig(arg_5_0)
+	arg_5_0._episodeStaticIllustrationDic = {}
 
-	for slot4, slot5 in ipairs(slot0._episodePuzzleConfig.configList) do
-		if slot0._episodeStaticIllustrationDic[slot5.activityId] == nil then
-			slot0._episodeStaticIllustrationDic[slot6] = {}
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._episodePuzzleConfig.configList) do
+		local var_5_0 = iter_5_1.activityId
+
+		if arg_5_0._episodeStaticIllustrationDic[var_5_0] == nil then
+			local var_5_1 = {}
+
+			arg_5_0._episodeStaticIllustrationDic[var_5_0] = var_5_1
 		end
 
-		if not string.nilorempty(slot5.staticShape) then
-			slot8 = {}
+		if not string.nilorempty(iter_5_1.staticShape) then
+			local var_5_2 = string.split(iter_5_1.staticShape, "|")
+			local var_5_3 = {}
 
-			for slot12, slot13 in ipairs(string.split(slot5.staticShape, "|")) do
-				slot15 = string.splitToNumber(string.split(slot13, "#")[1], ",")
-				slot17 = slot15[2]
+			for iter_5_2, iter_5_3 in ipairs(var_5_2) do
+				local var_5_4 = string.split(iter_5_3, "#")
+				local var_5_5 = string.splitToNumber(var_5_4[1], ",")
+				local var_5_6 = var_5_5[1]
+				local var_5_7 = var_5_5[2]
 
-				if slot8[slot15[1]] and slot8[slot16][slot17] then
-					logError("固定格子位置重复 位置: x:" .. slot16 .. "y:" .. slot17)
+				if var_5_3[var_5_6] and var_5_3[var_5_6][var_5_7] then
+					logError("固定格子位置重复 位置: x:" .. var_5_6 .. "y:" .. var_5_7)
 				else
-					if not slot8[slot16] then
-						slot8[slot16] = {}
+					if not var_5_3[var_5_6] then
+						var_5_3[var_5_6] = {}
 					end
 
-					slot8[slot16][slot17] = tonumber(slot14[2])
+					var_5_3[var_5_6][var_5_7] = tonumber(var_5_4[2])
 				end
 			end
 
-			slot0._episodeStaticIllustrationDic[slot6][slot5.id] = slot8
+			arg_5_0._episodeStaticIllustrationDic[var_5_0][iter_5_1.id] = var_5_3
 		end
 	end
 end
 
-function slot0.getFirstEpisodeId(slot0)
-	return slot0._episodeConfig.configList[1]
+function var_0_0.getFirstEpisodeId(arg_6_0)
+	return arg_6_0._episodeConfig.configList[1]
 end
 
-function slot0.initIllustrationConfig(slot0)
-	slot0._illustrationShapeDic = {}
-	slot0._illustrationShapeBoxCountDic = {}
+function var_0_0.initIllustrationConfig(arg_7_0)
+	arg_7_0._illustrationShapeDic = {}
+	arg_7_0._illustrationShapeBoxCountDic = {}
 
-	for slot4, slot5 in ipairs(slot0._illustrationConfig.configList) do
-		slot7 = slot5.id
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._illustrationConfig.configList) do
+		local var_7_0 = iter_7_1.activityId
+		local var_7_1 = iter_7_1.id
 
-		if not slot0._illustrationShapeDic[slot5.activityId] then
-			slot0._illustrationShapeDic[slot6] = {}
-			slot0._illustrationShapeBoxCountDic[slot6] = {}
+		if not arg_7_0._illustrationShapeDic[var_7_0] then
+			local var_7_2 = {}
+
+			arg_7_0._illustrationShapeDic[var_7_0] = var_7_2
+
+			local var_7_3 = {}
+
+			arg_7_0._illustrationShapeBoxCountDic[var_7_0] = var_7_3
 		end
 
-		if not slot0._illustrationShapeDic[slot6][slot7] then
-			slot8 = {}
-			slot9 = 0
+		if not arg_7_0._illustrationShapeDic[var_7_0][var_7_1] then
+			local var_7_4 = {}
+			local var_7_5 = 0
+			local var_7_6 = string.split(iter_7_1.shape, "#")
 
-			for slot14 = 1, #string.split(slot5.shape, "#") do
-				for slot21 = 1, #string.splitToNumber(slot10[slot14], ",") do
-					if slot17[slot21] == 1 then
-						slot9 = slot9 + 1
+			for iter_7_2 = 1, #var_7_6 do
+				local var_7_7 = {}
+				local var_7_8 = var_7_6[iter_7_2]
+				local var_7_9 = string.splitToNumber(var_7_8, ",")
+
+				for iter_7_3 = 1, #var_7_9 do
+					var_7_7[iter_7_3] = var_7_9[iter_7_3]
+
+					if var_7_9[iter_7_3] == 1 then
+						var_7_5 = var_7_5 + 1
 					end
 				end
 
-				slot8[slot14] = {
-					[slot21] = slot17[slot21]
-				}
+				var_7_4[iter_7_2] = var_7_7
 			end
 
-			slot0._illustrationShapeDic[slot6][slot7] = slot8
-			slot0._illustrationShapeBoxCountDic[slot6][slot7] = slot9
+			arg_7_0._illustrationShapeDic[var_7_0][var_7_1] = var_7_4
+			arg_7_0._illustrationShapeBoxCountDic[var_7_0][var_7_1] = var_7_5
 		else
-			logError(string.format("梁月角色活动 插图表id重复 actId:%s id:%s", slot6, slot7))
+			logError(string.format("梁月角色活动 插图表id重复 actId:%s id:%s", var_7_0, var_7_1))
 		end
 	end
 end
 
-function slot0.getEpisodeStaticIllustrationDic(slot0, slot1, slot2)
-	if slot0._episodeStaticIllustrationDic[slot1] then
-		return slot0._episodeStaticIllustrationDic[slot1][slot2]
+function var_0_0.getEpisodeStaticIllustrationDic(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0._episodeStaticIllustrationDic[arg_8_1] then
+		return arg_8_0._episodeStaticIllustrationDic[arg_8_1][arg_8_2]
 	end
 
 	return nil
 end
 
-function slot0.getIllustrationShape(slot0, slot1, slot2)
-	if not slot0._illustrationShapeDic[slot1] then
+function var_0_0.getIllustrationShape(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._illustrationShapeDic[arg_9_1] then
 		return nil
 	end
 
-	return slot0._illustrationShapeDic[slot1][slot2]
+	return arg_9_0._illustrationShapeDic[arg_9_1][arg_9_2]
 end
 
-function slot0.getIllustrationShapeCount(slot0, slot1, slot2)
-	if not slot0._illustrationShapeBoxCountDic[slot1] then
+function var_0_0.getIllustrationShapeCount(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_0._illustrationShapeBoxCountDic[arg_10_1] then
 		return nil
 	end
 
-	return slot0._illustrationShapeBoxCountDic[slot1][slot2]
+	return arg_10_0._illustrationShapeBoxCountDic[arg_10_1][arg_10_2]
 end
 
-function slot0.getIllustrationAttribute(slot0, slot1, slot2)
-	if slot0:getIllustrationConfigById(slot1, slot2) == nil then
+function var_0_0.getIllustrationAttribute(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0:getIllustrationConfigById(arg_11_1, arg_11_2)
+
+	if var_11_0 == nil then
 		return
 	end
 
-	if not slot0._illustrationAttributeConfig then
-		slot0._illustrationAttributeConfig = {}
+	if not arg_11_0._illustrationAttributeConfig then
+		arg_11_0._illustrationAttributeConfig = {}
 	end
 
-	if not slot0._illustrationAttributeConfig[slot1] then
-		slot0._illustrationAttributeConfig[slot1] = {}
+	if not arg_11_0._illustrationAttributeConfig[arg_11_1] then
+		arg_11_0._illustrationAttributeConfig[arg_11_1] = {}
 	end
 
-	if not slot0._illustrationAttributeConfig[slot1][slot2] then
-		slot4 = {
-			[slot12] = {
-				slot12,
-				slot11[2],
-				slot11[3]
+	if not arg_11_0._illustrationAttributeConfig[arg_11_1][arg_11_2] then
+		local var_11_1 = {}
+		local var_11_2 = string.split(var_11_0.attribute, "|")
+
+		for iter_11_0, iter_11_1 in ipairs(var_11_2) do
+			local var_11_3 = string.splitToNumber(iter_11_1, "#")
+			local var_11_4 = var_11_3[1]
+			local var_11_5 = var_11_3[2]
+			local var_11_6 = var_11_3[3]
+
+			var_11_1[var_11_4] = {
+				var_11_4,
+				var_11_5,
+				var_11_6
 			}
-		}
-
-		for slot9, slot10 in ipairs(string.split(slot3.attribute, "|")) do
-			slot12 = string.splitToNumber(slot10, "#")[1]
 		end
 
-		slot0._illustrationAttributeConfig[slot1][slot2] = slot4
+		arg_11_0._illustrationAttributeConfig[arg_11_1][arg_11_2] = var_11_1
 
-		return slot4
+		return var_11_1
 	end
 
-	return slot0._illustrationAttributeConfig[slot1][slot2]
+	return arg_11_0._illustrationAttributeConfig[arg_11_1][arg_11_2]
 end
 
-function slot0.getEpisodeConfigByActAndId(slot0, slot1, slot2)
-	if not slot0._episodeConfig.configDict[slot1] then
+function var_0_0.getEpisodeConfigByActAndId(arg_12_0, arg_12_1, arg_12_2)
+	if not arg_12_0._episodeConfig.configDict[arg_12_1] then
 		return nil
 	end
 
-	return slot0._episodeConfig.configDict[slot1][slot2]
+	return arg_12_0._episodeConfig.configDict[arg_12_1][arg_12_2]
 end
 
-function slot0.getEpisodePuzzleConfigByActAndId(slot0, slot1, slot2)
-	if not slot0._episodePuzzleConfig.configDict[slot1] then
+function var_0_0.getEpisodePuzzleConfigByActAndId(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_0._episodePuzzleConfig.configDict[arg_13_1] then
 		return nil
 	end
 
-	return slot0._episodePuzzleConfig.configDict[slot1][slot2]
+	return arg_13_0._episodePuzzleConfig.configDict[arg_13_1][arg_13_2]
 end
 
-function slot0.getIllustrationConfigById(slot0, slot1, slot2)
-	if not slot0._illustrationConfig.configDict[slot1] then
+function var_0_0.getIllustrationConfigById(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_0._illustrationConfig.configDict[arg_14_1] then
 		return nil
 	end
 
-	return slot0._illustrationConfig.configDict[slot1][slot2]
+	return arg_14_0._illustrationConfig.configDict[arg_14_1][arg_14_2]
 end
 
-function slot0.getNoGameEpisodeList(slot0, slot1)
-	if not slot0._episodeConfig.configDict[slot1] then
+function var_0_0.getNoGameEpisodeList(arg_15_0, arg_15_1)
+	if not arg_15_0._episodeConfig.configDict[arg_15_1] then
 		return nil
 	end
 
-	if not slot0._noGameEpisodeDic[slot1] then
-		slot2 = {}
+	if not arg_15_0._noGameEpisodeDic[arg_15_1] then
+		local var_15_0 = {}
+		local var_15_1 = arg_15_0._episodeConfig.configDict[arg_15_1]
 
-		for slot7, slot8 in pairs(slot0._episodeConfig.configDict[slot1]) do
-			if slot8.puzzleId == 0 then
-				table.insert(slot2, slot8)
+		for iter_15_0, iter_15_1 in pairs(var_15_1) do
+			if iter_15_1.puzzleId == 0 then
+				table.insert(var_15_0, iter_15_1)
 			end
 		end
 
-		table.sort(slot2, slot0._sortEpisode)
+		table.sort(var_15_0, arg_15_0._sortEpisode)
 
-		slot0._noGameEpisodeDic[slot1] = slot2
+		arg_15_0._noGameEpisodeDic[arg_15_1] = var_15_0
 	end
 
-	return slot0._noGameEpisodeDic[slot1]
+	return arg_15_0._noGameEpisodeDic[arg_15_1]
 end
 
-function slot0._sortEpisode(slot0, slot1)
-	return slot0.episodeId <= slot1.episodeId
+function var_0_0._sortEpisode(arg_16_0, arg_16_1)
+	return arg_16_0.episodeId <= arg_16_1.episodeId
 end
 
-function slot0.getAfterGameEpisodeId(slot0, slot1, slot2)
-	if not slot0._episodeConfig.configDict[slot1] then
+function var_0_0.getAfterGameEpisodeId(arg_17_0, arg_17_1, arg_17_2)
+	if not arg_17_0._episodeConfig.configDict[arg_17_1] then
 		return nil
 	end
 
-	if not slot0._afterGameEpisodeDic[slot1] then
-		for slot8, slot9 in pairs(slot0._episodeConfig.configDict[slot1]) do
-			if slot9.puzzleId ~= 0 then
-				-- Nothing
+	if not arg_17_0._afterGameEpisodeDic[arg_17_1] then
+		local var_17_0 = {}
+		local var_17_1 = arg_17_0._episodeConfig.configDict[arg_17_1]
+
+		for iter_17_0, iter_17_1 in pairs(var_17_1) do
+			if iter_17_1.puzzleId ~= 0 then
+				var_17_0[iter_17_1.preEpisodeId] = iter_17_1.episodeId
 			end
 		end
 
-		slot0._afterGameEpisodeDic[slot1] = {
-			[slot9.preEpisodeId] = slot9.episodeId
-		}
+		arg_17_0._afterGameEpisodeDic[arg_17_1] = var_17_0
 	end
 
-	return slot0._afterGameEpisodeDic[slot1][slot2]
+	return arg_17_0._afterGameEpisodeDic[arg_17_1][arg_17_2]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

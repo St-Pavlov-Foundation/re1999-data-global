@@ -1,71 +1,79 @@
-module("modules.logic.gm.view.GMResetCardsView", package.seeall)
+﻿module("modules.logic.gm.view.GMResetCardsView", package.seeall)
 
-slot0 = class("GMResetCardsView", BaseView)
+local var_0_0 = class("GMResetCardsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._btnOK = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnOK")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
+	arg_1_0._btnOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnOK")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnOK:AddClickListener(slot0._onClickOK, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnOK:AddClickListener(arg_2_0._onClickOK, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnOK:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnOK:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot1 = {}
+function var_0_0.onOpen(arg_4_0)
+	local var_4_0 = {}
+	local var_4_1 = FightCardModel.instance:getHandCardsByOps({})
 
-	for slot6, slot7 in ipairs(FightCardModel.instance:getHandCardsByOps({})) do
-		table.insert(slot1, {
-			oldEntityId = slot7.uid,
-			oldSkillId = slot7.skillId
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		table.insert(var_4_0, {
+			oldEntityId = iter_4_1.uid,
+			oldSkillId = iter_4_1.skillId
 		})
 	end
 
-	GMResetCardsModel.instance:getModel1():setList(slot1)
+	GMResetCardsModel.instance:getModel1():setList(var_4_0)
 
-	slot4 = {}
+	local var_4_2 = {}
+	local var_4_3 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
 
-	for slot9, slot10 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)) do
-		for slot15, slot16 in ipairs(slot10:getMO().skillGroup1) do
-			table.insert(slot4, {
-				entityId = slot10.id,
-				skillId = slot16
+	for iter_4_2, iter_4_3 in ipairs(var_4_3) do
+		local var_4_4 = iter_4_3:getMO()
+
+		for iter_4_4, iter_4_5 in ipairs(var_4_4.skillGroup1) do
+			table.insert(var_4_2, {
+				entityId = iter_4_3.id,
+				skillId = iter_4_5
 			})
 		end
 
-		for slot15, slot16 in ipairs(slot11.skillGroup2) do
-			table.insert(slot4, {
-				entityId = slot10.id,
-				skillId = slot16
+		for iter_4_6, iter_4_7 in ipairs(var_4_4.skillGroup2) do
+			table.insert(var_4_2, {
+				entityId = iter_4_3.id,
+				skillId = iter_4_7
 			})
 		end
 
-		table.insert(slot4, {
-			entityId = slot10.id,
-			skillId = slot11.exSkill
+		table.insert(var_4_2, {
+			entityId = iter_4_3.id,
+			skillId = var_4_4.exSkill
 		})
 	end
 
-	GMResetCardsModel.instance:getModel2():setList(slot4)
+	GMResetCardsModel.instance:getModel2():setList(var_4_2)
 end
 
-function slot0._onClickOK(slot0)
-	slot1 = GMResetCardsModel.instance:getModel1()
+function var_0_0._onClickOK(arg_5_0)
+	local var_5_0 = GMResetCardsModel.instance:getModel1()
+	local var_5_1 = ""
+	local var_5_2 = var_5_0:getCount()
 
-	for slot7, slot8 in ipairs(slot1:getList()) do
-		if slot7 < slot1:getCount() then
-			slot2 = "" .. (slot8.newSkillId or slot8.oldSkillId) .. "#"
+	for iter_5_0, iter_5_1 in ipairs(var_5_0:getList()) do
+		var_5_1 = var_5_1 .. (iter_5_1.newSkillId or iter_5_1.oldSkillId)
+
+		if iter_5_0 < var_5_2 then
+			var_5_1 = var_5_1 .. "#"
 		end
 	end
 
-	GMRpc.instance:sendGMRequest("fight resetCards " .. slot2)
-	slot0:closeThis()
+	GMRpc.instance:sendGMRequest("fight resetCards " .. var_5_1)
+	arg_5_0:closeThis()
 end
 
-return slot0
+return var_0_0

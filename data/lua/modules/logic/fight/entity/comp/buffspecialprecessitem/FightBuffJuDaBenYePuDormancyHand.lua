@@ -1,17 +1,21 @@
-module("modules.logic.fight.entity.comp.buffspecialprecessitem.FightBuffJuDaBenYePuDormancyHand", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buffspecialprecessitem.FightBuffJuDaBenYePuDormancyHand", package.seeall)
 
-slot0 = class("FightBuffJuDaBenYePuDormancyHand", FightBuffJuDaBenYePuDormancyTail)
+local var_0_0 = class("FightBuffJuDaBenYePuDormancyHand", FightBuffJuDaBenYePuDormancyTail)
 
-function slot0.getPlayValue(slot0)
-	slot1 = MaterialUtil.getPropValueFromMat(slot0._entityMat, "_TempOffset3", "Vector4")
+function var_0_0.getPlayValue(arg_1_0)
+	local var_1_0 = MaterialUtil.getPropValueFromMat(arg_1_0._entityMat, "_TempOffset3", "Vector4")
+	local var_1_1 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", var_1_0.z))
+	local var_1_2 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", var_1_0.z))
 
-	return MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", slot1.z)), MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", slot1.z))
+	return var_1_1, var_1_2
 end
 
-function slot0.getCloseValue(slot0)
-	slot1 = MaterialUtil.getPropValueFromMat(slot0._entityMat, "_TempOffset3", "Vector4")
+function var_0_0.getCloseValue(arg_2_0)
+	local var_2_0 = MaterialUtil.getPropValueFromMat(arg_2_0._entityMat, "_TempOffset3", "Vector4")
+	local var_2_1 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", var_2_0.z))
+	local var_2_2 = MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", var_2_0.z))
 
-	return MaterialUtil.getPropValueFromStr("Vector4", string.format("3,1,%f,0", slot1.z)), MaterialUtil.getPropValueFromStr("Vector4", string.format("3,0,%f,0", slot1.z))
+	return var_2_1, var_2_2
 end
 
-return slot0
+return var_0_0

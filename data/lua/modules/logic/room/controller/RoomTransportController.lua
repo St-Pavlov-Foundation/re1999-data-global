@@ -1,404 +1,467 @@
-module("modules.logic.room.controller.RoomTransportController", package.seeall)
+﻿module("modules.logic.room.controller.RoomTransportController", package.seeall)
 
-slot0 = class("RoomTransportController", BaseController)
+local var_0_0 = class("RoomTransportController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0:_removeEvents()
+function var_0_0.clear(arg_3_0)
+	arg_3_0:_removeEvents()
 	RoomTransportPathModel.instance:clear()
 	RoomMapTransportPathModel.instance:clear()
 end
 
-function slot0.init(slot0)
-	slot0:_addEvents()
+function var_0_0.init(arg_4_0)
+	arg_4_0:_addEvents()
 end
 
-function slot0._addEvents(slot0)
-	if slot0._isInitAddEvent then
+function var_0_0._addEvents(arg_5_0)
+	if arg_5_0._isInitAddEvent then
 		return
 	end
 end
 
-function slot0._removeEvents(slot0)
-	slot0._isInitAddEvent = false
+function var_0_0._removeEvents(arg_6_0)
+	arg_6_0._isInitAddEvent = false
 end
 
-function slot0.initPathData(slot0, slot1)
-	RoomTransportPathModel.instance:initPath(slot1)
-	RoomMapTransportPathModel.instance:initPath(slot1)
+function var_0_0.initPathData(arg_7_0, arg_7_1)
+	RoomTransportPathModel.instance:initPath(arg_7_1)
+	RoomMapTransportPathModel.instance:initPath(arg_7_1)
 	RoomMapTransportPathModel.instance:updateSiteHexPoint()
 end
 
-slot0.SAME_EDIT_PATH_REQUEST = "RoomTransportController.SAME_EDIT_PATH_REQUEST"
+var_0_0.SAME_EDIT_PATH_REQUEST = "RoomTransportController.SAME_EDIT_PATH_REQUEST"
 
-function slot0.saveEditPath(slot0)
-	slot1 = {}
-	slot3 = RoomMapTransportPathModel.instance
+function var_0_0.saveEditPath(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = {}
+	local var_8_2 = RoomMapTransportPathModel.instance
+	local var_8_3 = RoomTransportPathModel.instance:getTransportPathMOList()
 
-	for slot9, slot10 in ipairs(RoomTransportPathModel.instance:getTransportPathMOList()) do
-		if slot3:getTransportPathMOBy2Type(slot10.fromType, slot10.toType) and slot11:isLinkFinish() then
-			slot11:updateCritterInfo(slot10)
-			slot11:updateBuildingInfo(slot10)
+	for iter_8_0, iter_8_1 in ipairs(var_8_3) do
+		local var_8_4 = var_8_2:getTransportPathMOBy2Type(iter_8_1.fromType, iter_8_1.toType)
 
-			slot11.id = slot10.id
+		if var_8_4 and var_8_4:isLinkFinish() then
+			var_8_4:updateCritterInfo(iter_8_1)
+			var_8_4:updateBuildingInfo(iter_8_1)
 
-			table.insert({}, slot11)
-		elseif slot10.id > 0 then
-			table.insert(slot1, slot10.id)
-			RoomTransportHelper.saveQuickLink(RoomTransportHelper.fromTo2SiteType(slot10.fromType, slot10.toType), false)
+			var_8_4.id = iter_8_1.id
+
+			table.insert(var_8_1, var_8_4)
+		elseif iter_8_1.id > 0 then
+			table.insert(var_8_0, iter_8_1.id)
+
+			local var_8_5 = RoomTransportHelper.fromTo2SiteType(iter_8_1.fromType, iter_8_1.toType)
+
+			RoomTransportHelper.saveQuickLink(var_8_5, false)
 		end
 	end
 
-	slot7 = -1
+	local var_8_6 = var_8_2:getTransportPathMOList()
+	local var_8_7 = -1
 
-	for slot11, slot12 in ipairs(slot3:getTransportPathMOList()) do
-		if slot12:isLinkFinish() then
-			if not tabletool.indexOf(slot2, slot12) then
-				slot12.critterUid = 0
-				slot12.buildingUid = 0
-				slot12.buildingId = 0
-				slot12.buildingSkinId = 0
-				slot12.id = slot7
-				slot7 = slot7 - 1
+	for iter_8_2, iter_8_3 in ipairs(var_8_6) do
+		if iter_8_3:isLinkFinish() then
+			if not tabletool.indexOf(var_8_1, iter_8_3) then
+				iter_8_3.critterUid = 0
+				iter_8_3.buildingUid = 0
+				iter_8_3.buildingId = 0
+				iter_8_3.buildingSkinId = 0
+				iter_8_3.id = var_8_7
+				var_8_7 = var_8_7 - 1
 
-				table.insert(slot2, slot12)
+				table.insert(var_8_1, iter_8_3)
 			end
 
-			if slot12:getIsEdit() and slot12:getIsQuickLink() ~= nil then
-				RoomTransportHelper.saveQuickLink(RoomTransportHelper.fromTo2SiteType(slot12.fromType, slot12.toType), slot12:getIsQuickLink())
+			if iter_8_3:getIsEdit() and iter_8_3:getIsQuickLink() ~= nil then
+				local var_8_8 = RoomTransportHelper.fromTo2SiteType(iter_8_3.fromType, iter_8_3.toType)
+
+				RoomTransportHelper.saveQuickLink(var_8_8, iter_8_3:getIsQuickLink())
 			end
 		end
 	end
 
-	RoomMapTransportPathModel.instance:setList(slot2)
+	RoomMapTransportPathModel.instance:setList(var_8_1)
 
-	slot0._savePathDeleteOp = #slot1 > 0
-	slot0._savePathGeneraterOP = #slot2 > 0
-	slot0._coutWaitSuccess = 0
+	arg_8_0._savePathDeleteOp = #var_8_0 > 0
+	arg_8_0._savePathGeneraterOP = #var_8_1 > 0
+	arg_8_0._coutWaitSuccess = 0
 
-	if slot0._savePathGeneraterOP then
-		slot0._coutWaitSuccess = slot0._coutWaitSuccess + 1
+	if arg_8_0._savePathGeneraterOP then
+		arg_8_0._coutWaitSuccess = arg_8_0._coutWaitSuccess + 1
 
-		RoomRpc.instance:sendGenerateRoadRequest(slot2, slot1, slot0._onGenerateRoadReply, slot0)
-	elseif slot0._savePathDeleteOp then
-		slot0._coutWaitSuccess = slot0._coutWaitSuccess + 1
+		RoomRpc.instance:sendGenerateRoadRequest(var_8_1, var_8_0, arg_8_0._onGenerateRoadReply, arg_8_0)
+	elseif arg_8_0._savePathDeleteOp then
+		arg_8_0._coutWaitSuccess = arg_8_0._coutWaitSuccess + 1
 
-		RoomRpc.instance:sendDeleteRoadRequest(slot1, slot0._onDeleteRoadReply, slot0)
+		RoomRpc.instance:sendDeleteRoadRequest(var_8_0, arg_8_0._onDeleteRoadReply, arg_8_0)
 	end
 
-	if slot0._savePathGeneraterOP or slot0._savePathDeleteOp then
+	if arg_8_0._savePathGeneraterOP or arg_8_0._savePathDeleteOp then
 		RoomModel.instance:setEditFlag()
 	end
 
-	slot0:waitRefreshPathLineChanged()
-	slot0:updateBlockUseState()
+	arg_8_0:waitRefreshPathLineChanged()
+	arg_8_0:updateBlockUseState()
 end
 
-function slot0._onDeleteRoadReply(slot0, slot1, slot2, slot3)
-	slot0._savePathDeleteOp = false
+function var_0_0._onDeleteRoadReply(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	arg_9_0._savePathDeleteOp = false
 
-	if slot2 == 0 then
-		slot0._coutWaitSuccess = slot0._coutWaitSuccess - 1
+	if arg_9_2 == 0 then
+		arg_9_0._coutWaitSuccess = arg_9_0._coutWaitSuccess - 1
 
-		RoomTransportPathModel.instance:removeByIds(slot3.ids)
-		RoomMapTransportPathModel.instance:removeByIds(slot3.ids)
+		RoomTransportPathModel.instance:removeByIds(arg_9_3.ids)
+		RoomMapTransportPathModel.instance:removeByIds(arg_9_3.ids)
 	end
 
-	slot0:_checkSaveEditPath()
+	arg_9_0:_checkSaveEditPath()
 end
 
-function slot0._onGenerateRoadReply(slot0, slot1, slot2, slot3)
-	slot0._savePathGeneraterOP = false
+function var_0_0._onGenerateRoadReply(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0._savePathGeneraterOP = false
 
-	if slot2 == 0 then
-		slot0._coutWaitSuccess = slot0._coutWaitSuccess - 1
-		slot4 = slot3.validRoadInfos
+	if arg_10_2 == 0 then
+		arg_10_0._coutWaitSuccess = arg_10_0._coutWaitSuccess - 1
 
-		RoomTransportPathModel.instance:removeByIds(slot3.ids)
-		RoomMapTransportPathModel.instance:removeByIds(slot3.ids)
-		RoomTransportPathModel.instance:initPath(slot4)
-		RoomMapTransportPathModel.instance:initPath(slot4)
+		local var_10_0 = arg_10_3.validRoadInfos
+
+		RoomTransportPathModel.instance:removeByIds(arg_10_3.ids)
+		RoomMapTransportPathModel.instance:removeByIds(arg_10_3.ids)
+		RoomTransportPathModel.instance:initPath(var_10_0)
+		RoomMapTransportPathModel.instance:initPath(var_10_0)
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 	end
 
-	slot0:_checkSaveEditPath()
+	arg_10_0:_checkSaveEditPath()
 end
 
-function slot0.deleteRoadReply(slot0, slot1)
-	slot0:deleteRoadByIds(slot1.ids)
+function var_0_0.deleteRoadReply(arg_11_0, arg_11_1)
+	arg_11_0:deleteRoadByIds(arg_11_1.ids)
 end
 
-function slot0.deleteRoadByIds(slot0, slot1)
-	if not slot1 or #slot1 < 1 then
+function var_0_0.deleteRoadByIds(arg_12_0, arg_12_1)
+	if not arg_12_1 or #arg_12_1 < 1 then
 		return
 	end
 
-	RoomTransportPathModel.instance:removeByIds(slot1)
-	RoomMapTransportPathModel.instance:removeByIds(slot1)
+	RoomTransportPathModel.instance:removeByIds(arg_12_1)
+	RoomMapTransportPathModel.instance:removeByIds(arg_12_1)
 	RoomMapTransportPathModel.instance:updateSiteHexPoint()
-	slot0:updateBlockUseState()
+	arg_12_0:updateBlockUseState()
 end
 
-function slot0.allotCritterReply(slot0, slot1)
-	slot2 = {
-		critterUid = slot1.critterUid
+function var_0_0.allotCritterReply(arg_13_0, arg_13_1)
+	local var_13_0 = {
+		critterUid = arg_13_1.critterUid
 	}
-	slot3 = slot0:isTransportWorkingById(slot1.id)
-	slot4 = nil
+	local var_13_1 = arg_13_0:isTransportWorkingById(arg_13_1.id)
+	local var_13_2
+	local var_13_3 = RoomMapTransportPathModel.instance:getTransportPathMOList()
 
-	for slot9, slot10 in ipairs(RoomMapTransportPathModel.instance:getTransportPathMOList()) do
-		if slot10.id ~= slot1.id and slot10.critterUid == slot1.critterUid then
-			table.insert(slot4 or {}, slot10)
+	for iter_13_0, iter_13_1 in ipairs(var_13_3) do
+		if iter_13_1.id ~= arg_13_1.id and iter_13_1.critterUid == arg_13_1.critterUid then
+			var_13_2 = var_13_2 or {}
+
+			table.insert(var_13_2, iter_13_1)
 		end
 	end
 
-	if slot4 then
-		slot6 = {
+	if var_13_2 then
+		local var_13_4 = {
 			critterUid = 0
 		}
 
-		for slot10, slot11 in ipairs(slot4) do
-			RoomTransportPathModel.instance:updateInofoById(slot11.id, slot6)
-			RoomMapTransportPathModel.instance:updateInofoById(slot11.id, slot6)
+		for iter_13_2, iter_13_3 in ipairs(var_13_2) do
+			RoomTransportPathModel.instance:updateInofoById(iter_13_3.id, var_13_4)
+			RoomMapTransportPathModel.instance:updateInofoById(iter_13_3.id, var_13_4)
 		end
 	end
 
-	RoomTransportPathModel.instance:updateInofoById(slot1.id, slot2)
-	RoomMapTransportPathModel.instance:updateInofoById(slot1.id, slot2)
+	RoomTransportPathModel.instance:updateInofoById(arg_13_1.id, var_13_0)
+	RoomMapTransportPathModel.instance:updateInofoById(arg_13_1.id, var_13_0)
 
-	if not slot3 and slot0:isTransportWorkingById(slot1.id) then
+	if not var_13_1 and arg_13_0:isTransportWorkingById(arg_13_1.id) then
 		GameFacade.showToast(ToastEnum.RoomTransportStartMove)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportCritterChanged)
 end
 
-function slot0.isTransportWorkingById(slot0, slot1)
-	if RoomMapTransportPathModel.instance:getTransportPathMO(slot1) and slot2.critterUid and slot2.critterUid ~= 0 and (RoomBuildingAreaHelper.isHasWorkingByType(slot2.fromType) or RoomBuildingAreaHelper.isHasWorkingByType(slot2.toType)) then
+function var_0_0.isTransportWorkingById(arg_14_0, arg_14_1)
+	local var_14_0 = RoomMapTransportPathModel.instance:getTransportPathMO(arg_14_1)
+
+	if var_14_0 and var_14_0.critterUid and var_14_0.critterUid ~= 0 and (RoomBuildingAreaHelper.isHasWorkingByType(var_14_0.fromType) or RoomBuildingAreaHelper.isHasWorkingByType(var_14_0.toType)) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.batchCritterReply(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RoomTransportHelper.serverRoadInfo2Info(slot6)
+function var_0_0.batchCritterReply(arg_15_0, arg_15_1)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
+		local var_15_0 = RoomTransportHelper.serverRoadInfo2Info(iter_15_1)
 
-		RoomTransportPathModel.instance:updateInofoById(slot7.id, slot7)
-		RoomMapTransportPathModel.instance:updateInofoById(slot7.id, slot7)
+		RoomTransportPathModel.instance:updateInofoById(var_15_0.id, var_15_0)
+		RoomMapTransportPathModel.instance:updateInofoById(var_15_0.id, var_15_0)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportCritterChanged)
 end
 
-function slot0.allotVehicleReply(slot0, slot1)
-	slot2 = {
-		buildingUid = slot1.buildingUid,
-		buildingId = slot1.buildingDefineId,
-		buildingDefineId = slot1.buildingDefineId,
-		buildingSkinId = slot1.skinId
+function var_0_0.allotVehicleReply(arg_16_0, arg_16_1)
+	local var_16_0 = {
+		buildingUid = arg_16_1.buildingUid,
+		buildingId = arg_16_1.buildingDefineId,
+		buildingDefineId = arg_16_1.buildingDefineId,
+		buildingSkinId = arg_16_1.skinId
 	}
+	local var_16_1 = RoomMapTransportPathModel.instance:getTransportPathMO(arg_16_1.id)
 
-	RoomTransportPathModel.instance:updateInofoById(slot1.id, slot2)
-	RoomMapTransportPathModel.instance:updateInofoById(slot1.id, slot2)
+	RoomTransportPathModel.instance:updateInofoById(arg_16_1.id, var_16_0)
+	RoomMapTransportPathModel.instance:updateInofoById(arg_16_1.id, var_16_0)
 
-	if RoomMapTransportPathModel.instance:getTransportPathMO(slot1.id) then
-		slot0:_updateVehicle(slot3)
+	if var_16_1 then
+		arg_16_0:_updateVehicle(var_16_1)
 	end
 
 	GameFacade.showToast(ToastEnum.RoomTransportSkinChange)
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportBuildingChanged)
 end
 
-function slot0._updateVehicle(slot0, slot1)
-	if not slot1 then
+function var_0_0._updateVehicle(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	if not RoomCameraController.instance:getRoomScene() then
+	local var_17_0 = RoomCameraController.instance:getRoomScene()
+
+	if not var_17_0 then
 		return
 	end
 
-	slot3 = RoomTransportHelper.fromTo2SiteType(slot1.fromType, slot1.toType)
+	local var_17_1 = RoomTransportHelper.fromTo2SiteType(arg_17_1.fromType, arg_17_1.toType)
+	local var_17_2 = RoomTransportHelper.getVehicleCfgByBuildingId(arg_17_1.buildingId, arg_17_1.buildingSkinId)
 
-	if RoomTransportHelper.getVehicleCfgByBuildingId(slot1.buildingId, slot1.buildingSkinId) then
-		if not RoomMapVehicleModel.instance:getVehicleMOBySiteType(slot3) and RoomMapVehicleModel.instance:createVehicleMOBySiteType(slot3) then
-			RoomMapVehicleModel.instance:addAtLast(slot5)
+	if var_17_2 then
+		local var_17_3 = RoomMapVehicleModel.instance:getVehicleMOBySiteType(var_17_1)
+
+		if not var_17_3 then
+			var_17_3 = RoomMapVehicleModel.instance:createVehicleMOBySiteType(var_17_1)
+
+			if var_17_3 then
+				RoomMapVehicleModel.instance:addAtLast(var_17_3)
+			end
 		end
 
-		if slot5 then
-			slot5.config = slot4
-			slot5.vehicleId = slot4.id
+		if var_17_3 then
+			var_17_3.config = var_17_2
+			var_17_3.vehicleId = var_17_2.id
 
-			if slot2.vehiclemgr:getVehicleEntity(slot5.id) then
-				slot6:refreshReplaceType()
-				slot6:refreshVehicle()
+			local var_17_4 = var_17_0.vehiclemgr:getVehicleEntity(var_17_3.id)
+
+			if var_17_4 then
+				var_17_4:refreshReplaceType()
+				var_17_4:refreshVehicle()
 			else
-				slot2.vehiclemgr:spawnMapVehicle(slot5)
+				var_17_0.vehiclemgr:spawnMapVehicle(var_17_3)
 			end
 		end
 	else
-		if slot2.vehiclemgr:getVehicleEntity(RoomMapVehicleModel.instance:getVehicleIdBySiteType(slot3)) then
-			slot2.vehiclemgr:destroyVehicle(slot6)
+		local var_17_5 = RoomMapVehicleModel.instance:getVehicleIdBySiteType(var_17_1)
+		local var_17_6 = var_17_0.vehiclemgr:getVehicleEntity(var_17_5)
+
+		if var_17_6 then
+			var_17_0.vehiclemgr:destroyVehicle(var_17_6)
 		end
 
-		if RoomMapVehicleModel.instance:getVehicleMOBySiteType(slot3) then
-			RoomMapVehicleModel.instance:remove(slot7)
+		local var_17_7 = RoomMapVehicleModel.instance:getVehicleMOBySiteType(var_17_1)
+
+		if var_17_7 then
+			RoomMapVehicleModel.instance:remove(var_17_7)
 		end
 	end
 end
 
-function slot0._checkSaveEditPath(slot0)
-	if not slot0._savePathDeleteOp and not slot0._savePathGeneraterOP then
-		UIBlockMgr.instance:endBlock(uv0.SAME_EDIT_PATH_REQUEST)
+function var_0_0._checkSaveEditPath(arg_18_0)
+	if not arg_18_0._savePathDeleteOp and not arg_18_0._savePathGeneraterOP then
+		UIBlockMgr.instance:endBlock(var_0_0.SAME_EDIT_PATH_REQUEST)
 
-		if slot0._coutWaitSuccess and slot0._coutWaitSuccess < 1 then
+		if arg_18_0._coutWaitSuccess and arg_18_0._coutWaitSuccess < 1 then
 			ViewMgr.instance:closeView(ViewName.RoomTransportPathView)
 			GameFacade.showToast(RoomEnum.Toast.LayoutPlanSave)
 		end
 
-		slot0:waitRefreshPathLineChanged()
+		arg_18_0:waitRefreshPathLineChanged()
 	end
 end
 
-function slot0.updateBlockUseState(slot0)
-	slot2 = RoomMapBlockModel.instance
-	slot3 = {}
-	slot4 = {}
-	slot5 = RoomBlockEnum.UseState.TransportPath
+function var_0_0.updateBlockUseState(arg_19_0)
+	local var_19_0 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local var_19_1 = RoomMapBlockModel.instance
+	local var_19_2 = {}
+	local var_19_3 = {}
+	local var_19_4 = RoomBlockEnum.UseState.TransportPath
 
-	for slot9 = 1, #RoomMapTransportPathModel.instance:getTransportPathMOList() do
-		for slot15, slot16 in ipairs(slot1[slot9]:getHexPointList()) do
-			if slot2:getBlockMO(slot16.x, slot16.y) then
-				slot3[slot17.id] = true
-				slot4[slot17.id] = slot10.blockCleanType
+	for iter_19_0 = 1, #var_19_0 do
+		local var_19_5 = var_19_0[iter_19_0]
+		local var_19_6 = var_19_5:getHexPointList()
+
+		for iter_19_1, iter_19_2 in ipairs(var_19_6) do
+			local var_19_7 = var_19_1:getBlockMO(iter_19_2.x, iter_19_2.y)
+
+			if var_19_7 then
+				var_19_2[var_19_7.id] = true
+				var_19_3[var_19_7.id] = var_19_5.blockCleanType
 			end
 		end
 	end
 
-	for slot10, slot11 in ipairs(slot2:getFullBlockMOList()) do
-		if slot3[slot11.id] then
-			slot15 = slot4[slot11.id]
+	local var_19_8 = var_19_1:getFullBlockMOList()
 
-			if slot11:getUseState() ~= slot5 or slot15 ~= slot11:getCleanType() then
-				slot11:setUseState(slot5)
-				slot11:setCleanType(slot15)
-				slot0:waitRefreshBlockById(slot12)
+	for iter_19_3, iter_19_4 in ipairs(var_19_8) do
+		local var_19_9 = iter_19_4.id
+		local var_19_10 = iter_19_4:getUseState()
+		local var_19_11 = iter_19_4:getCleanType()
+
+		if var_19_2[var_19_9] then
+			local var_19_12 = var_19_3[iter_19_4.id]
+
+			if var_19_10 ~= var_19_4 or var_19_12 ~= var_19_11 then
+				iter_19_4:setUseState(var_19_4)
+				iter_19_4:setCleanType(var_19_12)
+				arg_19_0:waitRefreshBlockById(var_19_9)
 			end
-		elseif slot13 == slot5 or slot14 ~= RoomBlockEnum.UseState.Normal then
-			slot11:setUseState(nil)
-			slot11:setCleanType(nil)
-			slot0:waitRefreshBlockById(slot12)
+		elseif var_19_10 == var_19_4 or var_19_11 ~= RoomBlockEnum.UseState.Normal then
+			iter_19_4:setUseState(nil)
+			iter_19_4:setCleanType(nil)
+			arg_19_0:waitRefreshBlockById(var_19_9)
 		end
 	end
 
-	slot0:waitRefreshPathLineChanged()
+	arg_19_0:waitRefreshPathLineChanged()
 end
 
-function slot0.tweenCameraFocusSite(slot0, slot1, slot2)
-	slot0._tweenCameraFocusSiteParams = nil
-	slot3 = GameSceneMgr.instance:getCurScene()
+function var_0_0.tweenCameraFocusSite(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0._tweenCameraFocusSiteParams = nil
 
-	if RoomMapVehicleModel.instance:getVehicleMOBySiteType(slot1) then
-		slot3.cameraFollow:setFollowTarget(slot3.vehiclemgr:getVehicleEntity(slot4.id) and slot5.cameraFollowTargetComp, slot2 == true)
+	local var_20_0 = GameSceneMgr.instance:getCurScene()
+	local var_20_1 = RoomMapVehicleModel.instance:getVehicleMOBySiteType(arg_20_1)
 
-		if slot5 then
-			slot7 = RoomEnum.CameraState.ThirdPerson
-			slot8 = slot4.config and slot6.thirdCameraId
+	if var_20_1 then
+		arg_20_2 = arg_20_2 == true
 
-			if slot2 then
-				slot8 = slot6 and slot6.firstCameraId
-				slot7 = RoomEnum.CameraState.FirstPerson
+		local var_20_2 = var_20_0.vehiclemgr:getVehicleEntity(var_20_1.id)
+
+		var_20_0.cameraFollow:setFollowTarget(var_20_2 and var_20_2.cameraFollowTargetComp, arg_20_2)
+
+		if var_20_2 then
+			local var_20_3 = var_20_1.config
+			local var_20_4 = RoomEnum.CameraState.ThirdPerson
+			local var_20_5 = var_20_3 and var_20_3.thirdCameraId
+
+			if arg_20_2 then
+				var_20_5 = var_20_3 and var_20_3.firstCameraId
+				var_20_4 = RoomEnum.CameraState.FirstPerson
 			end
 
-			slot5.cameraFollowTargetComp:setFollowGOPath(slot2 and RoomEnum.EntityChildKey.FirstPersonCameraGOKey or RoomEnum.EntityChildKey.ThirdPersonCameraGOKey)
+			var_20_2.cameraFollowTargetComp:setFollowGOPath(arg_20_2 and RoomEnum.EntityChildKey.FirstPersonCameraGOKey or RoomEnum.EntityChildKey.ThirdPersonCameraGOKey)
 
-			slot9, slot10, slot11 = slot5.cameraFollowTargetComp:getPositionXYZ()
+			local var_20_6, var_20_7, var_20_8 = var_20_2.cameraFollowTargetComp:getPositionXYZ()
 
-			slot3.cameraFollow:setIsPass(true, slot10)
+			var_20_0.cameraFollow:setIsPass(true, var_20_7)
 
-			slot3.cameraFollow._offsetY = slot10
+			local var_20_9 = {
+				focusX = var_20_6,
+				focusY = var_20_8
+			}
 
-			if slot2 then
-				slot13, slot14, slot15 = slot5.cameraFollowTargetComp:getRotateXYZ()
+			var_20_0.cameraFollow._offsetY = var_20_7
+
+			if arg_20_2 then
+				local var_20_10, var_20_11, var_20_12 = var_20_2.cameraFollowTargetComp:getRotateXYZ()
+
+				var_20_9.rotate = RoomRotateHelper.getMod(var_20_11, 360) * Mathf.Deg2Rad
 			end
 
-			slot3.camera:setChangeCameraParamsById(slot7, slot8)
-			slot3.camera:switchCameraState(slot7, {
-				focusX = slot9,
-				focusY = slot11,
-				rotate = RoomRotateHelper.getMod(slot14, 360) * Mathf.Deg2Rad
-			}, nil, slot0._onTweenCameraFocusSiteFinsh, slot0)
+			var_20_0.camera:setChangeCameraParamsById(var_20_4, var_20_5)
+			var_20_0.camera:switchCameraState(var_20_4, var_20_9, nil, arg_20_0._onTweenCameraFocusSiteFinsh, arg_20_0)
 
-			slot0._tweenCameraFocusSiteParams = true
+			arg_20_0._tweenCameraFocusSiteParams = true
 
-			slot3.fovblock:setLookVehicleUid(slot7, slot4.id)
+			var_20_0.fovblock:setLookVehicleUid(var_20_4, var_20_1.id)
 		end
 
 		return
 	end
 
-	if RoomMapTransportPathModel.instance:getSiteHexPointByType(slot1) then
-		slot3.cameraFollow:setFollowTarget(nil)
+	local var_20_13 = RoomMapTransportPathModel.instance:getSiteHexPointByType(arg_20_1)
 
-		slot6, slot7 = HexMath.hexXYToPosXY(slot5.x, slot5.y, RoomBlockEnum.BlockSize)
+	if var_20_13 then
+		var_20_0.cameraFollow:setFollowTarget(nil)
 
-		slot3.camera:switchCameraState(RoomEnum.CameraState.Normal, {
-			focusX = slot6,
-			focusY = slot7
+		local var_20_14, var_20_15 = HexMath.hexXYToPosXY(var_20_13.x, var_20_13.y, RoomBlockEnum.BlockSize)
+
+		var_20_0.camera:switchCameraState(RoomEnum.CameraState.Normal, {
+			focusX = var_20_14,
+			focusY = var_20_15
 		})
 	end
 end
 
-function slot0._onTweenCameraFocusSiteFinsh(slot0)
-	if slot0._tweenCameraFocusSiteParams then
-		slot0._tweenCameraFocusSiteParams = nil
+function var_0_0._onTweenCameraFocusSiteFinsh(arg_21_0)
+	if arg_21_0._tweenCameraFocusSiteParams then
+		arg_21_0._tweenCameraFocusSiteParams = nil
 
-		if RoomCameraController.instance:getRoomScene() then
-			slot1.cameraFollow:setIsPass(false)
+		local var_21_0 = RoomCameraController.instance:getRoomScene()
+
+		if var_21_0 then
+			var_21_0.cameraFollow:setIsPass(false)
 		end
 	end
 end
 
-function slot0.openTransportSiteView(slot0, slot1, slot2)
-	if slot0:_findLinkPathSiteType(slot1) then
-		RoomCameraController.instance:saveCameraStateByKey(ViewName.RoomTransportSiteView, slot2)
+function var_0_0.openTransportSiteView(arg_22_0, arg_22_1, arg_22_2)
+	arg_22_1 = arg_22_0:_findLinkPathSiteType(arg_22_1)
 
-		slot3 = false
+	if arg_22_1 then
+		RoomCameraController.instance:saveCameraStateByKey(ViewName.RoomTransportSiteView, arg_22_2)
 
-		slot0:tweenCameraFocusSite(slot1, slot3)
+		local var_22_0 = false
+
+		arg_22_0:tweenCameraFocusSite(arg_22_1, var_22_0)
 		ViewMgr.instance:openView(ViewName.RoomTransportSiteView, {
-			siteType = slot1,
-			isFirstPerson = slot3
+			siteType = arg_22_1,
+			isFirstPerson = var_22_0
 		})
 	end
 end
 
-function slot0._findLinkPathSiteType(slot0, slot1)
-	slot2, slot3 = RoomTransportHelper.getSiteFromToByType(slot1)
+function var_0_0._findLinkPathSiteType(arg_23_0, arg_23_1)
+	local var_23_0, var_23_1 = RoomTransportHelper.getSiteFromToByType(arg_23_1)
 
-	if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot2, slot3) then
-		return slot1
+	if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_23_0, var_23_1) then
+		return arg_23_1
 	end
 
-	for slot9, slot10 in ipairs(RoomTransportHelper.getSiteBuildingTypeList()) do
-		slot11, slot12 = RoomTransportHelper.getSiteFromToByType(slot10)
+	local var_23_2 = RoomTransportHelper.getSiteBuildingTypeList()
 
-		if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot11, slot12) and (slot11 == slot1 or slot12 == slot1) then
-			return slot10
+	for iter_23_0, iter_23_1 in ipairs(var_23_2) do
+		local var_23_3, var_23_4 = RoomTransportHelper.getSiteFromToByType(iter_23_1)
+
+		if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_23_3, var_23_4) and (var_23_3 == arg_23_1 or var_23_4 == arg_23_1) then
+			return iter_23_1
 		end
 	end
 end
 
-function slot0.openTransportPathView(slot0)
+function var_0_0.openTransportPathView(arg_24_0)
 	if RoomMapBuildingAreaModel.instance:getCount() < 2 then
 		GameFacade.showToast(ToastEnum.RoomTranspathUnableEdite)
 
@@ -409,84 +472,91 @@ function slot0.openTransportPathView(slot0)
 	ViewMgr.instance:openView(ViewName.RoomTransportPathView)
 end
 
-function slot0.isTransportPathShow(slot0)
+function var_0_0.isTransportPathShow(arg_25_0)
 	return ViewMgr.instance:isOpen(ViewName.RoomTransportPathView)
 end
 
-function slot0.isTransportSitShow(slot0)
+function var_0_0.isTransportSitShow(arg_26_0)
 	return ViewMgr.instance:isOpen(ViewName.RoomTransportSiteView)
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_27_0)
+	return
 end
 
-function slot0.waitRefreshBlockById(slot0, slot1)
-	slot0._waitingBlockIdList = slot0._waitingBlockIdList or {}
+function var_0_0.waitRefreshBlockById(arg_28_0, arg_28_1)
+	arg_28_0._waitingBlockIdList = arg_28_0._waitingBlockIdList or {}
 
-	if slot1 and not tabletool.indexOf(slot0._waitingBlockIdList, slot1) then
-		table.insert(slot0._waitingBlockIdList, slot1)
-		slot0:_startWaitRunRefreshTask()
+	if arg_28_1 and not tabletool.indexOf(arg_28_0._waitingBlockIdList, arg_28_1) then
+		table.insert(arg_28_0._waitingBlockIdList, arg_28_1)
+		arg_28_0:_startWaitRunRefreshTask()
 	end
 end
 
-function slot0.waitRefreshPathLineChanged(slot0)
-	slot0._transportPathLineChanged = true
+function var_0_0.waitRefreshPathLineChanged(arg_29_0)
+	arg_29_0._transportPathLineChanged = true
 
-	slot0:_startWaitRunRefreshTask()
+	arg_29_0:_startWaitRunRefreshTask()
 end
 
-function slot0._refreshBlockByIds(slot0, slot1)
-	if slot1 and #slot1 > 0 then
-		slot2 = {}
+function var_0_0._refreshBlockByIds(arg_30_0, arg_30_1)
+	if arg_30_1 and #arg_30_1 > 0 then
+		local var_30_0 = {}
 
-		for slot6 = 1, #slot1 do
-			if RoomMapBlockModel.instance:getFullBlockMOById(slot1[slot6]) and slot8:isInMap() then
-				if GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(slot8.id, SceneTag.RoomMapBlock) and not tabletool.indexOf(slot2, slot10) then
-					table.insert(slot2, slot10)
+		for iter_30_0 = 1, #arg_30_1 do
+			local var_30_1 = arg_30_1[iter_30_0]
+			local var_30_2 = RoomMapBlockModel.instance:getFullBlockMOById(var_30_1)
+
+			if var_30_2 and var_30_2:isInMap() then
+				local var_30_3 = GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(var_30_2.id, SceneTag.RoomMapBlock)
+
+				if var_30_3 and not tabletool.indexOf(var_30_0, var_30_3) then
+					table.insert(var_30_0, var_30_3)
 				end
 
-				slot15 = false
-				slot16 = true
+				local var_30_4 = RoomBlockHelper.getNearBlockEntity(false, var_30_2.hexPoint, 1, false, true)
 
-				for slot15, slot16 in ipairs(RoomBlockHelper.getNearBlockEntity(false, slot8.hexPoint, 1, slot15, slot16)) do
-					if slot16 and not tabletool.indexOf(slot2, slot16) then
-						table.insert(slot2, slot16)
+				for iter_30_1, iter_30_2 in ipairs(var_30_4) do
+					if iter_30_2 and not tabletool.indexOf(var_30_0, iter_30_2) then
+						table.insert(var_30_0, iter_30_2)
 					end
 				end
 			end
 		end
 
-		RoomBlockHelper.refreshBlockResourceType(slot2)
-		RoomBlockHelper.refreshBlockEntity(slot2, "refreshLand")
+		RoomBlockHelper.refreshBlockResourceType(var_30_0)
+		RoomBlockHelper.refreshBlockEntity(var_30_0, "refreshLand")
 	end
 end
 
-function slot0._startWaitRunRefreshTask(slot0)
-	if not slot0._hasWaitRunRefreshTask then
-		slot0._hasWaitRunRefreshTask = true
+function var_0_0._startWaitRunRefreshTask(arg_31_0)
+	if not arg_31_0._hasWaitRunRefreshTask then
+		arg_31_0._hasWaitRunRefreshTask = true
 
-		TaskDispatcher.runDelay(slot0._onWaitRunRefreshTask, slot0, 0.001)
+		TaskDispatcher.runDelay(arg_31_0._onWaitRunRefreshTask, arg_31_0, 0.001)
 	end
 end
 
-function slot0._onWaitRunRefreshTask(slot0)
-	slot0._hasWaitRunRefreshTask = false
+function var_0_0._onWaitRunRefreshTask(arg_32_0)
+	arg_32_0._hasWaitRunRefreshTask = false
 
-	if slot0._waitingBlockIdList and #slot0._waitingBlockIdList > 0 then
-		slot0._waitingBlockIdList = {}
+	if arg_32_0._waitingBlockIdList and #arg_32_0._waitingBlockIdList > 0 then
+		local var_32_0 = arg_32_0._waitingBlockIdList
 
-		slot0:_refreshBlockByIds(slot0._waitingBlockIdList)
+		arg_32_0._waitingBlockIdList = {}
 
-		slot0._transportPathLineChanged = true
+		arg_32_0:_refreshBlockByIds(var_32_0)
+
+		arg_32_0._transportPathLineChanged = true
 	end
 
-	if slot0._transportPathLineChanged then
-		slot0._transportPathLineChanged = false
+	if arg_32_0._transportPathLineChanged then
+		arg_32_0._transportPathLineChanged = false
 
 		RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathLineChanged)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

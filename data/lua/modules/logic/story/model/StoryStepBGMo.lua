@@ -1,12 +1,12 @@
-module("modules.logic.story.model.StoryStepBGMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepBGMo", package.seeall)
 
-slot0 = pureTable("StoryStepBGMo")
+local var_0_0 = pureTable("StoryStepBGMo")
 
-function slot0.ctor(slot0)
-	slot0.bgType = 0
-	slot0.bgImg = ""
-	slot0.transType = 0
-	slot0.darkTimes = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.bgType = 0
+	arg_1_0.bgImg = ""
+	arg_1_0.transType = 0
+	arg_1_0.darkTimes = {
 		0,
 		0,
 		0,
@@ -16,7 +16,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.waitTimes = {
+	arg_1_0.waitTimes = {
 		0,
 		0,
 		0,
@@ -26,7 +26,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.fadeTimes = {
+	arg_1_0.fadeTimes = {
 		0.5,
 		0.5,
 		0.5,
@@ -36,10 +36,10 @@ function slot0.ctor(slot0)
 		0.5,
 		0.5
 	}
-	slot0.offset = {}
-	slot0.angle = 0
-	slot0.scale = 1
-	slot0.transTimes = {
+	arg_1_0.offset = {}
+	arg_1_0.angle = 0
+	arg_1_0.scale = 1
+	arg_1_0.transTimes = {
 		0,
 		0,
 		0,
@@ -49,9 +49,9 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effType = 0
-	slot0.effDegree = 0
-	slot0.effDelayTimes = {
+	arg_1_0.effType = 0
+	arg_1_0.effDegree = 0
+	arg_1_0.effDelayTimes = {
 		0,
 		0,
 		0,
@@ -61,7 +61,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effTimes = {
+	arg_1_0.effTimes = {
 		0,
 		0,
 		0,
@@ -71,32 +71,34 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effRate = 1
+	arg_1_0.effRate = 1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.bgType = slot1[1]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.bgType = arg_2_1[1]
 
-	if slot1[2] ~= "" then
-		slot0.bgImg = StoryBgZoneModel.instance:getRightBgZonePath(string.find(slot1[2], "/") and slot1[2] or "bg/" .. slot1[2])
+	if arg_2_1[2] ~= "" then
+		local var_2_0 = string.find(arg_2_1[2], "/") and arg_2_1[2] or "bg/" .. arg_2_1[2]
+
+		arg_2_0.bgImg = StoryBgZoneModel.instance:getRightBgZonePath(var_2_0)
 	end
 
-	slot0.transType = slot1[3]
-	slot0.darkTimes = slot1[4]
-	slot0.waitTimes = slot1[5]
-	slot0.fadeTimes = slot1[6]
-	slot0.offset = {
-		slot1[7],
-		slot1[8]
+	arg_2_0.transType = arg_2_1[3]
+	arg_2_0.darkTimes = arg_2_1[4]
+	arg_2_0.waitTimes = arg_2_1[5]
+	arg_2_0.fadeTimes = arg_2_1[6]
+	arg_2_0.offset = {
+		arg_2_1[7],
+		arg_2_1[8]
 	}
-	slot0.angle = slot1[9]
-	slot0.scale = slot1[10]
-	slot0.transTimes = slot1[11]
-	slot0.effType = slot1[12]
-	slot0.effDegree = slot1[13]
-	slot0.effDelayTimes = slot1[14]
-	slot0.effTimes = slot1[15]
-	slot0.effRate = slot1[16]
+	arg_2_0.angle = arg_2_1[9]
+	arg_2_0.scale = arg_2_1[10]
+	arg_2_0.transTimes = arg_2_1[11]
+	arg_2_0.effType = arg_2_1[12]
+	arg_2_0.effDegree = arg_2_1[13]
+	arg_2_0.effDelayTimes = arg_2_1[14]
+	arg_2_0.effTimes = arg_2_1[15]
+	arg_2_0.effRate = arg_2_1[16]
 end
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.explore.map.unit.ExploreExitUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreExitUnit", package.seeall)
 
-slot0 = class("ExploreExitUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreExitUnit", ExploreBaseDisplayUnit)
 
-function slot0.canTrigger(slot0)
-	if not slot0.mo:isInteractActiveState() then
+function var_0_0.canTrigger(arg_1_0)
+	if not arg_1_0.mo:isInteractActiveState() then
 		return false
 	end
 
-	return uv0.super.canTrigger(slot0)
+	return var_0_0.super.canTrigger(arg_1_0)
 end
 
-return slot0
+return var_0_0

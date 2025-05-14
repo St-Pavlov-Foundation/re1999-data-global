@@ -1,7 +1,8 @@
-module("modules.video.AvProEnum", package.seeall)
+﻿module("modules.video.AvProEnum", package.seeall)
 
-slot0 = class("AvProEnum")
-slot0.PlayerStatus = {
+local var_0_0 = class("AvProEnum")
+
+var_0_0.PlayerStatus = {
 	Stalled = 8,
 	ReadyToPlay = 1,
 	Unstalled = 9,
@@ -24,110 +25,110 @@ slot0.PlayerStatus = {
 	FinishedSeeking = 12
 }
 
-function slot0.getPlayerStatusEnumName(slot0)
-	if slot0 == uv0.PlayerStatus.MetaDataReady then
+function var_0_0.getPlayerStatusEnumName(arg_1_0)
+	if arg_1_0 == var_0_0.PlayerStatus.MetaDataReady then
 		return "MetaDataReady"
 	end
 
-	if slot0 == uv0.PlayerStatus.ReadyToPlay then
+	if arg_1_0 == var_0_0.PlayerStatus.ReadyToPlay then
 		return "ReadyToPlay"
 	end
 
-	if slot0 == uv0.PlayerStatus.Started then
+	if arg_1_0 == var_0_0.PlayerStatus.Started then
 		return "Started"
 	end
 
-	if slot0 == uv0.PlayerStatus.FirstFrameReady then
+	if arg_1_0 == var_0_0.PlayerStatus.FirstFrameReady then
 		return "FirstFrameReady"
 	end
 
-	if slot0 == uv0.PlayerStatus.FinishedPlaying then
+	if arg_1_0 == var_0_0.PlayerStatus.FinishedPlaying then
 		return "FinishedPlaying"
 	end
 
-	if slot0 == uv0.PlayerStatus.Closing then
+	if arg_1_0 == var_0_0.PlayerStatus.Closing then
 		return "Closing"
 	end
 
-	if slot0 == uv0.PlayerStatus.Error then
+	if arg_1_0 == var_0_0.PlayerStatus.Error then
 		return "Error"
 	end
 
-	if slot0 == uv0.PlayerStatus.SubtitleChange then
+	if arg_1_0 == var_0_0.PlayerStatus.SubtitleChange then
 		return "SubtitleChange"
 	end
 
-	if slot0 == uv0.PlayerStatus.Stalled then
+	if arg_1_0 == var_0_0.PlayerStatus.Stalled then
 		return "Stalled"
 	end
 
-	if slot0 == uv0.PlayerStatus.Unstalled then
+	if arg_1_0 == var_0_0.PlayerStatus.Unstalled then
 		return "Unstalled"
 	end
 
-	if slot0 == uv0.PlayerStatus.ResolutionChanged then
+	if arg_1_0 == var_0_0.PlayerStatus.ResolutionChanged then
 		return "ResolutionChanged"
 	end
 
-	if slot0 == uv0.PlayerStatus.StartedSeeking then
+	if arg_1_0 == var_0_0.PlayerStatus.StartedSeeking then
 		return "StartedSeeking"
 	end
 
-	if slot0 == uv0.PlayerStatus.FinishedSeeking then
+	if arg_1_0 == var_0_0.PlayerStatus.FinishedSeeking then
 		return "FinishedSeeking"
 	end
 
-	if slot0 == uv0.PlayerStatus.StartedBuffering then
+	if arg_1_0 == var_0_0.PlayerStatus.StartedBuffering then
 		return "StartedBuffering"
 	end
 
-	if slot0 == uv0.PlayerStatus.FinishedBuffering then
+	if arg_1_0 == var_0_0.PlayerStatus.FinishedBuffering then
 		return "FinishedBuffering"
 	end
 
-	if slot0 == uv0.PlayerStatus.PropertiesChanged then
+	if arg_1_0 == var_0_0.PlayerStatus.PropertiesChanged then
 		return "PropertiesChanged"
 	end
 
-	if slot0 == uv0.PlayerStatus.PlaylistItemChanged then
+	if arg_1_0 == var_0_0.PlayerStatus.PlaylistItemChanged then
 		return "PlaylistItemChanged"
 	end
 
-	if slot0 == uv0.PlayerStatus.PlaylistFinished then
+	if arg_1_0 == var_0_0.PlayerStatus.PlaylistFinished then
 		return "PlaylistFinished"
 	end
 
-	if slot0 == uv0.PlayerStatus.TextTracksChanged then
+	if arg_1_0 == var_0_0.PlayerStatus.TextTracksChanged then
 		return "TextTracksChanged"
 	end
 
-	if slot0 == uv0.PlayerStatus.TextCueChanged then
+	if arg_1_0 == var_0_0.PlayerStatus.TextCueChanged then
 		return "TextCueChanged"
 	end
 
 	return "None"
 end
 
-slot0.ErrorCode = {
+var_0_0.ErrorCode = {
 	DecodeFailed = 200,
 	LoadFailed = 100,
 	None = 0
 }
 
-function slot0.getErrorCodeEnumName(slot0)
-	if slot0 == uv0.ErrorCode.None then
+function var_0_0.getErrorCodeEnumName(arg_2_0)
+	if arg_2_0 == var_0_0.ErrorCode.None then
 		return "None"
 	end
 
-	if slot0 == uv0.ErrorCode.LoadFailed then
+	if arg_2_0 == var_0_0.ErrorCode.LoadFailed then
 		return "LoadFailed"
 	end
 
-	if slot0 == uv0.ErrorCode.DecodeFailed then
+	if arg_2_0 == var_0_0.ErrorCode.DecodeFailed then
 		return "DecodeFailed"
 	end
 
 	return "UnKnown"
 end
 
-return slot0
+return var_0_0

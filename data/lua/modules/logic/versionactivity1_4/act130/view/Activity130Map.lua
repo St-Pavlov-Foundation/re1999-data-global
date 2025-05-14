@@ -1,117 +1,139 @@
-module("modules.logic.versionactivity1_4.act130.view.Activity130Map", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.view.Activity130Map", package.seeall)
 
-slot0 = class("Activity130Map", BaseView)
+local var_0_0 = class("Activity130Map", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._elementList = slot0:getUserDataTb_()
-	slot0._tempVector = Vector3()
-	slot0._sceneIndex = 1
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._gofullscreen)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._elementList = arg_4_0:getUserDataTb_()
+	arg_4_0._tempVector = Vector3()
+	arg_4_0._sceneIndex = 1
+	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0._gofullscreen)
 
-	slot0:_initMap()
-	slot0:_addEvents()
+	arg_4_0:_initMap()
+	arg_4_0:_addEvents()
 end
 
-function slot0._initMap(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("Activity130Map")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+function var_0_0._initMap(arg_5_0)
+	local var_5_0 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0.5, slot4, 0)
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	arg_5_0._sceneRoot = UnityEngine.GameObject.New("Activity130Map")
 
-	slot7 = "ui/viewres/versionactivity_1_4/v1a4_37role/v1a4_role37_mapinteractiveitem.prefab"
-	slot0._mapLoader = MultiAbLoader.New()
+	local var_5_1 = CameraMgr.instance:getMainCameraTrs().parent
+	local var_5_2, var_5_3, var_5_4 = transformhelper.getLocalPos(var_5_1)
 
-	for slot11, slot12 in ipairs(string.split(Activity130Model.instance:getCurMapConfig().scenes, "#")) do
-		slot0._mapLoader:addPath(slot12 .. ".prefab")
+	transformhelper.setLocalPos(arg_5_0._sceneRoot.transform, 0.5, var_5_3, 0)
+	gohelper.addChild(var_5_0, arg_5_0._sceneRoot)
+
+	local var_5_5 = string.split(Activity130Model.instance:getCurMapConfig().scenes, "#")
+	local var_5_6 = "ui/viewres/versionactivity_1_4/v1a4_37role/v1a4_role37_mapinteractiveitem.prefab"
+
+	arg_5_0._mapLoader = MultiAbLoader.New()
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_5) do
+		arg_5_0._mapLoader:addPath(iter_5_1 .. ".prefab")
 	end
 
-	slot0._mapLoader:addPath(slot7)
-	slot0._mapLoader:startLoad(function (slot0)
-		uv0._mainPrefabs = {}
-		uv0._elementRoots = {}
+	arg_5_0._mapLoader:addPath(var_5_6)
+	arg_5_0._mapLoader:startLoad(function(arg_6_0)
+		arg_5_0._mainPrefabs = {}
+		arg_5_0._elementRoots = {}
 
-		for slot4, slot5 in ipairs(uv1) do
-			slot8 = gohelper.clone(uv0._mapLoader:getAssetItem(slot5 .. ".prefab"):GetResource(slot5 .. ".prefab"), uv0._sceneRoot)
+		for iter_6_0, iter_6_1 in ipairs(var_5_5) do
+			local var_6_0 = arg_5_0._mapLoader:getAssetItem(iter_6_1 .. ".prefab"):GetResource(iter_6_1 .. ".prefab")
+			local var_6_1 = gohelper.clone(var_6_0, arg_5_0._sceneRoot)
 
-			gohelper.setActive(slot8, false)
-			table.insert(uv0._mainPrefabs, slot8)
+			gohelper.setActive(var_6_1, false)
+			table.insert(arg_5_0._mainPrefabs, var_6_1)
 		end
 
-		slot2 = Activity130Model.instance:getEpisodeCurSceneIndex(Activity130Model.instance:getCurEpisodeId())
-		uv0._sceneGo = uv0._mainPrefabs[slot2]
+		local var_6_2 = Activity130Model.instance:getCurEpisodeId()
+		local var_6_3 = Activity130Model.instance:getEpisodeCurSceneIndex(var_6_2)
 
-		gohelper.setActive(uv0._sceneGo, true)
+		arg_5_0._sceneGo = arg_5_0._mainPrefabs[var_6_3]
 
-		uv0._sceneAnimator = uv0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+		gohelper.setActive(arg_5_0._sceneGo, true)
 
-		uv0._sceneAnimator:Play("open", 0, 0)
+		arg_5_0._sceneAnimator = arg_5_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-		uv0._backgroundGo = gohelper.findChild(uv0._sceneGo, "root/BackGround")
-		uv0._diffuseGo = gohelper.findChild(uv0._sceneGo, "Obj-Plant/all/diffuse")
-		uv0._elementRoots[slot2] = UnityEngine.GameObject.New("elementRoot")
+		arg_5_0._sceneAnimator:Play("open", 0, 0)
 
-		gohelper.addChild(uv0._mainPrefabs[slot2], uv0._elementRoots[slot2])
+		arg_5_0._backgroundGo = gohelper.findChild(arg_5_0._sceneGo, "root/BackGround")
+		arg_5_0._diffuseGo = gohelper.findChild(arg_5_0._sceneGo, "Obj-Plant/all/diffuse")
+		arg_5_0._elementRoots[var_6_3] = UnityEngine.GameObject.New("elementRoot")
 
-		uv0._anim = uv0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
-		uv0._itemPrefab = uv0._mapLoader:getAssetItem(uv2):GetResource(uv2)
+		gohelper.addChild(arg_5_0._mainPrefabs[var_6_3], arg_5_0._elementRoots[var_6_3])
 
-		uv0:_initElements()
+		arg_5_0._anim = arg_5_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-		uv0._sceneLoaded = true
+		local var_6_4 = arg_5_0._mapLoader:getAssetItem(var_5_6)
 
-		if uv0._needCheckInit then
-			uv0:_checkInitElements()
+		arg_5_0._itemPrefab = var_6_4:GetResource(var_5_6)
 
-			uv0._needCheckInit = false
+		arg_5_0:_initElements()
+
+		arg_5_0._sceneLoaded = true
+
+		if arg_5_0._needCheckInit then
+			arg_5_0:_checkInitElements()
+
+			arg_5_0._needCheckInit = false
 		end
 	end)
 end
 
-function slot0._initElements(slot0)
-	slot0:_showElements()
+function var_0_0._initElements(arg_7_0)
+	arg_7_0:_showElements()
 end
 
-function slot0._checkInitElements(slot0)
-	if not slot0._sceneLoaded then
-		slot0._needCheckInit = true
+function var_0_0._checkInitElements(arg_8_0)
+	if not arg_8_0._sceneLoaded then
+		arg_8_0._needCheckInit = true
 
 		return
 	end
 
-	slot0._needCheckInit = false
-	slot2 = VersionActivity1_4Enum.ActivityId.Role37
-	slot3 = Activity130Model.instance:getCurEpisodeId()
+	arg_8_0._needCheckInit = false
 
-	if Activity130Model.instance:getCurMapInfo().progress == Activity130Enum.ProgressType.AfterStory then
-		if Activity130Config.instance:getActivity130EpisodeCo(slot2, slot3).afterStoryId > 0 and not StoryModel.instance:isStoryFinished(slot4.afterStoryId) then
-			StoryController.instance:playStory(slot4.afterStoryId, nil, slot0._onStoryFinished, slot0)
+	local var_8_0 = Activity130Model.instance:getCurMapInfo()
+	local var_8_1 = VersionActivity1_4Enum.ActivityId.Role37
+	local var_8_2 = Activity130Model.instance:getCurEpisodeId()
+
+	if var_8_0.progress == Activity130Enum.ProgressType.AfterStory then
+		local var_8_3 = Activity130Config.instance:getActivity130EpisodeCo(var_8_1, var_8_2)
+
+		if var_8_3.afterStoryId > 0 and not StoryModel.instance:isStoryFinished(var_8_3.afterStoryId) then
+			StoryController.instance:playStory(var_8_3.afterStoryId, nil, arg_8_0._onStoryFinished, arg_8_0)
 		else
-			slot0:_onStoryFinished()
+			arg_8_0:_onStoryFinished()
 		end
 
 		return
 	end
 
-	if Activity130Config.instance:getActivity130EpisodeCo(slot2, slot3).elements ~= "" then
-		for slot9, slot10 in ipairs(string.splitToNumber(slot4.elements, "#")) do
-			for slot14, slot15 in pairs(slot1.act130Elements) do
-				if slot15.elementId == slot10 and not slot15.isFinish then
-					slot0:_clickElement(nil, slot15)
+	local var_8_4 = Activity130Config.instance:getActivity130EpisodeCo(var_8_1, var_8_2)
+
+	if var_8_4.elements ~= "" then
+		local var_8_5 = string.splitToNumber(var_8_4.elements, "#")
+
+		for iter_8_0, iter_8_1 in ipairs(var_8_5) do
+			for iter_8_2, iter_8_3 in pairs(var_8_0.act130Elements) do
+				if iter_8_3.elementId == iter_8_1 and not iter_8_3.isFinish then
+					arg_8_0:_clickElement(nil, iter_8_3)
 
 					return
 				end
@@ -119,50 +141,18 @@ function slot0._checkInitElements(slot0)
 		end
 	end
 
-	for slot8, slot9 in pairs(slot1.act130Elements) do
-		if not slot9.isFinish then
-			if slot9:getType() == Activity130Enum.ElementType.CheckDecrypt then
-				Activity130Controller.instance:dispatchEvent(Activity130Event.CheckDecrypt, slot9)
+	for iter_8_4, iter_8_5 in pairs(var_8_0.act130Elements) do
+		if not iter_8_5.isFinish then
+			if iter_8_5:getType() == Activity130Enum.ElementType.CheckDecrypt then
+				Activity130Controller.instance:dispatchEvent(Activity130Event.CheckDecrypt, iter_8_5)
 
 				return
-			elseif slot9.index <= #slot9.typeList and slot9.index ~= 0 then
-				slot0:_clickElement(nil, slot9)
+			elseif #iter_8_5.typeList >= iter_8_5.index and iter_8_5.index ~= 0 then
+				arg_8_0:_clickElement(nil, iter_8_5)
 
 				return
-			elseif slot9.index == 0 and slot9.config.res == "" then
-				slot0:_clickElement(nil, slot9)
-
-				return
-			end
-		end
-	end
-end
-
-function slot0._onStoryFinished(slot0)
-	if Activity130Config.instance:getActivity130EpisodeCo(VersionActivity1_4Enum.ActivityId.Role37, Activity130Model.instance:getCurEpisodeId()).afterStoryId > 0 then
-		Activity130Rpc.instance:sendAct130StoryRequest(slot1, slot2)
-	end
-
-	if slot2 == Activity130Model.instance:getMaxUnlockEpisode() then
-		slot0:_backToLevelView()
-	end
-end
-
-function slot0._clickUp(slot0)
-	slot0._elementMouseDown = nil
-
-	if slot0._elementMouseDown and slot1:isValid() then
-		slot1:onClick()
-	end
-end
-
-function slot0._onGamepadKeyDown(slot0, slot1)
-	if slot1 == GamepadEnum.KeyCode.A then
-		slot2 = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
-
-		for slot8 = 0, UnityEngine.Physics2D.RaycastAll(slot2.origin, slot2.direction).Length - 1 do
-			if MonoHelper.getLuaComFromGo(slot3[slot8].transform.parent.gameObject, Activity130MapElement) then
-				slot10:onDown()
+			elseif iter_8_5.index == 0 and iter_8_5.config.res == "" then
+				arg_8_0:_clickElement(nil, iter_8_5)
 
 				return
 			end
@@ -170,343 +160,442 @@ function slot0._onGamepadKeyDown(slot0, slot1)
 	end
 end
 
-function slot0._onSceneClose(slot0)
-end
+function var_0_0._onStoryFinished(arg_9_0)
+	local var_9_0 = VersionActivity1_4Enum.ActivityId.Role37
+	local var_9_1 = Activity130Model.instance:getCurEpisodeId()
 
-function slot0._initCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-
-	transformhelper.setLocalRotation(slot1.transform, 0, 0, 0)
-
-	slot1.orthographic = true
-	slot1.orthographicSize = 7.4 * GameUtil.getAdapterScale(true)
-end
-
-function slot0.onOpen(slot0)
-	slot0:playAmbientAudio()
-	MainCameraMgr.instance:addView(ViewName.Activity130GameView, slot0._initCamera, nil, slot0)
-end
-
-function slot0.onClose(slot0)
-	slot0:_clearElements()
-	slot0:_removeEvents()
-	slot0:closeAmbientSound()
-end
-
-function slot0._clearElements(slot0)
-	for slot4, slot5 in pairs(slot0._elementList) do
-		slot5:dispose()
+	if Activity130Config.instance:getActivity130EpisodeCo(var_9_0, var_9_1).afterStoryId > 0 then
+		Activity130Rpc.instance:sendAct130StoryRequest(var_9_0, var_9_1)
 	end
 
-	slot0._elementList = slot0:getUserDataTb_()
+	if var_9_1 == Activity130Model.instance:getMaxUnlockEpisode() then
+		arg_9_0:_backToLevelView()
+	end
 end
 
-function slot0._showElements(slot0)
-	slot4 = {}
+function var_0_0._clickUp(arg_10_0)
+	local var_10_0 = arg_10_0._elementMouseDown
 
-	for slot8, slot9 in ipairs(Activity130Model.instance:getEpisodeElements(Activity130Model.instance:getCurEpisodeId())) do
-		if not string.nilorempty(Activity130Config.instance:getActivity130ElementCo(VersionActivity1_4Enum.ActivityId.Role37, slot9.elementId).res) then
-			slot11 = slot4[slot10] or {}
+	arg_10_0._elementMouseDown = nil
 
-			if slot9:isAvailable() or slot0._elementList[slot9.elementId] then
-				table.insert(slot11, slot9)
+	if var_10_0 and var_10_0:isValid() then
+		var_10_0:onClick()
+	end
+end
+
+function var_0_0._onGamepadKeyDown(arg_11_0, arg_11_1)
+	if arg_11_1 == GamepadEnum.KeyCode.A then
+		local var_11_0 = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
+		local var_11_1 = UnityEngine.Physics2D.RaycastAll(var_11_0.origin, var_11_0.direction)
+		local var_11_2 = var_11_1.Length - 1
+
+		for iter_11_0 = 0, var_11_2 do
+			local var_11_3 = var_11_1[iter_11_0]
+			local var_11_4 = MonoHelper.getLuaComFromGo(var_11_3.transform.parent.gameObject, Activity130MapElement)
+
+			if var_11_4 then
+				var_11_4:onDown()
+
+				return
+			end
+		end
+	end
+end
+
+function var_0_0._onSceneClose(arg_12_0)
+	return
+end
+
+function var_0_0._initCamera(arg_13_0)
+	local var_13_0 = CameraMgr.instance:getMainCamera()
+
+	transformhelper.setLocalRotation(var_13_0.transform, 0, 0, 0)
+
+	local var_13_1 = GameUtil.getAdapterScale(true)
+
+	var_13_0.orthographic = true
+	var_13_0.orthographicSize = 7.4 * var_13_1
+end
+
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:playAmbientAudio()
+	MainCameraMgr.instance:addView(ViewName.Activity130GameView, arg_14_0._initCamera, nil, arg_14_0)
+end
+
+function var_0_0.onClose(arg_15_0)
+	arg_15_0:_clearElements()
+	arg_15_0:_removeEvents()
+	arg_15_0:closeAmbientSound()
+end
+
+function var_0_0._clearElements(arg_16_0)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._elementList) do
+		iter_16_1:dispose()
+	end
+
+	arg_16_0._elementList = arg_16_0:getUserDataTb_()
+end
+
+function var_0_0._showElements(arg_17_0)
+	local var_17_0 = Activity130Model.instance:getCurEpisodeId()
+	local var_17_1 = Activity130Model.instance:getEpisodeElements(var_17_0)
+	local var_17_2 = VersionActivity1_4Enum.ActivityId.Role37
+	local var_17_3 = {}
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
+		local var_17_4 = Activity130Config.instance:getActivity130ElementCo(var_17_2, iter_17_1.elementId).res
+
+		if not string.nilorempty(var_17_4) then
+			local var_17_5 = var_17_3[var_17_4] or {}
+
+			if iter_17_1:isAvailable() or arg_17_0._elementList[iter_17_1.elementId] then
+				table.insert(var_17_5, iter_17_1)
 			end
 
-			slot4[slot10] = slot11
+			var_17_3[var_17_4] = var_17_5
 		end
 	end
 
-	slot5 = {}
+	local var_17_6 = {}
 
-	for slot9 = #slot2, 1, -1 do
-		if not slot10:isAvailable() then
-			slot0:_removeElement(slot10, (slot4[Activity130Config.instance:getActivity130ElementCo(slot3, slot2[slot9].elementId).res] and #slot12 or 0) <= 1)
+	for iter_17_2 = #var_17_1, 1, -1 do
+		local var_17_7 = var_17_1[iter_17_2]
+		local var_17_8 = var_17_3[Activity130Config.instance:getActivity130ElementCo(var_17_2, var_17_7.elementId).res]
+		local var_17_9 = var_17_8 and #var_17_8 or 0
+
+		if not var_17_7:isAvailable() then
+			arg_17_0:_removeElement(var_17_7, var_17_9 <= 1)
 		else
-			table.insert(slot5, slot10)
+			table.insert(var_17_6, var_17_7)
 		end
 	end
 
-	for slot9 = #slot5, 1, -1 do
-		slot0:_addElement(slot10, (slot4[Activity130Config.instance:getActivity130ElementCo(slot3, slot5[slot9].elementId).res] and #slot12 or 0) <= 1)
+	for iter_17_3 = #var_17_6, 1, -1 do
+		local var_17_10 = var_17_6[iter_17_3]
+		local var_17_11 = var_17_3[Activity130Config.instance:getActivity130ElementCo(var_17_2, var_17_10.elementId).res]
+		local var_17_12 = var_17_11 and #var_17_11 or 0
+
+		arg_17_0:_addElement(var_17_10, var_17_12 <= 1)
 	end
 end
 
-function slot0._addElement(slot0, slot1, slot2)
-	if slot0._elementList[slot1.elementId] then
-		slot3:updateInfo(slot1)
+function var_0_0._addElement(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0._elementList[arg_18_1.elementId]
+
+	if var_18_0 then
+		var_18_0:updateInfo(arg_18_1)
 
 		return
 	end
 
-	if not gohelper.findChild(slot0._elementRoots[Activity130Model.instance:getEpisodeCurSceneIndex(Activity130Model.instance:getCurEpisodeId())], tostring(slot1.elementId)) then
-		gohelper.addChild(slot0._elementRoots[slot5], UnityEngine.GameObject.New(tostring(slot1.elementId)))
+	local var_18_1 = Activity130Model.instance:getCurEpisodeId()
+	local var_18_2 = Activity130Model.instance:getEpisodeCurSceneIndex(var_18_1)
+	local var_18_3 = gohelper.findChild(arg_18_0._elementRoots[var_18_2], tostring(arg_18_1.elementId))
+
+	if not var_18_3 then
+		var_18_3 = UnityEngine.GameObject.New(tostring(arg_18_1.elementId))
+
+		gohelper.addChild(arg_18_0._elementRoots[var_18_2], var_18_3)
 	else
-		MonoHelper.removeLuaComFromGo(slot6, Activity130MapElement)
-		gohelper.destroyAllChildren(slot6)
+		MonoHelper.removeLuaComFromGo(var_18_3, Activity130MapElement)
+		gohelper.destroyAllChildren(var_18_3)
 	end
 
-	slot3 = MonoHelper.addLuaComOnceToGo(slot6, Activity130MapElement, {
-		slot1,
-		slot0
+	local var_18_4 = MonoHelper.addLuaComOnceToGo(var_18_3, Activity130MapElement, {
+		arg_18_1,
+		arg_18_0
 	})
-	slot0._elementList[slot1.elementId] = slot3
 
-	if string.nilorempty(slot3:getResName()) then
+	arg_18_0._elementList[arg_18_1.elementId] = var_18_4
+
+	local var_18_5 = var_18_4:getResName()
+
+	if string.nilorempty(var_18_5) then
 		return
 	end
 
-	slot9 = nil
+	local var_18_6 = gohelper.findChild(arg_18_0._diffuseGo, var_18_5)
+	local var_18_7
 
-	if not gohelper.findChild(slot0._diffuseGo, slot7) then
-		slot9 = gohelper.findChild(slot0._backgroundGo, slot7)
+	if not var_18_6 then
+		var_18_6 = gohelper.findChild(arg_18_0._backgroundGo, var_18_5)
+		var_18_7 = var_18_6
 	end
 
-	if not slot8 then
-		logError(string.format("元件id: %s no resGo:%s", slot1.elementId, slot7))
+	if not var_18_6 then
+		logError(string.format("元件id: %s no resGo:%s", arg_18_1.elementId, var_18_5))
 
 		return
 	end
 
-	slot10, slot11, slot12 = transformhelper.getPos(slot8.transform)
-	slot9 = slot9 or gohelper.clone(slot8, slot6, slot7)
+	local var_18_8, var_18_9, var_18_10 = transformhelper.getPos(var_18_6.transform)
 
-	gohelper.setActive(slot8, false)
-	transformhelper.setPos(slot9.transform, slot10, slot11, slot12)
-	gohelper.setLayer(slot9, UnityLayer.Scene, true)
-	slot3:setItemGo(slot9, slot2)
-	Activity130Controller.instance:dispatchEvent(Activity130Event.OnAddElement, slot1.elementId)
+	var_18_7 = var_18_7 or gohelper.clone(var_18_6, var_18_3, var_18_5)
+
+	gohelper.setActive(var_18_6, false)
+	transformhelper.setPos(var_18_7.transform, var_18_8, var_18_9, var_18_10)
+	gohelper.setLayer(var_18_7, UnityLayer.Scene, true)
+	var_18_4:setItemGo(var_18_7, arg_18_2)
+	Activity130Controller.instance:dispatchEvent(Activity130Event.OnAddElement, arg_18_1.elementId)
 end
 
-function slot0._removeElement(slot0, slot1, slot2)
-	if not slot0._elementList[slot1.elementId] then
+function var_0_0._removeElement(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_1.elementId
+	local var_19_1 = arg_19_0._elementList[var_19_0]
+
+	if not var_19_1 then
 		return
 	end
 
-	slot0._elementList[slot3] = nil
+	arg_19_0._elementList[var_19_0] = nil
 
-	slot4:updateInfo(slot1)
-	slot4:disappear(slot2)
+	var_19_1:updateInfo(arg_19_1)
+	var_19_1:disappear(arg_19_2)
 end
 
-function slot0.setElementDown(slot0, slot1)
+function var_0_0.setElementDown(arg_20_0, arg_20_1)
 	if ViewMgr.instance:isOpen(ViewName.Activity130DialogView) then
 		return
 	end
 
-	slot0._elementMouseDown = slot1
+	arg_20_0._elementMouseDown = arg_20_1
 end
 
-function slot0.setScenePosSafety(slot0, slot1, slot2)
-	if not slot0._sceneGo then
+function var_0_0.setScenePosSafety(arg_21_0, arg_21_1, arg_21_2)
+	if not arg_21_0._sceneGo then
 		return
 	end
 
-	if slot1.x < slot0._mapMinX then
-		slot1.x = slot0._mapMinX
-	elseif slot0._mapMaxX < slot1.x then
-		slot1.x = slot0._mapMaxX
+	if arg_21_1.x < arg_21_0._mapMinX then
+		arg_21_1.x = arg_21_0._mapMinX
+	elseif arg_21_1.x > arg_21_0._mapMaxX then
+		arg_21_1.x = arg_21_0._mapMaxX
 	end
 
-	if slot1.y < slot0._mapMinY then
-		slot1.y = slot0._mapMinY
-	elseif slot0._mapMaxY < slot1.y then
-		slot1.y = slot0._mapMaxY
+	if arg_21_1.y < arg_21_0._mapMinY then
+		arg_21_1.y = arg_21_0._mapMinY
+	elseif arg_21_1.y > arg_21_0._mapMaxY then
+		arg_21_1.y = arg_21_0._mapMaxY
 	end
 
-	if slot2 then
-		ZProj.TweenHelper.DOLocalMove(slot0._sceneGo.transform, slot1.x, slot1.y, 0, 0.26)
+	if arg_21_2 then
+		ZProj.TweenHelper.DOLocalMove(arg_21_0._sceneGo.transform, arg_21_1.x, arg_21_1.y, 0, 0.26)
 	else
-		slot0._sceneGo.transform.localPosition = slot1
+		arg_21_0._sceneGo.transform.localPosition = arg_21_1
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_22_0)
+	return
 end
 
-function slot0._playEnterAnim(slot0)
-	slot0._isPlayAnim = true
+function var_0_0._playEnterAnim(arg_23_0)
+	arg_23_0._isPlayAnim = true
 
-	slot0:_onPlayEnterAnim()
+	arg_23_0:_onPlayEnterAnim()
 end
 
-function slot0._setInitPos(slot0, slot1)
-	if not slot0._mapCfg then
+function var_0_0._setInitPos(arg_24_0, arg_24_1)
+	if not arg_24_0._mapCfg then
 		return
 	end
 
-	slot3 = string.splitToNumber(slot0._mapCfg.initPos, "#")
+	local var_24_0 = arg_24_0._mapCfg.initPos
+	local var_24_1 = string.splitToNumber(var_24_0, "#")
 
-	slot0:setScenePosSafety(Vector3(slot3[1], slot3[2], 0), slot1)
+	arg_24_0:setScenePosSafety(Vector3(var_24_1[1], var_24_1[2], 0), arg_24_1)
 end
 
-function slot0._onShowFinishAnimDone(slot0)
-	slot0:_showElements()
+function var_0_0._onShowFinishAnimDone(arg_25_0)
+	arg_25_0:_showElements()
 end
 
-function slot0._OnDialogReply(slot0, slot1)
-	if not slot0._elementList[slot1] then
+function var_0_0._OnDialogReply(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0._elementList[arg_26_1]
+
+	if not var_26_0 then
 		return
 	end
 
-	slot0:_OnClickElement(slot2)
+	arg_26_0:_OnClickElement(var_26_0)
 end
 
-function slot0._OnGuideClickElement(slot0, slot1)
-	if not tonumber(slot1) then
+function var_0_0._OnGuideClickElement(arg_27_0, arg_27_1)
+	local var_27_0 = tonumber(arg_27_1)
+
+	if not var_27_0 then
 		return
 	end
 
-	if not slot0._elementList[slot2] then
+	local var_27_1 = arg_27_0._elementList[var_27_0]
+
+	if not var_27_1 then
 		return
 	end
 
-	slot0:_OnClickElement(slot3)
+	arg_27_0:_OnClickElement(var_27_1)
 end
 
-function slot0._OnClickElement(slot0, slot1)
-	slot0:_clickElement(slot1)
+function var_0_0._OnClickElement(arg_28_0, arg_28_1)
+	arg_28_0:_clickElement(arg_28_1)
 end
 
-function slot0._backToLevelView(slot0)
-	slot0:closeThis()
+function var_0_0._backToLevelView(arg_29_0)
+	arg_29_0:closeThis()
 	Activity130Controller.instance:dispatchEvent(Activity130Event.BackToLevelView, true)
 end
 
-function slot0._clickElement(slot0, slot1, slot2)
-	slot3 = slot1 and slot1._info or slot2
-	slot4 = slot3.elementId
+function var_0_0._clickElement(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = arg_30_1 and arg_30_1._info or arg_30_2
+	local var_30_1 = var_30_0.elementId
+	local var_30_2 = var_30_0:getType()
 
-	if slot3:getType() == Activity130Enum.ElementType.Battle then
-		-- Nothing
-	elseif slot5 == Activity130Enum.ElementType.General then
-		AudioMgr.instance:trigger(tonumber(slot3.config.param))
-		Activity130Rpc.instance:sendAct130GeneralRequest(VersionActivity1_4Enum.ActivityId.Role37, Activity130Model.instance:getCurEpisodeId(), slot4)
-	elseif slot5 == Activity130Enum.ElementType.Respawn then
-		-- Nothing
-	elseif slot5 == Activity130Enum.ElementType.Dialog then
+	if var_30_2 == Activity130Enum.ElementType.Battle then
+		-- block empty
+	elseif var_30_2 == Activity130Enum.ElementType.General then
+		local var_30_3 = tonumber(var_30_0.config.param)
+
+		AudioMgr.instance:trigger(var_30_3)
+
+		local var_30_4 = VersionActivity1_4Enum.ActivityId.Role37
+		local var_30_5 = Activity130Model.instance:getCurEpisodeId()
+
+		Activity130Rpc.instance:sendAct130GeneralRequest(var_30_4, var_30_5, var_30_1)
+	elseif var_30_2 == Activity130Enum.ElementType.Respawn then
+		-- block empty
+	elseif var_30_2 == Activity130Enum.ElementType.Dialog then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
-		Activity130Controller.instance:openActivity130DialogView({
-			elementInfo = slot3,
-			isClient = false
-		})
-	elseif slot5 == Activity130Enum.ElementType.TaskTip then
-		Activity130Controller.instance:dispatchEvent(Activity130Event.RefreshTaskTip, slot3)
-	elseif slot5 == Activity130Enum.ElementType.SetValue then
-		Activity130Controller.instance:dispatchEvent(Activity130Event.UnlockCollect, slot3)
-	elseif slot5 == Activity130Enum.ElementType.UnlockDecrypt then
-		Activity130Controller.instance:dispatchEvent(Activity130Event.UnlockDecrypt, slot3)
-	elseif slot5 == Activity130Enum.ElementType.CheckDecrypt then
-		Activity130Controller.instance:dispatchEvent(Activity130Event.CheckDecrypt, slot3)
-	elseif slot5 == Activity130Enum.ElementType.ChangeScene then
-		slot0:_changeScene(tonumber(string.split(slot3.config.param, "#")[slot3.index + 1]), slot3)
+
+		local var_30_6 = {
+			elementInfo = var_30_0
+		}
+
+		var_30_6.isClient = false
+
+		Activity130Controller.instance:openActivity130DialogView(var_30_6)
+	elseif var_30_2 == Activity130Enum.ElementType.TaskTip then
+		Activity130Controller.instance:dispatchEvent(Activity130Event.RefreshTaskTip, var_30_0)
+	elseif var_30_2 == Activity130Enum.ElementType.SetValue then
+		Activity130Controller.instance:dispatchEvent(Activity130Event.UnlockCollect, var_30_0)
+	elseif var_30_2 == Activity130Enum.ElementType.UnlockDecrypt then
+		Activity130Controller.instance:dispatchEvent(Activity130Event.UnlockDecrypt, var_30_0)
+	elseif var_30_2 == Activity130Enum.ElementType.CheckDecrypt then
+		Activity130Controller.instance:dispatchEvent(Activity130Event.CheckDecrypt, var_30_0)
+	elseif var_30_2 == Activity130Enum.ElementType.ChangeScene then
+		local var_30_7 = tonumber(string.split(var_30_0.config.param, "#")[var_30_0.index + 1])
+
+		arg_30_0:_changeScene(var_30_7, var_30_0)
 	end
 end
 
-function slot0._changeScene(slot0, slot1, slot2)
-	if not slot0._mainPrefabs[slot1] then
+function var_0_0._changeScene(arg_31_0, arg_31_1, arg_31_2)
+	if not arg_31_0._mainPrefabs[arg_31_1] then
 		logError("配置了一个不存在的场景标记！请检查配置")
 
 		return
 	end
 
-	gohelper.setActive(slot0._sceneGo, false)
+	gohelper.setActive(arg_31_0._sceneGo, false)
 
-	slot0._sceneGo = slot0._mainPrefabs[slot1]
+	arg_31_0._sceneGo = arg_31_0._mainPrefabs[arg_31_1]
 
-	gohelper.setActive(slot0._sceneGo, true)
+	gohelper.setActive(arg_31_0._sceneGo, true)
 
-	slot0._backgroundGo = gohelper.findChild(slot0._sceneGo, "root/BackGround")
-	slot0._diffuseGo = gohelper.findChild(slot0._sceneGo, "Obj-Plant/all/diffuse")
+	arg_31_0._backgroundGo = gohelper.findChild(arg_31_0._sceneGo, "root/BackGround")
+	arg_31_0._diffuseGo = gohelper.findChild(arg_31_0._sceneGo, "Obj-Plant/all/diffuse")
 
-	if not slot0._elementRoots[slot1] then
-		slot0._elementRoots[slot1] = UnityEngine.GameObject.New("elementRoot")
+	if not arg_31_0._elementRoots[arg_31_1] then
+		arg_31_0._elementRoots[arg_31_1] = UnityEngine.GameObject.New("elementRoot")
 
-		gohelper.addChild(slot0._sceneGo, slot0._elementRoots[slot1])
+		gohelper.addChild(arg_31_0._sceneGo, arg_31_0._elementRoots[arg_31_1])
 	end
 
-	slot0._anim = slot0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	arg_31_0._anim = arg_31_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot2 and slot2.elementId then
-		Activity130Rpc.instance:sendAct130GeneralRequest(VersionActivity1_4Enum.ActivityId.Role37, Activity130Model.instance:getCurEpisodeId(), slot2.elementId, slot0._onGeneralSuccess, slot0)
+	if arg_31_2 and arg_31_2.elementId then
+		local var_31_0 = VersionActivity1_4Enum.ActivityId.Role37
+		local var_31_1 = Activity130Model.instance:getCurEpisodeId()
+
+		Activity130Rpc.instance:sendAct130GeneralRequest(var_31_0, var_31_1, arg_31_2.elementId, arg_31_0._onGeneralSuccess, arg_31_0)
 	end
 end
 
-function slot0._onRestartSet(slot0)
-	slot0:_clearElements()
-	slot0:_changeScene(1)
-	slot0:_showElements()
+function var_0_0._onRestartSet(arg_32_0)
+	arg_32_0:_clearElements()
+	arg_32_0:_changeScene(1)
+	arg_32_0:_showElements()
 end
 
-function slot0._onGeneralSuccess(slot0, slot1, slot2)
-	if slot2 ~= 0 then
+function var_0_0._onGeneralSuccess(arg_33_0, arg_33_1, arg_33_2)
+	if arg_33_2 ~= 0 then
 		return
 	end
 
-	slot0:_showElements()
+	arg_33_0:_showElements()
 end
 
-function slot0._addEvents(slot0)
-	slot0._click:AddClickUpListener(slot0._clickUp, slot0)
+function var_0_0._addEvents(arg_34_0)
+	arg_34_0._click:AddClickUpListener(arg_34_0._clickUp, arg_34_0)
 
 	if GamepadController.instance:isOpen() then
-		slot0:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, slot0._onGamepadKeyDown, slot0)
+		arg_34_0:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, arg_34_0._onGamepadKeyDown, arg_34_0)
 	end
 
-	slot0:addEventCb(MainController.instance, MainEvent.OnSceneClose, slot0._onSceneClose, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.OnGeneralGameSuccess, slot0._showElements, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.OnElementUpdate, slot0._showElements, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.OnRestartEpisodeSuccess, slot0._onRestartSet, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, slot0._showElements, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.OnClickElement, slot0._OnClickElement, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.AutoStartElement, slot0._checkInitElements, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, slot0._checkInitElements, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.NewEpisodeUnlock, slot0._backToLevelView, slot0)
-	slot0:addEventCb(Activity130Controller.instance, Activity130Event.GuideClickElement, slot0._OnGuideClickElement, slot0)
+	arg_34_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_34_0._onSceneClose, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.OnGeneralGameSuccess, arg_34_0._showElements, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.OnElementUpdate, arg_34_0._showElements, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.OnRestartEpisodeSuccess, arg_34_0._onRestartSet, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, arg_34_0._showElements, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.OnClickElement, arg_34_0._OnClickElement, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.AutoStartElement, arg_34_0._checkInitElements, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, arg_34_0._checkInitElements, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.NewEpisodeUnlock, arg_34_0._backToLevelView, arg_34_0)
+	arg_34_0:addEventCb(Activity130Controller.instance, Activity130Event.GuideClickElement, arg_34_0._OnGuideClickElement, arg_34_0)
 end
 
-function slot0._removeEvents(slot0)
-	if slot0._click then
-		slot0._click:RemoveClickUpListener()
+function var_0_0._removeEvents(arg_35_0)
+	if arg_35_0._click then
+		arg_35_0._click:RemoveClickUpListener()
 	end
 
 	if GamepadController.instance:isOpen() then
-		slot0:removeEventCb(GamepadController.instance, GamepadEvent.KeyDown, slot0._onGamepadKeyDown, slot0)
+		arg_35_0:removeEventCb(GamepadController.instance, GamepadEvent.KeyDown, arg_35_0._onGamepadKeyDown, arg_35_0)
 	end
 
-	slot0:removeEventCb(MainController.instance, MainEvent.OnSceneClose, slot0._onSceneClose, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.OnGeneralGameSuccess, slot0._showElements, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.OnElementUpdate, slot0._showElements, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.OnRestartEpisodeSuccess, slot0._onRestartSet, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, slot0._showElements, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.OnClickElement, slot0._OnClickElement, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.AutoStartElement, slot0._checkInitElements, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, slot0._checkInitElements, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.NewEpisodeUnlock, slot0._backToLevelView, slot0)
-	slot0:removeEventCb(Activity130Controller.instance, Activity130Event.GuideClickElement, slot0._OnGuideClickElement, slot0)
+	arg_35_0:removeEventCb(MainController.instance, MainEvent.OnSceneClose, arg_35_0._onSceneClose, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.OnGeneralGameSuccess, arg_35_0._showElements, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.OnElementUpdate, arg_35_0._showElements, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.OnRestartEpisodeSuccess, arg_35_0._onRestartSet, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, arg_35_0._showElements, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.OnClickElement, arg_35_0._OnClickElement, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.AutoStartElement, arg_35_0._checkInitElements, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.OnDialogMarkSuccess, arg_35_0._checkInitElements, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.NewEpisodeUnlock, arg_35_0._backToLevelView, arg_35_0)
+	arg_35_0:removeEventCb(Activity130Controller.instance, Activity130Event.GuideClickElement, arg_35_0._OnGuideClickElement, arg_35_0)
 end
 
-function slot0.onDestroyView(slot0)
-	gohelper.destroy(slot0._sceneRoot)
+function var_0_0.onDestroyView(arg_36_0)
+	gohelper.destroy(arg_36_0._sceneRoot)
 
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if arg_36_0._mapLoader then
+		arg_36_0._mapLoader:dispose()
 	end
 end
 
-function slot0.playAmbientAudio(slot0)
-	slot0:closeAmbientSound()
+function var_0_0.playAmbientAudio(arg_37_0)
+	arg_37_0:closeAmbientSound()
 	AudioMgr.instance:trigger(AudioEnum.UI.set_state_activityvol_on)
 
-	slot0._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Bgm.ActivityMapAmbientBgm)
+	arg_37_0._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Bgm.ActivityMapAmbientBgm)
 end
 
-function slot0.closeAmbientSound(slot0)
-	if slot0._ambientAudioId then
-		AudioMgr.instance:stopPlayingID(slot0._ambientAudioId)
+function var_0_0.closeAmbientSound(arg_38_0)
+	if arg_38_0._ambientAudioId then
+		AudioMgr.instance:stopPlayingID(arg_38_0._ambientAudioId)
 		AudioMgr.instance:trigger(AudioEnum.UI.set_state_activityvol_off)
 
-		slot0._ambientAudioId = nil
+		arg_38_0._ambientAudioId = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,46 +1,54 @@
-module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonTypeBase", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonTypeBase", package.seeall)
 
-slot0 = class("FightRestartAbandonTypeBase", UserDataDispose)
+local var_0_0 = class("FightRestartAbandonTypeBase", UserDataDispose)
 
-function slot0.episodeCostIsEnough(slot0)
-	slot0._box_type = MessageBoxIdDefine.RestartStage62
+function var_0_0.episodeCostIsEnough(arg_1_0)
+	arg_1_0._box_type = MessageBoxIdDefine.RestartStage62
 
-	if not string.nilorempty(slot0._episode_config.failCost) then
-		if string.splitToNumber(slot0._episode_config.failCost, "#")[3] == 0 then
+	if not string.nilorempty(arg_1_0._episode_config.failCost) then
+		local var_1_0 = string.splitToNumber(arg_1_0._episode_config.failCost, "#")
+
+		if var_1_0[3] == 0 then
 			return true
 		end
 
-		slot2, slot3 = ItemModel.instance:getItemConfigAndIcon(slot1[1], slot1[2])
+		local var_1_1, var_1_2 = ItemModel.instance:getItemConfigAndIcon(var_1_0[1], var_1_0[2])
 
-		if slot2 then
-			slot4 = MessageBoxIdDefine.RestartStage62
-			slot5 = ItemModel.instance:getItemQuantity(slot1[1], slot1[2])
-			slot6 = string.splitToNumber(slot0._episode_config.cost, "#")[3]
-			slot7 = false
+		if var_1_1 then
+			local var_1_3 = MessageBoxIdDefine.RestartStage62
+			local var_1_4 = ItemModel.instance:getItemQuantity(var_1_0[1], var_1_0[2])
+			local var_1_5 = string.splitToNumber(arg_1_0._episode_config.cost, "#")[3]
+			local var_1_6 = false
 
-			if slot1[1] == 2 and slot1[2] == 4 then
-				slot7 = true
+			if var_1_0[1] == 2 and var_1_0[2] == 4 then
+				local var_1_7 = FightModel.instance:getFightParam()
+				local var_1_8 = var_1_7 and var_1_7.episodeId
 
-				if DungeonConfig.instance:getEpisodeCO(FightModel.instance:getFightParam() and slot8.episodeId) and DungeonConfig.instance:getChapterCO(slot10.chapterId) and slot11.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(slot11.type) > 0 then
-					slot4 = MessageBoxIdDefine.DungeonEquipRestart
-					slot7 = true
+				var_1_6 = true
+
+				local var_1_9 = DungeonConfig.instance:getEpisodeCO(var_1_8)
+				local var_1_10 = var_1_9 and DungeonConfig.instance:getChapterCO(var_1_9.chapterId)
+
+				if var_1_10 and var_1_10.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(var_1_10.type) > 0 then
+					var_1_3 = MessageBoxIdDefine.DungeonEquipRestart
+					var_1_6 = true
 				end
 			else
-				slot4 = MessageBoxIdDefine.RestartStage63
-				slot7 = slot6 <= slot5 - slot1[3]
+				var_1_3 = MessageBoxIdDefine.RestartStage63
+				var_1_6 = var_1_5 <= var_1_4 - var_1_0[3]
 			end
 
-			slot0._box_type = slot4
-			slot0._cost_item_config = slot2
+			arg_1_0._box_type = var_1_3
+			arg_1_0._cost_item_config = var_1_1
 
-			if slot7 then
+			if var_1_6 then
 				return true
 			else
-				GameFacade.showMessageBox(slot0._box_type, MsgBoxEnum.BoxType.Yes_No, function ()
-					GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, uv0, uv1.name)
-				end, function ()
+				GameFacade.showMessageBox(arg_1_0._box_type, MsgBoxEnum.BoxType.Yes_No, function()
+					GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_1_2, var_1_1.name)
+				end, function()
 					FightSystem.instance:cancelRestart()
-				end, nil, , , , slot0._cost_item_config.name)
+				end, nil, nil, nil, nil, arg_1_0._cost_item_config.name)
 
 				return false
 			end
@@ -52,49 +60,53 @@ function slot0.episodeCostIsEnough(slot0)
 	return false
 end
 
-function slot0.confirmNotice(slot0)
-	GameFacade.showMessageBox(slot0._box_type, MsgBoxEnum.BoxType.Yes_No, function ()
-		FightController.instance:unregisterCallback(FightEvent.PushEndFight, uv0._onPushEndFight, uv0)
+function var_0_0.confirmNotice(arg_4_0)
+	local var_4_0 = arg_4_0._cost_item_config and arg_4_0._cost_item_config.name
 
-		if uv0.IS_DEAD then
+	GameFacade.showMessageBox(arg_4_0._box_type, MsgBoxEnum.BoxType.Yes_No, function()
+		FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_4_0._onPushEndFight, arg_4_0)
+
+		if arg_4_0.IS_DEAD then
 			ToastController.instance:showToast(-80)
 
 			return
 		end
 
-		uv0:startAbandon()
-	end, function ()
+		arg_4_0:startAbandon()
+	end, function()
 		FightSystem.instance:cancelRestart()
-	end, nil, , , , slot0._cost_item_config and slot0._cost_item_config.name)
+	end, nil, nil, nil, nil, var_4_0)
 end
 
-function slot0._onPushEndFight(slot0)
-	slot0.IS_DEAD = true
+function var_0_0._onPushEndFight(arg_7_0)
+	arg_7_0.IS_DEAD = true
 
 	FightSystem.instance:cancelRestart()
 
-	if slot0._box_type then
+	if arg_7_0._box_type then
 		ViewMgr.instance:closeView(ViewName.MessageBoxView)
 	end
 end
 
-function slot0.abandon(slot0)
-	if slot0.confirmNotice then
-		FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._onPushEndFight, slot0, LuaEventSystem.High)
-		slot0:confirmNotice()
+function var_0_0.abandon(arg_8_0)
+	if arg_8_0.confirmNotice then
+		FightController.instance:registerCallback(FightEvent.PushEndFight, arg_8_0._onPushEndFight, arg_8_0, LuaEventSystem.High)
+		arg_8_0:confirmNotice()
 	else
-		slot0:startAbandon()
+		arg_8_0:startAbandon()
 	end
 end
 
-function slot0.releaseEvent(slot0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, slot0._onPushEndFight, slot0)
+function var_0_0.releaseEvent(arg_9_0)
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_9_0._onPushEndFight, arg_9_0)
 end
 
-function slot0.canRestart(slot0)
+function var_0_0.canRestart(arg_10_0)
+	return
 end
 
-function slot0.startAbandon(slot0)
+function var_0_0.startAbandon(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

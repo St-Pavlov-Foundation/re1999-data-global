@@ -1,57 +1,57 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaEquipMO", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaEquipMO", package.seeall)
 
-slot0 = pureTable("AiZiLaEquipMO")
+local var_0_0 = pureTable("AiZiLaEquipMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.id = slot1
-	slot0.typeId = slot1
-	slot0._equipId = slot2 or 0
-	slot0.activityId = slot3 or VersionActivity1_5Enum.ActivityId.AiZiLa
-	slot0._needUpdateConfig = true
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.id = arg_1_1
+	arg_1_0.typeId = arg_1_1
+	arg_1_0._equipId = arg_1_2 or 0
+	arg_1_0.activityId = arg_1_3 or VersionActivity1_5Enum.ActivityId.AiZiLa
+	arg_1_0._needUpdateConfig = true
 end
 
-function slot0.getConfig(slot0)
-	if slot0._needUpdateConfig then
-		slot0._needUpdateConfig = false
-		slot0._config = AiZiLaConfig.instance:getEquipCo(slot0.activityId, slot0._equipId)
-		slot0._nexConfig = AiZiLaConfig.instance:getEquipCoByPreId(slot0.activityId, slot0._equipId, slot0.typeId)
-		slot0._costParams = AiZiLaHelper.getCostParams(slot0._nexConfig)
+function var_0_0.getConfig(arg_2_0)
+	if arg_2_0._needUpdateConfig then
+		arg_2_0._needUpdateConfig = false
+		arg_2_0._config = AiZiLaConfig.instance:getEquipCo(arg_2_0.activityId, arg_2_0._equipId)
+		arg_2_0._nexConfig = AiZiLaConfig.instance:getEquipCoByPreId(arg_2_0.activityId, arg_2_0._equipId, arg_2_0.typeId)
+		arg_2_0._costParams = AiZiLaHelper.getCostParams(arg_2_0._nexConfig)
 	end
 
-	return slot0._config
+	return arg_2_0._config
 end
 
-function slot0.getNextConfig(slot0)
-	slot0:getConfig()
+function var_0_0.getNextConfig(arg_3_0)
+	arg_3_0:getConfig()
 
-	return slot0._nexConfig
+	return arg_3_0._nexConfig
 end
 
-function slot0.isMaxLevel(slot0)
-	return slot0:getNextConfig() == nil
+function var_0_0.isMaxLevel(arg_4_0)
+	return arg_4_0:getNextConfig() == nil
 end
 
-function slot0.isCanUpLevel(slot0)
-	slot0:getConfig()
+function var_0_0.isCanUpLevel(arg_5_0)
+	arg_5_0:getConfig()
 
-	if slot0:isMaxLevel() or slot0._costParams == nil then
+	if arg_5_0:isMaxLevel() or arg_5_0._costParams == nil then
 		return false
 	end
 
-	return AiZiLaHelper.checkCostParams(slot0._costParams)
+	return AiZiLaHelper.checkCostParams(arg_5_0._costParams)
 end
 
-function slot0.getCostParams(slot0)
-	slot0:getConfig()
+function var_0_0.getCostParams(arg_6_0)
+	arg_6_0:getConfig()
 
-	return slot0._costParams
+	return arg_6_0._costParams
 end
 
-function slot0.updateInfo(slot0, slot1)
-	if slot0._equipId ~= slot1 then
-		slot0._equipId = slot1
-		slot0._needUpdateConfig = true
+function var_0_0.updateInfo(arg_7_0, arg_7_1)
+	if arg_7_0._equipId ~= arg_7_1 then
+		arg_7_0._equipId = arg_7_1
+		arg_7_0._needUpdateConfig = true
 	end
 end
 
-return slot0
+return var_0_0

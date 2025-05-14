@@ -1,56 +1,66 @@
-module("modules.logic.room.model.map.path.RoomMapPathPlanModel", package.seeall)
+﻿module("modules.logic.room.model.map.path.RoomMapPathPlanModel", package.seeall)
 
-slot0 = class("RoomMapPathPlanModel", BaseModel)
+local var_0_0 = class("RoomMapPathPlanModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
+function var_0_0._clearData(arg_4_0)
+	return
 end
 
-function slot0.init(slot0)
-	slot0:clear()
+function var_0_0.init(arg_5_0)
+	arg_5_0:clear()
 end
 
-function slot0.initPath(slot0)
-	slot1 = {}
+function var_0_0.initPath(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = RoomConfig.instance:getVehicleConfigList()
 
-	for slot6, slot7 in ipairs(RoomConfig.instance:getVehicleConfigList()) do
-		table.insert(slot1, slot7.resId)
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		table.insert(var_6_0, iter_6_1.resId)
 	end
 
-	slot4 = {}
+	local var_6_2 = RoomResourceHelper.getResourcePointAreaMODict(nil, var_6_0)
+	local var_6_3 = {}
 
-	for slot8, slot9 in pairs(RoomResourceHelper.getResourcePointAreaMODict(nil, slot1)) do
-		for slot14, slot15 in ipairs(slot9:findeArea()) do
-			slot17 = RoomMapPathPlanMO.New()
+	for iter_6_2, iter_6_3 in pairs(var_6_2) do
+		local var_6_4 = iter_6_3:findeArea()
 
-			slot17:init(slot8 * 1000 + slot14, slot8, slot15)
-			table.insert(slot4, slot17)
+		for iter_6_4, iter_6_5 in ipairs(var_6_4) do
+			local var_6_5 = iter_6_2 * 1000 + iter_6_4
+			local var_6_6 = RoomMapPathPlanMO.New()
+
+			var_6_6:init(var_6_5, iter_6_2, iter_6_5)
+			table.insert(var_6_3, var_6_6)
 		end
 	end
 
-	slot0:setList(slot4)
+	arg_6_0:setList(var_6_3)
 end
 
-function slot0.getPlanMOByXY(slot0, slot1, slot2, slot3)
-	for slot8 = 1, #slot0:getList() do
-		if slot4[slot8].resourceId == slot3 and slot9:getNodeByXY(slot1, slot2) then
-			return slot9
+function var_0_0.getPlanMOByXY(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_0:getList()
+
+	for iter_7_0 = 1, #var_7_0 do
+		local var_7_1 = var_7_0[iter_7_0]
+
+		if var_7_1.resourceId == arg_7_3 and var_7_1:getNodeByXY(arg_7_1, arg_7_2) then
+			return var_7_1
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

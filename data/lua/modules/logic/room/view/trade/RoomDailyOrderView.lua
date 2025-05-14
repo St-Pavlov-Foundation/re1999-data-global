@@ -1,218 +1,240 @@
-module("modules.logic.room.view.trade.RoomDailyOrderView", package.seeall)
+﻿module("modules.logic.room.view.trade.RoomDailyOrderView", package.seeall)
 
-slot0 = class("RoomDailyOrderView", BaseView)
+local var_0_0 = class("RoomDailyOrderView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "tip")
-	slot0._txttip1 = gohelper.findChildText(slot0.viewGO, "tip/#txt_tip1")
-	slot0._txttip2 = gohelper.findChildText(slot0.viewGO, "tip/#txt_tip2")
-	slot0._goroot = gohelper.findChild(slot0.viewGO, "#go_root")
-	slot0._gonotorder = gohelper.findChild(slot0.viewGO, "#go_notorder")
-	slot0._gorole = gohelper.findChild(slot0.viewGO, "#go_notorder/spine/#go_role")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_notorder/barrage/namebg/#txt_name")
-	slot0._scrollbarrage = gohelper.findChildScrollRect(slot0.viewGO, "#go_notorder/barrage/#scroll_barrage")
-	slot0._txtbarrage = gohelper.findChildText(slot0.viewGO, "#go_notorder/barrage/#scroll_barrage/Viewport/#txt_barrage")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_notorder/#simage_icon")
-	slot0._gonotorder2 = gohelper.findChild(slot0.viewGO, "#go_notorder2")
-	slot0._simageicon2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_notorder2/#simage_icon")
-	slot0._txtbarrage2 = gohelper.findChildText(slot0.viewGO, "#go_notorder2/barrage/#scroll_barrage/Viewport/#txt_barrage")
-	slot0._txtname2 = gohelper.findChildText(slot0.viewGO, "#go_notorder2/barrage/namebg/#txt_name")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "tip")
+	arg_1_0._txttip1 = gohelper.findChildText(arg_1_0.viewGO, "tip/#txt_tip1")
+	arg_1_0._txttip2 = gohelper.findChildText(arg_1_0.viewGO, "tip/#txt_tip2")
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
+	arg_1_0._gonotorder = gohelper.findChild(arg_1_0.viewGO, "#go_notorder")
+	arg_1_0._gorole = gohelper.findChild(arg_1_0.viewGO, "#go_notorder/spine/#go_role")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder/barrage/namebg/#txt_name")
+	arg_1_0._scrollbarrage = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_notorder/barrage/#scroll_barrage")
+	arg_1_0._txtbarrage = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder/barrage/#scroll_barrage/Viewport/#txt_barrage")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_notorder/#simage_icon")
+	arg_1_0._gonotorder2 = gohelper.findChild(arg_1_0.viewGO, "#go_notorder2")
+	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_notorder2/#simage_icon")
+	arg_1_0._txtbarrage2 = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder2/barrage/#scroll_barrage/Viewport/#txt_barrage")
+	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.viewGO, "#go_notorder2/barrage/namebg/#txt_name")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, slot0.refrshCurrency, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnGetTradeOrderInfo, slot0.onRefresh, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, slot0.finishOrder, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnRefreshDailyOrder, slot0.refreshOrder, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTracedDailyOrder, slot0.refreshTraced, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnLockedDailyOrder, slot0.refreshLocked, slot0)
+function var_0_0.addEvents(arg_2_0)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_2_0.refrshCurrency, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnGetTradeOrderInfo, arg_2_0.onRefresh, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, arg_2_0.finishOrder, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnRefreshDailyOrder, arg_2_0.refreshOrder, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTracedDailyOrder, arg_2_0.refreshTraced, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnLockedDailyOrder, arg_2_0.refreshLocked, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, slot0.refrshCurrency, slot0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnGetTradeOrderInfo, slot0.onRefresh, slot0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, slot0.finishOrder, slot0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnRefreshDailyOrder, slot0.refreshOrder, slot0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnTracedDailyOrder, slot0.refreshTraced, slot0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnLockedDailyOrder, slot0.refreshLocked, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_3_0.refrshCurrency, arg_3_0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnGetTradeOrderInfo, arg_3_0.onRefresh, arg_3_0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, arg_3_0.finishOrder, arg_3_0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnRefreshDailyOrder, arg_3_0.refreshOrder, arg_3_0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnTracedDailyOrder, arg_3_0.refreshTraced, arg_3_0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnLockedDailyOrder, arg_3_0.refreshLocked, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = ServerTime.ReplaceUTCStr(luaLang("p_roomdailyorderview_txt_notoder"))
-	slot0._tips1 = gohelper.findChildText(slot0.viewGO, "#go_notorder/tipsbg/txt_tips")
-	slot0._tips2 = gohelper.findChildText(slot0.viewGO, "#go_notorder2/tipsbg/txt_tips")
-	slot0._tips1.text = slot1
-	slot0._tips2.text = slot1
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_4_0)
+	local var_4_0 = ServerTime.ReplaceUTCStr(luaLang("p_roomdailyorderview_txt_notoder"))
+
+	arg_4_0._tips1 = gohelper.findChildText(arg_4_0.viewGO, "#go_notorder/tipsbg/txt_tips")
+	arg_4_0._tips2 = gohelper.findChildText(arg_4_0.viewGO, "#go_notorder2/tipsbg/txt_tips")
+	arg_4_0._tips1.text = var_4_0
+	arg_4_0._tips2.text = var_4_0
+	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:onRefresh()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:onRefresh()
 end
 
-function slot0.onRefresh(slot0)
-	slot0:refreshOrderItem()
-	slot0:refreshFinishCount()
-	slot0:refreshRefreshCount()
+function var_0_0.onRefresh(arg_7_0)
+	arg_7_0:refreshOrderItem()
+	arg_7_0:refreshFinishCount()
+	arg_7_0:refreshRefreshCount()
 end
 
-function slot0._getOrderItem(slot0, slot1)
-	if not slot0._orderItems[slot1] then
-		slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(RoomDailyOrderItem.ResUrl, slot0._goroot, string.format("roomdailyorderitem%s", slot1)), RoomDailyOrderItem)
-		slot2.viewContainer = slot0.viewContainer
-		slot0._orderItems[slot1] = slot2
+function var_0_0._getOrderItem(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._orderItems[arg_8_1]
 
-		slot2:playOpenAnim(slot1)
+	if not var_8_0 then
+		local var_8_1 = arg_8_0:getResInst(RoomDailyOrderItem.ResUrl, arg_8_0._goroot, string.format("roomdailyorderitem%s", arg_8_1))
+
+		var_8_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, RoomDailyOrderItem)
+		var_8_0.viewContainer = arg_8_0.viewContainer
+		arg_8_0._orderItems[arg_8_1] = var_8_0
+
+		var_8_0:playOpenAnim(arg_8_1)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.refreshFinishCount(slot0)
-	slot2, slot3 = RoomTradeModel.instance:getDailyOrderFinishCount()
-	slot4 = slot3 <= slot2
-	slot0._txttip1.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("room_tade_dailyorder_tip"), slot4 and "#a63838" or "#EFEFEF", slot2, slot3)
+function var_0_0.refreshFinishCount(arg_9_0)
+	local var_9_0 = luaLang("room_tade_dailyorder_tip")
+	local var_9_1, var_9_2 = RoomTradeModel.instance:getDailyOrderFinishCount()
+	local var_9_3 = var_9_2 <= var_9_1
+	local var_9_4 = var_9_3 and "#a63838" or "#EFEFEF"
 
-	slot0:refreshFinishBarrage(slot4)
+	arg_9_0._txttip1.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_9_0, var_9_4, var_9_1, var_9_2)
+
+	arg_9_0:refreshFinishBarrage(var_9_3)
 end
 
-function slot0.refreshRefreshCount(slot0)
-	slot2, slot3 = RoomTradeModel.instance:getRefreshCount()
-	slot0._txttip2.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("room_tade_dailyorder_active_refresh_tip"), slot3 <= slot3 - slot2 and "#a63838" or "#EFEFEF", slot2, slot3)
+function var_0_0.refreshRefreshCount(arg_10_0)
+	local var_10_0 = luaLang("room_tade_dailyorder_active_refresh_tip")
+	local var_10_1, var_10_2 = RoomTradeModel.instance:getRefreshCount()
+	local var_10_3 = var_10_2 - var_10_1
+	local var_10_4 = var_10_2 <= var_10_3 and "#a63838" or "#EFEFEF"
 
-	gohelper.setActive(slot0._txttip2, slot3 > 0)
+	arg_10_0._txttip2.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_10_0, var_10_4, var_10_3, var_10_2)
+
+	gohelper.setActive(arg_10_0._txttip2, var_10_2 > 0)
 end
 
-function slot0.refreshFinishBarrage(slot0, slot1)
-	if slot1 then
-		slot2 = RoomTradeModel.instance:getBarrageCo(RoomTradeEnum.BarrageType.DailyOrder)
-		slot3 = slot2.heroId
-		slot5, slot6 = nil
+function var_0_0.refreshFinishBarrage(arg_11_0, arg_11_1)
+	if arg_11_1 then
+		local var_11_0 = RoomTradeModel.instance:getBarrageCo(RoomTradeEnum.BarrageType.DailyOrder)
+		local var_11_1 = var_11_0.heroId
+		local var_11_2 = var_11_0.icon
+		local var_11_3
+		local var_11_4
 
-		if not string.nilorempty(slot2.icon) then
-			slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, tonumber(slot4))
+		if not string.nilorempty(var_11_2) then
+			local var_11_5 = tonumber(var_11_2)
+
+			var_11_3, var_11_4 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_11_5)
 		end
 
-		if slot3 and slot3 ~= 0 then
-			slot0.skinCo = SkinConfig.instance:getSkinCo(HeroConfig.instance:getHeroCO(slot3).skinId)
+		if var_11_1 and var_11_1 ~= 0 then
+			local var_11_6 = HeroConfig.instance:getHeroCO(var_11_1).skinId
 
-			if not slot0.smallSpine then
-				slot0.smallSpine = GuiSpine.Create(slot0._gorole, false)
+			arg_11_0.skinCo = SkinConfig.instance:getSkinCo(var_11_6)
+
+			if not arg_11_0.smallSpine then
+				arg_11_0.smallSpine = GuiSpine.Create(arg_11_0._gorole, false)
 			end
 
-			slot0.smallSpine:stopVoice()
-			slot0.smallSpine:setResPath(ResUrl.getSpineUIPrefab(slot0.skinCo.spine), slot0._onSpineLoaded, slot0, true)
+			arg_11_0.smallSpine:stopVoice()
+			arg_11_0.smallSpine:setResPath(ResUrl.getSpineUIPrefab(arg_11_0.skinCo.spine), arg_11_0._onSpineLoaded, arg_11_0, true)
 
-			if not string.nilorempty(slot6) then
-				slot0._simageicon:LoadImage(slot6)
+			if not string.nilorempty(var_11_4) then
+				arg_11_0._simageicon:LoadImage(var_11_4)
 			end
 
-			if slot5 then
-				slot0._txtname.text = slot5.name
+			if var_11_3 then
+				arg_11_0._txtname.text = var_11_3.name
 			end
 
-			slot0._txtbarrage.text = slot2.desc
+			arg_11_0._txtbarrage.text = var_11_0.desc
 
-			gohelper.setActive(slot0._gonotorder, true)
-			gohelper.setActive(slot0._gonotorder2, false)
+			gohelper.setActive(arg_11_0._gonotorder, true)
+			gohelper.setActive(arg_11_0._gonotorder2, false)
 		else
-			if not string.nilorempty(slot6) then
-				slot0._simageicon2:LoadImage(slot6)
+			if not string.nilorempty(var_11_4) then
+				arg_11_0._simageicon2:LoadImage(var_11_4)
 			end
 
-			if slot5 then
-				slot0._txtname2.text = slot5.name
+			if var_11_3 then
+				arg_11_0._txtname2.text = var_11_3.name
 			end
 
-			slot0._txtbarrage2.text = slot2.desc
+			arg_11_0._txtbarrage2.text = var_11_0.desc
 
-			gohelper.setActive(slot0._gonotorder, false)
-			gohelper.setActive(slot0._gonotorder2, true)
+			gohelper.setActive(arg_11_0._gonotorder, false)
+			gohelper.setActive(arg_11_0._gonotorder2, true)
 		end
 
-		slot0._animator:Play(RoomTradeEnum.TradeAnim.DailyOrderOpen, 0, 0)
+		arg_11_0._animator:Play(RoomTradeEnum.TradeAnim.DailyOrderOpen, 0, 0)
 	else
-		gohelper.setActive(slot0._gonotorder, false)
-		gohelper.setActive(slot0._gonotorder2, false)
+		gohelper.setActive(arg_11_0._gonotorder, false)
+		gohelper.setActive(arg_11_0._gonotorder2, false)
 	end
 
-	gohelper.setActive(slot0._goroot, not slot1)
-	gohelper.setActive(slot0._gotip, not slot1)
+	gohelper.setActive(arg_11_0._goroot, not arg_11_1)
+	gohelper.setActive(arg_11_0._gotip, not arg_11_1)
 end
 
-function slot0._onSpineLoaded(slot0)
-	slot1 = SkinConfig.instance:getSkinOffset(slot0.skinCo.skinSpineOffset)
+function var_0_0._onSpineLoaded(arg_12_0)
+	local var_12_0 = SkinConfig.instance:getSkinOffset(arg_12_0.skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(slot0._gorole.transform, tonumber(slot1[1]), tonumber(slot1[2]))
-	transformhelper.setLocalScale(slot0._gorole.transform, tonumber(slot1[3]), tonumber(slot1[3]), tonumber(slot1[3]))
+	recthelper.setAnchor(arg_12_0._gorole.transform, tonumber(var_12_0[1]), tonumber(var_12_0[2]))
+	transformhelper.setLocalScale(arg_12_0._gorole.transform, tonumber(var_12_0[3]), tonumber(var_12_0[3]), tonumber(var_12_0[3]))
 end
 
-function slot0.refreshOrderItem(slot0)
-	slot1 = RoomTradeModel.instance:getDailyOrders()
+function var_0_0.refreshOrderItem(arg_13_0)
+	local var_13_0 = RoomTradeModel.instance:getDailyOrders()
 
-	if not slot0._orderItems then
-		slot0._orderItems = slot0:getUserDataTb_()
+	if not arg_13_0._orderItems then
+		arg_13_0._orderItems = arg_13_0:getUserDataTb_()
 	end
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0:_getOrderItem(slot5):onUpdateMo(slot6)
+	if var_13_0 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+			arg_13_0:_getOrderItem(iter_13_0):onUpdateMo(iter_13_1)
 		end
 
-		for slot5 = #slot1 + 1, #slot0._orderItems do
-			gohelper.setActive(slot0._orderItems[slot5].viewGO, false)
+		for iter_13_2 = #var_13_0 + 1, #arg_13_0._orderItems do
+			gohelper.setActive(arg_13_0._orderItems[iter_13_2].viewGO, false)
 		end
 	end
 end
 
-function slot0.finishOrder(slot0, slot1)
-	if slot1 ~= RoomTradeEnum.Mode.DailyOrder then
+function var_0_0.finishOrder(arg_14_0, arg_14_1)
+	if arg_14_1 ~= RoomTradeEnum.Mode.DailyOrder then
 		return
 	end
 
-	slot0:onRefresh()
+	arg_14_0:onRefresh()
 end
 
-function slot0.refreshOrder(slot0)
-	slot0:onRefresh()
+function var_0_0.refreshOrder(arg_15_0)
+	arg_15_0:onRefresh()
 end
 
-function slot0.refrshCurrency(slot0)
-	if RoomTradeModel.instance:getDailyOrders() then
-		for slot5 = 1, #slot1 do
-			slot0:_getOrderItem(slot5):onRefresh()
+function var_0_0.refrshCurrency(arg_16_0)
+	local var_16_0 = RoomTradeModel.instance:getDailyOrders()
+
+	if var_16_0 then
+		for iter_16_0 = 1, #var_16_0 do
+			arg_16_0:_getOrderItem(iter_16_0):onRefresh()
 		end
 	end
 end
 
-function slot0.refreshTraced(slot0, slot1)
-	slot2, slot3 = RoomTradeModel.instance:getDailyOrderById(slot1)
+function var_0_0.refreshTraced(arg_17_0, arg_17_1)
+	local var_17_0, var_17_1 = RoomTradeModel.instance:getDailyOrderById(arg_17_1)
 
-	slot0:_getOrderItem(slot3):refreshTraced()
+	arg_17_0:_getOrderItem(var_17_1):refreshTraced()
 end
 
-function slot0.refreshLocked(slot0, slot1)
-	slot2, slot3 = RoomTradeModel.instance:getDailyOrderById(slot1)
+function var_0_0.refreshLocked(arg_18_0, arg_18_1)
+	local var_18_0, var_18_1 = RoomTradeModel.instance:getDailyOrderById(arg_18_1)
 
-	slot0:_getOrderItem(slot3):refreshLocked()
+	arg_18_0:_getOrderItem(var_18_1):refreshLocked()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.smallSpine then
-		slot0.smallSpine:stopVoice()
+function var_0_0.onDestroyView(arg_20_0)
+	if arg_20_0.smallSpine then
+		arg_20_0.smallSpine:stopVoice()
 
-		slot0.smallSpine = nil
+		arg_20_0.smallSpine = nil
 	end
 end
 
-return slot0
+return var_0_0

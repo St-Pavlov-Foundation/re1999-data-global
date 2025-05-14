@@ -1,143 +1,145 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotModel", package.seeall)
 
-slot0 = class("V1a6_CachotModel", BaseModel)
+local var_0_0 = class("V1a6_CachotModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._rogueStateInfo = nil
-	slot0._rogueInfo = nil
-	slot0._goodsInfos = nil
-	slot0._rogueEndingInfo = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._rogueStateInfo = nil
+	arg_1_0._rogueInfo = nil
+	arg_1_0._goodsInfos = nil
+	arg_1_0._rogueEndingInfo = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.getRogueStateInfo(slot0)
-	return slot0._rogueStateInfo
+function var_0_0.getRogueStateInfo(arg_3_0)
+	return arg_3_0._rogueStateInfo
 end
 
-function slot0.getRogueInfo(slot0)
-	return slot0._rogueInfo
+function var_0_0.getRogueInfo(arg_4_0)
+	return arg_4_0._rogueInfo
 end
 
-function slot0.getGoodsInfos(slot0)
-	return slot0._goodsInfos
+function var_0_0.getGoodsInfos(arg_5_0)
+	return arg_5_0._goodsInfos
 end
 
-function slot0.getTeamInfo(slot0)
-	if not slot0._rogueInfo then
+function var_0_0.getTeamInfo(arg_6_0)
+	if not arg_6_0._rogueInfo then
 		return
 	end
 
-	return slot0._rogueInfo.teamInfo
+	return arg_6_0._rogueInfo.teamInfo
 end
 
-function slot0.getRogueEndingInfo(slot0)
-	return slot0._rogueEndingInfo
+function var_0_0.getRogueEndingInfo(arg_7_0)
+	return arg_7_0._rogueEndingInfo
 end
 
-function slot0.clearRogueInfo(slot0)
-	slot0._rogueInfo = nil
+function var_0_0.clearRogueInfo(arg_8_0)
+	arg_8_0._rogueInfo = nil
 
 	V1a6_CachotRoomModel.instance:clear()
 end
 
-function slot0.updateRogueStateInfo(slot0, slot1)
-	slot0._rogueStateInfo = slot0._rogueStateInfo or RogueStateInfoMO.New()
+function var_0_0.updateRogueStateInfo(arg_9_0, arg_9_1)
+	arg_9_0._rogueStateInfo = arg_9_0._rogueStateInfo or RogueStateInfoMO.New()
 
-	slot0._rogueStateInfo:init(slot1)
+	arg_9_0._rogueStateInfo:init(arg_9_1)
 	V1a6_CachotStatController.instance:recordInitHeroGroup()
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnUpdateRogueStateInfo)
 end
 
-function slot0.isInRogue(slot0)
-	if slot0._rogueInfo then
-		return not slot0._rogueInfo.isFinish
+function var_0_0.isInRogue(arg_10_0)
+	if arg_10_0._rogueInfo then
+		return not arg_10_0._rogueInfo.isFinish
 	end
 
-	return slot0._rogueStateInfo and slot0._rogueStateInfo.start
+	return arg_10_0._rogueStateInfo and arg_10_0._rogueStateInfo.start
 end
 
-function slot0.updateRogueInfo(slot0, slot1)
-	slot0._rogueInfo = slot0._rogueInfo or RogueInfoMO.New()
+function var_0_0.updateRogueInfo(arg_11_0, arg_11_1)
+	arg_11_0._rogueInfo = arg_11_0._rogueInfo or RogueInfoMO.New()
 
-	slot0._rogueInfo:init(slot1)
+	arg_11_0._rogueInfo:init(arg_11_1)
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnUpdateRogueInfo)
 end
 
-function slot0.updateTeamInfo(slot0, slot1)
-	slot0._rogueInfo:updateTeamInfo(slot1)
+function var_0_0.updateTeamInfo(arg_12_0, arg_12_1)
+	arg_12_0._rogueInfo:updateTeamInfo(arg_12_1)
 end
 
-function slot0.updateGroupBoxStar(slot0, slot1)
-	slot0._rogueInfo.teamInfo:updateGroupBoxStar(slot1)
+function var_0_0.updateGroupBoxStar(arg_13_0, arg_13_1)
+	arg_13_0._rogueInfo.teamInfo:updateGroupBoxStar(arg_13_1)
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnUpdateGroupBoxStar)
 end
 
-function slot0.updateGoodsInfos(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateGoodsInfos(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	slot0._goodsInfos = {}
+	arg_14_0._goodsInfos = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RogueGoodsInfoMO.New()
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		local var_14_0 = RogueGoodsInfoMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0._goodsInfos, slot7)
+		var_14_0:init(iter_14_1)
+		table.insert(arg_14_0._goodsInfos, var_14_0)
 	end
 
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnUpdateGoodsInfos)
 end
 
-function slot0.updateCollectionsInfos(slot0, slot1)
-	if not slot1 then
+function var_0_0.updateCollectionsInfos(arg_15_0, arg_15_1)
+	if not arg_15_1 then
 		return
 	end
 
-	slot0._rogueInfo = slot0._rogueInfo or RogueInfoMO.New()
+	arg_15_0._rogueInfo = arg_15_0._rogueInfo or RogueInfoMO.New()
 
-	slot0._rogueInfo:updateCollections(slot1)
+	arg_15_0._rogueInfo:updateCollections(arg_15_1)
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnUpdateCollectionsInfo)
 end
 
-function slot0.updateRogueEndingInfo(slot0, slot1)
-	slot0._rogueEndingInfo = slot0._rogueEndingInfo or RogueEndingInfoMO.New()
+function var_0_0.updateRogueEndingInfo(arg_16_0, arg_16_1)
+	arg_16_0._rogueEndingInfo = arg_16_0._rogueEndingInfo or RogueEndingInfoMO.New()
 
-	slot0._rogueEndingInfo:init(slot1)
+	arg_16_0._rogueEndingInfo:init(arg_16_1)
 end
 
-function slot0.clearRogueEndingInfo(slot0)
-	slot0._rogueEndingInfo = nil
+function var_0_0.clearRogueEndingInfo(arg_17_0)
+	arg_17_0._rogueEndingInfo = nil
 end
 
-function slot0.setChangeLifes(slot0, slot1)
-	slot0._changeLifes = {}
+function var_0_0.setChangeLifes(arg_18_0, arg_18_1)
+	arg_18_0._changeLifes = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RogueHeroLifeMO.New()
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		local var_18_0 = RogueHeroLifeMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0._changeLifes, slot7)
+		var_18_0:init(iter_18_1)
+		table.insert(arg_18_0._changeLifes, var_18_0)
 	end
 end
 
-function slot0.getChangeLifes(slot0)
-	return slot0._changeLifes
+function var_0_0.getChangeLifes(arg_19_0)
+	return arg_19_0._changeLifes
 end
 
-function slot0.isReallyOpen(slot0)
+function var_0_0.isReallyOpen(arg_20_0)
 	if ActivityModel.instance:getActMO(V1a6_CachotEnum.ActivityId):isOpen() then
-		return ActivityConfig.instance:getActivityCo(V1a6_CachotEnum.ActivityId).openId and slot4 ~= 0 and OpenModel.instance:isFunctionUnlock(slot4)
+		local var_20_0 = ActivityConfig.instance:getActivityCo(V1a6_CachotEnum.ActivityId).openId
+
+		return var_20_0 and var_20_0 ~= 0 and OpenModel.instance:isFunctionUnlock(var_20_0)
 	end
 end
 
-function slot0.isOnline(slot0)
+function var_0_0.isOnline(arg_21_0)
 	return ActivityModel.instance:getActMO(V1a6_CachotEnum.ActivityId) and ActivityHelper.getActivityStatus(V1a6_CachotEnum.ActivityId, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,96 +1,102 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoOptionComp", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoOptionComp", package.seeall)
 
-slot0 = class("FeiLinShiDuoOptionComp", LuaCompBase)
+local var_0_0 = class("FeiLinShiDuoOptionComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.trans = slot0.go.transform
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.trans = arg_1_0.go.transform
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot0.itemInfo = slot1
-	slot0.sceneViewCls = slot2
-	slot0.playerGO = slot2:getPlayerGO()
-	slot0.playerTrans = slot0.playerGO.transform
-	slot0.refId = slot0.itemInfo.refId
-	slot0.doorItemInfo = nil
-	slot0.curOpenState = false
+function var_0_0.initData(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.itemInfo = arg_2_1
+	arg_2_0.sceneViewCls = arg_2_2
+	arg_2_0.playerGO = arg_2_2:getPlayerGO()
+	arg_2_0.playerTrans = arg_2_0.playerGO.transform
+	arg_2_0.refId = arg_2_0.itemInfo.refId
+	arg_2_0.doorItemInfo = nil
+	arg_2_0.curOpenState = false
 end
 
-function slot0.addEventListeners(slot0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, slot0.resetData, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, arg_3_0.resetData, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, slot0.resetData, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, arg_4_0.resetData, arg_4_0)
 end
 
-function slot0.resetData(slot0)
-	slot0.curOpenState = false
+function var_0_0.resetData(arg_5_0)
+	arg_5_0.curOpenState = false
 end
 
-function slot0.onTick(slot0)
-	slot0:initDoorItem()
-	slot0:handleEvent()
+function var_0_0.onTick(arg_6_0)
+	arg_6_0:initDoorItem()
+	arg_6_0:handleEvent()
 end
 
-function slot0.initDoorItem(slot0)
-	if not slot0.doorItemInfo then
-		for slot6, slot7 in pairs(FeiLinShiDuoGameModel.instance:getElementMap()[FeiLinShiDuoEnum.ObjectType.Door] or {}) do
-			if slot7.refId == slot0.refId then
-				slot0.doorItemInfo = slot7
+function var_0_0.initDoorItem(arg_7_0)
+	if not arg_7_0.doorItemInfo then
+		local var_7_0 = FeiLinShiDuoGameModel.instance:getElementMap()
+		local var_7_1 = var_7_0[FeiLinShiDuoEnum.ObjectType.Door] or {}
+
+		for iter_7_0, iter_7_1 in pairs(var_7_1) do
+			if iter_7_1.refId == arg_7_0.refId then
+				arg_7_0.doorItemInfo = iter_7_1
 
 				break
 			end
 		end
 
-		if not slot0.doorItemInfo then
+		if not arg_7_0.doorItemInfo then
 			return
 		end
 
-		slot3 = slot0.sceneViewCls:getElementGOMap()
-		slot0.doorGO = slot3[slot0.doorItemInfo.id].subGOList[1]
-		slot0.boxElementMap = slot1[FeiLinShiDuoEnum.ObjectType.Box]
-		slot0.doorAnim = slot0.doorGO:GetComponent(gohelper.Type_Animator)
-		slot0.curOpenState = false
-		slot0.optionGO = slot3[slot0.itemInfo.id].subGOList[1]
-		slot0.optionAnim = slot0.optionGO:GetComponent(gohelper.Type_Animator)
+		local var_7_2 = arg_7_0.sceneViewCls:getElementGOMap()
+
+		arg_7_0.doorGO = var_7_2[arg_7_0.doorItemInfo.id].subGOList[1]
+		arg_7_0.boxElementMap = var_7_0[FeiLinShiDuoEnum.ObjectType.Box]
+		arg_7_0.doorAnim = arg_7_0.doorGO:GetComponent(gohelper.Type_Animator)
+		arg_7_0.curOpenState = false
+		arg_7_0.optionGO = var_7_2[arg_7_0.itemInfo.id].subGOList[1]
+		arg_7_0.optionAnim = arg_7_0.optionGO:GetComponent(gohelper.Type_Animator)
 	end
 end
 
-function slot0.handleEvent(slot0)
-	if not slot0.sceneViewCls or not slot0.doorItemInfo then
+function var_0_0.handleEvent(arg_8_0)
+	if not arg_8_0.sceneViewCls or not arg_8_0.doorItemInfo then
 		return
 	end
 
-	slot0:checkTouchBoxOrPlayer()
+	arg_8_0:checkTouchBoxOrPlayer()
 end
 
-function slot0.checkTouchBoxOrPlayer(slot0)
-	slot1 = false
+function var_0_0.checkTouchBoxOrPlayer(arg_9_0)
+	local var_9_0 = false
+	local var_9_1 = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(arg_9_0.trans.localPosition.x, arg_9_0.trans.localPosition.y - 1, arg_9_0.itemInfo, FeiLinShiDuoEnum.checkDir.Top, arg_9_0.boxElementMap)
+	local var_9_2 = arg_9_0.playerTrans.localPosition.x > arg_9_0.itemInfo.pos[1] and arg_9_0.playerTrans.localPosition.x < arg_9_0.itemInfo.pos[1] + arg_9_0.itemInfo.width and arg_9_0.playerTrans.localPosition.y > arg_9_0.itemInfo.pos[2] - 1 and arg_9_0.playerTrans.localPosition.y < arg_9_0.itemInfo.pos[2] + arg_9_0.itemInfo.height
 
-	if FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(slot0.trans.localPosition.x, slot0.trans.localPosition.y - 1, slot0.itemInfo, FeiLinShiDuoEnum.checkDir.Top, slot0.boxElementMap) and #slot2 > 0 or slot0.itemInfo.pos[1] < slot0.playerTrans.localPosition.x and slot0.playerTrans.localPosition.x < slot0.itemInfo.pos[1] + slot0.itemInfo.width and slot0.playerTrans.localPosition.y > slot0.itemInfo.pos[2] - 1 and slot0.playerTrans.localPosition.y < slot0.itemInfo.pos[2] + slot0.itemInfo.height then
-		slot1 = true
+	if var_9_1 and #var_9_1 > 0 or var_9_2 then
+		var_9_0 = true
 	end
 
-	slot0:setOpenState(slot1)
+	arg_9_0:setOpenState(var_9_0)
 end
 
-function slot0.setOpenState(slot0, slot1)
-	if slot0.curOpenState ~= slot1 then
-		slot0.curOpenState = slot1
+function var_0_0.setOpenState(arg_10_0, arg_10_1)
+	if arg_10_0.curOpenState ~= arg_10_1 then
+		arg_10_0.curOpenState = arg_10_1
 
-		slot0.optionAnim:Play(slot1 and "in" or "out")
-		slot0.doorAnim:Play(slot1 and "out" or "in")
+		arg_10_0.optionAnim:Play(arg_10_1 and "in" or "out")
+		arg_10_0.doorAnim:Play(arg_10_1 and "out" or "in")
 
-		if slot1 then
+		if arg_10_1 then
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_door_open)
 		else
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_door_close)
 		end
 
-		FeiLinShiDuoGameModel.instance:setDoorOpenState(slot0.doorItemInfo.id, slot0.curOpenState)
+		FeiLinShiDuoGameModel.instance:setDoorOpenState(arg_10_0.doorItemInfo.id, arg_10_0.curOpenState)
 	end
 end
 
-return slot0
+return var_0_0

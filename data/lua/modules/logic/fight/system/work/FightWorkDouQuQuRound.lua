@@ -1,38 +1,38 @@
-module("modules.logic.fight.system.work.FightWorkDouQuQuRound", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDouQuQuRound", package.seeall)
 
-slot0 = class("FightWorkDouQuQuRound", FightWorkItem)
+local var_0_0 = class("FightWorkDouQuQuRound", FightWorkItem)
 
-function slot0.onStart(slot0)
-	slot0.douQuQuMgr = FightDataModel.instance.douQuQuMgr
+function var_0_0.onStart(arg_1_0)
+	arg_1_0.douQuQuMgr = FightDataModel.instance.douQuQuMgr
 
-	if slot0.douQuQuMgr.isFinish then
-		slot0:onDone(true)
+	if arg_1_0.douQuQuMgr.isFinish then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0:cancelFightWorkSafeTimer()
-	slot0:com_registMsg(FightMsgId.FightAct174Reply, slot0._onFightAct174Reply)
-	Activity174Rpc.instance:sendViewFightAct174Request(slot0.douQuQuMgr.index, slot0.douQuQuMgr.round + 1)
+	arg_1_0:cancelFightWorkSafeTimer()
+	arg_1_0:com_registMsg(FightMsgId.FightAct174Reply, arg_1_0._onFightAct174Reply)
+	Activity174Rpc.instance:sendViewFightAct174Request(arg_1_0.douQuQuMgr.index, arg_1_0.douQuQuMgr.round + 1)
 end
 
-function slot0._onFightAct174Reply(slot0, slot1)
+function var_0_0._onFightAct174Reply(arg_2_0, arg_2_1)
 	FightCardModel.instance:clearCardOps()
 	FightDataHelper.paTaMgr:resetOp()
-	slot0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish)
-	FightModel.instance:updateFightRound(slot1.fightRound)
+	arg_2_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish)
+	FightModel.instance:updateFightRound(arg_2_1.fightRound)
 	FightSystem.instance:startRound()
 	FightController.instance:dispatchEvent(FightEvent.RespBeginRound)
 end
 
-function slot0._onRoundSequenceFinish(slot0)
-	if slot0.douQuQuMgr.isFinish then
-		slot0:onDone(true)
+function var_0_0._onRoundSequenceFinish(arg_3_0)
+	if arg_3_0.douQuQuMgr.isFinish then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	Activity174Rpc.instance:sendViewFightAct174Request(slot0.douQuQuMgr.index, slot0.douQuQuMgr.round + 1)
+	Activity174Rpc.instance:sendViewFightAct174Request(arg_3_0.douQuQuMgr.index, arg_3_0.douQuQuMgr.round + 1)
 end
 
-return slot0
+return var_0_0

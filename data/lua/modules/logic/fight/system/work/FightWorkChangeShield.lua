@@ -1,18 +1,21 @@
-module("modules.logic.fight.system.work.FightWorkChangeShield", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeShield", package.seeall)
 
-slot0 = class("FightWorkChangeShield", FightEffectBase)
+local var_0_0 = class("FightWorkChangeShield", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:com_sendFightEvent(FightEvent.ChangeShield, slot0._actEffectMO.targetId)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.targetId
 
-	if slot0._actEffectMO.reserveId == "1" then
-		FightFloatMgr.instance:float(slot1, FightEnum.FloatType.addShield, "+" .. slot0._actEffectMO.effectNum)
+	arg_1_0:com_sendFightEvent(FightEvent.ChangeShield, var_1_0)
+
+	if arg_1_0._actEffectMO.reserveId == "1" then
+		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.addShield, "+" .. arg_1_0._actEffectMO.effectNum)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0._onPlayCardOver(slot0)
+function var_0_0._onPlayCardOver(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,12 +1,12 @@
-module("modules.logic.room.view.building.RoomCommonStrengthViewContainer", package.seeall)
+﻿module("modules.logic.room.view.building.RoomCommonStrengthViewContainer", package.seeall)
 
-slot0 = class("RoomCommonStrengthViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomCommonStrengthViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomCommonStrengthView.New())
-	table.insert(slot1, RoomViewTopRight.New("#go_topright", slot0._viewSetting.otherRes[1], {
+	table.insert(var_1_0, RoomCommonStrengthView.New())
+	table.insert(var_1_0, RoomViewTopRight.New("#go_topright", arg_1_0._viewSetting.otherRes[1], {
 		{
 			strengthId = 190007,
 			strengthShowType = 0,
@@ -19,10 +19,11 @@ function slot0.buildViews(slot0)
 		}
 	}))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,177 +1,203 @@
-module("modules.logic.explore.map.ExploreMapPipe", package.seeall)
+﻿module("modules.logic.explore.map.ExploreMapPipe", package.seeall)
 
-slot0 = class("ExploreMapPipe")
-slot1 = ExploreEnum.PipeColor
+local var_0_0 = class("ExploreMapPipe")
+local var_0_1 = ExploreEnum.PipeColor
+local var_0_2 = {
+	[var_0_1.Color1] = var_0_1.Color1,
+	[var_0_1.Color2] = var_0_1.Color2,
+	[var_0_1.Color3] = var_0_1.Color3,
+	[bit.bor(var_0_1.Color1, var_0_1.Color2)] = var_0_1.Color3,
+	[bit.bor(var_0_1.Color3, var_0_1.Color2)] = var_0_1.Color1,
+	[bit.bor(var_0_1.Color1, var_0_1.Color3)] = var_0_1.Color2
+}
 
-GameUtil.setDefaultValue({
-	[slot1.Color1] = slot1.Color1,
-	[slot1.Color2] = slot1.Color2,
-	[slot1.Color3] = slot1.Color3,
-	[bit.bor(slot1.Color1, slot1.Color2)] = slot1.Color3,
-	[bit.bor(slot1.Color3, slot1.Color2)] = slot1.Color1,
-	[bit.bor(slot1.Color1, slot1.Color3)] = slot1.Color2
-}, slot1.None)
+GameUtil.setDefaultValue(var_0_2, var_0_1.None)
 
-function slot0.loadMap(slot0)
+function var_0_0.loadMap(arg_1_0)
+	return
 end
 
-function slot0.init(slot0)
-	if #ExploreController.instance:getMap():getUnitsByTypeDict(ExploreEnum.PipeTypes) <= 0 then
+function var_0_0.init(arg_2_0)
+	local var_2_0 = ExploreController.instance:getMap():getUnitsByTypeDict(ExploreEnum.PipeTypes)
+
+	if #var_2_0 <= 0 then
 		return
 	end
 
-	slot0._allPipeMos = {}
-	slot0._allPipeComps = {}
+	arg_2_0._allPipeMos = {}
+	arg_2_0._allPipeComps = {}
 
-	for slot6, slot7 in pairs(slot2) do
-		slot8 = ExploreHelper.getKey(slot7.mo.nodePos)
-		slot0._allPipeMos[slot8] = slot7.mo
-		slot0._allPipeComps[slot8] = slot7.pipeComp
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		local var_2_1 = ExploreHelper.getKey(iter_2_1.mo.nodePos)
+
+		arg_2_0._allPipeMos[var_2_1] = iter_2_1.mo
+		arg_2_0._allPipeComps[var_2_1] = iter_2_1.pipeComp
 	end
 
-	slot0:initColors(true)
+	arg_2_0:initColors(true)
 
-	slot0._tweenId = nil
+	arg_2_0._tweenId = nil
 end
 
-function slot0.sortUnitById(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortUnitById(arg_3_0, arg_3_1)
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.initColors(slot0, slot1, slot2, slot3)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.initColors(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_4_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_4_0._tweenId = nil
 	end
 
-	if #(slot3 or {}) > 50 then
-		slot4 = ""
+	arg_4_3 = arg_4_3 or {}
+
+	if #arg_4_3 > 50 then
+		local var_4_0 = ""
 
 		if isDebugBuild then
-			for slot8, slot9 in pairs(slot0._allPipeMos) do
-				slot4 = string.format("%s\n[%s,%s,%s]", slot4, slot9.id, slot9:getColor(0), slot9:isInteractActiveState())
+			for iter_4_0, iter_4_1 in pairs(arg_4_0._allPipeMos) do
+				var_4_0 = string.format("%s\n[%s,%s,%s]", var_4_0, iter_4_1.id, iter_4_1:getColor(0), iter_4_1:isInteractActiveState())
 			end
 		end
 
-		logError("密室管道死循环了？？？" .. slot4)
+		logError("密室管道死循环了？？？" .. var_4_0)
 
 		return
 	end
 
-	slot0._all = nil
-	slot0._allOutColor = nil
-	slot5 = {
-		[slot12.id] = slot13
-	}
-	slot0._cacheActiveSensor = slot2 or {}
+	arg_4_0._all = nil
+	arg_4_0._allOutColor = nil
 
-	table.sort(ExploreController.instance:getMap():getUnitsByType(ExploreEnum.ItemType.PipeEntrance), uv0.sortUnitById)
+	local var_4_1 = {}
+	local var_4_2 = {}
 
-	for slot11, slot12 in ipairs(slot7) do
-		if slot12.mo:getColor() ~= ExploreEnum.PipeColor.None then
-			slot0:calcRelation(slot12.mo, slot12.id, {}, nil, slot12.mo:getPipeOutDir())
+	arg_4_2 = arg_4_2 or {}
+	arg_4_0._cacheActiveSensor = arg_4_2
+
+	local var_4_3 = ExploreController.instance:getMap()
+	local var_4_4 = var_4_3:getUnitsByType(ExploreEnum.ItemType.PipeEntrance)
+
+	table.sort(var_4_4, var_0_0.sortUnitById)
+
+	for iter_4_2, iter_4_3 in ipairs(var_4_4) do
+		local var_4_5 = iter_4_3.mo:getColor()
+
+		if var_4_5 ~= ExploreEnum.PipeColor.None then
+			var_4_2[iter_4_3.id] = var_4_5
+
+			arg_4_0:calcRelation(iter_4_3.mo, iter_4_3.id, var_4_1, nil, iter_4_3.mo:getPipeOutDir())
 		end
 	end
 
-	slot8 = slot6:getUnitsByType(ExploreEnum.ItemType.PipeSensor)
+	local var_4_6 = var_4_3:getUnitsByType(ExploreEnum.ItemType.PipeSensor)
 
-	table.sort(slot8, uv0.sortUnitById)
+	table.sort(var_4_6, var_0_0.sortUnitById)
 
-	for slot12, slot13 in ipairs(slot8) do
-		if slot13.mo:getColor() ~= ExploreEnum.PipeColor.None then
-			slot5[slot13.id] = slot14
+	for iter_4_4, iter_4_5 in ipairs(var_4_6) do
+		local var_4_7 = iter_4_5.mo:getColor()
 
-			slot0:calcRelation(slot13.mo, slot13.id, slot4, nil, slot13.mo:getPipeOutDir())
+		if var_4_7 ~= ExploreEnum.PipeColor.None then
+			var_4_2[iter_4_5.id] = var_4_7
+
+			arg_4_0:calcRelation(iter_4_5.mo, iter_4_5.id, var_4_1, nil, iter_4_5.mo:getPipeOutDir())
 		end
 	end
 
-	slot9 = slot6:getUnitsByType(ExploreEnum.ItemType.PipeMemory)
+	local var_4_8 = var_4_3:getUnitsByType(ExploreEnum.ItemType.PipeMemory)
 
-	table.sort(slot9, uv0.sortUnitById)
+	table.sort(var_4_8, var_0_0.sortUnitById)
 
-	for slot13, slot14 in ipairs(slot9) do
-		if slot14.mo:getColor() ~= ExploreEnum.PipeColor.None then
-			slot5[slot14.id] = slot15
+	for iter_4_6, iter_4_7 in ipairs(var_4_8) do
+		local var_4_9 = iter_4_7.mo:getColor()
 
-			slot0:calcRelation(slot14.mo, slot14.id, slot4, nil, slot14.mo:getPipeOutDir())
+		if var_4_9 ~= ExploreEnum.PipeColor.None then
+			var_4_2[iter_4_7.id] = var_4_9
+
+			arg_4_0:calcRelation(iter_4_7.mo, iter_4_7.id, var_4_1, nil, iter_4_7.mo:getPipeOutDir())
 		end
 	end
 
-	slot0:delUnUseDir(slot4)
+	arg_4_0:delUnUseDir(var_4_1)
 
-	slot10 = {}
-	slot11 = {}
+	local var_4_10 = {}
+	local var_4_11 = {}
 
-	for slot15, slot16 in ipairs(slot4) do
-		if slot16.isDivisive then
-			if not slot10[slot16.toId] then
-				slot10[slot16.toId] = {
-					[slot16.fromId] = true
+	for iter_4_8, iter_4_9 in ipairs(var_4_1) do
+		if iter_4_9.isDivisive then
+			if not var_4_10[iter_4_9.toId] then
+				var_4_10[iter_4_9.toId] = {
+					[iter_4_9.fromId] = true
 				}
 			else
-				slot10[slot16.toId][slot16.fromId] = true
+				var_4_10[iter_4_9.toId][iter_4_9.fromId] = true
 			end
 
-			if slot16.noOutDivisive then
-				slot11[slot16.toId] = true
+			if iter_4_9.noOutDivisive then
+				var_4_11[iter_4_9.toId] = true
 			end
 		end
 	end
 
-	while true do
-		slot12 = false
+	local var_4_12 = true
 
-		for slot16, slot17 in pairs(slot10) do
-			for slot22 in pairs(slot17) do
-				if slot22 ~= slot16 then
-					if slot5[slot22] then
-						slot18 = bit.bor(uv1.None, slot5[slot22])
+	while var_4_12 do
+		var_4_12 = false
+
+		for iter_4_10, iter_4_11 in pairs(var_4_10) do
+			local var_4_13 = var_0_1.None
+
+			for iter_4_12 in pairs(iter_4_11) do
+				if iter_4_12 ~= iter_4_10 then
+					if var_4_2[iter_4_12] then
+						var_4_13 = bit.bor(var_4_13, var_4_2[iter_4_12])
 					else
-						slot18 = nil
+						var_4_13 = nil
 
 						break
 					end
 				end
 			end
 
-			if slot18 then
-				slot19 = uv2[slot18]
+			if var_4_13 then
+				local var_4_14 = var_0_2[var_4_13]
 
-				if slot11[slot16] and not slot0:haveValue(uv1, slot18) then
-					slot19 = uv1.None
+				if var_4_11[iter_4_10] and not arg_4_0:haveValue(var_0_1, var_4_13) then
+					var_4_14 = var_0_1.None
 				end
 
-				slot5[slot16] = slot19
-				slot12 = true
-				slot10[slot16] = nil
+				var_4_2[iter_4_10] = var_4_14
+				var_4_12 = true
+				var_4_10[iter_4_10] = nil
 			end
 		end
 
-		if not slot12 and next(slot10) then
-			for slot16, slot17 in pairs(slot10) do
-				for slot22 in pairs(slot17) do
-					if slot22 ~= slot16 then
-						if slot5[slot22] then
-							slot18 = bit.bor(uv1.None, slot5[slot22])
-						elseif not slot0:isRound({}, slot16, slot22, slot10) then
-							slot18 = nil
+		if not var_4_12 and next(var_4_10) then
+			for iter_4_13, iter_4_14 in pairs(var_4_10) do
+				local var_4_15 = var_0_1.None
+
+				for iter_4_15 in pairs(iter_4_14) do
+					if iter_4_15 ~= iter_4_13 then
+						if var_4_2[iter_4_15] then
+							var_4_15 = bit.bor(var_4_15, var_4_2[iter_4_15])
+						elseif not arg_4_0:isRound({}, iter_4_13, iter_4_15, var_4_10) then
+							var_4_15 = nil
 
 							break
 						end
 					end
 				end
 
-				if slot18 ~= uv1.None and slot18 then
-					slot19 = uv2[slot18]
+				if var_4_15 ~= var_0_1.None and var_4_15 then
+					local var_4_16 = var_0_2[var_4_15]
 
-					if slot11[slot16] and not slot0:haveValue(uv1, slot18) then
-						slot19 = uv1.None
+					if var_4_11[iter_4_13] and not arg_4_0:haveValue(var_0_1, var_4_15) then
+						var_4_16 = var_0_1.None
 					end
 
-					slot5[slot16] = slot19
-					slot12 = true
-					slot10[slot16] = nil
+					var_4_2[iter_4_13] = var_4_16
+					var_4_12 = true
+					var_4_10[iter_4_13] = nil
 
 					break
 				end
@@ -179,69 +205,76 @@ function slot0.initColors(slot0, slot1, slot2, slot3)
 		end
 	end
 
-	slot13 = {
-		[slot18.id] = 1
-	}
+	local var_4_17 = {}
 
-	for slot17, slot18 in ipairs(slot8) do
-		if not slot2[slot18.id] and slot18.mo:getColor() == ExploreEnum.PipeColor.None then
-			slot20 = ExploreHelper.dirToXY(slot18.mo.unitDir)
+	for iter_4_16, iter_4_17 in ipairs(var_4_6) do
+		local var_4_18 = iter_4_17.mo:getColor()
 
-			if slot0._allPipeMos[ExploreHelper.getKeyXY(slot18.mo.nodePos.x + slot20.x, slot18.mo.nodePos.y + slot20.y)] and slot0:getOutDirColor(slot4, slot5, ExploreHelper.getDir(slot18.mo.unitDir + 180), slot22.id, ExploreEnum.PipeDirMatchMode.Single) == slot18.mo:getNeedColor() then
-				slot2[slot18.id] = true
+		if not arg_4_2[iter_4_17.id] and var_4_18 == ExploreEnum.PipeColor.None then
+			local var_4_19 = ExploreHelper.dirToXY(iter_4_17.mo.unitDir)
+			local var_4_20 = ExploreHelper.getKeyXY(iter_4_17.mo.nodePos.x + var_4_19.x, iter_4_17.mo.nodePos.y + var_4_19.y)
+			local var_4_21 = arg_4_0._allPipeMos[var_4_20]
+
+			if var_4_21 and arg_4_0:getOutDirColor(var_4_1, var_4_2, ExploreHelper.getDir(iter_4_17.mo.unitDir + 180), var_4_21.id, ExploreEnum.PipeDirMatchMode.Single) == iter_4_17.mo:getNeedColor() then
+				arg_4_2[iter_4_17.id] = true
+				var_4_17[iter_4_17.id] = 1
 			end
 		end
 	end
 
-	for slot17, slot18 in ipairs(slot9) do
-		slot20 = ExploreHelper.dirToXY(slot18.mo.unitDir)
+	for iter_4_18, iter_4_19 in ipairs(var_4_8) do
+		local var_4_22 = iter_4_19.mo:getColor()
+		local var_4_23 = ExploreHelper.dirToXY(iter_4_19.mo.unitDir)
+		local var_4_24 = ExploreHelper.getKeyXY(iter_4_19.mo.nodePos.x + var_4_23.x, iter_4_19.mo.nodePos.y + var_4_23.y)
+		local var_4_25 = arg_4_0._allPipeMos[var_4_24]
+		local var_4_26 = var_4_25 and arg_4_0:getOutDirColor(var_4_1, var_4_2, ExploreHelper.getDir(iter_4_19.mo.unitDir + 180), var_4_25.id, ExploreEnum.PipeDirMatchMode.Single) or ExploreEnum.PipeColor.None
 
-		if (slot0._allPipeMos[ExploreHelper.getKeyXY(slot18.mo.nodePos.x + slot20.x, slot18.mo.nodePos.y + slot20.y)] and slot0:getOutDirColor(slot4, slot5, ExploreHelper.getDir(slot18.mo.unitDir + 180), slot22.id, ExploreEnum.PipeDirMatchMode.Single) or ExploreEnum.PipeColor.None) ~= slot18.mo:getColor() and slot23 ~= ExploreEnum.PipeColor.None then
-			slot18.mo:setCacheColor(slot23)
+		if var_4_26 ~= var_4_22 and var_4_26 ~= ExploreEnum.PipeColor.None then
+			iter_4_19.mo:setCacheColor(var_4_26)
 
-			slot13[slot18.id] = slot23
+			var_4_17[iter_4_19.id] = var_4_26
 		end
 	end
 
-	if not slot0:haveHistory(slot3, slot13) then
-		table.insert(slot3, slot13)
+	if not arg_4_0:haveHistory(arg_4_3, var_4_17) then
+		table.insert(arg_4_3, var_4_17)
 
-		return slot0:initColors(slot1, slot2, slot3)
+		return arg_4_0:initColors(arg_4_1, arg_4_2, arg_4_3)
 	end
 
-	slot0._all = slot4
-	slot0._allOutColor = slot5
+	arg_4_0._all = var_4_1
+	arg_4_0._allOutColor = var_4_2
 
-	if slot1 then
-		slot0._initDone = true
+	if arg_4_1 then
+		arg_4_0._initDone = true
 	end
 
-	for slot17, slot18 in pairs(slot0._allPipeComps) do
-		slot18:applyColor(slot1)
+	for iter_4_20, iter_4_21 in pairs(arg_4_0._allPipeComps) do
+		iter_4_21:applyColor(arg_4_1)
 	end
 
-	if not slot1 then
+	if not arg_4_1 then
 		ExploreModel.instance:setStepPause(true)
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.Pipe)
 
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.4, slot0._frameCall, slot0._finishCall, slot0, nil, EaseType.Linear)
+		arg_4_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.4, arg_4_0._frameCall, arg_4_0._finishCall, arg_4_0, nil, EaseType.Linear)
 	end
 end
 
-function slot0.haveHistory(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot1) do
-		if tabletool.len(slot7) == tabletool.len(slot2) then
-			slot8 = true
+function var_0_0.haveHistory(arg_5_0, arg_5_1, arg_5_2)
+	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
+		if tabletool.len(iter_5_1) == tabletool.len(arg_5_2) then
+			local var_5_0 = true
 
-			for slot12, slot13 in pairs(slot7) do
-				if slot2[slot12] ~= slot13 then
-					slot8 = false
+			for iter_5_2, iter_5_3 in pairs(iter_5_1) do
+				if arg_5_2[iter_5_2] ~= iter_5_3 then
+					var_5_0 = false
 
 					break
 				end
 			end
 
-			if slot8 then
+			if var_5_0 then
 				return true
 			end
 		end
@@ -250,29 +283,31 @@ function slot0.haveHistory(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.isRound(slot0, slot1, slot2, slot3, slot4)
-	if slot2 == slot3 then
+function var_0_0.isRound(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	if arg_6_2 == arg_6_3 then
 		return true
 	end
 
-	if slot1[slot3 or slot2] then
+	arg_6_3 = arg_6_3 or arg_6_2
+
+	if arg_6_1[arg_6_3] then
 		return
 	end
 
-	slot1[slot3] = true
+	arg_6_1[arg_6_3] = true
 
-	if slot4[slot3] then
-		for slot9 in pairs(slot4) do
-			if slot0:isRound(slot1, slot2, slot9, slot4) then
+	if arg_6_4[arg_6_3] then
+		for iter_6_0 in pairs(arg_6_4) do
+			if arg_6_0:isRound(arg_6_1, arg_6_2, iter_6_0, arg_6_4) then
 				return true
 			end
 		end
 	end
 end
 
-function slot0.haveValue(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot1) do
-		if slot7 == slot2 then
+function var_0_0.haveValue(arg_7_0, arg_7_1, arg_7_2)
+	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
+		if iter_7_1 == arg_7_2 then
 			return true
 		end
 	end
@@ -280,129 +315,134 @@ function slot0.haveValue(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.isCacheActive(slot0, slot1)
-	if not slot0._cacheActiveSensor then
+function var_0_0.isCacheActive(arg_8_0, arg_8_1)
+	if not arg_8_0._cacheActiveSensor then
 		return
 	end
 
-	return slot0._cacheActiveSensor[slot1]
+	return arg_8_0._cacheActiveSensor[arg_8_1]
 end
 
-function slot0._frameCall(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._allPipeComps) do
-		slot6:tweenColor(slot1)
+function var_0_0._frameCall(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._allPipeComps) do
+		iter_9_1:tweenColor(arg_9_1)
 	end
 end
 
-function slot0._finishCall(slot0)
+function var_0_0._finishCall(arg_10_0)
 	ExploreModel.instance:setStepPause(false)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Pipe)
 end
 
-function slot0.getDirColor(slot0, slot1, slot2)
-	slot3 = slot0._all
-	slot4 = slot0._allOutColor
+function var_0_0.getDirColor(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0._all
+	local var_11_1 = arg_11_0._allOutColor
 
-	if ExploreController.instance:getMap():getUnit(slot1).mo:isDivisive() then
-		slot6 = nil
+	if ExploreController.instance:getMap():getUnit(arg_11_1).mo:isDivisive() then
+		local var_11_2
 
-		for slot10, slot11 in ipairs(slot3) do
-			if slot11.toId == slot1 and slot2 == slot11.inDir then
-				slot6 = slot11
+		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+			if iter_11_1.toId == arg_11_1 and arg_11_2 == iter_11_1.inDir then
+				var_11_2 = iter_11_1
 
 				break
 			end
 		end
 
-		if slot6 then
-			return slot6 and slot4[slot6.fromId] or slot0:getOutDirColor(slot3, slot4, slot2, slot1, ExploreEnum.PipeDirMatchMode.Single)
+		if var_11_2 then
+			return var_11_2 and var_11_1[var_11_2.fromId] or arg_11_0:getOutDirColor(var_11_0, var_11_1, arg_11_2, arg_11_1, ExploreEnum.PipeDirMatchMode.Single)
 		end
 	end
 
-	return slot0:getOutDirColor(slot3, slot4, slot2, slot1, ExploreEnum.PipeDirMatchMode.Both)
+	return arg_11_0:getOutDirColor(var_11_0, var_11_1, arg_11_2, arg_11_1, ExploreEnum.PipeDirMatchMode.Both)
 end
 
-function slot0.getCenterColor(slot0, slot1)
-	return slot0:getOutDirColor(nil, , , slot1, ExploreEnum.PipeDirMatchMode.All)
+function var_0_0.getCenterColor(arg_12_0, arg_12_1)
+	return arg_12_0:getOutDirColor(nil, nil, nil, arg_12_1, ExploreEnum.PipeDirMatchMode.All)
 end
 
-function slot0.getOutDirColor(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot2 = slot2 or slot0._allOutColor
+function var_0_0.getOutDirColor(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
+	arg_13_1 = arg_13_1 or arg_13_0._all
+	arg_13_2 = arg_13_2 or arg_13_0._allOutColor
 
-	if not (slot1 or slot0._all) then
+	if not arg_13_1 then
 		return ExploreEnum.PipeColor.None
 	end
 
-	if slot2[slot4] then
-		if not ExploreMapModel.instance:getUnitMO(slot4) then
+	if arg_13_2[arg_13_4] then
+		local var_13_0 = ExploreMapModel.instance:getUnitMO(arg_13_4)
+
+		if not var_13_0 then
 			return ExploreEnum.PipeColor.None
 		end
 
-		if slot3 and not slot6:isOutDir(slot3) then
+		if arg_13_3 and not var_13_0:isOutDir(arg_13_3) then
 			return ExploreEnum.PipeColor.None
 		end
 
-		return slot2[slot4]
+		return arg_13_2[arg_13_4]
 	end
 
-	slot6 = nil
+	local var_13_1
 
-	for slot10, slot11 in ipairs(slot1) do
-		slot12 = false
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		local var_13_2 = false
 
-		if slot5 == ExploreEnum.PipeDirMatchMode.Single then
-			slot12 = slot3 == slot11.outDir
-		elseif slot5 == ExploreEnum.PipeDirMatchMode.Both then
-			slot12 = slot3 == slot11.outDir or slot3 == slot11.inDir
-		elseif slot5 == ExploreEnum.PipeDirMatchMode.All then
-			slot12 = true
+		if arg_13_5 == ExploreEnum.PipeDirMatchMode.Single then
+			var_13_2 = arg_13_3 == iter_13_1.outDir
+		elseif arg_13_5 == ExploreEnum.PipeDirMatchMode.Both then
+			var_13_2 = arg_13_3 == iter_13_1.outDir or arg_13_3 == iter_13_1.inDir
+		elseif arg_13_5 == ExploreEnum.PipeDirMatchMode.All then
+			var_13_2 = true
 		end
 
-		if slot11.toId == slot4 and slot12 then
-			slot6 = slot11
+		if iter_13_1.toId == arg_13_4 and var_13_2 then
+			var_13_1 = iter_13_1
 
 			break
 		end
 	end
 
-	return slot6 and slot2[slot6.fromId] or ExploreEnum.PipeColor.None
+	return var_13_1 and arg_13_2[var_13_1.fromId] or ExploreEnum.PipeColor.None
 end
 
-function slot0.delUnUseDir(slot0, slot1)
-	while true do
-		slot2 = false
+function var_0_0.delUnUseDir(arg_14_0, arg_14_1)
+	local var_14_0 = true
 
-		for slot6, slot7 in ipairs(slot1) do
-			if slot7.isDivisive then
-				slot8 = {}
+	while var_14_0 do
+		var_14_0 = false
 
-				for slot12, slot13 in ipairs(slot1) do
-					if slot13.fromId == slot7.toId and slot7.inDir == slot13.fromDir or slot13.toId == slot7.toId and slot7.inDir == slot13.outDir then
-						table.insert(slot8, slot12)
+		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+			if iter_14_1.isDivisive then
+				local var_14_1 = {}
+
+				for iter_14_2, iter_14_3 in ipairs(arg_14_1) do
+					if iter_14_3.fromId == iter_14_1.toId and iter_14_1.inDir == iter_14_3.fromDir or iter_14_3.toId == iter_14_1.toId and iter_14_1.inDir == iter_14_3.outDir then
+						table.insert(var_14_1, iter_14_2)
 					end
 				end
 
-				for slot12 = #slot8, 1, -1 do
-					table.remove(slot1, slot8[slot12])
+				for iter_14_4 = #var_14_1, 1, -1 do
+					table.remove(arg_14_1, var_14_1[iter_14_4])
 
-					slot2 = true
+					var_14_0 = true
 				end
 			end
 
-			if slot2 then
+			if var_14_0 then
 				break
 			end
 		end
 	end
 
-	for slot6 = #slot1, 1, -1 do
-		slot7 = slot1[slot6]
+	for iter_14_5 = #arg_14_1, 1, -1 do
+		local var_14_2 = arg_14_1[iter_14_5]
 
-		for slot11 = slot6 - 1, 1, -1 do
-			slot12 = slot1[slot11]
+		for iter_14_6 = iter_14_5 - 1, 1, -1 do
+			local var_14_3 = arg_14_1[iter_14_6]
 
-			if not slot7.isDivisive and slot7.toId == slot12.toId and slot7.inDir == slot12.outDir then
-				table.remove(slot1, slot6)
+			if not var_14_2.isDivisive and var_14_2.toId == var_14_3.toId and var_14_2.inDir == var_14_3.outDir then
+				table.remove(arg_14_1, iter_14_5)
 
 				break
 			end
@@ -410,70 +450,72 @@ function slot0.delUnUseDir(slot0, slot1)
 	end
 end
 
-function slot0.calcRelation(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6, slot7, slot8 = slot1:getPipeOutDir(slot4)
+function var_0_0.calcRelation(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	local var_15_0, var_15_1, var_15_2 = arg_15_1:getPipeOutDir(arg_15_4)
 
-	slot0:calcRelationDir(slot6, slot1, slot2, slot3, slot4, slot5)
-	slot0:calcRelationDir(slot7, slot1, slot2, slot3, slot4, slot5)
-	slot0:calcRelationDir(slot8, slot1, slot2, slot3, slot4, slot5)
+	arg_15_0:calcRelationDir(var_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	arg_15_0:calcRelationDir(var_15_1, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	arg_15_0:calcRelationDir(var_15_2, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
 end
 
-function slot0.calcRelationDir(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot1 then
+function var_0_0.calcRelationDir(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6)
+	if not arg_16_1 then
 		return
 	end
 
-	for slot10, slot11 in ipairs(slot4) do
-		if slot11.inDir == slot5 and slot11.toId == slot2.id and slot11.outDir == slot1 then
+	for iter_16_0, iter_16_1 in ipairs(arg_16_4) do
+		if iter_16_1.inDir == arg_16_5 and iter_16_1.toId == arg_16_2.id and iter_16_1.outDir == arg_16_1 then
 			return
 		end
 	end
 
-	table.insert(slot4, {
-		fromId = slot3,
-		inDir = slot5,
-		toId = slot2.id,
-		outDir = slot1,
-		fromDir = slot6,
-		isDivisive = slot2:isDivisive(),
-		noOutDivisive = slot2:isDivisive() and not slot2:haveOutDir()
+	table.insert(arg_16_4, {
+		fromId = arg_16_3,
+		inDir = arg_16_5,
+		toId = arg_16_2.id,
+		outDir = arg_16_1,
+		fromDir = arg_16_6,
+		isDivisive = arg_16_2:isDivisive(),
+		noOutDivisive = arg_16_2:isDivisive() and not arg_16_2:haveOutDir()
 	})
 
-	slot7 = ExploreHelper.dirToXY(slot1)
+	local var_16_0 = ExploreHelper.dirToXY(arg_16_1)
+	local var_16_1 = ExploreHelper.getKeyXY(arg_16_2.nodePos.x + var_16_0.x, arg_16_2.nodePos.y + var_16_0.y)
+	local var_16_2 = arg_16_0._allPipeMos[var_16_1]
 
-	if not slot0._allPipeMos[ExploreHelper.getKeyXY(slot2.nodePos.x + slot7.x, slot2.nodePos.y + slot7.y)] or slot9.type ~= ExploreEnum.ItemType.Pipe then
+	if not var_16_2 or var_16_2.type ~= ExploreEnum.ItemType.Pipe then
 		return
 	end
 
-	if slot2:isDivisive() then
-		slot3 = slot2.id
-		slot6 = slot1
+	if arg_16_2:isDivisive() then
+		arg_16_3 = arg_16_2.id
+		arg_16_6 = arg_16_1
 	end
 
-	return slot0:calcRelation(slot9, slot3, slot4, ExploreHelper.getDir(slot1 + 180), slot6)
+	return arg_16_0:calcRelation(var_16_2, arg_16_3, arg_16_4, ExploreHelper.getDir(arg_16_1 + 180), arg_16_6)
 end
 
-function slot0.isInitDone(slot0)
-	return slot0._initDone
+function var_0_0.isInitDone(arg_17_0)
+	return arg_17_0._initDone
 end
 
-function slot0.unloadMap(slot0)
-	slot0:destroy()
+function var_0_0.unloadMap(arg_18_0)
+	arg_18_0:destroy()
 end
 
-function slot0.destroy(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.destroy(arg_19_0)
+	if arg_19_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_19_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_19_0._tweenId = nil
 	end
 
-	slot0._initDone = false
-	slot0._allPipeMos = {}
-	slot0._allPipeComps = {}
-	slot0._all = nil
-	slot0._allOutColor = nil
-	slot0._cacheActiveSensor = nil
+	arg_19_0._initDone = false
+	arg_19_0._allPipeMos = {}
+	arg_19_0._allPipeComps = {}
+	arg_19_0._all = nil
+	arg_19_0._allOutColor = nil
+	arg_19_0._cacheActiveSensor = nil
 end
 
-return slot0
+return var_0_0

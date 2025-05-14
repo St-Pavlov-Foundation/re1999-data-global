@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_3.act174.config.Activity174Config", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.config.Activity174Config", package.seeall)
 
-slot0 = class("Activity174Config", BaseConfig)
+local var_0_0 = class("Activity174Config", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"activity174_const",
 		"activity174_turn",
@@ -19,146 +19,162 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity174_turn" then
-		slot0.turnConfig = slot2
-	elseif slot1 == "activity174_shop" then
-		slot0.shopConfig = slot2
-	elseif slot1 == "activity174_role" then
-		slot0.roleConfig = slot2
-	elseif slot1 == "activity174_collection" then
-		slot0.collectionConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity174_turn" then
+		arg_3_0.turnConfig = arg_3_2
+	elseif arg_3_1 == "activity174_shop" then
+		arg_3_0.shopConfig = arg_3_2
+	elseif arg_3_1 == "activity174_role" then
+		arg_3_0.roleConfig = arg_3_2
+	elseif arg_3_1 == "activity174_collection" then
+		arg_3_0.collectionConfig = arg_3_2
 	end
 end
 
-function slot0.initUnlockNewTeamTurnData(slot0)
-	slot0.unlockNewTeamTurn = {}
+function var_0_0.initUnlockNewTeamTurnData(arg_4_0)
+	arg_4_0.unlockNewTeamTurn = {}
 
-	for slot4, slot5 in ipairs(slot0.turnConfig.configList) do
-		slot6 = slot5.turn
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.turnConfig.configList) do
+		local var_4_0 = iter_4_1.turn
+		local var_4_1 = iter_4_1.groupNum
+		local var_4_2 = arg_4_0.unlockNewTeamTurn[var_4_1]
 
-		if not slot0.unlockNewTeamTurn[slot5.groupNum] or slot6 < slot8 then
-			slot0.unlockNewTeamTurn[slot7] = slot6
+		if not var_4_2 or var_4_0 < var_4_2 then
+			arg_4_0.unlockNewTeamTurn[var_4_1] = var_4_0
 		end
 	end
 end
 
-function slot0.isUnlockNewTeamTurn(slot0, slot1)
-	slot2 = false
+function var_0_0.isUnlockNewTeamTurn(arg_5_0, arg_5_1)
+	local var_5_0 = false
 
-	if not slot0.unlockNewTeamTurn then
-		slot0:initUnlockNewTeamTurnData()
+	if not arg_5_0.unlockNewTeamTurn then
+		arg_5_0:initUnlockNewTeamTurnData()
 	end
 
-	for slot6, slot7 in ipairs(slot0.unlockNewTeamTurn) do
-		if slot7 == slot1 then
-			slot2 = true
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.unlockNewTeamTurn) do
+		if iter_5_1 == arg_5_1 then
+			var_5_0 = true
 
 			break
 		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getTurnCo(slot0, slot1, slot2)
-	if not slot0.turnConfig.configDict[slot1][slot2] then
-		logError("dont exist turnCo" .. tostring(slot1) .. "#" .. tostring(slot2))
+function var_0_0.getTurnCo(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0.turnConfig.configDict[arg_6_1][arg_6_2]
+
+	if not var_6_0 then
+		logError("dont exist turnCo" .. tostring(arg_6_1) .. "#" .. tostring(arg_6_2))
 	end
 
-	return slot3
+	return var_6_0
 end
 
-function slot0.getMaxRound(slot0, slot1, slot2)
-	slot3 = 0
+function var_0_0.getMaxRound(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = 0
 
-	for slot7, slot8 in ipairs(slot0.turnConfig.configDict[slot1]) do
-		if slot8.endless == 1 then
-			slot3 = slot8.turn
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.turnConfig.configDict[arg_7_1]) do
+		if iter_7_1.endless == 1 then
+			var_7_0 = iter_7_1.turn
 		end
 	end
 
-	if slot3 < slot2 then
-		return #slot0.turnConfig.configDict[slot1], true
+	if var_7_0 < arg_7_2 then
+		return #arg_7_0.turnConfig.configDict[arg_7_1], true
 	end
 
-	return slot3, false
+	return var_7_0, false
 end
 
-function slot0.getUnlockLevel(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0.turnConfig.configDict[slot1]) do
-		if slot7.groupNum == slot2 then
-			return slot7.turn
+function var_0_0.getUnlockLevel(arg_8_0, arg_8_1, arg_8_2)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.turnConfig.configDict[arg_8_1]) do
+		if iter_8_1.groupNum == arg_8_2 then
+			return iter_8_1.turn
 		end
 	end
 end
 
-function slot0.getShopCo(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0.shopConfig.configList) do
-		if slot7.activityId == slot1 and slot7.level == slot2 then
-			return slot7
+function var_0_0.getShopCo(arg_9_0, arg_9_1, arg_9_2)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.shopConfig.configList) do
+		if iter_9_1.activityId == arg_9_1 and iter_9_1.level == arg_9_2 then
+			return iter_9_1
 		end
 	end
 
-	logError("dont exist shopCo" .. tostring(slot1) .. "#" .. tostring(slot2))
+	logError("dont exist shopCo" .. tostring(arg_9_1) .. "#" .. tostring(arg_9_2))
 end
 
-function slot0.getHeroPassiveSkillIdList(slot0, slot1, slot2)
-	slot3 = slot0:getRoleCo(slot1)
-	slot4 = {}
+function var_0_0.getHeroPassiveSkillIdList(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:getRoleCo(arg_10_1)
+	local var_10_1 = {}
 
-	return (not slot2 or string.splitToNumber(slot3.replacePassiveSkill, "|")) and string.splitToNumber(slot3.passiveSkill, "|")
-end
-
-function slot0.getHeroSkillIdDic(slot0, slot1, slot2)
-	slot5 = string.splitToNumber(slot0:getRoleCo(slot1).activeSkill1, "#")
-
-	if slot2 then
-		-- Nothing
+	if arg_10_2 then
+		var_10_1 = string.splitToNumber(var_10_0.replacePassiveSkill, "|")
 	else
-		slot4[1] = slot5
-		slot4[2] = slot6
-		slot4[3] = {
-			slot3.uniqueSkill
+		var_10_1 = string.splitToNumber(var_10_0.passiveSkill, "|")
+	end
+
+	return var_10_1
+end
+
+function var_0_0.getHeroSkillIdDic(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0:getRoleCo(arg_11_1)
+	local var_11_1 = {}
+	local var_11_2 = string.splitToNumber(var_11_0.activeSkill1, "#")
+	local var_11_3 = string.splitToNumber(var_11_0.activeSkill2, "#")
+
+	if arg_11_2 then
+		var_11_1[1] = var_11_2[#var_11_2]
+		var_11_1[2] = var_11_3[#var_11_2]
+		var_11_1[3] = var_11_0.uniqueSkill
+	else
+		var_11_1[1] = var_11_2
+		var_11_1[2] = var_11_3
+		var_11_1[3] = {
+			var_11_0.uniqueSkill
 		}
 	end
 
-	return {
-		slot5[#slot5],
-		string.splitToNumber(slot3.activeSkill2, "#")[#slot5],
-		slot3.uniqueSkill
-	}
+	return var_11_1
 end
 
-function slot0.getRoleCo(slot0, slot1)
-	if not slot0.roleConfig.configDict[slot1] then
-		logError("dont exist role" .. tostring(slot1))
+function var_0_0.getRoleCo(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.roleConfig.configDict[arg_12_1]
+
+	if not var_12_0 then
+		logError("dont exist role" .. tostring(arg_12_1))
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getRoleCoByHeroId(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.roleConfig.configList) do
-		if slot6.heroId == slot1 then
-			return slot6
+function var_0_0.getRoleCoByHeroId(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.roleConfig.configList) do
+		if iter_13_1.heroId == arg_13_1 then
+			return iter_13_1
 		end
 	end
 
-	logError("dont exist role with heroId" .. tostring(slot1))
+	logError("dont exist role with heroId" .. tostring(arg_13_1))
 end
 
-function slot0.getCollectionCo(slot0, slot1)
-	if not slot0.collectionConfig.configDict[slot1] then
-		logError("dont exist collection" .. tostring(slot1))
+function var_0_0.getCollectionCo(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.collectionConfig.configDict[arg_14_1]
+
+	if not var_14_0 then
+		logError("dont exist collection" .. tostring(arg_14_1))
 	end
 
-	return slot2
+	return var_14_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

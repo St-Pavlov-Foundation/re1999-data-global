@@ -1,223 +1,253 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.interacts.YaXianInteractHandleBase", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.interacts.YaXianInteractHandleBase", package.seeall)
 
-slot0 = class("YaXianInteractHandleBase")
+local var_0_0 = class("YaXianInteractHandleBase")
 
-function slot0.init(slot0, slot1)
-	slot0._interactObject = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._interactObject = arg_1_1
 end
 
-function slot0.onSelectCall(slot0)
+function var_0_0.onSelectCall(arg_2_0)
+	return
 end
 
-function slot0.onCancelSelect(slot0)
+function var_0_0.onCancelSelect(arg_3_0)
+	return
 end
 
-function slot0.onSelectPos(slot0, slot1, slot2)
+function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
-	slot0:faceTo(slot0._interactObject.interactMo.direction)
+function var_0_0.onAvatarLoaded(arg_5_0)
+	arg_5_0:faceTo(arg_5_0._interactObject.interactMo.direction)
 end
 
-function slot0.faceTo(slot0, slot1)
-	slot0._interactObject.interactMo:setDirection(slot1)
+function var_0_0.faceTo(arg_6_0, arg_6_1)
+	arg_6_0._interactObject.interactMo:setDirection(arg_6_1)
 
-	if slot0._interactObject:isDelete() then
+	if arg_6_0._interactObject:isDelete() then
 		return
 	end
 
-	if not slot0._interactObject.directionAvatarDict then
+	if not arg_6_0._interactObject.directionAvatarDict then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0._interactObject.directionAvatarDict) do
-		gohelper.setActive(slot6, slot5 == slot1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._interactObject.directionAvatarDict) do
+		gohelper.setActive(iter_6_1, iter_6_0 == arg_6_1)
 	end
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3, slot4)
-	if slot1 == slot0._interactObject.interactMo.posX and slot2 == slot0._interactObject.interactMo.posY then
-		if slot0.stepData then
-			slot0:faceTo(slot0.stepData.direction)
+function var_0_0.moveTo(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	if arg_7_1 == arg_7_0._interactObject.interactMo.posX and arg_7_2 == arg_7_0._interactObject.interactMo.posY then
+		if arg_7_0.stepData then
+			arg_7_0:faceTo(arg_7_0.stepData.direction)
 		end
 
-		if slot3 then
-			return slot3(slot4)
+		if arg_7_3 then
+			return arg_7_3(arg_7_4)
 		end
 
 		return
 	end
 
-	if slot0._interactObject:isDelete() then
-		if slot3 then
-			slot0._interactObject.interactMo:setXY(slot1, slot2)
+	if arg_7_0._interactObject:isDelete() then
+		if arg_7_3 then
+			arg_7_0._interactObject.interactMo:setXY(arg_7_1, arg_7_2)
 
-			if slot0.stepData then
-				slot0:faceTo(slot0.stepData.direction)
+			if arg_7_0.stepData then
+				arg_7_0:faceTo(arg_7_0.stepData.direction)
 			end
 
-			return slot3(slot4)
+			return arg_7_3(arg_7_4)
 		end
 
 		return
 	end
 
-	slot0._moveCallback = slot3
-	slot0._moveCallbackObj = slot4
-	slot5 = slot0._interactObject.interactMo
+	arg_7_0._moveCallback = arg_7_3
+	arg_7_0._moveCallbackObj = arg_7_4
 
-	slot0:faceTo(YaXianGameHelper.getDirection(slot5.posX, slot5.posY, slot1, slot2))
-	slot5:setXY(slot1, slot2)
+	local var_7_0 = arg_7_0._interactObject.interactMo
+	local var_7_1 = YaXianGameHelper.getDirection(var_7_0.posX, var_7_0.posY, arg_7_1, arg_7_2)
 
-	if slot0.stepData and slot0.stepData.assassinateSourceStep then
-		slot0:handleAssassinate()
+	arg_7_0:faceTo(var_7_1)
+	var_7_0:setXY(arg_7_1, arg_7_2)
+
+	if arg_7_0.stepData and arg_7_0.stepData.assassinateSourceStep then
+		arg_7_0:handleAssassinate()
 
 		return
 	end
 
-	slot7, slot8, slot9 = YaXianGameHelper.calcTilePosInScene(slot1, slot2)
+	local var_7_2, var_7_3, var_7_4 = YaXianGameHelper.calcTilePosInScene(arg_7_1, arg_7_2)
 
-	slot0:killMoveTween()
+	arg_7_0:killMoveTween()
 
-	slot0.moveWork = YaXianInteractMoveWork.New({
-		transform = slot0._interactObject.interactItemContainerTr,
-		targetX = slot7,
-		targetY = slot8,
-		targetZ = slot9,
-		isPlayer = slot0._interactObject:isPlayer(),
-		interactMo = slot5
+	arg_7_0.moveWork = YaXianInteractMoveWork.New({
+		transform = arg_7_0._interactObject.interactItemContainerTr,
+		targetX = var_7_2,
+		targetY = var_7_3,
+		targetZ = var_7_4,
+		isPlayer = arg_7_0._interactObject:isPlayer(),
+		interactMo = var_7_0
 	})
 
-	slot0.moveWork:registerDoneListener(slot0.onMoveCompleted, slot0)
-	slot0.moveWork:onStart()
+	arg_7_0.moveWork:registerDoneListener(arg_7_0.onMoveCompleted, arg_7_0)
+	arg_7_0.moveWork:onStart()
 end
 
-function slot0.handleAssassinate(slot0)
-	slot0:stopFlow()
+function var_0_0.handleAssassinate(arg_8_0)
+	local var_8_0 = YaXianGameController.instance.stepMgr:getStepData(arg_8_0.stepData.deleteStepIndex)
+	local var_8_1 = var_8_0 and var_8_0.id or 0
+	local var_8_2 = YaXianGameController.instance:getInteractItem(var_8_1)
+	local var_8_3 = var_8_0 and var_8_0.sourceId or 0
+	local var_8_4 = YaXianGameController.instance:getInteractItem(var_8_3)
 
-	slot0.flow = FlowSequence.New()
-	slot9 = slot0._interactObject.interactMo.prePosX
-	slot10 = slot0._interactObject.interactMo.prePosY
+	arg_8_0:stopFlow()
 
-	if YaXianGameController.instance:getInteractItem(YaXianGameController.instance.stepMgr:getStepData(slot0.stepData.deleteStepIndex) and slot2.id or 0).interactMo.posX ~= YaXianGameController.instance:getInteractItem(slot2 and slot2.sourceId or 0).interactMo.posX or slot4.interactMo.posY ~= slot6.interactMo.posY then
-		slot11, slot12, slot13 = YaXianGameHelper.calcTilePosInScene(slot0._interactObject.interactMo.posX, slot0._interactObject.interactMo.posY)
+	arg_8_0.flow = FlowSequence.New()
 
-		slot0.flow:addWork(YaXianInteractMoveWork.New({
-			transform = slot0._interactObject.interactItemContainerTr,
-			targetX = slot11,
-			targetY = slot12,
-			targetZ = slot13,
-			isPlayer = slot0._interactObject:isPlayer(),
-			interactMo = slot0._interactObject.interactMo
+	local var_8_5 = arg_8_0._interactObject.interactMo.posX
+	local var_8_6 = arg_8_0._interactObject.interactMo.posY
+	local var_8_7 = arg_8_0._interactObject.interactMo.prePosX
+	local var_8_8 = arg_8_0._interactObject.interactMo.prePosY
+
+	if var_8_2.interactMo.posX ~= var_8_4.interactMo.posX or var_8_2.interactMo.posY ~= var_8_4.interactMo.posY then
+		local var_8_9, var_8_10, var_8_11 = YaXianGameHelper.calcTilePosInScene(var_8_5, var_8_6)
+
+		arg_8_0.flow:addWork(YaXianInteractMoveWork.New({
+			transform = arg_8_0._interactObject.interactItemContainerTr,
+			targetX = var_8_9,
+			targetY = var_8_10,
+			targetZ = var_8_11,
+			isPlayer = arg_8_0._interactObject:isPlayer(),
+			interactMo = arg_8_0._interactObject.interactMo
 		}))
-		slot0.flow:addWork(YaXianInteractEffectWork.New(slot3, YaXianGameEnum.EffectType.Assassinate))
-		slot0.flow:addWork(YaXianInteractEffectWork.New(slot3, YaXianGameEnum.EffectType.Die))
-		slot0.flow:addWork(YaXianInteractEffectWork.New(slot5, YaXianGameEnum.EffectType.FightSuccess))
+		arg_8_0.flow:addWork(YaXianInteractEffectWork.New(var_8_1, YaXianGameEnum.EffectType.Assassinate))
+		arg_8_0.flow:addWork(YaXianInteractEffectWork.New(var_8_1, YaXianGameEnum.EffectType.Die))
+		arg_8_0.flow:addWork(YaXianInteractEffectWork.New(var_8_3, YaXianGameEnum.EffectType.FightSuccess))
 	else
-		slot13, slot14, slot15 = YaXianGameHelper.calBafflePosInScene(slot7, slot8, YaXianGameEnum.OppositeDirection[YaXianGameHelper.getDirection(slot9, slot10, slot7, slot8)])
+		local var_8_12 = YaXianGameHelper.getDirection(var_8_7, var_8_8, var_8_5, var_8_6)
+		local var_8_13 = YaXianGameEnum.OppositeDirection[var_8_12]
+		local var_8_14, var_8_15, var_8_16 = YaXianGameHelper.calBafflePosInScene(var_8_5, var_8_6, var_8_13)
 
-		slot0.flow:addWork(YaXianInteractMoveWork.New({
-			transform = slot0._interactObject.interactItemContainerTr,
-			targetX = slot13,
-			targetY = slot14,
-			targetZ = slot15,
-			isPlayer = slot0._interactObject:isPlayer(),
-			interactMo = slot0._interactObject.interactMo
+		arg_8_0.flow:addWork(YaXianInteractMoveWork.New({
+			transform = arg_8_0._interactObject.interactItemContainerTr,
+			targetX = var_8_14,
+			targetY = var_8_15,
+			targetZ = var_8_16,
+			isPlayer = arg_8_0._interactObject:isPlayer(),
+			interactMo = arg_8_0._interactObject.interactMo
 		}))
 
-		slot16 = nil
-		slot17, slot18, slot19 = YaXianGameHelper.calBafflePosInScene(slot7, slot8, slot11)
+		local var_8_17
 
-		slot0.flow:addWork(YaXianInteractMoveWork.New({
-			transform = (slot3 == slot0._interactObject.id and slot6 or slot4).interactItemContainerTr,
-			targetX = slot17,
-			targetY = slot18,
-			targetZ = slot19
+		if var_8_1 == arg_8_0._interactObject.id then
+			var_8_17 = var_8_4
+		else
+			var_8_17 = var_8_2
+		end
+
+		local var_8_18, var_8_19, var_8_20 = YaXianGameHelper.calBafflePosInScene(var_8_5, var_8_6, var_8_12)
+
+		arg_8_0.flow:addWork(YaXianInteractMoveWork.New({
+			transform = var_8_17.interactItemContainerTr,
+			targetX = var_8_18,
+			targetY = var_8_19,
+			targetZ = var_8_20
 		}))
-		slot0.flow:addWork(YaXianInteractEffectWork.New(slot3, YaXianGameEnum.EffectType.Assassinate))
+		arg_8_0.flow:addWork(YaXianInteractEffectWork.New(var_8_1, YaXianGameEnum.EffectType.Assassinate))
 
-		slot17 = FlowParallel.New()
+		local var_8_21 = FlowParallel.New()
 
-		slot17:addWork(YaXianInteractEffectWork.New(slot3, YaXianGameEnum.EffectType.Die))
+		var_8_21:addWork(YaXianInteractEffectWork.New(var_8_1, YaXianGameEnum.EffectType.Die))
 
-		slot18, slot19, slot20 = YaXianGameHelper.calcTilePosInScene(slot7, slot8)
+		local var_8_22, var_8_23, var_8_24 = YaXianGameHelper.calcTilePosInScene(var_8_5, var_8_6)
 
-		slot17:addWork(YaXianInteractMoveWork.New({
-			transform = slot6.interactItemContainerTr,
-			targetX = slot18,
-			targetY = slot19,
-			targetZ = slot20
+		var_8_21:addWork(YaXianInteractMoveWork.New({
+			transform = var_8_4.interactItemContainerTr,
+			targetX = var_8_22,
+			targetY = var_8_23,
+			targetZ = var_8_24
 		}))
-		slot0.flow:addWork(slot17)
-		slot0.flow:addWork(YaXianInteractEffectWork.New(slot5, YaXianGameEnum.EffectType.FightSuccess))
+		arg_8_0.flow:addWork(var_8_21)
+		arg_8_0.flow:addWork(YaXianInteractEffectWork.New(var_8_3, YaXianGameEnum.EffectType.FightSuccess))
 	end
 
-	slot0.flow:registerDoneListener(slot0.onMoveCompleted, slot0)
-	slot0.flow:start()
+	arg_8_0.flow:registerDoneListener(arg_8_0.onMoveCompleted, arg_8_0)
+	arg_8_0.flow:start()
 end
 
-function slot0.onMoveCompleted(slot0)
-	slot0:killMoveTween()
-	slot0:stopFlow()
+function var_0_0.onMoveCompleted(arg_9_0)
+	arg_9_0:killMoveTween()
+	arg_9_0:stopFlow()
 
-	if slot0.stepData and slot0._interactObject.interactMo.direction ~= slot0.stepData.direction then
-		TaskDispatcher.runDelay(slot0.doMoveCallback, slot0, YaXianGameEnum.SwitchDirectionDelay)
+	if arg_9_0.stepData and arg_9_0._interactObject.interactMo.direction ~= arg_9_0.stepData.direction then
+		TaskDispatcher.runDelay(arg_9_0.doMoveCallback, arg_9_0, YaXianGameEnum.SwitchDirectionDelay)
 
 		return
 	end
 
-	slot0:doMoveCallback()
+	arg_9_0:doMoveCallback()
 end
 
-function slot0.doMoveCallback(slot0)
-	if slot0.stepData then
-		slot0:faceTo(slot0.stepData.direction)
+function var_0_0.doMoveCallback(arg_10_0)
+	if arg_10_0.stepData then
+		arg_10_0:faceTo(arg_10_0.stepData.direction)
 
-		slot0.stepData = nil
+		arg_10_0.stepData = nil
 	end
 
-	if slot0._interactObject:isPlayer() and slot0._interactObject.interactMo.posX == YaXianGameModel.instance:getExitInteractMo().posX and slot0._interactObject.interactMo.posY == slot1.posY then
-		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
+	if arg_10_0._interactObject:isPlayer() then
+		local var_10_0 = YaXianGameModel.instance:getExitInteractMo()
+
+		if arg_10_0._interactObject.interactMo.posX == var_10_0.posX and arg_10_0._interactObject.interactMo.posY == var_10_0.posY then
+			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
+		end
 	end
 
-	if slot0._moveCallback then
-		slot0._moveCallback = nil
-		slot0._moveCallbackObj = nil
+	if arg_10_0._moveCallback then
+		local var_10_1 = arg_10_0._moveCallback
+		local var_10_2 = arg_10_0._moveCallbackObj
 
-		return slot0._moveCallback(slot0._moveCallbackObj)
-	end
-end
+		arg_10_0._moveCallback = nil
+		arg_10_0._moveCallbackObj = nil
 
-function slot0.killMoveTween(slot0)
-	if slot0.moveWork then
-		slot0.moveWork:onDestroy()
-
-		slot0.moveWork = nil
-	end
-end
-
-function slot0.moveToFromMoveStep(slot0, slot1, slot2, slot3)
-	slot0.stepData = slot1
-
-	slot0:moveTo(slot0.stepData.x, slot0.stepData.y, slot2, slot3)
-end
-
-function slot0.stopFlow(slot0)
-	if slot0.flow then
-		slot0.flow:destroy()
-
-		slot0.flow = nil
+		return var_10_1(var_10_2)
 	end
 end
 
-function slot0.stopAllAction(slot0)
-	slot0:stopFlow()
-	slot0:killMoveTween()
-	TaskDispatcher.cancelTask(slot0.doMoveCallback, slot0)
+function var_0_0.killMoveTween(arg_11_0)
+	if arg_11_0.moveWork then
+		arg_11_0.moveWork:onDestroy()
+
+		arg_11_0.moveWork = nil
+	end
 end
 
-function slot0.dispose(slot0)
-	slot0:stopAllAction()
+function var_0_0.moveToFromMoveStep(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_0.stepData = arg_12_1
+
+	arg_12_0:moveTo(arg_12_0.stepData.x, arg_12_0.stepData.y, arg_12_2, arg_12_3)
 end
 
-return slot0
+function var_0_0.stopFlow(arg_13_0)
+	if arg_13_0.flow then
+		arg_13_0.flow:destroy()
+
+		arg_13_0.flow = nil
+	end
+end
+
+function var_0_0.stopAllAction(arg_14_0)
+	arg_14_0:stopFlow()
+	arg_14_0:killMoveTween()
+	TaskDispatcher.cancelTask(arg_14_0.doMoveCallback, arg_14_0)
+end
+
+function var_0_0.dispose(arg_15_0)
+	arg_15_0:stopAllAction()
+end
+
+return var_0_0

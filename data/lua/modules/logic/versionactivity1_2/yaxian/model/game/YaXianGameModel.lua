@@ -1,117 +1,132 @@
-module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameModel", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameModel", package.seeall)
 
-slot0 = class("YaXianGameModel", BaseModel)
+local var_0_0 = class("YaXianGameModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
-	slot0.actId = nil
-	slot0.mapId = nil
-	slot0.episodeId = nil
-	slot0.episodeCo = nil
-	slot0.width = nil
-	slot0.height = nil
-	slot0.round = nil
-	slot0.result = nil
-	slot0.mapTileBaseList = nil
-	slot0.mapInteractMoList = nil
-	slot0.playerInteractMo = nil
-	slot0.finishInteract = nil
-	slot0.baffleList = nil
-	slot0.skillDict = nil
-	slot0.mapOffsetX = nil
-	slot0.mapOffsetY = nil
-	slot0.canWalkTargetPosDict = nil
-	slot0.gameLoadOne = nil
-	slot0.currentDeleteInteractId = nil
+function var_0_0.release(arg_3_0)
+	arg_3_0.actId = nil
+	arg_3_0.mapId = nil
+	arg_3_0.episodeId = nil
+	arg_3_0.episodeCo = nil
+	arg_3_0.width = nil
+	arg_3_0.height = nil
+	arg_3_0.round = nil
+	arg_3_0.result = nil
+	arg_3_0.mapTileBaseList = nil
+	arg_3_0.mapInteractMoList = nil
+	arg_3_0.playerInteractMo = nil
+	arg_3_0.finishInteract = nil
+	arg_3_0.baffleList = nil
+	arg_3_0.skillDict = nil
+	arg_3_0.mapOffsetX = nil
+	arg_3_0.mapOffsetY = nil
+	arg_3_0.canWalkTargetPosDict = nil
+	arg_3_0.gameLoadOne = nil
+	arg_3_0.currentDeleteInteractId = nil
 end
 
-function slot0.initLocalConfig(slot0, slot1, slot2)
-	slot0.episodeCo = YaXianConfig.instance:getEpisodeConfig(slot1, slot2)
-	slot0.episodeId = slot2
-	slot0.actId = slot1
-	slot0.mapId = slot0.episodeCo.mapId
-	slot0.mapCo = YaXianConfig.instance:getMapConfig(slot1, slot0.mapId)
-	slot0.width = slot0.mapCo.width
-	slot0.height = slot0.mapCo.height
+function var_0_0.initLocalConfig(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.episodeCo = YaXianConfig.instance:getEpisodeConfig(arg_4_1, arg_4_2)
+	arg_4_0.episodeId = arg_4_2
+	arg_4_0.actId = arg_4_1
+	arg_4_0.mapId = arg_4_0.episodeCo.mapId
+	arg_4_0.mapCo = YaXianConfig.instance:getMapConfig(arg_4_1, arg_4_0.mapId)
+	arg_4_0.width = arg_4_0.mapCo.width
+	arg_4_0.height = arg_4_0.mapCo.height
 
-	if slot0.mapCo and not string.nilorempty(slot0.mapCo.offset) then
-		slot3 = string.splitToNumber(slot0.mapCo.offset, ",")
-		slot0.mapOffsetX = slot3[1]
-		slot0.mapOffsetY = slot3[2]
+	if arg_4_0.mapCo and not string.nilorempty(arg_4_0.mapCo.offset) then
+		local var_4_0 = string.splitToNumber(arg_4_0.mapCo.offset, ",")
+
+		arg_4_0.mapOffsetX = var_4_0[1]
+		arg_4_0.mapOffsetY = var_4_0[2]
 	else
-		slot0.mapOffsetX = YaXianGameEnum.ChessBoardOffsetX
-		slot0.mapOffsetY = YaXianGameEnum.ChessBoardOffsetY
+		arg_4_0.mapOffsetX = YaXianGameEnum.ChessBoardOffsetX
+		arg_4_0.mapOffsetY = YaXianGameEnum.ChessBoardOffsetY
 	end
 
-	slot0.mapTileBaseList = string.splitToNumber(slot0.mapCo.tilebase, ",")
+	arg_4_0.mapTileBaseList = string.splitToNumber(arg_4_0.mapCo.tilebase, ",")
 
-	slot0:initBaffleData()
+	arg_4_0:initBaffleData()
 end
 
-function slot0.initBaffleData(slot0)
-	slot0.baffleList = {}
-	slot1, slot2 = nil
+function var_0_0.initBaffleData(arg_5_0)
+	arg_5_0.baffleList = {}
 
-	for slot6 = 0, slot0.width - 1 do
-		for slot10 = 0, slot0.height - 1 do
-			if slot0.mapTileBaseList[slot0:getIndex(slot6, slot10)] > 1 then
-				if YaXianGameHelper.hasBaffle(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Left) then
-					table.insert(slot0.baffleList, slot0:buildBaffleData(slot6, slot10, YaXianGameEnum.BaffleDirection.Left, YaXianGameHelper.getBaffleType(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Left)))
+	local var_5_0
+	local var_5_1
+
+	for iter_5_0 = 0, arg_5_0.width - 1 do
+		for iter_5_1 = 0, arg_5_0.height - 1 do
+			local var_5_2 = arg_5_0.mapTileBaseList[arg_5_0:getIndex(iter_5_0, iter_5_1)]
+
+			if var_5_2 > 1 then
+				if YaXianGameHelper.hasBaffle(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Left) then
+					local var_5_3 = YaXianGameHelper.getBaffleType(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Left)
+
+					table.insert(arg_5_0.baffleList, arg_5_0:buildBaffleData(iter_5_0, iter_5_1, YaXianGameEnum.BaffleDirection.Left, var_5_3))
 				end
 
-				if YaXianGameHelper.hasBaffle(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Right) then
-					table.insert(slot0.baffleList, slot0:buildBaffleData(slot6, slot10, YaXianGameEnum.BaffleDirection.Right, YaXianGameHelper.getBaffleType(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Right)))
+				if YaXianGameHelper.hasBaffle(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Right) then
+					local var_5_4 = YaXianGameHelper.getBaffleType(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Right)
+
+					table.insert(arg_5_0.baffleList, arg_5_0:buildBaffleData(iter_5_0, iter_5_1, YaXianGameEnum.BaffleDirection.Right, var_5_4))
 				end
 
-				if YaXianGameHelper.hasBaffle(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Top) then
-					table.insert(slot0.baffleList, slot0:buildBaffleData(slot6, slot10, YaXianGameEnum.BaffleDirection.Top, YaXianGameHelper.getBaffleType(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Top)))
+				if YaXianGameHelper.hasBaffle(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Top) then
+					local var_5_5 = YaXianGameHelper.getBaffleType(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Top)
+
+					table.insert(arg_5_0.baffleList, arg_5_0:buildBaffleData(iter_5_0, iter_5_1, YaXianGameEnum.BaffleDirection.Top, var_5_5))
 				end
 
-				if YaXianGameHelper.hasBaffle(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Bottom) then
-					table.insert(slot0.baffleList, slot0:buildBaffleData(slot6, slot10, YaXianGameEnum.BaffleDirection.Bottom, YaXianGameHelper.getBaffleType(slot1, YaXianGameEnum.BaffleDirectionPowerPos.Bottom)))
+				if YaXianGameHelper.hasBaffle(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Bottom) then
+					local var_5_6 = YaXianGameHelper.getBaffleType(var_5_2, YaXianGameEnum.BaffleDirectionPowerPos.Bottom)
+
+					table.insert(arg_5_0.baffleList, arg_5_0:buildBaffleData(iter_5_0, iter_5_1, YaXianGameEnum.BaffleDirection.Bottom, var_5_6))
 				end
 			end
 		end
 	end
 end
 
-function slot0.initServerDataByServerData(slot0, slot1)
-	slot0:setRound(slot1.currentRound)
-	slot0:initObjects(slot1.interactObjects)
-	slot0:updateFinishInteracts(slot1.finishInteracts)
+function var_0_0.initServerDataByServerData(arg_6_0, arg_6_1)
+	arg_6_0:setRound(arg_6_1.currentRound)
+	arg_6_0:initObjects(arg_6_1.interactObjects)
+	arg_6_0:updateFinishInteracts(arg_6_1.finishInteracts)
 end
 
-function slot0.initServerDataByMapMo(slot0, slot1)
-	slot0:setRound(slot1.currentRound)
-	slot0:setObjects(slot1.interactObjs)
-	slot0:updateFinishInteracts(slot1.finishInteracts)
+function var_0_0.initServerDataByMapMo(arg_7_0, arg_7_1)
+	arg_7_0:setRound(arg_7_1.currentRound)
+	arg_7_0:setObjects(arg_7_1.interactObjs)
+	arg_7_0:updateFinishInteracts(arg_7_1.finishInteracts)
 end
 
-function slot0.getBaffleList(slot0)
-	return slot0.baffleList
+function var_0_0.getBaffleList(arg_8_0)
+	return arg_8_0.baffleList
 end
 
-function slot0.addInteractMo(slot0, slot1)
-	table.insert(slot0.mapInteractMoList, slot1)
+function var_0_0.addInteractMo(arg_9_0, arg_9_1)
+	table.insert(arg_9_0.mapInteractMoList, arg_9_1)
 end
 
-function slot0.removeInteractMo(slot0, slot1)
-	tabletool.removeValue(slot0.mapInteractMoList, slot1)
+function var_0_0.removeInteractMo(arg_10_0, arg_10_1)
+	tabletool.removeValue(arg_10_0.mapInteractMoList, arg_10_1)
 end
 
-function slot0.getPlayerInteractMo(slot0)
-	return slot0.playerInteractMo
+function var_0_0.getPlayerInteractMo(arg_11_0)
+	return arg_11_0.playerInteractMo
 end
 
-function slot0.setPlayerInteractMo(slot0)
-	for slot4, slot5 in ipairs(slot0.mapInteractMoList) do
-		if slot5.config.interactType == YaXianGameEnum.InteractType.Player then
-			slot0.playerInteractMo = slot5
+function var_0_0.setPlayerInteractMo(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.mapInteractMoList) do
+		if iter_12_1.config.interactType == YaXianGameEnum.InteractType.Player then
+			arg_12_0.playerInteractMo = iter_12_1
 
 			return
 		end
@@ -120,14 +135,14 @@ function slot0.setPlayerInteractMo(slot0)
 	logError("not found Player InteractMo")
 end
 
-function slot0.getExitInteractMo(slot0)
-	return slot0.exitInteractMo
+function var_0_0.getExitInteractMo(arg_13_0)
+	return arg_13_0.exitInteractMo
 end
 
-function slot0.setExitInteractMo(slot0)
-	for slot4, slot5 in ipairs(slot0.mapInteractMoList) do
-		if slot5.config.interactType == YaXianGameEnum.InteractType.TriggerVictory then
-			slot0.exitInteractMo = slot5
+function var_0_0.setExitInteractMo(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.mapInteractMoList) do
+		if iter_14_1.config.interactType == YaXianGameEnum.InteractType.TriggerVictory then
+			arg_14_0.exitInteractMo = iter_14_1
 
 			return
 		end
@@ -136,81 +151,86 @@ function slot0.setExitInteractMo(slot0)
 	logError("not found Exit InteractMo")
 end
 
-function slot0.initObjects(slot0, slot1)
-	slot0.mapInteractMoList = {}
+function var_0_0.initObjects(arg_15_0, arg_15_1)
+	arg_15_0.mapInteractMoList = {}
 
-	for slot6 = 1, #slot1 do
-		slot8 = YaXianGameInteractMO.New()
+	local var_15_0 = #arg_15_1
 
-		slot8:init(slot0.actId, slot1[slot6])
-		table.insert(slot0.mapInteractMoList, slot8)
+	for iter_15_0 = 1, var_15_0 do
+		local var_15_1 = arg_15_1[iter_15_0]
+		local var_15_2 = YaXianGameInteractMO.New()
+
+		var_15_2:init(arg_15_0.actId, var_15_1)
+		table.insert(arg_15_0.mapInteractMoList, var_15_2)
 	end
 
-	slot0:setPlayerInteractMo()
-	slot0:setExitInteractMo()
-	slot0:initInteractData()
+	arg_15_0:setPlayerInteractMo()
+	arg_15_0:setExitInteractMo()
+	arg_15_0:initInteractData()
 end
 
-function slot0.setObjects(slot0, slot1)
-	slot0.mapInteractMoList = slot1
+function var_0_0.setObjects(arg_16_0, arg_16_1)
+	arg_16_0.mapInteractMoList = arg_16_1
 
-	slot0:setPlayerInteractMo()
-	slot0:setExitInteractMo()
-	slot0:initInteractData()
+	arg_16_0:setPlayerInteractMo()
+	arg_16_0:setExitInteractMo()
+	arg_16_0:initInteractData()
 end
 
-function slot0.addObject(slot0, slot1)
-	slot2 = YaXianGameInteractMO.New()
+function var_0_0.addObject(arg_17_0, arg_17_1)
+	local var_17_0 = YaXianGameInteractMO.New()
 
-	slot2:init(slot0.actId, slot1)
-	table.insert(slot0.mapInteractMoList, slot2)
+	var_17_0:init(arg_17_0.actId, arg_17_1)
+	table.insert(arg_17_0.mapInteractMoList, var_17_0)
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.removeObjectById(slot0, slot1)
-	for slot5 = 1, #slot0.mapInteractMoList do
-		if slot0.mapInteractMoList[slot5].id == slot1 then
-			table.remove(slot0.mapInteractMoList, slot5)
+function var_0_0.removeObjectById(arg_18_0, arg_18_1)
+	for iter_18_0 = 1, #arg_18_0.mapInteractMoList do
+		if arg_18_0.mapInteractMoList[iter_18_0].id == arg_18_1 then
+			local var_18_0 = arg_18_0.mapInteractMoList[iter_18_0]
 
-			return slot0.mapInteractMoList[slot5]
+			table.remove(arg_18_0.mapInteractMoList, iter_18_0)
+
+			return var_18_0
 		end
 	end
 end
 
-function slot0.initInteractData(slot0)
-	for slot4, slot5 in ipairs(slot0.mapInteractMoList) do
-		if slot5.config.interactType == YaXianGameEnum.InteractType.Player then
-			if slot0:updateSkillInfoAndCheckHasChange(slot5.data and slot5.data.skills) then
+function var_0_0.initInteractData(arg_19_0)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.mapInteractMoList) do
+		if iter_19_1.config.interactType == YaXianGameEnum.InteractType.Player then
+			if arg_19_0:updateSkillInfoAndCheckHasChange(iter_19_1.data and iter_19_1.data.skills) then
 				YaXianGameController.instance:dispatchEvent(YaXianEvent.OnUpdateSkillInfo)
 			end
 
-			if slot0:updateEffectsAndCheckHasChange(slot5.data and slot5.data.effects) then
+			if arg_19_0:updateEffectsAndCheckHasChange(iter_19_1.data and iter_19_1.data.effects) then
 				YaXianGameController.instance:dispatchEvent(YaXianEvent.OnUpdateEffectInfo)
 			end
 		end
 	end
 end
 
-function slot0.updateFinishInteracts(slot0, slot1)
-	slot0.finishInteract = {}
+function var_0_0.updateFinishInteracts(arg_20_0, arg_20_1)
+	arg_20_0.finishInteract = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0.finishInteract[slot1[slot5]] = true
+	if arg_20_1 then
+		for iter_20_0 = 1, #arg_20_1 do
+			arg_20_0.finishInteract[arg_20_1[iter_20_0]] = true
 		end
 	end
 end
 
-function slot0.setFinishInteracts(slot0, slot1)
-	slot0.finishInteract = slot1
+function var_0_0.setFinishInteracts(arg_21_0, arg_21_1)
+	arg_21_0.finishInteract = arg_21_1
 end
 
-function slot0.isAlertArea(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0.mapInteractMoList) do
-		if slot7.alertPosList then
-			for slot11, slot12 in ipairs(slot7.alertPosList) do
-				if slot1 == slot12.posX and slot2 == slot12.posY then
+function var_0_0.isAlertArea(arg_22_0, arg_22_1, arg_22_2)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.mapInteractMoList) do
+		if iter_22_1.alertPosList then
+			for iter_22_2, iter_22_3 in ipairs(iter_22_1.alertPosList) do
+				if arg_22_1 == iter_22_3.posX and arg_22_2 == iter_22_3.posY then
 					return true
 				end
 			end
@@ -220,9 +240,9 @@ function slot0.isAlertArea(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.hasInteract(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0.mapInteractMoList) do
-		if slot1 == slot7.posX and slot2 == slot7.posY and slot7.config.interactType ~= YaXianGameEnum.InteractType.Player then
+function var_0_0.hasInteract(arg_23_0, arg_23_1, arg_23_2)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0.mapInteractMoList) do
+		if arg_23_1 == iter_23_1.posX and arg_23_2 == iter_23_1.posY and iter_23_1.config.interactType ~= YaXianGameEnum.InteractType.Player then
 			return true
 		end
 	end
@@ -230,48 +250,52 @@ function slot0.hasInteract(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.updateSkillInfo(slot0, slot1)
-	if not slot1 then
-		slot0.skillDict = nil
+function var_0_0.updateSkillInfo(arg_24_0, arg_24_1)
+	if not arg_24_1 then
+		arg_24_0.skillDict = nil
 
 		return
 	end
 
-	slot0.skillDict = slot0.skillDict or {}
+	arg_24_0.skillDict = arg_24_0.skillDict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.skillDict[slot6.skillId] then
-			slot7 = YaXianGameSkillMo.New()
+	for iter_24_0, iter_24_1 in ipairs(arg_24_1) do
+		local var_24_0 = arg_24_0.skillDict[iter_24_1.skillId]
 
-			slot7:init(slot0.actId, slot6)
+		if not var_24_0 then
+			var_24_0 = YaXianGameSkillMo.New()
 
-			slot0.skillDict[slot6.skillId] = slot7
+			var_24_0:init(arg_24_0.actId, iter_24_1)
+
+			arg_24_0.skillDict[iter_24_1.skillId] = var_24_0
 		else
-			slot7:updateMO(slot6)
+			var_24_0:updateMO(iter_24_1)
 		end
 	end
 end
 
-function slot0.updateSkillInfoAndCheckHasChange(slot0, slot1)
-	if not slot1 then
-		if not slot0.skillDict then
+function var_0_0.updateSkillInfoAndCheckHasChange(arg_25_0, arg_25_1)
+	if not arg_25_1 then
+		if not arg_25_0.skillDict then
 			return false
 		else
-			slot0:updateSkillInfo(slot1)
+			arg_25_0:updateSkillInfo(arg_25_1)
 
 			return true
 		end
 	end
 
-	slot0.skillDict = slot0.skillDict or {}
+	arg_25_0.skillDict = arg_25_0.skillDict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.skillDict[slot6.skillId] then
-			slot0:updateSkillInfo(slot1)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
+		local var_25_0 = arg_25_0.skillDict[iter_25_1.skillId]
+
+		if not var_25_0 then
+			arg_25_0:updateSkillInfo(arg_25_1)
 
 			return true
-		elseif slot7.canUseCount ~= slot6.canUseCount then
-			slot0:updateSkillInfo(slot1)
+		elseif var_25_0.canUseCount ~= iter_25_1.canUseCount then
+			arg_25_0:updateSkillInfo(arg_25_1)
 
 			return true
 		end
@@ -280,253 +304,263 @@ function slot0.updateSkillInfoAndCheckHasChange(slot0, slot1)
 	return false
 end
 
-function slot0.getSkillMo(slot0, slot1)
-	return slot0.skillDict and slot0.skillDict[slot1]
+function var_0_0.getSkillMo(arg_26_0, arg_26_1)
+	return arg_26_0.skillDict and arg_26_0.skillDict[arg_26_1]
 end
 
-function slot0.hasSkill(slot0)
-	return slot0.skillDict ~= nil
+function var_0_0.hasSkill(arg_27_0)
+	return arg_27_0.skillDict ~= nil
 end
 
-function slot0.updateEffects(slot0, slot1)
-	if not slot1 then
-		slot0._effectsDict = nil
+function var_0_0.updateEffects(arg_28_0, arg_28_1)
+	if not arg_28_1 then
+		arg_28_0._effectsDict = nil
 
 		return
 	end
 
-	slot0.effectsPool = slot0.effectsPool or {}
+	arg_28_0.effectsPool = arg_28_0.effectsPool or {}
 
-	if slot0._effectsDict then
-		for slot5, slot6 in pairs(slot0._effectsDict) do
-			slot0.effectsPool[slot5] = slot6
+	if arg_28_0._effectsDict then
+		for iter_28_0, iter_28_1 in pairs(arg_28_0._effectsDict) do
+			arg_28_0.effectsPool[iter_28_0] = iter_28_1
 		end
 	end
 
-	slot0._effectsDict = {}
+	arg_28_0._effectsDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.effectsPool[slot6.effectType] then
-			YaXianGameSkillEffectMo.New():init(slot0.actId, slot6)
+	for iter_28_2, iter_28_3 in ipairs(arg_28_1) do
+		local var_28_0 = arg_28_0.effectsPool[iter_28_3.effectType]
+
+		if not var_28_0 then
+			var_28_0 = YaXianGameSkillEffectMo.New()
+
+			var_28_0:init(arg_28_0.actId, iter_28_3)
 		else
-			slot7:updateMO(slot6)
+			var_28_0:updateMO(iter_28_3)
 		end
 
-		slot0._effectsDict[slot7.effectType] = slot7
+		arg_28_0._effectsDict[var_28_0.effectType] = var_28_0
 	end
 end
 
-function slot0.updateEffectsAndCheckHasChange(slot0, slot1)
-	if not slot1 and not slot0._effectsDict then
-		slot0._effectsDict = nil
+function var_0_0.updateEffectsAndCheckHasChange(arg_29_0, arg_29_1)
+	if not arg_29_1 and not arg_29_0._effectsDict then
+		arg_29_0._effectsDict = nil
 
 		return false
 	end
 
-	if not slot1 then
-		slot0._effectsDict = nil
+	if not arg_29_1 then
+		arg_29_0._effectsDict = nil
 
 		return true
 	end
 
-	if not slot0._effectsDict then
-		slot0:updateEffects(slot1)
+	if not arg_29_0._effectsDict then
+		arg_29_0:updateEffects(arg_29_1)
 
 		return true
 	end
 
-	if #slot1 ~= tabletool.len(slot0._effectsDict) then
-		slot0:updateEffects(slot1)
+	if #arg_29_1 ~= tabletool.len(arg_29_0._effectsDict) then
+		arg_29_0:updateEffects(arg_29_1)
 
 		return true
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._effectsDict[slot6.effectType] then
-			slot0:updateEffects(slot1)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
+		local var_29_0 = arg_29_0._effectsDict[iter_29_1.effectType]
+
+		if not var_29_0 then
+			arg_29_0:updateEffects(arg_29_1)
 
 			return true
-		elseif slot7.remainRound ~= slot1.remainRound then
-			slot0:updateEffects(slot1)
+		elseif var_29_0.remainRound ~= arg_29_1.remainRound then
+			arg_29_0:updateEffects(arg_29_1)
 
 			return true
 		end
 	end
 end
 
-function slot0.getEffectByType(slot0, slot1)
-	return slot0._effectsDict and slot0._effectsDict[slot1]
+function var_0_0.getEffectByType(arg_30_0, arg_30_1)
+	return arg_30_0._effectsDict and arg_30_0._effectsDict[arg_30_1]
 end
 
-function slot0.isShowVisibleStatus(slot0)
-	return slot0._effectsDict and slot0._effectsDict[YaXianGameEnum.SkillType.InVisible] and slot0._effectsDict[YaXianGameEnum.SkillType.InVisible].remainRound > 0
+function var_0_0.isShowVisibleStatus(arg_31_0)
+	return arg_31_0._effectsDict and arg_31_0._effectsDict[YaXianGameEnum.SkillType.InVisible] and arg_31_0._effectsDict[YaXianGameEnum.SkillType.InVisible].remainRound > 0
 end
 
-function slot0.isShowThroughStatus(slot0)
-	return slot0._effectsDict and slot0._effectsDict[YaXianGameEnum.SkillType.ThroughWall] and slot0._effectsDict[YaXianGameEnum.SkillType.ThroughWall].remainRound > 0
+function var_0_0.isShowThroughStatus(arg_32_0)
+	return arg_32_0._effectsDict and arg_32_0._effectsDict[YaXianGameEnum.SkillType.ThroughWall] and arg_32_0._effectsDict[YaXianGameEnum.SkillType.ThroughWall].remainRound > 0
 end
 
-function slot0.hasInVisibleEffect(slot0)
-	return slot0._effectsDict and slot0._effectsDict[YaXianGameEnum.SkillType.InVisible] and slot0._effectsDict[YaXianGameEnum.SkillType.InVisible].remainRound > 1
+function var_0_0.hasInVisibleEffect(arg_33_0)
+	return arg_33_0._effectsDict and arg_33_0._effectsDict[YaXianGameEnum.SkillType.InVisible] and arg_33_0._effectsDict[YaXianGameEnum.SkillType.InVisible].remainRound > 1
 end
 
-function slot0.hasThroughWallEffect(slot0)
-	return slot0._effectsDict and slot0._effectsDict[YaXianGameEnum.SkillType.ThroughWall] and slot0._effectsDict[YaXianGameEnum.SkillType.ThroughWall].remainRound > 0
+function var_0_0.hasThroughWallEffect(arg_34_0)
+	return arg_34_0._effectsDict and arg_34_0._effectsDict[YaXianGameEnum.SkillType.ThroughWall] and arg_34_0._effectsDict[YaXianGameEnum.SkillType.ThroughWall].remainRound > 0
 end
 
-function slot0.addFinishInteract(slot0, slot1)
-	slot0.finishInteract[slot1] = true
+function var_0_0.addFinishInteract(arg_35_0, arg_35_1)
+	arg_35_0.finishInteract[arg_35_1] = true
 end
 
-function slot0.isInteractFinish(slot0, slot1)
-	if slot0.finishInteract then
-		return slot0.finishInteract[slot1]
+function var_0_0.isInteractFinish(arg_36_0, arg_36_1)
+	if arg_36_0.finishInteract then
+		return arg_36_0.finishInteract[arg_36_1]
 	end
 end
 
-function slot0.getBaseTile(slot0, slot1, slot2)
-	return slot0.mapTileBaseList[slot0:getIndex(slot1, slot2)]
+function var_0_0.getBaseTile(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = arg_37_0:getIndex(arg_37_1, arg_37_2)
+
+	return arg_37_0.mapTileBaseList[var_37_0]
 end
 
-function slot0.setBaseTile(slot0, slot1, slot2, slot3)
-	slot0.mapTileBaseList[slot0:getIndex(slot1, slot2)] = slot3
+function var_0_0.setBaseTile(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	local var_38_0 = arg_38_0:getIndex(arg_38_1, arg_38_2)
+
+	arg_38_0.mapTileBaseList[var_38_0] = arg_38_3
 end
 
-function slot0.setRound(slot0, slot1)
-	slot0.round = slot1
+function var_0_0.setRound(arg_39_0, arg_39_1)
+	arg_39_0.round = arg_39_1
 end
 
-function slot0.setResult(slot0, slot1)
-	slot0.result = slot1
+function var_0_0.setResult(arg_40_0, arg_40_1)
+	arg_40_0.result = arg_40_1
 end
 
-function slot0.getResult(slot0)
-	return slot0.result
+function var_0_0.getResult(arg_41_0)
+	return arg_41_0.result
 end
 
-function slot0.getInteractMoList(slot0)
-	return slot0.mapInteractMoList
+function var_0_0.getInteractMoList(arg_42_0)
+	return arg_42_0.mapInteractMoList
 end
 
-function slot0.getInteractMo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.mapInteractMoList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.getInteractMo(arg_43_0, arg_43_1)
+	for iter_43_0, iter_43_1 in ipairs(arg_43_0.mapInteractMoList) do
+		if iter_43_1.id == arg_43_1 then
+			return iter_43_1
 		end
 	end
 end
 
-function slot0.getIndex(slot0, slot1, slot2)
-	return slot2 * slot0.width + slot1 + 1
+function var_0_0.getIndex(arg_44_0, arg_44_1, arg_44_2)
+	return arg_44_2 * arg_44_0.width + arg_44_1 + 1
 end
 
-function slot0.getGameSize(slot0)
-	return slot0.width, slot0.height
+function var_0_0.getGameSize(arg_45_0)
+	return arg_45_0.width, arg_45_0.height
 end
 
-function slot0.getMapId(slot0)
-	return slot0.mapId
+function var_0_0.getMapId(arg_46_0)
+	return arg_46_0.mapId
 end
 
-function slot0.getActId(slot0)
-	return slot0.actId
+function var_0_0.getActId(arg_47_0)
+	return arg_47_0.actId
 end
 
-function slot0.getRound(slot0)
-	return math.max(slot0.round or 1, 1)
+function var_0_0.getRound(arg_48_0)
+	return math.max(arg_48_0.round or 1, 1)
 end
 
-function slot0.isRoundUseUp(slot0)
-	return slot0:getRound() == slot0.episodeCo.maxRound
+function var_0_0.isRoundUseUp(arg_49_0)
+	return arg_49_0:getRound() == arg_49_0.episodeCo.maxRound
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0.episodeId
+function var_0_0.getEpisodeId(arg_50_0)
+	return arg_50_0.episodeId
 end
 
-function slot0.getEpisodeCo(slot0)
-	return slot0.episodeCo
+function var_0_0.getEpisodeCo(arg_51_0)
+	return arg_51_0.episodeCo
 end
 
-function slot0.isPosInChessBoard(slot0, slot1, slot2)
-	return slot1 >= 0 and slot1 < slot0.width and slot2 >= 0 and slot2 < slot0.height
+function var_0_0.isPosInChessBoard(arg_52_0, arg_52_1, arg_52_2)
+	return arg_52_1 >= 0 and arg_52_1 < arg_52_0.width and arg_52_2 >= 0 and arg_52_2 < arg_52_0.height
 end
 
-function slot0.buildBaffleData(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.buildBaffleData(arg_53_0, arg_53_1, arg_53_2, arg_53_3, arg_53_4)
 	return {
-		x = slot1,
-		y = slot2,
-		direction = slot3,
-		type = slot4
+		x = arg_53_1,
+		y = arg_53_2,
+		direction = arg_53_3,
+		type = arg_53_4
 	}
 end
 
-function slot0.setCanWalkTargetPosDict(slot0, slot1)
-	slot0.canWalkDirection2Pos = slot1
-	slot0.canWalkPos2Direction = {}
+function var_0_0.setCanWalkTargetPosDict(arg_54_0, arg_54_1)
+	arg_54_0.canWalkDirection2Pos = arg_54_1
+	arg_54_0.canWalkPos2Direction = {}
 
-	for slot5, slot6 in pairs(slot0.canWalkDirection2Pos) do
-		slot0.canWalkPos2Direction[YaXianGameHelper.getPosHashKey(slot6.x, slot6.y)] = slot5
+	for iter_54_0, iter_54_1 in pairs(arg_54_0.canWalkDirection2Pos) do
+		arg_54_0.canWalkPos2Direction[YaXianGameHelper.getPosHashKey(iter_54_1.x, iter_54_1.y)] = iter_54_0
 	end
 end
 
-function slot0.getCanWalkTargetPosDict(slot0)
-	return slot0.canWalkDirection2Pos
+function var_0_0.getCanWalkTargetPosDict(arg_55_0)
+	return arg_55_0.canWalkDirection2Pos
 end
 
-function slot0.getCanWalkPos2Direction(slot0)
-	return slot0.canWalkPos2Direction
+function var_0_0.getCanWalkPos2Direction(arg_56_0)
+	return arg_56_0.canWalkPos2Direction
 end
 
-function slot0.setGameLoadDone(slot0, slot1)
-	slot0.gameLoadOne = slot1
+function var_0_0.setGameLoadDone(arg_57_0, arg_57_1)
+	arg_57_0.gameLoadOne = arg_57_1
 end
 
-function slot0.gameIsLoadDone(slot0)
-	return slot0.gameLoadOne
+function var_0_0.gameIsLoadDone(arg_58_0)
+	return arg_58_0.gameLoadOne
 end
 
-function slot0.setNeedFeatureInteractMo(slot0, slot1)
-	slot0.needFeatureInteractMo = slot1
-	slot0.featurePrePosX = slot0.needFeatureInteractMo.prePosX
-	slot0.featurePrePosY = slot0.needFeatureInteractMo.prePosY
-	slot0.featurePreDirection = slot0.needFeatureInteractMo.preDirection
+function var_0_0.setNeedFeatureInteractMo(arg_59_0, arg_59_1)
+	arg_59_0.needFeatureInteractMo = arg_59_1
+	arg_59_0.featurePrePosX = arg_59_0.needFeatureInteractMo.prePosX
+	arg_59_0.featurePrePosY = arg_59_0.needFeatureInteractMo.prePosY
+	arg_59_0.featurePreDirection = arg_59_0.needFeatureInteractMo.preDirection
 end
 
-function slot0.clearFeatureInteract(slot0)
-	slot0.needFeatureInteractMo = nil
-	slot0.featurePrePosX = nil
-	slot0.featurePrePosY = nil
-	slot0.featurePreDirection = nil
+function var_0_0.clearFeatureInteract(arg_60_0)
+	arg_60_0.needFeatureInteractMo = nil
+	arg_60_0.featurePrePosX = nil
+	arg_60_0.featurePrePosY = nil
+	arg_60_0.featurePreDirection = nil
 end
 
-function slot0.getNeedFeatureInteractMo(slot0)
-	return slot0.needFeatureInteractMo
+function var_0_0.getNeedFeatureInteractMo(arg_61_0)
+	return arg_61_0.needFeatureInteractMo
 end
 
-function slot0.checkFinishCondition(slot0, slot1, slot2)
-	if slot1 == YaXianGameEnum.ConditionType.PassEpisode then
-		return slot0.result
-	elseif slot1 == YaXianGameEnum.ConditionType.Round then
-		return slot0.result and slot0.round <= slot2
-	elseif slot1 == YaXianGameEnum.ConditionType.FinishInteract then
-		return slot0:isInteractFinish(slot2)
-	elseif slot1 == YaXianGameEnum.ConditionType.FinishAllInteract then
-		if slot2 > 0 and slot2 < slot0.round then
+function var_0_0.checkFinishCondition(arg_62_0, arg_62_1, arg_62_2)
+	if arg_62_1 == YaXianGameEnum.ConditionType.PassEpisode then
+		return arg_62_0.result
+	elseif arg_62_1 == YaXianGameEnum.ConditionType.Round then
+		return arg_62_0.result and arg_62_2 >= arg_62_0.round
+	elseif arg_62_1 == YaXianGameEnum.ConditionType.FinishInteract then
+		return arg_62_0:isInteractFinish(arg_62_2)
+	elseif arg_62_1 == YaXianGameEnum.ConditionType.FinishAllInteract then
+		if arg_62_2 > 0 and arg_62_2 < arg_62_0.round then
 			return false
 		end
 
-		slot3 = 0
+		local var_62_0 = 0
 
-		if slot0.finishInteract then
-			for slot7, slot8 in pairs(slot0.finishInteract) do
-				if YaXianConfig.instance:checkInteractCanFinish(YaXianConfig.instance:getInteractObjectCo(slot0.actId, slot7)) then
-					slot3 = slot3 + 1
+		if arg_62_0.finishInteract then
+			for iter_62_0, iter_62_1 in pairs(arg_62_0.finishInteract) do
+				if YaXianConfig.instance:checkInteractCanFinish(YaXianConfig.instance:getInteractObjectCo(arg_62_0.actId, iter_62_0)) then
+					var_62_0 = var_62_0 + 1
 				end
 			end
 		end
 
-		return slot3 == YaXianConfig.instance:getEpisodeCanFinishInteractCount(slot0.episodeCo)
+		return var_62_0 == YaXianConfig.instance:getEpisodeCanFinishInteractCount(arg_62_0.episodeCo)
 	else
 		logError("un support condition type")
 
@@ -534,16 +568,19 @@ function slot0.checkFinishCondition(slot0, slot1, slot2)
 	end
 end
 
-function slot0.getFinishConditionCount(slot0)
-	for slot6, slot7 in ipairs(YaXianConfig.instance:getConditionList(slot0.episodeCo)) do
-		if slot0:checkFinishCondition(slot7[1], slot7[2]) then
-			slot2 = 0 + 1
+function var_0_0.getFinishConditionCount(arg_63_0)
+	local var_63_0 = YaXianConfig.instance:getConditionList(arg_63_0.episodeCo)
+	local var_63_1 = 0
+
+	for iter_63_0, iter_63_1 in ipairs(var_63_0) do
+		if arg_63_0:checkFinishCondition(iter_63_1[1], iter_63_1[2]) then
+			var_63_1 = var_63_1 + 1
 		end
 	end
 
-	return slot2
+	return var_63_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

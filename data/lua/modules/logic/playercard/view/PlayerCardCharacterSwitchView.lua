@@ -1,345 +1,366 @@
-module("modules.logic.playercard.view.PlayerCardCharacterSwitchView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardCharacterSwitchView", package.seeall)
 
-slot0 = class("PlayerCardCharacterSwitchView", BaseView)
+local var_0_0 = class("PlayerCardCharacterSwitchView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.switchViewGO = gohelper.findChild(slot0.viewGO, "#go_characterswitchview/characterswitchview")
-	slot0._btnClose = gohelper.findChildButton(slot0.viewGO, "#go_characterswitchview/characterswitchview/#btn_close")
-	slot0._btnchange = gohelper.findChildButtonWithAudio(slot0.switchViewGO, "right/start/#btn_change", AudioEnum.UI.Store_Good_Click)
-	slot0._goshowing = gohelper.findChild(slot0.switchViewGO, "right/start/#go_showing")
-	slot0._scrollcard = gohelper.findChildScrollRect(slot0.switchViewGO, "right/mask/#scroll_card")
-	slot0._btntimerank = gohelper.findChildButtonWithAudio(slot0.switchViewGO, "right/#btn_timerank")
-	slot0._btnrarerank = gohelper.findChildButtonWithAudio(slot0.switchViewGO, "right/#btn_rarerank")
-	slot0._gobtns = gohelper.findChild(slot0.switchViewGO, "#go_btns")
-	slot0._goinfo = gohelper.findChild(slot0.switchViewGO, "left/#go_info")
-	slot0._simagesignature = gohelper.findChildSingleImage(slot0.switchViewGO, "left/#go_info/#simage_signature")
-	slot0._txttime = gohelper.findChildText(slot0.switchViewGO, "left/#go_info/#txt_time")
-	slot0._goheroskin = gohelper.findChild(slot0.switchViewGO, "left/#go_heroskin")
-	slot0._gobgbottom = gohelper.findChild(slot0.switchViewGO, "left/#go_heroskin/#go_bgbottom")
-	slot0._scrollskin = gohelper.findChildScrollRect(slot0.switchViewGO, "left/#go_heroskin/#scroll_skin")
-	slot0._goheroskinItem = gohelper.findChild(slot0.switchViewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
-	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.switchViewGO = gohelper.findChild(arg_1_0.viewGO, "#go_characterswitchview/characterswitchview")
+	arg_1_0._btnClose = gohelper.findChildButton(arg_1_0.viewGO, "#go_characterswitchview/characterswitchview/#btn_close")
+	arg_1_0._btnchange = gohelper.findChildButtonWithAudio(arg_1_0.switchViewGO, "right/start/#btn_change", AudioEnum.UI.Store_Good_Click)
+	arg_1_0._goshowing = gohelper.findChild(arg_1_0.switchViewGO, "right/start/#go_showing")
+	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.switchViewGO, "right/mask/#scroll_card")
+	arg_1_0._btntimerank = gohelper.findChildButtonWithAudio(arg_1_0.switchViewGO, "right/#btn_timerank")
+	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.switchViewGO, "right/#btn_rarerank")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.switchViewGO, "#go_btns")
+	arg_1_0._goinfo = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_info")
+	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.switchViewGO, "left/#go_info/#simage_signature")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.switchViewGO, "left/#go_info/#txt_time")
+	arg_1_0._goheroskin = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_heroskin")
+	arg_1_0._gobgbottom = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_heroskin/#go_bgbottom")
+	arg_1_0._scrollskin = gohelper.findChildScrollRect(arg_1_0.switchViewGO, "left/#go_heroskin/#scroll_skin")
+	arg_1_0._goheroskinItem = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
+	arg_1_0.animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnchange:AddClickListener(slot0._btnchangeOnClick, slot0)
-	slot0._btntimerank:AddClickListener(slot0._btntimerankOnClick, slot0)
-	slot0._btnrarerank:AddClickListener(slot0._btnrarerankOnClick, slot0)
-	slot0._btnClose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHero, slot0._onSwitchHero, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroSkin, slot0._switchHeroSkin, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroL2d, slot0._switchL2d, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, slot0._onRefreshSwitchView, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, slot0.refreshView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
+	arg_2_0._btntimerank:AddClickListener(arg_2_0._btntimerankOnClick, arg_2_0)
+	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHero, arg_2_0._onSwitchHero, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroSkin, arg_2_0._switchHeroSkin, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroL2d, arg_2_0._switchL2d, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, arg_2_0._onRefreshSwitchView, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, arg_2_0.refreshView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnchange:RemoveClickListener()
-	slot0._btntimerank:RemoveClickListener()
-	slot0._btnrarerank:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnchange:RemoveClickListener()
+	arg_3_0._btntimerank:RemoveClickListener()
+	arg_3_0._btnrarerank:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._showItemList = slot0:getUserDataTb_()
-	slot0._cacheItemList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._showItemList = arg_4_0:getUserDataTb_()
+	arg_4_0._cacheItemList = arg_4_0:getUserDataTb_()
 
-	slot0._goinfo:SetActive(true)
+	arg_4_0._goinfo:SetActive(true)
 
-	slot0._timeBtns = slot0:getUserDataTb_()
-	slot0._timeArrow = slot0:getUserDataTb_()
-	slot0._rareBtns = slot0:getUserDataTb_()
-	slot0._rareArrow = slot0:getUserDataTb_()
+	arg_4_0._timeBtns = arg_4_0:getUserDataTb_()
+	arg_4_0._timeArrow = arg_4_0:getUserDataTb_()
+	arg_4_0._rareBtns = arg_4_0:getUserDataTb_()
+	arg_4_0._rareArrow = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, 2 do
-		slot0._timeBtns[slot4] = gohelper.findChild(slot0._btntimerank.gameObject, "btn" .. tostring(slot4))
-		slot0._timeArrow[slot4] = gohelper.findChild(slot0._timeBtns[slot4], "txt/arrow").transform
-		slot0._rareBtns[slot4] = gohelper.findChild(slot0._btnrarerank.gameObject, "btn" .. tostring(slot4))
-		slot0._rareArrow[slot4] = gohelper.findChild(slot0._rareBtns[slot4], "txt/arrow").transform
+	for iter_4_0 = 1, 2 do
+		arg_4_0._timeBtns[iter_4_0] = gohelper.findChild(arg_4_0._btntimerank.gameObject, "btn" .. tostring(iter_4_0))
+		arg_4_0._timeArrow[iter_4_0] = gohelper.findChild(arg_4_0._timeBtns[iter_4_0], "txt/arrow").transform
+		arg_4_0._rareBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnrarerank.gameObject, "btn" .. tostring(iter_4_0))
+		arg_4_0._rareArrow[iter_4_0] = gohelper.findChild(arg_4_0._rareBtns[iter_4_0], "txt/arrow").transform
 	end
 
-	slot0._sortIndex = 2
-	slot0._asceTime = false
-	slot0._asceRare = false
+	arg_4_0._sortIndex = 2
+	arg_4_0._asceTime = false
+	arg_4_0._asceRare = false
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_5_0)
 	if not PlayerCardModel.instance:checkHeroDiff() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, PlayerCardCharacterSwitchViewContainer.yesCallback)
 	else
-		slot0:closeThis()
+		arg_5_0:closeThis()
 	end
 end
 
-function slot0._btnchangeOnClick(slot0)
-	PlayerCardCharacterSwitchListModel.instance:changeMainHero(slot0._heroId, slot0._skinId, slot0._isRandom, slot0._isL2d)
+function var_0_0._btnchangeOnClick(arg_6_0)
+	PlayerCardCharacterSwitchListModel.instance:changeMainHero(arg_6_0._heroId, arg_6_0._skinId, arg_6_0._isRandom, arg_6_0._isL2d)
 end
 
-function slot0._btntimerankOnClick(slot0)
-	if slot0._sortIndex ~= 1 then
-		slot0._sortIndex = 1
+function var_0_0._btntimerankOnClick(arg_7_0)
+	if arg_7_0._sortIndex ~= 1 then
+		arg_7_0._sortIndex = 1
 	else
-		slot0._asceTime = not slot0._asceTime
+		arg_7_0._asceTime = not arg_7_0._asceTime
 	end
 
-	slot0._asceRare = false
+	arg_7_0._asceRare = false
 
-	slot0:_refreshBtnIcon()
+	arg_7_0:_refreshBtnIcon()
 end
 
-function slot0._btnrarerankOnClick(slot0)
-	if slot0._sortIndex ~= 2 then
-		slot0._sortIndex = 2
+function var_0_0._btnrarerankOnClick(arg_8_0)
+	if arg_8_0._sortIndex ~= 2 then
+		arg_8_0._sortIndex = 2
 	else
-		slot0._asceRare = not slot0._asceRare
+		arg_8_0._asceRare = not arg_8_0._asceRare
 	end
 
-	slot0._asceTime = false
+	arg_8_0._asceTime = false
 
-	slot0:_refreshBtnIcon()
+	arg_8_0:_refreshBtnIcon()
 end
 
-function slot0._onSwitchHero(slot0, slot1)
-	slot0:_switchHero(slot1[1], slot1[2], slot1[3], slot0._isL2d)
+function var_0_0._onSwitchHero(arg_9_0, arg_9_1)
+	arg_9_0:_switchHero(arg_9_1[1], arg_9_1[2], arg_9_1[3], arg_9_0._isL2d)
 end
 
-function slot0._switchHeroSkin(slot0, slot1, slot2)
-	slot0:_switchHero(slot1, slot2, false, slot0._isL2d)
+function var_0_0._switchHeroSkin(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:_switchHero(arg_10_1, arg_10_2, false, arg_10_0._isL2d)
 end
 
-function slot0._switchL2d(slot0)
-	slot0._isL2d = not slot0._isL2d
+function var_0_0._switchL2d(arg_11_0)
+	arg_11_0._isL2d = not arg_11_0._isL2d
 
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshSwitchView, {
-		heroId = slot0._heroId,
-		skinId = slot0._skinId,
-		isL2d = slot0._isL2d
+		heroId = arg_11_0._heroId,
+		skinId = arg_11_0._skinId,
+		isL2d = arg_11_0._isL2d
 	})
 end
 
-function slot0._switchHero(slot0, slot1, slot2, slot3, slot4)
-	if slot3 then
-		slot0:_updateHero(slot0._curHeroId, slot0._curSkinId, slot3, slot4)
+function var_0_0._switchHero(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	if arg_12_3 then
+		arg_12_0:_updateHero(arg_12_0._curHeroId, arg_12_0._curSkinId, arg_12_3, arg_12_4)
 	else
-		slot0:_updateHero(slot1, slot2, slot3, slot4)
+		arg_12_0:_updateHero(arg_12_1, arg_12_2, arg_12_3, arg_12_4)
 	end
 end
 
-function slot0._showMainHero(slot0)
-	slot0._curHeroId, slot0._curSkinId, slot0._curRandom, slot0._curIsL2d = slot0.cardInfo:getMainHero()
+function var_0_0._showMainHero(arg_13_0)
+	arg_13_0._curHeroId, arg_13_0._curSkinId, arg_13_0._curRandom, arg_13_0._curIsL2d = arg_13_0.cardInfo:getMainHero()
 
-	if slot0._curHeroId and slot0._curSkinId then
-		slot0:_switchHero(slot0._curHeroId, slot0._curSkinId, slot0._curRandom, slot0._curIsL2d)
-		slot0:_refreshSelect()
+	if arg_13_0._curHeroId and arg_13_0._curSkinId then
+		arg_13_0:_switchHero(arg_13_0._curHeroId, arg_13_0._curSkinId, arg_13_0._curRandom, arg_13_0._curIsL2d)
+		arg_13_0:_refreshSelect()
 	end
 end
 
-function slot0._refreshSelect(slot0)
-	if PlayerCardCharacterSwitchListModel.instance:getMoByHeroId(not slot0._isRandom and slot0._heroId) then
-		slot0.viewContainer.scrollView:setSelect(slot2)
+function var_0_0._refreshSelect(arg_14_0)
+	local var_14_0 = not arg_14_0._isRandom and arg_14_0._heroId
+	local var_14_1 = PlayerCardCharacterSwitchListModel.instance:getMoByHeroId(var_14_0)
+	local var_14_2 = arg_14_0.viewContainer.scrollView
+
+	if var_14_1 then
+		var_14_2:setSelect(var_14_1)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_updateParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_15_0)
+	arg_15_0:_updateParam()
+	arg_15_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateParam()
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0:_updateParam()
 	PlayerCardCharacterSwitchListModel.instance:initHeroList()
-	slot0:refreshView()
-	slot0:_refreshBtnIcon()
+	arg_16_0:refreshView()
+	arg_16_0:_refreshBtnIcon()
 end
 
-function slot0._updateParam(slot0)
-	slot0.userId = PlayerModel.instance:getMyUserId()
-	slot0.cardInfo = PlayerCardModel.instance:getCardInfo(slot0.userId)
+function var_0_0._updateParam(arg_17_0)
+	arg_17_0.userId = PlayerModel.instance:getMyUserId()
+	arg_17_0.cardInfo = PlayerCardModel.instance:getCardInfo(arg_17_0.userId)
 end
 
-function slot0.refreshView(slot0)
-	if not slot0.cardInfo then
+function var_0_0.refreshView(arg_18_0)
+	if not arg_18_0.cardInfo then
 		return
 	end
 
-	slot0:_showMainHero()
+	arg_18_0:_showMainHero()
 end
 
-function slot0._refreshBtnIcon(slot0)
-	if slot0._sortIndex == 1 then
-		PlayerCardCharacterSwitchListModel.instance:sortByTime(slot0._asceTime)
+function var_0_0._refreshBtnIcon(arg_19_0)
+	local var_19_0 = arg_19_0._sortIndex
+
+	if var_19_0 == 1 then
+		PlayerCardCharacterSwitchListModel.instance:sortByTime(arg_19_0._asceTime)
 	else
-		PlayerCardCharacterSwitchListModel.instance:sortByRare(slot0._asceRare)
+		PlayerCardCharacterSwitchListModel.instance:sortByRare(arg_19_0._asceRare)
 	end
 
-	gohelper.setActive(slot0._timeBtns[1], slot1 ~= 1)
-	gohelper.setActive(slot0._timeBtns[2], slot1 == 1)
-	gohelper.setActive(slot0._rareBtns[1], slot1 ~= 2)
-	gohelper.setActive(slot0._rareBtns[2], slot1 == 2)
+	gohelper.setActive(arg_19_0._timeBtns[1], var_19_0 ~= 1)
+	gohelper.setActive(arg_19_0._timeBtns[2], var_19_0 == 1)
+	gohelper.setActive(arg_19_0._rareBtns[1], var_19_0 ~= 2)
+	gohelper.setActive(arg_19_0._rareBtns[2], var_19_0 == 2)
 
-	slot2 = slot0._asceTime and -1 or 1
-	slot3 = slot0._asceRare and -1 or 1
+	local var_19_1 = arg_19_0._asceTime and -1 or 1
+	local var_19_2 = arg_19_0._asceRare and -1 or 1
 
-	transformhelper.setLocalScale(slot0._timeArrow[1], 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._timeArrow[2], 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._rareArrow[1], 1, slot3, 1)
-	transformhelper.setLocalScale(slot0._rareArrow[2], 1, slot3, 1)
+	transformhelper.setLocalScale(arg_19_0._timeArrow[1], 1, var_19_1, 1)
+	transformhelper.setLocalScale(arg_19_0._timeArrow[2], 1, var_19_1, 1)
+	transformhelper.setLocalScale(arg_19_0._rareArrow[1], 1, var_19_2, 1)
+	transformhelper.setLocalScale(arg_19_0._rareArrow[2], 1, var_19_2, 1)
 end
 
-function slot0.changeHero(slot0, slot1)
-	PlayerCardCharacterSwitchListModel.instance.curHeroId = slot1
+function var_0_0.changeHero(arg_20_0, arg_20_1)
+	PlayerCardCharacterSwitchListModel.instance.curHeroId = arg_20_1
 end
 
-function slot0._updateHero(slot0, slot1, slot2, slot3, slot4)
-	if slot3 then
-		slot0:changeHero()
+function var_0_0._updateHero(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
+	if arg_21_3 then
+		arg_21_0:changeHero()
 	else
-		slot0:changeHero(slot1)
+		arg_21_0:changeHero(arg_21_1)
 	end
 
-	slot0._heroId = slot1
-	slot0._skinId = slot2
-	slot0._isRandom = slot3
-	slot0._isL2d = slot4
-	slot5 = HeroModel.instance:getByHeroId(slot0._heroId)
-	slot0._hero = slot5
-	slot0._heroSkinConfig = SkinConfig.instance:getSkinCo(slot0._skinId or slot5 and slot5.skin)
+	arg_21_0._heroId = arg_21_1
+	arg_21_0._skinId = arg_21_2
+	arg_21_0._isRandom = arg_21_3
+	arg_21_0._isL2d = arg_21_4
+
+	local var_21_0 = HeroModel.instance:getByHeroId(arg_21_0._heroId)
+
+	arg_21_0._heroSkinConfig, arg_21_0._hero = SkinConfig.instance:getSkinCo(arg_21_0._skinId or var_21_0 and var_21_0.skin), var_21_0
 
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshSwitchView, {
-		heroId = slot0._heroId,
-		skinId = slot0._skinId,
-		isL2d = slot0._isL2d
+		heroId = arg_21_0._heroId,
+		skinId = arg_21_0._skinId,
+		isL2d = arg_21_0._isL2d
 	})
-	PlayerCardModel.instance:setSelectHero(slot0._heroId, slot0._skinId)
+	PlayerCardModel.instance:setSelectHero(arg_21_0._heroId, arg_21_0._skinId)
 end
 
-function slot0._onRefreshSwitchView(slot0)
-	slot0:showTip()
-	slot0:refreshSignature()
-	slot0:refreshCreateTime()
-	slot0:_showSkinList()
+function var_0_0._onRefreshSwitchView(arg_22_0)
+	arg_22_0:showTip()
+	arg_22_0:refreshSignature()
+	arg_22_0:refreshCreateTime()
+	arg_22_0:_showSkinList()
 end
 
-function slot0.refreshSignature(slot0)
-	if not slot0._hero then
+function var_0_0.refreshSignature(arg_23_0)
+	if not arg_23_0._hero then
 		return
 	end
 
-	slot0._simagesignature:UnLoadImage()
-	slot0._simagesignature:LoadImage(ResUrl.getSignature(slot0._hero.config.signature))
+	arg_23_0._simagesignature:UnLoadImage()
+	arg_23_0._simagesignature:LoadImage(ResUrl.getSignature(arg_23_0._hero.config.signature))
 end
 
-function slot0.showTip(slot0)
-	slot1 = slot0._curHeroId == slot0._heroId and slot0._curSkinId == slot0._skinId and slot0._curRandom == slot0._isRandom and slot0._curIsL2d == slot0._isL2d
+function var_0_0.showTip(arg_24_0)
+	local var_24_0 = arg_24_0._curHeroId == arg_24_0._heroId and arg_24_0._curSkinId == arg_24_0._skinId and arg_24_0._curRandom == arg_24_0._isRandom and arg_24_0._curIsL2d == arg_24_0._isL2d
 
-	gohelper.setActive(slot0._btnchange.gameObject, not slot1)
-	gohelper.setActive(slot0._goshowing.gameObject, slot1)
+	gohelper.setActive(arg_24_0._btnchange.gameObject, not var_24_0)
+	gohelper.setActive(arg_24_0._goshowing.gameObject, var_24_0)
 end
 
-function slot0.refreshCreateTime(slot0)
-	if not slot0._hero then
+function var_0_0.refreshCreateTime(arg_25_0)
+	if not arg_25_0._hero then
 		return
 	end
 
-	if not ServerTime.formatTimeInLocal(slot0._hero.createTime / 1000, "%Y / %m / %d") then
+	local var_25_0 = ServerTime.formatTimeInLocal(arg_25_0._hero.createTime / 1000, "%Y / %m / %d")
+
+	if not var_25_0 then
 		return
 	end
 
-	slot0._txttime.text = slot1
+	arg_25_0._txttime.text = var_25_0
 end
 
-slot1 = {
+local var_0_1 = {
 	149.2,
 	-64.3,
 	-151.4
 }
 
-function slot0._showSkinList(slot0, slot1, slot2)
-	slot4 = slot0._skinId
+function var_0_0._showSkinList(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_0._heroId
+	local var_26_1 = arg_26_0._skinId
+	local var_26_2 = arg_26_0._isRandom
 
-	gohelper.setActive(slot0._goheroskin, not slot0._isRandom)
+	gohelper.setActive(arg_26_0._goheroskin, not var_26_2)
 
-	if not slot0._heroId then
+	if not var_26_0 then
 		return
 	end
 
-	slot6 = HeroModel.instance:getByHeroId(slot3)
-	slot7 = tabletool.copy(slot6.skinInfoList)
+	local var_26_3 = HeroModel.instance:getByHeroId(var_26_0)
+	local var_26_4 = tabletool.copy(var_26_3.skinInfoList)
 
-	table.sort(slot7, uv0._sort)
+	table.sort(var_26_4, var_0_0._sort)
 
-	slot8 = SkinInfoMO.New()
+	local var_26_5 = SkinInfoMO.New()
 
-	slot8:init({
+	var_26_5:init({
 		expireSec = 0,
-		skin = slot6.config.skinId
+		skin = var_26_3.config.skinId
 	})
+	table.insert(var_26_4, 1, var_26_5)
 
-	slot12 = slot8
+	local var_26_6 = arg_26_0:removeDuplicates(var_26_4)
 
-	table.insert(slot7, 1, slot12)
-	slot0:_hideAllItems()
+	arg_26_0:_hideAllItems()
 
-	for slot12, slot13 in ipairs(slot0:removeDuplicates(slot7)) do
-		slot14 = slot13.skin
+	for iter_26_0, iter_26_1 in ipairs(var_26_6) do
+		local var_26_7 = iter_26_1.skin
 
-		slot0:_showSkinItem(slot3, slot14, slot14 == slot4)
+		arg_26_0:_showSkinItem(var_26_0, var_26_7, var_26_7 == var_26_1)
 	end
 
-	recthelper.setAnchorY(slot0._gobgbottom.transform, uv1[math.min(#slot7, #uv1)])
+	local var_26_8 = math.min(#var_26_6, #var_0_1)
+
+	recthelper.setAnchorY(arg_26_0._gobgbottom.transform, var_0_1[var_26_8])
 end
 
-function slot0._sort(slot0, slot1)
-	return slot0.skin < slot1.skin
+function var_0_0._sort(arg_27_0, arg_27_1)
+	return arg_27_0.skin < arg_27_1.skin
 end
 
-function slot0.removeDuplicates(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0.removeDuplicates(arg_28_0, arg_28_1)
+	local var_28_0 = {}
+	local var_28_1 = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		if not slot2[slot8.skin] then
-			slot2[slot8.skin] = true
+	for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
+		if not var_28_0[iter_28_1.skin] then
+			var_28_0[iter_28_1.skin] = true
 
-			table.insert(slot3, slot8)
+			table.insert(var_28_1, iter_28_1)
 		end
 	end
 
-	return slot3
+	return var_28_1
 end
 
-function slot0._hideAllItems(slot0)
-	for slot5 = 1, #slot0._showItemList do
-		slot6 = slot0._showItemList[slot5]
+function var_0_0._hideAllItems(arg_29_0)
+	local var_29_0 = #arg_29_0._showItemList
 
-		gohelper.setActive(slot6.viewGO, false)
-		table.insert(slot0._cacheItemList, slot6)
+	for iter_29_0 = 1, var_29_0 do
+		local var_29_1 = arg_29_0._showItemList[iter_29_0]
 
-		slot0._showItemList[slot5] = nil
+		gohelper.setActive(var_29_1.viewGO, false)
+		table.insert(arg_29_0._cacheItemList, var_29_1)
+
+		arg_29_0._showItemList[iter_29_0] = nil
 	end
 end
 
-function slot0._showSkinItem(slot0, slot1, slot2, slot3)
-	slot4 = table.remove(slot0._cacheItemList) or MonoHelper.addLuaComOnceToGo(gohelper.cloneInPlace(slot0._goheroskinItem), PlayerCardCharacterSwitchSkinItem)
+function var_0_0._showSkinItem(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	local var_30_0 = table.remove(arg_30_0._cacheItemList)
 
-	gohelper.setAsLastSibling(slot4.viewGO)
-	table.insert(slot0._showItemList, slot4)
-	slot4:showSkin(slot1, slot2)
-	slot4:setSelected(slot3)
+	if not var_30_0 then
+		local var_30_1 = gohelper.cloneInPlace(arg_30_0._goheroskinItem)
+
+		var_30_0 = MonoHelper.addLuaComOnceToGo(var_30_1, PlayerCardCharacterSwitchSkinItem)
+	end
+
+	gohelper.setAsLastSibling(var_30_0.viewGO)
+	table.insert(arg_30_0._showItemList, var_30_0)
+	var_30_0:showSkin(arg_30_1, arg_30_2)
+	var_30_0:setSelected(arg_30_3)
 end
 
-function slot0.onClose(slot0)
-	slot0.animator:Play("close")
+function var_0_0.onClose(arg_31_0)
+	arg_31_0.animator:Play("close")
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.OnCloseHeroView)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagesignature:UnLoadImage()
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, slot0)
+function var_0_0.onDestroyView(arg_32_0)
+	arg_32_0._simagesignature:UnLoadImage()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_32_0)
 end
 
-return slot0
+return var_0_0

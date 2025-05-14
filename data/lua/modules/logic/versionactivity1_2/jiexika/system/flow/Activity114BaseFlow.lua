@@ -1,68 +1,73 @@
-module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114BaseFlow", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114BaseFlow", package.seeall)
 
-slot0 = class("Activity114BaseFlow", FlowSequence)
+local var_0_0 = class("Activity114BaseFlow", FlowSequence)
 
-function slot0.initParams(slot0, slot1, slot2)
-	slot0.context = slot1
+function var_0_0.initParams(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.context = arg_1_1
 
-	if slot0.context.eventId then
-		slot0.context.eventCo = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, slot0.context.eventId)
+	if arg_1_0.context.eventId then
+		arg_1_0.context.eventCo = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, arg_1_0.context.eventId)
 	end
 
-	slot0.context.nowWeek = Activity114Model.instance.serverData.week
-	slot0.context.nowDay = slot0.context.nowDay or Activity114Model.instance.serverData.day
-	slot0.context.nowRound = slot0.context.nowRound or Activity114Model.instance.serverData.round
-	slot0.context.preAttention = slot0.context.preAttention or Activity114Model.instance.serverData.attention
-	slot0.context.preAttrs = tabletool.copy(Activity114Model.instance.attrDict)
+	arg_1_0.context.nowWeek = Activity114Model.instance.serverData.week
+	arg_1_0.context.nowDay = arg_1_0.context.nowDay or Activity114Model.instance.serverData.day
+	arg_1_0.context.nowRound = arg_1_0.context.nowRound or Activity114Model.instance.serverData.round
+	arg_1_0.context.preAttention = arg_1_0.context.preAttention or Activity114Model.instance.serverData.attention
+	arg_1_0.context.preAttrs = tabletool.copy(Activity114Model.instance.attrDict)
 
-	slot0:setup(slot1, slot2)
+	arg_1_0:setup(arg_1_1, arg_1_2)
 end
 
-function slot0.setup(slot0, slot1, slot2)
-	slot0:addWork(Activity114WaitStoryCloseEndWork.New())
-	slot0:addWork(Activity114DelayWork.New(0))
+function var_0_0.setup(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:addWork(Activity114WaitStoryCloseEndWork.New())
+	arg_2_0:addWork(Activity114DelayWork.New(0))
 
-	if not slot2 then
-		slot0:addNoSkipWork()
+	if not arg_2_2 then
+		arg_2_0:addNoSkipWork()
 	else
-		slot0:addSkipWork()
+		arg_2_0:addSkipWork()
 	end
 
-	slot0:addRoundEndStory()
-	slot0:addRoundEndTransition()
-	slot0:addWork(Activity114ChangeEventWork.New())
-	slot0:addWork(Activity114WaitStoryCloseEndWork.New())
-	slot0:start(slot0.context)
+	arg_2_0:addRoundEndStory()
+	arg_2_0:addRoundEndTransition()
+	arg_2_0:addWork(Activity114ChangeEventWork.New())
+	arg_2_0:addWork(Activity114WaitStoryCloseEndWork.New())
+	arg_2_0:start(arg_2_0.context)
 end
 
-function slot0.addNoSkipWork(slot0)
-	slot0:addEventBeginStory()
-	slot0:addEventWork()
+function var_0_0.addNoSkipWork(arg_3_0)
+	arg_3_0:addEventBeginStory()
+	arg_3_0:addEventWork()
 end
 
-function slot0.addSkipWork(slot0)
-	slot0:addEventBeginStory()
-	slot0:addEventWork()
+function var_0_0.addSkipWork(arg_4_0)
+	arg_4_0:addEventBeginStory()
+	arg_4_0:addEventWork()
 end
 
-function slot0.addEventWork(slot0)
+function var_0_0.addEventWork(arg_5_0)
+	return
 end
 
-function slot0.getContext(slot0)
-	return slot0.context
+function var_0_0.getContext(arg_6_0)
+	return arg_6_0.context
 end
 
-function slot0.canFinishStory(slot0)
-	if not slot0._workList[slot0._curIndex] then
+function var_0_0.canFinishStory(arg_7_0)
+	local var_7_0 = arg_7_0._workList[arg_7_0._curIndex]
+
+	if not var_7_0 then
 		return true
 	end
 
-	if not slot0.context.eventCo then
+	local var_7_1 = arg_7_0.context.eventCo
+
+	if not var_7_1 then
 		return true
 	end
 
-	if slot0.context.storyType == Activity114Enum.StoryType.Event and (slot2.config.isCheckEvent > 0 or slot2.config.testId > 0) then
-		slot0:_closeCurStoryWork(slot1)
+	if arg_7_0.context.storyType == Activity114Enum.StoryType.Event and (var_7_1.config.isCheckEvent > 0 or var_7_1.config.testId > 0) then
+		arg_7_0:_closeCurStoryWork(var_7_0)
 
 		return false
 	end
@@ -70,30 +75,34 @@ function slot0.canFinishStory(slot0)
 	return true
 end
 
-function slot0._closeCurStoryWork(slot0, slot1)
-	slot0.context.storyWorkEnd = true
+function var_0_0._closeCurStoryWork(arg_8_0, arg_8_1)
+	arg_8_0.context.storyWorkEnd = true
 
-	slot1:forceEndStory()
+	arg_8_1:forceEndStory()
 end
 
-function slot0.addEventBeginStory(slot0)
-	if not slot0.context.eventCo then
+function var_0_0.addEventBeginStory(arg_9_0)
+	local var_9_0 = arg_9_0.context.eventCo
+
+	if not var_9_0 then
 		return
 	end
 
-	if slot1.config.storyId <= 0 then
+	if var_9_0.config.storyId <= 0 then
 		return
 	end
 
-	slot0:addWork(Activity114StoryWork.New(slot1.config.storyId, Activity114Enum.StoryType.Event))
+	arg_9_0:addWork(Activity114StoryWork.New(var_9_0.config.storyId, Activity114Enum.StoryType.Event))
 end
 
-function slot0.addRoundEndStory(slot0)
-	if not Activity114Config.instance:getRoundCo(Activity114Model.instance.id, slot0.context.nowDay, slot0.context.nowRound) then
+function var_0_0.addRoundEndStory(arg_10_0)
+	local var_10_0 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, arg_10_0.context.nowDay, arg_10_0.context.nowRound)
+
+	if not var_10_0 then
 		return
 	end
 
-	if slot1.storyId <= 0 then
+	if var_10_0.storyId <= 0 then
 		return
 	end
 
@@ -101,19 +110,21 @@ function slot0.addRoundEndStory(slot0)
 		return
 	end
 
-	slot0:addWork(Activity114StoryWork.New(slot1.storyId, Activity114Enum.StoryType.RoundEnd))
+	arg_10_0:addWork(Activity114StoryWork.New(var_10_0.storyId, Activity114Enum.StoryType.RoundEnd))
 end
 
-function slot0.addRoundEndTransition(slot0)
-	if not Activity114Config.instance:getRoundCo(Activity114Model.instance.id, slot0.context.nowDay, slot0.context.nowRound) then
+function var_0_0.addRoundEndTransition(arg_11_0)
+	local var_11_0 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, arg_11_0.context.nowDay, arg_11_0.context.nowRound)
+
+	if not var_11_0 then
 		return
 	end
 
-	if slot1.transition <= 0 then
+	if var_11_0.transition <= 0 then
 		return
 	end
 
-	slot0:addWork(Activity114OpenTransitionViewWork.New(slot1.transition))
+	arg_11_0:addWork(Activity114OpenTransitionViewWork.New(var_11_0.transition))
 end
 
-return slot0
+return var_0_0

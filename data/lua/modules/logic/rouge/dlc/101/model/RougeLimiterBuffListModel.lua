@@ -1,49 +1,57 @@
-module("modules.logic.rouge.dlc.101.model.RougeLimiterBuffListModel", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.model.RougeLimiterBuffListModel", package.seeall)
 
-slot0 = class("RougeLimiterBuffListModel", ListScrollModel)
+local var_0_0 = class("RougeLimiterBuffListModel", ListScrollModel)
 
-function slot0.onInit(slot0, slot1)
-	slot0:setList(slot0:getBuffCosByType(slot1))
-	slot0:try2SelectEquipedBuff()
+function var_0_0.onInit(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0:getBuffCosByType(arg_1_1)
+
+	arg_1_0:setList(var_1_0)
+	arg_1_0:try2SelectEquipedBuff()
 end
 
-function slot0.getBuffCosByType(slot0, slot1)
-	slot4 = {}
+function var_0_0.getBuffCosByType(arg_2_0, arg_2_1)
+	local var_2_0 = RougeModel.instance:getVersion()
+	local var_2_1 = RougeDLCConfig101.instance:getAllLimiterBuffCosByType(var_2_0, arg_2_1)
+	local var_2_2 = {}
 
-	if RougeDLCConfig101.instance:getAllLimiterBuffCosByType(RougeModel.instance:getVersion(), slot1) then
-		for slot8, slot9 in ipairs(slot3) do
-			table.insert(slot4, slot9)
+	if var_2_1 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+			table.insert(var_2_2, iter_2_1)
 		end
 	end
 
-	table.sort(slot4, slot0._buffSortFunc)
+	table.sort(var_2_2, arg_2_0._buffSortFunc)
 
-	return slot4
+	return var_2_2
 end
 
-function slot0._buffSortFunc(slot0, slot1)
-	if slot0.blank == 1 ~= (slot1.blank == 1) then
-		return slot2
+function var_0_0._buffSortFunc(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.blank == 1
+
+	if var_3_0 ~= (arg_3_1.blank == 1) then
+		return var_3_0
 	end
 
-	return slot0.id < slot1.id
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.try2SelectEquipedBuff(slot0)
-	slot1, slot2 = slot0:getEquipedBuffId()
+function var_0_0.try2SelectEquipedBuff(arg_4_0)
+	local var_4_0, var_4_1 = arg_4_0:getEquipedBuffId()
 
-	slot0:selectCell(slot1, true)
-	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.OnSelectBuff, slot2, true)
+	arg_4_0:selectCell(var_4_0, true)
+	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.OnSelectBuff, var_4_1, true)
 end
 
-function slot0.getEquipedBuffId(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if RougeDLCModel101.instance:getLimiterBuffState(slot6.id) == RougeDLCEnum101.BuffState.Equiped then
-			return slot5, slot6.id
+function var_0_0.getEquipedBuffId(arg_5_0)
+	local var_5_0 = arg_5_0:getList()
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		if RougeDLCModel101.instance:getLimiterBuffState(iter_5_1.id) == RougeDLCEnum101.BuffState.Equiped then
+			return iter_5_0, iter_5_1.id
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

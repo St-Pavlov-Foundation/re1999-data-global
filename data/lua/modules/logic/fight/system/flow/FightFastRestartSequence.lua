@@ -1,14 +1,14 @@
-module("modules.logic.fight.system.flow.FightFastRestartSequence", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightFastRestartSequence", package.seeall)
 
-slot0 = class("FightFastRestartSequence", BaseFightSequence)
+local var_0_0 = class("FightFastRestartSequence", BaseFightSequence)
 
-function slot0.buildFlow(slot0)
-	uv0.super.buildFlow(slot0)
+function var_0_0.buildFlow(arg_1_0)
+	var_0_0.super.buildFlow(arg_1_0)
 
-	slot1 = FightModel.instance:getFightParam()
+	local var_1_0 = FightModel.instance:getFightParam()
 
-	slot0:addWork(FightWorkRestartBefore.New(slot1))
-	slot0:addWork(FightWorkFastRestartRequest.New(slot1))
+	arg_1_0:addWork(FightWorkRestartBefore.New(var_1_0))
+	arg_1_0:addWork(FightWorkFastRestartRequest.New(var_1_0))
 end
 
-return slot0
+return var_0_0

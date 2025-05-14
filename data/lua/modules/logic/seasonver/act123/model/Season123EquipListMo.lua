@@ -1,12 +1,13 @@
-slot0 = pureTable("Season123EquipListMo")
+﻿local var_0_0 = pureTable("Season123EquipListMo")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.uid
-	slot0.itemId = slot1.itemId
-	slot0.originMO = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.uid
+	arg_2_0.itemId = arg_2_1.itemId
+	arg_2_0.originMO = arg_2_1
 end
 
-return slot0
+return var_0_0

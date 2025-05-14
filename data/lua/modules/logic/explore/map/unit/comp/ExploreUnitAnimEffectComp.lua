@@ -1,80 +1,85 @@
-module("modules.logic.explore.map.unit.comp.ExploreUnitAnimEffectComp", package.seeall)
+﻿module("modules.logic.explore.map.unit.comp.ExploreUnitAnimEffectComp", package.seeall)
 
-slot0 = class("ExploreUnitAnimEffectComp", LuaCompBase)
+local var_0_0 = class("ExploreUnitAnimEffectComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.unit = slot1
-	slot0._effectGo = nil
-	slot0._isOnce = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.unit = arg_1_1
+	arg_1_0._effectGo = nil
+	arg_1_0._isOnce = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 end
 
-function slot0.playAnim(slot0, slot1, slot2)
-	slot0._isOnce = false
+function var_0_0.playAnim(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._isOnce = false
 
-	slot0:_releaseEffectGo()
+	arg_3_0:_releaseEffectGo()
 
-	if slot1 then
-		slot3, slot0._isOnce, slot5, slot6, slot7 = ExploreConfig.instance:getUnitEffectConfig(slot0.unit:getResPath(), slot1)
+	if arg_3_1 then
+		local var_3_0, var_3_1, var_3_2, var_3_3, var_3_4 = ExploreConfig.instance:getUnitEffectConfig(arg_3_0.unit:getResPath(), arg_3_1)
 
-		if slot2 and slot4 then
+		arg_3_0._isOnce = var_3_1
+
+		if arg_3_2 and var_3_1 then
 			return
 		end
 
-		ExploreHelper.triggerAudio(slot5, slot6, slot0.unit.go, slot7 and slot0.unit.id or nil)
+		ExploreHelper.triggerAudio(var_3_2, var_3_3, arg_3_0.unit.go, var_3_4 and arg_3_0.unit.id or nil)
 
-		if string.nilorempty(slot3) == false then
-			slot0._effectPath = ResUrl.getExploreEffectPath(slot3)
-			slot0._assetId = ResMgr.getAbAsset(slot0._effectPath, slot0._onResLoaded, slot0, slot0._assetId)
+		if string.nilorempty(var_3_0) == false then
+			arg_3_0._effectPath = ResUrl.getExploreEffectPath(var_3_0)
+			arg_3_0._assetId = ResMgr.getAbAsset(arg_3_0._effectPath, arg_3_0._onResLoaded, arg_3_0, arg_3_0._assetId)
 		end
 	else
-		slot0._effectPath = nil
+		arg_3_0._effectPath = nil
 	end
 end
 
-function slot0._onResLoaded(slot0, slot1)
-	if not slot1.IsLoadSuccess then
+function var_0_0._onResLoaded(arg_4_0, arg_4_1)
+	if not arg_4_1.IsLoadSuccess then
 		return
 	end
 
-	if slot0._effectPath == slot1:getUrl() then
-		slot0:_releaseEffectGo()
+	if arg_4_0._effectPath == arg_4_1:getUrl() then
+		arg_4_0:_releaseEffectGo()
 
-		slot0._effectPath = slot1:getUrl()
-		slot0._effectGo = slot1:getInstance(nil, , slot0.unit:getEffectRoot().gameObject)
+		arg_4_0._effectPath = arg_4_1:getUrl()
+
+		local var_4_0 = arg_4_0.unit:getEffectRoot()
+
+		arg_4_0._effectGo = arg_4_1:getInstance(nil, nil, var_4_0.gameObject)
 	end
 end
 
-function slot0.destoryEffectIfOnce(slot0)
-	if slot0._isOnce then
-		slot0:_releaseEffectGo()
+function var_0_0.destoryEffectIfOnce(arg_5_0)
+	if arg_5_0._isOnce then
+		arg_5_0:_releaseEffectGo()
 	end
 end
 
-function slot0._releaseEffectGo(slot0)
-	ResMgr.removeCallBack(slot0._assetId)
-	ResMgr.ReleaseObj(slot0._effectGo)
+function var_0_0._releaseEffectGo(arg_6_0)
+	ResMgr.removeCallBack(arg_6_0._assetId)
+	ResMgr.ReleaseObj(arg_6_0._effectGo)
 
-	slot0._effectGo = nil
-	slot0._effectPath = nil
+	arg_6_0._effectGo = nil
+	arg_6_0._effectPath = nil
 end
 
-function slot0.clear(slot0)
-	if not slot0.unit then
+function var_0_0.clear(arg_7_0)
+	if not arg_7_0.unit then
 		return
 	end
 
-	GameSceneMgr.instance:getCurScene().audio:stopAudioByUnit(slot0.unit.id)
+	GameSceneMgr.instance:getCurScene().audio:stopAudioByUnit(arg_7_0.unit.id)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._isOnce = false
-	slot0.unit = false
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0._isOnce = false
+	arg_8_0.unit = false
 
-	slot0:_releaseEffectGo()
+	arg_8_0:_releaseEffectGo()
 end
 
-return slot0
+return var_0_0

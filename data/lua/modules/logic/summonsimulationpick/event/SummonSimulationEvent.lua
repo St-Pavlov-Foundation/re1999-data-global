@@ -1,10 +1,11 @@
-module("modules.logic.summonsimulationpick.event.SummonSimulationEvent", package.seeall)
+﻿module("modules.logic.summonsimulationpick.event.SummonSimulationEvent", package.seeall)
 
-slot0 = _M
-slot0.onGetSummonInfo = 0
-slot0.onSummonSimulation = 1
-slot0.onSaveResult = 2
-slot0.onSelectResult = 3
-slot0.onSelectItem = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.onGetSummonInfo = 0
+var_0_0.onSummonSimulation = 1
+var_0_0.onSaveResult = 2
+var_0_0.onSelectResult = 3
+var_0_0.onSelectItem = 4
+
+return var_0_0

@@ -1,115 +1,125 @@
-module("modules.logic.room.model.critter.RoomTrainCritterListModel", package.seeall)
+﻿module("modules.logic.room.model.critter.RoomTrainCritterListModel", package.seeall)
 
-slot0 = class("RoomTrainCritterListModel", ListScrollModel)
+local var_0_0 = class("RoomTrainCritterListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
+function var_0_0._clearData(arg_4_0)
+	return
 end
 
-function slot0.setCritterList(slot0, slot1)
-	slot0._filterMO = slot1
+function var_0_0.setCritterList(arg_5_0, arg_5_1)
+	arg_5_0._filterMO = arg_5_1
 
-	if slot0._sortAttrId == nil then
-		slot0._sortAttrId = CritterEnum.AttributeType.Efficiency
+	if arg_5_0._sortAttrId == nil then
+		arg_5_0._sortAttrId = CritterEnum.AttributeType.Efficiency
 	end
 
-	if slot0._isSortHightToLow == nil then
-		slot0._isSortHightToLow = true
+	if arg_5_0._isSortHightToLow == nil then
+		arg_5_0._isSortHightToLow = true
 	end
 
-	slot0:updateCritterList()
+	arg_5_0:updateCritterList()
 end
 
-function slot0.updateCritterList(slot0, slot1)
-	slot2 = slot0._filterMO
-	slot3 = {}
+function var_0_0.updateCritterList(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._filterMO
+	local var_6_1 = {}
+	local var_6_2 = {}
+	local var_6_3 = CritterModel.instance:getList()
 
-	for slot9 = 1, #CritterModel.instance:getList() do
-		if slot5[slot9] and not slot10:isMaturity() then
-			if slot10:isCultivating() and slot1 ~= slot10.id or slot2 and not slot2:isPassedFilter(slot10) then
-				-- Nothing
+	for iter_6_0 = 1, #var_6_3 do
+		local var_6_4 = var_6_3[iter_6_0]
+
+		if var_6_4 and not var_6_4:isMaturity() then
+			if var_6_4:isCultivating() and arg_6_1 ~= var_6_4.id or var_6_0 and not var_6_0:isPassedFilter(var_6_4) then
+				var_6_2[var_6_4.id] = var_6_4
 			else
-				table.insert(slot3, slot10)
+				table.insert(var_6_1, var_6_4)
 			end
 		end
 	end
 
-	slot0._trainCritterMODict = {
-		[slot10.id] = slot10
-	}
+	arg_6_0._trainCritterMODict = var_6_2
 
-	table.sort(slot3, slot0:_getSortFunction())
-	slot0:setList(slot3)
+	table.sort(var_6_1, arg_6_0:_getSortFunction())
+	arg_6_0:setList(var_6_1)
 end
 
-function slot0.sortByAttrId(slot0, slot1, slot2)
-	if slot1 ~= nil then
-		slot0._sortAttrId = slot1
+function var_0_0.sortByAttrId(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= nil then
+		arg_7_0._sortAttrId = arg_7_1
 	end
 
-	if slot2 ~= nil then
-		slot0._isSortHightToLow = slot2
+	if arg_7_2 ~= nil then
+		arg_7_0._isSortHightToLow = arg_7_2
 	end
 
-	slot0:sort(slot0:_getSortFunction())
+	arg_7_0:sort(arg_7_0:_getSortFunction())
 end
 
-function slot0._getSortFunction(slot0)
-	slot0._trainHeroMO = RoomTrainHeroListModel.instance:getById(RoomTrainHeroListModel.instance:getSelectId())
+function var_0_0._getSortFunction(arg_8_0)
+	arg_8_0._trainHeroMO = RoomTrainHeroListModel.instance:getById(RoomTrainHeroListModel.instance:getSelectId())
 
-	if slot0._sortFunc then
-		return slot0._sortFunc
+	if arg_8_0._sortFunc then
+		return arg_8_0._sortFunc
 	end
 
-	function slot0._sortFunc(slot0, slot1)
-		if uv0._trainHeroMO and uv0:_getCritterValue(uv0._trainHeroMO, slot0) ~= uv0:_getCritterValue(uv0._trainHeroMO, slot1) then
-			return slot3 < slot2
+	function arg_8_0._sortFunc(arg_9_0, arg_9_1)
+		if arg_8_0._trainHeroMO then
+			local var_9_0 = arg_8_0:_getCritterValue(arg_8_0._trainHeroMO, arg_9_0)
+			local var_9_1 = arg_8_0:_getCritterValue(arg_8_0._trainHeroMO, arg_9_1)
+
+			if var_9_0 ~= var_9_1 then
+				return var_9_1 < var_9_0
+			end
 		end
 
-		slot2, slot3 = uv0:_getAttrValue(slot0, uv0._sortAttrId)
-		slot4, slot5 = uv0:_getAttrValue(slot1, uv0._sortAttrId)
+		local var_9_2, var_9_3 = arg_8_0:_getAttrValue(arg_9_0, arg_8_0._sortAttrId)
+		local var_9_4, var_9_5 = arg_8_0:_getAttrValue(arg_9_1, arg_8_0._sortAttrId)
 
-		if slot3 ~= slot5 then
-			if uv0._isSortHightToLow then
-				return slot5 < slot3
+		if var_9_3 ~= var_9_5 then
+			if arg_8_0._isSortHightToLow then
+				return var_9_5 < var_9_3
 			end
 
-			return slot3 < slot5
+			return var_9_3 < var_9_5
 		end
 
-		if slot2 ~= slot4 then
-			if uv0._isSortHightToLow then
-				return slot4 < slot2
+		if var_9_2 ~= var_9_4 then
+			if arg_8_0._isSortHightToLow then
+				return var_9_4 < var_9_2
 			end
 
-			return slot2 < slot4
+			return var_9_2 < var_9_4
 		end
 
-		return CritterHelper.sortByTotalAttrValue(slot0, slot1)
+		return CritterHelper.sortByTotalAttrValue(arg_9_0, arg_9_1)
 	end
 
-	return slot0._sortFunc
+	return arg_8_0._sortFunc
 end
 
-function slot0._getCritterValue(slot0, slot1, slot2)
-	if slot1:chcekPrefernectCritterId(slot2:getDefineId()) then
-		if slot1:getPrefernectType() == CritterEnum.PreferenceType.All then
+function var_0_0._getCritterValue(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1:chcekPrefernectCritterId(arg_10_2:getDefineId()) then
+		local var_10_0 = arg_10_1:getPrefernectType()
+
+		if var_10_0 == CritterEnum.PreferenceType.All then
 			return 110
-		elseif slot3 == CritterEnum.PreferenceType.Catalogue then
+		elseif var_10_0 == CritterEnum.PreferenceType.Catalogue then
 			return 120
-		elseif slot3 == CritterEnum.PreferenceType.Critter then
+		elseif var_10_0 == CritterEnum.PreferenceType.Critter then
 			return 130
 		end
 
@@ -119,103 +129,105 @@ function slot0._getCritterValue(slot0, slot1, slot2)
 	return 0
 end
 
-function slot0._getAttrValue(slot0, slot1, slot2)
-	if slot2 == CritterEnum.AttributeType.Efficiency then
-		return slot1.efficiency, slot1.efficiencyIncrRate
-	elseif slot2 == CritterEnum.AttributeType.Patience then
-		return slot1.patience, slot1.patienceIncrRate
-	elseif slot2 == CritterEnum.AttributeType.Lucky then
-		return slot1.lucky, slot1.luckyIncrRate
+function var_0_0._getAttrValue(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_2 == CritterEnum.AttributeType.Efficiency then
+		return arg_11_1.efficiency, arg_11_1.efficiencyIncrRate
+	elseif arg_11_2 == CritterEnum.AttributeType.Patience then
+		return arg_11_1.patience, arg_11_1.patienceIncrRate
+	elseif arg_11_2 == CritterEnum.AttributeType.Lucky then
+		return arg_11_1.lucky, arg_11_1.luckyIncrRate
 	end
 
 	return 0
 end
 
-function slot0.getSortAttrId(slot0)
-	return slot0._sortAttrId
+function var_0_0.getSortAttrId(arg_12_0)
+	return arg_12_0._sortAttrId
 end
 
-function slot0.getSortIsHightToLow(slot0)
-	return slot0._isSortHightToLow
+function var_0_0.getSortIsHightToLow(arg_13_0)
+	return arg_13_0._isSortHightToLow
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.clearSelect(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._scrollViews) do
+		iter_14_1:setSelect(nil)
 	end
 
-	slot0._selectUid = nil
+	arg_14_0._selectUid = nil
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectUid))
+function var_0_0._refreshSelect(arg_15_0)
+	local var_15_0 = arg_15_0:getById(arg_15_0._selectUid)
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._scrollViews) do
+		iter_15_1:setSelect(var_15_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectUid = slot1
+function var_0_0.setSelect(arg_16_0, arg_16_1)
+	arg_16_0._selectUid = arg_16_1
 
-	slot0:_refreshSelect()
+	arg_16_0:_refreshSelect()
 end
 
-function slot0.getSelectId(slot0)
-	return slot0._selectUid
+function var_0_0.getSelectId(arg_17_0)
+	return arg_17_0._selectUid
 end
 
-function slot0.getById(slot0, slot1)
-	return uv0.super.getById(slot0, slot1) or slot0._trainCritterMODict and slot0._trainCritterMODict[slot1]
+function var_0_0.getById(arg_18_0, arg_18_1)
+	return var_0_0.super.getById(arg_18_0, arg_18_1) or arg_18_0._trainCritterMODict and arg_18_0._trainCritterMODict[arg_18_1]
 end
 
-function slot0.setFilterResType(slot0, slot1, slot2)
-	slot0._filterIncludeList = {}
-	slot0._filterExcludeList = {}
+function var_0_0.setFilterResType(arg_19_0, arg_19_1, arg_19_2)
+	arg_19_0._filterIncludeList = {}
+	arg_19_0._filterExcludeList = {}
 
-	slot0:_setList(slot0._filterIncludeList, slot1)
-	slot0:_setList(slot0._filterExcludeList, slot2)
+	arg_19_0:_setList(arg_19_0._filterIncludeList, arg_19_1)
+	arg_19_0:_setList(arg_19_0._filterExcludeList, arg_19_2)
 end
 
-function slot0.isFilterType(slot0, slot1, slot2)
-	if slot0:_isSameValue(slot0._filterIncludeList, slot1) and slot0:_isSameValue(slot0._filterExcludeList, slot2) then
+function var_0_0.isFilterType(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_0:_isSameValue(arg_20_0._filterIncludeList, arg_20_1) and arg_20_0:_isSameValue(arg_20_0._filterExcludeList, arg_20_2) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isFilterTypeEmpty(slot0)
-	return slot0:_isEmptyList(slot0._filterTypeList)
+function var_0_0.isFilterTypeEmpty(arg_21_0)
+	return arg_21_0:_isEmptyList(arg_21_0._filterTypeList)
 end
 
-function slot0._setList(slot0, slot1, slot2)
-	tabletool.addValues(slot1, slot2)
+function var_0_0._setList(arg_22_0, arg_22_1, arg_22_2)
+	tabletool.addValues(arg_22_1, arg_22_2)
 end
 
-function slot0._isListValue(slot0, slot1, slot2)
-	if slot2 and tabletool.indexOf(slot1, slot2) then
+function var_0_0._isListValue(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_2 and tabletool.indexOf(arg_23_1, arg_23_2) then
 		return true
 	end
 
 	return false
 end
 
-function slot0._isSameValue(slot0, slot1, slot2)
-	if slot0:_isEmptyList(slot1) and slot0:_isEmptyList(slot2) then
+function var_0_0._isSameValue(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_0:_isEmptyList(arg_24_1) and arg_24_0:_isEmptyList(arg_24_2) then
 		return true
 	end
 
-	if #slot1 ~= #slot2 then
+	if #arg_24_1 ~= #arg_24_2 then
 		return false
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		if not tabletool.indexOf(slot1, slot7) then
+	for iter_24_0, iter_24_1 in ipairs(arg_24_2) do
+		if not tabletool.indexOf(arg_24_1, iter_24_1) then
 			return false
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if not tabletool.indexOf(slot2, slot7) then
+	for iter_24_2, iter_24_3 in ipairs(arg_24_1) do
+		if not tabletool.indexOf(arg_24_2, iter_24_3) then
 			return false
 		end
 	end
@@ -223,10 +235,10 @@ function slot0._isSameValue(slot0, slot1, slot2)
 	return true
 end
 
-function slot0._isEmptyList(slot0, slot1)
-	return slot1 == nil or #slot1 < 1
+function var_0_0._isEmptyList(arg_25_0, arg_25_1)
+	return arg_25_1 == nil or #arg_25_1 < 1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

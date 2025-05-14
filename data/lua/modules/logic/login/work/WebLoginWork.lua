@@ -1,71 +1,78 @@
-module("modules.logic.login.work.WebLoginWork", package.seeall)
+﻿module("modules.logic.login.work.WebLoginWork", package.seeall)
 
-slot0 = class("WebLoginWork", BaseWork)
+local var_0_0 = class("WebLoginWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot3 = {}
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = LoginController.instance:get_httpWebLoginUrl(arg_1_0.context.useBackupUrl)
+	local var_1_1 = {}
 
-	table.insert(slot3, string.format("slSessionId=%s", LoginModel.instance.channelSessionId))
-	table.insert(slot3, string.format("clientVersion=%s", "0.0.0"))
-	table.insert(slot3, string.format("sysType=%s", BootNativeUtil.isAndroid() and "1" or "0"))
-	table.insert(slot3, string.format("accountId=%s", LoginModel.instance.channelUserId))
-	table.insert(slot3, string.format("channelId=%s", LoginModel.instance.channelId))
-	table.insert(slot3, string.format("subChannelId=%s", SDKMgr.instance:getSubChannelId()))
+	table.insert(var_1_1, string.format("slSessionId=%s", LoginModel.instance.channelSessionId))
+	table.insert(var_1_1, string.format("clientVersion=%s", "0.0.0"))
+	table.insert(var_1_1, string.format("sysType=%s", BootNativeUtil.isAndroid() and "1" or "0"))
+	table.insert(var_1_1, string.format("accountId=%s", LoginModel.instance.channelUserId))
+	table.insert(var_1_1, string.format("channelId=%s", LoginModel.instance.channelId))
+	table.insert(var_1_1, string.format("subChannelId=%s", SDKMgr.instance:getSubChannelId()))
 
-	slot2 = LoginController.instance:get_httpWebLoginUrl(slot0.context.useBackupUrl) .. "?" .. table.concat(slot3, "&")
-	slot0._url = slot2
-	slot0._httpWebLoginRequestId = SLFramework.SLWebRequest.Instance:Get(slot2, slot0._onHttpWebLoginUrlResponse, slot0)
+	local var_1_2 = var_1_0 .. "?" .. table.concat(var_1_1, "&")
 
-	logNormal(slot2)
+	arg_1_0._url = var_1_2
+	arg_1_0._httpWebLoginRequestId = SLFramework.SLWebRequest.Instance:Get(var_1_2, arg_1_0._onHttpWebLoginUrlResponse, arg_1_0)
+
+	logNormal(var_1_2)
 end
 
-function slot0._onHttpWebLoginUrlResponse(slot0, slot1, slot2)
-	slot0._httpWebLoginRequestId = nil
-	slot3 = slot0._url
+function var_0_0._onHttpWebLoginUrlResponse(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._httpWebLoginRequestId = nil
 
-	if slot1 and slot2 and slot2 ~= "" then
-		if cjson.decode(slot2) and slot4.resultCode and slot4.resultCode == 0 then
-			LoginModel.instance.userName = slot4.userName
-			LoginModel.instance.sessionId = slot4.sessionId
+	local var_2_0 = arg_2_0._url
 
-			if slot4.zoneInfo then
-				slot0.context.serverMO = {
-					id = slot5.id,
-					name = slot5.name,
-					prefix = slot5.prefix,
-					state = slot5.state
+	if arg_2_1 and arg_2_2 and arg_2_2 ~= "" then
+		local var_2_1 = cjson.decode(arg_2_2)
+
+		if var_2_1 and var_2_1.resultCode and var_2_1.resultCode == 0 then
+			LoginModel.instance.userName = var_2_1.userName
+			LoginModel.instance.sessionId = var_2_1.sessionId
+
+			local var_2_2 = var_2_1.zoneInfo
+
+			if var_2_2 then
+				arg_2_0.context.serverMO = {
+					id = var_2_2.id,
+					name = var_2_2.name,
+					prefix = var_2_2.prefix,
+					state = var_2_2.state
 				}
 			else
 				logNormal("没有服务器，zone不存在")
 			end
 
-			slot0.context.webLoginSuccess = true
+			arg_2_0.context.webLoginSuccess = true
 
-			slot0:onDone(true)
+			arg_2_0:onDone(true)
 
 			if string.nilorempty(LoginModel.instance.userName) or string.nilorempty(LoginModel.instance.sessionId) then
-				logError(string.format("WebLoginWork response error userName:%s, sessionId:%s msg:%s url:%s", slot4.userName, slot4.sessionId, slot2, slot3))
+				logError(string.format("WebLoginWork response error userName:%s, sessionId:%s msg:%s url:%s", var_2_1.userName, var_2_1.sessionId, arg_2_2, var_2_0))
 			end
 		else
-			slot0.context.resultCode = slot4 and slot4.resultCode
+			arg_2_0.context.resultCode = var_2_1 and var_2_1.resultCode
 
-			logNormal(string.format("http web login 出错了 resultCode = %d", slot4.resultCode or "nil"))
-			slot0:onDone(false)
+			logNormal(string.format("http web login 出错了 resultCode = %d", var_2_1.resultCode or "nil"))
+			arg_2_0:onDone(false)
 		end
 	else
 		logNormal("http web 登录失败")
-		slot0:onDone(false)
+		arg_2_0:onDone(false)
 	end
 end
 
-function slot0.clearWork(slot0)
-	slot0._url = nil
+function var_0_0.clearWork(arg_3_0)
+	arg_3_0._url = nil
 
-	if slot0._httpWebLoginRequestId then
-		SLFramework.SLWebRequest.Instance:Stop(slot0._httpWebLoginRequestId)
+	if arg_3_0._httpWebLoginRequestId then
+		SLFramework.SLWebRequest.Instance:Stop(arg_3_0._httpWebLoginRequestId)
 
-		slot0._httpWebLoginRequestId = nil
+		arg_3_0._httpWebLoginRequestId = nil
 	end
 end
 
-return slot0
+return var_0_0

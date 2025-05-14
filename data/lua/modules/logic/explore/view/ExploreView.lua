@@ -1,75 +1,77 @@
-module("modules.logic.explore.view.ExploreView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreView", package.seeall)
 
-slot0 = class("ExploreView", BaseView)
+local var_0_0 = class("ExploreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._btnback = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_btns/#btn_back")
-	slot0._btnhelp = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_btns/#btn_help")
-	slot0._btnfile = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_btns/#btn_file")
-	slot0._btnbag = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_bag")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "topright/#btn_reward")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "topright/#btn_reset")
-	slot0._goshou = gohelper.findChild(slot0.viewGO, "shou")
-	slot0._gotopright = gohelper.findChild(slot0.viewGO, "topright")
-	slot0._gooptip = gohelper.findChild(slot0.viewGO, "#go_optip")
-	slot0._txtoptip = gohelper.findChildTextMesh(slot0.viewGO, "#go_optip/tip")
-	slot0._keyTipsBag = gohelper.findChild(slot0._btnbag.gameObject, "#go_pcbtn2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_btns/#btn_back")
+	arg_1_0._btnhelp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_btns/#btn_help")
+	arg_1_0._btnfile = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_btns/#btn_file")
+	arg_1_0._btnbag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_bag")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/#btn_reward")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/#btn_reset")
+	arg_1_0._goshou = gohelper.findChild(arg_1_0.viewGO, "shou")
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "topright")
+	arg_1_0._gooptip = gohelper.findChild(arg_1_0.viewGO, "#go_optip")
+	arg_1_0._txtoptip = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_optip/tip")
+	arg_1_0._keyTipsBag = gohelper.findChild(arg_1_0._btnbag.gameObject, "#go_pcbtn2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	NavigateMgr.instance:addEscape(ViewName.ExploreView, slot0._btnbackOnClick, slot0)
-	slot0._btnback:AddClickListener(slot0._btnbackOnClick, slot0)
-	slot0._btnhelp:AddClickListener(slot0._btnhelpOnClick, slot0)
-	slot0._btnfile:AddClickListener(slot0._btnfileOnClick, slot0)
-	slot0._btnbag:AddClickListener(slot0._btnbagOnClick, slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnEnterFbFight, slot0.closeThis, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.CoinCountUpdate, slot0.updateCoinCount, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, slot0.onMapStatusChange, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.HeroCarryChange, slot0.onHeroCarryChange, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.ShowBagBtn, slot0.updateBagBtn, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.ShowResetChange, slot0.updateResetBtn, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorOpenBook, slot0._btnfileOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorHelp, slot0._btnhelpOnClick, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._checkDialogIsOpen, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._checkDialogIsOpen, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, slot0._gudieEnd, slot0)
+function var_0_0.addEvents(arg_2_0)
+	NavigateMgr.instance:addEscape(ViewName.ExploreView, arg_2_0._btnbackOnClick, arg_2_0)
+	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+	arg_2_0._btnhelp:AddClickListener(arg_2_0._btnhelpOnClick, arg_2_0)
+	arg_2_0._btnfile:AddClickListener(arg_2_0._btnfileOnClick, arg_2_0)
+	arg_2_0._btnbag:AddClickListener(arg_2_0._btnbagOnClick, arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnEnterFbFight, arg_2_0.closeThis, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.CoinCountUpdate, arg_2_0.updateCoinCount, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, arg_2_0.onMapStatusChange, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.HeroCarryChange, arg_2_0.onHeroCarryChange, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.ShowBagBtn, arg_2_0.updateBagBtn, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.ShowResetChange, arg_2_0.updateResetBtn, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorOpenBook, arg_2_0._btnfileOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorHelp, arg_2_0._btnhelpOnClick, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._checkDialogIsOpen, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._checkDialogIsOpen, arg_2_0)
+	arg_2_0:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, arg_2_0._gudieEnd, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
 	NavigateMgr.instance:removeEscape(ViewName.ExploreView)
-	slot0._btnback:RemoveClickListener()
-	slot0._btnhelp:RemoveClickListener()
-	slot0._btnfile:RemoveClickListener()
-	slot0._btnbag:RemoveClickListener()
-	slot0._btnreward:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnEnterFbFight, slot0.closeThis, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.CoinCountUpdate, slot0.updateCoinCount, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, slot0.onMapStatusChange, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.HeroCarryChange, slot0.onHeroCarryChange, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.ShowBagBtn, slot0.updateBagBtn, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.ShowResetChange, slot0.updateResetBtn, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorOpenBook, slot0._btnfileOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorHelp, slot0._btnhelpOnClick, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._checkDialogIsOpen, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._checkDialogIsOpen, slot0)
-	slot0:removeEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, slot0._gudieEnd, slot0)
+	arg_3_0._btnback:RemoveClickListener()
+	arg_3_0._btnhelp:RemoveClickListener()
+	arg_3_0._btnfile:RemoveClickListener()
+	arg_3_0._btnbag:RemoveClickListener()
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnEnterFbFight, arg_3_0.closeThis, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.CoinCountUpdate, arg_3_0.updateCoinCount, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, arg_3_0.onMapStatusChange, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.HeroCarryChange, arg_3_0.onHeroCarryChange, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.ShowBagBtn, arg_3_0.updateBagBtn, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.ShowResetChange, arg_3_0.updateResetBtn, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorOpenBook, arg_3_0._btnfileOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorHelp, arg_3_0._btnhelpOnClick, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0._checkDialogIsOpen, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._checkDialogIsOpen, arg_3_0)
+	arg_3_0:removeEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, arg_3_0._gudieEnd, arg_3_0)
 end
 
-function slot0._btnbackOnClick(slot0)
-	if ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.UseItem then
-		slot1:setMapStatus(ExploreEnum.MapStatus.Normal)
+function var_0_0._btnbackOnClick(arg_4_0)
+	local var_4_0 = ExploreController.instance:getMap()
+
+	if var_4_0:getNowStatus() == ExploreEnum.MapStatus.UseItem then
+		var_4_0:setMapStatus(ExploreEnum.MapStatus.Normal)
 
 		return
 	end
@@ -77,285 +79,297 @@ function slot0._btnbackOnClick(slot0)
 	ExploreController.instance:exit()
 end
 
-function slot0._btnhelpOnClick(slot0)
-	if slot0._btnhelp.gameObject.activeInHierarchy then
+function var_0_0._btnhelpOnClick(arg_5_0)
+	if arg_5_0._btnhelp.gameObject.activeInHierarchy then
 		HelpController.instance:showHelp(HelpEnum.HelpId.ExploreMap)
 	end
 end
 
-function slot0._gudieEnd(slot0)
-	slot0:_updateHelpBtn()
+function var_0_0._gudieEnd(arg_6_0)
+	arg_6_0:_updateHelpBtn()
 end
 
-function slot0._updateHelpBtn(slot0)
-	gohelper.setActive(slot0._btnhelp, HelpController.instance:checkGuideStepLock(HelpEnum.HelpId.ExploreMap))
+function var_0_0._updateHelpBtn(arg_7_0)
+	gohelper.setActive(arg_7_0._btnhelp, HelpController.instance:checkGuideStepLock(HelpEnum.HelpId.ExploreMap))
 end
 
-function slot0._checkDialogIsOpen(slot0)
+function var_0_0._checkDialogIsOpen(arg_8_0)
 	if ViewMgr.instance:isOpen(ViewName.ExploreInteractView) or ViewMgr.instance:isOpen(ViewName.ExploreBonusSceneView) or ViewMgr.instance:isOpen(ViewName.ExploreGuideDialogueView) then
 		ViewMgr.instance:closeView(ViewName.ExploreBackpackView)
-		gohelper.setActive(slot0.viewGO, false)
+		gohelper.setActive(arg_8_0.viewGO, false)
 	else
-		gohelper.setActive(slot0.viewGO, true)
+		gohelper.setActive(arg_8_0.viewGO, true)
 	end
 end
 
-function slot0._btnfileOnClick(slot0)
+function var_0_0._btnfileOnClick(arg_9_0)
+	local var_9_0 = ExploreModel.instance:getMapId()
+	local var_9_1 = ExploreConfig.instance:getMapIdConfig(var_9_0)
+
 	ViewMgr.instance:openView(ViewName.ExploreArchivesView, {
-		id = ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId()).chapterId
+		id = var_9_1.chapterId
 	})
 end
 
-function slot0._btnbagOnClick(slot0)
+function var_0_0._btnbagOnClick(arg_10_0)
 	ViewMgr.instance:openView(ViewName.ExploreBackpackView)
 end
 
-function slot0._btnrewardOnClick(slot0)
-	ViewMgr.instance:openView(ViewName.ExploreRewardView, DungeonConfig.instance:getChapterCO(ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId()).chapterId))
+function var_0_0._btnrewardOnClick(arg_11_0)
+	local var_11_0 = ExploreModel.instance:getMapId()
+	local var_11_1 = ExploreConfig.instance:getMapIdConfig(var_11_0)
+	local var_11_2 = DungeonConfig.instance:getChapterCO(var_11_1.chapterId)
+
+	ViewMgr.instance:openView(ViewName.ExploreRewardView, var_11_2)
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_12_0)
 	if not ExploreModel.instance:isHeroInControl() then
 		return
 	end
 
 	ExploreModel.instance.isShowingResetBoxMessage = true
 
-	GameFacade.showMessageBox(ExploreConstValue.MessageBoxId.MapReset, MsgBoxEnum.BoxType.Yes_No, slot0._onResetReq, slot0._onCancel, nil, slot0, slot0)
+	GameFacade.showMessageBox(ExploreConstValue.MessageBoxId.MapReset, MsgBoxEnum.BoxType.Yes_No, arg_12_0._onResetReq, arg_12_0._onCancel, nil, arg_12_0, arg_12_0)
 end
 
-function slot0._onResetReq(slot0)
+function var_0_0._onResetReq(arg_13_0)
 	ExploreRpc.instance:sendResetExploreRequest()
 
 	ExploreModel.instance.isShowingResetBoxMessage = false
 end
 
-function slot0._onCancel(slot0)
+function var_0_0._onCancel(arg_14_0)
 	ExploreModel.instance.isShowingResetBoxMessage = false
 end
 
-function slot0._editableInitView(slot0)
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._gofullscreen)
+function var_0_0._editableInitView(arg_15_0)
+	arg_15_0._click = SLFramework.UGUI.UIClickListener.Get(arg_15_0._gofullscreen)
 
-	slot0._click:AddClickDownListener(slot0._onClickDown, slot0)
-	slot0._click:AddClickUpListener(slot0._onClickUp, slot0)
+	arg_15_0._click:AddClickDownListener(arg_15_0._onClickDown, arg_15_0)
+	arg_15_0._click:AddClickUpListener(arg_15_0._onClickUp, arg_15_0)
 
-	slot0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(slot0._gofullscreen)
+	arg_15_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_15_0._gofullscreen)
 
-	slot0._touchEventMgr:SetIgnoreUI(true)
-	slot0._touchEventMgr:SetOnMultiDragCb(slot0.onScaleHandler, slot0)
+	arg_15_0._touchEventMgr:SetIgnoreUI(true)
+	arg_15_0._touchEventMgr:SetOnMultiDragCb(arg_15_0.onScaleHandler, arg_15_0)
+	arg_15_0._touchEventMgr:SetScrollWheelCb(arg_15_0.onMouseScrollWheelChange, arg_15_0)
 
-	slot4 = slot0
+	arg_15_0._progressItems = {}
 
-	slot0._touchEventMgr:SetScrollWheelCb(slot0.onMouseScrollWheelChange, slot4)
-
-	slot0._progressItems = {}
-
-	for slot4 = 1, 3 do
-		slot0._progressItems[slot4] = slot0:getUserDataTb_()
-		slot0._progressItems[slot4].go = gohelper.findChild(slot0.viewGO, "topright/progresslist/#go_progress" .. slot4)
-		slot0._progressItems[slot4].dark = gohelper.findChild(slot0._progressItems[slot4].go, "dark")
-		slot0._progressItems[slot4].light = gohelper.findChild(slot0._progressItems[slot4].go, "light")
-		slot0._progressItems[slot4].progress = gohelper.findChildTextMesh(slot0._progressItems[slot4].go, "txt_progress")
+	for iter_15_0 = 1, 3 do
+		arg_15_0._progressItems[iter_15_0] = arg_15_0:getUserDataTb_()
+		arg_15_0._progressItems[iter_15_0].go = gohelper.findChild(arg_15_0.viewGO, "topright/progresslist/#go_progress" .. iter_15_0)
+		arg_15_0._progressItems[iter_15_0].dark = gohelper.findChild(arg_15_0._progressItems[iter_15_0].go, "dark")
+		arg_15_0._progressItems[iter_15_0].light = gohelper.findChild(arg_15_0._progressItems[iter_15_0].go, "light")
+		arg_15_0._progressItems[iter_15_0].progress = gohelper.findChildTextMesh(arg_15_0._progressItems[iter_15_0].go, "txt_progress")
 	end
 
-	PCInputController.instance:showkeyTips(slot0._keyTipsBag, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.bag)
+	PCInputController.instance:showkeyTips(arg_15_0._keyTipsBag, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.bag)
 end
 
-function slot0.updateBagBtn(slot0)
-	gohelper.setActive(slot0._btnbag, ExploreSimpleModel.instance.isShowBag)
-	gohelper.setActive(slot0._goshou, ExploreSimpleModel.instance.isShowBag)
+function var_0_0.updateBagBtn(arg_16_0)
+	gohelper.setActive(arg_16_0._btnbag, ExploreSimpleModel.instance.isShowBag)
+	gohelper.setActive(arg_16_0._goshou, ExploreSimpleModel.instance.isShowBag)
 end
 
-function slot0.updateResetBtn(slot0)
-	gohelper.setActive(slot0._btnreset, ExploreMapModel.instance:getIsShowResetBtn())
+function var_0_0.updateResetBtn(arg_17_0)
+	gohelper.setActive(arg_17_0._btnreset, ExploreMapModel.instance:getIsShowResetBtn())
 end
 
-function slot0.onMouseScrollWheelChange(slot0, slot1)
+function var_0_0.onMouseScrollWheelChange(arg_18_0, arg_18_1)
 	if ViewMgr.instance:isOpen(ViewName.ExploreMapView) then
 		return
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnDeltaScaleMap, -slot1)
+	local var_18_0 = -arg_18_1
+
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnDeltaScaleMap, var_18_0)
 end
 
-function slot0.onScaleHandler(slot0, slot1)
+function var_0_0.onScaleHandler(arg_19_0, arg_19_1)
 	if ViewMgr.instance:isOpen(ViewName.ExploreMapView) then
 		return
 	end
 
-	slot0._scale = true
+	arg_19_0._scale = true
 
 	if BootNativeUtil.isMobilePlayer() then
-		slot0._clickDown = false
+		arg_19_0._clickDown = false
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnDeltaScaleMap, slot1 and -0.02 or 0.02)
+	local var_19_0 = arg_19_1 and -0.02 or 0.02
+
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnDeltaScaleMap, var_19_0)
 end
 
-function slot0._onClickDown(slot0)
-	slot0._clickDown = true
+function var_0_0._onClickDown(arg_20_0)
+	arg_20_0._clickDown = true
 end
 
-function slot0._onClickUp(slot0)
+function var_0_0._onClickUp(arg_21_0)
 	if UIBlockMgr.instance:isBlock() or ZProj.TouchEventMgr.Fobidden then
 		return
 	end
 
-	if slot0._clickDown then
+	if arg_21_0._clickDown then
 		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickMap, GamepadController.instance:getMousePosition())
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._click:RemoveClickDownListener()
-	slot0._click:RemoveClickUpListener()
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0._click:RemoveClickDownListener()
+	arg_22_0._click:RemoveClickUpListener()
 end
 
-function slot0.checkMove(slot0)
+function var_0_0.checkMove(arg_23_0)
 	if GuideController.instance:isGuiding() then
 		return
 	end
 
-	slot1 = ExploreEnum.RoleMoveDir.None
+	local var_23_0 = ExploreEnum.RoleMoveDir.None
 
 	if SDKMgr.instance:isEmulator() then
 		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.W) then
-			slot1 = ExploreEnum.RoleMoveDir.Up
+			var_23_0 = ExploreEnum.RoleMoveDir.Up
 		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.A) then
-			slot1 = ExploreEnum.RoleMoveDir.Left
+			var_23_0 = ExploreEnum.RoleMoveDir.Left
 		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.S) then
-			slot1 = ExploreEnum.RoleMoveDir.Down
+			var_23_0 = ExploreEnum.RoleMoveDir.Down
 		elseif UnityEngine.Input.GetKey(UnityEngine.KeyCode.D) then
-			slot1 = ExploreEnum.RoleMoveDir.Right
+			var_23_0 = ExploreEnum.RoleMoveDir.Right
 		end
 
-		if slot1 ~= ExploreEnum.RoleMoveDir.None and slot0._isTop == false then
-			slot1 = ExploreEnum.RoleMoveDir.None
+		if var_23_0 ~= ExploreEnum.RoleMoveDir.None and arg_23_0._isTop == false then
+			var_23_0 = ExploreEnum.RoleMoveDir.None
 		end
 	else
-		slot2 = PCInputController.instance
-		slot3, slot4, slot5, slot6 = slot2:getThirdMoveKey()
+		local var_23_1 = PCInputController.instance
+		local var_23_2, var_23_3, var_23_4, var_23_5 = var_23_1:getThirdMoveKey()
 
-		if slot2:getKeyPress(slot3) then
-			slot1 = ExploreEnum.RoleMoveDir.Up
-		elseif slot2:getKeyPress(slot4) then
-			slot1 = ExploreEnum.RoleMoveDir.Left
-		elseif slot2:getKeyPress(slot5) then
-			slot1 = ExploreEnum.RoleMoveDir.Down
-		elseif slot2:getKeyPress(slot6) then
-			slot1 = ExploreEnum.RoleMoveDir.Right
+		if var_23_1:getKeyPress(var_23_2) then
+			var_23_0 = ExploreEnum.RoleMoveDir.Up
+		elseif var_23_1:getKeyPress(var_23_3) then
+			var_23_0 = ExploreEnum.RoleMoveDir.Left
+		elseif var_23_1:getKeyPress(var_23_4) then
+			var_23_0 = ExploreEnum.RoleMoveDir.Down
+		elseif var_23_1:getKeyPress(var_23_5) then
+			var_23_0 = ExploreEnum.RoleMoveDir.Right
 		end
 
-		if slot1 ~= ExploreEnum.RoleMoveDir.None and slot0._isTop == false then
-			slot1 = ExploreEnum.RoleMoveDir.None
+		if var_23_0 ~= ExploreEnum.RoleMoveDir.None and arg_23_0._isTop == false then
+			var_23_0 = ExploreEnum.RoleMoveDir.None
 		end
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.UpdateMoveDir, slot1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.UpdateMoveDir, var_23_0)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._gooptip, false)
+function var_0_0.onOpen(arg_24_0)
+	gohelper.setActive(arg_24_0._gooptip, false)
 
-	slot0._isTop = true
+	arg_24_0._isTop = true
 
 	if BootNativeUtil.isWindows() or SDKMgr.instance:isEmulator() then
-		TaskDispatcher.runRepeat(slot0.checkMove, slot0, 0)
+		TaskDispatcher.runRepeat(arg_24_0.checkMove, arg_24_0, 0)
 	end
 
-	slot0:updateResetBtn()
-	slot0:updateBagBtn()
-	slot0:updateCoinCount()
-	slot0:_updateHelpBtn()
+	arg_24_0:updateResetBtn()
+	arg_24_0:updateBagBtn()
+	arg_24_0:updateCoinCount()
+	arg_24_0:_updateHelpBtn()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.checkMove, slot0)
+function var_0_0.onClose(arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0.checkMove, arg_25_0)
 	ViewMgr.instance:closeView(ViewName.ExploreBackpackView)
 
-	if slot0._touchEventMgr then
-		slot0._touchEventMgr:ClearAllCallback()
+	if arg_25_0._touchEventMgr then
+		arg_25_0._touchEventMgr:ClearAllCallback()
 
-		slot0._touchEventMgr = nil
+		arg_25_0._touchEventMgr = nil
 	end
 end
 
-function slot0._showBotBtn(slot0, slot1)
-	gohelper.setActive(slot0._btnbag, slot1)
+function var_0_0._showBotBtn(arg_26_0, arg_26_1)
+	gohelper.setActive(arg_26_0._btnbag, arg_26_1)
 end
 
-function slot0.updateCoinCount(slot0)
-	slot2, slot3, slot4, slot5, slot6, slot7 = ExploreSimpleModel.instance:getCoinCountByMapId(ExploreModel.instance:getMapId())
+function var_0_0.updateCoinCount(arg_27_0)
+	local var_27_0 = ExploreModel.instance:getMapId()
+	local var_27_1, var_27_2, var_27_3, var_27_4, var_27_5, var_27_6 = ExploreSimpleModel.instance:getCoinCountByMapId(var_27_0)
 
-	gohelper.setActive(slot0._progressItems[1].dark, slot4 ~= slot7)
-	gohelper.setActive(slot0._progressItems[1].light, slot4 == slot7)
+	gohelper.setActive(arg_27_0._progressItems[1].dark, var_27_3 ~= var_27_6)
+	gohelper.setActive(arg_27_0._progressItems[1].light, var_27_3 == var_27_6)
 
-	slot0._progressItems[1].progress.text = string.format("%d/%d", slot4, slot7)
+	arg_27_0._progressItems[1].progress.text = string.format("%d/%d", var_27_3, var_27_6)
 
-	gohelper.setActive(slot0._progressItems[2].dark, slot3 ~= slot6)
-	gohelper.setActive(slot0._progressItems[2].light, slot3 == slot6)
+	gohelper.setActive(arg_27_0._progressItems[2].dark, var_27_2 ~= var_27_5)
+	gohelper.setActive(arg_27_0._progressItems[2].light, var_27_2 == var_27_5)
 
-	slot0._progressItems[2].progress.text = string.format("%d/%d", slot3, slot6)
+	arg_27_0._progressItems[2].progress.text = string.format("%d/%d", var_27_2, var_27_5)
 
-	gohelper.setActive(slot0._progressItems[3].dark, slot2 ~= slot5)
-	gohelper.setActive(slot0._progressItems[3].light, slot2 == slot5)
+	gohelper.setActive(arg_27_0._progressItems[3].dark, var_27_1 ~= var_27_4)
+	gohelper.setActive(arg_27_0._progressItems[3].light, var_27_1 == var_27_4)
 
-	slot0._progressItems[3].progress.text = string.format("%d/%d", slot2, slot5)
+	arg_27_0._progressItems[3].progress.text = string.format("%d/%d", var_27_1, var_27_4)
 end
 
-function slot0.onHeroCarryChange(slot0)
-	slot0:onMapStatusChange(ExploreController.instance:getMap():getNowStatus())
+function var_0_0.onHeroCarryChange(arg_28_0)
+	arg_28_0:onMapStatusChange(ExploreController.instance:getMap():getNowStatus())
 end
 
-function slot0.onMapStatusChange(slot0, slot1)
-	if slot1 == ExploreEnum.MapStatus.MoveUnit or slot1 == ExploreEnum.MapStatus.RotateUnit then
-		slot0._txtoptip.text = luaLang("exploreview_optip_interact")
+function var_0_0.onMapStatusChange(arg_29_0, arg_29_1)
+	if arg_29_1 == ExploreEnum.MapStatus.MoveUnit or arg_29_1 == ExploreEnum.MapStatus.RotateUnit then
+		arg_29_0._txtoptip.text = luaLang("exploreview_optip_interact")
 
-		gohelper.setActive(slot0._gooptip, true)
+		gohelper.setActive(arg_29_0._gooptip, true)
 	elseif ExploreController.instance:getMap():getHero():getHeroStatus() == ExploreAnimEnum.RoleAnimStatus.Carry then
-		slot0._txtoptip.text = luaLang("exploreview_optip_carry")
+		arg_29_0._txtoptip.text = luaLang("exploreview_optip_carry")
 
-		gohelper.setActive(slot0._gooptip, true)
+		gohelper.setActive(arg_29_0._gooptip, true)
 	else
-		gohelper.setActive(slot0._gooptip, false)
+		gohelper.setActive(arg_29_0._gooptip, false)
 	end
 
-	gohelper.setActive(slot0._btnback, slot1 ~= ExploreEnum.MapStatus.UseItem)
-	gohelper.setActive(slot0._btnhelp, slot1 ~= ExploreEnum.MapStatus.UseItem and HelpController.instance:checkGuideStepLock(HelpEnum.HelpId.ExploreMap))
-	gohelper.setActive(slot0._btnfile, slot1 ~= ExploreEnum.MapStatus.UseItem)
-	gohelper.setActive(slot0._gotopright, slot1 ~= ExploreEnum.MapStatus.UseItem)
+	gohelper.setActive(arg_29_0._btnback, arg_29_1 ~= ExploreEnum.MapStatus.UseItem)
+	gohelper.setActive(arg_29_0._btnhelp, arg_29_1 ~= ExploreEnum.MapStatus.UseItem and HelpController.instance:checkGuideStepLock(HelpEnum.HelpId.ExploreMap))
+	gohelper.setActive(arg_29_0._btnfile, arg_29_1 ~= ExploreEnum.MapStatus.UseItem)
+	gohelper.setActive(arg_29_0._gotopright, arg_29_1 ~= ExploreEnum.MapStatus.UseItem)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.ExploreBackpackView then
-		slot0:_showBotBtn(false)
+function var_0_0._onOpenView(arg_30_0, arg_30_1)
+	if arg_30_1 == ViewName.ExploreBackpackView then
+		arg_30_0:_showBotBtn(false)
 	end
 
-	slot0:_checkIsTop()
+	arg_30_0:_checkIsTop()
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.ExploreBackpackView then
-		slot0:_showBotBtn(true)
+function var_0_0._onCloseView(arg_31_0, arg_31_1)
+	if arg_31_1 == ViewName.ExploreBackpackView then
+		arg_31_0:_showBotBtn(true)
 	end
 
-	slot0:_checkIsTop()
+	arg_31_0:_checkIsTop()
 end
 
-slot0.ignoreView = {
+var_0_0.ignoreView = {
 	[ViewName.ToastView] = true,
 	[ViewName.ExploreBackpackView] = true
 }
 
-function slot0._checkIsTop(slot0)
-	slot1 = ViewMgr.instance:getOpenViewNameList()
+function var_0_0._checkIsTop(arg_32_0)
+	local var_32_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_32_1 = #var_32_0
+	local var_32_2 = var_32_0[var_32_1]
 
-	while uv0.ignoreView[slot1[#slot1]] do
-		slot3 = slot1[slot2 - 1]
+	while var_0_0.ignoreView[var_32_2] do
+		var_32_1 = var_32_1 - 1
+		var_32_2 = var_32_0[var_32_1]
 	end
 
-	slot0._isTop = slot3 == ViewName.ExploreView
+	arg_32_0._isTop = var_32_2 == ViewName.ExploreView
 end
 
-return slot0
+return var_0_0

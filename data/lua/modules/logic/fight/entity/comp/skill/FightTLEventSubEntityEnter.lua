@@ -1,47 +1,52 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventSubEntityEnter", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSubEntityEnter", package.seeall)
 
-slot0 = class("FightTLEventSubEntityEnter")
+local var_0_0 = class("FightTLEventSubEntityEnter")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
 
-	if FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()[1] then
-		slot0.nextSubEntityMO = slot5
+	local var_1_0 = FightEntityModel.instance:getSubModel(FightEnum.EntitySide.MySide):getList()[1]
 
-		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
+	if var_1_0 then
+		arg_1_0.nextSubEntityMO = var_1_0
 
-		slot0._nextSubEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildSubSpine(slot5)
+		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSubSpineLoaded, arg_1_0)
+
+		arg_1_0._nextSubEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildSubSpine(var_1_0)
 	end
 end
 
-function slot0._onSubSpineLoaded(slot0, slot1)
-	if slot1.unitSpawn.id == slot0.nextSubEntityMO.id then
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
+function var_0_0._onSubSpineLoaded(arg_2_0, arg_2_1)
+	if arg_2_1.unitSpawn.id == arg_2_0.nextSubEntityMO.id then
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_2_0._onSubSpineLoaded, arg_2_0)
 
-		slot0._nextSubBornFlow = FlowSequence.New()
+		local var_2_0 = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(arg_2_0.nextSubEntityMO.id)
 
-		slot0._nextSubBornFlow:addWork(FightWorkStartBornNormal.New(GameSceneMgr.instance:getCurScene().entityMgr:getEntity(slot0.nextSubEntityMO.id), true))
-		slot0._nextSubBornFlow:start()
+		arg_2_0._nextSubBornFlow = FlowSequence.New()
+
+		arg_2_0._nextSubBornFlow:addWork(FightWorkStartBornNormal.New(var_2_0, true))
+		arg_2_0._nextSubBornFlow:start()
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:dispose()
+function var_0_0.reset(arg_3_0)
+	arg_3_0:dispose()
 end
 
-function slot0.dispose(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
+function var_0_0.dispose(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_4_0._onSubSpineLoaded, arg_4_0)
 
-	if slot0._nextSubBornFlow then
-		slot0._nextSubBornFlow:stop()
+	if arg_4_0._nextSubBornFlow then
+		arg_4_0._nextSubBornFlow:stop()
 
-		slot0._nextSubBornFlow = nil
+		arg_4_0._nextSubBornFlow = nil
 	end
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

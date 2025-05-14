@@ -1,409 +1,437 @@
-module("modules.logic.player.view.PlayerView", package.seeall)
+﻿module("modules.logic.player.view.PlayerView", package.seeall)
 
-slot0 = class("PlayerView", BaseView)
+local var_0_0 = class("PlayerView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_bgroot")
-	slot0._txtentryday = gohelper.findChildText(slot0.viewGO, "leftside/playerinfo/#txt_entryday")
-	slot0._txtepisodeprogress = gohelper.findChildText(slot0.viewGO, "leftside/txtContainer/progress/#txt_episodeprogress")
-	slot0._txtepisodeprogressen = gohelper.findChildText(slot0.viewGO, "leftside/txtContainer/progress/#txt_episodeprogressen")
-	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.viewGO, "leftside/playerinfo/headframe/#simage_headicon")
-	slot0._btnheadicon = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftside/playerinfo/headframe/#simage_headicon")
-	slot0._goframenode = gohelper.findChild(slot0.viewGO, "leftside/playerinfo/headframe/#simage_headicon/#go_framenode")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "leftside/playerinfo/lv/#txt_level")
-	slot0._txtexp = gohelper.findChildText(slot0.viewGO, "leftside/playerinfo/#txt_exp")
-	slot0._imageexp = gohelper.findChildSlider(slot0.viewGO, "leftside/playerinfo/#slider_exp")
-	slot0._txtplayerid = gohelper.findChildText(slot0.viewGO, "leftside/playerinfo/#txt_playerid")
-	slot0._btnplayerid = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftside/playerinfo/#txt_playerid/#btn_playerid")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "leftside/playerinfo/#txt_name")
-	slot0._gosignature = gohelper.findChild(slot0.viewGO, "leftside/playerinfo/signature")
-	slot0._txtsignature = gohelper.findChildText(slot0.viewGO, "leftside/playerinfo/signature/scroll/viewport/#txt_signature")
-	slot0._btnsignature = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftside/playerinfo/signature/#btn_signature")
-	slot0._btnshowcharacterA1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "showcharacters/showcharacter1/#btn_Add")
-	slot0._btnshowcharacterA2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "showcharacters/showcharacter2/#btn_Add")
-	slot0._btnshowcharacterA3 = gohelper.findChildButtonWithAudio(slot0.viewGO, "showcharacters/showcharacter3/#btn_Add")
-	slot0._btnshowcharacterB1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "showcharacters/showcharacter1/#btn_Character")
-	slot0._btnshowcharacterB2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "showcharacters/showcharacter2/#btn_Character")
-	slot0._btnshowcharacterB3 = gohelper.findChildButtonWithAudio(slot0.viewGO, "showcharacters/showcharacter3/#btn_Character")
-	slot0._btnmodifyname = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftside/playerinfo/#txt_name/#btn_modifyname")
-	slot0._btncollection = gohelper.findChildButton(slot0.viewGO, "collection")
-	slot0._btncloseCollectText = gohelper.findChildButton(slot0.viewGO, "collection/#btn_closeCollectText")
-	slot0._btnchangebg = gohelper.findChildButton(slot0.viewGO, "btn_changebg/#btn_changebg")
-	slot0._gochangebgreddot = gohelper.findChild(slot0.viewGO, "btn_changebg/#go_reddot")
-	slot0._gocollectbg = gohelper.findChild(slot0.viewGO, "collection/newbg")
-	slot0._goAssistReward = gohelper.findChild(slot0.viewGO, "#go_gather")
-	slot0._btnGetAssistReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_gather/#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bgroot")
+	arg_1_0._txtentryday = gohelper.findChildText(arg_1_0.viewGO, "leftside/playerinfo/#txt_entryday")
+	arg_1_0._txtepisodeprogress = gohelper.findChildText(arg_1_0.viewGO, "leftside/txtContainer/progress/#txt_episodeprogress")
+	arg_1_0._txtepisodeprogressen = gohelper.findChildText(arg_1_0.viewGO, "leftside/txtContainer/progress/#txt_episodeprogressen")
+	arg_1_0._simageheadicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "leftside/playerinfo/headframe/#simage_headicon")
+	arg_1_0._btnheadicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftside/playerinfo/headframe/#simage_headicon")
+	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "leftside/playerinfo/headframe/#simage_headicon/#go_framenode")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "leftside/playerinfo/lv/#txt_level")
+	arg_1_0._txtexp = gohelper.findChildText(arg_1_0.viewGO, "leftside/playerinfo/#txt_exp")
+	arg_1_0._imageexp = gohelper.findChildSlider(arg_1_0.viewGO, "leftside/playerinfo/#slider_exp")
+	arg_1_0._txtplayerid = gohelper.findChildText(arg_1_0.viewGO, "leftside/playerinfo/#txt_playerid")
+	arg_1_0._btnplayerid = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftside/playerinfo/#txt_playerid/#btn_playerid")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "leftside/playerinfo/#txt_name")
+	arg_1_0._gosignature = gohelper.findChild(arg_1_0.viewGO, "leftside/playerinfo/signature")
+	arg_1_0._txtsignature = gohelper.findChildText(arg_1_0.viewGO, "leftside/playerinfo/signature/scroll/viewport/#txt_signature")
+	arg_1_0._btnsignature = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftside/playerinfo/signature/#btn_signature")
+	arg_1_0._btnshowcharacterA1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "showcharacters/showcharacter1/#btn_Add")
+	arg_1_0._btnshowcharacterA2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "showcharacters/showcharacter2/#btn_Add")
+	arg_1_0._btnshowcharacterA3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "showcharacters/showcharacter3/#btn_Add")
+	arg_1_0._btnshowcharacterB1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "showcharacters/showcharacter1/#btn_Character")
+	arg_1_0._btnshowcharacterB2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "showcharacters/showcharacter2/#btn_Character")
+	arg_1_0._btnshowcharacterB3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "showcharacters/showcharacter3/#btn_Character")
+	arg_1_0._btnmodifyname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftside/playerinfo/#txt_name/#btn_modifyname")
+	arg_1_0._btncollection = gohelper.findChildButton(arg_1_0.viewGO, "collection")
+	arg_1_0._btncloseCollectText = gohelper.findChildButton(arg_1_0.viewGO, "collection/#btn_closeCollectText")
+	arg_1_0._btnchangebg = gohelper.findChildButton(arg_1_0.viewGO, "btn_changebg/#btn_changebg")
+	arg_1_0._gochangebgreddot = gohelper.findChild(arg_1_0.viewGO, "btn_changebg/#go_reddot")
+	arg_1_0._gocollectbg = gohelper.findChild(arg_1_0.viewGO, "collection/newbg")
+	arg_1_0._goAssistReward = gohelper.findChild(arg_1_0.viewGO, "#go_gather")
+	arg_1_0._btnGetAssistReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_gather/#btn_click")
 
-	gohelper.setActive(slot0._goAssistReward, false)
+	gohelper.setActive(arg_1_0._goAssistReward, false)
 
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._loader = MultiAbLoader.New()
-	slot0._btnplayercard = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_personalcard/#btn_changebg")
+	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._loader = MultiAbLoader.New()
+	arg_1_0._btnplayercard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_personalcard/#btn_changebg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnplayercard:AddClickListener(slot0._btnplayercardOnClick, slot0)
-	slot0._btnplayerid:AddClickListener(slot0._btnplayeridOnClick, slot0)
-	slot0._btnsignature:AddClickListener(slot0._btnsignatureOnClick, slot0)
-	slot0._btnshowcharacterA1:AddClickListener(slot0._showHeroClick, slot0, 1)
-	slot0._btnshowcharacterA2:AddClickListener(slot0._showHeroClick, slot0, 2)
-	slot0._btnshowcharacterA3:AddClickListener(slot0._showHeroClick, slot0, 3)
-	slot0._btnshowcharacterB1:AddClickListener(slot0._showHeroClick, slot0, 1)
-	slot0._btnshowcharacterB2:AddClickListener(slot0._showHeroClick, slot0, 2)
-	slot0._btnshowcharacterB3:AddClickListener(slot0._showHeroClick, slot0, 3)
-	slot0._btnheadicon:AddClickListener(slot0._changeIcon, slot0)
-	slot0._btncollection:AddClickListener(slot0._showCollectionText, slot0)
-	slot0._btncloseCollectText:AddClickListener(slot0._hideCollectionText, slot0)
-	slot0._btnmodifyname:AddClickListener(slot0._btnmodifynameOnClick, slot0)
-	slot0._btnchangebg:AddClickListener(slot0._btnchangebgOnClick, slot0)
-	slot0._btnGetAssistReward:AddClickListener(slot0._btnGetAssistRewardOnClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0, LuaEventSystem.Low)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, slot0.updateBg, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0.resetBg, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnplayercard:AddClickListener(arg_2_0._btnplayercardOnClick, arg_2_0)
+	arg_2_0._btnplayerid:AddClickListener(arg_2_0._btnplayeridOnClick, arg_2_0)
+	arg_2_0._btnsignature:AddClickListener(arg_2_0._btnsignatureOnClick, arg_2_0)
+	arg_2_0._btnshowcharacterA1:AddClickListener(arg_2_0._showHeroClick, arg_2_0, 1)
+	arg_2_0._btnshowcharacterA2:AddClickListener(arg_2_0._showHeroClick, arg_2_0, 2)
+	arg_2_0._btnshowcharacterA3:AddClickListener(arg_2_0._showHeroClick, arg_2_0, 3)
+	arg_2_0._btnshowcharacterB1:AddClickListener(arg_2_0._showHeroClick, arg_2_0, 1)
+	arg_2_0._btnshowcharacterB2:AddClickListener(arg_2_0._showHeroClick, arg_2_0, 2)
+	arg_2_0._btnshowcharacterB3:AddClickListener(arg_2_0._showHeroClick, arg_2_0, 3)
+	arg_2_0._btnheadicon:AddClickListener(arg_2_0._changeIcon, arg_2_0)
+	arg_2_0._btncollection:AddClickListener(arg_2_0._showCollectionText, arg_2_0)
+	arg_2_0._btncloseCollectText:AddClickListener(arg_2_0._hideCollectionText, arg_2_0)
+	arg_2_0._btnmodifyname:AddClickListener(arg_2_0._btnmodifynameOnClick, arg_2_0)
+	arg_2_0._btnchangebg:AddClickListener(arg_2_0._btnchangebgOnClick, arg_2_0)
+	arg_2_0._btnGetAssistReward:AddClickListener(arg_2_0._btnGetAssistRewardOnClick, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_2_0._onCloseFullView, arg_2_0, LuaEventSystem.Low)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, arg_2_0.updateBg, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0.resetBg, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnplayercard:RemoveClickListener()
-	slot0._btnplayerid:RemoveClickListener()
-	slot0._btnsignature:RemoveClickListener()
-	slot0._btnshowcharacterA1:RemoveClickListener()
-	slot0._btnshowcharacterA2:RemoveClickListener()
-	slot0._btnshowcharacterA3:RemoveClickListener()
-	slot0._btnshowcharacterB1:RemoveClickListener()
-	slot0._btnshowcharacterB2:RemoveClickListener()
-	slot0._btnshowcharacterB3:RemoveClickListener()
-	slot0._btnheadicon:RemoveClickListener()
-	slot0._btncollection:RemoveClickListener()
-	slot0._btncloseCollectText:RemoveClickListener()
-	slot0._btnmodifyname:RemoveClickListener()
-	slot0._btnchangebg:RemoveClickListener()
-	slot0._btnGetAssistReward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnplayercard:RemoveClickListener()
+	arg_3_0._btnplayerid:RemoveClickListener()
+	arg_3_0._btnsignature:RemoveClickListener()
+	arg_3_0._btnshowcharacterA1:RemoveClickListener()
+	arg_3_0._btnshowcharacterA2:RemoveClickListener()
+	arg_3_0._btnshowcharacterA3:RemoveClickListener()
+	arg_3_0._btnshowcharacterB1:RemoveClickListener()
+	arg_3_0._btnshowcharacterB2:RemoveClickListener()
+	arg_3_0._btnshowcharacterB3:RemoveClickListener()
+	arg_3_0._btnheadicon:RemoveClickListener()
+	arg_3_0._btncollection:RemoveClickListener()
+	arg_3_0._btncloseCollectText:RemoveClickListener()
+	arg_3_0._btnmodifyname:RemoveClickListener()
+	arg_3_0._btnchangebg:RemoveClickListener()
+	arg_3_0._btnGetAssistReward:RemoveClickListener()
 
-	if slot0._playerSelf then
-		slot0:removeEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, slot0._refreshIsHasAssistReward, slot0)
+	if arg_3_0._playerSelf then
+		arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, arg_3_0._refreshIsHasAssistReward, arg_3_0)
 	end
 
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, slot0.updateBg, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.resetBg, slot0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, arg_3_0.updateBg, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0.resetBg, arg_3_0)
 end
 
-function slot0._btnplayercardOnClick(slot0)
-	if not slot0._info then
+function var_0_0._btnplayercardOnClick(arg_4_0)
+	if not arg_4_0._info then
 		return
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
 		PlayerCardController.instance:openPlayerCardView({
-			userId = slot0._info.userId
+			userId = arg_4_0._info.userId
 		})
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.PlayerCard))
 	end
 end
 
-function slot0._btnplayeridOnClick(slot0)
-	slot0._txtplayerid.text = slot0._info.userId
+function var_0_0._btnplayeridOnClick(arg_5_0)
+	arg_5_0._txtplayerid.text = arg_5_0._info.userId
 
-	ZProj.UGUIHelper.CopyText(slot0._txtplayerid.text)
+	ZProj.UGUIHelper.CopyText(arg_5_0._txtplayerid.text)
 
-	slot0._txtplayerid.text = string.format("ID:%s", slot0._info.userId)
+	arg_5_0._txtplayerid.text = string.format("ID:%s", arg_5_0._info.userId)
 
 	GameFacade.showToast(ToastEnum.ClickPlayerId)
 end
 
-function slot0._btnsignatureOnClick(slot0)
+function var_0_0._btnsignatureOnClick(arg_6_0)
 	ViewMgr.instance:openView(ViewName.Signature)
 end
 
-function slot0._btnmodifynameOnClick(slot0)
+function var_0_0._btnmodifynameOnClick(arg_7_0)
 	ViewMgr.instance:openView(ViewName.PlayerModifyNameView)
 end
 
-function slot0._btnchangebgOnClick(slot0)
+function var_0_0._btnchangebgOnClick(arg_8_0)
 	PostProcessingMgr.instance:setBlurWeight(0)
-	slot0:_closeAndDelayOpenView(ViewName.PlayerChangeBgView, {
-		bgComp = slot0._bgComp
+	arg_8_0:_closeAndDelayOpenView(ViewName.PlayerChangeBgView, {
+		bgComp = arg_8_0._bgComp
 	})
 end
 
-function slot0._closeAndDelayOpenView(slot0, slot1, slot2)
-	if not slot0._playerSelf then
+function var_0_0._closeAndDelayOpenView(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._playerSelf then
 		return
 	end
 
 	ShaderKeyWordMgr.disableKeyWord("_CLIPALPHA_ON")
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	slot0._viewAnim:Play(UIAnimationName.Close, 0, 0)
+	arg_9_0._viewAnim:Play(UIAnimationName.Close, 0, 0)
 
-	slot0._openViewData = {
-		slot1,
-		slot2
+	arg_9_0._openViewData = {
+		arg_9_1,
+		arg_9_2
 	}
 
 	UIBlockMgr.instance:startBlock("PlayerViewDelayOpenView")
-	TaskDispatcher.runDelay(slot0._delayOpenView, slot0, 0.12)
+	TaskDispatcher.runDelay(arg_9_0._delayOpenView, arg_9_0, 0.12)
 end
 
-function slot0._delayOpenView(slot0)
+function var_0_0._delayOpenView(arg_10_0)
 	UIBlockMgr.instance:endBlock("PlayerViewDelayOpenView")
-	ViewMgr.instance:openView(unpack(slot0._openViewData))
+	ViewMgr.instance:openView(unpack(arg_10_0._openViewData))
 end
 
-function slot0.resetBg(slot0, slot1)
-	if slot1 == ViewName.PlayerChangeBgView then
-		slot0._bgComp.go.transform:SetParent(slot0.viewGO.transform, false)
-		slot0._bgComp.go.transform:SetSiblingIndex(0)
-		slot0:updateBg()
+function var_0_0.resetBg(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.PlayerChangeBgView then
+		arg_11_0._bgComp.go.transform:SetParent(arg_11_0.viewGO.transform, false)
+		arg_11_0._bgComp.go.transform:SetSiblingIndex(0)
+		arg_11_0:updateBg()
 	end
 end
 
-function slot0._changeIcon(slot0)
-	if slot0._playerSelf then
+function var_0_0._changeIcon(arg_12_0)
+	if arg_12_0._playerSelf then
 		ViewMgr.instance:openView(ViewName.IconTipView)
 	end
 end
 
-function slot0._showHeroClick(slot0, slot1)
-	slot0:_closeAndDelayOpenView(ViewName.ShowCharacterView, {
+function var_0_0._showHeroClick(arg_13_0, arg_13_1)
+	arg_13_0:_closeAndDelayOpenView(ViewName.ShowCharacterView, {
 		notRepeatUpdateAssistReward = true
 	})
 end
 
-function slot0._btnGetAssistRewardOnClick(slot0)
-	if not slot0._playerSelf then
+function var_0_0._btnGetAssistRewardOnClick(arg_14_0)
+	if not arg_14_0._playerSelf then
 		return
 	end
 
 	PlayerController.instance:getAssistReward()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnsignature.gameObject, AudioEnum.UI.play_ui_hero_sign)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterA1.gameObject, AudioEnum.UI.play_ui_hero_card_click)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterA2.gameObject, AudioEnum.UI.play_ui_hero_card_click)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterA3.gameObject, AudioEnum.UI.play_ui_hero_card_click)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterB1.gameObject, AudioEnum.UI.play_ui_hero_card_click)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterB2.gameObject, AudioEnum.UI.play_ui_hero_card_click)
-	gohelper.addUIClickAudio(slot0._btnshowcharacterB3.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+function var_0_0._editableInitView(arg_15_0)
+	gohelper.addUIClickAudio(arg_15_0._btnsignature.gameObject, AudioEnum.UI.play_ui_hero_sign)
+	gohelper.addUIClickAudio(arg_15_0._btnshowcharacterA1.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+	gohelper.addUIClickAudio(arg_15_0._btnshowcharacterA2.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+	gohelper.addUIClickAudio(arg_15_0._btnshowcharacterA3.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+	gohelper.addUIClickAudio(arg_15_0._btnshowcharacterB1.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+	gohelper.addUIClickAudio(arg_15_0._btnshowcharacterB2.gameObject, AudioEnum.UI.play_ui_hero_card_click)
+	gohelper.addUIClickAudio(arg_15_0._btnshowcharacterB3.gameObject, AudioEnum.UI.play_ui_hero_card_click)
 
-	slot0._collectionfulls = slot0:getUserDataTb_()
-	slot0._collectiontxt = slot0:getUserDataTb_()
+	arg_15_0._collectionfulls = arg_15_0:getUserDataTb_()
+	arg_15_0._collectiontxt = arg_15_0:getUserDataTb_()
 
-	for slot4 = 1, 5 do
-		slot0._collectionfulls[slot4] = gohelper.findChildImage(slot0.viewGO, "collection/collection" .. slot4 .. "/#image_full")
-		slot0._collectiontxt[slot4] = gohelper.findChildText(slot0.viewGO, "collection/collection" .. slot4 .. "/#txt_progress")
+	for iter_15_0 = 1, 5 do
+		arg_15_0._collectionfulls[iter_15_0] = gohelper.findChildImage(arg_15_0.viewGO, "collection/collection" .. iter_15_0 .. "/#image_full")
+		arg_15_0._collectiontxt[iter_15_0] = gohelper.findChildText(arg_15_0.viewGO, "collection/collection" .. iter_15_0 .. "/#txt_progress")
 	end
 
-	slot0._bgComp = MonoHelper.addLuaComOnceToGo(slot0._gobg, PlayerBgComp)
+	arg_15_0._bgComp = MonoHelper.addLuaComOnceToGo(arg_15_0._gobg, PlayerBgComp)
 
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_16_0)
+	arg_16_0:onOpen()
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._viewAnim.enabled = true
+function var_0_0.onOpenFinish(arg_17_0)
+	arg_17_0._viewAnim.enabled = true
 end
 
-function slot0.onOpen(slot0)
-	slot0._info = slot0.viewParam.playerInfo
-	slot0._playerSelf = slot0.viewParam.playerSelf
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0._info = arg_18_0.viewParam.playerInfo
+	arg_18_0._playerSelf = arg_18_0.viewParam.playerSelf
 
-	slot0:_initPlayerCardinfo(slot0._info)
-	slot0:_initPlayerbassinfo(slot0._info)
-	slot0:_initPlayerOtherinfo(slot0._info)
-	slot0:_initPlayerShowCard(slot0._info.showHeros)
-	slot0:_hideCollectionText()
+	arg_18_0:_initPlayerCardinfo(arg_18_0._info)
+	arg_18_0:_initPlayerbassinfo(arg_18_0._info)
+	arg_18_0:_initPlayerOtherinfo(arg_18_0._info)
+	arg_18_0:_initPlayerShowCard(arg_18_0._info.showHeros)
+	arg_18_0:_hideCollectionText()
 
-	if slot0._playerSelf then
-		slot0:addEventCb(PlayerController.instance, PlayerEvent.PlayerbassinfoChange, slot0._initPlayerbassinfo, slot0)
-		slot0:addEventCb(PlayerController.instance, PlayerEvent.SetShowHero, slot0._initPlayerShowCard, slot0)
-		slot0:addEventCb(PlayerController.instance, PlayerEvent.RenameFlagUpdate, slot0._refreshRenameStatus, slot0)
-		slot0:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, slot0._refreshIsHasAssistReward, slot0)
+	if arg_18_0._playerSelf then
+		arg_18_0:addEventCb(PlayerController.instance, PlayerEvent.PlayerbassinfoChange, arg_18_0._initPlayerbassinfo, arg_18_0)
+		arg_18_0:addEventCb(PlayerController.instance, PlayerEvent.SetShowHero, arg_18_0._initPlayerShowCard, arg_18_0)
+		arg_18_0:addEventCb(PlayerController.instance, PlayerEvent.RenameFlagUpdate, arg_18_0._refreshRenameStatus, arg_18_0)
+		arg_18_0:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, arg_18_0._refreshIsHasAssistReward, arg_18_0)
 
-		slot0._btnheadicon.button.enabled = true
+		arg_18_0._btnheadicon.button.enabled = true
 
-		slot0:updateAssistReward()
-		TaskDispatcher.cancelTask(slot0.updateAssistReward, slot0)
-		TaskDispatcher.runRepeat(slot0.updateAssistReward, slot0, CommonConfig.instance:getConstNum(ConstEnum.AssistRewardUpdateFrequency))
+		arg_18_0:updateAssistReward()
+
+		local var_18_0 = CommonConfig.instance:getConstNum(ConstEnum.AssistRewardUpdateFrequency)
+
+		TaskDispatcher.cancelTask(arg_18_0.updateAssistReward, arg_18_0)
+		TaskDispatcher.runRepeat(arg_18_0.updateAssistReward, arg_18_0, var_18_0)
 	else
-		slot0:removeEventCb(PlayerController.instance, PlayerEvent.PlayerbassinfoChange, slot0._initPlayerbassinfo, slot0)
-		slot0:removeEventCb(PlayerController.instance, PlayerEvent.SetShowHero, slot0._initPlayerShowCard, slot0)
-		slot0:removeEventCb(PlayerController.instance, PlayerEvent.RenameFlagUpdate, slot0._refreshRenameStatus, slot0)
+		arg_18_0:removeEventCb(PlayerController.instance, PlayerEvent.PlayerbassinfoChange, arg_18_0._initPlayerbassinfo, arg_18_0)
+		arg_18_0:removeEventCb(PlayerController.instance, PlayerEvent.SetShowHero, arg_18_0._initPlayerShowCard, arg_18_0)
+		arg_18_0:removeEventCb(PlayerController.instance, PlayerEvent.RenameFlagUpdate, arg_18_0._refreshRenameStatus, arg_18_0)
 
-		slot0._btnheadicon.button.enabled = false
+		arg_18_0._btnheadicon.button.enabled = false
 
-		gohelper.setActive(slot0._goAssistReward, false)
+		gohelper.setActive(arg_18_0._goAssistReward, false)
 	end
 
-	RedDotController.instance:addRedDot(slot0._gochangebgreddot, RedDotEnum.DotNode.PlayerChangeBgNew)
-	gohelper.setActive(slot0._gochangebgreddot, slot0._playerSelf)
-	gohelper.setActive(slot0._btnsignature.gameObject, slot0._playerSelf)
+	RedDotController.instance:addRedDot(arg_18_0._gochangebgreddot, RedDotEnum.DotNode.PlayerChangeBgNew)
+	gohelper.setActive(arg_18_0._gochangebgreddot, arg_18_0._playerSelf)
+	gohelper.setActive(arg_18_0._btnsignature.gameObject, arg_18_0._playerSelf)
 
-	slot0._isGamePad = SDKNativeUtil.isGamePad()
+	arg_18_0._isGamePad = SDKNativeUtil.isGamePad()
 
-	gohelper.setActive(slot0._gosignature.gameObject, slot0._isGamePad == false)
-	slot0:_refreshRenameStatus()
-	slot0:updateBg()
+	gohelper.setActive(arg_18_0._gosignature.gameObject, arg_18_0._isGamePad == false)
+	arg_18_0:_refreshRenameStatus()
+	arg_18_0:updateBg()
 end
 
-function slot0.updateAssistReward(slot0)
-	if not slot0._playerSelf then
+function var_0_0.updateAssistReward(arg_19_0)
+	if not arg_19_0._playerSelf then
 		return
 	end
 
 	PlayerController.instance:updateAssistRewardCount()
 end
 
-function slot0.updateBg(slot0)
+function var_0_0.updateBg(arg_20_0)
 	if ViewMgr.instance:isOpen(ViewName.PlayerChangeBgView) then
 		return
 	end
 
-	slot1 = PlayerModel.instance:getPlayinfo()
+	local var_20_0 = PlayerModel.instance:getPlayinfo()
 
-	if not slot0.viewParam.playerSelf and slot0.viewParam.playerInfo then
-		slot1 = slot0.viewParam.playerInfo
+	if not arg_20_0.viewParam.playerSelf and arg_20_0.viewParam.playerInfo then
+		var_20_0 = arg_20_0.viewParam.playerInfo
 
-		slot0._bgComp:setPlayerInfo(slot0.viewParam.playerInfo, slot0.viewParam.heroCover)
+		arg_20_0._bgComp:setPlayerInfo(arg_20_0.viewParam.playerInfo, arg_20_0.viewParam.heroCover)
 	end
 
-	slot2 = PlayerConfig.instance:getBgCo(slot1.bg)
+	local var_20_1 = PlayerConfig.instance:getBgCo(var_20_0.bg)
 
-	slot0._bgComp:showBg(slot2)
-	gohelper.setActive(slot0._gocollectbg, slot2.item ~= 0)
+	arg_20_0._bgComp:showBg(var_20_1)
+	gohelper.setActive(arg_20_0._gocollectbg, var_20_1.item ~= 0)
 end
 
-function slot0._initPlayerbassinfo(slot0, slot1)
-	slot0._txtname.text = slot1.name
-	slot0._txtplayerid.text = string.format("ID:%s", slot1.userId)
+function var_0_0._initPlayerbassinfo(arg_21_0, arg_21_1)
+	arg_21_0._txtname.text = arg_21_1.name
+	arg_21_0._txtplayerid.text = string.format("ID:%s", arg_21_1.userId)
 
-	if string.nilorempty(slot1.signature) and string.split(CommonConfig.instance:getConstStr(ConstEnum.RoleRandomSignature), "#") and #slot3 > 0 then
-		slot2 = slot3[math.random(1, #slot3)]
+	local var_21_0 = arg_21_1.signature
+
+	if string.nilorempty(var_21_0) then
+		local var_21_1 = string.split(CommonConfig.instance:getConstStr(ConstEnum.RoleRandomSignature), "#")
+
+		if var_21_1 and #var_21_1 > 0 then
+			var_21_0 = var_21_1[math.random(1, #var_21_1)]
+		end
 	end
 
-	slot0._txtsignature.text = slot2
+	arg_21_0._txtsignature.text = var_21_0
 
-	gohelper.setActive(slot0._txtsignature.gameObject, true)
+	gohelper.setActive(arg_21_0._txtsignature.gameObject, true)
 
-	slot0._txtentryday.text = TimeUtil.langTimestampToString3(ServerTime.timeInLocal(slot1.registerTime / 1000))
-	slot4 = lua_item.configDict[slot1.portrait]
+	arg_21_0._txtentryday.text = TimeUtil.langTimestampToString3(ServerTime.timeInLocal(arg_21_1.registerTime / 1000))
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageheadicon)
+	local var_21_2 = arg_21_1.portrait
+	local var_21_3 = lua_item.configDict[var_21_2]
+
+	if not arg_21_0._liveHeadIcon then
+		arg_21_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_21_0._simageheadicon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot3)
+	arg_21_0._liveHeadIcon:setLiveHead(var_21_2)
 
-	if #string.split(slot4.effect, "#") > 1 then
-		if slot4.id == tonumber(slot5[#slot5]) then
-			gohelper.setActive(slot0._goframenode, true)
+	local var_21_4 = string.split(var_21_3.effect, "#")
 
-			if not slot0.frame then
-				slot0._loader:addPath("ui/viewres/common/effect/frame.prefab")
-				slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+	if #var_21_4 > 1 then
+		if var_21_3.id == tonumber(var_21_4[#var_21_4]) then
+			gohelper.setActive(arg_21_0._goframenode, true)
+
+			if not arg_21_0.frame then
+				local var_21_5 = "ui/viewres/common/effect/frame.prefab"
+
+				arg_21_0._loader:addPath(var_21_5)
+				arg_21_0._loader:startLoad(arg_21_0._onLoadCallback, arg_21_0)
 			end
 		end
 	else
-		gohelper.setActive(slot0._goframenode, false)
+		gohelper.setActive(arg_21_0._goframenode, false)
 	end
 end
 
-function slot0._onLoadCallback(slot0)
-	gohelper.clone(slot0._loader:getFirstAssetItem():GetResource(), slot0._goframenode, "frame")
+function var_0_0._onLoadCallback(arg_22_0)
+	local var_22_0 = arg_22_0._loader:getFirstAssetItem():GetResource()
 
-	slot0.frame = gohelper.findChild(slot0._goframenode, "frame")
-	slot0.frame:GetComponent(gohelper.Type_Image).enabled = false
-	slot5 = 1.41 * recthelper.getWidth(slot0._simageheadicon.transform) / recthelper.getWidth(slot0.frame.transform)
+	gohelper.clone(var_22_0, arg_22_0._goframenode, "frame")
 
-	transformhelper.setLocalScale(slot0.frame.transform, slot5, slot5, 1)
+	arg_22_0.frame = gohelper.findChild(arg_22_0._goframenode, "frame")
+	arg_22_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+
+	local var_22_1 = 1.41 * (recthelper.getWidth(arg_22_0._simageheadicon.transform) / recthelper.getWidth(arg_22_0.frame.transform))
+
+	transformhelper.setLocalScale(arg_22_0.frame.transform, var_22_1, var_22_1, 1)
 end
 
-function slot0._initPlayerCardinfo(slot0, slot1)
-	slot3 = HeroConfig.instance:getAnyOnlineRareCharacterCount(2)
-	slot4 = HeroConfig.instance:getAnyOnlineRareCharacterCount(3)
-	slot5 = HeroConfig.instance:getAnyOnlineRareCharacterCount(4)
-	slot6 = HeroConfig.instance:getAnyOnlineRareCharacterCount(5)
-	slot7 = math.min(HeroConfig.instance:getAnyOnlineRareCharacterCount(1) > 0 and slot1.heroRareNNCount / slot2 or 1, 1)
-	slot8 = math.min(slot3 > 0 and slot1.heroRareNCount / slot3 or 1, 1)
-	slot9 = math.min(slot4 > 0 and slot1.heroRareRCount / slot4 or 1, 1)
-	slot10 = math.min(slot5 > 0 and slot1.heroRareSRCount / slot5 or 1, 1)
-	slot11 = math.min(slot6 > 0 and slot1.heroRareSSRCount / slot6 or 1, 1)
-	slot0._collectionfulls[1].fillAmount = slot7
-	slot0._collectionfulls[2].fillAmount = slot8
-	slot0._collectionfulls[3].fillAmount = slot9
-	slot0._collectionfulls[4].fillAmount = slot10
-	slot0._collectionfulls[5].fillAmount = slot11
-	slot0._collectiontxt[1].text = string.format("%s%%", slot7 * 100 - slot7 * 100 % 0.1)
-	slot0._collectiontxt[2].text = string.format("%s%%", slot8 * 100 - slot8 * 100 % 0.1)
-	slot0._collectiontxt[3].text = string.format("%s%%", slot9 * 100 - slot9 * 100 % 0.1)
-	slot0._collectiontxt[4].text = string.format("%s%%", slot10 * 100 - slot10 * 100 % 0.1)
-	slot0._collectiontxt[5].text = string.format("%s%%", slot11 * 100 - slot11 * 100 % 0.1)
+function var_0_0._initPlayerCardinfo(arg_23_0, arg_23_1)
+	local var_23_0 = HeroConfig.instance:getAnyOnlineRareCharacterCount(1)
+	local var_23_1 = HeroConfig.instance:getAnyOnlineRareCharacterCount(2)
+	local var_23_2 = HeroConfig.instance:getAnyOnlineRareCharacterCount(3)
+	local var_23_3 = HeroConfig.instance:getAnyOnlineRareCharacterCount(4)
+	local var_23_4 = HeroConfig.instance:getAnyOnlineRareCharacterCount(5)
+	local var_23_5 = math.min(var_23_0 > 0 and arg_23_1.heroRareNNCount / var_23_0 or 1, 1)
+	local var_23_6 = math.min(var_23_1 > 0 and arg_23_1.heroRareNCount / var_23_1 or 1, 1)
+	local var_23_7 = math.min(var_23_2 > 0 and arg_23_1.heroRareRCount / var_23_2 or 1, 1)
+	local var_23_8 = math.min(var_23_3 > 0 and arg_23_1.heroRareSRCount / var_23_3 or 1, 1)
+	local var_23_9 = math.min(var_23_4 > 0 and arg_23_1.heroRareSSRCount / var_23_4 or 1, 1)
+
+	arg_23_0._collectionfulls[1].fillAmount = var_23_5
+	arg_23_0._collectionfulls[2].fillAmount = var_23_6
+	arg_23_0._collectionfulls[3].fillAmount = var_23_7
+	arg_23_0._collectionfulls[4].fillAmount = var_23_8
+	arg_23_0._collectionfulls[5].fillAmount = var_23_9
+	arg_23_0._collectiontxt[1].text = string.format("%s%%", var_23_5 * 100 - var_23_5 * 100 % 0.1)
+	arg_23_0._collectiontxt[2].text = string.format("%s%%", var_23_6 * 100 - var_23_6 * 100 % 0.1)
+	arg_23_0._collectiontxt[3].text = string.format("%s%%", var_23_7 * 100 - var_23_7 * 100 % 0.1)
+	arg_23_0._collectiontxt[4].text = string.format("%s%%", var_23_8 * 100 - var_23_8 * 100 % 0.1)
+	arg_23_0._collectiontxt[5].text = string.format("%s%%", var_23_9 * 100 - var_23_9 * 100 % 0.1)
 end
 
-function slot0._showCollectionText(slot0)
-	for slot4, slot5 in ipairs(slot0._collectiontxt) do
-		gohelper.setActive(slot5.gameObject, true)
+function var_0_0._showCollectionText(arg_24_0)
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0._collectiontxt) do
+		gohelper.setActive(iter_24_1.gameObject, true)
 	end
 
-	gohelper.setActive(slot0._btncloseCollectText.gameObject, true)
+	gohelper.setActive(arg_24_0._btncloseCollectText.gameObject, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function slot0._hideCollectionText(slot0)
-	for slot4, slot5 in ipairs(slot0._collectiontxt) do
-		gohelper.setActive(slot5.gameObject, false)
+function var_0_0._hideCollectionText(arg_25_0)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_0._collectiontxt) do
+		gohelper.setActive(iter_25_1.gameObject, false)
 	end
 
-	gohelper.setActive(slot0._btncloseCollectText.gameObject, false)
+	gohelper.setActive(arg_25_0._btncloseCollectText.gameObject, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function slot0._initPlayerOtherinfo(slot0, slot1)
-	slot0._txtepisodeprogress.text = ""
-	slot0._txtepisodeprogressen.text = ""
-	slot4 = GameConfig:GetCurLangType() == LangSettings.en and "%s %s" or "《%s %s》"
+function var_0_0._initPlayerOtherinfo(arg_26_0, arg_26_1)
+	arg_26_0._txtepisodeprogress.text = ""
+	arg_26_0._txtepisodeprogressen.text = ""
 
-	if slot1.lastEpisodeId and lua_episode.configDict[slot2] then
-		if DungeonConfig.instance:getChapterCO(slot3.chapterId).type == DungeonEnum.ChapterType.Simple then
-			slot3 = lua_episode.configDict[slot3.normalEpisodeId]
+	local var_26_0 = arg_26_1.lastEpisodeId
+	local var_26_1 = var_26_0 and lua_episode.configDict[var_26_0]
+	local var_26_2 = GameConfig:GetCurLangType() == LangSettings.en and "%s %s" or "《%s %s》"
+
+	if var_26_1 then
+		if DungeonConfig.instance:getChapterCO(var_26_1.chapterId).type == DungeonEnum.ChapterType.Simple then
+			var_26_1 = lua_episode.configDict[var_26_1.normalEpisodeId]
 		end
 
-		if slot3 then
-			slot0._txtepisodeprogress.text = string.format(slot4, DungeonController.getEpisodeName(slot3), slot3.name)
-			slot0._txtepisodeprogressen.text = slot3.name_En
+		if var_26_1 then
+			arg_26_0._txtepisodeprogress.text = string.format(var_26_2, DungeonController.getEpisodeName(var_26_1), var_26_1.name)
+			arg_26_0._txtepisodeprogressen.text = var_26_1.name_En
 		end
 	end
 
-	slot5 = slot1.level
-	slot0._txtlevel.text = slot5
-	slot6 = slot1.exp
-	slot7 = 0
+	local var_26_3 = arg_26_1.level
 
-	if slot5 < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
-		slot7 = PlayerConfig.instance:getPlayerLevelCO(slot5 + 1).exp
+	arg_26_0._txtlevel.text = var_26_3
+
+	local var_26_4 = arg_26_1.exp
+	local var_26_5 = 0
+
+	if var_26_3 < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
+		var_26_5 = PlayerConfig.instance:getPlayerLevelCO(var_26_3 + 1).exp
 	else
-		slot6 = PlayerConfig.instance:getPlayerLevelCO(slot5).exp
+		var_26_5 = PlayerConfig.instance:getPlayerLevelCO(var_26_3).exp
+		var_26_4 = var_26_5
 	end
 
-	slot0._txtexp.text = slot6 .. "/" .. slot7
+	arg_26_0._txtexp.text = var_26_4 .. "/" .. var_26_5
 
-	slot0._imageexp:SetValue(slot6 / slot7)
+	arg_26_0._imageexp:SetValue(var_26_4 / var_26_5)
 end
 
-function slot0._initPlayerShowCard(slot0, slot1)
-	for slot5 = 1, 3 do
-		slot0:_showcharacterinfo(slot1[slot5], gohelper.findChild(slot0.viewGO, "showcharacters/showcharacter" .. slot5))
+function var_0_0._initPlayerShowCard(arg_27_0, arg_27_1)
+	for iter_27_0 = 1, 3 do
+		local var_27_0 = gohelper.findChild(arg_27_0.viewGO, "showcharacters/showcharacter" .. iter_27_0)
+
+		arg_27_0:_showcharacterinfo(arg_27_1[iter_27_0], var_27_0)
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	0.23,
 	0.42,
 	0.59,
@@ -411,93 +439,114 @@ slot1 = {
 	1
 }
 
-function slot0._showcharacterinfo(slot0, slot1, slot2)
-	slot3 = gohelper.findChild(slot2, "#btn_Add")
-	slot4 = gohelper.findChild(slot2, "#btn_Character")
+function var_0_0._showcharacterinfo(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = gohelper.findChild(arg_28_2, "#btn_Add")
+	local var_28_1 = gohelper.findChild(arg_28_2, "#btn_Character")
 
-	if slot1 and slot1 ~= 0 and slot1.heroId and slot1.heroId ~= "0" and slot1.heroId ~= 0 then
-		if slot0._playerSelf then
-			slot1 = HeroModel.instance:getByHeroId(slot1.heroId)
+	if arg_28_1 and arg_28_1 ~= 0 and arg_28_1.heroId and arg_28_1.heroId ~= "0" and arg_28_1.heroId ~= 0 then
+		if arg_28_0._playerSelf then
+			arg_28_1 = HeroModel.instance:getByHeroId(arg_28_1.heroId)
 		end
 
-		gohelper.setActive(slot3.gameObject, false)
-		gohelper.setActive(slot4.gameObject, true)
+		gohelper.setActive(var_28_0.gameObject, false)
+		gohelper.setActive(var_28_1.gameObject, true)
 
-		slot13 = {}
+		local var_28_2 = gohelper.findChildImage(arg_28_2, "#btn_Character/charactercarditem/#simage_cardrare")
+		local var_28_3 = gohelper.findChild(arg_28_2, "#btn_Character/charactercarditem/#simage_cardrare/r")
+		local var_28_4 = gohelper.findChild(arg_28_2, "#btn_Character/charactercarditem/#simage_cardrare/sr")
+		local var_28_5 = gohelper.findChild(arg_28_2, "#btn_Character/charactercarditem/#simage_cardrare/ssr")
+		local var_28_6 = gohelper.findChildText(arg_28_2, "#btn_Character/charactercarditem/#txt_level")
+		local var_28_7 = gohelper.findChild(arg_28_2, "#btn_Character/charactercarditem/iconmask/#simage_icon")
+		local var_28_8 = CommonHeroCard.create(var_28_7, arg_28_0.viewName)
+		local var_28_9 = gohelper.findChildImage(arg_28_2, "#btn_Character/charactercarditem/lvProgress/#image_breakprogress")
+		local var_28_10 = {}
 
-		table.insert(slot13, gohelper.findChild(slot2, "#btn_Character/charactercarditem/#simage_cardrare/r"))
-		table.insert(slot13, gohelper.findChild(slot2, "#btn_Character/charactercarditem/#simage_cardrare/sr"))
-		table.insert(slot13, gohelper.findChild(slot2, "#btn_Character/charactercarditem/#simage_cardrare/ssr"))
-		UISpriteSetMgr.instance:setPlayerRareBgSprite(gohelper.findChildImage(slot2, "#btn_Character/charactercarditem/#simage_cardrare"), "rare_" .. CharacterEnum.Color[HeroConfig.instance:getHeroCO(slot1.heroId).rare])
-		CommonHeroCard.create(gohelper.findChild(slot2, "#btn_Character/charactercarditem/iconmask/#simage_icon"), slot0.viewName):onUpdateMO(SkinConfig.instance:getSkinCo(slot1.skin))
+		table.insert(var_28_10, var_28_3)
+		table.insert(var_28_10, var_28_4)
+		table.insert(var_28_10, var_28_5)
 
-		gohelper.findChildText(slot2, "#btn_Character/charactercarditem/#txt_level").text = HeroConfig.instance:getShowLevel(slot1.level)
-		gohelper.findChildImage(slot2, "#btn_Character/charactercarditem/lvProgress/#image_breakprogress").fillAmount = slot1.exSkillLevel and uv0[slot1.exSkillLevel] or 0
+		local var_28_11 = HeroConfig.instance:getHeroCO(arg_28_1.heroId)
+		local var_28_12 = SkinConfig.instance:getSkinCo(arg_28_1.skin)
 
-		for slot19 = 1, 3 do
-			gohelper.setActive(slot13[slot19], slot19 == slot14.rare - 2)
+		UISpriteSetMgr.instance:setPlayerRareBgSprite(var_28_2, "rare_" .. CharacterEnum.Color[var_28_11.rare])
+		var_28_8:onUpdateMO(var_28_12)
+
+		var_28_6.text = HeroConfig.instance:getShowLevel(arg_28_1.level)
+		var_28_9.fillAmount = arg_28_1.exSkillLevel and var_0_1[arg_28_1.exSkillLevel] or 0
+
+		for iter_28_0 = 1, 3 do
+			gohelper.setActive(var_28_10[iter_28_0], iter_28_0 == var_28_11.rare - 2)
 		end
 
-		slot0:_showCharacterRankInfo(slot1, slot2)
+		arg_28_0:_showCharacterRankInfo(arg_28_1, arg_28_2)
 	else
-		gohelper.setActive(slot3.gameObject, true)
-		gohelper.setActive(slot4.gameObject, false)
+		gohelper.setActive(var_28_0.gameObject, true)
+		gohelper.setActive(var_28_1.gameObject, false)
 	end
 
-	if not slot0._playerSelf then
-		gohelper.setActive(slot3, false)
-	end
-end
-
-function slot0._showCharacterRankInfo(slot0, slot1, slot2)
-	slot3 = HeroConfig.instance:getHeroCO(slot1.heroId)
-
-	for slot9 = 1, 3 do
-		table.insert({}, gohelper.findChild(gohelper.findChild(slot2, "#btn_Character/charactercarditem/rankobj"), "rank" .. slot9))
-	end
-
-	for slot9 = 1, 3 do
-		gohelper.setActive(slot5[slot9], slot9 == slot1.rank - 1)
+	if not arg_28_0._playerSelf then
+		gohelper.setActive(var_28_0, false)
 	end
 end
 
-function slot0._refreshRenameStatus(slot0)
-	gohelper.setActive(slot0._btnmodifyname.gameObject, slot0._playerSelf and slot0._isGamePad == false)
+function var_0_0._showCharacterRankInfo(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = HeroConfig.instance:getHeroCO(arg_29_1.heroId)
+	local var_29_1 = gohelper.findChild(arg_29_2, "#btn_Character/charactercarditem/rankobj")
+	local var_29_2 = {}
+
+	for iter_29_0 = 1, 3 do
+		local var_29_3 = gohelper.findChild(var_29_1, "rank" .. iter_29_0)
+
+		table.insert(var_29_2, var_29_3)
+	end
+
+	for iter_29_1 = 1, 3 do
+		local var_29_4 = var_29_2[iter_29_1]
+
+		gohelper.setActive(var_29_4, iter_29_1 == arg_29_1.rank - 1)
+	end
 end
 
-function slot0._refreshIsHasAssistReward(slot0)
-	if slot0._playerSelf then
-		gohelper.setActive(slot0._goAssistReward, OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) and PlayerModel.instance:isHasAssistReward())
+function var_0_0._refreshRenameStatus(arg_30_0)
+	gohelper.setActive(arg_30_0._btnmodifyname.gameObject, arg_30_0._playerSelf and arg_30_0._isGamePad == false)
+end
+
+function var_0_0._refreshIsHasAssistReward(arg_31_0)
+	if arg_31_0._playerSelf then
+		local var_31_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend)
+		local var_31_1 = PlayerModel.instance:isHasAssistReward()
+
+		gohelper.setActive(arg_31_0._goAssistReward, var_31_0 and var_31_1)
 	else
-		gohelper.setActive(slot0._goAssistReward, false)
+		gohelper.setActive(arg_31_0._goAssistReward, false)
 	end
 end
 
-function slot0._onCloseFullView(slot0, slot1)
-	if slot0._viewAnim then
+function var_0_0._onCloseFullView(arg_32_0, arg_32_1)
+	if arg_32_0._viewAnim then
 		ShaderKeyWordMgr.disableKeyWord("_CLIPALPHA_ON")
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-		slot0._viewAnim:Play(UIAnimationName.Open, 0, 0)
+		arg_32_0._viewAnim:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_33_0)
 	PostProcessingMgr.instance:setBlurWeight(1)
-	TaskDispatcher.cancelTask(slot0._delayOpenView, slot0)
+	TaskDispatcher.cancelTask(arg_33_0._delayOpenView, arg_33_0)
 	UIBlockMgr.instance:endBlock("PlayerViewDelayOpenView")
-	TaskDispatcher.cancelTask(slot0.updateAssistReward, slot0)
+	TaskDispatcher.cancelTask(arg_33_0.updateAssistReward, arg_33_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageheadicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_34_0)
+	arg_34_0._simageheadicon:UnLoadImage()
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_34_0._loader then
+		arg_34_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_34_0._loader = nil
 	end
 
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 end
 
-return slot0
+return var_0_0

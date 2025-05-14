@@ -1,128 +1,144 @@
-module("modules.logic.rouge.define.RougeLuaCompBase", package.seeall)
+﻿module("modules.logic.rouge.define.RougeLuaCompBase", package.seeall)
 
-slot0 = class("RougeLuaCompBase", ListScrollCellExtend)
+local var_0_0 = class("RougeLuaCompBase", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
-	uv0.super.init(slot0, slot1)
-	slot0:initDLCs(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
+	var_0_0.super.init(arg_1_0, arg_1_1)
+	arg_1_0:initDLCs(arg_1_1)
 end
 
-function slot0.initDLCs(slot0, slot1)
-	slot0._parentGo = slot1
+function var_0_0.initDLCs(arg_2_0, arg_2_1)
+	arg_2_0._parentGo = arg_2_1
 
-	slot0:_collectAllClsAndLoadRes()
+	arg_2_0:_collectAllClsAndLoadRes()
 end
 
-function slot0.onUpdateDLC(slot0, ...)
+function var_0_0.onUpdateDLC(arg_3_0, ...)
+	return
 end
 
-function slot0.tickUpdateDLCs(slot0, ...)
-	if not slot0._dlcComps or not slot0._resLoadDone then
-		slot0.params = {
+function var_0_0.tickUpdateDLCs(arg_4_0, ...)
+	if not arg_4_0._dlcComps or not arg_4_0._resLoadDone then
+		arg_4_0.params = {
 			...
 		}
 
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._dlcComps) do
-		slot5:onUpdateDLC(...)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._dlcComps) do
+		iter_4_1:onUpdateDLC(...)
 	end
 end
 
-function slot0._collectAllClsAndLoadRes(slot0)
-	slot0._clsList = slot0:getUserDataTb_()
-	slot1 = {}
+function var_0_0._collectAllClsAndLoadRes(arg_5_0)
+	arg_5_0._clsList = arg_5_0:getUserDataTb_()
 
-	for slot8, slot9 in ipairs(RougeModel.instance:getVersion() or {}) do
-		slot11 = _G[string.format("%s_%s_%s", slot0.__cname, RougeOutsideModel.instance:season(), slot9)]
+	local var_5_0 = {}
+	local var_5_1 = {}
+	local var_5_2 = RougeOutsideModel.instance:season()
+	local var_5_3 = RougeModel.instance:getVersion()
 
-		table.insert(slot0._clsList, slot11)
-		slot0:_collectNeedLoadRes(slot11, slot1, {})
+	for iter_5_0, iter_5_1 in ipairs(var_5_3 or {}) do
+		local var_5_4 = string.format("%s_%s_%s", arg_5_0.__cname, var_5_2, iter_5_1)
+		local var_5_5 = _G[var_5_4]
+
+		table.insert(arg_5_0._clsList, var_5_5)
+		arg_5_0:_collectNeedLoadRes(var_5_5, var_5_0, var_5_1)
 	end
 
-	slot0:_loadAllNeedRes(slot1)
+	arg_5_0:_loadAllNeedRes(var_5_0)
 end
 
-function slot0._collectNeedLoadRes(slot0, slot1, slot2, slot3)
-	if slot1 and slot1.AssetUrl then
-		slot3[slot4] = true
+function var_0_0._collectNeedLoadRes(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_1 and arg_6_1.AssetUrl
 
-		table.insert(slot2, slot4)
+	if var_6_0 then
+		arg_6_3[var_6_0] = true
+
+		table.insert(arg_6_2, var_6_0)
 	end
 end
 
-function slot0._loadAllNeedRes(slot0, slot1)
-	slot0._resLoadDone = false
+function var_0_0._loadAllNeedRes(arg_7_0, arg_7_1)
+	arg_7_0._resLoadDone = false
 
-	if not slot1 or #slot1 <= 0 then
-		slot0:_resLoadDoneCallBack()
+	if not arg_7_1 or #arg_7_1 <= 0 then
+		arg_7_0:_resLoadDoneCallBack()
 
 		return
 	end
 
-	slot0._abLoader = slot0._abLoader or MultiAbLoader.New()
+	arg_7_0._abLoader = arg_7_0._abLoader or MultiAbLoader.New()
 
-	slot0._abLoader:setPathList(slot1)
-	slot0._abLoader:startLoad(slot0._resLoadDoneCallBack, slot0)
+	arg_7_0._abLoader:setPathList(arg_7_1)
+	arg_7_0._abLoader:startLoad(arg_7_0._resLoadDoneCallBack, arg_7_0)
 end
 
-function slot0._resLoadDoneCallBack(slot0)
-	slot0._dlcComps = slot0:getUserDataTb_()
-	slot1 = nil
+function var_0_0._resLoadDoneCallBack(arg_8_0)
+	arg_8_0._dlcComps = arg_8_0:getUserDataTb_()
 
-	if slot0.params then
-		slot1 = unpack(slot0.params)
+	local var_8_0
+
+	if arg_8_0.params then
+		var_8_0 = unpack(arg_8_0.params)
 	end
 
-	for slot5, slot6 in ipairs(slot0._clsList) do
-		if slot0:_createGo(slot6.ParentObjPath, slot6.AssetUrl, slot6.ResInitPosition) then
-			slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot7, slot6, slot0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._clsList) do
+		local var_8_1 = arg_8_0:_createGo(iter_8_1.ParentObjPath, iter_8_1.AssetUrl, iter_8_1.ResInitPosition)
 
-			slot8:onUpdateDLC(slot1)
-			table.insert(slot0._dlcComps, slot8)
+		if var_8_1 then
+			local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, iter_8_1, arg_8_0)
+
+			var_8_2:onUpdateDLC(var_8_0)
+			table.insert(arg_8_0._dlcComps, var_8_2)
 		end
 	end
 
-	slot0._resLoadDone = true
+	arg_8_0._resLoadDone = true
 end
 
-function slot0._createGo(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot1) or string.nilorempty(slot2) or not slot0._abLoader then
+function var_0_0._createGo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if string.nilorempty(arg_9_1) or string.nilorempty(arg_9_2) or not arg_9_0._abLoader then
 		return
 	end
 
-	if not (slot0._abLoader:getAssetItem(slot2) and slot4:GetResource(slot2)) then
-		logError("无法找到指定资源 :" .. slot2)
+	local var_9_0 = arg_9_0._abLoader:getAssetItem(arg_9_2)
+	local var_9_1 = var_9_0 and var_9_0:GetResource(arg_9_2)
+
+	if not var_9_1 then
+		logError("无法找到指定资源 :" .. arg_9_2)
 
 		return
 	end
 
-	if gohelper.isNil(gohelper.findChild(slot0._parentGo, slot1)) then
-		logError("无法找到指定肉鸽DLC界面挂点:" .. tostring(slot1))
+	local var_9_2 = gohelper.findChild(arg_9_0._parentGo, arg_9_1)
+
+	if gohelper.isNil(var_9_2) then
+		logError("无法找到指定肉鸽DLC界面挂点:" .. tostring(arg_9_1))
 
 		return
 	end
 
-	slot7 = gohelper.clone(slot5, slot6)
+	local var_9_3 = gohelper.clone(var_9_1, var_9_2)
 
-	if slot3 then
-		recthelper.setAnchor(slot7.transform, slot3.x or 0, slot3.y or 0)
+	if arg_9_3 then
+		recthelper.setAnchor(var_9_3.transform, arg_9_3.x or 0, arg_9_3.y or 0)
 	end
 
-	return slot7
+	return var_9_3
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._abLoader then
-		slot0._abLoader:dispose()
+function var_0_0.onDestroy(arg_10_0)
+	if arg_10_0._abLoader then
+		arg_10_0._abLoader:dispose()
 
-		slot0._abLoader = nil
+		arg_10_0._abLoader = nil
 	end
 
-	uv0.super.onDestroy(slot0)
-	slot0:__onDispose()
+	var_0_0.super.onDestroy(arg_10_0)
+	arg_10_0:__onDispose()
 end
 
-return slot0
+return var_0_0

@@ -1,14 +1,16 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowStartStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowStartStep", package.seeall)
 
-slot0 = class("EliminateChessShowStartStep", EliminateChessStepBase)
+local var_0_0 = class("EliminateChessShowStartStep", EliminateChessStepBase)
 
-function slot0.onStart(slot0)
-	EliminateChessController.instance:openNoticeView(true, false, false, false, 0, slot0._data, slot0._onPlayEnd, slot0)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
+
+	EliminateChessController.instance:openNoticeView(true, false, false, false, 0, var_1_0, arg_1_0._onPlayEnd, arg_1_0)
 end
 
-function slot0._onPlayEnd(slot0)
+function var_0_0._onPlayEnd(arg_2_0)
 	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.Match3ChessBeginViewClose)
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

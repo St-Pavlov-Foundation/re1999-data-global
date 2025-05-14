@@ -1,47 +1,47 @@
-module("modules.logic.voyage.view.ActivityGiftForTheVoyageItemRewardItem", package.seeall)
+﻿module("modules.logic.voyage.view.ActivityGiftForTheVoyageItemRewardItem", package.seeall)
 
-slot0 = class("ActivityGiftForTheVoyageItemRewardItem", LuaCompBase)
+local var_0_0 = class("ActivityGiftForTheVoyageItemRewardItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_item")
-	slot0._gohasGet = gohelper.findChild(slot0.viewGO, "#go_hasGet")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
+	arg_1_0._gohasGet = gohelper.findChild(arg_1_0.viewGO, "#go_hasGet")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.viewGO = arg_2_1
 
-	slot0:onInitView()
+	arg_2_0:onInitView()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gohasGet, false)
+function var_0_0._editableInitView(arg_3_0)
+	gohelper.setActive(arg_3_0._gohasGet, false)
 
-	slot0._item = IconMgr.instance:getCommonItemIcon(slot0._goitem)
+	arg_3_0._item = IconMgr.instance:getCommonItemIcon(arg_3_0._goitem)
 end
 
-function slot0.refreshRewardItem(slot0, slot1, slot2)
-	slot3 = slot0._item
+function var_0_0.refreshRewardItem(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0._item
 
-	slot3:setMOValue(slot1[1], slot1[2], slot1[3], nil, true)
-	slot3:setConsume(true)
-	slot3:isShowEffect(true)
-	slot3:setAutoPlay(true)
-	slot3:setCountFontSize(48)
-	slot3:showStackableNum2()
-	slot3:setGetMask(slot2)
-	gohelper.setActive(slot0._gohasGet, slot2)
+	var_4_0:setMOValue(arg_4_1[1], arg_4_1[2], arg_4_1[3], nil, true)
+	var_4_0:setConsume(true)
+	var_4_0:isShowEffect(true)
+	var_4_0:setAutoPlay(true)
+	var_4_0:setCountFontSize(48)
+	var_4_0:showStackableNum2()
+	var_4_0:setGetMask(arg_4_2)
+	gohelper.setActive(arg_4_0._gohasGet, arg_4_2)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_item")
+function var_0_0.onDestroyView(arg_5_0)
+	GameUtil.onDestroyViewMemberList(arg_5_0, "_item")
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyView()
+function var_0_0.onDestroy(arg_6_0)
+	arg_6_0:onDestroyView()
 end
 
-return slot0
+return var_0_0

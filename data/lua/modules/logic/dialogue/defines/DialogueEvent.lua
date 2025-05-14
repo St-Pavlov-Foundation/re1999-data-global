@@ -1,10 +1,11 @@
-module("modules.logic.dialogue.defines.DialogueEvent", package.seeall)
+﻿module("modules.logic.dialogue.defines.DialogueEvent", package.seeall)
 
-slot0 = _M
-slot0.OnClickOption = 1
-slot0.BeforePlayStep = 2
-slot0.OnDone = 3
-slot0.OnDialogueInfoChange = 100
-slot0.OnCloseViewWithDialogueDone = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnClickOption = 1
+var_0_0.BeforePlayStep = 2
+var_0_0.OnDone = 3
+var_0_0.OnDialogueInfoChange = 100
+var_0_0.OnCloseViewWithDialogueDone = 4
+
+return var_0_0

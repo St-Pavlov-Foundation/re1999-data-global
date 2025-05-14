@@ -1,7 +1,8 @@
-module("modules.logic.limited.controller.LimitedRoleEnum", package.seeall)
+﻿module("modules.logic.limited.controller.LimitedRoleEnum", package.seeall)
 
-slot0 = _M
-slot0.Stage = {
+local var_0_0 = _M
+
+var_0_0.Stage = {
 	FirstLogin = 1,
 	SwitchRole = 5,
 	MainVisibleClick = 3,
@@ -9,4 +10,4 @@ slot0.Stage = {
 	SummonGet = 4
 }
 
-return slot0
+return var_0_0

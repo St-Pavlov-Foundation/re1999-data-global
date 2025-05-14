@@ -1,14 +1,16 @@
-module("modules.logic.fight.system.work.FightWorkCardDeckNum", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCardDeckNum", package.seeall)
 
-slot0 = class("FightWorkCardDeckNum", FightEffectBase)
+local var_0_0 = class("FightWorkCardDeckNum", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0.afterDeckNum = FightDataHelper.fieldMgr.deckNum
+function var_0_0.beforePlayEffectData(arg_1_0)
+	arg_1_0.afterDeckNum = FightDataHelper.fieldMgr.deckNum
 end
 
-function slot0.onStart(slot0)
-	slot0:com_sendFightEvent(FightEvent.CardBoxNumChange, slot0.afterDeckNum, FightDataHelper.fieldMgr.deckNum)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = FightDataHelper.fieldMgr.deckNum
+
+	arg_2_0:com_sendFightEvent(FightEvent.CardBoxNumChange, arg_2_0.afterDeckNum, var_2_0)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

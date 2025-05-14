@@ -1,159 +1,190 @@
-module("modules.logic.playercard.model.PlayerCardModel", package.seeall)
+﻿module("modules.logic.playercard.model.PlayerCardModel", package.seeall)
 
-slot0 = class("PlayerCardModel", BaseModel)
+local var_0_0 = class("PlayerCardModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.characterSwitchFlag = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.characterSwitchFlag = nil
 end
 
-function slot0.updateCardInfo(slot0, slot1, slot2)
-	if not (slot2 and slot2.userId or PlayerModel.instance:getMyUserId()) then
+function var_0_0.updateCardInfo(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_2 and arg_3_2.userId or PlayerModel.instance:getMyUserId()
+
+	if not var_3_0 then
 		return
 	end
 
-	if not slot0:getById(slot3) then
-		slot4 = PlayerCardMO.New()
+	local var_3_1 = arg_3_0:getById(var_3_0)
 
-		slot4:init(slot3)
-		slot0:addAtLast(slot4)
+	if not var_3_1 then
+		var_3_1 = PlayerCardMO.New()
+
+		var_3_1:init(var_3_0)
+		arg_3_0:addAtLast(var_3_1)
 	end
 
-	slot4:updateInfo(slot1, slot2)
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot3)
+	var_3_1:updateInfo(arg_3_1, arg_3_2)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_3_0)
 end
 
-function slot0.updateSetting(slot0, slot1)
-	if slot0:getCardInfo() then
-		slot2:updateShowSetting(slot1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot2.userId)
-	end
-end
+function var_0_0.updateSetting(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getCardInfo()
 
-function slot0.updateProgressSetting(slot0, slot1)
-	if slot0:getCardInfo() then
-		slot2:updateProgressSetting(slot1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot2.userId)
+	if var_4_0 then
+		var_4_0:updateShowSetting(arg_4_1)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_4_0.userId)
 	end
 end
 
-function slot0.updateBaseInfoSetting(slot0, slot1)
-	if slot0:getCardInfo() then
-		slot2:updateBaseInfoSetting(slot1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot2.userId)
+function var_0_0.updateProgressSetting(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getCardInfo()
+
+	if var_5_0 then
+		var_5_0:updateProgressSetting(arg_5_1)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_5_0.userId)
 	end
 end
 
-function slot0.updateHeroCover(slot0, slot1)
-	if slot0:getCardInfo() then
-		slot2:updateHeroCover(slot1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot2.userId)
+function var_0_0.updateBaseInfoSetting(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getCardInfo()
+
+	if var_6_0 then
+		var_6_0:updateBaseInfoSetting(arg_6_1)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_6_0.userId)
 	end
 end
 
-function slot0.updateThemeId(slot0, slot1)
-	if slot0:getCardInfo() then
-		slot2:updateThemeId(slot1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot2.userId)
+function var_0_0.updateHeroCover(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getCardInfo()
+
+	if var_7_0 then
+		var_7_0:updateHeroCover(arg_7_1)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_7_0.userId)
 	end
 end
 
-function slot0.updateCritter(slot0, slot1, slot2)
-	if slot0:getCardInfo() then
-		slot3:updateCritter(slot1, slot2)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot3.userId)
+function var_0_0.updateThemeId(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getCardInfo()
+
+	if var_8_0 then
+		var_8_0:updateThemeId(arg_8_1)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_8_0.userId)
 	end
 end
 
-function slot0.updateAchievement(slot0, slot1)
-	if slot0:getCardInfo() then
-		slot2:updateAchievement(slot1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, slot2.userId)
+function var_0_0.updateCritter(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:getCardInfo()
+
+	if var_9_0 then
+		var_9_0:updateCritter(arg_9_1, arg_9_2)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_9_0.userId)
 	end
 end
 
-function slot0.getCardInfo(slot0, slot1)
-	return slot0:getById(slot1 or PlayerModel.instance:getMyUserId())
-end
+function var_0_0.updateAchievement(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getCardInfo()
 
-function slot0.getShowAchievement(slot0)
-	if slot0:getCardInfo() then
-		return slot1:getShowAchievement()
+	if var_10_0 then
+		var_10_0:updateAchievement(arg_10_1)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_10_0.userId)
 	end
 end
 
-function slot0.themeIsUnlock(slot0, slot1)
+function var_0_0.getCardInfo(arg_11_0, arg_11_1)
+	arg_11_1 = arg_11_1 or PlayerModel.instance:getMyUserId()
+
+	return arg_11_0:getById(arg_11_1)
+end
+
+function var_0_0.getShowAchievement(arg_12_0)
+	local var_12_0 = arg_12_0:getCardInfo()
+
+	if var_12_0 then
+		return var_12_0:getShowAchievement()
+	end
+end
+
+function var_0_0.themeIsUnlock(arg_13_0, arg_13_1)
 	return true
 end
 
-function slot0.isCharacterSwitchFlag(slot0)
-	return slot0.characterSwitchFlag
+function var_0_0.isCharacterSwitchFlag(arg_14_0)
+	return arg_14_0.characterSwitchFlag
 end
 
-function slot0.setCharacterSwitchFlag(slot0, slot1)
-	slot0.characterSwitchFlag = slot1
+function var_0_0.setCharacterSwitchFlag(arg_15_0, arg_15_1)
+	arg_15_0.characterSwitchFlag = arg_15_1
 end
 
-function slot0.setSelectCritterUid(slot0, slot1)
-	if slot0:getCardInfo() then
-		return slot2:setSelectCritterUid(slot1)
+function var_0_0.setSelectCritterUid(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getCardInfo()
+
+	if var_16_0 then
+		return var_16_0:setSelectCritterUid(arg_16_1)
 	end
 end
 
-function slot0.getSelectCritterUid(slot0)
-	if slot0:getCardInfo() then
-		return slot1:getSelectCritterUid()
+function var_0_0.getSelectCritterUid(arg_17_0)
+	local var_17_0 = arg_17_0:getCardInfo()
+
+	if var_17_0 then
+		return var_17_0:getSelectCritterUid()
 	end
 end
 
-function slot0.getPlayerCardSkinId(slot0)
-	if slot0:getCardInfo() then
-		return slot1:getThemeId()
+function var_0_0.getPlayerCardSkinId(arg_18_0)
+	local var_18_0 = arg_18_0:getCardInfo()
+
+	if var_18_0 then
+		return var_18_0:getThemeId()
 	end
 end
 
-function slot0.setSelectSkinMO(slot0, slot1)
-	slot0.selectSkinMO = slot1
+function var_0_0.setSelectSkinMO(arg_19_0, arg_19_1)
+	arg_19_0.selectSkinMO = arg_19_1
 end
 
-function slot0.getSelectSkinMO(slot0)
-	return slot0.selectSkinMO or nil
+function var_0_0.getSelectSkinMO(arg_20_0)
+	return arg_20_0.selectSkinMO or nil
 end
 
-function slot0.setIsOpenSkinView(slot0, slot1)
-	slot0.isopenskin = slot1
+function var_0_0.setIsOpenSkinView(arg_21_0, arg_21_1)
+	arg_21_0.isopenskin = arg_21_1
 end
 
-function slot0.getIsOpenSkinView(slot0)
-	return slot0.isopenskin
+function var_0_0.getIsOpenSkinView(arg_22_0)
+	return arg_22_0.isopenskin
 end
 
-function slot0.setSelectHero(slot0, slot1, slot2)
-	slot0.selectHeroId = slot1
-	slot0.selectSkinId = slot2
+function var_0_0.setSelectHero(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0.selectHeroId = arg_23_1
+	arg_23_0.selectSkinId = arg_23_2
 end
 
-function slot0.getSelectHero(slot0)
-	return slot0.selectHeroId, slot0.selectSkinId
+function var_0_0.getSelectHero(arg_24_0)
+	return arg_24_0.selectHeroId, arg_24_0.selectSkinId
 end
 
-function slot0.checkHeroDiff(slot0)
-	slot1, slot2, slot3, slot4 = slot0:getCardInfo():getMainHero()
+function var_0_0.checkHeroDiff(arg_25_0)
+	local var_25_0, var_25_1, var_25_2, var_25_3 = arg_25_0:getCardInfo():getMainHero()
 
-	if slot1 ~= slot0.selectHeroId or slot2 ~= slot0.selectSkinId then
+	if var_25_0 ~= arg_25_0.selectHeroId or var_25_1 ~= arg_25_0.selectSkinId then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getCritterOpen(slot0)
-	return CritterModel.instance:isCritterUnlock(false) and #CritterModel.instance:getAllCritters() > 0
+function var_0_0.getCritterOpen(arg_26_0)
+	local var_26_0 = CritterModel.instance:isCritterUnlock(false)
+	local var_26_1 = CritterModel.instance:getAllCritters()
+
+	return var_26_0 and #var_26_1 > 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

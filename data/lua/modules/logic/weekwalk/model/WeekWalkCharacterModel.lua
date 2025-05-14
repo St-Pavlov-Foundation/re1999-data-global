@@ -1,11 +1,11 @@
-module("modules.logic.weekwalk.model.WeekWalkCharacterModel", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekWalkCharacterModel", package.seeall)
 
-slot0 = class("WeekWalkCharacterModel", CharacterModel)
+local var_0_0 = class("WeekWalkCharacterModel", CharacterModel)
 
-function slot0._setCharacterCardList(slot0, slot1)
-	WeekWalkCardListModel.instance:setCharacterList(slot1)
+function var_0_0._setCharacterCardList(arg_1_0, arg_1_1)
+	WeekWalkCardListModel.instance:setCharacterList(arg_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

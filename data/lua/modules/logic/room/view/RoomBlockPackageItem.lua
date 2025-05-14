@@ -1,88 +1,94 @@
-module("modules.logic.room.view.RoomBlockPackageItem", package.seeall)
+﻿module("modules.logic.room.view.RoomBlockPackageItem", package.seeall)
 
-slot0 = class("RoomBlockPackageItem", ListScrollCellExtend)
+local var_0_0 = class("RoomBlockPackageItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnItem:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._btnItem:RemoveClickListener()
 end
 
-function slot0._btnitemOnClick(slot0)
-	RoomHelper.hideBlockPackageReddot(slot0._packageId)
-	RoomMapController.instance:dispatchEvent(RoomEvent.SelectBlockPackage, slot0._packageId)
+function var_0_0._btnitemOnClick(arg_5_0)
+	RoomHelper.hideBlockPackageReddot(arg_5_0._packageId)
+	RoomMapController.instance:dispatchEvent(RoomEvent.SelectBlockPackage, arg_5_0._packageId)
 end
 
-function slot0.getGO(slot0)
-	return slot0._go
+function var_0_0.getGO(arg_6_0)
+	return arg_6_0._go
 end
 
-function slot0.setShowIcon(slot0, slot1)
-	slot0._isShowIcon = slot1
+function var_0_0.setShowIcon(arg_7_0, arg_7_1)
+	arg_7_0._isShowIcon = arg_7_1
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	arg_8_0._isSelect = arg_8_1
 
-	gohelper.setActive(slot0._goselect, slot1)
-	slot0:_onSelectUI()
+	gohelper.setActive(arg_8_0._goselect, arg_8_1)
+	arg_8_0:_onSelectUI()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._showPackageMO = slot1
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._showPackageMO = arg_9_1
 
-	slot0:setPackageId(slot1.id)
+	arg_9_0:setPackageId(arg_9_1.id)
 end
 
-function slot0.getPackageId(slot0)
-	return slot0._packageId
+function var_0_0.getPackageId(arg_10_0)
+	return arg_10_0._packageId
 end
 
-function slot0.setPackageId(slot0, slot1)
-	slot0._packageId = slot1
-	slot0._packageCfg = RoomConfig.instance:getBlockPackageConfig(slot1) or nil
-	slot0._packageMO = RoomInventoryBlockModel.instance:getPackageMOById(slot1)
-	slot0._blockNum = slot0._packageMO and slot0._packageMO:getUnUseCount() or 0
+function var_0_0.setPackageId(arg_11_0, arg_11_1)
+	arg_11_0._packageId = arg_11_1
+	arg_11_0._packageCfg = RoomConfig.instance:getBlockPackageConfig(arg_11_1) or nil
+	arg_11_0._packageMO = RoomInventoryBlockModel.instance:getPackageMOById(arg_11_1)
+	arg_11_0._blockNum = arg_11_0._packageMO and arg_11_0._packageMO:getUnUseCount() or 0
 
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.RoomBlockPackage, slot0._packageId)
-	slot0:_refreshUI()
+	RedDotController.instance:addRedDot(arg_11_0._goreddot, RedDotEnum.DotNode.RoomBlockPackage, arg_11_0._packageId)
+	arg_11_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	if not slot0._packageCfg then
+function var_0_0._refreshUI(arg_12_0)
+	if not arg_12_0._packageCfg then
 		return
 	end
 
-	slot0._txtname.text = slot0._packageCfg.name
-	slot0._txtnum.text = slot0._blockNum
-	slot0._txtdegree.text = slot0._packageCfg.blockBuildDegree * slot0._blockNum
+	arg_12_0._txtname.text = arg_12_0._packageCfg.name
+	arg_12_0._txtnum.text = arg_12_0._blockNum
+	arg_12_0._txtdegree.text = arg_12_0._packageCfg.blockBuildDegree * arg_12_0._blockNum
 
-	gohelper.setActive(slot0._goempty, slot0._blockNum == 0)
-	gohelper.setActive(slot0._txtnum.gameObject, slot0._blockNum > 0)
-	gohelper.setActive(slot0._txtdegree.gameObject, slot0._blockNum > 0)
-	slot0:_onRefreshUI()
+	gohelper.setActive(arg_12_0._goempty, arg_12_0._blockNum == 0)
+	gohelper.setActive(arg_12_0._txtnum.gameObject, arg_12_0._blockNum > 0)
+	gohelper.setActive(arg_12_0._txtdegree.gameObject, arg_12_0._blockNum > 0)
+	arg_12_0:_onRefreshUI()
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_13_0)
+	return
 end
 
-function slot0._onInit(slot0, slot1)
+function var_0_0._onInit(arg_14_0, arg_14_1)
+	return
 end
 
-function slot0._onRefreshUI(slot0)
+function var_0_0._onRefreshUI(arg_15_0)
+	return
 end
 
-function slot0._onSelectUI(slot0)
+function var_0_0._onSelectUI(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,109 +1,144 @@
-module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillDescItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillDescItem", package.seeall)
 
-slot0 = class("VersionActivity1_6SkillDescItem", UserDataDispose)
+local var_0_0 = class("VersionActivity1_6SkillDescItem", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0._skillCfg = slot2
-	slot0.go = slot1
-	slot0.parentView = slot3
-	slot0.txtlv = gohelper.findChildText(slot1, "descripteitem/#txt_skillevel")
-	slot0.txtskillDesc = gohelper.findChildText(slot1, "descripteitem/#txt_descripte")
-	slot0.canvasGroup = gohelper.onceAddComponent(slot0.txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
-	slot0.txtlvcanvasGroup = gohelper.onceAddComponent(slot0.txtlv.gameObject, gohelper.Type_CanvasGroup)
-	slot0.goCurLvFlag = gohelper.findChild(slot1, "descripteitem/#go_curlevel")
-	slot0.vx = gohelper.findChild(slot1, "descripteitem/vx")
-	slot0.txtCostNum = gohelper.findChildText(slot1, "descripteitem/#txt_descripte/Prop/#txt_Num")
-	slot0.imageCostIcon = gohelper.findChildImage(slot1, "descripteitem/#txt_descripte/Prop/#simage_Prop")
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._skillCfg = arg_1_2
+	arg_1_0.go = arg_1_1
+	arg_1_0.parentView = arg_1_3
+	arg_1_0.txtlv = gohelper.findChildText(arg_1_1, "descripteitem/#txt_skillevel")
+	arg_1_0.txtskillDesc = gohelper.findChildText(arg_1_1, "descripteitem/#txt_descripte")
+	arg_1_0.canvasGroup = gohelper.onceAddComponent(arg_1_0.txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
+	arg_1_0.txtlvcanvasGroup = gohelper.onceAddComponent(arg_1_0.txtlv.gameObject, gohelper.Type_CanvasGroup)
+	arg_1_0.goCurLvFlag = gohelper.findChild(arg_1_1, "descripteitem/#go_curlevel")
+	arg_1_0.vx = gohelper.findChild(arg_1_1, "descripteitem/vx")
+	arg_1_0.txtCostNum = gohelper.findChildText(arg_1_1, "descripteitem/#txt_descripte/Prop/#txt_Num")
+	arg_1_0.imageCostIcon = gohelper.findChildImage(arg_1_1, "descripteitem/#txt_descripte/Prop/#simage_Prop")
 
-	gohelper.setActive(slot0.vx, false)
+	gohelper.setActive(arg_1_0.vx, false)
 
-	slot0._needUseSkillEffDescList = {}
-	slot0._needUseSkillEffDescList2 = {}
+	arg_1_0._needUseSkillEffDescList = {}
+	arg_1_0._needUseSkillEffDescList2 = {}
 end
 
-function slot0.refreshInfo(slot0)
-	slot1 = slot0._skillCfg.level
-	slot3 = slot0._skillCfg.attrs
-	slot4 = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[slot1]
-	slot0.lv = slot1
-	slot0.txtlv.text = slot0._skillCfg.level
-	slot0._hyperLinkClick = slot0.txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
+function var_0_0.refreshInfo(arg_2_0)
+	local var_2_0 = arg_2_0._skillCfg.level
+	local var_2_1 = arg_2_0._skillCfg.skillId
+	local var_2_2 = arg_2_0._skillCfg.attrs
+	local var_2_3 = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[var_2_0]
 
-	slot0._hyperLinkClick:SetClickListener(slot0._onHyperLinkClick, slot0)
+	arg_2_0.lv = var_2_0
+	arg_2_0.txtlv.text = arg_2_0._skillCfg.level
+	arg_2_0._hyperLinkClick = arg_2_0.txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
-	slot5 = ""
+	arg_2_0._hyperLinkClick:SetClickListener(arg_2_0._onHyperLinkClick, arg_2_0)
 
-	if slot0._skillCfg.skillId and slot2 ~= 0 then
-		slot5 = FightConfig.instance:getSkillEffectDesc(nil, FightConfig.instance:getSkillEffectCO(slot2))
-	elseif slot3 then
-		slot6 = string.splitToNumber(slot3, "#")
-		slot8 = slot6[2]
-		slot9 = lua_skill_effect.configDict[slot6[1]]
-		slot5 = slot0._skillCfg.skillAttrDesc
+	local var_2_4 = ""
+
+	if var_2_1 and var_2_1 ~= 0 then
+		local var_2_5 = FightConfig.instance:getSkillEffectCO(var_2_1)
+
+		var_2_4 = FightConfig.instance:getSkillEffectDesc(nil, var_2_5)
+	elseif var_2_2 then
+		local var_2_6 = string.splitToNumber(var_2_2, "#")
+		local var_2_7 = var_2_6[1]
+		local var_2_8 = var_2_6[2]
+		local var_2_9 = lua_skill_effect.configDict[var_2_7]
+
+		var_2_4 = arg_2_0._skillCfg.skillAttrDesc
 	end
 
-	slot5 = slot0:_buildLinkTag(HeroSkillModel.instance:formatDescWithColor(slot5, "#deaa79", "#7e99d0"))
-	slot0.height = GameUtil.getTextHeightByLine(slot0.txtskillDesc, slot5, 28, -3) + 42
+	local var_2_10 = HeroSkillModel.instance:formatDescWithColor(var_2_4, "#deaa79", "#7e99d0")
+	local var_2_11 = arg_2_0:_buildLinkTag(var_2_10)
 
-	recthelper.setHeight(slot0.go.transform, slot0.height)
+	arg_2_0.height = GameUtil.getTextHeightByLine(arg_2_0.txtskillDesc, var_2_11, 28, -3) + 42
 
-	slot0.txtskillDesc.text = slot5
-	slot0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.txtskillDesc.gameObject, FixTmpBreakLine)
+	recthelper.setHeight(arg_2_0.go.transform, arg_2_0.height)
 
-	slot0._fixTmpBreakLine:refreshTmpContent(slot0.txtskillDesc)
+	arg_2_0.txtskillDesc.text = var_2_11
+	arg_2_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0.txtskillDesc.gameObject, FixTmpBreakLine)
 
-	if Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillCfg.type, slot0._skillCfg.level) then
-		slot0.txtCostNum.text = string.splitToNumber(slot7.cost, "#")[3]
+	arg_2_0._fixTmpBreakLine:refreshTmpContent(arg_2_0.txtskillDesc)
+
+	local var_2_12 = Activity148Config.instance:getAct148CfgByTypeLv(arg_2_0._skillCfg.type, arg_2_0._skillCfg.level)
+
+	if var_2_12 then
+		local var_2_13 = var_2_12.cost
+		local var_2_14 = string.splitToNumber(var_2_13, "#")[3]
+
+		arg_2_0.txtCostNum.text = var_2_14
 	end
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0.imageCostIcon, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill) and slot8.icon))
+	local var_2_15 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+	local var_2_16 = string.format("%s_1", var_2_15 and var_2_15.icon)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_2_0.imageCostIcon, var_2_16)
 end
 
-function slot0._onHyperLinkClick(slot0, slot1, slot2)
+function var_0_0._onHyperLinkClick(arg_3_0, arg_3_1, arg_3_2)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if not slot0._needUseSkillEffDescList[slot0._needUseSkillEffDescList2[tonumber(slot1)]] then
+	arg_3_1 = arg_3_0._needUseSkillEffDescList2[tonumber(arg_3_1)]
+
+	if not arg_3_0._needUseSkillEffDescList[arg_3_1] then
 		return
 	end
 
-	slot0.parentView:showBuffContainer(SkillConfig.instance:processSkillDesKeyWords(slot1), slot0._needUseSkillEffDescList[slot1], slot2)
+	arg_3_0.parentView:showBuffContainer(SkillConfig.instance:processSkillDesKeyWords(arg_3_1), arg_3_0._needUseSkillEffDescList[arg_3_1], arg_3_2)
 end
 
-function slot0._buildLinkTag(slot0, slot1)
-	slot1 = string.gsub(string.gsub(slot1, "】", "]"), "【", "[")
-	slot4 = {}
-	slot5 = nil
+function var_0_0._buildLinkTag(arg_4_0, arg_4_1)
+	arg_4_1 = string.gsub(arg_4_1, "】", "]")
+	arg_4_1 = string.gsub(arg_4_1, "【", "[")
 
-	for slot9, slot10 in function ()
-		return string.find(uv0, "[%[%]]", uv1)
-	end, nil,  do
-		slot5 = string.sub(slot1, 0, slot9 - 1)
+	local var_4_0 = 0
+	local var_4_1 = 0
+	local var_4_2 = {}
+	local var_4_3
 
-		if (0 + 1) % 2 == 0 then
-			slot5 = (not slot0:_buildSkillEffDescCo(slot5) or string.format("<u><link=%s>[%s]</link></u>", slot11, SkillConfig.instance:processSkillDesKeyWords(slot5))) and string.format("[%s]", slot5)
+	for iter_4_0, iter_4_1 in function()
+		return string.find(arg_4_1, "[%[%]]", var_4_0)
+	end do
+		var_4_1 = var_4_1 + 1
+
+		local var_4_4 = string.sub(arg_4_1, var_4_0, iter_4_0 - 1)
+
+		if var_4_1 % 2 == 0 then
+			local var_4_5 = arg_4_0:_buildSkillEffDescCo(var_4_4)
+
+			if var_4_5 then
+				local var_4_6 = SkillConfig.instance:processSkillDesKeyWords(var_4_4)
+
+				var_4_4 = string.format("<u><link=%s>[%s]</link></u>", var_4_5, var_4_6)
+			else
+				var_4_4 = string.format("[%s]", var_4_4)
+			end
 		end
 
-		table.insert(slot4, slot5)
+		table.insert(var_4_2, var_4_4)
 
-		slot2 = slot10 + 1
+		var_4_0 = iter_4_1 + 1
 	end
 
-	table.insert(slot4, string.sub(slot1, slot2))
+	table.insert(var_4_2, string.sub(arg_4_1, var_4_0))
 
-	return table.concat(slot4)
+	return table.concat(var_4_2)
 end
 
-function slot0._buildSkillEffDescCo(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_skill_eff_desc.configList) do
-		if slot6.name == slot1 then
-			if SkillHelper.canShowTag(slot6) then
-				if not tabletool.indexOf(slot0._needUseSkillEffDescList2, slot1) then
-					slot0._needUseSkillEffDescList2[#slot0._needUseSkillEffDescList2 + 1] = slot1
+function var_0_0._buildSkillEffDescCo(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in ipairs(lua_skill_eff_desc.configList) do
+		if iter_6_1.name == arg_6_1 then
+			if SkillHelper.canShowTag(iter_6_1) then
+				local var_6_0 = tabletool.indexOf(arg_6_0._needUseSkillEffDescList2, arg_6_1)
+
+				if not var_6_0 then
+					var_6_0 = #arg_6_0._needUseSkillEffDescList2 + 1
+					arg_6_0._needUseSkillEffDescList2[var_6_0] = arg_6_1
 				end
 
-				slot0._needUseSkillEffDescList[slot1] = slot6.desc
+				arg_6_0._needUseSkillEffDescList[arg_6_1] = iter_6_1.desc
 
-				return slot7
+				return var_6_0
 			else
 				return nil
 			end
@@ -111,4 +146,4 @@ function slot0._buildSkillEffDescCo(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

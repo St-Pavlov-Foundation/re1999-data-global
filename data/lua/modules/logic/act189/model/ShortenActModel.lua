@@ -1,22 +1,23 @@
-module("modules.logic.act189.model.ShortenActModel", package.seeall)
+﻿module("modules.logic.act189.model.ShortenActModel", package.seeall)
 
-slot0 = class("ShortenActModel", BaseModel)
+local var_0_0 = class("ShortenActModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getActivityId(slot0)
+function var_0_0.getActivityId(arg_3_0)
 	return ShortenActConfig.instance:getActivityId()
 end
 
-function slot0.isClaimable(slot0)
-	return Activity189Model.instance:isClaimable(slot0:getActivityId())
+function var_0_0.isClaimable(arg_4_0)
+	return Activity189Model.instance:isClaimable(arg_4_0:getActivityId())
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,57 +1,65 @@
-module("modules.logic.explore.map.unit.ExplorePipePotUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExplorePipePotUnit", package.seeall)
 
-slot0 = class("ExplorePipePotUnit", ExploreBaseMoveUnit)
+local var_0_0 = class("ExplorePipePotUnit", ExploreBaseMoveUnit)
 
-function slot0.setPosByNode(slot0, ...)
-	if not ExploreHeroResetFlow.instance:isReseting() and ExploreHeroCatchUnitFlow.instance:isInFlow(slot0) then
+function var_0_0.setPosByNode(arg_1_0, ...)
+	if not ExploreHeroResetFlow.instance:isReseting() and ExploreHeroCatchUnitFlow.instance:isInFlow(arg_1_0) then
 		return
 	end
 
-	uv0.super.setPosByNode(slot0, ...)
+	var_0_0.super.setPosByNode(arg_1_0, ...)
 end
 
-function slot0.setPosByFlow(slot0)
-	uv0.super.setPosByNode(slot0, slot0.nodePos)
+function var_0_0.setPosByFlow(arg_2_0)
+	var_0_0.super.setPosByNode(arg_2_0, arg_2_0.nodePos)
 end
 
-function slot0.onStatus2Change(slot0, slot1, slot2)
+function var_0_0.onStatus2Change(arg_3_0, arg_3_1, arg_3_2)
 	if not ExploreHeroResetFlow.instance:isReseting() then
 		return
 	end
 
-	if (slot2.bindInteractId or 0) > 0 then
-		slot0:setParent(ExploreController.instance:getMap():getUnit(slot4).trans, ExploreEnum.ExplorePipePotHangType.Put)
+	local var_3_0 = ExploreController.instance:getMap()
+	local var_3_1 = arg_3_2.bindInteractId or 0
+
+	if var_3_1 > 0 then
+		local var_3_2 = var_3_0:getUnit(var_3_1)
+
+		arg_3_0:setParent(var_3_2.trans, ExploreEnum.ExplorePipePotHangType.Put)
 	else
-		slot0:setParent(slot3:getUnitRoot().transform, ExploreEnum.ExplorePipePotHangType.UnCarry)
+		arg_3_0:setParent(var_3_0:getUnitRoot().transform, ExploreEnum.ExplorePipePotHangType.UnCarry)
 	end
 end
 
-function slot0.setParent(slot0, slot1, slot2)
-	slot0.trans:SetParent(slot1, false)
+function var_0_0.setParent(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.trans:SetParent(arg_4_1, false)
 
-	if slot2 == ExploreEnum.ExplorePipePotHangType.Carry then
-		slot4 = ExploreController.instance:getMap():getHero().dir
-		slot0._carryDir = slot4
+	if arg_4_2 == ExploreEnum.ExplorePipePotHangType.Carry then
+		local var_4_0 = ExploreController.instance:getMap():getHero().dir
 
-		transformhelper.setLocalPos(slot0.trans, 0, 0, 0)
-		transformhelper.setLocalRotation(slot0.trans, slot4 - 90 - slot0.mo.unitDir, 0, 90)
-		slot0.clickComp:setEnable(false)
-	elseif slot2 == ExploreEnum.ExplorePipePotHangType.UnCarry then
-		slot0.mo.unitDir = ExploreController.instance:getMap():getHero().dir - (slot0._carryDir or 0) + slot0.mo.unitDir
+		arg_4_0._carryDir = var_4_0
 
-		transformhelper.setLocalRotation(slot0.trans, 0, slot0.mo.unitDir, 0)
-		slot0:setPosByFlow()
-		slot0.clickComp:setEnable(true)
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, slot0, slot0.nodePos, slot0.nodePos)
-	elseif slot2 == ExploreEnum.ExplorePipePotHangType.Pick then
-		transformhelper.setLocalPos(slot0.trans, 0, 0, 0)
-		transformhelper.setLocalRotation(slot0.trans, 0, slot0.mo.unitDir, 0)
-		slot0.clickComp:setEnable(false)
-	elseif slot2 == ExploreEnum.ExplorePipePotHangType.Put then
-		transformhelper.setLocalPos(slot0.trans, 0, 0.65, 0)
-		transformhelper.setLocalRotation(slot0.trans, 180, 360 - slot0.mo.unitDir, 0)
-		slot0.clickComp:setEnable(false)
+		transformhelper.setLocalPos(arg_4_0.trans, 0, 0, 0)
+		transformhelper.setLocalRotation(arg_4_0.trans, var_4_0 - 90 - arg_4_0.mo.unitDir, 0, 90)
+		arg_4_0.clickComp:setEnable(false)
+	elseif arg_4_2 == ExploreEnum.ExplorePipePotHangType.UnCarry then
+		local var_4_1 = ExploreController.instance:getMap():getHero().dir - (arg_4_0._carryDir or 0)
+
+		arg_4_0.mo.unitDir = var_4_1 + arg_4_0.mo.unitDir
+
+		transformhelper.setLocalRotation(arg_4_0.trans, 0, arg_4_0.mo.unitDir, 0)
+		arg_4_0:setPosByFlow()
+		arg_4_0.clickComp:setEnable(true)
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, arg_4_0, arg_4_0.nodePos, arg_4_0.nodePos)
+	elseif arg_4_2 == ExploreEnum.ExplorePipePotHangType.Pick then
+		transformhelper.setLocalPos(arg_4_0.trans, 0, 0, 0)
+		transformhelper.setLocalRotation(arg_4_0.trans, 0, arg_4_0.mo.unitDir, 0)
+		arg_4_0.clickComp:setEnable(false)
+	elseif arg_4_2 == ExploreEnum.ExplorePipePotHangType.Put then
+		transformhelper.setLocalPos(arg_4_0.trans, 0, 0.65, 0)
+		transformhelper.setLocalRotation(arg_4_0.trans, 180, 360 - arg_4_0.mo.unitDir, 0)
+		arg_4_0.clickComp:setEnable(false)
 	end
 end
 
-return slot0
+return var_0_0

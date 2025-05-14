@@ -1,41 +1,48 @@
-module("modules.logic.scene.room.fsm.RoomTransitionCancelBackBlock", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionCancelBackBlock", package.seeall)
 
-slot0 = class("RoomTransitionCancelBackBlock", JompFSMBaseTransition)
+local var_0_0 = class("RoomTransitionCancelBackBlock", JompFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._opToDis = {
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_1_0._opToDis = {
 		[RoomBlockEnum.OpState.Normal] = RoomBlockEnum.OpState.Back,
 		[RoomBlockEnum.OpState.Back] = RoomBlockEnum.OpState.Normal
 	}
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	for slot7 = 1, #RoomMapBlockModel.instance:getBackBlockModel():getList() do
-		slot8 = slot3[slot7]
+	local var_3_0 = RoomMapBlockModel.instance:getBackBlockModel()
+	local var_3_1 = var_3_0:getList()
 
-		slot8:setOpState(RoomBlockEnum.OpState.Normal)
+	for iter_3_0 = 1, #var_3_1 do
+		local var_3_2 = var_3_1[iter_3_0]
 
-		if slot0._scene.mapmgr:getBlockEntity(slot8.id, SceneTag.RoomMapBlock) then
-			slot9:refreshBlock()
+		var_3_2:setOpState(RoomBlockEnum.OpState.Normal)
+
+		local var_3_3 = arg_3_0._scene.mapmgr:getBlockEntity(var_3_2.id, SceneTag.RoomMapBlock)
+
+		if var_3_3 then
+			var_3_3:refreshBlock()
 		end
 	end
 
-	slot2:clear()
-	slot0:onDone()
+	var_3_0:clear()
+	arg_3_0:onDone()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ClientCancelBackBlock)
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_4_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

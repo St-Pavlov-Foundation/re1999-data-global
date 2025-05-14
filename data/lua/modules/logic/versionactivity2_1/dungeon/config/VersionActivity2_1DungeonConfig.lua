@@ -1,45 +1,52 @@
-module("modules.logic.versionactivity2_1.dungeon.config.VersionActivity2_1DungeonConfig", package.seeall)
+﻿module("modules.logic.versionactivity2_1.dungeon.config.VersionActivity2_1DungeonConfig", package.seeall)
 
-slot0 = class("VersionActivity2_1DungeonConfig", BaseConfig)
+local var_0_0 = class("VersionActivity2_1DungeonConfig", BaseConfig)
 
-function slot1(slot0)
-	if DungeonConfig.instance:getEpisodeCO(slot0).chapterId ~= VersionActivity2_1DungeonEnum.DungeonChapterId.ElementFight then
-		if slot1.chapterId == VersionActivity2_1DungeonEnum.DungeonChapterId.Hard then
-			slot1 = DungeonConfig.instance:getEpisodeCO(slot0 - 10000)
+local function var_0_1(arg_1_0)
+	local var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
+
+	if var_1_0.chapterId ~= VersionActivity2_1DungeonEnum.DungeonChapterId.ElementFight then
+		if var_1_0.chapterId == VersionActivity2_1DungeonEnum.DungeonChapterId.Hard then
+			arg_1_0 = arg_1_0 - 10000
+			var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0)
 		else
-			while slot1.chapterId ~= VersionActivity2_1DungeonEnum.DungeonChapterId.Story do
-				slot1 = DungeonConfig.instance:getEpisodeCO(slot1.preEpisode)
+			while var_1_0.chapterId ~= VersionActivity2_1DungeonEnum.DungeonChapterId.Story do
+				var_1_0 = DungeonConfig.instance:getEpisodeCO(var_1_0.preEpisode)
 			end
 		end
 	end
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.getEpisodeMapConfig(slot0, slot1)
-	return DungeonConfig.instance:getChapterMapCfg(VersionActivity2_1DungeonEnum.DungeonChapterId.Story, uv0(slot1).preEpisode)
+function var_0_0.getEpisodeMapConfig(arg_2_0, arg_2_1)
+	local var_2_0 = var_0_1(arg_2_1)
+
+	return DungeonConfig.instance:getChapterMapCfg(VersionActivity2_1DungeonEnum.DungeonChapterId.Story, var_2_0.preEpisode)
 end
 
-function slot0.checkElementBelongMapId(slot0, slot1, slot2)
-	return tabletool.indexOf({
-		slot1.mapId
-	}, slot2)
+function var_0_0.checkElementBelongMapId(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = {
+		arg_3_1.mapId
+	}
+
+	return tabletool.indexOf(var_3_0, arg_3_2)
 end
 
-function slot0.getEpisodeIndex(slot0, slot1)
-	slot2 = uv0(slot1)
+function var_0_0.getEpisodeIndex(arg_4_0, arg_4_1)
+	local var_4_0 = var_0_1(arg_4_1)
 
-	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(slot2.chapterId, slot2.id)
+	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_4_0.chapterId, var_4_0.id)
 end
 
-function slot0.getStoryEpisodeCo(slot0, slot1)
-	return uv0(slot1)
+function var_0_0.getStoryEpisodeCo(arg_5_0, arg_5_1)
+	return var_0_1(arg_5_1)
 end
 
-function slot0.getEpisodeIdByElementId(slot0, slot1)
-	return DungeonConfig.instance:getChapterMapElement(slot1).mapId
+function var_0_0.getEpisodeIdByElementId(arg_6_0, arg_6_1)
+	return DungeonConfig.instance:getChapterMapElement(arg_6_1).mapId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

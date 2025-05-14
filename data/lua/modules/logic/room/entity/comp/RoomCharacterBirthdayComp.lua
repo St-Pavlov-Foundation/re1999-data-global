@@ -1,192 +1,230 @@
-module("modules.logic.room.entity.comp.RoomCharacterBirthdayComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCharacterBirthdayComp", package.seeall)
 
-slot0 = class("RoomCharacterBirthdayComp", LuaCompBase)
-slot1 = 0.1
+local var_0_0 = class("RoomCharacterBirthdayComp", LuaCompBase)
+local var_0_1 = 0.1
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.birthdayRes = nil
-	slot0.birthdayEffKey = RoomEnum.EffectKey.CharacterBirthdayEffKey
-	slot0.goTrs = slot1.transform
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.birthdayRes = nil
+	arg_2_0.birthdayEffKey = RoomEnum.EffectKey.CharacterBirthdayEffKey
+	arg_2_0.goTrs = arg_2_1.transform
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.addEventListeners(slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, slot0._updateCharacterMove, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.ConfirmCharacter, slot0.onPlaceCharacter, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_3_0._updateCharacterMove, arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.ConfirmCharacter, arg_3_0.onPlaceCharacter, arg_3_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, slot0._updateCharacterMove, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.ConfirmCharacter, slot0.onPlaceCharacter, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_4_0._updateCharacterMove, arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.ConfirmCharacter, arg_4_0.onPlaceCharacter, arg_4_0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_4_0._onDailyRefresh, arg_4_0)
 end
 
-function slot0._updateCharacterMove(slot0)
-	if slot0.entity.isPressing then
+function var_0_0._updateCharacterMove(arg_5_0)
+	if arg_5_0.entity.isPressing then
 		return
 	end
 
-	if not slot0.entity:getMO() then
+	local var_5_0 = arg_5_0.entity:getMO()
+
+	if not var_5_0 then
 		return
 	end
 
-	if slot0._scene.character:isLock() then
+	if arg_5_0._scene.character:isLock() then
 		return
 	end
 
-	if slot1:getMoveState() == slot0._lastAnimState then
+	local var_5_1 = var_5_0:getMoveState()
+
+	if var_5_1 == arg_5_0._lastAnimState then
 		return
 	end
 
-	slot0._lastAnimState = slot2
-	slot0._curBlockMO = slot0:_findBlockMO()
+	arg_5_0._lastAnimState = var_5_1
+	arg_5_0._curBlockMO = arg_5_0:_findBlockMO()
 
-	slot0:checkBirthday()
+	arg_5_0:checkBirthday()
 end
 
-function slot0.onPlaceCharacter(slot0)
-	slot0._curBlockMO = slot0:_findBlockMO()
+function var_0_0.onPlaceCharacter(arg_6_0)
+	arg_6_0._curBlockMO = arg_6_0:_findBlockMO()
 
-	slot0:checkBirthday()
+	arg_6_0:checkBirthday()
 end
 
-function slot0._findBlockMO(slot0)
-	if slot0.__willDestroy then
+function var_0_0._findBlockMO(arg_7_0)
+	if arg_7_0.__willDestroy then
 		return
 	end
 
-	if slot0.goTrs then
-		slot1, slot2, slot3 = transformhelper.getPos(slot0.goTrs)
-		slot5 = HexMath.positionToRoundHex(Vector2(slot1, slot3), RoomBlockEnum.BlockSize)
+	if arg_7_0.goTrs then
+		local var_7_0, var_7_1, var_7_2 = transformhelper.getPos(arg_7_0.goTrs)
+		local var_7_3 = Vector2(var_7_0, var_7_2)
+		local var_7_4 = HexMath.positionToRoundHex(var_7_3, RoomBlockEnum.BlockSize)
 
-		return RoomMapBlockModel.instance:getBlockMO(slot5.x, slot5.y)
-	end
-end
-
-function slot0._onDailyRefresh(slot0)
-	if slot0.__willDestroy then
-		return
-	end
-
-	if not slot0.entity:getMO() then
-		return
-	end
-
-	if not RoomCharacterModel.instance:isOnBirthday(slot1.id) then
-		slot1:replaceIdleState()
+		return RoomMapBlockModel.instance:getBlockMO(var_7_4.x, var_7_4.y)
 	end
 end
 
-function slot0.onStart(slot0)
-end
-
-function slot0.onEffectRebuild(slot0)
-	if not slot0.entity.effect:isHasEffectGOByKey(slot0.birthdayEffKey) then
+function var_0_0._onDailyRefresh(arg_8_0)
+	if arg_8_0.__willDestroy then
 		return
 	end
 
-	slot0:setEffGoDict(slot1:getEffectGO(slot0.birthdayEffKey))
+	local var_8_0 = arg_8_0.entity:getMO()
 
-	if slot0.tmpMeetingYear then
-		slot0:playBirthdayFirework(slot0.tmpMeetingYear)
-
-		slot0.tmpMeetingYear = nil
-	end
-end
-
-function slot0.setEffGoDict(slot0, slot1)
-	slot0.effGoDict = {}
-
-	if gohelper.isNil(slot1) then
+	if not var_8_0 then
 		return
 	end
 
-	for slot8 = 1, gohelper.findChild(slot1, "root").transform.childCount do
-		if not string.nilorempty(tonumber(slot3:GetChild(slot8 - 1).name)) then
-			slot12 = slot9.gameObject
-			slot0.effGoDict[slot11] = slot12
+	if not RoomCharacterModel.instance:isOnBirthday(var_8_0.id) then
+		var_8_0:replaceIdleState()
+	end
+end
 
-			gohelper.setActive(slot12, false)
+function var_0_0.onStart(arg_9_0)
+	return
+end
+
+function var_0_0.onEffectRebuild(arg_10_0)
+	local var_10_0 = arg_10_0.entity.effect
+
+	if not var_10_0:isHasEffectGOByKey(arg_10_0.birthdayEffKey) then
+		return
+	end
+
+	local var_10_1 = var_10_0:getEffectGO(arg_10_0.birthdayEffKey)
+
+	arg_10_0:setEffGoDict(var_10_1)
+
+	if arg_10_0.tmpMeetingYear then
+		arg_10_0:playBirthdayFirework(arg_10_0.tmpMeetingYear)
+
+		arg_10_0.tmpMeetingYear = nil
+	end
+end
+
+function var_0_0.setEffGoDict(arg_11_0, arg_11_1)
+	arg_11_0.effGoDict = {}
+
+	if gohelper.isNil(arg_11_1) then
+		return
+	end
+
+	local var_11_0 = gohelper.findChild(arg_11_1, "root").transform
+	local var_11_1 = var_11_0.childCount
+
+	for iter_11_0 = 1, var_11_1 do
+		local var_11_2 = var_11_0:GetChild(iter_11_0 - 1)
+		local var_11_3 = var_11_2.name
+		local var_11_4 = tonumber(var_11_3)
+
+		if not string.nilorempty(var_11_4) then
+			local var_11_5 = var_11_2.gameObject
+
+			arg_11_0.effGoDict[var_11_4] = var_11_5
+
+			gohelper.setActive(var_11_5, false)
 		end
 	end
 end
 
-function slot0.checkBirthday(slot0)
-	if slot0.__willDestroy then
+function var_0_0.checkBirthday(arg_12_0)
+	if arg_12_0.__willDestroy then
 		return
 	end
 
-	slot3 = nil
+	local var_12_0 = arg_12_0.entity:getMO()
+	local var_12_1 = RoomCharacterModel.instance:isOnBirthday(var_12_0.id)
+	local var_12_2
 
-	if RoomCharacterModel.instance:isOnBirthday(slot0.entity:getMO().id) and slot0:_isSelfBirthdayBlock(slot0._curBlockMO, slot1.heroId) and HeroModel.instance:getByHeroId(slot1.id) then
-		slot0:playBirthdayFirework(slot4:getMeetingYear())
+	if var_12_1 and arg_12_0:_isSelfBirthdayBlock(arg_12_0._curBlockMO, var_12_0.heroId) then
+		local var_12_3 = HeroModel.instance:getByHeroId(var_12_0.id)
 
-		slot3 = RoomCharacterEnum.CharacterMoveState.BirthdayIdle
+		if var_12_3 then
+			local var_12_4 = var_12_3:getMeetingYear()
+
+			arg_12_0:playBirthdayFirework(var_12_4)
+
+			var_12_2 = RoomCharacterEnum.CharacterMoveState.BirthdayIdle
+		end
 	end
 
-	slot1:replaceIdleState(slot3)
+	var_12_0:replaceIdleState(var_12_2)
 end
 
-function slot0._isSelfBirthdayBlock(slot0, slot1, slot2)
-	if not slot1 or slot1:getDefineId() ~= slot1:getDefineId(true) then
+function var_0_0._isSelfBirthdayBlock(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_1 or arg_13_1:getDefineId() ~= arg_13_1:getDefineId(true) then
 		return false
 	end
 
-	return RoomConfig.instance:getSpecialBlockConfig(slot1.blockId) and slot3.heroId == slot2
+	local var_13_0 = RoomConfig.instance:getSpecialBlockConfig(arg_13_1.blockId)
+
+	return var_13_0 and var_13_0.heroId == arg_13_2
 end
 
-function slot0.playBirthdayFirework(slot0, slot1)
-	if not slot1 then
+function var_0_0.playBirthdayFirework(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	if not slot0.effGoDict then
-		slot0:initEffect()
+	arg_14_1 = math.max(1, arg_14_1)
 
-		slot0.tmpMeetingYear = math.max(1, slot1)
+	if not arg_14_0.effGoDict then
+		arg_14_0:initEffect()
+
+		arg_14_0.tmpMeetingYear = arg_14_1
 
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0.effGoDict) do
-		gohelper.setActive(slot6, false)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.effGoDict) do
+		gohelper.setActive(iter_14_1, false)
 
-		if slot5 == slot1 then
-			gohelper.setActive(slot6, true)
+		if iter_14_0 == arg_14_1 then
+			gohelper.setActive(iter_14_1, true)
 		end
 	end
 end
 
-function slot0.initEffect(slot0)
-	if slot0.entity.effect:isHasEffectGOByKey(slot0.birthdayEffKey) then
-		slot0:setEffGoDict(slot1:getEffectGO(slot0.birthdayEffKey))
+function var_0_0.initEffect(arg_15_0)
+	local var_15_0 = arg_15_0.entity.effect
+
+	if var_15_0:isHasEffectGOByKey(arg_15_0.birthdayEffKey) then
+		local var_15_1 = var_15_0:getEffectGO(arg_15_0.birthdayEffKey)
+
+		arg_15_0:setEffGoDict(var_15_1)
 	else
-		slot1:addParams({
-			[slot0.birthdayEffKey] = {
+		local var_15_2 = Vector3.one * var_0_1
+
+		var_15_0:addParams({
+			[arg_15_0.birthdayEffKey] = {
 				res = RoomScenePreloader.RecCharacterBirthdayEffect,
-				localScale = Vector3.one * uv0
+				localScale = var_15_2
 			}
 		})
 	end
 
-	slot1:refreshEffect()
+	var_15_0:refreshEffect()
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.tmpMeetingYear = nil
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_16_0)
+	arg_16_0.tmpMeetingYear = nil
+	arg_16_0.__willDestroy = true
 
-	slot0:removeEventListeners()
+	arg_16_0:removeEventListeners()
 end
 
-function slot0.onDestroy(slot0)
-	slot0.effGoDict = nil
+function var_0_0.onDestroy(arg_17_0)
+	arg_17_0.effGoDict = nil
 end
 
-return slot0
+return var_0_0

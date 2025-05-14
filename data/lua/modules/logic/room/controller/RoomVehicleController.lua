@@ -1,28 +1,29 @@
-module("modules.logic.room.controller.RoomVehicleController", package.seeall)
+﻿module("modules.logic.room.controller.RoomVehicleController", package.seeall)
 
-slot0 = class("RoomVehicleController", BaseController)
+local var_0_0 = class("RoomVehicleController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
 	RoomMapVehicleModel.instance:clear()
 	RoomMapPathPlanModel.instance:clear()
 end
 
-function slot0.init(slot0)
+function var_0_0.init(arg_4_0)
 	RoomMapPathPlanModel.instance:initPath()
 	RoomMapVehicleModel.instance:initVehicle()
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_5_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

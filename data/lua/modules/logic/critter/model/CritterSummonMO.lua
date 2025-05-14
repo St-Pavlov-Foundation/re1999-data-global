@@ -1,63 +1,79 @@
-module("modules.logic.critter.model.CritterSummonMO", package.seeall)
+﻿module("modules.logic.critter.model.CritterSummonMO", package.seeall)
 
-slot0 = pureTable("CritterSummonMO")
+local var_0_0 = pureTable("CritterSummonMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id or slot1.poolId
-	slot0.poolId = slot1.poolId
-	slot0.hasSummonCritter = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id or arg_1_1.poolId
+	arg_1_0.poolId = arg_1_1.poolId
+	arg_1_0.hasSummonCritter = {}
 
-	for slot5 = 1, #slot1.hasSummonCritter do
-		slot6 = slot1.hasSummonCritter[slot5]
-		slot0.hasSummonCritter[slot6.materialId] = slot6.quantity
+	for iter_1_0 = 1, #arg_1_1.hasSummonCritter do
+		local var_1_0 = arg_1_1.hasSummonCritter[iter_1_0]
+		local var_1_1 = var_1_0.materialId
+		local var_1_2 = var_1_0.quantity
+
+		arg_1_0.hasSummonCritter[var_1_1] = var_1_2
 	end
 
-	slot0.critterMos = {}
+	arg_1_0.critterMos = {}
 
-	if CritterConfig.instance:getCritterSummonPoolCfg(slot1.poolId) then
-		for slot6, slot7 in pairs(slot2) do
-			for slot12, slot13 in pairs(GameUtil.splitString2(slot7.critterIds, true)) do
-				slot14 = CritterSummonPoolMO.New()
+	local var_1_3 = CritterConfig.instance:getCritterSummonPoolCfg(arg_1_1.poolId)
 
-				slot14:init(slot7.rare, slot15, slot13[2], slot0.hasSummonCritter[slot13[1]] or 0)
-				table.insert(slot0.critterMos, slot14)
+	if var_1_3 then
+		for iter_1_1, iter_1_2 in pairs(var_1_3) do
+			local var_1_4 = GameUtil.splitString2(iter_1_2.critterIds, true)
+
+			for iter_1_3, iter_1_4 in pairs(var_1_4) do
+				local var_1_5 = CritterSummonPoolMO.New()
+				local var_1_6 = iter_1_4[1]
+				local var_1_7 = iter_1_4[2]
+				local var_1_8 = arg_1_0.hasSummonCritter[var_1_6] or 0
+
+				var_1_5:init(iter_1_2.rare, var_1_6, var_1_7, var_1_8)
+				table.insert(arg_1_0.critterMos, var_1_5)
 			end
 		end
 	end
 end
 
-function slot0.onRefresh(slot0, slot1)
-	slot0.hasSummonCritter = {}
+function var_0_0.onRefresh(arg_2_0, arg_2_1)
+	arg_2_0.hasSummonCritter = {}
 
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
-		slot7 = slot6.materialId
-		slot0.hasSummonCritter[slot7] = slot6.quantity
+	for iter_2_0 = 1, #arg_2_1 do
+		local var_2_0 = arg_2_1[iter_2_0]
+		local var_2_1 = var_2_0.materialId
+		local var_2_2 = var_2_0.quantity
 
-		if slot0:getCritterMoById(slot7) then
-			slot9:onRefreshPoolCount(slot8)
+		arg_2_0.hasSummonCritter[var_2_1] = var_2_2
+
+		local var_2_3 = arg_2_0:getCritterMoById(var_2_1)
+
+		if var_2_3 then
+			var_2_3:onRefreshPoolCount(var_2_2)
 		end
 	end
 end
 
-function slot0.getCritterMoById(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.critterMos) do
-		if slot6.critterId == slot1 then
-			return slot6
+function var_0_0.getCritterMoById(arg_3_0, arg_3_1)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.critterMos) do
+		if iter_3_1.critterId == arg_3_1 then
+			return iter_3_1
 		end
 	end
 end
 
-function slot0.getCritterMos(slot0)
-	return slot0.critterMos
+function var_0_0.getCritterMos(arg_4_0)
+	return arg_4_0.critterMos
 end
 
-function slot0.getCritterCount(slot0)
-	for slot5, slot6 in ipairs(slot0.critterMos) do
-		slot1 = 0 + slot6:getPoolCount()
+function var_0_0.getCritterCount(arg_5_0)
+	local var_5_0 = 0
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.critterMos) do
+		var_5_0 = var_5_0 + iter_5_1:getPoolCount()
 	end
 
-	return slot1
+	return var_5_0
 end
 
-return slot0
+return var_0_0

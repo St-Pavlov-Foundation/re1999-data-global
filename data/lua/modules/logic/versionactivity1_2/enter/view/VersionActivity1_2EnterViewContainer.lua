@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity1_2.enter.view.VersionActivity1_2EnterViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.enter.view.VersionActivity1_2EnterViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_2EnterViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_2EnterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_2EnterView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,14 +19,14 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-function slot0.onContainerInit(slot0)
-	ActivityStageHelper.recordActivityStage(slot0.viewParam.activityIdList)
+function var_0_0.onContainerInit(arg_3_0)
+	ActivityStageHelper.recordActivityStage(arg_3_0.viewParam.activityIdList)
 end
 
-function slot0.onContainerClose(slot0)
-	if slot0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
+function var_0_0.onContainerClose(arg_4_0)
+	if arg_4_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-return slot0
+return var_0_0

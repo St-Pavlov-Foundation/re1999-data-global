@@ -1,111 +1,128 @@
-module("modules.logic.store.model.StoreRoomGoodsItemListModel", package.seeall)
+﻿module("modules.logic.store.model.StoreRoomGoodsItemListModel", package.seeall)
 
-slot0 = class("StoreRoomGoodsItemListModel", TreeScrollModel)
+local var_0_0 = class("StoreRoomGoodsItemListModel", TreeScrollModel)
 
-function slot0.setMOList(slot0, slot1)
-	slot0:clear()
-	table.sort(slot1, slot0.sortFunction)
+function var_0_0.setMOList(arg_1_0, arg_1_1)
+	arg_1_0:clear()
 
-	slot4 = {
-		rootType = 1,
-		rootLength = 373 + 24
-	}
+	local var_1_0 = 24
+	local var_1_1 = 373 + var_1_0
 
-	for slot8 = 1, #slot1 do
-		if slot1[slot8].children then
-			slot9 = math.ceil(#slot1[slot8].children / 4)
-			slot10 = {
-				rootType = 1,
-				rootLength = slot3,
-				nodeType = slot9 + 1,
-				nodeLength = 387 * slot9 + 30,
-				nodeCountEachLine = 1,
-				nodeStartSpace = 0,
-				nodeEndSpace = 0,
-				isExpanded = slot1[slot8].isExpand or false
-			}
-			slot1[slot8].treeRootParam = slot10
-			slot1[slot8].children.rootindex = slot8
+	table.sort(arg_1_1, arg_1_0.sortFunction)
 
-			slot0:addRoot(slot1[slot8], slot10, slot8)
-			slot0:addNode(slot1[slot8].children, slot8, 1)
+	local var_1_2 = {}
+
+	var_1_2.rootType = 1
+	var_1_2.rootLength = var_1_1
+
+	for iter_1_0 = 1, #arg_1_1 do
+		if arg_1_1[iter_1_0].children then
+			local var_1_3 = math.ceil(#arg_1_1[iter_1_0].children / 4)
+			local var_1_4 = {}
+
+			var_1_4.rootType = 1
+			var_1_4.rootLength = var_1_1
+			var_1_4.nodeType = var_1_3 + 1
+			var_1_4.nodeLength = 387 * var_1_3 + 30
+			var_1_4.nodeCountEachLine = 1
+			var_1_4.nodeStartSpace = 0
+			var_1_4.nodeEndSpace = 0
+			var_1_4.isExpanded = arg_1_1[iter_1_0].isExpand or false
+			arg_1_1[iter_1_0].treeRootParam = var_1_4
+			arg_1_1[iter_1_0].children.rootindex = iter_1_0
+
+			arg_1_0:addRoot(arg_1_1[iter_1_0], var_1_4, iter_1_0)
+			arg_1_0:addNode(arg_1_1[iter_1_0].children, iter_1_0, 1)
 		else
-			slot0:addRoot(slot1[slot8], {
-				rootType = 1,
-				rootLength = slot3
-			}, slot8)
+			local var_1_5 = {}
+
+			var_1_5.rootType = 1
+			var_1_5.rootLength = var_1_1
+
+			arg_1_0:addRoot(arg_1_1[iter_1_0], var_1_5, iter_1_0)
 		end
 	end
 
-	for slot8, slot9 in pairs(slot1) do
-		if slot9.children then
-			table.sort(slot9.children, slot0.sortFunction)
+	for iter_1_1, iter_1_2 in pairs(arg_1_1) do
+		if iter_1_2.children then
+			table.sort(iter_1_2.children, arg_1_0.sortFunction)
 		end
 	end
 
-	slot0:addRoot({
+	arg_1_0:addRoot({
 		update = true,
 		type = 0
-	}, slot4, #slot1 + 1)
+	}, var_1_2, #arg_1_1 + 1)
 end
 
-function slot0.getInfoList(slot0)
-	return uv0.super.getInfoList(slot0)
+function var_0_0.getInfoList(arg_2_0)
+	return var_0_0.super.getInfoList(arg_2_0)
 end
 
-function slot0.sortFunction(slot0, slot1)
-	slot2 = StoreConfig.instance:getGoodsConfig(slot0.goodsId)
-	slot3 = StoreConfig.instance:getGoodsConfig(slot1.goodsId)
-	slot6 = StoreNormalGoodsItemListModel._isStoreItemUnlock(slot0.goodsId)
-	slot7 = StoreNormalGoodsItemListModel._isStoreItemUnlock(slot1.goodsId)
+function var_0_0.sortFunction(arg_3_0, arg_3_1)
+	local var_3_0 = StoreConfig.instance:getGoodsConfig(arg_3_0.goodsId)
+	local var_3_1 = StoreConfig.instance:getGoodsConfig(arg_3_1.goodsId)
+	local var_3_2 = StoreNormalGoodsItemListModel._isStoreItemSoldOut(arg_3_0.goodsId)
+	local var_3_3 = StoreNormalGoodsItemListModel._isStoreItemSoldOut(arg_3_1.goodsId)
+	local var_3_4 = StoreNormalGoodsItemListModel._isStoreItemUnlock(arg_3_0.goodsId)
+	local var_3_5 = StoreNormalGoodsItemListModel._isStoreItemUnlock(arg_3_1.goodsId)
 
-	if not StoreNormalGoodsItemListModel._isStoreItemSoldOut(slot0.goodsId) and StoreNormalGoodsItemListModel._isStoreItemSoldOut(slot1.goodsId) then
+	if not var_3_2 and var_3_3 then
 		return true
-	elseif slot4 and not slot5 then
+	elseif var_3_2 and not var_3_3 then
 		return false
 	end
 
-	if slot6 and not slot7 then
+	if var_3_4 and not var_3_5 then
 		return true
-	elseif not slot6 and slot7 then
+	elseif not var_3_4 and var_3_5 then
 		return false
 	end
 
-	if slot0:alreadyHas() ~= slot1:alreadyHas() then
-		return slot9
+	local var_3_6 = arg_3_0:alreadyHas()
+	local var_3_7 = arg_3_1:alreadyHas()
+
+	if var_3_6 ~= var_3_7 then
+		return var_3_7
 	end
 
-	if StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(slot0.goodsId) ~= StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(slot1.goodsId) then
-		if slot10 then
+	local var_3_8 = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_0.goodsId)
+
+	if var_3_8 ~= StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_1.goodsId) then
+		if var_3_8 then
 			return false
 		end
 
 		return true
 	end
 
-	if slot2.order < slot3.order then
+	if var_3_0.order < var_3_1.order then
 		return true
-	elseif slot3.order < slot2.order then
+	elseif var_3_0.order > var_3_1.order then
 		return false
 	end
 
-	if slot2.id < slot3.id then
+	if var_3_0.id < var_3_1.id then
 		return true
-	elseif slot3.id < slot2.id then
+	elseif var_3_0.id > var_3_1.id then
 		return false
 	end
 end
 
-function slot0._isStoreItemUnlock(slot0)
-	if not StoreConfig.instance:getGoodsConfig(slot0).needEpisodeId or slot1 == 0 then
+function var_0_0._isStoreItemUnlock(arg_4_0)
+	local var_4_0 = StoreConfig.instance:getGoodsConfig(arg_4_0).needEpisodeId
+
+	if not var_4_0 or var_4_0 == 0 then
 		return true
 	end
 
-	return DungeonModel.instance:hasPassLevelAndStory(slot1)
+	return DungeonModel.instance:hasPassLevelAndStory(var_4_0)
 end
 
-function slot0.needWeekWalkLayerUnlock(slot0)
-	if StoreConfig.instance:getGoodsConfig(slot0).needWeekwalkLayer <= 0 then
+function var_0_0.needWeekWalkLayerUnlock(arg_5_0)
+	local var_5_0 = StoreConfig.instance:getGoodsConfig(arg_5_0).needWeekwalkLayer
+
+	if var_5_0 <= 0 then
 		return false
 	end
 
@@ -113,13 +130,13 @@ function slot0.needWeekWalkLayerUnlock(slot0)
 		return true
 	end
 
-	return WeekWalkModel.instance:getMaxLayerId() < slot1
+	return var_5_0 > WeekWalkModel.instance:getMaxLayerId()
 end
 
-function slot0._isStoreItemSoldOut(slot0)
-	return StoreModel.instance:getGoodsMO(slot0):isSoldOut()
+function var_0_0._isStoreItemSoldOut(arg_6_0)
+	return StoreModel.instance:getGoodsMO(arg_6_0):isSoldOut()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

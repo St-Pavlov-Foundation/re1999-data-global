@@ -1,214 +1,231 @@
-module("modules.logic.activity.view.show.ActivityWeekWalkDeepShowView", package.seeall)
+﻿module("modules.logic.activity.view.show.ActivityWeekWalkDeepShowView", package.seeall)
 
-slot0 = class("ActivityWeekWalkDeepShowView", BaseView)
+local var_0_0 = class("ActivityWeekWalkDeepShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "reset/#txt_time")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "reward/rewardPreview/#scroll_reward")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_detail")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "#go_progress")
-	slot0._txtprogress = gohelper.findChildText(slot0.viewGO, "#go_progress/#txt_progress")
-	slot0._gonewrule = gohelper.findChild(slot0.viewGO, "#btn_detail/#go_newrule")
-	slot0._animView = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "reset/#txt_time")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_detail")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
+	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_progress/#txt_progress")
+	arg_1_0._gonewrule = gohelper.findChild(arg_1_0.viewGO, "#btn_detail/#go_newrule")
+	arg_1_0._animView = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, slot0._refreshNewRuleIcon, slot0, LuaEventSystem.Low)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_2_0._refreshNewRuleIcon, arg_2_0, LuaEventSystem.Low)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnjump:RemoveClickListener()
-	slot0._btndetail:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshActivityState, slot0._refreshNewRuleIcon, slot0, LuaEventSystem.Low)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnjump:RemoveClickListener()
+	arg_3_0._btndetail:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshActivityState, arg_3_0._refreshNewRuleIcon, arg_3_0, LuaEventSystem.Low)
 end
 
-function slot0._btnjumpOnClick(slot0)
+function var_0_0._btnjumpOnClick(arg_4_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.WeekWalk) then
 		GameFacade.showToast(ToastEnum.ActivityWeekWalkDeepShowView)
 
 		return
 	end
 
-	WeekWalkController.instance:jumpWeekWalkDeepLayerView(slot0._jumpCallback, slot0)
+	WeekWalkController.instance:jumpWeekWalkDeepLayerView(arg_4_0._jumpCallback, arg_4_0)
 end
 
-function slot0._jumpCallback(slot0)
-	TaskDispatcher.cancelTask(slot0._closeBeginnerView, slot0)
-	TaskDispatcher.runDelay(slot0._closeBeginnerView, slot0, 1)
+function var_0_0._jumpCallback(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._closeBeginnerView, arg_5_0)
+	TaskDispatcher.runDelay(arg_5_0._closeBeginnerView, arg_5_0, 1)
 end
 
-function slot0._closeBeginnerView(slot0)
+function var_0_0._closeBeginnerView(arg_6_0)
 	ViewMgr.instance:closeView(ViewName.ActivityBeginnerView)
 end
 
-function slot0._btndetailOnClick(slot0)
-	if not slot0:_isWeekWalkDeepOpen() then
+function var_0_0._btndetailOnClick(arg_7_0)
+	if not arg_7_0:_isWeekWalkDeepOpen() then
 		GameFacade.showToast(ToastEnum.WeekWalkDetail)
 
 		return
 	end
 
 	WeekWalkController.instance:openWeekWalkRuleView()
-	gohelper.setActive(slot0._gonewrule, false)
-	slot0:_setIsClickRuleBtnData(uv0.HasClickRuleBtn)
+	gohelper.setActive(arg_7_0._gonewrule, false)
+	arg_7_0:_setIsClickRuleBtnData(var_0_0.HasClickRuleBtn)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_limbo_bg"))
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_limbo_bg"))
 
-	slot0._rewardItems = slot0:getUserDataTb_()
+	arg_8_0._rewardItems = arg_8_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._gorewarditem, false)
-	slot0:_refreshNewRuleIcon()
+	gohelper.setActive(arg_8_0._gorewarditem, false)
+	arg_8_0:_refreshNewRuleIcon()
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		ActivityEnum.Activity.WeekWalkDeepShow
 	})
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._animView:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._animView:Play(UIAnimationName.Open, 0, 0)
 
-	slot0._actId = slot0.viewContainer.activityId
+	arg_10_0._actId = arg_10_0.viewContainer.activityId
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._config = ActivityConfig.instance:getActivityShowTaskList(slot0._actId, 1)
-	slot0._txtdesc.text = slot0._config.actDesc
+function var_0_0.refreshUI(arg_11_0)
+	arg_11_0._config = ActivityConfig.instance:getActivityShowTaskList(arg_11_0._actId, 1)
+	arg_11_0._txtdesc.text = arg_11_0._config.actDesc
 
-	slot0:_refreshRewards()
+	arg_11_0:_refreshRewards()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.WeekWalk) then
-		slot0:_showDeadline()
-		slot0:_refreshProgress()
+		arg_11_0:_showDeadline()
+		arg_11_0:_refreshProgress()
 	else
-		slot0._txttime.text = luaLang("activityweekwalkdeepview_lcok")
-		slot0._txtprogress.text = luaLang("activityweekwalkdeepview_empty")
+		arg_11_0._txttime.text = luaLang("activityweekwalkdeepview_lcok")
+		arg_11_0._txtprogress.text = luaLang("activityweekwalkdeepview_empty")
 	end
 end
 
-function slot0._isWeekWalkDeepOpen(slot0)
+function var_0_0._isWeekWalkDeepOpen(arg_12_0)
 	return OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.WeekWalk) and WeekWalkModel.instance:getInfo().isOpenDeep
 end
 
-slot0.ShowCount = 1
+var_0_0.ShowCount = 1
 
-function slot0._refreshRewards(slot0)
-	for slot5 = 1, #string.split(slot0._config.showBonus, "|") do
-		if not slot0._rewardItems[slot5] then
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = gohelper.clone(slot0._gorewarditem, slot0._gorewardContent, "rewarditem" .. slot5)
-			slot6.item = IconMgr.instance:getCommonPropItemIcon(slot6.go)
+function var_0_0._refreshRewards(arg_13_0)
+	local var_13_0 = string.split(arg_13_0._config.showBonus, "|")
 
-			table.insert(slot0._rewardItems, slot6)
+	for iter_13_0 = 1, #var_13_0 do
+		if not arg_13_0._rewardItems[iter_13_0] then
+			local var_13_1 = arg_13_0:getUserDataTb_()
+
+			var_13_1.go = gohelper.clone(arg_13_0._gorewarditem, arg_13_0._gorewardContent, "rewarditem" .. iter_13_0)
+			var_13_1.item = IconMgr.instance:getCommonPropItemIcon(var_13_1.go)
+
+			table.insert(arg_13_0._rewardItems, var_13_1)
 		end
 
-		gohelper.setActive(slot0._rewardItems[slot5].go, true)
+		gohelper.setActive(arg_13_0._rewardItems[iter_13_0].go, true)
 
-		slot7 = string.splitToNumber(slot1[slot5], "#")
+		local var_13_2 = string.splitToNumber(var_13_0[iter_13_0], "#")
 
-		slot0._rewardItems[slot5].item:setMOValue(slot7[1], slot7[2], slot7[3])
-		slot0._rewardItems[slot5].item:isShowCount(slot7[4] == uv0.ShowCount)
-		slot0._rewardItems[slot5].item:setCountFontSize(35)
-		slot0._rewardItems[slot5].item:setHideLvAndBreakFlag(true)
-		slot0._rewardItems[slot5].item:hideEquipLvAndBreak(true)
+		arg_13_0._rewardItems[iter_13_0].item:setMOValue(var_13_2[1], var_13_2[2], var_13_2[3])
+		arg_13_0._rewardItems[iter_13_0].item:isShowCount(var_13_2[4] == var_0_0.ShowCount)
+		arg_13_0._rewardItems[iter_13_0].item:setCountFontSize(35)
+		arg_13_0._rewardItems[iter_13_0].item:setHideLvAndBreakFlag(true)
+		arg_13_0._rewardItems[iter_13_0].item:hideEquipLvAndBreak(true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._rewardItems do
-		gohelper.setActive(slot0._rewardItems[slot5].go, false)
+	for iter_13_1 = #var_13_0 + 1, #arg_13_0._rewardItems do
+		gohelper.setActive(arg_13_0._rewardItems[iter_13_1].go, false)
 	end
 end
 
-function slot0._refreshProgress(slot0)
-	slot2, slot3 = WeekWalkModel.instance:getInfo():getNotFinishedMap()
-	slot5 = nil
+function var_0_0._refreshProgress(arg_14_0)
+	local var_14_0 = WeekWalkModel.instance:getInfo()
+	local var_14_1, var_14_2 = var_14_0:getNotFinishedMap()
+	local var_14_3 = WeekWalkModel.isShallowMap(var_14_1.sceneId)
+	local var_14_4
 
-	if WeekWalkModel.isShallowMap(slot2.sceneId) or not slot1.isOpenDeep then
-		slot5 = luaLang("activityweekwalkdeepview_empty")
+	if var_14_3 or not var_14_0.isOpenDeep then
+		var_14_4 = luaLang("activityweekwalkdeepview_empty")
 	else
-		gohelper.setActive(slot0._goprogress, true)
+		gohelper.setActive(arg_14_0._goprogress, true)
 
-		slot6 = lua_weekwalk_scene.configDict[slot2.sceneId]
-		slot5 = (not LangSettings.instance:isEn() or string.format("%s %s", slot6.name, slot6.battleName)) and string.format("%s%s", slot6.name, slot6.battleName)
+		local var_14_5 = lua_weekwalk_scene.configDict[var_14_1.sceneId]
+
+		if LangSettings.instance:isEn() then
+			var_14_4 = string.format("%s %s", var_14_5.name, var_14_5.battleName)
+		else
+			var_14_4 = string.format("%s%s", var_14_5.name, var_14_5.battleName)
+		end
 	end
 
-	slot0._txtprogress.text = slot5
+	arg_14_0._txtprogress.text = var_14_4
 end
 
-function slot0._showDeadline(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0._showDeadline(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadline, arg_15_0)
 
 	if not WeekWalkModel.instance:getInfo().isOpenDeep then
-		slot0._txttime.text = luaLang("activityweekwalkdeepview_lcok")
+		arg_15_0._txttime.text = luaLang("activityweekwalkdeepview_lcok")
 
 		return
 	end
 
-	slot0._endTime = WeekWalkModel.instance:getInfo().endTime
+	arg_15_0._endTime = WeekWalkModel.instance:getInfo().endTime
 
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
-	slot0:_onRefreshDeadline()
+	TaskDispatcher.runRepeat(arg_15_0._onRefreshDeadline, arg_15_0, 1)
+	arg_15_0:_onRefreshDeadline()
 end
 
-function slot0._onRefreshDeadline(slot0)
-	if slot0._endTime - ServerTime.now() <= 0 then
-		TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0._onRefreshDeadline(arg_16_0)
+	local var_16_0 = arg_16_0._endTime - ServerTime.now()
+
+	if var_16_0 <= 0 then
+		TaskDispatcher.cancelTask(arg_16_0._onRefreshDeadline, arg_16_0)
 	end
 
-	slot2, slot3 = TimeUtil.secondToRoughTime2(math.floor(slot1))
-	slot0._txttime.text = formatLuaLang("activityweekwalkdeepview_resetremaintime", slot2 .. slot3)
+	local var_16_1, var_16_2 = TimeUtil.secondToRoughTime2(math.floor(var_16_0))
+
+	arg_16_0._txttime.text = formatLuaLang("activityweekwalkdeepview_resetremaintime", var_16_1 .. var_16_2)
 end
 
-function slot0._refreshNewRuleIcon(slot0)
-	slot1 = ActivityModel.instance:getActMO(ActivityEnum.Activity.WeekWalkDeepShow).isNewStage
-	slot3 = false
+function var_0_0._refreshNewRuleIcon(arg_17_0)
+	local var_17_0 = ActivityModel.instance:getActMO(ActivityEnum.Activity.WeekWalkDeepShow).isNewStage
+	local var_17_1 = arg_17_0:_isWeekWalkDeepOpen()
+	local var_17_2 = false
 
-	if slot0:_isWeekWalkDeepOpen() then
-		slot3 = slot1 or not slot0:_checkIsClickRuleBtn()
+	if var_17_1 then
+		var_17_2 = var_17_0 or not arg_17_0:_checkIsClickRuleBtn()
 	end
 
-	if slot1 then
-		slot0:_setIsClickRuleBtnData(uv0.UnClickRuleBtn)
+	if var_17_0 then
+		arg_17_0:_setIsClickRuleBtnData(var_0_0.UnClickRuleBtn)
 	end
 
-	gohelper.setActive(slot0._gonewrule, slot3)
+	gohelper.setActive(arg_17_0._gonewrule, var_17_2)
 end
 
-slot1 = PlayerPrefsKey.EnteredActKey .. "#" .. tostring(ActivityEnum.Activity.WeekWalkDeepShow) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+local var_0_1 = PlayerPrefsKey.EnteredActKey .. "#" .. tostring(ActivityEnum.Activity.WeekWalkDeepShow) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
-function slot0._checkIsClickRuleBtn(slot0)
-	return tonumber(PlayerPrefsHelper.getNumber(uv0, uv1.UnClickRuleBtn)) ~= uv1.UnClickRuleBtn
+function var_0_0._checkIsClickRuleBtn(arg_18_0)
+	local var_18_0 = PlayerPrefsHelper.getNumber(var_0_1, var_0_0.UnClickRuleBtn)
+
+	return tonumber(var_18_0) ~= var_0_0.UnClickRuleBtn
 end
 
-slot0.HasClickRuleBtn = 1
-slot0.UnClickRuleBtn = 0
+var_0_0.HasClickRuleBtn = 1
+var_0_0.UnClickRuleBtn = 0
 
-function slot0._setIsClickRuleBtnData(slot0, slot1)
-	PlayerPrefsHelper.setNumber(uv0, tonumber(slot1) or uv1.UnClickRuleBtn)
+function var_0_0._setIsClickRuleBtnData(arg_19_0, arg_19_1)
+	PlayerPrefsHelper.setNumber(var_0_1, tonumber(arg_19_1) or var_0_0.UnClickRuleBtn)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.cancelTask(slot0._closeBeginnerView, slot0)
+function var_0_0.onClose(arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._onRefreshDeadline, arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._closeBeginnerView, arg_20_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,57 +1,67 @@
-module("modules.logic.rouge.define.RougeBaseDLCViewComp", package.seeall)
+﻿module("modules.logic.rouge.define.RougeBaseDLCViewComp", package.seeall)
 
-slot0 = class("RougeBaseDLCViewComp", BaseViewExtended)
+local var_0_0 = class("RougeBaseDLCViewComp", BaseViewExtended)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._isImmediate = slot1
+	arg_1_0._isImmediate = arg_1_1
 end
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_2_0)
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_3_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	if slot0._isImmediate then
-		slot0:addEventCb(RougeDLCController.instance, RougeEvent.UpdateRougeVersion, slot0._updateVersion, slot0)
+function var_0_0._editableInitView(arg_5_0)
+	if arg_5_0._isImmediate then
+		arg_5_0:addEventCb(RougeDLCController.instance, RougeEvent.UpdateRougeVersion, arg_5_0._updateVersion, arg_5_0)
 	end
 end
 
-function slot0._updateVersion(slot0)
-	slot0:killAllChildView()
+function var_0_0._updateVersion(arg_6_0)
+	local var_6_0 = arg_6_0:getSeason()
+	local var_6_1 = arg_6_0:getVersions()
 
-	for slot6, slot7 in pairs(slot0:getVersions() or {}) do
-		if _G[string.format("%s_%s_%s", slot0.viewName, slot0:getSeason(), slot7)] then
-			slot10 = nil
+	arg_6_0:killAllChildView()
 
-			if slot9.ParentObjPath then
-				slot10 = gohelper.findChild(slot0.viewGO, slot9.ParentObjPath)
+	for iter_6_0, iter_6_1 in pairs(var_6_1 or {}) do
+		local var_6_2 = string.format("%s_%s_%s", arg_6_0.viewName, var_6_0, iter_6_1)
+		local var_6_3 = _G[var_6_2]
+
+		if var_6_3 then
+			local var_6_4
+
+			if var_6_3.ParentObjPath then
+				var_6_4 = gohelper.findChild(arg_6_0.viewGO, var_6_3.ParentObjPath)
 			end
 
-			slot0:openSubView(slot9, slot9.AssetUrl, slot10, slot0.viewParam)
+			arg_6_0:openSubView(var_6_3, var_6_3.AssetUrl, var_6_4, arg_6_0.viewParam)
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateVersion()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:_updateVersion()
 end
 
-function slot0.getSeason(slot0)
+function var_0_0.getSeason(arg_8_0)
 	return RougeOutsideModel.instance:season()
 end
 
-function slot0.getVersions(slot0)
-	return RougeOutsideModel.instance:getRougeGameRecord() and slot1:getVersionIds()
+function var_0_0.getVersions(arg_9_0)
+	local var_9_0 = RougeOutsideModel.instance:getRougeGameRecord()
+
+	return var_9_0 and var_9_0:getVersionIds()
 end
 
-return slot0
+return var_0_0

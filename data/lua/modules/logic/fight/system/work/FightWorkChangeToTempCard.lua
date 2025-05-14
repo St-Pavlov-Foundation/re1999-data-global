@@ -1,23 +1,27 @@
-module("modules.logic.fight.system.work.FightWorkChangeToTempCard", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeToTempCard", package.seeall)
 
-slot0 = class("FightWorkChangeToTempCard", FightEffectBase)
+local var_0_0 = class("FightWorkChangeToTempCard", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if #string.splitToNumber(slot0._actEffectMO.reserveStr, "#") > 0 then
-		if FightCardModel.instance:getCardMO().cardGroup then
-			for slot6, slot7 in ipairs(slot1) do
-				if slot2[slot7] then
-					slot2[slot7].tempCard = true
+	local var_1_0 = string.splitToNumber(arg_1_0._actEffectMO.reserveStr, "#")
 
-					FightController.instance:dispatchEvent(FightEvent.ChangeToTempCard, slot7)
+	if #var_1_0 > 0 then
+		local var_1_1 = FightCardModel.instance:getCardMO().cardGroup
+
+		if var_1_1 then
+			for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+				if var_1_1[iter_1_1] then
+					var_1_1[iter_1_1].tempCard = true
+
+					FightController.instance:dispatchEvent(FightEvent.ChangeToTempCard, iter_1_1)
 				else
-					logError("FightWorkChangeToTempCard error, card = nil, index = " .. slot7 .. " cardCount = " .. #slot2)
+					logError("FightWorkChangeToTempCard error, card = nil, index = " .. iter_1_1 .. " cardCount = " .. #var_1_1)
 
 					break
 				end
@@ -27,10 +31,11 @@ function slot0.onStart(slot0)
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,30 +1,31 @@
-module("modules.logic.permanent.model.PermanentActivityListModel", package.seeall)
+﻿module("modules.logic.permanent.model.PermanentActivityListModel", package.seeall)
 
-slot0 = class("PermanentActivityListModel", ListScrollModel)
+local var_0_0 = class("PermanentActivityListModel", ListScrollModel)
 
-function slot0.refreshList(slot0)
-	slot2 = {}
-	slot3 = {}
+function var_0_0.refreshList(arg_1_0)
+	local var_1_0 = PermanentModel.instance:getActivityDic()
+	local var_1_1 = {}
+	local var_1_2 = {}
 
-	for slot7, slot8 in pairs(PermanentModel.instance:getActivityDic()) do
-		if slot8.online then
-			if slot8.permanentUnlock then
-				table.insert(slot2, slot8)
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		if iter_1_1.online then
+			if iter_1_1.permanentUnlock then
+				table.insert(var_1_1, iter_1_1)
 			else
-				table.insert(slot3, slot8)
+				table.insert(var_1_2, iter_1_1)
 			end
 		end
 	end
 
-	table.sort(slot2, SortUtil.keyLower("id"))
-	table.sort(slot3, SortUtil.keyLower("id"))
-	tabletool.addValues(slot2, slot3)
-	table.insert(slot2, {
+	table.sort(var_1_1, SortUtil.keyLower("id"))
+	table.sort(var_1_2, SortUtil.keyLower("id"))
+	tabletool.addValues(var_1_1, var_1_2)
+	table.insert(var_1_1, {
 		id = -999
 	})
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

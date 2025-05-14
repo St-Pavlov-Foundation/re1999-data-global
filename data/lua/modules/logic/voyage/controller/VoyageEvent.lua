@@ -1,7 +1,8 @@
-module("modules.logic.voyage.controller.VoyageEvent", package.seeall)
+﻿module("modules.logic.voyage.controller.VoyageEvent", package.seeall)
 
-slot0 = _M
-slot0.OnReceiveAct1001GetInfoReply = 100
-slot0.OnReceiveAct1001UpdatePush = 101
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnReceiveAct1001GetInfoReply = 100
+var_0_0.OnReceiveAct1001UpdatePush = 101
+
+return var_0_0

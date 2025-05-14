@@ -1,92 +1,104 @@
-module("modules.logic.patface.controller.work.PatFaceWorkBase", package.seeall)
+﻿module("modules.logic.patface.controller.work.PatFaceWorkBase", package.seeall)
 
-slot0 = class("PatFaceWorkBase", BaseWork)
+local var_0_0 = class("PatFaceWorkBase", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._patFaceId = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._patFaceId = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	if not slot0._patFaceId or slot0._patFaceId == PatFaceEnum.NoneNum then
-		slot0:patComplete()
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if not arg_2_0._patFaceId or arg_2_0._patFaceId == PatFaceEnum.NoneNum then
+		arg_2_0:patComplete()
 
 		return
 	end
 
-	slot0._patViewName = PatFaceConfig.instance:getPatFaceViewName(slot0._patFaceId)
-	slot0._patStoryId = PatFaceConfig.instance:getPatFaceStoryId(slot0._patFaceId)
-	slot0._patFaceType = slot1 and slot1.patFaceType
+	arg_2_0._patViewName = PatFaceConfig.instance:getPatFaceViewName(arg_2_0._patFaceId)
+	arg_2_0._patStoryId = PatFaceConfig.instance:getPatFaceStoryId(arg_2_0._patFaceId)
+	arg_2_0._patFaceType = arg_2_1 and arg_2_1.patFaceType
 
-	if slot0:checkCanPat() then
-		slot0:startPat()
+	if arg_2_0:checkCanPat() then
+		arg_2_0:startPat()
 	else
-		slot0:patComplete()
+		arg_2_0:patComplete()
 	end
 end
 
-function slot0.checkCanPat(slot0)
-	slot1 = false
+function var_0_0.checkCanPat(arg_3_0)
+	local var_3_0 = false
+	local var_3_1 = PatFaceEnum.CustomCheckCanPatFun[arg_3_0._patFaceId]
 
-	return (not PatFaceEnum.CustomCheckCanPatFun[slot0._patFaceId] or slot2(slot0._patFaceId)) and slot0:defaultCheckCanPat()
-end
-
-function slot0.defaultCheckCanPat(slot0)
-	slot1 = false
-
-	if PatFaceConfig.instance:getPatFaceActivityId(slot0._patFaceId) and slot2 ~= PatFaceEnum.NoneNum then
-		slot1 = ActivityHelper.getActivityStatus(slot2) == ActivityEnum.ActivityStatus.Normal
+	if var_3_1 then
+		var_3_0 = var_3_1(arg_3_0._patFaceId)
 	else
-		logNormal(string.format("PatFaceWorkBase:defaultCheckCanPat error, actId invalid,patFaceId:%s, actId:%s", slot0._patFaceId, slot2))
+		var_3_0 = arg_3_0:defaultCheckCanPat()
 	end
 
-	return slot1
+	return var_3_0
 end
 
-function slot0.startPat(slot0)
-	if not string.nilorempty(slot0._patViewName) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
-		slot0:patView()
-	elseif slot0._patStoryId and slot0._patStoryId ~= PatFaceEnum.NoneNum then
-		slot0:patStory()
+function var_0_0.defaultCheckCanPat(arg_4_0)
+	local var_4_0 = false
+	local var_4_1 = PatFaceConfig.instance:getPatFaceActivityId(arg_4_0._patFaceId)
+
+	if var_4_1 and var_4_1 ~= PatFaceEnum.NoneNum then
+		var_4_0 = ActivityHelper.getActivityStatus(var_4_1) == ActivityEnum.ActivityStatus.Normal
 	else
-		slot0:patComplete()
+		local var_4_2 = string.format("PatFaceWorkBase:defaultCheckCanPat error, actId invalid,patFaceId:%s, actId:%s", arg_4_0._patFaceId, var_4_1)
+
+		logNormal(var_4_2)
 	end
+
+	return var_4_0
 end
 
-function slot0.onResume(slot0)
-	if not string.nilorempty(slot0._patViewName) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
-	end
-end
-
-function slot0.patView(slot0)
-	if PatFaceEnum.CustomPatFun[slot0._patFaceId] then
-		slot1(slot0._patFaceId)
+function var_0_0.startPat(arg_5_0)
+	if not string.nilorempty(arg_5_0._patViewName) then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_5_0.onCloseViewFinish, arg_5_0)
+		arg_5_0:patView()
+	elseif arg_5_0._patStoryId and arg_5_0._patStoryId ~= PatFaceEnum.NoneNum then
+		arg_5_0:patStory()
 	else
-		ViewMgr.instance:openView(slot0._patViewName)
+		arg_5_0:patComplete()
 	end
 end
 
-function slot0.patStory(slot0)
-	StoryController.instance:playStory(slot0._patStoryId, nil, slot0.onPlayPatStoryFinish, slot0)
-end
-
-function slot0.onCloseViewFinish(slot0, slot1)
-	if string.nilorempty(slot0._patViewName) or slot0._patViewName == slot1 then
-		slot0:patComplete()
+function var_0_0.onResume(arg_6_0)
+	if not string.nilorempty(arg_6_0._patViewName) then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinish, arg_6_0)
 	end
 end
 
-function slot0.onPlayPatStoryFinish(slot0)
-	slot0:patComplete()
+function var_0_0.patView(arg_7_0)
+	local var_7_0 = PatFaceEnum.CustomPatFun[arg_7_0._patFaceId]
+
+	if var_7_0 then
+		var_7_0(arg_7_0._patFaceId)
+	else
+		ViewMgr.instance:openView(arg_7_0._patViewName)
+	end
 end
 
-function slot0.patComplete(slot0)
-	slot0:onDone(true)
+function var_0_0.patStory(arg_8_0)
+	StoryController.instance:playStory(arg_8_0._patStoryId, nil, arg_8_0.onPlayPatStoryFinish, arg_8_0)
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
+function var_0_0.onCloseViewFinish(arg_9_0, arg_9_1)
+	if string.nilorempty(arg_9_0._patViewName) or arg_9_0._patViewName == arg_9_1 then
+		arg_9_0:patComplete()
+	end
 end
 
-return slot0
+function var_0_0.onPlayPatStoryFinish(arg_10_0)
+	arg_10_0:patComplete()
+end
+
+function var_0_0.patComplete(arg_11_0)
+	arg_11_0:onDone(true)
+end
+
+function var_0_0.clearWork(arg_12_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_12_0.onCloseViewFinish, arg_12_0)
+end
+
+return var_0_0

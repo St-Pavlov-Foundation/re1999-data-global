@@ -1,72 +1,75 @@
-module("modules.logic.rouge.model.RougeCollectionHandBookListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionHandBookListModel", package.seeall)
 
-slot0 = class("RougeCollectionHandBookListModel", ListScrollModel)
+local var_0_0 = class("RougeCollectionHandBookListModel", ListScrollModel)
 
-function slot0.onInit(slot0, slot1, slot2)
-	slot0._baseTagFilterMap = slot1
-	slot0._extraTagFilterMap = slot2
-	slot0._curSelectId = nil
+function var_0_0.onInit(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._baseTagFilterMap = arg_1_1
+	arg_1_0._extraTagFilterMap = arg_1_2
+	arg_1_0._curSelectId = nil
 
-	slot0:onCollectionDataUpdate()
-	slot0:selectFirstOrDefault()
+	arg_1_0:onCollectionDataUpdate()
+	arg_1_0:selectFirstOrDefault()
 end
 
-function slot0.onCollectionDataUpdate(slot0)
-	slot1 = {}
+function var_0_0.onCollectionDataUpdate(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = RougeCollectionConfig.instance:getCollectionSynthesisList()
 
-	if RougeCollectionConfig.instance:getCollectionSynthesisList() then
-		for slot6, slot7 in ipairs(slot2) do
-			if RougeCollectionHelper.checkCollectionHasAnyOneTag(slot7.product, nil, slot0._baseTagFilterMap, slot0._extraTagFilterMap) then
-				table.insert(slot1, slot7)
+	if var_2_1 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+			if RougeCollectionHelper.checkCollectionHasAnyOneTag(iter_2_1.product, nil, arg_2_0._baseTagFilterMap, arg_2_0._extraTagFilterMap) then
+				table.insert(var_2_0, iter_2_1)
 			end
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.isBagEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBagEmpty(arg_3_0)
+	return arg_3_0:getCount() <= 0
 end
 
-function slot0.selectCell(slot0, slot1, slot2)
-	if not slot0:getByIndex(slot1) then
-		slot0._curSelectId = nil
+function var_0_0.selectCell(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0:getByIndex(arg_4_1)
+
+	if not var_4_0 then
+		arg_4_0._curSelectId = nil
 
 		return
 	end
 
-	slot0._curSelectId = slot2 and slot3.id or 0
+	arg_4_0._curSelectId = arg_4_2 and var_4_0.id or 0
 
-	uv0.super.selectCell(slot0, slot1, slot2)
+	var_0_0.super.selectCell(arg_4_0, arg_4_1, arg_4_2)
 end
 
-function slot0.selectFirstOrDefault(slot0)
-	if not slot0:getById(slot0._curSelectId) then
-		slot0:selectCell(1, true)
+function var_0_0.selectFirstOrDefault(arg_5_0)
+	if not arg_5_0:getById(arg_5_0._curSelectId) then
+		arg_5_0:selectCell(1, true)
 	end
 end
 
-function slot0.getCurSelectCellId(slot0)
-	return slot0._curSelectId or 0
+function var_0_0.getCurSelectCellId(arg_6_0)
+	return arg_6_0._curSelectId or 0
 end
 
-function slot0.updateFilterMap(slot0, slot1, slot2)
-	slot0._baseTagFilterMap = slot1
-	slot0._extraTagFilterMap = slot2
+function var_0_0.updateFilterMap(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._baseTagFilterMap = arg_7_1
+	arg_7_0._extraTagFilterMap = arg_7_2
 
-	slot0:onCollectionDataUpdate()
-	slot0:selectFirstOrDefault()
+	arg_7_0:onCollectionDataUpdate()
+	arg_7_0:selectFirstOrDefault()
 end
 
-function slot0.isCurSelectTargetId(slot0, slot1)
-	return slot0._curSelectId == slot1
+function var_0_0.isCurSelectTargetId(arg_8_0, arg_8_1)
+	return arg_8_0._curSelectId == arg_8_1
 end
 
-function slot0.isFiltering(slot0)
-	return not GameUtil.tabletool_dictIsEmpty(slot0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(slot0._extraTagFilterMap)
+function var_0_0.isFiltering(arg_9_0)
+	return not GameUtil.tabletool_dictIsEmpty(arg_9_0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(arg_9_0._extraTagFilterMap)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

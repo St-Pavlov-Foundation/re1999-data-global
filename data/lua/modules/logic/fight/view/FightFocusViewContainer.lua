@@ -1,50 +1,50 @@
-module("modules.logic.fight.view.FightFocusViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightFocusViewContainer", package.seeall)
 
-slot0 = class("FightFocusViewContainer", BaseViewContainer)
+local var_0_0 = class("FightFocusViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightFocusView.New(),
 		TabViewGroup.New(1, "fightinfocontainer/skilltipview")
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._skillTipView = SkillTipView.New()
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._skillTipView = SkillTipView.New()
 
 		return {
-			slot0._skillTipView
+			arg_3_0._skillTipView
 		}
 	end
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 1, slot1)
+function var_0_0.switchTab(arg_4_0, arg_4_1)
+	arg_4_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_4_1)
 end
 
-function slot0.showSkillTipView(slot0, slot1, slot2, slot3)
-	slot0._skillTipView:showInfo(slot1, slot2, slot3)
+function var_0_0.showSkillTipView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0._skillTipView:showInfo(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0.hideSkillTipView(slot0)
-	slot0._skillTipView:hideInfo()
+function var_0_0.hideSkillTipView(arg_6_0)
+	arg_6_0._skillTipView:hideInfo()
 end
 
-function slot0.playOpenTransition(slot0)
-	uv0.super.playOpenTransition(slot0, {
+function var_0_0.playOpenTransition(arg_7_0)
+	var_0_0.super.playOpenTransition(arg_7_0, {
 		anim = "open"
 	})
 end
 
-function slot0.playCloseTransition(slot0)
-	uv0.super.playCloseTransition(slot0, {
+function var_0_0.playCloseTransition(arg_8_0)
+	var_0_0.super.playCloseTransition(arg_8_0, {
 		anim = "close"
 	})
 end
 
-return slot0
+return var_0_0

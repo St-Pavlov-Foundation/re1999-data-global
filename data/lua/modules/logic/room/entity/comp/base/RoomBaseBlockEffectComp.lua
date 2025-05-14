@@ -1,80 +1,87 @@
-module("modules.logic.room.entity.comp.base.RoomBaseBlockEffectComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.base.RoomBaseBlockEffectComp", package.seeall)
 
-slot0 = class("RoomBaseBlockEffectComp", LuaCompBase)
+local var_0_0 = class("RoomBaseBlockEffectComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0.delayTaskTime = 0.1
-	slot0._effectKeyDict = {}
-	slot0._allEffectKeyList = {}
-	slot0._effectPrefixKey = slot0.__cname
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.delayTaskTime = 0.1
+	arg_1_0._effectKeyDict = {}
+	arg_1_0._allEffectKeyList = {}
+	arg_1_0._effectPrefixKey = arg_1_0.__cname
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.onBeforeDestroy(slot0)
+function var_0_0.onBeforeDestroy(arg_4_0)
+	return
 end
 
-function slot0.onRunDelayTask(slot0)
+function var_0_0.onRunDelayTask(arg_5_0)
+	return
 end
 
-function slot0.removeParamsAndPlayAnimator(slot0, slot1, slot2, slot3)
-	slot4 = slot0.entity.effect
+function var_0_0.removeParamsAndPlayAnimator(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_0.entity.effect
 
-	if slot3 then
-		for slot8 = 1, #slot1 do
-			slot4:playEffectAnimator(slot1[slot8], slot2)
+	if arg_6_3 then
+		for iter_6_0 = 1, #arg_6_1 do
+			var_6_0:playEffectAnimator(arg_6_1[iter_6_0], arg_6_2)
 		end
 	end
 
-	slot4:removeParams(slot1, slot3)
+	var_6_0:removeParams(arg_6_1, arg_6_3)
 end
 
-function slot0.getEffectKeyById(slot0, slot1)
-	if not slot0._effectKeyDict[slot1] then
-		slot2 = slot0:formatEffectKey(slot1)
-		slot0._effectKeyDict[slot1] = slot2
+function var_0_0.getEffectKeyById(arg_7_0, arg_7_1)
+	if not arg_7_0._effectKeyDict[arg_7_1] then
+		local var_7_0 = arg_7_0:formatEffectKey(arg_7_1)
 
-		table.insert(slot0._allEffectKeyList, slot2)
+		arg_7_0._effectKeyDict[arg_7_1] = var_7_0
+
+		table.insert(arg_7_0._allEffectKeyList, var_7_0)
 	end
 
-	return slot0._effectKeyDict[slot1]
+	return arg_7_0._effectKeyDict[arg_7_1]
 end
 
-function slot0.formatEffectKey(slot0, slot1)
-	return string.format("%s_%s", slot0._effectPrefixKey, slot1)
+function var_0_0.formatEffectKey(arg_8_0, arg_8_1)
+	return string.format("%s_%s", arg_8_0._effectPrefixKey, arg_8_1)
 end
 
-function slot0.startWaitRunDelayTask(slot0)
-	if not slot0.__hasWaitRunDelayTask_ then
-		slot0.__hasWaitRunDelayTask_ = true
+function var_0_0.startWaitRunDelayTask(arg_9_0)
+	if not arg_9_0.__hasWaitRunDelayTask_ then
+		arg_9_0.__hasWaitRunDelayTask_ = true
 
-		TaskDispatcher.runDelay(slot0.__onWaitRunDelayTask_, slot0, math.max(0.001, tonumber(slot0.delayTaskTime or 0.001)))
-	end
-end
+		local var_9_0 = arg_9_0.delayTaskTime or 0.001
 
-function slot0.__onWaitRunDelayTask_(slot0)
-	slot0.__hasWaitRunDelayTask_ = false
-
-	if not slot0:isWillDestory() then
-		slot0:onRunDelayTask()
+		TaskDispatcher.runDelay(arg_9_0.__onWaitRunDelayTask_, arg_9_0, math.max(0.001, tonumber(var_9_0)))
 	end
 end
 
-function slot0.isWillDestory(slot0)
-	return slot0.__willDestroy
+function var_0_0.__onWaitRunDelayTask_(arg_10_0)
+	arg_10_0.__hasWaitRunDelayTask_ = false
+
+	if not arg_10_0:isWillDestory() then
+		arg_10_0:onRunDelayTask()
+	end
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
-	slot0.__hasWaitRunDelayTask_ = false
-
-	TaskDispatcher.cancelTask(slot0.__onWaitRunDelayTask_, slot0)
-	slot0:onBeforeDestroy()
+function var_0_0.isWillDestory(arg_11_0)
+	return arg_11_0.__willDestroy
 end
 
-return slot0
+function var_0_0.beforeDestroy(arg_12_0)
+	arg_12_0.__willDestroy = true
+	arg_12_0.__hasWaitRunDelayTask_ = false
+
+	TaskDispatcher.cancelTask(arg_12_0.__onWaitRunDelayTask_, arg_12_0)
+	arg_12_0:onBeforeDestroy()
+end
+
+return var_0_0

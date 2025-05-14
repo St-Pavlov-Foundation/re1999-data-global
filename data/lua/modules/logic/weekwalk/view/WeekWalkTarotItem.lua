@@ -1,308 +1,356 @@
-module("modules.logic.weekwalk.view.WeekWalkTarotItem", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkTarotItem", package.seeall)
 
-slot0 = class("WeekWalkTarotItem", ListScrollCellExtend)
+local var_0_0 = class("WeekWalkTarotItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg/#simage_icon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#simage_bg/#txt_name")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#simage_bg/#txt_desc")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#simage_bg/#btn_click")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_tip")
-	slot0._btnclosetip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_tip/#btn_closetip")
-	slot0._txtheronamecn = gohelper.findChildText(slot0.viewGO, "#go_tip/#txt_heronamecn")
-	slot0._txtheronameen = gohelper.findChildText(slot0.viewGO, "#go_tip/#txt_heronamecn/#txt_heronameen")
-	slot0._txteffect = gohelper.findChildText(slot0.viewGO, "#go_tip/#scroll_effects/Viewport/Content/#txt_effect")
-	slot0._goattreffect = gohelper.findChild(slot0.viewGO, "#go_tip/#go_attreffect")
-	slot0._goattritem = gohelper.findChild(slot0.viewGO, "#go_tip/#go_attreffect/#go_attritem")
-	slot0._scrolleffects = gohelper.findChildScrollRect(slot0.viewGO, "#go_tip/#scroll_effects")
-	slot0._txtdesitem = gohelper.findChildText(slot0.viewGO, "#go_tip/#scroll_effects/Viewport/Content/#txt_desitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg/#simage_icon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/#txt_name")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/#txt_desc")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#simage_bg/#btn_click")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
+	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_tip/#btn_closetip")
+	arg_1_0._txtheronamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#txt_heronamecn")
+	arg_1_0._txtheronameen = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#txt_heronamecn/#txt_heronameen")
+	arg_1_0._txteffect = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#scroll_effects/Viewport/Content/#txt_effect")
+	arg_1_0._goattreffect = gohelper.findChild(arg_1_0.viewGO, "#go_tip/#go_attreffect")
+	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_tip/#go_attreffect/#go_attritem")
+	arg_1_0._scrolleffects = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_tip/#scroll_effects")
+	arg_1_0._txtdesitem = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#scroll_effects/Viewport/Content/#txt_desitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 
-	if slot0._btnclosetip then
-		slot0._btnclosetip:AddClickListener(slot0._btnclosetipOnClick, slot0)
+	if arg_2_0._btnclosetip then
+		arg_2_0._btnclosetip:AddClickListener(arg_2_0._btnclosetipOnClick, arg_2_0)
 	end
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 
-	if slot0._btnclosetip then
-		slot0._btnclosetip:RemoveClickListener()
+	if arg_3_0._btnclosetip then
+		arg_3_0._btnclosetip:RemoveClickListener()
 	end
 end
 
-function slot0._btnclosetipOnClick(slot0)
-	gohelper.setActive(slot0._gotip, false)
+function var_0_0._btnclosetipOnClick(arg_4_0)
+	gohelper.setActive(arg_4_0._gotip, false)
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._isSelectTarotView then
-		slot0._callback(slot0._callbackObj, slot0)
+function var_0_0._btnclickOnClick(arg_5_0)
+	if arg_5_0._isSelectTarotView then
+		arg_5_0._callback(arg_5_0._callbackObj, arg_5_0)
 		AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_fight_choosecard)
-	elseif slot0._config.type == WeekWalkEnum.BuffType.Pray then
-		slot0:_showPrayInfo()
+	elseif arg_5_0._config.type == WeekWalkEnum.BuffType.Pray then
+		arg_5_0:_showPrayInfo()
 	end
 end
 
-function slot0._showPrayInfo(slot0)
-	if not WeekWalkModel.instance:getInfo():getPrayInfo() then
+function var_0_0._showPrayInfo(arg_6_0)
+	local var_6_0 = WeekWalkModel.instance:getInfo():getPrayInfo()
+
+	if not var_6_0 then
 		return
 	end
 
-	gohelper.setActive(slot0._gotip, true)
+	gohelper.setActive(arg_6_0._gotip, true)
 
-	slot2 = HeroConfig.instance:getHeroCO(slot1.blessingHeroId)
-	slot0._txtheronamecn.text = slot2.name
-	slot0._txtheronameen.text = slot2.nameEng
+	local var_6_1 = HeroConfig.instance:getHeroCO(var_6_0.blessingHeroId)
 
-	slot0:_initParams()
-	slot0:_showEffect(slot1.sacrificeHeroId)
+	arg_6_0._txtheronamecn.text = var_6_1.name
+	arg_6_0._txtheronameen.text = var_6_1.nameEng
+
+	arg_6_0:_initParams()
+	arg_6_0:_showEffect(var_6_0.sacrificeHeroId)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._callback = nil
-	slot0._callbackObj = nil
-	slot0._callbackParam = nil
-	slot0._uimeshGo = gohelper.findChild(slot0.viewGO, "#simage_bg/mesh")
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._canvasgroup = slot0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._callback = nil
+	arg_7_0._callbackObj = nil
+	arg_7_0._callbackParam = nil
+	arg_7_0._uimeshGo = gohelper.findChild(arg_7_0.viewGO, "#simage_bg/mesh")
+	arg_7_0._anim = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0._canvasgroup = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.removeUIClickAudio(slot0._btnclick.gameObject)
+	gohelper.removeUIClickAudio(arg_7_0._btnclick.gameObject)
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnClickTarot, slot0._playAnimWhenClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._playAnimWhenEnter, slot0)
+function var_0_0._editableAddEvents(arg_8_0)
+	arg_8_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnClickTarot, arg_8_0._playAnimWhenClick, arg_8_0)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_8_0._playAnimWhenEnter, arg_8_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnClickTarot, slot0._playAnimWhenClick, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._playAnimWhenEnter, slot0)
+function var_0_0._editableRemoveEvents(arg_9_0)
+	arg_9_0:removeEventCb(WeekWalkController.instance, WeekWalkEvent.OnClickTarot, arg_9_0._playAnimWhenClick, arg_9_0)
+	arg_9_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_9_0._playAnimWhenEnter, arg_9_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0.info = slot1
-	slot0._isSelectTarotView = slot2
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0.info = arg_10_1
+	arg_10_0._isSelectTarotView = arg_10_2
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = lua_weekwalk_buff.configDict[slot0.info.tarotId]
-	slot0._config = slot1
-	slot0._txtname.text = slot1.name
-	slot0._txtdesc.text = HeroSkillModel.instance:skillDesToSpot(slot1.desc, "#924840", "#30466A")
-	slot0._tarotItemBgUrl = slot0._tarotItemBgUrl or ResUrl.getWeekWalkTarotIcon("k" .. slot1.rare)
+function var_0_0._refreshUI(arg_11_0)
+	local var_11_0 = lua_weekwalk_buff.configDict[arg_11_0.info.tarotId]
 
-	if slot0._isSelectTarotView and slot0._isSelectTarotView == true then
-		slot0:_loadTarotItemBg()
+	arg_11_0._config = var_11_0
+	arg_11_0._txtname.text = var_11_0.name
+	arg_11_0._txtdesc.text = HeroSkillModel.instance:skillDesToSpot(var_11_0.desc, "#924840", "#30466A")
+	arg_11_0._tarotItemBgUrl = arg_11_0._tarotItemBgUrl or ResUrl.getWeekWalkTarotIcon("k" .. var_11_0.rare)
+
+	if arg_11_0._isSelectTarotView and arg_11_0._isSelectTarotView == true then
+		arg_11_0:_loadTarotItemBg()
 	else
-		slot0._simagebg:LoadImage(slot0._tarotItemBgUrl)
+		arg_11_0._simagebg:LoadImage(arg_11_0._tarotItemBgUrl)
 	end
 
-	slot0._simageicon:LoadImage(ResUrl.getWeekWalkTarotIcon(tostring(slot1.icon)))
+	arg_11_0._simageicon:LoadImage(ResUrl.getWeekWalkTarotIcon(tostring(var_11_0.icon)))
 
-	slot0._canvasgroup.interactable = true
+	arg_11_0._canvasgroup.interactable = true
 end
 
-function slot0._loadTarotItemBg(slot0)
-	if not slot0._textureLoader then
-		slot0._textureLoader = MultiAbLoader.New()
+function var_0_0._loadTarotItemBg(arg_12_0)
+	if not arg_12_0._textureLoader then
+		arg_12_0._textureLoader = MultiAbLoader.New()
 
-		slot0._textureLoader:addPath(slot0._tarotItemBgUrl)
-		slot0._textureLoader:startLoad(slot0._loadTarotItemBgCB, slot0)
-	end
-end
-
-function slot0._loadTarotItemBgCB(slot0)
-	slot0._uimeshGo:GetComponent(typeof(UIMesh)).texture = slot0._textureLoader:getAssetItem(slot0._tarotItemBgUrl):GetResource(slot0._tarotItemBgUrl)
-	slot0._uimeshGo.gameObject:GetComponent(typeof(UnityEngine.Animation)).enabled = true
-end
-
-function slot0.setClickCallback(slot0, slot1, slot2)
-	slot0._callback = slot1
-	slot0._callbackObj = slot2
-end
-
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageicon:UnLoadImage()
-
-	if slot0._textureLoader then
-		slot0._textureLoader:dispose()
-
-		slot0._textureLoader = nil
+		arg_12_0._textureLoader:addPath(arg_12_0._tarotItemBgUrl)
+		arg_12_0._textureLoader:startLoad(arg_12_0._loadTarotItemBgCB, arg_12_0)
 	end
 end
 
-function slot0._initParams(slot0)
-	if slot0.info.tarotId == slot0._buffId then
+function var_0_0._loadTarotItemBgCB(arg_13_0)
+	local var_13_0 = arg_13_0._textureLoader:getAssetItem(arg_13_0._tarotItemBgUrl):GetResource(arg_13_0._tarotItemBgUrl)
+
+	arg_13_0._uimeshGo:GetComponent(typeof(UIMesh)).texture = var_13_0
+	arg_13_0._uimeshGo.gameObject:GetComponent(typeof(UnityEngine.Animation)).enabled = true
+end
+
+function var_0_0.setClickCallback(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0._callback = arg_14_1
+	arg_14_0._callbackObj = arg_14_2
+end
+
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._simagebg:UnLoadImage()
+	arg_15_0._simageicon:UnLoadImage()
+
+	if arg_15_0._textureLoader then
+		arg_15_0._textureLoader:dispose()
+
+		arg_15_0._textureLoader = nil
+	end
+end
+
+function var_0_0._initParams(arg_16_0)
+	local var_16_0 = arg_16_0.info.tarotId
+
+	if var_16_0 == arg_16_0._buffId then
 		return
 	end
 
-	slot0._buffId = slot1
-	slot0._buffConfig = lua_weekwalk_buff.configDict[slot0._buffId]
-	slot0._prayId = tonumber(slot0._buffConfig.param)
-	slot0._prayConfig = lua_weekwalk_pray.configDict[slot0._prayId]
-	slot0._sacrificeLimitLevel = 0
-	slot0._sacrificeLimitCareer = 0
-	slot0._sacrificeLimitHeroId = 0
+	arg_16_0._buffId = var_16_0
+	arg_16_0._buffConfig = lua_weekwalk_buff.configDict[arg_16_0._buffId]
+	arg_16_0._prayId = tonumber(arg_16_0._buffConfig.param)
+	arg_16_0._prayConfig = lua_weekwalk_pray.configDict[arg_16_0._prayId]
+	arg_16_0._sacrificeLimitLevel = 0
+	arg_16_0._sacrificeLimitCareer = 0
+	arg_16_0._sacrificeLimitHeroId = 0
 
-	if GameUtil.splitString2(slot0._prayConfig.sacrificeLimit, true, "|", "#") then
-		for slot6, slot7 in ipairs(slot2) do
-			if slot7[1] == 1 then
-				slot0._sacrificeLimitCareer = slot7[2]
-			elseif slot8 == 2 then
-				slot0._sacrificeLimitLevel = slot9
-			elseif slot8 == 3 then
-				slot0._sacrificeLimitHeroId = slot9
+	local var_16_1 = GameUtil.splitString2(arg_16_0._prayConfig.sacrificeLimit, true, "|", "#")
+
+	if var_16_1 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+			local var_16_2 = iter_16_1[1]
+			local var_16_3 = iter_16_1[2]
+
+			if var_16_2 == 1 then
+				arg_16_0._sacrificeLimitCareer = var_16_3
+			elseif var_16_2 == 2 then
+				arg_16_0._sacrificeLimitLevel = var_16_3
+			elseif var_16_2 == 3 then
+				arg_16_0._sacrificeLimitHeroId = var_16_3
 			end
 		end
 	end
 
-	slot0._blessingLimit = slot0._prayConfig.blessingLimit == "1"
-	slot0._effectMap = {}
-	slot7 = "#"
+	arg_16_0._blessingLimit = arg_16_0._prayConfig.blessingLimit == "1"
+	arg_16_0._effectMap = {}
 
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot0._prayConfig.effect, true, "|", slot7)) do
-		slot11 = slot8[3]
+	local var_16_4 = GameUtil.splitString2(arg_16_0._prayConfig.effect, true, "|", "#")
 
-		if slot8[1] == WeekWalkEnum.SacrificeEffectType.BaseAttr then
-			slot0._effectMap[slot9] = slot8[2] / 1000
-		elseif slot9 == WeekWalkEnum.SacrificeEffectType.ExAttr then
-			slot0._effectMap[slot9] = {
-				slot10,
-				slot11 / 1000
+	for iter_16_2, iter_16_3 in ipairs(var_16_4) do
+		local var_16_5 = iter_16_3[1]
+		local var_16_6 = iter_16_3[2]
+		local var_16_7 = iter_16_3[3]
+
+		if var_16_5 == WeekWalkEnum.SacrificeEffectType.BaseAttr then
+			arg_16_0._effectMap[var_16_5] = var_16_6 / 1000
+		elseif var_16_5 == WeekWalkEnum.SacrificeEffectType.ExAttr then
+			arg_16_0._effectMap[var_16_5] = {
+				var_16_6,
+				var_16_7 / 1000
 			}
-		elseif slot9 == WeekWalkEnum.SacrificeEffectType.PassiveSkill then
-			slot0._effectMap[slot9] = slot10
+		elseif var_16_5 == WeekWalkEnum.SacrificeEffectType.PassiveSkill then
+			arg_16_0._effectMap[var_16_5] = var_16_6
 		end
 	end
 end
 
-function slot0._showEffect(slot0, slot1)
-	if slot1 == slot0._sacrificeHeroId then
+function var_0_0._showEffect(arg_17_0, arg_17_1)
+	if arg_17_1 == arg_17_0._sacrificeHeroId then
 		return
 	end
 
-	slot0._sacrificeHeroId = slot1
-	slot2 = HeroModel.instance:getByHeroId(slot1)
+	arg_17_0._sacrificeHeroId = arg_17_1
 
-	for slot6, slot7 in pairs(slot0._effectMap) do
-		if slot2 and slot6 == WeekWalkEnum.SacrificeEffectType.BaseAttr then
-			slot9 = slot2.baseAttr
+	local var_17_0 = HeroModel.instance:getByHeroId(arg_17_1)
 
-			for slot14, slot15 in ipairs({
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._effectMap) do
+		if var_17_0 and iter_17_0 == WeekWalkEnum.SacrificeEffectType.BaseAttr then
+			local var_17_1 = iter_17_1
+			local var_17_2 = var_17_0.baseAttr
+			local var_17_3 = {
 				102,
 				101,
 				103,
 				104,
 				105
-			}) do
-				if math.floor(slot2:getAttrValueWithoutTalentByID(slot15) * slot7) > 0 then
-					slot18 = slot0:_getAttributeItem(slot14)
+			}
 
-					gohelper.setActive(slot18.go, true)
-					slot0:_showAttribute(slot18, HeroConfig.instance:getHeroAttributeCO(slot15).name, "icon_att_" .. tostring(slot15), slot16)
+			for iter_17_2, iter_17_3 in ipairs(var_17_3) do
+				local var_17_4 = var_17_0:getAttrValueWithoutTalentByID(iter_17_3) * var_17_1
+				local var_17_5 = math.floor(var_17_4)
+
+				if var_17_5 > 0 then
+					local var_17_6 = HeroConfig.instance:getHeroAttributeCO(iter_17_3)
+					local var_17_7 = arg_17_0:_getAttributeItem(iter_17_2)
+
+					gohelper.setActive(var_17_7.go, true)
+
+					local var_17_8 = "icon_att_" .. tostring(iter_17_3)
+
+					arg_17_0:_showAttribute(var_17_7, var_17_6.name, var_17_8, var_17_5)
 				end
 			end
-		elseif slot2 and slot6 == WeekWalkEnum.SacrificeEffectType.ExAttr then
-			slot14 = slot0:_getAttributeItem(1)
+		elseif var_17_0 and iter_17_0 == WeekWalkEnum.SacrificeEffectType.ExAttr then
+			local var_17_9 = iter_17_1[1]
+			local var_17_10 = iter_17_1[2]
+			local var_17_11 = HeroConfig.instance:getHeroAttributeCO(var_17_9)
+			local var_17_12 = var_17_0:getTalentGain()
+			local var_17_13 = HeroConfig.instance:talentGainTab2IDTab(var_17_12)[var_17_11.id]
+			local var_17_14 = var_17_13 and var_17_13.value * var_17_10 / 10 or 0
+			local var_17_15 = arg_17_0:_getAttributeItem(1)
 
-			gohelper.setActive(slot14.go, true)
-			slot0:_showAttribute(slot14, slot10.name, "icon_att_" .. tostring(slot10.id), HeroConfig.instance:talentGainTab2IDTab(slot2:getTalentGain())[HeroConfig.instance:getHeroAttributeCO(slot7[1]).id] and slot12.value * slot7[2] / 10 or 0, true)
-		elseif slot6 == WeekWalkEnum.SacrificeEffectType.PassiveSkill then
-			slot9 = lua_skill.configDict[tonumber(slot7)].desc
-			slot0._txteffect.text = HeroSkillModel.instance:skillDesToSpot(slot9, "#B64F44", "#3C5784")
+			gohelper.setActive(var_17_15.go, true)
 
-			if slot0:_getEffectDesc(slot9) and #slot10 > 0 then
-				for slot14, slot15 in ipairs(slot10) do
-					slot16 = gohelper.cloneInPlace(slot0._txtdesitem.gameObject, "des_" .. slot14)
+			local var_17_16 = "icon_att_" .. tostring(var_17_11.id)
 
-					gohelper.setActive(slot16, true)
+			arg_17_0:_showAttribute(var_17_15, var_17_11.name, var_17_16, var_17_14, true)
+		elseif iter_17_0 == WeekWalkEnum.SacrificeEffectType.PassiveSkill then
+			local var_17_17 = tonumber(iter_17_1)
+			local var_17_18 = lua_skill.configDict[var_17_17].desc
 
-					slot16:GetComponent(gohelper.Type_TextMesh).text = slot15
+			arg_17_0._txteffect.text = HeroSkillModel.instance:skillDesToSpot(var_17_18, "#B64F44", "#3C5784")
+
+			local var_17_19 = arg_17_0:_getEffectDesc(var_17_18)
+
+			if var_17_19 and #var_17_19 > 0 then
+				for iter_17_4, iter_17_5 in ipairs(var_17_19) do
+					local var_17_20 = gohelper.cloneInPlace(arg_17_0._txtdesitem.gameObject, "des_" .. iter_17_4)
+
+					gohelper.setActive(var_17_20, true)
+
+					var_17_20:GetComponent(gohelper.Type_TextMesh).text = iter_17_5
 				end
 			end
 		end
 
-		gohelper.setActive(slot0._scrolleffects.gameObject, slot2 and slot6 == WeekWalkEnum.SacrificeEffectType.PassiveSkill)
-		gohelper.setActive(slot0._goattreffect, slot2 and slot6 ~= WeekWalkEnum.SacrificeEffectType.PassiveSkill)
+		gohelper.setActive(arg_17_0._scrolleffects.gameObject, var_17_0 and iter_17_0 == WeekWalkEnum.SacrificeEffectType.PassiveSkill)
+		gohelper.setActive(arg_17_0._goattreffect, var_17_0 and iter_17_0 ~= WeekWalkEnum.SacrificeEffectType.PassiveSkill)
 	end
 end
 
-function slot0._getAttributeItem(slot0, slot1)
-	slot0._attributeItems = slot0._attributeItems or {}
+function var_0_0._getAttributeItem(arg_18_0, arg_18_1)
+	arg_18_0._attributeItems = arg_18_0._attributeItems or {}
 
-	if not slot0._attributeItems[slot1] then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.cloneInPlace(slot0._goattritem, "attribute" .. slot1)
-		slot3.iconImg = gohelper.findChildImage(slot3.go, "icon")
-		slot3.nameTxt = gohelper.findChildText(slot3.go, "name")
-		slot3.valueTxt = gohelper.findChildText(slot3.go, "value")
+	local var_18_0 = arg_18_0._attributeItems[arg_18_1]
 
-		table.insert(slot0._attributeItems, slot3)
+	if not var_18_0 then
+		local var_18_1 = arg_18_0:getUserDataTb_()
 
-		slot2 = slot3
+		var_18_1.go = gohelper.cloneInPlace(arg_18_0._goattritem, "attribute" .. arg_18_1)
+		var_18_1.iconImg = gohelper.findChildImage(var_18_1.go, "icon")
+		var_18_1.nameTxt = gohelper.findChildText(var_18_1.go, "name")
+		var_18_1.valueTxt = gohelper.findChildText(var_18_1.go, "value")
+
+		table.insert(arg_18_0._attributeItems, var_18_1)
+
+		var_18_0 = var_18_1
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0._showAttribute(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot1 then
+function var_0_0._showAttribute(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5)
+	if not arg_19_1 then
 		return
 	end
 
-	slot1.nameTxt.text = slot2
+	arg_19_1.nameTxt.text = arg_19_2
 
-	UISpriteSetMgr.instance:setCommonSprite(slot1.iconImg, slot3)
+	UISpriteSetMgr.instance:setCommonSprite(arg_19_1.iconImg, arg_19_3)
 
-	slot1.valueTxt.text = slot4
+	arg_19_1.valueTxt.text = arg_19_4
 
-	if slot5 then
-		slot1.valueTxt.text = string.format("%s%%", math.floor(slot4))
+	if arg_19_5 then
+		arg_19_1.valueTxt.text = string.format("%s%%", math.floor(arg_19_4))
 	end
 end
 
-function slot0._playAnimWhenClick(slot0, slot1)
-	if slot0.viewGO == slot1 then
-		slot0._anim:Play(UIAnimationName.Selected, 0, 0)
+function var_0_0._playAnimWhenClick(arg_20_0, arg_20_1)
+	if arg_20_0.viewGO == arg_20_1 then
+		arg_20_0._anim:Play(UIAnimationName.Selected, 0, 0)
 	else
-		slot0._anim:Play("out", 0, 0)
+		arg_20_0._anim:Play("out", 0, 0)
 	end
 
-	slot0._canvasgroup.interactable = false
+	arg_20_0._canvasgroup.interactable = false
 end
 
-function slot0._playAnimWhenEnter(slot0, slot1)
-	if slot1 == ViewName.WeekWalkBuffBindingView then
-		slot0._anim:Play("in", 0, 0)
+function var_0_0._playAnimWhenEnter(arg_21_0, arg_21_1)
+	if arg_21_1 == ViewName.WeekWalkBuffBindingView then
+		arg_21_0._anim:Play("in", 0, 0)
 
-		slot0._canvasgroup.interactable = true
+		arg_21_0._canvasgroup.interactable = true
 	end
 end
 
-function slot0._getEffectDesc(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0._getEffectDesc(arg_22_0, arg_22_1)
+	if string.nilorempty(arg_22_1) then
 		return nil
 	end
 
-	slot3 = {}
+	local var_22_0 = HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(arg_22_1)
+	local var_22_1 = {}
 
-	for slot7, slot8 in ipairs(HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(slot1)) do
-		table.insert(slot3, HeroSkillModel.instance:skillDesToSpot(string.format("[%s]:%s", SkillConfig.instance:processSkillDesKeyWords(SkillConfig.instance:getSkillEffectDescCo(slot8).name), SkillConfig.instance:processSkillDesKeyWords(SkillConfig.instance:getSkillEffectDescCo(slot8).desc)), "#B64F44", "#3C5784"))
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		local var_22_2 = SkillConfig.instance:processSkillDesKeyWords(SkillConfig.instance:getSkillEffectDescCo(iter_22_1).desc)
+		local var_22_3 = SkillConfig.instance:processSkillDesKeyWords(SkillConfig.instance:getSkillEffectDescCo(iter_22_1).name)
+		local var_22_4 = string.format("[%s]:%s", var_22_3, var_22_2)
+		local var_22_5 = HeroSkillModel.instance:skillDesToSpot(var_22_4, "#B64F44", "#3C5784")
+
+		table.insert(var_22_1, var_22_5)
 	end
 
-	return slot3
+	return var_22_1
 end
 
-return slot0
+return var_0_0

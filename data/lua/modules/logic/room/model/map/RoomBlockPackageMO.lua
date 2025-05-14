@@ -1,217 +1,239 @@
-module("modules.logic.room.model.map.RoomBlockPackageMO", package.seeall)
+﻿module("modules.logic.room.model.map.RoomBlockPackageMO", package.seeall)
 
-slot0 = pureTable("RoomBlockPackageMO")
+local var_0_0 = pureTable("RoomBlockPackageMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1.id
-	slot0._blockModel = slot0:_clearOrCreateModel(slot0._blockModel)
-	slot0._useBlockModel = slot0:_clearOrCreateModel(slot0._useBlockModel)
-	slot0._unUseBlockModel = slot0:_clearOrCreateModel(slot0._unUseBlockModel)
-	slot0._useCount = 0
-	slot4 = {}
-	slot0._resIdDic = {}
-	slot0._resIdList = {}
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0._blockModel = arg_1_0:_clearOrCreateModel(arg_1_0._blockModel)
+	arg_1_0._useBlockModel = arg_1_0:_clearOrCreateModel(arg_1_0._useBlockModel)
+	arg_1_0._unUseBlockModel = arg_1_0:_clearOrCreateModel(arg_1_0._unUseBlockModel)
+	arg_1_0._useCount = 0
 
-	for slot8, slot9 in ipairs(RoomConfig.instance:getBlockListByPackageId(slot0.id) or {}) do
-		if slot9.ownType ~= RoomBlockEnum.OwnType.Special or tabletool.indexOf(slot2 or {}, slot9.blockId) then
-			table.insert(slot4, slot0:_createBlockMOByCfg(slot9))
+	local var_1_0 = RoomConfig.instance:getBlockListByPackageId(arg_1_0.id) or {}
+	local var_1_1 = {}
+
+	arg_1_0._resIdDic = {}
+	arg_1_0._resIdList = {}
+	arg_1_2 = arg_1_2 or {}
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		if iter_1_1.ownType ~= RoomBlockEnum.OwnType.Special or tabletool.indexOf(arg_1_2, iter_1_1.blockId) then
+			local var_1_2 = arg_1_0:_createBlockMOByCfg(iter_1_1)
+
+			table.insert(var_1_1, var_1_2)
 		end
 
-		if not slot0._resIdDic[slot9.mainRes] then
-			slot0._resIdDic[slot9.mainRes] = true
+		if not arg_1_0._resIdDic[iter_1_1.mainRes] then
+			arg_1_0._resIdDic[iter_1_1.mainRes] = true
 
-			table.insert(slot0._resIdList, slot9.mainRes)
+			table.insert(arg_1_0._resIdList, iter_1_1.mainRes)
 		end
 	end
 
-	slot0._blockModel:setList(slot4)
-	slot0._unUseBlockModel:setList(slot4)
+	arg_1_0._blockModel:setList(var_1_1)
+	arg_1_0._unUseBlockModel:setList(var_1_1)
 
-	if #slot0._resIdList > 1 then
-		table.sort(slot0._resIdList, function (slot0, slot1)
-			if slot0 ~= slot1 then
-				return slot0 < slot1
+	if #arg_1_0._resIdList > 1 then
+		table.sort(arg_1_0._resIdList, function(arg_2_0, arg_2_1)
+			if arg_2_0 ~= arg_2_1 then
+				return arg_2_0 < arg_2_1
 			end
 		end)
 	end
 end
 
-function slot0._clearModel(slot0, slot1)
-	if slot1 then
-		slot1:clear()
+function var_0_0._clearModel(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		arg_3_1:clear()
 	end
 end
 
-function slot0._clearOrCreateModel(slot0, slot1)
-	if slot1 then
-		slot1:clear()
+function var_0_0._clearOrCreateModel(arg_4_0, arg_4_1)
+	if arg_4_1 then
+		arg_4_1:clear()
 	else
-		slot1 = BaseModel.New()
+		arg_4_1 = BaseModel.New()
 	end
 
-	return slot1
+	return arg_4_1
 end
 
-function slot0._sumCount(slot0, slot1)
-	return slot1:getCount()
+function var_0_0._sumCount(arg_5_0, arg_5_1)
+	return arg_5_1:getCount()
 end
 
-function slot0._sumCountByResId(slot0, slot1, slot2)
-	for slot8, slot9 in ipairs(slot1:getList()) do
-		if slot9:getMainRes() == slot2 then
-			slot4 = 0 + 1
+function var_0_0._sumCountByResId(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_1:getList()
+	local var_6_1 = 0
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1:getMainRes() == arg_6_2 then
+			var_6_1 = var_6_1 + 1
 		end
 	end
 
-	return slot4
+	return var_6_1
 end
 
-function slot0._getBlockMOByResId(slot0, slot1, slot2)
-	for slot7 = 1, #slot1:getList() do
-		if slot3[slot7]:getMainRes() == slot2 then
-			return slot8
+function var_0_0._getBlockMOByResId(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_1:getList()
+
+	for iter_7_0 = 1, #var_7_0 do
+		local var_7_1 = var_7_0[iter_7_0]
+
+		if var_7_1:getMainRes() == arg_7_2 then
+			return var_7_1
 		end
 	end
 end
 
-function slot0._createBlockMOByCfg(slot0, slot1)
-	slot2 = RoomBlockMO.New()
-	slot2.blockState = RoomBlockEnum.BlockState.Inventory
+function var_0_0._createBlockMOByCfg(arg_8_0, arg_8_1)
+	local var_8_0 = RoomBlockMO.New()
 
-	slot2:init(slot1)
+	var_8_0.blockState = RoomBlockEnum.BlockState.Inventory
 
-	if slot2.defineId == RoomBlockEnum.EmptyDefineId then
-		slot2.rotate = math.random(0, 6)
+	var_8_0:init(arg_8_1)
+
+	if var_8_0.defineId == RoomBlockEnum.EmptyDefineId then
+		var_8_0.rotate = math.random(0, 6)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getUnUseBlockMOByResId(slot0, slot1)
-	return slot0:_getBlockMOByResId(slot0._unUseBlockModel, slot1)
+function var_0_0.getUnUseBlockMOByResId(arg_9_0, arg_9_1)
+	return arg_9_0:_getBlockMOByResId(arg_9_0._unUseBlockModel, arg_9_1)
 end
 
-function slot0.getResIdList(slot0)
-	return slot0._resIdList
+function var_0_0.getResIdList(arg_10_0)
+	return arg_10_0._resIdList
 end
 
-function slot0.getBlockMOById(slot0, slot1)
-	return slot0._blockModel:getById(slot1)
+function var_0_0.getBlockMOById(arg_11_0, arg_11_1)
+	return arg_11_0._blockModel:getById(arg_11_1)
 end
 
-function slot0.getUnUseBlockMOById(slot0, slot1)
-	return slot0._unUseBlockModel:getById(slot1)
+function var_0_0.getUnUseBlockMOById(arg_12_0, arg_12_1)
+	return arg_12_0._unUseBlockModel:getById(arg_12_1)
 end
 
-function slot0.getCount(slot0)
-	return slot0:_sumCount(slot0._blockModel)
+function var_0_0.getCount(arg_13_0)
+	return arg_13_0:_sumCount(arg_13_0._blockModel)
 end
 
-function slot0.getUseCount(slot0)
-	return slot0:_sumCount(slot0._uselockModel)
+function var_0_0.getUseCount(arg_14_0)
+	return arg_14_0:_sumCount(arg_14_0._uselockModel)
 end
 
-function slot0.getUnUseCount(slot0)
-	return slot0:_sumCount(slot0._unUseBlockModel)
+function var_0_0.getUnUseCount(arg_15_0)
+	return arg_15_0:_sumCount(arg_15_0._unUseBlockModel)
 end
 
-function slot0.getCountByResId(slot0, slot1)
-	return slot0:_sumCountByResId(slot0._blockModel, slot1)
+function var_0_0.getCountByResId(arg_16_0, arg_16_1)
+	return arg_16_0:_sumCountByResId(arg_16_0._blockModel, arg_16_1)
 end
 
-function slot0.getUseCountByResId(slot0, slot1)
-	return slot0:_sumCountByResId(slot0._uselockModel, slot1)
+function var_0_0.getUseCountByResId(arg_17_0, arg_17_1)
+	return arg_17_0:_sumCountByResId(arg_17_0._uselockModel, arg_17_1)
 end
 
-function slot0.getUnUseCountByResId(slot0, slot1)
-	return slot0:_sumCountByResId(slot0._unUseBlockModel, slot1)
+function var_0_0.getUnUseCountByResId(arg_18_0, arg_18_1)
+	return arg_18_0:_sumCountByResId(arg_18_0._unUseBlockModel, arg_18_1)
 end
 
-function slot0.getUseBlockMOById(slot0, slot1)
-	return slot0._useBlockModel:getById(slot1)
+function var_0_0.getUseBlockMOById(arg_19_0, arg_19_1)
+	return arg_19_0._useBlockModel:getById(arg_19_1)
 end
 
-function slot0.getBlockMOList(slot0)
-	return slot0._blockModel:getList()
+function var_0_0.getBlockMOList(arg_20_0)
+	return arg_20_0._blockModel:getList()
 end
 
-function slot0.getUseBlockMOList(slot0)
-	return slot0._useBlockModel:getList()
+function var_0_0.getUseBlockMOList(arg_21_0)
+	return arg_21_0._useBlockModel:getList()
 end
 
-function slot0.getUnUseBlockMOList(slot0)
-	return slot0._unUseBlockModel:getList()
+function var_0_0.getUnUseBlockMOList(arg_22_0)
+	return arg_22_0._unUseBlockModel:getList()
 end
 
-function slot0.addBlockIdList(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		slot0:addBlockById(slot1[slot5])
+function var_0_0.addBlockIdList(arg_23_0, arg_23_1)
+	for iter_23_0 = 1, #arg_23_1 do
+		arg_23_0:addBlockById(arg_23_1[iter_23_0])
 	end
 end
 
-function slot0.addBlockById(slot0, slot1)
-	if slot0._blockModel:getById(slot1) then
+function var_0_0.addBlockById(arg_24_0, arg_24_1)
+	if arg_24_0._blockModel:getById(arg_24_1) then
 		return
 	end
 
-	if RoomConfig.instance:getBlock(slot1) and slot2.packageId == slot0.id then
-		slot3 = slot0:_createBlockMOByCfg(slot2)
+	local var_24_0 = RoomConfig.instance:getBlock(arg_24_1)
 
-		slot0._blockModel:addAtLast(slot3)
-		slot0._unUseBlockModel:addAtLast(slot3)
+	if var_24_0 and var_24_0.packageId == arg_24_0.id then
+		local var_24_1 = arg_24_0:_createBlockMOByCfg(var_24_0)
+
+		arg_24_0._blockModel:addAtLast(var_24_1)
+		arg_24_0._unUseBlockModel:addAtLast(var_24_1)
 	end
 end
 
-function slot0.useBlockId(slot0, slot1)
-	if slot0._unUseBlockModel:getById(slot1) then
-		slot2.blockState = RoomBlockEnum.BlockState.Map
+function var_0_0.useBlockId(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0._unUseBlockModel:getById(arg_25_1)
 
-		slot0._unUseBlockModel:remove(slot2)
-		slot0._useBlockModel:addAtLast(slot2)
+	if var_25_0 then
+		var_25_0.blockState = RoomBlockEnum.BlockState.Map
+
+		arg_25_0._unUseBlockModel:remove(var_25_0)
+		arg_25_0._useBlockModel:addAtLast(var_25_0)
 	end
 end
 
-function slot0.useBlockIds(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:useBlockId(slot6)
+function var_0_0.useBlockIds(arg_26_0, arg_26_1)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_1) do
+		arg_26_0:useBlockId(iter_26_1)
 	end
 end
 
-function slot0.unUseBlockId(slot0, slot1)
-	if slot0._useBlockModel:getById(slot1) then
-		slot2.blockState = RoomBlockEnum.BlockState.Inventory
+function var_0_0.unUseBlockId(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0._useBlockModel:getById(arg_27_1)
 
-		slot0._useBlockModel:remove(slot2)
-		slot0._unUseBlockModel:addAtLast(slot2)
+	if var_27_0 then
+		var_27_0.blockState = RoomBlockEnum.BlockState.Inventory
+
+		arg_27_0._useBlockModel:remove(var_27_0)
+		arg_27_0._unUseBlockModel:addAtLast(var_27_0)
 	end
 end
 
-function slot0.unUseBlockIds(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:unUseBlockId(slot6)
+function var_0_0.unUseBlockIds(arg_28_0, arg_28_1)
+	for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
+		arg_28_0:unUseBlockId(iter_28_1)
 	end
 end
 
-function slot0.reset(slot0)
-	for slot5, slot6 in ipairs(slot0._useBlockModel:getList()) do
-		slot6.blockState = RoomBlockEnum.BlockState.Inventory
+function var_0_0.reset(arg_29_0)
+	local var_29_0 = arg_29_0._useBlockModel:getList()
+
+	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+		iter_29_1.blockState = RoomBlockEnum.BlockState.Inventory
 	end
 
-	slot0:_clearModel(slot0._useBlockModel)
-	slot0:_clearModel(slot0._unUseBlockModel)
-	slot0._unUseBlockModel:setList(slot0._blockModel:getList())
+	arg_29_0:_clearModel(arg_29_0._useBlockModel)
+	arg_29_0:_clearModel(arg_29_0._unUseBlockModel)
+	arg_29_0._unUseBlockModel:setList(arg_29_0._blockModel:getList())
 end
 
-function slot0.clear(slot0)
-	slot0:_clearModel(slot0._blockModel)
-	slot0:_clearModel(slot0._useBlockModel)
-	slot0:_clearModel(slot0._unUseBlockModel)
+function var_0_0.clear(arg_30_0)
+	arg_30_0:_clearModel(arg_30_0._blockModel)
+	arg_30_0:_clearModel(arg_30_0._useBlockModel)
+	arg_30_0:_clearModel(arg_30_0._unUseBlockModel)
 end
 
-function slot0.sortBlock(slot0, slot1)
-	if slot0.packageOrder ~= slot1.packageOrder then
-		return slot1.packageOrder < slot0.packageOrder
+function var_0_0.sortBlock(arg_31_0, arg_31_1)
+	if arg_31_0.packageOrder ~= arg_31_1.packageOrder then
+		return arg_31_0.packageOrder > arg_31_1.packageOrder
 	end
 end
 
-return slot0
+return var_0_0

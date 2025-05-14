@@ -1,38 +1,38 @@
-module("modules.logic.room.view.RoomBackBlockView", package.seeall)
+﻿module("modules.logic.room.view.RoomBackBlockView", package.seeall)
 
-slot0 = class("RoomBackBlockView", BaseView)
+local var_0_0 = class("RoomBackBlockView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goviewcontent = gohelper.findChild(slot0.viewGO, "#go_viewContent")
-	slot0._gobackOne = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_backOne")
-	slot0._btnback = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_viewContent/#go_backOne/#btn_back")
-	slot0._gobackState = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_backOne/#btn_back/#go_backState")
-	slot0._gonotbackState = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_backOne/#btn_back/#go_notbackState")
-	slot0._gobackMore = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_backMore")
-	slot0._btnmoreConfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_viewContent/#go_backMore/#btn_moreConfirm")
-	slot0._btnmoreCancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_viewContent/#go_backMore/#btn_moreCancel")
-	slot0._gonoSelect = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_backMore/#go_noSelect")
-	slot0._gonumber = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_number")
-	slot0._gonumberItem = gohelper.findChild(slot0.viewGO, "#go_viewContent/#go_number/#go_numberItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goviewcontent = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent")
+	arg_1_0._gobackOne = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_backOne")
+	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_viewContent/#go_backOne/#btn_back")
+	arg_1_0._gobackState = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_backOne/#btn_back/#go_backState")
+	arg_1_0._gonotbackState = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_backOne/#btn_back/#go_notbackState")
+	arg_1_0._gobackMore = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_backMore")
+	arg_1_0._btnmoreConfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_viewContent/#go_backMore/#btn_moreConfirm")
+	arg_1_0._btnmoreCancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_viewContent/#go_backMore/#btn_moreCancel")
+	arg_1_0._gonoSelect = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_backMore/#go_noSelect")
+	arg_1_0._gonumber = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_number")
+	arg_1_0._gonumberItem = gohelper.findChild(arg_1_0.viewGO, "#go_viewContent/#go_number/#go_numberItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnback:AddClickListener(slot0._btnbackOnClick, slot0)
-	slot0._btnmoreConfirm:AddClickListener(slot0._btnmoreConfirmOnClick, slot0)
-	slot0._btnmoreCancel:AddClickListener(slot0._btnmoreCancelOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+	arg_2_0._btnmoreConfirm:AddClickListener(arg_2_0._btnmoreConfirmOnClick, arg_2_0)
+	arg_2_0._btnmoreCancel:AddClickListener(arg_2_0._btnmoreCancelOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnback:RemoveClickListener()
-	slot0._btnmoreConfirm:RemoveClickListener()
-	slot0._btnmoreCancel:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnback:RemoveClickListener()
+	arg_3_0._btnmoreConfirm:RemoveClickListener()
+	arg_3_0._btnmoreCancel:RemoveClickListener()
 end
 
-function slot0._btnmoreConfirmOnClick(slot0)
+function var_0_0._btnmoreConfirmOnClick(arg_4_0)
 	if RoomMapBlockModel.instance:getBackBlockModel():getCount() < 1 then
 		GameFacade.showToast(RoomEnum.Toast.InventoryConfirmNoBackBlock)
 
@@ -45,253 +45,294 @@ function slot0._btnmoreConfirmOnClick(slot0)
 		return
 	end
 
-	slot3, slot4 = slot0:_isHasBuilding()
+	local var_4_0, var_4_1 = arg_4_0:_isHasBuilding()
 
-	GameFacade.showMessageBox(slot4 or MessageBoxIdDefine.RoomInventoryBlockMoreBack, MsgBoxEnum.BoxType.Yes_No, function ()
-		uv0:_sendRequest()
+	var_4_1 = var_4_1 or MessageBoxIdDefine.RoomInventoryBlockMoreBack
+
+	GameFacade.showMessageBox(var_4_1, MsgBoxEnum.BoxType.Yes_No, function()
+		arg_4_0:_sendRequest()
 	end)
 end
 
-function slot0._isHasBuilding(slot0)
-	slot3 = RoomMapBuildingModel.instance
-	slot4 = ManufactureModel.instance
-	slot5 = false
-	slot6 = false
+function var_0_0._isHasBuilding(arg_6_0)
+	local var_6_0 = RoomMapBlockModel.instance:getBackBlockModel():getList()
+	local var_6_1 = RoomMapBuildingModel.instance
+	local var_6_2 = ManufactureModel.instance
+	local var_6_3 = false
+	local var_6_4 = false
 
-	for slot10 = 1, #RoomMapBlockModel.instance:getBackBlockModel():getList() do
-		if slot2[slot10].hexPoint and slot3:getBuildingParam(slot11.x, slot11.y) then
-			slot5 = true
+	for iter_6_0 = 1, #var_6_0 do
+		local var_6_5 = var_6_0[iter_6_0].hexPoint
+		local var_6_6 = var_6_5 and var_6_1:getBuildingParam(var_6_5.x, var_6_5.y)
 
-			if slot3:isHasCritterByBuid(slot12.buildingUid) then
+		if var_6_6 then
+			var_6_3 = true
+
+			if var_6_1:isHasCritterByBuid(var_6_6.buildingUid) then
 				return true, MessageBoxIdDefine.RoomBackBlockCritterBuilding
 			end
 		end
 
-		if not slot6 and RoomTransportHelper.checkInLoadHexXY(slot11.x, slot11.y) then
-			slot6 = true
+		if not var_6_4 and RoomTransportHelper.checkInLoadHexXY(var_6_5.x, var_6_5.y) then
+			var_6_4 = true
 		end
 	end
 
-	if slot6 then
+	if var_6_4 then
 		return true, MessageBoxIdDefine.RoomBackBlockHasTransportPath
 	end
 
-	if slot5 then
+	if var_6_3 then
 		return true, MessageBoxIdDefine.RoomInventoryBlockBuildingBack
 	end
 
 	return false
 end
 
-function slot0._btnmoreCancelOnClick(slot0)
-	slot0:cancelBack()
+function var_0_0._btnmoreCancelOnClick(arg_7_0)
+	arg_7_0:cancelBack()
 end
 
-function slot0.cancelBack(slot0)
+function var_0_0.cancelBack(arg_8_0)
 	RoomMapController.instance:switchBackBlock(false)
 end
 
-function slot0._btnbackOnClick(slot0)
-	if RoomMapBlockModel.instance:getBackBlockModel():getCount() < 1 then
+function var_0_0._btnbackOnClick(arg_9_0)
+	local var_9_0 = RoomMapBlockModel.instance:getBackBlockModel()
+
+	if var_9_0:getCount() < 1 then
 		return
 	end
 
 	if not RoomMapBlockModel.instance:isCanBackBlock() then
-		GameFacade.showToast(RoomBackBlockHelper.isHasInitBlock(slot1:getList()) and RoomEnum.Toast.InventoryCannotBackInitBlock or RoomEnum.Toast.InventoryBlockUnBack)
+		GameFacade.showToast(RoomBackBlockHelper.isHasInitBlock(var_9_0:getList()) and RoomEnum.Toast.InventoryCannotBackInitBlock or RoomEnum.Toast.InventoryBlockUnBack)
 
 		return
 	end
 
-	slot2, slot3 = slot0:_isHasBuilding()
+	local var_9_1, var_9_2 = arg_9_0:_isHasBuilding()
 
-	if slot2 then
-		GameFacade.showMessageBox(slot3, MsgBoxEnum.BoxType.Yes_No, function ()
-			uv0:_sendRequest()
+	if var_9_1 then
+		GameFacade.showMessageBox(var_9_2, MsgBoxEnum.BoxType.Yes_No, function()
+			arg_9_0:_sendRequest()
 		end)
 	else
-		slot0:_sendRequest()
+		arg_9_0:_sendRequest()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animator = ZProj.ProjAnimatorPlayer.Get(slot0.viewGO)
-	slot0._gonumberTrs = slot0._gonumber.transform
-	slot0._gobackOneTrs = slot0._gobackOne.transform
-	slot0._btnbackTrs = slot0._btnback.transform
-	slot0._gobackOneTrs = slot0._gobackOne.transform
-	slot0._btnmoreConfirmGO = slot0._btnmoreConfirm.gameObject
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._isOneCanBack = true
-	slot0._blockNumberItemList = {}
-	slot0._confirmCanvasGroup = slot0._gobackOne:GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._animator = ZProj.ProjAnimatorPlayer.Get(arg_11_0.viewGO)
+	arg_11_0._gonumberTrs = arg_11_0._gonumber.transform
+	arg_11_0._gobackOneTrs = arg_11_0._gobackOne.transform
+	arg_11_0._btnbackTrs = arg_11_0._btnback.transform
+	arg_11_0._gobackOneTrs = arg_11_0._gobackOne.transform
+	arg_11_0._btnmoreConfirmGO = arg_11_0._btnmoreConfirm.gameObject
+	arg_11_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_11_0._isOneCanBack = true
+	arg_11_0._blockNumberItemList = {}
+	arg_11_0._confirmCanvasGroup = arg_11_0._gobackOne:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	table.insert(slot0._blockNumberItemList, MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gonumberItem, RoomBackBlockNumberItem, slot0))
-	gohelper.setActive(slot0._gonumberItem, false)
+	table.insert(arg_11_0._blockNumberItemList, MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._gonumberItem, RoomBackBlockNumberItem, arg_11_0))
+	gohelper.setActive(arg_11_0._gonumberItem, false)
 end
 
-function slot0._sendRequest(slot0)
-	if RoomMapBlockModel.instance:getBackBlockModel():getCount() < 1 then
+function var_0_0._sendRequest(arg_12_0)
+	local var_12_0 = RoomMapBlockModel.instance:getBackBlockModel()
+
+	if var_12_0:getCount() < 1 then
 		return
 	end
 
-	slot3 = {}
+	local var_12_1 = var_12_0:getList()
+	local var_12_2 = {}
 
-	for slot7 = 1, #slot1:getList() do
-		table.insert(slot3, slot2[slot7].id)
+	for iter_12_0 = 1, #var_12_1 do
+		table.insert(var_12_2, var_12_1[iter_12_0].id)
 	end
 
-	RoomMapController.instance:unUseBlockListRequest(slot3)
+	RoomMapController.instance:unUseBlockListRequest(var_12_2)
 end
 
-function slot0._sceneEvent(slot0, slot1, slot2)
-	slot0._scene.fsm:triggerEvent(slot1, slot2 or {})
+function var_0_0._sceneEvent(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._scene.fsm:triggerEvent(arg_13_1, arg_13_2 or {})
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_14_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, slot0._onTryBackBlock, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, slot0._onBackBlockEventHandler, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmBackBlock, slot0._onBackBlockEventHandler, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, slot0._onBuildViewShowChanged, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, slot0._backBlockShowChanged, slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_15_0._cameraTransformUpdate, arg_15_0)
+	arg_15_0:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, arg_15_0._onTryBackBlock, arg_15_0)
+	arg_15_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, arg_15_0._onBackBlockEventHandler, arg_15_0)
+	arg_15_0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmBackBlock, arg_15_0._onBackBlockEventHandler, arg_15_0)
+	arg_15_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, arg_15_0._onBuildViewShowChanged, arg_15_0)
+	arg_15_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, arg_15_0._backBlockShowChanged, arg_15_0)
+	arg_15_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0._backBlockShowChanged(slot0)
+function var_0_0._backBlockShowChanged(arg_17_0)
 	if not RoomMapBlockModel.instance:isBackMore() then
-		slot0._isOneCanBack = RoomMapBlockModel.instance:isCanBackBlock()
+		arg_17_0._isOneCanBack = RoomMapBlockModel.instance:isCanBackBlock()
 	end
 
-	if RoomMapBlockModel.instance:isBackMore() or slot0._isLastPlayAnimClose then
-		slot0._isLastPlayAnimClose = false
+	local var_17_0 = RoomMapBlockModel.instance:isBackMore()
 
-		slot0._animator:Play(UIAnimationName.Open)
-		slot0:_refreshUI()
-		TaskDispatcher.cancelTask(slot0._refreshUI, slot0)
-	elseif not slot1 and not slot0._isLastPlayAnimClose then
-		slot0._isLastPlayAnimClose = true
+	if var_17_0 or arg_17_0._isLastPlayAnimClose then
+		arg_17_0._isLastPlayAnimClose = false
 
-		slot0._animator:Play(UIAnimationName.Close)
-		TaskDispatcher.runDelay(slot0._refreshUI, slot0, 0.3)
+		arg_17_0._animator:Play(UIAnimationName.Open)
+		arg_17_0:_refreshUI()
+		TaskDispatcher.cancelTask(arg_17_0._refreshUI, arg_17_0)
+	elseif not var_17_0 and not arg_17_0._isLastPlayAnimClose then
+		arg_17_0._isLastPlayAnimClose = true
+
+		arg_17_0._animator:Play(UIAnimationName.Close)
+		TaskDispatcher.runDelay(arg_17_0._refreshUI, arg_17_0, 0.3)
 	end
 end
 
-function slot0._onTryBackBlock(slot0)
+function var_0_0._onTryBackBlock(arg_18_0)
 	if not RoomMapBlockModel.instance:isBackMore() then
-		slot0._isOneCanBack = RoomMapBlockModel.instance:isCanBackBlock()
+		arg_18_0._isOneCanBack = RoomMapBlockModel.instance:isCanBackBlock()
 	end
 
-	slot0:_refreshUI()
+	arg_18_0:_refreshUI()
 end
 
-function slot0._onBuildViewShowChanged(slot0, slot1)
-	gohelper.setActive(slot0._goviewcontent, not slot1)
+function var_0_0._onBuildViewShowChanged(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._goviewcontent, not arg_19_1)
 end
 
-function slot0._onBackBlockEventHandler(slot0)
-	slot0:_refreshUI()
+function var_0_0._onBackBlockEventHandler(arg_20_0)
+	arg_20_0:_refreshUI()
 end
 
-function slot0._cameraTransformUpdate(slot0)
-	slot0:_refreshUI()
+function var_0_0._cameraTransformUpdate(arg_21_0)
+	arg_21_0:_refreshUI()
 end
 
-function slot0._getBackBlockModel(slot0)
+function var_0_0._getBackBlockModel(arg_22_0)
 	return RoomMapBlockModel.instance:getBackBlockModel()
 end
 
-function slot0._refreshUI(slot0)
-	slot2 = slot0:_getBackBlockModel():getCount()
+function var_0_0._refreshUI(arg_23_0)
+	local var_23_0 = arg_23_0:_getBackBlockModel()
+	local var_23_1 = var_23_0:getCount()
+	local var_23_2 = RoomMapBlockModel.instance:isBackMore()
 
-	gohelper.setActive(slot0._gobackMore, RoomMapBlockModel.instance:isBackMore() == true)
-	gohelper.setActive(slot0._btnmoreConfirmGO, slot2 > 0)
-	gohelper.setActive(slot0._gonoSelect, slot2 <= 0)
+	gohelper.setActive(arg_23_0._gobackMore, var_23_2 == true)
+	gohelper.setActive(arg_23_0._btnmoreConfirmGO, var_23_1 > 0)
+	gohelper.setActive(arg_23_0._gonoSelect, var_23_1 <= 0)
 
-	if slot2 < 1 then
-		gohelper.setActive(slot0._gobackOne, false)
-		gohelper.setActive(slot0._gonumber, false)
+	if var_23_1 < 1 then
+		gohelper.setActive(arg_23_0._gobackOne, false)
+		gohelper.setActive(arg_23_0._gonumber, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gobackOne, slot3 == false)
-	gohelper.setActive(slot0._gonumber, slot3 == true)
+	gohelper.setActive(arg_23_0._gobackOne, var_23_2 == false)
+	gohelper.setActive(arg_23_0._gonumber, var_23_2 == true)
 
-	if slot3 == false and slot1:getByIndex(1) and slot0._scene.mapmgr:getBlockEntity(slot4.id, SceneTag.RoomMapBlock) then
-		slot0:_setUIPos(Vector3(transformhelper.getPos(slot5.goTrs)), slot0._btnbackTrs, slot0._gobackOneTrs, nil, true)
-		gohelper.setActive(slot0._gobackState, slot0._isOneCanBack == true)
-		gohelper.setActive(slot0._gonotbackState, slot0._isOneCanBack == false)
-	end
+	if var_23_2 == false then
+		local var_23_3 = var_23_0:getByIndex(1)
+		local var_23_4 = var_23_3 and arg_23_0._scene.mapmgr:getBlockEntity(var_23_3.id, SceneTag.RoomMapBlock)
 
-	slot0:_refreshItemUI()
-	slot0:_refreshItemUIPos()
-end
+		if var_23_4 then
+			local var_23_5 = Vector3(transformhelper.getPos(var_23_4.goTrs))
 
-function slot0._refreshItemUI(slot0)
-	for slot6 = 1, #RoomMapBlockModel.instance:getBackBlockModel():getList() do
-		if not slot0._blockNumberItemList[slot6] then
-			table.insert(slot0._blockNumberItemList, MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gonumberItem, slot0._gonumber, "numberitem" .. slot6), RoomBackBlockNumberItem, slot0))
-		end
-
-		slot7:setNumber(slot6)
-		slot7:setBlockMO(slot2[slot6])
-	end
-
-	for slot6 = #slot2 + 1, #slot0._blockNumberItemList do
-		slot0._blockNumberItemList[slot6]:setBlockMO(nil)
-	end
-end
-
-function slot0._refreshItemUIPos(slot0)
-	for slot4 = 1, #slot0._blockNumberItemList do
-		if slot0._blockNumberItemList[slot4]:getBlockMO() and slot0._scene.mapmgr:getBlockEntity(slot6.id, SceneTag.RoomMapBlock) then
-			slot0:_setUIPos(Vector3(transformhelper.getPos(slot7.goTrs)), slot5:getGOTrs(), slot0._gonumberTrs)
-		end
-	end
-end
-
-function slot0._setUIPos(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = RoomBendingHelper.worldToBendingSimple(slot1)
-	slot9 = Vector2.Distance(slot0._scene.camera:getCameraFocus(), Vector2(slot1.x, slot1.z))
-
-	if slot5 then
-		slot10 = 1
-		slot10 = slot9 <= 2.5 and 1 or slot9 >= 3.5 and 0 or 3.5 - slot9
-
-		if slot0._lastAlpha == nil or math.abs(slot0._lastAlpha - slot10) >= 0.02 then
-			slot0._lastAlpha = slot10
-			slot0._confirmCanvasGroup.alpha = slot10
-			slot0._confirmCanvasGroup.blocksRaycasts = slot10 > 0.25
+			arg_23_0:_setUIPos(var_23_5, arg_23_0._btnbackTrs, arg_23_0._gobackOneTrs, nil, true)
+			gohelper.setActive(arg_23_0._gobackState, arg_23_0._isOneCanBack == true)
+			gohelper.setActive(arg_23_0._gonotbackState, arg_23_0._isOneCanBack == false)
 		end
 	end
 
-	slot10 = 1
+	arg_23_0:_refreshItemUI()
+	arg_23_0:_refreshItemUIPos()
+end
 
-	transformhelper.setLocalScale(slot2, slot10, slot10, slot10)
+function var_0_0._refreshItemUI(arg_24_0)
+	local var_24_0 = RoomMapBlockModel.instance:getBackBlockModel():getList()
 
-	slot11 = slot0._scene.camera:getCameraRotate()
-	slot12 = slot7.x
-	slot13 = slot7.z
-	slot4 = slot4 or 0.12
+	for iter_24_0 = 1, #var_24_0 do
+		local var_24_1 = arg_24_0._blockNumberItemList[iter_24_0]
 
-	if slot6 then
-		slot12 = slot7.x - (0.9 - slot10 * 0.5) * Mathf.Sin(slot11)
-		slot13 = slot7.z - (0.9 - slot10 * 0.5) * Mathf.Cos(slot11)
+		if not var_24_1 then
+			local var_24_2 = gohelper.clone(arg_24_0._gonumberItem, arg_24_0._gonumber, "numberitem" .. iter_24_0)
+
+			var_24_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_24_2, RoomBackBlockNumberItem, arg_24_0)
+
+			table.insert(arg_24_0._blockNumberItemList, var_24_1)
+		end
+
+		var_24_1:setNumber(iter_24_0)
+		var_24_1:setBlockMO(var_24_0[iter_24_0])
 	end
 
-	slot15 = recthelper.worldPosToAnchorPos(Vector3(slot12, slot7.y + slot4, slot13), slot3)
-
-	recthelper.setAnchor(slot2, slot15.x, slot15.y)
+	for iter_24_1 = #var_24_0 + 1, #arg_24_0._blockNumberItemList do
+		arg_24_0._blockNumberItemList[iter_24_1]:setBlockMO(nil)
+	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshUI, slot0)
+function var_0_0._refreshItemUIPos(arg_25_0)
+	for iter_25_0 = 1, #arg_25_0._blockNumberItemList do
+		local var_25_0 = arg_25_0._blockNumberItemList[iter_25_0]
+		local var_25_1 = var_25_0:getBlockMO()
+		local var_25_2 = var_25_1 and arg_25_0._scene.mapmgr:getBlockEntity(var_25_1.id, SceneTag.RoomMapBlock)
+
+		if var_25_2 then
+			local var_25_3 = Vector3(transformhelper.getPos(var_25_2.goTrs))
+
+			arg_25_0:_setUIPos(var_25_3, var_25_0:getGOTrs(), arg_25_0._gonumberTrs)
+		end
+	end
 end
 
-return slot0
+function var_0_0._setUIPos(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6)
+	local var_26_0 = RoomBendingHelper.worldToBendingSimple(arg_26_1)
+	local var_26_1 = arg_26_0._scene.camera:getCameraFocus()
+	local var_26_2 = Vector2.Distance(var_26_1, Vector2(arg_26_1.x, arg_26_1.z))
+
+	if arg_26_5 then
+		local var_26_3 = 1
+		local var_26_4 = var_26_2 <= 2.5 and 1 or var_26_2 >= 3.5 and 0 or 3.5 - var_26_2
+
+		if arg_26_0._lastAlpha == nil or math.abs(arg_26_0._lastAlpha - var_26_4) >= 0.02 then
+			arg_26_0._lastAlpha = var_26_4
+			arg_26_0._confirmCanvasGroup.alpha = var_26_4
+			arg_26_0._confirmCanvasGroup.blocksRaycasts = var_26_4 > 0.25
+		end
+	end
+
+	local var_26_5 = 1
+
+	transformhelper.setLocalScale(arg_26_2, var_26_5, var_26_5, var_26_5)
+
+	local var_26_6 = arg_26_0._scene.camera:getCameraRotate()
+	local var_26_7 = var_26_0.x
+	local var_26_8 = var_26_0.z
+
+	arg_26_4 = arg_26_4 or 0.12
+
+	if arg_26_6 then
+		var_26_7 = var_26_0.x - (0.9 - var_26_5 * 0.5) * Mathf.Sin(var_26_6)
+		var_26_8 = var_26_0.z - (0.9 - var_26_5 * 0.5) * Mathf.Cos(var_26_6)
+	end
+
+	local var_26_9 = Vector3(var_26_7, var_26_0.y + arg_26_4, var_26_8)
+	local var_26_10 = recthelper.worldPosToAnchorPos(var_26_9, arg_26_3)
+
+	recthelper.setAnchor(arg_26_2, var_26_10.x, var_26_10.y)
+end
+
+function var_0_0.onDestroyView(arg_27_0)
+	TaskDispatcher.cancelTask(arg_27_0._refreshUI, arg_27_0)
+end
+
+return var_0_0

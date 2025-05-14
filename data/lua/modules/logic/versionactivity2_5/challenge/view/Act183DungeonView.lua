@@ -1,391 +1,445 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonView", package.seeall)
 
-slot0 = class("Act183DungeonView", BaseView)
-slot1 = 30
-slot2 = 0.1
+local var_0_0 = class("Act183DungeonView", BaseView)
+local var_0_1 = 30
+local var_0_2 = 0.1
 
-function slot0.onInitView(slot0)
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "root/#go_topleft")
-	slot0._scrollgroups = gohelper.findChildScrollRect(slot0.viewGO, "root/left/#scroll_groups")
-	slot0._gogroupitem = gohelper.findChild(slot0.viewGO, "root/left/#scroll_groups/Viewport/Content/#go_groupitem")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/left/#btn_task")
-	slot0._gotaskreddot = gohelper.findChild(slot0.viewGO, "root/left/#btn_task/#go_taskreddot")
-	slot0._goepisodecontainer = gohelper.findChild(slot0.viewGO, "root/middle/#go_episodecontainer")
-	slot0._gonormalepisode = gohelper.findChild(slot0.viewGO, "root/middle/#go_episodecontainer/#go_normalepisode")
-	slot0._gobossepisode = gohelper.findChild(slot0.viewGO, "root/middle/#go_episodecontainer/#go_bossepisode")
-	slot0._godailyepisode = gohelper.findChild(slot0.viewGO, "root/middle/#go_episodecontainer/#go_dailyepisode")
-	slot0._goprogresslist = gohelper.findChild(slot0.viewGO, "root/top/bar/#go_progresslist")
-	slot0._goprogressitem = gohelper.findChild(slot0.viewGO, "root/top/bar/#go_progresslist/#go_progressitem")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/top/bar/#go_progresslist/#btn_reset")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "root/right/#go_normal")
-	slot0._gohard = gohelper.findChild(slot0.viewGO, "root/right/#go_hard")
-	slot0._scrolldetail = gohelper.findChildScrollRect(slot0.viewGO, "root/right/#scroll_detail")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "root/right/#go_detail/title/#txt_title")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "root/right/#go_detail/#scroll_detail/Viewport/Content/top/#txt_desc")
-	slot0._txtadditionrule = gohelper.findChildText(slot0.viewGO, "root/right/#scroll_detail/Viewport/Content/#txt_additionrule")
-	slot0._gobaserulecontainer = gohelper.findChild(slot0.viewGO, "root/right/#scroll_detail/Viewport/Content/baserules/#go_baserulecontainer")
-	slot0._gobaseruleitem = gohelper.findChild(slot0.viewGO, "root/right/#scroll_detail/Viewport/Content/baserules/#go_baserulecontainer/#go_baseruleitem")
-	slot0._goescaperulecontainer = gohelper.findChild(slot0.viewGO, "root/right/#scroll_detail/Viewport/Content/escaperules/#go_escaperulecontainer")
-	slot0._goescaperuleitem = gohelper.findChild(slot0.viewGO, "root/right/#scroll_detail/Viewport/Content/escaperules/#go_escaperulecontainer/#go_escaperuleitem")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/#go_detail/#btn_start")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/#go_detail/#btn_restart")
-	slot0._simagehardbg = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_HardBG")
-	slot0._gocompleted = gohelper.findChild(slot0.viewGO, "root/middle/#go_Completed")
-	slot0._godailycompleted = gohelper.findChild(slot0.viewGO, "root/middle/#go_DailyCompleted")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+	arg_1_0._scrollgroups = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/left/#scroll_groups")
+	arg_1_0._gogroupitem = gohelper.findChild(arg_1_0.viewGO, "root/left/#scroll_groups/Viewport/Content/#go_groupitem")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_task")
+	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "root/left/#btn_task/#go_taskreddot")
+	arg_1_0._goepisodecontainer = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_episodecontainer")
+	arg_1_0._gonormalepisode = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_episodecontainer/#go_normalepisode")
+	arg_1_0._gobossepisode = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_episodecontainer/#go_bossepisode")
+	arg_1_0._godailyepisode = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_episodecontainer/#go_dailyepisode")
+	arg_1_0._goprogresslist = gohelper.findChild(arg_1_0.viewGO, "root/top/bar/#go_progresslist")
+	arg_1_0._goprogressitem = gohelper.findChild(arg_1_0.viewGO, "root/top/bar/#go_progresslist/#go_progressitem")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/top/bar/#go_progresslist/#btn_reset")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_normal")
+	arg_1_0._gohard = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_hard")
+	arg_1_0._scrolldetail = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#scroll_detail")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/right/#go_detail/title/#txt_title")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/right/#go_detail/#scroll_detail/Viewport/Content/top/#txt_desc")
+	arg_1_0._txtadditionrule = gohelper.findChildText(arg_1_0.viewGO, "root/right/#scroll_detail/Viewport/Content/#txt_additionrule")
+	arg_1_0._gobaserulecontainer = gohelper.findChild(arg_1_0.viewGO, "root/right/#scroll_detail/Viewport/Content/baserules/#go_baserulecontainer")
+	arg_1_0._gobaseruleitem = gohelper.findChild(arg_1_0.viewGO, "root/right/#scroll_detail/Viewport/Content/baserules/#go_baserulecontainer/#go_baseruleitem")
+	arg_1_0._goescaperulecontainer = gohelper.findChild(arg_1_0.viewGO, "root/right/#scroll_detail/Viewport/Content/escaperules/#go_escaperulecontainer")
+	arg_1_0._goescaperuleitem = gohelper.findChild(arg_1_0.viewGO, "root/right/#scroll_detail/Viewport/Content/escaperules/#go_escaperulecontainer/#go_escaperuleitem")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#go_detail/#btn_start")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#go_detail/#btn_restart")
+	arg_1_0._simagehardbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_HardBG")
+	arg_1_0._gocompleted = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_Completed")
+	arg_1_0._godailycompleted = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_DailyCompleted")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntask:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntask:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
 end
 
-function slot0._btntaskOnClick(slot0)
-	Act183Controller.instance:openAct183TaskView({
-		selectGroupType = slot0._groupMo and slot0._groupMo:getGroupType(),
-		selectGroupId = slot0._groupMo and slot0._groupMo:getGroupId()
-	})
+function var_0_0._btntaskOnClick(arg_4_0)
+	local var_4_0 = arg_4_0._groupMo and arg_4_0._groupMo:getGroupType()
+	local var_4_1 = arg_4_0._groupMo and arg_4_0._groupMo:getGroupId()
+	local var_4_2 = {
+		selectGroupType = var_4_0,
+		selectGroupId = var_4_1
+	}
+
+	Act183Controller.instance:openAct183TaskView(var_4_2)
 end
 
-function slot0._btnresetOnClick(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act183ResetGroupEpisode, MsgBoxEnum.BoxType.Yes_No, slot0._resetConfirmCallBack, nil, , slot0)
+function var_0_0._btnresetOnClick(arg_5_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act183ResetGroupEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0._resetConfirmCallBack, nil, nil, arg_5_0)
 end
 
-function slot0._resetConfirmCallBack(slot0)
-	Act183Controller.instance:resetGroupEpisode(slot0._actId, slot0._selectGroupId)
+function var_0_0._resetConfirmCallBack(arg_6_0)
+	Act183Controller.instance:resetGroupEpisode(arg_6_0._actId, arg_6_0._selectGroupId)
 end
 
-function slot0._onUpdateGroupInfo(slot0)
-	slot0:refresh()
+function var_0_0._onUpdateGroupInfo(arg_7_0)
+	arg_7_0:refresh()
 end
 
-function slot0._onClickSwitchGroup(slot0, slot1)
-	if slot0._selectGroupId == slot1 then
+function var_0_0._onClickSwitchGroup(arg_8_0, arg_8_1)
+	if arg_8_0._selectGroupId == arg_8_1 then
 		return
 	end
 
-	slot0._selectGroupId = slot1
+	arg_8_0._selectGroupId = arg_8_1
 
-	slot0._animator:Play("modeswitch", 0, 0)
+	arg_8_0._animator:Play("modeswitch", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_SwitchGroup)
-	TaskDispatcher.cancelTask(slot0.refresh, slot0)
-	TaskDispatcher.runDelay(slot0.refresh, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_8_0.refresh, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0.refresh, arg_8_0, var_0_2)
 end
 
-function slot0._onSelectEpisode(slot0, slot1)
-	slot0._selectEpisodeId = slot1
+function var_0_0._onSelectEpisode(arg_9_0, arg_9_1)
+	arg_9_0._selectEpisodeId = arg_9_1
 end
 
-function slot0._editableInitView(slot0)
-	slot0._groupItemTab = slot0:getUserDataTb_()
-	slot0._episodeItemTab = slot0:getUserDataTb_()
-	slot0._progressItemTab = slot0:getUserDataTb_()
-	slot0._actId = Act183Model.instance:getActivityId()
-	slot0._actInfo = Act183Model.instance:getActInfo()
-	slot0._gogroupcontent = gohelper.findChild(slot0.viewGO, "root/left/#scroll_groups/Viewport/Content")
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._groupItemTab = arg_10_0:getUserDataTb_()
+	arg_10_0._episodeItemTab = arg_10_0:getUserDataTb_()
+	arg_10_0._progressItemTab = arg_10_0:getUserDataTb_()
+	arg_10_0._actId = Act183Model.instance:getActivityId()
+	arg_10_0._actInfo = Act183Model.instance:getActInfo()
+	arg_10_0._gogroupcontent = gohelper.findChild(arg_10_0.viewGO, "root/left/#scroll_groups/Viewport/Content")
 
-	RedDotController.instance:addRedDot(slot0._gotaskreddot, RedDotEnum.DotNode.V2a5_Act183Task)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnUpdateGroupInfo, slot0._onUpdateGroupInfo, slot0)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnClickSwitchGroup, slot0._onClickSwitchGroup, slot0)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnClickEpisode, slot0._onSelectEpisode, slot0)
+	RedDotController.instance:addRedDot(arg_10_0._gotaskreddot, RedDotEnum.DotNode.V2a5_Act183Task)
+	arg_10_0:addEventCb(Act183Controller.instance, Act183Event.OnUpdateGroupInfo, arg_10_0._onUpdateGroupInfo, arg_10_0)
+	arg_10_0:addEventCb(Act183Controller.instance, Act183Event.OnClickSwitchGroup, arg_10_0._onClickSwitchGroup, arg_10_0)
+	arg_10_0:addEventCb(Act183Controller.instance, Act183Event.OnClickEpisode, arg_10_0._onSelectEpisode, arg_10_0)
 
-	slot0._animator = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
+	arg_10_0._animator = gohelper.onceAddComponent(arg_10_0.viewGO, gohelper.Type_Animator)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_SwitchGroup)
-	slot0:init()
+	arg_11_0:init()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:destroyEpisodeItems()
-	slot0:destroyGroupItems()
+function var_0_0.onUpdateParam(arg_12_0)
+	arg_12_0:destroyEpisodeItems()
+	arg_12_0:destroyGroupItems()
 
-	slot0._groupItemTab = slot0:getUserDataTb_()
-	slot0._episodeItemTab = slot0:getUserDataTb_()
+	arg_12_0._groupItemTab = arg_12_0:getUserDataTb_()
+	arg_12_0._episodeItemTab = arg_12_0:getUserDataTb_()
 
-	slot0:init()
+	arg_12_0:init()
 end
 
-function slot0.init(slot0)
-	slot0:initViewParams()
-	slot0:initGroupItems()
-	slot0:refresh()
-	slot0:tickRefreshGroupItems()
-	slot0:addGuide()
+function var_0_0.init(arg_13_0)
+	arg_13_0:initViewParams()
+	arg_13_0:initGroupItems()
+	arg_13_0:refresh()
+	arg_13_0:tickRefreshGroupItems()
+	arg_13_0:addGuide()
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0:focusGroupCategory()
+function var_0_0.onOpenFinish(arg_14_0)
+	arg_14_0:focusGroupCategory()
 	Act183Controller.instance:dispatchEvent(Act183Event.OnInitDungeonDone)
 end
 
-function slot0.initViewParams(slot0)
-	slot0._groupTypes = slot0.viewParam and slot0.viewParam.groupTypes or {
+function var_0_0.initViewParams(arg_15_0)
+	arg_15_0._groupTypes = arg_15_0.viewParam and arg_15_0.viewParam.groupTypes or {
 		Act183Enum.GroupType.NormalMain
 	}
-	slot0._groupList = {}
+	arg_15_0._groupList = {}
 
-	for slot4, slot5 in ipairs(slot0._groupTypes) do
-		tabletool.addValues(slot0._groupList, slot0._actInfo:getGroupEpisodeMos(slot5))
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._groupTypes) do
+		local var_15_0 = arg_15_0._actInfo:getGroupEpisodeMos(iter_15_1)
+
+		tabletool.addValues(arg_15_0._groupList, var_15_0)
 	end
 
-	slot0._selectGroupId = slot0.viewParam and slot0.viewParam.selectGroupId
+	arg_15_0._selectGroupId = arg_15_0.viewParam and arg_15_0.viewParam.selectGroupId
 
-	if not slot0._selectGroupId then
-		slot0._firstGroupMo = slot0._groupList and slot0._groupList[1]
-		slot0._selectGroupId = slot0._firstGroupMo:getGroupId()
+	if not arg_15_0._selectGroupId then
+		arg_15_0._firstGroupMo = arg_15_0._groupList and arg_15_0._groupList[1]
+		arg_15_0._selectGroupId = arg_15_0._firstGroupMo:getGroupId()
 	end
 
-	slot0._groupType = slot0._actInfo:getGroupEpisodeMo(slot0._selectGroupId):getGroupType()
-	slot0._selectEpisodeId = slot0._selectEpisodeId or slot0.viewParam and slot0.viewParam.selectEpisodeId
+	arg_15_0._groupType = arg_15_0._actInfo:getGroupEpisodeMo(arg_15_0._selectGroupId):getGroupType()
+
+	local var_15_1 = arg_15_0.viewParam and arg_15_0.viewParam.selectEpisodeId
+
+	arg_15_0._selectEpisodeId = arg_15_0._selectEpisodeId or var_15_1
 end
 
-function slot0.initGroupItems(slot0)
-	if slot0._groupList then
-		for slot4, slot5 in ipairs(slot0._groupList) do
-			if slot0._groupType == Act183Enum.GroupType.Daily and slot5:getStatus() == Act183Enum.GroupStatus.Locked then
+function var_0_0.initGroupItems(arg_16_0)
+	if arg_16_0._groupList then
+		for iter_16_0, iter_16_1 in ipairs(arg_16_0._groupList) do
+			local var_16_0 = iter_16_1:getStatus()
+
+			if arg_16_0._groupType == Act183Enum.GroupType.Daily and var_16_0 == Act183Enum.GroupStatus.Locked then
 				break
 			end
 
-			slot8 = slot0:_getOrCreateGroupItem(slot4, slot5:getGroupType())
+			local var_16_1 = iter_16_1:getGroupType()
+			local var_16_2 = arg_16_0:_getOrCreateGroupItem(iter_16_0, var_16_1)
+			local var_16_3 = iter_16_1:getGroupId()
 
-			slot8:onUpdateMO(slot5, slot4)
-			slot8:onSelect(slot5:getGroupId() == slot0._selectGroupId)
+			var_16_2:onUpdateMO(iter_16_1, iter_16_0)
+			var_16_2:onSelect(var_16_3 == arg_16_0._selectGroupId)
 		end
 	end
 end
 
-function slot0._getOrCreateGroupItem(slot0, slot1, slot2)
-	if not slot0._groupItemTab[slot1] then
-		slot0._groupItemTab[slot1] = MonoHelper.addLuaComOnceToGo(gohelper.cloneInPlace(slot0._gogroupitem, "groupitem_" .. slot1), slot0:_getGroupItemClsDefine(slot2))
+function var_0_0._getOrCreateGroupItem(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0._groupItemTab[arg_17_1]
+
+	if not var_17_0 then
+		local var_17_1 = gohelper.cloneInPlace(arg_17_0._gogroupitem, "groupitem_" .. arg_17_1)
+		local var_17_2 = arg_17_0:_getGroupItemClsDefine(arg_17_2)
+
+		var_17_0 = MonoHelper.addLuaComOnceToGo(var_17_1, var_17_2)
+		arg_17_0._groupItemTab[arg_17_1] = var_17_0
 	end
 
-	return slot3
+	return var_17_0
 end
 
-function slot0.destroyGroupItems(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._groupItemTab) do
-		if not slot1 or not slot1[slot6] then
-			gohelper.destroy(slot6.go)
+function var_0_0.destroyGroupItems(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._groupItemTab) do
+		if not arg_18_1 or not arg_18_1[iter_18_1] then
+			gohelper.destroy(iter_18_1.go)
 		end
 	end
 end
 
-function slot0._getGroupItemClsDefine(slot0, slot1)
-	if not slot0._groupItemClsDefineMap then
-		slot0._groupItemClsDefineMap = {
+function var_0_0._getGroupItemClsDefine(arg_19_0, arg_19_1)
+	if not arg_19_0._groupItemClsDefineMap then
+		arg_19_0._groupItemClsDefineMap = {
 			[Act183Enum.GroupType.Daily] = Act183DungeonBaseGroupItem,
 			[Act183Enum.GroupType.NormalMain] = Act183DungeonBaseGroupItem,
 			[Act183Enum.GroupType.HardMain] = Act183DungeonHardMainGroupItem
 		}
 	end
 
-	return slot0._groupItemClsDefineMap[slot1]
+	return arg_19_0._groupItemClsDefineMap[arg_19_1]
 end
 
-function slot0.tickRefreshGroupItems(slot0)
-	if slot0._groupType ~= Act183Enum.GroupType.Daily then
-		TaskDispatcher.cancelTask(slot0.checkRefreshGroupItems, slot0)
+function var_0_0.tickRefreshGroupItems(arg_20_0)
+	if arg_20_0._groupType ~= Act183Enum.GroupType.Daily then
+		TaskDispatcher.cancelTask(arg_20_0.checkRefreshGroupItems, arg_20_0)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0.checkRefreshGroupItems, slot0)
-	TaskDispatcher.runRepeat(slot0.checkRefreshGroupItems, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_20_0.checkRefreshGroupItems, arg_20_0)
+	TaskDispatcher.runRepeat(arg_20_0.checkRefreshGroupItems, arg_20_0, var_0_1)
 end
 
-function slot0.checkRefreshGroupItems(slot0)
-	slot0:initGroupItems()
+function var_0_0.checkRefreshGroupItems(arg_21_0)
+	arg_21_0:initGroupItems()
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshInfo()
-	slot0:refreshEpisodes()
-	slot0:refreshProgress()
-	slot0:refreshCompletedUI()
+function var_0_0.refresh(arg_22_0)
+	arg_22_0:refreshInfo()
+	arg_22_0:refreshEpisodes()
+	arg_22_0:refreshProgress()
+	arg_22_0:refreshCompletedUI()
 end
 
-function slot0.refreshInfo(slot0)
-	slot0._groupMo = slot0._actInfo and slot0._actInfo:getGroupEpisodeMo(slot0._selectGroupId)
-	slot0._groupType = slot0._groupMo and slot0._groupMo:getGroupType()
+function var_0_0.refreshInfo(arg_23_0)
+	arg_23_0._groupMo = arg_23_0._actInfo and arg_23_0._actInfo:getGroupEpisodeMo(arg_23_0._selectGroupId)
+	arg_23_0._groupType = arg_23_0._groupMo and arg_23_0._groupMo:getGroupType()
 
-	gohelper.setActive(slot0._simagehardbg.gameObject, slot0._groupType == Act183Enum.GroupType.HardMain)
+	gohelper.setActive(arg_23_0._simagehardbg.gameObject, arg_23_0._groupType == Act183Enum.GroupType.HardMain)
 end
 
-function slot0.getGroupStatus(slot0, slot1)
-	slot2 = slot0._actInfo and slot0._actInfo:getGroupEpisodeMo(slot1)
+function var_0_0.getGroupStatus(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0._actInfo and arg_24_0._actInfo:getGroupEpisodeMo(arg_24_1)
 
-	return slot2 and slot2:getStatus()
+	return var_24_0 and var_24_0:getStatus()
 end
 
-function slot0.refreshEpisodes(slot0)
-	if not slot0._groupMo then
+function var_0_0.refreshEpisodes(arg_25_0)
+	if not arg_25_0._groupMo then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._groupMo:getEpisodeMos()) do
-		slot9 = slot0:_getOrCreeateEpisodeItem(slot7)
+	local var_25_0 = {}
+	local var_25_1 = arg_25_0._groupMo:getEpisodeMos()
 
-		slot9:onUpdateMo(slot7)
-		slot9:onSelect(slot7:getEpisodeId() == slot0._selectEpisodeId)
+	for iter_25_0, iter_25_1 in ipairs(var_25_1) do
+		local var_25_2 = iter_25_1:getEpisodeId()
+		local var_25_3 = arg_25_0:_getOrCreeateEpisodeItem(iter_25_1)
+
+		var_25_3:onUpdateMo(iter_25_1)
+		var_25_3:onSelect(var_25_2 == arg_25_0._selectEpisodeId)
+
+		var_25_0[var_25_3] = true
 	end
 
-	slot0:destroyEpisodeItems({
-		[slot9] = true
-	})
+	arg_25_0:destroyEpisodeItems(var_25_0)
 end
 
-function slot0.destroyEpisodeItems(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._episodeItemTab) do
-		if not slot1 or not slot1[slot6] then
-			gohelper.destroy(slot6.go)
+function var_0_0.destroyEpisodeItems(arg_26_0, arg_26_1)
+	for iter_26_0, iter_26_1 in pairs(arg_26_0._episodeItemTab) do
+		if not arg_26_1 or not arg_26_1[iter_26_1] then
+			gohelper.destroy(iter_26_1.go)
 		end
 	end
 end
 
-function slot0._getOrCreeateEpisodeItem(slot0, slot1)
-	if not (slot0._episodeItemTab and slot0._episodeItemTab[slot1:getConfig().order]) then
-		slot5 = slot1:getEpisodeType()
-		slot7 = nil
+function var_0_0._getOrCreeateEpisodeItem(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_1:getConfig().order
+	local var_27_1 = arg_27_0._episodeItemTab and arg_27_0._episodeItemTab[var_27_0]
 
-		if slot1:getGroupType() == Act183Enum.GroupType.Daily then
-			slot4 = MonoHelper.addLuaComOnceToGo(gohelper.clone(slot0._godailyepisode, slot0:_getEpisodeItemParent("root/middle/#go_episodecontainer/go_dailypoint" .. slot3), "episode_" .. slot3), Act183DailyEpisodeItem)
-		elseif slot5 == Act183Enum.EpisodeType.Boss then
-			slot4 = MonoHelper.addLuaComOnceToGo(gohelper.clone(slot0._gobossepisode, slot0:_getEpisodeItemParent("root/middle/#go_episodecontainer/go_pointboss"), "boss"), Act183MainBossEpisodeItem)
-		elseif slot5 == Act183Enum.EpisodeType.Sub then
-			slot4 = MonoHelper.addLuaComOnceToGo(gohelper.clone(slot0._gonormalepisode, slot0:_getEpisodeItemParent("root/middle/#go_episodecontainer/go_point" .. slot3), "episode_" .. slot3), Act183MainNormalEpisodeItem)
+	if not var_27_1 then
+		local var_27_2 = arg_27_1:getEpisodeType()
+		local var_27_3 = arg_27_1:getGroupType()
+		local var_27_4
+
+		if var_27_3 == Act183Enum.GroupType.Daily then
+			local var_27_5 = "root/middle/#go_episodecontainer/go_dailypoint" .. var_27_0
+			local var_27_6 = arg_27_0:_getEpisodeItemParent(var_27_5)
+			local var_27_7 = gohelper.clone(arg_27_0._godailyepisode, var_27_6, "episode_" .. var_27_0)
+
+			var_27_1 = MonoHelper.addLuaComOnceToGo(var_27_7, Act183DailyEpisodeItem)
+		elseif var_27_2 == Act183Enum.EpisodeType.Boss then
+			local var_27_8 = "root/middle/#go_episodecontainer/go_pointboss"
+			local var_27_9 = arg_27_0:_getEpisodeItemParent(var_27_8)
+			local var_27_10 = gohelper.clone(arg_27_0._gobossepisode, var_27_9, "boss")
+
+			var_27_1 = MonoHelper.addLuaComOnceToGo(var_27_10, Act183MainBossEpisodeItem)
+		elseif var_27_2 == Act183Enum.EpisodeType.Sub then
+			local var_27_11 = "root/middle/#go_episodecontainer/go_point" .. var_27_0
+			local var_27_12 = arg_27_0:_getEpisodeItemParent(var_27_11)
+			local var_27_13 = gohelper.clone(arg_27_0._gonormalepisode, var_27_12, "episode_" .. var_27_0)
+
+			var_27_1 = MonoHelper.addLuaComOnceToGo(var_27_13, Act183MainNormalEpisodeItem)
 		else
-			logError(string.format("未定义生成关卡方法 episodeType = %s", slot5))
+			logError(string.format("未定义生成关卡方法 episodeType = %s", var_27_2))
 		end
 
-		slot0._episodeItemTab[slot3] = slot4
+		arg_27_0._episodeItemTab[var_27_0] = var_27_1
 	end
 
-	return slot4
+	return var_27_1
 end
 
-function slot0.getEpisodeItemTab(slot0)
-	return slot0._episodeItemTab
+function var_0_0.getEpisodeItemTab(arg_28_0)
+	return arg_28_0._episodeItemTab
 end
 
-function slot0._getEpisodeItemParent(slot0, slot1)
-	if gohelper.isNil(gohelper.findChild(slot0.viewGO, slot1)) then
-		logError(string.format("关卡挂点不存在, 挂点路径: %s", slot1))
+function var_0_0._getEpisodeItemParent(arg_29_0, arg_29_1)
+	local var_29_0 = gohelper.findChild(arg_29_0.viewGO, arg_29_1)
+
+	if gohelper.isNil(var_29_0) then
+		logError(string.format("关卡挂点不存在, 挂点路径: %s", arg_29_1))
 	end
 
-	return slot2
+	return var_29_0
 end
 
-function slot0.refreshProgress(slot0)
-	slot0._episodeCount = slot0._groupMo:getEpisodeMos() and #slot1 or 0
-	slot0._episodeFinishCount = slot0._groupMo:getEpisodeFinishCount()
-	slot2 = {}
+function var_0_0.refreshProgress(arg_30_0)
+	local var_30_0 = arg_30_0._groupMo:getEpisodeMos()
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot8 = slot0:_getOrCreateProgressItem(slot6)
+	arg_30_0._episodeCount = var_30_0 and #var_30_0 or 0
+	arg_30_0._episodeFinishCount = arg_30_0._groupMo:getEpisodeFinishCount()
 
-			slot0:refreshEpisodeProgress(slot8, slot7, slot6)
+	local var_30_1 = {}
 
-			slot2[slot8] = true
+	if var_30_0 then
+		for iter_30_0, iter_30_1 in ipairs(var_30_0) do
+			local var_30_2 = arg_30_0:_getOrCreateProgressItem(iter_30_0)
+
+			arg_30_0:refreshEpisodeProgress(var_30_2, iter_30_1, iter_30_0)
+
+			var_30_1[var_30_2] = true
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._progressItemTab) do
-		if not slot2[slot7] then
-			gohelper.setActive(slot7.viewGO, false)
+	for iter_30_2, iter_30_3 in pairs(arg_30_0._progressItemTab) do
+		if not var_30_1[iter_30_3] then
+			gohelper.setActive(iter_30_3.viewGO, false)
 		end
 	end
 
-	gohelper.setAsLastSibling(slot0._btnreset.gameObject)
+	gohelper.setAsLastSibling(arg_30_0._btnreset.gameObject)
 end
 
-function slot0.refreshCompletedUI(slot0)
-	slot2 = false
+function var_0_0.refreshCompletedUI(arg_31_0)
+	local var_31_0 = arg_31_0._groupMo:isGroupFinished()
+	local var_31_1 = false
 
-	if slot0._groupMo:isGroupFinished() then
-		slot2 = Act183Model.instance:getNewFinishGroupId() == slot0._groupMo:getGroupId()
+	if var_31_0 then
+		local var_31_2 = arg_31_0._groupMo:getGroupId()
+
+		var_31_1 = Act183Model.instance:getNewFinishGroupId() == var_31_2
 	end
 
-	slot3 = slot0._groupMo and slot0._groupMo:getGroupType()
+	local var_31_3 = arg_31_0._groupMo and arg_31_0._groupMo:getGroupType()
 
-	gohelper.setActive(slot0._gocompleted, slot1 and slot3 ~= Act183Enum.GroupType.Daily and not slot2)
-	gohelper.setActive(slot0._godailycompleted, slot1 and slot3 == Act183Enum.GroupType.Daily and not slot2)
+	gohelper.setActive(arg_31_0._gocompleted, var_31_0 and var_31_3 ~= Act183Enum.GroupType.Daily and not var_31_1)
+	gohelper.setActive(arg_31_0._godailycompleted, var_31_0 and var_31_3 == Act183Enum.GroupType.Daily and not var_31_1)
 end
 
-function slot0._getOrCreateProgressItem(slot0, slot1)
-	if not slot0._progressItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._goprogressitem, "item_" .. slot1)
-		slot2.goicon1 = gohelper.findChild(slot2.viewGO, "icon")
-		slot2.goicon2 = gohelper.findChild(slot2.viewGO, "icon2")
-		slot2.goicon3 = gohelper.findChild(slot2.viewGO, "icon3")
-		slot0._progressItemTab[slot1] = slot2
+function var_0_0._getOrCreateProgressItem(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_0._progressItemTab[arg_32_1]
+
+	if not var_32_0 then
+		var_32_0 = arg_32_0:getUserDataTb_()
+		var_32_0.viewGO = gohelper.cloneInPlace(arg_32_0._goprogressitem, "item_" .. arg_32_1)
+		var_32_0.goicon1 = gohelper.findChild(var_32_0.viewGO, "icon")
+		var_32_0.goicon2 = gohelper.findChild(var_32_0.viewGO, "icon2")
+		var_32_0.goicon3 = gohelper.findChild(var_32_0.viewGO, "icon3")
+		arg_32_0._progressItemTab[arg_32_1] = var_32_0
 	end
 
-	return slot2
+	return var_32_0
 end
 
-function slot0.refreshEpisodeProgress(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.viewGO, true)
-	gohelper.setActive(slot1.goicon1, false)
-	gohelper.setActive(slot1.goicon2, false)
-	gohelper.setActive(slot1.goicon3, false)
+function var_0_0.refreshEpisodeProgress(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	gohelper.setActive(arg_33_1.viewGO, true)
+	gohelper.setActive(arg_33_1.goicon1, false)
+	gohelper.setActive(arg_33_1.goicon2, false)
+	gohelper.setActive(arg_33_1.goicon3, false)
 
-	if slot3 <= slot0._episodeFinishCount then
-		gohelper.setActive(slot1.goicon2, true)
-	elseif slot3 == slot0._episodeFinishCount + 1 then
-		gohelper.setActive(slot1.goicon3, true)
+	if arg_33_3 <= arg_33_0._episodeFinishCount then
+		gohelper.setActive(arg_33_1.goicon2, true)
+	elseif arg_33_3 == arg_33_0._episodeFinishCount + 1 then
+		gohelper.setActive(arg_33_1.goicon3, true)
 	else
-		gohelper.setActive(slot1.goicon1, true)
+		gohelper.setActive(arg_33_1.goicon1, true)
 	end
 end
 
-function slot0.focusGroupCategory(slot0)
-	slot1 = 0
-	slot2 = false
+function var_0_0.focusGroupCategory(arg_34_0)
+	local var_34_0 = 0
+	local var_34_1 = false
 
-	if slot0._selectGroupId and slot0._groupList then
-		for slot6, slot7 in ipairs(slot0._groupList) do
-			if slot7:getGroupId() == slot0._selectGroupId then
-				slot2 = true
+	if arg_34_0._selectGroupId and arg_34_0._groupList then
+		for iter_34_0, iter_34_1 in ipairs(arg_34_0._groupList) do
+			if iter_34_1:getGroupId() == arg_34_0._selectGroupId then
+				var_34_1 = true
 
 				break
 			end
 
-			slot1 = slot1 + slot0:_getOrCreateGroupItem(slot6):getHeight()
+			var_34_0 = var_34_0 + arg_34_0:_getOrCreateGroupItem(iter_34_0):getHeight()
 		end
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._gogroupcontent.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_34_0._gogroupcontent.transform)
 
-	slot0._scrollgroups.verticalNormalizedPosition = 1 - (slot2 and slot1 or 0) / (recthelper.getHeight(slot0._gogroupcontent.transform) - recthelper.getHeight(slot0._scrollgroups.transform))
+	local var_34_2 = recthelper.getHeight(arg_34_0._scrollgroups.transform)
+	local var_34_3 = recthelper.getHeight(arg_34_0._gogroupcontent.transform)
+	local var_34_4 = var_34_1 and var_34_0 or 0
+
+	arg_34_0._scrollgroups.verticalNormalizedPosition = 1 - var_34_4 / (var_34_3 - var_34_2)
 end
 
-function slot0.addGuide(slot0)
-	if slot0._groupType == Act183Enum.GroupType.NormalMain then
-		slot1 = HelpShowView.New()
+function var_0_0.addGuide(arg_35_0)
+	if arg_35_0._groupType == Act183Enum.GroupType.NormalMain then
+		local var_35_0 = HelpShowView.New()
 
-		slot1:setHelpId(HelpEnum.HelpId.Act183EnterDungeon)
-		slot0:addChildView(slot1)
+		var_35_0:setHelpId(HelpEnum.HelpId.Act183EnterDungeon)
+		arg_35_0:addChildView(var_35_0)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refresh, slot0)
-	TaskDispatcher.cancelTask(slot0.checkRefreshGroupItems, slot0)
+function var_0_0.onClose(arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0.refresh, arg_36_0)
+	TaskDispatcher.cancelTask(arg_36_0.checkRefreshGroupItems, arg_36_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_37_0)
+	return
 end
 
-return slot0
+return var_0_0

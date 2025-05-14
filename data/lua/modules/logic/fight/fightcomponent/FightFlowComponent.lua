@@ -1,15 +1,17 @@
-module("modules.logic.fight.fightcomponent.FightFlowComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightFlowComponent", package.seeall)
 
-slot0 = class("FightFlowComponent", FightBaseClass)
+local var_0_0 = class("FightFlowComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
+function var_0_0.onConstructor(arg_1_0)
+	return
 end
 
-function slot0.registCustomFlow(slot0, slot1)
-	return slot0:newClass(slot1)
+function var_0_0.registCustomFlow(arg_2_0, arg_2_1)
+	return arg_2_0:newClass(arg_2_1)
 end
 
-function slot0.onDestructor(slot0)
+function var_0_0.onDestructor(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

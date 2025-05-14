@@ -1,12 +1,12 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9EntryOverviewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9EntryOverviewContainer", package.seeall)
 
-slot0 = class("Season123_1_9EntryOverviewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_1_9EntryOverviewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123_1_9CheckCloseView.New(),
 		Season123_1_9EntryOverview.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,12 @@
-module("modules.logic.pushbox.config.PushBoxEpisodeConfig", package.seeall)
+﻿module("modules.logic.pushbox.config.PushBoxEpisodeConfig", package.seeall)
 
-slot0 = class("PushBoxEpisodeConfig", BaseConfig)
+local var_0_0 = class("PushBoxEpisodeConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"push_box_episode",
 		"push_box_activity",
@@ -13,71 +14,69 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "push_box_episode" then
-		-- Nothing
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "push_box_episode" then
+		-- block empty
 	end
 end
 
-function slot0.getConfig(slot0, slot1)
-	return lua_push_box_episode.configDict[slot1]
+function var_0_0.getConfig(arg_4_0, arg_4_1)
+	return lua_push_box_episode.configDict[arg_4_1]
 end
 
-function slot0.getEpisodeList(slot0)
-	if slot0._episode_list then
-		return slot0._episode_list
+function var_0_0.getEpisodeList(arg_5_0)
+	if arg_5_0._episode_list then
+		return arg_5_0._episode_list
 	end
 
-	slot1 = {}
-	slot4 = PushBoxModel.instance
-	slot5 = slot4
+	local var_5_0 = {}
 
-	for slot5, slot6 in pairs(lua_push_box_activity.configDict[slot4.getCurActivityID(slot5)]) do
-		table.insert(slot1, slot6)
+	for iter_5_0, iter_5_1 in pairs(lua_push_box_activity.configDict[PushBoxModel.instance:getCurActivityID()]) do
+		table.insert(var_5_0, iter_5_1)
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot0.stageId < slot1.stageId
+	table.sort(var_5_0, function(arg_6_0, arg_6_1)
+		return arg_6_0.stageId < arg_6_1.stageId
 	end)
 
-	slot0._episode_list = {}
-	slot0._episode2stageID = {}
+	arg_5_0._episode_list = {}
+	arg_5_0._episode2stageID = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		for slot10, slot11 in ipairs(slot6.episodeIds) do
-			table.insert(slot0._episode_list, slot0:getConfig(slot11))
+	for iter_5_2, iter_5_3 in ipairs(var_5_0) do
+		for iter_5_4, iter_5_5 in ipairs(iter_5_3.episodeIds) do
+			local var_5_1 = arg_5_0:getConfig(iter_5_5)
 
-			slot0._episode2stageID[slot11] = slot6.stageId
+			table.insert(arg_5_0._episode_list, var_5_1)
+
+			arg_5_0._episode2stageID[iter_5_5] = iter_5_3.stageId
 		end
 	end
 
-	return slot0._episode_list
+	return arg_5_0._episode_list
 end
 
-function slot0.getStageIDByEpisodeID(slot0, slot1)
-	return slot0._episode2stageID[slot1]
+function var_0_0.getStageIDByEpisodeID(arg_7_0, arg_7_1)
+	return arg_7_0._episode2stageID[arg_7_1]
 end
 
-function slot0.getStageConfig(slot0, slot1)
-	return lua_push_box_activity.configDict[PushBoxModel.instance:getCurActivityID()][slot1]
+function var_0_0.getStageConfig(arg_8_0, arg_8_1)
+	return lua_push_box_activity.configDict[PushBoxModel.instance:getCurActivityID()][arg_8_1]
 end
 
-function slot0.getTaskList(slot0)
-	if slot0._task_list then
-		return slot0._task_list
+function var_0_0.getTaskList(arg_9_0)
+	if arg_9_0._task_list then
+		return arg_9_0._task_list
 	end
 
-	slot0._task_list = {}
-	slot3 = PushBoxModel.instance
-	slot4 = slot3
+	arg_9_0._task_list = {}
 
-	for slot4, slot5 in pairs(lua_push_box_task.configDict[slot3.getCurActivityID(slot4)]) do
-		table.insert(slot0._task_list, slot5)
+	for iter_9_0, iter_9_1 in pairs(lua_push_box_task.configDict[PushBoxModel.instance:getCurActivityID()]) do
+		table.insert(arg_9_0._task_list, iter_9_1)
 	end
 
-	return slot0._task_list
+	return arg_9_0._task_list
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

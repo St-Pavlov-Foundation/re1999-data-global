@@ -1,146 +1,162 @@
-module("modules.logic.versionactivity2_5.act187.model.Activity187Model", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act187.model.Activity187Model", package.seeall)
 
-slot0 = class("Activity187Model", BaseModel)
+local var_0_0 = class("Activity187Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.clearData(slot0)
-	slot0:setLoginCount()
-	slot0:setRemainPaintingCount()
-	slot0:setFinishPaintingIndex()
-	slot0:setAccrueRewardIndex()
+function var_0_0.clearData(arg_3_0)
+	arg_3_0:setLoginCount()
+	arg_3_0:setRemainPaintingCount()
+	arg_3_0:setFinishPaintingIndex()
+	arg_3_0:setAccrueRewardIndex()
 
-	slot0._paintingRewardDict = {}
+	arg_3_0._paintingRewardDict = {}
 end
 
-function slot0.checkActId(slot0, slot1)
-	if not (slot1 == slot0:getAct187Id()) then
-		logError(string.format("Activity187Model:setServerInfo error, not same actId, server:%s, local:%s", slot1, slot2))
+function var_0_0.checkActId(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getAct187Id()
+	local var_4_1 = arg_4_1 == var_4_0
+
+	if not var_4_1 then
+		logError(string.format("Activity187Model:setServerInfo error, not same actId, server:%s, local:%s", arg_4_1, var_4_0))
 	end
 
-	return slot3
+	return var_4_1
 end
 
-function slot0.setAct187Info(slot0, slot1)
-	if not slot1 then
+function var_0_0.setAct187Info(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	slot0:setLoginCount(slot1.loginCount)
-	slot0:setRemainPaintingCount(slot1.haveGameCount)
-	slot0:setFinishPaintingIndex(slot1.finishGameCount)
-	slot0:setAccrueRewardIndex(slot1.acceptRewardGameCount)
-	slot0:setAllPaintingReward(slot1.randomBonusInfos)
+	arg_5_0:setLoginCount(arg_5_1.loginCount)
+	arg_5_0:setRemainPaintingCount(arg_5_1.haveGameCount)
+	arg_5_0:setFinishPaintingIndex(arg_5_1.finishGameCount)
+	arg_5_0:setAccrueRewardIndex(arg_5_1.acceptRewardGameCount)
+	arg_5_0:setAllPaintingReward(arg_5_1.randomBonusInfos)
 end
 
-function slot0.setLoginCount(slot0, slot1)
-	slot0._loginCount = slot1 or 0
+function var_0_0.setLoginCount(arg_6_0, arg_6_1)
+	arg_6_0._loginCount = arg_6_1 or 0
 end
 
-function slot0.setRemainPaintingCount(slot0, slot1)
-	slot0._remainPaintingCount = slot1 or 0
+function var_0_0.setRemainPaintingCount(arg_7_0, arg_7_1)
+	arg_7_0._remainPaintingCount = arg_7_1 or 0
 end
 
-function slot0.setFinishPaintingIndex(slot0, slot1)
-	slot0._finishPaintingIndex = slot1 or 0
+function var_0_0.setFinishPaintingIndex(arg_8_0, arg_8_1)
+	arg_8_0._finishPaintingIndex = arg_8_1 or 0
 end
 
-function slot0.setAccrueRewardIndex(slot0, slot1)
-	slot0._accrueRewardIndex = slot1 or 0
+function var_0_0.setAccrueRewardIndex(arg_9_0, arg_9_1)
+	arg_9_0._accrueRewardIndex = arg_9_1 or 0
 end
 
-function slot0.setAllPaintingReward(slot0, slot1)
-	if not slot1 then
+function var_0_0.setAllPaintingReward(arg_10_0, arg_10_1)
+	if not arg_10_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:setPaintingRewardList(slot5, slot6.randomBonusList)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+		arg_10_0:setPaintingRewardList(iter_10_0, iter_10_1.randomBonusList)
 	end
 end
 
-function slot0.setPaintingRewardList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.setPaintingRewardList(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot9 = MaterialDataMO.New()
+	for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
+		local var_11_1 = MaterialDataMO.New()
 
-		slot9:initValue(slot8.materilType, slot8.materilId, slot8.quantity)
-		table.insert(slot3, slot9)
+		var_11_1:initValue(iter_11_1.materilType, iter_11_1.materilId, iter_11_1.quantity)
+		table.insert(var_11_0, var_11_1)
 	end
 
-	slot0._paintingRewardDict[slot1] = slot3
+	arg_11_0._paintingRewardDict[arg_11_1] = var_11_0
 end
 
-function slot0.getAct187Id(slot0)
+function var_0_0.getAct187Id(arg_12_0)
 	return VersionActivity2_5Enum.ActivityId.LanternFestival
 end
 
-function slot0.isAct187Open(slot0, slot1)
-	slot2, slot3, slot4 = nil
+function var_0_0.isAct187Open(arg_13_0, arg_13_1)
+	local var_13_0
+	local var_13_1
+	local var_13_2
+	local var_13_3 = arg_13_0:getAct187Id()
 
-	if ActivityModel.instance:getActivityInfo()[slot0:getAct187Id()] then
-		slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(slot5)
+	if ActivityModel.instance:getActivityInfo()[var_13_3] then
+		var_13_0, var_13_1, var_13_2 = ActivityHelper.getActivityStatusAndToast(var_13_3)
 	else
-		slot3 = ToastEnum.ActivityEnd
+		var_13_1 = ToastEnum.ActivityEnd
 	end
 
-	if slot1 and slot3 then
-		GameFacade.showToast(slot3, slot4)
+	if arg_13_1 and var_13_1 then
+		GameFacade.showToast(var_13_1, var_13_2)
 	end
 
-	return slot2 == ActivityEnum.ActivityStatus.Normal
+	return var_13_0 == ActivityEnum.ActivityStatus.Normal
 end
 
-function slot0.getAct187RemainTimeStr(slot0)
-	slot1 = ""
+function var_0_0.getAct187RemainTimeStr(arg_14_0)
+	local var_14_0 = ""
+	local var_14_1 = arg_14_0:getAct187Id()
+	local var_14_2 = ActivityModel.instance:getActMO(var_14_1)
 
-	if ActivityModel.instance:getActMO(slot0:getAct187Id()) then
-		slot1 = string.format(luaLang("remain"), slot3:getRemainTimeStr3())
+	if var_14_2 then
+		local var_14_3 = var_14_2:getRemainTimeStr3()
+
+		var_14_0 = string.format(luaLang("remain"), var_14_3)
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.getLoginCount(slot0)
-	return slot0._loginCount
+function var_0_0.getLoginCount(arg_15_0)
+	return arg_15_0._loginCount
 end
 
-function slot0.getRemainPaintingCount(slot0)
-	return slot0._remainPaintingCount
+function var_0_0.getRemainPaintingCount(arg_16_0)
+	return arg_16_0._remainPaintingCount
 end
 
-function slot0.getFinishPaintingIndex(slot0)
-	return slot0._finishPaintingIndex
+function var_0_0.getFinishPaintingIndex(arg_17_0)
+	return arg_17_0._finishPaintingIndex
 end
 
-function slot0.getAccrueRewardIndex(slot0)
-	return slot0._accrueRewardIndex
+function var_0_0.getAccrueRewardIndex(arg_18_0)
+	return arg_18_0._accrueRewardIndex
 end
 
-function slot0.getPaintingRewardList(slot0, slot1)
-	return slot0._paintingRewardDict and slot0._paintingRewardDict[slot1] or {}
+function var_0_0.getPaintingRewardList(arg_19_0, arg_19_1)
+	return arg_19_0._paintingRewardDict and arg_19_0._paintingRewardDict[arg_19_1] or {}
 end
 
-function slot0.getPaintingRewardId(slot0, slot1)
-	slot2 = nil
+function var_0_0.getPaintingRewardId(arg_20_0, arg_20_1)
+	local var_20_0
+	local var_20_1 = arg_20_0:getPaintingRewardList(arg_20_1)
 
-	if slot0:getPaintingRewardList(slot1) and #slot3 then
-		for slot7, slot8 in ipairs(slot3) do
-			slot9 = string.format("%s#%s", slot8.materilType, slot8.materilId)
-			slot2 = string.nilorempty(slot2) and slot9 or string.format("%s|%s", slot9, slot9)
+	if var_20_1 and #var_20_1 then
+		for iter_20_0, iter_20_1 in ipairs(var_20_1) do
+			local var_20_2 = string.format("%s#%s", iter_20_1.materilType, iter_20_1.materilId)
+
+			if string.nilorempty(var_20_0) then
+				var_20_0 = var_20_2
+			else
+				var_20_0 = string.format("%s|%s", var_20_0, var_20_2)
+			end
 		end
 	end
 
-	return slot2
+	return var_20_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

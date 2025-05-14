@@ -1,129 +1,142 @@
-module("modules.logic.versionactivity2_3.act174.controller.Activity174Controller", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.controller.Activity174Controller", package.seeall)
 
-slot0 = class("Activity174Controller", BaseController)
+local var_0_0 = class("Activity174Controller", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.openMainView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.Act174MainView, slot1)
+function var_0_0.openMainView(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.Act174MainView, arg_5_1)
 end
 
-function slot0.openStoreView(slot0, slot1)
-	if not VersionActivityEnterHelper.checkCanOpen(slot1) then
+function var_0_0.openStoreView(arg_6_0, arg_6_1)
+	if not VersionActivityEnterHelper.checkCanOpen(arg_6_1) then
 		return
 	end
 
-	slot0.actId = slot1
+	arg_6_0.actId = arg_6_1
 
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(slot1, slot0._openStoreViewAfterRpc, slot0)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_6_1, arg_6_0._openStoreViewAfterRpc, arg_6_0)
 end
 
-function slot0._openStoreViewAfterRpc(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._openStoreViewAfterRpc(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_2 == 0 then
 		ViewMgr.instance:openView(ViewName.Act174StoreView, {
-			actId = slot0.actId
+			actId = arg_7_0.actId
 		})
 	end
 
-	slot0.actId = nil
+	arg_7_0.actId = nil
 end
 
-function slot0.openGameView(slot0)
+function var_0_0.openGameView(arg_8_0)
 	ViewMgr.instance:openView(ViewName.Act174GameView)
 end
 
-function slot0.openForcePickView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.Act174ForcePickView, slot1)
+function var_0_0.openForcePickView(arg_9_0, arg_9_1)
+	ViewMgr.instance:openView(ViewName.Act174ForcePickView, arg_9_1)
 end
 
-function slot0.openFightReadyView(slot0)
+function var_0_0.openFightReadyView(arg_10_0)
 	ViewMgr.instance:openView(ViewName.Act174FightReadyView)
 end
 
-function slot0.playFight(slot0, slot1, slot2)
-	slot3 = Activity174Model.instance:getActInfo():getGameInfo()
-	slot4 = slot3:getTeamMoList()
-	slot5 = slot3:getFightInfo()
-	slot6 = slot5.matchInfo.teamInfo
-	slot7 = slot5.fightResInfo
+function var_0_0.playFight(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = Activity174Model.instance:getActInfo():getGameInfo()
+	local var_11_1 = var_11_0:getTeamMoList()
+	local var_11_2 = var_11_0:getFightInfo()
+	local var_11_3 = var_11_2.matchInfo.teamInfo
+	local var_11_4 = var_11_2.fightResInfo
 
-	if not slot1 then
-		slot1 = {}
+	if not arg_11_1 then
+		arg_11_1 = {}
 
-		for slot11 = 1, #slot7 do
-			slot1[#slot1 + 1] = slot11
+		for iter_11_0 = 1, #var_11_4 do
+			arg_11_1[#arg_11_1 + 1] = iter_11_0
 		end
 	end
 
-	if #slot1 == 0 then
-		slot0:openFightResultView()
+	if #arg_11_1 == 0 then
+		arg_11_0:openFightResultView()
 
 		return
 	end
 
-	slot9 = DungeonConfig.instance:getChapterEpisodeCOList(tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.ChapterId].value))
-	slot10 = slot9[math.random(1, #slot9)]
-	slot11 = {}
+	local var_11_5 = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.ChapterId].value)
+	local var_11_6 = DungeonConfig.instance:getChapterEpisodeCOList(var_11_5)
+	local var_11_7 = var_11_6[math.random(1, #var_11_6)]
+	local var_11_8 = {}
 
-	for slot15, slot16 in ipairs(slot7) do
-		table.insert(slot11, slot16.win)
+	for iter_11_1, iter_11_2 in ipairs(var_11_4) do
+		table.insert(var_11_8, iter_11_2.win)
 	end
 
-	FightMgr.instance:playDouQuQu(slot8, slot10.id, slot10.battleId, slot1, slot2, {
-		player = slot4,
-		enemy = slot6,
-		win = slot11
-	})
-	DungeonModel.instance:SetSendChapterEpisodeId(slot8, slot10.id)
+	local var_11_9 = {
+		player = var_11_1,
+		enemy = var_11_3,
+		win = var_11_8
+	}
+
+	FightMgr.instance:playDouQuQu(var_11_5, var_11_7.id, var_11_7.battleId, arg_11_1, arg_11_2, var_11_9)
+	DungeonModel.instance:SetSendChapterEpisodeId(var_11_5, var_11_7.id)
 end
 
-function slot0.openFightResultView(slot0)
+function var_0_0.openFightResultView(arg_12_0)
 	ViewMgr.instance:openView(ViewName.Act174FightResultView)
 end
 
-function slot0.openEndLessView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.Act174EndLessView, slot1)
+function var_0_0.openEndLessView(arg_13_0, arg_13_1)
+	ViewMgr.instance:openView(ViewName.Act174EndLessView, arg_13_1)
 end
 
-function slot0.openSettlementView(slot0)
+function var_0_0.openSettlementView(arg_14_0)
 	ViewMgr.instance:openView(ViewName.Act174SettlementView)
 end
 
-function slot0.openItemTipView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.Act174ItemTipView, slot1)
+function var_0_0.openItemTipView(arg_15_0, arg_15_1)
+	ViewMgr.instance:openView(ViewName.Act174ItemTipView, arg_15_1)
 end
 
-function slot0.openRoleInfoView(slot0, slot1, slot2, slot3)
+function var_0_0.openRoleInfoView(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 	ViewMgr.instance:openView(ViewName.Act174RoleInfo, {
-		roleId = slot1,
-		itemId = slot2,
-		pos = slot3
+		roleId = arg_16_1,
+		itemId = arg_16_2,
+		pos = arg_16_3
 	})
 end
 
-function slot0.openBuffTipView(slot0, slot1, slot2, slot3)
+function var_0_0.openBuffTipView(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_2 = arg_17_2 or Vector2.New(0, 0)
+
 	ViewMgr.instance:openView(ViewName.Act174BuffTipView, {
-		isEnemy = slot1,
-		pos = slot2 or Vector2.New(0, 0),
-		isDown = slot3
+		isEnemy = arg_17_1,
+		pos = arg_17_2,
+		isDown = arg_17_3
 	})
 end
 
-function slot0.checkTeamDataWrong(slot0, slot1)
-	slot2 = Activity174Model.instance:getActInfo(slot1):getGameInfo()
+function var_0_0.checkTeamDataWrong(arg_18_0, arg_18_1)
+	local var_18_0 = Activity174Model.instance:getActInfo(arg_18_1):getGameInfo()
+	local var_18_1 = var_18_0:getTeamMoList()
+	local var_18_2 = Activity174Config.instance:getTurnCo(arg_18_1, var_18_0.gameCount)
 
-	for slot8 = 1, Activity174Config.instance:getTurnCo(slot1, slot2.gameCount).groupNum do
-		if not slot2:getTeamMoList()[slot8] or not slot9:notEmpty() then
+	for iter_18_0 = 1, var_18_2.groupNum do
+		local var_18_3 = var_18_1[iter_18_0]
+
+		if not var_18_3 or not var_18_3:notEmpty() then
 			return true
 		end
 	end
@@ -131,10 +144,12 @@ function slot0.checkTeamDataWrong(slot0, slot1)
 	return false
 end
 
-function slot0.syncLocalTeam2Server(slot0, slot1)
-	Activity174Rpc.instance:sendChangeAct174TeamRequest(slot1, Activity174Model.instance:getActInfo(slot1):getGameInfo():getTeamMoList())
+function var_0_0.syncLocalTeam2Server(arg_19_0, arg_19_1)
+	local var_19_0 = Activity174Model.instance:getActInfo(arg_19_1):getGameInfo():getTeamMoList()
+
+	Activity174Rpc.instance:sendChangeAct174TeamRequest(arg_19_1, var_19_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

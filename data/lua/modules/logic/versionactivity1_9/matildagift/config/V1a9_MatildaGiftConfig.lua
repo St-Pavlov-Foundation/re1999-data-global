@@ -1,17 +1,19 @@
-module("modules.logic.versionactivity1_9.matildagift.config.V1a9_MatildaGiftConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_9.matildagift.config.V1a9_MatildaGiftConfig", package.seeall)
 
-slot0 = class("V1a9_MatildaGiftConfig", BaseConfig)
+local var_0_0 = class("V1a9_MatildaGiftConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return nil
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

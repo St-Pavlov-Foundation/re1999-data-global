@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_9EnterViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_9EnterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_9EnterView.New(),
 		VersionActivity1_9EnterBgmView.New(),
@@ -11,8 +11,8 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -20,7 +20,7 @@ function slot0.buildTabViews(slot0, slot1)
 				false
 			})
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			V1a9_DungeonEnterView.New(),
 			V1a6_BossRush_EnterView.New(),
@@ -34,48 +34,51 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.selectActTab(slot0, slot1, slot2)
-	slot0.activityId = slot2
+function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.activityId = arg_3_2
 
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
 end
 
-function slot0.onContainerInit(slot0)
-	slot0.isFirstPlaySubViewAnim = true
-	slot0.activityIdList = slot0.viewParam.activityIdList
+function var_0_0.onContainerInit(arg_4_0)
+	arg_4_0.isFirstPlaySubViewAnim = true
+	arg_4_0.activityIdList = arg_4_0.viewParam.activityIdList
 
-	for slot4, slot5 in ipairs(slot0.activityIdList) do
-		ActivityStageHelper.recordOneActivityStage(VersionActivityEnterHelper.getActId(slot5))
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.activityIdList) do
+		local var_4_0 = VersionActivityEnterHelper.getActId(iter_4_1)
+
+		ActivityStageHelper.recordOneActivityStage(var_4_0)
 	end
 
-	if VersionActivityEnterHelper.getTabIndex(slot0.activityIdList, slot0.viewParam.jumpActId) ~= 1 then
-		slot0.viewParam.defaultTabIds = {
-			[2] = slot1
-		}
+	local var_4_1 = VersionActivityEnterHelper.getTabIndex(arg_4_0.activityIdList, arg_4_0.viewParam.jumpActId)
+
+	if var_4_1 ~= 1 then
+		arg_4_0.viewParam.defaultTabIds = {}
+		arg_4_0.viewParam.defaultTabIds[2] = var_4_1
 	else
-		slot0.viewParam.playVideo = true
+		arg_4_0.viewParam.playVideo = true
 	end
 
-	slot2 = VersionActivityEnterHelper.getActId(slot0.activityIdList[slot1])
+	local var_4_2 = VersionActivityEnterHelper.getActId(arg_4_0.activityIdList[var_4_1])
 
-	ActivityEnterMgr.instance:enterActivity(slot2)
+	ActivityEnterMgr.instance:enterActivity(var_4_2)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		slot2
+		var_4_2
 	})
 end
 
-function slot0.onContainerClose(slot0)
-	if slot0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
+function var_0_0.onContainerClose(arg_5_0)
+	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-function slot0.getIsFirstPlaySubViewAnim(slot0)
-	return slot0.isFirstPlaySubViewAnim
+function var_0_0.getIsFirstPlaySubViewAnim(arg_6_0)
+	return arg_6_0.isFirstPlaySubViewAnim
 end
 
-function slot0.markPlayedSubViewAnim(slot0)
-	slot0.isFirstPlaySubViewAnim = false
+function var_0_0.markPlayedSubViewAnim(arg_7_0)
+	arg_7_0.isFirstPlaySubViewAnim = false
 end
 
-return slot0
+return var_0_0

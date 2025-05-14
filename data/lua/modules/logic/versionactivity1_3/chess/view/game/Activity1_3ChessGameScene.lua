@@ -1,48 +1,50 @@
-module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessGameScene", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessGameScene", package.seeall)
 
-slot0 = class("Activity1_3ChessGameScene", Va3ChessGameScene)
+local var_0_0 = class("Activity1_3ChessGameScene", Va3ChessGameScene)
 
-function slot0._editableInitView(slot0)
-	slot0._btnEffect1ClickArea = gohelper.findChildButton(slot0.viewGO, "btn_effect1ClickArea")
-	slot0._btnEffect2ClickArea = gohelper.findChildButton(slot0.viewGO, "btn_effect2ClickArea")
-	slot0._fireTileMap = {}
-	slot0._sightTileMap = {}
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._btnEffect1ClickArea = gohelper.findChildButton(arg_1_0.viewGO, "btn_effect1ClickArea")
+	arg_1_0._btnEffect2ClickArea = gohelper.findChildButton(arg_1_0.viewGO, "btn_effect2ClickArea")
+	arg_1_0._fireTileMap = {}
+	arg_1_0._sightTileMap = {}
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveStep, slot0._onObjMove, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveEnd, slot0._onObjMoveEnd, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, slot0._onEnterNextMap, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentHpUpdate, slot0._onHpUpdate, slot0)
-	slot0:addEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.UpdateGameScene, slot0._onMapUpdate, slot0)
-	slot0:addEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.InitGameScene, slot0._onSceneInit, slot0)
-	slot0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.AfterResetChessGame, slot0._onResetGame, slot0)
-	slot0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.OnReadChessGame, slot0._onReadGame, slot0)
-	slot0._btnEffect1ClickArea:AddClickListener(slot0._onClickEffect1, slot0)
-	slot0._btnEffect2ClickArea:AddClickListener(slot0._onClickEffect2, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveStep, arg_2_0._onObjMove, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveEnd, arg_2_0._onObjMoveEnd, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_2_0._onEnterNextMap, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentHpUpdate, arg_2_0._onHpUpdate, arg_2_0)
+	arg_2_0:addEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.UpdateGameScene, arg_2_0._onMapUpdate, arg_2_0)
+	arg_2_0:addEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.InitGameScene, arg_2_0._onSceneInit, arg_2_0)
+	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.AfterResetChessGame, arg_2_0._onResetGame, arg_2_0)
+	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.OnReadChessGame, arg_2_0._onReadGame, arg_2_0)
+	arg_2_0._btnEffect1ClickArea:AddClickListener(arg_2_0._onClickEffect1, arg_2_0)
+	arg_2_0._btnEffect2ClickArea:AddClickListener(arg_2_0._onClickEffect2, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0:removeEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.UpdateGameScene, slot0._onMapUpdate, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveStep, slot0._onObjMove, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveEnd, slot0._onObjMoveEnd, slot0)
-	slot0:removeEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.InitGameScene, slot0._onSceneInit, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, slot0._onEnterNextMap, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentHpUpdate, slot0._onHpUpdate, slot0)
-	slot0:removeEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.AfterResetChessGame, slot0._onResetGame, slot0)
-	slot0:removeEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.OnReadChessGame, slot0._onReadGame, slot0)
-	slot0._btnEffect1ClickArea:RemoveClickListener()
-	slot0._btnEffect2ClickArea:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.UpdateGameScene, arg_3_0._onMapUpdate, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveStep, arg_3_0._onObjMove, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.ObjMoveEnd, arg_3_0._onObjMoveEnd, arg_3_0)
+	arg_3_0:removeEventCb(Activity1_3ChessGameController.instance, Activity1_3ChessEvent.InitGameScene, arg_3_0._onSceneInit, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_3_0._onEnterNextMap, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentHpUpdate, arg_3_0._onHpUpdate, arg_3_0)
+	arg_3_0:removeEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.AfterResetChessGame, arg_3_0._onResetGame, arg_3_0)
+	arg_3_0:removeEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.OnReadChessGame, arg_3_0._onReadGame, arg_3_0)
+	arg_3_0._btnEffect1ClickArea:RemoveClickListener()
+	arg_3_0._btnEffect2ClickArea:RemoveClickListener()
 end
 
-function slot0.onRefreshViewParam(slot0)
-	slot2 = CameraMgr.instance:getUnitCamera()
-	slot2.orthographic = true
-	slot2.orthographicSize = CameraMgr.instance:getMainCamera().orthographicSize
+function var_0_0.onRefreshViewParam(arg_4_0)
+	local var_4_0 = CameraMgr.instance:getMainCamera()
+	local var_4_1 = CameraMgr.instance:getUnitCamera()
+
+	var_4_1.orthographic = true
+	var_4_1.orthographicSize = var_4_0.orthographicSize
 
 	gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), true)
 	gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, true)
@@ -51,165 +53,194 @@ function slot0.onRefreshViewParam(slot0)
 	PostProcessingMgr.instance:setUnitPPValue("bloomActive", false)
 end
 
-function slot0.initCamera(slot0)
+function var_0_0.initCamera(arg_5_0)
+	return
 end
 
-function slot0.resetCamera(slot0)
+function var_0_0.resetCamera(arg_6_0)
+	return
 end
 
-function slot0.loadRes(slot0)
+function var_0_0.loadRes(arg_7_0)
 	UIBlockMgr.instance:startBlock(Va3ChessGameScene.BLOCK_KEY)
 
-	slot0._loader = MultiAbLoader.New()
+	arg_7_0._loader = MultiAbLoader.New()
 
-	slot0._loader:addPath(slot0:getCurrentSceneUrl())
-	slot0._loader:addPath(Va3ChessEnum.SceneResPath.GroundItem)
-	slot0._loader:addPath(Va3ChessEnum.SceneResPath.DirItem)
-	slot0._loader:addPath(Va3ChessEnum.SceneResPath.AlarmItem)
-	slot0:onLoadRes()
-	slot0._loader:startLoad(slot0.loadResCompleted, slot0)
+	arg_7_0._loader:addPath(arg_7_0:getCurrentSceneUrl())
+	arg_7_0._loader:addPath(Va3ChessEnum.SceneResPath.GroundItem)
+	arg_7_0._loader:addPath(Va3ChessEnum.SceneResPath.DirItem)
+	arg_7_0._loader:addPath(Va3ChessEnum.SceneResPath.AlarmItem)
+	arg_7_0:onLoadRes()
+	arg_7_0._loader:startLoad(arg_7_0.loadResCompleted, arg_7_0)
 end
 
-function slot0.onLoadRes(slot0)
-	slot0._loader:addPath(Activity1_3ChessEnum.SceneResPath.FireTile)
-	slot0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightTile1)
-	slot0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightTile2)
-	slot0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightTile3)
-	slot0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightEdgeTile)
+function var_0_0.onLoadRes(arg_8_0)
+	arg_8_0._loader:addPath(Activity1_3ChessEnum.SceneResPath.FireTile)
+	arg_8_0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightTile1)
+	arg_8_0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightTile2)
+	arg_8_0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightTile3)
+	arg_8_0._loader:addPath(Activity1_3ChessEnum.SceneResPath.SightEdgeTile)
 end
 
-function slot0.createAllInteractObjs(slot0)
+function var_0_0.createAllInteractObjs(arg_9_0)
 	if not Va3ChessGameController.instance.interacts then
 		return
 	end
 
-	slot1 = Va3ChessGameController.instance.interacts:getList()
+	local var_9_0 = Va3ChessGameController.instance.interacts:getList()
 
-	table.sort(slot1, Va3ChessInteractMgr.sortRenderOrder)
+	table.sort(var_9_0, Va3ChessInteractMgr.sortRenderOrder)
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6:GetIgnoreSight() then
-			slot0:createInteractObj(slot6)
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1:GetIgnoreSight() then
+			arg_9_0:createInteractObj(iter_9_1)
 		end
 	end
 
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.AllObjectCreated, slot0.createAllInteractObjs, slot0)
+	arg_9_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.AllObjectCreated, arg_9_0.createAllInteractObjs, arg_9_0)
 end
 
-function slot0.onloadResCompleted(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot0._sceneGo, "Obj-Plant/scence_smoke"), true)
+function var_0_0.onloadResCompleted(arg_10_0, arg_10_1)
+	local var_10_0 = gohelper.findChild(arg_10_0._sceneGo, "Obj-Plant/scence_smoke")
 
-	slot0._sceneSight = UnityEngine.GameObject.New("sight")
+	gohelper.setActive(var_10_0, true)
 
-	transformhelper.setLocalPos(slot0._sceneSight.transform, 0, 0, -2.5)
+	arg_10_0._sceneSight = UnityEngine.GameObject.New("sight")
 
-	slot0._sceneFire = UnityEngine.GameObject.New("fire")
+	transformhelper.setLocalPos(arg_10_0._sceneSight.transform, 0, 0, -2.5)
 
-	transformhelper.setLocalPos(slot0._sceneFire.transform, 0, 0, -1)
-	slot0._sceneSight.transform:SetParent(slot0._sceneGo.transform, false)
-	slot0._sceneFire.transform:SetParent(slot0._sceneGo.transform, false)
+	arg_10_0._sceneFire = UnityEngine.GameObject.New("fire")
 
-	slot0._sceneEffect1 = gohelper.findChild(slot0._sceneGo, "Obj-Plant/all/diffuse/vx_click_quan")
-	slot0._sceneEffect2 = gohelper.findChild(slot0._sceneGo, "Obj-Plant/all/diffuse/vx_click_eye")
+	transformhelper.setLocalPos(arg_10_0._sceneFire.transform, 0, 0, -1)
+	arg_10_0._sceneSight.transform:SetParent(arg_10_0._sceneGo.transform, false)
+	arg_10_0._sceneFire.transform:SetParent(arg_10_0._sceneGo.transform, false)
 
-	if slot0._sceneEffect1 then
-		slot3 = CameraMgr.instance:getUICamera()
-		slot4 = CameraMgr.instance:getMainCamera()
-		slot5 = Vector3.New()
-		slot5.x, slot5.y, slot5.z = transformhelper.getPos(slot0._sceneEffect1.transform)
-		slot7 = Vector3.New()
-		slot7.x, slot7.y, slot7.z = transformhelper.getPos(slot0._sceneEffect2.transform)
-		slot0._btnEffect1ClickArea.transform.localPosition = recthelper.worldPosToAnchorPos(slot5, slot0.viewGO.transform, slot3, slot4)
-		slot0._btnEffect2ClickArea.transform.localPosition = recthelper.worldPosToAnchorPos(slot7, slot0.viewGO.transform, slot3, slot4)
+	arg_10_0._sceneEffect1 = gohelper.findChild(arg_10_0._sceneGo, "Obj-Plant/all/diffuse/vx_click_quan")
+	arg_10_0._sceneEffect2 = gohelper.findChild(arg_10_0._sceneGo, "Obj-Plant/all/diffuse/vx_click_eye")
 
-		gohelper.setActive(slot0._sceneEffect1, false)
-		gohelper.setActive(slot0._sceneEffect2, false)
+	if arg_10_0._sceneEffect1 then
+		local var_10_1 = CameraMgr.instance:getUICamera()
+		local var_10_2 = CameraMgr.instance:getMainCamera()
+		local var_10_3 = Vector3.New()
+
+		var_10_3.x, var_10_3.y, var_10_3.z = transformhelper.getPos(arg_10_0._sceneEffect1.transform)
+
+		local var_10_4 = recthelper.worldPosToAnchorPos(var_10_3, arg_10_0.viewGO.transform, var_10_1, var_10_2)
+		local var_10_5 = Vector3.New()
+
+		var_10_5.x, var_10_5.y, var_10_5.z = transformhelper.getPos(arg_10_0._sceneEffect2.transform)
+
+		local var_10_6 = recthelper.worldPosToAnchorPos(var_10_5, arg_10_0.viewGO.transform, var_10_1, var_10_2)
+
+		arg_10_0._btnEffect1ClickArea.transform.localPosition = var_10_4
+		arg_10_0._btnEffect2ClickArea.transform.localPosition = var_10_6
+
+		gohelper.setActive(arg_10_0._sceneEffect1, false)
+		gohelper.setActive(arg_10_0._sceneEffect2, false)
 	else
-		gohelper.setActive(slot0._btnEffect1ClickArea.gameObject, false)
-		gohelper.setActive(slot0._btnEffect2ClickArea.gameObject, false)
+		gohelper.setActive(arg_10_0._btnEffect1ClickArea.gameObject, false)
+		gohelper.setActive(arg_10_0._btnEffect2ClickArea.gameObject, false)
 	end
 
-	slot0:_onSceneInit()
+	arg_10_0:_onSceneInit()
 end
 
-function slot0._onSceneInit(slot0)
-	slot0:removeFireTiles()
-	slot0:removeSightTiles()
+function var_0_0._onSceneInit(arg_11_0)
+	arg_11_0:removeFireTiles()
+	arg_11_0:removeSightTiles()
 
-	for slot5, slot6 in pairs(Activity122Model.instance:getCurEpisodeSightMap()) do
-		slot7, slot8 = Va3ChessMapUtils.calPosXY(slot5)
+	local var_11_0 = Activity122Model.instance:getCurEpisodeSightMap()
 
-		slot0:createSightTileItem(slot7, slot8)
+	for iter_11_0, iter_11_1 in pairs(var_11_0) do
+		local var_11_1, var_11_2 = Va3ChessMapUtils.calPosXY(iter_11_0)
 
-		slot9, slot10 = Va3ChessGameController.instance:searchInteractByPos(slot7, slot8)
+		arg_11_0:createSightTileItem(var_11_1, var_11_2)
 
-		if slot9 == 1 then
-			if slot10 then
-				slot0:createInteractObj(slot11)
+		local var_11_3, var_11_4 = Va3ChessGameController.instance:searchInteractByPos(var_11_1, var_11_2)
+
+		if var_11_3 == 1 then
+			local var_11_5 = var_11_4
+
+			if var_11_5 then
+				arg_11_0:createInteractObj(var_11_5)
 			end
-		elseif slot9 > 1 then
-			for slot15, slot16 in pairs(slot10) do
-				slot0:createInteractObj(slot16)
+		elseif var_11_3 > 1 then
+			local var_11_6 = var_11_4
+
+			for iter_11_2, iter_11_3 in pairs(var_11_6) do
+				arg_11_0:createInteractObj(iter_11_3)
 			end
 		end
 	end
 
-	for slot6, slot7 in pairs(Activity122Model.instance:getCurEpisodeFireMap()) do
-		slot8, slot9 = Va3ChessMapUtils.calPosXY(slot6)
+	local var_11_7 = Activity122Model.instance:getCurEpisodeFireMap()
 
-		slot0:createFireTileItem(slot8, slot9)
+	for iter_11_4, iter_11_5 in pairs(var_11_7) do
+		local var_11_8, var_11_9 = Va3ChessMapUtils.calPosXY(iter_11_4)
+
+		arg_11_0:createFireTileItem(var_11_8, var_11_9)
 	end
 
-	Activity1_3ChessGameController.instance:dispatchEvent(Activity1_3ChessEvent.GameSceneInited, Va3ChessGameModel.instance:getMapId())
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameViewOpened, slot0.viewParam)
+	local var_11_10 = Va3ChessGameModel.instance:getMapId()
+
+	Activity1_3ChessGameController.instance:dispatchEvent(Activity1_3ChessEvent.GameSceneInited, var_11_10)
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameViewOpened, arg_11_0.viewParam)
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_12_0)
+	return
 end
 
-function slot0.onChessStateUpdate(slot0, slot1)
-	uv0.super.onChessStateUpdate(slot0)
+function var_0_0.onChessStateUpdate(arg_13_0, arg_13_1)
+	var_0_0.super.onChessStateUpdate(arg_13_0)
 
-	if slot1 == Va3ChessEnum.GameEventType.Normal then
-		-- Nothing
+	if arg_13_1 == Va3ChessEnum.GameEventType.Normal then
+		-- block empty
 	end
 end
 
-function slot0._onMapUpdate(slot0, slot1)
-	slot3 = false
+function var_0_0._onMapUpdate(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.addFires
+	local var_14_1 = false
 
-	if slot1.addFires then
-		for slot7, slot8 in ipairs(slot2) do
-			slot0:createFireTileItem(slot8.x, slot8.y)
+	if var_14_0 then
+		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+			arg_14_0:createFireTileItem(iter_14_1.x, iter_14_1.y)
 
-			slot3 = true
+			var_14_1 = true
 		end
 	end
 
-	if slot3 then
+	if var_14_1 then
 		AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.FireSpread)
 	end
 
-	if slot1.removeFires then
-		for slot8, slot9 in ipairs(slot4) do
-			slot0:hideFireTileItem(slot9.x, slot9.y)
+	local var_14_2 = arg_14_1.removeFires
+
+	if var_14_2 then
+		for iter_14_2, iter_14_3 in ipairs(var_14_2) do
+			arg_14_0:hideFireTileItem(iter_14_3.x, iter_14_3.y)
 		end
 	end
 
-	if slot1.addSights then
-		for slot9, slot10 in ipairs(slot5) do
-			slot0:createSightTileItem(slot10.x, slot10.y)
+	local var_14_3 = arg_14_1.addSights
 
-			slot11, slot12 = Va3ChessGameController.instance:searchInteractByPos(slot10.x, slot10.y)
+	if var_14_3 then
+		for iter_14_4, iter_14_5 in ipairs(var_14_3) do
+			arg_14_0:createSightTileItem(iter_14_5.x, iter_14_5.y)
 
-			if slot11 == 1 then
-				if (slot11 == 1 and slot12[1] or slot12) and not slot0._avatarMap[slot13.id] then
-					slot0:createInteractObj(slot13)
+			local var_14_4, var_14_5 = Va3ChessGameController.instance:searchInteractByPos(iter_14_5.x, iter_14_5.y)
+
+			if var_14_4 == 1 then
+				local var_14_6 = var_14_4 == 1 and var_14_5[1] or var_14_5
+
+				if var_14_6 and not arg_14_0._avatarMap[var_14_6.id] then
+					arg_14_0:createInteractObj(var_14_6)
 				end
-			elseif slot11 > 1 then
-				for slot16, slot17 in pairs(slot12) do
-					if not slot0._avatarMap[slot17.id] then
-						slot0:createInteractObj(slot17)
+			elseif var_14_4 > 1 then
+				for iter_14_6, iter_14_7 in pairs(var_14_5) do
+					if not arg_14_0._avatarMap[iter_14_7.id] then
+						arg_14_0:createInteractObj(iter_14_7)
 					end
 				end
 			end
@@ -217,165 +248,195 @@ function slot0._onMapUpdate(slot0, slot1)
 	end
 end
 
-function slot0._onObjMove(slot0, slot1, slot2, slot3)
-	if not Activity122Model.instance:checkPosIndexInSight(Va3ChessMapUtils.calPosIndex(slot2, slot3)) then
+function var_0_0._onObjMove(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = Va3ChessMapUtils.calPosIndex(arg_15_2, arg_15_3)
+
+	if not Activity122Model.instance:checkPosIndexInSight(var_15_0) then
 		return
 	end
 
-	if slot0._avatarMap[slot1] then
-		Va3ChessGameController.instance.interacts:get(slot1):getHandler():setAlertActive(true)
-		gohelper.setActive(slot0._avatarMap[slot1].sceneGo, true)
+	if arg_15_0._avatarMap[arg_15_1] then
+		Va3ChessGameController.instance.interacts:get(arg_15_1):getHandler():setAlertActive(true)
+		gohelper.setActive(arg_15_0._avatarMap[arg_15_1].sceneGo, true)
 
 		return
 	end
 
-	slot0:createInteractObj(Va3ChessGameController.instance.interacts:get(slot1))
+	local var_15_1 = Va3ChessGameController.instance.interacts:get(arg_15_1)
+
+	arg_15_0:createInteractObj(var_15_1)
 end
 
-function slot0._onObjMoveEnd(slot0, slot1, slot2, slot3)
-	if not Activity122Model.instance:checkPosIndexInSight(Va3ChessMapUtils.calPosIndex(slot2, slot3)) then
-		if not slot0._avatarMap[slot1] then
+function var_0_0._onObjMoveEnd(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = Va3ChessMapUtils.calPosIndex(arg_16_2, arg_16_3)
+
+	if not Activity122Model.instance:checkPosIndexInSight(var_16_0) then
+		if not arg_16_0._avatarMap[arg_16_1] then
 			return
 		end
 
-		gohelper.setActive(slot0._avatarMap[slot1].sceneGo, false)
-		Va3ChessGameController.instance.interacts:get(slot1):getHandler():setAlertActive(false)
+		gohelper.setActive(arg_16_0._avatarMap[arg_16_1].sceneGo, false)
+		Va3ChessGameController.instance.interacts:get(arg_16_1):getHandler():setAlertActive(false)
 	end
 end
 
-function slot0._onHpUpdate(slot0)
-	if Va3ChessGameController.instance.interacts:getMainPlayer() and slot2:getHandler() then
-		slot2:getHandler():showHitAni()
+function var_0_0._onHpUpdate(arg_17_0)
+	local var_17_0 = Va3ChessGameController.instance.interacts:getMainPlayer()
+
+	if var_17_0 and var_17_0:getHandler() then
+		var_17_0:getHandler():showHitAni()
 	end
 end
 
-function slot0._onClickEffect1(slot0)
-	if not slot0._sceneEffect1 then
+function var_0_0._onClickEffect1(arg_18_0)
+	if not arg_18_0._sceneEffect1 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.DrumHit)
-	gohelper.setActive(slot0._sceneEffect1, false)
-	gohelper.setActive(slot0._sceneEffect1, true)
+	gohelper.setActive(arg_18_0._sceneEffect1, false)
+	gohelper.setActive(arg_18_0._sceneEffect1, true)
 end
 
-function slot0._onClickEffect2(slot0)
-	if not slot0._sceneEffect2 then
+function var_0_0._onClickEffect2(arg_19_0)
+	if not arg_19_0._sceneEffect2 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.MonsterCroaking)
-	gohelper.setActive(slot0._sceneEffect2, false)
-	gohelper.setActive(slot0._sceneEffect2, true)
+	gohelper.setActive(arg_19_0._sceneEffect2, false)
+	gohelper.setActive(arg_19_0._sceneEffect2, true)
 end
 
-function slot0.createFireTileItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.createFireTileItem(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0
+	local var_20_1 = Va3ChessMapUtils.calPosIndex(arg_20_1, arg_20_2)
 
-	if slot0._fireTileMap[Va3ChessMapUtils.calPosIndex(slot1, slot2)] then
-		slot3 = slot0._fireTileMap[slot4]
+	if arg_20_0._fireTileMap[var_20_1] then
+		var_20_0 = arg_20_0._fireTileMap[var_20_1]
 	end
 
-	if not slot3 then
-		slot3 = slot0:getUserDataTb_()
-		slot6 = gohelper.clone(slot0._loader:getAssetItem(Activity1_3ChessEnum.SceneResPath.FireTile):GetResource(), slot0._sceneFire, "fireTile" .. slot1 .. "_" .. slot2)
-		slot3.go = slot6
-		slot3.sceneTf = slot6.transform
-		slot0._fireTileMap[slot4] = slot3
+	if not var_20_0 then
+		var_20_0 = arg_20_0:getUserDataTb_()
 
-		Activity1_3ChessGameController.instance:dispatchEvent(Activity1_3ChessEvent.GameSceneFireCreated, slot4)
+		local var_20_2 = arg_20_0._loader:getAssetItem(Activity1_3ChessEnum.SceneResPath.FireTile)
+		local var_20_3 = gohelper.clone(var_20_2:GetResource(), arg_20_0._sceneFire, "fireTile" .. arg_20_1 .. "_" .. arg_20_2)
+
+		var_20_0.go = var_20_3
+		var_20_0.sceneTf = var_20_3.transform
+		arg_20_0._fireTileMap[var_20_1] = var_20_0
+
+		Activity1_3ChessGameController.instance:dispatchEvent(Activity1_3ChessEvent.GameSceneFireCreated, var_20_1)
 	end
 
-	gohelper.setActive(slot3.go, true)
-	slot0:setTileBasePosition(slot3, slot1, slot2)
+	gohelper.setActive(var_20_0.go, true)
+	arg_20_0:setTileBasePosition(var_20_0, arg_20_1, arg_20_2)
 
-	return slot3
+	return var_20_0
 end
 
-function slot0.hideFireTileItem(slot0, slot1, slot2)
-	if slot0._fireTileMap[Va3ChessMapUtils.calPosIndex(slot1, slot2)] then
-		gohelper.setActive(slot0._fireTileMap[slot3].go, false)
-	end
-end
+function var_0_0.hideFireTileItem(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = Va3ChessMapUtils.calPosIndex(arg_21_1, arg_21_2)
 
-function slot0.removeFireTiles(slot0)
-	for slot4, slot5 in pairs(slot0._fireTileMap) do
-		UnityEngine.GameObject.Destroy(slot5.go)
-
-		slot5.sceneTf = nil
-	end
-
-	slot0._fireTileMap = {}
-end
-
-function slot0.createSightTileItem(slot0, slot1, slot2)
-	slot3 = nil
-
-	if slot0._sightTileMap[Va3ChessMapUtils.calPosIndex(slot1, slot2)] then
-		slot3 = slot0._sightTileMap[slot4]
-	end
-
-	if not slot3 then
-		slot3 = slot0:getUserDataTb_()
-		slot6 = nil
-		slot7 = gohelper.clone(((not Va3ChessMapUtils.IsEdgeTile(slot1, slot2) or slot0._loader:getAssetItem(Activity1_3ChessEnum.SceneResPath.SightEdgeTile)) and slot0._loader:getAssetItem(Activity1_3ChessEnum.SceneResPath["SightTile" .. math.random(3)])):GetResource(), slot0._sceneSight, "sightTile" .. slot1 .. "_" .. slot2)
-		slot3.go = slot7
-		slot3.sceneTf = slot7.transform
-		slot0._sightTileMap[slot4] = slot3
-	end
-
-	gohelper.setActive(slot3.go, true)
-	slot0:setTileBasePosition(slot3, slot1, slot2)
-
-	return slot3
-end
-
-function slot0.hideSightTileItem(slot0, slot1, slot2)
-	if slot0._sightTileMap[Va3ChessMapUtils.calPosIndex(slot1, slot2)] then
-		gohelper.setActive(slot0._sightTileMap[slot3].go, false)
+	if arg_21_0._fireTileMap[var_21_0] then
+		gohelper.setActive(arg_21_0._fireTileMap[var_21_0].go, false)
 	end
 end
 
-function slot0.removeSightTiles(slot0)
-	for slot4, slot5 in pairs(slot0._sightTileMap) do
-		UnityEngine.GameObject.Destroy(slot5.go)
+function var_0_0.removeFireTiles(arg_22_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._fireTileMap) do
+		UnityEngine.GameObject.Destroy(iter_22_1.go)
 
-		slot5.sceneTf = nil
+		iter_22_1.sceneTf = nil
 	end
 
-	slot0._sightTileMap = {}
+	arg_22_0._fireTileMap = {}
 end
 
-function slot0._onResetGame(slot0)
-	slot0:resetTiles()
+function var_0_0.createSightTileItem(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0
+	local var_23_1 = Va3ChessMapUtils.calPosIndex(arg_23_1, arg_23_2)
+
+	if arg_23_0._sightTileMap[var_23_1] then
+		var_23_0 = arg_23_0._sightTileMap[var_23_1]
+	end
+
+	if not var_23_0 then
+		local var_23_2 = Va3ChessMapUtils.IsEdgeTile(arg_23_1, arg_23_2)
+
+		var_23_0 = arg_23_0:getUserDataTb_()
+
+		local var_23_3
+
+		if var_23_2 then
+			var_23_3 = arg_23_0._loader:getAssetItem(Activity1_3ChessEnum.SceneResPath.SightEdgeTile)
+		else
+			local var_23_4 = math.random(3)
+
+			var_23_3 = arg_23_0._loader:getAssetItem(Activity1_3ChessEnum.SceneResPath["SightTile" .. var_23_4])
+		end
+
+		local var_23_5 = gohelper.clone(var_23_3:GetResource(), arg_23_0._sceneSight, "sightTile" .. arg_23_1 .. "_" .. arg_23_2)
+
+		var_23_0.go = var_23_5
+		var_23_0.sceneTf = var_23_5.transform
+		arg_23_0._sightTileMap[var_23_1] = var_23_0
+	end
+
+	gohelper.setActive(var_23_0.go, true)
+	arg_23_0:setTileBasePosition(var_23_0, arg_23_1, arg_23_2)
+
+	return var_23_0
+end
+
+function var_0_0.hideSightTileItem(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = Va3ChessMapUtils.calPosIndex(arg_24_1, arg_24_2)
+
+	if arg_24_0._sightTileMap[var_24_0] then
+		gohelper.setActive(arg_24_0._sightTileMap[var_24_0].go, false)
+	end
+end
+
+function var_0_0.removeSightTiles(arg_25_0)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._sightTileMap) do
+		UnityEngine.GameObject.Destroy(iter_25_1.go)
+
+		iter_25_1.sceneTf = nil
+	end
+
+	arg_25_0._sightTileMap = {}
+end
+
+function var_0_0._onResetGame(arg_26_0)
+	arg_26_0:resetTiles()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer()
 end
 
-function slot0._onReadGame(slot0)
-	slot0:resetTiles()
+function var_0_0._onReadGame(arg_27_0)
+	arg_27_0:resetTiles()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer()
 end
 
-function slot0._onEnterNextMap(slot0)
-	slot0:resetTiles()
+function var_0_0._onEnterNextMap(arg_28_0)
+	arg_28_0:resetTiles()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer()
 end
 
-function slot0.handleResetByResult(slot0)
-	slot0:removeFireTiles()
-	slot0:removeSightTiles()
-	slot0:resetTiles()
-	uv0.super.handleResetByResult(slot0)
+function var_0_0.handleResetByResult(arg_29_0)
+	arg_29_0:removeFireTiles()
+	arg_29_0:removeSightTiles()
+	arg_29_0:resetTiles()
+	var_0_0.super.handleResetByResult(arg_29_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:removeFireTiles()
-	slot0:removeSightTiles()
-	slot0:removeEvents()
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_30_0)
+	arg_30_0:removeFireTiles()
+	arg_30_0:removeSightTiles()
+	arg_30_0:removeEvents()
+	var_0_0.super.onDestroyView(arg_30_0)
 end
 
-return slot0
+return var_0_0

@@ -1,313 +1,371 @@
-module("modules.logic.tower.model.TowerPermanentModel", package.seeall)
+﻿module("modules.logic.tower.model.TowerPermanentModel", package.seeall)
 
-slot0 = class("TowerPermanentModel", MixScrollModel)
+local var_0_0 = class("TowerPermanentModel", MixScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:initDataInfo()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:initDataInfo()
 end
 
-function slot0.reInit(slot0)
-	slot0:initDataInfo()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:initDataInfo()
 
-	slot0.lastPassLayer = 0
-	slot0.localCurPassLayer = -1
+	arg_2_0.lastPassLayer = 0
+	arg_2_0.localCurPassLayer = -1
 end
 
-function slot0.initDataInfo(slot0)
-	slot0.permanentMoList = {}
-	slot0.ItemType = 1
-	slot0.PermanentInfoMap = {}
-	slot0.defaultStage = 1
-	slot0.curSelectStage = 1
-	slot0.curPassLayer = 0
-	slot0.curSelectLayer = 1
-	slot0.curSelectEpisodeId = 0
-	slot0.realSelectMap = {}
+function var_0_0.initDataInfo(arg_3_0)
+	arg_3_0.permanentMoList = {}
+	arg_3_0.ItemType = 1
+	arg_3_0.PermanentInfoMap = {}
+	arg_3_0.defaultStage = 1
+	arg_3_0.curSelectStage = 1
+	arg_3_0.curPassLayer = 0
+	arg_3_0.curSelectLayer = 1
+	arg_3_0.curSelectEpisodeId = 0
+	arg_3_0.realSelectMap = {}
 end
 
-function slot0.cleanData(slot0)
-	slot0:initDataInfo()
+function var_0_0.cleanData(arg_4_0)
+	arg_4_0:initDataInfo()
 end
 
-function slot0.initDefaultSelectStage(slot0, slot1)
-	slot0.curPassLayer = slot1 and slot1.passLayerId or 0
+function var_0_0.initDefaultSelectStage(arg_5_0, arg_5_1)
+	arg_5_0.curPassLayer = arg_5_1 and arg_5_1.passLayerId or 0
 
-	if slot0.curPassLayer == 0 then
-		slot0.defaultStage = 1
-		slot0.curSelectLayer = 1
+	if arg_5_0.curPassLayer == 0 then
+		arg_5_0.defaultStage = 1
+		arg_5_0.curSelectLayer = 1
 	else
-		slot0.defaultStage, slot0.curSelectLayer = slot0:getNewtStageAndLayer()
+		local var_5_0, var_5_1 = arg_5_0:getNewtStageAndLayer()
+
+		arg_5_0.defaultStage = var_5_0
+		arg_5_0.curSelectLayer = var_5_1
 	end
 
-	slot0.curSelectStage = slot0.defaultStage
-	slot0.realSelectMap[slot0.curSelectStage] = slot0.curSelectLayer
+	arg_5_0.curSelectStage = arg_5_0.defaultStage
+	arg_5_0.realSelectMap[arg_5_0.curSelectStage] = arg_5_0.curSelectLayer
 end
 
-function slot0.getNewtStageAndLayer(slot0)
-	slot4 = TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer + 1)
+function var_0_0.getNewtStageAndLayer(arg_6_0)
+	local var_6_0 = 1
+	local var_6_1 = 1
+	local var_6_2 = TowerConfig.instance:getPermanentEpisodeCo(arg_6_0.curPassLayer)
+	local var_6_3 = TowerConfig.instance:getPermanentEpisodeCo(arg_6_0.curPassLayer + 1)
 
-	if not TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer) then
-		logError("该层配置为空，请检查：" .. slot0.curPassLayer)
+	if not var_6_2 then
+		logError("该层配置为空，请检查：" .. arg_6_0.curPassLayer)
 
-		return 1, 1
+		return var_6_0, var_6_1
 	end
 
-	if not slot4 then
-		slot1 = slot3.stageId
-		slot2 = slot0:getPassLayerIndex()
-	elseif slot3.stageId ~= slot4.stageId then
-		if slot0:checkStageIsOnline(slot4.stageId) then
-			slot1 = slot4.stageId
-			slot2 = 1
+	if not var_6_3 then
+		var_6_0 = var_6_2.stageId
+		var_6_1 = arg_6_0:getPassLayerIndex()
+	elseif var_6_2.stageId ~= var_6_3.stageId then
+		if arg_6_0:checkStageIsOnline(var_6_3.stageId) then
+			var_6_0 = var_6_3.stageId
+			var_6_1 = 1
 		else
-			slot1 = slot3.stageId
-			slot2 = slot0:getPassLayerIndex()
+			var_6_0 = var_6_2.stageId
+			var_6_1 = arg_6_0:getPassLayerIndex()
 		end
 	else
-		slot1 = slot3.stageId
-		slot2 = slot0:getPassLayerIndex() + 1
+		var_6_0 = var_6_2.stageId
+		var_6_1 = arg_6_0:getPassLayerIndex() + 1
 	end
 
-	return slot1, slot2
+	return var_6_0, var_6_1
 end
 
-function slot0.getPassLayerIndex(slot0)
-	return TowerConfig.instance:getPermanentEpisodeCo(slot0.curPassLayer).index
+function var_0_0.getPassLayerIndex(arg_7_0)
+	return TowerConfig.instance:getPermanentEpisodeCo(arg_7_0.curPassLayer).index
 end
 
-function slot0.getStageCount(slot0)
-	return slot0.defaultStage
+function var_0_0.getStageCount(arg_8_0)
+	return arg_8_0.defaultStage
 end
 
-function slot0.checkhasLockTip(slot0)
-	return slot0.defaultStage < #slot0.permanentMoList
+function var_0_0.checkhasLockTip(arg_9_0)
+	return #arg_9_0.permanentMoList > arg_9_0.defaultStage
 end
 
-function slot0.InitData(slot0)
-	slot0:initDefaultSelectStage(TowerModel.instance:getCurPermanentMo())
+function var_0_0.InitData(arg_10_0)
+	local var_10_0 = TowerModel.instance:getCurPermanentMo()
 
-	slot0.permanentMoList = {}
+	arg_10_0:initDefaultSelectStage(var_10_0)
 
-	for slot5 = 1, slot0.defaultStage do
-		if not slot0.PermanentInfoMap[slot5] then
-			slot0.PermanentInfoMap[slot5] = TowerPermanentMo.New()
+	arg_10_0.permanentMoList = {}
+
+	for iter_10_0 = 1, arg_10_0.defaultStage do
+		local var_10_1 = arg_10_0.PermanentInfoMap[iter_10_0]
+
+		if not var_10_1 then
+			var_10_1 = TowerPermanentMo.New()
+			arg_10_0.PermanentInfoMap[iter_10_0] = var_10_1
 		end
 
-		slot6:init(slot5, TowerConfig.instance:getPermanentEpisodeStageCoList(slot5))
-		table.insert(slot0.permanentMoList, slot6)
+		local var_10_2 = TowerConfig.instance:getPermanentEpisodeStageCoList(iter_10_0)
+
+		var_10_1:init(iter_10_0, var_10_2)
+		table.insert(arg_10_0.permanentMoList, var_10_1)
 	end
 
-	slot2 = slot0.defaultStage + 1
+	local var_10_3 = arg_10_0.defaultStage + 1
+	local var_10_4 = TowerConfig.instance:getPermanentEpisodeStageCoList(var_10_3)
+	local var_10_5 = TowerConfig.instance:getTowerPermanentTimeCo(var_10_3)
 
-	if TowerConfig.instance:getPermanentEpisodeStageCoList(slot2) or TowerConfig.instance:getTowerPermanentTimeCo(slot2) then
-		slot5 = TowerPermanentMo.New()
-		slot0.PermanentInfoMap[slot2] = slot5
+	if var_10_4 or var_10_5 then
+		local var_10_6 = TowerPermanentMo.New()
 
-		slot5:init(slot2, {})
-		table.insert(slot0.permanentMoList, slot5)
+		arg_10_0.PermanentInfoMap[var_10_3] = var_10_6
+
+		var_10_6:init(var_10_3, {})
+		table.insert(arg_10_0.permanentMoList, var_10_6)
 	end
 
-	slot0:setList(slot0.permanentMoList)
+	arg_10_0:setList(arg_10_0.permanentMoList)
 end
 
-function slot0.initStageUnFoldState(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0.permanentMoList) do
-		slot7:setIsUnFold(slot7.stage == (slot1 or slot0:getCurSelectStage()))
+function var_0_0.initStageUnFoldState(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1 or arg_11_0:getCurSelectStage()
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.permanentMoList) do
+		iter_11_1:setIsUnFold(iter_11_1.stage == var_11_0)
 	end
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getInfoList(arg_12_0, arg_12_1)
+	local var_12_0 = {}
+	local var_12_1 = arg_12_0:getList()
 
-	for slot7, slot8 in ipairs(slot0:getList()) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot0.ItemType, slot8:getStageHeight(slot8:getIsUnFold()), slot7))
+	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+		local var_12_2 = iter_12_1:getIsUnFold()
+		local var_12_3 = SLFramework.UGUI.MixCellInfo.New(arg_12_0.ItemType, iter_12_1:getStageHeight(var_12_2), iter_12_0)
+
+		table.insert(var_12_0, var_12_3)
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getCurContentTotalHeight(slot0)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		slot2 = 0 + slot7:getStageHeight(slot7:getIsUnFold(slot7:getIsUnFold()))
+function var_0_0.getCurContentTotalHeight(arg_13_0)
+	local var_13_0 = arg_13_0:getList()
+	local var_13_1 = 0
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_2 = iter_13_1:getIsUnFold()
+
+		var_13_1 = var_13_1 + iter_13_1:getStageHeight(iter_13_1:getIsUnFold(var_13_2))
 	end
 
-	return slot2
+	return var_13_1
 end
 
-function slot0.setCurSelectStage(slot0, slot1)
-	slot0.curSelectStage = slot1
-	slot0.curSelectLayer = slot0.realSelectMap[slot1] or 1
-	slot0.curSelectEpisodeId = 0
+function var_0_0.setCurSelectStage(arg_14_0, arg_14_1)
+	arg_14_0.curSelectStage = arg_14_1
+	arg_14_0.curSelectLayer = arg_14_0.realSelectMap[arg_14_1] or 1
+	arg_14_0.curSelectEpisodeId = 0
 end
 
-function slot0.getCurSelectStage(slot0)
-	return slot0.curSelectStage
+function var_0_0.getCurSelectStage(arg_15_0)
+	return arg_15_0.curSelectStage
 end
 
-function slot0.setCurSelectLayer(slot0, slot1, slot2)
-	slot0.realSelectMap = {
-		[slot2] = slot1
-	}
-	slot0.curSelectLayer = slot1
-	slot0.curSelectEpisodeId = 0
+function var_0_0.setCurSelectLayer(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0.realSelectMap = {}
+	arg_16_0.realSelectMap[arg_16_2] = arg_16_1
+	arg_16_0.curSelectLayer = arg_16_1
+	arg_16_0.curSelectEpisodeId = 0
 end
 
-function slot0.getCurSelectLayer(slot0)
-	return slot0.curSelectLayer
+function var_0_0.getCurSelectLayer(arg_17_0)
+	return arg_17_0.curSelectLayer
 end
 
-function slot0.getRealSelectStage(slot0)
-	for slot4, slot5 in pairs(slot0.realSelectMap) do
-		if slot4 then
-			return slot4, slot5
+function var_0_0.getRealSelectStage(arg_18_0)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0.realSelectMap) do
+		if iter_18_0 then
+			return iter_18_0, iter_18_1
 		end
 	end
 end
 
-function slot0.setCurSelectEpisodeId(slot0, slot1)
-	slot0.curSelectEpisodeId = slot1
+function var_0_0.setCurSelectEpisodeId(arg_19_0, arg_19_1)
+	arg_19_0.curSelectEpisodeId = arg_19_1
 end
 
-function slot0.getCurSelectEpisodeId(slot0)
-	return slot0.curSelectEpisodeId
+function var_0_0.getCurSelectEpisodeId(arg_20_0)
+	return arg_20_0.curSelectEpisodeId
 end
 
-function slot0.checkLayerSubEpisodeFinish(slot0, slot1, slot2)
-	for slot8, slot9 in ipairs(TowerModel.instance:getCurPermanentMo():getLayerSubEpisodeList(slot1, true) or {}) do
-		if slot9.episodeId == slot2 then
-			return slot9.status == TowerEnum.PassEpisodeState.Pass, slot9
+function var_0_0.checkLayerSubEpisodeFinish(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = TowerModel.instance:getCurPermanentMo():getLayerSubEpisodeList(arg_21_1, true) or {}
+
+	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+		if iter_21_1.episodeId == arg_21_2 then
+			return iter_21_1.status == TowerEnum.PassEpisodeState.Pass, iter_21_1
 		end
 	end
 
 	return false
 end
 
-function slot0.getFirstUnFinishEipsode(slot0, slot1)
-	for slot7, slot8 in ipairs(TowerModel.instance:getCurPermanentMo():getLayerSubEpisodeList(slot1, true) or {}) do
-		if slot8.status == TowerEnum.PassEpisodeState.NotPass then
-			return slot8, slot7
+function var_0_0.getFirstUnFinishEipsode(arg_22_0, arg_22_1)
+	local var_22_0 = TowerModel.instance:getCurPermanentMo():getLayerSubEpisodeList(arg_22_1, true) or {}
+
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		if iter_22_1.status == TowerEnum.PassEpisodeState.NotPass then
+			return iter_22_1, iter_22_0
 		end
 	end
 end
 
-function slot0.checkLayerUnlock(slot0, slot1)
-	slot2 = TowerModel.instance:getCurPermanentMo()
+function var_0_0.checkLayerUnlock(arg_23_0, arg_23_1)
+	local var_23_0 = TowerModel.instance:getCurPermanentMo()
+	local var_23_1 = arg_23_1.preLayerId
 
-	if slot1.preLayerId == 0 then
+	if var_23_1 == 0 then
 		return true
 	else
-		return slot3 <= slot2.passLayerId
+		return var_23_1 <= var_23_0.passLayerId
 	end
 end
 
-function slot0.getCurPermanentPassLayer(slot0)
+function var_0_0.getCurPermanentPassLayer(arg_24_0)
 	return TowerModel.instance:getCurPermanentMo().passLayerId or 0
 end
 
-function slot0.getCurPassEpisodeId(slot0)
-	if TowerConfig.instance:getPermanentEpisodeCo((TowerModel.instance:getCurPermanentMo().passLayerId or 0) + 1) and slot4.isElite == 1 then
-		for slot9, slot10 in ipairs(string.splitToNumber(slot4.episodeIds, "|")) do
-			if slot1:getSubEpisodeMoByEpisodeId(slot10) and slot11.status == TowerEnum.PassEpisodeState.Pass then
-				return slot10
+function var_0_0.getCurPassEpisodeId(arg_25_0)
+	local var_25_0 = TowerModel.instance:getCurPermanentMo()
+	local var_25_1 = var_25_0.passLayerId or 0
+	local var_25_2 = var_25_1 + 1
+	local var_25_3 = TowerConfig.instance:getPermanentEpisodeCo(var_25_2)
+
+	if var_25_3 and var_25_3.isElite == 1 then
+		local var_25_4 = string.splitToNumber(var_25_3.episodeIds, "|")
+
+		for iter_25_0, iter_25_1 in ipairs(var_25_4) do
+			local var_25_5 = var_25_0:getSubEpisodeMoByEpisodeId(iter_25_1)
+
+			if var_25_5 and var_25_5.status == TowerEnum.PassEpisodeState.Pass then
+				return iter_25_1
 			end
 		end
 	end
 
-	if not TowerConfig.instance:getPermanentEpisodeCo(slot2) then
+	local var_25_6 = TowerConfig.instance:getPermanentEpisodeCo(var_25_1)
+
+	if not var_25_6 then
 		return 0
 	end
 
-	if slot5.isElite == 1 then
-		slot6 = string.splitToNumber(slot5.episodeIds, "|")
+	if var_25_6.isElite == 1 then
+		local var_25_7 = string.splitToNumber(var_25_6.episodeIds, "|")
 
-		return slot6[#slot6]
+		return var_25_7[#var_25_7]
 	else
-		return tonumber(slot5.episodeIds)
+		return tonumber(var_25_6.episodeIds)
 	end
 end
 
-function slot0.setLastPassLayer(slot0, slot1)
-	slot0.lastPassLayer = slot1
+function var_0_0.setLastPassLayer(arg_26_0, arg_26_1)
+	arg_26_0.lastPassLayer = arg_26_1
 end
 
-function slot0.setLocalPassLayer(slot0, slot1)
-	slot0.localCurPassLayer = slot1
+function var_0_0.setLocalPassLayer(arg_27_0, arg_27_1)
+	arg_27_0.localCurPassLayer = arg_27_1
 end
 
-function slot0.getLocalPassLayer(slot0)
-	return slot0.localCurPassLayer
+function var_0_0.getLocalPassLayer(arg_28_0)
+	return arg_28_0.localCurPassLayer
 end
 
-function slot0.isNewPassLayer(slot0)
-	return TowerModel.instance:getCurPermanentMo().passLayerId == slot0.lastPassLayer and slot0.localCurPassLayer < slot1.passLayerId
+function var_0_0.isNewPassLayer(arg_29_0)
+	local var_29_0 = TowerModel.instance:getCurPermanentMo()
+
+	return var_29_0.passLayerId == arg_29_0.lastPassLayer and var_29_0.passLayerId > arg_29_0.localCurPassLayer
 end
 
-function slot0.isNewStage(slot0)
-	if TowerConfig.instance:getPermanentEpisodeCo(TowerModel.instance:getCurPermanentMo().passLayerId).stageId < slot0.defaultStage and slot0:isNewPassLayer() then
-		return true, slot0.defaultStage, slot2.stageId
+function var_0_0.isNewStage(arg_30_0)
+	local var_30_0 = TowerModel.instance:getCurPermanentMo()
+	local var_30_1 = TowerConfig.instance:getPermanentEpisodeCo(var_30_0.passLayerId)
+
+	if arg_30_0.defaultStage > var_30_1.stageId and arg_30_0:isNewPassLayer() then
+		return true, arg_30_0.defaultStage, var_30_1.stageId
 	end
 
-	return false, slot0.defaultStage, slot2.stageId
+	return false, arg_30_0.defaultStage, var_30_1.stageId
 end
 
-function slot0.checkStageIsOnline(slot0, slot1)
-	if string.nilorempty(TowerConfig.instance:getTowerPermanentTimeCo(slot1).time) then
+function var_0_0.checkStageIsOnline(arg_31_0, arg_31_1)
+	local var_31_0 = TowerConfig.instance:getTowerPermanentTimeCo(arg_31_1)
+
+	if string.nilorempty(var_31_0.time) then
 		return true
 	else
-		slot3 = string.splitToNumber(slot2.time, "-")
+		local var_31_1 = string.splitToNumber(var_31_0.time, "-")
+		local var_31_2 = TimeUtil.timeToTimeStamp(var_31_1[1], var_31_1[2], var_31_1[3], TimeDispatcher.DailyRefreshTime) - ServerTime.now()
 
-		if TimeUtil.timeToTimeStamp(slot3[1], slot3[2], slot3[3], TimeDispatcher.DailyRefreshTime) - ServerTime.now() <= 0 then
+		if var_31_2 <= 0 then
 			return true
 		else
-			return false, slot5
+			return false, var_31_2
 		end
 	end
 end
 
-function slot0.getCurUnfoldStage(slot0)
-	for slot4, slot5 in ipairs(slot0.permanentMoList) do
-		if slot5.isUnFold then
-			return slot5.stage
+function var_0_0.getCurUnfoldStage(arg_32_0)
+	for iter_32_0, iter_32_1 in ipairs(arg_32_0.permanentMoList) do
+		if iter_32_1.isUnFold then
+			return iter_32_1.stage
 		end
 	end
 
-	return slot0.curSelectStage
+	return arg_32_0.curSelectStage
 end
 
-function slot0.checkNewLayerIsElite(slot0)
-	if not TowerConfig.instance:getPermanentEpisodeCo((TowerModel.instance:getCurPermanentMo().passLayerId or 0) + 1) then
+function var_0_0.checkNewLayerIsElite(arg_33_0)
+	local var_33_0 = (TowerModel.instance:getCurPermanentMo().passLayerId or 0) + 1
+	local var_33_1 = TowerConfig.instance:getPermanentEpisodeCo(var_33_0)
+
+	if not var_33_1 then
 		return false
 	end
 
-	return slot4.isElite == 1
+	return var_33_1.isElite == 1
 end
 
-function slot0.localMopUpSaveKey(slot0)
+function var_0_0.localMopUpSaveKey(arg_34_0)
 	return TowerEnum.LocalPrefsKey.OpenMopUpViewWithFullTicket
 end
 
-function slot0.checkCanShowMopUpReddot(slot0)
+function var_0_0.checkCanShowMopUpReddot(arg_35_0)
 	if not TowerController.instance:isOpen() then
 		return false
 	end
 
-	slot1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
+	local var_35_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
+	local var_35_1 = TowerModel.instance:getCurPermanentMo()
 
-	if not TowerModel.instance:getCurPermanentMo() then
+	if not var_35_1 then
 		return false
 	end
 
-	if not (tonumber(slot1) <= slot2.passLayerId) then
+	if not (var_35_1.passLayerId >= tonumber(var_35_0)) then
 		return false
 	end
 
-	if TimeUtil.getDayFirstLoginRed(TowerEnum.LocalPrefsKey.MopUpDailyRefresh) and TowerModel.instance:getMopUpTimes() == tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)) then
+	local var_35_2 = TimeUtil.getDayFirstLoginRed(TowerEnum.LocalPrefsKey.MopUpDailyRefresh)
+	local var_35_3 = TowerModel.instance:getMopUpTimes()
+	local var_35_4 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
+
+	if var_35_2 and var_35_3 == tonumber(var_35_4) then
 		return true
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

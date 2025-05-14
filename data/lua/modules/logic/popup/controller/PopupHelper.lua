@@ -1,23 +1,27 @@
-module("modules.logic.popup.controller.PopupHelper", package.seeall)
+﻿module("modules.logic.popup.controller.PopupHelper", package.seeall)
 
-slot0 = class("PopupHelper")
+local var_0_0 = class("PopupHelper")
 
-function slot0.checkInFight()
-	return GameSceneMgr.instance:isFightScene()
+function var_0_0.checkInFight()
+	return (GameSceneMgr.instance:isFightScene())
 end
 
-function slot0.checkInGuide()
-	slot0 = false
+function var_0_0.checkInGuide()
+	local var_2_0 = false
+	local var_2_1 = GuideController.instance:isGuiding()
+	local var_2_2 = ViewMgr.instance:isOpen(ViewName.GuideView)
+	local var_2_3 = GuideModel.instance:lastForceGuideId()
+	local var_2_4 = GuideModel.instance:isGuideFinish(var_2_3)
 
-	if GuideController.instance:isGuiding() or ViewMgr.instance:isOpen(ViewName.GuideView) or not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
-		slot0 = true
+	if var_2_1 or var_2_2 or not var_2_4 then
+		var_2_0 = true
 	end
 
-	return slot0
+	return var_2_0
 end
 
-function slot0.checkInSummonDrawing()
-	return SummonModel.instance:getIsDrawing()
+function var_0_0.checkInSummonDrawing()
+	return (SummonModel.instance:getIsDrawing())
 end
 
-return slot0
+return var_0_0

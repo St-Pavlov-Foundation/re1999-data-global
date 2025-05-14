@@ -1,3 +1,3 @@
-module("modules.logic.explore.model.mo.unit.ExploreSequenceCountUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreSequenceCountUnitMO", package.seeall)
 
-return class("ExploreSequenceCountUnitMO", ExploreWaitActiveAnimUnitMO)
+return (class("ExploreSequenceCountUnitMO", ExploreWaitActiveAnimUnitMO))

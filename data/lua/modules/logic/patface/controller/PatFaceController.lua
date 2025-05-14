@@ -1,72 +1,87 @@
-module("modules.logic.patface.controller.PatFaceController", package.seeall)
+﻿module("modules.logic.patface.controller.PatFaceController", package.seeall)
 
-slot0 = class("PatFaceController", BaseController)
+local var_0_0 = class("PatFaceController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
 end
 
-function slot0.reInit(slot0)
-	slot0:_destroyPopupFlow()
+function var_0_0.reInit(arg_4_0)
+	arg_4_0:_destroyPopupFlow()
 end
 
-function slot0._onFinishAllPatFace(slot0)
-	if slot0._skipBlurViewName then
-		PostProcessingMgr.instance:setCloseSkipRefreshBlur(slot0._skipBlurViewName, nil)
+function var_0_0._onFinishAllPatFace(arg_5_0)
+	if arg_5_0._skipBlurViewName then
+		PostProcessingMgr.instance:setCloseSkipRefreshBlur(arg_5_0._skipBlurViewName, nil)
 
-		slot0._skipBlurViewName = nil
+		arg_5_0._skipBlurViewName = nil
 
 		PostProcessingMgr.instance:forceRefreshCloseBlur()
 	end
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if not PatFaceModel.instance:getIsPatting() or not slot0._patFaceViewNameMap or not slot0._patFaceFlow then
+function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
+	if not PatFaceModel.instance:getIsPatting() or not arg_6_0._patFaceViewNameMap or not arg_6_0._patFaceFlow then
 		return
 	end
 
-	if slot0._patFaceViewNameMap[slot1] then
-		slot0._skipBlurViewName = slot1
+	if arg_6_0._patFaceViewNameMap[arg_6_1] then
+		arg_6_0._skipBlurViewName = arg_6_1
 
-		PostProcessingMgr.instance:setCloseSkipRefreshBlur(slot0._skipBlurViewName, true)
-		slot0:_checkAndCloseTryCallView(slot1)
+		PostProcessingMgr.instance:setCloseSkipRefreshBlur(arg_6_0._skipBlurViewName, true)
+		arg_6_0:_checkAndCloseTryCallView(arg_6_1)
 	end
 end
 
-function slot0._checkAndCloseTryCallView(slot0, slot1)
-	if ViewMgr.instance:isOpenFinish(slot1) and ViewMgr.instance:getContainer(slot1) and slot2.isHasTryCallFail and slot2:isHasTryCallFail() then
-		logError(string.format("PatFace view open has error, try close . name:[%s] .", slot1))
-		ViewMgr.instance:closeView(slot1)
+function var_0_0._checkAndCloseTryCallView(arg_7_0, arg_7_1)
+	if ViewMgr.instance:isOpenFinish(arg_7_1) then
+		local var_7_0 = ViewMgr.instance:getContainer(arg_7_1)
+
+		if var_7_0 and var_7_0.isHasTryCallFail and var_7_0:isHasTryCallFail() then
+			logError(string.format("PatFace view open has error, try close . name:[%s] .", arg_7_1))
+			ViewMgr.instance:closeView(arg_7_1)
+		end
 	end
 end
 
-function slot0._initPatFaceFlow(slot0)
-	slot0:_destroyPopupFlow()
+function var_0_0._initPatFaceFlow(arg_8_0)
+	arg_8_0:_destroyPopupFlow()
 
-	slot0._patFaceFlow = PatFaceFlowSequence.New()
-	slot0._patFaceViewNameMap = {}
+	arg_8_0._patFaceFlow = PatFaceFlowSequence.New()
+	arg_8_0._patFaceViewNameMap = {}
 
-	for slot5, slot6 in ipairs(PatFaceConfig.instance:getPatFaceConfigList()) do
-		slot0._patFaceViewNameMap[slot6.config.patFaceViewName] = true
+	local var_8_0 = PatFaceConfig.instance:getPatFaceConfigList()
 
-		slot0._patFaceFlow:addWork((PatFaceEnum.patFaceCustomWork[slot6.id] or PatFaceWorkBase).New(slot7))
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		local var_8_1 = iter_8_1.id
+
+		arg_8_0._patFaceViewNameMap[iter_8_1.config.patFaceViewName] = true
+
+		local var_8_2 = (PatFaceEnum.patFaceCustomWork[var_8_1] or PatFaceWorkBase).New(var_8_1)
+
+		arg_8_0._patFaceFlow:addWork(var_8_2)
 	end
 
-	slot0._patFaceFlow:registerDoneListener(slot0._finishAllPatFace, slot0)
+	arg_8_0._patFaceFlow:registerDoneListener(arg_8_0._finishAllPatFace, arg_8_0)
 end
 
-function slot0.startPatFace(slot0, slot1)
+function var_0_0.startPatFace(arg_9_0, arg_9_1)
 	if PatFaceModel.instance:getIsSkipPatFace() then
 		return false
 	end
 
-	if GuideModel.instance:isDoingClickGuide() and not GuideController.instance:isForbidGuides() then
+	local var_9_0 = GuideModel.instance:isDoingClickGuide()
+	local var_9_1 = GuideController.instance:isForbidGuides()
+
+	if var_9_0 and not var_9_1 then
 		return false
 	end
 
@@ -74,41 +89,41 @@ function slot0.startPatFace(slot0, slot1)
 		return false
 	end
 
-	if not slot0._patFaceFlow then
-		slot0:_initPatFaceFlow()
+	if not arg_9_0._patFaceFlow then
+		arg_9_0:_initPatFaceFlow()
 	end
 
 	PatFaceModel.instance:setIsPatting(true)
-	slot0._patFaceFlow:start({
-		patFaceType = slot1
+	arg_9_0._patFaceFlow:start({
+		patFaceType = arg_9_1
 	})
 
 	return true
 end
 
-function slot0._finishAllPatFace(slot0)
+function var_0_0._finishAllPatFace(arg_10_0)
 	PatFaceModel.instance:setIsPatting(false)
 
-	if slot0._patFaceFlow then
-		slot0._patFaceFlow:reset()
+	if arg_10_0._patFaceFlow then
+		arg_10_0._patFaceFlow:reset()
 	end
 
-	slot0:_onFinishAllPatFace()
-	slot0:dispatchEvent(PatFaceEvent.FinishAllPatFace)
+	arg_10_0:_onFinishAllPatFace()
+	arg_10_0:dispatchEvent(PatFaceEvent.FinishAllPatFace)
 end
 
-function slot0._destroyPopupFlow(slot0)
+function var_0_0._destroyPopupFlow(arg_11_0)
 	PatFaceModel.instance:setIsPatting(false)
 
-	if not slot0._patFaceFlow then
+	if not arg_11_0._patFaceFlow then
 		return
 	end
 
-	slot0._patFaceFlow:destroy()
+	arg_11_0._patFaceFlow:destroy()
 
-	slot0._patFaceFlow = nil
+	arg_11_0._patFaceFlow = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

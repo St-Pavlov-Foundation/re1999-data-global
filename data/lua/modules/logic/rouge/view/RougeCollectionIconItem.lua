@@ -1,58 +1,60 @@
-module("modules.logic.rouge.view.RougeCollectionIconItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionIconItem", package.seeall)
 
-slot0 = class("RougeCollectionIconItem", UserDataDispose)
+local var_0_0 = class("RougeCollectionIconItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.viewGO = slot1
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_icon")
-	slot0._gogridcontainer = gohelper.findChild(slot0.viewGO, "#go_gridcontainer")
-	slot0._gogrid = gohelper.findChild(slot0.viewGO, "#go_gridcontainer/#go_grid")
-	slot0._goholetool = gohelper.findChild(slot0.viewGO, "#go_holetool")
-	slot0._goholeitem = gohelper.findChild(slot0.viewGO, "#go_holetool/#go_holeitem")
-	slot0._gridList = slot0:getUserDataTb_()
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
+	arg_1_0._gogridcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_gridcontainer")
+	arg_1_0._gogrid = gohelper.findChild(arg_1_0.viewGO, "#go_gridcontainer/#go_grid")
+	arg_1_0._goholetool = gohelper.findChild(arg_1_0.viewGO, "#go_holetool")
+	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "#go_holetool/#go_holeitem")
+	arg_1_0._gridList = arg_1_0:getUserDataTb_()
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = 46
-slot2 = 46
+local var_0_1 = 46
+local var_0_2 = 46
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(slot1)
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(arg_4_1)
 
-	slot0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot1))
-	RougeCollectionHelper.loadShapeGrid(slot1, slot0._gogridcontainer, slot0._gogrid, slot0._gridList)
-	gohelper.setActive(slot0.viewGO, true)
+	arg_4_0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_4_1))
+	RougeCollectionHelper.loadShapeGrid(arg_4_1, arg_4_0._gogridcontainer, arg_4_0._gogrid, arg_4_0._gridList)
+	gohelper.setActive(arg_4_0.viewGO, true)
 end
 
-function slot0.setPerCellSize(slot0, slot1, slot2)
-	RougeCollectionHelper.computeAndSetCollectionIconScale(slot0._collectionCfg.id, slot0._simageicon.transform, slot1, slot2)
+function var_0_0.setPerCellSize(arg_5_0, arg_5_1, arg_5_2)
+	RougeCollectionHelper.computeAndSetCollectionIconScale(arg_5_0._collectionCfg.id, arg_5_0._simageicon.transform, arg_5_1, arg_5_2)
 
-	slot0._perCellWidth = slot1 or uv0
-	slot0._perCellHeight = slot2 or uv1
+	arg_5_0._perCellWidth = arg_5_1 or var_0_1
+	arg_5_0._perCellHeight = arg_5_2 or var_0_2
 end
 
-function slot0.setCollectionIconSize(slot0, slot1, slot2)
-	recthelper.setSize(slot0._simageicon.transform, slot1, slot2)
+function var_0_0.setCollectionIconSize(arg_6_0, arg_6_1, arg_6_2)
+	recthelper.setSize(arg_6_0._simageicon.transform, arg_6_1, arg_6_2)
 end
 
-function slot0.setHolesVisible(slot0, slot1)
-	gohelper.setActive(slot0._goholetool, slot1)
+function var_0_0.setHolesVisible(arg_7_0, arg_7_1)
+	gohelper.setActive(arg_7_0._goholetool, arg_7_1)
 end
 
-function slot0.destroy(slot0)
-	slot0._simageicon:UnLoadImage()
-	slot0:__onDispose(slot0)
+function var_0_0.destroy(arg_8_0)
+	arg_8_0._simageicon:UnLoadImage()
+	arg_8_0:__onDispose(arg_8_0)
 end
 
-return slot0
+return var_0_0

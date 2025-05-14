@@ -1,47 +1,49 @@
-module("modules.logic.versionactivity1_5.act142.view.Activity142TaskViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.view.Activity142TaskViewContainer", package.seeall)
 
-slot0 = class("Activity142TaskViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity142TaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_TaskList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = Activity142TaskItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.cellWidth = 1160
-	slot2.cellHeight = 165
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	for slot7 = 1, 10 do
+	var_1_1.scrollGOPath = "#scroll_TaskList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = Activity142TaskItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.cellWidth = 1160
+	var_1_1.cellHeight = 165
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 10 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
 	end
 
-	table.insert(slot1, LuaListScrollViewWithAnimator.New(Activity142TaskListModel.instance, slot2, {
-		[slot7] = (slot7 - 1) * 0.06
-	}))
-	table.insert(slot1, Activity142TaskView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Activity142TaskListModel.instance, var_1_1, var_1_2))
+	table.insert(var_1_0, Activity142TaskView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_3_0:closeThis()
 end
 
-return slot0
+return var_0_0

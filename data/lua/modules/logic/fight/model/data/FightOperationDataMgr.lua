@@ -1,175 +1,182 @@
-module("modules.logic.fight.model.data.FightOperationDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightOperationDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightOperationDataMgr")
-slot0.StateType = {
+local var_0_0 = FightDataClass("FightOperationDataMgr")
+
+var_0_0.StateType = {
 	PlayHandCard = GameUtil.getEnumId(),
 	PlayAssistBossCard = GameUtil.getEnumId(),
 	PlayPlayerFinisherSkill = GameUtil.getEnumId(),
 	MoveHandCard = GameUtil.getEnumId()
 }
 
-function slot0.onConstructor(slot0)
-	slot0.operationStates = {}
-	slot0.operationList = {}
-	slot0.extraMoveUsedCount = 0
-	slot0.playerFinisherSkillUsedCount = nil
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.operationStates = {}
+	arg_1_0.operationList = {}
+	arg_1_0.extraMoveUsedCount = 0
+	arg_1_0.playerFinisherSkillUsedCount = nil
 end
 
-function slot0.clearClientSimulationData(slot0)
-	tabletool.clear(slot0.operationList)
-	tabletool.clear(slot0.operationStates)
+function var_0_0.clearClientSimulationData(arg_2_0)
+	tabletool.clear(arg_2_0.operationList)
+	tabletool.clear(arg_2_0.operationStates)
 
-	slot0.extraMoveUsedCount = 0
-	slot0.playerFinisherSkillUsedCount = nil
+	arg_2_0.extraMoveUsedCount = 0
+	arg_2_0.playerFinisherSkillUsedCount = nil
 end
 
-function slot0.onCancelOperation(slot0)
-	slot0:clearClientSimulationData()
+function var_0_0.onCancelOperation(arg_3_0)
+	arg_3_0:clearClientSimulationData()
 end
 
-function slot0.onStageChanged(slot0)
-	if #slot0.operationStates > 0 then
+function var_0_0.onStageChanged(arg_4_0)
+	if #arg_4_0.operationStates > 0 then
 		logError("战斗阶段改变了，但是操作状态列表中还有值，")
 	end
 
-	slot0:clearClientSimulationData()
+	arg_4_0:clearClientSimulationData()
 end
 
-function slot0.enterOperationState(slot0, slot1)
-	table.insert(slot0.operationStates, slot1)
+function var_0_0.enterOperationState(arg_5_0, arg_5_1)
+	table.insert(arg_5_0.operationStates, arg_5_1)
 end
 
-function slot0.exitOperationState(slot0, slot1)
-	for slot5 = #slot0.operationStates, 1, -1 do
-		if slot0.operationStates[slot5] == slot1 then
-			table.remove(slot0.operationStates, slot5)
+function var_0_0.exitOperationState(arg_6_0, arg_6_1)
+	for iter_6_0 = #arg_6_0.operationStates, 1, -1 do
+		if arg_6_0.operationStates[iter_6_0] == arg_6_1 then
+			table.remove(arg_6_0.operationStates, iter_6_0)
 		end
 	end
 end
 
-function slot0.addOperation(slot0, slot1)
-	table.insert(slot0.operationList, slot1)
+function var_0_0.addOperation(arg_7_0, arg_7_1)
+	table.insert(arg_7_0.operationList, arg_7_1)
 end
 
-function slot0.newOperation(slot0)
-	slot1 = FightOperationItemData.New()
+function var_0_0.newOperation(arg_8_0)
+	local var_8_0 = FightOperationItemData.New()
 
-	table.insert(slot0.operationList, slot1)
+	table.insert(arg_8_0.operationList, var_8_0)
 
-	return slot1
+	return var_8_0
 end
 
-function slot0.getEntityOps(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getEntityOps(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = {}
 
-	for slot7, slot8 in ipairs(slot0.operationList) do
-		if slot8.belongToEntityId == slot1 and (not slot2 or slot8.operType == slot2) then
-			table.insert(slot3, slot8)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.operationList) do
+		if iter_9_1.belongToEntityId == arg_9_1 and (not arg_9_2 or iter_9_1.operType == arg_9_2) then
+			table.insert(var_9_0, iter_9_1)
 		end
 	end
 
-	return slot3
+	return var_9_0
 end
 
-function slot0.getShowOpActList(slot0)
-	slot1 = {}
+function var_0_0.getShowOpActList(arg_10_0)
+	local var_10_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.operationList) do
-		if slot0:canShowOpAct(slot6) then
-			table.insert(slot1, slot6)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.operationList) do
+		if arg_10_0:canShowOpAct(iter_10_1) then
+			table.insert(var_10_0, iter_10_1)
 		end
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.canShowOpAct(slot0, slot1)
-	if not slot1:isMoveUniversal() and (not slot1:isMoveCard() or not FightCardModel.instance._cardMO:isUnlimitMoveCard() or slot1:isPlayCard()) then
+function var_0_0.canShowOpAct(arg_11_0, arg_11_1)
+	if not arg_11_1:isMoveUniversal() and (not (arg_11_1:isMoveCard() and FightCardModel.instance._cardMO:isUnlimitMoveCard()) or arg_11_1:isPlayCard()) then
 		return true
 	end
 end
 
-function slot0.getPlayCardOpList(slot0)
-	slot1 = {}
+function var_0_0.getPlayCardOpList(arg_12_0)
+	local var_12_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.operationList) do
-		if slot6:isPlayCard() then
-			table.insert(slot1, slot6)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.operationList) do
+		if iter_12_1:isPlayCard() then
+			table.insert(var_12_0, iter_12_1)
 		end
 	end
 
-	return slot1
+	return var_12_0
 end
 
-function slot0.getMoveCardOpList(slot0)
-	slot1 = {}
+function var_0_0.getMoveCardOpList(arg_13_0)
+	local var_13_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.operationList) do
-		if slot6:isMoveCard() then
-			table.insert(slot1, slot6)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.operationList) do
+		if iter_13_1:isMoveCard() then
+			table.insert(var_13_0, iter_13_1)
 		end
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.getMoveCardOpCostActList(slot0)
-	slot1 = {}
+function var_0_0.getMoveCardOpCostActList(arg_14_0)
+	local var_14_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.operationList) do
-		if slot6:isMoveCard() then
-			table.insert(slot1, slot6)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.operationList) do
+		if iter_14_1:isMoveCard() then
+			table.insert(var_14_0, iter_14_1)
 		end
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.isCardOpEnd(slot0)
-	if #slot0.dataMgr.handCardMgr.handCard == 0 then
+function var_0_0.isCardOpEnd(arg_15_0)
+	local var_15_0 = arg_15_0.dataMgr.handCardMgr.handCard
+
+	if #var_15_0 == 0 then
 		return true
 	end
 
-	slot3 = slot0.dataMgr.fieldMgr
-	slot6 = 0
+	local var_15_1 = arg_15_0.dataMgr.fieldMgr
+	local var_15_2 = arg_15_0.operationList
+	local var_15_3 = 0
+	local var_15_4 = 0
 
-	for slot10, slot11 in ipairs(slot0.operationList) do
-		if slot11:isPlayCard() then
-			slot5 = 0 + slot11.costActPoint
-		elseif slot11:isMoveCard() then
-			if not slot3:isUnlimitMoveCard() and slot3.extraMoveAct < slot6 + 1 then
-				slot5 = slot5 + slot11.costActPoint
+	for iter_15_0, iter_15_1 in ipairs(var_15_2) do
+		if iter_15_1:isPlayCard() then
+			var_15_3 = var_15_3 + iter_15_1.costActPoint
+		elseif iter_15_1:isMoveCard() then
+			var_15_4 = var_15_4 + 1
+
+			if not var_15_1:isUnlimitMoveCard() and var_15_4 > var_15_1.extraMoveAct then
+				var_15_3 = var_15_3 + iter_15_1.costActPoint
 			end
 		end
 	end
 
-	slot7 = slot3.actPoint
+	local var_15_5 = var_15_1.actPoint
 
-	if slot3:isSeason2() then
-		slot7 = 1
+	if var_15_1:isSeason2() then
+		var_15_5 = 1
 
-		if #slot4 >= 1 then
+		if #var_15_2 >= 1 then
 			return true
 		end
 	end
 
-	if slot7 <= slot5 then
+	if var_15_5 <= var_15_3 then
 		return true
 	end
 
-	if FightCardDataHelper.allFrozenCard(slot1) then
+	if FightCardDataHelper.allFrozenCard(var_15_0) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getLeftExtraMoveCount(slot0)
-	if slot0.dataMgr.fieldMgr.extraMoveAct < 0 then
-		return slot0.dataMgr.fieldMgr.extraMoveAct
+function var_0_0.getLeftExtraMoveCount(arg_16_0)
+	if arg_16_0.dataMgr.fieldMgr.extraMoveAct < 0 then
+		return arg_16_0.dataMgr.fieldMgr.extraMoveAct
 	end
 
-	return slot0.dataMgr.fieldMgr.extraMoveAct - slot0.extraMoveUsedCount
+	return arg_16_0.dataMgr.fieldMgr.extraMoveAct - arg_16_0.extraMoveUsedCount
 end
 
-return slot0
+return var_0_0

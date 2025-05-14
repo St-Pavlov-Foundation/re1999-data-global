@@ -1,68 +1,70 @@
-module("modules.logic.weekwalk.view.WeekWalkRespawnView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkRespawnView", package.seeall)
 
-slot0 = class("WeekWalkRespawnView", BaseView)
+local var_0_0 = class("WeekWalkRespawnView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gorolecontainer = gohelper.findChild(slot0.viewGO, "#go_rolecontainer")
-	slot0._scrollcard = gohelper.findChildScrollRect(slot0.viewGO, "#go_rolecontainer/#scroll_card")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorolecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer")
+	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/#scroll_card")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	if not slot0._heroMO then
+function var_0_0._btnconfirmOnClick(arg_4_0)
+	if not arg_4_0._heroMO then
 		GameFacade.showToast(ToastEnum.AdventureRespawn2)
 
 		return
 	end
 
-	WeekwalkRpc.instance:sendWeekwalkRespawnRequest(slot0.info.elementId, slot0._heroMO.heroId)
+	WeekwalkRpc.instance:sendWeekwalkRespawnRequest(arg_4_0.info.elementId, arg_4_0._heroMO.heroId)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._imgBg = gohelper.findChildSingleImage(slot0.viewGO, "bg/bgimg")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._imgBg = gohelper.findChildSingleImage(arg_5_0.viewGO, "bg/bgimg")
 
-	slot0._imgBg:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
+	arg_5_0._imgBg:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
 	HeroGroupEditListModel.instance:setParam(nil, WeekWalkModel.instance:getInfo())
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.info = slot0.viewParam
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.info = arg_7_0.viewParam
 
 	WeekWalkRespawnModel.instance:setRespawnList()
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, slot0._onHeroItemClick, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.WeekWalkRespawnReply, slot0._onWeekWalkRespawnReply, slot0)
+	arg_7_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_7_0._onHeroItemClick, arg_7_0)
+	arg_7_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.WeekWalkRespawnReply, arg_7_0._onWeekWalkRespawnReply, arg_7_0)
 end
 
-function slot0._onHeroItemClick(slot0, slot1)
-	slot0._heroMO = slot1
+function var_0_0._onHeroItemClick(arg_8_0, arg_8_1)
+	arg_8_0._heroMO = arg_8_1
 end
 
-function slot0._onWeekWalkRespawnReply(slot0)
+function var_0_0._onWeekWalkRespawnReply(arg_9_0)
 	GameFacade.showToast(ToastEnum.AdventureRespawn3)
-	slot0:closeThis()
+	arg_9_0:closeThis()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._imgBg:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._imgBg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

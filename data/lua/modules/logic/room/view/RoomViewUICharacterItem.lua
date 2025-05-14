@@ -1,236 +1,260 @@
-module("modules.logic.room.view.RoomViewUICharacterItem", package.seeall)
+﻿module("modules.logic.room.view.RoomViewUICharacterItem", package.seeall)
 
-slot0 = class("RoomViewUICharacterItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUICharacterItem", RoomViewUIBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._heroId = slot1
+	arg_1_0._heroId = arg_1_1
 end
 
-function slot0._customOnInit(slot0)
-	slot0._simageheroicon = gohelper.findChildImage(slot0._gocontainer, "mask/simage_heroicon")
-	slot0._gochat = gohelper.findChild(slot0._gocontainer, "go_chat")
-	slot0._btnchat = gohelper.findChildButton(slot0._gocontainer, "go_chat/btn_chat")
-	slot0._gofullfaith = gohelper.findChild(slot0._gocontainer, "go_fullfaith")
-	slot0._gogetfaith = gohelper.findChild(slot0._gocontainer, "go_getfaith")
-	slot0._btngetfaith = gohelper.findChildButton(slot0._gocontainer, "go_getfaith/btn_getfaith")
-	slot0._btnfull = gohelper.findChildButton(slot0._gocontainer, "go_fullfaith/btn_full")
-	slot0._gomaxfaith = gohelper.findChild(slot0._gocontainer, "go_maxfaith")
-	slot0._btnmax = gohelper.findChildButton(slot0._gocontainer, "go_maxfaith/btn_max")
-	slot0._imageprocess = gohelper.findChildImage(slot0._gocontainer, "go_getfaith/process")
-	slot0._goonbirthdayicon = gohelper.findChild(slot0._gocontainer, "#image_onbirthday")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._simageheroicon = gohelper.findChildImage(arg_2_0._gocontainer, "mask/simage_heroicon")
+	arg_2_0._gochat = gohelper.findChild(arg_2_0._gocontainer, "go_chat")
+	arg_2_0._btnchat = gohelper.findChildButton(arg_2_0._gocontainer, "go_chat/btn_chat")
+	arg_2_0._gofullfaith = gohelper.findChild(arg_2_0._gocontainer, "go_fullfaith")
+	arg_2_0._gogetfaith = gohelper.findChild(arg_2_0._gocontainer, "go_getfaith")
+	arg_2_0._btngetfaith = gohelper.findChildButton(arg_2_0._gocontainer, "go_getfaith/btn_getfaith")
+	arg_2_0._btnfull = gohelper.findChildButton(arg_2_0._gocontainer, "go_fullfaith/btn_full")
+	arg_2_0._gomaxfaith = gohelper.findChild(arg_2_0._gocontainer, "go_maxfaith")
+	arg_2_0._btnmax = gohelper.findChildButton(arg_2_0._gocontainer, "go_maxfaith/btn_max")
+	arg_2_0._imageprocess = gohelper.findChildImage(arg_2_0._gocontainer, "go_getfaith/process")
+	arg_2_0._goonbirthdayicon = gohelper.findChild(arg_2_0._gocontainer, "#image_onbirthday")
 end
 
-function slot0._customAddEventListeners(slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, slot0._characterPositionChanged, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, slot0._refreshBtnShow, slot0)
-	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, slot0._refreshBtnShow, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, slot0._refreshBtnShow, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0:refreshUI(true)
+function var_0_0._customAddEventListeners(arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, arg_3_0._characterPositionChanged, arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, arg_3_0._refreshBtnShow, arg_3_0)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, arg_3_0._refreshBtnShow, arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, arg_3_0._refreshBtnShow, arg_3_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+	arg_3_0:refreshUI(true)
 end
 
-function slot0._customRemoveEventListeners(slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, slot0._characterPositionChanged, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, slot0._refreshBtnShow, slot0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, slot0._refreshBtnShow, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, slot0._refreshBtnShow, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+function var_0_0._customRemoveEventListeners(arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, arg_4_0._characterPositionChanged, arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, arg_4_0._refreshBtnShow, arg_4_0)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, arg_4_0._refreshBtnShow, arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, arg_4_0._refreshBtnShow, arg_4_0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_4_0._onDailyRefresh, arg_4_0)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:_refreshCharacter()
-	slot0:_refreshBtnShow()
-	slot0:_refreshShow(slot1)
-	slot0:_refreshPosition()
-	slot0:_refreshBirthday()
+function var_0_0.refreshUI(arg_5_0, arg_5_1)
+	arg_5_0:_refreshCharacter()
+	arg_5_0:_refreshBtnShow()
+	arg_5_0:_refreshShow(arg_5_1)
+	arg_5_0:_refreshPosition()
+	arg_5_0:_refreshBirthday()
 end
 
-function slot0._characterPositionChanged(slot0, slot1)
-	if slot0._heroId ~= slot1 then
+function var_0_0._characterPositionChanged(arg_6_0, arg_6_1)
+	if arg_6_0._heroId ~= arg_6_1 then
 		return
 	end
 
-	slot0:_refreshPosition()
+	arg_6_0:_refreshPosition()
 end
 
-function slot0._refreshCharacter(slot0)
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) then
+function var_0_0._refreshCharacter(arg_7_0)
+	local var_7_0 = RoomCharacterModel.instance:getCharacterMOById(arg_7_0._heroId)
+
+	if not var_7_0 then
 		return
 	end
 
-	gohelper.getSingleImage(slot0._simageheroicon.gameObject):LoadImage(ResUrl.roomHeadIcon(SkinConfig.instance:getSkinCo(slot1.skinId).headIcon))
+	local var_7_1 = var_7_0.skinId
+	local var_7_2 = SkinConfig.instance:getSkinCo(var_7_1)
+
+	gohelper.getSingleImage(arg_7_0._simageheroicon.gameObject):LoadImage(ResUrl.roomHeadIcon(var_7_2.headIcon))
 end
 
-function slot0._refreshBtnShow(slot0)
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) or slot1:isTrainSourceState() then
+function var_0_0._refreshBtnShow(arg_8_0)
+	local var_8_0 = RoomCharacterModel.instance:getCharacterMOById(arg_8_0._heroId)
+
+	if not var_8_0 or var_8_0:isTrainSourceState() then
 		return
 	end
 
-	if slot0._isPlayingGainAnim then
+	if arg_8_0._isPlayingGainAnim then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._gainCharacterFaithAnimEnd, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._gainCharacterFaithAnimEnd, arg_8_0)
 
-	if slot1:getCurrentInteractionId() and RoomController.instance:isObMode() then
-		gohelper.setActive(slot0._gochat, true)
-		gohelper.setActive(slot0._gofullfaith, false)
-		gohelper.setActive(slot0._gogetfaith, false)
-		gohelper.setActive(slot0._gomaxfaith, false)
-
-		return
-	end
-
-	gohelper.setActive(slot0._gochat, false)
-	gohelper.setActive(slot0._gofullfaith, RoomCharacterController.instance:isCharacterFaithFull(slot1.heroId) and RoomController.instance:isObMode() and RoomCharacterModel.instance:isShowFaithFull(slot1.heroId))
-
-	if slot3 then
-		gohelper.setActive(slot0._gogetfaith, false)
-		gohelper.setActive(slot0._gomaxfaith, false)
+	if var_8_0:getCurrentInteractionId() and RoomController.instance:isObMode() then
+		gohelper.setActive(arg_8_0._gochat, true)
+		gohelper.setActive(arg_8_0._gofullfaith, false)
+		gohelper.setActive(arg_8_0._gogetfaith, false)
+		gohelper.setActive(arg_8_0._gomaxfaith, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gogetfaith, RoomCharacterHelper.getCharacterFaithFill(slot1) > 0 and slot4 < 1)
-	gohelper.setActive(slot0._gomaxfaith, slot4 >= 1)
+	gohelper.setActive(arg_8_0._gochat, false)
 
-	if slot4 > 0 and slot4 < 1 then
-		slot0._imageprocess.fillAmount = slot4 * 0.55 + 0.2
+	local var_8_1 = RoomCharacterController.instance:isCharacterFaithFull(var_8_0.heroId)
+
+	gohelper.setActive(arg_8_0._gofullfaith, var_8_1 and RoomController.instance:isObMode() and RoomCharacterModel.instance:isShowFaithFull(var_8_0.heroId))
+
+	if var_8_1 then
+		gohelper.setActive(arg_8_0._gogetfaith, false)
+		gohelper.setActive(arg_8_0._gomaxfaith, false)
+
+		return
+	end
+
+	local var_8_2 = RoomCharacterHelper.getCharacterFaithFill(var_8_0)
+
+	gohelper.setActive(arg_8_0._gogetfaith, var_8_2 > 0 and var_8_2 < 1)
+	gohelper.setActive(arg_8_0._gomaxfaith, var_8_2 >= 1)
+
+	if var_8_2 > 0 and var_8_2 < 1 then
+		arg_8_0._imageprocess.fillAmount = var_8_2 * 0.55 + 0.2
 	end
 end
 
-function slot0._onDailyRefresh(slot0)
-	slot0:_refreshBirthday()
+function var_0_0._onDailyRefresh(arg_9_0)
+	arg_9_0:_refreshBirthday()
 end
 
-function slot0._refreshShow(slot0, slot1)
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) then
-		slot0:_setShow(false, true)
+function var_0_0._refreshShow(arg_10_0, arg_10_1)
+	if not RoomCharacterModel.instance:getCharacterMOById(arg_10_0._heroId) then
+		arg_10_0:_setShow(false, true)
 
 		return
 	end
 
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_10_0:_setShow(false, arg_10_1)
 
 		return
 	end
 
-	if RoomEnum.CameraShowSpineMap[slot0._scene.camera:getCameraState()] then
-		slot0:_setShow(false, slot1)
+	local var_10_0 = arg_10_0._scene.camera:getCameraState()
+
+	if RoomEnum.CameraShowSpineMap[var_10_0] then
+		arg_10_0:_setShow(false, arg_10_1)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		slot0:_setShow(false, slot1)
+		arg_10_0:_setShow(false, arg_10_1)
 
 		return
 	end
 
-	slot0:_setShow(true, slot1)
+	arg_10_0:_setShow(true, arg_10_1)
 end
 
-function slot0._refreshBirthday(slot0)
-	gohelper.setActive(slot0._goonbirthdayicon, RoomCharacterModel.instance:isOnBirthday(slot0._heroId))
+function var_0_0._refreshBirthday(arg_11_0)
+	local var_11_0 = RoomCharacterModel.instance:isOnBirthday(arg_11_0._heroId)
+
+	gohelper.setActive(arg_11_0._goonbirthdayicon, var_11_0)
 end
 
-function slot0.getUI3DPos(slot0)
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) then
+function var_0_0.getUI3DPos(arg_12_0)
+	local var_12_0 = RoomCharacterModel.instance:getCharacterMOById(arg_12_0._heroId)
+
+	if not var_12_0 then
 		return Vector3.zero
 	end
 
-	slot2 = slot1.currentPosition
+	local var_12_1 = var_12_0.currentPosition
 
-	return Vector3(slot2.x, slot2.y, slot2.z)
+	return (Vector3(var_12_1.x, var_12_1.y, var_12_1.z))
 end
 
-function slot0._gainCharacterFaith(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
-		slot0._isPlayingGainAnim = false
+function var_0_0._gainCharacterFaith(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_2 ~= 0 then
+		arg_13_0._isPlayingGainAnim = false
 
 		return
 	end
 
-	slot0._baseAnimator:Play("room_task_lingqu", 0, 0)
-	TaskDispatcher.runDelay(slot0._gainCharacterFaithAnimEnd, slot0, 1.5)
+	arg_13_0._baseAnimator:Play("room_task_lingqu", 0, 0)
+	TaskDispatcher.runDelay(arg_13_0._gainCharacterFaithAnimEnd, arg_13_0, 1.5)
 end
 
-function slot0._gainCharacterFaithAnimEnd(slot0)
-	slot0._isPlayingGainAnim = false
+function var_0_0._gainCharacterFaithAnimEnd(arg_14_0)
+	arg_14_0._isPlayingGainAnim = false
 
-	slot0:_refreshBtnShow()
+	arg_14_0:_refreshBtnShow()
 end
 
-function slot0._onClick(slot0, slot1, slot2)
+function var_0_0._onClick(arg_15_0, arg_15_1, arg_15_2)
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) then
+	local var_15_0 = RoomCharacterModel.instance:getCharacterMOById(arg_15_0._heroId)
+
+	if not var_15_0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 
-	if slot1.transform:IsChildOf(slot0._btngetfaith.gameObject.transform) or slot1.transform:IsChildOf(slot0._btnmax.gameObject.transform) then
-		slot0:_switchCamera(slot0.gainCharacterFaith, slot0)
+	if arg_15_1.transform:IsChildOf(arg_15_0._btngetfaith.gameObject.transform) or arg_15_1.transform:IsChildOf(arg_15_0._btnmax.gameObject.transform) then
+		arg_15_0:_switchCamera(arg_15_0.gainCharacterFaith, arg_15_0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
-	elseif slot1.transform:IsChildOf(slot0._btnfull.gameObject.transform) then
-		RoomCharacterController.instance:setCharacterFullFaithChecked(slot3.heroId)
-		slot0:_switchCamera()
+	elseif arg_15_1.transform:IsChildOf(arg_15_0._btnfull.gameObject.transform) then
+		RoomCharacterController.instance:setCharacterFullFaithChecked(var_15_0.heroId)
+		arg_15_0:_switchCamera()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
-	elseif slot1.transform:IsChildOf(slot0._btnchat.gameObject.transform) then
-		slot0:_switchCamera(slot0.startInteraction, slot0)
+	elseif arg_15_1.transform:IsChildOf(arg_15_0._btnchat.gameObject.transform) then
+		arg_15_0:_switchCamera(arg_15_0.startInteraction, arg_15_0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 	else
-		slot0:_switchCamera()
+		arg_15_0:_switchCamera()
 
-		if RoomCharacterModel.instance:isNeedShowBirthdayToastTip(slot0._heroId) then
+		if RoomCharacterModel.instance:isNeedShowBirthdayToastTip(arg_15_0._heroId) then
 			GameFacade.showToast(ToastEnum.CharacterOnBirthday)
-			RoomCharacterModel.instance:setHasShowBirthdayToastTip(slot0._heroId)
+			RoomCharacterModel.instance:setHasShowBirthdayToastTip(arg_15_0._heroId)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 	end
 end
 
-function slot0._switchCamera(slot0, slot1, slot2)
-	slot4 = RoomCharacterModel.instance:getCharacterMOById(slot0._heroId).currentPosition
+function var_0_0._switchCamera(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = RoomCharacterModel.instance:getCharacterMOById(arg_16_0._heroId).currentPosition
 
-	slot0._scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {
-		focusX = slot4.x,
-		focusY = slot4.z
-	}, nil, slot1, slot2)
+	arg_16_0._scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {
+		focusX = var_16_0.x,
+		focusY = var_16_0.z
+	}, nil, arg_16_1, arg_16_2)
 end
 
-function slot0.startInteraction(slot0)
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) then
+function var_0_0.startInteraction(arg_17_0)
+	local var_17_0 = RoomCharacterModel.instance:getCharacterMOById(arg_17_0._heroId)
+
+	if not var_17_0 then
 		return
 	end
 
-	RoomCharacterController.instance:startInteraction(slot1:getCurrentInteractionId(), true)
+	RoomCharacterController.instance:startInteraction(var_17_0:getCurrentInteractionId(), true)
 end
 
-function slot0.gainCharacterFaith(slot0)
+function var_0_0.gainCharacterFaith(arg_18_0)
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	if not RoomCharacterModel.instance:getCharacterMOById(slot0._heroId) then
+	local var_18_0 = RoomCharacterModel.instance:getCharacterMOById(arg_18_0._heroId)
+
+	if not var_18_0 then
 		return
 	end
 
 	RoomCharacterController.instance:gainCharacterFaith({
-		slot1.heroId
+		var_18_0.heroId
 	})
 	AudioMgr.instance:trigger(AudioEnum.Room.ui_home_board_upgrade)
 end
 
-function slot0._customOnDestory(slot0)
-	TaskDispatcher.cancelTask(slot0._gainCharacterFaithAnimEnd, slot0)
+function var_0_0._customOnDestory(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._gainCharacterFaithAnimEnd, arg_19_0)
 end
 
-return slot0
+return var_0_0

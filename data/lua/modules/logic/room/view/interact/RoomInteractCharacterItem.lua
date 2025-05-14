@@ -1,90 +1,98 @@
-module("modules.logic.room.view.interact.RoomInteractCharacterItem", package.seeall)
+﻿module("modules.logic.room.view.interact.RoomInteractCharacterItem", package.seeall)
 
-slot0 = class("RoomInteractCharacterItem", ListScrollCellExtend)
+local var_0_0 = class("RoomInteractCharacterItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goonbirthdayicon = gohelper.findChild(slot0.viewGO, "#go_onbirthdayicon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goonbirthdayicon = gohelper.findChild(arg_1_0.viewGO, "#go_onbirthdayicon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._view and slot0._view.viewContainer and slot0._mo then
-		slot0._view.viewContainer:dispatchEvent(RoomEvent.InteractBuildingSelectHero, slot0._mo.heroId)
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._view and arg_4_0._view.viewContainer and arg_4_0._mo then
+		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.InteractBuildingSelectHero, arg_4_0._mo.heroId)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "role/heroicon")
-	slot0._gobeplaced = gohelper.findChild(slot0.viewGO, "placeicon")
-	slot0._goclick = gohelper.findChild(slot0.viewGO, "go_click")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "select")
-	slot0._gotrust = gohelper.findChild(slot0.viewGO, "trust")
-	slot0._txttrust = gohelper.findChildText(slot0.viewGO, "trust/txt_trust")
-	slot0._gorole = gohelper.findChild(slot0.viewGO, "role")
-	slot0._imagecareer = gohelper.findChildImage(slot0.viewGO, "role/career")
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "role/rare")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "role/name")
-	slot0._txtnameen = gohelper.findChildText(slot0.viewGO, "role/name/nameEn")
-	slot0._canvasGroup = slot0._gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simageicon = gohelper.findChildSingleImage(arg_5_0.viewGO, "role/heroicon")
+	arg_5_0._gobeplaced = gohelper.findChild(arg_5_0.viewGO, "placeicon")
+	arg_5_0._goclick = gohelper.findChild(arg_5_0.viewGO, "go_click")
+	arg_5_0._goselect = gohelper.findChild(arg_5_0.viewGO, "select")
+	arg_5_0._gotrust = gohelper.findChild(arg_5_0.viewGO, "trust")
+	arg_5_0._txttrust = gohelper.findChildText(arg_5_0.viewGO, "trust/txt_trust")
+	arg_5_0._gorole = gohelper.findChild(arg_5_0.viewGO, "role")
+	arg_5_0._imagecareer = gohelper.findChildImage(arg_5_0.viewGO, "role/career")
+	arg_5_0._imagerare = gohelper.findChildImage(arg_5_0.viewGO, "role/rare")
+	arg_5_0._txtname = gohelper.findChildText(arg_5_0.viewGO, "role/name")
+	arg_5_0._txtnameen = gohelper.findChildText(arg_5_0.viewGO, "role/name/nameEn")
+	arg_5_0._canvasGroup = arg_5_0._gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.addUIClickAudio(slot0._goclick, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_5_0._goclick, AudioEnum.UI.UI_Common_Click)
 
-	slot0._uiclick = SLFramework.UGUI.UIClickListener.Get(slot0._goclick)
+	arg_5_0._uiclick = SLFramework.UGUI.UIClickListener.Get(arg_5_0._goclick)
 
-	slot0._uiclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	gohelper.setActive(slot0._gotrust, false)
-	gohelper.setActive(slot0._gobeplaced, false)
-	gohelper.setActive(gohelper.findChild(slot0._gobeplaced, "icon"), false)
+	arg_5_0._uiclick:AddClickListener(arg_5_0._btnclickOnClick, arg_5_0)
+	gohelper.setActive(arg_5_0._gotrust, false)
+	gohelper.setActive(arg_5_0._gobeplaced, false)
+	gohelper.setActive(gohelper.findChild(arg_5_0._gobeplaced, "icon"), false)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0:_refreshUI()
+	arg_8_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._uiclick:RemoveClickListener()
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._uiclick:RemoveClickListener()
+	arg_10_0._simageicon:UnLoadImage()
 end
 
-function slot0._refreshUI(slot0)
-	slot0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(slot0._mo.skinConfig.headIcon))
-	gohelper.setActive(slot0._gobeplaced, slot0._mo.use)
-	gohelper.setActive(slot0._goonbirthdayicon, RoomCharacterModel.instance:isOnBirthday(slot0._mo.heroConfig.id))
+function var_0_0._refreshUI(arg_11_0)
+	arg_11_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(arg_11_0._mo.skinConfig.headIcon))
+	gohelper.setActive(arg_11_0._gobeplaced, arg_11_0._mo.use)
 
-	if slot0._mo.use then
-		slot0._canvasGroup.alpha = 0.7
+	local var_11_0 = RoomCharacterModel.instance:isOnBirthday(arg_11_0._mo.heroConfig.id)
+
+	gohelper.setActive(arg_11_0._goonbirthdayicon, var_11_0)
+
+	if arg_11_0._mo.use then
+		arg_11_0._canvasGroup.alpha = 0.7
 	else
-		slot0._canvasGroup.alpha = 1
+		arg_11_0._canvasGroup.alpha = 1
 	end
 
-	gohelper.addUIClickAudio(slot0._goclick, slot0._mo.use and AudioEnum.UI.UI_Common_Click or AudioEnum.UI.Play_UI_Copies)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. slot0._mo.heroConfig.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. CharacterEnum.Color[slot0._mo.heroConfig.rare])
+	gohelper.addUIClickAudio(arg_11_0._goclick, arg_11_0._mo.use and AudioEnum.UI.UI_Common_Click or AudioEnum.UI.Play_UI_Copies)
+	UISpriteSetMgr.instance:setCommonSprite(arg_11_0._imagecareer, "lssx_" .. arg_11_0._mo.heroConfig.career)
+	UISpriteSetMgr.instance:setCommonSprite(arg_11_0._imagerare, "bgequip" .. CharacterEnum.Color[arg_11_0._mo.heroConfig.rare])
 
-	slot0._txtname.text = slot0._mo.heroConfig.name
-	slot0._txtnameen.text = slot0._mo.heroConfig.nameEng
+	arg_11_0._txtname.text = arg_11_0._mo.heroConfig.name
+	arg_11_0._txtnameen.text = arg_11_0._mo.heroConfig.nameEng
 end
 
-slot0.prefabUrl = "ui/viewres/room/roomcharacterplaceitem.prefab"
+var_0_0.prefabUrl = "ui/viewres/room/roomcharacterplaceitem.prefab"
 
-return slot0
+return var_0_0

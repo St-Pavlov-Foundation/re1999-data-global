@@ -1,202 +1,219 @@
-module("modules.logic.rouge.view.comp.RougeCapacityComp", package.seeall)
+﻿module("modules.logic.rouge.view.comp.RougeCapacityComp", package.seeall)
 
-slot0 = class("RougeCapacityComp", LuaCompBase)
-slot0.SpriteType1 = "rouge_team_volume_1"
-slot0.SpriteType2 = "rouge_team_volume_2"
-slot0.SpriteType3 = "rouge_team_volume_3"
+local var_0_0 = class("RougeCapacityComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
+var_0_0.SpriteType1 = "rouge_team_volume_1"
+var_0_0.SpriteType2 = "rouge_team_volume_2"
+var_0_0.SpriteType3 = "rouge_team_volume_3"
+
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
 end
 
-function slot0.Add(slot0, slot1, slot2, slot3, slot4)
-	slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
+function var_0_0.Add(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0, var_0_0)
 
-	slot5:setCurNum(slot1)
-	slot5:setMaxNum(slot2)
+	var_2_0:setCurNum(arg_2_1)
+	var_2_0:setMaxNum(arg_2_2)
 
-	if slot3 then
-		slot5:autoFindNodes()
+	if arg_2_3 then
+		var_2_0:autoFindNodes()
 	end
 
-	slot5:setSpriteType(nil, slot4)
-	slot5:initCapacity()
+	var_2_0:setSpriteType(nil, arg_2_4)
+	var_2_0:initCapacity()
 
-	return slot5
+	return var_2_0
 end
 
-function slot0.getCurNum(slot0)
-	return slot0._curNum
+function var_0_0.getCurNum(arg_3_0)
+	return arg_3_0._curNum
 end
 
-function slot0.getMaxNum(slot0)
-	return slot0._maxNum
+function var_0_0.getMaxNum(arg_4_0)
+	return arg_4_0._maxNum
 end
 
-function slot0.updateCurAndMaxNum(slot0, slot1, slot2)
-	slot0._curNum = slot1
-	slot0._maxNum = slot2
+function var_0_0.updateCurAndMaxNum(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._curNum = arg_5_1
+	arg_5_0._maxNum = arg_5_2
 
-	slot0:_refreshImageList()
+	arg_5_0:_refreshImageList()
 end
 
-function slot0.updateCurNum(slot0, slot1)
-	slot0._curNum = slot1
+function var_0_0.updateCurNum(arg_6_0, arg_6_1)
+	arg_6_0._curNum = arg_6_1
 
-	slot0:_refreshImageList()
+	arg_6_0:_refreshImageList()
 end
 
-function slot0.updateMaxNum(slot0, slot1)
-	slot0._maxNum = slot1
+function var_0_0.updateMaxNum(arg_7_0, arg_7_1)
+	arg_7_0._maxNum = arg_7_1
 
-	slot0:_refreshImageList()
+	arg_7_0:_refreshImageList()
 end
 
-function slot0.updateMaxNumAndOpaqueNum(slot0, slot1, slot2)
-	slot0._opaqueNum = slot2
+function var_0_0.updateMaxNumAndOpaqueNum(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._opaqueNum = arg_8_2
 
-	slot0:updateMaxNum(slot1)
+	arg_8_0:updateMaxNum(arg_8_1)
 end
 
-function slot0.showChangeEffect(slot0, slot1)
-	slot0._showChangeEffect = slot1
+function var_0_0.showChangeEffect(arg_9_0, arg_9_1)
+	arg_9_0._showChangeEffect = arg_9_1
 end
 
-function slot0.setPoint(slot0, slot1)
-	slot0._pointGo = slot1
+function var_0_0.setPoint(arg_10_0, arg_10_1)
+	arg_10_0._pointGo = arg_10_1
 end
 
-function slot0.setTxt(slot0, slot1)
-	slot0._txt = slot1
+function var_0_0.setTxt(arg_11_0, arg_11_1)
+	arg_11_0._txt = arg_11_1
 end
 
-function slot0.autoFindNodes(slot0)
-	slot0._pointGo = gohelper.findChild(slot0._go, "point")
+function var_0_0.autoFindNodes(arg_12_0)
+	arg_12_0._pointGo = gohelper.findChild(arg_12_0._go, "point")
 
-	gohelper.setActive(slot0._pointGo, false)
+	gohelper.setActive(arg_12_0._pointGo, false)
 
-	slot0._txt = gohelper.findChildText(slot0._go, "#txt_num")
+	arg_12_0._txt = gohelper.findChildText(arg_12_0._go, "#txt_num")
 
-	if not slot0._pointGo then
+	if not arg_12_0._pointGo then
 		logError("RougeCapacityComp autoFindNodes 请检查脚本是否attach在volume上，以及节点目录是否正确")
 	end
 end
 
-function slot0.setCurNum(slot0, slot1)
-	if slot0._curNum then
+function var_0_0.setCurNum(arg_13_0, arg_13_1)
+	if arg_13_0._curNum then
 		return
 	end
 
-	slot0._curNum = slot1
+	arg_13_0._curNum = arg_13_1
 end
 
-function slot0.setMaxNum(slot0, slot1)
-	if slot0._maxNum then
+function var_0_0.setMaxNum(arg_14_0, arg_14_1)
+	if arg_14_0._maxNum then
 		return
 	end
 
-	slot0._maxNum = slot1
+	arg_14_0._maxNum = arg_14_1
 end
 
-function slot0.setSpriteType(slot0, slot1, slot2)
-	slot0._usedSpriteType = slot1
-	slot0._notUsedSpriteType = slot2
+function var_0_0.setSpriteType(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0._usedSpriteType = arg_15_1
+	arg_15_0._notUsedSpriteType = arg_15_2
 end
 
-function slot0.getUsedSpriteType(slot0)
-	slot0._usedSpriteType = slot0._usedSpriteType or uv0.SpriteType3
+function var_0_0.getUsedSpriteType(arg_16_0)
+	arg_16_0._usedSpriteType = arg_16_0._usedSpriteType or var_0_0.SpriteType3
 
-	return slot0._usedSpriteType
+	return arg_16_0._usedSpriteType
 end
 
-function slot0.getNotUsedSpriteType(slot0)
-	slot0._notUsedSpriteType = slot0._notUsedSpriteType or uv0.SpriteType1
+function var_0_0.getNotUsedSpriteType(arg_17_0)
+	arg_17_0._notUsedSpriteType = arg_17_0._notUsedSpriteType or var_0_0.SpriteType1
 
-	return slot0._notUsedSpriteType
+	return arg_17_0._notUsedSpriteType
 end
 
-function slot0.setTxtFormat(slot0, slot1, slot2)
-	slot0._notFullFormat = slot1
-	slot0._fullFormat = slot2
+function var_0_0.setTxtFormat(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0._notFullFormat = arg_18_1
+	arg_18_0._fullFormat = arg_18_2
 end
 
-function slot0.getFullFormat(slot0)
-	slot0._fullFormat = slot0._fullFormat or "<#D97373>%s</color>/%s"
+function var_0_0.getFullFormat(arg_19_0)
+	arg_19_0._fullFormat = arg_19_0._fullFormat or "<#D97373>%s</color>/%s"
 
-	return slot0._fullFormat
+	return arg_19_0._fullFormat
 end
 
-function slot0.getNotFullFormat(slot0)
-	slot0._notFullFormat = slot0._notFullFormat or "<#E99B56>%s</color>/%s"
+function var_0_0.getNotFullFormat(arg_20_0)
+	arg_20_0._notFullFormat = arg_20_0._notFullFormat or "<#E99B56>%s</color>/%s"
 
-	return slot0._notFullFormat
+	return arg_20_0._notFullFormat
 end
 
-function slot0.initCapacity(slot0)
-	if slot0._imageList then
+function var_0_0.initCapacity(arg_21_0)
+	if arg_21_0._imageList then
 		return
 	end
 
-	slot0._imageList = slot0:getUserDataTb_()
+	arg_21_0._imageList = arg_21_0:getUserDataTb_()
 
-	slot0:_refreshImageList()
+	arg_21_0:_refreshImageList()
 end
 
-function slot0._getPointInfo(slot0, slot1)
-	if not slot0._imageList[slot1] then
-		slot3 = gohelper.cloneInPlace(slot0._pointGo)
+function var_0_0._getPointInfo(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0._imageList[arg_22_1]
 
-		gohelper.setActive(slot3, true)
+	if not var_22_0 then
+		local var_22_1 = gohelper.cloneInPlace(arg_22_0._pointGo)
 
-		slot2 = slot0:getUserDataTb_()
-		slot0._imageList[slot1] = slot2
-		slot2.image = slot3:GetComponent(gohelper.Type_Image)
-		slot2.yellow = gohelper.findChild(slot3, "yellow")
+		gohelper.setActive(var_22_1, true)
+
+		local var_22_2 = var_22_1:GetComponent(gohelper.Type_Image)
+
+		var_22_0 = arg_22_0:getUserDataTb_()
+		arg_22_0._imageList[arg_22_1] = var_22_0
+		var_22_0.image = var_22_2
+		var_22_0.yellow = gohelper.findChild(var_22_1, "yellow")
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0._refreshImageList(slot0)
-	if not slot0._imageList or not slot0._maxNum then
+function var_0_0._refreshImageList(arg_23_0)
+	if not arg_23_0._imageList or not arg_23_0._maxNum then
 		return
 	end
 
-	slot1 = false
-	slot2 = slot0._curNum or 0
-	slot0._prevNum = slot2
-	slot5 = slot0._opaqueNum or slot0._maxNum
+	local var_23_0 = false
+	local var_23_1 = arg_23_0._curNum or 0
+	local var_23_2 = var_23_1 ~= arg_23_0._prevNum
 
-	for slot9 = 1, math.max(slot4, #slot0._imageList) do
-		slot12 = slot9 <= slot0._maxNum
+	arg_23_0._prevNum = var_23_1
 
-		gohelper.setActive(slot0:_getPointInfo(slot9).image, slot12)
+	local var_23_3 = arg_23_0._maxNum
+	local var_23_4 = arg_23_0._opaqueNum or var_23_3
+	local var_23_5 = math.max(var_23_3, #arg_23_0._imageList)
 
-		if slot12 then
-			if slot9 <= slot2 and slot0._showChangeEffect and slot2 ~= slot0._prevNum then
-				gohelper.setActive(slot10.yellow, false)
-				gohelper.setActive(slot10.yellow, true)
+	for iter_23_0 = 1, var_23_5 do
+		local var_23_6 = arg_23_0:_getPointInfo(iter_23_0)
+		local var_23_7 = var_23_6.image
+		local var_23_8 = iter_23_0 <= arg_23_0._maxNum
 
-				slot1 = true
+		gohelper.setActive(var_23_7, var_23_8)
+
+		if var_23_8 then
+			local var_23_9 = iter_23_0 <= var_23_1
+
+			if var_23_9 and arg_23_0._showChangeEffect and var_23_2 then
+				gohelper.setActive(var_23_6.yellow, false)
+				gohelper.setActive(var_23_6.yellow, true)
+
+				var_23_0 = true
 			end
 
-			UISpriteSetMgr.instance:setRougeSprite(slot11, slot13 and slot0:getUsedSpriteType() or slot0:getNotUsedSpriteType())
+			UISpriteSetMgr.instance:setRougeSprite(var_23_7, var_23_9 and arg_23_0:getUsedSpriteType() or arg_23_0:getNotUsedSpriteType())
 
-			if slot0._opaqueNum ~= nil then
-				slot14 = slot11.color
-				slot14.a = slot9 <= slot5 and 1 or 0.4
-				slot11.color = slot14
+			if arg_23_0._opaqueNum ~= nil then
+				local var_23_10 = var_23_7.color
+
+				var_23_10.a = iter_23_0 <= var_23_4 and 1 or 0.4
+				var_23_7.color = var_23_10
 			end
 		end
 	end
 
-	if slot1 then
+	if var_23_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.PointLight)
 	end
 
-	if slot0._txt then
-		slot0._txt.text = string.format(slot0._maxNum <= slot2 and slot0:getFullFormat() or slot0:getNotFullFormat(), slot2, slot0._maxNum)
+	if arg_23_0._txt then
+		local var_23_11 = var_23_1 >= arg_23_0._maxNum and arg_23_0:getFullFormat() or arg_23_0:getNotFullFormat()
+
+		arg_23_0._txt.text = string.format(var_23_11, var_23_1, arg_23_0._maxNum)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,90 +1,96 @@
-module("modules.logic.gm.view.GM_SummonHeroDetailView", package.seeall)
+﻿module("modules.logic.gm.view.GM_SummonHeroDetailView", package.seeall)
 
-slot0 = class("GM_SummonHeroDetailView", BaseView)
-slot1 = string.format
-slot2 = "#FFFF00"
+local var_0_0 = class("GM_SummonHeroDetailView", BaseView)
+local var_0_1 = string.format
+local var_0_2 = "#FFFF00"
 
-function slot0.register()
-	uv0.SummonHeroDetailView_register(SummonHeroDetailView)
+function var_0_0.register()
+	var_0_0.SummonHeroDetailView_register(SummonHeroDetailView)
 end
 
-function slot0.SummonHeroDetailView_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_refreshHero")
+function var_0_0.SummonHeroDetailView_register(arg_2_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_refreshHero")
 
-	function slot0._editableInitView(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(slot0)
+	function arg_2_0._editableInitView(arg_3_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(arg_3_0)
 	end
 
-	function slot0.addEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(slot0)
-		GM_SummonHeroDetailViewContainer.addEvents(slot0)
+	function arg_2_0.addEvents(arg_4_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
+		GM_SummonHeroDetailViewContainer.addEvents(arg_4_0)
 	end
 
-	function slot0.removeEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(slot0)
-		GM_SummonHeroDetailViewContainer.removeEvents(slot0)
+	function arg_2_0.removeEvents(arg_5_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
+		GM_SummonHeroDetailViewContainer.removeEvents(arg_5_0)
 	end
 
-	function slot0._refreshHero(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_refreshHero", ...)
+	function arg_2_0._refreshHero(arg_6_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_6_0, "_refreshHero", ...)
 
-		if not uv0.s_ShowAllTabId then
+		if not var_0_0.s_ShowAllTabId then
 			return
 		end
 
-		slot3 = HeroConfig.instance:getHeroCO(slot0._heroId)
+		local var_6_0 = arg_6_0._heroId
+		local var_6_1 = arg_6_0._skinId
+		local var_6_2 = HeroConfig.instance:getHeroCO(var_6_0)
 
-		if SkinConfig.instance:getSkinCo(slot0._skinId) then
-			slot0._txtnameen.text = slot3.nameEng .. uv1(" (skinId: %s)", gohelper.getRichColorText(slot2, uv2))
+		if SkinConfig.instance:getSkinCo(var_6_1) then
+			arg_6_0._txtnameen.text = var_6_2.nameEng .. var_0_1(" (skinId: %s)", gohelper.getRichColorText(var_6_1, var_0_2))
 		end
 
-		slot0._txtname.text = slot3.name .. gohelper.getRichColorText(slot1, uv2)
+		arg_6_0._txtname.text = var_6_2.name .. gohelper.getRichColorText(var_6_0, var_0_2)
 	end
 
-	function slot0._gm_showAllTabIdUpdate(slot0)
-		slot0:_refreshUI()
+	function arg_2_0._gm_showAllTabIdUpdate(arg_7_0)
+		arg_7_0:_refreshUI()
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._item1Toggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item1/Toggle")
+function var_0_0.onInitView(arg_8_0)
+	arg_8_0._btnClose = gohelper.findChildButtonWithAudio(arg_8_0.viewGO, "btnClose")
+	arg_8_0._item1Toggle = gohelper.findChildToggle(arg_8_0.viewGO, "viewport/content/item1/Toggle")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._item1Toggle:AddOnValueChanged(slot0._onItem1ToggleValueChanged, slot0)
+function var_0_0.addEvents(arg_9_0)
+	arg_9_0._btnClose:AddClickListener(arg_9_0.closeThis, arg_9_0)
+	arg_9_0._item1Toggle:AddOnValueChanged(arg_9_0._onItem1ToggleValueChanged, arg_9_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._item1Toggle:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_10_0)
+	arg_10_0._btnClose:RemoveClickListener()
+	arg_10_0._item1Toggle:RemoveOnValueChanged()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshItem1()
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0:_refreshItem1()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-slot0.s_ShowAllTabId = false
+var_0_0.s_ShowAllTabId = false
 
-function slot0._refreshItem1(slot0)
-	slot0._item1Toggle.isOn = uv0.s_ShowAllTabId
+function var_0_0._refreshItem1(arg_13_0)
+	local var_13_0 = var_0_0.s_ShowAllTabId
+
+	arg_13_0._item1Toggle.isOn = var_13_0
 end
 
-function slot0._onItem1ToggleValueChanged(slot0)
-	slot1 = slot0._item1Toggle.isOn
-	uv0.s_ShowAllTabId = slot1
+function var_0_0._onItem1ToggleValueChanged(arg_14_0)
+	local var_14_0 = arg_14_0._item1Toggle.isOn
 
-	GMController.instance:dispatchEvent(GMEvent.SummonHeroDetailView_ShowAllTabIdUpdate, slot1)
+	var_0_0.s_ShowAllTabId = var_14_0
+
+	GMController.instance:dispatchEvent(GMEvent.SummonHeroDetailView_ShowAllTabIdUpdate, var_14_0)
 end
 
-return slot0
+return var_0_0

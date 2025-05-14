@@ -1,15 +1,16 @@
-module("modules.logic.commonbufftip.CommonBuffTipEnum", package.seeall)
+﻿module("modules.logic.commonbufftip.CommonBuffTipEnum", package.seeall)
 
-slot0 = _M
-slot0.Pivot = {
+local var_0_0 = _M
+
+var_0_0.Pivot = {
 	Left = Vector2(0, 1),
 	Right = Vector2(1, 1),
 	Down = Vector2(1, 0)
 }
-slot0.DefaultInterval = 50
-slot0.BottomMargin = 50
-slot0.TipWidth = 560
-slot0.Anchor = {
+var_0_0.DefaultInterval = 50
+var_0_0.BottomMargin = 50
+var_0_0.TipWidth = 560
+var_0_0.Anchor = {
 	[ViewName.SkillTipView] = Vector2(-303.39, 57.22754),
 	[ViewName.SkillTipView3] = Vector2(-303.39, 57.22754),
 	[ViewName.FightFocusView] = Vector2(-225.47, 117.6),
@@ -19,4 +20,4 @@ slot0.Anchor = {
 	[ViewName.TowerSkillTipView] = Vector2(874, 279)
 }
 
-return slot0
+return var_0_0

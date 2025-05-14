@@ -1,17 +1,17 @@
-module("modules.logic.guide.controller.action.impl.GuideActionEnableClick", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionEnableClick", package.seeall)
 
-slot0 = class("GuideActionEnableClick", BaseGuideAction)
+local var_0_0 = class("GuideActionEnableClick", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._isEnable = slot3 == "1"
+	arg_1_0._isEnable = arg_1_3 == "1"
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	GuideViewMgr.instance:enableClick(slot0._isEnable)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
+	GuideViewMgr.instance:enableClick(arg_2_0._isEnable)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

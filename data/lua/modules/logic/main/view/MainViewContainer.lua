@@ -1,18 +1,18 @@
-module("modules.logic.main.view.MainViewContainer", package.seeall)
+﻿module("modules.logic.main.view.MainViewContainer", package.seeall)
 
-slot0 = class("MainViewContainer", BaseViewContainer)
+local var_0_0 = class("MainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._mainHeroNoInteractive = MainHeroNoInteractive.New()
-	slot0._mainHeroView = MainHeroView.New()
-	slot0._mainActivityEnterView = MainActivityEnterView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._mainHeroNoInteractive = MainHeroNoInteractive.New()
+	arg_1_0._mainHeroView = MainHeroView.New()
+	arg_1_0._mainActivityEnterView = MainActivityEnterView.New()
 
 	return {
 		MainView.New(),
-		slot0._mainHeroNoInteractive,
-		slot0._mainHeroView,
+		arg_1_0._mainHeroNoInteractive,
+		arg_1_0._mainHeroView,
 		MainHeroMipView.New(),
-		slot0._mainActivityEnterView,
+		arg_1_0._mainActivityEnterView,
 		MainActExtraDisplay.New(),
 		TabViewGroup.New(1, "#go_righttop"),
 		MainViewCamera.New(),
@@ -21,76 +21,83 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.getNoInteractiveComp(slot0)
-	return slot0._mainHeroNoInteractive
+function var_0_0.getNoInteractiveComp(arg_2_0)
+	return arg_2_0._mainHeroNoInteractive
 end
 
-function slot0.getMainHeroView(slot0)
-	return slot0._mainHeroView
+function var_0_0.getMainHeroView(arg_3_0)
+	return arg_3_0._mainHeroView
 end
 
-function slot0.getMainActivityEnterView(slot0)
-	return slot0._mainActivityEnterView
+function var_0_0.getMainActivityEnterView(arg_4_0)
+	return arg_4_0._mainActivityEnterView
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot2 = CurrencyEnum.CurrencyType
+function var_0_0.buildTabViews(arg_5_0, arg_5_1)
+	local var_5_0 = CurrencyEnum.CurrencyType
+	local var_5_1 = {
+		var_5_0.Diamond,
+		var_5_0.FreeDiamondCoupon,
+		var_5_0.Gold
+	}
 
 	return {
-		CurrencyView.New({
-			slot2.Diamond,
-			slot2.FreeDiamondCoupon,
-			slot2.Gold
-		})
+		CurrencyView.New(var_5_1)
 	}
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0:forceRefreshMainSceneYearAnimation()
+function var_0_0.onContainerOpenFinish(arg_6_0)
+	arg_6_0:forceRefreshMainSceneYearAnimation()
 end
 
-function slot0.forceRefreshMainSceneYearAnimation(slot0)
+function var_0_0.forceRefreshMainSceneYearAnimation(arg_7_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main then
 		GameSceneMgr.instance:getCurScene().yearAnimation:forcePlayAni()
 	end
 end
 
-function slot0._checkSceneVisible(slot0, slot1)
+function var_0_0._checkSceneVisible(arg_8_0, arg_8_1)
 	if ViewMgr.instance:isOpen(ViewName.SummonView) then
-		TaskDispatcher.cancelTask(slot0._checkSceneVisible, slot0)
+		TaskDispatcher.cancelTask(arg_8_0._checkSceneVisible, arg_8_0)
 
 		return
 	end
 
-	if GameSceneMgr.instance:getCurScene() and slot2:getSceneContainerGO() and not slot3.activeSelf then
-		TaskDispatcher.cancelTask(slot0._checkSceneVisible, slot0)
+	local var_8_0 = GameSceneMgr.instance:getCurScene()
+	local var_8_1 = var_8_0 and var_8_0:getSceneContainerGO()
 
-		slot4 = nil
+	if var_8_1 and not var_8_1.activeSelf then
+		TaskDispatcher.cancelTask(arg_8_0._checkSceneVisible, arg_8_0)
 
-		if slot0._isVisible then
-			slot5 = GameGlobalMgr.instance:getFullViewState()
+		local var_8_2
 
-			slot5:forceSceneCameraActive(true)
-			logError(string.format("MainViewContainer _checkSceneVisible isVisible:%s,viewName:%s,names:%s", slot0._isVisible, slot1, slot5:getOpenFullViewNames()))
+		if arg_8_0._isVisible then
+			local var_8_3 = GameGlobalMgr.instance:getFullViewState()
+
+			var_8_3:forceSceneCameraActive(true)
+
+			local var_8_4 = var_8_3:getOpenFullViewNames()
+
+			logError(string.format("MainViewContainer _checkSceneVisible isVisible:%s,viewName:%s,names:%s", arg_8_0._isVisible, arg_8_1, var_8_4))
 		end
 	end
 end
 
-function slot0._onCloseFullView(slot0, slot1)
-	if slot0._isVisible then
-		TaskDispatcher.cancelTask(slot0._checkSceneVisible, slot0)
-		TaskDispatcher.runRepeat(slot0._checkSceneVisible, slot0, 0, 3)
-		slot0:_checkSceneVisible(slot1)
+function var_0_0._onCloseFullView(arg_9_0, arg_9_1)
+	if arg_9_0._isVisible then
+		TaskDispatcher.cancelTask(arg_9_0._checkSceneVisible, arg_9_0)
+		TaskDispatcher.runRepeat(arg_9_0._checkSceneVisible, arg_9_0, 0, 3)
+		arg_9_0:_checkSceneVisible(arg_9_1)
 	end
 end
 
-function slot0.onContainerOpen(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0, LuaEventSystem.Low)
+function var_0_0.onContainerOpen(arg_10_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, arg_10_0._onCloseFullView, arg_10_0, LuaEventSystem.Low)
 end
 
-function slot0.onContainerClose(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
-	TaskDispatcher.cancelTask(slot0._checkSceneVisible, slot0)
+function var_0_0.onContainerClose(arg_11_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_11_0._onCloseFullView, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._checkSceneVisible, arg_11_0)
 end
 
-return slot0
+return var_0_0

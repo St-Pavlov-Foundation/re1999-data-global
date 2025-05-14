@@ -1,212 +1,241 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffEntry", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffEntry", package.seeall)
 
-slot0 = class("RougeLimiterBuffEntry", LuaCompBase)
-slot0.DefaultDifficultyFontSize = 38
+local var_0_0 = class("RougeLimiterBuffEntry", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._txtdifficulty = gohelper.findChildText(slot0.viewGO, "#txt_difficulty")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#txt_num")
-	slot0._gonamebg = gohelper.findChild(slot0.viewGO, "namebg")
-	slot0._numAnim = gohelper.onceAddComponent(slot0._txtnum.gameObject, gohelper.Type_Animator)
-	slot0._canvasgroup = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_CanvasGroup)
-	slot0._selectIndex = 0
+var_0_0.DefaultDifficultyFontSize = 38
+
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._txtdifficulty = gohelper.findChildText(arg_1_0.viewGO, "#txt_difficulty")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_num")
+	arg_1_0._gonamebg = gohelper.findChild(arg_1_0.viewGO, "namebg")
+	arg_1_0._numAnim = gohelper.onceAddComponent(arg_1_0._txtnum.gameObject, gohelper.Type_Animator)
+	arg_1_0._canvasgroup = gohelper.onceAddComponent(arg_1_0.viewGO, gohelper.Type_CanvasGroup)
+	arg_1_0._selectIndex = 0
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateBuffState, slot0._onUpdateBuffState, slot0)
-	slot0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, slot0._onUpdateLimiterGroup, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeInfo, slot0._onUpdateRougeInfo, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateBuffState, arg_2_0._onUpdateBuffState, arg_2_0)
+	arg_2_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, arg_2_0._onUpdateLimiterGroup, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeInfo, arg_2_0._onUpdateRougeInfo, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:refreshRisk()
-	slot0:refreshAllBuffEntry()
-	slot0:refreshRiskIcon(slot1)
+function var_0_0.refreshUI(arg_4_0, arg_4_1)
+	arg_4_0:refreshRisk()
+	arg_4_0:refreshAllBuffEntry()
+	arg_4_0:refreshRiskIcon(arg_4_1)
 end
 
-function slot0.refreshRisk(slot0)
-	slot2 = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(slot0:getTotalRiskValue())
-	slot0._switchRiskStage = not slot0._riskCo or not slot2 or slot0._riskCo.id ~= slot2.id
-	slot0._riskCo = slot2
-	slot0._txtdifficulty.text = slot0._riskCo and slot0._riskCo.title
-	slot0._txtnum.text = slot1
+function var_0_0.refreshRisk(arg_5_0)
+	local var_5_0 = arg_5_0:getTotalRiskValue()
+	local var_5_1 = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(var_5_0)
 
-	slot0._numAnim:Play(slot0._switchRiskStage and "refresh" or "idle", 0, 0)
+	arg_5_0._switchRiskStage = not arg_5_0._riskCo or not var_5_1 or arg_5_0._riskCo.id ~= var_5_1.id
+	arg_5_0._riskCo = var_5_1
+	arg_5_0._txtdifficulty.text = arg_5_0._riskCo and arg_5_0._riskCo.title
+	arg_5_0._txtnum.text = var_5_0
 
-	slot0._isCurMaxLevel = RougeDLCConfig101.instance:getMaxLevlRiskCo() and slot0._riskCo and slot3.id == slot0._riskCo.id
+	arg_5_0._numAnim:Play(arg_5_0._switchRiskStage and "refresh" or "idle", 0, 0)
+
+	local var_5_2 = RougeDLCConfig101.instance:getMaxLevlRiskCo()
+
+	arg_5_0._isCurMaxLevel = var_5_2 and arg_5_0._riskCo and var_5_2.id == arg_5_0._riskCo.id
 end
 
-function slot0.getTotalRiskValue(slot0)
+function var_0_0.getTotalRiskValue(arg_6_0)
 	return RougeDLCModel101.instance:getTotalRiskValue()
 end
 
-function slot0.refreshRiskIcon(slot0, slot1)
-	slot2 = false
+function var_0_0.refreshRiskIcon(arg_7_0, arg_7_1)
+	local var_7_0 = false
 
-	for slot6 = 1, #lua_rouge_risk.configList do
-		slot9 = slot0._riskCo and slot0._riskCo.id == slot7.id
+	for iter_7_0 = 1, #lua_rouge_risk.configList do
+		local var_7_1 = lua_rouge_risk.configList[iter_7_0]
+		local var_7_2 = gohelper.findChild(arg_7_0.viewGO, "difficulty/" .. var_7_1.id)
+		local var_7_3 = arg_7_0._riskCo and arg_7_0._riskCo.id == var_7_1.id
 
-		gohelper.setActive(gohelper.findChild(slot0.viewGO, "difficulty/" .. lua_rouge_risk.configList[slot6].id), slot9)
+		gohelper.setActive(var_7_2, var_7_3)
 
-		if slot9 then
-			slot2 = true
+		if var_7_3 then
+			var_7_0 = true
 
-			if slot0._switchRiskStage and slot1 then
-				slot10 = gohelper.onceAddComponent(slot8, gohelper.Type_Animator)
+			if arg_7_0._switchRiskStage and arg_7_1 then
+				local var_7_4 = gohelper.onceAddComponent(var_7_2, gohelper.Type_Animator)
 
-				slot10:Play("open", 0, 0)
-				slot10:Update(0)
+				var_7_4:Play("open", 0, 0)
+				var_7_4:Update(0)
 			end
 		end
 	end
 
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "difficulty/none"), not slot2)
+	local var_7_5 = gohelper.findChild(arg_7_0.viewGO, "difficulty/none")
 
-	if not slot2 and slot1 then
-		gohelper.onceAddComponent(slot3, gohelper.Type_Animator):Play("open", 0, 0)
+	gohelper.setActive(var_7_5, not var_7_0)
+
+	if not var_7_0 and arg_7_1 then
+		gohelper.onceAddComponent(var_7_5, gohelper.Type_Animator):Play("open", 0, 0)
 	end
 end
 
-function slot0.refreshAllBuffEntry(slot0)
-	for slot6, slot7 in ipairs(slot0:_getAllBuffTypes()) do
-		slot0:refreshBuffEntry(slot7, slot7 <= (slot0._riskCo and slot0._riskCo.buffNum or 0))
+function var_0_0.refreshAllBuffEntry(arg_8_0)
+	local var_8_0 = arg_8_0._riskCo and arg_8_0._riskCo.buffNum or 0
+	local var_8_1 = arg_8_0:_getAllBuffTypes()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		local var_8_2 = iter_8_1 <= var_8_0
+
+		arg_8_0:refreshBuffEntry(iter_8_1, var_8_2)
 	end
 end
 
-function slot0._getAllBuffTypes(slot0)
-	slot1 = {}
+function var_0_0._getAllBuffTypes(arg_9_0)
+	local var_9_0 = {}
 
-	for slot5, slot6 in pairs(RougeDLCEnum101.LimiterBuffType) do
-		table.insert(slot1, slot6)
+	for iter_9_0, iter_9_1 in pairs(RougeDLCEnum101.LimiterBuffType) do
+		table.insert(var_9_0, iter_9_1)
 	end
 
-	table.sort(slot1, uv0._sortBuffType)
+	table.sort(var_9_0, var_0_0._sortBuffType)
 
-	return slot1
+	return var_9_0
 end
 
-function slot0._sortBuffType(slot0, slot1)
-	return slot0 < slot1
+function var_0_0._sortBuffType(arg_10_0, arg_10_1)
+	return arg_10_0 < arg_10_1
 end
 
-function slot0.refreshBuffEntry(slot0, slot1, slot2)
-	gohelper.setActive(slot0:_getOrCreateBuffPart(slot1).gobuff, slot2)
+function var_0_0.refreshBuffEntry(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0:_getOrCreateBuffPart(arg_11_1)
 
-	if not slot2 then
+	gohelper.setActive(var_11_0.gobuff, arg_11_2)
+
+	if not arg_11_2 then
 		return
 	end
 
-	slot5 = slot0:_getTypeBuffEquiped(slot1) ~= nil
-	slot6 = slot4 and slot4.blank == 1
+	local var_11_1 = arg_11_0:_getTypeBuffEquiped(arg_11_1)
+	local var_11_2 = var_11_1 ~= nil
+	local var_11_3 = var_11_1 and var_11_1.blank == 1
+	local var_11_4 = arg_11_0._selectIndex == arg_11_1
 
-	gohelper.setActive(slot3.imageunequiped.gameObject, not slot5)
-	gohelper.setActive(slot3.imageequipednormal.gameObject, slot5 and not slot6)
-	gohelper.setActive(slot3.goquipedblank, slot6 and not slot0._isCurMaxLevel)
-	gohelper.setActive(slot3.goequipedblankred, slot6 and slot0._isCurMaxLevel)
-	gohelper.setActive(slot3.imageselect.gameObject, slot0._selectIndex == slot1)
+	gohelper.setActive(var_11_0.imageunequiped.gameObject, not var_11_2)
+	gohelper.setActive(var_11_0.imageequipednormal.gameObject, var_11_2 and not var_11_3)
+	gohelper.setActive(var_11_0.goquipedblank, var_11_3 and not arg_11_0._isCurMaxLevel)
+	gohelper.setActive(var_11_0.goequipedblankred, var_11_3 and arg_11_0._isCurMaxLevel)
+	gohelper.setActive(var_11_0.imageselect.gameObject, var_11_4)
 
-	if slot0._isCurMaxLevel then
-		slot8 = string.format("rouge_dlc1_buffbtn" .. slot1) .. "_hong"
+	local var_11_5 = string.format("rouge_dlc1_buffbtn" .. arg_11_1)
+
+	if arg_11_0._isCurMaxLevel then
+		var_11_5 = var_11_5 .. "_hong"
 	end
 
-	UISpriteSetMgr.instance:setRouge3Sprite(slot3.imageunequiped, slot8, true)
-	UISpriteSetMgr.instance:setRouge3Sprite(slot3.imageequipednormal, slot8, true)
+	UISpriteSetMgr.instance:setRouge3Sprite(var_11_0.imageunequiped, var_11_5, true)
+	UISpriteSetMgr.instance:setRouge3Sprite(var_11_0.imageequipednormal, var_11_5, true)
 end
 
-function slot0._getOrCreateBuffPart(slot0, slot1)
-	slot0._buffPartTab = slot0._buffPartTab or slot0:getUserDataTb_()
+function var_0_0._getOrCreateBuffPart(arg_12_0, arg_12_1)
+	arg_12_0._buffPartTab = arg_12_0._buffPartTab or arg_12_0:getUserDataTb_()
 
-	if not slot0._buffPartTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.gobuff = gohelper.findChild(slot0.viewGO, "#go_buff" .. slot1)
-		slot2.imageunequiped = gohelper.findChildImage(slot2.gobuff, "unselect_unequip")
-		slot2.imageequipednormal = gohelper.findChildImage(slot2.gobuff, "unselect_equiped")
-		slot2.goquipedblank = gohelper.findChild(slot2.gobuff, "none")
-		slot2.goequipedblankred = gohelper.findChild(slot2.gobuff, "none_red")
-		slot2.imageselect = gohelper.findChildImage(slot2.gobuff, "select_equiped")
-		slot2.btnclick = gohelper.findChildButtonWithAudio(slot2.gobuff, "btn_click")
+	local var_12_0 = arg_12_0._buffPartTab[arg_12_1]
 
-		slot2.btnclick:AddClickListener(slot0._btnbuffOnClick, slot0, slot1)
+	if not var_12_0 then
+		var_12_0 = arg_12_0:getUserDataTb_()
+		var_12_0.gobuff = gohelper.findChild(arg_12_0.viewGO, "#go_buff" .. arg_12_1)
+		var_12_0.imageunequiped = gohelper.findChildImage(var_12_0.gobuff, "unselect_unequip")
+		var_12_0.imageequipednormal = gohelper.findChildImage(var_12_0.gobuff, "unselect_equiped")
+		var_12_0.goquipedblank = gohelper.findChild(var_12_0.gobuff, "none")
+		var_12_0.goequipedblankred = gohelper.findChild(var_12_0.gobuff, "none_red")
+		var_12_0.imageselect = gohelper.findChildImage(var_12_0.gobuff, "select_equiped")
+		var_12_0.btnclick = gohelper.findChildButtonWithAudio(var_12_0.gobuff, "btn_click")
 
-		slot0._buffPartTab[slot1] = slot2
+		var_12_0.btnclick:AddClickListener(arg_12_0._btnbuffOnClick, arg_12_0, arg_12_1)
+
+		arg_12_0._buffPartTab[arg_12_1] = var_12_0
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0._getTypeBuffEquiped(slot0, slot1)
-	if RougeDLCConfig101.instance:getAllLimiterBuffCosByType(RougeModel.instance:getVersion(), slot1) then
-		for slot7, slot8 in ipairs(slot3) do
-			if RougeDLCModel101.instance:getLimiterBuffState(slot8.id) == RougeDLCEnum101.BuffState.Equiped then
-				return slot8
+function var_0_0._getTypeBuffEquiped(arg_13_0, arg_13_1)
+	local var_13_0 = RougeModel.instance:getVersion()
+	local var_13_1 = RougeDLCConfig101.instance:getAllLimiterBuffCosByType(var_13_0, arg_13_1)
+
+	if var_13_1 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+			if RougeDLCModel101.instance:getLimiterBuffState(iter_13_1.id) == RougeDLCEnum101.BuffState.Equiped then
+				return iter_13_1
 			end
 		end
 	end
 end
 
-function slot0._onUpdateBuffState(slot0, slot1)
-	if not RougeDLCConfig101.instance:getLimiterBuffCo(slot1) then
+function var_0_0._onUpdateBuffState(arg_14_0, arg_14_1)
+	local var_14_0 = RougeDLCConfig101.instance:getLimiterBuffCo(arg_14_1)
+
+	if not var_14_0 then
 		return
 	end
 
-	slot0:refreshBuffEntry(slot2.buffType, true)
+	arg_14_0:refreshBuffEntry(var_14_0.buffType, true)
 end
 
-function slot0._onUpdateLimiterGroup(slot0, slot1)
-	slot0:refreshUI(true)
+function var_0_0._onUpdateLimiterGroup(arg_15_0, arg_15_1)
+	arg_15_0:refreshUI(true)
 end
 
-function slot0._onUpdateRougeInfo(slot0)
-	slot0:refreshUI()
+function var_0_0._onUpdateRougeInfo(arg_16_0)
+	arg_16_0:refreshUI()
 end
 
-function slot0._btnbuffOnClick(slot0, slot1)
-	slot0:selectBuffEntry(slot1)
+function var_0_0._btnbuffOnClick(arg_17_0, arg_17_1)
+	arg_17_0:selectBuffEntry(arg_17_1)
 	RougeDLCController101.instance:openRougeLimiterBuffView({
-		buffType = slot1
+		buffType = arg_17_1
 	})
 end
 
-function slot0.selectBuffEntry(slot0, slot1)
-	slot0._selectIndex = slot1 or 0
+function var_0_0.selectBuffEntry(arg_18_0, arg_18_1)
+	arg_18_0._selectIndex = arg_18_1 or 0
 
-	slot0:refreshAllBuffEntry()
+	arg_18_0:refreshAllBuffEntry()
 end
 
-function slot0.setDifficultyTxtFontSize(slot0, slot1)
-	slot0._txtdifficulty.fontSize = slot1 or uv0.DefaultDifficultyFontSize
+function var_0_0.setDifficultyTxtFontSize(arg_19_0, arg_19_1)
+	arg_19_1 = arg_19_1 or var_0_0.DefaultDifficultyFontSize
+	arg_19_0._txtdifficulty.fontSize = arg_19_1
 end
 
-function slot0.setDifficultyVisible(slot0, slot1)
-	gohelper.setActive(slot0._txtdifficulty.gameObject, slot1)
-	gohelper.setActive(slot0._gonamebg, slot1)
+function var_0_0.setDifficultyVisible(arg_20_0, arg_20_1)
+	gohelper.setActive(arg_20_0._txtdifficulty.gameObject, arg_20_1)
+	gohelper.setActive(arg_20_0._gonamebg, arg_20_1)
 end
 
-function slot0.setPlaySwitchAnim(slot0, slot1)
-	slot0._enabledPlaySwitchAnim = slot1
+function var_0_0.setPlaySwitchAnim(arg_21_0, arg_21_1)
+	arg_21_0._enabledPlaySwitchAnim = arg_21_1
 end
 
-function slot0.setInteractable(slot0, slot1)
-	slot0._canvasgroup.interactable = slot1
-	slot0._canvasgroup.blocksRaycasts = slot1
+function var_0_0.setInteractable(arg_22_0, arg_22_1)
+	arg_22_0._canvasgroup.interactable = arg_22_1
+	arg_22_0._canvasgroup.blocksRaycasts = arg_22_1
 end
 
-function slot0.removeAllBuffPartClick(slot0)
-	if slot0._buffPartTab then
-		for slot4, slot5 in pairs(slot0._buffPartTab) do
-			if slot5.btnclick then
-				slot5.btnclick:RemoveClickListener()
+function var_0_0.removeAllBuffPartClick(arg_23_0)
+	if arg_23_0._buffPartTab then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0._buffPartTab) do
+			if iter_23_1.btnclick then
+				iter_23_1.btnclick:RemoveClickListener()
 			end
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:removeAllBuffPartClick()
+function var_0_0.onDestroy(arg_24_0)
+	arg_24_0:removeAllBuffPartClick()
 end
 
-return slot0
+return var_0_0

@@ -1,26 +1,27 @@
-module("modules.logic.scene.fight.comp.FightSceneMgrComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneMgrComp", package.seeall)
 
-slot0 = class("FightSceneMgrComp", BaseSceneComp)
+local var_0_0 = class("FightSceneMgrComp", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0.mgr = FightPerformanceMgr.New()
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.mgr = FightPerformanceMgr.New()
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	if slot0.mgr then
-		slot0.mgr:disposeSelf()
+function var_0_0.onSceneClose(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_0.mgr then
+		arg_3_0.mgr:disposeSelf()
 
-		slot0.mgr = nil
+		arg_3_0.mgr = nil
 	end
 end
 
-function slot0.getASFDMgr(slot0)
-	if slot0.mgr then
-		return slot0.mgr:getASFDMgr()
+function var_0_0.getASFDMgr(arg_4_0)
+	if arg_4_0.mgr then
+		return arg_4_0.mgr:getASFDMgr()
 	end
 end
 
-return slot0
+return var_0_0

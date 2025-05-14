@@ -1,153 +1,178 @@
-module("modules.logic.activity.controller.chessmap.ActivityChessInteractObject", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.ActivityChessInteractObject", package.seeall)
 
-slot0 = class("ActivityChessInteractObject")
-slot1 = {
+local var_0_0 = class("ActivityChessInteractObject")
+local var_0_1 = {
 	[ActivityChessEnum.InteractType.Player] = ActivityChessInteractPlayer,
 	[ActivityChessEnum.InteractType.TriggerFail] = ActivityChessInteractTriggerFail
 }
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
-	slot0.id = slot1.id
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
+	arg_1_0.id = arg_1_1.id
 
-	if Activity109Config.instance:getInteractObjectCo(slot0.originData.actId, slot0.id) then
-		slot0.objType = slot2.interactType
-		slot0.config = slot2
-		slot0._handler = (uv0[slot2.interactType] or ActivityChessInteractBase).New()
+	local var_1_0 = Activity109Config.instance:getInteractObjectCo(arg_1_0.originData.actId, arg_1_0.id)
 
-		slot0._handler:init(slot0)
+	if var_1_0 then
+		arg_1_0.objType = var_1_0.interactType
+		arg_1_0.config = var_1_0
+		arg_1_0._handler = (var_0_1[var_1_0.interactType] or ActivityChessInteractBase).New()
+
+		arg_1_0._handler:init(arg_1_0)
 	else
-		logError("can't find interact_object : " .. tostring(slot1.actId) .. ", " .. tostring(slot1.id))
+		logError("can't find interact_object : " .. tostring(arg_1_1.actId) .. ", " .. tostring(arg_1_1.id))
 	end
 
-	slot0.goToObject = ActivityChessGotoObject.New(slot0)
-	slot0.effect = ActivityChessInteractEffect.New(slot0)
-	slot0.avatar = nil
+	arg_1_0.goToObject = ActivityChessGotoObject.New(arg_1_0)
+	arg_1_0.effect = ActivityChessInteractEffect.New(arg_1_0)
+	arg_1_0.avatar = nil
 end
 
-function slot0.setAvatar(slot0, slot1)
-	slot0.avatar = slot1
+function var_0_0.setAvatar(arg_2_0, arg_2_1)
+	arg_2_0.avatar = arg_2_1
 
-	slot0:updateAvatarInScene()
+	arg_2_0:updateAvatarInScene()
 end
 
-function slot0.updateAvatarInScene(slot0)
-	if not slot0.avatar or not slot0.avatar.sceneGo then
+function var_0_0.updateAvatarInScene(arg_3_0)
+	if not arg_3_0.avatar or not arg_3_0.avatar.sceneGo then
 		return
 	end
 
-	if slot0.originData.posX and slot0.originData.posY then
-		slot1, slot2, slot3 = ActivityChessGameController.instance:calcTilePosInScene(slot0.originData.posX, slot0.originData.posY, slot0.avatar.order)
-		slot0.avatar.sceneX = slot1
-		slot0.avatar.sceneY = slot2
+	if arg_3_0.originData.posX and arg_3_0.originData.posY then
+		local var_3_0, var_3_1, var_3_2 = ActivityChessGameController.instance:calcTilePosInScene(arg_3_0.originData.posX, arg_3_0.originData.posY, arg_3_0.avatar.order)
 
-		transformhelper.setLocalPos(slot0.avatar.sceneTf, slot1, slot2, slot3)
+		arg_3_0.avatar.sceneX = var_3_0
+		arg_3_0.avatar.sceneY = var_3_1
+
+		transformhelper.setLocalPos(arg_3_0.avatar.sceneTf, var_3_0, var_3_1, var_3_2)
 	end
 
-	slot1 = 0.6
+	local var_3_3 = 0.6
 
-	transformhelper.setLocalScale(slot0.avatar.sceneTf, slot1, slot1, slot1)
+	transformhelper.setLocalScale(arg_3_0.avatar.sceneTf, var_3_3, var_3_3, var_3_3)
 
-	if slot0.avatar.loader and not string.nilorempty(slot0:getAvatarPath()) then
-		slot0.avatar.loader:startLoad(string.format("scenes/m_s12_dfw/prefab/picpe/%s.prefab", slot2), slot0.onSceneObjectLoadFinish, slot0)
+	if arg_3_0.avatar.loader then
+		local var_3_4 = arg_3_0:getAvatarPath()
+
+		if not string.nilorempty(var_3_4) then
+			arg_3_0.avatar.loader:startLoad(string.format("scenes/m_s12_dfw/prefab/picpe/%s.prefab", var_3_4), arg_3_0.onSceneObjectLoadFinish, arg_3_0)
+		end
 	end
 end
 
-slot0.DirectionList = {
+var_0_0.DirectionList = {
 	2,
 	4,
 	6,
 	8
 }
-slot0.DirectionSet = {}
+var_0_0.DirectionSet = {}
 
-for slot5, slot6 in pairs(slot0.DirectionList) do
-	slot0.DirectionSet[slot6] = true
+for iter_0_0, iter_0_1 in pairs(var_0_0.DirectionList) do
+	var_0_0.DirectionSet[iter_0_1] = true
 end
 
-function slot0.onSceneObjectLoadFinish(slot0)
-	if slot0.avatar and slot0.avatar.loader then
-		if not gohelper.isNil(slot0.avatar.loader:getInstGO()) then
-			if gohelper.findChild(slot1, "Canvas") and slot2:GetComponent(typeof(UnityEngine.Canvas)) then
-				slot3.worldCamera = CameraMgr.instance:getMainCamera()
+function var_0_0.onSceneObjectLoadFinish(arg_4_0)
+	if arg_4_0.avatar and arg_4_0.avatar.loader then
+		local var_4_0 = arg_4_0.avatar.loader:getInstGO()
+
+		if not gohelper.isNil(var_4_0) then
+			local var_4_1 = gohelper.findChild(var_4_0, "Canvas")
+
+			if var_4_1 then
+				local var_4_2 = var_4_1:GetComponent(typeof(UnityEngine.Canvas))
+
+				if var_4_2 then
+					var_4_2.worldCamera = CameraMgr.instance:getMainCamera()
+				end
 			end
 
-			for slot6, slot7 in ipairs(uv0.DirectionList) do
-				slot0.avatar["goFaceTo" .. slot7] = gohelper.findChild(slot1, "piecea/char_" .. slot7)
+			for iter_4_0, iter_4_1 in ipairs(var_0_0.DirectionList) do
+				arg_4_0.avatar["goFaceTo" .. iter_4_1] = gohelper.findChild(var_4_0, "piecea/char_" .. iter_4_1)
 			end
 		end
 
-		slot0.avatar.isLoaded = true
+		arg_4_0.avatar.isLoaded = true
 
-		slot0:getHandler():onAvatarLoaded()
-		slot0.goToObject:onAvatarLoaded()
-		slot0.effect:onAvatarLoaded()
+		arg_4_0:getHandler():onAvatarLoaded()
+		arg_4_0.goToObject:onAvatarLoaded()
+		arg_4_0.effect:onAvatarLoaded()
 	end
 end
 
-function slot0.tryGetGameObject(slot0)
-	if slot0.avatar and slot0.avatar.loader and not gohelper.isNil(slot0.avatar.loader:getInstGO()) then
-		return slot1
+function var_0_0.tryGetGameObject(arg_5_0)
+	if arg_5_0.avatar and arg_5_0.avatar.loader then
+		local var_5_0 = arg_5_0.avatar.loader:getInstGO()
+
+		if not gohelper.isNil(var_5_0) then
+			return var_5_0
+		end
 	end
 end
 
-function slot0.getAvatarPath(slot0)
-	if Activity109Config.instance:getInteractObjectCo(slot0.originData.actId, slot0.originData.id) then
-		return slot3.avatar
+function var_0_0.getAvatarPath(arg_6_0)
+	local var_6_0 = arg_6_0.originData.actId
+	local var_6_1 = arg_6_0.originData.id
+	local var_6_2 = Activity109Config.instance:getInteractObjectCo(var_6_0, var_6_1)
+
+	if var_6_2 then
+		return var_6_2.avatar
 	end
 end
 
-function slot0.canSelect(slot0)
-	return slot0.config and slot0.config.interactType == ActivityChessEnum.InteractType.Player
+function var_0_0.canSelect(arg_7_0)
+	return arg_7_0.config and arg_7_0.config.interactType == ActivityChessEnum.InteractType.Player
 end
 
-function slot0.getHandler(slot0)
-	return slot0._handler
+function var_0_0.getHandler(arg_8_0)
+	return arg_8_0._handler
 end
 
-function slot0.canBlock(slot0)
-	return slot0.config and (slot0.config.interactType == ActivityChessEnum.InteractType.Obstacle or slot0.config.interactType == ActivityChessEnum.InteractType.TriggerFail or slot0.config.interactType == ActivityChessEnum.InteractType.Player)
+function var_0_0.canBlock(arg_9_0)
+	return arg_9_0.config and (arg_9_0.config.interactType == ActivityChessEnum.InteractType.Obstacle or arg_9_0.config.interactType == ActivityChessEnum.InteractType.TriggerFail or arg_9_0.config.interactType == ActivityChessEnum.InteractType.Player)
 end
 
-function slot0.getSelectPriority(slot0)
-	slot1 = nil
+function var_0_0.getSelectPriority(arg_10_0)
+	local var_10_0
 
-	if slot0.config then
-		slot1 = ActivityChessEnum.InteractSelectPriority[slot0.config.interactType]
+	if arg_10_0.config then
+		var_10_0 = ActivityChessEnum.InteractSelectPriority[arg_10_0.config.interactType]
 	end
 
-	return slot1 or slot0.id
+	return var_10_0 or arg_10_0.id
 end
 
-function slot0.dispose(slot0)
-	if slot0.avatar ~= nil then
-		if slot0.avatar.loader then
-			slot0.avatar.loader:dispose()
+function var_0_0.dispose(arg_11_0)
+	if arg_11_0.avatar ~= nil then
+		if arg_11_0.avatar.loader then
+			arg_11_0.avatar.loader:dispose()
 
-			slot0.avatar.loader = nil
+			arg_11_0.avatar.loader = nil
 		end
 
-		if not gohelper.isNil(slot0.avatar.sceneGo) then
-			gohelper.setActive(slot0.avatar.sceneGo, true)
-			gohelper.destroy(slot0.avatar.sceneGo)
+		if not gohelper.isNil(arg_11_0.avatar.sceneGo) then
+			gohelper.setActive(arg_11_0.avatar.sceneGo, true)
+			gohelper.destroy(arg_11_0.avatar.sceneGo)
 		end
 
-		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.DeleteInteractAvatar, slot0.avatar)
+		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.DeleteInteractAvatar, arg_11_0.avatar)
 
-		slot0.avatar = nil
+		arg_11_0.avatar = nil
 	end
 
-	for slot5, slot6 in ipairs({
+	local var_11_0 = {
 		"_handler",
 		"goToObject",
 		"effect"
-	}) do
-		if slot0[slot6] ~= nil then
-			slot0[slot6]:dispose()
+	}
 
-			slot0[slot6] = nil
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if arg_11_0[iter_11_1] ~= nil then
+			arg_11_0[iter_11_1]:dispose()
+
+			arg_11_0[iter_11_1] = nil
 		end
 	end
 end
 
-return slot0
+return var_0_0

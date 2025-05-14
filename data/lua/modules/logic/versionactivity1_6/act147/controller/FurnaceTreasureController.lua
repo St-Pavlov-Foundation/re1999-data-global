@@ -1,40 +1,45 @@
-module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureController", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureController", package.seeall)
 
-slot0 = class("FurnaceTreasureController", BaseController)
+local var_0_0 = class("FurnaceTreasureController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0.refreshActivityInfo, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.refreshActivityInfo, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.refreshActivityInfo, arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.refreshActivityInfo, arg_2_0)
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-function slot0.refreshActivityInfo(slot0, slot1)
-	if not string.nilorempty(slot1) and slot1 ~= 0 and slot1 ~= FurnaceTreasureModel.instance:getActId() then
+function var_0_0.refreshActivityInfo(arg_4_0, arg_4_1)
+	local var_4_0 = FurnaceTreasureModel.instance:getActId()
+	local var_4_1 = not string.nilorempty(arg_4_1) and arg_4_1 ~= 0
+
+	if var_4_1 and arg_4_1 ~= var_4_0 then
 		return
 	end
 
 	if FurnaceTreasureModel.instance:isActivityOpen() then
-		FurnaceTreasureRpc.instance:sendGetAct147InfosRequest(slot2)
-	elseif slot3 then
+		FurnaceTreasureRpc.instance:sendGetAct147InfosRequest(var_4_0)
+	elseif var_4_1 then
 		FurnaceTreasureModel.instance:resetData(true)
 	end
 end
 
-function slot0.BuyFurnaceTreasureGoods(slot0, slot1, slot2, slot3, slot4)
-	slot5 = false
+function var_0_0.BuyFurnaceTreasureGoods(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = false
 
-	if slot1 and slot2 then
-		slot5 = FurnaceTreasureEnum.DEFAULT_BUY_COUNT <= FurnaceTreasureModel.instance:getGoodsRemainCount(slot1, slot2)
+	if arg_5_1 and arg_5_2 then
+		var_5_0 = FurnaceTreasureModel.instance:getGoodsRemainCount(arg_5_1, arg_5_2) >= FurnaceTreasureEnum.DEFAULT_BUY_COUNT
 	end
 
-	if not slot5 then
-		if slot3 then
-			slot3(slot4)
+	if not var_5_0 then
+		if arg_5_3 then
+			arg_5_3(arg_5_4)
 		end
 
 		GameFacade.showToast(ToastEnum.CurrencyChanged)
@@ -42,9 +47,11 @@ function slot0.BuyFurnaceTreasureGoods(slot0, slot1, slot2, slot3, slot4)
 		return
 	end
 
-	FurnaceTreasureRpc.instance:sendBuyAct147GoodsRequest(FurnaceTreasureModel.instance:getActId(), slot1, slot2, FurnaceTreasureEnum.DEFAULT_BUY_COUNT, slot3, slot4)
+	local var_5_1 = FurnaceTreasureModel.instance:getActId()
+
+	FurnaceTreasureRpc.instance:sendBuyAct147GoodsRequest(var_5_1, arg_5_1, arg_5_2, FurnaceTreasureEnum.DEFAULT_BUY_COUNT, arg_5_3, arg_5_4)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

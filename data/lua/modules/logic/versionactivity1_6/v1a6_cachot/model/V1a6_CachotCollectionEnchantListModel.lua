@@ -1,93 +1,107 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionEnchantListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionEnchantListModel", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionEnchantListModel", ListScrollModel)
+local var_0_0 = class("V1a6_CachotCollectionEnchantListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._enchantList = nil
-	slot0._curSelectEnchantId = nil
-	slot0._enchantIndexMap = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._enchantList = nil
+	arg_1_0._curSelectEnchantId = nil
+	arg_1_0._enchantIndexMap = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
+	arg_2_0:clear()
 end
 
-function slot0.onInitData(slot0, slot1)
-	slot0._enchantList = slot0:buildEnchantDataTab(slot1)
+function var_0_0.onInitData(arg_3_0, arg_3_1)
+	arg_3_0._enchantList = arg_3_0:buildEnchantDataTab(arg_3_1)
 
-	slot0:setList(slot0._enchantList)
+	arg_3_0:setList(arg_3_0._enchantList)
 end
 
-function slot0.buildEnchantDataTab(slot0, slot1)
-	slot3 = V1a6_CachotModel.instance:getRogueInfo() and slot2.enchants
-	slot5 = slot3 and #slot3 or 0
+function var_0_0.buildEnchantDataTab(arg_4_0, arg_4_1)
+	local var_4_0 = V1a6_CachotModel.instance:getRogueInfo()
+	local var_4_1 = var_4_0 and var_4_0.enchants
+	local var_4_2 = {}
+	local var_4_3 = var_4_1 and #var_4_1 or 0
+	local var_4_4 = arg_4_0:getList()
 
-	for slot10, slot11 in ipairs(slot0:getList()) do
-		table.insert({}, slot3 and slot3[slot0:getEnchantIndexById(slot11.id) or slot10])
+	for iter_4_0, iter_4_1 in ipairs(var_4_4) do
+		local var_4_5 = arg_4_0:getEnchantIndexById(iter_4_1.id) or iter_4_0
+		local var_4_6 = var_4_1 and var_4_1[var_4_5]
+
+		table.insert(var_4_2, var_4_6)
 	end
 
-	for slot10 = #slot6 + 1, slot5 do
-		table.insert(slot4, slot3[slot10])
+	for iter_4_2 = #var_4_4 + 1, var_4_3 do
+		table.insert(var_4_2, var_4_1[iter_4_2])
 	end
 
-	if slot1 then
-		table.sort(slot4, slot0.sortFunc)
+	if arg_4_1 then
+		table.sort(var_4_2, arg_4_0.sortFunc)
 	end
 
-	return slot4
+	return var_4_2
 end
 
-function slot0.getEnchantIndexById(slot0, slot1)
-	if not slot0._enchantIndexMap then
-		slot0._enchantIndexMap = {}
+function var_0_0.getEnchantIndexById(arg_5_0, arg_5_1)
+	if not arg_5_0._enchantIndexMap then
+		arg_5_0._enchantIndexMap = {}
 
-		for slot7, slot8 in ipairs(V1a6_CachotModel.instance:getRogueInfo() and slot2.enchants) do
-			slot0._enchantIndexMap[slot8.id] = slot7
+		local var_5_0 = V1a6_CachotModel.instance:getRogueInfo()
+		local var_5_1 = var_5_0 and var_5_0.enchants
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			arg_5_0._enchantIndexMap[iter_5_1.id] = iter_5_0
 		end
 	end
 
-	return slot0._enchantIndexMap and slot0._enchantIndexMap[slot1]
+	return arg_5_0._enchantIndexMap and arg_5_0._enchantIndexMap[arg_5_1]
 end
 
-function slot0.sortFunc(slot0, slot1)
-	if slot0:isEnchant() ~= slot1:isEnchant() then
-		return not slot2
+function var_0_0.sortFunc(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:isEnchant()
+
+	if var_6_0 ~= arg_6_1:isEnchant() then
+		return not var_6_0
 	end
 
-	return slot1.id < slot0.id
+	return arg_6_0.id > arg_6_1.id
 end
 
-function slot0.isEnchantEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isEnchantEmpty(arg_7_0)
+	return arg_7_0:getCount() <= 0
 end
 
-function slot0.selectCell(slot0, slot1, slot2)
-	slot3 = slot0._curSelectEnchantId
+function var_0_0.selectCell(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._curSelectEnchantId
 
-	if slot1 and slot1 > 0 and slot2 then
-		slot0:selectCellInternal(slot1, slot2)
+	if arg_8_1 and arg_8_1 > 0 and arg_8_2 then
+		arg_8_0:selectCellInternal(arg_8_1, arg_8_2)
 	else
-		slot0:selectCellInternal(slot3, false)
+		arg_8_0:selectCellInternal(var_8_0, false)
 	end
 end
 
-function slot0.selectCellInternal(slot0, slot1, slot2)
-	slot4 = nil
+function var_0_0.selectCellInternal(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:getById(arg_9_1)
+	local var_9_1
 
-	if slot0:getById(slot1) then
-		uv0.super.selectCell(slot0, slot0:getIndex(slot3), slot2)
+	if var_9_0 then
+		local var_9_2 = arg_9_0:getIndex(var_9_0)
 
-		slot4 = slot2 and slot3.id
+		var_0_0.super.selectCell(arg_9_0, var_9_2, arg_9_2)
+
+		var_9_1 = arg_9_2 and var_9_0.id
 	end
 
-	slot0._curSelectEnchantId = slot4
+	arg_9_0._curSelectEnchantId = var_9_1
 end
 
-function slot0.getCurSelectEnchantId(slot0)
-	return slot0._curSelectEnchantId
+function var_0_0.getCurSelectEnchantId(arg_10_0)
+	return arg_10_0._curSelectEnchantId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

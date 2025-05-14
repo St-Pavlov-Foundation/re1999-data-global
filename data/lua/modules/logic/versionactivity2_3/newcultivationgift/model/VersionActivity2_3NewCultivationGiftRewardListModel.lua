@@ -1,23 +1,28 @@
-slot0 = class("VersionActivity2_3NewCultivationGiftRewardListModel", ListScrollModel)
+﻿local var_0_0 = class("VersionActivity2_3NewCultivationGiftRewardListModel", ListScrollModel)
 
-function slot0.setRewardList(slot0, slot1)
-	slot2 = {}
+function var_0_0.setRewardList(arg_1_0, arg_1_1)
+	local var_1_0 = {}
 
-	if not string.nilorempty(slot1) and string.split(slot1, "|") and #slot3 > 0 then
-		for slot7, slot8 in ipairs(slot3) do
-			slot10 = string.splitToNumber(slot8, "#")
+	if not string.nilorempty(arg_1_1) then
+		local var_1_1 = string.split(arg_1_1, "|")
 
-			table.insert(slot2, {
-				type = slot10[1],
-				id = slot10[2],
-				quantity = slot10[3]
-			})
+		if var_1_1 and #var_1_1 > 0 then
+			for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+				local var_1_2 = {}
+				local var_1_3 = string.splitToNumber(iter_1_1, "#")
+
+				var_1_2.type = var_1_3[1]
+				var_1_2.id = var_1_3[2]
+				var_1_2.quantity = var_1_3[3]
+
+				table.insert(var_1_0, var_1_2)
+			end
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

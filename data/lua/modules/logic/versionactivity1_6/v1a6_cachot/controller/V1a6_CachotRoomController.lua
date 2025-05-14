@@ -1,20 +1,20 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotRoomController", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotRoomController", package.seeall)
 
-slot0 = class("V1a6_CachotRoomController", BaseController)
+local var_0_0 = class("V1a6_CachotRoomController", BaseController)
 
-function slot0.reInit(slot0)
-	slot0._isSwitchLevel = nil
+function var_0_0.reInit(arg_1_0)
+	arg_1_0._isSwitchLevel = nil
 
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, slot0._switchLevel, slot0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, arg_1_0._switchLevel, arg_1_0)
 end
 
-function slot0.addConstEvents(slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChange, slot0._checkAndSwitchLevel, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, slot0._playRoomViewOpenAnim, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._checkAndSwitchLevel, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChange, arg_2_0._checkAndSwitchLevel, arg_2_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_2_0._playRoomViewOpenAnim, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._checkAndSwitchLevel, arg_2_0)
 end
 
-function slot0._checkAndSwitchLevel(slot0)
+function var_0_0._checkAndSwitchLevel(arg_3_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Cachot then
 		return
 	end
@@ -23,7 +23,9 @@ function slot0._checkAndSwitchLevel(slot0)
 		return
 	end
 
-	if not V1a6_CachotModel.instance:getRogueInfo() then
+	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not var_3_0 then
 		return
 	end
 
@@ -37,38 +39,44 @@ function slot0._checkAndSwitchLevel(slot0)
 
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChangeBegin)
 
+	local var_3_1 = V1a6_CachotConfig.instance:getSceneLevelId(var_3_0.sceneId)
+
 	if V1a6_CachotRoomModel.instance:getLayerIsChange() then
 		V1a6_CachotRoomModel.instance:clearRoomChangeStatus()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingCachotChangeView)
-		GameSceneMgr.instance:startScene(SceneType.Cachot, 90001, V1a6_CachotConfig.instance:getSceneLevelId(slot1.sceneId), true, true)
+		GameSceneMgr.instance:startScene(SceneType.Cachot, 90001, var_3_1, true, true)
 	else
 		V1a6_CachotRoomModel.instance:clearRoomChangeStatus()
-		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, slot0._switchLevel, slot0)
+		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, arg_3_0._switchLevel, arg_3_0)
 	end
 end
 
-function slot0._switchLevel(slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, slot0._switchLevel, slot0)
+function var_0_0._switchLevel(arg_4_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, arg_4_0._switchLevel, arg_4_0)
 
-	if not V1a6_CachotModel.instance:getRogueInfo() then
+	local var_4_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not var_4_0 then
 		return
 	end
 
-	slot0._isSwitchLevel = true
+	local var_4_1 = V1a6_CachotConfig.instance:getSceneLevelId(var_4_0.sceneId)
 
-	GameSceneMgr.instance:getCurScene().level:switchLevel(V1a6_CachotConfig.instance:getSceneLevelId(slot1.sceneId))
+	arg_4_0._isSwitchLevel = true
+
+	GameSceneMgr.instance:getCurScene().level:switchLevel(var_4_1)
 end
 
-function slot0._playRoomViewOpenAnim(slot0, slot1)
+function var_0_0._playRoomViewOpenAnim(arg_5_0, arg_5_1)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Cachot then
 		return
 	end
 
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChangePlayAnim, slot0._isSwitchLevel)
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChangePlayAnim, arg_5_0._isSwitchLevel)
 
-	slot0._isSwitchLevel = nil
+	arg_5_0._isSwitchLevel = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

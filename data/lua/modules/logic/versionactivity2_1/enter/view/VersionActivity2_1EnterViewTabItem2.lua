@@ -1,31 +1,31 @@
-module("modules.logic.versionactivity2_1.enter.view.VersionActivity2_1EnterViewTabItem2", package.seeall)
+﻿module("modules.logic.versionactivity2_1.enter.view.VersionActivity2_1EnterViewTabItem2", package.seeall)
 
-slot0 = class("VersionActivity2_1EnterViewTabItem2", VersionActivity2_1EnterViewTabItemBase)
+local var_0_0 = class("VersionActivity2_1EnterViewTabItem2", VersionActivity2_1EnterViewTabItemBase)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0.goselect = gohelper.findChild(slot0.go, "#go_unselect")
-	slot0.gounselect = gohelper.findChild(slot0.go, "#go_unselect")
-	slot0.txtselectName = gohelper.findChildText(slot0.go, "#go_select/#txt_name")
-	slot0.txtselectNameEn = gohelper.findChildText(slot0.go, "#go_select/#txt_nameen")
-	slot0.txtunselectName = gohelper.findChildText(slot0.go, "#go_unselect/#txt_name")
-	slot0.txtunselectNameEn = gohelper.findChildText(slot0.go, "#go_unselect/#txt_nameen")
+	arg_1_0.goselect = gohelper.findChild(arg_1_0.go, "#go_unselect")
+	arg_1_0.gounselect = gohelper.findChild(arg_1_0.go, "#go_unselect")
+	arg_1_0.txtselectName = gohelper.findChildText(arg_1_0.go, "#go_select/#txt_name")
+	arg_1_0.txtselectNameEn = gohelper.findChildText(arg_1_0.go, "#go_select/#txt_nameen")
+	arg_1_0.txtunselectName = gohelper.findChildText(arg_1_0.go, "#go_unselect/#txt_name")
+	arg_1_0.txtunselectNameEn = gohelper.findChildText(arg_1_0.go, "#go_unselect/#txt_nameen")
 end
 
-function slot0.afterSetData(slot0)
-	uv0.super.afterSetData(slot0)
+function var_0_0.afterSetData(arg_2_0)
+	var_0_0.super.afterSetData(arg_2_0)
 
-	slot0.txtselectName.text = slot0.activityCo and slot0.activityCo.name or ""
-	slot0.txtselectNameEn.text = slot0.activityCo and slot0.activityCo.nameEn or ""
-	slot0.txtunselectName.text = slot0.activityCo and slot0.activityCo.name or ""
-	slot0.txtunselectNameEn.text = slot0.activityCo and slot0.activityCo.nameEn or ""
+	arg_2_0.txtselectName.text = arg_2_0.activityCo and arg_2_0.activityCo.name or ""
+	arg_2_0.txtselectNameEn.text = arg_2_0.activityCo and arg_2_0.activityCo.nameEn or ""
+	arg_2_0.txtunselectName.text = arg_2_0.activityCo and arg_2_0.activityCo.name or ""
+	arg_2_0.txtunselectNameEn.text = arg_2_0.activityCo and arg_2_0.activityCo.nameEn or ""
 end
 
-function slot0.childRefreshSelect(slot0, slot1)
-	uv0.super.childRefreshSelect(slot0, slot1)
-	gohelper.setActive(slot0.goselect, slot0.isSelect)
-	gohelper.setActive(slot0.gounselect, not slot0.isSelect)
+function var_0_0.childRefreshSelect(arg_3_0, arg_3_1)
+	var_0_0.super.childRefreshSelect(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0.goselect, arg_3_0.isSelect)
+	gohelper.setActive(arg_3_0.gounselect, not arg_3_0.isSelect)
 end
 
-return slot0
+return var_0_0

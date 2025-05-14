@@ -1,10 +1,10 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerRotate", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerRotate", package.seeall)
 
-slot0 = class("ExploreTriggerRotate", ExploreTriggerBase)
+local var_0_0 = class("ExploreTriggerRotate", ExploreTriggerBase)
 
-function slot0.handle(slot0, slot1, slot2)
-	ExploreController.instance:dispatchEvent(ExploreEvent.SetRotateUnit, slot2)
-	slot0:onDone(false)
+function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
+	ExploreController.instance:dispatchEvent(ExploreEvent.SetRotateUnit, arg_1_2)
+	arg_1_0:onDone(false)
 end
 
-return slot0
+return var_0_0

@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotRoomViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotRoomViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		V1a6_CachotRoomView.New(),
 		V1a6_CachotPlayCtrlView.New(),
@@ -17,4 +17,4 @@ function slot0.buildViews(slot0)
 	}
 end
 
-return slot0
+return var_0_0

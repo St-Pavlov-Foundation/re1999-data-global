@@ -1,19 +1,21 @@
-module("modules.logic.dungeon.model.DungeonMonsterListModel", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonMonsterListModel", package.seeall)
 
-slot0 = class("DungeonMonsterListModel", ListScrollModel)
+local var_0_0 = class("DungeonMonsterListModel", ListScrollModel)
 
-function slot0.setMonsterList(slot0, slot1)
-	for slot6, slot7 in ipairs(DungeonModel.instance:getMonsterDisplayList(slot1)) do
-		slot2[slot6] = {
-			config = slot7
+function var_0_0.setMonsterList(arg_1_0, arg_1_1)
+	local var_1_0 = DungeonModel.instance:getMonsterDisplayList(arg_1_1)
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		var_1_0[iter_1_0] = {
+			config = iter_1_1
 		}
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 
-	slot0.initSelectMO = slot2[1]
+	arg_1_0.initSelectMO = var_1_0[1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

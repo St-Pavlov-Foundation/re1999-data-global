@@ -1,140 +1,159 @@
-module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_SpecialScheduleItem", package.seeall)
+﻿module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_SpecialScheduleItem", package.seeall)
 
-slot0 = class("V2a1_BossRush_SpecialScheduleItem", ListScrollCellExtend)
+local var_0_0 = class("V2a1_BossRush_SpecialScheduleItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goNormal = gohelper.findChild(slot0.viewGO, "#go_Normal")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "#go_Normal/#txt_Descr")
-	slot0._imgIcon = gohelper.findChildImage(slot0.viewGO, "#go_Normal/image_Icon")
-	slot0._scrollRewards = gohelper.findChildScrollRect(slot0.viewGO, "#go_Normal/#scroll_Rewards")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_Normal/#scroll_Rewards/Viewport/#go_rewards")
-	slot0._btnNotFinish = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Normal/#btn_NotFinish")
-	slot0._btnFinished = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Normal/#btn_Finished")
-	slot0._goAllFinished = gohelper.findChild(slot0.viewGO, "#go_Normal/#go_AllFinished")
-	slot0._goGetAll = gohelper.findChild(slot0.viewGO, "#go_GetAll")
-	slot0._btngetall = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_GetAll/#btn_getall/click")
-	slot0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0._goNormal)
-	slot0.animator = slot0._goNormal:GetComponent(typeof(UnityEngine.Animator))
-	slot0.animatorGetAll = slot0._goGetAll:GetComponent(typeof(UnityEngine.Animator))
-	slot0.animatorPlayerGetAll = ZProj.ProjAnimatorPlayer.Get(slot0._goGetAll)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goNormal = gohelper.findChild(arg_1_0.viewGO, "#go_Normal")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_Normal/#txt_Descr")
+	arg_1_0._imgIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_Normal/image_Icon")
+	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_Normal/#scroll_Rewards")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_Normal/#scroll_Rewards/Viewport/#go_rewards")
+	arg_1_0._btnNotFinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Normal/#btn_NotFinish")
+	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Normal/#btn_Finished")
+	arg_1_0._goAllFinished = gohelper.findChild(arg_1_0.viewGO, "#go_Normal/#go_AllFinished")
+	arg_1_0._goGetAll = gohelper.findChild(arg_1_0.viewGO, "#go_GetAll")
+	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_GetAll/#btn_getall/click")
+	arg_1_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._goNormal)
+	arg_1_0.animator = arg_1_0._goNormal:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.animatorGetAll = arg_1_0._goGetAll:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.animatorPlayerGetAll = ZProj.ProjAnimatorPlayer.Get(arg_1_0._goGetAll)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnNotFinish:AddClickListener(slot0._btnNotFinishOnClick, slot0)
-	slot0._btnFinished:AddClickListener(slot0._btnFinishedOnClick, slot0)
-	slot0._btngetall:AddClickListener(slot0._btngetallOnClick, slot0)
-	slot0:addEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllSpecialScheduleBouns, slot0._OnClickGetAllScheduleBouns, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnNotFinish:AddClickListener(arg_2_0._btnNotFinishOnClick, arg_2_0)
+	arg_2_0._btnFinished:AddClickListener(arg_2_0._btnFinishedOnClick, arg_2_0)
+	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
+	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllSpecialScheduleBouns, arg_2_0._OnClickGetAllScheduleBouns, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnNotFinish:RemoveClickListener()
-	slot0._btnFinished:RemoveClickListener()
-	slot0._btngetall:RemoveClickListener()
-	slot0:removeEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllSpecialScheduleBouns, slot0._OnClickGetAllScheduleBouns, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnNotFinish:RemoveClickListener()
+	arg_3_0._btnFinished:RemoveClickListener()
+	arg_3_0._btngetall:RemoveClickListener()
+	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnClickGetAllSpecialScheduleBouns, arg_3_0._OnClickGetAllScheduleBouns, arg_3_0)
 end
 
-slot0.UI_CLICK_BLOCK_KEY = "V2a1_BossRush_SpecialScheduleItemClick"
+var_0_0.UI_CLICK_BLOCK_KEY = "V2a1_BossRush_SpecialScheduleItemClick"
 
-function slot0._btngetallOnClick(slot0)
-	slot0:_btnFinishedOnClick()
+function var_0_0._btngetallOnClick(arg_4_0)
+	arg_4_0:_btnFinishedOnClick()
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnClickGetAllSpecialScheduleBouns)
 end
 
-function slot0._btnNotFinishOnClick(slot0)
+function var_0_0._btnNotFinishOnClick(arg_5_0)
+	return
 end
 
-function slot0._btnFinishedOnClick(slot0)
-	UIBlockMgr.instance:startBlock(uv0.UI_CLICK_BLOCK_KEY)
-	slot0:getAnimatorPlayer():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, slot0.firstAnimationDone, slot0)
+function var_0_0._btnFinishedOnClick(arg_6_0)
+	UIBlockMgr.instance:startBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+	arg_6_0:getAnimatorPlayer():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, arg_6_0.firstAnimationDone, arg_6_0)
 end
 
-function slot0._OnClickGetAllScheduleBouns(slot0)
-	if slot0._mo and slot0._mo.isCanClaim then
-		slot0:getAnimator():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, 0, 0)
+function var_0_0._OnClickGetAllScheduleBouns(arg_7_0)
+	if arg_7_0._mo and arg_7_0._mo.isCanClaim then
+		arg_7_0:getAnimator():Play(BossRushEnum.V1a6_BonusViewAnimName.Finish, 0, 0)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_9_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_10_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
 
-	if not slot1.getAll then
-		slot0:refreshNormalUI(slot1)
+	if not arg_11_1.getAll then
+		arg_11_0:refreshNormalUI(arg_11_1)
 	else
-		slot0:refreshGetAllUI(slot1)
+		arg_11_0:refreshGetAllUI(arg_11_1)
 	end
 end
 
-function slot0.refreshNormalUI(slot0, slot1)
-	slot2 = slot1.config
-	slot5 = slot2.maxFinishCount <= slot1.finishCount
-	slot6 = not slot5 and slot1.hasFinished
-	slot0._imgIcon.color = slot2.maxProgress <= BossRushModel.instance:getLastPointInfo(slot2.stage).cur and GameUtil.parseColor("#00AFAD") or GameUtil.parseColor("#919191")
-	slot0._mo.isCanClaim = slot6
+function var_0_0.refreshNormalUI(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.config
+	local var_12_1 = var_12_0.stage
+	local var_12_2 = BossRushModel.instance:getLastPointInfo(var_12_1)
+	local var_12_3 = arg_12_1.finishCount >= var_12_0.maxFinishCount
+	local var_12_4 = not var_12_3 and arg_12_1.hasFinished
+	local var_12_5 = not var_12_3 and not var_12_4
+	local var_12_6 = var_12_2.cur >= var_12_0.maxProgress
+	local var_12_7 = ItemModel.instance:getItemDataListByConfigStr(var_12_0.bonus)
+	local var_12_8 = var_12_6 and GameUtil.parseColor("#00AFAD") or GameUtil.parseColor("#919191")
 
-	gohelper.setActive(slot0._btnNotFinish.gameObject, not slot5 and not slot6)
-	gohelper.setActive(slot0._btnFinished.gameObject, slot6)
-	gohelper.setActive(slot0._goAllFinished, slot5)
-	gohelper.setActive(slot0._goGetAll, false)
-	gohelper.setActive(slot0._goNormal, true)
-	IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onRewardItemShow, ItemModel.instance:getItemDataListByConfigStr(slot2.bonus), slot0._gorewards)
+	arg_12_0._imgIcon.color = var_12_8
+	arg_12_0._mo.isCanClaim = var_12_4
 
-	slot0._txtDescr.text = string.format(luaLang("v2a1_bossrush_specialrewardview_desc"), slot2.maxProgress)
+	gohelper.setActive(arg_12_0._btnNotFinish.gameObject, var_12_5)
+	gohelper.setActive(arg_12_0._btnFinished.gameObject, var_12_4)
+	gohelper.setActive(arg_12_0._goAllFinished, var_12_3)
+	gohelper.setActive(arg_12_0._goGetAll, false)
+	gohelper.setActive(arg_12_0._goNormal, true)
+	IconMgr.instance:getCommonPropItemIconList(arg_12_0, arg_12_0._onRewardItemShow, var_12_7, arg_12_0._gorewards)
+
+	arg_12_0._txtDescr.text = string.format(luaLang("v2a1_bossrush_specialrewardview_desc"), var_12_0.maxProgress)
 end
 
-function slot0.refreshGetAllUI(slot0, slot1)
-	gohelper.setActive(slot0._goGetAll, true)
-	gohelper.setActive(slot0._goNormal, false)
+function var_0_0.refreshGetAllUI(arg_13_0, arg_13_1)
+	gohelper.setActive(arg_13_0._goGetAll, true)
+	gohelper.setActive(arg_13_0._goNormal, false)
 end
 
-function slot0._onRewardItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:showStackableNum2()
-	slot1:setCountFontSize(48)
+function var_0_0._onRewardItemShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	arg_14_1:onUpdateMO(arg_14_2)
+	arg_14_1:showStackableNum2()
+	arg_14_1:setCountFontSize(48)
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-function slot0.firstAnimationDone(slot0)
-	if slot0._view.viewContainer:getScrollAnimRemoveItem(BossRushEnum.BonusViewTab.SpecialScheduleTab) then
-		slot1:removeByIndex(slot0._index, slot0.secondAnimationDone, slot0)
+function var_0_0.firstAnimationDone(arg_17_0)
+	local var_17_0 = arg_17_0._view.viewContainer:getScrollAnimRemoveItem(BossRushEnum.BonusViewTab.SpecialScheduleTab)
+
+	if var_17_0 then
+		var_17_0:removeByIndex(arg_17_0._index, arg_17_0.secondAnimationDone, arg_17_0)
 	else
-		slot0:secondAnimationDone()
+		arg_17_0:secondAnimationDone()
 	end
 end
 
-function slot0.secondAnimationDone(slot0)
-	if slot0._mo.getAll then
-		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity128, nil, V2a1_BossRush_SpecialScheduleViewListModel.instance:getAllTask(slot0._mo.stage), nil, slot0, BossRushConfig.instance:getActivityId())
+function var_0_0.secondAnimationDone(arg_18_0)
+	if arg_18_0._mo.getAll then
+		local var_18_0 = arg_18_0._mo.stage
+		local var_18_1 = BossRushConfig.instance:getActivityId()
+		local var_18_2 = V2a1_BossRush_SpecialScheduleViewListModel.instance:getAllTask(var_18_0)
+
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity128, nil, var_18_2, nil, arg_18_0, var_18_1)
 	else
-		V2a1_BossRush_SpecialScheduleViewListModel.instance:claimRewardByIndex(slot0._index)
+		V2a1_BossRush_SpecialScheduleViewListModel.instance:claimRewardByIndex(arg_18_0._index)
 	end
 
-	UIBlockMgr.instance:endBlock(uv0.UI_CLICK_BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(var_0_0.UI_CLICK_BLOCK_KEY)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._mo.getAll and slot0.animatorGetAll or slot0.animator
+function var_0_0.getAnimator(arg_19_0)
+	return arg_19_0._mo.getAll and arg_19_0.animatorGetAll or arg_19_0.animator
 end
 
-function slot0.getAnimatorPlayer(slot0)
-	return slot0._mo.getAll and slot0.animatorPlayerGetAll or slot0.animatorPlayer
+function var_0_0.getAnimatorPlayer(arg_20_0)
+	return arg_20_0._mo.getAll and arg_20_0.animatorPlayerGetAll or arg_20_0.animatorPlayer
 end
 
-return slot0
+return var_0_0

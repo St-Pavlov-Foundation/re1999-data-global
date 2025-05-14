@@ -1,13 +1,13 @@
-module("modules.logic.dungeon.view.DungeonListScaleView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonListScaleView", package.seeall)
 
-slot0 = class("DungeonListScaleView", BaseView)
+local var_0_0 = class("DungeonListScaleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._csScrollScale = SLFramework.UGUI.ListScrollScale.GetWithPath(slot0.viewGO, "chapterlist/#scroll_chapter")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._csScrollScale = SLFramework.UGUI.ListScrollScale.GetWithPath(arg_1_0.viewGO, "chapterlist/#scroll_chapter")
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._csScrollScale = nil
+function var_0_0.onDestroyView(arg_2_0)
+	arg_2_0._csScrollScale = nil
 end
 
-return slot0
+return var_0_0

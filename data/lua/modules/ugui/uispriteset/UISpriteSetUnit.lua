@@ -1,172 +1,189 @@
-module("modules.ugui.uispriteset.UISpriteSetUnit", package.seeall)
+﻿module("modules.ugui.uispriteset.UISpriteSetUnit", package.seeall)
 
-slot0 = class("UISpriteSetUnit")
+local var_0_0 = class("UISpriteSetUnit")
 
-function slot0.init(slot0, slot1)
-	slot0._loader = nil
-	slot0._spriteSetAsset = nil
-	slot0._assetPath = slot1
-	slot0._refImageList = {}
-	slot0._refCacheImages = {}
-	slot0._loading = false
-	slot0._loadDone = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._loader = nil
+	arg_1_0._spriteSetAsset = nil
+	arg_1_0._assetPath = arg_1_1
+	arg_1_0._refImageList = {}
+	arg_1_0._refCacheImages = {}
+	arg_1_0._loading = false
+	arg_1_0._loadDone = false
 end
 
-function slot0.getSpriteSetAsset(slot0)
-	return slot0._spriteSetAsset
+function var_0_0.getSpriteSetAsset(arg_2_0)
+	return arg_2_0._spriteSetAsset
 end
 
-function slot0._checkLoadAsset(slot0)
-	if slot0._loader then
+function var_0_0._checkLoadAsset(arg_3_0)
+	if arg_3_0._loader then
 		return
 	end
 
-	slot0._loading = true
-	slot1 = MultiAbLoader.New()
-	slot0._loader = slot1
+	arg_3_0._loading = true
 
-	slot1:addPath(slot0._assetPath)
-	slot1:startLoad(function (slot0)
-		uv1._spriteSetAsset = uv0:getAssetItem(uv1._assetPath):GetResource(uv1._assetPath)
+	local var_3_0 = MultiAbLoader.New()
 
-		for slot6, slot7 in pairs(uv1._refCacheImages) do
-			if gohelper.isNil(slot6) == false then
-				uv1:_setImgAlpha(slot6, slot7.alpha or 1)
+	arg_3_0._loader = var_3_0
 
-				slot6.sprite = uv1._spriteSetAsset:GetSprite(slot7.spriteName)
+	var_3_0:addPath(arg_3_0._assetPath)
+	var_3_0:startLoad(function(arg_4_0)
+		local var_4_0 = var_3_0:getAssetItem(arg_3_0._assetPath):GetResource(arg_3_0._assetPath)
 
-				if slot7.setNativeSize then
-					slot6:SetNativeSize()
+		arg_3_0._spriteSetAsset = var_4_0
+
+		for iter_4_0, iter_4_1 in pairs(arg_3_0._refCacheImages) do
+			local var_4_1 = iter_4_1.spriteName
+			local var_4_2 = iter_4_1.setNativeSize
+			local var_4_3 = iter_4_1.alpha
+
+			if gohelper.isNil(iter_4_0) == false then
+				arg_3_0:_setImgAlpha(iter_4_0, var_4_3 or 1)
+
+				iter_4_0.sprite = arg_3_0._spriteSetAsset:GetSprite(var_4_1)
+
+				if var_4_2 then
+					iter_4_0:SetNativeSize()
 				end
 
-				table.insert(uv1._refImageList, slot6)
+				table.insert(arg_3_0._refImageList, iter_4_0)
 			end
 		end
 
-		uv1._refCacheImages = {}
-		uv1._hasCache = false
-		uv1._loading = false
-		uv1._loadDone = true
+		arg_3_0._refCacheImages = {}
+		arg_3_0._hasCache = false
+		arg_3_0._loading = false
+		arg_3_0._loadDone = true
 
-		if uv1.callback then
-			uv1.callback(uv1.callbackObj)
+		if arg_3_0.callback then
+			arg_3_0.callback(arg_3_0.callbackObj)
 		end
 	end)
 end
 
-function slot0.setImageAlpha(slot0, slot1, slot2)
-	if slot0._refCacheImages[slot1] then
-		slot3.alpha = slot2
+function var_0_0.setImageAlpha(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0._refCacheImages[arg_5_1]
+
+	if var_5_0 then
+		var_5_0.alpha = arg_5_2
 	else
-		slot0:_setImgAlpha(slot1, slot2)
+		arg_5_0:_setImgAlpha(arg_5_1, arg_5_2)
 	end
 end
 
-function slot0._setImgAlpha(slot0, slot1, slot2)
-	slot3 = slot1.color
-	slot3.a = slot2
-	slot1.color = slot3
+function var_0_0._setImgAlpha(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_1.color
+
+	var_6_0.a = arg_6_2
+	arg_6_1.color = var_6_0
 end
 
-function slot0.setSprite(slot0, slot1, slot2, slot3, slot4)
-	if gohelper.isNil(slot1) then
-		logError("set SpriteSet fail, image = null, spriteName = " .. (slot2 or "nil"))
+function var_0_0.setSprite(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	if gohelper.isNil(arg_7_1) then
+		logError("set SpriteSet fail, image = null, spriteName = " .. (arg_7_2 or "nil"))
 
 		return
 	end
 
-	if string.nilorempty(slot2) then
-		logError("set SpriteSet fail, spriteName = null, image = " .. (slot1 and slot1.name or "nil"))
+	if string.nilorempty(arg_7_2) then
+		logError("set SpriteSet fail, spriteName = null, image = " .. (arg_7_1 and arg_7_1.name or "nil"))
 
 		return
 	end
 
-	slot0:_checkLoadAsset()
+	arg_7_0:_checkLoadAsset()
 
-	if not slot0._spriteSetAsset then
-		if gohelper.isNil(slot1.sprite) then
-			slot0:_setImgAlpha(slot1, 0)
+	if not arg_7_0._spriteSetAsset then
+		if gohelper.isNil(arg_7_1.sprite) then
+			arg_7_0:_setImgAlpha(arg_7_1, 0)
 		end
 
-		slot0._refCacheImages[slot1] = {
-			spriteName = slot2,
-			setNativeSize = slot3,
-			alpha = slot4
+		arg_7_0._refCacheImages[arg_7_1] = {
+			spriteName = arg_7_2,
+			setNativeSize = arg_7_3,
+			alpha = arg_7_4
 		}
-		slot0._hasCache = true
+		arg_7_0._hasCache = true
 
 		return
 	end
 
-	if slot2 then
-		slot1.sprite = slot0._spriteSetAsset:GetSprite(slot2)
+	if arg_7_2 then
+		arg_7_1.sprite = arg_7_0._spriteSetAsset:GetSprite(arg_7_2)
 
-		if slot3 then
-			slot1:SetNativeSize()
+		if arg_7_3 then
+			arg_7_1:SetNativeSize()
 		end
 	end
 
-	table.insert(slot0._refImageList, slot1)
+	table.insert(arg_7_0._refImageList, arg_7_1)
 end
 
-function slot0.loadAsset(slot0, slot1, slot2)
-	if slot0._loadDone then
-		slot1(slot2)
+function var_0_0.loadAsset(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0._loadDone then
+		arg_8_1(arg_8_2)
 
 		return
 	end
 
-	slot0.callback = slot1
-	slot0.callbackObj = slot2
+	arg_8_0.callback = arg_8_1
+	arg_8_0.callbackObj = arg_8_2
 
-	if slot0._loading then
+	if arg_8_0._loading then
 		return
 	end
 
-	slot0._loading = true
-	slot3 = MultiAbLoader.New()
-	slot0._loader = slot3
+	arg_8_0._loading = true
 
-	slot3:addPath(slot0._assetPath)
-	slot3:startLoad(function (slot0)
-		uv1._spriteSetAsset = uv0:getAssetItem(uv1._assetPath):GetResource(uv1._assetPath)
-		uv1._loading = false
-		uv1._loadDone = true
+	local var_8_0 = MultiAbLoader.New()
 
-		if uv1.callback then
-			uv1.callback(uv1.callbackObj)
+	arg_8_0._loader = var_8_0
+
+	var_8_0:addPath(arg_8_0._assetPath)
+	var_8_0:startLoad(function(arg_9_0)
+		local var_9_0 = var_8_0:getAssetItem(arg_8_0._assetPath):GetResource(arg_8_0._assetPath)
+
+		arg_8_0._spriteSetAsset = var_9_0
+		arg_8_0._loading = false
+		arg_8_0._loadDone = true
+
+		if arg_8_0.callback then
+			arg_8_0.callback(arg_8_0.callbackObj)
 		end
 	end)
 end
 
-function slot0.getSprite(slot0, slot1)
-	if not slot0._loadDone then
+function var_0_0.getSprite(arg_10_0, arg_10_1)
+	if not arg_10_0._loadDone then
 		logError("sprite not load done, please use self:loadAsset() load.")
 
 		return nil
 	end
 
-	return slot0._spriteSetAsset:GetSprite(slot1)
+	return arg_10_0._spriteSetAsset:GetSprite(arg_10_1)
 end
 
-function slot0.tryDispose(slot0)
-	if slot0._hasCache then
+function var_0_0.tryDispose(arg_11_0)
+	if arg_11_0._hasCache then
 		return
 	end
 
-	for slot4 = #slot0._refImageList, 1, -1 do
-		if gohelper.isNil(slot0._refImageList[slot4]) then
-			table.remove(slot0._refImageList, slot4)
+	for iter_11_0 = #arg_11_0._refImageList, 1, -1 do
+		local var_11_0 = arg_11_0._refImageList[iter_11_0]
+
+		if gohelper.isNil(var_11_0) then
+			table.remove(arg_11_0._refImageList, iter_11_0)
 		end
 	end
 
-	if slot0._loader and #slot0._refImageList == 0 then
-		slot0._spriteSetAsset = nil
+	if arg_11_0._loader and #arg_11_0._refImageList == 0 then
+		arg_11_0._spriteSetAsset = nil
 
-		slot0._loader:dispose()
+		arg_11_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_11_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

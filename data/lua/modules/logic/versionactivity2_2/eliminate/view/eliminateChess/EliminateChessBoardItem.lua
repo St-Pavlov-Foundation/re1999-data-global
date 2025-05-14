@@ -1,38 +1,40 @@
-module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateChessBoardItem", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateChessBoardItem", package.seeall)
 
-slot0 = class("EliminateChessBoardItem", LuaCompBase)
+local var_0_0 = class("EliminateChessBoardItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._tr = slot1.transform
-	slot0._img_chessBoard = gohelper.findChildImage(slot0._go, "image")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._tr = arg_1_1.transform
+	arg_1_0._img_chessBoard = gohelper.findChildImage(arg_1_0._go, "image")
 end
 
-function slot0.initData(slot0, slot1)
-	slot0._data = slot1
+function var_0_0.initData(arg_2_0, arg_2_1)
+	arg_2_0._data = arg_2_1
 
-	if slot0._data then
-		slot2 = (slot0._data.x - 1) * EliminateEnum.ChessWidth
-		slot3 = (slot0._data.y - 1) * EliminateEnum.ChessHeight
+	if arg_2_0._data then
+		local var_2_0 = (arg_2_0._data.x - 1) * EliminateEnum.ChessWidth
+		local var_2_1 = (arg_2_0._data.y - 1) * EliminateEnum.ChessHeight
+		local var_2_2 = EliminateConfig.instance:getChessBoardIconPath(arg_2_0._data:getChessBoardType())
+		local var_2_3 = not string.nilorempty(var_2_2)
 
-		recthelper.setSize(slot0._tr, EliminateEnum.ChessWidth, EliminateEnum.ChessHeight)
+		recthelper.setSize(arg_2_0._tr, EliminateEnum.ChessWidth, EliminateEnum.ChessHeight)
 
-		if not string.nilorempty(EliminateConfig.instance:getChessBoardIconPath(slot0._data:getChessBoardType())) then
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(slot0._img_chessBoard, slot4, false)
+		if var_2_3 then
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_2_0._img_chessBoard, var_2_2, false)
 		end
 
-		gohelper.setActiveCanvasGroup(slot0._go, slot5)
-		transformhelper.setLocalPosXY(slot0._tr, slot2, slot3)
+		gohelper.setActiveCanvasGroup(arg_2_0._go, var_2_3)
+		transformhelper.setLocalPosXY(arg_2_0._tr, var_2_0, var_2_1)
 	end
 end
 
-function slot0.clear(slot0)
-	slot0._data = nil
+function var_0_0.clear(arg_3_0)
+	arg_3_0._data = nil
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clear()
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_4_0)
+	arg_4_0:clear()
+	var_0_0.super.onDestroy(arg_4_0)
 end
 
-return slot0
+return var_0_0

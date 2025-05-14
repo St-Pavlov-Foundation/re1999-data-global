@@ -1,83 +1,83 @@
-module("modules.logic.room.model.record.RoomHandBookMo", package.seeall)
+﻿module("modules.logic.room.model.record.RoomHandBookMo", package.seeall)
 
-slot0 = class("RoomHandBookMo")
+local var_0_0 = class("RoomHandBookMo")
 
-function slot0.ctor(slot0)
-	slot0._config = nil
-	slot0.id = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._config = nil
+	arg_1_0.id = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0._config = slot1
-	slot0.id = slot1.id
-	slot0._isreverse = false
-	slot0._mo = RoomHandBookModel.instance:getMoById(slot0.id)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._config = arg_2_1
+	arg_2_0.id = arg_2_1.id
+	arg_2_0._isreverse = false
+	arg_2_0._mo = RoomHandBookModel.instance:getMoById(arg_2_0.id)
 end
 
-function slot0.getConfig(slot0)
-	return slot0._config
+function var_0_0.getConfig(arg_3_0)
+	return arg_3_0._config
 end
 
-function slot0.checkGotCritter(slot0)
-	return slot0._mo and true or false
+function var_0_0.checkGotCritter(arg_4_0)
+	return arg_4_0._mo and true or false
 end
 
-function slot0.getBackGroundId(slot0)
-	if slot0._mo and slot0._mo.Background ~= 0 then
-		return slot0._mo.Background
+function var_0_0.getBackGroundId(arg_5_0)
+	if arg_5_0._mo and arg_5_0._mo.Background ~= 0 then
+		return arg_5_0._mo.Background
 	end
 end
 
-function slot0.setBackGroundId(slot0, slot1)
-	slot0._mo.Background = slot1
+function var_0_0.setBackGroundId(arg_6_0, arg_6_1)
+	arg_6_0._mo.Background = arg_6_1
 end
 
-function slot0.checkUnlockSpeicalSkinById(slot0)
-	if not slot0._mo then
+function var_0_0.checkUnlockSpeicalSkinById(arg_7_0)
+	if not arg_7_0._mo then
 		return
 	end
 
-	return slot0._mo.unlockSpecialSkin
+	return arg_7_0._mo.unlockSpecialSkin
 end
 
-function slot0.setSpeicalSkin(slot0, slot1)
-	slot0._mo.UseSpecialSkin = slot1
+function var_0_0.setSpeicalSkin(arg_8_0, arg_8_1)
+	arg_8_0._mo.UseSpecialSkin = arg_8_1
 end
 
-function slot0.checkNew(slot0)
-	if not slot0._mo then
+function var_0_0.checkNew(arg_9_0)
+	if not arg_9_0._mo then
 		return
 	end
 
-	return slot0._mo.isNew
+	return arg_9_0._mo.isNew
 end
 
-function slot0.clearNewState(slot0)
-	slot0._mo.isNew = false
+function var_0_0.clearNewState(arg_10_0)
+	arg_10_0._mo.isNew = false
 end
 
-function slot0.setReverse(slot0, slot1)
-	slot0._isreverse = slot1
+function var_0_0.setReverse(arg_11_0, arg_11_1)
+	arg_11_0._isreverse = arg_11_1
 end
 
-function slot0.checkIsReverse(slot0)
-	return slot0._isreverse
+function var_0_0.checkIsReverse(arg_12_0)
+	return arg_12_0._isreverse
 end
 
-function slot0.checkShowMutate(slot0)
-	if not slot0._mo then
+function var_0_0.checkShowMutate(arg_13_0)
+	if not arg_13_0._mo then
 		return false
 	end
 
-	return slot0._mo.unlockSpecialSkin and slot0._mo.unlockNormalSkin
+	return arg_13_0._mo.unlockSpecialSkin and arg_13_0._mo.unlockNormalSkin
 end
 
-function slot0.checkShowSpeicalSkin(slot0)
-	if not slot0._mo then
+function var_0_0.checkShowSpeicalSkin(arg_14_0)
+	if not arg_14_0._mo then
 		return false
 	end
 
-	return slot0._mo.UseSpecialSkin
+	return arg_14_0._mo.UseSpecialSkin
 end
 
-return slot0
+return var_0_0

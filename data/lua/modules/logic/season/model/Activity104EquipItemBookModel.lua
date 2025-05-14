@@ -1,145 +1,162 @@
-module("modules.logic.season.model.Activity104EquipItemBookModel", package.seeall)
+﻿module("modules.logic.season.model.Activity104EquipItemBookModel", package.seeall)
 
-slot0 = class("Activity104EquipItemBookModel", ListScrollModel)
+local var_0_0 = class("Activity104EquipItemBookModel", ListScrollModel)
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_1_0)
+	var_0_0.super.clear(arg_1_0)
 
-	slot0.activityId = nil
-	slot0.curSelectItemId = nil
-	slot0._itemMap = nil
-	slot0.recordNew = nil
-	slot0._itemStartAnimTime = nil
-	slot0.tagModel = nil
+	arg_1_0.activityId = nil
+	arg_1_0.curSelectItemId = nil
+	arg_1_0._itemMap = nil
+	arg_1_0.recordNew = nil
+	arg_1_0._itemStartAnimTime = nil
+	arg_1_0.tagModel = nil
 end
 
-function slot0.initDatas(slot0, slot1)
-	slot0.activityId = slot1
-	slot0.curSelectItemId = nil
+function var_0_0.initDatas(arg_2_0, arg_2_1)
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.curSelectItemId = nil
 
-	slot0:initSubModel()
-	slot0:initPlayerPrefs()
-	slot0:initList()
+	arg_2_0:initSubModel()
+	arg_2_0:initPlayerPrefs()
+	arg_2_0:initList()
 end
 
-function slot0.initList(slot0)
-	slot0:initConfig()
-	slot0:initBackpack()
+function var_0_0.initList(arg_3_0)
+	arg_3_0:initConfig()
+	arg_3_0:initBackpack()
 
-	if slot0:getCount() > 0 then
-		slot0:setSelectItemId(slot0:getByIndex(1).id)
+	if arg_3_0:getCount() > 0 then
+		arg_3_0:setSelectItemId(arg_3_0:getByIndex(1).id)
 	end
 end
 
-function slot0.initSubModel(slot0)
-	slot0.tagModel = Activity104EquipTagModel.New()
+function var_0_0.initSubModel(arg_4_0)
+	arg_4_0.tagModel = Activity104EquipTagModel.New()
 
-	slot0.tagModel:init(slot0.activityId)
+	arg_4_0.tagModel:init(arg_4_0.activityId)
 end
 
-function slot0.initConfig(slot0)
-	slot1 = {}
+function var_0_0.initConfig(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = SeasonConfig.instance:getSeasonEquipCos()
 
-	for slot6, slot7 in pairs(SeasonConfig.instance:getSeasonEquipCos()) do
-		if not SeasonConfig.instance:getEquipIsOptional(slot6) and not SeasonEquipMetaUtils.isBanActivity(slot7, slot0.activityId) and slot0:isCardCanShowByTag(slot7.tag) then
-			slot8 = Activity104EquipBookMo.New()
+	for iter_5_0, iter_5_1 in pairs(var_5_1) do
+		if not SeasonConfig.instance:getEquipIsOptional(iter_5_0) and not SeasonEquipMetaUtils.isBanActivity(iter_5_1, arg_5_0.activityId) and arg_5_0:isCardCanShowByTag(iter_5_1.tag) then
+			local var_5_2 = Activity104EquipBookMo.New()
 
-			slot8:init(slot6)
-			table.insert(slot1, slot8)
+			var_5_2:init(iter_5_0)
+			table.insert(var_5_0, var_5_2)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_5_0:setList(var_5_0)
 end
 
-function slot0.initPlayerPrefs(slot0)
-	slot0.recordNew = SeasonEquipLocalRecord.New()
+function var_0_0.initPlayerPrefs(arg_6_0)
+	arg_6_0.recordNew = SeasonEquipLocalRecord.New()
 
-	slot0.recordNew:init(slot0.activityId, Activity104Enum.PlayerPrefsKeyItemUid)
+	arg_6_0.recordNew:init(arg_6_0.activityId, Activity104Enum.PlayerPrefsKeyItemUid)
 end
 
-function slot0.initBackpack(slot0)
-	slot0._itemMap = Activity104Model.instance:getAllItemMo(slot0.activityId) or {}
+function var_0_0.initBackpack(arg_7_0)
+	arg_7_0._itemMap = Activity104Model.instance:getAllItemMo(arg_7_0.activityId) or {}
 
-	for slot4, slot5 in pairs(slot0._itemMap) do
-		if SeasonConfig.instance:getSeasonEquipCo(slot5.itemId) and slot0:getById(slot5.itemId) then
-			slot7.count = slot7.count + 1
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._itemMap) do
+		if SeasonConfig.instance:getSeasonEquipCo(iter_7_1.itemId) then
+			local var_7_0 = arg_7_0:getById(iter_7_1.itemId)
 
-			if not slot0.recordNew:contain(slot4) then
-				slot7:setIsNew(true)
+			if var_7_0 then
+				var_7_0.count = var_7_0.count + 1
+
+				if not arg_7_0.recordNew:contain(iter_7_0) then
+					var_7_0:setIsNew(true)
+				end
 			end
 		end
 	end
 
-	slot0:sort(uv0.sortItemMOList)
+	arg_7_0:sort(var_0_0.sortItemMOList)
 end
 
-function slot0.isCardCanShowByTag(slot0, slot1)
-	if slot0.tagModel then
-		return slot0.tagModel:isCardNeedShow(slot1)
+function var_0_0.isCardCanShowByTag(arg_8_0, arg_8_1)
+	if arg_8_0.tagModel then
+		return arg_8_0.tagModel:isCardNeedShow(arg_8_1)
 	end
 
 	return true
 end
 
-function slot0.getDelayPlayTime(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.getDelayPlayTime(arg_9_0, arg_9_1)
+	if arg_9_1 == nil then
 		return -1
 	end
 
-	if slot0._itemStartAnimTime == nil then
-		slot0._itemStartAnimTime = Time.time + SeasonEquipBookItem.OpenAnimStartTime
+	local var_9_0 = Time.time
+
+	if arg_9_0._itemStartAnimTime == nil then
+		arg_9_0._itemStartAnimTime = var_9_0 + SeasonEquipBookItem.OpenAnimStartTime
 	end
 
-	if not slot0:getIndex(slot1) or slot3 > SeasonEquipBookItem.AnimRowCount * SeasonEquipBookItem.ColumnCount then
+	local var_9_1 = arg_9_0:getIndex(arg_9_1)
+
+	if not var_9_1 or var_9_1 > SeasonEquipBookItem.AnimRowCount * SeasonEquipBookItem.ColumnCount then
 		return -1
 	end
 
-	if math.floor((slot3 - 1) / SeasonEquipBookItem.ColumnCount) * SeasonEquipBookItem.OpenAnimTime + SeasonEquipBookItem.OpenAnimStartTime < slot2 - slot0._itemStartAnimTime then
+	local var_9_2 = math.floor((var_9_1 - 1) / SeasonEquipBookItem.ColumnCount) * SeasonEquipBookItem.OpenAnimTime + SeasonEquipBookItem.OpenAnimStartTime
+	local var_9_3 = var_9_0 - arg_9_0._itemStartAnimTime
+
+	if var_9_2 < var_9_3 then
 		return -1
 	else
-		return slot4 - slot5
+		return var_9_2 - var_9_3
 	end
 end
 
-function slot0.sortItemMOList(slot0, slot1)
-	if slot0.count > 0 ~= (slot1.count > 0) then
-		return slot2
+function var_0_0.sortItemMOList(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.count > 0
+
+	if var_10_0 ~= (arg_10_1.count > 0) then
+		return var_10_0
 	end
 
-	slot5 = SeasonConfig.instance:getSeasonEquipCo(slot1.id)
+	local var_10_1 = SeasonConfig.instance:getSeasonEquipCo(arg_10_0.id)
+	local var_10_2 = SeasonConfig.instance:getSeasonEquipCo(arg_10_1.id)
 
-	if SeasonConfig.instance:getSeasonEquipCo(slot0.id) ~= nil and slot5 ~= nil then
-		if slot4.rare ~= slot5.rare then
-			return slot5.rare < slot4.rare
+	if var_10_1 ~= nil and var_10_2 ~= nil then
+		if var_10_1.rare ~= var_10_2.rare then
+			return var_10_1.rare > var_10_2.rare
 		else
-			return slot5.equipId < slot4.equipId
+			return var_10_1.equipId > var_10_2.equipId
 		end
 	else
-		return slot0.id < slot1.id
+		return arg_10_0.id < arg_10_1.id
 	end
 end
 
-function slot0.setSelectItemId(slot0, slot1)
-	if slot0:getById(slot1) then
-		slot0.curSelectItemId = slot1
+function var_0_0.setSelectItemId(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getById(arg_11_1)
 
-		slot2:setIsNew(false)
+	if var_11_0 then
+		arg_11_0.curSelectItemId = arg_11_1
+
+		var_11_0:setIsNew(false)
 	end
 end
 
-function slot0.checkResetCurSelected(slot0)
-	if slot0.curSelectItemId and not slot0:getById(slot0.curSelectItemId) then
-		slot0.curSelectItemId = nil
+function var_0_0.checkResetCurSelected(arg_12_0)
+	if arg_12_0.curSelectItemId and not arg_12_0:getById(arg_12_0.curSelectItemId) then
+		arg_12_0.curSelectItemId = nil
 	end
 end
 
-function slot0.flushRecord(slot0)
-	if slot0.recordNew then
-		slot0.recordNew:recordAllItem()
+function var_0_0.flushRecord(arg_13_0)
+	if arg_13_0.recordNew then
+		arg_13_0.recordNew:recordAllItem()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

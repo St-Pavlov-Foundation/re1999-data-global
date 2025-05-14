@@ -1,42 +1,42 @@
-module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltViewContainer", package.seeall)
 
-slot0 = class("LoperaSmeltViewContainer", BaseViewContainer)
+local var_0_0 = class("LoperaSmeltViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		LoperaSmeltView.New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot2:setCloseCheck(slot0.defaultOverrideCloseCheck, slot0)
-		slot2:setOverrideHome(slot0._overrideClickHome, slot0)
+		var_2_0:setCloseCheck(arg_2_0.defaultOverrideCloseCheck, arg_2_0)
+		var_2_0:setOverrideHome(arg_2_0._overrideClickHome, arg_2_0)
 
 		return {
-			slot2
+			var_2_0
 		}
 	end
 end
 
-function slot0.defaultOverrideCloseCheck(slot0)
-	slot0:closeThis()
+function var_0_0.defaultOverrideCloseCheck(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-function slot0._overrideClickHome(slot0)
+function var_0_0._overrideClickHome(arg_4_0)
 	LoperaController.instance:sendStatOnHomeClick()
 	NavigateButtonsView.homeClick()
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_5_0, arg_5_1)
+	var_0_0.super.setVisibleInternal(arg_5_0, arg_5_1)
 end
 
-return slot0
+return var_0_0

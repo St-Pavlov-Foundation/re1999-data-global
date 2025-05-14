@@ -1,83 +1,88 @@
-module("modules.logic.season.model.Activity104SelfChoiceListModel", package.seeall)
+﻿module("modules.logic.season.model.Activity104SelfChoiceListModel", package.seeall)
 
-slot0 = class("Activity104SelfChoiceListModel", ListScrollModel)
+local var_0_0 = class("Activity104SelfChoiceListModel", ListScrollModel)
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_1_0)
+	var_0_0.super.clear(arg_1_0)
 
-	slot0.activityId = nil
-	slot0.costItemUid = nil
-	slot0.curSelectedItemId = nil
-	slot0.targetRare = nil
-	slot0.tagModel = nil
+	arg_1_0.activityId = nil
+	arg_1_0.costItemUid = nil
+	arg_1_0.curSelectedItemId = nil
+	arg_1_0.targetRare = nil
+	arg_1_0.tagModel = nil
 end
 
-function slot0.initDatas(slot0, slot1, slot2)
+function var_0_0.initDatas(arg_2_0, arg_2_1, arg_2_2)
 	logNormal("Activity104SelfChoiceListModel initDatas")
-	slot0:clear()
+	arg_2_0:clear()
 
-	slot0.activityId = slot1
-	slot0.costItemUid = slot2
-	slot0.curSelectedItemId = nil
-	slot4 = SeasonConfig.instance:getSeasonEquipCo(Activity104Model.instance:getAllItemMo(slot0.activityId)[slot0.costItemUid].itemId)
-	slot0.itemId = slot4.equipId
-	slot0.targetRare = slot4.rare
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.costItemUid = arg_2_2
+	arg_2_0.curSelectedItemId = nil
 
-	slot0:initList()
+	local var_2_0 = Activity104Model.instance:getAllItemMo(arg_2_0.activityId)
+	local var_2_1 = SeasonConfig.instance:getSeasonEquipCo(var_2_0[arg_2_0.costItemUid].itemId)
+
+	arg_2_0.itemId = var_2_1.equipId
+	arg_2_0.targetRare = var_2_1.rare
+
+	arg_2_0:initList()
 end
 
-function slot0.initList(slot0)
-	slot0.curSelectedItemId = nil
-	slot2 = {}
+function var_0_0.initList(arg_3_0)
+	arg_3_0.curSelectedItemId = nil
 
-	for slot6, slot7 in ipairs(SeasonConfig.instance:getEquipCoByCondition(uv0.filterSameRare)) do
-		slot8 = Activity104SelfChoiceMo.New()
+	local var_3_0 = SeasonConfig.instance:getEquipCoByCondition(var_0_0.filterSameRare)
+	local var_3_1 = {}
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		local var_3_2 = Activity104SelfChoiceMo.New()
 
-		if not slot0.curSelectedItemId then
-			slot0.curSelectedItemId = slot7.equipId
+		var_3_2:init(iter_3_1)
+		table.insert(var_3_1, var_3_2)
+
+		if not arg_3_0.curSelectedItemId then
+			arg_3_0.curSelectedItemId = iter_3_1.equipId
 		end
 	end
 
-	slot0:setList(slot2)
-	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectSelfChoiceCard, slot0.curSelectedItemId)
+	arg_3_0:setList(var_3_1)
+	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectSelfChoiceCard, arg_3_0.curSelectedItemId)
 end
 
-function slot0.filterSameRare(slot0)
-	if slot0.rare == uv0.instance.targetRare and not SeasonConfig.instance:getEquipIsOptional(slot0.equipId) and not SeasonEquipMetaUtils.isBanActivity(slot0, uv0.instance.activityId) and uv0.instance:isCardCanShowByTag(slot0.tag) then
+function var_0_0.filterSameRare(arg_4_0)
+	if arg_4_0.rare == var_0_0.instance.targetRare and not SeasonConfig.instance:getEquipIsOptional(arg_4_0.equipId) and not SeasonEquipMetaUtils.isBanActivity(arg_4_0, var_0_0.instance.activityId) and var_0_0.instance:isCardCanShowByTag(arg_4_0.tag) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.setSelectEquip(slot0, slot1)
-	slot0.curSelectedItemId = slot1
+function var_0_0.setSelectEquip(arg_5_0, arg_5_1)
+	arg_5_0.curSelectedItemId = arg_5_1
 
-	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectSelfChoiceCard, slot1)
-	slot0:onModelUpdate()
+	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectSelfChoiceCard, arg_5_1)
+	arg_5_0:onModelUpdate()
 end
 
-function slot0.initSubModel(slot0)
-	slot0.tagModel = Activity104EquipTagModel.New()
+function var_0_0.initSubModel(arg_6_0)
+	arg_6_0.tagModel = Activity104EquipTagModel.New()
 
-	slot0.tagModel:init(slot0.activityId)
+	arg_6_0.tagModel:init(arg_6_0.activityId)
 end
 
-function slot0.isCardCanShowByTag(slot0, slot1)
-	return slot0:getTagModel():isCardNeedShow(slot1)
+function var_0_0.isCardCanShowByTag(arg_7_0, arg_7_1)
+	return arg_7_0:getTagModel():isCardNeedShow(arg_7_1)
 end
 
-function slot0.getTagModel(slot0)
-	if not slot0.tagModel then
-		slot0:initSubModel()
+function var_0_0.getTagModel(arg_8_0)
+	if not arg_8_0.tagModel then
+		arg_8_0:initSubModel()
 	end
 
-	return slot0.tagModel
+	return arg_8_0.tagModel
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

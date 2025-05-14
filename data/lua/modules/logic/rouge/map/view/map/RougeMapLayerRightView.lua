@@ -1,164 +1,173 @@
-module("modules.logic.rouge.map.view.map.RougeMapLayerRightView", package.seeall)
+﻿module("modules.logic.rouge.map.view.map.RougeMapLayerRightView", package.seeall)
 
-slot0 = class("RougeMapLayerRightView", BaseView)
+local var_0_0 = class("RougeMapLayerRightView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goLayerRight = gohelper.findChild(slot0.viewGO, "#go_layer_right")
-	slot0.simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_layer_right/RightBG2/#simage_newrightbg")
-	slot0.simagelayerbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_layer_right/#simage_picbg")
-	slot0.simagelayerpic = gohelper.findChildSingleImage(slot0.viewGO, "#go_layer_right/#simage_pic")
-	slot0._txtChapterName = gohelper.findChildText(slot0.viewGO, "#go_layer_right/Title/#txt_ChapterName")
-	slot0._txtDesc = gohelper.findChildText(slot0.viewGO, "#go_layer_right/#txt_Desc")
-	slot0._btnNext = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_layer_right/Title/#btn_next")
-	slot0._btnLast = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_layer_right/Title/#btn_last")
-	slot0._btnMove = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_layer_right/#btn_MoveBtn")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goLayerRight = gohelper.findChild(arg_1_0.viewGO, "#go_layer_right")
+	arg_1_0.simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_layer_right/RightBG2/#simage_newrightbg")
+	arg_1_0.simagelayerbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_layer_right/#simage_picbg")
+	arg_1_0.simagelayerpic = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_layer_right/#simage_pic")
+	arg_1_0._txtChapterName = gohelper.findChildText(arg_1_0.viewGO, "#go_layer_right/Title/#txt_ChapterName")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_layer_right/#txt_Desc")
+	arg_1_0._btnNext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_layer_right/Title/#btn_next")
+	arg_1_0._btnLast = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_layer_right/Title/#btn_last")
+	arg_1_0._btnMove = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_layer_right/#btn_MoveBtn")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnNext:AddClickListener(slot0._btnNextOnClick, slot0)
-	slot0._btnLast:AddClickListener(slot0._btnLastOnClick, slot0)
-	slot0._btnMove:AddClickListener(slot0._btnMoveOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnNext:AddClickListener(arg_2_0._btnNextOnClick, arg_2_0)
+	arg_2_0._btnLast:AddClickListener(arg_2_0._btnLastOnClick, arg_2_0)
+	arg_2_0._btnMove:AddClickListener(arg_2_0._btnMoveOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnNext:RemoveClickListener()
-	slot0._btnLast:RemoveClickListener()
-	slot0._btnMove:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnNext:RemoveClickListener()
+	arg_3_0._btnLast:RemoveClickListener()
+	arg_3_0._btnMove:RemoveClickListener()
 end
 
-function slot0._btnLastOnClick(slot0)
-	if slot0.curSelectIndex <= 1 then
+function var_0_0._btnLastOnClick(arg_4_0)
+	if arg_4_0.curSelectIndex <= 1 then
 		return
 	end
 
-	slot0.curSelectIndex = slot0.curSelectIndex - 1
+	arg_4_0.curSelectIndex = arg_4_0.curSelectIndex - 1
 
-	slot0:changeSelectLayer()
+	arg_4_0:changeSelectLayer()
 end
 
-function slot0._btnNextOnClick(slot0)
-	if slot0.nextLayerLen <= slot0.curSelectIndex then
+function var_0_0._btnNextOnClick(arg_5_0)
+	if arg_5_0.curSelectIndex >= arg_5_0.nextLayerLen then
 		return
 	end
 
-	slot0.curSelectIndex = slot0.curSelectIndex + 1
+	arg_5_0.curSelectIndex = arg_5_0.curSelectIndex + 1
 
-	slot0:changeSelectLayer()
+	arg_5_0:changeSelectLayer()
 end
 
-function slot0.changeSelectLayer(slot0)
-	RougeMapModel.instance:updateSelectLayerId(slot0.nextLayerList[slot0.curSelectIndex])
+function var_0_0.changeSelectLayer(arg_6_0)
+	local var_6_0 = arg_6_0.nextLayerList[arg_6_0.curSelectIndex]
+
+	RougeMapModel.instance:updateSelectLayerId(var_6_0)
 end
 
-function slot0._btnMoveOnClick(slot0)
-	RougeRpc.instance:sendRougeLeaveMiddleLayerRequest(slot0.layerCo.id)
+function var_0_0._btnMoveOnClick(arg_7_0)
+	RougeRpc.instance:sendRougeLeaveMiddleLayerRequest(arg_7_0.layerCo.id)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.simagerightbg:LoadImage("singlebg/rouge/map/rouge_map_detailbg2.png")
-	slot0.simagelayerbg:LoadImage("singlebg/rouge/map/rouge_map_detailbg3.png")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.simagerightbg:LoadImage("singlebg/rouge/map/rouge_map_detailbg2.png")
+	arg_8_0.simagelayerbg:LoadImage("singlebg/rouge/map/rouge_map_detailbg3.png")
 
-	slot0.goNextBtn = slot0._btnNext.gameObject
-	slot0.goLastBtn = slot0._btnLast.gameObject
-	slot0.layerAnimator = slot0.goLayerRight:GetComponent(gohelper.Type_Animator)
+	arg_8_0.goNextBtn = arg_8_0._btnNext.gameObject
+	arg_8_0.goLastBtn = arg_8_0._btnLast.gameObject
+	arg_8_0.layerAnimator = arg_8_0.goLayerRight:GetComponent(gohelper.Type_Animator)
 
-	slot0:hide()
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLayerChange, slot0.onSelectLayerChange, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, slot0.onChangeMapInfo, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onPathSelectMapFocusDone, slot0.onPathSelectMapFocusDone, slot0)
+	arg_8_0:hide()
+	arg_8_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLayerChange, arg_8_0.onSelectLayerChange, arg_8_0)
+	arg_8_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, arg_8_0.onChangeMapInfo, arg_8_0)
+	arg_8_0:addEventCb(RougeMapController.instance, RougeMapEvent.onPathSelectMapFocusDone, arg_8_0.onPathSelectMapFocusDone, arg_8_0)
 end
 
-function slot0.onChangeMapInfo(slot0)
+function var_0_0.onChangeMapInfo(arg_9_0)
 	if not RougeMapModel.instance:isPathSelect() then
-		slot0:hide()
+		arg_9_0:hide()
 
 		return
 	end
 
-	slot0:initData()
+	arg_9_0:initData()
 end
 
-function slot0.onSelectLayerChange(slot0, slot1)
-	slot0.layerCo = lua_rouge_layer.configDict[slot1]
+function var_0_0.onSelectLayerChange(arg_10_0, arg_10_1)
+	arg_10_0.layerCo = lua_rouge_layer.configDict[arg_10_1]
 
-	slot0:updateSelectIndex()
-	slot0.layerAnimator:Play("switch", 0, 0)
-	TaskDispatcher.cancelTask(slot0.refresh, slot0)
-	TaskDispatcher.runDelay(slot0.refresh, slot0, RougeMapEnum.WaitMapRightRefreshTime)
+	arg_10_0:updateSelectIndex()
+	arg_10_0.layerAnimator:Play("switch", 0, 0)
+	TaskDispatcher.cancelTask(arg_10_0.refresh, arg_10_0)
+	TaskDispatcher.runDelay(arg_10_0.refresh, arg_10_0, RougeMapEnum.WaitMapRightRefreshTime)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_11_0)
 	if not RougeMapModel.instance:isPathSelect() then
 		return
 	end
 
-	slot0:initData()
+	arg_11_0:initData()
 end
 
-function slot0.initData(slot0)
-	slot0.nextLayerList = RougeMapModel.instance:getNextLayerList()
-	slot0.nextLayerLen = #slot0.nextLayerList
-	slot0.layerCo = lua_rouge_layer.configDict[RougeMapModel.instance:getSelectLayerId()]
+function var_0_0.initData(arg_12_0)
+	arg_12_0.nextLayerList = RougeMapModel.instance:getNextLayerList()
+	arg_12_0.nextLayerLen = #arg_12_0.nextLayerList
 
-	slot0:updateSelectIndex()
+	local var_12_0 = RougeMapModel.instance:getSelectLayerId()
+
+	arg_12_0.layerCo = lua_rouge_layer.configDict[var_12_0]
+
+	arg_12_0:updateSelectIndex()
 end
 
-function slot0.updateSelectIndex(slot0)
-	slot0.curSelectIndex = 1
+function var_0_0.updateSelectIndex(arg_13_0)
+	arg_13_0.curSelectIndex = 1
 
-	for slot4, slot5 in ipairs(slot0.nextLayerList) do
-		if slot0.layerCo.id == slot5 then
-			slot0.curSelectIndex = slot4
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.nextLayerList) do
+		if arg_13_0.layerCo.id == iter_13_1 then
+			arg_13_0.curSelectIndex = iter_13_0
 		end
 	end
 end
 
-function slot0.onPathSelectMapFocusDone(slot0)
-	slot0:refresh()
+function var_0_0.onPathSelectMapFocusDone(arg_14_0)
+	arg_14_0:refresh()
 end
 
-function slot0.refresh(slot0)
-	slot0:show()
-	slot0:refreshLayerInfo()
-	slot0:refreshArrow()
-	slot0:refreshImage()
+function var_0_0.refresh(arg_15_0)
+	arg_15_0:show()
+	arg_15_0:refreshLayerInfo()
+	arg_15_0:refreshArrow()
+	arg_15_0:refreshImage()
 end
 
-function slot0.refreshLayerInfo(slot0)
-	slot0._txtChapterName.text = slot0.layerCo.name
-	slot0._txtDesc.text = slot0.layerCo.desc
+function var_0_0.refreshLayerInfo(arg_16_0)
+	arg_16_0._txtChapterName.text = arg_16_0.layerCo.name
+	arg_16_0._txtDesc.text = arg_16_0.layerCo.desc
 end
 
-function slot0.refreshArrow(slot0)
-	gohelper.setActive(slot0.goNextBtn, slot0.curSelectIndex < slot0.nextLayerLen)
-	gohelper.setActive(slot0.goLastBtn, slot0.curSelectIndex > 1)
+function var_0_0.refreshArrow(arg_17_0)
+	gohelper.setActive(arg_17_0.goNextBtn, arg_17_0.curSelectIndex < arg_17_0.nextLayerLen)
+	gohelper.setActive(arg_17_0.goLastBtn, arg_17_0.curSelectIndex > 1)
 end
 
-function slot0.refreshImage(slot0)
-	if string.nilorempty(slot0.layerCo.iconRes) then
+function var_0_0.refreshImage(arg_18_0)
+	local var_18_0 = arg_18_0.layerCo.iconRes
+
+	if string.nilorempty(var_18_0) then
 		return
 	end
 
-	slot0.simagelayerpic:LoadImage(string.format("singlebg/rouge/mapdetail/%s.png", slot1))
+	local var_18_1 = string.format("singlebg/rouge/mapdetail/%s.png", var_18_0)
+
+	arg_18_0.simagelayerpic:LoadImage(var_18_1)
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.goLayerRight, true)
+function var_0_0.show(arg_19_0)
+	gohelper.setActive(arg_19_0.goLayerRight, true)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.goLayerRight, false)
+function var_0_0.hide(arg_20_0)
+	gohelper.setActive(arg_20_0.goLayerRight, false)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.simagerightbg:UnLoadImage()
-	slot0.simagelayerbg:UnLoadImage()
-	slot0.simagelayerpic:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0.refresh, slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0.simagerightbg:UnLoadImage()
+	arg_21_0.simagelayerbg:UnLoadImage()
+	arg_21_0.simagelayerpic:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_21_0.refresh, arg_21_0)
 end
 
-return slot0
+return var_0_0

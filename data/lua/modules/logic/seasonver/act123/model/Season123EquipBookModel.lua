@@ -1,214 +1,242 @@
-module("modules.logic.seasonver.act123.model.Season123EquipBookModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EquipBookModel", package.seeall)
 
-slot0 = class("Season123EquipBookModel", ListScrollModel)
+local var_0_0 = class("Season123EquipBookModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_2_0)
+	var_0_0.super.clear(arg_2_0)
 
-	slot0.equipItemList = {}
-	slot0.curSelectItemId = nil
-	slot0.curActId = nil
-	slot0.tagModel = nil
-	slot0._itemStartAnimTime = nil
-	slot0.allItemMo = nil
-	slot0.recordNew = nil
-	slot0.allEquipItemMap = {}
-	slot0.ColumnCount = 6
-	slot0.AnimRowCount = 4
-	slot0.OpenAnimTime = 0.06
-	slot0.OpenAnimStartTime = 0.05
+	arg_2_0.equipItemList = {}
+	arg_2_0.curSelectItemId = nil
+	arg_2_0.curActId = nil
+	arg_2_0.tagModel = nil
+	arg_2_0._itemStartAnimTime = nil
+	arg_2_0.allItemMo = nil
+	arg_2_0.recordNew = nil
+	arg_2_0.allEquipItemMap = {}
+	arg_2_0.ColumnCount = 6
+	arg_2_0.AnimRowCount = 4
+	arg_2_0.OpenAnimTime = 0.06
+	arg_2_0.OpenAnimStartTime = 0.05
 end
 
-function slot0.initDatas(slot0, slot1)
-	slot0.curActId = slot1
-	slot0.curSelectItemId = nil
+function var_0_0.initDatas(arg_3_0, arg_3_1)
+	arg_3_0.curActId = arg_3_1
+	arg_3_0.curSelectItemId = nil
 
-	slot0:initSubModel()
-	slot0:initPlayerPrefs()
-	slot0:initList()
+	arg_3_0:initSubModel()
+	arg_3_0:initPlayerPrefs()
+	arg_3_0:initList()
 end
 
-function slot0.initList(slot0)
-	slot0:initConfig()
-	slot0:initBackpack()
+function var_0_0.initList(arg_4_0)
+	arg_4_0:initConfig()
+	arg_4_0:initBackpack()
 
-	if slot0:getCount() > 0 then
-		slot0:setCurSelectItemId(slot0:getByIndex(1).id)
+	if arg_4_0:getCount() > 0 then
+		arg_4_0:setCurSelectItemId(arg_4_0:getByIndex(1).id)
 	end
 end
 
-function slot0.initConfig(slot0)
-	slot1 = {}
+function var_0_0.initConfig(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = Season123Config.instance:getSeasonEquipCos()
 
-	for slot6, slot7 in pairs(Season123Config.instance:getSeasonEquipCos()) do
-		if not Season123EquipMetaUtils.isBanActivity(slot7, slot0.curActId) and slot0:isCardCanShowByTag(slot7.tag) then
-			slot8 = Season123EquipBookMO.New()
+	for iter_5_0, iter_5_1 in pairs(var_5_1) do
+		if not Season123EquipMetaUtils.isBanActivity(iter_5_1, arg_5_0.curActId) and arg_5_0:isCardCanShowByTag(iter_5_1.tag) then
+			local var_5_2 = Season123EquipBookMO.New()
 
-			slot8:init(slot6)
-			table.insert(slot1, slot8)
+			var_5_2:init(iter_5_0)
+			table.insert(var_5_0, var_5_2)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_5_0:setList(var_5_0)
 end
 
-function slot0.initBackpack(slot0)
-	slot0.allItemMo = Season123Model.instance:getAllItemMo(slot0.curActId) or {}
+function var_0_0.initBackpack(arg_6_0)
+	arg_6_0.allItemMo = Season123Model.instance:getAllItemMo(arg_6_0.curActId) or {}
 
-	for slot4, slot5 in pairs(slot0.allItemMo) do
-		if Season123Config.instance:getSeasonEquipCo(slot5.itemId) and slot0:getById(slot5.itemId) then
-			slot7.count = slot7.count + 1
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.allItemMo) do
+		if Season123Config.instance:getSeasonEquipCo(iter_6_1.itemId) then
+			local var_6_0 = arg_6_0:getById(iter_6_1.itemId)
 
-			if not slot0.recordNew:contain(slot5.itemId) then
-				slot7:setIsNew(true)
+			if var_6_0 then
+				var_6_0.count = var_6_0.count + 1
+
+				if not arg_6_0.recordNew:contain(iter_6_1.itemId) then
+					var_6_0:setIsNew(true)
+				end
 			end
 		end
 	end
 
-	slot0:sort(uv0.sortItemMOList)
+	arg_6_0:sort(var_0_0.sortItemMOList)
 end
 
-function slot0.setCurSelectItemId(slot0, slot1)
-	if slot0:getById(slot1) then
-		slot0.curSelectItemId = slot1
+function var_0_0.setCurSelectItemId(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getById(arg_7_1)
 
-		slot0.recordNew:add(slot1)
-		slot2:setIsNew(false)
+	if var_7_0 then
+		arg_7_0.curSelectItemId = arg_7_1
+
+		arg_7_0.recordNew:add(arg_7_1)
+		var_7_0:setIsNew(false)
 	else
-		slot0.curSelectItemId = nil
+		arg_7_0.curSelectItemId = nil
 	end
 end
 
-function slot0.initSubModel(slot0)
-	slot0.tagModel = Season123EquipTagModel.New()
+function var_0_0.initSubModel(arg_8_0)
+	arg_8_0.tagModel = Season123EquipTagModel.New()
 
-	slot0.tagModel:init(slot0.curActId)
+	arg_8_0.tagModel:init(arg_8_0.curActId)
 end
 
-function slot0.initPlayerPrefs(slot0)
-	slot0.recordNew = Season123EquipLocalRecord.New()
+function var_0_0.initPlayerPrefs(arg_9_0)
+	arg_9_0.recordNew = Season123EquipLocalRecord.New()
 
-	slot0.recordNew:init(slot0.curActId, Activity123Enum.PlayerPrefsKeyItemUid)
+	arg_9_0.recordNew:init(arg_9_0.curActId, Activity123Enum.PlayerPrefsKeyItemUid)
 end
 
-function slot0.isCardCanShowByTag(slot0, slot1)
-	if slot0.tagModel then
-		return slot0.tagModel:isCardNeedShow(slot1)
+function var_0_0.isCardCanShowByTag(arg_10_0, arg_10_1)
+	if arg_10_0.tagModel then
+		return arg_10_0.tagModel:isCardNeedShow(arg_10_1)
 	end
 
 	return true
 end
 
-function slot0.getDelayPlayTime(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.getDelayPlayTime(arg_11_0, arg_11_1)
+	if arg_11_1 == nil then
 		return -1
 	end
 
-	if slot0._itemStartAnimTime == nil then
-		slot0._itemStartAnimTime = Time.time + slot0.OpenAnimStartTime
+	local var_11_0 = Time.time
+
+	if arg_11_0._itemStartAnimTime == nil then
+		arg_11_0._itemStartAnimTime = var_11_0 + arg_11_0.OpenAnimStartTime
 	end
 
-	if not slot0:getIndex(slot1) or slot3 > slot0.AnimRowCount * slot0.ColumnCount then
+	local var_11_1 = arg_11_0:getIndex(arg_11_1)
+
+	if not var_11_1 or var_11_1 > arg_11_0.AnimRowCount * arg_11_0.ColumnCount then
 		return -1
 	end
 
-	if slot2 - slot0._itemStartAnimTime - (math.floor((slot3 - 1) / slot0.ColumnCount) * slot0.OpenAnimTime + slot0.OpenAnimStartTime) > 0.1 then
+	local var_11_2 = math.floor((var_11_1 - 1) / arg_11_0.ColumnCount) * arg_11_0.OpenAnimTime + arg_11_0.OpenAnimStartTime
+
+	if var_11_0 - arg_11_0._itemStartAnimTime - var_11_2 > 0.1 then
 		return -1
 	else
-		return slot4
+		return var_11_2
 	end
 end
 
-function slot0.sortItemMOList(slot0, slot1)
-	if slot0.count > 0 ~= (slot1.count > 0) then
-		return slot2
+function var_0_0.sortItemMOList(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.count > 0
+
+	if var_12_0 ~= (arg_12_1.count > 0) then
+		return var_12_0
 	end
 
-	slot5 = Season123Config.instance:getSeasonEquipCo(slot1.id)
+	local var_12_1 = Season123Config.instance:getSeasonEquipCo(arg_12_0.id)
+	local var_12_2 = Season123Config.instance:getSeasonEquipCo(arg_12_1.id)
 
-	if Season123Config.instance:getSeasonEquipCo(slot0.id) ~= nil and slot5 ~= nil then
-		if slot4.isMain == Activity123Enum.isMainRole ~= (slot5.isMain == Activity123Enum.isMainRole) then
-			return slot6
+	if var_12_1 ~= nil and var_12_2 ~= nil then
+		local var_12_3 = var_12_1.isMain == Activity123Enum.isMainRole
+
+		if var_12_3 ~= (var_12_2.isMain == Activity123Enum.isMainRole) then
+			return var_12_3
 		end
 
-		if slot4.rare ~= slot5.rare then
-			return slot5.rare < slot4.rare
+		if var_12_1.rare ~= var_12_2.rare then
+			return var_12_1.rare > var_12_2.rare
 		else
-			return slot5.equipId < slot4.equipId
+			return var_12_1.equipId > var_12_2.equipId
 		end
 	else
-		return slot0.id < slot1.id
+		return arg_12_0.id < arg_12_1.id
 	end
 end
 
-function slot0.checkResetCurSelected(slot0)
-	if slot0.curSelectItemId and not slot0:getById(slot0.curSelectItemId) then
-		slot0.curSelectItemId = nil
+function var_0_0.checkResetCurSelected(arg_13_0)
+	if arg_13_0.curSelectItemId and not arg_13_0:getById(arg_13_0.curSelectItemId) then
+		arg_13_0.curSelectItemId = nil
 	end
 end
 
-function slot0.flushRecord(slot0)
-	if slot0.recordNew then
-		slot0.recordNew:recordAllItem()
+function var_0_0.flushRecord(arg_14_0)
+	if arg_14_0.recordNew then
+		arg_14_0.recordNew:recordAllItem()
 	end
 end
 
-function slot0.getEquipBookItemCount(slot0, slot1)
-	for slot6 = 1, #slot0:getList() do
-		if slot2[slot6].id == slot1 then
-			return slot2[slot6].count
+function var_0_0.getEquipBookItemCount(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getList()
+
+	for iter_15_0 = 1, #var_15_0 do
+		if var_15_0[iter_15_0].id == arg_15_1 then
+			return var_15_0[iter_15_0].count
 		end
 	end
 
 	return 0
 end
 
-function slot0.refreshBackpack(slot0)
-	slot0:initConfig()
-	slot0:initBackpack()
+function var_0_0.refreshBackpack(arg_16_0)
+	arg_16_0:initConfig()
+	arg_16_0:initBackpack()
 end
 
-function slot0.removeDecomposeEquipItem(slot0, slot1)
-	slot0:initConfig()
-	slot0:initBackpack()
+function var_0_0.removeDecomposeEquipItem(arg_17_0, arg_17_1)
+	arg_17_0:initConfig()
+	arg_17_0:initBackpack()
 
-	if slot0:getById(slot0.curSelectItemId) and slot2.count == 0 then
-		slot0:setCurSelectItemId(slot0:getByIndex(1).id)
+	local var_17_0 = arg_17_0:getById(arg_17_0.curSelectItemId)
+
+	if var_17_0 and var_17_0.count == 0 then
+		arg_17_0:setCurSelectItemId(arg_17_0:getByIndex(1).id)
 	end
 end
 
-function slot0.selectFirstCard(slot0)
-	if slot0:getCount() > 0 then
-		slot0:setCurSelectItemId(slot0:getByIndex(1).id)
+function var_0_0.selectFirstCard(arg_18_0)
+	if arg_18_0:getCount() > 0 then
+		arg_18_0:setCurSelectItemId(arg_18_0:getByIndex(1).id)
 	end
 end
 
-function slot0.getAllEquipItem(slot0)
-	slot0.allEquipItemMap = {}
+function var_0_0.getAllEquipItem(arg_19_0)
+	arg_19_0.allEquipItemMap = {}
 
-	for slot5, slot6 in pairs(Season123Config.instance:getSeasonEquipCos()) do
-		if not Season123EquipMetaUtils.isBanActivity(slot6, slot0.curActId) then
-			slot7 = Season123EquipBookMO.New()
+	local var_19_0 = Season123Config.instance:getSeasonEquipCos()
 
-			slot7:init(slot5)
+	for iter_19_0, iter_19_1 in pairs(var_19_0) do
+		if not Season123EquipMetaUtils.isBanActivity(iter_19_1, arg_19_0.curActId) then
+			local var_19_1 = Season123EquipBookMO.New()
 
-			slot0.allEquipItemMap[slot5] = slot7
+			var_19_1:init(iter_19_0)
+
+			arg_19_0.allEquipItemMap[iter_19_0] = var_19_1
 		end
 	end
 
-	slot0.allItemMo = Season123Model.instance:getAllItemMo(slot0.curActId) or {}
+	arg_19_0.allItemMo = Season123Model.instance:getAllItemMo(arg_19_0.curActId) or {}
 
-	for slot5, slot6 in pairs(slot0.allItemMo) do
-		if Season123Config.instance:getSeasonEquipCo(slot6.itemId) and slot0.allEquipItemMap[slot6.itemId] then
-			slot8.count = slot8.count + 1
+	for iter_19_2, iter_19_3 in pairs(arg_19_0.allItemMo) do
+		if Season123Config.instance:getSeasonEquipCo(iter_19_3.itemId) then
+			local var_19_2 = arg_19_0.allEquipItemMap[iter_19_3.itemId]
+
+			if var_19_2 then
+				var_19_2.count = var_19_2.count + 1
+			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

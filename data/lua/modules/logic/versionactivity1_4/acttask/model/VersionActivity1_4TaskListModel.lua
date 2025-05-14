@@ -1,78 +1,89 @@
-module("modules.logic.versionactivity1_4.acttask.model.VersionActivity1_4TaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.acttask.model.VersionActivity1_4TaskListModel", package.seeall)
 
-slot0 = class("VersionActivity1_4TaskListModel", ListScrollModel)
+local var_0_0 = class("VersionActivity1_4TaskListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.sortTaskMoList(slot0, slot1, slot2)
-	slot0.actId = slot1
-	slot4 = {}
-	slot5 = {}
-	slot6 = {}
-	slot0.allTaskFinish = true
+function var_0_0.sortTaskMoList(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.actId = arg_3_1
 
-	for slot10, slot11 in ipairs(TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, slot1)) do
-		if slot11.config.page == slot2 then
-			slot12 = true
+	local var_3_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, arg_3_1)
+	local var_3_1 = {}
+	local var_3_2 = {}
+	local var_3_3 = {}
 
-			if not string.nilorempty(slot11.config.prepose) then
-				for slot17, slot18 in ipairs(string.split(slot11.config.prepose, "#")) do
-					if not TaskModel.instance:isTaskFinish(slot11.type, tonumber(slot18)) then
-						slot12 = false
+	arg_3_0.allTaskFinish = true
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		if iter_3_1.config.page == arg_3_2 then
+			local var_3_4 = true
+
+			if not string.nilorempty(iter_3_1.config.prepose) then
+				local var_3_5 = string.split(iter_3_1.config.prepose, "#")
+
+				for iter_3_2, iter_3_3 in ipairs(var_3_5) do
+					if not TaskModel.instance:isTaskFinish(iter_3_1.type, tonumber(iter_3_3)) then
+						var_3_4 = false
 
 						break
 					end
 				end
 			end
 
-			if slot12 then
-				if slot11.config.maxFinishCount <= slot11.finishCount then
-					table.insert(slot6, slot11)
-				elseif slot11.hasFinished then
-					table.insert(slot4, slot11)
+			if var_3_4 then
+				if iter_3_1.finishCount >= iter_3_1.config.maxFinishCount then
+					table.insert(var_3_3, iter_3_1)
+				elseif iter_3_1.hasFinished then
+					table.insert(var_3_1, iter_3_1)
 				else
-					table.insert(slot5, slot11)
+					table.insert(var_3_2, iter_3_1)
 				end
 			end
 		end
 
-		if slot11.finishCount < slot11.config.maxFinishCount then
-			slot0.allTaskFinish = false
+		if iter_3_1.finishCount < iter_3_1.config.maxFinishCount then
+			arg_3_0.allTaskFinish = false
 		end
 	end
 
-	table.sort(slot4, uv0._sortFunc)
-	table.sort(slot5, uv0._sortFunc)
-	table.sort(slot6, uv0._sortFunc)
+	table.sort(var_3_1, var_0_0._sortFunc)
+	table.sort(var_3_2, var_0_0._sortFunc)
+	table.sort(var_3_3, var_0_0._sortFunc)
 
-	slot0.taskMoList = {}
+	arg_3_0.taskMoList = {}
 
-	tabletool.addValues(slot0.taskMoList, slot4)
-	tabletool.addValues(slot0.taskMoList, slot5)
-	tabletool.addValues(slot0.taskMoList, slot6)
-	slot0:refreshList()
+	tabletool.addValues(arg_3_0.taskMoList, var_3_1)
+	tabletool.addValues(arg_3_0.taskMoList, var_3_2)
+	tabletool.addValues(arg_3_0.taskMoList, var_3_3)
+	arg_3_0:refreshList()
 end
 
-function slot0.checkTaskRedByPage(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, slot1)) do
-		if slot8.config.page == slot2 then
-			slot9 = true
+function var_0_0.checkTaskRedByPage(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, arg_4_1)
 
-			if not string.nilorempty(slot8.config.prepose) then
-				for slot14, slot15 in ipairs(string.split(slot8.config.prepose, "#")) do
-					if not TaskModel.instance:isTaskFinish(slot8.type, tonumber(slot15)) then
-						slot9 = false
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if iter_4_1.config.page == arg_4_2 then
+			local var_4_1 = true
+
+			if not string.nilorempty(iter_4_1.config.prepose) then
+				local var_4_2 = string.split(iter_4_1.config.prepose, "#")
+
+				for iter_4_2, iter_4_3 in ipairs(var_4_2) do
+					if not TaskModel.instance:isTaskFinish(iter_4_1.type, tonumber(iter_4_3)) then
+						var_4_1 = false
 
 						break
 					end
 				end
 			end
 
-			if slot9 and slot8.finishCount < slot8.config.maxFinishCount and slot8.hasFinished then
+			if var_4_1 and iter_4_1.finishCount < iter_4_1.config.maxFinishCount and iter_4_1.hasFinished then
 				return true
 			end
 		end
@@ -81,60 +92,67 @@ function slot0.checkTaskRedByPage(slot0, slot1, slot2)
 	return false
 end
 
-function slot0._sortFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0._sortFunc(arg_5_0, arg_5_1)
+	return arg_5_0.id < arg_5_1.id
 end
 
-function slot0.refreshList(slot0)
-	if slot0:getFinishTaskCount() > 1 then
-		slot2 = tabletool.copy(slot0.taskMoList)
+function var_0_0.refreshList(arg_6_0)
+	if arg_6_0:getFinishTaskCount() > 1 then
+		local var_6_0 = tabletool.copy(arg_6_0.taskMoList)
 
-		table.insert(slot2, 1, {
+		table.insert(var_6_0, 1, {
 			getAll = true
 		})
-		slot0:setList(slot2)
+		arg_6_0:setList(var_6_0)
 	else
-		slot0:setList(slot0.taskMoList)
+		arg_6_0:setList(arg_6_0.taskMoList)
 	end
 end
 
-function slot0.getFinishTaskCount(slot0)
-	for slot5, slot6 in ipairs(slot0.taskMoList) do
-		if slot6.hasFinished and slot6.finishCount < slot6.config.maxFinishCount then
-			slot1 = 0 + 1
+function var_0_0.getFinishTaskCount(arg_7_0)
+	local var_7_0 = 0
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.taskMoList) do
+		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1.config.maxFinishCount then
+			var_7_0 = var_7_0 + 1
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.getFinishTaskActivityCount(slot0)
-	for slot5, slot6 in ipairs(slot0.taskMoList) do
-		if slot6.hasFinished and slot6.finishCount < slot6.config.maxFinishCount then
-			slot1 = 0 + slot6.config.activity
+function var_0_0.getFinishTaskActivityCount(arg_8_0)
+	local var_8_0 = 0
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.taskMoList) do
+		if iter_8_1.hasFinished and iter_8_1.finishCount < iter_8_1.config.maxFinishCount then
+			var_8_0 = var_8_0 + iter_8_1.config.activity
 		end
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0.getGetRewardTaskCount(slot0)
-	for slot5, slot6 in ipairs(slot0.taskMoList) do
-		if slot6.config.maxFinishCount <= slot6.finishCount then
-			slot1 = 0 + 1
+function var_0_0.getGetRewardTaskCount(arg_9_0)
+	local var_9_0 = 0
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.taskMoList) do
+		if iter_9_1.finishCount >= iter_9_1.config.maxFinishCount then
+			var_9_0 = var_9_0 + 1
 		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.getKeyRewardMo(slot0)
+function var_0_0.getKeyRewardMo(arg_10_0)
+	return
 end
 
-function slot0.getActId(slot0)
-	return slot0.actId
+function var_0_0.getActId(arg_11_0)
+	return arg_11_0.actId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

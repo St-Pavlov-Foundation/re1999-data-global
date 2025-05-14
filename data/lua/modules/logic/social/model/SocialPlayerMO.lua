@@ -1,33 +1,33 @@
-module("modules.logic.social.model.SocialPlayerMO", package.seeall)
+﻿module("modules.logic.social.model.SocialPlayerMO", package.seeall)
 
-slot0 = pureTable("SocialPlayerMO")
+local var_0_0 = pureTable("SocialPlayerMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.userId
-	slot0.userId = slot1.userId
-	slot0.name = slot1.name
-	slot0.level = slot1.level
-	slot0.portrait = slot1.portrait
-	slot0.time = slot1.time
-	slot0.desc = slot1.desc
-	slot0.infos = slot1.infos
-	slot0.bg = slot1.bg or 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.userId
+	arg_1_0.userId = arg_1_1.userId
+	arg_1_0.name = arg_1_1.name
+	arg_1_0.level = arg_1_1.level
+	arg_1_0.portrait = arg_1_1.portrait
+	arg_1_0.time = arg_1_1.time
+	arg_1_0.desc = arg_1_1.desc
+	arg_1_0.infos = arg_1_1.infos
+	arg_1_0.bg = arg_1_1.bg or 0
 end
 
-function slot0.isSendAddFriend(slot0)
-	return slot0._isAdded or false
+function var_0_0.isSendAddFriend(arg_2_0)
+	return arg_2_0._isAdded or false
 end
 
-function slot0.setAddedFriend(slot0)
-	slot0._isAdded = true
+function var_0_0.setAddedFriend(arg_3_0)
+	arg_3_0._isAdded = true
 end
 
-function slot0.isMyFriend(slot0)
-	return SocialModel.instance:isMyFriendByUserId(slot0.userId)
+function var_0_0.isMyFriend(arg_4_0)
+	return SocialModel.instance:isMyFriendByUserId(arg_4_0.userId)
 end
 
-function slot0.isMyBlackList(slot0)
-	return SocialModel.instance:isMyBlackListByUserId(slot0.userId)
+function var_0_0.isMyBlackList(arg_5_0)
+	return SocialModel.instance:isMyBlackListByUserId(arg_5_0.userId)
 end
 
-return slot0
+return var_0_0

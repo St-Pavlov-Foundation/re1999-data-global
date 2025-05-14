@@ -1,16 +1,19 @@
-module("modules.logic.chessgame.game.step.ChessStepDialogue", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepDialogue", package.seeall)
 
-slot0 = class("ChessStepDialogue", BaseWork)
+local var_0_0 = class("ChessStepDialogue", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot1 = slot0.originData.interactId
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = arg_2_0.originData.interactId
+	local var_2_1 = arg_2_0.originData.dialogueId
+	local var_2_2 = ChessModel.instance:getActId()
+	local var_2_3 = ChessConfig.instance:getBubbleCoByGroup(var_2_2, var_2_1)
 
-	if not ChessConfig.instance:getBubbleCoByGroup(ChessModel.instance:getActId(), slot0.originData.dialogueId) then
-		slot0:onDone(true)
+	if not var_2_3 then
+		arg_2_0:onDone(true)
 
 		return
 	end
@@ -21,10 +24,10 @@ function slot0.onStart(slot0)
 		return
 	end
 
-	ChessGameController.instance:registerCallback(ChessGameEvent.DialogEnd, slot0._onDialogEnd, slot0)
+	ChessGameController.instance:registerCallback(ChessGameEvent.DialogEnd, arg_2_0._onDialogEnd, arg_2_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.PlayDialogue, {
-		txtco = slot4,
-		id = slot1
+		txtco = var_2_3,
+		id = var_2_0
 	})
 	ChessGameController.instance:setClickStatus(ChessGameEnum.SelectPosStatus.ShowTalk)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetNeedChooseDirectionVisible, {
@@ -32,14 +35,14 @@ function slot0.onStart(slot0)
 	})
 end
 
-function slot0._onDialogEnd(slot0)
+function var_0_0._onDialogEnd(arg_3_0)
 	ChessGameController.instance:setSelectObj(nil)
 	ChessGameController.instance:autoSelectPlayer()
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	ChessGameController.instance:unregisterCallback(ChessGameEvent.DialogEnd, slot0._onDialogEnd, slot0)
+function var_0_0.clearWork(arg_4_0)
+	ChessGameController.instance:unregisterCallback(ChessGameEvent.DialogEnd, arg_4_0._onDialogEnd, arg_4_0)
 end
 
-return slot0
+return var_0_0

@@ -1,56 +1,62 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174BetSuccessView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174BetSuccessView", package.seeall)
 
-slot0 = class("Act174BetSuccessView", BaseView)
+local var_0_0 = class("Act174BetSuccessView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
-	slot0._txtRule = gohelper.findChildText(slot0.viewGO, "#txt_Rule")
-	slot0._imageHpPercent = gohelper.findChildImage(slot0.viewGO, "hp/bg/fill")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	arg_1_0._txtRule = gohelper.findChildText(arg_1_0.viewGO, "#txt_Rule")
+	arg_1_0._imageHpPercent = gohelper.findChildImage(arg_1_0.viewGO, "hp/bg/fill")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.maxHp = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
-	slot0.hpEffList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.maxHp = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
+	arg_5_0.hpEffList = arg_5_0:getUserDataTb_()
 
-	for slot4 = 1, slot0.maxHp do
-		slot0.hpEffList[#slot0.hpEffList + 1] = gohelper.findChild(slot0.viewGO, "hp/bg/#hp0" .. slot4)
+	for iter_5_0 = 1, arg_5_0.maxHp do
+		local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "hp/bg/#hp0" .. iter_5_0)
+
+		arg_5_0.hpEffList[#arg_5_0.hpEffList + 1] = var_5_0
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._imageHpPercent.fillAmount = Activity174Model.instance:getActInfo():getGameInfo().hp / slot0.maxHp
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = Activity174Model.instance:getActInfo():getGameInfo()
 
-	for slot6 = 1, slot0.maxHp do
-		gohelper.setActive(slot0.hpEffList[slot6], slot6 == slot2.hp)
+	arg_7_0._imageHpPercent.fillAmount = var_7_0.hp / arg_7_0.maxHp
+
+	for iter_7_0 = 1, arg_7_0.maxHp do
+		gohelper.setActive(arg_7_0.hpEffList[iter_7_0], iter_7_0 == var_7_0.hp)
 	end
 
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, 3)
+	TaskDispatcher.runDelay(arg_7_0.closeThis, arg_7_0, 3)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0.closeThis, arg_9_0)
 end
 
-return slot0
+return var_0_0

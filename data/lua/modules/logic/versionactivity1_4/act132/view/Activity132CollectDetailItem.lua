@@ -1,51 +1,53 @@
-module("modules.logic.versionactivity1_4.act132.view.Activity132CollectDetailItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.view.Activity132CollectDetailItem", package.seeall)
 
-slot0 = class("Activity132CollectDetailItem", UserDataDispose)
+local var_0_0 = class("Activity132CollectDetailItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._viewGO = slot1
-	slot0._goTips = gohelper.findChild(slot1, "tips")
-	slot0._txtLock = gohelper.findChildTextMesh(slot0._goTips, "txt_Lock")
-	slot0._goDesc = gohelper.findChild(slot1, "txtDesc")
-	slot0._txtDesc = slot0._goDesc:GetComponent(gohelper.Type_TextMesh)
-	slot0._animTxt = slot0._goDesc:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._viewGO = arg_1_1
+	arg_1_0._goTips = gohelper.findChild(arg_1_1, "tips")
+	arg_1_0._txtLock = gohelper.findChildTextMesh(arg_1_0._goTips, "txt_Lock")
+	arg_1_0._goDesc = gohelper.findChild(arg_1_1, "txtDesc")
+	arg_1_0._txtDesc = arg_1_0._goDesc:GetComponent(gohelper.Type_TextMesh)
+	arg_1_0._animTxt = arg_1_0._goDesc:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0.data = slot1
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.data = arg_2_1
 
-	if not slot1 then
-		gohelper.setActive(slot0._viewGO, false)
+	if not arg_2_1 then
+		gohelper.setActive(arg_2_0._viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._viewGO, true)
-	slot0:refreshState()
+	gohelper.setActive(arg_2_0._viewGO, true)
+	arg_2_0:refreshState()
 end
 
-function slot0.refreshState(slot0)
-	if not slot0.data then
+function var_0_0.refreshState(arg_3_0)
+	if not arg_3_0.data then
 		return
 	end
 
-	slot0._txtDesc.text = slot0.data:getContent()
-	slot0._txtLock.text = slot0.data:getUnlockDesc()
+	local var_3_0 = Activity132Model.instance:getContentState(arg_3_0.data.activityId, arg_3_0.data.contentId)
 
-	gohelper.setActive(slot0._goTips, Activity132Model.instance:getContentState(slot0.data.activityId, slot0.data.contentId) ~= Activity132Enum.ContentState.Unlock)
-	gohelper.setActive(slot0._goDesc, slot1 == Activity132Enum.ContentState.Unlock)
+	arg_3_0._txtDesc.text = arg_3_0.data:getContent()
+	arg_3_0._txtLock.text = arg_3_0.data:getUnlockDesc()
+
+	gohelper.setActive(arg_3_0._goTips, var_3_0 ~= Activity132Enum.ContentState.Unlock)
+	gohelper.setActive(arg_3_0._goDesc, var_3_0 == Activity132Enum.ContentState.Unlock)
 end
 
-function slot0.playUnlock(slot0)
-	slot0:refreshState()
-	slot0._animTxt:Play("unlock")
+function var_0_0.playUnlock(arg_4_0)
+	arg_4_0:refreshState()
+	arg_4_0._animTxt:Play("unlock")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_doom_disappear)
 end
 
-function slot0.destroy(slot0)
-	slot0:__onDispose()
+function var_0_0.destroy(arg_5_0)
+	arg_5_0:__onDispose()
 end
 
-return slot0
+return var_0_0

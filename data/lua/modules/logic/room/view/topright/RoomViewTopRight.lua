@@ -1,99 +1,122 @@
-module("modules.logic.room.view.topright.RoomViewTopRight", package.seeall)
+﻿module("modules.logic.room.view.topright.RoomViewTopRight", package.seeall)
 
-slot0 = class("RoomViewTopRight", BaseView)
+local var_0_0 = class("RoomViewTopRight", BaseView)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._path = slot1
-	slot0._resPath = slot2
-	slot0._param = slot3
+	arg_1_0._path = arg_1_1
+	arg_1_0._resPath = arg_1_2
+	arg_1_0._param = arg_1_3
 end
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_2_0)
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, slot0._refreshShow, slot0)
-	slot0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, slot0._refreshShow, slot0)
-	slot0:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, slot0._refreshShow, slot0)
+function var_0_0._editableInitView(arg_3_0)
+	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+	arg_3_0:addEventCb(RoomCharacterController.instance, RoomEvent.UpdateCharacterInteractionUI, arg_3_0._refreshShow, arg_3_0)
+	arg_3_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_3_0._refreshShow, arg_3_0)
+	arg_3_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, arg_3_0._refreshShow, arg_3_0)
 
-	slot0._resourceItemList = {}
+	arg_3_0._resourceItemList = {}
 
-	if string.nilorempty(slot0._path) or string.nilorempty(slot0._resPath) or not LuaUtil.tableNotEmpty(slot0._param) then
+	if string.nilorempty(arg_3_0._path) or string.nilorempty(arg_3_0._resPath) or not LuaUtil.tableNotEmpty(arg_3_0._param) then
 		return
 	end
 
-	slot5 = gohelper.findChild(slot0.viewGO, slot0._path)
-	slot0._topRight = slot0.viewContainer:getResInst(slot0._resPath, slot5, "topright")
-	slot0._goflyitem = gohelper.findChild(slot0._topRight, "go_flyitem")
-	slot0._goresource = gohelper.findChild(slot0._topRight, "container/resource")
+	local var_3_0 = gohelper.findChild(arg_3_0.viewGO, arg_3_0._path)
 
-	gohelper.setActive(slot0._goflyitem, false)
+	arg_3_0._topRight = arg_3_0.viewContainer:getResInst(arg_3_0._resPath, var_3_0, "topright")
+	arg_3_0._goflyitem = gohelper.findChild(arg_3_0._topRight, "go_flyitem")
+	arg_3_0._goresource = gohelper.findChild(arg_3_0._topRight, "container/resource")
 
-	for slot5 = 1, 6 do
-		gohelper.setActive(gohelper.cloneInPlace(slot0._goresource, "resource" .. slot5), false)
+	gohelper.setActive(arg_3_0._goflyitem, false)
 
-		if slot0._param[slot5] then
-			slot7.parent = slot0
-			slot7.index = slot5
-			slot10 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChild(slot0._topRight, "container/resource" .. slot5), slot7.classDefine, slot7)
+	for iter_3_0 = 1, 6 do
+		local var_3_1 = gohelper.cloneInPlace(arg_3_0._goresource, "resource" .. iter_3_0)
+
+		gohelper.setActive(var_3_1, false)
+
+		local var_3_2 = arg_3_0._param[iter_3_0]
+
+		if var_3_2 then
+			var_3_2.parent = arg_3_0
+			var_3_2.index = iter_3_0
+
+			local var_3_3 = gohelper.findChild(arg_3_0._topRight, "container/resource" .. iter_3_0)
+			local var_3_4 = var_3_2.classDefine
+			local var_3_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_3, var_3_4, var_3_2)
 		end
 	end
 
-	gohelper.setActive(slot0._goresource, false)
+	gohelper.setActive(arg_3_0._goresource, false)
 
-	slot0._flyItemPoolList = slot0:getUserDataTb_()
+	arg_3_0._flyItemPoolList = arg_3_0:getUserDataTb_()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_4_0)
+	return
 end
 
-function slot0._onOpenView(slot0, slot1)
-	slot0:_refreshShow()
+function var_0_0._onOpenView(arg_5_0, arg_5_1)
+	arg_5_0:_refreshShow()
 end
 
-function slot0._onCloseView(slot0, slot1)
-	slot0:_refreshShow()
+function var_0_0._onCloseView(arg_6_0, arg_6_1)
+	arg_6_0:_refreshShow()
 end
 
-function slot0._refreshShow(slot0)
-	gohelper.setActive(slot0._topRight, slot0:_getTopView() == slot0.viewName and not RoomCharacterHelper.isInDialogInteraction() and not RoomWaterReformModel.instance:isWaterReform() and not RoomSkinModel.instance:getIsShowRoomSkinList() and not RoomTransportController.instance:isTransportPathShow())
+function var_0_0._refreshShow(arg_7_0)
+	local var_7_0 = arg_7_0:_getTopView()
+	local var_7_1 = RoomWaterReformModel.instance:isWaterReform()
+	local var_7_2 = RoomCharacterHelper.isInDialogInteraction()
+	local var_7_3 = RoomSkinModel.instance:getIsShowRoomSkinList()
+	local var_7_4 = RoomTransportController.instance:isTransportPathShow()
+
+	gohelper.setActive(arg_7_0._topRight, var_7_0 == arg_7_0.viewName and not var_7_2 and not var_7_1 and not var_7_3 and not var_7_4)
 end
 
-function slot0._getTopView(slot0)
-	for slot5 = #NavigateMgr.sortOpenViewNameList(ViewMgr.instance:getOpenViewNameList()), 1, -1 do
-		if ViewMgr.instance:getContainer(slot1[slot5]) and slot7._views then
-			for slot11 = #slot7._views, 1, -1 do
-				if slot7._views[slot11].__cname == slot0.__cname then
-					return slot6
+function var_0_0._getTopView(arg_8_0)
+	local var_8_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_8_1 = NavigateMgr.sortOpenViewNameList(var_8_0)
+
+	for iter_8_0 = #var_8_1, 1, -1 do
+		local var_8_2 = var_8_1[iter_8_0]
+		local var_8_3 = ViewMgr.instance:getContainer(var_8_2)
+
+		if var_8_3 and var_8_3._views then
+			for iter_8_1 = #var_8_3._views, 1, -1 do
+				if var_8_3._views[iter_8_1].__cname == arg_8_0.__cname then
+					return var_8_2
 				end
 			end
 		end
 	end
 end
 
-function slot0.getFlyGO(slot0)
-	if slot0._flyItemPoolList[#slot0._flyItemPoolList] then
-		table.remove(slot0._flyItemPoolList, #slot0._flyItemPoolList)
+function var_0_0.getFlyGO(arg_9_0)
+	local var_9_0 = arg_9_0._flyItemPoolList[#arg_9_0._flyItemPoolList]
+
+	if var_9_0 then
+		table.remove(arg_9_0._flyItemPoolList, #arg_9_0._flyItemPoolList)
 	else
-		slot1 = gohelper.cloneInPlace(slot0._goflyitem, "flyEffect")
+		var_9_0 = gohelper.cloneInPlace(arg_9_0._goflyitem, "flyEffect")
 	end
 
-	gohelper.setActive(slot1, false)
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(var_9_0, false)
+	gohelper.setActive(var_9_0, true)
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.returnFlyGO(slot0, slot1)
-	gohelper.setActive(slot1, false)
-	table.insert(slot0._flyItemPoolList, slot1)
+function var_0_0.returnFlyGO(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_1, false)
+	table.insert(arg_10_0._flyItemPoolList, arg_10_1)
 end
 
-return slot0
+return var_0_0

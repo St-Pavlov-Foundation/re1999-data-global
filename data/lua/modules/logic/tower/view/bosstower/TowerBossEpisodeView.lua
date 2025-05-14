@@ -1,262 +1,291 @@
-module("modules.logic.tower.view.bosstower.TowerBossEpisodeView", package.seeall)
+﻿module("modules.logic.tower.view.bosstower.TowerBossEpisodeView", package.seeall)
 
-slot0 = class("TowerBossEpisodeView", BaseView)
+local var_0_0 = class("TowerBossEpisodeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.txtName = gohelper.findChildTextMesh(slot0.viewGO, "root/episodeNode/nameBg/txtName")
-	slot0.btnStart = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/Right/btnStart")
-	slot0.goRewards = gohelper.findChild(slot0.viewGO, "root/Right/Reward/scroll_reward/Viewport/#go_rewards")
-	slot0.goAttrInfo = gohelper.findChild(slot0.viewGO, "root/Right/attrInfo")
-	slot0.goLevItem = gohelper.findChild(slot0.viewGO, "root/Right/attrInfo/levItem")
-	slot0.txtCurLev = gohelper.findChildTextMesh(slot0.goLevItem, "curLev")
-	slot0.txtNextLev = gohelper.findChildTextMesh(slot0.goLevItem, "nextLev")
-	slot0.goAttrItem = gohelper.findChild(slot0.viewGO, "root/Right/attrInfo/attrItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/episodeNode/nameBg/txtName")
+	arg_1_0.btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Right/btnStart")
+	arg_1_0.goRewards = gohelper.findChild(arg_1_0.viewGO, "root/Right/Reward/scroll_reward/Viewport/#go_rewards")
+	arg_1_0.goAttrInfo = gohelper.findChild(arg_1_0.viewGO, "root/Right/attrInfo")
+	arg_1_0.goLevItem = gohelper.findChild(arg_1_0.viewGO, "root/Right/attrInfo/levItem")
+	arg_1_0.txtCurLev = gohelper.findChildTextMesh(arg_1_0.goLevItem, "curLev")
+	arg_1_0.txtNextLev = gohelper.findChildTextMesh(arg_1_0.goLevItem, "nextLev")
+	arg_1_0.goAttrItem = gohelper.findChild(arg_1_0.viewGO, "root/Right/attrInfo/attrItem")
 
-	gohelper.setActive(slot0.goAttrItem, false)
+	gohelper.setActive(arg_1_0.goAttrItem, false)
 
-	slot0.goTalentPoint = gohelper.findChild(slot0.viewGO, "root/Right/attrInfo/talentPoint")
-	slot0.txtTalentPoint = gohelper.findChildTextMesh(slot0.goTalentPoint, "value")
-	slot0.goSkillUnlock = gohelper.findChild(slot0.viewGO, "root/Right/attrInfo/skillUnlock")
-	slot0.imgSkillUnlock = gohelper.findChildImage(slot0.viewGO, "root/Right/attrInfo/skillUnlock/icon")
-	slot0.goBossUnlock = gohelper.findChild(slot0.viewGO, "root/Right/attrInfo/bossUnlock")
-	slot0.txtPreIndex = gohelper.findChildTextMesh(slot0.viewGO, "root/episodeNode/Levels/indexBg2/txtCurEpisode")
-	slot0.txtCurIndex = gohelper.findChildTextMesh(slot0.viewGO, "root/episodeNode/Levels/indexBg3/txtCurEpisode")
-	slot0.txtNextIndex = gohelper.findChildTextMesh(slot0.viewGO, "root/episodeNode/Levels/indexBg4/txtCurEpisode")
-	slot0.simageBoss = gohelper.findChildSingleImage(slot0.viewGO, "root/episodeNode/BOSS/#simage_BossPic")
-	slot0.simageShadow = gohelper.findChildSingleImage(slot0.viewGO, "root/episodeNode/BOSS/#simage_BossShadow")
-	slot0.animLevels = gohelper.findChildComponent(slot0.viewGO, "root/episodeNode/Levels", gohelper.Type_Animator)
-	slot0.goLevels = gohelper.findChild(slot0.viewGO, "root/episodeNode/Levels")
-	slot0.goRight = gohelper.findChild(slot0.viewGO, "root/Right")
-	slot0.goLevMax = gohelper.findChild(slot0.viewGO, "root/#go_levelmax")
-	slot0.txtMaxLevel = gohelper.findChildTextMesh(slot0.viewGO, "root/#go_levelmax/#txt_num")
+	arg_1_0.goTalentPoint = gohelper.findChild(arg_1_0.viewGO, "root/Right/attrInfo/talentPoint")
+	arg_1_0.txtTalentPoint = gohelper.findChildTextMesh(arg_1_0.goTalentPoint, "value")
+	arg_1_0.goSkillUnlock = gohelper.findChild(arg_1_0.viewGO, "root/Right/attrInfo/skillUnlock")
+	arg_1_0.imgSkillUnlock = gohelper.findChildImage(arg_1_0.viewGO, "root/Right/attrInfo/skillUnlock/icon")
+	arg_1_0.goBossUnlock = gohelper.findChild(arg_1_0.viewGO, "root/Right/attrInfo/bossUnlock")
+	arg_1_0.txtPreIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/episodeNode/Levels/indexBg2/txtCurEpisode")
+	arg_1_0.txtCurIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/episodeNode/Levels/indexBg3/txtCurEpisode")
+	arg_1_0.txtNextIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/episodeNode/Levels/indexBg4/txtCurEpisode")
+	arg_1_0.simageBoss = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/episodeNode/BOSS/#simage_BossPic")
+	arg_1_0.simageShadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/episodeNode/BOSS/#simage_BossShadow")
+	arg_1_0.animLevels = gohelper.findChildComponent(arg_1_0.viewGO, "root/episodeNode/Levels", gohelper.Type_Animator)
+	arg_1_0.goLevels = gohelper.findChild(arg_1_0.viewGO, "root/episodeNode/Levels")
+	arg_1_0.goRight = gohelper.findChild(arg_1_0.viewGO, "root/Right")
+	arg_1_0.goLevMax = gohelper.findChild(arg_1_0.viewGO, "root/#go_levelmax")
+	arg_1_0.txtMaxLevel = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_levelmax/#txt_num")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnStart, slot0._onBtnStartClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnStart, arg_2_0._onBtnStartClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0.btnStart)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0.btnStart)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onBtnStartClick(slot0)
-	if not slot0.episodeConfig then
+function var_0_0._onBtnStartClick(arg_5_0)
+	if not arg_5_0.episodeConfig then
 		return
 	end
 
-	TowerController.instance:enterFight({
-		towerType = slot0.towerType,
-		towerId = slot0.towerId,
-		layerId = slot0.episodeConfig.layerId,
-		episodeId = slot0.episodeConfig.episodeId
-	})
+	local var_5_0 = {
+		towerType = arg_5_0.towerType,
+		towerId = arg_5_0.towerId,
+		layerId = arg_5_0.episodeConfig.layerId,
+		episodeId = arg_5_0.episodeConfig.episodeId
+	}
+
+	TowerController.instance:enterFight(var_5_0)
 end
 
-function slot0._onMove(slot0)
-	slot0:refreshCurLayerId()
-	slot0:refreshLayerInfo()
+function var_0_0._onMove(arg_6_0)
+	arg_6_0:refreshCurLayerId()
+	arg_6_0:refreshLayerInfo()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:refreshParam()
+	arg_7_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:refreshParam()
+	arg_8_0:refreshView()
 
-	if slot0.needChangeLayer then
+	if arg_8_0.needChangeLayer then
 		UIBlockMgr.instance:startBlock("delayMove")
-		TaskDispatcher.runDelay(slot0.delayMove, slot0, 1)
+		TaskDispatcher.runDelay(arg_8_0.delayMove, arg_8_0, 1)
 	end
 end
 
-function slot0.delayMove(slot0)
+function var_0_0.delayMove(arg_9_0)
 	UIBlockMgr.instance:endBlock("delayMove")
-	slot0.animLevels:Play("move")
+	arg_9_0.animLevels:Play("move")
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_boss_swtich)
-	TaskDispatcher.runDelay(slot0._onMove, slot0, 0.167)
+	TaskDispatcher.runDelay(arg_9_0._onMove, arg_9_0, 0.167)
 end
 
-function slot0.refreshParam(slot0)
-	slot0.episodeConfig = slot0.viewParam.episodeConfig
-	slot0.towerId = slot0.episodeConfig.towerId
-	slot0.towerType = TowerEnum.TowerType.Boss
-	slot0.episodeMo = TowerModel.instance:getEpisodeMoByTowerType(slot0.towerType)
-	slot0.towerConfig = TowerConfig.instance:getBossTowerConfig(slot0.towerId)
-	slot0.bossConfig = TowerConfig.instance:getAssistBossConfig(slot0.towerConfig.bossId)
-	slot0.towerInfo = TowerModel.instance:getTowerInfoById(slot0.towerType, slot0.towerId)
+function var_0_0.refreshParam(arg_10_0)
+	arg_10_0.episodeConfig = arg_10_0.viewParam.episodeConfig
+	arg_10_0.towerId = arg_10_0.episodeConfig.towerId
+	arg_10_0.towerType = TowerEnum.TowerType.Boss
+	arg_10_0.episodeMo = TowerModel.instance:getEpisodeMoByTowerType(arg_10_0.towerType)
+	arg_10_0.towerConfig = TowerConfig.instance:getBossTowerConfig(arg_10_0.towerId)
+	arg_10_0.bossConfig = TowerConfig.instance:getAssistBossConfig(arg_10_0.towerConfig.bossId)
+	arg_10_0.towerInfo = TowerModel.instance:getTowerInfoById(arg_10_0.towerType, arg_10_0.towerId)
 
-	slot0:refreshCurLayerId()
+	arg_10_0:refreshCurLayerId()
 end
 
-function slot0.refreshCurLayerId(slot0)
-	if slot0.viewParam and slot0.viewParam.passLayerId then
-		slot0.curLayer = slot1
-		slot0.viewParam.passLayerId = nil
+function var_0_0.refreshCurLayerId(arg_11_0)
+	local var_11_0 = arg_11_0.viewParam and arg_11_0.viewParam.passLayerId
+
+	if var_11_0 then
+		arg_11_0.curLayer = var_11_0
+		arg_11_0.viewParam.passLayerId = nil
 	else
-		slot0.curLayer = slot0.episodeConfig.layerId
+		arg_11_0.curLayer = arg_11_0.episodeConfig.layerId
 	end
 
-	slot0.needChangeLayer = slot0.curLayer ~= slot0.episodeConfig.layerId
+	arg_11_0.needChangeLayer = arg_11_0.curLayer ~= arg_11_0.episodeConfig.layerId
 end
 
-function slot0.refreshView(slot0)
-	slot0.txtName.text = slot0.towerConfig.name
+function var_0_0.refreshView(arg_12_0)
+	arg_12_0.txtName.text = arg_12_0.towerConfig.name
 
-	slot0.simageBoss:LoadImage(slot0.bossConfig.bossPic)
-	slot0.simageShadow:LoadImage(slot0.bossConfig.bossShadowPic)
-	slot0:refreshLayerInfo()
+	arg_12_0.simageBoss:LoadImage(arg_12_0.bossConfig.bossPic)
+	arg_12_0.simageShadow:LoadImage(arg_12_0.bossConfig.bossShadowPic)
+	arg_12_0:refreshLayerInfo()
 end
 
-function slot0.refreshLayerInfo(slot0)
-	slot1 = not slot0.needChangeLayer and slot0.towerInfo:isLayerPass(slot0.curLayer, slot0.episodeMo)
+function var_0_0.refreshLayerInfo(arg_13_0)
+	local var_13_0 = not arg_13_0.needChangeLayer and arg_13_0.towerInfo:isLayerPass(arg_13_0.curLayer, arg_13_0.episodeMo)
 
-	gohelper.setActive(slot0.goLevMax, slot1)
-	gohelper.setActive(slot0.goLevels, not slot1)
-	gohelper.setActive(slot0.goRight, not slot1)
+	gohelper.setActive(arg_13_0.goLevMax, var_13_0)
+	gohelper.setActive(arg_13_0.goLevels, not var_13_0)
+	gohelper.setActive(arg_13_0.goRight, not var_13_0)
 
-	if not slot1 then
-		slot0:refreshIndex()
-		slot0:refreshRewards(slot0.episodeConfig.firstReward)
-		slot0:refreshAttr()
+	if not var_13_0 then
+		arg_13_0:refreshIndex()
+		arg_13_0:refreshRewards(arg_13_0.episodeConfig.firstReward)
+		arg_13_0:refreshAttr()
 	else
-		slot0.txtMaxLevel.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot0.curLayer))
+		arg_13_0.txtMaxLevel.text = tostring(arg_13_0.episodeMo:getEpisodeIndex(arg_13_0.towerId, arg_13_0.curLayer))
 	end
 end
 
-function slot0.refreshIndex(slot0)
-	slot1 = slot0.episodeMo:getEpisodeConfig(slot0.towerId, slot0.curLayer)
-	slot0.txtCurIndex.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot0.curLayer))
+function var_0_0.refreshIndex(arg_14_0)
+	local var_14_0 = arg_14_0.episodeMo:getEpisodeConfig(arg_14_0.towerId, arg_14_0.curLayer)
 
-	if slot0.episodeMo:getNextEpisodeLayer(slot0.towerId, slot0.curLayer) then
-		if slot0.episodeMo:getEpisodeConfig(slot0.towerId, slot2).openRound > 0 then
-			slot0.txtNextIndex.text = ""
+	arg_14_0.txtCurIndex.text = tostring(arg_14_0.episodeMo:getEpisodeIndex(arg_14_0.towerId, arg_14_0.curLayer))
+
+	local var_14_1 = arg_14_0.episodeMo:getNextEpisodeLayer(arg_14_0.towerId, arg_14_0.curLayer)
+
+	if var_14_1 then
+		if arg_14_0.episodeMo:getEpisodeConfig(arg_14_0.towerId, var_14_1).openRound > 0 then
+			arg_14_0.txtNextIndex.text = ""
 		else
-			slot0.txtNextIndex.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot2))
+			arg_14_0.txtNextIndex.text = tostring(arg_14_0.episodeMo:getEpisodeIndex(arg_14_0.towerId, var_14_1))
 		end
 	else
-		slot0.txtNextIndex.text = ""
+		arg_14_0.txtNextIndex.text = ""
 	end
 
-	if slot1.preLayerId and slot3 > 0 then
-		slot0.txtPreIndex.text = tostring(slot0.episodeMo:getEpisodeIndex(slot0.towerId, slot3))
+	local var_14_2 = var_14_0.preLayerId
+
+	if var_14_2 and var_14_2 > 0 then
+		arg_14_0.txtPreIndex.text = tostring(arg_14_0.episodeMo:getEpisodeIndex(arg_14_0.towerId, var_14_2))
 	else
-		slot0.txtPreIndex.text = ""
+		arg_14_0.txtPreIndex.text = ""
 	end
 end
 
-function slot0.refreshRewards(slot0, slot1)
-	if slot0.rewardItems == nil then
-		slot0.rewardItems = {}
+function var_0_0.refreshRewards(arg_15_0, arg_15_1)
+	if arg_15_0.rewardItems == nil then
+		arg_15_0.rewardItems = {}
 	end
 
-	slot6 = #(GameUtil.splitString2(slot1, true) or {})
+	local var_15_0 = GameUtil.splitString2(arg_15_1, true) or {}
 
-	for slot6 = 1, math.max(#slot0.rewardItems, slot6) do
-		if not slot0.rewardItems[slot6] then
-			slot0.rewardItems[slot6] = IconMgr.instance:getCommonPropItemIcon(slot0.goRewards)
+	for iter_15_0 = 1, math.max(#arg_15_0.rewardItems, #var_15_0) do
+		local var_15_1 = arg_15_0.rewardItems[iter_15_0]
+
+		if not var_15_1 then
+			var_15_1 = IconMgr.instance:getCommonPropItemIcon(arg_15_0.goRewards)
+			arg_15_0.rewardItems[iter_15_0] = var_15_1
 		end
 
-		gohelper.setActive(slot7.go, slot2[slot6] ~= nil)
+		gohelper.setActive(var_15_1.go, var_15_0[iter_15_0] ~= nil)
 
-		if slot2[slot6] then
-			slot7:setMOValue(slot2[slot6][1], slot2[slot6][2], slot2[slot6][3], nil, true)
-			slot7:setScale(0.7)
-			slot7:setCountTxtSize(51)
+		if var_15_0[iter_15_0] then
+			var_15_1:setMOValue(var_15_0[iter_15_0][1], var_15_0[iter_15_0][2], var_15_0[iter_15_0][3], nil, true)
+			var_15_1:setScale(0.7)
+			var_15_1:setCountTxtSize(51)
 		end
 	end
 end
 
-function slot0.refreshAttr(slot0)
-	if slot0.attrItems == nil then
-		slot0.attrItems = {}
+function var_0_0.refreshAttr(arg_16_0)
+	if arg_16_0.attrItems == nil then
+		arg_16_0.attrItems = {}
 	end
 
-	slot2 = slot0.episodeConfig.bossLevel
-	slot6 = TowerConfig.instance:getAssistDevelopConfig(slot0.towerConfig.bossId, slot2) and slot5.talentPoint
-	slot0.txtCurLev.text = string.format("Lv.%s", slot0.episodeMo:getEpisodeConfig(slot0.towerId, slot0.episodeConfig.preLayerId) and slot3.bossLevel or 0)
-	slot0.txtNextLev.text = string.format("Lv.%s", slot2)
-	slot11 = #(GameUtil.splitString2(slot5 and slot5.attribute, true) or {})
+	local var_16_0 = arg_16_0.towerConfig.bossId
+	local var_16_1 = arg_16_0.episodeConfig.bossLevel
+	local var_16_2 = arg_16_0.episodeMo:getEpisodeConfig(arg_16_0.towerId, arg_16_0.episodeConfig.preLayerId)
+	local var_16_3 = var_16_2 and var_16_2.bossLevel or 0
+	local var_16_4 = TowerConfig.instance:getAssistDevelopConfig(var_16_0, var_16_1)
+	local var_16_5 = var_16_4 and var_16_4.talentPoint
 
-	for slot11 = 1, math.max(#slot0.attrItems, slot11) do
-		if not slot0.attrItems[slot11] then
-			slot0.attrItems[slot11] = slot0:createAttrItem(slot11)
+	arg_16_0.txtCurLev.text = string.format("Lv.%s", var_16_3)
+	arg_16_0.txtNextLev.text = string.format("Lv.%s", var_16_1)
+
+	local var_16_6 = GameUtil.splitString2(var_16_4 and var_16_4.attribute, true) or {}
+
+	for iter_16_0 = 1, math.max(#arg_16_0.attrItems, #var_16_6) do
+		local var_16_7 = arg_16_0.attrItems[iter_16_0]
+
+		if not var_16_7 then
+			var_16_7 = arg_16_0:createAttrItem(iter_16_0)
+			arg_16_0.attrItems[iter_16_0] = var_16_7
 		end
 
-		slot0:refreshAttrItem(slot12, slot7[slot11])
+		arg_16_0:refreshAttrItem(var_16_7, var_16_6[iter_16_0])
 	end
 
-	slot8 = slot6 and slot6 > 0 or false
+	local var_16_8 = var_16_5 and var_16_5 > 0 or false
 
-	gohelper.setActive(slot0.goTalentPoint, slot8)
+	gohelper.setActive(arg_16_0.goTalentPoint, var_16_8)
 
-	if slot8 then
-		slot0.txtTalentPoint.text = string.format("+%s", slot6)
+	if var_16_8 then
+		arg_16_0.txtTalentPoint.text = string.format("+%s", var_16_5)
 	end
 
-	gohelper.setActive(slot0.goBossUnlock, slot2 == 1)
+	gohelper.setActive(arg_16_0.goBossUnlock, var_16_1 == 1)
 
-	slot9 = nil
+	local var_16_9
+	local var_16_10 = TowerConfig.instance:getPassiveSKills(var_16_0)
 
-	for slot14, slot15 in ipairs(TowerConfig.instance:getPassiveSKills(slot1)) do
-		if TowerConfig.instance:getPassiveSkillActiveLev(slot1, slot15[1]) == slot2 then
-			slot9 = slot14
+	for iter_16_1, iter_16_2 in ipairs(var_16_10) do
+		if TowerConfig.instance:getPassiveSkillActiveLev(var_16_0, iter_16_2[1]) == var_16_1 then
+			var_16_9 = iter_16_1
 
 			break
 		end
 	end
 
-	gohelper.setActive(slot0.goSkillUnlock, slot9 ~= nil)
+	gohelper.setActive(arg_16_0.goSkillUnlock, var_16_9 ~= nil)
 
-	if slot9 then
-		UISpriteSetMgr.instance:setCommonSprite(slot0.imgSkillUnlock, string.format("icon_att_%s", slot9 + 221))
+	if var_16_9 then
+		UISpriteSetMgr.instance:setCommonSprite(arg_16_0.imgSkillUnlock, string.format("icon_att_%s", var_16_9 + 221))
 	end
 end
 
-function slot0.createAttrItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.index = slot1
-	slot2.go = gohelper.cloneInPlace(slot0.goAttrItem, string.format("attrItem%s", slot1))
-	slot2.icon = gohelper.findChildImage(slot2.go, "icon")
-	slot2.txtName = gohelper.findChildTextMesh(slot2.go, "name")
-	slot2.txtValue = gohelper.findChildTextMesh(slot2.go, "value")
+function var_0_0.createAttrItem(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:getUserDataTb_()
 
-	return slot2
+	var_17_0.index = arg_17_1
+	var_17_0.go = gohelper.cloneInPlace(arg_17_0.goAttrItem, string.format("attrItem%s", arg_17_1))
+	var_17_0.icon = gohelper.findChildImage(var_17_0.go, "icon")
+	var_17_0.txtName = gohelper.findChildTextMesh(var_17_0.go, "name")
+	var_17_0.txtValue = gohelper.findChildTextMesh(var_17_0.go, "value")
+
+	return var_17_0
 end
 
-function slot0.refreshAttrItem(slot0, slot1, slot2)
-	gohelper.setActive(slot1.go, slot2 ~= nil)
+function var_0_0.refreshAttrItem(arg_18_0, arg_18_1, arg_18_2)
+	gohelper.setActive(arg_18_1.go, arg_18_2 ~= nil)
 
-	if slot2 then
-		slot3 = slot2[1]
-		slot1.txtName.text = HeroConfig.instance:getHeroAttributeCO(slot3).name
-		slot1.txtValue.text = string.format("+%s%%", slot2[2] * 0.1)
+	if arg_18_2 then
+		local var_18_0 = arg_18_2[1]
+		local var_18_1 = arg_18_2[2]
+		local var_18_2 = HeroConfig.instance:getHeroAttributeCO(var_18_0)
 
-		UISpriteSetMgr.instance:setCommonSprite(slot1.icon, string.format("icon_att_%s", slot3))
+		arg_18_1.txtName.text = var_18_2.name
+		arg_18_1.txtValue.text = string.format("+%s%%", var_18_1 * 0.1)
+
+		UISpriteSetMgr.instance:setCommonSprite(arg_18_1.icon, string.format("icon_att_%s", var_18_0))
 	end
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_19_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_21_0)
 	UIBlockMgr.instance:endBlock("delayMove")
-	TaskDispatcher.cancelTask(slot0.delayMove, slot0)
-	TaskDispatcher.cancelTask(slot0._onMove, slot0)
-	slot0.simageShadow:UnLoadImage()
-	slot0.simageBoss:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_21_0.delayMove, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._onMove, arg_21_0)
+	arg_21_0.simageShadow:UnLoadImage()
+	arg_21_0.simageBoss:UnLoadImage()
 end
 
-return slot0
+return var_0_0

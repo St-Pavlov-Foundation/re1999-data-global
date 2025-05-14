@@ -1,42 +1,47 @@
-module("modules.logic.room.entity.comp.RoomBuildingClockComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomBuildingClockComp", package.seeall)
 
-slot0 = class("RoomBuildingClockComp", LuaCompBase)
+local var_0_0 = class("RoomBuildingClockComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot2 = slot0:getMO()
-	slot0._audioExtendType = slot2.config.audioExtendType
-	slot0._audioExtendIds = string.splitToNumber(slot2.config.audioExtendIds, "#") or {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+
+	local var_2_0 = arg_2_0:getMO()
+
+	arg_2_0._audioExtendType = var_2_0.config.audioExtendType
+	arg_2_0._audioExtendIds = string.splitToNumber(var_2_0.config.audioExtendIds, "#") or {}
 end
 
-function slot0.addEventListeners(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.OnHourReporting, slot0._onHourReporting, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.OnHourReporting, arg_3_0._onHourReporting, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.OnHourReporting, slot0._onHourReporting, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.OnHourReporting, arg_4_0._onHourReporting, arg_4_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0:removeEventListeners()
 end
 
-function slot0._onHourReporting(slot0, slot1)
-	if RoomController.instance:isEditMode() or not slot1 then
+function var_0_0._onHourReporting(arg_6_0, arg_6_1)
+	if RoomController.instance:isEditMode() or not arg_6_1 then
 		return
 	end
 
-	if slot0._audioExtendType == RoomBuildingEnum.AudioExtendType.Clock12Hour then
-		RoomHelper.audioExtendTrigger(slot0._audioExtendIds[(slot1 - 1) % 12 + 1], slot0.go)
+	if arg_6_0._audioExtendType == RoomBuildingEnum.AudioExtendType.Clock12Hour then
+		local var_6_0 = (arg_6_1 - 1) % 12 + 1
+		local var_6_1 = arg_6_0._audioExtendIds[var_6_0]
+
+		RoomHelper.audioExtendTrigger(var_6_1, arg_6_0.go)
 	end
 end
 
-function slot0.getMO(slot0)
-	return slot0.entity:getMO()
+function var_0_0.getMO(arg_7_0)
+	return arg_7_0.entity:getMO()
 end
 
-return slot0
+return var_0_0

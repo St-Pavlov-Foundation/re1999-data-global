@@ -1,27 +1,29 @@
-module("modules.logic.rouge.model.rpcmo.RougeHeroInfoMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeHeroInfoMO", package.seeall)
 
-slot0 = pureTable("RougeHeroInfoMO")
+local var_0_0 = pureTable("RougeHeroInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0:update(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:update(arg_1_1)
 end
 
-function slot0.update(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.stressValue = slot1.stressValue
-	slot0.stressValueLimit = slot1.stressValueLimit
+function var_0_0.update(arg_2_0, arg_2_1)
+	arg_2_0.heroId = arg_2_1.heroId
+	arg_2_0.stressValue = arg_2_1.stressValue
+	arg_2_0.stressValueLimit = arg_2_1.stressValueLimit
 end
 
-function slot0.getStressValue(slot0)
-	return slot0.stressValue or 0
+function var_0_0.getStressValue(arg_3_0)
+	return arg_3_0.stressValue or 0
 end
 
-function slot0.getStressRange(slot0)
-	return 0, slot0:getStressValueLimit()
+function var_0_0.getStressRange(arg_4_0)
+	local var_4_0 = arg_4_0:getStressValueLimit()
+
+	return 0, var_4_0
 end
 
-function slot0.getStressValueLimit(slot0)
-	return slot0.stressValueLimit or 0
+function var_0_0.getStressValueLimit(arg_5_0)
+	return arg_5_0.stressValueLimit or 0
 end
 
-return slot0
+return var_0_0

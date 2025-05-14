@@ -1,26 +1,27 @@
-module("modules.logic.fight.system.work.FightWorkEnterFightDeal", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEnterFightDeal", package.seeall)
 
-slot0 = class("FightWorkEnterFightDeal", FightEffectBase)
+local var_0_0 = class("FightWorkEnterFightDeal", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if FightModel.instance:getVersion() < 4 then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot2 = slot0:com_registWorkDoneFlowSequence()
+	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
 
-	slot2:addWork(Work2FightWork.New(FightWorkDistributeCard))
-	slot2:registWork(FightWorkFunction, slot0._afterDistribute, slot0)
-	slot2:start()
+	var_1_0:addWork(Work2FightWork.New(FightWorkDistributeCard))
+	var_1_0:registWork(FightWorkFunction, arg_1_0._afterDistribute, arg_1_0)
+	var_1_0:start()
 end
 
-function slot0._afterDistribute(slot0)
+function var_0_0._afterDistribute(arg_2_0)
 	FightController.instance:setCurStage(FightEnum.Stage.StartRound)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

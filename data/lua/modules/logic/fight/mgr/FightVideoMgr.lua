@@ -1,159 +1,165 @@
-module("modules.logic.fight.mgr.FightVideoMgr", package.seeall)
+﻿module("modules.logic.fight.mgr.FightVideoMgr", package.seeall)
 
-slot0 = class("FightVideoMgr")
-slot1 = "ui/viewres/fight/fightvideo.prefab"
+local var_0_0 = class("FightVideoMgr")
+local var_0_1 = "ui/viewres/fight/fightvideo.prefab"
 
-function slot0.ctor(slot0)
-	slot0._avProVideoPlayer = nil
-	slot0._displauUGUI = nil
-	slot0._mediaPlayer = nil
-	slot0._videoName = nil
-	slot0._isPlaying = false
-	slot0._callback = nil
-	slot0._callbackObj = nil
-	slot0._prefabLoader = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._avProVideoPlayer = nil
+	arg_1_0._displauUGUI = nil
+	arg_1_0._mediaPlayer = nil
+	arg_1_0._videoName = nil
+	arg_1_0._isPlaying = false
+	arg_1_0._callback = nil
+	arg_1_0._callbackObj = nil
+	arg_1_0._prefabLoader = nil
 end
 
-function slot0.init(slot0)
-	slot0:_checkVideCopatible()
+function var_0_0.init(arg_2_0)
+	arg_2_0:_checkVideCopatible()
 end
 
-function slot0.dispose(slot0)
-	slot0:stop()
+function var_0_0.dispose(arg_3_0)
+	arg_3_0:stop()
 end
 
-function slot0._checkVideCopatible(slot0)
-	if slot0._videoCopatible ~= SettingsModel.instance:getVideoCompatible() then
-		slot0:stop()
+function var_0_0._checkVideCopatible(arg_4_0)
+	if arg_4_0._videoCopatible ~= SettingsModel.instance:getVideoCompatible() then
+		arg_4_0:stop()
 
-		if slot0._avProVideoPlayer then
-			slot0._avProVideoPlayer:Clear()
+		if arg_4_0._avProVideoPlayer then
+			arg_4_0._avProVideoPlayer:Clear()
 
-			slot0._avProVideoPlayer = nil
-			slot0._mediaPlayer = nil
-			slot0._displauUGUI = nil
+			arg_4_0._avProVideoPlayer = nil
+			arg_4_0._mediaPlayer = nil
+			arg_4_0._displauUGUI = nil
 		end
 
-		if slot0._prefabLoader then
-			slot0._prefabLoader:dispose()
+		if arg_4_0._prefabLoader then
+			arg_4_0._prefabLoader:dispose()
 
-			slot0._prefabLoader = nil
+			arg_4_0._prefabLoader = nil
 		end
 
-		if slot0._videoRootGO then
-			gohelper.destroy(slot0._videoRootGO)
+		if arg_4_0._videoRootGO then
+			gohelper.destroy(arg_4_0._videoRootGO)
 
-			slot0._videoRootGO = nil
+			arg_4_0._videoRootGO = nil
 		end
 	end
 end
 
-function slot0.isSameVideo(slot0, slot1)
-	return slot1 == slot0._videoName
+function var_0_0.isSameVideo(arg_5_0, arg_5_1)
+	return arg_5_1 == arg_5_0._videoName
 end
 
-function slot0.play(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot1) then
+function var_0_0.play(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if string.nilorempty(arg_6_1) then
 		logError("video path is nil")
 
 		return
 	end
 
-	slot0._pause = false
-	slot0._videoName = slot1
-	slot0._callback = slot2
-	slot0._callbackObj = slot3
+	arg_6_0._pause = false
+	arg_6_0._videoName = arg_6_1
+	arg_6_0._callback = arg_6_2
+	arg_6_0._callbackObj = arg_6_3
 
-	if slot0._videoRootGO then
-		slot0:_playVideo()
+	if arg_6_0._videoRootGO then
+		arg_6_0:_playVideo()
 	else
-		slot0._videoCopatible = SettingsModel.instance:getVideoCompatible()
-		slot0._prefabLoader = MultiAbLoader.New()
+		arg_6_0._videoCopatible = SettingsModel.instance:getVideoCompatible()
+		arg_6_0._prefabLoader = MultiAbLoader.New()
 
-		slot0._prefabLoader:addPath(AvProMgr.instance:getFightUrl())
-		slot0._prefabLoader:startLoad(slot0._onVideoPrefabLoaded, slot0)
+		arg_6_0._prefabLoader:addPath(AvProMgr.instance:getFightUrl())
+		arg_6_0._prefabLoader:startLoad(arg_6_0._onVideoPrefabLoaded, arg_6_0)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnPlayVideo, slot1)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayVideo, arg_6_1)
 end
 
-function slot0._onVideoPrefabLoaded(slot0, slot1)
-	slot0._videoRootGO = gohelper.clone(slot1:getFirstAssetItem():GetResource(), ViewMgr.instance:getUILayer(UILayerName.PopUp), "FightVideo")
-	slot3 = gohelper.findChild(slot0._videoRootGO, "FightVideo")
+function var_0_0._onVideoPrefabLoaded(arg_7_0, arg_7_1)
+	local var_7_0 = ViewMgr.instance:getUILayer(UILayerName.PopUp)
+
+	arg_7_0._videoRootGO = gohelper.clone(arg_7_1:getFirstAssetItem():GetResource(), var_7_0, "FightVideo")
+
+	local var_7_1 = gohelper.findChild(arg_7_0._videoRootGO, "FightVideo")
 
 	if SettingsModel.instance:getVideoEnabled() == false then
-		slot0._avProVideoPlayer = AvProUGUIPlayer_adjust.instance
-		slot0._mediaPlayer = MediaPlayer_adjust.New()
+		arg_7_0._avProVideoPlayer = AvProUGUIPlayer_adjust.instance
+		arg_7_0._mediaPlayer = MediaPlayer_adjust.New()
 	else
-		slot0._displauUGUI = gohelper.onceAddComponent(slot3, typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
-		slot0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
-		slot0._avProVideoPlayer = gohelper.onceAddComponent(slot3, typeof(ZProj.AvProUGUIPlayer))
+		arg_7_0._displauUGUI = gohelper.onceAddComponent(var_7_1, typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
+		arg_7_0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+		arg_7_0._avProVideoPlayer = gohelper.onceAddComponent(var_7_1, typeof(ZProj.AvProUGUIPlayer))
 
-		slot0._avProVideoPlayer:AddDisplayUGUI(slot0._displauUGUI)
+		arg_7_0._avProVideoPlayer:AddDisplayUGUI(arg_7_0._displauUGUI)
 
-		slot0._mediaPlayer = gohelper.onceAddComponent(slot3, typeof(RenderHeads.Media.AVProVideo.MediaPlayer))
+		arg_7_0._mediaPlayer = gohelper.onceAddComponent(var_7_1, typeof(RenderHeads.Media.AVProVideo.MediaPlayer))
 	end
 
-	slot0:_playVideo()
+	arg_7_0:_playVideo()
 end
 
-function slot0._playVideo(slot0)
-	slot0:stop()
+function var_0_0._playVideo(arg_8_0)
+	arg_8_0:stop()
 
-	slot0._isPlaying = true
+	arg_8_0._isPlaying = true
 
-	if slot0._avProVideoPlayer then
-		gohelper.setActive(slot0._videoRootGO, true)
-		slot0._avProVideoPlayer:LoadMedia(langVideoUrl(slot0._videoName))
-		slot0._avProVideoPlayer:Play(slot0._displauUGUI, false)
+	if arg_8_0._avProVideoPlayer then
+		gohelper.setActive(arg_8_0._videoRootGO, true)
 
-		slot0._mediaPlayer.PlaybackRate = FightModel.instance:getSpeed() * Time.timeScale
+		local var_8_0 = langVideoUrl(arg_8_0._videoName)
 
-		if slot0._pause then
-			slot0:pause()
+		arg_8_0._avProVideoPlayer:LoadMedia(var_8_0)
+		arg_8_0._avProVideoPlayer:Play(arg_8_0._displauUGUI, false)
+
+		arg_8_0._mediaPlayer.PlaybackRate = FightModel.instance:getSpeed() * Time.timeScale
+
+		if arg_8_0._pause then
+			arg_8_0:pause()
 		end
 	end
 end
 
-function slot0.stop(slot0)
-	if slot0._isPlaying then
-		slot0._pause = false
-		slot0._isPlaying = false
+function var_0_0.stop(arg_9_0)
+	if arg_9_0._isPlaying then
+		arg_9_0._pause = false
+		arg_9_0._isPlaying = false
 
-		slot0:_stopVideo()
+		arg_9_0:_stopVideo()
 	end
 end
 
-function slot0.pause(slot0)
-	if slot0._avProVideoPlayer then
-		gohelper.setActive(slot0._videoRootGO, false)
+function var_0_0.pause(arg_10_0)
+	if arg_10_0._avProVideoPlayer then
+		gohelper.setActive(arg_10_0._videoRootGO, false)
 	else
-		slot0._pause = true
+		arg_10_0._pause = true
 	end
 end
 
-function slot0.isPause(slot0)
-	return slot0._pause
+function var_0_0.isPause(arg_11_0)
+	return arg_11_0._pause
 end
 
-function slot0.continue(slot0, slot1)
-	if slot0._videoName == slot1 and slot0._isPlaying then
-		slot0._pause = false
+function var_0_0.continue(arg_12_0, arg_12_1)
+	if arg_12_0._videoName == arg_12_1 and arg_12_0._isPlaying then
+		arg_12_0._pause = false
 
-		if slot0._avProVideoPlayer then
-			gohelper.setActive(slot0._videoRootGO, true)
+		if arg_12_0._avProVideoPlayer then
+			gohelper.setActive(arg_12_0._videoRootGO, true)
 		end
 	end
 end
 
-function slot0._stopVideo(slot0)
-	if slot0._avProVideoPlayer then
-		slot0._avProVideoPlayer:Stop()
-		slot0._mediaPlayer:CloseMedia()
-		gohelper.setActive(slot0._videoRootGO, false)
+function var_0_0._stopVideo(arg_13_0)
+	if arg_13_0._avProVideoPlayer then
+		arg_13_0._avProVideoPlayer:Stop()
+		arg_13_0._mediaPlayer:CloseMedia()
+		gohelper.setActive(arg_13_0._videoRootGO, false)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

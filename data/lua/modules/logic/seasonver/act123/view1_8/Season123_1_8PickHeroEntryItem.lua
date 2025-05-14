@@ -1,191 +1,211 @@
-module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroEntryItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroEntryItem", package.seeall)
 
-slot0 = class("Season123_1_8PickHeroEntryItem", UserDataDispose)
+local var_0_0 = class("Season123_1_8PickHeroEntryItem", UserDataDispose)
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:__onInit()
 end
 
-function slot0.dispose(slot0)
-	slot0:removeEvents()
-	slot0:__onDispose()
+function var_0_0.dispose(arg_2_0)
+	arg_2_0:removeEvents()
+	arg_2_0:__onDispose()
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = gohelper.findChild(slot1, "root")
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.viewGO = gohelper.findChild(arg_3_1, "root")
 
-	slot0:initComponent()
+	arg_3_0:initComponent()
 end
 
-slot0.exSkillFillAmount = {
+var_0_0.exSkillFillAmount = {
 	0.2,
 	0.4,
 	0.6,
 	0.79,
 	1
 }
-slot0.MaxRare = 5
+var_0_0.MaxRare = 5
 
-function slot0.initComponent(slot0)
-	slot0._goadd = gohelper.findChild(slot0.viewGO, "#go_add")
-	slot0._gohero = gohelper.findChild(slot0.viewGO, "#go_hero")
-	slot0._goassist = gohelper.findChild(slot0.viewGO, "#go_assit")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0._gohero, "#simage_rolehead")
-	slot0._txtlevel = gohelper.findChildText(slot0._gohero, "#txt_roleLv1")
-	slot0._txttalentevel2 = gohelper.findChildText(slot0._gohero, "#txt_roleLv2")
-	slot0._goexskill = gohelper.findChild(slot0._gohero, "#go_exskill")
-	slot0._imageexskill = gohelper.findChildImage(slot0._gohero, "#go_exskill/#image_exskill")
-	slot0._imagecareer = gohelper.findChildImage(slot0._gohero, "career")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_click")
-	slot0._btnselfsupport = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_selfassit")
-	slot0._btnothersupport = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_otherassit")
-	slot0._txtrolename = gohelper.findChildText(slot0._gohero, "#txt_rolename")
-	slot0._gotalentline = gohelper.findChild(slot0._gohero, "line")
-	slot0._gosliderhp = gohelper.findChild(slot0.viewGO, "#slider_hp")
-	slot0._gorank = gohelper.findChild(slot0._gohero, "rank")
-	slot0._gocuthero = gohelper.findChild(slot0.viewGO, "#click")
-	slot0._animCuthero = gohelper.findChild(slot0._gocuthero, "ani"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._rankList = slot0:getUserDataTb_()
+function var_0_0.initComponent(arg_4_0)
+	arg_4_0._goadd = gohelper.findChild(arg_4_0.viewGO, "#go_add")
+	arg_4_0._gohero = gohelper.findChild(arg_4_0.viewGO, "#go_hero")
+	arg_4_0._goassist = gohelper.findChild(arg_4_0.viewGO, "#go_assit")
+	arg_4_0._simageicon = gohelper.findChildSingleImage(arg_4_0._gohero, "#simage_rolehead")
+	arg_4_0._txtlevel = gohelper.findChildText(arg_4_0._gohero, "#txt_roleLv1")
+	arg_4_0._txttalentevel2 = gohelper.findChildText(arg_4_0._gohero, "#txt_roleLv2")
+	arg_4_0._goexskill = gohelper.findChild(arg_4_0._gohero, "#go_exskill")
+	arg_4_0._imageexskill = gohelper.findChildImage(arg_4_0._gohero, "#go_exskill/#image_exskill")
+	arg_4_0._imagecareer = gohelper.findChildImage(arg_4_0._gohero, "career")
+	arg_4_0._btnclick = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "btn_click")
+	arg_4_0._btnselfsupport = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#btn_selfassit")
+	arg_4_0._btnothersupport = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#btn_otherassit")
+	arg_4_0._txtrolename = gohelper.findChildText(arg_4_0._gohero, "#txt_rolename")
+	arg_4_0._gotalentline = gohelper.findChild(arg_4_0._gohero, "line")
+	arg_4_0._gosliderhp = gohelper.findChild(arg_4_0.viewGO, "#slider_hp")
+	arg_4_0._gorank = gohelper.findChild(arg_4_0._gohero, "rank")
+	arg_4_0._gocuthero = gohelper.findChild(arg_4_0.viewGO, "#click")
+	arg_4_0._animCuthero = gohelper.findChild(arg_4_0._gocuthero, "ani"):GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._rankList = arg_4_0:getUserDataTb_()
 
-	for slot6 = 1, HeroConfig.instance:getMaxRank(uv0.MaxRare) do
-		slot0._rankList[slot6] = gohelper.findChild(slot0._gorank, "rank" .. tostring(slot6))
+	local var_4_0 = HeroConfig.instance:getMaxRank(var_0_0.MaxRare)
+
+	for iter_4_0 = 1, var_4_0 do
+		arg_4_0._rankList[iter_4_0] = gohelper.findChild(arg_4_0._gorank, "rank" .. tostring(iter_4_0))
 	end
 
-	slot0._gorare = gohelper.findChild(slot0._gohero, "rare")
-	slot0._rareList = slot0:getUserDataTb_()
+	arg_4_0._gorare = gohelper.findChild(arg_4_0._gohero, "rare")
+	arg_4_0._rareList = arg_4_0:getUserDataTb_()
 
-	for slot6 = 1, CharacterEnum.MaxRare + 1 do
-		slot0._rareList[slot6] = gohelper.findChild(slot0._gorare, "go_rare" .. tostring(slot6))
+	for iter_4_1 = 1, CharacterEnum.MaxRare + 1 do
+		arg_4_0._rareList[iter_4_1] = gohelper.findChild(arg_4_0._gorare, "go_rare" .. tostring(iter_4_1))
 	end
 
-	slot0._btnclick:AddClickListener(slot0.onClickSelf, slot0)
-	slot0._btnselfsupport:AddClickListener(slot0.onClickSupport, slot0)
-	slot0._btnothersupport:AddClickListener(slot0.onClickSupport, slot0)
+	arg_4_0._btnclick:AddClickListener(arg_4_0.onClickSelf, arg_4_0)
+	arg_4_0._btnselfsupport:AddClickListener(arg_4_0.onClickSupport, arg_4_0)
+	arg_4_0._btnothersupport:AddClickListener(arg_4_0.onClickSupport, arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnselfsupport:RemoveClickListener()
-	slot0._btnothersupport:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0.playOpenAnim, slot0)
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0._btnclick:RemoveClickListener()
+	arg_5_0._btnselfsupport:RemoveClickListener()
+	arg_5_0._btnothersupport:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_5_0.playOpenAnim, arg_5_0)
 end
 
-function slot0.initData(slot0, slot1)
-	slot0._index = slot1
+function var_0_0.initData(arg_6_0, arg_6_1)
+	arg_6_0._index = arg_6_1
 
-	slot0:refreshUI()
-	slot0:OpenAnim()
+	arg_6_0:refreshUI()
+	arg_6_0:OpenAnim()
 end
 
-function slot0.refreshUI(slot0)
-	if Season123PickHeroEntryModel.instance:getByIndex(slot0._index) then
-		slot2 = slot1:getIsEmpty()
+function var_0_0.refreshUI(arg_7_0)
+	local var_7_0 = Season123PickHeroEntryModel.instance:getByIndex(arg_7_0._index)
 
-		gohelper.setActive(slot0._goadd, slot2)
-		gohelper.setActive(slot0._gohero, not slot2)
+	if var_7_0 then
+		local var_7_1 = var_7_0:getIsEmpty()
 
-		if not slot2 then
-			if slot1.heroMO and slot1.heroMO.config then
-				slot0._txtrolename.text = slot1.heroMO.config.name
+		gohelper.setActive(arg_7_0._goadd, var_7_1)
+		gohelper.setActive(arg_7_0._gohero, not var_7_1)
 
-				UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. tostring(slot1.heroMO.config.career))
+		if not var_7_1 then
+			if var_7_0.heroMO and var_7_0.heroMO.config then
+				arg_7_0._txtrolename.text = var_7_0.heroMO.config.name
+
+				UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer, "lssx_" .. tostring(var_7_0.heroMO.config.career))
 			else
-				slot0._txtrolename.text = ""
+				arg_7_0._txtrolename.text = ""
 
-				gohelper.setActive(slot0._imagecareer, false)
+				gohelper.setActive(arg_7_0._imagecareer, false)
 			end
 
-			slot0:refreshRare(slot1.heroMO)
-			slot0:refreshRank(slot1.heroMO)
-			slot0:refreshExSkill(slot1.heroMO)
+			arg_7_0:refreshRare(var_7_0.heroMO)
+			arg_7_0:refreshRank(var_7_0.heroMO)
+			arg_7_0:refreshExSkill(var_7_0.heroMO)
 
-			if slot1.heroMO then
-				if not SkinConfig.instance:getSkinCo(slot1.heroMO.skin) then
-					logError("Season123_1_8PickHeroEntryItem.refreshUI error, skinCfg is nil, id:" .. tostring(slot1.skinId))
+			if var_7_0.heroMO then
+				local var_7_2 = SkinConfig.instance:getSkinCo(var_7_0.heroMO.skin)
+
+				if not var_7_2 then
+					logError("Season123_1_8PickHeroEntryItem.refreshUI error, skinCfg is nil, id:" .. tostring(var_7_0.skinId))
 
 					return
 				end
 
-				slot0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(slot3.headIcon))
+				arg_7_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(var_7_2.headIcon))
 
-				slot0._txtlevel.text = "Lv." .. tostring(HeroConfig.instance:getShowLevel(slot1.heroMO.level))
-				slot4 = false
+				arg_7_0._txtlevel.text = "Lv." .. tostring(HeroConfig.instance:getShowLevel(var_7_0.heroMO.level))
 
-				if (not slot1.heroMO:isOtherPlayerHero() or slot1.heroMO:getOtherPlayerIsOpenTalent()) and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) and slot6 then
-					gohelper.setActive(slot0._gotalentline, true)
-					gohelper.setActive(slot0._txttalentevel2, true)
+				local var_7_3 = false
 
-					slot0._txttalentevel2.text = "Lv." .. tostring(slot1.heroMO.talent)
+				if var_7_0.heroMO:isOtherPlayerHero() then
+					var_7_3 = var_7_0.heroMO:getOtherPlayerIsOpenTalent()
 				else
-					gohelper.setActive(slot0._gotalentline, false)
-					gohelper.setActive(slot0._txttalentevel2, false)
+					local var_7_4 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent)
+					local var_7_5 = var_7_0.heroMO.rank >= CharacterEnum.TalentRank
+
+					var_7_3 = var_7_4 and var_7_5
+				end
+
+				if var_7_3 then
+					gohelper.setActive(arg_7_0._gotalentline, true)
+					gohelper.setActive(arg_7_0._txttalentevel2, true)
+
+					arg_7_0._txttalentevel2.text = "Lv." .. tostring(var_7_0.heroMO.talent)
+				else
+					gohelper.setActive(arg_7_0._gotalentline, false)
+					gohelper.setActive(arg_7_0._txttalentevel2, false)
 				end
 			else
-				slot0._txtlevel.text = ""
+				arg_7_0._txtlevel.text = ""
 
-				gohelper.setActive(slot0._gotalentline, false)
-				gohelper.setActive(slot0._txttalentevel2, false)
+				gohelper.setActive(arg_7_0._gotalentline, false)
+				gohelper.setActive(arg_7_0._txttalentevel2, false)
 			end
 		end
 	end
 
-	if slot0._index == Activity123Enum.SupportPosIndex then
-		gohelper.setActive(slot0._goassist, slot2 and slot1 and slot1.isSupport)
-		gohelper.setActive(slot0._btnselfsupport, slot1 and (not slot1.isSupport or slot1:getIsEmpty()))
-		gohelper.setActive(slot0._btnothersupport, slot1 and slot1.isSupport)
+	local var_7_6 = arg_7_0._index == Activity123Enum.SupportPosIndex
+
+	if var_7_6 then
+		gohelper.setActive(arg_7_0._goassist, var_7_6 and var_7_0 and var_7_0.isSupport)
+		gohelper.setActive(arg_7_0._btnselfsupport, var_7_0 and (not var_7_0.isSupport or var_7_0:getIsEmpty()))
+		gohelper.setActive(arg_7_0._btnothersupport, var_7_0 and var_7_0.isSupport)
 	else
-		gohelper.setActive(slot0._goassist, false)
-		gohelper.setActive(slot0._btnselfsupport, false)
-		gohelper.setActive(slot0._btnothersupport, false)
+		gohelper.setActive(arg_7_0._goassist, false)
+		gohelper.setActive(arg_7_0._btnselfsupport, false)
+		gohelper.setActive(arg_7_0._btnothersupport, false)
 	end
 end
 
-function slot0.refreshRare(slot0, slot1)
-	for slot5 = 1, #slot0._rareList do
-		gohelper.setActive(slot0._rareList[slot5], slot5 <= slot1.config.rare + 1)
+function var_0_0.refreshRare(arg_8_0, arg_8_1)
+	for iter_8_0 = 1, #arg_8_0._rareList do
+		gohelper.setActive(arg_8_0._rareList[iter_8_0], iter_8_0 <= arg_8_1.config.rare + 1)
 	end
 end
 
-function slot0.refreshRank(slot0, slot1)
-	if slot1 and slot1.rank and slot1.rank > 1 then
-		gohelper.setActive(slot0._gorank, true)
+function var_0_0.refreshRank(arg_9_0, arg_9_1)
+	if arg_9_1 and arg_9_1.rank and arg_9_1.rank > 1 then
+		gohelper.setActive(arg_9_0._gorank, true)
 
-		for slot6 = 1, 5 do
-			gohelper.setActive(slot0._rankList[slot6], slot1.rank - 1 == slot6)
+		local var_9_0 = 5
+
+		for iter_9_0 = 1, var_9_0 do
+			gohelper.setActive(arg_9_0._rankList[iter_9_0], arg_9_1.rank - 1 == iter_9_0)
 		end
 	else
-		gohelper.setActive(slot0._gorank, false)
+		gohelper.setActive(arg_9_0._gorank, false)
 	end
 end
 
-function slot0.refreshExSkill(slot0, slot1)
-	if slot1.exSkillLevel <= 0 then
-		slot0._imageexskill.fillAmount = 0
+function var_0_0.refreshExSkill(arg_10_0, arg_10_1)
+	if arg_10_1.exSkillLevel <= 0 then
+		arg_10_0._imageexskill.fillAmount = 0
 
 		return
 	end
 
-	gohelper.setActive(slot0._goexskill, true)
+	gohelper.setActive(arg_10_0._goexskill, true)
 
-	slot0._imageexskill.fillAmount = SummonCustomPickChoiceItem.exSkillFillAmount[slot1.exSkillLevel] or 1
+	arg_10_0._imageexskill.fillAmount = SummonCustomPickChoiceItem.exSkillFillAmount[arg_10_1.exSkillLevel] or 1
 end
 
-function slot0.onClickSelf(slot0)
-	logNormal("onClickSelf ： " .. tostring(slot0._index))
+function var_0_0.onClickSelf(arg_11_0)
+	logNormal("onClickSelf ： " .. tostring(arg_11_0._index))
 
-	if slot0._index == Activity123Enum.SupportPosIndex and Season123PickHeroEntryModel.instance:getByIndex(slot0._index).isSupport then
+	if arg_11_0._index == Activity123Enum.SupportPosIndex and Season123PickHeroEntryModel.instance:getByIndex(arg_11_0._index).isSupport then
 		Season123PickHeroEntryController.instance:openPickSupportView()
 
 		return
 	end
 
-	Season123PickHeroEntryController.instance:openPickHeroView(slot0._index)
+	Season123PickHeroEntryController.instance:openPickHeroView(arg_11_0._index)
 end
 
-function slot0.onClickSupport(slot0)
-	if slot0._index == Activity123Enum.SupportPosIndex then
-		if Season123PickHeroEntryModel.instance:getByIndex(slot0._index).isSupport then
-			GameFacade.showMessageBox(MessageBoxIdDefine.Season123CancelAssist, MsgBoxEnum.BoxType.Yes_No, Season123PickHeroEntryController.instance.cancelSupport, nil, , Season123PickHeroEntryController.instance, nil)
+function var_0_0.onClickSupport(arg_12_0)
+	if arg_12_0._index == Activity123Enum.SupportPosIndex then
+		if Season123PickHeroEntryModel.instance:getByIndex(arg_12_0._index).isSupport then
+			GameFacade.showMessageBox(MessageBoxIdDefine.Season123CancelAssist, MsgBoxEnum.BoxType.Yes_No, Season123PickHeroEntryController.instance.cancelSupport, nil, nil, Season123PickHeroEntryController.instance, nil)
 
 			return
 		end
@@ -194,18 +214,21 @@ function slot0.onClickSupport(slot0)
 	end
 end
 
-function slot0.OpenAnim(slot0)
-	gohelper.setActive(slot0.viewGO, false)
-	TaskDispatcher.runDelay(slot0.playOpenAnim, slot0, (slot0._index - 1) % 4 * 0.03)
+function var_0_0.OpenAnim(arg_13_0)
+	gohelper.setActive(arg_13_0.viewGO, false)
+
+	local var_13_0 = (arg_13_0._index - 1) % 4 * 0.03
+
+	TaskDispatcher.runDelay(arg_13_0.playOpenAnim, arg_13_0, var_13_0)
 end
 
-function slot0.playOpenAnim(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0.playOpenAnim(arg_14_0)
+	gohelper.setActive(arg_14_0.viewGO, true)
 end
 
-function slot0.cutHeroAnim(slot0, slot1)
-	gohelper.setActive(slot0._gocuthero, slot1)
-	slot0._animCuthero:Play("pickheroentryview_click", 0, 0)
+function var_0_0.cutHeroAnim(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0._gocuthero, arg_15_1)
+	arg_15_0._animCuthero:Play("pickheroentryview_click", 0, 0)
 end
 
-return slot0
+return var_0_0

@@ -1,115 +1,129 @@
-module("modules.logic.room.view.common.RoomThemeTipItem", package.seeall)
+﻿module("modules.logic.room.view.common.RoomThemeTipItem", package.seeall)
 
-slot0 = class("RoomThemeTipItem", ListScrollCellExtend)
+local var_0_0 = class("RoomThemeTipItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._hideSourcesShowTypeMap = {
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._hideSourcesShowTypeMap = {
 		[RoomEnum.SourcesShowType.Cobrand] = true
 	}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gobuildingicon = gohelper.findChild(slot0.viewGO, "go_buildingicon")
-	slot0._goplaneicon = gohelper.findChild(slot0.viewGO, "go_planeicon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "txt_name")
-	slot0._txtstate = gohelper.findChildText(slot0.viewGO, "txt_state")
-	slot0._gosource = gohelper.findChild(slot0.viewGO, "go_source")
-	slot0._gosourceItem = gohelper.findChild(slot0.viewGO, "go_source/go_sourceItem")
-	slot0._sourceTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gobuildingicon = gohelper.findChild(arg_4_0.viewGO, "go_buildingicon")
+	arg_4_0._goplaneicon = gohelper.findChild(arg_4_0.viewGO, "go_planeicon")
+	arg_4_0._txtname = gohelper.findChildText(arg_4_0.viewGO, "txt_name")
+	arg_4_0._txtstate = gohelper.findChildText(arg_4_0.viewGO, "txt_state")
+	arg_4_0._gosource = gohelper.findChild(arg_4_0.viewGO, "go_source")
+	arg_4_0._gosourceItem = gohelper.findChild(arg_4_0.viewGO, "go_source/go_sourceItem")
+	arg_4_0._sourceTab = arg_4_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._gosourceItem, false)
+	gohelper.setActive(arg_4_0._gosourceItem, false)
 end
 
-function slot0._refreshUI(slot0)
-	slot2 = slot0._themeItemMO.itemNum <= slot0._themeItemMO:getItemQuantity()
+function var_0_0._refreshUI(arg_5_0)
+	local var_5_0 = arg_5_0._themeItemMO:getItemQuantity()
+	local var_5_1 = var_5_0 >= arg_5_0._themeItemMO.itemNum
 
-	gohelper.setActive(slot0._gobuildingicon, slot0._themeItemMO.materialType == MaterialEnum.MaterialType.Building)
-	gohelper.setActive(slot0._goplaneicon, slot0._themeItemMO.materialType == MaterialEnum.MaterialType.BlockPackage)
+	gohelper.setActive(arg_5_0._gobuildingicon, arg_5_0._themeItemMO.materialType == MaterialEnum.MaterialType.Building)
+	gohelper.setActive(arg_5_0._goplaneicon, arg_5_0._themeItemMO.materialType == MaterialEnum.MaterialType.BlockPackage)
 
-	slot3 = slot0._themeItemMO:getItemConfig()
+	local var_5_2 = arg_5_0._themeItemMO:getItemConfig()
 
-	for slot7, slot8 in pairs(slot0._sourceTab) do
-		gohelper.setActive(slot8.go, false)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._sourceTab) do
+		gohelper.setActive(iter_5_1.go, false)
 	end
 
-	slot0._txtname.text = slot3 and slot3.name or ""
-	slot0._txtstate.text = slot0:_getStateStr(slot0._themeItemMO.itemNum, slot1)
+	arg_5_0._txtname.text = var_5_2 and var_5_2.name or ""
+	arg_5_0._txtstate.text = arg_5_0:_getStateStr(arg_5_0._themeItemMO.itemNum, var_5_0)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtstate, slot2 and "#65B96F" or "#D97373")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._txtstate, var_5_1 and "#65B96F" or "#D97373")
 
-	if not string.nilorempty(slot3.sourcesType) then
-		slot4 = string.splitToNumber(slot3.sourcesType, "#")
+	if not string.nilorempty(var_5_2.sourcesType) then
+		local var_5_3 = string.splitToNumber(var_5_2.sourcesType, "#")
 
-		slot0:_sortSource(slot4)
+		arg_5_0:_sortSource(var_5_3)
 
-		for slot8, slot9 in pairs(slot4) do
-			if RoomConfig.instance:getSourcesTypeConfig(slot9) and (not slot10.showType or not slot0._hideSourcesShowTypeMap[slot10.showType]) then
-				slot11 = slot0:_getSourceItem(slot9)
+		for iter_5_2, iter_5_3 in pairs(var_5_3) do
+			local var_5_4 = RoomConfig.instance:getSourcesTypeConfig(iter_5_3)
 
-				gohelper.setActive(slot11.go, true)
+			if var_5_4 and (not var_5_4.showType or not arg_5_0._hideSourcesShowTypeMap[var_5_4.showType]) then
+				local var_5_5 = arg_5_0:_getSourceItem(iter_5_3)
 
-				slot11.txt.text = string.format("<color=%s>%s</color>", slot10.nameColor, slot10.name)
+				gohelper.setActive(var_5_5.go, true)
 
-				UISpriteSetMgr.instance:setRoomSprite(slot11.bg, slot10.bgIcon)
-				SLFramework.UGUI.GuiHelper.SetColor(slot11.bg, string.nilorempty(slot10.bgColor) and "#FFFFFF" or slot10.bgColor)
-			elseif slot10 == nil then
-				logError(string.format("小屋主题\"export_获得类型\"缺少配置。id:%s", slot9))
+				var_5_5.txt.text = string.format("<color=%s>%s</color>", var_5_4.nameColor, var_5_4.name)
+
+				UISpriteSetMgr.instance:setRoomSprite(var_5_5.bg, var_5_4.bgIcon)
+				SLFramework.UGUI.GuiHelper.SetColor(var_5_5.bg, string.nilorempty(var_5_4.bgColor) and "#FFFFFF" or var_5_4.bgColor)
+			elseif var_5_4 == nil then
+				logError(string.format("小屋主题\"export_获得类型\"缺少配置。id:%s", iter_5_3))
 			end
 		end
 	end
 end
 
-function slot0._getSourceItem(slot0, slot1)
-	if not slot0._sourceTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.clone(slot0._gosourceItem, slot0._gosource, "source" .. slot1)
-		slot2.txt = gohelper.findChildText(slot2.go, "txt")
-		slot2.bg = gohelper.findChildImage(slot2.go, "bg")
+function var_0_0._getSourceItem(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._sourceTab[arg_6_1]
 
-		gohelper.setActive(slot2.go, false)
+	if not var_6_0 then
+		var_6_0 = arg_6_0:getUserDataTb_()
+		var_6_0.go = gohelper.clone(arg_6_0._gosourceItem, arg_6_0._gosource, "source" .. arg_6_1)
+		var_6_0.txt = gohelper.findChildText(var_6_0.go, "txt")
+		var_6_0.bg = gohelper.findChildImage(var_6_0.go, "bg")
 
-		slot0._sourceTab[slot1] = slot2
+		gohelper.setActive(var_6_0.go, false)
+
+		arg_6_0._sourceTab[arg_6_1] = var_6_0
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0._sortSource(slot0, slot1)
-	table.sort(slot1, uv0._sortFunc)
+function var_0_0._sortSource(arg_7_0, arg_7_1)
+	table.sort(arg_7_1, var_0_0._sortFunc)
 end
 
-function slot0._sortFunc(slot0, slot1)
-	if RoomConfig.instance:getSourcesTypeConfig(slot0).order ~= RoomConfig.instance:getSourcesTypeConfig(slot1).order then
-		return slot2 < slot3
+function var_0_0._sortFunc(arg_8_0, arg_8_1)
+	local var_8_0 = RoomConfig.instance:getSourcesTypeConfig(arg_8_0).order
+	local var_8_1 = RoomConfig.instance:getSourcesTypeConfig(arg_8_1).order
+
+	if var_8_0 ~= var_8_1 then
+		return var_8_0 < var_8_1
 	end
 end
 
-function slot0._getStateStr(slot0, slot1, slot2)
-	slot3 = slot1 <= slot2
+function var_0_0._getStateStr(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0
 
-	return string.format("%s/%s", slot2, slot1)
+	var_9_0 = arg_9_1 <= arg_9_2
+
+	return string.format("%s/%s", arg_9_2, arg_9_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._themeItemMO = slot1
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._themeItemMO = arg_10_1
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

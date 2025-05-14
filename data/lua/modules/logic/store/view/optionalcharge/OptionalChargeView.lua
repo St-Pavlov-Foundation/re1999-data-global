@@ -1,263 +1,293 @@
-module("modules.logic.store.view.optionalcharge.OptionalChargeView", package.seeall)
+﻿module("modules.logic.store.view.optionalcharge.OptionalChargeView", package.seeall)
 
-slot0 = class("OptionalChargeView", BaseView)
+local var_0_0 = class("OptionalChargeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title/#txt_Title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "Title/#txt_TitleEn")
-	slot0._txtSelectNum = gohelper.findChildText(slot0.viewGO, "Title/image_TitleTips/#txt_SelectNum")
-	slot0._goArea1 = gohelper.findChild(slot0.viewGO, "Gift1/#go_Area1")
-	slot0._goArea2 = gohelper.findChild(slot0.viewGO, "Gift2/#go_Area2")
-	slot0._goArea3 = gohelper.findChild(slot0.viewGO, "Gift3/#go_Area3")
-	slot0._btnBuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Buy")
-	slot0._txtPrice = gohelper.findChildText(slot0.viewGO, "#btn_Buy/#txt_Price")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
-	slot0._goOptionalItem = gohelper.findChild(slot0.viewGO, "OptionalItem")
-	slot0._goGift1Special = gohelper.findChild(slot0.viewGO, "Gift1Special")
-	slot0._goGift1 = gohelper.findChild(slot0.viewGO, "Gift1")
-	slot0._simageItem1 = gohelper.findChildSingleImage(slot0.viewGO, "Gift1Special/Item1/simage_Item")
-	slot0._simageItem2 = gohelper.findChildSingleImage(slot0.viewGO, "Gift1Special/Item2/simage_Item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_Title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_TitleEn")
+	arg_1_0._txtSelectNum = gohelper.findChildText(arg_1_0.viewGO, "Title/image_TitleTips/#txt_SelectNum")
+	arg_1_0._goArea1 = gohelper.findChild(arg_1_0.viewGO, "Gift1/#go_Area1")
+	arg_1_0._goArea2 = gohelper.findChild(arg_1_0.viewGO, "Gift2/#go_Area2")
+	arg_1_0._goArea3 = gohelper.findChild(arg_1_0.viewGO, "Gift3/#go_Area3")
+	arg_1_0._btnBuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Buy")
+	arg_1_0._txtPrice = gohelper.findChildText(arg_1_0.viewGO, "#btn_Buy/#txt_Price")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	arg_1_0._goOptionalItem = gohelper.findChild(arg_1_0.viewGO, "OptionalItem")
+	arg_1_0._goGift1Special = gohelper.findChild(arg_1_0.viewGO, "Gift1Special")
+	arg_1_0._goGift1 = gohelper.findChild(arg_1_0.viewGO, "Gift1")
+	arg_1_0._simageItem1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Gift1Special/Item1/simage_Item")
+	arg_1_0._simageItem2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Gift1Special/Item2/simage_Item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnBuy:AddClickListener(slot0._btnBuyOnClick, slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnBuy:AddClickListener(arg_2_0._btnBuyOnClick, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnBuy:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnBuy:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnBuyOnClick(slot0)
+function var_0_0._btnBuyOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_payment_click)
 
-	if tabletool.len(slot0.selectIndexs) ~= 3 then
+	if tabletool.len(arg_4_0.selectIndexs) ~= 3 then
 		GameFacade.showToast(ToastEnum.OptionalChargeSelectNotEnough)
 
 		return
 	end
 
-	PayController.instance:startPay(slot0._mo.id, slot0.selectIndexs)
+	PayController.instance:startPay(arg_4_0._mo.id, arg_4_0.selectIndexs)
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(PayController.instance, PayEvent.PayFinished, slot0._payFinished, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_6_0._payFinished, arg_6_0)
 
-	slot0.selectIndexs = {}
+	arg_6_0.selectIndexs = {}
 
-	slot0:initSelectItem()
+	arg_6_0:initSelectItem()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._mo = slot0.viewParam
-	slot0.chargeGoodsCfg = slot0.viewParam.config
-	slot0.optionalGroups = StoreConfig.instance:getChargeOptionalGroup(slot0._mo.id)
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._mo = arg_8_0.viewParam
+	arg_8_0.chargeGoodsCfg = arg_8_0.viewParam.config
+	arg_8_0.optionalGroups = StoreConfig.instance:getChargeOptionalGroup(arg_8_0._mo.id)
 
-	slot0:initOptionalItem()
+	arg_8_0:initOptionalItem()
 
-	slot0._txtTitle.text = slot0.chargeGoodsCfg.name
-	slot0._txtTitleEn.text = slot0.chargeGoodsCfg.nameEn
-	slot0._txtPrice.text = formatLuaLang("price_cost", string.format("<color=#e98457>%s</color>", PayModel.instance:getProductPrice(slot0._mo.id)))
+	arg_8_0._txtTitle.text = arg_8_0.chargeGoodsCfg.name
+	arg_8_0._txtTitleEn.text = arg_8_0.chargeGoodsCfg.nameEn
 
-	gohelper.setActive(slot0._goGift1, slot0.optionalGroups[1].rare == 0)
-	gohelper.setActive(slot0._goGift1Special, slot0.optionalGroups[1].rare == 1)
-	slot0:refreshSelect()
+	local var_8_0 = string.format("<color=#e98457>%s</color>", PayModel.instance:getProductPrice(arg_8_0._mo.id))
+
+	arg_8_0._txtPrice.text = formatLuaLang("price_cost", var_8_0)
+
+	gohelper.setActive(arg_8_0._goGift1, arg_8_0.optionalGroups[1].rare == 0)
+	gohelper.setActive(arg_8_0._goGift1Special, arg_8_0.optionalGroups[1].rare == 1)
+	arg_8_0:refreshSelect()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageItem1:UnLoadImage()
-	slot0._simageItem2:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simageItem1:UnLoadImage()
+	arg_10_0._simageItem2:UnLoadImage()
 
-	for slot4, slot5 in pairs(slot0.optionalItemList[1]) do
-		if slot5.longPress then
-			slot6:RemoveLongPressListener()
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.optionalItemList[1]) do
+		local var_10_0 = iter_10_1.longPress
+
+		if var_10_0 then
+			var_10_0:RemoveLongPressListener()
 		end
 	end
 end
 
-function slot0.initOptionalItem(slot0)
-	slot0.optionalItemList = {}
+function var_0_0.initOptionalItem(arg_11_0)
+	arg_11_0.optionalItemList = {}
 
-	if slot0.optionalGroups[1].rare == 0 then
-		gohelper.setActive(slot0._goGift1, true)
-		gohelper.setActive(slot0._goGift1Special, false)
-		slot0:creatOptionalItem(slot0._goArea1, slot0.optionalGroups[1].items, 1)
+	if arg_11_0.optionalGroups[1].rare == 0 then
+		gohelper.setActive(arg_11_0._goGift1, true)
+		gohelper.setActive(arg_11_0._goGift1Special, false)
+		arg_11_0:creatOptionalItem(arg_11_0._goArea1, arg_11_0.optionalGroups[1].items, 1)
 	else
-		gohelper.setActive(slot0._goGift1, false)
-		gohelper.setActive(slot0._goGift1Special, true)
-		slot0:creatSpecialItem(slot0.optionalGroups[1].items)
+		gohelper.setActive(arg_11_0._goGift1, false)
+		gohelper.setActive(arg_11_0._goGift1Special, true)
+		arg_11_0:creatSpecialItem(arg_11_0.optionalGroups[1].items)
 	end
 
-	slot0:creatOptionalItem(slot0._goArea2, slot0.optionalGroups[2].items, 2)
-	slot0:creatOptionalItem(slot0._goArea3, slot0.optionalGroups[3].items, 3)
-	gohelper.setActive(slot0._goOptionalItem, false)
+	arg_11_0:creatOptionalItem(arg_11_0._goArea2, arg_11_0.optionalGroups[2].items, 2)
+	arg_11_0:creatOptionalItem(arg_11_0._goArea3, arg_11_0.optionalGroups[3].items, 3)
+	gohelper.setActive(arg_11_0._goOptionalItem, false)
 end
 
-function slot0.initSelectItem(slot0)
-	slot0.selectItems = {}
+function var_0_0.initSelectItem(arg_12_0)
+	arg_12_0.selectItems = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot6 = "SelectItems/ItemSlot" .. slot4
-		slot5.itemGo = gohelper.findChild(slot0.viewGO, slot6 .. "/go_commonitemicon")
-		slot5.itemIcon = IconMgr.instance:getCommonItemIcon(slot5.itemGo)
+	for iter_12_0 = 1, 3 do
+		local var_12_0 = arg_12_0:getUserDataTb_()
+		local var_12_1 = "SelectItems/ItemSlot" .. iter_12_0
 
-		slot5.itemIcon:isEnableClick(false)
-		slot5.itemIcon:setCountFontSize(37.8)
+		var_12_0.itemGo = gohelper.findChild(arg_12_0.viewGO, var_12_1 .. "/go_commonitemicon")
+		var_12_0.itemIcon = IconMgr.instance:getCommonItemIcon(var_12_0.itemGo)
 
-		slot5.goAddEffect = gohelper.findChild(slot0.viewGO, slot6 .. "/add")
+		var_12_0.itemIcon:isEnableClick(false)
+		var_12_0.itemIcon:setCountFontSize(37.8)
 
-		gohelper.setActive(slot5.itemGo, false)
-		gohelper.setActive(slot5.goAddEffect, false)
+		var_12_0.goAddEffect = gohelper.findChild(arg_12_0.viewGO, var_12_1 .. "/add")
 
-		slot0.selectItems[slot4] = slot5
+		gohelper.setActive(var_12_0.itemGo, false)
+		gohelper.setActive(var_12_0.goAddEffect, false)
+
+		arg_12_0.selectItems[iter_12_0] = var_12_0
 	end
 end
 
-function slot0.refreshSelect(slot0, slot1, slot2)
-	slot0._txtSelectNum.text = string.format("<color=#e98457>%d</color>/%d", tabletool.len(slot0.selectIndexs), #slot0.optionalGroups)
+function var_0_0.refreshSelect(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = tabletool.len(arg_13_0.selectIndexs)
 
-	if slot1 then
-		slot4 = slot0.selectIndexs[slot1]
+	arg_13_0._txtSelectNum.text = string.format("<color=#e98457>%d</color>/%d", var_13_0, #arg_13_0.optionalGroups)
 
-		if slot2 then
-			gohelper.setActive(slot0.selectItems[slot1].itemGo, true)
+	if arg_13_1 then
+		local var_13_1 = arg_13_0.selectIndexs[arg_13_1]
+		local var_13_2 = arg_13_0.selectItems[arg_13_1]
+
+		if arg_13_2 then
+			gohelper.setActive(var_13_2.itemGo, true)
 		else
-			gohelper.setActive(slot5.goAddEffect, false)
+			gohelper.setActive(var_13_2.goAddEffect, false)
 		end
 
-		gohelper.setActive(slot5.goAddEffect, true)
+		gohelper.setActive(var_13_2.goAddEffect, true)
 
-		slot6 = slot0.optionalItemList[slot1][slot4].itemArr
+		local var_13_3 = arg_13_0.optionalItemList[arg_13_1][var_13_1].itemArr
 
-		slot5.itemIcon:setMOValue(slot6[1], slot6[2], slot6[3])
+		var_13_2.itemIcon:setMOValue(var_13_3[1], var_13_3[2], var_13_3[3])
 	end
 end
 
-function slot0.creatSpecialItem(slot0, slot1)
-	slot0._simageItem1:LoadImage(ResUrl.getEquipSuit("1000"))
-	slot0._simageItem2:LoadImage(ResUrl.getPropItemIcon("481005"))
+function var_0_0.creatSpecialItem(arg_14_0, arg_14_1)
+	arg_14_0._simageItem1:LoadImage(ResUrl.getEquipSuit("1000"))
+	arg_14_0._simageItem2:LoadImage(ResUrl.getPropItemIcon("481005"))
 
-	slot0.optionalItemList[1] = {}
+	local var_14_0 = string.split(arg_14_1, "|")
 
-	for slot6 = 1, 2 do
-		slot7 = slot0:getUserDataTb_()
-		slot7.itemArr = string.splitToNumber(string.split(slot1, "|")[slot6], "#")
-		slot10 = gohelper.findChild(slot0.viewGO, "Gift1Special/Item" .. slot6)
-		gohelper.findChildText(slot10, "image_Name/txt_Name").text = ItemConfig.instance:getItemConfig(slot7.itemArr[1], slot7.itemArr[2]).name .. luaLang("multiple") .. slot7.itemArr[3]
-		slot7.sFrame = gohelper.findChild(slot10, "go_SelectedFrame")
-		slot7.sYes = gohelper.findChild(slot10, "go_SelectedYes")
+	arg_14_0.optionalItemList[1] = {}
 
-		slot0:addClickCb(gohelper.findChildClick(slot10, "btn_click"), slot0._clickSpecialItem, slot0, slot6)
+	for iter_14_0 = 1, 2 do
+		local var_14_1 = arg_14_0:getUserDataTb_()
 
-		slot7.longPress = SLFramework.UGUI.UILongPressListener.GetWithPath(slot10, "btn_click")
+		var_14_1.itemArr = string.splitToNumber(var_14_0[iter_14_0], "#")
 
-		slot7.longPress:SetLongPressTime({
+		local var_14_2 = ItemConfig.instance:getItemConfig(var_14_1.itemArr[1], var_14_1.itemArr[2])
+		local var_14_3 = "Gift1Special/Item" .. iter_14_0
+		local var_14_4 = gohelper.findChild(arg_14_0.viewGO, var_14_3)
+
+		gohelper.findChildText(var_14_4, "image_Name/txt_Name").text = var_14_2.name .. luaLang("multiple") .. var_14_1.itemArr[3]
+		var_14_1.sFrame = gohelper.findChild(var_14_4, "go_SelectedFrame")
+		var_14_1.sYes = gohelper.findChild(var_14_4, "go_SelectedYes")
+
+		local var_14_5 = gohelper.findChildClick(var_14_4, "btn_click")
+
+		arg_14_0:addClickCb(var_14_5, arg_14_0._clickSpecialItem, arg_14_0, iter_14_0)
+
+		var_14_1.longPress = SLFramework.UGUI.UILongPressListener.GetWithPath(var_14_4, "btn_click")
+
+		var_14_1.longPress:SetLongPressTime({
 			0.5,
 			99999
 		})
-		slot7.longPress:AddLongPressListener(slot0._longPressSpecial, slot0, slot6)
-		gohelper.setActive(slot7.sFrame, false)
-		gohelper.setActive(slot7.sYes, false)
+		var_14_1.longPress:AddLongPressListener(arg_14_0._longPressSpecial, arg_14_0, iter_14_0)
+		gohelper.setActive(var_14_1.sFrame, false)
+		gohelper.setActive(var_14_1.sYes, false)
 
-		slot0.optionalItemList[1][slot6] = slot7
+		arg_14_0.optionalItemList[1][iter_14_0] = var_14_1
 	end
 end
 
-function slot0._clickSpecialItem(slot0, slot1)
-	if slot0.selectIndexs[1] == slot1 then
+function var_0_0._clickSpecialItem(arg_15_0, arg_15_1)
+	if arg_15_0.selectIndexs[1] == arg_15_1 then
 		return
 	end
 
-	slot2 = slot0.selectIndexs[1]
-	slot0.selectIndexs[1] = slot1
+	local var_15_0 = arg_15_0.selectIndexs[1]
 
-	for slot6, slot7 in ipairs(slot0.optionalItemList[1]) do
-		gohelper.setActive(slot7.sFrame, slot6 == slot1)
-		gohelper.setActive(slot7.sYes, slot6 == slot1)
+	arg_15_0.selectIndexs[1] = arg_15_1
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.optionalItemList[1]) do
+		gohelper.setActive(iter_15_1.sFrame, iter_15_0 == arg_15_1)
+		gohelper.setActive(iter_15_1.sYes, iter_15_0 == arg_15_1)
 	end
 
-	slot0:refreshSelect(1, slot2 == nil)
-	slot0:_track(1, slot2, slot1)
+	arg_15_0:refreshSelect(1, var_15_0 == nil)
+	arg_15_0:_track(1, var_15_0, arg_15_1)
 end
 
-function slot0._longPressSpecial(slot0, slot1)
-	slot3 = slot0.optionalItemList[1][slot1].itemArr
+function var_0_0._longPressSpecial(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.optionalItemList[1][arg_16_1].itemArr
 
-	MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2], false, nil, , , , , , slot0.closeThis, slot0)
+	MaterialTipController.instance:showMaterialInfo(var_16_0[1], var_16_0[2], false, nil, nil, nil, nil, nil, nil, arg_16_0.closeThis, arg_16_0)
 end
 
-function slot0.creatOptionalItem(slot0, slot1, slot2, slot3)
-	slot0.optionalItemList[slot3] = {}
+function var_0_0.creatOptionalItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = string.split(arg_17_2, "|")
 
-	for slot8 = 1, #string.split(slot2, "|") do
-		slot10 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._goOptionalItem, slot1), OptionalChargeItem)
+	arg_17_0.optionalItemList[arg_17_3] = {}
 
-		slot10:setValue(slot4[slot8], slot0.clickOptional, slot0, slot3, slot8)
+	for iter_17_0 = 1, #var_17_0 do
+		local var_17_1 = gohelper.clone(arg_17_0._goOptionalItem, arg_17_1)
+		local var_17_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, OptionalChargeItem)
 
-		slot0.optionalItemList[slot3][slot8] = slot10
+		var_17_2:setValue(var_17_0[iter_17_0], arg_17_0.clickOptional, arg_17_0, arg_17_3, iter_17_0)
+
+		arg_17_0.optionalItemList[arg_17_3][iter_17_0] = var_17_2
 	end
 end
 
-function slot0.clickOptional(slot0, slot1, slot2)
-	if slot0.selectIndexs[slot1] == slot2 then
+function var_0_0.clickOptional(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_0.selectIndexs[arg_18_1] == arg_18_2 then
 		return
 	end
 
-	slot3 = slot0.selectIndexs[slot1]
-	slot0.selectIndexs[slot1] = slot2
+	local var_18_0 = arg_18_0.selectIndexs[arg_18_1]
 
-	for slot7, slot8 in ipairs(slot0.optionalItemList[slot1]) do
-		slot8:refreshSelect(slot7 == slot2)
+	arg_18_0.selectIndexs[arg_18_1] = arg_18_2
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.optionalItemList[arg_18_1]) do
+		iter_18_1:refreshSelect(iter_18_0 == arg_18_2)
 	end
 
-	slot0:refreshSelect(slot1, slot3 == nil)
-	slot0:_track(slot1, slot3, slot2)
+	arg_18_0:refreshSelect(arg_18_1, var_18_0 == nil)
+	arg_18_0:_track(arg_18_1, var_18_0, arg_18_2)
 end
 
-function slot0._payFinished(slot0)
-	slot0:closeThis()
+function var_0_0._payFinished(arg_19_0)
+	arg_19_0:closeThis()
 end
 
-function slot0._track(slot0, slot1, slot2, slot3)
+function var_0_0._track(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	local var_20_0 = arg_20_2 and arg_20_0:_getItemNameByIndex(arg_20_1, arg_20_2) or ""
+	local var_20_1 = arg_20_0:_getItemNameByIndex(arg_20_1, arg_20_3)
+
 	StatController.instance:track(StatEnum.EventName.SelectOptionalCharge, {
-		[StatEnum.EventProperties.PackName] = slot0.chargeGoodsCfg.name,
-		[StatEnum.EventProperties.StuffGearId] = tostring(slot1),
-		[StatEnum.EventProperties.BeforeStuffName] = slot2 and slot0:_getItemNameByIndex(slot1, slot2) or "",
-		[StatEnum.EventProperties.AfterStuffName] = slot0:_getItemNameByIndex(slot1, slot3),
-		[StatEnum.EventProperties.SelectedStuffName] = slot0:_getSelectItemNameList()
+		[StatEnum.EventProperties.PackName] = arg_20_0.chargeGoodsCfg.name,
+		[StatEnum.EventProperties.StuffGearId] = tostring(arg_20_1),
+		[StatEnum.EventProperties.BeforeStuffName] = var_20_0,
+		[StatEnum.EventProperties.AfterStuffName] = var_20_1,
+		[StatEnum.EventProperties.SelectedStuffName] = arg_20_0:_getSelectItemNameList()
 	})
 end
 
-function slot0._getSelectItemNameList(slot0)
-	slot1 = {}
+function var_0_0._getSelectItemNameList(arg_21_0)
+	local var_21_0 = {}
 
-	for slot5 = 1, 3 do
-		slot1[#slot1 + 1] = slot0.selectIndexs[slot5] and slot0:_getItemNameByIndex(slot5, slot6) or ""
+	for iter_21_0 = 1, 3 do
+		local var_21_1 = arg_21_0.selectIndexs[iter_21_0]
+
+		var_21_0[#var_21_0 + 1] = var_21_1 and arg_21_0:_getItemNameByIndex(iter_21_0, var_21_1) or ""
 	end
 
-	return slot1
+	return var_21_0
 end
 
-function slot0._getItemNameByIndex(slot0, slot1, slot2)
-	slot3 = slot0.optionalItemList[slot1][slot2].itemArr
+function var_0_0._getItemNameByIndex(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = arg_22_0.optionalItemList[arg_22_1][arg_22_2].itemArr
 
-	return ItemConfig.instance:getItemConfig(slot3[1], slot3[2]).name
+	return ItemConfig.instance:getItemConfig(var_22_0[1], var_22_0[2]).name
 end
 
-return slot0
+return var_0_0

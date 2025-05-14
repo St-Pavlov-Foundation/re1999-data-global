@@ -1,55 +1,62 @@
-module("modules.logic.fight.view.cardeffect.FigthMasterCardRemoveEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FigthMasterCardRemoveEffect", package.seeall)
 
-slot0 = class("FigthMasterCardRemoveEffect", BaseWork)
-slot1 = {
+local var_0_0 = class("FigthMasterCardRemoveEffect", BaseWork)
+local var_0_1 = {
 	"ui/viewres/fight/ui_effect_wuduquan_a.prefab"
 }
 
-function slot0.onStart(slot0, slot1)
-	slot0._loader = slot0._loader or LoaderComponent.New()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0._loader = arg_1_0._loader or LoaderComponent.New()
 
-	slot0._loader:loadListAsset(uv0, slot0._onLoaded, slot0._onAllLoaded, slot0)
+	arg_1_0._loader:loadListAsset(var_0_1, arg_1_0._onLoaded, arg_1_0._onAllLoaded, arg_1_0)
 end
 
-function slot0._onLoaded(slot0)
+function var_0_0._onLoaded(arg_2_0)
+	return
 end
 
-function slot0._onAllLoaded(slot0)
-	for slot4, slot5 in ipairs(uv0) do
-		if slot0._loader:getAssetItem(slot5) then
-			if slot4 == 1 then
-				slot0.context.card:playAni(ViewAnim.FightCardWuDuQuan, UIAnimationName.Close)
+function var_0_0._onAllLoaded(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(var_0_1) do
+		local var_3_0 = arg_3_0._loader:getAssetItem(iter_3_1)
 
-				slot0._clonePrefab = gohelper.clone(slot6:GetResource(), slot0.context.card.go)
+		if var_3_0 then
+			local var_3_1 = var_3_0:GetResource()
 
-				gohelper.onceAddComponent(slot0._clonePrefab, typeof(UnityEngine.Animator)):Play("close", 0, 0)
+			if iter_3_0 == 1 then
+				arg_3_0.context.card:playAni(ViewAnim.FightCardWuDuQuan, UIAnimationName.Close)
+
+				arg_3_0._clonePrefab = gohelper.clone(var_3_1, arg_3_0.context.card.go)
+
+				gohelper.onceAddComponent(arg_3_0._clonePrefab, typeof(UnityEngine.Animator)):Play("close", 0, 0)
 			end
 		end
 	end
 
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.8 / FightModel.instance:getUISpeed())
+	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 0.8 / FightModel.instance:getUISpeed())
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if not gohelper.isNil(slot0.context.card._forAnimGO) then
-		gohelper.onceAddComponent(slot1, gohelper.Type_CanvasGroup).alpha = 1
+function var_0_0.clearWork(arg_5_0)
+	local var_5_0 = arg_5_0.context.card._forAnimGO
+
+	if not gohelper.isNil(var_5_0) then
+		gohelper.onceAddComponent(var_5_0, gohelper.Type_CanvasGroup).alpha = 1
 	end
 
-	if not gohelper.isNil(slot0._clonePrefab) then
-		gohelper.destroy(slot0._clonePrefab)
+	if not gohelper.isNil(arg_5_0._clonePrefab) then
+		gohelper.destroy(arg_5_0._clonePrefab)
 	end
 
-	gohelper.setActive(slot0.context.card.go, false)
+	gohelper.setActive(arg_5_0.context.card.go, false)
 
-	if slot0._loader then
-		slot0._loader:releaseSelf()
+	if arg_5_0._loader then
+		arg_5_0._loader:releaseSelf()
 
-		slot0._loader = nil
+		arg_5_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

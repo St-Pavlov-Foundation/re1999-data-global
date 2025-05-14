@@ -1,59 +1,64 @@
-module("modules.logic.prototest.core.ProtoTestMgr", package.seeall)
+﻿module("modules.logic.prototest.core.ProtoTestMgr", package.seeall)
 
-slot0 = class("ProtoTestMgr")
+local var_0_0 = class("ProtoTestMgr")
 
-function slot0.ctor(slot0)
-	slot0.isShowFiles = false
-	slot0._isRecording = false
-	slot0._preSender = ProtoTestPreSender.New()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.isShowFiles = false
+	arg_1_0._isRecording = false
+	arg_1_0._preSender = ProtoTestPreSender.New()
 
-	LuaEventSystem.addEventMechanism(slot0)
+	LuaEventSystem.addEventMechanism(arg_1_0)
 end
 
-function slot0.startRecord(slot0)
-	slot0._isRecording = true
+function var_0_0.startRecord(arg_2_0)
+	arg_2_0._isRecording = true
 
-	LuaSocketMgr.instance:registerPreSender(slot0._preSender)
+	LuaSocketMgr.instance:registerPreSender(arg_2_0._preSender)
 end
 
-function slot0.endRecord(slot0)
-	slot0._isRecording = false
+function var_0_0.endRecord(arg_3_0)
+	arg_3_0._isRecording = false
 
-	LuaSocketMgr.instance:unregisterPreSender(slot0._preSender)
+	LuaSocketMgr.instance:unregisterPreSender(arg_3_0._preSender)
 end
 
-function slot0.isRecording(slot0)
-	return slot0._isRecording
+function var_0_0.isRecording(arg_4_0)
+	return arg_4_0._isRecording
 end
 
-function slot0.readFromFile(slot0, slot1)
+function var_0_0.readFromFile(arg_5_0, arg_5_1)
 	SLFramework.FileHelper.EnsureDir(ProtoFileHelper.DirPath)
 
-	slot5 = {}
+	local var_5_0 = ProtoFileHelper.getFullPathByFileName(arg_5_1)
+	local var_5_1 = SLFramework.FileHelper.ReadText(var_5_0)
+	local var_5_2 = cjson.decode(var_5_1)
+	local var_5_3 = {}
 
-	for slot9, slot10 in ipairs(cjson.decode(SLFramework.FileHelper.ReadText(ProtoFileHelper.getFullPathByFileName(slot1)))) do
-		slot11 = ProtoTestCaseMO.New()
+	for iter_5_0, iter_5_1 in ipairs(var_5_2) do
+		local var_5_4 = ProtoTestCaseMO.New()
 
-		slot11:deserialize(slot10)
-		table.insert(slot5, slot11)
+		var_5_4:deserialize(iter_5_1)
+		table.insert(var_5_3, var_5_4)
 	end
 
-	return slot5
+	return var_5_3
 end
 
-function slot0.saveToFile(slot0, slot1, slot2)
+function var_0_0.saveToFile(arg_6_0, arg_6_1, arg_6_2)
 	SLFramework.FileHelper.EnsureDir(ProtoFileHelper.DirPath)
 
-	slot3 = ProtoFileHelper.getFullPathByFileName(slot1)
-	slot4 = {}
+	local var_6_0 = ProtoFileHelper.getFullPathByFileName(arg_6_1)
+	local var_6_1 = {}
 
-	for slot8, slot9 in ipairs(slot2) do
-		table.insert(slot4, slot9:serialize())
+	for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
+		table.insert(var_6_1, iter_6_1:serialize())
 	end
 
-	SLFramework.FileHelper.WriteTextToPath(slot3, cjson.encode(slot4))
+	local var_6_2 = cjson.encode(var_6_1)
+
+	SLFramework.FileHelper.WriteTextToPath(var_6_0, var_6_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

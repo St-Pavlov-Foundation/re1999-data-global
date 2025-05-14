@@ -1,203 +1,224 @@
-module("modules.logic.versionactivity2_2.eliminate.model.EliminateChessModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateChessModel", package.seeall)
 
-slot0 = class("EliminateChessModel", BaseModel)
+local var_0_0 = class("EliminateChessModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._chessMo = {}
-	slot0._chessConfig = {}
-	slot0._chessBoardConfig = {}
-	slot0._maxRow = 0
-	slot0._maxCol = 0
-	slot0._tips = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._chessMo = {}
+	arg_1_0._chessConfig = {}
+	arg_1_0._chessBoardConfig = {}
+	arg_1_0._maxRow = 0
+	arg_1_0._maxCol = 0
+	arg_1_0._tips = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._chessMo = {}
-	slot0._chessConfig = {}
-	slot0._chessBoardConfig = {}
-	slot0._maxRow = 0
-	slot0._maxCol = 0
-	slot0._tips = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._chessMo = {}
+	arg_2_0._chessConfig = {}
+	arg_2_0._chessBoardConfig = {}
+	arg_2_0._maxRow = 0
+	arg_2_0._maxCol = 0
+	arg_2_0._tips = nil
 end
 
-function slot0.mockData(slot0)
-	slot1 = T_lua_eliminate_level[1]
-	slot2 = slot1.chess
-	slot3 = slot1.chessBoard
-	slot0._maxRow = #slot2
+function var_0_0.mockData(arg_3_0)
+	local var_3_0 = T_lua_eliminate_level[1]
+	local var_3_1 = var_3_0.chess
+	local var_3_2 = var_3_0.chessBoard
 
-	for slot7 = 1, #slot2 do
-		if slot0._chessMo then
-			slot0._chessMo[slot7] = {}
+	arg_3_0._maxRow = #var_3_1
+
+	for iter_3_0 = 1, #var_3_1 do
+		if arg_3_0._chessMo then
+			arg_3_0._chessMo[iter_3_0] = {}
 		end
 
-		slot8 = slot2[slot7]
-		slot0._maxCol = #slot8
+		local var_3_3 = var_3_1[iter_3_0]
 
-		for slot12 = 1, #slot8 do
-			slot14 = EliminateChessMO.New()
+		arg_3_0._maxCol = #var_3_3
 
-			slot14:setXY(slot7, slot12)
-			slot14:setStartXY(slot7, slot12)
-			slot14:setChessId(slot8[slot12])
-			slot14:setChessBoardType(slot3[slot7][slot12])
+		for iter_3_1 = 1, #var_3_3 do
+			local var_3_4 = var_3_3[iter_3_1]
+			local var_3_5 = EliminateChessMO.New()
 
-			slot0._chessMo[slot7][slot12] = slot14
+			var_3_5:setXY(iter_3_0, iter_3_1)
+			var_3_5:setStartXY(iter_3_0, iter_3_1)
+			var_3_5:setChessId(var_3_4)
+			var_3_5:setChessBoardType(var_3_2[iter_3_0][iter_3_1])
+
+			arg_3_0._chessMo[iter_3_0][iter_3_1] = var_3_5
 		end
 	end
 end
 
-function slot0.initChessInfo(slot0, slot1)
-	if slot1.row == nil or #slot2 <= 0 then
+function var_0_0.initChessInfo(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.row
+
+	if var_4_0 == nil or #var_4_0 <= 0 then
 		return
 	end
 
-	slot0._maxRow = #slot2
+	arg_4_0._maxRow = #var_4_0
 
-	for slot6 = 1, #slot2 do
-		if slot0._chessMo[slot6] == nil then
-			slot0._chessMo[slot6] = {}
+	for iter_4_0 = 1, #var_4_0 do
+		if arg_4_0._chessMo[iter_4_0] == nil then
+			arg_4_0._chessMo[iter_4_0] = {}
 		end
 
-		for slot11 = 1, #slot2[slot6].chess do
-			slot0._maxCol = #slot7
-			slot12 = slot7[slot11]
+		local var_4_1 = var_4_0[iter_4_0].chess
 
-			if slot0._chessMo[slot6][slot11] == nil then
-				slot0._chessMo[slot6][slot11] = EliminateChessMO.New()
+		for iter_4_1 = 1, #var_4_1 do
+			arg_4_0._maxCol = #var_4_1
+
+			local var_4_2 = var_4_1[iter_4_1]
+			local var_4_3 = arg_4_0._chessMo[iter_4_0][iter_4_1]
+
+			if var_4_3 == nil then
+				var_4_3 = EliminateChessMO.New()
+				arg_4_0._chessMo[iter_4_0][iter_4_1] = var_4_3
 			end
 
-			slot13:setXY(slot6, slot11)
-			slot13:setStartXY(slot6, slot11)
-			slot13:setChessId(slot12.id)
-			slot13:setChessBoardType(slot12.type)
+			var_4_3:setXY(iter_4_0, iter_4_1)
+			var_4_3:setStartXY(iter_4_0, iter_4_1)
+			var_4_3:setChessId(var_4_2.id)
+			var_4_3:setChessBoardType(var_4_2.type)
 		end
 	end
 
-	slot0:createInitMoveState()
+	arg_4_0:createInitMoveState()
 end
 
-function slot0.createInitMoveState(slot0)
-	for slot4 = 1, #slot0._chessMo do
-		for slot9 = 1, #slot0._chessMo[slot4] do
-			slot5[slot9]:setStartXY(slot4, slot0._maxCol + 1)
+function var_0_0.createInitMoveState(arg_5_0)
+	for iter_5_0 = 1, #arg_5_0._chessMo do
+		local var_5_0 = arg_5_0._chessMo[iter_5_0]
+
+		for iter_5_1 = 1, #var_5_0 do
+			var_5_0[iter_5_1]:setStartXY(iter_5_0, arg_5_0._maxCol + 1)
 		end
 	end
 end
 
-function slot0.getMaxRowAndCol(slot0)
-	return slot0._maxRow, slot0._maxCol
+function var_0_0.getMaxRowAndCol(arg_6_0)
+	return arg_6_0._maxRow, arg_6_0._maxCol
 end
 
-function slot0.posIsValid(slot0, slot1, slot2)
-	return slot1 >= 1 and slot1 <= slot0._maxRow and slot2 >= 1 and slot2 <= slot0._maxCol
+function var_0_0.posIsValid(arg_7_0, arg_7_1, arg_7_2)
+	return arg_7_1 >= 1 and arg_7_1 <= arg_7_0._maxRow and arg_7_2 >= 1 and arg_7_2 <= arg_7_0._maxCol
 end
 
-function slot0.updateMatch3Tips(slot0, slot1)
-	if not slot0._tips then
-		slot0._tips = EliminateTipMO.New()
+function var_0_0.updateMatch3Tips(arg_8_0, arg_8_1)
+	if not arg_8_0._tips then
+		arg_8_0._tips = EliminateTipMO.New()
 	end
 
-	slot0._tips:updateInfoByServer(slot1)
+	arg_8_0._tips:updateInfoByServer(arg_8_1)
 end
 
-function slot0.getTipEliminateCount(slot0)
-	return slot0._tips and slot0._tips:getEliminateCount() or 0
+function var_0_0.getTipEliminateCount(arg_9_0)
+	return arg_9_0._tips and arg_9_0._tips:getEliminateCount() or 0
 end
 
-function slot0.updateMovePoint(slot0, slot1)
-	slot0._movePoint = slot1 or 0
+function var_0_0.updateMovePoint(arg_10_0, arg_10_1)
+	arg_10_0._movePoint = arg_10_1 or 0
 end
 
-function slot0.getTipInfo(slot0)
-	return slot0._tips
+function var_0_0.getTipInfo(arg_11_0)
+	return arg_11_0._tips
 end
 
-function slot0.getChessMo(slot0, slot1, slot2)
-	return slot0._chessMo[slot1][slot2]
+function var_0_0.getChessMo(arg_12_0, arg_12_1, arg_12_2)
+	return arg_12_0._chessMo[arg_12_1][arg_12_2]
 end
 
-function slot0.updateChessMo(slot0, slot1, slot2, slot3)
-	slot0._chessMo[slot1][slot2] = slot3
+function var_0_0.updateChessMo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_0._chessMo[arg_13_1][arg_13_2] = arg_13_3
 end
 
-function slot0.getChessMoList(slot0)
-	return slot0._chessMo
+function var_0_0.getChessMoList(arg_14_0)
+	return arg_14_0._chessMo
 end
 
-function slot0.getMovePoint(slot0)
-	return slot0._movePoint
+function var_0_0.getMovePoint(arg_15_0)
+	return arg_15_0._movePoint
 end
 
-function slot0.setRecordCurNeedShowEffectAndXY(slot0, slot1, slot2, slot3)
-	slot0._recordShowEffectX = slot1
-	slot0._recordShowEffectY = slot2
-	slot0._recordShowEffectType = slot3
+function var_0_0.setRecordCurNeedShowEffectAndXY(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	arg_16_0._recordShowEffectX = arg_16_1
+	arg_16_0._recordShowEffectY = arg_16_2
+	arg_16_0._recordShowEffectType = arg_16_3
 end
 
-function slot0.getRecordCurNeedShowEffectAndXYAndClear(slot0)
-	slot0._recordShowEffectType = nil
-	slot0._recordShowEffectX = nil
-	slot0._recordShowEffectY = nil
+function var_0_0.getRecordCurNeedShowEffectAndXYAndClear(arg_17_0)
+	local var_17_0 = arg_17_0._recordShowEffectType
+	local var_17_1 = arg_17_0._recordShowEffectX
+	local var_17_2 = arg_17_0._recordShowEffectY
 
-	return slot0._recordShowEffectX, slot0._recordShowEffectY, slot0._recordShowEffectType
+	arg_17_0._recordShowEffectType = nil
+	arg_17_0._recordShowEffectX = nil
+	arg_17_0._recordShowEffectY = nil
+
+	return var_17_1, var_17_2, var_17_0
 end
 
-function slot0.addCurPlayAudioCount(slot0)
-	slot0._playAudioCount = slot0._playAudioCount and slot0._playAudioCount + 1 or 1
+function var_0_0.addCurPlayAudioCount(arg_18_0)
+	arg_18_0._playAudioCount = arg_18_0._playAudioCount and arg_18_0._playAudioCount + 1 or 1
 end
 
-function slot0.clearCurPlayAudioCount(slot0)
-	slot0._playAudioCount = nil
+function var_0_0.clearCurPlayAudioCount(arg_19_0)
+	arg_19_0._playAudioCount = nil
 end
 
-function slot0.getCurPlayAudioCount(slot0)
-	if slot0._playAudioCount == nil then
-		slot0._playAudioCount = 1
+function var_0_0.getCurPlayAudioCount(arg_20_0)
+	if arg_20_0._playAudioCount == nil then
+		arg_20_0._playAudioCount = 1
 	end
 
-	return slot0._playAudioCount
+	return arg_20_0._playAudioCount
 end
 
-function slot0.calEvaluateLevel(slot0)
-	if slot0._eliminateTotalCount == nil then
+function var_0_0.calEvaluateLevel(arg_21_0)
+	if arg_21_0._eliminateTotalCount == nil then
 		return nil
 	end
 
-	slot2 = nil
+	local var_21_0 = EliminateConfig.instance:getEvaluateGear()
+	local var_21_1
 
-	if EliminateConfig.instance:getEvaluateGear() and #slot1 == 3 then
-		slot2 = slot0._eliminateTotalCount < slot1[2] and (slot1[1] <= slot0._eliminateTotalCount and 1 or nil) or slot0._eliminateTotalCount < slot1[3] and 2 or 3
+	if var_21_0 and #var_21_0 == 3 then
+		if arg_21_0._eliminateTotalCount < var_21_0[2] then
+			var_21_1 = arg_21_0._eliminateTotalCount >= var_21_0[1] and 1 or nil
+		else
+			var_21_1 = arg_21_0._eliminateTotalCount < var_21_0[3] and 2 or 3
+		end
 	end
 
-	return slot2
+	return var_21_1
 end
 
-function slot0.addTotalEliminateCount(slot0, slot1)
-	if slot0._eliminateTotalCount == nil then
-		slot0._eliminateTotalCount = 0
+function var_0_0.addTotalEliminateCount(arg_22_0, arg_22_1)
+	if arg_22_0._eliminateTotalCount == nil then
+		arg_22_0._eliminateTotalCount = 0
 	end
 
-	slot0._eliminateTotalCount = slot0._eliminateTotalCount + slot1
+	arg_22_0._eliminateTotalCount = arg_22_0._eliminateTotalCount + arg_22_1
 end
 
-function slot0.clearTotalCount(slot0)
-	slot0._eliminateTotalCount = nil
+function var_0_0.clearTotalCount(arg_23_0)
+	arg_23_0._eliminateTotalCount = nil
 end
 
-function slot0.getNeedResetData(slot0)
-	return slot0._cacheData
+function var_0_0.getNeedResetData(arg_24_0)
+	return arg_24_0._cacheData
 end
 
-function slot0.setNeedResetData(slot0, slot1)
-	slot0._cacheData = slot1
+function var_0_0.setNeedResetData(arg_25_0, arg_25_1)
+	arg_25_0._cacheData = arg_25_1
 end
 
-function slot0.clear(slot0)
-	slot0._chessMo = {}
-	slot0._cacheData = nil
+function var_0_0.clear(arg_26_0)
+	arg_26_0._chessMo = {}
+	arg_26_0._cacheData = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

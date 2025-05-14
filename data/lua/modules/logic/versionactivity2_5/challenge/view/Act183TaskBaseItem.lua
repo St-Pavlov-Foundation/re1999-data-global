@@ -1,54 +1,56 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183TaskBaseItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183TaskBaseItem", package.seeall)
 
-slot0 = class("Act183TaskBaseItem", MixScrollCell)
+local var_0_0 = class("Act183TaskBaseItem", MixScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.go)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0.go)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._mo = arg_2_1
 
-	slot0:playAnim()
+	arg_2_0:playAnim()
 end
 
-function slot0.playAnim(slot0)
-	slot1 = UnityEngine.Time.frameCount - Act183TaskListModel.instance.startFrameCount < 10
-	slot0._animName = slot1 and UIAnimationName.Open or UIAnimationName.Idle
+function var_0_0.playAnim(arg_3_0)
+	local var_3_0 = UnityEngine.Time.frameCount - Act183TaskListModel.instance.startFrameCount < 10
 
-	gohelper.setActive(slot0.go, false)
-	TaskDispatcher.cancelTask(slot0._playAnimByName, slot0)
+	arg_3_0._animName = var_3_0 and UIAnimationName.Open or UIAnimationName.Idle
 
-	if slot1 then
-		TaskDispatcher.runDelay(slot0._playAnimByName, slot0, (slot0._index - 1) * 0.03)
+	gohelper.setActive(arg_3_0.go, false)
+	TaskDispatcher.cancelTask(arg_3_0._playAnimByName, arg_3_0)
+
+	if var_3_0 then
+		TaskDispatcher.runDelay(arg_3_0._playAnimByName, arg_3_0, (arg_3_0._index - 1) * 0.03)
 
 		return
 	end
 
-	slot0:_playAnimByName()
+	arg_3_0:_playAnimByName()
 end
 
-function slot0._playAnimByName(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0._playAnimByName(arg_4_0)
+	gohelper.setActive(arg_4_0.go, true)
 
-	if not slot0._animName or not slot0.go.activeInHierarchy then
+	if not arg_4_0._animName or not arg_4_0.go.activeInHierarchy then
 		return
 	end
 
-	slot0._animatorPlayer:Play(slot0._animName, slot0._onPlayAnimDone, slot0)
+	arg_4_0._animatorPlayer:Play(arg_4_0._animName, arg_4_0._onPlayAnimDone, arg_4_0)
 end
 
-function slot0._onPlayAnimDone(slot0)
+function var_0_0._onPlayAnimDone(arg_5_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._playAnimByName, slot0)
-	slot0:setBlock(false)
+function var_0_0.onDestroy(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._playAnimByName, arg_6_0)
+	arg_6_0:setBlock(false)
 end
 
-function slot0.setBlock(slot0, slot1)
-	if slot1 then
+function var_0_0.setBlock(arg_7_0, arg_7_1)
+	if arg_7_1 then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("Act183TaskBaseItem_ReceiveReward")
 	else
@@ -57,4 +59,4 @@ function slot0.setBlock(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

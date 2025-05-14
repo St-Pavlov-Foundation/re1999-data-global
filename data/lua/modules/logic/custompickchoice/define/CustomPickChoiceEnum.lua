@@ -1,21 +1,22 @@
-module("modules.logic.custompickchoice.define.CustomPickChoiceEnum", package.seeall)
+﻿module("modules.logic.custompickchoice.define.CustomPickChoiceEnum", package.seeall)
 
-slot0 = _M
-slot0.style = {
+local var_0_0 = _M
+
+var_0_0.style = {
 	SummonCustomPick = 2,
 	OptionalHeroGift = 1
 }
-slot0.FixedText = {
-	[slot0.style.OptionalHeroGift] = {
+var_0_0.FixedText = {
+	[var_0_0.style.OptionalHeroGift] = {
 		_txttitle = "herogift_custom_pick_title"
 	}
 }
-slot0.ComponentVisible = {
-	[slot0.style.OptionalHeroGift] = {
+var_0_0.ComponentVisible = {
+	[var_0_0.style.OptionalHeroGift] = {
 		_gomask = true,
 		_gobg = true,
 		_goTips = false
 	}
 }
 
-return slot0
+return var_0_0

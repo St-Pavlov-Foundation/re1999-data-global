@@ -1,46 +1,50 @@
-module("modules.logic.explore.map.unit.ExploreDoorOnceUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreDoorOnceUnit", package.seeall)
 
-slot0 = class("ExploreDoorOnceUnit", ExploreDoor)
+local var_0_0 = class("ExploreDoorOnceUnit", ExploreDoor)
 
-function slot0.tryTrigger(slot0, ...)
-	if not slot0.mo:isInteractActiveState() then
-		uv0.super.tryTrigger(slot0, ...)
+function var_0_0.tryTrigger(arg_1_0, ...)
+	if not arg_1_0.mo:isInteractActiveState() then
+		var_0_0.super.tryTrigger(arg_1_0, ...)
 	end
 end
 
-function slot0.cancelTrigger(slot0, ...)
-	if not slot0.mo:isInteractActiveState() then
-		uv0.super.cancelTrigger(slot0, ...)
+function var_0_0.cancelTrigger(arg_2_0, ...)
+	if not arg_2_0.mo:isInteractActiveState() then
+		var_0_0.super.cancelTrigger(arg_2_0, ...)
 	end
 end
 
-function slot0.getIdleAnim(slot0)
-	if slot0.mo:isInteractActiveState() then
+function var_0_0.getIdleAnim(arg_3_0)
+	if arg_3_0.mo:isInteractActiveState() then
 		return ExploreAnimEnum.AnimName.active
 	else
-		return uv0.super.getIdleAnim(slot0)
+		return var_0_0.super.getIdleAnim(arg_3_0)
 	end
 end
 
-function slot0.onUpdateCount(slot0, ...)
-	if slot0.mo:isInteractActiveState() then
-		if slot0.animComp._curAnim ~= ExploreAnimEnum.AnimName.nToA then
-			slot0:playAnim(ExploreAnimEnum.AnimName.active)
+function var_0_0.onUpdateCount(arg_4_0, ...)
+	if arg_4_0.mo:isInteractActiveState() then
+		if arg_4_0.animComp._curAnim ~= ExploreAnimEnum.AnimName.nToA then
+			arg_4_0:playAnim(ExploreAnimEnum.AnimName.active)
 		end
 	else
-		uv0.super.onUpdateCount(slot0, ...)
+		var_0_0.super.onUpdateCount(arg_4_0, ...)
 	end
 end
 
-function slot0.onActiveChange(slot0, slot1)
-	if slot1 and slot0.animComp._curAnim and slot2 ~= ExploreAnimEnum.AnimName.active and slot0.animComp:isIdleAnim() then
-		slot0:playAnim(ExploreAnimEnum.AnimName.nToA)
-		slot0:checkShowIcon()
+function var_0_0.onActiveChange(arg_5_0, arg_5_1)
+	if arg_5_1 then
+		local var_5_0 = arg_5_0.animComp._curAnim
 
-		return
+		if var_5_0 and var_5_0 ~= ExploreAnimEnum.AnimName.active and arg_5_0.animComp:isIdleAnim() then
+			arg_5_0:playAnim(ExploreAnimEnum.AnimName.nToA)
+			arg_5_0:checkShowIcon()
+
+			return
+		end
 	end
 
-	uv0.super.onActiveChange(slot0, slot1)
+	var_0_0.super.onActiveChange(arg_5_0, arg_5_1)
 end
 
-return slot0
+return var_0_0

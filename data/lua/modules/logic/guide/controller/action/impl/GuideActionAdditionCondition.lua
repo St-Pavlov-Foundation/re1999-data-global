@@ -1,40 +1,51 @@
-module("modules.logic.guide.controller.action.impl.GuideActionAdditionCondition", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionAdditionCondition", package.seeall)
 
-slot0 = class("GuideActionAdditionCondition", BaseGuideAction)
+local var_0_0 = class("GuideActionAdditionCondition", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot6 = slot2[4]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+	local var_1_1 = var_1_0[1]
+	local var_1_2 = var_1_0[2]
+	local var_1_3 = var_1_0[3]
+	local var_1_4 = var_1_0[4]
+	local var_1_5 = arg_1_0[var_1_1]
 
-	if slot0[slot2[1]] and slot7(slot0, slot2[2]) then
-		slot0:additionStepId(slot0.sourceGuideId or slot0.guideId, slot2[3])
+	if var_1_5 and var_1_5(arg_1_0, var_1_2) then
+		arg_1_0:additionStepId(arg_1_0.sourceGuideId or arg_1_0.guideId, var_1_3)
 	else
-		slot0:additionStepId(slot0.sourceGuideId or slot0.guideId, slot6)
+		arg_1_0:additionStepId(arg_1_0.sourceGuideId or arg_1_0.guideId, var_1_4)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.additionStepId(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.additionStepId(arg_2_0, arg_2_1, arg_2_2)
+	if not arg_2_1 then
 		return
 	end
 
-	if not GuideStepController.instance:getActionFlow(slot1) then
+	local var_2_0 = GuideStepController.instance:getActionFlow(arg_2_1)
+
+	if not var_2_0 then
 		return
 	end
 
-	if not string.nilorempty(slot2) then
-		slot3:addWork(GuideActionBuilder.buildAction(slot1, 0, string.gsub(string.gsub(slot2, "&", "|"), "*", "#")))
+	if not string.nilorempty(arg_2_2) then
+		arg_2_2 = string.gsub(arg_2_2, "&", "|")
+		arg_2_2 = string.gsub(arg_2_2, "*", "#")
+
+		local var_2_1 = GuideActionBuilder.buildAction(arg_2_1, 0, arg_2_2)
+
+		var_2_0:addWork(var_2_1)
 	end
 end
 
-function slot0.checkRoomTaskHasFinished(slot0)
-	slot1, slot2 = RoomSceneTaskController.instance:isFirstTaskFinished()
+function var_0_0.checkRoomTaskHasFinished(arg_3_0)
+	local var_3_0, var_3_1 = RoomSceneTaskController.instance:isFirstTaskFinished()
 
-	return slot1
+	return var_3_0
 end
 
-return slot0
+return var_0_0

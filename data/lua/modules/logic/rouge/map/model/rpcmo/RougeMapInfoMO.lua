@@ -1,15 +1,15 @@
-module("modules.logic.rouge.map.model.rpcmo.RougeMapInfoMO", package.seeall)
+﻿module("modules.logic.rouge.map.model.rpcmo.RougeMapInfoMO", package.seeall)
 
-slot0 = pureTable("RougeMapInfoMO")
+local var_0_0 = pureTable("RougeMapInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.mapType = slot1.mapType
-	slot0.layerId = slot1.layerId
-	slot0.middleLayerId = slot1.middleLayerId
-	slot0.curStage = slot1.curStage
-	slot0.curNode = slot1.curNode
-	slot0.nodeInfo = GameUtil.rpcInfosToList(slot1.nodeInfo, RougeNodeInfoMO)
-	slot0.skillInfo = GameUtil.rpcInfosToList(slot1.mapSkill, RougeMapSkillMO)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.mapType = arg_1_1.mapType
+	arg_1_0.layerId = arg_1_1.layerId
+	arg_1_0.middleLayerId = arg_1_1.middleLayerId
+	arg_1_0.curStage = arg_1_1.curStage
+	arg_1_0.curNode = arg_1_1.curNode
+	arg_1_0.nodeInfo = GameUtil.rpcInfosToList(arg_1_1.nodeInfo, RougeNodeInfoMO)
+	arg_1_0.skillInfo = GameUtil.rpcInfosToList(arg_1_1.mapSkill, RougeMapSkillMO)
 end
 
-return slot0
+return var_0_0

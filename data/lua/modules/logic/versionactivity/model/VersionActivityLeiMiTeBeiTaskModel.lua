@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity.model.VersionActivityLeiMiTeBeiTaskModel", package.seeall)
+﻿module("modules.logic.versionactivity.model.VersionActivityLeiMiTeBeiTaskModel", package.seeall)
 
-slot0 = class("VersionActivityLeiMiTeBeiTaskModel", BaseModel)
+local var_0_0 = class("VersionActivityLeiMiTeBeiTaskModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.infosDic = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.infosDic = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

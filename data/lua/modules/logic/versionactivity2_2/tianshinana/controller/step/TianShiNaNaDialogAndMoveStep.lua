@@ -1,40 +1,44 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDialogAndMoveStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDialogAndMoveStep", package.seeall)
 
-slot0 = class("TianShiNaNaDialogAndMoveStep", TianShiNaNaDialogStep)
+local var_0_0 = class("TianShiNaNaDialogAndMoveStep", TianShiNaNaDialogStep)
 
-function slot0.onStart(slot0, slot1)
-	if slot0._data.isMonsterMove == 1 then
-		return slot0:beginPlayDialog()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	if arg_1_0._data.isMonsterMove == 1 then
+		return arg_1_0:beginPlayDialog()
 	end
 
-	if not TianShiNaNaModel.instance:getHeroMo() then
+	local var_1_0 = TianShiNaNaModel.instance:getHeroMo()
+
+	if not var_1_0 then
 		logError("对话时，角色不存在")
 
-		return slot0:onDone(true)
+		return arg_1_0:onDone(true)
 	end
 
-	slot0._targetEntity = TianShiNaNaEntityMgr.instance:getEntity(slot0._data.interactId)
+	local var_1_1 = TianShiNaNaEntityMgr.instance:getEntity(var_1_0.co.id)
 
-	if not TianShiNaNaEntityMgr.instance:getEntity(slot2.co.id) then
+	arg_1_0._targetEntity = TianShiNaNaEntityMgr.instance:getEntity(arg_1_0._data.interactId)
+
+	if not var_1_1 then
 		logError("对话时，角色不存在")
 
-		return slot0:onDone(true)
+		return arg_1_0:onDone(true)
 	end
 
-	if not slot0._targetEntity then
+	if not arg_1_0._targetEntity then
 		logError("对话时，目标不存在")
 
-		return slot0:onDone(true)
+		return arg_1_0:onDone(true)
 	end
 
-	return slot3:moveToHalf(slot0._targetEntity._unitMo.x, slot0._targetEntity._unitMo.y, slot0._onEndMove, slot0)
+	return var_1_1:moveToHalf(arg_1_0._targetEntity._unitMo.x, arg_1_0._targetEntity._unitMo.y, arg_1_0._onEndMove, arg_1_0)
 end
 
-function slot0._onEndMove(slot0)
-	slot1 = TianShiNaNaModel.instance:getHeroMo()
+function var_0_0._onEndMove(arg_2_0)
+	local var_2_0 = TianShiNaNaModel.instance:getHeroMo()
 
-	slot0._targetEntity:changeDir(slot1.x, slot1.y)
-	slot0:beginPlayDialog()
+	arg_2_0._targetEntity:changeDir(var_2_0.x, var_2_0.y)
+	arg_2_0:beginPlayDialog()
 end
 
-return slot0
+return var_0_0

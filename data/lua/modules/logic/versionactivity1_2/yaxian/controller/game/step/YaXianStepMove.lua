@@ -1,33 +1,41 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepMove", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepMove", package.seeall)
 
-slot0 = class("YaXianStepMove", YaXianStepBase)
+local var_0_0 = class("YaXianStepMove", YaXianStepBase)
 
-function slot0.start(slot0)
-	if not YaXianGameController.instance:getInteractItem(slot0.originData.id) then
-		logError("not found interactObj, id : " .. tostring(slot0.originData.id))
-		slot0:finish()
+function var_0_0.start(arg_1_0)
+	local var_1_0 = YaXianGameController.instance:getInteractItem(arg_1_0.originData.id)
+
+	if not var_1_0 then
+		logError("not found interactObj, id : " .. tostring(arg_1_0.originData.id))
+		arg_1_0:finish()
 	end
 
-	slot0.interactItem = slot1
+	arg_1_0.interactItem = var_1_0
 
-	if slot1:getHandler() then
-		slot2:moveToFromMoveStep(slot0.originData, slot0.finish, slot0)
+	local var_1_1 = var_1_0:getHandler()
+
+	if var_1_1 then
+		var_1_1:moveToFromMoveStep(arg_1_0.originData, arg_1_0.finish, arg_1_0)
 
 		return
 	end
 
-	logError("interact not found handle, interactId : " .. slot0.originData.id)
-	slot0:finish()
+	logError("interact not found handle, interactId : " .. arg_1_0.originData.id)
+	arg_1_0:finish()
 end
 
-function slot0.finish(slot0)
-	uv0.super.finish(slot0)
+function var_0_0.finish(arg_2_0)
+	var_0_0.super.finish(arg_2_0)
 end
 
-function slot0.dispose(slot0)
-	if slot0.interactItem and slot0.interactItem:getHandler() then
-		slot1:stopAllAction()
+function var_0_0.dispose(arg_3_0)
+	if arg_3_0.interactItem then
+		local var_3_0 = arg_3_0.interactItem:getHandler()
+
+		if var_3_0 then
+			var_3_0:stopAllAction()
+		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,173 +1,192 @@
-module("modules.logic.social.controller.SocialMessageController", package.seeall)
+﻿module("modules.logic.social.controller.SocialMessageController", package.seeall)
 
-slot0 = class("SocialMessageController", BaseController)
+local var_0_0 = class("SocialMessageController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._tempListDict = {
-		[SocialEnum.ChannelType.Friend] = {}
-	}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._tempListDict = {}
+	arg_1_0._tempListDict[SocialEnum.ChannelType.Friend] = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._tempListDict = {
-		[SocialEnum.ChannelType.Friend] = {}
-	}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._tempListDict = {}
+	arg_2_0._tempListDict[SocialEnum.ChannelType.Friend] = {}
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	return
 end
 
-function slot0.readSocialMessages(slot0, slot1, slot2)
-	slot5 = {}
+function var_0_0.readSocialMessages(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = SocialConfig.instance:getSocialMessagesKey(arg_5_1, arg_5_2)
+	local var_5_1 = PlayerPrefsHelper.getString(var_5_0, nil)
+	local var_5_2 = {}
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(SocialConfig.instance:getSocialMessagesKey(slot1, slot2), nil)) then
-		slot5 = slot0:_convertToList(slot1, slot2, slot4)
+	if not string.nilorempty(var_5_1) then
+		var_5_2 = arg_5_0:_convertToList(arg_5_1, arg_5_2, var_5_1)
 	end
 
-	SocialMessageModel.instance:loadSocialMessages(slot1, slot2, slot5)
+	SocialMessageModel.instance:loadSocialMessages(arg_5_1, arg_5_2, var_5_2)
 end
 
-function slot0.writeSocialMessages(slot0, slot1, slot2, slot3)
-	slot4 = SocialConfig.instance:getSocialMessagesKey(slot1, slot2)
-	slot5 = ""
+function var_0_0.writeSocialMessages(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = SocialConfig.instance:getSocialMessagesKey(arg_6_1, arg_6_2)
+	local var_6_1 = ""
 
-	if slot3 and #slot3 > 0 then
-		slot5 = slot0:_convertToPrefs(slot1, slot2, slot3)
+	if arg_6_3 and #arg_6_3 > 0 then
+		var_6_1 = arg_6_0:_convertToPrefs(arg_6_1, arg_6_2, arg_6_3)
 	end
 
-	if not string.nilorempty(slot5) then
-		PlayerPrefsHelper.setString(slot4, slot5)
+	if not string.nilorempty(var_6_1) then
+		PlayerPrefsHelper.setString(var_6_0, var_6_1)
 	else
-		PlayerPrefsHelper.deleteKey(slot4)
+		PlayerPrefsHelper.deleteKey(var_6_0)
 	end
 end
 
-function slot0._convertToList(slot0, slot1, slot2, slot3)
-	slot6 = SocialConfig.instance:getSocialMessageFields()
+function var_0_0._convertToList(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = cjson.decode(arg_7_3)
+	local var_7_1 = SocialConfig.instance:getSocialMessageFields()
+	local var_7_2 = {
+		__index = function(arg_8_0, arg_8_1)
+			local var_8_0 = var_7_1[arg_8_1]
+			local var_8_1 = rawget(arg_8_0, var_8_0)
 
-	for slot11, slot12 in ipairs(cjson.decode(slot3)) do
-		setmetatable(slot12, {
-			__index = function (slot0, slot1)
-				if rawget(slot0, uv0[slot1]) == cjson.null then
-					slot3 = nil
-				end
-
-				return slot3
+			if var_8_1 == cjson.null then
+				var_8_1 = nil
 			end
-		})
+
+			return var_8_1
+		end
+	}
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		setmetatable(iter_7_1, var_7_2)
 	end
 
-	slot0._tempListDict[slot1][slot2] = slot5
+	arg_7_0._tempListDict[arg_7_1][arg_7_2] = var_7_0
 
-	return slot5
+	return var_7_0
 end
 
-function slot0._convertToPrefs(slot0, slot1, slot2, slot3)
-	slot4 = SocialConfig.instance:getSocialMessageFields()
-	slot5 = {}
-	slot6 = 1
+function var_0_0._convertToPrefs(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = SocialConfig.instance:getSocialMessageFields()
+	local var_9_1 = {}
+	local var_9_2 = 1
 
-	if slot0._tempListDict[slot1][slot2] and #slot3 > #slot0._tempListDict[slot1][slot2] then
-		slot6 = #slot0._tempListDict[slot1][slot2] + 1
-		slot5 = slot0._tempListDict[slot1][slot2]
+	if arg_9_0._tempListDict[arg_9_1][arg_9_2] and #arg_9_3 > #arg_9_0._tempListDict[arg_9_1][arg_9_2] then
+		var_9_2 = #arg_9_0._tempListDict[arg_9_1][arg_9_2] + 1
+		var_9_1 = arg_9_0._tempListDict[arg_9_1][arg_9_2]
 	end
 
-	for slot10 = slot6, #slot3 do
-		for slot16, slot17 in pairs(slot3[slot10]) do
-			if slot4[slot16] then
-				-- Nothing
+	for iter_9_0 = var_9_2, #arg_9_3 do
+		local var_9_3 = arg_9_3[iter_9_0]
+		local var_9_4 = {}
+
+		for iter_9_1, iter_9_2 in pairs(var_9_3) do
+			if var_9_0[iter_9_1] then
+				var_9_4[var_9_0[iter_9_1]] = iter_9_2
 			end
 		end
 
-		table.insert(slot5, {
-			[slot4[slot16]] = slot17
-		})
+		table.insert(var_9_1, var_9_4)
 	end
 
-	slot7 = {}
+	local var_9_5 = {}
+	local var_9_6 = #var_9_1
+	local var_9_7 = SocialEnum.MaxSaveMessageCount
 
-	if SocialEnum.MaxSaveMessageCount < #slot5 then
-		for slot13 = 1, slot9 do
-			slot7[slot13] = slot5[slot8 - slot9 + slot13]
+	if var_9_7 < var_9_6 then
+		for iter_9_3 = 1, var_9_7 do
+			var_9_5[iter_9_3] = var_9_1[var_9_6 - var_9_7 + iter_9_3]
 		end
 	else
-		slot7 = slot5
+		var_9_5 = var_9_1
 	end
 
-	slot0._tempListDict[slot1][slot2] = slot5
+	local var_9_8 = cjson.encode(var_9_5)
 
-	return cjson.encode(slot7)
+	arg_9_0._tempListDict[arg_9_1][arg_9_2] = var_9_1
+
+	return var_9_8
 end
 
-function slot0.readMessageUnread(slot0)
-	slot3 = {}
+function var_0_0.readMessageUnread(arg_10_0)
+	local var_10_0 = SocialConfig.instance:getMessageUnreadKey()
+	local var_10_1 = PlayerPrefsHelper.getString(var_10_0, nil)
+	local var_10_2 = {}
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(SocialConfig.instance:getMessageUnreadKey(), nil)) then
-		slot8 = "#"
+	if not string.nilorempty(var_10_1) then
+		local var_10_3 = GameUtil.splitString2(var_10_1, false, "|", "#")
 
-		for slot8, slot9 in ipairs(GameUtil.splitString2(slot2, false, "|", slot8)) do
-			if #slot9 >= 4 then
-				slot3[tonumber(slot9[1])] = slot3[tonumber(slot9[1])] or {}
-				slot3[tonumber(slot9[1])][slot9[2]] = {
-					count = tonumber(slot9[3]) or 0,
-					lastTime = tonumber(slot9[4]) or 0
+		for iter_10_0, iter_10_1 in ipairs(var_10_3) do
+			if #iter_10_1 >= 4 then
+				var_10_2[tonumber(iter_10_1[1])] = var_10_2[tonumber(iter_10_1[1])] or {}
+
+				local var_10_4 = {
+					count = tonumber(iter_10_1[3]) or 0,
+					lastTime = tonumber(iter_10_1[4]) or 0
 				}
+
+				var_10_2[tonumber(iter_10_1[1])][iter_10_1[2]] = var_10_4
 			end
 		end
 	end
 
-	SocialMessageModel.instance:loadMessageUnread(slot3)
+	SocialMessageModel.instance:loadMessageUnread(var_10_2)
 end
 
-function slot0.writeMessageUnread(slot0, slot1)
-	slot2 = SocialConfig.instance:getMessageUnreadKey()
-	slot3 = ""
-	slot4 = true
+function var_0_0.writeMessageUnread(arg_11_0, arg_11_1)
+	local var_11_0 = SocialConfig.instance:getMessageUnreadKey()
+	local var_11_1 = ""
+	local var_11_2 = true
 
-	if slot1 then
-		for slot8, slot9 in pairs(slot1) do
-			for slot13, slot14 in pairs(slot9) do
-				if not slot4 then
-					slot3 = slot3 .. "|"
+	if arg_11_1 then
+		for iter_11_0, iter_11_1 in pairs(arg_11_1) do
+			for iter_11_2, iter_11_3 in pairs(iter_11_1) do
+				if not var_11_2 then
+					var_11_1 = var_11_1 .. "|"
 				end
 
-				slot4 = false
-				slot3 = string.format("%s%s#%s#%s#%s", slot3, slot8, slot13, slot14.count, slot14.lastTime)
+				var_11_2 = false
+				var_11_1 = string.format("%s%s#%s#%s#%s", var_11_1, iter_11_0, iter_11_2, iter_11_3.count, iter_11_3.lastTime)
 			end
 		end
 	end
 
-	PlayerPrefsHelper.setString(slot2, slot3)
+	PlayerPrefsHelper.setString(var_11_0, var_11_1)
 end
 
-function slot0.opMessageOnClick(slot0, slot1)
-	if not slot1 then
+function var_0_0.opMessageOnClick(arg_12_0, arg_12_1)
+	if not arg_12_1 then
 		return
 	end
 
-	if slot0:_getOpFuncByMsgType(slot1.msgType) then
-		slot2(slot1)
+	local var_12_0 = arg_12_0:_getOpFuncByMsgType(arg_12_1.msgType)
+
+	if var_12_0 then
+		var_12_0(arg_12_1)
 	end
 end
 
-function slot0._getOpFuncByMsgType(slot0, slot1)
-	if not slot0._opFuncMsgDict then
-		slot0._opFuncMsgDict = {
-			[ChatEnum.MsgType.RoomSeekShare] = function (slot0)
-				RoomChatShareController.instance:chatSeekShare(slot0)
+function var_0_0._getOpFuncByMsgType(arg_13_0, arg_13_1)
+	if not arg_13_0._opFuncMsgDict then
+		arg_13_0._opFuncMsgDict = {
+			[ChatEnum.MsgType.RoomSeekShare] = function(arg_14_0)
+				RoomChatShareController.instance:chatSeekShare(arg_14_0)
 			end,
-			[ChatEnum.MsgType.RoomShareCode] = function (slot0)
-				RoomChatShareController.instance:chatShareCode(slot0)
+			[ChatEnum.MsgType.RoomShareCode] = function(arg_15_0)
+				RoomChatShareController.instance:chatShareCode(arg_15_0)
 			end
 		}
 	end
 
-	return slot0._opFuncMsgDict[slot1]
+	return arg_13_0._opFuncMsgDict[arg_13_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

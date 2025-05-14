@@ -1,273 +1,308 @@
-module("modules.logic.rouge.view.RougeFactionIllustrationDetailItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionIllustrationDetailItem", package.seeall)
 
-slot0 = class("RougeFactionIllustrationDetailItem", ListScrollCellExtend)
+local var_0_0 = class("RougeFactionIllustrationDetailItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._txtcoin = gohelper.findChildText(slot0.viewGO, "Select/detail/coin/#txt_coin")
-	slot0._txtbag = gohelper.findChildText(slot0.viewGO, "Select/detail/bag/#txt_bag")
-	slot0._txtgroup = gohelper.findChildText(slot0.viewGO, "Select/detail/group/#txt_group")
-	slot0._gobag = gohelper.findChild(slot0.viewGO, "Select/detail/baglayout/#go_bag")
-	slot0._btncheck = gohelper.findChildButtonWithAudio(slot0.viewGO, "Select/detail/baglayout/#btn_check")
-	slot0._godescitem = gohelper.findChild(slot0.viewGO, "Select/detail/beidong/#Scroll_Desc/Viewport/Content/#go_descitem")
-	slot0._goskillitem = gohelper.findChild(slot0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_skills/#go_skillitem")
-	slot0._godetail2 = gohelper.findChild(slot0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_detail2")
-	slot0._imageskillicon = gohelper.findChildImage(slot0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_detail2/#image_skillicon")
-	slot0._txtdec2 = gohelper.findChildText(slot0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_detail2/#txt_dec2")
-	slot0._goBg = gohelper.findChild(slot0.viewGO, "Select/#go_Bg")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "Select/#image_icon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "Select/#txt_name")
-	slot0._txten = gohelper.findChildText(slot0.viewGO, "Select/#txt_name/#txt_en")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "Select/#scroll_desc")
-	slot0._txtscrollDesc = gohelper.findChildText(slot0.viewGO, "Select/#scroll_desc/viewport/content/#txt_scrollDesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtcoin = gohelper.findChildText(arg_1_0.viewGO, "Select/detail/coin/#txt_coin")
+	arg_1_0._txtbag = gohelper.findChildText(arg_1_0.viewGO, "Select/detail/bag/#txt_bag")
+	arg_1_0._txtgroup = gohelper.findChildText(arg_1_0.viewGO, "Select/detail/group/#txt_group")
+	arg_1_0._gobag = gohelper.findChild(arg_1_0.viewGO, "Select/detail/baglayout/#go_bag")
+	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Select/detail/baglayout/#btn_check")
+	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "Select/detail/beidong/#Scroll_Desc/Viewport/Content/#go_descitem")
+	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_skills/#go_skillitem")
+	arg_1_0._godetail2 = gohelper.findChild(arg_1_0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_detail2")
+	arg_1_0._imageskillicon = gohelper.findChildImage(arg_1_0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_detail2/#image_skillicon")
+	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "Select/detail/zhouyu/#go_skillcontainer/#go_detail2/#txt_dec2")
+	arg_1_0._goBg = gohelper.findChild(arg_1_0.viewGO, "Select/#go_Bg")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "Select/#image_icon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "Select/#txt_name")
+	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "Select/#txt_name/#txt_en")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Select/#scroll_desc")
+	arg_1_0._txtscrollDesc = gohelper.findChildText(arg_1_0.viewGO, "Select/#scroll_desc/viewport/content/#txt_scrollDesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncheck:AddClickListener(slot0._btncheckOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncheck:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncheck:RemoveClickListener()
 end
 
-function slot0._refreshAllBtnStatus(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._skillItemList) do
-		slot0:_setBtnStatus(slot1 == slot5, slot6.gonormal, slot6.goselect)
+function var_0_0._refreshAllBtnStatus(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._skillItemList) do
+		local var_4_0 = arg_4_1 == iter_4_0
+
+		arg_4_0:_setBtnStatus(var_4_0, iter_4_1.gonormal, iter_4_1.goselect)
 	end
 end
 
-function slot0._setBtnStatus(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot2, not slot1)
-	gohelper.setActive(slot3, slot1)
+function var_0_0._setBtnStatus(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	gohelper.setActive(arg_5_2, not arg_5_1)
+	gohelper.setActive(arg_5_3, arg_5_1)
 end
 
-function slot0._btncheckOnClick(slot0)
-	RougeController.instance:openRougeCollectionInitialView({
-		collectionCfgIds = slot0._collectionCfgIds
-	})
+function var_0_0._btncheckOnClick(arg_6_0)
+	local var_6_0 = {
+		collectionCfgIds = arg_6_0._collectionCfgIds
+	}
+
+	RougeController.instance:openRougeCollectionInitialView(var_6_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._skillItemList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._skillItemList = arg_7_0:getUserDataTb_()
 
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, slot0._onTouchScreenUp, slot0)
-	gohelper.setActive(slot0._godetail2, false)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, arg_7_0._onTouchScreenUp, arg_7_0)
+	gohelper.setActive(arg_7_0._godetail2, false)
 
-	slot0._descItemList = {
-		slot0:_create_RougeFactionItemSelected_DescItem(1),
-		slot0:_create_RougeFactionItemSelected_DescItem(2)
+	arg_7_0._descItemList = {
+		arg_7_0:_create_RougeFactionItemSelected_DescItem(1),
+		(arg_7_0:_create_RougeFactionItemSelected_DescItem(2))
 	}
 end
 
-function slot0._onTouchScreenUp(slot0)
-	if slot0._showTips then
-		slot0._showTips = false
+function var_0_0._onTouchScreenUp(arg_8_0)
+	if arg_8_0._showTips then
+		arg_8_0._showTips = false
 
 		return
 	end
 
-	gohelper.setActive(slot0._godetail2, false)
-	slot0:_refreshAllBtnStatus()
+	gohelper.setActive(arg_8_0._godetail2, false)
+	arg_8_0:_refreshAllBtnStatus()
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_9_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_10_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txtname.text = slot1.name
-	slot0._txtcoin.text = slot1.coin
-	slot0._txtbag.text = tostring(slot1.power) .. "/" .. tostring(slot1.powerLimit)
-	slot0._txtgroup.text = slot1.capacity
-	slot0._txtscrollDesc.text = slot1.desc
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
+	arg_11_0._txtname.text = arg_11_1.name
+	arg_11_0._txtcoin.text = arg_11_1.coin
+	arg_11_0._txtbag.text = tostring(arg_11_1.power) .. "/" .. tostring(arg_11_1.powerLimit)
+	arg_11_0._txtgroup.text = arg_11_1.capacity
+	arg_11_0._txtscrollDesc.text = arg_11_1.desc
 
-	slot0:_initSkill()
-	slot0:_initOrRefreshDescItemList(slot1)
-	slot0:_initOrRefreshCollectonSlot(slot1)
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0._imageicon, string.format("%s_light", slot0._mo.icon))
+	arg_11_0:_initSkill()
+	arg_11_0:_initOrRefreshDescItemList(arg_11_1)
+	arg_11_0:_initOrRefreshCollectonSlot(arg_11_1)
+	UISpriteSetMgr.instance:setRouge2Sprite(arg_11_0._imageicon, string.format("%s_light", arg_11_0._mo.icon))
 
-	if RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Faction, slot0._mo.id) ~= nil then
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(RougeOutsideModel.instance:season(), RougeEnum.FavoriteType.Faction, slot0._mo.id)
+	if RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Faction, arg_11_0._mo.id) ~= nil then
+		local var_11_0 = RougeOutsideModel.instance:season()
+
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_11_0, RougeEnum.FavoriteType.Faction, arg_11_0._mo.id)
 	end
 end
 
-function slot0._initOrRefreshCollectonSlot(slot0, slot1)
-	if not slot0._collectionSlotComp then
-		slot0._collectionSlotComp = RougeCollectionSlotComp.Get(slot0._gobag, RougeCollectionHelper.StyleShowCollectionSlotParam)
+function var_0_0._initOrRefreshCollectonSlot(arg_12_0, arg_12_1)
+	if not arg_12_0._collectionSlotComp then
+		arg_12_0._collectionSlotComp = RougeCollectionSlotComp.Get(arg_12_0._gobag, RougeCollectionHelper.StyleShowCollectionSlotParam)
 	end
 
-	slot2 = slot1.layoutId
-	slot3 = RougeCollectionConfig.instance:getCollectionInitialBagSize(slot2)
+	local var_12_0 = arg_12_1.layoutId
+	local var_12_1 = RougeCollectionConfig.instance:getCollectionInitialBagSize(var_12_0)
+	local var_12_2 = arg_12_0:_createInitialCollections(var_12_0)
 
-	slot0._collectionSlotComp:onUpdateMO(slot3.col, slot3.row, slot0:_createInitialCollections(slot2))
+	arg_12_0._collectionSlotComp:onUpdateMO(var_12_1.col, var_12_1.row, var_12_2)
 end
 
-function slot0._createInitialCollections(slot0, slot1)
-	if not RougeCollectionConfig.instance:getStyleInitialCollections(slot1) then
+function var_0_0._createInitialCollections(arg_13_0, arg_13_1)
+	local var_13_0 = RougeCollectionConfig.instance:getStyleInitialCollections(arg_13_1)
+
+	if not var_13_0 then
 		return
 	end
 
-	slot3 = {}
-	slot0._collectionCfgIds = {}
+	local var_13_1 = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot9 = RougeCollectionSlotMO.New()
+	arg_13_0._collectionCfgIds = {}
 
-		slot9:init({
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_2 = RougeCollectionSlotMO.New()
+		local var_13_3 = {
 			item = {
-				id = slot7,
-				itemId = slot8.cfgId
+				id = iter_13_0,
+				itemId = iter_13_1.cfgId
 			},
-			rotation = slot8.rotation,
-			pos = slot8.pos
-		})
-		table.insert(slot3, slot9)
-		table.insert(slot0._collectionCfgIds, slot8.cfgId)
+			rotation = iter_13_1.rotation,
+			pos = iter_13_1.pos
+		}
+
+		var_13_2:init(var_13_3)
+		table.insert(var_13_1, var_13_2)
+		table.insert(arg_13_0._collectionCfgIds, iter_13_1.cfgId)
 	end
 
-	return slot3
+	return var_13_1
 end
 
-function slot0._initSkill(slot0)
-	slot3 = {}
+function var_0_0._initSkill(arg_14_0)
+	local var_14_0 = arg_14_0:_getAllSkills()
+	local var_14_1 = RougeOutsideModel.instance:config()
+	local var_14_2 = {}
 
-	for slot7, slot8 in ipairs(slot0:_getAllSkills()) do
-		slot9 = slot0:_getOrCreateSkillItem(slot7)
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_3 = arg_14_0:_getOrCreateSkillItem(iter_14_0)
+		local var_14_4 = var_14_1:getSkillCo(iter_14_1.type, iter_14_1.skillId)
+		local var_14_5 = var_14_4 and var_14_4.icon
 
-		if not string.nilorempty(RougeOutsideModel.instance:config():getSkillCo(slot8.type, slot8.skillId) and slot10.icon) then
-			UISpriteSetMgr.instance:setRouge2Sprite(slot9.imagenormalicon, slot11, true)
-			UISpriteSetMgr.instance:setRouge2Sprite(slot9.imagselecticon, slot11 .. "_light", true)
+		if not string.nilorempty(var_14_5) then
+			UISpriteSetMgr.instance:setRouge2Sprite(var_14_3.imagenormalicon, var_14_5, true)
+			UISpriteSetMgr.instance:setRouge2Sprite(var_14_3.imagselecticon, var_14_5 .. "_light", true)
 		else
-			logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", slot8.type, slot8.skillId))
+			logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", iter_14_1.type, iter_14_1.skillId))
 		end
 
-		slot0["_skillDesc" .. slot7] = slot10.desc
-		slot0["_skillIcon" .. slot7] = slot10.icon
+		arg_14_0["_skillDesc" .. iter_14_0] = var_14_4.desc
+		arg_14_0["_skillIcon" .. iter_14_0] = var_14_4.icon
 
-		gohelper.setActive(slot9.viewGO, true)
+		gohelper.setActive(var_14_3.viewGO, true)
 
-		slot3[slot9] = true
+		var_14_2[var_14_3] = true
 	end
 
-	for slot7, slot8 in ipairs(slot0._skillItemList) do
-		if not slot3[slot8] then
-			gohelper.setActive(slot8.viewGO, false)
+	for iter_14_2, iter_14_3 in ipairs(arg_14_0._skillItemList) do
+		if not var_14_2[iter_14_3] then
+			gohelper.setActive(iter_14_3.viewGO, false)
 		end
 	end
 end
 
-function slot0._getOrCreateSkillItem(slot0, slot1)
-	if not (slot0._skillItemList and slot0._skillItemList[slot1]) then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._goskillitem, "item_" .. slot1)
-		slot2.gonormal = gohelper.findChild(slot2.viewGO, "go_normal")
-		slot2.imagenormalicon = gohelper.findChildImage(slot2.viewGO, "go_normal/image_icon")
-		slot2.goselect = gohelper.findChild(slot2.viewGO, "go_select")
-		slot2.imagselecticon = gohelper.findChildImage(slot2.viewGO, "go_select/image_icon")
-		slot2.btnclick = gohelper.findChildButtonWithAudio(slot2.viewGO, "btn_click")
+function var_0_0._getOrCreateSkillItem(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._skillItemList and arg_15_0._skillItemList[arg_15_1]
 
-		slot2.btnclick:AddClickListener(slot0._btnskillOnClick, slot0, slot1)
-		table.insert(slot0._skillItemList, slot2)
+	if not var_15_0 then
+		var_15_0 = arg_15_0:getUserDataTb_()
+		var_15_0.viewGO = gohelper.cloneInPlace(arg_15_0._goskillitem, "item_" .. arg_15_1)
+		var_15_0.gonormal = gohelper.findChild(var_15_0.viewGO, "go_normal")
+		var_15_0.imagenormalicon = gohelper.findChildImage(var_15_0.viewGO, "go_normal/image_icon")
+		var_15_0.goselect = gohelper.findChild(var_15_0.viewGO, "go_select")
+		var_15_0.imagselecticon = gohelper.findChildImage(var_15_0.viewGO, "go_select/image_icon")
+		var_15_0.btnclick = gohelper.findChildButtonWithAudio(var_15_0.viewGO, "btn_click")
+
+		var_15_0.btnclick:AddClickListener(arg_15_0._btnskillOnClick, arg_15_0, arg_15_1)
+		table.insert(arg_15_0._skillItemList, var_15_0)
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0._btnskillOnClick(slot0, slot1)
-	slot0._showTips = true
-	slot0._txtdec2.text = slot0["_skillDesc" .. slot1]
+function var_0_0._btnskillOnClick(arg_16_0, arg_16_1)
+	arg_16_0._showTips = true
+	arg_16_0._txtdec2.text = arg_16_0["_skillDesc" .. arg_16_1]
 
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0._imageskillicon, slot0["_skillIcon" .. slot1], true)
-	gohelper.setActive(slot0._godetail2, false)
-	gohelper.setActive(slot0._godetail2, true)
-	slot0:_refreshAllBtnStatus(slot1)
+	UISpriteSetMgr.instance:setRouge2Sprite(arg_16_0._imageskillicon, arg_16_0["_skillIcon" .. arg_16_1], true)
+	gohelper.setActive(arg_16_0._godetail2, false)
+	gohelper.setActive(arg_16_0._godetail2, true)
+	arg_16_0:_refreshAllBtnStatus(arg_16_1)
 end
 
-function slot0._removeAllSkillClickListener(slot0)
-	if slot0._skillItemList then
-		for slot4, slot5 in pairs(slot0._skillItemList) do
-			if slot5.btnclick then
-				slot5.btnclick:RemoveClickListener()
+function var_0_0._removeAllSkillClickListener(arg_17_0)
+	if arg_17_0._skillItemList then
+		for iter_17_0, iter_17_1 in pairs(arg_17_0._skillItemList) do
+			if iter_17_1.btnclick then
+				iter_17_1.btnclick:RemoveClickListener()
 			end
 		end
 	end
 end
 
-function slot0._getAllSkills(slot0)
-	for slot6, slot7 in ipairs(string.splitToNumber(slot0._mo.activeSkills, "#")) do
-		table.insert({}, {
+function var_0_0._getAllSkills(arg_18_0)
+	local var_18_0 = {}
+	local var_18_1 = string.splitToNumber(arg_18_0._mo.activeSkills, "#")
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		table.insert(var_18_0, {
 			type = RougeEnum.SkillType.Style,
-			skillId = slot7
+			skillId = iter_18_1
 		})
 	end
 
-	for slot7, slot8 in ipairs(string.splitToNumber(slot0._mo.mapSkills, "#")) do
-		table.insert(slot1, {
+	local var_18_2 = string.splitToNumber(arg_18_0._mo.mapSkills, "#")
+
+	for iter_18_2, iter_18_3 in ipairs(var_18_2) do
+		table.insert(var_18_0, {
 			type = RougeEnum.SkillType.Map,
-			skillId = slot8
+			skillId = iter_18_3
 		})
 	end
 
-	for slot8, slot9 in ipairs(RougeDLCConfig101.instance:getStyleUnlockSkills(slot0._mo.id) or {}) do
-		table.insert(slot1, {
-			type = slot9.type,
-			skillId = slot9.skillId
+	local var_18_3 = RougeDLCConfig101.instance:getStyleUnlockSkills(arg_18_0._mo.id)
+
+	for iter_18_4, iter_18_5 in ipairs(var_18_3 or {}) do
+		table.insert(var_18_0, {
+			type = iter_18_5.type,
+			skillId = iter_18_5.skillId
 		})
 	end
 
-	return slot1
+	return var_18_0
 end
 
-function slot0._createItem(slot0, slot1, slot2)
-	slot4 = slot2.New(slot0)
+function var_0_0._createItem(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = gohelper.cloneInPlace(arg_19_1, arg_19_2.__cname)
+	local var_19_1 = arg_19_2.New(arg_19_0)
 
-	slot4:init(gohelper.cloneInPlace(slot1, slot2.__cname))
+	var_19_1:init(var_19_0)
 
-	return slot4
+	return var_19_1
 end
 
-function slot0._create_RougeFactionItemSelected_DescItem(slot0, slot1)
-	slot2 = slot0:_createItem(slot0._godescitem, RougeFactionItemSelected_DescItem)
+function var_0_0._create_RougeFactionItemSelected_DescItem(arg_20_0, arg_20_1)
+	arg_20_1 = arg_20_1 or #arg_20_0._descItemList
 
-	slot2:setIndex(slot1 or #slot0._descItemList)
+	local var_20_0 = arg_20_0:_createItem(arg_20_0._godescitem, RougeFactionItemSelected_DescItem)
 
-	return slot2
+	var_20_0:setIndex(arg_20_1)
+
+	return var_20_0
 end
 
-function slot0._initOrRefreshDescItemList(slot0, slot1)
-	for slot6, slot7 in ipairs(RougeConfig1.instance:calcStyleCOPassiveSkillDescsList(slot1)) do
-		if not slot0._descItemList[slot6] then
-			slot0._descItemList[slot6] = slot0:_create_RougeFactionItemSelected_DescItem(slot6)
+function var_0_0._initOrRefreshDescItemList(arg_21_0, arg_21_1)
+	local var_21_0 = RougeConfig1.instance:calcStyleCOPassiveSkillDescsList(arg_21_1)
+
+	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+		local var_21_1 = arg_21_0._descItemList[iter_21_0]
+
+		if not var_21_1 then
+			var_21_1 = arg_21_0:_create_RougeFactionItemSelected_DescItem(iter_21_0)
+			arg_21_0._descItemList[iter_21_0] = var_21_1
 		end
 
-		slot8:setData(slot7)
+		var_21_1:setData(iter_21_1)
 	end
 
-	for slot6 = #slot2 + 1, #slot0._descItemList do
-		slot0._descItemList[slot6]:setData(nil)
+	for iter_21_2 = #var_21_0 + 1, #arg_21_0._descItemList do
+		arg_21_0._descItemList[iter_21_2]:setData(nil)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_22_0, arg_22_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, slot0._onTouchScreenUp, slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_descItemList")
+function var_0_0.onDestroyView(arg_23_0)
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_23_0._onTouchScreenUp, arg_23_0)
+	GameUtil.onDestroyViewMemberList(arg_23_0, "_descItemList")
 
-	if slot0._collectionSlotComp then
-		slot0._collectionSlotComp:destroy()
+	if arg_23_0._collectionSlotComp then
+		arg_23_0._collectionSlotComp:destroy()
 
-		slot0._collectionSlotComp = nil
+		arg_23_0._collectionSlotComp = nil
 	end
 
-	slot0:_removeAllSkillClickListener()
+	arg_23_0:_removeAllSkillClickListener()
 end
 
-return slot0
+return var_0_0

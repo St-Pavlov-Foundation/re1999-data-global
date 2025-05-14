@@ -1,174 +1,192 @@
-module("modules.logic.versionactivity2_1.aergusi.model.AergusiModel", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.model.AergusiModel", package.seeall)
 
-slot0 = class("AergusiModel", BaseModel)
+local var_0_0 = class("AergusiModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._episodeInfos = {}
-	slot0._evidenceDicts = {}
-	slot0._curEpisodeId = 0
-	slot0._curClueId = 0
-	slot0._readClueList = {}
-	slot0._unlockProcess = {
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._episodeInfos = {}
+	arg_2_0._evidenceDicts = {}
+	arg_2_0._curEpisodeId = 0
+	arg_2_0._curClueId = 0
+	arg_2_0._readClueList = {}
+	arg_2_0._unlockProcess = {
 		0,
 		0
 	}
 end
 
-function slot0.setEpisodeInfos(slot0, slot1)
-	slot0._episodeInfos = {}
+function var_0_0.setEpisodeInfos(arg_3_0, arg_3_1)
+	arg_3_0._episodeInfos = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = AergusiEpisodeMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = AergusiEpisodeMo.New()
 
-		slot7:init(slot6)
+		var_3_0:init(iter_3_1)
 
-		slot0._episodeInfos[slot6.episodeId] = slot7
+		arg_3_0._episodeInfos[iter_3_1.episodeId] = var_3_0
 	end
 end
 
-function slot0.getEpisodeInfo(slot0, slot1)
-	return slot0._episodeInfos[slot1]
+function var_0_0.getEpisodeInfo(arg_4_0, arg_4_1)
+	return arg_4_0._episodeInfos[arg_4_1]
 end
 
-function slot0.getEpisodeInfos(slot0)
-	function (slot0)
-		slot1 = AergusiConfig.instance:getEpisodeConfigs()
+function var_0_0.getEpisodeInfos(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = arg_5_0:getFirstEpisode()
 
-		table.insert(uv0, slot1[slot0])
+	local function var_5_2(arg_6_0)
+		local var_6_0 = AergusiConfig.instance:getEpisodeConfigs()
 
-		for slot5, slot6 in pairs(slot1) do
-			if slot6.preEpisodeId == slot0 then
-				return uv1(slot6.episodeId)
+		table.insert(var_5_0, var_6_0[arg_6_0])
+
+		for iter_6_0, iter_6_1 in pairs(var_6_0) do
+			if iter_6_1.preEpisodeId == arg_6_0 then
+				return var_5_2(iter_6_1.episodeId)
 			end
 		end
-	end(slot0:getFirstEpisode())
+	end
 
-	return {}
+	var_5_2(var_5_1)
+
+	return var_5_0
 end
 
-function slot0.getMaxUnlockEpisodeIndex(slot0)
-	for slot5 = 1, #slot0:getEpisodeInfos() do
-		if not slot0:isEpisodeUnlock(slot1[slot5].episodeId) and slot0:isEpisodeUnlock(slot1[slot5].preEpisodeId) then
-			return slot5 - 1
+function var_0_0.getMaxUnlockEpisodeIndex(arg_7_0)
+	local var_7_0 = arg_7_0:getEpisodeInfos()
+
+	for iter_7_0 = 1, #var_7_0 do
+		if not arg_7_0:isEpisodeUnlock(var_7_0[iter_7_0].episodeId) and arg_7_0:isEpisodeUnlock(var_7_0[iter_7_0].preEpisodeId) then
+			return iter_7_0 - 1
 		end
 	end
 
-	return #slot1
+	return #var_7_0
 end
 
-function slot0.getFirstEpisode(slot0)
-	for slot5, slot6 in pairs(AergusiConfig.instance:getEpisodeConfigs()) do
-		if slot6.preEpisodeId == 0 then
-			return slot6.episodeId
-		end
-	end
+function var_0_0.getFirstEpisode(arg_8_0)
+	local var_8_0 = AergusiConfig.instance:getEpisodeConfigs()
 
-	return 0
-end
-
-function slot0.getEpisodeNextEpisode(slot0, slot1)
-	for slot6, slot7 in pairs(AergusiConfig.instance:getEpisodeConfigs()) do
-		if slot7.preEpisodeId == slot1 then
-			return slot7.episodeId
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		if iter_8_1.preEpisodeId == 0 then
+			return iter_8_1.episodeId
 		end
 	end
 
 	return 0
 end
 
-function slot0.getEpisodeIndex(slot0, slot1)
-	for slot6 = 1, #slot0:getEpisodeInfos() do
-		if slot2[slot6].episodeId == slot1 then
-			return slot6
+function var_0_0.getEpisodeNextEpisode(arg_9_0, arg_9_1)
+	local var_9_0 = AergusiConfig.instance:getEpisodeConfigs()
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		if iter_9_1.preEpisodeId == arg_9_1 then
+			return iter_9_1.episodeId
 		end
 	end
 
 	return 0
 end
 
-function slot0.getNewFinishEpisode(slot0)
-	return slot0._newFinishEpisode or -1
+function var_0_0.getEpisodeIndex(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getEpisodeInfos()
+
+	for iter_10_0 = 1, #var_10_0 do
+		if var_10_0[iter_10_0].episodeId == arg_10_1 then
+			return iter_10_0
+		end
+	end
+
+	return 0
 end
 
-function slot0.setNewFinishEpisode(slot0, slot1)
-	slot0._newFinishEpisode = slot1
+function var_0_0.getNewFinishEpisode(arg_11_0)
+	return arg_11_0._newFinishEpisode or -1
 end
 
-function slot0.getNewUnlockEpisode(slot0)
-	return slot0._newUnlockEpisode or -1
+function var_0_0.setNewFinishEpisode(arg_12_0, arg_12_1)
+	arg_12_0._newFinishEpisode = arg_12_1
 end
 
-function slot0.setNewUnlockEpisode(slot0, slot1)
-	slot0._newUnlockEpisode = slot1
+function var_0_0.getNewUnlockEpisode(arg_13_0)
+	return arg_13_0._newUnlockEpisode or -1
 end
 
-function slot0.isStoryEpisode(slot0, slot1)
-	return AergusiConfig.instance:getEpisodeConfig(nil, slot1).evidenceId == ""
+function var_0_0.setNewUnlockEpisode(arg_14_0, arg_14_1)
+	arg_14_0._newUnlockEpisode = arg_14_1
 end
 
-function slot0.getMaxPassedEpisode(slot0)
-	slot2 = 0
+function var_0_0.isStoryEpisode(arg_15_0, arg_15_1)
+	return AergusiConfig.instance:getEpisodeConfig(nil, arg_15_1).evidenceId == ""
+end
 
-	for slot6, slot7 in pairs(AergusiConfig.instance:getEpisodeConfigs()) do
-		if slot7.preEpisodeId > 0 and slot0:isEpisodePassed(slot7.preEpisodeId) then
-			if not slot0:isEpisodePassed(slot7.episodeId) then
-				return slot7.preEpisodeId
+function var_0_0.getMaxPassedEpisode(arg_16_0)
+	local var_16_0 = AergusiConfig.instance:getEpisodeConfigs()
+	local var_16_1 = 0
+
+	for iter_16_0, iter_16_1 in pairs(var_16_0) do
+		local var_16_2 = arg_16_0:isEpisodePassed(iter_16_1.episodeId)
+
+		if iter_16_1.preEpisodeId > 0 and arg_16_0:isEpisodePassed(iter_16_1.preEpisodeId) then
+			if not var_16_2 then
+				return iter_16_1.preEpisodeId
 			else
-				slot2 = slot7.episodeId
+				var_16_1 = iter_16_1.episodeId
 			end
 		end
 	end
 
-	return slot2
+	return var_16_1
 end
 
-function slot0.setCurEpisode(slot0, slot1)
-	slot0._curEpisodeId = slot1
+function var_0_0.setCurEpisode(arg_17_0, arg_17_1)
+	arg_17_0._curEpisodeId = arg_17_1
 end
 
-function slot0.getCurEpisode(slot0)
-	return slot0._curEpisodeId
+function var_0_0.getCurEpisode(arg_18_0)
+	return arg_18_0._curEpisodeId
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	if AergusiEnum.ProgressState.Finished <= slot0._episodeInfos[slot1].episodeState then
+function var_0_0.isEpisodeUnlock(arg_19_0, arg_19_1)
+	if arg_19_0._episodeInfos[arg_19_1].episodeState >= AergusiEnum.ProgressState.Finished then
 		return true
 	else
-		if not AergusiConfig.instance:getEpisodeConfig(nil, slot1).preEpisodeId or slot2 == 0 then
+		local var_19_0 = AergusiConfig.instance:getEpisodeConfig(nil, arg_19_1).preEpisodeId
+
+		if not var_19_0 or var_19_0 == 0 then
 			return true
 		end
 
-		return AergusiEnum.ProgressState.Finished <= slot0._episodeInfos[slot2].episodeState
+		return arg_19_0._episodeInfos[var_19_0].episodeState >= AergusiEnum.ProgressState.Finished
 	end
 end
 
-function slot0.isEpisodePassed(slot0, slot1)
-	return slot0._episodeInfos[slot1] and AergusiEnum.ProgressState.Finished <= slot0._episodeInfos[slot1].episodeState
+function var_0_0.isEpisodePassed(arg_20_0, arg_20_1)
+	return arg_20_0._episodeInfos[arg_20_1] and arg_20_0._episodeInfos[arg_20_1].episodeState >= AergusiEnum.ProgressState.Finished
 end
 
-function slot0.setReadClueList(slot0, slot1)
-	slot0._readClueList = {}
+function var_0_0.setReadClueList(arg_21_0, arg_21_1)
+	arg_21_0._readClueList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0._readClueList, slot6)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
+		table.insert(arg_21_0._readClueList, iter_21_1)
 	end
 end
 
-function slot0.isClueReaded(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._readClueList) do
-		if slot6 == slot1 then
+function var_0_0.isClueReaded(arg_22_0, arg_22_1)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._readClueList) do
+		if iter_22_1 == arg_22_1 then
 			return true
 		end
 	end
 
-	if slot0._evidenceDicts[slot0._curEpisodeId] then
-		for slot5, slot6 in pairs(slot0._evidenceDicts[slot0._curEpisodeId].clueInfos) do
-			if slot6.clueId == slot1 then
-				return slot6.status == 1
+	if arg_22_0._evidenceDicts[arg_22_0._curEpisodeId] then
+		for iter_22_2, iter_22_3 in pairs(arg_22_0._evidenceDicts[arg_22_0._curEpisodeId].clueInfos) do
+			if iter_22_3.clueId == arg_22_1 then
+				return iter_22_3.status == 1
 			end
 		end
 	end
@@ -176,46 +194,47 @@ function slot0.isClueReaded(slot0, slot1)
 	return false
 end
 
-function slot0.setClueReaded(slot0, slot1)
-	table.insert(slot0._readClueList, slot1)
+function var_0_0.setClueReaded(arg_23_0, arg_23_1)
+	table.insert(arg_23_0._readClueList, arg_23_1)
 end
 
-function slot0.setEvidenceInfo(slot0, slot1, slot2)
-	if not slot0._evidenceDicts[slot1] then
-		slot0._evidenceDicts[slot1] = AergusiEvidenceMo.New()
+function var_0_0.setEvidenceInfo(arg_24_0, arg_24_1, arg_24_2)
+	if not arg_24_0._evidenceDicts[arg_24_1] then
+		arg_24_0._evidenceDicts[arg_24_1] = AergusiEvidenceMo.New()
 
-		slot0._evidenceDicts[slot1]:init(slot2)
+		arg_24_0._evidenceDicts[arg_24_1]:init(arg_24_2)
 	else
-		slot0._evidenceDicts[slot1]:update(slot2)
+		arg_24_0._evidenceDicts[arg_24_1]:update(arg_24_2)
 	end
 end
 
-function slot0.setEpisodeUnlockAutoTipProcess(slot0, slot1)
-	if slot1 == "" then
-		slot0._unlockProcess = {
+function var_0_0.setEpisodeUnlockAutoTipProcess(arg_25_0, arg_25_1)
+	if arg_25_1 == "" then
+		arg_25_0._unlockProcess = {
 			0,
 			0
 		}
 	else
-		slot2 = string.splitToNumber(slot1, "_")
-		slot0._unlockProcess = {
-			slot2[1],
-			slot2[2]
+		local var_25_0 = string.splitToNumber(arg_25_1, "_")
+
+		arg_25_0._unlockProcess = {
+			var_25_0[1],
+			var_25_0[2]
 		}
 	end
 end
 
-function slot0.getUnlockAutoTipProcess(slot0)
-	return slot0._unlockProcess
+function var_0_0.getUnlockAutoTipProcess(arg_26_0)
+	return arg_26_0._unlockProcess
 end
 
-function slot0.getEvidenceInfo(slot0, slot1)
-	return slot0._evidenceDicts[slot1]
+function var_0_0.getEvidenceInfo(arg_27_0, arg_27_1)
+	return arg_27_0._evidenceDicts[arg_27_1]
 end
 
-function slot0.hasClueNotRead(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if not slot0:isClueReaded(slot6.clueId) then
+function var_0_0.hasClueNotRead(arg_28_0, arg_28_1)
+	for iter_28_0, iter_28_1 in pairs(arg_28_1) do
+		if not arg_28_0:isClueReaded(iter_28_1.clueId) then
 			return true
 		end
 	end
@@ -223,51 +242,64 @@ function slot0.hasClueNotRead(slot0, slot1)
 	return false
 end
 
-function slot0.getAllClues(slot0, slot1)
-	if not slot0:isEpisodePassed(slot0:getEpisodeInfos()[1].episodeId) then
+function var_0_0.getAllClues(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:getEpisodeInfos()
+
+	if not arg_29_0:isEpisodePassed(var_29_0[1].episodeId) then
 		return {}
 	end
 
-	for slot6 = 1, #slot2 do
-		if not slot0:isEpisodePassed(slot2[slot6].episodeId) and slot0:isEpisodePassed(AergusiConfig.instance:getEpisodeConfig(nil, slot2[slot6].episodeId).preEpisodeId) then
-			return slot0:getEpisodeClueConfigs(slot7.preEpisodeId, slot1)
+	for iter_29_0 = 1, #var_29_0 do
+		if not arg_29_0:isEpisodePassed(var_29_0[iter_29_0].episodeId) then
+			local var_29_1 = AergusiConfig.instance:getEpisodeConfig(nil, var_29_0[iter_29_0].episodeId)
+
+			if arg_29_0:isEpisodePassed(var_29_1.preEpisodeId) then
+				return arg_29_0:getEpisodeClueConfigs(var_29_1.preEpisodeId, arg_29_1)
+			end
 		end
 	end
 
-	return slot0:getEpisodeClueConfigs(slot2[#slot2].episodeId, slot1)
+	return arg_29_0:getEpisodeClueConfigs(var_29_0[#var_29_0].episodeId, arg_29_1)
 end
 
-function slot0.getEpisodeClueConfigs(slot0, slot1, slot2)
-	slot3 = slot0:isEpisodePassed(slot1)
-	slot4 = {}
+function var_0_0.getEpisodeClueConfigs(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = arg_30_0:isEpisodePassed(arg_30_1)
+	local var_30_1 = {}
 
-	if slot2 then
-		for slot9, slot10 in pairs(slot0._evidenceDicts[slot1].clueInfos) do
-			table.insert(slot4, AergusiConfig.instance:getClueConfig(slot10.clueId))
+	if arg_30_2 then
+		local var_30_2 = arg_30_0._evidenceDicts[arg_30_1].clueInfos
+
+		for iter_30_0, iter_30_1 in pairs(var_30_2) do
+			local var_30_3 = AergusiConfig.instance:getClueConfig(iter_30_1.clueId)
+
+			table.insert(var_30_1, var_30_3)
 		end
 	else
-		slot5 = {}
+		local var_30_4 = {}
+		local var_30_5 = AergusiConfig.instance:getClueConfigs()
 
-		for slot10, slot11 in pairs(AergusiConfig.instance:getClueConfigs()) do
-			if slot3 and slot11.episodeId < slot1 or slot11.episodeId <= slot1 then
-				table.insert(slot4, slot11)
+		for iter_30_2, iter_30_3 in pairs(var_30_5) do
+			if var_30_0 and arg_30_1 > iter_30_3.episodeId or arg_30_1 >= iter_30_3.episodeId then
+				table.insert(var_30_1, iter_30_3)
 
-				if slot11.materialId ~= "" then
-					for slot17, slot18 in ipairs(string.splitToNumber(slot11.materialId, "#")) do
-						table.insert(slot5, slot18)
+				if iter_30_3.materialId ~= "" then
+					local var_30_6 = string.splitToNumber(iter_30_3.materialId, "#")
+
+					for iter_30_4, iter_30_5 in ipairs(var_30_6) do
+						table.insert(var_30_4, iter_30_5)
 					end
 				end
 
-				if slot11.replaceId ~= 0 then
-					table.insert(slot5, slot11.replaceId)
+				if iter_30_3.replaceId ~= 0 then
+					table.insert(var_30_4, iter_30_3.replaceId)
 				end
 			end
 		end
 
-		for slot10 = #slot4, 1, -1 do
-			for slot14, slot15 in pairs(slot5) do
-				if slot4[slot10].clueId == slot15 then
-					table.remove(slot4, slot10)
+		for iter_30_6 = #var_30_1, 1, -1 do
+			for iter_30_7, iter_30_8 in pairs(var_30_4) do
+				if var_30_1[iter_30_6].clueId == iter_30_8 then
+					table.remove(var_30_1, iter_30_6)
 
 					break
 				end
@@ -275,64 +307,68 @@ function slot0.getEpisodeClueConfigs(slot0, slot1, slot2)
 		end
 	end
 
-	table.sort(slot4, function (slot0, slot1)
-		return slot0.clueId < slot1.clueId
+	table.sort(var_30_1, function(arg_31_0, arg_31_1)
+		return arg_31_0.clueId < arg_31_1.clueId
 	end)
 
-	return slot4
+	return var_30_1
 end
 
-function slot0.getCouldMergeClues(slot0, slot1)
-	slot2 = {}
-	slot3 = {
-		[slot8.clueId] = slot8
-	}
+function var_0_0.getCouldMergeClues(arg_32_0, arg_32_1)
+	local var_32_0 = {}
+	local var_32_1 = {}
 
-	for slot7, slot8 in pairs(slot1) do
-		-- Nothing
+	for iter_32_0, iter_32_1 in pairs(arg_32_1) do
+		var_32_1[iter_32_1.clueId] = iter_32_1
 	end
 
-	for slot8, slot9 in pairs(AergusiConfig.instance:getClueConfigs()) do
-		if slot9.materialId ~= "" and slot3[string.splitToNumber(slot9.materialId, "#")[1]] and slot3[slot10[2]] then
-			table.insert(slot2, {
-				slot10[1],
-				slot10[2]
-			})
+	local var_32_2 = AergusiConfig.instance:getClueConfigs()
+
+	for iter_32_2, iter_32_3 in pairs(var_32_2) do
+		if iter_32_3.materialId ~= "" then
+			local var_32_3 = string.splitToNumber(iter_32_3.materialId, "#")
+
+			if var_32_1[var_32_3[1]] and var_32_1[var_32_3[2]] then
+				table.insert(var_32_0, {
+					var_32_3[1],
+					var_32_3[2]
+				})
+			end
 		end
 	end
 
-	return slot2
+	return var_32_0
 end
 
-function slot0.getCurClueId(slot0)
-	return slot0._curClueId
+function var_0_0.getCurClueId(arg_33_0)
+	return arg_33_0._curClueId
 end
 
-function slot0.setCurClueId(slot0, slot1)
-	slot0._curClueId = slot1
+function var_0_0.setCurClueId(arg_34_0, arg_34_1)
+	arg_34_0._curClueId = arg_34_1
 end
 
-function slot0.setClueMergePosSelect(slot0, slot1, slot2)
-	slot0._mergeClueState.pos[slot1].selected = slot2
-	slot0._mergeClueState.pos[3 - slot1].selected = false
+function var_0_0.setClueMergePosSelect(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_0._mergeClueState.pos[arg_35_1].selected = arg_35_2
+	arg_35_0._mergeClueState.pos[3 - arg_35_1].selected = false
 end
 
-function slot0.getClueMergePosSelectState(slot0, slot1)
-	return slot0._mergeClueState.pos[slot1].selected
+function var_0_0.getClueMergePosSelectState(arg_36_0, arg_36_1)
+	return arg_36_0._mergeClueState.pos[arg_36_1].selected
 end
 
-function slot0.setClueMergePosClueId(slot0, slot1, slot2)
-	slot0._mergeClueState.pos[slot1].clueId = slot2
+function var_0_0.setClueMergePosClueId(arg_37_0, arg_37_1, arg_37_2)
+	arg_37_0._mergeClueState.pos[arg_37_1].clueId = arg_37_2
 
-	if slot2 > 0 and not slot0._mergeClueState.pos[3 - slot1].selected and slot0._mergeClueState.pos[3 - slot1].clueId <= 0 then
-		slot0._mergeClueState.pos[slot1].selected = false
-		slot0._mergeClueState.pos[3 - slot1].selected = true
+	if arg_37_2 > 0 and not arg_37_0._mergeClueState.pos[3 - arg_37_1].selected and arg_37_0._mergeClueState.pos[3 - arg_37_1].clueId <= 0 then
+		arg_37_0._mergeClueState.pos[arg_37_1].selected = false
+		arg_37_0._mergeClueState.pos[3 - arg_37_1].selected = true
 	end
 end
 
-function slot0.isClueInMerge(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._mergeClueState.pos) do
-		if slot6.clueId == slot1 then
+function var_0_0.isClueInMerge(arg_38_0, arg_38_1)
+	for iter_38_0, iter_38_1 in pairs(arg_38_0._mergeClueState.pos) do
+		if iter_38_1.clueId == arg_38_1 then
 			return true
 		end
 	end
@@ -340,73 +376,75 @@ function slot0.isClueInMerge(slot0, slot1)
 	return false
 end
 
-function slot0.getSelectPos(slot0)
-	if not slot0._mergeClueState or not slot0._mergeClueState.pos then
+function var_0_0.getSelectPos(arg_39_0)
+	if not arg_39_0._mergeClueState or not arg_39_0._mergeClueState.pos then
 		return 0
 	end
 
-	for slot4, slot5 in pairs(slot0._mergeClueState.pos) do
-		if slot5.selected then
-			return slot4
+	for iter_39_0, iter_39_1 in pairs(arg_39_0._mergeClueState.pos) do
+		if iter_39_1.selected then
+			return iter_39_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.getMergeClueState(slot0)
-	return slot0._mergeClueState
+function var_0_0.getMergeClueState(arg_40_0)
+	return arg_40_0._mergeClueState
 end
 
-function slot0.clearMergePosState(slot0)
-	if not slot0._mergeClueState then
-		slot0._mergeClueState = {}
+function var_0_0.clearMergePosState(arg_41_0)
+	if not arg_41_0._mergeClueState then
+		arg_41_0._mergeClueState = {}
 	end
 
-	slot0._mergeClueState.open = false
+	arg_41_0._mergeClueState.open = false
 
-	for slot4 = 1, 2 do
-		if not slot0._mergeClueState.pos then
-			slot0._mergeClueState.pos = {}
+	for iter_41_0 = 1, 2 do
+		if not arg_41_0._mergeClueState.pos then
+			arg_41_0._mergeClueState.pos = {}
 		end
 
-		if not slot0._mergeClueState.pos[slot4] then
-			slot0._mergeClueState.pos[slot4] = {}
+		if not arg_41_0._mergeClueState.pos[iter_41_0] then
+			arg_41_0._mergeClueState.pos[iter_41_0] = {}
 		end
 
-		slot0._mergeClueState.pos[slot4].selected = slot4 == 1
-		slot0._mergeClueState.pos[slot4].clueId = 0
+		arg_41_0._mergeClueState.pos[iter_41_0].selected = iter_41_0 == 1
+		arg_41_0._mergeClueState.pos[iter_41_0].clueId = 0
 	end
 end
 
-function slot0.setMergeClueOpen(slot0, slot1)
-	slot0._mergeClueState.open = slot1
+function var_0_0.setMergeClueOpen(arg_42_0, arg_42_1)
+	arg_42_0._mergeClueState.open = arg_42_1
 end
 
-function slot0.isMergeClueOpen(slot0)
-	return slot0._mergeClueState.open
+function var_0_0.isMergeClueOpen(arg_43_0)
+	return arg_43_0._mergeClueState.open
 end
 
-function slot0.getMergeClues(slot0)
-	slot1 = {}
+function var_0_0.getMergeClues(arg_44_0)
+	local var_44_0 = {}
 
-	for slot5 = 1, 2 do
-		table.insert(slot1, slot0._mergeClueState.pos[slot5].clueId)
+	for iter_44_0 = 1, 2 do
+		table.insert(var_44_0, arg_44_0._mergeClueState.pos[iter_44_0].clueId)
 	end
 
-	return slot1
+	return var_44_0
 end
 
-function slot0.getTargetMergeClue(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(AergusiConfig.instance:getClueConfigs()) do
-		if slot8.materialId == string.format("%s#%s", slot1, slot2) or slot8.materialId == string.format("%s#%s", slot2, slot1) then
-			return slot8.clueId
+function var_0_0.getTargetMergeClue(arg_45_0, arg_45_1, arg_45_2)
+	local var_45_0 = AergusiConfig.instance:getClueConfigs()
+
+	for iter_45_0, iter_45_1 in pairs(var_45_0) do
+		if iter_45_1.materialId == string.format("%s#%s", arg_45_1, arg_45_2) or iter_45_1.materialId == string.format("%s#%s", arg_45_2, arg_45_1) then
+			return iter_45_1.clueId
 		end
 	end
 
 	return 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

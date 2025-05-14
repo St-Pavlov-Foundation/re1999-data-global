@@ -1,17 +1,17 @@
-module("modules.logic.explore.model.mo.unit.ExploreStepUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreStepUnitMO", package.seeall)
 
-slot0 = pureTable("ExploreStepUnitMO", ExploreBaseUnitMO)
+local var_0_0 = pureTable("ExploreStepUnitMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.enterTriggerType = true
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.enterTriggerType = true
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_2_0)
 	return ExploreStepUnit
 end
 
-function slot0.isInActive(slot0)
-	return slot0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
+function var_0_0.isInActive(arg_3_0)
+	return arg_3_0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
 end
 
-return slot0
+return var_0_0

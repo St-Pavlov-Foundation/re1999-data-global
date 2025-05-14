@@ -1,52 +1,55 @@
-module("modules.logic.equip.view.EquipStoryView", package.seeall)
+﻿module("modules.logic.equip.view.EquipStoryView", package.seeall)
 
-slot0 = class("EquipStoryView", BaseView)
+local var_0_0 = class("EquipStoryView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txtnameEn = gohelper.findChildText(slot0.viewGO, "#txt_name/#txt_nameen")
-	slot0._goskillpos = gohelper.findChild(slot0.viewGO, "#go_skillpos")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtnameEn = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_nameen")
+	arg_1_0._goskillpos = gohelper.findChild(arg_1_0.viewGO, "#go_skillpos")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.txt_skilldesc = SLFramework.GameObjectHelper.FindChildComponent(slot0.viewGO, "desc/txt_skilldesc", typeof(TMPro.TextMeshProUGUI))
-	slot0._viewAnim = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.txt_skilldesc = SLFramework.GameObjectHelper.FindChildComponent(arg_4_0.viewGO, "desc/txt_skilldesc", typeof(TMPro.TextMeshProUGUI))
+	arg_4_0._viewAnim = gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.Animator))
 end
 
-function slot0.onOpen(slot0)
-	slot0._equipMO = slot0.viewContainer.viewParam.equipMO
-	slot0._equipId = slot0._equipMO and slot0._equipMO.config.id or slot0.viewContainer.viewParam.equipId
-	slot0._config = slot0._equipMO and slot0._equipMO.config or EquipConfig.instance:getEquipCo(slot0._equipId)
-	slot0._txtname.text = slot0._config.name
-	slot0._txtnameEn.text = slot0._config.name_en
-	slot0.txt_skilldesc.text = slot0._config.desc
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0._equipMO = arg_5_0.viewContainer.viewParam.equipMO
+	arg_5_0._equipId = arg_5_0._equipMO and arg_5_0._equipMO.config.id or arg_5_0.viewContainer.viewParam.equipId
+	arg_5_0._config = arg_5_0._equipMO and arg_5_0._equipMO.config or EquipConfig.instance:getEquipCo(arg_5_0._equipId)
+	arg_5_0._txtname.text = arg_5_0._config.name
+	arg_5_0._txtnameEn.text = arg_5_0._config.name_en
+	arg_5_0.txt_skilldesc.text = arg_5_0._config.desc
 
-	if slot0.viewContainer:getIsOpenLeftBackpack() then
-		slot0.viewContainer.equipView:showTitleAndCenter()
+	if arg_5_0.viewContainer:getIsOpenLeftBackpack() then
+		arg_5_0.viewContainer.equipView:showTitleAndCenter()
 	end
 
-	slot0._viewAnim:Play(UIAnimationName.Open)
+	arg_5_0._viewAnim:Play(UIAnimationName.Open)
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_6_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	slot0:playCloseAnimation()
+function var_0_0.onClose(arg_7_0)
+	arg_7_0:playCloseAnimation()
 end
 
-function slot0.playCloseAnimation(slot0)
-	slot0._viewAnim:Play(UIAnimationName.Close)
+function var_0_0.playCloseAnimation(arg_8_0)
+	arg_8_0._viewAnim:Play(UIAnimationName.Close)
 end
 
-return slot0
+return var_0_0

@@ -1,106 +1,114 @@
-module("modules.logic.room.view.critter.RoomCritterTrainItem", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterTrainItem", package.seeall)
 
-slot0 = class("RoomCritterTrainItem", ListScrollCellExtend)
+local var_0_0 = class("RoomCritterTrainItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "#go_icon")
-	slot0._goinfo = gohelper.findChild(slot0.viewGO, "#go_info")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_info/#txt_name")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_selected")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
-	slot0._scrollbase = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_base")
-	slot0._gobaseitem = gohelper.findChild(slot0.viewGO, "#scroll_base/viewport/content/#go_baseitem")
-	slot0._btnclickitem = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_clickitem")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_detail")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
+	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_info")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#txt_name")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+	arg_1_0._scrollbase = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_base")
+	arg_1_0._gobaseitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_base/viewport/content/#go_baseitem")
+	arg_1_0._btnclickitem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_clickitem")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_detail")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnclickitem:AddClickListener(slot0._btnclickitemOnClick, slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnclickitem:AddClickListener(arg_2_0._btnclickitemOnClick, arg_2_0)
+	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnclickitem:RemoveClickListener()
-	slot0._btndetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnclickitem:RemoveClickListener()
+	arg_3_0._btndetail:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0:_btnclickitemOnClick()
+function var_0_0._btnclickOnClick(arg_4_0)
+	arg_4_0:_btnclickitemOnClick()
 end
 
-function slot0._btndetailOnClick(slot0)
-	CritterController.instance:openRoomCritterDetailView(true, slot0._mo, true)
+function var_0_0._btndetailOnClick(arg_5_0)
+	CritterController.instance:openRoomCritterDetailView(true, arg_5_0._mo, true)
 end
 
-function slot0._btnclickitemOnClick(slot0)
-	if slot0._view and slot0._view.viewContainer then
-		slot0._view.viewContainer:dispatchEvent(CritterEvent.UITrainSelectCritter, slot0:getDataMO())
+function var_0_0._btnclickitemOnClick(arg_6_0)
+	if arg_6_0._view and arg_6_0._view.viewContainer then
+		arg_6_0._view.viewContainer:dispatchEvent(CritterEvent.UITrainSelectCritter, arg_6_0:getDataMO())
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goScrollbaseContent = gohelper.findChild(slot0.viewGO, "#scroll_base/viewport/content")
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._goScrollbaseContent = gohelper.findChild(arg_7_0.viewGO, "#scroll_base/viewport/content")
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_8_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_9_0)
+	return
 end
 
-function slot0.getDataMO(slot0)
-	return slot0._mo
+function var_0_0.getDataMO(arg_10_0)
+	return arg_10_0._mo
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
 
-	slot0:refreshUI()
+	arg_11_0:refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot1)
+function var_0_0.onSelect(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._goselected, arg_12_1)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	if slot0._mo then
-		if not slot0.critterIcon then
-			slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._goicon)
+function var_0_0.refreshUI(arg_14_0)
+	local var_14_0 = arg_14_0._mo
+
+	if var_14_0 then
+		if not arg_14_0.critterIcon then
+			arg_14_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_14_0._goicon)
 		end
 
-		slot0.critterIcon:setMOValue(slot1:getId(), slot1:getDefineId())
+		arg_14_0.critterIcon:setMOValue(var_14_0:getId(), var_14_0:getDefineId())
 
-		slot0._txtname.text = slot1:getName()
+		arg_14_0._txtname.text = var_14_0:getName()
 
-		slot0:_refreshLineLinkUI()
+		arg_14_0:_refreshLineLinkUI()
 	end
 end
 
-function slot0._refreshLineLinkUI(slot0)
-	if slot0._mo then
-		slot0._dataList = slot0._mo:getAttributeInfos()
+function var_0_0._refreshLineLinkUI(arg_15_0)
+	if arg_15_0._mo then
+		arg_15_0._dataList = arg_15_0._mo:getAttributeInfos()
 
-		gohelper.CreateObjList(slot0, slot0._onCritterArrComp, slot0._dataList, slot0._goScrollbaseContent, slot0._gobaseitem, RoomCritterAttrScrollCell)
+		local var_15_0 = arg_15_0._goScrollbaseContent
+		local var_15_1 = arg_15_0._gobaseitem
+
+		gohelper.CreateObjList(arg_15_0, arg_15_0._onCritterArrComp, arg_15_0._dataList, var_15_0, var_15_1, RoomCritterAttrScrollCell)
 	end
 end
 
-function slot0._onCritterArrComp(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
+function var_0_0._onCritterArrComp(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	arg_16_1:onUpdateMO(arg_16_2)
 
-	if not slot1._view then
-		slot1._view = slot0._view
+	if not arg_16_1._view then
+		arg_16_1._view = arg_16_0._view
 	end
 end
 
-slot0.prefabPath = "ui/viewres/room/critter/roomcrittertrainitem.prefab"
+var_0_0.prefabPath = "ui/viewres/room/critter/roomcrittertrainitem.prefab"
 
-return slot0
+return var_0_0

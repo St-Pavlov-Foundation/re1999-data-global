@@ -1,13 +1,13 @@
-module("modules.logic.scene.fight.comp.FightSceneViewComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneViewComp", package.seeall)
 
-slot0 = class("FightSceneViewComp", BaseSceneComp)
+local var_0_0 = class("FightSceneViewComp", BaseSceneComp)
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
+function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	ViewMgr.instance:openView(ViewName.FightSkillSelectView)
 	ViewMgr.instance:openView(ViewName.FightView)
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
+function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
 	ViewMgr.instance:closeView(ViewName.FightView)
 	ViewMgr.instance:closeView(ViewName.FightSkillSelectView, true)
 	ViewMgr.instance:closeView(ViewName.FightTechniqueView, true)
@@ -31,4 +31,4 @@ function slot0.onSceneClose(slot0, slot1, slot2)
 	ViewMgr.instance:closeView(ViewName.FightCardDeckView, true)
 end
 
-return slot0
+return var_0_0

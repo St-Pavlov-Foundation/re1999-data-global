@@ -1,39 +1,44 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepUpdateObjectData", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepUpdateObjectData", package.seeall)
 
-slot0 = class("YaXianStepUpdateObjectData", YaXianStepBase)
+local var_0_0 = class("YaXianStepUpdateObjectData", YaXianStepBase)
 
-function slot0.start(slot0)
-	slot1 = slot0.originData.object
-	slot0.interactId = slot1.id
-	slot2 = slot1.data
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.object
 
-	logNormal("start update object data : " .. slot0.interactId)
+	arg_1_0.interactId = var_1_0.id
 
-	if YaXianGameModel.instance:getInteractMo(slot0.interactId) then
-		slot3:updateDataByTableData(slot2)
+	local var_1_1 = var_1_0.data
 
-		if slot3.config.interactType == YaXianGameEnum.InteractType.Player then
-			slot0:handleUpdateSkillInfo(slot2 and slot2.skills)
-			slot0:handleUpdateEffects(slot2 and slot2.effects)
+	logNormal("start update object data : " .. arg_1_0.interactId)
+
+	local var_1_2 = YaXianGameModel.instance:getInteractMo(arg_1_0.interactId)
+
+	if var_1_2 then
+		var_1_2:updateDataByTableData(var_1_1)
+
+		if var_1_2.config.interactType == YaXianGameEnum.InteractType.Player then
+			arg_1_0:handleUpdateSkillInfo(var_1_1 and var_1_1.skills)
+			arg_1_0:handleUpdateEffects(var_1_1 and var_1_1.effects)
 		end
 	end
 
-	slot0:finish()
+	arg_1_0:finish()
 end
 
-function slot0.handleUpdateSkillInfo(slot0, slot1)
-	if YaXianGameModel.instance:updateSkillInfoAndCheckHasChange(slot1) then
+function var_0_0.handleUpdateSkillInfo(arg_2_0, arg_2_1)
+	if YaXianGameModel.instance:updateSkillInfoAndCheckHasChange(arg_2_1) then
 		YaXianGameController.instance:dispatchEvent(YaXianEvent.OnUpdateSkillInfo)
 	end
 end
 
-function slot0.handleUpdateEffects(slot0, slot1)
-	if YaXianGameModel.instance:updateEffectsAndCheckHasChange(slot1) then
+function var_0_0.handleUpdateEffects(arg_3_0, arg_3_1)
+	if YaXianGameModel.instance:updateEffectsAndCheckHasChange(arg_3_1) then
 		YaXianGameController.instance:dispatchEvent(YaXianEvent.OnUpdateEffectInfo)
 	end
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

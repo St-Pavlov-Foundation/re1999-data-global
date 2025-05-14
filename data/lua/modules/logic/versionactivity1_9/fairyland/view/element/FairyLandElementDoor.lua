@@ -1,52 +1,55 @@
-module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementDoor", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementDoor", package.seeall)
 
-slot0 = class("FairyLandElementDoor", FairyLandElementBase)
+local var_0_0 = class("FairyLandElementDoor", FairyLandElementBase)
 
-function slot0.onInitView(slot0)
-	slot0.animator = slot0._go:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.animator = arg_1_0._go:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.DoStairAnim, slot0.onDoStairAnim, slot0)
+	arg_1_0:addEventCb(FairyLandController.instance, FairyLandEvent.DoStairAnim, arg_1_0.onDoStairAnim, arg_1_0)
 end
 
-function slot0.getState(slot0)
-	if not FairyLandConfig.instance:getElementConfig(slot0:getElementId() - 1) or FairyLandModel.instance:isFinishElement(slot2) then
+function var_0_0.getState(arg_2_0)
+	local var_2_0 = arg_2_0:getElementId() - 1
+
+	if not FairyLandConfig.instance:getElementConfig(var_2_0) or FairyLandModel.instance:isFinishElement(var_2_0) then
 		return FairyLandEnum.ShapeState.CanClick
 	end
 
 	return FairyLandEnum.ShapeState.LockClick
 end
 
-function slot0.onClick(slot0)
-	if slot0:getState() == FairyLandEnum.ShapeState.CanClick and not slot0._elements:isMoveing() then
-		slot0:setFinish()
+function var_0_0.onClick(arg_3_0)
+	if arg_3_0:getState() == FairyLandEnum.ShapeState.CanClick and not arg_3_0._elements:isMoveing() then
+		arg_3_0:setFinish()
 	end
 end
 
-function slot0.finish(slot0)
-	FairyLandModel.instance:setPos(slot0:getPos(), true)
-	slot0._elements:characterMove()
-	slot0:onDestroy()
+function var_0_0.finish(arg_4_0)
+	FairyLandModel.instance:setPos(arg_4_0:getPos(), true)
+	arg_4_0._elements:characterMove()
+	arg_4_0:onDestroy()
 end
 
-function slot0.onDoStairAnim(slot0, slot1)
-	if slot1 == 46 then
-		slot0.animator:Play("door_01", 0, 0)
-	elseif slot1 == 48 then
-		slot0.animator:Play("door_02", 0, 0)
+function var_0_0.onDoStairAnim(arg_5_0, arg_5_1)
+	if arg_5_1 == 46 then
+		arg_5_0.animator:Play("door_01", 0, 0)
+	elseif arg_5_1 == 48 then
+		arg_5_0.animator:Play("door_02", 0, 0)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyElement()
+function var_0_0.onDestroy(arg_6_0)
+	arg_6_0:onDestroyElement()
 
-	if slot0.click then
-		slot0.click:RemoveClickListener()
+	if arg_6_0.click then
+		arg_6_0.click:RemoveClickListener()
 	end
 
-	slot0:__onDispose()
+	arg_6_0:__onDispose()
 end
 
-function slot0.onDestroyElement(slot0)
+function var_0_0.onDestroyElement(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

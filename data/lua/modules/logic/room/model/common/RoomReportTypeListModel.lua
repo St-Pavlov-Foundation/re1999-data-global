@@ -1,44 +1,46 @@
-module("modules.logic.room.model.common.RoomReportTypeListModel", package.seeall)
+﻿module("modules.logic.room.model.common.RoomReportTypeListModel", package.seeall)
 
-slot0 = class("RoomReportTypeListModel", ListScrollModel)
+local var_0_0 = class("RoomReportTypeListModel", ListScrollModel)
 
-function slot0.sortFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortFunc(arg_1_0, arg_1_1)
+	return arg_1_0.id < arg_1_1.id
 end
 
-function slot0.initType(slot0, slot1)
-	table.sort(slot1, slot0.sortFunc)
-	slot0:setList(slot1)
+function var_0_0.initType(arg_2_0, arg_2_1)
+	table.sort(arg_2_1, arg_2_0.sortFunc)
+	arg_2_0:setList(arg_2_1)
 end
 
-function slot0.setSelectId(slot0, slot1)
-	if slot0.selectId == slot1 then
+function var_0_0.setSelectId(arg_3_0, arg_3_1)
+	if arg_3_0.selectId == arg_3_1 then
 		return
 	end
 
-	slot0._selectId = slot1
+	arg_3_0._selectId = arg_3_1
 
-	slot0:_refreshSelect()
+	arg_3_0:_refreshSelect()
 end
 
-function slot0.isSelect(slot0, slot1)
-	return slot0._selectId == slot1
+function var_0_0.isSelect(arg_4_0, arg_4_1)
+	return arg_4_0._selectId == arg_4_1
 end
 
-function slot0.getSelectId(slot0)
-	return slot0._selectId
+function var_0_0.getSelectId(arg_5_0)
+	return arg_5_0._selectId
 end
 
-function slot0.clearSelect(slot0)
-	slot0._selectId = nil
+function var_0_0.clearSelect(arg_6_0)
+	arg_6_0._selectId = nil
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectId))
+function var_0_0._refreshSelect(arg_7_0)
+	local var_7_0 = arg_7_0:getById(arg_7_0._selectId)
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._scrollViews) do
+		iter_7_1:setSelect(var_7_0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

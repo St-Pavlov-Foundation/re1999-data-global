@@ -1,61 +1,63 @@
-module("modules.logic.explore.controller.ExploreHelper", package.seeall)
+﻿module("modules.logic.explore.controller.ExploreHelper", package.seeall)
 
-slot0 = _M
-slot1 = LayerMask.GetMask("Scene")
-slot2 = LayerMask.GetMask("SceneOpaque", "Unit", "Scene")
-slot3 = LayerMask.GetMask(SceneLayer.UI3D, SceneLayer.UI3DAfterPostProcess)
+local var_0_0 = _M
+local var_0_1 = LayerMask.GetMask("Scene")
+local var_0_2 = LayerMask.GetMask("SceneOpaque", "Unit", "Scene")
+local var_0_3 = LayerMask.GetMask(SceneLayer.UI3D, SceneLayer.UI3DAfterPostProcess)
 
-function slot0.getXYByKey(slot0)
-	slot1 = string.split(slot0, "_")
+function var_0_0.getXYByKey(arg_1_0)
+	local var_1_0 = string.split(arg_1_0, "_")
+	local var_1_1 = tonumber(var_1_0[1])
+	local var_1_2 = tonumber(var_1_0[2])
 
-	return tonumber(slot1[1]), tonumber(slot1[2])
+	return var_1_1, var_1_2
 end
 
-function slot0.getNavigateMask()
-	return uv0
+function var_0_0.getNavigateMask()
+	return var_0_1
 end
 
-function slot0.getSceneMask()
-	return uv0
+function var_0_0.getSceneMask()
+	return var_0_2
 end
 
-function slot0.getTriggerMask()
-	return uv0
+function var_0_0.getTriggerMask()
+	return var_0_3
 end
 
-function slot0.getKey(slot0)
-	return uv0.getKeyXY(slot0.x, slot0.y)
+function var_0_0.getKey(arg_5_0)
+	return var_0_0.getKeyXY(arg_5_0.x, arg_5_0.y)
 end
 
-function slot0.getKeyXY(slot0, slot1)
-	return string.format("%s_%s", slot0, slot1)
+function var_0_0.getKeyXY(arg_6_0, arg_6_1)
+	return string.format("%s_%s", arg_6_0, arg_6_1)
 end
 
-function slot0.tileToPos(slot0)
-	return Vector3(slot0.x * ExploreConstValue.TILE_SIZE + 0.5, 0, slot0.y * ExploreConstValue.TILE_SIZE + 0.5)
+function var_0_0.tileToPos(arg_7_0)
+	return Vector3(arg_7_0.x * ExploreConstValue.TILE_SIZE + 0.5, 0, arg_7_0.y * ExploreConstValue.TILE_SIZE + 0.5)
 end
 
-function slot0.posToTile(slot0)
-	return Vector2(math.floor(slot0.x / ExploreConstValue.TILE_SIZE), math.floor(slot0.z / ExploreConstValue.TILE_SIZE))
+function var_0_0.posToTile(arg_8_0)
+	return Vector2(math.floor(arg_8_0.x / ExploreConstValue.TILE_SIZE), math.floor(arg_8_0.z / ExploreConstValue.TILE_SIZE))
 end
 
-function slot0.isPosEqual(slot0, slot1)
-	return slot0 == slot1 or slot0.x == slot1.x and slot0.y == slot1.y
+function var_0_0.isPosEqual(arg_9_0, arg_9_1)
+	return arg_9_0 == arg_9_1 or arg_9_0.x == arg_9_1.x and arg_9_0.y == arg_9_1.y
 end
 
-function slot0.getDistance(slot0, slot1)
-	return math.abs(slot0.x - slot1.x) + math.abs(slot0.y - slot1.y)
+function var_0_0.getDistance(arg_10_0, arg_10_1)
+	return math.abs(arg_10_0.x - arg_10_1.x) + math.abs(arg_10_0.y - arg_10_1.y)
 end
 
-function slot0.getDistanceRound(slot0, slot1)
-	return math.max(math.abs(slot0.x - slot1.x), math.abs(slot0.y - slot1.y))
+function var_0_0.getDistanceRound(arg_11_0, arg_11_1)
+	return math.max(math.abs(arg_11_0.x - arg_11_1.x), math.abs(arg_11_0.y - arg_11_1.y))
 end
 
-function slot0.getDir(slot0)
-	return (slot0 + 360) % 360
+function var_0_0.getDir(arg_12_0)
+	return (arg_12_0 + 360) % 360
 end
 
-slot4 = {
+local var_0_4 = {
 	[0] = {
 		x = 0,
 		y = 1
@@ -74,77 +76,95 @@ slot4 = {
 	}
 }
 
-function slot0.dirToXY(slot0)
-	return uv1[uv0.getDir(slot0)]
+function var_0_0.dirToXY(arg_13_0)
+	arg_13_0 = var_0_0.getDir(arg_13_0)
+
+	return var_0_4[arg_13_0]
 end
 
-function slot0.xyToDir(slot0, slot1)
-	for slot5, slot6 in pairs(uv0) do
-		if slot6.x == slot0 and slot6.y == slot1 then
-			return slot5
+function var_0_0.xyToDir(arg_14_0, arg_14_1)
+	for iter_14_0, iter_14_1 in pairs(var_0_4) do
+		if iter_14_1.x == arg_14_0 and iter_14_1.y == arg_14_1 then
+			return iter_14_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.getCornerNum(slot0, slot1)
-	if not slot0 or #slot0 <= 0 then
+function var_0_0.getCornerNum(arg_15_0, arg_15_1)
+	if not arg_15_0 or #arg_15_0 <= 0 then
 		return 0
 	end
 
-	slot2 = 0
-	slot3 = slot0[1]
-	slot4 = nil
+	local var_15_0 = 0
+	local var_15_1 = arg_15_0[1]
+	local var_15_2
 
-	function slot5(slot0)
-		slot1 = 0
+	local function var_15_3(arg_16_0)
+		local var_16_0 = 0
 
-		if uv0.x == slot0.x then
-			slot1 = -1
-		elseif uv0.y == slot0.y then
-			slot1 = 1
+		if var_15_1.x == arg_16_0.x then
+			var_16_0 = -1
+		elseif var_15_1.y == arg_16_0.y then
+			var_16_0 = 1
 		end
 
-		if not uv1 or uv1 ~= slot1 then
-			uv2 = uv2 + 1
-			uv1 = slot1
+		if not var_15_2 or var_15_2 ~= var_16_0 then
+			var_15_0 = var_15_0 + 1
+			var_15_2 = var_16_0
 		end
 	end
 
-	for slot9 = 2, #slot0 do
-		slot10 = slot0[slot9]
+	for iter_15_0 = 2, #arg_15_0 do
+		local var_15_4 = arg_15_0[iter_15_0]
 
-		slot5(slot10)
+		var_15_3(var_15_4)
 
-		slot3 = slot10
+		var_15_1 = var_15_4
 	end
 
-	slot5(slot1)
+	var_15_3(arg_15_1)
 
-	return slot2 - 1
+	return var_15_0 - 1
 end
 
-function slot0.getBit(slot0, slot1)
-	return bit.band(slot0, bit.lshift(1, slot1 - 1))
+function var_0_0.getBit(arg_17_0, arg_17_1)
+	local var_17_0 = bit.lshift(1, arg_17_1 - 1)
+
+	return bit.band(arg_17_0, var_17_0)
 end
 
-function slot0.setBit(slot0, slot1, slot2)
-	slot3 = bit.lshift(1, slot1 - 1)
+function var_0_0.setBit(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = bit.lshift(1, arg_18_1 - 1)
 
-	return (not slot2 or bit.bor(slot0, slot3)) and bit.band(bit.bor(slot0, slot3), bit.bnot(slot3))
+	if arg_18_2 then
+		arg_18_0 = bit.bor(arg_18_0, var_18_0)
+	else
+		local var_18_1 = bit.bnot(var_18_0)
+
+		arg_18_0 = bit.band(arg_18_0, var_18_1)
+	end
+
+	return arg_18_0
 end
 
-function slot0.triggerAudio(slot0, slot1, slot2, slot3)
-	if not slot0 or slot0 <= 0 then
+function var_0_0.triggerAudio(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	if not arg_19_0 or arg_19_0 <= 0 then
 		return
 	end
 
-	slot4 = nil
+	local var_19_0
 
-	if slot3 then
-		GameSceneMgr.instance:getCurScene().audio:onTriggerAudio(slot3, (not slot1 or AudioMgr.instance:trigger(slot0, slot2)) and AudioMgr.instance:trigger(slot0))
+	if arg_19_1 then
+		var_19_0 = AudioMgr.instance:trigger(arg_19_0, arg_19_2)
+	else
+		var_19_0 = AudioMgr.instance:trigger(arg_19_0)
+	end
+
+	if arg_19_3 then
+		GameSceneMgr.instance:getCurScene().audio:onTriggerAudio(arg_19_3, var_19_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,65 +1,68 @@
-module("modules.logic.activitywelfare.view.ActivityWelfareViewContainer", package.seeall)
+﻿module("modules.logic.activitywelfare.view.ActivityWelfareViewContainer", package.seeall)
 
-slot0 = class("ActivityWelfareViewContainer", BaseViewContainer)
+local var_0_0 = class("ActivityWelfareViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_category/#scroll_categoryitem"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = ActivityWelfareCategoryItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 405
-	slot2.cellHeight = 125
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 9.8
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(ActivityWelfareListModel.instance, slot2))
-	table.insert(slot1, ActivityWelfareView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	var_1_1.scrollGOPath = "#go_category/#scroll_categoryitem"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = ActivityWelfareCategoryItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 405
+	var_1_1.cellHeight = 125
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 9.8
+	var_1_1.startSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(ActivityWelfareListModel.instance, var_1_1))
+	table.insert(var_1_0, ActivityWelfareView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.play_ui_common_pause)
+function var_0_0.onContainerOpenFinish(arg_3_0)
+	arg_3_0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.play_ui_common_pause)
 end
 
-slot1 = {
+local var_0_1 = {
 	[ActivityEnum.ActivityTypeID.OpenTestWarmUp] = HelpEnum.HelpId.ActivityWarmUp
 }
 
-function slot0.refreshHelp(slot0, slot1)
-	if slot0.navigationView then
-		if uv0[slot1] then
-			slot0.navigationView:setHelpId(slot2)
+function var_0_0.refreshHelp(arg_4_0, arg_4_1)
+	if arg_4_0.navigationView then
+		local var_4_0 = var_0_1[arg_4_1]
+
+		if var_4_0 then
+			arg_4_0.navigationView:setHelpId(var_4_0)
 		else
-			slot0.navigationView:hideHelpIcon()
+			arg_4_0.navigationView:hideHelpIcon()
 		end
 	end
 end
 
-function slot0.hideHelp(slot0)
-	if slot0.navigationView then
-		slot0.navigationView:hideHelpIcon()
+function var_0_0.hideHelp(arg_5_0)
+	if arg_5_0.navigationView then
+		arg_5_0.navigationView:hideHelpIcon()
 	end
 end
 
-return slot0
+return var_0_0

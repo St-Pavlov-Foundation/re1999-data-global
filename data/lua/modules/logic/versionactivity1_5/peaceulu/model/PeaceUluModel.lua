@@ -1,192 +1,201 @@
-module("modules.logic.versionactivity1_5.peaceulu.model.PeaceUluModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.peaceulu.model.PeaceUluModel", package.seeall)
 
-slot0 = class("PeaceUluModel", BaseModel)
+local var_0_0 = class("PeaceUluModel", BaseModel)
 
-function slot0.ctor(slot0)
-	slot0.super:ctor()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.super:ctor()
 
-	slot0.serverTaskModel = BaseModel.New()
+	arg_1_0.serverTaskModel = BaseModel.New()
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	slot0.removeNum = slot1.removeNum
-	slot0.gameNum = slot1.gameNum
-	slot0.hasGetBonusIds = slot1.hasGetBonusIds
-	slot0.lastGameRecord = slot1.lastGameRecord
+function var_0_0.setActivityInfo(arg_2_0, arg_2_1)
+	arg_2_0.removeNum = arg_2_1.removeNum
+	arg_2_0.gameNum = arg_2_1.gameNum
+	arg_2_0.hasGetBonusIds = arg_2_1.hasGetBonusIds
+	arg_2_0.lastGameRecord = arg_2_1.lastGameRecord
 
-	slot0.serverTaskModel:clear()
-	slot0:setTasksInfo(slot1.tasks)
+	arg_2_0.serverTaskModel:clear()
+	arg_2_0:setTasksInfo(arg_2_1.tasks)
 end
 
-function slot0.onGetRemoveTask(slot0, slot1)
-	slot0.taskId = slot1.taskId
-	slot0.removeNum = slot1.removeNum
+function var_0_0.onGetRemoveTask(arg_3_0, arg_3_1)
+	arg_3_0.taskId = arg_3_1.taskId
+	arg_3_0.removeNum = arg_3_1.removeNum
 
-	slot0:setTasksInfo(slot1.tasks)
+	arg_3_0:setTasksInfo(arg_3_1.tasks)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.OnUpdateInfo)
 end
 
-function slot0.checkTaskId(slot0)
-	if slot0.taskId then
+function var_0_0.checkTaskId(arg_4_0)
+	if arg_4_0.taskId then
 		return true
 	end
 
 	return false
 end
 
-function slot0.cleanTaskId(slot0)
-	if slot0.taskId then
-		slot0.taskId = nil
+function var_0_0.cleanTaskId(arg_5_0)
+	if arg_5_0.taskId then
+		arg_5_0.taskId = nil
 	end
 end
 
-function slot0.getLastGameRecord(slot0)
-	return slot0.lastGameRecord
+function var_0_0.getLastGameRecord(arg_6_0)
+	return arg_6_0.lastGameRecord
 end
 
-function slot0.onGetGameResult(slot0, slot1)
-	slot0.gameRes = slot1.gameRes
-	slot0.removeNum = slot1.removeNum
-	slot0.gameNum = slot1.gameNum
-	slot0.lastSelect = slot1.content
+function var_0_0.onGetGameResult(arg_7_0, arg_7_1)
+	arg_7_0.gameRes = arg_7_1.gameRes
+	arg_7_0.removeNum = arg_7_1.removeNum
+	arg_7_0.gameNum = arg_7_1.gameNum
+	arg_7_0.lastSelect = arg_7_1.content
 
-	slot0:setOtherChoice()
+	arg_7_0:setOtherChoice()
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onGetGameResult)
 end
 
-function slot0.onUpdateReward(slot0, slot1)
-	slot0.hasGetBonusIds = slot1.hasGetBonusIds
-	slot0.bonusIds = slot1.bonusIds
+function var_0_0.onUpdateReward(arg_8_0, arg_8_1)
+	arg_8_0.hasGetBonusIds = arg_8_1.hasGetBonusIds
+	arg_8_0.bonusIds = arg_8_1.bonusIds
 end
 
-function slot0.checkBonusIds(slot0)
-	if slot0.bonusIds then
+function var_0_0.checkBonusIds(arg_9_0)
+	if arg_9_0.bonusIds then
 		return true
 	end
 
 	return false
 end
 
-function slot0.cleanBonusIds(slot0)
-	if slot0.bonusIds then
-		slot0.bonusIds = nil
+function var_0_0.cleanBonusIds(arg_10_0)
+	if arg_10_0.bonusIds then
+		arg_10_0.bonusIds = nil
 	end
 end
 
-function slot0.checkCanRemove(slot0)
-	if not slot0.removeNum or slot0.removeNum == 0 then
+function var_0_0.checkCanRemove(arg_11_0)
+	if not arg_11_0.removeNum or arg_11_0.removeNum == 0 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.checkCanPlay(slot0)
-	if not slot0.gameNum then
+function var_0_0.checkCanPlay(arg_12_0)
+	if not arg_12_0.gameNum then
 		return
 	end
 
-	if slot0.gameNum < PeaceUluConfig.instance:getGameTimes() then
+	if PeaceUluConfig.instance:getGameTimes() > arg_12_0.gameNum then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getRemoveNum(slot0)
-	if not slot0.removeNum or slot0.removeNum == 0 then
+function var_0_0.getRemoveNum(arg_13_0)
+	if not arg_13_0.removeNum or arg_13_0.removeNum == 0 then
 		return false
 	end
 
-	return slot0.removeNum
+	return arg_13_0.removeNum
 end
 
-function slot0.getGameHaveTimes(slot0)
-	if not slot0.gameNum then
+function var_0_0.getGameHaveTimes(arg_14_0)
+	if not arg_14_0.gameNum then
 		return
 	end
 
-	return PeaceUluConfig.instance:getGameTimes() - slot0.gameNum
+	return PeaceUluConfig.instance:getGameTimes() - arg_14_0.gameNum
 end
 
-function slot0.setOtherChoice(slot0)
-	if slot0.gameRes == PeaceUluEnum.GameResult.Draw then
-		slot0.otherChoice = slot0.lastSelect
-	elseif slot0.gameRes == PeaceUluEnum.GameResult.Win then
-		slot0.otherChoice = slot0:_gameRule(slot0.lastSelect, true)
+function var_0_0.setOtherChoice(arg_15_0)
+	if arg_15_0.gameRes == PeaceUluEnum.GameResult.Draw then
+		arg_15_0.otherChoice = arg_15_0.lastSelect
+	elseif arg_15_0.gameRes == PeaceUluEnum.GameResult.Win then
+		arg_15_0.otherChoice = arg_15_0:_gameRule(arg_15_0.lastSelect, true)
 	else
-		slot0.otherChoice = slot0:_gameRule(slot0.lastSelect, false)
+		arg_15_0.otherChoice = arg_15_0:_gameRule(arg_15_0.lastSelect, false)
 	end
 end
 
-function slot0._gameRule(slot0, slot1, slot2)
-	if slot1 == PeaceUluEnum.Game.Scissors then
-		if slot2 then
+function var_0_0._gameRule(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 == PeaceUluEnum.Game.Scissors then
+		if arg_16_2 then
 			return PeaceUluEnum.Game.Paper
 		else
 			return PeaceUluEnum.Game.Rock
 		end
-	elseif slot1 == PeaceUluEnum.Game.Rock then
-		if slot2 then
+	elseif arg_16_1 == PeaceUluEnum.Game.Rock then
+		if arg_16_2 then
 			return PeaceUluEnum.Game.Scissors
 		else
 			return PeaceUluEnum.Game.Paper
 		end
-	elseif slot2 then
+	elseif arg_16_2 then
 		return PeaceUluEnum.Game.Rock
 	else
 		return PeaceUluEnum.Game.Scissors
 	end
 end
 
-function slot0.getGameRes(slot0)
-	return slot0.gameRes
+function var_0_0.getGameRes(arg_17_0)
+	return arg_17_0.gameRes
 end
 
-function slot0.setPlaying(slot0, slot1)
-	slot0._isPlaying = slot1
+function var_0_0.setPlaying(arg_18_0, arg_18_1)
+	arg_18_0._isPlaying = arg_18_1
 end
 
-function slot0.isPlaying(slot0)
-	if slot0._isPlaying == true then
+function var_0_0.isPlaying(arg_19_0)
+	if arg_19_0._isPlaying == true then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getSchedule(slot0)
-	slot1 = 0
-	slot2 = 0.1
-	slot3 = 0.955
-	slot4 = PeaceUluConfig.instance:getBonusCoList()
-	slot5 = #slot4
-	slot6 = PeaceUluConfig.instance:getProgressByIndex(1)
-	slot7 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
-	slot8 = 0
-	slot9 = 0
-	slot10 = 0
+function var_0_0.getSchedule(arg_20_0)
+	local var_20_0 = 0
+	local var_20_1 = 0.1
+	local var_20_2 = 0.955
+	local var_20_3 = PeaceUluConfig.instance:getBonusCoList()
+	local var_20_4 = #var_20_3
+	local var_20_5 = PeaceUluConfig.instance:getProgressByIndex(1)
+	local var_20_6 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+	local var_20_7 = 0
+	local var_20_8 = 0
+	local var_20_9 = 0
 
-	for slot14, slot15 in ipairs(slot4) do
-		if PeaceUluConfig.instance:getProgressByIndex(slot14) <= slot7 then
-			slot8 = slot14
-			slot9 = PeaceUluConfig.instance:getProgressByIndex(slot14)
+	for iter_20_0, iter_20_1 in ipairs(var_20_3) do
+		if var_20_6 >= PeaceUluConfig.instance:getProgressByIndex(iter_20_0) then
+			var_20_7 = iter_20_0
+			var_20_8 = PeaceUluConfig.instance:getProgressByIndex(iter_20_0)
 		else
-			slot10 = PeaceUluConfig.instance:getProgressByIndex(slot14)
+			var_20_9 = PeaceUluConfig.instance:getProgressByIndex(iter_20_0)
 
 			break
 		end
 	end
 
-	slot12 = (slot7 - slot9) / (slot10 - slot9)
+	local var_20_10 = (var_20_2 - var_20_1) / (var_20_4 - 1)
+	local var_20_11 = (var_20_6 - var_20_8) / (var_20_9 - var_20_8)
 
-	return slot8 == slot5 and 1 or slot8 - 1 + slot12 <= 0 and slot7 / slot6 * slot2 or slot2 + (slot3 - slot2) / (slot5 - 1) * (slot8 - 1 + slot12)
+	if var_20_7 == var_20_4 then
+		var_20_0 = 1
+	elseif var_20_7 - 1 + var_20_11 <= 0 then
+		var_20_0 = var_20_6 / var_20_5 * var_20_1
+	else
+		var_20_0 = var_20_1 + var_20_10 * (var_20_7 - 1 + var_20_11)
+	end
+
+	return var_20_0
 end
 
-function slot0.checkGetReward(slot0, slot1)
-	if slot0.hasGetBonusIds then
-		for slot5, slot6 in pairs(slot0.hasGetBonusIds) do
-			if slot6 == slot1 then
+function var_0_0.checkGetReward(arg_21_0, arg_21_1)
+	if arg_21_0.hasGetBonusIds then
+		for iter_21_0, iter_21_1 in pairs(arg_21_0.hasGetBonusIds) do
+			if iter_21_1 == arg_21_1 then
 				return true
 			end
 		end
@@ -195,55 +204,64 @@ function slot0.checkGetReward(slot0, slot1)
 	return false
 end
 
-function slot0.checkGetAllReward(slot0)
-	if slot0.hasGetBonusIds and #PeaceUluConfig.instance:getBonusCoList() == #slot0.hasGetBonusIds then
+function var_0_0.checkGetAllReward(arg_22_0)
+	if arg_22_0.hasGetBonusIds and #PeaceUluConfig.instance:getBonusCoList() == #arg_22_0.hasGetBonusIds then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getOtherChoice(slot0)
-	return slot0.otherChoice
+function var_0_0.getOtherChoice(arg_23_0)
+	return arg_23_0.otherChoice
 end
 
-function slot0.getTasksInfo(slot0)
-	return slot0.serverTaskModel:getList()
+function var_0_0.getTasksInfo(arg_24_0)
+	return arg_24_0.serverTaskModel:getList()
 end
 
-function slot0.setTasksInfo(slot0, slot1)
-	slot2 = nil
+function var_0_0.setTasksInfo(arg_25_0, arg_25_1)
+	local var_25_0
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0.serverTaskModel:getById(slot7.id) then
-			slot8:update(slot7)
-		elseif PeaceUluConfig.instance:getTaskCo(slot7.id) then
-			slot8 = TaskMo.New()
+	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
+		local var_25_1 = arg_25_0.serverTaskModel:getById(iter_25_1.id)
 
-			slot8:init(slot7, slot9)
-			slot0.serverTaskModel:addAtLast(slot8)
+		if var_25_1 then
+			var_25_1:update(iter_25_1)
+		else
+			local var_25_2 = PeaceUluConfig.instance:getTaskCo(iter_25_1.id)
+
+			if var_25_2 then
+				local var_25_3 = TaskMo.New()
+
+				var_25_3:init(iter_25_1, var_25_2)
+				arg_25_0.serverTaskModel:addAtLast(var_25_3)
+			end
 		end
 
-		slot2 = true
+		var_25_0 = true
 	end
 
-	if slot2 then
-		slot0:sortList()
+	if var_25_0 then
+		arg_25_0:sortList()
 	end
 
-	return slot2
+	return var_25_0
 end
 
-function slot0.sortList(slot0)
-	slot0.serverTaskModel:sort(function (slot0, slot1)
-		if (slot0.finishCount > 0 and 3 or slot0.config.maxProgress <= slot0.progress and 1 or 2) ~= (slot1.finishCount > 0 and 3 or slot1.config.maxProgress <= slot1.progress and 1 or 2) then
-			return slot2 < slot3
+function var_0_0.sortList(arg_26_0)
+	arg_26_0.serverTaskModel:sort(function(arg_27_0, arg_27_1)
+		local var_27_0 = arg_27_0.finishCount > 0 and 3 or arg_27_0.progress >= arg_27_0.config.maxProgress and 1 or 2
+		local var_27_1 = arg_27_1.finishCount > 0 and 3 or arg_27_1.progress >= arg_27_1.config.maxProgress and 1 or 2
+
+		if var_27_0 ~= var_27_1 then
+			return var_27_0 < var_27_1
 		else
-			return slot0.config.id < slot1.config.id
+			return arg_27_0.config.id < arg_27_1.config.id
 		end
 	end)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,464 +1,526 @@
-module("modules.logic.tips.view.SkillTipView", package.seeall)
+﻿module("modules.logic.tips.view.SkillTipView", package.seeall)
 
-slot0 = class("SkillTipView", BaseView)
+local var_0_0 = class("SkillTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gonewskilltip = gohelper.findChild(slot0.viewGO, "#go_newskilltip")
-	slot0._gospecialitem = gohelper.findChild(slot0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/name/special/#go_specialitem")
-	slot0._goline = gohelper.findChild(slot0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_line")
-	slot0._goskillspecialitem = gohelper.findChild(slot0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/skillspecial/#go_skillspecialitem")
-	slot0._goskilltipScrollviewContent = gohelper.findChild(slot0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content")
-	slot0._scrollskilltipScrollview = gohelper.findChildScrollRect(slot0.viewGO, "#go_newskilltip/skilltipScrollview")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_newskilltip/bottombg/#go_arrow")
-	slot0._gostoryDesc = gohelper.findChild(slot0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_storyDesc")
-	slot0._txtstory = gohelper.findChildText(slot0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_storyDesc/#txt_story")
-	slot0._goBuffContainer = gohelper.findChild(slot0.viewGO, "#go_buffContainer")
-	slot0._btnclosebuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buffContainer/buff_bg")
-	slot0._goBuffItem = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem")
-	slot0._txtBuffName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
-	slot0._goBuffTag = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
-	slot0._txtBuffTagName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
-	slot0._txtBuffDesc = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
-	slot0._btnupgradeShow = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_newskilltip/#btn_upgradeShow")
-	slot0._goBtnNormal = gohelper.findChild(slot0._btnupgradeShow.gameObject, "#go_normal")
-	slot0._goBtnUpgraded = gohelper.findChild(slot0._btnupgradeShow.gameObject, "#go_upgraded")
-	slot0._goshowSelect = gohelper.findChild(slot0.viewGO, "#go_newskilltip/#go_showSelect")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonewskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip")
+	arg_1_0._gospecialitem = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/name/special/#go_specialitem")
+	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_line")
+	arg_1_0._goskillspecialitem = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/skillspecial/#go_skillspecialitem")
+	arg_1_0._goskilltipScrollviewContent = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content")
+	arg_1_0._scrollskilltipScrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/bottombg/#go_arrow")
+	arg_1_0._gostoryDesc = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_storyDesc")
+	arg_1_0._txtstory = gohelper.findChildText(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_storyDesc/#txt_story")
+	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer")
+	arg_1_0._btnclosebuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buffContainer/buff_bg")
+	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem")
+	arg_1_0._txtBuffName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
+	arg_1_0._goBuffTag = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
+	arg_1_0._txtBuffTagName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
+	arg_1_0._txtBuffDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
+	arg_1_0._btnupgradeShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_newskilltip/#btn_upgradeShow")
+	arg_1_0._goBtnNormal = gohelper.findChild(arg_1_0._btnupgradeShow.gameObject, "#go_normal")
+	arg_1_0._goBtnUpgraded = gohelper.findChild(arg_1_0._btnupgradeShow.gameObject, "#go_upgraded")
+	arg_1_0._goshowSelect = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/#go_showSelect")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclosebuff:AddClickListener(slot0._btnclosebuffOnClick, slot0)
-	slot0._btnupgradeShow:AddClickListener(slot0._btnUpgradeShowOnClock, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclosebuff:AddClickListener(arg_2_0._btnclosebuffOnClick, arg_2_0)
+	arg_2_0._btnupgradeShow:AddClickListener(arg_2_0._btnUpgradeShowOnClock, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclosebuff:RemoveClickListener()
-	slot0._btnupgradeShow:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclosebuff:RemoveClickListener()
+	arg_3_0._btnupgradeShow:RemoveClickListener()
 end
 
-slot0.skillTypeColor = {
+var_0_0.skillTypeColor = {
 	"#405874",
 	"#8c4e31",
 	"#9b7039"
 }
 
-function slot0._btnclosebuffOnClick(slot0)
-	gohelper.setActive(slot0._goBuffContainer, false)
+function var_0_0._btnclosebuffOnClick(arg_4_0)
+	gohelper.setActive(arg_4_0._goBuffContainer, false)
 end
 
-function slot0._refreshArrow(slot0)
-	if recthelper.getHeight(slot0._scrollskilltipScrollview.transform) < recthelper.getHeight(slot0._goskilltipScrollviewContent.transform) and slot0._scrollskilltipScrollview.verticalNormalizedPosition > 0.01 then
-		gohelper.setActive(slot0._goarrow, true)
+function var_0_0._refreshArrow(arg_5_0)
+	if recthelper.getHeight(arg_5_0._goskilltipScrollviewContent.transform) > recthelper.getHeight(arg_5_0._scrollskilltipScrollview.transform) and arg_5_0._scrollskilltipScrollview.verticalNormalizedPosition > 0.01 then
+		gohelper.setActive(arg_5_0._goarrow, true)
 	else
-		gohelper.setActive(slot0._goarrow, false)
+		gohelper.setActive(arg_5_0._goarrow, false)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goBuffContainer, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._goBuffContainer, false)
+	arg_6_0._scrollskilltipScrollview:AddOnValueChanged(arg_6_0._refreshArrow, arg_6_0)
 
-	slot4 = slot0
+	arg_6_0._newskillitems = {}
 
-	slot0._scrollskilltipScrollview:AddOnValueChanged(slot0._refreshArrow, slot4)
+	for iter_6_0 = 1, 3 do
+		local var_6_0 = gohelper.findChild(arg_6_0._gonewskilltip, "normal/skillicon" .. tostring(iter_6_0))
+		local var_6_1 = arg_6_0:getUserDataTb_()
 
-	slot0._newskillitems = {}
+		var_6_1.go = var_6_0
+		var_6_1.icon = gohelper.findChildSingleImage(var_6_0, "imgIcon")
+		var_6_1.btn = gohelper.findChildButtonWithAudio(var_6_0, "bg")
+		var_6_1.selectframe = gohelper.findChild(var_6_0, "selectframe")
+		var_6_1.selectarrow = gohelper.findChild(var_6_0, "selectarrow")
+		var_6_1.aggrandizement = gohelper.findChild(var_6_0, "aggrandizement")
+		var_6_1.index = iter_6_0
 
-	for slot4 = 1, 3 do
-		slot5 = gohelper.findChild(slot0._gonewskilltip, "normal/skillicon" .. tostring(slot4))
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = slot5
-		slot6.icon = gohelper.findChildSingleImage(slot5, "imgIcon")
-		slot6.btn = gohelper.findChildButtonWithAudio(slot5, "bg")
-		slot6.selectframe = gohelper.findChild(slot5, "selectframe")
-		slot6.selectarrow = gohelper.findChild(slot5, "selectarrow")
-		slot6.aggrandizement = gohelper.findChild(slot5, "aggrandizement")
-		slot6.index = slot4
+		var_6_1.btn:AddClickListener(arg_6_0._skillItemClick, arg_6_0, var_6_1.index)
 
-		slot6.btn:AddClickListener(slot0._skillItemClick, slot0, slot6.index)
-
-		slot6.tag = gohelper.findChildSingleImage(slot5, "tag/tagIcon")
-		slot0._newskillitems[slot4] = slot6
+		var_6_1.tag = gohelper.findChildSingleImage(var_6_0, "tag/tagIcon")
+		arg_6_0._newskillitems[iter_6_0] = var_6_1
 	end
 
-	slot0._newsuperskill = slot0:getUserDataTb_()
-	slot1 = gohelper.findChild(slot0._gonewskilltip, "super")
-	slot0._newsuperskill.icon = gohelper.findChildSingleImage(slot1, "imgIcon")
-	slot0._newsuperskill.tag = gohelper.findChildSingleImage(slot1, "tag/tagIcon")
-	slot0._newsuperskill.aggrandizement = gohelper.findChild(slot1, "aggrandizement")
-	slot0._newskilltips = slot0:getUserDataTb_()
-	slot0._newskilltips[1] = gohelper.findChild(slot0._gonewskilltip, "normal")
-	slot0._newskilltips[2] = gohelper.findChild(slot0._gonewskilltip, "super")
-	slot0._newskillname = gohelper.findChildText(slot0._goskilltipScrollviewContent, "name")
-	slot0._newskilldesc = gohelper.findChildText(slot0._goskilltipScrollviewContent, "desc")
-	slot0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._newskilldesc.gameObject, FixTmpBreakLine)
+	arg_6_0._newsuperskill = arg_6_0:getUserDataTb_()
 
-	SkillHelper.addHyperLinkClick(slot0._newskilldesc, slot0._onHyperLinkClick, slot0)
+	local var_6_2 = gohelper.findChild(arg_6_0._gonewskilltip, "super")
 
-	slot0._skillTagGOs = slot0:getUserDataTb_()
-	slot0._skillEffectGOs = slot0:getUserDataTb_()
+	arg_6_0._newsuperskill.icon = gohelper.findChildSingleImage(var_6_2, "imgIcon")
+	arg_6_0._newsuperskill.tag = gohelper.findChildSingleImage(var_6_2, "tag/tagIcon")
+	arg_6_0._newsuperskill.aggrandizement = gohelper.findChild(var_6_2, "aggrandizement")
+	arg_6_0._newskilltips = arg_6_0:getUserDataTb_()
+	arg_6_0._newskilltips[1] = gohelper.findChild(arg_6_0._gonewskilltip, "normal")
+	arg_6_0._newskilltips[2] = gohelper.findChild(arg_6_0._gonewskilltip, "super")
+	arg_6_0._newskillname = gohelper.findChildText(arg_6_0._goskilltipScrollviewContent, "name")
+	arg_6_0._newskilldesc = gohelper.findChildText(arg_6_0._goskilltipScrollviewContent, "desc")
+	arg_6_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._newskilldesc.gameObject, FixTmpBreakLine)
 
-	gohelper.setActive(slot0._gospecialitem, false)
-	gohelper.setActive(slot0._goskillspecialitem, false)
+	SkillHelper.addHyperLinkClick(arg_6_0._newskilldesc, arg_6_0._onHyperLinkClick, arg_6_0)
 
-	slot0._goarrow1 = gohelper.findChild(slot0._gonewskilltip, "normal/arrow1")
-	slot0._goarrow2 = gohelper.findChild(slot0._gonewskilltip, "normal/arrow2")
-	slot0._viewInitialized = true
-	slot0._upgradeSelectShow = false
-	slot0._canShowUpgradeBtn = true
+	arg_6_0._skillTagGOs = arg_6_0:getUserDataTb_()
+	arg_6_0._skillEffectGOs = arg_6_0:getUserDataTb_()
+
+	gohelper.setActive(arg_6_0._gospecialitem, false)
+	gohelper.setActive(arg_6_0._goskillspecialitem, false)
+
+	arg_6_0._goarrow1 = gohelper.findChild(arg_6_0._gonewskilltip, "normal/arrow1")
+	arg_6_0._goarrow2 = gohelper.findChild(arg_6_0._gonewskilltip, "normal/arrow2")
+	arg_6_0._viewInitialized = true
+	arg_6_0._upgradeSelectShow = false
+	arg_6_0._canShowUpgradeBtn = true
 end
 
-function slot0._skillItemClick(slot0, slot1)
-	if slot1 == slot0._curSkillLevel then
+function var_0_0._skillItemClick(arg_7_0, arg_7_1)
+	if arg_7_1 == arg_7_0._curSkillLevel then
 		return
 	end
 
-	slot0:_refreshSkill(slot1)
+	arg_7_0:_refreshSkill(arg_7_1)
 end
 
-function slot0._setNewSkills(slot0, slot1, slot2, slot3)
-	slot0._curSkillLevel = slot0._curSkillLevel or nil
-	slot0._skillIdList = slot0:_checkDestinyEffect(slot1)
-	slot0._super = slot2
+function var_0_0._setNewSkills(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0._curSkillLevel = arg_8_0._curSkillLevel or nil
+	arg_8_1 = arg_8_0:_checkDestinyEffect(arg_8_1)
+	arg_8_0._skillIdList = arg_8_1
+	arg_8_0._super = arg_8_2
 
-	gohelper.setActive(slot0._newskilltips[1], not slot2)
-	gohelper.setActive(slot0._newskilltips[2], slot2)
+	gohelper.setActive(arg_8_0._newskilltips[1], not arg_8_2)
+	gohelper.setActive(arg_8_0._newskilltips[2], arg_8_2)
 
-	if not slot2 then
-		for slot8 = 1, #slot1 do
-			if lua_skill.configDict[slot1[slot8]] then
-				slot0._newskillitems[slot8].icon:LoadImage(ResUrl.getSkillIcon(slot9.icon))
-				slot0._newskillitems[slot8].tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot9.showTag))
+	if not arg_8_2 then
+		local var_8_0 = #arg_8_1
+
+		for iter_8_0 = 1, var_8_0 do
+			local var_8_1 = lua_skill.configDict[arg_8_1[iter_8_0]]
+
+			if var_8_1 then
+				arg_8_0._newskillitems[iter_8_0].icon:LoadImage(ResUrl.getSkillIcon(var_8_1.icon))
+				arg_8_0._newskillitems[iter_8_0].tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_8_1.showTag))
 			else
-				logError("找不到技能: " .. slot1[slot8])
+				logError("找不到技能: " .. arg_8_1[iter_8_0])
 			end
 
-			gohelper.setActive(slot0._newskillitems[slot8].selectframe, false)
-			gohelper.setActive(slot0._newskillitems[slot8].selectarrow, false)
-			gohelper.setActive(slot0._newskillitems[slot8].go, true)
-			gohelper.setActive(slot0._newskillitems[slot8].aggrandizement, slot0._upgradeSelectShow)
+			gohelper.setActive(arg_8_0._newskillitems[iter_8_0].selectframe, false)
+			gohelper.setActive(arg_8_0._newskillitems[iter_8_0].selectarrow, false)
+			gohelper.setActive(arg_8_0._newskillitems[iter_8_0].go, true)
+			gohelper.setActive(arg_8_0._newskillitems[iter_8_0].aggrandizement, arg_8_0._upgradeSelectShow)
 		end
 
-		for slot8 = slot4 + 1, 3 do
-			gohelper.setActive(slot0._newskillitems[slot8].go, false)
+		for iter_8_1 = var_8_0 + 1, 3 do
+			gohelper.setActive(arg_8_0._newskillitems[iter_8_1].go, false)
 		end
 
-		gohelper.setActive(slot0._goarrow1, slot4 > 1)
-		gohelper.setActive(slot0._goarrow2, slot4 > 2)
-		slot0:_refreshSkill(slot0._curSkillLevel or 1)
-	elseif lua_skill.configDict[slot1[1]] then
-		slot0._newsuperskill.icon:LoadImage(ResUrl.getSkillIcon(slot4.icon))
-		slot0._newsuperskill.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot4.showTag))
-
-		slot0._newskillname.text = slot4.name
-		slot0._newskilldesc.text = SkillHelper.getSkillDesc(slot0.monsterName, slot4)
-
-		slot0._fixTmpBreakLine:refreshTmpContent(slot0._newskilldesc)
-		gohelper.setActive(slot0._newsuperskill.aggrandizement, slot0._upgradeSelectShow)
-		gohelper.setActive(slot0._gostoryDesc, not string.nilorempty(slot4.desc_art))
-
-		slot0._txtstory.text = slot4.desc_art
-
-		slot0._txtstory:GetPreferredValues()
-
-		slot0._scrollskilltipScrollview.verticalNormalizedPosition = 1
-
-		slot0:_refreshSkillSpecial(slot4)
+		gohelper.setActive(arg_8_0._goarrow1, var_8_0 > 1)
+		gohelper.setActive(arg_8_0._goarrow2, var_8_0 > 2)
+		arg_8_0:_refreshSkill(arg_8_0._curSkillLevel or 1)
 	else
-		logError("找不到技能: " .. tostring(slot1))
+		local var_8_2 = lua_skill.configDict[arg_8_1[1]]
+
+		if var_8_2 then
+			arg_8_0._newsuperskill.icon:LoadImage(ResUrl.getSkillIcon(var_8_2.icon))
+			arg_8_0._newsuperskill.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_8_2.showTag))
+
+			arg_8_0._newskillname.text = var_8_2.name
+
+			local var_8_3 = SkillHelper.getSkillDesc(arg_8_0.monsterName, var_8_2)
+
+			arg_8_0._newskilldesc.text = var_8_3
+
+			arg_8_0._fixTmpBreakLine:refreshTmpContent(arg_8_0._newskilldesc)
+			gohelper.setActive(arg_8_0._newsuperskill.aggrandizement, arg_8_0._upgradeSelectShow)
+			gohelper.setActive(arg_8_0._gostoryDesc, not string.nilorempty(var_8_2.desc_art))
+
+			arg_8_0._txtstory.text = var_8_2.desc_art
+
+			arg_8_0._txtstory:GetPreferredValues()
+
+			arg_8_0._scrollskilltipScrollview.verticalNormalizedPosition = 1
+
+			arg_8_0:_refreshSkillSpecial(var_8_2)
+		else
+			logError("找不到技能: " .. tostring(arg_8_1))
+		end
 	end
 
-	if slot0.viewName == ViewName.FightFocusView then
+	local var_8_4 = arg_8_0._goBuffItem.transform
+
+	if arg_8_0.viewName == ViewName.FightFocusView then
 		if ViewMgr.instance:isOpen(ViewName.FightFocusView) then
-			if slot3 then
-				transformhelper.setLocalPosXY(slot0._gonewskilltip.transform, 460.9, -24.3)
-				recthelper.setAnchorX(slot0._goBuffItem.transform, -38)
+			if arg_8_3 then
+				transformhelper.setLocalPosXY(arg_8_0._gonewskilltip.transform, 460.9, -24.3)
+				recthelper.setAnchorX(var_8_4, -38)
 			else
-				transformhelper.setLocalPosXY(slot0._gonewskilltip.transform, 270, -24.3)
-				recthelper.setAnchorX(slot4, -38)
+				transformhelper.setLocalPosXY(arg_8_0._gonewskilltip.transform, 270, -24.3)
+				recthelper.setAnchorX(var_8_4, -38)
 			end
 		else
-			transformhelper.setLocalPosXY(slot0._gonewskilltip.transform, 185.12, 49.85)
-			recthelper.setAnchorX(slot4, -120)
+			transformhelper.setLocalPosXY(arg_8_0._gonewskilltip.transform, 185.12, 49.85)
+			recthelper.setAnchorX(var_8_4, -120)
 		end
 	else
-		transformhelper.setLocalPosXY(slot0._gonewskilltip.transform, 0.69, -0.54)
-		recthelper.setAnchorX(slot4, -304)
+		transformhelper.setLocalPosXY(arg_8_0._gonewskilltip.transform, 0.69, -0.54)
+		recthelper.setAnchorX(var_8_4, -304)
 	end
 end
 
-function slot0._checkDestinyEffect(slot0, slot1)
-	if slot1 and slot0.viewParam and slot0.viewParam.heroMo and slot2.destinyStoneMo then
-		slot1 = slot2.destinyStoneMo:_replaceSkill(slot1)
+function var_0_0._checkDestinyEffect(arg_9_0, arg_9_1)
+	if arg_9_1 then
+		local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.heroMo
+
+		if var_9_0 and var_9_0.destinyStoneMo then
+			arg_9_1 = var_9_0.destinyStoneMo:_replaceSkill(arg_9_1)
+		end
 	end
 
-	return slot1
+	return arg_9_1
 end
 
-function slot0._refreshSkill(slot0, slot1)
-	if not slot0._skillIdList[slot1] then
-		slot1 = 1
+function var_0_0._refreshSkill(arg_10_0, arg_10_1)
+	if not arg_10_0._skillIdList[arg_10_1] then
+		arg_10_1 = 1
 	end
 
-	slot0._curSkillLevel = slot1
+	arg_10_0._curSkillLevel = arg_10_1
 
-	for slot5 = 1, 3 do
-		gohelper.setActive(slot0._newskillitems[slot5].selectframe, slot5 == slot1)
-		gohelper.setActive(slot0._newskillitems[slot5].selectarrow, slot5 == slot1)
+	for iter_10_0 = 1, 3 do
+		gohelper.setActive(arg_10_0._newskillitems[iter_10_0].selectframe, iter_10_0 == arg_10_1)
+		gohelper.setActive(arg_10_0._newskillitems[iter_10_0].selectarrow, iter_10_0 == arg_10_1)
 	end
 
-	if lua_skill.configDict[tonumber(slot0._skillIdList[slot1])] then
-		slot0._newskillname.text = slot2.name
-		slot0._newskilldesc.text = SkillHelper.getSkillDesc(slot0.monsterName, slot2)
+	local var_10_0 = lua_skill.configDict[tonumber(arg_10_0._skillIdList[arg_10_1])]
 
-		slot0._fixTmpBreakLine:refreshTmpContent(slot0._newskilldesc)
-		gohelper.setActive(slot0._gostoryDesc, not string.nilorempty(slot2.desc_art))
+	if var_10_0 then
+		arg_10_0._newskillname.text = var_10_0.name
+		arg_10_0._newskilldesc.text = SkillHelper.getSkillDesc(arg_10_0.monsterName, var_10_0)
 
-		slot0._txtstory.text = slot2.desc_art
+		arg_10_0._fixTmpBreakLine:refreshTmpContent(arg_10_0._newskilldesc)
+		gohelper.setActive(arg_10_0._gostoryDesc, not string.nilorempty(var_10_0.desc_art))
 
-		slot0._txtstory:GetPreferredValues()
+		arg_10_0._txtstory.text = var_10_0.desc_art
 
-		slot0._scrollskilltipScrollview.verticalNormalizedPosition = 1
+		arg_10_0._txtstory:GetPreferredValues()
 
-		slot0:_refreshSkillSpecial(slot2)
+		arg_10_0._scrollskilltipScrollview.verticalNormalizedPosition = 1
+
+		arg_10_0:_refreshSkillSpecial(var_10_0)
 	else
-		logError("找不到技能: " .. slot0._skillIdList[slot1])
+		logError("找不到技能: " .. arg_10_0._skillIdList[arg_10_1])
 	end
 end
 
-function slot0._refreshSkillSpecial(slot0, slot1)
-	slot2 = {}
+function var_0_0._refreshSkillSpecial(arg_11_0, arg_11_1)
+	local var_11_0 = {}
 
-	if slot1.battleTag and slot1.battleTag ~= "" then
-		for slot6 = 1, #string.split(slot1.battleTag, "#") do
-			if not slot0._skillTagGOs[slot6] then
-				table.insert(slot0._skillTagGOs, gohelper.cloneInPlace(slot0._gospecialitem, "item" .. slot6))
+	if arg_11_1.battleTag and arg_11_1.battleTag ~= "" then
+		var_11_0 = string.split(arg_11_1.battleTag, "#")
+
+		for iter_11_0 = 1, #var_11_0 do
+			local var_11_1 = arg_11_0._skillTagGOs[iter_11_0]
+
+			if not var_11_1 then
+				var_11_1 = gohelper.cloneInPlace(arg_11_0._gospecialitem, "item" .. iter_11_0)
+
+				table.insert(arg_11_0._skillTagGOs, var_11_1)
 			end
 
-			if HeroConfig.instance:getBattleTagConfigCO(slot2[slot6]) then
-				gohelper.findChildText(slot7, "name").text = slot9.tagName
+			local var_11_2 = gohelper.findChildText(var_11_1, "name")
+			local var_11_3 = HeroConfig.instance:getBattleTagConfigCO(var_11_0[iter_11_0])
+
+			if var_11_3 then
+				var_11_2.text = var_11_3.tagName
 			else
-				logError("找不到技能BattleTag: " .. tostring(slot2[slot6]))
+				logError("找不到技能BattleTag: " .. tostring(var_11_0[iter_11_0]))
 			end
 
-			gohelper.setActive(slot7, true)
+			gohelper.setActive(var_11_1, true)
 		end
 	end
 
-	for slot6 = #slot2 + 1, #slot0._skillTagGOs do
-		gohelper.setActive(slot0._skillTagGOs[slot6], false)
+	for iter_11_1 = #var_11_0 + 1, #arg_11_0._skillTagGOs do
+		gohelper.setActive(arg_11_0._skillTagGOs[iter_11_1], false)
 	end
 
-	gohelper.setActive(slot0._goline, false)
+	gohelper.setActive(arg_11_0._goline, false)
 
-	for slot8 = #HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(FightConfig.instance:getSkillEffectDesc(slot0.monsterName, slot1)), 1, -1 do
-		if SkillConfig.instance:getSkillEffectDescCo(tonumber(slot4[slot8])) then
-			if not SkillHelper.canShowTag(slot10) then
-				table.remove(slot4, slot8)
+	local var_11_4 = FightConfig.instance:getSkillEffectDesc(arg_11_0.monsterName, arg_11_1)
+	local var_11_5 = HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(var_11_4)
+
+	for iter_11_2 = #var_11_5, 1, -1 do
+		local var_11_6 = tonumber(var_11_5[iter_11_2])
+		local var_11_7 = SkillConfig.instance:getSkillEffectDescCo(var_11_6)
+
+		if var_11_7 then
+			if not SkillHelper.canShowTag(var_11_7) then
+				table.remove(var_11_5, iter_11_2)
 			end
 		else
-			logError("找不到技能eff_desc: " .. tostring(slot9))
+			logError("找不到技能eff_desc: " .. tostring(var_11_6))
 		end
 	end
 
-	slot5 = 1
+	local var_11_8 = 1
 
-	for slot9 = 1, #slot4 do
-		if SkillConfig.instance:getSkillEffectDescCo(tonumber(slot4[slot9])).isSpecialCharacter == 1 then
-			gohelper.setActive(slot0._goline, true)
+	for iter_11_3 = 1, #var_11_5 do
+		local var_11_9 = tonumber(var_11_5[iter_11_3])
+		local var_11_10 = SkillConfig.instance:getSkillEffectDescCo(var_11_9)
 
-			if not slot0._skillEffectGOs[slot5] then
-				table.insert(slot0._skillEffectGOs, gohelper.cloneInPlace(slot0._goskillspecialitem, "item" .. slot5))
+		if var_11_10.isSpecialCharacter == 1 then
+			gohelper.setActive(arg_11_0._goline, true)
+
+			local var_11_11 = arg_11_0._skillEffectGOs[var_11_8]
+
+			if not var_11_11 then
+				var_11_11 = gohelper.cloneInPlace(arg_11_0._goskillspecialitem, "item" .. var_11_8)
+
+				table.insert(arg_11_0._skillEffectGOs, var_11_11)
 			end
 
-			slot15 = gohelper.findChildText(slot12, "desc")
+			local var_11_12 = gohelper.findChildImage(var_11_11, "titlebg/bg")
+			local var_11_13 = gohelper.findChildText(var_11_11, "titlebg/bg/name")
+			local var_11_14 = gohelper.findChildText(var_11_11, "desc")
 
-			SkillHelper.addHyperLinkClick(slot15, slot0._onHyperLinkClick, slot0)
+			SkillHelper.addHyperLinkClick(var_11_14, arg_11_0._onHyperLinkClick, arg_11_0)
 
-			if slot11 then
-				SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildImage(slot12, "titlebg/bg"):GetComponent("Image"), uv0.skillTypeColor[slot11.color])
+			local var_11_15 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_14.gameObject, FixTmpBreakLine)
 
-				gohelper.findChildText(slot12, "titlebg/bg/name").text = SkillHelper.removeRichTag(slot11.name)
-				slot15.text = SkillHelper.getSkillDesc(slot0.monsterName, slot11)
+			if var_11_10 then
+				SLFramework.UGUI.GuiHelper.SetColor(var_11_12:GetComponent("Image"), var_0_0.skillTypeColor[var_11_10.color])
 
-				MonoHelper.addNoUpdateLuaComOnceToGo(slot15.gameObject, FixTmpBreakLine):refreshTmpContent(slot15)
+				var_11_13.text = SkillHelper.removeRichTag(var_11_10.name)
+				var_11_14.text = SkillHelper.getSkillDesc(arg_11_0.monsterName, var_11_10)
+
+				var_11_15:refreshTmpContent(var_11_14)
 			else
-				logError("找不到技能eff_desc: " .. tostring(slot10))
+				logError("找不到技能eff_desc: " .. tostring(var_11_9))
 			end
 
-			gohelper.setActive(slot12, true)
+			gohelper.setActive(var_11_11, true)
 
-			slot5 = slot5 + 1
+			var_11_8 = var_11_8 + 1
 		end
 	end
 
-	for slot9 = slot5, #slot0._skillEffectGOs do
-		gohelper.setActive(slot0._skillEffectGOs[slot9], false)
+	for iter_11_4 = var_11_8, #arg_11_0._skillEffectGOs do
+		gohelper.setActive(arg_11_0._skillEffectGOs[iter_11_4], false)
 	end
 
-	slot0:_refreshArrow()
+	arg_11_0:_refreshArrow()
 end
 
-function slot0._onHyperLinkClick(slot0, slot1, slot2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(slot1), CommonBuffTipEnum.Anchor[slot0.viewName], CommonBuffTipEnum.Pivot.Right)
+function var_0_0._onHyperLinkClick(arg_12_0, arg_12_1, arg_12_2)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_12_1), CommonBuffTipEnum.Anchor[arg_12_0.viewName], CommonBuffTipEnum.Pivot.Right)
 end
 
-function slot0.AutoEffectDescItem()
+function var_0_0.AutoEffectDescItem()
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	if slot0.viewName ~= ViewName.FightFocusView then
-		slot0:initView()
+function var_0_0.onUpdateParam(arg_14_0)
+	if arg_14_0.viewName ~= ViewName.FightFocusView then
+		arg_14_0:initView()
 	end
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewName ~= ViewName.FightFocusView then
-		slot0:initView()
+function var_0_0.onOpen(arg_15_0)
+	if arg_15_0.viewName ~= ViewName.FightFocusView then
+		arg_15_0:initView()
 	else
-		slot0:hideInfo()
+		arg_15_0:hideInfo()
 	end
 end
 
-function slot0.initView(slot0)
-	slot1 = slot0.viewParam
-	slot0.srcSkillIdList = slot1.skillIdList
-	slot0.isSuper = slot1.super
-	slot0.isCharacter = true
+function var_0_0.initView(arg_16_0)
+	local var_16_0 = arg_16_0.viewParam
 
-	slot0:updateMonsterName()
-	slot0:refreshUpgradeBtn(slot0.isCharacter)
-	slot0:_setNewSkills(slot0.srcSkillIdList, slot0.isSuper, slot0.isCharacter)
+	arg_16_0.srcSkillIdList = var_16_0.skillIdList
+	arg_16_0.isSuper = var_16_0.super
+	arg_16_0.isCharacter = true
 
-	if slot1 and slot1.anchorX then
-		recthelper.setAnchorX(slot0.viewGO.transform, slot2)
+	arg_16_0:updateMonsterName()
+	arg_16_0:refreshUpgradeBtn(arg_16_0.isCharacter)
+	arg_16_0:_setNewSkills(arg_16_0.srcSkillIdList, arg_16_0.isSuper, arg_16_0.isCharacter)
+
+	local var_16_1 = var_16_0 and var_16_0.anchorX
+
+	if var_16_1 then
+		recthelper.setAnchorX(arg_16_0.viewGO.transform, var_16_1)
 	end
 end
 
-function slot0.updateMonsterName(slot0)
-	slot0.monsterName = slot0.viewParam.monsterName
+function var_0_0.updateMonsterName(arg_17_0)
+	arg_17_0.monsterName = arg_17_0.viewParam.monsterName
 
-	if string.nilorempty(slot0.monsterName) then
+	if string.nilorempty(arg_17_0.monsterName) then
 		logError("SkillTipView 缺少 monsterName 参数")
 
-		slot0.monsterName = ""
+		arg_17_0.monsterName = ""
 	end
 end
 
-function slot0.showInfo(slot0, slot1, slot2, slot3)
-	if not slot0._viewInitialized then
+function var_0_0.showInfo(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if not arg_18_0._viewInitialized then
 		return
 	end
 
-	slot0.entityMo = FightDataHelper.entityMgr:getById(slot3)
-	slot0.monsterName = FightConfig.instance:getEntityName(slot3)
-	slot0.entitySkillIndex = slot1.skillIndex
+	arg_18_0.entityMo = FightDataHelper.entityMgr:getById(arg_18_3)
+	arg_18_0.monsterName = FightConfig.instance:getEntityName(arg_18_3)
+	arg_18_0.entitySkillIndex = arg_18_1.skillIndex
 
-	if string.nilorempty(slot0.monsterName) then
-		logError("SkillTipView monsterName 为 nil, entityId : " .. tostring(slot3))
+	if string.nilorempty(arg_18_0.monsterName) then
+		logError("SkillTipView monsterName 为 nil, entityId : " .. tostring(arg_18_3))
 
-		slot0.monsterName = ""
+		arg_18_0.monsterName = ""
 	end
 
-	slot0.srcSkillIdList = slot1.skillIdList
-	slot0.isSuper = slot1.super
-	slot0.isCharacter = slot2
+	arg_18_0.srcSkillIdList = arg_18_1.skillIdList
+	arg_18_0.isSuper = arg_18_1.super
+	arg_18_0.isCharacter = arg_18_2
 
-	gohelper.setActive(slot0._gonewskilltip, true)
+	gohelper.setActive(arg_18_0._gonewskilltip, true)
 
-	slot0._upgradeSelectShow = false
+	arg_18_0._upgradeSelectShow = false
 
-	slot0:refreshUpgradeBtn(slot0.isCharacter)
-	slot0:_setNewSkills(slot0.srcSkillIdList, slot0.isSuper, slot0.isCharacter)
+	arg_18_0:refreshUpgradeBtn(arg_18_0.isCharacter)
+	arg_18_0:_setNewSkills(arg_18_0.srcSkillIdList, arg_18_0.isSuper, arg_18_0.isCharacter)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Tipsopen)
 end
 
-function slot0.hideInfo(slot0)
-	if not slot0._viewInitialized then
+function var_0_0.hideInfo(arg_19_0)
+	if not arg_19_0._viewInitialized then
 		return
 	end
 
-	gohelper.setActive(slot0._gonewskilltip, false)
+	gohelper.setActive(arg_19_0._gonewskilltip, false)
 end
 
-function slot0.refreshUpgradeBtn(slot0, slot1)
-	if not slot0._canShowUpgradeBtn then
-		gohelper.setActive(slot0._btnupgradeShow.gameObject, false)
+function var_0_0.refreshUpgradeBtn(arg_20_0, arg_20_1)
+	if not arg_20_0._canShowUpgradeBtn then
+		gohelper.setActive(arg_20_0._btnupgradeShow.gameObject, false)
 
 		return
 	end
 
-	if slot0.viewName ~= ViewName.FightFocusView then
-		slot0:refreshHeroUpgrade()
+	if arg_20_0.viewName ~= ViewName.FightFocusView then
+		arg_20_0:refreshHeroUpgrade()
 	else
-		slot0:refreshEntityUpgrade(slot1)
+		arg_20_0:refreshEntityUpgrade(arg_20_1)
 	end
 end
 
-function slot0.refreshHeroUpgrade(slot0)
-	slot0.hasBreakLevelSkill, slot0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(slot0.viewParam.heroId, slot0.viewParam.heroMo and slot1.exSkillLevel or 0, slot0.viewParam.skillIndex)
+function var_0_0.refreshHeroUpgrade(arg_21_0)
+	local var_21_0 = arg_21_0.viewParam.heroMo
+	local var_21_1 = arg_21_0.viewParam.skillIndex
+	local var_21_2 = var_21_0 and var_21_0.exSkillLevel or 0
 
-	slot0:refreshUpgradeUI()
+	arg_21_0.hasBreakLevelSkill, arg_21_0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(arg_21_0.viewParam.heroId, var_21_2, var_21_1)
+
+	arg_21_0:refreshUpgradeUI()
 end
 
-function slot0.refreshEntityUpgrade(slot0, slot1)
-	if not slot1 then
-		slot0:refreshUpgradeUI()
+function var_0_0.refreshEntityUpgrade(arg_22_0, arg_22_1)
+	if not arg_22_1 then
+		arg_22_0:refreshUpgradeUI()
 
 		return
 	end
 
-	slot2 = slot0.entityMo and slot0.entityMo:getCO()
+	local var_22_0 = arg_22_0.entityMo and arg_22_0.entityMo:getCO()
+	local var_22_1 = var_22_0 and var_22_0.id
 
-	if not (slot2 and slot2.id) then
-		gohelper.setActive(slot0._btnupgradeShow.gameObject, false)
+	if not var_22_1 then
+		gohelper.setActive(arg_22_0._btnupgradeShow.gameObject, false)
 
 		return
 	end
 
-	slot0.hasBreakLevelSkill, slot0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(slot3, slot0.entityMo.exSkillLevel, slot0.entitySkillIndex)
+	arg_22_0.hasBreakLevelSkill, arg_22_0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(var_22_1, arg_22_0.entityMo.exSkillLevel, arg_22_0.entitySkillIndex)
 
-	if slot0.upgradeSkillIdList and slot0.srcSkillIdList[1] == slot0.upgradeSkillIdList[1] then
-		slot0.upgraded = true
+	if arg_22_0.upgradeSkillIdList and arg_22_0.srcSkillIdList[1] == arg_22_0.upgradeSkillIdList[1] then
+		arg_22_0.upgraded = true
 	else
-		slot0.upgraded = false
+		arg_22_0.upgraded = false
 	end
 
-	slot0:refreshUpgradeUI()
+	arg_22_0:refreshUpgradeUI()
 end
 
-function slot0._btnUpgradeShowOnClock(slot0)
-	slot0._upgradeSelectShow = not slot0._upgradeSelectShow
+function var_0_0._btnUpgradeShowOnClock(arg_23_0)
+	arg_23_0._upgradeSelectShow = not arg_23_0._upgradeSelectShow
 
-	slot0:refreshUpgradeUI()
-	slot0:_setNewSkills(slot0._upgradeSelectShow and slot0.upgradeSkillIdList or slot0.srcSkillIdList, slot0.isSuper, slot0.isCharacter)
+	arg_23_0:refreshUpgradeUI()
+
+	local var_23_0 = arg_23_0._upgradeSelectShow and arg_23_0.upgradeSkillIdList or arg_23_0.srcSkillIdList
+
+	arg_23_0:_setNewSkills(var_23_0, arg_23_0.isSuper, arg_23_0.isCharacter)
 end
 
-function slot0.refreshUpgradeUI(slot0)
-	gohelper.setActive(slot0._btnupgradeShow, not slot0.upgraded and slot0.hasBreakLevelSkill)
-	gohelper.setActive(slot0._goshowSelect, slot0.upgraded or slot0._upgradeSelectShow)
-	gohelper.setActive(slot0._goBtnUpgraded, slot0._upgradeSelectShow)
-	gohelper.setActive(slot0._goBtnNormal, not slot0._upgradeSelectShow)
+function var_0_0.refreshUpgradeUI(arg_24_0)
+	local var_24_0 = not arg_24_0.upgraded and arg_24_0.hasBreakLevelSkill
+	local var_24_1 = arg_24_0.upgraded or arg_24_0._upgradeSelectShow
+
+	gohelper.setActive(arg_24_0._btnupgradeShow, var_24_0)
+	gohelper.setActive(arg_24_0._goshowSelect, var_24_1)
+	gohelper.setActive(arg_24_0._goBtnUpgraded, arg_24_0._upgradeSelectShow)
+	gohelper.setActive(arg_24_0._goBtnNormal, not arg_24_0._upgradeSelectShow)
 end
 
-function slot0.setUpgradebtnShowState(slot0, slot1)
-	slot0._canShowUpgradeBtn = slot1
+function var_0_0.setUpgradebtnShowState(arg_25_0, arg_25_1)
+	arg_25_0._canShowUpgradeBtn = arg_25_1
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_26_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._scrollskilltipScrollview:RemoveOnValueChanged()
+function var_0_0.onDestroyView(arg_27_0)
+	arg_27_0._scrollskilltipScrollview:RemoveOnValueChanged()
 
-	if slot0._newskillitems then
-		for slot4, slot5 in pairs(slot0._newskillitems) do
-			slot5.icon:UnLoadImage()
-			slot5.btn:RemoveClickListener()
+	if arg_27_0._newskillitems then
+		for iter_27_0, iter_27_1 in pairs(arg_27_0._newskillitems) do
+			iter_27_1.icon:UnLoadImage()
+			iter_27_1.btn:RemoveClickListener()
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,92 +1,100 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotNormalStoreGoodsView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotNormalStoreGoodsView", package.seeall)
 
-slot0 = class("V1a6_CachotNormalStoreGoodsView", BaseView)
+local var_0_0 = class("V1a6_CachotNormalStoreGoodsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "root/propinfo/#simage_icon")
-	slot0._imageiconbg = gohelper.findChildImage(slot0.viewGO, "root/propinfo/#image_iconbg")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "root/propinfo/#image_icon")
-	slot0._txtdesc = gohelper.findChildTextMesh(slot0.viewGO, "root/propinfo/scroll_info/Viewport/Content/#txt_goodsUseDesc")
-	slot0._txtname = gohelper.findChildTextMesh(slot0.viewGO, "root/propinfo/#txt_goodsNameCn")
-	slot0._txtorginalcost = gohelper.findChildTextMesh(slot0.viewGO, "root/#go_buy/cost/#txt_originalCost/#txt_salePrice")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._btnBuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#go_buy/#btn_buy")
-	slot0._goenchantlist = gohelper.findChild(slot0.viewGO, "root/propinfo/#go_enchantlist")
-	slot0._gohole = gohelper.findChild(slot0.viewGO, "root/propinfo/#go_enchantlist/#go_hole")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/propinfo/#simage_icon")
+	arg_1_0._imageiconbg = gohelper.findChildImage(arg_1_0.viewGO, "root/propinfo/#image_iconbg")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/propinfo/#image_icon")
+	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/propinfo/scroll_info/Viewport/Content/#txt_goodsUseDesc")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/propinfo/#txt_goodsNameCn")
+	arg_1_0._txtorginalcost = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_buy/cost/#txt_originalCost/#txt_salePrice")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._btnBuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_buy/#btn_buy")
+	arg_1_0._goenchantlist = gohelper.findChild(arg_1_0.viewGO, "root/propinfo/#go_enchantlist")
+	arg_1_0._gohole = gohelper.findChild(arg_1_0.viewGO, "root/propinfo/#go_enchantlist/#go_hole")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnBuy:AddClickListener(slot0.onBuyClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnBuy:AddClickListener(arg_2_0.onBuyClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnBuy:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnBuy:RemoveClickListener()
 end
 
-slot1 = "#6F3C0F"
-slot2 = "#2B4E6C"
+local var_0_1 = "#6F3C0F"
+local var_0_2 = "#2B4E6C"
 
-function slot0.onOpen(slot0)
-	slot0._enoughCoin = slot0.viewParam.price <= V1a6_CachotModel.instance:getRogueInfo().coin
+function var_0_0.onOpen(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam
+	local var_4_1 = V1a6_CachotModel.instance:getRogueInfo().coin
 
-	if slot2 < slot1.price then
-		slot0._txtorginalcost.text = string.format("<color=#BF2E11>%s</color>", slot1.price)
+	arg_4_0._enoughCoin = var_4_1 >= var_4_0.price
+
+	if var_4_1 < var_4_0.price then
+		arg_4_0._txtorginalcost.text = string.format("<color=#BF2E11>%s</color>", var_4_0.price)
 	else
-		slot0._txtorginalcost.text = slot1.price
+		arg_4_0._txtorginalcost.text = var_4_0.price
 	end
 
-	gohelper.setActive(slot0._simageicon, false)
-	gohelper.setActive(slot0._goenchantlist, false)
+	gohelper.setActive(arg_4_0._simageicon, false)
+	gohelper.setActive(arg_4_0._goenchantlist, false)
 
-	slot0._imageicon.enabled = false
+	arg_4_0._imageicon.enabled = false
 
-	if slot1.creator ~= 0 then
-		gohelper.setActive(slot0._simageicon, true)
-		gohelper.setActive(slot0._goenchantlist, true)
+	if var_4_0.creator ~= 0 then
+		gohelper.setActive(arg_4_0._simageicon, true)
+		gohelper.setActive(arg_4_0._goenchantlist, true)
 
-		slot3 = lua_rogue_collection.configDict[slot1.creator]
-		slot0._txtdesc.text = V1a6_CachotCollectionConfig.instance:getCollectionSkillsContent(slot3, nil, uv0, uv1)
-		slot0._txtname.text = slot3.name
+		local var_4_2 = lua_rogue_collection.configDict[var_4_0.creator]
 
-		slot0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. slot3.icon))
-		UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imageiconbg, lua_rogue_event_drop_desc.configDict[V1a6_CachotEnum.DropType.Collection][1].iconbg)
-		V1a6_CachotCollectionHelper.createCollectionHoles(slot3, slot0._goenchantlist, slot0._gohole)
-	elseif slot1.event ~= 0 then
-		slot0._imageicon.enabled = true
-		slot3, slot4 = V1a6_CachotEventConfig.instance:getDescCoByEventId(slot1.event)
+		arg_4_0._txtdesc.text = V1a6_CachotCollectionConfig.instance:getCollectionSkillsContent(var_4_2, nil, var_0_1, var_0_2)
+		arg_4_0._txtname.text = var_4_2.name
 
-		if slot3 then
-			slot0._txtname.text = slot3.title
-			slot0._txtdesc.text = HeroSkillModel.instance:skillDesToSpot(slot4 or slot3.desc, uv0, uv1)
+		arg_4_0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_4_2.icon))
 
-			UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imageicon, slot3.icon)
-			UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imageiconbg, slot3.iconbg)
+		local var_4_3 = lua_rogue_event_drop_desc.configDict[V1a6_CachotEnum.DropType.Collection][1]
+
+		UISpriteSetMgr.instance:setV1a6CachotSprite(arg_4_0._imageiconbg, var_4_3.iconbg)
+		V1a6_CachotCollectionHelper.createCollectionHoles(var_4_2, arg_4_0._goenchantlist, arg_4_0._gohole)
+	elseif var_4_0.event ~= 0 then
+		arg_4_0._imageicon.enabled = true
+
+		local var_4_4, var_4_5 = V1a6_CachotEventConfig.instance:getDescCoByEventId(var_4_0.event)
+
+		if var_4_4 then
+			arg_4_0._txtname.text = var_4_4.title
+			arg_4_0._txtdesc.text = HeroSkillModel.instance:skillDesToSpot(var_4_5 or var_4_4.desc, var_0_1, var_0_2)
+
+			UISpriteSetMgr.instance:setV1a6CachotSprite(arg_4_0._imageicon, var_4_4.icon)
+			UISpriteSetMgr.instance:setV1a6CachotSprite(arg_4_0._imageiconbg, var_4_4.iconbg)
 		else
-			logError("未处理事件 " .. slot1.event)
+			logError("未处理事件 " .. var_4_0.event)
 		end
 	else
-		logError("肉鸽商品配置错误 id" .. slot1.id)
+		logError("肉鸽商品配置错误 id" .. var_4_0.id)
 	end
 end
 
-function slot0.onBuyClick(slot0)
-	if not slot0._enoughCoin then
+function var_0_0.onBuyClick(arg_5_0)
+	if not arg_5_0._enoughCoin then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast09)
 
 		return
 	end
 
-	RogueRpc.instance:sendBuyRogueGoodsRequest(V1a6_CachotEnum.ActivityId, slot0.viewParam.id, 1, slot0.closeThis, slot0)
+	RogueRpc.instance:sendBuyRogueGoodsRequest(V1a6_CachotEnum.ActivityId, arg_5_0.viewParam.id, 1, arg_5_0.closeThis, arg_5_0)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0._simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

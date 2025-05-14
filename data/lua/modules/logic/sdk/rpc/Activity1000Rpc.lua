@@ -1,37 +1,39 @@
-module("modules.logic.sdk.rpc.Activity1000Rpc", package.seeall)
+﻿module("modules.logic.sdk.rpc.Activity1000Rpc", package.seeall)
 
-slot0 = class("Activity1000Rpc", BaseRpc)
+local var_0_0 = class("Activity1000Rpc", BaseRpc)
 
-function slot0.sendAct1000GetInfoRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity1000Module_pb.Act1000GetInfoRequest()
-	slot5.activityId = slot1
+function var_0_0.sendAct1000GetInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	local var_1_0 = Activity1000Module_pb.Act1000GetInfoRequest()
 
-	slot0:sendMsg(slot5, slot2, slot3, slot4)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3, arg_1_4)
 end
 
-function slot0.onReceiveAct1000GetInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct1000GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	SDKModel.instance:setAccountBindBonus(slot2.accountBindBonus)
+	SDKModel.instance:setAccountBindBonus(arg_2_2.accountBindBonus)
 end
 
-function slot0.sendAct1000AccountBindBonusRequest(slot0, slot1)
-	slot2 = Activity1000Module_pb.Act1000AccountBindBonusRequest()
-	slot2.activityId = slot1
+function var_0_0.sendAct1000AccountBindBonusRequest(arg_3_0, arg_3_1)
+	local var_3_0 = Activity1000Module_pb.Act1000AccountBindBonusRequest()
 
-	slot0:sendMsg(slot2)
+	var_3_0.activityId = arg_3_1
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveAct1000AccountBindBonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct1000AccountBindBonusReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
 	SDKModel.instance:setAccountBindBonus(SDKEnum.RewardType.Got)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

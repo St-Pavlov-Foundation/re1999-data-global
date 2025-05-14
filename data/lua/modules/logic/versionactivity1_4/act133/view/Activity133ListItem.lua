@@ -1,181 +1,194 @@
-module("modules.logic.versionactivity1_4.act133.view.Activity133ListItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.view.Activity133ListItem", package.seeall)
 
-slot0 = class("Activity133ListItem", ListScrollCellExtend)
+local var_0_0 = class("Activity133ListItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imageitem = gohelper.findChildImage(slot0.viewGO, "#image_item")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#image_item/lockbg")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/Content")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/Content/#go_item")
-	slot0._btnfix = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_fix")
-	slot0._goFixIcon = gohelper.findChild(slot0.viewGO, "bottom/#btn_fix/icon")
-	slot0._goCanFix = gohelper.findChild(slot0.viewGO, "bottom/#btn_fix/icon1")
-	slot0._btncheck = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_check")
-	slot0._btnchecking = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg_checking/#btn_checking")
-	slot0._imgcost = gohelper.findChildImage(slot0.viewGO, "bottom/cost/txt/#simage_icon")
-	slot0._txtcost = gohelper.findChildText(slot0.viewGO, "bottom/cost/txt")
-	slot0._gochecking = gohelper.findChild(slot0.viewGO, "bottom/#go_checking")
-	slot0._gocost = gohelper.findChild(slot0.viewGO, "bottom/cost")
-	slot0._gobuyed = gohelper.findChild(slot0.viewGO, "bottom/buyed")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "bottom/buyed/#txt_title")
-	slot0._gocheckbg = gohelper.findChild(slot0.viewGO, "bg_checking")
-	slot0._golockbg = gohelper.findChild(slot0.viewGO, "bg_lockedmask")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "bottom/#btn_fix/icon/#go_reddot")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._unlockAniTime = 1
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageitem = gohelper.findChildImage(arg_1_0.viewGO, "#image_item")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#image_item/lockbg")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/Content")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/Content/#go_item")
+	arg_1_0._btnfix = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_fix")
+	arg_1_0._goFixIcon = gohelper.findChild(arg_1_0.viewGO, "bottom/#btn_fix/icon")
+	arg_1_0._goCanFix = gohelper.findChild(arg_1_0.viewGO, "bottom/#btn_fix/icon1")
+	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_check")
+	arg_1_0._btnchecking = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg_checking/#btn_checking")
+	arg_1_0._imgcost = gohelper.findChildImage(arg_1_0.viewGO, "bottom/cost/txt/#simage_icon")
+	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "bottom/cost/txt")
+	arg_1_0._gochecking = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_checking")
+	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "bottom/cost")
+	arg_1_0._gobuyed = gohelper.findChild(arg_1_0.viewGO, "bottom/buyed")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "bottom/buyed/#txt_title")
+	arg_1_0._gocheckbg = gohelper.findChild(arg_1_0.viewGO, "bg_checking")
+	arg_1_0._golockbg = gohelper.findChild(arg_1_0.viewGO, "bg_lockedmask")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "bottom/#btn_fix/icon/#go_reddot")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._unlockAniTime = 1
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfix:AddClickListener(slot0._btnfixOnClick, slot0)
-	slot0._btncheck:AddClickListener(slot0._btncheckOnClick, slot0)
-	slot0._btnchecking:AddClickListener(slot0._btncheckingOnClick, slot0)
-	slot0:addEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, slot0._refreshStatus, slot0)
-	slot0:addEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, slot0._refreshStatus, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfix:AddClickListener(arg_2_0._btnfixOnClick, arg_2_0)
+	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
+	arg_2_0._btnchecking:AddClickListener(arg_2_0._btncheckingOnClick, arg_2_0)
+	arg_2_0:addEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, arg_2_0._refreshStatus, arg_2_0)
+	arg_2_0:addEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, arg_2_0._refreshStatus, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfix:RemoveClickListener()
-	slot0._btncheck:RemoveClickListener()
-	slot0._btnchecking:RemoveClickListener()
-	slot0:removeEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, slot0._refreshStatus, slot0)
-	slot0:removeEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, slot0._refreshStatus, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfix:RemoveClickListener()
+	arg_3_0._btncheck:RemoveClickListener()
+	arg_3_0._btnchecking:RemoveClickListener()
+	arg_3_0:removeEventCb(Activity133Controller.instance, Activity133Event.OnUpdateInfo, arg_3_0._refreshStatus, arg_3_0)
+	arg_3_0:removeEventCb(Activity133Controller.instance, Activity133Event.OnGetBonus, arg_3_0._refreshStatus, arg_3_0)
 end
 
-function slot0._btnfixOnClick(slot0)
-	if tonumber(slot0.targetNum) <= CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity then
-		slot0._animator.speed = 1
+function var_0_0._btnfixOnClick(arg_4_0)
+	if CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity >= tonumber(arg_4_0.targetNum) then
+		arg_4_0._animator.speed = 1
 
 		UIBlockMgr.instance:startBlock("Activity133ListItem")
-		slot0._animator:Play(UIAnimationName.Unlock, 0, 0)
+		arg_4_0._animator:Play(UIAnimationName.Unlock, 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_qiutu_list_maintain)
-		slot0._animator:Update(0)
-		TaskDispatcher.runDelay(slot0._onItemFixAniFinish, slot0, slot0._unlockAniTime)
+		arg_4_0._animator:Update(0)
+		TaskDispatcher.runDelay(arg_4_0._onItemFixAniFinish, arg_4_0, arg_4_0._unlockAniTime)
 	else
-		GameFacade.showToast(ToastEnum.DiamondBuy, slot0.costName)
+		GameFacade.showToast(ToastEnum.DiamondBuy, arg_4_0.costName)
 	end
 end
 
-function slot0._onItemFixAniFinish(slot0)
+function var_0_0._onItemFixAniFinish(arg_5_0)
 	UIBlockMgr.instance:endBlock("Activity133ListItem")
-	Activity133Rpc.instance:sendAct133BonusRequest(slot0.actId, slot0.id)
+	Activity133Rpc.instance:sendAct133BonusRequest(arg_5_0.actId, arg_5_0.id)
 end
 
-function slot0._btncheckOnClick(slot0)
-	slot0._view:selectCell(slot0._index, true)
+function var_0_0._btncheckOnClick(arg_6_0)
+	arg_6_0._view:selectCell(arg_6_0._index, true)
 end
 
-function slot0._btncheckingOnClick(slot0)
-	slot0._view:selectCell(slot0._index, false)
+function var_0_0._btncheckingOnClick(arg_7_0)
+	arg_7_0._view:selectCell(arg_7_0._index, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
 	Activity133Controller.instance:dispatchEvent(Activity133Event.OnSelectCheckNote)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._itemList = {}
-	slot0._isfix = false
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._itemList = {}
+	arg_8_0._isfix = false
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0.mo = arg_9_1
 
-	slot0:_refreshUI()
-	slot0:_checkRedDot()
+	arg_9_0:_refreshUI()
+	arg_9_0:_checkRedDot()
 end
 
-function slot0._checkRedDot(slot0)
-	if tonumber(slot0.targetNum) <= CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity then
-		slot0._canGet = true
+function var_0_0._checkRedDot(arg_10_0)
+	if CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity >= tonumber(arg_10_0.targetNum) then
+		arg_10_0._canGet = true
 	else
-		slot0._canGet = false
+		arg_10_0._canGet = false
 	end
 
-	gohelper.setActive(slot0._goFixIcon, not slot0._canGet)
-	gohelper.setActive(slot0._goCanFix, slot0._canGet)
+	gohelper.setActive(arg_10_0._goFixIcon, not arg_10_0._canGet)
+	gohelper.setActive(arg_10_0._goCanFix, arg_10_0._canGet)
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = slot0.mo.config
-	slot0.actId = slot1.activityId
-	slot0.id = slot1.id
-	slot0.iconid = slot1.icon
+function var_0_0._refreshUI(arg_11_0)
+	local var_11_0 = arg_11_0.mo.config
 
-	UISpriteSetMgr.instance:setV1a4ShiprepairSprite(slot0._imageitem, tostring(slot1.icon))
+	arg_11_0.actId = var_11_0.activityId
+	arg_11_0.id = var_11_0.id
+	arg_11_0.iconid = var_11_0.icon
 
-	slot2 = string.splitToNumber(slot1.needTokens, "#")
-	slot0.targetNum = slot2[3]
-	slot0.costName = ItemModel.instance:getItemConfig(slot2[1], slot2[2]) and slot6.name or ""
-	slot7, slot8 = ItemModel.instance:getItemConfigAndIcon(slot3, slot4)
+	UISpriteSetMgr.instance:setV1a4ShiprepairSprite(arg_11_0._imageitem, tostring(var_11_0.icon))
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imgcost, string.format("%s_1", slot7.icon))
+	local var_11_1 = string.splitToNumber(var_11_0.needTokens, "#")
+	local var_11_2 = var_11_1[1]
+	local var_11_3 = var_11_1[2]
+	local var_11_4
 
-	slot0._txtcost.text = slot0.targetNum
-	slot0._txttitle.text = slot1.title
+	arg_11_0.targetNum, var_11_4 = var_11_1[3], ItemModel.instance:getItemConfig(var_11_2, var_11_3)
+	arg_11_0.costName = var_11_4 and var_11_4.name or ""
 
-	for slot15, slot16 in ipairs(GameUtil.splitString2(slot1.bonus, true)) do
-		if not slot0._itemList[slot15] then
-			slot17 = slot0:getUserDataTb_()
-			slot17.go = gohelper.cloneInPlace(slot0._goitem)
+	local var_11_5, var_11_6 = ItemModel.instance:getItemConfigAndIcon(var_11_2, var_11_3)
+	local var_11_7 = var_11_5.icon
+	local var_11_8 = string.format("%s_1", var_11_7)
 
-			gohelper.setActive(slot17.go, true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_11_0._imgcost, var_11_8)
 
-			slot17.icon = IconMgr.instance:getCommonPropItemIcon(slot17.go)
-			slot17.goget = gohelper.findChild(slot17.go, "get")
+	arg_11_0._txtcost.text = arg_11_0.targetNum
+	arg_11_0._txttitle.text = var_11_0.title
 
-			gohelper.setAsLastSibling(slot17.goget)
-			gohelper.setActive(slot17.goget, false)
-			table.insert(slot0._itemList, slot17)
+	local var_11_9 = GameUtil.splitString2(var_11_0.bonus, true)
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_9) do
+		local var_11_10 = arg_11_0._itemList[iter_11_0]
+
+		if not var_11_10 then
+			var_11_10 = arg_11_0:getUserDataTb_()
+			var_11_10.go = gohelper.cloneInPlace(arg_11_0._goitem)
+
+			gohelper.setActive(var_11_10.go, true)
+
+			var_11_10.icon = IconMgr.instance:getCommonPropItemIcon(var_11_10.go)
+			var_11_10.goget = gohelper.findChild(var_11_10.go, "get")
+
+			gohelper.setAsLastSibling(var_11_10.goget)
+			gohelper.setActive(var_11_10.goget, false)
+			table.insert(arg_11_0._itemList, var_11_10)
 		end
 
-		slot17.icon:setMOValue(slot16[1], slot16[2], slot16[3], nil, true)
-		slot17.icon:SetCountLocalY(45)
-		slot17.icon:SetCountBgHeight(30)
-		slot17.icon:setCountFontSize(36)
+		var_11_10.icon:setMOValue(iter_11_1[1], iter_11_1[2], iter_11_1[3], nil, true)
+		var_11_10.icon:SetCountLocalY(45)
+		var_11_10.icon:SetCountBgHeight(30)
+		var_11_10.icon:setCountFontSize(36)
 	end
 
-	slot0:_refreshStatus()
+	arg_11_0:_refreshStatus()
 end
 
-function slot0._refreshStatus(slot0)
-	slot1 = Activity133Model.instance:checkBonusReceived(slot0.mo.id)
+function var_0_0._refreshStatus(arg_12_0)
+	local var_12_0 = Activity133Model.instance:checkBonusReceived(arg_12_0.mo.id)
 
-	gohelper.setActive(slot0._btnfix.gameObject, not slot1)
-	gohelper.setActive(slot0._btncheck.gameObject, slot1)
-	gohelper.setActive(slot0._golock, not slot1)
-	gohelper.setActive(slot0._golockbg, not slot1)
-	gohelper.setActive(slot0._gocost, not slot1)
-	gohelper.setActive(slot0._gobuyed, slot1)
+	gohelper.setActive(arg_12_0._btnfix.gameObject, not var_12_0)
+	gohelper.setActive(arg_12_0._btncheck.gameObject, var_12_0)
+	gohelper.setActive(arg_12_0._golock, not var_12_0)
+	gohelper.setActive(arg_12_0._golockbg, not var_12_0)
+	gohelper.setActive(arg_12_0._gocost, not var_12_0)
+	gohelper.setActive(arg_12_0._gobuyed, var_12_0)
 
-	for slot5, slot6 in pairs(slot0._itemList) do
-		gohelper.setActive(slot6.goget, slot1)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._itemList) do
+		gohelper.setActive(iter_12_1.goget, var_12_0)
 
-		if slot1 then
-			slot6.icon:setAlpha(0.45, 0.8)
+		if var_12_0 then
+			iter_12_1.icon:setAlpha(0.45, 0.8)
 		else
-			slot6.icon:setAlpha(1, 1)
+			iter_12_1.icon:setAlpha(1, 1)
 		end
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_13_0)
+	return arg_13_0._animator
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._btncheck.gameObject, not slot1)
-	gohelper.setActive(slot0._gochecking, slot1)
-	gohelper.setActive(slot0._gocheckbg, slot1)
+function var_0_0.onSelect(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._btncheck.gameObject, not arg_14_1)
+	gohelper.setActive(arg_14_0._gochecking, arg_14_1)
+	gohelper.setActive(arg_14_0._gocheckbg, arg_14_1)
 
-	if slot1 then
-		Activity133Controller.instance:dispatchEvent(Activity133Event.OnSelectCheckNote, slot0.mo)
+	if arg_14_1 then
+		Activity133Controller.instance:dispatchEvent(Activity133Event.OnSelectCheckNote, arg_14_0.mo)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

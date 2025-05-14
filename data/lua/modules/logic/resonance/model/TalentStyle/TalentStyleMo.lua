@@ -1,99 +1,115 @@
-module("modules.logic.resonance.model.TalentStyle.TalentStyleMo", package.seeall)
+﻿module("modules.logic.resonance.model.TalentStyle.TalentStyleMo", package.seeall)
 
-slot0 = class("TalentStyleMo")
+local var_0_0 = class("TalentStyleMo")
 
-function slot0.ctor(slot0)
-	slot0._styleCo = nil
-	slot0._orginId = nil
-	slot0._replaceId = nil
-	slot0._styleId = nil
-	slot0._isUse = false
-	slot0._isSelect = false
-	slot0._isNew = false
-	slot0._isUnlock = false
-	slot0._unlockPercent = 0
-	slot0._hotUnlockStyle = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._styleCo = nil
+	arg_1_0._orginId = nil
+	arg_1_0._replaceId = nil
+	arg_1_0._styleId = nil
+	arg_1_0._isUse = false
+	arg_1_0._isSelect = false
+	arg_1_0._isNew = false
+	arg_1_0._isUnlock = false
+	arg_1_0._unlockPercent = 0
+	arg_1_0._hotUnlockStyle = nil
 end
 
-function slot0.setMo(slot0, slot1, slot2, slot3)
-	slot0._styleCo = slot1
-	slot0._orginId = slot2
-	slot0._replaceId = slot3
-	slot0._styleId = slot1.styleId
+function var_0_0.setMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._styleCo = arg_2_1
+	arg_2_0._orginId = arg_2_2
+	arg_2_0._replaceId = arg_2_3
+	arg_2_0._styleId = arg_2_1.styleId
 end
 
-function slot0.isCanUnlock(slot0, slot1)
-	return slot1 >= (slot0._styleCo and slot0._styleCo.level and slot0._styleCo.level or 0)
+function var_0_0.isCanUnlock(arg_3_0, arg_3_1)
+	return arg_3_1 >= (arg_3_0._styleCo and arg_3_0._styleCo.level and arg_3_0._styleCo.level or 0)
 end
 
-function slot0.onRefresh(slot0, slot1, slot2, slot3)
-	slot0._isUse = slot1 == slot0._styleId
-	slot0._isSelect = slot2 == slot0._styleId
-	slot0._isUnlock = slot3
+function var_0_0.onRefresh(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0._isUse = arg_4_1 == arg_4_0._styleId
+	arg_4_0._isSelect = arg_4_2 == arg_4_0._styleId
+	arg_4_0._isUnlock = arg_4_3
 end
 
-function slot0.setShowInfo(slot0)
+function var_0_0.setShowInfo(arg_5_0)
+	return
 end
 
-function slot0.getStyleTag(slot0)
-	if slot0._lastLangId ~= LangSettings.instance:getCurLang() then
-		slot0._tagStr = nil
-		slot0._name = nil
-		slot0._lastLangId = slot1
+function var_0_0.getStyleTag(arg_6_0)
+	local var_6_0 = LangSettings.instance:getCurLang()
+
+	if arg_6_0._lastLangId ~= var_6_0 then
+		arg_6_0._tagStr = nil
+		arg_6_0._name = nil
+		arg_6_0._lastLangId = var_6_0
 	end
 
-	if not slot0._name then
-		slot0._name = slot0._styleCo.name
+	if not arg_6_0._name then
+		arg_6_0._name = arg_6_0._styleCo.name
 	end
 
-	if string.nilorempty(slot0._tagStr) then
-		slot0._tagStr = ""
+	if string.nilorempty(arg_6_0._tagStr) then
+		local var_6_1 = arg_6_0._styleCo.tag
 
-		if not string.nilorempty(slot0._styleCo.tag) then
-			for slot7, slot8 in ipairs(string.splitToNumber(slot2, "#")) do
-				if string.nilorempty(slot0._tagStr) then
-					slot0._tagStr = lua_character_attribute.configDict[slot8] and slot9.name or luaLang("talent_style_special_tag_" .. slot8)
+		arg_6_0._tagStr = ""
+
+		if not string.nilorempty(var_6_1) then
+			local var_6_2 = string.splitToNumber(var_6_1, "#")
+
+			for iter_6_0, iter_6_1 in ipairs(var_6_2) do
+				local var_6_3 = lua_character_attribute.configDict[iter_6_1]
+				local var_6_4 = var_6_3 and var_6_3.name or luaLang("talent_style_special_tag_" .. iter_6_1)
+
+				if string.nilorempty(arg_6_0._tagStr) then
+					arg_6_0._tagStr = var_6_4
 				else
-					slot0._tagStr = string.format("%s    %s", slot0._tagStr, slot10)
+					arg_6_0._tagStr = string.format("%s    %s", arg_6_0._tagStr, var_6_4)
 				end
 			end
 		end
 	end
 
-	return slot0._name, slot0._tagStr
+	return arg_6_0._name, arg_6_0._tagStr
 end
 
-function slot0.getStyleTagIcon(slot0)
-	if (not slot0._growTagIcon or not slot0._nomalTagIcon) and slot0._styleCo.tagicon then
-		if tonumber(slot1) and slot2 < 10 then
-			slot1 = "0" .. slot2
-		end
+function var_0_0.getStyleTagIcon(arg_7_0)
+	if not arg_7_0._growTagIcon or not arg_7_0._nomalTagIcon then
+		local var_7_0 = arg_7_0._styleCo.tagicon
 
-		slot0._growTagIcon = "fg_" .. slot1
-		slot0._nomalTagIcon = "fz_" .. slot1
+		if var_7_0 then
+			local var_7_1 = tonumber(var_7_0)
+
+			if var_7_1 and var_7_1 < 10 then
+				var_7_0 = "0" .. var_7_1
+			end
+
+			arg_7_0._growTagIcon = "fg_" .. var_7_0
+			arg_7_0._nomalTagIcon = "fz_" .. var_7_0
+		end
 	end
 
-	return slot0._growTagIcon, slot0._nomalTagIcon
+	return arg_7_0._growTagIcon, arg_7_0._nomalTagIcon
 end
 
-function slot0.setNew(slot0, slot1)
-	slot0._isNew = slot1 and slot0._styleId ~= 0
+function var_0_0.setNew(arg_8_0, arg_8_1)
+	arg_8_0._isNew = arg_8_1 and arg_8_0._styleId ~= 0
 end
 
-function slot0.setUnlockPercent(slot0, slot1)
-	slot0._unlockPercent = slot1
+function var_0_0.setUnlockPercent(arg_9_0, arg_9_1)
+	arg_9_0._unlockPercent = arg_9_1
 end
 
-function slot0.getUnlockPercent(slot0)
-	return slot0._unlockPercent or 0
+function var_0_0.getUnlockPercent(arg_10_0)
+	return arg_10_0._unlockPercent or 0
 end
 
-function slot0.setHotUnlockStyle(slot0, slot1)
-	slot0._hotUnlockStyle = slot1
+function var_0_0.setHotUnlockStyle(arg_11_0, arg_11_1)
+	arg_11_0._hotUnlockStyle = arg_11_1
 end
 
-function slot0.isHotUnlock(slot0)
-	return slot0._hotUnlockStyle
+function var_0_0.isHotUnlock(arg_12_0)
+	return arg_12_0._hotUnlockStyle
 end
 
-return slot0
+return var_0_0

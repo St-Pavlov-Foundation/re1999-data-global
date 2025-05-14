@@ -1,87 +1,91 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapNodeItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapNodeItem", package.seeall)
 
-slot0 = class("WuErLiXiGameMapNodeItem", LuaCompBase)
+local var_0_0 = class("WuErLiXiGameMapNodeItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._imageicon = gohelper.findChildImage(slot1, "icon")
-	slot0._goselected = gohelper.findChild(slot1, "#go_Selected")
-	slot0._gounplaceable = gohelper.findChild(slot1, "#go_Unplaceable")
-	slot0._goput = gohelper.findChild(slot1, "#go_Put")
-	slot0._gohighlight = gohelper.findChild(slot1, "#go_Highlight")
-	slot0._goconfirm = gohelper.findChild(slot1, "#go_Confirm")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "icon")
+	arg_1_0._goselected = gohelper.findChild(arg_1_1, "#go_Selected")
+	arg_1_0._gounplaceable = gohelper.findChild(arg_1_1, "#go_Unplaceable")
+	arg_1_0._goput = gohelper.findChild(arg_1_1, "#go_Put")
+	arg_1_0._gohighlight = gohelper.findChild(arg_1_1, "#go_Highlight")
+	arg_1_0._goconfirm = gohelper.findChild(arg_1_1, "#go_Confirm")
 end
 
-function slot0.setItem(slot0, slot1)
-	slot0._nodeMo = slot1
+function var_0_0.setItem(arg_2_0, arg_2_1)
+	arg_2_0._nodeMo = arg_2_1
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_2_0.go, true)
 
-	slot0.go.name = slot1.x .. "_" .. slot1.y
+	arg_2_0.go.name = arg_2_1.x .. "_" .. arg_2_1.y
 
-	slot0:refreshItem()
+	arg_2_0:refreshItem()
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_3_0)
+	gohelper.setActive(arg_3_0.go, false)
 end
 
-function slot0.showUnplace(slot0, slot1)
-	gohelper.setActive(slot0._gounplaceable, slot1)
+function var_0_0.showUnplace(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0._gounplaceable, arg_4_1)
 end
 
-function slot0.showHightLight(slot0, slot1)
-	gohelper.setActive(slot0._gohighlight, slot1 and not slot0._nodeMo:getNodeUnit())
+function var_0_0.showHightLight(arg_5_0, arg_5_1)
+	arg_5_1 = arg_5_1 and not arg_5_0._nodeMo:getNodeUnit()
+
+	gohelper.setActive(arg_5_0._gohighlight, arg_5_1)
 end
 
-function slot0.showPlaceable(slot0, slot1)
-	gohelper.setActive(slot0._goconfirm, slot1)
+function var_0_0.showPlaceable(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._goconfirm, arg_6_1)
 end
 
-function slot0.showPut(slot0, slot1)
-	gohelper.setActive(slot0._goput, slot1)
+function var_0_0.showPut(arg_7_0, arg_7_1)
+	gohelper.setActive(arg_7_0._goput, arg_7_1)
 end
 
-function slot0.showSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot1)
+function var_0_0.showSelect(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0._goselected, arg_8_1)
 end
 
-function slot0.refreshItem(slot0)
-	slot1 = WuErLiXiMapModel.instance:getCurSelectUnit()
-	slot0._unitMo = slot0._nodeMo:getNodeUnit()
+function var_0_0.refreshItem(arg_9_0)
+	local var_9_0 = WuErLiXiMapModel.instance:getCurSelectUnit()
 
-	if slot0._unitMo then
-		gohelper.setActive(slot0._goselected, slot1[1] == slot0._unitMo.x and slot1[2] == slot0._unitMo.y)
+	arg_9_0._unitMo = arg_9_0._nodeMo:getNodeUnit()
 
-		if slot0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalStart or slot0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalEnd then
-			UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, "v2a4_wuerlixi_node_icon4")
+	if arg_9_0._unitMo then
+		gohelper.setActive(arg_9_0._goselected, var_9_0[1] == arg_9_0._unitMo.x and var_9_0[2] == arg_9_0._unitMo.y)
+
+		if arg_9_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_9_0._unitMo.unitType == WuErLiXiEnum.UnitType.SignalEnd then
+			UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_9_0._imageicon, "v2a4_wuerlixi_node_icon4")
 
 			return
 		end
 	else
-		gohelper.setActive(slot0._goselected, false)
+		gohelper.setActive(arg_9_0._goselected, false)
 	end
 
-	if WuErLiXiMapModel.instance:isNodeHasInitUnit(slot0._nodeMo) then
-		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, "v2a4_wuerlixi_node_icon5")
+	if WuErLiXiMapModel.instance:isNodeHasInitUnit(arg_9_0._nodeMo) then
+		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_9_0._imageicon, "v2a4_wuerlixi_node_icon5")
 
 		return
 	end
 
-	if WuErLiXiMapModel.instance:isNodeHasUnit(slot0._nodeMo) then
-		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, "v2a4_wuerlixi_node_icon2")
+	if WuErLiXiMapModel.instance:isNodeHasUnit(arg_9_0._nodeMo) then
+		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_9_0._imageicon, "v2a4_wuerlixi_node_icon2")
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, "v2a4_wuerlixi_node_icon1")
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_9_0._imageicon, "v2a4_wuerlixi_node_icon1")
 end
 
-function slot0.getNodeMo(slot0)
-	return slot0._nodeMo
+function var_0_0.getNodeMo(arg_10_0)
+	return arg_10_0._nodeMo
 end
 
-function slot0.destroy(slot0)
+function var_0_0.destroy(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

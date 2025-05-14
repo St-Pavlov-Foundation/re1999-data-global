@@ -1,185 +1,205 @@
-module("modules.logic.help.view.HelpPageTabView", package.seeall)
+﻿module("modules.logic.help.view.HelpPageTabView", package.seeall)
 
-slot0 = class("HelpPageTabView", BaseView)
+local var_0_0 = class("HelpPageTabView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
-	slot0._govoidepage = gohelper.findChild(slot0.viewGO, "#go_voidepage")
-	slot0._gohelpview = gohelper.findChild(slot0.viewGO, "#go_helpview")
-	slot0._gocategorycontent = gohelper.findChild(slot0.viewGO, "left/scroll_category/viewport/#go_categorycontent")
-	slot0._gostorecategoryitem = gohelper.findChild(slot0.viewGO, "left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+	arg_1_0._govoidepage = gohelper.findChild(arg_1_0.viewGO, "#go_voidepage")
+	arg_1_0._gohelpview = gohelper.findChild(arg_1_0.viewGO, "#go_helpview")
+	arg_1_0._gocategorycontent = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/#go_categorycontent")
+	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.GuideView then
-		slot0:closeThis()
+function var_0_0._onOpenView(arg_4_0, arg_4_1)
+	if arg_4_1 == ViewName.GuideView then
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "left")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goleft = gohelper.findChild(arg_5_0.viewGO, "left")
 end
 
-function slot0.setVideoFullScreen(slot0, slot1)
-	slot2 = slot1 ~= true
+function var_0_0.setVideoFullScreen(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1 ~= true
 
-	gohelper.setActive(slot0._goleft, slot2)
-	gohelper.setActive(slot0._golefttop, slot2)
-	gohelper.setActive(slot0._gobtns, slot2)
+	gohelper.setActive(arg_6_0._goleft, var_6_0)
+	gohelper.setActive(arg_6_0._golefttop, var_6_0)
+	gohelper.setActive(arg_6_0._gobtns, var_6_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	if slot0.viewParam and slot0.viewParam.defaultShowId and lua_help_page_tab.configDict[slot1] then
-		slot3 = slot2.mainTitleId
+function var_0_0.onUpdateParam(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam and arg_7_0.viewParam.defaultShowId
 
-		if slot0._curSelectMainIndex == slot3 then
-			slot0._curSelectSubIndex = nil
+	if var_7_0 then
+		local var_7_1 = lua_help_page_tab.configDict[var_7_0]
 
-			slot0:_onSubBtnClick(tabletool.indexOf(slot0._tagDataList[slot3], slot2))
-			slot0:_btn_tween_open_end()
-		else
-			slot0:_onBtnClick({
-				index = slot3,
-				subIndex = slot4
-			})
+		if var_7_1 then
+			local var_7_2 = var_7_1.mainTitleId
+			local var_7_3 = tabletool.indexOf(arg_7_0._tagDataList[var_7_2], var_7_1)
+
+			if arg_7_0._curSelectMainIndex == var_7_2 then
+				arg_7_0._curSelectSubIndex = nil
+
+				arg_7_0:_onSubBtnClick(var_7_3)
+				arg_7_0:_btn_tween_open_end()
+			else
+				arg_7_0:_onBtnClick({
+					index = var_7_2,
+					subIndex = var_7_3
+				})
+			end
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewContainer then
-		slot0:addEventCb(slot0.viewContainer, HelpEvent.UIPageTabSelectChange, slot0._onVoideFullScreenChange, slot0)
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0.closeThis, slot0)
+function var_0_0.onOpen(arg_8_0)
+	if arg_8_0.viewContainer then
+		arg_8_0:addEventCb(arg_8_0.viewContainer, HelpEvent.UIPageTabSelectChange, arg_8_0._onVoideFullScreenChange, arg_8_0)
+		NavigateMgr.instance:addEscape(arg_8_0.viewContainer.viewName, arg_8_0.closeThis, arg_8_0)
 	end
 
-	slot0:setPageTabCfg(nil)
+	arg_8_0:setPageTabCfg(nil)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._tagDataList = {}
-	slot1 = slot0.viewParam and slot0.viewParam.isGMShowAll or false
-	slot2 = slot0.viewParam and slot0.viewParam.defaultShowId
-	slot0._matchGuideId = nil
-	slot0._matchAllPage = false
+function var_0_0.onOpenFinish(arg_9_0)
+	arg_9_0._tagDataList = {}
 
-	if slot0.viewParam and slot0.viewParam.guideId then
-		slot0._matchGuideId = tonumber(slot0.viewParam.guideId)
-		slot0._matchAllPage = slot0.viewParam.matchAllPage
+	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.isGMShowAll or false
+	local var_9_1 = arg_9_0.viewParam and arg_9_0.viewParam.defaultShowId
+
+	arg_9_0._matchGuideId = nil
+	arg_9_0._matchAllPage = false
+
+	if arg_9_0.viewParam and arg_9_0.viewParam.guideId then
+		arg_9_0._matchGuideId = tonumber(arg_9_0.viewParam.guideId)
+		arg_9_0._matchAllPage = arg_9_0.viewParam.matchAllPage
 	end
 
-	slot3 = {}
-	slot4 = nil
+	local var_9_2 = {}
+	local var_9_3
 
-	for slot8, slot9 in ipairs(lua_help_page_tab.configList) do
-		if slot9.parentId ~= 0 and slot0:checkIsNeedShowPageTabCfg(slot9, slot1) then
-			if not slot3[slot9.parentId] then
-				slot10 = lua_help_page_tab.configDict[slot9.parentId] or slot9
-				slot3[slot9.parentId] = {
-					id = slot10.id,
-					sortIdx = slot10.sortIdx,
-					config = slot10,
+	for iter_9_0, iter_9_1 in ipairs(lua_help_page_tab.configList) do
+		if iter_9_1.parentId ~= 0 and arg_9_0:checkIsNeedShowPageTabCfg(iter_9_1, var_9_0) then
+			if not var_9_2[iter_9_1.parentId] then
+				local var_9_4 = lua_help_page_tab.configDict[iter_9_1.parentId] or iter_9_1
+
+				var_9_2[iter_9_1.parentId] = {
+					id = var_9_4.id,
+					sortIdx = var_9_4.sortIdx,
+					config = var_9_4,
 					childCfgList = {}
 				}
 			end
 
-			table.insert(slot3[slot9.parentId].childCfgList, slot9)
+			table.insert(var_9_2[iter_9_1.parentId].childCfgList, iter_9_1)
 
-			if slot2 == slot9.id then
-				slot4 = slot9
+			if var_9_1 == iter_9_1.id then
+				var_9_3 = iter_9_1
 			end
 		end
 	end
 
-	for slot8, slot9 in pairs(slot3) do
-		table.sort(slot3[slot8].childCfgList, uv0._sortSubConfig)
-		table.insert(slot0._tagDataList, slot3[slot8])
+	for iter_9_2, iter_9_3 in pairs(var_9_2) do
+		table.sort(var_9_2[iter_9_2].childCfgList, var_0_0._sortSubConfig)
+		table.insert(arg_9_0._tagDataList, var_9_2[iter_9_2])
 	end
 
-	table.sort(slot0._tagDataList, uv0._sortConfig)
+	table.sort(arg_9_0._tagDataList, var_0_0._sortConfig)
 
-	slot0._mainBtnTbList = slot0:getUserDataTb_()
-	slot0._subBtnHeightList = {}
-	slot0._subBtnTbList = slot0:getUserDataTb_()
+	arg_9_0._mainBtnTbList = arg_9_0:getUserDataTb_()
+	arg_9_0._subBtnHeightList = {}
+	arg_9_0._subBtnTbList = arg_9_0:getUserDataTb_()
 
-	gohelper.CreateObjList(slot0, slot0._onMainBtnShow, slot0._tagDataList, slot0._gocategorycontent, slot0._gostorecategoryitem)
+	gohelper.CreateObjList(arg_9_0, arg_9_0._onMainBtnShow, arg_9_0._tagDataList, arg_9_0._gocategorycontent, arg_9_0._gostorecategoryitem)
 
-	if #slot0._tagDataList > 0 then
-		slot5 = 1
-		slot6 = 1
+	if #arg_9_0._tagDataList > 0 then
+		local var_9_5 = 1
+		local var_9_6 = 1
 
-		if slot4 then
-			slot5 = slot4.mainTitleId
+		if var_9_3 then
+			var_9_5 = var_9_3.mainTitleId
+			var_9_6 = tabletool.indexOf(arg_9_0._tagDataList[var_9_5], var_9_3)
 
-			slot0:_onBtnClick({
-				index = slot5,
-				subIndex = tabletool.indexOf(slot0._tagDataList[slot5], slot4)
+			arg_9_0:_onBtnClick({
+				index = var_9_5,
+				subIndex = var_9_6
 			})
 		else
-			recthelper.setHeight(slot0._mainBtnTbList[1].transform, 130)
-			recthelper.setHeight(slot0._mainBtnTbList[1].go_childcategoryTrs, 0)
+			recthelper.setHeight(arg_9_0._mainBtnTbList[1].transform, 130)
+			recthelper.setHeight(arg_9_0._mainBtnTbList[1].go_childcategoryTrs, 0)
 
-			slot0._curSelectMainIndex = slot5
-			slot0._curSelectSubIndex = nil
+			arg_9_0._curSelectMainIndex = var_9_5
+			arg_9_0._curSelectSubIndex = nil
 
-			slot0:_refreshMainBtnState()
-			slot0:_onSubBtnClick(slot6)
-			gohelper.setActive(slot0._mainBtnTbList[1].go_line, false)
-			slot0:_btn_tween_open_end()
+			arg_9_0:_refreshMainBtnState()
+			arg_9_0:_onSubBtnClick(var_9_6)
+			gohelper.setActive(arg_9_0._mainBtnTbList[1].go_line, false)
+			arg_9_0:_btn_tween_open_end()
 
-			slot0._curSelectMainIndex = nil
+			arg_9_0._curSelectMainIndex = nil
 		end
 	end
 end
 
-function slot0._onVoideFullScreenChange(slot0, slot1)
-	slot0:setPageTabCfg(slot1)
+function var_0_0._onVoideFullScreenChange(arg_10_0, arg_10_1)
+	arg_10_0:setPageTabCfg(arg_10_1)
 end
 
-function slot0.setPageTabCfg(slot0, slot1)
-	slot2 = slot1 and slot1.showType or -1
+function var_0_0.setPageTabCfg(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1 and arg_11_1.showType or -1
 
-	gohelper.setActive(slot0._govoidepage, slot2 == HelpEnum.PageTabShowType.Video)
-	gohelper.setActive(slot0._gohelpview, slot2 == HelpEnum.PageTabShowType.HelpView)
+	gohelper.setActive(arg_11_0._govoidepage, var_11_0 == HelpEnum.PageTabShowType.Video)
+	gohelper.setActive(arg_11_0._gohelpview, var_11_0 == HelpEnum.PageTabShowType.HelpView)
 end
 
-function slot0.checkIsNeedShowPageTabCfg(slot0, slot1, slot2)
-	if (slot1 and slot1.showType) == HelpEnum.PageTabShowType.HelpView then
-		return slot0:_checkHelpViewByHelpId(slot1 and slot1.helpId)
-	elseif slot3 == HelpEnum.PageTabShowType.Video then
-		return slot0:_checkHelpVideoById(slot4)
+function var_0_0.checkIsNeedShowPageTabCfg(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_1 and arg_12_1.showType
+	local var_12_1 = arg_12_1 and arg_12_1.helpId
+
+	if var_12_0 == HelpEnum.PageTabShowType.HelpView then
+		return arg_12_0:_checkHelpViewByHelpId(var_12_1)
+	elseif var_12_0 == HelpEnum.PageTabShowType.Video then
+		return arg_12_0:_checkHelpVideoById(var_12_1)
 	end
 
 	return false
 end
 
-function slot0._checkHelpViewByHelpId(slot0, slot1)
-	if not HelpConfig.instance:getHelpCO(slot1) or string.nilorempty(slot2.page) then
-		logError("请检查帮助说明配置" .. tostring(slot1) .. "相关配置是否完整！")
+function var_0_0._checkHelpViewByHelpId(arg_13_0, arg_13_1)
+	local var_13_0 = HelpConfig.instance:getHelpCO(arg_13_1)
+
+	if not var_13_0 or string.nilorempty(var_13_0.page) then
+		logError("请检查帮助说明配置" .. tostring(arg_13_1) .. "相关配置是否完整！")
 
 		return false
 	end
 
-	if #string.split(slot2.page, "#") < 1 then
-		logError("请检查帮助界面" .. tostring(slot1) .. "相关配置是否完整！")
+	local var_13_1 = string.split(var_13_0.page, "#")
+
+	if #var_13_1 < 1 then
+		logError("请检查帮助界面" .. tostring(arg_13_1) .. "相关配置是否完整！")
 
 		return false
 	end
 
-	for slot7 = 1, #slot3 do
-		if slot0.viewContainer:checkHelpPageCfg(HelpConfig.instance:getHelpPageCo(tonumber(slot3[slot7])), slot0._matchAllPage, slot0._matchGuideId) then
+	for iter_13_0 = 1, #var_13_1 do
+		local var_13_2 = HelpConfig.instance:getHelpPageCo(tonumber(var_13_1[iter_13_0]))
+
+		if arg_13_0.viewContainer:checkHelpPageCfg(var_13_2, arg_13_0._matchAllPage, arg_13_0._matchGuideId) then
 			return true
 		end
 	end
@@ -187,196 +207,223 @@ function slot0._checkHelpViewByHelpId(slot0, slot1)
 	return false
 end
 
-function slot0._checkHelpVideoById(slot0, slot1)
-	if not HelpConfig.instance:getHelpVideoCO(slot1) or string.nilorempty(slot2.videopath) then
-		logError("请检查【export_帮助视频】" .. tostring(slot1) .. "相关配置是否完整！")
+function var_0_0._checkHelpVideoById(arg_14_0, arg_14_1)
+	local var_14_0 = HelpConfig.instance:getHelpVideoCO(arg_14_1)
+
+	if not var_14_0 or string.nilorempty(var_14_0.videopath) then
+		logError("请检查【export_帮助视频】" .. tostring(arg_14_1) .. "相关配置是否完整！")
 
 		return false
 	end
 
-	return slot0.viewContainer:checkHelpVideoCfg(slot2, slot0._matchAllPage, slot0._matchGuideId)
+	return arg_14_0.viewContainer:checkHelpVideoCfg(var_14_0, arg_14_0._matchAllPage, arg_14_0._matchGuideId)
 end
 
-function slot0._onMainBtnShow(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot5 = slot1.transform
-	slot4.gameObject = slot1
-	slot4.go = slot1
-	slot4.goTrs = slot5
-	slot4.transform = slot5
-	slot4.index = slot3
-	slot4.data = slot2
-	slot6 = slot2.config
-	slot4.go_selected = gohelper.findChild(slot1, "go_selected")
-	slot4.go_unselected = gohelper.findChild(slot1, "go_unselected")
-	slot4.go_childcategory = gohelper.findChild(slot1, "go_childcategory")
-	slot4.go_childitem = gohelper.findChild(slot1, "go_childcategory/go_childitem")
-	slot4.go_line = gohelper.findChild(slot1, "go_line")
-	slot4.go_lineTrs = slot4.go_line.transform
-	slot4.go_childcategoryTrs = slot4.go_childcategory.transform
-	slot8 = gohelper.getClickWithAudio(gohelper.findChild(slot1, "clickArea"), AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.findChildText(slot1, "go_unselected/txt_itemcn1").text = slot6.title
-	gohelper.findChildText(slot1, "go_unselected/txt_itemen1").text = slot6.title_en
-	gohelper.findChildText(slot1, "go_selected/txt_itemcn2").text = slot6.title
-	gohelper.findChildText(slot1, "go_selected/txt_itemen2").text = slot6.title_en
-	slot0._subBelongIndex = slot3
-	slot0._subBtnPosY = -60
+function var_0_0._onMainBtnShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = arg_15_0:getUserDataTb_()
+	local var_15_1 = arg_15_1.transform
 
-	gohelper.CreateObjList(slot0, slot0._onSubBtnShow, slot2.childCfgList, slot4.go_childcategory, slot4.go_childitem)
+	var_15_0.gameObject = arg_15_1
+	var_15_0.go = arg_15_1
+	var_15_0.goTrs = var_15_1
+	var_15_0.transform = var_15_1
+	var_15_0.index = arg_15_3
+	var_15_0.data = arg_15_2
 
-	slot0._subBtnHeightList[slot3] = math.abs(slot0._subBtnPosY + 70)
+	local var_15_2 = arg_15_2.config
 
-	table.insert(slot0._mainBtnTbList, slot4)
-	slot0:removeClickCb(slot8)
-	slot0:addClickCb(slot8, slot0._onBtnClick, slot0, slot4)
+	var_15_0.go_selected = gohelper.findChild(arg_15_1, "go_selected")
+	var_15_0.go_unselected = gohelper.findChild(arg_15_1, "go_unselected")
+	var_15_0.go_childcategory = gohelper.findChild(arg_15_1, "go_childcategory")
+	var_15_0.go_childitem = gohelper.findChild(arg_15_1, "go_childcategory/go_childitem")
+	var_15_0.go_line = gohelper.findChild(arg_15_1, "go_line")
+	var_15_0.go_lineTrs = var_15_0.go_line.transform
+	var_15_0.go_childcategoryTrs = var_15_0.go_childcategory.transform
+
+	local var_15_3 = gohelper.findChild(arg_15_1, "clickArea")
+	local var_15_4 = gohelper.getClickWithAudio(var_15_3, AudioEnum.UI.UI_transverse_tabs_click)
+	local var_15_5 = gohelper.findChildText(arg_15_1, "go_unselected/txt_itemcn1")
+	local var_15_6 = gohelper.findChildText(arg_15_1, "go_unselected/txt_itemen1")
+	local var_15_7 = gohelper.findChildText(arg_15_1, "go_selected/txt_itemcn2")
+	local var_15_8 = gohelper.findChildText(arg_15_1, "go_selected/txt_itemen2")
+
+	var_15_5.text = var_15_2.title
+	var_15_6.text = var_15_2.title_en
+	var_15_7.text = var_15_2.title
+	var_15_8.text = var_15_2.title_en
+	arg_15_0._subBelongIndex = arg_15_3
+	arg_15_0._subBtnPosY = -60
+
+	gohelper.CreateObjList(arg_15_0, arg_15_0._onSubBtnShow, arg_15_2.childCfgList, var_15_0.go_childcategory, var_15_0.go_childitem)
+
+	arg_15_0._subBtnHeightList[arg_15_3] = math.abs(arg_15_0._subBtnPosY + 70)
+
+	table.insert(arg_15_0._mainBtnTbList, var_15_0)
+	arg_15_0:removeClickCb(var_15_4)
+	arg_15_0:addClickCb(var_15_4, arg_15_0._onBtnClick, arg_15_0, var_15_0)
 end
 
-function slot0._onBtnClick(slot0, slot1)
-	slot3 = slot1.subIndex or 1
+function var_0_0._onBtnClick(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.index
+	local var_16_1 = arg_16_1.subIndex or 1
 
-	if slot0._curSelectMainIndex == slot1.index then
-		if slot0._btnAniTweenId then
-			ZProj.TweenHelper.KillById(slot0._btnAniTweenId)
+	if arg_16_0._curSelectMainIndex == var_16_0 then
+		if arg_16_0._btnAniTweenId then
+			ZProj.TweenHelper.KillById(arg_16_0._btnAniTweenId)
 		end
 
-		slot0._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.3, slot0._onBtnAniFrameCallback, slot0._btn_tween_end, slot0)
+		arg_16_0._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.3, arg_16_0._onBtnAniFrameCallback, arg_16_0._btn_tween_end, arg_16_0)
 
 		return
 	end
 
-	if slot0._curSelectMainIndex then
-		recthelper.setHeight(slot0._mainBtnTbList[slot0._curSelectMainIndex].transform, 130)
-		recthelper.setHeight(slot0._mainBtnTbList[slot0._curSelectMainIndex].go_childcategoryTrs, 0)
+	if arg_16_0._curSelectMainIndex then
+		recthelper.setHeight(arg_16_0._mainBtnTbList[arg_16_0._curSelectMainIndex].transform, 130)
+		recthelper.setHeight(arg_16_0._mainBtnTbList[arg_16_0._curSelectMainIndex].go_childcategoryTrs, 0)
 	end
 
-	slot0._curSelectMainIndex = slot2
-	slot0._curSelectSubIndex = nil
+	arg_16_0._curSelectMainIndex = var_16_0
+	arg_16_0._curSelectSubIndex = nil
 
-	slot0:_refreshMainBtnState()
-	slot0:_onSubBtnClick(slot3)
+	arg_16_0:_refreshMainBtnState()
+	arg_16_0:_onSubBtnClick(var_16_1)
 
-	if slot0._btnAniTweenId then
-		ZProj.TweenHelper.KillById(slot0._btnAniTweenId)
+	if arg_16_0._btnAniTweenId then
+		ZProj.TweenHelper.KillById(arg_16_0._btnAniTweenId)
 	end
 
-	gohelper.setActive(slot0._mainBtnTbList[slot0._curSelectMainIndex].go_line, true)
+	gohelper.setActive(arg_16_0._mainBtnTbList[arg_16_0._curSelectMainIndex].go_line, true)
 
-	slot0._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, slot0._onBtnAniFrameCallback, slot0._btn_tween_open_end, slot0)
+	arg_16_0._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_16_0._onBtnAniFrameCallback, arg_16_0._btn_tween_open_end, arg_16_0)
 end
 
-function slot0._onBtnAniFrameCallback(slot0, slot1)
-	recthelper.setHeight(slot0._mainBtnTbList[slot0._curSelectMainIndex].transform, 130 + slot0._subBtnHeightList[slot0._curSelectMainIndex] * slot1)
-	recthelper.setHeight(slot0._mainBtnTbList[slot0._curSelectMainIndex].go_childcategoryTrs, slot0._subBtnHeightList[slot0._curSelectMainIndex] * slot1)
+function var_0_0._onBtnAniFrameCallback(arg_17_0, arg_17_1)
+	recthelper.setHeight(arg_17_0._mainBtnTbList[arg_17_0._curSelectMainIndex].transform, 130 + arg_17_0._subBtnHeightList[arg_17_0._curSelectMainIndex] * arg_17_1)
+	recthelper.setHeight(arg_17_0._mainBtnTbList[arg_17_0._curSelectMainIndex].go_childcategoryTrs, arg_17_0._subBtnHeightList[arg_17_0._curSelectMainIndex] * arg_17_1)
 end
 
-function slot0.scrollItemIsVisible(slot0, slot1, slot2)
-	if slot1.transform:InverseTransformPoint(slot2.transform.position).y + recthelper.getHeight(slot2.transform) / 2 >= 65 or slot3 <= -785 then
-		recthelper.setAnchorY(slot0._gocategorycontent.transform, 130 * (slot0._curSelectMainIndex - 1) - 60)
+function var_0_0.scrollItemIsVisible(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_1.transform:InverseTransformPoint(arg_18_2.transform.position).y + recthelper.getHeight(arg_18_2.transform) / 2
+
+	if var_18_0 >= 65 or var_18_0 <= -785 then
+		recthelper.setAnchorY(arg_18_0._gocategorycontent.transform, 130 * (arg_18_0._curSelectMainIndex - 1) - 60)
 	end
 end
 
-function slot0._btn_tween_open_end(slot0)
-	slot0:scrollItemIsVisible(gohelper.findChild(slot0.viewGO, "left/scroll_category"), slot0._mainBtnTbList[slot0._curSelectMainIndex])
+function var_0_0._btn_tween_open_end(arg_19_0)
+	arg_19_0:scrollItemIsVisible(gohelper.findChild(arg_19_0.viewGO, "left/scroll_category"), arg_19_0._mainBtnTbList[arg_19_0._curSelectMainIndex])
 end
 
-function slot0._btn_tween_end(slot0)
-	gohelper.setActive(slot0._mainBtnTbList[slot0._curSelectMainIndex].go_line, false)
+function var_0_0._btn_tween_end(arg_20_0)
+	gohelper.setActive(arg_20_0._mainBtnTbList[arg_20_0._curSelectMainIndex].go_line, false)
 
-	slot0._curSelectMainIndex = nil
+	arg_20_0._curSelectMainIndex = nil
 end
 
-function slot0._refreshMainBtnState(slot0)
-	if slot0._mainBtnTbList then
-		for slot5, slot6 in ipairs(slot0._mainBtnTbList) do
-			slot7 = slot6 == slot0._mainBtnTbList[slot0._curSelectMainIndex]
+function var_0_0._refreshMainBtnState(arg_21_0)
+	if arg_21_0._mainBtnTbList then
+		local var_21_0 = arg_21_0._mainBtnTbList[arg_21_0._curSelectMainIndex]
 
-			gohelper.setActive(slot6.go_line, slot7)
-			gohelper.setActive(slot6.go_unselected, not slot7)
-			gohelper.setActive(slot6.go_selected, slot7)
-			gohelper.setActive(slot6.go_childcategory, slot7)
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0._mainBtnTbList) do
+			local var_21_1 = iter_21_1 == var_21_0
+
+			gohelper.setActive(iter_21_1.go_line, var_21_1)
+			gohelper.setActive(iter_21_1.go_unselected, not var_21_1)
+			gohelper.setActive(iter_21_1.go_selected, var_21_1)
+			gohelper.setActive(iter_21_1.go_childcategory, var_21_1)
 		end
 	end
 end
 
-function slot0._onSubBtnShow(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot5 = slot1.transform
-	slot4.gameObject = slot1
-	slot4.go = slot1
-	slot4.transform = slot5
-	slot4.goTrs = slot5
-	slot4.data = slot2
-	slot4.index = slot3
-	slot4.go_selected = gohelper.findChild(slot1, "go_selected")
-	slot4.go_unselected = gohelper.findChild(slot1, "go_unselected")
+function var_0_0._onSubBtnShow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	local var_22_0 = arg_22_0:getUserDataTb_()
+	local var_22_1 = arg_22_1.transform
 
-	recthelper.setAnchorY(slot5, slot0._subBtnPosY)
+	var_22_0.gameObject = arg_22_1
+	var_22_0.go = arg_22_1
+	var_22_0.transform = var_22_1
+	var_22_0.goTrs = var_22_1
+	var_22_0.data = arg_22_2
+	var_22_0.index = arg_22_3
+	var_22_0.go_selected = gohelper.findChild(arg_22_1, "go_selected")
+	var_22_0.go_unselected = gohelper.findChild(arg_22_1, "go_unselected")
 
-	slot0._subBtnPosY = slot0._subBtnPosY - 110
-	slot7 = gohelper.getClickWithAudio(gohelper.findChild(slot1, "clickArea"), AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.findChildText(slot1, "go_unselected/txt_itemcn1").text = slot2.title
-	gohelper.findChildText(slot1, "go_unselected/txt_itemen1").text = slot2.title_en
-	gohelper.findChildText(slot1, "go_selected/txt_itemcn2").text = slot2.title
-	gohelper.findChildText(slot1, "go_selected/txt_itemen2").text = slot2.title_en
+	recthelper.setAnchorY(var_22_1, arg_22_0._subBtnPosY)
 
-	if not slot0._subBtnTbList[slot0._subBelongIndex] then
-		slot0._subBtnTbList[slot0._subBelongIndex] = {}
+	arg_22_0._subBtnPosY = arg_22_0._subBtnPosY - 110
+
+	local var_22_2 = gohelper.findChild(arg_22_1, "clickArea")
+	local var_22_3 = gohelper.getClickWithAudio(var_22_2, AudioEnum.UI.UI_transverse_tabs_click)
+	local var_22_4 = gohelper.findChildText(arg_22_1, "go_unselected/txt_itemcn1")
+	local var_22_5 = gohelper.findChildText(arg_22_1, "go_unselected/txt_itemen1")
+	local var_22_6 = gohelper.findChildText(arg_22_1, "go_selected/txt_itemcn2")
+	local var_22_7 = gohelper.findChildText(arg_22_1, "go_selected/txt_itemen2")
+
+	var_22_4.text = arg_22_2.title
+	var_22_5.text = arg_22_2.title_en
+	var_22_6.text = arg_22_2.title
+	var_22_7.text = arg_22_2.title_en
+
+	if not arg_22_0._subBtnTbList[arg_22_0._subBelongIndex] then
+		arg_22_0._subBtnTbList[arg_22_0._subBelongIndex] = {}
 	end
 
-	table.insert(slot0._subBtnTbList[slot0._subBelongIndex], slot4)
-	slot0:removeClickCb(slot7)
-	slot0:addClickCb(slot7, slot0._onSubBtnClick, slot0, slot3)
+	table.insert(arg_22_0._subBtnTbList[arg_22_0._subBelongIndex], var_22_0)
+	arg_22_0:removeClickCb(var_22_3)
+	arg_22_0:addClickCb(var_22_3, arg_22_0._onSubBtnClick, arg_22_0, arg_22_3)
 end
 
-function slot0._onSubBtnClick(slot0, slot1)
-	if slot0._curSelectSubIndex == slot1 then
+function var_0_0._onSubBtnClick(arg_23_0, arg_23_1)
+	if arg_23_0._curSelectSubIndex == arg_23_1 then
 		return
 	end
 
-	slot0._curSelectSubIndex = slot1
-	slot0._curSelectSubData = slot0._tagDataList[slot0._curSelectMainIndex].childCfgList[slot1]
+	arg_23_0._curSelectSubIndex = arg_23_1
+	arg_23_0._curSelectSubData = arg_23_0._tagDataList[arg_23_0._curSelectMainIndex].childCfgList[arg_23_1]
 
-	slot0:_refreshSubBtnState()
+	arg_23_0:_refreshSubBtnState()
 
-	if slot0.viewContainer then
-		slot0.viewContainer:dispatchEvent(HelpEvent.UIPageTabSelectChange, slot0._curSelectSubData)
+	if arg_23_0.viewContainer then
+		arg_23_0.viewContainer:dispatchEvent(HelpEvent.UIPageTabSelectChange, arg_23_0._curSelectSubData)
 	end
 end
 
-function slot0._refreshSubBtnState(slot0)
-	if slot0._subBtnTbList then
-		slot1 = slot0._subBtnTbList[slot0._curSelectMainIndex]
+function var_0_0._refreshSubBtnState(arg_24_0)
+	if arg_24_0._subBtnTbList then
+		local var_24_0 = arg_24_0._subBtnTbList[arg_24_0._curSelectMainIndex]
+		local var_24_1 = var_24_0[arg_24_0._curSelectSubIndex]
 
-		for slot6, slot7 in ipairs(slot1) do
-			slot8 = slot7 == slot1[slot0._curSelectSubIndex]
+		for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+			local var_24_2 = iter_24_1 == var_24_1
 
-			gohelper.setActive(slot7.go_unselected, not slot8)
-			gohelper.setActive(slot7.go_selected, slot8)
+			gohelper.setActive(iter_24_1.go_unselected, not var_24_2)
+			gohelper.setActive(iter_24_1.go_selected, var_24_2)
 		end
 	end
 end
 
-function slot0._sortConfig(slot0, slot1)
-	return uv0._sortSubConfig(slot0, slot1)
+function var_0_0._sortConfig(arg_25_0, arg_25_1)
+	return var_0_0._sortSubConfig(arg_25_0, arg_25_1)
 end
 
-function slot0._sortSubConfig(slot0, slot1)
-	if slot0.sortIdx ~= slot1.sortIdx then
-		return slot0.sortIdx < slot1.sortIdx
+function var_0_0._sortSubConfig(arg_26_0, arg_26_1)
+	if arg_26_0.sortIdx ~= arg_26_1.sortIdx then
+		return arg_26_0.sortIdx < arg_26_1.sortIdx
 	end
 
-	if slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
-	end
-end
-
-function slot0.onClose(slot0)
-	if slot0._btnAniTweenId then
-		ZProj.TweenHelper.KillById(slot0._btnAniTweenId)
+	if arg_26_0.id ~= arg_26_1.id then
+		return arg_26_0.id < arg_26_1.id
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onClose(arg_27_0)
+	if arg_27_0._btnAniTweenId then
+		ZProj.TweenHelper.KillById(arg_27_0._btnAniTweenId)
+	end
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_28_0)
+	return
+end
+
+return var_0_0

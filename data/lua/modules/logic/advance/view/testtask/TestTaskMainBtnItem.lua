@@ -1,51 +1,54 @@
-module("modules.logic.advance.view.testtask.TestTaskMainBtnItem", package.seeall)
+﻿module("modules.logic.advance.view.testtask.TestTaskMainBtnItem", package.seeall)
 
-slot0 = class("TestTaskMainBtnItem", LuaCompBase)
+local var_0_0 = class("TestTaskMainBtnItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = gohelper.cloneInPlace(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = gohelper.cloneInPlace(arg_1_1)
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_1_0.go, true)
 
-	slot0._imgitem = gohelper.findChildImage(slot0.go, "bg")
-	slot0._btnitem = gohelper.getClick(gohelper.findChild(slot0.go, "bg"))
-	slot0._reddotitem = gohelper.findChild(slot0.go, "go_activityreddot")
-	slot0._txttheme = gohelper.findChildText(slot0.go, "txt_theme")
+	arg_1_0._imgitem = gohelper.findChildImage(arg_1_0.go, "bg")
 
-	slot0:_refreshItem()
-	slot0:addEvent()
+	local var_1_0 = gohelper.findChild(arg_1_0.go, "bg")
+
+	arg_1_0._btnitem = gohelper.getClick(var_1_0)
+	arg_1_0._reddotitem = gohelper.findChild(arg_1_0.go, "go_activityreddot")
+	arg_1_0._txttheme = gohelper.findChildText(arg_1_0.go, "txt_theme")
+
+	arg_1_0:_refreshItem()
+	arg_1_0:addEvent()
 end
 
-function slot0.addEvent(slot0)
-	slot0._btnitem:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0.addEvent(arg_2_0)
+	arg_2_0._btnitem:AddClickListener(arg_2_0._onItemClick, arg_2_0)
 end
 
-function slot0.removeEvent(slot0)
-	slot0._btnitem:RemoveClickListener()
+function var_0_0.removeEvent(arg_3_0)
+	arg_3_0._btnitem:RemoveClickListener()
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_4_0)
 	TestTaskController.instance:openTestTaskView()
 end
 
-function slot0._refreshItem(slot0)
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, "icon_3")
-	RedDotController.instance:addRedDot(slot0._reddotitem, RedDotEnum.DotNode.TestTaskBtn)
+function var_0_0._refreshItem(arg_5_0)
+	UISpriteSetMgr.instance:setMainSprite(arg_5_0._imgitem, "icon_3")
+	RedDotController.instance:addRedDot(arg_5_0._reddotitem, RedDotEnum.DotNode.TestTaskBtn)
 end
 
-function slot0.destroy(slot0)
-	slot0:removeEvent()
-	gohelper.setActive(slot0.go, false)
-	gohelper.destroy(slot0.go)
+function var_0_0.destroy(arg_6_0)
+	arg_6_0:removeEvent()
+	gohelper.setActive(arg_6_0.go, false)
+	gohelper.destroy(arg_6_0.go)
 
-	slot0.go = nil
-	slot0._imgitem = nil
-	slot0._btnitem = nil
-	slot0._reddotitem = nil
+	arg_6_0.go = nil
+	arg_6_0._imgitem = nil
+	arg_6_0._btnitem = nil
+	arg_6_0._reddotitem = nil
 end
 
-function slot0.isShowRedDot(slot0)
+function var_0_0.isShowRedDot(arg_7_0)
 	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.TestTaskBtn)
 end
 
-return slot0
+return var_0_0

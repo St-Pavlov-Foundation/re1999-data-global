@@ -1,9 +1,9 @@
-module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301", package.seeall)
 
-slot0 = class("FightEntitySpecialSkinEffect307301", FightEntitySpecialEffectBase)
+local var_0_0 = class("FightEntitySpecialSkinEffect307301", FightEntitySpecialEffectBase)
 
-function slot0.initClass(slot0)
-	slot0:newClass(FightEntitySpecialSkinEffect307301_buff4150002)
+function var_0_0.initClass(arg_1_0)
+	arg_1_0:newClass(FightEntitySpecialSkinEffect307301_buff4150002)
 end
 
-return slot0
+return var_0_0

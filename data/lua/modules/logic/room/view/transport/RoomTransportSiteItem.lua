@@ -1,76 +1,80 @@
-module("modules.logic.room.view.transport.RoomTransportSiteItem", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportSiteItem", package.seeall)
 
-slot0 = class("RoomTransportSiteItem", ListScrollCellExtend)
+local var_0_0 = class("RoomTransportSiteItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnswithItem:AddClickListener(slot0._btnswithItemOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnswithItem:AddClickListener(arg_2_0._btnswithItemOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnswithItem:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnswithItem:RemoveClickListener()
 end
 
-function slot0._btnswithItemOnClick(slot0)
-	if slot0._view and slot0._view.viewContainer then
-		slot0._view.viewContainer:dispatchEvent(RoomEvent.TransportSiteSelect, slot0:getDataMO())
+function var_0_0._btnswithItemOnClick(arg_4_0)
+	if arg_4_0._view and arg_4_0._view.viewContainer then
+		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.TransportSiteSelect, arg_4_0:getDataMO())
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnswithItem = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_swithItem")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "btn_swithItem/go_select")
-	slot0._imageselecticon = gohelper.findChildImage(slot0.viewGO, "btn_swithItem/go_select/image_selecticon")
-	slot0._gounselect = gohelper.findChild(slot0.viewGO, "btn_swithItem/go_unselect")
-	slot0._imageunselecticon = gohelper.findChildImage(slot0.viewGO, "btn_swithItem/go_unselect/image_unselecticon")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._btnswithItem = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "btn_swithItem")
+	arg_5_0._goselect = gohelper.findChild(arg_5_0.viewGO, "btn_swithItem/go_select")
+	arg_5_0._imageselecticon = gohelper.findChildImage(arg_5_0.viewGO, "btn_swithItem/go_select/image_selecticon")
+	arg_5_0._gounselect = gohelper.findChild(arg_5_0.viewGO, "btn_swithItem/go_unselect")
+	arg_5_0._imageunselecticon = gohelper.findChildImage(arg_5_0.viewGO, "btn_swithItem/go_unselect/image_unselecticon")
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.getDataMO(slot0)
-	return slot0._dataMO
+function var_0_0.getDataMO(arg_8_0)
+	return arg_8_0._dataMO
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._dataMO = slot1
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._dataMO = arg_9_1
 
-	slot0:refreshUI()
+	arg_9_0:refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
-	gohelper.setActive(slot0._gounselect, not slot1)
+function var_0_0.onSelect(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._goselect, arg_10_1)
+	gohelper.setActive(arg_10_0._gounselect, not arg_10_1)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = slot0._dataMO and RoomMapTransportPathModel.instance:getTransportPathMO(slot0._dataMO.pathId)
-	slot2 = false
+function var_0_0.refreshUI(arg_12_0)
+	local var_12_0 = arg_12_0._dataMO and RoomMapTransportPathModel.instance:getTransportPathMO(arg_12_0._dataMO.pathId)
+	local var_12_1 = false
+	local var_12_2 = var_12_0 and RoomTransportHelper.getVehicleCfgByBuildingId(var_12_0.buildingId, var_12_0.buildingSkinId)
 
-	if slot1 and RoomTransportHelper.getVehicleCfgByBuildingId(slot1.buildingId, slot1.buildingSkinId) then
-		if slot3.id ~= slot0._lastVehicleId then
-			UISpriteSetMgr.instance:setRoomSprite(slot0._imageselecticon, slot3.buildIcon)
-			UISpriteSetMgr.instance:setRoomSprite(slot0._imageunselecticon, slot3.buildIcon)
+	if var_12_2 then
+		if var_12_2.id ~= arg_12_0._lastVehicleId then
+			UISpriteSetMgr.instance:setRoomSprite(arg_12_0._imageselecticon, var_12_2.buildIcon)
+			UISpriteSetMgr.instance:setRoomSprite(arg_12_0._imageunselecticon, var_12_2.buildIcon)
 		end
 
-		slot2 = true
+		var_12_1 = true
 	end
 
-	if slot0._lastIsActive ~= slot2 then
-		gohelper.setActive(slot0._imageselecticon, slot2)
-		gohelper.setActive(slot0._imageunselecticon, slot2)
+	if arg_12_0._lastIsActive ~= var_12_1 then
+		gohelper.setActive(arg_12_0._imageselecticon, var_12_1)
+		gohelper.setActive(arg_12_0._imageunselecticon, var_12_1)
 	end
 end
 
-return slot0
+return var_0_0

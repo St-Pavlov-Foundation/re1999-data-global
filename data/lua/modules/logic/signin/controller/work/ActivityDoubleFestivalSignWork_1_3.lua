@@ -1,24 +1,24 @@
-module("modules.logic.signin.controller.work.ActivityDoubleFestivalSignWork_1_3", package.seeall)
+﻿module("modules.logic.signin.controller.work.ActivityDoubleFestivalSignWork_1_3", package.seeall)
 
-slot0 = class("ActivityDoubleFestivalSignWork_1_3", BaseWork)
-slot1 = ActivityEnum.Activity.DoubleFestivalSign_1_3
+local var_0_0 = class("ActivityDoubleFestivalSignWork_1_3", BaseWork)
+local var_0_1 = ActivityEnum.Activity.DoubleFestivalSign_1_3
 
-function slot0.onStart(slot0)
-	if not ActivityModel.instance:isActOnLine(uv0) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not ActivityModel.instance:isActOnLine(var_0_1) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshNorSignActivity, slot0)
-	Activity101Rpc.instance:sendGet101InfosRequest(uv0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_1_0._refreshNorSignActivity, arg_1_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(var_0_1)
 end
 
-function slot0._refreshNorSignActivity(slot0)
-	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(uv0) then
-		slot0:onDone(true)
+function var_0_0._refreshNorSignActivity(arg_2_0)
+	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_0_1) then
+		arg_2_0:onDone(true)
 
 		return
 	end
@@ -26,37 +26,37 @@ function slot0._refreshNorSignActivity(slot0)
 	ViewMgr.instance:openView(ViewName.ActivityDoubleFestivalSignPaiLianView_1_3)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.ActivityDoubleFestivalSignPaiLianView_1_3 then
-		slot0:onDone(true)
+function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
+	if arg_3_1 == ViewName.ActivityDoubleFestivalSignPaiLianView_1_3 then
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 ~= ViewName.ActivityDoubleFestivalSignPaiLianView_1_3 then
+function var_0_0._onOpenViewFinish(arg_4_0, arg_4_1)
+	if arg_4_1 ~= ViewName.ActivityDoubleFestivalSignPaiLianView_1_3 then
 		return
 	end
 
-	slot0:_endBlock()
+	arg_4_0:_endBlock()
 end
 
-function slot0.clearWork(slot0)
-	slot0:_endBlock()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshNorSignActivity, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.clearWork(arg_5_0)
+	arg_5_0:_endBlock()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_5_0._refreshNorSignActivity, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
 end
 
-function slot0._endBlock(slot0)
-	if not slot0:_isBlock() then
+function var_0_0._endBlock(arg_6_0)
+	if not arg_6_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function slot0._isBlock(slot0)
+function var_0_0._isBlock(arg_7_0)
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-return slot0
+return var_0_0

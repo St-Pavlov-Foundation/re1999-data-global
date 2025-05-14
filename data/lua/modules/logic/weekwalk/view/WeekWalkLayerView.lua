@@ -1,178 +1,189 @@
-module("modules.logic.weekwalk.view.WeekWalkLayerView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkLayerView", package.seeall)
 
-slot0 = class("WeekWalkLayerView", BaseView)
+local var_0_0 = class("WeekWalkLayerView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/#btn_left")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "btns/#btn_right")
-	slot0._goshallow = gohelper.findChild(slot0.viewGO, "bottom_left/#go_shallow ")
-	slot0._godeep = gohelper.findChild(slot0.viewGO, "bottom_left/#go_deep")
-	slot0._gocountdown = gohelper.findChild(slot0.viewGO, "bottom_left/#go_deep/#go_countdown")
-	slot0._txtcountday = gohelper.findChildText(slot0.viewGO, "bottom_left/#go_deep/#go_countdown/#txt_countday")
-	slot0._goexcept = gohelper.findChild(slot0.viewGO, "bottom_left/#go_deep/#go_except")
-	slot0._goruleIcon = gohelper.findChild(slot0.viewGO, "#go_ruleIcon")
-	slot0._btnruleIcon = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ruleIcon/#btn_ruleIcon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_left")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_right")
+	arg_1_0._goshallow = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_shallow ")
+	arg_1_0._godeep = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_deep")
+	arg_1_0._gocountdown = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_deep/#go_countdown")
+	arg_1_0._txtcountday = gohelper.findChildText(arg_1_0.viewGO, "bottom_left/#go_deep/#go_countdown/#txt_countday")
+	arg_1_0._goexcept = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_deep/#go_except")
+	arg_1_0._goruleIcon = gohelper.findChild(arg_1_0.viewGO, "#go_ruleIcon")
+	arg_1_0._btnruleIcon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ruleIcon/#btn_ruleIcon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
-	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
-	slot0._btnruleIcon:AddClickListener(slot0._btnruleIconOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
+	arg_2_0._btnruleIcon:AddClickListener(arg_2_0._btnruleIconOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
-	slot0._btnruleIcon:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
+	arg_3_0._btnruleIcon:RemoveClickListener()
 end
 
-function slot0._btnruleIconOnClick(slot0)
+function var_0_0._btnruleIconOnClick(arg_4_0)
 	WeekWalkController.instance:openWeekWalkRuleView()
 end
 
-function slot0._btnleftOnClick(slot0)
-	slot1 = slot0._pageIndex
-	slot0._pageIndex = slot1 - 1
+function var_0_0._btnleftOnClick(arg_5_0)
+	local var_5_0 = arg_5_0._pageIndex
 
-	slot0:_tweenPos()
-	slot0:_updateBtns()
-	slot0:_pageTransition(slot1, slot0._pageIndex)
+	arg_5_0._pageIndex = var_5_0 - 1
+
+	arg_5_0:_tweenPos()
+	arg_5_0:_updateBtns()
+	arg_5_0:_pageTransition(var_5_0, arg_5_0._pageIndex)
 end
 
-function slot0._btnrightOnClick(slot0)
-	slot1 = slot0._pageIndex
-	slot0._pageIndex = slot1 + 1
+function var_0_0._btnrightOnClick(arg_6_0)
+	local var_6_0 = arg_6_0._pageIndex
 
-	slot0:_tweenPos()
-	slot0:_updateBtns()
-	slot0:_pageTransition(slot1, slot0._pageIndex)
+	arg_6_0._pageIndex = var_6_0 + 1
+
+	arg_6_0:_tweenPos()
+	arg_6_0:_updateBtns()
+	arg_6_0:_pageTransition(var_6_0, arg_6_0._pageIndex)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
 	WeekWalkModel.instance:clearOldInfo()
-	gohelper.addUIClickAudio(slot0._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
-	gohelper.addUIClickAudio(slot0._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
+	gohelper.addUIClickAudio(arg_7_0._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
+	gohelper.addUIClickAudio(arg_7_0._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "top_left")
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0._gotopleft = gohelper.findChild(arg_7_0.viewGO, "top_left")
 end
 
-function slot0._initPages(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0._initPages(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = {}
 
-	for slot6, slot7 in ipairs(lua_weekwalk.configList) do
-		if slot7.type <= 2 then
-			slot10 = slot1[1] or {}
+	for iter_8_0, iter_8_1 in ipairs(lua_weekwalk.configList) do
+		if iter_8_1.type <= 2 then
+			local var_8_2 = 1
+			local var_8_3 = var_8_0[var_8_2] or {}
 
-			table.insert(slot10, slot7)
+			table.insert(var_8_3, iter_8_1)
 
-			slot1[slot9] = slot10
+			var_8_0[var_8_2] = var_8_3
 		end
 	end
 
-	slot5 = ResSplitConfig.instance:getMaxWeekWalkLayer()
+	local var_8_4 = WeekWalkModel.instance:getInfo()
+	local var_8_5 = WeekWalkConfig.instance:getDeepLayer(var_8_4.issueId)
+	local var_8_6 = ResSplitConfig.instance:getMaxWeekWalkLayer()
 
-	if WeekWalkConfig.instance:getDeepLayer(WeekWalkModel.instance:getInfo().issueId) then
-		for slot9, slot10 in ipairs(slot4) do
-			if not slot0.isVerifing or slot5 >= slot10.layer then
-				slot12 = slot1[2] or {}
+	if var_8_5 then
+		for iter_8_2, iter_8_3 in ipairs(var_8_5) do
+			if not arg_8_0.isVerifing or not (var_8_6 < iter_8_3.layer) then
+				local var_8_7 = 2
+				local var_8_8 = var_8_0[var_8_7] or {}
 
-				table.insert(slot12, slot10)
+				table.insert(var_8_8, iter_8_3)
 
-				slot1[slot11] = slot12
+				var_8_0[var_8_7] = var_8_8
 			end
 		end
 	end
 
-	slot0._pageList = slot1
-	slot0._layerPageList = slot0:getUserDataTb_()
-	slot0._pageIndex = 1
-	slot0._maxPageIndex = 1
+	arg_8_0._pageList = var_8_0
+	arg_8_0._layerPageList = arg_8_0:getUserDataTb_()
+	arg_8_0._pageIndex = 1
+	arg_8_0._maxPageIndex = 1
 end
 
-function slot0._addPages(slot0)
-	for slot4, slot5 in ipairs(slot0._pageList) do
-		slot0:_addPage(slot4, slot5)
+function var_0_0._addPages(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._pageList) do
+		arg_9_0:_addPage(iter_9_0, iter_9_1)
 	end
 end
 
-function slot0._addPage(slot0, slot1, slot2)
-	if slot0._maxPageIndex < slot1 then
-		slot0._maxPageIndex = slot1
+function var_0_0._addPage(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 > arg_10_0._maxPageIndex then
+		arg_10_0._maxPageIndex = arg_10_1
 	end
 
-	if slot0._layerPageList[slot1] then
+	if arg_10_0._layerPageList[arg_10_1] then
 		return
 	end
 
-	slot4 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocontent)
-	slot5 = WeekWalkLayerPage.New()
+	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[1]
+	local var_10_1 = arg_10_0:getResInst(var_10_0, arg_10_0._gocontent)
+	local var_10_2 = WeekWalkLayerPage.New()
 
-	slot5:initView(slot4, {
-		slot0,
-		slot1,
-		slot2
+	var_10_2:initView(var_10_1, {
+		arg_10_0,
+		arg_10_1,
+		arg_10_2
 	})
-	recthelper.setAnchorX(slot4.transform, (slot1 - 1) * 2808)
+	recthelper.setAnchorX(var_10_1.transform, (arg_10_1 - 1) * 2808)
 
-	slot0._layerPageList[slot1] = slot5
+	arg_10_0._layerPageList[arg_10_1] = var_10_2
 end
 
-function slot0._updateBtns(slot0)
-	gohelper.setActive(slot0._btnleft.gameObject, slot0._pageIndex > 1)
+function var_0_0._updateBtns(arg_11_0)
+	gohelper.setActive(arg_11_0._btnleft.gameObject, arg_11_0._pageIndex > 1)
 
-	slot1 = slot0._pageIndex < slot0._maxPageIndex and slot0:_shallowFinish()
+	local var_11_0 = arg_11_0._pageIndex < arg_11_0._maxPageIndex
 
-	if slot0.isVerifing then
-		slot1 = false
+	var_11_0 = var_11_0 and arg_11_0:_shallowFinish()
+
+	if arg_11_0.isVerifing then
+		var_11_0 = false
 	end
 
-	gohelper.setActive(slot0._btnright.gameObject, slot1)
-	slot0:_updateTitles()
+	gohelper.setActive(arg_11_0._btnright.gameObject, var_11_0)
+	arg_11_0:_updateTitles()
 end
 
-function slot0._shallowFinish(slot0)
-	return WeekWalkModel.instance:getMapInfo(205) and slot1.isFinished > 0
+function var_0_0._shallowFinish(arg_12_0)
+	local var_12_0 = WeekWalkModel.instance:getMapInfo(205)
+
+	return var_12_0 and var_12_0.isFinished > 0
 end
 
-function slot0._onChangeRightBtnVisible(slot0, slot1)
-	if slot0:_shallowFinish() then
+function var_0_0._onChangeRightBtnVisible(arg_13_0, arg_13_1)
+	if arg_13_0:_shallowFinish() then
 		return
 	end
 
-	if slot0.isVerifing then
-		slot1 = false
+	if arg_13_0.isVerifing then
+		arg_13_1 = false
 	end
 
-	gohelper.setActive(slot0._btnright.gameObject, slot1)
+	gohelper.setActive(arg_13_0._btnright.gameObject, arg_13_1)
 end
 
-function slot0._updateTitles(slot0)
-	slot1 = uv0.isShallowPage(slot0._pageIndex)
+function var_0_0._updateTitles(arg_14_0)
+	local var_14_0 = var_0_0.isShallowPage(arg_14_0._pageIndex)
 
-	gohelper.setActive(slot0._goshallow, slot1)
-	gohelper.setActive(slot0._godeep, not slot1)
+	gohelper.setActive(arg_14_0._goshallow, var_14_0)
+	gohelper.setActive(arg_14_0._godeep, not var_14_0)
 
-	if not slot1 then
-		slot2 = WeekWalkModel.instance:getInfo()
+	if not var_14_0 then
+		local var_14_1 = WeekWalkModel.instance:getInfo()
 
-		gohelper.setActive(slot0._goexcept, not slot2.isOpenDeep)
-		gohelper.setActive(slot0._gocountdown, slot2.isOpenDeep)
+		gohelper.setActive(arg_14_0._goexcept, not var_14_1.isOpenDeep)
+		gohelper.setActive(arg_14_0._gocountdown, var_14_1.isOpenDeep)
 	end
 
-	gohelper.setActive(slot0._goruleIcon, slot0:_showDeepRuleBtn())
-	slot0:_shallowPageOpenShow()
-	slot0:_deepPageOpenShow()
+	gohelper.setActive(arg_14_0._goruleIcon, arg_14_0:_showDeepRuleBtn())
+	arg_14_0:_shallowPageOpenShow()
+	arg_14_0:_deepPageOpenShow()
 end
 
-function slot0._shallowPageOpenShow(slot0)
-	if not uv0.isShallowPage(slot0._pageIndex) then
+function var_0_0._shallowPageOpenShow(arg_15_0)
+	if not var_0_0.isShallowPage(arg_15_0._pageIndex) then
 		return
 	end
 
@@ -180,7 +191,7 @@ function slot0._shallowPageOpenShow(slot0)
 		return
 	end
 
-	if not slot0:_shallowFinish() then
+	if not arg_15_0:_shallowFinish() then
 		return
 	end
 
@@ -191,8 +202,8 @@ function slot0._shallowPageOpenShow(slot0)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideShallowPageOpenShow)
 end
 
-function slot0._deepPageOpenShow(slot0)
-	if uv0.isShallowPage(slot0._pageIndex) then
+function var_0_0._deepPageOpenShow(arg_16_0)
+	if var_0_0.isShallowPage(arg_16_0._pageIndex) then
 		return
 	end
 
@@ -200,225 +211,235 @@ function slot0._deepPageOpenShow(slot0)
 		return
 	end
 
-	if not slot0:_shallowFinish() then
+	if not arg_16_0:_shallowFinish() then
 		return
 	end
 
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideDeepPageOpenShow)
 end
 
-function slot0.isShallowPage(slot0)
-	return slot0 <= 1
+function var_0_0.isShallowPage(arg_17_0)
+	return arg_17_0 <= 1
 end
 
-function slot0._pageTransition(slot0, slot1, slot2)
-	slot3 = slot0._layerPageList[slot1]
+function var_0_0._pageTransition(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0._layerPageList[arg_18_1]
+	local var_18_1 = arg_18_0._layerPageList[arg_18_2]
 
-	gohelper.setAsLastSibling(slot0._layerPageList[slot2].viewGO)
+	gohelper.setAsLastSibling(var_18_1.viewGO)
 
-	if slot1 < slot2 then
-		slot4:playAnim("weekwalklayerpage_slideleft02")
-		slot3:playAnim("weekwalklayerpage_slideleft01")
-		slot4:playBgAnim("weekwalklayerpage_bg_slideleft02")
-		slot3:playBgAnim("weekwalklayerpage_bg_slideleft01")
+	if arg_18_1 < arg_18_2 then
+		var_18_1:playAnim("weekwalklayerpage_slideleft02")
+		var_18_0:playAnim("weekwalklayerpage_slideleft01")
+		var_18_1:playBgAnim("weekwalklayerpage_bg_slideleft02")
+		var_18_0:playBgAnim("weekwalklayerpage_bg_slideleft01")
 	else
-		slot4:playAnim("weekwalklayerpage_slideright02")
-		slot3:playAnim("weekwalklayerpage_slideright01")
-		slot4:playBgAnim("weekwalklayerpage_bg_slideright02")
-		slot3:playBgAnim("weekwalklayerpage_bg_slideright01")
+		var_18_1:playAnim("weekwalklayerpage_slideright02")
+		var_18_0:playAnim("weekwalklayerpage_slideright01")
+		var_18_1:playBgAnim("weekwalklayerpage_bg_slideright02")
+		var_18_0:playBgAnim("weekwalklayerpage_bg_slideright01")
 	end
 end
 
-function slot0._tweenPos(slot0, slot1)
-	if slot0._prevPageIndex == slot0._pageIndex then
+function var_0_0._tweenPos(arg_19_0, arg_19_1)
+	if arg_19_0._prevPageIndex == arg_19_0._pageIndex then
 		return
 	end
 
-	if slot0:_getAmbientSound(slot0._pageIndex) ~= slot0._ambientSoundId then
-		slot0:_endAmbientSound()
+	if arg_19_0:_getAmbientSound(arg_19_0._pageIndex) ~= arg_19_0._ambientSoundId then
+		arg_19_0:_endAmbientSound()
 	end
 
-	slot0._prevPageIndex = slot0._pageIndex
+	arg_19_0._prevPageIndex = arg_19_0._pageIndex
 
-	for slot5, slot6 in ipairs(slot0._layerPageList) do
-		slot8 = slot5 == slot0._pageIndex
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._layerPageList) do
+		local var_19_0 = iter_19_1.viewGO
+		local var_19_1 = iter_19_0 == arg_19_0._pageIndex
 
-		slot6:setVisible(slot8)
+		iter_19_1:setVisible(var_19_1)
 
-		if slot8 then
-			slot6:resetPos(slot0._targetId)
+		if var_19_1 then
+			iter_19_1:resetPos(arg_19_0._targetId)
 
-			slot0._targetId = nil
+			arg_19_0._targetId = nil
 
-			recthelper.setAnchorX(slot6.viewGO.transform, 0)
+			recthelper.setAnchorX(var_19_0.transform, 0)
 		else
-			recthelper.setAnchorX(slot7.transform, 10000)
+			recthelper.setAnchorX(var_19_0.transform, 10000)
 		end
 	end
 
-	slot0:_movePageDone()
+	arg_19_0:_movePageDone()
 end
 
-function slot0._movePageDone(slot0)
-	slot0:_beginAmbientSound()
+function var_0_0._movePageDone(arg_20_0)
+	arg_20_0:_beginAmbientSound()
 
-	if slot0._pageIndex == 2 then
+	if arg_20_0._pageIndex == 2 then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideChangeToLayerPage3)
 	end
 
-	if slot0._pageIndex == 3 then
+	if arg_20_0._pageIndex == 3 then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideChangeToLayerPage5)
 	end
 end
 
-function slot0._beginAmbientSound(slot0)
-	if not slot0._isOpenFinish then
+function var_0_0._beginAmbientSound(arg_21_0)
+	if not arg_21_0._isOpenFinish then
 		return
 	end
 
-	if slot0._ambientSoundId then
+	if arg_21_0._ambientSoundId then
 		return
 	end
 end
 
-function slot0._endAmbientSound(slot0)
-	if not slot0._ambientSoundId then
+function var_0_0._endAmbientSound(arg_22_0)
+	if not arg_22_0._ambientSoundId then
 		return
 	end
 
-	slot0._ambientSoundId = nil
+	arg_22_0._ambientSoundId = nil
 end
 
-function slot0._getAmbientSound(slot0, slot1)
-	if slot1 <= 1 then
+function var_0_0._getAmbientSound(arg_23_0, arg_23_1)
+	if arg_23_1 <= 1 then
 		return AudioEnum.WeekWalk.play_artificial_layer_type_2
-	elseif slot1 <= 2 then
+	elseif arg_23_1 <= 2 then
 		return AudioEnum.WeekWalk.play_artificial_layer_type_3
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_24_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, slot0._onGetInfo, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeRightBtnVisible, slot0._onChangeRightBtnVisible, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.GuideMoveLayerPage, slot0._onGuideMoveLayerPage, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onOpen(arg_25_0)
+	arg_25_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_25_0._onGetInfo, arg_25_0)
+	arg_25_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeRightBtnVisible, arg_25_0._onChangeRightBtnVisible, arg_25_0)
+	arg_25_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.GuideMoveLayerPage, arg_25_0._onGuideMoveLayerPage, arg_25_0)
+	arg_25_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_25_0._onCloseViewFinish, arg_25_0, LuaEventSystem.Low)
+	arg_25_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_25_0._onOpenView, arg_25_0)
+	arg_25_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_25_0._onCloseView, arg_25_0)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideOnLayerViewOpen)
 
-	slot0.isVerifing = VersionValidator.instance:isInReviewing()
+	arg_25_0.isVerifing = VersionValidator.instance:isInReviewing()
 
-	slot0:_initPages()
-	slot0:_addPages()
-	slot0:_moveTargetLayer()
-	slot0:_updateBtns()
-	slot0:_showDeadline()
+	arg_25_0:_initPages()
+	arg_25_0:_addPages()
+	arg_25_0:_moveTargetLayer()
+	arg_25_0:_updateBtns()
+	arg_25_0:_showDeadline()
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.WeekWalkView then
-		slot0._animator.enabled = true
+function var_0_0._onOpenView(arg_26_0, arg_26_1)
+	if arg_26_1 == ViewName.WeekWalkView then
+		arg_26_0._animator.enabled = true
 
-		slot0._animator:Play("weekwalklayerview_out", 0, 0)
-		TaskDispatcher.cancelTask(slot0._delayHideBtnHelp, slot0)
-		TaskDispatcher.runDelay(slot0._delayHideBtnHelp, slot0, 0.1)
-		gohelper.setActive(slot0._goruleIcon, false)
+		arg_26_0._animator:Play("weekwalklayerview_out", 0, 0)
+		TaskDispatcher.cancelTask(arg_26_0._delayHideBtnHelp, arg_26_0)
+		TaskDispatcher.runDelay(arg_26_0._delayHideBtnHelp, arg_26_0, 0.1)
+		gohelper.setActive(arg_26_0._goruleIcon, false)
 	end
 end
 
-function slot0._delayHideBtnHelp(slot0)
-	slot0.viewContainer:getNavBtnView():setHelpVisible(false)
+function var_0_0._delayHideBtnHelp(arg_27_0)
+	arg_27_0.viewContainer:getNavBtnView():setHelpVisible(false)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.WeekWalkView then
-		slot0._animator.enabled = true
+function var_0_0._onCloseView(arg_28_0, arg_28_1)
+	if arg_28_1 == ViewName.WeekWalkView then
+		arg_28_0._animator.enabled = true
 
-		slot0._animator:Play(UIAnimationName.Open, 0, 0)
-		slot0.viewContainer:getNavBtnView():setHelpVisible(true)
-		gohelper.setActive(slot0._goruleIcon, slot0:_showDeepRuleBtn())
-		slot0._layerPageList[slot0._pageIndex]:playAnim("weekwalklayerpage_in")
+		arg_28_0._animator:Play(UIAnimationName.Open, 0, 0)
+		arg_28_0.viewContainer:getNavBtnView():setHelpVisible(true)
+		gohelper.setActive(arg_28_0._goruleIcon, arg_28_0:_showDeepRuleBtn())
+		arg_28_0._layerPageList[arg_28_0._pageIndex]:playAnim("weekwalklayerpage_in")
 	end
 end
 
-function slot0._showDeepRuleBtn(slot0)
-	if not slot0._pageIndex then
+function var_0_0._showDeepRuleBtn(arg_29_0)
+	if not arg_29_0._pageIndex then
 		return false
 	end
 
-	return not uv0.isShallowPage(slot0._pageIndex) and WeekWalkModel.instance:getInfo().isOpenDeep
+	local var_29_0 = var_0_0.isShallowPage(arg_29_0._pageIndex)
+	local var_29_1 = WeekWalkModel.instance:getInfo()
+
+	return not var_29_0 and var_29_1.isOpenDeep
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.WeekWalkView then
-		slot0:_addPages()
-		slot0:_updateBtns()
+function var_0_0._onCloseViewFinish(arg_30_0, arg_30_1)
+	if arg_30_1 == ViewName.WeekWalkView then
+		arg_30_0:_addPages()
+		arg_30_0:_updateBtns()
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideOnLayerViewOpen)
 	end
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._isOpenFinish = true
+function var_0_0.onOpenFinish(arg_31_0)
+	arg_31_0._isOpenFinish = true
 
-	slot0:_beginAmbientSound()
+	arg_31_0:_beginAmbientSound()
 end
 
-function slot0._showDeadline(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0._showDeadline(arg_32_0)
+	TaskDispatcher.cancelTask(arg_32_0._onRefreshDeadline, arg_32_0)
 
-	slot0._endTime = WeekWalkModel.instance:getInfo().endTime
+	arg_32_0._endTime = WeekWalkModel.instance:getInfo().endTime
 
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
-	slot0:_onRefreshDeadline()
+	TaskDispatcher.runRepeat(arg_32_0._onRefreshDeadline, arg_32_0, 1)
+	arg_32_0:_onRefreshDeadline()
 end
 
-function slot0._onRefreshDeadline(slot0)
-	if slot0._endTime - ServerTime.now() <= 0 then
-		TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0._onRefreshDeadline(arg_33_0)
+	local var_33_0 = arg_33_0._endTime - ServerTime.now()
+
+	if var_33_0 <= 0 then
+		TaskDispatcher.cancelTask(arg_33_0._onRefreshDeadline, arg_33_0)
 	end
 
-	slot2, slot3 = TimeUtil.secondToRoughTime2(math.floor(slot1))
-	slot0._txtcountday.text = slot2 .. slot3
+	local var_33_1, var_33_2 = TimeUtil.secondToRoughTime2(math.floor(var_33_0))
+
+	arg_33_0._txtcountday.text = var_33_1 .. var_33_2
 end
 
-function slot0._onGetInfo(slot0)
-	slot0:_showDeadline()
-	slot0:_updateTitles()
+function var_0_0._onGetInfo(arg_34_0)
+	arg_34_0:_showDeadline()
+	arg_34_0:_updateTitles()
 end
 
-function slot0._onGuideMoveLayerPage(slot0, slot1)
-	slot0._guideMoveMapId = tonumber(slot1)
+function var_0_0._onGuideMoveLayerPage(arg_35_0, arg_35_1)
+	arg_35_0._guideMoveMapId = tonumber(arg_35_1)
 end
 
-function slot0._moveTargetLayer(slot0)
-	slot0._targetId = slot0.viewParam and slot0.viewParam.mapId
-	slot0._targetLayerId = slot0.viewParam and slot0.viewParam.layerId
+function var_0_0._moveTargetLayer(arg_36_0)
+	arg_36_0._targetId = arg_36_0.viewParam and arg_36_0.viewParam.mapId
+	arg_36_0._targetLayerId = arg_36_0.viewParam and arg_36_0.viewParam.layerId
 
-	if not slot0._targetId and not slot0._targetLayerId then
-		slot2, slot3 = WeekWalkModel.instance:getInfo():getNotFinishedMap()
-		slot0._targetId = slot2.id
+	if not arg_36_0._targetId and not arg_36_0._targetLayerId then
+		local var_36_0, var_36_1 = WeekWalkModel.instance:getInfo():getNotFinishedMap()
+
+		arg_36_0._targetId = var_36_0.id
 	end
 
-	if slot0._guideMoveMapId then
-		slot0._targetId = slot0._guideMoveMapId
-		slot0._guideMoveMapId = nil
+	if arg_36_0._guideMoveMapId then
+		arg_36_0._targetId = arg_36_0._guideMoveMapId
+		arg_36_0._guideMoveMapId = nil
 	end
 
-	if slot0._targetId or slot0._targetLayerId then
-		for slot4, slot5 in ipairs(slot0._pageList) do
-			for slot9, slot10 in ipairs(slot5) do
-				if slot10.id == slot0._targetId or slot10.layer == slot0._targetLayerId then
-					slot0._pageIndex = slot4
+	if arg_36_0._targetId or arg_36_0._targetLayerId then
+		for iter_36_0, iter_36_1 in ipairs(arg_36_0._pageList) do
+			for iter_36_2, iter_36_3 in ipairs(iter_36_1) do
+				if iter_36_3.id == arg_36_0._targetId or iter_36_3.layer == arg_36_0._targetLayerId then
+					arg_36_0._pageIndex = iter_36_0
 
-					slot0:_tweenPos(true)
+					arg_36_0:_tweenPos(true)
 
-					slot11 = slot0._layerPageList[slot0._pageIndex]
+					local var_36_2 = arg_36_0._layerPageList[arg_36_0._pageIndex]
 
-					gohelper.setAsLastSibling(slot11.viewGO)
-					slot11:playAnim("weekwalklayerpage_in")
+					gohelper.setAsLastSibling(var_36_2.viewGO)
+					var_36_2:playAnim("weekwalklayerpage_in")
 
 					return
 				end
@@ -427,19 +448,19 @@ function slot0._moveTargetLayer(slot0)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayHideBtnHelp, slot0)
-	slot0:_endAmbientSound()
+function var_0_0.onClose(arg_37_0)
+	TaskDispatcher.cancelTask(arg_37_0._delayHideBtnHelp, arg_37_0)
+	arg_37_0:_endAmbientSound()
 
-	for slot4, slot5 in ipairs(slot0._layerPageList) do
-		slot5:destroyView()
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0._layerPageList) do
+		iter_37_1:destroyView()
 	end
 
-	gohelper.setActive(slot0._gotopleft, false)
+	gohelper.setActive(arg_37_0._gotopleft, false)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onDestroyView(arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._onRefreshDeadline, arg_38_0)
 end
 
-return slot0
+return var_0_0

@@ -1,206 +1,290 @@
-module("modules.logic.room.utils.RoomBendingHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomBendingHelper", package.seeall)
 
-slot1, slot2 = nil
-slot3 = 0
-slot4 = 0
-slot5 = 0
-slot6, slot7 = nil
+local var_0_0 = {}
 
-return {
-	bendingAmount = 0,
-	bendingPosition = Vector3(0, 0, 0),
-	_bendingPosX = 0,
-	_bendingPosY = 0,
-	_bendingPosZ = 0,
-	setBendingAmount = function (slot0)
-		uv0.bendingAmount = slot0
-	end,
-	setBendingPosition = function (slot0)
-		uv0.bendingPosition = slot0
-		uv0._bendingPosX = slot0.x
-		uv0._bendingPosY = slot0.y
-		uv0._bendingPosZ = slot0.z
-	end,
-	worldToBendingSimple = function (slot0)
-		return uv0.worldToBending(slot0, true)
-	end,
-	getCameraPos = function ()
-		if not uv0 or UnityEngine.Time.frameCount ~= uv1 then
-			uv0 = CameraMgr.instance:getMainCameraTrs().position
-			uv1 = UnityEngine.Time.frameCount
-			uv4 = uv0.z
-			uv3 = uv0.y
-			uv2 = uv0.x
-		end
+var_0_0.bendingAmount = 0
+var_0_0.bendingPosition = Vector3(0, 0, 0)
+var_0_0._bendingPosX = 0
+var_0_0._bendingPosY = 0
+var_0_0._bendingPosZ = 0
 
-		return uv0
-	end,
-	getCameraPosXYZ = function ()
-		uv0.getCameraPos()
+function var_0_0.setBendingAmount(arg_1_0)
+	var_0_0.bendingAmount = arg_1_0
+end
 
-		return uv1, uv2, uv3
-	end,
-	getCameraEuler = function ()
-		if not uv0 or UnityEngine.Time.frameCount ~= uv1 then
-			uv0 = CameraMgr.instance:getMainCameraTrs().eulerAngles
-			uv1 = UnityEngine.Time.frameCount
-		end
+function var_0_0.setBendingPosition(arg_2_0)
+	var_0_0.bendingPosition = arg_2_0
+	var_0_0._bendingPosX = arg_2_0.x
+	var_0_0._bendingPosY = arg_2_0.y
+	var_0_0._bendingPosZ = arg_2_0.z
+end
 
-		return uv0
-	end,
-	worldToBending = function (slot0, slot1)
-		return uv0.worldXYZToBending(slot0.x, slot0.y, slot0.z, slot1)
-	end,
-	worldXYZToBending = function (slot0, slot1, slot2, slot3)
-		slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12 = uv0.worldXYZToBendingXYZ(slot0, slot1, slot2, slot3)
+function var_0_0.worldToBendingSimple(arg_3_0)
+	return var_0_0.worldToBending(arg_3_0, true)
+end
 
-		if slot3 then
-			return Vector3(slot4, slot5, slot6)
-		end
+local var_0_1
+local var_0_2
+local var_0_3 = 0
+local var_0_4 = 0
+local var_0_5 = 0
 
-		slot13 = Quaternion.New()
+function var_0_0.getCameraPos()
+	if not var_0_1 or UnityEngine.Time.frameCount ~= var_0_2 then
+		var_0_1 = CameraMgr.instance:getMainCameraTrs().position
+		var_0_2 = UnityEngine.Time.frameCount
+		var_0_3, var_0_4, var_0_5 = var_0_1.x, var_0_1.y, var_0_1.z
+	end
 
-		slot13:SetEuler(slot7, slot8, slot9)
+	return var_0_1
+end
 
-		return Vector3(slot4, slot5, slot6), slot13, Vector3(slot10, slot11, slot12)
-	end,
-	worldToBendingXYZ = function (slot0, slot1)
-		return uv0.worldXYZToBendingXYZ(slot0.x, slot0.y, slot0.z, slot1)
-	end,
-	worldXYZToBendingXYZ = function (slot0, slot1, slot2, slot3)
-		slot5 = uv0.getCameraEuler().y
-		slot9 = slot0 - uv0._bendingPosX
-		slot10 = slot1 - uv0._bendingPosY
-		slot11 = slot2 - uv0._bendingPosZ
-		slot12 = slot9 * math.cos(Mathf.Deg2Rad * slot5) - slot11 * math.sin(Mathf.Deg2Rad * slot5)
-		slot13 = slot11 * math.cos(Mathf.Deg2Rad * slot5) + slot9 * math.sin(Mathf.Deg2Rad * slot5)
-		slot16 = slot12 * slot12 * uv0.bendingAmount * 0.08 + slot13 * slot13 * uv0.bendingAmount * 0.08
+function var_0_0.getCameraPosXYZ()
+	var_0_0.getCameraPos()
 
-		if slot3 then
-			return slot0, slot1 - slot16, slot2
-		end
+	return var_0_3, var_0_4, var_0_5
+end
 
-		slot20, slot21, slot22 = uv0.getCameraPosXYZ()
-		slot23 = slot0 - slot20
-		slot24 = slot1 - slot21
-		slot25 = slot2 - slot22
+local var_0_6
+local var_0_7
 
-		return slot0, slot1 - slot16, slot2, -(slot12 == 0 and 0 or Mathf.Rad2Deg * math.atan(slot14 / slot12)), slot5, slot13 == 0 and 0 or Mathf.Rad2Deg * math.atan(slot15 / slot13), slot4.x * 0.7, (slot25 * math.cos(Mathf.Deg2Rad * slot5) + slot23 * math.sin(Mathf.Deg2Rad * slot5) == 0 and 0 or Mathf.Rad2Deg * math.atan((slot23 * math.cos(Mathf.Deg2Rad * slot5) - slot25 * math.sin(Mathf.Deg2Rad * slot5)) / slot27)) * 0.5, 0
-	end,
-	bendingToWorld = function (slot0)
-		slot2 = slot0 - uv0.bendingPosition
+function var_0_0.getCameraEuler()
+	if not var_0_6 or UnityEngine.Time.frameCount ~= var_0_7 then
+		var_0_6 = CameraMgr.instance:getMainCameraTrs().eulerAngles
+		var_0_7 = UnityEngine.Time.frameCount
+	end
 
-		return Vector3(slot0.x, slot0.y + slot2.z * slot2.z * uv0.bendingAmount * 0.08 + slot2.x * slot2.x * uv0.bendingAmount * 0.08, slot0.z)
-	end,
-	screenToWorld = function (slot0)
-		slot1 = uv0.screenPosToRay(slot0)
-		slot2 = -uv0.bendingAmount * 0.08
-		slot3 = uv0.bendingPosition
-		slot4 = slot1.origin
-		slot4.y = slot4.y - 0.1
+	return var_0_6
+end
 
-		if slot1.direction.y >= 0 then
-			return nil
-		end
+function var_0_0.worldToBending(arg_7_0, arg_7_1)
+	return var_0_0.worldXYZToBending(arg_7_0.x, arg_7_0.y, arg_7_0.z, arg_7_1)
+end
 
-		slot6 = slot4 - slot3
-		slot8 = uv0.getCameraEuler().y * Mathf.Deg2Rad
-		slot9 = math.sin(slot8)
-		slot10 = math.cos(slot8)
-		slot11 = Vector3(slot6.x * slot10 - slot6.z * slot9, slot6.y, slot6.z * slot10 + slot6.x * slot9)
-		slot12 = Vector3(slot5.x * slot10 - slot5.z * slot9, slot5.y, slot5.z * slot10 + slot5.x * slot9)
-		slot16 = 0
+function var_0_0.worldXYZToBending(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0, var_8_1, var_8_2, var_8_3, var_8_4, var_8_5, var_8_6, var_8_7, var_8_8 = var_0_0.worldXYZToBendingXYZ(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 
-		if slot12.x * slot12.x + slot12.z * slot12.z == 0 then
-			slot16 = -(slot11.x * slot11.x + slot11.z * slot11.z - slot11.y / slot2) / (2 * slot11.x * slot12.x + 2 * slot11.z * slot12.z - slot12.y / slot2)
-		else
-			if slot14 * slot14 - 4 * slot13 * slot15 < 0 then
-				return nil
-			end
+	if arg_8_3 then
+		return Vector3(var_8_0, var_8_1, var_8_2)
+	end
 
-			slot18 = math.abs(math.sqrt(slot17))
-			slot16 = math.abs((-slot14 + slot18) / (2 * slot13)) < math.abs((-slot14 - slot18) / (2 * slot13)) and slot19 or slot20
-		end
+	local var_8_9 = Quaternion.New()
 
-		if slot16 <= 0 then
-			return nil
-		end
+	var_8_9:SetEuler(var_8_3, var_8_4, var_8_5)
 
-		return Vector2(slot4.x + slot16 * slot5.x, slot4.z + slot16 * slot5.z)
-	end,
-	screenPosToHex = function (slot0)
-		if uv0.screenToWorld(slot0) then
-			return HexMath.positionToRoundHex(slot1, RoomBlockEnum.BlockSize)
-		end
-	end,
-	getRaycastEntity = function (slot0, slot1)
-		slot2 = uv0.screenPosToRay(slot0)
-		slot3 = RoomMapBuildingModel.instance:getBuildingMOList()
-		slot4, slot5 = UnityEngine.Physics.Raycast(slot2.origin, slot2.direction, nil, 10, LayerMask.GetMask("SceneOpaque"))
+	return Vector3(var_8_0, var_8_1, var_8_2), var_8_9, Vector3(var_8_6, var_8_7, var_8_8)
+end
 
-		if not slot4 then
-			return nil
-		end
+function var_0_0.worldToBendingXYZ(arg_9_0, arg_9_1)
+	return var_0_0.worldXYZToBendingXYZ(arg_9_0.x, arg_9_0.y, arg_9_0.z, arg_9_1)
+end
 
-		slot6 = slot5.transform
-		slot7 = GameSceneMgr.instance:getCurScene()
+function var_0_0.worldXYZToBendingXYZ(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = var_0_0.getCameraEuler()
+	local var_10_1 = var_10_0.y
+	local var_10_2 = var_0_0._bendingPosX
+	local var_10_3 = var_0_0._bendingPosY
+	local var_10_4 = var_0_0._bendingPosZ
+	local var_10_5 = arg_10_0 - var_10_2
+	local var_10_6 = arg_10_1 - var_10_3
+	local var_10_7 = arg_10_2 - var_10_4
+	local var_10_8 = var_10_5 * math.cos(Mathf.Deg2Rad * var_10_1) - var_10_7 * math.sin(Mathf.Deg2Rad * var_10_1)
+	local var_10_9 = var_10_7 * math.cos(Mathf.Deg2Rad * var_10_1) + var_10_5 * math.sin(Mathf.Deg2Rad * var_10_1)
+	local var_10_10 = var_10_8 * var_10_8 * var_0_0.bendingAmount * 0.08
+	local var_10_11 = var_10_9 * var_10_9 * var_0_0.bendingAmount * 0.08
+	local var_10_12 = var_10_10 + var_10_11
 
-		for slot11, slot12 in ipairs(slot3) do
-			if (slot12.buildingState == RoomBuildingEnum.BuildingState.Map or slot1 and (slot12.buildingState == RoomBuildingEnum.BuildingState.Temp or slot12.buildingState == RoomBuildingEnum.BuildingState.Revert)) and slot7.buildingmgr:getBuildingEntity(slot12.id, SceneTag.RoomBuilding) and slot6:IsChildOf(slot13.goTrs) then
-				return RoomEnum.TouchTab.RoomBuilding, slot12.id
-			end
-		end
+	if arg_10_3 then
+		return arg_10_0, arg_10_1 - var_10_12, arg_10_2
+	end
 
-		if slot7.buildingmgr:getInitBuildingGO() and slot6:IsChildOf(slot8.transform) then
-			return RoomEnum.TouchTab.RoomInitBuilding, 0
-		end
+	local var_10_13 = var_10_8 == 0 and 0 or Mathf.Rad2Deg * math.atan(var_10_10 / var_10_8)
+	local var_10_14 = var_10_1
+	local var_10_15 = var_10_9 == 0 and 0 or Mathf.Rad2Deg * math.atan(var_10_11 / var_10_9)
+	local var_10_16 = -var_10_13
+	local var_10_17, var_10_18, var_10_19 = var_0_0.getCameraPosXYZ()
+	local var_10_20 = arg_10_0 - var_10_17
+	local var_10_21 = arg_10_1 - var_10_18
+	local var_10_22 = arg_10_2 - var_10_19
+	local var_10_23 = var_10_20 * math.cos(Mathf.Deg2Rad * var_10_1) - var_10_22 * math.sin(Mathf.Deg2Rad * var_10_1)
+	local var_10_24 = var_10_22 * math.cos(Mathf.Deg2Rad * var_10_1) + var_10_20 * math.sin(Mathf.Deg2Rad * var_10_1)
+	local var_10_25 = var_10_24 == 0 and 0 or Mathf.Rad2Deg * math.atan(var_10_23 / var_10_24)
+	local var_10_26 = var_10_0.x * 0.7
+	local var_10_27 = var_10_25 * 0.5
+	local var_10_28 = 0
 
-		for slot12, slot13 in ipairs(lua_production_part.configList) do
-			if slot7.buildingmgr:getPartContainerGO(slot12) and slot6:IsChildOf(slot14.transform) then
-				return RoomEnum.TouchTab.RoomPartBuilding, slot12
-			end
-		end
+	return arg_10_0, arg_10_1 - var_10_12, arg_10_2, var_10_16, var_10_14, var_10_15, var_10_26, var_10_27, var_10_28
+end
 
-		for slot13, slot14 in ipairs(RoomCharacterModel.instance:getList()) do
-			if (slot14.characterState == RoomCharacterEnum.CharacterState.Map or slot1 and (slot14.characterState == RoomCharacterEnum.CharacterState.Temp or slot14.characterState == RoomCharacterEnum.CharacterState.Revert)) and slot7.charactermgr:getCharacterEntity(slot14.id, SceneTag.RoomCharacter) and slot6:IsChildOf(slot15.goTrs) then
-				return RoomEnum.TouchTab.RoomCharacter, slot14.id
-			end
-		end
+function var_0_0.bendingToWorld(arg_11_0)
+	local var_11_0 = arg_11_0 - var_0_0.bendingPosition
+	local var_11_1 = var_11_0.z * var_11_0.z * var_0_0.bendingAmount * 0.08
+	local var_11_2 = var_11_0.x * var_11_0.x * var_0_0.bendingAmount * 0.08
 
-		for slot14, slot15 in ipairs(RoomCritterModel.instance:getAllCritterList()) do
-			if (slot7.crittermgr:getCritterEntity(slot15.id, SceneTag.RoomCharacter) or slot7.buildingcrittermgr:getCritterEntity(slot15.id, SceneTag.RoomCharacter)) and slot6:IsChildOf(slot16.goTrs) then
-				return RoomEnum.TouchTab.RoomCritter, slot15.id
-			end
-		end
+	return Vector3(arg_11_0.x, arg_11_0.y + var_11_1 + var_11_2, arg_11_0.z)
+end
 
-		for slot15 = 1, #RoomTransportHelper.getSiteBuildingTypeList() do
-			if slot7.sitemgr:getSiteEntity(slot11[slot15]) and slot6:IsChildOf(slot17.goTrs) then
-				return RoomEnum.TouchTab.RoomTransportSite, slot16
-			end
+function var_0_0.screenToWorld(arg_12_0)
+	local var_12_0 = var_0_0.screenPosToRay(arg_12_0)
+	local var_12_1 = -var_0_0.bendingAmount * 0.08
+	local var_12_2 = var_0_0.bendingPosition
+	local var_12_3 = var_12_0.origin
 
-			if slot7.vehiclemgr:getVehicleEntity(RoomMapVehicleModel.instance:getVehicleIdBySiteType(slot16)) and slot6:IsChildOf(slot19.goTrs) then
-				return RoomEnum.TouchTab.RoomTransportSite, slot16
-			end
-		end
+	var_12_3.y = var_12_3.y - 0.1
 
+	local var_12_4 = var_12_0.direction
+
+	if var_12_4.y >= 0 then
 		return nil
-	end,
-	screenPosToRay = function (slot0)
-		return GameSceneMgr.instance:getCurScene().camera.camera:ScreenPointToRay(slot0)
-	end,
-	worldPosToAnchorPos = function (slot0, slot1, slot2, slot3)
-		slot2 = slot2 or CameraMgr.instance:getUICamera()
+	end
 
-		if (slot3 or CameraMgr.instance:getMainCamera()):WorldToScreenPoint(slot0).z < 0 then
+	local var_12_5 = var_12_3 - var_12_2
+	local var_12_6 = var_0_0.getCameraEuler().y * Mathf.Deg2Rad
+	local var_12_7 = math.sin(var_12_6)
+	local var_12_8 = math.cos(var_12_6)
+	local var_12_9 = Vector3(var_12_5.x * var_12_8 - var_12_5.z * var_12_7, var_12_5.y, var_12_5.z * var_12_8 + var_12_5.x * var_12_7)
+	local var_12_10 = Vector3(var_12_4.x * var_12_8 - var_12_4.z * var_12_7, var_12_4.y, var_12_4.z * var_12_8 + var_12_4.x * var_12_7)
+	local var_12_11 = var_12_10.x * var_12_10.x + var_12_10.z * var_12_10.z
+	local var_12_12 = 2 * var_12_9.x * var_12_10.x + 2 * var_12_9.z * var_12_10.z - var_12_10.y / var_12_1
+	local var_12_13 = var_12_9.x * var_12_9.x + var_12_9.z * var_12_9.z - var_12_9.y / var_12_1
+	local var_12_14 = 0
+
+	if var_12_11 == 0 then
+		var_12_14 = -var_12_13 / var_12_12
+	else
+		local var_12_15 = var_12_12 * var_12_12 - 4 * var_12_11 * var_12_13
+
+		if var_12_15 < 0 then
 			return nil
-		else
-			slot6, slot7 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(slot1, slot4, slot2, Vector2.New(0, 0))
+		end
 
-			if slot6 then
-				return slot7
-			else
-				return nil
+		local var_12_16 = math.abs(math.sqrt(var_12_15))
+		local var_12_17 = (-var_12_12 + var_12_16) / (2 * var_12_11)
+		local var_12_18 = (-var_12_12 - var_12_16) / (2 * var_12_11)
+
+		if math.abs(var_12_17) < math.abs(var_12_18) then
+			var_12_14 = var_12_17
+		else
+			var_12_14 = var_12_18
+		end
+	end
+
+	if var_12_14 <= 0 then
+		return nil
+	end
+
+	return (Vector2(var_12_3.x + var_12_14 * var_12_4.x, var_12_3.z + var_12_14 * var_12_4.z))
+end
+
+function var_0_0.screenPosToHex(arg_13_0)
+	local var_13_0 = var_0_0.screenToWorld(arg_13_0)
+
+	if var_13_0 then
+		return HexMath.positionToRoundHex(var_13_0, RoomBlockEnum.BlockSize)
+	end
+end
+
+function var_0_0.getRaycastEntity(arg_14_0, arg_14_1)
+	local var_14_0 = var_0_0.screenPosToRay(arg_14_0)
+	local var_14_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local var_14_2, var_14_3 = UnityEngine.Physics.Raycast(var_14_0.origin, var_14_0.direction, nil, 10, LayerMask.GetMask("SceneOpaque"))
+
+	if not var_14_2 then
+		return nil
+	end
+
+	local var_14_4 = var_14_3.transform
+	local var_14_5 = GameSceneMgr.instance:getCurScene()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		if iter_14_1.buildingState == RoomBuildingEnum.BuildingState.Map or arg_14_1 and (iter_14_1.buildingState == RoomBuildingEnum.BuildingState.Temp or iter_14_1.buildingState == RoomBuildingEnum.BuildingState.Revert) then
+			local var_14_6 = var_14_5.buildingmgr:getBuildingEntity(iter_14_1.id, SceneTag.RoomBuilding)
+
+			if var_14_6 and var_14_4:IsChildOf(var_14_6.goTrs) then
+				return RoomEnum.TouchTab.RoomBuilding, iter_14_1.id
 			end
 		end
 	end
-}
+
+	local var_14_7 = var_14_5.buildingmgr:getInitBuildingGO()
+
+	if var_14_7 and var_14_4:IsChildOf(var_14_7.transform) then
+		return RoomEnum.TouchTab.RoomInitBuilding, 0
+	end
+
+	for iter_14_2, iter_14_3 in ipairs(lua_production_part.configList) do
+		local var_14_8 = var_14_5.buildingmgr:getPartContainerGO(iter_14_2)
+
+		if var_14_8 and var_14_4:IsChildOf(var_14_8.transform) then
+			return RoomEnum.TouchTab.RoomPartBuilding, iter_14_2
+		end
+	end
+
+	local var_14_9 = RoomCharacterModel.instance:getList()
+
+	for iter_14_4, iter_14_5 in ipairs(var_14_9) do
+		if iter_14_5.characterState == RoomCharacterEnum.CharacterState.Map or arg_14_1 and (iter_14_5.characterState == RoomCharacterEnum.CharacterState.Temp or iter_14_5.characterState == RoomCharacterEnum.CharacterState.Revert) then
+			local var_14_10 = var_14_5.charactermgr:getCharacterEntity(iter_14_5.id, SceneTag.RoomCharacter)
+
+			if var_14_10 and var_14_4:IsChildOf(var_14_10.goTrs) then
+				return RoomEnum.TouchTab.RoomCharacter, iter_14_5.id
+			end
+		end
+	end
+
+	local var_14_11 = RoomCritterModel.instance:getAllCritterList()
+
+	for iter_14_6, iter_14_7 in ipairs(var_14_11) do
+		local var_14_12 = var_14_5.crittermgr:getCritterEntity(iter_14_7.id, SceneTag.RoomCharacter) or var_14_5.buildingcrittermgr:getCritterEntity(iter_14_7.id, SceneTag.RoomCharacter)
+
+		if var_14_12 and var_14_4:IsChildOf(var_14_12.goTrs) then
+			return RoomEnum.TouchTab.RoomCritter, iter_14_7.id
+		end
+	end
+
+	local var_14_13 = RoomTransportHelper.getSiteBuildingTypeList()
+
+	for iter_14_8 = 1, #var_14_13 do
+		local var_14_14 = var_14_13[iter_14_8]
+		local var_14_15 = var_14_5.sitemgr:getSiteEntity(var_14_14)
+
+		if var_14_15 and var_14_4:IsChildOf(var_14_15.goTrs) then
+			return RoomEnum.TouchTab.RoomTransportSite, var_14_14
+		end
+
+		local var_14_16 = RoomMapVehicleModel.instance:getVehicleIdBySiteType(var_14_14)
+		local var_14_17 = var_14_5.vehiclemgr:getVehicleEntity(var_14_16)
+
+		if var_14_17 and var_14_4:IsChildOf(var_14_17.goTrs) then
+			return RoomEnum.TouchTab.RoomTransportSite, var_14_14
+		end
+	end
+
+	return nil
+end
+
+function var_0_0.screenPosToRay(arg_15_0)
+	return (GameSceneMgr.instance:getCurScene().camera.camera:ScreenPointToRay(arg_15_0))
+end
+
+function var_0_0.worldPosToAnchorPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	arg_16_2 = arg_16_2 or CameraMgr.instance:getUICamera()
+	arg_16_3 = arg_16_3 or CameraMgr.instance:getMainCamera()
+
+	local var_16_0 = arg_16_3:WorldToScreenPoint(arg_16_0)
+
+	if var_16_0.z < 0 then
+		return nil
+	else
+		local var_16_1 = Vector2.New(0, 0)
+		local var_16_2, var_16_3 = UnityEngine.RectTransformUtility.ScreenPointToLocalPointInRectangle(arg_16_1, var_16_0, arg_16_2, var_16_1)
+
+		if var_16_2 then
+			return var_16_3
+		else
+			return nil
+		end
+	end
+end
+
+return var_0_0

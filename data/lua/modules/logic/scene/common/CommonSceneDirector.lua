@@ -1,22 +1,22 @@
-module("modules.logic.scene.common.CommonSceneDirector", package.seeall)
+﻿module("modules.logic.scene.common.CommonSceneDirector", package.seeall)
 
-slot0 = class("CommonSceneDirector", BaseSceneComp)
+local var_0_0 = class("CommonSceneDirector", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onSceneClose(arg_3_0)
+	arg_3_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	slot0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
-	slot0._scene:onPrepared()
+function var_0_0._onLevelLoaded(arg_4_0, arg_4_1)
+	arg_4_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_4_0._onLevelLoaded, arg_4_0)
+	arg_4_0._scene:onPrepared()
 end
 
-return slot0
+return var_0_0

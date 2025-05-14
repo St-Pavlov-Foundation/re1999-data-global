@@ -1,333 +1,374 @@
-module("modules.logic.store.view.NormalStoreView", package.seeall)
+﻿module("modules.logic.store.view.NormalStoreView", package.seeall)
 
-slot0 = class("NormalStoreView", BaseView)
+local var_0_0 = class("NormalStoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._scrollprop = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_prop")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#scroll_prop/#go_lock")
-	slot0._simagelockbg = gohelper.findChildSingleImage(slot0.viewGO, "#scroll_prop/#go_lock/#simage_lockbg")
-	slot0._gostorecategoryitem = gohelper.findChild(slot0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem")
-	slot0._goline = gohelper.findChild(slot0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_line")
-	slot0._gotabreddot1 = gohelper.findChild(slot0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_tabreddot1")
-	slot0._golimit = gohelper.findChild(slot0.viewGO, "#go_limit")
-	slot0._txtrefreshTime = gohelper.findChildText(slot0.viewGO, "#txt_refreshTime")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#scroll_prop/#go_lock")
+	arg_1_0._simagelockbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_prop/#go_lock/#simage_lockbg")
+	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem")
+	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_line")
+	arg_1_0._gotabreddot1 = gohelper.findChild(arg_1_0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_tabreddot1")
+	arg_1_0._golimit = gohelper.findChild(arg_1_0.viewGO, "#go_limit")
+	arg_1_0._txtrefreshTime = gohelper.findChildText(arg_1_0.viewGO, "#txt_refreshTime")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtrefreshTime = gohelper.findChildText(slot0.viewGO, "#txt_refreshTime")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._txtrefreshTime = gohelper.findChildText(arg_4_0.viewGO, "#txt_refreshTime")
 
-	gohelper.setActive(slot0._txtrefreshTime.gameObject, false)
-	gohelper.setActive(slot0._gostorecategoryitem, false)
+	gohelper.setActive(arg_4_0._txtrefreshTime.gameObject, false)
+	gohelper.setActive(arg_4_0._gostorecategoryitem, false)
 
-	slot0._lockClick = gohelper.getClickWithAudio(slot0._golock)
-	slot0._isLock = false
-	slot0._categoryItemContainer = {}
+	arg_4_0._lockClick = gohelper.getClickWithAudio(arg_4_0._golock)
+	arg_4_0._isLock = false
+	arg_4_0._categoryItemContainer = {}
 
-	slot0._simagelockbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_weijiesuodiban"))
+	arg_4_0._simagelockbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_weijiesuodiban"))
 end
 
-function slot0._refreshTabs(slot0, slot1, slot2)
-	StoreController.instance:readTab(slot1)
+function var_0_0._refreshTabs(arg_5_0, arg_5_1, arg_5_2)
+	StoreController.instance:readTab(arg_5_1)
 
-	slot3 = slot0._selectSecondTabId
-	slot4 = slot0._selectThirdTabId
-	slot0._selectSecondTabId = 0
-	slot0._selectThirdTabId = 0
+	local var_5_0 = arg_5_0._selectSecondTabId
+	local var_5_1 = arg_5_0._selectThirdTabId
 
-	if not StoreModel.instance:isTabOpen(slot1) then
-		slot1 = slot0.viewContainer:getSelectFirstTabId()
+	arg_5_0._selectSecondTabId = 0
+	arg_5_0._selectThirdTabId = 0
+
+	if not StoreModel.instance:isTabOpen(arg_5_1) then
+		arg_5_1 = arg_5_0.viewContainer:getSelectFirstTabId()
 	end
 
-	slot5 = nil
-	slot5, slot0._selectSecondTabId, slot0._selectThirdTabId = StoreModel.instance:jumpTabIdToSelectTabId(slot1)
+	local var_5_2
+	local var_5_3
 
-	if slot0._selectSecondTabId == StoreEnum.StoreId.LimitStore then
-		slot0:refreshCurrency()
+	var_5_3, arg_5_0._selectSecondTabId, arg_5_0._selectThirdTabId = StoreModel.instance:jumpTabIdToSelectTabId(arg_5_1)
+
+	local var_5_4 = arg_5_0._selectSecondTabId == StoreEnum.StoreId.LimitStore
+
+	if var_5_4 then
+		arg_5_0:refreshCurrency()
 	else
-		slot8 = StoreConfig.instance:getTabConfig(slot0._selectSecondTabId)
-		slot9 = StoreConfig.instance:getTabConfig(slot0.viewContainer:getSelectFirstTabId())
+		local var_5_5 = StoreConfig.instance:getTabConfig(arg_5_0._selectThirdTabId)
+		local var_5_6 = StoreConfig.instance:getTabConfig(arg_5_0._selectSecondTabId)
+		local var_5_7 = StoreConfig.instance:getTabConfig(arg_5_0.viewContainer:getSelectFirstTabId())
 
-		if StoreConfig.instance:getTabConfig(slot0._selectThirdTabId) and not string.nilorempty(slot7.showCost) then
-			slot0.viewContainer:setCurrencyType(slot7.showCost)
-		elseif slot8 and not string.nilorempty(slot8.showCost) then
-			slot0.viewContainer:setCurrencyType(slot8.showCost)
-		elseif slot9 and not string.nilorempty(slot9.showCost) then
-			slot0.viewContainer:setCurrencyType(slot9.showCost)
+		if var_5_5 and not string.nilorempty(var_5_5.showCost) then
+			arg_5_0.viewContainer:setCurrencyType(var_5_5.showCost)
+		elseif var_5_6 and not string.nilorempty(var_5_6.showCost) then
+			arg_5_0.viewContainer:setCurrencyType(var_5_6.showCost)
+		elseif var_5_7 and not string.nilorempty(var_5_7.showCost) then
+			arg_5_0.viewContainer:setCurrencyType(var_5_7.showCost)
 		else
-			slot0.viewContainer:setCurrencyType(nil)
+			arg_5_0.viewContainer:setCurrencyType(nil)
 		end
 	end
 
-	if not slot2 and slot3 == slot0._selectSecondTabId and slot4 == slot0._selectThirdTabId then
+	if not arg_5_2 and var_5_0 == arg_5_0._selectSecondTabId and var_5_1 == arg_5_0._selectThirdTabId then
 		return
 	end
 
-	if StoreModel.instance:getSecondTabs(slot0._selectFirstTabId, true, true) and #slot7 > 0 then
-		for slot11 = 1, #slot7 do
-			slot0:_refreshSecondTabs(slot11, slot7[slot11])
-			gohelper.setActive(slot0._categoryItemContainer[slot11].go, true)
+	local var_5_8 = StoreModel.instance:getSecondTabs(arg_5_0._selectFirstTabId, true, true)
+
+	if var_5_8 and #var_5_8 > 0 then
+		for iter_5_0 = 1, #var_5_8 do
+			arg_5_0:_refreshSecondTabs(iter_5_0, var_5_8[iter_5_0])
+			gohelper.setActive(arg_5_0._categoryItemContainer[iter_5_0].go, true)
 		end
 
-		gohelper.setActive(slot0._categoryItemContainer[#slot7].go_line, false)
+		gohelper.setActive(arg_5_0._categoryItemContainer[#var_5_8].go_line, false)
 
-		for slot11 = #slot7 + 1, #slot0._categoryItemContainer do
-			gohelper.setActive(slot0._categoryItemContainer[slot11].go, false)
+		for iter_5_1 = #var_5_8 + 1, #arg_5_0._categoryItemContainer do
+			gohelper.setActive(arg_5_0._categoryItemContainer[iter_5_1].go, false)
 		end
 
-		gohelper.setActive(slot0._lineGo, true)
+		gohelper.setActive(arg_5_0._lineGo, true)
 	else
-		for slot11 = 1, #slot0._categoryItemContainer do
-			gohelper.setActive(slot0._categoryItemContainer[slot11].go, false)
+		for iter_5_2 = 1, #arg_5_0._categoryItemContainer do
+			gohelper.setActive(arg_5_0._categoryItemContainer[iter_5_2].go, false)
 		end
 
-		gohelper.setActive(slot0._lineGo, false)
+		gohelper.setActive(arg_5_0._lineGo, false)
 	end
 
-	slot0:_onRefreshRedDot()
-	slot0:_refreshTabDeadLine()
-	slot0:_refreshGoods(true)
+	arg_5_0:_onRefreshRedDot()
+	arg_5_0:_refreshTabDeadLine()
+	arg_5_0:_refreshGoods(true)
 
-	if slot0._selectThirdTabId > 0 then
-		slot0._isLock = StoreModel.instance:isStoreTabLock(slot0._selectThirdTabId)
+	if arg_5_0._selectThirdTabId > 0 then
+		arg_5_0._isLock = StoreModel.instance:isStoreTabLock(arg_5_0._selectThirdTabId)
 
-		if slot0._isLock then
-			slot0._txtLockText.text = string.format(luaLang("lock_store_text"), StoreConfig.instance:getTabConfig(StoreConfig.instance:getStoreConfig(slot0._selectThirdTabId).needClearStore).name)
+		if arg_5_0._isLock then
+			local var_5_9 = StoreConfig.instance:getStoreConfig(arg_5_0._selectThirdTabId)
+
+			arg_5_0._txtLockText.text = string.format(luaLang("lock_store_text"), StoreConfig.instance:getTabConfig(var_5_9.needClearStore).name)
 		end
 
-		gohelper.setActive(slot0._golock, slot0._isLock)
+		gohelper.setActive(arg_5_0._golock, arg_5_0._isLock)
 	else
-		gohelper.setActive(slot0._golock, false)
+		gohelper.setActive(arg_5_0._golock, false)
 	end
 
-	slot0._scrollprop.verticalNormalizedPosition = 1
+	arg_5_0._scrollprop.verticalNormalizedPosition = 1
 
-	gohelper.setActive(slot0._golimit, slot6)
-	gohelper.setActive(slot0._scrollprop.gameObject, not slot6)
+	gohelper.setActive(arg_5_0._golimit, var_5_4)
+	gohelper.setActive(arg_5_0._scrollprop.gameObject, not var_5_4)
 end
 
-function slot0.refreshCurrency(slot0)
-	slot2 = StoreConfig.instance:getTabConfig(slot0._selectSecondTabId)
-	slot3 = StoreConfig.instance:getTabConfig(slot0.viewContainer:getSelectFirstTabId())
+function var_0_0.refreshCurrency(arg_6_0)
+	local var_6_0 = StoreConfig.instance:getTabConfig(arg_6_0._selectThirdTabId)
+	local var_6_1 = StoreConfig.instance:getTabConfig(arg_6_0._selectSecondTabId)
+	local var_6_2 = StoreConfig.instance:getTabConfig(arg_6_0.viewContainer:getSelectFirstTabId())
 
-	if StoreConfig.instance:getTabConfig(slot0._selectThirdTabId) and not string.nilorempty(slot1.showCost) then
-		slot0.viewContainer:setCurrencyByParams(slot0:packShowCostParam(slot1.showCost))
-	elseif slot2 and not string.nilorempty(slot2.showCost) then
-		slot0.viewContainer:setCurrencyByParams(slot0:packShowCostParam(slot2.showCost))
-	elseif slot3 and not string.nilorempty(slot3.showCost) then
-		slot0.viewContainer:setCurrencyByParams(slot0:packShowCostParam(slot3.showCost))
+	if var_6_0 and not string.nilorempty(var_6_0.showCost) then
+		arg_6_0.viewContainer:setCurrencyByParams(arg_6_0:packShowCostParam(var_6_0.showCost))
+	elseif var_6_1 and not string.nilorempty(var_6_1.showCost) then
+		arg_6_0.viewContainer:setCurrencyByParams(arg_6_0:packShowCostParam(var_6_1.showCost))
+	elseif var_6_2 and not string.nilorempty(var_6_2.showCost) then
+		arg_6_0.viewContainer:setCurrencyByParams(arg_6_0:packShowCostParam(var_6_2.showCost))
 	else
-		slot0.viewContainer:setCurrencyType(nil)
+		arg_6_0.viewContainer:setCurrencyType(nil)
 	end
 end
 
-function slot0.packShowCostParam(slot0, slot1)
-	slot2 = {}
+function var_0_0.packShowCostParam(arg_7_0, arg_7_1)
+	local var_7_0 = {}
+	local var_7_1 = string.split(arg_7_1, "#")
 
-	for slot7 = #string.split(slot1, "#"), 1, -1 do
-		if ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, slot3[slot7]) then
-			table.insert(slot2, {
+	for iter_7_0 = #var_7_1, 1, -1 do
+		local var_7_2 = var_7_1[iter_7_0]
+		local var_7_3 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, var_7_2)
+
+		if var_7_3 then
+			table.insert(var_7_0, {
 				isCurrencySprite = true,
-				id = tonumber(slot8),
-				icon = slot9.icon,
+				id = tonumber(var_7_2),
+				icon = var_7_3.icon,
 				type = MaterialEnum.MaterialType.Item
 			})
 		end
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0._refreshSecondTabs(slot0, slot1, slot2)
-	slot3 = slot0._categoryItemContainer[slot1] or slot0:initCategoryItemTable(slot1)
-	slot3.tabId = slot2.id
-	slot3.txt_itemcn1.text = slot2.name
-	slot3.txt_itemcn2.text = slot2.name
-	slot3.txt_itemen1.text = slot2.nameEn
-	slot3.txt_itemen2.text = slot2.nameEn
+function var_0_0._refreshSecondTabs(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._categoryItemContainer[arg_8_1] or arg_8_0:initCategoryItemTable(arg_8_1)
 
-	gohelper.setActive(slot0._categoryItemContainer[slot1].go_line, true)
+	var_8_0.tabId = arg_8_2.id
+	var_8_0.txt_itemcn1.text = arg_8_2.name
+	var_8_0.txt_itemcn2.text = arg_8_2.name
+	var_8_0.txt_itemen1.text = arg_8_2.nameEn
+	var_8_0.txt_itemen2.text = arg_8_2.nameEn
 
-	if slot0._selectSecondTabId == slot2.id and slot0._categoryItemContainer[slot1 - 1] then
-		gohelper.setActive(slot0._categoryItemContainer[slot1 - 1].go_line, false)
+	local var_8_1 = arg_8_0._selectSecondTabId == arg_8_2.id
+
+	gohelper.setActive(arg_8_0._categoryItemContainer[arg_8_1].go_line, true)
+
+	if var_8_1 and arg_8_0._categoryItemContainer[arg_8_1 - 1] then
+		gohelper.setActive(arg_8_0._categoryItemContainer[arg_8_1 - 1].go_line, false)
 	end
 
-	gohelper.setActive(slot3.go_unselected, not slot4)
-	gohelper.setActive(slot3.go_selected, slot4)
+	gohelper.setActive(var_8_0.go_unselected, not var_8_1)
+	gohelper.setActive(var_8_0.go_selected, var_8_1)
 end
 
-function slot0.initCategoryItemTable(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0._gostorecategoryitem, "item" .. slot1)
-	slot2.go_unselected = gohelper.findChild(slot2.go, "go_unselected")
-	slot2.go_selected = gohelper.findChild(slot2.go, "go_selected")
-	slot2.go_reddot = gohelper.findChild(slot2.go, "#go_tabreddot1")
-	slot2.go_reddotNormalType = gohelper.findChild(slot2.go, "#go_tabreddot1/type1")
-	slot2.go_reddotActType = gohelper.findChild(slot2.go, "#go_tabreddot1/type9")
-	slot2.txt_itemcn1 = gohelper.findChildText(slot2.go, "go_unselected/txt_itemcn1")
-	slot2.txt_itemen1 = gohelper.findChildText(slot2.go, "go_unselected/txt_itemen1")
-	slot2.txt_itemcn2 = gohelper.findChildText(slot2.go, "go_selected/txt_itemcn2")
-	slot2.txt_itemen2 = gohelper.findChildText(slot2.go, "go_selected/txt_itemen2")
-	slot2.go_line = gohelper.findChild(slot2.go, "#go_line")
-	slot2.go_deadline = gohelper.findChild(slot2.go, "go_deadline")
-	slot2.imagetimebg = gohelper.findChildImage(slot2.go, "go_deadline/timebg")
-	slot2.godeadlineEffect = gohelper.findChild(slot2.go, "go_deadline/#effect")
-	slot2.imagetimeicon = gohelper.findChildImage(slot2.go, "go_deadline/#txt_time/timeicon")
-	slot2.txttime = gohelper.findChildText(slot2.go, "go_deadline/#txt_time")
-	slot2.txtformat = gohelper.findChildText(slot2.go, "go_deadline/#txt_time/#txt_format")
-	slot2.btn = gohelper.getClickWithAudio(slot2.go, AudioEnum.UI.play_ui_bank_open)
-	slot2.tabId = 0
+function var_0_0.initCategoryItemTable(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	slot2.btn:AddClickListener(function (slot0)
-		slot1 = slot0.tabId
+	var_9_0.go = gohelper.cloneInPlace(arg_9_0._gostorecategoryitem, "item" .. arg_9_1)
+	var_9_0.go_unselected = gohelper.findChild(var_9_0.go, "go_unselected")
+	var_9_0.go_selected = gohelper.findChild(var_9_0.go, "go_selected")
+	var_9_0.go_reddot = gohelper.findChild(var_9_0.go, "#go_tabreddot1")
+	var_9_0.go_reddotNormalType = gohelper.findChild(var_9_0.go, "#go_tabreddot1/type1")
+	var_9_0.go_reddotActType = gohelper.findChild(var_9_0.go, "#go_tabreddot1/type9")
+	var_9_0.txt_itemcn1 = gohelper.findChildText(var_9_0.go, "go_unselected/txt_itemcn1")
+	var_9_0.txt_itemen1 = gohelper.findChildText(var_9_0.go, "go_unselected/txt_itemen1")
+	var_9_0.txt_itemcn2 = gohelper.findChildText(var_9_0.go, "go_selected/txt_itemcn2")
+	var_9_0.txt_itemen2 = gohelper.findChildText(var_9_0.go, "go_selected/txt_itemen2")
+	var_9_0.go_line = gohelper.findChild(var_9_0.go, "#go_line")
+	var_9_0.go_deadline = gohelper.findChild(var_9_0.go, "go_deadline")
+	var_9_0.imagetimebg = gohelper.findChildImage(var_9_0.go, "go_deadline/timebg")
+	var_9_0.godeadlineEffect = gohelper.findChild(var_9_0.go, "go_deadline/#effect")
+	var_9_0.imagetimeicon = gohelper.findChildImage(var_9_0.go, "go_deadline/#txt_time/timeicon")
+	var_9_0.txttime = gohelper.findChildText(var_9_0.go, "go_deadline/#txt_time")
+	var_9_0.txtformat = gohelper.findChildText(var_9_0.go, "go_deadline/#txt_time/#txt_format")
+	var_9_0.btn = gohelper.getClickWithAudio(var_9_0.go, AudioEnum.UI.play_ui_bank_open)
+	var_9_0.tabId = 0
 
-		uv0:_refreshTabs(slot1)
+	var_9_0.btn:AddClickListener(function(arg_10_0)
+		local var_10_0 = arg_10_0.tabId
 
-		uv0.viewContainer.notPlayAnimation = true
+		arg_9_0:_refreshTabs(var_10_0)
 
-		StoreController.instance:statSwitchStore(slot1)
-	end, slot2)
-	table.insert(slot0._categoryItemContainer, slot2)
-	gohelper.setActive(slot2.go_childItem, false)
+		arg_9_0.viewContainer.notPlayAnimation = true
 
-	return slot2
+		StoreController.instance:statSwitchStore(var_10_0)
+	end, var_9_0)
+	table.insert(arg_9_0._categoryItemContainer, var_9_0)
+	gohelper.setActive(var_9_0.go_childItem, false)
+
+	return var_9_0
 end
 
-function slot0._refreshGoods(slot0, slot1)
-	slot0.storeId = 0
-	slot0.storeId = StoreConfig.instance:getTabConfig(slot0._selectThirdTabId) and slot2.storeId or 0
+function var_0_0._refreshGoods(arg_11_0, arg_11_1)
+	arg_11_0.storeId = 0
 
-	if slot0.storeId == 0 then
-		slot0.storeId = StoreConfig.instance:getTabConfig(slot0._selectSecondTabId) and slot3.storeId or 0
+	local var_11_0 = StoreConfig.instance:getTabConfig(arg_11_0._selectThirdTabId)
+
+	arg_11_0.storeId = var_11_0 and var_11_0.storeId or 0
+
+	if arg_11_0.storeId == 0 then
+		local var_11_1 = StoreConfig.instance:getTabConfig(arg_11_0._selectSecondTabId)
+
+		arg_11_0.storeId = var_11_1 and var_11_1.storeId or 0
 	end
 
-	if slot0.storeId == 0 then
+	if arg_11_0.storeId == 0 then
 		StoreNormalGoodsItemListModel.instance:setMOList()
 	else
-		if StoreModel.instance:getStoreMO(slot0.storeId) then
-			StoreNormalGoodsItemListModel.instance:setMOList(slot3:getGoodsList(true), slot0.storeId)
+		local var_11_2 = StoreModel.instance:getStoreMO(arg_11_0.storeId)
+
+		if var_11_2 then
+			local var_11_3 = var_11_2:getGoodsList(true)
+
+			StoreNormalGoodsItemListModel.instance:setMOList(var_11_3, arg_11_0.storeId)
 		else
-			StoreNormalGoodsItemListModel.instance:setMOList(nil, slot0.storeId)
+			StoreNormalGoodsItemListModel.instance:setMOList(nil, arg_11_0.storeId)
 		end
 
-		if slot1 then
+		if arg_11_1 then
 			StoreRpc.instance:sendGetStoreInfosRequest({
-				slot0.storeId
+				arg_11_0.storeId
 			})
-			slot0.viewContainer:playNormalStoreAnimation()
-			slot0.viewContainer:playSummonStoreAnimation()
+			arg_11_0.viewContainer:playNormalStoreAnimation()
+			arg_11_0.viewContainer:playSummonStoreAnimation()
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._selectFirstTabId = slot0.viewContainer:getSelectFirstTabId()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._selectFirstTabId = arg_12_0.viewContainer:getSelectFirstTabId()
 
-	slot0:_refreshTabs(slot0.viewContainer:getJumpTabId(), true)
-	slot0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, slot0._updateInfo, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._updateInfo, slot0)
-	slot0:addEventCb(FurnaceTreasureController.instance, FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate, slot0._updateInfo, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._onRefreshRedDot, slot0)
-	slot0._lockClick:AddClickListener(slot0._onLockClick, slot0)
-	slot0:checkCountdownStatus()
+	local var_12_0 = arg_12_0.viewContainer:getJumpTabId()
+
+	arg_12_0:_refreshTabs(var_12_0, true)
+	arg_12_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_12_0._updateInfo, arg_12_0)
+	arg_12_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_12_0._updateInfo, arg_12_0)
+	arg_12_0:addEventCb(FurnaceTreasureController.instance, FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate, arg_12_0._updateInfo, arg_12_0)
+	arg_12_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_12_0._onRefreshRedDot, arg_12_0)
+	arg_12_0._lockClick:AddClickListener(arg_12_0._onLockClick, arg_12_0)
+	arg_12_0:checkCountdownStatus()
 end
 
-function slot0._onLockClick(slot0)
-	if slot0._isLock then
-		GameFacade.showToast(ToastEnum.NormalStoreIsLock, StoreConfig.instance:getTabConfig(slot0.storeId).name)
+function var_0_0._onLockClick(arg_13_0)
+	if arg_13_0._isLock then
+		local var_13_0 = StoreConfig.instance:getTabConfig(arg_13_0.storeId).name
+
+		GameFacade.showToast(ToastEnum.NormalStoreIsLock, var_13_0)
 	end
 end
 
-function slot0._updateInfo(slot0)
-	slot0:_refreshGoods(false)
+function var_0_0._updateInfo(arg_14_0)
+	arg_14_0:_refreshGoods(false)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, slot0._updateInfo, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._updateInfo, slot0)
-	slot0:removeEventCb(FurnaceTreasureController.instance, FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate, slot0._updateInfo, slot0)
-	slot0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._onRefreshRedDot, slot0)
-	slot0._lockClick:RemoveClickListener()
-	slot0:closeTaskCountdown()
+function var_0_0.onClose(arg_15_0)
+	arg_15_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_15_0._updateInfo, arg_15_0)
+	arg_15_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_15_0._updateInfo, arg_15_0)
+	arg_15_0:removeEventCb(FurnaceTreasureController.instance, FurnaceTreasureEvent.onFurnaceTreasureGoodsUpdate, arg_15_0._updateInfo, arg_15_0)
+	arg_15_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_15_0._onRefreshRedDot, arg_15_0)
+	arg_15_0._lockClick:RemoveClickListener()
+	arg_15_0:closeTaskCountdown()
 end
 
-function slot0._onRefreshRedDot(slot0)
-	for slot4, slot5 in pairs(slot0._categoryItemContainer) do
-		slot6, slot7 = StoreModel.instance:isTabFirstRedDotShow(slot5.tabId)
+function var_0_0._onRefreshRedDot(arg_16_0)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._categoryItemContainer) do
+		local var_16_0, var_16_1 = StoreModel.instance:isTabFirstRedDotShow(iter_16_1.tabId)
 
-		gohelper.setActive(slot5.go_reddot, slot6)
-		gohelper.setActive(slot5.go_reddotNormalType, not slot7)
-		gohelper.setActive(slot5.go_reddotActType, slot7)
+		gohelper.setActive(iter_16_1.go_reddot, var_16_0)
+		gohelper.setActive(iter_16_1.go_reddotNormalType, not var_16_1)
+		gohelper.setActive(iter_16_1.go_reddotActType, var_16_1)
 	end
 end
 
-function slot0.checkCountdownStatus(slot0)
-	if slot0._needCountdown then
-		TaskDispatcher.cancelTask(slot0._refreshTabDeadLine, slot0)
-		TaskDispatcher.runRepeat(slot0._refreshTabDeadLine, slot0, 1)
+function var_0_0.checkCountdownStatus(arg_17_0)
+	if arg_17_0._needCountdown then
+		TaskDispatcher.cancelTask(arg_17_0._refreshTabDeadLine, arg_17_0)
+		TaskDispatcher.runRepeat(arg_17_0._refreshTabDeadLine, arg_17_0, 1)
 	end
 end
 
-function slot0.closeTaskCountdown(slot0)
-	if slot0._needCountdown then
-		TaskDispatcher.cancelTask(slot0._refreshTabDeadLine, slot0)
+function var_0_0.closeTaskCountdown(arg_18_0)
+	if arg_18_0._needCountdown then
+		TaskDispatcher.cancelTask(arg_18_0._refreshTabDeadLine, arg_18_0)
 	end
 end
 
-function slot0._refreshTabDeadLine(slot0)
-	for slot4, slot5 in pairs(slot0._categoryItemContainer) do
-		if slot5 ~= nil or slot5.tabId ~= nil then
-			if StoreHelper.getRemainExpireTime(StoreConfig.instance:getTabConfig(slot5.tabId)) > 0 then
-				slot8 = false
-				slot5.txttime.text, slot5.txtformat.text, slot8 = TimeUtil.secondToRoughTime(math.floor(slot7), true)
+function var_0_0._refreshTabDeadLine(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._categoryItemContainer) do
+		if iter_19_1 ~= nil or iter_19_1.tabId ~= nil then
+			local var_19_0 = StoreConfig.instance:getTabConfig(iter_19_1.tabId)
+			local var_19_1 = StoreHelper.getRemainExpireTime(var_19_0)
 
-				if slot0._refreshTabDeadlineHasDay == nil then
-					slot0._refreshTabDeadlineHasDay = {}
+			if var_19_1 > 0 then
+				local var_19_2 = false
+				local var_19_3
+
+				iter_19_1.txttime.text, iter_19_1.txtformat.text, var_19_3 = TimeUtil.secondToRoughTime(math.floor(var_19_1), true)
+
+				if arg_19_0._refreshTabDeadlineHasDay == nil then
+					arg_19_0._refreshTabDeadlineHasDay = {}
 				end
 
-				if slot0._refreshTabDeadlineHasDay[slot5.tabId] == nil or slot0._refreshTabDeadlineHasDay[slot5.tabId] ~= slot8 then
-					UISpriteSetMgr.instance:setCommonSprite(slot5.imagetimebg, slot8 and "daojishi_01" or "daojishi_02")
-					UISpriteSetMgr.instance:setCommonSprite(slot5.imagetimeicon, slot8 and "daojishiicon_01" or "daojishiicon_02")
-					SLFramework.UGUI.GuiHelper.SetColor(slot5.txttime, slot8 and "#98D687" or "#E99B56")
-					SLFramework.UGUI.GuiHelper.SetColor(slot5.txtformat, slot8 and "#98D687" or "#E99B56")
-					gohelper.setActive(slot5.godeadlineEffect, not slot8)
+				if arg_19_0._refreshTabDeadlineHasDay[iter_19_1.tabId] == nil or arg_19_0._refreshTabDeadlineHasDay[iter_19_1.tabId] ~= var_19_3 then
+					UISpriteSetMgr.instance:setCommonSprite(iter_19_1.imagetimebg, var_19_3 and "daojishi_01" or "daojishi_02")
+					UISpriteSetMgr.instance:setCommonSprite(iter_19_1.imagetimeicon, var_19_3 and "daojishiicon_01" or "daojishiicon_02")
+					SLFramework.UGUI.GuiHelper.SetColor(iter_19_1.txttime, var_19_3 and "#98D687" or "#E99B56")
+					SLFramework.UGUI.GuiHelper.SetColor(iter_19_1.txtformat, var_19_3 and "#98D687" or "#E99B56")
+					gohelper.setActive(iter_19_1.godeadlineEffect, not var_19_3)
 
-					slot0._refreshTabDeadlineHasDay[slot5.tabId] = slot8
+					arg_19_0._refreshTabDeadlineHasDay[iter_19_1.tabId] = var_19_3
 				end
 
-				slot0._needCountdown = true
+				arg_19_0._needCountdown = true
 			end
 
-			gohelper.setActive(slot5.go_deadline, slot7 > 0)
-			gohelper.setActive(slot5.txttime.gameObject, slot7 > 0)
+			gohelper.setActive(iter_19_1.go_deadline, var_19_1 > 0)
+			gohelper.setActive(iter_19_1.txttime.gameObject, var_19_1 > 0)
 		end
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._selectFirstTabId = slot0.viewContainer:getSelectFirstTabId()
+function var_0_0.onUpdateParam(arg_20_0)
+	arg_20_0._selectFirstTabId = arg_20_0.viewContainer:getSelectFirstTabId()
 
-	slot0:_refreshTabs(slot0.viewContainer:getJumpTabId())
+	local var_20_0 = arg_20_0.viewContainer:getJumpTabId()
+
+	arg_20_0:_refreshTabs(var_20_0)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._categoryItemContainer and #slot0._categoryItemContainer > 0 then
-		for slot4 = 1, #slot0._categoryItemContainer do
-			slot0._categoryItemContainer[slot4].btn:RemoveClickListener()
+function var_0_0.onDestroyView(arg_21_0)
+	if arg_21_0._categoryItemContainer and #arg_21_0._categoryItemContainer > 0 then
+		for iter_21_0 = 1, #arg_21_0._categoryItemContainer do
+			arg_21_0._categoryItemContainer[iter_21_0].btn:RemoveClickListener()
 		end
 	end
 
-	slot0._simagelockbg:UnLoadImage()
+	arg_21_0._simagelockbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

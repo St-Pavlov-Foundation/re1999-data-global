@@ -1,119 +1,143 @@
-module("modules.logic.room.model.record.RoomLogModel", package.seeall)
+﻿module("modules.logic.room.model.record.RoomLogModel", package.seeall)
 
-slot0 = class("RoomLogModel", BaseModel)
+local var_0_0 = class("RoomLogModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._currentPage = 1
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._currentPage = 1
 end
 
-function slot0.reInit(slot0)
-	slot0._currentPage = 1
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._currentPage = 1
 end
 
-function slot0.getInfos(slot0)
-	return slot0._list
+function var_0_0.getInfos(arg_3_0)
+	return arg_3_0._list
 end
 
-function slot0.setInfos(slot0, slot1)
-	slot0._currentTime = nil
-	slot0._list = {}
-	slot0._newLog = nil
+function var_0_0.setInfos(arg_4_0, arg_4_1)
+	arg_4_0._currentTime = nil
+	arg_4_0._list = {}
+	arg_4_0._newLog = nil
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot1.time < slot0.time
-	end)
+	local function var_4_0(arg_5_0, arg_5_1)
+		return arg_5_0.time > arg_5_1.time
+	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot0:setConfigByType(slot7, {
-			type = slot7.type,
-			time = slot7.time,
-			timestr = TimeUtil.timestampToString4(slot7.time)
-		})
+	table.sort(arg_4_1, var_4_0)
 
-		if slot0:checkIsNewDay(slot7.time) and #slot1 > 0 then
-			table.insert(slot0._list, {
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = {
+			type = iter_4_1.type,
+			time = iter_4_1.time,
+			timestr = TimeUtil.timestampToString4(iter_4_1.time)
+		}
+
+		arg_4_0:setConfigByType(iter_4_1, var_4_1)
+
+		if arg_4_0:checkIsNewDay(iter_4_1.time) and #arg_4_1 > 0 then
+			local var_4_2 = os.date("*t", iter_4_1.time - TimeUtil.OneDaySecond).wday
+			local var_4_3 = {
 				type = RoomRecordEnum.LogType.Time,
-				day = os.date("*t", slot7.time - TimeUtil.OneDaySecond).wday
-			})
+				day = var_4_2
+			}
+
+			table.insert(arg_4_0._list, var_4_3)
 		end
 
-		table.insert(slot0._list, slot8)
+		table.insert(arg_4_0._list, var_4_1)
 	end
 
-	if slot0._newLog then
-		RoomController.instance:dispatchEvent(RoomEvent.NewLog, slot0._newLog)
+	if arg_4_0._newLog then
+		RoomController.instance:dispatchEvent(RoomEvent.NewLog, arg_4_0._newLog)
 	end
 end
 
-function slot0.setConfigByType(slot0, slot1, slot2)
-	if slot1.type == RoomRecordEnum.LogType.Speical then
-		if HeroConfig.instance:getHeroCO(RoomConfig.instance:getCharacterInteractionConfig(slot1.id).heroId).name then
-			slot2.heroname = slot5
+function var_0_0.setConfigByType(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1.type == RoomRecordEnum.LogType.Speical then
+		local var_6_0 = arg_6_1.id
+		local var_6_1 = RoomConfig.instance:getCharacterInteractionConfig(var_6_0)
+		local var_6_2 = HeroConfig.instance:getHeroCO(var_6_1.heroId).name
+
+		if var_6_2 then
+			arg_6_2.heroname = var_6_2
 		end
 
-		slot2.config = slot4
+		local var_6_3 = 0
+
+		arg_6_2.config = var_6_1
 
 		while true do
-			slot2.logConfigList = slot2.logConfigList or {}
+			arg_6_2.logConfigList = arg_6_2.logConfigList or {}
+			var_6_3 = var_6_3 + 1
 
-			if not RoomConfig.instance:getCharacterDialogConfig(slot4.dialogId, 0 + 1) then
+			local var_6_4 = RoomConfig.instance:getCharacterDialogConfig(var_6_1.dialogId, var_6_3)
+
+			if not var_6_4 then
 				break
 			end
 
-			table.insert(slot2.logConfigList, slot7)
+			table.insert(arg_6_2.logConfigList, var_6_4)
 		end
-	elseif slot1.type == RoomRecordEnum.LogType.Normal then
-		if RoomLogConfig.instance:getLogConfigById(slot1.id) then
-			slot2.content = slot3.content
-		end
-	elseif slot1.type == RoomRecordEnum.LogType.Custom then
-		if RoomTradeConfig.instance:getTaskCoById(slot1.id) then
-			slot2.config = slot3
-			slot2.name = HeroConfig.instance:getHeroCO(tonumber(slot3.speaker)).name
-			slot4 = {}
+	elseif arg_6_1.type == RoomRecordEnum.LogType.Normal then
+		local var_6_5 = RoomLogConfig.instance:getLogConfigById(arg_6_1.id)
 
-			if not string.nilorempty(slot3.logtext) then
-				slot4 = string.splitToNumber(slot3.logtext, "#")
+		if var_6_5 then
+			arg_6_2.content = var_6_5.content
+		end
+	elseif arg_6_1.type == RoomRecordEnum.LogType.Custom then
+		local var_6_6 = RoomTradeConfig.instance:getTaskCoById(arg_6_1.id)
+
+		if var_6_6 then
+			arg_6_2.config = var_6_6
+			arg_6_2.name = HeroConfig.instance:getHeroCO(tonumber(var_6_6.speaker)).name
+
+			local var_6_7 = {}
+
+			if not string.nilorempty(var_6_6.logtext) then
+				var_6_7 = string.splitToNumber(var_6_6.logtext, "#")
 			end
 
-			if #slot4 > 0 then
-				slot2.logConfigList = slot2.logConfigList or {}
-				slot7 = slot4[1]
+			if #var_6_7 > 0 then
+				arg_6_2.logConfigList = arg_6_2.logConfigList or {}
 
-				while slot7 <= slot4[2] do
-					table.insert(slot2.logConfigList, RoomLogConfig.instance:getLogConfigById(slot7))
+				local var_6_8, var_6_9 = var_6_7[1], var_6_7[2]
 
-					slot7 = slot7 + 1
+				while var_6_8 <= var_6_9 do
+					local var_6_10 = RoomLogConfig.instance:getLogConfigById(var_6_8)
+
+					table.insert(arg_6_2.logConfigList, var_6_10)
+
+					var_6_8 = var_6_8 + 1
 				end
 			end
 		end
 
-		if slot1.isNew and not slot0._newLog then
-			slot0._newLog = slot2
+		if arg_6_1.isNew and not arg_6_0._newLog then
+			arg_6_0._newLog = arg_6_2
 		end
 	end
 end
 
-function slot0.checkIsNewDay(slot0, slot1)
-	if not slot0._currentTime then
-		slot0._currentTime = slot1
+function var_0_0.checkIsNewDay(arg_7_0, arg_7_1)
+	if not arg_7_0._currentTime then
+		arg_7_0._currentTime = arg_7_1
 
 		return false
-	elseif slot1 < slot0._currentTime and not TimeUtil.isSameDay(slot1, slot0._currentTime) then
-		slot0._currentTime = slot1
+	elseif arg_7_1 < arg_7_0._currentTime and not TimeUtil.isSameDay(arg_7_1, arg_7_0._currentTime) then
+		arg_7_0._currentTime = arg_7_1
 
 		return true
 	end
 end
 
-function slot0.setPage(slot0, slot1)
-	slot0._currentPage = slot1
+function var_0_0.setPage(arg_8_0, arg_8_1)
+	arg_8_0._currentPage = arg_8_1
 end
 
-function slot0.getPage(slot0)
-	return slot0._currentPage or 1
+function var_0_0.getPage(arg_9_0)
+	return arg_9_0._currentPage or 1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

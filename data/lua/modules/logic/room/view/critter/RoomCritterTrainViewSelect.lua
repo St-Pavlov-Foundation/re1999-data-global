@@ -1,241 +1,256 @@
-module("modules.logic.room.view.critter.RoomCritterTrainViewSelect", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterTrainViewSelect", package.seeall)
 
-slot0 = class("RoomCritterTrainViewSelect", BaseView)
+local var_0_0 = class("RoomCritterTrainViewSelect", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotrainselect = gohelper.findChild(slot0.viewGO, "bottom/#go_trainselect")
-	slot0._gohascritter = gohelper.findChild(slot0._gotrainselect, "critter/#go_hascritter")
-	slot0._gocritterIcon = gohelper.findChild(slot0._gotrainselect, "critter/#go_hascritter/#go_critterIcon")
-	slot0._gonocritter = gohelper.findChild(slot0._gotrainselect, "critter/#go_nocritter")
-	slot0._gocritterselected = gohelper.findChild(slot0._gotrainselect, "critter/#go_critter_selected")
-	slot0._btncritterselect = gohelper.findChildButtonWithAudio(slot0._gotrainselect, "critter/#btn_critter_select")
-	slot0._gohashero = gohelper.findChild(slot0._gotrainselect, "hero/#go_hashero")
-	slot0._goheroIcon = gohelper.findChild(slot0._gotrainselect, "hero/#go_hashero/#go_heroIcon")
-	slot0._simageheroicon = gohelper.findChildSingleImage(slot0._gotrainselect, "hero/#go_hashero/#simage_heroicon")
-	slot0._gonohero = gohelper.findChild(slot0._gotrainselect, "hero/#go_nohero")
-	slot0._goheroselected = gohelper.findChild(slot0._gotrainselect, "hero/#go_hero_selected")
-	slot0._btnheroselect = gohelper.findChildButtonWithAudio(slot0._gotrainselect, "hero/#btn_hero_select")
-	slot0._gocritterinfo = gohelper.findChild(slot0._gotrainselect, "#go_critter_info")
-	slot0._txtcrittername = gohelper.findChildText(slot0._gotrainselect, "#go_critter_info/#txt_critter_name")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0._gotrainselect, "#go_critter_info/#btn_detail")
-	slot0._scrollcritterarr = gohelper.findChildScrollRect(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr")
-	slot0._gocritteritem = gohelper.findChild(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem")
-	slot0._txtname = gohelper.findChildText(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_name")
-	slot0._imageicon = gohelper.findChildImage(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_name/#image_icon")
-	slot0._txtnum = gohelper.findChildText(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_num")
-	slot0._txtratio = gohelper.findChildText(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_ratio")
-	slot0._scrollcritterpreview = gohelper.findChildScrollRect(slot0._gotrainselect, "#go_critter_info/#scroll_critterpreview")
-	slot0._gobaseitem = gohelper.findChild(slot0._gotrainselect, "#go_critter_info/#scroll_critterpreview/viewport/content/#go_baseitem")
-	slot0._goheroinfo = gohelper.findChild(slot0._gotrainselect, "#go_hero_info")
-	slot0._txtheroname = gohelper.findChildText(slot0._gotrainselect, "#go_hero_info/#txt_hero_name")
-	slot0._txtheroinfo = gohelper.findChildText(slot0._gotrainselect, "#go_hero_info/#txt_hero_info")
-	slot0._scrollheroarr = gohelper.findChildScrollRect(slot0._gotrainselect, "#go_hero_info/#scroll_heroarr")
-	slot0._goheroitem = gohelper.findChild(slot0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/#go_heroitem")
-	slot0._txtpreference = gohelper.findChildText(slot0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem/#txt_preference")
-	slot0._simagepreference = gohelper.findChildSingleImage(slot0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem/#simage_preference")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotrainselect = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_trainselect")
+	arg_1_0._gohascritter = gohelper.findChild(arg_1_0._gotrainselect, "critter/#go_hascritter")
+	arg_1_0._gocritterIcon = gohelper.findChild(arg_1_0._gotrainselect, "critter/#go_hascritter/#go_critterIcon")
+	arg_1_0._gonocritter = gohelper.findChild(arg_1_0._gotrainselect, "critter/#go_nocritter")
+	arg_1_0._gocritterselected = gohelper.findChild(arg_1_0._gotrainselect, "critter/#go_critter_selected")
+	arg_1_0._btncritterselect = gohelper.findChildButtonWithAudio(arg_1_0._gotrainselect, "critter/#btn_critter_select")
+	arg_1_0._gohashero = gohelper.findChild(arg_1_0._gotrainselect, "hero/#go_hashero")
+	arg_1_0._goheroIcon = gohelper.findChild(arg_1_0._gotrainselect, "hero/#go_hashero/#go_heroIcon")
+	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0._gotrainselect, "hero/#go_hashero/#simage_heroicon")
+	arg_1_0._gonohero = gohelper.findChild(arg_1_0._gotrainselect, "hero/#go_nohero")
+	arg_1_0._goheroselected = gohelper.findChild(arg_1_0._gotrainselect, "hero/#go_hero_selected")
+	arg_1_0._btnheroselect = gohelper.findChildButtonWithAudio(arg_1_0._gotrainselect, "hero/#btn_hero_select")
+	arg_1_0._gocritterinfo = gohelper.findChild(arg_1_0._gotrainselect, "#go_critter_info")
+	arg_1_0._txtcrittername = gohelper.findChildText(arg_1_0._gotrainselect, "#go_critter_info/#txt_critter_name")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0._gotrainselect, "#go_critter_info/#btn_detail")
+	arg_1_0._scrollcritterarr = gohelper.findChildScrollRect(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterarr")
+	arg_1_0._gocritteritem = gohelper.findChild(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_name")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_name/#image_icon")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_num")
+	arg_1_0._txtratio = gohelper.findChildText(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content/#go_critteritem/#txt_ratio")
+	arg_1_0._scrollcritterpreview = gohelper.findChildScrollRect(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterpreview")
+	arg_1_0._gobaseitem = gohelper.findChild(arg_1_0._gotrainselect, "#go_critter_info/#scroll_critterpreview/viewport/content/#go_baseitem")
+	arg_1_0._goheroinfo = gohelper.findChild(arg_1_0._gotrainselect, "#go_hero_info")
+	arg_1_0._txtheroname = gohelper.findChildText(arg_1_0._gotrainselect, "#go_hero_info/#txt_hero_name")
+	arg_1_0._txtheroinfo = gohelper.findChildText(arg_1_0._gotrainselect, "#go_hero_info/#txt_hero_info")
+	arg_1_0._scrollheroarr = gohelper.findChildScrollRect(arg_1_0._gotrainselect, "#go_hero_info/#scroll_heroarr")
+	arg_1_0._goheroitem = gohelper.findChild(arg_1_0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/#go_heroitem")
+	arg_1_0._txtpreference = gohelper.findChildText(arg_1_0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem/#txt_preference")
+	arg_1_0._simagepreference = gohelper.findChildSingleImage(arg_1_0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem/#simage_preference")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncritterselect:AddClickListener(slot0._btncritterselectOnClick, slot0)
-	slot0._btnheroselect:AddClickListener(slot0._btnheroselectOnClick, slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncritterselect:AddClickListener(arg_2_0._btncritterselectOnClick, arg_2_0)
+	arg_2_0._btnheroselect:AddClickListener(arg_2_0._btnheroselectOnClick, arg_2_0)
+	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncritterselect:RemoveClickListener()
-	slot0._btnheroselect:RemoveClickListener()
-	slot0._btndetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncritterselect:RemoveClickListener()
+	arg_3_0._btnheroselect:RemoveClickListener()
+	arg_3_0._btndetail:RemoveClickListener()
 end
 
-function slot0._btncritterselectOnClick(slot0)
-	slot0:setSelectCritter(true)
-	slot0.viewContainer:dispatchEvent(CritterEvent.UITrainSubTab, 2)
+function var_0_0._btncritterselectOnClick(arg_4_0)
+	arg_4_0:setSelectCritter(true)
+	arg_4_0.viewContainer:dispatchEvent(CritterEvent.UITrainSubTab, 2)
 end
 
-function slot0._btnheroselectOnClick(slot0)
-	slot0:setSelectCritter(false)
-	slot0.viewContainer:dispatchEvent(CritterEvent.UITrainSubTab, 3)
+function var_0_0._btnheroselectOnClick(arg_5_0)
+	arg_5_0:setSelectCritter(false)
+	arg_5_0.viewContainer:dispatchEvent(CritterEvent.UITrainSubTab, 3)
 end
 
-function slot0._btndetailOnClick(slot0)
-	if CritterModel.instance:getCritterMOByUid(slot0._selectCritterUid) then
-		CritterController.instance:openRoomCritterDetailView(slot1.finishTrain ~= true, slot1, true)
+function var_0_0._btndetailOnClick(arg_6_0)
+	local var_6_0 = CritterModel.instance:getCritterMOByUid(arg_6_0._selectCritterUid)
+
+	if var_6_0 then
+		CritterController.instance:openRoomCritterDetailView(var_6_0.finishTrain ~= true, var_6_0, true)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._trainPreveSendDict = {}
-	slot0._attributeItems = {}
-	slot0._goCritterAttrContent = gohelper.findChild(slot0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content")
-	slot0._gopreferenceitem = gohelper.findChild(slot0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem")
-	slot0._referenceCanvasGroup = gohelper.onceAddComponent(slot0._gopreferenceitem, typeof(UnityEngine.CanvasGroup))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._trainPreveSendDict = {}
+	arg_7_0._attributeItems = {}
+	arg_7_0._goCritterAttrContent = gohelper.findChild(arg_7_0._gotrainselect, "#go_critter_info/#scroll_critterarr/viewport/content")
+	arg_7_0._gopreferenceitem = gohelper.findChild(arg_7_0._gotrainselect, "#go_hero_info/#scroll_heroarr/viewport/content/go_preferenceitem")
+	arg_7_0._referenceCanvasGroup = gohelper.onceAddComponent(arg_7_0._gopreferenceitem, typeof(UnityEngine.CanvasGroup))
 
-	gohelper.setActive(slot0._gobaseitem, false)
+	gohelper.setActive(arg_7_0._gobaseitem, false)
 
-	slot0._heroAttrComp = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goheroitem, RoomCritterAttrScrollCell)
-	slot0._heroAttrComp._view = slot0
-	slot0._tempAttrList = {}
+	arg_7_0._heroAttrComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._goheroitem, RoomCritterAttrScrollCell)
+	arg_7_0._heroAttrComp._view = arg_7_0
+	arg_7_0._tempAttrList = {}
 
-	for slot5, slot6 in ipairs({
+	local var_7_0 = {
 		CritterEnum.AttributeType.Efficiency,
 		CritterEnum.AttributeType.Patience,
 		CritterEnum.AttributeType.Lucky
-	}) do
-		slot7 = CritterAttributeInfoMO.New()
+	}
 
-		slot7:init({
-			attributeId = slot6
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = CritterAttributeInfoMO.New()
+
+		var_7_1:init({
+			attributeId = iter_7_1
 		})
-		table.insert(slot0._tempAttrList, slot7)
+		table.insert(arg_7_0._tempAttrList, var_7_1)
 	end
 
-	slot0._txtheroinfo.text = luaLang(CritterEnum.LangKey.HeroTrainLevel)
+	arg_7_0._txtheroinfo.text = luaLang(CritterEnum.LangKey.HeroTrainLevel)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.__isOpenFlage = true
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.__isOpenFlage = true
 
-	if slot0.viewContainer then
-		slot0:addEventCb(slot0.viewContainer, CritterEvent.UITrainSelectCritter, slot0._onSelectCritterItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, CritterEvent.UITrainSelectHero, slot0._onSelectHeroItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, CritterEvent.UITrainSelectSlot, slot0._onSelectSlotItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, CritterEvent.UIChangeTrainCritter, slot0._onChangeTrainCritter, slot0)
-		slot0:addEventCb(slot0.viewContainer, CritterEvent.UITrainViewGoBack, slot0._onTrainGoBack, slot0)
+	if arg_9_0.viewContainer then
+		arg_9_0:addEventCb(arg_9_0.viewContainer, CritterEvent.UITrainSelectCritter, arg_9_0._onSelectCritterItem, arg_9_0)
+		arg_9_0:addEventCb(arg_9_0.viewContainer, CritterEvent.UITrainSelectHero, arg_9_0._onSelectHeroItem, arg_9_0)
+		arg_9_0:addEventCb(arg_9_0.viewContainer, CritterEvent.UITrainSelectSlot, arg_9_0._onSelectSlotItem, arg_9_0)
+		arg_9_0:addEventCb(arg_9_0.viewContainer, CritterEvent.UIChangeTrainCritter, arg_9_0._onChangeTrainCritter, arg_9_0)
+		arg_9_0:addEventCb(arg_9_0.viewContainer, CritterEvent.UITrainViewGoBack, arg_9_0._onTrainGoBack, arg_9_0)
 	end
 
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onCritterInfoPushUpdate, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.StartTrainCritterPreviewReply, slot0._onTrainPreviewReplay, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, slot0.showSceneSpine, slot0)
-	slot0:setSelectCritter(true)
-	slot0:refreshSelectCritterUI()
-	slot0:refreshSelectHeroUI()
+	arg_9_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_9_0._onCritterInfoPushUpdate, arg_9_0)
+	arg_9_0:addEventCb(CritterController.instance, CritterEvent.StartTrainCritterPreviewReply, arg_9_0._onTrainPreviewReplay, arg_9_0)
+	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, arg_9_0.showSceneSpine, arg_9_0)
+	arg_9_0:setSelectCritter(true)
+	arg_9_0:refreshSelectCritterUI()
+	arg_9_0:refreshSelectHeroUI()
 end
 
-function slot0.onClose(slot0)
-	slot0.__isOpenFlage = false
+function var_0_0.onClose(arg_10_0)
+	arg_10_0.__isOpenFlage = false
 
 	RoomCritterController.instance:showTrainSceneHero(nil)
 	RoomCritterController.instance:showTrainSceneCritter(nil)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._heroAttrComp:onDestroy()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._heroAttrComp:onDestroy()
 
-	if slot0._attributeItems then
-		for slot4, slot5 in pairs(slot0._attributeItems) do
-			slot5:destroy()
+	if arg_11_0._attributeItems then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0._attributeItems) do
+			iter_11_1:destroy()
 		end
 
-		slot0._attributeItems = nil
+		arg_11_0._attributeItems = nil
 	end
 end
 
-function slot0._onSelectCritterItem(slot0, slot1)
-	slot0._selectCritterUid = slot1.id
+function var_0_0._onSelectCritterItem(arg_12_0, arg_12_1)
+	arg_12_0._selectCritterUid = arg_12_1.id
 
-	slot0:refreshSelectCritterUI()
+	arg_12_0:refreshSelectCritterUI()
 end
 
-function slot0._onSelectHeroItem(slot0, slot1)
-	slot0._selectHeroId = slot1.id
+function var_0_0._onSelectHeroItem(arg_13_0, arg_13_1)
+	arg_13_0._selectHeroId = arg_13_1.id
 
-	slot0:refreshSelectHeroUI()
+	arg_13_0:refreshSelectHeroUI()
 end
 
-function slot0._onCritterInfoPushUpdate(slot0)
-	slot0:refreshSelectCritterUI()
+function var_0_0._onCritterInfoPushUpdate(arg_14_0)
+	arg_14_0:refreshSelectCritterUI()
 end
 
-function slot0._onChangeTrainCritter(slot0, slot1)
-	slot0:_updateBySlotMO(slot1)
-	slot0:setSelectCritter(true)
-	slot0:refreshSelectCritterUI()
-	slot0:refreshSelectHeroUI()
+function var_0_0._onChangeTrainCritter(arg_15_0, arg_15_1)
+	arg_15_0:_updateBySlotMO(arg_15_1)
+	arg_15_0:setSelectCritter(true)
+	arg_15_0:refreshSelectCritterUI()
+	arg_15_0:refreshSelectHeroUI()
 end
 
-function slot0._onSelectSlotItem(slot0, slot1)
-	slot0:_updateBySlotMO(slot1)
-	slot0:setSelectCritter(true)
-	slot0:refreshSelectCritterUI()
-	slot0:refreshSelectHeroUI()
+function var_0_0._onSelectSlotItem(arg_16_0, arg_16_1)
+	arg_16_0:_updateBySlotMO(arg_16_1)
+	arg_16_0:setSelectCritter(true)
+	arg_16_0:refreshSelectCritterUI()
+	arg_16_0:refreshSelectHeroUI()
 end
 
-function slot0._updateBySlotMO(slot0, slot1)
-	slot0._selectCritterUid = nil
-	slot0._selectHeroId = nil
-	slot0._selectSlotMO = slot1
-	slot0._selectSiteId = slot1 and slot1.id
+function var_0_0._updateBySlotMO(arg_17_0, arg_17_1)
+	arg_17_0._selectCritterUid = nil
+	arg_17_0._selectHeroId = nil
+	arg_17_0._selectSlotMO = arg_17_1
+	arg_17_0._selectSiteId = arg_17_1 and arg_17_1.id
 
-	if slot1 and slot1.critterMO then
-		slot0._selectCritterUid = slot2.id
-		slot0._selectHeroId = slot2.trainInfo.heroId
+	local var_17_0 = arg_17_1 and arg_17_1.critterMO
+
+	if var_17_0 then
+		arg_17_0._selectCritterUid = var_17_0.id
+		arg_17_0._selectHeroId = var_17_0.trainInfo.heroId
 	end
 end
 
-function slot0._onTrainGoBack(slot0)
-	slot0:_updateBySlotMO(slot0._selectSlotMO)
-	slot0:showSceneSpine()
+function var_0_0._onTrainGoBack(arg_18_0)
+	arg_18_0:_updateBySlotMO(arg_18_0._selectSlotMO)
+	arg_18_0:showSceneSpine()
 end
 
-function slot0._onTrainPreviewReplay(slot0, slot1, slot2)
-	slot0:refreshAttributeItem()
+function var_0_0._onTrainPreviewReplay(arg_19_0, arg_19_1, arg_19_2)
+	arg_19_0:refreshAttributeItem()
 end
 
-function slot0.setSelectCritter(slot0, slot1)
-	slot0._isSelectCritter = slot1
+function var_0_0.setSelectCritter(arg_20_0, arg_20_1)
+	arg_20_0._isSelectCritter = arg_20_1
 
-	gohelper.setActive(slot0._goheroinfo, not slot1)
-	gohelper.setActive(slot0._goheroselected, not slot1)
-	gohelper.setActive(slot0._gocritterinfo, slot1)
-	gohelper.setActive(slot0._gocritterselected, slot1)
-	slot0:showSceneSpine()
+	gohelper.setActive(arg_20_0._goheroinfo, not arg_20_1)
+	gohelper.setActive(arg_20_0._goheroselected, not arg_20_1)
+	gohelper.setActive(arg_20_0._gocritterinfo, arg_20_1)
+	gohelper.setActive(arg_20_0._gocritterselected, arg_20_1)
+	arg_20_0:showSceneSpine()
 end
 
-function slot0.refreshSelectCritterUI(slot0)
-	slot3 = CritterModel.instance:getCritterMOByUid(slot0._selectCritterUid) ~= nil
+function var_0_0.refreshSelectCritterUI(arg_21_0)
+	local var_21_0 = arg_21_0._selectCritterUid
+	local var_21_1 = CritterModel.instance:getCritterMOByUid(var_21_0)
+	local var_21_2 = var_21_1 ~= nil
 
-	gohelper.setActive(slot0._gohascritter, slot3)
-	gohelper.setActive(slot0._gonocritter, not slot3)
+	gohelper.setActive(arg_21_0._gohascritter, var_21_2)
+	gohelper.setActive(arg_21_0._gonocritter, not var_21_2)
 
-	slot4 = slot0._tempAttrList
+	local var_21_3 = arg_21_0._tempAttrList
 
-	if slot3 then
-		if not slot0.critterIcon then
-			slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocritterIcon)
+	if var_21_2 then
+		if not arg_21_0.critterIcon then
+			arg_21_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_21_0._gocritterIcon)
 		end
 
-		slot0.critterIcon:setMOValue(slot2:getId(), slot2:getDefineId())
+		arg_21_0.critterIcon:setMOValue(var_21_1:getId(), var_21_1:getDefineId())
 
-		slot0._txtcrittername.text = slot2:getName()
-		slot4 = slot2:getAttributeInfos()
+		arg_21_0._txtcrittername.text = var_21_1:getName()
+		var_21_3 = var_21_1:getAttributeInfos()
 	else
-		slot0._txtcrittername.text = luaLang("critter_train_noselect_critter_text")
+		arg_21_0._txtcrittername.text = luaLang("critter_train_noselect_critter_text")
 	end
 
-	slot0._isHasSelectCritter = slot3
+	arg_21_0._isHasSelectCritter = var_21_2
 
-	gohelper.CreateObjList(slot0, slot0._onCritterArrComp, slot4, slot0._goCritterAttrContent, slot0._gocritteritem, RoomCritterAttrScrollCell)
-	slot0:refreshAttributeItem()
-	slot0:showSceneSpine()
-	slot0:refreshReferenceUI()
+	local var_21_4 = arg_21_0._goCritterAttrContent
+	local var_21_5 = arg_21_0._gocritteritem
+
+	gohelper.CreateObjList(arg_21_0, arg_21_0._onCritterArrComp, var_21_3, var_21_4, var_21_5, RoomCritterAttrScrollCell)
+	arg_21_0:refreshAttributeItem()
+	arg_21_0:showSceneSpine()
+	arg_21_0:refreshReferenceUI()
 end
 
-function slot0.refreshReferenceUI(slot0)
-	slot0._referenceCanvasGroup.alpha = slot0:_isPreference() and 1 or 0.5
+function var_0_0.refreshReferenceUI(arg_22_0)
+	local var_22_0 = arg_22_0:_isPreference() and 1 or 0.5
+
+	arg_22_0._referenceCanvasGroup.alpha = var_22_0
 end
 
-function slot0._isPreference(slot0)
-	if slot0._selectCritterUid and slot0._selectHeroId then
-		slot2 = RoomTrainHeroListModel.instance:getById(slot0._selectHeroId)
+function var_0_0._isPreference(arg_23_0)
+	if arg_23_0._selectCritterUid and arg_23_0._selectHeroId then
+		local var_23_0 = CritterModel.instance:getCritterMOByUid(arg_23_0._selectCritterUid)
+		local var_23_1 = RoomTrainHeroListModel.instance:getById(arg_23_0._selectHeroId)
 
-		if CritterModel.instance:getCritterMOByUid(slot0._selectCritterUid) and slot2 and slot2:chcekPrefernectCritterId(slot1:getDefineId()) then
+		if var_23_0 and var_23_1 and var_23_1:chcekPrefernectCritterId(var_23_0:getDefineId()) then
 			return true
 		end
 	end
@@ -243,126 +258,142 @@ function slot0._isPreference(slot0)
 	return false
 end
 
-function slot0.refreshAttributeItem(slot0)
-	slot2 = true
+function var_0_0.refreshAttributeItem(arg_24_0)
+	local var_24_0 = arg_24_0:_getTrainPreviewMO()
+	local var_24_1 = true
 
-	if slot0:_getTrainPreviewMO() then
-		for slot6, slot7 in pairs(slot0._attributeItems) do
-			slot7:hideItem()
+	if var_24_0 then
+		for iter_24_0, iter_24_1 in pairs(arg_24_0._attributeItems) do
+			iter_24_1:hideItem()
 		end
 
-		for slot7 = 1, #slot1:getAttributeInfos() do
-			if not slot0._attributeItems[slot7] then
-				slot0._attributeItems[slot7] = RoomCritterTrainDetailItemAttributeItem.New()
+		local var_24_2 = var_24_0:getAttributeInfos()
 
-				slot0._attributeItems[slot7]:init(slot0._gobaseitem)
+		for iter_24_2 = 1, #var_24_2 do
+			if not arg_24_0._attributeItems[iter_24_2] then
+				arg_24_0._attributeItems[iter_24_2] = RoomCritterTrainDetailItemAttributeItem.New()
+
+				arg_24_0._attributeItems[iter_24_2]:init(arg_24_0._gobaseitem)
 			end
 
-			slot0._attributeItems[slot7]:setShowLv(slot0._showLv)
-			slot0._attributeItems[slot7]:refresh(slot3[slot7], slot1)
+			arg_24_0._attributeItems[iter_24_2]:setShowLv(arg_24_0._showLv)
+			arg_24_0._attributeItems[iter_24_2]:refresh(var_24_2[iter_24_2], var_24_0)
 		end
-	elseif not slot0._selectCritterUid or not slot0._selectHeroId then
-		slot2 = false
+	elseif not arg_24_0._selectCritterUid or not arg_24_0._selectHeroId then
+		var_24_1 = false
 	end
 
-	gohelper.setActive(slot0._scrollcritterarr, not slot2)
-	gohelper.setActive(slot0._scrollcritterpreview, slot2)
+	gohelper.setActive(arg_24_0._scrollcritterarr, not var_24_1)
+	gohelper.setActive(arg_24_0._scrollcritterpreview, var_24_1)
 end
 
-function slot0._getTrainPreviewMO(slot0)
-	if slot0._selectCritterUid and slot0._selectHeroId then
-		if CritterModel.instance:getCritterMOByUid(slot0._selectCritterUid) and slot1:isCultivating() and slot1.trainInfo.heroId == slot0._selectHeroId then
-			return slot1
+function var_0_0._getTrainPreviewMO(arg_25_0)
+	if arg_25_0._selectCritterUid and arg_25_0._selectHeroId then
+		local var_25_0 = CritterModel.instance:getCritterMOByUid(arg_25_0._selectCritterUid)
+
+		if var_25_0 and var_25_0:isCultivating() and var_25_0.trainInfo.heroId == arg_25_0._selectHeroId then
+			return var_25_0
 		end
 
-		if slot1 and slot1:isMaturity() then
+		if var_25_0 and var_25_0:isMaturity() then
 			return nil
 		end
 
-		if CritterModel.instance:getTrainPreviewMO(slot0._selectCritterUid, slot0._selectHeroId) then
-			return slot2
+		local var_25_1 = CritterModel.instance:getTrainPreviewMO(arg_25_0._selectCritterUid, arg_25_0._selectHeroId)
+
+		if var_25_1 then
+			return var_25_1
 		end
 
-		if RoomHelper.get2KeyValue(slot0._trainPreveSendDict, slot0._selectCritterUid, slot0._selectHeroId) == nil or slot3 < Time.time then
-			RoomHelper.add2KeyValue(slot0._trainPreveSendDict, slot0._selectCritterUid, slot0._selectHeroId, Time.time + 2)
-			CritterRpc.instance:sendStartTrainCritterPreviewRequest(slot0._selectCritterUid, slot0._selectHeroId)
+		local var_25_2 = RoomHelper.get2KeyValue(arg_25_0._trainPreveSendDict, arg_25_0._selectCritterUid, arg_25_0._selectHeroId)
+
+		if var_25_2 == nil or var_25_2 < Time.time then
+			RoomHelper.add2KeyValue(arg_25_0._trainPreveSendDict, arg_25_0._selectCritterUid, arg_25_0._selectHeroId, Time.time + 2)
+			CritterRpc.instance:sendStartTrainCritterPreviewRequest(arg_25_0._selectCritterUid, arg_25_0._selectHeroId)
 		end
 	end
 
 	return nil
 end
 
-function slot0.refreshSelectHeroUI(slot0)
-	slot2 = RoomTrainHeroListModel.instance:getById(slot0._selectHeroId) ~= nil
+function var_0_0.refreshSelectHeroUI(arg_26_0)
+	local var_26_0 = RoomTrainHeroListModel.instance:getById(arg_26_0._selectHeroId)
+	local var_26_1 = var_26_0 ~= nil
 
-	gohelper.setActive(slot0._gohashero, slot2)
-	gohelper.setActive(slot0._gonohero, not slot2)
-	gohelper.setActive(slot0._txtheroinfo, slot2)
-	gohelper.setActive(slot0._scrollheroarr, slot2)
+	gohelper.setActive(arg_26_0._gohashero, var_26_1)
+	gohelper.setActive(arg_26_0._gonohero, not var_26_1)
+	gohelper.setActive(arg_26_0._txtheroinfo, var_26_1)
+	gohelper.setActive(arg_26_0._scrollheroarr, var_26_1)
 
-	if slot2 then
-		slot0._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(slot1.skinConfig.headIcon))
+	if var_26_1 then
+		arg_26_0._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(var_26_0.skinConfig.headIcon))
 
-		slot0._txtheroname.text = slot1.heroConfig and slot1.heroConfig.name
+		arg_26_0._txtheroname.text = var_26_0.heroConfig and var_26_0.heroConfig.name
 
-		slot0._heroAttrComp:onUpdateMO(slot1:getAttributeInfoMO())
+		arg_26_0._heroAttrComp:onUpdateMO(var_26_0:getAttributeInfoMO())
 
-		slot0._txtpreference.text = slot1:getPrefernectName()
+		arg_26_0._txtpreference.text = var_26_0:getPrefernectName()
 
-		if slot1.critterHeroConfig then
-			slot0._simagepreference:LoadImage(ResUrl.getCritterHedaIcon(slot1.critterHeroConfig.critterIcon))
+		if var_26_0.critterHeroConfig then
+			arg_26_0._simagepreference:LoadImage(ResUrl.getCritterHedaIcon(var_26_0.critterHeroConfig.critterIcon))
 		end
 	else
-		slot0._txtheroname.text = luaLang("critter_train_noselect_hero_text")
+		arg_26_0._txtheroname.text = luaLang("critter_train_noselect_hero_text")
 	end
 
-	slot0:refreshAttributeItem()
-	slot0:showSceneSpine()
-	slot0:refreshReferenceUI()
+	arg_26_0:refreshAttributeItem()
+	arg_26_0:showSceneSpine()
+	arg_26_0:refreshReferenceUI()
 end
 
-function slot0.showSceneSpine(slot0)
-	slot0._lastHeroId = slot0._selectHeroId
-	slot0._lastCritterUiId = slot0._selectCritterUid
+function var_0_0.showSceneSpine(arg_27_0)
+	arg_27_0._lastHeroId = arg_27_0._selectHeroId
+	arg_27_0._lastCritterUiId = arg_27_0._selectCritterUid
 
-	if slot0:_isHideSpine() then
-		slot0._lastHeroId = nil
-		slot0._lastCritterUiId = nil
+	if arg_27_0:_isHideSpine() then
+		arg_27_0._lastHeroId = nil
+		arg_27_0._lastCritterUiId = nil
 	end
 
-	slot3 = slot0.viewContainer:getContainerViewBuildingUid()
+	local var_27_0 = RoomTrainHeroListModel.instance:getById(arg_27_0._lastHeroId)
+	local var_27_1 = CritterModel.instance:getCritterMOByUid(arg_27_0._lastCritterUiId)
+	local var_27_2 = arg_27_0.viewContainer:getContainerViewBuildingUid()
+	local var_27_3 = 7
+	local var_27_4 = 6
 
-	RoomCritterController.instance:showTrainSceneHero(RoomTrainHeroListModel.instance:getById(slot0._lastHeroId), slot3, 7)
-	RoomCritterController.instance:showTrainSceneCritter(CritterModel.instance:getCritterMOByUid(slot0._lastCritterUiId), slot3, 6)
+	RoomCritterController.instance:showTrainSceneHero(var_27_0, var_27_2, var_27_3)
+	RoomCritterController.instance:showTrainSceneCritter(var_27_1, var_27_2, var_27_4)
 end
 
-function slot0._isHideSpine(slot0)
-	if not slot0.__isOpenFlage then
+function var_0_0._isHideSpine(arg_28_0)
+	if not arg_28_0.__isOpenFlage then
 		return true
 	end
 
-	if slot0.viewContainer:getContainerCurSelectTab() ~= RoomCritterBuildingViewContainer.SubViewTabId.Training then
+	if arg_28_0.viewContainer:getContainerCurSelectTab() ~= RoomCritterBuildingViewContainer.SubViewTabId.Training then
 		return true
 	end
 
-	if not RoomCameraController.instance:getRoomScene() then
+	local var_28_0 = RoomCameraController.instance:getRoomScene()
+
+	if not var_28_0 then
 		return true
 	end
 
-	return slot1.camera:getCameraState() == RoomEnum.CameraState.ThirdPerson
+	return var_28_0.camera:getCameraState() == RoomEnum.CameraState.ThirdPerson
 end
 
-function slot0._onCritterArrComp(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
+function var_0_0._onCritterArrComp(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	arg_29_1:onUpdateMO(arg_29_2)
 
-	if not slot1._view then
-		slot1._view = slot0
+	if not arg_29_1._view then
+		arg_29_1._view = arg_29_0
 	end
 
-	if not slot0._isHasSelectCritter then
-		slot1._txtratio.text = "--"
-		slot1._txtnum.text = "--"
+	if not arg_29_0._isHasSelectCritter then
+		arg_29_1._txtratio.text = "--"
+		arg_29_1._txtnum.text = "--"
 	end
 end
 
-return slot0
+return var_0_0

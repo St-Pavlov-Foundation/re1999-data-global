@@ -1,8 +1,0 @@
-module("projbooter.gamepad.define.GamepadEvent", package.seeall)
-
-slot0 = _M
-slot0.AxisChange = 1
-slot0.KeyUp = 2
-slot0.KeyDown = 3
-
-return slot0

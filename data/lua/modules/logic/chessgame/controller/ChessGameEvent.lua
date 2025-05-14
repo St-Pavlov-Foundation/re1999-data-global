@@ -1,35 +1,36 @@
-module("modules.logic.chessgame.controller.ChessGameEvent", package.seeall)
+﻿module("modules.logic.chessgame.controller.ChessGameEvent", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.DeleteInteractAvatar = slot1()
-slot0.GameMapDataUpdate = slot1()
-slot0.SetNeedChooseDirectionVisible = slot1()
-slot0.SetAlarmAreaVisible = slot1()
-slot0.CurrentRoundUpdate = slot1()
-slot0.GameLoadingMapStateUpdate = slot1()
-slot0.GameReset = slot1()
-slot0.RollBack = slot1()
-slot0.AllObjectCreated = slot1()
-slot0.AddInteractObj = slot1()
-slot0.OnVictory = slot1()
-slot0.OnFail = slot1()
-slot0.GamePointReturn = slot1()
-slot0.ChangeMap = slot1()
-slot0.RefreshScene = slot1()
-slot0.GameResultQuit = slot1()
-slot0.PlayStoryFinish = slot1()
-slot0.PlayDialogue = slot1()
-slot0.DialogEnd = slot1()
-slot0.ClickOnTalking = slot1()
-slot0.CurrentConditionUpdate = slot1()
-slot0.GuideStart = slot1()
-slot0.GuideOnEnterEpisode = slot1()
-slot0.GameToastUpdate = slot1()
-slot0.EnterGameFinish = slot1()
-slot0.LoadingMapState = {
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
+
+var_0_0.DeleteInteractAvatar = var_0_1()
+var_0_0.GameMapDataUpdate = var_0_1()
+var_0_0.SetNeedChooseDirectionVisible = var_0_1()
+var_0_0.SetAlarmAreaVisible = var_0_1()
+var_0_0.CurrentRoundUpdate = var_0_1()
+var_0_0.GameLoadingMapStateUpdate = var_0_1()
+var_0_0.GameReset = var_0_1()
+var_0_0.RollBack = var_0_1()
+var_0_0.AllObjectCreated = var_0_1()
+var_0_0.AddInteractObj = var_0_1()
+var_0_0.OnVictory = var_0_1()
+var_0_0.OnFail = var_0_1()
+var_0_0.GamePointReturn = var_0_1()
+var_0_0.ChangeMap = var_0_1()
+var_0_0.RefreshScene = var_0_1()
+var_0_0.GameResultQuit = var_0_1()
+var_0_0.PlayStoryFinish = var_0_1()
+var_0_0.PlayDialogue = var_0_1()
+var_0_0.DialogEnd = var_0_1()
+var_0_0.ClickOnTalking = var_0_1()
+var_0_0.CurrentConditionUpdate = var_0_1()
+var_0_0.GuideStart = var_0_1()
+var_0_0.GuideOnEnterEpisode = var_0_1()
+var_0_0.GameToastUpdate = var_0_1()
+var_0_0.EnterGameFinish = var_0_1()
+var_0_0.LoadingMapState = {
 	Start = 998,
 	Finish = 999
 }
 
-return slot0
+return var_0_0

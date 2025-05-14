@@ -1,107 +1,113 @@
-module("modules.logic.scene.luacomp.SceneLuaCompSpineDynamicShadow", package.seeall)
+﻿module("modules.logic.scene.luacomp.SceneLuaCompSpineDynamicShadow", package.seeall)
 
-slot0 = class("SceneLuaCompSpineDynamicShadow", LuaCompBase)
+local var_0_0 = class("SceneLuaCompSpineDynamicShadow", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	if string.nilorempty(slot1[1]) then
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	if string.nilorempty(arg_1_1[1]) then
 		logError("场景阴影贴图未配置，请检查 C场景表.xlsx-export_场景表现")
 
 		return
 	end
 
-	slot0._texturePath = ResUrl.getRoleSpineMatTex(slot1[1])
+	arg_1_0._texturePath = ResUrl.getRoleSpineMatTex(arg_1_1[1])
 
-	if slot1[2] then
-		slot2 = string.splitToNumber(slot1[2], "#")
-		slot0._vec_ShadowMap_ST = Vector4.New(slot2[1], slot2[2], slot2[3], slot2[4])
+	if arg_1_1[2] then
+		local var_1_0 = string.splitToNumber(arg_1_1[2], "#")
+
+		arg_1_0._vec_ShadowMap_ST = Vector4.New(var_1_0[1], var_1_0[2], var_1_0[3], var_1_0[4])
 	end
 
-	if slot1[3] then
-		slot2 = string.splitToNumber(slot1[3], "#")
-		slot0._vec_ShadowMapOffset = Vector4.New(slot2[1], slot2[2], slot2[3], slot2[4])
+	if arg_1_1[3] then
+		local var_1_1 = string.splitToNumber(arg_1_1[3], "#")
+
+		arg_1_0._vec_ShadowMapOffset = Vector4.New(var_1_1[1], var_1_1[2], var_1_1[3], var_1_1[4])
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot0._loader = MultiAbLoader.New()
-	slot0._needSetMatDict = nil
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._loader = MultiAbLoader.New()
+	arg_2_0._needSetMatDict = nil
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, slot0._onSpineMatChange, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, arg_3_0._onSpineMatChange, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, slot0._onSpineMatChange, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_4_0._onSpineLoaded, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSpineMaterialChange, arg_4_0._onSpineMatChange, arg_4_0)
 end
 
-function slot0.onStart(slot0)
-	if not slot0._texturePath then
+function var_0_0.onStart(arg_5_0)
+	if not arg_5_0._texturePath then
 		return
 	end
 
-	slot0._loader:addPath(slot0._texturePath)
-	slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+	arg_5_0._loader:addPath(arg_5_0._texturePath)
+	arg_5_0._loader:startLoad(arg_5_0._onLoadCallback, arg_5_0)
 
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitys()) do
-		if slot6.spine and slot6.spine:getSpineGO() then
-			slot0:_setSpineMat(slot6.spineRenderer:getReplaceMat())
+	local var_5_0 = FightHelper.getAllEntitys()
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		if iter_5_1.spine and iter_5_1.spine:getSpineGO() then
+			arg_5_0:_setSpineMat(iter_5_1.spineRenderer:getReplaceMat())
 		end
 	end
 end
 
-function slot0._onLoadCallback(slot0)
-	if slot0._needSetMatDict then
-		for slot4, slot5 in pairs(slot0._needSetMatDict) do
-			slot0:_setSpineMat(slot4)
+function var_0_0._onLoadCallback(arg_6_0)
+	if arg_6_0._needSetMatDict then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._needSetMatDict) do
+			arg_6_0:_setSpineMat(iter_6_0)
 		end
 
-		slot0._needSetMatDict = nil
+		arg_6_0._needSetMatDict = nil
 	end
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	slot0:_setSpineMat(slot1.unitSpawn.spineRenderer:getReplaceMat())
+function var_0_0._onSpineLoaded(arg_7_0, arg_7_1)
+	arg_7_0:_setSpineMat(arg_7_1.unitSpawn.spineRenderer:getReplaceMat())
 end
 
-function slot0._onSpineMatChange(slot0, slot1, slot2)
-	slot0:_setSpineMat(slot2)
+function var_0_0._onSpineMatChange(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0:_setSpineMat(arg_8_2)
 end
 
-function slot0._setSpineMat(slot0, slot1)
-	if slot0._loader and slot0._loader:getFirstAssetItem() then
-		slot3 = slot2:GetResource(slot0._texturePath)
+function var_0_0._setSpineMat(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._loader and arg_9_0._loader:getFirstAssetItem()
 
-		slot1:EnableKeyword("_SHADOW_DYNAMIC_ON")
+	if var_9_0 then
+		local var_9_1 = var_9_0:GetResource(arg_9_0._texturePath)
 
-		if slot0._vec_ShadowMap_ST then
-			slot1:SetVector("_ShadowMap_ST", slot0._vec_ShadowMap_ST)
+		arg_9_1:EnableKeyword("_SHADOW_DYNAMIC_ON")
+
+		if arg_9_0._vec_ShadowMap_ST then
+			arg_9_1:SetVector("_ShadowMap_ST", arg_9_0._vec_ShadowMap_ST)
 		end
 
-		if slot0._vec_ShadowMapOffset then
-			slot1:SetVector("_ShadowMapOffset", slot0._vec_ShadowMapOffset)
+		if arg_9_0._vec_ShadowMapOffset then
+			arg_9_1:SetVector("_ShadowMapOffset", arg_9_0._vec_ShadowMapOffset)
 		end
 
-		slot1:SetTexture("_ShadowMap", slot3)
+		arg_9_1:SetTexture("_ShadowMap", var_9_1)
 	else
-		if not slot0._needSetMatDict then
-			slot0._needSetMatDict = {}
+		if not arg_9_0._needSetMatDict then
+			arg_9_0._needSetMatDict = {}
 		end
 
-		slot0._needSetMatDict[slot1] = true
+		arg_9_0._needSetMatDict[arg_9_1] = true
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.onDestroy(arg_10_0)
+	if arg_10_0._loader then
+		arg_10_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_10_0._loader = nil
 	end
 
-	slot0._needSetMatDict = nil
+	arg_10_0._needSetMatDict = nil
 end
 
-return slot0
+return var_0_0

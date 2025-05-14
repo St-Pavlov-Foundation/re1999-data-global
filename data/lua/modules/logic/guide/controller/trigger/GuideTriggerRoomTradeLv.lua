@@ -1,30 +1,35 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerRoomTradeLv", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomTradeLv", package.seeall)
 
-slot0 = class("GuideTriggerRoomTradeLv", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerRoomTradeLv", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTradeLevelUpReply, slot0._checkStartGuide, slot0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.TradeLevelChange, slot0._checkStartGuide, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._onEnterOneSceneFinish, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnTradeLevelUpReply, arg_1_0._checkStartGuide, arg_1_0)
+	ManufactureController.instance:registerCallback(ManufactureEvent.TradeLevelChange, arg_1_0._checkStartGuide, arg_1_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return slot1 == SceneType.Room and tonumber(slot2) <= slot0:getParam()
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_1 == SceneType.Room
+	local var_2_1 = tonumber(arg_2_2)
+
+	return var_2_0 and var_2_1 <= arg_2_0:getParam()
 end
 
-function slot0.getParam(slot0)
+function var_0_0.getParam(arg_3_0)
 	return ManufactureModel.instance:getTradeLevel()
 end
 
-function slot0._onEnterOneSceneFinish(slot0, slot1, slot2)
-	slot0:checkStartGuide(slot1)
+function var_0_0._onEnterOneSceneFinish(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:checkStartGuide(arg_4_1)
 end
 
-function slot0._checkStartGuide(slot0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		slot0:checkStartGuide(slot1)
+function var_0_0._checkStartGuide(arg_5_0)
+	local var_5_0 = GameSceneMgr.instance:getCurSceneType()
+
+	if var_5_0 == SceneType.Room then
+		arg_5_0:checkStartGuide(var_5_0)
 	end
 end
 
-return slot0
+return var_0_0

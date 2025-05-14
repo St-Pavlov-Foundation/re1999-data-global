@@ -1,13 +1,15 @@
-module("modules.logic.tipdialog.model.TipDialogModel", package.seeall)
+﻿module("modules.logic.tipdialog.model.TipDialogModel", package.seeall)
 
-slot0 = class("TipDialogModel", BaseModel)
+local var_0_0 = class("TipDialogModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

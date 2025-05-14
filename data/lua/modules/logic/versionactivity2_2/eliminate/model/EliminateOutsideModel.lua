@@ -1,116 +1,120 @@
-module("modules.logic.versionactivity2_2.eliminate.model.EliminateOutsideModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateOutsideModel", package.seeall)
 
-slot0 = class("EliminateOutsideModel", BaseModel)
+local var_0_0 = class("EliminateOutsideModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._selectedEpisodeId = nil
-	slot0._selectedCharacterId = nil
-	slot0._selectedPieceId = nil
-	slot0._totalStar = 0
-	slot0._gainedTaskId = {}
-	slot0._chapterList = {}
-	slot0._ownedWarChessCharacterId = {}
-	slot0._ownedWarChessPieceId = {}
-	slot0._episodeInfo = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._selectedEpisodeId = nil
+	arg_2_0._selectedCharacterId = nil
+	arg_2_0._selectedPieceId = nil
+	arg_2_0._totalStar = 0
+	arg_2_0._gainedTaskId = {}
+	arg_2_0._chapterList = {}
+	arg_2_0._ownedWarChessCharacterId = {}
+	arg_2_0._ownedWarChessPieceId = {}
+	arg_2_0._episodeInfo = {}
 end
 
-function slot0.initTaskInfo(slot0, slot1, slot2)
-	slot0._totalStar = slot1
-	slot0._gainedTaskId = {}
+function var_0_0.initTaskInfo(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._totalStar = arg_3_1
+	arg_3_0._gainedTaskId = {}
 
-	for slot6, slot7 in ipairs(slot2) do
-		slot0._gainedTaskId[slot7] = slot7
+	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
+		arg_3_0._gainedTaskId[iter_3_1] = iter_3_1
 	end
 end
 
-function slot0.initMapInfo(slot0, slot1, slot2, slot3, slot4)
-	slot0._ownedWarChessCharacterId = {}
-	slot0._ownedWarChessPieceId = {}
-	slot0._episodeInfo = {}
-	slot0._unlockSlotNum = #slot4
+function var_0_0.initMapInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	arg_4_0._ownedWarChessCharacterId = {}
+	arg_4_0._ownedWarChessPieceId = {}
+	arg_4_0._episodeInfo = {}
+	arg_4_0._unlockSlotNum = #arg_4_4
 
-	for slot8, slot9 in ipairs(slot1) do
-		slot0._ownedWarChessCharacterId[slot9] = slot9
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		arg_4_0._ownedWarChessCharacterId[iter_4_1] = iter_4_1
 	end
 
-	for slot8, slot9 in ipairs(slot2) do
-		slot0._ownedWarChessPieceId[slot9] = slot9
+	for iter_4_2, iter_4_3 in ipairs(arg_4_2) do
+		arg_4_0._ownedWarChessPieceId[iter_4_3] = iter_4_3
 	end
 
-	for slot8, slot9 in ipairs(slot3) do
-		slot10 = slot0._episodeInfo[slot9.id] or WarEpisodeInfo.New()
+	for iter_4_4, iter_4_5 in ipairs(arg_4_3) do
+		local var_4_0 = arg_4_0._episodeInfo[iter_4_5.id] or WarEpisodeInfo.New()
 
-		slot10:init(slot9)
+		var_4_0:init(iter_4_5)
 
-		slot0._episodeInfo[slot9.id] = slot10
+		arg_4_0._episodeInfo[iter_4_5.id] = var_4_0
 	end
 
-	slot0:_initChapterList()
+	arg_4_0:_initChapterList()
 	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.OnUpdateEpisodeInfo)
 end
 
-function slot0._initChapterList(slot0)
-	slot0._chapterList = {}
+function var_0_0._initChapterList(arg_5_0)
+	arg_5_0._chapterList = {}
 
-	for slot4, slot5 in ipairs(lua_eliminate_episode.configList) do
-		slot6 = slot0._chapterList[slot5.chapterId] or {}
-		slot0._chapterList[slot5.chapterId] = slot6
-		slot7 = slot0._episodeInfo[slot5.id] or WarEpisodeInfo.New()
+	for iter_5_0, iter_5_1 in ipairs(lua_eliminate_episode.configList) do
+		local var_5_0 = arg_5_0._chapterList[iter_5_1.chapterId] or {}
 
-		slot7:initFromParam(slot5.id, slot7.star or 0)
+		arg_5_0._chapterList[iter_5_1.chapterId] = var_5_0
 
-		slot0._episodeInfo[slot7.id] = slot7
+		local var_5_1 = arg_5_0._episodeInfo[iter_5_1.id] or WarEpisodeInfo.New()
 
-		table.insert(slot6, slot7)
+		var_5_1:initFromParam(iter_5_1.id, var_5_1.star or 0)
+
+		arg_5_0._episodeInfo[var_5_1.id] = var_5_1
+
+		table.insert(var_5_0, var_5_1)
 	end
 end
 
-function slot0.getChapterList(slot0)
-	return slot0._chapterList
+function var_0_0.getChapterList(arg_6_0)
+	return arg_6_0._chapterList
 end
 
-function slot0.getUnlockSlotNum(slot0)
-	return slot0._unlockSlotNum
+function var_0_0.getUnlockSlotNum(arg_7_0)
+	return arg_7_0._unlockSlotNum
 end
 
-function slot0.getTotalStar(slot0)
-	return slot0._totalStar
+function var_0_0.getTotalStar(arg_8_0)
+	return arg_8_0._totalStar
 end
 
-function slot0.addGainedTask(slot0, slot1)
-	if slot1 == 0 then
-		for slot5, slot6 in ipairs(lua_eliminate_reward.configList) do
-			if slot6.star <= slot0._totalStar then
-				slot0._gainedTaskId[slot6.id] = slot6.id
+function var_0_0.addGainedTask(arg_9_0, arg_9_1)
+	if arg_9_1 == 0 then
+		for iter_9_0, iter_9_1 in ipairs(lua_eliminate_reward.configList) do
+			if arg_9_0._totalStar >= iter_9_1.star then
+				arg_9_0._gainedTaskId[iter_9_1.id] = iter_9_1.id
 			end
 		end
 
 		return
 	end
 
-	slot0._gainedTaskId[slot1] = slot1
+	arg_9_0._gainedTaskId[arg_9_1] = arg_9_1
 end
 
-function slot0.gainedTask(slot0, slot1)
-	return slot0._gainedTaskId[slot1] ~= nil
+function var_0_0.gainedTask(arg_10_0, arg_10_1)
+	return arg_10_0._gainedTaskId[arg_10_1] ~= nil
 end
 
-function slot0.hasCharacter(slot0, slot1)
-	return slot0._ownedWarChessCharacterId[slot1] ~= nil
+function var_0_0.hasCharacter(arg_11_0, arg_11_1)
+	return arg_11_0._ownedWarChessCharacterId[arg_11_1] ~= nil
 end
 
-function slot0.hasChessPiece(slot0, slot1)
-	return slot0._ownedWarChessPieceId[slot1] ~= nil
+function var_0_0.hasChessPiece(arg_12_0, arg_12_1)
+	return arg_12_0._ownedWarChessPieceId[arg_12_1] ~= nil
 end
 
-function slot0.hasPassedEpisode(slot0, slot1)
-	return slot0._episodeInfo[slot1] and slot2.star > 0
+function var_0_0.hasPassedEpisode(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._episodeInfo[arg_13_1]
+
+	return var_13_0 and var_13_0.star > 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

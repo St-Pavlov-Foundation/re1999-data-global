@@ -1,128 +1,146 @@
-module("modules.logic.rouge.map.controller.RougePopController", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougePopController", package.seeall)
 
-slot0 = class("RougePopController")
+local var_0_0 = class("RougePopController")
 
-function slot0._init(slot0)
-	if slot0._inited then
+function var_0_0._init(arg_1_0)
+	if arg_1_0._inited then
 		return
 	end
 
-	slot0._inited = true
-	slot0.waitPopViewList = {}
-	slot0.dataPool = {}
-	slot0.showingViewName = nil
+	arg_1_0._inited = true
+	arg_1_0.waitPopViewList = {}
+	arg_1_0.dataPool = {}
+	arg_1_0.showingViewName = nil
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseView, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.onCloseView, arg_1_0)
 end
 
-function slot0.getViewData(slot0, slot1, slot2)
-	slot3 = nil
-	slot3 = (#slot0.dataPool <= 1 or table.remove(slot0.dataPool)) and {}
-	slot3.type = RougeEnum.PopType.ViewName
-	slot3.viewName = slot1
-	slot3.param = slot2
+function var_0_0.getViewData(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0
 
-	return slot3
+	if #arg_2_0.dataPool > 1 then
+		var_2_0 = table.remove(arg_2_0.dataPool)
+	else
+		var_2_0 = {}
+	end
+
+	var_2_0.type = RougeEnum.PopType.ViewName
+	var_2_0.viewName = arg_2_1
+	var_2_0.param = arg_2_2
+
+	return var_2_0
 end
 
-function slot0.getViewDataByFunc(slot0, slot1, slot2, slot3, ...)
-	slot4 = nil
-	slot4 = (#slot0.dataPool <= 1 or table.remove(slot0.dataPool)) and {}
-	slot4.type = RougeEnum.PopType.Func
-	slot4.viewName = slot1
-	slot4.openFunc = slot2
-	slot4.openFuncObj = slot3
-	slot4.funcParam = {
+function var_0_0.getViewDataByFunc(arg_3_0, arg_3_1, arg_3_2, arg_3_3, ...)
+	local var_3_0
+
+	if #arg_3_0.dataPool > 1 then
+		var_3_0 = table.remove(arg_3_0.dataPool)
+	else
+		var_3_0 = {}
+	end
+
+	var_3_0.type = RougeEnum.PopType.Func
+	var_3_0.viewName = arg_3_1
+	var_3_0.openFunc = arg_3_2
+	var_3_0.openFuncObj = arg_3_3
+	var_3_0.funcParam = {
 		...
 	}
 
-	return slot4
+	return var_3_0
 end
 
-function slot0.recycleData(slot0, slot1)
-	tabletool.clear(slot1)
-	table.insert(slot0.dataPool, slot1)
+function var_0_0.recycleData(arg_4_0, arg_4_1)
+	tabletool.clear(arg_4_1)
+	table.insert(arg_4_0.dataPool, arg_4_1)
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot0.showingViewName ~= slot1 then
+function var_0_0.onCloseView(arg_5_0, arg_5_1)
+	if arg_5_0.showingViewName ~= arg_5_1 then
 		return
 	end
 
-	slot0:recycleData(slot0.data)
+	arg_5_0:recycleData(arg_5_0.data)
 
-	slot0.data = nil
-	slot0.showingViewName = nil
+	arg_5_0.data = nil
+	arg_5_0.showingViewName = nil
 
-	if slot0:hadPopView() then
-		slot0:_popNextView()
+	if arg_5_0:hadPopView() then
+		arg_5_0:_popNextView()
 	else
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onPopViewDone)
 	end
 end
 
-function slot0.popViewData(slot0)
-	return table.remove(slot0.waitPopViewList, 1)
+function var_0_0.popViewData(arg_6_0)
+	return table.remove(arg_6_0.waitPopViewList, 1)
 end
 
-function slot0.hadPopView(slot0)
-	return slot0.showingViewName ~= nil or slot0.waitPopViewList and #slot0.waitPopViewList > 0
+function var_0_0.hadPopView(arg_7_0)
+	return arg_7_0.showingViewName ~= nil or arg_7_0.waitPopViewList and #arg_7_0.waitPopViewList > 0
 end
 
-function slot0.addPopViewWithViewName(slot0, slot1, slot2)
-	slot0:_init()
-	logNormal("add pop view : " .. slot1)
-	table.insert(slot0.waitPopViewList, slot0:getViewData(slot1, slot2))
-	slot0:_popNextView()
+function var_0_0.addPopViewWithViewName(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0:_init()
+
+	local var_8_0 = arg_8_0:getViewData(arg_8_1, arg_8_2)
+
+	logNormal("add pop view : " .. arg_8_1)
+	table.insert(arg_8_0.waitPopViewList, var_8_0)
+	arg_8_0:_popNextView()
 end
 
-function slot0.addPopViewWithOpenFunc(slot0, slot1, slot2, slot3, ...)
-	slot0:_init()
-	logNormal("add pop view : " .. slot1)
-	table.insert(slot0.waitPopViewList, slot0:getViewDataByFunc(slot1, slot2, slot3, ...))
-	slot0:_popNextView()
+function var_0_0.addPopViewWithOpenFunc(arg_9_0, arg_9_1, arg_9_2, arg_9_3, ...)
+	arg_9_0:_init()
+
+	local var_9_0 = arg_9_0:getViewDataByFunc(arg_9_1, arg_9_2, arg_9_3, ...)
+
+	logNormal("add pop view : " .. arg_9_1)
+	table.insert(arg_9_0.waitPopViewList, var_9_0)
+	arg_9_0:_popNextView()
 end
 
-function slot0._popNextView(slot0)
+function var_0_0._popNextView(arg_10_0)
 	if RougeMapModel.instance:getMapState() <= RougeMapEnum.MapState.LoadingMap then
 		return
 	end
 
-	if slot0.showingViewName then
+	if arg_10_0.showingViewName then
 		return
 	end
 
-	slot0.data = slot0:popViewData()
+	arg_10_0.data = arg_10_0:popViewData()
 
-	if not slot0.data then
+	if not arg_10_0.data then
 		return
 	end
 
-	slot0.showingViewName = slot0.data.viewName
+	arg_10_0.showingViewName = arg_10_0.data.viewName
 
-	if slot0.data.type == RougeEnum.PopType.ViewName then
-		ViewMgr.instance:openView(slot0.data.viewName, slot0.data.param)
+	if arg_10_0.data.type == RougeEnum.PopType.ViewName then
+		ViewMgr.instance:openView(arg_10_0.data.viewName, arg_10_0.data.param)
 	else
-		slot0.data.openFunc(slot0.data.openFuncObj, unpack(slot0.data.funcParam))
+		arg_10_0.data.openFunc(arg_10_0.data.openFuncObj, unpack(arg_10_0.data.funcParam))
 	end
 end
 
-function slot0.tryPopView(slot0)
-	slot0:_popNextView()
+function var_0_0.tryPopView(arg_11_0)
+	arg_11_0:_popNextView()
 end
 
-function slot0.isPopping(slot0)
-	return slot0.showingViewName ~= nil
+function var_0_0.isPopping(arg_12_0)
+	return arg_12_0.showingViewName ~= nil
 end
 
-function slot0.clearAllPopView(slot0)
-	if slot0.waitPopViewList then
-		for slot4 = 1, #slot0.waitPopViewList do
-			slot0:recycleData(table.remove(slot0.waitPopViewList))
+function var_0_0.clearAllPopView(arg_13_0)
+	if arg_13_0.waitPopViewList then
+		for iter_13_0 = 1, #arg_13_0.waitPopViewList do
+			arg_13_0:recycleData(table.remove(arg_13_0.waitPopViewList))
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

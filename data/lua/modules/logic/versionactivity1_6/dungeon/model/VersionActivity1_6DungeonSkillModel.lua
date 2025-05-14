@@ -1,19 +1,19 @@
-module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonSkillModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonSkillModel", package.seeall)
 
-slot0 = class("VersionActivity1_6DungeonSkillModel", Activity148Model)
+local var_0_0 = class("VersionActivity1_6DungeonSkillModel", Activity148Model)
 
-function slot0.onInit(slot0)
-	uv0.super.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	var_0_0.super.onInit(arg_1_0)
 end
 
-function slot0.reInit(slot0)
-	uv0.super.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	var_0_0.super.reInit(arg_2_0)
 end
 
-function slot0.init(slot0)
-	uv0.super.init(slot0)
+function var_0_0.init(arg_3_0)
+	var_0_0.super.init(arg_3_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

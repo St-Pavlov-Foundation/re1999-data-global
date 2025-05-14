@@ -1,63 +1,73 @@
-module("modules.logic.room.entity.comp.RoomBuildingReflectionComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomBuildingReflectionComp", package.seeall)
 
-slot0 = class("RoomBuildingReflectionComp", LuaCompBase)
+local var_0_0 = class("RoomBuildingReflectionComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot2 = slot0:getMO()
-	slot0._isReflection = slot0:_checkReflection()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+
+	local var_2_0 = arg_2_0:getMO()
+
+	arg_2_0._isReflection = arg_2_0:_checkReflection()
 end
 
-function slot0.addEventListeners(slot0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, slot0._onDropBuildingDown, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, arg_3_0._onDropBuildingDown, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, slot0._onDropBuildingDown, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, arg_4_0._onDropBuildingDown, arg_4_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0:removeEventListeners()
 end
 
-function slot0._onDropBuildingDown(slot0)
-	slot0:refreshReflection()
+function var_0_0._onDropBuildingDown(arg_6_0)
+	arg_6_0:refreshReflection()
 end
 
-function slot0.refreshReflection(slot0)
-	if slot0._isReflection ~= slot0:_checkReflection() then
-		slot0._isReflection = slot1
+function var_0_0.refreshReflection(arg_7_0)
+	local var_7_0 = arg_7_0:_checkReflection()
 
-		slot0:_updateReflection()
+	if arg_7_0._isReflection ~= var_7_0 then
+		arg_7_0._isReflection = var_7_0
+
+		arg_7_0:_updateReflection()
 	end
 end
 
-function slot0._updateReflection(slot0)
-	if slot0.entity.effect:getGameObjectsByName(slot0._effectKey, RoomEnum.EntityChildKey.ReflerctionGOKey) and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			gohelper.setActive(slot6, slot0._isReflection)
+function var_0_0._updateReflection(arg_8_0)
+	local var_8_0 = arg_8_0.entity.effect:getGameObjectsByName(arg_8_0._effectKey, RoomEnum.EntityChildKey.ReflerctionGOKey)
+
+	if var_8_0 and #var_8_0 > 0 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+			gohelper.setActive(iter_8_1, arg_8_0._isReflection)
 		end
 	end
 end
 
-function slot0._checkReflection(slot0)
-	if slot0.entity.id == RoomBuildingController.instance:isPressBuilding() then
+function var_0_0._checkReflection(arg_9_0)
+	if arg_9_0.entity.id == RoomBuildingController.instance:isPressBuilding() then
 		return false
 	end
 
-	slot1, slot2 = slot0:_getOccupyDict()
+	local var_9_0, var_9_1 = arg_9_0:_getOccupyDict()
 
-	if not slot1 then
+	if not var_9_0 then
 		return false
 	end
 
-	for slot7, slot8 in ipairs(slot2) do
-		if RoomMapBlockModel.instance:getBlockMO(slot8.x, slot8.y) and slot9:isInMapBlock() and slot9:hasRiver() then
+	local var_9_2 = RoomMapBlockModel.instance
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		local var_9_3 = var_9_2:getBlockMO(iter_9_1.x, iter_9_1.y)
+
+		if var_9_3 and var_9_3:isInMapBlock() and var_9_3:hasRiver() then
 			return true
 		end
 	end
@@ -65,20 +75,22 @@ function slot0._checkReflection(slot0)
 	return false
 end
 
-function slot0._getOccupyDict(slot0)
-	return slot0.entity:getOccupyDict()
+function var_0_0._getOccupyDict(arg_10_0)
+	return arg_10_0.entity:getOccupyDict()
 end
 
-function slot0.getMO(slot0)
-	return slot0.entity:getMO()
+function var_0_0.getMO(arg_11_0)
+	return arg_11_0.entity:getMO()
 end
 
-function slot0.onEffectRebuild(slot0)
-	if slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) and not slot1:isSameResByKey(slot0._effectKey, slot0._effectRes) then
-		slot0._effectRes = slot1:getEffectRes(slot0._effectKey)
+function var_0_0.onEffectRebuild(arg_12_0)
+	local var_12_0 = arg_12_0.entity.effect
 
-		slot0:_updateReflection()
+	if var_12_0:isHasEffectGOByKey(arg_12_0._effectKey) and not var_12_0:isSameResByKey(arg_12_0._effectKey, arg_12_0._effectRes) then
+		arg_12_0._effectRes = var_12_0:getEffectRes(arg_12_0._effectKey)
+
+		arg_12_0:_updateReflection()
 	end
 end
 
-return slot0
+return var_0_0

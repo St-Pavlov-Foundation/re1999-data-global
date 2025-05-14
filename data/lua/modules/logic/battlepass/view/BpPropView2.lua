@@ -1,55 +1,55 @@
-module("modules.logic.battlepass.view.BpPropView2", package.seeall)
+﻿module("modules.logic.battlepass.view.BpPropView2", package.seeall)
 
-slot0 = class("BpPropView2", BaseView)
+local var_0_0 = class("BpPropView2", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._bgClick = gohelper.getClick(slot0.viewGO)
-	slot0._scrollitem = gohelper.findChild(slot0.viewGO, "#scroll")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll/itemcontent")
-	slot0._goeff = gohelper.findChild(slot0.viewGO, "#go_eff")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btnOK")
-	slot0._btnBuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btnBuy")
-	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "title/level/#txt_lv")
-	slot0._scrollContent2 = gohelper.findChild(slot0.viewGO, "#scroll2/Viewport/#go_rewards")
-	slot0._item = gohelper.findChild(slot0.viewGO, "#scroll2/Viewport/#go_rewards/#go_Items")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._bgClick = gohelper.getClick(arg_1_0.viewGO)
+	arg_1_0._scrollitem = gohelper.findChild(arg_1_0.viewGO, "#scroll")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll/itemcontent")
+	arg_1_0._goeff = gohelper.findChild(arg_1_0.viewGO, "#go_eff")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btnOK")
+	arg_1_0._btnBuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btnBuy")
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "title/level/#txt_lv")
+	arg_1_0._scrollContent2 = gohelper.findChild(arg_1_0.viewGO, "#scroll2/Viewport/#go_rewards")
+	arg_1_0._item = gohelper.findChild(arg_1_0.viewGO, "#scroll2/Viewport/#go_rewards/#go_Items")
 end
 
-function slot0.addEvents(slot0)
-	slot0._bgClick:AddClickListener(slot0._onClickBG, slot0)
-	slot0._btnclose:AddClickListener(slot0._onClickOK, slot0)
-	slot0._btnBuy:AddClickListener(slot0.openChargeView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._bgClick:AddClickListener(arg_2_0._onClickBG, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._onClickOK, arg_2_0)
+	arg_2_0._btnBuy:AddClickListener(arg_2_0.openChargeView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnBuy:RemoveClickListener()
-	slot0._bgClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnBuy:RemoveClickListener()
+	arg_3_0._bgClick:RemoveClickListener()
 end
 
-function slot0._onClickBG(slot0)
-	if not slot0._openDt or UnityEngine.Time.time < slot0._openDt + 1 then
+function var_0_0._onClickBG(arg_4_0)
+	if not arg_4_0._openDt or arg_4_0._openDt + 1 > UnityEngine.Time.time then
 		return
 	end
 
 	StatController.instance:track(StatEnum.EventName.ClickBPRewardWindowButton, {
 		[StatEnum.EventProperties.ButtonName] = "关闭"
 	})
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._onClickOK(slot0)
+function var_0_0._onClickOK(arg_5_0)
 	StatController.instance:track(StatEnum.EventName.ClickBPRewardWindowButton, {
 		[StatEnum.EventProperties.ButtonName] = "确定"
 	})
-	slot0:closeThis()
+	arg_5_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0._openDt = UnityEngine.Time.time
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._openDt = UnityEngine.Time.time
 	CommonPropListItem.hasOpen = false
 
-	slot0:_setPropItems()
-	NavigateMgr.instance:addEscape(ViewName.BpPropView2, slot0._onClickBG, slot0)
+	arg_6_0:_setPropItems()
+	NavigateMgr.instance:addEscape(ViewName.BpPropView2, arg_6_0._onClickBG, arg_6_0)
 
 	if CommonPropListModel.instance:isHadHighRareProp() then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards_High_1)
@@ -57,140 +57,151 @@ function slot0.onOpen(slot0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
 	end
 
-	slot1 = BpModel.instance:getBpLv()
-	slot0._txtlv.text = slot1
+	local var_6_0 = BpModel.instance:getBpLv()
 
-	gohelper.setActive(slot0._item, false)
+	arg_6_0._txtlv.text = var_6_0
 
-	slot3 = {}
+	gohelper.setActive(arg_6_0._item, false)
 
-	for slot7 = 1, slot1 do
-		slot0:_calcBonus({}, slot3, BpConfig.instance:getBonusCO(BpModel.instance.id, slot7).payBonus)
+	local var_6_1 = {}
+	local var_6_2 = {}
+
+	for iter_6_0 = 1, var_6_0 do
+		local var_6_3 = BpConfig.instance:getBonusCO(BpModel.instance.id, iter_6_0)
+
+		arg_6_0:_calcBonus(var_6_1, var_6_2, var_6_3.payBonus)
 	end
 
-	slot0:_sortList(slot3)
-	gohelper.CreateObjList(slot0, slot0._createItem, slot3, slot0._scrollContent2, slot0._item)
+	arg_6_0:_sortList(var_6_2)
+	gohelper.CreateObjList(arg_6_0, arg_6_0._createItem, var_6_2, arg_6_0._scrollContent2, arg_6_0._item)
 end
 
-function slot0._sortList(slot0, slot1)
-	table.sort(slot1, function (slot0, slot1)
-		if uv0:getIsSkin(slot0) ~= uv0:getIsSkin(slot1) then
-			return uv0:getIsSkin(slot0)
-		elseif uv0:getIsSummon(slot0) ~= uv0:getIsSummon(slot1) then
-			return uv0:getIsSummon(slot0)
-		elseif uv0:getIsEquip(slot0) ~= uv0:getIsEquip(slot1) then
-			return uv0:getIsEquip(slot0)
-		elseif CommonPropListModel.instance:_getQuality(slot0) ~= CommonPropListModel.instance:_getQuality(slot1) then
-			return CommonPropListModel.instance:_getQuality(slot1) < CommonPropListModel.instance:_getQuality(slot0)
-		elseif slot0.materilType ~= slot1.materilType then
-			return slot1.materilType < slot0.materilType
-		elseif slot0.materilType == MaterialEnum.MaterialType.Item and slot1.materilType == MaterialEnum.MaterialType.Item and CommonPropListModel.instance:_getSubType(slot0) ~= CommonPropListModel.instance:_getSubType(slot1) then
-			return CommonPropListModel.instance:_getSubType(slot0) < CommonPropListModel.instance:_getSubType(slot1)
-		elseif slot0.materilId ~= slot1.materilId then
-			return slot1.materilId < slot0.materilId
+function var_0_0._sortList(arg_7_0, arg_7_1)
+	table.sort(arg_7_1, function(arg_8_0, arg_8_1)
+		if arg_7_0:getIsSkin(arg_8_0) ~= arg_7_0:getIsSkin(arg_8_1) then
+			return arg_7_0:getIsSkin(arg_8_0)
+		elseif arg_7_0:getIsSummon(arg_8_0) ~= arg_7_0:getIsSummon(arg_8_1) then
+			return arg_7_0:getIsSummon(arg_8_0)
+		elseif arg_7_0:getIsEquip(arg_8_0) ~= arg_7_0:getIsEquip(arg_8_1) then
+			return arg_7_0:getIsEquip(arg_8_0)
+		elseif CommonPropListModel.instance:_getQuality(arg_8_0) ~= CommonPropListModel.instance:_getQuality(arg_8_1) then
+			return CommonPropListModel.instance:_getQuality(arg_8_0) > CommonPropListModel.instance:_getQuality(arg_8_1)
+		elseif arg_8_0.materilType ~= arg_8_1.materilType then
+			return arg_8_0.materilType > arg_8_1.materilType
+		elseif arg_8_0.materilType == MaterialEnum.MaterialType.Item and arg_8_1.materilType == MaterialEnum.MaterialType.Item and CommonPropListModel.instance:_getSubType(arg_8_0) ~= CommonPropListModel.instance:_getSubType(arg_8_1) then
+			return CommonPropListModel.instance:_getSubType(arg_8_0) < CommonPropListModel.instance:_getSubType(arg_8_1)
+		elseif arg_8_0.materilId ~= arg_8_1.materilId then
+			return arg_8_0.materilId > arg_8_1.materilId
 		end
 	end)
 end
 
-function slot0.getIsSkin(slot0, slot1)
-	return slot1.materilType == MaterialEnum.MaterialType.HeroSkin
+function var_0_0.getIsSkin(arg_9_0, arg_9_1)
+	return arg_9_1.materilType == MaterialEnum.MaterialType.HeroSkin
 end
 
-function slot0.getIsEquip(slot0, slot1)
-	return slot1.materilType == MaterialEnum.MaterialType.Equip and slot1.materilId == 1000
+function var_0_0.getIsEquip(arg_10_0, arg_10_1)
+	return arg_10_1.materilType == MaterialEnum.MaterialType.Equip and arg_10_1.materilId == 1000
 end
 
-function slot0.getIsSummon(slot0, slot1)
-	return slot1.materilType == MaterialEnum.MaterialType.Item and slot1.materilId == 140001
+function var_0_0.getIsSummon(arg_11_0, arg_11_1)
+	return arg_11_1.materilType == MaterialEnum.MaterialType.Item and arg_11_1.materilId == 140001
 end
 
-function slot0._calcBonus(slot0, slot1, slot2, slot3)
-	slot7 = "|"
+function var_0_0._calcBonus(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	for iter_12_0, iter_12_1 in pairs(string.split(arg_12_3, "|")) do
+		local var_12_0 = string.splitToNumber(iter_12_1, "#")
+		local var_12_1 = var_12_0[2]
+		local var_12_2 = var_12_0[3]
 
-	for slot7, slot8 in pairs(string.split(slot3, slot7)) do
-		slot9 = string.splitToNumber(slot8, "#")
-		slot11 = slot9[3]
-
-		if not slot1[slot9[2]] then
-			slot1[slot10] = {
-				materilType = slot9[1],
-				materilId = slot9[2],
-				quantity = slot9[3],
-				[4] = slot9[4],
-				[5] = slot9[5]
+		if not arg_12_1[var_12_1] then
+			arg_12_1[var_12_1] = {
+				materilType = var_12_0[1],
+				materilId = var_12_0[2],
+				quantity = var_12_0[3],
+				[4] = var_12_0[4],
+				[5] = var_12_0[5]
 			}
 
-			table.insert(slot2, slot1[slot10])
+			table.insert(arg_12_2, arg_12_1[var_12_1])
 		else
-			slot1[slot10].quantity = slot1[slot10].quantity + slot11
+			arg_12_1[var_12_1].quantity = arg_12_1[var_12_1].quantity + var_12_2
 		end
 	end
 end
 
-function slot0._createItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChild(slot1, "#go_Limit")
-	slot6 = gohelper.findChild(slot1, "#go_new")
-	slot9 = slot2.quantity
+function var_0_0._createItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = gohelper.findChild(arg_13_1, "#go_Limit")
+	local var_13_1 = gohelper.findChild(arg_13_1, "#go_item")
+	local var_13_2 = gohelper.findChild(arg_13_1, "#go_new")
+	local var_13_3 = arg_13_2.materilType
+	local var_13_4 = arg_13_2.materilId
+	local var_13_5 = arg_13_2.quantity
+	local var_13_6 = IconMgr.instance:getCommonPropItemIcon(var_13_1)
 
-	IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot1, "#go_item")):setMOValue(slot2.materilType, slot2.materilId, slot9, nil, true)
+	var_13_6:setMOValue(var_13_3, var_13_4, var_13_5, nil, true)
 
-	slot11 = slot9 and slot9 ~= 0
+	local var_13_7 = var_13_5 and var_13_5 ~= 0
 
-	if slot0:getIsSkin(slot2) then
-		slot11 = false
+	if arg_13_0:getIsSkin(arg_13_2) then
+		var_13_7 = false
 	end
 
-	slot10:isShowEquipAndItemCount(slot11)
+	var_13_6:isShowEquipAndItemCount(var_13_7)
 
-	if slot11 then
-		slot10:setCountText(GameUtil.numberDisplay(slot9))
+	if var_13_7 then
+		var_13_6:setCountText(GameUtil.numberDisplay(var_13_5))
 	end
 
-	slot10:setCountFontSize(43)
-	gohelper.setActive(slot4, slot2[4] == 1)
-	gohelper.setActive(slot6, slot2[5] == 1)
+	var_13_6:setCountFontSize(43)
+	gohelper.setActive(var_13_0, arg_13_2[4] == 1)
+	gohelper.setActive(var_13_2, arg_13_2[5] == 1)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_14_0)
+	arg_14_0:closeThis()
 end
 
-function slot0._setPropItems(slot0)
-	CommonPropListModel.instance:setPropList(slot0.viewParam)
+function var_0_0._setPropItems(arg_15_0)
+	CommonPropListModel.instance:setPropList(arg_15_0.viewParam)
 
-	for slot5, slot6 in ipairs(CommonPropListModel.instance:getList()) do
-		slot7 = slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[1], slot0._gocontent, "cell" .. slot5)
+	local var_15_0 = CommonPropListModel.instance:getList()
 
-		transformhelper.setLocalScale(slot7.transform, 0.7, 0.7, 0.7)
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		local var_15_1 = arg_15_0:getResInst(arg_15_0.viewContainer._viewSetting.otherRes[1], arg_15_0._gocontent, "cell" .. iter_15_0)
 
-		slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot7, CommonPropListItem)
-		slot8._index = slot5
-		slot8._view = slot0
+		transformhelper.setLocalScale(var_15_1.transform, 0.7, 0.7, 0.7)
 
-		slot8:onUpdateMO(slot6)
+		local var_15_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, CommonPropListItem)
 
-		function slot8.callback()
-			uv0:setCountFontSize(43)
+		var_15_2._index = iter_15_0
+		var_15_2._view = arg_15_0
+
+		var_15_2:onUpdateMO(iter_15_1)
+
+		function var_15_2.callback()
+			var_15_2:setCountFontSize(43)
 		end
 	end
 end
 
-function slot0.openChargeView(slot0)
+function var_0_0.openChargeView(arg_17_0)
 	StatController.instance:track(StatEnum.EventName.ClickBPRewardWindowButton, {
 		[StatEnum.EventProperties.ButtonName] = "解锁吼吼典藏光碟"
 	})
 	ViewMgr.instance:openView(ViewName.BpChargeView)
-	slot0:closeThis()
+	arg_17_0:closeThis()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_18_0)
 	CommonPropListModel.instance:clear()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_shutdown)
 
 	CommonPropListItem.hasOpen = false
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_19_0)
+	return
 end
 
-return slot0
+return var_0_0

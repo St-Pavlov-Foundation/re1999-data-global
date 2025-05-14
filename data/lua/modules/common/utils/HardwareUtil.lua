@@ -1,45 +1,47 @@
-module("modules.common.utils.HardwareUtil", package.seeall)
+﻿module("modules.common.utils.HardwareUtil", package.seeall)
 
-slot0 = _M
-slot1 = nil
-slot2 = "none"
+local var_0_0 = _M
+local var_0_1
+local var_0_2 = "none"
 
-function slot0.getPerformanceGrade()
-	if not uv0 then
-		slot1 = BootNativeUtil.getCpuName()
-		slot2 = UnityEngine.SystemInfo.graphicsDeviceName
+function var_0_0.getPerformanceGrade()
+	if not var_0_1 then
+		local var_1_0 = UnityEngine.SystemInfo.deviceModel
+		local var_1_1 = BootNativeUtil.getCpuName()
+		local var_1_2 = UnityEngine.SystemInfo.graphicsDeviceName
+		local var_1_3 = UnityEngine.SystemInfo.systemMemorySize
 
-		logNormal("DeviceName: " .. (UnityEngine.SystemInfo.deviceModel or "nil") .. "\nCPU: " .. (slot1 or "nil") .. "\n" .. "GPU: " .. (slot2 or "nil") .. "\n" .. "Memory: " .. (UnityEngine.SystemInfo.systemMemorySize or "nil"))
+		logNormal("DeviceName: " .. (var_1_0 or "nil") .. "\nCPU: " .. (var_1_1 or "nil") .. "\n" .. "GPU: " .. (var_1_2 or "nil") .. "\n" .. "Memory: " .. (var_1_3 or "nil"))
 
-		slot4 = CommonConfig.instance
-		slot5 = slot4
-		slot5 = CommonConfig.instance:getGPULevel(slot2 or "")
-		uv0 = ModuleEnum.Performance.High
+		local var_1_4 = CommonConfig.instance:getCPULevel(var_1_1 or "")
+		local var_1_5 = CommonConfig.instance:getGPULevel(var_1_2 or "")
 
-		if slot4.getCPULevel(slot5, slot1 or "") ~= ModuleEnum.Performance.Undefine then
-			uv0 = slot4
-			uv1 = "cpu"
-		elseif slot5 ~= ModuleEnum.Performance.Undefine then
-			uv0 = slot5
-			uv1 = "gpu"
-		elseif slot3 then
+		var_0_1 = ModuleEnum.Performance.High
+
+		if var_1_4 ~= ModuleEnum.Performance.Undefine then
+			var_0_1 = var_1_4
+			var_0_2 = "cpu"
+		elseif var_1_5 ~= ModuleEnum.Performance.Undefine then
+			var_0_1 = var_1_5
+			var_0_2 = "gpu"
+		elseif var_1_3 then
 			if BootNativeUtil.isIOS() then
-				if slot3 <= 2048 then
-					uv0 = ModuleEnum.Performance.Low
-				elseif slot3 <= 4096 then
-					uv0 = ModuleEnum.Performance.Middle
+				if var_1_3 <= 2048 then
+					var_0_1 = ModuleEnum.Performance.Low
+				elseif var_1_3 <= 4096 then
+					var_0_1 = ModuleEnum.Performance.Middle
 				end
-			elseif slot3 <= 3072 then
-				uv0 = ModuleEnum.Performance.Low
-			elseif slot3 <= 5120 then
-				uv0 = ModuleEnum.Performance.Middle
+			elseif var_1_3 <= 3072 then
+				var_0_1 = ModuleEnum.Performance.Low
+			elseif var_1_3 <= 5120 then
+				var_0_1 = ModuleEnum.Performance.Middle
 			end
 
-			uv1 = "memory"
+			var_0_2 = "memory"
 		end
 	end
 
-	return uv0, uv1
+	return var_0_1, var_0_2
 end
 
-return slot0
+return var_0_0

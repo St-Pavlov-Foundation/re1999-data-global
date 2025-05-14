@@ -1,25 +1,25 @@
-module("modules.logic.login.config.LoginConfig", package.seeall)
+﻿module("modules.logic.login.config.LoginConfig", package.seeall)
 
-slot0 = class("LoginConfig", BaseConfig)
+local var_0_0 = class("LoginConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return nil
 end
 
-function slot0.onInit(slot0)
-	slot0._config = nil
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._config = nil
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "" then
-		slot0._config = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "" then
+		arg_3_0._config = arg_3_2
 	end
 end
 
-function slot0.getConfigTable(slot0)
-	return slot0._config
+function var_0_0.getConfigTable(arg_4_0)
+	return arg_4_0._config
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

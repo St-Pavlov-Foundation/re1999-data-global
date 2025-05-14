@@ -1,174 +1,175 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessStepUtil", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessStepUtil", package.seeall)
 
-slot0 = class("EliminateTeamChessStepUtil")
+local var_0_0 = class("EliminateTeamChessStepUtil")
 
-function slot0.createStep(slot0, slot1)
-	slot2 = slot1
+function var_0_0.createStep(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1
 
-	if slot0 then
-		slot2 = slot0.effectType
+	if arg_1_0 then
+		var_1_0 = arg_1_0.effectType
 	end
 
-	slot3 = nil
-	slot4 = uv0.createStepData(slot2, slot0)
+	local var_1_1
+	local var_1_2 = var_0_0.createStepData(var_1_0, arg_1_0)
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.placeChess or slot2 == EliminateTeamChessEnum.StepWorkType.callChess then
-		slot3 = TeamChessPlaceStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.placeChess or var_1_0 == EliminateTeamChessEnum.StepWorkType.callChess then
+		var_1_1 = TeamChessPlaceStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-		slot3 = TeamChessPowerChangeStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+		var_1_1 = TeamChessPowerChangeStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.resourceChange then
-		slot3 = ResourceDataChangeStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.resourceChange then
+		var_1_1 = ResourceDataChangeStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.strongHoldPowerChange then
-		slot3 = StrongHoldPowerChangeStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.strongHoldPowerChange then
+		var_1_1 = StrongHoldPowerChangeStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.mainCharacterHpChange then
-		slot3 = MainCharacterHpChangeStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.mainCharacterHpChange then
+		var_1_1 = MainCharacterHpChangeStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.teamChessFightResult then
-		slot3 = TeamChessFightResultStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.teamChessFightResult then
+		var_1_1 = TeamChessFightResultStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.teamChessServerDataDiff then
-		slot3 = EliminateTeamChessSyncDataStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.teamChessServerDataDiff then
+		var_1_1 = EliminateTeamChessSyncDataStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.teamChessCheckRoundState then
-		slot3 = TeamChessCheckRoundStateStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.teamChessCheckRoundState then
+		var_1_1 = TeamChessCheckRoundStateStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.strongHoldSettleFinish then
-		slot3 = TeamChessPerformReductionStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.strongHoldSettleFinish then
+		var_1_1 = TeamChessPerformReductionStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.chessDie then
-		slot3 = TeamChessDieStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.chessDie then
+		var_1_1 = TeamChessDieStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.removeChess then
-		slot3 = TeamChessRemoveStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.removeChess then
+		var_1_1 = TeamChessRemoveStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.strongHoldSettle then
-		slot3 = StrongHoldSettleStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.strongHoldSettle then
+		var_1_1 = StrongHoldSettleStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.mainCharacterPowerChange then
-		slot3 = MainCharacterPowerChangeStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.mainCharacterPowerChange then
+		var_1_1 = MainCharacterPowerChangeStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.teamChessBeginViewShow then
-		slot3 = EliminateTeamChessBeginStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.teamChessBeginViewShow then
+		var_1_1 = EliminateTeamChessBeginStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.chessActiveMove then
-		slot3 = EliminateTeamChessUpdateActiveMoveStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.chessActiveMove then
+		var_1_1 = EliminateTeamChessUpdateActiveMoveStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect then
-		slot3 = EliminateTeamChessShowBuffEffectStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect then
+		var_1_1 = EliminateTeamChessShowBuffEffectStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
-		slot3 = TeamChessGrowUpUpdateStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
+		var_1_1 = TeamChessGrowUpUpdateStep.New()
 	end
 
-	if slot2 == EliminateTeamChessEnum.StepWorkType.teamChessUpdateForecast then
-		slot3 = TeamChessForecastUpdateStep.New()
+	if var_1_0 == EliminateTeamChessEnum.StepWorkType.teamChessUpdateForecast then
+		var_1_1 = TeamChessForecastUpdateStep.New()
 	end
 
-	slot3 = slot3 or EliminateTeamChessStepBase.New()
+	var_1_1 = var_1_1 or EliminateTeamChessStepBase.New()
 
-	slot3:initData(slot4)
+	var_1_1:initData(var_1_2)
 
-	return slot3
+	return var_1_1
 end
 
-function slot0.createStepData(slot0, slot1)
-	if slot0 == EliminateTeamChessEnum.StepWorkType.placeChess or slot0 == EliminateTeamChessEnum.StepWorkType.callChess then
-		if not string.nilorempty(slot1.extraData) then
-			-- Nothing
+function var_0_0.createStepData(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.placeChess or arg_2_0 == EliminateTeamChessEnum.StepWorkType.callChess then
+		var_2_0.strongholdId = arg_2_1.effectNum
+		var_2_0.chessPiece = arg_2_1.chessPiece
+
+		if not string.nilorempty(arg_2_1.extraData) then
+			var_2_0.sourceStrongholdId = tonumber(arg_2_1.extraData)
 		end
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-		slot2.uid = slot1.targetId
-		slot2.diffValue = slot1.effectNum
-		slot2.needShowDamage = slot1.needShowDamage or false
-		slot2.reasonId = slot1.reasonId
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+		var_2_0.uid = arg_2_1.targetId
+		var_2_0.diffValue = arg_2_1.effectNum
+		var_2_0.needShowDamage = arg_2_1.needShowDamage or false
+		var_2_0.reasonId = arg_2_1.reasonId
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.resourceChange then
-		slot2.resourceIdMap = cjson.decode(slot1.extraData)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.resourceChange then
+		var_2_0.resourceIdMap = cjson.decode(arg_2_1.extraData)
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.strongHoldPowerChange then
-		slot2.strongholdId = tonumber(slot1.targetId)
-		slot2.diffValue = slot1.effectNum
-		slot2.teamType = tonumber(slot1.extraData)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.strongHoldPowerChange then
+		var_2_0.strongholdId = tonumber(arg_2_1.targetId)
+		var_2_0.diffValue = arg_2_1.effectNum
+		var_2_0.teamType = tonumber(arg_2_1.extraData)
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.mainCharacterHpChange then
-		slot2.diffValue = slot1.effectNum
-		slot2.teamType = tonumber(slot1.targetId)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.mainCharacterHpChange then
+		var_2_0.diffValue = arg_2_1.effectNum
+		var_2_0.teamType = tonumber(arg_2_1.targetId)
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.chessDie then
-		slot2.uid = slot1.targetId
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.chessDie then
+		var_2_0.uid = arg_2_1.targetId
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.removeChess then
-		slot2.uid = slot1.targetId
-		slot2.strongholdId = tonumber(slot1.effectNum)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.removeChess then
+		var_2_0.uid = arg_2_1.targetId
+		var_2_0.strongholdId = tonumber(arg_2_1.effectNum)
 
-		if not string.nilorempty(slot1.extraData) then
-			slot2.targetStrongholdId = tonumber(slot1.extraData)
+		if not string.nilorempty(arg_2_1.extraData) then
+			var_2_0.targetStrongholdId = tonumber(arg_2_1.extraData)
 		end
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.strongHoldSettle then
-		slot2.strongholdId = tonumber(slot1.targetId)
-		slot2.state = tonumber(slot1.effectNum)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.strongHoldSettle then
+		var_2_0.strongholdId = tonumber(arg_2_1.targetId)
+		var_2_0.state = tonumber(arg_2_1.effectNum)
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.mainCharacterPowerChange then
-		slot2.diffValue = tonumber(slot1.effectNum)
-		slot2.teamType = tonumber(slot1.targetId)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.mainCharacterPowerChange then
+		var_2_0.diffValue = tonumber(arg_2_1.effectNum)
+		var_2_0.teamType = tonumber(arg_2_1.targetId)
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.teamChessBeginViewShow then
-		slot2.time = EliminateTeamChessEnum.beginViewShowTime
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.teamChessBeginViewShow then
+		var_2_0.time = EliminateTeamChessEnum.beginViewShowTime
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.chessActiveMove then
-		slot2.uid = slot1.targetId
-		slot2.displacementState = slot1.chessPiece.displacementState
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.chessActiveMove then
+		var_2_0.uid = arg_2_1.targetId
+		var_2_0.displacementState = arg_2_1.chessPiece.displacementState
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect then
-		slot2.uid = slot1.uid
-		slot2.vxEffectType = slot1.vxEffectType
-		slot2.time = slot1.time
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect then
+		var_2_0.uid = arg_2_1.uid
+		var_2_0.vxEffectType = arg_2_1.vxEffectType
+		var_2_0.time = arg_2_1.time
 	end
 
-	if slot0 == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
-		slot2.uid = slot1.targetId
-		slot2.upValue = slot1.effectNum
-		slot2.skillId = tonumber(slot1.extraData)
+	if arg_2_0 == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
+		var_2_0.uid = arg_2_1.targetId
+		var_2_0.upValue = arg_2_1.effectNum
+		var_2_0.skillId = tonumber(arg_2_1.extraData)
 	end
 
-	return {
-		strongholdId = slot1.effectNum,
-		chessPiece = slot1.chessPiece,
-		sourceStrongholdId = tonumber(slot1.extraData)
-	}
+	return var_2_0
 end
 
-return slot0
+return var_0_0

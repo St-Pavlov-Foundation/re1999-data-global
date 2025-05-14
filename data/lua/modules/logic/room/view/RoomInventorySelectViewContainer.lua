@@ -1,65 +1,69 @@
-module("modules.logic.room.view.RoomInventorySelectViewContainer", package.seeall)
+﻿module("modules.logic.room.view.RoomInventorySelectViewContainer", package.seeall)
 
-slot0 = class("RoomInventorySelectViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomInventorySelectViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.selectView = RoomInventorySelectView.New()
-	slot0._listScrollView = slot0:getScrollView()
-	slot1 = {
-		slot0.selectView,
-		slot0._listScrollView
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.selectView = RoomInventorySelectView.New()
+	arg_1_0._listScrollView = arg_1_0:getScrollView()
+
+	local var_1_0 = {
+		arg_1_0.selectView,
+		arg_1_0._listScrollView
 	}
 
-	table.insert(slot1, TabViewGroup.New(1, "blockop_tab"))
-	table.insert(slot1, TabViewGroup.New(2, "go_content/go_righttop/go_tabtransprotfail"))
-	table.insert(slot1, RoomInventorySelectEffect.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "blockop_tab"))
+	table.insert(var_1_0, TabViewGroup.New(2, "go_content/go_righttop/go_tabtransprotfail"))
+	table.insert(var_1_0, RoomInventorySelectEffect.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.getScrollView(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "go_content/scroll_block"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "go_content/#go_item"
-	slot1.cellClass = RoomInventorySelectItem
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = 170
-	slot1.cellHeight = 231
-	slot1.cellSpaceH = 0.5
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 5
+function var_0_0.getScrollView(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	for slot6 = 1, 12 do
+	var_2_0.scrollGOPath = "go_content/scroll_block"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_2_0.prefabUrl = "go_content/#go_item"
+	var_2_0.cellClass = RoomInventorySelectItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirH
+	var_2_0.lineCount = 1
+	var_2_0.cellWidth = 170
+	var_2_0.cellHeight = 231
+	var_2_0.cellSpaceH = 0.5
+	var_2_0.cellSpaceV = 0
+	var_2_0.startSpace = 5
+
+	local var_2_1 = {}
+
+	for iter_2_0 = 1, 12 do
+		var_2_1[iter_2_0] = (iter_2_0 - 1) * 0.03
 	end
 
-	return LuaListScrollViewWithAnimator.New(RoomShowBlockListModel.instance, slot1, {
-		[slot6] = (slot6 - 1) * 0.03
-	})
+	return LuaListScrollViewWithAnimator.New(RoomShowBlockListModel.instance, var_2_0, var_2_1)
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = RoomViewBuilding.New()
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		local var_3_0 = RoomViewBuilding.New()
+		local var_3_1 = {
+			var_3_0,
+			var_3_0:getBuildingListView()
+		}
 
 		return {
-			MultiView.New({
-				slot2,
-				slot2:getBuildingListView()
-			})
+			MultiView.New(var_3_1)
 		}
-	elseif slot1 == 2 then
+	elseif arg_3_1 == 2 then
 		return {
 			RoomTransportPathFailTips.New()
 		}
 	end
 end
 
-function slot0.switch2BuildingView(slot0, slot1)
-	if slot0.selectView then
-		slot0.selectView:_btnbuildingOnClick(slot1)
+function var_0_0.switch2BuildingView(arg_4_0, arg_4_1)
+	if arg_4_0.selectView then
+		arg_4_0.selectView:_btnbuildingOnClick(arg_4_1)
 	end
 end
 
-return slot0
+return var_0_0

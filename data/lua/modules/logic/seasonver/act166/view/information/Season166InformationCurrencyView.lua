@@ -1,161 +1,185 @@
-module("modules.logic.seasonver.act166.view.information.Season166InformationCurrencyView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.information.Season166InformationCurrencyView", package.seeall)
 
-slot0 = class("Season166InformationCurrencyView", BaseView)
+local var_0_0 = class("Season166InformationCurrencyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocurrency = gohelper.findChild(slot0.viewGO, "RightTop/#go_container/#go_currency")
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "RightTop/#go_container")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "RightTop/#go_container/#go_currency")
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "RightTop/#go_container")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btncurrencyOnClick(slot0)
-	slot1 = slot0.self
+function var_0_0._btncurrencyOnClick(arg_4_0)
+	local var_4_0 = arg_4_0.self
+	local var_4_1 = arg_4_0.index
 
-	slot1:_btncurrencyClick(slot1.param[slot0.index])
+	var_4_0:_btncurrencyClick(var_4_0.param[var_4_1])
 end
 
-function slot0._btncurrencyClick(slot0, slot1)
-	if not slot1 then
+function var_0_0._btncurrencyClick(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	if slot0.overrideClickFunc then
-		return slot0.overrideClickFunc(slot0.overrideClickFuncObj, slot1)
+	if arg_5_0.overrideClickFunc then
+		return arg_5_0.overrideClickFunc(arg_5_0.overrideClickFuncObj, arg_5_1)
 	end
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, slot1, false)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, arg_5_1, false)
 
-	if slot0._callback then
-		slot0._callback(slot0._callbackObj)
+	if arg_5_0._callback then
+		arg_5_0._callback(arg_5_0._callbackObj)
 	end
 end
 
-function slot0._onClick(slot0)
-	if not slot0.self.param[slot0.index] then
+function var_0_0._onClick(arg_6_0)
+	local var_6_0 = arg_6_0.self
+	local var_6_1 = arg_6_0.index
+	local var_6_2 = var_6_0.param[var_6_1]
+
+	if not var_6_2 then
 		return
 	end
 
-	if type(slot3) == "number" then
-		CurrencyJumpHandler.JumpByCurrency(slot3)
-	elseif slot3.jumpFunc then
-		slot3.jumpFunc()
+	if type(var_6_2) == "number" then
+		local var_6_3 = var_6_2
+
+		CurrencyJumpHandler.JumpByCurrency(var_6_3)
+	elseif var_6_2.jumpFunc then
+		var_6_2.jumpFunc()
 	end
 end
 
-slot1 = CurrencyEnum.CurrencyType
+local var_0_1 = CurrencyEnum.CurrencyType
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gocurrency, false)
+function var_0_0._editableInitView(arg_7_0)
+	gohelper.setActive(arg_7_0._gocurrency, false)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._currencyObjs = {}
-	slot0._currentItemIndex = nil
-	slot0._initialized = true
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0._currencyObjs = {}
+	arg_7_0._currentItemIndex = nil
+	arg_7_0._initialized = true
 end
 
-function slot0.setCurrencyType(slot0, slot1)
-	slot0.param = slot1
+function var_0_0.setCurrencyType(arg_8_0, arg_8_1)
+	arg_8_0.param = arg_8_1
 
-	slot0:_onCurrencyChange()
+	arg_8_0:_onCurrencyChange()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0._currencyObjs) do
-		slot5.btn:RemoveClickListener()
-		slot5.btncurrency:RemoveClickListener()
+function var_0_0.onDestroyView(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._currencyObjs) do
+		iter_9_1.btn:RemoveClickListener()
+		iter_9_1.btncurrency:RemoveClickListener()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId or slot0.viewParam.activityId
-	slot0.param = {
-		Season166Config.instance:getSeasonConstNum(slot0.actId, Season166Enum.InfoCostId)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.actId = arg_10_0.viewParam.actId or arg_10_0.viewParam.activityId
+	arg_10_0.param = {
+		Season166Config.instance:getSeasonConstNum(arg_10_0.actId, Season166Enum.InfoCostId)
 	}
 
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onCurrencyChange, slot0)
-	slot0:_onCurrencyChange()
+	arg_10_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_10_0._onCurrencyChange, arg_10_0)
+	arg_10_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_10_0._onCurrencyChange, arg_10_0)
+	arg_10_0:_onCurrencyChange()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onCurrencyChange, slot0)
+function var_0_0.onClose(arg_11_0)
+	arg_11_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0._onCurrencyChange, arg_11_0)
+	arg_11_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0._onCurrencyChange, arg_11_0)
 end
 
-function slot0._onCurrencyChange(slot0)
-	if not slot0.param then
-		gohelper.setActive(slot0._gocontainer, false)
+function var_0_0._onCurrencyChange(arg_12_0)
+	if not arg_12_0.param then
+		gohelper.setActive(arg_12_0._gocontainer, false)
 
 		return
 	end
 
-	if not slot0._initialized then
+	if not arg_12_0._initialized then
 		return
 	end
 
-	slot2 = 1
+	local var_12_0 = #arg_12_0.param
+	local var_12_1 = 1
 
-	for slot6 = #slot0.param, 1, -1 do
-		gohelper.setSibling(slot0:getCurrencyItem(slot6).go, slot2)
+	for iter_12_0 = var_12_0, 1, -1 do
+		local var_12_2 = arg_12_0:getCurrencyItem(iter_12_0)
+		local var_12_3 = arg_12_0.param[iter_12_0]
 
-		slot2 = slot2 + 1
+		gohelper.setSibling(var_12_2.go, var_12_1)
 
-		if slot0.param[slot6] then
-			slot9 = slot8
-			slot7.txt.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(slot9) and slot10.quantity or 0)
+		var_12_1 = var_12_1 + 1
 
-			slot7.go:SetActive(true)
-			UISpriteSetMgr.instance:setCurrencyItemSprite(slot7.image, CurrencyConfig.instance:getCurrencyCo(slot9).icon .. "_1")
+		if var_12_3 then
+			local var_12_4 = var_12_3
+			local var_12_5 = CurrencyModel.instance:getCurrency(var_12_4)
+			local var_12_6 = CurrencyConfig.instance:getCurrencyCo(var_12_4)
+			local var_12_7 = var_12_5 and var_12_5.quantity or 0
+
+			var_12_2.txt.text = GameUtil.numberDisplay(var_12_7)
+
+			var_12_2.go:SetActive(true)
+
+			local var_12_8 = var_12_6.icon
+
+			UISpriteSetMgr.instance:setCurrencyItemSprite(var_12_2.image, var_12_8 .. "_1")
 		else
-			slot7.go:SetActive(false)
+			var_12_2.go:SetActive(false)
 		end
 	end
 
-	if slot1 < #slot0._currencyObjs then
-		for slot6 = slot1 + 1, #slot0._currencyObjs do
-			slot0:getCurrencyItem(slot6).go:SetActive(false)
+	if var_12_0 < #arg_12_0._currencyObjs then
+		for iter_12_1 = var_12_0 + 1, #arg_12_0._currencyObjs do
+			arg_12_0:getCurrencyItem(iter_12_1).go:SetActive(false)
 		end
 	end
 
-	gohelper.setActive(slot0._gocontainer, slot1 > 0)
+	gohelper.setActive(arg_12_0._gocontainer, var_12_0 > 0)
 end
 
-function slot0.getCurrencyItem(slot0, slot1)
-	if not slot0._currencyObjs[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._gocurrency, "currency")
-		slot2.go = slot3
-		slot2.btn = gohelper.findChildButtonWithAudio(slot3, "#btn_currency/#btn")
-		slot2.image = gohelper.findChildImage(slot3, "#btn_currency/#image")
-		slot2.btncurrency = gohelper.findChildButtonWithAudio(slot3, "#btn_currency")
-		slot2.txt = gohelper.findChildText(slot3, "#btn_currency/content/#txt")
-		slot2.click = gohelper.findChild(slot3, "#btn_currency/click")
+function var_0_0.getCurrencyItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._currencyObjs[arg_13_1]
 
-		slot2.btn:AddClickListener(slot0._onClick, {
-			self = slot0,
-			index = slot1
+	if not var_13_0 then
+		var_13_0 = arg_13_0:getUserDataTb_()
+
+		local var_13_1 = gohelper.cloneInPlace(arg_13_0._gocurrency, "currency")
+
+		var_13_0.go = var_13_1
+		var_13_0.btn = gohelper.findChildButtonWithAudio(var_13_1, "#btn_currency/#btn")
+		var_13_0.image = gohelper.findChildImage(var_13_1, "#btn_currency/#image")
+		var_13_0.btncurrency = gohelper.findChildButtonWithAudio(var_13_1, "#btn_currency")
+		var_13_0.txt = gohelper.findChildText(var_13_1, "#btn_currency/content/#txt")
+		var_13_0.click = gohelper.findChild(var_13_1, "#btn_currency/click")
+
+		var_13_0.btn:AddClickListener(arg_13_0._onClick, {
+			self = arg_13_0,
+			index = arg_13_1
 		})
-		gohelper.setActive(slot2.btn, false)
-		slot2.btncurrency:AddClickListener(slot0._btncurrencyOnClick, {
-			self = slot0,
-			index = slot1
+		gohelper.setActive(var_13_0.btn, false)
+		var_13_0.btncurrency:AddClickListener(arg_13_0._btncurrencyOnClick, {
+			self = arg_13_0,
+			index = arg_13_1
 		})
 
-		slot0._currencyObjs[slot1] = slot2
+		arg_13_0._currencyObjs[arg_13_1] = var_13_0
 
-		gohelper.setActive(slot2.go, true)
+		gohelper.setActive(var_13_0.go, true)
 	end
 
-	return slot2
+	return var_13_0
 end
 
-return slot0
+return var_0_0

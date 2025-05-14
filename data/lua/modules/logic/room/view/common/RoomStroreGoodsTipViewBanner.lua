@@ -1,53 +1,64 @@
-module("modules.logic.room.view.common.RoomStroreGoodsTipViewBanner", package.seeall)
+﻿module("modules.logic.room.view.common.RoomStroreGoodsTipViewBanner", package.seeall)
 
-slot0 = class("RoomStroreGoodsTipViewBanner", RoomMaterialTipViewBanner)
+local var_0_0 = class("RoomStroreGoodsTipViewBanner", RoomMaterialTipViewBanner)
 
-function slot0._getItemDataList(slot0)
-	slot3 = {
+function var_0_0._getItemDataList(arg_1_0)
+	local var_1_0 = arg_1_0.viewParam.storeGoodsMO.config
+	local var_1_1 = GameUtil.splitString2(var_1_0.product, true)
+	local var_1_2 = {
 		MaterialEnum.MaterialType.RoomTheme,
 		MaterialEnum.MaterialType.BlockPackage,
 		MaterialEnum.MaterialType.Building
 	}
+	local var_1_3 = {}
+	local var_1_4 = #var_1_1 > 1
 
-	for slot9 = 1, #slot2 do
-		slot10 = slot2[slot9]
-		slot11 = slot10[1]
+	for iter_1_0 = 1, #var_1_1 do
+		local var_1_5 = var_1_1[iter_1_0]
+		local var_1_6 = var_1_5[1]
+		local var_1_7 = var_1_5[2]
 
-		if #GameUtil.splitString2(slot0.viewParam.storeGoodsMO.config.product, true) > 1 and RoomConfig.instance:getThemeIdByItem(slot10[2], slot11) then
-			slot0:_addItemInfoToDic({}, slot13, MaterialEnum.MaterialType.RoomTheme)
+		if var_1_4 then
+			local var_1_8 = RoomConfig.instance:getThemeIdByItem(var_1_7, var_1_6)
+
+			if var_1_8 then
+				arg_1_0:_addItemInfoToDic(var_1_3, var_1_8, MaterialEnum.MaterialType.RoomTheme)
+			end
 		end
 
-		if tabletool.indexOf(slot3, slot11) then
-			slot0:_addItemInfoToDic(slot4, slot12, slot11)
+		if tabletool.indexOf(var_1_2, var_1_6) then
+			arg_1_0:_addItemInfoToDic(var_1_3, var_1_7, var_1_6)
 		end
 	end
 
-	slot6 = {}
+	local var_1_9 = {}
 
-	for slot10, slot11 in ipairs(slot3) do
-		if slot4[slot11] then
-			for slot15, slot16 in ipairs(slot4[slot11]) do
-				table.insert(slot6, {
-					itemId = slot16,
-					itemType = slot11
+	for iter_1_1, iter_1_2 in ipairs(var_1_2) do
+		if var_1_3[iter_1_2] then
+			for iter_1_3, iter_1_4 in ipairs(var_1_3[iter_1_2]) do
+				table.insert(var_1_9, {
+					itemId = iter_1_4,
+					itemType = iter_1_2
 				})
 			end
 		end
 	end
 
-	return slot6
+	return var_1_9
 end
 
-function slot0._addItemInfoToDic(slot0, slot1, slot2, slot3)
-	if not (slot1 or {})[slot3] then
-		slot1[slot3] = {}
+function var_0_0._addItemInfoToDic(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_1 = arg_2_1 or {}
+
+	if not arg_2_1[arg_2_3] then
+		arg_2_1[arg_2_3] = {}
 	end
 
-	if tabletool.indexOf(slot1[slot3], slot2) == nil then
-		table.insert(slot1[slot3], slot2)
+	if tabletool.indexOf(arg_2_1[arg_2_3], arg_2_2) == nil then
+		table.insert(arg_2_1[arg_2_3], arg_2_2)
 	end
 
-	return slot1
+	return arg_2_1
 end
 
-return slot0
+return var_0_0

@@ -1,170 +1,188 @@
-module("modules.logic.seasonver.act123.model.Season123EpisodeListModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EpisodeListModel", package.seeall)
 
-slot0 = class("Season123EpisodeListModel", BaseModel)
+local var_0_0 = class("Season123EpisodeListModel", BaseModel)
 
-function slot0.reInit(slot0)
-	slot0._loadingRecordMap = nil
+function var_0_0.reInit(arg_1_0)
+	arg_1_0._loadingRecordMap = nil
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
-	slot0.activityId = nil
-	slot0.stage = nil
-	slot0.lastSendEpisodeCfg = nil
-	slot0.curSelectLayer = nil
+function var_0_0.release(arg_3_0)
+	arg_3_0.activityId = nil
+	arg_3_0.stage = nil
+	arg_3_0.lastSendEpisodeCfg = nil
+	arg_3_0.curSelectLayer = nil
 
-	slot0:clear()
+	arg_3_0:clear()
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.activityId = slot1
-	slot0.stage = slot2
+function var_0_0.init(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.activityId = arg_4_1
+	arg_4_0.stage = arg_4_2
 
-	slot0:initEpisodeList()
-	slot0:initSelectLayer()
+	arg_4_0:initEpisodeList()
+	arg_4_0:initSelectLayer()
 end
 
-function slot0.initEpisodeList(slot0)
-	slot1 = {}
+function var_0_0.initEpisodeList(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = Season123Config.instance:getSeasonEpisodeByStage(arg_5_0.activityId, arg_5_0.stage)
 
-	logNormal("episode list length : " .. tostring(#Season123Config.instance:getSeasonEpisodeByStage(slot0.activityId, slot0.stage)))
+	logNormal("episode list length : " .. tostring(#var_5_1))
 
-	if Season123Model.instance:getActInfo(slot0.activityId):getStageMO(slot0.stage) then
-		for slot8 = 1, #slot2 do
-			slot9 = slot2[slot8]
-			slot11 = Season123EpisodeListMO.New()
+	local var_5_2 = Season123Model.instance:getActInfo(arg_5_0.activityId):getStageMO(arg_5_0.stage)
 
-			slot11:init(slot4.episodeMap[slot9.layer], slot9)
-			table.insert(slot1, slot11)
+	if var_5_2 then
+		for iter_5_0 = 1, #var_5_1 do
+			local var_5_3 = var_5_1[iter_5_0]
+			local var_5_4 = var_5_2.episodeMap[var_5_3.layer]
+			local var_5_5 = Season123EpisodeListMO.New()
+
+			var_5_5:init(var_5_4, var_5_3)
+			table.insert(var_5_0, var_5_5)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_5_0:setList(var_5_0)
 end
 
-function slot0.initSelectLayer(slot0)
-	slot0.curSelectLayer = slot0:getCurrentChallengeLayer()
+function var_0_0.initSelectLayer(arg_6_0)
+	arg_6_0.curSelectLayer = arg_6_0:getCurrentChallengeLayer()
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	slot2 = Season123Model.instance:getActInfo(slot0.activityId)
+function var_0_0.isEpisodeUnlock(arg_7_0, arg_7_1)
+	local var_7_0 = Season123Model.instance:getActInfo(arg_7_0.activityId)
 
-	if slot0:getById(slot1).isFinished then
+	if arg_7_0:getById(arg_7_1).isFinished then
 		return true
 	end
 
-	if slot1 <= 1 then
-		if not slot2 then
+	if arg_7_1 <= 1 then
+		if not var_7_0 then
 			return false
 		end
 
-		return slot0.stage == slot2.stage
+		return arg_7_0.stage == var_7_0.stage
 	end
 
-	if not slot0:getById(slot1 - 1) or not slot4.isFinished then
+	local var_7_1 = arg_7_0:getById(arg_7_1 - 1)
+
+	if not var_7_1 or not var_7_1.isFinished then
 		return false
 	end
 
 	return true
 end
 
-function slot0.inCurrentStage(slot0)
-	return Season123Model.instance:getActInfo(slot0.activityId) ~= nil and not slot1:isNotInStage() and slot1.stage == uv0.instance.stage
+function var_0_0.inCurrentStage(arg_8_0)
+	local var_8_0 = Season123Model.instance:getActInfo(arg_8_0.activityId)
+
+	return var_8_0 ~= nil and not var_8_0:isNotInStage() and var_8_0.stage == var_0_0.instance.stage
 end
 
-function slot0.getCurrentChallengeLayer(slot0)
-	if not slot0:getList() or #slot1 <= 0 then
+function var_0_0.getCurrentChallengeLayer(arg_9_0)
+	local var_9_0 = arg_9_0:getList()
+
+	if not var_9_0 or #var_9_0 <= 0 then
 		return 0
 	end
 
-	for slot5 = 1, #slot1 do
-		if not slot1[slot5].isFinished then
-			return slot5
+	for iter_9_0 = 1, #var_9_0 do
+		if not var_9_0[iter_9_0].isFinished then
+			return iter_9_0
 		end
 	end
 
-	return slot1[#slot1].cfg.layer
+	return var_9_0[#var_9_0].cfg.layer
 end
 
-function slot0.getEnemyCareerList(slot0, slot1)
-	slot2 = FightParam.New()
+function var_0_0.getEnemyCareerList(arg_10_0, arg_10_1)
+	local var_10_0 = FightParam.New()
 
-	slot2:setEpisodeId(slot1)
+	var_10_0:setEpisodeId(arg_10_1)
 
-	slot3 = {}
-	slot4 = {}
-	slot5 = {}
-	slot6 = {}
+	local var_10_1 = {}
+	local var_10_2 = {}
+	local var_10_3 = {}
+	local var_10_4 = {}
 
-	for slot10, slot11 in ipairs(slot2.monsterGroupIds) do
-		for slot17, slot18 in ipairs(string.splitToNumber(lua_monster_group.configDict[slot11].monster, "#")) do
-			slot19 = lua_monster.configDict[slot18].career
+	for iter_10_0, iter_10_1 in ipairs(var_10_0.monsterGroupIds) do
+		local var_10_5 = lua_monster_group.configDict[iter_10_1].bossId
+		local var_10_6 = string.splitToNumber(lua_monster_group.configDict[iter_10_1].monster, "#")
 
-			if slot18 == lua_monster_group.configDict[slot11].bossId then
-				slot3[slot19] = (slot3[slot19] or 0) + 1
+		for iter_10_2, iter_10_3 in ipairs(var_10_6) do
+			local var_10_7 = lua_monster.configDict[iter_10_3].career
 
-				table.insert(slot6, slot18)
+			if iter_10_3 == var_10_5 then
+				var_10_1[var_10_7] = (var_10_1[var_10_7] or 0) + 1
+
+				table.insert(var_10_4, iter_10_3)
 			else
-				slot4[slot19] = (slot4[slot19] or 0) + 1
+				var_10_2[var_10_7] = (var_10_2[var_10_7] or 0) + 1
 
-				table.insert(slot5, slot18)
+				table.insert(var_10_3, iter_10_3)
 			end
 		end
 	end
 
-	slot7 = {}
+	local var_10_8 = {}
 
-	for slot11, slot12 in pairs(slot3) do
-		table.insert(slot7, {
-			career = slot11,
-			count = slot12
+	for iter_10_4, iter_10_5 in pairs(var_10_1) do
+		table.insert(var_10_8, {
+			career = iter_10_4,
+			count = iter_10_5
 		})
 	end
 
-	slot8 = #slot7
+	local var_10_9 = #var_10_8
 
-	for slot12, slot13 in pairs(slot4) do
-		table.insert(slot7, {
-			career = slot12,
-			count = slot13
+	for iter_10_6, iter_10_7 in pairs(var_10_2) do
+		table.insert(var_10_8, {
+			career = iter_10_6,
+			count = iter_10_7
 		})
 	end
 
-	return slot7, slot8
+	return var_10_8, var_10_9
 end
 
-function slot0.setSelectLayer(slot0, slot1)
-	slot0.curSelectLayer = slot1
+function var_0_0.setSelectLayer(arg_11_0, arg_11_1)
+	arg_11_0.curSelectLayer = arg_11_1
 end
 
-function slot0.cleanPlayLoadingAnimRecord(slot0, slot1)
-	if not slot0._loadingRecordMap then
+function var_0_0.cleanPlayLoadingAnimRecord(arg_12_0, arg_12_1)
+	if not arg_12_0._loadingRecordMap then
 		return
 	end
 
-	slot0._loadingRecordMap = slot0._loadingRecordMap or {}
-	slot0._loadingRecordMap[slot1] = nil
+	arg_12_0._loadingRecordMap = arg_12_0._loadingRecordMap or {}
+	arg_12_0._loadingRecordMap[arg_12_1] = nil
 end
 
-function slot0.savePlayLoadingAnimRecord(slot0, slot1)
-	slot0._loadingRecordMap = slot0._loadingRecordMap or {}
-	slot0._loadingRecordMap[slot1] = true
+function var_0_0.savePlayLoadingAnimRecord(arg_13_0, arg_13_1)
+	arg_13_0._loadingRecordMap = arg_13_0._loadingRecordMap or {}
+	arg_13_0._loadingRecordMap[arg_13_1] = true
 end
 
-function slot0.isLoadingAnimNeedPlay(slot0, slot1)
-	return slot0._loadingRecordMap == nil or slot0._loadingRecordMap[slot1] == nil
+function var_0_0.isLoadingAnimNeedPlay(arg_14_0, arg_14_1)
+	return arg_14_0._loadingRecordMap == nil or arg_14_0._loadingRecordMap[arg_14_1] == nil
 end
 
-function slot0.stageIsPassed(slot0)
-	if not Season123Model.instance:getActInfo(slot0.activityId) then
+function var_0_0.stageIsPassed(arg_15_0)
+	local var_15_0 = Season123Model.instance:getActInfo(arg_15_0.activityId)
+
+	if not var_15_0 then
 		return false
 	end
 
-	return slot1.stageMap[slot0.stage] and slot2.isPass
+	local var_15_1 = var_15_0.stageMap[arg_15_0.stage]
+
+	return var_15_1 and var_15_1.isPass
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

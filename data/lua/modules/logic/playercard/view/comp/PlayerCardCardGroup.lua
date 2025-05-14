@@ -1,48 +1,60 @@
-module("modules.logic.playercard.view.comp.PlayerCardCardGroup", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardCardGroup", package.seeall)
 
-slot0 = class("PlayerCardCardGroup", BasePlayerCardComp)
+local var_0_0 = class("PlayerCardCardGroup", BasePlayerCardComp)
 
-function slot0.onInitView(slot0)
-	slot0.items = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.items = {}
 
-	for slot4 = 1, 4 do
-		slot0.items[slot4] = slot0:createItem(slot4)
+	for iter_1_0 = 1, 4 do
+		arg_1_0.items[iter_1_0] = arg_1_0:createItem(iter_1_0)
 	end
 end
 
-function slot0.createItem(slot0, slot1)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0.itemRes, gohelper.findChild(slot0.viewGO, "#go_card"), tostring(slot1)), PlayerCardCardItem, {
-		index = slot1,
-		compType = slot0.compType
-	})
+function var_0_0.createItem(arg_2_0, arg_2_1)
+	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "#go_card")
+	local var_2_1 = gohelper.clone(arg_2_0.itemRes, var_2_0, tostring(arg_2_1))
+
+	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, PlayerCardCardItem, {
+		index = arg_2_1,
+		compType = arg_2_0.compType
+	}))
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.onRefreshView(slot0)
-	for slot5, slot6 in ipairs(slot0.items) do
-		slot6:refreshView(slot0.cardInfo, PlayerCardConfig.instance:getCardConfig(slot0.cardInfo:getCardData()[slot5]))
+function var_0_0.onRefreshView(arg_5_0)
+	local var_5_0 = arg_5_0.cardInfo:getCardData()
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.items) do
+		local var_5_1 = PlayerCardConfig.instance:getCardConfig(var_5_0[iter_5_0])
+
+		iter_5_1:refreshView(arg_5_0.cardInfo, var_5_1)
 	end
 
-	slot2 = not slot0:isSingle()
+	local var_5_2 = not arg_5_0:isSingle()
 
-	slot0.items[3]:setVisible(slot2)
-	slot0.items[4]:setVisible(slot2)
+	arg_5_0.items[3]:setVisible(var_5_2)
+	arg_5_0.items[4]:setVisible(var_5_2)
 end
 
-function slot0.isSingle(slot0)
-	if not slot0.cardInfo then
+function var_0_0.isSingle(arg_6_0)
+	if not arg_6_0.cardInfo then
 		return
 	end
 
-	return slot0.cardInfo:getCardData() and #slot1 < 3
+	local var_6_0 = arg_6_0.cardInfo:getCardData()
+
+	return var_6_0 and #var_6_0 < 3
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

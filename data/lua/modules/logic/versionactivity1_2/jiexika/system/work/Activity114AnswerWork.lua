@@ -1,17 +1,17 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114AnswerWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114AnswerWork", package.seeall)
 
-slot0 = class("Activity114AnswerWork", Activity114OpenViewWork)
+local var_0_0 = class("Activity114AnswerWork", Activity114OpenViewWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if Activity114Model.instance.serverData.testEventId > 0 then
-		slot0._viewName = ViewName.Activity114EventSelectView
+		arg_1_0._viewName = ViewName.Activity114EventSelectView
 
-		uv0.super.onStart(slot0, slot1)
+		var_0_0.super.onStart(arg_1_0, arg_1_1)
 	else
-		slot0.context.result = Activity114Enum.Result.Success
+		arg_1_0.context.result = Activity114Enum.Result.Success
 
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

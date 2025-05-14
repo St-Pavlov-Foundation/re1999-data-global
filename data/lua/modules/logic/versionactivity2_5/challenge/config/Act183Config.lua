@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_5.challenge.config.Act183Config", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.config.Act183Config", package.seeall)
 
-slot0 = class("Act183Config", BaseConfig)
+local var_0_0 = class("Act183Config", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"challenge_episode",
 		"challenge_daily_unlock",
@@ -13,210 +13,265 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "challenge_episode" then
-		slot0:_onEpisodeConfigLoaded(slot2)
-	elseif slot1 == "challenge_reward" then
-		slot0:_onRewardConfigsLoad(slot2)
-	elseif slot1 == "challenge_task" then
-		slot0:_onTaskConfigLoaded(slot2)
+function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == "challenge_episode" then
+		arg_2_0:_onEpisodeConfigLoaded(arg_2_2)
+	elseif arg_2_1 == "challenge_reward" then
+		arg_2_0:_onRewardConfigsLoad(arg_2_2)
+	elseif arg_2_1 == "challenge_task" then
+		arg_2_0:_onTaskConfigLoaded(arg_2_2)
 	end
 end
 
-function slot0._onEpisodeConfigLoaded(slot0, slot1)
-	slot0._episodeTab = slot1
-	slot0._episodeGroupTab = {}
+function var_0_0._onEpisodeConfigLoaded(arg_3_0, arg_3_1)
+	arg_3_0._episodeTab = arg_3_1
+	arg_3_0._episodeGroupTab = {}
 
-	for slot5, slot6 in ipairs(slot1.configList) do
-		slot7 = slot6.groupId
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.configList) do
+		local var_3_0 = iter_3_1.groupId
+		local var_3_1 = iter_3_1.activityId
+		local var_3_2 = arg_3_0._episodeGroupTab[var_3_1]
 
-		if not slot0._episodeGroupTab[slot6.activityId] then
-			slot0._episodeGroupTab[slot8] = {}
+		if not var_3_2 then
+			var_3_2 = {}
+			arg_3_0._episodeGroupTab[var_3_1] = var_3_2
 		end
 
-		if not slot9[slot7] then
-			slot9[slot7] = {}
+		local var_3_3 = var_3_2[var_3_0]
+
+		if not var_3_3 then
+			var_3_3 = {}
+			var_3_2[var_3_0] = var_3_3
 		end
 
-		table.insert(slot10, slot6)
+		table.insert(var_3_3, iter_3_1)
 	end
 end
 
-function slot0.getEpisodeCo(slot0, slot1)
-	if not slot0._episodeTab.configDict[slot1] then
-		logError(string.format("关卡配置不存在 episodeId = %s", slot1))
+function var_0_0.getEpisodeCo(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._episodeTab.configDict[arg_4_1]
+
+	if not var_4_0 then
+		logError(string.format("关卡配置不存在 episodeId = %s", arg_4_1))
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.getEpisodeCosByGroupId(slot0, slot1, slot2)
-	if not (slot0._episodeGroupTab[slot1] and slot3[slot2]) then
-		logError(string.format("关卡组配置不存在 activityId = %s, groupId = %s", slot1, slot2))
+function var_0_0.getEpisodeCosByGroupId(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0._episodeGroupTab[arg_5_1]
+	local var_5_1 = var_5_0 and var_5_0[arg_5_2]
+
+	if not var_5_1 then
+		logError(string.format("关卡组配置不存在 activityId = %s, groupId = %s", arg_5_1, arg_5_2))
 	end
 
-	return slot4
+	return var_5_1
 end
 
-function slot0.getEpisodeAllRuleDesc(slot0, slot1)
-	slot4 = slot0:getEpisodeRuleDesc(slot1, 2)
+function var_0_0.getEpisodeAllRuleDesc(arg_6_0, arg_6_1)
+	local var_6_0 = {}
+	local var_6_1 = arg_6_0:getEpisodeRuleDesc(arg_6_1, 1)
+	local var_6_2 = arg_6_0:getEpisodeRuleDesc(arg_6_1, 2)
 
-	if not string.nilorempty(slot0:getEpisodeRuleDesc(slot1, 1)) then
-		table.insert({}, slot3)
+	if not string.nilorempty(var_6_1) then
+		table.insert(var_6_0, var_6_1)
 	end
 
-	if not string.nilorempty(slot4) then
-		table.insert(slot2, slot4)
+	if not string.nilorempty(var_6_2) then
+		table.insert(var_6_0, var_6_2)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.getEpisodeRuleDesc(slot0, slot1, slot2)
-	if not slot0:getEpisodeCo(slot1) then
+function var_0_0.getEpisodeRuleDesc(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0:getEpisodeCo(arg_7_1)
+
+	if not var_7_0 then
 		return
 	end
 
-	if slot2 == 1 then
-		return slot3.ruleDesc1
-	elseif slot2 == 2 then
-		return slot3.ruleDesc2
+	if arg_7_2 == 1 then
+		return var_7_0.ruleDesc1
+	elseif arg_7_2 == 2 then
+		return var_7_0.ruleDesc2
 	else
-		logError(string.format("关卡机制序号不存在 episodeId = %s, ruleIndex = %s", slot1, slot2))
+		logError(string.format("关卡机制序号不存在 episodeId = %s, ruleIndex = %s", arg_7_1, arg_7_2))
 	end
 end
 
-function slot0._onRewardConfigsLoad(slot0, slot1)
-	slot0._taskTab = slot1
-	slot0._taskChapterTab = {}
+function var_0_0._onRewardConfigsLoad(arg_8_0, arg_8_1)
+	arg_8_0._taskTab = arg_8_1
+	arg_8_0._taskChapterTab = {}
 
-	for slot5, slot6 in ipairs(slot1.configList) do
-		if not slot0._taskChapterTab[slot6.type1] then
-			slot0._taskChapterTab[slot6.type1] = {}
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1.configList) do
+		local var_8_0 = arg_8_0._taskChapterTab[iter_8_1.type1]
+
+		if not var_8_0 then
+			var_8_0 = {}
+			arg_8_0._taskChapterTab[iter_8_1.type1] = var_8_0
 		end
 
-		if not slot7[slot6.type2] then
-			slot7[slot6.type2] = {}
+		local var_8_1 = var_8_0[iter_8_1.type2]
+
+		if not var_8_1 then
+			var_8_1 = {}
+			var_8_0[iter_8_1.type2] = var_8_1
 		end
 
-		table.insert(slot8, slot6)
+		table.insert(var_8_1, iter_8_1)
 	end
 end
 
-function slot0.getAllTaskByType(slot0, slot1)
-	if not slot0._taskChapterTab[slot1] then
-		logError(string.format("无法找到挑战任务配置! taskType = %s", slot1))
+function var_0_0.getAllTaskByType(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._taskChapterTab[arg_9_1]
+
+	if not var_9_0 then
+		logError(string.format("无法找到挑战任务配置! taskType = %s", arg_9_1))
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.getChapterTasks(slot0, slot1, slot2)
-	if not (slot0:getAllTaskByType(slot1) and slot3[slot2]) then
-		logError(string.format("无法找到挑战任务配置! taskType = %s, subTaskType = %s", slot1, slot2))
+function var_0_0.getChapterTasks(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:getAllTaskByType(arg_10_1)
+	local var_10_1 = var_10_0 and var_10_0[arg_10_2]
+
+	if not var_10_1 then
+		logError(string.format("无法找到挑战任务配置! taskType = %s, subTaskType = %s", arg_10_1, arg_10_2))
 	end
 
-	return slot4
+	return var_10_1
 end
 
-function slot0.getConditionCo(slot0, slot1)
-	if not (lua_challenge_condition and lua_challenge_condition.configDict[slot1]) then
-		logError(string.format("战斗条件配置为空 conditionId = %s", slot1))
+function var_0_0.getConditionCo(arg_11_0, arg_11_1)
+	local var_11_0 = lua_challenge_condition and lua_challenge_condition.configDict[arg_11_1]
+
+	if not var_11_0 then
+		logError(string.format("战斗条件配置为空 conditionId = %s", arg_11_1))
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0.getActivityBadgeCos(slot0, slot1)
-	if not lua_challenge_badge.configDict[slot1] then
-		logError(string.format("活动中的神秘刻纹配置为空 activityId = %s", slot1, slot1))
+function var_0_0.getActivityBadgeCos(arg_12_0, arg_12_1)
+	local var_12_0 = lua_challenge_badge.configDict[arg_12_1]
+
+	if not var_12_0 then
+		logError(string.format("活动中的神秘刻纹配置为空 activityId = %s", arg_12_1, arg_12_1))
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getBadgeCo(slot0, slot1, slot2)
-	if not (slot0:getActivityBadgeCos(slot1) and slot3[slot2]) then
-		logError(string.format("神秘刻纹配置为空 activityId = %s, badgeNum = %s", slot1, slot2))
+function var_0_0.getBadgeCo(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0:getActivityBadgeCos(arg_13_1)
+	local var_13_1 = var_13_0 and var_13_0[arg_13_2]
+
+	if not var_13_1 then
+		logError(string.format("神秘刻纹配置为空 activityId = %s, badgeNum = %s", arg_13_1, arg_13_2))
 	end
 
-	return slot4
+	return var_13_1
 end
 
-function slot0.getEpisodeConditions(slot0, slot1, slot2)
-	if slot0:getEpisodeCo(slot1, slot2) then
-		return string.splitToNumber(slot3.condition, "#")
+function var_0_0.getEpisodeConditions(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_0:getEpisodeCo(arg_14_1, arg_14_2)
+
+	if var_14_0 then
+		return (string.splitToNumber(var_14_0.condition, "#"))
 	end
 end
 
-function slot0.getGroupSubEpisodeConditions(slot0, slot1, slot2)
-	if not slot0:getEpisodeCosByGroupId(slot1, slot2) then
+function var_0_0.getGroupSubEpisodeConditions(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getEpisodeCosByGroupId(arg_15_1, arg_15_2)
+
+	if not var_15_0 then
 		return
 	end
 
-	slot4 = {}
+	local var_15_1 = {}
 
-	for slot8, slot9 in ipairs(slot3) do
-		if Act183Helper.getEpisodeType(slot9.episodeId) == Act183Enum.EpisodeType.Sub then
-			tabletool.addValues(slot4, string.splitToNumber(slot9.condition, "#"))
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		if Act183Helper.getEpisodeType(iter_15_1.episodeId) == Act183Enum.EpisodeType.Sub then
+			local var_15_2 = string.splitToNumber(iter_15_1.condition, "#")
+
+			tabletool.addValues(var_15_1, var_15_2)
 		end
 	end
 
-	return slot4
+	return var_15_1
 end
 
-function slot0._onTaskConfigLoaded(slot0, slot1)
-	slot0._taskTab = slot1
-	slot0._taskTypeMap = {}
-	slot0._taskGroupMap = {}
+function var_0_0._onTaskConfigLoaded(arg_16_0, arg_16_1)
+	arg_16_0._taskTab = arg_16_1
+	arg_16_0._taskTypeMap = {}
+	arg_16_0._taskGroupMap = {}
 
-	for slot5, slot6 in ipairs(slot1.configList) do
-		slot0:_onSingleTaskConfigLoaded(slot6)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_1.configList) do
+		arg_16_0:_onSingleTaskConfigLoaded(iter_16_1)
 	end
 end
 
-function slot0._onSingleTaskConfigLoaded(slot0, slot1)
-	if not (slot1.isOnline == 1) then
+function var_0_0._onSingleTaskConfigLoaded(arg_17_0, arg_17_1)
+	if not (arg_17_1.isOnline == 1) then
 		return
 	end
 
-	if not slot0._taskTypeMap[slot1.activityId] then
-		slot0._taskTypeMap[slot3] = {}
+	local var_17_0 = arg_17_1.activityId
+	local var_17_1 = arg_17_0._taskTypeMap[var_17_0]
+
+	if not var_17_1 then
+		var_17_1 = {}
+		arg_17_0._taskTypeMap[var_17_0] = var_17_1
 	end
 
-	if not slot4[slot1.type] then
-		slot4[slot5] = {}
+	local var_17_2 = arg_17_1.type
+	local var_17_3 = var_17_1[var_17_2]
+
+	if not var_17_3 then
+		var_17_3 = {}
+		var_17_1[var_17_2] = var_17_3
 	end
 
-	table.insert(slot6, slot1)
+	table.insert(var_17_3, arg_17_1)
 
-	slot0._taskGroupMap[slot7] = slot0._taskGroupMap[slot1.groupId] or {}
+	local var_17_4 = arg_17_1.groupId
 
-	table.insert(slot0._taskGroupMap[slot7], slot1)
+	arg_17_0._taskGroupMap[var_17_4] = arg_17_0._taskGroupMap[var_17_4] or {}
+
+	table.insert(arg_17_0._taskGroupMap[var_17_4], arg_17_1)
 end
 
-function slot0.getAllOnlineTypeTasks(slot0, slot1, slot2)
-	return slot0._taskTypeMap[slot1] and slot3[slot2]
+function var_0_0.getAllOnlineTypeTasks(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0._taskTypeMap[arg_18_1]
+
+	return var_18_0 and var_18_0[arg_18_2]
 end
 
-function slot0.getAllOnlineGroupTasks(slot0, slot1)
-	return slot0._taskGroupMap and slot0._taskGroupMap[slot1]
+function var_0_0.getAllOnlineGroupTasks(arg_19_0, arg_19_1)
+	return arg_19_0._taskGroupMap and arg_19_0._taskGroupMap[arg_19_1]
 end
 
-function slot0.getTaskConfig(slot0, slot1)
-	if not lua_challenge_task.configDict[slot1] then
-		logError(string.format("任务配置不存在 taskId = %s", slot1))
+function var_0_0.getTaskConfig(arg_20_0, arg_20_1)
+	local var_20_0 = lua_challenge_task.configDict[arg_20_1]
+
+	if not var_20_0 then
+		logError(string.format("任务配置不存在 taskId = %s", arg_20_1))
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.getPreEpisodeIds(slot0, slot1, slot2)
-	if slot0:getEpisodeCo(slot1, slot2) and string.nilorempty(slot3.preEpisodeIds) then
-		return string.splitToNumber(slot3.preEpisodeIds, "#")
+function var_0_0.getPreEpisodeIds(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0:getEpisodeCo(arg_21_1, arg_21_2)
+
+	if var_21_0 and string.nilorempty(var_21_0.preEpisodeIds) then
+		return (string.splitToNumber(var_21_0.preEpisodeIds, "#"))
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

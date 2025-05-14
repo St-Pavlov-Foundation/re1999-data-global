@@ -1,29 +1,29 @@
-module("modules.logic.enemyinfo.model.EnemyInfoMo", package.seeall)
+﻿module("modules.logic.enemyinfo.model.EnemyInfoMo", package.seeall)
 
-slot0 = pureTable("EnemyInfoMo")
+local var_0_0 = pureTable("EnemyInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.showLeftTab = false
-	slot0.battleId = 0
-	slot0.tabEnum = EnemyInfoEnum.TabEnum.Normal
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.showLeftTab = false
+	arg_1_0.battleId = 0
+	arg_1_0.tabEnum = EnemyInfoEnum.TabEnum.Normal
 end
 
-function slot0.updateBattleId(slot0, slot1)
-	if slot0.battleId == slot1 then
+function var_0_0.updateBattleId(arg_2_0, arg_2_1)
+	if arg_2_0.battleId == arg_2_1 then
 		return
 	end
 
-	slot0.battleId = slot1
+	arg_2_0.battleId = arg_2_1
 
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.UpdateBattleInfo, slot0.battleId)
+	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.UpdateBattleInfo, arg_2_0.battleId)
 end
 
-function slot0.setTabEnum(slot0, slot1)
-	slot0.tabEnum = slot1
+function var_0_0.setTabEnum(arg_3_0, arg_3_1)
+	arg_3_0.tabEnum = arg_3_1
 end
 
-function slot0.setShowLeftTab(slot0, slot1)
-	slot0.showLeftTab = slot1
+function var_0_0.setShowLeftTab(arg_4_0, arg_4_1)
+	arg_4_0.showLeftTab = arg_4_1
 end
 
-return slot0
+return var_0_0

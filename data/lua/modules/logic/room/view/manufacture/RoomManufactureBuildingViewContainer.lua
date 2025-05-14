@@ -1,59 +1,61 @@
-module("modules.logic.room.view.manufacture.RoomManufactureBuildingViewContainer", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureBuildingViewContainer", package.seeall)
 
-slot0 = class("RoomManufactureBuildingViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomManufactureBuildingViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomManufactureBuildingView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
-	table.insert(slot1, TabViewGroup.New(2, "go_detailBanner"))
+	table.insert(var_1_0, RoomManufactureBuildingView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(var_1_0, TabViewGroup.New(2, "go_detailBanner"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
-		}, nil, slot0._closeCallback, nil, , slot0)
+		}, nil, arg_2_0._closeCallback, nil, nil, arg_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
-	elseif slot1 == 2 then
-		slot0.detailBanner = RoomManufactureBuildingDetailBanner.New()
+	elseif arg_2_1 == 2 then
+		arg_2_0.detailBanner = RoomManufactureBuildingDetailBanner.New()
 
 		return {
-			slot0.detailBanner
+			arg_2_0.detailBanner
 		}
 	end
 end
 
-function slot0._closeCallback(slot0)
+function var_0_0._closeCallback(arg_3_0)
 	ManufactureController.instance:resetCameraOnCloseView()
 end
 
-function slot0.onContainerInit(slot0)
-	slot0:setContainerViewBuildingUid()
+function var_0_0.onContainerInit(arg_4_0)
+	arg_4_0:setContainerViewBuildingUid()
 end
 
-function slot0.onContainerClose(slot0)
-	slot0:setContainerViewBuildingUid()
+function var_0_0.onContainerClose(arg_5_0)
+	arg_5_0:setContainerViewBuildingUid()
 end
 
-function slot0.setContainerViewBuildingUid(slot0, slot1)
-	slot0._viewBuildingUid = slot1
+function var_0_0.setContainerViewBuildingUid(arg_6_0, arg_6_1)
+	arg_6_0._viewBuildingUid = arg_6_1
 end
 
-function slot0.getContainerViewBuilding(slot0, slot1)
-	if not RoomMapBuildingModel.instance:getBuildingMOById(slot0._viewBuildingUid) and slot1 then
-		logError(string.format("RoomManufactureBuildingViewContainer:getContainerViewBuilding error, buildingMO is nil, uid:%s", slot0._viewBuildingUid))
+function var_0_0.getContainerViewBuilding(arg_7_0, arg_7_1)
+	local var_7_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_7_0._viewBuildingUid)
+
+	if not var_7_0 and arg_7_1 then
+		logError(string.format("RoomManufactureBuildingViewContainer:getContainerViewBuilding error, buildingMO is nil, uid:%s", arg_7_0._viewBuildingUid))
 	end
 
-	return slot0._viewBuildingUid, slot2
+	return arg_7_0._viewBuildingUid, var_7_0
 end
 
-return slot0
+return var_0_0

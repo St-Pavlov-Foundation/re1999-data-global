@@ -1,101 +1,116 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionGetView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionGetView", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionGetView", BaseView)
+local var_0_0 = class("V1a6_CachotCollectionGetView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagelevelbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_levelbg")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#simage_title")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_view")
-	slot0._gocollectionitem = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/Content/#go_lineitem/#go_collectionitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._golineitem = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/Content/#go_lineitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
+	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/Content/#go_lineitem/#go_collectionitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._golineitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/Content/#go_lineitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goScrollContent = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/Content")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goScrollContent = gohelper.findChild(arg_5_0.viewGO, "#scroll_view/Viewport/Content")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshPerLineCollectionList(slot0:buildLineMOList(slot0.viewParam and slot1.getColletions))
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam
+	local var_7_1 = var_7_0 and var_7_0.getColletions
+	local var_7_2 = arg_7_0:buildLineMOList(var_7_1)
+
+	arg_7_0:refreshPerLineCollectionList(var_7_2)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_collection_get)
 end
 
-slot1 = 3
+local var_0_1 = 3
 
-function slot0.buildLineMOList(slot0, slot1)
-	slot2 = {}
+function var_0_0.buildLineMOList(arg_8_0, arg_8_1)
+	local var_8_0 = {}
 
-	if slot1 then
-		for slot8, slot9 in ipairs(slot1) do
-			if uv0 <= 0 then
-				table.insert(slot2, {})
+	if arg_8_1 then
+		local var_8_1 = 0
+		local var_8_2 = {}
 
-				slot4 = {}
-				slot3 = 0
+		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+			if var_8_1 >= var_0_1 then
+				table.insert(var_8_0, var_8_2)
+
+				var_8_2 = {}
+				var_8_1 = 0
 			end
 
-			table.insert(slot4, slot9)
+			table.insert(var_8_2, iter_8_1)
 
-			slot3 = slot3 + 1
+			var_8_1 = var_8_1 + 1
 		end
 
-		if slot4 and #slot4 > 0 then
-			table.insert(slot2, slot4)
+		if var_8_2 and #var_8_2 > 0 then
+			table.insert(var_8_0, var_8_2)
 		end
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.refreshPerLineCollectionList(slot0, slot1)
-	gohelper.CreateObjList(slot0, slot0._onShowPerLineCollectionItem, slot1, slot0._goScrollContent, slot0._golineitem)
+function var_0_0.refreshPerLineCollectionList(arg_9_0, arg_9_1)
+	gohelper.CreateObjList(arg_9_0, arg_9_0._onShowPerLineCollectionItem, arg_9_1, arg_9_0._goScrollContent, arg_9_0._golineitem)
 end
 
-function slot0._onShowPerLineCollectionItem(slot0, slot1, slot2, slot3)
-	slot0:refreshGetCollectionList(slot2, slot1, slot0._gocollectionitem)
+function var_0_0._onShowPerLineCollectionItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0:refreshGetCollectionList(arg_10_2, arg_10_1, arg_10_0._gocollectionitem)
 end
 
-function slot0.refreshGetCollectionList(slot0, slot1, slot2, slot3)
-	gohelper.CreateObjList(slot0, slot0._onShowGetCollectionItem, slot1, slot2, slot3)
+function var_0_0.refreshGetCollectionList(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	gohelper.CreateObjList(arg_11_0, arg_11_0._onShowGetCollectionItem, arg_11_1, arg_11_2, arg_11_3)
 end
 
-function slot0._onShowGetCollectionItem(slot0, slot1, slot2, slot3)
-	if V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot2) then
-		slot5 = gohelper.findChildSingleImage(slot1, "collection/#simage_collection")
-		slot5.curImageUrl = nil
+function var_0_0._onShowGetCollectionItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_12_2)
 
-		slot5:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. slot4.icon))
+	if var_12_0 then
+		local var_12_1 = gohelper.findChildSingleImage(arg_12_1, "collection/#simage_collection")
+		local var_12_2 = gohelper.findChildText(arg_12_1, "collection/#txt_name")
+		local var_12_3 = gohelper.findChild(arg_12_1, "layout")
+		local var_12_4 = gohelper.findChild(arg_12_1, "layout/#go_descitem")
 
-		gohelper.findChildText(slot1, "collection/#txt_name").text = slot4.name
+		var_12_1.curImageUrl = nil
 
-		V1a6_CachotCollectionHelper.refreshSkillDescWithoutEffectDesc(slot4, gohelper.findChild(slot1, "layout"), gohelper.findChild(slot1, "layout/#go_descitem"))
+		var_12_1:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_12_0.icon))
+
+		var_12_2.text = var_12_0.name
+
+		V1a6_CachotCollectionHelper.refreshSkillDescWithoutEffectDesc(var_12_0, var_12_3, var_12_4)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
 	V1a6_CachotEventController.instance:setPause(false, V1a6_CachotEnum.EventPauseType.GetCollecttions)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

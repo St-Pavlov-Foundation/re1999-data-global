@@ -1,265 +1,298 @@
-module("modules.logic.settings.view.SettingsPCSystemView", package.seeall)
+﻿module("modules.logic.settings.view.SettingsPCSystemView", package.seeall)
 
-slot0 = class("SettingsPCSystemView", BaseView)
+local var_0_0 = class("SettingsPCSystemView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageblur = gohelper.findChildSingleImage(slot0.viewGO, "simage_blur")
-	slot0._simagetop = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_top")
-	slot0._simagebottom = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_bottom")
-	slot0._btnfullscreenswitch = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch")
-	slot0._gofullscreenoff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch/#go_off")
-	slot0._gofullscreenon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch/#go_on")
-	slot0._btnframerateswitch = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch")
-	slot0._golowfps = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_lowfps")
-	slot0._gohighfps = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_highfps")
-	slot0._btnhigh = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high")
-	slot0._gohighoff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high/#go_highoff")
-	slot0._gohighon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high/#go_highon")
-	slot0._gohighrecommend = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high/#go_highrecommend")
-	slot0._btnmiddle = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle")
-	slot0._gomiddleoff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle/#go_middleoff")
-	slot0._gomiddleon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle/#go_middleon")
-	slot0._gomiddlerecommend = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle/#go_middlerecommend")
-	slot0._btnlow = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low")
-	slot0._golowoff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low/#go_lowoff")
-	slot0._golowon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low/#go_lowon")
-	slot0._golowrecommend = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low/#go_lowrecommend")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnvideo = gohelper.findChildButtonWithAudio(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/#btn_videoswitch")
-	slot0._govideoon = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/#btn_videoswitch/#go_on")
-	slot0._govideooff = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/videomode/#btn_videoswitch/#go_off")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_blur")
+	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_top")
+	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_bottom")
+	arg_1_0._btnfullscreenswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch")
+	arg_1_0._gofullscreenoff = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch/#go_off")
+	arg_1_0._gofullscreenon = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch/#go_on")
+	arg_1_0._btnframerateswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch")
+	arg_1_0._golowfps = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_lowfps")
+	arg_1_0._gohighfps = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_highfps")
+	arg_1_0._btnhigh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high")
+	arg_1_0._gohighoff = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high/#go_highoff")
+	arg_1_0._gohighon = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high/#go_highon")
+	arg_1_0._gohighrecommend = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_high/#go_highrecommend")
+	arg_1_0._btnmiddle = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle")
+	arg_1_0._gomiddleoff = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle/#go_middleoff")
+	arg_1_0._gomiddleon = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle/#go_middleon")
+	arg_1_0._gomiddlerecommend = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_middle/#go_middlerecommend")
+	arg_1_0._btnlow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low")
+	arg_1_0._golowoff = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low/#go_lowoff")
+	arg_1_0._golowon = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low/#go_lowon")
+	arg_1_0._golowrecommend = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/imagequality/graphics/#btn_low/#go_lowrecommend")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnvideo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/videomode/#btn_videoswitch")
+	arg_1_0._govideoon = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/videomode/#btn_videoswitch/#go_on")
+	arg_1_0._govideooff = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/videomode/#btn_videoswitch/#go_off")
 
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text"), false)
+	gohelper.setActive(gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text"), false)
 
-	slot0._framerateDrop = gohelper.findChildDropdown(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/dropframerateswitch")
-	slot0._framerateDropClick = gohelper.getClick(slot0._framerateDrop.gameObject)
-	slot0._frameTemplate = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/framerate/dropframerateswitch/Template")
+	arg_1_0._framerateDrop = gohelper.findChildDropdown(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/framerate/dropframerateswitch")
+	arg_1_0._framerateDropClick = gohelper.getClick(arg_1_0._framerateDrop.gameObject)
+	arg_1_0._frameTemplate = gohelper.findChild(arg_1_0.viewGO, "graphicsScroll/Viewport/Content/framerate/dropframerateswitch/Template")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfullscreenswitch:AddClickListener(slot0._btnfullscreenswitchOnClick, slot0)
-	slot0._btnhigh:AddClickListener(slot0._btnhighOnClick, slot0)
-	slot0._btnmiddle:AddClickListener(slot0._btnmiddleOnClick, slot0)
-	slot0._btnlow:AddClickListener(slot0._btnlowOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnvideo:AddClickListener(slot0._btnvideoOnClick, slot0)
-	slot0._drop:AddOnValueChanged(slot0._onValueChanged, slot0)
-	slot0._dropClick:AddClickListener(function ()
-		uv0:_refreshDropdownList()
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfullscreenswitch:AddClickListener(arg_2_0._btnfullscreenswitchOnClick, arg_2_0)
+	arg_2_0._btnhigh:AddClickListener(arg_2_0._btnhighOnClick, arg_2_0)
+	arg_2_0._btnmiddle:AddClickListener(arg_2_0._btnmiddleOnClick, arg_2_0)
+	arg_2_0._btnlow:AddClickListener(arg_2_0._btnlowOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnvideo:AddClickListener(arg_2_0._btnvideoOnClick, arg_2_0)
+	arg_2_0._drop:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
+	arg_2_0._dropClick:AddClickListener(function()
+		arg_2_0:_refreshDropdownList()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	end, slot0)
-	slot0._framerateDrop:AddOnValueChanged(slot0._onFrameValueChanged, slot0)
-	slot0._framerateDropClick:AddClickListener(function ()
-		uv0:_refreshTargetFrameRateUI()
+	end, arg_2_0)
+	arg_2_0._framerateDrop:AddOnValueChanged(arg_2_0._onFrameValueChanged, arg_2_0)
+	arg_2_0._framerateDropClick:AddClickListener(function()
+		arg_2_0:_refreshTargetFrameRateUI()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	end, slot0)
+	end, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfullscreenswitch:RemoveClickListener()
-	slot0._btnhigh:RemoveClickListener()
-	slot0._btnmiddle:RemoveClickListener()
-	slot0._btnlow:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnvideo:RemoveClickListener()
-	slot0._drop:RemoveOnValueChanged()
-	slot0._dropClick:RemoveClickListener()
-	slot0._framerateDrop:RemoveOnValueChanged()
-	slot0._framerateDropClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0._btnfullscreenswitch:RemoveClickListener()
+	arg_5_0._btnhigh:RemoveClickListener()
+	arg_5_0._btnmiddle:RemoveClickListener()
+	arg_5_0._btnlow:RemoveClickListener()
+	arg_5_0._btnclose:RemoveClickListener()
+	arg_5_0._btnvideo:RemoveClickListener()
+	arg_5_0._drop:RemoveOnValueChanged()
+	arg_5_0._dropClick:RemoveClickListener()
+	arg_5_0._framerateDrop:RemoveOnValueChanged()
+	arg_5_0._framerateDropClick:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goscreen = gohelper.findChild(slot0.viewGO, "graphicsScroll/Viewport/Content/screen")
-	slot0._drop = gohelper.findChildDropdown(slot0.viewGO, "graphicsScroll/Viewport/Content/screen/text/#dropResolution")
-	slot0._dropClick = gohelper.getClick(slot0._drop.gameObject)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._goscreen = gohelper.findChild(arg_6_0.viewGO, "graphicsScroll/Viewport/Content/screen")
+	arg_6_0._drop = gohelper.findChildDropdown(arg_6_0.viewGO, "graphicsScroll/Viewport/Content/screen/text/#dropResolution")
+	arg_6_0._dropClick = gohelper.getClick(arg_6_0._drop.gameObject)
 
-	slot0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_6_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_6_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 
-	slot0._resolutionRatioList = SettingsModel.instance:getResolutionRatioStrList()
+	arg_6_0._resolutionRatioList = SettingsModel.instance:getResolutionRatioStrList()
 
-	slot0:_refreshDropdownList()
-	slot0:_refreshTargetFrameRateUI()
-	gohelper.setActive(slot0._drop.gameObject, true)
+	arg_6_0:_refreshDropdownList()
+	arg_6_0:_refreshTargetFrameRateUI()
+	gohelper.setActive(arg_6_0._drop.gameObject, true)
 end
 
-function slot0._btnfullscreenswitchOnClick(slot0)
+function var_0_0._btnfullscreenswitchOnClick(arg_7_0)
 	if SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.On then
 		SettingsModel.instance:setFullChange(ModuleEnum.FullScreenState.Off)
 	else
 		SettingsModel.instance:setFullChange(ModuleEnum.FullScreenState.On)
 	end
 
-	slot0:_refreshIsFullScreenUI()
+	arg_7_0:_refreshIsFullScreenUI()
 end
 
-function slot0._onValueChanged(slot0, slot1)
-	if not SettingsModel.instance:setScreenResolutionByIndex(slot1 + 1) then
-		slot0._drop:SetValue(slot0._preSelectedIndex)
+function var_0_0._onValueChanged(arg_8_0, arg_8_1)
+	if not SettingsModel.instance:setScreenResolutionByIndex(arg_8_1 + 1) then
+		arg_8_0._drop:SetValue(arg_8_0._preSelectedIndex)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_select)
-	slot0:_refreshIsFullScreenUI()
+	arg_8_0:_refreshIsFullScreenUI()
 
-	slot0._preSelectedIndex = slot1
+	arg_8_0._preSelectedIndex = arg_8_1
 end
 
-function slot0._btnvideoOnClick(slot0)
+function var_0_0._btnvideoOnClick(arg_9_0)
 	if SettingsModel.instance:getVideoCompatible() == false then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SettingVideoCompatible, MsgBoxEnum.BoxType.Yes_No, function ()
-			uv0:_switchVideoCompatible()
+		GameFacade.showMessageBox(MessageBoxIdDefine.SettingVideoCompatible, MsgBoxEnum.BoxType.Yes_No, function()
+			arg_9_0:_switchVideoCompatible()
 		end)
 	else
-		slot0:_switchVideoCompatible()
+		arg_9_0:_switchVideoCompatible()
 	end
 end
 
-function slot0._switchVideoCompatible(slot0)
-	SettingsModel.instance:setVideoCompatible(SettingsModel.instance:getVideoCompatible() == false)
-	slot0:_refreshVideoUI()
+function var_0_0._switchVideoCompatible(arg_11_0)
+	local var_11_0 = SettingsModel.instance:getVideoCompatible()
+
+	SettingsModel.instance:setVideoCompatible(var_11_0 == false)
+	arg_11_0:_refreshVideoUI()
 end
 
-function slot0._btnlowOnClick(slot0)
-	slot0:_setGraphicsQuality(ModuleEnum.Performance.Low)
+function var_0_0._btnlowOnClick(arg_12_0)
+	arg_12_0:_setGraphicsQuality(ModuleEnum.Performance.Low)
 end
 
-function slot0._btnmiddleOnClick(slot0)
-	slot0:_setGraphicsQuality(ModuleEnum.Performance.Middle)
+function var_0_0._btnmiddleOnClick(arg_13_0)
+	arg_13_0:_setGraphicsQuality(ModuleEnum.Performance.Middle)
 end
 
-function slot0._btnhighOnClick(slot0)
-	slot0:_setGraphicsQuality(ModuleEnum.Performance.High)
+function var_0_0._btnhighOnClick(arg_14_0)
+	arg_14_0:_setGraphicsQuality(ModuleEnum.Performance.High)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_15_0)
+	arg_15_0:closeThis()
 end
 
-function slot0._onFrameValueChanged(slot0, slot1)
-	SettingsModel.instance:setModelTargetFrameRate(slot1)
+function var_0_0._onFrameValueChanged(arg_16_0, arg_16_1)
+	SettingsModel.instance:setModelTargetFrameRate(arg_16_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_select)
 end
 
-function slot0._setGraphicsQuality(slot0, slot1)
-	if SettingsModel.instance:getModelGraphicsQuality() == slot1 then
+function var_0_0._setGraphicsQuality(arg_17_0, arg_17_1)
+	if SettingsModel.instance:getModelGraphicsQuality() == arg_17_1 then
 		return
 	end
 
-	if slot1 < SettingsModel.instance:getRecommendQuality() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SwitchHigherQuality, MsgBoxEnum.BoxType.Yes_No, function ()
-			uv0:directSetGraphicsQuality(uv1)
+	if arg_17_1 < SettingsModel.instance:getRecommendQuality() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SwitchHigherQuality, MsgBoxEnum.BoxType.Yes_No, function()
+			arg_17_0:directSetGraphicsQuality(arg_17_1)
 		end)
 	else
-		slot0:directSetGraphicsQuality(slot1)
+		arg_17_0:directSetGraphicsQuality(arg_17_1)
 	end
 end
 
-function slot0.directSetGraphicsQuality(slot0, slot1)
-	SettingsModel.instance:setGraphicsQuality(slot1)
-	slot0:_refreshGraphicsQualityUI()
+function var_0_0.directSetGraphicsQuality(arg_19_0, arg_19_1)
+	SettingsModel.instance:setGraphicsQuality(arg_19_1)
+	arg_19_0:_refreshGraphicsQualityUI()
 end
 
-function slot0._refreshGraphicsQualityUI(slot0)
-	gohelper.setActive(slot0._golowselected, SettingsModel.instance:getModelGraphicsQuality() == ModuleEnum.Performance.Low)
-	gohelper.setActive(slot0._gomiddleselected, slot1 == ModuleEnum.Performance.Middle)
-	gohelper.setActive(slot0._gohighselected, slot1 == ModuleEnum.Performance.High)
-	gohelper.setActive(slot0._golowon, slot1 == ModuleEnum.Performance.Low)
-	gohelper.setActive(slot0._golowoff, slot1 ~= ModuleEnum.Performance.Low)
-	gohelper.setActive(slot0._gomiddleon, slot1 == ModuleEnum.Performance.Middle)
-	gohelper.setActive(slot0._gomiddleoff, slot1 ~= ModuleEnum.Performance.Middle)
-	gohelper.setActive(slot0._gohighon, slot1 == ModuleEnum.Performance.High)
-	gohelper.setActive(slot0._gohighoff, slot1 ~= ModuleEnum.Performance.High)
-	gohelper.setActive(slot0._goline1, slot1 == ModuleEnum.Performance.High)
-	gohelper.setActive(slot0._goline2, slot1 == ModuleEnum.Performance.Low)
+function var_0_0._refreshGraphicsQualityUI(arg_20_0)
+	local var_20_0 = SettingsModel.instance:getModelGraphicsQuality()
+
+	gohelper.setActive(arg_20_0._golowselected, var_20_0 == ModuleEnum.Performance.Low)
+	gohelper.setActive(arg_20_0._gomiddleselected, var_20_0 == ModuleEnum.Performance.Middle)
+	gohelper.setActive(arg_20_0._gohighselected, var_20_0 == ModuleEnum.Performance.High)
+	gohelper.setActive(arg_20_0._golowon, var_20_0 == ModuleEnum.Performance.Low)
+	gohelper.setActive(arg_20_0._golowoff, var_20_0 ~= ModuleEnum.Performance.Low)
+	gohelper.setActive(arg_20_0._gomiddleon, var_20_0 == ModuleEnum.Performance.Middle)
+	gohelper.setActive(arg_20_0._gomiddleoff, var_20_0 ~= ModuleEnum.Performance.Middle)
+	gohelper.setActive(arg_20_0._gohighon, var_20_0 == ModuleEnum.Performance.High)
+	gohelper.setActive(arg_20_0._gohighoff, var_20_0 ~= ModuleEnum.Performance.High)
+	gohelper.setActive(arg_20_0._goline1, var_20_0 == ModuleEnum.Performance.High)
+	gohelper.setActive(arg_20_0._goline2, var_20_0 == ModuleEnum.Performance.Low)
 end
 
-function slot0._refreshTargetFrameRateUI(slot0)
-	gohelper.setActive(slot0._golowfps, SettingsModel.instance:getModelTargetFrameRate() == ModuleEnum.TargetFrameRate.Low)
-	gohelper.setActive(slot0._gohighfps, slot1 == ModuleEnum.TargetFrameRate.High)
+function var_0_0._refreshTargetFrameRateUI(arg_21_0)
+	local var_21_0 = SettingsModel.instance:getModelTargetFrameRate()
+
+	gohelper.setActive(arg_21_0._golowfps, var_21_0 == ModuleEnum.TargetFrameRate.Low)
+	gohelper.setActive(arg_21_0._gohighfps, var_21_0 == ModuleEnum.TargetFrameRate.High)
 end
 
-function slot0._refreshIsFullScreenUI(slot0)
-	gohelper.setActive(slot0._gofullscreenon, SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.On)
-	gohelper.setActive(slot0._gofullscreenoff, SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.Off)
+function var_0_0._refreshIsFullScreenUI(arg_22_0)
+	gohelper.setActive(arg_22_0._gofullscreenon, SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.On)
+	gohelper.setActive(arg_22_0._gofullscreenoff, SettingsModel.instance._isFullScreen == ModuleEnum.FullScreenState.Off)
 end
 
-function slot0._refreshVideoUI(slot0)
-	slot1 = SettingsModel.instance:getVideoCompatible()
+function var_0_0._refreshVideoUI(arg_23_0)
+	local var_23_0 = SettingsModel.instance:getVideoCompatible()
 
-	gohelper.setActive(slot0._govideoon, slot1)
-	gohelper.setActive(slot0._govideooff, not slot1)
+	gohelper.setActive(arg_23_0._govideoon, var_23_0)
+	gohelper.setActive(arg_23_0._govideooff, not var_23_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_24_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	NavigateMgr.instance:addEscape(ViewName.SettingsPCSystemView, slot0._btncloseOnClick, slot0)
-	slot0:_refreshUI()
-	gohelper.setActive(slot0._golowrecommend, SettingsModel.instance:getRecommendQuality() == ModuleEnum.Performance.Low)
-	gohelper.setActive(slot0._gomiddlerecommend, slot1 == ModuleEnum.Performance.Middle)
-	gohelper.setActive(slot0._gohighrecommend, slot1 == ModuleEnum.Performance.High)
+function var_0_0.onOpen(arg_25_0)
+	NavigateMgr.instance:addEscape(ViewName.SettingsPCSystemView, arg_25_0._btncloseOnClick, arg_25_0)
+	arg_25_0:_refreshUI()
+
+	local var_25_0 = SettingsModel.instance:getRecommendQuality()
+
+	gohelper.setActive(arg_25_0._golowrecommend, var_25_0 == ModuleEnum.Performance.Low)
+	gohelper.setActive(arg_25_0._gomiddlerecommend, var_25_0 == ModuleEnum.Performance.Middle)
+	gohelper.setActive(arg_25_0._gohighrecommend, var_25_0 == ModuleEnum.Performance.High)
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshGraphicsQualityUI()
-	slot0:_refreshTargetFrameRateUI()
-	slot0:_refreshIsFullScreenUI()
-	slot0:_refreshVideoUI()
+function var_0_0._refreshUI(arg_26_0)
+	arg_26_0:_refreshGraphicsQualityUI()
+	arg_26_0:_refreshTargetFrameRateUI()
+	arg_26_0:_refreshIsFullScreenUI()
+	arg_26_0:_refreshVideoUI()
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewParam and slot0.viewParam.closeCallback then
-		slot0.viewParam.closeCallback(slot0.viewParam.closeCallbackObj)
+function var_0_0.onClose(arg_27_0)
+	if arg_27_0.viewParam and arg_27_0.viewParam.closeCallback then
+		arg_27_0.viewParam.closeCallback(arg_27_0.viewParam.closeCallbackObj)
 	end
 
-	slot0._simageblur:UnLoadImage()
-	slot0._simagetop:UnLoadImage()
-	slot0._simagebottom:UnLoadImage()
+	arg_27_0._simageblur:UnLoadImage()
+	arg_27_0._simagetop:UnLoadImage()
+	arg_27_0._simagebottom:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_28_0)
+	return
 end
 
-function slot0._refreshDropdownList(slot0)
-	slot0._drop:ClearOptions()
-	slot0._drop:AddOptions(SettingsModel.instance:getResolutionRatioStrList())
-	slot0._drop:SetValue(SettingsModel.instance:getCurrentDropDownIndex())
+function var_0_0._refreshDropdownList(arg_29_0)
+	local var_29_0 = SettingsModel.instance:getResolutionRatioStrList()
 
-	slot0._preSelectedIndex = slot0._drop:GetValue()
+	arg_29_0._drop:ClearOptions()
+	arg_29_0._drop:AddOptions(var_29_0)
+	arg_29_0._drop:SetValue((SettingsModel.instance:getCurrentDropDownIndex()))
+
+	arg_29_0._preSelectedIndex = arg_29_0._drop:GetValue()
 end
 
-function slot0._refreshTargetFrameRateUI(slot0)
-	slot2 = {}
+function var_0_0._refreshTargetFrameRateUI(arg_30_0)
+	local var_30_0 = SettingsModel.instance.FrameRate
+	local var_30_1 = {}
 
-	for slot6, slot7 in ipairs(SettingsModel.instance.FrameRate) do
-		if not BootNativeUtil.isWindows() and slot7 > 60 then
+	for iter_30_0, iter_30_1 in ipairs(var_30_0) do
+		if not BootNativeUtil.isWindows() and iter_30_1 > 60 then
 			break
 		end
 
-		table.insert(slot2, tostring(slot7))
+		local var_30_2 = tostring(iter_30_1)
+
+		table.insert(var_30_1, var_30_2)
 	end
 
-	slot0._framerateDrop:ClearOptions()
-	slot0._framerateDrop:AddOptions(slot2)
-	recthelper.setHeight(slot0._frameTemplate.transform, #slot2 * 73)
-	slot0._framerateDrop:SetValue(SettingsModel.instance:getCurrentFrameRateIndex() - 1)
+	arg_30_0._framerateDrop:ClearOptions()
+	arg_30_0._framerateDrop:AddOptions(var_30_1)
 
-	slot0._framerateDropIndex = slot0._framerateDrop:GetValue()
+	local var_30_3 = #var_30_1 * 73
 
-	if slot0._framerateDropIndex == 0 then
+	recthelper.setHeight(arg_30_0._frameTemplate.transform, var_30_3)
+	arg_30_0._framerateDrop:SetValue(SettingsModel.instance:getCurrentFrameRateIndex() - 1)
+
+	arg_30_0._framerateDropIndex = arg_30_0._framerateDrop:GetValue()
+
+	if arg_30_0._framerateDropIndex == 0 then
 		SettingsModel.instance:setModelTargetFrameRate(0)
 	end
 
-	if gohelper.findChild(slot0._framerateDrop.gameObject, "Dropdown List") and gohelper.findChild(slot4, "Viewport/Content") and slot5.transform:GetChild(slot0._framerateDropIndex + 1) and gohelper.findChild(slot6.gameObject, "BG") then
-		gohelper.setActive(slot7, true)
+	local var_30_4 = gohelper.findChild(arg_30_0._framerateDrop.gameObject, "Dropdown List")
+
+	if var_30_4 then
+		local var_30_5 = gohelper.findChild(var_30_4, "Viewport/Content")
+
+		if var_30_5 then
+			local var_30_6 = var_30_5.transform:GetChild(arg_30_0._framerateDropIndex + 1)
+
+			if var_30_6 then
+				local var_30_7 = gohelper.findChild(var_30_6.gameObject, "BG")
+
+				if var_30_7 then
+					gohelper.setActive(var_30_7, true)
+				end
+			end
+		end
 	end
 end
 
-return slot0
+return var_0_0

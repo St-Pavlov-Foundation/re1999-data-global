@@ -1,22 +1,25 @@
-module("modules.logic.explore.controller.steps.ExploreDelUnitStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreDelUnitStep", package.seeall)
 
-slot0 = class("ExploreDelUnitStep", ExploreStepBase)
-slot1 = {
+local var_0_0 = class("ExploreDelUnitStep", ExploreStepBase)
+local var_0_1 = {
 	[ExploreEnum.ItemType.Rock] = true
 }
 
-function slot0.onStart(slot0)
-	if ExploreController.instance:getMap():getUnit(slot0._data.interact.id, true) then
-		ExploreController.instance:removeUnit(slot1.id)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data.interact
+	local var_1_1 = ExploreController.instance:getMap():getUnit(var_1_0.id, true)
 
-		if not ExploreModel.instance.isReseting and uv0[slot2:getUnitType()] then
-			slot2:setExitCallback(slot0.onDone, slot0)
+	if var_1_1 then
+		ExploreController.instance:removeUnit(var_1_0.id)
+
+		if not ExploreModel.instance.isReseting and var_0_1[var_1_1:getUnitType()] then
+			var_1_1:setExitCallback(arg_1_0.onDone, arg_1_0)
 		else
-			slot0:onDone()
+			arg_1_0:onDone()
 		end
 	else
-		slot0:onDone()
+		arg_1_0:onDone()
 	end
 end
 
-return slot0
+return var_0_0

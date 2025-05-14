@@ -1,34 +1,35 @@
-module("modules.logic.fight.mgr.FightEntrustedWorkMgr", package.seeall)
+﻿module("modules.logic.fight.mgr.FightEntrustedWorkMgr", package.seeall)
 
-slot0 = class("FightEntrustedWorkMgr", FightBaseClass)
+local var_0_0 = class("FightEntrustedWorkMgr", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._workList = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._workList = {}
 
-	slot0:com_registMsg(FightMsgId.EntrustFightWork, slot0._onEntrustFightWork)
-	slot0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish)
+	arg_1_0:com_registMsg(FightMsgId.EntrustFightWork, arg_1_0._onEntrustFightWork)
+	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_1_0._onRoundSequenceFinish)
 end
 
-function slot0._onEntrustFightWork(slot0, slot1)
-	table.insert(slot0._workList, slot1)
-	slot0:com_replyMsg(FightMsgId.EntrustFightWork, true)
+function var_0_0._onEntrustFightWork(arg_2_0, arg_2_1)
+	table.insert(arg_2_0._workList, arg_2_1)
+	arg_2_0:com_replyMsg(FightMsgId.EntrustFightWork, true)
 end
 
-function slot0._onRoundSequenceFinish(slot0)
-	for slot4 = #slot0._workList, 1, -1 do
-		if slot0._workList[slot4].IS_DISPOSED then
-			table.remove(slot0._workList, slot4)
+function var_0_0._onRoundSequenceFinish(arg_3_0)
+	for iter_3_0 = #arg_3_0._workList, 1, -1 do
+		if arg_3_0._workList[iter_3_0].IS_DISPOSED then
+			table.remove(arg_3_0._workList, iter_3_0)
 		end
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4 = #slot0._workList, 1, -1 do
-		slot5 = slot0._workList[slot4]
-		slot5.FIGHT_WORK_ENTRUSTED = nil
+function var_0_0.onDestructor(arg_4_0)
+	for iter_4_0 = #arg_4_0._workList, 1, -1 do
+		local var_4_0 = arg_4_0._workList[iter_4_0]
 
-		slot5:disposeSelf()
+		var_4_0.FIGHT_WORK_ENTRUSTED = nil
+
+		var_4_0:disposeSelf()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,14 +1,15 @@
-module("modules.logic.fight.system.work.FightWorkRoundStart", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRoundStart", package.seeall)
 
-slot0 = class("FightWorkRoundStart", BaseWork)
+local var_0_0 = class("FightWorkRoundStart", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.FightRoundStart)
 	FightCardModel.instance:onStartRound()
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

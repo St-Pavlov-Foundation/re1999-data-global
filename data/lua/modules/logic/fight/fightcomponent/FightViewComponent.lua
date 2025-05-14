@@ -1,167 +1,179 @@
-module("modules.logic.fight.fightcomponent.FightViewComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightViewComponent", package.seeall)
 
-slot0 = class("FightViewComponent", FightBaseClass)
+local var_0_0 = class("FightViewComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0.inner_childViews = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.inner_childViews = {}
 end
 
-function slot0.openSubView(slot0, slot1, slot2, slot3, ...)
-	if not slot1.IS_FIGHT_BASE_VIEW then
-		return slot0:openSubViewForBaseView(slot1, slot2, slot3, ...)
+function var_0_0.openSubView(arg_2_0, arg_2_1, arg_2_2, arg_2_3, ...)
+	if not arg_2_1.IS_FIGHT_BASE_VIEW then
+		return arg_2_0:openSubViewForBaseView(arg_2_1, arg_2_2, arg_2_3, ...)
 	end
 
-	slot4 = slot0.PARENT_ROOT_CLASS
-	slot5 = slot0:newClass(slot1, ...)
-	slot5.viewName = slot4.viewName
-	slot5.viewContainer = slot4.viewContainer
-	slot5.PARENT_VIEW = slot4
+	local var_2_0 = arg_2_0.PARENT_ROOT_CLASS
+	local var_2_1 = arg_2_0:newClass(arg_2_1, ...)
 
-	if type(slot2) == "string" then
-		slot0:com_loadAsset(slot2, slot0._onViewGOLoadFinish, {
-			handle = slot5,
-			parent_obj = slot3 or slot4.viewGO
+	var_2_1.viewName = var_2_0.viewName
+	var_2_1.viewContainer = var_2_0.viewContainer
+	var_2_1.PARENT_VIEW = var_2_0
+
+	if type(arg_2_2) == "string" then
+		arg_2_3 = arg_2_3 or var_2_0.viewGO
+
+		arg_2_0:com_loadAsset(arg_2_2, arg_2_0._onViewGOLoadFinish, {
+			handle = var_2_1,
+			parent_obj = arg_2_3
 		})
 	else
-		slot5.viewGO = slot2
-		slot5.keyword_gameObject = slot2
+		var_2_1.viewGO = arg_2_2
+		var_2_1.keyword_gameObject = arg_2_2
 
-		slot5:inner_startView()
+		var_2_1:inner_startView()
 	end
 
-	table.insert(slot0.inner_childViews, slot5)
+	table.insert(arg_2_0.inner_childViews, var_2_1)
 
-	return slot5
+	return var_2_1
 end
 
-function slot0._onViewGOLoadFinish(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0._onViewGOLoadFinish(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if not arg_3_1 then
 		return
 	end
 
-	slot5 = gohelper.clone(slot2:GetResource(), slot3.parent_obj)
-	slot6 = slot3.handle
-	slot6.viewGO = slot5
-	slot6.keyword_gameObject = slot5
+	local var_3_0 = arg_3_2:GetResource()
+	local var_3_1 = gohelper.clone(var_3_0, arg_3_3.parent_obj)
+	local var_3_2 = arg_3_3.handle
 
-	slot6:inner_startView()
+	var_3_2.viewGO = var_3_1
+	var_3_2.keyword_gameObject = var_3_1
+
+	var_3_2:inner_startView()
 end
 
-function slot0.openSubViewForBaseView(slot0, slot1, slot2, ...)
-	if not slot0.inner_childForBaseView then
-		slot0.inner_childForBaseView = {}
+function var_0_0.openSubViewForBaseView(arg_4_0, arg_4_1, arg_4_2, ...)
+	if not arg_4_0.inner_childForBaseView then
+		arg_4_0.inner_childForBaseView = {}
 	end
 
-	slot3 = slot1.New(...)
-	slot3.viewName = slot0.viewName
-	slot3.viewContainer = slot0.viewContainer
-	slot3.PARENT_VIEW = slot0
+	local var_4_0 = arg_4_1.New(...)
 
-	slot3:__onInit()
+	var_4_0.viewName = arg_4_0.viewName
+	var_4_0.viewContainer = arg_4_0.viewContainer
+	var_4_0.PARENT_VIEW = arg_4_0
 
-	slot3.viewGO = slot2
+	var_4_0:__onInit()
 
-	slot3:onInitViewInternal()
-	slot3:addEventsInternal()
-	slot3:onOpenInternal()
-	slot3:onOpenFinishInternal()
-	table.insert(slot0.inner_childForBaseView, slot3)
+	var_4_0.viewGO = arg_4_2
 
-	return slot3
+	var_4_0:onInitViewInternal()
+	var_4_0:addEventsInternal()
+	var_4_0:onOpenInternal()
+	var_4_0:onOpenFinishInternal()
+	table.insert(arg_4_0.inner_childForBaseView, var_4_0)
+
+	return var_4_0
 end
 
-function slot0.openExclusiveView(slot0, slot1, slot2, slot3, slot4, ...)
-	return slot0:openSignExclusiveView(1, slot1, slot2, slot3, slot4, ...)
+function var_0_0.openExclusiveView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, ...)
+	return arg_5_0:openSignExclusiveView(1, arg_5_1, arg_5_2, arg_5_3, arg_5_4, ...)
 end
 
-function slot0.openSignExclusiveView(slot0, slot1, slot2, slot3, slot4, slot5, ...)
-	if not slot0.exclusive_tab then
-		slot0.exclusive_tab = {}
-		slot0.exclusive_opening = {}
+function var_0_0.openSignExclusiveView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, ...)
+	if not arg_6_0.exclusive_tab then
+		arg_6_0.exclusive_tab = {}
+		arg_6_0.exclusive_opening = {}
 	end
 
-	slot1 = slot1 or 1
-	slot0.exclusive_tab[slot1] = slot0.exclusive_tab[slot1] or {}
+	arg_6_1 = arg_6_1 or 1
+	arg_6_0.exclusive_tab[arg_6_1] = arg_6_0.exclusive_tab[arg_6_1] or {}
 
-	if slot0.exclusive_tab[slot1][slot0.exclusive_opening[slot1]] then
-		if slot2 == slot0.exclusive_opening[slot1] then
-			return slot6
+	local var_6_0 = arg_6_0.exclusive_tab[arg_6_1][arg_6_0.exclusive_opening[arg_6_1]]
+
+	if var_6_0 then
+		if arg_6_2 == arg_6_0.exclusive_opening[arg_6_1] then
+			return var_6_0
 		end
 
-		slot0:hideExclusiveView(slot6, slot1, slot2)
+		arg_6_0:hideExclusiveView(var_6_0, arg_6_1, arg_6_2)
 	end
 
-	if slot0.exclusive_tab[slot1][slot2] then
-		slot0:setExclusiveViewVisible(slot0.exclusive_tab[slot1][slot2], true)
+	if arg_6_0.exclusive_tab[arg_6_1][arg_6_2] then
+		arg_6_0:setExclusiveViewVisible(arg_6_0.exclusive_tab[arg_6_1][arg_6_2], true)
 
-		slot0.exclusive_opening[slot1] = slot2
+		arg_6_0.exclusive_opening[arg_6_1] = arg_6_2
 
-		return slot0.exclusive_tab[slot1][slot2]
+		return arg_6_0.exclusive_tab[arg_6_1][arg_6_2]
 	end
 
-	slot6 = slot0:openSubView(slot3, slot4, slot5, ...)
-	slot6.internalExclusiveSign = slot1
-	slot6.internalExclusiveID = slot2
-	slot0.exclusive_tab[slot1][slot2] = slot6
-	slot0.exclusive_opening[slot1] = slot2
+	local var_6_1 = arg_6_0:openSubView(arg_6_3, arg_6_4, arg_6_5, ...)
 
-	return slot6
+	var_6_1.internalExclusiveSign = arg_6_1
+	var_6_1.internalExclusiveID = arg_6_2
+	arg_6_0.exclusive_tab[arg_6_1][arg_6_2] = var_6_1
+	arg_6_0.exclusive_opening[arg_6_1] = arg_6_2
+
+	return var_6_1
 end
 
-function slot0.hideExclusiveGroup(slot0, slot1)
-	slot1 = slot1 or 1
+function var_0_0.hideExclusiveGroup(arg_7_0, arg_7_1)
+	arg_7_1 = arg_7_1 or 1
 
-	if slot0.exclusive_opening and slot0.exclusive_opening[slot1] then
-		slot0:hideExclusiveView(slot0.exclusive_tab[slot1][slot0.exclusive_opening[slot1]])
+	if arg_7_0.exclusive_opening and arg_7_0.exclusive_opening[arg_7_1] then
+		arg_7_0:hideExclusiveView(arg_7_0.exclusive_tab[arg_7_1][arg_7_0.exclusive_opening[arg_7_1]])
 	end
 end
 
-function slot0.hideExclusiveView(slot0, slot1, slot2, slot3)
-	slot1 = slot1 or slot0.exclusive_tab[slot2 or 1][slot3]
+function var_0_0.hideExclusiveView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_2 = arg_8_2 or 1
+	arg_8_1 = arg_8_1 or arg_8_0.exclusive_tab[arg_8_2][arg_8_3]
 
-	if slot0.exclusive_opening[slot1.internalExclusiveSign] == slot1.internalExclusiveID then
-		slot0.exclusive_opening[slot1.internalExclusiveSign] = nil
+	if arg_8_0.exclusive_opening[arg_8_1.internalExclusiveSign] == arg_8_1.internalExclusiveID then
+		arg_8_0.exclusive_opening[arg_8_1.internalExclusiveSign] = nil
 	end
 
-	slot0:setExclusiveViewVisible(slot1, false)
+	arg_8_0:setExclusiveViewVisible(arg_8_1, false)
 end
 
-function slot0.setExclusiveViewVisible(slot0, slot1, slot2)
-	if slot1.onSetExclusiveViewVisible then
-		slot1:onSetExclusiveViewVisible(slot2)
+function var_0_0.setExclusiveViewVisible(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1.onSetExclusiveViewVisible then
+		arg_9_1:onSetExclusiveViewVisible(arg_9_2)
 	else
-		slot1:setViewVisibleInternal(slot2)
+		arg_9_1:setViewVisibleInternal(arg_9_2)
 	end
 end
 
-function slot0.killAllSubView(slot0)
-	if slot0.inner_childForBaseView then
-		for slot4 = #slot0.inner_childForBaseView, 1, -1 do
-			slot5 = slot0.inner_childForBaseView[slot4]
+function var_0_0.killAllSubView(arg_10_0)
+	if arg_10_0.inner_childForBaseView then
+		for iter_10_0 = #arg_10_0.inner_childForBaseView, 1, -1 do
+			local var_10_0 = arg_10_0.inner_childForBaseView[iter_10_0]
 
-			slot5:onCloseInternal()
-			slot5:onCloseFinishInternal()
-			slot5:removeEventsInternal()
-			slot5:onDestroyViewInternal()
-			slot5:__onDispose()
+			var_10_0:onCloseInternal()
+			var_10_0:onCloseFinishInternal()
+			var_10_0:removeEventsInternal()
+			var_10_0:onDestroyViewInternal()
+			var_10_0:__onDispose()
 		end
 
-		slot0.inner_childForBaseView = nil
+		arg_10_0.inner_childForBaseView = nil
 	end
 
-	for slot4 = #slot0.inner_childViews, 1, -1 do
-		if not slot0.inner_childViews[slot4].IS_DISPOSED then
-			slot5:onCloseInternal()
-			slot5:onCloseFinishInternal()
-			slot5:removeEventsInternal()
-			slot5:onDestroyViewInternal()
-			slot5:disposeSelf()
+	for iter_10_1 = #arg_10_0.inner_childViews, 1, -1 do
+		local var_10_1 = arg_10_0.inner_childViews[iter_10_1]
+
+		if not var_10_1.IS_DISPOSED then
+			var_10_1:onCloseInternal()
+			var_10_1:onCloseFinishInternal()
+			var_10_1:removeEventsInternal()
+			var_10_1:onDestroyViewInternal()
+			var_10_1:disposeSelf()
 		end
 	end
 end
 
-function slot0.onDestructor(slot0)
-	slot0:killAllSubView()
+function var_0_0.onDestructor(arg_11_0)
+	arg_11_0:killAllSubView()
 end
 
-return slot0
+return var_0_0

@@ -1,14 +1,14 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessGameViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessGameViewContainer", package.seeall)
 
-slot0 = class("AutoChessGameViewContainer", BaseViewContainer)
+local var_0_0 = class("AutoChessGameViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, AutoChessGameView.New())
-	table.insert(slot1, AutoChessGameScene.New())
+	table.insert(var_1_0, AutoChessGameView.New())
+	table.insert(var_1_0, AutoChessGameScene.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

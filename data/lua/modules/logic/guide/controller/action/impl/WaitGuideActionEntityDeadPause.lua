@@ -1,25 +1,25 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionEntityDeadPause", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEntityDeadPause", package.seeall)
 
-slot0 = class("WaitGuideActionEntityDeadPause", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionEntityDeadPause", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	FightController.instance:registerCallback(FightEvent.OnGuideEntityDeadPause, slot0._onGuideEntityDeadPause, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	FightController.instance:registerCallback(FightEvent.OnGuideEntityDeadPause, arg_1_0._onGuideEntityDeadPause, arg_1_0)
 
-	slot0._side = tonumber(slot0.actionParam)
+	arg_1_0._side = tonumber(arg_1_0.actionParam)
 end
 
-function slot0._onGuideEntityDeadPause(slot0, slot1, slot2)
-	if slot2.side == slot0._side then
-		slot1.OnGuideEntityDeadPause = true
+function var_0_0._onGuideEntityDeadPause(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2.side == arg_2_0._side then
+		arg_2_1.OnGuideEntityDeadPause = true
 
-		FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, slot0._onGuideEntityDeadPause, slot0)
-		slot0:onDone(true)
+		FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, arg_2_0._onGuideEntityDeadPause, arg_2_0)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, slot0._onGuideEntityDeadPause, slot0)
+function var_0_0.clearWork(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, arg_3_0._onGuideEntityDeadPause, arg_3_0)
 end
 
-return slot0
+return var_0_0

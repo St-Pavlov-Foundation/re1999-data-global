@@ -1,173 +1,200 @@
-module("modules.logic.character.model.HeroDestinyStoneMO", package.seeall)
+﻿module("modules.logic.character.model.HeroDestinyStoneMO", package.seeall)
 
-slot0 = class("HeroDestinyStoneMO")
+local var_0_0 = class("HeroDestinyStoneMO")
 
-function slot0.ctor(slot0, slot1)
-	slot0.rank = 0
-	slot0.level = 0
-	slot0.curUseStoneId = 0
-	slot0.unlockStoneIds = nil
-	slot0.stoneMoList = nil
-	slot0.heroId = slot1
-	slot0.maxRank = 0
-	slot0.maxLevel = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.rank = 0
+	arg_1_0.level = 0
+	arg_1_0.curUseStoneId = 0
+	arg_1_0.unlockStoneIds = nil
+	arg_1_0.stoneMoList = nil
+	arg_1_0.heroId = arg_1_1
+	arg_1_0.maxRank = 0
+	arg_1_0.maxLevel = {}
 
-	if CharacterDestinyConfig.instance:getDestinySlotCosByHeroId(slot1) then
-		for slot6, slot7 in ipairs(slot2) do
-			slot0.maxRank = math.max(slot6, slot0.maxRank)
-			slot0.maxLevel[slot6] = tabletool.len(slot7)
+	local var_1_0 = CharacterDestinyConfig.instance:getDestinySlotCosByHeroId(arg_1_1)
+
+	if var_1_0 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			arg_1_0.maxRank = math.max(iter_1_0, arg_1_0.maxRank)
+			arg_1_0.maxLevel[iter_1_0] = tabletool.len(iter_1_1)
 		end
 	end
 end
 
-function slot0.refreshMo(slot0, slot1, slot2, slot3, slot4)
-	slot0.rank = slot1
-	slot0.level = slot2
-	slot0.curUseStoneId = slot3
-	slot0.unlockStoneIds = slot4 or {}
+function var_0_0.refreshMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0.rank = arg_2_1
+	arg_2_0.level = arg_2_2
+	arg_2_0.curUseStoneId = arg_2_3
+	arg_2_0.unlockStoneIds = arg_2_4 or {}
 
-	slot0:setStoneMo()
+	arg_2_0:setStoneMo()
 end
 
-function slot0.isUnlockSlot(slot0)
-	return slot0.rank > 0
+function var_0_0.isUnlockSlot(arg_3_0)
+	return arg_3_0.rank > 0
 end
 
-function slot0.isCanUpSlotRank(slot0)
-	return slot0:getNextDestinySlotCo() and slot1.node == 1
+function var_0_0.isCanUpSlotRank(arg_4_0)
+	local var_4_0 = arg_4_0:getNextDestinySlotCo()
+
+	return var_4_0 and var_4_0.node == 1
 end
 
-function slot0.isSlotMaxLevel(slot0)
-	return not slot0:getNextDestinySlotCo()
+function var_0_0.isSlotMaxLevel(arg_5_0)
+	return not arg_5_0:getNextDestinySlotCo()
 end
 
-function slot0.setStoneMo(slot0)
-	slot1 = CharacterDestinyConfig.instance:getFacetIdsByHeroId(slot0.heroId)
+function var_0_0.setStoneMo(arg_6_0)
+	local var_6_0 = CharacterDestinyConfig.instance:getFacetIdsByHeroId(arg_6_0.heroId)
 
-	if not slot0.stoneMoList then
-		slot0.stoneMoList = {}
+	if not arg_6_0.stoneMoList then
+		arg_6_0.stoneMoList = {}
 	end
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			if not slot0.stoneMoList[slot6] then
-				slot7 = DestinyStoneMO.New()
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+			local var_6_1 = arg_6_0.stoneMoList[iter_6_1]
 
-				slot7:initMo(slot6)
+			if not var_6_1 then
+				var_6_1 = DestinyStoneMO.New()
 
-				slot0.stoneMoList[slot6] = slot7
+				var_6_1:initMo(iter_6_1)
+
+				arg_6_0.stoneMoList[iter_6_1] = var_6_1
 			end
 
-			slot7:refresUnlock(LuaUtil.tableContains(slot0.unlockStoneIds, slot6))
-			slot7:refreshUse(slot6 == slot0.curUseStoneId)
+			var_6_1:refresUnlock(LuaUtil.tableContains(arg_6_0.unlockStoneIds, iter_6_1))
+			var_6_1:refreshUse(iter_6_1 == arg_6_0.curUseStoneId)
 		end
 	end
 end
 
-function slot0.getStoneMo(slot0, slot1)
-	return slot0.stoneMoList and slot0.stoneMoList[slot1]
+function var_0_0.getStoneMo(arg_7_0, arg_7_1)
+	return arg_7_0.stoneMoList and arg_7_0.stoneMoList[arg_7_1]
 end
 
-function slot0.refreshUseStone(slot0)
-	for slot4, slot5 in ipairs(slot0.stoneMoList) do
-		slot5:refreshUse(slot4 == slot0.curUseStoneId)
+function var_0_0.refreshUseStone(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.stoneMoList) do
+		iter_8_1:refreshUse(iter_8_0 == arg_8_0.curUseStoneId)
 	end
 end
 
-function slot0.getCurUseStoneCo(slot0)
-	if slot0.curUseStoneId ~= 0 then
-		return CharacterDestinyConfig.instance:getDestinyFacets(slot0.curUseStoneId, slot0.rank)
+function var_0_0.getCurUseStoneCo(arg_9_0)
+	if arg_9_0.curUseStoneId ~= 0 then
+		return CharacterDestinyConfig.instance:getDestinyFacets(arg_9_0.curUseStoneId, arg_9_0.rank)
 	end
 end
 
-function slot0.getAddAttrValues(slot0)
-	return slot0:getAddAttrValueByLevel(slot0.rank, slot0.level)
+function var_0_0.getAddAttrValues(arg_10_0)
+	return (arg_10_0:getAddAttrValueByLevel(arg_10_0.rank, arg_10_0.level))
 end
 
-function slot0.getAddAttrValueByLevel(slot0, slot1, slot2)
-	return CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(slot0.heroId, slot1, slot2)
+function var_0_0.getAddAttrValueByLevel(arg_11_0, arg_11_1, arg_11_2)
+	return (CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(arg_11_0.heroId, arg_11_1, arg_11_2))
 end
 
-function slot0.getAddValueByAttrId(slot0, slot1, slot2)
-	if not (slot1 or slot0:getAddAttrValues())[slot2] then
-		if CharacterDestinyEnum.DestinyUpBaseParseAttr[slot2] then
-			return slot1[slot2] or 0
+function var_0_0.getAddValueByAttrId(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_1 = arg_12_1 or arg_12_0:getAddAttrValues()
+
+	local var_12_0 = arg_12_1[arg_12_2]
+
+	if not var_12_0 then
+		arg_12_2 = CharacterDestinyEnum.DestinyUpBaseParseAttr[arg_12_2]
+
+		if arg_12_2 then
+			return arg_12_1[arg_12_2] or 0
 		end
 	else
-		return slot3
+		return var_12_0
 	end
 
 	return 0
 end
 
-function slot0.getRankLevelCount(slot0)
-	return slot0.maxLevel[slot0.rank] or 0
+function var_0_0.getRankLevelCount(arg_13_0)
+	return arg_13_0.maxLevel[arg_13_0.rank] or 0
 end
 
-function slot0.getNextDestinySlotCo(slot0)
-	return CharacterDestinyConfig.instance:getNextDestinySlotCo(slot0.heroId, slot0.rank, slot0.level)
+function var_0_0.getNextDestinySlotCo(arg_14_0)
+	return (CharacterDestinyConfig.instance:getNextDestinySlotCo(arg_14_0.heroId, arg_14_0.rank, arg_14_0.level))
 end
 
-function slot0.getCurStoneNameAndIcon(slot0)
-	if slot0.curUseStoneId == 0 then
+function var_0_0.getCurStoneNameAndIcon(arg_15_0)
+	if arg_15_0.curUseStoneId == 0 then
 		return
 	end
 
-	return slot0:getStoneMo(slot0.curUseStoneId):getNameAndIcon()
+	return arg_15_0:getStoneMo(arg_15_0.curUseStoneId):getNameAndIcon()
 end
 
-function slot0.isCanPlayAttrUnlockAnim(slot0, slot1, slot2)
-	if not slot0:isUnlockSlot() then
+function var_0_0.isCanPlayAttrUnlockAnim(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_0:isUnlockSlot() then
 		return
 	end
 
-	if slot0.rank < slot2 then
+	if arg_16_2 > arg_16_0.rank then
 		return
 	end
 
-	if not slot0:getStoneMo(slot1) then
+	local var_16_0 = arg_16_0:getStoneMo(arg_16_1)
+
+	if not var_16_0 then
 		return
 	end
 
-	if not slot3.isUnlock then
+	if not var_16_0.isUnlock then
 		return
 	end
 
-	if GameUtil.playerPrefsGetNumberByUserId("HeroDestinyStoneMO_isCanPlayAttrUnlockAnim_" .. slot0.heroId .. "_" .. slot2 .. "_" .. slot1, 0) == 0 then
-		GameUtil.playerPrefsSetNumberByUserId(slot4, 1)
+	local var_16_1 = "HeroDestinyStoneMO_isCanPlayAttrUnlockAnim_" .. arg_16_0.heroId .. "_" .. arg_16_2 .. "_" .. arg_16_1
+
+	if GameUtil.playerPrefsGetNumberByUserId(var_16_1, 0) == 0 then
+		GameUtil.playerPrefsSetNumberByUserId(var_16_1, 1)
 
 		return true
 	end
 end
 
-function slot0._replaceSkill(slot0, slot1)
-	if slot1 and slot0:getCurUseStoneCo() and not string.nilorempty(slot2.exchangeSkills) then
-		slot4 = GameUtil.splitString2(slot3, true)
+function var_0_0._replaceSkill(arg_17_0, arg_17_1)
+	if arg_17_1 then
+		local var_17_0 = arg_17_0:getCurUseStoneCo()
 
-		for slot8 = 1, #slot1 do
-			for slot12, slot13 in ipairs(slot4) do
-				if slot1[slot8] == slot13[1] then
-					slot1[slot8] = slot13[2]
+		if var_17_0 then
+			local var_17_1 = var_17_0.exchangeSkills
+
+			if not string.nilorempty(var_17_1) then
+				local var_17_2 = GameUtil.splitString2(var_17_1, true)
+
+				for iter_17_0 = 1, #arg_17_1 do
+					for iter_17_1, iter_17_2 in ipairs(var_17_2) do
+						local var_17_3 = iter_17_2[1]
+						local var_17_4 = iter_17_2[2]
+
+						if arg_17_1[iter_17_0] == var_17_3 then
+							arg_17_1[iter_17_0] = var_17_4
+						end
+					end
 				end
 			end
 		end
 	end
 
-	return slot1
+	return arg_17_1
 end
 
-function slot0.setRedDot(slot0, slot1)
-	slot0.reddot = slot1
+function var_0_0.setRedDot(arg_18_0, arg_18_1)
+	arg_18_0.reddot = arg_18_1
 end
 
-function slot0.getRedDot(slot0)
-	return slot0.reddot or 0
+function var_0_0.getRedDot(arg_19_0)
+	return arg_19_0.reddot or 0
 end
 
-function slot0.setTrial(slot0)
-	if slot0.maxLevel and slot0.maxRank then
-		slot0.level = slot0.maxLevel[slot0.maxRank] or 1
+function var_0_0.setTrial(arg_20_0)
+	if arg_20_0.maxLevel and arg_20_0.maxRank then
+		arg_20_0.level = arg_20_0.maxLevel[arg_20_0.maxRank] or 1
 	end
 end
 
-return slot0
+return var_0_0

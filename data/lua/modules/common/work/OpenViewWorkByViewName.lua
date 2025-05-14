@@ -1,25 +1,25 @@
-module("modules.common.work.OpenViewWorkByViewName", package.seeall)
+﻿module("modules.common.work.OpenViewWorkByViewName", package.seeall)
 
-slot0 = class("OpenViewWorkByViewName", BaseWork)
+local var_0_0 = class("OpenViewWorkByViewName", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.viewName = slot1
-	slot0.viewParam = slot2
-	slot0.eventName = slot3 or ViewEvent.OnOpenView
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.viewName = arg_1_1
+	arg_1_0.viewParam = arg_1_2
+	arg_1_0.eventName = arg_1_3 or ViewEvent.OnOpenView
 end
 
-function slot0.onStart(slot0)
-	ViewMgr.instance:registerCallback(slot0.eventName, slot0.onEventFinish, slot0)
-	ViewMgr.instance:openView(slot0.viewName, slot0.viewParam)
+function var_0_0.onStart(arg_2_0)
+	ViewMgr.instance:registerCallback(arg_2_0.eventName, arg_2_0.onEventFinish, arg_2_0)
+	ViewMgr.instance:openView(arg_2_0.viewName, arg_2_0.viewParam)
 end
 
-function slot0.onEventFinish(slot0)
-	ViewMgr.instance:unregisterCallback(slot0.eventName, slot0.onEventFinish, slot0)
-	slot0:onDone(true)
+function var_0_0.onEventFinish(arg_3_0)
+	ViewMgr.instance:unregisterCallback(arg_3_0.eventName, arg_3_0.onEventFinish, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(slot0.eventName, slot0.onEventFinish, slot0)
+function var_0_0.clearWork(arg_4_0)
+	ViewMgr.instance:unregisterCallback(arg_4_0.eventName, arg_4_0.onEventFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

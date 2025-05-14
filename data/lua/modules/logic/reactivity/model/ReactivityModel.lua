@@ -1,37 +1,43 @@
-module("modules.logic.reactivity.model.ReactivityModel", package.seeall)
+﻿module("modules.logic.reactivity.model.ReactivityModel", package.seeall)
 
-slot0 = class("ReactivityModel", BaseModel)
+local var_0_0 = class("ReactivityModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.isReactivity(slot0, slot1)
-	if not slot1 or slot1 <= 0 then
+function var_0_0.isReactivity(arg_3_0, arg_3_1)
+	if not arg_3_1 or arg_3_1 <= 0 then
 		return false
 	end
 
-	if not ActivityConfig.instance:getActivityCo(slot1) then
+	local var_3_0 = ActivityConfig.instance:getActivityCo(arg_3_1)
+
+	if not var_3_0 then
 		return false
 	end
 
-	return slot2.isRetroAcitivity == 1
+	return var_3_0.isRetroAcitivity == 1
 end
 
-function slot0.getActivityCurrencyId(slot0, slot1)
-	if ReactivityEnum.ActivityDefine[slot1] then
-		return slot2.storeCurrency
+function var_0_0.getActivityCurrencyId(arg_4_0, arg_4_1)
+	local var_4_0 = ReactivityEnum.ActivityDefine[arg_4_1]
+
+	if var_4_0 then
+		return var_4_0.storeCurrency
 	end
 
-	for slot6, slot7 in pairs(ReactivityEnum.ActivityDefine) do
-		if slot7.storeActId == slot1 then
-			return slot7.storeCurrency
+	for iter_4_0, iter_4_1 in pairs(ReactivityEnum.ActivityDefine) do
+		if iter_4_1.storeActId == arg_4_1 then
+			return iter_4_1.storeCurrency
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

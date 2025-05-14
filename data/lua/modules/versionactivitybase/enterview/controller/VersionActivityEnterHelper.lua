@@ -1,12 +1,12 @@
-module("modules.versionactivitybase.enterview.controller.VersionActivityEnterHelper", package.seeall)
+﻿module("modules.versionactivitybase.enterview.controller.VersionActivityEnterHelper", package.seeall)
 
-slot0 = class("VersionActivityEnterHelper")
+local var_0_0 = class("VersionActivityEnterHelper")
 
-function slot0.getTabIndex(slot0, slot1)
-	if slot1 and slot1 > 0 then
-		for slot5, slot6 in ipairs(slot0) do
-			if uv0.checkIsSameAct(slot6, slot1) then
-				return slot5
+function var_0_0.getTabIndex(arg_1_0, arg_1_1)
+	if arg_1_1 and arg_1_1 > 0 then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
+			if var_0_0.checkIsSameAct(iter_1_1, arg_1_1) then
+				return iter_1_0
 			end
 		end
 	end
@@ -14,13 +14,13 @@ function slot0.getTabIndex(slot0, slot1)
 	return 1
 end
 
-function slot0.checkIsSameAct(slot0, slot1)
-	if slot0.actType == VersionActivityEnterViewEnum.ActType.Single then
-		return slot0.actId == slot1
+function var_0_0.checkIsSameAct(arg_2_0, arg_2_1)
+	if arg_2_0.actType == VersionActivityEnterViewEnum.ActType.Single then
+		return arg_2_0.actId == arg_2_1
 	end
 
-	for slot5, slot6 in ipairs(slot0.actId) do
-		if slot6 == slot1 then
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.actId) do
+		if iter_2_1 == arg_2_1 then
 			return true
 		end
 	end
@@ -28,47 +28,53 @@ function slot0.checkIsSameAct(slot0, slot1)
 	return false
 end
 
-function slot0.getActId(slot0)
-	if slot0.actType == VersionActivityEnterViewEnum.ActType.Single then
-		return slot0.actId
+function var_0_0.getActId(arg_3_0)
+	if arg_3_0.actType == VersionActivityEnterViewEnum.ActType.Single then
+		return arg_3_0.actId
 	end
 
-	for slot4, slot5 in ipairs(slot0.actId) do
-		if ActivityHelper.getActivityStatus(slot5) ~= ActivityEnum.ActivityStatus.Expired and slot6 ~= ActivityEnum.ActivityStatus.NotOnLine then
-			return slot5
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.actId) do
+		local var_3_0 = ActivityHelper.getActivityStatus(iter_3_1)
+
+		if var_3_0 ~= ActivityEnum.ActivityStatus.Expired and var_3_0 ~= ActivityEnum.ActivityStatus.NotOnLine then
+			return iter_3_1
 		end
 	end
 
-	return slot0.actId[1]
+	return arg_3_0.actId[1]
 end
 
-function slot0.getActIdList(slot0)
-	slot1 = {}
+function var_0_0.getActIdList(arg_4_0)
+	local var_4_0 = {}
 
-	if slot0 then
-		for slot5, slot6 in ipairs(slot0) do
-			if uv0.getActId(slot6) then
-				slot1[#slot1 + 1] = slot7
+	if arg_4_0 then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0) do
+			local var_4_1 = var_0_0.getActId(iter_4_1)
+
+			if var_4_1 then
+				var_4_0[#var_4_0 + 1] = var_4_1
 			end
 		end
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.isActTabCanRemove(slot0)
-	if not slot0 then
+function var_0_0.isActTabCanRemove(arg_5_0)
+	if not arg_5_0 then
 		return true
 	end
 
-	if slot0.actType == VersionActivityEnterViewEnum.ActType.Single then
-		slot1 = slot0.storeId and ActivityHelper.getActivityStatus(slot0.storeId) or ActivityHelper.getActivityStatus(slot0.actId)
+	if arg_5_0.actType == VersionActivityEnterViewEnum.ActType.Single then
+		local var_5_0 = arg_5_0.storeId and ActivityHelper.getActivityStatus(arg_5_0.storeId) or ActivityHelper.getActivityStatus(arg_5_0.actId)
 
-		return slot1 == ActivityEnum.ActivityStatus.Expired or slot1 == ActivityEnum.ActivityStatus.NotOnLine
+		return var_5_0 == ActivityEnum.ActivityStatus.Expired or var_5_0 == ActivityEnum.ActivityStatus.NotOnLine
 	end
 
-	for slot4, slot5 in ipairs(slot0.actId) do
-		if ActivityHelper.getActivityStatus(slot5) ~= ActivityEnum.ActivityStatus.Expired and slot6 ~= ActivityEnum.ActivityStatus.NotOnLine then
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.actId) do
+		local var_5_1 = ActivityHelper.getActivityStatus(iter_5_1)
+
+		if var_5_1 ~= ActivityEnum.ActivityStatus.Expired and var_5_1 ~= ActivityEnum.ActivityStatus.NotOnLine then
 			return false
 		end
 	end
@@ -76,19 +82,19 @@ function slot0.isActTabCanRemove(slot0)
 	return true
 end
 
-function slot0.checkCanOpen(slot0)
-	slot1 = true
-	slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(slot0)
+function var_0_0.checkCanOpen(arg_6_0)
+	local var_6_0 = true
+	local var_6_1, var_6_2, var_6_3 = ActivityHelper.getActivityStatusAndToast(arg_6_0)
 
-	if slot2 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot3 then
-			GameFacade.showToastWithTableParam(slot3, slot4)
+	if var_6_1 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_6_2 then
+			GameFacade.showToastWithTableParam(var_6_2, var_6_3)
 		end
 
-		slot1 = false
+		var_6_0 = false
 	end
 
-	return slot1
+	return var_6_0
 end
 
-return slot0
+return var_0_0

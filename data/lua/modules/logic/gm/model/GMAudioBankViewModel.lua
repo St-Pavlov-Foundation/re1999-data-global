@@ -1,14 +1,15 @@
-module("modules.logic.gm.model.GMAudioBankViewModel", package.seeall)
+﻿module("modules.logic.gm.model.GMAudioBankViewModel", package.seeall)
 
-slot0 = class("GMAudioBankViewModel", ListScrollModel)
+local var_0_0 = class("GMAudioBankViewModel", ListScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

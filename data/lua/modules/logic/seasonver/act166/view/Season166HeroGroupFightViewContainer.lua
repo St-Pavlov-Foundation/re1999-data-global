@@ -1,8 +1,8 @@
-module("modules.logic.seasonver.act166.view.Season166HeroGroupFightViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166HeroGroupFightViewContainer", package.seeall)
 
-slot0 = class("Season166HeroGroupFightViewContainer", BaseViewContainer)
+local var_0_0 = class("Season166HeroGroupFightViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season166HeroGroupFightLayoutView.New(),
 		Season166HeroGroupFightView.New(),
@@ -12,31 +12,31 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, slot0._closeCallback, nil, , slot0)
+		}, nil, arg_2_0._closeCallback, nil, nil, arg_2_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_2_0._navigateButtonsView
 		}
 	end
 end
 
-function slot0._closeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._closeCallback(arg_3_0)
+	arg_3_0:closeThis()
 
-	if slot0:handleVersionActivityCloseCall() then
+	if arg_3_0:handleVersionActivityCloseCall() then
 		return
 	end
 
 	MainController.instance:enterMainScene(true, false)
 end
 
-function slot0.handleVersionActivityCloseCall(slot0)
+function var_0_0.handleVersionActivityCloseCall(arg_4_0)
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -44,4 +44,4 @@ function slot0.handleVersionActivityCloseCall(slot0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,24 +1,25 @@
-module("modules.logic.main.view.MainThumbnailBannerSelectItem", package.seeall)
+﻿module("modules.logic.main.view.MainThumbnailBannerSelectItem", package.seeall)
 
-slot0 = class("MainThumbnailBannerSelectItem", LuaCompBase)
+local var_0_0 = class("MainThumbnailBannerSelectItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1.go
-	slot0._pageIndex = slot1.index
-	slot0._normalGo = gohelper.findChild(slot0._go, "#go_nomalstar")
-	slot0._selectedGo = gohelper.findChild(slot0._go, "#go_lightstar")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1.go
+	arg_1_0._pageIndex = arg_1_1.index
+	arg_1_0._normalGo = gohelper.findChild(arg_1_0._go, "#go_nomalstar")
+	arg_1_0._selectedGo = gohelper.findChild(arg_1_0._go, "#go_lightstar")
 
-	transformhelper.setLocalPos(slot0._go.transform, slot1.pos, 0, 0)
+	transformhelper.setLocalPos(arg_1_0._go.transform, arg_1_1.pos, 0, 0)
 end
 
-function slot0.updateItem(slot0, slot1, slot2)
-	slot3 = slot0._pageIndex == slot1
+function var_0_0.updateItem(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_0._pageIndex == arg_2_1
 
-	gohelper.setActive(slot0._selectedGo, slot3 and slot2 > 1)
-	gohelper.setActive(slot0._normalGo, not slot3 and slot2 > 1)
+	gohelper.setActive(arg_2_0._selectedGo, var_2_0 and arg_2_2 > 1)
+	gohelper.setActive(arg_2_0._normalGo, not var_2_0 and arg_2_2 > 1)
 end
 
-function slot0.destroy(slot0)
+function var_0_0.destroy(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,215 +1,227 @@
-module("modules.logic.meilanni.view.MeilanniEntrustView", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniEntrustView", package.seeall)
 
-slot0 = class("MeilanniEntrustView", BaseView)
+local var_0_0 = class("MeilanniEntrustView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_bg")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_bg/#simage_bg1")
-	slot0._txtexhibitsname = gohelper.findChildText(slot0.viewGO, "#go_bg/#txt_exhibitsname")
-	slot0._txtexhibitsdesc = gohelper.findChildText(slot0.viewGO, "#go_bg/scroll_exhibits/Viewport/#txt_exhibitsdesc")
-	slot0._txtactioninfo = gohelper.findChildText(slot0.viewGO, "#go_bg/#txt_actioninfo")
-	slot0._simageexhibitsicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_bg/#simage_exhibitsicon")
-	slot0._txttrustee = gohelper.findChildText(slot0.viewGO, "#go_bg/#txt_trustee")
-	slot0._txtdate = gohelper.findChildText(slot0.viewGO, "#go_bg/#txt_date")
-	slot0._gonodetail = gohelper.findChild(slot0.viewGO, "#go_nodetail")
-	slot0._btnaccept = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_nodetail/#btn_accept")
-	slot0._btnacceptagain = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_nodetail/#btn_acceptagain")
-	slot0._gobossdetail = gohelper.findChild(slot0.viewGO, "#go_bossdetail")
-	slot0._btncloseboss = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_bossdetail/#btn_closeboss")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#go_bossdetail/#simage_mask")
-	slot0._txtbossname = gohelper.findChildText(slot0.viewGO, "#go_bossdetail/#txt_bossname")
-	slot0._simagebossicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_bossdetail/#simage_bossicon")
-	slot0._scrollproperty = gohelper.findChildScrollRect(slot0.viewGO, "#go_bossdetail/#scroll_property")
-	slot0._gopropertyitem = gohelper.findChild(slot0.viewGO, "#go_bossdetail/#scroll_property/Viewport/Content/#go_propertyitem")
-	slot0._btnclose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_bg/#simage_bg1")
+	arg_1_0._txtexhibitsname = gohelper.findChildText(arg_1_0.viewGO, "#go_bg/#txt_exhibitsname")
+	arg_1_0._txtexhibitsdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_bg/scroll_exhibits/Viewport/#txt_exhibitsdesc")
+	arg_1_0._txtactioninfo = gohelper.findChildText(arg_1_0.viewGO, "#go_bg/#txt_actioninfo")
+	arg_1_0._simageexhibitsicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_bg/#simage_exhibitsicon")
+	arg_1_0._txttrustee = gohelper.findChildText(arg_1_0.viewGO, "#go_bg/#txt_trustee")
+	arg_1_0._txtdate = gohelper.findChildText(arg_1_0.viewGO, "#go_bg/#txt_date")
+	arg_1_0._gonodetail = gohelper.findChild(arg_1_0.viewGO, "#go_nodetail")
+	arg_1_0._btnaccept = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_nodetail/#btn_accept")
+	arg_1_0._btnacceptagain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_nodetail/#btn_acceptagain")
+	arg_1_0._gobossdetail = gohelper.findChild(arg_1_0.viewGO, "#go_bossdetail")
+	arg_1_0._btncloseboss = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_bossdetail/#btn_closeboss")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_bossdetail/#simage_mask")
+	arg_1_0._txtbossname = gohelper.findChildText(arg_1_0.viewGO, "#go_bossdetail/#txt_bossname")
+	arg_1_0._simagebossicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_bossdetail/#simage_bossicon")
+	arg_1_0._scrollproperty = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_bossdetail/#scroll_property")
+	arg_1_0._gopropertyitem = gohelper.findChild(arg_1_0.viewGO, "#go_bossdetail/#scroll_property/Viewport/Content/#go_propertyitem")
+	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnaccept:AddClickListener(slot0._btnacceptOnClick, slot0)
-	slot0._btnacceptagain:AddClickListener(slot0._btnacceptagainOnClick, slot0)
-	slot0._btncloseboss:AddClickListener(slot0._btnclosebossOnClick, slot0)
-	slot0._btnclose1:AddClickListener(slot0._btnclose1OnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnaccept:AddClickListener(arg_2_0._btnacceptOnClick, arg_2_0)
+	arg_2_0._btnacceptagain:AddClickListener(arg_2_0._btnacceptagainOnClick, arg_2_0)
+	arg_2_0._btncloseboss:AddClickListener(arg_2_0._btnclosebossOnClick, arg_2_0)
+	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnaccept:RemoveClickListener()
-	slot0._btnacceptagain:RemoveClickListener()
-	slot0._btncloseboss:RemoveClickListener()
-	slot0._btnclose1:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnaccept:RemoveClickListener()
+	arg_3_0._btnacceptagain:RemoveClickListener()
+	arg_3_0._btncloseboss:RemoveClickListener()
+	arg_3_0._btnclose1:RemoveClickListener()
 end
 
-function slot0._btnclose1OnClick(slot0)
-	if slot0._showExcludeRules then
+function var_0_0._btnclose1OnClick(arg_4_0)
+	if arg_4_0._showExcludeRules then
 		return
 	end
 
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._btnclosebossOnClick(slot0)
-	if slot0._showExcludeRules then
+function var_0_0._btnclosebossOnClick(arg_5_0)
+	if arg_5_0._showExcludeRules then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_photo_close)
-	gohelper.setActive(slot0._gobossdetail, false)
-	gohelper.setActive(slot0._gonodetail, true)
+	gohelper.setActive(arg_5_0._gobossdetail, false)
+	gohelper.setActive(arg_5_0._gonodetail, true)
 
-	if slot0._showBoss then
+	if arg_5_0._showBoss then
 		return
 	end
 
-	slot0._settlementAnimator:Play("appear")
-	slot0._acceptAgainAnimator:Play("appear")
-	slot0._acceptAnimator:Play("appear")
+	arg_5_0._settlementAnimator:Play("appear")
+	arg_5_0._acceptAgainAnimator:Play("appear")
+	arg_5_0._acceptAnimator:Play("appear")
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0._showExcludeRules then
+function var_0_0._btncloseOnClick(arg_6_0)
+	if arg_6_0._showExcludeRules then
 		return
 	end
 
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0._btnacceptOnClick(slot0)
-	slot0:_onAccept()
+function var_0_0._btnacceptOnClick(arg_7_0)
+	arg_7_0:_onAccept()
 end
 
-function slot0._btnacceptagainOnClick(slot0)
-	Activity108Rpc.instance:sendResetMapRequest(MeilanniEnum.activityId, slot0._mapId)
+function var_0_0._btnacceptagainOnClick(arg_8_0)
+	Activity108Rpc.instance:sendResetMapRequest(MeilanniEnum.activityId, arg_8_0._mapId)
 end
 
-function slot0._onAccept(slot0)
-	Activity108Rpc.instance:sendResetMapRequest(MeilanniEnum.activityId, slot0._mapId)
+function var_0_0._onAccept(arg_9_0)
+	Activity108Rpc.instance:sendResetMapRequest(MeilanniEnum.activityId, arg_9_0._mapId)
 end
 
-function slot0._checkEnterMapStory(slot0)
-	gohelper.setActive(slot0.viewGO, false)
+function var_0_0._checkEnterMapStory(arg_10_0)
+	gohelper.setActive(arg_10_0.viewGO, false)
 
-	for slot5, slot6 in ipairs(MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.enterMap)) do
-		if slot6[2] == slot0._mapId and not StoryModel.instance:isStoryFinished(slot6[1].story) then
-			if MeilanniMainView.getOpenDayAndFinishMapStory() then
-				StoryController.instance:playStories({
-					slot9,
-					slot8
-				})
-			else
-				StoryController.instance:playStory(slot8)
+	local var_10_0 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.enterMap)
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		if iter_10_1[2] == arg_10_0._mapId then
+			local var_10_1 = iter_10_1[1].story
+
+			if not StoryModel.instance:isStoryFinished(var_10_1) then
+				local var_10_2 = MeilanniMainView.getOpenDayAndFinishMapStory()
+
+				if var_10_2 then
+					StoryController.instance:playStories({
+						var_10_2,
+						var_10_1
+					})
+				else
+					StoryController.instance:playStory(var_10_1)
+				end
+
+				return
 			end
-
-			return
 		end
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_10_0.viewGO, true)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.StoryView then
-		gohelper.setActive(slot0.viewGO, true)
+function var_0_0._onCloseView(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.StoryView then
+		gohelper.setActive(arg_11_0.viewGO, true)
 		AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnaccept.gameObject, AudioEnum.UI.UI_checkpoint_Insight_Click)
-	gohelper.addUIClickAudio(slot0._btnacceptagain.gameObject, AudioEnum.UI.UI_checkpoint_Insight_Click)
-	slot0._simagebg1:LoadImage(ResUrl.getMeilanniIcon("bg_beijing5"))
-	slot0._simagemask:LoadImage(ResUrl.getMeilanniIcon("bg_yinying"))
+function var_0_0._editableInitView(arg_12_0)
+	gohelper.addUIClickAudio(arg_12_0._btnaccept.gameObject, AudioEnum.UI.UI_checkpoint_Insight_Click)
+	gohelper.addUIClickAudio(arg_12_0._btnacceptagain.gameObject, AudioEnum.UI.UI_checkpoint_Insight_Click)
+	arg_12_0._simagebg1:LoadImage(ResUrl.getMeilanniIcon("bg_beijing5"))
+	arg_12_0._simagemask:LoadImage(ResUrl.getMeilanniIcon("bg_yinying"))
 
-	slot0._acceptAgainAnimator = gohelper.findChild(slot0._btnacceptagain.gameObject, "acceptagain"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._acceptAnimator = gohelper.findChild(slot0._btnaccept.gameObject, "accept"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._acceptClick = SLFramework.UGUI.UIClickListener.Get(slot0._btnaccept.gameObject)
+	arg_12_0._acceptAgainAnimator = gohelper.findChild(arg_12_0._btnacceptagain.gameObject, "acceptagain"):GetComponent(typeof(UnityEngine.Animator))
+	arg_12_0._acceptAnimator = gohelper.findChild(arg_12_0._btnaccept.gameObject, "accept"):GetComponent(typeof(UnityEngine.Animator))
+	arg_12_0._acceptClick = SLFramework.UGUI.UIClickListener.Get(arg_12_0._btnaccept.gameObject)
 
-	slot0._acceptClick:AddClickDownListener(slot0._acceptClickDown, slot0)
-	slot0._acceptClick:AddClickUpListener(slot0._acceptClickUp, slot0)
+	arg_12_0._acceptClick:AddClickDownListener(arg_12_0._acceptClickDown, arg_12_0)
+	arg_12_0._acceptClick:AddClickUpListener(arg_12_0._acceptClickUp, arg_12_0)
 
-	slot0._acceptAgainClick = SLFramework.UGUI.UIClickListener.Get(slot0._btnacceptagain.gameObject)
+	arg_12_0._acceptAgainClick = SLFramework.UGUI.UIClickListener.Get(arg_12_0._btnacceptagain.gameObject)
 
-	slot0._acceptAgainClick:AddClickDownListener(slot0._acceptAgainClickDown, slot0)
-	slot0._acceptAgainClick:AddClickUpListener(slot0._acceptAgainClickUp, slot0)
+	arg_12_0._acceptAgainClick:AddClickDownListener(arg_12_0._acceptAgainClickDown, arg_12_0)
+	arg_12_0._acceptAgainClick:AddClickUpListener(arg_12_0._acceptAgainClickUp, arg_12_0)
 end
 
-function slot0._acceptAgainClickDown(slot0)
-	slot0._acceptAgainAnimator:Play("clickdown")
+function var_0_0._acceptAgainClickDown(arg_13_0)
+	arg_13_0._acceptAgainAnimator:Play("clickdown")
 end
 
-function slot0._acceptAgainClickUp(slot0)
-	slot0._acceptAgainAnimator:Play("clickup")
+function var_0_0._acceptAgainClickUp(arg_14_0)
+	arg_14_0._acceptAgainAnimator:Play("clickup")
 end
 
-function slot0._acceptClickDown(slot0)
-	slot0._acceptAnimator:Play("clickdown")
+function var_0_0._acceptClickDown(arg_15_0)
+	arg_15_0._acceptAnimator:Play("clickdown")
 end
 
-function slot0._acceptClickUp(slot0)
-	slot0._acceptAnimator:Play("clickup")
+function var_0_0._acceptClickUp(arg_16_0)
+	arg_16_0._acceptAnimator:Play("clickup")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_17_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._mapId = slot0.viewParam.mapId
-	slot0._showExhibits = slot0.viewParam.showExhibits
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0._mapId = arg_18_0.viewParam.mapId
+	arg_18_0._showExhibits = arg_18_0.viewParam.showExhibits
 
-	slot0:_checkEnterMapStory()
+	arg_18_0:_checkEnterMapStory()
 
-	slot0._mapInfo = MeilanniModel.instance:getMapInfo(slot0._mapId)
-	slot0._mapConfig = lua_activity108_map.configDict[slot0._mapId]
-	slot0._ruleGoList = slot0:getUserDataTb_()
-	slot0._txtexhibitsdesc.text = slot0._mapConfig.content
-	slot0._txtexhibitsname.text = slot0._mapConfig.title
-	slot0._txttrustee.text = slot0._mapConfig.consignor
-	slot0._txtactioninfo.text = slot0._mapConfig.actContent
-	slot1 = not slot0._mapInfo or not slot0._mapInfo:checkFinish()
+	arg_18_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_18_0._mapId)
+	arg_18_0._mapConfig = lua_activity108_map.configDict[arg_18_0._mapId]
+	arg_18_0._ruleGoList = arg_18_0:getUserDataTb_()
+	arg_18_0._txtexhibitsdesc.text = arg_18_0._mapConfig.content
+	arg_18_0._txtexhibitsname.text = arg_18_0._mapConfig.title
+	arg_18_0._txttrustee.text = arg_18_0._mapConfig.consignor
+	arg_18_0._txtactioninfo.text = arg_18_0._mapConfig.actContent
 
-	gohelper.setActive(slot0._btnaccept.gameObject, slot1)
-	gohelper.setActive(slot0._btnacceptagain.gameObject, not slot1)
+	local var_18_0 = not arg_18_0._mapInfo or not arg_18_0._mapInfo:checkFinish()
 
-	if slot0._showExhibits then
-		gohelper.setActive(slot0._btnaccept.gameObject, false)
+	gohelper.setActive(arg_18_0._btnaccept.gameObject, var_18_0)
+	gohelper.setActive(arg_18_0._btnacceptagain.gameObject, not var_18_0)
+
+	if arg_18_0._showExhibits then
+		gohelper.setActive(arg_18_0._btnaccept.gameObject, false)
 	end
 
-	if slot0._mapId <= 102 then
-		slot0._txtdate.text = formatLuaLang("meilanni_total_day", MeilanniConfig.instance:getLastEpisode(slot0._mapId).day)
+	local var_18_1 = MeilanniConfig.instance:getLastEpisode(arg_18_0._mapId)
+
+	if arg_18_0._mapId <= 102 then
+		arg_18_0._txtdate.text = formatLuaLang("meilanni_total_day", var_18_1.day)
 	else
-		slot0._txtdate.text = formatLuaLang("meilanni_total_day2", slot2.day)
+		arg_18_0._txtdate.text = formatLuaLang("meilanni_total_day2", var_18_1.day)
 	end
 
-	slot0._simageexhibitsicon:LoadImage(ResUrl.getMeilanniIcon(slot0._mapConfig.exhibits))
-	slot0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, slot0._resetMap, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+	arg_18_0._simageexhibitsicon:LoadImage(ResUrl.getMeilanniIcon(arg_18_0._mapConfig.exhibits))
+	arg_18_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_18_0._resetMap, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_18_0._onCloseView, arg_18_0)
 end
 
-function slot0._resetMap(slot0)
-	slot0:closeThis()
+function var_0_0._resetMap(arg_19_0)
+	arg_19_0:closeThis()
 	MeilanniController.instance:openMeilanniView({
-		mapId = slot0._mapId
+		mapId = arg_19_0._mapId
 	})
 end
 
-function slot0.onClose(slot0)
-	slot0._simageexhibitsicon:UnLoadImage()
+function var_0_0.onClose(arg_20_0)
+	arg_20_0._simageexhibitsicon:UnLoadImage()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_photo_close)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
-	slot0._acceptClick:RemoveClickDownListener()
-	slot0._acceptClick:RemoveClickUpListener()
-	slot0._acceptAgainClick:RemoveClickDownListener()
-	slot0._acceptAgainClick:RemoveClickUpListener()
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0._simagebg1:UnLoadImage()
+	arg_21_0._simagemask:UnLoadImage()
+	arg_21_0._acceptClick:RemoveClickDownListener()
+	arg_21_0._acceptClick:RemoveClickUpListener()
+	arg_21_0._acceptAgainClick:RemoveClickDownListener()
+	arg_21_0._acceptAgainClick:RemoveClickUpListener()
 end
 
-return slot0
+return var_0_0

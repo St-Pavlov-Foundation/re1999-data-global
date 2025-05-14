@@ -1,58 +1,59 @@
-module("modules.logic.dungeon.controller.DungeonPuzzlePipeRule", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonPuzzlePipeRule", package.seeall)
 
-slot0 = class("DungeonPuzzlePipeRule")
-slot1 = DungeonPuzzleEnum.dir.left
-slot2 = DungeonPuzzleEnum.dir.right
-slot3 = DungeonPuzzleEnum.dir.down
-slot4 = DungeonPuzzleEnum.dir.up
+local var_0_0 = class("DungeonPuzzlePipeRule")
+local var_0_1 = DungeonPuzzleEnum.dir.left
+local var_0_2 = DungeonPuzzleEnum.dir.right
+local var_0_3 = DungeonPuzzleEnum.dir.down
+local var_0_4 = DungeonPuzzleEnum.dir.up
 
-function slot0.ctor(slot0)
-	slot0._ruleChange = {
-		[28.0] = 46,
-		[248.0] = 468,
-		[24.0] = 48,
-		[46.0] = 28,
-		[48.0] = 68,
-		[246.0] = 248,
-		[268.0] = 246,
-		[468.0] = 268,
-		[26.0] = 24,
-		[68.0] = 26,
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._ruleChange = {
+		[28] = 46,
+		[248] = 468,
+		[24] = 48,
+		[46] = 28,
+		[48] = 68,
+		[246] = 248,
+		[268] = 246,
+		[468] = 268,
+		[26] = 24,
+		[68] = 26,
 		[DungeonPuzzlePipeModel.constEntry] = DungeonPuzzlePipeModel.constEntry
 	}
-	slot0._ruleConnect = {}
+	arg_1_0._ruleConnect = {}
 
-	for slot4, slot5 in pairs(slot0._ruleChange) do
-		if slot4 ~= 0 then
-			slot6 = {}
-			slot7 = slot4
+	for iter_1_0, iter_1_1 in pairs(arg_1_0._ruleChange) do
+		if iter_1_0 ~= 0 then
+			local var_1_0 = {}
+			local var_1_1 = iter_1_0
 
-			while slot7 > 0 do
-				slot8 = slot7 % 10
-				slot7 = (slot7 - slot8) / 10
-				slot6[slot8] = true
+			while var_1_1 > 0 do
+				local var_1_2 = var_1_1 % 10
+
+				var_1_1 = (var_1_1 - var_1_2) / 10
+				var_1_0[var_1_2] = true
 			end
 
-			slot0._ruleConnect[slot4] = slot6
+			arg_1_0._ruleConnect[iter_1_0] = var_1_0
 		end
 	end
 
-	slot0._ruleConnect[DungeonPuzzlePipeModel.constEntry] = {
-		[uv0] = true,
-		[uv1] = true,
-		[uv2] = true,
-		[uv3] = true
+	arg_1_0._ruleConnect[DungeonPuzzlePipeModel.constEntry] = {
+		[var_0_2] = true,
+		[var_0_1] = true,
+		[var_0_3] = true,
+		[var_0_4] = true
 	}
 end
 
-function slot0.setGameSize(slot0, slot1, slot2)
-	slot0._gameWidth = slot1
-	slot0._gameHeight = slot2
+function var_0_0.setGameSize(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._gameWidth = arg_2_1
+	arg_2_0._gameHeight = arg_2_2
 end
 
-function slot0.isGameClear(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if not slot0:getIsEntryClear(slot5) then
+function var_0_0.isGameClear(arg_3_0, arg_3_1)
+	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
+		if not arg_3_0:getIsEntryClear(iter_3_0) then
 			return false
 		end
 	end
@@ -60,177 +61,208 @@ function slot0.isGameClear(slot0, slot1)
 	return true
 end
 
-function slot0.getIsEntryClear(slot0, slot1)
-	return DungeonPuzzleEnum.pipeEntryClearCount <= slot1.entryCount and DungeonPuzzleEnum.pipeEntryClearDecimal <= slot1:getConnectValue()
+function var_0_0.getIsEntryClear(arg_4_0, arg_4_1)
+	return arg_4_1.entryCount >= DungeonPuzzleEnum.pipeEntryClearCount and arg_4_1:getConnectValue() >= DungeonPuzzleEnum.pipeEntryClearDecimal
 end
 
-function slot0.getReachTable(slot0)
-	slot3 = {}
+function var_0_0.getReachTable(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = {}
+	local var_5_2 = {}
+	local var_5_3 = DungeonPuzzlePipeModel.instance:getEntryList()
 
-	for slot8, slot9 in ipairs(DungeonPuzzlePipeModel.instance:getEntryList()) do
-		table.insert(slot3, slot9)
+	for iter_5_0, iter_5_1 in ipairs(var_5_3) do
+		table.insert(var_5_2, iter_5_1)
 
-		slot9.entryCount = #slot11
+		local var_5_4, var_5_5 = arg_5_0:_getSearchPipeResult(iter_5_1, var_5_2)
+
+		var_5_1[iter_5_1] = var_5_5
+		var_5_0[iter_5_1] = var_5_4
+		iter_5_1.entryCount = #var_5_5
 	end
 
-	return {
-		[slot9] = slot0:_getSearchPipeResult(slot9, slot3)
-	}, {
-		[slot9] = slot11
-	}
+	return var_5_0, var_5_1
 end
 
-function slot0._getSearchPipeResult(slot0, slot1, slot2)
-	slot3 = {}
-	slot4 = {}
+function var_0_0._getSearchPipeResult(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = {}
+	local var_6_1 = {}
 
-	while #slot2 > 0 do
-		if table.remove(slot2):isEntry() and slot5 ~= slot1 then
-			if not slot4[slot5] then
-				table.insert(slot3, slot5)
+	while #arg_6_2 > 0 do
+		local var_6_2 = table.remove(arg_6_2)
+
+		if var_6_2:isEntry() and var_6_2 ~= arg_6_1 then
+			if not var_6_1[var_6_2] then
+				table.insert(var_6_0, var_6_2)
 			end
 		else
-			slot0:_addToOpenSet(slot5, slot4, slot2)
+			arg_6_0:_addToOpenSet(var_6_2, var_6_1, arg_6_2)
 		end
 
-		slot4[slot5] = true
+		var_6_1[var_6_2] = true
 	end
 
-	return slot4, slot3
+	return var_6_1, var_6_0
 end
 
-function slot0._addToOpenSet(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in pairs(slot1.connectSet) do
-		slot9, slot10, slot11 = uv0.getIndexByDir(slot1.x, slot1.y, slot7)
+function var_0_0._addToOpenSet(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	for iter_7_0, iter_7_1 in pairs(arg_7_1.connectSet) do
+		local var_7_0, var_7_1, var_7_2 = var_0_0.getIndexByDir(arg_7_1.x, arg_7_1.y, iter_7_0)
 
-		if slot9 > 0 and slot9 <= slot0._gameWidth and slot10 > 0 and slot10 <= slot0._gameHeight and not slot2[DungeonPuzzlePipeModel.instance:getData(slot9, slot10)] then
-			table.insert(slot3, slot12)
+		if var_7_0 > 0 and var_7_0 <= arg_7_0._gameWidth and var_7_1 > 0 and var_7_1 <= arg_7_0._gameHeight then
+			local var_7_3 = DungeonPuzzlePipeModel.instance:getData(var_7_0, var_7_1)
+
+			if not arg_7_2[var_7_3] then
+				table.insert(arg_7_3, var_7_3)
+			end
 		end
 	end
 end
 
-function slot0._mergeReachDir(slot0, slot1)
-	slot2 = {}
+function var_0_0._mergeReachDir(arg_8_0, arg_8_1)
+	local var_8_0 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		table.insert(slot2, slot7)
+	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
+		table.insert(var_8_0, iter_8_1)
 	end
 
-	for slot7 = 1, #slot2 do
-		slot8 = {}
+	local var_8_1 = #var_8_0
 
-		for slot12 = slot7 + 1, slot3 do
-			for slot18, slot19 in pairs(slot2[slot7]) do
-				if slot2[slot12][slot18] then
-					slot8[slot18] = 1
+	for iter_8_2 = 1, var_8_1 do
+		local var_8_2 = {}
+
+		for iter_8_3 = iter_8_2 + 1, var_8_1 do
+			local var_8_3 = var_8_0[iter_8_2]
+			local var_8_4 = var_8_0[iter_8_3]
+
+			for iter_8_4, iter_8_5 in pairs(var_8_3) do
+				if var_8_4[iter_8_4] then
+					var_8_2[iter_8_4] = 1
 				end
 			end
 
-			slot0:_markReachDir(slot8)
+			arg_8_0:_markReachDir(var_8_2)
 		end
 	end
 end
 
-function slot0._markReachDir(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		for slot10, slot11 in pairs(slot5.connectSet) do
-			slot12, slot13, slot14 = uv0.getIndexByDir(slot5.x, slot5.y, slot10)
+function var_0_0._markReachDir(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
+		for iter_9_2, iter_9_3 in pairs(iter_9_0.connectSet) do
+			local var_9_0, var_9_1, var_9_2 = var_0_0.getIndexByDir(iter_9_0.x, iter_9_0.y, iter_9_2)
 
-			if slot12 > 0 and slot12 <= slot0._gameWidth and slot13 > 0 and slot13 <= slot0._gameHeight and slot1[DungeonPuzzlePipeModel.instance:getData(slot12, slot13)] then
-				slot5.entryConnect[slot10] = true
-				slot15.entryConnect[slot14] = true
+			if var_9_0 > 0 and var_9_0 <= arg_9_0._gameWidth and var_9_1 > 0 and var_9_1 <= arg_9_0._gameHeight then
+				local var_9_3 = DungeonPuzzlePipeModel.instance:getData(var_9_0, var_9_1)
+
+				if arg_9_1[var_9_3] then
+					iter_9_0.entryConnect[iter_9_2] = true
+					var_9_3.entryConnect[var_9_2] = true
+				end
 			end
 		end
 	end
 end
 
-function slot0._unmarkBranch(slot0)
-	for slot4 = 1, slot0._gameWidth do
-		for slot8 = 1, slot0._gameHeight do
-			slot0:_unmarkSearchNode(DungeonPuzzlePipeModel.instance:getData(slot4, slot8))
+function var_0_0._unmarkBranch(arg_10_0)
+	for iter_10_0 = 1, arg_10_0._gameWidth do
+		for iter_10_1 = 1, arg_10_0._gameHeight do
+			local var_10_0 = DungeonPuzzlePipeModel.instance:getData(iter_10_0, iter_10_1)
+
+			arg_10_0:_unmarkSearchNode(var_10_0)
 		end
 	end
 end
 
-function slot0._unmarkSearchNode(slot0, slot1)
-	slot2 = slot1
+function var_0_0._unmarkSearchNode(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1
 
-	while slot2 ~= nil do
-		if tabletool.len(slot2.entryConnect) == 1 and not slot2:isEntry() then
-			slot3 = nil
+	while var_11_0 ~= nil do
+		if tabletool.len(var_11_0.entryConnect) == 1 and not var_11_0:isEntry() then
+			local var_11_1
 
-			for slot7, slot8 in pairs(slot2.entryConnect) do
-				slot3 = slot7
+			for iter_11_0, iter_11_1 in pairs(var_11_0.entryConnect) do
+				var_11_1 = iter_11_0
 			end
 
-			slot4, slot5, slot6 = uv0.getIndexByDir(slot2.x, slot2.y, slot3)
-			slot7 = DungeonPuzzlePipeModel.instance:getData(slot4, slot5)
-			slot2.entryConnect[slot3] = nil
-			slot7.entryConnect[slot6] = nil
-			slot2 = slot7
+			local var_11_2, var_11_3, var_11_4 = var_0_0.getIndexByDir(var_11_0.x, var_11_0.y, var_11_1)
+			local var_11_5 = DungeonPuzzlePipeModel.instance:getData(var_11_2, var_11_3)
+
+			var_11_0.entryConnect[var_11_1] = nil
+			var_11_5.entryConnect[var_11_4] = nil
+			var_11_0 = var_11_5
 		else
-			slot2 = nil
+			var_11_0 = nil
 		end
 	end
 end
 
-function slot0.setSingleConnection(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1 > 0 and slot1 <= slot0._gameWidth and slot2 > 0 and slot2 <= slot0._gameHeight then
-		slot10 = slot6.connectSet[slot3] == true
+function var_0_0.setSingleConnection(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
+	if arg_12_1 > 0 and arg_12_1 <= arg_12_0._gameWidth and arg_12_2 > 0 and arg_12_2 <= arg_12_0._gameHeight then
+		local var_12_0 = DungeonPuzzlePipeModel.instance:getData(arg_12_1, arg_12_2)
+		local var_12_1 = arg_12_0._ruleConnect[var_12_0.value]
+		local var_12_2 = arg_12_0._ruleConnect[arg_12_5.value]
+		local var_12_3 = var_12_1[arg_12_3] and var_12_2[arg_12_4]
+		local var_12_4
 
-		if slot0._ruleConnect[DungeonPuzzlePipeModel.instance:getData(slot1, slot2).value][slot3] and slot0._ruleConnect[slot5.value][slot4] then
-			slot6.connectSet[slot3] = true
-			slot5.connectSet[slot4] = true
+		var_12_4 = var_12_0.connectSet[arg_12_3] == true
+
+		if var_12_3 then
+			var_12_0.connectSet[arg_12_3] = true
+			arg_12_5.connectSet[arg_12_4] = true
 		else
-			slot6.connectSet[slot3] = nil
-			slot5.connectSet[slot4] = nil
+			var_12_0.connectSet[arg_12_3] = nil
+			arg_12_5.connectSet[arg_12_4] = nil
 		end
 	end
 end
 
-function slot0.changeDirection(slot0, slot1, slot2)
-	if slot0._ruleChange[DungeonPuzzlePipeModel.instance:getData(slot1, slot2).value] then
-		slot3.value = slot4
+function var_0_0.changeDirection(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = DungeonPuzzlePipeModel.instance:getData(arg_13_1, arg_13_2)
+	local var_13_1 = arg_13_0._ruleChange[var_13_0.value]
+
+	if var_13_1 then
+		var_13_0.value = var_13_1
 	end
 
-	return slot3
+	return var_13_0
 end
 
-function slot0.getRandomSkipSet(slot0)
-	slot1 = {
-		[slot9] = true
-	}
-	slot3, slot4 = DungeonPuzzlePipeModel.instance:getGameSize()
+function var_0_0.getRandomSkipSet(arg_14_0)
+	local var_14_0 = {}
+	local var_14_1 = DungeonPuzzlePipeModel.instance:getEntryList()
+	local var_14_2, var_14_3 = DungeonPuzzlePipeModel.instance:getGameSize()
 
-	for slot8, slot9 in ipairs(DungeonPuzzlePipeModel.instance:getEntryList()) do
-		slot10 = slot9.x
-		slot11 = slot9.y
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		var_14_0[iter_14_1] = true
 
-		slot0:_insertToSet(slot10 - 1, slot11, slot1)
-		slot0:_insertToSet(slot10 + 1, slot11, slot1)
-		slot0:_insertToSet(slot10, slot11 - 1, slot1)
-		slot0:_insertToSet(slot10, slot11 + 1, slot1)
+		local var_14_4 = iter_14_1.x
+		local var_14_5 = iter_14_1.y
+
+		arg_14_0:_insertToSet(var_14_4 - 1, var_14_5, var_14_0)
+		arg_14_0:_insertToSet(var_14_4 + 1, var_14_5, var_14_0)
+		arg_14_0:_insertToSet(var_14_4, var_14_5 - 1, var_14_0)
+		arg_14_0:_insertToSet(var_14_4, var_14_5 + 1, var_14_0)
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0._insertToSet(slot0, slot1, slot2, slot3)
-	if slot1 > 0 and slot1 <= slot0._gameWidth and slot2 > 0 and slot2 <= slot0._gameHeight then
-		slot3[DungeonPuzzlePipeModel.instance:getData(slot1, slot2)] = true
-	end
-end
-
-function slot0.getIndexByDir(slot0, slot1, slot2)
-	if slot2 == uv0 then
-		return slot0 - 1, slot1, uv1
-	elseif slot2 == uv1 then
-		return slot0 + 1, slot1, uv0
-	elseif slot2 == uv2 then
-		return slot0, slot1 + 1, uv3
-	elseif slot2 == uv3 then
-		return slot0, slot1 - 1, uv2
+function var_0_0._insertToSet(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if arg_15_1 > 0 and arg_15_1 <= arg_15_0._gameWidth and arg_15_2 > 0 and arg_15_2 <= arg_15_0._gameHeight then
+		arg_15_3[DungeonPuzzlePipeModel.instance:getData(arg_15_1, arg_15_2)] = true
 	end
 end
 
-return slot0
+function var_0_0.getIndexByDir(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_2 == var_0_1 then
+		return arg_16_0 - 1, arg_16_1, var_0_2
+	elseif arg_16_2 == var_0_2 then
+		return arg_16_0 + 1, arg_16_1, var_0_1
+	elseif arg_16_2 == var_0_4 then
+		return arg_16_0, arg_16_1 + 1, var_0_3
+	elseif arg_16_2 == var_0_3 then
+		return arg_16_0, arg_16_1 - 1, var_0_4
+	end
+end
+
+return var_0_0

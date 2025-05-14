@@ -1,88 +1,95 @@
-module("modules.common.others.UICloneComponent", package.seeall)
+﻿module("modules.common.others.UICloneComponent", package.seeall)
 
-slot0 = class("UICloneComponent", UserDataDispose)
+local var_0_0 = class("UICloneComponent", UserDataDispose)
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:__onInit()
 
-	slot0.create_data = slot0:getUserDataTb_()
+	arg_1_0.create_data = arg_1_0:getUserDataTb_()
 end
 
-function slot0.createObjList(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	if type(slot3) == "number" then
-		slot3 = {}
+function var_0_0.createObjList(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6, arg_2_7, arg_2_8)
+	if type(arg_2_3) == "number" then
+		local var_2_0 = arg_2_3
 
-		for slot13 = 1, slot3 do
-			table.insert(slot3, slot13)
+		arg_2_3 = {}
+
+		for iter_2_0 = 1, var_2_0 do
+			table.insert(arg_2_3, iter_2_0)
 		end
 	end
 
-	if not slot4 then
+	if not arg_2_4 then
 		logError("没有传入格子父节点")
 
 		return
 	end
 
-	if not slot5 then
+	if not arg_2_5 then
 		logError("没有传入格子模型")
 
 		return
 	end
 
-	if slot7 then
-		slot0:getUserDataTb_().total_num = #slot3
-		slot9.delay_time = slot7 or 0.01
-		slot9.create_count = slot8 or 1
-		slot9.cur_count = 0
-		slot9.class = slot1
-		slot9.callback = slot2
-		slot9.data = slot3
-		slot9.parent_obj = slot4
-		slot9.model_obj = slot5
-		slot9.component = slot6
-		slot9.start_time = Time.realtimeSinceStartup
+	if arg_2_7 then
+		local var_2_1 = arg_2_0:getUserDataTb_()
 
-		table.insert(slot0.create_data, slot9)
-		TaskDispatcher.runRepeat(slot0._detectCloneState, slot0, 0.01)
+		var_2_1.total_num = #arg_2_3
+		var_2_1.delay_time = arg_2_7 or 0.01
+		var_2_1.create_count = arg_2_8 or 1
+		var_2_1.cur_count = 0
+		var_2_1.class = arg_2_1
+		var_2_1.callback = arg_2_2
+		var_2_1.data = arg_2_3
+		var_2_1.parent_obj = arg_2_4
+		var_2_1.model_obj = arg_2_5
+		var_2_1.component = arg_2_6
+		var_2_1.start_time = Time.realtimeSinceStartup
+
+		table.insert(arg_2_0.create_data, var_2_1)
+		TaskDispatcher.runRepeat(arg_2_0._detectCloneState, arg_2_0, 0.01)
 	else
-		gohelper.CreateObjList(slot1, slot2, slot3, slot4, slot5, slot6)
+		gohelper.CreateObjList(arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
 	end
 end
 
-function slot0._detectCloneState(slot0)
-	for slot4, slot5 in ipairs(slot0.create_data) do
-		if slot5.delay_time <= Time.realtimeSinceStartup - slot5.start_time then
-			slot5.start_time = Time.realtimeSinceStartup
+function var_0_0._detectCloneState(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.create_data) do
+		if Time.realtimeSinceStartup - iter_3_1.start_time >= iter_3_1.delay_time then
+			iter_3_1.start_time = Time.realtimeSinceStartup
 
-			if slot5.cur_count < slot5.total_num then
-				slot6 = slot5.cur_count + 1
-				slot5.cur_count = slot5.cur_count + slot5.create_count
+			if iter_3_1.cur_count < iter_3_1.total_num then
+				local var_3_0 = iter_3_1.cur_count + 1
 
-				if slot5.total_num < slot5.cur_count then
-					slot5.cur_count = slot5.total_num
+				iter_3_1.cur_count = iter_3_1.cur_count + iter_3_1.create_count
+
+				if iter_3_1.cur_count > iter_3_1.total_num then
+					iter_3_1.cur_count = iter_3_1.total_num
 				end
 
-				gohelper.CreateObjList(slot5.class, slot5.callback, slot5.data, slot5.parent_obj, slot5.model_obj, slot5.component, slot6, slot5.cur_count)
+				local var_3_1 = iter_3_1.cur_count
+
+				gohelper.CreateObjList(iter_3_1.class, iter_3_1.callback, iter_3_1.data, iter_3_1.parent_obj, iter_3_1.model_obj, iter_3_1.component, var_3_0, var_3_1)
 			end
 		end
 	end
 
-	for slot4 = #slot0.create_data, 1, -1 do
-		slot5 = slot0.create_data[slot4]
+	for iter_3_2 = #arg_3_0.create_data, 1, -1 do
+		local var_3_2 = arg_3_0.create_data[iter_3_2]
 
-		if slot5.total_num <= slot5.cur_count then
-			table.remove(slot0.create_data, slot4)
+		if var_3_2.cur_count >= var_3_2.total_num then
+			table.remove(arg_3_0.create_data, iter_3_2)
 		end
 	end
 
-	if #slot0.create_data == 0 then
-		TaskDispatcher.cancelTask(slot0._detectCloneState, slot0)
+	if #arg_3_0.create_data == 0 then
+		TaskDispatcher.cancelTask(arg_3_0._detectCloneState, arg_3_0)
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	TaskDispatcher.cancelTask(slot0._detectCloneState, slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._detectCloneState, arg_4_0)
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

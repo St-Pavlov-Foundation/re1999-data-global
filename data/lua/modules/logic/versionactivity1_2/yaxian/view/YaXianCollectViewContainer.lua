@@ -1,20 +1,21 @@
-module("modules.logic.versionactivity1_2.yaxian.view.YaXianCollectViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianCollectViewContainer", package.seeall)
 
-slot0 = class("YaXianCollectViewContainer", BaseViewContainer)
+local var_0_0 = class("YaXianCollectViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, YaXianCollectView.New())
+	table.insert(var_1_0, YaXianCollectView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_feedback_open)
 end
 
-return slot0
+return var_0_0

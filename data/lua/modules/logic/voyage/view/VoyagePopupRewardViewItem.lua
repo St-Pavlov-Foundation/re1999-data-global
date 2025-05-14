@@ -1,54 +1,62 @@
-module("modules.logic.voyage.view.VoyagePopupRewardViewItem", package.seeall)
+﻿module("modules.logic.voyage.view.VoyagePopupRewardViewItem", package.seeall)
 
-slot0 = class("VoyagePopupRewardViewItem", ActivityGiftForTheVoyageItemBase)
+local var_0_0 = class("VoyagePopupRewardViewItem", ActivityGiftForTheVoyageItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._imagenum = gohelper.findChildImage(slot0.viewGO, "#image_num")
-	slot0._gonum = gohelper.findChild(slot0.viewGO, "#go_num")
-	slot0._goimgall = gohelper.findChild(slot0.viewGO, "#go_imgall")
-	slot0._txttaskdesc = gohelper.findChildText(slot0.viewGO, "#txt_taskdesc")
-	slot0._scrollRewards = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_Rewards")
-	slot0._goRewards = gohelper.findChild(slot0.viewGO, "#scroll_Rewards/Viewport/#go_Rewards")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "#image_num")
+	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "#go_num")
+	arg_1_0._goimgall = gohelper.findChild(arg_1_0.viewGO, "#go_imgall")
+	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskdesc")
+	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Rewards")
+	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "#scroll_Rewards/Viewport/#go_Rewards")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gonumTrans = slot0._gonum.transform
-	slot0._bg = gohelper.findChild(slot0.viewGO, "bg")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gonumTrans = arg_4_0._gonum.transform
+	arg_4_0._bg = gohelper.findChild(arg_4_0.viewGO, "bg")
 end
 
-slot1 = 1
+local var_0_1 = 1
 
-function slot0.onUpdateMO(slot0, slot1)
-	for slot7 = 1 + uv0, math.max(slot0._index, slot0._gonumTrans.childCount) do
-		if slot2 <= slot7 - 1 then
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._gonumTrans.childCount
+	local var_5_1 = math.max(arg_5_0._index, var_5_0)
+
+	for iter_5_0 = 1 + var_0_1, var_5_1 do
+		if var_5_0 <= iter_5_0 - 1 then
 			break
 		end
 
-		GameUtil.setActive01(slot0._gonumTrans:GetChild(slot7 - 1), slot0._index == slot7 - uv0)
+		local var_5_2 = arg_5_0._gonumTrans:GetChild(iter_5_0 - 1)
+
+		GameUtil.setActive01(var_5_2, arg_5_0._index == iter_5_0 - var_0_1)
 	end
 
-	ZProj.UGUIHelper.SetColorAlpha(slot0._bg:GetComponent(gohelper.Type_Image), slot1.id > 0 and 0.7 or 1)
-	uv1.super.onUpdateMO(slot0, slot1)
+	ZProj.UGUIHelper.SetColorAlpha(arg_5_0._bg:GetComponent(gohelper.Type_Image), arg_5_1.id > 0 and 0.7 or 1)
+	var_0_0.super.onUpdateMO(arg_5_0, arg_5_1)
 end
 
-function slot0.onRefresh(slot0)
-	slot1 = slot0._mo
-	slot0._txttaskdesc.text = slot1.desc
+function var_0_0.onRefresh(arg_6_0)
+	local var_6_0 = arg_6_0._mo
 
-	gohelper.setActive(slot0._goimgall, slot1.id == -1)
-	slot0:_refreshRewardList(slot0._goRewards)
+	arg_6_0._txttaskdesc.text = var_6_0.desc
 
-	slot0._scrollRewards.horizontalNormalizedPosition = 0
+	gohelper.setActive(arg_6_0._goimgall, var_6_0.id == -1)
+	arg_6_0:_refreshRewardList(arg_6_0._goRewards)
+
+	arg_6_0._scrollRewards.horizontalNormalizedPosition = 0
 end
 
-return slot0
+return var_0_0

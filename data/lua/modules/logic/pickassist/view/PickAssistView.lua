@@ -1,87 +1,91 @@
-module("modules.logic.pickassist.view.PickAssistView", package.seeall)
+﻿module("modules.logic.pickassist.view.PickAssistView", package.seeall)
 
-slot0 = class("PickAssistView", BaseView)
+local var_0_0 = class("PickAssistView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofilter = gohelper.findChild(slot0.viewGO, "#go_filter")
-	slot0._goattrItem = gohelper.findChild(slot0.viewGO, "#go_filter/#go_attrItem")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
-	slot0._gorecommendAttr = gohelper.findChild(slot0.viewGO, "#go_recommendAttr")
-	slot0._txtrecommendAttrDesc = gohelper.findChildText(slot0.viewGO, "#go_recommendAttr/txt_recommend")
-	slot0._goattrlist = gohelper.findChild(slot0.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist")
-	slot0._goattritem = gohelper.findChild(slot0.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist/#go_recommendAttrItem")
-	slot0._btnrefresh = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_refresh")
-	slot0._simageprogress = gohelper.findChildImage(slot0.viewGO, "bottom/#btn_refresh/#simage_progress")
-	slot0._godetail = gohelper.findChild(slot0.viewGO, "bottom/#btn_detail")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_detail")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_confirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "#go_filter")
+	arg_1_0._goattrItem = gohelper.findChild(arg_1_0.viewGO, "#go_filter/#go_attrItem")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+	arg_1_0._gorecommendAttr = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr")
+	arg_1_0._txtrecommendAttrDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_recommendAttr/txt_recommend")
+	arg_1_0._goattrlist = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist")
+	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/txt_recommend/#go_attrlist/#go_recommendAttrItem")
+	arg_1_0._btnrefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_refresh")
+	arg_1_0._simageprogress = gohelper.findChildImage(arg_1_0.viewGO, "bottom/#btn_refresh/#simage_progress")
+	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "bottom/#btn_detail")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_detail")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_confirm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrefresh:AddClickListener(slot0._btnrefreshOnClick, slot0)
-	slot0._btndetail:AddClickListener(slot0._onHeroDetailClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0:addEventCb(PickAssistController.instance, PickAssistEvent.BeforeRefreshAssistList, slot0.onBeforeRefreshAssistList, slot0)
-	slot0:addEventCb(PickAssistController.instance, PickAssistEvent.SetCareer, slot0.refreshIsEmpty, slot0)
-	slot0:addEventCb(PickAssistController.instance, PickAssistEvent.RefreshSelectAssistHero, slot0.refreshBtnDetail, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnrefresh:AddClickListener(arg_2_0._btnrefreshOnClick, arg_2_0)
+	arg_2_0._btndetail:AddClickListener(arg_2_0._onHeroDetailClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0:addEventCb(PickAssistController.instance, PickAssistEvent.BeforeRefreshAssistList, arg_2_0.onBeforeRefreshAssistList, arg_2_0)
+	arg_2_0:addEventCb(PickAssistController.instance, PickAssistEvent.SetCareer, arg_2_0.refreshIsEmpty, arg_2_0)
+	arg_2_0:addEventCb(PickAssistController.instance, PickAssistEvent.RefreshSelectAssistHero, arg_2_0.refreshBtnDetail, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrefresh:RemoveClickListener()
-	slot0._btndetail:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
-	slot0:addEventCb(PickAssistController.instance, PickAssistEvent.BeforeRefreshAssistList, slot0.onBeforeRefreshAssistList, slot0)
-	slot0:removeEventCb(PickAssistController.instance, PickAssistEvent.SetCareer, slot0.refreshIsEmpty, slot0)
-	slot0:removeEventCb(PickAssistController.instance, PickAssistEvent.RefreshSelectAssistHero, slot0.refreshBtnDetail, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnrefresh:RemoveClickListener()
+	arg_3_0._btndetail:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0:addEventCb(PickAssistController.instance, PickAssistEvent.BeforeRefreshAssistList, arg_3_0.onBeforeRefreshAssistList, arg_3_0)
+	arg_3_0:removeEventCb(PickAssistController.instance, PickAssistEvent.SetCareer, arg_3_0.refreshIsEmpty, arg_3_0)
+	arg_3_0:removeEventCb(PickAssistController.instance, PickAssistEvent.RefreshSelectAssistHero, arg_3_0.refreshBtnDetail, arg_3_0)
 end
 
-function slot0.onBeforeRefreshAssistList(slot0)
-	if slot0.scrollView then
-		slot0.scrollView._firstUpdate = true
+function var_0_0.onBeforeRefreshAssistList(arg_4_0)
+	if arg_4_0.scrollView then
+		arg_4_0.scrollView._firstUpdate = true
 
-		if not slot0.hasChangedItemDelayTime then
-			slot0.scrollView:changeDelayTime(-slot0.viewContainer.viewOpenAnimTime)
+		if not arg_4_0.hasChangedItemDelayTime then
+			arg_4_0.scrollView:changeDelayTime(-arg_4_0.viewContainer.viewOpenAnimTime)
 
-			slot0.hasChangedItemDelayTime = true
+			arg_4_0.hasChangedItemDelayTime = true
 		end
 	end
 end
 
-function slot0._btnrefreshOnClick(slot0)
+function var_0_0._btnrefreshOnClick(arg_5_0)
 	PickAssistController.instance:manualRefreshList()
 end
 
-function slot0._onHeroDetailClick(slot0)
-	if PickAssistListModel.instance:getSelectedMO() then
-		CharacterController.instance:openCharacterView(slot1.heroMO)
+function var_0_0._onHeroDetailClick(arg_6_0)
+	local var_6_0 = PickAssistListModel.instance:getSelectedMO()
+
+	if var_6_0 then
+		CharacterController.instance:openCharacterView(var_6_0.heroMO)
 	end
 end
 
-function slot0._btnconfirmOnClick(slot0)
+function var_0_0._btnconfirmOnClick(arg_7_0)
 	PickAssistController.instance:pickOver()
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0._btnCareerFilterOnClick(slot0, slot1)
-	if PickAssistController.instance:setCareer(slot1) then
-		slot0:refreshCareerFilterItems()
+function var_0_0._btnCareerFilterOnClick(arg_8_0, arg_8_1)
+	if PickAssistController.instance:setCareer(arg_8_1) then
+		arg_8_0:refreshCareerFilterItems()
 	end
 end
 
-function slot0.getRecommendCareer(slot0)
+function var_0_0.getRecommendCareer(arg_9_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_setFilterBtn()
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0:_setFilterBtn()
 end
 
-function slot0._setFilterBtn(slot0)
-	slot0._career2FilterItemDict = {}
-	slot1 = {
+function var_0_0._setFilterBtn(arg_11_0)
+	arg_11_0._career2FilterItemDict = {}
+
+	local var_11_0 = {
 		CharacterEnum.CareerType.Yan,
 		CharacterEnum.CareerType.Xing,
 		CharacterEnum.CareerType.Mu,
@@ -89,100 +93,118 @@ function slot0._setFilterBtn(slot0)
 		CharacterEnum.CareerType.Ling,
 		CharacterEnum.CareerType.Zhi
 	}
-	slot0.careerTypeCount = #slot1
 
-	gohelper.CreateObjList(slot0, slot0._onInitFilterBtn, slot1, slot0._gofilter, slot0._goattrItem)
+	arg_11_0.careerTypeCount = #var_11_0
+
+	gohelper.CreateObjList(arg_11_0, arg_11_0._onInitFilterBtn, var_11_0, arg_11_0._gofilter, arg_11_0._goattrItem)
 end
 
-function slot0._onInitFilterBtn(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot4.goSelected = gohelper.findChild(slot1, "#go_selected")
-	slot4.attrIcon = gohelper.findChildImage(slot1, "#image_attrIcon")
-	slot4.goLine = gohelper.findChild(slot1, "#go_line")
-	slot4.btnClick = gohelper.findChildButtonWithAudio(slot1, "#btn_click")
+function var_0_0._onInitFilterBtn(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_0:getUserDataTb_()
 
-	gohelper.setActive(slot4.goLine, slot3 ~= slot0.careerTypeCount)
-	gohelper.setActive(slot4.goSelected, false)
-	UISpriteSetMgr.instance:setHeroGroupSprite(slot4.attrIcon, "career_" .. slot2)
-	slot4.btnClick:AddClickListener(slot0._btnCareerFilterOnClick, slot0, slot2)
+	var_12_0.goSelected = gohelper.findChild(arg_12_1, "#go_selected")
+	var_12_0.attrIcon = gohelper.findChildImage(arg_12_1, "#image_attrIcon")
+	var_12_0.goLine = gohelper.findChild(arg_12_1, "#go_line")
+	var_12_0.btnClick = gohelper.findChildButtonWithAudio(arg_12_1, "#btn_click")
 
-	slot0._career2FilterItemDict[slot2] = slot4
+	local var_12_1 = arg_12_3 ~= arg_12_0.careerTypeCount
+
+	gohelper.setActive(var_12_0.goLine, var_12_1)
+	gohelper.setActive(var_12_0.goSelected, false)
+	UISpriteSetMgr.instance:setHeroGroupSprite(var_12_0.attrIcon, "career_" .. arg_12_2)
+	var_12_0.btnClick:AddClickListener(arg_12_0._btnCareerFilterOnClick, arg_12_0, arg_12_2)
+
+	arg_12_0._career2FilterItemDict[arg_12_2] = var_12_0
 end
 
-function slot0.onOpen(slot0)
-	slot0.scrollView = slot0.viewContainer and slot0.viewContainer.scrollView
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0.scrollView = arg_13_0.viewContainer and arg_13_0.viewContainer.scrollView
 
-	slot0:refreshUI()
-	TaskDispatcher.runRepeat(slot0.refreshCD, slot0, 0.01)
-	slot0:showRecommendCareer()
+	arg_13_0:refreshUI()
+	TaskDispatcher.runRepeat(arg_13_0.refreshCD, arg_13_0, 0.01)
+	arg_13_0:showRecommendCareer()
 end
 
-function slot0.showRecommendCareer(slot0)
-	if not slot0:getRecommendCareer() then
-		gohelper.setActive(slot0._gorecommendAttr, false)
+function var_0_0.showRecommendCareer(arg_14_0)
+	local var_14_0 = arg_14_0:getRecommendCareer()
+
+	if not var_14_0 then
+		gohelper.setActive(arg_14_0._gorecommendAttr, false)
 
 		return
 	end
 
-	slot2 = #slot1 ~= 0
-	slot0._txtrecommendAttrDesc.text = slot2 and luaLang("herogroupeditview_recommend") or luaLang("herogroupeditview_notrecommend")
+	local var_14_1 = #var_14_0 ~= 0
+	local var_14_2 = var_14_1 and luaLang("herogroupeditview_recommend") or luaLang("herogroupeditview_notrecommend")
 
-	if slot2 then
-		gohelper.CreateObjList(slot0, slot0._onRecommendCareerItemShow, slot1, slot0._goattrlist, slot0._goattritem)
+	arg_14_0._txtrecommendAttrDesc.text = var_14_2
+
+	if var_14_1 then
+		gohelper.CreateObjList(arg_14_0, arg_14_0._onRecommendCareerItemShow, var_14_0, arg_14_0._goattrlist, arg_14_0._goattritem)
 	end
 
-	gohelper.setActive(slot0._goattrlist, slot2)
-	gohelper.setActive(slot0._gorecommendAttr, true)
+	gohelper.setActive(arg_14_0._goattrlist, var_14_1)
+	gohelper.setActive(arg_14_0._gorecommendAttr, true)
 end
 
-function slot0._onRecommendCareerItemShow(slot0, slot1, slot2, slot3)
-	UISpriteSetMgr.instance:setHeroGroupSprite(gohelper.findChildImage(slot1, "icon"), "career_" .. slot2)
+function var_0_0._onRecommendCareerItemShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = gohelper.findChildImage(arg_15_1, "icon")
+
+	UISpriteSetMgr.instance:setHeroGroupSprite(var_15_0, "career_" .. arg_15_2)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshCD()
-	slot0:refreshCareerFilterItems()
-	slot0:refreshIsEmpty()
-	slot0:refreshBtnDetail()
+function var_0_0.refreshUI(arg_16_0)
+	arg_16_0:refreshCD()
+	arg_16_0:refreshCareerFilterItems()
+	arg_16_0:refreshIsEmpty()
+	arg_16_0:refreshBtnDetail()
 end
 
-function slot0.refreshCD(slot0)
-	slot0._simageprogress.fillAmount = PickAssistController.instance:getRefreshCDRate()
+function var_0_0.refreshCD(arg_17_0)
+	local var_17_0 = PickAssistController.instance:getRefreshCDRate()
+
+	arg_17_0._simageprogress.fillAmount = var_17_0
 end
 
-function slot0.refreshCareerFilterItems(slot0)
-	for slot4, slot5 in pairs(slot0._career2FilterItemDict) do
-		gohelper.setActive(slot5.goSelected, slot4 == PickAssistListModel.instance:getCareer())
+function var_0_0.refreshCareerFilterItems(arg_18_0)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._career2FilterItemDict) do
+		local var_18_0 = PickAssistListModel.instance:getCareer()
+
+		gohelper.setActive(iter_18_1.goSelected, iter_18_0 == var_18_0)
 	end
 end
 
-function slot0.refreshIsEmpty(slot0)
-	gohelper.setActive(slot0._goempty, not PickAssistListModel.instance:isHasAssistList())
+function var_0_0.refreshIsEmpty(arg_19_0)
+	local var_19_0 = PickAssistListModel.instance:isHasAssistList()
+
+	gohelper.setActive(arg_19_0._goempty, not var_19_0)
 end
 
-function slot0.refreshBtnDetail(slot0)
-	gohelper.setActive(slot0._godetail, PickAssistListModel.instance:getSelectedMO())
+function var_0_0.refreshBtnDetail(arg_20_0)
+	local var_20_0 = PickAssistListModel.instance:getSelectedMO()
+
+	gohelper.setActive(arg_20_0._godetail, var_20_0)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshCD, slot0)
+function var_0_0.onClose(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.refreshCD, arg_21_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:disposeCareerItems()
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0:disposeCareerItems()
 	PickAssistController.instance:onCloseView()
 end
 
-function slot0.disposeCareerItems(slot0)
-	if slot0._career2FilterItemDict then
-		for slot4, slot5 in pairs(slot0._career2FilterItemDict) do
-			if slot5.btnClick then
-				slot5.btnClick:RemoveClickListener()
+function var_0_0.disposeCareerItems(arg_23_0)
+	if arg_23_0._career2FilterItemDict then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0._career2FilterItemDict) do
+			if iter_23_1.btnClick then
+				iter_23_1.btnClick:RemoveClickListener()
 			end
 		end
 
-		slot0._career2FilterItemDict = nil
+		arg_23_0._career2FilterItemDict = nil
 	end
 end
 
-return slot0
+return var_0_0

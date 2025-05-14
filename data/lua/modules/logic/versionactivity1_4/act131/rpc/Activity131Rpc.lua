@@ -1,141 +1,149 @@
-module("modules.logic.versionactivity1_4.act131.rpc.Activity131Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act131.rpc.Activity131Rpc", package.seeall)
 
-slot0 = class("Activity131Rpc", BaseRpc)
-slot0.instance = slot0.New()
+local var_0_0 = class("Activity131Rpc", BaseRpc)
 
-function slot0.sendGet131InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity131Module_pb.Get131InfosRequest()
-	slot4.activityId = slot1
+var_0_0.instance = var_0_0.New()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+function var_0_0.sendGet131InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity131Module_pb.Get131InfosRequest()
+
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet131InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet131InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	Activity131Model.instance:setInfos(slot2.infos)
+	Activity131Model.instance:setInfos(arg_2_2.infos)
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnGetInfoSuccess)
 end
 
-function slot0.sendAct131StoryRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity131Module_pb.Act131StoryRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
+function var_0_0.sendAct131StoryRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = Activity131Module_pb.Act131StoryRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_3_0.activityId = arg_3_1
+	var_3_0.episodeId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
 end
 
-function slot0.onReceiveAct131StoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct131StoryReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	Activity131Model.instance:updateProgress(slot2.episodeId, slot2.progress)
+	Activity131Model.instance:updateProgress(arg_4_2.episodeId, arg_4_2.progress)
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnStoryFinishedSuccess)
 end
 
-function slot0.sendAct131GeneralRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity131Module_pb.Act131GeneralRequest()
-	slot6.activityId = slot1
-	slot6.episodeId = slot2
-	slot6.elementId = slot3
+function var_0_0.sendAct131GeneralRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+	local var_5_0 = Activity131Module_pb.Act131GeneralRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_5_0.activityId = arg_5_1
+	var_5_0.episodeId = arg_5_2
+	var_5_0.elementId = arg_5_3
+
+	arg_5_0:sendMsg(var_5_0, arg_5_4, arg_5_5)
 end
 
-function slot0.onReceiveAct131GeneralReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct131GeneralReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnGeneralGameSuccess)
 end
 
-function slot0.sendAct131DialogRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity131Module_pb.Act131DialogRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
-	slot5.elementId = slot3
-	slot5.option = slot4
+function var_0_0.sendAct131DialogRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	local var_7_0 = Activity131Module_pb.Act131DialogRequest()
 
-	slot0:sendMsg(slot5)
+	var_7_0.activityId = arg_7_1
+	var_7_0.episodeId = arg_7_2
+	var_7_0.elementId = arg_7_3
+	var_7_0.option = arg_7_4
+
+	arg_7_0:sendMsg(var_7_0)
 end
 
-function slot0.onReceiveAct131DialogReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct131DialogReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnDialogMarkSuccess)
 end
 
-function slot0.sendAct131DialogHistoryRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity131Module_pb.Act131DialogHistoryRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
-	slot5.elementId = slot3
+function var_0_0.sendAct131DialogHistoryRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = Activity131Module_pb.Act131DialogHistoryRequest()
 
-	for slot9, slot10 in ipairs(slot4) do
-		table.insert(slot5.historylist, slot10)
+	var_9_0.activityId = arg_9_1
+	var_9_0.episodeId = arg_9_2
+	var_9_0.elementId = arg_9_3
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_4) do
+		table.insert(var_9_0.historylist, iter_9_1)
 	end
 
-	slot0:sendMsg(slot5)
+	arg_9_0:sendMsg(var_9_0)
 end
 
-function slot0.onReceiveAct131DialogHistoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct131DialogHistoryReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= 0 then
 		return
 	end
 
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnDialogHistorySuccess)
 end
 
-function slot0.onReceiveAct131ElementsPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct131ElementsPush(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	Activity131Model.instance:updateInfos(slot2.act131Info)
+	Activity131Model.instance:updateInfos(arg_11_2.act131Info)
 	Activity131Model.instance:refreshLogDics()
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnElementUpdate)
 end
 
-function slot0.sendAct131RestartEpisodeRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity131Module_pb.Act131RestartEpisodeRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
+function var_0_0.sendAct131RestartEpisodeRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	local var_12_0 = Activity131Module_pb.Act131RestartEpisodeRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_12_0.activityId = arg_12_1
+	var_12_0.episodeId = arg_12_2
+
+	arg_12_0:sendMsg(var_12_0, arg_12_3, arg_12_4)
 end
 
-function slot0.onReceiveAct131RestartEpisodeReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct131RestartEpisodeReply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 ~= 0 then
 		return
 	end
 
-	Activity131Model.instance:updateInfos(slot2.infos)
+	Activity131Model.instance:updateInfos(arg_13_2.infos)
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnRestartEpisodeSuccess)
 end
 
-function slot0.sendBeforeAct131BattleRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity131Module_pb.BeforeAct131BattleRequest()
-	slot4.activityId = slot1
-	slot4.episodeId = slot2
-	slot4.elementId = slot3
+function var_0_0.sendBeforeAct131BattleRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = Activity131Module_pb.BeforeAct131BattleRequest()
 
-	slot0:sendMsg(slot4)
+	var_14_0.activityId = arg_14_1
+	var_14_0.episodeId = arg_14_2
+	var_14_0.elementId = arg_14_3
+
+	arg_14_0:sendMsg(var_14_0)
 end
 
-function slot0.onReceiveBeforeAct131BattleReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveBeforeAct131BattleReply(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 ~= 0 then
 		return
 	end
 
-	Activity131Controller.instance:dispatchEvent(Activity131Event.OnBattleBeforeSucess, slot2.elementId)
+	Activity131Controller.instance:dispatchEvent(Activity131Event.OnBattleBeforeSucess, arg_15_2.elementId)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,16 +1,17 @@
-module("modules.logic.fight.config.FightEnum", package.seeall)
+﻿module("modules.logic.fight.config.FightEnum", package.seeall)
 
-slot0 = _M
-slot0.StepEffectCountLimit = 50
-slot0.UniversalCard1 = 30000001
-slot0.UniversalCard2 = 30000002
-slot0.UniversalCard = {
-	[slot0.UniversalCard1] = slot0.UniversalCard1,
-	[slot0.UniversalCard2] = slot0.UniversalCard2
+local var_0_0 = _M
+
+var_0_0.StepEffectCountLimit = 50
+var_0_0.UniversalCard1 = 30000001
+var_0_0.UniversalCard2 = 30000002
+var_0_0.UniversalCard = {
+	[var_0_0.UniversalCard1] = var_0_0.UniversalCard1,
+	[var_0_0.UniversalCard2] = var_0_0.UniversalCard2
 }
-slot0.MaxBehavior = 9
-slot0.MaxBuffIconCount = 8
-slot0.Stage = {
+var_0_0.MaxBehavior = 9
+var_0_0.MaxBuffIconCount = 8
+var_0_0.Stage = {
 	End = 8,
 	FillCard = 6,
 	Card = 3,
@@ -21,55 +22,55 @@ slot0.Stage = {
 	EndRound = 7,
 	Distribute = 2
 }
-slot0.FightReason = {
+var_0_0.FightReason = {
 	Dungeon = 2,
 	DungeonRecord = 3,
 	None = 1
 }
-slot0.EffectLookDir = {
+var_0_0.EffectLookDir = {
 	Left = 0,
 	Right = 180
 }
-slot0.Rotation = {
+var_0_0.Rotation = {
 	Thas = 270,
 	Ohae = 180,
 	Ninety = 90,
 	Zero = 0
 }
-slot0.RotationQuaternion = {
+var_0_0.RotationQuaternion = {
 	Zero = Quaternion.AngleAxis(0, Vector3.up),
 	Ninety = Quaternion.AngleAxis(90, Vector3.up),
 	Ohae = Quaternion.AngleAxis(180, Vector3.up),
 	Thas = Quaternion.AngleAxis(270, Vector3.up)
 }
-slot0.SideUid = {
+var_0_0.SideUid = {
 	MySide = "0",
 	EnemySide = "-99999"
 }
-slot0.EntitySide = {
+var_0_0.EntitySide = {
 	EnemySide = 2,
 	BothSide = 3,
 	MySide = 1
 }
-slot0.TeamType = {
+var_0_0.TeamType = {
 	MySide = 1,
 	EnemySide = 2
 }
-slot0.EntityGOName = {
+var_0_0.EntityGOName = {
 	MySide = "Player",
 	EnemySide = "Monster"
 }
-slot0.PurifyId = {
+var_0_0.PurifyId = {
 	PurifyX = 20020,
 	Purify1 = 20003,
 	Purify2 = 20004
 }
-slot0.PurifyName = {
-	[slot0.PurifyId.Purify1] = "Purify1",
-	[slot0.PurifyId.Purify2] = "Purify2",
-	[slot0.PurifyId.PurifyX] = "PurifyX"
+var_0_0.PurifyName = {
+	[var_0_0.PurifyId.Purify1] = "Purify1",
+	[var_0_0.PurifyId.Purify2] = "Purify2",
+	[var_0_0.PurifyId.PurifyX] = "PurifyX"
 }
-slot0.FloatType = {
+var_0_0.FloatType = {
 	restrain = 5,
 	crit_heal = 3,
 	crit_berestrain = 2,
@@ -93,9 +94,9 @@ slot0.FloatType = {
 	miss = 10,
 	heal = 7
 }
-slot0.UniformDefAudioId = 440000130
-slot0.AudioSwitchGroup = "Checkpointstate"
-slot0.AudioSwitch = {
+var_0_0.UniformDefAudioId = 440000130
+var_0_0.AudioSwitchGroup = "Checkpointstate"
+var_0_0.AudioSwitch = {
 	Fightboss = "Fightboss",
 	Victory = "Victory",
 	Fightend = "Fightend",
@@ -107,8 +108,8 @@ slot0.AudioSwitch = {
 	Comeshow = "Comeshow",
 	Bosswarning = "Bosswarning"
 }
-slot0.WeaponHitSwitchGroup = "bigka_common_group"
-slot0.WeaponHitSwitchNames = {
+var_0_0.WeaponHitSwitchGroup = "bigka_common_group"
+var_0_0.WeaponHitSwitchNames = {
 	[0] = "nothing",
 	"air",
 	"arrow",
@@ -135,19 +136,19 @@ slot0.WeaponHitSwitchNames = {
 	"water",
 	"wind"
 }
-slot0.RenderOrderType = {
+var_0_0.RenderOrderType = {
 	ZPos = 2,
 	StandPos = 1,
 	SameOrder = 3
 }
-slot0.ActType = {
+var_0_0.ActType = {
 	CHANGEWAVE = 5,
 	EFFECT = 3,
 	CHANGEHERO = 4,
 	SKILL = 1,
 	BUFF = 2
 }
-slot0.EffectType = {
+var_0_0.EffectType = {
 	MASTERHALO = 172,
 	MAGICCIRCLEDELETE = 139,
 	DELCARDANDDAMAGE = 249,
@@ -464,13 +465,13 @@ slot0.EffectType = {
 	SLAVEHALO = 173,
 	BUFFEFFECT = 8
 }
-slot0.BuffEffectType = {
-	[slot0.EffectType.BUFFADD] = true,
-	[slot0.EffectType.BUFFDEL] = true,
-	[slot0.EffectType.BUFFUPDATE] = true,
-	[slot0.EffectType.BUFFDELNOEFFECT] = true
+var_0_0.BuffEffectType = {
+	[var_0_0.EffectType.BUFFADD] = true,
+	[var_0_0.EffectType.BUFFDEL] = true,
+	[var_0_0.EffectType.BUFFUPDATE] = true,
+	[var_0_0.EffectType.BUFFDELNOEFFECT] = true
 }
-slot0.EnchantedType = {
+var_0_0.EnchantedType = {
 	Discard = 10004,
 	depresse = 10007,
 	Frozen = 10001,
@@ -479,8 +480,8 @@ slot0.EnchantedType = {
 	Chaos = 10003,
 	Precision = 10006
 }
-slot0.EnchantNumLimit = 6
-slot0.CardOpType = {
+var_0_0.EnchantNumLimit = 6
+var_0_0.CardOpType = {
 	Season2ChangeHero = 5,
 	MoveCard = 1,
 	SimulateDissolveCard = -99,
@@ -489,86 +490,86 @@ slot0.CardOpType = {
 	PlayerFinisherSkill = 6,
 	MoveUniversal = 3
 }
-slot0.FightResult = {
+var_0_0.FightResult = {
 	Abort = -1,
 	OutOfRoundFail = 2,
 	Fail = 0,
 	Succ = 1
 }
-slot0.TargetLimit = {
+var_0_0.TargetLimit = {
 	EnemySide = 1,
 	MySide = 2,
 	None = 0
 }
-slot0.ShowLogicTargetView = {
-	[1.0] = true
+var_0_0.ShowLogicTargetView = {
+	[1] = true
 }
-slot0.CondTargetHpMin = 109
-slot0.LogicTargetClassify = {
+var_0_0.CondTargetHpMin = 109
+var_0_0.LogicTargetClassify = {
 	Special = {
 		[0] = 1
 	},
 	MySideAll = {
-		[102.0] = 1,
-		[101.0] = 1,
-		[104.0] = 1,
-		[105.0] = 1
+		[102] = 1,
+		[101] = 1,
+		[104] = 1,
+		[105] = 1
 	},
 	Me = {
-		[103.0] = 1
+		[103] = 1
 	},
 	Single = {
 		1,
-		[107.0] = 1,
-		[106.0] = 1,
-		[108.0] = 1,
-		[303.0] = 1,
-		[205.0] = 1,
-		[204.0] = 1,
-		[109.0] = 1,
-		[207.0] = 1
+		[107] = 1,
+		[106] = 1,
+		[108] = 1,
+		[303] = 1,
+		[205] = 1,
+		[204] = 1,
+		[109] = 1,
+		[207] = 1
 	},
 	SingleAndRandom = {
-		[206.0] = 1,
-		[201.0] = 1
+		[206] = 1,
+		[201] = 1
 	},
 	EnemySideAll = {
-		[301.0] = 1,
-		[202.0] = 1,
-		[302.0] = 1
+		[301] = 1,
+		[202] = 1,
+		[302] = 1
 	},
 	EnemySideindex = {
-		[226.0] = 1,
-		[228.0] = 1,
-		[227.0] = 1,
-		[229.0] = 1
+		[226] = 1,
+		[228] = 1,
+		[227] = 1,
+		[229] = 1
 	},
 	EnemyMostHp = {
-		[208.0] = 1
+		[208] = 1
 	},
 	EnemyWith101Buff = {
-		[4101.0] = 1
+		[4101] = 1
 	},
 	SecondaryTarget = {
-		[216.0] = 1
+		[216] = 1
 	},
 	StanceAndBefore = {
-		[120.0] = 1
+		[120] = 1
 	},
 	StanceAndAfter = {
-		[122.0] = 1
+		[122] = 1
 	},
 	Position = {
-		[223.0] = 2,
-		[225.0] = 4,
-		[222.0] = 1,
-		[224.0] = 3
+		[223] = 2,
+		[225] = 4,
+		[222] = 1,
+		[224] = 3
 	},
 	EnemyWith795Feature = {
-		[307.0] = 1
+		[307] = 1
 	}
 }
-slot0.FightBonusTag = {
+var_0_0.FightBonusTag = {
 	AdvencedBonus = 3,
 	NormalBonus = 2,
 	AdditionBonus = 4,
@@ -578,14 +579,14 @@ slot0.FightBonusTag = {
 	SimpleBouns = 6,
 	ActBonus = 100
 }
-slot0.FightBonusTagPriority = {
-	[slot0.FightBonusTag.TimeFirstBonus] = 1,
-	[slot0.FightBonusTag.AdditionBonus] = 2,
-	[slot0.FightBonusTag.NormalBonus] = 3,
-	[slot0.FightBonusTag.FirstBonus] = 4,
-	[slot0.FightBonusTag.AdvencedBonus] = 5
+var_0_0.FightBonusTagPriority = {
+	[var_0_0.FightBonusTag.TimeFirstBonus] = 1,
+	[var_0_0.FightBonusTag.AdditionBonus] = 2,
+	[var_0_0.FightBonusTag.NormalBonus] = 3,
+	[var_0_0.FightBonusTag.FirstBonus] = 4,
+	[var_0_0.FightBonusTag.AdvencedBonus] = 5
 }
-slot0.DropType = {
+var_0_0.DropType = {
 	Act158 = 5,
 	Normal2Simple = 6,
 	Act153 = 4,
@@ -593,27 +594,27 @@ slot0.DropType = {
 	Act155 = 3,
 	Act135 = 2
 }
-slot0.MySideDefaultStanceId = 100
-slot0.EnemySideDefaultStanceId = 3
-slot0.StanceCount = 3
-slot0.MaxSkillCardLv = 3
-slot0.UniqueSkillCardLv = 4
-slot0.TopOrderFactor = 100
-slot0.OrderRegion = 200
-slot0.GameSpeedRTPC = "GameSpeed"
-slot0.HitStatusGroupName = "Hit_Status_Group"
-slot0.HitStatusArr = {
+var_0_0.MySideDefaultStanceId = 100
+var_0_0.EnemySideDefaultStanceId = 3
+var_0_0.StanceCount = 3
+var_0_0.MaxSkillCardLv = 3
+var_0_0.UniqueSkillCardLv = 4
+var_0_0.TopOrderFactor = 100
+var_0_0.OrderRegion = 200
+var_0_0.GameSpeedRTPC = "GameSpeed"
+var_0_0.HitStatusGroupName = "Hit_Status_Group"
+var_0_0.HitStatusArr = {
 	"General_attack",
 	"Critical_strike"
 }
-slot0.HitMaterialGroupName = "Hit_Material_Group"
-slot0.HitMaterialArr = {
+var_0_0.HitMaterialGroupName = "Hit_Material_Group"
+var_0_0.HitMaterialArr = {
 	[0] = "nothing",
 	"Metal",
 	"Succulent",
 	"Ligneous"
 }
-slot0.SkillShowTag = {
+var_0_0.SkillShowTag = {
 	Counter = 5,
 	SpiritualDamage = 2,
 	Buff = 4,
@@ -621,41 +622,42 @@ slot0.SkillShowTag = {
 	RealDamage = 1,
 	HealEffect = 6
 }
-slot0.NeedShowRestrainTag = {
-	[slot0.SkillShowTag.RealDamage] = true,
-	[slot0.SkillShowTag.SpiritualDamage] = true,
-	[slot0.SkillShowTag.Debuff] = true
+var_0_0.NeedShowRestrainTag = {
+	[var_0_0.SkillShowTag.RealDamage] = true,
+	[var_0_0.SkillShowTag.SpiritualDamage] = true,
+	[var_0_0.SkillShowTag.Debuff] = true
 }
-slot0.LogicTargetDesc = {}
-slot1 = {
+var_0_0.LogicTargetDesc = {}
+
+local var_0_1 = {
 	"logic_target_single",
-	[104.0] = "logic_target_area",
-	[202.0] = "logic_target_area",
-	[108.0] = "logic_target_single",
-	[206.0] = "logic_target_single",
-	[301.0] = "logic_target_area",
-	[101.0] = "logic_target_area",
-	[107.0] = "logic_target_single",
-	[207.0] = "logic_target_single",
-	[302.0] = "logic_target_area",
-	[102.0] = "logic_target_area",
-	[106.0] = "logic_target_single",
-	[201.0] = "logic_target_area",
-	[103.0] = "logic_target_single",
-	[105.0] = "logic_target_area"
+	[104] = "logic_target_area",
+	[202] = "logic_target_area",
+	[108] = "logic_target_single",
+	[206] = "logic_target_single",
+	[301] = "logic_target_area",
+	[101] = "logic_target_area",
+	[107] = "logic_target_single",
+	[207] = "logic_target_single",
+	[302] = "logic_target_area",
+	[102] = "logic_target_area",
+	[106] = "logic_target_single",
+	[201] = "logic_target_area",
+	[103] = "logic_target_single",
+	[105] = "logic_target_area"
 }
 
-setmetatable(slot0.LogicTargetDesc, {
-	__index = function (slot0, slot1)
-		if uv0[slot1] then
-			return luaLang(uv0[slot1])
+setmetatable(var_0_0.LogicTargetDesc, {
+	__index = function(arg_1_0, arg_1_1)
+		if var_0_1[arg_1_1] then
+			return luaLang(var_0_1[arg_1_1])
 		end
 
 		return ""
 	end
 })
 
-slot0.EffectTag = {
+var_0_0.EffectTag = {
 	SpiritAttack = 2,
 	CounterSpell = 5,
 	Buff = 4,
@@ -664,35 +666,36 @@ slot0.EffectTag = {
 	Control = 7,
 	RealAttack = 1
 }
-slot0.EffectTagDesc = {}
-slot2 = {
-	[slot0.EffectTag.RealAttack] = "effect_tag_attack",
-	[slot0.EffectTag.SpiritAttack] = "effect_tag_attack",
-	[slot0.EffectTag.Debuff] = "effect_tag_debuff",
-	[slot0.EffectTag.Buff] = "effect_tag_buff",
-	[slot0.EffectTag.CounterSpell] = "effect_tag_counterspell",
-	[slot0.EffectTag.Heal] = "effect_tag_heal",
-	[slot0.EffectTag.Control] = "effect_tag_control"
+var_0_0.EffectTagDesc = {}
+
+local var_0_2 = {
+	[var_0_0.EffectTag.RealAttack] = "effect_tag_attack",
+	[var_0_0.EffectTag.SpiritAttack] = "effect_tag_attack",
+	[var_0_0.EffectTag.Debuff] = "effect_tag_debuff",
+	[var_0_0.EffectTag.Buff] = "effect_tag_buff",
+	[var_0_0.EffectTag.CounterSpell] = "effect_tag_counterspell",
+	[var_0_0.EffectTag.Heal] = "effect_tag_heal",
+	[var_0_0.EffectTag.Control] = "effect_tag_control"
 }
 
-setmetatable(slot0.EffectTagDesc, {
-	__index = function (slot0, slot1)
-		if uv0[slot1] then
-			return luaLang(uv0[slot1])
+setmetatable(var_0_0.EffectTagDesc, {
+	__index = function(arg_2_0, arg_2_1)
+		if var_0_2[arg_2_1] then
+			return luaLang(var_0_2[arg_2_1])
 		end
 
 		return ""
 	end
 })
 
-slot0.BuffIncludeTypes = {
+var_0_0.BuffIncludeTypes = {
 	Stacked15 = "15",
 	Stacked12 = "12",
 	Count = 9,
 	Stacked14 = "14",
 	Stacked = "10"
 }
-slot0.FactionToSkin = {
+var_0_0.FactionToSkin = {
 	430001,
 	430002,
 	430003,
@@ -703,62 +706,62 @@ slot0.FactionToSkin = {
 	430008,
 	430009
 }
-slot0.SpecialFaction = {
+var_0_0.SpecialFaction = {
 	[DungeonEnum.ChapterType.Gold] = true,
 	[DungeonEnum.ChapterType.Exp] = true,
 	[DungeonEnum.ChapterType.Equip] = true,
 	[DungeonEnum.ChapterType.Break] = true,
 	[DungeonEnum.ChapterType.SpecialEquip] = true
 }
-slot0.BuffFloatEffectType = {
+var_0_0.BuffFloatEffectType = {
 	Counter = 4,
 	Good = 1,
 	Poisoning = 5,
 	Heal = 3,
 	Debuffs = 2
 }
-slot0.Behavior_AddExPoint = "AddExPoint"
-slot0.Behavior_DelExPoint = "DelExPoint"
-slot0.Behavior_LostLife = "LostLife"
-slot0.Behavior_CatapultBuff = "CatapultBuff"
-slot0.BuffType_Dizzy = "Dizzy"
-slot0.BuffType_Charm = "Charm"
-slot0.BuffType_Petrified = "Petrified"
-slot0.BuffType_Sleep = "Sleep"
-slot0.BuffType_Frozen = "Frozen"
-slot0.BuffType_Disarm = "Disarm"
-slot0.BuffType_Forbid = "Forbid"
-slot0.BuffType_Seal = "Seal"
-slot0.BuffType_Dot = "Dot"
-slot0.BuffType_Immunity = "Immunity"
-slot0.BuffType_Freeze = "Freeze"
-slot0.BuffType_CantSelect = "CantSelect"
-slot0.BuffType_CantSelectEx = "CantSelectEx"
-slot0.BuffType_HideLife = "HideLife"
-slot0.ExPointCantAdd = "ExPointCantAdd"
-slot0.BuffType_CastChannel = "CastChannel"
-slot0.BuffType_NoneCastChannel = "NoneCastChannel"
-slot0.BuffType_ContractCastChannel = "ContractCastChannel"
-slot0.BuffType_ExPointOverflowBank = "ExPointOverflowBank"
-slot0.BuffType_SpExPointMaxAdd = "SpExPointMaxAdd"
-slot0.BuffType_TransferAddExPoint = "TransferAddExPoint"
-slot0.BuffType_ContractBuff = "ContractBuff"
-slot0.BuffType_BeContractedBuff = "BeContractedBuff"
-slot0.BuffType_CountContinueChannel = "CountContinueChannel"
-slot0.BuffType_DuduBoneContinueChannel = "DuduBoneContinueChannel"
-slot0.BuffType_DeadlyPoison = "DeadlyPoison"
-slot0.BuffType_UseCardFixExPoint = "UseCardFixExPoint"
-slot0.BuffType_ExPointCardMove = "ExPointCardMove"
-slot0.BuffType_FixAttrTeamEnergyAndBuff = "FixAttrTeamEnergyAndBuff"
-slot0.BuffType_FixAttrTeamEnergy = "FixAttrTeamEnergy"
-slot0.BuffType_EmitterCareerChange = "EmitterCareerChange"
-slot0.BuffType_CardAreaRedOrBlue = "CardAreaRedOrBlue"
-slot0.BuffType_RedOrBlueCount = "RedOrBlueCount"
-slot0.BuffType_RedOrBlueChangeTrigger = "RedOrBlueChangeTrigger"
-slot0.BuffType_SaveFightRecord = "SaveFightRecord"
-slot0.BuffTypeId_CoverPerson = 8398
-slot0.BuffTypeId_CelebrityCharm = 8399
-slot0.BuffFeature = {
+var_0_0.Behavior_AddExPoint = "AddExPoint"
+var_0_0.Behavior_DelExPoint = "DelExPoint"
+var_0_0.Behavior_LostLife = "LostLife"
+var_0_0.Behavior_CatapultBuff = "CatapultBuff"
+var_0_0.BuffType_Dizzy = "Dizzy"
+var_0_0.BuffType_Charm = "Charm"
+var_0_0.BuffType_Petrified = "Petrified"
+var_0_0.BuffType_Sleep = "Sleep"
+var_0_0.BuffType_Frozen = "Frozen"
+var_0_0.BuffType_Disarm = "Disarm"
+var_0_0.BuffType_Forbid = "Forbid"
+var_0_0.BuffType_Seal = "Seal"
+var_0_0.BuffType_Dot = "Dot"
+var_0_0.BuffType_Immunity = "Immunity"
+var_0_0.BuffType_Freeze = "Freeze"
+var_0_0.BuffType_CantSelect = "CantSelect"
+var_0_0.BuffType_CantSelectEx = "CantSelectEx"
+var_0_0.BuffType_HideLife = "HideLife"
+var_0_0.ExPointCantAdd = "ExPointCantAdd"
+var_0_0.BuffType_CastChannel = "CastChannel"
+var_0_0.BuffType_NoneCastChannel = "NoneCastChannel"
+var_0_0.BuffType_ContractCastChannel = "ContractCastChannel"
+var_0_0.BuffType_ExPointOverflowBank = "ExPointOverflowBank"
+var_0_0.BuffType_SpExPointMaxAdd = "SpExPointMaxAdd"
+var_0_0.BuffType_TransferAddExPoint = "TransferAddExPoint"
+var_0_0.BuffType_ContractBuff = "ContractBuff"
+var_0_0.BuffType_BeContractedBuff = "BeContractedBuff"
+var_0_0.BuffType_CountContinueChannel = "CountContinueChannel"
+var_0_0.BuffType_DuduBoneContinueChannel = "DuduBoneContinueChannel"
+var_0_0.BuffType_DeadlyPoison = "DeadlyPoison"
+var_0_0.BuffType_UseCardFixExPoint = "UseCardFixExPoint"
+var_0_0.BuffType_ExPointCardMove = "ExPointCardMove"
+var_0_0.BuffType_FixAttrTeamEnergyAndBuff = "FixAttrTeamEnergyAndBuff"
+var_0_0.BuffType_FixAttrTeamEnergy = "FixAttrTeamEnergy"
+var_0_0.BuffType_EmitterCareerChange = "EmitterCareerChange"
+var_0_0.BuffType_CardAreaRedOrBlue = "CardAreaRedOrBlue"
+var_0_0.BuffType_RedOrBlueCount = "RedOrBlueCount"
+var_0_0.BuffType_RedOrBlueChangeTrigger = "RedOrBlueChangeTrigger"
+var_0_0.BuffType_SaveFightRecord = "SaveFightRecord"
+var_0_0.BuffTypeId_CoverPerson = 8398
+var_0_0.BuffTypeId_CelebrityCharm = 8399
+var_0_0.BuffFeature = {
 	AttrFixFromInjuryBank = "AttrFixFromInjuryBank",
 	ResistancesAttr = "ResistancesAttr",
 	FixAttrTeamEnergyAndBuff = "FixAttrTeamEnergyAndBuff",
@@ -773,57 +776,57 @@ slot0.BuffFeature = {
 	InjuryBank = "InjuryBank",
 	None = "None"
 }
-slot0.BuffFeatureMap = {
-	[slot0.BuffType_Dizzy] = true,
-	[slot0.BuffType_Charm] = true,
-	[slot0.BuffType_Petrified] = true,
-	[slot0.BuffType_Sleep] = true,
-	[slot0.BuffType_Frozen] = true,
-	[slot0.BuffType_Disarm] = true,
-	[slot0.BuffType_Forbid] = true,
-	[slot0.BuffType_Seal] = true,
-	[slot0.BuffType_Dot] = true,
-	[slot0.BuffType_Immunity] = true,
-	[slot0.BuffType_Freeze] = true,
-	[slot0.BuffType_CastChannel] = true
+var_0_0.BuffFeatureMap = {
+	[var_0_0.BuffType_Dizzy] = true,
+	[var_0_0.BuffType_Charm] = true,
+	[var_0_0.BuffType_Petrified] = true,
+	[var_0_0.BuffType_Sleep] = true,
+	[var_0_0.BuffType_Frozen] = true,
+	[var_0_0.BuffType_Disarm] = true,
+	[var_0_0.BuffType_Forbid] = true,
+	[var_0_0.BuffType_Seal] = true,
+	[var_0_0.BuffType_Dot] = true,
+	[var_0_0.BuffType_Immunity] = true,
+	[var_0_0.BuffType_Freeze] = true,
+	[var_0_0.BuffType_CastChannel] = true
 }
-slot0.BuffPriorityTypeDict = {
-	[slot0.BuffType_Freeze] = 5,
-	[slot0.BuffType_Immunity] = 4,
-	[slot0.BuffType_Dizzy] = 3,
-	[slot0.BuffType_Charm] = 3,
-	[slot0.BuffType_Petrified] = 2,
-	[slot0.BuffType_Sleep] = 1,
-	[slot0.BuffType_Frozen] = 2
+var_0_0.BuffPriorityTypeDict = {
+	[var_0_0.BuffType_Freeze] = 5,
+	[var_0_0.BuffType_Immunity] = 4,
+	[var_0_0.BuffType_Dizzy] = 3,
+	[var_0_0.BuffType_Charm] = 3,
+	[var_0_0.BuffType_Petrified] = 2,
+	[var_0_0.BuffType_Sleep] = 1,
+	[var_0_0.BuffType_Frozen] = 2
 }
-slot0.CardLockPriorityDict = {
-	[slot0.BuffType_CastChannel] = 4,
-	[slot0.BuffType_Dizzy] = 3,
-	[slot0.BuffType_Charm] = 3,
-	[slot0.BuffType_Petrified] = 2,
-	[slot0.BuffType_Sleep] = 1,
-	[slot0.BuffType_Frozen] = 2,
-	[slot0.BuffType_Disarm] = 0,
-	[slot0.BuffType_Forbid] = 0,
-	[slot0.BuffType_Seal] = 0
+var_0_0.CardLockPriorityDict = {
+	[var_0_0.BuffType_CastChannel] = 4,
+	[var_0_0.BuffType_Dizzy] = 3,
+	[var_0_0.BuffType_Charm] = 3,
+	[var_0_0.BuffType_Petrified] = 2,
+	[var_0_0.BuffType_Sleep] = 1,
+	[var_0_0.BuffType_Frozen] = 2,
+	[var_0_0.BuffType_Disarm] = 0,
+	[var_0_0.BuffType_Forbid] = 0,
+	[var_0_0.BuffType_Seal] = 0
 }
-slot0.FightSpecialTipsType = {
+var_0_0.FightSpecialTipsType = {
 	Addition = 2,
 	Special = 1
 }
-slot0.FightConstId = {
+var_0_0.FightConstId = {
 	TechnicCriticalRatio = 11,
 	TechnicTargetLevelRatio = 14,
 	TechnicCriticalDamageRatio = 12,
 	TechnicCorrectConst = 13
 }
-slot0.DirectDamageType = -1
-slot0.FightBuffType = {
+var_0_0.DirectDamageType = -1
+var_0_0.FightBuffType = {
 	GoodBuff = 2,
 	BadBuff = 1,
 	NormalBuff = 3
 }
-slot0.BuffTypeList = {
+var_0_0.BuffTypeList = {
 	GoodBuffList = {
 		1,
 		3,
@@ -835,30 +838,30 @@ slot0.BuffTypeList = {
 		6
 	}
 }
-slot0.FightStatType = {
+var_0_0.FightStatType = {
 	DataView = 1,
 	SkillView = 2
 }
-slot0.AtkRenderOrderIgnore = {
+var_0_0.AtkRenderOrderIgnore = {
 	[60111] = {
-		[slot0.EntitySide.MySide] = {
+		[var_0_0.EntitySide.MySide] = {
 			5
 		}
 	}
 }
-slot0.DeadEffectType = {
+var_0_0.DeadEffectType = {
 	NoEffect = 1,
 	NormalEffect = 0,
 	Abjqr4 = 3,
 	ZaoWu = 2
 }
-slot0.DissolveType = {
+var_0_0.DissolveType = {
 	Player = 1,
 	Abjqr4 = 4,
 	Monster = 2,
 	ZaoWu = 3
 }
-slot0.IndicatorId = {
+var_0_0.IndicatorId = {
 	NewSeasonScoreOffset = 163,
 	Season1_2 = 3,
 	BossInfiniteHPCount = 5,
@@ -874,72 +877,72 @@ slot0.IndicatorId = {
 	FightSucc = 2,
 	Id6182 = 6182
 }
-slot0.AppearTimelineSkillId = -111
-slot0.SkillTargetType = {
+var_0_0.AppearTimelineSkillId = -111
+var_0_0.SkillTargetType = {
 	All = 4,
 	Single = 1,
 	Side = 3,
 	Multi = 2
 }
-slot0.SkillLineColor = {
+var_0_0.SkillLineColor = {
 	Yellow = 2,
 	Red = 1
 }
-slot0.ClothSkillType = {
+var_0_0.ClothSkillType = {
 	HeroUpgrade = 1,
 	ClothSkill = 0,
 	Contract = 3,
 	Rouge = 2
 }
-slot0.CardType = {
+var_0_0.CardType = {
 	SUPPORT_NORMAL = 2,
 	USE_ACT_POINT = 5,
 	ROUGE_SP = 1,
 	SUPPORT_EX = 3,
 	NONE = 0
 }
-slot0.PowerType = {
+var_0_0.PowerType = {
 	Energy = 2,
 	PlayerFinisherSkill = 5,
 	AssistBoss = 4,
 	Stress = 3,
 	Power = 1
 }
-slot0.ClothSkillPerformanceType = {
+var_0_0.ClothSkillPerformanceType = {
 	Rouge = 1,
 	ToughBattle = 2,
 	Normal = 0
 }
-slot0.ExIndexForRouge = {
+var_0_0.ExIndexForRouge = {
 	Coin = 1,
 	Magic = 2,
 	SupportHeroSkill = 4,
 	MagicLimit = 3
 }
-slot0.PerformanceTime = {
+var_0_0.PerformanceTime = {
 	CardLevelChange = 1.3,
 	DouQuQuXianHouShou = 3.6,
 	CardAConvertCardB = 1.2
 }
-slot0.CacheProtoType = {
+var_0_0.CacheProtoType = {
 	Fight = 1,
 	Round = 2
 }
-slot0.FightActType = {
+var_0_0.FightActType = {
 	Sp = 2,
 	Season2 = 3,
 	Act174 = 4,
 	Normal = 1
 }
-slot0.CardInfoStatus = {
+var_0_0.CardInfoStatus = {
 	STATUS_NONE = 0,
 	STATUS_PLAYSETGRAY = 1
 }
-slot0.BuffActId = {
+var_0_0.BuffActId = {
 	ExSkillNoConsumption = 514,
 	ExPointCantAdd = 603
 }
-slot0.ExPointState = {
+var_0_0.ExPointState = {
 	Server = 2,
 	Client = 3,
 	ServerFull = 4,
@@ -948,11 +951,11 @@ slot0.ExPointState = {
 	Lock = 6,
 	Empty = 1
 }
-slot0.CardRankChangeFail = {
+var_0_0.CardRankChangeFail = {
 	DownFail = "0",
 	UpFail = "1"
 }
-slot0.Resistance = {
+var_0_0.Resistance = {
 	forbid = 406,
 	sleep = 402,
 	dizzy = 401,
@@ -968,26 +971,26 @@ slot0.Resistance = {
 	disarm = 405,
 	cantGetExskill = 408
 }
-slot0.ToughnessToResistance = {
-	[slot0.Resistance.controlResilience] = {
-		slot0.Resistance.dizzy,
-		slot0.Resistance.sleep,
-		slot0.Resistance.petrified,
-		slot0.Resistance.frozen,
-		slot0.Resistance.disarm,
-		slot0.Resistance.forbid,
-		slot0.Resistance.seal,
-		slot0.Resistance.cantGetExskill,
-		slot0.Resistance.charm
+var_0_0.ToughnessToResistance = {
+	[var_0_0.Resistance.controlResilience] = {
+		var_0_0.Resistance.dizzy,
+		var_0_0.Resistance.sleep,
+		var_0_0.Resistance.petrified,
+		var_0_0.Resistance.frozen,
+		var_0_0.Resistance.disarm,
+		var_0_0.Resistance.forbid,
+		var_0_0.Resistance.seal,
+		var_0_0.Resistance.cantGetExskill,
+		var_0_0.Resistance.charm
 	},
-	[slot0.Resistance.delExPointResilience] = {
-		slot0.Resistance.delExPoint
+	[var_0_0.Resistance.delExPointResilience] = {
+		var_0_0.Resistance.delExPoint
 	},
-	[slot0.Resistance.stressUpResilience] = {
-		slot0.Resistance.stressUp
+	[var_0_0.Resistance.stressUpResilience] = {
+		var_0_0.Resistance.stressUp
 	}
 }
-slot0.ResistanceKeyToSpAttributeMoField = {
+var_0_0.ResistanceKeyToSpAttributeMoField = {
 	forbid = "forbidResistances",
 	sleep = "sleepResistances",
 	dizzy = "dizzyResistances",
@@ -1003,8 +1006,8 @@ slot0.ResistanceKeyToSpAttributeMoField = {
 	disarm = "disarmResistances",
 	cantGetExskill = "cantGetExskillResistances"
 }
-slot0.DeadPerformanceMaxNum = 8
-slot0.StressBehaviour = {
+var_0_0.DeadPerformanceMaxNum = 8
+var_0_0.StressBehaviour = {
 	Resolute = 4,
 	BaseResolute = 7,
 	Positive = 1,
@@ -1014,36 +1017,36 @@ slot0.StressBehaviour = {
 	BaseMeltdown = 8,
 	Meltdown = 3
 }
-slot0.StressBehaviourString = {
-	[slot0.StressBehaviour.Positive] = "positive",
-	[slot0.StressBehaviour.Negative] = "negative",
-	[slot0.StressBehaviour.Resolute] = "resolute",
-	[slot0.StressBehaviour.Meltdown] = "meltdown",
-	[slot0.StressBehaviour.BaseAdd] = "baseAdd",
-	[slot0.StressBehaviour.BaseReduce] = "baseReduce",
-	[slot0.StressBehaviour.BaseResolute] = "baseResolute",
-	[slot0.StressBehaviour.BaseMeltdown] = "baseMeltdown"
+var_0_0.StressBehaviourString = {
+	[var_0_0.StressBehaviour.Positive] = "positive",
+	[var_0_0.StressBehaviour.Negative] = "negative",
+	[var_0_0.StressBehaviour.Resolute] = "resolute",
+	[var_0_0.StressBehaviour.Meltdown] = "meltdown",
+	[var_0_0.StressBehaviour.BaseAdd] = "baseAdd",
+	[var_0_0.StressBehaviour.BaseReduce] = "baseReduce",
+	[var_0_0.StressBehaviour.BaseResolute] = "baseResolute",
+	[var_0_0.StressBehaviour.BaseMeltdown] = "baseMeltdown"
 }
-slot0.StressBehaviourConstId = {
-	[slot0.StressBehaviour.Positive] = 6,
-	[slot0.StressBehaviour.Negative] = 7,
-	[slot0.StressBehaviour.Resolute] = 8,
-	[slot0.StressBehaviour.Meltdown] = 9
+var_0_0.StressBehaviourConstId = {
+	[var_0_0.StressBehaviour.Positive] = 6,
+	[var_0_0.StressBehaviour.Negative] = 7,
+	[var_0_0.StressBehaviour.Resolute] = 8,
+	[var_0_0.StressBehaviour.Meltdown] = 9
 }
-slot0.Status = {
+var_0_0.Status = {
 	Positive = 1,
 	Negative = 2
 }
-slot0.StressThreshold = {
-	[slot0.Status.Positive] = 24,
-	[slot0.Status.Negative] = 50
+var_0_0.StressThreshold = {
+	[var_0_0.Status.Positive] = 24,
+	[var_0_0.Status.Negative] = 50
 }
-slot0.BuffType = {
+var_0_0.BuffType = {
 	LayerMasterHalo = 1,
 	LayerSalveHalo = 2,
 	Normal = 0
 }
-slot0.IdentityType = {
+var_0_0.IdentityType = {
 	BattleTag = "battleTag",
 	HeroId = "id",
 	HeroType = "heroType",
@@ -1051,48 +1054,48 @@ slot0.IdentityType = {
 	Career = "career",
 	Custom = "custom"
 }
-slot0.EnemyActionStatus = {
+var_0_0.EnemyActionStatus = {
 	Lock = 3,
 	NotOpen = 0,
 	Select = 2,
 	Normal = 1
 }
-slot0.EntityStatus = {
+var_0_0.EntityStatus = {
 	Dying = 1,
 	Dead = 2,
 	Normal = 0
 }
-slot0.EntityType = {
+var_0_0.EntityType = {
 	Character = 1,
 	ASFDEmitter = 6,
 	Player = 3,
 	AssistBoss = 5,
 	Monster = 2
 }
-slot0.ConditionTarget = {
+var_0_0.ConditionTarget = {
 	Self = 103
 }
-slot0.ConditionType = {
+var_0_0.ConditionType = {
 	HasBuffId = "HasBuffId"
 }
-slot0.ASFDUnit = {
+var_0_0.ASFDUnit = {
 	Explosion = 3,
 	Emitter = 1,
 	Missile = 2,
 	Born = 4
 }
-slot0.ASFDType = {
+var_0_0.ASFDType = {
 	Normal = 1
 }
-slot0.ASFDEffect = {
+var_0_0.ASFDEffect = {
 	Fission = 2,
 	Normal = 1
 }
-slot0.ASFDReplyRule = {
+var_0_0.ASFDReplyRule = {
 	HasSkin = 1,
 	HasBuffActId = 2
 }
-slot0.CardShowType = {
+var_0_0.CardShowType = {
 	Default = 0,
 	HandCard = 1,
 	BossAction = 4,
@@ -1100,17 +1103,17 @@ slot0.CardShowType = {
 	PlayCard = 3,
 	Operation = 2
 }
-slot0.CardColor = {
+var_0_0.CardColor = {
 	Blue = 1,
 	Both = 3,
 	Red = 2,
 	None = 0
 }
-slot0.LYCardAreaWidthOffset = 45
-slot0.LYPlayCardAreaOffset = 74
-slot0.LYCardWaitAreaScale = 1.5
-slot0.CardIconId = {
+var_0_0.LYCardAreaWidthOffset = 45
+var_0_0.LYPlayCardAreaOffset = 74
+var_0_0.LYCardWaitAreaScale = 1.5
+var_0_0.CardIconId = {
 	PreDelete = 99999999
 }
 
-return slot0
+return var_0_0

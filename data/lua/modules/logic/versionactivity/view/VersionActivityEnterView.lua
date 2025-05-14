@@ -1,37 +1,37 @@
-module("modules.logic.versionactivity.view.VersionActivityEnterView", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityEnterView", package.seeall)
 
-slot0 = class("VersionActivityEnterView", VersionActivityEnterBaseView)
+local var_0_0 = class("VersionActivityEnterView", VersionActivityEnterBaseView)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btnstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_store")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "entrance/#btn_store/#txt_num")
-	slot0._txtremainday = gohelper.findChildText(slot0.viewGO, "logo/#txt_remaintime")
-	slot0._txtremaindayprefix = gohelper.findChildText(slot0.viewGO, "logo/#txt_remaintime_prefix")
-	slot0._txtremaindaysuffix = gohelper.findChildText(slot0.viewGO, "logo/#txt_remiantime_suffix")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#txt_num")
+	arg_1_0._txtremainday = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_remaintime")
+	arg_1_0._txtremaindayprefix = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_remaintime_prefix")
+	arg_1_0._txtremaindaysuffix = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_remiantime_suffix")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0._btnstore:AddClickListener(slot0._btnstoreOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0._btnstore:AddClickListener(arg_2_0._btnstoreOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0._btnstore:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	arg_3_0._btnstore:RemoveClickListener()
 end
 
-slot0.SeasonAnchor = {
+var_0_0.SeasonAnchor = {
 	Open = Vector2(-723.9, -228.9),
 	NotOpen = Vector2(-660.9, 128.1)
 }
-slot0.LeiMiTeBeiAnchor = {
+var_0_0.LeiMiTeBeiAnchor = {
 	Normal = {
 		Position = Vector2(-651, -133),
 		Rotation = Vector3(0, 0, 0)
@@ -41,7 +41,7 @@ slot0.LeiMiTeBeiAnchor = {
 		Rotation = Vector3(0, 0, 31.65)
 	}
 }
-slot0.LeiMiTeBeiStoreAnchor = {
+var_0_0.LeiMiTeBeiStoreAnchor = {
 	Normal = {
 		Position = Vector2(-788, -94),
 		Rotation = Vector3(0, 0, 0)
@@ -52,12 +52,12 @@ slot0.LeiMiTeBeiStoreAnchor = {
 	}
 }
 
-function slot0._btnstoreOnClick(slot0)
-	slot1, slot2, slot3 = ActivityHelper.getActivityStatusAndToast(VersionActivityEnum.ActivityId.Act107)
+function var_0_0._btnstoreOnClick(arg_4_0)
+	local var_4_0, var_4_1, var_4_2 = ActivityHelper.getActivityStatusAndToast(VersionActivityEnum.ActivityId.Act107)
 
-	if slot1 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot2 then
-			GameFacade.showToastWithTableParam(slot2, slot3)
+	if var_4_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_4_1 then
+			GameFacade.showToastWithTableParam(var_4_1, var_4_2)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
@@ -69,207 +69,248 @@ function slot0._btnstoreOnClick(slot0)
 	VersionActivityController.instance:openLeiMiTeBeiStoreView()
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getVersionActivityIcon("full/bg"))
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshLeiMiTeBeiCurrency, slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getVersionActivityIcon("full/bg"))
+	arg_5_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_5_0.refreshLeiMiTeBeiCurrency, arg_5_0)
 end
 
-function slot0.onClickActivity1(slot0)
+function var_0_0.onClickActivity1(arg_6_0)
 	VersionActivityDungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function slot0.checkActivityCanClickFunc2(slot0, slot1)
-	if ActivityHelper.getActivityStatus(slot1.actId) == ActivityEnum.ActivityStatus.NotOpen then
-		slot3 = TimeUtil.timestampToTable(ActivityModel.instance:getActStartTime(slot1.actId) / 1000)
+function var_0_0.checkActivityCanClickFunc2(arg_7_0, arg_7_1)
+	if ActivityHelper.getActivityStatus(arg_7_1.actId) == ActivityEnum.ActivityStatus.NotOpen then
+		local var_7_0 = TimeUtil.timestampToTable(ActivityModel.instance:getActStartTime(arg_7_1.actId) / 1000)
 
-		GameFacade.showToast(ToastEnum.SeasonUTTUNotOpen, slot3.month, slot3.day)
+		GameFacade.showToast(ToastEnum.SeasonUTTUNotOpen, var_7_0.month, var_7_0.day)
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
 
 		return false
 	end
 
-	return slot0:defaultCheckActivityCanClick(slot1)
+	return arg_7_0:defaultCheckActivityCanClick(arg_7_1)
 end
 
-function slot0.onClickActivity2(slot0)
+function var_0_0.onClickActivity2(arg_8_0)
 	Activity104Controller.instance:openSeasonMainView()
 end
 
-function slot0.onClickActivity3(slot0)
+function var_0_0.onClickActivity3(arg_9_0)
 	ViewMgr.instance:openView(ViewName.VersionActivityExchangeView)
 end
 
-function slot0.onClickActivity4(slot0)
+function var_0_0.onClickActivity4(arg_10_0)
 	Activity109ChessController.instance:openEntry(VersionActivityEnum.ActivityId.Act109)
 end
 
-function slot0.onClickActivity5(slot0)
+function var_0_0.onClickActivity5(arg_11_0)
 	PushBoxController.instance:enterPushBoxGame()
 end
 
-function slot0.onClickActivity6(slot0)
+function var_0_0.onClickActivity6(arg_12_0)
 	MeilanniController.instance:openMeilanniMainView({
 		checkStory = true
 	})
 end
 
-function slot0.refreshUI(slot0)
-	uv0.super.refreshUI(slot0)
+function var_0_0.refreshUI(arg_13_0)
+	var_0_0.super.refreshUI(arg_13_0)
 
-	slot1 = VersionActivityEnum.ActivityId.Act104
-	slot5 = slot0:getVersionActivityItem(VersionActivityEnum.ActivityId.Act113).rootGo.transform
-	slot6 = slot0._btnstore.transform
-	slot8, slot9 = nil
+	local var_13_0 = VersionActivityEnum.ActivityId.Act104
+	local var_13_1 = arg_13_0:getVersionActivityItem(var_13_0)
+	local var_13_2 = arg_13_0:getVersionActivityItem(VersionActivityEnum.ActivityId.Act113)
+	local var_13_3 = var_13_1.rootGo.transform
+	local var_13_4 = var_13_2.rootGo.transform
+	local var_13_5 = arg_13_0._btnstore.transform
+	local var_13_6 = ActivityHelper.getActivityStatus(var_13_0)
+	local var_13_7
+	local var_13_8
 
-	if ActivityHelper.getActivityStatus(slot1) == ActivityEnum.ActivityStatus.NotOpen then
-		slot8 = uv0.SeasonAnchor.NotOpen
+	if var_13_6 == ActivityEnum.ActivityStatus.NotOpen then
+		local var_13_9 = var_0_0.SeasonAnchor.NotOpen
 
-		recthelper.setAnchor(slot0:getVersionActivityItem(slot1).rootGo.transform, slot8.x, slot8.y)
+		recthelper.setAnchor(var_13_3, var_13_9.x, var_13_9.y)
 
-		slot8 = uv0.LeiMiTeBeiAnchor.Normal.Position
+		local var_13_10 = var_0_0.LeiMiTeBeiAnchor.Normal.Position
 
-		recthelper.setAnchor(slot5, slot8.x, slot8.y)
+		recthelper.setAnchor(var_13_4, var_13_10.x, var_13_10.y)
 
-		slot9 = uv0.LeiMiTeBeiAnchor.Normal.Rotation
+		local var_13_11 = var_0_0.LeiMiTeBeiAnchor.Normal.Rotation
 
-		transformhelper.setLocalRotation(slot5, slot9.x, slot9.y, slot9.z)
+		transformhelper.setLocalRotation(var_13_4, var_13_11.x, var_13_11.y, var_13_11.z)
 
-		slot8 = uv0.LeiMiTeBeiStoreAnchor.Normal.Position
+		local var_13_12 = var_0_0.LeiMiTeBeiStoreAnchor.Normal.Position
 
-		recthelper.setAnchor(slot6, slot8.x, slot8.y)
+		recthelper.setAnchor(var_13_5, var_13_12.x, var_13_12.y)
 
-		slot9 = uv0.LeiMiTeBeiStoreAnchor.Normal.Rotation
+		local var_13_13 = var_0_0.LeiMiTeBeiStoreAnchor.Normal.Rotation
 
-		transformhelper.setLocalRotation(slot6, slot9.x, slot9.y, slot9.z)
+		transformhelper.setLocalRotation(var_13_5, var_13_13.x, var_13_13.y, var_13_13.z)
 	else
-		slot8 = uv0.SeasonAnchor.Open
+		local var_13_14 = var_0_0.SeasonAnchor.Open
 
-		recthelper.setAnchor(slot4, slot8.x, slot8.y)
+		recthelper.setAnchor(var_13_3, var_13_14.x, var_13_14.y)
 
-		slot8 = uv0.LeiMiTeBeiAnchor.Expired.Position
+		local var_13_15 = var_0_0.LeiMiTeBeiAnchor.Expired.Position
 
-		recthelper.setAnchor(slot5, slot8.x, slot8.y)
+		recthelper.setAnchor(var_13_4, var_13_15.x, var_13_15.y)
 
-		slot9 = uv0.LeiMiTeBeiAnchor.Expired.Rotation
+		local var_13_16 = var_0_0.LeiMiTeBeiAnchor.Expired.Rotation
 
-		transformhelper.setLocalRotation(slot5, slot9.x, slot9.y, slot9.z)
+		transformhelper.setLocalRotation(var_13_4, var_13_16.x, var_13_16.y, var_13_16.z)
 
-		slot8 = uv0.LeiMiTeBeiStoreAnchor.Expired.Position
+		local var_13_17 = var_0_0.LeiMiTeBeiStoreAnchor.Expired.Position
 
-		recthelper.setAnchor(slot6, slot8.x, slot8.y)
+		recthelper.setAnchor(var_13_5, var_13_17.x, var_13_17.y)
 
-		slot9 = uv0.LeiMiTeBeiStoreAnchor.Expired.Rotation
+		local var_13_18 = var_0_0.LeiMiTeBeiStoreAnchor.Expired.Rotation
 
-		transformhelper.setLocalRotation(slot6, slot9.x, slot9.y, slot9.z)
+		transformhelper.setLocalRotation(var_13_5, var_13_18.x, var_13_18.y, var_13_18.z)
 	end
 
-	gohelper.setActive(slot0._btnstore.gameObject, ActivityHelper.getActivityStatus(VersionActivityEnum.ActivityId.Act107) == ActivityEnum.ActivityStatus.Normal)
-	slot0:refreshLeiMiTeBeiCurrency()
-	slot0:refreshRemainTime()
+	local var_13_19 = ActivityHelper.getActivityStatus(VersionActivityEnum.ActivityId.Act107)
+
+	gohelper.setActive(arg_13_0._btnstore.gameObject, var_13_19 == ActivityEnum.ActivityStatus.Normal)
+	arg_13_0:refreshLeiMiTeBeiCurrency()
+	arg_13_0:refreshRemainTime()
 end
 
-function slot0.refreshLeiMiTeBeiCurrency(slot0)
-	slot0._txtnum.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(ReactivityModel.instance:getActivityCurrencyId(slot0.actId)) and slot2.quantity or 0)
+function var_0_0.refreshLeiMiTeBeiCurrency(arg_14_0)
+	local var_14_0 = ReactivityModel.instance:getActivityCurrencyId(arg_14_0.actId)
+	local var_14_1 = CurrencyModel.instance:getCurrency(var_14_0)
+	local var_14_2 = var_14_1 and var_14_1.quantity or 0
+
+	arg_14_0._txtnum.text = GameUtil.numberDisplay(var_14_2)
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot2 = ActivityModel.instance:getActivityInfo()[slot0.actId]:getRealEndTimeStamp() - ServerTime.now()
-	slot0._txtremainday.text = string.format(luaLang("remain"), string.format("%s%s%s%s", Mathf.Floor(slot2 / TimeUtil.OneDaySecond), luaLang("time_day"), Mathf.Floor(slot2 % TimeUtil.OneDaySecond / TimeUtil.OneHourSecond), luaLang("time_hour2")))
+function var_0_0.refreshRemainTime(arg_15_0)
+	local var_15_0 = ActivityModel.instance:getActivityInfo()[arg_15_0.actId]:getRealEndTimeStamp() - ServerTime.now()
+	local var_15_1 = Mathf.Floor(var_15_0 / TimeUtil.OneDaySecond)
+	local var_15_2 = var_15_0 % TimeUtil.OneDaySecond
+	local var_15_3 = Mathf.Floor(var_15_2 / TimeUtil.OneHourSecond)
+
+	arg_15_0._txtremainday.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_15_1, luaLang("time_day"), var_15_3, luaLang("time_hour2")))
 end
 
-function slot0.refreshEnterViewTime(slot0)
-	slot0:refreshRemainTime()
-	slot0:onRefreshActivity1(slot0:getVersionActivityItem(VersionActivityEnum.ActivityId.Act113))
-	slot0:onRefreshActivity2(slot0:getVersionActivityItem(VersionActivityEnum.ActivityId.Act104))
+function var_0_0.refreshEnterViewTime(arg_16_0)
+	arg_16_0:refreshRemainTime()
+	arg_16_0:onRefreshActivity1(arg_16_0:getVersionActivityItem(VersionActivityEnum.ActivityId.Act113))
+	arg_16_0:onRefreshActivity2(arg_16_0:getVersionActivityItem(VersionActivityEnum.ActivityId.Act104))
 end
 
-function slot0.onRefreshActivity1(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot1.rootGo, "normal/#go_bg1"), ActivityHelper.getActivityStatus(slot1.actId) == ActivityEnum.ActivityStatus.Normal)
+function var_0_0.onRefreshActivity1(arg_17_0, arg_17_1)
+	local var_17_0 = ActivityHelper.getActivityStatus(arg_17_1.actId)
+	local var_17_1 = gohelper.findChild(arg_17_1.rootGo, "normal/#go_bg1")
 
-	if slot2 == ActivityEnum.ActivityStatus.Normal then
-		gohelper.findChildText(slot1.rootGo, "normal/#go_bg1/#txt_time").text = string.format(luaLang("versionactivity_remain_day"), ActivityModel.instance:getActivityInfo()[slot1.actId] and slot4:getRemainTimeStr())
+	gohelper.setActive(var_17_1, var_17_0 == ActivityEnum.ActivityStatus.Normal)
+
+	if var_17_0 == ActivityEnum.ActivityStatus.Normal then
+		local var_17_2 = ActivityModel.instance:getActivityInfo()[arg_17_1.actId]
+
+		gohelper.findChildText(arg_17_1.rootGo, "normal/#go_bg1/#txt_time").text = string.format(luaLang("versionactivity_remain_day"), var_17_2 and var_17_2:getRemainTimeStr())
 	end
 end
 
-function slot0.onRefreshActivity2(slot0, slot1)
-	slot3 = ActivityHelper.getActivityStatus(slot1.actId) == ActivityEnum.ActivityStatus.Normal
+function var_0_0.onRefreshActivity2(arg_18_0, arg_18_1)
+	local var_18_0 = ActivityHelper.getActivityStatus(arg_18_1.actId)
+	local var_18_1 = var_18_0 == ActivityEnum.ActivityStatus.Normal
+	local var_18_2 = gohelper.findChild(arg_18_1.goLockContainer, "notopen")
+	local var_18_3 = gohelper.findChild(arg_18_1.goLockContainer, "lock")
 
-	gohelper.setActive(gohelper.findChild(slot1.goLockContainer, "notopen"), slot2 == ActivityEnum.ActivityStatus.NotOpen)
-	gohelper.setActive(gohelper.findChild(slot1.goLockContainer, "lock"), slot2 ~= ActivityEnum.ActivityStatus.NotOpen)
-	gohelper.setActive(slot1.goNormal, slot2 ~= ActivityEnum.ActivityStatus.NotOpen)
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "week"), slot3 and Activity104Model.instance:isEnterSpecial())
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "score"), slot3)
+	gohelper.setActive(var_18_2, var_18_0 == ActivityEnum.ActivityStatus.NotOpen)
+	gohelper.setActive(var_18_3, var_18_0 ~= ActivityEnum.ActivityStatus.NotOpen)
+	gohelper.setActive(arg_18_1.goNormal, var_18_0 ~= ActivityEnum.ActivityStatus.NotOpen)
 
-	if slot3 then
-		gohelper.setActive(gohelper.findChildImage(slot1.rootGo, "normal/score/stage7"), Activity104Model.instance:getAct104CurStage() == 7)
+	local var_18_4 = gohelper.findChild(arg_18_1.goNormal, "week")
+	local var_18_5 = gohelper.findChild(arg_18_1.goNormal, "score")
 
-		for slot13 = 1, 7 do
-			UISpriteSetMgr.instance:setVersionActivitySprite(gohelper.findChildImage(slot1.rootGo, "normal/score/stage" .. slot13), slot13 <= slot8 and "eye" or "slot", true)
+	gohelper.setActive(var_18_4, var_18_1 and Activity104Model.instance:isEnterSpecial())
+	gohelper.setActive(var_18_5, var_18_1)
+
+	if var_18_1 then
+		local var_18_6 = Activity104Model.instance:getAct104CurStage()
+		local var_18_7 = gohelper.findChildImage(arg_18_1.rootGo, "normal/score/stage7")
+
+		gohelper.setActive(var_18_7, var_18_6 == 7)
+
+		for iter_18_0 = 1, 7 do
+			local var_18_8 = gohelper.findChildImage(arg_18_1.rootGo, "normal/score/stage" .. iter_18_0)
+
+			UISpriteSetMgr.instance:setVersionActivitySprite(var_18_8, iter_18_0 <= var_18_6 and "eye" or "slot", true)
 		end
 	end
 end
 
-function slot0.beforePlayActUnlockAnimationActivity2(slot0, slot1)
-	gohelper.setActive(slot1.goTime, true)
-	gohelper.setActive(slot1.goLockContainer, true)
+function var_0_0.beforePlayActUnlockAnimationActivity2(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_1.goTime, true)
+	gohelper.setActive(arg_19_1.goLockContainer, true)
 
-	if gohelper.findChild(slot1.goLockContainer, "lock/bg") then
-		gohelper.setActive(slot2, false)
+	local var_19_0 = gohelper.findChild(arg_19_1.goLockContainer, "lock/bg")
+
+	if var_19_0 then
+		gohelper.setActive(var_19_0, false)
 	end
 
-	gohelper.setActive(gohelper.findChild(slot1.goLockContainer, "lock"), true)
+	local var_19_1 = gohelper.findChild(arg_19_1.goLockContainer, "lock")
+
+	gohelper.setActive(var_19_1, true)
 end
 
-function slot0.everyMinuteCall(slot0)
-	uv0.super.everyMinuteCall(slot0)
-	slot0:refreshEnterViewTime()
+function var_0_0.everyMinuteCall(arg_20_0)
+	var_0_0.super.everyMinuteCall(arg_20_0)
+	arg_20_0:refreshEnterViewTime()
 end
 
-function slot0.playBgm(slot0)
+function var_0_0.playBgm(arg_21_0)
+	return
 end
 
-function slot0.stopBgm(slot0)
+function var_0_0.stopBgm(arg_22_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_23_0)
+	var_0_0.super.onDestroyView(arg_23_0)
+	arg_23_0._simagebg:UnLoadImage()
 end
 
-function slot0.initActivityItem(slot0, slot1, slot2, slot3)
-	slot4 = uv0.super.initActivityItem(slot0, slot1, slot2, slot3)
-	slot4.shakeicon = gohelper.findChild(slot3, "normal/icon1")
+function var_0_0.initActivityItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	local var_24_0 = var_0_0.super.initActivityItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
 
-	return slot4
+	var_24_0.shakeicon = gohelper.findChild(arg_24_3, "normal/icon1")
+
+	return var_24_0
 end
 
-function slot0.defaultBeforePlayActUnlockAnimation(slot0, slot1)
-	uv0.super.defaultBeforePlayActUnlockAnimation(slot0, slot1)
+function var_0_0.defaultBeforePlayActUnlockAnimation(arg_25_0, arg_25_1)
+	var_0_0.super.defaultBeforePlayActUnlockAnimation(arg_25_0, arg_25_1)
 
-	if slot1.shakeicon then
-		gohelper.setActive(slot1.shakeicon, false)
+	if arg_25_1.shakeicon then
+		gohelper.setActive(arg_25_1.shakeicon, false)
 	end
 end
 
-function slot0.refreshLockUI(slot0, slot1, slot2)
-	uv0.super.refreshLockUI(slot0, slot1, slot2)
+function var_0_0.refreshLockUI(arg_26_0, arg_26_1, arg_26_2)
+	var_0_0.super.refreshLockUI(arg_26_0, arg_26_1, arg_26_2)
 
-	if slot1.shakeicon then
-		gohelper.setActive(slot1.shakeicon, slot2 == ActivityEnum.ActivityStatus.Normal)
+	if arg_26_1.shakeicon then
+		local var_26_0 = arg_26_2 == ActivityEnum.ActivityStatus.Normal
+
+		gohelper.setActive(arg_26_1.shakeicon, var_26_0)
 	end
 end
 
-function slot0.playUnlockAnimationDone(slot0)
-	uv0.super.playUnlockAnimationDone(slot0)
+function var_0_0.playUnlockAnimationDone(arg_27_0)
+	var_0_0.super.playUnlockAnimationDone(arg_27_0)
 
-	if slot0.needPlayTimeUnlockList then
-		for slot4, slot5 in ipairs(slot0.needPlayTimeUnlockList) do
-			if slot5.shakeicon then
-				gohelper.setActive(slot5.shakeicon, true)
+	if arg_27_0.needPlayTimeUnlockList then
+		for iter_27_0, iter_27_1 in ipairs(arg_27_0.needPlayTimeUnlockList) do
+			if iter_27_1.shakeicon then
+				gohelper.setActive(iter_27_1.shakeicon, true)
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

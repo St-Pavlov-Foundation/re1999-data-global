@@ -1,153 +1,167 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueMergeView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueMergeView", package.seeall)
 
-slot0 = class("AergusiClueMergeView", BaseView)
+local var_0_0 = class("AergusiClueMergeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocluemerge = gohelper.findChild(slot0.viewGO, "Right/#go_cluemerge")
-	slot0._simagenotebg2 = gohelper.findChildSingleImage(slot0.viewGO, "Right/#go_cluemerge/#simage_notebg2")
-	slot0._btnmergeclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_cluemerge/#btn_mergeclose")
-	slot0._gofailedtips = gohelper.findChild(slot0.viewGO, "Right/#go_cluemerge/#go_failedtips")
-	slot0._btnok = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_cluemerge/#btn_ok")
-	slot0._btnlocked = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_cluemerge/#btn_locked")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocluemerge = gohelper.findChild(arg_1_0.viewGO, "Right/#go_cluemerge")
+	arg_1_0._simagenotebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_cluemerge/#simage_notebg2")
+	arg_1_0._btnmergeclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_cluemerge/#btn_mergeclose")
+	arg_1_0._gofailedtips = gohelper.findChild(arg_1_0.viewGO, "Right/#go_cluemerge/#go_failedtips")
+	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_cluemerge/#btn_ok")
+	arg_1_0._btnlocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_cluemerge/#btn_locked")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmergeclose:AddClickListener(slot0._btnmergecloseOnClick, slot0)
-	slot0._btnok:AddClickListener(slot0._btnokOnClick, slot0)
-	slot0._btnlocked:AddClickListener(slot0._btnlockedOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmergeclose:AddClickListener(arg_2_0._btnmergecloseOnClick, arg_2_0)
+	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+	arg_2_0._btnlocked:AddClickListener(arg_2_0._btnlockedOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmergeclose:RemoveClickListener()
-	slot0._btnok:RemoveClickListener()
-	slot0._btnlocked:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmergeclose:RemoveClickListener()
+	arg_3_0._btnok:RemoveClickListener()
+	arg_3_0._btnlocked:RemoveClickListener()
 end
 
-function slot0._btnmergecloseOnClick(slot0)
-	slot0._mergeAni:Play("close", 0, 0)
-	TaskDispatcher.runDelay(slot0._realCloseClueMerge, slot0, 0.34)
+function var_0_0._btnmergecloseOnClick(arg_4_0)
+	arg_4_0._mergeAni:Play("close", 0, 0)
+	TaskDispatcher.runDelay(arg_4_0._realCloseClueMerge, arg_4_0, 0.34)
 end
 
-function slot0._realCloseClueMerge(slot0)
+function var_0_0._realCloseClueMerge(arg_5_0)
 	AergusiModel.instance:setMergeClueOpen(false)
 	AergusiModel.instance:clearMergePosState()
 
-	for slot4 = 1, 2 do
-		slot0._clueMergeItems[slot4]:refreshItem()
+	for iter_5_0 = 1, 2 do
+		arg_5_0._clueMergeItems[iter_5_0]:refreshItem()
 	end
 
-	gohelper.setActive(slot0._gocluemerge, false)
+	gohelper.setActive(arg_5_0._gocluemerge, false)
 	AergusiController.instance:dispatchEvent(AergusiEvent.OnClickCloseMergeClue)
 end
 
-function slot0._btnokOnClick(slot0)
-	slot1 = AergusiModel.instance:getMergeClues()
-	slot0._targetClue = AergusiModel.instance:getTargetMergeClue(slot1[1], slot1[2])
+function var_0_0._btnokOnClick(arg_6_0)
+	local var_6_0 = AergusiModel.instance:getMergeClues()
 
-	if slot0._targetClue > 0 then
-		Activity163Rpc.instance:sendAct163EvidenceOperationRequest(VersionActivity2_1Enum.ActivityId.Aergusi, slot0.viewParam.episodeId, AergusiEnum.OperationType.Merge, string.format("%s#%s#%s", slot1[1], slot1[2], slot0._targetClue), slot0._mergeSuccess, slot0)
+	arg_6_0._targetClue = AergusiModel.instance:getTargetMergeClue(var_6_0[1], var_6_0[2])
+
+	if arg_6_0._targetClue > 0 then
+		local var_6_1 = VersionActivity2_1Enum.ActivityId.Aergusi
+		local var_6_2 = arg_6_0.viewParam.episodeId
+		local var_6_3 = AergusiEnum.OperationType.Merge
+		local var_6_4 = string.format("%s#%s#%s", var_6_0[1], var_6_0[2], arg_6_0._targetClue)
+		local var_6_5 = arg_6_0._mergeSuccess
+		local var_6_6 = arg_6_0
+
+		Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_6_1, var_6_2, var_6_3, var_6_4, var_6_5, var_6_6)
 	else
-		logError(string.format("线索%s与线索%s没法融合，请重新选择需要融合的线索！", slot1[1], slot1[2]))
+		logError(string.format("线索%s与线索%s没法融合，请重新选择需要融合的线索！", var_6_0[1], var_6_0[2]))
 	end
 end
 
-function slot0._mergeSuccess(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._mergeSuccess(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_2 ~= 0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_hybrid)
-	slot0._mergeAni:Play("merge", 0, 0)
+	arg_7_0._mergeAni:Play("merge", 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("clueMerge")
-	TaskDispatcher.runDelay(slot0._mergeFinished, slot0, 0.83)
+	TaskDispatcher.runDelay(arg_7_0._mergeFinished, arg_7_0, 0.83)
 end
 
-function slot0._mergeFinished(slot0)
-	AergusiModel.instance:setCurClueId(slot0._targetClue)
+function var_0_0._mergeFinished(arg_8_0)
+	AergusiModel.instance:setCurClueId(arg_8_0._targetClue)
 	AergusiModel.instance:clearMergePosState()
-	AergusiController.instance:dispatchEvent(AergusiEvent.OnPlayMergeSuccess, slot0._targetClue)
-	TaskDispatcher.runDelay(function ()
+	AergusiController.instance:dispatchEvent(AergusiEvent.OnPlayMergeSuccess, arg_8_0._targetClue)
+	TaskDispatcher.runDelay(function()
 		AergusiModel.instance:setMergeClueOpen(false)
 		AergusiModel.instance:clearMergePosState()
 
-		for slot3 = 1, 2 do
-			uv0._clueMergeItems[slot3]:refreshItem()
+		for iter_9_0 = 1, 2 do
+			arg_8_0._clueMergeItems[iter_9_0]:refreshItem()
 		end
 
-		gohelper.setActive(uv0._gocluemerge, false)
+		gohelper.setActive(arg_8_0._gocluemerge, false)
 		UIBlockMgr.instance:endBlock("clueMerge")
 		AergusiController.instance:dispatchEvent(AergusiEvent.OnGuideClueMergeSuccess)
 	end, nil, 0.83)
 end
 
-function slot0._btnlockedOnClick(slot0)
+function var_0_0._btnlockedOnClick(arg_10_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_addEvents()
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0:_addEvents()
 
-	slot0._mergeAni = slot0._gocluemerge:GetComponent(typeof(UnityEngine.Animator))
+	arg_11_0._mergeAni = arg_11_0._gocluemerge:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_12_0)
 	AergusiModel.instance:clearMergePosState()
 
-	slot0._clueMergeItems = {}
+	arg_12_0._clueMergeItems = {}
 
-	for slot4 = 1, 2 do
-		slot0._clueMergeItems[slot4] = AergusiClueMergeEvidenceItem.New()
+	for iter_12_0 = 1, 2 do
+		arg_12_0._clueMergeItems[iter_12_0] = AergusiClueMergeEvidenceItem.New()
 
-		slot0._clueMergeItems[slot4]:init(gohelper.findChild(slot0.viewGO, "Right/#go_cluemerge/evidence" .. slot4), slot4)
+		local var_12_0 = gohelper.findChild(arg_12_0.viewGO, "Right/#go_cluemerge/evidence" .. iter_12_0)
+
+		arg_12_0._clueMergeItems[iter_12_0]:init(var_12_0, iter_12_0)
 	end
 
-	gohelper.setActive(slot0._gocluemerge, false)
+	gohelper.setActive(arg_12_0._gocluemerge, false)
 end
 
-function slot0._refreshMerge(slot0)
-	slot2 = AergusiModel.instance:getMergeClues()[1] > 0 and slot1[2] > 0
-	slot4 = slot2 and AergusiModel.instance:getTargetMergeClue(slot1[1], slot1[2]) > 0
+function var_0_0._refreshMerge(arg_13_0)
+	local var_13_0 = AergusiModel.instance:getMergeClues()
+	local var_13_1 = var_13_0[1] > 0 and var_13_0[2] > 0
+	local var_13_2 = AergusiModel.instance:getTargetMergeClue(var_13_0[1], var_13_0[2])
+	local var_13_3 = var_13_1 and var_13_2 > 0
 
-	gohelper.setActive(slot0._btnok.gameObject, slot4)
-	gohelper.setActive(slot0._btnlocked.gameObject, not slot4 and not slot2)
-	gohelper.setActive(slot0._gofailedtips.gameObject, not slot4 and slot2)
+	gohelper.setActive(arg_13_0._btnok.gameObject, var_13_3)
+	gohelper.setActive(arg_13_0._btnlocked.gameObject, not var_13_3 and not var_13_1)
+	gohelper.setActive(arg_13_0._gofailedtips.gameObject, not var_13_3 and var_13_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0._addEvents(slot0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnClickStartMergeClue, slot0._onShowMerge, slot0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnClickClueMergeSelect, slot0._refreshMerge, slot0)
+function var_0_0._addEvents(arg_15_0)
+	AergusiController.instance:registerCallback(AergusiEvent.OnClickStartMergeClue, arg_15_0._onShowMerge, arg_15_0)
+	AergusiController.instance:registerCallback(AergusiEvent.OnClickClueMergeSelect, arg_15_0._refreshMerge, arg_15_0)
 end
 
-function slot0._removeEvents(slot0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnClickStartMergeClue, slot0._onShowMerge, slot0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnClickClueMergeSelect, slot0._refreshMerge, slot0)
+function var_0_0._removeEvents(arg_16_0)
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnClickStartMergeClue, arg_16_0._onShowMerge, arg_16_0)
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnClickClueMergeSelect, arg_16_0._refreshMerge, arg_16_0)
 end
 
-function slot0._onShowMerge(slot0)
-	slot0._mergeAni:Play("open", 0, 0)
-	gohelper.setActive(slot0._gocluemerge, true)
+function var_0_0._onShowMerge(arg_17_0)
+	arg_17_0._mergeAni:Play("open", 0, 0)
+	gohelper.setActive(arg_17_0._gocluemerge, true)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_18_0)
 	UIBlockMgr.instance:endBlock("clueMerge")
-	TaskDispatcher.cancelTask(slot0._realCloseClueMerge, slot0)
+	TaskDispatcher.cancelTask(arg_18_0._realCloseClueMerge, arg_18_0)
 
-	if slot0._clueMergeItems then
-		for slot4, slot5 in pairs(slot0._clueMergeItems) do
-			slot5:destroy()
+	if arg_18_0._clueMergeItems then
+		for iter_18_0, iter_18_1 in pairs(arg_18_0._clueMergeItems) do
+			iter_18_1:destroy()
 		end
 
-		slot0._clueMergeItems = nil
+		arg_18_0._clueMergeItems = nil
 	end
 
-	slot0:_removeEvents()
+	arg_18_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

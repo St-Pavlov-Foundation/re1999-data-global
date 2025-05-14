@@ -1,8 +1,9 @@
-module("modules.common.gameobject.GameObjectLiveEvent", package.seeall)
+﻿module("modules.common.gameobject.GameObjectLiveEvent", package.seeall)
 
-slot0 = _M
-slot0.OnAwake = 1
-slot0.OnStart = 2
-slot0.OnDestroy = 3
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnAwake = 1
+var_0_0.OnStart = 2
+var_0_0.OnDestroy = 3
+
+return var_0_0

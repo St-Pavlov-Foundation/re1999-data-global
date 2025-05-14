@@ -1,29 +1,32 @@
-module("modules.logic.weekwalk.view.WeekWalkTarotViewContainer", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkTarotViewContainer", package.seeall)
 
-slot0 = class("WeekWalkTarotViewContainer", BaseViewContainer)
+local var_0_0 = class("WeekWalkTarotViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, WeekWalkTarotView.New())
+	table.insert(var_1_0, WeekWalkTarotView.New())
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_tarot"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = WeekWalkTarotItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 5
-	slot2.cellWidth = 340
-	slot2.cellHeight = 650
-	slot2.cellSpaceH = 110.3
-	slot2.cellSpaceV = 40
-	slot2.startSpace = 10.6
-	slot2.endSpace = 20
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(WeekWalkTarotListModel.instance, slot2))
+	var_1_1.scrollGOPath = "#scroll_tarot"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = WeekWalkTarotItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 5
+	var_1_1.cellWidth = 340
+	var_1_1.cellHeight = 650
+	var_1_1.cellSpaceH = 110.3
+	var_1_1.cellSpaceV = 40
+	var_1_1.startSpace = 10.6
+	var_1_1.endSpace = 20
 
-	return slot1
+	local var_1_2 = LuaListScrollView.New(WeekWalkTarotListModel.instance, var_1_1)
+
+	table.insert(var_1_0, var_1_2)
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

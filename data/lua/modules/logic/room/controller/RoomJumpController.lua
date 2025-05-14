@@ -1,139 +1,159 @@
-module("modules.logic.room.controller.RoomJumpController", package.seeall)
+﻿module("modules.logic.room.controller.RoomJumpController", package.seeall)
 
-slot0 = class("RoomJumpController", BaseController)
+local var_0_0 = class("RoomJumpController", BaseController)
 
-function slot0.jumpFormTaskView(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0.jumpFormTaskView(arg_1_0, arg_1_1)
+	if string.nilorempty(arg_1_1) then
 		return
 	end
 
-	slot2 = false
+	local var_1_0 = false
+	local var_1_1 = string.splitToNumber(arg_1_1, "#")
 
-	if string.splitToNumber(slot1, "#")[1] == JumpEnum.JumpView.RoomView then
+	if var_1_1[1] == JumpEnum.JumpView.RoomView then
 		if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
 			return
 		end
 
-		if slot0["jumpTo" .. slot3[2]] then
-			slot2 = slot4(slot0, slot3)
+		local var_1_2 = arg_1_0["jumpTo" .. var_1_1[2]]
+
+		if var_1_2 then
+			var_1_0 = var_1_2(arg_1_0, var_1_1)
 		end
 	end
 
-	if slot2 and ViewMgr.instance:isOpen(ViewName.RoomRecordView) then
+	if var_1_0 and ViewMgr.instance:isOpen(ViewName.RoomRecordView) then
 		ViewMgr.instance:closeView(ViewName.RoomRecordView, false)
 	end
 end
 
-function slot0.jumpTo1(slot0, slot1)
-	if (slot1[3] or 1) == 1 then
+function var_0_0.jumpTo1(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1[3] or 1
+
+	if var_2_0 == 1 then
 		return
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.RoomRecordView) then
+		local var_2_1 = var_2_0 == 2 and RoomRecordEnum.AnimName.Task2Log or RoomRecordEnum.AnimName.Task2HandBook
+
 		RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
-			animName = slot2 == 2 and RoomRecordEnum.AnimName.Task2Log or RoomRecordEnum.AnimName.Task2HandBook,
-			view = slot2
+			animName = var_2_1,
+			view = var_2_0
 		})
 	else
-		ManufactureController.instance:openRoomRecordView(slot2)
+		ManufactureController.instance:openRoomRecordView(var_2_0)
 	end
 end
 
-function slot0.jumpTo2(slot0, slot1)
-	slot2 = slot1[3] or 1
+function var_0_0.jumpTo2(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1[3] or 1
+	local var_3_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if not ManufactureModel.instance:getCritterBuildingListInOrder() or #slot3 <= 0 then
-		slot0:showRoomNotBuildingMessageBox()
+	if not var_3_1 or #var_3_1 <= 0 then
+		arg_3_0:showRoomNotBuildingMessageBox()
 
 		return
 	end
 
-	if slot2 == 3 then
+	if var_3_0 == 3 then
 		if not GuideModel.instance:isGuideFinish(RoomTradeEnum.GuideUnlock.Summon) then
 			GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 			return
 		end
-	elseif slot2 == 4 and ManufactureModel.instance:getTradeLevel() < RoomTradeTaskModel.instance:getOpenCritterIncubateLevel() then
+	elseif var_3_0 == 4 and ManufactureModel.instance:getTradeLevel() < RoomTradeTaskModel.instance:getOpenCritterIncubateLevel() then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	return ManufactureController.instance:openCritterBuildingView(nil, slot2)
+	return ManufactureController.instance:openCritterBuildingView(nil, var_3_0)
 end
 
-function slot0.jumpTo3(slot0, slot1)
+function var_0_0.jumpTo3(arg_4_0, arg_4_1)
 	return ManufactureController.instance:openOverView()
 end
 
-function slot0.jumpTo4(slot0, slot1)
-	return ManufactureController.instance:openRoomTradeView(nil, slot1[3] or 1)
+function var_0_0.jumpTo4(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1[3] or 1
+
+	return ManufactureController.instance:openRoomTradeView(nil, var_5_0)
 end
 
-function slot0.jumpTo5(slot0, slot1)
+function var_0_0.jumpTo5(arg_6_0, arg_6_1)
 	return ManufactureController.instance:openRoomBackpackView()
 end
 
-function slot0.jumpTo6(slot0, slot1)
-	return slot0:jumpToPlaceBuilding()
+function var_0_0.jumpTo6(arg_7_0, arg_7_1)
+	return arg_7_0:jumpToPlaceBuilding()
 end
 
-function slot0.jumpTo7(slot0, slot1)
-	return slot0:jumpToManufactureBuilding(slot1[3])
+function var_0_0.jumpTo7(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1[3]
+
+	return arg_8_0:jumpToManufactureBuilding(var_8_0)
 end
 
-function slot0.jumpTo8(slot0, slot1)
-	return slot0:jumpToManufactureBuildingLevelUp(slot1[3])
+function var_0_0.jumpTo8(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1[3]
+
+	return arg_9_0:jumpToManufactureBuildingLevelUp(var_9_0)
 end
 
-function slot0.jumpTo9(slot0, slot1)
+function var_0_0.jumpTo9(arg_10_0, arg_10_1)
 	JumpController.instance:jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function slot0.jumpTo10(slot0, slot1)
-	if not (ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen) <= ManufactureModel.instance:getTradeLevel()) then
+function var_0_0.jumpTo10(arg_11_0, arg_11_1)
+	if not (ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)) then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	if not RoomTransportController.instance:_findLinkPathSiteType(slot1[3]) then
-		slot0:showRoomNotTransportRoadMessageBox()
+	local var_11_0 = arg_11_1[3]
+
+	if not RoomTransportController.instance:_findLinkPathSiteType(var_11_0) then
+		arg_11_0:showRoomNotTransportRoadMessageBox()
 
 		return false
 	end
 
-	RoomTransportController.instance:openTransportSiteView(slot3)
+	RoomTransportController.instance:openTransportSiteView(var_11_0)
 
 	return true
 end
 
-function slot0.jumpTo11(slot0, slot1)
-	return slot0:jumpToManufactureBuilding(nil, slot1[3])
+function var_0_0.jumpTo11(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1[3]
+
+	return arg_12_0:jumpToManufactureBuilding(nil, var_12_0)
 end
 
-function slot0.jumpTo12(slot0, slot1)
-	return slot0:jumpToManufactureBuildingLevelUp(nil, slot1[3])
+function var_0_0.jumpTo12(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1[3]
+
+	return arg_13_0:jumpToManufactureBuildingLevelUp(nil, var_13_0)
 end
 
-function slot0.jumpTo13(slot0, slot1)
-	if not (ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen) <= ManufactureModel.instance:getTradeLevel()) then
+function var_0_0.jumpTo13(arg_14_0, arg_14_1)
+	if not (ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.TransportSystemOpen)) then
 		GameFacade.showToast(RoomEnum.Toast.RoomTradeLowLevel)
 
 		return
 	end
 
-	return slot0:jumpToTransportSiteView()
+	return arg_14_0:jumpToTransportSiteView()
 end
 
-function slot0.jumpToPlaceBuilding(slot0)
+function var_0_0.jumpToPlaceBuilding(arg_15_0)
 	ManufactureController.instance:jump2PlaceManufactureBuildingView()
 
 	return true
 end
 
-function slot0.jumpToTransportSiteView(slot0)
+function var_0_0.jumpToTransportSiteView(arg_16_0)
 	if RoomController.instance:isEditMode() then
 		GameFacade.showToast(RoomEnum.Toast.TaskAlreadyInEditMode)
 	else
@@ -147,7 +167,10 @@ function slot0.jumpToTransportSiteView(slot0)
 			RoomTradeController.instance:dispatchEvent(RoomTradeEvent.PlayCloseTVAnim)
 		end
 
-		if ViewMgr.instance:isOpen(ViewName.RoomBackpackView) or ViewMgr.instance:isOpen(ViewName.RoomOverView) then
+		local var_16_0 = ViewMgr.instance:isOpen(ViewName.RoomBackpackView)
+		local var_16_1 = ViewMgr.instance:isOpen(ViewName.RoomOverView)
+
+		if var_16_0 or var_16_1 then
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_normal)
 		end
 
@@ -159,76 +182,88 @@ function slot0.jumpToTransportSiteView(slot0)
 	return true
 end
 
-function slot0.jumpToManufactureBuilding(slot0, slot1, slot2)
-	if slot2 then
-		if RoomMapBuildingModel.instance:getBuildingMoByBuildingId(slot2) then
-			ManufactureController.instance:openManufactureBuildingViewByBuilding(slot3)
+function var_0_0.jumpToManufactureBuilding(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 then
+		local var_17_0 = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(arg_17_2)
+
+		if var_17_0 then
+			ManufactureController.instance:openManufactureBuildingViewByBuilding(var_17_0)
 		else
-			slot0:showRoomNotBuildingMessageBox()
+			arg_17_0:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 	else
-		slot3, slot4 = slot0:isHasBuilding(slot1)
+		local var_17_1, var_17_2 = arg_17_0:isHasBuilding(arg_17_1)
 
-		if not slot3 then
-			slot0:showRoomNotBuildingMessageBox()
+		if not var_17_1 then
+			arg_17_0:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 
-		ManufactureController.instance:openManufactureBuildingViewByType(slot4)
+		ManufactureController.instance:openManufactureBuildingViewByType(var_17_2)
 	end
 
 	return true
 end
 
-function slot0.jumpToManufactureBuildingLevelUp(slot0, slot1, slot2)
-	if slot2 then
-		if RoomMapBuildingModel.instance:getBuildingMoByBuildingId(slot2) then
-			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(slot3.buildingUid)
+function var_0_0.jumpToManufactureBuildingLevelUp(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_2 then
+		local var_18_0 = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(arg_18_2)
+
+		if var_18_0 then
+			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(var_18_0.buildingUid)
 		else
-			slot0:showRoomNotBuildingMessageBox()
+			arg_18_0:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 	else
-		slot3, slot4 = slot0:isHasBuilding(slot1)
+		local var_18_1, var_18_2 = arg_18_0:isHasBuilding(arg_18_1)
 
-		if not slot3 then
-			slot0:showRoomNotBuildingMessageBox()
+		if not var_18_1 then
+			arg_18_0:showRoomNotBuildingMessageBox()
 
 			return false
 		end
 
-		if RoomMapBuildingModel.instance:getBuildingListByType(slot4) and #slot5 > 0 then
-			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(slot5[1].buildingUid)
+		local var_18_3 = RoomMapBuildingModel.instance:getBuildingListByType(var_18_2)
+
+		if var_18_3 and #var_18_3 > 0 then
+			local var_18_4 = var_18_3[1].buildingUid
+
+			ManufactureController.instance:jumpToManufactureBuildingLevelUpView(var_18_4)
 		end
 	end
 
 	return true
 end
 
-function slot0.isHasBuilding(slot0, slot1)
-	if slot1 and slot1 > 0 then
-		return RoomMapBuildingModel.instance:getBuildingListByType(slot1) and #slot2 > 0, slot1
+function var_0_0.isHasBuilding(arg_19_0, arg_19_1)
+	if arg_19_1 and arg_19_1 > 0 then
+		local var_19_0 = RoomMapBuildingModel.instance:getBuildingListByType(arg_19_1)
+
+		return var_19_0 and #var_19_0 > 0, arg_19_1
 	end
 
-	for slot5, slot6 in pairs(RoomJumpEnum.ManufactureBuildingType) do
-		if RoomMapBuildingModel.instance:getBuildingListByType(slot6) and #slot7 > 0 then
-			return true, slot6
+	for iter_19_0, iter_19_1 in pairs(RoomJumpEnum.ManufactureBuildingType) do
+		local var_19_1 = RoomMapBuildingModel.instance:getBuildingListByType(iter_19_1)
+
+		if var_19_1 and #var_19_1 > 0 then
+			return true, iter_19_1
 		end
 	end
 end
 
-function slot0.showRoomNotBuildingMessageBox(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotBuilding, MsgBoxEnum.BoxType.Yes_No, slot0.jumpToPlaceBuilding)
+function var_0_0.showRoomNotBuildingMessageBox(arg_20_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotBuilding, MsgBoxEnum.BoxType.Yes_No, arg_20_0.jumpToPlaceBuilding)
 end
 
-function slot0.showRoomNotTransportRoadMessageBox(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotTransportRoad, MsgBoxEnum.BoxType.Yes_No, slot0.jumpToTransportSiteView)
+function var_0_0.showRoomNotTransportRoadMessageBox(arg_21_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.RoomNotTransportRoad, MsgBoxEnum.BoxType.Yes_No, arg_21_0.jumpToTransportSiteView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

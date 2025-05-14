@@ -1,15 +1,18 @@
-module("modules.logic.guide.controller.action.impl.GuideActionExploreUseItem", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionExploreUseItem", package.seeall)
 
-slot0 = class("GuideActionExploreUseItem", BaseGuideAction)
+local var_0_0 = class("GuideActionExploreUseItem", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = string.splitToNumber(slot0.actionParam, "#")
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+	local var_1_1 = var_1_0[1]
+	local var_1_2 = var_1_0[2] == 1
+	local var_1_3 = ExploreBackpackModel.instance:getItem(var_1_1)
 
-	if ExploreBackpackModel.instance:getItem(slot2[1]) and ExploreModel.instance:getUseItemUid() == slot5.id ~= (slot2[2] == 1) then
-		ExploreRpc.instance:sendExploreUseItemRequest(slot5.id, 0, 0)
+	if var_1_3 and ExploreModel.instance:getUseItemUid() == var_1_3.id ~= var_1_2 then
+		ExploreRpc.instance:sendExploreUseItemRequest(var_1_3.id, 0, 0)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

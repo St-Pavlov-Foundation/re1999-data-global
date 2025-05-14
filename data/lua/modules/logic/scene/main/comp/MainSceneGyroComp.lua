@@ -1,9 +1,9 @@
-module("modules.logic.scene.main.comp.MainSceneGyroComp", package.seeall)
+﻿module("modules.logic.scene.main.comp.MainSceneGyroComp", package.seeall)
 
-slot0 = class("MainSceneGyroComp", BaseSceneComp)
-slot1 = UnityEngine.Input
-slot2 = UnityEngine.Time
-slot3 = {
+local var_0_0 = class("MainSceneGyroComp", BaseSceneComp)
+local var_0_1 = UnityEngine.Input
+local var_0_2 = UnityEngine.Time
+local var_0_3 = {
 	{
 		deltaScale = 2.2,
 		angle_x = 1.5,
@@ -12,42 +12,47 @@ slot3 = {
 	}
 }
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	if not slot0._isRunning then
-		slot0._isRunning = true
+function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+	if not arg_1_0._isRunning then
+		arg_1_0._isRunning = true
 
-		TaskDispatcher.runRepeat(slot0._tick, slot0, 0)
+		TaskDispatcher.runRepeat(arg_1_0._tick, arg_1_0, 0)
 		CameraMgr.instance:setUnitCameraSeparate()
 	end
 
-	slot0._aniGoList = {}
-	slot3 = uv0[1]
-	slot4 = CameraMgr.instance:getMainCameraTrs()
-	slot5 = slot4.localEulerAngles
-	slot3.maxX = slot5.x + slot3.angle_x
-	slot3.minX = slot5.x - slot3.angle_x
-	slot3.maxY = slot5.y + slot3.angle_y
-	slot3.minY = slot5.y - slot3.angle_y
+	arg_1_0._aniGoList = {}
 
-	table.insert(slot0._aniGoList, {
-		transform = slot4,
-		config = slot3,
-		initAngles = slot5
-	})
+	local var_1_0 = var_0_3[1]
+	local var_1_1 = CameraMgr.instance:getMainCameraTrs()
+	local var_1_2 = var_1_1.localEulerAngles
 
-	slot7, slot8, slot9 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
-	slot0._acceleration = Vector3.New(slot7, slot8, slot9)
-	slot0._curAcceleration = Vector3.New(slot7, slot8, slot9)
-	slot0._deltaPos = Vector3.zero
-	slot0._tempAngle = Vector3.zero
-	slot0._gyroOffset = Vector4.New(0, 0, 0.04)
-	slot0._srcQuaternion = Quaternion.New()
-	slot0._targetQuaternion = Quaternion.New()
-	slot0._gyroOffsetID = UnityEngine.Shader.PropertyToID("_GyroOffset")
+	var_1_0.maxX = var_1_2.x + var_1_0.angle_x
+	var_1_0.minX = var_1_2.x - var_1_0.angle_x
+	var_1_0.maxY = var_1_2.y + var_1_0.angle_y
+	var_1_0.minY = var_1_2.y - var_1_0.angle_y
+
+	local var_1_3 = {
+		transform = var_1_1,
+		config = var_1_0,
+		initAngles = var_1_2
+	}
+
+	table.insert(arg_1_0._aniGoList, var_1_3)
+
+	local var_1_4, var_1_5, var_1_6 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+
+	arg_1_0._acceleration = Vector3.New(var_1_4, var_1_5, var_1_6)
+	arg_1_0._curAcceleration = Vector3.New(var_1_4, var_1_5, var_1_6)
+	arg_1_0._deltaPos = Vector3.zero
+	arg_1_0._tempAngle = Vector3.zero
+	arg_1_0._gyroOffset = Vector4.New(0, 0, 0.04)
+	arg_1_0._srcQuaternion = Quaternion.New()
+	arg_1_0._targetQuaternion = Quaternion.New()
+	arg_1_0._gyroOffsetID = UnityEngine.Shader.PropertyToID("_GyroOffset")
 end
 
-function slot0._tick(slot0)
-	if not slot0._aniGoList then
+function var_0_0._tick(arg_2_0)
+	if not arg_2_0._aniGoList then
 		return
 	end
 
@@ -55,65 +60,73 @@ function slot0._tick(slot0)
 		return
 	end
 
-	slot1, slot2, slot3 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
-	slot0._gyroOffset.y = (slot0._gyroOffset.y + slot2) * 0.5
-	slot0._gyroOffset.x = (slot0._gyroOffset.x + slot1) * 0.5
+	local var_2_0, var_2_1, var_2_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-	UnityEngine.Shader.SetGlobalVector(slot0._gyroOffsetID, slot0._gyroOffset)
-	slot0._curAcceleration:Set(slot1, slot2, slot3)
+	arg_2_0._gyroOffset.x, arg_2_0._gyroOffset.y = (arg_2_0._gyroOffset.x + var_2_0) * 0.5, (arg_2_0._gyroOffset.y + var_2_1) * 0.5
 
-	slot4 = slot0._deltaPos
-	slot5, slot6, slot7 = nil
+	UnityEngine.Shader.SetGlobalVector(arg_2_0._gyroOffsetID, arg_2_0._gyroOffset)
+	arg_2_0._curAcceleration:Set(var_2_0, var_2_1, var_2_2)
 
-	for slot11, slot12 in ipairs(slot0._aniGoList) do
-		slot6 = slot12.config
-		slot4.y = slot0._curAcceleration.x - slot0._acceleration.x
-		slot4.x = slot0._curAcceleration.y - slot0._acceleration.y
-		slot7.x = slot6.maxX < slot0:calcAngle(slot12.initAngles, slot4, slot6.deltaScale).x and slot6.maxX or slot7.x
-		slot7.x = slot7.x < slot6.minX and slot6.minX or slot7.x
-		slot7.y = slot6.maxY < slot7.y and slot6.maxY or slot7.y
-		slot7.y = slot7.y < slot6.minY and slot6.minY or slot7.y
+	local var_2_3 = arg_2_0._deltaPos
+	local var_2_4
+	local var_2_5
+	local var_2_6
 
-		transformhelper.setLocalRotationLerp(slot12.transform, slot7.x, slot7.y, slot7.z, uv0.deltaTime * slot6.lerpScale)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._aniGoList) do
+		local var_2_7 = iter_2_1.transform
+		local var_2_8 = iter_2_1.config
+
+		var_2_3.y = arg_2_0._curAcceleration.x - arg_2_0._acceleration.x
+		var_2_3.x = arg_2_0._curAcceleration.y - arg_2_0._acceleration.y
+
+		local var_2_9 = arg_2_0:calcAngle(iter_2_1.initAngles, var_2_3, var_2_8.deltaScale)
+
+		var_2_9.x = var_2_9.x > var_2_8.maxX and var_2_8.maxX or var_2_9.x
+		var_2_9.x = var_2_9.x < var_2_8.minX and var_2_8.minX or var_2_9.x
+		var_2_9.y = var_2_9.y > var_2_8.maxY and var_2_8.maxY or var_2_9.y
+		var_2_9.y = var_2_9.y < var_2_8.minY and var_2_8.minY or var_2_9.y
+
+		transformhelper.setLocalRotationLerp(var_2_7, var_2_9.x, var_2_9.y, var_2_9.z, var_0_2.deltaTime * var_2_8.lerpScale)
 	end
 end
 
-function slot0.calcAngle(slot0, slot1, slot2, slot3)
-	slot4 = slot0._tempAngle
-	slot4.x = slot1.x + slot2.x * slot3
-	slot4.y = slot1.y + slot2.y * slot3
-	slot4.z = slot1.z + slot2.z * slot3
+function var_0_0.calcAngle(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_0._tempAngle
 
-	return slot4
+	var_3_0.x = arg_3_1.x + arg_3_2.x * arg_3_3
+	var_3_0.y = arg_3_1.y + arg_3_2.y * arg_3_3
+	var_3_0.z = arg_3_1.z + arg_3_2.z * arg_3_3
+
+	return var_3_0
 end
 
-function slot0.QuaternionLerp(slot0, slot1, slot2, slot3)
-	slot3 = Mathf.Clamp(slot3, 0, 1)
+function var_0_0.QuaternionLerp(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_3 = Mathf.Clamp(arg_4_3, 0, 1)
 
-	if Quaternion.Dot(slot1, slot2) < 0 then
-		slot1.x = slot1.x + slot3 * (-slot2.x - slot1.x)
-		slot1.y = slot1.y + slot3 * (-slot2.y - slot1.y)
-		slot1.z = slot1.z + slot3 * (-slot2.z - slot1.z)
-		slot1.w = slot1.w + slot3 * (-slot2.w - slot1.w)
+	if Quaternion.Dot(arg_4_1, arg_4_2) < 0 then
+		arg_4_1.x = arg_4_1.x + arg_4_3 * (-arg_4_2.x - arg_4_1.x)
+		arg_4_1.y = arg_4_1.y + arg_4_3 * (-arg_4_2.y - arg_4_1.y)
+		arg_4_1.z = arg_4_1.z + arg_4_3 * (-arg_4_2.z - arg_4_1.z)
+		arg_4_1.w = arg_4_1.w + arg_4_3 * (-arg_4_2.w - arg_4_1.w)
 	else
-		slot1.x = slot1.x + (slot2.x - slot1.x) * slot3
-		slot1.y = slot1.y + (slot2.y - slot1.y) * slot3
-		slot1.z = slot1.z + (slot2.z - slot1.z) * slot3
-		slot1.w = slot1.w + (slot2.w - slot1.w) * slot3
+		arg_4_1.x = arg_4_1.x + (arg_4_2.x - arg_4_1.x) * arg_4_3
+		arg_4_1.y = arg_4_1.y + (arg_4_2.y - arg_4_1.y) * arg_4_3
+		arg_4_1.z = arg_4_1.z + (arg_4_2.z - arg_4_1.z) * arg_4_3
+		arg_4_1.w = arg_4_1.w + (arg_4_2.w - arg_4_1.w) * arg_4_3
 	end
 
-	slot1:SetNormalize()
+	arg_4_1:SetNormalize()
 
-	return slot1
+	return arg_4_1
 end
 
-function slot0.onSceneClose(slot0)
-	if slot0._isRunning then
-		slot0._isRunning = false
+function var_0_0.onSceneClose(arg_5_0)
+	if arg_5_0._isRunning then
+		arg_5_0._isRunning = false
 
-		TaskDispatcher.cancelTask(slot0._tick, slot0)
+		TaskDispatcher.cancelTask(arg_5_0._tick, arg_5_0)
 		CameraMgr.instance:setUnitCameraCombine()
 	end
 end
 
-return slot0
+return var_0_0

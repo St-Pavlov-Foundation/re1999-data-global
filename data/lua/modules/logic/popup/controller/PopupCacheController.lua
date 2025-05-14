@@ -1,28 +1,32 @@
-module("modules.logic.popup.controller.PopupCacheController", package.seeall)
+﻿module("modules.logic.popup.controller.PopupCacheController", package.seeall)
 
-slot0 = class("PopupCacheController", BaseController)
+local var_0_0 = class("PopupCacheController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._viewChangeCheckIsInMainView, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._viewChangeCheckIsInMainView, arg_3_0)
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 ~= ViewName.MainView then
+function var_0_0._onOpenViewFinish(arg_4_0, arg_4_1)
+	if arg_4_1 ~= ViewName.MainView then
 		return
 	end
 
-	slot0:_viewChangeCheckIsInMainView()
+	arg_4_0:_viewChangeCheckIsInMainView()
 end
 
-function slot0._viewChangeCheckIsInMainView(slot0)
-	if not PopupCacheModel.instance:getCount() or slot1 <= 0 then
+function var_0_0._viewChangeCheckIsInMainView(arg_5_0)
+	local var_5_0 = PopupCacheModel.instance:getCount()
+
+	if not var_5_0 or var_5_0 <= 0 then
 		return
 	end
 
@@ -34,54 +38,63 @@ function slot0._viewChangeCheckIsInMainView(slot0)
 		return
 	end
 
-	slot0:showCachePopupView()
+	arg_5_0:showCachePopupView()
 end
 
-function slot0.showCachePopupView(slot0)
-	if not PopupCacheModel.instance:popNextPopupParam() then
+function var_0_0.showCachePopupView(arg_6_0)
+	local var_6_0 = PopupCacheModel.instance:popNextPopupParam()
+
+	if not var_6_0 then
 		return
 	end
 
-	if slot1.customPopupFunc then
-		slot2(slot1)
+	local var_6_1 = var_6_0.customPopupFunc
+
+	if var_6_1 then
+		var_6_1(var_6_0)
 	else
-		slot0:defaultShowCommonPropView(slot1)
+		arg_6_0:defaultShowCommonPropView(var_6_0)
 	end
 end
 
-function slot0.defaultShowCommonPropView(slot0, slot1)
-	if not (slot1 and slot1.materialDataMOList) then
+function var_0_0.defaultShowCommonPropView(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1 and arg_7_1.materialDataMOList
+
+	if not var_7_0 then
 		return
 	end
 
-	RoomController.instance:popUpRoomBlockPackageView(slot2)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot2)
+	RoomController.instance:popUpRoomBlockPackageView(var_7_0)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_7_0)
 end
 
-function slot0.tryCacheGetPropView(slot0, slot1, slot2)
-	if type(slot2) ~= "table" then
+function var_0_0.tryCacheGetPropView(arg_8_0, arg_8_1, arg_8_2)
+	if type(arg_8_2) ~= "table" then
 		logError(string.format("PopupCacheController:tryCacheGetPropView error, need table param"))
 
 		return false
 	end
 
-	slot3 = false
+	local var_8_0 = false
+	local var_8_1 = arg_8_1 and PopupEnum.CheckCacheGetApproach[arg_8_1] or {}
 
-	for slot8, slot9 in ipairs(slot1 and PopupEnum.CheckCacheGetApproach[slot1] or {}) do
-		if PopupEnum.CheckCacheHandler[slot9] and slot10() or false then
-			slot2.cacheType = slot9
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		local var_8_2 = PopupEnum.CheckCacheHandler[iter_8_1]
 
-			PopupCacheModel.instance:recordCachePopupParam(slot2)
+		if var_8_2 and var_8_2() or false then
+			arg_8_2.cacheType = iter_8_1
 
-			slot3 = true
+			PopupCacheModel.instance:recordCachePopupParam(arg_8_2)
+
+			var_8_0 = true
 
 			break
 		end
 	end
 
-	return slot3
+	return var_8_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

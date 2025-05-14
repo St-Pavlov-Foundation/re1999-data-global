@@ -1,94 +1,99 @@
-module("modules.logic.gamepad.GamepadPointer", package.seeall)
+﻿module("modules.logic.gamepad.GamepadPointer", package.seeall)
 
-slot0 = class("GamepadPointer", LuaCompBase)
+local var_0_0 = class("GamepadPointer", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:__onInit()
 
-	slot0._go = gohelper.create2d(ViewMgr.instance:getUILayer("Adaption"), "GamepadPointer")
-	slot0._resLoader = PrefabInstantiate.Create(slot0._go)
+	arg_1_0._go = gohelper.create2d(ViewMgr.instance:getUILayer("Adaption"), "GamepadPointer")
+	arg_1_0._resLoader = PrefabInstantiate.Create(arg_1_0._go)
 
-	slot0._resLoader:startLoad("ui/viewres/gamepad/gamepadpointer.prefab", slot0._onResLoaded, slot0)
+	arg_1_0._resLoader:startLoad("ui/viewres/gamepad/gamepadpointer.prefab", arg_1_0._onResLoaded, arg_1_0)
 
-	slot0._x = 0
-	slot0._y = 0
-	slot0._trans = slot0._go.transform
-	slot0._moveScale = 25
+	arg_1_0._x = 0
+	arg_1_0._y = 0
+	arg_1_0._trans = arg_1_0._go.transform
+	arg_1_0._moveScale = 25
 
-	recthelper.setAnchor(slot0._trans, 0, 0)
-	slot0:_onScreenResize()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	recthelper.setAnchor(arg_1_0._trans, 0, 0)
+	arg_1_0:_onScreenResize()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._onScreenResize, arg_1_0)
 end
 
-function slot0.getPos(slot0)
-	return slot0._x, slot0._y
+function var_0_0.getPos(arg_2_0)
+	return arg_2_0._x, arg_2_0._y
 end
 
-function slot0.getScreenPos(slot0)
-	if CameraMgr.instance:getUICamera() then
-		slot2 = slot1:WorldToScreenPoint(slot0._trans.position)
+function var_0_0.getScreenPos(arg_3_0)
+	local var_3_0 = CameraMgr.instance:getUICamera()
 
-		return slot2.x, slot2.y
+	if var_3_0 then
+		local var_3_1 = var_3_0:WorldToScreenPoint(arg_3_0._trans.position)
+
+		return var_3_1.x, var_3_1.y
 	end
 end
 
-function slot0.setAnchor(slot0, slot1, slot2)
-	slot0._x = slot1
-	slot0._y = slot2
+function var_0_0.setAnchor(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._x = arg_4_1
+	arg_4_0._y = arg_4_2
 
-	slot0:_updatePos()
+	arg_4_0:_updatePos()
 end
 
-function slot0.updateX(slot0, slot1)
-	slot0._x = slot0._x + slot1 * slot0._moveScale
+function var_0_0.updateX(arg_5_0, arg_5_1)
+	arg_5_0._x = arg_5_0._x + arg_5_1 * arg_5_0._moveScale
 
-	slot0:_updatePos()
+	arg_5_0:_updatePos()
 end
 
-function slot0.updateY(slot0, slot1)
-	slot0._y = slot0._y + slot1 * slot0._moveScale
+function var_0_0.updateY(arg_6_0, arg_6_1)
+	arg_6_0._y = arg_6_0._y + arg_6_1 * arg_6_0._moveScale
 
-	slot0:_updatePos()
+	arg_6_0:_updatePos()
 end
 
-function slot0._onScreenResize(slot0)
-	slot0._screenWidth = 1920
+function var_0_0._onScreenResize(arg_7_0)
+	arg_7_0._screenWidth = 1920
 
-	if UnityEngine.Screen.width / UnityEngine.Screen.height > 1.7777777777777777 then
-		slot0._screenWidth = 1080 * slot1
+	local var_7_0 = UnityEngine.Screen.width / UnityEngine.Screen.height
+
+	if var_7_0 > 1.7777777777777777 then
+		arg_7_0._screenWidth = 1080 * var_7_0
 	end
 
-	slot0._halfScreenWidth = slot0._screenWidth / 2
-	slot0._halfScreenWidthMinus = -slot0._halfScreenWidth
-	slot0._realHalfScreenHeight = UnityEngine.Screen.height / 2
-	slot0._halfScreenHeight = 540
-	slot0._halfScreenHeightMinus = -540
+	arg_7_0._halfScreenWidth = arg_7_0._screenWidth / 2
+	arg_7_0._halfScreenWidthMinus = -arg_7_0._halfScreenWidth
+	arg_7_0._realHalfScreenHeight = UnityEngine.Screen.height / 2
+	arg_7_0._halfScreenHeight = 540
+	arg_7_0._halfScreenHeightMinus = -540
 
-	slot0:_updatePos()
+	arg_7_0:_updatePos()
 end
 
-function slot0._updatePos(slot0)
-	slot0._x = math.max(slot0._halfScreenWidthMinus, slot0._x)
-	slot0._x = math.min(slot0._halfScreenWidth, slot0._x)
-	slot0._y = math.max(slot0._halfScreenHeightMinus, slot0._y)
-	slot0._y = math.min(slot0._halfScreenHeight, slot0._y)
+function var_0_0._updatePos(arg_8_0)
+	arg_8_0._x = math.max(arg_8_0._halfScreenWidthMinus, arg_8_0._x)
+	arg_8_0._x = math.min(arg_8_0._halfScreenWidth, arg_8_0._x)
+	arg_8_0._y = math.max(arg_8_0._halfScreenHeightMinus, arg_8_0._y)
+	arg_8_0._y = math.min(arg_8_0._halfScreenHeight, arg_8_0._y)
 
-	recthelper.setAnchor(slot0._trans, slot0._x, slot0._y)
+	recthelper.setAnchor(arg_8_0._trans, arg_8_0._x, arg_8_0._y)
 end
 
-function slot0._onResLoaded(slot0)
+function var_0_0._onResLoaded(arg_9_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+function var_0_0.onDestroy(arg_10_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_10_0._onScreenResize, arg_10_0)
 
-	if slot0._resLoader then
-		slot0._resLoader:dispose()
+	if arg_10_0._resLoader then
+		arg_10_0._resLoader:dispose()
 
-		slot0._resLoader = nil
+		arg_10_0._resLoader = nil
 	end
 
-	slot0:__onDispose()
+	arg_10_0:__onDispose()
 end
 
-return slot0
+return var_0_0

@@ -1,28 +1,28 @@
-module("modules.logic.rouge.map.view.choice.RougeMapNodeChoiceItem", package.seeall)
+﻿module("modules.logic.rouge.map.view.choice.RougeMapNodeChoiceItem", package.seeall)
 
-slot0 = class("RougeMapNodeChoiceItem", RougeMapChoiceBaseItem)
+local var_0_0 = class("RougeMapNodeChoiceItem", RougeMapChoiceBaseItem)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0._btnlockdetail = gohelper.findChildButtonWithAudio(slot0.go, "#go_locked/#btn_lockdetail")
-	slot0._btnnormaldetail = gohelper.findChildButtonWithAudio(slot0.go, "#go_normal/#btn_normaldetail")
-	slot0._btnselectdetail = gohelper.findChildButtonWithAudio(slot0.go, "#go_select/#btn_selectdetail")
+	arg_1_0._btnlockdetail = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_locked/#btn_lockdetail")
+	arg_1_0._btnnormaldetail = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_normal/#btn_normaldetail")
+	arg_1_0._btnselectdetail = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_select/#btn_selectdetail")
 
-	slot0._btnlockdetail:AddClickListener(slot0.onClickDetail, slot0)
-	slot0._btnnormaldetail:AddClickListener(slot0.onClickDetail, slot0)
-	slot0._btnselectdetail:AddClickListener(slot0.onClickDetail, slot0)
+	arg_1_0._btnlockdetail:AddClickListener(arg_1_0.onClickDetail, arg_1_0)
+	arg_1_0._btnnormaldetail:AddClickListener(arg_1_0.onClickDetail, arg_1_0)
+	arg_1_0._btnselectdetail:AddClickListener(arg_1_0.onClickDetail, arg_1_0)
 end
 
-function slot0.onClickDetail(slot0)
-	if not slot0.hadCollection then
+function var_0_0.onClickDetail(arg_2_0)
+	if not arg_2_0.hadCollection then
 		return
 	end
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onClickChoiceDetail, slot0.collectionIdList)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onClickChoiceDetail, arg_2_0.collectionIdList)
 end
 
-function slot0.onClickSelf(slot0)
+function var_0_0.onClickSelf(arg_3_0)
 	if RougeMapModel.instance:isInteractiving() then
 		return
 	end
@@ -31,161 +31,185 @@ function slot0.onClickSelf(slot0)
 		return
 	end
 
-	if slot0.status == RougeMapEnum.ChoiceStatus.Lock then
+	if arg_3_0.status == RougeMapEnum.ChoiceStatus.Lock then
 		return
 	end
 
-	if slot0.status == RougeMapEnum.ChoiceStatus.Select then
-		slot0.animator:Play("select", 0, 0)
-		TaskDispatcher.cancelTask(slot0.onSelectAnimDone, slot0)
-		TaskDispatcher.runDelay(slot0.onSelectAnimDone, slot0, RougeMapEnum.ChoiceSelectAnimDuration)
+	if arg_3_0.status == RougeMapEnum.ChoiceStatus.Select then
+		arg_3_0.animator:Play("select", 0, 0)
+		TaskDispatcher.cancelTask(arg_3_0.onSelectAnimDone, arg_3_0)
+		TaskDispatcher.runDelay(arg_3_0.onSelectAnimDone, arg_3_0, RougeMapEnum.ChoiceSelectAnimDuration)
 		UIBlockMgr.instance:startBlock(RougeMapEnum.WaitChoiceItemAnimBlock)
 	else
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceItemStatusChange, slot0.choiceId)
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceItemStatusChange, arg_3_0.choiceId)
 	end
 end
 
-function slot0.onSelectAnimDone(slot0)
-	RougeMapModel.instance:recordCurChoiceEventSelectId(slot0.choiceId)
-	RougeRpc.instance:sendRougeChoiceEventRequest(slot0.choiceId)
+function var_0_0.onSelectAnimDone(arg_4_0)
+	RougeMapModel.instance:recordCurChoiceEventSelectId(arg_4_0.choiceId)
+	RougeRpc.instance:sendRougeChoiceEventRequest(arg_4_0.choiceId)
 	UIBlockMgr.instance:endBlock(RougeMapEnum.WaitChoiceItemAnimBlock)
 end
 
-function slot0.onStatusChange(slot0, slot1)
-	if slot0.status == RougeMapEnum.ChoiceStatus.Lock then
+function var_0_0.onStatusChange(arg_5_0, arg_5_1)
+	if arg_5_0.status == RougeMapEnum.ChoiceStatus.Lock then
 		return
 	end
 
-	slot2 = nil
+	local var_5_0
 
-	if ((not slot1 or (slot1 ~= slot0.choiceId or RougeMapEnum.ChoiceStatus.Select) and RougeMapEnum.ChoiceStatus.UnSelect) and RougeMapEnum.ChoiceStatus.Normal) == slot0.status then
-		return
-	end
-
-	slot0.status = slot2
-
-	slot0:refreshUI()
-end
-
-function slot0.update(slot0, slot1, slot2, slot3)
-	uv0.super.update(slot0, slot2)
-
-	slot0.choiceId = slot1
-	slot0.choiceCo = lua_rouge_choice.configDict[slot1]
-	slot0.nodeMo = slot3
-
-	slot0:buildCollectionIdList()
-
-	slot0.title = slot0.choiceCo.title
-	slot0.desc = slot0.choiceCo.desc
-
-	slot0:initStatus()
-
-	if slot0.status == RougeMapEnum.ChoiceStatus.Lock then
-		slot0.tip = RougeMapUnlockHelper.getLockTips(slot0.choiceCo.unlockType, slot0.choiceCo.unlockParam)
-	else
-		slot0.tip = ""
-	end
-
-	slot0:refreshUI()
-	slot0:playUnlockAnim()
-end
-
-function slot0.buildCollectionIdList(slot0)
-	if not string.nilorempty(slot0.choiceCo.display) then
-		slot0.hadCollection = true
-		slot0.collectionIdList = string.splitToNumber(slot1, "|")
-
-		return
-	end
-
-	if string.nilorempty(slot0.choiceCo.interactive) then
-		slot0.hadCollection = false
-		slot0.collectionIdList = nil
-
-		return
-	end
-
-	if string.splitToNumber(slot2, "#")[1] == RougeMapEnum.InteractType.LossNotUniqueCollection then
-		if slot0.nodeMo.interactive9drop == 0 then
-			slot0.hadCollection = false
-			slot0.collectionIdList = nil
+	if arg_5_1 then
+		if arg_5_1 == arg_5_0.choiceId then
+			var_5_0 = RougeMapEnum.ChoiceStatus.Select
 		else
-			slot0.hadCollection = true
-			slot0.collectionIdList = {
-				slot4
-			}
-		end
-	elseif slot3 == RougeMapEnum.InteractType.StorageCollection then
-		if slot0.nodeMo.interactive10drop == 0 then
-			slot0.hadCollection = false
-			slot0.collectionIdList = nil
-		else
-			slot0.hadCollection = true
-			slot0.collectionIdList = {
-				slot4
-			}
-		end
-	elseif slot3 == RougeMapEnum.InteractType.LossSpCollection then
-		if slot0.nodeMo.interactive14drop == 0 then
-			slot0.hadCollection = false
-			slot0.collectionIdList = nil
-		else
-			slot0.hadCollection = true
-			slot0.collectionIdList = {
-				slot4
-			}
+			var_5_0 = RougeMapEnum.ChoiceStatus.UnSelect
 		end
 	else
-		slot0.hadCollection = false
-		slot0.collectionIdList = nil
+		var_5_0 = RougeMapEnum.ChoiceStatus.Normal
 	end
+
+	if var_5_0 == arg_5_0.status then
+		return
+	end
+
+	arg_5_0.status = var_5_0
+
+	arg_5_0:refreshUI()
 end
 
-function slot0.initStatus(slot0)
-	if RougeMapUnlockHelper.checkIsUnlock(slot0.choiceCo.unlockType, slot0.choiceCo.unlockParam) then
-		slot0.status = RougeMapEnum.ChoiceStatus.Normal
+function var_0_0.update(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	var_0_0.super.update(arg_6_0, arg_6_2)
+
+	arg_6_0.choiceId = arg_6_1
+	arg_6_0.choiceCo = lua_rouge_choice.configDict[arg_6_1]
+	arg_6_0.nodeMo = arg_6_3
+
+	arg_6_0:buildCollectionIdList()
+
+	arg_6_0.title = arg_6_0.choiceCo.title
+	arg_6_0.desc = arg_6_0.choiceCo.desc
+
+	arg_6_0:initStatus()
+
+	if arg_6_0.status == RougeMapEnum.ChoiceStatus.Lock then
+		arg_6_0.tip = RougeMapUnlockHelper.getLockTips(arg_6_0.choiceCo.unlockType, arg_6_0.choiceCo.unlockParam)
 	else
-		slot0.status = RougeMapEnum.ChoiceStatus.Lock
+		arg_6_0.tip = ""
 	end
+
+	arg_6_0:refreshUI()
+	arg_6_0:playUnlockAnim()
 end
 
-function slot0.refreshLockUI(slot0)
-	uv0.super.refreshLockUI(slot0)
-	gohelper.setActive(slot0._golockdetail, slot0.hadCollection)
-end
+function var_0_0.buildCollectionIdList(arg_7_0)
+	local var_7_0 = arg_7_0.choiceCo.display
 
-function slot0.refreshNormalUI(slot0)
-	uv0.super.refreshNormalUI(slot0)
-	gohelper.setActive(slot0._gonormaldetail, slot0.hadCollection)
-end
+	if not string.nilorempty(var_7_0) then
+		arg_7_0.hadCollection = true
+		arg_7_0.collectionIdList = string.splitToNumber(var_7_0, "|")
 
-function slot0.refreshSelectUI(slot0)
-	uv0.super.refreshSelectUI(slot0)
-	gohelper.setActive(slot0._goselectdetail, slot0.hadCollection)
-end
-
-function slot0.playUnlockAnim(slot0)
-	if RougeMapUnlockHelper.UnlockType.ActiveOutGenius ~= slot0.choiceCo.unlockType then
 		return
 	end
 
-	if RougeMapController.instance:checkEventChoicePlayedUnlockAnim(slot0.choiceId) then
+	local var_7_1 = arg_7_0.choiceCo.interactive
+
+	if string.nilorempty(var_7_1) then
+		arg_7_0.hadCollection = false
+		arg_7_0.collectionIdList = nil
+
 		return
 	end
 
-	if RougeMapUnlockHelper.checkIsUnlock(slot1, slot0.choiceCo.unlockParam) then
-		slot0.animator:Play("unlock", 0, 0)
-		RougeMapController.instance:playedEventChoiceEvent(slot0.choiceId)
+	local var_7_2 = string.splitToNumber(var_7_1, "#")[1]
+
+	if var_7_2 == RougeMapEnum.InteractType.LossNotUniqueCollection then
+		local var_7_3 = arg_7_0.nodeMo.interactive9drop
+
+		if var_7_3 == 0 then
+			arg_7_0.hadCollection = false
+			arg_7_0.collectionIdList = nil
+		else
+			arg_7_0.hadCollection = true
+			arg_7_0.collectionIdList = {
+				var_7_3
+			}
+		end
+	elseif var_7_2 == RougeMapEnum.InteractType.StorageCollection then
+		local var_7_4 = arg_7_0.nodeMo.interactive10drop
+
+		if var_7_4 == 0 then
+			arg_7_0.hadCollection = false
+			arg_7_0.collectionIdList = nil
+		else
+			arg_7_0.hadCollection = true
+			arg_7_0.collectionIdList = {
+				var_7_4
+			}
+		end
+	elseif var_7_2 == RougeMapEnum.InteractType.LossSpCollection then
+		local var_7_5 = arg_7_0.nodeMo.interactive14drop
+
+		if var_7_5 == 0 then
+			arg_7_0.hadCollection = false
+			arg_7_0.collectionIdList = nil
+		else
+			arg_7_0.hadCollection = true
+			arg_7_0.collectionIdList = {
+				var_7_5
+			}
+		end
+	else
+		arg_7_0.hadCollection = false
+		arg_7_0.collectionIdList = nil
 	end
 end
 
-function slot0.destroy(slot0)
-	TaskDispatcher.cancelTask(slot0.onSelectAnimDone, slot0)
-	slot0._btnlockdetail:RemoveClickListener()
-	slot0._btnnormaldetail:RemoveClickListener()
-	slot0._btnselectdetail:RemoveClickListener()
-	uv0.super.destroy(slot0)
+function var_0_0.initStatus(arg_8_0)
+	if RougeMapUnlockHelper.checkIsUnlock(arg_8_0.choiceCo.unlockType, arg_8_0.choiceCo.unlockParam) then
+		arg_8_0.status = RougeMapEnum.ChoiceStatus.Normal
+	else
+		arg_8_0.status = RougeMapEnum.ChoiceStatus.Lock
+	end
 end
 
-return slot0
+function var_0_0.refreshLockUI(arg_9_0)
+	var_0_0.super.refreshLockUI(arg_9_0)
+	gohelper.setActive(arg_9_0._golockdetail, arg_9_0.hadCollection)
+end
+
+function var_0_0.refreshNormalUI(arg_10_0)
+	var_0_0.super.refreshNormalUI(arg_10_0)
+	gohelper.setActive(arg_10_0._gonormaldetail, arg_10_0.hadCollection)
+end
+
+function var_0_0.refreshSelectUI(arg_11_0)
+	var_0_0.super.refreshSelectUI(arg_11_0)
+	gohelper.setActive(arg_11_0._goselectdetail, arg_11_0.hadCollection)
+end
+
+function var_0_0.playUnlockAnim(arg_12_0)
+	local var_12_0 = arg_12_0.choiceCo.unlockType
+
+	if RougeMapUnlockHelper.UnlockType.ActiveOutGenius ~= var_12_0 then
+		return
+	end
+
+	if RougeMapController.instance:checkEventChoicePlayedUnlockAnim(arg_12_0.choiceId) then
+		return
+	end
+
+	if RougeMapUnlockHelper.checkIsUnlock(var_12_0, arg_12_0.choiceCo.unlockParam) then
+		arg_12_0.animator:Play("unlock", 0, 0)
+		RougeMapController.instance:playedEventChoiceEvent(arg_12_0.choiceId)
+	end
+end
+
+function var_0_0.destroy(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0.onSelectAnimDone, arg_13_0)
+	arg_13_0._btnlockdetail:RemoveClickListener()
+	arg_13_0._btnnormaldetail:RemoveClickListener()
+	arg_13_0._btnselectdetail:RemoveClickListener()
+	var_0_0.super.destroy(arg_13_0)
+end
+
+return var_0_0

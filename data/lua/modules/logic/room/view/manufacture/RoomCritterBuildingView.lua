@@ -1,198 +1,207 @@
-module("modules.logic.room.view.manufacture.RoomCritterBuildingView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomCritterBuildingView", package.seeall)
 
-slot0 = class("RoomCritterBuildingView", BaseView)
+local var_0_0 = class("RoomCritterBuildingView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
-	slot0._scrolltabbtn = gohelper.findChildScrollRect(slot0.viewGO, "tabLayout/#scroll_tabbtn")
-	slot0._gotablayout = gohelper.findChild(slot0.viewGO, "tabLayout")
-	slot0._gotabItem = gohelper.findChild(slot0.viewGO, "tabLayout/#scroll_tabbtn/Viewport/Content/#go_tabItem")
-	slot0._gorighttop = gohelper.findChild(slot0.viewGO, "righttop")
-	slot0._btnrule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_BackBtns/#btn_rule")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+	arg_1_0._scrolltabbtn = gohelper.findChildScrollRect(arg_1_0.viewGO, "tabLayout/#scroll_tabbtn")
+	arg_1_0._gotablayout = gohelper.findChild(arg_1_0.viewGO, "tabLayout")
+	arg_1_0._gotabItem = gohelper.findChild(arg_1_0.viewGO, "tabLayout/#scroll_tabbtn/Viewport/Content/#go_tabItem")
+	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "righttop")
+	arg_1_0._btnrule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_BackBtns/#btn_rule")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrule:AddClickListener(slot0._btnruleOnClick, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingHideView, slot0.hideView, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingShowView, slot0.showView, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, slot0.hideView, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, slot0.showView, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewRefreshCamera, slot0.refreshCamera, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, slot0._onChangeRestBuilding, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnrule:AddClickListener(arg_2_0._btnruleOnClick, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingHideView, arg_2_0.hideView, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingShowView, arg_2_0.showView, arg_2_0)
+	arg_2_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_2_0.hideView, arg_2_0)
+	arg_2_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_2_0.showView, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewRefreshCamera, arg_2_0.refreshCamera, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, arg_2_0._onChangeRestBuilding, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrule:RemoveClickListener()
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingHideView, slot0.hideView, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingShowView, slot0.showView, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, slot0.hideView, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, slot0.showView, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingViewRefreshCamera, slot0.refreshCamera, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, slot0._onChangeRestBuilding, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnrule:RemoveClickListener()
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingHideView, arg_3_0.hideView, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingShowView, arg_3_0.showView, arg_3_0)
+	arg_3_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_3_0.hideView, arg_3_0)
+	arg_3_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_3_0.showView, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingViewRefreshCamera, arg_3_0.refreshCamera, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterBuildingViewChangeBuilding, arg_3_0._onChangeRestBuilding, arg_3_0)
 end
 
-function slot0._btnruleOnClick(slot0)
-	if slot0._helpCallback then
-		slot0._helpCallback()
+function var_0_0._btnruleOnClick(arg_4_0)
+	if arg_4_0._helpCallback then
+		arg_4_0._helpCallback()
 	end
 end
 
-function slot0._btnTabOnClick(slot0, slot1)
-	if not slot0.viewContainer:checkTabId(slot1) then
-		logError(string.format("RoomCritterBuildingView._btnTabOnClick error, no subview, tabId:%s", slot1))
+function var_0_0._btnTabOnClick(arg_5_0, arg_5_1)
+	if not arg_5_0.viewContainer:checkTabId(arg_5_1) then
+		logError(string.format("RoomCritterBuildingView._btnTabOnClick error, no subview, tabId:%s", arg_5_1))
 
 		return
 	end
 
-	if slot0._curSelectTab == slot1 then
+	if arg_5_0._curSelectTab == arg_5_1 then
 		return
 	end
 
-	slot0.viewContainer:switchTab(slot1)
+	arg_5_0.viewContainer:switchTab(arg_5_1)
 
-	slot0._curSelectTab = slot1
+	arg_5_0._curSelectTab = arg_5_1
 
-	slot0:refreshTab()
-	slot0:refreshCamera()
-	slot0:refreshSeatSlotIcon()
+	arg_5_0:refreshTab()
+	arg_5_0:refreshCamera()
+	arg_5_0:refreshSeatSlotIcon()
 
-	if slot1 == RoomCritterBuildingViewContainer.SubViewTabId.Training and RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomCritterTrainHas, 0) then
+	if arg_5_1 == RoomCritterBuildingViewContainer.SubViewTabId.Training and RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomCritterTrainHas, 0) then
 		RedDotRpc.instance:sendGetRedDotInfosRequest({
 			RedDotEnum.DotNode.RoomCritterTrainHas
 		})
 	end
 end
 
-function slot0.hideView(slot0, slot1, slot2)
-	gohelper.setActive(slot0._goBackBtns, slot1)
-	slot0._animator:Play(UIAnimationName.Close, 0, 0)
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangSeatSlotVisible, slot2)
+function var_0_0.hideView(arg_6_0, arg_6_1, arg_6_2)
+	gohelper.setActive(arg_6_0._goBackBtns, arg_6_1)
+	arg_6_0._animator:Play(UIAnimationName.Close, 0, 0)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangSeatSlotVisible, arg_6_2)
 end
 
-function slot0.showView(slot0)
-	slot0:refreshSeatSlotIcon()
-	slot0._animator:Play(UIAnimationName.Open, 0, 0)
-	gohelper.setActive(slot0._goBackBtns, true)
+function var_0_0.showView(arg_7_0)
+	arg_7_0:refreshSeatSlotIcon()
+	arg_7_0._animator:Play(UIAnimationName.Open, 0, 0)
+	gohelper.setActive(arg_7_0._goBackBtns, true)
 end
 
-function slot0._onChangeRestBuilding(slot0)
+function var_0_0._onChangeRestBuilding(arg_8_0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterPlaceView) then
 		return
 	end
 
-	gohelper.setActive(slot0._goBackBtns, false)
-	slot0._animator:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.cancelTask(slot0._changeFinish, slot0)
-	TaskDispatcher.runDelay(slot0._changeFinish, slot0, CritterEnum.CritterBuildingChangeBuildingAnimTime)
+	gohelper.setActive(arg_8_0._goBackBtns, false)
+	arg_8_0._animator:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.cancelTask(arg_8_0._changeFinish, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0._changeFinish, arg_8_0, CritterEnum.CritterBuildingChangeBuildingAnimTime)
 end
 
-function slot0._changeFinish(slot0)
-	slot0._animator:Play(UIAnimationName.Open, 0, 0)
-	gohelper.setActive(slot0._goBackBtns, true)
+function var_0_0._changeFinish(arg_9_0)
+	arg_9_0._animator:Play(UIAnimationName.Open, 0, 0)
+	gohelper.setActive(arg_9_0._goBackBtns, true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._scene = RoomCameraController.instance:getRoomScene()
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._animator = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_10_0._scene = RoomCameraController.instance:getRoomScene()
 
-	gohelper.setActive(slot0._gotabItem, false)
+	gohelper.setActive(arg_10_0._gotabItem, false)
 
-	slot0._tabDict = {}
+	arg_10_0._tabDict = {}
 end
 
-function slot0.onUpdateParam(slot0)
-	if not slot0.viewParam then
+function var_0_0.onUpdateParam(arg_11_0)
+	if not arg_11_0.viewParam then
 		return
 	end
 
-	slot0._curSelectTab = slot0.viewContainer:getDefaultSelectedTab()
+	arg_11_0._curSelectTab = arg_11_0.viewContainer:getDefaultSelectedTab()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, slot0._tradeLevelUp, slot0)
-	slot0:onUpdateParam()
-	slot0:setTabItem()
-	slot0:refreshTab()
-	slot0:refreshSeatSlotIcon()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:addEventCb(RoomTradeController.instance, RoomTradeEvent.OnTradeLevelUpReply, arg_12_0._tradeLevelUp, arg_12_0)
+	arg_12_0:onUpdateParam()
+	arg_12_0:setTabItem()
+	arg_12_0:refreshTab()
+	arg_12_0:refreshSeatSlotIcon()
 
 	if not GuideModel.instance:isGuideFinish(RoomTradeEnum.GuideUnlock.Summon) then
-		slot0:addEventCb(GuideController.instance, GuideEvent.FinishStep, slot0._onFinishSetep, slot0)
-		slot0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.Summon, false)
+		arg_12_0:addEventCb(GuideController.instance, GuideEvent.FinishStep, arg_12_0._onFinishSetep, arg_12_0)
+		arg_12_0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.Summon, false)
 	end
 
-	slot1, slot2 = slot0:_isOpenIncubate()
+	local var_12_0, var_12_1 = arg_12_0:_isOpenIncubate()
 
-	if not slot1 or slot2 then
-		slot0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.IncubatebId, false)
+	if not var_12_0 or var_12_1 then
+		arg_12_0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.IncubatebId, false)
 	end
 
-	if slot2 then
-		TaskDispatcher.runDelay(slot0._tradeLevelUp, slot0, 2)
+	if var_12_1 then
+		TaskDispatcher.runDelay(arg_12_0._tradeLevelUp, arg_12_0, 2)
 	end
 
 	RoomBuildingController.instance:dispatchEvent(RoomEvent.SetBuildingColliderEnable, false)
 end
 
-function slot0.setTabItem(slot0)
-	for slot4, slot5 in ipairs(RoomCritterBuildingViewContainer.TabSettingList) do
-		if not slot0._tabDict[slot4] and not gohelper.isNil(gohelper.cloneInPlace(slot0._gotabItem, slot4)) then
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = slot7
-			slot6.goselect = gohelper.findChild(slot7, "select")
-			slot6.gonormal = gohelper.findChild(slot7, "normal")
-			slot6.selecticon = gohelper.findChildImage(slot7, "select/#image_icon")
-			slot6.normalicon = gohelper.findChildImage(slot7, "normal/#image_icon")
-			slot6.btn = gohelper.findChildButtonWithAudio(slot7, "#btn_click")
-			slot6.goreddot = gohelper.findChild(slot7, "#go_reddot")
+function var_0_0.setTabItem(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(RoomCritterBuildingViewContainer.TabSettingList) do
+		if not arg_13_0._tabDict[iter_13_0] then
+			local var_13_0 = gohelper.cloneInPlace(arg_13_0._gotabItem, iter_13_0)
 
-			slot6.btn:AddClickListener(slot0._btnTabOnClick, slot0, slot4)
+			if not gohelper.isNil(var_13_0) then
+				local var_13_1 = arg_13_0:getUserDataTb_()
 
-			if slot5.openBtnCallBack then
-				gohelper.setActive(slot7, slot5.openBtnCallBack())
-			else
-				gohelper.setActive(slot7, true)
+				var_13_1.go = var_13_0
+				var_13_1.goselect = gohelper.findChild(var_13_0, "select")
+				var_13_1.gonormal = gohelper.findChild(var_13_0, "normal")
+				var_13_1.selecticon = gohelper.findChildImage(var_13_0, "select/#image_icon")
+				var_13_1.normalicon = gohelper.findChildImage(var_13_0, "normal/#image_icon")
+				var_13_1.btn = gohelper.findChildButtonWithAudio(var_13_0, "#btn_click")
+				var_13_1.goreddot = gohelper.findChild(var_13_0, "#go_reddot")
+
+				var_13_1.btn:AddClickListener(arg_13_0._btnTabOnClick, arg_13_0, iter_13_0)
+
+				if iter_13_1.openBtnCallBack then
+					gohelper.setActive(var_13_0, iter_13_1.openBtnCallBack())
+				else
+					gohelper.setActive(var_13_0, true)
+				end
+
+				UISpriteSetMgr.instance:setCritterSprite(var_13_1.selecticon, iter_13_1.icon)
+				UISpriteSetMgr.instance:setCritterSprite(var_13_1.normalicon, iter_13_1.icon)
+
+				arg_13_0._tabDict[iter_13_0] = var_13_1
 			end
-
-			UISpriteSetMgr.instance:setCritterSprite(slot6.selecticon, slot5.icon)
-			UISpriteSetMgr.instance:setCritterSprite(slot6.normalicon, slot5.icon)
-
-			slot0._tabDict[slot4] = slot6
 		end
 	end
 
-	if slot0._tabDict[RoomCritterBuildingViewContainer.SubViewTabId.Training] then
-		RedDotController.instance:addRedDot(slot1.goreddot, RedDotEnum.DotNode.RoomCritterTrainTab)
+	local var_13_2 = arg_13_0._tabDict[RoomCritterBuildingViewContainer.SubViewTabId.Training]
+
+	if var_13_2 then
+		RedDotController.instance:addRedDot(var_13_2.goreddot, RedDotEnum.DotNode.RoomCritterTrainTab)
 	end
 end
 
-function slot0.refreshTab(slot0)
-	for slot4, slot5 in pairs(slot0._tabDict) do
-		slot6 = slot4 == slot0._curSelectTab
+function var_0_0.refreshTab(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._tabDict) do
+		local var_14_0 = iter_14_0 == arg_14_0._curSelectTab
 
-		gohelper.setActive(slot5.goselect, slot6)
-		gohelper.setActive(slot5.gonormal, not slot6)
+		gohelper.setActive(iter_14_1.goselect, var_14_0)
+		gohelper.setActive(iter_14_1.gonormal, not var_14_0)
 	end
 
-	slot0._helpCallback = RoomCritterBuildingViewContainer.TabSettingList[slot0._curSelectTab].helpBtnCallBack
+	arg_14_0._helpCallback = RoomCritterBuildingViewContainer.TabSettingList[arg_14_0._curSelectTab].helpBtnCallBack
 
-	gohelper.setActive(slot0._btnrule.gameObject, slot0._helpCallback ~= nil)
+	gohelper.setActive(arg_14_0._btnrule.gameObject, arg_14_0._helpCallback ~= nil)
 end
 
-function slot0._setOpenByTabId(slot0, slot1, slot2, slot3)
-	if slot0._tabDict[slot1] then
-		gohelper.setActive(slot4.go, slot2)
+function var_0_0._setOpenByTabId(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = arg_15_0._tabDict[arg_15_1]
 
-		if slot2 and slot3 then
-			if not slot4.animator then
-				slot4.animator = slot4.go:GetComponent(RoomEnum.ComponentType.Animator)
+	if var_15_0 then
+		gohelper.setActive(var_15_0.go, arg_15_2)
+
+		if arg_15_2 and arg_15_3 then
+			if not var_15_0.animator then
+				var_15_0.animator = var_15_0.go:GetComponent(RoomEnum.ComponentType.Animator)
 			end
 
-			if slot4.animator then
-				slot4.animator:Play(RoomTradeEnum.TradeAnim.Unlock, 0, 0)
+			if var_15_0.animator then
+				var_15_0.animator:Play(RoomTradeEnum.TradeAnim.Unlock, 0, 0)
 			end
 		end
 	end
@@ -200,75 +209,77 @@ function slot0._setOpenByTabId(slot0, slot1, slot2, slot3)
 	return true
 end
 
-function slot0._tradeLevelUp(slot0)
-	slot1, slot2 = slot0:_isOpenIncubate()
+function var_0_0._tradeLevelUp(arg_16_0)
+	local var_16_0, var_16_1 = arg_16_0:_isOpenIncubate()
 
-	if slot1 and slot2 then
-		slot2 = true
+	if var_16_0 and var_16_1 then
+		var_16_1 = true
 
 		RoomHelper.setNumberByKey(PlayerPrefsKey.RoomTradeLevelUnlockCritterIncubate, 1)
 	end
 
-	slot0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.IncubatebId, slot1, slot2)
+	arg_16_0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.IncubatebId, var_16_0, var_16_1)
 end
 
-function slot0._isOpenIncubate(slot0)
-	slot2 = false
+function var_0_0._isOpenIncubate(arg_17_0)
+	local var_17_0 = ManufactureModel.instance:getTradeLevel() >= ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.CritterIncubate)
+	local var_17_1 = false
 
-	if ManufactureConfig.instance:getUnlockSystemTradeLevel(RoomTradeEnum.LevelUnlock.CritterIncubate) <= ManufactureModel.instance:getTradeLevel() and RoomHelper.getNumberByKey(PlayerPrefsKey.RoomTradeLevelUnlockCritterIncubate) ~= 1 then
-		slot2 = true
+	if var_17_0 and RoomHelper.getNumberByKey(PlayerPrefsKey.RoomTradeLevelUnlockCritterIncubate) ~= 1 then
+		var_17_1 = true
 	end
 
-	return slot1, slot2
+	return var_17_0, var_17_1
 end
 
-function slot0._onFinishSetep(slot0, slot1, slot2)
-	if RoomTradeEnum.GuideUnlock.Summon == slot1 and slot2 == 4 then
-		slot0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.Summon, true, true)
+function var_0_0._onFinishSetep(arg_18_0, arg_18_1, arg_18_2)
+	if RoomTradeEnum.GuideUnlock.Summon == arg_18_1 and arg_18_2 == 4 then
+		arg_18_0:_setOpenByTabId(RoomCritterBuildingViewContainer.SubViewTabId.Summon, true, true)
 	end
 end
 
-function slot0.refreshCamera(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
+function var_0_0.refreshCamera(arg_19_0)
+	local var_19_0, var_19_1 = arg_19_0:getViewBuilding()
 
-	if not slot2 then
+	if not var_19_1 then
 		return
 	end
 
-	slot4 = ManufactureConfig.instance:getBuildingCameraIdByIndex(slot2.buildingId, slot0._curSelectTab)
+	local var_19_2 = var_19_1.buildingId
+	local var_19_3 = ManufactureConfig.instance:getBuildingCameraIdByIndex(var_19_2, arg_19_0._curSelectTab)
 
-	if RoomCameraController.instance:getRoomCamera() and slot4 then
-		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(slot1, slot4, slot0._cameraTweenFinish, slot0)
+	if RoomCameraController.instance:getRoomCamera() and var_19_3 then
+		RoomCameraController.instance:tweenCameraFocusBuildingUseCameraId(var_19_0, var_19_3, arg_19_0._cameraTweenFinish, arg_19_0)
 	end
 end
 
-function slot0._cameraTweenFinish(slot0)
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingCameraTweenFinish, slot0._curSelectTab)
+function var_0_0._cameraTweenFinish(arg_20_0)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingCameraTweenFinish, arg_20_0._curSelectTab)
 end
 
-function slot0.refreshSeatSlotIcon(slot0)
-	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangSeatSlotVisible, slot0._curSelectTab == RoomCritterBuildingViewContainer.SubViewTabId.Rest)
+function var_0_0.refreshSeatSlotIcon(arg_21_0)
+	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangSeatSlotVisible, arg_21_0._curSelectTab == RoomCritterBuildingViewContainer.SubViewTabId.Rest)
 end
 
-function slot0.getViewBuilding(slot0)
-	slot1, slot2 = slot0.viewContainer:getContainerViewBuilding(true)
+function var_0_0.getViewBuilding(arg_22_0)
+	local var_22_0, var_22_1 = arg_22_0.viewContainer:getContainerViewBuilding(true)
 
-	return slot1, slot2
+	return var_22_0, var_22_1
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._changeFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._tradeLevelUp, slot0)
+function var_0_0.onClose(arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._changeFinish, arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._tradeLevelUp, arg_23_0)
 	RoomBuildingController.instance:dispatchEvent(RoomEvent.SetBuildingColliderEnable, true)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingChangSeatSlotVisible, false)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewChange)
 	ManufactureController.instance:dispatchEvent(ManufactureEvent.PlayCritterBuildingBgm, 0, false)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._tabDict) do
-		slot5.btn:RemoveClickListener()
+function var_0_0.onDestroyView(arg_24_0)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0._tabDict) do
+		iter_24_1.btn:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

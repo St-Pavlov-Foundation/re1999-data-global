@@ -1,135 +1,140 @@
-module("modules.logic.seasonver.act123.view2_0.Season123_2_0FightRuleTipView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0FightRuleTipView", package.seeall)
 
-slot0 = class("Season123_2_0FightRuleTipView", BaseView)
+local var_0_0 = class("Season123_2_0FightRuleTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close1")
-	slot0._btnClose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close2")
-	slot0._goLabel = gohelper.findChild(slot0.viewGO, "root/top/#btn_label")
-	slot0._goCard = gohelper.findChild(slot0.viewGO, "root/top/#btn_card")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_leftbg")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_rightbg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close1")
+	arg_1_0._btnClose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close2")
+	arg_1_0._goLabel = gohelper.findChild(arg_1_0.viewGO, "root/top/#btn_label")
+	arg_1_0._goCard = gohelper.findChild(arg_1_0.viewGO, "root/top/#btn_card")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_leftbg")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_rightbg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose1:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnClose2:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose1:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnClose2:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose1:RemoveClickListener()
-	slot0._btnClose2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose1:RemoveClickListener()
+	arg_3_0._btnClose2:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.labelTab = slot0:createTab(slot0._goLabel, Activity123Enum.RuleTab.Rule)
-	slot0.cardTab = slot0:createTab(slot0._goCard, Activity123Enum.RuleTab.Card)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.labelTab = arg_4_0:createTab(arg_4_0._goLabel, Activity123Enum.RuleTab.Rule)
+	arg_4_0.cardTab = arg_4_0:createTab(arg_4_0._goCard, Activity123Enum.RuleTab.Card)
 
-	slot0._simageleftbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light2.png"))
-	slot0._simagerightbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light1.png"))
+	arg_4_0._simageleftbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light2.png"))
+	arg_4_0._simagerightbg:LoadImage(ResUrl.getSeasonIcon("img_bg_light1.png"))
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:_closeView()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:_closeView()
 end
 
-function slot0._closeView(slot0)
-	slot0:closeThis()
+function var_0_0._closeView(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0._ruleList = SeasonFightRuleView.getRuleList()
-	slot0._cardList = Season123Model.instance:getFightCardDataList()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._ruleList = SeasonFightRuleView.getRuleList()
+	arg_7_0._cardList = Season123Model.instance:getFightCardDataList()
 
-	if #slot0._ruleList > 0 then
-		slot0:switchTab(Activity123Enum.RuleTab.Rule)
+	if #arg_7_0._ruleList > 0 then
+		arg_7_0:switchTab(Activity123Enum.RuleTab.Rule)
 	else
-		slot0:switchTab(Activity123Enum.RuleTab.Card)
+		arg_7_0:switchTab(Activity123Enum.RuleTab.Card)
 	end
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._btncloseOnClick, slot0)
+	NavigateMgr.instance:addEscape(arg_7_0.viewName, arg_7_0._btncloseOnClick, arg_7_0)
 end
 
-function slot0.createTab(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.go = slot1
-	slot3.tabType = slot2
-	slot3.goUnSelect = gohelper.findChild(slot1, "unselect")
-	slot3.goSelect = gohelper.findChild(slot1, "selected")
-	slot3.btn = gohelper.findButtonWithAudio(slot1)
+function var_0_0.createTab(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0:getUserDataTb_()
 
-	slot3.btn:AddClickListener(slot0.onClickTab, slot0, slot3)
+	var_8_0.go = arg_8_1
+	var_8_0.tabType = arg_8_2
+	var_8_0.goUnSelect = gohelper.findChild(arg_8_1, "unselect")
+	var_8_0.goSelect = gohelper.findChild(arg_8_1, "selected")
+	var_8_0.btn = gohelper.findButtonWithAudio(arg_8_1)
 
-	return slot3
+	var_8_0.btn:AddClickListener(arg_8_0.onClickTab, arg_8_0, var_8_0)
+
+	return var_8_0
 end
 
-function slot0.updateTab(slot0, slot1, slot2, slot3)
-	if slot2 then
-		slot4 = slot0.tabType == slot1.tabType
+function var_0_0.updateTab(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_2 then
+		local var_9_0 = arg_9_0.tabType == arg_9_1.tabType
 
-		gohelper.setActive(slot1.go, true)
-		gohelper.setActive(slot1.goSelect, slot4)
-		gohelper.setActive(slot1.goUnSelect, not slot4)
+		gohelper.setActive(arg_9_1.go, true)
+		gohelper.setActive(arg_9_1.goSelect, var_9_0)
+		gohelper.setActive(arg_9_1.goUnSelect, not var_9_0)
 	else
-		gohelper.setActive(slot1.go, false)
+		gohelper.setActive(arg_9_1.go, false)
 	end
 end
 
-function slot0.destroyTab(slot0, slot1)
-	if slot1 then
-		slot1.btn:RemoveClickListener()
+function var_0_0.destroyTab(arg_10_0, arg_10_1)
+	if arg_10_1 then
+		arg_10_1.btn:RemoveClickListener()
 	end
 end
 
-function slot0.onClickTab(slot0, slot1)
-	if not slot1 then
+function var_0_0.onClickTab(arg_11_0, arg_11_1)
+	if not arg_11_1 then
 		return
 	end
 
-	slot0:switchTab(slot1.tabType)
+	arg_11_0:switchTab(arg_11_1.tabType)
 end
 
-function slot0.switchTab(slot0, slot1)
-	if slot0.tabType == slot1 then
+function var_0_0.switchTab(arg_12_0, arg_12_1)
+	if arg_12_0.tabType == arg_12_1 then
 		return
 	end
 
-	slot0.tabType = slot1
-	slot3 = slot0:getTabActive(slot0.cardTab.tabType)
+	arg_12_0.tabType = arg_12_1
 
-	if slot0:getTabActive(slot0.labelTab.tabType) then
-		slot4 = 0 + 1
+	local var_12_0 = arg_12_0:getTabActive(arg_12_0.labelTab.tabType)
+	local var_12_1 = arg_12_0:getTabActive(arg_12_0.cardTab.tabType)
+	local var_12_2 = 0
+
+	if var_12_0 then
+		var_12_2 = var_12_2 + 1
 	end
 
-	if slot3 then
-		slot4 = slot4 + 1
+	if var_12_1 then
+		var_12_2 = var_12_2 + 1
 	end
 
-	slot0:updateTab(slot0.labelTab, slot2, slot4)
-	slot0:updateTab(slot0.cardTab, slot3, slot4)
-	slot0.viewContainer:switchTab(slot1)
+	arg_12_0:updateTab(arg_12_0.labelTab, var_12_0, var_12_2)
+	arg_12_0:updateTab(arg_12_0.cardTab, var_12_1, var_12_2)
+	arg_12_0.viewContainer:switchTab(arg_12_1)
 end
 
-function slot0.getTabActive(slot0, slot1)
-	if slot1 == Activity123Enum.RuleTab.Card then
-		return slot0._cardList and #slot0._cardList > 0
+function var_0_0.getTabActive(arg_13_0, arg_13_1)
+	if arg_13_1 == Activity123Enum.RuleTab.Card then
+		return arg_13_0._cardList and #arg_13_0._cardList > 0
 	end
 
-	return slot0._ruleList and #slot0._ruleList > 0
+	return arg_13_0._ruleList and #arg_13_0._ruleList > 0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:destroyTab(slot0.labelTab)
-	slot0:destroyTab(slot0.cardTab)
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0:destroyTab(arg_15_0.labelTab)
+	arg_15_0:destroyTab(arg_15_0.cardTab)
+	arg_15_0._simageleftbg:UnLoadImage()
+	arg_15_0._simagerightbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

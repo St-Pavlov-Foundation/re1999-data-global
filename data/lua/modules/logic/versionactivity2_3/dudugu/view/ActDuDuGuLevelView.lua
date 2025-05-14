@@ -1,105 +1,109 @@
-module("modules.logic.versionactivity2_3.dudugu.view.ActDuDuGuLevelView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.dudugu.view.ActDuDuGuLevelView", package.seeall)
 
-slot0 = class("ActDuDuGuLevelView", BaseView)
+local var_0_0 = class("ActDuDuGuLevelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._golvpath = gohelper.findChild(slot0.viewGO, "#go_lvpath")
-	slot0._golvScroll = gohelper.findChild(slot0.viewGO, "#go_lvpath/#go_lvScroll")
-	slot0._golvstages = gohelper.findChild(slot0.viewGO, "#go_lvpath/#go_lvScroll/#go_lvstages")
-	slot0._goTitle = gohelper.findChild(slot0.viewGO, "#go_Title")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#go_Title/#simage_title")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_Title/#go_time")
-	slot0._txtlimittime = gohelper.findChildText(slot0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	slot0._btnPlayBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Title/#btn_PlayBtn")
-	slot0._btnTask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Task")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0._animEvent = slot0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	slot0._goPath = gohelper.findChild(slot0._golvScroll, "path/path_2")
-	slot0._animPath = slot0._goPath:GetComponent(gohelper.Type_Animator)
-	slot0._animTask = gohelper.findChild(slot0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	slot0._scrolllv = gohelper.findChildScrollRect(slot0._golvpath, "")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._golvpath = gohelper.findChild(arg_1_0.viewGO, "#go_lvpath")
+	arg_1_0._golvScroll = gohelper.findChild(arg_1_0.viewGO, "#go_lvpath/#go_lvScroll")
+	arg_1_0._golvstages = gohelper.findChild(arg_1_0.viewGO, "#go_lvpath/#go_lvScroll/#go_lvstages")
+	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
+	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
+	arg_1_0._btnPlayBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Title/#btn_PlayBtn")
+	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+	arg_1_0._goPath = gohelper.findChild(arg_1_0._golvScroll, "path/path_2")
+	arg_1_0._animPath = arg_1_0._goPath:GetComponent(gohelper.Type_Animator)
+	arg_1_0._animTask = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
+	arg_1_0._scrolllv = gohelper.findChildScrollRect(arg_1_0._golvpath, "")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnPlayBtn:AddClickListener(slot0._btnPlayBtnOnClick, slot0)
-	slot0._btnTask:AddClickListener(slot0._btnTaskOnClick, slot0)
-	slot0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd, slot0._onStoryOpenEnd, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnPlayBtn:AddClickListener(arg_2_0._btnPlayBtnOnClick, arg_2_0)
+	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
+	arg_2_0._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd, arg_2_0._onStoryOpenEnd, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnPlayBtn:RemoveClickListener()
-	slot0._btnTask:RemoveClickListener()
-	slot0._animEvent:RemoveEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnPlayBtn:RemoveClickListener()
+	arg_3_0._btnTask:RemoveClickListener()
+	arg_3_0._animEvent:RemoveEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd)
 end
 
-function slot0._btnPlayBtnOnClick(slot0)
-	if slot0.actConfig.storyId > 0 then
-		StoryController.instance:playStory(slot0.actConfig.storyId)
+function var_0_0._btnPlayBtnOnClick(arg_4_0)
+	if arg_4_0.actConfig.storyId > 0 then
+		StoryController.instance:playStory(arg_4_0.actConfig.storyId)
 	end
 end
 
-function slot0._btnTaskOnClick(slot0)
+function var_0_0._btnTaskOnClick(arg_5_0)
 	ViewMgr.instance:openView(ViewName.ActDuDuGuTaskView)
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(RoleActivityController.instance, RoleActivityEvent.StoryItemClick, slot0.OnLvItemClick, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.Finish, slot0.OnStoryFinish, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, slot0.OnEndDungeonPush, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0.OnDotChange, slot0)
+function var_0_0._addEvents(arg_6_0)
+	arg_6_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.StoryItemClick, arg_6_0.OnLvItemClick, arg_6_0)
+	arg_6_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_6_0.OnStoryFinish, arg_6_0)
+	arg_6_0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, arg_6_0.OnEndDungeonPush, arg_6_0)
+	arg_6_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_6_0.OnDotChange, arg_6_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = VersionActivity2_3Enum.ActivityId.DuDuGu
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._golvpath)
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0.actId = VersionActivity2_3Enum.ActivityId.DuDuGu
+	arg_7_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_7_0._golvpath)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_7_0._drag:AddDragBeginListener(arg_7_0._onDragBegin, arg_7_0)
+	arg_7_0._drag:AddDragEndListener(arg_7_0._onDragEnd, arg_7_0)
 
-	slot0._touch = SLFramework.UGUI.UIClickListener.Get(slot0._golvpath)
+	arg_7_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_7_0._golvpath)
 
-	slot0._touch:AddClickDownListener(slot0._onClickDown, slot0)
+	arg_7_0._touch:AddClickDownListener(arg_7_0._onClickDown, arg_7_0)
 
-	slot0._audioScroll = MonoHelper.addLuaComOnceToGo(slot0._golvpath, DungeonMapEpisodeAudio, slot0._scrolllv)
-	slot0.actConfig = ActivityConfig.instance:getActivityCo(slot0.actId)
+	arg_7_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_7_0._golvpath, DungeonMapEpisodeAudio, arg_7_0._scrolllv)
+	arg_7_0.actConfig = ActivityConfig.instance:getActivityCo(arg_7_0.actId)
 
-	ActDuDuGuModel.instance:initData(slot0.actId)
-	slot0:_initStageItems()
-	gohelper.setActive(slot0._btnPlayBtn, slot0.actConfig.storyId > 0)
-	slot0:_addEvents()
+	ActDuDuGuModel.instance:initData(arg_7_0.actId)
+	arg_7_0:_initStageItems()
+	gohelper.setActive(arg_7_0._btnPlayBtn, arg_7_0.actConfig.storyId > 0)
+	arg_7_0:_addEvents()
 end
 
-function slot0.onOpen(slot0)
-	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "#go_reddot"), RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId)
-	slot0:_initPathStatus()
-	slot0:OnDotChange()
-	slot0:_showLeftTime()
-	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 1)
+function var_0_0.onOpen(arg_8_0)
+	local var_8_0 = gohelper.findChild(arg_8_0._btnTask.gameObject, "#go_reddot")
 
-	if slot0:_checkFirstEnter() then
-		slot0:_lockScreen(true)
-		slot0._lvItems[1]:lockStatus()
-		TaskDispatcher.runDelay(slot0._playFirstUnlock, slot0, 0.8)
+	RedDotController.instance:addRedDot(var_8_0, RedDotEnum.DotNode.V1a6RoleActivityTask, arg_8_0.actId)
+	arg_8_0:_initPathStatus()
+	arg_8_0:OnDotChange()
+	arg_8_0:_showLeftTime()
+	TaskDispatcher.runRepeat(arg_8_0._showLeftTime, arg_8_0, 1)
+
+	if arg_8_0:_checkFirstEnter() then
+		arg_8_0:_lockScreen(true)
+		arg_8_0._lvItems[1]:lockStatus()
+		TaskDispatcher.runDelay(arg_8_0._playFirstUnlock, arg_8_0, 0.8)
 	end
 end
 
-function slot0._playStoryFinishAnim(slot0)
-	if ActDuDuGuModel.instance:getNewFinishStoryLvl() then
-		for slot5, slot6 in ipairs(slot0.storyItemList) do
-			if slot6.id == slot1 then
-				slot0:_lockScreen(true)
+function var_0_0._playStoryFinishAnim(arg_9_0)
+	local var_9_0 = ActDuDuGuModel.instance:getNewFinishStoryLvl()
 
-				slot0.finishStoryIndex = slot5
+	if var_9_0 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0.storyItemList) do
+			if iter_9_1.id == var_9_0 then
+				arg_9_0:_lockScreen(true)
 
-				slot6:playFinish()
-				slot6:playStarAnim()
-				TaskDispatcher.runDelay(slot0._finishStoryEnd, slot0, 1)
+				arg_9_0.finishStoryIndex = iter_9_0
+
+				iter_9_1:playFinish()
+				iter_9_1:playStarAnim()
+				TaskDispatcher.runDelay(arg_9_0._finishStoryEnd, arg_9_0, 1)
 
 				break
 			end
@@ -109,8 +113,8 @@ function slot0._playStoryFinishAnim(slot0)
 	end
 end
 
-function slot0._checkFirstEnter(slot0)
-	if not slot0._lvItems[2]:isUnlock() and PlayerPrefsHelper.getNumber("ActDuDuGuFirstEnter", 0) == 0 then
+function var_0_0._checkFirstEnter(arg_10_0)
+	if not arg_10_0._lvItems[2]:isUnlock() and PlayerPrefsHelper.getNumber("ActDuDuGuFirstEnter", 0) == 0 then
 		PlayerPrefsHelper.setNumber("ActDuDuGuFirstEnter", 1)
 
 		return true
@@ -119,181 +123,198 @@ function slot0._checkFirstEnter(slot0)
 	return false
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._showLeftTime, slot0)
-	TaskDispatcher.cancelTask(slot0._playFirstUnlock, slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenStory, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockLvEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._finishStoryEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._playPathAnim, slot0)
-	TaskDispatcher.cancelTask(slot0._unlockStory, slot0)
-	TaskDispatcher.cancelTask(slot0._playStoryFinishAnim, slot0)
-	slot0:_lockScreen(false)
+function var_0_0.onClose(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._showLeftTime, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._playFirstUnlock, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._delayOpenStory, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._unlockLvEnd, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._finishStoryEnd, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._playPathAnim, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._unlockStory, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._playStoryFinishAnim, arg_11_0)
+	arg_11_0:_lockScreen(false)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._lvItems = nil
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0._lvItems = nil
 
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragEndListener()
+	if arg_12_0._drag then
+		arg_12_0._drag:RemoveDragBeginListener()
+		arg_12_0._drag:RemoveDragEndListener()
 
-		slot0._drag = nil
+		arg_12_0._drag = nil
 	end
 
-	if slot0._touch then
-		slot0._touch:RemoveClickDownListener()
+	if arg_12_0._touch then
+		arg_12_0._touch:RemoveClickDownListener()
 
-		slot0._touch = nil
+		arg_12_0._touch = nil
 	end
 end
 
-function slot0.OnLvItemClick(slot0, slot1)
-	slot0:_focusLvItem(slot1, true)
+function var_0_0.OnLvItemClick(arg_13_0, arg_13_1)
+	arg_13_0:_focusLvItem(arg_13_1, true)
 end
 
-function slot0.OnStoryFinish(slot0)
+function var_0_0.OnStoryFinish(arg_14_0)
 	if ActDuDuGuModel.instance:getNewFinishStoryLvl() then
-		slot0._curLvIndex = slot0._lvItems[slot0._curLvIndex + 1] and slot0._curLvIndex + 1 or slot0._curLvIndex
+		arg_14_0._curLvIndex = arg_14_0._lvItems[arg_14_0._curLvIndex + 1] and arg_14_0._curLvIndex + 1 or arg_14_0._curLvIndex
 
-		slot0:_focusLvItem(slot0._curLvIndex, false)
+		arg_14_0:_focusLvItem(arg_14_0._curLvIndex, false)
 	end
 
-	TaskDispatcher.runDelay(slot0._delayOpenStory, slot0, 0.4)
+	TaskDispatcher.runDelay(arg_14_0._delayOpenStory, arg_14_0, 0.4)
 end
 
-function slot0.OnEndDungeonPush(slot0)
+function var_0_0.OnEndDungeonPush(arg_15_0)
 	if ActDuDuGuModel.instance:getNewFinishStoryLvl() then
-		slot0._curLvIndex = slot0._lvItems[slot0._curLvIndex + 1] and slot0._curLvIndex + 1 or slot0._curLvIndex
+		arg_15_0._curLvIndex = arg_15_0._lvItems[arg_15_0._curLvIndex + 1] and arg_15_0._curLvIndex + 1 or arg_15_0._curLvIndex
 
-		slot0:_focusLvItem(slot0._curLvIndex, false)
+		arg_15_0:_focusLvItem(arg_15_0._curLvIndex, false)
 	end
 
-	ActDuDuGuModel.instance:updateData(slot0.actId)
-	TaskDispatcher.runDelay(slot0._playStoryFinishAnim, slot0, 0.73)
+	ActDuDuGuModel.instance:updateData(arg_15_0.actId)
+	TaskDispatcher.runDelay(arg_15_0._playStoryFinishAnim, arg_15_0, 0.73)
 end
 
-function slot0.OnDotChange(slot0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, slot0.actId) then
-		slot0._animTask:Play("loop")
+function var_0_0.OnDotChange(arg_16_0)
+	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, arg_16_0.actId) then
+		arg_16_0._animTask:Play("loop")
 	else
-		slot0._animTask:Play("idle")
+		arg_16_0._animTask:Play("idle")
 	end
 end
 
-function slot0._onStoryOpenEnd(slot0)
-	slot0:_initPathStatus()
+function var_0_0._onStoryOpenEnd(arg_17_0)
+	arg_17_0:_initPathStatus()
 
 	if ActDuDuGuModel.instance:getNewFinishStoryLvl() then
-		slot0:_playStoryFinishAnim()
-		ActDuDuGuModel.instance:updateData(slot0.actId)
+		arg_17_0:_playStoryFinishAnim()
+		ActDuDuGuModel.instance:updateData(arg_17_0.actId)
 	end
 end
 
-function slot0._onDragBegin(slot0)
-	slot0._audioScroll:onDragBegin()
+function var_0_0._onDragBegin(arg_18_0)
+	arg_18_0._audioScroll:onDragBegin()
 end
 
-function slot0._onDragEnd(slot0)
-	slot0._audioScroll:onDragEnd()
+function var_0_0._onDragEnd(arg_19_0)
+	arg_19_0._audioScroll:onDragEnd()
 end
 
-function slot0._onClickDown(slot0)
-	slot0._audioScroll:onClickDown()
+function var_0_0._onClickDown(arg_20_0)
+	arg_20_0._audioScroll:onClickDown()
 end
 
-function slot0._initStageItems(slot0)
-	slot1, slot2 = nil
-	slot0._lvItems = {}
+function var_0_0._initStageItems(arg_21_0)
+	local var_21_0
+	local var_21_1
+	local var_21_2 = arg_21_0.viewContainer:getSetting().otherRes[1]
 
-	for slot7 = 1, #RoleActivityConfig.instance:getStoryLevelList(slot0.actId) do
-		slot0._lvItems[slot7] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], gohelper.findChild(slot0._golvstages, "stage" .. slot7)), ActDuDuGuLevelItem, slot0)
+	arg_21_0._lvItems = {}
 
-		slot0._lvItems[slot7]:setParam(slot3[slot7], slot7, slot0.actId)
+	local var_21_3 = RoleActivityConfig.instance:getStoryLevelList(arg_21_0.actId)
+	local var_21_4 = #var_21_3
 
-		if slot0._lvItems[slot7]:isUnlock() then
-			slot0._curLvIndex = slot7
+	for iter_21_0 = 1, var_21_4 do
+		local var_21_5 = gohelper.findChild(arg_21_0._golvstages, "stage" .. iter_21_0)
+		local var_21_6 = arg_21_0:getResInst(var_21_2, var_21_5)
+		local var_21_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_6, ActDuDuGuLevelItem, arg_21_0)
+
+		arg_21_0._lvItems[iter_21_0] = var_21_7
+
+		arg_21_0._lvItems[iter_21_0]:setParam(var_21_3[iter_21_0], iter_21_0, arg_21_0.actId)
+
+		if arg_21_0._lvItems[iter_21_0]:isUnlock() then
+			arg_21_0._curLvIndex = iter_21_0
 		end
 	end
 
-	slot0._curLvIndex = ActDuDuGuModel.instance:getCurLvIndex() > 0 and slot4 or slot0._curLvIndex
+	local var_21_8 = ActDuDuGuModel.instance:getCurLvIndex()
 
-	slot0:_focusLvItem(slot0._curLvIndex)
+	arg_21_0._curLvIndex = var_21_8 > 0 and var_21_8 or arg_21_0._curLvIndex
+
+	arg_21_0:_focusLvItem(arg_21_0._curLvIndex)
 end
 
-function slot0._playFirstUnlock(slot0)
-	slot0.finishStoryIndex = 0
+function var_0_0._playFirstUnlock(arg_22_0)
+	arg_22_0.finishStoryIndex = 0
 
-	slot0._lvItems[1]:playUnlock()
-	TaskDispatcher.runDelay(slot0._unlockLvEnd, slot0, 2)
+	arg_22_0._lvItems[1]:playUnlock()
+	TaskDispatcher.runDelay(arg_22_0._unlockLvEnd, arg_22_0, 2)
 end
 
-function slot0._unlockLvEnd(slot0)
-	slot0._lvItems[slot0.finishStoryIndex + 1]:refreshStatus()
+function var_0_0._unlockLvEnd(arg_23_0)
+	arg_23_0._lvItems[arg_23_0.finishStoryIndex + 1]:refreshStatus()
 
-	slot0.finishStoryIndex = nil
+	arg_23_0.finishStoryIndex = nil
 
-	slot0:_lockScreen(false)
+	arg_23_0:_lockScreen(false)
 end
 
-function slot0._finishStoryEnd(slot0)
-	if slot0.finishStoryIndex == #slot0._lvItems then
-		slot0._curLvIndex = slot0.finishStoryIndex
-		slot0.finishStoryIndex = nil
+function var_0_0._finishStoryEnd(arg_24_0)
+	if arg_24_0.finishStoryIndex == #arg_24_0._lvItems then
+		arg_24_0._curLvIndex = arg_24_0.finishStoryIndex
+		arg_24_0.finishStoryIndex = nil
 
-		slot0:_lockScreen(false)
+		arg_24_0:_lockScreen(false)
 	else
-		slot0._curLvIndex = slot0.finishStoryIndex + 1
+		arg_24_0._curLvIndex = arg_24_0.finishStoryIndex + 1
 
-		slot0:_playPathAnim()
+		arg_24_0:_playPathAnim()
 	end
 end
 
-function slot0._playPathAnim(slot0)
-	slot0._animPath.speed = 1
+function var_0_0._playPathAnim(arg_25_0)
+	local var_25_0 = "go" .. arg_25_0.finishStoryIndex
 
-	slot0._animPath:Play("go" .. slot0.finishStoryIndex)
-	TaskDispatcher.runDelay(slot0._unlockStory, slot0, 0.33)
+	arg_25_0._animPath.speed = 1
+
+	arg_25_0._animPath:Play(var_25_0)
+	TaskDispatcher.runDelay(arg_25_0._unlockStory, arg_25_0, 0.33)
 end
 
-function slot0._unlockStory(slot0)
-	slot0._lvItems[slot0.finishStoryIndex + 1]:playUnlock()
-	TaskDispatcher.runDelay(slot0._unlockLvEnd, slot0, 2)
+function var_0_0._unlockStory(arg_26_0)
+	arg_26_0._lvItems[arg_26_0.finishStoryIndex + 1]:playUnlock()
+	TaskDispatcher.runDelay(arg_26_0._unlockLvEnd, arg_26_0, 2)
 end
 
-function slot0._delayOpenStory(slot0)
-	slot0._anim:Play("openstory", 0, 0)
+function var_0_0._delayOpenStory(arg_27_0)
+	arg_27_0._anim:Play("openstory", 0, 0)
 end
 
-function slot0._showLeftTime(slot0)
-	slot0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(slot0.actId)
+function var_0_0._showLeftTime(arg_28_0)
+	arg_28_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(arg_28_0.actId)
 end
 
-function slot0._initPathStatus(slot0)
-	if slot0._curLvIndex > 1 then
-		slot0._animPath:Play("go" .. slot0._curLvIndex - 1, 0, 1)
+function var_0_0._initPathStatus(arg_29_0)
+	if arg_29_0._curLvIndex > 1 then
+		arg_29_0._animPath:Play("go" .. arg_29_0._curLvIndex - 1, 0, 1)
 	else
-		slot0._animPath.speed = 0
+		arg_29_0._animPath.speed = 0
 
-		slot0._animPath:Play("go1", 0, 0)
+		arg_29_0._animPath:Play("go1", 0, 0)
 	end
 end
 
-function slot0._focusLvItem(slot0, slot1, slot2)
-	if slot2 then
-		ZProj.TweenHelper.DOLocalMoveY(slot0._golvScroll.transform, slot1 < 3 and 540 or 540 + (slot1 - 3) * 920 / 5, 0.26, slot0._onFocusEnd, slot0, slot1)
+function var_0_0._focusLvItem(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = arg_30_1 < 3 and 540 or 540 + (arg_30_1 - 3) * 920 / 5
+
+	if arg_30_2 then
+		ZProj.TweenHelper.DOLocalMoveY(arg_30_0._golvScroll.transform, var_30_0, 0.26, arg_30_0._onFocusEnd, arg_30_0, arg_30_1)
 	else
-		ZProj.TweenHelper.DOLocalMoveY(slot0._golvScroll.transform, slot3, 0.26)
+		ZProj.TweenHelper.DOLocalMoveY(arg_30_0._golvScroll.transform, var_30_0, 0.26)
 	end
 
-	ActDuDuGuModel.instance:setCurLvIndex(slot1)
+	ActDuDuGuModel.instance:setCurLvIndex(arg_30_1)
 end
 
-function slot0._onFocusEnd(slot0, slot1)
+function var_0_0._onFocusEnd(arg_31_0, arg_31_1)
+	return
 end
 
-function slot0._lockScreen(slot0, slot1)
-	if slot1 then
+function var_0_0._lockScreen(arg_32_0, arg_32_1)
+	if arg_32_1 then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("DuDuGuLock")
 	else
@@ -302,4 +323,4 @@ function slot0._lockScreen(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

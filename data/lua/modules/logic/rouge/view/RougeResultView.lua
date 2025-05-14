@@ -1,243 +1,280 @@
-module("modules.logic.rouge.view.RougeResultView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeResultView", package.seeall)
 
-slot0 = class("RougeResultView", BaseView)
-slot0.BeginType = 1
-slot0.MinMiddleType = 2
-slot0.MaxMiddleType = 5
-slot0.EndType = 6
-slot0.StartResultIndex = 1
-slot0.OnePageShowResultCount = 2
+local var_0_0 = class("RougeResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "Content/#txt_dec")
-	slot0._goevent = gohelper.findChild(slot0.viewGO, "Content/#go_event")
-	slot0._goitem1 = gohelper.findChild(slot0.viewGO, "Content/#go_event/#go_item1")
-	slot0._txtevent = gohelper.findChildText(slot0.viewGO, "Content/#go_event/#go_item1/scroll_desc/viewport/#txt_event")
-	slot0._goitem2 = gohelper.findChild(slot0.viewGO, "Content/#go_event/#go_item2")
-	slot0._goitem3 = gohelper.findChild(slot0.viewGO, "Content/#go_event/#go_item3")
-	slot0._goitem4 = gohelper.findChild(slot0.viewGO, "Content/#go_event/#go_item4")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "Content/#go_fail")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "Content/#go_fail/#simage_mask")
-	slot0._simagemask2 = gohelper.findChildSingleImage(slot0.viewGO, "Content/#go_fail/#simage_mask2")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "Content/#go_success")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "Content/#go_arrow")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Content/Title/#txt_Title")
-	slot0._simagerightmask = gohelper.findChildSingleImage(slot0.viewGO, "Content/img_dec/#simage_rightmask")
-	slot0._simageleftmask = gohelper.findChildSingleImage(slot0.viewGO, "Content/img_dec/#simage_leftmask")
-	slot0._simagerightmask2 = gohelper.findChildSingleImage(slot0.viewGO, "Content/img_dec/#simage_rightmask2")
-	slot0._simageleftmask2 = gohelper.findChildSingleImage(slot0.viewGO, "Content/img_dec/#simage_leftmask2")
-	slot0._simagepoint = gohelper.findChildSingleImage(slot0.viewGO, "Content/img_dec/#simage_point")
-	slot0._simagepoint2 = gohelper.findChildSingleImage(slot0.viewGO, "Content/img_dec/#simage_point2")
-	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0.viewGO, "Content/#btn_skip")
-	slot0._imageskip = gohelper.findChildImage(slot0.viewGO, "Content/#btn_skip/#image_skip")
-	slot0._btnnext = gohelper.findChildButton(slot0.viewGO, "Content/#btn_next")
+var_0_0.BeginType = 1
+var_0_0.MinMiddleType = 2
+var_0_0.MaxMiddleType = 5
+var_0_0.EndType = 6
+var_0_0.StartResultIndex = 1
+var_0_0.OnePageShowResultCount = 2
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Content/#txt_dec")
+	arg_1_0._goevent = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event")
+	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item1")
+	arg_1_0._txtevent = gohelper.findChildText(arg_1_0.viewGO, "Content/#go_event/#go_item1/scroll_desc/viewport/#txt_event")
+	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item2")
+	arg_1_0._goitem3 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item3")
+	arg_1_0._goitem4 = gohelper.findChild(arg_1_0.viewGO, "Content/#go_event/#go_item4")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "Content/#go_fail")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/#go_fail/#simage_mask")
+	arg_1_0._simagemask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/#go_fail/#simage_mask2")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "Content/#go_success")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "Content/#go_arrow")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Content/Title/#txt_Title")
+	arg_1_0._simagerightmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_rightmask")
+	arg_1_0._simageleftmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_leftmask")
+	arg_1_0._simagerightmask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_rightmask2")
+	arg_1_0._simageleftmask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_leftmask2")
+	arg_1_0._simagepoint = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_point")
+	arg_1_0._simagepoint2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Content/img_dec/#simage_point2")
+	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Content/#btn_skip")
+	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0.viewGO, "Content/#btn_skip/#image_skip")
+	arg_1_0._btnnext = gohelper.findChildButton(arg_1_0.viewGO, "Content/#btn_next")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnskip:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnskip:RemoveClickListener()
+	arg_3_0._btnnext:RemoveClickListener()
 end
 
-function slot0._btnskipOnClick(slot0)
+function var_0_0._btnskipOnClick(arg_4_0)
 	RougeController.instance:openRougeSettlementView()
 end
 
-function slot0._btnnextOnClick(slot0)
-	TaskDispatcher.cancelTask(slot0.playStartSettlementTxtAudio, slot0)
+function var_0_0._btnnextOnClick(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.playStartSettlementTxtAudio, arg_5_0)
 
-	if slot0._isSwitch2EndingView then
+	if arg_5_0._isSwitch2EndingView then
 		RougeController.instance:openRougeSettlementView()
-	elseif slot0:isHasNeedShowResultItem(slot0._curEventEndIndex + 1) then
-		slot0:try2ShowResult(slot1)
-		AudioMgr.instance:trigger(AudioEnum.UI.NextShowSettlementTxt)
 	else
-		slot0:switch2Ending()
-		AudioMgr.instance:trigger(AudioEnum.UI.ShowEndingTxt)
+		local var_5_0 = arg_5_0._curEventEndIndex + 1
+
+		if arg_5_0:isHasNeedShowResultItem(var_5_0) then
+			arg_5_0:try2ShowResult(var_5_0)
+			AudioMgr.instance:trigger(AudioEnum.UI.NextShowSettlementTxt)
+		else
+			arg_5_0:switch2Ending()
+			AudioMgr.instance:trigger(AudioEnum.UI.ShowEndingTxt)
+		end
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._isSwitch2EndingView = false
-	slot0._curEventEndIndex = 0
-	slot0._configMap = slot0:buildConfigMap()
-	slot0._descList = slot0:getTriggerConfigs()
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._isSwitch2EndingView = false
+	arg_6_0._curEventEndIndex = 0
+	arg_6_0._configMap = arg_6_0:buildConfigMap()
+	arg_6_0._descList = arg_6_0:getTriggerConfigs()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.SettlementCloseWindow)
 end
 
-slot1 = 2
+local var_0_1 = 2
 
-function slot0.onOpenFinish(slot0)
-	slot0:onBeforeShowResultContent()
-	TaskDispatcher.cancelTask(slot0.playStartSettlementTxtAudio, slot0)
-	TaskDispatcher.runDelay(slot0.playStartSettlementTxtAudio, slot0, uv0)
+function var_0_0.onOpenFinish(arg_8_0)
+	arg_8_0:onBeforeShowResultContent()
+	TaskDispatcher.cancelTask(arg_8_0.playStartSettlementTxtAudio, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0.playStartSettlementTxtAudio, arg_8_0, var_0_1)
 end
 
-function slot0.playStartSettlementTxtAudio(slot0)
+function var_0_0.playStartSettlementTxtAudio(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.StartShowSettlementTxt)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onBeforeShowResultContent()
+function var_0_0.onUpdateParam(arg_10_0)
+	arg_10_0:onBeforeShowResultContent()
 
-	slot0._isSwitch2EndingView = false
-	slot0._curEventEndIndex = 0
+	arg_10_0._isSwitch2EndingView = false
+	arg_10_0._curEventEndIndex = 0
 end
 
-function slot0.onBeforeShowResultContent(slot0)
-	if slot0:filterTypeGroupCfgs(uv0.BeginType) then
-		slot0._txtdec.text = slot1 and slot1[1]
+function var_0_0.onBeforeShowResultContent(arg_11_0)
+	local var_11_0 = arg_11_0:filterTypeGroupCfgs(var_0_0.BeginType)
 
-		gohelper.setActive(slot0._txtdec.gameObject, true)
+	if var_11_0 then
+		arg_11_0._txtdec.text = var_11_0 and var_11_0[1]
+
+		gohelper.setActive(arg_11_0._txtdec.gameObject, true)
 	end
 
-	gohelper.setActive(slot0._gofail, false)
-	gohelper.setActive(slot0._gosuccess, false)
-	gohelper.setActive(slot0._goarrow, false)
-	gohelper.setActive(slot0._goevent, false)
+	gohelper.setActive(arg_11_0._gofail, false)
+	gohelper.setActive(arg_11_0._gosuccess, false)
+	gohelper.setActive(arg_11_0._goarrow, false)
+	gohelper.setActive(arg_11_0._goevent, false)
 end
 
-function slot0.showRougeResultList(slot0)
-	slot0:try2ShowResult(uv0.StartResultIndex)
-	gohelper.setActive(slot0._goarrow, true)
-	gohelper.setActive(slot0._txtdec.gameObject, false)
+function var_0_0.showRougeResultList(arg_12_0)
+	arg_12_0:try2ShowResult(var_0_0.StartResultIndex)
+	gohelper.setActive(arg_12_0._goarrow, true)
+	gohelper.setActive(arg_12_0._txtdec.gameObject, false)
 end
 
-function slot0.buildConfigMap(slot0)
-	slot4 = {}
+function var_0_0.buildConfigMap(arg_13_0)
+	local var_13_0 = RougeModel.instance:getRougeResult()
+	local var_13_1 = var_13_0 and var_13_0.season
+	local var_13_2 = lua_rouge_result.configDict[var_13_1]
+	local var_13_3 = {}
 
-	if lua_rouge_result.configDict[RougeModel.instance:getRougeResult() and slot1.season] then
-		for slot8, slot9 in pairs(slot3) do
-			slot4[slot10] = slot4[slot9.type] or {}
+	if var_13_2 then
+		for iter_13_0, iter_13_1 in pairs(var_13_2) do
+			local var_13_4 = iter_13_1.type
 
-			table.insert(slot4[slot10], slot9)
+			var_13_3[var_13_4] = var_13_3[var_13_4] or {}
+
+			table.insert(var_13_3[var_13_4], iter_13_1)
 		end
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		table.sort(slot9, slot0.configSortFunction)
+	for iter_13_2, iter_13_3 in pairs(var_13_3) do
+		table.sort(iter_13_3, arg_13_0.configSortFunction)
 	end
 
-	return slot4
+	return var_13_3
 end
 
-function slot0.configSortFunction(slot0, slot1)
-	if slot0.priority ~= slot1.priority then
-		return slot2 < slot3
+function var_0_0.configSortFunction(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.priority
+	local var_14_1 = arg_14_1.priority
+
+	if var_14_0 ~= var_14_1 then
+		return var_14_0 < var_14_1
 	end
 
-	return slot0.id < slot1.id
+	return arg_14_0.id < arg_14_1.id
 end
 
-slot2 = 3
+local var_0_2 = 3
 
-function slot0.getTriggerConfigs(slot0)
-	slot1 = {}
+function var_0_0.getTriggerConfigs(arg_15_0)
+	local var_15_0 = {}
 
-	for slot5 = uv0.MinMiddleType, uv0.MaxMiddleType do
-		if slot0:filterTypeGroupCfgs(slot5) and #slot6 > 0 then
-			table.insert(slot1, {
-				eventType = slot5,
-				contents = slot6
-			})
+	for iter_15_0 = var_0_0.MinMiddleType, var_0_0.MaxMiddleType do
+		local var_15_1 = arg_15_0:filterTypeGroupCfgs(iter_15_0)
+
+		if var_15_1 and #var_15_1 > 0 then
+			local var_15_2 = {
+				eventType = iter_15_0,
+				contents = var_15_1
+			}
+
+			table.insert(var_15_0, var_15_2)
 		end
 	end
 
-	return slot1
+	return var_15_0
 end
 
-function slot0.filterTypeGroupCfgs(slot0, slot1)
-	if not (slot0._configMap and slot0._configMap[slot1]) then
+function var_0_0.filterTypeGroupCfgs(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0._configMap and arg_16_0._configMap[arg_16_1]
+
+	if not var_16_0 then
 		return
 	end
 
-	slot3 = {}
+	local var_16_1 = {}
+	local var_16_2 = 0
 
-	for slot8, slot9 in ipairs(slot2) do
-		if not string.nilorempty(slot0:tryFilterTrigger(slot9)) then
-			table.insert(slot3, slot10)
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_3 = arg_16_0:tryFilterTrigger(iter_16_1)
 
-			if uv0 <= 0 + 1 then
+		if not string.nilorempty(var_16_3) then
+			table.insert(var_16_1, var_16_3)
+
+			var_16_2 = var_16_2 + 1
+
+			if var_16_2 >= var_0_2 then
 				break
 			end
 		end
 	end
 
-	return slot3
+	return var_16_1
 end
 
-function slot0.tryFilterTrigger(slot0, slot1)
-	if not slot1 then
+function var_0_0.tryFilterTrigger(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		return
 	end
 
-	slot2 = {
+	local var_17_0 = {
 		0
 	}
 
-	if not string.nilorempty(slot1.triggerParam) then
-		slot2 = string.splitToNumber(slot1.triggerParam, "#")
+	if not string.nilorempty(arg_17_1.triggerParam) then
+		var_17_0 = string.splitToNumber(arg_17_1.triggerParam, "#")
 	end
 
-	if {
-		RougeSettlementTriggerHelper.isResultTrigger(slot1.trigger, unpack(slot2))
-	} and slot3[1] ~= nil or slot0:checkIsTriggerDefaultVisible(slot1) then
-		return GameUtil.getSubPlaceholderLuaLang(slot1.desc, slot3)
+	local var_17_1 = {
+		RougeSettlementTriggerHelper.isResultTrigger(arg_17_1.trigger, unpack(var_17_0))
+	}
+	local var_17_2 = var_17_1 and var_17_1[1] ~= nil
+	local var_17_3 = arg_17_0:checkIsTriggerDefaultVisible(arg_17_1)
+
+	if var_17_2 or var_17_3 then
+		return (GameUtil.getSubPlaceholderLuaLang(arg_17_1.desc, var_17_1))
 	end
 end
 
-function slot0.checkIsTriggerDefaultVisible(slot0, slot1)
-	return slot1 and slot1.priority == 0
+function var_0_0.checkIsTriggerDefaultVisible(arg_18_0, arg_18_1)
+	return arg_18_1 and arg_18_1.priority == 0
 end
 
-function slot0.try2ShowResult(slot0, slot1)
-	if not slot0._descList then
+function var_0_0.try2ShowResult(arg_19_0, arg_19_1)
+	if not arg_19_0._descList then
 		return
 	end
 
-	if slot1 > #slot0._descList then
+	local var_19_0 = #arg_19_0._descList
+
+	if var_19_0 < arg_19_1 then
 		return
 	end
 
-	if slot2 < slot1 + uv0.OnePageShowResultCount - 1 then
-		slot3 = slot2 or slot3
+	local var_19_1 = arg_19_1 + var_0_0.OnePageShowResultCount - 1
+
+	var_19_1 = var_19_0 < var_19_1 and var_19_0 or var_19_1
+
+	arg_19_0:setAllResultItemVisible(false)
+
+	for iter_19_0 = arg_19_1, var_19_1 do
+		local var_19_2 = arg_19_0._descList[iter_19_0]
+		local var_19_3 = arg_19_0:getOrCreateResultItem(iter_19_0)
+
+		arg_19_0:refreshResultContent(var_19_3, var_19_2)
 	end
 
-	slot0:setAllResultItemVisible(false)
+	arg_19_0._curEventEndIndex = var_19_1
 
-	for slot7 = slot1, slot3 do
-		slot0:refreshResultContent(slot0:getOrCreateResultItem(slot7), slot0._descList[slot7])
-	end
-
-	slot0._curEventEndIndex = slot3
-
-	gohelper.setActive(slot0._goevent, true)
-	gohelper.setActive(slot0._txtdec.gameObject, false)
+	gohelper.setActive(arg_19_0._goevent, true)
+	gohelper.setActive(arg_19_0._txtdec.gameObject, false)
 end
 
-function slot0.getOrCreateResultItem(slot0, slot1)
-	return slot0["_goitem" .. slot1]
+function var_0_0.getOrCreateResultItem(arg_20_0, arg_20_1)
+	return arg_20_0["_goitem" .. arg_20_1]
 end
 
-function slot0.setAllResultItemVisible(slot0, slot1)
-	for slot6 = 1, slot0._goevent.transform.childCount do
-		gohelper.setActive(slot0._goevent.transform:GetChild(slot6 - 1), slot1)
+function var_0_0.setAllResultItemVisible(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0._goevent.transform.childCount
+
+	for iter_21_0 = 1, var_21_0 do
+		gohelper.setActive(arg_21_0._goevent.transform:GetChild(iter_21_0 - 1), arg_21_1)
 	end
 end
 
-slot3 = {
+local var_0_3 = {
 	nil,
 	"rouge_result_icon_box",
 	"rouge_result_icon_beasts",
@@ -245,56 +282,70 @@ slot3 = {
 	"rouge_result_icon_location"
 }
 
-function slot0.refreshResultContent(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.refreshResultContent(arg_22_0, arg_22_1, arg_22_2)
+	if not arg_22_1 or not arg_22_2 then
 		return
 	end
 
-	gohelper.findChildText(slot1, "scroll_desc/viewport/#txt_event").text = table.concat(slot2.contents, "\n")
+	local var_22_0 = arg_22_2.contents
+	local var_22_1 = table.concat(var_22_0, "\n")
 
-	if uv0[slot2.eventType] then
-		UISpriteSetMgr.instance:setRouge2Sprite(gohelper.findChildImage(slot1, "#imgae_icon"), slot6)
+	gohelper.findChildText(arg_22_1, "scroll_desc/viewport/#txt_event").text = var_22_1
+
+	local var_22_2 = var_0_3[arg_22_2.eventType]
+
+	if var_22_2 then
+		local var_22_3 = gohelper.findChildImage(arg_22_1, "#imgae_icon")
+
+		UISpriteSetMgr.instance:setRouge2Sprite(var_22_3, var_22_2)
 	end
 
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(arg_22_1, true)
 end
 
-function slot0.isHasNeedShowResultItem(slot0, slot1)
-	return slot1 <= (slot0._descList and #slot0._descList or 0)
+function var_0_0.isHasNeedShowResultItem(arg_23_0, arg_23_1)
+	return arg_23_1 <= (arg_23_0._descList and #arg_23_0._descList or 0)
 end
 
-function slot0.switch2Ending(slot0)
-	slot2 = RougeModel.instance:getRougeResult() and slot1:isSucceed()
+function var_0_0.switch2Ending(arg_24_0)
+	local var_24_0 = RougeModel.instance:getRougeResult()
+	local var_24_1 = var_24_0 and var_24_0:isSucceed()
 
-	gohelper.setActive(slot0._gofail, not slot2)
-	gohelper.setActive(slot0._gosuccess, slot2)
-	gohelper.setActive(slot0._goarrow, false)
-	slot0:setAllResultItemVisible(false)
+	gohelper.setActive(arg_24_0._gofail, not var_24_1)
+	gohelper.setActive(arg_24_0._gosuccess, var_24_1)
+	gohelper.setActive(arg_24_0._goarrow, false)
+	arg_24_0:setAllResultItemVisible(false)
 
-	slot0._isSwitch2EndingView = true
+	arg_24_0._isSwitch2EndingView = true
 
-	if slot2 then
-		gohelper.findChildText(slot0._gosuccess, "txt_success").text = slot0:filterTypeGroupCfgs(uv0.EndType) and slot3[1] or ""
+	local var_24_2 = arg_24_0:filterTypeGroupCfgs(var_0_0.EndType)
+	local var_24_3 = var_24_2 and var_24_2[1] or ""
+
+	if var_24_1 then
+		gohelper.findChildText(arg_24_0._gosuccess, "txt_success").text = var_24_3
 	else
-		gohelper.findChildText(slot0._gofail, "txt_fail").text = slot4
+		gohelper.findChildText(arg_24_0._gofail, "txt_fail").text = var_24_3
 	end
 end
 
-function slot0.getRougeResultCfg(slot0, slot1, slot2)
-	if slot0._configMap[slot1] then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot8.season == slot2 then
-				return slot8
+function var_0_0.getRougeResultCfg(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0 = arg_25_0._configMap[arg_25_1]
+
+	if var_25_0 then
+		for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+			if iter_25_1.season == arg_25_2 then
+				return iter_25_1
 			end
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.playStartSettlementTxtAudio, slot0)
+function var_0_0.onClose(arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0.playStartSettlementTxtAudio, arg_26_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_27_0)
+	return
 end
 
-return slot0
+return var_0_0

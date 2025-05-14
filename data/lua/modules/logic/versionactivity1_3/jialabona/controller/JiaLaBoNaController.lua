@@ -1,27 +1,29 @@
-module("modules.logic.versionactivity1_3.jialabona.controller.JiaLaBoNaController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.jialabona.controller.JiaLaBoNaController", package.seeall)
 
-slot0 = class("JiaLaBoNaController", BaseController)
+local var_0_0 = class("JiaLaBoNaController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._waitActId = nil
-	slot0._waitEpisodeId = nil
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._waitActId = nil
+	arg_4_0._waitEpisodeId = nil
 end
 
-function slot0.delayReward(slot0, slot1, slot2)
-	if slot0._act120TaskMO == nil and slot2 then
-		slot0._act120TaskMO = slot2
+function var_0_0.delayReward(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._act120TaskMO == nil and arg_5_2 then
+		arg_5_0._act120TaskMO = arg_5_2
 
-		TaskDispatcher.runDelay(slot0._onPreFinish, slot0, slot1)
+		TaskDispatcher.runDelay(arg_5_0._onPreFinish, arg_5_0, arg_5_1)
 
 		return true
 	end
@@ -29,112 +31,121 @@ function slot0.delayReward(slot0, slot1, slot2)
 	return false
 end
 
-function slot0._onPreFinish(slot0)
-	slot0._act120TaskMO = nil
+function var_0_0._onPreFinish(arg_6_0)
+	local var_6_0 = arg_6_0._act120TaskMO
 
-	if slot0._act120TaskMO and (slot1.id == JiaLaBoNaEnum.TaskMOAllFinishId or slot1:alreadyGotReward()) then
-		Activity120TaskListModel.instance:preFinish(slot1)
+	arg_6_0._act120TaskMO = nil
 
-		slot0._act120TaskId = slot1.id
+	if var_6_0 and (var_6_0.id == JiaLaBoNaEnum.TaskMOAllFinishId or var_6_0:alreadyGotReward()) then
+		Activity120TaskListModel.instance:preFinish(var_6_0)
 
-		TaskDispatcher.runDelay(slot0._onRewardTask, slot0, JiaLaBoNaEnum.AnimatorTime.TaskRewardMoveUp)
+		arg_6_0._act120TaskId = var_6_0.id
+
+		TaskDispatcher.runDelay(arg_6_0._onRewardTask, arg_6_0, JiaLaBoNaEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function slot0._onRewardTask(slot0)
-	slot0._act120TaskId = nil
+function var_0_0._onRewardTask(arg_7_0)
+	local var_7_0 = arg_7_0._act120TaskId
 
-	if slot0._act120TaskId then
-		if slot1 == JiaLaBoNaEnum.TaskMOAllFinishId then
+	arg_7_0._act120TaskId = nil
+
+	if var_7_0 then
+		if var_7_0 == JiaLaBoNaEnum.TaskMOAllFinishId then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity120)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(slot1)
+			TaskRpc.instance:sendFinishTaskRequest(var_7_0)
 		end
 	end
 end
 
-function slot0.oneClaimReward(slot0, slot1)
-	for slot6, slot7 in pairs(Activity120TaskListModel.instance:getList()) do
-		if slot7:alreadyGotReward() and slot7.id ~= JiaLaBoNaEnum.TaskMOAllFinishId then
-			TaskRpc.instance:sendFinishTaskRequest(slot7.id)
+function var_0_0.oneClaimReward(arg_8_0, arg_8_1)
+	local var_8_0 = Activity120TaskListModel.instance:getList()
+
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		if iter_8_1:alreadyGotReward() and iter_8_1.id ~= JiaLaBoNaEnum.TaskMOAllFinishId then
+			TaskRpc.instance:sendFinishTaskRequest(iter_8_1.id)
 		end
 	end
 end
 
-function slot0.openMapView(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.openMapView(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity120
-	}, function ()
+	}, function()
 		Activity120Rpc.instance:sendGetActInfoRequest(VersionActivity1_3Enum.ActivityId.Act306)
-		Activity120Model.instance:setCurEpisodeId(uv0)
+		Activity120Model.instance:setCurEpisodeId(arg_9_1)
 		ViewMgr.instance:openView(ViewName.JiaLaBoNaMapView, {
-			episodeId = uv0
+			episodeId = arg_9_1
 		})
 
-		if uv1 then
-			uv1(uv2, uv3)
+		if arg_9_2 then
+			arg_9_2(arg_9_3, arg_9_4)
 		end
 	end)
 end
 
-function slot0.openStoryView(slot0, slot1)
-	if Activity120Model.instance:isEpisodeClear(slot1) then
+function var_0_0.openStoryView(arg_11_0, arg_11_1)
+	if Activity120Model.instance:isEpisodeClear(arg_11_1) then
 		ViewMgr.instance:openView(ViewName.JiaLaBoNaStoryView, {
 			actId = VersionActivity1_3Enum.ActivityId.Act306,
-			episodeId = slot1
+			episodeId = arg_11_1
 		})
 	end
 end
 
-function slot0.isEnterBforeClear(slot0)
-	return slot0._isBeforeClear
+function var_0_0.isEnterBforeClear(arg_12_0)
+	return arg_12_0._isBeforeClear
 end
 
-slot0.ENTER_CHESS_GAME_BLOCK_KEY = "JiaLaBoNaController.ENTER_CHESS_GAME_BLOCK_KEY"
+var_0_0.ENTER_CHESS_GAME_BLOCK_KEY = "JiaLaBoNaController.ENTER_CHESS_GAME_BLOCK_KEY"
 
-function slot0.enterChessGame(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:startBlock(uv0.ENTER_CHESS_GAME_BLOCK_KEY)
+function var_0_0.enterChessGame(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	UIBlockMgr.instance:startBlock(var_0_0.ENTER_CHESS_GAME_BLOCK_KEY)
 
-	slot0._waitActId = slot1
-	slot0._waitEpisodeId = slot2
-	slot0._isBeforeClear = Activity120Model.instance:isEpisodeClear(slot2)
+	arg_13_0._waitActId = arg_13_1
+	arg_13_0._waitEpisodeId = arg_13_2
+	arg_13_0._isBeforeClear = Activity120Model.instance:isEpisodeClear(arg_13_2)
 
-	Activity120Model.instance:setCurEpisodeId(slot2)
-	TaskDispatcher.cancelTask(slot0._onEnterChessGame, slot0, slot3)
-	TaskDispatcher.runDelay(slot0._onEnterChessGame, slot0, slot3 or 0.1)
+	Activity120Model.instance:setCurEpisodeId(arg_13_2)
+	TaskDispatcher.cancelTask(arg_13_0._onEnterChessGame, arg_13_0, arg_13_3)
+	TaskDispatcher.runDelay(arg_13_0._onEnterChessGame, arg_13_0, arg_13_3 or 0.1)
 end
 
-function slot0._onEnterChessGame(slot0)
-	UIBlockMgr.instance:endBlock(uv0.ENTER_CHESS_GAME_BLOCK_KEY)
+function var_0_0._onEnterChessGame(arg_14_0)
+	UIBlockMgr.instance:endBlock(var_0_0.ENTER_CHESS_GAME_BLOCK_KEY)
 
-	if slot0._waitActId and slot0._waitEpisodeId then
-		Activity120Rpc.instance:sendActStartEpisodeRequest(slot0._waitActId, slot0._waitEpisodeId, slot0._onOpenGame, slot0)
+	if arg_14_0._waitActId and arg_14_0._waitEpisodeId then
+		Activity120Rpc.instance:sendActStartEpisodeRequest(arg_14_0._waitActId, arg_14_0._waitEpisodeId, arg_14_0._onOpenGame, arg_14_0)
 	end
 end
 
-function slot0.resetStartGame(slot0)
-	slot1 = Va3ChessModel.instance:getEpisodeId()
+function var_0_0.resetStartGame(arg_15_0)
+	local var_15_0 = Va3ChessModel.instance:getEpisodeId()
+	local var_15_1 = Va3ChessModel.instance:getActId()
 
-	if Va3ChessModel.instance:getActId() and slot1 then
+	if var_15_1 and var_15_0 then
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameLoadingMapStateUpdate, Va3ChessEvent.LoadingMapState.Start, true)
-		Activity120Rpc.instance:sendActStartEpisodeRequest(slot2, slot1, slot0._onRestartCallback, slot0)
+		Activity120Rpc.instance:sendActStartEpisodeRequest(var_15_1, var_15_0, arg_15_0._onRestartCallback, arg_15_0)
 	end
 end
 
-slot0.RETURN_POINT_GAME_BLOCK_KEY = "JiaLaBoNaController.RETURN_POINT_GAME_BLOCK_KEY"
+var_0_0.RETURN_POINT_GAME_BLOCK_KEY = "JiaLaBoNaController.RETURN_POINT_GAME_BLOCK_KEY"
 
-function slot0.returnPointGame(slot0, slot1)
-	UIBlockMgr.instance:startBlock(uv0.RETURN_POINT_GAME_BLOCK_KEY)
+function var_0_0.returnPointGame(arg_16_0, arg_16_1)
+	UIBlockMgr.instance:startBlock(var_0_0.RETURN_POINT_GAME_BLOCK_KEY)
 
-	slot0._isLastCheckPoint = slot1
+	arg_16_0._isLastCheckPoint = arg_16_1
 
-	if Va3ChessModel.instance:getActId() then
-		Activity120Rpc.instance:sendActCheckPointRequest(slot2, slot1, slot0._onReurnPiontGame, slot0)
+	local var_16_0 = Va3ChessModel.instance:getActId()
+
+	if var_16_0 then
+		Activity120Rpc.instance:sendActCheckPointRequest(var_16_0, arg_16_1, arg_16_0._onReurnPiontGame, arg_16_0)
 	end
 end
 
-function slot0._onRestartCallback(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._onRestartCallback(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_2 == 0 then
 		Va3ChessController.onOpenGameStoryPlayOver()
 		Stat1_3Controller.instance:jiaLaBoNaStatStart()
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameReset)
@@ -143,34 +154,34 @@ function slot0._onRestartCallback(slot0, slot1, slot2, slot3)
 	end
 end
 
-function slot0._onReurnPiontGame(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:endBlock(uv0.RETURN_POINT_GAME_BLOCK_KEY)
+function var_0_0._onReurnPiontGame(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	UIBlockMgr.instance:endBlock(var_0_0.RETURN_POINT_GAME_BLOCK_KEY)
 
-	if slot2 ~= 0 then
+	if arg_18_2 ~= 0 then
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameLoadingMapStateUpdate, Va3ChessEvent.LoadingMapState.Finish)
-	elseif slot0._isLastCheckPoint then
+	elseif arg_18_0._isLastCheckPoint then
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameLoadingMapStateUpdate, Va3ChessEvent.LoadingMapState.Start, true)
-		TaskDispatcher.runDelay(slot0._eventReurnPiontGame, slot0, JiaLaBoNaEnum.AnimatorTime.SwithSceneOpen)
+		TaskDispatcher.runDelay(arg_18_0._eventReurnPiontGame, arg_18_0, JiaLaBoNaEnum.AnimatorTime.SwithSceneOpen)
 		ViewMgr.instance:closeView(ViewName.JiaLaBoNaGameResultView)
 	else
-		slot0:_eventReurnPiontGame()
+		arg_18_0:_eventReurnPiontGame()
 	end
 end
 
-function slot0._eventReurnPiontGame(slot0)
-	uv0.instance:dispatchEvent(JiaLaBoNaEvent.GamePointReturn)
+function var_0_0._eventReurnPiontGame(arg_19_0)
+	var_0_0.instance:dispatchEvent(JiaLaBoNaEvent.GamePointReturn)
 end
 
-function slot0._onOpenGame(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		Activity120Model.instance:increaseCount(slot3.map.id)
-		Va3ChessController.instance:initMapData(slot3.activityId, slot3.map)
+function var_0_0._onOpenGame(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	if arg_20_2 == 0 then
+		Activity120Model.instance:increaseCount(arg_20_3.map.id)
+		Va3ChessController.instance:initMapData(arg_20_3.activityId, arg_20_3.map)
 		Va3ChessGameController.instance:setViewName(ViewName.JiaLaBoNaGameView)
 		Stat1_3Controller.instance:jiaLaBoNaStatStart()
-		Va3ChessController.instance:openGameView(slot1, slot2)
+		Va3ChessController.instance:openGameView(arg_20_1, arg_20_2)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

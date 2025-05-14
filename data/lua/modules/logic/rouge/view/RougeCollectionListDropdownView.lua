@@ -1,198 +1,214 @@
-module("modules.logic.rouge.view.RougeCollectionListDropdownView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionListDropdownView", package.seeall)
 
-slot0 = class("RougeCollectionListDropdownView", BaseView)
+local var_0_0 = class("RougeCollectionListDropdownView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnblock = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/#btn_block")
-	slot0._btnhole1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole1")
-	slot0._btnunequip1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#btn_unequip1")
-	slot0._goempty1 = gohelper.findChild(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#go_empty1")
-	slot0._goarrow1 = gohelper.findChild(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#go_empty1/#go_arrow1")
-	slot0._simageruanpan1 = gohelper.findChildSingleImage(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#simage_ruanpan1")
-	slot0._btnhole2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole2")
-	slot0._btnunequip2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#btn_unequip2")
-	slot0._goempty2 = gohelper.findChild(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#go_empty2")
-	slot0._goarrow2 = gohelper.findChild(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#go_empty2/#go_arrow2")
-	slot0._simageruanpan2 = gohelper.findChildSingleImage(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#simage_ruanpan2")
-	slot0._btnhole3 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole3")
-	slot0._btnunequip3 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#btn_unequip3")
-	slot0._goempty3 = gohelper.findChild(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#go_empty3")
-	slot0._goarrow3 = gohelper.findChild(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#go_empty3/#go_arrow3")
-	slot0._simageruanpan3 = gohelper.findChildSingleImage(slot0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#simage_ruanpan3")
-	slot0._scrollcollectiondesc = gohelper.findChildScrollRect(slot0.viewGO, "Right/#go_normal/#scroll_collectiondesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnblock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/#btn_block")
+	arg_1_0._btnhole1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole1")
+	arg_1_0._btnunequip1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#btn_unequip1")
+	arg_1_0._goempty1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#go_empty1")
+	arg_1_0._goarrow1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#go_empty1/#go_arrow1")
+	arg_1_0._simageruanpan1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole1/#simage_ruanpan1")
+	arg_1_0._btnhole2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole2")
+	arg_1_0._btnunequip2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#btn_unequip2")
+	arg_1_0._goempty2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#go_empty2")
+	arg_1_0._goarrow2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#go_empty2/#go_arrow2")
+	arg_1_0._simageruanpan2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole2/#simage_ruanpan2")
+	arg_1_0._btnhole3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole3")
+	arg_1_0._btnunequip3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#btn_unequip3")
+	arg_1_0._goempty3 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#go_empty3")
+	arg_1_0._goarrow3 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#go_empty3/#go_arrow3")
+	arg_1_0._simageruanpan3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_normal/bottom/#btn_hole3/#simage_ruanpan3")
+	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_normal/#scroll_collectiondesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnblock:AddClickListener(slot0._btnblockOnClick, slot0)
-	slot0._btnhole1:AddClickListener(slot0._btnhole1OnClick, slot0)
-	slot0._btnunequip1:AddClickListener(slot0._btnunequip1OnClick, slot0)
-	slot0._btnhole2:AddClickListener(slot0._btnhole2OnClick, slot0)
-	slot0._btnunequip2:AddClickListener(slot0._btnunequip2OnClick, slot0)
-	slot0._btnhole3:AddClickListener(slot0._btnhole3OnClick, slot0)
-	slot0._btnunequip3:AddClickListener(slot0._btnunequip3OnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnblock:AddClickListener(arg_2_0._btnblockOnClick, arg_2_0)
+	arg_2_0._btnhole1:AddClickListener(arg_2_0._btnhole1OnClick, arg_2_0)
+	arg_2_0._btnunequip1:AddClickListener(arg_2_0._btnunequip1OnClick, arg_2_0)
+	arg_2_0._btnhole2:AddClickListener(arg_2_0._btnhole2OnClick, arg_2_0)
+	arg_2_0._btnunequip2:AddClickListener(arg_2_0._btnunequip2OnClick, arg_2_0)
+	arg_2_0._btnhole3:AddClickListener(arg_2_0._btnhole3OnClick, arg_2_0)
+	arg_2_0._btnunequip3:AddClickListener(arg_2_0._btnunequip3OnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnblock:RemoveClickListener()
-	slot0._btnhole1:RemoveClickListener()
-	slot0._btnunequip1:RemoveClickListener()
-	slot0._btnhole2:RemoveClickListener()
-	slot0._btnunequip2:RemoveClickListener()
-	slot0._btnhole3:RemoveClickListener()
-	slot0._btnunequip3:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnblock:RemoveClickListener()
+	arg_3_0._btnhole1:RemoveClickListener()
+	arg_3_0._btnunequip1:RemoveClickListener()
+	arg_3_0._btnhole2:RemoveClickListener()
+	arg_3_0._btnunequip2:RemoveClickListener()
+	arg_3_0._btnhole3:RemoveClickListener()
+	arg_3_0._btnunequip3:RemoveClickListener()
 end
 
-function slot0._btnunequip1OnClick(slot0)
-	slot0._holeMoList[1] = nil
+function var_0_0._btnunequip1OnClick(arg_4_0)
+	arg_4_0._holeMoList[1] = nil
 
-	slot0:_updateHoles()
-	slot0:_btnblockOnClick()
+	arg_4_0:_updateHoles()
+	arg_4_0:_btnblockOnClick()
 end
 
-function slot0._btnunequip2OnClick(slot0)
-	slot0._holeMoList[2] = nil
+function var_0_0._btnunequip2OnClick(arg_5_0)
+	arg_5_0._holeMoList[2] = nil
 
-	slot0:_updateHoles()
-	slot0:_btnblockOnClick()
+	arg_5_0:_updateHoles()
+	arg_5_0:_btnblockOnClick()
 end
 
-function slot0._btnunequip3OnClick(slot0)
-	slot0._holeMoList[3] = nil
+function var_0_0._btnunequip3OnClick(arg_6_0)
+	arg_6_0._holeMoList[3] = nil
 
-	slot0:_updateHoles()
-	slot0:_btnblockOnClick()
+	arg_6_0:_updateHoles()
+	arg_6_0:_btnblockOnClick()
 end
 
-function slot0._btnblockOnClick(slot0)
-	if slot0._clickHoleIndex then
-		transformhelper.setLocalScale(slot0["_goarrow" .. slot0._clickHoleIndex].transform, 1, 1, 1)
+function var_0_0._btnblockOnClick(arg_7_0)
+	if arg_7_0._clickHoleIndex then
+		local var_7_0 = arg_7_0["_goarrow" .. arg_7_0._clickHoleIndex].transform
+
+		transformhelper.setLocalScale(var_7_0, 1, 1, 1)
 	end
 
-	gohelper.setActive(slot0._scrollviewGo, false)
-	gohelper.setActive(slot0._btnblock, false)
+	gohelper.setActive(arg_7_0._scrollviewGo, false)
+	gohelper.setActive(arg_7_0._btnblock, false)
 
-	slot0._clickHoleIndex = nil
+	arg_7_0._clickHoleIndex = nil
 end
 
-function slot0._btnhole1OnClick(slot0)
-	slot0:_clickholeBtn(1)
+function var_0_0._btnhole1OnClick(arg_8_0)
+	arg_8_0:_clickholeBtn(1)
 end
 
-function slot0._btnhole2OnClick(slot0)
-	slot0:_clickholeBtn(2)
+function var_0_0._btnhole2OnClick(arg_9_0)
+	arg_9_0:_clickholeBtn(2)
 end
 
-function slot0._btnhole3OnClick(slot0)
-	slot0:_clickholeBtn(3)
+function var_0_0._btnhole3OnClick(arg_10_0)
+	arg_10_0:_clickholeBtn(3)
 end
 
-function slot0._clickholeBtn(slot0, slot1)
-	if slot0._clickHoleIndex then
-		slot0:_btnblockOnClick()
+function var_0_0._clickholeBtn(arg_11_0, arg_11_1)
+	if arg_11_0._clickHoleIndex then
+		arg_11_0:_btnblockOnClick()
 
 		return
 	end
 
-	slot0._clickHoleIndex = slot1
+	arg_11_0._clickHoleIndex = arg_11_1
 
-	RougeFavoriteCollectionEnchantListModel.instance:initData(slot0._holeMoList[slot1])
-	gohelper.addChild(slot0["_btnhole" .. slot1].gameObject, slot0._scrollviewGo)
-	gohelper.setActive(slot0._scrollviewGo, true)
-	gohelper.setActive(slot0._btnblock, true)
-	recthelper.setAnchor(slot0._scrollviewGo.transform, -1, 374)
-	transformhelper.setLocalScale(slot0["_goarrow" .. slot1].transform, 1, -1, 1)
+	local var_11_0 = arg_11_0["_btnhole" .. arg_11_1]
 
-	slot0._scrollview.verticalNormalizedPosition = 1
+	RougeFavoriteCollectionEnchantListModel.instance:initData(arg_11_0._holeMoList[arg_11_1])
+	gohelper.addChild(var_11_0.gameObject, arg_11_0._scrollviewGo)
+	gohelper.setActive(arg_11_0._scrollviewGo, true)
+	gohelper.setActive(arg_11_0._btnblock, true)
+	recthelper.setAnchor(arg_11_0._scrollviewGo.transform, -1, 374)
+
+	local var_11_1 = arg_11_0["_goarrow" .. arg_11_1].transform
+
+	transformhelper.setLocalScale(var_11_1, 1, -1, 1)
+
+	arg_11_0._scrollview.verticalNormalizedPosition = 1
 end
 
-function slot0.getHoleMoList(slot0)
-	return slot0._holeMoList
+function var_0_0.getHoleMoList(arg_12_0)
+	return arg_12_0._holeMoList
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._btnhole1, false)
-	gohelper.setActive(slot0._btnhole2, false)
-	gohelper.setActive(slot0._btnhole3, false)
+function var_0_0._editableInitView(arg_13_0)
+	gohelper.setActive(arg_13_0._btnhole1, false)
+	gohelper.setActive(arg_13_0._btnhole2, false)
+	gohelper.setActive(arg_13_0._btnhole3, false)
 
-	slot0._holeMoList = {}
-	slot0._holdNum = 3
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "Right/#go_normal/bottom/scrollview")
-	slot0._scrollviewGo = slot0._scrollview.gameObject
-	slot0._scrollAnchor = recthelper.getAnchor(slot0._scrollviewGo.transform)
+	arg_13_0._holeMoList = {}
+	arg_13_0._holdNum = 3
+	arg_13_0._scrollview = gohelper.findChildScrollRect(arg_13_0.viewGO, "Right/#go_normal/bottom/scrollview")
+	arg_13_0._scrollviewGo = arg_13_0._scrollview.gameObject
+	arg_13_0._scrollAnchor = recthelper.getAnchor(arg_13_0._scrollviewGo.transform)
 
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionListItem, slot0._onClickCollectionListItem, slot0, LuaEventSystem.High)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionDropItem, slot0._onClickCollectionDropItem, slot0)
+	arg_13_0:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionListItem, arg_13_0._onClickCollectionListItem, arg_13_0, LuaEventSystem.High)
+	arg_13_0:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionDropItem, arg_13_0._onClickCollectionDropItem, arg_13_0)
 end
 
-function slot0._onClickCollectionDropItem(slot0, slot1)
-	slot0._holeMoList[slot0._clickHoleIndex] = slot1
+function var_0_0._onClickCollectionDropItem(arg_14_0, arg_14_1)
+	arg_14_0._holeMoList[arg_14_0._clickHoleIndex] = arg_14_1
 
-	slot0:_updateHoles()
-	slot0:_btnblockOnClick()
+	arg_14_0:_updateHoles()
+	arg_14_0:_btnblockOnClick()
 end
 
-function slot0._updateHoles(slot0, slot1)
-	for slot5 = 1, slot0._holdNum do
-		slot8 = slot0._holeMoList[slot5] ~= nil
+function var_0_0._updateHoles(arg_15_0, arg_15_1)
+	for iter_15_0 = 1, arg_15_0._holdNum do
+		local var_15_0 = arg_15_0["_simageruanpan" .. iter_15_0]
+		local var_15_1 = arg_15_0._holeMoList[iter_15_0]
+		local var_15_2 = var_15_1 ~= nil
 
-		gohelper.setActive(slot0["_simageruanpan" .. slot5], slot8)
-		gohelper.setActive(slot0["_btnunequip" .. slot5], slot8)
-		gohelper.setActive(slot0["_goempty" .. slot5], not slot8)
+		gohelper.setActive(var_15_0, var_15_2)
+		gohelper.setActive(arg_15_0["_btnunequip" .. iter_15_0], var_15_2)
+		gohelper.setActive(arg_15_0["_goempty" .. iter_15_0], not var_15_2)
 
-		if slot8 then
-			slot6:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot7.id))
+		if var_15_2 then
+			var_15_0:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_15_1.id))
 		end
 	end
 
-	if not slot1 then
-		slot0.viewContainer:getCollectionListView():_refreshSelectCollectionInfo()
+	if not arg_15_1 then
+		arg_15_0.viewContainer:getCollectionListView():_refreshSelectCollectionInfo()
 	end
 end
 
-function slot0._onClickCollectionListItem(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefresh, slot0)
-	TaskDispatcher.runDelay(slot0._onRefresh, slot0, RougeEnum.CollectionListViewDelayTime)
+function var_0_0._onClickCollectionListItem(arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._onRefresh, arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0._onRefresh, arg_16_0, RougeEnum.CollectionListViewDelayTime)
 end
 
-function slot0._onRefresh(slot0)
-	recthelper.setHeight(slot0._scrollcollectiondesc.transform, 372)
+function var_0_0._onRefresh(arg_17_0)
+	recthelper.setHeight(arg_17_0._scrollcollectiondesc.transform, 372)
 
-	if not RougeCollectionListModel.instance:getSelectedConfig() then
+	local var_17_0 = RougeCollectionListModel.instance:getSelectedConfig()
+
+	if not var_17_0 then
 		return
 	end
 
-	if not RougeCollectionConfig.instance:getCollectionCfg(slot1.id) then
+	local var_17_1 = var_17_0.id
+	local var_17_2 = RougeCollectionConfig.instance:getCollectionCfg(var_17_1)
+
+	if not var_17_2 then
 		return
 	end
 
-	if slot3.holeNum > 0 then
-		recthelper.setHeight(slot0._scrollcollectiondesc.transform, 293)
+	if var_17_2.holeNum > 0 then
+		recthelper.setHeight(arg_17_0._scrollcollectiondesc.transform, 293)
 	end
 
-	for slot7 = 1, slot0._holdNum do
-		slot0._holeMoList[slot7] = nil
+	for iter_17_0 = 1, arg_17_0._holdNum do
+		arg_17_0._holeMoList[iter_17_0] = nil
 
-		slot0:_setHoleVisible(slot7, slot7 <= slot3.holeNum)
+		arg_17_0:_setHoleVisible(iter_17_0, iter_17_0 <= var_17_2.holeNum)
 	end
 
-	slot0:_updateHoles(true)
+	arg_17_0:_updateHoles(true)
 end
 
-function slot0._setHoleVisible(slot0, slot1, slot2)
-	gohelper.setActive(slot0["_btnhole" .. slot1], slot2)
+function var_0_0._setHoleVisible(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0["_btnhole" .. arg_18_1]
+
+	gohelper.setActive(var_18_0, arg_18_2)
 end
 
-function slot0.onClose(slot0)
-	gohelper.setActive(slot0._scrollviewGo, false)
-	gohelper.setActive(slot0._btnblock, false)
+function var_0_0.onClose(arg_19_0)
+	gohelper.setActive(arg_19_0._scrollviewGo, false)
+	gohelper.setActive(arg_19_0._btnblock, false)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefresh, slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._onRefresh, arg_20_0)
 end
 
-return slot0
+return var_0_0

@@ -1,407 +1,457 @@
-module("modules.logic.activity.view.warmup.ActivityWarmUpView", package.seeall)
+﻿module("modules.logic.activity.view.warmup.ActivityWarmUpView", package.seeall)
 
-slot0 = class("ActivityWarmUpView", BaseView)
+local var_0_0 = class("ActivityWarmUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simagebg3 = gohelper.findChildSingleImage(slot0.viewGO, "#go_main/#simage_bg3")
-	slot0._simagebg4 = gohelper.findChildSingleImage(slot0.viewGO, "#go_main/#simage_bg4")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_main/#go_btns")
-	slot0._simagemap = gohelper.findChildSingleImage(slot0.viewGO, "#go_main/#simage_map")
-	slot0._godayitem = gohelper.findChild(slot0.viewGO, "#go_main/#scroll_daylist/Viewport/Content/#go_dayitem")
-	slot0._gochangllenitem = gohelper.findChild(slot0.viewGO, "#go_main/#go_area/#go_changllenitem")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "#go_main/#btn_extra/#go_reddot")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_main/#btn_extra/#btn_task")
-	slot0._txtremaintime = gohelper.findChildText(slot0.viewGO, "#go_main/#txt_remaintime")
-	slot0._gowelcome = gohelper.findChild(slot0.viewGO, "#go_welcome")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_welcome/#btn_start")
-	slot0._gomain = gohelper.findChild(slot0.viewGO, "#go_main")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simagebg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_main/#simage_bg3")
+	arg_1_0._simagebg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_main/#simage_bg4")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_main/#go_btns")
+	arg_1_0._simagemap = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_main/#simage_map")
+	arg_1_0._godayitem = gohelper.findChild(arg_1_0.viewGO, "#go_main/#scroll_daylist/Viewport/Content/#go_dayitem")
+	arg_1_0._gochangllenitem = gohelper.findChild(arg_1_0.viewGO, "#go_main/#go_area/#go_changllenitem")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_main/#btn_extra/#go_reddot")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_main/#btn_extra/#btn_task")
+	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "#go_main/#txt_remaintime")
+	arg_1_0._gowelcome = gohelper.findChild(arg_1_0.viewGO, "#go_welcome")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_welcome/#btn_start")
+	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "#go_main")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstart:RemoveClickListener()
-	slot0._btntask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btntask:RemoveClickListener()
 end
 
-slot0.OrderMaxPos = 4
+var_0_0.OrderMaxPos = 4
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getActivityWarmUpBg("full/bj003"))
-	slot0._simagebg3:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi6"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getActivityWarmUpBg("full/bj003"))
+	arg_4_0._simagebg3:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi6"))
 
-	slot0._bgMaterial = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._simagebg3.gameObject, SingleBgToMaterial)
+	arg_4_0._bgMaterial = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._simagebg3.gameObject, SingleBgToMaterial)
 
-	slot0._bgMaterial:loadMaterial(slot0._simagebg3, "ui_black2transparent")
-	slot0._simagebg4:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi7"))
+	arg_4_0._bgMaterial:loadMaterial(arg_4_0._simagebg3, "ui_black2transparent")
+	arg_4_0._simagebg4:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi7"))
 
-	slot4 = UnityEngine.Animator
-	slot0._animtorSelf = slot0.viewGO:GetComponent(typeof(slot4))
-	slot0._posListX = {}
-	slot0._posListY = {}
+	arg_4_0._animtorSelf = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._posListX = {}
+	arg_4_0._posListY = {}
 
-	for slot4 = 1, uv0.OrderMaxPos do
-		slot0._posListX[slot4], slot0._posListY[slot4] = recthelper.getAnchor(gohelper.findChild(slot0.viewGO, "#go_main/#go_area/#go_pos" .. slot4).transform)
+	for iter_4_0 = 1, var_0_0.OrderMaxPos do
+		local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "#go_main/#go_area/#go_pos" .. iter_4_0)
+		local var_4_1, var_4_2 = recthelper.getAnchor(var_4_0.transform)
+
+		arg_4_0._posListX[iter_4_0], arg_4_0._posListY[iter_4_0] = var_4_1, var_4_2
 	end
 
-	slot0._tabItems = {}
-	slot0._orderItems = {}
+	arg_4_0._tabItems = {}
+	arg_4_0._orderItems = {}
 
-	gohelper.setActive(slot0._gowelcome, false)
-	gohelper.setActive(slot0._gomain, true)
+	gohelper.setActive(arg_4_0._gowelcome, false)
+	gohelper.setActive(arg_4_0._gomain, true)
 
-	slot0._imageBossFrameTab = slot0:getUserDataTb_()
+	arg_4_0._imageBossFrameTab = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._tabItems) do
-		slot5.btn:RemoveClickListener()
+function var_0_0.onDestroyView(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._tabItems) do
+		iter_5_1.btn:RemoveClickListener()
 	end
 
-	for slot4, slot5 in pairs(slot0._orderItems) do
-		slot5.btnDetail:RemoveClickListener()
-		slot5.btnPlay:RemoveClickListener()
-		slot5.btnGoto:RemoveClickListener()
-		slot5.btnFinishInfo:RemoveClickListener()
+	for iter_5_2, iter_5_3 in pairs(arg_5_0._orderItems) do
+		iter_5_3.btnDetail:RemoveClickListener()
+		iter_5_3.btnPlay:RemoveClickListener()
+		iter_5_3.btnGoto:RemoveClickListener()
+		iter_5_3.btnFinishInfo:RemoveClickListener()
 	end
 
-	for slot4, slot5 in pairs(slot0._imageBossFrameTab) do
-		slot5:UnLoadImage()
+	for iter_5_4, iter_5_5 in pairs(arg_5_0._imageBossFrameTab) do
+		iter_5_5:UnLoadImage()
 	end
 
-	slot0._simagebg:UnLoadImage()
-	slot0._simagebg3:UnLoadImage()
-	slot0._bgMaterial:dispose()
-	slot0._simagebg4:UnLoadImage()
+	arg_5_0._simagebg:UnLoadImage()
+	arg_5_0._simagebg3:UnLoadImage()
+	arg_5_0._bgMaterial:dispose()
+	arg_5_0._simagebg4:UnLoadImage()
 end
 
-function slot0.onOpen(slot0)
-	slot2 = slot0.viewParam.actId
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.parent
+	local var_6_1 = arg_6_0.viewParam.actId
 
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderFinish, slot0.onPlayOrderFinish, slot0)
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderCancel, slot0.onPlayOrderCancel, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinishCall, slot0)
-	ActivityWarmUpController.instance:init(slot2)
-	Activity106Rpc.instance:sendGet106InfosRequest(slot2)
+	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	arg_6_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderFinish, arg_6_0.onPlayOrderFinish, arg_6_0)
+	arg_6_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderCancel, arg_6_0.onPlayOrderCancel, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinishCall, arg_6_0)
+	ActivityWarmUpController.instance:init(var_6_1)
+	Activity106Rpc.instance:sendGet106InfosRequest(var_6_1)
 
-	slot3, slot4 = ActivityWarmUpController.instance:getRedDotParam()
+	local var_6_2, var_6_3 = ActivityWarmUpController.instance:getRedDotParam()
 
-	if slot3 ~= nil then
-		RedDotController.instance:addRedDot(slot0._goreddot, slot3, slot4)
+	if var_6_2 ~= nil then
+		RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_2, var_6_3)
 	end
 
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, 1)
-	slot0:checkFirstShowHelp(slot2)
+	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, 1)
+	arg_6_0:checkFirstShowHelp(var_6_1)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, slot0.refreshUI, slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, slot0.refreshUI, slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderFinish, slot0.onPlayOrderFinish, slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderCancel, slot0.onPlayOrderCancel, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinishCall, slot0)
-	gohelper.setActive(slot0._gomain, true)
-	gohelper.setActive(slot0._gowelcome, false)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_7_0)
+	arg_7_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderFinish, arg_7_0.onPlayOrderFinish, arg_7_0)
+	arg_7_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.PlayOrderCancel, arg_7_0.onPlayOrderCancel, arg_7_0)
+	arg_7_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_7_0.onCloseViewFinishCall, arg_7_0)
+	gohelper.setActive(arg_7_0._gomain, true)
+	gohelper.setActive(arg_7_0._gowelcome, false)
+	TaskDispatcher.cancelTask(arg_7_0.refreshRemainTime, arg_7_0)
 end
 
-function slot0.checkFirstShowHelp(slot0, slot1)
-	if string.nilorempty(PlayerPrefsHelper.getString(slot0:getFirstHelpKey(), "")) then
-		gohelper.setActive(slot0._gomain, false)
-		gohelper.setActive(slot0._gowelcome, true)
+function var_0_0.checkFirstShowHelp(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getFirstHelpKey()
+	local var_8_1 = PlayerPrefsHelper.getString(var_8_0, "")
+
+	if string.nilorempty(var_8_1) then
+		gohelper.setActive(arg_8_0._gomain, false)
+		gohelper.setActive(arg_8_0._gowelcome, true)
 	end
 end
 
-function slot0.onWelcomeUIClose(slot0)
-	gohelper.setActive(slot0._gomain, true)
-	PlayerPrefsHelper.setString(slot0:getFirstHelpKey(), "watched")
+function var_0_0.onWelcomeUIClose(arg_9_0)
+	gohelper.setActive(arg_9_0._gomain, true)
+
+	local var_9_0 = arg_9_0:getFirstHelpKey()
+
+	PlayerPrefsHelper.setString(var_9_0, "watched")
 	HelpController.instance:showHelp(HelpEnum.HelpId.ActivityWarmUp)
 end
 
-function slot0.getFirstHelpKey(slot0)
-	return "ActivityWarmUpViewHelp#" .. tostring(slot0.viewParam.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getFirstHelpKey(arg_10_0)
+	local var_10_0 = arg_10_0.viewParam.actId
+
+	return "ActivityWarmUpViewHelp#" .. tostring(var_10_0) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshAllTabBtns()
-	slot0:refreshAllOrder()
-	slot0:refreshRemainTime()
+function var_0_0.refreshUI(arg_11_0)
+	arg_11_0:refreshAllTabBtns()
+	arg_11_0:refreshAllOrder()
+	arg_11_0:refreshRemainTime()
 end
 
-function slot0.refreshAllTabBtns(slot0)
-	slot2 = ActivityWarmUpModel.instance:getCurrentDay()
+function var_0_0.refreshAllTabBtns(arg_12_0)
+	local var_12_0 = ActivityWarmUpModel.instance:getTotalContentDays()
+	local var_12_1 = ActivityWarmUpModel.instance:getCurrentDay()
 
-	for slot6 = 1, ActivityWarmUpModel.instance:getTotalContentDays() do
-		slot0:refreshTabBtn(slot0:getOrCreateTabItem(slot6), slot6)
+	for iter_12_0 = 1, var_12_0 do
+		local var_12_2 = arg_12_0:getOrCreateTabItem(iter_12_0)
+
+		arg_12_0:refreshTabBtn(var_12_2, iter_12_0)
 	end
 end
 
-function slot0.refreshTabBtn(slot0, slot1, slot2)
-	gohelper.setActive(slot1.go, true)
+function var_0_0.refreshTabBtn(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = ActivityWarmUpModel.instance:getCurrentDay()
 
-	slot4 = tostring(slot2)
+	gohelper.setActive(arg_13_1.go, true)
 
-	UISpriteSetMgr.instance:setActivityWarmUpSprite(slot1.imageUnchooseDay, "xi_0" .. slot2)
-	UISpriteSetMgr.instance:setActivityWarmUpSprite(slot1.imageChooseDay, "da_0" .. slot2)
+	local var_13_1 = tostring(arg_13_2)
 
-	slot5 = ActivityWarmUpModel.instance:getSelectedDay() == slot2
+	UISpriteSetMgr.instance:setActivityWarmUpSprite(arg_13_1.imageUnchooseDay, "xi_0" .. arg_13_2)
+	UISpriteSetMgr.instance:setActivityWarmUpSprite(arg_13_1.imageChooseDay, "da_0" .. arg_13_2)
 
-	gohelper.setActive(slot1.goChoose, slot5)
-	gohelper.setActive(slot1.goUnchoose, not slot5)
-	gohelper.setActive(slot1.goLock, ActivityWarmUpModel.instance:getCurrentDay() < slot2)
+	local var_13_2 = ActivityWarmUpModel.instance:getSelectedDay() == arg_13_2
+
+	gohelper.setActive(arg_13_1.goChoose, var_13_2)
+	gohelper.setActive(arg_13_1.goUnchoose, not var_13_2)
+	gohelper.setActive(arg_13_1.goLock, var_13_0 < arg_13_2)
 end
 
-function slot0.refreshRemainTime(slot0)
-	if ActivityModel.instance:getActMO(ActivityWarmUpModel.instance:getActId()) then
-		slot4, slot5 = TimeUtil.secondToRoughTime2(slot2.endTime / 1000 - ServerTime.now())
-		slot0._txtremaintime.text = string.format(luaLang("activity_warmup_remain_time"), slot4 .. slot5)
+function var_0_0.refreshRemainTime(arg_14_0)
+	local var_14_0 = ActivityWarmUpModel.instance:getActId()
+	local var_14_1 = ActivityModel.instance:getActMO(var_14_0)
+
+	if var_14_1 then
+		local var_14_2 = var_14_1.endTime / 1000 - ServerTime.now()
+		local var_14_3, var_14_4 = TimeUtil.secondToRoughTime2(var_14_2)
+
+		arg_14_0._txtremaintime.text = string.format(luaLang("activity_warmup_remain_time"), var_14_3 .. var_14_4)
 	else
-		slot0._txtremaintime.text = string.format(luaLang("activity_warmup_remain_time"), "--")
+		arg_14_0._txtremaintime.text = string.format(luaLang("activity_warmup_remain_time"), "--")
 	end
 end
 
-function slot0.getOrCreateTabItem(slot0, slot1)
-	if not slot0._tabItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._godayitem, "tabitem_" .. tostring(slot1))
-		slot2.go = slot3
-		slot2.goUnchoose = gohelper.findChild(slot3, "go_unselected")
-		slot2.goChoose = gohelper.findChild(slot3, "go_selected")
-		slot2.imageUnchooseDay = gohelper.findChildImage(slot3, "go_unselected/day")
-		slot2.imageChooseDay = gohelper.findChildImage(slot3, "go_selected/day")
-		slot2.goLock = gohelper.findChild(slot3, "go_lock")
-		slot2.btn = gohelper.findChildButtonWithAudio(slot3, "btn_click")
+function var_0_0.getOrCreateTabItem(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._tabItems[arg_15_1]
 
-		slot2.btn:AddClickListener(uv0.onClickTabItem, {
-			self = slot0,
-			index = slot1
+	if not var_15_0 then
+		var_15_0 = arg_15_0:getUserDataTb_()
+
+		local var_15_1 = gohelper.cloneInPlace(arg_15_0._godayitem, "tabitem_" .. tostring(arg_15_1))
+
+		var_15_0.go = var_15_1
+		var_15_0.goUnchoose = gohelper.findChild(var_15_1, "go_unselected")
+		var_15_0.goChoose = gohelper.findChild(var_15_1, "go_selected")
+		var_15_0.imageUnchooseDay = gohelper.findChildImage(var_15_1, "go_unselected/day")
+		var_15_0.imageChooseDay = gohelper.findChildImage(var_15_1, "go_selected/day")
+		var_15_0.goLock = gohelper.findChild(var_15_1, "go_lock")
+		var_15_0.btn = gohelper.findChildButtonWithAudio(var_15_1, "btn_click")
+
+		var_15_0.btn:AddClickListener(var_0_0.onClickTabItem, {
+			self = arg_15_0,
+			index = arg_15_1
 		})
 
-		slot0._tabItems[slot1] = slot2
+		arg_15_0._tabItems[arg_15_1] = var_15_0
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.refreshAllOrder(slot0)
-	slot0._processedItemSet = slot0._processedItemSet or {}
+function var_0_0.refreshAllOrder(arg_16_0)
+	arg_16_0._processedItemSet = arg_16_0._processedItemSet or {}
 
-	if ActivityWarmUpModel.instance:getSelectedDayOrders() then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0:refreshOrder(slot5, slot6)
+	local var_16_0 = ActivityWarmUpModel.instance:getSelectedDayOrders()
+
+	if var_16_0 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			arg_16_0:refreshOrder(iter_16_0, iter_16_1)
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0._orderItems) do
-		if not slot0._processedItemSet[slot6] then
-			gohelper.setActive(slot6.go, false)
+	for iter_16_2, iter_16_3 in pairs(arg_16_0._orderItems) do
+		if not arg_16_0._processedItemSet[iter_16_3] then
+			gohelper.setActive(iter_16_3.go, false)
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0._processedItemSet) do
-		slot0._processedItemSet[slot5] = nil
+	for iter_16_4, iter_16_5 in pairs(arg_16_0._processedItemSet) do
+		arg_16_0._processedItemSet[iter_16_4] = nil
 	end
 end
 
-function slot0.refreshOrder(slot0, slot1, slot2)
-	if uv0.OrderMaxPos < slot1 then
-		logError("order config count error : " .. tostring(slot1) .. ", max is " .. tostring(uv0.OrderMaxPos))
+function var_0_0.refreshOrder(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 > var_0_0.OrderMaxPos then
+		logError("order config count error : " .. tostring(arg_17_1) .. ", max is " .. tostring(var_0_0.OrderMaxPos))
 
 		return
 	end
 
-	slot3 = slot0:getOrCreateOrderItem(slot1)
+	local var_17_0 = arg_17_0:getOrCreateOrderItem(arg_17_1)
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_17_0.go, true)
 
-	slot3.txtName.text = tostring(slot2.cfg.name)
-	slot3.txtLocation.text = tostring(string.format(luaLang("activity_warmup_location"), slot2.cfg.location))
+	var_17_0.txtName.text = tostring(arg_17_2.cfg.name)
+	var_17_0.txtLocation.text = tostring(string.format(luaLang("activity_warmup_location"), arg_17_2.cfg.location))
 
-	UISpriteSetMgr.instance:setActivityWarmUpSprite(slot3.imageBoss, slot2.cfg.bossPic)
+	UISpriteSetMgr.instance:setActivityWarmUpSprite(var_17_0.imageBoss, arg_17_2.cfg.bossPic)
 
-	if (slot3.orderActId ~= slot2.cfg.activityId or slot3.orderId ~= slot2.cfg.id) and slot3.animOrderFinish.isActiveAndEnabled then
-		slot3.animOrderFinish:Play(UIAnimationName.Idle)
+	if (var_17_0.orderActId ~= arg_17_2.cfg.activityId or var_17_0.orderId ~= arg_17_2.cfg.id) and var_17_0.animOrderFinish.isActiveAndEnabled then
+		var_17_0.animOrderFinish:Play(UIAnimationName.Idle)
 	end
 
-	slot3.orderActId = slot2.cfg.activityId
-	slot3.orderId = slot2.cfg.id
+	var_17_0.orderActId = arg_17_2.cfg.activityId
+	var_17_0.orderId = arg_17_2.cfg.id
 
-	if not string.nilorempty(ActivityWarmUpEnum.Quality2FramePath[slot2.cfg.rare]) then
-		gohelper.setActive(slot3.imageBossFrame.gameObject, true)
-		slot3.imageBossFrame:LoadImage(ResUrl.getActivityWarmUpLangIcon(slot4))
-		table.insert(slot0._imageBossFrameTab, slot3.imageBossFrame)
+	local var_17_1 = ActivityWarmUpEnum.Quality2FramePath[arg_17_2.cfg.rare]
+
+	if not string.nilorempty(var_17_1) then
+		gohelper.setActive(var_17_0.imageBossFrame.gameObject, true)
+		var_17_0.imageBossFrame:LoadImage(ResUrl.getActivityWarmUpLangIcon(var_17_1))
+		table.insert(arg_17_0._imageBossFrameTab, var_17_0.imageBossFrame)
 	else
-		gohelper.setActive(slot3.imageBossFrame.gameObject, false)
+		gohelper.setActive(var_17_0.imageBossFrame.gameObject, false)
 	end
 
-	gohelper.setActive(slot3.btnPlay.gameObject, slot2:getStatus() == ActivityWarmUpEnum.OrderStatus.Collected)
-	gohelper.setActive(slot3.btnGoto.gameObject, slot5 == ActivityWarmUpEnum.OrderStatus.Accepted)
-	gohelper.setActive(slot3.btnFinishInfo.gameObject, slot5 == ActivityWarmUpEnum.OrderStatus.Finished)
-	gohelper.setActive(slot3.goFinish, slot5 == ActivityWarmUpEnum.OrderStatus.Finished)
-	gohelper.setActive(slot3.btnDetail.gameObject, slot5 ~= ActivityWarmUpEnum.OrderStatus.Finished)
-	gohelper.setActive(slot3.goOrderFinish, slot5 == ActivityWarmUpEnum.OrderStatus.Finished)
-	gohelper.setActive(slot3.goOrderRunning, slot5 ~= ActivityWarmUpEnum.OrderStatus.Finished)
+	local var_17_2 = arg_17_2:getStatus()
 
-	if slot5 == ActivityWarmUpEnum.OrderStatus.Accepted or slot5 == ActivityWarmUpEnum.OrderStatus.Collected then
-		gohelper.setActive(slot3.txtProgress.gameObject, true)
+	gohelper.setActive(var_17_0.btnPlay.gameObject, var_17_2 == ActivityWarmUpEnum.OrderStatus.Collected)
+	gohelper.setActive(var_17_0.btnGoto.gameObject, var_17_2 == ActivityWarmUpEnum.OrderStatus.Accepted)
+	gohelper.setActive(var_17_0.btnFinishInfo.gameObject, var_17_2 == ActivityWarmUpEnum.OrderStatus.Finished)
+	gohelper.setActive(var_17_0.goFinish, var_17_2 == ActivityWarmUpEnum.OrderStatus.Finished)
+	gohelper.setActive(var_17_0.btnDetail.gameObject, var_17_2 ~= ActivityWarmUpEnum.OrderStatus.Finished)
+	gohelper.setActive(var_17_0.goOrderFinish, var_17_2 == ActivityWarmUpEnum.OrderStatus.Finished)
+	gohelper.setActive(var_17_0.goOrderRunning, var_17_2 ~= ActivityWarmUpEnum.OrderStatus.Finished)
 
-		slot3.txtProgress.text = string.format("%s/%s", slot2.progress or 0, slot2.cfg.maxProgress)
-	elseif slot5 == ActivityWarmUpEnum.OrderStatus.Finished then
-		gohelper.setActive(slot3.txtProgress.gameObject, true)
+	if var_17_2 == ActivityWarmUpEnum.OrderStatus.Accepted or var_17_2 == ActivityWarmUpEnum.OrderStatus.Collected then
+		gohelper.setActive(var_17_0.txtProgress.gameObject, true)
 
-		slot3.txtProgress.text = luaLang("p_task_get")
-		slot3.txtNewsInfo.text = ActivityWarmUpModel.getBriefName(slot2.cfg.infoDesc, 96, "...")
+		local var_17_3 = arg_17_2.progress or 0
+		local var_17_4 = arg_17_2.cfg.maxProgress
+
+		var_17_0.txtProgress.text = string.format("%s/%s", var_17_3, var_17_4)
+	elseif var_17_2 == ActivityWarmUpEnum.OrderStatus.Finished then
+		gohelper.setActive(var_17_0.txtProgress.gameObject, true)
+
+		var_17_0.txtProgress.text = luaLang("p_task_get")
+		var_17_0.txtNewsInfo.text = ActivityWarmUpModel.getBriefName(arg_17_2.cfg.infoDesc, 96, "...")
 	else
-		gohelper.setActive(slot3.txtProgress.gameObject, false)
+		gohelper.setActive(var_17_0.txtProgress.gameObject, false)
 	end
 
-	slot0._processedItemSet[slot3] = true
+	arg_17_0._processedItemSet[var_17_0] = true
 end
 
-function slot0.getOrCreateOrderItem(slot0, slot1)
-	if not slot0._orderItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._gochangllenitem, "orderitem_" .. tostring(slot1))
-		slot2.go = slot3
-		slot2.txtName = gohelper.findChildText(slot3, "go_unpassgame/txt_title")
-		slot2.txtProgress = gohelper.findChildText(slot3, "go_unpassgame/txt_progress")
-		slot2.txtLocation = gohelper.findChildText(slot3, "go_unpassgame/txt_bossdesc")
-		slot2.imageBoss = gohelper.findChildImage(slot3, "go_unpassgame/image_icon")
-		slot2.imageBossFrame = gohelper.findChildSingleImage(slot3, "go_unpassgame/image_iconbg")
-		slot2.btnPlay = gohelper.findChildButtonWithAudio(slot3, "go_unpassgame/btn_challenge")
-		slot2.btnDetail = gohelper.findChildButtonWithAudio(slot3, "go_unpassgame/btn_detail")
-		slot2.btnGoto = gohelper.findChildButtonWithAudio(slot3, "go_unpassgame/btn_goto")
-		slot2.btnFinishInfo = gohelper.findChildButtonWithAudio(slot3, "go_passgame/btn_news")
-		slot2.goFinish = gohelper.findChild(slot3, "go_unpassgame/go_finish")
-		slot2.goOrderRunning = gohelper.findChild(slot3, "go_unpassgame")
-		slot2.goOrderFinish = gohelper.findChild(slot3, "go_passgame")
-		slot2.animOrderFinish = slot2.goOrderFinish:GetComponent(typeof(UnityEngine.Animator))
-		slot2.txtBossDesc = gohelper.findChild(slot3, "go_unpassgame/txt_bossdesc")
-		slot2.txtNewsInfo = gohelper.findChildText(slot3, "go_passgame/txt_newsinfo")
-		slot4 = {
-			self = slot0,
-			index = slot1
+function var_0_0.getOrCreateOrderItem(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._orderItems[arg_18_1]
+
+	if not var_18_0 then
+		var_18_0 = arg_18_0:getUserDataTb_()
+
+		local var_18_1 = gohelper.cloneInPlace(arg_18_0._gochangllenitem, "orderitem_" .. tostring(arg_18_1))
+
+		var_18_0.go = var_18_1
+		var_18_0.txtName = gohelper.findChildText(var_18_1, "go_unpassgame/txt_title")
+		var_18_0.txtProgress = gohelper.findChildText(var_18_1, "go_unpassgame/txt_progress")
+		var_18_0.txtLocation = gohelper.findChildText(var_18_1, "go_unpassgame/txt_bossdesc")
+		var_18_0.imageBoss = gohelper.findChildImage(var_18_1, "go_unpassgame/image_icon")
+		var_18_0.imageBossFrame = gohelper.findChildSingleImage(var_18_1, "go_unpassgame/image_iconbg")
+		var_18_0.btnPlay = gohelper.findChildButtonWithAudio(var_18_1, "go_unpassgame/btn_challenge")
+		var_18_0.btnDetail = gohelper.findChildButtonWithAudio(var_18_1, "go_unpassgame/btn_detail")
+		var_18_0.btnGoto = gohelper.findChildButtonWithAudio(var_18_1, "go_unpassgame/btn_goto")
+		var_18_0.btnFinishInfo = gohelper.findChildButtonWithAudio(var_18_1, "go_passgame/btn_news")
+		var_18_0.goFinish = gohelper.findChild(var_18_1, "go_unpassgame/go_finish")
+		var_18_0.goOrderRunning = gohelper.findChild(var_18_1, "go_unpassgame")
+		var_18_0.goOrderFinish = gohelper.findChild(var_18_1, "go_passgame")
+		var_18_0.animOrderFinish = var_18_0.goOrderFinish:GetComponent(typeof(UnityEngine.Animator))
+		var_18_0.txtBossDesc = gohelper.findChild(var_18_1, "go_unpassgame/txt_bossdesc")
+		var_18_0.txtNewsInfo = gohelper.findChildText(var_18_1, "go_passgame/txt_newsinfo")
+
+		local var_18_2 = {
+			self = arg_18_0,
+			index = arg_18_1
 		}
 
-		slot2.btnPlay:AddClickListener(slot0.onClickPlayOrder, slot4)
-		slot2.btnDetail:AddClickListener(slot0.onClickDetailOrder, slot4)
-		slot2.btnGoto:AddClickListener(slot0.onClickGotoOrder, slot4)
-		slot2.btnFinishInfo:AddClickListener(slot0.onClickFinishInfoOrder, slot4)
-		recthelper.setAnchor(slot2.go.transform, slot0._posListX[slot1], slot0._posListY[slot1])
+		var_18_0.btnPlay:AddClickListener(arg_18_0.onClickPlayOrder, var_18_2)
+		var_18_0.btnDetail:AddClickListener(arg_18_0.onClickDetailOrder, var_18_2)
+		var_18_0.btnGoto:AddClickListener(arg_18_0.onClickGotoOrder, var_18_2)
+		var_18_0.btnFinishInfo:AddClickListener(arg_18_0.onClickFinishInfoOrder, var_18_2)
+		recthelper.setAnchor(var_18_0.go.transform, arg_18_0._posListX[arg_18_1], arg_18_0._posListY[arg_18_1])
 
-		slot0._orderItems[slot1] = slot2
+		arg_18_0._orderItems[arg_18_1] = var_18_0
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.onClickTabItem(slot0)
-	slot1 = slot0.self
+function var_0_0.onClickTabItem(arg_19_0)
+	local var_19_0 = arg_19_0.self
+	local var_19_1 = arg_19_0.index
+	local var_19_2 = var_19_1 > ActivityWarmUpModel.instance:getCurrentDay()
 
-	if ActivityWarmUpModel.instance:getSelectedDay() ~= slot2 and not (ActivityWarmUpModel.instance:getCurrentDay() < slot0.index) then
-		ActivityWarmUpController.instance:switchTab(slot2)
-	end
-end
-
-function slot0.onClickPlayOrder(slot0)
-	slot1 = slot0.self
-
-	if slot0.index <= #ActivityWarmUpModel.instance:getSelectedDayOrders() then
-		slot4 = slot3[slot2]
-
-		ActivityWarmUpController.instance:focusOrderGame(slot4.id)
-		ActivityWarmUpGameController.instance:openGameView(slot4.cfg.gameSetting)
+	if ActivityWarmUpModel.instance:getSelectedDay() ~= var_19_1 and not var_19_2 then
+		ActivityWarmUpController.instance:switchTab(var_19_1)
 	end
 end
 
-function slot0.onClickDetailOrder(slot0)
-	slot1 = slot0.self
+function var_0_0.onClickPlayOrder(arg_20_0)
+	local var_20_0 = arg_20_0.self
+	local var_20_1 = arg_20_0.index
+	local var_20_2 = ActivityWarmUpModel.instance:getSelectedDayOrders()
 
-	if slot0.index <= #ActivityWarmUpModel.instance:getSelectedDayOrders() then
-		slot4 = slot3[slot2].cfg
+	if var_20_1 <= #var_20_2 then
+		local var_20_3 = var_20_2[var_20_1]
+
+		ActivityWarmUpController.instance:focusOrderGame(var_20_3.id)
+		ActivityWarmUpGameController.instance:openGameView(var_20_3.cfg.gameSetting)
+	end
+end
+
+function var_0_0.onClickDetailOrder(arg_21_0)
+	local var_21_0 = arg_21_0.self
+	local var_21_1 = arg_21_0.index
+	local var_21_2 = ActivityWarmUpModel.instance:getSelectedDayOrders()
+
+	if var_21_1 <= #var_21_2 then
+		local var_21_3 = var_21_2[var_21_1].cfg
 
 		ViewMgr.instance:openView(ViewName.ActivityWarmUpTips, {
-			actId = slot4.activityId,
-			orderId = slot4.id
+			actId = var_21_3.activityId,
+			orderId = var_21_3.id
 		})
 	end
 end
 
-function slot0.onClickGotoOrder(slot0)
-	slot1 = slot0.self
+function var_0_0.onClickGotoOrder(arg_22_0)
+	local var_22_0 = arg_22_0.self
+	local var_22_1 = arg_22_0.index
+	local var_22_2 = ActivityWarmUpModel.instance:getSelectedDayOrders()
 
-	if slot0.index <= #ActivityWarmUpModel.instance:getSelectedDayOrders() then
-		slot5, slot6 = ActivityWarmUpController.instance:cantJumpDungeonGetName(slot3[slot2].cfg.jumpId)
+	if var_22_1 <= #var_22_2 then
+		local var_22_3 = var_22_2[var_22_1].cfg
+		local var_22_4, var_22_5 = ActivityWarmUpController.instance:cantJumpDungeonGetName(var_22_3.jumpId)
 
-		if slot5 then
-			GameFacade.showToast(ToastEnum.WarmUpGotoOrder, slot6)
+		if var_22_4 then
+			GameFacade.showToast(ToastEnum.WarmUpGotoOrder, var_22_5)
 		else
-			JumpController.instance:jump(slot4.jumpId)
+			JumpController.instance:jump(var_22_3.jumpId)
 		end
 	end
 end
 
-function slot0.onClickFinishInfoOrder(slot0)
-	slot1 = slot0.self
+function var_0_0.onClickFinishInfoOrder(arg_23_0)
+	local var_23_0 = arg_23_0.self
+	local var_23_1 = arg_23_0.index
+	local var_23_2 = ActivityWarmUpModel.instance:getSelectedDayOrders()
 
-	if slot0.index <= #ActivityWarmUpModel.instance:getSelectedDayOrders() then
-		slot4 = slot3[slot2].cfg
+	if var_23_1 <= #var_23_2 then
+		local var_23_3 = var_23_2[var_23_1].cfg
 
 		ViewMgr.instance:openView(ViewName.ActivityWarmUpNews, {
-			actId = slot4.activityId,
-			orderId = slot4.id
+			actId = var_23_3.activityId,
+			orderId = var_23_3.id
 		})
 	end
 end
 
-function slot0.onPlayOrderCancel(slot0)
-	slot0._finishedOrderId = nil
-	slot0._finishedActId = nil
+function var_0_0.onPlayOrderCancel(arg_24_0)
+	arg_24_0._finishedActId, arg_24_0._finishedOrderId = nil
 end
 
-function slot0.onPlayOrderFinish(slot0, slot1)
-	slot2 = slot1.actId
-	slot3 = slot1.orderId
+function var_0_0.onPlayOrderFinish(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_1.actId
+	local var_25_1 = arg_25_1.orderId
 
-	logNormal("onPlayOrderFinish actId = " .. tostring(slot2) .. ", orderId = " .. tostring(slot3))
+	logNormal("onPlayOrderFinish actId = " .. tostring(var_25_0) .. ", orderId = " .. tostring(var_25_1))
 
-	slot0._finishedOrderId = slot3
-	slot0._finishedActId = slot2
+	arg_25_0._finishedActId, arg_25_0._finishedOrderId = var_25_0, var_25_1
 end
 
-function slot0.onCloseViewFinishCall(slot0, slot1)
-	if slot1 == ViewName.ActivityWarmUpGameView and slot0._finishedActId and slot0._finishedOrderId then
-		for slot5, slot6 in pairs(slot0._orderItems) do
-			if slot6.orderActId == slot0._finishedActId and slot6.orderId == slot0._finishedOrderId then
-				slot6.animOrderFinish:Play(UIAnimationName.Open, 0, 0)
-			elseif slot6.animOrderFinish.isActiveAndEnabled then
-				slot6.animOrderFinish:Play(UIAnimationName.Idle)
+function var_0_0.onCloseViewFinishCall(arg_26_0, arg_26_1)
+	if arg_26_1 == ViewName.ActivityWarmUpGameView and arg_26_0._finishedActId and arg_26_0._finishedOrderId then
+		for iter_26_0, iter_26_1 in pairs(arg_26_0._orderItems) do
+			if iter_26_1.orderActId == arg_26_0._finishedActId and iter_26_1.orderId == arg_26_0._finishedOrderId then
+				iter_26_1.animOrderFinish:Play(UIAnimationName.Open, 0, 0)
+			elseif iter_26_1.animOrderFinish.isActiveAndEnabled then
+				iter_26_1.animOrderFinish:Play(UIAnimationName.Idle)
 			end
 		end
 	end
 end
 
-function slot0._btntaskOnClick(slot0)
+function var_0_0._btntaskOnClick(arg_27_0)
+	local var_27_0 = ActivityWarmUpModel.instance:getActId()
+
 	ViewMgr.instance:openView(ViewName.ActivityWarmUpTask, {
-		actId = ActivityWarmUpModel.instance:getActId(),
+		actId = var_27_0,
 		index = ActivityWarmUpModel.instance:getSelectedDay()
 	})
 end
 
-function slot0._btnstartOnClick(slot0)
-	gohelper.setActive(slot0._gowelcome, false)
-	slot0:onWelcomeUIClose()
+function var_0_0._btnstartOnClick(arg_28_0)
+	gohelper.setActive(arg_28_0._gowelcome, false)
+	arg_28_0:onWelcomeUIClose()
 end
 
-return slot0
+return var_0_0

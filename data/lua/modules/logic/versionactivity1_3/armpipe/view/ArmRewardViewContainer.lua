@@ -1,34 +1,36 @@
-module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardViewContainer", package.seeall)
 
-slot0 = class("ArmRewardViewContainer", BaseViewContainer)
+local var_0_0 = class("ArmRewardViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "Root/#scroll_TaskList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = ArmRewardViewTaskItem.prefabPath
-	slot2.cellClass = ArmRewardViewTaskItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 824
-	slot2.cellHeight = 158
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	for slot7 = 1, 10 do
+	var_1_1.scrollGOPath = "Root/#scroll_TaskList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = ArmRewardViewTaskItem.prefabPath
+	var_1_1.cellClass = ArmRewardViewTaskItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 824
+	var_1_1.cellHeight = 158
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 10 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06 + 0.3
 	end
 
-	table.insert(slot1, LuaListScrollViewWithAnimator.New(Activity124RewardListModel.instance, slot2, {
-		[slot7] = (slot7 - 1) * 0.06 + 0.3
-	}))
-	table.insert(slot1, ArmRewardView.New())
+	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Activity124RewardListModel.instance, var_1_1, var_1_2))
+	table.insert(var_1_0, ArmRewardView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -38,4 +40,4 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,55 +1,76 @@
-module("modules.logic.gm.controller.GMFightController", package.seeall)
+﻿module("modules.logic.gm.controller.GMFightController", package.seeall)
 
-slot0 = class("GMFightController", BaseController)
+local var_0_0 = class("GMFightController", BaseController)
 
-function slot0.ctor(slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.ExitScene, slot0._onExitScene, slot0)
+function var_0_0.ctor(arg_1_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.ExitScene, arg_1_0._onExitScene, arg_1_0)
 end
 
-function slot0._onExitScene(slot0)
-	slot0.buffTypeId = nil
+function var_0_0._onExitScene(arg_2_0)
+	arg_2_0.buffTypeId = nil
 end
 
-function slot0.startStatBuffType(slot0, slot1)
-	slot0.buffTypeId = slot1
+function var_0_0.startStatBuffType(arg_3_0, arg_3_1)
+	arg_3_0.buffTypeId = arg_3_1
 
-	for slot8, slot9 in pairs(GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(SceneTag.UnitMonster)) do
-		slot0:addStatBuffTypeByEntity(slot9)
+	local var_3_0 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_3_1 = var_3_0:getTagUnitDict(SceneTag.UnitMonster)
+
+	for iter_3_0, iter_3_1 in pairs(var_3_1) do
+		arg_3_0:addStatBuffTypeByEntity(iter_3_1)
 	end
 
-	for slot9, slot10 in pairs(slot3:getTagUnitDict(SceneTag.UnitPlayer)) do
-		slot0:addStatBuffTypeByEntity(slot10)
-	end
-end
+	local var_3_2 = var_3_0:getTagUnitDict(SceneTag.UnitPlayer)
 
-function slot0.addStatBuffTypeByEntity(slot0, slot1)
-	if slot1.nameUI then
-		MonoHelper.addLuaComOnceToGo(slot2:getGO(), FightGmNameUIComp, slot1):startStatBuffType(slot0.buffTypeId)
-	end
-end
-
-function slot0.stopStatBuffType(slot0)
-	slot0.buffTypeId = nil
-
-	for slot7, slot8 in pairs(GameSceneMgr.instance:getCurScene().entityMgr:getTagUnitDict(SceneTag.UnitMonster)) do
-		slot0:stopStatBuffTypeByEntity(slot8)
-	end
-
-	for slot8, slot9 in pairs(slot2:getTagUnitDict(SceneTag.UnitPlayer)) do
-		slot0:stopStatBuffTypeByEntity(slot9)
+	for iter_3_2, iter_3_3 in pairs(var_3_2) do
+		arg_3_0:addStatBuffTypeByEntity(iter_3_3)
 	end
 end
 
-function slot0.stopStatBuffTypeByEntity(slot0, slot1)
-	if slot1.nameUI and MonoHelper.getLuaComFromGo(slot2:getGO(), FightGmNameUIComp) then
-		slot4:stopStatBuffType()
+function var_0_0.addStatBuffTypeByEntity(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.nameUI
+
+	if var_4_0 then
+		local var_4_1 = var_4_0:getGO()
+
+		MonoHelper.addLuaComOnceToGo(var_4_1, FightGmNameUIComp, arg_4_1):startStatBuffType(arg_4_0.buffTypeId)
 	end
 end
 
-function slot0.statingBuffType(slot0)
-	return slot0.buffTypeId ~= nil
+function var_0_0.stopStatBuffType(arg_5_0)
+	arg_5_0.buffTypeId = nil
+
+	local var_5_0 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_5_1 = var_5_0:getTagUnitDict(SceneTag.UnitMonster)
+
+	for iter_5_0, iter_5_1 in pairs(var_5_1) do
+		arg_5_0:stopStatBuffTypeByEntity(iter_5_1)
+	end
+
+	local var_5_2 = var_5_0:getTagUnitDict(SceneTag.UnitPlayer)
+
+	for iter_5_2, iter_5_3 in pairs(var_5_2) do
+		arg_5_0:stopStatBuffTypeByEntity(iter_5_3)
+	end
 end
 
-slot0.instance = slot0.New()
+function var_0_0.stopStatBuffTypeByEntity(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1.nameUI
 
-return slot0
+	if var_6_0 then
+		local var_6_1 = var_6_0:getGO()
+		local var_6_2 = MonoHelper.getLuaComFromGo(var_6_1, FightGmNameUIComp)
+
+		if var_6_2 then
+			var_6_2:stopStatBuffType()
+		end
+	end
+end
+
+function var_0_0.statingBuffType(arg_7_0)
+	return arg_7_0.buffTypeId ~= nil
+end
+
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

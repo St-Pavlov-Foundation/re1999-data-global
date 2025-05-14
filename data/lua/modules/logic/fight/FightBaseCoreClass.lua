@@ -1,206 +1,229 @@
-module("modules.logic.fight.FightBaseCoreClass", package.seeall)
+﻿module("modules.logic.fight.FightBaseCoreClass", package.seeall)
 
-slot0 = class("FightBaseCoreClass")
+local var_0_0 = class("FightBaseCoreClass")
 
-function slot0.onConstructor(slot0)
-	slot0.INSTANTIATE_CLASS_LIST = {}
-	slot0.COMPONENT_LIST = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.INSTANTIATE_CLASS_LIST = {}
+	arg_1_0.COMPONENT_LIST = {}
 end
 
-function slot0.onAwake(slot0, ...)
+function var_0_0.onAwake(arg_2_0, ...)
+	return
 end
 
-function slot0.releaseSelf(slot0)
+function var_0_0.releaseSelf(arg_3_0)
+	return
 end
 
-function slot0.onDestructor(slot0)
-	slot0:disposeClassList(slot0.COMPONENT_LIST)
+function var_0_0.onDestructor(arg_4_0)
+	arg_4_0:disposeClassList(arg_4_0.COMPONENT_LIST)
 
-	slot0.INSTANTIATE_CLASS_LIST = nil
-	slot0.COMPONENT_LIST = nil
+	arg_4_0.INSTANTIATE_CLASS_LIST = nil
+	arg_4_0.COMPONENT_LIST = nil
 end
 
-function slot0.onDestructorFinish(slot0)
+function var_0_0.onDestructorFinish(arg_5_0)
+	return
 end
 
-function slot0.newClass(slot0, slot1, ...)
-	if slot0.IS_DISPOSED or slot0.IS_RELEASING then
-		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. slot0.__cname)
+function var_0_0.newClass(arg_6_0, arg_6_1, ...)
+	if arg_6_0.IS_DISPOSED or arg_6_0.IS_RELEASING then
+		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. arg_6_0.__cname)
 	end
 
-	slot2 = slot1.New(...)
-	slot2.PARENT_ROOT_CLASS = slot0
+	local var_6_0 = arg_6_1.New(...)
 
-	table.insert(slot0.INSTANTIATE_CLASS_LIST, slot2)
+	var_6_0.PARENT_ROOT_CLASS = arg_6_0
 
-	return slot2
+	table.insert(arg_6_0.INSTANTIATE_CLASS_LIST, var_6_0)
+
+	return var_6_0
 end
 
-function slot0.addComponent(slot0, slot1)
-	if slot0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. slot0.__cname)
+function var_0_0.addComponent(arg_7_0, arg_7_1)
+	if arg_7_0.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. arg_7_0.__cname)
 	end
 
-	slot2 = slot1.New()
-	slot2.PARENT_ROOT_CLASS = slot0
+	local var_7_0 = arg_7_1.New()
 
-	table.insert(slot0.COMPONENT_LIST, slot2)
+	var_7_0.PARENT_ROOT_CLASS = arg_7_0
 
-	return slot2
+	table.insert(arg_7_0.COMPONENT_LIST, var_7_0)
+
+	return var_7_0
 end
 
-function slot0.removeComponent(slot0, slot1)
-	if not slot1 then
+function var_0_0.removeComponent(arg_8_0, arg_8_1)
+	if not arg_8_1 then
 		return
 	end
 
-	slot1:disposeSelf()
+	arg_8_1:disposeSelf()
 end
 
-function slot0.disposeSelf(slot0)
-	if slot0.IS_DISPOSED then
+function var_0_0.disposeSelf(arg_9_0)
+	if arg_9_0.IS_DISPOSED then
 		return
 	end
 
-	slot0.IS_DISPOSED = true
+	arg_9_0.IS_DISPOSED = true
 
-	xpcall(slot0.disposeSelfInternal, __G__TRACKBACK__, slot0)
+	local var_9_0 = arg_9_0.keyword_gameObject
 
-	if slot0.keyword_gameObject then
-		gohelper.destroy(slot1)
+	xpcall(arg_9_0.disposeSelfInternal, __G__TRACKBACK__, arg_9_0)
+
+	if var_9_0 then
+		gohelper.destroy(var_9_0)
 	end
 end
 
-function slot0.ctor(slot0, ...)
-	slot0:initializationInternal(slot0.class, slot0, ...)
+function var_0_0.ctor(arg_10_0, ...)
+	arg_10_0:initializationInternal(arg_10_0.class, arg_10_0, ...)
 
-	return slot0:onAwake(...)
+	return arg_10_0:onAwake(...)
 end
 
-function slot0.initializationInternal(slot0, slot1, slot2, ...)
-	if slot1.super then
-		slot0:initializationInternal(slot3, slot2, ...)
+function var_0_0.initializationInternal(arg_11_0, arg_11_1, arg_11_2, ...)
+	local var_11_0 = arg_11_1.super
+
+	if var_11_0 then
+		arg_11_0:initializationInternal(var_11_0, arg_11_2, ...)
 	end
 
-	if rawget(slot1, "onConstructor") then
-		return slot4(slot2, ...)
+	local var_11_1 = rawget(arg_11_1, "onConstructor")
+
+	if var_11_1 then
+		return var_11_1(arg_11_2, ...)
 	end
 end
 
-function slot0.disposeSelfInternal(slot0)
-	if not slot0.IS_RELEASING then
-		if slot0.PARENT_ROOT_CLASS then
-			slot0.PARENT_ROOT_CLASS:clearDeadInstantiatedClass()
+function var_0_0.disposeSelfInternal(arg_12_0)
+	if not arg_12_0.IS_RELEASING then
+		if arg_12_0.PARENT_ROOT_CLASS then
+			arg_12_0.PARENT_ROOT_CLASS:clearDeadInstantiatedClass()
 		end
 
-		slot0:markReleasing()
-		slot0:releaseChildRoot()
+		arg_12_0:markReleasing()
+		arg_12_0:releaseChildRoot()
 	end
 
-	slot0:releaseSelf()
-	slot0:destructorInternal(slot0.class, slot0)
+	arg_12_0:releaseSelf()
+	arg_12_0:destructorInternal(arg_12_0.class, arg_12_0)
 
-	return slot0:onDestructorFinish()
+	return arg_12_0:onDestructorFinish()
 end
 
-function slot0.clearDeadInstantiatedClass(slot0)
-	if slot0.IS_DISPOSED then
+function var_0_0.clearDeadInstantiatedClass(arg_13_0)
+	if arg_13_0.IS_DISPOSED then
 		return
 	end
 
-	if slot0.CLEARTIMER then
+	if arg_13_0.CLEARTIMER then
 		return
 	end
 
-	slot0.CLEARTIMER = slot0:com_registRepeatTimer(slot0.internalClearDeadInstantiatedClass, 1, 1)
+	arg_13_0.CLEARTIMER = arg_13_0:com_registRepeatTimer(arg_13_0.internalClearDeadInstantiatedClass, 1, 1)
 end
 
-function slot0.internalClearDeadInstantiatedClass(slot0)
-	if slot0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用了清除已经死亡的类的方法,请检查代码,类名:" .. slot0.__cname)
+function var_0_0.internalClearDeadInstantiatedClass(arg_14_0)
+	if arg_14_0.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了清除已经死亡的类的方法,请检查代码,类名:" .. arg_14_0.__cname)
 	end
 
-	slot0.CLEARTIMER = nil
+	arg_14_0.CLEARTIMER = nil
 
-	for slot4 = #slot0.INSTANTIATE_CLASS_LIST, 1, -1 do
-		if slot0.INSTANTIATE_CLASS_LIST[slot4].IS_DISPOSED then
-			table.remove(slot0.INSTANTIATE_CLASS_LIST, slot4)
+	for iter_14_0 = #arg_14_0.INSTANTIATE_CLASS_LIST, 1, -1 do
+		if arg_14_0.INSTANTIATE_CLASS_LIST[iter_14_0].IS_DISPOSED then
+			table.remove(arg_14_0.INSTANTIATE_CLASS_LIST, iter_14_0)
 		end
 	end
 end
 
-function slot0.markReleasing(slot0)
-	slot1 = slot0
+function var_0_0.markReleasing(arg_15_0)
+	local var_15_0 = arg_15_0
 
-	while slot1 do
-		slot2 = slot1.INSTANTIATE_CLASS_LIST
+	while var_15_0 do
+		local var_15_1 = var_15_0.INSTANTIATE_CLASS_LIST
 
-		if not slot1.IS_RELEASING then
-			slot1.IS_RELEASING = 0
+		if not var_15_0.IS_RELEASING then
+			var_15_0.IS_RELEASING = 0
 		end
 
-		if not slot2[slot1.IS_RELEASING + 1] then
-			if slot1 == slot0 then
+		local var_15_2 = var_15_0.IS_RELEASING + 1
+		local var_15_3 = var_15_1[var_15_2]
+
+		if not var_15_3 then
+			if var_15_0 == arg_15_0 then
 				return
 			end
 
-			slot1 = slot1.PARENT_ROOT_CLASS
+			var_15_0 = var_15_0.PARENT_ROOT_CLASS
 		else
-			slot1.IS_RELEASING = slot3
+			var_15_0.IS_RELEASING = var_15_2
 
-			if not slot4.IS_RELEASING then
-				slot1 = slot4
+			if not var_15_3.IS_RELEASING then
+				var_15_0 = var_15_3
 			end
 		end
 	end
 end
 
-function slot0.releaseChildRoot(slot0)
-	slot1 = slot0
+function var_0_0.releaseChildRoot(arg_16_0)
+	local var_16_0 = arg_16_0
 
-	while slot1 do
-		slot2 = slot1.INSTANTIATE_CLASS_LIST
+	while var_16_0 do
+		local var_16_1 = var_16_0.INSTANTIATE_CLASS_LIST
 
-		if not slot1.DISPOSEINDEX then
-			slot1.DISPOSEINDEX = #slot2 + 1
+		if not var_16_0.DISPOSEINDEX then
+			var_16_0.DISPOSEINDEX = #var_16_1 + 1
 		end
 
-		if not slot2[slot1.DISPOSEINDEX - 1] then
-			if slot1 == slot0 then
+		local var_16_2 = var_16_0.DISPOSEINDEX - 1
+		local var_16_3 = var_16_1[var_16_2]
+
+		if not var_16_3 then
+			if var_16_0 == arg_16_0 then
 				return
 			end
 
-			if not slot1.IS_DISPOSED then
-				slot1:disposeSelf()
+			if not var_16_0.IS_DISPOSED then
+				var_16_0:disposeSelf()
 			end
 
-			slot1 = slot1.PARENT_ROOT_CLASS
+			var_16_0 = var_16_0.PARENT_ROOT_CLASS
 		else
-			slot1.DISPOSEINDEX = slot3
+			var_16_0.DISPOSEINDEX = var_16_2
 
-			if not slot4.DISPOSEINDEX then
-				slot1 = slot4
+			if not var_16_3.DISPOSEINDEX then
+				var_16_0 = var_16_3
 			end
 		end
 	end
 end
 
-function slot0.destructorInternal(slot0, slot1, slot2)
-	if rawget(slot1, "onDestructor") then
-		slot3(slot2)
+function var_0_0.destructorInternal(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = rawget(arg_17_1, "onDestructor")
+
+	if var_17_0 then
+		var_17_0(arg_17_2)
 	end
 
-	if slot1.super then
-		return slot0:destructorInternal(slot4, slot2)
+	local var_17_1 = arg_17_1.super
+
+	if var_17_1 then
+		return arg_17_0:destructorInternal(var_17_1, arg_17_2)
 	end
 end
 
-function slot0.disposeClassList(slot0, slot1)
-	for slot5 = #slot1, 1, -1 do
-		if not slot1[slot5].IS_DISPOSED then
-			slot6:disposeSelf()
+function var_0_0.disposeClassList(arg_18_0, arg_18_1)
+	for iter_18_0 = #arg_18_1, 1, -1 do
+		local var_18_0 = arg_18_1[iter_18_0]
+
+		if not var_18_0.IS_DISPOSED then
+			var_18_0:disposeSelf()
 		end
 	end
 end
 
-return slot0
+return var_0_0

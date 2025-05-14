@@ -1,121 +1,127 @@
-module("modules.logic.settings.view.SettingsSoundView", package.seeall)
+﻿module("modules.logic.settings.view.SettingsSoundView", package.seeall)
 
-slot0 = class("SettingsSoundView", BaseView)
+local var_0_0 = class("SettingsSoundView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot1 = gohelper.findChild(slot0.viewGO, "SoundScroll/Viewport/Content")
-	slot0._gomusic = gohelper.findChild(slot1, "#go_music")
-	slot0._govoice = gohelper.findChild(slot1, "#go_voice")
-	slot0._goeffect = gohelper.findChild(slot1, "#go_effect")
-	slot0._goglobal = gohelper.findChild(slot1, "#go_global")
-	slot0._gobackgroundsound = gohelper.findChild(slot1, "backgroundsound")
-	slot0._btnbackgroundsoundswitch = gohelper.findChildButtonWithAudio(slot1, "backgroundsound/text/#btn_backgroundsoundswitch")
-	slot0._gobackgroundsoundoff = gohelper.findChild(slot1, "backgroundsound/text/#btn_backgroundsoundswitch/#go_backgroundsoundoff")
-	slot0._gobackgroundsoundon = gohelper.findChild(slot1, "backgroundsound/text/#btn_backgroundsoundswitch/#go_backgroundsoundon")
+function var_0_0.onInitView(arg_1_0)
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "SoundScroll/Viewport/Content")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	arg_1_0._gomusic = gohelper.findChild(var_1_0, "#go_music")
+	arg_1_0._govoice = gohelper.findChild(var_1_0, "#go_voice")
+	arg_1_0._goeffect = gohelper.findChild(var_1_0, "#go_effect")
+	arg_1_0._goglobal = gohelper.findChild(var_1_0, "#go_global")
+	arg_1_0._gobackgroundsound = gohelper.findChild(var_1_0, "backgroundsound")
+	arg_1_0._btnbackgroundsoundswitch = gohelper.findChildButtonWithAudio(var_1_0, "backgroundsound/text/#btn_backgroundsoundswitch")
+	arg_1_0._gobackgroundsoundoff = gohelper.findChild(var_1_0, "backgroundsound/text/#btn_backgroundsoundswitch/#go_backgroundsoundoff")
+	arg_1_0._gobackgroundsoundon = gohelper.findChild(var_1_0, "backgroundsound/text/#btn_backgroundsoundswitch/#go_backgroundsoundon")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbackgroundsoundswitch:AddClickListener(slot0.__btnbackgroundsoundswitchOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbackgroundsoundswitch:AddClickListener(arg_2_0.__btnbackgroundsoundswitchOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbackgroundsoundswitch:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbackgroundsoundswitch:RemoveClickListener()
 end
 
-slot0.VoiceKeyEnum = {
+var_0_0.VoiceKeyEnum = {
 	Global = 4,
 	Effect = 3,
 	Voice = 2,
 	Music = 1
 }
 
-function slot0._editableInitView(slot0)
-	slot0._itemTables = {
-		[uv0.VoiceKeyEnum.Music] = slot0:_initItem(slot0._gomusic, uv0.VoiceKeyEnum.Music),
-		[uv0.VoiceKeyEnum.Voice] = slot0:_initItem(slot0._govoice, uv0.VoiceKeyEnum.Voice),
-		[uv0.VoiceKeyEnum.Effect] = slot0:_initItem(slot0._goeffect, uv0.VoiceKeyEnum.Effect),
-		[uv0.VoiceKeyEnum.Global] = slot0:_initItem(slot0._goglobal, uv0.VoiceKeyEnum.Global)
-	}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._itemTables = {}
+	arg_4_0._itemTables[var_0_0.VoiceKeyEnum.Music] = arg_4_0:_initItem(arg_4_0._gomusic, var_0_0.VoiceKeyEnum.Music)
+	arg_4_0._itemTables[var_0_0.VoiceKeyEnum.Voice] = arg_4_0:_initItem(arg_4_0._govoice, var_0_0.VoiceKeyEnum.Voice)
+	arg_4_0._itemTables[var_0_0.VoiceKeyEnum.Effect] = arg_4_0:_initItem(arg_4_0._goeffect, var_0_0.VoiceKeyEnum.Effect)
+	arg_4_0._itemTables[var_0_0.VoiceKeyEnum.Global] = arg_4_0:_initItem(arg_4_0._goglobal, var_0_0.VoiceKeyEnum.Global)
 
-	gohelper.setActive(slot0._gobackgroundsound, BootNativeUtil.isWindows())
+	gohelper.setActive(arg_4_0._gobackgroundsound, BootNativeUtil.isWindows())
 end
 
-function slot0._initItem(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.slider = gohelper.findChildSlider(slot1, "slider")
-	slot3.sliderClick = gohelper.getClick(slot3.slider.gameObject)
+function var_0_0._initItem(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getUserDataTb_()
 
-	slot3.sliderClick:AddClickDownListener(function ()
+	var_5_0.slider = gohelper.findChildSlider(arg_5_1, "slider")
+	var_5_0.sliderClick = gohelper.getClick(var_5_0.slider.gameObject)
+
+	var_5_0.sliderClick:AddClickDownListener(function()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_volume_button)
-	end, slot0)
-	slot3.slider:SetValue(slot0:getVoiceValue(slot2))
-	slot3.slider:AddOnValueChanged(slot0.onSliderValueChanged, slot0, slot2)
+	end, arg_5_0)
+	var_5_0.slider:SetValue(arg_5_0:getVoiceValue(arg_5_2))
+	var_5_0.slider:AddOnValueChanged(arg_5_0.onSliderValueChanged, arg_5_0, arg_5_2)
 
-	slot3.txtvalue = gohelper.findChildText(slot1, "slider/area/handle/#txt_value")
-	slot3.key = slot2
-	slot3.txtvalue.text = slot0:getVoiceValue(slot2)
+	var_5_0.txtvalue = gohelper.findChildText(arg_5_1, "slider/area/handle/#txt_value")
+	var_5_0.key = arg_5_2
+	var_5_0.txtvalue.text = arg_5_0:getVoiceValue(arg_5_2)
 
-	return slot3
+	return var_5_0
 end
 
-function slot0.onSliderValueChanged(slot0, slot1, slot2)
-	if slot1 == uv0.VoiceKeyEnum.Music then
-		SettingsModel.instance:setMusicValue(slot2)
-	elseif slot1 == uv0.VoiceKeyEnum.Voice then
-		SettingsModel.instance:setVoiceValue(slot2)
-	elseif slot1 == uv0.VoiceKeyEnum.Effect then
-		SettingsModel.instance:setEffectValue(slot2)
-	elseif slot1 == uv0.VoiceKeyEnum.Global then
-		SettingsModel.instance:setGlobalAudioVolume(slot2)
+function var_0_0.onSliderValueChanged(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 == var_0_0.VoiceKeyEnum.Music then
+		SettingsModel.instance:setMusicValue(arg_7_2)
+	elseif arg_7_1 == var_0_0.VoiceKeyEnum.Voice then
+		SettingsModel.instance:setVoiceValue(arg_7_2)
+	elseif arg_7_1 == var_0_0.VoiceKeyEnum.Effect then
+		SettingsModel.instance:setEffectValue(arg_7_2)
+	elseif arg_7_1 == var_0_0.VoiceKeyEnum.Global then
+		SettingsModel.instance:setGlobalAudioVolume(arg_7_2)
 	end
 
-	slot0._itemTables[slot1].txtvalue.text = slot2
+	arg_7_0._itemTables[arg_7_1].txtvalue.text = arg_7_2
 end
 
-function slot0.getVoiceValue(slot0, slot1)
-	if slot1 == uv0.VoiceKeyEnum.Music then
+function var_0_0.getVoiceValue(arg_8_0, arg_8_1)
+	if arg_8_1 == var_0_0.VoiceKeyEnum.Music then
 		return SettingsModel.instance:getMusicValue()
-	elseif slot1 == uv0.VoiceKeyEnum.Voice then
+	elseif arg_8_1 == var_0_0.VoiceKeyEnum.Voice then
 		return SettingsModel.instance:getVoiceValue()
-	elseif slot1 == uv0.VoiceKeyEnum.Effect then
+	elseif arg_8_1 == var_0_0.VoiceKeyEnum.Effect then
 		return SettingsModel.instance:getEffectValue()
-	elseif slot1 == uv0.VoiceKeyEnum.Global then
+	elseif arg_8_1 == var_0_0.VoiceKeyEnum.Global then
 		return SettingsModel.instance:getGlobalAudioVolume()
 	else
 		return 0
 	end
 end
 
-function slot0.__btnbackgroundsoundswitchOnClick(slot0)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.WWise_SL_ActivateDuringFocusLoss, PlayerPrefsHelper.getNumber(PlayerPrefsKey.WWise_SL_ActivateDuringFocusLoss, 0) == 0 and 1 or 0)
-	slot0:_refreshgroundsound()
+function var_0_0.__btnbackgroundsoundswitchOnClick(arg_9_0)
+	local var_9_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.WWise_SL_ActivateDuringFocusLoss, 0) == 0 and 1 or 0
+
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.WWise_SL_ActivateDuringFocusLoss, var_9_0)
+	arg_9_0:_refreshgroundsound()
 end
 
-function slot0._refreshgroundsound(slot0)
-	gohelper.setActive(slot0._gobackgroundsoundoff, PlayerPrefsHelper.getNumber(PlayerPrefsKey.WWise_SL_ActivateDuringFocusLoss, 0) == 0)
-	gohelper.setActive(slot0._gobackgroundsoundon, slot1 == 1)
+function var_0_0._refreshgroundsound(arg_10_0)
+	local var_10_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.WWise_SL_ActivateDuringFocusLoss, 0)
+
+	gohelper.setActive(arg_10_0._gobackgroundsoundoff, var_10_0 == 0)
+	gohelper.setActive(arg_10_0._gobackgroundsoundon, var_10_0 == 1)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshgroundsound()
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0:_refreshgroundsound()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshgroundsound()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:_refreshgroundsound()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0._itemTables) do
-		slot5.sliderClick:RemoveClickDownListener()
-		slot5.slider:RemoveOnValueChanged()
+function var_0_0.onDestroyView(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._itemTables) do
+		iter_14_1.sliderClick:RemoveClickDownListener()
+		iter_14_1.slider:RemoveOnValueChanged()
 	end
 end
 
-return slot0
+return var_0_0

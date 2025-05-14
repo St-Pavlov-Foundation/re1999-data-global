@@ -1,19 +1,19 @@
-module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameSkillEffectMo", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameSkillEffectMo", package.seeall)
 
-slot0 = pureTable("YaXianGameSkillEffectMo")
+local var_0_0 = pureTable("YaXianGameSkillEffectMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.actId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.actId = arg_1_1
 
-	slot0:updateMO(slot2)
+	arg_1_0:updateMO(arg_1_2)
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.effectType = slot1.effectType
-	slot0.effectUid = slot1.effectUid
-	slot0.remainRound = slot1.remainRound
-	slot0.skillId = slot1.skillId
-	slot0.skillMo = YaXianGameModel.instance:getSkillMo(slot0.skillId)
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.effectType = arg_2_1.effectType
+	arg_2_0.effectUid = arg_2_1.effectUid
+	arg_2_0.remainRound = arg_2_1.remainRound
+	arg_2_0.skillId = arg_2_1.skillId
+	arg_2_0.skillMo = YaXianGameModel.instance:getSkillMo(arg_2_0.skillId)
 end
 
-return slot0
+return var_0_0

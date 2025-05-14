@@ -1,62 +1,72 @@
-module("modules.logic.guide.rpc.GuideRpc", package.seeall)
+﻿module("modules.logic.guide.rpc.GuideRpc", package.seeall)
 
-slot0 = class("GuideRpc", BaseRpc)
+local var_0_0 = class("GuideRpc", BaseRpc)
 
-function slot0.sendGetGuideInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(GuideModule_pb.GetGuideInfoRequest(), slot1, slot2)
+function var_0_0.sendGetGuideInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = GuideModule_pb.GetGuideInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetGuideInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		GuideModel.instance:setGuideList(slot2.guideInfos)
+function var_0_0.onReceiveGetGuideInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		GuideModel.instance:setGuideList(arg_2_2.guideInfos)
 		GuideController.instance:dispatchEvent(GuideEvent.GetGuideInfoSuccess)
 	end
 end
 
-function slot0.sendFinishGuideRequest(slot0, slot1, slot2)
-	slot3 = GuideModule_pb.FinishGuideRequest()
-	slot3.guideId = slot1
-	slot3.stepId = slot2
+function var_0_0.sendFinishGuideRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = GuideModule_pb.FinishGuideRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.guideId = arg_3_1
+	var_3_0.stepId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveFinishGuideReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveFinishGuideReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		-- block empty
+	else
 		GuideController.instance:dispatchEvent(GuideEvent.FinishGuideFail)
 	end
 end
 
-function slot0.onReceiveUpdateGuidePush(slot0, slot1, slot2)
-	GuideModel.instance:updateGuideList(slot2.guideInfos)
+function var_0_0.onReceiveUpdateGuidePush(arg_5_0, arg_5_1, arg_5_2)
+	GuideModel.instance:updateGuideList(arg_5_2.guideInfos)
 
-	for slot6 = 1, #slot2.guideInfos do
-		slot7 = slot2.guideInfos[slot6]
+	for iter_5_0 = 1, #arg_5_2.guideInfos do
+		local var_5_0 = arg_5_2.guideInfos[iter_5_0]
 
-		logNormal(string.format("<color=#3E7E00>update guide push guide_%d_%d</color>", slot7.guideId, slot7.stepId))
+		logNormal(string.format("<color=#3E7E00>update guide push guide_%d_%d</color>", var_5_0.guideId, var_5_0.stepId))
 
-		if slot2.guideInfos[slot6].stepId == 0 then
-			GuideController.instance:dispatchEvent(GuideEvent.StartGuide, GuideModel.instance:getById(slot7.guideId).id)
+		local var_5_1 = GuideModel.instance:getById(var_5_0.guideId)
+
+		if arg_5_2.guideInfos[iter_5_0].stepId == 0 then
+			GuideController.instance:dispatchEvent(GuideEvent.StartGuide, var_5_1.id)
 		else
-			GuideStepController.instance:clearFlow(slot8.id)
+			GuideStepController.instance:clearFlow(var_5_1.id)
 
-			if (slot8.serverStepId > 0 and slot8.serverStepId or slot8.clientStepId) == -1 then
-				slot10 = GuideConfig.instance:getStepList(slot8.id)
-				slot9 = slot10[#slot10].stepId
+			local var_5_2 = var_5_1.serverStepId > 0 and var_5_1.serverStepId or var_5_1.clientStepId
+
+			if var_5_2 == -1 then
+				local var_5_3 = GuideConfig.instance:getStepList(var_5_1.id)
+
+				var_5_2 = var_5_3[#var_5_3].stepId
 			end
 
-			GuideController.instance:dispatchEvent(GuideEvent.FinishStep, slot8.id, slot9)
+			GuideController.instance:dispatchEvent(GuideEvent.FinishStep, var_5_1.id, var_5_2)
 
-			if slot8.isFinish then
-				GuideController.instance:dispatchEvent(GuideEvent.FinishGuide, slot8.id)
+			if var_5_1.isFinish then
+				GuideController.instance:dispatchEvent(GuideEvent.FinishGuide, var_5_1.id)
 			end
 		end
 
-		GuideController.instance:statFinishStep(slot8.id, slot8.clientStepId, false)
-		GuideController.instance:execNextStep(slot8.id)
+		GuideController.instance:statFinishStep(var_5_1.id, var_5_1.clientStepId, false)
+		GuideController.instance:execNextStep(var_5_1.id)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

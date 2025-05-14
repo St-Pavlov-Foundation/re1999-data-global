@@ -1,26 +1,29 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessLeaderShowView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessLeaderShowView", package.seeall)
 
-slot0 = class("AutoChessLeaderShowView", BaseView)
+local var_0_0 = class("AutoChessLeaderShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goCard = gohelper.findChild(slot0.viewGO, "#go_Card")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goCard = gohelper.findChild(arg_1_0.viewGO, "#go_Card")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam then
-		MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.LeaderCardPath, slot0._goCard), AutoChessLeaderCard):setData(slot0.viewParam)
+function var_0_0.onOpen(arg_4_0)
+	if arg_4_0.viewParam then
+		local var_4_0 = arg_4_0:getResInst(AutoChessEnum.LeaderCardPath, arg_4_0._goCard)
+
+		MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0, AutoChessLeaderCard):setData(arg_4_0.viewParam)
 	end
 end
 
-return slot0
+return var_0_0

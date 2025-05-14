@@ -1,70 +1,76 @@
-module("modules.logic.turnback.view.new.view.TurnbackNewShowRewardView", package.seeall)
+﻿module("modules.logic.turnback.view.new.view.TurnbackNewShowRewardView", package.seeall)
 
-slot0 = class("TurnbackNewShowRewardView", BaseView)
+local var_0_0 = class("TurnbackNewShowRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "reward/#scroll_reward")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/#scroll_reward")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
+	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rewardItemList = {}
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._rewardItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.bonus = slot0.viewParam.bonus
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.bonus = arg_7_0.viewParam.bonus
 
-	slot0:_refreshReward()
+	arg_7_0:_refreshReward()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 end
 
-function slot0._refreshReward(slot0)
-	for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.bonus, true)) do
-		slot7 = slot0:getUserDataTb_()
-		slot7.go = gohelper.cloneInPlace(slot0._gorewarditem, "item" .. slot5)
+function var_0_0._refreshReward(arg_8_0)
+	local var_8_0 = GameUtil.splitString2(arg_8_0.bonus, true)
 
-		gohelper.setActive(slot7.go, true)
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		local var_8_1 = arg_8_0:getUserDataTb_()
 
-		slot8 = slot6[1]
-		slot9 = slot6[2]
-		slot10 = slot6[3]
+		var_8_1.go = gohelper.cloneInPlace(arg_8_0._gorewarditem, "item" .. iter_8_0)
 
-		if not slot7.itemIcon then
-			slot7.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot7.go)
+		gohelper.setActive(var_8_1.go, true)
+
+		local var_8_2 = iter_8_1[1]
+		local var_8_3 = iter_8_1[2]
+		local var_8_4 = iter_8_1[3]
+
+		if not var_8_1.itemIcon then
+			var_8_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_8_1.go)
 		end
 
-		slot7.itemIcon:setMOValue(slot8, slot9, slot10, nil, true)
-		slot7.itemIcon:isShowQuality(true)
-		slot7.itemIcon:isShowCount(true)
+		var_8_1.itemIcon:setMOValue(var_8_2, var_8_3, var_8_4, nil, true)
+		var_8_1.itemIcon:isShowQuality(true)
+		var_8_1.itemIcon:isShowCount(true)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

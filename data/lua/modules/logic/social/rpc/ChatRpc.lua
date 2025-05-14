@@ -1,86 +1,100 @@
-module("modules.logic.social.rpc.ChatRpc", package.seeall)
+﻿module("modules.logic.social.rpc.ChatRpc", package.seeall)
 
-slot0 = class("ChatRpc", BaseRpc)
+local var_0_0 = class("ChatRpc", BaseRpc)
 
-function slot0.sendSendMsgRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot8 = ChatModule_pb.SendMsgRequest()
-	slot8.channelType = slot1
-	slot8.recipientId = slot2
-	slot8.content = slot3
-	slot8.msgType = slot4 or 0
-	slot8.extData = slot5 or ""
+function var_0_0.sendSendMsgRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6, arg_1_7)
+	local var_1_0 = ChatModule_pb.SendMsgRequest()
 
-	slot0:sendMsg(slot8, slot6, slot7)
+	var_1_0.channelType = arg_1_1
+	var_1_0.recipientId = arg_1_2
+	var_1_0.content = arg_1_3
+	var_1_0.msgType = arg_1_4 or 0
+	var_1_0.extData = arg_1_5 or ""
+
+	arg_1_0:sendMsg(var_1_0, arg_1_6, arg_1_7)
 end
 
-function slot0.onReceiveSendMsgReply(slot0, slot1, slot2)
-	if slot1 == 0 and not string.nilorempty(slot2.message) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.ForbidSendMessage, MsgBoxEnum.BoxType.Yes, nil, , , , , , slot2.message)
+function var_0_0.onReceiveSendMsgReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 and not string.nilorempty(arg_2_2.message) then
+		GameFacade.showMessageBox(MessageBoxIdDefine.ForbidSendMessage, MsgBoxEnum.BoxType.Yes, nil, nil, nil, nil, nil, nil, arg_2_2.message)
 	end
 end
 
-function slot0.sendDeleteOfflineMsgRequest(slot0)
-	slot0:sendMsg(ChatModule_pb.DeleteOfflineMsgRequest())
+function var_0_0.sendDeleteOfflineMsgRequest(arg_3_0)
+	local var_3_0 = ChatModule_pb.DeleteOfflineMsgRequest()
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveDeleteOfflineMsgReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		-- Nothing
+function var_0_0.onReceiveDeleteOfflineMsgReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		-- block empty
 	end
 end
 
-function slot0.onReceiveChatMsgPush(slot0, slot1, slot2)
-	if slot1 == 0 and slot2.msg and #slot3 > 0 then
-		slot5 = false
+function var_0_0.onReceiveChatMsgPush(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		local var_5_0 = arg_5_2.msg
 
-		for slot9, slot10 in ipairs(slot3) do
-			if slot10.senderId ~= PlayerModel.instance:getMyUserId() then
-				slot5 = true
+		if var_5_0 and #var_5_0 > 0 then
+			local var_5_1 = PlayerModel.instance:getMyUserId()
+			local var_5_2 = false
+
+			for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+				if iter_5_1.senderId ~= var_5_1 then
+					var_5_2 = true
+				end
+
+				SocialMessageModel.instance:addSocialMessage(iter_5_1)
 			end
 
-			SocialMessageModel.instance:addSocialMessage(slot10)
-		end
-
-		if slot5 then
-			slot0:sendDeleteOfflineMsgRequest()
+			if var_5_2 then
+				arg_5_0:sendDeleteOfflineMsgRequest()
+			end
 		end
 	end
 end
 
-function slot0.sendGetReportTypeRequest(slot0, slot1, slot2)
-	slot0:sendMsg(ChatModule_pb.GetReportTypeRequest(), slot1, slot2)
+function var_0_0.sendGetReportTypeRequest(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = ChatModule_pb.GetReportTypeRequest()
+
+	arg_6_0:sendMsg(var_6_0, arg_6_1, arg_6_2)
 end
 
-function slot0.onReceiveGetReportTypeReply(slot0)
+function var_0_0.onReceiveGetReportTypeReply(arg_7_0)
+	return
 end
 
-function slot0.sendReportRequest(slot0, slot1, slot2, slot3)
-	slot4 = ChatModule_pb.ReportRequest()
-	slot4.reportedUserId = slot1
-	slot4.reportTypeId = slot2
-	slot4.content = slot3
+function var_0_0.sendReportRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = ChatModule_pb.ReportRequest()
 
-	slot0:sendMsg(slot4)
+	var_8_0.reportedUserId = arg_8_1
+	var_8_0.reportTypeId = arg_8_2
+	var_8_0.content = arg_8_3
+
+	arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceiveReportReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveReportReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == 0 then
 		SocialController.instance:dispatchEvent(SocialEvent.InformSuccessReply)
 	else
 		SocialController.instance:dispatchEvent(SocialEvent.InformFailReply)
 	end
 end
 
-function slot0.sendWordTestRequest(slot0, slot1, slot2, slot3)
-	slot4 = ChatModule_pb.WordTestRequest()
-	slot4.content = slot1
+function var_0_0.sendWordTestRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = ChatModule_pb.WordTestRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_10_0.content = arg_10_1
+
+	arg_10_0:sendMsg(var_10_0, arg_10_2, arg_10_3)
 end
 
-function slot0.onReceiveWordTestReply(slot0, slot1, slot2)
+function var_0_0.onReceiveWordTestReply(arg_11_0, arg_11_1, arg_11_2)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

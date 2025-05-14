@@ -1,13 +1,13 @@
-module("modules.logic.balanceumbrella.config.BalanceUmbrellaConfig", package.seeall)
+﻿module("modules.logic.balanceumbrella.config.BalanceUmbrellaConfig", package.seeall)
 
-slot0 = class("BalanceUmbrellaConfig", BaseConfig)
+local var_0_0 = class("BalanceUmbrellaConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"balance_umbrella"
 	}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,8 +1,9 @@
-module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081", package.seeall)
 
-slot0 = class("FightEntitySpecialEffect3081", FightEntitySpecialEffectBase)
+local var_0_0 = class("FightEntitySpecialEffect3081", FightEntitySpecialEffectBase)
 
-function slot0.initClass(slot0)
+function var_0_0.initClass(arg_1_0)
+	return
 end
 
-return slot0
+return var_0_0

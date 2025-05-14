@@ -1,54 +1,59 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityEnter", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityEnter", package.seeall)
 
-slot0 = class("FightTLEventEntityEnter")
+local var_0_0 = class("FightTLEventEntityEnter")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot6 = GameSceneMgr.instance:getCurScene().entityMgr
-	slot7 = slot1.fromId
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_1.fromId
+	local var_1_1 = arg_1_1.toId
+	local var_1_2 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_1_3 = var_1_0
 
-	if slot3[1] == "2" then
-		slot7 = slot1.toId
+	if arg_1_3[1] == "2" then
+		var_1_3 = var_1_1
 	end
 
-	slot8 = FightDataHelper.entityMgr:getById(slot7)
+	local var_1_4 = FightDataHelper.entityMgr:getById(var_1_3)
 
-	if slot1.customType == "change_hero" then
-		FightEntityModel.instance:getSubModel(slot8.side):remove(slot8)
-		FightEntityModel.instance:getModel(slot8.side):addAtLast(slot8)
+	if arg_1_1.customType == "change_hero" then
+		local var_1_5 = FightEntityModel.instance:getModel(var_1_4.side)
 
-		slot8.position = slot1.toPosition
+		FightEntityModel.instance:getSubModel(var_1_4.side):remove(var_1_4)
+		var_1_5:addAtLast(var_1_4)
+
+		var_1_4.position = arg_1_1.toPosition
 	end
 
-	slot0._newEntity = slot6:buildSpine(slot8)
-	slot0._work = FightWorkStartBornNormal.New(slot0._newEntity, false)
+	arg_1_0._newEntity = var_1_2:buildSpine(var_1_4)
+	arg_1_0._work = FightWorkStartBornNormal.New(arg_1_0._newEntity, false)
 
-	slot0._work:registerDoneListener(slot0._onEntityBornDone, slot0)
-	slot0._work:onStart()
+	arg_1_0._work:registerDoneListener(arg_1_0._onEntityBornDone, arg_1_0)
+	arg_1_0._work:onStart()
 
-	if slot0._newEntity:isMySide() then
-		FightAudioMgr.instance:playHeroVoiceRandom(slot8.modelId, CharacterEnum.VoiceType.EnterFight)
-	end
-end
-
-function slot0._onEntityBornDone(slot0)
-	slot0._work:unregisterDoneListener(slot0._onEntityBornDone, slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, slot0._newEntity)
-end
-
-function slot0.reset(slot0)
-	slot0:dispose()
-end
-
-function slot0.dispose(slot0)
-	if slot0._work then
-		slot0._work:unregisterDoneListener(slot0._onEntityBornDone, slot0)
-		slot0._work:onStop()
-
-		slot0._work = nil
+	if arg_1_0._newEntity:isMySide() then
+		FightAudioMgr.instance:playHeroVoiceRandom(var_1_4.modelId, CharacterEnum.VoiceType.EnterFight)
 	end
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0._onEntityBornDone(arg_2_0)
+	arg_2_0._work:unregisterDoneListener(arg_2_0._onEntityBornDone, arg_2_0)
+	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, arg_2_0._newEntity)
 end
 
-return slot0
+function var_0_0.reset(arg_3_0)
+	arg_3_0:dispose()
+end
+
+function var_0_0.dispose(arg_4_0)
+	if arg_4_0._work then
+		arg_4_0._work:unregisterDoneListener(arg_4_0._onEntityBornDone, arg_4_0)
+		arg_4_0._work:onStop()
+
+		arg_4_0._work = nil
+	end
+end
+
+function var_0_0.onSkillEnd(arg_5_0)
+	return
+end
+
+return var_0_0

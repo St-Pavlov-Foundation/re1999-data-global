@@ -1,9 +1,10 @@
-module("modules.logic.rouge.define.RougeDLCEnum", package.seeall)
+﻿module("modules.logic.rouge.define.RougeDLCEnum", package.seeall)
 
-slot0 = _M
-slot0.DLCEnum = {
+local var_0_0 = _M
+
+var_0_0.DLCEnum = {
 	DLC_102 = 102,
 	DLC_101 = 101
 }
 
-return slot0
+return var_0_0

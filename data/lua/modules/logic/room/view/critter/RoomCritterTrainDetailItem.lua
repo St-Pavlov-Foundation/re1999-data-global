@@ -1,421 +1,457 @@
-module("modules.logic.room.view.critter.RoomCritterTrainDetailItem", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterTrainDetailItem", package.seeall)
 
-slot0 = class("RoomCritterTrainDetailItem", ListScrollCellExtend)
+local var_0_0 = class("RoomCritterTrainDetailItem", ListScrollCellExtend)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	if slot1 then
-		slot0._view = slot1
+	if arg_1_1 then
+		arg_1_0._view = arg_1_1
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._txttrainlevel = gohelper.findChildText(slot0.viewGO, "TrainProgress/#txt_trainlevel")
-	slot0._imagetotalBarValue = gohelper.findChildImage(slot0.viewGO, "TrainProgress/ProgressBg/#image_totalBarValue")
-	slot0._goeventpointitem = gohelper.findChild(slot0.viewGO, "TrainProgress/ProgressBg/eventlayout/#go_eventpointitem")
-	slot0._goeventtips = gohelper.findChild(slot0.viewGO, "TrainProgress/ProgressBg/eventlayout/#go_eventtips")
-	slot0._txteventtime = gohelper.findChildText(slot0.viewGO, "TrainProgress/ProgressBg/eventlayout/#go_eventtips/#txt_eventtime")
-	slot0._gotrainTime = gohelper.findChild(slot0.viewGO, "TrainProgress/#go_trainTime")
-	slot0._txttotalTrainTime = gohelper.findChildText(slot0.viewGO, "TrainProgress/#go_trainTime/#txt_totalTrainTime")
-	slot0._btnaccelerate = gohelper.findChildButtonWithAudio(slot0.viewGO, "TrainProgress/#btn_accelerate")
-	slot0._btntrainfinish = gohelper.findChildButtonWithAudio(slot0.viewGO, "TrainProgress/#btn_trainfinish")
-	slot0._gotrainslotitem = gohelper.findChild(slot0.viewGO, "#go_trainslotitem")
-	slot0._gocrittericon = gohelper.findChild(slot0.viewGO, "#go_trainslotitem/#go_critter_icon")
-	slot0._simageheroIcon = gohelper.findChildSingleImage(slot0.viewGO, "#go_trainslotitem/#simage_heroIcon")
-	slot0._btncritterchange = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_trainslotitem/#btn_critterchange")
-	slot0._goinfo = gohelper.findChild(slot0.viewGO, "#go_info")
-	slot0._txttrainingname = gohelper.findChildText(slot0.viewGO, "#go_info/#txt_trainingname")
-	slot0._scrollbase = gohelper.findChildScrollRect(slot0.viewGO, "#go_info/#scroll_base")
-	slot0._gobaseitem = gohelper.findChild(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/#image_icon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/#txt_name")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_ratelevel/#txt_level")
-	slot0._simagelevelBarValue = gohelper.findChildSingleImage(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_ratelevel/ProgressBg/#simage_levelBarValue")
-	slot0._simagetotalBarValue = gohelper.findChildSingleImage(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_detail/ProgressBg/#simage_totalBarValue")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_detail/#txt_num")
-	slot0._btnswitch = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_info/#btn_switch")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_detail")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._txttrainlevel = gohelper.findChildText(arg_2_0.viewGO, "TrainProgress/#txt_trainlevel")
+	arg_2_0._imagetotalBarValue = gohelper.findChildImage(arg_2_0.viewGO, "TrainProgress/ProgressBg/#image_totalBarValue")
+	arg_2_0._goeventpointitem = gohelper.findChild(arg_2_0.viewGO, "TrainProgress/ProgressBg/eventlayout/#go_eventpointitem")
+	arg_2_0._goeventtips = gohelper.findChild(arg_2_0.viewGO, "TrainProgress/ProgressBg/eventlayout/#go_eventtips")
+	arg_2_0._txteventtime = gohelper.findChildText(arg_2_0.viewGO, "TrainProgress/ProgressBg/eventlayout/#go_eventtips/#txt_eventtime")
+	arg_2_0._gotrainTime = gohelper.findChild(arg_2_0.viewGO, "TrainProgress/#go_trainTime")
+	arg_2_0._txttotalTrainTime = gohelper.findChildText(arg_2_0.viewGO, "TrainProgress/#go_trainTime/#txt_totalTrainTime")
+	arg_2_0._btnaccelerate = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "TrainProgress/#btn_accelerate")
+	arg_2_0._btntrainfinish = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "TrainProgress/#btn_trainfinish")
+	arg_2_0._gotrainslotitem = gohelper.findChild(arg_2_0.viewGO, "#go_trainslotitem")
+	arg_2_0._gocrittericon = gohelper.findChild(arg_2_0.viewGO, "#go_trainslotitem/#go_critter_icon")
+	arg_2_0._simageheroIcon = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_trainslotitem/#simage_heroIcon")
+	arg_2_0._btncritterchange = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_trainslotitem/#btn_critterchange")
+	arg_2_0._goinfo = gohelper.findChild(arg_2_0.viewGO, "#go_info")
+	arg_2_0._txttrainingname = gohelper.findChildText(arg_2_0.viewGO, "#go_info/#txt_trainingname")
+	arg_2_0._scrollbase = gohelper.findChildScrollRect(arg_2_0.viewGO, "#go_info/#scroll_base")
+	arg_2_0._gobaseitem = gohelper.findChild(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem")
+	arg_2_0._imageicon = gohelper.findChildImage(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/#image_icon")
+	arg_2_0._txtname = gohelper.findChildText(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/#txt_name")
+	arg_2_0._txtlevel = gohelper.findChildText(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_ratelevel/#txt_level")
+	arg_2_0._simagelevelBarValue = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_ratelevel/ProgressBg/#simage_levelBarValue")
+	arg_2_0._simagetotalBarValue = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_detail/ProgressBg/#simage_totalBarValue")
+	arg_2_0._txtnum = gohelper.findChildText(arg_2_0.viewGO, "#go_info/#scroll_base/viewport/content/#go_baseitem/go_detail/#txt_num")
+	arg_2_0._btnswitch = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_info/#btn_switch")
+	arg_2_0._btndetail = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btn_detail")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnaccelerate:AddClickListener(slot0._btnaccelerateOnClick, slot0)
-	slot0._btntrainfinish:AddClickListener(slot0._btntrainfinishOnClick, slot0)
-	slot0._btncritterchange:AddClickListener(slot0._btncritterchangeOnClick, slot0)
-	slot0._btnswitch:AddClickListener(slot0._btnswitchOnClick, slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnaccelerate:AddClickListener(arg_3_0._btnaccelerateOnClick, arg_3_0)
+	arg_3_0._btntrainfinish:AddClickListener(arg_3_0._btntrainfinishOnClick, arg_3_0)
+	arg_3_0._btncritterchange:AddClickListener(arg_3_0._btncritterchangeOnClick, arg_3_0)
+	arg_3_0._btnswitch:AddClickListener(arg_3_0._btnswitchOnClick, arg_3_0)
+	arg_3_0._btndetail:AddClickListener(arg_3_0._btndetailOnClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnaccelerate:RemoveClickListener()
-	slot0._btntrainfinish:RemoveClickListener()
-	slot0._btncritterchange:RemoveClickListener()
-	slot0._btnswitch:RemoveClickListener()
-	slot0._btndetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnaccelerate:RemoveClickListener()
+	arg_4_0._btntrainfinish:RemoveClickListener()
+	arg_4_0._btncritterchange:RemoveClickListener()
+	arg_4_0._btnswitch:RemoveClickListener()
+	arg_4_0._btndetail:RemoveClickListener()
 end
 
-function slot0._btnswitchOnClick(slot0)
-	slot0._showLv = not slot0._showLv
+function var_0_0._btnswitchOnClick(arg_5_0)
+	arg_5_0._showLv = not arg_5_0._showLv
 
-	slot0:refreshAttributeItem()
+	arg_5_0:refreshAttributeItem()
 end
 
-function slot0._btnaccelerateOnClick(slot0)
-	if slot0._critterMO then
-		RoomCritterController.instance:openTrainAccelerateView(slot1.uid)
+function var_0_0._btnaccelerateOnClick(arg_6_0)
+	local var_6_0 = arg_6_0._critterMO
+
+	if var_6_0 then
+		RoomCritterController.instance:openTrainAccelerateView(var_6_0.uid)
 	end
 end
 
-function slot0._btntrainfinishOnClick(slot0)
-	if slot0._critterMO and slot1.trainInfo then
-		if slot1.trainInfo:isFinishAllEvent() then
-			RoomCritterController.instance:sendFinishTrainCritter(slot1.id)
+function var_0_0._btntrainfinishOnClick(arg_7_0)
+	local var_7_0 = arg_7_0._critterMO
+
+	if var_7_0 and var_7_0.trainInfo then
+		if var_7_0.trainInfo:isFinishAllEvent() then
+			RoomCritterController.instance:sendFinishTrainCritter(var_7_0.id)
 		else
 			GameFacade.showToast(ToastEnum.RoomCritterTrainEventNotFinished)
-			RoomCritterController.instance:openTrainEventView(slot1.id)
+			RoomCritterController.instance:openTrainEventView(var_7_0.id)
 		end
 	end
 
-	if slot0._finishCallback then
-		if slot0._finishCallbackObj ~= nil then
-			slot0._finishCallback(slot0._finishCallbackObj)
+	if arg_7_0._finishCallback then
+		if arg_7_0._finishCallbackObj ~= nil then
+			arg_7_0._finishCallback(arg_7_0._finishCallbackObj)
 		else
-			slot0._finishCallback()
+			arg_7_0._finishCallback()
 		end
 	end
 end
 
-function slot0._btncritterchangeOnClick(slot0)
-	if slot0._critterchangeCallback then
-		if slot0._critterchangeCallbackObj ~= nil then
-			slot0._critterchangeCallback(slot0._critterchangeCallbackObj)
+function var_0_0._btncritterchangeOnClick(arg_8_0)
+	if arg_8_0._critterchangeCallback then
+		if arg_8_0._critterchangeCallbackObj ~= nil then
+			arg_8_0._critterchangeCallback(arg_8_0._critterchangeCallbackObj)
 		else
-			slot0._critterchangeCallback()
+			arg_8_0._critterchangeCallback()
 		end
 	end
 end
 
-function slot0._btndetailOnClick(slot0)
-	CritterController.instance:openRoomCritterDetailView(slot0._critterMO.finishTrain ~= true, slot0._critterMO, true)
+function var_0_0._btndetailOnClick(arg_9_0)
+	CritterController.instance:openRoomCritterDetailView(arg_9_0._critterMO.finishTrain ~= true, arg_9_0._critterMO, true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._showStateInfo = true
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._showStateInfo = true
 
-	gohelper.setActive(slot0._gobaseitem, false)
-	gohelper.setActive(slot0._goeventtips, false)
-	gohelper.setActive(slot0._btncritterchange, false)
+	gohelper.setActive(arg_10_0._gobaseitem, false)
+	gohelper.setActive(arg_10_0._goeventtips, false)
+	gohelper.setActive(arg_10_0._btncritterchange, false)
 
-	slot0._gogrssBg = gohelper.findChild(slot0.viewGO, "TrainProgress/bg")
-	slot0._gogressFinishBg = gohelper.findChild(slot0.viewGO, "TrainProgress/#go_finishbg")
-	slot0._imageTrainBarValue = gohelper.findChildImage(slot0.viewGO, "TrainProgress/ProgressBg/#simage_totalBarValue")
-	slot0._eventPointTbList = slot0:getUserDataTb_()
-	slot0._attributeItems = {}
-	slot0._showLv = false
-	slot0._barTrs = slot0._imagetotalBarValue.transform
-	slot0._goeventtipsTrs = slot0._goeventtips.transform
+	arg_10_0._gogrssBg = gohelper.findChild(arg_10_0.viewGO, "TrainProgress/bg")
+	arg_10_0._gogressFinishBg = gohelper.findChild(arg_10_0.viewGO, "TrainProgress/#go_finishbg")
+	arg_10_0._imageTrainBarValue = gohelper.findChildImage(arg_10_0.viewGO, "TrainProgress/ProgressBg/#simage_totalBarValue")
+	arg_10_0._eventPointTbList = arg_10_0:getUserDataTb_()
+	arg_10_0._attributeItems = {}
+	arg_10_0._showLv = false
+	arg_10_0._barTrs = arg_10_0._imagetotalBarValue.transform
+	arg_10_0._goeventtipsTrs = arg_10_0._goeventtips.transform
 
-	table.insert(slot0._eventPointTbList, slot0:_createEventPointTB(slot0._goeventpointitem))
-	slot0:setBarValue(0)
+	table.insert(arg_10_0._eventPointTbList, arg_10_0:_createEventPointTB(arg_10_0._goeventpointitem))
+	arg_10_0:setBarValue(0)
 end
 
-function slot0._editableAddEvents(slot0)
-	RoomController.instance:registerCallback(RoomEvent.CritterTrainLevelFinished, slot0._onTrainResultFinished, slot0)
+function var_0_0._editableAddEvents(arg_11_0)
+	RoomController.instance:registerCallback(RoomEvent.CritterTrainLevelFinished, arg_11_0._onTrainResultFinished, arg_11_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainLevelFinished, slot0._onTrainResultFinished, slot0)
+function var_0_0._editableRemoveEvents(arg_12_0)
+	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainLevelFinished, arg_12_0._onTrainResultFinished, arg_12_0)
 end
 
-function slot0._onTrainResultFinished(slot0)
-	slot0._showLv = true
+function var_0_0._onTrainResultFinished(arg_13_0)
+	arg_13_0._showLv = true
 
-	slot0:refreshAttributeItem()
+	arg_13_0:refreshAttributeItem()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._critterMO = slot1
-	slot0._critterId = slot1 and slot1.id
+function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
+	arg_14_0._critterMO = arg_14_1
+	arg_14_0._critterId = arg_14_1 and arg_14_1.id
 
-	slot0:refreshUI()
+	arg_14_0:refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._attributeItems then
-		for slot4, slot5 in pairs(slot0._attributeItems) do
-			slot5:destroy()
+function var_0_0.onDestroyView(arg_16_0)
+	if arg_16_0._attributeItems then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0._attributeItems) do
+			iter_16_1:destroy()
 		end
 
-		slot0._attributeItems = nil
+		arg_16_0._attributeItems = nil
 	end
 
-	if slot0._eventPointTbList then
-		slot0._eventPointTbList = nil
+	if arg_16_0._eventPointTbList then
+		local var_16_0 = arg_16_0._eventPointTbList
 
-		for slot5, slot6 in ipairs(slot0._eventPointTbList) do
-			slot0:_disposeEventPointBT(slot6)
+		arg_16_0._eventPointTbList = nil
+
+		for iter_16_2, iter_16_3 in ipairs(var_16_0) do
+			arg_16_0:_disposeEventPointBT(iter_16_3)
 		end
 	end
 end
 
-function slot0.setFinishCallback(slot0, slot1, slot2)
-	slot0._finishCallback = slot1
-	slot0._finishCallbackObj = slot2
+function var_0_0.setFinishCallback(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._finishCallback = arg_17_1
+	arg_17_0._finishCallbackObj = arg_17_2
 end
 
-function slot0.setCritterChanageCallback(slot0, slot1, slot2)
-	slot0._critterchangeCallback = slot1
-	slot0._critterchangeCallbackObj = slot2
+function var_0_0.setCritterChanageCallback(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0._critterchangeCallback = arg_18_1
+	arg_18_0._critterchangeCallbackObj = arg_18_2
 
-	if slot1 then
-		gohelper.setActive(slot0._btncritterchange, true)
+	if arg_18_1 then
+		gohelper.setActive(arg_18_0._btncritterchange, true)
 	else
-		gohelper.setActive(slot0._btncritterchange, false)
+		gohelper.setActive(arg_18_0._btncritterchange, false)
 	end
 end
 
-function slot0.tranCdTimeUpdate(slot0)
-	slot0:refreshTrainProgressUI()
+function var_0_0.tranCdTimeUpdate(arg_19_0)
+	arg_19_0:refreshTrainProgressUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshTrainProgressUI()
-	slot0:refreshSlotUI()
-	slot0:refreshAttributeItem()
+function var_0_0.refreshUI(arg_20_0)
+	arg_20_0:refreshTrainProgressUI()
+	arg_20_0:refreshSlotUI()
+	arg_20_0:refreshAttributeItem()
 end
 
-function slot0.setShowStateInfo(slot0, slot1)
-	slot0._showStateInfo = slot1 and true or false
+function var_0_0.setShowStateInfo(arg_21_0, arg_21_1)
+	arg_21_0._showStateInfo = arg_21_1 and true or false
 
-	slot0:refreshTrainProgressUI()
+	arg_21_0:refreshTrainProgressUI()
 end
 
-function slot0.refreshTrainProgressUI(slot0)
-	if slot0._critterMO and slot1.trainInfo then
-		slot3 = slot1.trainInfo:isTrainFinish()
+function var_0_0.refreshTrainProgressUI(arg_22_0)
+	local var_22_0 = arg_22_0._critterMO
 
-		gohelper.setActive(slot0._btntrainfinish, slot0._showStateInfo and slot3)
-		gohelper.setActive(slot0._gogressFinishBg, slot0._showStateInfo and slot3)
-		gohelper.setActive(slot0._gogrssBg, not slot0._showStateInfo or not slot3)
-		gohelper.setActive(slot0._gotrainTime, slot0._showStateInfo and not slot3)
-		gohelper.setActive(slot0._btnaccelerate, slot0._showStateInfo and not slot3)
-		slot0:setBarValue(slot2:getProcess())
+	if var_22_0 and var_22_0.trainInfo then
+		local var_22_1 = var_22_0.trainInfo
+		local var_22_2 = var_22_1:isTrainFinish()
 
-		slot0._txttotalTrainTime.text = TimeUtil.second2TimeString(slot2:getCurCdTime(), true)
+		gohelper.setActive(arg_22_0._btntrainfinish, arg_22_0._showStateInfo and var_22_2)
+		gohelper.setActive(arg_22_0._gogressFinishBg, arg_22_0._showStateInfo and var_22_2)
+		gohelper.setActive(arg_22_0._gogrssBg, not arg_22_0._showStateInfo or not var_22_2)
+		gohelper.setActive(arg_22_0._gotrainTime, arg_22_0._showStateInfo and not var_22_2)
+		gohelper.setActive(arg_22_0._btnaccelerate, arg_22_0._showStateInfo and not var_22_2)
+		arg_22_0:setBarValue(var_22_1:getProcess())
 
-		slot0:refreshEventPointUI()
+		arg_22_0._txttotalTrainTime.text = TimeUtil.second2TimeString(var_22_1:getCurCdTime(), true)
+
+		arg_22_0:refreshEventPointUI()
 	end
 
-	slot0:_refreshTipsUI()
+	arg_22_0:_refreshTipsUI()
 end
 
-function slot0.setBarValue(slot0, slot1)
-	slot0._barValue = slot1
-	slot0._imagetotalBarValue.fillAmount = slot1
+function var_0_0.setBarValue(arg_23_0, arg_23_1)
+	arg_23_0._barValue = arg_23_1
+	arg_23_0._imagetotalBarValue.fillAmount = arg_23_1
 end
 
-function slot0.getBarValue(slot0, slot1)
-	return slot0._barValue
+function var_0_0.getBarValue(arg_24_0, arg_24_1)
+	return arg_24_0._barValue
 end
 
-function slot0._refreshTipsUI(slot0)
-	if slot0._lookTrainInfoMO then
-		if slot0._lookEventTime - slot0._lookTrainInfoMO:getProcessTime() < 0 or slot0._critterId ~= slot0._lookCritterId then
-			gohelper.setActive(slot0._goeventtips, false)
+function var_0_0._refreshTipsUI(arg_25_0)
+	if arg_25_0._lookTrainInfoMO then
+		local var_25_0 = arg_25_0._lookEventTime - arg_25_0._lookTrainInfoMO:getProcessTime()
 
-			slot0._lookTrainInfoMO = nil
-			slot0._lookCritterId = nil
+		if var_25_0 < 0 or arg_25_0._critterId ~= arg_25_0._lookCritterId then
+			gohelper.setActive(arg_25_0._goeventtips, false)
+
+			arg_25_0._lookTrainInfoMO = nil
+			arg_25_0._lookCritterId = nil
 		else
-			slot0._txteventtime.text = TimeUtil.second2TimeString(slot1, true)
+			arg_25_0._txteventtime.text = TimeUtil.second2TimeString(var_25_0, true)
 		end
 	end
 end
 
-function slot0.refreshSlotUI(slot0)
-	if slot0._critterMO then
-		if not slot0.critterIcon then
-			slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocrittericon)
+function var_0_0.refreshSlotUI(arg_26_0)
+	local var_26_0 = arg_26_0._critterMO
+
+	if var_26_0 then
+		if not arg_26_0.critterIcon then
+			arg_26_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_26_0._gocrittericon)
 		end
 
-		slot0.critterIcon:setMOValue(slot1:getId(), slot1:getDefineId())
+		arg_26_0.critterIcon:setMOValue(var_26_0:getId(), var_26_0:getDefineId())
 
-		if HeroModel.instance:getByHeroId(slot1.trainInfo.heroId) and SkinConfig.instance:getSkinCo(slot2.skin) then
-			slot0._simageheroIcon:LoadImage(ResUrl.getRoomHeadIcon(slot3.headIcon))
+		local var_26_1 = HeroModel.instance:getByHeroId(var_26_0.trainInfo.heroId)
+		local var_26_2 = var_26_1 and SkinConfig.instance:getSkinCo(var_26_1.skin)
+
+		if var_26_2 then
+			arg_26_0._simageheroIcon:LoadImage(ResUrl.getRoomHeadIcon(var_26_2.headIcon))
 		end
 
-		slot0._txttrainingname.text = slot1:getName()
+		arg_26_0._txttrainingname.text = var_26_0:getName()
 	end
 end
 
-function slot0.refreshEventPointUI(slot0)
-	if not slot0._eventPointTbList then
+function var_0_0.refreshEventPointUI(arg_27_0)
+	if not arg_27_0._eventPointTbList then
 		return
 	end
 
-	slot1 = 0
+	local var_27_0 = 0
+	local var_27_1 = arg_27_0._critterMO
 
-	if slot0._critterMO and slot2.trainInfo then
-		slot4 = slot2:getTainTime()
-		slot5 = recthelper.getWidth(slot0._barTrs)
+	if var_27_1 and var_27_1.trainInfo then
+		local var_27_2 = var_27_1.trainInfo.eventTimePoints
+		local var_27_3 = var_27_1:getTainTime()
+		local var_27_4 = recthelper.getWidth(arg_27_0._barTrs)
 
-		for slot9 = 1, #slot2.trainInfo.eventTimePoints do
-			slot10 = slot3[slot9]
+		for iter_27_0 = 1, #var_27_2 do
+			local var_27_5 = var_27_2[iter_27_0]
 
-			if not slot0._eventPointTbList[slot1 + 1] then
-				table.insert(slot0._eventPointTbList, slot0:_createEventPointTB(gohelper.cloneInPlace(slot0._goeventpointitem)))
+			var_27_0 = var_27_0 + 1
+
+			local var_27_6 = arg_27_0._eventPointTbList[var_27_0]
+
+			if not var_27_6 then
+				local var_27_7 = gohelper.cloneInPlace(arg_27_0._goeventpointitem)
+
+				var_27_6 = arg_27_0:_createEventPointTB(var_27_7)
+
+				table.insert(arg_27_0._eventPointTbList, var_27_6)
 			end
 
-			slot11.roundIndex = slot1
+			var_27_6.roundIndex = var_27_0
 
-			slot0:_updateEventPointTB(slot11, slot5 * slot10 / slot4, slot10, slot2.trainInfo, slot2.id)
+			local var_27_8 = var_27_4 * var_27_5 / var_27_3
+
+			arg_27_0:_updateEventPointTB(var_27_6, var_27_8, var_27_5, var_27_1.trainInfo, var_27_1.id)
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._eventPointTbList) do
-		gohelper.setActive(slot7.go, slot6 <= slot1)
+	for iter_27_1, iter_27_2 in ipairs(arg_27_0._eventPointTbList) do
+		gohelper.setActive(iter_27_2.go, iter_27_1 <= var_27_0)
 	end
 end
 
-function slot0.refreshAttributeItem(slot0)
-	if slot0._critterMO then
-		for slot5, slot6 in pairs(slot0._attributeItems) do
-			slot6:hideItem()
+function var_0_0.refreshAttributeItem(arg_28_0)
+	local var_28_0 = arg_28_0._critterMO
+
+	if var_28_0 then
+		for iter_28_0, iter_28_1 in pairs(arg_28_0._attributeItems) do
+			iter_28_1:hideItem()
 		end
 
-		for slot6 = 1, #slot1:getAttributeInfos() do
-			if not slot0._attributeItems[slot6] then
-				slot0._attributeItems[slot6] = RoomCritterTrainDetailItemAttributeItem.New()
+		local var_28_1 = var_28_0:getAttributeInfos()
 
-				slot0._attributeItems[slot6]:init(slot0._gobaseitem)
+		for iter_28_2 = 1, #var_28_1 do
+			if not arg_28_0._attributeItems[iter_28_2] then
+				arg_28_0._attributeItems[iter_28_2] = RoomCritterTrainDetailItemAttributeItem.New()
+
+				arg_28_0._attributeItems[iter_28_2]:init(arg_28_0._gobaseitem)
 			end
 
-			slot0._attributeItems[slot6]:setShowLv(slot0._showLv)
-			slot0._attributeItems[slot6]:refresh(slot2[slot6], slot1)
+			arg_28_0._attributeItems[iter_28_2]:setShowLv(arg_28_0._showLv)
+			arg_28_0._attributeItems[iter_28_2]:refresh(var_28_1[iter_28_2], var_28_0)
 		end
 	end
 end
 
-function slot0.playLevelUp(slot0, slot1, slot2)
-	if slot0._critterMO then
-		for slot7, slot8 in ipairs(slot0._attributeItems) do
-			slot9 = false
+function var_0_0.playLevelUp(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_0._critterMO then
+		for iter_29_0, iter_29_1 in ipairs(arg_29_0._attributeItems) do
+			local var_29_0 = false
 
-			for slot13 = 1, #slot1 do
-				if slot8:getAttributeId() == slot1[slot13].attributeId then
-					slot9 = true
+			for iter_29_2 = 1, #arg_29_1 do
+				if iter_29_1:getAttributeId() == arg_29_1[iter_29_2].attributeId then
+					var_29_0 = true
 
-					slot8:playLevelUp(slot1[slot13], slot2)
+					iter_29_1:playLevelUp(arg_29_1[iter_29_2], arg_29_2)
 				end
 			end
 
-			if not slot9 then
-				slot8:playNoLevelUp()
+			if not var_29_0 then
+				iter_29_1:playNoLevelUp()
 			end
 		end
 	end
 end
 
-function slot0.playBarAdd(slot0, slot1, slot2)
-	if slot0._critterMO then
-		for slot7, slot8 in ipairs(slot0._attributeItems) do
-			if slot1 then
-				for slot12 = 1, #slot2 do
-					if slot8:getAttributeId() == slot2[slot12].addAttriButes[1].attributeId then
-						slot8:playBarAdd(slot1, slot2[slot12].addAttriButes[1])
+function var_0_0.playBarAdd(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_0._critterMO then
+		for iter_30_0, iter_30_1 in ipairs(arg_30_0._attributeItems) do
+			if arg_30_1 then
+				for iter_30_2 = 1, #arg_30_2 do
+					if iter_30_1:getAttributeId() == arg_30_2[iter_30_2].addAttriButes[1].attributeId then
+						iter_30_1:playBarAdd(arg_30_1, arg_30_2[iter_30_2].addAttriButes[1])
 					end
 				end
 			else
-				slot8:playBarAdd(slot1)
+				iter_30_1:playBarAdd(arg_30_1)
 			end
 		end
 	end
 end
 
-function slot0._updateEventPointTB(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot1.trainInfoMO = slot4
-	slot1.critterId = slot5
-	slot1.eventTime = slot3
-	slot7 = slot4:checkRoundFinish(slot1.roundIndex, CritterEnum.EventType.ActiveTime)
+function var_0_0._updateEventPointTB(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4, arg_31_5)
+	arg_31_1.trainInfoMO = arg_31_4
+	arg_31_1.critterId = arg_31_5
+	arg_31_1.eventTime = arg_31_3
 
-	if slot1.isLastActivie ~= (slot3 < slot4:getProcessTime()) or slot1.isLastFinish ~= slot7 then
-		slot1.isLastActivie = slot6
-		slot1.isLastFinish = slot7
+	local var_31_0 = arg_31_3 < arg_31_4:getProcessTime()
+	local var_31_1 = arg_31_4:checkRoundFinish(arg_31_1.roundIndex, CritterEnum.EventType.ActiveTime)
 
-		gohelper.setActive(slot1._gounactive, not slot6)
-		gohelper.setActive(slot1._gounfinish, slot6 and not slot7)
-		gohelper.setActive(slot1._gofinish, slot6 and slot7)
+	if arg_31_1.isLastActivie ~= var_31_0 or arg_31_1.isLastFinish ~= var_31_1 then
+		arg_31_1.isLastActivie = var_31_0
+		arg_31_1.isLastFinish = var_31_1
+
+		gohelper.setActive(arg_31_1._gounactive, not var_31_0)
+		gohelper.setActive(arg_31_1._gounfinish, var_31_0 and not var_31_1)
+		gohelper.setActive(arg_31_1._gofinish, var_31_0 and var_31_1)
 	end
 
-	if slot1.anchorX ~= slot2 then
-		slot1.anchorX = slot2
+	if arg_31_1.anchorX ~= arg_31_2 then
+		arg_31_1.anchorX = arg_31_2
 
-		recthelper.setAnchorX(slot1.goTrs, slot2)
+		recthelper.setAnchorX(arg_31_1.goTrs, arg_31_2)
 	end
 end
 
-function slot0._tbunactiveOnClick(slot0, slot1)
-	if slot0._lookCritterId == slot1.critterId and slot0._lookEventTime == slot1.eventTime then
-		slot0._lookTrainInfoMO = nil
-		slot0._lookCritterId = nil
+function var_0_0._tbunactiveOnClick(arg_32_0, arg_32_1)
+	if arg_32_0._lookCritterId == arg_32_1.critterId and arg_32_0._lookEventTime == arg_32_1.eventTime then
+		arg_32_0._lookTrainInfoMO = nil
+		arg_32_0._lookCritterId = nil
 
-		gohelper.setActive(slot0._goeventtips, false)
+		gohelper.setActive(arg_32_0._goeventtips, false)
 
 		return
 	end
 
-	slot0._lookTrainInfoMO = slot1.trainInfoMO
-	slot0._lookCritterId = slot1.critterId
-	slot0._lookEventTime = slot1.eventTime
+	arg_32_0._lookTrainInfoMO = arg_32_1.trainInfoMO
+	arg_32_0._lookCritterId = arg_32_1.critterId
+	arg_32_0._lookEventTime = arg_32_1.eventTime
 
-	recthelper.setAnchorX(slot0._goeventtipsTrs, slot1.anchorX)
-	gohelper.setActive(slot0._goeventtips, not slot1.isLastActivie)
-	slot0:_refreshTipsUI()
+	recthelper.setAnchorX(arg_32_0._goeventtipsTrs, arg_32_1.anchorX)
+	gohelper.setActive(arg_32_0._goeventtips, not arg_32_1.isLastActivie)
+	arg_32_0:_refreshTipsUI()
 end
 
-function slot0._createEventPointTB(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goTrs = slot1.transform
-	slot2._gounfinish = gohelper.findChild(slot1, "unfinish")
-	slot2._gofinish = gohelper.findChild(slot1, "finished")
-	slot2._gounactive = gohelper.findChild(slot1, "unactive")
-	slot2._btnunactive = gohelper.findChildButtonWithAudio(slot1, "unactive")
+function var_0_0._createEventPointTB(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0:getUserDataTb_()
 
-	slot2._btnunactive:AddClickListener(slot0._tbunactiveOnClick, slot0, slot2)
+	var_33_0.go = arg_33_1
+	var_33_0.goTrs = arg_33_1.transform
+	var_33_0._gounfinish = gohelper.findChild(arg_33_1, "unfinish")
+	var_33_0._gofinish = gohelper.findChild(arg_33_1, "finished")
+	var_33_0._gounactive = gohelper.findChild(arg_33_1, "unactive")
+	var_33_0._btnunactive = gohelper.findChildButtonWithAudio(arg_33_1, "unactive")
 
-	return slot2
+	var_33_0._btnunactive:AddClickListener(arg_33_0._tbunactiveOnClick, arg_33_0, var_33_0)
+
+	return var_33_0
 end
 
-function slot0._disposeEventPointBT(slot0, slot1)
-	if slot1 then
-		slot1.go = nil
-		slot1.goTrs = nil
-		slot1._gounfinsh = nil
-		slot1._gofinish = nil
+function var_0_0._disposeEventPointBT(arg_34_0, arg_34_1)
+	if arg_34_1 then
+		arg_34_1.go = nil
+		arg_34_1.goTrs = nil
+		arg_34_1._gounfinsh = nil
+		arg_34_1._gofinish = nil
 
-		if slot1._btnunactive then
-			slot1._btnunactive:RemoveClickListener()
+		if arg_34_1._btnunactive then
+			arg_34_1._btnunactive:RemoveClickListener()
 		end
 
-		slot1._btnunactive = nil
+		arg_34_1._btnunactive = nil
 	end
 end
 
-function slot0.getUserDataTb_(slot0)
-	if slot0._view then
-		return slot0._view:getUserDataTb_()
+function var_0_0.getUserDataTb_(arg_35_0)
+	if arg_35_0._view then
+		return arg_35_0._view:getUserDataTb_()
 	end
 
 	return {}
 end
 
-slot0.prefabPath = "ui/viewres/room/critter/roomcrittertraindetailitem.prefab"
+var_0_0.prefabPath = "ui/viewres/room/critter/roomcrittertraindetailitem.prefab"
 
-return slot0
+return var_0_0

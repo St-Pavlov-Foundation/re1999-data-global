@@ -1,11 +1,11 @@
-module("modules.logic.bossrush.view.FightActionBarPopViewContainer", package.seeall)
+﻿module("modules.logic.bossrush.view.FightActionBarPopViewContainer", package.seeall)
 
-slot0 = class("FightActionBarPopViewContainer", BaseViewContainer)
+local var_0_0 = class("FightActionBarPopViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightActionBarPopView.New()
 	}
 end
 
-return slot0
+return var_0_0

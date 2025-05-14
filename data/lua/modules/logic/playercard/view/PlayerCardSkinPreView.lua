@@ -1,160 +1,172 @@
-module("modules.logic.playercard.view.PlayerCardSkinPreView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardSkinPreView", package.seeall)
 
-slot0 = class("PlayerCardSkinPreView", LuaCompBase)
+local var_0_0 = class("PlayerCardSkinPreView", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._isopen = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._isopen = false
 
-	slot0:onInitView()
-	slot0:addEvents()
-	slot0:initView()
+	arg_1_0:onInitView()
+	arg_1_0:addEvents()
+	arg_1_0:initView()
 end
 
-function slot0.onInitView(slot0)
-	slot0._btndetail = gohelper.findChildButton(slot0.viewGO, "#btn_detail")
-	slot0._gosocialfrienditemnode = gohelper.findChild(slot0.viewGO, "#btn_detail/#go_socialfrienditem")
-	slot0._gochat = gohelper.findChild(slot0.viewGO, "#go_chat")
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#go_chat/#btn_close")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_chat/#simage_chatbg")
-	slot0._goSkinbg = gohelper.findChild(slot0.viewGO, "#go_chat/#go_skinbg")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._btndetail = gohelper.findChildButton(arg_2_0.viewGO, "#btn_detail")
+	arg_2_0._gosocialfrienditemnode = gohelper.findChild(arg_2_0.viewGO, "#btn_detail/#go_socialfrienditem")
+	arg_2_0._gochat = gohelper.findChild(arg_2_0.viewGO, "#go_chat")
+	arg_2_0._btnclose = gohelper.findChildButton(arg_2_0.viewGO, "#go_chat/#btn_close")
+	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_chat/#simage_chatbg")
+	arg_2_0._goSkinbg = gohelper.findChild(arg_2_0.viewGO, "#go_chat/#go_skinbg")
 
-	gohelper.setActive(slot0._gochat, slot0._isopen)
+	gohelper.setActive(arg_2_0._gochat, arg_2_0._isopen)
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._btndetail, slot0.onClickDetail, slot0)
-	slot0:addClickCb(slot0._btnclose, slot0.onClickDetail, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, slot0.onSwitchView, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0:addClickCb(arg_3_0._btndetail, arg_3_0.onClickDetail, arg_3_0)
+	arg_3_0:addClickCb(arg_3_0._btnclose, arg_3_0.onClickDetail, arg_3_0)
+	arg_3_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_3_0.onSwitchView, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0._btndetail, slot0.onClickDetail, slot0)
-	slot0:removeClickCb(slot0._btnclose, slot0.onClickDetail, slot0)
-	slot0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, slot0.onSwitchView, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0:removeClickCb(arg_4_0._btndetail, arg_4_0.onClickDetail, arg_4_0)
+	arg_4_0:removeClickCb(arg_4_0._btnclose, arg_4_0.onClickDetail, arg_4_0)
+	arg_4_0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_4_0.onSwitchView, arg_4_0)
 end
 
-function slot0.onClickDetail(slot0)
-	slot0._isopen = not slot0._isopen
+function var_0_0.onClickDetail(arg_5_0)
+	arg_5_0._isopen = not arg_5_0._isopen
 
-	gohelper.setActive(slot0._gochat, slot0._isopen)
+	gohelper.setActive(arg_5_0._gochat, arg_5_0._isopen)
 end
 
-function slot0.initView(slot0)
-	slot0._skinId = PlayerCardModel.instance:getPlayerCardSkinId()
-	slot0._itemPath = "ui/viewres/social/socialfrienditem.prefab"
-	slot0._loader = MultiAbLoader.New()
+function var_0_0.initView(arg_6_0)
+	arg_6_0._skinId = PlayerCardModel.instance:getPlayerCardSkinId()
+	arg_6_0._itemPath = "ui/viewres/social/socialfrienditem.prefab"
+	arg_6_0._loader = MultiAbLoader.New()
 
-	if slot0._skinId and slot0._skinId ~= 0 then
-		slot0._hasSkin = true
-		slot0._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", slot0._skinId)
+	if arg_6_0._skinId and arg_6_0._skinId ~= 0 then
+		arg_6_0._hasSkin = true
+		arg_6_0._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", arg_6_0._skinId)
 
-		slot0._loader:addPath(slot0._skinPath)
+		arg_6_0._loader:addPath(arg_6_0._skinPath)
 	else
-		slot0._hasSkin = false
+		arg_6_0._hasSkin = false
 	end
 
-	gohelper.setActive(slot0._goSkinbg, slot0._hasSkin)
-	gohelper.setActive(slot0._simagebg.gameObject, not slot0._hasSkin)
-	slot0._loader:addPath(slot0._itemPath)
-	slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+	gohelper.setActive(arg_6_0._goSkinbg, arg_6_0._hasSkin)
+	gohelper.setActive(arg_6_0._simagebg.gameObject, not arg_6_0._hasSkin)
+	arg_6_0._loader:addPath(arg_6_0._itemPath)
+	arg_6_0._loader:startLoad(arg_6_0._onLoadFinish, arg_6_0)
 
-	slot0._selectMo = PlayerCardModel.instance:getSelectSkinMO()
+	arg_6_0._selectMo = PlayerCardModel.instance:getSelectSkinMO()
 end
 
-function slot0.switchSkin(slot0, slot1)
-	gohelper.destroy(slot0._goskinEffect)
+function var_0_0.switchSkin(arg_7_0, arg_7_1)
+	gohelper.destroy(arg_7_0._goskinEffect)
 
-	slot0._switchskinloader = MultiAbLoader.New()
+	arg_7_0._switchskinloader = MultiAbLoader.New()
 
-	if slot1 and slot1 ~= 0 then
-		slot0._hasSkin = true
-		slot0._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", slot1)
+	if arg_7_1 and arg_7_1 ~= 0 then
+		arg_7_0._hasSkin = true
+		arg_7_0._skinPath = string.format("ui/viewres/player/playercard/playercardskinpreview_%s.prefab", arg_7_1)
 
-		slot0._loader:addPath(slot0._skinPath)
+		arg_7_0._loader:addPath(arg_7_0._skinPath)
 	else
-		slot0._hasSkin = false
+		arg_7_0._hasSkin = false
 	end
 
-	gohelper.setActive(slot0._simagebg.gameObject, not slot0._hasSkin)
-	gohelper.setActive(slot0._goSkinbg, slot0._hasSkin)
-	gohelper.setActive(slot0._gosocialfrienditem, false)
-	slot0._switchskinloader:addPath(slot0._skinPath)
-	slot0._switchskinloader:startLoad(slot0._onLoadSkinFinish, slot0)
+	gohelper.setActive(arg_7_0._simagebg.gameObject, not arg_7_0._hasSkin)
+	gohelper.setActive(arg_7_0._goSkinbg, arg_7_0._hasSkin)
+	gohelper.setActive(arg_7_0._gosocialfrienditem, false)
+	arg_7_0._switchskinloader:addPath(arg_7_0._skinPath)
+	arg_7_0._switchskinloader:startLoad(arg_7_0._onLoadSkinFinish, arg_7_0)
 end
 
-function slot0._onLoadSkinFinish(slot0)
-	slot0._goskinEffect = gohelper.clone(slot0._switchskinloader:getAssetItem(slot0._skinPath):GetResource(slot0._skinPath), slot0._goSkinbg)
+function var_0_0._onLoadSkinFinish(arg_8_0)
+	local var_8_0 = arg_8_0._switchskinloader:getAssetItem(arg_8_0._skinPath):GetResource(arg_8_0._skinPath)
 
-	gohelper.setActive(slot0._gosocialfrienditem, true)
+	arg_8_0._goskinEffect = gohelper.clone(var_8_0, arg_8_0._goSkinbg)
+
+	gohelper.setActive(arg_8_0._gosocialfrienditem, true)
 end
 
-function slot0.updateBg(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getSocialIcon("img_chat_bg.png"))
+function var_0_0.updateBg(arg_9_0)
+	local var_9_0 = "img_chat_bg.png"
+
+	arg_9_0._simagebg:LoadImage(ResUrl.getSocialIcon(var_9_0))
 end
 
-function slot0.updateItem(slot0)
-	slot0._socialfrienditemcls:selectSkin(slot0._selectMo.id)
+function var_0_0.updateItem(arg_10_0)
+	arg_10_0._socialfrienditemcls:selectSkin(arg_10_0._selectMo.id)
 end
 
-function slot0._onLoadFinish(slot0)
-	if slot0._hasSkin then
-		slot0._goskinEffect = gohelper.clone(slot0._loader:getAssetItem(slot0._skinPath):GetResource(slot0._skinPath), slot0._goSkinbg)
+function var_0_0._onLoadFinish(arg_11_0)
+	if arg_11_0._hasSkin then
+		local var_11_0 = arg_11_0._loader:getAssetItem(arg_11_0._skinPath):GetResource(arg_11_0._skinPath)
+
+		arg_11_0._goskinEffect = gohelper.clone(var_11_0, arg_11_0._goSkinbg)
 	end
 
-	slot0._gosocialfrienditem = gohelper.clone(slot0._loader:getAssetItem(slot0._itemPath):GetResource(slot0._itemPath), slot0._gosocialfrienditemnode)
-	slot0._socialfrienditemcls = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gosocialfrienditem, SocialFriendItem)
-	slot3 = PlayerModel.instance:getPlayinfo()
+	local var_11_1 = arg_11_0._loader:getAssetItem(arg_11_0._itemPath):GetResource(arg_11_0._itemPath)
 
-	slot0._socialfrienditemcls:onUpdateMO({
+	arg_11_0._gosocialfrienditem = gohelper.clone(var_11_1, arg_11_0._gosocialfrienditemnode)
+	arg_11_0._socialfrienditemcls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._gosocialfrienditem, SocialFriendItem)
+
+	local var_11_2 = PlayerModel.instance:getPlayinfo()
+	local var_11_3 = {
 		time = 0,
-		userId = slot3.userId,
-		name = slot3.name,
-		level = slot3.level,
-		portrait = slot3.portrait
-	})
-	slot0._socialfrienditemcls:selectSkin(PlayerCardModel.instance:getPlayerCardSkinId())
+		userId = var_11_2.userId,
+		name = var_11_2.name,
+		level = var_11_2.level,
+		portrait = var_11_2.portrait
+	}
+	local var_11_4 = PlayerCardModel.instance:getPlayerCardSkinId()
+
+	arg_11_0._socialfrienditemcls:onUpdateMO(var_11_3)
+	arg_11_0._socialfrienditemcls:selectSkin(var_11_4)
 end
 
-function slot0.onSwitchView(slot0, slot1)
-	slot0._selectMo = PlayerCardModel.instance:getSelectSkinMO()
+function var_0_0.onSwitchView(arg_12_0, arg_12_1)
+	arg_12_0._selectMo = PlayerCardModel.instance:getSelectSkinMO()
 
-	if slot0._selectMo.id ~= 0 then
-		gohelper.setActive(slot0._goSkinbg, true)
-		gohelper.setActive(slot0._simagebg.gameObject, false)
+	if arg_12_0._selectMo.id ~= 0 then
+		gohelper.setActive(arg_12_0._goSkinbg, true)
+		gohelper.setActive(arg_12_0._simagebg.gameObject, false)
 
-		if slot0._selectMo.id ~= slot0._skinId then
-			slot0._skinId = slot0._selectMo.id
+		if arg_12_0._selectMo.id ~= arg_12_0._skinId then
+			arg_12_0._skinId = arg_12_0._selectMo.id
 
-			slot0:switchSkin(slot0._skinId)
-			slot0._socialfrienditemcls:selectSkin(slot0._skinId)
+			arg_12_0:switchSkin(arg_12_0._skinId)
+			arg_12_0._socialfrienditemcls:selectSkin(arg_12_0._skinId)
 		end
 	else
-		gohelper.setActive(slot0._goSkinbg, false)
-		gohelper.setActive(slot0._simagebg.gameObject, true)
-		slot0._socialfrienditemcls:selectSkin(slot0._selectMo.id)
+		gohelper.setActive(arg_12_0._goSkinbg, false)
+		gohelper.setActive(arg_12_0._simagebg.gameObject, true)
+		arg_12_0._socialfrienditemcls:selectSkin(arg_12_0._selectMo.id)
 
-		slot0._skinId = slot0._selectMo.id
+		arg_12_0._skinId = arg_12_0._selectMo.id
 	end
 end
 
-function slot0.onHide(slot0)
-	slot1 = PlayerCardModel.instance:getPlayerCardSkinId()
-	slot0._skinId = slot1
+function var_0_0.onHide(arg_13_0)
+	local var_13_0 = PlayerCardModel.instance:getPlayerCardSkinId()
 
-	slot0._socialfrienditemcls:selectSkin(slot1)
+	arg_13_0._skinId = var_13_0
+
+	arg_13_0._socialfrienditemcls:selectSkin(var_13_0)
 end
 
-function slot0.onDestroy(slot0)
-	slot0:removeEvents()
+function var_0_0.onDestroy(arg_14_0)
+	arg_14_0:removeEvents()
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_14_0._loader then
+		arg_14_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_14_0._loader = nil
 	end
 
-	gohelper.destroy(slot0._gosocialfrienditem)
+	gohelper.destroy(arg_14_0._gosocialfrienditem)
 end
 
-return slot0
+return var_0_0

@@ -1,4 +1,4 @@
-return {
+﻿return {
 	{
 		id = 2220001,
 		chess = {

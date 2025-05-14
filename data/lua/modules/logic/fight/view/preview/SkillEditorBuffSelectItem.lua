@@ -1,126 +1,147 @@
-module("modules.logic.fight.view.preview.SkillEditorBuffSelectItem", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorBuffSelectItem", package.seeall)
 
-slot0 = class("SkillEditorBuffSelectItem", ListScrollCell)
+local var_0_0 = class("SkillEditorBuffSelectItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._text = gohelper.findChildText(slot1, "Text")
-	slot0._text1 = gohelper.findChildText(slot1, "imgSelect/Text")
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot1)
-	slot0._selectGO = gohelper.findChild(slot1, "imgSelect")
-	slot0._textAddLayer1 = nil
-	slot0._textAddLayer10 = nil
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
+	arg_1_0._text1 = gohelper.findChildText(arg_1_1, "imgSelect/Text")
+	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "imgSelect")
+	arg_1_0._textAddLayer1 = nil
+	arg_1_0._textAddLayer10 = nil
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 
-	if slot0._clickLayer1 then
-		slot0._clickLayer1:RemoveClickListener()
-		slot0._clickLayer10:RemoveClickListener()
+	if arg_3_0._clickLayer1 then
+		arg_3_0._clickLayer1:RemoveClickListener()
+		arg_3_0._clickLayer10:RemoveClickListener()
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot1.co
-	slot0._text.text = slot2.id .. "\n" .. slot2.name
-	slot0._text1.text = slot2.id .. "\n" .. slot2.name
-	slot4 = slot0:_getEntityBuffMO(SkillEditorBuffSelectModel.instance.attacker, slot2.id) ~= nil
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	gohelper.setActive(slot0._text.gameObject, not slot4)
-	gohelper.setActive(slot0._selectGO, slot4)
+	local var_4_0 = arg_4_1.co
+	local var_4_1 = SkillEditorBuffSelectModel.instance.attacker
 
-	slot0._canShowLayer = false
+	arg_4_0._text.text = var_4_0.id .. "\n" .. var_4_0.name
+	arg_4_0._text1.text = var_4_0.id .. "\n" .. var_4_0.name
 
-	if slot4 then
-		for slot8, slot9 in ipairs(lua_fight_buff_layer_effect.configList) do
-			if slot9.id == slot2.id then
-				slot0._canShowLayer = true
+	local var_4_2 = arg_4_0:_getEntityBuffMO(var_4_1, var_4_0.id) ~= nil
+
+	gohelper.setActive(arg_4_0._text.gameObject, not var_4_2)
+	gohelper.setActive(arg_4_0._selectGO, var_4_2)
+
+	arg_4_0._canShowLayer = false
+
+	if var_4_2 then
+		for iter_4_0, iter_4_1 in ipairs(lua_fight_buff_layer_effect.configList) do
+			if iter_4_1.id == var_4_0.id then
+				arg_4_0._canShowLayer = true
 
 				break
 			end
 		end
 	end
 
-	if slot0._canShowLayer and not slot0._textAddLayer1 then
-		slot0._textAddLayer1 = gohelper.findChildText(slot0.go, "layer1")
-		slot0._textAddLayer10 = gohelper.findChildText(slot0.go, "layer10")
-		slot0._textAddLayer1.text = "<color=white>+1层</color>"
-		slot0._textAddLayer10.text = "<color=white>+10层</color>"
-		slot0._textAddLayer1.raycastTarget = true
-		slot0._textAddLayer10.raycastTarget = true
-		slot0._clickLayer1 = gohelper.getClick(gohelper.cloneInPlace(slot0._text.gameObject, "layer1"))
-		slot0._clickLayer10 = gohelper.getClick(gohelper.cloneInPlace(slot0._text.gameObject, "layer10"))
+	if arg_4_0._canShowLayer and not arg_4_0._textAddLayer1 then
+		local var_4_3 = gohelper.cloneInPlace(arg_4_0._text.gameObject, "layer1")
+		local var_4_4 = gohelper.cloneInPlace(arg_4_0._text.gameObject, "layer10")
 
-		slot0._clickLayer1:AddClickListener(slot0._onClickAddLayer1, slot0)
-		slot0._clickLayer10:AddClickListener(slot0._onClickAddLayer10, slot0)
-		recthelper.setAnchor(slot0._textAddLayer1.transform, 100, 25)
-		recthelper.setAnchor(slot0._textAddLayer10.transform, 100, -10)
+		arg_4_0._textAddLayer1 = gohelper.findChildText(arg_4_0.go, "layer1")
+		arg_4_0._textAddLayer10 = gohelper.findChildText(arg_4_0.go, "layer10")
+		arg_4_0._textAddLayer1.text = "<color=white>+1层</color>"
+		arg_4_0._textAddLayer10.text = "<color=white>+10层</color>"
+		arg_4_0._textAddLayer1.raycastTarget = true
+		arg_4_0._textAddLayer10.raycastTarget = true
+		arg_4_0._clickLayer1 = gohelper.getClick(var_4_3)
+		arg_4_0._clickLayer10 = gohelper.getClick(var_4_4)
+
+		arg_4_0._clickLayer1:AddClickListener(arg_4_0._onClickAddLayer1, arg_4_0)
+		arg_4_0._clickLayer10:AddClickListener(arg_4_0._onClickAddLayer10, arg_4_0)
+		recthelper.setAnchor(arg_4_0._textAddLayer1.transform, 100, 25)
+		recthelper.setAnchor(arg_4_0._textAddLayer10.transform, 100, -10)
 	end
 
-	if slot0._textAddLayer1 then
-		gohelper.setActive(slot0._textAddLayer1.gameObject, slot0._canShowLayer)
-		gohelper.setActive(slot0._textAddLayer10.gameObject, slot0._canShowLayer)
+	if arg_4_0._textAddLayer1 then
+		gohelper.setActive(arg_4_0._textAddLayer1.gameObject, arg_4_0._canShowLayer)
+		gohelper.setActive(arg_4_0._textAddLayer10.gameObject, arg_4_0._canShowLayer)
 	end
 end
 
-function slot0._onClickAddLayer1(slot0)
-	slot2.layer = slot0:_getEntityBuffMO(SkillEditorBuffSelectModel.instance.attacker, slot0._mo.co.id).layer and slot2.layer + 1 or 1
+function var_0_0._onClickAddLayer1(arg_5_0)
+	local var_5_0 = SkillEditorBuffSelectModel.instance.attacker
+	local var_5_1 = arg_5_0:_getEntityBuffMO(var_5_0, arg_5_0._mo.co.id)
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot1.id, FightEnum.EffectType.BUFFUPDATE, slot0._mo.co.id, slot2.uid, 0)
-	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, slot0._mo.co.id)
+	var_5_1.layer = var_5_1.layer and var_5_1.layer + 1 or 1
+
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_5_0.id, FightEnum.EffectType.BUFFUPDATE, arg_5_0._mo.co.id, var_5_1.uid, 0)
+	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, arg_5_0._mo.co.id)
 end
 
-function slot0._onClickAddLayer10(slot0)
-	slot2.layer = slot0:_getEntityBuffMO(SkillEditorBuffSelectModel.instance.attacker, slot0._mo.co.id).layer and slot2.layer + 10 or 10
+function var_0_0._onClickAddLayer10(arg_6_0)
+	local var_6_0 = SkillEditorBuffSelectModel.instance.attacker
+	local var_6_1 = arg_6_0:_getEntityBuffMO(var_6_0, arg_6_0._mo.co.id)
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot1.id, FightEnum.EffectType.BUFFUPDATE, slot0._mo.co.id, slot2.uid, 0)
-	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, slot0._mo.co.id)
+	var_6_1.layer = var_6_1.layer and var_6_1.layer + 10 or 10
+
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_6_0.id, FightEnum.EffectType.BUFFUPDATE, arg_6_0._mo.co.id, var_6_1.uid, 0)
+	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, arg_6_0._mo.co.id)
 end
 
-function slot0._onClickThis(slot0)
-	if slot0:_getEntityBuffMO(SkillEditorBuffSelectModel.instance.attacker, slot0._mo.co.id) == nil then
-		slot4 = FightBuffMO.New()
+function var_0_0._onClickThis(arg_7_0)
+	local var_7_0 = SkillEditorBuffSelectModel.instance.attacker
+	local var_7_1 = arg_7_0._mo.co
+	local var_7_2 = arg_7_0:_getEntityBuffMO(var_7_0, var_7_1.id)
 
-		slot4:init({
-			buffId = slot2.id,
-			duration = 1,
-			count = 1,
-			uid = SkillEditorBuffSelectView.genBuffUid()
-		}, slot1.id)
-		slot1:getMO():addBuff(slot4)
-		slot1.buff:addBuff(slot4)
+	if var_7_2 == nil then
+		local var_7_3 = FightBuffMO.New()
+		local var_7_4 = {
+			buffId = var_7_1.id
+		}
+
+		var_7_4.duration = 1
+		var_7_4.count = 1
+		var_7_4.uid = SkillEditorBuffSelectView.genBuffUid()
+
+		var_7_3:init(var_7_4, var_7_0.id)
+		var_7_0:getMO():addBuff(var_7_3)
+		var_7_0.buff:addBuff(var_7_3)
 
 		if SkillEditorBuffSelectView._show_frame then
 			FightController.instance:dispatchEvent(FightEvent.OnEditorPlayBuffStart)
 		end
 	else
-		slot1:getMO():delBuff(slot3.uid)
-		slot1.buff:delBuff(slot3.uid)
+		var_7_0:getMO():delBuff(var_7_2.uid)
+		var_7_0.buff:delBuff(var_7_2.uid)
 	end
 
-	if slot2.typeId == 5001 then
-		slot1.nameUI:setShield(math.floor(slot1.nameUI:getHp() * 0.1 + 0.5))
+	if var_7_1.typeId == 5001 then
+		var_7_0.nameUI:setShield(math.floor(var_7_0.nameUI:getHp() * 0.1 + 0.5))
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate)
-	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, slot2.id)
-	slot0:onUpdateMO(slot0._mo)
+	FightController.instance:dispatchEvent(FightEvent.SkillEditorRefreshBuff, var_7_1.id)
+	arg_7_0:onUpdateMO(arg_7_0._mo)
 end
 
-function slot0._getEntityBuffMO(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot1:getMO():getBuffDic()) do
-		if slot8.buffId == slot2 then
-			return slot8
+function var_0_0._getEntityBuffMO(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_1:getMO():getBuffDic()
+
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		if iter_8_1.buffId == arg_8_2 then
+			return iter_8_1
 		end
 	end
 
 	return nil
 end
 
-return slot0
+return var_0_0

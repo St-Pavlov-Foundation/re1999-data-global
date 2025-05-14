@@ -1,14 +1,15 @@
-module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameResultContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameResultContainer", package.seeall)
 
-slot0 = class("YaXianGameResultContainer", BaseViewContainer)
+local var_0_0 = class("YaXianGameResultContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		YaXianGameResultView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-return slot0
+return var_0_0

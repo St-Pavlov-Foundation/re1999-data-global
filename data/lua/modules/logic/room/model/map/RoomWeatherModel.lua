@@ -1,31 +1,32 @@
-module("modules.logic.room.model.map.RoomWeatherModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomWeatherModel", package.seeall)
 
-slot0 = class("RoomWeatherModel", BaseModel)
+local var_0_0 = class("RoomWeatherModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
+function var_0_0._clearData(arg_4_0)
+	return
 end
 
-function slot0.setIsNight(slot0, slot1)
-	slot0._isNight = slot1 == true
+function var_0_0.setIsNight(arg_5_0, arg_5_1)
+	arg_5_0._isNight = arg_5_1 == true
 end
 
-function slot0.getIsNight(slot0)
-	return slot0._isNight
+function var_0_0.getIsNight(arg_6_0)
+	return arg_6_0._isNight
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

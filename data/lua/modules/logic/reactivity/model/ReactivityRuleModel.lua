@@ -1,37 +1,44 @@
-module("modules.logic.reactivity.model.ReactivityRuleModel", package.seeall)
+﻿module("modules.logic.reactivity.model.ReactivityRuleModel", package.seeall)
 
-slot0 = class("ReactivityRuleModel", ListScrollModel)
+local var_0_0 = class("ReactivityRuleModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.refreshList(slot0)
-	slot0:clear()
+function var_0_0.refreshList(arg_2_0)
+	arg_2_0:clear()
 
-	slot5 = {}
+	local var_2_0 = ReactivityController.instance:getCurReactivityId()
+	local var_2_1 = ReactivityEnum.ActivityDefine[var_2_0]
+	local var_2_2 = var_2_1 and var_2_1.storeActId
+	local var_2_3 = ReactivityConfig.instance:getItemConvertList()
+	local var_2_4 = {}
 
-	for slot9, slot10 in ipairs(ReactivityConfig.instance:getItemConvertList()) do
-		if slot10.version == (ReactivityEnum.ActivityDefine[ReactivityController.instance:getCurReactivityId()] and slot2.storeActId) then
-			table.insert(slot5, {
-				id = slot9,
-				typeId = slot10.typeId,
-				itemId = slot10.itemId,
-				limit = slot10.limit,
-				price = slot10.price
-			})
+	for iter_2_0, iter_2_1 in ipairs(var_2_3) do
+		if iter_2_1.version == var_2_2 then
+			local var_2_5 = {
+				id = iter_2_0,
+				typeId = iter_2_1.typeId,
+				itemId = iter_2_1.itemId,
+				limit = iter_2_1.limit,
+				price = iter_2_1.price
+			}
+
+			table.insert(var_2_4, var_2_5)
 		end
 	end
 
-	if #slot5 > 1 then
-		table.sort(slot5, SortUtil.tableKeyLower({
+	if #var_2_4 > 1 then
+		table.sort(var_2_4, SortUtil.tableKeyLower({
 			"typeId",
 			"itemId"
 		}))
 	end
 
-	slot0:setList(slot5)
+	arg_2_0:setList(var_2_4)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

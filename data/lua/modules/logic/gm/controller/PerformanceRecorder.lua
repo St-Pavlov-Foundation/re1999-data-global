@@ -1,571 +1,657 @@
-module("modules.logic.gm.controller.PerformanceRecorder", package.seeall)
+﻿module("modules.logic.gm.controller.PerformanceRecorder", package.seeall)
 
-slot0 = class("PerformanceRecorder")
+local var_0_0 = class("PerformanceRecorder")
 
-function slot0.init(slot0)
-	slot0._curTime = 0
-	slot0._curFrameCount = 0
-	slot0._curSceondTime = 0
-	slot0._record = {}
+function var_0_0.init(arg_1_0)
+	arg_1_0._curTime = 0
+	arg_1_0._curFrameCount = 0
+	arg_1_0._curSceondTime = 0
+	arg_1_0._record = {}
 end
 
-function slot0.initProfilerConnection()
+function var_0_0.initProfilerConnection()
 	ZProj.ProfilerConnection.Instance:Init()
-	ZProj.ProfilerConnection.Instance:RegisterReceiveMsgLuaCallback(uv0.onProfilerMsg, uv0.instance)
+	ZProj.ProfilerConnection.Instance:RegisterReceiveMsgLuaCallback(var_0_0.onProfilerMsg, var_0_0.instance)
 end
 
-function slot0.beginRecord(slot0, slot1)
-	slot0._recording = true
-	slot0._startSceondTime = os.time()
-	slot0._startTime = Time.realtimeSinceStartup
-	slot0._curSceondTime = 0
-	slot0._luaMemoryList = {}
-	slot0._allocatedMemoryList = {}
-	slot0._reservedMemoryList = {}
-	slot0._monoReservedMemoryList = {}
-	slot0._monoUsedMemoryList = {}
-	slot0._fpsList = {}
-	slot0._monoGCCount = ZProj.ProfilerHelper.GetGCCount()
-	slot0._monoGCAllocated = ZProj.ProfilerHelper.GetGCAllocated()
-	slot0._monoGCAllocated2 = ZProj.ProfilerHelper.GetMonoUsedSizeLong()
-	slot0._monoGCAmount = 0
-	slot0._luaAllocated = ZProj.ProfilerHelper.GetLuaMemory()
-	slot0._luaAllocateAmount = 0
-	slot0._luaAllocateAmountMax = 0
-	slot0._luaGCAmount = 0
-	slot0._lowestFps = 60
-	slot0._recordFrameNum = slot1
-	slot0._curRecordFrame = 0
-	slot0._beginTextureAsset = ZProj.ProfilerHelper.GetTextureAssetMemory()
+function var_0_0.beginRecord(arg_3_0, arg_3_1)
+	arg_3_0._recording = true
+	arg_3_0._startSceondTime = os.time()
+	arg_3_0._startTime = Time.realtimeSinceStartup
+	arg_3_0._curSceondTime = 0
+	arg_3_0._luaMemoryList = {}
+	arg_3_0._allocatedMemoryList = {}
+	arg_3_0._reservedMemoryList = {}
+	arg_3_0._monoReservedMemoryList = {}
+	arg_3_0._monoUsedMemoryList = {}
+	arg_3_0._fpsList = {}
+	arg_3_0._monoGCCount = ZProj.ProfilerHelper.GetGCCount()
+	arg_3_0._monoGCAllocated = ZProj.ProfilerHelper.GetGCAllocated()
+	arg_3_0._monoGCAllocated2 = ZProj.ProfilerHelper.GetMonoUsedSizeLong()
+	arg_3_0._monoGCAmount = 0
+	arg_3_0._luaAllocated = ZProj.ProfilerHelper.GetLuaMemory()
+	arg_3_0._luaAllocateAmount = 0
+	arg_3_0._luaAllocateAmountMax = 0
+	arg_3_0._luaGCAmount = 0
+	arg_3_0._lowestFps = 60
+	arg_3_0._recordFrameNum = arg_3_1
+	arg_3_0._curRecordFrame = 0
+	arg_3_0._beginTextureAsset = ZProj.ProfilerHelper.GetTextureAssetMemory()
 
-	LateUpdateBeat:Add(slot0._lateUpdate, slot0)
-	ZProj.ProfilerConnection.Instance:SendToEditor(cjson.encode({
-		sheetIdx = slot0._curCaseIdx,
-		cmd = "BeginRecord",
-		frameNum = slot1
-	}))
+	LateUpdateBeat:Add(arg_3_0._lateUpdate, arg_3_0)
 
-	slot0._curCaseIdx = slot0._curCaseIdx + 1
+	local var_3_0 = {
+		sheetIdx = arg_3_0._curCaseIdx
+	}
+
+	var_3_0.cmd = "BeginRecord"
+	var_3_0.frameNum = arg_3_1
+
+	local var_3_1 = cjson.encode(var_3_0)
+
+	ZProj.ProfilerConnection.Instance:SendToEditor(var_3_1)
+
+	arg_3_0._curCaseIdx = arg_3_0._curCaseIdx + 1
 end
 
-function slot0.endRecord(slot0)
-	slot0._endSecondTime = os.time()
+function var_0_0.endRecord(arg_4_0)
+	arg_4_0._endSecondTime = os.time()
 
-	LateUpdateBeat:Remove(slot0._lateUpdate, slot0)
+	LateUpdateBeat:Remove(arg_4_0._lateUpdate, arg_4_0)
 
-	slot2, slot3 = slot0.getAverageAndMax(slot0._luaMemoryList)
-	slot2, slot3 = slot0.getAverageAndMax(slot0._luaMemoryList)
-	slot4, slot5 = slot0.getAverageAndMax(slot0._allocatedMemoryList)
-	slot4, slot5 = slot0.getAverageAndMax(slot0._reservedMemoryList)
-	slot4, slot5 = slot0.getAverageAndMax(slot0._monoUsedMemoryList)
-	slot4, slot5 = slot0.getAverageAndMax(slot0._monoReservedMemoryList)
-	slot4, slot5 = slot0.getAverageAndMin(slot0._fpsList)
+	local var_4_0 = {
+		monoGCAmount = arg_4_0._monoGCAmount
+	}
+	local var_4_1, var_4_2 = arg_4_0.getAverageAndMax(arg_4_0._luaMemoryList)
 
-	ZProj.ProfilerConnection.Instance:SendToEditor(cjson.encode({
-		monoGCAmount = slot0._monoGCAmount,
-		luaMemory = {
-			slot0._luaMemoryList[1],
-			slot0._luaMemoryList[#slot0._luaMemoryList],
-			slot2,
-			slot3
-		},
-		luaAllocateAmount = {
-			0,
-			slot0._luaAllocateAmount,
-			slot0._luaAllocateAmount / (slot0._curRecordFrame - 1),
-			slot0._luaAllocateAmountMax
-		},
-		allocatedMemory = {
-			slot0._allocatedMemoryList[1],
-			slot0._allocatedMemoryList[#slot0._allocatedMemoryList],
-			slot4,
-			slot5
-		},
-		reservedMemory = {
-			slot0._reservedMemoryList[1],
-			slot0._reservedMemoryList[#slot0._reservedMemoryList],
-			slot4,
-			slot5
-		},
-		monoUsedMemory = {
-			slot0._monoUsedMemoryList[1],
-			slot0._monoUsedMemoryList[#slot0._monoUsedMemoryList],
-			slot4,
-			slot5
-		},
-		monoReservedMemory = {
-			slot0._monoReservedMemoryList[1],
-			slot0._monoReservedMemoryList[#slot0._monoReservedMemoryList],
-			slot4,
-			slot5
-		},
-		fps = {
-			slot0._fpsList[1],
-			slot0._fpsList[#slot0._fpsList],
-			slot4,
-			slot5
-		},
-		lowestFps = slot0._lowestFps,
-		textureAssetMemory = {
-			slot0._beginTextureAsset,
-			ZProj.ProfilerHelper.GetTextureAssetMemory(),
-			0,
-			0
-		},
-		graphicsDriverMemory = {
-			0,
-			ZProj.ProfilerHelper.GetGraphicsDriverMemory(),
-			0,
-			0
-		},
-		cmd = "EndRecord",
-		frameNum = slot0._curRecordFrame - 1
-	}))
+	var_4_0.luaMemory = {
+		arg_4_0._luaMemoryList[1],
+		arg_4_0._luaMemoryList[#arg_4_0._luaMemoryList],
+		var_4_1,
+		var_4_2
+	}
 
-	if slot0._cases[slot0._curCaseIdx].screenshot then
-		ZProj.ScreenCaptureUtil.Instance:CaptureScreenshotAsTexture(slot0._onCaptureDone, slot0)
+	local var_4_3, var_4_4 = arg_4_0.getAverageAndMax(arg_4_0._luaMemoryList)
+
+	var_4_0.luaAllocateAmount = {
+		0,
+		arg_4_0._luaAllocateAmount,
+		arg_4_0._luaAllocateAmount / (arg_4_0._curRecordFrame - 1),
+		arg_4_0._luaAllocateAmountMax
+	}
+
+	local var_4_5, var_4_6 = arg_4_0.getAverageAndMax(arg_4_0._allocatedMemoryList)
+
+	var_4_0.allocatedMemory = {
+		arg_4_0._allocatedMemoryList[1],
+		arg_4_0._allocatedMemoryList[#arg_4_0._allocatedMemoryList],
+		var_4_5,
+		var_4_6
+	}
+
+	local var_4_7, var_4_8 = arg_4_0.getAverageAndMax(arg_4_0._reservedMemoryList)
+
+	var_4_0.reservedMemory = {
+		arg_4_0._reservedMemoryList[1],
+		arg_4_0._reservedMemoryList[#arg_4_0._reservedMemoryList],
+		var_4_7,
+		var_4_8
+	}
+
+	local var_4_9, var_4_10 = arg_4_0.getAverageAndMax(arg_4_0._monoUsedMemoryList)
+
+	var_4_0.monoUsedMemory = {
+		arg_4_0._monoUsedMemoryList[1],
+		arg_4_0._monoUsedMemoryList[#arg_4_0._monoUsedMemoryList],
+		var_4_9,
+		var_4_10
+	}
+
+	local var_4_11, var_4_12 = arg_4_0.getAverageAndMax(arg_4_0._monoReservedMemoryList)
+
+	var_4_0.monoReservedMemory = {
+		arg_4_0._monoReservedMemoryList[1],
+		arg_4_0._monoReservedMemoryList[#arg_4_0._monoReservedMemoryList],
+		var_4_11,
+		var_4_12
+	}
+
+	local var_4_13, var_4_14 = arg_4_0.getAverageAndMin(arg_4_0._fpsList)
+
+	var_4_0.fps = {
+		arg_4_0._fpsList[1],
+		arg_4_0._fpsList[#arg_4_0._fpsList],
+		var_4_13,
+		var_4_14
+	}
+	var_4_0.lowestFps = arg_4_0._lowestFps
+	var_4_0.textureAssetMemory = {
+		arg_4_0._beginTextureAsset,
+		ZProj.ProfilerHelper.GetTextureAssetMemory(),
+		0,
+		0
+	}
+	var_4_0.graphicsDriverMemory = {
+		0,
+		ZProj.ProfilerHelper.GetGraphicsDriverMemory(),
+		0,
+		0
+	}
+	var_4_0.cmd = "EndRecord"
+	var_4_0.frameNum = arg_4_0._curRecordFrame - 1
+
+	local var_4_15 = cjson.encode(var_4_0)
+
+	ZProj.ProfilerConnection.Instance:SendToEditor(var_4_15)
+
+	if arg_4_0._cases[arg_4_0._curCaseIdx].screenshot then
+		ZProj.ScreenCaptureUtil.Instance:CaptureScreenshotAsTexture(arg_4_0._onCaptureDone, arg_4_0)
 	end
 
 	logNormal("EndRecord")
-	slot0:dispatchEvent(PerformanceRecordEvent.onRecordDone)
+	arg_4_0:dispatchEvent(PerformanceRecordEvent.onRecordDone)
 end
 
-function slot0.endRecordByEvent(slot0)
-	slot0._endTime = Time.realtimeSinceStartup
+function var_0_0.endRecordByEvent(arg_5_0)
+	arg_5_0._endTime = Time.realtimeSinceStartup
 
-	slot0:endRecord()
+	arg_5_0:endRecord()
 end
 
-function slot0._lateUpdate(slot0)
-	slot0._curRecordFrame = slot0._curRecordFrame + 1
+function var_0_0._lateUpdate(arg_6_0)
+	arg_6_0._curRecordFrame = arg_6_0._curRecordFrame + 1
 
-	if slot0._recordFrameNum > 0 and slot0._recordFrameNum < slot0._curRecordFrame then
-		slot0._endTime = Time.realtimeSinceStartup
+	if arg_6_0._recordFrameNum > 0 and arg_6_0._curRecordFrame > arg_6_0._recordFrameNum then
+		arg_6_0._endTime = Time.realtimeSinceStartup
 
-		if slot0._recordFrameNum < 10 then
-			TaskDispatcher.runDelay(slot0.endRecord, slot0, 0.75)
-			LateUpdateBeat:Remove(slot0._lateUpdate, slot0)
+		if arg_6_0._recordFrameNum < 10 then
+			TaskDispatcher.runDelay(arg_6_0.endRecord, arg_6_0, 0.75)
+			LateUpdateBeat:Remove(arg_6_0._lateUpdate, arg_6_0)
 		else
-			slot0:endRecord()
+			arg_6_0:endRecord()
 		end
 
 		return
 	end
 
-	slot0:_updatePerFrameData()
+	arg_6_0:_updatePerFrameData()
 
-	if slot0._recordFrameNum <= 120 then
-		if slot0._curRecordFrame % 10 == 1 then
-			slot0:_updatePerSecondData()
+	if arg_6_0._recordFrameNum <= 120 then
+		if arg_6_0._curRecordFrame % 10 == 1 then
+			arg_6_0:_updatePerSecondData()
 		end
-	elseif slot0._curSceondTime < os.time() then
-		slot0._curSceondTime = slot1
+	else
+		local var_6_0 = os.time()
 
-		slot0:_updatePerSecondData()
+		if var_6_0 > arg_6_0._curSceondTime then
+			arg_6_0._curSceondTime = var_6_0
+
+			arg_6_0:_updatePerSecondData()
+		end
 	end
 end
 
-function slot0.onProfilerMsg(slot0, slot1)
-	if string.split(slot1, "#")[1] == "BeginRecord" then
-		slot0:beginRecord(tonumber(slot2[2]) or 100)
-	elseif slot3 == "GetDeviceInfo" then
-		slot0:_sendDevicesInfo()
-	elseif slot3 == "StartCases" then
-		slot0._cases = {}
+function var_0_0.onProfilerMsg(arg_7_0, arg_7_1)
+	local var_7_0 = string.split(arg_7_1, "#")
+	local var_7_1 = var_7_0[1]
 
-		for slot9, slot10 in ipairs(string.split(slot2[2], "|")) do
-			slot12 = string.split(slot10, "@")
-			slot0._cases[#slot0._cases + 1] = {
-				preAction = slot12[2],
-				delay = slot12[3],
-				startEventParams = slot12[4],
-				sampleFrameNum = slot12[5],
-				endEventParams = slot12[6],
-				endAction = slot12[7],
-				screenshot = slot12[8] == "True",
-				endActionDelay = slot12[9]
-			}
+	if var_7_1 == "BeginRecord" then
+		local var_7_2 = tonumber(var_7_0[2])
+
+		arg_7_0:beginRecord(var_7_2 or 100)
+	elseif var_7_1 == "GetDeviceInfo" then
+		arg_7_0:_sendDevicesInfo()
+	elseif var_7_1 == "StartCases" then
+		local var_7_3 = var_7_0[2]
+
+		arg_7_0._cases = {}
+
+		local var_7_4 = string.split(var_7_3, "|")
+
+		for iter_7_0, iter_7_1 in ipairs(var_7_4) do
+			local var_7_5 = {}
+			local var_7_6 = string.split(iter_7_1, "@")
+
+			var_7_5.preAction = var_7_6[2]
+			var_7_5.delay = var_7_6[3]
+			var_7_5.startEventParams = var_7_6[4]
+			var_7_5.sampleFrameNum = var_7_6[5]
+			var_7_5.endEventParams = var_7_6[6]
+			var_7_5.endAction = var_7_6[7]
+			var_7_5.screenshot = var_7_6[8] == "True"
+			var_7_5.endActionDelay = var_7_6[9]
+			arg_7_0._cases[#arg_7_0._cases + 1] = var_7_5
 		end
 
-		slot0:beginCheckCasesFlow()
+		arg_7_0:beginCheckCasesFlow()
 	end
 end
 
-function slot0.isRecording(slot0)
-	return slot0._recording
+function var_0_0.isRecording(arg_8_0)
+	return arg_8_0._recording
 end
 
-function slot0.exportCurFramePerformanceData(slot0)
-	slot2 = string.format("%s/../curFramePerformanceData.json", UnityEngine.Application.dataPath)
-
-	SLFramework.FileHelper.WriteTextToPath(slot2, JsonUtil.encode({
+function var_0_0.exportCurFramePerformanceData(arg_9_0)
+	local var_9_0 = {
 		LuaMemory = ZProj.ProfilerHelper.GetLuaMemory(),
 		TotalAllocatedMemory = ZProj.ProfilerHelper.GetTotalAllocatedMemory(),
 		TotalReservedMemory = ZProj.ProfilerHelper.GetTotalReservedMemory(),
 		MonoHeapReservedMemory = ZProj.ProfilerHelper.GetMonoHeapReservedMemory(),
 		MonoHeapUsedMemory = ZProj.ProfilerHelper.GetMonoHeapUsedMemory(),
 		TextureAssetMemory = ZProj.ProfilerHelper.GetTextureAssetMemory()
-	}))
-	logNormal(slot2)
+	}
+	local var_9_1 = string.format("%s/../curFramePerformanceData.json", UnityEngine.Application.dataPath)
+	local var_9_2 = JsonUtil.encode(var_9_0)
+
+	SLFramework.FileHelper.WriteTextToPath(var_9_1, var_9_2)
+	logNormal(var_9_1)
 end
 
-function slot0._updatePerFrameData(slot0)
-	slot1 = ZProj.ProfilerHelper.GetGCAllocated()
+function var_0_0._updatePerFrameData(arg_10_0)
+	local var_10_0 = ZProj.ProfilerHelper.GetGCAllocated()
+	local var_10_1 = ZProj.ProfilerHelper.GetGCCount()
 
-	if slot0._monoGCCount < ZProj.ProfilerHelper.GetGCCount() then
-		slot0._monoGCCount = slot2
-		slot0._monoGCAmount = slot0._monoGCAmount + slot0._monoGCAllocated - slot1
+	if var_10_1 > arg_10_0._monoGCCount then
+		arg_10_0._monoGCCount = var_10_1
+		arg_10_0._monoGCAmount = arg_10_0._monoGCAmount + arg_10_0._monoGCAllocated - var_10_0
 	end
 
-	slot0._monoGCAllocated = slot1
-	slot0._monoGCAllocated2 = ZProj.ProfilerHelper.GetMonoUsedSizeLong()
+	arg_10_0._monoGCAllocated = var_10_0
+	arg_10_0._monoGCAllocated2 = ZProj.ProfilerHelper.GetMonoUsedSizeLong()
 
-	if slot0._luaAllocated < ZProj.ProfilerHelper.GetLuaMemory() then
-		slot4 = slot3 - slot0._luaAllocated
-		slot0._luaAllocateAmount = slot0._luaAllocateAmount + slot4
-		slot0._luaAllocateAmountMax = math.max(slot0._luaAllocateAmountMax, slot4)
+	local var_10_2 = ZProj.ProfilerHelper.GetLuaMemory()
+
+	if var_10_2 > arg_10_0._luaAllocated then
+		local var_10_3 = var_10_2 - arg_10_0._luaAllocated
+
+		arg_10_0._luaAllocateAmount = arg_10_0._luaAllocateAmount + var_10_3
+		arg_10_0._luaAllocateAmountMax = math.max(arg_10_0._luaAllocateAmountMax, var_10_3)
 	end
 
-	slot0._luaAllocated = slot3
-	slot0._lowestFps = math.min(slot0._lowestFps, 1 / Time.deltaTime)
-	slot0._fpsList[#slot0._fpsList + 1] = 1 / Time.deltaTime
+	arg_10_0._luaAllocated = var_10_2
+	arg_10_0._lowestFps = math.min(arg_10_0._lowestFps, 1 / Time.deltaTime)
+	arg_10_0._fpsList[#arg_10_0._fpsList + 1] = 1 / Time.deltaTime
 end
 
-function slot0._updatePerSecondData(slot0)
-	slot1 = #slot0._luaMemoryList + 1
-	slot0._luaMemoryList[slot1] = ZProj.ProfilerHelper.GetLuaMemory()
-	slot0._allocatedMemoryList[slot1] = ZProj.ProfilerHelper.GetTotalAllocatedMemory()
-	slot0._reservedMemoryList[slot1] = ZProj.ProfilerHelper.GetTotalReservedMemory()
-	slot0._monoReservedMemoryList[slot1] = ZProj.ProfilerHelper.GetMonoHeapReservedMemory()
-	slot0._monoUsedMemoryList[slot1] = ZProj.ProfilerHelper.GetMonoHeapUsedMemory()
+function var_0_0._updatePerSecondData(arg_11_0)
+	local var_11_0 = #arg_11_0._luaMemoryList + 1
+
+	arg_11_0._luaMemoryList[var_11_0] = ZProj.ProfilerHelper.GetLuaMemory()
+	arg_11_0._allocatedMemoryList[var_11_0] = ZProj.ProfilerHelper.GetTotalAllocatedMemory()
+	arg_11_0._reservedMemoryList[var_11_0] = ZProj.ProfilerHelper.GetTotalReservedMemory()
+	arg_11_0._monoReservedMemoryList[var_11_0] = ZProj.ProfilerHelper.GetMonoHeapReservedMemory()
+	arg_11_0._monoUsedMemoryList[var_11_0] = ZProj.ProfilerHelper.GetMonoHeapUsedMemory()
 end
 
-function slot0.getAverageAndMax(slot0)
-	slot1 = 0
+function var_0_0.getAverageAndMax(arg_12_0)
+	local var_12_0 = 0
+	local var_12_1 = 0
+	local var_12_2 = 0
 
-	for slot7 = 1, #slot0 do
-		slot3 = 0 + slot0[slot7]
-		slot2 = math.max(0, slot0[slot7])
+	for iter_12_0 = 1, #arg_12_0 do
+		var_12_2 = var_12_2 + arg_12_0[iter_12_0]
+		var_12_1 = math.max(var_12_1, arg_12_0[iter_12_0])
 	end
 
-	return slot3 / #slot0, slot2
+	return var_12_2 / #arg_12_0, var_12_1
 end
 
-function slot0.getAverageAndMin(slot0)
-	slot1 = 0
+function var_0_0.getAverageAndMin(arg_13_0)
+	local var_13_0 = 0
+	local var_13_1 = 999
+	local var_13_2 = 0
 
-	for slot7 = 1, #slot0 do
-		slot3 = 0 + slot0[slot7]
-		slot2 = math.min(999, slot0[slot7])
+	for iter_13_0 = 1, #arg_13_0 do
+		var_13_2 = var_13_2 + arg_13_0[iter_13_0]
+		var_13_1 = math.min(var_13_1, arg_13_0[iter_13_0])
 	end
 
-	return slot3 / #slot0, slot2
+	return var_13_2 / #arg_13_0, var_13_1
 end
 
-function slot0._onCaptureDone(slot0, slot1)
-	ZProj.ProfilerConnection.Instance:SendToEditor(UnityEngine.ImageConversion.EncodeToPNG(slot1))
+function var_0_0._onCaptureDone(arg_14_0, arg_14_1)
+	local var_14_0 = UnityEngine.ImageConversion.EncodeToPNG(arg_14_1)
+
+	ZProj.ProfilerConnection.Instance:SendToEditor(var_14_0)
 end
 
-slot1 = {
+local var_0_1 = {
 	[ModuleEnum.Performance.High] = "High",
 	[ModuleEnum.Performance.Middle] = "Middle",
 	[ModuleEnum.Performance.Low] = "Low"
 }
 
-function slot0._sendDevicesInfo(slot0)
-	slot5, slot6 = HardwareUtil.getPerformanceGrade()
-
-	ZProj.ProfilerConnection.Instance:SendToEditor(cjson.encode({
-		deviceName = UnityEngine.SystemInfo.deviceModel,
-		cpuName = BootNativeUtil.getCpuName(),
-		gpuName = UnityEngine.SystemInfo.graphicsDeviceName,
-		memory = UnityEngine.SystemInfo.systemMemorySize .. "M",
+function var_0_0._sendDevicesInfo(arg_15_0)
+	local var_15_0 = UnityEngine.SystemInfo.deviceModel
+	local var_15_1 = BootNativeUtil.getCpuName()
+	local var_15_2 = UnityEngine.SystemInfo.graphicsDeviceName
+	local var_15_3 = UnityEngine.SystemInfo.systemMemorySize
+	local var_15_4, var_15_5 = HardwareUtil.getPerformanceGrade()
+	local var_15_6 = var_0_1[var_15_4]
+	local var_15_7 = {
+		deviceName = var_15_0,
+		cpuName = var_15_1,
+		gpuName = var_15_2,
+		memory = var_15_3 .. "M",
 		DPI = UnityEngine.Screen.dpi,
 		resolution = UnityEngine.Screen.currentResolution:ToString(),
-		grade = uv0[slot5],
-		cmd = "DeviceInfo"
-	}))
+		grade = var_15_6
+	}
+
+	var_15_7.cmd = "DeviceInfo"
+
+	local var_15_8 = cjson.encode(var_15_7)
+
+	ZProj.ProfilerConnection.Instance:SendToEditor(var_15_8)
 end
 
-function slot0.beginCheckCasesFlow(slot0)
-	slot1 = FlowSequence.New()
-	slot2 = 3
-	slot0._curCaseIdx = 0
+function var_0_0.beginCheckCasesFlow(arg_16_0)
+	local var_16_0 = FlowSequence.New()
+	local var_16_1 = 3
 
-	for slot6, slot7 in ipairs(slot0._cases) do
-		if not string.nilorempty(slot7.preAction) then
-			slot1:addWork(DoStringActionWork.New(slot7.preAction))
+	arg_16_0._curCaseIdx = 0
+
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._cases) do
+		if not string.nilorempty(iter_16_1.preAction) then
+			var_16_0:addWork(DoStringActionWork.New(iter_16_1.preAction))
 		end
 
-		if not string.nilorempty(slot7.startEventParams) then
-			slot1:addWork(WaitEventWork.New(slot7.startEventParams))
+		if not string.nilorempty(iter_16_1.startEventParams) then
+			var_16_0:addWork(WaitEventWork.New(iter_16_1.startEventParams))
 		end
 
-		slot8 = 0
+		local var_16_2 = 0
 
-		if not string.nilorempty(slot7.delay) then
-			slot8 = tonumber(slot7.delay)
+		if not string.nilorempty(iter_16_1.delay) then
+			var_16_2 = tonumber(iter_16_1.delay)
 		end
 
-		slot9 = tonumber(slot7.sampleFrameNum) or 120
+		local var_16_3 = tonumber(iter_16_1.sampleFrameNum) or 120
 
-		if not string.nilorempty(slot7.endEventParams) then
-			slot9 = -1
+		if not string.nilorempty(iter_16_1.endEventParams) then
+			var_16_3 = -1
 		end
 
-		slot1:addWork(DelayDoFuncWork.New(slot0.beginRecord, slot0, slot8, slot9))
+		var_16_0:addWork(DelayDoFuncWork.New(arg_16_0.beginRecord, arg_16_0, var_16_2, var_16_3))
 
-		if not string.nilorempty(slot7.endEventParams) then
-			slot1:addWork(WaitEventWork.New(slot7.endEventParams))
-			slot1:addWork(DelayDoFuncWork.New(slot0.endRecordByEvent, slot0, 0))
+		if not string.nilorempty(iter_16_1.endEventParams) then
+			var_16_0:addWork(WaitEventWork.New(iter_16_1.endEventParams))
+			var_16_0:addWork(DelayDoFuncWork.New(arg_16_0.endRecordByEvent, arg_16_0, 0))
 		else
-			slot1:addWork(WaitRecordDoneWork.New())
+			var_16_0:addWork(WaitRecordDoneWork.New())
 		end
 
-		if not string.nilorempty(slot7.endAction) then
-			slot10 = 0
+		if not string.nilorempty(iter_16_1.endAction) then
+			local var_16_4 = 0
 
-			if not string.nilorempty(slot7.endActionDelay) then
-				slot10 = tonumber(slot7.endActionDelay)
+			if not string.nilorempty(iter_16_1.endActionDelay) then
+				var_16_4 = tonumber(iter_16_1.endActionDelay)
 			end
 
-			if slot10 > 0 then
-				slot1:addWork(BpWaitSecWork.New(slot10))
+			if var_16_4 > 0 then
+				var_16_0:addWork(BpWaitSecWork.New(var_16_4))
 			end
 
-			slot1:addWork(DoStringActionWork.New(slot7.endAction))
+			var_16_0:addWork(DoStringActionWork.New(iter_16_1.endAction))
 		end
 
-		slot1:addWork(BpWaitSecWork.New(slot2))
+		var_16_0:addWork(BpWaitSecWork.New(var_16_1))
 	end
 
-	slot1:start()
+	var_16_0:start()
 end
 
-function slot0.doProfilerCmdAction(slot0, slot1)
-	slot0._record = {}
-	slot0._recordDataCmdList = {}
+function var_0_0.doProfilerCmdAction(arg_17_0, arg_17_1)
+	arg_17_0._record = {}
+	arg_17_0._recordDataCmdList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot8 = slot6.stop
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		local var_17_0 = iter_17_1.cmd
+		local var_17_1 = iter_17_1.stop
 
-		if slot0:_getProfilerAciton(slot6.cmd) then
-			if slot6.frame then
-				if slot10 > 1 then
-					-- Nothing
-				elseif slot10 == 1 then
-					-- Nothing
+		if arg_17_0:_getProfilerAciton(var_17_0) then
+			local var_17_2 = iter_17_1.frame
+
+			if var_17_2 then
+				if var_17_2 > 1 then
+					-- block empty
+				elseif var_17_2 == 1 then
+					-- block empty
 				end
 			else
-				slot0:addProfilerAcitonInUpdate(slot7)
+				arg_17_0:addProfilerAcitonInUpdate(var_17_0)
 			end
-		elseif slot7 == "WaitSceond" then
-			-- Nothing
+		elseif var_17_0 == "WaitSceond" then
+			-- block empty
 		end
 
-		if slot8 then
-			slot0:removeProfilerAcitonInUpdate(slot8)
+		if var_17_1 then
+			arg_17_0:removeProfilerAcitonInUpdate(var_17_1)
 		end
 	end
 
-	if slot0.workFlow then
-		slot0.workFlow:registerDoneListener(slot0.onFlowDone, slot0)
-		slot0.workFlow:start()
+	if arg_17_0.workFlow then
+		arg_17_0.workFlow:registerDoneListener(arg_17_0.onFlowDone, arg_17_0)
+		arg_17_0.workFlow:start()
 	end
 end
 
-function slot0._getProfilerAciton(slot0, slot1)
-	if slot0._cmdActionDict == nil then
-		slot0._cmdActionDict = {
-			GetTextureMemory = slot0.recordTextureMemory,
-			WaitSceond = nil,
-			GetLuaMemory = slot0.recordLuaMemory,
-			LogLuaMemory = slot0.logLuaMemory,
-			LogRenderData = slot0.logRenderDataAction,
-			LogTextureMemory = slot0.logTextureMemory
-		}
+function var_0_0._getProfilerAciton(arg_18_0, arg_18_1)
+	if arg_18_0._cmdActionDict == nil then
+		arg_18_0._cmdActionDict = {}
+		arg_18_0._cmdActionDict.GetTextureMemory = arg_18_0.recordTextureMemory
+		arg_18_0._cmdActionDict.WaitSceond = nil
+		arg_18_0._cmdActionDict.GetLuaMemory = arg_18_0.recordLuaMemory
+		arg_18_0._cmdActionDict.LogLuaMemory = arg_18_0.logLuaMemory
+		arg_18_0._cmdActionDict.LogRenderData = arg_18_0.logRenderDataAction
+		arg_18_0._cmdActionDict.LogTextureMemory = arg_18_0.logTextureMemory
 	end
 
-	return slot0._cmdActionDict[slot1]
+	return arg_18_0._cmdActionDict[arg_18_1]
 end
 
-function slot0._getStopProfilerAciton(slot0, slot1)
-	if slot0._stopActionDict == nil then
-		slot0._stopActionDict = {
-			GetRenderData = slot0.stopLogRenderDataAction
-		}
+function var_0_0._getStopProfilerAciton(arg_19_0, arg_19_1)
+	if arg_19_0._stopActionDict == nil then
+		arg_19_0._stopActionDict = {}
+		arg_19_0._stopActionDict.GetRenderData = arg_19_0.stopLogRenderDataAction
 	end
 
-	return slot0._stopActionDict[slot1]
+	return arg_19_0._stopActionDict[arg_19_1]
 end
 
-function slot0.addProfilerAcitonInUpdate(slot0, slot1)
-	if slot0:_getProfilerAciton(slot1) then
-		if not slot0._secondsProfilerAcitons then
-			slot0._secondsProfilerAcitons = {}
+function var_0_0.addProfilerAcitonInUpdate(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:_getProfilerAciton(arg_20_1)
 
-			LateUpdateBeat:Add(slot0.doProfilerAcitonInUpdate, slot0)
+	if var_20_0 then
+		if not arg_20_0._secondsProfilerAcitons then
+			arg_20_0._secondsProfilerAcitons = {}
+
+			LateUpdateBeat:Add(arg_20_0.doProfilerAcitonInUpdate, arg_20_0)
 		end
 
-		slot0._secondsProfilerAcitons[slot1] = slot2
+		arg_20_0._secondsProfilerAcitons[arg_20_1] = var_20_0
 	end
 end
 
-function slot0.removeProfilerAcitonInUpdate(slot0, slot1)
-	slot2 = slot0:_getStopProfilerAciton(slot1)
+function var_0_0.removeProfilerAcitonInUpdate(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:_getStopProfilerAciton(arg_21_1)
 
-	if not slot0._secondsProfilerAcitons then
+	if not arg_21_0._secondsProfilerAcitons then
 		return
 	end
 
-	slot0._secondsProfilerAcitons[slot1] = nil
+	arg_21_0._secondsProfilerAcitons[arg_21_1] = nil
 
-	if tabletool.len(slot0._secondsProfilerAcitons) == 0 then
-		LateUpdateBeat:Remove(slot0.doProfilerAcitonInUpdate, slot0)
+	if tabletool.len(arg_21_0._secondsProfilerAcitons) == 0 then
+		LateUpdateBeat:Remove(arg_21_0.doProfilerAcitonInUpdate, arg_21_0)
 	end
 
-	if slot2 then
-		slot2(slot0)
-	end
-end
-
-function slot0.doProfilerAcitonInUpdate(slot0)
-	if not slot0._secondsProfilerAcitons then
-		return
-	end
-
-	slot0._curSceondTime = slot0._curSceondTime or 0
-
-	if os.time() <= slot0._curSceondTime then
-		return
-	end
-
-	slot0._curSceondTime = slot1
-
-	for slot6, slot7 in pairs(slot0._secondsProfilerAcitons) do
-		slot2 = 0 + 1
-
-		slot7(slot0)
-	end
-
-	if slot2 == 0 then
-		LateUpdateBeat:Remove(slot0.doProfilerAcitonInUpdate, slot0)
+	if var_21_0 then
+		var_21_0(arg_21_0)
 	end
 end
 
-function slot0.getTextureMemory(slot0)
+function var_0_0.doProfilerAcitonInUpdate(arg_22_0)
+	if not arg_22_0._secondsProfilerAcitons then
+		return
+	end
+
+	arg_22_0._curSceondTime = arg_22_0._curSceondTime or 0
+
+	local var_22_0 = os.time()
+
+	if var_22_0 <= arg_22_0._curSceondTime then
+		return
+	end
+
+	arg_22_0._curSceondTime = var_22_0
+
+	local var_22_1 = 0
+
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._secondsProfilerAcitons) do
+		var_22_1 = var_22_1 + 1
+
+		iter_22_1(arg_22_0)
+	end
+
+	if var_22_1 == 0 then
+		LateUpdateBeat:Remove(arg_22_0.doProfilerAcitonInUpdate, arg_22_0)
+	end
+end
+
+function var_0_0.getTextureMemory(arg_23_0)
 	return ZProj.ProfilerHelper.GetTextureAssetMemory()
 end
 
-function slot0.recordTextureMemory(slot0, slot1)
-	if not slot1 then
-		slot0._record[#slot0._record + 1] = slot0:getTextureMemory()
+function var_0_0.recordTextureMemory(arg_24_0, arg_24_1)
+	if not arg_24_1 then
+		arg_24_0._record[#arg_24_0._record + 1] = arg_24_0:getTextureMemory()
 	else
-		if slot1 == 0 then
-			slot0._record[#slot0._record + 1] = {}
+		if arg_24_1 == 0 then
+			arg_24_0._record[#arg_24_0._record + 1] = {}
 		end
 
-		slot0._record[#slot0._record][slot1 + 1] = slot0:getTextureMemory()
+		arg_24_0._record[#arg_24_0._record][arg_24_1 + 1] = arg_24_0:getTextureMemory()
 	end
 end
 
-function slot0.getLuaMemory(slot0)
+function var_0_0.getLuaMemory(arg_25_0)
 	return ZProj.ProfilerHelper.GetLuaMemory()
 end
 
-function slot0.recordLuaMemory(slot0, slot1)
-	if not slot1 then
-		slot0._record[#slot0._record + 1] = slot0:getLuaMemory()
+function var_0_0.recordLuaMemory(arg_26_0, arg_26_1)
+	if not arg_26_1 then
+		arg_26_0._record[#arg_26_0._record + 1] = arg_26_0:getLuaMemory()
 	else
-		if slot1 == 0 then
-			slot0._record[#slot0._record + 1] = {}
+		if arg_26_1 == 0 then
+			arg_26_0._record[#arg_26_0._record + 1] = {}
 		end
 
-		slot0._record[#slot0._record][slot1 + 1] = slot0:getLuaMemory()
+		arg_26_0._record[#arg_26_0._record][arg_26_1 + 1] = arg_26_0:getLuaMemory()
 	end
 end
 
-function slot0.logLuaMemory(slot0)
-	BenchmarkApi.AndroidLog(string.format("luaMemory:%.2f MB", slot0:getLuaMemory()))
+function var_0_0.logLuaMemory(arg_27_0)
+	local var_27_0 = arg_27_0:getLuaMemory()
+
+	BenchmarkApi.AndroidLog(string.format("luaMemory:%.2f MB", var_27_0))
 end
 
-function slot0.logRenderDataAction(slot0)
+function var_0_0.logRenderDataAction(arg_28_0)
 	if SLFramework.NativeUtil.IsAndroidX8664() then
 		logWarn("X86_64 not support Catch Render Data For the [ShadowHook] is not supported On X86")
 
 		return
 	end
 
-	if not slot0._benchMarkInited then
-		slot0._benchMarkInited = BenchmarkApi.init()
+	if not arg_28_0._benchMarkInited then
+		arg_28_0._benchMarkInited = BenchmarkApi.init()
 	end
 
-	if not slot0._benchMarkInlineHooked then
+	if not arg_28_0._benchMarkInlineHooked then
 		BenchmarkApi.hook()
 
-		slot0._benchMarkInlineHooked = true
+		arg_28_0._benchMarkInlineHooked = true
 	end
 
-	if slot0._catchedFrameData then
-		slot0._catchedFrameData = false
+	if arg_28_0._catchedFrameData then
+		arg_28_0._catchedFrameData = false
 
-		BenchmarkApi.AndroidLog(string.format("drawCall:%s|vertCount:%s|triCount:%s", slot0:getReadableNum(BenchmarkApi.pop_draw_num()), slot0:getReadableNum(BenchmarkApi.pop_num_vertices()), slot0:getReadableNum(BenchmarkApi.pop_num_triangles())))
+		local var_28_0 = BenchmarkApi.pop_draw_num()
+		local var_28_1 = arg_28_0:getReadableNum(var_28_0)
+		local var_28_2 = BenchmarkApi.pop_num_vertices()
+		local var_28_3 = arg_28_0:getReadableNum(var_28_2)
+		local var_28_4 = BenchmarkApi.pop_num_triangles()
+		local var_28_5 = arg_28_0:getReadableNum(var_28_4)
+
+		BenchmarkApi.AndroidLog(string.format("drawCall:%s|vertCount:%s|triCount:%s", var_28_1, var_28_3, var_28_5))
 	end
 
-	if not slot0._catchedFrameData then
+	if not arg_28_0._catchedFrameData then
 		BenchmarkApi.clearInfo()
 		BenchmarkApi.CatchSingleFrameData()
 
-		slot0._catchedFrameData = true
+		arg_28_0._catchedFrameData = true
 	end
 end
 
-function slot0.logTextureMemory(slot0)
-	BenchmarkApi.AndroidLog(string.format("textrueMemory:%.0f MB", slot0:getTextureMemory()))
+function var_0_0.logTextureMemory(arg_29_0)
+	local var_29_0 = arg_29_0:getTextureMemory()
+
+	BenchmarkApi.AndroidLog(string.format("textrueMemory:%.0f MB", var_29_0))
 end
 
-function slot0.stopLogRenderDataAction(slot0)
-	if not slot0._benchMarkInited then
+function var_0_0.stopLogRenderDataAction(arg_30_0)
+	if not arg_30_0._benchMarkInited then
 		return
 	end
 
-	if slot0._benchMarkInlineHooked then
+	if arg_30_0._benchMarkInlineHooked then
 		BenchmarkApi.clearInfo()
 		BenchmarkApi.unhook()
 	end
 
-	slot0._catchedFrameData = false
+	arg_30_0._catchedFrameData = false
 end
 
-function slot0.getReadableNum(slot0, slot1)
-	if slot1 < 1000 then
-		return slot1
-	elseif slot1 < 1000000 then
-		return string.format("%.1f", slot1 / 1000) .. "k"
+function var_0_0.getReadableNum(arg_31_0, arg_31_1)
+	if arg_31_1 < 1000 then
+		return arg_31_1
+	elseif arg_31_1 < 1000000 then
+		arg_31_1 = arg_31_1 / 1000
+
+		return string.format("%.1f", arg_31_1) .. "k"
 	else
-		return string.format("%.1f", slot1 / 1000000) .. "m"
+		arg_31_1 = arg_31_1 / 1000000
+
+		return string.format("%.1f", arg_31_1) .. "m"
 	end
 end
 
-function slot0.onFlowDone(slot0)
-	for slot5, slot6 in ipairs(slot0._record) do
-		-- Nothing
+function var_0_0.onFlowDone(arg_32_0)
+	local var_32_0 = {}
+
+	for iter_32_0, iter_32_1 in ipairs(arg_32_0._record) do
+		local var_32_1 = arg_32_0._recordDataCmdList[iter_32_0]
+
+		var_32_0[iter_32_0 .. var_32_1.cmd] = iter_32_1
 	end
 
-	slot2 = JsonUtil.encode({
-		[slot5 .. slot0._recordDataCmdList[slot5].cmd] = slot6
-	})
-	slot6 = io.open(System.IO.Path.Combine(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler"), "profilerResult.json"), "w")
+	local var_32_2 = JsonUtil.encode(var_32_0)
+	local var_32_3 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler")
+	local var_32_4 = "profilerResult.json"
+	local var_32_5 = System.IO.Path.Combine(var_32_3, var_32_4)
+	local var_32_6 = io.open(var_32_5, "w")
 
-	slot6:write(tostring(slot2))
-	slot6:close()
-	BenchmarkApi.AndroidLog(slot2)
+	var_32_6:write(tostring(var_32_2))
+	var_32_6:close()
+	BenchmarkApi.AndroidLog(var_32_2)
 
-	slot0.flow = nil
+	arg_32_0.flow = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

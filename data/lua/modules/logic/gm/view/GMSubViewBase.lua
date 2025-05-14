@@ -1,470 +1,528 @@
-module("modules.logic.gm.view.GMSubViewBase", package.seeall)
+﻿module("modules.logic.gm.view.GMSubViewBase", package.seeall)
 
-slot0 = class("GMSubViewBase", BaseView)
-slot1 = Color.New(1, 1, 1, 0.2)
-slot2 = Color.New(0.88, 0.84, 0.5, 1)
-slot3 = Color.New(0.75, 0.75, 0.75, 0.75)
-slot4 = Color.New(0, 0, 0, 0.5)
+local var_0_0 = class("GMSubViewBase", BaseView)
+local var_0_1 = Color.New(1, 1, 1, 0.2)
+local var_0_2 = Color.New(0.88, 0.84, 0.5, 1)
+local var_0_3 = Color.New(0.75, 0.75, 0.75, 0.75)
+local var_0_4 = Color.New(0, 0, 0, 0.5)
 
-function slot0.onInitView(slot0)
-	slot0._mainViewBg = gohelper.findChild(slot0.viewGO, "imgBg")
-	slot0._mainViewPort = gohelper.findChild(slot0.viewGO, "viewport")
-	slot0._mainViewScrollBar = gohelper.findChild(slot0.viewGO, "Scrollbar")
-	slot0._goSubViews = gohelper.findChild(slot0.viewGO, "SubViews")
-	slot0._goSubViewTabs = gohelper.findChild(slot0._goSubViews, "tabRect/Viewport/SubViewTabs")
-	slot0._goTabTemplate = gohelper.findChild(slot0._goSubViewTabs, "template")
-	slot0._goSubViewTemplate = gohelper.findChild(slot0._goSubViews, "SubViewTemplate")
-	slot0._goButtonTemplate = gohelper.findChild(slot0._goSubViews, "ButtonTemplate")
-	slot0._goWikiButtonTemplate = gohelper.findChild(slot0._goSubViews, "WikiButtonTemplate")
-	slot0._goLabelTemplate = gohelper.findChild(slot0._goSubViews, "LabelTemplate")
-	slot0._goInputTextTemplate = gohelper.findChild(slot0._goSubViews, "InputTextTemplate")
-	slot0._goToggleTemplate = gohelper.findChild(slot0._goSubViews, "ToggleTemplate")
-	slot0._goSliderTemplate = gohelper.findChild(slot0._goSubViews, "SliderTemplate")
-	slot0._goDropDownTemplate = gohelper.findChild(slot0._goSubViews, "DropDownTemplate")
-	slot0._goTitleSplitLine = gohelper.findChild(slot0._goSubViews, "TitleSplitLineTemplate")
-	slot0._subViewToggleGroup = slot0._goSubViewTabs:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._mainViewBg = gohelper.findChild(arg_1_0.viewGO, "imgBg")
+	arg_1_0._mainViewPort = gohelper.findChild(arg_1_0.viewGO, "viewport")
+	arg_1_0._mainViewScrollBar = gohelper.findChild(arg_1_0.viewGO, "Scrollbar")
+	arg_1_0._goSubViews = gohelper.findChild(arg_1_0.viewGO, "SubViews")
+	arg_1_0._goSubViewTabs = gohelper.findChild(arg_1_0._goSubViews, "tabRect/Viewport/SubViewTabs")
+	arg_1_0._goTabTemplate = gohelper.findChild(arg_1_0._goSubViewTabs, "template")
+	arg_1_0._goSubViewTemplate = gohelper.findChild(arg_1_0._goSubViews, "SubViewTemplate")
+	arg_1_0._goButtonTemplate = gohelper.findChild(arg_1_0._goSubViews, "ButtonTemplate")
+	arg_1_0._goWikiButtonTemplate = gohelper.findChild(arg_1_0._goSubViews, "WikiButtonTemplate")
+	arg_1_0._goLabelTemplate = gohelper.findChild(arg_1_0._goSubViews, "LabelTemplate")
+	arg_1_0._goInputTextTemplate = gohelper.findChild(arg_1_0._goSubViews, "InputTextTemplate")
+	arg_1_0._goToggleTemplate = gohelper.findChild(arg_1_0._goSubViews, "ToggleTemplate")
+	arg_1_0._goSliderTemplate = gohelper.findChild(arg_1_0._goSubViews, "SliderTemplate")
+	arg_1_0._goDropDownTemplate = gohelper.findChild(arg_1_0._goSubViews, "DropDownTemplate")
+	arg_1_0._goTitleSplitLine = gohelper.findChild(arg_1_0._goSubViews, "TitleSplitLineTemplate")
+	arg_1_0._subViewToggleGroup = arg_1_0._goSubViewTabs:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._horizontalGroups = slot0:getUserDataTb_()
-	slot0._buttons = slot0:getUserDataTb_()
-	slot0._inputTexts = slot0:getUserDataTb_()
-	slot0._toggles = slot0:getUserDataTb_()
-	slot0._sliders = slot0:getUserDataTb_()
-	slot0._dropDowns = slot0:getUserDataTb_()
-	slot0._verticalGroupDict = slot0:getUserDataTb_()
-	slot0._wikiURLs = {}
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._horizontalGroups = arg_2_0:getUserDataTb_()
+	arg_2_0._buttons = arg_2_0:getUserDataTb_()
+	arg_2_0._inputTexts = arg_2_0:getUserDataTb_()
+	arg_2_0._toggles = arg_2_0:getUserDataTb_()
+	arg_2_0._sliders = arg_2_0:getUserDataTb_()
+	arg_2_0._dropDowns = arg_2_0:getUserDataTb_()
+	arg_2_0._verticalGroupDict = arg_2_0:getUserDataTb_()
+	arg_2_0._wikiURLs = {}
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_3_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot2 = {}
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = PlayerPrefsHelper.getString("GMHideTabNames", "")
+	local var_5_1 = {}
 
-	if not string.nilorempty(PlayerPrefsHelper.getString("GMHideTabNames", "")) then
-		slot2 = string.split(slot1, "#")
+	if not string.nilorempty(var_5_0) then
+		var_5_1 = string.split(var_5_0, "#")
 	end
 
-	if slot0.tabName and not tabletool.indexOf(slot2, slot0.tabName) then
-		slot0:addSubViewGo(slot0.tabName)
-	end
-end
-
-function slot0.onClose(slot0)
-	if slot0._toggleWrap then
-		slot0._toggleWrap:RemoveOnValueChanged()
-	end
-
-	for slot4, slot5 in ipairs(slot0._buttons) do
-		slot5:RemoveClickListener()
-	end
-
-	for slot4, slot5 in ipairs(slot0._inputTexts) do
-		slot5:RemoveOnValueChanged()
-	end
-
-	for slot4, slot5 in ipairs(slot0._toggles) do
-		slot5:RemoveOnValueChanged()
-	end
-
-	for slot4, slot5 in ipairs(slot0._sliders) do
-		slot5:RemoveOnValueChanged()
-	end
-
-	for slot4, slot5 in ipairs(slot0._dropDowns) do
-		slot5:RemoveOnValueChanged()
+	if arg_5_0.tabName and not tabletool.indexOf(var_5_1, arg_5_0.tabName) then
+		arg_5_0:addSubViewGo(arg_5_0.tabName)
 	end
 end
 
-function slot0.addSubViewGo(slot0, slot1)
-	slot2 = gohelper.clone(slot0._goTabTemplate, slot0._goSubViewTabs, slot1 .. "Tab")
+function var_0_0.onClose(arg_6_0)
+	if arg_6_0._toggleWrap then
+		arg_6_0._toggleWrap:RemoveOnValueChanged()
+	end
 
-	gohelper.setActive(slot2, true)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._buttons) do
+		iter_6_1:RemoveClickListener()
+	end
 
-	slot0._toggleImage = gohelper.onceAddComponent(slot2, typeof(UnityEngine.UI.Image))
-	gohelper.onceAddComponent(slot2, typeof(UnityEngine.UI.Toggle)).group = slot0._subViewToggleGroup
-	slot0._tabText = gohelper.findChildText(slot2, "Text")
-	slot0._tabText.text = slot1
-	slot0._toggleWrap = gohelper.onceAddComponent(slot2, typeof(SLFramework.UGUI.ToggleWrap))
+	for iter_6_2, iter_6_3 in ipairs(arg_6_0._inputTexts) do
+		iter_6_3:RemoveOnValueChanged()
+	end
 
-	slot0._toggleWrap:AddOnValueChanged(slot0._onToggleValueChanged, slot0)
+	for iter_6_4, iter_6_5 in ipairs(arg_6_0._toggles) do
+		iter_6_5:RemoveOnValueChanged()
+	end
 
-	slot0._subViewGo = gohelper.clone(slot0._goSubViewTemplate, slot0._goSubViews, slot1)
-	slot0._content = gohelper.findChild(slot0._subViewGo, "viewport/content")
+	for iter_6_6, iter_6_7 in ipairs(arg_6_0._sliders) do
+		iter_6_7:RemoveOnValueChanged()
+	end
 
-	gohelper.setActive(slot0._subViewGo, false)
-	slot0.viewContainer:addSubViewToggle(slot0._toggleWrap)
+	for iter_6_8, iter_6_9 in ipairs(arg_6_0._dropDowns) do
+		iter_6_9:RemoveOnValueChanged()
+	end
 end
 
-function slot0.initViewContent(slot0)
-	slot0._inited = true
+function var_0_0.addSubViewGo(arg_7_0, arg_7_1)
+	local var_7_0 = gohelper.clone(arg_7_0._goTabTemplate, arg_7_0._goSubViewTabs, arg_7_1 .. "Tab")
+
+	gohelper.setActive(var_7_0, true)
+
+	local var_7_1 = gohelper.onceAddComponent(var_7_0, typeof(UnityEngine.UI.Toggle))
+
+	arg_7_0._toggleImage = gohelper.onceAddComponent(var_7_0, typeof(UnityEngine.UI.Image))
+	var_7_1.group = arg_7_0._subViewToggleGroup
+	arg_7_0._tabText = gohelper.findChildText(var_7_0, "Text")
+	arg_7_0._tabText.text = arg_7_1
+	arg_7_0._toggleWrap = gohelper.onceAddComponent(var_7_0, typeof(SLFramework.UGUI.ToggleWrap))
+
+	arg_7_0._toggleWrap:AddOnValueChanged(arg_7_0._onToggleValueChanged, arg_7_0)
+
+	arg_7_0._subViewGo = gohelper.clone(arg_7_0._goSubViewTemplate, arg_7_0._goSubViews, arg_7_1)
+	arg_7_0._content = gohelper.findChild(arg_7_0._subViewGo, "viewport/content")
+
+	gohelper.setActive(arg_7_0._subViewGo, false)
+	arg_7_0.viewContainer:addSubViewToggle(arg_7_0._toggleWrap)
 end
 
-function slot0._onToggleValueChanged(slot0, slot1, slot2)
-	if slot2 then
-		if not slot0._subViewContent then
-			slot0:initViewContent()
+function var_0_0.initViewContent(arg_8_0)
+	arg_8_0._inited = true
+end
+
+function var_0_0._onToggleValueChanged(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_2 then
+		if not arg_9_0._subViewContent then
+			arg_9_0:initViewContent()
 		end
 
-		slot0.viewContainer:selectToggle(slot0._toggleWrap)
+		arg_9_0.viewContainer:selectToggle(arg_9_0._toggleWrap)
 	end
 
-	slot3 = slot0._subViewToggleGroup:AnyTogglesOn()
+	local var_9_0 = arg_9_0._subViewToggleGroup:AnyTogglesOn()
 
-	gohelper.setActive(slot0._mainViewBg, not slot2 and not slot3)
-	gohelper.setActive(slot0._mainViewPort, not slot2 and not slot3)
+	gohelper.setActive(arg_9_0._mainViewBg, not arg_9_2 and not var_9_0)
+	gohelper.setActive(arg_9_0._mainViewPort, not arg_9_2 and not var_9_0)
 
-	slot0._toggleImage.color = slot2 and uv0 or uv1
+	arg_9_0._toggleImage.color = arg_9_2 and var_0_2 or var_0_3
 
-	gohelper.setActive(slot0._subViewGo, slot2)
+	gohelper.setActive(arg_9_0._subViewGo, arg_9_2)
 end
 
-function slot0.addHorizontalGroup(slot0, slot1, slot2, slot3)
-	slot4 = UnityEngine.GameObject.New()
+function var_0_0.addHorizontalGroup(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = UnityEngine.GameObject.New()
 
-	gohelper.addChild(slot0._content, slot4)
+	gohelper.addChild(arg_10_0._content, var_10_0)
 
-	slot4.name = "horizontal" .. slot1
-	slot5 = gohelper.onceAddComponent(slot4, gohelper.Type_HorizontalLayoutGroup)
-	slot6 = slot5.padding
-	slot6.left = 10
-	slot6.right = 10
-	slot5.spacing = 20
-	slot5.childForceExpandWidth = false
-	slot5.childControlWidth = false
-	slot5.childControlHeight = false
-	slot5.childAlignment = UnityEngine.TextAnchor.MiddleLeft
-	slot7 = gohelper.onceAddComponent(slot4, gohelper.Type_Image)
-	slot7.raycastTarget = false
-	slot7.color = uv0
+	var_10_0.name = "horizontal" .. arg_10_1
 
-	recthelper.setSize(slot4:GetComponent(gohelper.Type_RectTransform), slot2 or 1400, slot3 or 100)
+	local var_10_1 = gohelper.onceAddComponent(var_10_0, gohelper.Type_HorizontalLayoutGroup)
+	local var_10_2 = var_10_1.padding
 
-	slot0._horizontalGroups[slot1] = slot4
+	var_10_2.left = 10
+	var_10_2.right = 10
+	var_10_1.spacing = 20
+	var_10_1.childForceExpandWidth = false
+	var_10_1.childControlWidth = false
+	var_10_1.childControlHeight = false
+	var_10_1.childAlignment = UnityEngine.TextAnchor.MiddleLeft
 
-	return slot5
+	local var_10_3 = gohelper.onceAddComponent(var_10_0, gohelper.Type_Image)
+
+	var_10_3.raycastTarget = false
+	var_10_3.color = var_0_1
+
+	local var_10_4 = var_10_0:GetComponent(gohelper.Type_RectTransform)
+
+	recthelper.setSize(var_10_4, arg_10_2 or 1400, arg_10_3 or 100)
+
+	arg_10_0._horizontalGroups[arg_10_1] = var_10_0
+
+	return var_10_1
 end
 
-function slot0.addVerticalGroup(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addVerticalGroup(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	if not arg_11_0._horizontalGroups[arg_11_1] then
+		arg_11_0:addHorizontalGroup(arg_11_1)
 	end
 
-	slot6 = UnityEngine.GameObject.New()
+	local var_11_0 = arg_11_0._horizontalGroups[arg_11_1]
+	local var_11_1 = UnityEngine.GameObject.New()
 
-	gohelper.addChild(slot0._horizontalGroups[slot1], slot6)
+	gohelper.addChild(var_11_0, var_11_1)
 
-	slot6.name = "vertical" .. slot2
-	slot7 = gohelper.onceAddComponent(slot6, gohelper.Type_VerticalLayoutGroup)
-	slot8 = slot7.padding
-	slot8.left = 10
-	slot8.right = 10
-	slot7.spacing = 20
-	slot7.childForceExpandWidth = false
-	slot7.childControlWidth = false
-	slot7.childControlHeight = false
-	slot7.childAlignment = UnityEngine.TextAnchor.MiddleLeft
+	var_11_1.name = "vertical" .. arg_11_2
 
-	recthelper.setSize(slot6:GetComponent(gohelper.Type_RectTransform), slot3, slot4)
+	local var_11_2 = gohelper.onceAddComponent(var_11_1, gohelper.Type_VerticalLayoutGroup)
+	local var_11_3 = var_11_2.padding
 
-	slot0._verticalGroupDict[slot2] = slot6
+	var_11_3.left = 10
+	var_11_3.right = 10
+	var_11_2.spacing = 20
+	var_11_2.childForceExpandWidth = false
+	var_11_2.childControlWidth = false
+	var_11_2.childControlHeight = false
+	var_11_2.childAlignment = UnityEngine.TextAnchor.MiddleLeft
 
-	return slot6
+	local var_11_4 = var_11_1:GetComponent(gohelper.Type_RectTransform)
+
+	recthelper.setSize(var_11_4, arg_11_3, arg_11_4)
+
+	arg_11_0._verticalGroupDict[arg_11_2] = var_11_1
+
+	return var_11_1
 end
 
-function slot0.addButton(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addButton(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
+	if not arg_12_0._horizontalGroups[arg_12_1] then
+		arg_12_0:addHorizontalGroup(arg_12_1)
 	end
 
-	slot6 = slot0._horizontalGroups[slot1]
-	slot7 = gohelper.clone(slot0._goButtonTemplate, slot6, "button")
+	local var_12_0 = arg_12_0._horizontalGroups[arg_12_1]
+	local var_12_1 = gohelper.clone(arg_12_0._goButtonTemplate, var_12_0, "button")
 
-	gohelper.setActive(slot7, true)
+	gohelper.setActive(var_12_1, true)
 
-	slot8 = gohelper.findChildText(slot7, "Text")
-	slot8.text = slot2
+	local var_12_2 = gohelper.findChildText(var_12_1, "Text")
+	local var_12_3 = var_12_1:GetComponent(gohelper.Type_Image)
 
-	slot0._setFontSize(slot8, slot5, 36)
-	slot0._setGraphicsColor(slot7:GetComponent(gohelper.Type_Image), slot5)
-	slot0._setRectTransSize(slot7, slot5, slot8.preferredWidth + 20, 80)
-	slot0._adjustGroupWidthHeight(slot7, slot6)
+	var_12_2.text = arg_12_2
 
-	slot10 = gohelper.getClickWithDefaultAudio(slot7)
+	arg_12_0._setFontSize(var_12_2, arg_12_5, 36)
+	arg_12_0._setGraphicsColor(var_12_3, arg_12_5)
+	arg_12_0._setRectTransSize(var_12_1, arg_12_5, var_12_2.preferredWidth + 20, 80)
+	arg_12_0._adjustGroupWidthHeight(var_12_1, var_12_0)
 
-	slot10:AddClickListener(slot3, slot4)
+	local var_12_4 = gohelper.getClickWithDefaultAudio(var_12_1)
 
-	slot0._buttons[#slot0._buttons + 1] = slot10
+	var_12_4:AddClickListener(arg_12_3, arg_12_4)
+
+	arg_12_0._buttons[#arg_12_0._buttons + 1] = var_12_4
 
 	return {
-		slot10,
-		slot8
+		var_12_4,
+		var_12_2
 	}
 end
 
-function slot0.addWikiButton(slot0, slot1, slot2)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addWikiButton(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_0._horizontalGroups[arg_13_1] then
+		arg_13_0:addHorizontalGroup(arg_13_1)
 	end
 
-	slot4 = gohelper.clone(slot0._goWikiButtonTemplate, slot0._horizontalGroups[slot1], "wiki")
+	local var_13_0 = arg_13_0._horizontalGroups[arg_13_1]
+	local var_13_1 = gohelper.clone(arg_13_0._goWikiButtonTemplate, var_13_0, "wiki")
 
-	gohelper.setActive(slot4, true)
+	gohelper.setActive(var_13_1, true)
 
-	slot5 = gohelper.findChildButtonWithAudio(slot4, "Button")
-	slot0._wikiURLs[#slot0._wikiURLs + 1] = slot2
+	local var_13_2 = gohelper.findChildButtonWithAudio(var_13_1, "Button")
 
-	slot5:AddClickListener(slot0._openWikiURL, slot0, #slot0._wikiURLs)
+	arg_13_0._wikiURLs[#arg_13_0._wikiURLs + 1] = arg_13_2
 
-	slot0._buttons[#slot0._buttons + 1] = slot5
+	var_13_2:AddClickListener(arg_13_0._openWikiURL, arg_13_0, #arg_13_0._wikiURLs)
+
+	arg_13_0._buttons[#arg_13_0._buttons + 1] = var_13_2
 end
 
-function slot0.addInputText(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addInputText(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
+	if not arg_14_0._horizontalGroups[arg_14_1] then
+		arg_14_0:addHorizontalGroup(arg_14_1)
 	end
 
-	slot7 = slot0._horizontalGroups[slot1]
-	slot8 = gohelper.clone(slot0._goInputTextTemplate, slot7, "InputText")
+	local var_14_0 = arg_14_0._horizontalGroups[arg_14_1]
+	local var_14_1 = gohelper.clone(arg_14_0._goInputTextTemplate, var_14_0, "InputText")
 
-	gohelper.setActive(slot8, true)
+	gohelper.setActive(var_14_1, true)
 
-	slot9 = gohelper.findChildText(slot8, "Text")
+	local var_14_2 = gohelper.findChildText(var_14_1, "Text")
+	local var_14_3 = gohelper.findChildText(var_14_1, "Placeholder")
 
-	slot0._setFontSize(slot9, slot6, 36)
-	slot0._setFontSize(gohelper.findChildText(slot8, "Placeholder"), slot6, 36)
-	slot0._setRectTransSize(slot8, slot6, 300, 80)
-	slot0._adjustGroupWidthHeight(slot8, slot7)
-	slot0._setTextAlign(slot9, slot6)
+	arg_14_0._setFontSize(var_14_2, arg_14_6, 36)
+	arg_14_0._setFontSize(var_14_3, arg_14_6, 36)
+	arg_14_0._setRectTransSize(var_14_1, arg_14_6, 300, 80)
+	arg_14_0._adjustGroupWidthHeight(var_14_1, var_14_0)
+	arg_14_0._setTextAlign(var_14_2, arg_14_6)
 
-	SLFramework.UGUI.InputFieldWrap.Get(slot8).inputField.lineType = System.Enum.Parse(tolua.findtype("UnityEngine.UI.InputField+LineType"), "MultiLineSubmit")
-	slot10.text = slot3 or ""
+	local var_14_4 = SLFramework.UGUI.InputFieldWrap.Get(var_14_1)
+	local var_14_5 = tolua.findtype("UnityEngine.UI.InputField+LineType")
+	local var_14_6 = System.Enum.Parse(var_14_5, "MultiLineSubmit")
 
-	if string.nilorempty(slot2) then
-		slot11:SetText(PlayerPrefsHelper.getString(string.format("GM_%s_%s_%s", slot0.__cname, slot1, slot3)))
+	var_14_4.inputField.lineType = var_14_6
+	var_14_3.text = arg_14_3 or ""
+
+	local var_14_7 = string.format("GM_%s_%s_%s", arg_14_0.__cname, arg_14_1, arg_14_3)
+
+	if string.nilorempty(arg_14_2) then
+		var_14_4:SetText(PlayerPrefsHelper.getString(var_14_7))
 	else
-		slot11:SetText(slot2)
+		var_14_4:SetText(arg_14_2)
 	end
 
-	slot11:AddOnValueChanged(function (slot0, slot1)
-		if uv0 and uv1 then
-			uv0(uv1, slot1)
+	local function var_14_8(arg_15_0, arg_15_1)
+		if arg_14_4 and arg_14_5 then
+			arg_14_4(arg_14_5, arg_15_1)
 		end
 
-		PlayerPrefsHelper.setString(uv3, uv2:GetText())
-	end, slot0)
+		local var_15_0 = var_14_4:GetText()
 
-	slot0._inputTexts[#slot0._inputTexts + 1] = slot11
+		PlayerPrefsHelper.setString(var_14_7, var_15_0)
+	end
 
-	return slot11
+	var_14_4:AddOnValueChanged(var_14_8, arg_14_0)
+
+	arg_14_0._inputTexts[#arg_14_0._inputTexts + 1] = var_14_4
+
+	return var_14_4
 end
 
-function slot0.addLabel(slot0, slot1, slot2, slot3)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addLabel(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	if not arg_16_0._horizontalGroups[arg_16_1] then
+		arg_16_0:addHorizontalGroup(arg_16_1)
 	end
 
-	slot7 = slot2 or slot0._horizontalGroups[slot1].transform.childCount + 1
-	slot8 = gohelper.clone(slot0._goLabelTemplate, slot4, slot7)
+	local var_16_0 = arg_16_0._horizontalGroups[arg_16_1]
+	local var_16_1 = var_16_0.transform.childCount
+	local var_16_2 = arg_16_2 or var_16_1 + 1
+	local var_16_3 = gohelper.clone(arg_16_0._goLabelTemplate, var_16_0, var_16_2)
 
-	gohelper.setActive(slot8, true)
+	gohelper.setActive(var_16_3, true)
 
-	slot9 = gohelper.findChildText(slot8, "Text")
-	slot9.text = slot7
+	local var_16_4 = gohelper.findChildText(var_16_3, "Text")
 
-	slot0._setFontSize(slot9, slot3, 36)
-	slot0._setGraphicsColor(slot9, slot3)
-	slot0._setRectTransSize(slot8, slot3, slot9.preferredWidth + 20, 80)
-	slot0._setTextAlign(slot9, slot3)
+	var_16_4.text = var_16_2
 
-	return slot9
+	arg_16_0._setFontSize(var_16_4, arg_16_3, 36)
+	arg_16_0._setGraphicsColor(var_16_4, arg_16_3)
+	arg_16_0._setRectTransSize(var_16_3, arg_16_3, var_16_4.preferredWidth + 20, 80)
+	arg_16_0._setTextAlign(var_16_4, arg_16_3)
+
+	return var_16_4
 end
 
-function slot0.addToggle(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addToggle(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
+	if not arg_17_0._horizontalGroups[arg_17_1] then
+		arg_17_0:addHorizontalGroup(arg_17_1)
 	end
 
-	slot9 = slot2 or slot0._horizontalGroups[slot1].transform.childCount + 1
-	slot10 = gohelper.clone(slot0._goToggleTemplate, slot6, slot9)
+	local var_17_0 = arg_17_0._horizontalGroups[arg_17_1]
+	local var_17_1 = var_17_0.transform.childCount
+	local var_17_2 = arg_17_2 or var_17_1 + 1
+	local var_17_3 = gohelper.clone(arg_17_0._goToggleTemplate, var_17_0, var_17_2)
 
-	gohelper.setActive(slot10, true)
+	gohelper.setActive(var_17_3, true)
 
-	slot11 = gohelper.findChildText(slot10, "Label")
-	slot11.text = slot9
+	local var_17_4 = gohelper.findChildText(var_17_3, "Label")
 
-	slot0._setFontSize(slot11, slot5, 36)
-	slot0._setGraphicsColor(slot11, slot5)
-	slot0._setRectTransSize(slot10, slot5, slot11.preferredWidth + 100, 80)
+	var_17_4.text = var_17_2
 
-	slot12 = SLFramework.UGUI.ToggleWrap.Get(slot10)
+	arg_17_0._setFontSize(var_17_4, arg_17_5, 36)
+	arg_17_0._setGraphicsColor(var_17_4, arg_17_5)
+	arg_17_0._setRectTransSize(var_17_3, arg_17_5, var_17_4.preferredWidth + 100, 80)
 
-	if slot3 and slot4 then
-		slot12:AddOnValueChanged(slot3, slot4)
+	local var_17_5 = SLFramework.UGUI.ToggleWrap.Get(var_17_3)
+
+	if arg_17_3 and arg_17_4 then
+		var_17_5:AddOnValueChanged(arg_17_3, arg_17_4)
 	end
 
-	slot0._toggles[#slot0._toggles + 1] = slot12
+	arg_17_0._toggles[#arg_17_0._toggles + 1] = var_17_5
 
-	return slot12
+	return var_17_5
 end
 
-function slot0.addSlider(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addSlider(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
+	if not arg_18_0._horizontalGroups[arg_18_1] then
+		arg_18_0:addHorizontalGroup(arg_18_1)
 	end
 
-	slot7 = gohelper.clone(slot0._goSliderTemplate, slot0._horizontalGroups[slot1], "Slider")
+	local var_18_0 = arg_18_0._horizontalGroups[arg_18_1]
+	local var_18_1 = gohelper.clone(arg_18_0._goSliderTemplate, var_18_0, "Slider")
 
-	gohelper.setActive(slot7, true)
+	gohelper.setActive(var_18_1, true)
 
-	slot8 = gohelper.findChildText(slot7, "Text")
-	slot8.text = slot2
+	local var_18_2 = gohelper.findChildText(var_18_1, "Text")
 
-	slot0._setGraphicsColor(slot8, slot5)
-	slot0._setRectTransSize(slot7, slot5, 600, 80)
+	var_18_2.text = arg_18_2
 
-	slot9 = SLFramework.UGUI.SliderWrap.GetWithPath(slot7, "Slider")
+	arg_18_0._setGraphicsColor(var_18_2, arg_18_5)
+	arg_18_0._setRectTransSize(var_18_1, arg_18_5, 600, 80)
 
-	if slot3 and slot4 then
-		slot9:AddOnValueChanged(slot3, slot4)
+	local var_18_3 = SLFramework.UGUI.SliderWrap.GetWithPath(var_18_1, "Slider")
+
+	if arg_18_3 and arg_18_4 then
+		var_18_3:AddOnValueChanged(arg_18_3, arg_18_4)
 	end
 
-	slot0._sliders[#slot0._sliders + 1] = slot9
+	arg_18_0._sliders[#arg_18_0._sliders + 1] = var_18_3
 
 	return {
-		slot9,
-		slot8
+		var_18_3,
+		var_18_2
 	}
 end
 
-function slot0.addDropDown(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0._horizontalGroups[slot1] then
-		slot0:addHorizontalGroup(slot1)
+function var_0_0.addDropDown(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5, arg_19_6)
+	if not arg_19_0._horizontalGroups[arg_19_1] then
+		arg_19_0:addHorizontalGroup(arg_19_1)
 	end
 
-	slot8 = gohelper.clone(slot0._goDropDownTemplate, slot0._horizontalGroups[slot1], "Dropdown")
+	local var_19_0 = arg_19_0._horizontalGroups[arg_19_1]
+	local var_19_1 = gohelper.clone(arg_19_0._goDropDownTemplate, var_19_0, "Dropdown")
 
-	gohelper.setActive(slot8, true)
+	gohelper.setActive(var_19_1, true)
 
-	slot9 = gohelper.findChildText(slot8, "Text")
-	slot9.text = slot2
+	local var_19_2 = gohelper.findChildText(var_19_1, "Text")
+	local var_19_3 = gohelper.findChild(var_19_1, "Dropdown")
 
-	slot0._setFontSize(slot9, slot6, 36)
-	slot0._setGraphicsColor(slot9, slot6)
-	slot0._setRectTransSize(slot8, slot6, slot6 and slot6.total_w or slot9.preferredWidth + 300, 90)
-	slot0._setRectTransSize(slot9, slot6, slot6 and slot6.label_w or slot9.preferredWidth + 300, 90)
-	slot0._setRectTransSize(gohelper.findChild(slot8, "Dropdown"), slot6, slot6 and slot6.drop_w or slot9.preferredWidth + 150, 90)
-	slot0._setOffset(gohelper.findChildComponent(slot8, "Dropdown/Template", gohelper.Type_RectTransform), slot6)
+	var_19_2.text = arg_19_2
 
-	slot12 = gohelper.findChildDropdown(slot8, "Dropdown")
+	arg_19_0._setFontSize(var_19_2, arg_19_6, 36)
+	arg_19_0._setGraphicsColor(var_19_2, arg_19_6)
+	arg_19_0._setRectTransSize(var_19_1, arg_19_6, arg_19_6 and arg_19_6.total_w or var_19_2.preferredWidth + 300, 90)
+	arg_19_0._setRectTransSize(var_19_2, arg_19_6, arg_19_6 and arg_19_6.label_w or var_19_2.preferredWidth + 300, 90)
+	arg_19_0._setRectTransSize(var_19_3, arg_19_6, arg_19_6 and arg_19_6.drop_w or var_19_2.preferredWidth + 150, 90)
 
-	if slot4 and slot5 then
-		slot12:AddOnValueChanged(slot4, slot5)
+	local var_19_4 = gohelper.findChildComponent(var_19_1, "Dropdown/Template", gohelper.Type_RectTransform)
+
+	arg_19_0._setOffset(var_19_4, arg_19_6)
+
+	local var_19_5 = gohelper.findChildDropdown(var_19_1, "Dropdown")
+
+	if arg_19_4 and arg_19_5 then
+		var_19_5:AddOnValueChanged(arg_19_4, arg_19_5)
 	end
 
-	slot12:ClearOptions()
+	var_19_5:ClearOptions()
 
-	if slot3 then
-		slot12:AddOptions(slot3)
+	if arg_19_3 then
+		var_19_5:AddOptions(arg_19_3)
 	end
 
-	slot0._dropDowns[#slot0._dropDowns + 1] = slot12
+	arg_19_0._dropDowns[#arg_19_0._dropDowns + 1] = var_19_5
 
-	return slot12
+	return var_19_5
 end
 
-function slot0.addSplitLine(slot0)
-	slot1 = UnityEngine.GameObject.New()
+function var_0_0.addSplitLine(arg_20_0)
+	local var_20_0 = UnityEngine.GameObject.New()
 
-	gohelper.addChild(slot0._content, slot1)
+	gohelper.addChild(arg_20_0._content, var_20_0)
 
-	gohelper.onceAddComponent(slot1, gohelper.Type_Image).color = uv0
+	gohelper.onceAddComponent(var_20_0, gohelper.Type_Image).color = var_0_4
 
-	recthelper.setSize(slot1:GetComponent(gohelper.Type_RectTransform), 1400, 3)
+	local var_20_1 = var_20_0:GetComponent(gohelper.Type_RectTransform)
 
-	return slot1
+	recthelper.setSize(var_20_1, 1400, 3)
+
+	return var_20_0
 end
 
-function slot0.addTitleSplitLine(slot0, slot1)
-	slot2 = gohelper.clone(slot0._goTitleSplitLine, slot0._content, "titleSplitLine")
+function var_0_0.addTitleSplitLine(arg_21_0, arg_21_1)
+	local var_21_0 = gohelper.clone(arg_21_0._goTitleSplitLine, arg_21_0._content, "titleSplitLine")
 
-	gohelper.setActive(slot2, true)
+	gohelper.setActive(var_21_0, true)
 
-	slot3 = gohelper.findChildText(slot2, "Text")
-	slot3.text = slot1
+	local var_21_1 = gohelper.findChildText(var_21_0, "Text")
 
-	gohelper.setActive(slot3.gameObject, not string.nilorempty(slot1))
+	var_21_1.text = arg_21_1
+
+	gohelper.setActive(var_21_1.gameObject, not string.nilorempty(arg_21_1))
 end
 
-function slot0._setGraphicsColor(slot0, slot1)
-	if not slot1 or not slot1.c then
+function var_0_0._setGraphicsColor(arg_22_0, arg_22_1)
+	if not arg_22_1 or not arg_22_1.c then
 		return
 	end
 
-	slot0.color = SLFramework.UGUI.GuiHelper.ParseColor(slot1.c)
+	arg_22_0.color = SLFramework.UGUI.GuiHelper.ParseColor(arg_22_1.c)
 end
 
-function slot0._setRectTransSize(slot0, slot1, slot2, slot3)
-	slot5 = slot1 and slot1.w
-	slot6 = slot1 and slot1.h
+function var_0_0._setRectTransSize(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	local var_23_0 = arg_23_0:GetComponent(gohelper.Type_RectTransform)
+	local var_23_1 = arg_23_1 and arg_23_1.w
+	local var_23_2 = arg_23_1 and arg_23_1.h
 
-	recthelper.setSize(slot0:GetComponent(gohelper.Type_RectTransform), slot5 and slot5 or slot2, slot6 and slot6 or slot3)
+	recthelper.setSize(var_23_0, var_23_1 and var_23_1 or arg_23_2, var_23_2 and var_23_2 or arg_23_3)
 end
 
-function slot0._setFontSize(slot0, slot1, slot2)
-	slot3 = slot1 and slot1.fsize
-	slot0.fontSize = slot3 and slot3 or slot2
+function var_0_0._setFontSize(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = arg_24_1 and arg_24_1.fsize
+
+	arg_24_0.fontSize = var_24_0 and var_24_0 or arg_24_2
 end
 
-function slot0._setTMPTextAlign(slot0, slot1)
-	if slot1 and slot1.align then
-		slot0.alignment = slot2
+function var_0_0._setTMPTextAlign(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_1 and arg_25_1.align
+
+	if var_25_0 then
+		arg_25_0.alignment = var_25_0
 	end
 end
 
-function slot0._setTextAlign(slot0, slot1)
-	if slot1 and slot1.align then
-		slot0.alignment = slot2
+function var_0_0._setTextAlign(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_1 and arg_26_1.align
+
+	if var_26_0 then
+		arg_26_0.alignment = var_26_0
 	end
 end
 
-function slot0._setOffset(slot0, slot1, slot2)
-	if slot2 and slot2.offsetMin then
-		slot1.offsetMin = slot2.offsetMin
+function var_0_0._setOffset(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_2 and arg_27_2.offsetMin then
+		arg_27_1.offsetMin = arg_27_2.offsetMin
 	end
 
-	if slot2 and slot2.offsetMax then
-		slot1.offsetMax = slot2.offsetMax
+	if arg_27_2 and arg_27_2.offsetMax then
+		arg_27_1.offsetMax = arg_27_2.offsetMax
 	end
 end
 
-function slot0._openWikiURL(slot0, slot1)
+function var_0_0._openWikiURL(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._wikiURLs[arg_28_1]
+
 	if SLFramework.FrameworkSettings.IsEditor then
-		UnityEngine.Application.OpenURL(slot0._wikiURLs[slot1])
+		UnityEngine.Application.OpenURL(var_28_0)
 	end
 end
 
-function slot0._adjustGroupWidthHeight(slot0, slot1)
-	slot2 = slot0:GetComponent(gohelper.Type_RectTransform)
-	slot3 = slot1:GetComponent(gohelper.Type_RectTransform)
-	slot6 = recthelper.getWidth(slot2)
-	slot7 = recthelper.getWidth(slot3)
+function var_0_0._adjustGroupWidthHeight(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:GetComponent(gohelper.Type_RectTransform)
+	local var_29_1 = arg_29_1:GetComponent(gohelper.Type_RectTransform)
+	local var_29_2 = recthelper.getHeight(var_29_0)
+	local var_29_3 = recthelper.getHeight(var_29_1)
+	local var_29_4 = recthelper.getWidth(var_29_0)
+	local var_29_5 = recthelper.getWidth(var_29_1)
 
-	if recthelper.getHeight(slot3) < recthelper.getHeight(slot2) then
-		recthelper.setHeight(slot3, slot4)
+	if var_29_3 < var_29_2 then
+		recthelper.setHeight(var_29_1, var_29_2)
 	end
 
-	if slot7 < slot6 then
-		recthelper.setWidth(slot3, slot6)
+	if var_29_5 < var_29_4 then
+		recthelper.setWidth(var_29_1, var_29_4)
 	end
 end
 
-return slot0
+return var_0_0

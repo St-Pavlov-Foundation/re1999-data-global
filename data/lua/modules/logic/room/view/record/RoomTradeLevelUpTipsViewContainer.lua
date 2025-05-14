@@ -1,13 +1,13 @@
-module("modules.logic.room.view.record.RoomTradeLevelUpTipsViewContainer", package.seeall)
+﻿module("modules.logic.room.view.record.RoomTradeLevelUpTipsViewContainer", package.seeall)
 
-slot0 = class("RoomTradeLevelUpTipsViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomTradeLevelUpTipsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomTradeLevelUpTipsView.New())
+	table.insert(var_1_0, RoomTradeLevelUpTipsView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

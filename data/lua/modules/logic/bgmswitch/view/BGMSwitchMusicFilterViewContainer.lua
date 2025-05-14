@@ -1,11 +1,11 @@
-module("modules.logic.bgmswitch.view.BGMSwitchMusicFilterViewContainer", package.seeall)
+﻿module("modules.logic.bgmswitch.view.BGMSwitchMusicFilterViewContainer", package.seeall)
 
-slot0 = class("BGMSwitchMusicFilterViewContainer", BaseViewContainer)
+local var_0_0 = class("BGMSwitchMusicFilterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		BGMSwitchMusicFilterView.New()
 	}
 end
 
-return slot0
+return var_0_0

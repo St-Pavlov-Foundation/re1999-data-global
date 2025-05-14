@@ -1,95 +1,106 @@
-module("modules.logic.main.controller.work.Activity101SignPatFaceWork", package.seeall)
+﻿module("modules.logic.main.controller.work.Activity101SignPatFaceWork", package.seeall)
 
-slot0 = class("Activity101SignPatFaceWork", PatFaceWorkBase)
+local var_0_0 = class("Activity101SignPatFaceWork", PatFaceWorkBase)
 
-function slot0._viewName(slot0)
-	return PatFaceConfig.instance:getPatFaceViewName(slot0._patFaceId)
+function var_0_0._viewName(arg_1_0)
+	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
 end
 
-function slot0._actId(slot0)
-	return PatFaceConfig.instance:getPatFaceActivityId(slot0._patFaceId)
+function var_0_0._actId(arg_2_0)
+	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
 end
 
-function slot0.checkCanPat(slot0)
-	return ActivityType101Model.instance:isOpen(slot0:_actId())
+function var_0_0.checkCanPat(arg_3_0)
+	local var_3_0 = arg_3_0:_actId()
+
+	return ActivityType101Model.instance:isOpen(var_3_0)
 end
 
-function slot0.startPat(slot0)
-	slot0:_startBlock()
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshNorSignActivity, slot0)
-	Activity101Rpc.instance:sendGet101InfosRequest(slot0:_actId())
+function var_0_0.startPat(arg_4_0)
+	arg_4_0:_startBlock()
+
+	local var_4_0 = arg_4_0:_actId()
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_4_0._refreshNorSignActivity, arg_4_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(var_4_0)
 end
 
-function slot0.clearWork(slot0)
-	slot0:_endBlock()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, slot0._refreshNorSignActivity, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.clearWork(arg_5_0)
+	arg_5_0:_endBlock()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_5_0._refreshNorSignActivity, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 ~= slot0:_viewName() then
+function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
+	if arg_6_1 ~= arg_6_0:_viewName() then
 		return
 	end
 
-	slot0:_endBlock()
+	arg_6_0:_endBlock()
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 ~= slot0:_viewName() then
+function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:_viewName()
+
+	if arg_7_1 ~= var_7_0 then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(slot2) then
+	if ViewMgr.instance:isOpen(var_7_0) then
 		return
 	end
 
-	slot0:patComplete()
+	arg_7_0:patComplete()
 end
 
-function slot0._refreshNorSignActivity(slot0)
-	slot1 = slot0:_actId()
-	slot2 = slot0:_viewName()
+function var_0_0._refreshNorSignActivity(arg_8_0)
+	local var_8_0 = arg_8_0:_actId()
+	local var_8_1 = arg_8_0:_viewName()
 
-	if not slot0:isType101RewardCouldGetAnyOne() then
-		if ViewMgr.instance:isOpen(slot2) then
+	if not arg_8_0:isType101RewardCouldGetAnyOne() then
+		if ViewMgr.instance:isOpen(var_8_1) then
 			return
 		end
 
-		slot0:patComplete()
+		arg_8_0:patComplete()
 
 		return
 	end
 
-	ViewMgr.instance:openView(slot2, {
-		actId = slot1
-	})
+	local var_8_2 = {
+		actId = var_8_0
+	}
+
+	ViewMgr.instance:openView(var_8_1, var_8_2)
 end
 
-function slot0._endBlock(slot0)
-	if not slot0:_isBlock() then
+function var_0_0._endBlock(arg_9_0)
+	if not arg_9_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function slot0._startBlock(slot0)
-	if slot0:_isBlock() then
+function var_0_0._startBlock(arg_10_0)
+	if arg_10_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function slot0._isBlock(slot0)
+function var_0_0._isBlock(arg_11_0)
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function slot0.isType101RewardCouldGetAnyOne(slot0)
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot0:_actId())
+function var_0_0.isType101RewardCouldGetAnyOne(arg_12_0)
+	local var_12_0 = arg_12_0:_actId()
+
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_12_0)
 end
 
-return slot0
+return var_0_0

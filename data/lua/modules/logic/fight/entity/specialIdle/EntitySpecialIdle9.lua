@@ -1,24 +1,24 @@
-module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle9", package.seeall)
+﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle9", package.seeall)
 
-slot0 = class("EntitySpecialIdle9", UserDataDispose)
+local var_0_0 = class("EntitySpecialIdle9", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, slot0._onMySideRoundEnd, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, arg_1_0._onMySideRoundEnd, arg_1_0)
 
-	slot0._entity = slot1
+	arg_1_0._entity = arg_1_1
 end
 
-function slot0._onMySideRoundEnd(slot0)
-	FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, slot0._entity.id)
+function var_0_0._onMySideRoundEnd(arg_2_0)
+	FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_0._entity.id)
 end
 
-function slot0.releaseSelf(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, slot0._onMySideRoundEnd, slot0)
+function var_0_0.releaseSelf(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, arg_3_0._onMySideRoundEnd, arg_3_0)
 
-	slot0._entity = nil
+	arg_3_0._entity = nil
 
-	slot0:__onDispose()
+	arg_3_0:__onDispose()
 end
 
-return slot0
+return var_0_0

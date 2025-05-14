@@ -1,33 +1,34 @@
-module("modules.logic.fight.entity.comp.FightEntityBuffSpecialPrecessComp", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightEntityBuffSpecialPrecessComp", package.seeall)
 
-slot0 = class("FightEntityBuffSpecialPrecessComp", FightBaseClass)
+local var_0_0 = class("FightEntityBuffSpecialPrecessComp", FightBaseClass)
 
-function slot0.onAwake(slot0, slot1)
-	slot0._entity = slot1
+function var_0_0.onAwake(arg_1_0, arg_1_1)
+	arg_1_0._entity = arg_1_1
 
-	slot0:com_registFightEvent(FightEvent.AddEntityBuff, slot0._onAddEntityBuff)
+	arg_1_0:com_registFightEvent(FightEvent.AddEntityBuff, arg_1_0._onAddEntityBuff)
 end
 
-function slot0._onAddEntityBuff(slot0, slot1, slot2)
-	if slot1 ~= slot0._entity.id then
+function var_0_0._onAddEntityBuff(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= arg_2_0._entity.id then
 		return
 	end
 
-	slot0:_registBuffIdClass(slot2.buffId, slot2.uid)
+	arg_2_0:_registBuffIdClass(arg_2_2.buffId, arg_2_2.uid)
 end
 
-slot1 = {
+local var_0_1 = {
 	[4150022] = FightBuffJuDaBenYePuDormancyHand,
 	[4150023] = FightBuffJuDaBenYePuDormancyTail
 }
 
-function slot0._registBuffIdClass(slot0, slot1, slot2)
-	if uv0[slot1] then
-		slot0:newClass(uv0[slot1], slot0._entity, slot1, slot2)
+function var_0_0._registBuffIdClass(arg_3_0, arg_3_1, arg_3_2)
+	if var_0_1[arg_3_1] then
+		arg_3_0:newClass(var_0_1[arg_3_1], arg_3_0._entity, arg_3_1, arg_3_2)
 	end
 end
 
-function slot0.releaseSelf(slot0)
+function var_0_0.releaseSelf(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,45 +1,49 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_EnemyInfoView", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_EnemyInfoView", package.seeall)
 
-slot0 = class("V1a4_BossRush_EnemyInfoView", EnemyInfoView)
+local var_0_0 = class("V1a4_BossRush_EnemyInfoView", EnemyInfoView)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 end
 
-function slot0._refreshUI(slot0)
-	if not slot0._battleId then
+function var_0_0._refreshUI(arg_2_0)
+	if not arg_2_0._battleId then
 		logError("地方信息界面缺少战斗Id")
 
 		return
 	end
 
-	uv0.super._refreshUI(slot0)
+	var_0_0.super._refreshUI(arg_2_0)
 end
 
-function slot0._getBossId(slot0, slot1)
-	slot3 = FightController.instance:setFightParamByBattleId(slot0._battleId) and slot2.monsterGroupIds and slot2.monsterGroupIds[slot1]
-	slot4 = slot3 and lua_monster_group.configDict[slot3]
+function var_0_0._getBossId(arg_3_0, arg_3_1)
+	local var_3_0 = FightController.instance:setFightParamByBattleId(arg_3_0._battleId)
+	local var_3_1 = var_3_0 and var_3_0.monsterGroupIds and var_3_0.monsterGroupIds[arg_3_1]
+	local var_3_2 = var_3_1 and lua_monster_group.configDict[var_3_1]
 
-	return slot4 and not string.nilorempty(slot4.bossId) and slot4.bossId or nil
+	return var_3_2 and not string.nilorempty(var_3_2.bossId) and var_3_2.bossId or nil
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._battleId = BossRushConfig.instance:getDungeonBattleId(slot0.viewParam.bossRushStage, slot0.viewParam.bossRushLayer)
+function var_0_0.onUpdateParam(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam.bossRushStage
+	local var_4_1 = arg_4_0.viewParam.bossRushLayer
 
-	slot0:_refreshUI()
+	arg_4_0._battleId = BossRushConfig.instance:getDungeonBattleId(var_4_0, var_4_1)
+
+	arg_4_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, slot0._refreshInfo, slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_5_0._refreshInfo, arg_5_0)
+	arg_5_0:onUpdateParam()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, slot0._refreshInfo, slot0)
+function var_0_0.onClose(arg_6_0)
+	arg_6_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_6_0._refreshInfo, arg_6_0)
 end
 
-function slot0._doUpdateSelectIcon(slot0, slot1)
-	slot0.viewContainer:getBossRushViewRule():refreshUI(slot1)
+function var_0_0._doUpdateSelectIcon(arg_7_0, arg_7_1)
+	arg_7_0.viewContainer:getBossRushViewRule():refreshUI(arg_7_1)
 end
 
-return slot0
+return var_0_0

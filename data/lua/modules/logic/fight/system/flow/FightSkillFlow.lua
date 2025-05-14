@@ -1,136 +1,140 @@
-module("modules.logic.fight.system.flow.FightSkillFlow", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightSkillFlow", package.seeall)
 
-slot0 = class("FightSkillFlow", BaseFlow)
+local var_0_0 = class("FightSkillFlow", BaseFlow)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
-	slot0._sequence = FlowSequence.New()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._sequence = FlowSequence.New()
 
-	slot0._sequence:addWork(FightWorkSkillSwitchSpine.New(slot1))
+	arg_1_0._sequence:addWork(FightWorkSkillSwitchSpine.New(arg_1_1))
 
-	slot2 = FlowParallel.New()
+	local var_1_0 = FlowParallel.New()
 
-	slot0._sequence:addWork(slot2)
-	slot2:addWork(FightWorkStepSkill.New(slot1))
+	arg_1_0._sequence:addWork(var_1_0)
+	var_1_0:addWork(FightWorkStepSkill.New(arg_1_1))
 
-	slot3 = nil
+	local var_1_1
 
-	for slot7, slot8 in ipairs(slot1.actEffectMOs) do
-		if slot8.effectType == FightEnum.EffectType.DEAD then
-			(slot3 or FlowParallel.New()):addWork(FightWork2Work.New(FightWorkEffectDeadPerformance, slot1, slot8, true))
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffectMOs) do
+		if iter_1_1.effectType == FightEnum.EffectType.DEAD then
+			local var_1_2 = FightWork2Work.New(FightWorkEffectDeadPerformance, arg_1_1, iter_1_1, true)
+
+			var_1_1 = var_1_1 or FlowParallel.New()
+
+			var_1_1:addWork(var_1_2)
 		end
 	end
 
-	if slot3 then
-		slot2:addWork(slot3)
+	if var_1_1 then
+		var_1_0:addWork(var_1_1)
 	end
 
-	slot4 = nil
+	local var_1_3
 
-	for slot8, slot9 in ipairs(slot1.actEffectMOs) do
-		if (slot9.effectType == FightEnum.EffectType.HEAL or slot9.effectType == FightEnum.EffectType.HEALCRIT) and slot9.effectNum > 0 then
-			if not slot4 then
-				slot2:addWork(FightWorkSkillFinallyHeal.New(slot1))
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1.actEffectMOs) do
+		if (iter_1_3.effectType == FightEnum.EffectType.HEAL or iter_1_3.effectType == FightEnum.EffectType.HEALCRIT) and iter_1_3.effectNum > 0 then
+			if not var_1_3 then
+				var_1_3 = FightWorkSkillFinallyHeal.New(arg_1_1)
+
+				var_1_0:addWork(var_1_3)
 			end
 
-			slot4:addActEffectMO(slot9)
+			var_1_3:addActEffectMO(iter_1_3)
 		end
 	end
 end
 
-function slot0.onStart(slot0)
-	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillDoneThis, slot0._parallelDoneThis, slot0)
-	FightController.instance:registerCallback(FightEvent.ForceEndSkillStep, slot0._forceEndSkillStep, slot0)
-	FightController.instance:registerCallback(FightEvent.FightWorkStepSkillTimeout, slot0._onFightWorkStepSkillTimeout, slot0)
-	slot0._sequence:registerDoneListener(slot0._skillFlowDone, slot0)
-	slot0._sequence:start({})
+function var_0_0.onStart(arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_2_0._parallelDoneThis, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ForceEndSkillStep, arg_2_0._forceEndSkillStep, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.FightWorkStepSkillTimeout, arg_2_0._onFightWorkStepSkillTimeout, arg_2_0)
+	arg_2_0._sequence:registerDoneListener(arg_2_0._skillFlowDone, arg_2_0)
+	arg_2_0._sequence:start({})
 end
 
-function slot0._onFightWorkStepSkillTimeout(slot0, slot1)
-	if slot1 == slot0._fightStepMO then
-		if slot0._sequence then
-			slot0._sequence:stop()
+function var_0_0._onFightWorkStepSkillTimeout(arg_3_0, arg_3_1)
+	if arg_3_1 == arg_3_0._fightStepMO then
+		if arg_3_0._sequence then
+			arg_3_0._sequence:stop()
 		end
 
-		slot0:onDone(true)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillTimeLineDone, slot0._fightStepMO)
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, slot0._parallelDoneThis, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, slot0._forceEndSkillStep, slot0)
-	FightController.instance:unregisterCallback(FightEvent.FightWorkStepSkillTimeout, slot0._onFightWorkStepSkillTimeout, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillTimeLineDone, arg_4_0._fightStepMO)
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_4_0._parallelDoneThis, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, arg_4_0._forceEndSkillStep, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.FightWorkStepSkillTimeout, arg_4_0._onFightWorkStepSkillTimeout, arg_4_0)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._sequence then
-		slot0._sequence:stop()
-		slot0._sequence:unregisterDoneListener(slot0._skillFlowDone, slot0)
+function var_0_0.onDestroy(arg_5_0)
+	if arg_5_0._sequence then
+		arg_5_0._sequence:stop()
+		arg_5_0._sequence:unregisterDoneListener(arg_5_0._skillFlowDone, arg_5_0)
 
-		slot0._sequence = nil
+		arg_5_0._sequence = nil
 	end
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_5_0)
 end
 
-function slot0.addAfterSkillEffects(slot0, slot1)
-	slot5 = slot0._fightStepMO
+function var_0_0.addAfterSkillEffects(arg_6_0, arg_6_1)
+	arg_6_0._sequence:addWork(FightWorkSkillSwitchSpineEnd.New(arg_6_0._fightStepMO))
 
-	slot0._sequence:addWork(FightWorkSkillSwitchSpineEnd.New(slot5))
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._sequence:addWork(slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		arg_6_0._sequence:addWork(iter_6_1)
 	end
 end
 
-function slot0.hasDone(slot0)
-	if slot0._sequence and slot0._sequence.status == WorkStatus.Running then
+function var_0_0.hasDone(arg_7_0)
+	if arg_7_0._sequence and arg_7_0._sequence.status == WorkStatus.Running then
 		return false
 	end
 
 	return true
 end
 
-function slot0.stopSkillFlow(slot0)
-	if slot0._sequence and slot0._sequence.status == WorkStatus.Running then
-		slot0._sequence:stop()
-		slot0._sequence:unregisterDoneListener(slot0._skillFlowDone, slot0)
+function var_0_0.stopSkillFlow(arg_8_0)
+	if arg_8_0._sequence and arg_8_0._sequence.status == WorkStatus.Running then
+		arg_8_0._sequence:stop()
+		arg_8_0._sequence:unregisterDoneListener(arg_8_0._skillFlowDone, arg_8_0)
 
-		slot0._sequence = nil
+		arg_8_0._sequence = nil
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, slot0._parallelDoneThis, slot0)
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_8_0._parallelDoneThis, arg_8_0)
 end
 
-function slot0._skillFlowDone(slot0)
-	if slot0._sequence then
-		slot0._sequence:unregisterDoneListener(slot0._skillFlowDone, slot0)
+function var_0_0._skillFlowDone(arg_9_0)
+	if arg_9_0._sequence then
+		arg_9_0._sequence:unregisterDoneListener(arg_9_0._skillFlowDone, arg_9_0)
 
-		slot0._sequence = nil
+		arg_9_0._sequence = nil
 
-		if slot0._parallelDone or slot0._forceEndDone then
+		if arg_9_0._parallelDone or arg_9_0._forceEndDone then
 			return
 		end
 
-		slot0:onDone(true)
+		arg_9_0:onDone(true)
 	end
 end
 
-function slot0._parallelDoneThis(slot0, slot1)
-	if slot0._fightStepMO == slot1 then
-		slot0._parallelDone = true
+function var_0_0._parallelDoneThis(arg_10_0, arg_10_1)
+	if arg_10_0._fightStepMO == arg_10_1 then
+		arg_10_0._parallelDone = true
 
-		slot0:onDone(true)
+		arg_10_0:onDone(true)
 	end
 end
 
-function slot0._forceEndSkillStep(slot0, slot1)
-	if slot1 == slot0._fightStepMO then
-		slot0._forceEndDone = true
+function var_0_0._forceEndSkillStep(arg_11_0, arg_11_1)
+	if arg_11_1 == arg_11_0._fightStepMO then
+		arg_11_0._forceEndDone = true
 
-		slot0:onDone(true)
+		arg_11_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,42 +1,47 @@
-module("modules.logic.minors.controller.MinorsController", package.seeall)
+﻿module("modules.logic.minors.controller.MinorsController", package.seeall)
 
-slot0 = class("MinorsController", BaseController)
+local var_0_0 = class("MinorsController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
 	if SettingsModel.instance:isJpRegion() then
-		PlayerController.instance:registerCallback(PlayerEvent.PlayerbassinfoChange, slot0._onPlayerbassinfoChange, slot0)
+		PlayerController.instance:registerCallback(PlayerEvent.PlayerbassinfoChange, arg_4_0._onPlayerbassinfoChange, arg_4_0)
 	end
 end
 
-function slot0.confirmDateOfBirthVerify(slot0, slot1, slot2, slot3)
-	PlayerRpc.instance:sendSetBirthdayRequest(string.format("%s-%s-%s", slot1, slot2, slot3))
+function var_0_0.confirmDateOfBirthVerify(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = string.format("%s-%s-%s", arg_5_1, arg_5_2, arg_5_3)
+
+	PlayerRpc.instance:sendSetBirthdayRequest(var_5_0)
 end
 
-function slot0._onPlayerbassinfoChange(slot0)
-	if slot0._isPayLimit ~= slot0:isPayLimit() then
-		slot0:dispatchEvent(MinorsEvent.PayLimitFlagUpdate)
+function var_0_0._onPlayerbassinfoChange(arg_6_0)
+	if arg_6_0._isPayLimit ~= arg_6_0:isPayLimit() then
+		arg_6_0:dispatchEvent(MinorsEvent.PayLimitFlagUpdate)
 	end
 end
 
-function slot0.isPayLimit(slot0)
+function var_0_0.isPayLimit(arg_7_0)
 	if SettingsModel.instance:isJpRegion() then
-		slot0._isPayLimit = string.nilorempty(PlayerModel.instance:getPlayerBirthday())
+		arg_7_0._isPayLimit = string.nilorempty(PlayerModel.instance:getPlayerBirthday())
 
-		return slot0._isPayLimit
+		return arg_7_0._isPayLimit
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.explore.model.mo.ExploreInteractOptionMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.ExploreInteractOptionMO", package.seeall)
 
-slot0 = class("ExploreInteractOptionMO")
+local var_0_0 = class("ExploreInteractOptionMO")
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.optionTxt = slot1
-	slot0.optionCallBack = slot2
-	slot0.optionCallObj = slot3
-	slot0.unit = slot4
-	slot0.isClient = slot5
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0.optionTxt = arg_1_1
+	arg_1_0.optionCallBack = arg_1_2
+	arg_1_0.optionCallObj = arg_1_3
+	arg_1_0.unit = arg_1_4
+	arg_1_0.isClient = arg_1_5
 end
 
-return slot0
+return var_0_0

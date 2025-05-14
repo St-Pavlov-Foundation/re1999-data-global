@@ -1,107 +1,116 @@
-module("modules.logic.reddot.rpc.RedDotRpc", package.seeall)
+﻿module("modules.logic.reddot.rpc.RedDotRpc", package.seeall)
 
-slot0 = class("RedDotRpc", BaseRpc)
+local var_0_0 = class("RedDotRpc", BaseRpc)
 
-function slot0.sendGetRedDotInfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = RedDotModule_pb.GetRedDotInfosRequest()
+function var_0_0.sendGetRedDotInfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = RedDotModule_pb.GetRedDotInfosRequest()
 
-	if slot1 then
-		for slot8, slot9 in ipairs(slot1) do
-			table.insert(slot4.ids, slot9)
+	if arg_1_1 then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+			table.insert(var_1_0.ids, iter_1_1)
 		end
 	end
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetRedDotInfosReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		RedDotModel.instance:setRedDotInfo(slot2.redDotInfos)
+function var_0_0.onReceiveGetRedDotInfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		RedDotModel.instance:setRedDotInfo(arg_2_2.redDotInfos)
 
-		slot3 = {}
+		local var_2_0 = {}
 
-		for slot7, slot8 in ipairs(slot2.redDotInfos) do
-			for slot13, slot14 in pairs(RedDotModel.instance:_getAssociateRedDots(slot8.defineId)) do
-				slot3[slot14] = true
+		for iter_2_0, iter_2_1 in ipairs(arg_2_2.redDotInfos) do
+			local var_2_1 = RedDotModel.instance:_getAssociateRedDots(iter_2_1.defineId)
+
+			for iter_2_2, iter_2_3 in pairs(var_2_1) do
+				var_2_0[iter_2_3] = true
 			end
 		end
 
 		RedDotController.instance:CheckExpireDot()
-		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, slot3)
+		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_2_0)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function slot0.onReceiveUpdateRedDotPush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		RedDotModel.instance:updateRedDotInfo(slot2.redDotInfos)
+function var_0_0.onReceiveUpdateRedDotPush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == 0 then
+		RedDotModel.instance:updateRedDotInfo(arg_3_2.redDotInfos)
 
-		slot3 = {}
+		local var_3_0 = {}
 
-		for slot7, slot8 in ipairs(slot2.redDotInfos) do
-			for slot13, slot14 in pairs(RedDotModel.instance:_getAssociateRedDots(slot8.defineId)) do
-				slot3[slot14] = true
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2.redDotInfos) do
+			local var_3_1 = RedDotModel.instance:_getAssociateRedDots(iter_3_1.defineId)
+
+			for iter_3_2, iter_3_3 in pairs(var_3_1) do
+				var_3_0[iter_3_3] = true
 			end
 		end
 
 		RedDotController.instance:CheckExpireDot()
-		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, slot3)
+		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_3_0)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function slot0.sendShowRedDotRequest(slot0, slot1, slot2)
-	slot3 = RedDotModule_pb.ShowRedDotRequest()
-	slot3.defineId = slot1
-	slot3.isVisible = slot2
+function var_0_0.sendShowRedDotRequest(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = RedDotModule_pb.ShowRedDotRequest()
 
-	slot0:sendMsg(slot3)
+	var_4_0.defineId = arg_4_1
+	var_4_0.isVisible = arg_4_2
+
+	arg_4_0:sendMsg(var_4_0)
 end
 
-function slot0.onReceiveShowRedDotReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		-- Nothing
+function var_0_0.onReceiveShowRedDotReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		-- block empty
 	end
 end
 
-function slot0.clientAddRedDotGroupList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.clientAddRedDotGroupList(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot3[slot8.id] = slot3[slot8.id] or {}
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		var_6_0[iter_6_1.id] = var_6_0[iter_6_1.id] or {}
 
-		table.insert(slot3[slot8.id], slot0:clientMakeRedDotGroupItem(slot8.uid, slot8.value))
+		local var_6_1 = arg_6_0:clientMakeRedDotGroupItem(iter_6_1.uid, iter_6_1.value)
+
+		table.insert(var_6_0[iter_6_1.id], var_6_1)
 	end
 
-	slot4 = {
+	local var_6_2 = {
 		redDotInfos = {},
-		replaceAll = slot2 or false
+		replaceAll = arg_6_2 or false
 	}
 
-	for slot8, slot9 in pairs(slot3) do
-		table.insert(slot4.redDotInfos, slot0:clientMakeRedDotGroup(slot8, slot9, slot2))
+	for iter_6_2, iter_6_3 in pairs(var_6_0) do
+		local var_6_3 = arg_6_0:clientMakeRedDotGroup(iter_6_2, iter_6_3, arg_6_2)
+
+		table.insert(var_6_2.redDotInfos, var_6_3)
 	end
 
-	slot0:onReceiveUpdateRedDotPush(0, slot4)
+	arg_6_0:onReceiveUpdateRedDotPush(0, var_6_2)
 end
 
-function slot0.clientMakeRedDotGroupItem(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.clientMakeRedDotGroupItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
 	return {
-		id = slot1 or 0,
-		value = slot2 or 0,
-		time = slot3 or 0,
-		ext = slot4 or ""
+		id = arg_7_1 or 0,
+		value = arg_7_2 or 0,
+		time = arg_7_3 or 0,
+		ext = arg_7_4 or ""
 	}
 end
 
-function slot0.clientMakeRedDotGroup(slot0, slot1, slot2, slot3)
+function var_0_0.clientMakeRedDotGroup(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	return {
-		defineId = slot1,
-		infos = slot2,
-		replaceAll = slot3 or false
+		defineId = arg_8_1,
+		infos = arg_8_2,
+		replaceAll = arg_8_3 or false
 	}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

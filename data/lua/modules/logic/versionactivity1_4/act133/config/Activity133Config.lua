@@ -1,80 +1,80 @@
-module("modules.logic.versionactivity1_4.act133.config.Activity133Config", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.config.Activity133Config", package.seeall)
 
-slot0 = class("Activity133Config", BaseConfig)
+local var_0_0 = class("Activity133Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._act133taskList = {}
-	slot0._act133bonusList = {}
-	slot0._finalBonus = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._act133taskList = {}
+	arg_1_0._act133bonusList = {}
+	arg_1_0._finalBonus = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity133_bonus",
 		"activity133_task"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity133_task" then
-		for slot6, slot7 in ipairs(slot2.configList) do
-			slot8 = slot7.id
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity133_task" then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
+			local var_3_0 = iter_3_1.id
 
-			table.insert(slot0._act133taskList, slot7)
+			table.insert(arg_3_0._act133taskList, iter_3_1)
 		end
-	elseif slot1 == "activity133_bonus" then
-		for slot6, slot7 in ipairs(slot2.configList) do
-			slot8 = slot7.id
+	elseif arg_3_1 == "activity133_bonus" then
+		for iter_3_2, iter_3_3 in ipairs(arg_3_2.configList) do
+			local var_3_1 = iter_3_3.id
 
-			if slot7.finalBonus == 1 then
-				slot0._finalBonus = slot7.bonus
+			if iter_3_3.finalBonus == 1 then
+				arg_3_0._finalBonus = iter_3_3.bonus
 			else
-				slot0._act133bonusList[slot8] = slot0._act133bonusList[slot8] or {}
+				arg_3_0._act133bonusList[var_3_1] = arg_3_0._act133bonusList[var_3_1] or {}
 
-				table.insert(slot0._act133bonusList[slot8], slot7)
+				table.insert(arg_3_0._act133bonusList[var_3_1], iter_3_3)
 			end
 		end
 	end
 end
 
-function slot0.getFinalBonus(slot0)
-	return slot0._finalBonus
+function var_0_0.getFinalBonus(arg_4_0)
+	return arg_4_0._finalBonus
 end
 
-function slot0.getBonusCoList(slot0)
-	return slot0._act133bonusList
+function var_0_0.getBonusCoList(arg_5_0)
+	return arg_5_0._act133bonusList
 end
 
-function slot0.getNeedFixNum(slot0)
-	return #slot0._act133bonusList
+function var_0_0.getNeedFixNum(arg_6_0)
+	return #arg_6_0._act133bonusList
 end
 
-function slot0.getTaskCoList(slot0)
-	return slot0._act133taskList
+function var_0_0.getTaskCoList(arg_7_0)
+	return arg_7_0._act133taskList
 end
 
-function slot0.getTaskCo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._act133taskList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.getTaskCo(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._act133taskList) do
+		if iter_8_1.id == arg_8_1 then
+			return iter_8_1
 		end
 	end
 
-	return slot0._act133taskList[slot1]
+	return arg_8_0._act133taskList[arg_8_1]
 end
 
-function slot0.getBonusCo(slot0, slot1)
-	return slot0._act133bonusList[slot1]
+function var_0_0.getBonusCo(arg_9_0, arg_9_1)
+	return arg_9_0._act133bonusList[arg_9_1]
 end
 
-function slot0.IsActivityTask(slot0, slot1)
-	if slot0._act133taskList[slot1].orActivity == "1" then
+function var_0_0.IsActivityTask(arg_10_0, arg_10_1)
+	if arg_10_0._act133taskList[arg_10_1].orActivity == "1" then
 		return true
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

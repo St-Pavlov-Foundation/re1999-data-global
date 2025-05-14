@@ -1,9 +1,9 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventPlayAudio", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlayAudio", package.seeall)
 
-slot0 = class("FightTLEventPlayAudio")
+local var_0_0 = class("FightTLEventPlayAudio")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill and slot3[2] == "1" then
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill and arg_1_3[2] == "1" then
 		if FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill <= 0 then
 			return
 		end
@@ -11,41 +11,48 @@ function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
 		FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill = FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill - 1
 	end
 
-	slot4 = tonumber(slot3[1])
+	local var_1_0 = tonumber(arg_1_3[1])
+	local var_1_1 = FightHelper.getEntity(arg_1_1.fromId)
 
-	if not FightHelper.getEntity(slot1.fromId) then
+	if not var_1_1 then
 		return
 	end
 
-	slot6 = slot5:getMO()
-	slot9 = nil
+	local var_1_2 = var_1_1:getMO()
+	local var_1_3 = arg_1_1.supportHeroId ~= 0 and arg_1_1.supportHeroId or var_1_2 and var_1_2.modelId
+	local var_1_4 = var_1_1:isMySide()
+	local var_1_5
 
-	if slot1.supportHeroId ~= 0 and slot1.supportHeroId or slot6 and slot6.modelId then
-		if slot5:isMySide() then
-			slot10, slot11, slot12 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot7)
+	if var_1_3 then
+		if var_1_4 then
+			local var_1_6, var_1_7, var_1_8 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_1_3)
 
-			if slot12 then
-				FightAudioMgr.instance:playAudio(slot4)
+			if var_1_8 then
+				FightAudioMgr.instance:playAudio(var_1_0)
 			else
-				if not string.nilorempty(LangSettings.shortcutTab[slot10]) then
-					slot9 = slot13
+				local var_1_9 = LangSettings.shortcutTab[var_1_6]
+
+				if not string.nilorempty(var_1_9) then
+					var_1_5 = var_1_9
 				end
 
-				FightAudioMgr.instance:playAudioWithLang(slot4, slot9)
+				FightAudioMgr.instance:playAudioWithLang(var_1_0, var_1_5)
 			end
 		else
-			FightAudioMgr.instance:playAudioWithLang(slot4, GameConfig:GetCurVoiceShortcut())
+			local var_1_10 = GameConfig:GetCurVoiceShortcut()
+
+			FightAudioMgr.instance:playAudioWithLang(var_1_0, var_1_10)
 		end
 	else
-		FightAudioMgr.instance:playAudio(slot4)
+		FightAudioMgr.instance:playAudio(var_1_0)
 	end
 
-	slot1.atkAudioId = slot4
-	slot0._audioId = slot4
+	arg_1_1.atkAudioId = var_1_0
+	arg_1_0._audioId = var_1_0
 end
 
-function slot0.skipSkill(slot0)
-	FightAudioMgr.instance:stopAudio(slot0._audioId)
+function var_0_0.skipSkill(arg_2_0)
+	FightAudioMgr.instance:stopAudio(arg_2_0._audioId)
 end
 
-return slot0
+return var_0_0

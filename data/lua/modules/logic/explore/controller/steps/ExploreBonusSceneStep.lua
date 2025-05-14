@@ -1,10 +1,10 @@
-module("modules.logic.explore.controller.steps.ExploreBonusSceneStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreBonusSceneStep", package.seeall)
 
-slot0 = class("ExploreBonusSceneStep", ExploreStepBase)
+local var_0_0 = class("ExploreBonusSceneStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	ExploreSimpleModel.instance:onGetBonus(slot0._data.bonusSceneId, slot0._data.options)
-	slot0:onDone()
+function var_0_0.onStart(arg_1_0)
+	ExploreSimpleModel.instance:onGetBonus(arg_1_0._data.bonusSceneId, arg_1_0._data.options)
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

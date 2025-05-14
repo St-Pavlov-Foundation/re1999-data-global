@@ -1,21 +1,22 @@
-module("modules.logic.versionactivity2_4.dungeon.define.VersionActivity2_4DungeonEvent", package.seeall)
+﻿module("modules.logic.versionactivity2_4.dungeon.define.VersionActivity2_4DungeonEvent", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.OnMapPosChanged = slot1()
-slot0.OnClickElement = slot1()
-slot0.FocusElement = slot1()
-slot0.OnHideInteractUI = slot1()
-slot0.OnAddOneElement = slot1()
-slot0.OnRemoveElement = slot1()
-slot0.OnRecycleAllElement = slot1()
-slot0.ManualClickElement = slot1()
-slot0.GuideShowElement = slot1()
-slot0.SudokuSelectItem = slot1()
-slot0.SudokuSelectKeyboard = slot1()
-slot0.DoSudokuCmd = slot1()
-slot0.SudokuReset = slot1()
-slot0.SudokuViewAni = slot1()
-slot0.SudokuCompleted = slot1()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return slot0
+var_0_0.OnMapPosChanged = var_0_1()
+var_0_0.OnClickElement = var_0_1()
+var_0_0.FocusElement = var_0_1()
+var_0_0.OnHideInteractUI = var_0_1()
+var_0_0.OnAddOneElement = var_0_1()
+var_0_0.OnRemoveElement = var_0_1()
+var_0_0.OnRecycleAllElement = var_0_1()
+var_0_0.ManualClickElement = var_0_1()
+var_0_0.GuideShowElement = var_0_1()
+var_0_0.SudokuSelectItem = var_0_1()
+var_0_0.SudokuSelectKeyboard = var_0_1()
+var_0_0.DoSudokuCmd = var_0_1()
+var_0_0.SudokuReset = var_0_1()
+var_0_0.SudokuViewAni = var_0_1()
+var_0_0.SudokuCompleted = var_0_1()
+
+return var_0_0

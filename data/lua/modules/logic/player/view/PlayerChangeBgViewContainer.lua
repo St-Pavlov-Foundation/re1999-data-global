@@ -1,15 +1,15 @@
-module("modules.logic.player.view.PlayerChangeBgViewContainer", package.seeall)
+﻿module("modules.logic.player.view.PlayerChangeBgViewContainer", package.seeall)
 
-slot0 = class("PlayerChangeBgViewContainer", BaseViewContainer)
+local var_0_0 = class("PlayerChangeBgViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		PlayerChangeBgView.New(),
 		TabViewGroup.New(1, "root/#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +19,4 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-return slot0
+return var_0_0

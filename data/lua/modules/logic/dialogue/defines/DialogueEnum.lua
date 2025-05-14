@@ -1,31 +1,32 @@
-module("modules.logic.dialogue.defines.DialogueEnum", package.seeall)
+﻿module("modules.logic.dialogue.defines.DialogueEnum", package.seeall)
 
-slot0 = _M
-slot0.Type = {
+local var_0_0 = _M
+
+var_0_0.Type = {
 	RightMessage = 2,
 	LeftMessage = 1,
 	Option = 4,
 	JumpToGroup = 5,
 	SystemMessage = 3
 }
-slot0.MinHeight = {
-	[slot0.Type.LeftMessage] = 150,
-	[slot0.Type.RightMessage] = 150,
-	[slot0.Type.SystemMessage] = 50,
-	[slot0.Type.Option] = 50
+var_0_0.MinHeight = {
+	[var_0_0.Type.LeftMessage] = 150,
+	[var_0_0.Type.RightMessage] = 150,
+	[var_0_0.Type.SystemMessage] = 50,
+	[var_0_0.Type.Option] = 50
 }
-slot0.IntervalY = 26
-slot0.MessageBgOffsetWidth = 30
-slot0.MessageBgOffsetHeight = 20
-slot0.MessageTxtMaxWidth = 711
-slot0.MessageTxtOneLineHeight = 40
-slot0.MessageNameHeight = 50
-slot0.DialogueItemCls = {
-	[slot0.Type.LeftMessage] = DialogueNormalItem,
-	[slot0.Type.RightMessage] = DialogueNormalItem,
-	[slot0.Type.SystemMessage] = DialogueSystemMessageItem,
-	[slot0.Type.Option] = DialogueOptionItem
+var_0_0.IntervalY = 26
+var_0_0.MessageBgOffsetWidth = 30
+var_0_0.MessageBgOffsetHeight = 20
+var_0_0.MessageTxtMaxWidth = 711
+var_0_0.MessageTxtOneLineHeight = 40
+var_0_0.MessageNameHeight = 50
+var_0_0.DialogueItemCls = {
+	[var_0_0.Type.LeftMessage] = DialogueNormalItem,
+	[var_0_0.Type.RightMessage] = DialogueNormalItem,
+	[var_0_0.Type.SystemMessage] = DialogueSystemMessageItem,
+	[var_0_0.Type.Option] = DialogueOptionItem
 }
-slot0.OnDialogueDoneWaitTime = 1.5
+var_0_0.OnDialogueDoneWaitTime = 1.5
 
-return slot0
+return var_0_0

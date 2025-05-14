@@ -1,223 +1,258 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183Model", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183Model", package.seeall)
 
-slot0 = class("Act183Model", BaseModel)
+local var_0_0 = class("Act183Model", BaseModel)
 
-function slot0.reInit(slot0)
-	slot0._activityId = nil
-	slot0._actInfo = nil
-	slot0._readyUseBadgeNum = nil
-	slot0._selectConditions = nil
-	slot0._recordRepressEpisodeId = nil
+function var_0_0.reInit(arg_1_0)
+	arg_1_0._activityId = nil
+	arg_1_0._actInfo = nil
+	arg_1_0._readyUseBadgeNum = nil
+	arg_1_0._selectConditions = nil
+	arg_1_0._recordRepressEpisodeId = nil
 
-	slot0:clearBattleFinishedInfo()
+	arg_1_0:clearBattleFinishedInfo()
 
-	slot0._unfinishTaskMap = nil
-	slot0._initDone = false
+	arg_1_0._unfinishTaskMap = nil
+	arg_1_0._initDone = false
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._activityId = slot1
-	slot0._actInfo = Act183InfoMO.New()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._activityId = arg_2_1
+	arg_2_0._actInfo = Act183InfoMO.New()
 
-	slot0._actInfo:init(slot2)
+	arg_2_0._actInfo:init(arg_2_2)
 
-	slot0._initDone = true
+	arg_2_0._initDone = true
 end
 
-function slot0.isInitDone(slot0)
-	return slot0._initDone
+function var_0_0.isInitDone(arg_3_0)
+	return arg_3_0._initDone
 end
 
-function slot0.getActInfo(slot0)
-	return slot0._actInfo
+function var_0_0.getActInfo(arg_4_0)
+	return arg_4_0._actInfo
 end
 
-function slot0.getGroupEpisodeMo(slot0, slot1)
-	return slot0._actInfo and slot0._actInfo:getGroupEpisodeMo(slot1)
+function var_0_0.getGroupEpisodeMo(arg_5_0, arg_5_1)
+	return arg_5_0._actInfo and arg_5_0._actInfo:getGroupEpisodeMo(arg_5_1)
 end
 
-function slot0.getEpisodeMo(slot0, slot1, slot2)
-	if slot0:getGroupEpisodeMo(slot1) then
-		return slot3:getEpisodeMo(slot2)
+function var_0_0.getEpisodeMo(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:getGroupEpisodeMo(arg_6_1)
+
+	if var_6_0 then
+		return var_6_0:getEpisodeMo(arg_6_2)
 	end
 end
 
-function slot0.getEpisodeMoById(slot0, slot1)
-	if Act183Config.instance:getEpisodeCo(slot1) then
-		return slot0:getEpisodeMo(slot2.groupId, slot1)
+function var_0_0.getEpisodeMoById(arg_7_0, arg_7_1)
+	local var_7_0 = Act183Config.instance:getEpisodeCo(arg_7_1)
+
+	if var_7_0 then
+		return arg_7_0:getEpisodeMo(var_7_0.groupId, arg_7_1)
 	end
 end
 
-function slot0.setActivityId(slot0, slot1)
-	if slot1 then
-		slot0._activityId = slot1
+function var_0_0.setActivityId(arg_8_0, arg_8_1)
+	if arg_8_1 then
+		arg_8_0._activityId = arg_8_1
 	end
 end
 
-function slot0.getActivityId(slot0)
-	return slot0._activityId or VersionActivity2_5Enum.ActivityId.Challenge
+function var_0_0.getActivityId(arg_9_0)
+	return arg_9_0._activityId or VersionActivity2_5Enum.ActivityId.Challenge
 end
 
-function slot0.getBadgeNum(slot0)
-	if not slot0._actInfo then
+function var_0_0.getBadgeNum(arg_10_0)
+	if not arg_10_0._actInfo then
 		logError("活动数据不存在")
 
 		return
 	end
 
-	return slot0._actInfo:getBadgeNum()
+	return (arg_10_0._actInfo:getBadgeNum())
 end
 
-function slot0.recordEpisodeReadyUseBadgeNum(slot0, slot1)
-	slot0._readyUseBadgeNum = slot1 or 0
+function var_0_0.recordEpisodeReadyUseBadgeNum(arg_11_0, arg_11_1)
+	arg_11_0._readyUseBadgeNum = arg_11_1 or 0
 end
 
-function slot0.getEpisodeReadyUseBadgeNum(slot0)
-	return slot0._readyUseBadgeNum or 0
+function var_0_0.getEpisodeReadyUseBadgeNum(arg_12_0)
+	return arg_12_0._readyUseBadgeNum or 0
 end
 
-function slot0.clearEpisodeReadyUseBadgeNum(slot0)
-	slot0._readyUseBadgeNum = nil
+function var_0_0.clearEpisodeReadyUseBadgeNum(arg_13_0)
+	arg_13_0._readyUseBadgeNum = nil
 end
 
-function slot0.getUnlockSupportHeros(slot0)
-	return slot0._actInfo and slot0._actInfo:getUnlockSupportHeros()
+function var_0_0.getUnlockSupportHeros(arg_14_0)
+	return arg_14_0._actInfo and arg_14_0._actInfo:getUnlockSupportHeros()
 end
 
-function slot0.recordBattleFinishedInfo(slot0, slot1)
-	slot0:clearBattleFinishedInfo()
+function var_0_0.recordBattleFinishedInfo(arg_15_0, arg_15_1)
+	arg_15_0:clearBattleFinishedInfo()
 
-	slot0._battleFinishedInfo = slot1
+	arg_15_0._battleFinishedInfo = arg_15_1
 
-	if slot0._actInfo and slot0._battleFinishedInfo then
-		slot0:recordNewFinishEpisodeId()
-		slot0:recordNewFinishGroupId()
-		slot0:recordNewUnlockHardMainGroup()
+	if arg_15_0._actInfo and arg_15_0._battleFinishedInfo then
+		arg_15_0:recordNewFinishEpisodeId()
+		arg_15_0:recordNewFinishGroupId()
+		arg_15_0:recordNewUnlockHardMainGroup()
 	end
 end
 
-function slot0.getBattleFinishedInfo(slot0)
-	return slot0._battleFinishedInfo
+function var_0_0.getBattleFinishedInfo(arg_16_0)
+	return arg_16_0._battleFinishedInfo
 end
 
-function slot0.clearBattleFinishedInfo(slot0)
-	slot0._battleFinishedInfo = nil
-	slot0._newFinishEpisodeId = nil
-	slot0._newFinishGroupId = nil
-	slot0._isHardMainGroupNewUnlock = false
+function var_0_0.clearBattleFinishedInfo(arg_17_0)
+	arg_17_0._battleFinishedInfo = nil
+	arg_17_0._newFinishEpisodeId = nil
+	arg_17_0._newFinishGroupId = nil
+	arg_17_0._isHardMainGroupNewUnlock = false
 end
 
-function slot0.isHeroRepressInEpisode(slot0, slot1, slot2)
-	return slot0:getGroupEpisodeMo(Act183Config.instance:getEpisodeCo(slot1) and slot3.groupId) and slot5:isHeroRepress(slot2)
+function var_0_0.isHeroRepressInEpisode(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = Act183Config.instance:getEpisodeCo(arg_18_1)
+	local var_18_1 = var_18_0 and var_18_0.groupId
+	local var_18_2 = arg_18_0:getGroupEpisodeMo(var_18_1)
+
+	return var_18_2 and var_18_2:isHeroRepress(arg_18_2)
 end
 
-function slot0.isHeroRepressInPreEpisode(slot0, slot1, slot2)
-	return slot0:getGroupEpisodeMo(Act183Config.instance:getEpisodeCo(slot1) and slot3.groupId):isHeroRepressInPreEpisode(slot1, slot2)
+function var_0_0.isHeroRepressInPreEpisode(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = Act183Config.instance:getEpisodeCo(arg_19_1)
+	local var_19_1 = var_19_0 and var_19_0.groupId
+
+	return (arg_19_0:getGroupEpisodeMo(var_19_1):isHeroRepressInPreEpisode(arg_19_1, arg_19_2))
 end
 
-function slot0.recordEpisodeSelectConditions(slot0, slot1)
-	slot0._selectConditions = {}
+function var_0_0.recordEpisodeSelectConditions(arg_20_0, arg_20_1)
+	arg_20_0._selectConditions = {}
 
-	for slot5, slot6 in pairs(slot1) do
-		if slot6 == true then
-			table.insert(slot0._selectConditions, slot5)
+	for iter_20_0, iter_20_1 in pairs(arg_20_1) do
+		if iter_20_1 == true then
+			table.insert(arg_20_0._selectConditions, iter_20_0)
 		end
 	end
 end
 
-function slot0.getRecordEpisodeSelectConditions(slot0)
-	return slot0._selectConditions
+function var_0_0.getRecordEpisodeSelectConditions(arg_21_0)
+	return arg_21_0._selectConditions
 end
 
-function slot0.recordNewFinishEpisodeId(slot0)
-	if slot0._battleFinishedInfo.win then
-		slot2 = slot0._battleFinishedInfo.episodeMo
+function var_0_0.recordNewFinishEpisodeId(arg_22_0)
+	if arg_22_0._battleFinishedInfo.win then
+		local var_22_0 = arg_22_0._battleFinishedInfo.episodeMo
+		local var_22_1 = var_22_0:getEpisodeId()
 
-		if slot0:getEpisodeMoById(slot2:getEpisodeId()):getStatus() ~= slot2:getStatus() then
-			slot0._newFinishEpisodeId = slot3
+		if arg_22_0:getEpisodeMoById(var_22_1):getStatus() ~= var_22_0:getStatus() then
+			arg_22_0._newFinishEpisodeId = var_22_1
 		end
 	end
 end
 
-function slot0.recordNewFinishGroupId(slot0)
-	if slot0._battleFinishedInfo.win and slot0._battleFinishedInfo.groupFinished then
-		slot3 = slot0._battleFinishedInfo.episodeMo
+function var_0_0.recordNewFinishGroupId(arg_23_0)
+	local var_23_0 = arg_23_0._battleFinishedInfo.win
+	local var_23_1 = arg_23_0._battleFinishedInfo.groupFinished
 
-		if not (slot0:getGroupEpisodeMo(slot3:getGroupId()) and slot6:isGroupFinished()) and (slot6 and slot6:getEpisodeCount() or 0) <= slot3:getPassOrder() then
-			slot0._newFinishGroupId = slot4
+	if var_23_0 and var_23_1 then
+		local var_23_2 = arg_23_0._battleFinishedInfo.episodeMo
+		local var_23_3 = var_23_2:getGroupId()
+		local var_23_4 = var_23_2:getPassOrder()
+		local var_23_5 = arg_23_0:getGroupEpisodeMo(var_23_3)
+		local var_23_6 = var_23_5 and var_23_5:isGroupFinished()
+		local var_23_7 = var_23_5 and var_23_5:getEpisodeCount() or 0
+
+		if not var_23_6 and var_23_7 <= var_23_4 then
+			arg_23_0._newFinishGroupId = var_23_3
 		end
 	end
 end
 
-function slot0.recordNewUnlockHardMainGroup(slot0)
-	if slot0._newFinishGroupId and (slot0:getGroupEpisodeMo(slot0._newFinishGroupId) and slot1:getGroupType()) == Act183Enum.GroupType.NormalMain and not slot1:isHasFinished() then
-		slot0._isHardMainGroupNewUnlock = true
+function var_0_0.recordNewUnlockHardMainGroup(arg_24_0)
+	if arg_24_0._newFinishGroupId then
+		local var_24_0 = arg_24_0:getGroupEpisodeMo(arg_24_0._newFinishGroupId)
+
+		if (var_24_0 and var_24_0:getGroupType()) == Act183Enum.GroupType.NormalMain and not var_24_0:isHasFinished() then
+			arg_24_0._isHardMainGroupNewUnlock = true
+		end
 	end
 end
 
-function slot0.getNewFinishEpisodeId(slot0)
-	return slot0._newFinishEpisodeId
+function var_0_0.getNewFinishEpisodeId(arg_25_0)
+	return arg_25_0._newFinishEpisodeId
 end
 
-function slot0.isEpisodeNewUnlock(slot0, slot1)
-	if (slot0:getEpisodeMoById(slot1) and slot2:getStatus()) ~= Act183Enum.EpisodeStatus.Unlocked then
+function var_0_0.isEpisodeNewUnlock(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getEpisodeMoById(arg_26_1)
+
+	if (var_26_0 and var_26_0:getStatus()) ~= Act183Enum.EpisodeStatus.Unlocked then
 		return
 	end
 
-	if not slot0._battleFinishedInfo then
+	if not arg_26_0._battleFinishedInfo then
 		return
 	end
 
-	if slot2:getPreEpisodeIds() then
-		return tabletool.indexOf(slot4, slot0._battleFinishedInfo.episodeMo and slot5:getEpisodeId()) ~= nil
+	local var_26_1 = var_26_0:getPreEpisodeIds()
+
+	if var_26_1 then
+		local var_26_2 = arg_26_0._battleFinishedInfo.episodeMo
+		local var_26_3 = var_26_2 and var_26_2:getEpisodeId()
+
+		return tabletool.indexOf(var_26_1, var_26_3) ~= nil
 	end
 end
 
-function slot0.getNewFinishGroupId(slot0)
-	return slot0._newFinishGroupId
+function var_0_0.getNewFinishGroupId(arg_27_0)
+	return arg_27_0._newFinishGroupId
 end
 
-function slot0.isHardMainGroupNewUnlock(slot0)
-	return slot0._isHardMainGroupNewUnlock
+function var_0_0.isHardMainGroupNewUnlock(arg_28_0)
+	return arg_28_0._isHardMainGroupNewUnlock
 end
 
-function slot0.initTaskStatusMap(slot0)
-	if slot0._initUnfinishTaskMapDone then
+function var_0_0.initTaskStatusMap(arg_29_0)
+	if arg_29_0._initUnfinishTaskMapDone then
 		return
 	end
 
-	slot0._unfinishTaskMap = {}
+	arg_29_0._unfinishTaskMap = {}
 
-	if TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, slot0._activityId) then
-		for slot5, slot6 in ipairs(slot1) do
-			slot8 = slot6.config and slot7.groupId
-			slot0._unfinishTaskMap[slot8] = slot0._unfinishTaskMap[slot8] or {}
+	local var_29_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, arg_29_0._activityId)
 
-			if not Act183Helper.isTaskFinished(slot7.id) then
-				table.insert(slot0._unfinishTaskMap[slot8], slot7.id)
+	if var_29_0 then
+		for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+			local var_29_1 = iter_29_1.config
+			local var_29_2 = var_29_1 and var_29_1.groupId
+
+			arg_29_0._unfinishTaskMap[var_29_2] = arg_29_0._unfinishTaskMap[var_29_2] or {}
+
+			if not Act183Helper.isTaskFinished(var_29_1.id) then
+				table.insert(arg_29_0._unfinishTaskMap[var_29_2], var_29_1.id)
 			end
 		end
 	end
 
-	slot0._initUnfinishTaskMapDone = true
+	arg_29_0._initUnfinishTaskMapDone = true
 end
 
-function slot0.getUnfinishTaskMap(slot0)
-	return slot0._unfinishTaskMap
+function var_0_0.getUnfinishTaskMap(arg_30_0)
+	return arg_30_0._unfinishTaskMap
 end
 
-function slot0.recordLastRepressEpisodeId(slot0, slot1)
-	slot0._recordRepressEpisodeId = slot1
+function var_0_0.recordLastRepressEpisodeId(arg_31_0, arg_31_1)
+	arg_31_0._recordRepressEpisodeId = arg_31_1
 end
 
-function slot0.getRecordLastRepressEpisodeId(slot0)
-	return slot0._recordRepressEpisodeId
+function var_0_0.getRecordLastRepressEpisodeId(arg_32_0)
+	return arg_32_0._recordRepressEpisodeId
 end
 
-function slot0.clearRecordLastRepressEpisodeId(slot0)
-	slot0._recordRepressEpisodeId = nil
+function var_0_0.clearRecordLastRepressEpisodeId(arg_33_0)
+	arg_33_0._recordRepressEpisodeId = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

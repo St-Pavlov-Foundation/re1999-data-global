@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6Enum", package.seeall)
+﻿module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6Enum", package.seeall)
 
-slot0 = _M
-slot0.ActivityId = {
+local var_0_0 = _M
+
+var_0_0.ActivityId = {
 	Role1 = 11605,
 	BossRush = 11604,
 	DungeonBossRush = 11609,
@@ -19,19 +20,19 @@ slot0.ActivityId = {
 	EnterView = 11601,
 	ReactivityStore = 11611
 }
-slot0.EnterViewActIdList = {
-	slot0.ActivityId.Dungeon,
-	slot0.ActivityId.Cachot,
-	slot0.ActivityId.Reactivity,
-	slot0.ActivityId.Role1,
-	slot0.ActivityId.Role2,
-	slot0.ActivityId.BossRush,
-	slot0.ActivityId.Season,
+var_0_0.EnterViewActIdList = {
+	var_0_0.ActivityId.Dungeon,
+	var_0_0.ActivityId.Cachot,
+	var_0_0.ActivityId.Reactivity,
+	var_0_0.ActivityId.Role1,
+	var_0_0.ActivityId.Role2,
+	var_0_0.ActivityId.BossRush,
+	var_0_0.ActivityId.Season,
 	{
-		slot0.ActivityId.RoleStory,
-		slot0.ActivityId.RoleStory2
+		var_0_0.ActivityId.RoleStory,
+		var_0_0.ActivityId.RoleStory2
 	},
-	slot0.ActivityId.Explore
+	var_0_0.ActivityId.Explore
 }
 
-return slot0
+return var_0_0

@@ -1,78 +1,101 @@
-module("modules.logic.versionactivity1_8.dungeon.model.VersionActivity1_8DungeonMo", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.model.VersionActivity1_8DungeonMo", package.seeall)
 
-slot0 = pureTable("VersionActivity1_8DungeonMo", VersionActivityDungeonBaseMo)
+local var_0_0 = pureTable("VersionActivity1_8DungeonMo", VersionActivityDungeonBaseMo)
 
-function slot0.updateEpisodeId(slot0, slot1)
-	slot2 = nil
+function var_0_0.updateEpisodeId(arg_1_0, arg_1_1)
+	local var_1_0
 
-	if slot1 then
-		if DungeonConfig.instance:getEpisodeCO(slot1).chapterId == slot0.activityDungeonConfig.story2ChapterId or slot3.chapterId == slot0.activityDungeonConfig.story3ChapterId then
-			while slot3.chapterId ~= slot0.activityDungeonConfig.story1ChapterId do
-				slot3 = DungeonConfig.instance:getEpisodeCO(slot3.preEpisode)
+	if arg_1_1 then
+		var_1_0 = arg_1_1
+
+		local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0)
+
+		if var_1_1.chapterId == arg_1_0.activityDungeonConfig.story2ChapterId or var_1_1.chapterId == arg_1_0.activityDungeonConfig.story3ChapterId then
+			while var_1_1.chapterId ~= arg_1_0.activityDungeonConfig.story1ChapterId do
+				var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_1.preEpisode)
 			end
 		end
 
-		slot2 = slot3.id
+		var_1_0 = var_1_1.id
 	else
-		slot3 = DungeonConfig.instance:getChapterEpisodeCOList(slot0.chapterId)
+		local var_1_2 = DungeonConfig.instance:getChapterEpisodeCOList(arg_1_0.chapterId)
 
-		if DungeonModel.instance:hasPassAllChapterEpisode(slot0.chapterId) then
-			if slot0:getIsInSideMission() then
-				slot2 = slot3[#slot3] and slot6.id
+		if DungeonModel.instance:hasPassAllChapterEpisode(arg_1_0.chapterId) then
+			if arg_1_0:getIsInSideMission() then
+				local var_1_3 = var_1_2[#var_1_2]
+
+				var_1_0 = var_1_3 and var_1_3.id
 			end
 		else
-			slot5 = nil
+			local var_1_4
 
-			for slot9, slot10 in ipairs(slot3) do
-				if (slot10 and DungeonModel.instance:getEpisodeInfo(slot10.id) or nil) and slot0:checkEpisodeUnLock(slot10) then
-					slot2 = slot10.id
+			for iter_1_0, iter_1_1 in ipairs(var_1_2) do
+				if (iter_1_1 and DungeonModel.instance:getEpisodeInfo(iter_1_1.id) or nil) and arg_1_0:checkEpisodeUnLock(iter_1_1) then
+					var_1_0 = iter_1_1.id
 				end
 			end
 		end
 	end
 
-	if slot2 then
-		slot0.episodeId = slot2
+	if var_1_0 then
+		arg_1_0.episodeId = var_1_0
 	else
-		slot0.episodeId = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(slot0.chapterId)
+		arg_1_0.episodeId = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(arg_1_0.chapterId)
 	end
 end
 
-function slot0.getIsInSideMission(slot0)
+function var_0_0.getIsInSideMission(arg_2_0)
+	local var_2_0 = false
+
 	if not Activity157Model.instance:getIsSideMissionUnlocked() then
-		return false
+		return var_2_0
 	end
 
-	slot3 = DungeonConfig.instance:getChapterEpisodeCOList(slot0.chapterId)
+	local var_2_1 = DungeonConfig.instance:getChapterEpisodeCOList(arg_2_0.chapterId)
+	local var_2_2 = var_2_1[#var_2_1]
+	local var_2_3 = var_2_2 and var_2_2.id
 
-	if not (slot3[#slot3] and slot4.id) then
-		return slot1
+	if not var_2_3 then
+		return var_2_0
 	end
 
-	slot6 = Activity157Model.instance:getActId()
+	local var_2_4 = Activity157Model.instance:getActId()
+	local var_2_5 = VersionActivity1_8DungeonConfig.instance:getEpisodeMapConfig(var_2_3)
+	local var_2_6 = VersionActivity1_8DungeonModel.instance:getElementCoList(var_2_5.id)
 
-	for slot12, slot13 in ipairs(VersionActivity1_8DungeonModel.instance:getElementCoList(VersionActivity1_8DungeonConfig.instance:getEpisodeMapConfig(slot5).id)) do
-		if Activity157Config.instance:getMissionIdByElementId(slot6, slot13.id) and Activity157Config.instance:isSideMission(slot6, slot15) and not Activity157Model.instance:isFinishMission(Activity157Config.instance:getMissionGroup(slot6, slot15), slot15) then
-			slot1 = true
+	for iter_2_0, iter_2_1 in ipairs(var_2_6) do
+		local var_2_7 = iter_2_1.id
+		local var_2_8 = Activity157Config.instance:getMissionIdByElementId(var_2_4, var_2_7)
 
-			break
+		if var_2_8 and Activity157Config.instance:isSideMission(var_2_4, var_2_8) then
+			local var_2_9 = Activity157Config.instance:getMissionGroup(var_2_4, var_2_8)
+
+			if not Activity157Model.instance:isFinishMission(var_2_9, var_2_8) then
+				var_2_0 = true
+
+				break
+			end
 		end
 	end
 
-	return slot1
+	return var_2_0
 end
 
-function slot0.checkEpisodeUnLock(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkEpisodeUnLock(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return true
 	end
 
-	if string.nilorempty(slot1.elementList) then
+	local var_3_0 = arg_3_1.elementList
+
+	if string.nilorempty(var_3_0) then
 		return true
 	end
 
-	for slot7, slot8 in ipairs(string.splitToNumber(slot2, "#")) do
-		if not DungeonMapModel.instance:elementIsFinished(slot8) then
+	local var_3_1 = string.splitToNumber(var_3_0, "#")
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_3_1) then
 			return false
 		end
 	end
@@ -80,4 +103,4 @@ function slot0.checkEpisodeUnLock(slot0, slot1)
 	return true
 end
 
-return slot0
+return var_0_0

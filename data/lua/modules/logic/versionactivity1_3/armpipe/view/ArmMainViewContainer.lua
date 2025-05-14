@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity1_3.armpipe.view.ArmMainViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmMainViewContainer", package.seeall)
 
-slot0 = class("ArmMainViewContainer", BaseViewContainer)
+local var_0_0 = class("ArmMainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ArmMainView.New(),
 		TabViewGroup.New(1, "#go_BackBtns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,11 +19,11 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_3Enum.ActivityId.Act305)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_3Enum.ActivityId.Act305
 	})
 end
 
-return slot0
+return var_0_0

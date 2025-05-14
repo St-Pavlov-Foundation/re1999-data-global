@@ -1,22 +1,22 @@
-module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapNodeCo", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapNodeCo", package.seeall)
 
-slot0 = pureTable("TianShiNaNaMapNodeCo")
+local var_0_0 = pureTable("TianShiNaNaMapNodeCo")
 
-function slot0.init(slot0, slot1)
-	slot0.x = slot1[1]
-	slot0.y = slot1[2]
-	slot0.nodeType = slot1[3]
-	slot0.collapseRound = slot1[4]
-	slot0.nodePath = slot1[5]
-	slot0.walkable = slot1[6]
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.x = arg_1_1[1]
+	arg_1_0.y = arg_1_1[2]
+	arg_1_0.nodeType = arg_1_1[3]
+	arg_1_0.collapseRound = arg_1_1[4]
+	arg_1_0.nodePath = arg_1_1[5]
+	arg_1_0.walkable = arg_1_1[6]
 end
 
-function slot0.isCollapse(slot0)
-	if not slot0.collapseRound or slot0.collapseRound == 0 or TianShiNaNaModel.instance.nowRound < slot0.collapseRound then
+function var_0_0.isCollapse(arg_2_0)
+	if not arg_2_0.collapseRound or arg_2_0.collapseRound == 0 or arg_2_0.collapseRound > TianShiNaNaModel.instance.nowRound then
 		return false
 	end
 
 	return true
 end
 
-return slot0
+return var_0_0

@@ -1,134 +1,159 @@
-module("modules.logic.scene.room.comp.entitymgr.RoomSceneMapEntityMgr", package.seeall)
+﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneMapEntityMgr", package.seeall)
 
-slot0 = class("RoomSceneMapEntityMgr", BaseSceneUnitMgr)
+local var_0_0 = class("RoomSceneMapEntityMgr", BaseSceneUnitMgr)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
-	for slot7, slot8 in ipairs(RoomMapBlockModel.instance:getBlockMOList()) do
-		slot9 = nil
+	local var_2_0 = RoomMapBlockModel.instance:getBlockMOList()
 
-		if not ((slot8.blockState ~= RoomBlockEnum.BlockState.Water or slot0:getUnit(SceneTag.RoomEmptyBlock, slot8.id)) and slot0:getUnit(SceneTag.RoomMapBlock, slot8.id)) then
-			slot0:spawnMapBlock(slot8)
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		local var_2_1
+
+		if iter_2_1.blockState == RoomBlockEnum.BlockState.Water then
+			var_2_1 = arg_2_0:getUnit(SceneTag.RoomEmptyBlock, iter_2_1.id)
 		else
-			slot0:_refreshBlockEntiy(slot9, slot8)
+			var_2_1 = arg_2_0:getUnit(SceneTag.RoomMapBlock, iter_2_1.id)
+		end
+
+		if not var_2_1 then
+			arg_2_0:spawnMapBlock(iter_2_1)
+		else
+			arg_2_0:_refreshBlockEntiy(var_2_1, iter_2_1)
 		end
 	end
 
-	if not slot0:getUnit(SceneTag.Untagged, 1) then
-		slot0:_spawnBlockEffect(RoomEnum.EffectKey.BlockCanPlaceKey, RoomBlockCanPlaceEntity, 1)
+	if not arg_2_0:getUnit(SceneTag.Untagged, 1) then
+		arg_2_0:_spawnBlockEffect(RoomEnum.EffectKey.BlockCanPlaceKey, RoomBlockCanPlaceEntity, 1)
 	end
 end
 
-function slot0.onSwitchMode(slot0)
-	slot1 = RoomMapBlockModel.instance
-
-	for slot6, slot7 in ipairs({
+function var_0_0.onSwitchMode(arg_3_0)
+	local var_3_0 = RoomMapBlockModel.instance
+	local var_3_1 = {
 		SceneTag.RoomEmptyBlock,
 		SceneTag.RoomMapBlock
-	}) do
-		if slot0:getTagUnitDict(slot7) then
-			slot9 = {}
+	}
 
-			for slot13, slot14 in pairs(slot8) do
-				slot15 = nil
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		local var_3_2 = arg_3_0:getTagUnitDict(iter_3_1)
 
-				if not ((slot7 ~= SceneTag.RoomEmptyBlock or slot1:getEmptyBlockMOById(slot13)) and slot1:getFullBlockMOById(slot13)) then
-					table.insert(slot9, slot13)
+		if var_3_2 then
+			local var_3_3 = {}
+
+			for iter_3_2, iter_3_3 in pairs(var_3_2) do
+				local var_3_4
+
+				if iter_3_1 == SceneTag.RoomEmptyBlock then
+					var_3_4 = var_3_0:getEmptyBlockMOById(iter_3_2)
+				else
+					var_3_4 = var_3_0:getFullBlockMOById(iter_3_2)
+				end
+
+				if not var_3_4 then
+					table.insert(var_3_3, iter_3_2)
 				end
 			end
 
-			for slot13 = 1, #slot9 do
-				slot0:removeUnit(slot7, slot9[slot13])
+			for iter_3_4 = 1, #var_3_3 do
+				arg_3_0:removeUnit(iter_3_1, var_3_3[iter_3_4])
 			end
 		end
 	end
 end
 
-function slot0._spawnBlockEffect(slot0, slot1, slot2, slot3)
-	slot4 = slot0._scene.go.blockRoot
-	slot5 = gohelper.create3d(slot4, slot1)
-	slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, slot2, slot3)
+function var_0_0._spawnBlockEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = arg_4_0._scene.go.blockRoot
+	local var_4_1 = gohelper.create3d(var_4_0, arg_4_1)
+	local var_4_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_1, arg_4_2, arg_4_3)
 
-	gohelper.addChild(slot4, slot5)
-	slot0:addUnit(slot6)
+	gohelper.addChild(var_4_0, var_4_1)
+	arg_4_0:addUnit(var_4_2)
 
-	return slot6
+	return var_4_2
 end
 
-function slot0.spawnMapBlock(slot0, slot1)
-	slot2 = slot0._scene.go.blockRoot
+function var_0_0.spawnMapBlock(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._scene.go.blockRoot
+	local var_5_1 = arg_5_1.hexPoint
 
-	if not slot1.hexPoint then
+	if not var_5_1 then
 		logError("RoomSceneMapEntityMgr: 没有位置信息")
 
 		return
 	end
 
-	slot4 = gohelper.create3d(slot2, RoomResHelper.getBlockName(slot3))
-	slot5 = nil
-	slot5 = (slot1.blockState ~= RoomBlockEnum.BlockState.Water or MonoHelper.addNoUpdateLuaComOnceToGo(slot4, RoomEmptyBlockEntity, slot1.id)) and MonoHelper.addNoUpdateLuaComOnceToGo(slot4, RoomMapBlockEntity, slot1.id)
+	local var_5_2 = gohelper.create3d(var_5_0, RoomResHelper.getBlockName(var_5_1))
+	local var_5_3
 
-	slot0:addUnit(slot5)
-	gohelper.addChild(slot2, slot4)
-	slot0:_refreshBlockEntiy(slot5, slot1)
-
-	return slot5
-end
-
-function slot0._refreshBlockEntiy(slot0, slot1, slot2)
-	slot3 = HexMath.hexToPosition(slot2.hexPoint, RoomBlockEnum.BlockSize)
-
-	slot1:setLocalPos(slot3.x, 0, slot3.y)
-	slot1:refreshBlock()
-	slot1:refreshRotation()
-end
-
-function slot0.moveTo(slot0, slot1, slot2)
-	slot3 = HexMath.hexToPosition(slot2, RoomBlockEnum.BlockSize)
-
-	slot1:setLocalPos(slot3.x, 0, slot3.y)
-end
-
-function slot0.destroyBlock(slot0, slot1)
-	slot0:removeUnit(slot1:getTag(), slot1.id)
-end
-
-function slot0.getBlockEntity(slot0, slot1, slot2)
-	slot3 = (not slot2 or slot2 == SceneTag.RoomMapBlock) and slot0:getTagUnitDict(SceneTag.RoomMapBlock)
-
-	if slot3 and slot3[slot1] then
-		return slot4
+	if arg_5_1.blockState == RoomBlockEnum.BlockState.Water then
+		var_5_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_2, RoomEmptyBlockEntity, arg_5_1.id)
+	else
+		var_5_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_2, RoomMapBlockEntity, arg_5_1.id)
 	end
 
-	slot3 = (not slot2 or slot2 == SceneTag.RoomEmptyBlock) and slot0:getTagUnitDict(SceneTag.RoomEmptyBlock)
+	arg_5_0:addUnit(var_5_3)
+	gohelper.addChild(var_5_0, var_5_2)
+	arg_5_0:_refreshBlockEntiy(var_5_3, arg_5_1)
 
-	return slot3 and slot3[slot1]
+	return var_5_3
 end
 
-function slot0.getMapBlockEntityDict(slot0)
-	return slot0._tagUnitDict[SceneTag.RoomMapBlock]
+function var_0_0._refreshBlockEntiy(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = HexMath.hexToPosition(arg_6_2.hexPoint, RoomBlockEnum.BlockSize)
+
+	arg_6_1:setLocalPos(var_6_0.x, 0, var_6_0.y)
+	arg_6_1:refreshBlock()
+	arg_6_1:refreshRotation()
 end
 
-function slot0.getPropertyBlock(slot0)
-	if not slot0._propertyBlock then
-		slot0._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
+function var_0_0.moveTo(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = HexMath.hexToPosition(arg_7_2, RoomBlockEnum.BlockSize)
+
+	arg_7_1:setLocalPos(var_7_0.x, 0, var_7_0.y)
+end
+
+function var_0_0.destroyBlock(arg_8_0, arg_8_1)
+	arg_8_0:removeUnit(arg_8_1:getTag(), arg_8_1.id)
+end
+
+function var_0_0.getBlockEntity(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = (not arg_9_2 or arg_9_2 == SceneTag.RoomMapBlock) and arg_9_0:getTagUnitDict(SceneTag.RoomMapBlock)
+	local var_9_1 = var_9_0 and var_9_0[arg_9_1]
+
+	if var_9_1 then
+		return var_9_1
 	end
 
-	return slot0._propertyBlock
+	local var_9_2 = (not arg_9_2 or arg_9_2 == SceneTag.RoomEmptyBlock) and arg_9_0:getTagUnitDict(SceneTag.RoomEmptyBlock)
+
+	return var_9_2 and var_9_2[arg_9_1]
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
+function var_0_0.getMapBlockEntityDict(arg_10_0)
+	return arg_10_0._tagUnitDict[SceneTag.RoomMapBlock]
+end
 
-	if slot0._propertyBlock then
-		slot0._propertyBlock:Clear()
+function var_0_0.getPropertyBlock(arg_11_0)
+	if not arg_11_0._propertyBlock then
+		arg_11_0._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	end
 
-		slot0._propertyBlock = nil
+	return arg_11_0._propertyBlock
+end
+
+function var_0_0.onSceneClose(arg_12_0)
+	var_0_0.super.onSceneClose(arg_12_0)
+
+	if arg_12_0._propertyBlock then
+		arg_12_0._propertyBlock:Clear()
+
+		arg_12_0._propertyBlock = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,129 +1,140 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessLeaderView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessLeaderView", package.seeall)
 
-slot0 = class("AutoChessLeaderView", BaseView)
+local var_0_0 = class("AutoChessLeaderView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goItemRoot = gohelper.findChild(slot0.viewGO, "root/scroll_teamleaderlist/viewport/#go_ItemRoot")
-	slot0._btnStart = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_Start")
-	slot0._goStartGray = gohelper.findChild(slot0.viewGO, "root/#btn_Start/#go_StartGray")
-	slot0._btnFresh = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_Fresh")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goItemRoot = gohelper.findChild(arg_1_0.viewGO, "root/scroll_teamleaderlist/viewport/#go_ItemRoot")
+	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Start")
+	arg_1_0._goStartGray = gohelper.findChild(arg_1_0.viewGO, "root/#btn_Start/#go_StartGray")
+	arg_1_0._btnFresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Fresh")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnStart:AddClickListener(slot0._btnStartOnClick, slot0)
-	slot0._btnFresh:AddClickListener(slot0._btnFreshOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnStart:AddClickListener(arg_2_0._btnStartOnClick, arg_2_0)
+	arg_2_0._btnFresh:AddClickListener(arg_2_0._btnFreshOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnStart:RemoveClickListener()
-	slot0._btnFresh:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnStart:RemoveClickListener()
+	arg_3_0._btnFresh:RemoveClickListener()
 end
 
-function slot0._btnFreshOnClick(slot0)
-	slot0.anim:Play("switch", 0, 0)
-	TaskDispatcher.runDelay(slot0._delayRefresh, slot0, 0.16)
+function var_0_0._btnFreshOnClick(arg_4_0)
+	arg_4_0.anim:Play("switch", 0, 0)
+	TaskDispatcher.runDelay(arg_4_0._delayRefresh, arg_4_0, 0.16)
 end
 
-function slot0._delayRefresh(slot0)
-	Activity182Rpc.instance:sendAct182RefreshMasterRequest(slot0.actId, slot0.refreshBack, slot0)
+function var_0_0._delayRefresh(arg_5_0)
+	Activity182Rpc.instance:sendAct182RefreshMasterRequest(arg_5_0.actId, arg_5_0.refreshBack, arg_5_0)
 end
 
-function slot0.refreshBack(slot0, slot1, slot2)
-	if slot2 == 0 then
-		slot0:refreshUI()
+function var_0_0.refreshBack(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_2 == 0 then
+		arg_6_0:refreshUI()
 	end
 end
 
-function slot0._btnStartOnClick(slot0)
-	if not slot0.selectLeader then
+function var_0_0._btnStartOnClick(arg_7_0)
+	if not arg_7_0.selectLeader then
 		GameFacade.showToast(ToastEnum.AutoChessSelectLeader)
 
 		return
 	end
 
-	AutoChessController.instance:openLeaderNextView({
-		moduleId = slot0.moduleId,
-		episodeId = slot0.viewParam.episodeId,
-		leaderId = slot0.selectLeader.id
-	})
-	slot0:closeThis()
+	local var_7_0 = {
+		moduleId = arg_7_0.moduleId,
+		episodeId = arg_7_0.viewParam.episodeId,
+		leaderId = arg_7_0.selectLeader.id
+	}
+
+	AutoChessController.instance:openLeaderNextView(var_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0.actId = Activity182Model.instance:getCurActId()
-	slot0.moduleId = AutoChessEnum.ModuleId.PVP
-	slot0.leaderItemList = {}
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.anim = arg_8_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_8_0.actId = Activity182Model.instance:getCurActId()
+	arg_8_0.moduleId = AutoChessEnum.ModuleId.PVP
+	arg_8_0.leaderItemList = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getResInst(AutoChessEnum.LeaderItemPath, slot0._goItemRoot)
+	for iter_8_0 = 1, 3 do
+		local var_8_0 = arg_8_0:getResInst(AutoChessEnum.LeaderItemPath, arg_8_0._goItemRoot)
 
-		gohelper.setActive(slot5, false)
+		gohelper.setActive(var_8_0, false)
 
-		slot0.leaderItemList[slot4] = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, AutoChessLeaderItem, slot0)
+		local var_8_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_0, AutoChessLeaderItem, arg_8_0)
+
+		arg_8_0.leaderItemList[iter_8_0] = var_8_1
 	end
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_delete_features)
 
-	if slot0.viewParam then
-		slot0:refreshUI()
+	if arg_9_0.viewParam then
+		arg_9_0:refreshUI()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._delayRefresh, slot0)
-	TaskDispatcher.cancelTask(slot0.delayShowLeader, slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._delayRefresh, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0.delayShowLeader, arg_11_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = Activity182Model.instance:getActMo()
-	slot0.gameMo = slot1.gameMoDic[slot0.moduleId]
-	slot0.masterIdBox = slot0.gameMo.masterIdBox
-	slot0.showIndex = 0
+function var_0_0.refreshUI(arg_12_0)
+	local var_12_0 = Activity182Model.instance:getActMo()
 
-	slot0:delayShowLeader()
-	TaskDispatcher.runRepeat(slot0.delayShowLeader, slot0, 0.1)
-	gohelper.setActive(slot0._btnFresh, slot1:isEpisodePass(tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)) and not slot0.gameMo.refreshed)
-	gohelper.setActive(slot0._goStartGray, not slot0.selectLeader)
+	arg_12_0.gameMo = var_12_0.gameMoDic[arg_12_0.moduleId]
+	arg_12_0.masterIdBox = arg_12_0.gameMo.masterIdBox
+	arg_12_0.showIndex = 0
+
+	arg_12_0:delayShowLeader()
+	TaskDispatcher.runRepeat(arg_12_0.delayShowLeader, arg_12_0, 0.1)
+
+	local var_12_1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)
+	local var_12_2 = var_12_0:isEpisodePass(var_12_1)
+
+	gohelper.setActive(arg_12_0._btnFresh, var_12_2 and not arg_12_0.gameMo.refreshed)
+	gohelper.setActive(arg_12_0._goStartGray, not arg_12_0.selectLeader)
 end
 
-function slot0.delayShowLeader(slot0)
-	slot0.showIndex = slot0.showIndex + 1
-	slot1 = slot0.leaderItemList[slot0.showIndex]
+function var_0_0.delayShowLeader(arg_13_0)
+	arg_13_0.showIndex = arg_13_0.showIndex + 1
 
-	slot1:setData(slot0.masterIdBox[slot0.showIndex])
-	gohelper.setActive(slot1.go, true)
+	local var_13_0 = arg_13_0.leaderItemList[arg_13_0.showIndex]
 
-	if slot0.showIndex >= 3 then
-		TaskDispatcher.cancelTask(slot0.delayShowLeader, slot0)
+	var_13_0:setData(arg_13_0.masterIdBox[arg_13_0.showIndex])
+	gohelper.setActive(var_13_0.go, true)
+
+	if arg_13_0.showIndex >= 3 then
+		TaskDispatcher.cancelTask(arg_13_0.delayShowLeader, arg_13_0)
 	end
 end
 
-function slot0.onClickLeader(slot0, slot1)
-	if slot0.selectLeader then
-		if slot0.selectLeader == slot1 then
+function var_0_0.onClickLeader(arg_14_0, arg_14_1)
+	if arg_14_0.selectLeader then
+		if arg_14_0.selectLeader == arg_14_1 then
 			return
 		end
 
-		slot0.selectLeader:refreshSelect(false)
+		arg_14_0.selectLeader:refreshSelect(false)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_level_chosen)
-	slot1:refreshSelect(true)
+	arg_14_1:refreshSelect(true)
 
-	slot0.selectLeader = slot1
+	arg_14_0.selectLeader = arg_14_1
 
-	gohelper.setActive(slot0._goStartGray, not slot0.selectLeader)
+	gohelper.setActive(arg_14_0._goStartGray, not arg_14_0.selectLeader)
 end
 
-return slot0
+return var_0_0

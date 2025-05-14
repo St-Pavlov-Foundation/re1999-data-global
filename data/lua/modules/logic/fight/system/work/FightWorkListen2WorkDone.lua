@@ -1,43 +1,43 @@
-module("modules.logic.fight.system.work.FightWorkListen2WorkDone", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkListen2WorkDone", package.seeall)
 
-slot0 = class("FightWorkListen2WorkDone", FightWorkItem)
+local var_0_0 = class("FightWorkListen2WorkDone", FightWorkItem)
 
-function slot0.onConstructor(slot0, slot1)
-	slot0._work = slot1
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
+	arg_1_0._work = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	if slot0._work.IS_DISPOSED then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if arg_2_0._work.IS_DISPOSED then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot0._work.WORKFINISHED then
-		slot0:onDone(true)
+	if arg_2_0._work.WORKFINISHED then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	slot0:cancelFightWorkSafeTimer()
+	arg_2_0:cancelFightWorkSafeTimer()
 
-	if slot0._work.STARTED then
-		slot0._work:registFinishCallback(slot0.onWorkItemDone, slot0)
+	if arg_2_0._work.STARTED then
+		arg_2_0._work:registFinishCallback(arg_2_0.onWorkItemDone, arg_2_0)
 
 		return
 	end
 
-	slot0._work:registFinishCallback(slot0.onWorkItemDone, slot0)
+	arg_2_0._work:registFinishCallback(arg_2_0.onWorkItemDone, arg_2_0)
 
-	return slot0._work:start(slot0.context)
+	return arg_2_0._work:start(arg_2_0.context)
 end
 
-function slot0.onWorkItemDone(slot0)
-	return slot0:onDone(true)
+function var_0_0.onWorkItemDone(arg_3_0)
+	return arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	slot0._work:disposeSelf()
+function var_0_0.clearWork(arg_4_0)
+	arg_4_0._work:disposeSelf()
 end
 
-return slot0
+return var_0_0

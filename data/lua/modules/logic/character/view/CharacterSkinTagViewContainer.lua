@@ -1,13 +1,13 @@
-module("modules.logic.character.view.CharacterSkinTagViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterSkinTagViewContainer", package.seeall)
 
-slot0 = class("CharacterSkinTagViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterSkinTagViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, CharacterSkinTagView.New())
+	table.insert(var_1_0, CharacterSkinTagView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

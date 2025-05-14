@@ -1,64 +1,77 @@
-module("modules.logic.room.view.RoomBuildingInteractionView", package.seeall)
+﻿module("modules.logic.room.view.RoomBuildingInteractionView", package.seeall)
 
-slot0 = class("RoomBuildingInteractionView", BaseView)
+local var_0_0 = class("RoomBuildingInteractionView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnlockscreen = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_lockscreen")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnlockscreen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_lockscreen")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlockscreen:AddClickListener(slot0._btnlockscreenOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlockscreen:AddClickListener(arg_2_0._btnlockscreenOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlockscreen:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlockscreen:RemoveClickListener()
 end
 
-function slot0._btnlockscreenOnClick(slot0)
-	slot0:closeThis()
-	slot0:_resetCamera()
+function var_0_0._btnlockscreenOnClick(arg_4_0)
+	arg_4_0:closeThis()
+	arg_4_0:_resetCamera()
 end
 
-function slot0._resetCamera(slot0)
-	if not RoomCharacterController.instance:getPlayingInteractionParam() or slot1.behaviour ~= RoomCharacterEnum.InteractionType.Building then
+function var_0_0._resetCamera(arg_5_0)
+	local var_5_0 = RoomCharacterController.instance:getPlayingInteractionParam()
+
+	if not var_5_0 or var_5_0.behaviour ~= RoomCharacterEnum.InteractionType.Building then
 		return
 	end
 
-	if not RoomCharacterModel.instance:getCharacterMOById(slot1.heroId) then
+	local var_5_1 = RoomCharacterModel.instance:getCharacterMOById(var_5_0.heroId)
+
+	if not var_5_1 then
 		return
 	end
 
-	if not GameSceneMgr.instance:getCurScene() or not slot3.camera then
+	local var_5_2 = GameSceneMgr.instance:getCurScene()
+
+	if not var_5_2 or not var_5_2.camera then
 		return
 	end
 
-	if slot3.camera:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
-		slot5 = slot2.currentPosition
+	local var_5_3 = var_5_2.camera
 
-		slot4:switchCameraState(RoomEnum.CameraState.Normal, {
-			focusX = slot5.x,
-			focusY = slot5.z
+	if var_5_3:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
+		local var_5_4 = var_5_1.currentPosition
+
+		var_5_3:switchCameraState(RoomEnum.CameraState.Normal, {
+			focusX = var_5_4.x,
+			focusY = var_5_4.z
 		})
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

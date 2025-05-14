@@ -1,122 +1,142 @@
-module("modules.logic.versionactivity1_6.act147.config.FurnaceTreasureConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act147.config.FurnaceTreasureConfig", package.seeall)
 
-slot0 = class("FurnaceTreasureConfig", BaseConfig)
+local var_0_0 = class("FurnaceTreasureConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"activity147",
 		"activity147_goods"
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("%sConfigLoaded", slot1)] then
-		slot4(slot0, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_2)
 	end
 end
 
-function slot1(slot0, slot1)
-	if not (lua_activity147 and lua_activity147.configDict[slot0] or nil) and slot1 then
-		logError(string.format("FurnaceTreasureConfig.getAct147Cfg error, cfg is nil, id:%s", slot0))
+local function var_0_1(arg_4_0, arg_4_1)
+	local var_4_0 = lua_activity147 and lua_activity147.configDict[arg_4_0] or nil
+
+	if not var_4_0 and arg_4_1 then
+		logError(string.format("FurnaceTreasureConfig.getAct147Cfg error, cfg is nil, id:%s", arg_4_0))
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.getDescList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getDescList(arg_5_0, arg_5_1)
+	local var_5_0 = {}
+	local var_5_1 = var_0_1(arg_5_1, true)
 
-	if uv0(slot1, true) then
-		slot2 = string.split(slot3.descList, "|")
+	if var_5_1 then
+		local var_5_2 = var_5_1.descList
+
+		var_5_0 = string.split(var_5_2, "|")
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getRewardList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getRewardList(arg_6_0, arg_6_1)
+	local var_6_0 = {}
+	local var_6_1 = var_0_1(arg_6_1, true)
 
-	if uv0(slot1, true) then
-		slot2 = ItemModel.instance:getItemDataListByConfigStr(slot3.rewardList)
+	if var_6_1 then
+		local var_6_2 = var_6_1.rewardList
+
+		var_6_0 = ItemModel.instance:getItemDataListByConfigStr(var_6_2)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.getSpineRes(slot0, slot1)
-	slot2 = nil
+function var_0_0.getSpineRes(arg_7_0, arg_7_1)
+	local var_7_0
+	local var_7_1 = var_0_1(arg_7_1, true)
 
-	if uv0(slot1, true) then
-		slot2 = slot3.spineRes
+	if var_7_1 then
+		var_7_0 = var_7_1.spineRes
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getDialogList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getDialogList(arg_8_0, arg_8_1)
+	local var_8_0 = {}
+	local var_8_1 = var_0_1(arg_8_1, true)
 
-	if uv0(slot1, true) then
-		slot2 = string.split(slot3.dialogs, "|")
+	if var_8_1 then
+		local var_8_2 = var_8_1.dialogs
+
+		var_8_0 = string.split(var_8_2, "|")
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getJumpId(slot0, slot1)
-	slot2 = 0
+function var_0_0.getJumpId(arg_9_0, arg_9_1)
+	local var_9_0 = 0
+	local var_9_1 = var_0_1(arg_9_1, true)
 
-	if uv0(slot1, true) then
-		slot2 = slot3.jumpId
+	if var_9_1 then
+		var_9_0 = var_9_1.jumpId
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot2(slot0, slot1)
-	slot2 = nil
-	slot3 = FurnaceTreasureModel.instance:getActId()
+local function var_0_2(arg_10_0, arg_10_1)
+	local var_10_0
+	local var_10_1 = FurnaceTreasureModel.instance:getActId()
 
-	if lua_activity147_goods and lua_activity147_goods.configDict[slot3] then
-		slot2 = lua_activity147_goods.configDict[slot3][slot0]
+	if lua_activity147_goods and lua_activity147_goods.configDict[var_10_1] then
+		var_10_0 = lua_activity147_goods.configDict[var_10_1][arg_10_0]
 	end
 
-	if not slot2 and slot1 then
-		logError(string.format("FurnaceTreasureConfig.get147GoodCfg error, cfg is nil, actId:%s,goodsId:%s", slot3, slot0))
+	if not var_10_0 and arg_10_1 then
+		logError(string.format("FurnaceTreasureConfig.get147GoodCfg error, cfg is nil, actId:%s,goodsId:%s", var_10_1, arg_10_0))
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.get147GoodsCost(slot0, slot1)
-	slot2 = nil
+function var_0_0.get147GoodsCost(arg_11_0, arg_11_1)
+	local var_11_0
+	local var_11_1 = var_0_2(arg_11_1, true)
 
-	if uv0(slot1, true) then
-		slot2 = slot3.cost
+	if var_11_1 then
+		var_11_0 = var_11_1.cost
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0.getAct147GoodsShowItem(slot0, slot1)
-	slot2 = 0
-	slot3 = 0
-	slot4 = 0
+function var_0_0.getAct147GoodsShowItem(arg_12_0, arg_12_1)
+	local var_12_0 = 0
+	local var_12_1 = 0
+	local var_12_2 = 0
+	local var_12_3 = arg_12_1 and FurnaceTreasureEnum.Pool2GoodsId[arg_12_1] or nil
 
-	if slot1 and FurnaceTreasureEnum.Pool2GoodsId[slot1] or nil then
-		slot2 = string.splitToNumber(slot5, "#")[1] or 0
-		slot3 = slot6[2] or 0
-		slot4 = slot6[3] or 0
+	if var_12_3 then
+		local var_12_4 = string.splitToNumber(var_12_3, "#")
+
+		var_12_0 = var_12_4[1] or 0
+		var_12_1 = var_12_4[2] or 0
+		var_12_2 = var_12_4[3] or 0
 	else
-		logError(string.format("FurnaceTreasureConfig:getAct147GoodsShowItem error, can't get strShowItem, poolId:%s", slot1))
+		logError(string.format("FurnaceTreasureConfig:getAct147GoodsShowItem error, can't get strShowItem, poolId:%s", arg_12_1))
 	end
 
-	return slot2, slot3, slot4
+	return var_12_0, var_12_1, var_12_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

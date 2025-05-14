@@ -1,61 +1,67 @@
-module("modules.logic.activity.view.ActivityTipView", package.seeall)
+﻿module("modules.logic.activity.view.ActivityTipView", package.seeall)
 
-slot0 = class("ActivityTipView", BaseView)
+local var_0_0 = class("ActivityTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnbgclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_bgclick")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_tip")
-	slot0._btnmask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_tip/#btn_mask")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_tip/#txt_desc")
-	slot0._scrollruledesc = gohelper.findChildScrollRect(slot0.viewGO, "#go_tip/#scroll_ruledesc")
-	slot0._txttip = gohelper.findChildText(slot0.viewGO, "#go_tip/#scroll_ruledesc/Viewport/Content/#txt_tip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnbgclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_bgclick")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
+	arg_1_0._btnmask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_tip/#btn_mask")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#txt_desc")
+	arg_1_0._scrollruledesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_tip/#scroll_ruledesc")
+	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#scroll_ruledesc/Viewport/Content/#txt_tip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbgclick:AddClickListener(slot0._btnbgclickOnClick, slot0)
-	slot0._btnmask:AddClickListener(slot0._btnmaskOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbgclick:AddClickListener(arg_2_0._btnbgclickOnClick, arg_2_0)
+	arg_2_0._btnmask:AddClickListener(arg_2_0._btnmaskOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbgclick:RemoveClickListener()
-	slot0._btnmask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbgclick:RemoveClickListener()
+	arg_3_0._btnmask:RemoveClickListener()
 end
 
-function slot0._btnbgclickOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnbgclickOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewName = nil
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._viewName = nil
 end
 
-function slot0._btnmaskOnClick(slot0)
+function var_0_0._btnmaskOnClick(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refresh()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:_refresh()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-function slot0._refresh(slot0)
-	gohelper.addChild(slot0.viewParam.rootGo, slot0.viewGO)
-	transformhelper.setLocalPosXY(slot0._gotip.transform, recthelper.getWidth(slot0.viewParam.rootGo.transform), 0)
+function var_0_0._refresh(arg_10_0)
+	gohelper.addChild(arg_10_0.viewParam.rootGo, arg_10_0.viewGO)
 
-	slot0._txtdesc.text = slot0.viewParam.title
-	slot0._txttip.text = slot0.viewParam.desc
+	local var_10_0 = recthelper.getWidth(arg_10_0.viewParam.rootGo.transform)
+
+	transformhelper.setLocalPosXY(arg_10_0._gotip.transform, var_10_0, 0)
+
+	arg_10_0._txtdesc.text = arg_10_0.viewParam.title
+	arg_10_0._txttip.text = arg_10_0.viewParam.desc
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

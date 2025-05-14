@@ -1,114 +1,120 @@
-module("modules.logic.room.model.trade.RoomDailyOrderMo", package.seeall)
+﻿module("modules.logic.room.model.trade.RoomDailyOrderMo", package.seeall)
 
-slot0 = class("RoomDailyOrderMo")
+local var_0_0 = class("RoomDailyOrderMo")
 
-function slot0.ctor(slot0)
-	slot0.orderId = nil
-	slot0.lastRefreshTime = nil
-	slot0.buyerId = nil
-	slot0.goodsInfo = nil
-	slot0.isAdvanced = nil
-	slot0.isTraced = nil
-	slot0.waitRefresh = nil
-	slot0.refreshType = nil
-	slot0.isLocked = nil
-	slot0.isFinish = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.orderId = nil
+	arg_1_0.lastRefreshTime = nil
+	arg_1_0.buyerId = nil
+	arg_1_0.goodsInfo = nil
+	arg_1_0.isAdvanced = nil
+	arg_1_0.isTraced = nil
+	arg_1_0.waitRefresh = nil
+	arg_1_0.refreshType = nil
+	arg_1_0.isLocked = nil
+	arg_1_0.isFinish = nil
 end
 
-function slot0.initMo(slot0, slot1, slot2)
-	slot0.orderId = slot1.orderId
-	slot0.lastRefreshTime = slot1.lastRefreshTime
-	slot0.buyerId = slot1.buyerId
-	slot0.isAdvanced = slot1.isAdvanced
-	slot0.isTraced = slot1.isTraced
-	slot0.refreshType = slot1.refreshType
-	slot0.isLocked = slot1.isLocked
-	slot0.goodsInfo = {}
-	slot0._orderPrice = 0
+function var_0_0.initMo(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.orderId = arg_2_1.orderId
+	arg_2_0.lastRefreshTime = arg_2_1.lastRefreshTime
+	arg_2_0.buyerId = arg_2_1.buyerId
+	arg_2_0.isAdvanced = arg_2_1.isAdvanced
+	arg_2_0.isTraced = arg_2_1.isTraced
+	arg_2_0.refreshType = arg_2_1.refreshType
+	arg_2_0.isLocked = arg_2_1.isLocked
+	arg_2_0.goodsInfo = {}
+	arg_2_0._orderPrice = 0
 
-	for slot6 = 1, #slot1.goodsInfo do
-		slot7 = RoomProductionMo.New()
+	for iter_2_0 = 1, #arg_2_1.goodsInfo do
+		local var_2_0 = RoomProductionMo.New()
 
-		slot7:initMo(slot1.goodsInfo[slot6])
-		table.insert(slot0.goodsInfo, slot7)
+		var_2_0:initMo(arg_2_1.goodsInfo[iter_2_0])
+		table.insert(arg_2_0.goodsInfo, var_2_0)
 
-		slot0._orderPrice = slot0._orderPrice + slot7:getOrderPrice()
+		arg_2_0._orderPrice = arg_2_0._orderPrice + var_2_0:getOrderPrice()
 	end
 
-	if slot0.isAdvanced then
-		slot0._orderPrice = slot0._orderPrice * slot0:getAdvancedRate()
+	local var_2_1 = arg_2_0:getAdvancedRate()
+
+	if arg_2_0.isAdvanced then
+		arg_2_0._orderPrice = arg_2_0._orderPrice * var_2_1
 	end
 
-	slot0.isNewRefresh = slot2
-	slot0.waitRefresh = nil
-	slot0._orderCo = RoomTradeConfig.instance:getOrderQualityInfo(slot0.orderId)
-	slot0.isFinish = false
+	arg_2_0.isNewRefresh = arg_2_2
+	arg_2_0.waitRefresh = nil
+	arg_2_0._orderCo = RoomTradeConfig.instance:getOrderQualityInfo(arg_2_0.orderId)
+	arg_2_0.isFinish = false
 end
 
-function slot0.getAdvancedRate(slot0)
+function var_0_0.getAdvancedRate(arg_3_0)
 	return 1 + (RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyHighOrderAddRate, true) or 0) * 0.0001
 end
 
-function slot0.setFinish(slot0)
-	slot0.isFinish = true
+function var_0_0.setFinish(arg_4_0)
+	arg_4_0.isFinish = true
 end
 
-function slot0.getPrice(slot0)
-	return slot0._orderCo.co.price
+function var_0_0.getPrice(arg_5_0)
+	return arg_5_0._orderCo.co.price
 end
 
-function slot0.getPriceCount(slot0)
-	return GameUtil.numberDisplay(slot0._orderPrice)
+function var_0_0.getPriceCount(arg_6_0)
+	return GameUtil.numberDisplay(arg_6_0._orderPrice)
 end
 
-function slot0.setWaitRefresh(slot0, slot1)
-	slot0.waitRefresh = slot1
+function var_0_0.setWaitRefresh(arg_7_0, arg_7_1)
+	arg_7_0.waitRefresh = arg_7_1
 end
 
-function slot0.isWaitRefresh(slot0)
-	return slot0.waitRefresh
+function var_0_0.isWaitRefresh(arg_8_0)
+	return arg_8_0.waitRefresh
 end
 
-function slot0.cancelNewRefresh(slot0)
-	slot0.isNewRefresh = false
+function var_0_0.cancelNewRefresh(arg_9_0)
+	arg_9_0.isNewRefresh = false
 end
 
-function slot0.setTraced(slot0, slot1)
-	slot0.isTraced = slot1
+function var_0_0.setTraced(arg_10_0, arg_10_1)
+	arg_10_0.isTraced = arg_10_1
 end
 
-function slot0.setLocked(slot0, slot1)
-	slot0.isLocked = slot1
+function var_0_0.setLocked(arg_11_0, arg_11_1)
+	arg_11_0.isLocked = arg_11_1
 end
 
-function slot0.getLocked(slot0)
-	return slot0.isLocked
+function var_0_0.getLocked(arg_12_0)
+	return arg_12_0.isLocked
 end
 
-function slot0.checkGoodsCanProduct(slot0)
-	for slot6, slot7 in ipairs(slot0.goodsInfo) do
-		if slot7:isPlacedProduceBuilding() then
-			if string.nilorempty(nil) or not nil then
-				slot9, slot2 = slot7:checkProduceBuildingLevel()
+function var_0_0.checkGoodsCanProduct(arg_13_0)
+	local var_13_0
+	local var_13_1
 
-				if slot9 then
-					slot1 = luaLang("room_produce_building_need_upgrade")
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.goodsInfo) do
+		if iter_13_1:isPlacedProduceBuilding() then
+			if string.nilorempty(var_13_0) or not var_13_1 then
+				local var_13_2, var_13_3 = iter_13_1:checkProduceBuildingLevel()
+
+				if var_13_2 then
+					var_13_0 = luaLang("room_produce_building_need_upgrade")
+					var_13_1 = var_13_3
 				end
 			end
 		else
-			slot1 = luaLang("room_no_produce_building")
-			slot2 = nil
+			var_13_0 = luaLang("room_no_produce_building")
+			var_13_1 = nil
 
 			break
 		end
 	end
 
-	return slot1, slot2
+	return var_13_0, var_13_1
 end
 
-function slot0.isCanConfirm(slot0)
-	for slot4, slot5 in ipairs(slot0.goodsInfo) do
-		if not slot5:isEnoughCount() then
+function var_0_0.isCanConfirm(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.goodsInfo) do
+		if not iter_14_1:isEnoughCount() then
 			return false
 		end
 	end
@@ -116,18 +122,20 @@ function slot0.isCanConfirm(slot0)
 	return true
 end
 
-function slot0.getRefreshTime(slot0)
-	slot1 = 0
+function var_0_0.getRefreshTime(arg_15_0)
+	local var_15_0 = 0
 
-	if slot0.lastRefreshTime and slot0.refreshType == RoomTradeEnum.RefreshType.ActiveRefresh then
-		slot1 = RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyOrderRefreshTime, true) - (ServerTime.now() - slot0.lastRefreshTime)
+	if arg_15_0.lastRefreshTime and arg_15_0.refreshType == RoomTradeEnum.RefreshType.ActiveRefresh then
+		local var_15_1 = ServerTime.now() - arg_15_0.lastRefreshTime
+
+		var_15_0 = RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyOrderRefreshTime, true) - var_15_1
 	end
 
-	return slot1
+	return var_15_0
 end
 
-function slot0.getGoodsInfo(slot0)
-	return slot0.goodsInfo
+function var_0_0.getGoodsInfo(arg_16_0)
+	return arg_16_0.goodsInfo
 end
 
-return slot0
+return var_0_0

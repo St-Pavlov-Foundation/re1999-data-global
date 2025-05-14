@@ -1,37 +1,40 @@
-module("modules.logic.gm.view.GMFightEntitySkillView", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntitySkillView", package.seeall)
 
-slot0 = class("GMFightEntitySkillView", BaseView)
+local var_0_0 = class("GMFightEntitySkillView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._input = gohelper.findChildTextMeshInputField(slot0.viewGO, "skill/add/input")
-	slot0._btnAdd = gohelper.findChildButton(slot0.viewGO, "skill/add/btnAdd")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "skill/add/input")
+	arg_1_0._btnAdd = gohelper.findChildButton(arg_1_0.viewGO, "skill/add/btnAdd")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnAdd:AddClickListener(slot0._onClickAddSkill, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnAdd:AddClickListener(arg_2_0._onClickAddSkill, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnAdd:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnAdd:RemoveClickListener()
 end
 
-function slot0._onClickAddSkill(slot0)
-	slot1 = tonumber(slot0._input:GetText())
-	slot2 = lua_skill.configDict[slot1]
+function var_0_0._onClickAddSkill(arg_4_0)
+	local var_4_0 = tonumber(arg_4_0._input:GetText())
+	local var_4_1 = lua_skill.configDict[var_4_0]
+	local var_4_2 = GMFightEntityModel.instance.entityMO
 
-	if tabletool.indexOf(GMFightEntityModel.instance.entityMO.skillList, slot1) then
+	if tabletool.indexOf(var_4_2.skillList, var_4_0) then
 		GameFacade.showToast(ToastEnum.IconId, "skill has exist")
-	elseif slot2 then
-		GMRpc.instance:sendGMRequest(string.format("fightAddPassiveSkill %s %s", tostring(slot3.id), tostring(slot1)))
-		slot3:addPassiveSkill(slot1)
-		GMFightEntityModel.instance:setEntityMO(slot3)
+	elseif var_4_1 then
+		GMRpc.instance:sendGMRequest(string.format("fightAddPassiveSkill %s %s", tostring(var_4_2.id), tostring(var_4_0)))
+		var_4_2:addPassiveSkill(var_4_0)
+		GMFightEntityModel.instance:setEntityMO(var_4_2)
 
-		if FightLocalDataMgr.instance.entityMgr:getById(slot3.id) then
-			FightEntityDataHelper.copyEntityMO(slot3, slot4)
+		local var_4_3 = FightLocalDataMgr.instance.entityMgr:getById(var_4_2.id)
+
+		if var_4_3 then
+			FightEntityDataHelper.copyEntityMO(var_4_2, var_4_3)
 		end
 	else
 		GameFacade.showToast(ToastEnum.IconId, "skill not exist")
 	end
 end
 
-return slot0
+return var_0_0

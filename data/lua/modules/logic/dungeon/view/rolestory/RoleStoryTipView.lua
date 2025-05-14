@@ -1,98 +1,106 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryTipView", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryTipView", package.seeall)
 
-slot0 = class("RoleStoryTipView", BaseView)
+local var_0_0 = class("RoleStoryTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0.itemList = {}
-	slot0.goItem = gohelper.findChild(slot0.viewGO, "layout/item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0.itemList = {}
+	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "layout/item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0.btnClose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0.btnClose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0.btnClose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btntipsOnClick(slot0)
-	gohelper.setActive(slot0.goTips, false)
+function var_0_0._btntipsOnClick(arg_6_0)
+	gohelper.setActive(arg_6_0.goTips, false)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshView()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:refreshView()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.refreshView(slot0)
-	slot0.storyId = RoleStoryModel.instance:getCurActStoryId()
-	slot5 = #(RoleStoryConfig.instance:getScoreConfig(slot0.storyId) or {})
+function var_0_0.refreshView(arg_10_0)
+	arg_10_0.storyId = RoleStoryModel.instance:getCurActStoryId()
 
-	for slot5 = 1, math.max(#slot0.itemList, slot5) do
-		if not slot0.itemList[slot5] then
-			slot0.itemList[slot5] = slot0:createItem(slot5)
+	local var_10_0 = RoleStoryConfig.instance:getScoreConfig(arg_10_0.storyId) or {}
+
+	for iter_10_0 = 1, math.max(#arg_10_0.itemList, #var_10_0) do
+		local var_10_1 = arg_10_0.itemList[iter_10_0]
+
+		if not var_10_1 then
+			var_10_1 = arg_10_0:createItem(iter_10_0)
+			arg_10_0.itemList[iter_10_0] = var_10_1
 		end
 
-		slot0:updateItem(slot6, slot1[slot5], slot1[slot5 - 1])
+		arg_10_0:updateItem(var_10_1, var_10_0[iter_10_0], var_10_0[iter_10_0 - 1])
 	end
 end
 
-function slot0.createItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.index = slot1
-	slot2.go = gohelper.cloneInPlace(slot0.goItem)
-	slot2.txtNum = gohelper.findChildTextMesh(slot2.go, "#txt_num")
-	slot2.txtScore = gohelper.findChildTextMesh(slot2.go, "#txt_score")
-	slot2.goLine = gohelper.findChild(slot2.go, "line")
+function var_0_0.createItem(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getUserDataTb_()
 
-	gohelper.setActive(slot2.goLine, slot2.index ~= 1)
+	var_11_0.index = arg_11_1
+	var_11_0.go = gohelper.cloneInPlace(arg_11_0.goItem)
+	var_11_0.txtNum = gohelper.findChildTextMesh(var_11_0.go, "#txt_num")
+	var_11_0.txtScore = gohelper.findChildTextMesh(var_11_0.go, "#txt_score")
+	var_11_0.goLine = gohelper.findChild(var_11_0.go, "line")
 
-	return slot2
+	gohelper.setActive(var_11_0.goLine, var_11_0.index ~= 1)
+
+	return var_11_0
 end
 
-function slot0.updateItem(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0.updateItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if not arg_12_1 then
 		return
 	end
 
-	slot1.data = slot2
+	arg_12_1.data = arg_12_2
 
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+	if not arg_12_2 then
+		gohelper.setActive(arg_12_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(arg_12_1.go, true)
 
-	slot1.txtScore.text = tostring(slot2.score)
+	arg_12_1.txtScore.text = tostring(arg_12_2.score)
 
-	if slot3 and slot3.wave < slot2.wave - 1 then
-		slot1.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", string.format("%s-%s", GameUtil.getNum2Chinese(slot3.wave + 1), GameUtil.getNum2Chinese(slot2.wave)))
+	if arg_12_3 and arg_12_3.wave < arg_12_2.wave - 1 then
+		arg_12_1.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", string.format("%s-%s", GameUtil.getNum2Chinese(arg_12_3.wave + 1), GameUtil.getNum2Chinese(arg_12_2.wave)))
 	else
-		slot1.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", GameUtil.getNum2Chinese(slot2.wave))
+		arg_12_1.txtNum.text = formatLuaLang("rolestoryactivitytips_wave", GameUtil.getNum2Chinese(arg_12_2.wave))
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

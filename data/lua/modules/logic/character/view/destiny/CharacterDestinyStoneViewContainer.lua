@@ -1,51 +1,52 @@
-module("modules.logic.character.view.destiny.CharacterDestinyStoneViewContainer", package.seeall)
+﻿module("modules.logic.character.view.destiny.CharacterDestinyStoneViewContainer", package.seeall)
 
-slot0 = class("CharacterDestinyStoneViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterDestinyStoneViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._stoneView = CharacterDestinyStoneView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._stoneView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
+	arg_1_0._stoneView = CharacterDestinyStoneView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._stoneView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot0.navigateView:setOverrideClose(slot0.overrideCloseFunc, slot0)
+		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.setOpenUnlockStoneView(slot0, slot1)
-	slot0._openUnlockStoneView = slot1
+function var_0_0.setOpenUnlockStoneView(arg_3_0, arg_3_1)
+	arg_3_0._openUnlockStoneView = arg_3_1
 end
 
-function slot0.overrideCloseFunc(slot0)
-	if slot0._openUnlockStoneView then
-		slot0._stoneView:closeUnlockStoneView()
+function var_0_0.overrideCloseFunc(arg_4_0)
+	if arg_4_0._openUnlockStoneView then
+		arg_4_0._stoneView:closeUnlockStoneView()
 	else
-		slot0:closeThis()
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0._stoneView:playRootOpenCloseAnim(false, slot0.onCloseAnimDone, slot0)
+function var_0_0.playCloseTransition(arg_5_0)
+	arg_5_0._stoneView:playRootOpenCloseAnim(false, arg_5_0.onCloseAnimDone, arg_5_0)
 end
 
-function slot0.onCloseAnimDone(slot0)
-	slot0:onPlayCloseTransitionFinish()
+function var_0_0.onCloseAnimDone(arg_6_0)
+	arg_6_0:onPlayCloseTransitionFinish()
 end
 
-return slot0
+return var_0_0

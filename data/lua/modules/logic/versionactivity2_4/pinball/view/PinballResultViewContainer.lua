@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballResultViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballResultViewContainer", package.seeall)
 
-slot0 = class("PinballResultViewContainer", BaseViewContainer)
+local var_0_0 = class("PinballResultViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		PinballResultView.New()
 	}
 end
 
-return slot0
+return var_0_0

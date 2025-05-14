@@ -1,29 +1,29 @@
-module("modules.logic.lifecircle.view.LifeCircleRewardView", package.seeall)
+﻿module("modules.logic.lifecircle.view.LifeCircleRewardView", package.seeall)
 
-slot0 = class("LifeCircleRewardView", BaseView)
+local var_0_0 = class("LifeCircleRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtDays = gohelper.findChildText(slot0.viewGO, "TitleBG/#txt_Days")
-	slot0._simageIcon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_Icon")
-	slot0._goReward = gohelper.findChild(slot0.viewGO, "#go_Reward")
-	slot0._scrollitem = gohelper.findChildScrollRect(slot0.viewGO, "#go_Reward/#scroll_Reward")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#go_Reward/#scroll_Reward/Viewport/#go_Content")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtDays = gohelper.findChildText(arg_1_0.viewGO, "TitleBG/#txt_Days")
+	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Icon")
+	arg_1_0._goReward = gohelper.findChild(arg_1_0.viewGO, "#go_Reward")
+	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_Reward/#scroll_Reward")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#go_Reward/#scroll_Reward/Viewport/#go_Content")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._click:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-slot1 = SLFramework.AnimatorPlayer
-slot2 = {
+local var_0_1 = SLFramework.AnimatorPlayer
+local var_0_2 = {
 	ShowingRewards = 3,
 	ShownRewards = 4,
 	OpeningBox = 1,
@@ -31,151 +31,164 @@ slot2 = {
 	None = 0
 }
 
-function slot0._editableInitView(slot0)
-	slot0._state = uv0.None
-	slot0._contentGrid = slot0._goContent:GetComponent(gohelper.Type_GridLayoutGroup)
-	slot0._click = gohelper.getClick(slot0.viewGO)
-	slot0._animatorPlayer = uv1.Get(slot0.viewGO)
-	slot0._animSelf = slot0._animatorPlayer.animator
-	slot0._scrollitemTrans = slot0._scrollitem.transform
-	slot0._goContentTrans = slot0._goContent.transform
-	slot0._w = recthelper.getWidth(slot0._scrollitemTrans)
-	slot0._h = recthelper.getHeight(slot0._scrollitemTrans)
-	slot0._colCount = slot0._contentGrid.constraintCount
-	slot0._itemHeight = slot0._contentGrid.cellSize.y
-	slot0._spacingY = slot0._contentGrid.spacing.y
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._state = var_0_2.None
+	arg_4_0._contentGrid = arg_4_0._goContent:GetComponent(gohelper.Type_GridLayoutGroup)
+	arg_4_0._click = gohelper.getClick(arg_4_0.viewGO)
+	arg_4_0._animatorPlayer = var_0_1.Get(arg_4_0.viewGO)
+	arg_4_0._animSelf = arg_4_0._animatorPlayer.animator
+	arg_4_0._scrollitemTrans = arg_4_0._scrollitem.transform
+	arg_4_0._goContentTrans = arg_4_0._goContent.transform
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0.closeThis, slot0)
-	slot0:_setActive_goReward(false)
+	local var_4_0 = arg_4_0._contentGrid.cellSize
+	local var_4_1 = arg_4_0._contentGrid.spacing
+
+	arg_4_0._w = recthelper.getWidth(arg_4_0._scrollitemTrans)
+	arg_4_0._h = recthelper.getHeight(arg_4_0._scrollitemTrans)
+	arg_4_0._colCount = arg_4_0._contentGrid.constraintCount
+	arg_4_0._itemHeight = var_4_0.y
+	arg_4_0._spacingY = var_4_1.y
+
+	NavigateMgr.instance:addEscape(arg_4_0.viewName, arg_4_0.closeThis, arg_4_0)
+	arg_4_0:_setActive_goReward(false)
 end
 
-function slot0.closeThis(slot0)
-	if slot0._state == uv0.None then
-		slot0:_moveState()
+function var_0_0.closeThis(arg_5_0)
+	if arg_5_0._state == var_0_2.None then
+		arg_5_0:_moveState()
 	end
 
-	if not slot0:_allowCloseView() then
+	if not arg_5_0:_allowCloseView() then
 		return
 	end
 
-	uv1.super.closeThis(slot0)
+	var_0_0.super.closeThis(arg_5_0)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
 	CommonPropListItem.hasOpen = false
-	slot0._contentGrid.enabled = false
+	arg_7_0._contentGrid.enabled = false
 
-	slot0:_setPropItems()
+	arg_7_0:_setPropItems()
 
-	slot0._txtDays.text = slot0:_loginDayCount()
+	arg_7_0._txtDays.text = arg_7_0:_loginDayCount()
 end
 
-function slot0._loginDayCount(slot0)
-	return slot0.viewParam.loginDayCount or 0
+function var_0_0._loginDayCount(arg_8_0)
+	return arg_8_0.viewParam.loginDayCount or 0
 end
 
-function slot0._materialDataMOList(slot0)
-	return slot0.viewParam.materialDataMOList or {}
+function var_0_0._materialDataMOList(arg_9_0)
+	return arg_9_0.viewParam.materialDataMOList or {}
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:onUpdateParam()
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tangren_qiandao_open_25251110)
 end
 
-function slot0.onClose(slot0)
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
+function var_0_0.onClose(arg_12_0)
+	FrameTimerController.onDestroyViewMember(arg_12_0, "_fTimer")
 	CommonPropListModel.instance:clear()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_shutdown)
 
 	CommonPropListItem.hasOpen = false
 
-	TaskDispatcher.cancelTask(slot0._moveState, slot0)
-	NavigateMgr.instance:removeEscape(slot0.viewName)
+	TaskDispatcher.cancelTask(arg_12_0._moveState, arg_12_0)
+	NavigateMgr.instance:removeEscape(arg_12_0.viewName)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._moveState, slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._moveState, arg_13_0)
 end
 
-function slot0._setPropItems(slot0)
-	CommonPropListModel.instance:setPropList(slot0:_materialDataMOList())
-	recthelper.setSize(slot0._goContentTrans, slot0._w, slot0:_getContentHeight())
+function var_0_0._setPropItems(arg_14_0)
+	CommonPropListModel.instance:setPropList(arg_14_0:_materialDataMOList())
 
-	slot0._contentGrid.enabled = true
-	slot2 = true
+	local var_14_0 = arg_14_0:_getContentHeight()
 
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
+	recthelper.setSize(arg_14_0._goContentTrans, arg_14_0._w, var_14_0)
 
-	slot0._fTimer = FrameTimerController.instance:register(function ()
-		uv0._contentGrid.enabled = uv1
-		uv1 = not uv1
+	arg_14_0._contentGrid.enabled = true
+
+	local var_14_1 = true
+
+	FrameTimerController.onDestroyViewMember(arg_14_0, "_fTimer")
+
+	arg_14_0._fTimer = FrameTimerController.instance:register(function()
+		arg_14_0._contentGrid.enabled = var_14_1
+		var_14_1 = not var_14_1
 	end, 5, 2)
 
-	slot0._fTimer:Start()
+	arg_14_0._fTimer:Start()
 end
 
-function slot0._setActive_goReward(slot0, slot1)
-	gohelper.setActive(slot0._goReward, slot1)
+function var_0_0._setActive_goReward(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._goReward, arg_16_1)
 end
 
-function slot0._playAnim(slot0, slot1, slot2, slot3)
-	slot0._animatorPlayer:Play(slot1, slot2, slot3)
+function var_0_0._playAnim(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_0._animatorPlayer:Play(arg_17_1, arg_17_2, arg_17_3)
 end
 
-function slot0._moveState(slot0)
-	slot0:_setState(slot0._state + 1)
+function var_0_0._moveState(arg_18_0)
+	arg_18_0:_setState(arg_18_0._state + 1)
 end
 
-function slot0._setState(slot0, slot1)
-	if slot1 <= slot0._state then
+function var_0_0._setState(arg_19_0, arg_19_1)
+	if arg_19_1 <= arg_19_0._state then
 		return
 	end
 
-	slot0._state = slot1
+	arg_19_0._state = arg_19_1
 
-	if slot1 == uv0.OpeningBox then
-		slot0:_onOpenBoxAnim()
-	elseif slot1 == uv0.OpenedBox then
-		slot0:_onOpenedBox()
-	elseif slot1 == uv0.ShowingRewards then
-		slot0:_onShowingRewards()
-	elseif slot1 == uv0.ShownRewards then
-		-- Nothing
+	if arg_19_1 == var_0_2.OpeningBox then
+		arg_19_0:_onOpenBoxAnim()
+	elseif arg_19_1 == var_0_2.OpenedBox then
+		arg_19_0:_onOpenedBox()
+	elseif arg_19_1 == var_0_2.ShowingRewards then
+		arg_19_0:_onShowingRewards()
+	elseif arg_19_1 == var_0_2.ShownRewards then
+		-- block empty
 	end
 end
 
-function slot0._onOpenBoxAnim(slot0)
+function var_0_0._onOpenBoxAnim(arg_20_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_tangren_qiandao_leiji_25251111)
-	slot0:_playAnim(UIAnimationName.Click, slot0._moveState, slot0)
+	arg_20_0:_playAnim(UIAnimationName.Click, arg_20_0._moveState, arg_20_0)
 end
 
-function slot0._onOpenedBox(slot0)
+function var_0_0._onOpenedBox(arg_21_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_rewards_rare_2000081)
-	slot0:_setActive_goReward(true)
-	slot0:_moveState()
+	arg_21_0:_setActive_goReward(true)
+	arg_21_0:_moveState()
 end
 
-function slot0._onShowingRewards(slot0)
-	TaskDispatcher.cancelTask(slot0._moveState, slot0)
-	TaskDispatcher.runDelay(slot0._moveState, slot0, 0.8)
+function var_0_0._onShowingRewards(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._moveState, arg_22_0)
+	TaskDispatcher.runDelay(arg_22_0._moveState, arg_22_0, 0.8)
 end
 
-function slot0._allowCloseView(slot0)
-	return uv0.ShownRewards <= slot0._state
+function var_0_0._allowCloseView(arg_23_0)
+	return arg_23_0._state >= var_0_2.ShownRewards
 end
 
-function slot0._getContentHeight(slot0)
-	slot6 = math.max(1, math.ceil(#CommonPropListModel.instance:getList() / slot0._colCount))
+function var_0_0._getContentHeight(arg_24_0)
+	local var_24_0 = #CommonPropListModel.instance:getList()
+	local var_24_1 = arg_24_0._colCount
+	local var_24_2 = arg_24_0._itemHeight
+	local var_24_3 = arg_24_0._spacingY
+	local var_24_4 = math.max(1, math.ceil(var_24_0 / var_24_1))
+	local var_24_5 = math.max(arg_24_0._h, arg_24_0._contentGrid.preferredHeight)
 
-	return math.max(math.max(slot0._h, slot0._contentGrid.preferredHeight), (slot6 - 1) * slot0._spacingY + slot0._itemHeight * slot6)
+	return (math.max(var_24_5, (var_24_4 - 1) * var_24_3 + var_24_2 * var_24_4))
 end
 
-return slot0
+return var_0_0

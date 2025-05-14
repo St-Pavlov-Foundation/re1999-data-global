@@ -1,147 +1,153 @@
-module("modules.logic.versionactivity2_3.dudugu.view.ActDuDuGuLevelItem", package.seeall)
+﻿module("modules.logic.versionactivity2_3.dudugu.view.ActDuDuGuLevelItem", package.seeall)
 
-slot0 = class("ActDuDuGuLevelItem", LuaCompBase)
+local var_0_0 = class("ActDuDuGuLevelItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gogameicon = gohelper.findChild(slot0.go, "unlock/#go_gameicon")
-	slot0._imagegameicon = gohelper.findChildImage(slot0.go, "unlock/#go_gameicon")
-	slot0._gostagenormal = gohelper.findChild(slot0.go, "unlock/#go_stagenormal")
-	slot0._gostageunlock = gohelper.findChild(slot0.go, "unlock/#go_stageunlock")
-	slot0._gostagefinish = gohelper.findChild(slot0.go, "unlock/#go_stagefinish")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.go, "unlock/#btn_click")
-	slot0._txtname = gohelper.findChildText(slot0.go, "unlock/info/#txt_stagename")
-	slot0._txtnum = gohelper.findChildText(slot0.go, "unlock/info/#txt_stageNum")
-	slot0._txtstage = gohelper.findChildText(slot0.go, "unlock/info/txt_stage")
-	slot0._btnreview = gohelper.findChildButtonWithAudio(slot0.go, "unlock/info/#btn_review")
-	slot0._gostarno = gohelper.findChild(slot0.go, "unlock/info/star1/no")
-	slot0._imagestarno = gohelper.findChildImage(slot0.go, "unlock/info/star1/no")
-	slot0._gostar = gohelper.findChild(slot0.go, "unlock/info/star1/#go_star")
-	slot0._anim = slot0.go:GetComponent(gohelper.Type_Animator)
-	slot0._goimagestar = gohelper.findChild(slot0._gostar, "#image_Star")
-	slot0._animStar = slot0._goimagestar:GetComponent(gohelper.Type_Animation)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gogameicon = gohelper.findChild(arg_1_0.go, "unlock/#go_gameicon")
+	arg_1_0._imagegameicon = gohelper.findChildImage(arg_1_0.go, "unlock/#go_gameicon")
+	arg_1_0._gostagenormal = gohelper.findChild(arg_1_0.go, "unlock/#go_stagenormal")
+	arg_1_0._gostageunlock = gohelper.findChild(arg_1_0.go, "unlock/#go_stageunlock")
+	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.go, "unlock/#go_stagefinish")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "unlock/#btn_click")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.go, "unlock/info/#txt_stagename")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.go, "unlock/info/#txt_stageNum")
+	arg_1_0._txtstage = gohelper.findChildText(arg_1_0.go, "unlock/info/txt_stage")
+	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.go, "unlock/info/#btn_review")
+	arg_1_0._gostarno = gohelper.findChild(arg_1_0.go, "unlock/info/star1/no")
+	arg_1_0._imagestarno = gohelper.findChildImage(arg_1_0.go, "unlock/info/star1/no")
+	arg_1_0._gostar = gohelper.findChild(arg_1_0.go, "unlock/info/star1/#go_star")
+	arg_1_0._anim = arg_1_0.go:GetComponent(gohelper.Type_Animator)
+	arg_1_0._goimagestar = gohelper.findChild(arg_1_0._gostar, "#image_Star")
+	arg_1_0._animStar = arg_1_0._goimagestar:GetComponent(gohelper.Type_Animation)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnOnClick, slot0)
-	slot0._btnreview:AddClickListener(slot0._btnOnReview, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnOnClick, arg_2_0)
+	arg_2_0._btnreview:AddClickListener(arg_2_0._btnOnReview, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnreview:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnreview:RemoveClickListener()
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_4_0)
+	return
 end
 
-function slot0._btnOnClick(slot0)
-	if not slot0._islvunlock then
+function var_0_0._btnOnClick(arg_5_0)
+	if not arg_5_0._islvunlock then
 		GameFacade.showToast(ToastEnum.DungeonIsLockNormal)
 
 		return
 	end
 
-	ActDuDuGuModel.instance:setCurLvIndex(slot0._index)
-	slot0:_playBeforeStory()
+	ActDuDuGuModel.instance:setCurLvIndex(arg_5_0._index)
+	arg_5_0:_playBeforeStory()
 end
 
-function slot0._playBeforeStory(slot0)
-	if slot0._config.beforeStory > 0 then
-		slot1 = {
-			mark = true,
-			episodeId = slot0._config.id
-		}
+function var_0_0._playBeforeStory(arg_6_0)
+	if arg_6_0._config.beforeStory > 0 then
+		local var_6_0 = {}
 
-		if slot0._config.battleId <= 0 then
-			DungeonRpc.instance:sendStartDungeonRequest(slot0._config.chapterId, slot0._config.id)
+		var_6_0.mark = true
+		var_6_0.episodeId = arg_6_0._config.id
+
+		if arg_6_0._config.battleId <= 0 then
+			DungeonRpc.instance:sendStartDungeonRequest(arg_6_0._config.chapterId, arg_6_0._config.id)
 		end
 
-		StoryController.instance:playStory(slot0._config.beforeStory, slot1, slot0._enterFight, slot0)
+		StoryController.instance:playStory(arg_6_0._config.beforeStory, var_6_0, arg_6_0._enterFight, arg_6_0)
 	else
-		slot0:_enterFight()
+		arg_6_0:_enterFight()
 	end
 end
 
-function slot0._enterFight(slot0)
-	if slot0._config.battleId and slot0._config.battleId > 0 then
-		DungeonRpc.instance:sendStartDungeonRequest(slot0._config.chapterId, slot0._config.id)
-		DungeonFightController.instance:enterFightByBattleId(slot0._config.chapterId, slot0._config.id, slot0._config.battleId)
+function var_0_0._enterFight(arg_7_0)
+	if arg_7_0._config.battleId and arg_7_0._config.battleId > 0 then
+		DungeonRpc.instance:sendStartDungeonRequest(arg_7_0._config.chapterId, arg_7_0._config.id)
+		DungeonFightController.instance:enterFightByBattleId(arg_7_0._config.chapterId, arg_7_0._config.id, arg_7_0._config.battleId)
 	else
-		slot0:_enterAfterStory()
+		arg_7_0:_enterAfterStory()
 	end
 end
 
-function slot0._enterAfterStory(slot0)
-	if slot0._config.afterStory > 0 then
-		StoryController.instance:playStory(slot0._config.afterStory, {
-			mark = true,
-			episodeId = slot0._config.id
-		}, slot0._onLevelFinished, slot0)
+function var_0_0._enterAfterStory(arg_8_0)
+	if arg_8_0._config.afterStory > 0 then
+		local var_8_0 = {}
+
+		var_8_0.mark = true
+		var_8_0.episodeId = arg_8_0._config.id
+
+		StoryController.instance:playStory(arg_8_0._config.afterStory, var_8_0, arg_8_0._onLevelFinished, arg_8_0)
 	else
-		slot0:_onLevelFinished()
+		arg_8_0:_onLevelFinished()
 	end
 end
 
-function slot0._onLevelFinished(slot0)
+function var_0_0._onLevelFinished(arg_9_0)
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(slot0._config.id)
+	DungeonModel.instance:setLastSendEpisodeId(arg_9_0._config.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
 end
 
-function slot0._btnOnReview(slot0)
+function var_0_0._btnOnReview(arg_10_0)
+	return
 end
 
-function slot0.setParam(slot0, slot1, slot2, slot3)
-	slot0._config = slot1
-	slot0.id = slot1.id
-	slot0._episodeInfo = DungeonModel.instance:getEpisodeInfo(slot0.id)
-	slot0._actId = slot3
-	slot0._index = slot2
+function var_0_0.setParam(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	arg_11_0._config = arg_11_1
+	arg_11_0.id = arg_11_1.id
+	arg_11_0._episodeInfo = DungeonModel.instance:getEpisodeInfo(arg_11_0.id)
+	arg_11_0._actId = arg_11_3
+	arg_11_0._index = arg_11_2
 
-	slot0:_refreshUI()
+	arg_11_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot0._txtname.text = slot0._config.name
-	slot0._txtnum.text = "0" .. slot0._index
+function var_0_0._refreshUI(arg_12_0)
+	arg_12_0._txtname.text = arg_12_0._config.name
+	arg_12_0._txtnum.text = "0" .. arg_12_0._index
 
-	gohelper.setActive(slot0._gogameicon, slot0._config.battleId > 0)
-	slot0:refreshStatus()
+	gohelper.setActive(arg_12_0._gogameicon, arg_12_0._config.battleId > 0)
+	arg_12_0:refreshStatus()
 end
 
-function slot0.refreshStatus(slot0)
-	slot0._islvunlock = ActDuDuGuModel.instance:isLevelUnlock(slot0._actId, slot0.id)
-	slot0._islvpass = ActDuDuGuModel.instance:isLevelPass(slot0._actId, slot0.id)
+function var_0_0.refreshStatus(arg_13_0)
+	arg_13_0._islvunlock = ActDuDuGuModel.instance:isLevelUnlock(arg_13_0._actId, arg_13_0.id)
+	arg_13_0._islvpass = ActDuDuGuModel.instance:isLevelPass(arg_13_0._actId, arg_13_0.id)
 
-	if slot0._islvunlock then
-		slot0._anim:Play(slot0._islvpass and "finishidle" or "normalidle")
+	if arg_13_0._islvunlock then
+		local var_13_0 = arg_13_0._islvpass and "finishidle" or "normalidle"
+
+		arg_13_0._anim:Play(var_13_0)
 	else
-		slot0._anim:Play("lockidle")
+		arg_13_0._anim:Play("lockidle")
 	end
 end
 
-function slot0.lockStatus(slot0)
-	slot0._anim:Play("finishidle")
+function var_0_0.lockStatus(arg_14_0)
+	arg_14_0._anim:Play("finishidle")
 end
 
-function slot0.isUnlock(slot0)
-	return slot0._islvunlock
+function var_0_0.isUnlock(arg_15_0)
+	return arg_15_0._islvunlock
 end
 
-function slot0.playFinish(slot0)
-	slot0._anim:Play("finish", 0, 0)
+function var_0_0.playFinish(arg_16_0)
+	arg_16_0._anim:Play("finish", 0, 0)
 end
 
-function slot0.playUnlock(slot0)
+function var_0_0.playUnlock(arg_17_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_difficulty)
-	slot0._anim:Play("unlock", 0, 0)
+	arg_17_0._anim:Play("unlock", 0, 0)
 end
 
-function slot0.playStarAnim(slot0)
+function var_0_0.playStarAnim(arg_18_0)
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.star_show)
-	slot0._animStar:Play()
+	arg_18_0._animStar:Play()
 end
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.tower.view.TowerGuideViewContainer", package.seeall)
+﻿module("modules.logic.tower.view.TowerGuideViewContainer", package.seeall)
 
-slot0 = class("TowerGuideViewContainer", BaseViewContainer)
+local var_0_0 = class("TowerGuideViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TowerGuideView.New())
+	table.insert(var_1_0, TowerGuideView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

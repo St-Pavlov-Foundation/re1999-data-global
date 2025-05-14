@@ -1,43 +1,45 @@
-module("modules.logic.room.entity.comp.RoomBuildingVehicleComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomBuildingVehicleComp", package.seeall)
 
-slot0 = class("RoomBuildingVehicleComp", LuaCompBase)
+local var_0_0 = class("RoomBuildingVehicleComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._vehicleType = slot0:getBuilingMO().config.vehicleType
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._vehicleType = arg_2_0:getBuilingMO().config.vehicleType
 
-	slot0:_onSwitchModel()
+	arg_2_0:_onSwitchModel()
 end
 
-function slot0.addEventListeners(slot0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, slot0._onSwitchModel, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_3_0._onSwitchModel, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, slot0._onSwitchModel, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_4_0._onSwitchModel, arg_4_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0:removeEventListeners()
 end
 
-function slot0._onSwitchModel(slot0)
-	if not RoomController.instance:isEditMode() and not slot0.entity:getVehicleMO() then
-		slot1 = true
+function var_0_0._onSwitchModel(arg_6_0)
+	local var_6_0 = RoomController.instance:isEditMode()
+
+	if not var_6_0 and not arg_6_0.entity:getVehicleMO() then
+		var_6_0 = true
 	end
 
-	if slot0._vehicleType == 1 then
-		gohelper.setActive(slot0.entity.containerGO, slot1)
-		gohelper.setActive(slot0.entity.staticContainerGO, slot1)
+	if arg_6_0._vehicleType == 1 then
+		gohelper.setActive(arg_6_0.entity.containerGO, var_6_0)
+		gohelper.setActive(arg_6_0.entity.staticContainerGO, var_6_0)
 	end
 end
 
-function slot0.getBuilingMO(slot0)
-	return slot0.entity:getMO()
+function var_0_0.getBuilingMO(arg_7_0)
+	return arg_7_0.entity:getMO()
 end
 
-return slot0
+return var_0_0

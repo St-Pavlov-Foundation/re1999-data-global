@@ -1,21 +1,21 @@
-module("modules.logic.room.view.debug.RoomDebugEntranceViewContainer", package.seeall)
+﻿module("modules.logic.room.view.debug.RoomDebugEntranceViewContainer", package.seeall)
 
-slot0 = class("RoomDebugEntranceViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomDebugEntranceViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomDebugEntranceView.New())
+	table.insert(var_1_0, RoomDebugEntranceView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	if RoomController.instance:isEditorMode() then
 		return
 	end
 
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

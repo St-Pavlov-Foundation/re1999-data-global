@@ -1,28 +1,28 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenViewWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenViewWork", package.seeall)
 
-slot0 = class("Activity114OpenViewWork", Activity114BaseWork)
+local var_0_0 = class("Activity114OpenViewWork", Activity114BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._viewName = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._viewName = arg_1_1
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onStart(slot0, slot1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-	ViewMgr.instance:openView(slot0._viewName, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+	ViewMgr.instance:openView(arg_2_0._viewName, arg_2_1)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == slot0._viewName then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-		slot0:onDone(true)
+function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
+	if arg_3_1 == arg_3_0._viewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-	uv0.super.clearWork(slot0)
+function var_0_0.clearWork(arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0._onCloseViewFinish, arg_4_0)
+	var_0_0.super.clearWork(arg_4_0)
 end
 
-return slot0
+return var_0_0

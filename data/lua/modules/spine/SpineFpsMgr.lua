@@ -1,47 +1,52 @@
-module("modules.spine.SpineFpsMgr", package.seeall)
+﻿module("modules.spine.SpineFpsMgr", package.seeall)
 
-slot0 = class("SpineFpsMgr")
-slot1 = 30
-slot0.FightScene = "FightScene"
-slot0.Story = "Story"
-slot0.Module = {
-	[slot0.FightScene] = 60,
-	[slot0.Story] = 60
+local var_0_0 = class("SpineFpsMgr")
+local var_0_1 = 30
+
+var_0_0.FightScene = "FightScene"
+var_0_0.Story = "Story"
+var_0_0.Module = {
+	[var_0_0.FightScene] = 60,
+	[var_0_0.Story] = 60
 }
 
-function slot0.ctor(slot0)
-	slot0._moduleKey2FpsDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._moduleKey2FpsDict = {}
 end
 
-function slot0.set(slot0, slot1)
-	if uv0.Module[slot1] then
-		slot0._moduleKey2FpsDict[slot1] = slot2
+function var_0_0.set(arg_2_0, arg_2_1)
+	local var_2_0 = var_0_0.Module[arg_2_1]
 
-		slot0:_updateFps()
+	if var_2_0 then
+		arg_2_0._moduleKey2FpsDict[arg_2_1] = var_2_0
+
+		arg_2_0:_updateFps()
 	else
-		logError("key not in SpineFpsMgr.Module: " .. slot1)
+		logError("key not in SpineFpsMgr.Module: " .. arg_2_1)
 	end
 end
 
-function slot0.remove(slot0, slot1)
-	if slot0._moduleKey2FpsDict[slot1] then
-		slot0._moduleKey2FpsDict[slot1] = nil
+function var_0_0.remove(arg_3_0, arg_3_1)
+	if arg_3_0._moduleKey2FpsDict[arg_3_1] then
+		arg_3_0._moduleKey2FpsDict[arg_3_1] = nil
 
-		slot0:_updateFps()
+		arg_3_0:_updateFps()
 	end
 end
 
-function slot0._updateFps(slot0)
-	for slot5, slot6 in pairs(slot0._moduleKey2FpsDict) do
-		if uv0 < slot6 then
-			slot1 = slot6
+function var_0_0._updateFps(arg_4_0)
+	local var_4_0 = var_0_1
+
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._moduleKey2FpsDict) do
+		if var_4_0 < iter_4_1 then
+			var_4_0 = iter_4_1
 		end
 	end
 
-	Spine.Unity.SkeletonAnimation.SetTargetFps(slot1)
-	Spine.Unity.SkeletonGraphic.SetTargetFps(slot1)
+	Spine.Unity.SkeletonAnimation.SetTargetFps(var_4_0)
+	Spine.Unity.SkeletonGraphic.SetTargetFps(var_4_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

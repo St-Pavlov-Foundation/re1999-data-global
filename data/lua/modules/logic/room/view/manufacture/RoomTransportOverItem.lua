@@ -1,48 +1,51 @@
-module("modules.logic.room.view.manufacture.RoomTransportOverItem", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomTransportOverItem", package.seeall)
 
-slot0 = class("RoomTransportOverItem", LuaCompBase)
+local var_0_0 = class("RoomTransportOverItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gounlink = gohelper.findChild(slot0.go, "unlink")
-	slot0._golinked = gohelper.findChild(slot0.go, "linked")
-	slot0._btngoto = gohelper.findChildClickWithAudio(slot0.go, "linked/#btn_goto/clickarea")
-	slot0._gocritterInfoItem = gohelper.findChild(slot0.go, "linked/critterInfo/#go_critterInfoItem")
-	slot0._txtto = gohelper.findChildText(slot0.go, "linked/transportInfo/info/#txt_to")
-	slot0._txtfrom = gohelper.findChildText(slot0.go, "linked/transportInfo/info/#txt_from")
-	slot0._gopause = gohelper.findChild(slot0.go, "linked/transportInfo/info/pause")
-	slot0._gotransporting = gohelper.findChild(slot0.go, "linked/transportInfo/info/transporting")
-	slot0._simagevehicle = gohelper.findChildSingleImage(slot0.go, "linked/transportInfo/vehicle/#simage_vehicle")
-	slot0._govehicleimg = slot0._simagevehicle.gameObject
-	slot0._txtvehicle = gohelper.findChildText(slot0.go, "linked/transportInfo/vehicle/#txt_vehicle")
-	slot0._txtway = gohelper.findChildText(slot0.go, "linked/transportInfo/vehicle/#txt_vehicle/#txt_way")
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._gounlink = gohelper.findChild(arg_2_0.go, "unlink")
+	arg_2_0._golinked = gohelper.findChild(arg_2_0.go, "linked")
+	arg_2_0._btngoto = gohelper.findChildClickWithAudio(arg_2_0.go, "linked/#btn_goto/clickarea")
+	arg_2_0._gocritterInfoItem = gohelper.findChild(arg_2_0.go, "linked/critterInfo/#go_critterInfoItem")
+	arg_2_0._txtto = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/info/#txt_to")
+	arg_2_0._txtfrom = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/info/#txt_from")
+	arg_2_0._gopause = gohelper.findChild(arg_2_0.go, "linked/transportInfo/info/pause")
+	arg_2_0._gotransporting = gohelper.findChild(arg_2_0.go, "linked/transportInfo/info/transporting")
+	arg_2_0._simagevehicle = gohelper.findChildSingleImage(arg_2_0.go, "linked/transportInfo/vehicle/#simage_vehicle")
+	arg_2_0._govehicleimg = arg_2_0._simagevehicle.gameObject
+	arg_2_0._txtvehicle = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/vehicle/#txt_vehicle")
+	arg_2_0._txtway = gohelper.findChildText(arg_2_0.go, "linked/transportInfo/vehicle/#txt_vehicle/#txt_way")
 
-	slot0:clearVar()
+	arg_2_0:clearVar()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btngoto:AddClickListener(slot0._btngotoOnClick, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, slot0._onCritterChanged, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, slot0._onVehicleChange, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0._btngoto:AddClickListener(arg_3_0._btngotoOnClick, arg_3_0)
+	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_3_0._onCritterChanged, arg_3_0)
+	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, arg_3_0._onVehicleChange, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btngoto:RemoveClickListener()
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, slot0._onCritterChanged, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, slot0._onVehicleChange, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._btngoto:RemoveClickListener()
+	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_4_0._onCritterChanged, arg_4_0)
+	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, arg_4_0._onVehicleChange, arg_4_0)
 end
 
-function slot0._btngotoOnClick(slot0)
-	if slot0.transportPathMO then
+function var_0_0._btngotoOnClick(arg_5_0)
+	if arg_5_0.transportPathMO then
 		ViewMgr.instance:closeView(ViewName.RoomOverView, true)
-		RoomTransportController.instance:openTransportSiteView(RoomTransportHelper.fromTo2SiteType(slot0.transportPathMO.fromType, slot0.transportPathMO.toType), RoomEnum.CameraState.Overlook)
+
+		local var_5_0 = RoomTransportHelper.fromTo2SiteType(arg_5_0.transportPathMO.fromType, arg_5_0.transportPathMO.toType)
+
+		RoomTransportController.instance:openTransportSiteView(var_5_0, RoomEnum.CameraState.Overlook)
 
 		if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
 			ManufactureController.instance:closeCritterBuildingView(true)
@@ -50,123 +53,139 @@ function slot0._btngotoOnClick(slot0)
 	end
 end
 
-function slot0.onManufactureInfoUpdate(slot0)
-	slot0:checkIsTransporting()
+function var_0_0.onManufactureInfoUpdate(arg_6_0)
+	arg_6_0:checkIsTransporting()
 end
 
-function slot0._onCritterChanged(slot0)
-	slot0:refreshCritterItem()
-	slot0:checkHasMood()
+function var_0_0._onCritterChanged(arg_7_0)
+	arg_7_0:refreshCritterItem()
+	arg_7_0:checkHasMood()
 end
 
-function slot0._onVehicleChange(slot0, slot1)
-	slot0:refreshInfo()
-	slot0:checkIsTransporting()
+function var_0_0._onVehicleChange(arg_8_0, arg_8_1)
+	arg_8_0:refreshInfo()
+	arg_8_0:checkIsTransporting()
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.transportPathMO = slot1
+function var_0_0.setData(arg_9_0, arg_9_1)
+	arg_9_0.transportPathMO = arg_9_1
 
-	slot0:checkHasMood()
-	slot0:refresh()
+	arg_9_0:checkHasMood()
+	arg_9_0:refresh()
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshInfo()
-	slot0:refreshCritterItem()
-	slot0:checkIsTransporting()
+function var_0_0.refresh(arg_10_0)
+	arg_10_0:refreshInfo()
+	arg_10_0:refreshCritterItem()
+	arg_10_0:checkIsTransporting()
 end
 
-function slot0.refreshInfo(slot0)
-	slot1 = nil
-	slot2 = false
-	slot3 = ""
-	slot4 = ""
+function var_0_0.refreshInfo(arg_11_0)
+	local var_11_0
+	local var_11_1 = false
+	local var_11_2 = ""
+	local var_11_3 = ""
 
-	if slot0.transportPathMO then
-		slot2 = RoomConfig.instance:getBuildingConfig(slot0.transportPathMO.buildingId) and true or false
-		slot3 = luaLang(RoomBuildingEnum.BuildingTypeAreName[slot0.transportPathMO.fromType])
-		slot4 = luaLang(RoomBuildingEnum.BuildingTypeAreName[slot0.transportPathMO.toType])
+	if arg_11_0.transportPathMO then
+		var_11_0 = RoomConfig.instance:getBuildingConfig(arg_11_0.transportPathMO.buildingId)
+		var_11_1 = var_11_0 and true or false
+
+		local var_11_4 = RoomBuildingEnum.BuildingTypeAreName[arg_11_0.transportPathMO.fromType]
+		local var_11_5 = RoomBuildingEnum.BuildingTypeAreName[arg_11_0.transportPathMO.toType]
+
+		var_11_2 = luaLang(var_11_4)
+		var_11_3 = luaLang(var_11_5)
 	end
 
-	slot0._txtfrom.text = slot3
-	slot0._txtto.text = slot4
-	slot5 = ""
-	slot6 = ""
+	arg_11_0._txtfrom.text = var_11_2
+	arg_11_0._txtto.text = var_11_3
 
-	if slot2 then
-		slot5 = slot1.name
-		slot6 = slot1.useDesc
+	local var_11_6 = ""
+	local var_11_7 = ""
 
-		slot0._simagevehicle:LoadImage(ResUrl.getRoomImage("building/" .. slot1.icon))
+	if var_11_1 then
+		var_11_6 = var_11_0.name
+		var_11_7 = var_11_0.useDesc
+
+		local var_11_8 = ResUrl.getRoomImage("building/" .. var_11_0.icon)
+
+		arg_11_0._simagevehicle:LoadImage(var_11_8)
 	end
 
-	slot0._txtvehicle.text = slot5
-	slot0._txtway.text = slot6
+	arg_11_0._txtvehicle.text = var_11_6
+	arg_11_0._txtway.text = var_11_7
 
-	gohelper.setActive(slot0._govehicleimg, slot2)
+	gohelper.setActive(arg_11_0._govehicleimg, var_11_1)
 end
 
-function slot0.refreshCritterItem(slot0)
-	if not slot0.critterInfoItem then
-		slot0.critterInfoItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocritterInfoItem, RoomTransportCritterInfo)
+function var_0_0.refreshCritterItem(arg_12_0)
+	if not arg_12_0.critterInfoItem then
+		arg_12_0.critterInfoItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_12_0._gocritterInfoItem, RoomTransportCritterInfo)
 	end
 
-	slot1, slot2 = nil
+	local var_12_0
+	local var_12_1
 
-	if slot0.transportPathMO then
-		slot1 = slot0.transportPathMO.id
+	if arg_12_0.transportPathMO then
+		var_12_0 = arg_12_0.transportPathMO.id
 
-		if slot0.transportPathMO.critterUid ~= tonumber(CritterEnum.InvalidCritterUid) and slot3 ~= CritterEnum.InvalidCritterUid then
-			slot2 = slot3
+		local var_12_2 = arg_12_0.transportPathMO.critterUid
+
+		if var_12_2 ~= tonumber(CritterEnum.InvalidCritterUid) and var_12_2 ~= CritterEnum.InvalidCritterUid then
+			var_12_1 = var_12_2
 		end
 	end
 
-	slot0.critterInfoItem:setData(slot2, slot1)
+	arg_12_0.critterInfoItem:setData(var_12_1, var_12_0)
 end
 
-function slot0.checkHasMood(slot0)
-	slot1 = 0
+function var_0_0.checkHasMood(arg_13_0)
+	local var_13_0 = 0
 
-	if slot0.transportPathMO and CritterModel.instance:getCritterMOByUid(slot0.transportPathMO.critterUid) then
-		slot1 = slot2:getMoodValue()
+	if arg_13_0.transportPathMO then
+		local var_13_1 = CritterModel.instance:getCritterMOByUid(arg_13_0.transportPathMO.critterUid)
+
+		if var_13_1 then
+			var_13_0 = var_13_1:getMoodValue()
+		end
 	end
 
-	slot0.hasMood = slot1 > 0 and true or false
+	arg_13_0.hasMood = var_13_0 > 0 and true or false
 
-	slot0:checkIsTransporting()
+	arg_13_0:checkIsTransporting()
 end
 
-function slot0.checkIsTransporting(slot0)
-	slot0.isTransporting = false
-	slot1 = slot0.transportPathMO and true or false
+function var_0_0.checkIsTransporting(arg_14_0)
+	arg_14_0.isTransporting = false
 
-	gohelper.setActive(slot0._golinked, slot1)
-	gohelper.setActive(slot0._gounlink, not slot1)
+	local var_14_0 = arg_14_0.transportPathMO and true or false
 
-	if slot1 then
-		slot0.isTransporting = slot0.transportPathMO:isTransporting()
+	gohelper.setActive(arg_14_0._golinked, var_14_0)
+	gohelper.setActive(arg_14_0._gounlink, not var_14_0)
+
+	if var_14_0 then
+		arg_14_0.isTransporting = arg_14_0.transportPathMO:isTransporting()
 	end
 
-	gohelper.setActive(slot0._gotransporting, slot0.isTransporting)
-	gohelper.setActive(slot0._gopause, not slot0.isTransporting)
+	gohelper.setActive(arg_14_0._gotransporting, arg_14_0.isTransporting)
+	gohelper.setActive(arg_14_0._gopause, not arg_14_0.isTransporting)
 end
 
-function slot0.everySecondCall(slot0)
-	if slot0.hasMood and slot0.isTransporting then
-		slot0:checkHasMood()
+function var_0_0.everySecondCall(arg_15_0)
+	if arg_15_0.hasMood and arg_15_0.isTransporting then
+		arg_15_0:checkHasMood()
 	end
 end
 
-function slot0.clearVar(slot0)
-	slot0.hasMood = false
-	slot0.isTransporting = false
+function var_0_0.clearVar(arg_16_0)
+	arg_16_0.hasMood = false
+	arg_16_0.isTransporting = false
 
-	slot0._simagevehicle:UnLoadImage()
+	arg_16_0._simagevehicle:UnLoadImage()
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clearVar()
+function var_0_0.onDestroy(arg_17_0)
+	arg_17_0:clearVar()
 end
 
-return slot0
+return var_0_0

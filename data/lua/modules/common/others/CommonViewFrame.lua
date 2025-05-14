@@ -1,66 +1,70 @@
-module("modules.common.others.CommonViewFrame", package.seeall)
+﻿module("modules.common.others.CommonViewFrame", package.seeall)
 
-slot0 = class("CommonViewFrame", BaseView)
-slot1 = typeof(ZProj.ViewFrame)
+local var_0_0 = class("CommonViewFrame", BaseView)
+local var_0_1 = typeof(ZProj.ViewFrame)
 
-function slot0.onInitView(slot0)
-	slot0._viewFrame = slot0.viewGO:GetComponent(uv0)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._viewFrame = arg_1_0.viewGO:GetComponent(var_0_1)
 
-	if not slot0._viewFrame then
-		slot0._viewFrame = slot0.viewGO:GetComponentInChildren(uv0, true)
+	if not arg_1_0._viewFrame then
+		arg_1_0._viewFrame = arg_1_0.viewGO:GetComponentInChildren(var_0_1, true)
 	end
 
-	if slot0._viewFrame then
-		slot0._viewFrame:SetLoadCallback(slot0._onFrameLoaded, slot0)
+	if arg_1_0._viewFrame then
+		arg_1_0._viewFrame:SetLoadCallback(arg_1_0._onFrameLoaded, arg_1_0)
 	else
-		logError(slot0.viewName .. " 没有挂通用弹框底板脚本 ViewFrame.cs")
+		logError(arg_1_0.viewName .. " 没有挂通用弹框底板脚本 ViewFrame.cs")
 	end
 end
 
-function slot0._onFrameLoaded(slot0, slot1)
-	slot0._txtTitle = gohelper.findChildText(slot0._viewFrame.frameGO, "txt/titlecn")
+function var_0_0._onFrameLoaded(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._viewFrame.frameGO
 
-	if slot0._txtTitle and not string.nilorempty(slot0._viewFrame.cnTitle) then
-		slot0._txtTitle.text = luaLang(slot0._viewFrame.cnTitle)
+	arg_2_0._txtTitle = gohelper.findChildText(var_2_0, "txt/titlecn")
+
+	if arg_2_0._txtTitle and not string.nilorempty(arg_2_0._viewFrame.cnTitle) then
+		arg_2_0._txtTitle.text = luaLang(arg_2_0._viewFrame.cnTitle)
 	end
 
-	slot0._txtTitleEn = gohelper.findChildText(slot2, "txt/titlecn/titleen")
+	arg_2_0._txtTitleEn = gohelper.findChildText(var_2_0, "txt/titlecn/titleen")
 
-	if slot0._txtTitleEn then
-		slot0._txtTitleEn.text = slot0._viewFrame.enTitle
+	if arg_2_0._txtTitleEn then
+		arg_2_0._txtTitleEn.text = arg_2_0._viewFrame.enTitle
 	end
 
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot2, "#btn_close")
+	arg_2_0._btnclose = gohelper.findChildButtonWithAudio(var_2_0, "#btn_close")
 
-	if slot0._btnclose then
-		slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+	if arg_2_0._btnclose then
+		arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 	end
 
-	if gohelper.findChild(slot2, "Mask") then
-		slot0._clickMask = SLFramework.UGUI.UIClickListener.Get(slot3)
+	local var_2_1 = gohelper.findChild(var_2_0, "Mask")
 
-		slot0._clickMask:AddClickListener(slot0._btncloseOnClick, slot0)
-	end
-end
+	if var_2_1 then
+		arg_2_0._clickMask = SLFramework.UGUI.UIClickListener.Get(var_2_1)
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
-end
-
-function slot0.onDestroyView(slot0)
-	if slot0._btnclose then
-		slot0._btnclose:RemoveClickListener()
-
-		slot0._btnclose = nil
-	end
-
-	if slot0._clickMask then
-		slot0._clickMask:RemoveClickListener()
+		arg_2_0._clickMask:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 	end
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_4_0)
+	if arg_4_0._btnclose then
+		arg_4_0._btnclose:RemoveClickListener()
+
+		arg_4_0._btnclose = nil
+	end
+
+	if arg_4_0._clickMask then
+		arg_4_0._clickMask:RemoveClickListener()
+	end
+end
+
+function var_0_0.onClickModalMask(arg_5_0)
+	arg_5_0:closeThis()
+end
+
+return var_0_0

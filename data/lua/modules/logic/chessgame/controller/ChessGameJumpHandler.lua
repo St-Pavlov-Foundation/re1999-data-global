@@ -1,9 +1,9 @@
-module("modules.logic.chessgame.controller.ChessGameJumpHandler", package.seeall)
+﻿module("modules.logic.chessgame.controller.ChessGameJumpHandler", package.seeall)
 
-slot0 = class("ChessGameJumpHandler")
+local var_0_0 = class("ChessGameJumpHandler")
 
-function slot0.defaultJump()
+function var_0_0.defaultJump()
 	MainController.instance:enterMainScene()
 end
 
-return slot0
+return var_0_0

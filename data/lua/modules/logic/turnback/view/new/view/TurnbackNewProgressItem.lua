@@ -1,103 +1,116 @@
-module("modules.logic.turnback.view.new.view.TurnbackNewProgressItem", package.seeall)
+﻿module("modules.logic.turnback.view.new.view.TurnbackNewProgressItem", package.seeall)
 
-slot0 = class("TurnbackNewProgressItem", LuaCompBase)
+local var_0_0 = class("TurnbackNewProgressItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
-	if slot0.index == 1 or slot0._isJump == true then
-		slot0._btnactivity:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	if arg_3_0.index == 1 or arg_3_0._isJump == true then
+		arg_3_0._btnactivity:RemoveClickListener()
 	end
 end
 
-function slot0.initItem(slot0, slot1)
-	slot0.index = slot1
+function var_0_0.initItem(arg_4_0, arg_4_1)
+	arg_4_0.index = arg_4_1
 
-	if slot0.index == 1 then
-		slot0:initMainActivity()
+	if arg_4_0.index == 1 then
+		arg_4_0:initMainActivity()
 	else
-		slot0:initNormalItem()
+		arg_4_0:initNormalItem()
 	end
 end
 
-function slot0.initMainActivity(slot0)
-	slot0._btnactivity = gohelper.findChildButton(slot0.go, "#btn_activity")
+function var_0_0.initMainActivity(arg_5_0)
+	arg_5_0._btnactivity = gohelper.findChildButton(arg_5_0.go, "#btn_activity")
 
-	slot0._btnactivity:AddClickListener(slot0._onClickMainActivity, slot0)
+	arg_5_0._btnactivity:AddClickListener(arg_5_0._onClickMainActivity, arg_5_0)
 
-	slot0.txttitle = gohelper.findChildText(slot0.go, "titlebg/#txt_title")
-	slot0.txttitle.text = TurnbackConfig.instance:getDropCoById(1).name
+	arg_5_0.txttitle = gohelper.findChildText(arg_5_0.go, "titlebg/#txt_title")
+	arg_5_0.txttitle.text = TurnbackConfig.instance:getDropCoById(1).name
 end
 
-function slot0.initNormalItem(slot0)
-	slot0.goprogress = gohelper.findChild(slot0.go, "progress")
-	slot0.gounfinish = gohelper.findChild(slot0.go, "progress/unfinish")
-	slot0.txtunfinish = gohelper.findChildText(slot0.go, "progress/unfinish/#txt_progress")
-	slot0.imgunfinish = gohelper.findChildImage(slot0.go, "progress/unfinish/bg/fill")
-	slot0.gofinished = gohelper.findChild(slot0.go, "progress/finished")
-	slot0.simagepic = gohelper.findChildSingleImage(slot0.go, "#simage_pic")
-	slot0._btnactivity = gohelper.findChildButton(slot0.go, "#btn_activity")
-	slot0._gojumpicon = gohelper.findChild(slot0.go, "icon")
+function var_0_0.initNormalItem(arg_6_0)
+	arg_6_0.goprogress = gohelper.findChild(arg_6_0.go, "progress")
+	arg_6_0.gounfinish = gohelper.findChild(arg_6_0.go, "progress/unfinish")
+	arg_6_0.txtunfinish = gohelper.findChildText(arg_6_0.go, "progress/unfinish/#txt_progress")
+	arg_6_0.imgunfinish = gohelper.findChildImage(arg_6_0.go, "progress/unfinish/bg/fill")
+	arg_6_0.gofinished = gohelper.findChild(arg_6_0.go, "progress/finished")
+	arg_6_0.simagepic = gohelper.findChildSingleImage(arg_6_0.go, "#simage_pic")
+	arg_6_0._btnactivity = gohelper.findChildButton(arg_6_0.go, "#btn_activity")
+	arg_6_0._gojumpicon = gohelper.findChild(arg_6_0.go, "icon")
 end
 
-function slot0._onClickMainActivity(slot0)
-	_G[string.format("VersionActivity%sEnterController", ActivityHelper.getActivityVersion(ActivityEnum.VersionActivityIdList[#ActivityEnum.VersionActivityIdList]))]:openVersionActivityEnterView()
+function var_0_0._onClickMainActivity(arg_7_0)
+	local var_7_0 = ActivityEnum.VersionActivityIdList[#ActivityEnum.VersionActivityIdList]
+	local var_7_1 = ActivityHelper.getActivityVersion(var_7_0)
+
+	_G[string.format("VersionActivity%sEnterController", var_7_1)]:openVersionActivityEnterView()
 end
 
-function slot0.refreshItem(slot0, slot1)
-	slot0.mo = slot1
-	slot0.config = slot0.mo.co
-	slot0._isJump = false
+function var_0_0.refreshItem(arg_8_0, arg_8_1)
+	arg_8_0.mo = arg_8_1
+	arg_8_0.config = arg_8_0.mo.co
+	arg_8_0._isJump = false
 
-	slot0.simagepic:LoadImage(ResUrl.getTurnbackIcon("new/progress/" .. slot0.config.picPath))
+	local var_8_0 = not string.nilorempty(arg_8_0.config.jumpId)
 
-	slot0.txttitle = gohelper.findChildText(slot0.go, "titlebg/#txt_title")
-	slot0.txttitle.text = slot0.config.name
+	arg_8_0.simagepic:LoadImage(ResUrl.getTurnbackIcon("new/progress/" .. arg_8_0.config.picPath))
 
-	gohelper.setActive(slot0._btnactivity.gameObject, not string.nilorempty(slot0.config.jumpId))
-	gohelper.setActive(slot0._gojumpicon, slot0.config.type == TurnbackEnum.DropType.Jump)
-	gohelper.setActive(slot0.goprogress, slot0.config.type == TurnbackEnum.DropType.Progress)
+	arg_8_0.txttitle = gohelper.findChildText(arg_8_0.go, "titlebg/#txt_title")
+	arg_8_0.txttitle.text = arg_8_0.config.name
 
-	if slot2 then
-		slot0._btnactivity:AddClickListener(slot0._btnclickOnClick, slot0)
+	gohelper.setActive(arg_8_0._btnactivity.gameObject, var_8_0)
+	gohelper.setActive(arg_8_0._gojumpicon, arg_8_0.config.type == TurnbackEnum.DropType.Jump)
+	gohelper.setActive(arg_8_0.goprogress, arg_8_0.config.type == TurnbackEnum.DropType.Progress)
 
-		slot0._isJump = true
+	if var_8_0 then
+		arg_8_0._btnactivity:AddClickListener(arg_8_0._btnclickOnClick, arg_8_0)
+
+		arg_8_0._isJump = true
 	end
 
-	if slot0.config.type == TurnbackEnum.DropType.Progress then
-		slot3 = slot0.mo and slot0.mo.progress and slot0.mo.progress < 1
+	if arg_8_0.config.type == TurnbackEnum.DropType.Progress then
+		local var_8_1 = arg_8_0.mo and arg_8_0.mo.progress and arg_8_0.mo.progress < 1
 
-		gohelper.setActive(slot0.gounfinish, slot3)
-		gohelper.setActive(slot0.gofinished, not slot3)
+		gohelper.setActive(arg_8_0.gounfinish, var_8_1)
+		gohelper.setActive(arg_8_0.gofinished, not var_8_1)
 
-		if slot3 then
-			slot0.txtunfinish.text = math.floor(slot0.mo.progress * 100) / 100 * 100 .. "%"
-			slot0.imgunfinish.fillAmount = slot0.mo.progress
+		if var_8_1 then
+			local var_8_2 = math.floor(arg_8_0.mo.progress * 100) / 100
+
+			arg_8_0.txtunfinish.text = var_8_2 * 100 .. "%"
+			arg_8_0.imgunfinish.fillAmount = arg_8_0.mo.progress
 		end
 	end
 end
 
-function slot0.refreshItemBySelf(slot0)
-	if slot0.index > 1 and TurnbackModel.instance:getDropInfoByType(slot0.config.id) then
-		slot0:refreshItem(slot1)
+function var_0_0.refreshItemBySelf(arg_9_0)
+	if arg_9_0.index > 1 then
+		local var_9_0 = TurnbackModel.instance:getDropInfoByType(arg_9_0.config.id)
+
+		if var_9_0 then
+			arg_9_0:refreshItem(var_9_0)
+		end
 	end
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_10_0)
 	TurnbackRpc.instance:sendFinishReadTaskRequest(TurnbackEnum.ReadTaskId)
 	StatController.instance:track(StatEnum.EventName.ReflowActivityJump, {
-		[StatEnum.EventProperties.TurnbackJumpName] = slot0.config.name,
-		[StatEnum.EventProperties.TurnbackJumpId] = tostring(slot0.config.id)
+		[StatEnum.EventProperties.TurnbackJumpName] = arg_10_0.config.name,
+		[StatEnum.EventProperties.TurnbackJumpId] = tostring(arg_10_0.config.id)
 	})
-	GameFacade.jump(slot0.config.jumpId)
+	GameFacade.jump(arg_10_0.config.jumpId)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

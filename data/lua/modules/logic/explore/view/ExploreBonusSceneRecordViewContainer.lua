@@ -1,11 +1,11 @@
-module("modules.logic.explore.view.ExploreBonusSceneRecordViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBonusSceneRecordViewContainer", package.seeall)
 
-slot0 = class("ExploreBonusSceneRecordViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreBonusSceneRecordViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreBonusSceneRecordView.New()
 	}
 end
 
-return slot0
+return var_0_0

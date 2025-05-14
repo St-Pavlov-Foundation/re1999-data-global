@@ -1,51 +1,51 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballTalentTabItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballTalentTabItem", package.seeall)
 
-slot0 = class("PinballTalentTabItem", LuaCompBase)
+local var_0_0 = class("PinballTalentTabItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._goselect = gohelper.findChild(slot1, "selectbg")
-	slot0._gounselect = gohelper.findChild(slot1, "unselectbg")
-	slot0._txtname = gohelper.findChildTextMesh(slot1, "#txt_name")
-	slot0._click = gohelper.getClick(slot1)
-	slot0._red = gohelper.findChild(slot1, "go_reddot")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._goselect = gohelper.findChild(arg_1_1, "selectbg")
+	arg_1_0._gounselect = gohelper.findChild(arg_1_1, "unselectbg")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_1, "#txt_name")
+	arg_1_0._click = gohelper.getClick(arg_1_1)
+	arg_1_0._red = gohelper.findChild(arg_1_1, "go_reddot")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClick, slot0)
-	PinballController.instance:registerCallback(PinballEvent.TalentRedChange, slot0._onTalentRedChange, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
+	PinballController.instance:registerCallback(PinballEvent.TalentRedChange, arg_2_0._onTalentRedChange, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
-	PinballController.instance:unregisterCallback(PinballEvent.TalentRedChange, slot0._onTalentRedChange, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	PinballController.instance:unregisterCallback(PinballEvent.TalentRedChange, arg_3_0._onTalentRedChange, arg_3_0)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._txtname.text = slot1.co.name
-	slot0._data = slot1
+function var_0_0.setData(arg_4_0, arg_4_1)
+	arg_4_0._txtname.text = arg_4_1.co.name
+	arg_4_0._data = arg_4_1
 
-	slot0:_onTalentRedChange()
+	arg_4_0:_onTalentRedChange()
 end
 
-function slot0._onTalentRedChange(slot0)
-	gohelper.setActive(slot0._red, PinballModel.instance:getTalentRed(slot0._data.co.id))
+function var_0_0._onTalentRedChange(arg_5_0)
+	gohelper.setActive(arg_5_0._red, PinballModel.instance:getTalentRed(arg_5_0._data.co.id))
 end
 
-function slot0.setSelectData(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1 == slot0._data)
-	gohelper.setActive(slot0._gounselect, slot1 ~= slot0._data)
+function var_0_0.setSelectData(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._goselect, arg_6_1 == arg_6_0._data)
+	gohelper.setActive(arg_6_0._gounselect, arg_6_1 ~= arg_6_0._data)
 end
 
-function slot0.setClickCall(slot0, slot1, slot2)
-	slot0.callback = slot1
-	slot0.callobj = slot2
+function var_0_0.setClickCall(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.callback = arg_7_1
+	arg_7_0.callobj = arg_7_2
 end
 
-function slot0._onClick(slot0)
-	if slot0.callback then
-		slot0.callback(slot0.callobj, slot0._data)
+function var_0_0._onClick(arg_8_0)
+	if arg_8_0.callback then
+		arg_8_0.callback(arg_8_0.callobj, arg_8_0._data)
 	end
 end
 
-return slot0
+return var_0_0

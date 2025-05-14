@@ -1,107 +1,118 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotEquipInfoTeamListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotEquipInfoTeamListModel", package.seeall)
 
-slot0 = class("V1a6_CachotEquipInfoTeamListModel", EquipInfoBaseListModel)
+local var_0_0 = class("V1a6_CachotEquipInfoTeamListModel", EquipInfoBaseListModel)
 
-function slot0.setSeatLevel(slot0, slot1)
-	slot0._seatLevel = slot1
+function var_0_0.setSeatLevel(arg_1_0, arg_1_1)
+	arg_1_0._seatLevel = arg_1_1
 end
 
-function slot0.getSeatLevel(slot0)
-	return slot0._seatLevel
+function var_0_0.getSeatLevel(arg_2_0)
+	return arg_2_0._seatLevel
 end
 
-function slot0.onOpen(slot0, slot1, slot2)
-	slot0.viewParam = slot1
+function var_0_0.onOpen(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.viewParam = arg_3_1
 
-	slot0:initTeamEquipList(slot1, slot2)
+	arg_3_0:initTeamEquipList(arg_3_1, arg_3_2)
 
-	slot0.curGroupMO = slot1.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
-	slot0.posIndex = slot1.posIndex
+	arg_3_0.curGroupMO = arg_3_1.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
+	arg_3_0.posIndex = arg_3_1.posIndex
 
-	slot0:setCurrentSelectEquipMo(slot1.equipMo or slot0.equipMoList and slot0.equipMoList[1])
-	slot0:initInTeamEquipUidToHero()
+	local var_3_0 = arg_3_1.equipMo or arg_3_0.equipMoList and arg_3_0.equipMoList[1]
+
+	arg_3_0:setCurrentSelectEquipMo(var_3_0)
+	arg_3_0:initInTeamEquipUidToHero()
 end
 
-function slot0.initTeamEquipList(slot0, slot1, slot2)
-	if slot1.equipMo and slot1.equipMo.equipType == EquipEnum.ClientEquipType.TrialHero then
-		slot0.equipMoList = {
-			slot1.equipMo
+function var_0_0.initTeamEquipList(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1.equipMo and arg_4_1.equipMo.equipType == EquipEnum.ClientEquipType.TrialHero then
+		arg_4_0.equipMoList = {
+			arg_4_1.equipMo
 		}
 	else
-		slot0:initEquipList(slot2)
+		arg_4_0:initEquipList(arg_4_2)
 	end
 end
 
-function slot0.initEquipList(slot0, slot1)
-	slot2 = {}
+function var_0_0.initEquipList(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	if slot0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
-		for slot7, slot8 in ipairs(V1a6_CachotModel.instance:getTeamInfo().equipUids) do
-			table.insert(slot2, EquipModel.instance:getEquip(slot8))
+	if arg_5_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
+		local var_5_1 = V1a6_CachotModel.instance:getTeamInfo()
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_1.equipUids) do
+			table.insert(var_5_0, EquipModel.instance:getEquip(iter_5_1))
 		end
 	else
-		slot2 = EquipModel.instance:getEquips()
+		var_5_0 = EquipModel.instance:getEquips()
 	end
 
-	slot0.equipMoList = {}
-	slot3 = slot1:isFiltering()
+	arg_5_0.equipMoList = {}
+
+	local var_5_2 = arg_5_1:isFiltering()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-		for slot7, slot8 in ipairs(slot2) do
-			if EquipHelper.isNormalEquip(slot8.config) then
-				if slot3 then
-					if slot1:checkIsIncludeTag(slot8.config) then
-						table.insert(slot0.equipMoList, slot8)
+		for iter_5_2, iter_5_3 in ipairs(var_5_0) do
+			if EquipHelper.isNormalEquip(iter_5_3.config) then
+				if var_5_2 then
+					if arg_5_1:checkIsIncludeTag(iter_5_3.config) then
+						table.insert(arg_5_0.equipMoList, iter_5_3)
 					end
 				else
-					table.insert(slot0.equipMoList, slot8)
+					table.insert(arg_5_0.equipMoList, iter_5_3)
 				end
 			end
 		end
 	end
 
-	slot0:resortEquip()
+	arg_5_0:resortEquip()
 end
 
-function slot0.initInTeamEquipUidToHero(slot0)
-	slot0.equipUidToHeroMo = {}
+function var_0_0.initInTeamEquipUidToHero(arg_6_0)
+	arg_6_0.equipUidToHeroMo = {}
 
-	for slot5, slot6 in pairs(slot0.curGroupMO.equips) do
-		if tonumber(slot0.curGroupMO.heroList[slot5 + 1]) < 0 then
-			slot0.equipUidToHeroMo[slot6.equipUid[1]] = HeroGroupTrialModel.instance:getById(slot7)
+	local var_6_0 = arg_6_0.curGroupMO.heroList
+
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.curGroupMO.equips) do
+		local var_6_1 = var_6_0[iter_6_0 + 1]
+
+		if tonumber(var_6_1) < 0 then
+			arg_6_0.equipUidToHeroMo[iter_6_1.equipUid[1]] = HeroGroupTrialModel.instance:getById(var_6_1)
 		else
-			slot0.equipUidToHeroMo[slot6.equipUid[1]] = HeroModel.instance:getById(slot7)
+			arg_6_0.equipUidToHeroMo[iter_6_1.equipUid[1]] = HeroModel.instance:getById(var_6_1)
 		end
 	end
 end
 
-function slot0.getGroupCurrentPosEquip(slot0, slot1)
-	return slot0.curGroupMO:getPosEquips(slot1 or slot0.posIndex).equipUid
+function var_0_0.getGroupCurrentPosEquip(arg_7_0, arg_7_1)
+	return arg_7_0.curGroupMO:getPosEquips(arg_7_1 or arg_7_0.posIndex).equipUid
 end
 
-function slot0.getCurrentPosIndex(slot0)
-	return slot0.posIndex
+function var_0_0.getCurrentPosIndex(arg_8_0)
+	return arg_8_0.posIndex
 end
 
-function slot0.getRequestData(slot0, slot1, slot2)
-	return slot0.curGroupMO.groupId, slot1, {
-		slot2
+function var_0_0.getRequestData(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = {
+		arg_9_2
 	}
+
+	return arg_9_0.curGroupMO.groupId, arg_9_1, var_9_0
 end
 
-function slot0.getHeroMoByEquipUid(slot0, slot1)
-	return slot0.equipUidToHeroMo and slot0.equipUidToHeroMo[slot1]
+function var_0_0.getHeroMoByEquipUid(arg_10_0, arg_10_1)
+	return arg_10_0.equipUidToHeroMo and arg_10_0.equipUidToHeroMo[arg_10_1]
 end
 
-function slot0.clear(slot0)
-	slot0:onInit()
+function var_0_0.clear(arg_11_0)
+	arg_11_0:onInit()
 
-	slot0.selectedEquipMo = nil
-	slot0.curGroupMO = nil
-	slot0.posIndex = nil
-	slot0.equipUidToHeroMo = nil
+	arg_11_0.selectedEquipMo = nil
+	arg_11_0.curGroupMO = nil
+	arg_11_0.posIndex = nil
+	arg_11_0.equipUidToHeroMo = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

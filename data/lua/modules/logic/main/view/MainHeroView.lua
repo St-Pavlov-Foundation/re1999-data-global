@@ -1,607 +1,664 @@
-module("modules.logic.main.view.MainHeroView", package.seeall)
+﻿module("modules.logic.main.view.MainHeroView", package.seeall)
 
-slot0 = class("MainHeroView", BaseView)
+local var_0_0 = class("MainHeroView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._golightspinecontrol = gohelper.findChild(slot0.viewGO, "#go_lightspinecontrol")
-	slot0._gospinescale = gohelper.findChild(slot0.viewGO, "#go_spine_scale")
-	slot0._golightspine = gohelper.findChild(slot0.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
-	slot0._txtanacn = gohelper.findChildText(slot0.viewGO, "bottom/#txt_ana_cn")
-	slot0._txtanaen = gohelper.findChildText(slot0.viewGO, "bottom/#txt_ana_en")
-	slot0._gocontentbg = gohelper.findChild(slot0.viewGO, "bottom/#go_contentbg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._golightspinecontrol = gohelper.findChild(arg_1_0.viewGO, "#go_lightspinecontrol")
+	arg_1_0._gospinescale = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale")
+	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
+	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_cn")
+	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_en")
+	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = WeatherController.instance
+local var_0_1 = WeatherController.instance
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, slot0._onOpenFullView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, slot0._reOpenWhileOpen, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(WeatherController.instance, WeatherEvent.PlayVoice, slot0._onWeatherPlayVoice, slot0)
-	slot0:addEventCb(WeatherController.instance, WeatherEvent.LoadPhotoFrameBg, slot0._onWeatherLoadPhotoFrameBg, slot0)
-	slot0:addEventCb(WeatherController.instance, WeatherEvent.OnRoleBlend, slot0._onWeatherOnRoleBlend, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnReceiveAddFaithEvent, slot0._onSuccessTouchHead, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnClickSwitchRole, slot0._onClickSwitchRole, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnSceneClose, slot0._onSceneClose, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.SetMainViewVisible, slot0._setViewVisible, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.ChangeMainHeroSkin, slot0._changeMainHeroSkin, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnShowMainThumbnailView, slot0._onShowMainThumbnailView, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.SetMainViewRootVisible, slot0._setViewRootVisible, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.ForceStopVoice, slot0._forceStopVoice, slot0)
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, slot0._onStartSwitchScene, slot0, LuaEventSystem.High)
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneFinish, slot0._onSwitchSceneFinish, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.Start, slot0._onStart, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.Finish, slot0._onFinish, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-	slot0:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, slot0._onDelayCloseLoading, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onLoadingCloseView, slot0, LuaEventSystem.High)
-	slot0:addEventCb(LoginController.instance, LoginEvent.OnBeginLogout, slot0._onBeginLogout, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshMainHeroSkin, slot0._onRefreshMainHeroSkin, slot0)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_4_0._onOpenFullViewFinish, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_4_0._onOpenFullView, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_4_0._onCloseFullView, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, arg_4_0._reOpenWhileOpen, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0, LuaEventSystem.Low)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0, LuaEventSystem.Low)
+	arg_4_0:addEventCb(WeatherController.instance, WeatherEvent.PlayVoice, arg_4_0._onWeatherPlayVoice, arg_4_0)
+	arg_4_0:addEventCb(WeatherController.instance, WeatherEvent.LoadPhotoFrameBg, arg_4_0._onWeatherLoadPhotoFrameBg, arg_4_0)
+	arg_4_0:addEventCb(WeatherController.instance, WeatherEvent.OnRoleBlend, arg_4_0._onWeatherOnRoleBlend, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.OnReceiveAddFaithEvent, arg_4_0._onSuccessTouchHead, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.OnClickSwitchRole, arg_4_0._onClickSwitchRole, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_4_0._onSceneClose, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.SetMainViewVisible, arg_4_0._setViewVisible, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.ChangeMainHeroSkin, arg_4_0._changeMainHeroSkin, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.OnShowMainThumbnailView, arg_4_0._onShowMainThumbnailView, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.SetMainViewRootVisible, arg_4_0._setViewRootVisible, arg_4_0)
+	arg_4_0:addEventCb(MainController.instance, MainEvent.ForceStopVoice, arg_4_0._forceStopVoice, arg_4_0)
+	arg_4_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, arg_4_0._onStartSwitchScene, arg_4_0, LuaEventSystem.High)
+	arg_4_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneFinish, arg_4_0._onSwitchSceneFinish, arg_4_0)
+	arg_4_0:addEventCb(StoryController.instance, StoryEvent.Start, arg_4_0._onStart, arg_4_0)
+	arg_4_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_4_0._onFinish, arg_4_0)
+	arg_4_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenResize, arg_4_0)
+	arg_4_0:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_4_0._onDelayCloseLoading, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_4_0._onLoadingCloseView, arg_4_0, LuaEventSystem.High)
+	arg_4_0:addEventCb(LoginController.instance, LoginEvent.OnBeginLogout, arg_4_0._onBeginLogout, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshMainHeroSkin, arg_4_0._onRefreshMainHeroSkin, arg_4_0)
 end
 
-function slot0._onScreenResize(slot0)
-	slot0:_repeatSetSpineScale()
+function var_0_0._onScreenResize(arg_5_0)
+	arg_5_0:_repeatSetSpineScale()
 end
 
-function slot0._onStart(slot0, slot1)
-	if slot0._lightSpine then
-		slot0._isSpineCleared = true
+function var_0_0._onStart(arg_6_0, arg_6_1)
+	if arg_6_0._lightSpine then
+		arg_6_0._isSpineCleared = true
 
-		slot0:_onStopVoice()
-		slot0._lightSpine:clear()
+		arg_6_0:_onStopVoice()
+		arg_6_0._lightSpine:clear()
 
-		slot0._spineGo = nil
-		slot0._spineTransform = nil
-		slot0._spineMaterial = nil
+		arg_6_0._spineGo = nil
+		arg_6_0._spineTransform = nil
+		arg_6_0._spineMaterial = nil
 
 		WeatherController.instance:clearMat()
 	end
 end
 
-function slot0._onFinish(slot0, slot1)
-	if not slot0._isSpineCleared then
+function var_0_0._onFinish(arg_7_0, arg_7_1)
+	if not arg_7_0._isSpineCleared then
 		return
 	end
 
-	slot0._isSpineCleared = false
-	slot0._storyFinish = true
-	slot0._curHeroId, slot0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
+	arg_7_0._isSpineCleared = false
+	arg_7_0._storyFinish = true
+	arg_7_0._curHeroId, arg_7_0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
 
-	if slot0._curHeroId and slot0._curSkinId then
-		slot0:_updateHero(slot0._curHeroId, slot0._curSkinId)
+	if arg_7_0._curHeroId and arg_7_0._curSkinId then
+		arg_7_0:_updateHero(arg_7_0._curHeroId, arg_7_0._curSkinId)
 	end
 end
 
-function slot0._onBeginLogout(slot0)
-	slot0:_clearEvents()
+function var_0_0._onBeginLogout(arg_8_0)
+	arg_8_0:_clearEvents()
 end
 
-function slot0._onLoadingCloseView(slot0, slot1)
-	if slot1 == ViewName.LoadingView then
-		if slot0._canvasGroup then
-			slot0._canvasGroup.alpha = 1
-			slot0._canvasGroup = nil
+function var_0_0._onLoadingCloseView(arg_9_0, arg_9_1)
+	if arg_9_1 == ViewName.LoadingView then
+		if arg_9_0._canvasGroup then
+			arg_9_0._canvasGroup.alpha = 1
+			arg_9_0._canvasGroup = nil
 
-			slot0._animator:Play("mainview_in", 0, 0)
+			arg_9_0._animator:Play("mainview_in", 0, 0)
 		end
 
-		slot0:_checkPlayGreetingVoices()
+		arg_9_0:_checkPlayGreetingVoices()
 	end
 end
 
-function slot0._onDelayCloseLoading(slot0)
-	slot1 = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup))
-	slot1.alpha = 0
-	slot0._canvasGroup = slot1
+function var_0_0._onDelayCloseLoading(arg_10_0)
+	local var_10_0 = gohelper.onceAddComponent(arg_10_0.viewGO, typeof(UnityEngine.CanvasGroup))
+
+	var_10_0.alpha = 0
+	arg_10_0._canvasGroup = var_10_0
 end
 
-function slot0._onShowMainThumbnailView(slot0)
-	gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup)).alpha = 0
+function var_0_0._onShowMainThumbnailView(arg_11_0)
+	gohelper.onceAddComponent(arg_11_0.viewGO, typeof(UnityEngine.CanvasGroup)).alpha = 0
 end
 
-function slot0._changeMainHeroSkin(slot0, slot1, slot2, slot3)
+function var_0_0._changeMainHeroSkin(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 	if not ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) and not ViewMgr.instance:isOpen(ViewName.GMToolView) then
 		return
 	end
 
-	slot0._changeShowInScene = slot2
+	arg_12_0._changeShowInScene = arg_12_2
 
-	if slot0._lightSpine then
-		slot0:_onStopVoice()
+	if arg_12_0._lightSpine then
+		arg_12_0:_onStopVoice()
 	end
 
-	slot0:_updateHero(slot1.characterId, slot1.id, slot3)
+	arg_12_0:_updateHero(arg_12_1.characterId, arg_12_1.id, arg_12_3)
 end
 
-function slot0._onRefreshMainHeroSkin(slot0)
-	slot0._curHeroId, slot0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
+function var_0_0._onRefreshMainHeroSkin(arg_13_0)
+	arg_13_0._curHeroId, arg_13_0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
 
-	if slot0._curHeroId and slot0._curSkinId then
-		slot0:_updateHero(slot0._curHeroId, slot0._curSkinId)
+	if arg_13_0._curHeroId and arg_13_0._curSkinId then
+		arg_13_0:_updateHero(arg_13_0._curHeroId, arg_13_0._curSkinId)
 	end
 end
 
-function slot0._onSpineLoaded(slot0)
-	if slot0._storyFinish then
-		slot0._storyFinish = nil
+function var_0_0._onSpineLoaded(arg_14_0)
+	if arg_14_0._storyFinish then
+		arg_14_0._storyFinish = nil
 
-		slot0:_setShowInScene(true)
+		arg_14_0:_setShowInScene(true)
 	end
 
 	if not ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) then
 		return
 	end
 
-	slot0:_setShowInScene(slot0._changeShowInScene)
+	arg_14_0:_setShowInScene(arg_14_0._changeShowInScene)
 end
 
-function slot0._setViewVisible(slot0, slot1)
-	slot0._mainViewVisible = slot1
-	slot0._changeTime = Time.realtimeSinceStartup
+function var_0_0._setViewVisible(arg_15_0, arg_15_1)
+	arg_15_0._mainViewVisible = arg_15_1
+	arg_15_0._changeTime = Time.realtimeSinceStartup
 end
 
-function slot0._onSceneClose(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
+function var_0_0._onSceneClose(arg_16_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseFullView, arg_16_0._onCloseFullView, arg_16_0)
 end
 
-function slot0._onClickSwitchRole(slot0)
-	slot0:checkSwitchShowInScene()
+function var_0_0._onClickSwitchRole(arg_17_0)
+	arg_17_0:checkSwitchShowInScene()
 end
 
-function slot0.checkSwitchShowInScene(slot0)
-	if not slot0._showInScene then
-		slot0:_setShowInScene(true)
+function var_0_0.checkSwitchShowInScene(arg_18_0)
+	if not arg_18_0._showInScene then
+		arg_18_0:_setShowInScene(true)
 
-		if slot0._lightSpine then
-			slot0._lightSpine:fadeIn()
+		if arg_18_0._lightSpine then
+			arg_18_0._lightSpine:fadeIn()
 		end
 	end
 end
 
-function slot0._onWeatherPlayVoice(slot0, slot1)
+function var_0_0._onWeatherPlayVoice(arg_19_0, arg_19_1)
 	if not PlayerModel.instance:getMainThumbnail() then
 		return
 	end
 
-	if slot0:isPlayingVoice() or not slot0:isShowInScene() then
+	if arg_19_0:isPlayingVoice() or not arg_19_0:isShowInScene() then
 		return
 	end
 
-	slot1[2] = true
+	arg_19_1[2] = true
 
-	slot0:playVoice(slot1[1])
+	arg_19_0:playVoice(arg_19_1[1])
 end
 
-function slot0._onWeatherLoadPhotoFrameBg(slot0)
-	slot0:loadPhotoFrameBg()
+function var_0_0._onWeatherLoadPhotoFrameBg(arg_20_0)
+	arg_20_0:loadPhotoFrameBg()
 end
 
-function slot0._onWeatherOnRoleBlend(slot0, slot1)
-	slot0:onRoleBlend(slot1[1], slot1[2])
-	slot0:_updateMainColor()
+function var_0_0._onWeatherOnRoleBlend(arg_21_0, arg_21_1)
+	arg_21_0:onRoleBlend(arg_21_1[1], arg_21_1[2])
+	arg_21_0:_updateMainColor()
 end
 
-function slot0._setViewRootVisible(slot0, slot1)
-	if not slot1 and slot0._lightSpine then
-		slot0:_onStopVoice()
+function var_0_0._setViewRootVisible(arg_22_0, arg_22_1)
+	if not arg_22_1 and arg_22_0._lightSpine then
+		arg_22_0:_onStopVoice()
 	end
 end
 
-function slot0._updateMainColor(slot0)
-	if not slot0._lightSpine then
+function var_0_0._updateMainColor(arg_23_0)
+	if not arg_23_0._lightSpine then
 		return
 	end
 
-	if slot0._showInScene then
-		slot0._lightSpine:setMainColor(WeatherController.instance:getMainColor())
-		slot0._lightSpine:setLumFactor(WeatherEnum.HeroInSceneLumFactor)
+	if arg_23_0._showInScene then
+		local var_23_0 = WeatherController.instance:getMainColor()
+
+		arg_23_0._lightSpine:setMainColor(var_23_0)
+		arg_23_0._lightSpine:setLumFactor(WeatherEnum.HeroInSceneLumFactor)
 	else
-		if not WeatherController.instance:getCurLightMode() then
+		local var_23_1 = WeatherController.instance:getCurLightMode()
+
+		if not var_23_1 then
 			return
 		end
 
-		slot0._lightSpine:setMainColor(WeatherEnum.HeroInFrameColor[slot1])
-		slot0._lightSpine:setLumFactor(WeatherEnum.HeroInFrameLumFactor[slot1])
+		local var_23_2 = WeatherEnum.HeroInFrameColor[var_23_1]
+
+		arg_23_0._lightSpine:setMainColor(var_23_2)
+		arg_23_0._lightSpine:setLumFactor(WeatherEnum.HeroInFrameLumFactor[var_23_1])
 	end
 end
 
-function slot0._onStartSwitchScene(slot0)
-	if not slot0._showInScene then
-		slot0:_setShowInScene(true)
+function var_0_0._onStartSwitchScene(arg_24_0)
+	if not arg_24_0._showInScene then
+		arg_24_0:_setShowInScene(true)
 	end
 end
 
-function slot0._onSwitchSceneFinish(slot0)
-	slot0:_initFrame()
+function var_0_0._onSwitchSceneFinish(arg_25_0)
+	arg_25_0:_initFrame()
 end
 
-function slot0._initFrame(slot0)
-	slot0._frameBg = nil
-	slot0._frameSpineNode = nil
-	slot0._frameBg = uv0:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
+function var_0_0._initFrame(arg_26_0)
+	arg_26_0._frameBg = nil
+	arg_26_0._frameSpineNode = nil
+	arg_26_0._frameBg = var_0_1:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
 
-	if not slot0._frameBg then
+	if not arg_26_0._frameBg then
 		logError("_initFrame no frameBg")
 	end
 
-	if uv0:getSceneNode("s01_obj_a/Anim/Drawing/spine") then
-		slot0._frameSpineNode = slot1.transform
+	local var_26_0 = var_0_1:getSceneNode("s01_obj_a/Anim/Drawing/spine")
+
+	if var_26_0 then
+		arg_26_0._frameSpineNode = var_26_0.transform
 	else
 		logError("_initFrame no spineMountPoint")
 	end
 
-	gohelper.setActive(slot0._frameBg, false)
+	gohelper.setActive(arg_26_0._frameBg, false)
 
-	slot0._frameSpineNodeX = 3.11
-	slot0._frameSpineNodeY = 0.51
-	slot0._frameSpineNodeZ = 3.09
-	slot0._frameSpineNodeScale = 0.39
-	slot2 = slot0._frameBg:GetComponent(typeof(UnityEngine.Renderer))
-	slot0._frameBgMaterial = UnityEngine.Material.Instantiate(slot2.sharedMaterial)
-	slot2.material = slot0._frameBgMaterial
+	arg_26_0._frameSpineNodeX = 3.11
+	arg_26_0._frameSpineNodeY = 0.51
+	arg_26_0._frameSpineNodeZ = 3.09
+	arg_26_0._frameSpineNodeScale = 0.39
+
+	local var_26_1 = arg_26_0._frameBg:GetComponent(typeof(UnityEngine.Renderer))
+
+	arg_26_0._frameBgMaterial = UnityEngine.Material.Instantiate(var_26_1.sharedMaterial)
+	var_26_1.material = arg_26_0._frameBgMaterial
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_clearTrackMainHeroInteractionData()
-	slot0:_enableKeyword()
+function var_0_0._editableInitView(arg_27_0)
+	arg_27_0:_clearTrackMainHeroInteractionData()
+	arg_27_0:_enableKeyword()
 
-	slot0._skinInteraction = nil
-	slot0._curHeroId, slot0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
+	arg_27_0._skinInteraction = nil
+	arg_27_0._curHeroId, arg_27_0._curSkinId = CharacterSwitchListModel.instance:getMainHero()
 
-	if slot0._curHeroId and slot0._curSkinId then
-		slot0:_updateHero(slot0._curHeroId, slot0._curSkinId)
+	if arg_27_0._curHeroId and arg_27_0._curSkinId then
+		arg_27_0:_updateHero(arg_27_0._curHeroId, arg_27_0._curSkinId)
 	end
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._golightspinecontrol)
+	arg_27_0._animator = arg_27_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_27_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	arg_27_0._click = SLFramework.UGUI.UIClickListener.Get(arg_27_0._golightspinecontrol)
 
-	slot0._click:AddClickDownListener(slot0._clickDown, slot0)
+	arg_27_0._click:AddClickDownListener(arg_27_0._clickDown, arg_27_0)
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._golightspinecontrol)
+	arg_27_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_27_0._golightspinecontrol)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	slot0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, slot0._onTouch, slot0)
+	arg_27_0._drag:AddDragBeginListener(arg_27_0._onDragBegin, arg_27_0)
+	arg_27_0._drag:AddDragListener(arg_27_0._onDrag, arg_27_0)
+	arg_27_0._drag:AddDragEndListener(arg_27_0._onDragEnd, arg_27_0)
+	arg_27_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_27_0._onTouch, arg_27_0)
 
-	slot0._showInScene = true
+	arg_27_0._showInScene = true
 
-	slot0:_initFrame()
+	arg_27_0:_initFrame()
 
-	slot0._TintColorId = UnityEngine.Shader.PropertyToID("_TintColor")
+	arg_27_0._TintColorId = UnityEngine.Shader.PropertyToID("_TintColor")
 
-	slot0:_repeatSetSpineScale()
+	arg_27_0:_repeatSetSpineScale()
 end
 
-function slot0._setSpineScale(slot0)
-	uv0.setSpineScale(slot0._gospinescale)
+function var_0_0._setSpineScale(arg_28_0)
+	var_0_0.setSpineScale(arg_28_0._gospinescale)
 end
 
-function slot0._repeatSetSpineScale(slot0)
-	slot0:_setSpineScale()
-	TaskDispatcher.cancelTask(slot0._setSpineScale, slot0)
-	TaskDispatcher.runRepeat(slot0._setSpineScale, slot0, 0.1, 5)
+function var_0_0._repeatSetSpineScale(arg_29_0)
+	arg_29_0:_setSpineScale()
+	TaskDispatcher.cancelTask(arg_29_0._setSpineScale, arg_29_0)
+	TaskDispatcher.runRepeat(arg_29_0._setSpineScale, arg_29_0, 0.1, 5)
 end
 
-function slot0.setSpineScale(slot0)
-	slot1 = GameUtil.getAdapterScale()
+function var_0_0.setSpineScale(arg_30_0)
+	local var_30_0 = GameUtil.getAdapterScale()
 
-	transformhelper.setLocalScale(slot0.transform, slot1, slot1, slot1)
+	transformhelper.setLocalScale(arg_30_0.transform, var_30_0, var_30_0, var_30_0)
 end
 
-function slot0.showInScene(slot0)
-	if not slot0._spineMaterial then
+function var_0_0.showInScene(arg_31_0)
+	if not arg_31_0._spineMaterial then
 		return
 	end
 
-	slot0._lightSpine:setEffectFrameVisible(true)
-	slot0:_setStencil(true)
+	arg_31_0._lightSpine:setEffectFrameVisible(true)
+	arg_31_0:_setStencil(true)
 
-	slot0._spineTransform.parent = slot0._golightspine.transform
+	arg_31_0._spineTransform.parent = arg_31_0._golightspine.transform
 
-	transformhelper.setLocalScale(slot0._spineTransform, 1, 1, 1)
-	transformhelper.setLocalPos(slot0._spineTransform, 0, 0, 0)
-	transformhelper.setLocalRotation(slot0._spineGo.transform, 0, 0, 0)
-	gohelper.setLayer(slot0._spineGo, UnityLayer.Unit, true)
-	gohelper.setActive(slot0._frameBg, false)
-	uv0:setRoleMaskEnabled(true)
-	uv0:setStateByString("Photo_album", "no")
-	slot0:_updateMainColor()
+	transformhelper.setLocalScale(arg_31_0._spineTransform, 1, 1, 1)
+	transformhelper.setLocalPos(arg_31_0._spineTransform, 0, 0, 0)
+	transformhelper.setLocalRotation(arg_31_0._spineGo.transform, 0, 0, 0)
+	gohelper.setLayer(arg_31_0._spineGo, UnityLayer.Unit, true)
+	gohelper.setActive(arg_31_0._frameBg, false)
+	var_0_1:setRoleMaskEnabled(true)
+	var_0_1:setStateByString("Photo_album", "no")
+	arg_31_0:_updateMainColor()
 end
 
-function slot0.showInFrame(slot0)
-	if not slot0._spineMaterial then
+function var_0_0.showInFrame(arg_32_0)
+	if not arg_32_0._spineMaterial then
 		return
 	end
 
-	slot0._lightSpine:setEffectFrameVisible(false)
-	slot0:_setStencil(false)
-	transformhelper.setLocalScale(slot0._frameSpineNode, 1, 1, 1)
-	transformhelper.setLocalPos(slot0._frameSpineNode, 0, 0, 0)
+	arg_32_0._lightSpine:setEffectFrameVisible(false)
+	arg_32_0:_setStencil(false)
+	transformhelper.setLocalScale(arg_32_0._frameSpineNode, 1, 1, 1)
+	transformhelper.setLocalPos(arg_32_0._frameSpineNode, 0, 0, 0)
 
-	slot0._spineTransform.parent = slot0._frameSpineNode
-	slot1 = transformhelper.getLocalScale(slot0._spineTransform)
+	arg_32_0._spineTransform.parent = arg_32_0._frameSpineNode
 
-	transformhelper.setLocalScale(slot0._spineTransform, slot1, slot1, slot1)
-	transformhelper.setLocalRotation(slot0._spineTransform, 0, 0, 0)
+	local var_32_0 = transformhelper.getLocalScale(arg_32_0._spineTransform)
 
-	slot2 = slot0._frameSpineNodeX
-	slot3 = slot0._frameSpineNodeY
-	slot4 = slot0._frameSpineNodeScale
+	transformhelper.setLocalScale(arg_32_0._spineTransform, var_32_0, var_32_0, var_32_0)
+	transformhelper.setLocalRotation(arg_32_0._spineTransform, 0, 0, 0)
 
-	if not string.nilorempty(slot0._heroSkinConfig.mainViewFrameOffset) then
-		slot5 = SkinConfig.instance:getSkinOffset(slot0._heroSkinConfig.mainViewFrameOffset)
-		slot4 = slot5[3]
+	local var_32_1 = arg_32_0._frameSpineNodeX
+	local var_32_2 = arg_32_0._frameSpineNodeY
+	local var_32_3 = arg_32_0._frameSpineNodeScale
 
-		if MainSceneSwitchModel.instance:getCurSceneId() and lua_scene_settings.configDict[slot6] then
-			slot2 = slot5[1] + slot7.spineOffset[1]
-			slot3 = slot5[2] + slot7.spineOffset[2]
+	if not string.nilorempty(arg_32_0._heroSkinConfig.mainViewFrameOffset) then
+		local var_32_4 = SkinConfig.instance:getSkinOffset(arg_32_0._heroSkinConfig.mainViewFrameOffset)
+
+		var_32_1 = var_32_4[1]
+		var_32_2 = var_32_4[2]
+		var_32_3 = var_32_4[3]
+
+		local var_32_5 = MainSceneSwitchModel.instance:getCurSceneId()
+		local var_32_6 = var_32_5 and lua_scene_settings.configDict[var_32_5]
+
+		if var_32_6 then
+			var_32_1 = var_32_1 + var_32_6.spineOffset[1]
+			var_32_2 = var_32_2 + var_32_6.spineOffset[2]
 		end
 	end
 
-	transformhelper.setLocalScale(slot0._frameSpineNode, slot4, slot4, slot4)
-	transformhelper.setLocalPos(slot0._frameSpineNode, slot2, slot3, slot0._frameSpineNodeZ)
-	gohelper.setLayer(slot0._spineGo, UnityLayer.Scene, true)
+	transformhelper.setLocalScale(arg_32_0._frameSpineNode, var_32_3, var_32_3, var_32_3)
+	transformhelper.setLocalPos(arg_32_0._frameSpineNode, var_32_1, var_32_2, arg_32_0._frameSpineNodeZ)
+	gohelper.setLayer(arg_32_0._spineGo, UnityLayer.Scene, true)
 
-	if not slot0:loadPhotoFrameBg() then
-		gohelper.setActive(slot0._frameBg, true)
+	if not arg_32_0:loadPhotoFrameBg() then
+		gohelper.setActive(arg_32_0._frameBg, true)
 	end
 
-	uv0:setRoleMaskEnabled(false)
-	uv0:setStateByString("Photo_album", "yes")
-	slot0:_updateMainColor()
+	var_0_1:setRoleMaskEnabled(false)
+	var_0_1:setStateByString("Photo_album", "yes")
+	arg_32_0:_updateMainColor()
 end
 
-function slot0.loadPhotoFrameBg(slot0)
-	if slot0._showInScene then
+function var_0_0.loadPhotoFrameBg(arg_33_0)
+	if arg_33_0._showInScene then
 		return false
 	end
 
-	if slot0._curLightMode then
+	if arg_33_0._curLightMode then
 		return false
 	end
 
-	if not uv0:getCurLightMode() or slot0._curLightMode == slot1 then
+	local var_33_0 = var_0_1:getCurLightMode()
+
+	if not var_33_0 or arg_33_0._curLightMode == var_33_0 then
 		return false
 	end
 
-	slot0._curLightMode = slot1
+	arg_33_0._curLightMode = var_33_0
 
-	if slot0._photoFrameBgLoader then
-		slot0._photoFrameBgLoader:dispose()
+	if arg_33_0._photoFrameBgLoader then
+		arg_33_0._photoFrameBgLoader:dispose()
 
-		slot0._photoFrameBgLoader = nil
+		arg_33_0._photoFrameBgLoader = nil
 	end
 
-	slot2 = MultiAbLoader.New()
-	slot0._photoFrameBgLoader = slot2
+	local var_33_1 = MultiAbLoader.New()
 
-	slot2:addPath(string.format("scenes/dynamic/m_s01_zjm_a/lightmaps/m_s01_back_a_%s.tga", 0))
-	slot2:startLoad(function ()
-		uv2._frameBgMaterial:SetTexture("_MainTex", uv0:getAssetItem(uv1):GetResource(uv1))
-		gohelper.setActive(uv2._frameBg, true)
+	arg_33_0._photoFrameBgLoader = var_33_1
+
+	local var_33_2 = 0
+	local var_33_3 = string.format("scenes/dynamic/m_s01_zjm_a/lightmaps/m_s01_back_a_%s.tga", var_33_2)
+
+	var_33_1:addPath(var_33_3)
+	var_33_1:startLoad(function()
+		local var_34_0 = var_33_1:getAssetItem(var_33_3):GetResource(var_33_3)
+
+		arg_33_0._frameBgMaterial:SetTexture("_MainTex", var_34_0)
+		gohelper.setActive(arg_33_0._frameBg, true)
 	end)
 
 	return true
 end
 
-function slot0.onRoleBlend(slot0, slot1, slot2)
-	if not slot0._targetFrameTintColor then
-		slot3 = uv0:getCurLightMode()
-		slot4 = uv0:getPrevLightMode() or slot3
+function var_0_0.onRoleBlend(arg_35_0, arg_35_1, arg_35_2)
+	if not arg_35_0._targetFrameTintColor then
+		local var_35_0 = var_0_1:getCurLightMode()
+		local var_35_1 = var_0_1:getPrevLightMode() or var_35_0
 
-		if not slot3 then
+		if not var_35_0 then
 			return
 		end
 
-		slot5 = MainSceneSwitchModel.instance:getCurSceneId()
-		slot0._targetFrameTintColor = WeatherFrameComp.getFrameColor(slot5, slot3)
-		slot0._srcFrameTintColor = WeatherFrameComp.getFrameColor(slot5, slot4)
+		local var_35_2 = MainSceneSwitchModel.instance:getCurSceneId()
 
-		slot0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
+		arg_35_0._targetFrameTintColor = WeatherFrameComp.getFrameColor(var_35_2, var_35_0)
+		arg_35_0._srcFrameTintColor = WeatherFrameComp.getFrameColor(var_35_2, var_35_1)
+
+		arg_35_0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
 	end
 
-	slot0._frameBgMaterial:SetColor(slot0._TintColorId, uv0:lerpColorRGBA(slot0._srcFrameTintColor, slot0._targetFrameTintColor, slot1))
+	arg_35_0._frameBgMaterial:SetColor(arg_35_0._TintColorId, var_0_1:lerpColorRGBA(arg_35_0._srcFrameTintColor, arg_35_0._targetFrameTintColor, arg_35_1))
 
-	if slot2 then
-		slot0._targetFrameTintColor = nil
+	if arg_35_2 then
+		arg_35_0._targetFrameTintColor = nil
 
-		if uv0:getCurLightMode() == 1 then
-			slot0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
+		if var_0_1:getCurLightMode() == 1 then
+			arg_35_0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
 		end
 	end
 end
 
-function slot0._updateHero(slot0, slot1, slot2, slot3)
-	slot0._anchorMinPos = nil
-	slot0._anchorMaxPos = nil
-	slot0._heroId = slot1
-	slot0._skinId = slot2
-	slot4 = HeroConfig.instance:getHeroCO(slot0._heroId)
+function var_0_0._updateHero(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	arg_36_0._anchorMinPos = nil
+	arg_36_0._anchorMaxPos = nil
+	arg_36_0._heroId = arg_36_1
+	arg_36_0._skinId = arg_36_2
 
-	if not SkinConfig.instance:getSkinCo(slot0._skinId or slot4 and slot4.skin) then
-		slot0:_updateTrackInfoSkinId(nil)
+	local var_36_0 = HeroConfig.instance:getHeroCO(arg_36_0._heroId)
+	local var_36_1 = SkinConfig.instance:getSkinCo(arg_36_0._skinId or var_36_0 and var_36_0.skin)
+
+	if not var_36_1 then
+		arg_36_0:_updateTrackInfoSkinId(nil)
 
 		return
 	end
 
-	slot0._heroPhotoFrameBg = slot4.photoFrameBg
-	slot0._heroSkinConfig = slot5
-	slot0._heroSkinTriggerArea = {}
+	arg_36_0._heroPhotoFrameBg = var_36_0.photoFrameBg
+	arg_36_0._heroSkinConfig = var_36_1
+	arg_36_0._heroSkinTriggerArea = {}
 
-	slot0:_updateTrackInfoSkinId(slot5.id)
+	arg_36_0:_updateTrackInfoSkinId(var_36_1.id)
 
-	if not slot3 then
-		slot6 = SkinConfig.instance:getSkinOffset(slot5.mainViewOffset)
-		slot7 = slot0._golightspine.transform
+	if not arg_36_3 then
+		local var_36_2 = SkinConfig.instance:getSkinOffset(var_36_1.mainViewOffset)
+		local var_36_3 = arg_36_0._golightspine.transform
 
-		recthelper.setAnchor(slot7, tonumber(slot6[1]), tonumber(slot6[2]))
+		recthelper.setAnchor(var_36_3, tonumber(var_36_2[1]), tonumber(var_36_2[2]))
 
-		slot7.localScale = Vector3.one * tonumber(slot6[3])
+		local var_36_4 = tonumber(var_36_2[3])
+
+		var_36_3.localScale = Vector3.one * var_36_4
 	end
 
-	if not slot0._lightSpine then
-		slot0._lightSpine = LightModelAgent.Create(slot0._golightspine, true)
+	if not arg_36_0._lightSpine then
+		arg_36_0._lightSpine = LightModelAgent.Create(arg_36_0._golightspine, true)
 	end
 
-	if not string.nilorempty(slot5.defaultStencilValue) then
-		slot0._defaultStencilValue = string.splitToNumber(slot5.defaultStencilValue, "#")
+	if not string.nilorempty(var_36_1.defaultStencilValue) then
+		arg_36_0._defaultStencilValue = string.splitToNumber(var_36_1.defaultStencilValue, "#")
 	else
-		slot0._defaultStencilValue = nil
+		arg_36_0._defaultStencilValue = nil
 	end
 
-	if not string.nilorempty(slot5.frameStencilValue) then
-		slot0._frameStencilValue = string.splitToNumber(slot5.frameStencilValue, "#")
+	if not string.nilorempty(var_36_1.frameStencilValue) then
+		arg_36_0._frameStencilValue = string.splitToNumber(var_36_1.frameStencilValue, "#")
 	else
-		slot0._frameStencilValue = nil
+		arg_36_0._frameStencilValue = nil
 	end
 
-	slot0._lightSpine:setResPath(slot5, slot0._onLightSpineLoaded, slot0)
-	slot0._lightSpine:setInMainView()
+	arg_36_0._lightSpine:setResPath(var_36_1, arg_36_0._onLightSpineLoaded, arg_36_0)
+	arg_36_0._lightSpine:setInMainView()
 end
 
-function slot0._setStencil(slot0, slot1)
-	if slot1 then
-		if slot0._defaultStencilValue then
-			slot0._lightSpine:setStencilValues(slot0._defaultStencilValue[1], slot0._defaultStencilValue[2], slot0._defaultStencilValue[3])
+function var_0_0._setStencil(arg_37_0, arg_37_1)
+	if arg_37_1 then
+		if arg_37_0._defaultStencilValue then
+			arg_37_0._lightSpine:setStencilValues(arg_37_0._defaultStencilValue[1], arg_37_0._defaultStencilValue[2], arg_37_0._defaultStencilValue[3])
 		else
-			slot0._lightSpine:setStencilRef(0)
+			arg_37_0._lightSpine:setStencilRef(0)
 		end
-	elseif slot0._frameStencilValue then
-		slot0._lightSpine:setStencilValues(slot0._frameStencilValue[1], slot0._frameStencilValue[2], slot0._frameStencilValue[3])
+	elseif arg_37_0._frameStencilValue then
+		arg_37_0._lightSpine:setStencilValues(arg_37_0._frameStencilValue[1], arg_37_0._frameStencilValue[2], arg_37_0._frameStencilValue[3])
 	else
-		slot0._lightSpine:setStencilRef(1)
+		arg_37_0._lightSpine:setStencilRef(1)
 	end
 end
 
-function slot0._checkPlayGreetingVoices(slot0)
+function var_0_0._checkPlayGreetingVoices(arg_38_0)
 	if LimitedRoleController.instance:isPlaying() then
 		return
 	end
 
-	if slot0._needPlayGreeting and not ViewMgr.instance:isOpen(ViewName.LoadingView) then
-		slot0:_playGreetingVoices()
+	if arg_38_0._needPlayGreeting and not ViewMgr.instance:isOpen(ViewName.LoadingView) then
+		arg_38_0:_playGreetingVoices()
 	end
 end
 
-function slot0._playGreetingVoices(slot0)
-	if HeroModel.instance:getVoiceConfig(slot0._heroId, CharacterEnum.VoiceType.Greeting, nil, slot0._skinId) and #slot1 > 0 then
-		slot0:_onWeatherPlayVoice({
-			slot1[1]
+function var_0_0._playGreetingVoices(arg_39_0)
+	local var_39_0 = HeroModel.instance:getVoiceConfig(arg_39_0._heroId, CharacterEnum.VoiceType.Greeting, nil, arg_39_0._skinId)
+
+	if var_39_0 and #var_39_0 > 0 then
+		arg_39_0:_onWeatherPlayVoice({
+			var_39_0[1]
 		})
 	end
 end
 
-function slot0._onLightSpineLoaded(slot0)
-	TaskDispatcher.cancelTask(slot0._delayInitLightSpine, slot0)
-	TaskDispatcher.runDelay(slot0._delayInitLightSpine, slot0, 0.1)
+function var_0_0._onLightSpineLoaded(arg_40_0)
+	TaskDispatcher.cancelTask(arg_40_0._delayInitLightSpine, arg_40_0)
+	TaskDispatcher.runDelay(arg_40_0._delayInitLightSpine, arg_40_0, 0.1)
 end
 
-function slot0._delayInitLightSpine(slot0)
-	slot0._spineGo = slot0._lightSpine:getSpineGo()
+function var_0_0._delayInitLightSpine(arg_41_0)
+	arg_41_0._spineGo = arg_41_0._lightSpine:getSpineGo()
 
-	if gohelper.isNil(slot0._spineGo) then
+	if gohelper.isNil(arg_41_0._spineGo) then
 		return
 	end
 
-	slot0._spineTransform = slot0._spineGo.transform
-	slot0._spineMaterial = slot0._lightSpine:getRenderer().sharedMaterial
+	arg_41_0._spineTransform = arg_41_0._spineGo.transform
+	arg_41_0._spineMaterial = arg_41_0._lightSpine:getRenderer().sharedMaterial
 
-	slot0:_setStencil(true)
-	WeatherController.instance:setLightModel(slot0._lightSpine)
+	arg_41_0:_setStencil(true)
+	WeatherController.instance:setLightModel(arg_41_0._lightSpine)
 
-	if not slot0._firstLoadSpine then
-		slot0._firstLoadSpine = true
+	if not arg_41_0._firstLoadSpine then
+		arg_41_0._firstLoadSpine = true
 
 		if PlayerModel.instance:getMainThumbnail() then
-			-- Nothing
+			-- block empty
 		end
 
-		slot3 = not ViewMgr.instance:hasOpenFullView()
+		local var_41_0 = ViewMgr.instance:hasOpenFullView()
+		local var_41_1 = not var_41_0
 
 		if MainController.instance.firstEnterMainScene then
 			MainController.instance.firstEnterMainScene = false
-			slot3 = false
+			var_41_1 = false
 
-			if not slot2 then
-				slot0._needPlayGreeting = true
+			if not var_41_0 then
+				arg_41_0._needPlayGreeting = true
 
-				slot0:_checkPlayGreetingVoices()
+				arg_41_0:_checkPlayGreetingVoices()
 			end
 		end
 
-		uv0:initRoleGo(slot0._spineGo, slot0._heroId, slot0._spineMaterial, slot3, slot0._skinId)
+		var_0_1:initRoleGo(arg_41_0._spineGo, arg_41_0._heroId, arg_41_0._spineMaterial, var_41_1, arg_41_0._skinId)
 	else
-		uv0:changeRoleGo({
+		local var_41_2 = {
 			heroPlayWeatherVoice = true,
-			roleGo = slot0._lightSpine:getSpineGo(),
-			heroId = slot0._heroId,
-			sharedMaterial = slot0._spineMaterial,
-			skinId = slot0._skinId
-		})
+			roleGo = arg_41_0._lightSpine:getSpineGo(),
+			heroId = arg_41_0._heroId,
+			sharedMaterial = arg_41_0._spineMaterial,
+			skinId = arg_41_0._skinId
+		}
+
+		var_0_1:changeRoleGo(var_41_2)
 	end
 
-	slot0.viewContainer:getNoInteractiveComp():init()
-	slot0:_onSpineLoaded()
+	arg_41_0.viewContainer:getNoInteractiveComp():init()
+	arg_41_0:_onSpineLoaded()
 end
 
-function slot0.isPlayingVoice(slot0)
-	if not slot0._lightSpine then
+function var_0_0.isPlayingVoice(arg_42_0)
+	if not arg_42_0._lightSpine then
 		return false
 	end
 
-	if slot0._skinInteraction and slot0._skinInteraction:isPlayingVoice() then
+	if arg_42_0._skinInteraction and arg_42_0._skinInteraction:isPlayingVoice() then
 		return true
 	end
 
-	return slot0._lightSpine:isPlayingVoice()
+	return arg_42_0._lightSpine:isPlayingVoice()
 end
 
-function slot0.getLightSpine(slot0)
-	return slot0._lightSpine
+function var_0_0.getLightSpine(arg_43_0)
+	return arg_43_0._lightSpine
 end
 
-function slot0.isShowInScene(slot0)
-	return slot0._showInScene
+function var_0_0.isShowInScene(arg_44_0)
+	return arg_44_0._showInScene
 end
 
-function slot0._checkSpecialTouch(slot0, slot1, slot2)
-	if not slot0._heroSkinTriggerArea["triggerArea" .. slot1.param] then
-		slot0._heroSkinTriggerArea[slot3] = {}
+function var_0_0._checkSpecialTouch(arg_45_0, arg_45_1, arg_45_2)
+	local var_45_0 = "triggerArea" .. arg_45_1.param
+	local var_45_1 = arg_45_0._heroSkinTriggerArea[var_45_0]
 
-		for slot10, slot11 in ipairs(string.split(slot0._heroSkinConfig[slot3], "_")) do
-			if #string.split(slot11, "|") == 2 then
-				slot13 = string.split(slot12[1], "#")
-				slot14 = string.split(slot12[2], "#")
+	if not var_45_1 then
+		var_45_1 = {}
+		arg_45_0._heroSkinTriggerArea[var_45_0] = var_45_1
 
-				table.insert(slot4, {
-					tonumber(slot13[1]),
-					tonumber(slot13[2]),
-					tonumber(slot14[1]),
-					tonumber(slot14[2])
-				})
+		local var_45_2 = arg_45_0._heroSkinConfig[var_45_0]
+		local var_45_3 = string.split(var_45_2, "_")
+
+		for iter_45_0, iter_45_1 in ipairs(var_45_3) do
+			local var_45_4 = string.split(iter_45_1, "|")
+
+			if #var_45_4 == 2 then
+				local var_45_5 = string.split(var_45_4[1], "#")
+				local var_45_6 = string.split(var_45_4[2], "#")
+				local var_45_7 = tonumber(var_45_5[1])
+				local var_45_8 = tonumber(var_45_5[2])
+				local var_45_9 = tonumber(var_45_6[1])
+				local var_45_10 = tonumber(var_45_6[2])
+				local var_45_11 = {
+					var_45_7,
+					var_45_8,
+					var_45_9,
+					var_45_10
+				}
+
+				table.insert(var_45_1, var_45_11)
 			end
 		end
 	end
 
-	for slot8, slot9 in ipairs(slot4) do
-		if slot2 and tonumber(slot9[1]) <= slot2.x and slot2.x <= tonumber(slot9[3]) and slot2.y <= tonumber(slot9[2]) and tonumber(slot9[4]) <= slot2.y then
-			slot0:_updateTrackInfoAreaId(tonumber(slot1.param))
+	for iter_45_2, iter_45_3 in ipairs(var_45_1) do
+		local var_45_12 = tonumber(iter_45_3[1])
+		local var_45_13 = tonumber(iter_45_3[2])
+		local var_45_14 = tonumber(iter_45_3[3])
+		local var_45_15 = tonumber(iter_45_3[4])
+
+		if arg_45_2 and var_45_12 <= arg_45_2.x and var_45_14 >= arg_45_2.x and var_45_13 >= arg_45_2.y and var_45_15 <= arg_45_2.y then
+			arg_45_0:_updateTrackInfoAreaId(tonumber(arg_45_1.param))
 
 			return true
 		end
@@ -610,223 +667,267 @@ function slot0._checkSpecialTouch(slot0, slot1, slot2)
 	return false
 end
 
-function slot0._onTouch(slot0)
-	if not LimitedRoleController.instance:isPlaying() and slot0._mainViewVisible == false and Time.realtimeSinceStartup - slot0._changeTime > 0.5 then
-		TaskDispatcher.runDelay(slot0._delayCheckShowMain, slot0, 0.01)
+function var_0_0._onTouch(arg_46_0)
+	if not LimitedRoleController.instance:isPlaying() and arg_46_0._mainViewVisible == false and Time.realtimeSinceStartup - arg_46_0._changeTime > 0.5 then
+		TaskDispatcher.runDelay(arg_46_0._delayCheckShowMain, arg_46_0, 0.01)
 	end
 end
 
-function slot0._delayCheckShowMain(slot0)
-	if not LimitedRoleController.instance:isPlaying() and slot0._mainViewVisible == false and Time.realtimeSinceStartup - slot0._changeTime > 0.5 then
+function var_0_0._delayCheckShowMain(arg_47_0)
+	if not LimitedRoleController.instance:isPlaying() and arg_47_0._mainViewVisible == false and Time.realtimeSinceStartup - arg_47_0._changeTime > 0.5 then
 		MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, true)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_main_display)
 	end
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	if slot0._skinInteraction and slot0._skinInteraction:needRespond() then
-		slot0._dragSpecialRespond = slot0:_getDragSpecialRespond(CharacterEnum.VoiceType.MainViewDragSpecialRespond)
+function var_0_0._onDragBegin(arg_48_0, arg_48_1, arg_48_2)
+	if arg_48_0._skinInteraction and arg_48_0._skinInteraction:needRespond() then
+		arg_48_0._dragSpecialRespond = arg_48_0:_getDragSpecialRespond(CharacterEnum.VoiceType.MainViewDragSpecialRespond)
 
-		if not slot0._dragSpecialRespond then
+		if not arg_48_0._dragSpecialRespond then
 			return
 		end
 
-		slot0:_checkSpecialTouch(slot0._dragSpecialRespond)
+		arg_48_0:_checkSpecialTouch(arg_48_0._dragSpecialRespond)
 
-		slot0._dragArea = slot0._heroSkinTriggerArea["triggerArea" .. slot0._dragSpecialRespond.param][1]
-		slot6 = string.split(slot0._dragSpecialRespond.param2, "#")
-		slot0._dragParamName = slot6[1]
-		slot0._dragParamMinValue = tonumber(slot6[2])
-		slot0._dragParamMaxValue = tonumber(slot6[3])
-		slot0._dragParamLength = slot0._dragParamMaxValue - slot0._dragParamMinValue
-		slot0._dragParamIndex = slot0._lightSpine:addParameter(slot0._dragParamName, 0, slot0._dragParamMinValue)
+		local var_48_0 = "triggerArea" .. arg_48_0._dragSpecialRespond.param
 
-		slot0._skinInteraction:beginDrag()
+		arg_48_0._dragArea = arg_48_0._heroSkinTriggerArea[var_48_0][1]
+
+		local var_48_1 = arg_48_0._dragSpecialRespond.param2
+		local var_48_2 = string.split(var_48_1, "#")
+
+		arg_48_0._dragParamName = var_48_2[1]
+		arg_48_0._dragParamMinValue = tonumber(var_48_2[2])
+		arg_48_0._dragParamMaxValue = tonumber(var_48_2[3])
+		arg_48_0._dragParamLength = arg_48_0._dragParamMaxValue - arg_48_0._dragParamMinValue
+		arg_48_0._dragParamIndex = arg_48_0._lightSpine:addParameter(arg_48_0._dragParamName, 0, arg_48_0._dragParamMinValue)
+
+		arg_48_0._skinInteraction:beginDrag()
 		AudioMgr.instance:trigger(AudioEnum.UI.hero3100_mainsfx_mic_drag)
 	end
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0._dragSpecialRespond then
+function var_0_0._onDrag(arg_49_0, arg_49_1, arg_49_2)
+	if not arg_49_0._dragSpecialRespond then
 		return
 	end
 
-	slot4 = slot0._dragArea[1]
-	slot6 = slot0._dragArea[3]
+	local var_49_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_49_0._golightspinecontrol.transform)
+	local var_49_1 = arg_49_0._dragArea[1]
+	local var_49_2 = arg_49_0._dragArea[2]
+	local var_49_3 = arg_49_0._dragArea[3]
+	local var_49_4 = arg_49_0._dragArea[4]
 
-	if recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), slot0._golightspinecontrol.transform) and slot4 <= slot3.x and slot3.x <= slot6 and slot3.y <= slot0._dragArea[2] and slot0._dragArea[4] <= slot3.y then
-		slot10 = slot0._dragParamMinValue + (slot3.x - slot4) / (slot6 - slot4) * slot0._dragParamLength
+	if var_49_0 and var_49_1 <= var_49_0.x and var_49_3 >= var_49_0.x and var_49_2 >= var_49_0.y and var_49_4 <= var_49_0.y then
+		local var_49_5 = (var_49_0.x - var_49_1) / (var_49_3 - var_49_1)
+		local var_49_6 = arg_49_0._dragParamMinValue + var_49_5 * arg_49_0._dragParamLength
 
-		slot0._lightSpine:updateParameter(slot0._dragParamIndex, slot10)
+		arg_49_0._lightSpine:updateParameter(arg_49_0._dragParamIndex, var_49_6)
 
-		if slot10 >= slot0._dragParamMaxValue - 5 then
-			slot0:_onDragEnd(slot1, slot2)
-			slot0:_doClickPlayVoice(slot0._dragSpecialRespond)
+		if var_49_6 >= arg_49_0._dragParamMaxValue - 5 then
+			local var_49_7 = arg_49_0._dragSpecialRespond
+
+			arg_49_0:_onDragEnd(arg_49_1, arg_49_2)
+			arg_49_0:_doClickPlayVoice(var_49_7)
 		end
 	end
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if slot0._dragParamName then
-		slot0._lightSpine:removeParameter(slot0._dragParamName)
+function var_0_0._onDragEnd(arg_50_0, arg_50_1, arg_50_2)
+	if arg_50_0._dragParamName then
+		arg_50_0._lightSpine:removeParameter(arg_50_0._dragParamName)
 
-		slot0._dragParamName = nil
+		arg_50_0._dragParamName = nil
 	end
 
-	if slot0._dragSpecialRespond and slot0._skinInteraction then
-		slot0._skinInteraction:endDrag()
+	if arg_50_0._dragSpecialRespond and arg_50_0._skinInteraction then
+		arg_50_0._skinInteraction:endDrag()
 	end
 
-	slot0._dragSpecialRespond = nil
+	arg_50_0._dragSpecialRespond = nil
 end
 
-function slot0._clickDown(slot0)
-	if slot0._mainViewVisible == false then
+function var_0_0._clickDown(arg_51_0)
+	if arg_51_0._mainViewVisible == false then
 		return
 	end
 
 	MainController.instance:dispatchEvent(MainEvent.ClickDown)
 
-	if not slot0._showInScene then
+	if not arg_51_0._showInScene then
 		return
 	end
 
-	if gohelper.isNil(slot0._spineGo) then
+	if gohelper.isNil(arg_51_0._spineGo) then
 		return
 	end
 
-	slot0:_initSkinInteraction()
-	slot0._skinInteraction:onClick(recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), slot0._golightspinecontrol.transform))
+	local var_51_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_51_0._golightspinecontrol.transform)
+
+	arg_51_0:_initSkinInteraction()
+	arg_51_0._skinInteraction:onClick(var_51_0)
 end
 
-function slot0._initSkinInteraction(slot0)
-	if slot0._skinInteraction and slot1:getSkinId() ~= slot0._skinId then
-		slot1:onDestroy()
+function var_0_0._initSkinInteraction(arg_52_0)
+	local var_52_0 = arg_52_0._skinInteraction
 
-		slot0._skinInteraction = nil
+	if var_52_0 and var_52_0:getSkinId() ~= arg_52_0._skinId then
+		var_52_0:onDestroy()
+
+		arg_52_0._skinInteraction = nil
 	end
 
-	if not slot0._skinInteraction then
-		slot0._skinInteraction = slot0:getSkinInteraction(slot0._skinId)
+	if not arg_52_0._skinInteraction then
+		arg_52_0._skinInteraction = arg_52_0:getSkinInteraction(arg_52_0._skinId)
 
-		slot0._skinInteraction:init(slot0, slot0._skinId)
+		arg_52_0._skinInteraction:init(arg_52_0, arg_52_0._skinId)
 	end
 end
 
-function slot0.getSkinInteraction(slot0, slot1)
-	if slot1 == 303301 or slot1 == 303302 then
+function var_0_0.getSkinInteraction(arg_53_0, arg_53_1)
+	if arg_53_1 == 303301 or arg_53_1 == 303302 then
 		return TTTSkinInteraction.New()
 	end
 
 	return CommonSkinInteraction.New()
 end
 
-function slot0._clickDefault(slot0, slot1)
-	slot0:_updateTrackInfoAreaId(nil)
+function var_0_0._clickDefault(arg_54_0, arg_54_1)
+	arg_54_0:_updateTrackInfoAreaId(nil)
 
-	if slot0:_getSpecialInteraction() and slot0:_checkPosInBound(slot1) and slot0._skinInteraction:canPlay(slot2) and math.random() * 100 < string.splitToNumber(slot2.param, "#")[1] then
-		CharacterVoiceController.instance:setSpecialInteractionPlayType(CharacterVoiceEnum.PlayType.Click)
-		slot0:_doClickPlayVoice(slot2)
+	local var_54_0 = arg_54_0:_getSpecialInteraction()
 
-		return
+	if var_54_0 and arg_54_0:_checkPosInBound(arg_54_1) and arg_54_0._skinInteraction:canPlay(var_54_0) then
+		local var_54_1 = string.splitToNumber(var_54_0.param, "#")
+
+		if math.random() * 100 < var_54_1[1] then
+			CharacterVoiceController.instance:setSpecialInteractionPlayType(CharacterVoiceEnum.PlayType.Click)
+			arg_54_0:_doClickPlayVoice(var_54_0)
+
+			return
+		end
 	end
 
-	if slot0._skinInteraction:needRespond() then
-		if slot0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialRespond, slot1) and slot0._skinInteraction:canPlay(slot3) then
-			slot0:_doClickPlayVoice(slot3)
+	if arg_54_0._skinInteraction:needRespond() then
+		local var_54_2 = arg_54_0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialRespond, arg_54_1)
+
+		if var_54_2 and arg_54_0._skinInteraction:canPlay(var_54_2) then
+			arg_54_0:_doClickPlayVoice(var_54_2)
 		end
 
 		return
 	end
 
-	if slot0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialTouch, slot1) and math.random() > 0.5 and slot0._skinInteraction:canPlay(slot3) then
-		slot0:_doClickPlayVoice(slot3, true)
+	local var_54_3 = arg_54_0:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialTouch, arg_54_1)
+
+	if var_54_3 and math.random() > 0.5 and arg_54_0._skinInteraction:canPlay(var_54_3) then
+		arg_54_0:_doClickPlayVoice(var_54_3, true)
 
 		return
 	end
 
-	if slot0:_getNormalTouch(slot1) and slot0._skinInteraction:canPlay(slot4) then
-		slot0:_doClickPlayVoice(slot4, true)
+	local var_54_4 = arg_54_0:_getNormalTouch(arg_54_1)
+
+	if var_54_4 and arg_54_0._skinInteraction:canPlay(var_54_4) then
+		arg_54_0:_doClickPlayVoice(var_54_4, true)
 	end
 end
 
-function slot0._getSpecialInteraction(slot0, slot1)
-	if HeroModel.instance:getVoiceConfig(slot0._heroId, slot1 or CharacterEnum.VoiceType.MainViewSpecialInteraction, function (slot0)
-		return uv0._clickPlayConfig ~= slot0
-	end, slot0._skinId) and #slot2 > 0 then
-		return slot2[1]
+function var_0_0._getSpecialInteraction(arg_55_0, arg_55_1)
+	local var_55_0 = HeroModel.instance:getVoiceConfig(arg_55_0._heroId, arg_55_1 or CharacterEnum.VoiceType.MainViewSpecialInteraction, function(arg_56_0)
+		return arg_55_0._clickPlayConfig ~= arg_56_0
+	end, arg_55_0._skinId)
+
+	if var_55_0 and #var_55_0 > 0 then
+		return var_55_0[1]
 	end
 end
 
-function slot0._getDragSpecialRespond(slot0, slot1)
-	if HeroModel.instance:getVoiceConfig(slot0._heroId, slot1 or CharacterEnum.VoiceType.MainViewSpecialInteraction, function (slot0)
-		return uv0._clickPlayConfig ~= slot0 and not string.nilorempty(slot0.param2)
-	end, slot0._skinId) and #slot2 > 0 then
-		return slot2[1]
+function var_0_0._getDragSpecialRespond(arg_57_0, arg_57_1)
+	local var_57_0 = HeroModel.instance:getVoiceConfig(arg_57_0._heroId, arg_57_1 or CharacterEnum.VoiceType.MainViewSpecialInteraction, function(arg_58_0)
+		return arg_57_0._clickPlayConfig ~= arg_58_0 and not string.nilorempty(arg_58_0.param2)
+	end, arg_57_0._skinId)
+
+	if var_57_0 and #var_57_0 > 0 then
+		return var_57_0[1]
 	end
 end
 
-function slot0._getSpecialTouch(slot0, slot1, slot2)
-	if HeroModel.instance:getVoiceConfig(slot0._heroId, slot1, function (slot0)
-		return uv0._clickPlayConfig ~= slot0 and uv0:_checkSpecialTouch(slot0, uv1)
-	end, slot0._skinId) and #slot3 > 0 then
-		return slot3[1]
+function var_0_0._getSpecialTouch(arg_59_0, arg_59_1, arg_59_2)
+	local var_59_0 = HeroModel.instance:getVoiceConfig(arg_59_0._heroId, arg_59_1, function(arg_60_0)
+		return arg_59_0._clickPlayConfig ~= arg_60_0 and arg_59_0:_checkSpecialTouch(arg_60_0, arg_59_2)
+	end, arg_59_0._skinId)
+
+	if var_59_0 and #var_59_0 > 0 then
+		return var_59_0[1]
 	end
 end
 
-function slot0._getNormalTouch(slot0, slot1)
-	if slot0:_checkPosInBound(slot1) then
-		return uv0.getHeightWeight(HeroModel.instance:getVoiceConfig(slot0._heroId, CharacterEnum.VoiceType.MainViewNormalTouch, function (slot0)
-			return uv0._clickPlayConfig ~= slot0
-		end, slot0._skinId))
+function var_0_0._getNormalTouch(arg_61_0, arg_61_1)
+	if arg_61_0:_checkPosInBound(arg_61_1) then
+		local var_61_0 = HeroModel.instance:getVoiceConfig(arg_61_0._heroId, CharacterEnum.VoiceType.MainViewNormalTouch, function(arg_62_0)
+			return arg_61_0._clickPlayConfig ~= arg_62_0
+		end, arg_61_0._skinId)
+
+		return var_0_0.getHeightWeight(var_61_0)
 	end
 end
 
-function slot0._checkPosInBound(slot0, slot1)
-	if not slot0._anchorMinPos or not slot0._anchorMaxPos then
-		slot2, slot3 = slot0._lightSpine:getBoundsMinMaxPos()
-		slot0._anchorMinPos = recthelper.worldPosToAnchorPos(Vector3(slot2.x, slot3.y, slot2.z), slot0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
-		slot0._anchorMaxPos = recthelper.worldPosToAnchorPos(Vector3(slot3.x, slot2.y, slot3.z), slot0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
+function var_0_0._checkPosInBound(arg_63_0, arg_63_1)
+	if not arg_63_0._anchorMinPos or not arg_63_0._anchorMaxPos then
+		local var_63_0, var_63_1 = arg_63_0._lightSpine:getBoundsMinMaxPos()
+
+		arg_63_0._anchorMinPos = recthelper.worldPosToAnchorPos(Vector3(var_63_0.x, var_63_1.y, var_63_0.z), arg_63_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
+		arg_63_0._anchorMaxPos = recthelper.worldPosToAnchorPos(Vector3(var_63_1.x, var_63_0.y, var_63_1.z), arg_63_0._golightspinecontrol.transform, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUnitCamera())
 	end
 
-	slot3 = slot0._anchorMaxPos
+	local var_63_2 = arg_63_0._anchorMinPos
+	local var_63_3 = arg_63_0._anchorMaxPos
 
-	if slot0._anchorMinPos.x <= slot1.x and slot1.x <= slot3.x and slot1.y <= slot2.y and slot3.y <= slot1.y then
+	if arg_63_1.x >= var_63_2.x and arg_63_1.x <= var_63_3.x and arg_63_1.y <= var_63_2.y and arg_63_1.y >= var_63_3.y then
 		return true
 	end
 end
 
-function slot0.addFaith(slot0)
+function var_0_0.addFaith(arg_64_0)
 	if HeroModel.instance:getTouchHeadNumber() <= 0 then
 		return
 	end
 
-	HeroRpc.instance:sendTouchHeadRequest(slot0._heroId)
+	HeroRpc.instance:sendTouchHeadRequest(arg_64_0._heroId)
 end
 
-function slot0._onSuccessTouchHead(slot0, slot1)
-	if not slot0._showFaithToast then
+function var_0_0._onSuccessTouchHead(arg_65_0, arg_65_1)
+	if not arg_65_0._showFaithToast then
 		return
 	end
 
-	slot0._showFaithToast = false
+	arg_65_0._showFaithToast = false
 
-	if slot1 then
+	if arg_65_1 then
 		GameFacade.showToast(ToastEnum.MainHeroAddSuccess)
 	else
 		GameFacade.showToast(ToastEnum.MainHeroAddFail)
 	end
 end
 
-function slot0.getHeightWeight(slot0)
-	if slot0 and #slot0 > 0 then
-		for slot5, slot6 in ipairs(slot0) do
-			slot1 = 0 + slot6.param
+function var_0_0.getHeightWeight(arg_66_0)
+	if arg_66_0 and #arg_66_0 > 0 then
+		local var_66_0 = 0
+
+		for iter_66_0, iter_66_1 in ipairs(arg_66_0) do
+			var_66_0 = var_66_0 + iter_66_1.param
 		end
 
-		for slot7, slot8 in ipairs(slot0) do
-			if math.random() <= (0 + slot8.param) / slot1 then
-				return slot8
+		local var_66_1 = math.random()
+		local var_66_2 = 0
+
+		for iter_66_2, iter_66_3 in ipairs(arg_66_0) do
+			var_66_2 = var_66_2 + iter_66_3.param
+
+			if var_66_1 <= var_66_2 / var_66_0 then
+				return iter_66_3
 			end
 		end
 	end
@@ -834,158 +935,162 @@ function slot0.getHeightWeight(slot0)
 	return nil
 end
 
-function slot0._doClickPlayVoice(slot0, slot1, slot2)
-	slot0._showFaithToast = slot2
+function var_0_0._doClickPlayVoice(arg_67_0, arg_67_1, arg_67_2)
+	arg_67_0._showFaithToast = arg_67_2
 
-	slot0:addFaith()
-	slot0:clickPlayVoice(slot1)
+	arg_67_0:addFaith()
+	arg_67_0:clickPlayVoice(arg_67_1)
 end
 
-function slot0.clickPlayVoice(slot0, slot1)
-	slot0._clickPlayConfig = slot1
+function var_0_0.clickPlayVoice(arg_68_0, arg_68_1)
+	arg_68_0._clickPlayConfig = arg_68_1
 
-	slot0:playVoice(slot1)
+	arg_68_0:playVoice(arg_68_1)
 end
 
-function slot0._onStopVoice(slot0)
-	slot0._lightSpine:stopVoice()
+function var_0_0._onStopVoice(arg_69_0)
+	arg_69_0._lightSpine:stopVoice()
 
-	if slot0._skinInteraction then
-		slot0._skinInteraction:onStopVoice()
+	if arg_69_0._skinInteraction then
+		arg_69_0._skinInteraction:onStopVoice()
 	end
 end
 
-function slot0.playVoice(slot0, slot1)
-	if not slot0._lightSpine then
+function var_0_0.playVoice(arg_70_0, arg_70_1)
+	if not arg_70_0._lightSpine then
 		return
 	end
 
-	if slot0._skinInteraction then
-		slot0._skinInteraction:beforePlayVoice(slot1)
+	if arg_70_0._skinInteraction then
+		arg_70_0._skinInteraction:beforePlayVoice(arg_70_1)
 	end
 
-	slot0:_onStopVoice()
+	arg_70_0:_onStopVoice()
 
-	if slot0._skinInteraction then
-		slot0._skinInteraction:onPlayVoice(slot1)
+	if arg_70_0._skinInteraction then
+		arg_70_0._skinInteraction:onPlayVoice(arg_70_1)
 	end
 
-	slot0._lightSpine:playVoice(slot1, function ()
-		if uv0._skinInteraction then
-			uv0._skinInteraction:playVoiceFinish(uv1)
+	arg_70_0._lightSpine:playVoice(arg_70_1, function()
+		if arg_70_0._skinInteraction then
+			arg_70_0._skinInteraction:playVoiceFinish(arg_70_1)
 		end
 
-		uv0._interactionStartTime = Time.time
-		uv0._specialIdleStartTime = Time.time
-	end, slot0._txtanacn, slot0._txtanaen, slot0._gocontentbg)
+		arg_70_0._interactionStartTime = Time.time
+		arg_70_0._specialIdleStartTime = Time.time
+	end, arg_70_0._txtanacn, arg_70_0._txtanaen, arg_70_0._gocontentbg)
 
-	if slot0._skinInteraction then
-		slot0._skinInteraction:afterPlayVoice(slot1)
+	if arg_70_0._skinInteraction then
+		arg_70_0._skinInteraction:afterPlayVoice(arg_70_1)
 	end
 
-	slot0:_trackMainHeroInteraction(slot1 and slot1.audio)
+	arg_70_0:_trackMainHeroInteraction(arg_70_1 and arg_70_1.audio)
 end
 
-function slot0.onlyPlayVoice(slot0, slot1)
-	slot0:_onStopVoice()
-	slot0._lightSpine:playVoice(slot1, function ()
-		uv0._interactionStartTime = Time.time
-		uv0._specialIdleStartTime = Time.time
-	end, slot0._txtanacn, slot0._txtanaen, slot0._gocontentbg)
+function var_0_0.onlyPlayVoice(arg_72_0, arg_72_1)
+	arg_72_0:_onStopVoice()
+	arg_72_0._lightSpine:playVoice(arg_72_1, function()
+		arg_72_0._interactionStartTime = Time.time
+		arg_72_0._specialIdleStartTime = Time.time
+	end, arg_72_0._txtanacn, arg_72_0._txtanaen, arg_72_0._gocontentbg)
 end
 
-function slot0._enableKeyword(slot0)
+function var_0_0._enableKeyword(arg_74_0)
 	UnityEngine.Shader.EnableKeyword("_MAININTERFACELIGHT")
 
 	BaseLive2d.enableMainInterfaceLight = true
 end
 
-function slot0._disableKeyword(slot0)
+function var_0_0._disableKeyword(arg_75_0)
 	UnityEngine.Shader.DisableKeyword("_MAININTERFACELIGHT")
 
 	BaseLive2d.enableMainInterfaceLight = false
 end
 
-function slot0._onOpenFullView(slot0, slot1)
-	if slot1 == ViewName.CharacterSkinTipView then
-		slot0:_disableKeyword()
+function var_0_0._onOpenFullView(arg_76_0, arg_76_1)
+	if arg_76_1 == ViewName.CharacterSkinTipView then
+		arg_76_0:_disableKeyword()
 	end
 end
 
-function slot0._getSwitchViewName(slot0)
+function var_0_0._getSwitchViewName(arg_77_0)
 	return ViewName.MainSwitchView
 end
 
-function slot0._onOpenFullViewFinish(slot0, slot1)
-	if slot1 ~= slot0:_getSwitchViewName() then
-		slot0:_disableKeyword()
+function var_0_0._onOpenFullViewFinish(arg_78_0, arg_78_1)
+	if arg_78_1 ~= arg_78_0:_getSwitchViewName() then
+		arg_78_0:_disableKeyword()
 	end
 
-	slot0:_hideModelEffect()
-	uv0:setStateByString("Photo_album", "no")
+	arg_78_0:_hideModelEffect()
+	var_0_1:setStateByString("Photo_album", "no")
 end
 
-function slot0._checkLightSpineVisible(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._hideLightSpineVisible, slot0)
+function var_0_0._checkLightSpineVisible(arg_79_0, arg_79_1)
+	local var_79_0 = ViewMgr.instance:hasOpenFullView()
 
-	if ViewMgr.instance:hasOpenFullView() then
-		if slot0._golightspine.activeSelf then
-			TaskDispatcher.runDelay(slot0._hideLightSpineVisible, slot0, slot1 or 1)
+	TaskDispatcher.cancelTask(arg_79_0._hideLightSpineVisible, arg_79_0)
+
+	if var_79_0 then
+		if arg_79_0._golightspine.activeSelf then
+			TaskDispatcher.runDelay(arg_79_0._hideLightSpineVisible, arg_79_0, arg_79_1 or 1)
 		end
 	else
-		gohelper.setActive(slot0._golightspine, true)
+		gohelper.setActive(arg_79_0._golightspine, true)
 	end
 end
 
-function slot0._hideLightSpineVisible(slot0)
-	gohelper.setActive(slot0._golightspine, false)
+function var_0_0._hideLightSpineVisible(arg_80_0)
+	gohelper.setActive(arg_80_0._golightspine, false)
 end
 
-function slot0._isViewGOActive(slot0)
-	return slot0.viewGO.activeSelf and slot0.viewGO.activeInHierarchy
+function var_0_0._isViewGOActive(arg_81_0)
+	return arg_81_0.viewGO.activeSelf and arg_81_0.viewGO.activeInHierarchy
 end
 
-function slot0._hasOpenFullView(slot0)
-	for slot4, slot5 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if ViewMgr.instance:getSetting(slot5) and (slot6.viewType == ViewType.Full or slot6.bgBlur) then
+function var_0_0._hasOpenFullView(arg_82_0)
+	for iter_82_0, iter_82_1 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
+		local var_82_0 = ViewMgr.instance:getSetting(iter_82_1)
+
+		if var_82_0 and (var_82_0.viewType == ViewType.Full or var_82_0.bgBlur) then
 			return true
 		end
 	end
 end
 
-function slot0._activationSettings(slot0)
-	slot0:_enableKeyword()
+function var_0_0._activationSettings(arg_83_0)
+	arg_83_0:_enableKeyword()
 end
 
-function slot0._hideModelEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._showModelEffect, slot0)
+function var_0_0._hideModelEffect(arg_84_0)
+	TaskDispatcher.cancelTask(arg_84_0._showModelEffect, arg_84_0)
 
-	if slot0._lightSpine then
-		slot0._lightSpine:setEffectVisible(false)
+	if arg_84_0._lightSpine then
+		arg_84_0._lightSpine:setEffectVisible(false)
 	end
 end
 
-function slot0._showModelEffect(slot0)
-	if slot0._lightSpine and slot0._showInScene then
-		slot0._lightSpine:setEffectVisible(true)
+function var_0_0._showModelEffect(arg_85_0)
+	if arg_85_0._lightSpine and arg_85_0._showInScene then
+		arg_85_0._lightSpine:setEffectVisible(true)
 	end
 end
 
-function slot0._delayShowModelEffect(slot0)
-	slot0:_hideModelEffect()
-	TaskDispatcher.runDelay(slot0._showModelEffect, slot0, 0.1)
+function var_0_0._delayShowModelEffect(arg_86_0)
+	arg_86_0:_hideModelEffect()
+	TaskDispatcher.runDelay(arg_86_0._showModelEffect, arg_86_0, 0.1)
 end
 
-function slot0._onCloseFullView(slot0, slot1)
+function var_0_0._onCloseFullView(arg_87_0, arg_87_1)
 	if ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
 		if not ViewMgr.instance:hasOpenFullView() then
-			slot0:_delayShowModelEffect()
+			arg_87_0:_delayShowModelEffect()
 		end
 
 		return
 	end
 
-	if not slot0:_isViewGOActive() then
+	if not arg_87_0:_isViewGOActive() then
 		return
 	end
 
@@ -993,95 +1098,105 @@ function slot0._onCloseFullView(slot0, slot1)
 		return
 	end
 
-	if not slot0:_hasOpenFullView() then
-		slot0:_activationSettings()
+	if not arg_87_0:_hasOpenFullView() then
+		arg_87_0:_activationSettings()
 
-		if slot0._lightSpine then
-			slot0._lightSpine:processModelEffect()
+		if arg_87_0._lightSpine then
+			arg_87_0._lightSpine:processModelEffect()
 		end
 
-		slot0:_delayShowModelEffect()
+		arg_87_0:_delayShowModelEffect()
 
-		if slot0._showInScene then
+		local var_87_0 = arg_87_0._showInScene
+
+		if var_87_0 then
 			if math.random() < 0.1 then
-				slot2 = not slot2
+				var_87_0 = not var_87_0
 			end
 		elseif math.random() < 0.7 then
-			slot2 = not slot2
+			var_87_0 = not var_87_0
 		end
 
 		if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) then
-			slot2 = true
+			var_87_0 = true
 		end
 
-		if not slot2 and slot0._cameraAnimator.runtimeAnimatorController and slot3.enabled then
-			slot2 = true
+		if not var_87_0 then
+			local var_87_1 = arg_87_0._cameraAnimator
+
+			if var_87_1.runtimeAnimatorController and var_87_1.enabled then
+				var_87_0 = true
+			end
 		end
 
 		if GuideModel.instance:getDoingGuideId() and not GuideController.instance:isForbidGuides() then
-			slot2 = true
+			var_87_0 = true
 		end
 
-		if slot0._skinInteraction then
-			slot0._skinInteraction:onCloseFullView()
+		if arg_87_0._skinInteraction then
+			arg_87_0._skinInteraction:onCloseFullView()
 		end
 
-		if slot2 then
-			slot0:_playWelcomeVoice()
-			uv0:resetWeatherChangeVoiceFlag()
+		if var_87_0 then
+			arg_87_0:_playWelcomeVoice()
+			var_0_1:resetWeatherChangeVoiceFlag()
 		end
 
-		if slot2 == slot0._showInScene then
-			uv0:setStateByString("Photo_album", slot2 and "no" or "yes")
+		if var_87_0 == arg_87_0._showInScene then
+			var_0_1:setStateByString("Photo_album", var_87_0 and "no" or "yes")
 
 			return
 		end
 
-		slot0:_setShowInScene(slot2)
+		arg_87_0:_setShowInScene(var_87_0)
 	end
 end
 
-function slot0._setShowInScene(slot0, slot1)
-	slot0._showInScene = slot1
+function var_0_0._setShowInScene(arg_88_0, arg_88_1)
+	arg_88_0._showInScene = arg_88_1
 
-	if slot0._showInScene then
-		slot0:showInScene()
+	if arg_88_0._showInScene then
+		arg_88_0:showInScene()
 	else
-		slot0:showInFrame()
+		arg_88_0:showInFrame()
 	end
 
-	MainController.instance:dispatchEvent(MainEvent.HeroShowInScene, slot0._showInScene)
+	MainController.instance:dispatchEvent(MainEvent.HeroShowInScene, arg_88_0._showInScene)
 end
 
-function slot0.debugShowMode(slot0, slot1)
-	slot0:_setShowInScene(slot1)
+function var_0_0.debugShowMode(arg_89_0, arg_89_1)
+	arg_89_0:_setShowInScene(arg_89_1)
 end
 
-function slot0._reOpenWhileOpen(slot0, slot1)
-	if ViewMgr.instance:isFull(slot1) then
-		slot0:_onOpenFullViewFinish(slot1)
+function var_0_0._reOpenWhileOpen(arg_90_0, arg_90_1)
+	if ViewMgr.instance:isFull(arg_90_1) then
+		arg_90_0:_onOpenFullViewFinish(arg_90_1)
 	end
 end
 
-function slot0._playWelcomeVoice(slot0, slot1)
-	if slot0:_hasOpenFullView() then
+function var_0_0._playWelcomeVoice(arg_91_0, arg_91_1)
+	if arg_91_0:_hasOpenFullView() then
 		return
 	end
 
-	if not slot1 and math.random() > 0.3 then
+	if not arg_91_1 and math.random() > 0.3 then
 		return false
 	end
 
-	if slot0:_getSpecialInteraction() and (string.splitToNumber(slot2.param, "#")[2] or 0) > math.random() * 100 then
+	local var_91_0 = arg_91_0:_getSpecialInteraction()
+
+	if var_91_0 and (string.splitToNumber(var_91_0.param, "#")[2] or 0) > math.random() * 100 then
 		CharacterVoiceController.instance:setSpecialInteractionPlayType(CharacterVoiceEnum.PlayType.Auto)
-		slot0:_initSkinInteraction()
-		slot0:clickPlayVoice(slot2)
+		arg_91_0:_initSkinInteraction()
+		arg_91_0:clickPlayVoice(var_91_0)
 
 		return true
 	end
 
-	if uv0.getWelcomeLikeVoice(CharacterEnum.VoiceType.MainViewWelcome, slot0._heroId, slot0._skinId) then
-		slot0:playVoice(slot3)
+	local var_91_1 = var_0_0.getWelcomeLikeVoice(CharacterEnum.VoiceType.MainViewWelcome, arg_91_0._heroId, arg_91_0._skinId)
+
+	if var_91_1 then
+		arg_91_0:playVoice(var_91_1)
 
 		return true
 	end
@@ -1089,285 +1204,297 @@ function slot0._playWelcomeVoice(slot0, slot1)
 	return false
 end
 
-function slot0.getWelcomeLikeVoice(slot0, slot1, slot2)
-	slot3 = WeatherModel.instance:getNowDate()
-	slot3.hour = 0
-	slot3.min = 0
-	slot3.sec = 0
-	slot4 = os.time(slot3)
-	slot5 = os.time()
+function var_0_0.getWelcomeLikeVoice(arg_92_0, arg_92_1, arg_92_2)
+	local var_92_0 = WeatherModel.instance:getNowDate()
 
-	return uv0.getHeightWeight(HeroModel.instance:getVoiceConfig(slot1, slot0, function (slot0)
-		slot5 = "#"
+	var_92_0.hour = 0
+	var_92_0.min = 0
+	var_92_0.sec = 0
 
-		for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.time, false, "|", slot5)) do
-			if uv0._checkTime(slot6, uv1, uv2) then
+	local var_92_1 = os.time(var_92_0)
+	local var_92_2 = os.time()
+	local var_92_3 = HeroModel.instance:getVoiceConfig(arg_92_1, arg_92_0, function(arg_93_0)
+		local var_93_0 = GameUtil.splitString2(arg_93_0.time, false, "|", "#")
+
+		for iter_93_0, iter_93_1 in ipairs(var_93_0) do
+			if var_0_0._checkTime(iter_93_1, var_92_1, var_92_2) then
 				return true
 			end
 		end
 
 		return false
-	end, slot2))
+	end, arg_92_2)
+
+	return (var_0_0.getHeightWeight(var_92_3))
 end
 
-function slot0._checkTime(slot0, slot1, slot2)
-	slot3 = string.split(slot0[1], ":")
-	slot5 = tonumber(slot3[2])
-	slot6 = tonumber(slot0[2])
+function var_0_0._checkTime(arg_94_0, arg_94_1, arg_94_2)
+	local var_94_0 = string.split(arg_94_0[1], ":")
+	local var_94_1 = tonumber(var_94_0[1])
+	local var_94_2 = tonumber(var_94_0[2])
+	local var_94_3 = tonumber(arg_94_0[2])
 
-	if not tonumber(slot3[1]) or not slot5 or not slot6 then
+	if not var_94_1 or not var_94_2 or not var_94_3 then
 		return false
 	end
 
-	slot7 = slot1 + (slot4 * 60 + slot5) * 60
+	local var_94_4 = arg_94_1 + (var_94_1 * 60 + var_94_2) * 60
+	local var_94_5 = var_94_4 + var_94_3 * 3600
 
-	return slot7 <= slot2 and slot2 <= slot7 + slot6 * 3600
+	return var_94_4 <= arg_94_2 and arg_94_2 <= var_94_5
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) and slot1 == ViewName.CharacterSwitchView then
-		slot0.viewContainer:_setVisible(false)
+function var_0_0._onOpenView(arg_95_0, arg_95_1)
+	if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) and arg_95_1 == ViewName.CharacterSwitchView then
+		arg_95_0.viewContainer:_setVisible(false)
 
 		return
 	end
 
-	if ViewMgr.instance:getSetting(slot1) and (slot2.viewType == ViewType.Full or slot2.bgBlur) and slot0._lightSpine then
-		slot0:_tryStopVoice()
+	local var_95_0 = ViewMgr.instance:getSetting(arg_95_1)
+
+	if var_95_0 and (var_95_0.viewType == ViewType.Full or var_95_0.bgBlur) and arg_95_0._lightSpine then
+		arg_95_0:_tryStopVoice()
 	end
 
-	if slot1 == ViewName.MainThumbnailView then
-		slot0._animator:Play("mainview_out", 0, 0)
-		TaskDispatcher.runDelay(slot0._hide, slot0, 0.4)
+	if arg_95_1 == ViewName.MainThumbnailView then
+		arg_95_0._animator:Play("mainview_out", 0, 0)
+		TaskDispatcher.runDelay(arg_95_0._hide, arg_95_0, 0.4)
 
-		if slot0._tweenId then
-			ZProj.TweenHelper.KillById(slot0._tweenId)
+		if arg_95_0._tweenId then
+			ZProj.TweenHelper.KillById(arg_95_0._tweenId)
 
-			slot0._tweenId = nil
+			arg_95_0._tweenId = nil
 		end
 
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, slot0._setFactor, nil, slot0, nil, EaseType.Linear)
+		arg_95_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_95_0._setFactor, nil, arg_95_0, nil, EaseType.Linear)
 
 		PostProcessingMgr.instance:setUnitPPValue("dofSampleScale", Vector4.one)
 		PostProcessingMgr.instance:setUnitPPValue("dofRT3Scale", 2)
-		slot0:_tryStopVoice()
-	elseif slot1 == ViewName.CharacterGetView or slot1 == ViewName.CharacterSkinGetDetailView then
-		if slot0._lightSpine then
-			gohelper.setActive(slot0._lightSpine:getSpineGo(), false)
+		arg_95_0:_tryStopVoice()
+	elseif arg_95_1 == ViewName.CharacterGetView or arg_95_1 == ViewName.CharacterSkinGetDetailView then
+		if arg_95_0._lightSpine then
+			gohelper.setActive(arg_95_0._lightSpine:getSpineGo(), false)
 		end
-	elseif slot1 == ViewName.SummonView then
-		slot0:_hideModelEffect()
+	elseif arg_95_1 == ViewName.SummonView then
+		arg_95_0:_hideModelEffect()
 	end
 end
 
-function slot0._tryStopVoice(slot0)
-	if slot0._lightSpine then
-		if not LimitedRoleController.instance:isPlayingAction() then
-			slot0:_onStopVoice()
-		end
+function var_0_0._tryStopVoice(arg_96_0)
+	if not arg_96_0._lightSpine or LimitedRoleController.instance:isPlayingAction() then
+		-- block empty
+	else
+		arg_96_0:_onStopVoice()
 	end
 end
 
-function slot0._forceStopVoice(slot0)
-	if slot0._lightSpine then
-		slot0:_onStopVoice()
+function var_0_0._forceStopVoice(arg_97_0)
+	if arg_97_0._lightSpine then
+		arg_97_0:_onStopVoice()
 	end
 end
 
-function slot0._hide(slot0)
-	slot0.viewContainer:_setVisible(false)
+function var_0_0._hide(arg_98_0)
+	arg_98_0.viewContainer:_setVisible(false)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.SettingsView and ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
-		uv0.setPostProcessBlur()
+function var_0_0._onCloseView(arg_99_0, arg_99_1)
+	if arg_99_1 == ViewName.SettingsView and ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
+		var_0_0.setPostProcessBlur()
 
 		return
 	end
 
-	if slot1 == ViewName.SummonView then
-		slot0:_delayShowModelEffect()
-	elseif slot1 == ViewName.CharacterView and slot0._lightSpine and slot0._showInScene then
-		slot0._lightSpine:setLayer(UnityLayer.Water)
+	if arg_99_1 == ViewName.SummonView then
+		arg_99_0:_delayShowModelEffect()
+	elseif arg_99_1 == ViewName.CharacterView and arg_99_0._lightSpine and arg_99_0._showInScene then
+		arg_99_0._lightSpine:setLayer(UnityLayer.Water)
 	end
 
-	if slot1 == ViewName.StoryView then
-		slot0:_onFinish()
+	if arg_99_1 == ViewName.StoryView then
+		arg_99_0:_onFinish()
 	end
 
-	if not slot0:_hasOpenFullView() then
-		slot0:_activationSettings()
+	if not arg_99_0:_hasOpenFullView() then
+		arg_99_0:_activationSettings()
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot0:_isLogout() then
+function var_0_0._onCloseViewFinish(arg_100_0, arg_100_1)
+	if arg_100_0:_isLogout() then
 		return
 	end
 
-	slot0:_setSpineScale()
+	arg_100_0:_setSpineScale()
 
-	if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) and slot1 == ViewName.CharacterSwitchView then
-		slot0.viewContainer:_setVisible(true)
+	if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) and arg_100_1 == ViewName.CharacterSwitchView then
+		arg_100_0.viewContainer:_setVisible(true)
 
 		return
 	end
 
-	if slot1 == ViewName.MainThumbnailView then
-		TaskDispatcher.cancelTask(slot0._hide, slot0)
-		slot0.viewContainer:_setVisible(true)
-		slot0._animator:Play("mainview_in", 0, 0)
+	if arg_100_1 == ViewName.MainThumbnailView then
+		TaskDispatcher.cancelTask(arg_100_0._hide, arg_100_0)
+		arg_100_0.viewContainer:_setVisible(true)
+		arg_100_0._animator:Play("mainview_in", 0, 0)
 
-		if slot0._tweenId then
-			ZProj.TweenHelper.KillById(slot0._tweenId)
+		if arg_100_0._tweenId then
+			ZProj.TweenHelper.KillById(arg_100_0._tweenId)
 
-			slot0._tweenId = nil
+			arg_100_0._tweenId = nil
 		end
 
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, slot0._setFactor, slot0._resetPostProcessValue, slot0, nil, EaseType.Linear)
-		slot2, slot3 = CharacterSwitchListModel.instance:getMainHero()
+		arg_100_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, arg_100_0._setFactor, arg_100_0._resetPostProcessValue, arg_100_0, nil, EaseType.Linear)
 
-		if slot0._curHeroId ~= slot2 and slot2 or slot0._curSkinId ~= slot3 and slot3 or gohelper.isNil(slot0._spineGo) then
-			slot0._curHeroId = slot2
-			slot0._curSkinId = slot3
+		local var_100_0, var_100_1 = CharacterSwitchListModel.instance:getMainHero()
 
-			slot0:_updateHero(slot0._curHeroId, slot0._curSkinId)
-		elseif slot0._lightSpine then
-			uv0:changeRoleGo({
+		if arg_100_0._curHeroId ~= var_100_0 and var_100_0 or arg_100_0._curSkinId ~= var_100_1 and var_100_1 or gohelper.isNil(arg_100_0._spineGo) then
+			arg_100_0._curHeroId = var_100_0
+			arg_100_0._curSkinId = var_100_1
+
+			arg_100_0:_updateHero(arg_100_0._curHeroId, arg_100_0._curSkinId)
+		elseif arg_100_0._lightSpine then
+			local var_100_2 = {
 				heroPlayWeatherVoice = true,
-				roleGo = slot0._lightSpine:getSpineGo(),
-				heroId = slot0._heroId,
-				sharedMaterial = slot0._spineMaterial,
-				skinId = slot3
-			})
-			WeatherController.instance:setLightModel(slot0._lightSpine)
+				roleGo = arg_100_0._lightSpine:getSpineGo(),
+				heroId = arg_100_0._heroId,
+				sharedMaterial = arg_100_0._spineMaterial,
+				skinId = var_100_1
+			}
+
+			var_0_1:changeRoleGo(var_100_2)
+			WeatherController.instance:setLightModel(arg_100_0._lightSpine)
 		end
-	elseif slot1 == ViewName.CharacterGetView or slot1 == ViewName.CharacterSkinGetDetailView then
-		if slot0._lightSpine then
-			gohelper.setActive(slot0._lightSpine:getSpineGo(), true)
+	elseif arg_100_1 == ViewName.CharacterGetView or arg_100_1 == ViewName.CharacterSkinGetDetailView then
+		if arg_100_0._lightSpine then
+			gohelper.setActive(arg_100_0._lightSpine:getSpineGo(), true)
 		end
-	elseif slot1 == ViewName.CharacterView and slot0._lightSpine and slot0._showInScene then
-		slot0._lightSpine:setLayer(UnityLayer.Unit)
+	elseif arg_100_1 == ViewName.CharacterView and arg_100_0._lightSpine and arg_100_0._showInScene then
+		arg_100_0._lightSpine:setLayer(UnityLayer.Unit)
 	end
 end
 
-function slot0._setFactor(slot0, slot1)
-	PostProcessingMgr.instance:setUnitPPValue("dofFactor", slot1)
+function var_0_0._setFactor(arg_101_0, arg_101_1)
+	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_101_1)
 end
 
-function slot0.setPostProcessBlur()
+function var_0_0.setPostProcessBlur()
 	PostProcessingMgr.instance:setUnitPPValue("dofFactor", 1)
 	PostProcessingMgr.instance:setUnitPPValue("dofSampleScale", Vector4.one)
 	PostProcessingMgr.instance:setUnitPPValue("dofRT3Scale", 2)
 end
 
-function slot0.resetPostProcessBlur()
+function var_0_0.resetPostProcessBlur()
 	PostProcessingMgr.instance:setUnitPPValue("dofFactor", 0)
 	PostProcessingMgr.instance:setUnitPPValue("dofSampleScale", Vector4(7.18, 0.77, 3.26, 1))
 	PostProcessingMgr.instance:setUnitPPValue("dofRT3Scale", 3)
 end
 
-function slot0._resetPostProcessValue(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._resetPostProcessValue(arg_104_0)
+	if arg_104_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_104_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_104_0._tweenId = nil
 	end
 
-	uv0.resetPostProcessBlur()
+	var_0_0.resetPostProcessBlur()
 end
 
-function slot0._isLogout(slot0)
+function var_0_0._isLogout(arg_105_0)
 	return ViewMgr.instance:isOpen(ViewName.LoadingView)
 end
 
-function slot0.onClose(slot0)
-	if slot0._lightSpine then
-		slot0._lightSpine:doDestroy()
+function var_0_0.onClose(arg_106_0)
+	if arg_106_0._lightSpine then
+		arg_106_0._lightSpine:doDestroy()
 
-		slot0._lightSpine = nil
+		arg_106_0._lightSpine = nil
 	end
 
-	slot0._click:RemoveClickDownListener()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragEndListener()
+	arg_106_0._click:RemoveClickDownListener()
+	arg_106_0._drag:RemoveDragBeginListener()
+	arg_106_0._drag:RemoveDragListener()
+	arg_106_0._drag:RemoveDragEndListener()
 
-	if slot0._photoFrameBgLoader then
-		slot0._photoFrameBgLoader:dispose()
+	if arg_106_0._photoFrameBgLoader then
+		arg_106_0._photoFrameBgLoader:dispose()
 
-		slot0._photoFrameBgLoader = nil
+		arg_106_0._photoFrameBgLoader = nil
 	end
 
-	uv0:setStateByString("Photo_album", "no")
+	var_0_1:setStateByString("Photo_album", "no")
 
-	if slot0._skinInteraction then
-		slot0._skinInteraction:onDestroy()
+	if arg_106_0._skinInteraction then
+		arg_106_0._skinInteraction:onDestroy()
 	end
 
-	TaskDispatcher.cancelTask(slot0._hide, slot0)
-	TaskDispatcher.cancelTask(slot0._showModelEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._hideLightSpineVisible, slot0)
-	TaskDispatcher.cancelTask(slot0._setSpineScale, slot0)
-	TaskDispatcher.cancelTask(slot0._delayInitLightSpine, slot0)
-	slot0:_resetPostProcessValue()
-	slot0:_clearEvents()
+	TaskDispatcher.cancelTask(arg_106_0._hide, arg_106_0)
+	TaskDispatcher.cancelTask(arg_106_0._showModelEffect, arg_106_0)
+	TaskDispatcher.cancelTask(arg_106_0._hideLightSpineVisible, arg_106_0)
+	TaskDispatcher.cancelTask(arg_106_0._setSpineScale, arg_106_0)
+	TaskDispatcher.cancelTask(arg_106_0._delayInitLightSpine, arg_106_0)
+	arg_106_0:_resetPostProcessValue()
+	arg_106_0:_clearEvents()
 end
 
-function slot0._clearEvents(slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullViewFinish, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, slot0._onOpenFullView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, slot0._reOpenWhileOpen, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.Start, slot0._onStart, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.Finish, slot0._onFinish, slot0)
-	slot0:removeEventCb(WeatherController.instance, WeatherEvent.PlayVoice, slot0._onWeatherPlayVoice, slot0)
-	slot0:removeEventCb(WeatherController.instance, WeatherEvent.LoadPhotoFrameBg, slot0._onWeatherLoadPhotoFrameBg, slot0)
-	slot0:removeEventCb(WeatherController.instance, WeatherEvent.OnRoleBlend, slot0._onWeatherOnRoleBlend, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onLoadingCloseView, slot0)
-	slot0:removeEventCb(MainController.instance, MainEvent.ForceStopVoice, slot0._forceStopVoice, slot0)
-	TaskDispatcher.cancelTask(slot0._delayCheckShowMain, slot0)
+function var_0_0._clearEvents(arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_107_0._onOpenFullViewFinish, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_107_0._onOpenFullView, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_107_0._onCloseFullView, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, arg_107_0._reOpenWhileOpen, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_107_0._onOpenView, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_107_0._onCloseViewFinish, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_107_0._onCloseView, arg_107_0)
+	arg_107_0:removeEventCb(StoryController.instance, StoryEvent.Start, arg_107_0._onStart, arg_107_0)
+	arg_107_0:removeEventCb(StoryController.instance, StoryEvent.Finish, arg_107_0._onFinish, arg_107_0)
+	arg_107_0:removeEventCb(WeatherController.instance, WeatherEvent.PlayVoice, arg_107_0._onWeatherPlayVoice, arg_107_0)
+	arg_107_0:removeEventCb(WeatherController.instance, WeatherEvent.LoadPhotoFrameBg, arg_107_0._onWeatherLoadPhotoFrameBg, arg_107_0)
+	arg_107_0:removeEventCb(WeatherController.instance, WeatherEvent.OnRoleBlend, arg_107_0._onWeatherOnRoleBlend, arg_107_0)
+	arg_107_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_107_0._onLoadingCloseView, arg_107_0)
+	arg_107_0:removeEventCb(MainController.instance, MainEvent.ForceStopVoice, arg_107_0._forceStopVoice, arg_107_0)
+	TaskDispatcher.cancelTask(arg_107_0._delayCheckShowMain, arg_107_0)
 end
 
-function slot0.onCloseFinish(slot0)
-	gohelper.destroy(slot0._golightspine)
+function var_0_0.onCloseFinish(arg_108_0)
+	gohelper.destroy(arg_108_0._golightspine)
 end
 
-function slot0.getMaxTouchHeadNumber(slot0)
+function var_0_0.getMaxTouchHeadNumber(arg_109_0)
 	return tonumber(lua_const.configList[32].value)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_disableKeyword()
+function var_0_0.onDestroyView(arg_110_0)
+	arg_110_0:_disableKeyword()
 end
 
-function slot0._clearTrackMainHeroInteractionData(slot0)
-	slot0._track_main_hero_interaction_info = {
+function var_0_0._clearTrackMainHeroInteractionData(arg_111_0)
+	arg_111_0._track_main_hero_interaction_info = {
 		main_hero_interaction_skin_id = false,
 		main_hero_interaction_voice_id = false,
 		main_hero_interaction_area_id = false
 	}
 end
 
-function slot0._updateTrackInfoSkinId(slot0, slot1)
-	slot0._track_main_hero_interaction_info.main_hero_interaction_skin_id = slot1
+function var_0_0._updateTrackInfoSkinId(arg_112_0, arg_112_1)
+	arg_112_0._track_main_hero_interaction_info.main_hero_interaction_skin_id = arg_112_1
 end
 
-function slot0._updateTrackInfoAreaId(slot0, slot1)
-	slot0._track_main_hero_interaction_info.main_hero_interaction_area_id = slot1
+function var_0_0._updateTrackInfoAreaId(arg_113_0, arg_113_1)
+	arg_113_0._track_main_hero_interaction_info.main_hero_interaction_area_id = arg_113_1
 end
 
-function slot0._trackMainHeroInteraction(slot0, slot1)
-	if not slot0._track_main_hero_interaction_info.main_hero_interaction_area_id or not slot2.main_hero_interaction_skin_id then
+function var_0_0._trackMainHeroInteraction(arg_114_0, arg_114_1)
+	local var_114_0 = arg_114_0._track_main_hero_interaction_info
+
+	if not var_114_0.main_hero_interaction_area_id or not var_114_0.main_hero_interaction_skin_id then
 		return
 	end
 
-	slot2.main_hero_interaction_voice_id = tostring(slot1)
+	var_114_0.main_hero_interaction_voice_id = tostring(arg_114_1)
 
-	SDKDataTrackMgr.instance:trackMainHeroInteraction(slot2)
-	slot0:_updateTrackInfoAreaId(nil)
+	SDKDataTrackMgr.instance:trackMainHeroInteraction(var_114_0)
+	arg_114_0:_updateTrackInfoAreaId(nil)
 end
 
-return slot0
+return var_0_0

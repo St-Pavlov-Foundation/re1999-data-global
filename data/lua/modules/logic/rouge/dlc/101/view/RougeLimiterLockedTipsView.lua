@@ -1,69 +1,80 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsView", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsView", package.seeall)
 
-slot0 = class("RougeLimiterLockedTipsView", BaseView)
+local var_0_0 = class("RougeLimiterLockedTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._scrolltips = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_tips")
-	slot0._imagebufficon = gohelper.findChildImage(slot0.viewGO, "#scroll_tips/Viewport/Content/top/#image_bufficon")
-	slot0._txtbufflevel = gohelper.findChildText(slot0.viewGO, "#scroll_tips/Viewport/Content/top/#txt_bufflevel")
-	slot0._txtbuffname = gohelper.findChildText(slot0.viewGO, "#scroll_tips/Viewport/Content/top/#txt_buffname")
-	slot0._godesccontainer = gohelper.findChild(slot0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer")
-	slot0._txtdecitem = gohelper.findChildText(slot0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer/#txt_decitem")
-	slot0._txttips = gohelper.findChildText(slot0.viewGO, "#scroll_tips/Viewport/Content/#txt_tips")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._scrolltips = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tips")
+	arg_1_0._imagebufficon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#image_bufficon")
+	arg_1_0._txtbufflevel = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#txt_bufflevel")
+	arg_1_0._txtbuffname = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#txt_buffname")
+	arg_1_0._godesccontainer = gohelper.findChild(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer")
+	arg_1_0._txtdecitem = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer/#txt_decitem")
+	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#txt_tips")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUnlockedTips()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:refreshUnlockedTips()
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenRougeLimiterLockedTips)
 end
 
-function slot0.refreshUnlockedTips(slot0)
-	slot0._limiterGroupId = slot0.viewParam and slot0.viewParam.limiterGroupId
-	slot1 = RougeDLCConfig101.instance:getLimiterGroupCo(slot0._limiterGroupId)
-	slot4 = RougeDLCConfig101.instance:getLimiterCoByGroupIdAndLv(slot0._limiterGroupId, RougeDLCConfig101.instance:getLimiterGroupMaxLevel(slot0._limiterGroupId)) and slot3.id
-	slot0._txtbufflevel.text = GameUtil.getRomanNums(slot2)
-	slot0._txtbuffname.text = slot1 and slot1.title
-	slot0._txttips.text = slot1 and slot1.desc
+function var_0_0.refreshUnlockedTips(arg_8_0)
+	arg_8_0._limiterGroupId = arg_8_0.viewParam and arg_8_0.viewParam.limiterGroupId
 
-	UISpriteSetMgr.instance:setRouge4Sprite(slot0._imagebufficon, slot1.icon)
-	slot0:_refreshLimiterGroupDesc()
+	local var_8_0 = RougeDLCConfig101.instance:getLimiterGroupCo(arg_8_0._limiterGroupId)
+	local var_8_1 = RougeDLCConfig101.instance:getLimiterGroupMaxLevel(arg_8_0._limiterGroupId)
+	local var_8_2 = RougeDLCConfig101.instance:getLimiterCoByGroupIdAndLv(arg_8_0._limiterGroupId, var_8_1)
+	local var_8_3
+
+	var_8_3 = var_8_2 and var_8_2.id
+	arg_8_0._txtbufflevel.text = GameUtil.getRomanNums(var_8_1)
+	arg_8_0._txtbuffname.text = var_8_0 and var_8_0.title
+	arg_8_0._txttips.text = var_8_0 and var_8_0.desc
+
+	UISpriteSetMgr.instance:setRouge4Sprite(arg_8_0._imagebufficon, var_8_0.icon)
+	arg_8_0:_refreshLimiterGroupDesc()
 end
 
-function slot0._refreshLimiterGroupDesc(slot0)
-	gohelper.CreateObjList(slot0, slot0._refreshGroupDesc, RougeDLCConfig101.instance:getAllLimiterCosInGroup(slot0._limiterGroupId), slot0._godesccontainer, slot0._txtdecitem.gameObject)
+function var_0_0._refreshLimiterGroupDesc(arg_9_0)
+	local var_9_0 = RougeDLCConfig101.instance:getAllLimiterCosInGroup(arg_9_0._limiterGroupId)
+
+	gohelper.CreateObjList(arg_9_0, arg_9_0._refreshGroupDesc, var_9_0, arg_9_0._godesccontainer, arg_9_0._txtdecitem.gameObject)
 end
 
-function slot0._refreshGroupDesc(slot0, slot1, slot2, slot3)
-	gohelper.onceAddComponent(slot1, gohelper.Type_TextMesh).text = slot2 and slot2.desc
+function var_0_0._refreshGroupDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	gohelper.onceAddComponent(arg_10_1, gohelper.Type_TextMesh).text = arg_10_2 and arg_10_2.desc
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,52 +1,61 @@
-module("modules.logic.versionactivity2_5.liangyue.controller.LiangYueController", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.controller.LiangYueController", package.seeall)
 
-slot0 = class("LiangYueController", BaseController)
+local var_0_0 = class("LiangYueController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	return
 end
 
-function slot0.openGameView(slot0, slot1, slot2)
-	LiangYueModel.instance:setCurActId(slot1)
-	LiangYueModel.instance:setCurEpisodeId(slot2)
-	ViewMgr.instance:openView(ViewName.LiangYueGameView, {
-		actId = slot1,
-		episodeId = slot2,
-		episodeGameId = LiangYueConfig.instance:getEpisodeConfigByActAndId(slot1, slot2).puzzleId
-	})
+function var_0_0.openGameView(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = LiangYueConfig.instance:getEpisodeConfigByActAndId(arg_5_1, arg_5_2)
+	local var_5_1 = {
+		actId = arg_5_1,
+		episodeId = arg_5_2,
+		episodeGameId = var_5_0.puzzleId
+	}
+
+	LiangYueModel.instance:setCurActId(arg_5_1)
+	LiangYueModel.instance:setCurEpisodeId(arg_5_2)
+	ViewMgr.instance:openView(ViewName.LiangYueGameView, var_5_1)
 end
 
-function slot0.enterLevelView(slot0, slot1)
-	LiangYueRpc.instance:sendGetAct184InfoRequest(slot1, slot0._onReceiveInfo, slot0)
+function var_0_0.enterLevelView(arg_6_0, arg_6_1)
+	LiangYueRpc.instance:sendGetAct184InfoRequest(arg_6_1, arg_6_0._onReceiveInfo, arg_6_0)
 end
 
-function slot0._onReceiveInfo(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._onReceiveInfo(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_2 == 0 then
 		ViewMgr.instance:openView(ViewName.LiangYueLevelView)
 	end
 end
 
-function slot0.finishEpisode(slot0, slot1, slot2, slot3)
-	LiangYueRpc.instance:sendAct184FinishEpisodeRequest(slot1, slot2, slot3)
+function var_0_0.finishEpisode(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	LiangYueRpc.instance:sendAct184FinishEpisodeRequest(arg_8_1, arg_8_2, arg_8_3)
 end
 
-function slot0.statExitData(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.statExitData(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = ServerTime.now() - arg_9_1
+
 	StatController.instance:track(StatEnum.EventName.ExitLiangYueActivity, {
-		[StatEnum.EventProperties.LiangYue_UseTime] = ServerTime.now() - slot1,
-		[StatEnum.EventProperties.EpisodeId] = tostring(slot2),
-		[StatEnum.EventProperties.Result] = slot3,
-		[StatEnum.EventProperties.LiangYue_Illustration_Result] = slot4
+		[StatEnum.EventProperties.LiangYue_UseTime] = var_9_0,
+		[StatEnum.EventProperties.EpisodeId] = tostring(arg_9_2),
+		[StatEnum.EventProperties.Result] = arg_9_3,
+		[StatEnum.EventProperties.LiangYue_Illustration_Result] = arg_9_4
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,871 +1,981 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryCollectView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryCollectView", package.seeall)
 
-slot0 = class("VersionActivity_1_2_StoryCollectView", BaseViewExtended)
-slot1 = 12110
+local var_0_0 = class("VersionActivity_1_2_StoryCollectView", BaseViewExtended)
+local var_0_1 = 12110
 
-function slot0.onInitView(slot0)
-	slot0._simagebookbg1 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bookbg1")
-	slot0._simagebookbg2 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bookbg2")
-	slot0._simagebookbg3 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bookbg3")
-	slot0._simagebookbg4 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bookbg4")
-	slot0._simagebookbg5 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bookbg1/#simage_bookbg5")
-	slot0._simageleftbookbg5 = gohelper.findChildSingleImage(slot0.viewGO, "root/left/#simage_bookbg5")
-	slot0._simagebookbg6 = gohelper.findChildSingleImage(slot0.viewGO, "root/left/#simage_bookbg6")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "root/left/title/#simage_title")
-	slot0._txttitleName = gohelper.findChildText(slot0.viewGO, "root/left/title/#txt_titleName")
-	slot0._gofinishIcon = gohelper.findChild(slot0.viewGO, "root/left/title/#txt_titleName/#go_finishIcon")
-	slot0._txttitleIndex = gohelper.findChildText(slot0.viewGO, "root/left/title/#txt_titleIndex")
-	slot0._goleftNoteContent = gohelper.findChild(slot0.viewGO, "root/left/#go_leftNoteContent")
-	slot0._gocategory = gohelper.findChild(slot0.viewGO, "root/left/#go_category")
-	slot0._gocategoryItem = gohelper.findChild(slot0.viewGO, "root/left/#go_category/#go_categoryItem")
-	slot0._gorightNoteContent = gohelper.findChild(slot0.viewGO, "root/right/#go_rightNoteContent")
-	slot0._gorightEmpty = gohelper.findChild(slot0.viewGO, "root/right/#go_rightEmpty")
-	slot0._gocollectReward = gohelper.findChild(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward")
-	slot0._txtequiplv = gohelper.findChildText(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/#txt_equiplv")
-	slot0._goequipcareer = gohelper.findChild(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer")
-	slot0._gorefinebg = gohelper.findChild(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#go_refinebg")
-	slot0._goboth = gohelper.findChild(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#go_both")
-	slot0._imagecarrer = gohelper.findChildImage(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#go_both/#image_carrer")
-	slot0._txtrefinelv = gohelper.findChildText(slot0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#txt_refinelv")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "root/right/collect/rewardItem/#go_finish")
-	slot0._gocanget = gohelper.findChild(slot0.viewGO, "root/right/collect/#go_canget")
-	slot0._gocollectNote = gohelper.findChild(slot0.viewGO, "root/right/collect/#go_collectNote")
-	slot0._gocollectProcess = gohelper.findChild(slot0.viewGO, "root/right/collect/#go_collectProcess")
-	slot0._txtcollectProcess = gohelper.findChildText(slot0.viewGO, "root/right/collect/#go_collectProcess/txt/#txt_collectProcess")
-	slot0._gocollectContent = gohelper.findChild(slot0.viewGO, "root/right/collect/#go_collectProcess/#go_collectContent")
-	slot0._gocollectItem = gohelper.findChild(slot0.viewGO, "root/right/collect/#go_collectProcess/#go_collectContent/#go_collectItem")
-	slot0._gocollectFinish = gohelper.findChild(slot0.viewGO, "root/right/collect/#go_collectFinish")
-	slot0._btntidyclue = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/collect/#go_collectFinish/#btn_tidyclue")
-	slot0._gonoteItem = gohelper.findChild(slot0.viewGO, "root/#go_noteItem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._goblock = gohelper.findChild(slot0.viewGO, "root/#go_block")
-	slot0._root = gohelper.findChild(slot0.viewGO, "root")
-	slot0._gomask = gohelper.findChild(slot0.viewGO, "#go_mask")
-	slot0._gomaskGuide = gohelper.findChild(slot0.viewGO, "#go_mask_guide")
-	slot0._maskClick = gohelper.getClick(slot0._gomask)
-	slot0._ani = gohelper.onceAddComponent(slot0._root, typeof(UnityEngine.Animator))
-	slot0._goCollectProcessAni = gohelper.onceAddComponent(slot0._gocollectProcess, typeof(UnityEngine.Animator))
-	slot0._goCollectFinishAni = gohelper.onceAddComponent(slot0._gocollectFinish, typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebookbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bookbg1")
+	arg_1_0._simagebookbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bookbg2")
+	arg_1_0._simagebookbg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bookbg3")
+	arg_1_0._simagebookbg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bookbg4")
+	arg_1_0._simagebookbg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bookbg1/#simage_bookbg5")
+	arg_1_0._simageleftbookbg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/#simage_bookbg5")
+	arg_1_0._simagebookbg6 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/#simage_bookbg6")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/title/#simage_title")
+	arg_1_0._txttitleName = gohelper.findChildText(arg_1_0.viewGO, "root/left/title/#txt_titleName")
+	arg_1_0._gofinishIcon = gohelper.findChild(arg_1_0.viewGO, "root/left/title/#txt_titleName/#go_finishIcon")
+	arg_1_0._txttitleIndex = gohelper.findChildText(arg_1_0.viewGO, "root/left/title/#txt_titleIndex")
+	arg_1_0._goleftNoteContent = gohelper.findChild(arg_1_0.viewGO, "root/left/#go_leftNoteContent")
+	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "root/left/#go_category")
+	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "root/left/#go_category/#go_categoryItem")
+	arg_1_0._gorightNoteContent = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_rightNoteContent")
+	arg_1_0._gorightEmpty = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_rightEmpty")
+	arg_1_0._gocollectReward = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward")
+	arg_1_0._txtequiplv = gohelper.findChildText(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/#txt_equiplv")
+	arg_1_0._goequipcareer = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer")
+	arg_1_0._gorefinebg = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#go_refinebg")
+	arg_1_0._goboth = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#go_both")
+	arg_1_0._imagecarrer = gohelper.findChildImage(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#go_both/#image_carrer")
+	arg_1_0._txtrefinelv = gohelper.findChildText(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_collectReward/commonitemicon/click/#go_equipcareer/#txt_refinelv")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/rewardItem/#go_finish")
+	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/#go_canget")
+	arg_1_0._gocollectNote = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/#go_collectNote")
+	arg_1_0._gocollectProcess = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/#go_collectProcess")
+	arg_1_0._txtcollectProcess = gohelper.findChildText(arg_1_0.viewGO, "root/right/collect/#go_collectProcess/txt/#txt_collectProcess")
+	arg_1_0._gocollectContent = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/#go_collectProcess/#go_collectContent")
+	arg_1_0._gocollectItem = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/#go_collectProcess/#go_collectContent/#go_collectItem")
+	arg_1_0._gocollectFinish = gohelper.findChild(arg_1_0.viewGO, "root/right/collect/#go_collectFinish")
+	arg_1_0._btntidyclue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/collect/#go_collectFinish/#btn_tidyclue")
+	arg_1_0._gonoteItem = gohelper.findChild(arg_1_0.viewGO, "root/#go_noteItem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "root/#go_block")
+	arg_1_0._root = gohelper.findChild(arg_1_0.viewGO, "root")
+	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "#go_mask")
+	arg_1_0._gomaskGuide = gohelper.findChild(arg_1_0.viewGO, "#go_mask_guide")
+	arg_1_0._maskClick = gohelper.getClick(arg_1_0._gomask)
+	arg_1_0._ani = gohelper.onceAddComponent(arg_1_0._root, typeof(UnityEngine.Animator))
+	arg_1_0._goCollectProcessAni = gohelper.onceAddComponent(arg_1_0._gocollectProcess, typeof(UnityEngine.Animator))
+	arg_1_0._goCollectFinishAni = gohelper.onceAddComponent(arg_1_0._gocollectFinish, typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntidyclue:AddClickListener(slot0._btntidyclueOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._maskClick:AddClickListener(slot0._onMaskClick, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveGet121BonusReply, slot0._onReceiveGet121BonusReply, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.focusCollectedAllClueTab, slot0._focusCollectedAllClueTab, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.StoryCollectViewSelectTab, slot0._selectStoryTabByGuide, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.ShowMarkingStoryInView, slot0._markingKeyWordInStory, slot0)
-	slot0:addEventCb(GuideController.instance, GuideEvent.ShowMarkingStoryAllDone, slot0._onLastShowFlowDone, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, slot0._OnRemoveElement, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntidyclue:AddClickListener(arg_2_0._btntidyclueOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._maskClick:AddClickListener(arg_2_0._onMaskClick, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveGet121BonusReply, arg_2_0._onReceiveGet121BonusReply, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.focusCollectedAllClueTab, arg_2_0._focusCollectedAllClueTab, arg_2_0)
+	arg_2_0:addEventCb(GuideController.instance, GuideEvent.StoryCollectViewSelectTab, arg_2_0._selectStoryTabByGuide, arg_2_0)
+	arg_2_0:addEventCb(GuideController.instance, GuideEvent.ShowMarkingStoryInView, arg_2_0._markingKeyWordInStory, arg_2_0)
+	arg_2_0:addEventCb(GuideController.instance, GuideEvent.ShowMarkingStoryAllDone, arg_2_0._onLastShowFlowDone, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0._OnRemoveElement, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntidyclue:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._maskClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntidyclue:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._maskClick:RemoveClickListener()
 end
 
-function slot0._onReceiveGet121BonusReply(slot0, slot1)
-	if not slot0._selectConfig then
+function var_0_0._onReceiveGet121BonusReply(arg_4_0, arg_4_1)
+	if not arg_4_0._selectConfig then
 		return
 	end
 
-	if slot1 == slot0._selectConfig.id then
-		slot0.bonusFinished = VersionActivity1_2NoteModel.instance:getBonusFinished(slot0._selectConfig.id)
+	if arg_4_1 == arg_4_0._selectConfig.id then
+		arg_4_0.bonusFinished = VersionActivity1_2NoteModel.instance:getBonusFinished(arg_4_0._selectConfig.id)
 
-		slot0:_showCollectData()
+		arg_4_0:_showCollectData()
 	end
 end
 
-function slot0._btntidyclueOnClick(slot0)
-	slot0:_markNote()
-	slot0:_playMarkClueAni()
+function var_0_0._btntidyclueOnClick(arg_5_0)
+	arg_5_0:_markNote()
+	arg_5_0:_playMarkClueAni()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0._simagebookbg1:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben03"))
-	slot0._simagebookbg2:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben04"))
-	slot0._simagebookbg3:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben01"))
-	slot0._simagebookbg4:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben02"))
-	slot0._simagebookbg5:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben07"))
-	slot0._simageleftbookbg5:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben05"))
-	slot0._simagebookbg6:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben06"))
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._simagebookbg1:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben03"))
+	arg_7_0._simagebookbg2:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben04"))
+	arg_7_0._simagebookbg3:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben01"))
+	arg_7_0._simagebookbg4:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben02"))
+	arg_7_0._simagebookbg5:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben07"))
+	arg_7_0._simageleftbookbg5:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben05"))
+	arg_7_0._simagebookbg6:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2("bg_bijiben06"))
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
-	gohelper.setActive(slot0._goblock, false)
-	gohelper.setActive(slot0._gomask, false)
+	gohelper.setActive(arg_7_0._goblock, false)
+	gohelper.setActive(arg_7_0._gomask, false)
 
-	slot0._activityId = VersionActivityEnum.ActivityId.Act121
-	slot0._storyList = VersionActivity1_2NoteConfig.instance:getStoryList()
+	arg_7_0._activityId = VersionActivityEnum.ActivityId.Act121
+	arg_7_0._storyList = VersionActivity1_2NoteConfig.instance:getStoryList()
 
-	slot0:_showBtn()
-	slot0:_showBtnUnlockAni()
+	arg_7_0:_showBtn()
+	arg_7_0:_showBtnUnlockAni()
 end
 
-function slot0.getBtnAniFinish(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteBtnUnlockAni .. slot0, 0)
+function var_0_0.getBtnAniFinish(arg_8_0)
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteBtnUnlockAni .. arg_8_0, 0)
 end
 
-function slot0.setBtnAniFinish(slot0, slot1)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteBtnUnlockAni .. slot0, slot1 or 1)
+function var_0_0.setBtnAniFinish(arg_9_0, arg_9_1)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteBtnUnlockAni .. arg_9_0, arg_9_1 or 1)
 end
 
-function slot0._showBtnUnlockAni(slot0)
-	for slot4, slot5 in ipairs(slot0._storyList) do
-		slot6 = slot0._storyList[slot4].id
+function var_0_0._showBtnUnlockAni(arg_10_0)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._storyList) do
+		local var_10_0 = arg_10_0._storyList[iter_10_0].id
 
-		if DungeonModel.instance:hasPassLevel(slot0._storyList[slot4].episodeId) and uv0.getBtnAniFinish(slot6) == 0 then
-			uv0.setBtnAniFinish(slot6)
+		if DungeonModel.instance:hasPassLevel(arg_10_0._storyList[iter_10_0].episodeId) and var_0_0.getBtnAniFinish(var_10_0) == 0 then
+			var_0_0.setBtnAniFinish(var_10_0)
 
-			slot8 = slot0._btnList[slot4]
+			local var_10_1 = arg_10_0._btnList[iter_10_0]
 
-			gohelper.setActive(gohelper.findChild(slot8, "go_lock"), true)
-			gohelper.onceAddComponent(slot8, typeof(UnityEngine.Animator)):Play("unlock")
+			gohelper.setActive(gohelper.findChild(var_10_1, "go_lock"), true)
+			gohelper.onceAddComponent(var_10_1, typeof(UnityEngine.Animator)):Play("unlock")
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_difficulty)
 		end
 	end
 end
 
-function slot0._showBtn(slot0)
-	slot0._btnComList = slot0:getUserDataTb_()
-	slot0._btnList = slot0:getUserDataTb_()
+function var_0_0._showBtn(arg_11_0)
+	arg_11_0._btnComList = arg_11_0:getUserDataTb_()
+	arg_11_0._btnList = arg_11_0:getUserDataTb_()
 
-	slot0:com_createObjList(slot0._onBtnShow, slot0._storyList, slot0._gocategory, slot0._gocategoryItem)
+	arg_11_0:com_createObjList(arg_11_0._onBtnShow, arg_11_0._storyList, arg_11_0._gocategory, arg_11_0._gocategoryItem)
 
-	slot0._selectIndex = 1
+	arg_11_0._selectIndex = 1
 
-	slot0:_refreshBtnState()
-	slot0:_refreshData()
+	arg_11_0:_refreshBtnState()
+	arg_11_0:_refreshData()
 end
 
-function slot0._onBtnShow(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "go_select/txt_name").text = slot2.name
-	gohelper.findChildText(slot1, "go_normal/txt_name").text = slot2.name
-	slot9 = DungeonModel.instance:hasPassLevel(slot2.episodeId)
+function var_0_0._onBtnShow(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = gohelper.findChildText(arg_12_1, "go_select/txt_name")
+	local var_12_1 = gohelper.findChildText(arg_12_1, "go_normal/txt_name")
+	local var_12_2 = gohelper.findChild(arg_12_1, "go_normal")
+	local var_12_3 = gohelper.findChild(arg_12_1, "go_select")
+	local var_12_4 = gohelper.findChild(arg_12_1, "go_lock")
 
-	gohelper.setActive(gohelper.findChild(slot1, "go_normal"), slot9)
-	gohelper.setActive(gohelper.findChild(slot1, "go_select"), slot9)
-	gohelper.setActive(gohelper.findChild(slot1, "go_lock"), not slot9)
+	var_12_0.text = arg_12_2.name
+	var_12_1.text = arg_12_2.name
 
-	slot10 = gohelper.findChildButtonWithAudio(slot1, "btn_click", AudioEnum.TeachNote.play_ui_activity_switch)
+	local var_12_5 = DungeonModel.instance:hasPassLevel(arg_12_2.episodeId)
 
-	slot10:RemoveClickListener()
-	slot10:AddClickListener(slot0._onBtnClick, slot0, slot3)
-	table.insert(slot0._btnComList, slot10)
-	table.insert(slot0._btnList, slot1)
+	gohelper.setActive(var_12_2, var_12_5)
+	gohelper.setActive(var_12_3, var_12_5)
+	gohelper.setActive(var_12_4, not var_12_5)
+
+	local var_12_6 = gohelper.findChildButtonWithAudio(arg_12_1, "btn_click", AudioEnum.TeachNote.play_ui_activity_switch)
+
+	var_12_6:RemoveClickListener()
+	var_12_6:AddClickListener(arg_12_0._onBtnClick, arg_12_0, arg_12_3)
+	table.insert(arg_12_0._btnComList, var_12_6)
+	table.insert(arg_12_0._btnList, arg_12_1)
 end
 
-function slot0._refreshBtnState(slot0)
-	for slot4, slot5 in ipairs(slot0._btnList) do
-		gohelper.setActive(gohelper.findChild(slot5, "go_select"), DungeonModel.instance:hasPassLevel(slot0._storyList[slot4].episodeId) and slot0._selectIndex == slot4)
-		gohelper.setActive(gohelper.findChild(slot5, "go_normal"), slot6 and slot0._selectIndex ~= slot4)
-		gohelper.setActive(gohelper.findChild(slot5, "go_lock"), not slot6)
+function var_0_0._refreshBtnState(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._btnList) do
+		local var_13_0 = DungeonModel.instance:hasPassLevel(arg_13_0._storyList[iter_13_0].episodeId)
+
+		gohelper.setActive(gohelper.findChild(iter_13_1, "go_select"), var_13_0 and arg_13_0._selectIndex == iter_13_0)
+		gohelper.setActive(gohelper.findChild(iter_13_1, "go_normal"), var_13_0 and arg_13_0._selectIndex ~= iter_13_0)
+		gohelper.setActive(gohelper.findChild(iter_13_1, "go_lock"), not var_13_0)
 	end
 end
 
-function slot0._onBtnClick(slot0, slot1)
-	if not DungeonModel.instance:hasPassLevel(slot0._storyList[slot1].episodeId) then
+function var_0_0._onBtnClick(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._storyList[arg_14_1]
+
+	if not DungeonModel.instance:hasPassLevel(var_14_0.episodeId) then
 		GameFacade.showToast(ToastEnum.Activity1_2NoteStoryUnlockLick)
 
 		return
 	end
 
-	if slot0._selectIndex == slot1 then
+	if arg_14_0._selectIndex == arg_14_1 then
 		return
 	end
 
-	slot0._isOpened = true
-	slot0._selectIndex = slot1
+	arg_14_0._isOpened = true
+	arg_14_0._selectIndex = arg_14_1
 
-	slot0:_refreshBtnState()
-	slot0._ani:Play("siwtch", 0, 0)
-	TaskDispatcher.runDelay(slot0._refreshData, slot0, 0.1)
+	arg_14_0:_refreshBtnState()
+	arg_14_0._ani:Play("siwtch", 0, 0)
+	TaskDispatcher.runDelay(arg_14_0._refreshData, arg_14_0, 0.1)
 end
 
-function slot0._refreshData(slot0)
-	slot0._selectConfig = slot0._storyList[slot0._selectIndex]
-	slot0.bonusFinished = VersionActivity1_2NoteModel.instance:getBonusFinished(slot0._selectConfig.id)
-	slot1 = string.splitToNumber(slot0._selectConfig.noteIds, "|")
-	slot0._allClueCount = #slot1
-	slot0._haveClueCount = 0
-	slot0._haveNoteList = {}
-	slot0._noteList = {}
+function var_0_0._refreshData(arg_15_0)
+	arg_15_0._selectConfig = arg_15_0._storyList[arg_15_0._selectIndex]
+	arg_15_0.bonusFinished = VersionActivity1_2NoteModel.instance:getBonusFinished(arg_15_0._selectConfig.id)
 
-	for slot5, slot6 in ipairs(slot1) do
-		if VersionActivity1_2NoteModel.instance:getNote(slot6) then
-			slot0._haveClueCount = slot0._haveClueCount + 1
-			slot0._haveNoteList[slot5] = slot6
+	local var_15_0 = string.splitToNumber(arg_15_0._selectConfig.noteIds, "|")
+
+	arg_15_0._allClueCount = #var_15_0
+	arg_15_0._haveClueCount = 0
+	arg_15_0._haveNoteList = {}
+	arg_15_0._noteList = {}
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		if VersionActivity1_2NoteModel.instance:getNote(iter_15_1) then
+			arg_15_0._haveClueCount = arg_15_0._haveClueCount + 1
+			arg_15_0._haveNoteList[iter_15_0] = iter_15_1
 		end
 
-		slot0._noteList[slot5] = slot6
+		arg_15_0._noteList[iter_15_0] = iter_15_1
 	end
 
-	slot0:_releaseSignObj()
-	slot0:_showNoteCollectData()
-	slot0:_showCollectData()
+	arg_15_0:_releaseSignObj()
+	arg_15_0:_showNoteCollectData()
+	arg_15_0:_showCollectData()
 
-	slot0._txttitleIndex.text = string.format("%02d", slot0._selectIndex)
+	arg_15_0._txttitleIndex.text = string.format("%02d", arg_15_0._selectIndex)
 
-	slot0:_showReward()
-	slot0:_refreshRedPoint()
+	arg_15_0:_showReward()
+	arg_15_0:_refreshRedPoint()
 end
 
-function slot0._refreshRewardState(slot0)
-	gohelper.setActive(slot0._gofinishIcon, slot0.bonusFinished)
-	gohelper.setActive(slot0._gofinish, false)
+function var_0_0._refreshRewardState(arg_16_0)
+	gohelper.setActive(arg_16_0._gofinishIcon, arg_16_0.bonusFinished)
+	gohelper.setActive(arg_16_0._gofinish, false)
 end
 
-function slot0._refreshRedPoint(slot0)
-	for slot4, slot5 in ipairs(slot0._storyList) do
-		gohelper.setActive(gohelper.findChild(slot0._btnList[slot4], "redPoint"), uv0.getStoryRedPoint(slot5.id))
+function var_0_0._refreshRedPoint(arg_17_0)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._storyList) do
+		gohelper.setActive(gohelper.findChild(arg_17_0._btnList[iter_17_0], "redPoint"), var_0_0.getStoryRedPoint(iter_17_1.id))
 	end
 end
 
-function slot0._showNoteCollectData(slot0)
-	gohelper.setActive(slot0._gorightEmpty, false)
-	gohelper.setActive(slot0._gorightNoteContent, true)
+function var_0_0._showNoteCollectData(arg_18_0)
+	gohelper.setActive(arg_18_0._gorightEmpty, false)
+	gohelper.setActive(arg_18_0._gorightNoteContent, true)
 
-	slot0._textList = slot0:getUserDataTb_()
+	arg_18_0._textList = arg_18_0:getUserDataTb_()
 
-	slot0:com_createObjList(slot0._createLeftNote, 2, slot0._goleftNoteContent, slot0._gonoteItem)
-	slot0:com_createObjList(slot0._createRightNote, slot0._allClueCount - 2, slot0._gorightNoteContent, slot0._gonoteItem)
+	arg_18_0:com_createObjList(arg_18_0._createLeftNote, 2, arg_18_0._goleftNoteContent, arg_18_0._gonoteItem)
+	arg_18_0:com_createObjList(arg_18_0._createRightNote, arg_18_0._allClueCount - 2, arg_18_0._gorightNoteContent, arg_18_0._gonoteItem)
 
-	slot0._txttitleName.text = slot0._selectConfig.name
+	arg_18_0._txttitleName.text = arg_18_0._selectConfig.name
 
-	slot0._simagetitle:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2(slot0._selectConfig.icon))
+	arg_18_0._simagetitle:LoadImage(ResUrl.getVersionActivityStoryCollect_1_2(arg_18_0._selectConfig.icon))
 end
 
-function slot0._playUnlockNoteAni(slot0)
-	for slot5 = slot0._collectItemUnlockPlayIndex, slot0._haveClueCount do
-		slot6 = gohelper.findChild(slot0._gocollectContent.transform:GetChild(slot5 - 1).gameObject, "go_collected")
+function var_0_0._playUnlockNoteAni(arg_19_0)
+	local var_19_0 = arg_19_0._gocollectContent.transform
 
-		gohelper.setActive(slot6, true)
-		gohelper.onceAddComponent(slot6, typeof(UnityEngine.Animator)):Play("unlock", 0, 0)
+	for iter_19_0 = arg_19_0._collectItemUnlockPlayIndex, arg_19_0._haveClueCount do
+		local var_19_1 = gohelper.findChild(var_19_0:GetChild(iter_19_0 - 1).gameObject, "go_collected")
+
+		gohelper.setActive(var_19_1, true)
+		gohelper.onceAddComponent(var_19_1, typeof(UnityEngine.Animator)):Play("unlock", 0, 0)
 	end
 
-	for slot5, slot6 in ipairs(slot0._playUnlockNoteAniIds) do
-		slot7 = slot0._textList[slot6].transform.parent.gameObject
-		slot8 = gohelper.findChildText(slot7, "txt_desc")
-		slot9 = slot7:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-		slot10 = UnityEngine.Object.Instantiate(slot8.materialForRendering)
-		slot8.fontMaterial = slot10
+	for iter_19_1, iter_19_2 in ipairs(arg_19_0._playUnlockNoteAniIds) do
+		local var_19_2 = arg_19_0._textList[iter_19_2].transform.parent.gameObject
+		local var_19_3 = gohelper.findChildText(var_19_2, "txt_desc")
+		local var_19_4 = var_19_2:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+		local var_19_5 = UnityEngine.Object.Instantiate(var_19_3.materialForRendering)
 
-		slot9.mas:Clear()
-		slot9.mas:Add(slot10)
+		var_19_3.fontMaterial = var_19_5
 
-		gohelper.onceAddComponent(slot7, gohelper.Type_CanvasGroup).alpha = 1
-		gohelper.onceAddComponent(slot7, typeof(UnityEngine.Animator)).enabled = true
+		var_19_4.mas:Clear()
+		var_19_4.mas:Add(var_19_5)
 
-		gohelper.onceAddComponent(slot7, typeof(UnityEngine.Animator)):Play("unlock")
+		gohelper.onceAddComponent(var_19_2, gohelper.Type_CanvasGroup).alpha = 1
+		gohelper.onceAddComponent(var_19_2, typeof(UnityEngine.Animator)).enabled = true
+
+		gohelper.onceAddComponent(var_19_2, typeof(UnityEngine.Animator)):Play("unlock")
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_clue_unlock)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_clue_collect)
-	TaskDispatcher.runDelay(slot0._afterUnlockNoteAni, slot0, 1)
+	TaskDispatcher.runDelay(arg_19_0._afterUnlockNoteAni, arg_19_0, 1)
 end
 
-function slot0._afterUnlockNoteAni(slot0)
-	if slot0._haveClueCount == slot0._allClueCount and not slot0.bonusFinished then
-		slot0:_closeProcessAndShowGoCollectFinish()
+function var_0_0._afterUnlockNoteAni(arg_20_0)
+	if arg_20_0._haveClueCount == arg_20_0._allClueCount and not arg_20_0.bonusFinished then
+		arg_20_0:_closeProcessAndShowGoCollectFinish()
 	else
-		slot0:_refreshCollectData()
+		arg_20_0:_refreshCollectData()
 	end
 
-	slot0:_showUnlockNote()
+	arg_20_0:_showUnlockNote()
 end
 
-function slot0._showUnlockNote(slot0)
-	if uv0.getFirstShowStory(slot0._selectConfig.id) == 0 then
-		uv0.setFirstShowStory(slot0._selectConfig.id)
+function var_0_0._showUnlockNote(arg_21_0)
+	if var_0_0.getFirstShowStory(arg_21_0._selectConfig.id) == 0 then
+		var_0_0.setFirstShowStory(arg_21_0._selectConfig.id)
 
-		for slot4, slot5 in ipairs(slot0._noteList) do
-			if not VersionActivity1_2NoteModel.instance:getNote(slot5) then
-				slot6 = slot0._textList[slot4].transform.parent.gameObject
-				gohelper.onceAddComponent(slot6, gohelper.Type_CanvasGroup).alpha = 1
-				gohelper.onceAddComponent(slot6, typeof(UnityEngine.Animator)).enabled = true
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0._noteList) do
+			if not VersionActivity1_2NoteModel.instance:getNote(iter_21_1) then
+				local var_21_0 = arg_21_0._textList[iter_21_0].transform.parent.gameObject
 
-				gohelper.onceAddComponent(slot6, typeof(UnityEngine.Animator)):Play("open")
+				gohelper.onceAddComponent(var_21_0, gohelper.Type_CanvasGroup).alpha = 1
+				gohelper.onceAddComponent(var_21_0, typeof(UnityEngine.Animator)).enabled = true
+
+				gohelper.onceAddComponent(var_21_0, typeof(UnityEngine.Animator)):Play("open")
 			end
 		end
 	end
 end
 
-function slot0._showCollectData(slot0)
-	slot0:_refreshRewardState()
+function var_0_0._showCollectData(arg_22_0)
+	arg_22_0:_refreshRewardState()
 
-	slot0._playUnlockNoteAniIds = {}
+	arg_22_0._playUnlockNoteAniIds = {}
 
-	if not slot0.bonusFinished then
-		for slot4, slot5 in ipairs(slot0._noteList) do
-			if VersionActivity1_2NoteModel.instance:getNote(slot5) and uv0.getNoteItemUnlockAniFinish(slot5) == 0 then
-				uv0.setNoteItemUnlockAniFinish(slot5)
-				table.insert(slot0._playUnlockNoteAniIds, slot4)
+	if not arg_22_0.bonusFinished then
+		for iter_22_0, iter_22_1 in ipairs(arg_22_0._noteList) do
+			if VersionActivity1_2NoteModel.instance:getNote(iter_22_1) and var_0_0.getNoteItemUnlockAniFinish(iter_22_1) == 0 then
+				var_0_0.setNoteItemUnlockAniFinish(iter_22_1)
+				table.insert(arg_22_0._playUnlockNoteAniIds, iter_22_0)
 			end
 		end
 	end
 
-	slot0._collectItemUnlockPlayIndex = slot0._haveClueCount - #slot0._playUnlockNoteAniIds + 1
-	slot0._txtcollectProcess.text = string.format("<color=#ad7b40>%d</color>/%d", slot0._haveClueCount, slot0._allClueCount)
+	arg_22_0._collectItemUnlockPlayIndex = arg_22_0._haveClueCount - #arg_22_0._playUnlockNoteAniIds + 1
+	arg_22_0._txtcollectProcess.text = string.format("<color=#ad7b40>%d</color>/%d", arg_22_0._haveClueCount, arg_22_0._allClueCount)
 
-	slot0:com_createObjList(slot0._onCollectPieceShow, slot0._noteList, slot0._gocollectContent, slot0._gocollectItem)
+	arg_22_0:com_createObjList(arg_22_0._onCollectPieceShow, arg_22_0._noteList, arg_22_0._gocollectContent, arg_22_0._gocollectItem)
 
-	if #slot0._playUnlockNoteAniIds > 0 then
-		gohelper.setActive(slot0._gocollectNote, false)
-		gohelper.setActive(slot0._gocollectFinish, false)
-		gohelper.setActive(slot0._gocollectProcess, true)
-		gohelper.setActive(slot0._goblock, true)
+	if #arg_22_0._playUnlockNoteAniIds > 0 then
+		gohelper.setActive(arg_22_0._gocollectNote, false)
+		gohelper.setActive(arg_22_0._gocollectFinish, false)
+		gohelper.setActive(arg_22_0._gocollectProcess, true)
+		gohelper.setActive(arg_22_0._goblock, true)
 
-		if slot0._isOpened then
-			TaskDispatcher.runDelay(slot0._playUnlockNoteAni, slot0, 0.7)
+		if arg_22_0._isOpened then
+			TaskDispatcher.runDelay(arg_22_0._playUnlockNoteAni, arg_22_0, 0.7)
 		else
-			TaskDispatcher.runDelay(slot0._playUnlockNoteAni, slot0, 1)
+			TaskDispatcher.runDelay(arg_22_0._playUnlockNoteAni, arg_22_0, 1)
 		end
 
 		return
 	end
 
-	slot0:_showUnlockNote()
-	slot0:_refreshCollectData()
+	arg_22_0:_showUnlockNote()
+	arg_22_0:_refreshCollectData()
 end
 
-function slot0._refreshCollectData(slot0)
-	gohelper.setActive(slot0._gocollectNote, slot0.bonusFinished)
-	gohelper.setActive(slot0._gocollectProcess, not slot0.bonusFinished and slot0._haveClueCount < slot0._allClueCount)
-	gohelper.setActive(slot0._gocollectFinish, not slot0.bonusFinished and slot0._haveClueCount == slot0._allClueCount)
-	slot0._goCollectProcessAni:Play("idle")
-	slot0._goCollectFinishAni:Play("open")
+function var_0_0._refreshCollectData(arg_23_0)
+	gohelper.setActive(arg_23_0._gocollectNote, arg_23_0.bonusFinished)
+	gohelper.setActive(arg_23_0._gocollectProcess, not arg_23_0.bonusFinished and arg_23_0._haveClueCount < arg_23_0._allClueCount)
+	gohelper.setActive(arg_23_0._gocollectFinish, not arg_23_0.bonusFinished and arg_23_0._haveClueCount == arg_23_0._allClueCount)
+	arg_23_0._goCollectProcessAni:Play("idle")
+	arg_23_0._goCollectFinishAni:Play("open")
 
-	if slot0.bonusFinished then
-		TaskDispatcher.runDelay(slot0._markNote, slot0, 0.02)
+	if arg_23_0.bonusFinished then
+		TaskDispatcher.runDelay(arg_23_0._markNote, arg_23_0, 0.02)
 	end
 
-	slot0:com_createObjList(slot0._onCollectItemShow, string.splitToNumber(slot0._selectConfig.clueIds, "|"), slot0._gocollectNote, gohelper.findChild(slot0._gocollectNote, "txt_noteItem"))
-	gohelper.setActive(slot0._goblock, false)
+	local var_23_0 = string.splitToNumber(arg_23_0._selectConfig.clueIds, "|")
+	local var_23_1 = gohelper.findChild(arg_23_0._gocollectNote, "txt_noteItem")
+
+	arg_23_0:com_createObjList(arg_23_0._onCollectItemShow, var_23_0, arg_23_0._gocollectNote, var_23_1)
+	gohelper.setActive(arg_23_0._goblock, false)
 end
 
-function slot0._closeProcessAndShowGoCollectFinish(slot0)
-	slot0._showGoCollectAniFlow = slot0._showGoCollectAniFlow or FlowSequence.New()
+function var_0_0._closeProcessAndShowGoCollectFinish(arg_24_0)
+	arg_24_0._showGoCollectAniFlow = arg_24_0._showGoCollectAniFlow or FlowSequence.New()
 
-	slot0._showGoCollectAniFlow:addWork(FunctionWork.New(function ()
-		uv0._goCollectProcessAni:Play("close")
+	arg_24_0._showGoCollectAniFlow:addWork(FunctionWork.New(function()
+		arg_24_0._goCollectProcessAni:Play("close")
 	end))
-	slot0._showGoCollectAniFlow:addWork(WorkWaitSeconds.New(0.3))
-	slot0._showGoCollectAniFlow:addWork(FunctionWork.New(function ()
-		gohelper.setActive(uv0._gocollectProcess, false)
-		gohelper.setActive(uv0._gocollectFinish, true)
-		uv0._goCollectFinishAni:Play("open")
-		uv0:_refreshCollectData()
+	arg_24_0._showGoCollectAniFlow:addWork(WorkWaitSeconds.New(0.3))
+	arg_24_0._showGoCollectAniFlow:addWork(FunctionWork.New(function()
+		gohelper.setActive(arg_24_0._gocollectProcess, false)
+		gohelper.setActive(arg_24_0._gocollectFinish, true)
+		arg_24_0._goCollectFinishAni:Play("open")
+		arg_24_0:_refreshCollectData()
 	end))
-	slot0._showGoCollectAniFlow:start()
+	arg_24_0._showGoCollectAniFlow:start()
 end
 
-function slot0._onCollectPieceShow(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChild(slot1, "go_empty")
-	slot5 = gohelper.findChild(slot1, "go_collected")
-	slot6 = gohelper.findChildComponent(slot1, "go_collected", typeof(UIMesh))
-	slot7 = UnityEngine.Object.Instantiate(slot6.material)
-	slot6.material = slot7
-	slot8 = slot5:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+function var_0_0._onCollectPieceShow(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0 = gohelper.findChild(arg_27_1, "go_empty")
+	local var_27_1 = gohelper.findChild(arg_27_1, "go_collected")
+	local var_27_2 = gohelper.findChildComponent(arg_27_1, "go_collected", typeof(UIMesh))
+	local var_27_3 = UnityEngine.Object.Instantiate(var_27_2.material)
 
-	slot8.mas:Clear()
-	slot8.mas:Add(slot7)
-	gohelper.onceAddComponent(slot5, typeof(UnityEngine.Animator)):Play("idle", 0, 0)
-	gohelper.setActive(slot5, slot3 < slot0._collectItemUnlockPlayIndex)
+	var_27_2.material = var_27_3
+
+	local var_27_4 = var_27_1:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+
+	var_27_4.mas:Clear()
+	var_27_4.mas:Add(var_27_3)
+	gohelper.onceAddComponent(var_27_1, typeof(UnityEngine.Animator)):Play("idle", 0, 0)
+	gohelper.setActive(var_27_1, arg_27_3 < arg_27_0._collectItemUnlockPlayIndex)
 end
 
-function slot0.getNoteItemUnlockAniFinish(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteItemUnlockAniFinish .. slot0, 0)
+function var_0_0.getNoteItemUnlockAniFinish(arg_28_0)
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteItemUnlockAniFinish .. arg_28_0, 0)
 end
 
-function slot0.setNoteItemUnlockAniFinish(slot0, slot1)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteItemUnlockAniFinish .. slot0, slot1 or 1)
+function var_0_0.setNoteItemUnlockAniFinish(arg_29_0, arg_29_1)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteItemUnlockAniFinish .. arg_29_0, arg_29_1 or 1)
 end
 
-function slot0._onCollectItemShow(slot0, slot1, slot2, slot3)
-	slot5 = gohelper.findChild(slot1, "go_storytag")
-	slot10 = lua_activity121_clue.configDict[slot2][slot0._activityId]
-	gohelper.findChildText(slot1, "").text = slot10.name
+function var_0_0._onCollectItemShow(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	local var_30_0 = gohelper.findChildText(arg_30_1, "")
+	local var_30_1 = gohelper.findChild(arg_30_1, "go_storytag")
+	local var_30_2 = gohelper.findChild(arg_30_1, "go_point")
+	local var_30_3 = gohelper.findChild(arg_30_1, "go_line")
+	local var_30_4 = gohelper.findChild(arg_30_1, "go_vline")
+	local var_30_5 = gohelper.findChild(arg_30_1, "go_wave")
+	local var_30_6 = lua_activity121_clue.configDict[arg_30_2][arg_30_0._activityId]
 
-	gohelper.setActive(gohelper.findChild(slot1, "go_vline"), slot10.tagType == 1)
-	gohelper.setActive(gohelper.findChild(slot1, "go_line"), slot10.tagType == 2)
-	gohelper.setActive(gohelper.findChild(slot1, "go_point"), slot10.tagType == 3)
-	gohelper.setActive(gohelper.findChild(slot1, "go_wave"), slot10.tagType == 4)
+	var_30_0.text = var_30_6.name
 
-	slot12 = nil
+	local var_30_7 = var_30_6.tagType
 
-	if slot10.tagType == 1 then
-		slot12 = slot8.transform
-	elseif slot11 == 2 then
-		slot12 = slot7.transform
-	elseif slot11 == 3 then
-		slot12 = slot6.transform
-	elseif slot11 == 4 then
-		slot12 = slot9.transform
+	gohelper.setActive(var_30_4, var_30_6.tagType == 1)
+	gohelper.setActive(var_30_3, var_30_6.tagType == 2)
+	gohelper.setActive(var_30_2, var_30_6.tagType == 3)
+	gohelper.setActive(var_30_5, var_30_6.tagType == 4)
+
+	local var_30_8
+
+	if var_30_7 == 1 then
+		var_30_8 = var_30_4.transform
+	elseif var_30_7 == 2 then
+		var_30_8 = var_30_3.transform
+	elseif var_30_7 == 3 then
+		var_30_8 = var_30_2.transform
+	elseif var_30_7 == 4 then
+		var_30_8 = var_30_5.transform
 	end
 
-	gohelper.setActive(slot5, false)
-	recthelper.setWidth(slot12, slot4:GetPreferredValues().x - 26)
+	gohelper.setActive(var_30_1, false)
+	recthelper.setWidth(var_30_8, var_30_0:GetPreferredValues().x - 26)
 end
 
-function slot0._createLeftNote(slot0, slot1, slot2, slot3)
-	slot0:_onNoteItemShow(slot1, slot0._haveNoteList[slot3], slot3)
+function var_0_0._createLeftNote(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	arg_31_0:_onNoteItemShow(arg_31_1, arg_31_0._haveNoteList[arg_31_3], arg_31_3)
 end
 
-function slot0._createRightNote(slot0, slot1, slot2, slot3)
-	slot3 = slot3 + 2
+function var_0_0._createRightNote(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	arg_32_3 = arg_32_3 + 2
 
-	slot0:_onNoteItemShow(slot1, slot0._haveNoteList[slot3], slot3)
+	arg_32_0:_onNoteItemShow(arg_32_1, arg_32_0._haveNoteList[arg_32_3], arg_32_3)
 end
 
-function slot0.getFirstShowStory(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteFirstShowStory .. slot0, 0)
+function var_0_0.getFirstShowStory(arg_33_0)
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteFirstShowStory .. arg_33_0, 0)
 end
 
-function slot0.setFirstShowStory(slot0)
-	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteFirstShowStory .. slot0, 1)
+function var_0_0.setFirstShowStory(arg_34_0)
+	return PlayerPrefsHelper.setNumber(PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.Activity1_2NoteFirstShowStory .. arg_34_0, 1)
 end
 
-function slot0._onNoteItemShow(slot0, slot1, slot2, slot3)
-	slot1.name = slot2 or 0
-	slot11 = gohelper.findChildText(slot1, "go_empty/txt")
-	slot13 = gohelper.findChild(slot1, "title")
+function var_0_0._onNoteItemShow(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	local var_35_0 = var_0_0.getFirstShowStory(arg_35_0._selectConfig.id) == 0
 
-	gohelper.setActive(gohelper.findChild(slot1, "go_line"), true)
+	arg_35_1.name = arg_35_2 or 0
 
-	gohelper.findChildText(slot1, "title/go_titleNormal/txt_title").text = lua_activity121_note.configDict[slot0._noteList[slot3]][slot0._activityId].name
-	gohelper.findChildText(slot1, "title/go_titleEmpty/txt_title").text = ""
+	local var_35_1 = gohelper.findChild(arg_35_1, "title/go_titleNormal")
+	local var_35_2 = gohelper.findChildText(arg_35_1, "title/go_titleNormal/txt_title")
+	local var_35_3 = gohelper.findChild(arg_35_1, "title/go_titleEmpty")
+	local var_35_4 = gohelper.findChildText(arg_35_1, "title/go_titleEmpty/txt_title")
+	local var_35_5 = gohelper.findChildText(arg_35_1, "txt_desc")
+	local var_35_6 = gohelper.findChild(arg_35_1, "go_empty")
+	local var_35_7 = gohelper.findChildText(arg_35_1, "go_empty/txt")
+	local var_35_8 = gohelper.findChild(arg_35_1, "go_line")
+	local var_35_9 = gohelper.findChild(arg_35_1, "title")
 
-	if not slot0._haveNoteList[slot3] then
-		gohelper.setActive(slot1, true)
-		gohelper.setActive(gohelper.findChild(slot1, "title/go_titleNormal"), false)
-		gohelper.setActive(gohelper.findChild(slot1, "title/go_titleEmpty"), false)
-		gohelper.setActive(gohelper.findChild(slot1, "go_empty"), true)
+	gohelper.setActive(var_35_8, true)
 
-		gohelper.findChildText(slot1, "txt_desc").text = ""
-		slot17 = DungeonConfig.instance:getEpisodeCO(slot14.episodeId)
-		gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator)).enabled = false
-		gohelper.onceAddComponent(slot1, gohelper.Type_CanvasGroup).alpha = uv0.getFirstShowStory(slot0._selectConfig.id) == 0 and 0 or 1
+	local var_35_10 = lua_activity121_note.configDict[arg_35_0._noteList[arg_35_3]][arg_35_0._activityId]
+
+	var_35_2.text = var_35_10.name
+	var_35_4.text = ""
+
+	local var_35_11 = arg_35_0._haveNoteList[arg_35_3]
+
+	if not var_35_11 then
+		gohelper.setActive(arg_35_1, true)
+		gohelper.setActive(var_35_1, false)
+		gohelper.setActive(var_35_3, false)
+		gohelper.setActive(var_35_6, true)
+
+		var_35_5.text = ""
+
+		local var_35_12 = var_35_10.episodeId
+		local var_35_13 = DungeonConfig.instance:getEpisodeCO(var_35_12)
+
+		gohelper.onceAddComponent(arg_35_1, typeof(UnityEngine.Animator)).enabled = false
+		gohelper.onceAddComponent(arg_35_1, gohelper.Type_CanvasGroup).alpha = var_35_0 and 0 or 1
 	else
-		gohelper.setActive(slot5, true)
-		gohelper.setActive(slot7, false)
-		gohelper.setActive(slot10, false)
+		gohelper.setActive(var_35_1, true)
+		gohelper.setActive(var_35_3, false)
+		gohelper.setActive(var_35_6, false)
 
-		slot9.text = slot0:_showNoteDesNormal(slot14.content)
+		var_35_5.text = arg_35_0:_showNoteDesNormal(var_35_10.content)
 
-		if slot0.bonusFinished then
-			uv0.setNoteItemUnlockAniFinish(slot14.noteId)
+		if arg_35_0.bonusFinished then
+			var_0_0.setNoteItemUnlockAniFinish(var_35_10.noteId)
 		end
 
-		if uv0.getNoteItemUnlockAniFinish(slot15) == 0 then
-			gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator)).enabled = false
-			gohelper.onceAddComponent(slot1, gohelper.Type_CanvasGroup).alpha = 0
+		if var_0_0.getNoteItemUnlockAniFinish(var_35_11) == 0 then
+			gohelper.onceAddComponent(arg_35_1, typeof(UnityEngine.Animator)).enabled = false
+			gohelper.onceAddComponent(arg_35_1, gohelper.Type_CanvasGroup).alpha = 0
 		end
 	end
 
-	table.insert(slot0._textList, slot9)
-	gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator)):Play("idle")
+	table.insert(arg_35_0._textList, var_35_5)
+	gohelper.onceAddComponent(arg_35_1, typeof(UnityEngine.Animator)):Play("idle")
 end
 
-function slot0._episodeId2Number(slot0, slot1)
-	slot0._episode2NumberDic = slot0._episode2NumberDic or {}
+function var_0_0._episodeId2Number(arg_36_0, arg_36_1)
+	arg_36_0._episode2NumberDic = arg_36_0._episode2NumberDic or {}
 
-	if slot0._episode2NumberDic[slot1] then
-		return slot0._episode2NumberDic[slot1]
+	if arg_36_0._episode2NumberDic[arg_36_1] then
+		return arg_36_0._episode2NumberDic[arg_36_1]
 	end
 
-	slot2 = DungeonConfig.instance:getEpisodeCO(slot1)
-	slot3 = DungeonConfig.instance:getChapterCO(slot2.chapterId)
+	local var_36_0 = DungeonConfig.instance:getEpisodeCO(arg_36_1)
+	local var_36_1 = DungeonConfig.instance:getChapterCO(var_36_0.chapterId)
+	local var_36_2 = DungeonConfig.instance:getChapterEpisodeCOList(var_36_0.chapterId)
 
-	if DungeonConfig.instance:getChapterEpisodeCOList(slot2.chapterId) then
-		table.sort(slot4, function (slot0, slot1)
-			return slot0.id < slot1.id
+	if var_36_2 then
+		table.sort(var_36_2, function(arg_37_0, arg_37_1)
+			return arg_37_0.id < arg_37_1.id
 		end)
 	end
 
-	for slot8, slot9 in ipairs(slot4) do
-		for slot14, slot15 in ipairs(DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(slot9.id)) do
-			slot0._episode2NumberDic[slot15] = slot3.chapterIndex .. string.format(".%02d", slot8)
+	for iter_36_0, iter_36_1 in ipairs(var_36_2) do
+		local var_36_3 = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(iter_36_1.id)
+
+		for iter_36_2, iter_36_3 in ipairs(var_36_3) do
+			arg_36_0._episode2NumberDic[iter_36_3] = var_36_1.chapterIndex .. string.format(".%02d", iter_36_0)
 		end
 	end
 
-	return slot0._episode2NumberDic[slot1]
+	return arg_36_0._episode2NumberDic[arg_36_1]
 end
 
-function slot0._showNoteDesNormal(slot0, slot1)
-	return string.gsub(slot1, "<%d-:(.-)>", "%1")
+function var_0_0._showNoteDesNormal(arg_38_0, arg_38_1)
+	local var_38_0 = arg_38_1
+
+	return string.gsub(var_38_0, "<%d-:(.-)>", "%1")
 end
 
-function slot0._releaseSignObj(slot0)
-	if slot0._signObjDic then
-		for slot4, slot5 in pairs(slot0._signObjDic) do
-			for slot9, slot10 in ipairs(slot5) do
-				for slot14, slot15 in ipairs(slot10) do
-					gohelper.destroy(slot15)
+function var_0_0._releaseSignObj(arg_39_0)
+	if arg_39_0._signObjDic then
+		for iter_39_0, iter_39_1 in pairs(arg_39_0._signObjDic) do
+			for iter_39_2, iter_39_3 in ipairs(iter_39_1) do
+				for iter_39_4, iter_39_5 in ipairs(iter_39_3) do
+					gohelper.destroy(iter_39_5)
 				end
 			end
 		end
 	end
 
-	slot0._signObjDic = {}
+	arg_39_0._signObjDic = {}
 end
 
-slot0._signTypeName = {
+var_0_0._signTypeName = {
 	"go_vline",
 	"go_line",
 	"go_point",
 	"go_wave",
-	[101.0] = "go_vline",
-	[202.0] = "go_line",
-	[104.0] = "go_wave",
-	[303.0] = "go_point",
-	[304.0] = "go_wave",
-	[204.0] = "go_wave",
-	[301.0] = "go_vline",
-	[302.0] = "go_line",
-	[102.0] = "go_line",
-	[201.0] = "go_vline",
-	[103.0] = "go_point",
-	[203.0] = "go_point"
+	[101] = "go_vline",
+	[202] = "go_line",
+	[104] = "go_wave",
+	[303] = "go_point",
+	[304] = "go_wave",
+	[204] = "go_wave",
+	[301] = "go_vline",
+	[302] = "go_line",
+	[102] = "go_line",
+	[201] = "go_vline",
+	[103] = "go_point",
+	[203] = "go_point"
 }
 
-function slot0._markNote(slot0)
-	slot0:_releaseSignObj()
+function var_0_0._markNote(arg_40_0)
+	arg_40_0:_releaseSignObj()
 
-	for slot4 = 1, slot0._allClueCount do
-		if slot0._haveNoteList[slot4] then
-			slot8 = "<%d-:(.-)>"
-			slot9, slot10 = string.find(lua_activity121_note.configDict[slot5][slot0._activityId].content, "<%d-:.->")
+	for iter_40_0 = 1, arg_40_0._allClueCount do
+		local var_40_0 = arg_40_0._haveNoteList[iter_40_0]
 
-			while slot9 do
-				slot6 = string.gsub(slot6, slot8, function (slot0)
-					uv0 = slot0
+		if var_40_0 then
+			local var_40_1 = lua_activity121_note.configDict[var_40_0][arg_40_0._activityId].content
+			local var_40_2 = "<%d-:.->"
+			local var_40_3 = "<%d-:(.-)>"
+			local var_40_4, var_40_5 = string.find(var_40_1, var_40_2)
 
-					return slot0
+			while var_40_4 do
+				local var_40_6 = string.match(var_40_1, "<(%d-):.->")
+				local var_40_7 = tonumber(var_40_6)
+				local var_40_8 = ""
+
+				var_40_1 = string.gsub(var_40_1, var_40_3, function(arg_41_0)
+					var_40_8 = arg_41_0
+
+					return arg_41_0
 				end, 1)
-				slot13 = slot0._textList[slot4]
 
-				if lua_activity121_clue.configDict[tonumber(string.match(slot6, "<(%d-):.->"))][slot0._activityId] then
-					slot15 = slot14.tagType
+				local var_40_9 = arg_40_0._textList[iter_40_0]
+				local var_40_10 = lua_activity121_clue.configDict[var_40_7][arg_40_0._activityId]
 
-					if gohelper.cloneInPlace(gohelper.findChild(slot13.gameObject, uv0._signTypeName[slot11])) then
-						slot0._signObjDic[slot11] = slot0._signObjDic[slot11] or {}
+				if var_40_10 then
+					local var_40_11 = var_40_10.tagType
+					local var_40_12 = string.sub(var_40_1, 1, var_40_4 - 1)
+					local var_40_13 = gohelper.cloneInPlace(gohelper.findChild(var_40_9.gameObject, var_0_0._signTypeName[var_40_7]))
 
-						table.insert(slot0:getUserDataTb_(), slot17)
-						gohelper.setActive(slot17, true)
+					if var_40_13 then
+						arg_40_0._signObjDic[var_40_7] = arg_40_0._signObjDic[var_40_7] or {}
 
-						slot19 = slot17.transform
+						local var_40_14 = arg_40_0:getUserDataTb_()
 
-						if GameUtil.utf8len(string.sub(slot6, 1, slot9 - 1)) <= slot13.textInfo.characterCount then
-							slot24 = slot13.textInfo.characterInfo[slot21]
-							slot25 = slot24.bottomLeft
+						table.insert(var_40_14, var_40_13)
+						gohelper.setActive(var_40_13, true)
 
-							recthelper.setAnchorX(slot19, slot25.x + recthelper.getWidth(slot13.transform) / 2)
-							recthelper.setAnchorY(slot19, slot24.baseLine - recthelper.getHeight(slot13.transform) / 2 - 10)
+						local var_40_15 = var_40_13.transform
+						local var_40_16 = var_40_9.textInfo.characterCount
+						local var_40_17 = GameUtil.utf8len(var_40_12)
 
-							slot33 = 0
+						if var_40_17 <= var_40_16 then
+							local var_40_18 = recthelper.getWidth(var_40_9.transform)
+							local var_40_19 = recthelper.getHeight(var_40_9.transform)
+							local var_40_20 = var_40_9.textInfo.characterInfo[var_40_17]
+							local var_40_21 = var_40_20.bottomLeft
+							local var_40_22 = var_40_21.x + var_40_18 / 2
+							local var_40_23 = var_40_20.baseLine - var_40_19 / 2 - 10
 
-							if (slot25.y - slot13.textInfo.characterInfo[GameUtil.utf8len("") + slot21 - 1].bottomRight.y) / slot13.fontSize > 1 then
-								recthelper.setWidth(slot19, slot22 - slot26)
+							recthelper.setAnchorX(var_40_15, var_40_22)
+							recthelper.setAnchorY(var_40_15, var_40_23)
 
-								for slot37 = slot21, slot28 do
-									slot39 = slot13.textInfo.characterInfo[slot37 + 1]
+							local var_40_24 = GameUtil.utf8len(var_40_8) + var_40_17 - 1
+							local var_40_25 = var_40_9.textInfo.characterInfo[var_40_24].bottomRight
+							local var_40_26 = var_40_9.fontSize
+							local var_40_27 = (var_40_21.y - var_40_25.y) / var_40_26
+							local var_40_28 = 0
 
-									if slot13.textInfo.characterInfo[slot37] and slot39 and slot38.baseLine - slot39.baseLine > 1 then
-										slot40 = gohelper.cloneInPlace(slot17)
+							if var_40_27 > 1 then
+								recthelper.setWidth(var_40_15, var_40_18 - var_40_22)
 
-										table.insert(slot18, slot40)
+								for iter_40_1 = var_40_17, var_40_24 do
+									local var_40_29 = var_40_9.textInfo.characterInfo[iter_40_1]
+									local var_40_30 = var_40_9.textInfo.characterInfo[iter_40_1 + 1]
 
-										slot41 = slot40.transform
+									if var_40_29 and var_40_30 and var_40_29.baseLine - var_40_30.baseLine > 1 then
+										local var_40_31 = gohelper.cloneInPlace(var_40_13)
 
-										recthelper.setAnchorX(slot41, slot39.bottomLeft.x + slot22 / 2)
-										recthelper.setAnchorY(slot41, slot39.baseLine - slot23 / 2 - 10)
+										table.insert(var_40_14, var_40_31)
 
-										if slot33 + 1 > 0 and slot33 < slot32 - 1 then
-											recthelper.setWidth(slot41, slot22)
+										local var_40_32 = var_40_31.transform
+
+										var_40_21 = var_40_30.bottomLeft
+
+										local var_40_33 = var_40_21.x + var_40_18 / 2
+										local var_40_34 = var_40_30.baseLine - var_40_19 / 2 - 10
+
+										recthelper.setAnchorX(var_40_32, var_40_33)
+										recthelper.setAnchorY(var_40_32, var_40_34)
+
+										var_40_28 = var_40_28 + 1
+
+										if var_40_28 > 0 and var_40_28 < var_40_27 - 1 then
+											recthelper.setWidth(var_40_32, var_40_18)
 										else
-											recthelper.setWidth(slot41, slot30.x - slot39.bottomLeft.x)
+											recthelper.setWidth(var_40_32, var_40_25.x - var_40_30.bottomLeft.x)
 										end
 									end
 								end
 							else
-								recthelper.setWidth(slot19, slot30.x - slot25.x)
+								recthelper.setWidth(var_40_15, var_40_25.x - var_40_21.x)
 							end
 						end
 
-						table.insert(slot0._signObjDic[slot11], slot18)
+						table.insert(arg_40_0._signObjDic[var_40_7], var_40_14)
 					end
 				end
 
-				slot9, slot10 = string.find(slot6, slot7)
+				local var_40_35
+
+				var_40_4, var_40_35 = string.find(var_40_1, var_40_2)
 			end
 		end
 	end
 
-	if GuideModel.instance:isGuideFinish(uv1) and slot0.bonusFinished then
-		for slot5, slot6 in ipairs(string.splitToNumber(slot0._selectConfig.clueIds, "|")) do
-			if lua_activity121_clue.configDict[slot6][slot0._activityId].storyTag == 1 then
-				gohelper.setActive(gohelper.findChild(slot0._gocollectNote.transform:GetChild(slot5 - 1).gameObject, "go_storytag"), true)
+	if GuideModel.instance:isGuideFinish(var_0_1) and arg_40_0.bonusFinished then
+		local var_40_36 = string.splitToNumber(arg_40_0._selectConfig.clueIds, "|")
+
+		for iter_40_2, iter_40_3 in ipairs(var_40_36) do
+			if lua_activity121_clue.configDict[iter_40_3][arg_40_0._activityId].storyTag == 1 then
+				local var_40_37 = arg_40_0._gocollectNote.transform:GetChild(iter_40_2 - 1).gameObject
+				local var_40_38 = gohelper.findChild(var_40_37, "go_storytag")
+
+				gohelper.setActive(var_40_38, true)
 			end
 		end
 	end
 end
 
-function slot0._onMaskClick(slot0)
+function var_0_0._onMaskClick(arg_42_0)
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.skipLineWork)
 end
 
-function slot0._playMarkClueAni(slot0)
-	gohelper.setActive(slot0._goblock, true)
-	slot0:_releaseAniFlow()
+function var_0_0._playMarkClueAni(arg_43_0)
+	gohelper.setActive(arg_43_0._goblock, true)
+	arg_43_0:_releaseAniFlow()
 
-	slot0._aniFlow = FlowSequence.New()
-	slot1 = slot0._gocollectNote.transform
+	arg_43_0._aniFlow = FlowSequence.New()
 
-	slot0._aniFlow:addWork(FunctionWork.New(function ()
-		gohelper.setActive(uv0._gocollectFinish, false)
-		gohelper.setActive(uv0._gocollectNote, true)
+	local var_43_0 = arg_43_0._gocollectNote.transform
 
-		for slot3 = 0, uv1.childCount - 1 do
-			gohelper.setActive(uv1:GetChild(slot3).gameObject, false)
+	arg_43_0._aniFlow:addWork(FunctionWork.New(function()
+		gohelper.setActive(arg_43_0._gocollectFinish, false)
+		gohelper.setActive(arg_43_0._gocollectNote, true)
+
+		for iter_44_0 = 0, var_43_0.childCount - 1 do
+			local var_44_0 = var_43_0:GetChild(iter_44_0).gameObject
+
+			gohelper.setActive(var_44_0, false)
 		end
 	end))
 
-	for slot6, slot7 in ipairs(string.splitToNumber(slot0._selectConfig.clueIds, "|")) do
-		if slot0._signObjDic[slot7] then
-			slot0._aniFlow:addWork(VersionActivity_1_2_StoryClueAniWork.New(slot0._signObjDic[slot7], slot0, slot6, slot7))
+	local var_43_1 = string.splitToNumber(arg_43_0._selectConfig.clueIds, "|")
+
+	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
+		if arg_43_0._signObjDic[iter_43_1] then
+			arg_43_0._aniFlow:addWork(VersionActivity_1_2_StoryClueAniWork.New(arg_43_0._signObjDic[iter_43_1], arg_43_0, iter_43_0, iter_43_1))
 		end
 	end
 
-	slot0._aniFlow:addWork(TweenWork.New({
+	arg_43_0._aniFlow:addWork(TweenWork.New({
 		type = "DOAnchorPos",
 		tox = 0,
 		toy = 0,
 		t = 0.3,
-		tr = slot0._root.transform
+		tr = arg_43_0._root.transform
 	}))
-	slot0._aniFlow:addWork(TweenWork.New({
+	arg_43_0._aniFlow:addWork(TweenWork.New({
 		toz = 1,
 		type = "DOScale",
 		tox = 1,
 		toy = 1,
 		t = 0.3,
-		tr = slot0._root.transform
+		tr = arg_43_0._root.transform
 	}))
-	slot0._aniFlow:addWork(FunctionWork.New(function ()
-		gohelper.setActive(uv0._gomask, false)
-		uv0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, uv0._onCloseView, uv0)
-		Activity121Rpc.instance:sendGet121BonusRequest(uv0._selectConfig.id)
+	arg_43_0._aniFlow:addWork(FunctionWork.New(function()
+		gohelper.setActive(arg_43_0._gomask, false)
+		arg_43_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_43_0._onCloseView, arg_43_0)
+		Activity121Rpc.instance:sendGet121BonusRequest(arg_43_0._selectConfig.id)
 	end))
-	slot0._aniFlow:registerDoneListener(slot0._onAniFlowDone, slot0)
-	slot0._aniFlow:start()
+	arg_43_0._aniFlow:registerDoneListener(arg_43_0._onAniFlowDone, arg_43_0)
+	arg_43_0._aniFlow:start()
 end
 
-function slot0._onAniFlowDone(slot0)
-	gohelper.setActive(slot0._goblock, false)
+function var_0_0._onAniFlowDone(arg_46_0)
+	gohelper.setActive(arg_46_0._goblock, false)
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.CollectStoryAniEnd)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		slot6 = slot0._onCloseView
-		slot7 = slot0
+function var_0_0._onCloseView(arg_47_0, arg_47_1)
+	if arg_47_1 == ViewName.CommonPropView then
+		arg_47_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_47_0._onCloseView, arg_47_0)
 
-		slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot6, slot7)
+		local var_47_0 = true
 
-		slot2 = true
-
-		for slot6, slot7 in ipairs(slot0._storyList) do
-			if not VersionActivity1_2NoteModel.instance:getBonusFinished(slot7.id) then
-				slot2 = false
+		for iter_47_0, iter_47_1 in ipairs(arg_47_0._storyList) do
+			if not VersionActivity1_2NoteModel.instance:getBonusFinished(iter_47_1.id) then
+				var_47_0 = false
 			end
 		end
 
-		if slot2 then
-			if GuideModel.instance:isGuideRunning(uv0) then
+		if var_47_0 then
+			if GuideModel.instance:isGuideRunning(var_0_1) then
 				return
 			end
 
-			slot0:_playLastShowFlow()
+			arg_47_0:_playLastShowFlow()
 		end
 	end
 end
 
-function slot0._playLastShowFlow(slot0)
-	gohelper.setActive(slot0._goblock, true)
+function var_0_0._playLastShowFlow(arg_48_0)
+	gohelper.setActive(arg_48_0._goblock, true)
 
-	if not slot0._lastShowFlow then
-		slot1 = 0
-		slot0._lastShowFlow = FlowSequence.New()
+	if not arg_48_0._lastShowFlow then
+		local var_48_0 = 0
 
-		for slot5, slot6 in ipairs(slot0._storyList) do
-			slot0._lastShowFlow:addWork(FunctionWork.New(function ()
-				uv0 = uv0 + 1
+		arg_48_0._lastShowFlow = FlowSequence.New()
 
-				uv1:_onBtnClick(uv0)
+		for iter_48_0, iter_48_1 in ipairs(arg_48_0._storyList) do
+			arg_48_0._lastShowFlow:addWork(FunctionWork.New(function()
+				var_48_0 = var_48_0 + 1
+
+				arg_48_0:_onBtnClick(var_48_0)
 			end))
-			slot0._lastShowFlow:addWork(WorkWaitSeconds.New(1))
+			arg_48_0._lastShowFlow:addWork(WorkWaitSeconds.New(1))
 
-			for slot11, slot12 in ipairs(string.splitToNumber(slot6.clueIds, "|")) do
-				if lua_activity121_clue.configDict[slot12][slot0._activityId].storyTag == 1 then
-					slot0._lastShowFlow:addWork(FunctionWork.New(function ()
-						slot1 = gohelper.findChild(uv0._gocollectNote.transform:GetChild(uv1 - 1).gameObject, "go_storytag")
+			local var_48_1 = string.splitToNumber(iter_48_1.clueIds, "|")
 
-						gohelper.setActive(slot1, true)
-						gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator)):Play("open")
+			for iter_48_2, iter_48_3 in ipairs(var_48_1) do
+				if lua_activity121_clue.configDict[iter_48_3][arg_48_0._activityId].storyTag == 1 then
+					arg_48_0._lastShowFlow:addWork(FunctionWork.New(function()
+						local var_50_0 = arg_48_0._gocollectNote.transform:GetChild(iter_48_2 - 1).gameObject
+						local var_50_1 = gohelper.findChild(var_50_0, "go_storytag")
+
+						gohelper.setActive(var_50_1, true)
+						gohelper.onceAddComponent(var_50_1, typeof(UnityEngine.Animator)):Play("open")
 					end))
-					slot0._lastShowFlow:addWork(WorkWaitSeconds.New(1))
+					arg_48_0._lastShowFlow:addWork(WorkWaitSeconds.New(1))
 				end
 			end
 		end
 	end
 
-	slot0._lastShowFlow:registerDoneListener(slot0._onLastShowFlowDone, slot0)
-	slot0._lastShowFlow:start()
+	arg_48_0._lastShowFlow:registerDoneListener(arg_48_0._onLastShowFlowDone, arg_48_0)
+	arg_48_0._lastShowFlow:start()
 end
 
-function slot0._onLastShowFlowDone(slot0)
+function var_0_0._onLastShowFlowDone(arg_51_0)
 	DungeonRpc.instance:sendMapElementRequest(12101091)
 end
 
-function slot0._OnRemoveElement(slot0, slot1)
-	if slot1 == 12101091 then
-		slot0:closeThis()
+function var_0_0._OnRemoveElement(arg_52_0, arg_52_1)
+	if arg_52_1 == 12101091 then
+		arg_52_0:closeThis()
 	end
 end
 
-function slot0._releaseAniFlow(slot0)
-	if slot0._aniFlow then
-		slot0._aniFlow:unregisterDoneListener(slot0._onAniFlowDone, slot0)
-		slot0._aniFlow:destroy()
+function var_0_0._releaseAniFlow(arg_53_0)
+	if arg_53_0._aniFlow then
+		arg_53_0._aniFlow:unregisterDoneListener(arg_53_0._onAniFlowDone, arg_53_0)
+		arg_53_0._aniFlow:destroy()
 
-		slot0._aniFlow = nil
+		arg_53_0._aniFlow = nil
 	end
 end
 
-function slot0._showReward(slot0)
-	if string.nilorempty(slot0._selectConfig.bonus) then
-		gohelper.setActive(slot0._gocollectReward, false)
-		gohelper.setActive(slot0._gocanget, false)
+function var_0_0._showReward(arg_54_0)
+	if string.nilorempty(arg_54_0._selectConfig.bonus) then
+		gohelper.setActive(arg_54_0._gocollectReward, false)
+		gohelper.setActive(arg_54_0._gocanget, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gocollectReward, true)
+	gohelper.setActive(arg_54_0._gocollectReward, true)
 
-	slot1 = string.splitToNumber(slot0._selectConfig.bonus, "#")
-	slot0._reward = slot0._reward or IconMgr.instance:getCommonItemIcon(slot0._gocollectReward)
+	local var_54_0 = string.splitToNumber(arg_54_0._selectConfig.bonus, "#")
 
-	slot0._reward:setMOValue(slot1[1], slot1[2], slot1[3])
-	slot0._reward:setCountFontSize(34)
-	gohelper.setActive(slot0._gocanget, not slot0.bonusFinished and slot0._haveClueCount == slot0._allClueCount)
+	arg_54_0._reward = arg_54_0._reward or IconMgr.instance:getCommonItemIcon(arg_54_0._gocollectReward)
+
+	arg_54_0._reward:setMOValue(var_54_0[1], var_54_0[2], var_54_0[3])
+	arg_54_0._reward:setCountFontSize(34)
+	gohelper.setActive(arg_54_0._gocanget, not arg_54_0.bonusFinished and arg_54_0._haveClueCount == arg_54_0._allClueCount)
 end
 
-function slot0.getStoryRedPoint(slot0)
-	if VersionActivity1_2NoteModel.instance:getBonusFinished(slot0) then
+function var_0_0.getStoryRedPoint(arg_55_0)
+	if VersionActivity1_2NoteModel.instance:getBonusFinished(arg_55_0) then
 		return false
 	end
 
-	for slot7, slot8 in ipairs(string.splitToNumber(lua_activity121_story.configDict[VersionActivityEnum.ActivityId.Act121][slot0].noteIds, "|")) do
-		if VersionActivity1_2NoteModel.instance:getNote(slot8) and uv0.getNoteItemUnlockAniFinish(slot8) == 0 then
+	local var_55_0 = VersionActivityEnum.ActivityId.Act121
+	local var_55_1 = lua_activity121_story.configDict[var_55_0][arg_55_0]
+	local var_55_2 = string.splitToNumber(var_55_1.noteIds, "|")
+
+	for iter_55_0, iter_55_1 in ipairs(var_55_2) do
+		if VersionActivity1_2NoteModel.instance:getNote(iter_55_1) and var_0_0.getNoteItemUnlockAniFinish(iter_55_1) == 0 then
 			return true
 		end
 	end
 end
 
-function slot0.getRedPoint()
-	for slot3, slot4 in ipairs(VersionActivity1_2NoteConfig.instance:getStoryList()) do
-		if uv0.getStoryRedPoint(slot4.id) then
+function var_0_0.getRedPoint()
+	for iter_56_0, iter_56_1 in ipairs(VersionActivity1_2NoteConfig.instance:getStoryList()) do
+		if var_0_0.getStoryRedPoint(iter_56_1.id) then
 			return true
 		end
 	end
 end
 
-function slot0._focusCollectedAllClueTab(slot0)
+function var_0_0._focusCollectedAllClueTab(arg_57_0)
+	return
 end
 
-function slot0._selectStoryTabByGuide(slot0, slot1)
-	slot0._selectIndex = tonumber(slot1)
+function var_0_0._selectStoryTabByGuide(arg_58_0, arg_58_1)
+	arg_58_0._selectIndex = tonumber(arg_58_1)
 
-	slot0:_refreshBtnState()
-	slot0:_refreshData()
+	arg_58_0:_refreshBtnState()
+	arg_58_0:_refreshData()
 end
 
-function slot0._markingKeyWordInStory(slot0, slot1)
-	if slot0._guideMarkingStoryFlow then
-		slot0._guideMarkingStoryFlow:stop()
-		slot0._guideMarkingStoryFlow:destroy()
+function var_0_0._markingKeyWordInStory(arg_59_0, arg_59_1)
+	if arg_59_0._guideMarkingStoryFlow then
+		arg_59_0._guideMarkingStoryFlow:stop()
+		arg_59_0._guideMarkingStoryFlow:destroy()
 
-		slot0._guideMarkingStoryFlow = nil
+		arg_59_0._guideMarkingStoryFlow = nil
 	end
 
-	slot0._guideMarkingStoryFlow = FlowSequence.New()
-	slot2 = tonumber(slot1)
-	slot0._curGuideMarkingStoryIndex = slot2
+	arg_59_0._guideMarkingStoryFlow = FlowSequence.New()
 
-	slot0._guideMarkingStoryFlow:addWork(FunctionWork.New(function ()
-		uv0:_onBtnClick(uv1)
+	local var_59_0 = tonumber(arg_59_1)
+
+	arg_59_0._curGuideMarkingStoryIndex = var_59_0
+
+	local var_59_1 = arg_59_0._storyList[var_59_0]
+
+	arg_59_0._guideMarkingStoryFlow:addWork(FunctionWork.New(function()
+		arg_59_0:_onBtnClick(var_59_0)
 	end))
-	slot0._guideMarkingStoryFlow:addWork(WorkWaitSeconds.New(1))
+	arg_59_0._guideMarkingStoryFlow:addWork(WorkWaitSeconds.New(1))
 
-	for slot8, slot9 in ipairs(string.splitToNumber(slot0._storyList[slot2].clueIds, "|")) do
-		if lua_activity121_clue.configDict[slot9][slot0._activityId].storyTag == 1 then
-			slot0._guideMarkingStoryFlow:addWork(FunctionWork.New(function ()
-				slot1 = gohelper.findChild(uv0._gocollectNote.transform:GetChild(uv1 - 1).gameObject, "go_storytag")
+	local var_59_2 = string.splitToNumber(var_59_1.clueIds, "|")
 
-				gohelper.setActive(slot1, true)
-				gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator)):Play("open")
+	for iter_59_0, iter_59_1 in ipairs(var_59_2) do
+		if lua_activity121_clue.configDict[iter_59_1][arg_59_0._activityId].storyTag == 1 then
+			arg_59_0._guideMarkingStoryFlow:addWork(FunctionWork.New(function()
+				local var_61_0 = arg_59_0._gocollectNote.transform:GetChild(iter_59_0 - 1).gameObject
+				local var_61_1 = gohelper.findChild(var_61_0, "go_storytag")
+
+				gohelper.setActive(var_61_1, true)
+				gohelper.onceAddComponent(var_61_1, typeof(UnityEngine.Animator)):Play("open")
 				AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_level_chosen)
 			end))
-			slot0._guideMarkingStoryFlow:addWork(WorkWaitSeconds.New(1))
+			arg_59_0._guideMarkingStoryFlow:addWork(WorkWaitSeconds.New(1))
 		end
 	end
 
-	slot0._guideMarkingStoryFlow:registerDoneListener(slot0._markingStoryFlowDone, slot0)
-	slot0._guideMarkingStoryFlow:start()
+	arg_59_0._guideMarkingStoryFlow:registerDoneListener(arg_59_0._markingStoryFlowDone, arg_59_0)
+	arg_59_0._guideMarkingStoryFlow:start()
 end
 
-function slot0._markingStoryFlowDone(slot0)
+function var_0_0._markingStoryFlowDone(arg_62_0)
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.CollectStoryAniEnd)
 end
 
-function slot0.onClose(slot0)
-	if slot0._showGoCollectAniFlow then
-		slot0._showGoCollectAniFlow:destroy()
+function var_0_0.onClose(arg_63_0)
+	if arg_63_0._showGoCollectAniFlow then
+		arg_63_0._showGoCollectAniFlow:destroy()
 
-		slot0._showGoCollectAniFlow = nil
+		arg_63_0._showGoCollectAniFlow = nil
 	end
 
-	if slot0._lastShowFlow then
-		slot0._lastShowFlow:unregisterDoneListener(slot0._onLastShowFlowDone, slot0)
-		slot0._lastShowFlow:destroy()
+	if arg_63_0._lastShowFlow then
+		arg_63_0._lastShowFlow:unregisterDoneListener(arg_63_0._onLastShowFlowDone, arg_63_0)
+		arg_63_0._lastShowFlow:destroy()
 
-		slot0._lastShowFlow = nil
+		arg_63_0._lastShowFlow = nil
 	end
 
-	if slot0._guideMarkingStoryFlow then
-		slot0._guideMarkingStoryFlow:stop()
-		slot0._guideMarkingStoryFlow:destroy()
+	if arg_63_0._guideMarkingStoryFlow then
+		arg_63_0._guideMarkingStoryFlow:stop()
+		arg_63_0._guideMarkingStoryFlow:destroy()
 
-		slot0._guideMarkingStoryFlow = nil
+		arg_63_0._guideMarkingStoryFlow = nil
 	end
 
-	slot0:_releaseAniFlow()
-	TaskDispatcher.cancelTask(slot0._markNote, slot0)
-	TaskDispatcher.cancelTask(slot0._refreshData, slot0)
-	TaskDispatcher.cancelTask(slot0._afterUnlockNoteAni, slot0)
-	TaskDispatcher.cancelTask(slot0._playUnlockNoteAni, slot0)
+	arg_63_0:_releaseAniFlow()
+	TaskDispatcher.cancelTask(arg_63_0._markNote, arg_63_0)
+	TaskDispatcher.cancelTask(arg_63_0._refreshData, arg_63_0)
+	TaskDispatcher.cancelTask(arg_63_0._afterUnlockNoteAni, arg_63_0)
+	TaskDispatcher.cancelTask(arg_63_0._playUnlockNoteAni, arg_63_0)
 
-	if slot0._btnComList then
-		for slot4, slot5 in ipairs(slot0._btnComList) do
-			slot5:RemoveClickListener()
+	if arg_63_0._btnComList then
+		for iter_63_0, iter_63_1 in ipairs(arg_63_0._btnComList) do
+			iter_63_1:RemoveClickListener()
 		end
 	end
 
@@ -874,15 +984,15 @@ function slot0.onClose(slot0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebookbg1:UnLoadImage()
-	slot0._simagebookbg2:UnLoadImage()
-	slot0._simagebookbg3:UnLoadImage()
-	slot0._simagebookbg4:UnLoadImage()
-	slot0._simagebookbg5:UnLoadImage()
-	slot0._simagetitle:UnLoadImage()
-	slot0._simageleftbookbg5:UnLoadImage()
-	slot0._simagebookbg6:UnLoadImage()
+function var_0_0.onDestroyView(arg_64_0)
+	arg_64_0._simagebookbg1:UnLoadImage()
+	arg_64_0._simagebookbg2:UnLoadImage()
+	arg_64_0._simagebookbg3:UnLoadImage()
+	arg_64_0._simagebookbg4:UnLoadImage()
+	arg_64_0._simagebookbg5:UnLoadImage()
+	arg_64_0._simagetitle:UnLoadImage()
+	arg_64_0._simageleftbookbg5:UnLoadImage()
+	arg_64_0._simagebookbg6:UnLoadImage()
 end
 
-return slot0
+return var_0_0

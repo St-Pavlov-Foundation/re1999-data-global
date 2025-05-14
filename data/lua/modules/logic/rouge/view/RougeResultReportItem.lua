@@ -1,166 +1,210 @@
-module("modules.logic.rouge.view.RougeResultReportItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeResultReportItem", package.seeall)
 
-slot0 = class("RougeResultReportItem", ListScrollCellExtend)
-slot0.DefaultTitleImageUrl = "singlebg_lang/txt_rouge/enter/rouge_enter_titlebg.png"
+local var_0_0 = class("RougeResultReportItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._simageredbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_redbg")
-	slot0._simagegreenbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_greenbg")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#simage_title")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_time")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "#go_time/#txt_time")
-	slot0._godifficulty = gohelper.findChild(slot0.viewGO, "#go_difficulty")
-	slot0._txtdifficulty = gohelper.findChildText(slot0.viewGO, "#go_difficulty/#txt_difficulty")
-	slot0._gofaction = gohelper.findChild(slot0.viewGO, "#go_faction")
-	slot0._imageTypeIcon = gohelper.findChildImage(slot0.viewGO, "#go_faction/#image_TypeIcon")
-	slot0._txtTypeName = gohelper.findChildText(slot0.viewGO, "#go_faction/image_NameBG/#txt_TypeName")
-	slot0._txtLv = gohelper.findChildText(slot0.viewGO, "#go_faction/#txt_Lv")
-	slot0._imagePointIcon = gohelper.findChildImage(slot0.viewGO, "#go_faction/layout/#image_PointIcon")
-	slot0._goherogroup = gohelper.findChild(slot0.viewGO, "#go_herogroup")
-	slot0._goitem1 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item1")
-	slot0._goitem2 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item2")
-	slot0._goitem3 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item3")
-	slot0._goitem4 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item4")
-	slot0._goitem5 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item5")
-	slot0._goitem6 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item6")
-	slot0._goitem7 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item7")
-	slot0._goitem8 = gohelper.findChild(slot0.viewGO, "#go_herogroup/#go_item8")
-	slot0._godec = gohelper.findChild(slot0.viewGO, "#go_dec")
-	slot0._godecred = gohelper.findChild(slot0.viewGO, "#go_dec/#go_dec_red")
-	slot0._godecgreen = gohelper.findChild(slot0.viewGO, "#go_dec/#go_dec_green")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "#go_dec/#txt_dec")
-	slot0._btndetails = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_details")
+var_0_0.DefaultTitleImageUrl = "singlebg_lang/txt_rouge/enter/rouge_enter_titlebg.png"
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageredbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_redbg")
+	arg_1_0._simagegreenbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_greenbg")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_time")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#go_time/#txt_time")
+	arg_1_0._godifficulty = gohelper.findChild(arg_1_0.viewGO, "#go_difficulty")
+	arg_1_0._txtdifficulty = gohelper.findChildText(arg_1_0.viewGO, "#go_difficulty/#txt_difficulty")
+	arg_1_0._gofaction = gohelper.findChild(arg_1_0.viewGO, "#go_faction")
+	arg_1_0._imageTypeIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_faction/#image_TypeIcon")
+	arg_1_0._txtTypeName = gohelper.findChildText(arg_1_0.viewGO, "#go_faction/image_NameBG/#txt_TypeName")
+	arg_1_0._txtLv = gohelper.findChildText(arg_1_0.viewGO, "#go_faction/#txt_Lv")
+	arg_1_0._imagePointIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_faction/layout/#image_PointIcon")
+	arg_1_0._goherogroup = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup")
+	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item1")
+	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item2")
+	arg_1_0._goitem3 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item3")
+	arg_1_0._goitem4 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item4")
+	arg_1_0._goitem5 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item5")
+	arg_1_0._goitem6 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item6")
+	arg_1_0._goitem7 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item7")
+	arg_1_0._goitem8 = gohelper.findChild(arg_1_0.viewGO, "#go_herogroup/#go_item8")
+	arg_1_0._godec = gohelper.findChild(arg_1_0.viewGO, "#go_dec")
+	arg_1_0._godecred = gohelper.findChild(arg_1_0.viewGO, "#go_dec/#go_dec_red")
+	arg_1_0._godecgreen = gohelper.findChild(arg_1_0.viewGO, "#go_dec/#go_dec_green")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#go_dec/#txt_dec")
+	arg_1_0._btndetails = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_details")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btndetails:AddClickListener(slot0._btndetailsOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btndetails:AddClickListener(arg_2_0._btndetailsOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btndetails:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btndetails:RemoveClickListener()
 end
 
-function slot0._btndetailsOnClick(slot0)
-	RougeController.instance:openRougeResultReView({
+function var_0_0._btndetailsOnClick(arg_4_0)
+	local var_4_0 = {
 		showNavigate = true,
-		reviewInfo = slot0._mo
-	})
+		reviewInfo = arg_4_0._mo
+	}
+
+	RougeController.instance:openRougeResultReView(var_4_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0:refreshEnding(slot1)
-	slot0:refreshStyleInfo(slot1)
-	slot0:refreshPlayerInfo(slot1)
-	slot0:refreshBaseInfo(slot1)
-	slot0:refreshHeroGroup(slot1)
-	slot0:refreshTitle(slot1)
+	arg_8_0:refreshEnding(arg_8_1)
+	arg_8_0:refreshStyleInfo(arg_8_1)
+	arg_8_0:refreshPlayerInfo(arg_8_1)
+	arg_8_0:refreshBaseInfo(arg_8_1)
+	arg_8_0:refreshHeroGroup(arg_8_1)
+	arg_8_0:refreshTitle(arg_8_1)
 
-	slot0._txtdec.text = RougeResultReView.refreshEndingDesc(slot1)
-	slot2 = slot1:isSucceed()
+	arg_8_0._txtdec.text = RougeResultReView.refreshEndingDesc(arg_8_1)
 
-	gohelper.setActive(slot0._godecgreen, slot2)
-	gohelper.setActive(slot0._godecred, not slot2)
-	gohelper.setActive(slot0._simagegreenbg, slot2)
-	gohelper.setActive(slot0._simageredbg, not slot2)
+	local var_8_0 = arg_8_1:isSucceed()
+
+	gohelper.setActive(arg_8_0._godecgreen, var_8_0)
+	gohelper.setActive(arg_8_0._godecred, not var_8_0)
+	gohelper.setActive(arg_8_0._simagegreenbg, var_8_0)
+	gohelper.setActive(arg_8_0._simageredbg, not var_8_0)
 
 	if UnityEngine.Time.frameCount - RougeResultReportListModel.instance.startFrameCount < 10 then
-		slot0._aniamtor = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
+		arg_8_0._aniamtor = gohelper.onceAddComponent(arg_8_0.viewGO, gohelper.Type_Animator)
 
-		slot0._aniamtor:Play("open")
+		arg_8_0._aniamtor:Play("open")
 	end
 end
 
-function slot0.refreshHeroGroup(slot0, slot1)
-	if not slot0._heroItemList then
-		slot0._heroItemList = slot0:getUserDataTb_()
+function var_0_0.refreshHeroGroup(arg_9_0, arg_9_1)
+	if not arg_9_0._heroItemList then
+		arg_9_0._heroItemList = arg_9_0:getUserDataTb_()
 
-		for slot5 = 1, 8 do
-			slot8 = slot0._view:getResInst(slot0._view.viewContainer._viewSetting.otherRes[2], slot0["_goitem" .. slot5])
-			slot0._heroItemList[slot5] = {
-				simagerolehead = gohelper.findChildSingleImage(slot8, "#go_heroitem/#image_rolehead"),
-				frame = gohelper.findChild(slot8, "#go_heroitem/frame"),
-				empty = gohelper.findChild(slot8, "#go_heroitem/empty")
+		for iter_9_0 = 1, 8 do
+			local var_9_0 = arg_9_0["_goitem" .. iter_9_0]
+			local var_9_1 = arg_9_0._view.viewContainer._viewSetting.otherRes[2]
+			local var_9_2 = arg_9_0._view:getResInst(var_9_1, var_9_0)
+			local var_9_3 = {
+				simagerolehead = gohelper.findChildSingleImage(var_9_2, "#go_heroitem/#image_rolehead"),
+				frame = gohelper.findChild(var_9_2, "#go_heroitem/frame"),
+				empty = gohelper.findChild(var_9_2, "#go_heroitem/empty")
 			}
+
+			arg_9_0._heroItemList[iter_9_0] = var_9_3
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0._heroItemList) do
-		slot8 = slot0._mo.teamInfo.heroLifeList[slot5] ~= nil
+	for iter_9_1, iter_9_2 in ipairs(arg_9_0._heroItemList) do
+		local var_9_4 = arg_9_0._mo.teamInfo.heroLifeList[iter_9_1]
+		local var_9_5 = var_9_4 ~= nil
 
-		gohelper.setActive(slot6.simagerolehead, slot8)
-		gohelper.setActive(slot6.frame, slot8)
-		gohelper.setActive(slot6.empty, not slot8)
+		gohelper.setActive(iter_9_2.simagerolehead, var_9_5)
+		gohelper.setActive(iter_9_2.frame, var_9_5)
+		gohelper.setActive(iter_9_2.empty, not var_9_5)
 
-		if slot8 then
-			slot9 = slot7 and slot7.heroId
-			slot10 = nil
-			slot10 = (not HeroModel.instance:getByHeroId(slot9) or HeroModel.instance:getCurrentSkinConfig(slot9)) and SkinConfig.instance:getSkinCo(HeroConfig.instance:getHeroCO(slot9) and slot12.skinId)
+		if var_9_5 then
+			local var_9_6 = var_9_4 and var_9_4.heroId
+			local var_9_7
 
-			slot6.simagerolehead:LoadImage(ResUrl.getHeadIconSmall(slot10 and slot10.headIcon))
+			if HeroModel.instance:getByHeroId(var_9_6) then
+				var_9_7 = HeroModel.instance:getCurrentSkinConfig(var_9_6)
+			else
+				local var_9_8 = HeroConfig.instance:getHeroCO(var_9_6)
+				local var_9_9 = var_9_8 and var_9_8.skinId
+
+				var_9_7 = SkinConfig.instance:getSkinCo(var_9_9)
+			end
+
+			local var_9_10 = var_9_7 and var_9_7.headIcon
+
+			iter_9_2.simagerolehead:LoadImage(ResUrl.getHeadIconSmall(var_9_10))
 		end
 	end
 end
 
-function slot0.refreshEnding(slot0, slot1)
-	slot3 = slot1.endId > 0
+function var_0_0.refreshEnding(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1.endId > 0
 
-	gohelper.setActive(slot0._godecgreen, slot3)
-	gohelper.setActive(slot0._godecred, not slot3)
-	gohelper.setActive(slot0._simagegreenbg, slot3)
-	gohelper.setActive(slot0._simageredbg, not slot3)
+	gohelper.setActive(arg_10_0._godecgreen, var_10_0)
+	gohelper.setActive(arg_10_0._godecred, not var_10_0)
+	gohelper.setActive(arg_10_0._simagegreenbg, var_10_0)
+	gohelper.setActive(arg_10_0._simageredbg, not var_10_0)
 end
 
-function slot0.refreshBaseInfo(slot0, slot1)
-	slot2 = slot1.collectionNum
-	slot3 = slot1.gainCoin
-	slot0._txtdifficulty.text = lua_rouge_difficulty.configDict[slot1.season][slot1.difficulty] and slot6.title
-	slot0._txtLv.text = string.format("Lv.%s", slot1.teamLevel)
+function var_0_0.refreshBaseInfo(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.collectionNum
+	local var_11_1 = arg_11_1.gainCoin
+	local var_11_2 = arg_11_1.season
+	local var_11_3 = arg_11_1.difficulty
+	local var_11_4 = lua_rouge_difficulty.configDict[var_11_2][var_11_3]
+
+	arg_11_0._txtdifficulty.text = var_11_4 and var_11_4.title
+	arg_11_0._txtLv.text = string.format("Lv.%s", arg_11_1.teamLevel)
 end
 
-function slot0.refreshPlayerInfo(slot0, slot1)
-	slot2 = slot1.playerName
-	slot3 = slot1.playerLevel
-	slot0._txttime.text = TimeUtil.localTime2ServerTimeString(slot1.finishTime / 1000, "%Y.%m.%d %H:%M")
-	slot5 = ItemConfig.instance:getItemIconById(slot1.portrait)
+function var_0_0.refreshPlayerInfo(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.playerName
+	local var_12_1 = arg_12_1.playerLevel
+	local var_12_2 = arg_12_1.finishTime / 1000
+
+	arg_12_0._txttime.text = TimeUtil.localTime2ServerTimeString(var_12_2, "%Y.%m.%d %H:%M")
+
+	local var_12_3 = ItemConfig.instance:getItemIconById(arg_12_1.portrait)
 end
 
-function slot0.refreshStyleInfo(slot0, slot1)
-	slot0._txtTypeName.text = lua_rouge_style.configDict[slot1.season][slot1.style] and slot4.name
+function var_0_0.refreshStyleInfo(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.season
+	local var_13_1 = arg_13_1.style
+	local var_13_2 = lua_rouge_style.configDict[var_13_0][var_13_1]
 
-	if slot4 then
-		UISpriteSetMgr.instance:setRouge2Sprite(slot0._imageTypeIcon, string.format("%s_light", slot4 and slot4.icon))
-		UISpriteSetMgr.instance:setRouge2Sprite(slot0._imagePointIcon, string.format("rouge_faction_smallicon_%s", slot4.id))
+	arg_13_0._txtTypeName.text = var_13_2 and var_13_2.name
+
+	local var_13_3 = var_13_2 and var_13_2.icon
+
+	if var_13_2 then
+		UISpriteSetMgr.instance:setRouge2Sprite(arg_13_0._imageTypeIcon, string.format("%s_light", var_13_3))
+		UISpriteSetMgr.instance:setRouge2Sprite(arg_13_0._imagePointIcon, string.format("rouge_faction_smallicon_%s", var_13_2.id))
 	end
 
-	gohelper.setActive(slot0._gofaction, slot4 ~= nil)
+	gohelper.setActive(arg_13_0._gofaction, var_13_2 ~= nil)
 end
 
-function slot0.refreshTitle(slot0, slot1)
-	slot4 = ""
+function var_0_0.refreshTitle(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1:getVersions()
+	local var_14_1 = RougeDLCHelper.versionListToString(var_14_0)
+	local var_14_2 = ""
 
-	slot0._simagetitle:LoadImage((not string.nilorempty(RougeDLCHelper.versionListToString(slot1:getVersions())) or uv0.DefaultTitleImageUrl) and ResUrl.getRougeDLCLangImage("logo_dlc_" .. slot3))
+	if string.nilorempty(var_14_1) then
+		var_14_2 = var_0_0.DefaultTitleImageUrl
+	else
+		var_14_2 = ResUrl.getRougeDLCLangImage("logo_dlc_" .. var_14_1)
+	end
+
+	arg_14_0._simagetitle:LoadImage(var_14_2)
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetitle:UnLoadImage()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0._simagetitle:UnLoadImage()
 end
 
-return slot0
+return var_0_0

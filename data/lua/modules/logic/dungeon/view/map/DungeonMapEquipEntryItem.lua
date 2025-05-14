@@ -1,58 +1,66 @@
-module("modules.logic.dungeon.view.map.DungeonMapEquipEntryItem", package.seeall)
+﻿module("modules.logic.dungeon.view.map.DungeonMapEquipEntryItem", package.seeall)
 
-slot0 = class("DungeonMapEquipEntryItem", LuaCompBase)
+local var_0_0 = class("DungeonMapEquipEntryItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._index = slot1[1]
-	slot0._chapterId = slot1[2]
-	slot0._readyChapterId = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._index = arg_1_1[1]
+	arg_1_0._chapterId = arg_1_1[2]
+	arg_1_0._readyChapterId = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_icon")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#txt_num")
-	slot0._imagefull = gohelper.findChildImage(slot0.viewGO, "progress/#image_full")
-	slot0._txtprogressNum = gohelper.findChildText(slot0.viewGO, "progress/#txt_progressNum")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.viewGO = arg_2_1
+	arg_2_0._simageicon = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_icon")
+	arg_2_0._txtnum = gohelper.findChildText(arg_2_0.viewGO, "#txt_num")
+	arg_2_0._imagefull = gohelper.findChildImage(arg_2_0.viewGO, "progress/#image_full")
+	arg_2_0._txtprogressNum = gohelper.findChildText(arg_2_0.viewGO, "progress/#txt_progressNum")
 
-	slot0._simageicon:LoadImage(ResUrl.getDungeonIcon(string.format("entry/bg_fuben_tesurukou_%s", lua_equip_chapter.configDict[slot0._chapterId].group)))
+	local var_2_0 = lua_equip_chapter.configDict[arg_2_0._chapterId]
+	local var_2_1 = string.format("entry/bg_fuben_tesurukou_%s", var_2_0.group)
 
-	slot4 = DungeonConfig.instance:getChapterEpisodeCOList(slot0._chapterId)
-	slot5 = #slot4
+	arg_2_0._simageicon:LoadImage(ResUrl.getDungeonIcon(var_2_1))
 
-	for slot10, slot11 in ipairs(slot4) do
-		if DungeonModel.instance:hasPassLevel(slot11.id) and DungeonModel.instance:getEpisodeInfo(slot11.id).challengeCount == 1 then
-			slot6 = 0 + 1
+	local var_2_2 = DungeonConfig.instance:getChapterEpisodeCOList(arg_2_0._chapterId)
+	local var_2_3 = #var_2_2
+	local var_2_4 = 0
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+		local var_2_5 = DungeonModel.instance:getEpisodeInfo(iter_2_1.id)
+
+		if DungeonModel.instance:hasPassLevel(iter_2_1.id) and var_2_5.challengeCount == 1 then
+			var_2_4 = var_2_4 + 1
 		else
-			slot0._readyChapterId = slot11.id
+			arg_2_0._readyChapterId = iter_2_1.id
 
 			break
 		end
 	end
 
-	slot0._txtprogressNum.text = string.format("%s/%s", slot6, slot5)
-	slot0._txtnum.text = "0" .. slot0._index
-	slot0._imagefull.fillAmount = slot6 / slot5
+	arg_2_0._txtprogressNum.text = string.format("%s/%s", var_2_4, var_2_3)
+	arg_2_0._txtnum.text = "0" .. arg_2_0._index
+	arg_2_0._imagefull.fillAmount = var_2_4 / var_2_3
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click = gohelper.getClickWithAudio(slot0.viewGO)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0._click = gohelper.getClickWithAudio(arg_3_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_3_0._click:AddClickListener(arg_3_0._onClick, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._click:RemoveClickListener()
 end
 
-function slot0._onClick(slot0)
-	DungeonController.instance:openDungeonEquipEntryView(slot0._chapterId)
+function var_0_0._onClick(arg_5_0)
+	DungeonController.instance:openDungeonEquipEntryView(arg_5_0._chapterId)
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_6_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

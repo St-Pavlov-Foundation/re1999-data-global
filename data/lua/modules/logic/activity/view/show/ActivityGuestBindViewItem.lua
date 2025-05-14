@@ -1,47 +1,53 @@
-module("modules.logic.activity.view.show.ActivityGuestBindViewItem", package.seeall)
+﻿module("modules.logic.activity.view.show.ActivityGuestBindViewItem", package.seeall)
 
-slot0 = class("ActivityGuestBindViewItem", ListScrollCellExtend)
+local var_0_0 = class("ActivityGuestBindViewItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._item = IconMgr.instance:getCommonPropItemIcon(slot0._goitem)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._item = IconMgr.instance:getCommonPropItemIcon(arg_4_0._goitem)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 
-	slot0:_refresh()
+	arg_7_0:_refresh()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0._refresh(slot0)
-	slot2 = slot0._mo.itemCO
+function var_0_0._refresh(arg_10_0)
+	local var_10_0 = arg_10_0._mo.itemCO
 
-	slot0._item:setMOValue(slot2[1], slot2[2], slot2[3], nil, true)
+	arg_10_0._item:setMOValue(var_10_0[1], var_10_0[2], var_10_0[3], nil, true)
 end
 
-return slot0
+return var_0_0

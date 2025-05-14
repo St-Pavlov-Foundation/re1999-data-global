@@ -1,337 +1,355 @@
-module("modules.logic.task.view.TaskListCommonItem", package.seeall)
+﻿module("modules.logic.task.view.TaskListCommonItem", package.seeall)
 
-slot0 = class("TaskListCommonItem", LuaCompBase)
+local var_0_0 = class("TaskListCommonItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.go = slot1
-	slot0.go.name = "item" .. tostring(slot3)
-	slot0._index = slot3
-	slot0._mo = slot4
-	slot0._taskType = slot2
-	slot0._open = slot5
-	slot0._itemAni = slot1:GetComponent(typeof(UnityEngine.Animator))
-	slot0._gocommon = gohelper.findChild(slot0.go, "#go_common")
-	slot0._imgBg = gohelper.findChildImage(slot0._gocommon, "#simage_bg")
-	slot0._gonotget = gohelper.findChild(slot0._gocommon, "#go_notget")
-	slot0._btnnotfinishbg = gohelper.findChildButtonWithAudio(slot0._gocommon, "#go_notget/#btn_notfinishbg")
-	slot0._btnfinishbg = gohelper.findChildButton(slot0._gocommon, "#go_notget/#btn_finishbg")
-	slot0._goallfinish = gohelper.findChild(slot0._gocommon, "#go_notget/#go_allfinish")
-	slot0._godoing = gohelper.findChild(slot0._gocommon, "#go_notget/#go_doing")
-	slot0._txttaskdes = gohelper.findChildText(slot0._gocommon, "right/#txt_taskdes")
-	slot0._imgcompleteproc = gohelper.findChildImage(slot0._gocommon, "right/completeproc/#image_full")
-	slot0._txttotal = gohelper.findChildText(slot0._gocommon, "right/#txt_total")
-	slot0._txtcomplete = gohelper.findChildText(slot0._gocommon, "right/#txt_total/#txt_complete")
-	slot0._txtcommonnum = gohelper.findChildText(slot0._gocommon, "#txt_num")
-	slot0._simagegetmask = gohelper.findChildSingleImage(slot0._gocommon, "#simage_getmask")
-	slot0._goget = gohelper.findChild(slot0._gocommon, "#go_get")
-	slot0._gocollectionCanvasGroup = gohelper.findChild(slot0._gocommon, "#go_get/collecticon"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._goreddot = gohelper.findChild(slot0._gocommon, "#go_reddot")
-	slot0._gocommonclick = gohelper.findChild(slot0._gocommon, "click")
-	slot0._simagecommonclickmask = gohelper.findChildSingleImage(slot0._gocommon, "click/getmask")
-	slot0._goreward = gohelper.findChild(slot0.go, "#go_reward")
-	slot0._simagerewardbg = gohelper.findChildSingleImage(slot0._goreward, "#simage_bg")
-	slot0._txtrewardnum = gohelper.findChildText(slot0._goreward, "#txt_num")
-	slot0._btngetall = gohelper.findChildButton(slot0._goreward, "#go_getall/#btn_getall")
-	slot0._gorewardclick = gohelper.findChild(slot0._goreward, "click")
-	slot0._simagerewardclickmask = gohelper.findChildSingleImage(slot0._goreward, "click/getmask")
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0.go = arg_1_1
+	arg_1_0.go.name = "item" .. tostring(arg_1_3)
+	arg_1_0._index = arg_1_3
+	arg_1_0._mo = arg_1_4
+	arg_1_0._taskType = arg_1_2
+	arg_1_0._open = arg_1_5
+	arg_1_0._itemAni = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._gocommon = gohelper.findChild(arg_1_0.go, "#go_common")
+	arg_1_0._imgBg = gohelper.findChildImage(arg_1_0._gocommon, "#simage_bg")
+	arg_1_0._gonotget = gohelper.findChild(arg_1_0._gocommon, "#go_notget")
+	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0._gocommon, "#go_notget/#btn_notfinishbg")
+	arg_1_0._btnfinishbg = gohelper.findChildButton(arg_1_0._gocommon, "#go_notget/#btn_finishbg")
+	arg_1_0._goallfinish = gohelper.findChild(arg_1_0._gocommon, "#go_notget/#go_allfinish")
+	arg_1_0._godoing = gohelper.findChild(arg_1_0._gocommon, "#go_notget/#go_doing")
+	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0._gocommon, "right/#txt_taskdes")
+	arg_1_0._imgcompleteproc = gohelper.findChildImage(arg_1_0._gocommon, "right/completeproc/#image_full")
+	arg_1_0._txttotal = gohelper.findChildText(arg_1_0._gocommon, "right/#txt_total")
+	arg_1_0._txtcomplete = gohelper.findChildText(arg_1_0._gocommon, "right/#txt_total/#txt_complete")
+	arg_1_0._txtcommonnum = gohelper.findChildText(arg_1_0._gocommon, "#txt_num")
+	arg_1_0._simagegetmask = gohelper.findChildSingleImage(arg_1_0._gocommon, "#simage_getmask")
+	arg_1_0._goget = gohelper.findChild(arg_1_0._gocommon, "#go_get")
+	arg_1_0._gocollectionCanvasGroup = gohelper.findChild(arg_1_0._gocommon, "#go_get/collecticon"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0._gocommon, "#go_reddot")
+	arg_1_0._gocommonclick = gohelper.findChild(arg_1_0._gocommon, "click")
+	arg_1_0._simagecommonclickmask = gohelper.findChildSingleImage(arg_1_0._gocommon, "click/getmask")
+	arg_1_0._goreward = gohelper.findChild(arg_1_0.go, "#go_reward")
+	arg_1_0._simagerewardbg = gohelper.findChildSingleImage(arg_1_0._goreward, "#simage_bg")
+	arg_1_0._txtrewardnum = gohelper.findChildText(arg_1_0._goreward, "#txt_num")
+	arg_1_0._btngetall = gohelper.findChildButton(arg_1_0._goreward, "#go_getall/#btn_getall")
+	arg_1_0._gorewardclick = gohelper.findChild(arg_1_0._goreward, "click")
+	arg_1_0._simagerewardclickmask = gohelper.findChildSingleImage(arg_1_0._goreward, "click/getmask")
 
-	slot0._simagegetmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
-	slot0._simagecommonclickmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
-	slot0._simagerewardclickmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
-	slot0._simagerewardbg:LoadImage(ResUrl.getTaskBg("bg_quanbulqd"))
-	gohelper.setActive(slot0._gocommonclick, false)
-	gohelper.setActive(slot0._gorewardclick, false)
-	gohelper.setActive(slot0._goreddot, false)
+	arg_1_0._simagegetmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
+	arg_1_0._simagecommonclickmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
+	arg_1_0._simagerewardclickmask:LoadImage(ResUrl.getTaskBg("dieheiyou_020"))
+	arg_1_0._simagerewardbg:LoadImage(ResUrl.getTaskBg("bg_quanbulqd"))
+	gohelper.setActive(arg_1_0._gocommonclick, false)
+	gohelper.setActive(arg_1_0._gorewardclick, false)
+	gohelper.setActive(arg_1_0._goreddot, false)
 
-	slot0._rewardItems = {}
+	arg_1_0._rewardItems = {}
 
-	slot0:addEvents()
+	arg_1_0:addEvents()
 
-	if not slot0._mo then
-		slot0:_refreshRewardItem()
+	if not arg_1_0._mo then
+		arg_1_0:_refreshRewardItem()
 	else
-		slot0:_refreshCommonItem()
+		arg_1_0:_refreshCommonItem()
 	end
 end
 
-function slot0.hasFinished(slot0)
-	if slot0._mo then
-		return slot0._mo.config.maxFinishCount <= slot0._mo.finishCount
+function var_0_0.hasFinished(arg_2_0)
+	if arg_2_0._mo then
+		return arg_2_0._mo.finishCount >= arg_2_0._mo.config.maxFinishCount
 	end
 
 	return false
 end
 
-function slot0.isAllGetType(slot0)
-	return not slot0._mo
+function var_0_0.isAllGetType(arg_3_0)
+	return not arg_3_0._mo
 end
 
-function slot0.reset(slot0, slot1, slot2, slot3)
-	slot0._index = slot2
-	slot0._mo = slot3
-	slot0._taskType = slot1
-	slot0._open = false
+function var_0_0.reset(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0._index = arg_4_2
+	arg_4_0._mo = arg_4_3
+	arg_4_0._taskType = arg_4_1
+	arg_4_0._open = false
 
-	gohelper.setActive(slot0._gocommonclick, false)
-	gohelper.setActive(slot0._gorewardclick, false)
+	gohelper.setActive(arg_4_0._gocommonclick, false)
+	gohelper.setActive(arg_4_0._gorewardclick, false)
 
-	slot0.go.name = "item" .. tostring(slot2)
-	slot0._rewardItems = {}
+	arg_4_0.go.name = "item" .. tostring(arg_4_2)
+	arg_4_0._rewardItems = {}
 
-	if not slot0._mo then
-		slot0:_refreshRewardItem()
+	if not arg_4_0._mo then
+		arg_4_0:_refreshRewardItem()
 	else
-		slot0:_refreshCommonItem()
+		arg_4_0:_refreshCommonItem()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnotfinishbg:AddClickListener(slot0._btnnotfinishbgOnClick, slot0)
-	slot0._btnfinishbg:AddClickListener(slot0._btnfinishbgOnClick, slot0)
-	slot0._btngetall:AddClickListener(slot0._btnGetAllOnClick, slot0)
-	ActivityController.instance:registerCallback(TaskEvent.GetTaskReward, slot0._onGetReward, slot0)
-	ActivityController.instance:registerCallback(TaskEvent.GetAllTaskReward, slot0._onGetAllReward, slot0)
+function var_0_0.addEvents(arg_5_0)
+	arg_5_0._btnnotfinishbg:AddClickListener(arg_5_0._btnnotfinishbgOnClick, arg_5_0)
+	arg_5_0._btnfinishbg:AddClickListener(arg_5_0._btnfinishbgOnClick, arg_5_0)
+	arg_5_0._btngetall:AddClickListener(arg_5_0._btnGetAllOnClick, arg_5_0)
+	ActivityController.instance:registerCallback(TaskEvent.GetTaskReward, arg_5_0._onGetReward, arg_5_0)
+	ActivityController.instance:registerCallback(TaskEvent.GetAllTaskReward, arg_5_0._onGetAllReward, arg_5_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnotfinishbg:RemoveClickListener()
-	slot0._btnfinishbg:RemoveClickListener()
-	slot0._btngetall:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(TaskEvent.GetTaskReward, slot0._onGetReward, slot0)
-	ActivityController.instance:unregisterCallback(TaskEvent.GetAllTaskReward, slot0._onGetAllReward, slot0)
+function var_0_0.removeEvents(arg_6_0)
+	arg_6_0._btnnotfinishbg:RemoveClickListener()
+	arg_6_0._btnfinishbg:RemoveClickListener()
+	arg_6_0._btngetall:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(TaskEvent.GetTaskReward, arg_6_0._onGetReward, arg_6_0)
+	ActivityController.instance:unregisterCallback(TaskEvent.GetAllTaskReward, arg_6_0._onGetAllReward, arg_6_0)
 end
 
-function slot0._onGetAllReward(slot0, slot1)
-	if slot0._taskType ~= slot1 then
+function var_0_0._onGetAllReward(arg_7_0, arg_7_1)
+	if arg_7_0._taskType ~= arg_7_1 then
 		return
 	end
 
-	if slot0._mo and slot0._mo.finishCount < slot0._mo.config.maxFinishCount and slot0._mo.hasFinished then
-		gohelper.setActive(slot0._gocommonclick, true)
+	if arg_7_0._mo and arg_7_0._mo.finishCount < arg_7_0._mo.config.maxFinishCount and arg_7_0._mo.hasFinished then
+		gohelper.setActive(arg_7_0._gocommonclick, true)
 
-		slot0._itemAni.enabled = true
+		arg_7_0._itemAni.enabled = true
 
-		slot0._itemAni:Play(UIAnimationName.Close)
-		TaskDispatcher.runDelay(slot0._onPlayRewardFinished, slot0, 0.46)
+		arg_7_0._itemAni:Play(UIAnimationName.Close)
+		TaskDispatcher.runDelay(arg_7_0._onPlayRewardFinished, arg_7_0, 0.46)
 	end
 end
 
-function slot0._onGetReward(slot0, slot1)
-	if slot0._taskType ~= slot1 then
+function var_0_0._onGetReward(arg_8_0, arg_8_1)
+	if arg_8_0._taskType ~= arg_8_1 then
 		return
 	end
 
-	if not slot0._mo and #TaskModel.instance:getAllRewardUnreceivedTasks(slot0._taskType) < 3 then
-		slot0._itemAni.enabled = true
+	if not arg_8_0._mo and #TaskModel.instance:getAllRewardUnreceivedTasks(arg_8_0._taskType) < 3 then
+		arg_8_0._itemAni.enabled = true
 
-		slot0._itemAni:Play(UIAnimationName.Close)
-		TaskDispatcher.runDelay(slot0._onPlayRewardFinished, slot0, 0.76)
+		arg_8_0._itemAni:Play(UIAnimationName.Close)
+		TaskDispatcher.runDelay(arg_8_0._onPlayRewardFinished, arg_8_0, 0.76)
 	end
 end
 
-function slot0._btnGetAllOnClick(slot0)
+function var_0_0._btnGetAllOnClick(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Task_UI_TaskItem_moveTop)
-	gohelper.setActive(slot0._gorewardclick, true)
+	gohelper.setActive(arg_9_0._gorewardclick, true)
 
-	slot0._itemAni.enabled = true
+	arg_9_0._itemAni.enabled = true
 
-	slot0._itemAni:Play(UIAnimationName.Close)
+	arg_9_0._itemAni:Play(UIAnimationName.Close)
 	UIBlockMgr.instance:startBlock("taskani")
-	ActivityController.instance:dispatchEvent(TaskEvent.GetAllTaskReward, slot0._taskType)
-	TaskDispatcher.runDelay(slot0._onPlayRewardClickFinished, slot0, 0.76)
+	ActivityController.instance:dispatchEvent(TaskEvent.GetAllTaskReward, arg_9_0._taskType)
+	TaskDispatcher.runDelay(arg_9_0._onPlayRewardClickFinished, arg_9_0, 0.76)
 end
 
-function slot0._onPlayRewardFinished(slot0)
-	gohelper.setAsLastSibling(slot0.go)
+function var_0_0._onPlayRewardFinished(arg_10_0)
+	gohelper.setAsLastSibling(arg_10_0.go)
 end
 
-function slot0._onPlayRewardClickFinished(slot0)
-	for slot6, slot7 in pairs(TaskModel.instance:getAllUnlockTasks(slot0._taskType)) do
-		if slot7.finishCount < slot7.config.maxFinishCount and slot7.hasFinished then
-			slot1 = 0 + slot7.config.activity
+function var_0_0._onPlayRewardClickFinished(arg_11_0)
+	local var_11_0 = 0
+	local var_11_1 = TaskModel.instance:getAllUnlockTasks(arg_11_0._taskType)
+
+	for iter_11_0, iter_11_1 in pairs(var_11_1) do
+		if iter_11_1.finishCount < iter_11_1.config.maxFinishCount and iter_11_1.hasFinished then
+			var_11_0 = var_11_0 + iter_11_1.config.activity
 		end
 	end
 
-	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, {
-		num = slot1,
-		taskType = slot0._taskType
-	})
-	slot0:_getFinished()
-	TaskDispatcher.runDelay(slot0._onPlayGetAllRewardFinished, slot0, 0.6)
+	local var_11_2 = {
+		num = var_11_0,
+		taskType = arg_11_0._taskType
+	}
+
+	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, var_11_2)
+	arg_11_0:_getFinished()
+	TaskDispatcher.runDelay(arg_11_0._onPlayGetAllRewardFinished, arg_11_0, 0.6)
 end
 
-function slot0._onPlayGetAllRewardFinished(slot0)
+function var_0_0._onPlayGetAllRewardFinished(arg_12_0)
 	UIBlockMgr.instance:endBlock("taskani")
-	TaskRpc.instance:sendFinishAllTaskRequest(slot0._taskType)
+	TaskRpc.instance:sendFinishAllTaskRequest(arg_12_0._taskType)
 end
 
-function slot0._btnnotfinishbgOnClick(slot0)
-	if slot0._mo.config.jumpId ~= 0 then
+function var_0_0._btnnotfinishbgOnClick(arg_13_0)
+	if arg_13_0._mo.config.jumpId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
-		GameFacade.jump(slot0._mo.config.jumpId)
+		GameFacade.jump(arg_13_0._mo.config.jumpId)
 	end
 end
 
-function slot0._btnfinishbgOnClick(slot0)
+function var_0_0._btnfinishbgOnClick(arg_14_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Task_UI_TaskItem_moveTop)
 	TaskModel.instance:clearNewTaskIds()
-	gohelper.setActive(slot0._gocommonclick, true)
+	gohelper.setActive(arg_14_0._gocommonclick, true)
 
-	slot0._itemAni.enabled = true
+	arg_14_0._itemAni.enabled = true
 
-	slot0._itemAni:Play(UIAnimationName.Close)
+	arg_14_0._itemAni:Play(UIAnimationName.Close)
 	UIBlockMgr.instance:startBlock("taskani")
-	ActivityController.instance:dispatchEvent(TaskEvent.GetTaskReward, slot0._taskType)
-	TaskDispatcher.runDelay(slot0._onPlayCommonClickFinished, slot0, 0.46)
+	ActivityController.instance:dispatchEvent(TaskEvent.GetTaskReward, arg_14_0._taskType)
+	TaskDispatcher.runDelay(arg_14_0._onPlayCommonClickFinished, arg_14_0, 0.46)
 end
 
-function slot0._onPlayCommonClickFinished(slot0)
-	slot1 = 0
+function var_0_0._onPlayCommonClickFinished(arg_15_0)
+	local var_15_0 = 0
 
-	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, {
-		num = (slot0._taskType ~= TaskEnum.TaskType.Daily or TaskConfig.instance:gettaskdailyCO(slot0._mo.id).activity) and TaskConfig.instance:gettaskweeklyCO(slot0._mo.id).activity,
-		taskType = slot0._taskType
-	})
-	TaskDispatcher.runDelay(slot0._getFinished, slot0, 0.3)
-	TaskDispatcher.runDelay(slot0._onPlayActAniFinished, slot0, 0.6)
+	if arg_15_0._taskType == TaskEnum.TaskType.Daily then
+		var_15_0 = TaskConfig.instance:gettaskdailyCO(arg_15_0._mo.id).activity
+	else
+		var_15_0 = TaskConfig.instance:gettaskweeklyCO(arg_15_0._mo.id).activity
+	end
+
+	local var_15_1 = {
+		num = var_15_0,
+		taskType = arg_15_0._taskType
+	}
+
+	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, var_15_1)
+	TaskDispatcher.runDelay(arg_15_0._getFinished, arg_15_0, 0.3)
+	TaskDispatcher.runDelay(arg_15_0._onPlayActAniFinished, arg_15_0, 0.6)
 end
 
-function slot0._getFinished(slot0)
-	gohelper.setAsLastSibling(slot0.go)
+function var_0_0._getFinished(arg_16_0)
+	gohelper.setAsLastSibling(arg_16_0.go)
 end
 
-function slot0._onPlayActAniFinished(slot0)
+function var_0_0._onPlayActAniFinished(arg_17_0)
 	UIBlockMgr.instance:endBlock("taskani")
-	TaskRpc.instance:sendFinishTaskRequest(slot0._mo.id)
+	TaskRpc.instance:sendFinishTaskRequest(arg_17_0._mo.id)
 end
 
-function slot0._refreshCommonItem(slot0)
-	gohelper.setActive(slot0._gocommon, true)
-	gohelper.setActive(slot0._goreward, false)
+function var_0_0._refreshCommonItem(arg_18_0)
+	gohelper.setActive(arg_18_0._gocommon, true)
+	gohelper.setActive(arg_18_0._goreward, false)
 
-	slot0._txtcommonnum.text = luaLang("multiple") .. slot0._mo.config.activity
-	slot0._txttaskdes.text = string.format(slot0._mo.config.desc, slot0._mo.config.maxProgress)
-	slot0._txtcomplete.text = GameUtil.numberDisplay(slot0._mo.progress)
-	slot0._txttotal.text = GameUtil.numberDisplay(slot0._mo.config.maxProgress)
-	slot0._imgcompleteproc.fillAmount = slot0._mo.progress / slot0._mo.config.maxProgress
+	arg_18_0._txtcommonnum.text = luaLang("multiple") .. arg_18_0._mo.config.activity
+	arg_18_0._txttaskdes.text = string.format(arg_18_0._mo.config.desc, arg_18_0._mo.config.maxProgress)
+	arg_18_0._txtcomplete.text = GameUtil.numberDisplay(arg_18_0._mo.progress)
+	arg_18_0._txttotal.text = GameUtil.numberDisplay(arg_18_0._mo.config.maxProgress)
+	arg_18_0._imgcompleteproc.fillAmount = arg_18_0._mo.progress / arg_18_0._mo.config.maxProgress
 
-	if slot0._mo.config.maxFinishCount <= slot0._mo.finishCount then
-		gohelper.setActive(slot0._btnfinishbg.gameObject, false)
-		gohelper.setActive(slot0._btnnotfinishbg.gameObject, false)
-		gohelper.setActive(slot0._godoing.gameObject, false)
-		gohelper.setActive(slot0._goget, true)
-		gohelper.setActive(slot0._gonotget, false)
-		gohelper.setActive(slot0._simagegetmask.gameObject, true)
-		gohelper.setActive(slot0._goreddot, false)
-		ZProj.UGUIHelper.SetColorAlpha(slot0._imgBg, 0.8)
-	elseif slot0._mo.hasFinished then
-		gohelper.setActive(slot0._btnfinishbg.gameObject, true)
-		gohelper.setActive(slot0._btnnotfinishbg.gameObject, false)
-		gohelper.setActive(slot0._godoing.gameObject, false)
-		gohelper.setActive(slot0._goget, false)
-		gohelper.setActive(slot0._gonotget, true)
-		gohelper.setActive(slot0._simagegetmask.gameObject, false)
-		ZProj.UGUIHelper.SetColorAlpha(slot0._imgBg, 1)
+	if arg_18_0._mo.finishCount >= arg_18_0._mo.config.maxFinishCount then
+		gohelper.setActive(arg_18_0._btnfinishbg.gameObject, false)
+		gohelper.setActive(arg_18_0._btnnotfinishbg.gameObject, false)
+		gohelper.setActive(arg_18_0._godoing.gameObject, false)
+		gohelper.setActive(arg_18_0._goget, true)
+		gohelper.setActive(arg_18_0._gonotget, false)
+		gohelper.setActive(arg_18_0._simagegetmask.gameObject, true)
+		gohelper.setActive(arg_18_0._goreddot, false)
+		ZProj.UGUIHelper.SetColorAlpha(arg_18_0._imgBg, 0.8)
+	elseif arg_18_0._mo.hasFinished then
+		gohelper.setActive(arg_18_0._btnfinishbg.gameObject, true)
+		gohelper.setActive(arg_18_0._btnnotfinishbg.gameObject, false)
+		gohelper.setActive(arg_18_0._godoing.gameObject, false)
+		gohelper.setActive(arg_18_0._goget, false)
+		gohelper.setActive(arg_18_0._gonotget, true)
+		gohelper.setActive(arg_18_0._simagegetmask.gameObject, false)
+		ZProj.UGUIHelper.SetColorAlpha(arg_18_0._imgBg, 1)
 	else
-		gohelper.setActive(slot0._btnfinishbg.gameObject, false)
-		gohelper.setActive(slot0._btnnotfinishbg.gameObject, slot0._mo.config.jumpId ~= 0)
-		gohelper.setActive(slot0._godoing.gameObject, slot0._mo.config.jumpId == 0)
-		gohelper.setActive(slot0._goget, false)
-		gohelper.setActive(slot0._gonotget, true)
-		gohelper.setActive(slot0._simagegetmask.gameObject, false)
-		gohelper.setActive(slot0._goreddot, false)
-		ZProj.UGUIHelper.SetColorAlpha(slot0._imgBg, 1)
+		gohelper.setActive(arg_18_0._btnfinishbg.gameObject, false)
+		gohelper.setActive(arg_18_0._btnnotfinishbg.gameObject, arg_18_0._mo.config.jumpId ~= 0)
+		gohelper.setActive(arg_18_0._godoing.gameObject, arg_18_0._mo.config.jumpId == 0)
+		gohelper.setActive(arg_18_0._goget, false)
+		gohelper.setActive(arg_18_0._gonotget, true)
+		gohelper.setActive(arg_18_0._simagegetmask.gameObject, false)
+		gohelper.setActive(arg_18_0._goreddot, false)
+		ZProj.UGUIHelper.SetColorAlpha(arg_18_0._imgBg, 1)
 	end
 
-	if slot0._open then
-		slot0._itemAni:Play(UIAnimationName.Open, 0, 0)
+	if arg_18_0._open then
+		arg_18_0._itemAni:Play(UIAnimationName.Open, 0, 0)
 	else
-		slot0._itemAni:Play(UIAnimationName.Idle)
+		arg_18_0._itemAni:Play(UIAnimationName.Idle)
 	end
 
-	slot0:showAllComplete()
+	arg_18_0:showAllComplete()
 end
 
-function slot0.showAllComplete(slot0)
-	if not slot0._mo then
+function var_0_0.showAllComplete(arg_19_0)
+	if not arg_19_0._mo then
 		return
 	end
 
-	slot0._gocollectionCanvasGroup.alpha = TaskModel.instance:isAllRewardGet(slot0._taskType) and 0.6 or 1
+	local var_19_0 = TaskModel.instance:isAllRewardGet(arg_19_0._taskType)
 
-	if slot0._mo.config.maxFinishCount <= slot0._mo.finishCount then
-		gohelper.setActive(slot0._goallfinish, slot1)
-	elseif slot0._mo.hasFinished then
-		gohelper.setActive(slot0._btnfinishbg.gameObject, not slot1)
-		gohelper.setActive(slot0._goallfinish, slot1)
+	arg_19_0._gocollectionCanvasGroup.alpha = var_19_0 and 0.6 or 1
+
+	if arg_19_0._mo.finishCount >= arg_19_0._mo.config.maxFinishCount then
+		gohelper.setActive(arg_19_0._goallfinish, var_19_0)
+	elseif arg_19_0._mo.hasFinished then
+		gohelper.setActive(arg_19_0._btnfinishbg.gameObject, not var_19_0)
+		gohelper.setActive(arg_19_0._goallfinish, var_19_0)
 	else
-		gohelper.setActive(slot0._goallfinish, slot1)
+		gohelper.setActive(arg_19_0._goallfinish, var_19_0)
 	end
 
-	if slot1 then
-		gohelper.setActive(slot0._btnnotfinishbg.gameObject, false)
-		gohelper.setActive(slot0._simagegetmask.gameObject, true)
+	if var_19_0 then
+		gohelper.setActive(arg_19_0._btnnotfinishbg.gameObject, false)
+		gohelper.setActive(arg_19_0._simagegetmask.gameObject, true)
 	end
 end
 
-function slot0._refreshRewardItem(slot0)
-	gohelper.setActive(slot0._goreward, true)
-	gohelper.setActive(slot0._gocommon, false)
+function var_0_0._refreshRewardItem(arg_20_0)
+	gohelper.setActive(arg_20_0._goreward, true)
+	gohelper.setActive(arg_20_0._gocommon, false)
 
-	for slot6, slot7 in pairs(TaskModel.instance:getAllUnlockTasks(slot0._taskType)) do
-		if slot7.finishCount < slot7.config.maxFinishCount and slot7.hasFinished then
-			slot2 = 0 + slot7.config.activity
+	local var_20_0 = TaskModel.instance:getAllUnlockTasks(arg_20_0._taskType)
+	local var_20_1 = 0
+
+	for iter_20_0, iter_20_1 in pairs(var_20_0) do
+		if iter_20_1.finishCount < iter_20_1.config.maxFinishCount and iter_20_1.hasFinished then
+			var_20_1 = var_20_1 + iter_20_1.config.activity
 		end
 	end
 
-	slot0._txtrewardnum.text = slot2
+	arg_20_0._txtrewardnum.text = var_20_1
 
-	if slot0._open then
-		slot0._itemAni:Play(UIAnimationName.Open, 0, 0)
+	if arg_20_0._open then
+		arg_20_0._itemAni:Play(UIAnimationName.Open, 0, 0)
 	else
-		slot0._itemAni:Play(UIAnimationName.Idle)
+		arg_20_0._itemAni:Play(UIAnimationName.Idle)
 	end
 end
 
-function slot0.showIdle(slot0)
-	gohelper.setActive(slot0.go, true)
-	slot0._itemAni:Play(UIAnimationName.Idle)
+function var_0_0.showIdle(arg_21_0)
+	gohelper.setActive(arg_21_0.go, true)
+	arg_21_0._itemAni:Play(UIAnimationName.Idle)
 end
 
-function slot0.destroy(slot0)
+function var_0_0.destroy(arg_22_0)
 	UIBlockMgr.instance:endBlock("taskani")
-	slot0:removeEvents()
-	TaskDispatcher.cancelTask(slot0._onPlayCommonClickFinished, slot0)
-	TaskDispatcher.cancelTask(slot0._onPlayCommonFinished, slot0)
-	TaskDispatcher.cancelTask(slot0._onPlayRewardClickFinished, slot0)
-	TaskDispatcher.cancelTask(slot0._onPlayActAniFinished, slot0)
-	slot0._simagegetmask:UnLoadImage()
-	slot0._simagerewardbg:UnLoadImage()
-	slot0._simagecommonclickmask:UnLoadImage()
-	slot0._simagerewardclickmask:UnLoadImage()
+	arg_22_0:removeEvents()
+	TaskDispatcher.cancelTask(arg_22_0._onPlayCommonClickFinished, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._onPlayCommonFinished, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._onPlayRewardClickFinished, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._onPlayActAniFinished, arg_22_0)
+	arg_22_0._simagegetmask:UnLoadImage()
+	arg_22_0._simagerewardbg:UnLoadImage()
+	arg_22_0._simagecommonclickmask:UnLoadImage()
+	arg_22_0._simagerewardclickmask:UnLoadImage()
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_22_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_22_0._tweenId)
 	end
 
-	if slot0._posTweenId then
-		ZProj.TweenHelper.KillById(slot0._posTweenId)
+	if arg_22_0._posTweenId then
+		ZProj.TweenHelper.KillById(arg_22_0._posTweenId)
 	end
 
-	TaskDispatcher.cancelTask(slot0._showSelfItem, slot0)
-	TaskDispatcher.cancelTask(slot0._itemEntered, slot0)
+	TaskDispatcher.cancelTask(arg_22_0._showSelfItem, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._itemEntered, arg_22_0)
 
-	if slot0._rewardItems then
-		for slot4, slot5 in pairs(slot0._rewardItems) do
-			gohelper.destroy(slot5.itemIcon.go)
-			gohelper.destroy(slot5.parentGo)
-			slot5.itemIcon:onDestroy()
+	if arg_22_0._rewardItems then
+		for iter_22_0, iter_22_1 in pairs(arg_22_0._rewardItems) do
+			gohelper.destroy(iter_22_1.itemIcon.go)
+			gohelper.destroy(iter_22_1.parentGo)
+			iter_22_1.itemIcon:onDestroy()
 		end
 
-		slot0._rewardItems = nil
+		arg_22_0._rewardItems = nil
 	end
 
-	gohelper.destroy(slot0.go)
+	gohelper.destroy(arg_22_0.go)
 end
 
-return slot0
+return var_0_0

@@ -1,21 +1,21 @@
-module("modules.logic.versionactivity1_9.warmup.view.VersionActivity1_9WarmUpViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_9.warmup.view.VersionActivity1_9WarmUpViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_9WarmUpViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_9WarmUpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, VersionActivity1_9WarmUpView.New())
+	table.insert(var_1_0, VersionActivity1_9WarmUpView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.isPlayingDesc(slot0)
-	return slot0._isPlayingDesc
+function var_0_0.isPlayingDesc(arg_2_0)
+	return arg_2_0._isPlayingDesc
 end
 
-function slot0.setIsPlayingDesc(slot0, slot1)
-	slot0._isPlayingDesc = slot1
+function var_0_0.setIsPlayingDesc(arg_3_0, arg_3_1)
+	arg_3_0._isPlayingDesc = arg_3_1
 end
 
-return slot0
+return var_0_0

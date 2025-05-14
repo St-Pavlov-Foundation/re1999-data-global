@@ -1,122 +1,124 @@
-module("modules.common.others.UIBlockHelper", package.seeall)
+﻿module("modules.common.others.UIBlockHelper", package.seeall)
 
-slot0 = class("UIBlockHelper")
+local var_0_0 = class("UIBlockHelper")
 
-function slot0._init(slot0)
-	if not slot0._inited then
-		slot0._inited = true
-		slot0._blockTimeDict = {}
-		slot0._blockViewDict = {}
-		slot0._blockViewCount = {}
-		slot0._nextRemoveBlockTime = 0
+function var_0_0._init(arg_1_0)
+	if not arg_1_0._inited then
+		arg_1_0._inited = true
+		arg_1_0._blockTimeDict = {}
+		arg_1_0._blockViewDict = {}
+		arg_1_0._blockViewCount = {}
+		arg_1_0._nextRemoveBlockTime = 0
 
-		setmetatable(slot0._blockViewCount, {
-			__index = function ()
+		setmetatable(arg_1_0._blockViewCount, {
+			__index = function()
 				return 0
 			end
 		})
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
 	end
 end
 
-function slot0.startBlock(slot0, slot1, slot2, slot3)
-	slot0:_init()
+function var_0_0.startBlock(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0:_init()
 
-	if slot0._blockTimeDict[slot1] and slot0._blockViewDict[slot1] ~= slot3 then
+	if arg_3_0._blockTimeDict[arg_3_1] and arg_3_0._blockViewDict[arg_3_1] ~= arg_3_3 then
 		logError("不支持改变绑定的界面")
 
 		return
 	end
 
-	slot2 = slot2 or 0.1
+	arg_3_2 = arg_3_2 or 0.1
 
-	UIBlockMgr.instance:startBlock(slot1)
+	UIBlockMgr.instance:startBlock(arg_3_1)
 
-	if slot3 and not slot0._blockTimeDict[slot1] then
-		slot0._blockViewDict[slot1] = slot3
-		slot0._blockViewCount[slot3] = slot0._blockViewCount[slot3] + 1
+	if arg_3_3 and not arg_3_0._blockTimeDict[arg_3_1] then
+		arg_3_0._blockViewDict[arg_3_1] = arg_3_3
+		arg_3_0._blockViewCount[arg_3_3] = arg_3_0._blockViewCount[arg_3_3] + 1
 	end
 
-	slot0._blockTimeDict[slot1] = UnityEngine.Time.time + slot2
+	arg_3_0._blockTimeDict[arg_3_1] = UnityEngine.Time.time + arg_3_2
 
-	slot0:_checkNextRemoveBlock()
+	arg_3_0:_checkNextRemoveBlock()
 end
 
-function slot0.endBlock(slot0, slot1)
-	if not slot0._blockTimeDict or not slot0._blockTimeDict[slot1] then
+function var_0_0.endBlock(arg_4_0, arg_4_1)
+	if not arg_4_0._blockTimeDict or not arg_4_0._blockTimeDict[arg_4_1] then
 		return
 	end
 
-	slot0:_endBlock(slot1)
-	slot0:_checkNextRemoveBlock()
+	arg_4_0:_endBlock(arg_4_1)
+	arg_4_0:_checkNextRemoveBlock()
 end
 
-function slot0._checkNextRemoveBlock(slot0)
-	slot2 = math.huge
+function var_0_0._checkNextRemoveBlock(arg_5_0)
+	local var_5_0 = UnityEngine.Time.time
+	local var_5_1 = math.huge
 
-	for slot6, slot7 in pairs(slot0._blockTimeDict) do
-		if slot7 < UnityEngine.Time.time then
-			slot0:endBlock(slot6)
-		elseif slot7 < slot2 then
-			slot2 = slot7
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._blockTimeDict) do
+		if iter_5_1 < var_5_0 then
+			arg_5_0:endBlock(iter_5_0)
+		elseif iter_5_1 < var_5_1 then
+			var_5_1 = iter_5_1
 		end
 	end
 
-	if slot2 ~= math.huge then
-		if slot2 ~= slot0._nextRemoveBlockTime then
-			slot0._nextRemoveBlockTime = slot2
+	if var_5_1 ~= math.huge then
+		if var_5_1 ~= arg_5_0._nextRemoveBlockTime then
+			arg_5_0._nextRemoveBlockTime = var_5_1
 
-			TaskDispatcher.cancelTask(slot0._checkNextRemoveBlock, slot0)
-			TaskDispatcher.runDelay(slot0._checkNextRemoveBlock, slot0, slot2 - slot1)
+			TaskDispatcher.cancelTask(arg_5_0._checkNextRemoveBlock, arg_5_0)
+			TaskDispatcher.runDelay(arg_5_0._checkNextRemoveBlock, arg_5_0, var_5_1 - var_5_0)
 		end
-	elseif slot0._nextRemoveBlockTime ~= 0 then
-		slot0._nextRemoveBlockTime = 0
+	elseif arg_5_0._nextRemoveBlockTime ~= 0 then
+		arg_5_0._nextRemoveBlockTime = 0
 
-		TaskDispatcher.cancelTask(slot0._checkNextRemoveBlock, slot0)
+		TaskDispatcher.cancelTask(arg_5_0._checkNextRemoveBlock, arg_5_0)
 	end
 end
 
-function slot0._endBlock(slot0, slot1)
-	UIBlockMgr.instance:endBlock(slot1)
+function var_0_0._endBlock(arg_6_0, arg_6_1)
+	UIBlockMgr.instance:endBlock(arg_6_1)
 
-	slot0._blockTimeDict[slot1] = nil
+	arg_6_0._blockTimeDict[arg_6_1] = nil
 
-	if slot0._blockViewDict[slot1] then
-		slot2 = slot0._blockViewDict[slot1]
-		slot0._blockViewCount[slot2] = slot0._blockViewCount[slot2] - 1
+	if arg_6_0._blockViewDict[arg_6_1] then
+		local var_6_0 = arg_6_0._blockViewDict[arg_6_1]
 
-		if slot0._blockViewCount[slot2] == 0 then
-			slot0._blockViewCount[slot2] = nil
+		arg_6_0._blockViewCount[var_6_0] = arg_6_0._blockViewCount[var_6_0] - 1
+
+		if arg_6_0._blockViewCount[var_6_0] == 0 then
+			arg_6_0._blockViewCount[var_6_0] = nil
 		end
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot0._blockViewCount[slot1] > 0 then
-		for slot5, slot6 in pairs(slot0._blockViewDict) do
-			if slot6 == slot1 then
-				slot0:endBlock(slot5)
+function var_0_0._onCloseView(arg_7_0, arg_7_1)
+	if arg_7_0._blockViewCount[arg_7_1] > 0 then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._blockViewDict) do
+			if iter_7_1 == arg_7_1 then
+				arg_7_0:endBlock(iter_7_0)
 			end
 		end
 
-		slot0:_checkNextRemoveBlock()
+		arg_7_0:_checkNextRemoveBlock()
 	end
 end
 
-function slot0.clearAll(slot0)
-	if not slot0._blockTimeDict then
+function var_0_0.clearAll(arg_8_0)
+	if not arg_8_0._blockTimeDict then
 		return
 	end
 
-	for slot4 in pairs(slot0._blockTimeDict) do
-		slot0:_endBlock(slot4)
+	for iter_8_0 in pairs(arg_8_0._blockTimeDict) do
+		arg_8_0:_endBlock(iter_8_0)
 	end
 
-	slot0._nextRemoveBlockTime = 0
+	arg_8_0._nextRemoveBlockTime = 0
 
-	TaskDispatcher.cancelTask(slot0._checkNextRemoveBlock, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._checkNextRemoveBlock, arg_8_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

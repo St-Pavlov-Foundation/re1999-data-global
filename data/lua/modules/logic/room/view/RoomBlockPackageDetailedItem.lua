@@ -1,70 +1,80 @@
-module("modules.logic.room.view.RoomBlockPackageDetailedItem", package.seeall)
+﻿module("modules.logic.room.view.RoomBlockPackageDetailedItem", package.seeall)
 
-slot0 = class("RoomBlockPackageDetailedItem", RoomBlockPackageItem)
+local var_0_0 = class("RoomBlockPackageDetailedItem", RoomBlockPackageItem)
 
-function slot0._editableInitView(slot0)
-	slot0._go = slot0.viewGO
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "item")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "item/bottom/degree/txt_num")
-	slot0._txtdegree = gohelper.findChildText(slot0.viewGO, "item/bottom/degree/txt_degree")
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "item/image_rare")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "item/bottom/txt_name")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "item/image_icon/go_reddot")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._btnItem = gohelper.findChildButtonWithAudio(slot0.viewGO, "item")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "item/bottom/go_empty")
-	slot0._simagedegree = gohelper.findChildImage(slot0.viewGO, "item/bottom/degree/txt_degree/icon")
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._go = arg_1_0.viewGO
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "item")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "item/bottom/degree/txt_num")
+	arg_1_0._txtdegree = gohelper.findChildText(arg_1_0.viewGO, "item/bottom/degree/txt_degree")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "item/image_rare")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "item/bottom/txt_name")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "item/image_icon/go_reddot")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
+	arg_1_0._btnItem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "item")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "item/bottom/go_empty")
+	arg_1_0._simagedegree = gohelper.findChildImage(arg_1_0.viewGO, "item/bottom/degree/txt_degree/icon")
 
-	slot0._btnItem:AddClickListener(slot0._btnitemOnClick, slot0)
-	UISpriteSetMgr.instance:setRoomSprite(slot0._simagedegree, "jianshezhi")
-	slot0:_onInit(slot0.viewGO)
+	arg_1_0._btnItem:AddClickListener(arg_1_0._btnitemOnClick, arg_1_0)
+	UISpriteSetMgr.instance:setRoomSprite(arg_1_0._simagedegree, "jianshezhi")
+	arg_1_0:_onInit(arg_1_0.viewGO)
 end
 
-function slot0._onInit(slot0, slot1)
-	slot0._itemCanvasGroup = gohelper.findChild(slot1, "item"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._imageIcon = gohelper.findChildSingleImage(slot1, "item/image_icon")
-	slot0._gobirthday = gohelper.findChild(slot1, "item/go_birthday")
-	slot0._txtbirthName = gohelper.findChildText(slot1, "item/go_birthday/txt_birthName")
+function var_0_0._onInit(arg_2_0, arg_2_1)
+	arg_2_0._itemCanvasGroup = gohelper.findChild(arg_2_1, "item"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_2_0._imageIcon = gohelper.findChildSingleImage(arg_2_1, "item/image_icon")
+	arg_2_0._gobirthday = gohelper.findChild(arg_2_1, "item/go_birthday")
+	arg_2_0._txtbirthName = gohelper.findChildText(arg_2_1, "item/go_birthday/txt_birthName")
 end
 
-function slot0._onRefreshUI(slot0)
-	slot0._imageIcon:LoadImage(ResUrl.getRoomImage("blockpackage/" .. slot0._packageCfg.icon))
+function var_0_0._onRefreshUI(arg_3_0)
+	arg_3_0._imageIcon:LoadImage(ResUrl.getRoomImage("blockpackage/" .. arg_3_0._packageCfg.icon))
 
-	if slot0._packageCfg.id == RoomBlockPackageEnum.ID.RoleBirthday then
-		gohelper.setActive(slot0._gobirthday, slot0:_getNearBlockName() ~= nil)
+	if arg_3_0._packageCfg.id == RoomBlockPackageEnum.ID.RoleBirthday then
+		local var_3_0 = arg_3_0:_getNearBlockName()
 
-		if slot1 then
-			slot0._txtbirthName.text = slot1
+		gohelper.setActive(arg_3_0._gobirthday, var_3_0 ~= nil)
+
+		if var_3_0 then
+			arg_3_0._txtbirthName.text = var_3_0
 		end
 	else
-		gohelper.setActive(slot0._gobirthday, false)
+		gohelper.setActive(arg_3_0._gobirthday, false)
 	end
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imagerare, RoomBlockPackageEnum.RareBigIcon[slot0._packageCfg.rare] or RoomBlockPackageEnum.RareBigIcon[1])
+	local var_3_1 = RoomBlockPackageEnum.RareBigIcon[arg_3_0._packageCfg.rare] or RoomBlockPackageEnum.RareBigIcon[1]
+
+	UISpriteSetMgr.instance:setRoomSprite(arg_3_0._imagerare, var_3_1)
 end
 
-function slot0._getNearBlockName(slot0)
-	slot2 = nil
+function var_0_0._getNearBlockName(arg_4_0)
+	local var_4_0 = RoomModel.instance:getSpecialBlockInfoList()
+	local var_4_1
 
-	for slot6, slot7 in ipairs(RoomModel.instance:getSpecialBlockInfoList()) do
-		if RoomConfig.instance:getBlock(slot7.blockId) and slot8.packageId == RoomBlockPackageEnum.ID.RoleBirthday and (slot2 == nil or slot2.createTime < slot7.createTime) then
-			slot2 = slot7
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		local var_4_2 = RoomConfig.instance:getBlock(iter_4_1.blockId)
+
+		if var_4_2 and var_4_2.packageId == RoomBlockPackageEnum.ID.RoleBirthday and (var_4_1 == nil or var_4_1.createTime < iter_4_1.createTime) then
+			var_4_1 = iter_4_1
 		end
 	end
 
-	if slot2 then
-		return RoomConfig.instance:getSpecialBlockConfig(slot2.blockId) and slot3.name
+	if var_4_1 then
+		local var_4_3 = RoomConfig.instance:getSpecialBlockConfig(var_4_1.blockId)
+
+		return var_4_3 and var_4_3.name
 	end
 
 	return nil
 end
 
-function slot0._onSelectUI(slot0)
+function var_0_0._onSelectUI(arg_5_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0._imageIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_6_0)
+	var_0_0.super.onDestroyView(arg_6_0)
+	arg_6_0._imageIcon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

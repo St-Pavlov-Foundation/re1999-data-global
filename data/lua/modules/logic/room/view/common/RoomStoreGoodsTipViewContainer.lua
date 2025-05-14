@@ -1,23 +1,26 @@
-module("modules.logic.room.view.common.RoomStoreGoodsTipViewContainer", package.seeall)
+﻿module("modules.logic.room.view.common.RoomStoreGoodsTipViewContainer", package.seeall)
 
-slot0 = class("RoomStoreGoodsTipViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomStoreGoodsTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomStoreGoodsTipView.New())
-	table.insert(slot1, RoomStroreGoodsTipViewBanner.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, RoomStoreGoodsTipView.New())
+	table.insert(var_1_0, RoomStroreGoodsTipViewBanner.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = CurrencyEnum.CurrencyType
+	local var_2_1 = {
+		var_2_0.FreeDiamondCoupon,
+		23
+	}
+
 	if ItemModel.instance:getItemCount(StoreEnum.NormalRoomTicket) > 0 then
-		table.insert({
-			CurrencyEnum.CurrencyType.FreeDiamondCoupon,
-			23
-		}, {
+		table.insert(var_2_1, {
 			isCurrencySprite = true,
 			id = StoreEnum.NormalRoomTicket,
 			type = MaterialEnum.MaterialType.Item
@@ -25,7 +28,7 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 
 	if ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
-		table.insert(slot3, {
+		table.insert(var_2_1, {
 			isCurrencySprite = true,
 			id = StoreEnum.TopRoomTicket,
 			type = MaterialEnum.MaterialType.Item
@@ -33,12 +36,12 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 
 	return {
-		CurrencyView.New(slot3)
+		CurrencyView.New(var_2_1)
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_3_0)
 	ViewMgr.instance:closeView(ViewName.RoomStoreGoodsTipView, nil, true)
 end
 
-return slot0
+return var_0_0

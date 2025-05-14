@@ -1,30 +1,32 @@
-module("modules.logic.fight.view.cardeffect.FightEnemyPlayCardInEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightEnemyPlayCardInEffect", package.seeall)
 
-slot0 = class("FightEnemyPlayCardInEffect", BaseWork)
-slot1 = Color.white
+local var_0_0 = class("FightEnemyPlayCardInEffect", BaseWork)
+local var_0_1 = Color.white
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	for slot5 = 1, slot1.enemyNowActPoint do
-		gohelper.setActive(gohelper.findChild(slot1.viewGO, string.format("root/enemycards/item%d/op", slot5)), true)
+	for iter_1_0 = 1, arg_1_1.enemyNowActPoint do
+		local var_1_0 = gohelper.findChild(arg_1_1.viewGO, string.format("root/enemycards/item%d/op", iter_1_0))
 
-		slot7 = gohelper.findChild(slot1.viewGO, string.format("root/enemycards/item%d/empty", slot5))
+		gohelper.setActive(var_1_0, true)
 
-		gohelper.setActive(slot7, true)
+		local var_1_1 = gohelper.findChild(arg_1_1.viewGO, string.format("root/enemycards/item%d/empty", iter_1_0))
 
-		gohelper.onceAddComponent(slot7, gohelper.Type_Image).color = uv1
+		gohelper.setActive(var_1_1, true)
+
+		gohelper.onceAddComponent(var_1_1, gohelper.Type_Image).color = var_0_1
 	end
 
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.34)
+	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 0.34)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

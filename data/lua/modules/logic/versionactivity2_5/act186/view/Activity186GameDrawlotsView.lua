@@ -1,304 +1,331 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186GameDrawlotsView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameDrawlotsView", package.seeall)
 
-slot0 = class("Activity186GameDrawlotsView", BaseView)
+local var_0_0 = class("Activity186GameDrawlotsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goQian = gohelper.findChild(slot0.viewGO, "chouqian")
-	slot0.goResult = gohelper.findChild(slot0.viewGO, "result")
-	slot0.txtResult = gohelper.findChildTextMesh(slot0.viewGO, "result/left/#txt_resultdec")
-	slot0.simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "result/right/#simage_title")
-	slot0.txtTitle = gohelper.findChildTextMesh(slot0.viewGO, "result/right/#simage_title/#txt_result")
-	slot0.goReward1 = gohelper.findChild(slot0.viewGO, "result/right/rewards/reward1")
-	slot0.txtRewardNum1 = gohelper.findChildTextMesh(slot0.viewGO, "result/right/rewards/reward1/#txt_num")
-	slot0.goReward2 = gohelper.findChild(slot0.viewGO, "result/right/rewards/reward2")
-	slot0.simageReward2 = gohelper.findChildSingleImage(slot0.viewGO, "result/right/rewards/reward2/icon")
-	slot0.txtRewardNum2 = gohelper.findChildTextMesh(slot0.viewGO, "result/right/rewards/reward2/#txt_num")
-	slot0.btnSure = gohelper.findChildButtonWithAudio(slot0.viewGO, "result/right/#btn_Sure")
-	slot0.btnAgain = gohelper.findChildButtonWithAudio(slot0.viewGO, "result/right/#btn_Again")
-	slot0.txtRest = gohelper.findChildTextMesh(slot0.viewGO, "result/right/#btn_Again/#txt_rest")
-	slot0.goExit = gohelper.findChild(slot0.viewGO, "result/right/txt_exit")
-	slot0.viewAnim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0.qiantongAnim = gohelper.findChildComponent(slot0.viewGO, "chouqian/qiantong", gohelper.Type_Animator)
-	slot0.btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "FullBG")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goQian = gohelper.findChild(arg_1_0.viewGO, "chouqian")
+	arg_1_0.goResult = gohelper.findChild(arg_1_0.viewGO, "result")
+	arg_1_0.txtResult = gohelper.findChildTextMesh(arg_1_0.viewGO, "result/left/#txt_resultdec")
+	arg_1_0.simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "result/right/#simage_title")
+	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "result/right/#simage_title/#txt_result")
+	arg_1_0.goReward1 = gohelper.findChild(arg_1_0.viewGO, "result/right/rewards/reward1")
+	arg_1_0.txtRewardNum1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "result/right/rewards/reward1/#txt_num")
+	arg_1_0.goReward2 = gohelper.findChild(arg_1_0.viewGO, "result/right/rewards/reward2")
+	arg_1_0.simageReward2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "result/right/rewards/reward2/icon")
+	arg_1_0.txtRewardNum2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "result/right/rewards/reward2/#txt_num")
+	arg_1_0.btnSure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "result/right/#btn_Sure")
+	arg_1_0.btnAgain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "result/right/#btn_Again")
+	arg_1_0.txtRest = gohelper.findChildTextMesh(arg_1_0.viewGO, "result/right/#btn_Again/#txt_rest")
+	arg_1_0.goExit = gohelper.findChild(arg_1_0.viewGO, "result/right/txt_exit")
+	arg_1_0.viewAnim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_1_0.qiantongAnim = gohelper.findChildComponent(arg_1_0.viewGO, "chouqian/qiantong", gohelper.Type_Animator)
+	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "FullBG")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClose, slot0.onClickBtnClose, slot0)
-	slot0:addClickCb(slot0.btnSure, slot0.onClickBtnSure, slot0)
-	slot0:addClickCb(slot0.btnAgain, slot0.onClickBtnAgain, slot0)
-	slot0:addEventCb(Activity186Controller.instance, Activity186Event.PlayGame, slot0.onPlayGame, slot0)
-	slot0:addEventCb(Activity186Controller.instance, Activity186Event.FinishGame, slot0.onFinishGame, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickBtnClose, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnSure, arg_2_0.onClickBtnSure, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnAgain, arg_2_0.onClickBtnAgain, arg_2_0)
+	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.PlayGame, arg_2_0.onPlayGame, arg_2_0)
+	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.FinishGame, arg_2_0.onFinishGame, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onClickBtnClose(slot0)
-	if slot0.gameStatus == Activity186Enum.GameStatus.Result then
-		if not (Activity186Model.instance:getById(slot0.actId) and slot1:getGameInfo(slot0.gameId)) then
+function var_0_0.onClickBtnClose(arg_5_0)
+	if arg_5_0.gameStatus == Activity186Enum.GameStatus.Result then
+		local var_5_0 = Activity186Model.instance:getById(arg_5_0.actId)
+		local var_5_1 = var_5_0 and var_5_0:getGameInfo(arg_5_0.gameId)
+
+		if not var_5_1 then
 			return
 		end
 
-		slot3 = slot2.rewardId
+		local var_5_2 = var_5_1.rewardId
 
-		if slot2.bTypeRetryCount <= 0 then
-			slot0:closeThis()
+		if var_5_1.bTypeRetryCount <= 0 then
+			arg_5_0:closeThis()
 		end
 	end
 end
 
-function slot0.onClickBtnSure(slot0)
-	if not (Activity186Model.instance:getById(slot0.actId) and slot1:getGameInfo(slot0.gameId)) then
+function var_0_0.onClickBtnSure(arg_6_0)
+	local var_6_0 = Activity186Model.instance:getById(arg_6_0.actId)
+	local var_6_1 = var_6_0 and var_6_0:getGameInfo(arg_6_0.gameId)
+
+	if not var_6_1 then
 		return
 	end
 
-	if slot2.rewardId and slot3 > 0 then
-		Activity186Rpc.instance:sendFinishAct186BTypeGameRequest(slot0.actId, slot0.gameId)
-		slot0:closeThis()
+	local var_6_2 = var_6_1.rewardId
+
+	if var_6_2 and var_6_2 > 0 then
+		Activity186Rpc.instance:sendFinishAct186BTypeGameRequest(arg_6_0.actId, arg_6_0.gameId)
+		arg_6_0:closeThis()
 	end
 end
 
-function slot0.onClickBtnAgain(slot0)
-	slot0.viewAnim:Play("change")
-	slot0:startGame()
+function var_0_0.onClickBtnAgain(arg_7_0)
+	arg_7_0.viewAnim:Play("change")
+	arg_7_0:startGame()
 end
 
-function slot0.onPlayGame(slot0)
-	slot0.viewAnim:Play("finish")
-	slot0:_showResult()
+function var_0_0.onPlayGame(arg_8_0)
+	arg_8_0.viewAnim:Play("finish")
+	arg_8_0:_showResult()
 end
 
-function slot0.onFinishGame(slot0)
-	slot0:checkGameNotOnline()
+function var_0_0.onFinishGame(arg_9_0)
+	arg_9_0:checkGameNotOnline()
 end
 
-function slot0.checkGameNotOnline(slot0)
-	if not Activity186Model.instance:getById(slot0.actId) then
+function var_0_0.checkGameNotOnline(arg_10_0)
+	local var_10_0 = Activity186Model.instance:getById(arg_10_0.actId)
+
+	if not var_10_0 then
 		return
 	end
 
-	if not slot1:getGameInfo(slot0.gameId) then
+	if not var_10_0:getGameInfo(arg_10_0.gameId) then
 		return
 	end
 
-	if not slot1:isGameOnline(slot0.gameId) then
-		slot0:closeThis()
+	if not var_10_0:isGameOnline(arg_10_0.gameId) then
+		arg_10_0:closeThis()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_12_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_mln_page_turn)
 	ViewMgr.instance:closeView(ViewName.Activity186GameInviteView)
 
-	slot0.actId = slot0.viewParam.activityId
-	slot0.gameId = slot0.viewParam.gameId
-	slot0.gameStatus = slot0.viewParam.gameStatus
+	arg_12_0.actId = arg_12_0.viewParam.activityId
+	arg_12_0.gameId = arg_12_0.viewParam.gameId
+	arg_12_0.gameStatus = arg_12_0.viewParam.gameStatus
 
-	slot0:refreshView()
-	slot0:_showDeadline()
+	arg_12_0:refreshView()
+	arg_12_0:_showDeadline()
 end
 
-function slot0.refreshView(slot0)
-	if not (Activity186Model.instance:getById(slot0.actId) and slot1:getGameInfo(slot0.gameId)) then
+function var_0_0.refreshView(arg_13_0)
+	local var_13_0 = Activity186Model.instance:getById(arg_13_0.actId)
+	local var_13_1 = var_13_0 and var_13_0:getGameInfo(arg_13_0.gameId)
+
+	if not var_13_1 then
 		return
 	end
 
-	if slot2.rewardId and slot3 > 0 then
-		slot0.viewAnim:Play("open1")
-		slot0:_showResult()
+	local var_13_2 = var_13_1.rewardId
+
+	if var_13_2 and var_13_2 > 0 then
+		arg_13_0.viewAnim:Play("open1")
+		arg_13_0:_showResult()
 	else
-		slot0.viewAnim:Play("open")
-		slot0:startGame()
+		arg_13_0.viewAnim:Play("open")
+		arg_13_0:startGame()
 	end
 end
 
-function slot0.startGame(slot0)
-	slot0.gameStatus = Activity186Enum.GameStatus.Playing
+function var_0_0.startGame(arg_14_0)
+	arg_14_0.gameStatus = Activity186Enum.GameStatus.Playing
 
-	slot0.qiantongAnim:Play("idle")
+	arg_14_0.qiantongAnim:Play("idle")
 
-	slot0.inDelayTime = false
+	arg_14_0.inDelayTime = false
 
-	slot0:addTouchEvents()
-	slot0:startCheckShake()
+	arg_14_0:addTouchEvents()
+	arg_14_0:startCheckShake()
 end
 
-function slot0.startCheckShake(slot0)
-	slot1, slot2, slot3 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
-	slot0.previousAcceleration = Vector3.New(slot1, slot2, slot3)
+function var_0_0.startCheckShake(arg_15_0)
+	local var_15_0, var_15_1, var_15_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-	TaskDispatcher.cancelTask(slot0._onCheckShake, slot0)
-	TaskDispatcher.runRepeat(slot0._onCheckShake, slot0, 0.1)
+	arg_15_0.previousAcceleration = Vector3.New(var_15_0, var_15_1, var_15_2)
+
+	TaskDispatcher.cancelTask(arg_15_0._onCheckShake, arg_15_0)
+	TaskDispatcher.runRepeat(arg_15_0._onCheckShake, arg_15_0, 0.1)
 end
 
-function slot0._onCheckShake(slot0)
-	if slot0.gameStatus ~= Activity186Enum.GameStatus.Playing then
+function var_0_0._onCheckShake(arg_16_0)
+	if arg_16_0.gameStatus ~= Activity186Enum.GameStatus.Playing then
 		return
 	end
 
-	slot1, slot2, slot3 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+	local var_16_0, var_16_1, var_16_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+	local var_16_3 = Vector3.New(var_16_0, var_16_1, var_16_2)
 
-	if (Vector3.New(slot1, slot2, slot3) - slot0.previousAcceleration).magnitude > 0.5 then
-		slot0:startDelayTime()
+	if (var_16_3 - arg_16_0.previousAcceleration).magnitude > 0.5 then
+		arg_16_0:startDelayTime()
 	end
 
-	slot0.previousAcceleration = slot4
+	arg_16_0.previousAcceleration = var_16_3
 end
 
-function slot0.addTouchEvents(slot0)
-	if slot0._touchEventMgr then
+function var_0_0.addTouchEvents(arg_17_0)
+	if arg_17_0._touchEventMgr then
 		return
 	end
 
-	slot0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(slot0.goQian)
+	arg_17_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_17_0.goQian)
 
-	slot0._touchEventMgr:SetIgnoreUI(true)
-	slot0._touchEventMgr:SetOnlyTouch(true)
-	slot0._touchEventMgr:SetOnDragBeginCb(slot0._onDragBegin, slot0)
-	slot0._touchEventMgr:SetOnDragEndCb(slot0._onDragEnd, slot0)
+	arg_17_0._touchEventMgr:SetIgnoreUI(true)
+	arg_17_0._touchEventMgr:SetOnlyTouch(true)
+	arg_17_0._touchEventMgr:SetOnDragBeginCb(arg_17_0._onDragBegin, arg_17_0)
+	arg_17_0._touchEventMgr:SetOnDragEndCb(arg_17_0._onDragEnd, arg_17_0)
 end
 
-function slot0._onDragBegin(slot0)
-	slot0.inDrag = true
+function var_0_0._onDragBegin(arg_18_0)
+	arg_18_0.inDrag = true
 
-	if slot0.gameStatus == Activity186Enum.GameStatus.Playing then
-		slot0:startDelayTime()
+	if arg_18_0.gameStatus == Activity186Enum.GameStatus.Playing then
+		arg_18_0:startDelayTime()
 	end
 end
 
-function slot0._onDragEnd(slot0)
-	slot0.inDrag = false
+function var_0_0._onDragEnd(arg_19_0)
+	arg_19_0.inDrag = false
 
-	if slot0.gameStatus == Activity186Enum.GameStatus.Playing then
-		-- Nothing
+	if arg_19_0.gameStatus == Activity186Enum.GameStatus.Playing then
+		-- block empty
 	end
 end
 
-function slot0.startDelayTime(slot0)
-	if slot0.inDelayTime then
+function var_0_0.startDelayTime(arg_20_0)
+	if arg_20_0.inDelayTime then
 		return
 	end
 
-	slot0.inDelayTime = true
+	arg_20_0.inDelayTime = true
 
-	slot0.qiantongAnim:Play("open")
+	arg_20_0.qiantongAnim:Play("open")
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_tangren_qiuqian)
-	TaskDispatcher.cancelTask(slot0.checkFinish, slot0)
-	TaskDispatcher.runDelay(slot0.checkFinish, slot0, 3)
+	TaskDispatcher.cancelTask(arg_20_0.checkFinish, arg_20_0)
+	TaskDispatcher.runDelay(arg_20_0.checkFinish, arg_20_0, 3)
 end
 
-function slot0.checkFinish(slot0)
-	if slot0.gameStatus ~= Activity186Enum.GameStatus.Playing then
+function var_0_0.checkFinish(arg_21_0)
+	if arg_21_0.gameStatus ~= Activity186Enum.GameStatus.Playing then
 		return
 	end
 
-	slot0:showResult()
+	arg_21_0:showResult()
 end
 
-function slot0.showResult(slot0)
+function var_0_0.showResult(arg_22_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.stop_ui_bus)
 
-	slot0.gameStatus = Activity186Enum.GameStatus.Result
+	arg_22_0.gameStatus = Activity186Enum.GameStatus.Result
 
-	Activity186Rpc.instance:sendAct186BTypeGamePlayRequest(slot0.actId, slot0.gameId)
+	Activity186Rpc.instance:sendAct186BTypeGamePlayRequest(arg_22_0.actId, arg_22_0.gameId)
 end
 
-function slot0._showResult(slot0)
+function var_0_0._showResult(arg_23_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_mln_day_night)
 
-	slot0.gameStatus = Activity186Enum.GameStatus.Result
+	arg_23_0.gameStatus = Activity186Enum.GameStatus.Result
 
-	if not (Activity186Model.instance:getById(slot0.actId) and slot1:getGameInfo(slot0.gameId)) then
+	local var_23_0 = Activity186Model.instance:getById(arg_23_0.actId)
+	local var_23_1 = var_23_0 and var_23_0:getGameInfo(arg_23_0.gameId)
+
+	if not var_23_1 then
 		return
 	end
 
-	slot4 = slot2.bTypeRetryCount
+	local var_23_2 = var_23_1.rewardId
+	local var_23_3 = var_23_1.bTypeRetryCount
+	local var_23_4 = Activity186Config.instance:getGameRewardConfig(2, var_23_2)
 
-	if Activity186Config.instance:getGameRewardConfig(2, slot2.rewardId) then
-		if slot3 == 6 then
-			slot0.simageTitle:LoadImage("singlebg/v2a5_act186_singlebg/tag/v2a5_act186_tag5.png")
+	if var_23_4 then
+		if var_23_2 == 6 then
+			arg_23_0.simageTitle:LoadImage("singlebg/v2a5_act186_singlebg/tag/v2a5_act186_tag5.png")
 		else
-			slot0.simageTitle:LoadImage(string.format("singlebg/v2a5_act186_singlebg/tag/v2a5_act186_tag%s.png", slot3))
+			arg_23_0.simageTitle:LoadImage(string.format("singlebg/v2a5_act186_singlebg/tag/v2a5_act186_tag%s.png", var_23_2))
 		end
 
-		slot0.txtTitle.text = slot5.blessingtitle
-		slot0.txtResult.text = slot5.blessingdes
+		arg_23_0.txtTitle.text = var_23_4.blessingtitle
+		arg_23_0.txtResult.text = var_23_4.blessingdes
 
-		slot0:refreshReward(slot5.bonus)
+		arg_23_0:refreshReward(var_23_4.bonus)
 	end
 
-	gohelper.setActive(slot0.btnAgain, slot4 > 0)
-	gohelper.setActive(slot0.goExit, slot4 <= 0)
+	gohelper.setActive(arg_23_0.btnAgain, var_23_3 > 0)
+	gohelper.setActive(arg_23_0.goExit, var_23_3 <= 0)
 
-	if slot4 > 0 then
-		slot0.txtRest.text = formatLuaLang("act186_gameview_remaintimes", slot4)
+	if var_23_3 > 0 then
+		arg_23_0.txtRest.text = formatLuaLang("act186_gameview_remaintimes", var_23_3)
 	end
 end
 
-function slot0.refreshReward(slot0, slot1)
-	slot3 = {}
+function var_0_0.refreshReward(arg_24_0, arg_24_1)
+	local var_24_0 = GameUtil.splitString2(arg_24_1, true)
+	local var_24_1 = {}
 
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot1, true)) do
-		if slot8[1] ~= 26 then
-			table.insert(slot3, slot8)
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		if iter_24_1[1] ~= 26 then
+			table.insert(var_24_1, iter_24_1)
 		end
 	end
 
-	slot5 = slot3[2]
+	local var_24_2 = var_24_1[1]
+	local var_24_3 = var_24_1[2]
 
-	if slot3[1] then
-		slot0.txtRewardNum1.text = string.format("×%s", slot4[3])
+	if var_24_2 then
+		arg_24_0.txtRewardNum1.text = string.format("×%s", var_24_2[3])
 
-		gohelper.setActive(slot0.goReward1, true)
+		gohelper.setActive(arg_24_0.goReward1, true)
 	else
-		gohelper.setActive(slot0.goReward1, false)
+		gohelper.setActive(arg_24_0.goReward1, false)
 	end
 
-	if slot5 then
-		gohelper.setActive(slot0.goReward2, true)
+	if var_24_3 then
+		gohelper.setActive(arg_24_0.goReward2, true)
 
-		slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot5[1], slot5[2], true)
+		local var_24_4, var_24_5 = ItemModel.instance:getItemConfigAndIcon(var_24_3[1], var_24_3[2], true)
 
-		slot0.simageReward2:LoadImage(slot7)
+		arg_24_0.simageReward2:LoadImage(var_24_5)
 
-		slot0.txtRewardNum2.text = string.format("×%s", slot5[3])
+		arg_24_0.txtRewardNum2.text = string.format("×%s", var_24_3[3])
 	else
-		gohelper.setActive(slot0.goReward2, false)
+		gohelper.setActive(arg_24_0.goReward2, false)
 	end
 end
 
-function slot0._showDeadline(slot0)
-	slot0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
+function var_0_0._showDeadline(arg_25_0)
+	arg_25_0:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(arg_25_0._onRefreshDeadline, arg_25_0)
+	TaskDispatcher.runRepeat(arg_25_0._onRefreshDeadline, arg_25_0, 1)
 end
 
-function slot0._onRefreshDeadline(slot0)
-	slot0:checkGameNotOnline()
+function var_0_0._onRefreshDeadline(arg_26_0)
+	arg_26_0:checkGameNotOnline()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onClose(arg_27_0)
+	TaskDispatcher.cancelTask(arg_27_0._onRefreshDeadline, arg_27_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_28_0)
 	AudioMgr.instance:trigger(AudioEnum.Act186.stop_ui_bus)
-	slot0.simageReward2:UnLoadImage()
-	slot0.simageTitle:UnLoadImage()
+	arg_28_0.simageReward2:UnLoadImage()
+	arg_28_0.simageTitle:UnLoadImage()
 	ViewMgr.instance:closeView(ViewName.Activity186GameInviteView)
-	TaskDispatcher.cancelTask(slot0.checkFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._onCheckShake, slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+	TaskDispatcher.cancelTask(arg_28_0.checkFinish, arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0._onCheckShake, arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0._onRefreshDeadline, arg_28_0)
 end
 
-return slot0
+return var_0_0

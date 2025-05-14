@@ -1,54 +1,61 @@
-module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapHoleView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapHoleView", package.seeall)
 
-slot0 = class("HeroInvitationDungeonMapHoleView", DungeonMapHoleView)
+local var_0_0 = class("HeroInvitationDungeonMapHoleView", DungeonMapHoleView)
 
-function slot0.refreshHoles(slot0)
-	if not slot0.loadSceneDone or gohelper.isNil(slot0.mat) then
+function var_0_0.refreshHoles(arg_1_0)
+	if not arg_1_0.loadSceneDone or gohelper.isNil(arg_1_0.mat) then
 		return
 	end
 
-	slot1 = {}
+	local var_1_0 = {}
 
-	for slot5, slot6 in pairs(slot0.holdCoList) do
-		slot7 = slot6[4]
-		slot12 = math.sqrt((slot0.mainCameraPosY - (slot6[2] + slot0.sceneWorldPosY - slot0.defaultSceneWorldPosY))^2)
+	for iter_1_0, iter_1_1 in pairs(arg_1_0.holdCoList) do
+		local var_1_1 = iter_1_1[4]
+		local var_1_2 = iter_1_1[1] + arg_1_0.sceneWorldPosX - arg_1_0.defaultSceneWorldPosX
+		local var_1_3 = iter_1_1[2] + arg_1_0.sceneWorldPosY - arg_1_0.defaultSceneWorldPosY
+		local var_1_4 = math.abs(iter_1_1[3])
+		local var_1_5 = math.sqrt((arg_1_0.mainCameraPosX - var_1_2)^2)
+		local var_1_6 = math.sqrt((arg_1_0.mainCameraPosY - var_1_3)^2)
 
-		if math.sqrt((slot0.mainCameraPosX - (slot6[1] + slot0.sceneWorldPosX - slot0.defaultSceneWorldPosX))^2) <= slot0._mapHalfWidth + math.abs(slot6[3]) and slot12 <= slot0._mapHalfHeight + slot10 then
-			if slot7 and slot7 > 0 then
-				-- Nothing
+		if var_1_5 <= arg_1_0._mapHalfWidth + var_1_4 and var_1_6 <= arg_1_0._mapHalfHeight + var_1_4 then
+			local var_1_7 = {
+				finish = 0,
+				distance = -(var_1_5 * var_1_5 + var_1_6 * var_1_6),
+				pos = {
+					var_1_2,
+					var_1_3,
+					iter_1_1[3]
+				},
+				id = var_1_1 or 0
+			}
+
+			if var_1_1 and var_1_1 > 0 then
+				var_1_7.finish = DungeonMapModel.instance:elementIsFinished(var_1_1) and 0 or 1
 			end
 
-			table.insert(slot1, {
-				finish = 0,
-				distance = -(slot11 * slot11 + slot12 * slot12),
-				pos = {
-					slot8,
-					slot9,
-					slot6[3]
-				},
-				id = slot7 or 0,
-				finish = DungeonMapModel.instance:elementIsFinished(slot7) and 0 or 1
-			})
+			table.insert(var_1_0, var_1_7)
 		end
 	end
 
-	if #slot1 > 1 then
-		table.sort(slot1, SortUtil.tableKeyUpper({
+	if #var_1_0 > 1 then
+		table.sort(var_1_0, SortUtil.tableKeyUpper({
 			"finish",
 			"distance",
 			"id"
 		}))
 	end
 
-	for slot5 = 1, 5 do
-		if slot1[slot5] then
-			slot0.tempVector4:Set(slot6.pos[1], slot6.pos[2], slot6.pos[3])
-			slot0.mat:SetVector(slot0.shaderParamList[slot5], slot0.tempVector4)
+	for iter_1_2 = 1, 5 do
+		local var_1_8 = var_1_0[iter_1_2]
+
+		if var_1_8 then
+			arg_1_0.tempVector4:Set(var_1_8.pos[1], var_1_8.pos[2], var_1_8.pos[3])
+			arg_1_0.mat:SetVector(arg_1_0.shaderParamList[iter_1_2], arg_1_0.tempVector4)
 		else
-			slot0.tempVector4:Set(0, 0, 0)
-			slot0.mat:SetVector(slot0.shaderParamList[slot5], slot0.tempVector4)
+			arg_1_0.tempVector4:Set(0, 0, 0)
+			arg_1_0.mat:SetVector(arg_1_0.shaderParamList[iter_1_2], arg_1_0.tempVector4)
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,45 +1,45 @@
-module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessFightResultMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessFightResultMO", package.seeall)
 
-slot0 = class("WarChessFightResultMO")
+local var_0_0 = class("WarChessFightResultMO")
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.resultCode = slot1.resultCode
+function var_0_0.updateInfo(arg_1_0, arg_1_1)
+	arg_1_0.resultCode = arg_1_1.resultCode
 
-	if not string.nilorempty(slot1.extraData) then
-		slot0.result = cjson.decode(slot1.extraData)
+	if not string.nilorempty(arg_1_1.extraData) then
+		arg_1_0.result = cjson.decode(arg_1_1.extraData)
 	end
 end
 
-function slot0.getResultInfo(slot0)
-	return slot0.result and slot0.result or {}
+function var_0_0.getResultInfo(arg_2_0)
+	return arg_2_0.result and arg_2_0.result or {}
 end
 
-function slot0.getRewardCount(slot0)
-	slot1 = 0
+function var_0_0.getRewardCount(arg_3_0)
+	local var_3_0 = 0
 
-	if slot0.result then
-		for slot5, slot6 in pairs(slot0.result) do
-			if slot5 ~= "star" then
-				slot1 = slot1 + tabletool.len(slot6)
+	if arg_3_0.result then
+		for iter_3_0, iter_3_1 in pairs(arg_3_0.result) do
+			if iter_3_0 ~= "star" then
+				var_3_0 = var_3_0 + tabletool.len(iter_3_1)
 			end
 		end
 	end
 
-	return slot1
+	return var_3_0
 end
 
-function slot0.getStar(slot0)
-	slot1 = 0
+function var_0_0.getStar(arg_4_0)
+	local var_4_0 = 0
 
-	if slot0.result then
-		slot1 = tonumber(slot0.result.star)
+	if arg_4_0.result then
+		var_4_0 = tonumber(arg_4_0.result.star)
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.haveReward(slot0)
-	return slot0:getRewardCount() > 0
+function var_0_0.haveReward(arg_5_0)
+	return arg_5_0:getRewardCount() > 0
 end
 
-return slot0
+return var_0_0

@@ -1,79 +1,86 @@
-module("modules.logic.bgmswitch.rpc.BgmRpc", package.seeall)
+﻿module("modules.logic.bgmswitch.rpc.BgmRpc", package.seeall)
 
-slot0 = class("BgmRpc", BaseRpc)
+local var_0_0 = class("BgmRpc", BaseRpc)
 
-function slot0.sendGetBgmInfoRequest(slot0, slot1, slot2)
-	slot0:sendMsg(BgmModule_pb.GetBgmInfoRequest(), slot1, slot2)
+function var_0_0.sendGetBgmInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = BgmModule_pb.GetBgmInfoRequest()
+
+	arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetBgmInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		BGMSwitchModel.instance:setBgmInfos(slot2.bgmInfos)
-		BGMSwitchModel.instance:setUsedBgmIdFromServer(slot2.useBgmId)
-		BGMSwitchModel.instance:setCurBgm(slot2.useBgmId)
+function var_0_0.onReceiveGetBgmInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		BGMSwitchModel.instance:setBgmInfos(arg_2_2.bgmInfos)
+		BGMSwitchModel.instance:setUsedBgmIdFromServer(arg_2_2.useBgmId)
+		BGMSwitchModel.instance:setCurBgm(arg_2_2.useBgmId)
 	end
 end
 
-function slot0.onReceiveUpdateBgmPush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		BGMSwitchModel.instance:updateBgmInfos(slot2.bgmInfos)
+function var_0_0.onReceiveUpdateBgmPush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == 0 then
+		BGMSwitchModel.instance:updateBgmInfos(arg_3_2.bgmInfos)
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmUpdated)
 	end
 end
 
-function slot0.sendSetUseBgmRequest(slot0, slot1, slot2, slot3)
-	slot4 = BgmModule_pb.SetUseBgmRequest()
-	slot4.bgmId = slot1
+function var_0_0.sendSetUseBgmRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = BgmModule_pb.SetUseBgmRequest()
+
+	var_4_0.bgmId = arg_4_1
 
 	BGMSwitchModel.instance:recordInfoByType(BGMSwitchEnum.RecordInfoType.ListType, BGMSwitchModel.instance:getBGMSelectType(), true)
-	slot0:sendMsg(slot4, slot2, slot3)
+	arg_4_0:sendMsg(var_4_0, arg_4_2, arg_4_3)
 end
 
-function slot0.onReceiveSetUseBgmReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		BGMSwitchModel.instance:setUsedBgmIdFromServer(slot2.bgmId)
+function var_0_0.onReceiveSetUseBgmReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		BGMSwitchModel.instance:setUsedBgmIdFromServer(arg_5_2.bgmId)
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmSwitched)
 	end
 end
 
-function slot0.sendSetFavoriteBgmRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = BgmModule_pb.SetFavoriteBgmRequest()
-	slot5.bgmId = slot1
-	slot5.favorite = slot2
+function var_0_0.sendSetFavoriteBgmRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	local var_6_0 = BgmModule_pb.SetFavoriteBgmRequest()
 
-	if BGMSwitchConfig.instance:getBGMSwitchCO(slot1) then
+	var_6_0.bgmId = arg_6_1
+	var_6_0.favorite = arg_6_2
+
+	local var_6_1 = BGMSwitchConfig.instance:getBGMSwitchCO(arg_6_1)
+
+	if var_6_1 then
 		StatController.instance:track(StatEnum.EventName.SetPreferenceBgm, {
-			[StatEnum.EventProperties.AudioId] = tostring(slot1),
-			[StatEnum.EventProperties.AudioName] = slot6.audioName,
-			[StatEnum.EventProperties.OperationType] = slot2 and "setLove" or "setUnlove",
+			[StatEnum.EventProperties.AudioId] = tostring(arg_6_1),
+			[StatEnum.EventProperties.AudioName] = var_6_1.audioName,
+			[StatEnum.EventProperties.OperationType] = arg_6_2 and "setLove" or "setUnlove",
 			[StatEnum.EventProperties.FavoriteAudio] = BGMSwitchConfig.instance:getBgmNames(BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted())
 		})
 	end
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	arg_6_0:sendMsg(var_6_0, arg_6_3, arg_6_4)
 end
 
-function slot0.onReceiveSetFavoriteBgmReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		BGMSwitchModel.instance:setBgmFavorite(slot2.bgmId, slot2.favorite)
-		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmFavorite, slot2.bgmId)
+function var_0_0.onReceiveSetFavoriteBgmReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 == 0 then
+		BGMSwitchModel.instance:setBgmFavorite(arg_7_2.bgmId, arg_7_2.favorite)
+		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmFavorite, arg_7_2.bgmId)
 	end
 end
 
-function slot0.sendReadBgmRequest(slot0, slot1)
-	slot2 = BgmModule_pb.ReadBgmRequest()
-	slot2.bgmId = slot1
+function var_0_0.sendReadBgmRequest(arg_8_0, arg_8_1)
+	local var_8_0 = BgmModule_pb.ReadBgmRequest()
 
-	slot0:sendMsg(slot2)
+	var_8_0.bgmId = arg_8_1
+
+	arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceiveReadBgmReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		BGMSwitchModel.instance:markRead(slot2.bgmId)
-		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmMarkRead, slot2.bgmId)
+function var_0_0.onReceiveReadBgmReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == 0 then
+		BGMSwitchModel.instance:markRead(arg_9_2.bgmId)
+		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmMarkRead, arg_9_2.bgmId)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

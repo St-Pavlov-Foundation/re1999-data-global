@@ -1,32 +1,44 @@
-module("modules.logic.room.view.backpack.RoomBackpackPropItem", package.seeall)
+﻿module("modules.logic.room.view.backpack.RoomBackpackPropItem", package.seeall)
 
-slot0 = class("RoomBackpackPropItem", ListScrollCellExtend)
+local var_0_0 = class("RoomBackpackPropItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imgquality = gohelper.findChildImage(slot0.viewGO, "#image_quality")
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "#go_icon")
-	slot0._itemIcon = IconMgr.instance:getCommonItemIcon(slot0._goicon)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imgquality = gohelper.findChildImage(arg_1_0.viewGO, "#image_quality")
+	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
+	arg_1_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_1_0._goicon)
 
-	recthelper.setAnchorY(slot0._itemIcon:getCountBg().transform, RoomManufactureEnum.ItemCountBgY)
-	recthelper.setAnchorY(slot0._itemIcon:getCount().transform, RoomManufactureEnum.ItemCountY)
+	local var_1_0 = arg_1_0._itemIcon:getCountBg()
+	local var_1_1 = arg_1_0._itemIcon:getCount()
+	local var_1_2 = var_1_0.transform
+	local var_1_3 = var_1_1.transform
+
+	recthelper.setAnchorY(var_1_2, RoomManufactureEnum.ItemCountBgY)
+	recthelper.setAnchorY(var_1_3, RoomManufactureEnum.ItemCountY)
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0._itemIcon:setMOValue(slot0._mo.type, slot0._mo.id, slot0._mo.quantity)
-	slot0._itemIcon:isShowQuality(false)
-	slot0._itemIcon:isShowName(false)
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imgquality, RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()])
+	arg_4_0._itemIcon:setMOValue(arg_4_0._mo.type, arg_4_0._mo.id, arg_4_0._mo.quantity)
+	arg_4_0._itemIcon:isShowQuality(false)
+	arg_4_0._itemIcon:isShowName(false)
+
+	local var_4_0 = arg_4_0._itemIcon:getRare()
+	local var_4_1 = RoomManufactureEnum.RareImageMap[var_4_0]
+
+	UISpriteSetMgr.instance:setCritterSprite(arg_4_0._imgquality, var_4_1)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

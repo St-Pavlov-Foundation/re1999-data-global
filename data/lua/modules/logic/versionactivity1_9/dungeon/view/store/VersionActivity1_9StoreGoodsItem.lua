@@ -1,167 +1,172 @@
-module("modules.logic.versionactivity1_9.dungeon.view.store.VersionActivity1_9StoreGoodsItem", package.seeall)
+﻿module("modules.logic.versionactivity1_9.dungeon.view.store.VersionActivity1_9StoreGoodsItem", package.seeall)
 
-slot0 = class("VersionActivity1_9StoreGoodsItem", ListScrollCell)
+local var_0_0 = class("VersionActivity1_9StoreGoodsItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.goTag = gohelper.findChild(slot0.go, "go_tag")
-	slot0.txtTag = gohelper.findChildText(slot0.go, "go_tag/txt_tag")
-	slot0.txtLimitBuy = gohelper.findChildText(slot0.go, "txt_limitbuy")
-	slot0.imageRare = gohelper.findChildImage(slot0.go, "image_rare")
-	slot0.goMaxRareEffect = gohelper.findChild(slot0.go, "eff_rare5")
-	slot0.simageIcon = gohelper.findChildSingleImage(slot0.go, "simage_icon")
-	slot0.imageIcon = gohelper.findChildImage(slot0.go, "simage_icon")
-	slot0.goQuantity = gohelper.findChild(slot0.go, "quantity")
-	slot0.txtQuantity = gohelper.findChildText(slot0.go, "quantity/txt_quantity")
-	slot0.txtCost = gohelper.findChildText(slot0.go, "txt_cost")
-	slot0.simageCoin = gohelper.findChildSingleImage(slot0.go, "txt_cost/simage_coin")
-	slot0.imageCoin = gohelper.findChildImage(slot0.go, "txt_cost/simage_coin")
-	slot0.goSoldout = gohelper.findChild(slot0.go, "go_soldout")
-	slot0.goClick = gohelper.getClickWithDefaultAudio(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.goTag = gohelper.findChild(arg_1_0.go, "go_tag")
+	arg_1_0.txtTag = gohelper.findChildText(arg_1_0.go, "go_tag/txt_tag")
+	arg_1_0.txtLimitBuy = gohelper.findChildText(arg_1_0.go, "txt_limitbuy")
+	arg_1_0.imageRare = gohelper.findChildImage(arg_1_0.go, "image_rare")
+	arg_1_0.goMaxRareEffect = gohelper.findChild(arg_1_0.go, "eff_rare5")
+	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.go, "simage_icon")
+	arg_1_0.imageIcon = gohelper.findChildImage(arg_1_0.go, "simage_icon")
+	arg_1_0.goQuantity = gohelper.findChild(arg_1_0.go, "quantity")
+	arg_1_0.txtQuantity = gohelper.findChildText(arg_1_0.go, "quantity/txt_quantity")
+	arg_1_0.txtCost = gohelper.findChildText(arg_1_0.go, "txt_cost")
+	arg_1_0.simageCoin = gohelper.findChildSingleImage(arg_1_0.go, "txt_cost/simage_coin")
+	arg_1_0.imageCoin = gohelper.findChildImage(arg_1_0.go, "txt_cost/simage_coin")
+	arg_1_0.goSoldout = gohelper.findChild(arg_1_0.go, "go_soldout")
+	arg_1_0.goClick = gohelper.getClickWithDefaultAudio(arg_1_1)
 
-	slot0.goClick:AddClickListener(slot0.onClick, slot0)
+	arg_1_0.goClick:AddClickListener(arg_1_0.onClick, arg_1_0)
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClick(slot0)
-	if slot0.remainBuyCount <= 0 then
+function var_0_0.onClick(arg_4_0)
+	if arg_4_0.remainBuyCount <= 0 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_5NormalStoreGoodsView, slot0.goodsCo)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_5NormalStoreGoodsView, arg_4_0.goodsCo)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.goodsCo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0.goodsCo = arg_5_1
 
-	slot0:updateProductCo()
-	slot0:updateRare()
-	slot0:refreshRemainBuyCount()
-	gohelper.setActive(slot0.go, true)
-	slot0:refreshUI()
+	arg_5_0:updateProductCo()
+	arg_5_0:updateRare()
+	arg_5_0:refreshRemainBuyCount()
+	gohelper.setActive(arg_5_0.go, true)
+	arg_5_0:refreshUI()
 end
 
-function slot0.updateProductCo(slot0)
-	slot0.productItemType, slot0.productItemId, slot0.productQuantity = slot0:getItemTypeIdQuantity(slot0.goodsCo.product)
-	slot0.productConfig, slot0.productIconUrl = ItemModel.instance:getItemConfigAndIcon(slot0.productItemType, slot0.productItemId)
+function var_0_0.updateProductCo(arg_6_0)
+	arg_6_0.productItemType, arg_6_0.productItemId, arg_6_0.productQuantity = arg_6_0:getItemTypeIdQuantity(arg_6_0.goodsCo.product)
+	arg_6_0.productConfig, arg_6_0.productIconUrl = ItemModel.instance:getItemConfigAndIcon(arg_6_0.productItemType, arg_6_0.productItemId)
 end
 
-function slot0.updateRare(slot0)
-	slot0.rare = slot0.productConfig.rare
+function var_0_0.updateRare(arg_7_0)
+	arg_7_0.rare = arg_7_0.productConfig.rare
 
-	if not slot0.rare then
+	if not arg_7_0.rare then
 		logWarn("material type : %s, material id : %s not had rare attribute")
 
-		slot0.rare = 5
+		arg_7_0.rare = 5
 	end
 end
 
-function slot0.refreshRemainBuyCount(slot0)
-	if slot0.goodsCo.maxBuyCount == 0 then
-		gohelper.setActive(slot0.txtLimitBuy.gameObject, false)
-		gohelper.setActive(slot0.goSoldout, false)
+function var_0_0.refreshRemainBuyCount(arg_8_0)
+	if arg_8_0.goodsCo.maxBuyCount == 0 then
+		gohelper.setActive(arg_8_0.txtLimitBuy.gameObject, false)
+		gohelper.setActive(arg_8_0.goSoldout, false)
 
-		slot0.remainBuyCount = 9999
+		arg_8_0.remainBuyCount = 9999
 	else
-		gohelper.setActive(slot0.txtLimitBuy.gameObject, true)
+		gohelper.setActive(arg_8_0.txtLimitBuy.gameObject, true)
 
-		slot0.remainBuyCount = slot0.goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity1_9Enum.ActivityId.DungeonStore, slot0.goodsCo.id)
-		slot0.txtLimitBuy.text = formatLuaLang("v1a4_bossrush_storeview_buylimit", slot0.remainBuyCount)
+		arg_8_0.remainBuyCount = arg_8_0.goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivity1_9Enum.ActivityId.DungeonStore, arg_8_0.goodsCo.id)
+		arg_8_0.txtLimitBuy.text = formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_8_0.remainBuyCount)
 
-		gohelper.setActive(slot0.goSoldout, slot0.remainBuyCount <= 0)
+		gohelper.setActive(arg_8_0.goSoldout, arg_8_0.remainBuyCount <= 0)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshRareBg()
-	slot0:refreshIcon()
-	slot0:refreshTag()
-	slot0:refreshName()
-	slot0:refreshQuantity()
-	slot0:refreshCost()
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshRareBg()
+	arg_9_0:refreshIcon()
+	arg_9_0:refreshTag()
+	arg_9_0:refreshName()
+	arg_9_0:refreshQuantity()
+	arg_9_0:refreshCost()
 end
 
-function slot0.refreshRareBg(slot0)
-	UISpriteSetMgr.instance:setV1a9MainActivitySprite(slot0.imageRare, "v1a9_store_quality_" .. slot0.rare)
-	gohelper.setActive(slot0.goMaxRareEffect, slot0.rare >= 5)
+function var_0_0.refreshRareBg(arg_10_0)
+	UISpriteSetMgr.instance:setV1a9MainActivitySprite(arg_10_0.imageRare, "v1a9_store_quality_" .. arg_10_0.rare)
+	gohelper.setActive(arg_10_0.goMaxRareEffect, arg_10_0.rare >= 5)
 end
 
-function slot0.refreshIcon(slot0)
-	if slot0.productItemType == MaterialEnum.MaterialType.Equip then
-		slot0.simageIcon:LoadImage(ResUrl.getHeroDefaultEquipIcon(slot0.productConfig.icon), slot0.setNativeSize, slot0)
+function var_0_0.refreshIcon(arg_11_0)
+	if arg_11_0.productItemType == MaterialEnum.MaterialType.Equip then
+		arg_11_0.simageIcon:LoadImage(ResUrl.getHeroDefaultEquipIcon(arg_11_0.productConfig.icon), arg_11_0.setNativeSize, arg_11_0)
 	else
-		slot0.simageIcon:LoadImage(slot0.productIconUrl, slot0.setNativeSize, slot0)
+		arg_11_0.simageIcon:LoadImage(arg_11_0.productIconUrl, arg_11_0.setNativeSize, arg_11_0)
 	end
 end
 
-function slot0.setNativeSize(slot0)
-	slot0.imageIcon:SetNativeSize()
+function var_0_0.setNativeSize(arg_12_0)
+	arg_12_0.imageIcon:SetNativeSize()
 end
 
-function slot0.refreshTag(slot0)
-	if slot0.goodsCo.tag == 0 or slot0.remainBuyCount <= 0 then
-		gohelper.setActive(slot0.goTag, false)
+function var_0_0.refreshTag(arg_13_0)
+	if arg_13_0.goodsCo.tag == 0 or arg_13_0.remainBuyCount <= 0 then
+		gohelper.setActive(arg_13_0.goTag, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goTag, true)
+	gohelper.setActive(arg_13_0.goTag, true)
 
-	slot0.txtTag.text = ActivityStoreConfig.instance:getTagName(slot0.goodsCo.tag)
+	arg_13_0.txtTag.text = ActivityStoreConfig.instance:getTagName(arg_13_0.goodsCo.tag)
 end
 
-function slot0.refreshName(slot0)
-	gohelper.setActive(slot0.txtName, false)
+function var_0_0.refreshName(arg_14_0)
+	gohelper.setActive(arg_14_0.txtName, false)
 
-	if MaterialEnum.ItemRareR <= slot0.rare then
-		slot0.txtName = gohelper.findChildText(slot0.go, "txt_name" .. slot0.rare)
+	if arg_14_0.rare >= MaterialEnum.ItemRareR then
+		arg_14_0.txtName = gohelper.findChildText(arg_14_0.go, "txt_name" .. arg_14_0.rare)
 	else
-		slot0.txtName = gohelper.findChildText(slot0.go, "txt_name")
+		arg_14_0.txtName = gohelper.findChildText(arg_14_0.go, "txt_name")
 	end
 
-	gohelper.setActive(slot0.txtName, true)
+	gohelper.setActive(arg_14_0.txtName, true)
 
-	slot0.txtName.text = slot0.productConfig.name
+	arg_14_0.txtName.text = arg_14_0.productConfig.name
 end
 
-function slot0.refreshQuantity(slot0)
-	slot1 = slot0.productQuantity > 1
+function var_0_0.refreshQuantity(arg_15_0)
+	local var_15_0 = arg_15_0.productQuantity > 1
 
-	gohelper.setActive(slot0.goQuantity, slot1)
+	gohelper.setActive(arg_15_0.goQuantity, var_15_0)
 
-	if slot1 then
-		slot0.txtQuantity.text = luaLang("multiple") .. slot0.productQuantity
+	if var_15_0 then
+		arg_15_0.txtQuantity.text = luaLang("multiple") .. arg_15_0.productQuantity
 	end
 end
 
-function slot0.refreshCost(slot0)
-	slot1, slot2, slot0.txtCost.text = slot0:getItemTypeIdQuantity(slot0.goodsCo.cost)
-	slot4, slot5 = ItemModel.instance:getItemConfigAndIcon(slot1, slot2)
+function var_0_0.refreshCost(arg_16_0)
+	local var_16_0, var_16_1, var_16_2 = arg_16_0:getItemTypeIdQuantity(arg_16_0.goodsCo.cost)
 
-	if slot1 == MaterialEnum.MaterialType.Currency then
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0.imageCoin, slot4.icon .. "_1")
+	arg_16_0.txtCost.text = var_16_2
+
+	local var_16_3, var_16_4 = ItemModel.instance:getItemConfigAndIcon(var_16_0, var_16_1)
+
+	if var_16_0 == MaterialEnum.MaterialType.Currency then
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0.imageCoin, var_16_3.icon .. "_1")
 	else
-		slot0.simageCoin:LoadImage(slot5)
+		arg_16_0.simageCoin:LoadImage(var_16_4)
 	end
 end
 
-function slot0.getItemTypeIdQuantity(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "#")
+function var_0_0.getItemTypeIdQuantity(arg_17_0, arg_17_1)
+	local var_17_0 = string.splitToNumber(arg_17_1, "#")
 
-	return slot2[1], slot2[2], slot2[3]
+	return var_17_0[1], var_17_0[2], var_17_0[3]
 end
 
-function slot0.onDestroy(slot0)
-	slot0.goClick:RemoveClickListener()
-	slot0.simageIcon:UnLoadImage()
-	slot0.simageCoin:UnLoadImage()
+function var_0_0.onDestroy(arg_18_0)
+	arg_18_0.goClick:RemoveClickListener()
+	arg_18_0.simageIcon:UnLoadImage()
+	arg_18_0.simageCoin:UnLoadImage()
 end
 
-return slot0
+return var_0_0

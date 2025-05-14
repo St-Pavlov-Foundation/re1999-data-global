@@ -1,56 +1,56 @@
-module("modules.logic.versionactivity1_4.act131.model.Activity131Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act131.model.Activity131Model", package.seeall)
 
-slot0 = class("Activity131Model", BaseModel)
+local var_0_0 = class("Activity131Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._curEpisodeId = 0
-	slot0._interactInfos = {}
-	slot0.curMaplogDic = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._curEpisodeId = 0
+	arg_2_0._interactInfos = {}
+	arg_2_0.curMaplogDic = {}
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0:initInfo(slot1)
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0:initInfo(arg_3_1)
 end
 
-function slot0.setInfos(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = Activity131LevelInfoMo.New()
+function var_0_0.setInfos(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_0 = Activity131LevelInfoMo.New()
 
-		slot7:init(slot6)
+		var_4_0:init(iter_4_1)
 
-		slot0._interactInfos[slot6.episodeId] = slot7
+		arg_4_0._interactInfos[iter_4_1.episodeId] = var_4_0
 	end
 end
 
-function slot0.resetInfos(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		slot8 = Activity131LevelInfoMo.New()
+function var_0_0.resetInfos(arg_5_0, arg_5_1, arg_5_2)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
+		local var_5_0 = Activity131LevelInfoMo.New()
 
-		slot8:init(slot7)
+		var_5_0:init(iter_5_1)
 
-		slot0._interactInfos[slot7.episodeId] = slot8
+		arg_5_0._interactInfos[iter_5_1.episodeId] = var_5_0
 	end
 end
 
-function slot0.updateInfos(slot0, slot1)
-	if slot0._interactInfos[slot1.episodeId] then
-		slot0._interactInfos[slot1.episodeId]:updateInfo(slot1)
+function var_0_0.updateInfos(arg_6_0, arg_6_1)
+	if arg_6_0._interactInfos[arg_6_1.episodeId] then
+		arg_6_0._interactInfos[arg_6_1.episodeId]:updateInfo(arg_6_1)
 	else
-		slot2 = Activity131LevelInfoMo.New()
+		local var_6_0 = Activity131LevelInfoMo.New()
 
-		slot2:init(slot1)
+		var_6_0:init(arg_6_1)
 
-		slot0._interactInfos[slot1.episodeId] = slot2
+		arg_6_0._interactInfos[arg_6_1.episodeId] = var_6_0
 	end
 end
 
-function slot0.updateProgress(slot0, slot1, slot2)
-	if slot0._interactInfos and slot0._interactInfos[slot1] then
-		slot0._interactInfos[slot1].progress = slot2 < Activity131Enum.ProgressType.Finished and slot2 or Activity131Enum.ProgressType.Finished
+function var_0_0.updateProgress(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0._interactInfos and arg_7_0._interactInfos[arg_7_1] then
+		arg_7_0._interactInfos[arg_7_1].progress = arg_7_2 < Activity131Enum.ProgressType.Finished and arg_7_2 or Activity131Enum.ProgressType.Finished
 
 		return
 	end
@@ -58,37 +58,47 @@ function slot0.updateProgress(slot0, slot1, slot2)
 	logError("请求了不存在的关卡进度!")
 end
 
-function slot0.refreshLogDics(slot0)
-	slot2 = 0
+function var_0_0.refreshLogDics(arg_8_0)
+	local var_8_0 = arg_8_0:getCurMapInfo()
+	local var_8_1 = 0
 
-	if slot0:getCurMapInfo() then
-		slot0.curMaplogDic = {}
+	if var_8_0 then
+		arg_8_0.curMaplogDic = {}
 
-		for slot6, slot7 in ipairs(slot1.act131Elements) do
-			if slot7.index ~= 0 then
-				for slot12 = 1, slot8 do
-					if slot7.typeList[slot12] == Activity131Enum.ElementType.LogStart then
-						if not slot0.curMaplogDic[slot7.paramList[slot12]] then
-							slot0.curMaplogDic[slot2] = {}
+		for iter_8_0, iter_8_1 in ipairs(var_8_0.act131Elements) do
+			local var_8_2 = iter_8_1.index
+
+			if var_8_2 ~= 0 then
+				for iter_8_2 = 1, var_8_2 do
+					local var_8_3 = iter_8_1.typeList[iter_8_2]
+					local var_8_4 = iter_8_1.paramList[iter_8_2]
+
+					if var_8_3 == Activity131Enum.ElementType.LogStart then
+						var_8_1 = var_8_4
+
+						if not arg_8_0.curMaplogDic[var_8_1] then
+							arg_8_0.curMaplogDic[var_8_1] = {}
 						end
-					elseif slot13 == Activity131Enum.ElementType.Dialog then
-						if slot2 ~= 0 and slot0.curMaplogDic[slot2] then
-							for slot19, slot20 in pairs(Activity131Config.instance:getActivity131DialogGroup(tonumber(slot14))) do
-								table.insert(slot0.curMaplogDic[slot2], slot20)
+					elseif var_8_3 == Activity131Enum.ElementType.Dialog then
+						if var_8_1 ~= 0 and arg_8_0.curMaplogDic[var_8_1] then
+							local var_8_5 = Activity131Config.instance:getActivity131DialogGroup(tonumber(var_8_4))
+
+							for iter_8_3, iter_8_4 in pairs(var_8_5) do
+								table.insert(arg_8_0.curMaplogDic[var_8_1], iter_8_4)
 							end
 						end
-					elseif slot13 == Activity131Enum.ElementType.LogEnd then
-						if slot0.curMaplogDic[slot2] then
-							table.sort(slot0.curMaplogDic[slot2], function (slot0, slot1)
-								if slot0.id ~= slot1.id then
-									return slot0.id < slot1.id
+					elseif var_8_3 == Activity131Enum.ElementType.LogEnd then
+						if arg_8_0.curMaplogDic[var_8_1] then
+							table.sort(arg_8_0.curMaplogDic[var_8_1], function(arg_9_0, arg_9_1)
+								if arg_9_0.id ~= arg_9_1.id then
+									return arg_9_0.id < arg_9_1.id
 								else
-									return slot0.stepId < slot1.stepId
+									return arg_9_0.stepId < arg_9_1.stepId
 								end
 							end)
 						end
 
-						slot2 = 0
+						var_8_1 = 0
 					end
 				end
 			end
@@ -96,186 +106,199 @@ function slot0.refreshLogDics(slot0)
 	end
 end
 
-function slot0.getLogCategortList(slot0)
-	slot1 = {}
+function var_0_0.getLogCategortList(arg_10_0)
+	local var_10_0 = {}
 
-	for slot5, slot6 in pairs(slot0.curMaplogDic) do
-		table.insert(slot1, {
-			logType = slot5
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.curMaplogDic) do
+		table.insert(var_10_0, {
+			logType = iter_10_0
 		})
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.getInfos(slot0)
-	return slot0._interactInfos
+function var_0_0.getInfos(arg_11_0)
+	return arg_11_0._interactInfos
 end
 
-function slot0.getInfo(slot0, slot1)
-	if not slot0._interactInfos then
+function var_0_0.getInfo(arg_12_0, arg_12_1)
+	if not arg_12_0._interactInfos then
 		return {}
 	end
 
-	return slot0._interactInfos[slot1]
+	return arg_12_0._interactInfos[arg_12_1]
 end
 
-function slot0.isEpisodeFinished(slot0, slot1)
-	if not slot0._interactInfos or not slot0._interactInfos[slot1] then
+function var_0_0.isEpisodeFinished(arg_13_0, arg_13_1)
+	if not arg_13_0._interactInfos or not arg_13_0._interactInfos[arg_13_1] then
 		return false
 	end
 
-	return slot0._interactInfos[slot1].progress == Activity131Enum.ProgressType.Finished
+	return arg_13_0._interactInfos[arg_13_1].progress == Activity131Enum.ProgressType.Finished
 end
 
-function slot0.getEpisodeProgress(slot0, slot1)
-	if not slot0._interactInfos or not slot0._interactInfos[slot1] then
+function var_0_0.getEpisodeProgress(arg_14_0, arg_14_1)
+	if not arg_14_0._interactInfos or not arg_14_0._interactInfos[arg_14_1] then
 		return Activity131Enum.ProgressType.BeforeStory
 	end
 
-	return slot0._interactInfos[slot1].progress
+	return arg_14_0._interactInfos[arg_14_1].progress
 end
 
-function slot0.getEpisodeElements(slot0, slot1)
-	if not slot0._interactInfos or not slot0._interactInfos[slot1] then
+function var_0_0.getEpisodeElements(arg_15_0, arg_15_1)
+	if not arg_15_0._interactInfos or not arg_15_0._interactInfos[arg_15_1] then
 		return {}
 	end
 
-	return slot0._interactInfos[slot1].act131Elements
+	return arg_15_0._interactInfos[arg_15_1].act131Elements
 end
 
-function slot0.getEpisodeCurSceneIndex(slot0, slot1)
-	slot2 = 1
+function var_0_0.getEpisodeCurSceneIndex(arg_16_0, arg_16_1)
+	local var_16_0 = 1
+	local var_16_1 = arg_16_0:getInfo(arg_16_1)
 
-	for slot7, slot8 in ipairs(slot0:getInfo(slot1).act131Elements) do
-		if slot8.isFinish and slot8.typeList[slot8.index] == Activity131Enum.ElementType.ChangeScene then
-			slot2 = tonumber(string.split(slot8.config.param, "#")[slot8.index])
+	for iter_16_0, iter_16_1 in ipairs(var_16_1.act131Elements) do
+		if iter_16_1.isFinish and iter_16_1.typeList[iter_16_1.index] == Activity131Enum.ElementType.ChangeScene then
+			var_16_0 = tonumber(string.split(iter_16_1.config.param, "#")[iter_16_1.index])
 		end
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.getCurMapId(slot0)
-	return slot0:getCurMapConfig().mapId
+function var_0_0.getCurMapId(arg_17_0)
+	return arg_17_0:getCurMapConfig().mapId
 end
 
-function slot0.getCurMapConfig(slot0)
-	return Activity131Config.instance:getActivity131EpisodeCo(VersionActivity1_4Enum.ActivityId.Role6, slot0._curEpisodeId)
+function var_0_0.getCurMapConfig(arg_18_0)
+	local var_18_0 = VersionActivity1_4Enum.ActivityId.Role6
+
+	return (Activity131Config.instance:getActivity131EpisodeCo(var_18_0, arg_18_0._curEpisodeId))
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	return slot0:getInfo(slot1) and next(slot2)
+function var_0_0.isEpisodeUnlock(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0:getInfo(arg_19_1)
+
+	return var_19_0 and next(var_19_0)
 end
 
-function slot0.getEpisodeState(slot0, slot1)
-	if not slot0._interactInfos or not slot0._interactInfos[slot1] then
+function var_0_0.getEpisodeState(arg_20_0, arg_20_1)
+	if not arg_20_0._interactInfos or not arg_20_0._interactInfos[arg_20_1] then
 		return 0
 	end
 
-	return slot0._interactInfos[slot1].state
+	return arg_20_0._interactInfos[arg_20_1].state
 end
 
-function slot0.getCurMapInfo(slot0)
-	return slot0:getInfo(slot0._curEpisodeId)
+function var_0_0.getCurMapInfo(arg_21_0)
+	return arg_21_0:getInfo(arg_21_0._curEpisodeId)
 end
 
-function slot0.getCurMapElementInfo(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getCurMapInfo().act131Elements) do
-		if slot7.elementId == slot1 then
-			return slot7
+function var_0_0.getCurMapElementInfo(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getCurMapInfo()
+
+	for iter_22_0, iter_22_1 in pairs(var_22_0.act131Elements) do
+		if iter_22_1.elementId == arg_22_1 then
+			return iter_22_1
 		end
 	end
 end
 
-function slot0.setCurEpisodeId(slot0, slot1)
-	slot0._curEpisodeId = slot1
+function var_0_0.setCurEpisodeId(arg_23_0, arg_23_1)
+	arg_23_0._curEpisodeId = arg_23_1
 end
 
-function slot0.getCurEpisodeId(slot0)
-	return slot0._curEpisodeId
+function var_0_0.getCurEpisodeId(arg_24_0)
+	return arg_24_0._curEpisodeId
 end
 
-function slot0.getEpisodeTaskTip(slot0, slot1)
-	slot3 = 0
-	slot4 = 0
-	slot5 = 0
+function var_0_0.getEpisodeTaskTip(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0:getInfo(arg_25_1)
+	local var_25_1 = 0
+	local var_25_2 = 0
+	local var_25_3 = 0
 
-	for slot9, slot10 in ipairs(slot0:getInfo(slot1).act131Elements) do
-		for slot14, slot15 in ipairs(slot10.typeList) do
-			if slot15 == Activity131Enum.ElementType.TaskTip and slot14 <= slot10.index then
-				slot17 = string.splitToNumber(string.split(slot10.config.param, "#")[slot14], "_")
+	for iter_25_0, iter_25_1 in ipairs(var_25_0.act131Elements) do
+		for iter_25_2, iter_25_3 in ipairs(iter_25_1.typeList) do
+			if iter_25_3 == Activity131Enum.ElementType.TaskTip and iter_25_2 <= iter_25_1.index then
+				local var_25_4 = string.split(iter_25_1.config.param, "#")[iter_25_2]
+				local var_25_5 = string.splitToNumber(var_25_4, "_")
 
-				if slot5 < slot10.elementId then
-					slot5 = slot10.elementId
-					slot3 = slot17[1]
-					slot4 = slot17[2]
+				if var_25_3 < iter_25_1.elementId then
+					var_25_3 = iter_25_1.elementId
+					var_25_1 = var_25_5[1]
+					var_25_2 = var_25_5[2]
 				end
 			end
 		end
 	end
 
-	return slot3, slot4
+	return var_25_1, var_25_2
 end
 
-function slot0.getMaxEpisode(slot0)
-	slot3 = 0
+function var_0_0.getMaxEpisode(arg_26_0)
+	local var_26_0 = VersionActivity1_4Enum.ActivityId.Role6
+	local var_26_1 = Activity131Config.instance:getActivity131EpisodeCos(var_26_0)
+	local var_26_2 = 0
 
-	for slot7, slot8 in pairs(Activity131Config.instance:getActivity131EpisodeCos(VersionActivity1_4Enum.ActivityId.Role6)) do
-		slot3 = slot8.episodeId < slot3 and slot3 or slot8.episodeId
+	for iter_26_0, iter_26_1 in pairs(var_26_1) do
+		var_26_2 = var_26_2 > iter_26_1.episodeId and var_26_2 or iter_26_1.episodeId
 	end
 
-	return slot3
+	return var_26_2
 end
 
-function slot0.getMaxUnlockEpisode(slot0)
-	slot1 = slot0:getCurEpisodeId()
+function var_0_0.getMaxUnlockEpisode(arg_27_0)
+	local var_27_0 = arg_27_0:getCurEpisodeId()
 
-	for slot5, slot6 in pairs(slot0._interactInfos) do
-		slot1 = slot6.episodeId < slot1 and slot1 or slot6.episodeId
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._interactInfos) do
+		var_27_0 = var_27_0 > iter_27_1.episodeId and var_27_0 or iter_27_1.episodeId
 	end
 
-	return slot1
+	return var_27_0
 end
 
-function slot0.setNewFinishEpisode(slot0, slot1)
-	slot0._newFinishEpisode = slot1
+function var_0_0.setNewFinishEpisode(arg_28_0, arg_28_1)
+	arg_28_0._newFinishEpisode = arg_28_1
 end
 
-function slot0.getNewFinishEpisode(slot0)
-	return slot0._newFinishEpisode or -1
+function var_0_0.getNewFinishEpisode(arg_29_0)
+	return arg_29_0._newFinishEpisode or -1
 end
 
-function slot0.getNewUnlockEpisode(slot0)
-	return slot0._newUnlockEpisode or -1
+function var_0_0.getNewUnlockEpisode(arg_30_0)
+	return arg_30_0._newUnlockEpisode or -1
 end
 
-function slot0.setNewUnlockEpisode(slot0, slot1)
-	slot0._newUnlockEpisode = slot1
+function var_0_0.setNewUnlockEpisode(arg_31_0, arg_31_1)
+	arg_31_0._newUnlockEpisode = arg_31_1
 end
 
-function slot0.setSelectLogType(slot0, slot1)
-	slot0.curSelectLogType = slot1
+function var_0_0.setSelectLogType(arg_32_0, arg_32_1)
+	arg_32_0.curSelectLogType = arg_32_1
 
 	Activity131Controller.instance:dispatchEvent(Activity131Event.SelectCategory)
 end
 
-function slot0.getSelectLogType(slot0)
-	return slot0.curSelectLogType
+function var_0_0.getSelectLogType(arg_33_0)
+	return arg_33_0.curSelectLogType
 end
 
-function slot0.getLog(slot0)
-	if slot0.curSelectLogType and slot0.curSelectLogType ~= 0 then
-		return slot0.curMaplogDic and slot0.curMaplogDic[slot0.curSelectLogType] or {}
+function var_0_0.getLog(arg_34_0)
+	if arg_34_0.curSelectLogType and arg_34_0.curSelectLogType ~= 0 then
+		return arg_34_0.curMaplogDic and arg_34_0.curMaplogDic[arg_34_0.curSelectLogType] or {}
 	end
 
 	return {}
 end
 
-function slot0.getTotalEpisodeCount(slot0)
-	return #Activity131Config.instance:getActivity131EpisodeCos(VersionActivity1_4Enum.ActivityId.Role6)
+function var_0_0.getTotalEpisodeCount(arg_35_0)
+	local var_35_0 = VersionActivity1_4Enum.ActivityId.Role6
+
+	return #Activity131Config.instance:getActivity131EpisodeCos(var_35_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

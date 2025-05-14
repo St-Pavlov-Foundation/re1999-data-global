@@ -1,77 +1,81 @@
-module("modules.logic.rouge.map.map.RougePathSelectMap", package.seeall)
+﻿module("modules.logic.rouge.map.map.RougePathSelectMap", package.seeall)
 
-slot0 = class("RougePathSelectMap", RougeBaseMap)
+local var_0_0 = class("RougePathSelectMap", RougeBaseMap)
 
-function slot0.initMap(slot0)
-	uv0.super.initMap(slot0)
-	RougeMapModel.instance:setCameraSize(RougeMapConfig.instance:getPathSelectInitCameraSize())
+function var_0_0.initMap(arg_1_0)
+	var_0_0.super.initMap(arg_1_0)
 
-	slot2 = RougeMapModel.instance:getMapSize()
+	local var_1_0 = RougeMapConfig.instance:getPathSelectInitCameraSize()
 
-	transformhelper.setLocalPos(slot0.mapTransform, -slot2.x / 2, slot2.y / 2, RougeMapEnum.OffsetZ.Map)
+	RougeMapModel.instance:setCameraSize(var_1_0)
+
+	local var_1_1 = RougeMapModel.instance:getMapSize()
+
+	transformhelper.setLocalPos(arg_1_0.mapTransform, -var_1_1.x / 2, var_1_1.y / 2, RougeMapEnum.OffsetZ.Map)
 end
 
-function slot0.createMap(slot0)
-	slot0.actorComp = nil
+function var_0_0.createMap(arg_2_0)
+	arg_2_0.actorComp = nil
 
-	uv0.super.createMap(slot0)
-	TaskDispatcher.runDelay(slot0.focusToTarget, slot0, RougeMapEnum.PathSelectMapWaitTime)
+	var_0_0.super.createMap(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0.focusToTarget, arg_2_0, RougeMapEnum.PathSelectMapWaitTime)
 
-	slot0.openViewDone = ViewMgr.instance:isOpen(ViewName.RougeMapView)
+	arg_2_0.openViewDone = ViewMgr.instance:isOpen(ViewName.RougeMapView)
 
 	if not ViewMgr.instance:isOpen(ViewName.RougeMapView) then
-		slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
+		arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
 	end
 end
 
-function slot0.onOpenView(slot0, slot1)
-	if slot1 == ViewName.RougeMapView then
-		slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
+function var_0_0.onOpenView(arg_3_0, arg_3_1)
+	if arg_3_1 == ViewName.RougeMapView then
+		arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0.onOpenView, arg_3_0)
 
-		slot0.openViewDone = true
+		arg_3_0.openViewDone = true
 
-		slot0:_focusToTarget()
+		arg_3_0:_focusToTarget()
 	end
 end
 
-function slot0.focusToTarget(slot0)
-	slot0.delayDone = true
+function var_0_0.focusToTarget(arg_4_0)
+	arg_4_0.delayDone = true
 
-	slot0:_focusToTarget()
+	arg_4_0:_focusToTarget()
 end
 
-function slot0._focusToTarget(slot0)
-	if not slot0.delayDone or not slot0.openViewDone then
+function var_0_0._focusToTarget(arg_5_0)
+	if not arg_5_0.delayDone or not arg_5_0.openViewDone then
 		return
 	end
 
-	slot0:clearTween()
+	arg_5_0:clearTween()
 
-	slot1 = RougeMapModel.instance:getPathSelectCo()
-	slot2 = string.splitToNumber(slot1.focusMapPos, "#")
-	slot0.movingTweenId = ZProj.TweenHelper.DOLocalMove(slot0.mapTransform, slot2[1], slot2[2], RougeMapEnum.OffsetZ.Map, RougeMapEnum.RevertDuration, slot0.onMovingDone, slot0)
+	local var_5_0 = RougeMapModel.instance:getPathSelectCo()
+	local var_5_1 = string.splitToNumber(var_5_0.focusMapPos, "#")
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onPathSelectMapFocus, slot1.focusCameraSize)
+	arg_5_0.movingTweenId = ZProj.TweenHelper.DOLocalMove(arg_5_0.mapTransform, var_5_1[1], var_5_1[2], RougeMapEnum.OffsetZ.Map, RougeMapEnum.RevertDuration, arg_5_0.onMovingDone, arg_5_0)
+
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onPathSelectMapFocus, var_5_0.focusCameraSize)
 end
 
-function slot0.onMovingDone(slot0)
-	slot0.movingTweenId = nil
+function var_0_0.onMovingDone(arg_6_0)
+	arg_6_0.movingTweenId = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onPathSelectMapFocusDone)
 end
 
-function slot0.clearTween(slot0)
-	if slot0.movingTweenId then
-		ZProj.TweenHelper.KillById(slot0.movingTweenId)
+function var_0_0.clearTween(arg_7_0)
+	if arg_7_0.movingTweenId then
+		ZProj.TweenHelper.KillById(arg_7_0.movingTweenId)
 	end
 
-	slot0.movingTweenId = nil
+	arg_7_0.movingTweenId = nil
 end
 
-function slot0.destroy(slot0)
-	slot0:clearTween()
-	TaskDispatcher.cancelTask(slot0.focusToTarget, slot0)
-	uv0.super.destroy(slot0)
+function var_0_0.destroy(arg_8_0)
+	arg_8_0:clearTween()
+	TaskDispatcher.cancelTask(arg_8_0.focusToTarget, arg_8_0)
+	var_0_0.super.destroy(arg_8_0)
 end
 
-return slot0
+return var_0_0

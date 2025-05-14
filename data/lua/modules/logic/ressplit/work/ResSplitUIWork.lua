@@ -1,9 +1,9 @@
-module("modules.logic.ressplit.work.ResSplitUIWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitUIWork", package.seeall)
 
-slot0 = class("ResSplitUIWork", BaseWork)
+local var_0_0 = class("ResSplitUIWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = {
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = {
 		"minors",
 		"achievement",
 		"activity",
@@ -61,11 +61,7 @@ function slot0.onStart(slot0, slot1)
 		"textures",
 		"data_pic"
 	}
-	slot4 = {}
-	slot5 = {}
-	slot6 = {}
-
-	for slot10, slot11 in ipairs({
+	local var_1_1 = {
 		"",
 		"/lang/common",
 		"/lang/en",
@@ -73,89 +69,110 @@ function slot0.onStart(slot0, slot1)
 		"/lang/kr",
 		"/lang/tw",
 		"/lang/zh"
-	}) do
-		slot12 = "Assets/ZResourcesLib" .. slot11 .. "/ui/viewres/"
+	}
+	local var_1_2 = {}
+	local var_1_3 = {}
+	local var_1_4 = {}
 
-		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/ui/viewres/") then
-			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/ui/viewres/").Length - 1 do
-				if not string.find(slot13[slot17], ".meta") then
-					slot19 = false
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_5 = "Assets/ZResourcesLib" .. iter_1_1 .. "/ui/viewres/"
 
-					for slot23, slot24 in pairs(slot2) do
-						if slot18 == slot12 .. slot24 then
-							slot19 = true
+		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/ui/viewres/") then
+			local var_1_6 = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/ui/viewres/")
 
-							break
-						end
-					end
+			for iter_1_2 = 0, var_1_6.Length - 1 do
+				local var_1_7 = var_1_6[iter_1_2]
 
-					if slot19 == false then
-						table.insert(slot4, string.gsub(slot18, "Assets/ZResourcesLib/", "") .. "/")
-					end
-				end
-			end
-		end
+				if not string.find(var_1_7, ".meta") then
+					local var_1_8 = false
 
-		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg/") then
-			slot12 = "Assets/ZResourcesLib" .. slot11 .. "/singlebg/"
-
-			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg/").Length - 1 do
-				if not string.find(slot13[slot17], ".meta") then
-					slot19 = false
-
-					for slot23, slot24 in pairs(slot2) do
-						if string.find(slot18, slot12 .. slot24) then
-							slot19 = true
+					for iter_1_3, iter_1_4 in pairs(var_1_0) do
+						if var_1_7 == var_1_5 .. iter_1_4 then
+							var_1_8 = true
 
 							break
 						end
 					end
 
-					if slot19 == false then
-						table.insert(slot5, string.gsub(slot18, "Assets/ZResourcesLib/", "") .. "/")
+					if var_1_8 == false then
+						local var_1_9 = string.gsub(var_1_7, "Assets/ZResourcesLib/", "") .. "/"
+
+						table.insert(var_1_2, var_1_9)
 					end
 				end
 			end
 		end
 
-		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg_lang/") then
-			slot12 = "Assets/ZResourcesLib" .. slot11 .. "/singlebg_lang/"
+		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg/") then
+			local var_1_10 = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg/")
+			local var_1_11 = "Assets/ZResourcesLib" .. iter_1_1 .. "/singlebg/"
 
-			for slot17 = 0, SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. slot11 .. "/singlebg_lang/").Length - 1 do
-				if not string.find(slot13[slot17], ".meta") then
-					slot19 = false
+			for iter_1_5 = 0, var_1_10.Length - 1 do
+				local var_1_12 = var_1_10[iter_1_5]
 
-					for slot23, slot24 in pairs(slot2) do
-						if string.find(slot18, slot24) then
-							slot19 = true
+				if not string.find(var_1_12, ".meta") then
+					local var_1_13 = false
+
+					for iter_1_6, iter_1_7 in pairs(var_1_0) do
+						if string.find(var_1_12, var_1_11 .. iter_1_7) then
+							var_1_13 = true
 
 							break
 						end
 					end
 
-					if slot19 == false then
-						table.insert(slot6, string.gsub(slot18, "Assets/ZResourcesLib/", "") .. "/")
+					if var_1_13 == false then
+						local var_1_14 = string.gsub(var_1_12, "Assets/ZResourcesLib/", "") .. "/"
+
+						table.insert(var_1_3, var_1_14)
+					end
+				end
+			end
+		end
+
+		if SLFramework.FileHelper.IsDirExists(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg_lang/") then
+			local var_1_15 = SLFramework.FileHelper.GetSubdirectories(SLFramework.FrameworkSettings.AssetRootDir .. iter_1_1 .. "/singlebg_lang/")
+			local var_1_16 = "Assets/ZResourcesLib" .. iter_1_1 .. "/singlebg_lang/"
+
+			for iter_1_8 = 0, var_1_15.Length - 1 do
+				local var_1_17 = var_1_15[iter_1_8]
+
+				if not string.find(var_1_17, ".meta") then
+					local var_1_18 = false
+
+					for iter_1_9, iter_1_10 in pairs(var_1_0) do
+						if string.find(var_1_17, iter_1_10) then
+							var_1_18 = true
+
+							break
+						end
+					end
+
+					if var_1_18 == false then
+						local var_1_19 = string.gsub(var_1_17, "Assets/ZResourcesLib/", "") .. "/"
+
+						table.insert(var_1_4, var_1_19)
 					end
 				end
 			end
 		end
 	end
 
-	for slot10, slot11 in pairs(slot4) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, slot11, true)
+	for iter_1_11, iter_1_12 in pairs(var_1_2) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_12, true)
 	end
 
-	for slot10, slot11 in pairs(slot5) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, slot11, true)
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, slot11, true)
+	for iter_1_13, iter_1_14 in pairs(var_1_3) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, iter_1_14, true)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_14, true)
 	end
 
-	for slot10, slot11 in pairs(slot6) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, slot11, true)
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, slot11, true)
+	for iter_1_15, iter_1_16 in pairs(var_1_4) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.SinglebgFolder, iter_1_16, true)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_16, true)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

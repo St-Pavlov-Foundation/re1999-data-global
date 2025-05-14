@@ -1,14 +1,14 @@
-module("modules.logic.room.model.debug.RoomDebugPackageMO", package.seeall)
+﻿module("modules.logic.room.model.debug.RoomDebugPackageMO", package.seeall)
 
-slot0 = pureTable("RoomDebugPackageMO")
+local var_0_0 = pureTable("RoomDebugPackageMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.blockId = slot1.id
-	slot0.packageId = slot1.packageId
-	slot0.packageOrder = slot1.packageOrder
-	slot0.defineId = slot1.defineId
-	slot0.config = RoomConfig.instance:getBlockDefineConfig(slot0.defineId)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.blockId = arg_1_1.id
+	arg_1_0.packageId = arg_1_1.packageId
+	arg_1_0.packageOrder = arg_1_1.packageOrder
+	arg_1_0.defineId = arg_1_1.defineId
+	arg_1_0.config = RoomConfig.instance:getBlockDefineConfig(arg_1_0.defineId)
 end
 
-return slot0
+return var_0_0

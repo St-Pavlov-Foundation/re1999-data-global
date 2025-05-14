@@ -1,98 +1,108 @@
-module("modules.logic.signin.rpc.SignInRpc", package.seeall)
+﻿module("modules.logic.signin.rpc.SignInRpc", package.seeall)
 
-slot0 = class("SignInRpc", BaseRpc)
+local var_0_0 = class("SignInRpc", BaseRpc)
 
-function slot0.sendGetSignInInfoRequest(slot0, slot1, slot2)
-	slot0:sendMsg(SignInModule_pb.GetSignInInfoRequest(), slot1, slot2)
+function var_0_0.sendGetSignInInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = SignInModule_pb.GetSignInInfoRequest()
+
+	arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetSignInInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:setSignInInfo(slot2)
+function var_0_0.onReceiveGetSignInInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		SignInModel.instance:setSignInInfo(arg_2_2)
 		SignInController.instance:dispatchEvent(SignInEvent.GetSignInInfo)
 	end
 end
 
-function slot0.sendSignInRequest(slot0)
-	slot0:sendMsg(SignInModule_pb.SignInRequest())
+function var_0_0.sendSignInRequest(arg_3_0)
+	local var_3_0 = SignInModule_pb.SignInRequest()
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveSignInReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:setSignDayRewardGet(slot2)
+function var_0_0.onReceiveSignInReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		SignInModel.instance:setSignDayRewardGet(arg_4_2)
 		SignInController.instance:dispatchEvent(SignInEvent.GetSignInReply)
 		ChargeRpc.instance:sendGetMonthCardInfoRequest()
 	end
 end
 
-function slot0.sendSignInAddupRequest(slot0, slot1)
-	slot2 = SignInModule_pb.SignInAddupRequest()
-	slot2.id = slot1
+function var_0_0.sendSignInAddupRequest(arg_5_0, arg_5_1)
+	local var_5_0 = SignInModule_pb.SignInAddupRequest()
 
-	slot0:sendMsg(slot2)
+	var_5_0.id = arg_5_1
+
+	arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveSignInAddupReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:setSignTotalRewardGet(slot2.id)
+function var_0_0.onReceiveSignInAddupReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
+		SignInModel.instance:setSignTotalRewardGet(arg_6_2.id)
 		SignInController.instance:dispatchEvent(SignInEvent.GetSignInAddUp)
 	end
 end
 
-function slot0.sendSignInHistoryRequest(slot0, slot1)
-	slot2 = SignInModule_pb.SignInHistoryRequest()
-	slot2.month = slot1
+function var_0_0.sendSignInHistoryRequest(arg_7_0, arg_7_1)
+	local var_7_0 = SignInModule_pb.SignInHistoryRequest()
 
-	slot0:sendMsg(slot2)
+	var_7_0.month = arg_7_1
+
+	arg_7_0:sendMsg(var_7_0)
 end
 
-function slot0.onReceiveSignInHistoryReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:setSignInHistory(slot2)
-		SignInController.instance:dispatchEvent(SignInEvent.GetHistorySignInSuccess, slot2.month)
+function var_0_0.onReceiveSignInHistoryReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 == 0 then
+		SignInModel.instance:setSignInHistory(arg_8_2)
+		SignInController.instance:dispatchEvent(SignInEvent.GetHistorySignInSuccess, arg_8_2.month)
 	end
 end
 
-function slot0.sendGetHeroBirthdayRequest(slot0, slot1)
-	slot2 = SignInModule_pb.GetHeroBirthdayRequest()
-	slot2.heroId = slot1
+function var_0_0.sendGetHeroBirthdayRequest(arg_9_0, arg_9_1)
+	local var_9_0 = SignInModule_pb.GetHeroBirthdayRequest()
 
-	slot0:sendMsg(slot2)
+	var_9_0.heroId = arg_9_1
+
+	arg_9_0:sendMsg(var_9_0)
 end
 
-function slot0.onReceiveGetHeroBirthdayReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:setHeroBirthdayGet(slot2.heroId)
-		SignInModel.instance:addSignInBirthdayCount(slot2.heroId)
+function var_0_0.onReceiveGetHeroBirthdayReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
+		SignInModel.instance:setHeroBirthdayGet(arg_10_2.heroId)
+		SignInModel.instance:addSignInBirthdayCount(arg_10_2.heroId)
 		SignInController.instance:dispatchEvent(SignInEvent.GetHeroBirthday)
 	end
 end
 
-function slot0.sendSignInTotalRewardRequest(slot0, slot1, slot2, slot3)
-	slot4 = SignInModule_pb.SignInTotalRewardRequest()
-	slot4.id = slot1
+function var_0_0.sendSignInTotalRewardRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = SignInModule_pb.SignInTotalRewardRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_11_0.id = arg_11_1
+
+	return arg_11_0:sendMsg(var_11_0, arg_11_2, arg_11_3)
 end
 
-function slot0.onReceiveSignInTotalRewardReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:onReceiveSignInTotalRewardReply(slot2)
-		SignInController.instance:dispatchEvent(SignInEvent.OnSignInTotalRewardReply, slot2.id)
+function var_0_0.onReceiveSignInTotalRewardReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == 0 then
+		SignInModel.instance:onReceiveSignInTotalRewardReply(arg_12_2)
+		SignInController.instance:dispatchEvent(SignInEvent.OnSignInTotalRewardReply, arg_12_2.id)
 	end
 end
 
-function slot0.sendSignInTotalRewardAllRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(SignInModule_pb.SignInTotalRewardAllRequest(), slot1, slot2)
+function var_0_0.sendSignInTotalRewardAllRequest(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = SignInModule_pb.SignInTotalRewardAllRequest()
+
+	return arg_13_0:sendMsg(var_13_0, arg_13_1, arg_13_2)
 end
 
-function slot0.onReceiveSignInTotalRewardAllReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		SignInModel.instance:onReceiveSignInTotalRewardAllReply(slot2)
+function var_0_0.onReceiveSignInTotalRewardAllReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == 0 then
+		SignInModel.instance:onReceiveSignInTotalRewardAllReply(arg_14_2)
 		SignInController.instance:dispatchEvent(SignInEvent.OnReceiveSignInTotalRewardAllReply)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

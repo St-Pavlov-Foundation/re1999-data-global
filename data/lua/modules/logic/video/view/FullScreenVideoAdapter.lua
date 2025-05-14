@@ -1,38 +1,44 @@
-module("modules.logic.video.view.FullScreenVideoAdapter", package.seeall)
+﻿module("modules.logic.video.view.FullScreenVideoAdapter", package.seeall)
 
-slot0 = class("FullScreenVideoAdapter", LuaCompBase)
-slot1 = 2.4
+local var_0_0 = class("FullScreenVideoAdapter", LuaCompBase)
+local var_0_1 = 2.4
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.tr = slot1.transform
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.tr = arg_2_1.transform
 
-	if slot1:GetComponent(typeof(ZProj.UIBgSelfAdapter)) then
-		slot2.enabled = false
-		slot2 = nil
+	local var_2_0 = arg_2_1:GetComponent(typeof(ZProj.UIBgSelfAdapter))
+
+	if var_2_0 then
+		var_2_0.enabled = false
+
+		local var_2_1
 	end
 
-	slot0:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
+	arg_2_0:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenResize, arg_4_0)
 end
 
-function slot0._onScreenResize(slot0, slot1, slot2)
-	if uv0 < slot1 / slot2 then
-		slot4 = slot3 / uv0
+function var_0_0._onScreenResize(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_1 / arg_5_2
 
-		transformhelper.setLocalScale(slot0.tr, slot4, slot4, slot4)
+	if var_5_0 > var_0_1 then
+		local var_5_1 = var_5_0 / var_0_1
+
+		transformhelper.setLocalScale(arg_5_0.tr, var_5_1, var_5_1, var_5_1)
 	else
-		transformhelper.setLocalScale(slot0.tr, 1, 1, 1)
+		transformhelper.setLocalScale(arg_5_0.tr, 1, 1, 1)
 	end
 end
 
-return slot0
+return var_0_0

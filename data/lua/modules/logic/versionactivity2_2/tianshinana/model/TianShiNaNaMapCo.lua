@@ -1,43 +1,43 @@
-module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapCo", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapCo", package.seeall)
 
-slot0 = pureTable("TianShiNaNaMapCo")
+local var_0_0 = pureTable("TianShiNaNaMapCo")
 
-function slot0.init(slot0, slot1)
-	slot0.path = slot1[1]
-	slot0.unitDict = {}
-	slot0.nodesDict = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.path = arg_1_1[1]
+	arg_1_0.unitDict = {}
+	arg_1_0.nodesDict = {}
 
-	for slot5, slot6 in ipairs(slot1[2]) do
-		slot7 = TianShiNaNaMapUnitCo.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1[2]) do
+		local var_1_0 = TianShiNaNaMapUnitCo.New()
 
-		slot7:init(slot6)
+		var_1_0:init(iter_1_1)
 
-		slot0.unitDict[slot7.id] = slot7
+		arg_1_0.unitDict[var_1_0.id] = var_1_0
 	end
 
-	for slot5, slot6 in ipairs(slot1[3]) do
-		slot7 = TianShiNaNaMapNodeCo.New()
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1[3]) do
+		local var_1_1 = TianShiNaNaMapNodeCo.New()
 
-		slot7:init(slot6)
+		var_1_1:init(iter_1_3)
 
-		if not slot0.nodesDict[slot7.x] then
-			slot0.nodesDict[slot7.x] = {}
+		if not arg_1_0.nodesDict[var_1_1.x] then
+			arg_1_0.nodesDict[var_1_1.x] = {}
 		end
 
-		slot0.nodesDict[slot7.x][slot7.y] = slot7
+		arg_1_0.nodesDict[var_1_1.x][var_1_1.y] = var_1_1
 	end
 end
 
-function slot0.getUnitCo(slot0, slot1)
-	return slot0.unitDict[slot1]
+function var_0_0.getUnitCo(arg_2_0, arg_2_1)
+	return arg_2_0.unitDict[arg_2_1]
 end
 
-function slot0.getNodeCo(slot0, slot1, slot2)
-	if not slot0.nodesDict[slot1] then
+function var_0_0.getNodeCo(arg_3_0, arg_3_1, arg_3_2)
+	if not arg_3_0.nodesDict[arg_3_1] then
 		return
 	end
 
-	return slot0.nodesDict[slot1][slot2]
+	return arg_3_0.nodesDict[arg_3_1][arg_3_2]
 end
 
-return slot0
+return var_0_0

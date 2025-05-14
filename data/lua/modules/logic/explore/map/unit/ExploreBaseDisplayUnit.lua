@@ -1,395 +1,416 @@
-module("modules.logic.explore.map.unit.ExploreBaseDisplayUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreBaseDisplayUnit", package.seeall)
 
-slot0 = class("ExploreBaseDisplayUnit", ExploreBaseUnit)
-slot0.PairAnim = {
+local var_0_0 = class("ExploreBaseDisplayUnit", ExploreBaseUnit)
+
+var_0_0.PairAnim = {
 	[ExploreAnimEnum.AnimName.nToA] = ExploreAnimEnum.AnimName.aToN
 }
 
-function slot0.initComponents(slot0)
-	slot0:addComp("clickComp", ExploreUnitClickComp)
-	slot0:addComp("animComp", ExploreUnitAnimComp)
-	slot0:addComp("animEffectComp", ExploreUnitAnimEffectComp)
-	slot0:addComp("uiComp", ExploreUnitUIComp)
-	slot0:addComp("outLineComp", ExploreOutLineComp)
-	slot0:addComp("hangComp", ExploreHangComp)
+function var_0_0.initComponents(arg_1_0)
+	arg_1_0:addComp("clickComp", ExploreUnitClickComp)
+	arg_1_0:addComp("animComp", ExploreUnitAnimComp)
+	arg_1_0:addComp("animEffectComp", ExploreUnitAnimEffectComp)
+	arg_1_0:addComp("uiComp", ExploreUnitUIComp)
+	arg_1_0:addComp("outLineComp", ExploreOutLineComp)
+	arg_1_0:addComp("hangComp", ExploreHangComp)
 end
 
-function slot0.beginRotate(slot0)
+function var_0_0.beginRotate(arg_2_0)
+	return
 end
 
-function slot0.endRotate(slot0)
+function var_0_0.endRotate(arg_3_0)
+	return
 end
 
-function slot0.doRotate(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._rotateEndCb = slot4
-	slot0._rotateEndCallObj = slot5
+function var_0_0.doRotate(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+	arg_4_0._rotateEndCb = arg_4_4
+	arg_4_0._rotateEndCallObj = arg_4_5
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId, true)
+	if arg_4_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_4_0._tweenId, true)
 	end
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot1, slot2, slot3, slot0._onFrameRotate, slot0._onRotateTweenFinish, slot0)
+	arg_4_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_4_1, arg_4_2, arg_4_3, arg_4_0._onFrameRotate, arg_4_0._onRotateTweenFinish, arg_4_0)
 end
 
-function slot0._onFrameRotate(slot0, slot1)
-	slot0.mo.unitDir = ExploreHelper.getDir(slot1)
+function var_0_0._onFrameRotate(arg_5_0, arg_5_1)
+	arg_5_0.mo.unitDir = ExploreHelper.getDir(arg_5_1)
 
-	slot0:updateRotationRoot()
-	slot0:onRotation()
+	arg_5_0:updateRotationRoot()
+	arg_5_0:onRotation()
 end
 
-function slot0._onRotateTweenFinish(slot0)
-	slot0._tweenId = nil
+function var_0_0._onRotateTweenFinish(arg_6_0)
+	arg_6_0._tweenId = nil
 
-	if slot0._rotateEndCb then
-		slot0._rotateEndCb(slot0._rotateEndCallObj)
+	if arg_6_0._rotateEndCb then
+		arg_6_0._rotateEndCb(arg_6_0._rotateEndCallObj)
 	end
 
-	slot0._rotateEndCb = nil
-	slot0._rotateEndCallObj = nil
+	arg_6_0._rotateEndCb = nil
+	arg_6_0._rotateEndCallObj = nil
 
-	slot0:onRotateFinish()
+	arg_6_0:onRotateFinish()
 end
 
-function slot0.onRotateFinish(slot0)
+function var_0_0.onRotateFinish(arg_7_0)
+	return
 end
 
-function slot0.onEnter(slot0)
-	if slot0.animComp and slot0.animComp._curAnim == ExploreAnimEnum.AnimName.exit then
-		slot0.animComp:playAnim(slot0:getIdleAnim(), true)
+function var_0_0.onEnter(arg_8_0)
+	if arg_8_0.animComp and arg_8_0.animComp._curAnim == ExploreAnimEnum.AnimName.exit then
+		arg_8_0.animComp:playAnim(arg_8_0:getIdleAnim(), true)
 	end
 
-	if slot0.clickComp then
-		slot0.clickComp:setEnable(true)
+	if arg_8_0.clickComp then
+		arg_8_0.clickComp:setEnable(true)
 	end
 
-	uv0.super.onEnter(slot0)
+	var_0_0.super.onEnter(arg_8_0)
 end
 
-function slot0.setExit(slot0)
-	if slot0:isEnter() then
-		slot0._playedEnter = false
+function var_0_0.setExit(arg_9_0)
+	if arg_9_0:isEnter() then
+		arg_9_0._playedEnter = false
 
-		slot0.mo:setEnter(false)
-		logWarn(string.format("[-]%s:%s退出地图", slot0.__cname, slot0.id))
+		arg_9_0.mo:setEnter(false)
+		logWarn(string.format("[-]%s:%s退出地图", arg_9_0.__cname, arg_9_0.id))
 
-		if slot0._isEnter == false then
-			slot0:setActive(false)
-			slot0:checkLight()
+		if arg_9_0._isEnter == false then
+			arg_9_0:setActive(false)
+			arg_9_0:checkLight()
 		else
-			if slot0.clickComp then
-				slot0.clickComp:setEnable(false)
+			if arg_9_0.clickComp then
+				arg_9_0.clickComp:setEnable(false)
 			end
 
-			slot0:playAnim(ExploreAnimEnum.AnimName.exit)
+			arg_9_0:playAnim(ExploreAnimEnum.AnimName.exit)
 		end
 
-		slot0._isEnter = false
+		arg_9_0._isEnter = false
 
-		slot0:checkShowIcon()
-		slot0:onExit()
+		arg_9_0:checkShowIcon()
+		arg_9_0:onExit()
 	else
-		logWarn("重复退出" .. slot0.id .. slot0.__cname)
+		logWarn("重复退出" .. arg_9_0.id .. arg_9_0.__cname)
 	end
 end
 
-function slot0.playAnim(slot0, slot1)
-	if not slot0._displayGo or not slot0:isInFOV() then
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitAnimEnd, slot0.id, slot1)
+function var_0_0.playAnim(arg_10_0, arg_10_1)
+	if not arg_10_0._displayGo or not arg_10_0:isInFOV() then
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitAnimEnd, arg_10_0.id, arg_10_1)
 	else
-		slot0.animComp:playAnim(slot1)
+		arg_10_0.animComp:playAnim(arg_10_1)
 	end
 end
 
-function slot0.isPairAnim(slot0, slot1, slot2)
-	return slot0.PairAnim[slot1] == slot2 or slot0.PairAnim[slot2] == slot1
+function var_0_0.isPairAnim(arg_11_0, arg_11_1, arg_11_2)
+	return arg_11_0.PairAnim[arg_11_1] == arg_11_2 or arg_11_0.PairAnim[arg_11_2] == arg_11_1
 end
 
-function slot0.onAnimEnd(slot0, slot1, slot2)
-	if slot1 == ExploreAnimEnum.AnimName.exit then
-		slot0:setActive(false)
-		slot0:_releaseDisplayGo()
-		slot0:checkLight()
+function var_0_0.onAnimEnd(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == ExploreAnimEnum.AnimName.exit then
+		arg_12_0:setActive(false)
+		arg_12_0:_releaseDisplayGo()
+		arg_12_0:checkLight()
 	end
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_13_0)
+	return
 end
 
-function slot0._setupMO(slot0)
-	slot0:setupRes()
-	slot0:setupMO()
-	slot0:updateRotation()
-	slot0:updateRotationRoot()
-	slot0:checkShowIcon()
+function var_0_0._setupMO(arg_14_0)
+	arg_14_0:setupRes()
+	arg_14_0:setupMO()
+	arg_14_0:updateRotation()
+	arg_14_0:updateRotationRoot()
+	arg_14_0:checkShowIcon()
 end
 
-function slot0.setupRes(slot0)
-	slot0:setResPath(slot0.mo.showRes)
+function var_0_0.setupRes(arg_15_0)
+	arg_15_0:setResPath(arg_15_0.mo.showRes)
 end
 
-function slot0.setResPath(slot0, slot1)
-	if not slot0:isEnter() or slot0:isInFOV() == false then
+function var_0_0.setResPath(arg_16_0, arg_16_1)
+	if not arg_16_0:isEnter() or arg_16_0:isInFOV() == false then
 		return
 	end
 
-	if slot1 == "explore/prefabs/unit/ice.prefab" or slot1 == "" then
-		slot1 = nil
+	if arg_16_1 == "explore/prefabs/unit/ice.prefab" or arg_16_1 == "" then
+		arg_16_1 = nil
 	end
 
-	if slot1 and slot0._resPath ~= slot1 then
-		slot0._resPath = slot1
-		slot0._assetId = ResMgr.getAbAsset(slot0._resPath, slot0._onResLoaded, slot0, slot0._assetId)
+	if arg_16_1 and arg_16_0._resPath ~= arg_16_1 then
+		arg_16_0._resPath = arg_16_1
+		arg_16_0._assetId = ResMgr.getAbAsset(arg_16_0._resPath, arg_16_0._onResLoaded, arg_16_0, arg_16_0._assetId)
 
-		if slot0._assetId then
-			slot0:getMap():addUnitNeedLoadedNum(1)
+		if arg_16_0._assetId then
+			arg_16_0:getMap():addUnitNeedLoadedNum(1)
 		end
-	elseif slot1 and slot0._resPath == slot1 and slot0._displayGo == nil then
-		slot0._assetId = ResMgr.getAbAsset(slot0._resPath, slot0._onResLoaded, slot0, slot0._assetId)
+	elseif arg_16_1 and arg_16_0._resPath == arg_16_1 and arg_16_0._displayGo == nil then
+		arg_16_0._assetId = ResMgr.getAbAsset(arg_16_0._resPath, arg_16_0._onResLoaded, arg_16_0, arg_16_0._assetId)
 
-		if slot0._assetId then
-			slot0:getMap():addUnitNeedLoadedNum(1)
+		if arg_16_0._assetId then
+			arg_16_0:getMap():addUnitNeedLoadedNum(1)
 		end
 	else
-		slot0:onResLoaded()
+		arg_16_0:onResLoaded()
 	end
 end
 
-function slot0.getMap(slot0)
+function var_0_0.getMap(arg_17_0)
 	return ExploreController.instance:getMap()
 end
 
-function slot0.setInteractActive(slot0, slot1)
-	slot0.mo:setStatus(ExploreHelper.setBit(slot0.mo:getStatus(), ExploreEnum.InteractIndex.ActiveState, slot1))
+function var_0_0.setInteractActive(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0.mo:getStatus()
+	local var_18_1 = ExploreHelper.setBit(var_18_0, ExploreEnum.InteractIndex.ActiveState, arg_18_1)
+
+	arg_18_0.mo:setStatus(var_18_1)
 end
 
-function slot0.getResPath(slot0)
-	return slot0._resPath
+function var_0_0.getResPath(arg_19_0)
+	return arg_19_0._resPath
 end
 
-function slot0._onResLoaded(slot0, slot1)
-	if not slot1.IsLoadSuccess then
+function var_0_0._onResLoaded(arg_20_0, arg_20_1)
+	if not arg_20_1.IsLoadSuccess then
 		return
 	end
 
-	slot0:_releaseDisplayGo()
+	arg_20_0:_releaseDisplayGo()
 
-	if slot0:isActive() then
-		slot0._displayGo = slot1:getInstance(nil, , slot0.go)
-		slot0._displayTr = slot0._displayGo.transform
-		slot0._rotateRoot = slot0._displayTr:Find("#go_rotate")
+	if arg_20_0:isActive() then
+		arg_20_0._displayGo = arg_20_1:getInstance(nil, nil, arg_20_0.go)
+		arg_20_0._displayTr = arg_20_0._displayGo.transform
+		arg_20_0._rotateRoot = arg_20_0._displayTr:Find("#go_rotate")
 
-		if slot0.mo then
-			transformhelper.setLocalPos(slot0._displayTr, slot0.mo.resPosition[1], slot0.mo.resPosition[2], slot0.mo.resPosition[3])
+		if arg_20_0.mo then
+			transformhelper.setLocalPos(arg_20_0._displayTr, arg_20_0.mo.resPosition[1], arg_20_0.mo.resPosition[2], arg_20_0.mo.resPosition[3])
 		end
 
-		for slot6, slot7 in ipairs(slot0:getCompList()) do
-			if slot7.setup then
-				slot7:setup(slot0._displayGo)
+		local var_20_0 = arg_20_0:getCompList()
+
+		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+			if iter_20_1.setup then
+				iter_20_1:setup(arg_20_0._displayGo)
 			end
 		end
 
-		slot0:updateRotation()
-		slot0:updateRotationRoot()
-		slot0:onResLoaded()
-		slot0:_checkContainerNeedUpdate()
+		arg_20_0:updateRotation()
+		arg_20_0:updateRotationRoot()
+		arg_20_0:onResLoaded()
+		arg_20_0:_checkContainerNeedUpdate()
 
-		if not slot0._akComp and ExploreConfig.instance:getAssetNeedAkGo(slot0._resPath) then
-			gohelper.addAkGameObject(slot0.go)
+		if not arg_20_0._akComp and ExploreConfig.instance:getAssetNeedAkGo(arg_20_0._resPath) then
+			gohelper.addAkGameObject(arg_20_0.go)
 
-			slot0._akComp = true
+			arg_20_0._akComp = true
 		end
 
-		if not slot0._playedEnter and slot0.animComp and slot0.animComp.haveAnim and slot0.animComp:haveAnim(ExploreAnimEnum.AnimName.enter) then
-			slot0:markPlayedEnter()
-			slot0.animComp:playAnim(ExploreAnimEnum.AnimName.enter)
+		if not arg_20_0._playedEnter and arg_20_0.animComp and arg_20_0.animComp.haveAnim and arg_20_0.animComp:haveAnim(ExploreAnimEnum.AnimName.enter) then
+			arg_20_0:markPlayedEnter()
+			arg_20_0.animComp:playAnim(ExploreAnimEnum.AnimName.enter)
 		end
 
-		slot0:setOutLight(slot0._showOutLine)
+		arg_20_0:setOutLight(arg_20_0._showOutLine)
 	end
 end
 
-function slot0._checkContainerNeedUpdate(slot0)
-	slot1 = false
+function var_0_0._checkContainerNeedUpdate(arg_21_0)
+	local var_21_0 = false
 
-	if slot0.animComp and slot0.animComp.animator then
-		slot1 = true
+	if arg_21_0.animComp and arg_21_0.animComp.animator then
+		var_21_0 = true
 	end
 
-	slot0._luamonoContainer.enabled = slot1
+	arg_21_0._luamonoContainer.enabled = var_21_0
 end
 
-function slot0.onMapInit(slot0)
-	slot0:markPlayedEnter()
+function var_0_0.onMapInit(arg_22_0)
+	arg_22_0:markPlayedEnter()
 end
 
-function slot0.markPlayedEnter(slot0)
-	slot0._playedEnter = true
+function var_0_0.markPlayedEnter(arg_23_0)
+	arg_23_0._playedEnter = true
 end
 
-function slot0.updateRotation(slot0)
-	if not slot0._displayTr or not slot0.mo then
+function var_0_0.updateRotation(arg_24_0)
+	if not arg_24_0._displayTr or not arg_24_0.mo then
 		return
 	end
 
-	transformhelper.setLocalRotation(slot0._displayTr, slot0.mo.resRotation[1], slot0.mo.resRotation[2], slot0.mo.resRotation[3])
+	transformhelper.setLocalRotation(arg_24_0._displayTr, arg_24_0.mo.resRotation[1], arg_24_0.mo.resRotation[2], arg_24_0.mo.resRotation[3])
 end
 
-function slot0.getEffectRoot(slot0)
-	return slot0._rotateRoot or slot0._displayTr or slot0.trans
+function var_0_0.getEffectRoot(arg_25_0)
+	return arg_25_0._rotateRoot or arg_25_0._displayTr or arg_25_0.trans
 end
 
-function slot0.updateRotationRoot(slot0)
-	if not slot0._rotateRoot or not slot0.mo then
+function var_0_0.updateRotationRoot(arg_26_0)
+	if not arg_26_0._rotateRoot or not arg_26_0.mo then
 		return
 	end
 
-	transformhelper.setLocalRotation(slot0._rotateRoot, 0, slot0.mo.unitDir - slot0.mo.resRotation[2], 0)
+	transformhelper.setLocalRotation(arg_26_0._rotateRoot, 0, arg_26_0.mo.unitDir - arg_26_0.mo.resRotation[2], 0)
 end
 
-function slot0.onActiveChange(slot0, slot1)
-	if slot1 then
-		slot0:playAnim(ExploreAnimEnum.AnimName.nToA)
+function var_0_0.onActiveChange(arg_27_0, arg_27_1)
+	if arg_27_1 then
+		arg_27_0:playAnim(ExploreAnimEnum.AnimName.nToA)
 	else
-		slot0:playAnim(ExploreAnimEnum.AnimName.aToN)
+		arg_27_0:playAnim(ExploreAnimEnum.AnimName.aToN)
 	end
 
-	uv0.super.onActiveChange(slot0, slot1)
+	var_0_0.super.onActiveChange(arg_27_0, arg_27_1)
 end
 
-function slot0.onInteractChange(slot0, slot1)
-	if slot1 then
-		slot0:playAnim(ExploreAnimEnum.AnimName.uToN)
+function var_0_0.onInteractChange(arg_28_0, arg_28_1)
+	if arg_28_1 then
+		arg_28_0:playAnim(ExploreAnimEnum.AnimName.uToN)
 	else
-		slot0:playAnim(ExploreAnimEnum.AnimName.nToU)
+		arg_28_0:playAnim(ExploreAnimEnum.AnimName.nToU)
 	end
 
-	uv0.super.onInteractChange(slot0, slot1)
+	var_0_0.super.onInteractChange(arg_28_0, arg_28_1)
 end
 
-function slot0.forceOutLine(slot0, slot1)
-	slot0._isForceOutLight = slot1
+function var_0_0.forceOutLine(arg_29_0, arg_29_1)
+	arg_29_0._isForceOutLight = arg_29_1
 
-	slot0:setOutLight(slot0._showOutLine)
+	arg_29_0:setOutLight(arg_29_0._showOutLine)
 end
 
-function slot0.setOutLight(slot0, slot1)
-	if not slot0._displayGo or not slot0.outLineComp then
+function var_0_0.setOutLight(arg_30_0, arg_30_1)
+	if not arg_30_0._displayGo or not arg_30_0.outLineComp then
 		return
 	end
 
-	slot0.outLineComp:setOutLight(slot0._isForceOutLight or slot1)
+	arg_30_0.outLineComp:setOutLight(arg_30_0._isForceOutLight or arg_30_1)
 end
 
-function slot0.onRoleNear(slot0)
-	uv0.super.onRoleNear(slot0)
+function var_0_0.onRoleNear(arg_31_0)
+	var_0_0.super.onRoleNear(arg_31_0)
 
-	if slot0.mo.isStrong then
+	if arg_31_0.mo.isStrong then
 		return
 	end
 
-	slot0:checkShowIcon()
+	arg_31_0:checkShowIcon()
 end
 
-function slot0.onRoleFar(slot0)
-	uv0.super.onRoleFar(slot0)
+function var_0_0.onRoleFar(arg_32_0)
+	var_0_0.super.onRoleFar(arg_32_0)
 
-	if slot0.mo.isStrong then
+	if arg_32_0.mo.isStrong then
 		return
 	end
 
-	slot0:checkShowIcon()
+	arg_32_0:checkShowIcon()
 end
 
-function slot0.isCustomShowOutLine(slot0)
+function var_0_0.isCustomShowOutLine(arg_33_0)
 	return false
 end
 
-function slot0.checkShowIcon(slot0)
-	if not slot0.mo then
+function var_0_0.checkShowIcon(arg_34_0)
+	if not arg_34_0.mo then
 		return
 	end
 
-	if lua_explore_unit.configDict[slot0.mo.customIconType or slot0.mo.type] then
-		slot2 = false
+	local var_34_0 = lua_explore_unit.configDict[arg_34_0.mo.customIconType or arg_34_0.mo.type]
 
-		if slot0.mo.isStrong then
-			slot2 = true
-		elseif slot0._roleNear and slot1.isShow == 1 then
-			slot2 = true
+	if var_34_0 then
+		local var_34_1 = false
+
+		if arg_34_0.mo.isStrong then
+			var_34_1 = true
+		elseif arg_34_0._roleNear and var_34_0.isShow == 1 then
+			var_34_1 = true
 		end
 
-		if slot2 and not slot0:canTrigger() and not slot0:isCustomShowOutLine() and not slot0.mo.isCanMove or not slot0:isEnter() then
-			slot2 = false
+		local var_34_2 = arg_34_0:canTrigger()
+
+		if var_34_1 and not var_34_2 and not arg_34_0:isCustomShowOutLine() and not arg_34_0.mo.isCanMove or not arg_34_0:isEnter() then
+			var_34_1 = false
 		end
 
-		if not string.nilorempty(slot1.mapActiveIcon) and slot0.mo:isInteractActiveState() then
-			ExploreMapModel.instance:setSmallMapIconById(slot0.id, slot0.mo.nodeKey, slot1.mapActiveIcon)
-		elseif not string.nilorempty(slot1.mapIcon) or not string.nilorempty(slot1.mapIcon2) then
-			if slot1.mapIconShow == 1 then
-				ExploreMapModel.instance:setSmallMapIconById(slot0.id, slot0.mo.nodeKey, slot0:processMapIcon(slot0.mo.isStrong and slot1.mapIcon2 or slot1.mapIcon))
+		if not string.nilorempty(var_34_0.mapActiveIcon) and arg_34_0.mo:isInteractActiveState() then
+			ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, var_34_0.mapActiveIcon)
+		elseif not string.nilorempty(var_34_0.mapIcon) or not string.nilorempty(var_34_0.mapIcon2) then
+			local var_34_3 = arg_34_0.mo.isStrong and var_34_0.mapIcon2 or var_34_0.mapIcon
+			local var_34_4 = arg_34_0:processMapIcon(var_34_3)
+
+			if var_34_0.mapIconShow == 1 then
+				ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, var_34_4)
 			else
-				ExploreMapModel.instance:setSmallMapIconById(slot0.id, slot0.mo.nodeKey, slot3 and slot4 or nil)
+				ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, var_34_2 and var_34_4 or nil)
 			end
 		else
-			ExploreMapModel.instance:setSmallMapIconById(slot0.id, slot0.mo.nodeKey, nil)
+			ExploreMapModel.instance:setSmallMapIconById(arg_34_0.id, arg_34_0.mo.nodeKey, nil)
 		end
 
-		slot0._showOutLine = slot2
+		arg_34_0._showOutLine = var_34_1
 
-		slot0:setOutLight(slot2)
+		arg_34_0:setOutLight(var_34_1)
 	end
 end
 
-function slot0.processMapIcon(slot0, slot1)
-	return slot1
+function var_0_0.processMapIcon(arg_35_0, arg_35_1)
+	return arg_35_1
 end
 
-function slot0.hideMapIcon(slot0)
-	if not slot0.mo then
+function var_0_0.hideMapIcon(arg_36_0)
+	if not arg_36_0.mo then
 		return
 	end
 
-	if not lua_explore_unit.configDict[slot0.mo.customIconType or slot0.mo.type] or string.nilorempty(slot1.mapIcon) and string.nilorempty(slot1.mapIcon2) and string.nilorempty(slot1.mapActiveIcon) then
+	local var_36_0 = lua_explore_unit.configDict[arg_36_0.mo.customIconType or arg_36_0.mo.type]
+
+	if not var_36_0 or string.nilorempty(var_36_0.mapIcon) and string.nilorempty(var_36_0.mapIcon2) and string.nilorempty(var_36_0.mapActiveIcon) then
 		return
 	end
 
-	ExploreMapModel.instance:setSmallMapIconById(slot0.id, slot0.mo.nodeKey, nil)
+	ExploreMapModel.instance:setSmallMapIconById(arg_36_0.id, arg_36_0.mo.nodeKey, nil)
 end
 
-function slot0.onInFOVChange(slot0, slot1)
-	slot0:setActive(slot1)
+function var_0_0.onInFOVChange(arg_37_0, arg_37_1)
+	arg_37_0:setActive(arg_37_1)
 
-	if slot1 then
-		slot0:setupRes()
-		TaskDispatcher.cancelTask(slot0._releaseDisplayGo, slot0)
+	if arg_37_1 then
+		arg_37_0:setupRes()
+		TaskDispatcher.cancelTask(arg_37_0._releaseDisplayGo, arg_37_0)
 	else
-		TaskDispatcher.runDelay(slot0._releaseDisplayGo, slot0, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
+		TaskDispatcher.runDelay(arg_37_0._releaseDisplayGo, arg_37_0, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
 	end
 end
 
-function slot0.setActive(slot0, ...)
-	uv0.super.setActive(slot0, ...)
+function var_0_0.setActive(arg_38_0, ...)
+	var_0_0.super.setActive(arg_38_0, ...)
 
-	if not ... and slot0.animEffectComp and slot0.animEffectComp.destoryEffectIfOnce then
-		slot0.animEffectComp:destoryEffectIfOnce()
+	if not ... and arg_38_0.animEffectComp and arg_38_0.animEffectComp.destoryEffectIfOnce then
+		arg_38_0.animEffectComp:destoryEffectIfOnce()
 	end
 end
 
-function slot0.onNodeChange(slot0, slot1, slot2)
-	slot0:checkLight()
+function var_0_0.onNodeChange(arg_39_0, arg_39_1, arg_39_2)
+	arg_39_0:checkLight()
 end
 
-function slot0.setEmitLight(slot0, slot1)
-	slot0._isNoEmitLight = slot1
+function var_0_0.setEmitLight(arg_40_0, arg_40_1)
+	arg_40_0._isNoEmitLight = arg_40_1
 end
 
-function slot0.getIsNoEmitLight(slot0)
-	return slot0._isNoEmitLight
+function var_0_0.getIsNoEmitLight(arg_41_0)
+	return arg_41_0._isNoEmitLight
 end
 
-function slot0.checkLight(slot0)
-	if slot0:getLightRecvType() == ExploreEnum.LightRecvType.Photic or slot1 == ExploreEnum.LightRecvType.Custom then
+function var_0_0.checkLight(arg_42_0)
+	local var_42_0 = arg_42_0:getLightRecvType()
+
+	if var_42_0 == ExploreEnum.LightRecvType.Photic or var_42_0 == ExploreEnum.LightRecvType.Custom then
 		return
 	end
 
@@ -397,57 +418,62 @@ function slot0.checkLight(slot0)
 		return
 	end
 
-	ExploreController.instance:getMapLight():updateLightsByUnit(slot0)
+	ExploreController.instance:getMapLight():updateLightsByUnit(arg_42_0)
 end
 
-function slot0.getIdleAnim(slot0)
-	if not slot0.mo:isInteractEnabled() then
+function var_0_0.getIdleAnim(arg_43_0)
+	local var_43_0 = arg_43_0.mo
+
+	if not var_43_0:isInteractEnabled() then
 		return ExploreAnimEnum.AnimName.unable
-	elseif not slot1:isInteractActiveState() then
+	elseif not var_43_0:isInteractActiveState() then
 		return ExploreAnimEnum.AnimName.normal
 	else
 		return ExploreAnimEnum.AnimName.active
 	end
 end
 
-function slot0.onResLoaded(slot0)
+function var_0_0.onResLoaded(arg_44_0)
+	return
 end
 
-function slot0._releaseDisplayGo(slot0)
-	slot0:clearComp()
+function var_0_0._releaseDisplayGo(arg_45_0)
+	arg_45_0:clearComp()
 
-	if slot0._assetId and not slot0:isRole() then
-		slot0:getMap():addUnitNeedLoadedNum(-1)
+	if arg_45_0._assetId and not arg_45_0:isRole() then
+		arg_45_0:getMap():addUnitNeedLoadedNum(-1)
 	end
 
-	ResMgr.removeCallBack(slot0._assetId)
-	ResMgr.ReleaseObj(slot0._displayGo)
+	ResMgr.removeCallBack(arg_45_0._assetId)
+	ResMgr.ReleaseObj(arg_45_0._displayGo)
 
-	slot0._displayGo = nil
-	slot0._displayTr = nil
-	slot0._rotateRoot = nil
-	slot0._assetId = nil
+	arg_45_0._displayGo = nil
+	arg_45_0._displayTr = nil
+	arg_45_0._rotateRoot = nil
+	arg_45_0._assetId = nil
 
-	slot0:_checkContainerNeedUpdate()
+	arg_45_0:_checkContainerNeedUpdate()
 end
 
-function slot0.clearComp(slot0)
-	for slot5, slot6 in ipairs(slot0:getCompList()) do
-		if slot6.clear then
-			slot6:clear()
+function var_0_0.clearComp(arg_46_0)
+	local var_46_0 = arg_46_0:getCompList()
+
+	for iter_46_0, iter_46_1 in ipairs(var_46_0) do
+		if iter_46_1.clear then
+			iter_46_1:clear()
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:_releaseDisplayGo()
-	TaskDispatcher.cancelTask(slot0._releaseDisplayGo, slot0)
+function var_0_0.onDestroy(arg_47_0)
+	arg_47_0:_releaseDisplayGo()
+	TaskDispatcher.cancelTask(arg_47_0._releaseDisplayGo, arg_47_0)
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId, true)
+	if arg_47_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_47_0._tweenId, true)
 
-		slot0._tweenId = nil
+		arg_47_0._tweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

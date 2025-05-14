@@ -1,49 +1,49 @@
-module("modules.logic.fight.view.assistboss.FightAssistBoss1", package.seeall)
+﻿module("modules.logic.fight.view.assistboss.FightAssistBoss1", package.seeall)
 
-slot0 = class("FightAssistBoss1", FightAssistBossBase)
+local var_0_0 = class("FightAssistBoss1", FightAssistBossBase)
 
-function slot0.setPrefabPath(slot0)
-	slot0.prefabPath = "ui/viewres/assistboss/boss1.prefab"
+function var_0_0.setPrefabPath(arg_1_0)
+	arg_1_0.prefabPath = "ui/viewres/assistboss/boss1.prefab"
 end
 
-function slot0.initView(slot0)
-	uv0.super.initView(slot0)
+function var_0_0.initView(arg_2_0)
+	var_0_0.super.initView(arg_2_0)
 
-	slot0.energyImage = gohelper.findChildImage(slot0.viewGo, "head/energy")
-	slot0.goEffect1 = gohelper.findChild(slot0.viewGo, "head/dec2")
-	slot0.goEffect2 = gohelper.findChild(slot0.viewGo, "head/vx_eff")
+	arg_2_0.energyImage = gohelper.findChildImage(arg_2_0.viewGo, "head/energy")
+	arg_2_0.goEffect1 = gohelper.findChild(arg_2_0.viewGo, "head/dec2")
+	arg_2_0.goEffect2 = gohelper.findChild(arg_2_0.viewGo, "head/vx_eff")
 end
 
-function slot0.refreshPower(slot0)
-	uv0.super.refreshPower(slot0)
+function var_0_0.refreshPower(arg_3_0)
+	var_0_0.super.refreshPower(arg_3_0)
 
-	slot1, slot2 = FightDataHelper.paTaMgr:getAssistBossPower()
+	local var_3_0, var_3_1 = FightDataHelper.paTaMgr:getAssistBossPower()
 
-	slot0:setFillAmount(slot0.energyImage, slot1 / slot2)
-	slot0:refreshEffect()
+	arg_3_0:setFillAmount(arg_3_0.energyImage, var_3_0 / var_3_1)
+	arg_3_0:refreshEffect()
 end
 
-function slot0.refreshCD(slot0)
-	uv0.super.refreshCD(slot0)
-	slot0:refreshEffect()
+function var_0_0.refreshCD(arg_4_0)
+	var_0_0.super.refreshCD(arg_4_0)
+	arg_4_0:refreshEffect()
 end
 
-function slot0.refreshEffect(slot0)
-	slot1 = true
+function var_0_0.refreshEffect(arg_5_0)
+	local var_5_0 = true
 
 	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
-		slot1 = false
+		local var_5_1 = false
 
-		gohelper.setActive(slot0.goEffect1, slot1)
-		gohelper.setActive(slot0.goEffect2, slot1)
+		gohelper.setActive(arg_5_0.goEffect1, var_5_1)
+		gohelper.setActive(arg_5_0.goEffect2, var_5_1)
 
 		return
 	end
 
-	slot1 = not slot0:checkInCd()
+	local var_5_2 = not arg_5_0:checkInCd()
 
-	gohelper.setActive(slot0.goEffect1, slot1)
-	gohelper.setActive(slot0.goEffect2, slot1)
+	gohelper.setActive(arg_5_0.goEffect1, var_5_2)
+	gohelper.setActive(arg_5_0.goEffect2, var_5_2)
 end
 
-return slot0
+return var_0_0

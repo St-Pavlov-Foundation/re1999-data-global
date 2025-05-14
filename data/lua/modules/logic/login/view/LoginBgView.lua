@@ -1,47 +1,47 @@
-module("modules.logic.login.view.LoginBgView", package.seeall)
+﻿module("modules.logic.login.view.LoginBgView", package.seeall)
 
-slot0 = class("LoginBgView", BaseView)
+local var_0_0 = class("LoginBgView", BaseView)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._containerPath = slot1
+	arg_1_0._containerPath = arg_1_1
 end
 
-function slot0.onInitView(slot0)
-	slot0._goBgRoot = gohelper.findChild(slot0.viewGO, slot0._containerPath)
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._goBgRoot = gohelper.findChild(arg_2_0.viewGO, arg_2_0._containerPath)
 end
 
-function slot0.onOpen(slot0)
-	slot0._goSpine = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.LoginView).viewGO, "spine")
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0._goSpine = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.LoginView).viewGO, "spine")
 
-	slot0:_showBgType()
+	arg_3_0:_showBgType()
 end
 
-function slot0._showBgType(slot0)
+function var_0_0._showBgType(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_Login_interface_noise_1_9)
-	gohelper.setActive(slot0._goSpine, false)
+	gohelper.setActive(arg_4_0._goSpine, false)
 
-	if not slot0._goBg then
-		slot0._goBg = slot0.viewContainer:getResInst(slot0.viewContainer._viewSetting.otherRes[1], slot0._goBgRoot, "bgview2")
-		slot0._imgBg = gohelper.findChildSingleImage(slot0._goBg, "background")
+	if not arg_4_0._goBg then
+		arg_4_0._goBg = arg_4_0.viewContainer:getResInst(arg_4_0.viewContainer._viewSetting.otherRes[1], arg_4_0._goBgRoot, "bgview2")
+		arg_4_0._imgBg = gohelper.findChildSingleImage(arg_4_0._goBg, "background")
 	end
 
-	slot0._imgBg:LoadImage(ResUrl.getLoginBg("bg_denglubeijing_b01"), slot0._bgHasLoaded, slot0)
+	arg_4_0._imgBg:LoadImage(ResUrl.getLoginBg("bg_denglubeijing_b01"), arg_4_0._bgHasLoaded, arg_4_0)
 end
 
-function slot0._bgHasLoaded(slot0)
+function var_0_0._bgHasLoaded(arg_5_0)
 	LoginController.instance:dispatchEvent(LoginEvent.OnLoginBgLoaded)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_Login_interface_noise_1_9)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._imgBg then
-		slot0._imgBg:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	if arg_7_0._imgBg then
+		arg_7_0._imgBg:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

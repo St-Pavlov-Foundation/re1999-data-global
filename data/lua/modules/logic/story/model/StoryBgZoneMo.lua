@@ -1,19 +1,19 @@
-module("modules.logic.story.model.StoryBgZoneMo", package.seeall)
+﻿module("modules.logic.story.model.StoryBgZoneMo", package.seeall)
 
-slot0 = pureTable("StoryBgZoneMo")
+local var_0_0 = pureTable("StoryBgZoneMo")
 
-function slot0.ctor(slot0)
-	slot0.path = ""
-	slot0.sourcePath = ""
-	slot0.offsetX = 0
-	slot0.offsetY = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.path = ""
+	arg_1_0.sourcePath = ""
+	arg_1_0.offsetX = 0
+	arg_1_0.offsetY = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.path = slot1[1]
-	slot0.sourcePath = slot1[2]
-	slot0.offsetX = slot1[3]
-	slot0.offsetY = slot1[4]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.path = arg_2_1[1]
+	arg_2_0.sourcePath = arg_2_1[2]
+	arg_2_0.offsetX = arg_2_1[3]
+	arg_2_0.offsetY = arg_2_1[4]
 end
 
-return slot0
+return var_0_0

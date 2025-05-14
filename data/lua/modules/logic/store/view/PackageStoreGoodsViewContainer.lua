@@ -1,32 +1,33 @@
-module("modules.logic.store.view.PackageStoreGoodsViewContainer", package.seeall)
+﻿module("modules.logic.store.view.PackageStoreGoodsViewContainer", package.seeall)
 
-slot0 = class("PackageStoreGoodsViewContainer", BaseViewContainer)
+local var_0_0 = class("PackageStoreGoodsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
-	table.insert(slot1, PackageStoreGoodsView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, PackageStoreGoodsView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._currencyView = CurrencyView.New({})
-	slot2 = CurrencyEnum.CurrencyType
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0._currencyView = CurrencyView.New({})
 
-	slot0._currencyView:setCurrencyType({
-		slot2.Diamond,
-		slot2.FreeDiamondCoupon
+	local var_2_0 = CurrencyEnum.CurrencyType
+
+	arg_2_0._currencyView:setCurrencyType({
+		var_2_0.Diamond,
+		var_2_0.FreeDiamondCoupon
 	})
 
 	return {
-		slot0._currencyView
+		arg_2_0._currencyView
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-return slot0
+return var_0_0

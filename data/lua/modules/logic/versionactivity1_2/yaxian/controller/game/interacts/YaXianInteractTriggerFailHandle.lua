@@ -1,59 +1,59 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.interacts.YaXianInteractTriggerFailHandle", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.interacts.YaXianInteractTriggerFailHandle", package.seeall)
 
-slot0 = class("YaXianInteractTriggerFailHandle", YaXianInteractHandleBase)
+local var_0_0 = class("YaXianInteractTriggerFailHandle", YaXianInteractHandleBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._enableAlarm = true
+	arg_1_0._enableAlarm = true
 end
 
-function slot0.onDrawAlert(slot0, slot1)
-	if not slot0._enableAlarm then
+function var_0_0.onDrawAlert(arg_2_0, arg_2_1)
+	if not arg_2_0._enableAlarm then
 		return
 	end
 
-	slot2 = slot0._target.originData.posX
-	slot3 = slot0._target.originData.posY
+	local var_2_0 = arg_2_0._target.originData.posX
+	local var_2_1 = arg_2_0._target.originData.posY
 
-	uv0.insertToAlertMap(slot1, slot2 + 1, slot3)
-	uv0.insertToAlertMap(slot1, slot2 - 1, slot3)
-	uv0.insertToAlertMap(slot1, slot2, slot3 + 1)
-	uv0.insertToAlertMap(slot1, slot2, slot3 - 1)
+	var_0_0.insertToAlertMap(arg_2_1, var_2_0 + 1, var_2_1)
+	var_0_0.insertToAlertMap(arg_2_1, var_2_0 - 1, var_2_1)
+	var_0_0.insertToAlertMap(arg_2_1, var_2_0, var_2_1 + 1)
+	var_0_0.insertToAlertMap(arg_2_1, var_2_0, var_2_1 - 1)
 end
 
-function slot0.insertToAlertMap(slot0, slot1, slot2)
-	if YaXianGameController.instance:posCanWalk(slot1, slot2) then
-		slot0[slot1] = slot0[slot1] or {}
-		slot0[slot1][slot2] = true
+function var_0_0.insertToAlertMap(arg_3_0, arg_3_1, arg_3_2)
+	if YaXianGameController.instance:posCanWalk(arg_3_1, arg_3_2) then
+		arg_3_0[arg_3_1] = arg_3_0[arg_3_1] or {}
+		arg_3_0[arg_3_1][arg_3_2] = true
 	end
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3, slot4)
-	slot0._enableAlarm = false
+function var_0_0.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	arg_4_0._enableAlarm = false
 
-	uv0.super.moveTo(slot0, slot1, slot2, slot3, slot4)
+	var_0_0.super.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function slot0.onMoveCompleted(slot0)
-	uv0.super.onMoveCompleted(slot0)
+function var_0_0.onMoveCompleted(arg_5_0)
+	var_0_0.super.onMoveCompleted(arg_5_0)
 
-	slot0._enableAlarm = true
+	arg_5_0._enableAlarm = true
 
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_6_0)
+	var_0_0.super.onAvatarLoaded(arg_6_0)
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function slot0.dispose(slot0)
-	slot0._enableAlarm = false
+function var_0_0.dispose(arg_7_0)
+	arg_7_0._enableAlarm = false
 
-	uv0.super.dispose(slot0)
+	var_0_0.super.dispose(arg_7_0)
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-return slot0
+return var_0_0

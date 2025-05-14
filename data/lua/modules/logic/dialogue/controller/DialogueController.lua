@@ -1,21 +1,23 @@
-module("modules.logic.dialogue.controller.DialogueController", package.seeall)
+﻿module("modules.logic.dialogue.controller.DialogueController", package.seeall)
 
-slot0 = class("DialogueController", BaseController)
+local var_0_0 = class("DialogueController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.enterDialogue(slot0, slot1, slot2, slot3)
+function var_0_0.enterDialogue(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	ViewMgr.instance:openView(ViewName.DialogueView, {
-		dialogueId = slot1,
-		callback = slot2,
-		callbackTarget = slot3
+		dialogueId = arg_3_1,
+		callback = arg_3_2,
+		callbackTarget = arg_3_3
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

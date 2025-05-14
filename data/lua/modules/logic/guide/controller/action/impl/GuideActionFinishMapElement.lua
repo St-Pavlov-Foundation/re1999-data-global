@@ -1,10 +1,10 @@
-module("modules.logic.guide.controller.action.impl.GuideActionFinishMapElement", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionFinishMapElement", package.seeall)
 
-slot0 = class("GuideActionFinishMapElement", BaseGuideAction)
+local var_0_0 = class("GuideActionFinishMapElement", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	DungeonRpc.instance:sendMapElementRequest(tonumber(slot0.actionParam))
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	DungeonRpc.instance:sendMapElementRequest(tonumber(arg_1_0.actionParam))
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,289 +1,334 @@
-module("modules.logic.lifecircle.view.LifeCircleSignView", package.seeall)
+﻿module("modules.logic.lifecircle.view.LifeCircleSignView", package.seeall)
 
-slot0 = class("LifeCircleSignView", RougeSimpleItemBase)
+local var_0_0 = class("LifeCircleSignView", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._simageBG2 = gohelper.findChildSingleImage(slot0.viewGO, "BG/#simage_BG2")
-	slot0._simageBG1 = gohelper.findChildSingleImage(slot0.viewGO, "BG/#simage_BG1")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "#simage_Title")
-	slot0._txtDays = gohelper.findChildText(slot0.viewGO, "#txt_Days")
-	slot0._txt = gohelper.findChildText(slot0.viewGO, "txtbg/#txt")
-	slot0._scrollReward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_Reward")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_Reward/Viewport/#go_Content")
-	slot0._goGrayLine = gohelper.findChild(slot0.viewGO, "#scroll_Reward/Viewport/#go_Content/#go_GrayLine")
-	slot0._goNormalLine = gohelper.findChild(slot0.viewGO, "#scroll_Reward/Viewport/#go_Content/#go_NormalLine")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageBG2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "BG/#simage_BG2")
+	arg_1_0._simageBG1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "BG/#simage_BG1")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Title")
+	arg_1_0._txtDays = gohelper.findChildText(arg_1_0.viewGO, "#txt_Days")
+	arg_1_0._txt = gohelper.findChildText(arg_1_0.viewGO, "txtbg/#txt")
+	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Reward")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_Reward/Viewport/#go_Content")
+	arg_1_0._goGrayLine = gohelper.findChild(arg_1_0.viewGO, "#scroll_Reward/Viewport/#go_Content/#go_GrayLine")
+	arg_1_0._goNormalLine = gohelper.findChild(arg_1_0.viewGO, "#scroll_Reward/Viewport/#go_Content/#go_NormalLine")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = ZProj.TweenHelper
-slot2 = table.insert
-slot3 = string.format
-slot4 = 200
-slot5 = 90.86
+local var_0_1 = ZProj.TweenHelper
+local var_0_2 = table.insert
+local var_0_3 = string.format
+local var_0_4 = 200
+local var_0_5 = 90.86
 
-function slot0.ctor(slot0, ...)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	arg_4_0:__onInit()
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
 
-	slot0._txtbgGO = gohelper.findChild(slot0.viewGO, "txtbg")
-	slot0._scrollRewardGo = slot0._scrollReward.gameObject
-	slot0._goGraylineTran = slot0._goGrayLine.transform
-	slot0._goNormallineTran = slot0._goNormalLine.transform
-	slot0._goContentTran = slot0._goContent.transform
-	slot0._rectViewPortTran = gohelper.findChild(slot0._scrollRewardGo, "Viewport").transform
-	slot0._hLayoutGroup = slot0._goContentTran:GetComponent(gohelper.Type_HorizontalLayoutGroup)
-	slot0._goGraylinePosX = recthelper.getAnchorX(slot0._goGraylineTran)
-	slot0._scrollRewardTrans = slot0._scrollRewardGo.transform
+	arg_5_0._txtbgGO = gohelper.findChild(arg_5_0.viewGO, "txtbg")
+	arg_5_0._scrollRewardGo = arg_5_0._scrollReward.gameObject
+	arg_5_0._goGraylineTran = arg_5_0._goGrayLine.transform
+	arg_5_0._goNormallineTran = arg_5_0._goNormalLine.transform
+	arg_5_0._goContentTran = arg_5_0._goContent.transform
+	arg_5_0._rectViewPortTran = gohelper.findChild(arg_5_0._scrollRewardGo, "Viewport").transform
+	arg_5_0._hLayoutGroup = arg_5_0._goContentTran:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+	arg_5_0._goGraylinePosX = recthelper.getAnchorX(arg_5_0._goGraylineTran)
+	arg_5_0._scrollRewardTrans = arg_5_0._scrollRewardGo.transform
 
-	recthelper.setAnchorX(slot0._goContentTran, 0)
+	recthelper.setAnchorX(arg_5_0._goContentTran, 0)
 
-	slot0._itemList = {}
+	arg_5_0._itemList = {}
 end
 
-function slot0._onDragBegin(slot0)
-	slot0._audioScroll:onDragBegin()
+function var_0_0._onDragBegin(arg_6_0)
+	arg_6_0._audioScroll:onDragBegin()
 end
 
-function slot0._onDragEnd(slot0)
-	slot0._audioScroll:onDragEnd()
+function var_0_0._onDragEnd(arg_7_0)
+	arg_7_0._audioScroll:onDragEnd()
 end
 
-function slot0._onClickDownHandler(slot0)
-	slot0._audioScroll:onClickDown()
+function var_0_0._onClickDownHandler(arg_8_0)
+	arg_8_0._audioScroll:onClickDown()
 end
 
-function slot0._stagetitle(slot0)
-	slot3 = 0
+function var_0_0._stagetitle(arg_9_0)
+	local var_9_0 = arg_9_0:totalLoginDays()
+	local var_9_1 = arg_9_0:_COList()
+	local var_9_2 = 0
 
-	for slot7, slot8 in ipairs(slot0:_COList()) do
-		if slot8.logindaysid <= slot0:totalLoginDays() then
-			slot3 = slot7
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if var_9_0 >= iter_9_1.logindaysid then
+			var_9_2 = iter_9_0
 		else
 			break
 		end
 	end
 
-	return slot2[slot3] and slot2[slot3].stagetitle or ""
+	return var_9_1[var_9_2] and var_9_1[var_9_2].stagetitle or ""
 end
 
-function slot0._getLatestIndex(slot0)
-	slot1 = 0
+function var_0_0._getLatestIndex(arg_10_0)
+	local var_10_0 = 0
 
-	for slot5, slot6 in ipairs(slot0._itemList) do
-		if slot6:isClaimable() then
-			return slot5
-		elseif slot6:isClaimed() then
-			slot1 = slot5
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._itemList) do
+		if iter_10_1:isClaimable() then
+			return iter_10_0
+		elseif iter_10_1:isClaimed() then
+			var_10_0 = iter_10_0
 		end
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
-	slot0:_refreshContentPosX(slot0:_getLatestIndex())
-	slot0:_tryClaimAccumulateReward()
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0:_refresh()
+	arg_11_0:_refreshContentPosX(arg_11_0:_getLatestIndex())
+	arg_11_0:_tryClaimAccumulateReward()
 end
 
-function slot0._calcHLayoutContentMaxWidth(slot0, slot1)
-	slot2 = uv0
+function var_0_0._calcHLayoutContentMaxWidth(arg_12_0, arg_12_1)
+	arg_12_1 = arg_12_1 or #arg_12_0:_COList()
 
-	return (slot2 + slot0._hLayoutGroup.spacing) * math.max(0, slot1 or #slot0:_COList()) - slot0._hLayoutGroup.padding.left - slot2 / 2 + uv1
+	local var_12_0 = var_0_4
+	local var_12_1 = var_0_5
+	local var_12_2 = arg_12_0._hLayoutGroup.padding
+	local var_12_3 = arg_12_0._hLayoutGroup.spacing
+	local var_12_4 = var_12_2.left
+
+	return (var_12_0 + var_12_3) * math.max(0, arg_12_1) - var_12_4 - var_12_0 / 2 + var_12_1
 end
 
-function slot0.onOpen(slot0)
-	SignInController.instance:registerCallback(SignInEvent.OnSignInTotalRewardReply, slot0._onSignInTotalRewardReply, slot0)
-	SignInController.instance:registerCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, slot0._onReceiveSignInTotalRewardAllReply, slot0)
-	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, slot0._onChangePlayerinfo, slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_13_0)
+	SignInController.instance:registerCallback(SignInEvent.OnSignInTotalRewardReply, arg_13_0._onSignInTotalRewardReply, arg_13_0)
+	SignInController.instance:registerCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, arg_13_0._onReceiveSignInTotalRewardAllReply, arg_13_0)
+	PlayerController.instance:registerCallback(PlayerEvent.ChangePlayerinfo, arg_13_0._onChangePlayerinfo, arg_13_0)
+	arg_13_0:onUpdateParam()
 	LifeCircleController.instance:markLatestConfigCount()
 end
 
-function slot0.onClose(slot0)
-	SignInController.instance:unregisterCallback(SignInEvent.OnSignInTotalRewardReply, slot0._onSignInTotalRewardReply, slot0)
-	SignInController.instance:unregisterCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, slot0._onReceiveSignInTotalRewardAllReply, slot0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, slot0._onChangePlayerinfo, slot0)
+function var_0_0.onClose(arg_14_0)
+	SignInController.instance:unregisterCallback(SignInEvent.OnSignInTotalRewardReply, arg_14_0._onSignInTotalRewardReply, arg_14_0)
+	SignInController.instance:unregisterCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, arg_14_0._onReceiveSignInTotalRewardAllReply, arg_14_0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, arg_14_0._onChangePlayerinfo, arg_14_0)
 end
 
-function slot0.onDestroyView(slot0)
-	SignInController.instance:unregisterCallback(SignInEvent.OnSignInTotalRewardReply, slot0._onSignInTotalRewardReply, slot0)
-	SignInController.instance:unregisterCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, slot0._onReceiveSignInTotalRewardAllReply, slot0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, slot0._onChangePlayerinfo, slot0)
-	GameUtil.onDestroyViewMember(slot0, "_drag")
-	GameUtil.onDestroyViewMember_ClickDownListener(slot0, "_touch")
-	GameUtil.onDestroyViewMemberList(slot0, "_itemList")
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_15_0)
+	SignInController.instance:unregisterCallback(SignInEvent.OnSignInTotalRewardReply, arg_15_0._onSignInTotalRewardReply, arg_15_0)
+	SignInController.instance:unregisterCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, arg_15_0._onReceiveSignInTotalRewardAllReply, arg_15_0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.ChangePlayerinfo, arg_15_0._onChangePlayerinfo, arg_15_0)
+	GameUtil.onDestroyViewMember(arg_15_0, "_drag")
+	GameUtil.onDestroyViewMember_ClickDownListener(arg_15_0, "_touch")
+	GameUtil.onDestroyViewMemberList(arg_15_0, "_itemList")
+	var_0_0.super.onDestroyView(arg_15_0)
+	arg_15_0:__onDispose()
 end
 
-function slot0._create_LifeCircleSignRewardsItem(slot0, slot1, slot2)
-	slot3 = slot0.viewContainer or slot0:baseViewContainer()
-	slot5 = LifeCircleSignRewardsItem.New({
-		parent = slot0,
-		baseViewContainer = slot3
+function var_0_0._create_LifeCircleSignRewardsItem(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0.viewContainer or arg_16_0:baseViewContainer()
+	local var_16_1 = var_16_0:getResInst(SignInEnum.ResPath.lifecirclesignrewardsitem, arg_16_2)
+	local var_16_2 = LifeCircleSignRewardsItem.New({
+		parent = arg_16_0,
+		baseViewContainer = var_16_0
 	})
 
-	slot5:setIndex(slot1)
-	slot5:init(slot3:getResInst(SignInEnum.ResPath.lifecirclesignrewardsitem, slot2))
+	var_16_2:setIndex(arg_16_1)
+	var_16_2:init(var_16_1)
 
-	return slot5
+	return var_16_2
 end
 
-function slot0._onSignInTotalRewardReply(slot0)
-	slot0:_refresh()
+function var_0_0._onSignInTotalRewardReply(arg_17_0)
+	arg_17_0:_refresh()
 end
 
-function slot0._onReceiveSignInTotalRewardAllReply(slot0)
-	slot0:_scrollContentTo(slot0:_getLatestIndex())
-	slot0:_refresh()
+function var_0_0._onReceiveSignInTotalRewardAllReply(arg_18_0)
+	arg_18_0:_scrollContentTo(arg_18_0:_getLatestIndex())
+	arg_18_0:_refresh()
 end
 
-function slot0._onChangePlayerinfo(slot0)
-	slot0:_refresh()
+function var_0_0._onChangePlayerinfo(arg_19_0)
+	arg_19_0:_refresh()
 end
 
-function slot0.totalLoginDays(slot0)
+function var_0_0.totalLoginDays(arg_20_0)
 	return PlayerModel.instance:getPlayinfo().totalLoginDays
 end
 
-function slot0._COList(slot0)
+function var_0_0._COList(arg_21_0)
 	return lua_sign_in_lifetime_bonus.configList
 end
 
-function slot0._maxLogindaysid(slot0)
-	slot1 = slot0:_COList()
+function var_0_0._maxLogindaysid(arg_22_0)
+	local var_22_0 = arg_22_0:_COList()
+	local var_22_1 = var_22_0[#var_22_0]
 
-	return slot1[#slot1] and slot2.logindaysid or 0
+	return var_22_1 and var_22_1.logindaysid or 0
 end
 
-function slot0._COListCount(slot0)
-	return slot0:_COList() and #slot1 or 0
+function var_0_0._COListCount(arg_23_0)
+	local var_23_0 = arg_23_0:_COList()
+
+	return var_23_0 and #var_23_0 or 0
 end
 
-function slot0._refreshProgress(slot0, slot1, slot2)
-	slot3 = uv0
-	slot4 = slot0._hLayoutGroup.spacing
-	slot5 = slot0._goGraylinePosX
-	slot10, slot11 = slot0:_calcProgWidth(slot1, slot4, slot3, slot0._hLayoutGroup.padding.left + slot3 / 2, slot4 + slot3, slot5, -slot5)
+function var_0_0._refreshProgress(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = var_0_4
+	local var_24_1 = arg_24_0._hLayoutGroup.spacing
+	local var_24_2 = arg_24_0._goGraylinePosX
+	local var_24_3 = arg_24_0._hLayoutGroup.padding.left + var_24_0 / 2
+	local var_24_4 = var_24_1 + var_24_0
+	local var_24_5, var_24_6 = arg_24_0:_calcProgWidth(arg_24_1, var_24_1, var_24_0, var_24_3, var_24_4, var_24_2, -var_24_2)
 
-	recthelper.setWidth(slot0._goGraylineTran, slot11)
-	recthelper.setWidth(slot0._goNormallineTran, slot10)
+	recthelper.setWidth(arg_24_0._goGraylineTran, var_24_6)
+	recthelper.setWidth(arg_24_0._goNormallineTran, var_24_5)
 end
 
-function slot0._calcProgWidth(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if #slot0:_COList() == 0 then
+function var_0_0._calcProgWidth(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5, arg_25_6, arg_25_7)
+	local var_25_0 = arg_25_0:_COList()
+	local var_25_1 = #var_25_0
+
+	if var_25_1 == 0 then
 		return 0, 0
 	end
 
-	slot6 = slot6 or 0
-	slot10 = (slot4 or slot3 / 2) + (slot9 - 1) * (slot5 or slot3 + slot2) + (slot7 or 0)
-	slot12 = 0
+	arg_25_6 = arg_25_6 or 0
+	arg_25_7 = arg_25_7 or 0
+	arg_25_4 = arg_25_4 or arg_25_3 / 2
+	arg_25_5 = arg_25_5 or arg_25_3 + arg_25_2
 
-	for slot16, slot17 in ipairs(slot8) do
-		if slot17.logindaysid <= slot1 then
-			slot11 = 0 + (slot16 == 1 and slot4 or slot5)
-			slot12 = slot18
+	local var_25_2 = arg_25_4 + (var_25_1 - 1) * arg_25_5 + arg_25_7
+	local var_25_3 = 0
+	local var_25_4 = 0
+
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		local var_25_5 = iter_25_1.logindaysid
+		local var_25_6 = iter_25_0 == 1 and arg_25_4 or arg_25_5
+
+		if var_25_5 <= arg_25_1 then
+			var_25_3 = var_25_3 + var_25_6
+			var_25_4 = var_25_5
 		else
-			slot11 = slot11 + GameUtil.remap(slot1, slot12, slot18, 0, slot19)
+			var_25_3 = var_25_3 + GameUtil.remap(arg_25_1, var_25_4, var_25_5, 0, var_25_6)
 
 			break
 		end
 	end
 
-	return math.max(0, slot11 - slot6), slot10
+	return math.max(0, var_25_3 - arg_25_6), var_25_2
 end
 
-function slot0._getContentPosXByIndex(slot0, slot1)
-	return -math.max(0, slot0:_calcHorizontalLayoutPixel(slot1) - 0)
+function var_0_0._getContentPosXByIndex(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:_calcHorizontalLayoutPixel(arg_26_1)
+	local var_26_1 = 0
+
+	return -math.max(0, var_26_0 - var_26_1)
 end
 
-function slot0._refreshContentPosX(slot0, slot1)
-	recthelper.setAnchorX(slot0._goContentTran, slot0:_getContentPosXByIndex(slot1))
+function var_0_0._refreshContentPosX(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:_getContentPosXByIndex(arg_27_1)
+
+	recthelper.setAnchorX(arg_27_0._goContentTran, var_27_0)
 end
 
-function slot0._scrollContentTo(slot0, slot1)
-	uv0.DOAnchorPosX(slot0._goContentTran, slot0:_getContentPosXByIndex(slot1), 1)
+function var_0_0._scrollContentTo(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:_getContentPosXByIndex(arg_28_1)
+
+	var_0_1.DOAnchorPosX(arg_28_0._goContentTran, var_28_0, 1)
 end
 
-function slot0._calcHorizontalLayoutPixel(slot0, slot1)
-	slot2 = uv0
-	slot3 = slot0._hLayoutGroup.spacing
-	slot5 = slot0._hLayoutGroup.padding.left
-	slot8 = math.max(0, recthelper.getWidth(slot0._goContentTran) - slot0:_viewportWidth())
+function var_0_0._calcHorizontalLayoutPixel(arg_29_0, arg_29_1)
+	local var_29_0 = var_0_4
+	local var_29_1 = arg_29_0._hLayoutGroup.spacing
+	local var_29_2 = arg_29_0._hLayoutGroup.padding.left
+	local var_29_3 = arg_29_0:_viewportWidth()
+	local var_29_4 = recthelper.getWidth(arg_29_0._goContentTran)
+	local var_29_5 = math.max(0, var_29_4 - var_29_3)
 
-	if slot1 <= 1 then
+	if arg_29_1 <= 1 then
 		return 0
 	end
 
-	return math.min(slot8, (slot1 - 1) * (slot3 + slot2) + slot5)
+	return math.min(var_29_5, (arg_29_1 - 1) * (var_29_1 + var_29_0) + var_29_2)
 end
 
-function slot0._viewportWidth(slot0)
-	return recthelper.getWidth(slot0._scrollRewardTrans)
+function var_0_0._viewportWidth(arg_30_0)
+	return recthelper.getWidth(arg_30_0._scrollRewardTrans)
 end
 
-function slot0._refresh(slot0)
-	slot1 = slot0:_stagetitle()
-	slot0._txt.text = slot1
+function var_0_0._refresh(arg_31_0)
+	local var_31_0 = arg_31_0:_stagetitle()
 
-	gohelper.setActive(slot0._txtbgGO, not string.nilorempty(slot1))
+	arg_31_0._txt.text = var_31_0
 
-	slot2 = slot0:totalLoginDays()
-	slot0._txtDays.text = uv0(luaLang("lifecirclesignview_txt_Days"), slot2)
+	gohelper.setActive(arg_31_0._txtbgGO, not string.nilorempty(var_31_0))
 
-	slot0:_refreshProgress(slot2, slot0:_maxLogindaysid())
-	recthelper.setWidth(slot0._goContentTran, slot0:_calcHLayoutContentMaxWidth(slot0:_COListCount()))
-	slot0:_refreshItemList()
+	local var_31_1 = arg_31_0:totalLoginDays()
+
+	arg_31_0._txtDays.text = var_0_3(luaLang("lifecirclesignview_txt_Days"), var_31_1)
+
+	arg_31_0:_refreshProgress(var_31_1, arg_31_0:_maxLogindaysid())
+
+	local var_31_2 = arg_31_0:_calcHLayoutContentMaxWidth(arg_31_0:_COListCount())
+
+	recthelper.setWidth(arg_31_0._goContentTran, var_31_2)
+	arg_31_0:_refreshItemList()
 end
 
-function slot0._refreshItemList(slot0)
-	for slot5, slot6 in ipairs(slot0:_COList()) do
-		slot7 = nil
+function var_0_0._refreshItemList(arg_32_0)
+	local var_32_0 = arg_32_0:_COList()
 
-		if slot5 > #slot0._itemList then
-			uv0(slot0._itemList, slot0:_create_LifeCircleSignRewardsItem(slot5, slot0._goContent))
+	for iter_32_0, iter_32_1 in ipairs(var_32_0) do
+		local var_32_1
+
+		if iter_32_0 > #arg_32_0._itemList then
+			var_32_1 = arg_32_0:_create_LifeCircleSignRewardsItem(iter_32_0, arg_32_0._goContent)
+
+			var_0_2(arg_32_0._itemList, var_32_1)
 		else
-			slot7 = slot0._itemList[slot5]
+			var_32_1 = arg_32_0._itemList[iter_32_0]
 		end
 
-		slot7:onUpdateMO(slot6)
-		slot7:setActive(true)
+		var_32_1:onUpdateMO(iter_32_1)
+		var_32_1:setActive(true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._itemList do
-		slot0._itemList[slot5]:setActive(false)
+	for iter_32_2 = #var_32_0 + 1, #arg_32_0._itemList do
+		arg_32_0._itemList[iter_32_2]:setActive(false)
 	end
 end
 
-slot6 = "LifeCircleSignView:_tryClaimAccumulateReward()"
+local var_0_6 = "LifeCircleSignView:_tryClaimAccumulateReward()"
 
-function slot0._tryClaimAccumulateReward(slot0)
+function var_0_0._tryClaimAccumulateReward(arg_33_0)
 	if not LifeCircleController.instance:isClaimableAccumulateReward() then
 		return
 	end
 
-	UIBlockHelper.instance:startBlock(uv0, 5, slot0.viewName)
-	LifeCircleController.instance:sendSignInTotalRewardAllRequest(function (slot0, slot1)
-		UIBlockHelper.instance:endBlock(uv0)
+	UIBlockHelper.instance:startBlock(var_0_6, 5, arg_33_0.viewName)
+	LifeCircleController.instance:sendSignInTotalRewardAllRequest(function(arg_34_0, arg_34_1)
+		UIBlockHelper.instance:endBlock(var_0_6)
 
-		if slot1 ~= 0 then
+		if arg_34_1 ~= 0 then
 			SignInController.instance:sendGetSignInInfoRequestIfUnlock()
 		end
 	end)
 end
 
-return slot0
+return var_0_0

@@ -1,40 +1,42 @@
-module("modules.logic.activitywelfare.rpc.Activity160Rpc", package.seeall)
+﻿module("modules.logic.activitywelfare.rpc.Activity160Rpc", package.seeall)
 
-slot0 = class("Activity160Rpc", BaseRpc)
+local var_0_0 = class("Activity160Rpc", BaseRpc)
 
-function slot0.sendGetAct160InfoRequest(slot0, slot1)
-	slot2 = Activity160Module_pb.Act160GetInfoRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct160InfoRequest(arg_1_0, arg_1_1)
+	local var_1_0 = Activity160Module_pb.Act160GetInfoRequest()
 
-	slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveAct160GetInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity160Model.instance:setInfo(slot2)
+function var_0_0.onReceiveAct160GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		Activity160Model.instance:setInfo(arg_2_2)
 	end
 end
 
-function slot0.onReceiveAct160UpdatePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity160Model.instance:updateInfo(slot2)
+function var_0_0.onReceiveAct160UpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == 0 then
+		Activity160Model.instance:updateInfo(arg_3_2)
 	end
 end
 
-function slot0.sendGetAct160FinishMissionRequest(slot0, slot1, slot2)
-	slot3 = Activity160Module_pb.Act160FinishMissionRequest()
-	slot3.activityId = slot1
-	slot3.id = slot2
+function var_0_0.sendGetAct160FinishMissionRequest(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = Activity160Module_pb.Act160FinishMissionRequest()
 
-	slot0:sendMsg(slot3)
+	var_4_0.activityId = arg_4_1
+	var_4_0.id = arg_4_2
+
+	arg_4_0:sendMsg(var_4_0)
 end
 
-function slot0.onReceiveAct160FinishMissionReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity160Model.instance:finishMissionReply(slot2)
+function var_0_0.onReceiveAct160FinishMissionReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		Activity160Model.instance:finishMissionReply(arg_5_2)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

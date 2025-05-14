@@ -1,20 +1,21 @@
-module("modules.logic.settings.defines.SettingsEnum", package.seeall)
+﻿module("modules.logic.settings.defines.SettingsEnum", package.seeall)
 
-slot0 = _M
-slot0.ShowType = {
+local var_0_0 = _M
+
+var_0_0.ShowType = {
 	LimitedRoleEffect = 2,
 	Push = 4,
 	KeyMap = 3,
 	RecordVideo = 1
 }
-slot0.CategoryList = {
+var_0_0.CategoryList = {
 	{
 		name = "key_binding",
 		subname = "KEYMAP",
 		id = 1,
 		openIds = {},
 		showIds = {
-			slot0.ShowType.KeyMap
+			var_0_0.ShowType.KeyMap
 		}
 	},
 	{
@@ -42,7 +43,7 @@ slot0.CategoryList = {
 		id = 5,
 		openIds = {},
 		showIds = {
-			slot0.ShowType.Push
+			var_0_0.ShowType.Push
 		}
 	},
 	{
@@ -61,16 +62,16 @@ slot0.CategoryList = {
 		id = 7,
 		openIds = {},
 		showIds = {
-			slot0.ShowType.RecordVideo,
-			slot0.ShowType.LimitedRoleEffect
+			var_0_0.ShowType.RecordVideo,
+			var_0_0.ShowType.LimitedRoleEffect
 		}
 	}
 }
-slot0.PushType = {
+var_0_0.PushType = {
 	Room_Produce_Upper_Limit = 2,
 	Reactivation = 1,
 	Allow_Recommend = 3
 }
-slot0.CharVoiceLangPrefsKey = "CharVoiceLang_"
+var_0_0.CharVoiceLangPrefsKey = "CharVoiceLang_"
 
-return slot0
+return var_0_0

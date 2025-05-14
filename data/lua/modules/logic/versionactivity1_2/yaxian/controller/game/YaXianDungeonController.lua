@@ -1,31 +1,38 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianDungeonController", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianDungeonController", package.seeall)
 
-slot0 = class("YaXianDungeonController", BaseController)
+local var_0_0 = class("YaXianDungeonController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.enterFight(slot0, slot1)
-	slot2 = YaXianGameEnum.EpisodeId
+function var_0_0.enterFight(arg_3_0, arg_3_1)
+	local var_3_0 = YaXianGameEnum.EpisodeId
+
 	DungeonModel.instance.versionActivityChapterType = DungeonEnum.ChapterType.YaXian
 
-	DungeonFightController.instance:enterFightByBattleId(DungeonConfig.instance:getEpisodeCO(slot2).chapterId, slot2, slot1)
+	local var_3_1 = DungeonConfig.instance:getEpisodeCO(var_3_0)
+
+	DungeonFightController.instance:enterFightByBattleId(var_3_1.chapterId, var_3_0, arg_3_1)
 end
 
-function slot0.openGameAfterFight(slot0)
-	if not YaXianModel.instance.currentMapMo then
+function var_0_0.openGameAfterFight(arg_4_0)
+	local var_4_0 = YaXianModel.instance.currentMapMo
+
+	if not var_4_0 then
 		logError("not playing map data")
 
 		return
 	end
 
-	YaXianGameController.instance:initMapByMapMo(slot1)
+	YaXianGameController.instance:initMapByMapMo(var_4_0)
 	ViewMgr.instance:openView(ViewName.YaXianGameView)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

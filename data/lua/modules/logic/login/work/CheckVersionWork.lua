@@ -1,37 +1,37 @@
-module("modules.logic.login.work.CheckVersionWork", package.seeall)
+﻿module("modules.logic.login.work.CheckVersionWork", package.seeall)
 
-slot0 = class("CheckVersionWork", BaseWork)
-slot1 = 5
-slot2 = nil
+local var_0_0 = class("CheckVersionWork", BaseWork)
+local var_0_1 = 5
+local var_0_2
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._tryCallBack = slot1
-	slot0._tryCallBackObj = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._tryCallBack = arg_1_1
+	arg_1_0._tryCallBackObj = arg_1_2
 end
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
 	if GameResMgr.IsFromEditorDir or not GameConfig.CanHotUpdate then
-		slot0:onDone(true)
-	elseif uv0 and Time.time - uv0 < uv1 then
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
+	elseif var_0_2 and Time.time - var_0_2 < var_0_1 then
+		arg_2_0:onDone(true)
 	else
-		uv0 = Time.time
-		slot0._maxRetryCount = 2
-		slot0._curRetryCount = 0
-		slot0._failCount = 0
+		var_0_2 = Time.time
+		arg_2_0._maxRetryCount = 2
+		arg_2_0._curRetryCount = 0
+		arg_2_0._failCount = 0
 
-		slot0:_start(slot0._onCheckVersion, slot0)
+		arg_2_0:_start(arg_2_0._onCheckVersion, arg_2_0)
 	end
 end
 
-function slot0._onCheckVersion(slot0, slot1, slot2, slot3, slot4)
+function var_0_0._onCheckVersion(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 	UIBlockMgr.instance:endBlock("LoginCheckVersion")
 
-	if BootNativeUtil.isIOS() and slot2 or SLFramework.GameUpdate.HotUpdateInfoMgr.IsLatestVersion then
-		slot0:onDone(true)
+	if BootNativeUtil.isIOS() and arg_3_2 or SLFramework.GameUpdate.HotUpdateInfoMgr.IsLatestVersion then
+		arg_3_0:onDone(true)
 	else
-		slot0:onDone(false)
-		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.NewGameVersion, MsgBoxEnum.BoxType.Yes, function ()
+		arg_3_0:onDone(false)
+		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.NewGameVersion, MsgBoxEnum.BoxType.Yes, function()
 			if BootNativeUtil.isAndroid() then
 				if SDKMgr.restartGame ~= nil then
 					SDKMgr.instance:restartGame()
@@ -45,113 +45,117 @@ function slot0._onCheckVersion(slot0, slot1, slot2, slot3, slot4)
 	end
 end
 
-function slot0._start(slot0, slot1, slot2)
+function var_0_0._start(arg_5_0, arg_5_1, arg_5_2)
 	UIBlockMgr.instance:startBlock("LoginCheckVersion")
 
-	slot0._eventMgr = SLFramework.GameUpdate.HotUpdateEvent
-	slot0._eventMgrInst = SLFramework.GameUpdate.HotUpdateEvent.Instance
+	arg_5_0._eventMgr = SLFramework.GameUpdate.HotUpdateEvent
+	arg_5_0._eventMgrInst = SLFramework.GameUpdate.HotUpdateEvent.Instance
 
-	if slot1 then
-		slot0._finishCb = slot1
-		slot0._finishObj = slot2
+	if arg_5_1 then
+		arg_5_0._finishCb = arg_5_1
+		arg_5_0._finishObj = arg_5_2
 
-		slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.GetRemoteVersionFail, slot0._onGetRemoteVersionFail, slot0)
-		slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.GetRemoteVersionSuccess, slot0._onGetRemoteVersionSuccess, slot0)
+		arg_5_0._eventMgrInst:AddLuaLisenter(arg_5_0._eventMgr.GetRemoteVersionFail, arg_5_0._onGetRemoteVersionFail, arg_5_0)
+		arg_5_0._eventMgrInst:AddLuaLisenter(arg_5_0._eventMgr.GetRemoteVersionSuccess, arg_5_0._onGetRemoteVersionSuccess, arg_5_0)
 	end
 
-	slot3, slot4 = GameUrlConfig.getHotUpdateUrl()
-	slot5 = LoginModel.instance:getUseBackup() and slot4 or slot3
-	slot6 = SDKMgr.instance:getGameId()
-	slot7 = SLFramework.FrameworkSettings.CurPlatform
+	local var_5_0, var_5_1 = GameUrlConfig.getHotUpdateUrl()
+	local var_5_2 = LoginModel.instance:getUseBackup() and var_5_1 or var_5_0
+	local var_5_3 = SDKMgr.instance:getGameId()
+	local var_5_4 = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot7 = 0
+		var_5_4 = 0
 	end
 
-	slot8 = SDKMgr.instance:getChannelId()
-	slot9 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
-	slot10 = tonumber(BootNativeUtil.getAppVersion())
-	slot11 = BootNativeUtil.getPackageName()
-	slot12 = SDKMgr.instance:getSubChannelId()
+	local var_5_5 = SDKMgr.instance:getChannelId()
+	local var_5_6 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
+	local var_5_7 = tonumber(BootNativeUtil.getAppVersion())
+	local var_5_8 = BootNativeUtil.getPackageName()
+	local var_5_9 = SDKMgr.instance:getSubChannelId()
 
-	logNormal("subChannelId = " .. slot12)
-	logNormal("domain = " .. slot5 .. " gameId = " .. slot6 .. " osType = " .. slot7 .. " channelId = " .. slot8 .. " resVersion = " .. slot9 .. " appVersion = " .. slot10 .. " packageName = " .. slot11 .. " subChannelId = " .. slot12)
-	slot0._eventMgrInst:CheckVersion(slot5, slot6, slot7, slot8, GameChannelConfig.getServerType(), slot9, slot10, slot11, slot12)
+	logNormal("subChannelId = " .. var_5_9)
+	logNormal("domain = " .. var_5_2 .. " gameId = " .. var_5_3 .. " osType = " .. var_5_4 .. " channelId = " .. var_5_5 .. " resVersion = " .. var_5_6 .. " appVersion = " .. var_5_7 .. " packageName = " .. var_5_8 .. " subChannelId = " .. var_5_9)
+
+	local var_5_10 = GameChannelConfig.getServerType()
+
+	arg_5_0._eventMgrInst:CheckVersion(var_5_2, var_5_3, var_5_4, var_5_5, var_5_10, var_5_6, var_5_7, var_5_8, var_5_9)
 end
 
-function slot0._onRetryCountOver(slot0, slot1)
+function var_0_0._onRetryCountOver(arg_6_0, arg_6_1)
 	UIBlockMgr.instance:endBlock("LoginCheckVersion")
-	MessageBoxController.instance:showSystemMsgBoxAndSetBtn(MessageBoxIdDefine.CheckVersionFail, MsgBoxEnum.BoxType.Yes_No, booterLang("retry"), "retry", booterLang("exit"), "exit", slot0._retry, slot0._quitGame, nil, slot0, slot0, nil, slot1)
+	MessageBoxController.instance:showSystemMsgBoxAndSetBtn(MessageBoxIdDefine.CheckVersionFail, MsgBoxEnum.BoxType.Yes_No, booterLang("retry"), "retry", booterLang("exit"), "exit", arg_6_0._retry, arg_6_0._quitGame, nil, arg_6_0, arg_6_0, nil, arg_6_1)
 end
 
-function slot0._quitGame(slot0)
-	logNormal("重试超过了 " .. slot0._maxRetryCount .. " 次，点击了退出按钮！")
+function var_0_0._quitGame(arg_7_0)
+	logNormal("重试超过了 " .. arg_7_0._maxRetryCount .. " 次，点击了退出按钮！")
 	ProjBooter.instance:quitGame()
 end
 
-function slot0._retry(slot0)
-	logNormal("重试超过了 " .. slot0._maxRetryCount .. " 次，点击了重试按钮！")
+function var_0_0._retry(arg_8_0)
+	logNormal("重试超过了 " .. arg_8_0._maxRetryCount .. " 次，点击了重试按钮！")
 
-	if slot0._tryCallBack then
-		slot0._tryCallBack(slot0._tryCallBackObj)
+	if arg_8_0._tryCallBack then
+		arg_8_0._tryCallBack(arg_8_0._tryCallBackObj)
 	else
-		slot0:_start()
+		arg_8_0:_start()
 	end
 end
 
-function slot0._onGetRemoteVersionSuccess(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0._failCount > 0 then
-		slot6, slot7 = GameUrlConfig.getHotUpdateUrl()
+function var_0_0._onGetRemoteVersionSuccess(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+	if arg_9_0._failCount > 0 then
+		local var_9_0, var_9_1 = GameUrlConfig.getHotUpdateUrl()
+		local var_9_2 = LoginModel.instance:getUseBackup() and var_9_1 or var_9_0
 
 		StatController.instance:track(StatEnum.EventName.EventHostSwitch, {
 			[StatEnum.EventProperties.GameScene] = "scene_hotupdate_versioncheck",
-			[StatEnum.EventProperties.CurrentHost] = LoginModel.instance:getUseBackup() and slot7 or slot6,
-			[StatEnum.EventProperties.SwitchCount] = slot0._failCount
+			[StatEnum.EventProperties.CurrentHost] = var_9_2,
+			[StatEnum.EventProperties.SwitchCount] = arg_9_0._failCount
 		})
 
-		slot0._failCount = 0
+		arg_9_0._failCount = 0
 	end
 
-	logNormal("版本检查 _onGetRemoteVersionSuccess version = " .. slot1 .. " inReview = " .. tostring(slot2) .. " loginUrl = " .. slot3 .. " envType = " .. slot4)
-	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.success, slot5)
+	logNormal("版本检查 _onGetRemoteVersionSuccess version = " .. arg_9_1 .. " inReview = " .. tostring(arg_9_2) .. " loginUrl = " .. arg_9_3 .. " envType = " .. arg_9_4)
+	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.success, arg_9_5)
 
-	slot0._isInReview = slot2
+	arg_9_0._isInReview = arg_9_2
 
-	if slot0._finishCb then
-		slot0._eventMgrInst:ClearLuaListener()
-		slot0._finishCb(slot0._finishObj, slot1, slot2, slot3, slot4)
+	if arg_9_0._finishCb then
+		arg_9_0._eventMgrInst:ClearLuaListener()
+		arg_9_0._finishCb(arg_9_0._finishObj, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 
-		slot0._finishCb = nil
-		slot0._finishObj = nil
+		arg_9_0._finishCb = nil
+		arg_9_0._finishObj = nil
 	end
 end
 
-function slot0._onGetRemoteVersionFail(slot0, slot1, slot2, slot3)
-	logNormal("版本检查 _onGetRemoteVersionFail errorInfo = " .. slot1)
-	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.fail, slot3, slot2, slot1)
+function var_0_0._onGetRemoteVersionFail(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	logNormal("版本检查 _onGetRemoteVersionFail errorInfo = " .. arg_10_1)
+	SDKDataTrackMgr.instance:trackGetRemoteVersionEvent(SDKDataTrackMgr.RequestResult.fail, arg_10_3, arg_10_2, arg_10_1)
 	LoginModel.instance:inverseUseBackup()
 
-	slot0._failCount = slot0._failCount and slot0._failCount + 1 or 1
+	arg_10_0._failCount = arg_10_0._failCount and arg_10_0._failCount + 1 or 1
 
-	if slot0._maxRetryCount <= slot0._curRetryCount then
-		slot0._curRetryCount = 0
+	if arg_10_0._curRetryCount >= arg_10_0._maxRetryCount then
+		arg_10_0._curRetryCount = 0
 
-		slot0:_onRetryCountOver(slot1)
+		arg_10_0:_onRetryCountOver(arg_10_1)
 		UIBlockMgrExtend.instance:setTips()
 	else
-		slot0._curRetryCount = slot0._curRetryCount + 1
+		arg_10_0._curRetryCount = arg_10_0._curRetryCount + 1
 
-		slot0:_start()
-		UIBlockMgrExtend.instance:setTips(LoginModel.instance:getFailCountBlockStr(slot0._curRetryCount))
+		arg_10_0:_start()
+		UIBlockMgrExtend.instance:setTips(LoginModel.instance:getFailCountBlockStr(arg_10_0._curRetryCount))
 	end
 end
 
-function slot0.clearWork(slot0)
-	if slot0._eventMgrInst then
-		slot0._eventMgrInst:ClearLuaListener()
+function var_0_0.clearWork(arg_11_0)
+	if arg_11_0._eventMgrInst then
+		arg_11_0._eventMgrInst:ClearLuaListener()
 	end
 
 	UIBlockMgr.instance:endBlock("LoginCheckVersion")
 end
 
-return slot0
+return var_0_0

@@ -1,259 +1,284 @@
-module("modules.logic.rouge.view.RougeTalentTreeBranchView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeTalentTreeBranchView", package.seeall)
 
-slot0 = class("RougeTalentTreeBranchView", BaseView)
+local var_0_0 = class("RougeTalentTreeBranchView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._tabIndex = slot0.viewContainer:getTabView()._curTabId
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btnempty = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_empty")
-	slot0._treenodeList = {}
-	slot0._treeLightList = {}
-	slot0._curSelectId = nil
-	slot0._orderToDelayTime = {}
-	slot0._flexibleTime = 0.3
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._tabIndex = arg_1_0.viewContainer:getTabView()._curTabId
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btnempty = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_empty")
+	arg_1_0._treenodeList = {}
+	arg_1_0._treeLightList = {}
+	arg_1_0._curSelectId = nil
+	arg_1_0._orderToDelayTime = {}
+	arg_1_0._flexibleTime = 0.3
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._refreshUI, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, slot0._SelectItem, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnCancelTreeNode, slot0.cancelSelectNode, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.onSwitchTab, slot0._onSwitchTab, slot0)
-	slot0._btnempty:AddClickListener(slot0._btnemptyOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_2_0._refreshUI, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, arg_2_0._SelectItem, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnCancelTreeNode, arg_2_0.cancelSelectNode, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.onSwitchTab, arg_2_0._onSwitchTab, arg_2_0)
+	arg_2_0._btnempty:AddClickListener(arg_2_0._btnemptyOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._refreshUI, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, slot0._SelectItem, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnCancelTreeNode, slot0.cancelSelectNode, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.onSwitchTab, slot0._onSwitchTab, slot0)
-	slot0._btnempty:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_3_0._refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, arg_3_0._SelectItem, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnCancelTreeNode, arg_3_0.cancelSelectNode, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.onSwitchTab, arg_3_0._onSwitchTab, arg_3_0)
+	arg_3_0._btnempty:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._btnemptyOnClick(slot0)
-	RougeController.instance:dispatchEvent(RougeEvent.OnClickEmpty, slot0._tabIndex)
+function var_0_0._btnemptyOnClick(arg_5_0)
+	RougeController.instance:dispatchEvent(RougeEvent.OnClickEmpty, arg_5_0._tabIndex)
 end
 
-function slot0._refreshUI(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._treenodeList) do
-		if slot0._curSelectId == slot6:getID() then
-			if slot1 and slot1 == slot6:getID() then
-				slot6:refreshItem(false, slot1)
+function var_0_0._refreshUI(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._treenodeList) do
+		if arg_6_0._curSelectId == iter_6_1:getID() then
+			if arg_6_1 and arg_6_1 == iter_6_1:getID() then
+				iter_6_1:refreshItem(false, arg_6_1)
 			else
-				slot6:refreshItem(true)
+				iter_6_1:refreshItem(true)
 			end
 		else
-			slot6:refreshItem(false)
+			iter_6_1:refreshItem(false)
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0._treeLightList) do
-		slot0:_refreshLight(slot6)
+	for iter_6_2, iter_6_3 in ipairs(arg_6_0._treeLightList) do
+		arg_6_0:_refreshLight(iter_6_3)
 	end
 
-	if slot0._canplayAudio then
+	if arg_6_0._canplayAudio then
 		AudioMgr.instance:trigger(AudioEnum.UI.LightTalentBranch)
 
-		slot0._canplayAudio = false
+		arg_6_0._canplayAudio = false
 	end
 end
 
-function slot0._onSwitchTab(slot0, slot1)
-	if not (slot0._tabIndex == slot1) then
-		gohelper.setActive(slot0.viewGO, false)
+function var_0_0._onSwitchTab(arg_7_0, arg_7_1)
+	if not (arg_7_0._tabIndex == arg_7_1) then
+		gohelper.setActive(arg_7_0.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_7_0.viewGO, true)
 
-	for slot6, slot7 in ipairs(slot0._treeLightList) do
-		if slot7.isPlayAnim then
-			slot7.isPlayAnim = false
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._treeLightList) do
+		if iter_7_1.isPlayAnim then
+			iter_7_1.isPlayAnim = false
 
-			gohelper.setActive(slot7.go, false)
+			gohelper.setActive(iter_7_1.go, false)
 		end
 
-		slot0:_refreshLight(slot7)
+		arg_7_0:_refreshLight(iter_7_1)
 	end
 
-	if slot0._canplayAudio then
+	if arg_7_0._canplayAudio then
 		AudioMgr.instance:trigger(AudioEnum.UI.LightTalentBranch)
 
-		slot0._canplayAudio = false
+		arg_7_0._canplayAudio = false
 	end
 end
 
-function slot0._SelectItem(slot0, slot1)
-	if not slot1 then
+function var_0_0._SelectItem(arg_8_0, arg_8_1)
+	if not arg_8_1 then
 		return
 	end
 
-	slot3 = slot1.id
+	local var_8_0 = arg_8_1.talent
+	local var_8_1 = arg_8_1.id
 
-	for slot7, slot8 in ipairs(slot0._treenodeList) do
-		if slot0._tabIndex == slot1.talent and slot8:getID() == slot3 then
-			if not slot0._curSelectId then
-				slot8:refreshItem(true)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._treenodeList) do
+		if arg_8_0._tabIndex == var_8_0 and iter_8_1:getID() == var_8_1 then
+			if not arg_8_0._curSelectId then
+				iter_8_1:refreshItem(true)
 
-				slot0._curSelectId = slot3
-			elseif slot0._currentSelectId ~= slot3 then
-				slot8:refreshItem(true)
+				arg_8_0._curSelectId = var_8_1
+			elseif arg_8_0._currentSelectId ~= var_8_1 then
+				iter_8_1:refreshItem(true)
 
-				slot0._curSelectId = slot3
+				arg_8_0._curSelectId = var_8_1
 			end
 		else
-			slot8:refreshItem(false)
+			iter_8_1:refreshItem(false)
 		end
 	end
 end
 
-function slot0.cancelSelectNode(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._treenodeList) do
-		if slot1 == slot6:getID() then
-			slot6:refreshItem(false)
+function var_0_0.cancelSelectNode(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._treenodeList) do
+		if arg_9_1 == iter_9_1:getID() then
+			iter_9_1:refreshItem(false)
 
-			slot0._curSelectId = nil
+			arg_9_0._curSelectId = nil
 
 			break
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	if not RougeTalentModel.instance:checkIsCurrentSelectView(slot0._tabIndex) then
+function var_0_0.onOpen(arg_10_0)
+	if not RougeTalentModel.instance:checkIsCurrentSelectView(arg_10_0._tabIndex) then
 		return
 	end
 
-	slot0._config = RougeTalentConfig.instance:getBranchConfigListByTalent(slot0._tabIndex)
-	slot0._branchconfig = RougeTalentConfig.instance:getBranchLightConfigByTalent(slot0._tabIndex)
+	arg_10_0._config = RougeTalentConfig.instance:getBranchConfigListByTalent(arg_10_0._tabIndex)
+	arg_10_0._branchconfig = RougeTalentConfig.instance:getBranchLightConfigByTalent(arg_10_0._tabIndex)
 
-	if not slot0._branchconfig then
-		logError("genuis_branch_light " .. slot0._tabIndex .. " not config!!!!")
+	if not arg_10_0._branchconfig then
+		logError("genuis_branch_light " .. arg_10_0._tabIndex .. " not config!!!!")
 	end
 
-	slot0:_inititem()
-	slot0:_initLight()
+	arg_10_0:_inititem()
+	arg_10_0:_initLight()
 end
 
-function slot0._inititem(slot0)
-	for slot4, slot5 in ipairs(slot0._config) do
-		if not slot0._treenodeList[slot4] then
-			slot6 = slot0:getUserDataTb_()
+function var_0_0._inititem(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._config) do
+		local var_11_0 = arg_11_0._treenodeList[iter_11_0]
 
-			if slot0.viewContainer:getPoolView() then
-				slot6 = slot9:getIcon(gohelper.findChild(slot0.viewGO, "item/#go_item" .. string.gsub(slot5.pos, "#", "_")))
+		if not var_11_0 then
+			var_11_0 = arg_11_0:getUserDataTb_()
+
+			local var_11_1 = string.gsub(iter_11_1.pos, "#", "_")
+			local var_11_2 = gohelper.findChild(arg_11_0.viewGO, "item/#go_item" .. var_11_1)
+			local var_11_3 = arg_11_0.viewContainer:getPoolView()
+
+			if var_11_3 then
+				var_11_0 = var_11_3:getIcon(var_11_2)
 			end
 
-			slot0._treenodeList[slot4] = slot6
+			arg_11_0._treenodeList[iter_11_0] = var_11_0
 		end
 
-		slot6:initcomp(slot5, slot0._tabIndex)
-		slot6:refreshItem()
+		var_11_0:initcomp(iter_11_1, arg_11_0._tabIndex)
+		var_11_0:refreshItem()
 	end
 end
 
-function slot0._initLight(slot0)
-	slot0._canplayAudio = false
+function var_0_0._initLight(arg_12_0)
+	arg_12_0._canplayAudio = false
 
-	for slot4, slot5 in ipairs(slot0._branchconfig) do
-		if not slot0._treeLightList[slot4] then
-			slot6 = slot0:getUserDataTb_()
-			slot8 = gohelper.findChild(slot0.viewGO, "light/" .. slot5.lightname):GetComponent(typeof(UnityEngine.Animator))
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._branchconfig) do
+		local var_12_0 = arg_12_0._treeLightList[iter_12_0]
 
-			if slot5.pos then
-				slot9 = {}
+		if not var_12_0 then
+			var_12_0 = arg_12_0:getUserDataTb_()
 
-				if string.find(slot5.pos, "|") then
-					for slot14, slot15 in ipairs(string.split(slot5.pos, "|")) do
-						table.insert(slot9, string.splitToNumber(slot15, "#"))
+			local var_12_1 = gohelper.findChild(arg_12_0.viewGO, "light/" .. iter_12_1.lightname)
+			local var_12_2 = var_12_1:GetComponent(typeof(UnityEngine.Animator))
+
+			if iter_12_1.pos then
+				local var_12_3 = {}
+
+				if string.find(iter_12_1.pos, "|") then
+					local var_12_4 = string.split(iter_12_1.pos, "|")
+
+					for iter_12_2, iter_12_3 in ipairs(var_12_4) do
+						local var_12_5 = string.splitToNumber(iter_12_3, "#")
+
+						table.insert(var_12_3, var_12_5)
 					end
 				else
-					table.insert(slot9, string.splitToNumber(slot5.pos, "#"))
+					local var_12_6 = string.splitToNumber(iter_12_1.pos, "#")
+
+					table.insert(var_12_3, var_12_6)
 				end
 
-				if slot9 then
-					slot6.posList = slot9
+				if var_12_3 then
+					var_12_0.posList = var_12_3
 				end
 			end
 
-			slot6.index = slot4
-			slot6.name = slot5.lightname
-			slot6.go = slot7
+			var_12_0.index = iter_12_0
+			var_12_0.name = iter_12_1.lightname
+			var_12_0.go = var_12_1
 
-			gohelper.setActive(slot6.go, false)
+			gohelper.setActive(var_12_0.go, false)
 
-			slot6.animator = slot8
-			slot6.talent = slot5.talent
-			slot6.order = slot5.order
-			slot6.allLight = slot0:_checkCanLight(slot6)
-			slot6.isPlayAnim = false
+			var_12_0.animator = var_12_2
+			var_12_0.talent = iter_12_1.talent
+			var_12_0.order = iter_12_1.order
+			var_12_0.allLight = arg_12_0:_checkCanLight(var_12_0)
+			var_12_0.isPlayAnim = false
 
-			for slot13 = 0, slot6.animator.runtimeAnimatorController.animationClips.Length - 1 do
-				if slot9[slot13].name:find("_light$") then
-					slot6.animtime = slot9[slot13].length
+			local var_12_7 = var_12_0.animator.runtimeAnimatorController.animationClips
+
+			for iter_12_4 = 0, var_12_7.Length - 1 do
+				if var_12_7[iter_12_4].name:find("_light$") then
+					var_12_0.animtime = var_12_7[iter_12_4].length
 				end
 			end
 		end
 
-		table.insert(slot0._treeLightList, slot6)
-		slot0:_refreshLight(slot6)
+		table.insert(arg_12_0._treeLightList, var_12_0)
+		arg_12_0:_refreshLight(var_12_0)
 	end
 
-	if slot0._canplayAudio then
+	if arg_12_0._canplayAudio then
 		AudioMgr.instance:trigger(AudioEnum.UI.LightTalentBranch)
 
-		slot0._canplayAudio = false
+		arg_12_0._canplayAudio = false
 	end
 end
 
-function slot0._getDelayTime(slot0, slot1)
-	slot2 = 0
+function var_0_0._getDelayTime(arg_13_0, arg_13_1)
+	local var_13_0 = 0
+	local var_13_1 = arg_13_1.order
 
-	if slot0._orderToDelayTime[slot1.order] then
-		return slot0._orderToDelayTime[slot3]
+	if arg_13_0._orderToDelayTime[var_13_1] then
+		return arg_13_0._orderToDelayTime[var_13_1]
 	end
 
-	slot4 = nil
+	local var_13_2
 
-	for slot8 = 1, #slot0._treeLightList do
-		if slot8 > 1 and slot3 > 1 then
-			slot4 = slot0._treeLightList[slot8 - 1]
+	for iter_13_0 = 1, #arg_13_0._treeLightList do
+		if iter_13_0 > 1 and var_13_1 > 1 then
+			local var_13_3 = arg_13_0._treeLightList[iter_13_0 - 1]
 
-			if slot0._orderToDelayTime[slot3 - 1] then
-				slot2 = slot0._orderToDelayTime[slot3 - 1] + slot1.animtime - slot0._flexibleTime
+			if arg_13_0._orderToDelayTime[var_13_1 - 1] then
+				var_13_0 = arg_13_0._orderToDelayTime[var_13_1 - 1] + arg_13_1.animtime - arg_13_0._flexibleTime
 
 				break
 			else
-				slot2 = slot1.animtime - slot0._flexibleTime
+				var_13_0 = arg_13_1.animtime - arg_13_0._flexibleTime
 
 				break
 			end
 		end
 	end
 
-	if slot2 > 0 then
-		slot0._orderToDelayTime[slot3] = slot2
+	if var_13_0 > 0 then
+		arg_13_0._orderToDelayTime[var_13_1] = var_13_0
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0._checkCanLight(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1.posList) do
-		for slot12, slot13 in ipairs(slot7) do
-			if RougeTalentModel.instance:checkNodeLight(slot13) then
-				slot8 = 0 + 1
+function var_0_0._checkCanLight(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.posList
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_1 = 0
+
+		for iter_14_2, iter_14_3 in ipairs(iter_14_1) do
+			if RougeTalentModel.instance:checkNodeLight(iter_14_3) then
+				var_14_1 = var_14_1 + 1
 			end
 		end
 
-		if slot8 == #slot7 then
+		if var_14_1 == #iter_14_1 then
 			return true
 		end
 	end
@@ -261,75 +286,82 @@ function slot0._checkCanLight(slot0, slot1)
 	return false
 end
 
-function slot0.onClose(slot0)
-	slot0:recycleTreeNode()
+function var_0_0.onClose(arg_15_0)
+	arg_15_0:recycleTreeNode()
 end
 
-function slot0.recycleTreeNode(slot0)
-	if slot0._treenodeList then
-		for slot5, slot6 in ipairs(slot0._treenodeList) do
-			slot0.viewContainer:getPoolView():recycleIcon(slot0._treenodeList[slot5])
+function var_0_0.recycleTreeNode(arg_16_0)
+	if arg_16_0._treenodeList then
+		local var_16_0 = arg_16_0.viewContainer:getPoolView()
 
-			slot0._treenodeList[slot5] = nil
+		for iter_16_0, iter_16_1 in ipairs(arg_16_0._treenodeList) do
+			var_16_0:recycleIcon(arg_16_0._treenodeList[iter_16_0])
+
+			arg_16_0._treenodeList[iter_16_0] = nil
 		end
 	end
 end
 
-function slot0._refreshLight(slot0, slot1)
-	slot2 = slot0:_getDelayTime(slot1)
+function var_0_0._refreshLight(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:_getDelayTime(arg_17_1)
+	local var_17_1 = arg_17_0:_checkCanLight(arg_17_1)
 
-	function slot0.playfunc(slot0)
-		if not uv0.viewContainer or not uv0.viewContainer._isVisible then
+	function arg_17_0.playfunc(arg_18_0)
+		if not arg_17_0.viewContainer or not arg_17_0.viewContainer._isVisible then
 			return
 		end
 
-		TaskDispatcher.cancelTask(uv0.playfunc, slot0)
-		gohelper.setActive(slot0.go, true)
-		slot0.animator:Update(0)
-		slot0.animator:Play("light", 0, 0)
+		TaskDispatcher.cancelTask(arg_17_0.playfunc, arg_18_0)
+		gohelper.setActive(arg_18_0.go, true)
+		arg_18_0.animator:Update(0)
+		arg_18_0.animator:Play("light", 0, 0)
 
-		slot0.isPlayAnim = true
+		arg_18_0.isPlayAnim = true
 	end
 
-	if not slot0:_checkCanLight(slot1) then
-		gohelper.setActive(slot1.go, false)
-	elseif not slot1.isPlayAnim then
-		if slot1.allLight then
-			TaskDispatcher.runDelay(slot0.playfunc, slot1, slot2)
+	if not var_17_1 then
+		gohelper.setActive(arg_17_1.go, false)
+	elseif not arg_17_1.isPlayAnim then
+		if arg_17_1.allLight then
+			TaskDispatcher.runDelay(arg_17_0.playfunc, arg_17_1, var_17_0)
 
-			slot0._canplayAudio = true
+			arg_17_0._canplayAudio = true
 		else
-			TaskDispatcher.runDelay(slot0.playfunc, slot1, slot0:_checkBeforeBranchAllLightReturnDelayTime(slot1))
+			local var_17_2 = arg_17_0:_checkBeforeBranchAllLightReturnDelayTime(arg_17_1)
 
-			slot1.allLight = true
-			slot0._canplayAudio = true
+			TaskDispatcher.runDelay(arg_17_0.playfunc, arg_17_1, var_17_2)
+
+			arg_17_1.allLight = true
+			arg_17_0._canplayAudio = true
 		end
 	end
 end
 
-function slot0._checkBeforeBranchAllLightReturnDelayTime(slot0, slot1)
-	slot2 = 0
-	slot3 = slot1
+function var_0_0._checkBeforeBranchAllLightReturnDelayTime(arg_19_0, arg_19_1)
+	local var_19_0 = 0
+	local var_19_1 = arg_19_1
 
-	while slot3.index > 1 and slot3.order > 1 do
-		slot2 = slot2 + slot0:getBeforeLightAniTime(slot3)
-		slot3 = slot0._treeLightList[slot3.index - 1]
+	while var_19_1.index > 1 and var_19_1.order > 1 do
+		var_19_0 = var_19_0 + arg_19_0:getBeforeLightAniTime(var_19_1)
+		var_19_1 = arg_19_0._treeLightList[var_19_1.index - 1]
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.getBeforeLightAniTime(slot0, slot1)
-	slot2 = 0
+function var_0_0.getBeforeLightAniTime(arg_20_0, arg_20_1)
+	local var_20_0 = 0
+	local var_20_1 = arg_20_0._treeLightList[arg_20_1.index - 1]
 
-	if slot0._treeLightList[slot1.index - 1].allLight and not slot3.isPlayAnim then
-		slot2 = slot1.animtime - slot0._flexibleTime
+	if var_20_1.allLight and not var_20_1.isPlayAnim then
+		var_20_0 = arg_20_1.animtime - arg_20_0._flexibleTime
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	return
 end
 
-return slot0
+return var_0_0

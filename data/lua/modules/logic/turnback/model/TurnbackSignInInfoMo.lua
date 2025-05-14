@@ -1,23 +1,23 @@
-module("modules.logic.turnback.model.TurnbackSignInInfoMo", package.seeall)
+﻿module("modules.logic.turnback.model.TurnbackSignInInfoMo", package.seeall)
 
-slot0 = pureTable("TurnbackSignInInfoMo")
+local var_0_0 = pureTable("TurnbackSignInInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.turnbackId = 0
-	slot0.id = 0
-	slot0.state = 0
-	slot0.config = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.turnbackId = 0
+	arg_1_0.id = 0
+	arg_1_0.state = 0
+	arg_1_0.config = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.turnbackId = slot2
-	slot0.id = slot1.id
-	slot0.state = slot1.state
-	slot0.config = TurnbackConfig.instance:getTurnbackSignInDayCo(slot0.turnbackId, slot0.id)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.turnbackId = arg_2_2
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.state = arg_2_1.state
+	arg_2_0.config = TurnbackConfig.instance:getTurnbackSignInDayCo(arg_2_0.turnbackId, arg_2_0.id)
 end
 
-function slot0.updateState(slot0, slot1)
-	slot0.state = slot1
+function var_0_0.updateState(arg_3_0, arg_3_1)
+	arg_3_0.state = arg_3_1
 end
 
-return slot0
+return var_0_0

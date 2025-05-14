@@ -1,110 +1,125 @@
-module("modules.logic.room.model.map.RoomCritterModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomCritterModel", package.seeall)
 
-slot0 = class("RoomCritterModel", BaseModel)
+local var_0_0 = class("RoomCritterModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0:clearBuildingCritterData()
+function var_0_0._clearData(arg_3_0)
+	arg_3_0:clearBuildingCritterData()
 end
 
-function slot0.clearBuildingCritterData(slot0)
-	slot0._buildingCritterList = {}
-	slot0._buildingCritterDict = {}
+function var_0_0.clearBuildingCritterData(arg_4_0)
+	arg_4_0._buildingCritterList = {}
+	arg_4_0._buildingCritterDict = {}
 end
 
-function slot0.initCititer(slot0, slot1)
-	slot0:clear()
+function var_0_0.initCititer(arg_5_0, arg_5_1)
+	arg_5_0:clear()
 
-	slot2 = {}
+	local var_5_0 = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot8 = RoomCritterMO.New()
+	if arg_5_1 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+			local var_5_1 = RoomCritterMO.New()
 
-			slot8:init(slot7)
-			table.insert(slot2, slot8)
+			var_5_1:init(iter_5_1)
+			table.insert(var_5_0, var_5_1)
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_5_0:setList(var_5_0)
 end
 
-function slot0.initStayBuildingCritters(slot0)
-	slot0:clearBuildingCritterData()
+function var_0_0.initStayBuildingCritters(arg_6_0)
+	arg_6_0:clearBuildingCritterData()
 
-	for slot5, slot6 in ipairs(ManufactureModel.instance:getAllManufactureMOList()) do
-		if slot6:getSlot2CritterDict() then
-			for slot12, slot13 in pairs(slot7) do
-				slot14 = RoomCritterMO.New()
+	local var_6_0 = ManufactureModel.instance:getAllManufactureMOList()
 
-				slot14:initWithBuildingValue(slot13, slot6:getBuildingUid(), slot12)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = iter_6_1:getSlot2CritterDict()
 
-				slot0._buildingCritterList[#slot0._buildingCritterList + 1] = slot14
-				slot0._buildingCritterDict[slot13] = slot14
+		if var_6_1 then
+			local var_6_2 = iter_6_1:getBuildingUid()
+
+			for iter_6_2, iter_6_3 in pairs(var_6_1) do
+				local var_6_3 = RoomCritterMO.New()
+
+				var_6_3:initWithBuildingValue(iter_6_3, var_6_2, iter_6_2)
+
+				arg_6_0._buildingCritterList[#arg_6_0._buildingCritterList + 1] = var_6_3
+				arg_6_0._buildingCritterDict[iter_6_3] = var_6_3
 			end
 		end
 	end
 
-	for slot6, slot7 in ipairs(ManufactureModel.instance:getAllCritterBuildingMOList()) do
-		for slot13, slot14 in pairs(slot7:getSeatSlot2CritterDict()) do
-			slot15 = RoomCritterMO.New()
+	local var_6_4 = ManufactureModel.instance:getAllCritterBuildingMOList()
 
-			slot15:initWithBuildingValue(slot14, slot7:getBuildingUid(), slot13)
+	for iter_6_4, iter_6_5 in ipairs(var_6_4) do
+		local var_6_5 = iter_6_5:getSeatSlot2CritterDict()
+		local var_6_6 = iter_6_5:getBuildingUid()
 
-			slot0._buildingCritterList[#slot0._buildingCritterList + 1] = slot15
-			slot0._buildingCritterDict[slot14] = slot15
+		for iter_6_6, iter_6_7 in pairs(var_6_5) do
+			local var_6_7 = RoomCritterMO.New()
+
+			var_6_7:initWithBuildingValue(iter_6_7, var_6_6, iter_6_6)
+
+			arg_6_0._buildingCritterList[#arg_6_0._buildingCritterList + 1] = var_6_7
+			arg_6_0._buildingCritterDict[iter_6_7] = var_6_7
 		end
 	end
 end
 
-function slot0.getRoomBuildingCritterList(slot0)
-	return slot0._buildingCritterList
+function var_0_0.getRoomBuildingCritterList(arg_7_0)
+	return arg_7_0._buildingCritterList
 end
 
-function slot0.getCritterMOById(slot0, slot1)
-	if not slot0:getById(slot1) and slot0._buildingCritterDict then
-		slot2 = slot0._buildingCritterDict[slot1]
+function var_0_0.getCritterMOById(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getById(arg_8_1)
+
+	if not var_8_0 and arg_8_0._buildingCritterDict then
+		var_8_0 = arg_8_0._buildingCritterDict[arg_8_1]
 	end
 
-	if not slot2 and slot0._tempCritterMO and slot1 == slot0._tempCritterMO.uid then
-		return slot0._tempCritterMO
+	if not var_8_0 and arg_8_0._tempCritterMO and arg_8_1 == arg_8_0._tempCritterMO.uid then
+		return arg_8_0._tempCritterMO
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getTrainCritterMOList(slot0)
-	return slot0:getList()
+function var_0_0.getTrainCritterMOList(arg_9_0)
+	return arg_9_0:getList()
 end
 
-function slot0.removeTrainCritterMO(slot0, slot1)
-	slot0:remove(slot1)
+function var_0_0.removeTrainCritterMO(arg_10_0, arg_10_1)
+	arg_10_0:remove(arg_10_1)
 end
 
-function slot0.getAllCritterList(slot0)
-	slot1 = {}
+function var_0_0.getAllCritterList(arg_11_0)
+	local var_11_0 = {}
+	local var_11_1 = arg_11_0:getList()
+	local var_11_2 = arg_11_0:getRoomBuildingCritterList()
 
-	tabletool.addValues(slot1, slot0:getList())
-	tabletool.addValues(slot1, slot0:getRoomBuildingCritterList())
+	tabletool.addValues(var_11_0, var_11_1)
+	tabletool.addValues(var_11_0, var_11_2)
 
-	return slot1
+	return var_11_0
 end
 
-function slot0.getTempCritterMO(slot0)
-	if not slot0._tempCritterMO then
-		slot0._tempCritterMO = RoomCritterMO.New()
+function var_0_0.getTempCritterMO(arg_12_0)
+	if not arg_12_0._tempCritterMO then
+		arg_12_0._tempCritterMO = RoomCritterMO.New()
 	end
 
-	return slot0._tempCritterMO
+	return arg_12_0._tempCritterMO
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

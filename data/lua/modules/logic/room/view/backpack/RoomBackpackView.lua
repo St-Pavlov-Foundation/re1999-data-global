@@ -1,117 +1,132 @@
-module("modules.logic.room.view.backpack.RoomBackpackView", package.seeall)
+﻿module("modules.logic.room.view.backpack.RoomBackpackView", package.seeall)
 
-slot0 = class("RoomBackpackView", BaseView)
+local var_0_0 = class("RoomBackpackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocategoryItem = gohelper.findChild(slot0.viewGO, "#scroll_category/viewport/content/#go_categoryItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_category/viewport/content/#go_categoryItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btnTabOnClick(slot0, slot1)
-	if not slot0.viewContainer:checkTabId(slot1) then
-		logError(string.format("RoomBackpackView._btnTabOnClick error, no subview, tabId:%s", slot1))
+function var_0_0._btnTabOnClick(arg_4_0, arg_4_1)
+	if not arg_4_0.viewContainer:checkTabId(arg_4_1) then
+		logError(string.format("RoomBackpackView._btnTabOnClick error, no subview, tabId:%s", arg_4_1))
 
 		return
 	end
 
-	if slot0._curSelectTab == slot1 then
+	if arg_4_0._curSelectTab == arg_4_1 then
 		return
 	end
 
-	slot0.viewContainer:switchTab(slot1)
+	arg_4_0.viewContainer:switchTab(arg_4_1)
 
-	slot0._curSelectTab = slot1
+	arg_4_0._curSelectTab = arg_4_1
 
-	slot0:refreshTab()
+	arg_4_0:refreshTab()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gocategoryItem, false)
-	slot0:clearVar()
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._gocategoryItem, false)
+	arg_5_0:clearVar()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._curSelectTab = slot0.viewContainer:getDefaultSelectedTab()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._curSelectTab = arg_7_0.viewContainer:getDefaultSelectedTab()
 
-	slot0:setTabItem()
-	slot0:refreshTab()
+	arg_7_0:setTabItem()
+	arg_7_0:refreshTab()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_lower)
 end
 
-function slot0.setTabItem(slot0)
-	for slot4, slot5 in ipairs(RoomBackpackViewContainer.TabSettingList) do
-		if not slot0._tabDict[slot4] and not gohelper.isNil(gohelper.cloneInPlace(slot0._gocategoryItem, slot4)) then
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = slot7
-			slot6.btn = gohelper.getClickWithDefaultAudio(slot7)
+function var_0_0.setTabItem(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(RoomBackpackViewContainer.TabSettingList) do
+		if not arg_8_0._tabDict[iter_8_0] then
+			local var_8_0 = gohelper.cloneInPlace(arg_8_0._gocategoryItem, iter_8_0)
 
-			slot6.btn:AddClickListener(slot0._btnTabOnClick, slot0, slot4)
+			if not gohelper.isNil(var_8_0) then
+				local var_8_1 = arg_8_0:getUserDataTb_()
 
-			slot6.goselected = gohelper.findChild(slot7, "#go_selected")
-			slot6.gounselected = gohelper.findChild(slot7, "#go_normal")
-			slot6.goreddot = gohelper.findChild(slot7, "#go_reddot")
+				var_8_1.go = var_8_0
+				var_8_1.btn = gohelper.getClickWithDefaultAudio(var_8_0)
 
-			if slot4 == RoomBackpackViewContainer.SubViewTabId.Critter then
-				RedDotController.instance:addRedDot(slot6.goreddot, RedDotEnum.DotNode.CritterIsFull)
+				var_8_1.btn:AddClickListener(arg_8_0._btnTabOnClick, arg_8_0, iter_8_0)
+
+				var_8_1.goselected = gohelper.findChild(var_8_0, "#go_selected")
+				var_8_1.gounselected = gohelper.findChild(var_8_0, "#go_normal")
+				var_8_1.goreddot = gohelper.findChild(var_8_0, "#go_reddot")
+
+				if iter_8_0 == RoomBackpackViewContainer.SubViewTabId.Critter then
+					RedDotController.instance:addRedDot(var_8_1.goreddot, RedDotEnum.DotNode.CritterIsFull)
+				end
+
+				local var_8_2 = luaLang(iter_8_1.namecn)
+				local var_8_3 = gohelper.findChildText(var_8_0, "#go_normal/#txt_namecn")
+				local var_8_4 = gohelper.findChildText(var_8_0, "#go_selected/#txt_namecn")
+
+				var_8_3.text = var_8_2
+				var_8_4.text = var_8_2
+
+				local var_8_5 = luaLang(iter_8_1.nameen)
+				local var_8_6 = gohelper.findChildText(var_8_0, "#go_normal/#txt_nameen")
+				local var_8_7 = gohelper.findChildText(var_8_0, "#go_selected/#txt_nameen")
+
+				var_8_6.text = var_8_5
+				var_8_7.text = var_8_5
+
+				gohelper.setActive(var_8_0, true)
+
+				arg_8_0._tabDict[iter_8_0] = var_8_1
 			end
-
-			slot8 = luaLang(slot5.namecn)
-			gohelper.findChildText(slot7, "#go_normal/#txt_namecn").text = slot8
-			gohelper.findChildText(slot7, "#go_selected/#txt_namecn").text = slot8
-			slot11 = luaLang(slot5.nameen)
-			gohelper.findChildText(slot7, "#go_normal/#txt_nameen").text = slot11
-			gohelper.findChildText(slot7, "#go_selected/#txt_nameen").text = slot11
-
-			gohelper.setActive(slot7, true)
-
-			slot0._tabDict[slot4] = slot6
 		end
 	end
 end
 
-function slot0.refreshTab(slot0)
-	for slot4, slot5 in pairs(slot0._tabDict) do
-		slot6 = slot4 == slot0._curSelectTab
+function var_0_0.refreshTab(arg_9_0)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._tabDict) do
+		local var_9_0 = iter_9_0 == arg_9_0._curSelectTab
 
-		gohelper.setActive(slot5.goselected, slot6)
-		gohelper.setActive(slot5.gounselected, not slot6)
+		gohelper.setActive(iter_9_1.goselected, var_9_0)
+		gohelper.setActive(iter_9_1.gounselected, not var_9_0)
 	end
 end
 
-function slot0.clearVar(slot0)
-	slot0._curSelectTab = nil
+function var_0_0.clearVar(arg_10_0)
+	arg_10_0._curSelectTab = nil
 
-	slot0:clearTab()
+	arg_10_0:clearTab()
 end
 
-function slot0.clearTab(slot0)
-	if slot0._tabDict then
-		for slot4, slot5 in pairs(slot0._tabDict) do
-			slot5.btn:RemoveClickListener()
+function var_0_0.clearTab(arg_11_0)
+	if arg_11_0._tabDict then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0._tabDict) do
+			iter_11_1.btn:RemoveClickListener()
 		end
 	end
 
-	slot0._tabDict = {}
+	arg_11_0._tabDict = {}
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_normal)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:clearVar()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0:clearVar()
 end
 
-return slot0
+return var_0_0

@@ -1,105 +1,116 @@
-module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzles", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzles", package.seeall)
 
-slot0 = class("FairyLandPuzzles", BaseView)
+local var_0_0 = class("FairyLandPuzzles", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goPuzzle = gohelper.findChild(slot0.viewGO, "main/#go_Root/#go_Puzzle")
-	slot0.goText = gohelper.findChild(slot0.viewGO, "main/#go_Root/#go_Text")
-	slot0.animText = slot0.goText:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goPuzzle = gohelper.findChild(arg_1_0.viewGO, "main/#go_Root/#go_Puzzle")
+	arg_1_0.goText = gohelper.findChild(arg_1_0.viewGO, "main/#go_Root/#go_Text")
+	arg_1_0.animText = arg_1_0.goText:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0:setTextVisible(true)
+	arg_1_0:setTextVisible(true)
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.SetTextBgVisible, slot0.setTextVisible, slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.ElementFinish, slot0.refreshView, slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.DialogFinish, slot0.refreshView, slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.ElementLoadFinish, slot0.refreshView, slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.ResolveSuccess, slot0.refreshView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.SetTextBgVisible, arg_2_0.setTextVisible, arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.ElementFinish, arg_2_0.refreshView, arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.DialogFinish, arg_2_0.refreshView, arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.ElementLoadFinish, arg_2_0.refreshView, arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.ResolveSuccess, arg_2_0.refreshView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.refreshView(slot0)
-	slot0:changePuzzle(FairyLandModel.instance:getCurPuzzle())
+function var_0_0.refreshView(arg_4_0)
+	local var_4_0 = FairyLandModel.instance:getCurPuzzle()
+
+	arg_4_0:changePuzzle(var_4_0)
 end
 
-function slot0.changePuzzle(slot0, slot1)
-	if slot1 == slot0.puzzleId then
+function var_0_0.changePuzzle(arg_5_0, arg_5_1)
+	if arg_5_1 == arg_5_0.puzzleId then
 		return
 	end
 
-	slot0.puzzleId = slot1
-	slot3 = FairyLandConfig.instance:getFairlyLandPuzzleConfig(slot1)
+	arg_5_0.puzzleId = arg_5_1
 
-	if slot0.compId == slot0:getCompId(slot1) then
-		if slot0.puzzleComp then
-			slot0.puzzleComp:refresh(slot3)
+	local var_5_0 = arg_5_0:getCompId(arg_5_1)
+	local var_5_1 = FairyLandConfig.instance:getFairlyLandPuzzleConfig(arg_5_1)
+
+	if arg_5_0.compId == var_5_0 then
+		if arg_5_0.puzzleComp then
+			arg_5_0.puzzleComp:refresh(var_5_1)
 		end
 
 		return
 	end
 
-	slot0.compId = slot2
+	arg_5_0.compId = var_5_0
 
-	slot0:closePuzzle()
-	slot0:startPuzzle(slot3)
+	arg_5_0:closePuzzle()
+	arg_5_0:startPuzzle(var_5_1)
 end
 
-function slot0.startPuzzle(slot0, slot1)
-	if not slot1 then
+function var_0_0.startPuzzle(arg_6_0, arg_6_1)
+	if not arg_6_1 then
 		if FairyLandModel.instance:isPuzzleAllStepFinish(10) then
-			slot0:setTextVisible(false)
+			arg_6_0:setTextVisible(false)
 		else
-			slot0:setTextVisible(true)
+			arg_6_0:setTextVisible(true)
 		end
 
 		return
 	end
 
-	slot0.puzzleComp = _G["FairyLandPuzzle" .. tostring(slot0.compId)].New()
+	local var_6_0 = "FairyLandPuzzle" .. tostring(arg_6_0.compId)
 
-	slot0.puzzleComp:init({
-		config = slot1,
-		viewGO = slot0.viewGO
-	})
-	slot0:setTextVisible(false)
+	arg_6_0.puzzleComp = _G[var_6_0].New()
+
+	local var_6_1 = {
+		config = arg_6_1,
+		viewGO = arg_6_0.viewGO
+	}
+
+	arg_6_0.puzzleComp:init(var_6_1)
+	arg_6_0:setTextVisible(false)
 end
 
-function slot0.getCompId(slot0, slot1)
-	if slot1 > 3 then
+function var_0_0.getCompId(arg_7_0, arg_7_1)
+	if arg_7_1 > 3 then
 		return 4
 	end
 
-	return slot1
+	return arg_7_1
 end
 
-function slot0.closePuzzle(slot0)
-	if slot0.puzzleComp then
-		slot0.puzzleComp:destory()
+function var_0_0.closePuzzle(arg_8_0)
+	if arg_8_0.puzzleComp then
+		arg_8_0.puzzleComp:destory()
 
-		slot0.puzzleComp = nil
+		arg_8_0.puzzleComp = nil
 	end
 end
 
-function slot0.setTextVisible(slot0, slot1)
-	if slot0.textVisible == (slot1 and true or false) then
+function var_0_0.setTextVisible(arg_9_0, arg_9_1)
+	arg_9_1 = arg_9_1 and true or false
+
+	if arg_9_0.textVisible == arg_9_1 then
 		return
 	end
 
-	slot0.textVisible = slot1
+	arg_9_0.textVisible = arg_9_1
 
-	if slot1 then
-		gohelper.setActive(slot0.goText, false)
-		gohelper.setActive(slot0.goText, true)
+	if arg_9_1 then
+		gohelper.setActive(arg_9_0.goText, false)
+		gohelper.setActive(arg_9_0.goText, true)
 	else
-		slot0.animText:Play("close")
+		arg_9_0.animText:Play("close")
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:closePuzzle()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0:closePuzzle()
 end
 
-return slot0
+return var_0_0

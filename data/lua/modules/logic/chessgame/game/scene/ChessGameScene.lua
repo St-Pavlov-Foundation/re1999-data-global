@@ -1,634 +1,711 @@
-module("modules.logic.chessgame.game.scene.ChessGameScene", package.seeall)
+﻿module("modules.logic.chessgame.game.scene.ChessGameScene", package.seeall)
 
-slot0 = class("ChessGameScene", BaseViewExtended)
+local var_0_0 = class("ChessGameScene", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._gotouch = gohelper.findChild(slot0.viewGO, "#go_touch")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotouch = gohelper.findChild(arg_1_0.viewGO, "#go_touch")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._tfTouch = slot0._gotouch.transform
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._gotouch)
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._tfTouch = arg_2_0._gotouch.transform
+	arg_2_0._click = SLFramework.UGUI.UIClickListener.Get(arg_2_0._gotouch)
 
-	slot0._click:AddClickListener(slot0.onClickContainer, slot0)
+	arg_2_0._click:AddClickListener(arg_2_0.onClickContainer, arg_2_0)
 
-	slot0._baseTiles = {}
-	slot0._baseTilePool = {}
-	slot0._dirItems = {}
-	slot0._dirItemPool = {}
-	slot0._alarmItems = {}
-	slot0._alarmItemPool = {}
-	slot0._interactItemList = {}
-	slot0._baffleItems = {}
-	slot0._baffleItemPool = {}
-	slot0._avatarMap = {}
-	slot0.loadDoneInteractList = {}
-	slot0.needLoadInteractIdList = {}
-	slot0._fixedOrder = 0
+	arg_2_0._baseTiles = {}
+	arg_2_0._baseTilePool = {}
+	arg_2_0._dirItems = {}
+	arg_2_0._dirItemPool = {}
+	arg_2_0._alarmItems = {}
+	arg_2_0._alarmItemPool = {}
+	arg_2_0._interactItemList = {}
+	arg_2_0._baffleItems = {}
+	arg_2_0._baffleItemPool = {}
+	arg_2_0._avatarMap = {}
+	arg_2_0.loadDoneInteractList = {}
+	arg_2_0.needLoadInteractIdList = {}
+	arg_2_0._fixedOrder = 0
 
-	MainCameraMgr.instance:addView(slot0.viewName, slot0.initCamera, nil, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.DeleteInteractAvatar, slot0.deleteInteractObj, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.AddInteractObj, slot0.createOrUpdateInteractItem, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.ChangeMap, slot0.changeMap, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.GamePointReturn, slot0._onGamePointReturn, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.SetAlarmAreaVisible, slot0.onSetAlarmAreaVisible, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.SetNeedChooseDirectionVisible, slot0.onSetDirectionVisible, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.GameReset, slot0.onResetGame, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.GameMapDataUpdate, slot0.onGameDataUpdate, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.GameResultQuit, slot0.onResultQuit, slot0)
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.PlayStoryFinish, slot0._onPlayStoryFinish, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0.onScreenResize, slot0)
-	slot0:createSceneRoot()
-	slot0:loadRes()
+	MainCameraMgr.instance:addView(arg_2_0.viewName, arg_2_0.initCamera, nil, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.DeleteInteractAvatar, arg_2_0.deleteInteractObj, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.AddInteractObj, arg_2_0.createOrUpdateInteractItem, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.ChangeMap, arg_2_0.changeMap, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GamePointReturn, arg_2_0._onGamePointReturn, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.SetAlarmAreaVisible, arg_2_0.onSetAlarmAreaVisible, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.SetNeedChooseDirectionVisible, arg_2_0.onSetDirectionVisible, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GameReset, arg_2_0.onResetGame, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GameMapDataUpdate, arg_2_0.onGameDataUpdate, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GameResultQuit, arg_2_0.onResultQuit, arg_2_0)
+	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.PlayStoryFinish, arg_2_0._onPlayStoryFinish, arg_2_0)
+	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0.onScreenResize, arg_2_0)
+	arg_2_0:createSceneRoot()
+	arg_2_0:loadRes()
 end
 
-function slot0.createSceneRoot(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("ChessGameScene")
-	slot0._sceneBackground = UnityEngine.GameObject.New("background")
-	slot0._sceneGround = UnityEngine.GameObject.New("ground")
-	slot0._sceneContainer = UnityEngine.GameObject.New("container")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
+function var_0_0.createSceneRoot(arg_3_0)
+	local var_3_0 = CameraMgr.instance:getMainCameraTrs().parent
+	local var_3_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
+	arg_3_0._sceneRoot = UnityEngine.GameObject.New("ChessGameScene")
+	arg_3_0._sceneBackground = UnityEngine.GameObject.New("background")
+	arg_3_0._sceneGround = UnityEngine.GameObject.New("ground")
+	arg_3_0._sceneContainer = UnityEngine.GameObject.New("container")
 
-	slot0._sceneOffsetY = slot4
+	local var_3_2, var_3_3, var_3_4 = transformhelper.getLocalPos(var_3_0)
 
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
-	gohelper.addChild(slot0._sceneRoot, slot0._sceneBackground)
-	gohelper.addChild(slot0._sceneRoot, slot0._sceneGround)
-	gohelper.addChild(slot0._sceneRoot, slot0._sceneContainer)
+	transformhelper.setLocalPos(arg_3_0._sceneRoot.transform, 0, var_3_3, 0)
+
+	arg_3_0._sceneOffsetY = var_3_3
+
+	gohelper.addChild(var_3_1, arg_3_0._sceneRoot)
+	gohelper.addChild(arg_3_0._sceneRoot, arg_3_0._sceneBackground)
+	gohelper.addChild(arg_3_0._sceneRoot, arg_3_0._sceneGround)
+	gohelper.addChild(arg_3_0._sceneRoot, arg_3_0._sceneContainer)
 end
 
-function slot0.initCamera(slot0)
-	if slot0._isInitCamera then
+function var_0_0.initCamera(arg_4_0)
+	if arg_4_0._isInitCamera then
 		return
 	end
 
-	slot0._isInitCamera = true
+	arg_4_0._isInitCamera = true
 
-	slot0:onScreenResize()
+	arg_4_0:onScreenResize()
 end
 
-function slot0.onScreenResize(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
-	slot1.orthographicSize = 7.5 * GameUtil.getAdapterScale(true)
+function var_0_0.onScreenResize(arg_5_0)
+	local var_5_0 = CameraMgr.instance:getMainCamera()
+
+	var_5_0.orthographic = true
+	var_5_0.orthographicSize = 7.5 * GameUtil.getAdapterScale(true)
 end
 
-function slot0._onPlayStoryFinish(slot0)
+function var_0_0._onPlayStoryFinish(arg_6_0)
 	ChessGameController.instance:setSceneCamera(true)
 end
 
-function slot0.loadRes(slot0)
-	UIBlockMgr.instance:startBlock(uv0.BLOCK_KEY)
+function var_0_0.loadRes(arg_7_0)
+	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
 
-	slot0._loader = MultiAbLoader.New()
+	arg_7_0._loader = MultiAbLoader.New()
 
-	slot0._loader:addPath(slot0:getCurrentSceneUrl())
-	slot0._loader:addPath(slot0:getGroundItemUrl())
-	slot0._loader:addPath(ChessGameEnum.SceneResPath.DirItem)
-	slot0._loader:addPath(ChessGameEnum.SceneResPath.AlarmItem)
-	slot0:onLoadRes()
-	slot0._loader:startLoad(slot0.loadResCompleted, slot0)
+	arg_7_0._loader:addPath(arg_7_0:getCurrentSceneUrl())
+	arg_7_0._loader:addPath(arg_7_0:getGroundItemUrl())
+	arg_7_0._loader:addPath(ChessGameEnum.SceneResPath.DirItem)
+	arg_7_0._loader:addPath(ChessGameEnum.SceneResPath.AlarmItem)
+	arg_7_0:onLoadRes()
+	arg_7_0._loader:startLoad(arg_7_0.loadResCompleted, arg_7_0)
 end
 
-function slot0.onLoadRes(slot0)
+function var_0_0.onLoadRes(arg_8_0)
+	return
 end
 
-function slot0.onloadResCompleted(slot0, slot1)
+function var_0_0.onloadResCompleted(arg_9_0, arg_9_1)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Finish, true)
 end
 
-function slot0.getGroundItemUrl(slot0)
+function var_0_0.getGroundItemUrl(arg_10_0)
 	return ChessGameEnum.NodePath
 end
 
-function slot0.getCurrentSceneUrl(slot0)
+function var_0_0.getCurrentSceneUrl(arg_11_0)
 	return ChessGameModel.instance:getNowMapResPath()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_12_0)
+	return
 end
 
-function slot0.loadResCompleted(slot0, slot1)
-	if slot1:getAssetItem(ChessGameModel.instance:getNowMapResPath()) then
-		slot0._sceneGo = gohelper.clone(slot2:GetResource(), slot0._sceneRoot, "scene")
-		slot0._sceneAnim = slot0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.loadResCompleted(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1:getAssetItem(ChessGameModel.instance:getNowMapResPath())
 
-		slot0._sceneBackground.transform:SetParent(slot0._sceneGo.transform, false)
-		slot0._sceneGround.transform:SetParent(slot0._sceneGo.transform, false)
-		slot0._sceneContainer.transform:SetParent(slot0._sceneGo.transform, false)
-		transformhelper.setLocalPos(slot0._sceneBackground.transform, 0, 0, -0.5)
-		transformhelper.setLocalPos(slot0._sceneGround.transform, 0, 0, -1)
-		transformhelper.setLocalPos(slot0._sceneContainer.transform, 0, 0, -1.5)
-		slot0:fillChessBoardBase()
-		slot0:createAllInteractObjs()
-		slot0:onloadResCompleted(slot1)
-		slot0:playEnterAnim()
+	if var_13_0 then
+		arg_13_0._sceneGo = gohelper.clone(var_13_0:GetResource(), arg_13_0._sceneRoot, "scene")
+		arg_13_0._sceneAnim = arg_13_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+
+		arg_13_0._sceneBackground.transform:SetParent(arg_13_0._sceneGo.transform, false)
+		arg_13_0._sceneGround.transform:SetParent(arg_13_0._sceneGo.transform, false)
+		arg_13_0._sceneContainer.transform:SetParent(arg_13_0._sceneGo.transform, false)
+		transformhelper.setLocalPos(arg_13_0._sceneBackground.transform, 0, 0, -0.5)
+		transformhelper.setLocalPos(arg_13_0._sceneGround.transform, 0, 0, -1)
+		transformhelper.setLocalPos(arg_13_0._sceneContainer.transform, 0, 0, -1.5)
+		arg_13_0:fillChessBoardBase()
+		arg_13_0:createAllInteractObjs()
+		arg_13_0:onloadResCompleted(arg_13_1)
+		arg_13_0:playEnterAnim()
 		ChessGameController.instance:autoSelectPlayer()
 	end
 
-	UIBlockMgr.instance:endBlock(uv0.BLOCK_KEY)
-	ChessController.instance:dispatchEvent(ChessGameEvent.GuideOnEnterEpisode, tostring(ChessModel.instance:getEpisodeId()))
+	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
+
+	local var_13_1 = ChessModel.instance:getEpisodeId()
+
+	ChessController.instance:dispatchEvent(ChessGameEvent.GuideOnEnterEpisode, tostring(var_13_1))
 end
 
-function slot0.changeMap(slot0, slot1)
-	if not slot1 then
+function var_0_0.changeMap(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	if not slot0._oldLoader then
-		slot0._oldLoader = slot0._loader
-		slot0._oldSceneGo = slot0._sceneGo
-	elseif slot0._loader then
-		slot0._loader:dispose()
+	if not arg_14_0._oldLoader then
+		arg_14_0._oldLoader = arg_14_0._loader
+		arg_14_0._oldSceneGo = arg_14_0._sceneGo
+	elseif arg_14_0._loader then
+		arg_14_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_14_0._loader = nil
 	end
 
-	ChessGameModel.instance:setNowMapResPath(slot1)
-	slot0:loadRes()
+	local var_14_0 = arg_14_1
+
+	ChessGameModel.instance:setNowMapResPath(var_14_0)
+	arg_14_0:loadRes()
 end
 
-function slot0.playEnterAnim(slot0)
-	if slot0._sceneAnim then
-		slot0._sceneAnim:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.playEnterAnim(arg_15_0)
+	if arg_15_0._sceneAnim then
+		arg_15_0._sceneAnim:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function slot0.playAudio(slot0)
-	if ChessGameModel.instance:getActId() then
-		slot0:stopAudio()
+function var_0_0.playAudio(arg_16_0)
+	local var_16_0 = ChessGameModel.instance:getActId()
 
-		if ChessGameConfig.instance:getMapCo(slot1) and slot2.audioAmbient ~= 0 then
-			slot0._triggerAmbientId = AudioMgr.instance:trigger(slot2.audioAmbient)
+	if var_16_0 then
+		local var_16_1 = ChessGameConfig.instance:getMapCo(var_16_0)
+
+		arg_16_0:stopAudio()
+
+		if var_16_1 and var_16_1.audioAmbient ~= 0 then
+			arg_16_0._triggerAmbientId = AudioMgr.instance:trigger(var_16_1.audioAmbient)
 		end
 	end
 end
 
-function slot0.fillChessBoardBase(slot0)
-	slot0:resetTiles()
+function var_0_0.fillChessBoardBase(arg_17_0)
+	arg_17_0:resetTiles()
 
-	for slot5, slot6 in pairs(ChessGameNodeModel.instance:getAllNodes()) do
-		slot0._baseTiles[slot5] = slot0._baseTiles[slot5] or {}
+	local var_17_0 = ChessGameNodeModel.instance:getAllNodes()
 
-		for slot10, slot11 in pairs(slot6) do
-			slot12 = slot0:createTileBaseItem(slot5, slot10)
-			slot0._baseTiles[slot5][slot10] = slot12
+	for iter_17_0, iter_17_1 in pairs(var_17_0) do
+		arg_17_0._baseTiles[iter_17_0] = arg_17_0._baseTiles[iter_17_0] or {}
 
-			slot0:onTileItemCreate(slot5, slot10, slot12)
+		for iter_17_2, iter_17_3 in pairs(iter_17_1) do
+			local var_17_1 = arg_17_0:createTileBaseItem(iter_17_0, iter_17_2)
+
+			arg_17_0._baseTiles[iter_17_0][iter_17_2] = var_17_1
+
+			arg_17_0:onTileItemCreate(iter_17_0, iter_17_2, var_17_1)
 		end
 	end
 end
 
-function slot0.onTileItemCreate(slot0, slot1, slot2, slot3)
+function var_0_0.onTileItemCreate(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	return
 end
 
-function slot0.createTileBaseItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.createTileBaseItem(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0
+	local var_19_1 = arg_19_0._baseTiles[arg_19_1][arg_19_2]
 
-	if not slot0._baseTiles[slot1][slot2] then
-		slot3 = slot0:getUserDataTb_()
-		slot6 = gohelper.clone(slot0._loader:getAssetItem(slot0:getGroundItemUrl(slot1, slot2)):GetResource(), slot0._sceneBackground, "tilebase_" .. slot1 .. "_" .. slot2)
-		slot3.go = slot6
-		slot3.sceneTf = slot6.transform
-		slot3.pos = {
-			x = slot1,
-			y = slot2
+	if not var_19_1 then
+		var_19_1 = arg_19_0:getUserDataTb_()
+
+		local var_19_2 = arg_19_0:getGroundItemUrl(arg_19_1, arg_19_2)
+		local var_19_3 = arg_19_0._loader:getAssetItem(var_19_2)
+		local var_19_4 = gohelper.clone(var_19_3:GetResource(), arg_19_0._sceneBackground, "tilebase_" .. arg_19_1 .. "_" .. arg_19_2)
+
+		var_19_1.go = var_19_4
+		var_19_1.sceneTf = var_19_4.transform
+		var_19_1.pos = {
+			x = arg_19_1,
+			y = arg_19_2
 		}
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_19_1.go, true)
 
-	slot3.sceneTf.position = Vector3(slot1, slot2, 0)
+	var_19_1.sceneTf.position = Vector3(arg_19_1, arg_19_2, 0)
 
-	slot0:setTileBasePosition(slot3.sceneTf)
+	arg_19_0:setTileBasePosition(var_19_1.sceneTf)
 
-	return slot3
+	return var_19_1
 end
 
-function slot0.setTileBasePosition(slot0, slot1)
-	slot2 = ChessGameHelper.nodePosToWorldPos(slot1.position)
+function var_0_0.setTileBasePosition(arg_20_0, arg_20_1)
+	local var_20_0 = ChessGameHelper.nodePosToWorldPos(arg_20_1.position)
 
-	transformhelper.setLocalPos(slot1, slot2.x, slot2.y, slot2.z)
+	transformhelper.setLocalPos(arg_20_1, var_20_0.x, var_20_0.y, var_20_0.z)
 end
 
-function slot0.createAllInteractObjs(slot0)
+function var_0_0.createAllInteractObjs(arg_21_0)
 	if not ChessGameController.instance.interactsMgr then
 		return
 	end
 
-	for slot5, slot6 in ipairs(ChessGameController.instance.interactsMgr:getList()) do
-		if slot6:isShow() then
-			slot0:createOrUpdateInteractItem(slot6)
+	local var_21_0 = ChessGameController.instance.interactsMgr:getList()
+
+	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+		if iter_21_1:isShow() then
+			arg_21_0:createOrUpdateInteractItem(iter_21_1)
 		end
 	end
 
-	slot0:addEventCb(ChessGameController.instance, ChessGameEvent.AllObjectCreated, slot0.createAllInteractObjs, slot0)
+	arg_21_0:addEventCb(ChessGameController.instance, ChessGameEvent.AllObjectCreated, arg_21_0.createAllInteractObjs, arg_21_0)
 end
 
-function slot0.createOrUpdateInteractItem(slot0, slot1)
-	if gohelper.isNil(slot0._sceneContainer) then
+function var_0_0.createOrUpdateInteractItem(arg_22_0, arg_22_1)
+	if gohelper.isNil(arg_22_0._sceneContainer) then
 		logNormal("ChessGameScene: game is already end")
 
 		return
 	end
 
-	if not slot0._avatarMap[slot1.id] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.sceneGo = UnityEngine.GameObject.New("item_" .. slot1.id)
-		slot2.sceneTf = slot2.sceneGo.transform
-		slot2.loader = PrefabInstantiate.Create(slot2.sceneGo)
+	local var_22_0 = arg_22_0._avatarMap[arg_22_1.id]
 
-		slot2.sceneTf:SetParent(slot0._sceneContainer.transform, false)
+	if not var_22_0 then
+		var_22_0 = arg_22_0:getUserDataTb_()
+		var_22_0.sceneGo = UnityEngine.GameObject.New("item_" .. arg_22_1.id)
+		var_22_0.sceneTf = var_22_0.sceneGo.transform
+		var_22_0.loader = PrefabInstantiate.Create(var_22_0.sceneGo)
 
-		slot0._avatarMap[slot1.id] = slot2
+		var_22_0.sceneTf:SetParent(arg_22_0._sceneContainer.transform, false)
+
+		arg_22_0._avatarMap[arg_22_1.id] = var_22_0
 	end
 
-	slot1:setAvatar(slot2)
+	arg_22_1:setAvatar(var_22_0)
 end
 
-function slot0.deleteInteractObj(slot0, slot1)
-	slot0._avatarMap[slot1] = nil
+function var_0_0.deleteInteractObj(arg_23_0, arg_23_1)
+	arg_23_0._avatarMap[arg_23_1] = nil
 end
 
-function slot0.onSetDirectionVisible(slot0, slot1)
-	slot0:recycleAllDirItem()
+function var_0_0.onSetDirectionVisible(arg_24_0, arg_24_1)
+	arg_24_0:recycleAllDirItem()
 
-	if not slot1 then
+	if not arg_24_1 then
 		return
 	end
 
-	if slot1.visible then
-		slot2 = slot1.selectType or ChessGameEnum.ChessSelectType.Normal
+	if arg_24_1.visible then
+		local var_24_0 = arg_24_1.selectType or ChessGameEnum.ChessSelectType.Normal
 
-		for slot6 = 1, #slot1.posXList do
-			slot12 = slot1.posYList[slot6]
+		for iter_24_0 = 1, #arg_24_1.posXList do
+			local var_24_1 = arg_24_0:createDirItem()
 
-			slot0:addDirectionItem(slot0:createDirItem(), slot1.posXList[slot6], slot12)
+			arg_24_0:addDirectionItem(var_24_1, arg_24_1.posXList[iter_24_0], arg_24_1.posYList[iter_24_0])
 
-			for slot12, slot13 in pairs(ChessGameEnum.Direction) do
-				gohelper.setActive(slot7["goDir" .. slot13], slot13 == slot1.dirList[slot6])
+			local var_24_2 = arg_24_1.dirList[iter_24_0]
+
+			for iter_24_1, iter_24_2 in pairs(ChessGameEnum.Direction) do
+				gohelper.setActive(var_24_1["goDir" .. iter_24_2], iter_24_2 == var_24_2)
 			end
 
-			gohelper.setActive(slot7.goNormal, ChessGameEnum.ChessSelectType.Normal == slot2)
-			gohelper.setActive(slot7.goItem, ChessGameEnum.ChessSelectType.CatchObj == slot2)
-			gohelper.setActive(slot7.goCenter, false)
+			gohelper.setActive(var_24_1.goNormal, ChessGameEnum.ChessSelectType.Normal == var_24_0)
+			gohelper.setActive(var_24_1.goItem, ChessGameEnum.ChessSelectType.CatchObj == var_24_0)
+			gohelper.setActive(var_24_1.goCenter, false)
 		end
 
-		if slot1.selfPosX ~= nil and slot1.selfPosY ~= nil then
-			slot3 = slot0:createDirItem()
+		if arg_24_1.selfPosX ~= nil and arg_24_1.selfPosY ~= nil then
+			local var_24_3 = arg_24_0:createDirItem()
 
-			slot0:addDirectionItem(slot3, slot1.selfPosX, slot1.selfPosY)
-			gohelper.setActive(slot3.goNormal, false)
-			gohelper.setActive(slot3.goItem, false)
-			gohelper.setActive(slot3.goCenter, true)
+			arg_24_0:addDirectionItem(var_24_3, arg_24_1.selfPosX, arg_24_1.selfPosY)
+			gohelper.setActive(var_24_3.goNormal, false)
+			gohelper.setActive(var_24_3.goItem, false)
+			gohelper.setActive(var_24_3.goCenter, true)
 		end
 
-		if ChessGameEnum.ChessSelectType.Normal == slot2 then
-			ChessGameController.instance:checkInteractCanUse({
-				slot1.selfPosX + 1,
-				slot1.selfPosX - 1,
-				slot1.selfPosX,
-				slot1.selfPosX
-			}, {
-				slot1.selfPosY,
-				slot1.selfPosY,
-				slot1.selfPosY + 1,
-				slot1.selfPosY - 1
-			})
+		if ChessGameEnum.ChessSelectType.Normal == var_24_0 then
+			local var_24_4 = {
+				arg_24_1.selfPosX + 1,
+				arg_24_1.selfPosX - 1,
+				arg_24_1.selfPosX,
+				arg_24_1.selfPosX
+			}
+			local var_24_5 = {
+				arg_24_1.selfPosY,
+				arg_24_1.selfPosY,
+				arg_24_1.selfPosY + 1,
+				arg_24_1.selfPosY - 1
+			}
+
+			ChessGameController.instance:checkInteractCanUse(var_24_4, var_24_5)
 		end
 	end
 end
 
-function slot0.recycleAllDirItem(slot0)
-	for slot4, slot5 in pairs(slot0._dirItems) do
-		gohelper.setActive(slot5.go, false)
-		table.insert(slot0._dirItemPool, slot5)
+function var_0_0.recycleAllDirItem(arg_25_0)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._dirItems) do
+		gohelper.setActive(iter_25_1.go, false)
+		table.insert(arg_25_0._dirItemPool, iter_25_1)
 
-		slot0._dirItems[slot4] = nil
+		arg_25_0._dirItems[iter_25_0] = nil
 	end
 end
 
-function slot0.createDirItem(slot0)
-	slot1 = nil
+function var_0_0.createDirItem(arg_26_0)
+	local var_26_0
+	local var_26_1 = #arg_26_0._dirItemPool
 
-	if #slot0._dirItemPool > 0 then
-		slot1 = slot0._dirItemPool[slot2]
-		slot0._dirItemPool[slot2] = nil
+	if var_26_1 > 0 then
+		var_26_0 = arg_26_0._dirItemPool[var_26_1]
+		arg_26_0._dirItemPool[var_26_1] = nil
 	end
 
-	if not slot1 then
-		slot1 = slot0:getUserDataTb_()
-		slot7 = "dirItem"
-		slot1.go = gohelper.clone(slot0._loader:getAssetItem(ChessGameEnum.SceneResPath.DirItem):GetResource(), slot0._sceneGround, slot7)
-		slot1.sceneTf = slot1.go.transform
-		slot1.goCenter = gohelper.findChild(slot1.go, "#go_center")
-		slot1.goNormal = gohelper.findChild(slot1.go, "#go_normal")
-		slot1.goItem = gohelper.findChild(slot1.go, "#go_item")
+	if not var_26_0 then
+		var_26_0 = arg_26_0:getUserDataTb_()
 
-		for slot7, slot8 in pairs(ChessGameEnum.Direction) do
-			slot1["goDir" .. slot8] = gohelper.findChild(slot1.goItem, "jiantou_" .. slot8)
+		local var_26_2 = arg_26_0._loader:getAssetItem(ChessGameEnum.SceneResPath.DirItem)
+
+		var_26_0.go = gohelper.clone(var_26_2:GetResource(), arg_26_0._sceneGround, "dirItem")
+		var_26_0.sceneTf = var_26_0.go.transform
+		var_26_0.goCenter = gohelper.findChild(var_26_0.go, "#go_center")
+		var_26_0.goNormal = gohelper.findChild(var_26_0.go, "#go_normal")
+		var_26_0.goItem = gohelper.findChild(var_26_0.go, "#go_item")
+
+		for iter_26_0, iter_26_1 in pairs(ChessGameEnum.Direction) do
+			var_26_0["goDir" .. iter_26_1] = gohelper.findChild(var_26_0.goItem, "jiantou_" .. iter_26_1)
 		end
 	end
 
-	table.insert(slot0._dirItems, slot1)
+	table.insert(arg_26_0._dirItems, var_26_0)
 
-	return slot1
+	return var_26_0
 end
 
-function slot0.addDirectionItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.go, true)
+function var_0_0.addDirectionItem(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	gohelper.setActive(arg_27_1.go, true)
 
-	slot5 = ChessGameHelper.nodePosToWorldPos({
+	local var_27_0 = {
 		z = 0,
-		x = slot2,
-		y = slot3
-	})
-	slot1.tileX = slot2
-	slot1.tileY = slot3
+		x = arg_27_2,
+		y = arg_27_3
+	}
+	local var_27_1 = ChessGameHelper.nodePosToWorldPos(var_27_0)
 
-	transformhelper.setLocalPos(slot1.sceneTf, slot5.x, slot5.y, slot5.z)
+	arg_27_1.tileX = arg_27_2
+	arg_27_1.tileY = arg_27_3
+
+	transformhelper.setLocalPos(arg_27_1.sceneTf, var_27_1.x, var_27_1.y, var_27_1.z)
 end
 
-function slot0.onSetAlarmAreaVisible(slot0, slot1)
-	slot0:recycleAllAlarmItem()
+function var_0_0.onSetAlarmAreaVisible(arg_28_0, arg_28_1)
+	arg_28_0:recycleAllAlarmItem()
 
-	if not slot1 then
+	if not arg_28_1 then
 		return
 	end
 
-	if slot1.visible then
-		slot0:refreshAlarmArea()
+	if arg_28_1.visible then
+		arg_28_0:refreshAlarmArea()
 	end
 end
 
-function slot0.refreshAlarmArea(slot0)
-	slot0._isWaitingRefreshAlarm = false
+function var_0_0.refreshAlarmArea(arg_29_0)
+	arg_29_0._isWaitingRefreshAlarm = false
 
 	if not ChessGameController.instance.interactsMgr then
 		return
 	end
 
-	if not ChessGameController.instance.interactsMgr:getList() then
+	local var_29_0 = ChessGameController.instance.interactsMgr:getList()
+
+	if not var_29_0 then
 		return
 	end
 
-	slot2 = {}
+	local var_29_1 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.objType == ChessGameEnum.InteractType.Hunter then
-			slot7:getHandler():onDrawAlert(slot2)
+	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+		if iter_29_1.objType == ChessGameEnum.InteractType.Hunter then
+			iter_29_1:getHandler():onDrawAlert(var_29_1)
 		end
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		for slot11, slot12 in pairs(slot7) do
-			for slot16, slot17 in pairs(slot12) do
-				slot0:createAlarmItem(slot6, slot11, nil, slot17)
+	for iter_29_2, iter_29_3 in pairs(var_29_1) do
+		for iter_29_4, iter_29_5 in pairs(iter_29_3) do
+			for iter_29_6, iter_29_7 in pairs(iter_29_5) do
+				arg_29_0:createAlarmItem(iter_29_2, iter_29_4, nil, iter_29_7)
 			end
 		end
 	end
 end
 
-function slot0.recycleAllAlarmItem(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._alarmItems) do
-		for slot10, slot11 in pairs(slot6) do
-			if not slot11.isManual and (slot1 or not slot11.isStatic) then
-				gohelper.setActive(slot11.go, false)
+function var_0_0.recycleAllAlarmItem(arg_30_0, arg_30_1)
+	for iter_30_0, iter_30_1 in pairs(arg_30_0._alarmItems) do
+		for iter_30_2, iter_30_3 in pairs(iter_30_1) do
+			local var_30_0 = not iter_30_3.isManual
+			local var_30_1 = arg_30_1 or not iter_30_3.isStatic
 
-				if not slot0._alarmItemPool[slot11.resPath] then
-					slot0._alarmItemPool[slot11.resPath] = {}
+			if var_30_0 and var_30_1 then
+				gohelper.setActive(iter_30_3.go, false)
+
+				local var_30_2 = arg_30_0._alarmItemPool[iter_30_3.resPath]
+
+				if not var_30_2 then
+					var_30_2 = {}
+					arg_30_0._alarmItemPool[iter_30_3.resPath] = var_30_2
 				end
 
-				table.insert(slot14, slot11)
+				table.insert(var_30_2, iter_30_3)
 
-				slot6[slot10] = nil
+				iter_30_1[iter_30_2] = nil
 			end
 		end
 	end
 end
 
-function slot0.createAlarmItem(slot0, slot1, slot2, slot3, slot4)
-	slot5 = false
+function var_0_0.createAlarmItem(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
+	local var_31_0 = false
+	local var_31_1 = ChessGameEnum.SceneResPath.AlarmItem
 
-	if type(slot4) == "table" then
-		slot6 = slot4.resPath or ChessGameEnum.SceneResPath.AlarmItem
-	end
+	var_31_1 = type(arg_31_4) == "table" and arg_31_4.resPath or var_31_1
 
-	if slot0._alarmItems[ChessGameHelper.calPosIndex(slot1, slot2)] then
-		for slot12, slot13 in ipairs(slot8) do
-			if slot13.resPath == slot6 then
+	local var_31_2 = ChessGameHelper.calPosIndex(arg_31_1, arg_31_2)
+	local var_31_3 = arg_31_0._alarmItems[var_31_2]
+
+	if var_31_3 then
+		for iter_31_0, iter_31_1 in ipairs(var_31_3) do
+			if iter_31_1.resPath == var_31_1 then
 				return
 			end
 		end
 	end
 
-	slot9 = nil
+	local var_31_4
+	local var_31_5 = arg_31_0._alarmItemPool[var_31_1]
 
-	if slot0._alarmItemPool[slot6] and #slot10 > 0 then
-		slot9 = slot10[slot11]
-		slot10[slot11] = nil
+	if var_31_5 then
+		local var_31_6 = #var_31_5
+
+		if var_31_6 > 0 then
+			var_31_4 = var_31_5[var_31_6]
+			var_31_5[var_31_6] = nil
+		end
 	end
 
-	if not slot9 then
-		slot9 = slot0:getUserDataTb_()
-		slot9.go = gohelper.clone((slot0._loader:getAssetItem(slot6) or slot0._loader:getAssetItem(ChessGameEnum.SceneResPath.AlarmItem)):GetResource(), slot0._sceneGround, "alarmItem")
-		slot9.sceneTf = slot9.go.transform
+	if not var_31_4 then
+		var_31_4 = arg_31_0:getUserDataTb_()
+
+		local var_31_7 = arg_31_0._loader:getAssetItem(var_31_1) or arg_31_0._loader:getAssetItem(ChessGameEnum.SceneResPath.AlarmItem)
+
+		var_31_4.go = gohelper.clone(var_31_7:GetResource(), arg_31_0._sceneGround, "alarmItem")
+		var_31_4.sceneTf = var_31_4.go.transform
 	end
 
-	gohelper.setActive(slot9.go, true)
+	gohelper.setActive(var_31_4.go, true)
 
-	slot12 = ChessGameHelper.nodePosToWorldPos({
+	local var_31_8 = {
 		z = 0,
-		x = slot1,
-		y = slot2
-	})
-	slot9.tileX = slot1
-	slot9.tileY = slot2
-	slot9.isManual = slot3
-	slot9.isStatic = slot5
-	slot9.resPath = slot6
+		x = arg_31_1,
+		y = arg_31_2
+	}
+	local var_31_9 = ChessGameHelper.nodePosToWorldPos(var_31_8)
 
-	transformhelper.setLocalPos(slot9.sceneTf, slot12.x, slot12.y, slot12.z)
+	var_31_4.tileX = arg_31_1
+	var_31_4.tileY = arg_31_2
+	var_31_4.isManual = arg_31_3
+	var_31_4.isStatic = var_31_0
+	var_31_4.resPath = var_31_1
 
-	if not slot8 then
-		slot0._alarmItems[slot7] = {}
+	transformhelper.setLocalPos(var_31_4.sceneTf, var_31_9.x, var_31_9.y, var_31_9.z)
+
+	if not var_31_3 then
+		var_31_3 = {}
+		arg_31_0._alarmItems[var_31_2] = var_31_3
 	end
 
-	slot8[#slot8 + 1] = slot9
+	var_31_3[#var_31_3 + 1] = var_31_4
 
-	return slot9
+	return var_31_4
 end
 
-function slot0.addNeedLoadInteractList(slot0, slot1)
-	if not tabletool.indexOf(slot0.needLoadInteractIdList, slot1) then
-		table.insert(slot0.needLoadInteractIdList, slot1)
+function var_0_0.addNeedLoadInteractList(arg_32_0, arg_32_1)
+	if not tabletool.indexOf(arg_32_0.needLoadInteractIdList, arg_32_1) then
+		table.insert(arg_32_0.needLoadInteractIdList, arg_32_1)
 	end
 end
 
-function slot0.findInteractItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._interactItemList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.findInteractItem(arg_33_0, arg_33_1)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_0._interactItemList) do
+		if iter_33_1.id == arg_33_1 then
+			return iter_33_1
 		end
 	end
 end
 
-function slot0.getPlayerInteractItem(slot0)
-	return slot0.playerInteractItem
+function var_0_0.getPlayerInteractItem(arg_34_0)
+	return arg_34_0.playerInteractItem
 end
 
-function slot0.setInteractObjActive(slot0, slot1, slot2)
-	if not slot0:findInteractItem(slot1) then
+function var_0_0.setInteractObjActive(arg_35_0, arg_35_1, arg_35_2)
+	local var_35_0 = arg_35_0:findInteractItem(arg_35_1)
+
+	if not var_35_0 then
 		return
 	end
 
-	slot3:setActive(slot2)
+	var_35_0:setActive(arg_35_2)
 end
 
-function slot0.onClickContainer(slot0, slot1, slot2)
+function var_0_0.onClickContainer(arg_36_0, arg_36_1, arg_36_2)
 	if ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	slot4 = recthelper.screenPosToWorldPos(GamepadController.instance:getMousePosition(), CameraMgr.instance:getMainCamera(), slot0._sceneBackground.transform.position)
+	local var_36_0 = CameraMgr.instance:getMainCamera()
+	local var_36_1 = recthelper.screenPosToWorldPos(GamepadController.instance:getMousePosition(), var_36_0, arg_36_0._sceneBackground.transform.position)
 
-	logNormal("click Scene wolrdX, worldY : " .. tostring(slot4.x) .. ", " .. tostring(slot4.y))
+	logNormal("click Scene wolrdX, worldY : " .. tostring(var_36_1.x) .. ", " .. tostring(var_36_1.y))
 
-	slot6 = ChessGameHelper.worldPosToNodePos({
-		x = slot4.x,
-		y = slot4.y - slot0._sceneOffsetY,
-		z = slot4.z
-	})
+	local var_36_2 = {
+		x = var_36_1.x,
+		y = var_36_1.y - arg_36_0._sceneOffsetY,
+		z = var_36_1.z
+	}
+	local var_36_3 = ChessGameHelper.worldPosToNodePos(var_36_2)
 
-	logNormal("click Scene X, Y : " .. tostring(slot6.x) .. ", " .. tostring(slot6.y))
+	logNormal("click Scene X, Y : " .. tostring(var_36_3.x) .. ", " .. tostring(var_36_3.y))
 
-	if slot6 then
-		slot0:onClickChessPos(slot6.x, slot6.y)
+	if var_36_3 then
+		arg_36_0:onClickChessPos(var_36_3.x, var_36_3.y)
 	end
 end
 
-function slot0.onClickChessPos(slot0, slot1, slot2)
-	if ChessGameController.instance.eventMgr and slot3:getCurEvent() and slot3:getCurEvent() then
-		slot4:onClickPos(slot1, slot2, true)
+function var_0_0.onClickChessPos(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = ChessGameController.instance.eventMgr
+
+	if var_37_0 and var_37_0:getCurEvent() then
+		local var_37_1 = var_37_0:getCurEvent()
+
+		if var_37_1 then
+			var_37_1:onClickPos(arg_37_1, arg_37_2, true)
+		end
 	end
 end
 
-function slot0._guideClickTile(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "_")
+function var_0_0._guideClickTile(arg_38_0, arg_38_1)
+	local var_38_0 = string.splitToNumber(arg_38_1, "_")
+	local var_38_1 = var_38_0[1]
+	local var_38_2 = var_38_0[2]
 
-	slot0:onClickChessPos(slot2[1], slot2[2])
+	arg_38_0:onClickChessPos(var_38_1, var_38_2)
 end
 
-function slot0.recycleAllInteract(slot0)
-	for slot4, slot5 in ipairs(slot0._interactItemList) do
-		slot5:deleteSelf()
+function var_0_0.recycleAllInteract(arg_39_0)
+	for iter_39_0, iter_39_1 in ipairs(arg_39_0._interactItemList) do
+		iter_39_1:deleteSelf()
 	end
 end
 
-function slot0.disposeInteractItem(slot0)
-	for slot4, slot5 in ipairs(slot0._interactItemList) do
-		slot5:dispose()
+function var_0_0.disposeInteractItem(arg_40_0)
+	for iter_40_0, iter_40_1 in ipairs(arg_40_0._interactItemList) do
+		iter_40_1:dispose()
 	end
 
-	slot0._interactItemList = nil
+	arg_40_0._interactItemList = nil
 end
 
-function slot0.disposeBaffle(slot0)
-	slot1 = nil
+function var_0_0.disposeBaffle(arg_41_0)
+	local var_41_0
 
-	for slot5 = 1, #slot0._baffleItems do
-		slot0._baffleItems[slot5]:dispose()
+	for iter_41_0 = 1, #arg_41_0._baffleItems do
+		arg_41_0._baffleItems[iter_41_0]:dispose()
 	end
 
-	for slot5 = 1, #slot0._baffleItemPool do
-		slot0._baffleItemPool[slot5]:dispose()
+	for iter_41_1 = 1, #arg_41_0._baffleItemPool do
+		arg_41_0._baffleItemPool[iter_41_1]:dispose()
 	end
 
-	slot0._baffleItems = nil
-	slot0._baffleItemPool = nil
+	arg_41_0._baffleItems = nil
+	arg_41_0._baffleItemPool = nil
 end
 
-function slot0.disposeSceneRoot(slot0)
-	if slot0._sceneRoot then
-		gohelper.destroy(slot0._sceneRoot)
+function var_0_0.disposeSceneRoot(arg_42_0)
+	if arg_42_0._sceneRoot then
+		gohelper.destroy(arg_42_0._sceneRoot)
 
-		slot0._sceneRoot = nil
-	end
-end
-
-function slot0.releaseLoader(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
-
-		slot0._loader = nil
+		arg_42_0._sceneRoot = nil
 	end
 end
 
-function slot0.refreshNearInteractIcon(slot0)
+function var_0_0.releaseLoader(arg_43_0)
+	if arg_43_0._loader then
+		arg_43_0._loader:dispose()
+
+		arg_43_0._loader = nil
+	end
+end
+
+function var_0_0.refreshNearInteractIcon(arg_44_0)
 	ChessGameController.instance.interactsMgr:getMainPlayer():getHandler():calCanWalkArea()
 end
 
-function slot0.onCancelSelectInteract(slot0, slot1)
-	if slot0:findInteractItem(slot1) and not slot2.delete and slot2:getHandler() then
-		slot2:getHandler():onCancelSelect()
+function var_0_0.onCancelSelectInteract(arg_45_0, arg_45_1)
+	local var_45_0 = arg_45_0:findInteractItem(arg_45_1)
+
+	if var_45_0 and not var_45_0.delete and var_45_0:getHandler() then
+		var_45_0:getHandler():onCancelSelect()
 	end
 end
 
-function slot0.onGameDataUpdate(slot0)
+function var_0_0.onGameDataUpdate(arg_46_0)
 	if not ChessGameController.instance:getSelectObj() then
 		ChessGameController.instance:autoSelectPlayer(true)
 	end
 end
 
-function slot0.onResetGame(slot0)
-	slot0:fillChessBoardBase()
+function var_0_0.onResetGame(arg_47_0)
+	arg_47_0:fillChessBoardBase()
 	ChessGameController.instance:setSelectObj(nil)
 	ChessGameController.instance:autoSelectPlayer(true)
 end
 
-function slot0.resetTiles(slot0)
-	for slot4, slot5 in pairs(slot0._baseTiles) do
-		for slot9, slot10 in pairs(slot5) do
-			gohelper.setActive(slot10.go, false)
+function var_0_0.resetTiles(arg_48_0)
+	for iter_48_0, iter_48_1 in pairs(arg_48_0._baseTiles) do
+		for iter_48_2, iter_48_3 in pairs(iter_48_1) do
+			gohelper.setActive(iter_48_3.go, false)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_49_0)
 	if not ChessGameModel.instance:getGameState() then
 		ChessStatController.instance:statAbort()
 	end
 end
 
-function slot0.resetCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographicSize = 5
-	slot1.orthographic = false
+function var_0_0.resetCamera(arg_50_0)
+	local var_50_0 = CameraMgr.instance:getMainCamera()
+
+	var_50_0.orthographicSize = 5
+	var_50_0.orthographic = false
 end
 
-function slot0.onResultQuit(slot0)
-	slot0:closeThis()
+function var_0_0.onResultQuit(arg_51_0)
+	arg_51_0:closeThis()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._click then
-		slot0._click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_52_0)
+	if arg_52_0._click then
+		arg_52_0._click:RemoveClickListener()
 
-		slot0._click = nil
+		arg_52_0._click = nil
 	end
 
-	slot0._baseTiles = nil
-	slot0._alarmItemPool = {}
+	arg_52_0._baseTiles = nil
+	arg_52_0._alarmItemPool = {}
 
-	slot0:resetCamera()
-	slot0:disposeSceneRoot()
-	slot0:releaseLoader()
+	arg_52_0:resetCamera()
+	arg_52_0:disposeSceneRoot()
+	arg_52_0:releaseLoader()
 end
 
-return slot0
+return var_0_0

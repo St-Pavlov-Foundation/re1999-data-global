@@ -1,30 +1,32 @@
-module("modules.logic.main.model.MainSwitchCategoryListModel", package.seeall)
+﻿module("modules.logic.main.model.MainSwitchCategoryListModel", package.seeall)
 
-slot0 = class("MainSwitchCategoryListModel", ListScrollModel)
+local var_0_0 = class("MainSwitchCategoryListModel", ListScrollModel)
 
-function slot0.setCategoryId(slot0, slot1)
-	slot0.categoryId = slot1
+function var_0_0.setCategoryId(arg_1_0, arg_1_1)
+	arg_1_0.categoryId = arg_1_1
 
-	slot0:onModelUpdate()
+	arg_1_0:onModelUpdate()
 end
 
-function slot0.getCategoryId(slot0)
-	return slot0.categoryId
+function var_0_0.getCategoryId(arg_2_0)
+	return arg_2_0.categoryId
 end
 
-function slot0.initCategoryList(slot0)
-	slot0.categoryId = MainEnum.SwitchType.Character
+function var_0_0.initCategoryList(arg_3_0)
+	arg_3_0.categoryId = MainEnum.SwitchType.Character
 
-	slot0:setList({
+	local var_3_0 = {
 		{
 			id = MainEnum.SwitchType.Character
 		},
 		{
 			id = MainEnum.SwitchType.Scene
 		}
-	})
+	}
+
+	arg_3_0:setList(var_3_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

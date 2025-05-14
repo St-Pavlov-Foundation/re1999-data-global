@@ -1,54 +1,54 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183HeroMO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183HeroMO", package.seeall)
 
-slot0 = pureTable("Act183HeroMO")
+local var_0_0 = pureTable("Act183HeroMO")
 
-function slot0.init(slot0, slot1)
-	slot0._heroId = tonumber(slot1.heroId)
-	slot0._trialId = tonumber(slot1.trialId)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._heroId = tonumber(arg_1_1.heroId)
+	arg_1_0._trialId = tonumber(arg_1_1.trialId)
 
-	if slot0._heroId and slot0._heroId ~= 0 then
-		slot0._heroType = Act183Enum.HeroType.Normal
-		slot0._heroMo = HeroModel.instance:getByHeroId(slot0._heroId)
-	elseif slot0._trialId and slot0._trialId ~= 0 then
-		slot0._heroType = Act183Enum.HeroType.Trial
-		slot0._heroMo = HeroMo.New()
+	if arg_1_0._heroId and arg_1_0._heroId ~= 0 then
+		arg_1_0._heroType = Act183Enum.HeroType.Normal
+		arg_1_0._heroMo = HeroModel.instance:getByHeroId(arg_1_0._heroId)
+	elseif arg_1_0._trialId and arg_1_0._trialId ~= 0 then
+		arg_1_0._heroType = Act183Enum.HeroType.Trial
+		arg_1_0._heroMo = HeroMo.New()
 
-		slot0._heroMo:initFromTrial(slot0._trialId)
+		arg_1_0._heroMo:initFromTrial(arg_1_0._trialId)
 	else
 		logError("角色唯一id和试用id都为0")
 	end
 
-	if not slot0._heroMo then
-		logError(string.format("角色数据不存在 heroId = %s, trialId = %s", slot0._heroId, slot0._trialId))
+	if not arg_1_0._heroMo then
+		logError(string.format("角色数据不存在 heroId = %s, trialId = %s", arg_1_0._heroId, arg_1_0._trialId))
 	end
 
-	slot0._config = slot0._heroMo and slot0._heroMo.config
+	arg_1_0._config = arg_1_0._heroMo and arg_1_0._heroMo.config
 end
 
-function slot0.getHeroMo(slot0)
-	return slot0._heroMo
+function var_0_0.getHeroMo(arg_2_0)
+	return arg_2_0._heroMo
 end
 
-function slot0.getHeroType(slot0)
-	return slot0._heroType
+function var_0_0.getHeroType(arg_3_0)
+	return arg_3_0._heroType
 end
 
-function slot0.getHeroIconUrl(slot0)
-	if slot0._heroType == Act183Enum.HeroType.Normal then
-		return ResUrl.getHeadIconSmall(slot0._heroMo.skin)
-	elseif slot0._heroType == Act183Enum.HeroType.Trial then
-		return ResUrl.getHeadIconSmall(slot0._heroMo.skin)
+function var_0_0.getHeroIconUrl(arg_4_0)
+	if arg_4_0._heroType == Act183Enum.HeroType.Normal then
+		return ResUrl.getHeadIconSmall(arg_4_0._heroMo.skin)
+	elseif arg_4_0._heroType == Act183Enum.HeroType.Trial then
+		return ResUrl.getHeadIconSmall(arg_4_0._heroMo.skin)
 	else
 		logError("GetHeroIconUrl error")
 	end
 end
 
-function slot0.getHeroCarrer(slot0)
-	return slot0._config.career
+function var_0_0.getHeroCarrer(arg_5_0)
+	return arg_5_0._config.career
 end
 
-function slot0.getHeroId(slot0)
-	return slot0._heroMo and slot0._heroMo.heroId
+function var_0_0.getHeroId(arg_6_0)
+	return arg_6_0._heroMo and arg_6_0._heroMo.heroId
 end
 
-return slot0
+return var_0_0

@@ -1,48 +1,52 @@
-module("modules.logic.rouge.controller.RougeOutsideController", package.seeall)
+﻿module("modules.logic.rouge.controller.RougeOutsideController", package.seeall)
 
-slot0 = class("RougeOutsideController", BaseController)
+local var_0_0 = class("RougeOutsideController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._model = RougeOutsideModel.instance
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._model = RougeOutsideModel.instance
 end
 
-function slot0.addConstEvents(slot0)
-	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, slot0._onGetOpenInfoSuccess, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_2_0._onGetOpenInfoSuccess, arg_2_0)
 end
 
-function slot0._onGetOpenInfoSuccess(slot0)
-	if OpenModel.instance:isFunctionUnlock(slot0._model:config():openUnlockId()) then
+function var_0_0._onGetOpenInfoSuccess(arg_3_0)
+	local var_3_0 = arg_3_0._model:config():openUnlockId()
+
+	if OpenModel.instance:isFunctionUnlock(var_3_0) then
 		return
 	end
 
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, slot0._onNewFuncUnlock, slot0)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_3_0._onNewFuncUnlock, arg_3_0)
 end
 
-function slot0.checkOutSideStageInfo(slot0)
+function var_0_0.checkOutSideStageInfo(arg_4_0)
+	return
 end
 
-function slot0._onNewFuncUnlock(slot0, slot1)
-	slot4 = false
+function var_0_0._onNewFuncUnlock(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._model:config():openUnlockId()
+	local var_5_1 = false
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9 == slot0._model:config():openUnlockId() then
-			slot4 = true
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		if iter_5_1 == var_5_0 then
+			var_5_1 = true
 
 			break
 		end
 	end
 
-	if not slot4 then
+	if not var_5_1 then
 		return
 	end
 
-	slot0._model:setIsNewUnlockDifficulty(1, true)
+	arg_5_0._model:setIsNewUnlockDifficulty(1, true)
 end
 
-function slot0.isOpen(slot0)
-	return slot0._model:isUnlock()
+function var_0_0.isOpen(arg_6_0)
+	return arg_6_0._model:isUnlock()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

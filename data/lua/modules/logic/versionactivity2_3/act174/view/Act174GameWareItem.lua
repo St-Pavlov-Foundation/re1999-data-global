@@ -1,167 +1,180 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174GameWareItem", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174GameWareItem", package.seeall)
 
-slot0 = class("Act174GameWareItem", LuaCompBase)
+local var_0_0 = class("Act174GameWareItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.wareHouseView = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.wareHouseView = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.goRole = gohelper.findChild(slot1, "role")
-	slot0.heroRare = gohelper.findChildImage(slot1, "role/rare")
-	slot0.heroIcon = gohelper.findChildSingleImage(slot1, "role/heroicon")
-	slot0.heroCareer = gohelper.findChildImage(slot1, "role/career")
-	slot0.txtName = gohelper.findChildText(slot1, "role/name")
-	slot0.goNewRole = gohelper.findChild(slot1, "role/#new")
-	slot0.goCollection = gohelper.findChild(slot1, "collection")
-	slot0.collectionRare = gohelper.findChildImage(slot1, "collection/rare")
-	slot0.collectionIcon = gohelper.findChildSingleImage(slot1, "collection/collectionicon")
-	slot0.goNewCollection = gohelper.findChild(slot1, "collection/#new")
-	slot0.goSelect = gohelper.findChild(slot1, "go_select")
-	slot0.goHeroTip = gohelper.findChild(slot1, "go_select/txt_equiprole")
-	slot0.goCollectionTip = gohelper.findChild(slot1, "go_select/txt_equipcollection")
-	slot0.goNew = gohelper.findChild(slot1, "go_new")
-	slot0.click = gohelper.findChildClickWithAudio(slot1, "btn_click", AudioEnum.Act174.play_artificial_ui_carddisappear)
-	slot0.longClick = SLFramework.UGUI.UILongPressListener.Get(gohelper.findChild(slot1, "btn_click"))
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.goRole = gohelper.findChild(arg_2_1, "role")
+	arg_2_0.heroRare = gohelper.findChildImage(arg_2_1, "role/rare")
+	arg_2_0.heroIcon = gohelper.findChildSingleImage(arg_2_1, "role/heroicon")
+	arg_2_0.heroCareer = gohelper.findChildImage(arg_2_1, "role/career")
+	arg_2_0.txtName = gohelper.findChildText(arg_2_1, "role/name")
+	arg_2_0.goNewRole = gohelper.findChild(arg_2_1, "role/#new")
+	arg_2_0.goCollection = gohelper.findChild(arg_2_1, "collection")
+	arg_2_0.collectionRare = gohelper.findChildImage(arg_2_1, "collection/rare")
+	arg_2_0.collectionIcon = gohelper.findChildSingleImage(arg_2_1, "collection/collectionicon")
+	arg_2_0.goNewCollection = gohelper.findChild(arg_2_1, "collection/#new")
+	arg_2_0.goSelect = gohelper.findChild(arg_2_1, "go_select")
+	arg_2_0.goHeroTip = gohelper.findChild(arg_2_1, "go_select/txt_equiprole")
+	arg_2_0.goCollectionTip = gohelper.findChild(arg_2_1, "go_select/txt_equipcollection")
+	arg_2_0.goNew = gohelper.findChild(arg_2_1, "go_new")
+	arg_2_0.click = gohelper.findChildClickWithAudio(arg_2_1, "btn_click", AudioEnum.Act174.play_artificial_ui_carddisappear)
 
-	slot0.longClick:SetLongPressTime({
+	local var_2_0 = gohelper.findChild(arg_2_1, "btn_click")
+
+	arg_2_0.longClick = SLFramework.UGUI.UILongPressListener.Get(var_2_0)
+
+	arg_2_0.longClick:SetLongPressTime({
 		0.5,
 		99999
 	})
 end
 
-function slot0.addEventListeners(slot0)
-	slot0.click:AddClickListener(slot0.clickItem, slot0)
-	slot0.click:AddClickDownListener(slot0.onClickDown, slot0)
-	slot0.longClick:AddLongPressListener(slot0.onLongPress, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0.click:AddClickListener(arg_3_0.clickItem, arg_3_0)
+	arg_3_0.click:AddClickDownListener(arg_3_0.onClickDown, arg_3_0)
+	arg_3_0.longClick:AddLongPressListener(arg_3_0.onLongPress, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0.click:RemoveClickListener()
-	slot0.click:RemoveClickDownListener()
-	slot0.longClick:RemoveLongPressListener()
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0.click:RemoveClickListener()
+	arg_4_0.click:RemoveClickDownListener()
+	arg_4_0.longClick:RemoveLongPressListener()
 end
 
-function slot0.onDestroy(slot0)
-	slot0.heroIcon:UnLoadImage()
-	slot0.collectionIcon:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0.newAnimEnd, slot0)
+function var_0_0.onDestroy(arg_5_0)
+	arg_5_0.heroIcon:UnLoadImage()
+	arg_5_0.collectionIcon:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_5_0.newAnimEnd, arg_5_0)
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0.index = slot1
+function var_0_0.setIndex(arg_6_0, arg_6_1)
+	arg_6_0.index = arg_6_1
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	if not slot1 then
-		gohelper.setActive(slot0.go, false)
+function var_0_0.setData(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 then
+		gohelper.setActive(arg_7_0.go, false)
 
 		return
 	end
 
-	slot0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
-	slot0.wareData = slot1
-	slot0.wareType = slot2
+	arg_7_0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	arg_7_0.wareData = arg_7_1
+	arg_7_0.wareType = arg_7_2
 
-	if slot0.wareType == Activity174Enum.WareType.Hero then
-		slot0.config = lua_activity174_role.configDict[slot1.id]
+	local var_7_0 = arg_7_1.id
 
-		slot0.heroIcon:LoadImage(ResUrl.getHeadIconSmall(slot0.config.skinId))
-		UISpriteSetMgr.instance:setCommonSprite(slot0.heroRare, "bgequip" .. tostring(CharacterEnum.Color[slot0.config.rare]))
-		UISpriteSetMgr.instance:setCommonSprite(slot0.heroCareer, "lssx_" .. slot0.config.career)
+	if arg_7_0.wareType == Activity174Enum.WareType.Hero then
+		arg_7_0.config = lua_activity174_role.configDict[var_7_0]
 
-		slot0.txtName.text = slot0.config.name
-	elseif slot0.wareType == Activity174Enum.WareType.Collection then
-		slot0.config = lua_activity174_collection.configDict[slot3]
+		arg_7_0.heroIcon:LoadImage(ResUrl.getHeadIconSmall(arg_7_0.config.skinId))
+		UISpriteSetMgr.instance:setCommonSprite(arg_7_0.heroRare, "bgequip" .. tostring(CharacterEnum.Color[arg_7_0.config.rare]))
+		UISpriteSetMgr.instance:setCommonSprite(arg_7_0.heroCareer, "lssx_" .. arg_7_0.config.career)
 
-		slot0.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(slot0.config.icon))
-		UISpriteSetMgr.instance:setAct174Sprite(slot0.collectionRare, "act174_propitembg_" .. slot0.config.rare)
+		arg_7_0.txtName.text = arg_7_0.config.name
+	elseif arg_7_0.wareType == Activity174Enum.WareType.Collection then
+		arg_7_0.config = lua_activity174_collection.configDict[var_7_0]
+
+		arg_7_0.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(arg_7_0.config.icon))
+		UISpriteSetMgr.instance:setAct174Sprite(arg_7_0.collectionRare, "act174_propitembg_" .. arg_7_0.config.rare)
 	end
 
-	gohelper.setActive(slot0.goRole, slot0.wareType == Activity174Enum.WareType.Hero)
-	gohelper.setActive(slot0.goCollection, slot0.wareType == Activity174Enum.WareType.Collection)
-	slot0:refreshSelect()
-	gohelper.setActive(slot0.go, true)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.SwitchShopTeam, slot0.refreshSelect, slot0)
-	slot0:setNew(false)
+	gohelper.setActive(arg_7_0.goRole, arg_7_0.wareType == Activity174Enum.WareType.Hero)
+	gohelper.setActive(arg_7_0.goCollection, arg_7_0.wareType == Activity174Enum.WareType.Collection)
+	arg_7_0:refreshSelect()
+	gohelper.setActive(arg_7_0.go, true)
+	arg_7_0:addEventCb(Activity174Controller.instance, Activity174Event.SwitchShopTeam, arg_7_0.refreshSelect, arg_7_0)
+	arg_7_0:setNew(false)
 end
 
-function slot0.refreshSelect(slot0)
-	if slot0.wareHouseView._goEditTeam.activeInHierarchy then
-		gohelper.setActive(slot0.goSelect, slot0.wareData.isEquip == 1)
-		gohelper.setActive(slot0.goHeroTip, slot0.wareType == Activity174Enum.WareType.Hero)
-		gohelper.setActive(slot0.goCollectionTip, slot0.wareType == Activity174Enum.WareType.Collection)
+function var_0_0.refreshSelect(arg_8_0)
+	if arg_8_0.wareHouseView._goEditTeam.activeInHierarchy then
+		gohelper.setActive(arg_8_0.goSelect, arg_8_0.wareData.isEquip == 1)
+		gohelper.setActive(arg_8_0.goHeroTip, arg_8_0.wareType == Activity174Enum.WareType.Hero)
+		gohelper.setActive(arg_8_0.goCollectionTip, arg_8_0.wareType == Activity174Enum.WareType.Collection)
 	else
-		gohelper.setActive(slot0.goSelect, false)
+		gohelper.setActive(arg_8_0.goSelect, false)
 	end
 end
 
-function slot0.setNew(slot0, slot1)
-	gohelper.setActive(slot0.goNew, slot1)
+function var_0_0.setNew(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0.goNew, arg_9_1)
 end
 
-function slot0.playNew(slot0)
-	if slot0.wareType == Activity174Enum.WareType.Hero then
-		gohelper.setActive(slot0.goNewRole, true)
+function var_0_0.playNew(arg_10_0)
+	if arg_10_0.wareType == Activity174Enum.WareType.Hero then
+		gohelper.setActive(arg_10_0.goNewRole, true)
 	else
-		gohelper.setActive(slot0.goNewCollection, true)
+		gohelper.setActive(arg_10_0.goNewCollection, true)
 	end
 
-	TaskDispatcher.runDelay(slot0.newAnimEnd, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_10_0.newAnimEnd, arg_10_0, 0.5)
 end
 
-function slot0.newAnimEnd(slot0)
-	gohelper.setActive(slot0.goNewRole, false)
-	gohelper.setActive(slot0.goNewCollection, false)
+function var_0_0.newAnimEnd(arg_11_0)
+	gohelper.setActive(arg_11_0.goNewRole, false)
+	gohelper.setActive(arg_11_0.goNewCollection, false)
 end
 
-function slot0.clickItem(slot0)
-	if slot0.wareHouseView._goEditTeam.activeInHierarchy then
-		slot0:deleteNewSign()
+function var_0_0.clickItem(arg_12_0)
+	if arg_12_0.wareHouseView._goEditTeam.activeInHierarchy then
+		arg_12_0:deleteNewSign()
 
-		if slot0.wareData.isEquip == 0 then
-			Activity174Controller.instance:dispatchEvent(Activity174Event.WareItemInstall, slot0.wareData.id)
+		if arg_12_0.wareData.isEquip == 0 then
+			Activity174Controller.instance:dispatchEvent(Activity174Event.WareItemInstall, arg_12_0.wareData.id)
 		else
-			Activity174Controller.instance:dispatchEvent(Activity174Event.WareItemRemove, slot0.wareData.id)
+			Activity174Controller.instance:dispatchEvent(Activity174Event.WareItemRemove, arg_12_0.wareData.id)
 		end
 	end
 end
 
-function slot0.onClickDown(slot0)
-	if slot0.wareHouseView._goEditTeam.activeInHierarchy then
+function var_0_0.onClickDown(arg_13_0)
+	if arg_13_0.wareHouseView._goEditTeam.activeInHierarchy then
 		return
 	end
 
-	slot0:deleteNewSign()
-	Activity174Controller.instance:openItemTipView({
-		type = slot0.wareType,
-		co = slot0.config,
-		pos = Vector2.New(-300, 0),
-		showMask = true
-	})
+	arg_13_0:deleteNewSign()
+
+	local var_13_0 = {
+		type = arg_13_0.wareType,
+		co = arg_13_0.config,
+		pos = Vector2.New(-300, 0)
+	}
+
+	var_13_0.showMask = true
+
+	Activity174Controller.instance:openItemTipView(var_13_0)
 	AudioMgr.instance:trigger(AudioEnum.Act174.play_artificial_ui_carddisappear)
 end
 
-function slot0.onLongPress(slot0)
-	if not slot0.wareHouseView._goEditTeam.activeInHierarchy then
+function var_0_0.onLongPress(arg_14_0)
+	if not arg_14_0.wareHouseView._goEditTeam.activeInHierarchy then
 		return
 	end
 
-	slot0:deleteNewSign()
-	Activity174Controller.instance:openItemTipView({
-		type = slot0.wareType,
-		co = slot0.config,
-		pos = Vector2.New(-300, 0),
-		showMask = true
-	})
+	arg_14_0:deleteNewSign()
+
+	local var_14_0 = {
+		type = arg_14_0.wareType,
+		co = arg_14_0.config,
+		pos = Vector2.New(-300, 0)
+	}
+
+	var_14_0.showMask = true
+
+	Activity174Controller.instance:openItemTipView(var_14_0)
 end
 
-function slot0.deleteNewSign(slot0)
-	if slot0.goNew.activeInHierarchy then
-		slot0:setNew(false)
-		slot0.wareHouseView.wareHouseMo:deleteNewSign(slot0.wareType, slot0.wareData.id)
+function var_0_0.deleteNewSign(arg_15_0)
+	if arg_15_0.goNew.activeInHierarchy then
+		arg_15_0:setNew(false)
+		arg_15_0.wareHouseView.wareHouseMo:deleteNewSign(arg_15_0.wareType, arg_15_0.wareData.id)
 	end
 end
 
-return slot0
+return var_0_0

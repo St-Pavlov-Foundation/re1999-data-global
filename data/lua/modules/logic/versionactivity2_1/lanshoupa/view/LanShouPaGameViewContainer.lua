@@ -1,53 +1,53 @@
-module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameViewContainer", package.seeall)
 
-slot0 = class("LanShouPaGameViewContainer", BaseViewContainer)
+local var_0_0 = class("LanShouPaGameViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, LanShouPaGameView.New())
-	table.insert(slot1, LanShouPaGameScene.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(var_1_0, LanShouPaGameView.New())
+	table.insert(var_1_0, LanShouPaGameScene.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		local var_3_0 = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot2:setOverrideClose(slot0._overrideCloseFunc, slot0)
+		var_3_0:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
 
 		return {
-			slot2
+			var_3_0
 		}
 	end
 end
 
-function slot0._overrideCloseFunc(slot0)
+function var_0_0._overrideCloseFunc(arg_4_0)
 	ChessGameController.instance:release()
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._onEscape(slot0)
-	slot0:_overrideCloseFunc()
+function var_0_0._onEscape(arg_5_0)
+	arg_5_0:_overrideCloseFunc()
 end
 
-function slot0.setRootSceneGo(slot0, slot1)
-	slot0.sceneGo = slot1
+function var_0_0.setRootSceneGo(arg_6_0, arg_6_1)
+	arg_6_0.sceneGo = arg_6_1
 end
 
-function slot0.getRootSceneGo(slot0)
-	return slot0.sceneGo
+function var_0_0.getRootSceneGo(arg_7_0)
+	return arg_7_0.sceneGo
 end
 
-return slot0
+return var_0_0

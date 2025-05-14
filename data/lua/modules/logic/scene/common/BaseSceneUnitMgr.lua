@@ -1,80 +1,96 @@
-module("modules.logic.scene.common.BaseSceneUnitMgr", package.seeall)
+﻿module("modules.logic.scene.common.BaseSceneUnitMgr", package.seeall)
 
-slot0 = class("BaseSceneUnitMgr", BaseSceneComp)
+local var_0_0 = class("BaseSceneUnitMgr", BaseSceneComp)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0._tagUnitDict = {}
-	slot0._containerGO = slot0:getCurScene():getSceneContainerGO()
+	arg_1_0._tagUnitDict = {}
+	arg_1_0._containerGO = arg_1_0:getCurScene():getSceneContainerGO()
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:removeAllUnits()
+function var_0_0.onSceneClose(arg_2_0)
+	arg_2_0:removeAllUnits()
 end
 
-function slot0.addUnit(slot0, slot1)
-	gohelper.addChild(slot0._containerGO, slot1.go)
+function var_0_0.addUnit(arg_3_0, arg_3_1)
+	gohelper.addChild(arg_3_0._containerGO, arg_3_1.go)
 
-	if not slot0._tagUnitDict[slot1.go.tag] then
-		slot0._tagUnitDict[slot2] = {}
+	local var_3_0 = arg_3_1.go.tag
+	local var_3_1 = arg_3_0._tagUnitDict[var_3_0]
+
+	if not var_3_1 then
+		var_3_1 = {}
+		arg_3_0._tagUnitDict[var_3_0] = var_3_1
 	end
 
-	slot3[slot1.id] = slot1
+	var_3_1[arg_3_1.id] = arg_3_1
 end
 
-function slot0.removeUnit(slot0, slot1, slot2)
-	if slot0._tagUnitDict[slot1] and slot3[slot2] then
-		slot3[slot2] = nil
+function var_0_0.removeUnit(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0._tagUnitDict[arg_4_1]
 
-		slot0:destroyUnit(slot4)
-	end
-end
+	if var_4_0 then
+		local var_4_1 = var_4_0[arg_4_2]
 
-function slot0.removeUnitData(slot0, slot1, slot2)
-	if slot0._tagUnitDict[slot1] and slot0._tagUnitDict[slot1][slot2] then
-		slot0._tagUnitDict[slot1][slot2] = nil
+		if var_4_1 then
+			var_4_0[arg_4_2] = nil
 
-		return slot0._tagUnitDict[slot1][slot2]
-	end
-end
-
-function slot0.removeUnits(slot0, slot1)
-	if slot0._tagUnitDict[slot1] then
-		for slot6, slot7 in pairs(slot2) do
-			slot2[slot6] = nil
-
-			slot0:destroyUnit(slot7)
+			arg_4_0:destroyUnit(var_4_1)
 		end
 	end
 end
 
-function slot0.removeAllUnits(slot0)
-	for slot4, slot5 in pairs(slot0._tagUnitDict) do
-		for slot9, slot10 in pairs(slot5) do
-			slot5[slot9] = nil
+function var_0_0.removeUnitData(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._tagUnitDict[arg_5_1] and arg_5_0._tagUnitDict[arg_5_1][arg_5_2] then
+		local var_5_0 = arg_5_0._tagUnitDict[arg_5_1][arg_5_2]
 
-			slot0:destroyUnit(slot10)
+		arg_5_0._tagUnitDict[arg_5_1][arg_5_2] = nil
+
+		return var_5_0
+	end
+end
+
+function var_0_0.removeUnits(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._tagUnitDict[arg_6_1]
+
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in pairs(var_6_0) do
+			var_6_0[iter_6_0] = nil
+
+			arg_6_0:destroyUnit(iter_6_1)
 		end
 	end
 end
 
-function slot0.getUnit(slot0, slot1, slot2)
-	if slot0._tagUnitDict[slot1] then
-		return slot3[slot2]
+function var_0_0.removeAllUnits(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._tagUnitDict) do
+		for iter_7_2, iter_7_3 in pairs(iter_7_1) do
+			iter_7_1[iter_7_2] = nil
+
+			arg_7_0:destroyUnit(iter_7_3)
+		end
 	end
 end
 
-function slot0.getTagUnitDict(slot0, slot1)
-	return slot0._tagUnitDict[slot1]
+function var_0_0.getUnit(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._tagUnitDict[arg_8_1]
+
+	if var_8_0 then
+		return var_8_0[arg_8_2]
+	end
 end
 
-function slot0.destroyUnit(slot0, slot1)
-	if slot1.beforeDestroy then
-		slot1:beforeDestroy()
+function var_0_0.getTagUnitDict(arg_9_0, arg_9_1)
+	return arg_9_0._tagUnitDict[arg_9_1]
+end
+
+function var_0_0.destroyUnit(arg_10_0, arg_10_1)
+	if arg_10_1.beforeDestroy then
+		arg_10_1:beforeDestroy()
 	end
 
-	gohelper.destroy(slot1.go)
+	gohelper.destroy(arg_10_1.go)
 end
 
-return slot0
+return var_0_0

@@ -1,471 +1,535 @@
-module("modules.logic.room.model.map.RoomCharacterModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomCharacterModel", package.seeall)
 
-slot0 = class("RoomCharacterModel", BaseModel)
+local var_0_0 = class("RoomCharacterModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._tempCharacterMO = nil
-	slot0._canConfirmPlaceDict = nil
-	slot0._allNodePositionList = nil
-	slot0._cantWadeNodePositionList = nil
-	slot0._canDragCharacter = false
-	slot0._waterNodePositions = nil
-	slot0._hideFaithFullMap = {}
-	slot0._emptyBlockPositions = nil
-	slot0._showBirthdayToastTipCache = nil
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._tempCharacterMO = nil
+	arg_4_0._canConfirmPlaceDict = nil
+	arg_4_0._allNodePositionList = nil
+	arg_4_0._cantWadeNodePositionList = nil
+	arg_4_0._canDragCharacter = false
+	arg_4_0._waterNodePositions = nil
+	arg_4_0._hideFaithFullMap = {}
+	arg_4_0._emptyBlockPositions = nil
+	arg_4_0._showBirthdayToastTipCache = nil
 end
 
-function slot0.initCharacter(slot0, slot1)
-	slot0:clear()
+function var_0_0.initCharacter(arg_5_0, arg_5_1)
+	arg_5_0:clear()
 
-	if not slot1 or #slot1 <= 0 then
+	if not arg_5_1 or #arg_5_1 <= 0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if RoomModel.instance:getCharacterPosition(RoomInfoHelper.serverInfoToCharacterInfo(slot6).heroId) then
-			slot7.currentPosition = RoomCharacterHelper.reCalculateHeight(slot8)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = RoomInfoHelper.serverInfoToCharacterInfo(iter_5_1)
+		local var_5_1 = RoomModel.instance:getCharacterPosition(var_5_0.heroId)
+
+		if var_5_1 then
+			var_5_0.currentPosition = RoomCharacterHelper.reCalculateHeight(var_5_1)
 		end
 
-		slot9 = RoomCharacterMO.New()
+		local var_5_2 = RoomCharacterMO.New()
 
-		slot9:init(slot7)
+		var_5_2:init(var_5_0)
 
-		if RoomConfig.instance:getRoomCharacterConfig(slot9.skinId) then
-			slot0:_addCharacterMO(slot9)
-		end
-	end
-
-	slot0:_initHideFithData()
-end
-
-function slot0.addTempCharacterMO(slot0, slot1, slot2, slot3)
-	if slot0._tempCharacterMO then
-		return
-	end
-
-	slot0._tempCharacterMO = RoomCharacterMO.New()
-
-	slot0._tempCharacterMO:init(RoomInfoHelper.generateTempCharacterInfo(slot1, slot2, slot3))
-	RoomCharacterController.instance:correctCharacterHeight(slot0._tempCharacterMO)
-	slot0:_addCharacterMO(slot0._tempCharacterMO)
-	slot0:clearCanConfirmPlaceDict()
-
-	return slot0._tempCharacterMO
-end
-
-function slot0.getTempCharacterMO(slot0)
-	return slot0._tempCharacterMO
-end
-
-function slot0.changeTempCharacterMO(slot0, slot1)
-	if not slot0._tempCharacterMO then
-		return
-	end
-
-	slot0._tempCharacterMO:setPosition(RoomCharacterHelper.reCalculateHeight(slot1))
-end
-
-function slot0.removeTempCharacterMO(slot0)
-	if not slot0._tempCharacterMO then
-		return
-	end
-
-	slot0:_removeCharacterMO(slot0._tempCharacterMO)
-
-	slot0._tempCharacterMO = nil
-
-	slot0:clearCanConfirmPlaceDict()
-end
-
-function slot0.placeTempCharacterMO(slot0)
-	if not slot0._tempCharacterMO then
-		return
-	end
-
-	RoomCharacterController.instance:correctCharacterHeight(slot0._tempCharacterMO)
-
-	slot0._tempCharacterMO.characterState = RoomCharacterEnum.CharacterState.Map
-	slot0._tempCharacterMO = nil
-
-	slot0:clearCanConfirmPlaceDict()
-end
-
-function slot0.revertTempCharacterMO(slot0, slot1)
-	if slot0._tempCharacterMO then
-		return
-	end
-
-	slot0._tempCharacterMO = slot0:getCharacterMOById(slot1)
-
-	if not slot0._tempCharacterMO then
-		return
-	end
-
-	slot0._tempCharacterMO.characterState = RoomCharacterEnum.CharacterState.Revert
-	slot0._revertPosition = slot0._tempCharacterMO.currentPosition
-
-	slot0:clearCanConfirmPlaceDict()
-
-	return slot0._tempCharacterMO
-end
-
-function slot0.removeRevertCharacterMO(slot0)
-	if not slot0._tempCharacterMO then
-		return
-	end
-
-	slot0._tempCharacterMO:setPosition(RoomCharacterHelper.reCalculateHeight(slot0._revertPosition))
-
-	slot0._tempCharacterMO.characterState = RoomCharacterEnum.CharacterState.Map
-	slot0._tempCharacterMO = nil
-
-	slot0:clearCanConfirmPlaceDict()
-
-	return slot0._tempCharacterMO.heroId, slot0._revertPosition
-end
-
-function slot0.unUseRevertCharacterMO(slot0)
-	if not slot0._tempCharacterMO then
-		return
-	end
-
-	slot0:_removeCharacterMO(slot0._tempCharacterMO)
-
-	slot0._tempCharacterMO = nil
-
-	slot0:clearCanConfirmPlaceDict()
-end
-
-function slot0.getRevertPosition(slot0)
-	return slot0._revertPosition
-end
-
-function slot0.resetCharacterMO(slot0, slot1, slot2)
-	if not slot0:getById(slot1) then
-		return
-	end
-
-	slot3:endMove()
-	slot3:setPosition(RoomCharacterHelper.reCalculateHeight(slot2))
-end
-
-function slot0.deleteCharacterMO(slot0, slot1)
-	if not slot0:getById(slot1) then
-		return
-	end
-
-	slot0:_removeCharacterMO(slot2)
-	slot0:setHideFaithFull(slot1, false)
-end
-
-function slot0.endAllMove(slot0)
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		slot6:endMove()
-	end
-end
-
-function slot0.getConfirmCharacterCount(slot0)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if (slot7.characterState == RoomCharacterEnum.CharacterState.Map or slot7.characterState == RoomCharacterEnum.CharacterState.Revert) and slot7:isPlaceSourceState() then
-			slot2 = 0 + 1
+		if RoomConfig.instance:getRoomCharacterConfig(var_5_2.skinId) then
+			arg_5_0:_addCharacterMO(var_5_2)
 		end
 	end
 
-	return slot2
+	arg_5_0:_initHideFithData()
 end
 
-function slot0.getMaxCharacterCount(slot0, slot1, slot2)
-	return (RoomConfig.instance:getRoomLevelConfig(slot2 or RoomMapModel.instance:getRoomLevel()) and slot4.characterLimit or 0) + RoomConfig.instance:getCharacterLimitAddByBuildDegree(slot1 or RoomMapModel.instance:getAllBuildDegree())
+function var_0_0.addTempCharacterMO(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_0._tempCharacterMO then
+		return
+	end
+
+	arg_6_0._tempCharacterMO = RoomCharacterMO.New()
+
+	local var_6_0 = RoomInfoHelper.generateTempCharacterInfo(arg_6_1, arg_6_2, arg_6_3)
+
+	arg_6_0._tempCharacterMO:init(var_6_0)
+	RoomCharacterController.instance:correctCharacterHeight(arg_6_0._tempCharacterMO)
+	arg_6_0:_addCharacterMO(arg_6_0._tempCharacterMO)
+	arg_6_0:clearCanConfirmPlaceDict()
+
+	return arg_6_0._tempCharacterMO
 end
 
-function slot0.refreshCanConfirmPlaceDict(slot0)
-	if not slot0._tempCharacterMO then
-		slot0._canConfirmPlaceDict = {}
+function var_0_0.getTempCharacterMO(arg_7_0)
+	return arg_7_0._tempCharacterMO
+end
+
+function var_0_0.changeTempCharacterMO(arg_8_0, arg_8_1)
+	if not arg_8_0._tempCharacterMO then
+		return
+	end
+
+	arg_8_0._tempCharacterMO:setPosition(RoomCharacterHelper.reCalculateHeight(arg_8_1))
+end
+
+function var_0_0.removeTempCharacterMO(arg_9_0)
+	if not arg_9_0._tempCharacterMO then
+		return
+	end
+
+	arg_9_0:_removeCharacterMO(arg_9_0._tempCharacterMO)
+
+	arg_9_0._tempCharacterMO = nil
+
+	arg_9_0:clearCanConfirmPlaceDict()
+end
+
+function var_0_0.placeTempCharacterMO(arg_10_0)
+	if not arg_10_0._tempCharacterMO then
+		return
+	end
+
+	RoomCharacterController.instance:correctCharacterHeight(arg_10_0._tempCharacterMO)
+
+	arg_10_0._tempCharacterMO.characterState = RoomCharacterEnum.CharacterState.Map
+	arg_10_0._tempCharacterMO = nil
+
+	arg_10_0:clearCanConfirmPlaceDict()
+end
+
+function var_0_0.revertTempCharacterMO(arg_11_0, arg_11_1)
+	if arg_11_0._tempCharacterMO then
+		return
+	end
+
+	arg_11_0._tempCharacterMO = arg_11_0:getCharacterMOById(arg_11_1)
+
+	if not arg_11_0._tempCharacterMO then
+		return
+	end
+
+	arg_11_0._tempCharacterMO.characterState = RoomCharacterEnum.CharacterState.Revert
+	arg_11_0._revertPosition = arg_11_0._tempCharacterMO.currentPosition
+
+	arg_11_0:clearCanConfirmPlaceDict()
+
+	return arg_11_0._tempCharacterMO
+end
+
+function var_0_0.removeRevertCharacterMO(arg_12_0)
+	if not arg_12_0._tempCharacterMO then
+		return
+	end
+
+	local var_12_0 = arg_12_0._tempCharacterMO.heroId
+
+	arg_12_0._tempCharacterMO:setPosition(RoomCharacterHelper.reCalculateHeight(arg_12_0._revertPosition))
+
+	arg_12_0._tempCharacterMO.characterState = RoomCharacterEnum.CharacterState.Map
+	arg_12_0._tempCharacterMO = nil
+
+	arg_12_0:clearCanConfirmPlaceDict()
+
+	return var_12_0, arg_12_0._revertPosition
+end
+
+function var_0_0.unUseRevertCharacterMO(arg_13_0)
+	if not arg_13_0._tempCharacterMO then
+		return
+	end
+
+	arg_13_0:_removeCharacterMO(arg_13_0._tempCharacterMO)
+
+	arg_13_0._tempCharacterMO = nil
+
+	arg_13_0:clearCanConfirmPlaceDict()
+end
+
+function var_0_0.getRevertPosition(arg_14_0)
+	return arg_14_0._revertPosition
+end
+
+function var_0_0.resetCharacterMO(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getById(arg_15_1)
+
+	if not var_15_0 then
+		return
+	end
+
+	var_15_0:endMove()
+	var_15_0:setPosition(RoomCharacterHelper.reCalculateHeight(arg_15_2))
+end
+
+function var_0_0.deleteCharacterMO(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getById(arg_16_1)
+
+	if not var_16_0 then
+		return
+	end
+
+	arg_16_0:_removeCharacterMO(var_16_0)
+	arg_16_0:setHideFaithFull(arg_16_1, false)
+end
+
+function var_0_0.endAllMove(arg_17_0)
+	local var_17_0 = arg_17_0:getList()
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		iter_17_1:endMove()
+	end
+end
+
+function var_0_0.getConfirmCharacterCount(arg_18_0)
+	local var_18_0 = arg_18_0:getList()
+	local var_18_1 = 0
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		if (iter_18_1.characterState == RoomCharacterEnum.CharacterState.Map or iter_18_1.characterState == RoomCharacterEnum.CharacterState.Revert) and iter_18_1:isPlaceSourceState() then
+			var_18_1 = var_18_1 + 1
+		end
+	end
+
+	return var_18_1
+end
+
+function var_0_0.getMaxCharacterCount(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_2 or RoomMapModel.instance:getRoomLevel()
+	local var_19_1 = RoomConfig.instance:getRoomLevelConfig(var_19_0)
+	local var_19_2 = var_19_1 and var_19_1.characterLimit or 0
+	local var_19_3 = arg_19_1 or RoomMapModel.instance:getAllBuildDegree()
+
+	return var_19_2 + RoomConfig.instance:getCharacterLimitAddByBuildDegree(var_19_3)
+end
+
+function var_0_0.refreshCanConfirmPlaceDict(arg_20_0)
+	if not arg_20_0._tempCharacterMO then
+		arg_20_0._canConfirmPlaceDict = {}
 	else
-		slot0._canConfirmPlaceDict = RoomCharacterHelper.getCanConfirmPlaceDict(slot0._tempCharacterMO.heroId, slot0._tempCharacterMO.skinId)
+		arg_20_0._canConfirmPlaceDict = RoomCharacterHelper.getCanConfirmPlaceDict(arg_20_0._tempCharacterMO.heroId, arg_20_0._tempCharacterMO.skinId)
 	end
 end
 
-function slot0.isCanConfirm(slot0, slot1)
-	if not slot0._canConfirmPlaceDict then
-		slot0:refreshCanConfirmPlaceDict()
+function var_0_0.isCanConfirm(arg_21_0, arg_21_1)
+	if not arg_21_0._canConfirmPlaceDict then
+		arg_21_0:refreshCanConfirmPlaceDict()
 	end
 
-	return slot0._canConfirmPlaceDict[slot1.x] and slot0._canConfirmPlaceDict[slot1.x][slot1.y]
+	return arg_21_0._canConfirmPlaceDict[arg_21_1.x] and arg_21_0._canConfirmPlaceDict[arg_21_1.x][arg_21_1.y]
 end
 
-function slot0.getCanConfirmPlaceDict(slot0)
-	if not slot0._canConfirmPlaceDict then
-		slot0:refreshCanConfirmPlaceDict()
+function var_0_0.getCanConfirmPlaceDict(arg_22_0)
+	if not arg_22_0._canConfirmPlaceDict then
+		arg_22_0:refreshCanConfirmPlaceDict()
 	end
 
-	return slot0._canConfirmPlaceDict
+	return arg_22_0._canConfirmPlaceDict
 end
 
-function slot0.clearCanConfirmPlaceDict(slot0)
-	slot0._canConfirmPlaceDict = nil
+function var_0_0.clearCanConfirmPlaceDict(arg_23_0)
+	arg_23_0._canConfirmPlaceDict = nil
 end
 
-function slot0._refreshNodePositionList(slot0)
-	slot0._allNodePositionList = {}
+function var_0_0._refreshNodePositionList(arg_24_0)
+	arg_24_0._allNodePositionList = {}
 
-	RoomHelper.cArrayToLuaTable(ZProj.AStarPathBridge.GetNodePositions(RoomCharacterHelper.getTag(true)), slot0._allNodePositionList)
+	local var_24_0 = ZProj.AStarPathBridge.GetNodePositions(RoomCharacterHelper.getTag(true))
 
-	slot0._cantWadeNodePositionList = {}
+	RoomHelper.cArrayToLuaTable(var_24_0, arg_24_0._allNodePositionList)
 
-	RoomHelper.cArrayToLuaTable(ZProj.AStarPathBridge.GetNodePositions(RoomCharacterHelper.getTag(false)), slot0._cantWadeNodePositionList)
+	arg_24_0._cantWadeNodePositionList = {}
+
+	local var_24_1 = ZProj.AStarPathBridge.GetNodePositions(RoomCharacterHelper.getTag(false))
+
+	RoomHelper.cArrayToLuaTable(var_24_1, arg_24_0._cantWadeNodePositionList)
 end
 
-function slot0.getNodePositionList(slot0, slot1)
-	if not slot0._allNodePositionList or not slot0._cantWadeNodePositionList then
-		slot0:_refreshNodePositionList()
+function var_0_0.getNodePositionList(arg_25_0, arg_25_1)
+	if not arg_25_0._allNodePositionList or not arg_25_0._cantWadeNodePositionList then
+		arg_25_0:_refreshNodePositionList()
 	end
 
-	return slot1 and slot0._allNodePositionList or slot0._cantWadeNodePositionList
+	return arg_25_1 and arg_25_0._allNodePositionList or arg_25_0._cantWadeNodePositionList
 end
 
-function slot0.clearNodePositionList(slot0)
-	slot0._cantWadeNodePositionList = nil
-	slot0._allNodePositionList = nil
+function var_0_0.clearNodePositionList(arg_26_0)
+	arg_26_0._cantWadeNodePositionList = nil
+	arg_26_0._allNodePositionList = nil
 end
 
-function slot0._addCharacterMO(slot0, slot1)
-	slot0:addAtLast(slot1)
+function var_0_0._addCharacterMO(arg_27_0, arg_27_1)
+	arg_27_0:addAtLast(arg_27_1)
 end
 
-function slot0._removeCharacterMO(slot0, slot1)
-	slot0:remove(slot1)
+function var_0_0._removeCharacterMO(arg_28_0, arg_28_1)
+	arg_28_0:remove(arg_28_1)
 end
 
-function slot0.editRemoveCharacterMO(slot0, slot1)
-	if slot0:getById(slot1) then
-		slot0:_removeCharacterMO(slot2)
+function var_0_0.editRemoveCharacterMO(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:getById(arg_29_1)
+
+	if var_29_0 then
+		arg_29_0:_removeCharacterMO(var_29_0)
 	end
 end
 
-function slot0.getCharacterMOById(slot0, slot1)
-	if not slot0:getById(slot1) and slot0._trainTempMO and slot0._trainTempMO.id == slot1 then
-		return slot0._trainTempMO
+function var_0_0.getCharacterMOById(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0:getById(arg_30_1)
+
+	if not var_30_0 and arg_30_0._trainTempMO and arg_30_0._trainTempMO.id == arg_30_1 then
+		return arg_30_0._trainTempMO
 	end
 
-	return slot2
+	return var_30_0
 end
 
-function slot0.updateCharacterFaith(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0:getCharacterMOById(slot6.heroId) then
-			slot7.currentFaith = slot6.currentFaith
-			slot7.currentMinute = slot6.currentMinute
-			slot7.nextRefreshTime = slot6.nextRefreshTime
+function var_0_0.updateCharacterFaith(arg_31_0, arg_31_1)
+	for iter_31_0, iter_31_1 in ipairs(arg_31_1) do
+		local var_31_0 = arg_31_0:getCharacterMOById(iter_31_1.heroId)
+
+		if var_31_0 then
+			var_31_0.currentFaith = iter_31_1.currentFaith
+			var_31_0.currentMinute = iter_31_1.currentMinute
+			var_31_0.nextRefreshTime = iter_31_1.nextRefreshTime
 		end
 	end
 end
 
-function slot0.setCanDragCharacter(slot0, slot1)
-	slot0._canDragCharacter = slot1
+function var_0_0.setCanDragCharacter(arg_32_0, arg_32_1)
+	arg_32_0._canDragCharacter = arg_32_1
 end
 
-function slot0.canDragCharacter(slot0)
-	return slot0._canDragCharacter
+function var_0_0.canDragCharacter(arg_33_0)
+	return arg_33_0._canDragCharacter
 end
 
-function slot0._refreshWaterNodePositions(slot0)
-	slot0._waterNodePositions = {}
+function var_0_0._refreshWaterNodePositions(arg_34_0)
+	arg_34_0._waterNodePositions = {}
 
-	if ZProj.AStarPathBridge.GetNodePositions(bit.lshift(1, RoomEnum.AStarLayerTag.Water)) then
-		slot2 = slot1:GetEnumerator()
+	local var_34_0 = ZProj.AStarPathBridge.GetNodePositions(bit.lshift(1, RoomEnum.AStarLayerTag.Water))
 
-		while slot2:MoveNext() do
-			table.insert(slot0._waterNodePositions, slot2.Current)
+	if var_34_0 then
+		local var_34_1 = var_34_0:GetEnumerator()
+
+		while var_34_1:MoveNext() do
+			table.insert(arg_34_0._waterNodePositions, var_34_1.Current)
 		end
 	end
 end
 
-function slot0.getWaterNodePositions(slot0)
-	if not slot0._waterNodePositions then
-		slot0:_refreshWaterNodePositions()
+function var_0_0.getWaterNodePositions(arg_35_0)
+	if not arg_35_0._waterNodePositions then
+		arg_35_0:_refreshWaterNodePositions()
 	end
 
-	return slot0._waterNodePositions
+	return arg_35_0._waterNodePositions
 end
 
-function slot0.setHideFaithFull(slot0, slot1, slot2)
-	if not slot2 and not slot0._hideFaithFullMap[slot1] then
+function var_0_0.setHideFaithFull(arg_36_0, arg_36_1, arg_36_2)
+	if not arg_36_2 and not arg_36_0._hideFaithFullMap[arg_36_1] then
 		return
 	end
 
-	if (slot2 and true or false) ~= slot0._hideFaithFullMap[slot1] then
-		slot0._hideFaithFullMap[slot1] = slot3
+	local var_36_0 = arg_36_2 and true or false
 
-		slot0:_saveFaithFullData(slot0._hideFaithFullMap)
+	if var_36_0 ~= arg_36_0._hideFaithFullMap[arg_36_1] then
+		arg_36_0._hideFaithFullMap[arg_36_1] = var_36_0
+
+		arg_36_0:_saveFaithFullData(arg_36_0._hideFaithFullMap)
 	end
 end
 
-function slot0.isShowFaithFull(slot0, slot1)
-	if slot0._hideFaithFullMap[slot1] then
+function var_0_0.isShowFaithFull(arg_37_0, arg_37_1)
+	if arg_37_0._hideFaithFullMap[arg_37_1] then
 		return false
 	end
 
 	return true
 end
 
-function slot0._getFaithFullPrefsKey(slot0)
+function var_0_0._getFaithFullPrefsKey(arg_38_0)
 	return "room_character_faithfull_role#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-function slot0._initHideFithData(slot0)
-	slot0._hideFaithFullMap = {}
+function var_0_0._initHideFithData(arg_39_0)
+	arg_39_0._hideFaithFullMap = {}
 
-	if slot0:_canUseFaithFull() then
-		slot3 = false
+	if arg_39_0:_canUseFaithFull() then
+		local var_39_0 = PlayerPrefsHelper.getString(arg_39_0:_getFaithFullPrefsKey(), "")
+		local var_39_1 = string.splitToNumber(var_39_0, "#") or {}
+		local var_39_2 = false
 
-		for slot7, slot8 in ipairs(string.splitToNumber(PlayerPrefsHelper.getString(slot0:_getFaithFullPrefsKey(), ""), "#") or {}) do
-			if slot0:getById(slot8) then
-				slot0._hideFaithFullMap[slot8] = true
+		for iter_39_0, iter_39_1 in ipairs(var_39_1) do
+			if arg_39_0:getById(iter_39_1) then
+				arg_39_0._hideFaithFullMap[iter_39_1] = true
 			else
-				slot3 = true
+				var_39_2 = true
 			end
 		end
 
-		if slot3 then
-			slot0:_saveFaithFullData(slot0._hideFaithFullMap)
+		if var_39_2 then
+			arg_39_0:_saveFaithFullData(arg_39_0._hideFaithFullMap)
 		end
 	end
 end
 
-function slot0._saveFaithFullData(slot0, slot1)
-	if not slot0:_canUseFaithFull() or not slot1 then
+function var_0_0._saveFaithFullData(arg_40_0, arg_40_1)
+	if not arg_40_0:_canUseFaithFull() or not arg_40_1 then
 		return
 	end
 
-	slot2 = ""
+	local var_40_0 = ""
+	local var_40_1 = true
 
-	for slot7, slot8 in pairs(slot1) do
-		if slot8 == true then
-			if true then
-				slot3 = false
-				slot2 = tostring(slot7)
+	for iter_40_0, iter_40_1 in pairs(arg_40_1) do
+		if iter_40_1 == true then
+			if var_40_1 then
+				var_40_1 = false
+				var_40_0 = tostring(iter_40_0)
 			else
-				slot2 = slot2 .. "#" .. tostring(slot7)
+				var_40_0 = var_40_0 .. "#" .. tostring(iter_40_0)
 			end
 		end
 	end
 
-	PlayerPrefsHelper.setString(slot0:_getFaithFullPrefsKey(), slot2)
+	PlayerPrefsHelper.setString(arg_40_0:_getFaithFullPrefsKey(), var_40_0)
 end
 
-function slot0._canUseFaithFull(slot0)
-	return RoomModel.instance:getGameMode() == RoomEnum.GameMode.Ob or slot1 == RoomEnum.GameMode.Edit
+function var_0_0._canUseFaithFull(arg_41_0)
+	local var_41_0 = RoomModel.instance:getGameMode()
+
+	return var_41_0 == RoomEnum.GameMode.Ob or var_41_0 == RoomEnum.GameMode.Edit
 end
 
-function slot0.getEmptyBlockPositions(slot0)
-	if not slot0._emptyBlockPositions then
-		slot0._emptyBlockPositions = {}
+function var_0_0.getEmptyBlockPositions(arg_42_0)
+	if not arg_42_0._emptyBlockPositions then
+		arg_42_0._emptyBlockPositions = {}
 
-		for slot5, slot6 in ipairs(RoomMapBlockModel.instance:getEmptyBlockMOList()) do
-			if slot6.hexPoint then
-				table.insert(slot0._emptyBlockPositions, HexMath.hexToPosition(slot6.hexPoint, RoomBlockEnum.BlockSize))
+		local var_42_0 = RoomMapBlockModel.instance:getEmptyBlockMOList()
+
+		for iter_42_0, iter_42_1 in ipairs(var_42_0) do
+			if iter_42_1.hexPoint then
+				table.insert(arg_42_0._emptyBlockPositions, HexMath.hexToPosition(iter_42_1.hexPoint, RoomBlockEnum.BlockSize))
 			end
 		end
 	end
 
-	return slot0._emptyBlockPositions
+	return arg_42_0._emptyBlockPositions
 end
 
-function slot0.isOnBirthday(slot0, slot1)
-	slot2 = false
-	slot3 = slot1 and HeroConfig.instance:getHeroCO(slot1)
+function var_0_0.isOnBirthday(arg_43_0, arg_43_1)
+	local var_43_0 = false
+	local var_43_1 = arg_43_1 and HeroConfig.instance:getHeroCO(arg_43_1)
+	local var_43_2 = var_43_1 and var_43_1.roleBirthday
 
-	if not string.nilorempty(slot3 and slot3.roleBirthday) then
-		slot6 = string.splitToNumber(slot3.roleBirthday, "/")
-		slot9 = os.time({
+	if not string.nilorempty(var_43_2) then
+		local var_43_3 = SignInModel.instance:getCurDate()
+		local var_43_4 = string.splitToNumber(var_43_1.roleBirthday, "/")
+		local var_43_5 = {
 			hour = 5,
 			min = 0,
 			sec = 0,
-			year = SignInModel.instance:getCurDate().year,
-			month = slot6[1],
-			day = slot6[2]
-		}) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+			year = var_43_3.year,
+			month = var_43_4[1],
+			day = var_43_4[2]
+		}
+		local var_43_6 = os.time(var_43_5) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+		local var_43_7 = var_43_6 + CommonConfig.instance:getConstNum(ConstEnum.RoomBirthdayDurationDay) * TimeUtil.OneDaySecond
+		local var_43_8 = ServerTime.now()
 
-		if slot9 <= ServerTime.now() and slot12 < slot9 + CommonConfig.instance:getConstNum(ConstEnum.RoomBirthdayDurationDay) * TimeUtil.OneDaySecond then
-			slot2 = true
+		if var_43_6 <= var_43_8 and var_43_8 < var_43_7 then
+			var_43_0 = true
 		end
 	end
 
-	return slot2
+	return var_43_0
 end
 
-function slot0.initShowBirthdayToastTipCache(slot0)
-	if not string.nilorempty(GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomBirthdayToastKey, "")) then
-		slot0._showBirthdayToastTipCache = cjson.decode(slot1)
+function var_0_0.initShowBirthdayToastTipCache(arg_44_0)
+	local var_44_0 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomBirthdayToastKey, "")
+
+	if not string.nilorempty(var_44_0) then
+		arg_44_0._showBirthdayToastTipCache = cjson.decode(var_44_0)
 	end
 
-	slot0._showBirthdayToastTipCache = slot0._showBirthdayToastTipCache or {}
+	arg_44_0._showBirthdayToastTipCache = arg_44_0._showBirthdayToastTipCache or {}
 end
 
-function slot0.isNeedShowBirthdayToastTip(slot0, slot1)
-	if not slot1 then
-		return false
+function var_0_0.isNeedShowBirthdayToastTip(arg_45_0, arg_45_1)
+	local var_45_0 = false
+
+	if not arg_45_1 then
+		return var_45_0
 	end
 
-	slot3 = false
+	local var_45_1 = false
 
-	if not slot0._showBirthdayToastTipCache then
-		slot0:initShowBirthdayToastTipCache()
+	if not arg_45_0._showBirthdayToastTipCache then
+		arg_45_0:initShowBirthdayToastTipCache()
 	end
 
-	if slot0._showBirthdayToastTipCache[tostring(slot1)] then
-		slot3 = TimeUtil.isSameDay(slot5, ServerTime.now() - TimeDispatcher.DailyRefreshSecond)
+	local var_45_2 = tostring(arg_45_1)
+	local var_45_3 = arg_45_0._showBirthdayToastTipCache[var_45_2]
+
+	if var_45_3 then
+		local var_45_4 = ServerTime.now()
+
+		var_45_1 = TimeUtil.isSameDay(var_45_3, var_45_4 - TimeDispatcher.DailyRefreshSecond)
 	end
 
-	return slot0:isOnBirthday(slot1) and not slot3
+	return arg_45_0:isOnBirthday(arg_45_1) and not var_45_1
 end
 
-function slot0.getPlaceCount(slot0)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7:isPlaceSourceState() then
-			slot1 = 0 + 1
+function var_0_0.getPlaceCount(arg_46_0)
+	local var_46_0 = 0
+	local var_46_1 = arg_46_0:getList()
+
+	for iter_46_0, iter_46_1 in ipairs(var_46_1) do
+		if iter_46_1:isPlaceSourceState() then
+			var_46_0 = var_46_0 + 1
 		end
 	end
 
-	return slot1
+	return var_46_0
 end
 
-function slot0.setHasShowBirthdayToastTip(slot0, slot1)
-	if not slot1 then
+function var_0_0.setHasShowBirthdayToastTip(arg_47_0, arg_47_1)
+	if not arg_47_1 then
 		return
 	end
 
-	if not slot0._showBirthdayToastTipCache then
-		slot0:initShowBirthdayToastTipCache()
+	if not arg_47_0._showBirthdayToastTipCache then
+		arg_47_0:initShowBirthdayToastTipCache()
 	end
 
-	slot0._showBirthdayToastTipCache[tostring(slot1)] = ServerTime.now() - TimeDispatcher.DailyRefreshSecond
+	local var_47_0 = ServerTime.now() - TimeDispatcher.DailyRefreshSecond
+	local var_47_1 = tostring(arg_47_1)
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomBirthdayToastKey, cjson.encode(slot0._showBirthdayToastTipCache))
+	arg_47_0._showBirthdayToastTipCache[var_47_1] = var_47_0
+
+	local var_47_2 = cjson.encode(arg_47_0._showBirthdayToastTipCache)
+
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomBirthdayToastKey, var_47_2)
 end
 
-function slot0.getTrainTempMO(slot0)
-	if not slot0._trainTempMO then
-		slot0._trainTempMO = RoomCharacterMO.New()
+function var_0_0.getTrainTempMO(arg_48_0)
+	if not arg_48_0._trainTempMO then
+		arg_48_0._trainTempMO = RoomCharacterMO.New()
 	end
 
-	return slot0._trainTempMO
+	return arg_48_0._trainTempMO
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

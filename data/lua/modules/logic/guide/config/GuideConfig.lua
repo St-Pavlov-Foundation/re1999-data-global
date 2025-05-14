@@ -1,18 +1,18 @@
-module("modules.logic.guide.config.GuideConfig", package.seeall)
+﻿module("modules.logic.guide.config.GuideConfig", package.seeall)
 
-slot0 = class("GuideConfig", BaseConfig)
+local var_0_0 = class("GuideConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._guideList = {}
-	slot0._guide2StepList = {}
-	slot0._stepId2AdditionStepMap = {}
-	slot0._triggerTypeDict = {}
-	slot0._triggerParamDict = {}
-	slot0._invalidTypeListDict = {}
-	slot0._invalidListDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._guideList = {}
+	arg_1_0._guide2StepList = {}
+	arg_1_0._stepId2AdditionStepMap = {}
+	arg_1_0._triggerTypeDict = {}
+	arg_1_0._triggerParamDict = {}
+	arg_1_0._invalidTypeListDict = {}
+	arg_1_0._invalidListDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"guide",
 		"guide_step",
@@ -21,112 +21,131 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "guide" then
-		for slot6, slot7 in ipairs(slot2.configList) do
-			if slot7.isOnline == 1 then
-				table.insert(slot0._guideList, slot7)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "guide" then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
+			if iter_3_1.isOnline == 1 then
+				table.insert(arg_3_0._guideList, iter_3_1)
 
-				slot8 = string.split(slot7.trigger, "#")
-				slot0._triggerTypeDict[slot7.id] = slot8[1]
-				slot0._triggerParamDict[slot7.id] = slot8[2]
-				slot8 = GameUtil.splitString2(slot7.invalid, false, "|", "#")
-				slot0._invalidTypeListDict[slot7.id] = {}
-				slot0._invalidListDict[slot7.id] = {}
+				local var_3_0 = string.split(iter_3_1.trigger, "#")
 
-				if not string.nilorempty(slot7.invalid) then
-					for slot12, slot13 in ipairs(slot8) do
-						table.insert(slot0._invalidTypeListDict[slot7.id], slot13[1])
-						table.insert(slot0._invalidListDict[slot7.id], slot13)
+				arg_3_0._triggerTypeDict[iter_3_1.id] = var_3_0[1]
+				arg_3_0._triggerParamDict[iter_3_1.id] = var_3_0[2]
+
+				local var_3_1 = GameUtil.splitString2(iter_3_1.invalid, false, "|", "#")
+
+				arg_3_0._invalidTypeListDict[iter_3_1.id] = {}
+				arg_3_0._invalidListDict[iter_3_1.id] = {}
+
+				if not string.nilorempty(iter_3_1.invalid) then
+					for iter_3_2, iter_3_3 in ipairs(var_3_1) do
+						table.insert(arg_3_0._invalidTypeListDict[iter_3_1.id], iter_3_3[1])
+						table.insert(arg_3_0._invalidListDict[iter_3_1.id], iter_3_3)
 					end
 				end
 			end
 		end
-	elseif slot1 == "guide_step" then
-		for slot6, slot7 in ipairs(slot2.configList) do
-			if not slot0._guide2StepList[slot7.id] then
-				slot0._guide2StepList[slot7.id] = {}
+	elseif arg_3_1 == "guide_step" then
+		for iter_3_4, iter_3_5 in ipairs(arg_3_2.configList) do
+			local var_3_2 = arg_3_0._guide2StepList[iter_3_5.id]
+
+			if not var_3_2 then
+				var_3_2 = {}
+				arg_3_0._guide2StepList[iter_3_5.id] = var_3_2
 			end
 
-			table.insert(slot8, slot7)
+			table.insert(var_3_2, iter_3_5)
 		end
-	elseif slot1 == "guide_step_addition" then
-		slot0._stepId2AdditionStepMap = slot2.configDict
+	elseif arg_3_1 == "guide_step_addition" then
+		arg_3_0._stepId2AdditionStepMap = arg_3_2.configDict
 	end
 end
 
-function slot0.getGuideList(slot0)
-	return slot0._guideList
+function var_0_0.getGuideList(arg_4_0)
+	return arg_4_0._guideList
 end
 
-function slot0.getGuideCO(slot0, slot1)
-	return lua_guide.configDict[slot1]
+function var_0_0.getGuideCO(arg_5_0, arg_5_1)
+	return lua_guide.configDict[arg_5_1]
 end
 
-function slot0.getStepList(slot0, slot1)
-	return slot0._guide2StepList[slot1]
+function var_0_0.getStepList(arg_6_0, arg_6_1)
+	return arg_6_0._guide2StepList[arg_6_1]
 end
 
-function slot0.getStepCO(slot0, slot1, slot2)
-	if lua_guide_step.configDict[slot1] then
-		return slot3[slot2]
+function var_0_0.getStepCO(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = lua_guide_step.configDict[arg_7_1]
+
+	if var_7_0 then
+		return var_7_0[arg_7_2]
 	else
-		return slot0:getAddtionStepCfg(slot1, slot2)
+		return arg_7_0:getAddtionStepCfg(arg_7_1, arg_7_2)
 	end
 end
 
-function slot0.getAddtionStepCfg(slot0, slot1, slot2)
-	if slot0._stepId2AdditionStepMap[slot1] then
-		return slot3[slot2]
+function var_0_0.getAddtionStepCfg(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._stepId2AdditionStepMap[arg_8_1]
+
+	if var_8_0 then
+		return var_8_0[arg_8_2]
 	end
 end
 
-function slot0.getHighestPriorityGuideId(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1) do
-		if slot0:getGuideCO(slot8) and (not nil or not slot3 or slot3 < slot9.priority) then
-			slot2 = slot8
-			slot3 = slot9.priority
+function var_0_0.getHighestPriorityGuideId(arg_9_0, arg_9_1)
+	local var_9_0
+	local var_9_1
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_2 = arg_9_0:getGuideCO(iter_9_1)
+
+		if var_9_2 and (not var_9_0 or not var_9_1 or var_9_1 < var_9_2.priority) then
+			var_9_0 = iter_9_1
+			var_9_1 = var_9_2.priority
 		end
 	end
 
-	return slot2 or slot1 and slot1[1]
+	return var_9_0 or arg_9_1 and arg_9_1[1]
 end
 
-function slot0.getTriggerType(slot0, slot1)
-	return slot0._triggerTypeDict[slot1]
+function var_0_0.getTriggerType(arg_10_0, arg_10_1)
+	return arg_10_0._triggerTypeDict[arg_10_1]
 end
 
-function slot0.getTriggerParam(slot0, slot1)
-	return slot0._triggerParamDict[slot1]
+function var_0_0.getTriggerParam(arg_11_0, arg_11_1)
+	return arg_11_0._triggerParamDict[arg_11_1]
 end
 
-function slot0.getInvalidTypeList(slot0, slot1)
-	return slot0._invalidTypeListDict[slot1]
+function var_0_0.getInvalidTypeList(arg_12_0, arg_12_1)
+	return arg_12_0._invalidTypeListDict[arg_12_1]
 end
 
-function slot0.getInvalidList(slot0, slot1)
-	return slot0._invalidListDict[slot1]
+function var_0_0.getInvalidList(arg_13_0, arg_13_1)
+	return arg_13_0._invalidListDict[arg_13_1]
 end
 
-function slot0.getPrevStepId(slot0, slot1, slot2)
-	if slot0:getStepList(slot1)[1].stepId == slot2 then
+function var_0_0.getPrevStepId(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_0:getStepList(arg_14_1)
+
+	if var_14_0[1].stepId == arg_14_2 then
 		return 0
 	end
 
-	for slot7 = 2, #slot3 do
-		if slot3[slot7].stepId == slot2 then
-			return slot3[slot7 - 1].stepId
+	for iter_14_0 = 2, #var_14_0 do
+		if var_14_0[iter_14_0].stepId == arg_14_2 then
+			return var_14_0[iter_14_0 - 1].stepId
 		end
 	end
 
 	return -1
 end
 
-function slot0.getNextStepId(slot0, slot1, slot2)
-	if slot0:getStepList(slot1) then
-		for slot7 = 1, #slot3 - 1 do
-			if slot3[slot7].stepId == slot2 then
-				return slot3[slot7 + 1].stepId
+function var_0_0.getNextStepId(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getStepList(arg_15_1)
+
+	if var_15_0 then
+		for iter_15_0 = 1, #var_15_0 - 1 do
+			if var_15_0[iter_15_0].stepId == arg_15_2 then
+				return var_15_0[iter_15_0 + 1].stepId
 			end
 		end
 	end
@@ -134,6 +153,6 @@ function slot0.getNextStepId(slot0, slot1, slot2)
 	return -1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

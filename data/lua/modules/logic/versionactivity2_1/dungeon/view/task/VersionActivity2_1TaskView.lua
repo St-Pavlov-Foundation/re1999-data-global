@@ -1,71 +1,76 @@
-module("modules.logic.versionactivity2_1.dungeon.view.task.VersionActivity2_1TaskView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.dungeon.view.task.VersionActivity2_1TaskView", package.seeall)
 
-slot0 = class("VersionActivity2_1TaskView", BaseView)
-slot1 = 0.8
+local var_0_0 = class("VersionActivity2_1TaskView", BaseView)
+local var_0_1 = 0.8
 
-function slot0.onInitView(slot0)
-	slot0._simagelangtxt = gohelper.findChildSingleImage(slot0.viewGO, "Left/#simage_langtxt")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0._scrollTaskList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_TaskList")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0.refreshTaskList, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshTaskList, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshTaskList, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0.refreshTaskList, arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0.refreshTaskList, arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_2_0.refreshTaskList, arg_2_0)
+	arg_2_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	VersionActivity2_1TaskListModel.instance:initTask()
-	slot0:refreshRemainTime()
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
+	arg_6_0:refreshRemainTime()
+	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, TimeUtil.OneMinuteSecond)
 	UIBlockMgr.instance:startBlock(VersionActivity2_1DungeonEnum.BlockKey.OpenTaskView)
-	TaskDispatcher.runDelay(slot0._delayEndBlock, slot0, uv0)
-	slot0:refreshTaskList()
+	TaskDispatcher.runDelay(arg_6_0._delayEndBlock, arg_6_0, var_0_1)
+	arg_6_0:refreshTaskList()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function slot0._delayEndBlock(slot0)
+function var_0_0._delayEndBlock(arg_7_0)
 	UIBlockMgr.instance:endBlock(VersionActivity2_1DungeonEnum.BlockKey.OpenTaskView)
 end
 
-function slot0.refreshTaskList(slot0)
+function var_0_0.refreshTaskList(arg_8_0)
 	VersionActivity2_1TaskListModel.instance:sortTaskMoList()
 	VersionActivity2_1TaskListModel.instance:refreshList()
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot2 = ""
+function var_0_0.refreshRemainTime(arg_9_0)
+	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_1Enum.ActivityId.Dungeon]
+	local var_9_1 = ""
 
-	if ActivityModel.instance:getActivityInfo()[VersionActivity2_1Enum.ActivityId.Dungeon] then
-		slot2 = slot1:getRemainTimeStr3(false, false)
+	if var_9_0 then
+		var_9_1 = var_9_0:getRemainTimeStr3(false, false)
 	end
 
-	slot0._txtLimitTime.text = slot2
+	arg_9_0._txtLimitTime.text = var_9_1
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
-	TaskDispatcher.cancelTask(slot0._delayEndBlock, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.refreshRemainTime, arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._delayEndBlock, arg_10_0)
 	UIBlockMgr.instance:endBlock(VersionActivity2_1DungeonEnum.BlockKey.OpenTaskView)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

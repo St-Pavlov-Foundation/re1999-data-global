@@ -1,133 +1,146 @@
-module("modules.logic.season.view1_5.Season1_5EquipComposeItem", package.seeall)
+﻿module("modules.logic.season.view1_5.Season1_5EquipComposeItem", package.seeall)
 
-slot0 = class("Season1_5EquipComposeItem", ListScrollCellExtend)
+local var_0_0 = class("Season1_5EquipComposeItem", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._gopos = gohelper.findChild(slot0.viewGO, "go_pos")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._simageroleicon = gohelper.findChildSingleImage(slot0.viewGO, "image_roleicon")
-	slot0._gorolebg = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._imageroleicon = gohelper.findChildImage(slot0.viewGO, "image_roleicon")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_pos")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
+	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_roleicon")
+	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.viewGO, "bg")
+	arg_1_0._imageroleicon = gohelper.findChildImage(arg_1_0.viewGO, "image_roleicon")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1.originMO
-	slot0._listMO = slot1
-	slot0._cfg = SeasonConfig.instance:getSeasonEquipCo(slot0._mo.itemId)
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1.originMO
+	arg_2_0._listMO = arg_2_1
+	arg_2_0._cfg = SeasonConfig.instance:getSeasonEquipCo(arg_2_0._mo.itemId)
 
-	if slot0._cfg then
-		slot0:refreshUI()
+	if arg_2_0._cfg then
+		arg_2_0:refreshUI()
 	end
 
-	slot0:checkPlayAnim()
+	arg_2_0:checkPlayAnim()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:checkCreateIcon()
-	slot0.icon:updateData(slot0._cfg.equipId)
+function var_0_0.refreshUI(arg_3_0)
+	arg_3_0:checkCreateIcon()
+	arg_3_0.icon:updateData(arg_3_0._cfg.equipId)
 
-	slot2 = Activity104EquipItemComposeModel.instance:getSelectedRare() ~= nil and slot1 ~= slot0._cfg.rare
+	local var_3_0 = Activity104EquipItemComposeModel.instance:getSelectedRare()
+	local var_3_1 = var_3_0 ~= nil and var_3_0 ~= arg_3_0._cfg.rare
 
-	slot0.icon:setColorDark(slot2)
-	slot0:setRoleIconDark(slot2)
-	gohelper.setActive(slot0._goselect, Activity104EquipItemComposeModel.instance:isEquipSelected(slot0._mo.uid))
-	slot0:refreshEquipedHero(Activity104EquipItemComposeModel.instance:getEquipedHeroUid(slot0._mo.uid))
+	arg_3_0.icon:setColorDark(var_3_1)
+	arg_3_0:setRoleIconDark(var_3_1)
+	gohelper.setActive(arg_3_0._goselect, Activity104EquipItemComposeModel.instance:isEquipSelected(arg_3_0._mo.uid))
+
+	local var_3_2 = Activity104EquipItemComposeModel.instance:getEquipedHeroUid(arg_3_0._mo.uid)
+
+	arg_3_0:refreshEquipedHero(var_3_2)
 end
 
-function slot0.setRoleIconDark(slot0, slot1)
-	if slot1 then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imageroleicon, "#7b7b7b")
+function var_0_0.setRoleIconDark(arg_4_0, arg_4_1)
+	if arg_4_1 then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._imageroleicon, "#7b7b7b")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imageroleicon, "#ffffff")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._imageroleicon, "#ffffff")
 	end
 end
 
-function slot0.refreshEquipedHero(slot0, slot1)
-	if not slot1 or slot1 == Activity104EquipItemComposeModel.EmptyUid then
-		gohelper.setActive(slot0._simageroleicon, false)
-		gohelper.setActive(slot0._gorolebg, false)
+function var_0_0.refreshEquipedHero(arg_5_0, arg_5_1)
+	if not arg_5_1 or arg_5_1 == Activity104EquipItemComposeModel.EmptyUid then
+		gohelper.setActive(arg_5_0._simageroleicon, false)
+		gohelper.setActive(arg_5_0._gorolebg, false)
 
 		return
 	end
 
-	slot2 = nil
+	local var_5_0
 
-	if slot1 == Activity104EquipItemComposeModel.MainRoleHeroUid then
-		slot2 = Activity104Enum.MainRoleHeadIconID
+	if arg_5_1 == Activity104EquipItemComposeModel.MainRoleHeroUid then
+		var_5_0 = Activity104Enum.MainRoleHeadIconID
 	else
-		if not HeroModel.instance:getById(slot1) then
-			gohelper.setActive(slot0._simageroleicon, false)
-			gohelper.setActive(slot0._gorolebg, false)
+		local var_5_1 = HeroModel.instance:getById(arg_5_1)
+
+		if not var_5_1 then
+			gohelper.setActive(arg_5_0._simageroleicon, false)
+			gohelper.setActive(arg_5_0._gorolebg, false)
 
 			return
 		end
 
-		slot2 = slot3.skin
+		var_5_0 = var_5_1.skin
 	end
 
-	gohelper.setActive(slot0._simageroleicon, true)
-	gohelper.setActive(slot0._gorolebg, true)
-	slot0._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(slot2))
+	gohelper.setActive(arg_5_0._simageroleicon, true)
+	gohelper.setActive(arg_5_0._gorolebg, true)
+	arg_5_0._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(var_5_0))
 end
 
-slot0.ColumnCount = 6
-slot0.AnimRowCount = 4
-slot0.OpenAnimTime = 0.06
-slot0.OpenAnimStartTime = 0.05
+var_0_0.ColumnCount = 6
+var_0_0.AnimRowCount = 4
+var_0_0.OpenAnimTime = 0.06
+var_0_0.OpenAnimStartTime = 0.05
 
-function slot0.checkPlayAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
+function var_0_0.checkPlayAnim(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.onDelayPlayOpen, arg_6_0)
 
-	if Activity104EquipItemComposeModel.instance:getDelayPlayTime(slot0._listMO) == -1 then
-		slot0._animator:Play("idle", 0, 0)
+	local var_6_0 = Activity104EquipItemComposeModel.instance:getDelayPlayTime(arg_6_0._listMO)
 
-		slot0._animator.speed = 1
+	if var_6_0 == -1 then
+		arg_6_0._animator:Play("idle", 0, 0)
+
+		arg_6_0._animator.speed = 1
 	else
-		slot0._animator:Play("open", 0, 0)
+		arg_6_0._animator:Play("open", 0, 0)
 
-		slot0._animator.speed = 0
+		arg_6_0._animator.speed = 0
 
-		TaskDispatcher.runDelay(slot0.onDelayPlayOpen, slot0, slot1)
+		TaskDispatcher.runDelay(arg_6_0.onDelayPlayOpen, arg_6_0, var_6_0)
 	end
 end
 
-function slot0.onDelayPlayOpen(slot0)
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
-	slot0._animator:Play("open", 0, 0)
+function var_0_0.onDelayPlayOpen(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.onDelayPlayOpen, arg_7_0)
+	arg_7_0._animator:Play("open", 0, 0)
 
-	slot0._animator.speed = 1
+	arg_7_0._animator.speed = 1
 end
 
-function slot0.checkCreateIcon(slot0)
-	if not slot0.icon then
-		slot0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._view:getResInst(slot0._view.viewContainer:getSetting().otherRes[2], slot0._gopos, "icon"), Season1_5CelebrityCardEquip)
+function var_0_0.checkCreateIcon(arg_8_0)
+	if not arg_8_0.icon then
+		local var_8_0 = arg_8_0._view.viewContainer:getSetting().otherRes[2]
+		local var_8_1 = arg_8_0._view:getResInst(var_8_0, arg_8_0._gopos, "icon")
 
-		slot0.icon:setClickCall(slot0.onClickSelf, slot0)
-		slot0.icon:setLongPressCall(slot0.onLongPress, slot0)
+		arg_8_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, Season1_5CelebrityCardEquip)
+
+		arg_8_0.icon:setClickCall(arg_8_0.onClickSelf, arg_8_0)
+		arg_8_0.icon:setLongPressCall(arg_8_0.onLongPress, arg_8_0)
 	end
 end
 
-function slot0.onClickSelf(slot0)
-	if slot0._mo then
-		Activity104EquipComposeController.instance:changeSelectCard(slot0._mo.uid)
+function var_0_0.onClickSelf(arg_9_0)
+	if arg_9_0._mo then
+		Activity104EquipComposeController.instance:changeSelectCard(arg_9_0._mo.uid)
 	end
 end
 
-function slot0.onLongPress(slot0)
-	MaterialTipController.instance:showMaterialInfoWithData(MaterialEnum.MaterialType.EquipCard, slot0._cfg.equipId, {
-		actId = slot0._view.viewParam.actId
-	})
+function var_0_0.onLongPress(arg_10_0)
+	local var_10_0 = {
+		actId = arg_10_0._view.viewParam.actId
+	}
+
+	MaterialTipController.instance:showMaterialInfoWithData(MaterialEnum.MaterialType.EquipCard, arg_10_0._cfg.equipId, var_10_0)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.icon then
-		slot0.icon:disposeUI()
+function var_0_0.onDestroyView(arg_11_0)
+	if arg_11_0.icon then
+		arg_11_0.icon:disposeUI()
 	end
 
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
+	TaskDispatcher.cancelTask(arg_11_0.onDelayPlayOpen, arg_11_0)
 end
 
-return slot0
+return var_0_0

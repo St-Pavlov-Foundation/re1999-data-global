@@ -1,168 +1,177 @@
-module("modules.logic.rouge.view.RougeFactionItemSelected_BtnItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionItemSelected_BtnItem", package.seeall)
 
-slot0 = class("RougeFactionItemSelected_BtnItem", UserDataDispose)
+local var_0_0 = class("RougeFactionItemSelected_BtnItem", UserDataDispose)
 
-function slot0.onInitView(slot0)
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
-	slot0._lockAnim = gohelper.onceAddComponent(slot0._golock, gohelper.Type_Animator)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+	arg_1_0._lockAnim = gohelper.onceAddComponent(arg_1_0._golock, gohelper.Type_Animator)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	if slot0._itemClick then
-		slot0._itemClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	if arg_3_0._itemClick then
+		arg_3_0._itemClick:RemoveClickListener()
 
-		slot0._itemClick = nil
+		arg_3_0._itemClick = nil
 	end
 end
 
-slot1 = SLFramework.UGUI.RectTrHelper
+local var_0_1 = SLFramework.UGUI.RectTrHelper
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	arg_4_0:__onInit()
 
-	slot0._parent = slot1
+	arg_4_0._parent = arg_4_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._trans = slot1.transform
+function var_0_0.init(arg_5_0, arg_5_1)
+	arg_5_0.viewGO = arg_5_1
+	arg_5_0._trans = arg_5_1.transform
 
-	slot0:onInitView()
-	slot0:addEvents()
+	arg_5_0:onInitView()
+	arg_5_0:addEvents()
 end
 
-function slot0.transform(slot0)
-	return slot0._trans
+function var_0_0.transform(arg_6_0)
+	return arg_6_0._trans
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0._index = slot1
+function var_0_0.setIndex(arg_7_0, arg_7_1)
+	arg_7_0._index = arg_7_1
 end
 
-function slot0.index(slot0)
-	return slot0._index
+function var_0_0.index(arg_8_0)
+	return arg_8_0._index
 end
 
-function slot0._getDetailTrans(slot0)
-	return slot0._parent._detailTrans
+function var_0_0._getDetailTrans(arg_9_0)
+	return arg_9_0._parent._detailTrans
 end
 
-function slot0._getDetailText(slot0)
-	return slot0._parent._txtdec
+function var_0_0._getDetailText(arg_10_0)
+	return arg_10_0._parent._txtdec
 end
 
-function slot0._getDetailIcon(slot0)
-	return slot0._parent._detailimageicon
+function var_0_0._getDetailIcon(arg_11_0)
+	return arg_11_0._parent._detailimageicon
 end
 
-function slot0._onItemClick(slot0)
-	slot0._parent:_btnItemOnSelectIndex(slot0:index(), slot0._isUnlock)
+function var_0_0._onItemClick(arg_12_0)
+	arg_12_0._parent:_btnItemOnSelectIndex(arg_12_0:index(), arg_12_0._isUnlock)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._itemClick = gohelper.getClickWithAudio(slot0.viewGO)
-	slot0._normalIcon = gohelper.findChildImage(slot0._gonormal, "icon")
-	slot0._selectIcon = gohelper.findChildImage(slot0._goselect, "icon")
+function var_0_0._editableInitView(arg_13_0)
+	arg_13_0._itemClick = gohelper.getClickWithAudio(arg_13_0.viewGO)
+	arg_13_0._normalIcon = gohelper.findChildImage(arg_13_0._gonormal, "icon")
+	arg_13_0._selectIcon = gohelper.findChildImage(arg_13_0._goselect, "icon")
 
-	slot0:setData(nil)
-	slot0:setSelected(false)
+	arg_13_0:setData(nil)
+	arg_13_0:setSelected(false)
 end
 
-function slot0._getActiveSkillCO(slot0, slot1, slot2)
-	return RougeOutsideModel.instance:config():getSkillCo(slot1, slot2)
+function var_0_0._getActiveSkillCO(arg_14_0, arg_14_1, arg_14_2)
+	return RougeOutsideModel.instance:config():getSkillCo(arg_14_1, arg_14_2)
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	slot0._skillId = slot2
-	slot0._isUnlock = slot3
-	slot0._skillType = slot1
+function var_0_0.setData(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_0._skillId = arg_15_2
+	arg_15_0._isUnlock = arg_15_3
+	arg_15_0._skillType = arg_15_1
 
-	if not slot2 then
-		slot0:setActive(false)
+	if not arg_15_2 then
+		arg_15_0:setActive(false)
 
 		return
 	end
 
-	if not string.nilorempty(slot0:_getActiveSkillCO(slot0._skillType, slot2) and slot4.icon) then
-		UISpriteSetMgr.instance:setRouge2Sprite(slot0._normalIcon, slot5, true)
-		UISpriteSetMgr.instance:setRouge2Sprite(slot0._selectIcon, slot5, true)
+	local var_15_0 = arg_15_0:_getActiveSkillCO(arg_15_0._skillType, arg_15_2)
+	local var_15_1 = var_15_0 and var_15_0.icon
+
+	if not string.nilorempty(var_15_1) then
+		UISpriteSetMgr.instance:setRouge2Sprite(arg_15_0._normalIcon, var_15_1, true)
+		UISpriteSetMgr.instance:setRouge2Sprite(arg_15_0._selectIcon, var_15_1, true)
 	else
-		logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", slot1, slot2))
+		logError(string.format("未配置肉鸽流派技能图标, 技能类型 = %s, 技能id = %s", arg_15_1, arg_15_2))
 	end
 
-	gohelper.setActive(slot0._golock, not slot0._isUnlock)
-	slot0._lockAnim:Play(slot0._isUnlock and "idle" or "unlock")
-	slot0:setActive(true)
+	gohelper.setActive(arg_15_0._golock, not arg_15_0._isUnlock)
+
+	local var_15_2 = arg_15_0._isUnlock and "idle" or "unlock"
+
+	arg_15_0._lockAnim:Play(var_15_2)
+	arg_15_0:setActive(true)
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0.viewGO, arg_16_1)
 end
 
-function slot0.onUnlocked(slot0)
-	slot0._isUnlock = true
+function var_0_0.onUnlocked(arg_17_0)
+	arg_17_0._isUnlock = true
 
-	slot0:setSelected(false)
-	SLFramework.AnimatorPlayer.Get(slot0._lockAnim.gameObject):Play("unlock", slot0.endPayAnim, slot0)
+	arg_17_0:setSelected(false)
+	SLFramework.AnimatorPlayer.Get(arg_17_0._lockAnim.gameObject):Play("unlock", arg_17_0.endPayAnim, arg_17_0)
 end
 
-function slot0.endPayAnim(slot0)
-	gohelper.setActive(slot0._golock, false)
+function var_0_0.endPayAnim(arg_18_0)
+	gohelper.setActive(arg_18_0._golock, false)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:removeEvents()
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0:removeEvents()
+	arg_19_0:__onDispose()
 end
 
-function slot0.setSelected(slot0, slot1)
-	if slot0._isSelected == slot1 then
+function var_0_0.setSelected(arg_20_0, arg_20_1)
+	if arg_20_0._isSelected == arg_20_1 then
 		return
 	end
 
-	slot0._isSelected = slot1
+	arg_20_0._isSelected = arg_20_1
 
-	gohelper.setActive(slot0._gonormal, not slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+	gohelper.setActive(arg_20_0._gonormal, not arg_20_1)
+	gohelper.setActive(arg_20_0._goselect, arg_20_1)
 
-	if slot1 then
-		slot0:_resetDetailTxt()
-		slot0:_refreshDetailIcon()
+	if arg_20_1 then
+		arg_20_0:_resetDetailTxt()
+		arg_20_0:_refreshDetailIcon()
 	end
 end
 
-function slot0.isSelected(slot0)
-	return slot0._isSelected or false
+function var_0_0.isSelected(arg_21_0)
+	return arg_21_0._isSelected or false
 end
 
-function slot0._resetDetailTxt(slot0)
-	slot1 = slot0:_getDetailText()
+function var_0_0._resetDetailTxt(arg_22_0)
+	local var_22_0 = arg_22_0:_getDetailText()
 
-	if not slot0._skillId then
-		slot1.text = ""
+	if not arg_22_0._skillId then
+		var_22_0.text = ""
 
 		return
 	end
 
-	slot1.text = slot0:_getActiveSkillCO(slot0._skillType, slot0._skillId).desc
+	var_22_0.text = arg_22_0:_getActiveSkillCO(arg_22_0._skillType, arg_22_0._skillId).desc
 end
 
-function slot0._refreshDetailIcon(slot0)
-	if not slot0._skillId then
+function var_0_0._refreshDetailIcon(arg_23_0)
+	if not arg_23_0._skillId then
 		return
 	end
 
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0:_getDetailIcon(), slot0:_getActiveSkillCO(slot0._skillType, slot0._skillId).icon)
+	local var_23_0 = arg_23_0:_getDetailIcon()
+	local var_23_1 = arg_23_0:_getActiveSkillCO(arg_23_0._skillType, arg_23_0._skillId)
+
+	UISpriteSetMgr.instance:setRouge2Sprite(var_23_0, var_23_1.icon)
 end
 
-return slot0
+return var_0_0

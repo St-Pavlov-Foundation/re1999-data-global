@@ -1,16 +1,17 @@
-module("modules.logic.versionactivity1_4.act129.define.Activity129Enum", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.define.Activity129Enum", package.seeall)
 
-slot0 = _M
-slot0.PoolType = {
+local var_0_0 = _M
+
+var_0_0.PoolType = {
 	Limite = 1,
 	Unlimite = 2
 }
-slot0.ConstEnum = {
+var_0_0.ConstEnum = {
 	OnceCost = 1,
 	MaxMoreDraw = 2,
 	CostId = 3
 }
-slot0.VoiceType = {
+var_0_0.VoiceType = {
 	ClickHero = 2,
 	ClickEmptyPool = 4,
 	DrawGoosById = 6,
@@ -19,4 +20,4 @@ slot0.VoiceType = {
 	ClickPool = 3
 }
 
-return slot0
+return var_0_0

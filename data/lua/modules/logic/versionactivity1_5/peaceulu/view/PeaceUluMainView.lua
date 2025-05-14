@@ -1,155 +1,184 @@
-module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluMainView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluMainView", package.seeall)
 
-slot0 = class("PeaceUluMainView", BaseView)
+local var_0_0 = class("PeaceUluMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtremaintime = gohelper.findChildText(slot0.viewGO, "left/remaintime/bg/#txt_remaintime")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "left/#txt_title")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "left/#txt_desc")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "right/progress/#scroll_view")
-	slot0._imgfill = gohelper.findChildImage(slot0.viewGO, "right/progress/#scroll_view/Viewport/Content/fill/#go_fill")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "right/progress/#scroll_view/Viewport/Content")
-	slot0._goprogressitem = gohelper.findChild(slot0.viewGO, "right/progress/#scroll_view/Viewport/Content/#go_progressitem")
-	slot0._txtschedule = gohelper.findChildText(slot0.viewGO, "right/progress/bg/#txt_schedule")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0.bonusItemList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "left/remaintime/bg/#txt_remaintime")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_title")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_desc")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/progress/#scroll_view")
+	arg_1_0._imgfill = gohelper.findChildImage(arg_1_0.viewGO, "right/progress/#scroll_view/Viewport/Content/fill/#go_fill")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "right/progress/#scroll_view/Viewport/Content")
+	arg_1_0._goprogressitem = gohelper.findChild(arg_1_0.viewGO, "right/progress/#scroll_view/Viewport/Content/#go_progressitem")
+	arg_1_0._txtschedule = gohelper.findChildText(arg_1_0.viewGO, "right/progress/bg/#txt_schedule")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.bonusItemList = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._updateUI, slot0)
-	slot0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0:addEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, slot0._updateUI, slot0)
-	slot0:addEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, slot0._toSwitchTab, slot0)
-	slot0:addEventCb(slot0.viewContainer, PeaceUluEvent.onFinishTask, slot0.playFinishAnim, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._updateUI, arg_2_0)
+	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
+	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, arg_2_0._updateUI, arg_2_0)
+	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
+	arg_2_0:addEventCb(arg_2_0.viewContainer, PeaceUluEvent.onFinishTask, arg_2_0.playFinishAnim, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._updateUI, slot0)
-	slot0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, slot0._updateUI, slot0)
-	slot0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, slot0._toSwitchTab, slot0)
-	slot0:removeEventCb(slot0.viewContainer, PeaceUluEvent.onFinishTask, slot0.playFinishAnim, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_3_0._updateUI, arg_3_0)
+	arg_3_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.OnUpdateInfo, arg_3_0._updateUI, arg_3_0)
+	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.onSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
+	arg_3_0:removeEventCb(arg_3_0.viewContainer, PeaceUluEvent.onFinishTask, arg_3_0.playFinishAnim, arg_3_0)
+	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0._animator:Play(UIAnimationName.Open, 0, 0)
-	slot0._animator:Update(0)
-	slot0:_initBonus()
-	slot0:_initTaskMoList(true)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0._animator:Play(UIAnimationName.Open, 0, 0)
+	arg_4_0._animator:Update(0)
+	arg_4_0:_initBonus()
+	arg_4_0:_initTaskMoList(true)
 
-	if not string.nilorempty(PeaceUluModel.instance:getLastGameRecord()) then
-		GameFacade.showToast(ToastEnum.PeaceUluMainViewTips, slot1)
+	local var_4_0 = PeaceUluModel.instance:getLastGameRecord()
+
+	if not string.nilorempty(var_4_0) then
+		GameFacade.showToast(ToastEnum.PeaceUluMainViewTips, var_4_0)
 		PeaceUluRpc.instance:sendAct145ClearGameRecordRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 	end
 
-	slot0:_refreshRemainTime()
-	slot0:_checkCanGetReward()
-	slot0:_refreshSchedule()
+	arg_4_0:_refreshRemainTime()
+	arg_4_0:_checkCanGetReward()
+	arg_4_0:_refreshSchedule()
 end
 
-function slot0._refreshRemainTime(slot0)
-	slot0._txtremaintime.text = formatLuaLang("remain", ActivityModel.instance:getActivityInfo()[VersionActivity1_5Enum.ActivityId.PeaceUlu]:getRemainTimeStr3())
+function var_0_0._refreshRemainTime(arg_5_0)
+	local var_5_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_5Enum.ActivityId.PeaceUlu]:getRemainTimeStr3()
+
+	arg_5_0._txtremaintime.text = formatLuaLang("remain", var_5_0)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.CharacterBackpackView then
+function var_0_0._onCloseViewFinish(arg_6_0, arg_6_1)
+	if arg_6_1 == ViewName.CharacterBackpackView then
 		PeaceUluRpc.instance:sendGet145InfosRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "right/#scroll_task"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0.viewContainer:getSetting().otherRes[1]
-	slot1.cellClass = PeaceUluTaskItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1160
-	slot1.cellHeight = 160
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 0
-	slot0._csListView = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(slot0.viewGO, "right/#scroll_task"))
-	slot0._scrolltaskview = LuaListScrollView.New(PeaceUluTaskModel.instance, slot1)
+function var_0_0._editableInitView(arg_7_0)
+	local var_7_0 = ListScrollParam.New()
 
-	slot0:addChildView(slot0._scrolltaskview)
+	var_7_0.scrollGOPath = "right/#scroll_task"
+	var_7_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_7_0.prefabUrl = arg_7_0.viewContainer:getSetting().otherRes[1]
+	var_7_0.cellClass = PeaceUluTaskItem
+	var_7_0.scrollDir = ScrollEnum.ScrollDirV
+	var_7_0.lineCount = 1
+	var_7_0.cellWidth = 1160
+	var_7_0.cellHeight = 160
+	var_7_0.cellSpaceV = 0
+	var_7_0.startSpace = 0
+	arg_7_0._csListView = SLFramework.UGUI.ListScrollView.Get(gohelper.findChild(arg_7_0.viewGO, "right/#scroll_task"))
+	arg_7_0._scrolltaskview = LuaListScrollView.New(PeaceUluTaskModel.instance, var_7_0)
 
-	slot0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0._scrolltaskview)
+	arg_7_0:addChildView(arg_7_0._scrolltaskview)
 
-	slot0._taskAnimRemoveItem:setMoveInterval(0)
-	slot0._taskAnimRemoveItem:setMoveAnimationTime(PeaceUluEnum.TaskMaskTime - PeaceUluEnum.TaskGetAnimTime)
+	arg_7_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_7_0._scrolltaskview)
+
+	arg_7_0._taskAnimRemoveItem:setMoveInterval(0)
+	arg_7_0._taskAnimRemoveItem:setMoveAnimationTime(PeaceUluEnum.TaskMaskTime - PeaceUluEnum.TaskGetAnimTime)
 end
 
-function slot0.playFinishAnim(slot0, slot1)
-	if slot1 then
-		slot0._tweenIndexes = {
-			slot1
+function var_0_0.playFinishAnim(arg_8_0, arg_8_1)
+	if arg_8_1 then
+		arg_8_0._tweenIndexes = {
+			arg_8_1
 		}
 	end
 
-	TaskDispatcher.runDelay(slot0.delayPlayFinishAnim, slot0, PeaceUluEnum.TaskGetAnimTime)
+	TaskDispatcher.runDelay(arg_8_0.delayPlayFinishAnim, arg_8_0, PeaceUluEnum.TaskGetAnimTime)
 end
 
-function slot0.delayPlayFinishAnim(slot0)
-	slot0._taskAnimRemoveItem:removeByIndexs(slot0._tweenIndexes)
+function var_0_0.delayPlayFinishAnim(arg_9_0)
+	arg_9_0._taskAnimRemoveItem:removeByIndexs(arg_9_0._tweenIndexes)
 end
 
-function slot0._initBonus(slot0)
-	for slot7, slot8 in ipairs(PeaceUluConfig.instance:getBonusCoList()) do
-		if not slot0.bonusItemList[slot7] then
-			slot9 = PeaceUluProgressItem.New()
+function var_0_0._initBonus(arg_10_0)
+	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[2]
+	local var_10_1 = gohelper.findChild(arg_10_0._scrollview.gameObject, "Viewport/Content")
+	local var_10_2 = PeaceUluConfig.instance:getBonusCoList()
 
-			slot9:init(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], gohelper.findChild(slot0._scrollview.gameObject, "Viewport/Content"), "bonus" .. slot7).gameObject)
-			slot9:initMo(slot7, slot8)
-			table.insert(slot0.bonusItemList, slot9)
+	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
+		local var_10_3 = arg_10_0.bonusItemList[iter_10_0]
+
+		if not var_10_3 then
+			local var_10_4 = arg_10_0:getResInst(var_10_0, var_10_1, "bonus" .. iter_10_0)
+
+			var_10_3 = PeaceUluProgressItem.New()
+
+			var_10_3:init(var_10_4.gameObject)
+			var_10_3:initMo(iter_10_0, iter_10_1)
+			table.insert(arg_10_0.bonusItemList, var_10_3)
 		end
 
-		slot9:refreshProgress()
+		var_10_3:refreshProgress()
 	end
 end
 
-function slot0._updateUI(slot0)
-	slot0:_refreshSchedule()
-	slot0:_checkCanGetReward()
-	slot0:refreshBonusItem()
-	slot0:_initTaskMoList()
-	slot0:_refreshRemainTime()
+function var_0_0._updateUI(arg_11_0)
+	arg_11_0:_refreshSchedule()
+	arg_11_0:_checkCanGetReward()
+	arg_11_0:refreshBonusItem()
+	arg_11_0:_initTaskMoList()
+	arg_11_0:_refreshRemainTime()
 end
 
-function slot0._refreshSchedule(slot0)
-	slot0._imgfill.fillAmount = PeaceUluModel.instance:getSchedule()
-	slot0._txtschedule.text = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity .. "/" .. PeaceUluConfig.instance:getMaxProgress()
-	slot3 = slot0:_getnextIndex() - 1
-	slot6 = (268 - 40) * slot3 - (slot3 > 0 and 174 or 0)
+function var_0_0._refreshSchedule(arg_12_0)
+	arg_12_0._imgfill.fillAmount = PeaceUluModel.instance:getSchedule()
 
-	if slot0._dotweenId then
-		ZProj.TweenHelper.KillById(slot0._dotweenId)
+	local var_12_0 = PeaceUluConfig.instance:getMaxProgress()
+	local var_12_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
 
-		slot0._dotweenId = nil
+	arg_12_0._txtschedule.text = var_12_1 .. "/" .. var_12_0
+
+	local var_12_2 = arg_12_0:_getnextIndex() - 1
+	local var_12_3 = 40
+	local var_12_4 = (268 - var_12_3) * var_12_2 - (var_12_2 > 0 and 174 or 0)
+
+	if arg_12_0._dotweenId then
+		ZProj.TweenHelper.KillById(arg_12_0._dotweenId)
+
+		arg_12_0._dotweenId = nil
 	end
 
-	slot0._dotweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._goContent.transform, -slot6, 0.2)
+	arg_12_0._dotweenId = ZProj.TweenHelper.DOAnchorPosX(arg_12_0._goContent.transform, -var_12_4, 0.2)
 end
 
-function slot0._getnextIndex(slot0)
-	for slot6, slot7 in ipairs(PeaceUluConfig.instance:getBonusCoList()) do
-		if CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity <= tonumber(string.split(slot7.needProgress, "#")[3]) then
-			return slot6
+function var_0_0._getnextIndex(arg_13_0)
+	local var_13_0 = PeaceUluConfig.instance:getBonusCoList()
+	local var_13_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_2 = string.split(iter_13_1.needProgress, "#")[3]
+
+		if var_13_1 <= tonumber(var_13_2) then
+			return iter_13_0
 		end
 	end
 
-	return #slot1
+	return #var_13_0
 end
 
-function slot0._checkCanGetReward(slot0)
-	for slot6, slot7 in ipairs(PeaceUluConfig.instance:getBonusCoList()) do
-		if tonumber(string.split(slot7.needProgress, "#")[3]) <= CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity and not PeaceUluModel.instance:checkGetReward(slot7.id) then
+function var_0_0._checkCanGetReward(arg_14_0)
+	local var_14_0 = PeaceUluConfig.instance:getBonusCoList()
+	local var_14_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act145).quantity
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_2 = string.split(iter_14_1.needProgress, "#")[3]
+
+		if var_14_1 >= tonumber(var_14_2) and not PeaceUluModel.instance:checkGetReward(iter_14_1.id) then
 			PeaceUluRpc.instance:sendAct145GetRewardsRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 
 			break
@@ -157,32 +186,32 @@ function slot0._checkCanGetReward(slot0)
 	end
 end
 
-function slot0._initTaskMoList(slot0, slot1)
-	PeaceUluTaskModel.instance:sortTaskMoList(slot1)
+function var_0_0._initTaskMoList(arg_15_0, arg_15_1)
+	PeaceUluTaskModel.instance:sortTaskMoList(arg_15_1)
 end
 
-function slot0.refreshBonusItem(slot0)
-	for slot4, slot5 in ipairs(slot0.bonusItemList) do
-		slot5:refreshProgress()
+function var_0_0.refreshBonusItem(arg_16_0)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0.bonusItemList) do
+		iter_16_1:refreshProgress()
 	end
 end
 
-function slot0._onDailyRefresh(slot0)
+function var_0_0._onDailyRefresh(arg_17_0)
 	PeaceUluRpc.instance:sendGet145InfosRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 end
 
-function slot0._toSwitchTab(slot0, slot1)
-	slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0._toSwitchTab(arg_18_0, arg_18_1)
+	arg_18_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_18_1)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
+function var_0_0.onClose(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0.delayPlayFinishAnim, arg_19_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.bonusItemList) do
-		slot5:onDestroyView()
+function var_0_0.onDestroyView(arg_20_0)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0.bonusItemList) do
+		iter_20_1:onDestroyView()
 	end
 end
 
-return slot0
+return var_0_0

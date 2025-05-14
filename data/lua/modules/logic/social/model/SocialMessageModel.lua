@@ -1,235 +1,254 @@
-module("modules.logic.social.model.SocialMessageModel", package.seeall)
+﻿module("modules.logic.social.model.SocialMessageModel", package.seeall)
 
-slot0 = class("SocialMessageModel", BaseModel)
+local var_0_0 = class("SocialMessageModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._socialMessageMOListDict = {
-		[SocialEnum.ChannelType.Friend] = {}
-	}
-	slot0._messageUnreadDict = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._socialMessageMOListDict = {}
+	arg_1_0._socialMessageMOListDict[SocialEnum.ChannelType.Friend] = {}
+	arg_1_0._messageUnreadDict = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._socialMessageMOListDict = {
-		[SocialEnum.ChannelType.Friend] = {}
-	}
-	slot0._messageUnreadDict = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._socialMessageMOListDict = {}
+	arg_2_0._socialMessageMOListDict[SocialEnum.ChannelType.Friend] = {}
+	arg_2_0._messageUnreadDict = nil
 end
 
-function slot0.loadSocialMessages(slot0, slot1, slot2, slot3)
-	if not slot0._socialMessageMOListDict[slot1][slot2] then
-		slot4 = {}
+function var_0_0.loadSocialMessages(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if not arg_3_0._socialMessageMOListDict[arg_3_1][arg_3_2] then
+		local var_3_0 = {}
 
-		for slot8, slot9 in ipairs(slot3) do
-			slot10 = SocialMessageMO.New()
+		for iter_3_0, iter_3_1 in ipairs(arg_3_3) do
+			local var_3_1 = SocialMessageMO.New()
 
-			slot10:init(slot9)
-			table.insert(slot4, slot10)
+			var_3_1:init(iter_3_1)
+			table.insert(var_3_0, var_3_1)
 		end
 
-		slot0._socialMessageMOListDict[slot1][slot2] = slot4
+		arg_3_0._socialMessageMOListDict[arg_3_1][arg_3_2] = var_3_0
 	end
 end
 
-function slot0.saveSocialMessages(slot0, slot1, slot2)
-	if slot0._socialMessageMOListDict[slot1][slot2] then
-		SocialMessageController.instance:writeSocialMessages(slot1, slot2, slot0._socialMessageMOListDict[slot1][slot2])
+function var_0_0.saveSocialMessages(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._socialMessageMOListDict[arg_4_1][arg_4_2] then
+		SocialMessageController.instance:writeSocialMessages(arg_4_1, arg_4_2, arg_4_0._socialMessageMOListDict[arg_4_1][arg_4_2])
 	end
 end
 
-function slot0.getSocialMessageMOList(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.getSocialMessageMOList(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_1 or not arg_5_2 then
 		return
 	end
 
-	if not slot0._socialMessageMOListDict[slot1][slot2] then
-		SocialMessageController.instance:readSocialMessages(slot1, slot2)
+	if not arg_5_0._socialMessageMOListDict[arg_5_1][arg_5_2] then
+		SocialMessageController.instance:readSocialMessages(arg_5_1, arg_5_2)
 	end
 
-	return slot0._socialMessageMOListDict[slot1][slot2]
+	return arg_5_0._socialMessageMOListDict[arg_5_1][arg_5_2]
 end
 
-function slot0.loadMessageUnread(slot0, slot1)
-	slot0._messageUnreadDict = slot1
+function var_0_0.loadMessageUnread(arg_6_0, arg_6_1)
+	arg_6_0._messageUnreadDict = arg_6_1
 end
 
-function slot0.saveMessageUnread(slot0)
-	if slot0._messageUnreadDict then
-		SocialMessageController.instance:writeMessageUnread(slot0._messageUnreadDict)
+function var_0_0.saveMessageUnread(arg_7_0)
+	if arg_7_0._messageUnreadDict then
+		SocialMessageController.instance:writeMessageUnread(arg_7_0._messageUnreadDict)
 	end
 end
 
-function slot0.getMessageUnread(slot0)
-	if not slot0._messageUnreadDict then
+function var_0_0.getMessageUnread(arg_8_0)
+	if not arg_8_0._messageUnreadDict then
 		SocialMessageController.instance:readMessageUnread()
 	end
 
-	return slot0._messageUnreadDict
+	return arg_8_0._messageUnreadDict
 end
 
-function slot0.getUnReadLastMsgTime(slot0, slot1)
-	if not slot0._messageUnreadDict then
-		slot0._messageUnreadDict = slot0:getMessageUnread()
+function var_0_0.getUnReadLastMsgTime(arg_9_0, arg_9_1)
+	if not arg_9_0._messageUnreadDict then
+		arg_9_0._messageUnreadDict = arg_9_0:getMessageUnread()
 	end
 
-	slot0._messageUnreadDict[SocialEnum.ChannelType.Friend] = slot0._messageUnreadDict[SocialEnum.ChannelType.Friend] or {}
+	arg_9_0._messageUnreadDict[SocialEnum.ChannelType.Friend] = arg_9_0._messageUnreadDict[SocialEnum.ChannelType.Friend] or {}
 
-	if not slot0._messageUnreadDict[SocialEnum.ChannelType.Friend][slot1] then
+	if not arg_9_0._messageUnreadDict[SocialEnum.ChannelType.Friend][arg_9_1] then
 		return 0
 	end
 
-	return slot0._messageUnreadDict[SocialEnum.ChannelType.Friend][slot1].lastTime
+	return arg_9_0._messageUnreadDict[SocialEnum.ChannelType.Friend][arg_9_1].lastTime
 end
 
-function slot0.addMessageUnread(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._messageUnreadDict then
-		slot0._messageUnreadDict = slot0:getMessageUnread()
+function var_0_0.addMessageUnread(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if not arg_10_0._messageUnreadDict then
+		arg_10_0._messageUnreadDict = arg_10_0:getMessageUnread()
 	end
 
-	slot0._messageUnreadDict[slot1] = slot0._messageUnreadDict[slot1] or {}
-	slot0._messageUnreadDict[slot1][slot2] = slot0._messageUnreadDict[slot1][slot2] or {
+	arg_10_0._messageUnreadDict[arg_10_1] = arg_10_0._messageUnreadDict[arg_10_1] or {}
+	arg_10_0._messageUnreadDict[arg_10_1][arg_10_2] = arg_10_0._messageUnreadDict[arg_10_1][arg_10_2] or {
 		count = 0,
 		lastTime = 0
 	}
-	slot0._messageUnreadDict[slot1][slot2].count = slot0._messageUnreadDict[slot1][slot2].count + slot3
+	arg_10_0._messageUnreadDict[arg_10_1][arg_10_2].count = arg_10_0._messageUnreadDict[arg_10_1][arg_10_2].count + arg_10_3
 
-	if slot4 and slot0._messageUnreadDict[slot1][slot2].lastTime < tonumber(slot4) then
-		slot0._messageUnreadDict[slot1][slot2].lastTime = slot5
-	end
+	if arg_10_4 then
+		local var_10_0 = tonumber(arg_10_4)
 
-	if slot3 ~= 0 then
-		slot0:updateRedDotGroup()
-	end
-
-	slot0:saveMessageUnread()
-end
-
-function slot0.clearMessageUnread(slot0, slot1, slot2, slot3)
-	if not slot0._messageUnreadDict then
-		slot0._messageUnreadDict = slot0:getMessageUnread()
-	end
-
-	slot0._messageUnreadDict[slot1] = slot0._messageUnreadDict[slot1] or {}
-
-	if slot3 then
-		slot0._messageUnreadDict[slot1][slot2] = nil
-	elseif slot0._messageUnreadDict[slot1][slot2] then
-		slot0._messageUnreadDict[slot1][slot2].count = 0
-		slot0._messageUnreadDict[slot1][slot2].lastTime = 0
-	end
-
-	slot0:updateRedDotGroup()
-	slot0:saveMessageUnread()
-end
-
-function slot0.getFriendMessageUnread(slot0, slot1)
-	if not slot0._messageUnreadDict then
-		slot0._messageUnreadDict = slot0:getMessageUnread()
-	end
-
-	slot0._messageUnreadDict[SocialEnum.ChannelType.Friend] = slot0._messageUnreadDict[SocialEnum.ChannelType.Friend] or {}
-
-	return slot0._messageUnreadDict[SocialEnum.ChannelType.Friend][slot1] and slot2.count or 0
-end
-
-function slot0.getMessageUnreadRedDotGroup(slot0)
-	slot1 = {
-		defineId = 1006
-	}
-	slot2 = {}
-
-	for slot7, slot8 in pairs(SocialModel.instance:getFriendIdDict()) do
-		table.insert(slot2, {
-			id = tonumber(slot7),
-			value = slot0:getFriendMessageUnread(slot7),
-			time = 0,
-			ext = ""
-		})
-	end
-
-	if #slot2 <= 0 then
-		table.insert(slot2, {
-			id = 0,
-			value = 0,
-			time = 0
-		})
-	end
-
-	slot1.infos = slot2
-	slot1.replaceAll = true
-
-	return slot1
-end
-
-function slot0.updateRedDotGroup(slot0)
-	slot1 = {
-		redDotInfos = slot2,
-		replaceAll = false
-	}
-
-	table.insert({}, slot0:getMessageUnreadRedDotGroup())
-	RedDotModel.instance:updateRedDotInfo(slot1.redDotInfos)
-	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateFriendInfoDot, slot1.redDotInfos)
-end
-
-function slot0.addSocialMessage(slot0, slot1)
-	slot3 = 0
-	slot4 = false
-
-	if slot1.channelType == SocialEnum.ChannelType.Friend then
-		if PlayerModel.instance:getMyUserId() == slot1.senderId then
-			slot3 = slot1.recipientId
-			slot4 = true
-		else
-			slot3 = slot1.senderId
+		if var_10_0 > arg_10_0._messageUnreadDict[arg_10_1][arg_10_2].lastTime then
+			arg_10_0._messageUnreadDict[arg_10_1][arg_10_2].lastTime = var_10_0
 		end
 	end
 
-	if not slot0._socialMessageMOListDict[slot2][slot3] then
-		slot0._socialMessageMOListDict[slot2][slot3] = slot0:getSocialMessageMOList(slot2, slot3)
+	if arg_10_3 ~= 0 then
+		arg_10_0:updateRedDotGroup()
 	end
 
-	for slot9, slot10 in ipairs(slot0._socialMessageMOListDict[slot2][slot3]) do
-		if slot10.msgId == slot1.msgId then
+	arg_10_0:saveMessageUnread()
+end
+
+function var_0_0.clearMessageUnread(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if not arg_11_0._messageUnreadDict then
+		arg_11_0._messageUnreadDict = arg_11_0:getMessageUnread()
+	end
+
+	arg_11_0._messageUnreadDict[arg_11_1] = arg_11_0._messageUnreadDict[arg_11_1] or {}
+
+	if arg_11_3 then
+		arg_11_0._messageUnreadDict[arg_11_1][arg_11_2] = nil
+	elseif arg_11_0._messageUnreadDict[arg_11_1][arg_11_2] then
+		arg_11_0._messageUnreadDict[arg_11_1][arg_11_2].count = 0
+		arg_11_0._messageUnreadDict[arg_11_1][arg_11_2].lastTime = 0
+	end
+
+	arg_11_0:updateRedDotGroup()
+	arg_11_0:saveMessageUnread()
+end
+
+function var_0_0.getFriendMessageUnread(arg_12_0, arg_12_1)
+	if not arg_12_0._messageUnreadDict then
+		arg_12_0._messageUnreadDict = arg_12_0:getMessageUnread()
+	end
+
+	arg_12_0._messageUnreadDict[SocialEnum.ChannelType.Friend] = arg_12_0._messageUnreadDict[SocialEnum.ChannelType.Friend] or {}
+
+	local var_12_0 = arg_12_0._messageUnreadDict[SocialEnum.ChannelType.Friend][arg_12_1]
+
+	return var_12_0 and var_12_0.count or 0
+end
+
+function var_0_0.getMessageUnreadRedDotGroup(arg_13_0)
+	local var_13_0 = {}
+
+	var_13_0.defineId = 1006
+
+	local var_13_1 = {}
+	local var_13_2 = SocialModel.instance:getFriendIdDict()
+
+	for iter_13_0, iter_13_1 in pairs(var_13_2) do
+		local var_13_3 = {
+			id = tonumber(iter_13_0),
+			value = arg_13_0:getFriendMessageUnread(iter_13_0)
+		}
+
+		var_13_3.time = 0
+		var_13_3.ext = ""
+
+		table.insert(var_13_1, var_13_3)
+	end
+
+	if #var_13_1 <= 0 then
+		local var_13_4 = {}
+
+		var_13_4.id = 0
+		var_13_4.value = 0
+		var_13_4.time = 0
+
+		table.insert(var_13_1, var_13_4)
+	end
+
+	var_13_0.infos = var_13_1
+	var_13_0.replaceAll = true
+
+	return var_13_0
+end
+
+function var_0_0.updateRedDotGroup(arg_14_0)
+	local var_14_0 = {}
+	local var_14_1 = {}
+	local var_14_2 = arg_14_0:getMessageUnreadRedDotGroup()
+
+	table.insert(var_14_1, var_14_2)
+
+	var_14_0.redDotInfos = var_14_1
+	var_14_0.replaceAll = false
+
+	RedDotModel.instance:updateRedDotInfo(var_14_0.redDotInfos)
+	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateFriendInfoDot, var_14_0.redDotInfos)
+end
+
+function var_0_0.addSocialMessage(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.channelType
+	local var_15_1 = 0
+	local var_15_2 = false
+
+	if var_15_0 == SocialEnum.ChannelType.Friend then
+		if PlayerModel.instance:getMyUserId() == arg_15_1.senderId then
+			var_15_1 = arg_15_1.recipientId
+			var_15_2 = true
+		else
+			var_15_1 = arg_15_1.senderId
+		end
+	end
+
+	if not arg_15_0._socialMessageMOListDict[var_15_0][var_15_1] then
+		arg_15_0._socialMessageMOListDict[var_15_0][var_15_1] = arg_15_0:getSocialMessageMOList(var_15_0, var_15_1)
+	end
+
+	local var_15_3 = arg_15_0._socialMessageMOListDict[var_15_0][var_15_1]
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_3) do
+		if iter_15_1.msgId == arg_15_1.msgId then
 			return
 		end
 	end
 
-	slot6 = SocialMessageMO.New()
+	local var_15_4 = SocialMessageMO.New()
 
-	slot6:init(slot1)
-	table.insert(slot5, slot6)
-	slot0:saveSocialMessages(slot2, slot3)
+	var_15_4:init(arg_15_1)
+	table.insert(var_15_3, var_15_4)
+	arg_15_0:saveSocialMessages(var_15_0, var_15_1)
 
-	if slot4 then
-		slot0:addMessageUnread(slot2, slot3, 0)
+	if var_15_2 then
+		arg_15_0:addMessageUnread(var_15_0, var_15_1, 0)
 	else
-		slot0:addMessageUnread(slot2, slot3, 1, slot1.sendTime)
+		arg_15_0:addMessageUnread(var_15_0, var_15_1, 1, arg_15_1.sendTime)
 	end
 
 	SocialController.instance:dispatchEvent(SocialEvent.MessageInfoChanged)
 end
 
-function slot0.deleteSocialMessage(slot0, slot1, slot2)
-	slot0._socialMessageMOListDict[slot1][slot2] = {}
+function var_0_0.deleteSocialMessage(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0._socialMessageMOListDict[arg_16_1][arg_16_2] = {}
 
-	slot0:saveSocialMessages(slot1, slot2)
-	slot0:clearMessageUnread(slot1, slot2, true)
+	arg_16_0:saveSocialMessages(arg_16_1, arg_16_2)
+	arg_16_0:clearMessageUnread(arg_16_1, arg_16_2, true)
 	SocialController.instance:dispatchEvent(SocialEvent.MessageInfoChanged)
 end
 
-function slot0.ensureDeleteSocialMessage(slot0)
-	if not slot0:getMessageUnread()[SocialEnum.ChannelType.Friend] then
+function var_0_0.ensureDeleteSocialMessage(arg_17_0)
+	local var_17_0 = arg_17_0:getMessageUnread()[SocialEnum.ChannelType.Friend]
+
+	if not var_17_0 then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		if not SocialModel.instance:isMyFriendByUserId(slot6) then
-			slot0:deleteSocialMessage(SocialEnum.ChannelType.Friend, slot6)
+	for iter_17_0, iter_17_1 in pairs(var_17_0) do
+		if not SocialModel.instance:isMyFriendByUserId(iter_17_0) then
+			arg_17_0:deleteSocialMessage(SocialEnum.ChannelType.Friend, iter_17_0)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

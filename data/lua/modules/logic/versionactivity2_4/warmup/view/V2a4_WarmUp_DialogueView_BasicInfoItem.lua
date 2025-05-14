@@ -1,36 +1,40 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView_BasicInfoItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView_BasicInfoItem", package.seeall)
 
-slot0 = class("V2a4_WarmUp_DialogueView_BasicInfoItem", RougeSimpleItemBase)
+local var_0_0 = class("V2a4_WarmUp_DialogueView_BasicInfoItem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "bg/#txt_title")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "#txt_dec")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "bg/#txt_title")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#txt_dec")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, ...)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	arg_4_0:__onInit()
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_5_0)
+	var_0_0.super.onDestroyView(arg_5_0)
+	arg_5_0:__onDispose()
 end
 
-function slot0.setData(slot0, slot1)
-	slot3 = V2a4_WarmUpConfig.instance:textInfoCO(slot1)
-	slot0._txttitle.text = slot3.name
-	slot0._txtdec.text = slot3.value
+function var_0_0.setData(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1
+	local var_6_1 = V2a4_WarmUpConfig.instance:textInfoCO(var_6_0)
+
+	arg_6_0._txttitle.text = var_6_1.name
+	arg_6_0._txtdec.text = var_6_1.value
 end
 
-return slot0
+return var_0_0

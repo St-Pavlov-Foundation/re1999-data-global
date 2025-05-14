@@ -1,42 +1,48 @@
-module("modules.logic.rouge.view.RougeDifficultyItemLocked", package.seeall)
+﻿module("modules.logic.rouge.view.RougeDifficultyItemLocked", package.seeall)
 
-slot0 = class("RougeDifficultyItemLocked", RougeDifficultyItem_Base)
+local var_0_0 = class("RougeDifficultyItemLocked", RougeDifficultyItem_Base)
 
-function slot0.onInitView(slot0)
-	slot0._goBg1 = gohelper.findChild(slot0.viewGO, "bg/#go_Bg1")
-	slot0._goBg2 = gohelper.findChild(slot0.viewGO, "bg/#go_Bg2")
-	slot0._goBg3 = gohelper.findChild(slot0.viewGO, "bg/#go_Bg3")
-	slot0._txtnum1 = gohelper.findChildText(slot0.viewGO, "num/#txt_num1")
-	slot0._txtnum2 = gohelper.findChildText(slot0.viewGO, "num/#txt_num2")
-	slot0._txtnum3 = gohelper.findChildText(slot0.viewGO, "num/#txt_num3")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txten = gohelper.findChildText(slot0.viewGO, "#txt_name/#txt_en")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goBg1 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg1")
+	arg_1_0._goBg2 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg2")
+	arg_1_0._goBg3 = gohelper.findChild(arg_1_0.viewGO, "bg/#go_Bg3")
+	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num1")
+	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num2")
+	arg_1_0._txtnum3 = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num3")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_en")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	RougeDifficultyItem_Base._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	RougeDifficultyItem_Base._editableInitView(arg_4_0)
 
-	slot0._txtLocked = gohelper.findChildText(slot0.viewGO, "lock/txt_locked")
+	arg_4_0._txtLocked = gohelper.findChildText(arg_4_0.viewGO, "lock/txt_locked")
 end
 
-function slot0.setData(slot0, slot1)
-	RougeDifficultyItem_Base.setData(slot0, slot1)
+function var_0_0.setData(arg_5_0, arg_5_1)
+	RougeDifficultyItem_Base.setData(arg_5_0, arg_5_1)
 
-	if slot1.difficultyCO.preDifficulty and slot3 > 0 then
-		slot0._txtLocked.text = formatLuaLang("rougedifficultyitemlocked_unlock_desc_fmt", RougeOutsideModel.instance:config():getDifficultyCO(slot3).title)
+	local var_5_0 = arg_5_1.difficultyCO.preDifficulty
+
+	if var_5_0 and var_5_0 > 0 then
+		local var_5_1 = RougeOutsideModel.instance:config():getDifficultyCO(var_5_0)
+
+		arg_5_0._txtLocked.text = formatLuaLang("rougedifficultyitemlocked_unlock_desc_fmt", var_5_1.title)
 	else
-		slot0._txtLocked.text = ""
+		arg_5_0._txtLocked.text = ""
 	end
 end
 
-return slot0
+return var_0_0

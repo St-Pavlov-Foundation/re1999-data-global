@@ -1,16 +1,16 @@
-module("modules.logic.fight.FightMsgItem", package.seeall)
+﻿module("modules.logic.fight.FightMsgItem", package.seeall)
 
-slot0 = class("FightMsgItem")
+local var_0_0 = class("FightMsgItem")
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.msgId = slot1
-	slot0.callback = slot2
-	slot0.handle = slot3
-	slot0.msgName = FightMsgId.id2Name[slot1]
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.msgId = arg_1_1
+	arg_1_0.callback = arg_1_2
+	arg_1_0.handle = arg_1_3
+	arg_1_0.msgName = FightMsgId.id2Name[arg_1_1]
 end
 
-function slot0.sendMsg(slot0, ...)
-	xpcall(slot0.callback, __G__TRACKBACK__, slot0.handle, ...)
+function var_0_0.sendMsg(arg_2_0, ...)
+	xpcall(arg_2_0.callback, __G__TRACKBACK__, arg_2_0.handle, ...)
 end
 
-return slot0
+return var_0_0

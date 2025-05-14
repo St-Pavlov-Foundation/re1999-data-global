@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationViewContainer", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeCalibrationViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity2_4MusicFreeCalibrationViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, VersionActivity2_4MusicFreeCalibrationView.New())
+	table.insert(var_1_0, VersionActivity2_4MusicFreeCalibrationView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

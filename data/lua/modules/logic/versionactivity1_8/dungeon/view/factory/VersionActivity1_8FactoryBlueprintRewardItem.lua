@@ -1,85 +1,110 @@
-module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintRewardItem", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintRewardItem", package.seeall)
 
-slot0 = class("VersionActivity1_8FactoryBlueprintRewardItem", UserDataDispose)
+local var_0_0 = class("VersionActivity1_8FactoryBlueprintRewardItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.trans = slot1.transform
-	slot0.componentId = slot2
+	arg_1_0.go = arg_1_1
+	arg_1_0.trans = arg_1_1.transform
+	arg_1_0.componentId = arg_1_2
 
-	if slot3 then
-		slot0.progressPointLightGo = gohelper.findChild(slot3, "light")
+	if arg_1_3 then
+		arg_1_0.progressPointLightGo = gohelper.findChild(arg_1_3, "light")
 	end
 
-	slot0.actId = Activity157Model.instance:getActId()
-	slot4 = {}
+	arg_1_0.actId = Activity157Model.instance:getActId()
 
-	if not string.nilorempty(Activity157Config.instance:getComponentReward(slot0.actId, slot0.componentId)) then
-		slot4 = GameUtil.splitString2(slot5, true)
+	local var_1_0 = {}
+	local var_1_1 = Activity157Config.instance:getComponentReward(arg_1_0.actId, arg_1_0.componentId)
+
+	if not string.nilorempty(var_1_1) then
+		var_1_0 = GameUtil.splitString2(var_1_1, true)
 	end
 
-	slot0._rewardItemList = {}
+	arg_1_0._rewardItemList = {}
 
-	for slot9, slot10 in ipairs(slot4) do
-		if gohelper.findChild(slot0.go, "reward" .. slot9) then
-			slot13 = slot10[1]
-			slot0:getUserDataTb_().gohasget = gohelper.findChild(slot11, "#go_hasget")
-			slot15, slot16 = ItemModel.instance:getItemConfigAndIcon(slot13, slot10[2])
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_2 = gohelper.findChild(arg_1_0.go, "reward" .. iter_1_0)
 
-			if slot13 == MaterialEnum.MaterialType.Building and RoomConfig.instance:getLevelGroupConfig(slot14, Activity157Config.instance:getComponentBonusBuildingLevel(slot0.actId, slot0.componentId)) then
-				slot16 = ResUrl.getRoomBuildingPropIcon(slot18.icon)
+		if var_1_2 then
+			local var_1_3 = arg_1_0:getUserDataTb_()
+			local var_1_4 = iter_1_1[1]
+			local var_1_5 = iter_1_1[2]
+
+			var_1_3.gohasget = gohelper.findChild(var_1_2, "#go_hasget")
+
+			local var_1_6, var_1_7 = ItemModel.instance:getItemConfigAndIcon(var_1_4, var_1_5)
+
+			if var_1_4 == MaterialEnum.MaterialType.Building then
+				local var_1_8 = Activity157Config.instance:getComponentBonusBuildingLevel(arg_1_0.actId, arg_1_0.componentId)
+				local var_1_9 = RoomConfig.instance:getLevelGroupConfig(var_1_5, var_1_8)
+
+				if var_1_9 then
+					var_1_7 = ResUrl.getRoomBuildingPropIcon(var_1_9.icon)
+				end
 			end
 
-			slot12.simagereward = gohelper.findChildSingleImage(slot11, "#simage_reward")
+			var_1_3.simagereward = gohelper.findChildSingleImage(var_1_2, "#simage_reward")
 
-			if slot16 then
-				slot12.simagereward:LoadImage(slot16)
+			if var_1_7 then
+				var_1_3.simagereward:LoadImage(var_1_7)
 			end
 
-			if gohelper.findChildImage(slot11, "bg") then
-				UISpriteSetMgr.instance:setV1a8FactorySprite(slot17, "v1a8_dungeon_factory_rewardbg" .. slot15.rare)
+			local var_1_10 = gohelper.findChildImage(var_1_2, "bg")
+
+			if var_1_10 then
+				local var_1_11 = var_1_6.rare
+
+				UISpriteSetMgr.instance:setV1a8FactorySprite(var_1_10, "v1a8_dungeon_factory_rewardbg" .. var_1_11)
 			end
 
-			gohelper.findChildText(slot11, "#txt_rewardcount").text = luaLang("multiple") .. slot10[3]
+			gohelper.findChildText(var_1_2, "#txt_rewardcount").text = luaLang("multiple") .. iter_1_1[3]
 
-			table.insert(slot0._rewardItemList, slot12)
+			table.insert(arg_1_0._rewardItemList, var_1_3)
 		end
 	end
 
-	if #slot4 < slot0.trans.childCount then
-		for slot11 = slot6 + 1, slot7 do
-			gohelper.setActive(slot0.trans:GetChild(slot11 - 1).gameObject, false)
+	local var_1_12 = #var_1_0
+	local var_1_13 = arg_1_0.trans.childCount
+
+	if var_1_12 < var_1_13 then
+		for iter_1_2 = var_1_12 + 1, var_1_13 do
+			local var_1_14 = arg_1_0.trans:GetChild(iter_1_2 - 1)
+
+			gohelper.setActive(var_1_14.gameObject, false)
 		end
 	end
 end
 
-function slot0.refresh(slot0, slot1)
-	slot3 = Activity157Model.instance:hasComponentGotReward(slot0.componentId)
+function var_0_0.refresh(arg_2_0, arg_2_1)
+	local var_2_0 = Activity157Model.instance:isRepairComponent(arg_2_0.componentId)
+	local var_2_1 = Activity157Model.instance:hasComponentGotReward(arg_2_0.componentId)
 
-	for slot7, slot8 in ipairs(slot0._rewardItemList) do
-		gohelper.setActive(slot8.gohasget, slot3)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._rewardItemList) do
+		local var_2_2 = iter_2_1.gohasget
 
-		if slot1 and Activity157Model.instance:isRepairComponent(slot0.componentId) and not slot3 then
-			slot0:playHasGetAnim(slot9)
+		gohelper.setActive(var_2_2, var_2_1)
+
+		if arg_2_1 and var_2_0 and not var_2_1 then
+			arg_2_0:playHasGetAnim(var_2_2)
 		end
 	end
 
-	gohelper.setActive(slot0.progressPointLightGo, slot3)
+	gohelper.setActive(arg_2_0.progressPointLightGo, var_2_1)
 end
 
-function slot0.playHasGetAnim(slot0, slot1)
-	gohelper.setActive(slot1, true)
-	slot1:GetComponent(typeof(UnityEngine.Animator)):Play("go_hasget_in")
+function var_0_0.playHasGetAnim(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_1, true)
+	arg_3_1:GetComponent(typeof(UnityEngine.Animator)):Play("go_hasget_in")
 end
 
-function slot0.destroy(slot0)
-	for slot4, slot5 in pairs(slot0._rewardItemList) do
-		slot5.simagereward:UnLoadImage()
+function var_0_0.destroy(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._rewardItemList) do
+		iter_4_1.simagereward:UnLoadImage()
 	end
 
-	slot0:__onDispose()
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

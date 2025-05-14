@@ -1,70 +1,75 @@
-module("modules.logic.fight.entity.mgr.FightSkillMgr", package.seeall)
+﻿module("modules.logic.fight.entity.mgr.FightSkillMgr", package.seeall)
 
-slot0 = class("FightSkillMgr")
+local var_0_0 = class("FightSkillMgr")
 
-function slot0.ctor(slot0)
-	slot0._playingEntityId2StepMO = {}
-	slot0._playingSkillCount = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._playingEntityId2StepMO = {}
+	arg_1_0._playingSkillCount = 0
 end
 
-function slot0.init(slot0)
+function var_0_0.init(arg_2_0)
+	return
 end
 
-function slot0.dispose(slot0)
-	slot0._playingEntityId2StepMO = {}
-	slot0._playingSkillCount = 0
+function var_0_0.dispose(arg_3_0)
+	arg_3_0._playingEntityId2StepMO = {}
+	arg_3_0._playingSkillCount = 0
 end
 
-function slot0.beforeTimeline(slot0, slot1, slot2)
-	slot0._playingSkillCount = slot0._playingSkillCount + 1
-	slot0._playingEntityId2StepMO[slot1.id] = slot2 or 1
+function var_0_0.beforeTimeline(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._playingSkillCount = arg_4_0._playingSkillCount + 1
+	arg_4_0._playingEntityId2StepMO[arg_4_1.id] = arg_4_2 or 1
 
-	slot1:resetEntity()
-	FightController.instance:dispatchEvent(FightEvent.BeforePlayTimeline, slot1.id)
+	arg_4_1:resetEntity()
+	FightController.instance:dispatchEvent(FightEvent.BeforePlayTimeline, arg_4_1.id)
 
-	if slot0:isUniqueSkill(slot1, slot2) then
-		FightController.instance:dispatchEvent(FightEvent.BeforePlayUniqueSkill, slot1.id)
+	if arg_4_0:isUniqueSkill(arg_4_1, arg_4_2) then
+		FightController.instance:dispatchEvent(FightEvent.BeforePlayUniqueSkill, arg_4_1.id)
 	end
 end
 
-function slot0.afterTimeline(slot0, slot1, slot2)
-	slot0._playingSkillCount = slot0._playingSkillCount - 1
+function var_0_0.afterTimeline(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._playingSkillCount = arg_5_0._playingSkillCount - 1
 
-	if slot0._playingSkillCount < 0 then
-		slot0._playingSkillCount = 0
+	if arg_5_0._playingSkillCount < 0 then
+		arg_5_0._playingSkillCount = 0
 	end
 
-	slot0._playingEntityId2StepMO[slot1.id] = nil
+	arg_5_0._playingEntityId2StepMO[arg_5_1.id] = nil
 
-	if slot2 and slot0:isUniqueSkill(slot1, slot2) then
-		FightController.instance:dispatchEvent(FightEvent.AfterPlayUniqueSkill, slot1.id)
+	if arg_5_2 and arg_5_0:isUniqueSkill(arg_5_1, arg_5_2) then
+		FightController.instance:dispatchEvent(FightEvent.AfterPlayUniqueSkill, arg_5_1.id)
 
-		for slot7, slot8 in ipairs(FightHelper.getAllEntitys()) do
-			slot8:resetEntity()
+		local var_5_0 = FightHelper.getAllEntitys()
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+			iter_5_1:resetEntity()
 		end
 	else
-		slot1:resetEntity()
+		arg_5_1:resetEntity()
 	end
 
-	if not slot0:isPlayingAnyTimeline() then
+	if not arg_5_0:isPlayingAnyTimeline() then
 		FightTLEventUIVisible.resetLatestStepUid()
 	end
 end
 
-function slot0.isUniqueSkill(slot0, slot1, slot2)
-	if slot1:getMO() and FightCardModel.instance:isUniqueSkill(slot3.id, slot2.actId) then
+function var_0_0.isUniqueSkill(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_1:getMO()
+
+	if var_6_0 and FightCardModel.instance:isUniqueSkill(var_6_0.id, arg_6_2.actId) then
 		return true
 	end
 end
 
-function slot0.isEntityPlayingTimeline(slot0, slot1)
-	return slot0._playingEntityId2StepMO[slot1] ~= nil
+function var_0_0.isEntityPlayingTimeline(arg_7_0, arg_7_1)
+	return arg_7_0._playingEntityId2StepMO[arg_7_1] ~= nil
 end
 
-function slot0.isPlayingAnyTimeline(slot0)
-	return slot0._playingSkillCount > 0
+function var_0_0.isPlayingAnyTimeline(arg_8_0)
+	return arg_8_0._playingSkillCount > 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

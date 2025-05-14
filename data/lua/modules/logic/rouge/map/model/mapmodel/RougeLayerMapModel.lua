@@ -1,195 +1,209 @@
-module("modules.logic.rouge.map.model.mapmodel.RougeLayerMapModel", package.seeall)
+﻿module("modules.logic.rouge.map.model.mapmodel.RougeLayerMapModel", package.seeall)
 
-slot0 = class("RougeLayerMapModel")
+local var_0_0 = class("RougeLayerMapModel")
 
-function slot0.initMap(slot0, slot1)
-	slot0.layerId = slot1.layerId
-	slot0.layerCo = lua_rouge_layer.configDict[slot0.layerId]
-	slot0.curEpisodeId = RougeMapHelper.getEpisodeIndex(slot1.curStage)
-	slot0.curNodeId = slot1.curNode
+function var_0_0.initMap(arg_1_0, arg_1_1)
+	arg_1_0.layerId = arg_1_1.layerId
+	arg_1_0.layerCo = lua_rouge_layer.configDict[arg_1_0.layerId]
+	arg_1_0.curEpisodeId = RougeMapHelper.getEpisodeIndex(arg_1_1.curStage)
+	arg_1_0.curNodeId = arg_1_1.curNode
 
-	slot0:initNodeInfo(slot1.nodeInfo)
+	arg_1_0:initNodeInfo(arg_1_1.nodeInfo)
 end
 
-function slot0.updateMapInfo(slot0, slot1)
-	slot0.curEpisodeId = RougeMapHelper.getEpisodeIndex(slot1.curStage)
-	slot0.curNodeId = slot1.curNode
+function var_0_0.updateMapInfo(arg_2_0, arg_2_1)
+	arg_2_0.curEpisodeId = RougeMapHelper.getEpisodeIndex(arg_2_1.curStage)
+	arg_2_0.curNodeId = arg_2_1.curNode
 
-	slot0:updateNodeInfo(slot1.nodeInfo)
+	arg_2_0:updateNodeInfo(arg_2_1.nodeInfo)
 end
 
-function slot0.updateSimpleMapInfo(slot0, slot1)
-	slot0:updateMapInfo(slot1)
+function var_0_0.updateSimpleMapInfo(arg_3_0, arg_3_1)
+	arg_3_0:updateMapInfo(arg_3_1)
 end
 
-function slot0.initNodeInfo(slot0, slot1)
-	slot0.episodeList = {}
-	slot0.nodeDict = {}
-	slot2 = 0
-	slot4 = 0
+function var_0_0.initNodeInfo(arg_4_0, arg_4_1)
+	arg_4_0.episodeList = {}
+	arg_4_0.nodeDict = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		if 0 < RougeMapHelper.getEpisodeIndex(slot9.stage) then
-			slot3 = slot10
+	local var_4_0 = 0
+	local var_4_1 = 0
+	local var_4_2 = 0
+
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_3 = RougeMapHelper.getEpisodeIndex(iter_4_1.stage)
+
+		if var_4_1 < var_4_3 then
+			var_4_1 = var_4_3
 		end
 
-		if slot4 < slot9.nodeId then
-			slot4 = slot9.nodeId
+		if var_4_2 < iter_4_1.nodeId then
+			var_4_2 = iter_4_1.nodeId
 		end
 
-		if not slot0.episodeList[slot10] then
-			slot11 = RougeEpisodeMO.New()
+		local var_4_4 = arg_4_0.episodeList[var_4_3]
 
-			slot11:init(slot10)
-			table.insert(slot0.episodeList, slot11)
+		if not var_4_4 then
+			var_4_4 = RougeEpisodeMO.New()
 
-			slot2 = 0
+			var_4_4:init(var_4_3)
+			table.insert(arg_4_0.episodeList, var_4_4)
+
+			var_4_0 = 0
 		end
 
-		slot2 = slot2 + 1
-		slot12 = RougeNodeInfoMO.New()
+		var_4_0 = var_4_0 + 1
 
-		slot12:init(slot9)
-		slot11:addNode(slot12)
+		local var_4_5 = RougeNodeInfoMO.New()
 
-		slot0.nodeDict[slot12.nodeId] = slot12
+		var_4_5:init(iter_4_1)
+		var_4_4:addNode(var_4_5)
+
+		arg_4_0.nodeDict[var_4_5.nodeId] = var_4_5
 	end
 
-	slot5 = slot3 + 1
-	slot0.endNodeId = slot4 + 1
-	slot6 = {}
+	local var_4_6 = var_4_1 + 1
 
-	for slot11, slot12 in ipairs(slot0.episodeList[slot3]:getNodeMoList()) do
-		table.insert(slot6, slot12.nodeId)
+	arg_4_0.endNodeId = var_4_2 + 1
+
+	local var_4_7 = {}
+	local var_4_8 = arg_4_0.episodeList[var_4_1]
+
+	for iter_4_2, iter_4_3 in ipairs(var_4_8:getNodeMoList()) do
+		table.insert(var_4_7, iter_4_3.nodeId)
 	end
 
-	slot8 = RougeEpisodeMO.New()
+	local var_4_9 = RougeEpisodeMO.New()
 
-	slot8:init(slot5)
-	slot8:setIsEnd(true)
+	var_4_9:init(var_4_6)
+	var_4_9:setIsEnd(true)
 
-	slot9 = RougeNodeInfoMO.New()
+	local var_4_10 = RougeNodeInfoMO.New()
 
-	slot8:addNode(slot9)
+	var_4_9:addNode(var_4_10)
+	var_4_10:initEnd(arg_4_0.layerId, var_4_6, arg_4_0.endNodeId, var_4_7)
+	table.insert(arg_4_0.episodeList, var_4_9)
 
-	slot13 = slot5
-	slot14 = slot0.endNodeId
+	arg_4_0.nodeDict[arg_4_0.endNodeId] = var_4_10
 
-	slot9:initEnd(slot0.layerId, slot13, slot14, slot6)
-	table.insert(slot0.episodeList, slot8)
-
-	slot0.nodeDict[slot0.endNodeId] = slot9
-
-	for slot13, slot14 in ipairs(slot0.episodeList) do
-		slot14:sortNode()
-		slot14:updateNodeArriveStatus()
+	for iter_4_4, iter_4_5 in ipairs(arg_4_0.episodeList) do
+		iter_4_5:sortNode()
+		iter_4_5:updateNodeArriveStatus()
 	end
 
-	slot0:initNodeFogInfo()
+	arg_4_0:initNodeFogInfo()
 end
 
-function slot0.updateNodeInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.nodeDict[slot6.nodeId] then
-			logError("update node info fail, not found nodeId : " .. tostring(slot6.nodeId))
+function var_0_0.updateNodeInfo(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = arg_5_0.nodeDict[iter_5_1.nodeId]
+
+		if not var_5_0 then
+			logError("update node info fail, not found nodeId : " .. tostring(iter_5_1.nodeId))
 		else
-			slot7:updateInfo(slot6)
+			var_5_0:updateInfo(iter_5_1)
 		end
 	end
 
-	if slot0:getNode(slot0.endNodeId) then
-		slot2.fog = slot2:checkIsEndFog()
+	local var_5_1 = arg_5_0:getNode(arg_5_0.endNodeId)
+
+	if var_5_1 then
+		var_5_1.fog = var_5_1:checkIsEndFog()
 	end
 
-	for slot6, slot7 in ipairs(slot0.episodeList) do
-		slot7:sortNode()
-		slot7:updateNodeArriveStatus()
+	for iter_5_2, iter_5_3 in ipairs(arg_5_0.episodeList) do
+		iter_5_3:sortNode()
+		iter_5_3:updateNodeArriveStatus()
 	end
 
-	slot0:initNodeFogInfo()
+	arg_5_0:initNodeFogInfo()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onNodeArriveStatusChange)
 end
 
-function slot0.getEpisodeList(slot0)
-	return slot0.episodeList
+function var_0_0.getEpisodeList(arg_6_0)
+	return arg_6_0.episodeList
 end
 
-function slot0.getCurEpisodeId(slot0)
-	return slot0.curEpisodeId
+function var_0_0.getCurEpisodeId(arg_7_0)
+	return arg_7_0.curEpisodeId
 end
 
-function slot0.getCurNode(slot0)
-	return slot0:getNode(slot0.curNodeId)
+function var_0_0.getCurNode(arg_8_0)
+	return arg_8_0:getNode(arg_8_0.curNodeId)
 end
 
-function slot0.getNodeDict(slot0)
-	return slot0.nodeDict
+function var_0_0.getNodeDict(arg_9_0)
+	return arg_9_0.nodeDict
 end
 
-function slot0.getNode(slot0, slot1)
-	if not slot0.nodeDict[slot1] then
-		logError("not found nodeId : " .. tostring(slot1))
+function var_0_0.getNode(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.nodeDict[arg_10_1]
+
+	if not var_10_0 then
+		logError("not found nodeId : " .. tostring(arg_10_1))
 
 		return nil
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getEndNodeId(slot0)
-	return slot0.endNodeId
+function var_0_0.getEndNodeId(arg_11_0)
+	return arg_11_0.endNodeId
 end
 
-function slot0.initNodeFogInfo(slot0)
-	slot0._fogNodeList = {}
-	slot0._holeNodeList = {}
-	slot0._fogNodeMap = {}
-	slot0._holeNodeMap = {}
-	slot1 = false
+function var_0_0.initNodeFogInfo(arg_12_0)
+	arg_12_0._fogNodeList = {}
+	arg_12_0._holeNodeList = {}
+	arg_12_0._fogNodeMap = {}
+	arg_12_0._holeNodeMap = {}
 
-	for slot5, slot6 in ipairs(slot0.episodeList or {}) do
-		slot8 = {}
+	local var_12_0 = false
 
-		for slot12, slot13 in ipairs(slot6:getNodeMoList() or {}) do
-			if slot13.fog then
-				slot1 = true
-				slot0._fogNodeMap[slot13.nodeId] = slot13
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.episodeList or {}) do
+		local var_12_1 = iter_12_1:getNodeMoList()
+		local var_12_2 = {}
 
-				table.insert(slot0._fogNodeList, slot13)
+		for iter_12_2, iter_12_3 in ipairs(var_12_1 or {}) do
+			if iter_12_3.fog then
+				var_12_0 = true
+				arg_12_0._fogNodeMap[iter_12_3.nodeId] = iter_12_3
+
+				table.insert(arg_12_0._fogNodeList, iter_12_3)
 			else
-				table.insert(slot8, slot13)
+				table.insert(var_12_2, iter_12_3)
 			end
 		end
 
-		for slot12, slot13 in ipairs(slot8) do
-			if slot1 then
-				slot0._holeNodeMap[slot13.nodeId] = slot13
+		for iter_12_4, iter_12_5 in ipairs(var_12_2) do
+			if var_12_0 then
+				arg_12_0._holeNodeMap[iter_12_5.nodeId] = iter_12_5
 
-				table.insert(slot0._holeNodeList, slot13)
+				table.insert(arg_12_0._holeNodeList, iter_12_5)
 			end
 		end
 	end
 end
 
-function slot0.getFogNodeList(slot0)
-	return slot0._fogNodeList
+function var_0_0.getFogNodeList(arg_13_0)
+	return arg_13_0._fogNodeList
 end
 
-function slot0.getHoleNodeList(slot0)
-	return slot0._holeNodeList
+function var_0_0.getHoleNodeList(arg_14_0)
+	return arg_14_0._holeNodeList
 end
 
-function slot0.isHoleNode(slot0, slot1)
-	return slot0._holeNodeMap and slot0._holeNodeMap[slot1] ~= nil
+function var_0_0.isHoleNode(arg_15_0, arg_15_1)
+	return arg_15_0._holeNodeMap and arg_15_0._holeNodeMap[arg_15_1] ~= nil
 end
 
-function slot0.clear(slot0)
-	slot0.episodeList = nil
-	slot0.nodeDict = nil
-	slot0.layerId = nil
-	slot0.layerCo = nil
-	slot0.curEpisodeId = nil
-	slot0.curNodeId = nil
+function var_0_0.clear(arg_16_0)
+	arg_16_0.episodeList = nil
+	arg_16_0.nodeDict = nil
+	arg_16_0.layerId = nil
+	arg_16_0.layerCo = nil
+	arg_16_0.curEpisodeId = nil
+	arg_16_0.curNodeId = nil
 end
 
-return slot0
+return var_0_0

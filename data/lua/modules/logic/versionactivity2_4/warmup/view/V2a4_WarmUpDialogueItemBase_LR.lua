@@ -1,125 +1,130 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase_LR", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUpDialogueItemBase_LR", package.seeall)
 
-slot0 = class("V2a4_WarmUpDialogueItemBase_LR", V2a4_WarmUpDialogueItemBase)
-slot1 = SLFramework.AnimatorPlayer
+local var_0_0 = class("V2a4_WarmUpDialogueItemBase_LR", V2a4_WarmUpDialogueItemBase)
+local var_0_1 = SLFramework.AnimatorPlayer
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	var_0_0.super._editableInitView(arg_2_0)
 
-	slot0._bgGo = gohelper.findChild(slot0.viewGO, "content_bg")
-	slot0._bgTrans = slot0._bgGo.transform
-	slot0._txtGo = slot0._txtcontent.gameObject
-	slot0._txtTrans = slot0._txtGo.transform
-	slot0._oriTxtWidth = recthelper.getWidth(slot0._txtTrans)
-	slot0._oriTxtHeight = recthelper.getHeight(slot0._txtTrans)
-	slot0._oriBgWidth = recthelper.getWidth(slot0._bgTrans)
-	slot0._oriBgHeight = recthelper.getHeight(slot0._bgTrans)
-	slot0._animPlayer = uv1.Get(slot0.viewGO)
+	arg_2_0._bgGo = gohelper.findChild(arg_2_0.viewGO, "content_bg")
+	arg_2_0._bgTrans = arg_2_0._bgGo.transform
+	arg_2_0._txtGo = arg_2_0._txtcontent.gameObject
+	arg_2_0._txtTrans = arg_2_0._txtGo.transform
+	arg_2_0._oriTxtWidth = recthelper.getWidth(arg_2_0._txtTrans)
+	arg_2_0._oriTxtHeight = recthelper.getHeight(arg_2_0._txtTrans)
+	arg_2_0._oriBgWidth = recthelper.getWidth(arg_2_0._bgTrans)
+	arg_2_0._oriBgHeight = recthelper.getHeight(arg_2_0._bgTrans)
+	arg_2_0._animPlayer = var_0_1.Get(arg_2_0.viewGO)
 
-	slot0:setActive_loading(false)
+	arg_2_0:setActive_loading(false)
 end
 
-function slot0.setActive_loading(slot0, slot1)
-	gohelper.setActive(slot0._goloading, slot1)
+function var_0_0.setActive_loading(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0._goloading, arg_3_1)
 end
 
-function slot0.setData(slot0, slot1)
-	uv0.super.setData(slot0, slot1)
-	slot0:_openAnim()
+function var_0_0.setData(arg_4_0, arg_4_1)
+	var_0_0.super.setData(arg_4_0, arg_4_1)
+	arg_4_0:_openAnim()
 
-	slot3 = V2a4_WarmUpConfig.instance:getDialogDesc(slot1.dialogCO)
+	local var_4_0 = arg_4_1.dialogCO
+	local var_4_1 = V2a4_WarmUpConfig.instance:getDialogDesc(var_4_0)
 
-	slot0:setText(slot3)
-	slot0:typing(slot3)
+	arg_4_0:setText(var_4_1)
+	arg_4_0:typing(var_4_1)
 end
 
-function slot0.onFlush(slot0)
-	if slot0._isFlushed then
+function var_0_0.onFlush(arg_5_0)
+	if arg_5_0._isFlushed then
 		return
 	end
 
-	slot0._isFlushed = true
+	arg_5_0._isFlushed = true
 
-	TaskDispatcher.cancelTask(slot0.onFlush, slot0)
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimerLoading")
-	slot0:setActive_loading(false)
-	slot0:setActive_Txt(true)
+	TaskDispatcher.cancelTask(arg_5_0.onFlush, arg_5_0)
+	FrameTimerController.onDestroyViewMember(arg_5_0, "_fTimerLoading")
+	arg_5_0:setActive_loading(false)
+	arg_5_0:setActive_Txt(true)
 
-	if slot0:isReadyStepEnd() then
-		slot0:stepEnd()
+	if arg_5_0:isReadyStepEnd() then
+		arg_5_0:stepEnd()
 	end
 end
 
-function slot0._typingStartDelayTimer(slot0)
-	TaskDispatcher.runDelay(slot0.onFlush, slot0, V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
+function var_0_0._typingStartDelayTimer(arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0.onFlush, arg_6_0, V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
 end
 
-function slot0._typingStartFrameTimer(slot0, slot1)
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimerLoading")
+function var_0_0._typingStartFrameTimer(arg_7_0, arg_7_1)
+	local var_7_0 = math.random(1, GameUtil.clamp(#arg_7_1, 60, 120) * V2a4_WarmUpConfig.instance:getSentenceInBetweenSec())
 
-	slot0._fTimerLoading = FrameTimerController.instance:register(function ()
-		if not gohelper.isNil(uv0._txtGo) then
-			uv0:onFlush()
+	FrameTimerController.onDestroyViewMember(arg_7_0, "_fTimerLoading")
+
+	arg_7_0._fTimerLoading = FrameTimerController.instance:register(function()
+		if not gohelper.isNil(arg_7_0._txtGo) then
+			arg_7_0:onFlush()
 		end
-	end, math.random(1, GameUtil.clamp(#slot1, 60, 120) * V2a4_WarmUpConfig.instance:getSentenceInBetweenSec()), 1)
+	end, var_7_0, 1)
 
-	slot0._fTimerLoading:Start()
+	arg_7_0._fTimerLoading:Start()
 end
 
-slot2 = 155
+local var_0_2 = 155
 
-function slot0.typing(slot0, slot1)
-	recthelper.setSize(slot0._bgTrans, uv0, slot0._oriBgHeight)
-	slot0:addContentItem(slot0._oriBgHeight)
-	slot0:setActive_loading(true)
-	slot0:_typingStartDelayTimer()
+function var_0_0.typing(arg_9_0, arg_9_1)
+	recthelper.setSize(arg_9_0._bgTrans, var_0_2, arg_9_0._oriBgHeight)
+	arg_9_0:addContentItem(arg_9_0._oriBgHeight)
+	arg_9_0:setActive_loading(true)
+	arg_9_0:_typingStartDelayTimer()
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.onFlush, slot0)
-	GameUtil.onDestroyViewMember(slot0, "_tmpFadeInWithScroll")
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimerLoading")
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.onFlush, arg_10_0)
+	GameUtil.onDestroyViewMember(arg_10_0, "_tmpFadeInWithScroll")
+	FrameTimerController.onDestroyViewMember(arg_10_0, "_fTimerLoading")
+	var_0_0.super.onDestroyView(arg_10_0)
 end
 
-function slot0.onRefreshLineInfo(slot0)
-	slot2 = slot0:preferredHeightTxt()
-	slot4 = slot0._oriBgHeight
+function var_0_0.onRefreshLineInfo(arg_11_0)
+	local var_11_0 = arg_11_0:preferredWidthTxt()
+	local var_11_1 = arg_11_0:preferredHeightTxt()
+	local var_11_2 = arg_11_0._oriBgWidth
+	local var_11_3 = arg_11_0._oriBgHeight
 
-	if slot0:preferredWidthTxt() <= slot0._oriTxtWidth then
-		slot3 = slot0._oriBgWidth + slot1 - slot0._oriTxtWidth
+	if var_11_0 <= arg_11_0._oriTxtWidth then
+		var_11_2 = var_11_2 + (var_11_0 - arg_11_0._oriTxtWidth)
 	else
-		slot1 = slot0._oriTxtWidth
-		slot4 = slot4 + slot2 - slot0._oriTxtHeight
+		var_11_0 = arg_11_0._oriTxtWidth
+		var_11_3 = var_11_3 + (var_11_1 - arg_11_0._oriTxtHeight)
 	end
 
-	slot0._curTxtWidth = slot1
-	slot0._curTxtHeight = slot2
-	slot0._curBgWidth = slot3
-	slot0._curBgHeight = slot4
+	arg_11_0._curTxtWidth = var_11_0
+	arg_11_0._curTxtHeight = var_11_1
+	arg_11_0._curBgWidth = var_11_2
+	arg_11_0._curBgHeight = var_11_3
 
-	if slot0._isFlushed then
-		slot0:stepEnd()
+	if arg_11_0._isFlushed then
+		arg_11_0:stepEnd()
 	end
 end
 
-function slot0.stepEnd(slot0)
-	recthelper.setSize(slot0._txtTrans, slot0._curTxtWidth, slot0._curTxtHeight)
-	recthelper.setSize(slot0._bgTrans, slot0._curBgWidth, slot0._curBgHeight)
-	slot0:addContentItem(slot0._curBgHeight)
-	uv0.super.stepEnd(slot0)
+function var_0_0.stepEnd(arg_12_0)
+	recthelper.setSize(arg_12_0._txtTrans, arg_12_0._curTxtWidth, arg_12_0._curTxtHeight)
+	recthelper.setSize(arg_12_0._bgTrans, arg_12_0._curBgWidth, arg_12_0._curBgHeight)
+	arg_12_0:addContentItem(arg_12_0._curBgHeight)
+	var_0_0.super.stepEnd(arg_12_0)
 end
 
-function slot0.setGray(slot0, slot1)
-	slot0:grayscale(slot1, slot0._txtGo, slot0._bgGo)
+function var_0_0.setGray(arg_13_0, arg_13_1)
+	arg_13_0:grayscale(arg_13_1, arg_13_0._txtGo, arg_13_0._bgGo)
 end
 
-function slot0._openAnim(slot0, slot1, slot2)
-	slot0._animPlayer:Play(UIAnimationName.Open, slot1, slot2)
+function var_0_0._openAnim(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0._animPlayer:Play(UIAnimationName.Open, arg_14_1, arg_14_2)
 end
 
-return slot0
+return var_0_0

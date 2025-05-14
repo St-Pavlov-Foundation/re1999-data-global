@@ -1,30 +1,33 @@
-module("modules.logic.ressplit.controller.ResSplitController", package.seeall)
+﻿module("modules.logic.ressplit.controller.ResSplitController", package.seeall)
 
-slot0 = class("ResSplitController", BaseController)
+local var_0_0 = class("ResSplitController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._versionResSplitHandler = VersionResSplitHandler.New()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._versionResSplitHandler = VersionResSplitHandler.New()
 
 	ResSplitHelper.init()
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.generateResSplitCfg(slot0)
-	slot0._versionResSplitHandler:generateResSplitCfg()
+function var_0_0.generateResSplitCfg(arg_5_0)
+	arg_5_0._versionResSplitHandler:generateResSplitCfg()
 end
 
-function slot0.staticVersionResSplitAction()
-	uv0.instance:generateResSplitCfg()
+function var_0_0.staticVersionResSplitAction()
+	var_0_0.instance:generateResSplitCfg()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

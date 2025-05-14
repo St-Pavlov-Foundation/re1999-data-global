@@ -1,36 +1,36 @@
-module("modules.logic.rouge.model.rpcmo.RougeUnlockSkillMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeUnlockSkillMO", package.seeall)
 
-slot0 = pureTable("RougeUnlockSkillMO")
+local var_0_0 = pureTable("RougeUnlockSkillMO")
 
-function slot0.init(slot0, slot1)
-	slot0.type = slot1.type
-	slot0.idMap = slot0:_listToMap(slot1.ids)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.type = arg_1_1.type
+	arg_1_0.idMap = arg_1_0:_listToMap(arg_1_1.ids)
 end
 
-function slot0._listToMap(slot0, slot1)
-	if not slot1 then
+function var_0_0._listToMap(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return {}
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		-- Nothing
+	local var_2_0 = {}
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		var_2_0[iter_2_1] = iter_2_1
 	end
 
-	return {
-		[slot7] = slot7
-	}
+	return var_2_0
 end
 
-function slot0.isSkillUnlock(slot0, slot1)
-	return slot0.idMap and slot0.idMap[slot1] ~= nil
+function var_0_0.isSkillUnlock(arg_3_0, arg_3_1)
+	return arg_3_0.idMap and arg_3_0.idMap[arg_3_1] ~= nil
 end
 
-function slot0.onNewSkillUnlock(slot0, slot1)
-	if not slot1 then
+function var_0_0.onNewSkillUnlock(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot0.idMap[slot1] = true
+	arg_4_0.idMap[arg_4_1] = true
 end
 
-return slot0
+return var_0_0

@@ -1,43 +1,44 @@
-module("modules.logic.room.view.manufacture.RoomOneKeyViewContainer", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomOneKeyViewContainer", package.seeall)
 
-slot0 = class("RoomOneKeyViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomOneKeyViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = MixScrollParam.New()
-	slot2.scrollGOPath = "right/#go_addPop/#scroll_production"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "right/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
-	slot2.cellClass = RoomOneKeyAddPopItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = MixScrollParam.New()
 
-	table.insert(slot1, LuaMixScrollView.New(OneKeyAddPopListModel.instance, slot2))
+	var_1_1.scrollGOPath = "right/#go_addPop/#scroll_production"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "right/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
+	var_1_1.cellClass = RoomOneKeyAddPopItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
 
-	slot0.roomOneKeyAddPopView = RoomOneKeyAddPopView.New()
+	table.insert(var_1_0, LuaMixScrollView.New(OneKeyAddPopListModel.instance, var_1_1))
 
-	table.insert(slot1, slot0.roomOneKeyAddPopView)
+	arg_1_0.roomOneKeyAddPopView = RoomOneKeyAddPopView.New()
 
-	slot0.oneKeyView = RoomOneKeyView.New()
+	table.insert(var_1_0, arg_1_0.roomOneKeyAddPopView)
 
-	table.insert(slot1, slot0.oneKeyView)
+	arg_1_0.oneKeyView = RoomOneKeyView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.oneKeyView)
+
+	return var_1_0
 end
 
-function slot0.playOpenTransition(slot0)
-	slot1 = "open"
+function var_0_0.playOpenTransition(arg_2_0)
+	local var_2_0 = "open"
 
 	if ManufactureModel.instance:getRecordOneKeyType() == RoomManufactureEnum.OneKeyType.Customize then
-		slot1 = "open2"
+		var_2_0 = "open2"
 	end
 
-	uv0.super.playOpenTransition(slot0, {
-		anim = slot1
+	var_0_0.super.playOpenTransition(arg_2_0, {
+		anim = var_2_0
 	})
 end
 
-function slot0.oneKeyViewSetAddPopActive(slot0, slot1)
-	slot0.oneKeyView:setAddPopActive(slot1)
+function var_0_0.oneKeyViewSetAddPopActive(arg_3_0, arg_3_1)
+	arg_3_0.oneKeyView:setAddPopActive(arg_3_1)
 end
 
-return slot0
+return var_0_0

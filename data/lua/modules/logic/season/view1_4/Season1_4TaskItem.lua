@@ -1,284 +1,301 @@
-module("modules.logic.season.view1_4.Season1_4TaskItem", package.seeall)
+﻿module("modules.logic.season.view1_4.Season1_4TaskItem", package.seeall)
 
-slot0 = class("Season1_4TaskItem", UserDataDispose)
-slot0.BlockKey = "Season1_4TaskItemAni"
+local var_0_0 = class("Season1_4TaskItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+var_0_0.BlockKey = "Season1_4TaskItemAni"
 
-	slot0._viewGO = slot1
-	slot0._simageBg = gohelper.findChildSingleImage(slot1, "#simage_bg")
-	slot0._goNormal = gohelper.findChild(slot1, "#goNormal")
-	slot0._goTotal = gohelper.findChild(slot1, "#goTotal")
-	slot0._ani = slot1:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0:initNormal(slot2)
-	slot0:initTotal()
+	arg_1_0._viewGO = arg_1_1
+	arg_1_0._simageBg = gohelper.findChildSingleImage(arg_1_1, "#simage_bg")
+	arg_1_0._goNormal = gohelper.findChild(arg_1_1, "#goNormal")
+	arg_1_0._goTotal = gohelper.findChild(arg_1_1, "#goTotal")
+	arg_1_0._ani = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	arg_1_0:initNormal(arg_1_2)
+	arg_1_0:initTotal()
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 
-	slot0:addEventListeners()
+	arg_1_0:addEventListeners()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnGoto:AddClickListener(slot0.onClickGoto, slot0)
-	slot0._btnReceive:AddClickListener(slot0.onClickReceive, slot0)
-	slot0._btnGetTotal:AddClickListener(slot0.onClickGetTotal, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnGoto:AddClickListener(arg_2_0.onClickGoto, arg_2_0)
+	arg_2_0._btnReceive:AddClickListener(arg_2_0.onClickReceive, arg_2_0)
+	arg_2_0._btnGetTotal:AddClickListener(arg_2_0.onClickGetTotal, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnGoto:RemoveClickListener()
-	slot0._btnReceive:RemoveClickListener()
-	slot0._btnGetTotal:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnGoto:RemoveClickListener()
+	arg_3_0._btnReceive:RemoveClickListener()
+	arg_3_0._btnGetTotal:RemoveClickListener()
 end
 
-function slot0.initNormal(slot0, slot1)
-	slot0._txtCurCount = gohelper.findChildTextMesh(slot0._goNormal, "#txt_curcount")
-	slot0._txtMaxCount = gohelper.findChildTextMesh(slot0._goNormal, "#txt_curcount/#txt_maxcount")
-	slot0._txtDesc = gohelper.findChildTextMesh(slot0._goNormal, "#txt_desc")
-	slot0._scrollreward = gohelper.findChild(slot0._goNormal, "#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._gocontent = gohelper.findChild(slot0._goNormal, "#scroll_rewards/Viewport/Content")
-	slot0._scrollreward.parentGameObject = slot1
-	slot0._goRewardTemplate = gohelper.findChild(slot0._gocontent, "#go_rewarditem")
+function var_0_0.initNormal(arg_4_0, arg_4_1)
+	arg_4_0._txtCurCount = gohelper.findChildTextMesh(arg_4_0._goNormal, "#txt_curcount")
+	arg_4_0._txtMaxCount = gohelper.findChildTextMesh(arg_4_0._goNormal, "#txt_curcount/#txt_maxcount")
+	arg_4_0._txtDesc = gohelper.findChildTextMesh(arg_4_0._goNormal, "#txt_desc")
+	arg_4_0._scrollreward = gohelper.findChild(arg_4_0._goNormal, "#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_4_0._gocontent = gohelper.findChild(arg_4_0._goNormal, "#scroll_rewards/Viewport/Content")
+	arg_4_0._scrollreward.parentGameObject = arg_4_1
+	arg_4_0._goRewardTemplate = gohelper.findChild(arg_4_0._gocontent, "#go_rewarditem")
 
-	gohelper.setActive(slot0._goRewardTemplate, false)
+	gohelper.setActive(arg_4_0._goRewardTemplate, false)
 
-	slot0._goMask = gohelper.findChild(slot0._goNormal, "#go_blackmask")
-	slot0._goFinish = gohelper.findChild(slot0._goNormal, "#go_finish")
-	slot0._goGoto = gohelper.findChild(slot0._goNormal, "#btn_goto")
-	slot0._btnGoto = gohelper.findChildButtonWithAudio(slot0._goNormal, "#btn_goto")
-	slot0._goReceive = gohelper.findChild(slot0._goNormal, "#btn_receive")
-	slot0._btnReceive = gohelper.findChildButtonWithAudio(slot0._goNormal, "#btn_receive")
-	slot0._goUnfinish = gohelper.findChild(slot0._goNormal, "#go_unfinish")
-	slot0._goType1 = gohelper.findChild(slot0._goGoto, "#go_gotype1")
-	slot0._goType3 = gohelper.findChild(slot0._goGoto, "#go_gotype3")
+	arg_4_0._goMask = gohelper.findChild(arg_4_0._goNormal, "#go_blackmask")
+	arg_4_0._goFinish = gohelper.findChild(arg_4_0._goNormal, "#go_finish")
+	arg_4_0._goGoto = gohelper.findChild(arg_4_0._goNormal, "#btn_goto")
+	arg_4_0._btnGoto = gohelper.findChildButtonWithAudio(arg_4_0._goNormal, "#btn_goto")
+	arg_4_0._goReceive = gohelper.findChild(arg_4_0._goNormal, "#btn_receive")
+	arg_4_0._btnReceive = gohelper.findChildButtonWithAudio(arg_4_0._goNormal, "#btn_receive")
+	arg_4_0._goUnfinish = gohelper.findChild(arg_4_0._goNormal, "#go_unfinish")
+	arg_4_0._goType1 = gohelper.findChild(arg_4_0._goGoto, "#go_gotype1")
+	arg_4_0._goType3 = gohelper.findChild(arg_4_0._goGoto, "#go_gotype3")
 end
 
-function slot0.initTotal(slot0)
-	slot0._btnGetTotal = gohelper.findChildButtonWithAudio(slot0._goTotal, "#btn_getall")
+function var_0_0.initTotal(arg_5_0)
+	arg_5_0._btnGetTotal = gohelper.findChildButtonWithAudio(arg_5_0._goTotal, "#btn_getall")
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	if slot1 then
-		gohelper.setActive(slot0._viewGO, true)
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 then
+		gohelper.setActive(arg_6_0._viewGO, true)
 
-		if slot1.isTotalGet then
-			gohelper.setActive(slot0._goNormal, false)
-			gohelper.setActive(slot0._goTotal, true)
-			slot0._simageBg:LoadImage(ResUrl.getSeasonIcon("tap2.png"))
+		if arg_6_1.isTotalGet then
+			gohelper.setActive(arg_6_0._goNormal, false)
+			gohelper.setActive(arg_6_0._goTotal, true)
+			arg_6_0._simageBg:LoadImage(ResUrl.getSeasonIcon("tap2.png"))
 		else
-			gohelper.setActive(slot0._goNormal, true)
-			gohelper.setActive(slot0._goTotal, false)
-			slot0:refreshNormal(slot1)
+			gohelper.setActive(arg_6_0._goNormal, true)
+			gohelper.setActive(arg_6_0._goTotal, false)
+			arg_6_0:refreshNormal(arg_6_1)
 		end
 
-		if slot2 then
-			slot0._ani:Play(UIAnimationName.Open)
+		if arg_6_2 then
+			arg_6_0._ani:Play(UIAnimationName.Open)
 		else
-			slot0._ani:Play(UIAnimationName.Idle)
+			arg_6_0._ani:Play(UIAnimationName.Idle)
 		end
 	else
-		gohelper.setActive(slot0._viewGO, false)
+		gohelper.setActive(arg_6_0._viewGO, false)
 	end
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0._viewGO, false)
+function var_0_0.hide(arg_7_0)
+	gohelper.setActive(arg_7_0._viewGO, false)
 end
 
-function slot0.refreshNormal(slot0, slot1)
-	slot0.taskId = slot1.id
-	slot0.jumpId = slot1.config.jumpId
+function var_0_0.refreshNormal(arg_8_0, arg_8_1)
+	arg_8_0.taskId = arg_8_1.id
+	arg_8_0.jumpId = arg_8_1.config.jumpId
 
-	gohelper.setActive(slot0._viewGO, true)
-	slot0:refreshReward(slot1)
-	slot0:refreshDesc(slot1)
-	slot0:refreshProgress(slot1)
-	slot0:refreshState(slot1)
+	gohelper.setActive(arg_8_0._viewGO, true)
+	arg_8_0:refreshReward(arg_8_1)
+	arg_8_0:refreshDesc(arg_8_1)
+	arg_8_0:refreshProgress(arg_8_1)
+	arg_8_0:refreshState(arg_8_1)
 end
 
-function slot0.refreshReward(slot0, slot1)
-	for slot8, slot9 in ipairs(string.split(slot1.config.bonus, "|")) do
-		if not string.nilorempty(slot9) then
-			slot10 = string.splitToNumber(slot9, "#")
+function var_0_0.refreshReward(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1.config
+	local var_9_1 = string.split(var_9_0.bonus, "|")
+	local var_9_2 = {}
 
-			table.insert({}, {
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if not string.nilorempty(iter_9_1) then
+			local var_9_3 = string.splitToNumber(iter_9_1, "#")
+			local var_9_4 = {
 				isIcon = true,
-				materilType = slot10[1],
-				materilId = slot10[2],
-				quantity = slot10[3]
-			})
+				materilType = var_9_3[1],
+				materilId = var_9_3[2],
+				quantity = var_9_3[3]
+			}
+
+			table.insert(var_9_2, var_9_4)
 		end
 	end
 
-	if slot2.activity104EquipBonus > 0 then
-		table.insert(slot4, {
-			equipId = slot2.activity104EquipBonus
+	if var_9_0.activity104EquipBonus > 0 then
+		table.insert(var_9_2, {
+			equipId = var_9_0.activity104EquipBonus
 		})
 	end
 
-	if not slot0._rewardItems then
-		slot0._rewardItems = {}
+	if not arg_9_0._rewardItems then
+		arg_9_0._rewardItems = {}
 	end
 
-	slot8 = #slot4
+	for iter_9_2 = 1, math.max(#arg_9_0._rewardItems, #var_9_2) do
+		local var_9_5 = var_9_2[iter_9_2]
+		local var_9_6 = arg_9_0._rewardItems[iter_9_2] or arg_9_0:createRewardItem(iter_9_2)
 
-	for slot8 = 1, math.max(#slot0._rewardItems, slot8) do
-		slot0:refreshRewardItem(slot0._rewardItems[slot8] or slot0:createRewardItem(slot8), slot4[slot8])
+		arg_9_0:refreshRewardItem(var_9_6, var_9_5)
 	end
 end
 
-function slot0.createRewardItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot3 = gohelper.clone(slot0._goRewardTemplate, slot0._gocontent, "reward_" .. tostring(slot1))
-	slot2.go = slot3
-	slot2.itemParent = gohelper.findChild(slot3, "go_prop")
-	slot2.cardParent = gohelper.findChild(slot3, "go_card")
-	slot0._rewardItems[slot1] = slot2
+function var_0_0.createRewardItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getUserDataTb_()
+	local var_10_1 = gohelper.clone(arg_10_0._goRewardTemplate, arg_10_0._gocontent, "reward_" .. tostring(arg_10_1))
 
-	return slot2
+	var_10_0.go = var_10_1
+	var_10_0.itemParent = gohelper.findChild(var_10_1, "go_prop")
+	var_10_0.cardParent = gohelper.findChild(var_10_1, "go_card")
+	arg_10_0._rewardItems[arg_10_1] = var_10_0
+
+	return var_10_0
 end
 
-function slot0.refreshRewardItem(slot0, slot1, slot2)
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.refreshRewardItem(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_2 then
+		gohelper.setActive(arg_11_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(arg_11_1.go, true)
 
-	if slot2.equipId then
-		gohelper.setActive(slot1.cardParent, true)
-		gohelper.setActive(slot1.itemParent, false)
+	if arg_11_2.equipId then
+		gohelper.setActive(arg_11_1.cardParent, true)
+		gohelper.setActive(arg_11_1.itemParent, false)
 
-		if not slot1.equipIcon then
-			slot1.equipIcon = Season1_4CelebrityCardItem.New()
+		if not arg_11_1.equipIcon then
+			arg_11_1.equipIcon = Season1_4CelebrityCardItem.New()
 
-			slot1.equipIcon:init(slot1.cardParent, slot2.equipId)
+			arg_11_1.equipIcon:init(arg_11_1.cardParent, arg_11_2.equipId)
 		end
 
-		slot1.equipIcon:reset(slot2.equipId)
+		arg_11_1.equipIcon:reset(arg_11_2.equipId)
 
 		return
 	end
 
-	gohelper.setActive(slot1.cardParent, false)
-	gohelper.setActive(slot1.itemParent, true)
+	gohelper.setActive(arg_11_1.cardParent, false)
+	gohelper.setActive(arg_11_1.itemParent, true)
 
-	if not slot1.itemIcon then
-		slot1.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot1.itemParent)
+	if not arg_11_1.itemIcon then
+		arg_11_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_11_1.itemParent)
 	end
 
-	slot1.itemIcon:onUpdateMO(slot2)
-	slot1.itemIcon:isShowCount(true)
-	slot1.itemIcon:setCountFontSize(40)
-	slot1.itemIcon:showStackableNum2()
-	slot1.itemIcon:setHideLvAndBreakFlag(true)
-	slot1.itemIcon:hideEquipLvAndBreak(true)
+	arg_11_1.itemIcon:onUpdateMO(arg_11_2)
+	arg_11_1.itemIcon:isShowCount(true)
+	arg_11_1.itemIcon:setCountFontSize(40)
+	arg_11_1.itemIcon:showStackableNum2()
+	arg_11_1.itemIcon:setHideLvAndBreakFlag(true)
+	arg_11_1.itemIcon:hideEquipLvAndBreak(true)
 end
 
-function slot0.destroyRewardItem(slot0, slot1)
-	if slot1.itemIcon then
-		slot1.itemIcon:onDestroy()
+function var_0_0.destroyRewardItem(arg_12_0, arg_12_1)
+	if arg_12_1.itemIcon then
+		arg_12_1.itemIcon:onDestroy()
 
-		slot1.itemIcon = nil
+		arg_12_1.itemIcon = nil
 	end
 
-	if slot1.equipIcon then
-		slot1.equipIcon:destroy()
+	if arg_12_1.equipIcon then
+		arg_12_1.equipIcon:destroy()
 
-		slot1.equipIcon = nil
+		arg_12_1.equipIcon = nil
 	end
 end
 
-function slot0.refreshDesc(slot0, slot1)
-	slot0._simageBg:LoadImage(ResUrl.getSeasonIcon(string.format("tap%s.png", slot1.config.bgType == 1 and 3 or 1)))
+function var_0_0.refreshDesc(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.config
+	local var_13_1 = string.format("tap%s.png", var_13_0.bgType == 1 and 3 or 1)
 
-	slot0._txtDesc.text = slot2.desc
+	arg_13_0._simageBg:LoadImage(ResUrl.getSeasonIcon(var_13_1))
+
+	arg_13_0._txtDesc.text = var_13_0.desc
 end
 
-function slot0.refreshProgress(slot0, slot1)
-	slot0._txtCurCount.text = slot1.progress
-	slot0._txtMaxCount.text = slot1.config.maxProgress
+function var_0_0.refreshProgress(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.progress
+	local var_14_1 = arg_14_1.config.maxProgress
+
+	arg_14_0._txtCurCount.text = var_14_0
+	arg_14_0._txtMaxCount.text = var_14_1
 end
 
-function slot0.refreshState(slot0, slot1)
-	if slot1.config.maxFinishCount <= slot1.finishCount then
-		gohelper.setActive(slot0._goMask, true)
-		gohelper.setActive(slot0._goFinish, true)
-		gohelper.setActive(slot0._goGoto, false)
-		gohelper.setActive(slot0._goReceive, false)
-	elseif slot1.hasFinished then
-		gohelper.setActive(slot0._goMask, false)
-		gohelper.setActive(slot0._goFinish, false)
-		gohelper.setActive(slot0._goGoto, false)
-		gohelper.setActive(slot0._goReceive, true)
+function var_0_0.refreshState(arg_15_0, arg_15_1)
+	if arg_15_1.finishCount >= arg_15_1.config.maxFinishCount then
+		gohelper.setActive(arg_15_0._goMask, true)
+		gohelper.setActive(arg_15_0._goFinish, true)
+		gohelper.setActive(arg_15_0._goGoto, false)
+		gohelper.setActive(arg_15_0._goReceive, false)
+	elseif arg_15_1.hasFinished then
+		gohelper.setActive(arg_15_0._goMask, false)
+		gohelper.setActive(arg_15_0._goFinish, false)
+		gohelper.setActive(arg_15_0._goGoto, false)
+		gohelper.setActive(arg_15_0._goReceive, true)
 	else
-		gohelper.setActive(slot0._goMask, false)
-		gohelper.setActive(slot0._goFinish, false)
-		gohelper.setActive(slot0._goReceive, false)
+		gohelper.setActive(arg_15_0._goMask, false)
+		gohelper.setActive(arg_15_0._goFinish, false)
+		gohelper.setActive(arg_15_0._goReceive, false)
 
-		if slot0.jumpId and slot0.jumpId > 0 then
-			slot2 = slot1.config
+		if arg_15_0.jumpId and arg_15_0.jumpId > 0 then
+			local var_15_0 = arg_15_1.config
 
-			gohelper.setActive(slot0._goGoto, true)
-			gohelper.setActive(slot0._goUnfinish, false)
-			gohelper.setActive(slot0._goType1, slot1.config.bgType ~= 1)
-			gohelper.setActive(slot0._goType3, slot1.config.bgType == 1)
+			gohelper.setActive(arg_15_0._goGoto, true)
+			gohelper.setActive(arg_15_0._goUnfinish, false)
+			gohelper.setActive(arg_15_0._goType1, arg_15_1.config.bgType ~= 1)
+			gohelper.setActive(arg_15_0._goType3, arg_15_1.config.bgType == 1)
 		else
-			gohelper.setActive(slot0._goGoto, false)
-			gohelper.setActive(slot0._goUnfinish, true)
+			gohelper.setActive(arg_15_0._goGoto, false)
+			gohelper.setActive(arg_15_0._goUnfinish, true)
 		end
 	end
 end
 
-function slot0.onClickGoto(slot0)
-	if not slot0.jumpId then
+function var_0_0.onClickGoto(arg_16_0)
+	if not arg_16_0.jumpId then
 		return
 	end
 
-	if GameFacade.jump(slot0.jumpId) then
-		ViewMgr.instance:closeView(SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.TaskView))
+	if GameFacade.jump(arg_16_0.jumpId) then
+		local var_16_0 = Activity104Model.instance:getCurSeasonId()
+		local var_16_1 = SeasonViewHelper.getViewName(var_16_0, Activity104Enum.ViewName.TaskView)
+
+		ViewMgr.instance:closeView(var_16_1)
 	end
 end
 
-function slot0.onClickReceive(slot0)
-	if not slot0.taskId then
+function var_0_0.onClickReceive(arg_17_0)
+	if not arg_17_0.taskId then
 		return
 	end
 
-	gohelper.setActive(slot0._goMask, true)
-	slot0._ani:Play(UIAnimationName.Finish)
-	UIBlockMgr.instance:startBlock(uv0.BlockKey)
-	TaskDispatcher.runDelay(slot0._onPlayActAniFinished, slot0, 0.76)
+	gohelper.setActive(arg_17_0._goMask, true)
+	arg_17_0._ani:Play(UIAnimationName.Finish)
+	UIBlockMgr.instance:startBlock(var_0_0.BlockKey)
+	TaskDispatcher.runDelay(arg_17_0._onPlayActAniFinished, arg_17_0, 0.76)
 end
 
-function slot0.onClickGetTotal(slot0)
+function var_0_0.onClickGetTotal(arg_18_0)
 	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Season)
 end
 
-function slot0._onPlayActAniFinished(slot0)
-	UIBlockMgr.instance:endBlock(uv0.BlockKey)
-	TaskRpc.instance:sendFinishTaskRequest(slot0.taskId)
-	slot0:hide()
+function var_0_0._onPlayActAniFinished(arg_19_0)
+	UIBlockMgr.instance:endBlock(var_0_0.BlockKey)
+	TaskRpc.instance:sendFinishTaskRequest(arg_19_0.taskId)
+	arg_19_0:hide()
 end
 
-function slot0.destroy(slot0)
-	TaskDispatcher.cancelTask(slot0._onPlayActAniFinished, slot0)
-	slot0:removeEventListeners()
+function var_0_0.destroy(arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._onPlayActAniFinished, arg_20_0)
+	arg_20_0:removeEventListeners()
 
-	if slot0._rewardItems then
-		for slot4, slot5 in pairs(slot0._rewardItems) do
-			slot0:destroyRewardItem(slot5)
+	if arg_20_0._rewardItems then
+		for iter_20_0, iter_20_1 in pairs(arg_20_0._rewardItems) do
+			arg_20_0:destroyRewardItem(iter_20_1)
 		end
 
-		slot0._rewardItems = nil
+		arg_20_0._rewardItems = nil
 	end
 
-	slot0:__onDispose()
+	arg_20_0:__onDispose()
 end
 
-return slot0
+return var_0_0

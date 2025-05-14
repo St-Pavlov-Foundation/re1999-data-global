@@ -1,11 +1,11 @@
-module("modules.logic.limited.view.LimitedRoleViewContainer", package.seeall)
+﻿module("modules.logic.limited.view.LimitedRoleViewContainer", package.seeall)
 
-slot0 = class("LimitedRoleViewContainer", BaseViewContainer)
+local var_0_0 = class("LimitedRoleViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		LimitedRoleView.New()
 	}
 end
 
-return slot0
+return var_0_0

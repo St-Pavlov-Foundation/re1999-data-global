@@ -1,8 +1,8 @@
-module("modules.logic.rouge.config.RougeMapConfig", package.seeall)
+﻿module("modules.logic.rouge.config.RougeMapConfig", package.seeall)
 
-slot0 = class("RougeMapConfig", BaseConfig)
+local var_0_0 = class("RougeMapConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"rouge_layer",
 		"rouge_middle_layer",
@@ -28,332 +28,415 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "rouge_middle_layer" then
-		slot0:initRougeMiddleLayerCo()
-	elseif slot1 == "rouge_short_voice" then
-		slot0:initMapVoiceCo()
-	elseif slot1 == "rouge_effect" then
-		slot0:initRougeEffect()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "rouge_middle_layer" then
+		arg_3_0:initRougeMiddleLayerCo()
+	elseif arg_3_1 == "rouge_short_voice" then
+		arg_3_0:initMapVoiceCo()
+	elseif arg_3_1 == "rouge_effect" then
+		arg_3_0:initRougeEffect()
 	end
 end
 
-function slot0.initRougeEffect(slot0)
-	slot0.dropMaxRefreshNumDict = {}
+function var_0_0.initRougeEffect(arg_4_0)
+	arg_4_0.dropMaxRefreshNumDict = {}
 
-	for slot5, slot6 in ipairs(lua_rouge_effect.configList) do
-		if slot6.type == RougeMapEnum.EffectType.UnlockFightDropRefresh then
-			slot7 = string.splitToNumber(slot6.typeParam, "#")
-			slot0.dropMaxRefreshNumDict[slot7[1]] = slot7[2]
+	local var_4_0 = lua_rouge_effect.configList
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if iter_4_1.type == RougeMapEnum.EffectType.UnlockFightDropRefresh then
+			local var_4_1 = string.splitToNumber(iter_4_1.typeParam, "#")
+			local var_4_2 = var_4_1[1]
+			local var_4_3 = var_4_1[2]
+
+			arg_4_0.dropMaxRefreshNumDict[var_4_2] = var_4_3
 		end
 	end
 end
 
-function slot0.initMapVoiceCo(slot0)
-	slot0.groupVoiceList = {}
-	slot0.groupTotalWeight = {}
+function var_0_0.initMapVoiceCo(arg_5_0)
+	arg_5_0.groupVoiceList = {}
+	arg_5_0.groupTotalWeight = {}
 
-	for slot4, slot5 in ipairs(lua_rouge_short_voice.configList) do
-		if not slot0.groupVoiceList[slot5.groupId] then
-			slot0.groupVoiceList[slot6] = {}
+	for iter_5_0, iter_5_1 in ipairs(lua_rouge_short_voice.configList) do
+		local var_5_0 = iter_5_1.groupId
+		local var_5_1 = arg_5_0.groupVoiceList[var_5_0]
+
+		if not var_5_1 then
+			var_5_1 = {}
+			arg_5_0.groupVoiceList[var_5_0] = var_5_1
 		end
 
-		slot0.groupTotalWeight[slot6] = (slot0.groupTotalWeight[slot6] or 0) + slot5.weight
+		local var_5_2 = arg_5_0.groupTotalWeight[var_5_0] or 0
 
-		table.insert(slot7, slot5)
+		arg_5_0.groupTotalWeight[var_5_0] = var_5_2 + iter_5_1.weight
+
+		table.insert(var_5_1, iter_5_1)
 	end
 end
 
-function slot0.initRougeMiddleLayerCo(slot0)
-	slot1 = {
-		pointPos = uv0.pointPosHandle,
-		pathPointPos = uv0.pathPointPosHandle,
-		path = uv0.pathHandle,
-		pathDict = uv0.pathDictHandle,
-		leavePos = uv0.leavePosHandle,
-		nextLayerList = uv0.nextLayerListHandle,
-		pathSelectList = uv0.pathSelectListHandle
+function var_0_0.initRougeMiddleLayerCo(arg_6_0)
+	local var_6_0 = {
+		pointPos = var_0_0.pointPosHandle,
+		pathPointPos = var_0_0.pathPointPosHandle,
+		path = var_0_0.pathHandle,
+		pathDict = var_0_0.pathDictHandle,
+		leavePos = var_0_0.leavePosHandle,
+		nextLayerList = var_0_0.nextLayerListHandle,
+		pathSelectList = var_0_0.pathSelectListHandle
 	}
-	slot2 = getmetatable(lua_rouge_middle_layer.configList[1])
-	slot3 = slot2.__index
+	local var_6_1 = getmetatable(lua_rouge_middle_layer.configList[1])
+	local var_6_2 = var_6_1.__index
 
-	function slot2.__index(slot0, slot1)
-		if uv0[slot1] then
-			return slot2(slot0, slot1, uv1)
+	function var_6_1.__index(arg_7_0, arg_7_1)
+		local var_7_0 = var_6_0[arg_7_1]
+
+		if var_7_0 then
+			return var_7_0(arg_7_0, arg_7_1, var_6_2)
 		end
 
-		return uv1(slot0, slot1)
+		return var_6_2(arg_7_0, arg_7_1)
 	end
 end
 
-function slot0.pointPosHandle(slot0, slot1, slot2)
-	if not rawget(slot0, "pointPosList") then
-		rawset(slot0, "pointPosList", {})
+function var_0_0.pointPosHandle(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = rawget(arg_8_0, "pointPosList")
 
-		if not string.nilorempty(slot2(slot0, slot1)) then
-			slot8 = "|"
+	if not var_8_0 then
+		var_8_0 = {}
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
-				slot10 = string.splitToNumber(slot9, "#")
+		rawset(arg_8_0, "pointPosList", var_8_0)
 
-				table.insert(slot3, Vector3.New(slot10[1], slot10[2], slot10[3]))
+		local var_8_1 = arg_8_2(arg_8_0, arg_8_1)
+
+		if not string.nilorempty(var_8_1) then
+			for iter_8_0, iter_8_1 in ipairs(string.split(var_8_1, "|")) do
+				local var_8_2 = string.splitToNumber(iter_8_1, "#")
+
+				table.insert(var_8_0, Vector3.New(var_8_2[1], var_8_2[2], var_8_2[3]))
 			end
 		end
 	end
 
-	return slot3
+	return var_8_0
 end
 
-function slot0.pathPointPosHandle(slot0, slot1, slot2)
-	if not rawget(slot0, "pathPointPosList") then
-		rawset(slot0, "pathPointPos", {})
+function var_0_0.pathPointPosHandle(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = rawget(arg_9_0, "pathPointPosList")
 
-		if not string.nilorempty(slot2(slot0, slot1)) then
-			slot8 = "|"
+	if not var_9_0 then
+		var_9_0 = {}
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
-				slot10 = string.splitToNumber(slot9, "#")
+		rawset(arg_9_0, "pathPointPos", var_9_0)
 
-				table.insert(slot3, Vector2.New(slot10[1], slot10[2]))
+		local var_9_1 = arg_9_2(arg_9_0, arg_9_1)
+
+		if not string.nilorempty(var_9_1) then
+			for iter_9_0, iter_9_1 in ipairs(string.split(var_9_1, "|")) do
+				local var_9_2 = string.splitToNumber(iter_9_1, "#")
+
+				table.insert(var_9_0, Vector2.New(var_9_2[1], var_9_2[2]))
 			end
 		end
 	end
 
-	return slot3
+	return var_9_0
 end
 
-function slot0.pathHandle(slot0, slot1, slot2)
-	if not rawget(slot0, "pathList") then
-		rawset(slot0, "pathList", {})
+function var_0_0.pathHandle(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = rawget(arg_10_0, "pathList")
 
-		if not string.nilorempty(slot2(slot0, slot1)) then
-			slot8 = "|"
+	if not var_10_0 then
+		var_10_0 = {}
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
-				slot10 = string.splitToNumber(slot9, "#")
+		rawset(arg_10_0, "pathList", var_10_0)
 
-				table.insert(slot3, Vector2.New(slot10[1], slot10[2]))
+		local var_10_1 = arg_10_2(arg_10_0, arg_10_1)
+
+		if not string.nilorempty(var_10_1) then
+			for iter_10_0, iter_10_1 in ipairs(string.split(var_10_1, "|")) do
+				local var_10_2 = string.splitToNumber(iter_10_1, "#")
+
+				table.insert(var_10_0, Vector2.New(var_10_2[1], var_10_2[2]))
 			end
 		end
 	end
 
-	return slot3
+	return var_10_0
 end
 
-function slot0.pathDictHandle(slot0, slot1, slot2)
-	if not rawget(slot0, "pathDict") then
-		rawset(slot0, "pathDict", {})
+function var_0_0.pathDictHandle(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = rawget(arg_11_0, "pathDict")
 
-		if not string.nilorempty(slot2(slot0, "path")) then
-			slot8 = "|"
+	if not var_11_0 then
+		var_11_0 = {}
 
-			for slot8, slot9 in ipairs(string.split(slot4, slot8)) do
-				slot10 = string.splitToNumber(slot9, "#")
-				slot12 = slot10[2]
-				slot3[slot11] = slot3[slot10[1]] or {}
-				slot3[slot12] = slot3[slot12] or {}
-				slot3[slot11][slot12] = true
-				slot3[slot12][slot11] = true
+		rawset(arg_11_0, "pathDict", var_11_0)
+
+		local var_11_1 = arg_11_2(arg_11_0, "path")
+
+		if not string.nilorempty(var_11_1) then
+			for iter_11_0, iter_11_1 in ipairs(string.split(var_11_1, "|")) do
+				local var_11_2 = string.splitToNumber(iter_11_1, "#")
+				local var_11_3 = var_11_2[1]
+				local var_11_4 = var_11_2[2]
+
+				var_11_0[var_11_3] = var_11_0[var_11_3] or {}
+				var_11_0[var_11_4] = var_11_0[var_11_4] or {}
+				var_11_0[var_11_3][var_11_4] = true
+				var_11_0[var_11_4][var_11_3] = true
 			end
 		end
 	end
 
-	return slot3
+	return var_11_0
 end
 
-function slot0.leavePosHandle(slot0, slot1, slot2)
-	if not rawget(slot0, slot1) then
-		if string.nilorempty(slot2(slot0, slot1)) then
+function var_0_0.leavePosHandle(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = rawget(arg_12_0, arg_12_1)
+
+	if not var_12_0 then
+		var_12_0 = arg_12_2(arg_12_0, arg_12_1)
+
+		if string.nilorempty(var_12_0) then
 			return
 		end
 
-		slot3 = string.splitToNumber(slot3, "#")
+		var_12_0 = string.splitToNumber(var_12_0, "#")
+		var_12_0 = Vector3.New(var_12_0[1], var_12_0[2], var_12_0[3])
 
-		rawset(slot0, slot1, Vector3.New(slot3[1], slot3[2], slot3[3]))
+		rawset(arg_12_0, arg_12_1, var_12_0)
 	end
 
-	return slot3
+	return var_12_0
 end
 
-function slot0.nextLayerListHandle(slot0, slot1, slot2)
-	if not rawget(slot0, slot1) then
-		if string.nilorempty(slot2(slot0, "nextLayer")) then
+function var_0_0.nextLayerListHandle(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = rawget(arg_13_0, arg_13_1)
+
+	if not var_13_0 then
+		local var_13_1 = arg_13_2(arg_13_0, "nextLayer")
+
+		if string.nilorempty(var_13_1) then
 			return
 		end
 
-		rawset(slot0, slot1, string.splitToNumber(slot4, "#"))
+		var_13_0 = string.splitToNumber(var_13_1, "#")
+
+		rawset(arg_13_0, arg_13_1, var_13_0)
 	end
 
-	return slot3
+	return var_13_0
 end
 
-function slot0.pathSelectListHandle(slot0, slot1, slot2)
-	if not rawget(slot0, slot1) then
-		if string.nilorempty(slot2(slot0, "pathSelect")) then
+function var_0_0.pathSelectListHandle(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = rawget(arg_14_0, arg_14_1)
+
+	if not var_14_0 then
+		local var_14_1 = arg_14_2(arg_14_0, "pathSelect")
+
+		if string.nilorempty(var_14_1) then
 			return
 		end
 
-		rawset(slot0, slot1, string.splitToNumber(slot4, "#"))
+		var_14_0 = string.splitToNumber(var_14_1, "#")
+
+		rawset(arg_14_0, arg_14_1, var_14_0)
 	end
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.getPathIndexList(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot4 = slot4 or {}
+function var_0_0.getPathIndexList(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	arg_15_4 = arg_15_4 or {}
+	arg_15_5 = arg_15_5 or 1
 
-	if (slot5 or 1) > 20 then
+	if arg_15_5 > 20 then
 		logError("房间配置死循环了！！！！！！请检查配置")
 
 		return false
 	end
 
-	if tabletool.indexOf(slot4, slot2) then
+	if tabletool.indexOf(arg_15_4, arg_15_2) then
 		return false
 	end
 
-	table.insert(slot4, slot2)
+	table.insert(arg_15_4, arg_15_2)
 
-	if slot1[slot2] then
-		for slot10, slot11 in pairs(slot6) do
-			if slot10 == slot3 then
-				table.insert(slot4, slot3)
+	local var_15_0 = arg_15_1[arg_15_2]
+
+	if var_15_0 then
+		for iter_15_0, iter_15_1 in pairs(var_15_0) do
+			if iter_15_0 == arg_15_3 then
+				table.insert(arg_15_4, arg_15_3)
 
 				return true
-			elseif slot0:getPathIndexList(slot1, slot10, slot3, slot4, slot5 + 1) then
+			elseif arg_15_0:getPathIndexList(arg_15_1, iter_15_0, arg_15_3, arg_15_4, arg_15_5 + 1) then
 				return true
 			end
 		end
 	end
 
-	table.remove(slot4)
+	table.remove(arg_15_4)
 
 	return false
 end
 
-function slot0.getNextLayerList(slot0, slot1)
-	if not lua_rouge_middle_layer.configDict[slot1] then
-		logError("not found middle layer co .. " .. tostring(slot1))
+function var_0_0.getNextLayerList(arg_16_0, arg_16_1)
+	local var_16_0 = lua_rouge_middle_layer.configDict[arg_16_1]
+
+	if not var_16_0 then
+		logError("not found middle layer co .. " .. tostring(arg_16_1))
 
 		return
 	end
 
-	return slot2.nextLayerList
+	return var_16_0.nextLayerList
 end
 
-function slot0.getPathSelectList(slot0, slot1)
-	if not lua_rouge_middle_layer.configDict[slot1] then
-		logError("not found middle layer co .. " .. tostring(slot1))
+function var_0_0.getPathSelectList(arg_17_0, arg_17_1)
+	local var_17_0 = lua_rouge_middle_layer.configDict[arg_17_1]
+
+	if not var_17_0 then
+		logError("not found middle layer co .. " .. tostring(arg_17_1))
 
 		return
 	end
 
-	return slot2.pathSelectList
+	return var_17_0.pathSelectList
 end
 
-function slot0.getMapResPath(slot0, slot1)
-	return lua_rouge_layer.configDict[slot1].mapRes
+function var_0_0.getMapResPath(arg_18_0, arg_18_1)
+	return lua_rouge_layer.configDict[arg_18_1].mapRes
 end
 
-function slot0.getMiddleMapResPath(slot0, slot1)
-	return lua_rouge_middle_layer.configDict[slot1].mapRes
+function var_0_0.getMiddleMapResPath(arg_19_0, arg_19_1)
+	return lua_rouge_middle_layer.configDict[arg_19_1].mapRes
 end
 
-function slot0.getMiddleLayerCo(slot0, slot1)
-	return lua_rouge_middle_layer.configDict[slot1]
+function var_0_0.getMiddleLayerCo(arg_20_0, arg_20_1)
+	return lua_rouge_middle_layer.configDict[arg_20_1]
 end
 
-function slot0.getRougeEvent(slot0, slot1)
-	if not lua_rouge_event.configDict[slot1] then
-		logError("找不到肉鸽事件配置 ID : " .. tostring(slot1))
+function var_0_0.getRougeEvent(arg_21_0, arg_21_1)
+	local var_21_0 = lua_rouge_event.configDict[arg_21_1]
+
+	if not var_21_0 then
+		logError("找不到肉鸽事件配置 ID : " .. tostring(arg_21_1))
 	end
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.getFightEvent(slot0, slot1)
-	if not lua_rouge_fight_event.configDict[slot1] then
-		logError("找不到肉鸽战斗事件配置 ID : " .. tostring(slot1))
+function var_0_0.getFightEvent(arg_22_0, arg_22_1)
+	local var_22_0 = lua_rouge_fight_event.configDict[arg_22_1]
+
+	if not var_22_0 then
+		logError("找不到肉鸽战斗事件配置 ID : " .. tostring(arg_22_1))
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0.getPathSelectInitCameraSize(slot0)
+function var_0_0.getPathSelectInitCameraSize(arg_23_0)
 	return tonumber(lua_rouge_const.configDict[RougeMapEnum.ConstKey.PathSelectCameraSize].value)
 end
 
-function slot0.getStoreRefreshCost(slot0)
-	slot2 = string.splitToNumber(lua_rouge_const.configDict[RougeMapEnum.ConstKey.StoreRefreshCost].value, "#")
+function var_0_0.getStoreRefreshCost(arg_24_0)
+	local var_24_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.StoreRefreshCost]
+	local var_24_1 = string.splitToNumber(var_24_0.value, "#")
+	local var_24_2 = var_24_1[1]
+	local var_24_3 = var_24_1[2]
 
-	return slot2[1], slot2[2]
+	return var_24_2, var_24_3
 end
 
-function slot0.getRestStoreRefreshCount(slot0)
-	return tonumber(lua_rouge_const.configDict[RougeMapEnum.ConstKey.RestStoreRefreshCount].value)
+function var_0_0.getRestStoreRefreshCount(arg_25_0)
+	local var_25_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.RestStoreRefreshCount]
+
+	return tonumber(var_25_0.value)
 end
 
-function slot0.getRestExchangeCount(slot0)
-	return tonumber(lua_rouge_const.configDict[RougeMapEnum.ConstKey.ExchangeCount].value)
+function var_0_0.getRestExchangeCount(arg_26_0)
+	local var_26_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.ExchangeCount]
+
+	return tonumber(var_26_0.value)
 end
 
-function slot0.getFightRetryNum(slot0)
-	return tonumber(lua_rouge_const.configDict[RougeMapEnum.ConstKey.FightRetryNum].value)
+function var_0_0.getFightRetryNum(arg_27_0)
+	local var_27_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.FightRetryNum]
+
+	return tonumber(var_27_0.value)
 end
 
-function slot0.getRandomVoice(slot0, slot1)
-	if not slot0.groupVoiceList[slot1] then
+function var_0_0.getRandomVoice(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0.groupVoiceList[arg_28_1]
+
+	if not var_28_0 then
 		return
 	end
 
-	if #slot2 == 1 then
-		return slot2[1]
+	local var_28_1 = #var_28_0
+
+	if var_28_1 == 1 then
+		return var_28_0[1]
 	end
 
-	for slot10, slot11 in ipairs(slot2) do
-		if math.random(slot0.groupTotalWeight[slot1]) <= 0 + slot11.weight then
-			return slot11
+	local var_28_2 = arg_28_0.groupTotalWeight[arg_28_1]
+	local var_28_3 = math.random(var_28_2)
+	local var_28_4 = 0
+
+	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+		var_28_4 = var_28_4 + iter_28_1.weight
+
+		if var_28_3 <= var_28_4 then
+			return iter_28_1
 		end
 	end
 
-	return slot2[slot3]
+	return var_28_0[var_28_1]
 end
 
-function slot0.getVoiceGroupList(slot0)
+function var_0_0.getVoiceGroupList(arg_29_0)
 	return lua_rouge_short_voice_group.configList
 end
 
-function slot0.getRougeEffect(slot0, slot1)
-	if not lua_rouge_effect.configDict[slot1] then
-		logError("rouge effect not find effectId : " .. slot1)
+function var_0_0.getRougeEffect(arg_30_0, arg_30_1)
+	local var_30_0 = lua_rouge_effect.configDict[arg_30_1]
+
+	if not var_30_0 then
+		logError("rouge effect not find effectId : " .. arg_30_1)
 	end
 
-	return slot2
+	return var_30_0
 end
 
-function slot0.getFightDropMaxRefreshNum(slot0, slot1)
-	return slot0.dropMaxRefreshNumDict[slot1] or 0
+function var_0_0.getFightDropMaxRefreshNum(arg_31_0, arg_31_1)
+	return arg_31_0.dropMaxRefreshNumDict[arg_31_1] or 0
 end
 
-function slot0.getPieceCo(slot0, slot1)
-	if not slot1 then
+function var_0_0.getPieceCo(arg_32_0, arg_32_1)
+	if not arg_32_1 then
 		logError("piece id is nil")
 
 		return
 	end
 
-	if not lua_rouge_piece.configDict[slot1] then
-		logError("piece config not exist, id : " .. tostring(slot1))
+	local var_32_0 = lua_rouge_piece.configDict[arg_32_1]
+
+	if not var_32_0 then
+		logError("piece config not exist, id : " .. tostring(arg_32_1))
 
 		return
 	end
 
-	return slot2
+	return var_32_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,69 +1,85 @@
-module("modules.logic.dungeon.view.DungeonRewardTipView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonRewardTipView", package.seeall)
 
-slot0 = class("DungeonRewardTipView", BaseView)
+local var_0_0 = class("DungeonRewardTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#txt_title")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "scrollTips/Viewport/Content/#txt_info")
-	slot0._gorewardContentItem = gohelper.findChild(slot0.viewGO, "scrollTips/Viewport/Content/#go_rewardContentItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "scrollTips/Viewport/Content/#txt_info")
+	arg_1_0._gorewardContentItem = gohelper.findChild(arg_1_0.viewGO, "scrollTips/Viewport/Content/#go_rewardContentItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gorewardContentItem, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._gorewardContentItem, false)
 
-	slot1 = lua_helppage.configDict[10801]
-	slot0._txttitle.text = slot1.title
-	slot0._txtinfo.text = slot1.text
+	local var_4_0 = lua_helppage.configDict[10801]
 
-	if not GameUtil.splitString2(slot1.iconText) or #slot3 == 0 then
+	arg_4_0._txttitle.text = var_4_0.title
+	arg_4_0._txtinfo.text = var_4_0.text
+
+	local var_4_1 = var_4_0.iconText
+	local var_4_2 = GameUtil.splitString2(var_4_1)
+
+	if not var_4_2 or #var_4_2 == 0 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot0:_addReward(slot8[1], tonumber(slot8[2]))
+	for iter_4_0, iter_4_1 in ipairs(var_4_2) do
+		local var_4_3 = iter_4_1[1]
+		local var_4_4 = tonumber(iter_4_1[2])
+
+		arg_4_0:_addReward(var_4_3, var_4_4)
 	end
 end
 
-function slot0._addReward(slot0, slot1, slot2)
-	slot3 = gohelper.cloneInPlace(slot0._gorewardContentItem)
+function var_0_0._addReward(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = gohelper.cloneInPlace(arg_5_0._gorewardContentItem)
 
-	gohelper.setActive(slot3, true)
+	gohelper.setActive(var_5_0, true)
 
-	gohelper.findChildText(slot3, "opentitle").text = slot1
-	slot6 = gohelper.findChild(slot3, "scroll_reward/Viewport/Content")
+	gohelper.findChildText(var_5_0, "opentitle").text = arg_5_1
 
-	for slot11, slot12 in ipairs(DungeonModel.instance:getEpisodeRewardDisplayList(slot2)) do
-		slot13 = gohelper.cloneInPlace(gohelper.findChild(slot3, "scroll_reward/Viewport/Content/commonitemicon"))
+	local var_5_1 = DungeonModel.instance:getEpisodeRewardDisplayList(arg_5_2)
+	local var_5_2 = gohelper.findChild(var_5_0, "scroll_reward/Viewport/Content")
+	local var_5_3 = gohelper.findChild(var_5_0, "scroll_reward/Viewport/Content/commonitemicon")
 
-		gohelper.setActive(slot13, true)
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		local var_5_4 = gohelper.cloneInPlace(var_5_3)
 
-		slot14 = IconMgr.instance:getCommonPropItemIcon(slot13)
+		gohelper.setActive(var_5_4, true)
 
-		slot14:setMOValue(slot12[1], slot12[2], slot12[3])
-		slot14:hideEquipLvAndBreak(true)
+		local var_5_5 = IconMgr.instance:getCommonPropItemIcon(var_5_4)
+
+		var_5_5:setMOValue(iter_5_1[1], iter_5_1[2], iter_5_1[3])
+		var_5_5:hideEquipLvAndBreak(true)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

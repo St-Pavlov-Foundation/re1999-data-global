@@ -1,26 +1,26 @@
-module("modules.logic.tower.model.TowerSubEpisodeMo", package.seeall)
+﻿module("modules.logic.tower.model.TowerSubEpisodeMo", package.seeall)
 
-slot0 = pureTable("TowerSubEpisodeMo")
+local var_0_0 = pureTable("TowerSubEpisodeMo")
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.status = slot1.status
-	slot0.heroIds = slot1.heroIds
-	slot0.assistBossId = slot1.assistBossId
+function var_0_0.updateInfo(arg_1_0, arg_1_1)
+	arg_1_0.episodeId = arg_1_1.episodeId
+	arg_1_0.status = arg_1_1.status
+	arg_1_0.heroIds = arg_1_1.heroIds
+	arg_1_0.assistBossId = arg_1_1.assistBossId
 end
 
-function slot0.getHeros(slot0, slot1)
-	if slot0.status == 1 and slot0.heroIds then
-		for slot5 = 1, #slot0.heroIds do
-			slot1[slot0.heroIds[slot5]] = 1
+function var_0_0.getHeros(arg_2_0, arg_2_1)
+	if arg_2_0.status == 1 and arg_2_0.heroIds then
+		for iter_2_0 = 1, #arg_2_0.heroIds do
+			arg_2_1[arg_2_0.heroIds[iter_2_0]] = 1
 		end
 	end
 end
 
-function slot0.getAssistBossId(slot0, slot1)
-	if slot0.status == 1 and slot0.assistBossId then
-		slot1[slot0.assistBossId] = 1
+function var_0_0.getAssistBossId(arg_3_0, arg_3_1)
+	if arg_3_0.status == 1 and arg_3_0.assistBossId then
+		arg_3_1[arg_3_0.assistBossId] = 1
 	end
 end
 
-return slot0
+return var_0_0

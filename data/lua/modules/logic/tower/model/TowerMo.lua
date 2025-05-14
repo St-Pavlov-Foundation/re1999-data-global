@@ -1,210 +1,233 @@
-module("modules.logic.tower.model.TowerMo", package.seeall)
+﻿module("modules.logic.tower.model.TowerMo", package.seeall)
 
-slot0 = pureTable("TowerMo")
+local var_0_0 = pureTable("TowerMo")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.type = slot1.type
-	slot0.towerId = slot1.towerId
-	slot0.passLayerId = slot1.passLayerId
+function var_0_0.updateInfo(arg_2_0, arg_2_1)
+	arg_2_0.type = arg_2_1.type
+	arg_2_0.towerId = arg_2_1.towerId
+	arg_2_0.passLayerId = arg_2_1.passLayerId
 
-	slot0:updateLayerInfos(slot1.layerNOs)
-	slot0:updateLayerScore(slot1.layerNOs)
-	slot0:updateHistoryHighScore(slot1.historyHighScore)
-	slot0:updateOpenSpLayer(slot1.openSpLayerIds)
+	arg_2_0:updateLayerInfos(arg_2_1.layerNOs)
+	arg_2_0:updateLayerScore(arg_2_1.layerNOs)
+	arg_2_0:updateHistoryHighScore(arg_2_1.historyHighScore)
+	arg_2_0:updateOpenSpLayer(arg_2_1.openSpLayerIds)
 end
 
-function slot0.updateOpenSpLayer(slot0, slot1)
-	slot0.openSpLayerDict = {}
+function var_0_0.updateOpenSpLayer(arg_3_0, arg_3_1)
+	arg_3_0.openSpLayerDict = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0.openSpLayerDict[slot1[slot5]] = 1
+	if arg_3_1 then
+		for iter_3_0 = 1, #arg_3_1 do
+			arg_3_0.openSpLayerDict[arg_3_1[iter_3_0]] = 1
 		end
 	end
 end
 
-function slot0.isSpLayerOpen(slot0, slot1)
-	return slot0.openSpLayerDict[slot1] ~= nil
+function var_0_0.isSpLayerOpen(arg_4_0, arg_4_1)
+	return arg_4_0.openSpLayerDict[arg_4_1] ~= nil
 end
 
-function slot0.hasNewSpLayer(slot0, slot1)
-	slot2 = false
+function var_0_0.hasNewSpLayer(arg_5_0, arg_5_1)
+	local var_5_0 = false
 
-	for slot6, slot7 in pairs(slot0.openSpLayerDict) do
-		if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossSpOpen, slot0.towerId, slot1, TowerEnum.LockKey) == TowerEnum.LockKey then
-			slot2 = true
+	for iter_5_0, iter_5_1 in pairs(arg_5_0.openSpLayerDict) do
+		if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossSpOpen, arg_5_0.towerId, arg_5_1, TowerEnum.LockKey) == TowerEnum.LockKey then
+			var_5_0 = true
 
 			break
 		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.clearSpLayerNewTag(slot0, slot1)
-	slot2 = false
+function var_0_0.clearSpLayerNewTag(arg_6_0, arg_6_1)
+	local var_6_0 = false
 
-	for slot6, slot7 in pairs(slot0.openSpLayerDict) do
-		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossSpOpen, slot0.towerId, slot1, TowerEnum.UnlockKey)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.openSpLayerDict) do
+		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewBossSpOpen, arg_6_0.towerId, arg_6_1, TowerEnum.UnlockKey)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.isLayerUnlock(slot0, slot1, slot2)
-	if slot2 == nil then
-		slot2 = TowerModel.instance:getEpisodeMoByTowerType(slot0.type)
+function var_0_0.isLayerUnlock(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_2 == nil then
+		arg_7_2 = TowerModel.instance:getEpisodeMoByTowerType(arg_7_0.type)
 	end
 
-	if not slot2 then
+	if not arg_7_2 then
 		return false
 	end
 
-	if not slot2:getEpisodeConfig(slot0.towerId, slot1) then
+	local var_7_0 = arg_7_2:getEpisodeConfig(arg_7_0.towerId, arg_7_1)
+
+	if not var_7_0 then
 		return false
 	end
 
-	return slot0:isLayerPass(slot3.preLayerId, slot2)
+	return arg_7_0:isLayerPass(var_7_0.preLayerId, arg_7_2)
 end
 
-function slot0.isLayerPass(slot0, slot1, slot2)
-	if slot2 == nil then
-		slot2 = TowerModel.instance:getEpisodeMoByTowerType(slot0.type)
+function var_0_0.isLayerPass(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 == nil then
+		arg_8_2 = TowerModel.instance:getEpisodeMoByTowerType(arg_8_0.type)
 	end
 
-	if not slot2 then
+	if not arg_8_2 then
 		return false
 	end
 
-	return slot2:getEpisodeIndex(slot0.towerId, slot1, true) <= slot2:getEpisodeIndex(slot0.towerId, slot0.passLayerId, true)
+	return arg_8_2:getEpisodeIndex(arg_8_0.towerId, arg_8_1, true) <= arg_8_2:getEpisodeIndex(arg_8_0.towerId, arg_8_0.passLayerId, true)
 end
 
-function slot0.updateLayerInfos(slot0, slot1)
-	slot0.layerSubEpisodeMap = slot0.layerSubEpisodeMap or {}
+function var_0_0.updateLayerInfos(arg_9_0, arg_9_1)
+	arg_9_0.layerSubEpisodeMap = arg_9_0.layerSubEpisodeMap or {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = {}
+	if arg_9_1 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+			local var_9_0 = {}
 
-			for slot11 = 1, #slot6.episodeNOs do
-				slot12 = TowerSubEpisodeMo.New()
+			for iter_9_2 = 1, #iter_9_1.episodeNOs do
+				local var_9_1 = TowerSubEpisodeMo.New()
 
-				slot12:updateInfo(slot6.episodeNOs[slot11])
-				table.insert(slot7, slot12)
+				var_9_1:updateInfo(iter_9_1.episodeNOs[iter_9_2])
+				table.insert(var_9_0, var_9_1)
 			end
 
-			slot0.layerSubEpisodeMap[slot6.layerId] = slot7
+			arg_9_0.layerSubEpisodeMap[iter_9_1.layerId] = var_9_0
 		end
 	end
 end
 
-function slot0.resetLayerInfos(slot0, slot1)
-	slot2 = {}
+function var_0_0.resetLayerInfos(arg_10_0, arg_10_1)
+	local var_10_0 = {}
 
-	for slot6 = 1, #slot1.episodeNOs do
-		slot7 = TowerSubEpisodeMo.New()
+	for iter_10_0 = 1, #arg_10_1.episodeNOs do
+		local var_10_1 = TowerSubEpisodeMo.New()
 
-		slot7:updateInfo(slot1.episodeNOs[slot6])
-		table.insert(slot2, slot7)
+		var_10_1:updateInfo(arg_10_1.episodeNOs[iter_10_0])
+		table.insert(var_10_0, var_10_1)
 	end
 
-	slot0.layerSubEpisodeMap[slot1.layerId] = slot2
+	arg_10_0.layerSubEpisodeMap[arg_10_1.layerId] = var_10_0
 end
 
-function slot0.resetLayerScore(slot0, slot1)
-	if slot1 then
-		slot0.layerScoreMap[slot1.layerId] = slot1.currHighScore
+function var_0_0.resetLayerScore(arg_11_0, arg_11_1)
+	if arg_11_1 then
+		arg_11_0.layerScoreMap[arg_11_1.layerId] = arg_11_1.currHighScore
 	end
 end
 
-function slot0.updateHistoryHighScore(slot0, slot1)
-	slot0.historyHighScore = slot1
+function var_0_0.updateHistoryHighScore(arg_12_0, arg_12_1)
+	arg_12_0.historyHighScore = arg_12_1
 end
 
-function slot0.getHistoryHighScore(slot0)
-	return slot0.historyHighScore or 0
+function var_0_0.getHistoryHighScore(arg_13_0)
+	return arg_13_0.historyHighScore or 0
 end
 
-function slot0.updateLayerScore(slot0, slot1)
-	slot0.layerScoreMap = {}
+function var_0_0.updateLayerScore(arg_14_0, arg_14_1)
+	arg_14_0.layerScoreMap = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0.layerScoreMap[slot6.layerId] = slot6.currHighScore
+	if arg_14_1 then
+		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+			arg_14_0.layerScoreMap[iter_14_1.layerId] = iter_14_1.currHighScore
 		end
 	end
 end
 
-function slot0.getLayerScore(slot0, slot1)
-	return slot0.layerScoreMap[slot1] or 0
+function var_0_0.getLayerScore(arg_15_0, arg_15_1)
+	return arg_15_0.layerScoreMap[arg_15_1] or 0
 end
 
-function slot0.getLayerSubEpisodeList(slot0, slot1, slot2)
-	if not slot0.layerSubEpisodeMap[slot1] and not slot2 then
-		logError("该层没有子关卡信息：" .. slot1)
+function var_0_0.getLayerSubEpisodeList(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_0.layerSubEpisodeMap[arg_16_1] and not arg_16_2 then
+		logError("该层没有子关卡信息：" .. arg_16_1)
 	end
 
-	return slot0.layerSubEpisodeMap[slot1]
+	return arg_16_0.layerSubEpisodeMap[arg_16_1]
 end
 
-function slot0.getSubEpisodeMoByEpisodeId(slot0, slot1)
-	slot0.layerSubEpisodeMap = slot0.layerSubEpisodeMap or {}
+function var_0_0.getSubEpisodeMoByEpisodeId(arg_17_0, arg_17_1)
+	arg_17_0.layerSubEpisodeMap = arg_17_0.layerSubEpisodeMap or {}
 
-	for slot5, slot6 in pairs(slot0.layerSubEpisodeMap) do
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11.episodeId == slot1 then
-				return slot11, slot5
+	for iter_17_0, iter_17_1 in pairs(arg_17_0.layerSubEpisodeMap) do
+		for iter_17_2, iter_17_3 in ipairs(iter_17_1) do
+			if iter_17_3.episodeId == arg_17_1 then
+				return iter_17_3, iter_17_0
 			end
 		end
 	end
 end
 
-function slot0.getSubEpisodePassCount(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0:getLayerSubEpisodeList(slot1, true) or {}) do
-		if slot8.status == TowerEnum.PassEpisodeState.Pass then
-			slot2 = 0 + 1
+function var_0_0.getSubEpisodePassCount(arg_18_0, arg_18_1)
+	local var_18_0 = 0
+	local var_18_1 = arg_18_0:getLayerSubEpisodeList(arg_18_1, true) or {}
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		if iter_18_1.status == TowerEnum.PassEpisodeState.Pass then
+			var_18_0 = var_18_0 + 1
 		end
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.getTaskGroupId(slot0)
-	if TowerModel.instance:getTowerOpenInfo(slot0.type, slot0.towerId) == nil then
+function var_0_0.getTaskGroupId(arg_19_0)
+	local var_19_0 = TowerModel.instance:getTowerOpenInfo(arg_19_0.type, arg_19_0.towerId)
+
+	if var_19_0 == nil then
 		return
 	end
 
-	return TowerConfig.instance:getBossTimeTowerConfig(slot0.towerId, slot1.round) and slot2.taskGroupId
+	local var_19_1 = TowerConfig.instance:getBossTimeTowerConfig(arg_19_0.towerId, var_19_0.round)
+
+	return var_19_1 and var_19_1.taskGroupId
 end
 
-function slot0.getBanHeroAndBoss(slot0, slot1, slot2, slot3)
-	if slot0.type == TowerEnum.TowerType.Boss then
+function var_0_0.getBanHeroAndBoss(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	if arg_20_0.type == TowerEnum.TowerType.Boss then
 		return
 	end
 
-	if not slot0:getLayerSubEpisodeList(slot1, true) then
-		return {}, {}
+	local var_20_0 = {}
+	local var_20_1 = {}
+	local var_20_2 = arg_20_0:getLayerSubEpisodeList(arg_20_1, true)
+
+	if not var_20_2 then
+		return var_20_0, var_20_1
 	end
 
-	if slot0.type == TowerEnum.TowerType.Normal then
-		if TowerConfig.instance:getPermanentEpisodeCo(slot1) and slot7.isElite == 1 then
-			for slot11, slot12 in pairs(slot6) do
-				slot12:getHeros(slot4)
-				slot12:getAssistBossId(slot5)
+	if arg_20_0.type == TowerEnum.TowerType.Normal then
+		local var_20_3 = TowerConfig.instance:getPermanentEpisodeCo(arg_20_1)
+
+		if var_20_3 and var_20_3.isElite == 1 then
+			for iter_20_0, iter_20_1 in pairs(var_20_2) do
+				iter_20_1:getHeros(var_20_0)
+				iter_20_1:getAssistBossId(var_20_1)
 			end
 		end
-	elseif TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() then
-		for slot11 = 1, 3 do
-			if TowerConfig.instance:getTowerLimitedTimeCoList(slot7.towerId, slot11) then
-				for slot16, slot17 in pairs(slot12) do
-					if slot0:getLayerSubEpisodeList(slot17.layerId, true) then
-						for slot21, slot22 in pairs(slot6) do
-							slot22:getHeros(slot4)
-							slot22:getAssistBossId(slot5)
+	else
+		local var_20_4 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+
+		if var_20_4 then
+			for iter_20_2 = 1, 3 do
+				local var_20_5 = TowerConfig.instance:getTowerLimitedTimeCoList(var_20_4.towerId, iter_20_2)
+
+				if var_20_5 then
+					for iter_20_3, iter_20_4 in pairs(var_20_5) do
+						local var_20_6 = arg_20_0:getLayerSubEpisodeList(iter_20_4.layerId, true)
+
+						if var_20_6 then
+							for iter_20_5, iter_20_6 in pairs(var_20_6) do
+								iter_20_6:getHeros(var_20_0)
+								iter_20_6:getAssistBossId(var_20_1)
+							end
 						end
 					end
 				end
@@ -212,38 +235,41 @@ function slot0.getBanHeroAndBoss(slot0, slot1, slot2, slot3)
 		end
 	end
 
-	return slot4, slot5
+	return var_20_0, var_20_1
 end
 
-function slot0.getBanAssistBosss(slot0, slot1)
-	slot3 = {}
+function var_0_0.getBanAssistBosss(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:getLayerSubEpisodeList(arg_21_1, true)
+	local var_21_1 = {}
 
-	if slot0:getLayerSubEpisodeList(slot1, true) then
-		for slot7, slot8 in pairs(slot2) do
-			slot8:getAssistBossId(slot3)
+	if var_21_0 then
+		for iter_21_0, iter_21_1 in pairs(var_21_0) do
+			iter_21_1:getAssistBossId(var_21_1)
 		end
 	end
 
-	return slot3
+	return var_21_1
 end
 
-function slot0.isHeroGroupLock(slot0, slot1, slot2)
-	if slot0.type == TowerEnum.TowerType.Boss then
+function var_0_0.isHeroGroupLock(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_0.type == TowerEnum.TowerType.Boss then
 		return false
 	end
 
-	slot3 = slot0:getLayerSubEpisodeList(slot1, true)
+	local var_22_0 = arg_22_0:getLayerSubEpisodeList(arg_22_1, true)
 
-	if slot0.type == TowerEnum.TowerType.Normal then
-		if TowerConfig.instance:getPermanentEpisodeCo(slot1) and slot4.isElite ~= 1 then
+	if arg_22_0.type == TowerEnum.TowerType.Normal then
+		local var_22_1 = TowerConfig.instance:getPermanentEpisodeCo(arg_22_1)
+
+		if var_22_1 and var_22_1.isElite ~= 1 then
 			return false
 		end
 
-		if slot3 then
-			for slot8, slot9 in pairs(slot3) do
-				if slot9.episodeId == slot2 then
-					if slot9.status == 1 then
-						return true, slot9.heroIds, slot9.assistBossId
+		if var_22_0 then
+			for iter_22_0, iter_22_1 in pairs(var_22_0) do
+				if iter_22_1.episodeId == arg_22_2 then
+					if iter_22_1.status == 1 then
+						return true, iter_22_1.heroIds, iter_22_1.assistBossId
 					else
 						return false
 					end
@@ -254,10 +280,10 @@ function slot0.isHeroGroupLock(slot0, slot1, slot2)
 		return false
 	end
 
-	if slot3 then
-		for slot7, slot8 in pairs(slot3) do
-			if slot8.status == 1 then
-				return true, slot8.heroIds, slot8.assistBossId
+	if var_22_0 then
+		for iter_22_2, iter_22_3 in pairs(var_22_0) do
+			if iter_22_3.status == 1 then
+				return true, iter_22_3.heroIds, iter_22_3.assistBossId
 			end
 		end
 	end
@@ -265,4 +291,4 @@ function slot0.isHeroGroupLock(slot0, slot1, slot2)
 	return false
 end
 
-return slot0
+return var_0_0

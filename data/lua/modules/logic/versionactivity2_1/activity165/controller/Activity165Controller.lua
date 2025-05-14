@@ -1,29 +1,30 @@
-module("modules.logic.versionactivity2_1.activity165.controller.Activity165Controller", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.controller.Activity165Controller", package.seeall)
 
-slot0 = class("Activity165Controller", BaseController)
+local var_0_0 = class("Activity165Controller", BaseController)
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	return
 end
 
-function slot0.openActivity165EnterView(slot0)
+function var_0_0.openActivity165EnterView(arg_2_0)
 	Activity165Model.instance:onInitInfo()
 	ViewMgr.instance:openView(ViewName.Activity165StoryEnterView)
 end
 
-function slot0.openActivity165ReviewView(slot0, slot1, slot2)
+function var_0_0.openActivity165ReviewView(arg_3_0, arg_3_1, arg_3_2)
 	ViewMgr.instance:openView(ViewName.Activity165StoryReviewView, {
-		storyId = slot1,
-		view = slot2
+		storyId = arg_3_1,
+		view = arg_3_2
 	})
 end
 
-function slot0.openActivity165EditView(slot0, slot1, slot2)
+function var_0_0.openActivity165EditView(arg_4_0, arg_4_1, arg_4_2)
 	ViewMgr.instance:openView(ViewName.Activity165StoryEditView, {
-		storyId = slot1,
-		reviewEnding = slot2
+		storyId = arg_4_1,
+		reviewEnding = arg_4_2
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

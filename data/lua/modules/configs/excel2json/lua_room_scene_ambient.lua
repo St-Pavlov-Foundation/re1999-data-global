@@ -1,25 +1,28 @@
-module("modules.configs.excel2json.lua_room_scene_ambient", package.seeall)
+﻿module("modules.configs.excel2json.lua_room_scene_ambient", package.seeall)
 
-slot1 = {}
-slot2 = {
+local var_0_0 = {}
+local var_0_1 = {}
+local var_0_2 = {
 	"id"
 }
-slot3 = {}
+local var_0_3 = {}
 
-return {
-	onLoad = function (slot0)
-		uv0.confgData = slot0
-		uv0.configList, uv0.configDict = uv0.json_parse(slot0)
-	end,
-	json_parse = function (slot0)
-		slot1 = {}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.confgData = arg_1_0
+	var_0_0.configList, var_0_0.configDict = var_0_0.json_parse(arg_1_0)
+end
 
-		for slot6, slot7 in ipairs(slot0) do
-			table.insert(slot1, slot7)
-		end
+function var_0_0.json_parse(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = {}
 
-		return slot1, {
-			[slot7.id] = slot7
-		}
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
+		table.insert(var_2_0, iter_2_1)
+
+		var_2_1[iter_2_1.id] = iter_2_1
 	end
-}
+
+	return var_2_0, var_2_1
+end
+
+return var_0_0

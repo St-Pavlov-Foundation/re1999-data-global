@@ -1,188 +1,221 @@
-module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsView", package.seeall)
 
-slot0 = class("SportsNewsView", BaseView)
+local var_0_0 = class("SportsNewsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._scrolltablist = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_tablist")
-	slot0._simagepaperbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_paperbg")
-	slot0._simageTitleName = gohelper.findChildSingleImage(slot0.viewGO, "#simage_TitleName")
-	slot0._itemList = gohelper.findChild(slot0.viewGO, "List")
-	slot0._btnReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Reward/#btn_Reward")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "Reward/#go_redpoint")
-	slot0._gotabitemcontent = gohelper.findChild(slot0.viewGO, "#scroll_tablist/Viewport/content")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "#simage_TitleName/#txt_time")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._scrolltablist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tablist")
+	arg_1_0._simagepaperbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_paperbg")
+	arg_1_0._simageTitleName = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_TitleName")
+	arg_1_0._itemList = gohelper.findChild(arg_1_0.viewGO, "List")
+	arg_1_0._btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Reward/#btn_Reward")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Reward/#go_redpoint")
+	arg_1_0._gotabitemcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_tablist/Viewport/content")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#simage_TitleName/#txt_time")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnReward:AddClickListener(slot0._btnRewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnReward:AddClickListener(arg_2_0._btnRewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnReward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnReward:RemoveClickListener()
 end
 
-function slot0._btnRewardOnClick(slot0)
+function var_0_0._btnRewardOnClick(arg_4_0)
+	local var_4_0 = ActivityWarmUpModel.instance:getActId()
+
 	ViewMgr.instance:openView(ViewName.SportsNewsTaskView, {
-		actId = ActivityWarmUpModel.instance:getActId(),
+		actId = var_4_0,
 		index = ActivityWarmUpModel.instance:getSelectedDay()
 	})
 end
 
-slot0.OrderMaxPos = 4
+var_0_0.OrderMaxPos = 4
 
-function slot0._editableInitView(slot0)
-	slot0._pageTabs = slot0:getUserDataTb_()
-	slot0._newsItems = slot0:getUserDataTb_()
-	slot0._newsPos = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._pageTabs = arg_5_0:getUserDataTb_()
+	arg_5_0._newsItems = arg_5_0:getUserDataTb_()
+	arg_5_0._newsPos = arg_5_0:getUserDataTb_()
 
-	for slot4 = 1, uv0.OrderMaxPos do
-		slot0._newsPos[slot4] = gohelper.findChild(slot0._itemList, slot4)
+	for iter_5_0 = 1, var_0_0.OrderMaxPos do
+		arg_5_0._newsPos[iter_5_0] = gohelper.findChild(arg_5_0._itemList, iter_5_0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0._newsItems) do
-		slot5:onDestroyView()
+function var_0_0.onDestroyView(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._newsItems) do
+		iter_6_1:onDestroyView()
 	end
 
-	for slot4, slot5 in ipairs(slot0._pageTabs) do
-		slot5:onDestroyView()
+	for iter_6_2, iter_6_3 in ipairs(arg_6_0._pageTabs) do
+		iter_6_3:onDestroyView()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.actId = arg_7_0.viewParam.actId
 
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.OnInfosReply, slot0.onInfosReply, slot0)
-	ActivityWarmUpController.instance:init(slot0.actId)
+	arg_7_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:addEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.OnInfosReply, arg_7_0.onInfosReply, arg_7_0)
+	ActivityWarmUpController.instance:init(arg_7_0.actId)
 
-	slot0.jumpTab = SportsNewsModel.instance:getJumpToTab(slot0.actId)
+	arg_7_0.jumpTab = SportsNewsModel.instance:getJumpToTab(arg_7_0.actId)
 
-	if slot0.jumpTab then
-		ActivityWarmUpController.instance:switchTab(slot0.jumpTab)
+	if arg_7_0.jumpTab then
+		ActivityWarmUpController.instance:switchTab(arg_7_0.jumpTab)
 	end
 
-	Activity106Rpc.instance:sendGet106InfosRequest(slot0.actId)
+	Activity106Rpc.instance:sendGet106InfosRequest(arg_7_0.actId)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mail_open_1)
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.v1a5NewsTaskBonus)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, 1)
+	RedDotController.instance:addRedDot(arg_7_0._goreddot, RedDotEnum.DotNode.v1a5NewsTaskBonus)
+	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, 1)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, slot0.refreshUI, slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, slot0.refreshUI, slot0)
-	slot0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.OnInfosReply, slot0.onInfosReply, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_8_0)
+	arg_8_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.ViewSwitchTab, arg_8_0.refreshUI, arg_8_0)
+	arg_8_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.InfoReceived, arg_8_0.refreshUI, arg_8_0)
+	arg_8_0:removeEventCb(ActivityWarmUpController.instance, ActivityWarmUpEvent.OnInfosReply, arg_8_0.onInfosReply, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.refreshRemainTime, arg_8_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshAllTabBtns()
-	slot0:refreshAllOrder()
-	slot0:refreshRemainTime()
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshAllTabBtns()
+	arg_9_0:refreshAllOrder()
+	arg_9_0:refreshRemainTime()
 end
 
-function slot0.onInfosReply(slot0)
-	if slot0.jumpTab then
+function var_0_0.onInfosReply(arg_10_0)
+	if arg_10_0.jumpTab then
 		return
 	end
 
-	for slot6, slot7 in pairs(SportsNewsModel.instance:hasCanFinishOrder()) do
-		slot2 = Mathf.Min(slot6, ActivityWarmUpModel.instance:getSelectedDay())
+	local var_10_0 = SportsNewsModel.instance:hasCanFinishOrder()
+	local var_10_1 = ActivityWarmUpModel.instance:getSelectedDay()
+
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		var_10_1 = Mathf.Min(iter_10_0, var_10_1)
 	end
 
-	ActivityWarmUpController.instance:switchTab(slot2)
+	ActivityWarmUpController.instance:switchTab(var_10_1)
 end
 
-function slot0.refreshAllTabBtns(slot0)
-	slot2 = ActivityWarmUpModel.instance:getCurrentDay()
+function var_0_0.refreshAllTabBtns(arg_11_0)
+	local var_11_0 = ActivityWarmUpModel.instance:getTotalContentDays()
+	local var_11_1 = ActivityWarmUpModel.instance:getCurrentDay()
 
-	for slot6 = 1, ActivityWarmUpModel.instance:getTotalContentDays() do
-		slot0:refreshTabBtn(slot6)
+	for iter_11_0 = 1, var_11_0 do
+		arg_11_0:refreshTabBtn(iter_11_0)
 	end
 
-	slot0:dayTabRedDot()
+	arg_11_0:dayTabRedDot()
 end
 
-function slot0.refreshTabBtn(slot0, slot1)
-	slot0:getOrCreateTabItem(slot1):onRefresh()
+function var_0_0.refreshTabBtn(arg_12_0, arg_12_1)
+	arg_12_0:getOrCreateTabItem(arg_12_1):onRefresh()
 end
 
-function slot0.refreshRemainTime(slot0)
-	if ActivityModel.instance:getActivityInfo()[slot0.actId] then
-		slot0._txttime.text = string.format(luaLang("remain"), slot1:getRemainTimeStr2ByEndTime())
+function var_0_0.refreshRemainTime(arg_13_0)
+	local var_13_0 = ActivityModel.instance:getActivityInfo()[arg_13_0.actId]
+
+	if var_13_0 then
+		local var_13_1 = var_13_0:getRemainTimeStr2ByEndTime()
+
+		arg_13_0._txttime.text = string.format(luaLang("remain"), var_13_1)
 	end
 end
 
-function slot0.getOrCreateTabItem(slot0, slot1)
-	if not slot0._pageTabs[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot4 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[3], slot0._gotabitemcontent, "tab_item" .. tostring(slot1))
-		slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, SportsNewsPageTabItem)
+function var_0_0.getOrCreateTabItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._pageTabs[arg_14_1]
 
-		slot2:initData(slot1, slot4)
+	if not var_14_0 then
+		var_14_0 = arg_14_0:getUserDataTb_()
 
-		slot0._pageTabs[slot1] = slot2
+		local var_14_1 = arg_14_0.viewContainer:getSetting().otherRes[3]
+		local var_14_2 = arg_14_0:getResInst(var_14_1, arg_14_0._gotabitemcontent, "tab_item" .. tostring(arg_14_1))
+
+		var_14_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_2, SportsNewsPageTabItem)
+
+		var_14_0:initData(arg_14_1, var_14_2)
+
+		arg_14_0._pageTabs[arg_14_1] = var_14_0
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.dayTabRedDot(slot0)
-	slot2 = {}
+function var_0_0.dayTabRedDot(arg_15_0)
+	local var_15_0 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.v1a5NewsOrder).infos
+	local var_15_1 = {}
 
-	if RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.v1a5NewsOrder).infos then
-		for slot6, slot7 in pairs(slot1) do
-			if not slot2[SportsNewsModel.instance:getDayByOrderId(slot0.actId, slot7.uid)] and slot9 then
-				slot2[slot9] = {
-					id = slot8
+	if var_15_0 then
+		for iter_15_0, iter_15_1 in pairs(var_15_0) do
+			local var_15_2 = iter_15_1.uid
+			local var_15_3 = SportsNewsModel.instance:getDayByOrderId(arg_15_0.actId, var_15_2)
+
+			if not var_15_1[var_15_3] and var_15_3 then
+				var_15_1[var_15_3] = {
+					id = var_15_2
 				}
 			end
 		end
 	end
 
-	for slot7 = 1, ActivityWarmUpModel.instance:getTotalContentDays() do
-		slot8 = slot2[slot7] and slot2[slot7].id
+	local var_15_4 = ActivityWarmUpModel.instance:getTotalContentDays()
 
-		slot0:getOrCreateTabItem(slot7):enableRedDot(slot8, RedDotEnum.DotNode.v1a5NewsOrder, slot8)
+	for iter_15_2 = 1, var_15_4 do
+		local var_15_5 = var_15_1[iter_15_2] and var_15_1[iter_15_2].id
+
+		arg_15_0:getOrCreateTabItem(iter_15_2):enableRedDot(var_15_5, RedDotEnum.DotNode.v1a5NewsOrder, var_15_5)
 	end
 end
 
-function slot0.refreshAllOrder(slot0)
-	if ActivityWarmUpModel.instance:getSelectedDayOrders() then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0:refreshOrder(slot5, slot6)
+function var_0_0.refreshAllOrder(arg_16_0)
+	local var_16_0 = ActivityWarmUpModel.instance:getSelectedDayOrders()
+
+	if var_16_0 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			arg_16_0:refreshOrder(iter_16_0, iter_16_1)
 		end
 	end
 end
 
-function slot0.refreshOrder(slot0, slot1, slot2)
-	slot0:getOrCreateOrderItem(slot1):onRefresh(slot2)
+function var_0_0.refreshOrder(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0:getOrCreateOrderItem(arg_17_1):onRefresh(arg_17_2)
 end
 
-function slot0.getOrCreateOrderItem(slot0, slot1)
-	if not slot0._newsItems[slot1] then
-		if not slot0._newsPos[slot1] then
+function var_0_0.getOrCreateOrderItem(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._newsItems[arg_18_1]
+
+	if not var_18_0 then
+		local var_18_1 = arg_18_0._newsPos[arg_18_1]
+
+		if not var_18_1 then
 			return
 		end
 
-		slot4 = slot1 > 1 and 2 or 1
-		slot6 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[slot4], slot3, "news_" .. tostring(slot1))
-		slot2 = (slot4 ~= 1 or MonoHelper.addNoUpdateLuaComOnceToGo(slot6, SportsNewsMainReadItem)) and MonoHelper.addNoUpdateLuaComOnceToGo(slot6, SportsNewsMainTaskItem)
+		local var_18_2 = arg_18_1 > 1 and 2 or 1
+		local var_18_3 = arg_18_0.viewContainer:getSetting().otherRes[var_18_2]
+		local var_18_4 = arg_18_0:getResInst(var_18_3, var_18_1, "news_" .. tostring(arg_18_1))
 
-		slot2:initData(slot6, slot1)
+		if var_18_2 == 1 then
+			var_18_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_4, SportsNewsMainReadItem)
+		else
+			var_18_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_4, SportsNewsMainTaskItem)
+		end
 
-		slot0._newsItems[slot1] = slot2
+		var_18_0:initData(var_18_4, arg_18_1)
+
+		arg_18_0._newsItems[arg_18_1] = var_18_0
 	end
 
-	return slot2
+	return var_18_0
 end
 
-return slot0
+return var_0_0

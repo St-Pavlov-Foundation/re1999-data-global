@@ -1,52 +1,65 @@
-module("modules.logic.seasonver.act166.model.Season166TrainModel", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166TrainModel", package.seeall)
 
-slot0 = class("Season166TrainModel", BaseModel)
+local var_0_0 = class("Season166TrainModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0:cleanData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:cleanData()
 end
 
-function slot0.cleanData(slot0)
-	slot0.curTrainId = 0
-	slot0.curTrainConfig = nil
-	slot0.curEpisodeId = nil
+function var_0_0.cleanData(arg_3_0)
+	arg_3_0.curTrainId = 0
+	arg_3_0.curTrainConfig = nil
+	arg_3_0.curEpisodeId = nil
 end
 
-function slot0.initTrainData(slot0, slot1, slot2)
-	slot0.actId = slot1
-	slot0.curTrainId = slot2
-	slot0.curTrainConfig = Season166Config.instance:getSeasonTrainCo(slot1, slot2)
-	slot0.curEpisodeId = slot0.curTrainConfig and slot0.curTrainConfig.episodeId
+function var_0_0.initTrainData(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.actId = arg_4_1
+	arg_4_0.curTrainId = arg_4_2
+	arg_4_0.curTrainConfig = Season166Config.instance:getSeasonTrainCo(arg_4_1, arg_4_2)
+	arg_4_0.curEpisodeId = arg_4_0.curTrainConfig and arg_4_0.curTrainConfig.episodeId
 end
 
-function slot0.checkIsFinish(slot0, slot1, slot2)
-	return Season166Model.instance:getActInfo(slot1).trainInfoMap[slot2] and slot4.passCount > 0
+function var_0_0.checkIsFinish(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = Season166Model.instance:getActInfo(arg_5_1).trainInfoMap[arg_5_2]
+
+	return var_5_0 and var_5_0.passCount > 0
 end
 
-function slot0.getCurTrainPassCount(slot0, slot1)
-	for slot7, slot8 in ipairs(Season166Config.instance:getSeasonTrainCos(slot1)) do
-		if slot0:checkIsFinish(slot1, slot8.trainId) then
-			slot2 = 0 + 1
+function var_0_0.getCurTrainPassCount(arg_6_0, arg_6_1)
+	local var_6_0 = 0
+	local var_6_1 = Season166Config.instance:getSeasonTrainCos(arg_6_1)
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		if arg_6_0:checkIsFinish(arg_6_1, iter_6_1.trainId) then
+			var_6_0 = var_6_0 + 1
 		end
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.isHardEpisodeUnlockTime(slot0, slot1)
-	slot3 = Season166Config.instance:getSeasonConstNum(slot1, Season166Enum.SpOpenTimeConstId) > 0 and slot3 - 1
+function var_0_0.isHardEpisodeUnlockTime(arg_7_0, arg_7_1)
+	local var_7_0 = ActivityModel.instance:getActMO(arg_7_1)
+	local var_7_1 = Season166Config.instance:getSeasonConstNum(arg_7_1, Season166Enum.SpOpenTimeConstId)
+	local var_7_2 = var_7_1 > 0 and var_7_1 - 1
+	local var_7_3 = ServerTime.now() - var_7_0:getRealStartTimeStamp()
+	local var_7_4 = math.floor(var_7_3 / TimeUtil.OneDaySecond)
+	local var_7_5 = var_7_2 <= var_7_4
+	local var_7_6 = var_7_2 - var_7_4
 
-	return slot3 <= math.floor((ServerTime.now() - ActivityModel.instance:getActMO(slot1):getRealStartTimeStamp()) / TimeUtil.OneDaySecond), slot3 - slot5
+	return var_7_5, var_7_6
 end
 
-function slot0.getUnlockTrainInfoMap(slot0, slot1)
-	return tabletool.copy(Season166Model.instance:getActInfo(slot1).trainInfoMap)
+function var_0_0.getUnlockTrainInfoMap(arg_8_0, arg_8_1)
+	local var_8_0 = Season166Model.instance:getActInfo(arg_8_1)
+
+	return tabletool.copy(var_8_0.trainInfoMap)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

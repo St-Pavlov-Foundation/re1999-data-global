@@ -1,83 +1,87 @@
-module("modules.logic.rouge.view.RougeFactionViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionViewContainer", package.seeall)
 
-slot0 = class("RougeFactionViewContainer", BaseViewContainer)
-slot1 = 1
+local var_0_0 = class("RougeFactionViewContainer", BaseViewContainer)
+local var_0_1 = 1
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = 412
-	slot1.cellHeight = 852
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 109
-	slot0._listScrollParam = slot1
-	slot0._rougeFactionView = RougeFactionView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollDir = ScrollEnum.ScrollDirH
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 412
+	var_1_0.cellHeight = 852
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 109
+	arg_1_0._listScrollParam = var_1_0
+	arg_1_0._rougeFactionView = RougeFactionView.New()
 
 	return {
-		slot0._rougeFactionView,
-		TabViewGroup.New(uv0, "#go_lefttop")
+		arg_1_0._rougeFactionView,
+		TabViewGroup.New(var_0_1, "#go_lefttop")
 	}
 end
 
-slot2 = HelpEnum.HelpId.RougeFactionViewHelp
+local var_0_2 = HelpEnum.HelpId.RougeFactionViewHelp
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == uv0 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == var_0_1 then
 		return {
 			NavigateButtonsView.New({
 				true,
 				false,
 				true
-			}, uv1)
+			}, var_0_2)
 		}
 	end
 end
 
-function slot0.getScrollRect(slot0)
-	return slot0._rougeFactionView._scrollViewLimitScrollCmp
+function var_0_0.getScrollRect(arg_3_0)
+	return arg_3_0._rougeFactionView._scrollViewLimitScrollCmp
 end
 
-function slot0.onContainerInit(slot0)
-	slot1 = slot0:getScrollRect()
-	slot0._scrollViewGo = slot1.gameObject
-	slot0._scrollContentTrans = slot1.content
-	slot0._scrollContentGo = slot0._scrollContentTrans.gameObject
+function var_0_0.onContainerInit(arg_4_0)
+	local var_4_0 = arg_4_0:getScrollRect()
+
+	arg_4_0._scrollViewGo = var_4_0.gameObject
+	arg_4_0._scrollContentTrans = var_4_0.content
+	arg_4_0._scrollContentGo = arg_4_0._scrollContentTrans.gameObject
 end
 
-function slot0.getScrollViewGo(slot0)
-	return slot0._scrollViewGo
+function var_0_0.getScrollViewGo(arg_5_0)
+	return arg_5_0._scrollViewGo
 end
 
-function slot0.getScrollContentTranform(slot0)
-	return slot0._scrollContentTrans
+function var_0_0.getScrollContentTranform(arg_6_0)
+	return arg_6_0._scrollContentTrans
 end
 
-function slot0.getScrollContentGo(slot0)
-	return slot0._scrollContentGo
+function var_0_0.getScrollContentGo(arg_7_0)
+	return arg_7_0._scrollContentGo
 end
 
-function slot0.getListScrollParam(slot0)
-	return slot0._listScrollParam
+function var_0_0.getListScrollParam(arg_8_0)
+	return arg_8_0._listScrollParam
 end
 
-function slot0.getListScrollParam_cellSize(slot0)
-	slot1 = slot0._listScrollParam
+function var_0_0.getListScrollParam_cellSize(arg_9_0)
+	local var_9_0 = arg_9_0._listScrollParam
 
-	return slot1.cellWidth, slot1.cellHeight
+	return var_9_0.cellWidth, var_9_0.cellHeight
 end
 
-function slot0.rebuildLayout(slot0)
-	ZProj.UGUIHelper.RebuildLayout(slot0:getScrollContentTranform())
+function var_0_0.rebuildLayout(arg_10_0)
+	ZProj.UGUIHelper.RebuildLayout(arg_10_0:getScrollContentTranform())
 end
 
-function slot0.getListScrollParamStep(slot0)
-	if slot0:getListScrollParam().scrollDir == ScrollEnum.ScrollDirH then
-		return slot1.cellWidth + slot1.cellSpaceH
+function var_0_0.getListScrollParamStep(arg_11_0)
+	local var_11_0 = arg_11_0:getListScrollParam()
+
+	if var_11_0.scrollDir == ScrollEnum.ScrollDirH then
+		return var_11_0.cellWidth + var_11_0.cellSpaceH
 	else
-		return slot1.cellHeight + slot1.cellSpaceV
+		return var_11_0.cellHeight + var_11_0.cellSpaceV
 	end
 end
 
-return slot0
+return var_0_0

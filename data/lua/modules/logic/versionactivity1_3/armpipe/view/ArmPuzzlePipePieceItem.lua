@@ -1,93 +1,101 @@
-module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipePieceItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipePieceItem", package.seeall)
 
-slot0 = class("ArmPuzzlePipePieceItem", LuaCompBase)
+local var_0_0 = class("ArmPuzzlePipePieceItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "go_content")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "go_content/image_icon")
-	slot0._txtNum = gohelper.findChildText(slot0.viewGO, "go_content/image_NumBG/txt_Num")
-	slot0._txtNumZero = gohelper.findChildText(slot0.viewGO, "go_content/image_NumBG/txt_NumZero")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "go_content")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "go_content/image_icon")
+	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "go_content/image_NumBG/txt_Num")
+	arg_1_0._txtNumZero = gohelper.findChildText(arg_1_0.viewGO, "go_content/image_NumBG/txt_NumZero")
 
-	slot0:_editableInitView()
+	arg_1_0:_editableInitView()
 end
 
-function slot0.addEventListeners(slot0)
-	if slot0._btnUIdrag then
-		slot0._btnUIdrag:AddDragBeginListener(slot0._onDragBegin, slot0)
-		slot0._btnUIdrag:AddDragListener(slot0._onDragIng, slot0)
-		slot0._btnUIdrag:AddDragEndListener(slot0._onDragEnd, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	if arg_2_0._btnUIdrag then
+		arg_2_0._btnUIdrag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
+		arg_2_0._btnUIdrag:AddDragListener(arg_2_0._onDragIng, arg_2_0)
+		arg_2_0._btnUIdrag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
 	end
 end
 
-function slot0.removeEventListeners(slot0)
-	if slot0._btnUIdrag then
-		slot0._btnUIdrag:RemoveDragBeginListener()
-		slot0._btnUIdrag:RemoveDragListener()
-		slot0._btnUIdrag:RemoveDragEndListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	if arg_3_0._btnUIdrag then
+		arg_3_0._btnUIdrag:RemoveDragBeginListener()
+		arg_3_0._btnUIdrag:RemoveDragListener()
+		arg_3_0._btnUIdrag:RemoveDragEndListener()
 	end
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_4_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnUIdrag = SLFramework.UGUI.UIDragListener.Get(slot0._gocontent)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._btnUIdrag = SLFramework.UGUI.UIDragListener.Get(arg_6_0._gocontent)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._isStarDrag = false
+function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._isStarDrag = false
 
-	if slot0:_getPlaceNum() > 0 then
-		slot0._isStarDrag = true
+	if arg_7_0:_getPlaceNum() > 0 then
+		arg_7_0._isStarDrag = true
 
-		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.UIPipeDragBegin, slot2.position, slot0._typeId, ArmPuzzlePipeEnum.ruleConnect[slot0._typeId])
+		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.UIPipeDragBegin, arg_7_2.position, arg_7_0._typeId, ArmPuzzlePipeEnum.ruleConnect[arg_7_0._typeId])
 	end
 end
 
-function slot0._onDragIng(slot0, slot1, slot2)
-	if slot0._isStarDrag then
-		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.UIPipeDragIng, slot2.position)
+function var_0_0._onDragIng(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0._isStarDrag then
+		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.UIPipeDragIng, arg_8_2.position)
 	end
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if slot0._isStarDrag then
-		slot0._isStarDrag = false
+function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._isStarDrag then
+		arg_9_0._isStarDrag = false
 
-		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.UIPipeDragEnd, slot2.position)
+		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.UIPipeDragEnd, arg_9_2.position)
 	end
 end
 
-function slot0.setTypeId(slot0, slot1)
-	slot0._typeId = slot1
+function var_0_0.setTypeId(arg_10_0, arg_10_1)
+	arg_10_0._typeId = arg_10_1
 end
 
-function slot0.initItem(slot0, slot1)
+function var_0_0.initItem(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0._getPlaceNum(slot0)
-	return ArmPuzzlePipeModel.instance:getPlaceNum(slot0._typeId)
+function var_0_0._getPlaceNum(arg_12_0)
+	return ArmPuzzlePipeModel.instance:getPlaceNum(arg_12_0._typeId)
 end
 
-function slot0.refreshUI(slot0)
-	if not (slot0:_getPlaceNum() <= 0) then
-		slot0._txtNum.text = slot1
+function var_0_0.refreshUI(arg_13_0)
+	local var_13_0 = arg_13_0:_getPlaceNum()
+	local var_13_1 = var_13_0 <= 0
+
+	if not var_13_1 then
+		arg_13_0._txtNum.text = var_13_0
 	else
-		slot0._txtNumZero.text = slot1
+		arg_13_0._txtNumZero.text = var_13_0
 	end
 
-	UISpriteSetMgr.instance:setArmPipeSprite(slot0._imageicon, slot2 and ArmPuzzlePipeEnum.UIDragEmptyRes[slot0._typeId] or ArmPuzzlePipeEnum.UIDragRes[slot0._typeId], true)
+	local var_13_2 = var_13_1 and ArmPuzzlePipeEnum.UIDragEmptyRes[arg_13_0._typeId] or ArmPuzzlePipeEnum.UIDragRes[arg_13_0._typeId]
 
-	if slot0._isLastZero ~= slot2 then
-		slot0._isLastZero = slot2
+	UISpriteSetMgr.instance:setArmPipeSprite(arg_13_0._imageicon, var_13_2, true)
 
-		gohelper.setActive(slot0._txtNum, not slot2)
-		gohelper.setActive(slot0._txtNumZero, slot2)
+	if arg_13_0._isLastZero ~= var_13_1 then
+		arg_13_0._isLastZero = var_13_1
+
+		gohelper.setActive(arg_13_0._txtNum, not var_13_1)
+		gohelper.setActive(arg_13_0._txtNumZero, var_13_1)
 	end
 end
 
-return slot0
+return var_0_0

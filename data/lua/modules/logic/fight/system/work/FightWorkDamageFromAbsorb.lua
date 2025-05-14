@@ -1,60 +1,75 @@
-module("modules.logic.fight.system.work.FightWorkDamageFromAbsorb", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDamageFromAbsorb", package.seeall)
 
-slot0 = class("FightWorkDamageFromAbsorb", FightEffectBase)
+local var_0_0 = class("FightWorkDamageFromAbsorb", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		if slot0._actEffectMO.effectNum > 0 then
-			FightFloatMgr.instance:float(slot1.id, FightEnum.FloatType.damage, slot1:isMySide() and -slot2 or slot2)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
 
-			if slot1.nameUI then
-				slot1.nameUI:addHp(-slot2)
+	if var_1_0 then
+		local var_1_1 = arg_1_0._actEffectMO.effectNum
+
+		if var_1_1 > 0 then
+			local var_1_2 = var_1_0:isMySide() and -var_1_1 or var_1_1
+
+			FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.damage, var_1_2)
+
+			if var_1_0.nameUI then
+				var_1_0.nameUI:addHp(-var_1_1)
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, -slot2)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, -var_1_1)
 		end
 
-		if not slot1.effect then
-			slot0:onDone(true)
+		if not var_1_0.effect then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		if not (slot1.spine and slot1.spine:getSpineGO()) then
-			slot0:onDone(true)
+		local var_1_3 = var_1_0.spine and var_1_0.spine:getSpineGO()
+
+		if not var_1_3 then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		if not (gohelper.findChild(slot3, ModuleEnum.SpineHangPointRoot) and gohelper.findChild(slot4, "special1")) then
-			slot0:onDone(true)
+		local var_1_4 = gohelper.findChild(var_1_3, ModuleEnum.SpineHangPointRoot)
+
+		if not (var_1_4 and gohelper.findChild(var_1_4, "special1")) then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		if not FightDataHelper.entityMgr:getById(slot1.id) then
-			slot0:onDone(true)
+		local var_1_5 = FightDataHelper.entityMgr:getById(var_1_0.id)
+
+		if not var_1_5 then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		if not lua_fight_sp_effect_kkny_bear_damage.configDict[slot6.skin] then
-			slot0:onDone(true)
+		local var_1_6 = lua_fight_sp_effect_kkny_bear_damage.configDict[var_1_5.skin]
+
+		if not var_1_6 then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		slot8 = slot1.effect:addHangEffect(slot7.path, slot7.hangPoint, nil, 1.2 / FightModel.instance:getSpeed())
+		local var_1_7 = var_1_0.effect:addHangEffect(var_1_6.path, var_1_6.hangPoint, nil, 1.2 / FightModel.instance:getSpeed())
 
-		FightAudioMgr.instance:playAudio(slot7.audio)
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot8)
-		slot8:setLocalPos(0, 0, 0)
+		FightAudioMgr.instance:playAudio(var_1_6.audio)
+		FightRenderOrderMgr.instance:onAddEffectWrap(var_1_0.id, var_1_7)
+		var_1_7:setLocalPos(0, 0, 0)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

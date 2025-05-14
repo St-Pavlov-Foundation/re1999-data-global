@@ -1,353 +1,382 @@
-module("modules.logic.activity.controller.chessmap.ActivityChessGameController", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.ActivityChessGameController", package.seeall)
 
-slot0 = class("ActivityChessGameController", BaseController)
+local var_0_0 = class("ActivityChessGameController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
-	if slot0.interacts then
-		slot0.interacts:removeAll()
+function var_0_0.release(arg_3_0)
+	if arg_3_0.interacts then
+		arg_3_0.interacts:removeAll()
 	end
 
-	if slot0.event then
-		slot0.event:removeAll()
+	if arg_3_0.event then
+		arg_3_0.event:removeAll()
 	end
 
-	slot0._treeComp = nil
-	slot0.interacts = nil
-	slot0.event = nil
-	slot0._hasMap = false
+	arg_3_0._treeComp = nil
+	arg_3_0.interacts = nil
+	arg_3_0.event = nil
+	arg_3_0._hasMap = false
 end
 
-function slot0.enterChessGame(slot0, slot1, slot2)
+function var_0_0.enterChessGame(arg_4_0, arg_4_1, arg_4_2)
 	logNormal("ActivityChessGameController : enterChessGame!")
-	GuideController.instance:dispatchEvent(GuideEvent["OnChessEnter" .. Activity109ChessModel.instance:getEpisodeId()])
-	slot0:initData(slot1, slot2)
-	ViewMgr.instance:openView(ViewName.ActivityChessGame, slot0:packViewParam())
+
+	local var_4_0 = Activity109ChessModel.instance:getEpisodeId()
+
+	GuideController.instance:dispatchEvent(GuideEvent["OnChessEnter" .. var_4_0])
+	arg_4_0:initData(arg_4_1, arg_4_2)
+	ViewMgr.instance:openView(ViewName.ActivityChessGame, arg_4_0:packViewParam())
 	Activity109ChessController.instance:statStart()
 end
 
-function slot0.packViewParam(slot0)
+function var_0_0.packViewParam(arg_5_0)
 	return {
 		fromRefuseBattle = Activity109ChessController.instance:getFromRefuseBattle()
 	}
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot0._treeComp = ActivityChessGameTree.New()
+function var_0_0.initData(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._treeComp = ActivityChessGameTree.New()
 
-	ActivityChessGameModel.instance:initData(slot1, slot2)
+	ActivityChessGameModel.instance:initData(arg_6_1, arg_6_2)
 
-	slot0._tempSelectObjId = nil
+	arg_6_0._tempSelectObjId = nil
 
-	if Activity109Config.instance:getMapCo(slot1, slot2) and not string.nilorempty(slot3.offset) then
-		slot4 = string.splitToNumber(slot3.offset, ",")
-		slot0._cacheOffsetX = slot4[1]
-		slot0._cacheOffsetY = slot4[2]
+	local var_6_0 = Activity109Config.instance:getMapCo(arg_6_1, arg_6_2)
+
+	if var_6_0 and not string.nilorempty(var_6_0.offset) then
+		local var_6_1 = string.splitToNumber(var_6_0.offset, ",")
+
+		arg_6_0._cacheOffsetX = var_6_1[1]
+		arg_6_0._cacheOffsetY = var_6_1[2]
 	else
-		slot0._cacheOffsetX = nil
-		slot0._cacheOffsetY = nil
+		arg_6_0._cacheOffsetX = nil
+		arg_6_0._cacheOffsetY = nil
 	end
 end
 
-function slot0.initServerMap(slot0, slot1, slot2)
-	slot0:setClickStatus(ActivityChessEnum.SelectPosStatus.None)
-	slot0:setSelectObj(nil)
+function var_0_0.initServerMap(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:setClickStatus(ActivityChessEnum.SelectPosStatus.None)
+	arg_7_0:setSelectObj(nil)
 
-	slot0.interacts = slot0.interacts or ActivityChessInteractMgr.New()
+	arg_7_0.interacts = arg_7_0.interacts or ActivityChessInteractMgr.New()
 
-	slot0.interacts:removeAll()
-	ActivityChessGameModel.instance:initObjects(slot1, slot2.interactObjects)
-	slot0:initObjects()
+	arg_7_0.interacts:removeAll()
+	ActivityChessGameModel.instance:initObjects(arg_7_1, arg_7_2.interactObjects)
+	arg_7_0:initObjects()
 
-	slot0.event = slot0.event or ActivityChessEventMgr.New()
+	arg_7_0.event = arg_7_0.event or ActivityChessEventMgr.New()
 
-	slot0.event:removeAll()
-	slot0.event:setCurEvent(slot2.currentEvent)
-	ActivityChessGameModel.instance:setRound(slot2.currentRound)
+	arg_7_0.event:removeAll()
+	arg_7_0.event:setCurEvent(arg_7_2.currentEvent)
+	ActivityChessGameModel.instance:setRound(arg_7_2.currentRound)
 	ActivityChessGameModel.instance:setResult(nil)
-	ActivityChessGameModel.instance:updateFinishInteracts(slot2.finishInteracts)
+	ActivityChessGameModel.instance:updateFinishInteracts(arg_7_2.finishInteracts)
 
-	slot0._hasMap = true
+	arg_7_0._hasMap = true
 end
 
-function slot0.initObjects(slot0)
-	for slot5, slot6 in ipairs(ActivityChessGameModel.instance:getInteractDatas()) do
-		slot7 = ActivityChessInteractObject.New()
+function var_0_0.initObjects(arg_8_0)
+	local var_8_0 = ActivityChessGameModel.instance:getInteractDatas()
 
-		slot7:init(slot6)
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		local var_8_1 = ActivityChessInteractObject.New()
 
-		if slot7.config ~= nil then
-			slot0.interacts:add(slot7)
+		var_8_1:init(iter_8_1)
+
+		if var_8_1.config ~= nil then
+			arg_8_0.interacts:add(var_8_1)
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0.interacts:getList()) do
-		slot7.goToObject:init()
+	local var_8_2 = arg_8_0.interacts:getList()
+
+	for iter_8_2, iter_8_3 in ipairs(var_8_2) do
+		iter_8_3.goToObject:init()
 	end
 
-	slot0:dispatchEvent(ActivityChessEvent.AllObjectCreated)
+	arg_8_0:dispatchEvent(ActivityChessEvent.AllObjectCreated)
 end
 
-function slot0.initSceneTree(slot0, slot1, slot2)
-	slot0._treeSceneComp = ActivityChessGameTree.New()
-	slot0._offsetSceneY = slot2
-	slot3 = slot0._treeSceneComp:createLeaveNode()
-	slot4, slot5 = ActivityChessGameModel.instance:getGameSize()
+function var_0_0.initSceneTree(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._treeSceneComp = ActivityChessGameTree.New()
+	arg_9_0._offsetSceneY = arg_9_2
 
-	for slot9 = 1, slot4 do
-		for slot13 = 1, slot5 do
-			slot14 = {
-				y = slot18.y,
-				x = slot18.x,
-				tileY = slot13 - 1,
-				tileX = slot9 - 1
-			}
-			slot15, slot16, slot17 = slot0:calcTilePosInScene(slot9 - 1, slot13 - 1)
-			slot18 = recthelper.worldPosToAnchorPos(Vector3.New(slot15, slot16 + slot2, 0), slot1.transform)
+	local var_9_0 = arg_9_0._treeSceneComp:createLeaveNode()
+	local var_9_1, var_9_2 = ActivityChessGameModel.instance:getGameSize()
 
-			table.insert(slot3.nodes, slot14)
+	for iter_9_0 = 1, var_9_1 do
+		for iter_9_1 = 1, var_9_2 do
+			local var_9_3 = {}
+			local var_9_4, var_9_5, var_9_6 = arg_9_0:calcTilePosInScene(iter_9_0 - 1, iter_9_1 - 1)
+			local var_9_7 = recthelper.worldPosToAnchorPos(Vector3.New(var_9_4, var_9_5 + arg_9_2, 0), arg_9_1.transform)
 
-			slot3.keys = slot14
+			var_9_3.x, var_9_3.y = var_9_7.x, var_9_7.y
+			var_9_3.tileX, var_9_3.tileY = iter_9_0 - 1, iter_9_1 - 1
+
+			table.insert(var_9_0.nodes, var_9_3)
+
+			var_9_0.keys = var_9_3
 		end
 	end
 
-	slot0._treeSceneComp:growToBranch(slot3)
-	slot0._treeSceneComp:buildTree(slot3)
+	arg_9_0._treeSceneComp:growToBranch(var_9_0)
+	arg_9_0._treeSceneComp:buildTree(var_9_0)
 end
 
-function slot0.calcTilePosInScene(slot0, slot1, slot2, slot3)
-	slot4 = ActivityChessEnum.TileShowSettings
-	slot5, slot6 = nil
+function var_0_0.calcTilePosInScene(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = ActivityChessEnum.TileShowSettings
+	local var_10_1
+	local var_10_2
 
-	if not slot0._cacheOffsetX then
-		slot6 = slot2 * slot4.height + slot4.offsetY * slot1 + slot4.offsetYX * (slot1 + slot2) + ActivityChessEnum.ChessBoardOffsetY
-		slot5 = slot1 * slot4.width + slot4.offsetX * slot2 + slot4.offsetXY * (slot1 + slot2) + ActivityChessEnum.ChessBoardOffsetX
+	if not arg_10_0._cacheOffsetX then
+		var_10_1, var_10_2 = arg_10_1 * var_10_0.width + var_10_0.offsetX * arg_10_2 + var_10_0.offsetXY * (arg_10_1 + arg_10_2) + ActivityChessEnum.ChessBoardOffsetX, arg_10_2 * var_10_0.height + var_10_0.offsetY * arg_10_1 + var_10_0.offsetYX * (arg_10_1 + arg_10_2) + ActivityChessEnum.ChessBoardOffsetY
 	else
-		slot6 = slot2 * slot4.height + slot4.offsetY * slot1 + slot4.offsetYX * (slot1 + slot2) + slot0._cacheOffsetY
-		slot5 = slot1 * slot4.width + slot4.offsetX * slot2 + slot4.offsetXY * (slot1 + slot2) + slot0._cacheOffsetX
+		var_10_1, var_10_2 = arg_10_1 * var_10_0.width + var_10_0.offsetX * arg_10_2 + var_10_0.offsetXY * (arg_10_1 + arg_10_2) + arg_10_0._cacheOffsetX, arg_10_2 * var_10_0.height + var_10_0.offsetY * arg_10_1 + var_10_0.offsetYX * (arg_10_1 + arg_10_2) + arg_10_0._cacheOffsetY
 	end
 
-	return slot5 * 0.01, slot6 * 0.01, slot6 * 0.001 + (slot3 or 0) * 1e-06
+	return var_10_1 * 0.01, var_10_2 * 0.01, var_10_2 * 0.001 + (arg_10_3 or 0) * 1e-06
 end
 
-function slot0.getOffsetSceneY(slot0)
-	return slot0._offsetSceneY
+function var_0_0.getOffsetSceneY(arg_11_0)
+	return arg_11_0._offsetSceneY
 end
 
-function slot0.addInteractObj(slot0, slot1)
-	slot2 = ActivityChessInteractObject.New()
+function var_0_0.addInteractObj(arg_12_0, arg_12_1)
+	local var_12_0 = ActivityChessInteractObject.New()
 
-	slot2:init(slot1)
-	slot0.interacts:add(slot2)
-	slot2.goToObject:init()
-	slot0:dispatchEvent(ActivityChessEvent.InteractObjectCreated, slot2)
+	var_12_0:init(arg_12_1)
+	arg_12_0.interacts:add(var_12_0)
+	var_12_0.goToObject:init()
+	arg_12_0:dispatchEvent(ActivityChessEvent.InteractObjectCreated, var_12_0)
 end
 
-function slot0.deleteInteractObj(slot0, slot1)
-	slot0.interacts:remove(slot1)
+function var_0_0.deleteInteractObj(arg_13_0, arg_13_1)
+	arg_13_0.interacts:remove(arg_13_1)
 end
 
-function slot0.searchInteractByPos(slot0, slot1, slot2, slot3)
-	slot7 = 0
+function var_0_0.searchInteractByPos(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = arg_14_0.interacts:getList()
+	local var_14_1
+	local var_14_2
+	local var_14_3 = 0
 
-	for slot11, slot12 in ipairs(slot0.interacts:getList()) do
-		if slot12.originData.posX == slot1 and slot12.originData.posY == slot2 and (not slot3 or slot3(slot12)) then
-			if slot5 ~= nil then
-				table.insert(nil or {
-					slot5
-				}, slot12)
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		if iter_14_1.originData.posX == arg_14_1 and iter_14_1.originData.posY == arg_14_2 and (not arg_14_3 or arg_14_3(iter_14_1)) then
+			if var_14_1 ~= nil then
+				var_14_2 = var_14_2 or {
+					var_14_1
+				}
+
+				table.insert(var_14_2, iter_14_1)
 			else
-				slot5 = slot12
+				var_14_1 = iter_14_1
 			end
 
-			slot7 = slot7 + 1
+			var_14_3 = var_14_3 + 1
 		end
 	end
 
-	if slot7 > 1 then
-		table.sort(slot6, uv0.sortSelectObj)
+	if var_14_3 > 1 then
+		table.sort(var_14_2, var_0_0.sortSelectObj)
 	end
 
-	return slot7, slot6 or slot5
+	return var_14_3, var_14_2 or var_14_1
 end
 
-function slot0.sortSelectObj(slot0, slot1)
-	return slot0:getSelectPriority() < slot1:getSelectPriority()
+function var_0_0.sortSelectObj(arg_15_0, arg_15_1)
+	return arg_15_0:getSelectPriority() < arg_15_1:getSelectPriority()
 end
 
-function slot0.filterSelectable(slot0)
-	return slot0.config and slot0.config.interactType == ActivityChessEnum.InteractType.Player
+function var_0_0.filterSelectable(arg_16_0)
+	return arg_16_0.config and arg_16_0.config.interactType == ActivityChessEnum.InteractType.Player
 end
 
-function slot0.existGame(slot0)
-	return slot0._hasMap
+function var_0_0.existGame(arg_17_0)
+	return arg_17_0._hasMap
 end
 
-function slot0.setSelectObj(slot0, slot1)
-	if slot0._selectObj == slot1 then
+function var_0_0.setSelectObj(arg_18_0, arg_18_1)
+	if arg_18_0._selectObj == arg_18_1 then
 		return
 	end
 
-	if slot0._selectObj ~= nil and slot0._selectObj:getHandler() then
-		slot0._selectObj:getHandler():onCancelSelect()
+	if arg_18_0._selectObj ~= nil and arg_18_0._selectObj:getHandler() then
+		arg_18_0._selectObj:getHandler():onCancelSelect()
 	end
 
-	slot0._selectObj = slot1
+	arg_18_0._selectObj = arg_18_1
 
-	if slot1 ~= nil and slot0._selectObj:getHandler() then
-		slot1:getHandler():onSelectCall()
-	end
-end
-
-function slot0.saveTempSelectObj(slot0)
-	if slot0._selectObj then
-		slot0._tempSelectObjId = slot0._selectObj.id
+	if arg_18_1 ~= nil and arg_18_0._selectObj:getHandler() then
+		arg_18_1:getHandler():onSelectCall()
 	end
 end
 
-function slot0.tryResumeSelectObj(slot0)
-	if slot0.interacts and slot0._tempSelectObjId and slot0.interacts:get(slot0._tempSelectObjId) then
-		slot0:setSelectObj(slot1)
+function var_0_0.saveTempSelectObj(arg_19_0)
+	if arg_19_0._selectObj then
+		arg_19_0._tempSelectObjId = arg_19_0._selectObj.id
+	end
+end
 
-		slot0._tempSelectObjId = nil
+function var_0_0.tryResumeSelectObj(arg_20_0)
+	if arg_20_0.interacts and arg_20_0._tempSelectObjId then
+		local var_20_0 = arg_20_0.interacts:get(arg_20_0._tempSelectObjId)
 
-		return true
+		if var_20_0 then
+			arg_20_0:setSelectObj(var_20_0)
+
+			arg_20_0._tempSelectObjId = nil
+
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.syncServerMap(slot0)
-	slot2 = ActivityChessGameModel.instance:getMapId()
-	slot0._tempInteractMgr = slot0.interacts
-	slot0._tempEventMgr = slot0.event
+function var_0_0.syncServerMap(arg_21_0)
+	local var_21_0 = ActivityChessGameModel.instance:getActId()
+	local var_21_1 = ActivityChessGameModel.instance:getMapId()
 
-	if ActivityChessGameModel.instance:getActId() and slot2 then
-		slot0.interacts = nil
-		slot0.event = nil
+	arg_21_0._tempInteractMgr = arg_21_0.interacts
+	arg_21_0._tempEventMgr = arg_21_0.event
+
+	if var_21_0 and var_21_1 then
+		arg_21_0.interacts = nil
+		arg_21_0.event = nil
 
 		ActivityChessGameModel.instance:release()
-		ActivityChessGameModel.instance:initData(slot1, slot2)
-		Activity109Rpc.instance:sendGetAct109InfoRequest(slot1, slot0.onReceiveWhenSync, slot0)
-		slot0:dispatchEvent(ActivityChessEvent.ResetMapView)
+		ActivityChessGameModel.instance:initData(var_21_0, var_21_1)
+		Activity109Rpc.instance:sendGetAct109InfoRequest(var_21_0, arg_21_0.onReceiveWhenSync, arg_21_0)
+		arg_21_0:dispatchEvent(ActivityChessEvent.ResetMapView)
 	end
 end
 
-function slot0.onReceiveWhenSync(slot0, slot1, slot2)
-	if slot2 ~= 0 then
+function var_0_0.onReceiveWhenSync(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_2 ~= 0 then
 		return
 	end
 
-	slot4 = ActivityChessGameModel.instance:getMapId()
+	local var_22_0 = ActivityChessGameModel.instance:getActId()
+	local var_22_1 = ActivityChessGameModel.instance:getMapId()
 
-	if ActivityChessGameModel.instance:getActId() and slot4 then
-		if slot0._tempInteractMgr then
-			slot0._tempInteractMgr:dispose()
+	if var_22_0 and var_22_1 then
+		if arg_22_0._tempInteractMgr then
+			arg_22_0._tempInteractMgr:dispose()
 
-			slot0._tempInteractMgr = nil
+			arg_22_0._tempInteractMgr = nil
 		end
 
-		if slot0._tempEventMgr then
-			slot0._tempEventMgr:removeAll()
+		if arg_22_0._tempEventMgr then
+			arg_22_0._tempEventMgr:removeAll()
 
-			slot0._tempEventMgr = nil
+			arg_22_0._tempEventMgr = nil
 		end
 
-		slot0:initData(slot3, slot4)
-		slot0:initObjects()
+		arg_22_0:initData(var_22_0, var_22_1)
+		arg_22_0:initObjects()
 	end
 end
 
-function slot0.getSelectObj(slot0)
-	return slot0._selectObj
+function var_0_0.getSelectObj(arg_23_0)
+	return arg_23_0._selectObj
 end
 
-function slot0.setClickStatus(slot0, slot1)
-	slot0._clickStatus = slot1
+function var_0_0.setClickStatus(arg_24_0, arg_24_1)
+	arg_24_0._clickStatus = arg_24_1
 end
 
-function slot0.getClickStatus(slot0)
-	return slot0._clickStatus
+function var_0_0.getClickStatus(arg_25_0)
+	return arg_25_0._clickStatus
 end
 
-function slot0.autoSelectPlayer(slot0)
-	if not slot0.interacts then
+function var_0_0.autoSelectPlayer(arg_26_0)
+	if not arg_26_0.interacts then
 		return
 	end
 
-	if slot0.interacts:getList() then
-		slot2 = {}
+	local var_26_0 = arg_26_0.interacts:getList()
 
-		for slot6, slot7 in pairs(slot1) do
-			if slot7.config and slot7.config.interactType == ActivityChessEnum.InteractType.Player then
-				table.insert(slot2, slot7)
+	if var_26_0 then
+		local var_26_1 = {}
+
+		for iter_26_0, iter_26_1 in pairs(var_26_0) do
+			if iter_26_1.config and iter_26_1.config.interactType == ActivityChessEnum.InteractType.Player then
+				table.insert(var_26_1, iter_26_1)
 			end
 		end
 
-		table.sort(slot2, uv0.sortInteractObjById)
+		table.sort(var_26_1, var_0_0.sortInteractObjById)
 
-		if #slot2 > 0 then
-			slot0:setSelectObj(slot2[1])
+		if #var_26_1 > 0 then
+			arg_26_0:setSelectObj(var_26_1[1])
 		end
 	end
 end
 
-function slot0.sortInteractObjById(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortInteractObjById(arg_27_0, arg_27_1)
+	return arg_27_0.id < arg_27_1.id
 end
 
-function slot0.gameClear(slot0)
+function var_0_0.gameClear(arg_28_0)
 	ActivityChessGameModel.instance:setResult(true)
-	slot0:dispatchEvent(ActivityChessEvent.SetViewVictory)
-	slot0:dispatchEvent(ActivityChessEvent.CurrentConditionUpdate)
+	arg_28_0:dispatchEvent(ActivityChessEvent.SetViewVictory)
+	arg_28_0:dispatchEvent(ActivityChessEvent.CurrentConditionUpdate)
 end
 
-function slot0.gameOver(slot0)
+function var_0_0.gameOver(arg_29_0)
 	ActivityChessGameModel.instance:setResult(false)
-	slot0:dispatchEvent(ActivityChessEvent.SetViewFail)
-	slot0:dispatchEvent(ActivityChessEvent.CurrentConditionUpdate)
+	arg_29_0:dispatchEvent(ActivityChessEvent.SetViewFail)
+	arg_29_0:dispatchEvent(ActivityChessEvent.CurrentConditionUpdate)
 end
 
-function slot0.checkInActivityDuration(slot0)
-	if ActivityModel.instance:getActMO(ActivityChessGameModel.instance:getActId()) ~= nil and ActivityModel.instance:isActOnLine(slot1) and slot2:isOpen() and not slot2:isExpired() then
+function var_0_0.checkInActivityDuration(arg_30_0)
+	local var_30_0 = ActivityChessGameModel.instance:getActId()
+	local var_30_1 = ActivityModel.instance:getActMO(var_30_0)
+
+	if var_30_1 ~= nil and ActivityModel.instance:isActOnLine(var_30_0) and var_30_1:isOpen() and not var_30_1:isExpired() then
 		return true
 	end
 
-	slot0:closeViewFromActivityExpired()
+	arg_30_0:closeViewFromActivityExpired()
 
 	return false
 end
 
-function slot0.closeViewFromActivityExpired(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, function ()
+function var_0_0.closeViewFromActivityExpired(arg_31_0)
+	local function var_31_0()
 		ViewMgr.instance:closeView(ViewName.ActivityChessGame)
 		ViewMgr.instance:closeView(ViewName.Activity109ChessEntry)
-	end)
+	end
+
+	GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, var_31_0)
 end
 
-function slot0.posCanWalk(slot0, slot1, slot2)
-	if ActivityChessGameModel.instance:isPosInChessBoard(slot1, slot2) and ActivityChessGameModel.instance:getBaseTile(slot1, slot2) ~= ActivityChessEnum.TileBaseType.None then
-		return slot0:posObjCanWalk(slot1, slot2)
+function var_0_0.posCanWalk(arg_33_0, arg_33_1, arg_33_2)
+	if ActivityChessGameModel.instance:isPosInChessBoard(arg_33_1, arg_33_2) and ActivityChessGameModel.instance:getBaseTile(arg_33_1, arg_33_2) ~= ActivityChessEnum.TileBaseType.None then
+		return arg_33_0:posObjCanWalk(arg_33_1, arg_33_2)
 	end
 
 	return false
 end
 
-function slot0.posObjCanWalk(slot0, slot1, slot2)
-	slot3, slot4 = slot0:searchInteractByPos(slot1, slot2)
+function var_0_0.posObjCanWalk(arg_34_0, arg_34_1, arg_34_2)
+	local var_34_0, var_34_1 = arg_34_0:searchInteractByPos(arg_34_1, arg_34_2)
 
-	if slot3 == 1 then
-		if slot4 and slot4:canBlock() then
+	if var_34_0 == 1 then
+		if var_34_1 and var_34_1:canBlock() then
 			return false
 		end
-	elseif slot3 > 1 then
-		for slot8 = 1, slot3 do
-			if slot4[slot8] and slot4[slot8]:canBlock() then
+	elseif var_34_0 > 1 then
+		for iter_34_0 = 1, var_34_0 do
+			if var_34_1[iter_34_0] and var_34_1[iter_34_0]:canBlock() then
 				return false
 			end
 		end
@@ -358,36 +387,42 @@ function slot0.posObjCanWalk(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.getNearestScenePos(slot0, slot1, slot2)
-	if not slot0._treeSceneComp then
+function var_0_0.getNearestScenePos(arg_35_0, arg_35_1, arg_35_2)
+	if not arg_35_0._treeSceneComp then
 		return nil
 	end
 
-	slot4 = 99999999
-	slot5 = nil
-	slot6 = ActivityChessEnum.ClickYWeight
+	local var_35_0 = arg_35_0._treeSceneComp:search(arg_35_1, arg_35_2)
+	local var_35_1 = 99999999
+	local var_35_2
+	local var_35_3 = ActivityChessEnum.ClickYWeight
 
-	if slot0._treeSceneComp:search(slot1, slot2) then
-		for slot10 = 1, #slot3 do
-			slot11 = slot3[slot10]
-			slot13 = slot11.y - slot2
+	if var_35_0 then
+		for iter_35_0 = 1, #var_35_0 do
+			local var_35_4 = var_35_0[iter_35_0]
+			local var_35_5 = var_35_4.x - arg_35_1
+			local var_35_6 = var_35_4.y - arg_35_2
 
-			if math.abs(slot11.x - slot1) <= ActivityChessEnum.ClickRangeX and math.abs(slot13) <= ActivityChessEnum.ClickRangeY and slot4 > slot12 * slot12 + slot13 * slot13 * slot6 then
-				slot5 = slot11
-				slot4 = slot14
+			if math.abs(var_35_5) <= ActivityChessEnum.ClickRangeX and math.abs(var_35_6) <= ActivityChessEnum.ClickRangeY then
+				local var_35_7 = var_35_5 * var_35_5 + var_35_6 * var_35_6 * var_35_3
+
+				if var_35_7 < var_35_1 then
+					var_35_2 = var_35_4
+					var_35_1 = var_35_7
+				end
 			end
 		end
 	end
 
-	if slot5 then
-		return slot5.tileX, slot5.tileY
+	if var_35_2 then
+		return var_35_2.tileX, var_35_2.tileY
 	else
 		return nil
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

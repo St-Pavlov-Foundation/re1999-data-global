@@ -1,20 +1,21 @@
-module("modules.logic.sdk.config.SDKConfig", package.seeall)
+﻿module("modules.logic.sdk.config.SDKConfig", package.seeall)
 
-slot0 = class("SDKConfig", BaseConfig)
+local var_0_0 = class("SDKConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"const"
 	}
 end
 
-function slot0.getGuestBindRewards(slot0)
+function var_0_0.getGuestBindRewards(arg_3_0)
 	return CommonConfig.instance:getConstStr(ConstEnum.guestBindRewards)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

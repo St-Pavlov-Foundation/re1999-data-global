@@ -1,45 +1,48 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventRefreshRenderOrder", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventRefreshRenderOrder", package.seeall)
 
-slot0 = class("FightTLEventRefreshRenderOrder")
+local var_0_0 = class("FightTLEventRefreshRenderOrder")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot6 = FightHelper.getDefenders(slot1, true)
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = FightHelper.getEntity(arg_1_1.fromId)
+	local var_1_1 = FightHelper.getSideEntitys(var_1_0:getSide(), true)
+	local var_1_2 = FightHelper.getDefenders(arg_1_1, true)
 
-	for slot10, slot11 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide(), true)) do
-		FightRenderOrderMgr.instance:cancelOrder(slot11.id)
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		FightRenderOrderMgr.instance:cancelOrder(iter_1_1.id)
 	end
 
-	slot7 = tonumber(slot3[1])
+	local var_1_3 = tonumber(arg_1_3[1])
 
-	FightRenderOrderMgr.instance:setSortType(slot7)
+	FightRenderOrderMgr.instance:setSortType(var_1_3)
 
-	if slot7 == FightEnum.RenderOrderType.ZPos then
-		slot0._keepOrderPriorityDict = {
-			[slot4.id] = 0
-		}
+	if var_1_3 == FightEnum.RenderOrderType.ZPos then
+		arg_1_0._keepOrderPriorityDict = {}
+		arg_1_0._keepOrderPriorityDict[var_1_0.id] = 0
 
-		for slot11, slot12 in ipairs(slot6) do
-			slot0._keepOrderPriorityDict[slot12.id] = 1
+		for iter_1_2, iter_1_3 in ipairs(var_1_2) do
+			arg_1_0._keepOrderPriorityDict[iter_1_3.id] = 1
 		end
 
-		TaskDispatcher.runRepeat(slot0._refreshOrder, slot0, tonumber(slot3[2]) or 0.33)
+		local var_1_4 = tonumber(arg_1_3[2]) or 0.33
+
+		TaskDispatcher.runRepeat(arg_1_0._refreshOrder, arg_1_0, var_1_4)
 	end
 end
 
-function slot0.reset(slot0)
-	slot0._keepOrderPriorityDict = nil
+function var_0_0.reset(arg_2_0)
+	arg_2_0._keepOrderPriorityDict = nil
 
-	TaskDispatcher.cancelTask(slot0._refreshOrder, slot0)
+	TaskDispatcher.cancelTask(arg_2_0._refreshOrder, arg_2_0)
 end
 
-function slot0.dispose(slot0)
-	slot0._keepOrderPriorityDict = nil
+function var_0_0.dispose(arg_3_0)
+	arg_3_0._keepOrderPriorityDict = nil
 
-	TaskDispatcher.cancelTask(slot0._refreshOrder, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._refreshOrder, arg_3_0)
 end
 
-function slot0._refreshOrder(slot0)
-	FightRenderOrderMgr.instance:refreshRenderOrder(slot0._keepOrderPriorityDict)
+function var_0_0._refreshOrder(arg_4_0)
+	FightRenderOrderMgr.instance:refreshRenderOrder(arg_4_0._keepOrderPriorityDict)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.social.view.SocialRemarkTipViewContainer", package.seeall)
+﻿module("modules.logic.social.view.SocialRemarkTipViewContainer", package.seeall)
 
-slot0 = class("SocialRemarkTipViewContainer", BaseViewContainer)
+local var_0_0 = class("SocialRemarkTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		SocialRemarkTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

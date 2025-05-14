@@ -1,56 +1,72 @@
-module("modules.logic.room.view.common.RoomThemeFilterViewContainer", package.seeall)
+﻿module("modules.logic.room.view.common.RoomThemeFilterViewContainer", package.seeall)
 
-slot0 = class("RoomThemeFilterViewContainer", BaseViewContainer)
-slot1 = 386
-slot2 = 80
-slot3 = 3
+local var_0_0 = class("RoomThemeFilterViewContainer", BaseViewContainer)
+local var_0_1 = 386
+local var_0_2 = 80
+local var_0_3 = 3
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomThemeFilterView.New())
+	table.insert(var_1_0, RoomThemeFilterView.New())
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_content/#scroll_theme"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "#go_content/#go_themeitem"
-	slot2.cellClass = RoomThemeFilterItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = uv0
-	slot2.cellWidth = uv1
-	slot2.cellHeight = uv2
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
-	slot2.endSpace = 0
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(RoomThemeFilterListModel.instance, slot2))
+	var_1_1.scrollGOPath = "#go_content/#scroll_theme"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "#go_content/#go_themeitem"
+	var_1_1.cellClass = RoomThemeFilterItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = var_0_3
+	var_1_1.cellWidth = var_0_1
+	var_1_1.cellHeight = var_0_2
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+	var_1_1.endSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(RoomThemeFilterListModel.instance, var_1_1))
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0.getUIScreenWidth(slot0)
-	if UnityEngine.GameObject.Find("UIRoot/POPUP_TOP") then
-		return recthelper.getWidth(slot1.transform)
+function var_0_0.getUIScreenWidth(arg_3_0)
+	local var_3_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
+
+	if var_3_0 then
+		return recthelper.getWidth(var_3_0.transform)
 	end
 
-	return math.floor(UnityEngine.Screen.width * 1080 / UnityEngine.Screen.height + 0.5)
+	local var_3_1 = 1080 / UnityEngine.Screen.height
+
+	return (math.floor(UnityEngine.Screen.width * var_3_1 + 0.5))
 end
 
-function slot0.layoutContentTrs(slot0, slot1, slot2)
-	slot3 = 1220
-	slot6 = math.floor((RoomThemeFilterListModel.instance:getCount() + uv0 - 1) / uv0) * uv1 + 130 + 26
+function var_0_0.layoutContentTrs(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = 1220
+	local var_4_1 = arg_4_0:getUIScreenWidth() * 0.5
+	local var_4_2 = RoomThemeFilterListModel.instance:getCount()
+	local var_4_3 = math.floor((var_4_2 + var_0_3 - 1) / var_0_3) * var_0_2 + 130 + 26
 
-	if slot2 then
-		recthelper.setAnchorX(slot1, -(slot0:getUIScreenWidth() * 0.5) + 173)
+	if arg_4_2 then
+		local var_4_4 = 173
+		local var_4_5 = -var_4_1 + var_4_4
+
+		recthelper.setAnchorX(arg_4_1, var_4_5)
 	else
-		recthelper.setHeight(slot1, math.min(slot6, 605))
-		recthelper.setAnchor(slot1, math.min(-slot4 + 668, slot4 - slot3 - 46), 85)
+		local var_4_6 = 46
+		local var_4_7 = 668
+		local var_4_8 = var_4_1 - var_4_0 - var_4_6
+		local var_4_9 = -var_4_1 + var_4_7
+		local var_4_10 = math.min(var_4_9, var_4_8)
+
+		recthelper.setHeight(arg_4_1, math.min(var_4_3, 605))
+		recthelper.setAnchor(arg_4_1, var_4_10, 85)
 	end
 end
 
-return slot0
+return var_0_0

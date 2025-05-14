@@ -1,16 +1,16 @@
-module("modules.logic.rouge.model.RougeResultReportListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeResultReportListModel", package.seeall)
 
-slot0 = class("RougeResultReportListModel", ListScrollModel)
+local var_0_0 = class("RougeResultReportListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	slot1 = RougeFavoriteModel.instance:getReviewInfoList()
+function var_0_0.init(arg_1_0)
+	local var_1_0 = RougeFavoriteModel.instance:getReviewInfoList()
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot1.finishTime < slot0.finishTime
+	table.sort(var_1_0, function(arg_2_0, arg_2_1)
+		return arg_2_0.finishTime > arg_2_1.finishTime
 	end)
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

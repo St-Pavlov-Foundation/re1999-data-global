@@ -1,209 +1,234 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_TaskItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_TaskItem", package.seeall)
 
-slot0 = class("V2a4_WarmUp_TaskItem", ListScrollCellExtend)
+local var_0_0 = class("V2a4_WarmUp_TaskItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
-	slot0._simagenormalbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_normal/#simage_normalbg")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_normal/progress/#txt_num")
-	slot0._txttotal = gohelper.findChildText(slot0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	slot0._txttaskdes = gohelper.findChildText(slot0.viewGO, "#go_normal/#txt_taskdes")
-	slot0._scrollrewards = gohelper.findChildScrollRect(slot0.viewGO, "#go_normal/#scroll_rewards")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
-	slot0._btnnotfinishbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_notfinishbg")
-	slot0._btnfinishbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_finishbg")
-	slot0._goallfinish = gohelper.findChild(slot0.viewGO, "#go_normal/#go_allfinish")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
+	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
+	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
+	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_normal/#scroll_rewards")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
+	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
+	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg")
+	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnotfinishbg:AddClickListener(slot0._btnnotfinishbgOnClick, slot0)
-	slot0._btnfinishbg:AddClickListener(slot0._btnfinishbgOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
+	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnotfinishbg:RemoveClickListener()
-	slot0._btnfinishbg:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnnotfinishbg:RemoveClickListener()
+	arg_3_0._btnfinishbg:RemoveClickListener()
 end
 
-slot1 = "V2a4_WarmUp_TaskItem:_btnfinishbgOnClick()"
+local var_0_1 = "V2a4_WarmUp_TaskItem:_btnfinishbgOnClick()"
 
-function slot0._btnnotfinishbgOnClick(slot0)
-	if slot0._mo.config.jumpId ~= 0 then
+function var_0_0._btnnotfinishbgOnClick(arg_4_0)
+	if arg_4_0._mo.config.jumpId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
 
-		if GameFacade.jump(slot0.co.jumpId) then
+		if GameFacade.jump(arg_4_0.co.jumpId) then
 			ViewMgr.instance:closeView(ViewName.V2a4_WarmUp_TaskView)
 		end
 	end
 end
 
-function slot0._btnfinishbgOnClick(slot0)
-	UIBlockMgr.instance:startBlock(uv0)
+function var_0_0._btnfinishbgOnClick(arg_5_0)
+	UIBlockMgr.instance:startBlock(var_0_1)
 
-	slot0.animator.speed = 1
+	arg_5_0.animator.speed = 1
 
-	slot0.animatorPlayer:Play(UIAnimationName.Finish, slot0._firstAnimationDone, slot0)
+	arg_5_0.animatorPlayer:Play(UIAnimationName.Finish, arg_5_0._firstAnimationDone, arg_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rewardItemList = {}
-	slot0._btnnotfinishbgGo = slot0._btnnotfinishbg.gameObject
-	slot0._btnfinishbgGo = slot0._btnfinishbg.gameObject
-	slot0._goallfinishGo = slot0._goallfinish.gameObject
-	slot0._scrollrewardsGo = slot0._scrollrewards.gameObject
-	slot0._gorewardsContentFilter = gohelper.onceAddComponent(slot0._gorewards, gohelper.Type_ContentSizeFitter)
-	slot0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.viewGO)
-	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._rewardItemList = {}
+	arg_6_0._btnnotfinishbgGo = arg_6_0._btnnotfinishbg.gameObject
+	arg_6_0._btnfinishbgGo = arg_6_0._btnfinishbg.gameObject
+	arg_6_0._goallfinishGo = arg_6_0._goallfinish.gameObject
+	arg_6_0._scrollrewardsGo = arg_6_0._scrollrewards.gameObject
+	arg_6_0._gorewardsContentFilter = gohelper.onceAddComponent(arg_6_0._gorewards, gohelper.Type_ContentSizeFitter)
+	arg_6_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_6_0.viewGO)
+	arg_6_0.animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagenormalbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0._simagenormalbg:UnLoadImage()
 end
 
-function slot0.initInternal(slot0, ...)
-	uv0.super.initInternal(slot0, ...)
+function var_0_0.initInternal(arg_8_0, ...)
+	var_0_0.super.initInternal(arg_8_0, ...)
 
-	slot0.scrollReward = slot0._scrollrewardsGo:GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0.scrollReward.parentGameObject = slot0._view._csListScroll.gameObject
+	arg_8_0.scrollReward = arg_8_0._scrollrewardsGo:GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_8_0.scrollReward.parentGameObject = arg_8_0._view._csListScroll.gameObject
 end
 
-function slot0._viewContainer(slot0)
-	return slot0._view.viewContainer
+function var_0_0._viewContainer(arg_9_0)
+	return arg_9_0._view.viewContainer
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._mo = arg_10_1
 
-	if slot1.getAll then
-		slot0:_refreshGetAllUI()
+	if arg_10_1.getAll then
+		arg_10_0:_refreshGetAllUI()
 	else
-		slot0:_refreshNormalUI()
+		arg_10_0:_refreshNormalUI()
 	end
 end
 
-function slot0._refreshGetAllUI(slot0)
+function var_0_0._refreshGetAllUI(arg_11_0)
+	return
 end
 
-function slot0._isReadTask(slot0)
-	return slot0._mo.config.listenerType == "ReadTask"
+function var_0_0._isReadTask(arg_12_0)
+	return arg_12_0._mo.config.listenerType == "ReadTask"
 end
 
-function slot0._getProgressReadTask(slot0)
-	slot3 = slot0._mo.config
+function var_0_0._getProgressReadTask(arg_13_0)
+	local var_13_0 = ActivityWarmUpEnum.Activity125TaskTag
+	local var_13_1 = arg_13_0._mo
+	local var_13_2 = var_13_1.config
+	local var_13_3 = var_13_2.id
+	local var_13_4 = var_13_2.activityId
 
-	if Activity125Config.instance:getTaskCO_ReadTask_Tag(slot3.activityId, ActivityWarmUpEnum.Activity125TaskTag.sum_help_npc)[slot3.id] then
-		return slot0:_progress_sum_help_npc()
+	if Activity125Config.instance:getTaskCO_ReadTask_Tag(var_13_4, var_13_0.sum_help_npc)[var_13_3] then
+		return arg_13_0:_progress_sum_help_npc()
 	end
 
-	if Activity125Config.instance:getTaskCO_ReadTask_Tag(slot5, slot1.help_npc)[slot4] then
-		return slot2.progress
+	if Activity125Config.instance:getTaskCO_ReadTask_Tag(var_13_4, var_13_0.help_npc)[var_13_3] then
+		return var_13_1.progress
 	end
 
-	if Activity125Config.instance:getTaskCO_ReadTask_Tag(slot5, slot1.perfect_win)[slot4] then
-		return slot2.progress
+	if Activity125Config.instance:getTaskCO_ReadTask_Tag(var_13_4, var_13_0.perfect_win)[var_13_3] then
+		return var_13_1.progress
 	end
 end
 
-function slot0._getMaxProgressReadTask(slot0)
-	slot2 = slot0._mo.config
+function var_0_0._getMaxProgressReadTask(arg_14_0)
+	local var_14_0 = arg_14_0._mo.config
+	local var_14_1 = ActivityWarmUpEnum.Activity125TaskTag
+	local var_14_2 = var_14_0.id
+	local var_14_3 = var_14_0.activityId
 
-	if Activity125Config.instance:getTaskCO_ReadTask_Tag(slot2.activityId, ActivityWarmUpEnum.Activity125TaskTag.sum_help_npc)[slot2.id] then
-		return tonumber(slot2.clientlistenerParam) or 0
+	if Activity125Config.instance:getTaskCO_ReadTask_Tag(var_14_3, var_14_1.sum_help_npc)[var_14_2] then
+		return tonumber(var_14_0.clientlistenerParam) or 0
 	else
 		return 1
 	end
 end
 
-function slot0._progress_sum_help_npc(slot0)
+function var_0_0._progress_sum_help_npc(arg_15_0)
 	return Activity125Controller.instance:get_V2a4_WarmUp_sum_help_npc(0)
 end
 
-function slot0._refreshNormalUI(slot0)
-	slot1 = slot0._mo
-	slot3 = slot1.progress
-	slot4 = slot1.config.maxProgress
+function var_0_0._refreshNormalUI(arg_16_0)
+	local var_16_0 = arg_16_0._mo
+	local var_16_1 = var_16_0.config
+	local var_16_2 = var_16_0.progress
+	local var_16_3 = var_16_1.maxProgress
 
-	if slot0:_isReadTask() then
-		slot3 = slot0:_getProgressReadTask()
-		slot4 = slot0:_getMaxProgressReadTask()
+	if arg_16_0:_isReadTask() then
+		var_16_2 = arg_16_0:_getProgressReadTask()
+		var_16_3 = arg_16_0:_getMaxProgressReadTask()
 	end
 
-	slot0._txtnum.text = math.min(slot3, slot4)
-	slot0._txttaskdes.text = slot2.desc
-	slot0._txttotal.text = slot4
+	arg_16_0._txtnum.text = math.min(var_16_2, var_16_3)
+	arg_16_0._txttaskdes.text = var_16_1.desc
+	arg_16_0._txttotal.text = var_16_3
 
-	gohelper.setActive(slot0._btnnotfinishbgGo, slot1:isUnfinished())
-	gohelper.setActive(slot0._goallfinishGo, slot1:isClaimed())
-	gohelper.setActive(slot0._btnfinishbgGo, slot1:isClaimable())
-	slot0:_refreshRewardItems()
+	gohelper.setActive(arg_16_0._btnnotfinishbgGo, var_16_0:isUnfinished())
+	gohelper.setActive(arg_16_0._goallfinishGo, var_16_0:isClaimed())
+	gohelper.setActive(arg_16_0._btnfinishbgGo, var_16_0:isClaimable())
+	arg_16_0:_refreshRewardItems()
 end
 
-function slot0._refreshRewardItems(slot0)
-	if string.nilorempty(slot0._mo.config.bonus) then
-		gohelper.setActive(slot0.scrollReward.gameObject, false)
+function var_0_0._refreshRewardItems(arg_17_0)
+	local var_17_0 = arg_17_0._mo.config.bonus
+
+	if string.nilorempty(var_17_0) then
+		gohelper.setActive(arg_17_0.scrollReward.gameObject, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.scrollReward.gameObject, true)
+	gohelper.setActive(arg_17_0.scrollReward.gameObject, true)
 
-	slot0._gorewardsContentFilter.enabled = #GameUtil.splitString2(slot3, true, "|", "#") > 2
+	local var_17_1 = GameUtil.splitString2(var_17_0, true, "|", "#")
 
-	for slot8, slot9 in ipairs(slot4) do
-		if not slot0._rewardItemList[slot8] then
-			slot13 = IconMgr.instance:getCommonPropItemIcon(slot0._gorewards)
+	arg_17_0._gorewardsContentFilter.enabled = #var_17_1 > 2
 
-			slot13:setMOValue(slot9[1], slot9[2], slot9[3], nil, true)
-			slot13:setCountFontSize(26)
-			slot13:showStackableNum2()
-			slot13:isShowEffect(true)
-			table.insert(slot0._rewardItemList, slot13)
+	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
+		local var_17_2 = iter_17_1[1]
+		local var_17_3 = iter_17_1[2]
+		local var_17_4 = iter_17_1[3]
+		local var_17_5 = arg_17_0._rewardItemList[iter_17_0]
 
-			if slot13:getItemIcon().getCountBg then
-				transformhelper.setLocalScale(slot14:getCountBg().transform, 1, 1.5, 1)
+		if not var_17_5 then
+			var_17_5 = IconMgr.instance:getCommonPropItemIcon(arg_17_0._gorewards)
+
+			var_17_5:setMOValue(var_17_2, var_17_3, var_17_4, nil, true)
+			var_17_5:setCountFontSize(26)
+			var_17_5:showStackableNum2()
+			var_17_5:isShowEffect(true)
+			table.insert(arg_17_0._rewardItemList, var_17_5)
+
+			local var_17_6 = var_17_5:getItemIcon()
+
+			if var_17_6.getCountBg then
+				local var_17_7 = var_17_6:getCountBg()
+
+				transformhelper.setLocalScale(var_17_7.transform, 1, 1.5, 1)
 			end
 
-			if slot14.getCount then
-				transformhelper.setLocalScale(slot14:getCount().transform, 1.5, 1.5, 1)
+			if var_17_6.getCount then
+				local var_17_8 = var_17_6:getCount()
+
+				transformhelper.setLocalScale(var_17_8.transform, 1.5, 1.5, 1)
 			end
 		else
-			slot13:setMOValue(slot10, slot11, slot12, nil, true)
+			var_17_5:setMOValue(var_17_2, var_17_3, var_17_4, nil, true)
 		end
 
-		gohelper.setActive(slot13.go, true)
+		gohelper.setActive(var_17_5.go, true)
 	end
 
-	for slot8 = #slot4 + 1, #slot0._rewardItemList do
-		gohelper.setActive(slot0._rewardItemList[slot8].go, false)
+	for iter_17_2 = #var_17_1 + 1, #arg_17_0._rewardItemList do
+		gohelper.setActive(arg_17_0._rewardItemList[iter_17_2].go, false)
 	end
 
-	slot0.scrollReward.horizontalNormalizedPosition = 0
+	arg_17_0.scrollReward.horizontalNormalizedPosition = 0
 end
 
-function slot0._firstAnimationDone(slot0)
-	slot0:_viewContainer():removeByIndex(slot0._index, slot0._secondAnimationDone, slot0)
+function var_0_0._firstAnimationDone(arg_18_0)
+	arg_18_0:_viewContainer():removeByIndex(arg_18_0._index, arg_18_0._secondAnimationDone, arg_18_0)
 end
 
-function slot0._secondAnimationDone(slot0)
-	slot2 = slot0._mo
-	slot4 = slot2.config.id
+function var_0_0._secondAnimationDone(arg_19_0)
+	local var_19_0 = arg_19_0:_viewContainer()
+	local var_19_1 = arg_19_0._mo
+	local var_19_2 = var_19_1.config.id
 
-	UIBlockMgr.instance:endBlock(uv0)
-	slot0.animatorPlayer:Play(UIAnimationName.Idle)
+	UIBlockMgr.instance:endBlock(var_0_1)
+	arg_19_0.animatorPlayer:Play(UIAnimationName.Idle)
 
-	if slot2.getAll then
-		slot0:_viewContainer():sendFinishAllTaskRequest()
+	if var_19_1.getAll then
+		var_19_0:sendFinishAllTaskRequest()
 	else
-		slot1:sendFinishTaskRequest(slot4)
+		var_19_0:sendFinishTaskRequest(var_19_2)
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0.animator
+function var_0_0.getAnimator(arg_20_0)
+	return arg_20_0.animator
 end
 
-return slot0
+return var_0_0

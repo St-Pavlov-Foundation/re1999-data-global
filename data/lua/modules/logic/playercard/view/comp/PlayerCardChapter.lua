@@ -1,30 +1,36 @@
-module("modules.logic.playercard.view.comp.PlayerCardChapter", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardChapter", package.seeall)
 
-slot0 = class("PlayerCardChapter", BasePlayerCardComp)
+local var_0_0 = class("PlayerCardChapter", BasePlayerCardComp)
 
-function slot0.onInitView(slot0)
-	slot0.txtChapter = gohelper.findChildTextMesh(slot0.viewGO, "#txt_chapter")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.txtChapter = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_chapter")
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.onRefreshView(slot0)
-	if slot0:getPlayerInfo().lastEpisodeId and lua_episode.configDict[slot2] then
-		if DungeonConfig.instance:getChapterCO(slot3.chapterId).type == DungeonEnum.ChapterType.Simple then
-			slot3 = lua_episode.configDict[slot3.normalEpisodeId]
+function var_0_0.onRefreshView(arg_4_0)
+	local var_4_0 = arg_4_0:getPlayerInfo().lastEpisodeId
+	local var_4_1 = var_4_0 and lua_episode.configDict[var_4_0]
+
+	if var_4_1 then
+		if DungeonConfig.instance:getChapterCO(var_4_1.chapterId).type == DungeonEnum.ChapterType.Simple then
+			var_4_1 = lua_episode.configDict[var_4_1.normalEpisodeId]
 		end
 
-		if slot3 then
-			slot0.txtChapter.text = string.format("《%s %s》", DungeonController.getEpisodeName(slot3), slot3.name)
+		if var_4_1 then
+			arg_4_0.txtChapter.text = string.format("《%s %s》", DungeonController.getEpisodeName(var_4_1), var_4_1.name)
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

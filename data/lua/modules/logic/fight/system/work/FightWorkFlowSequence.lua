@@ -1,116 +1,118 @@
-module("modules.logic.fight.system.work.FightWorkFlowSequence", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFlowSequence", package.seeall)
 
-slot0 = class("FightWorkFlowSequence", FightWorkFlowBase)
+local var_0_0 = class("FightWorkFlowSequence", FightWorkFlowBase)
 
-function slot0.onConstructor(slot0)
-	slot0._workList = {}
-	slot0._curIndex = 0
-	slot0._startIndex = 0
-	slot0._playStartCount = 0
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._workList = {}
+	arg_1_0._curIndex = 0
+	arg_1_0._startIndex = 0
+	arg_1_0._playStartCount = 0
 end
 
-function slot0.registWork(slot0, slot1, ...)
-	return slot0:registWorkAtIndex(#slot0._workList + 1, slot1, ...)
+function var_0_0.registWork(arg_2_0, arg_2_1, ...)
+	return arg_2_0:registWorkAtIndex(#arg_2_0._workList + 1, arg_2_1, ...)
 end
 
-function slot0.registWorkAtIndex(slot0, slot1, slot2, ...)
-	slot3 = slot0:newClass(slot2, ...)
+function var_0_0.registWorkAtIndex(arg_3_0, arg_3_1, arg_3_2, ...)
+	local var_3_0 = arg_3_0:newClass(arg_3_2, ...)
 
-	table.insert(slot0._workList, slot1, slot3)
+	table.insert(arg_3_0._workList, arg_3_1, var_3_0)
 
-	return slot3
+	return var_3_0
 end
 
-function slot0.addWork(slot0, slot1)
-	if not slot1 then
+function var_0_0.addWork(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot0:addWorkAtIndex(#slot0._workList + 1, slot1)
+	arg_4_0:addWorkAtIndex(#arg_4_0._workList + 1, arg_4_1)
 end
 
-function slot0.addWorkAtIndex(slot0, slot1, slot2)
-	if not slot2 then
+function var_0_0.addWorkAtIndex(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_2 then
 		return
 	end
 
-	table.insert(slot0._workList, slot1, slot2)
+	table.insert(arg_5_0._workList, arg_5_1, arg_5_2)
 end
 
-function slot0.listen2Work(slot0, slot1)
-	slot0:listen2WorkAtIndex(#slot0._workList + 1, slot1)
+function var_0_0.listen2Work(arg_6_0, arg_6_1)
+	arg_6_0:listen2WorkAtIndex(#arg_6_0._workList + 1, arg_6_1)
 end
 
-function slot0.listen2WorkAtIndex(slot0, slot1, slot2)
-	slot0:registWorkAtIndex(slot1, FightWorkListen2WorkDone, slot2)
+function var_0_0.listen2WorkAtIndex(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:registWorkAtIndex(arg_7_1, FightWorkListen2WorkDone, arg_7_2)
 end
 
-function slot0.onStart(slot0)
-	slot0:cancelFightWorkSafeTimer()
+function var_0_0.onStart(arg_8_0)
+	arg_8_0:cancelFightWorkSafeTimer()
 
-	return slot0:_playNext()
+	return arg_8_0:_playNext()
 end
 
-function slot0._playNext(slot0)
-	slot0._curIndex = slot0._curIndex + 1
+function var_0_0._playNext(arg_9_0)
+	arg_9_0._curIndex = arg_9_0._curIndex + 1
 
-	if slot0._workList[slot0._curIndex] then
-		if slot1.WORKFINISHED or slot1.IS_DISPOSED then
-			return slot0:_playNext()
-		elseif not slot1.STARTED then
-			slot0._playStartCount = slot0._playStartCount + 1
+	local var_9_0 = arg_9_0._workList[arg_9_0._curIndex]
 
-			if slot0._playStartCount == 1 then
-				slot0._startIndex = slot0._curIndex
+	if var_9_0 then
+		if var_9_0.WORKFINISHED or var_9_0.IS_DISPOSED then
+			return arg_9_0:_playNext()
+		elseif not var_9_0.STARTED then
+			arg_9_0._playStartCount = arg_9_0._playStartCount + 1
 
-				while slot0._playStartCount ~= 0 do
-					slot2 = slot0._workList[slot0._startIndex]
+			if arg_9_0._playStartCount == 1 then
+				arg_9_0._startIndex = arg_9_0._curIndex
 
-					slot2:registFinishCallback(slot0.onWorkItemDone, slot0, slot2)
-					xpcall(slot2.start, __G__TRACKBACK__, slot2, slot0.context)
+				while arg_9_0._playStartCount ~= 0 do
+					local var_9_1 = arg_9_0._workList[arg_9_0._startIndex]
 
-					slot0._playStartCount = slot0._playStartCount - 1
-					slot0._startIndex = slot0._startIndex + 1
+					var_9_1:registFinishCallback(arg_9_0.onWorkItemDone, arg_9_0, var_9_1)
+					xpcall(var_9_1.start, __G__TRACKBACK__, var_9_1, arg_9_0.context)
+
+					arg_9_0._playStartCount = arg_9_0._playStartCount - 1
+					arg_9_0._startIndex = arg_9_0._startIndex + 1
 				end
 
-				if slot0._curIndex > #slot0._workList then
-					return slot0:onDone(true)
+				if arg_9_0._curIndex > #arg_9_0._workList then
+					return arg_9_0:onDone(true)
 				end
-			elseif slot0._playStartCount < 1 then
-				return slot0:onDone(true)
+			elseif arg_9_0._playStartCount < 1 then
+				return arg_9_0:onDone(true)
 			end
 		end
-	elseif slot0._playStartCount == 0 then
-		return slot0:onDone(true)
+	elseif arg_9_0._playStartCount == 0 then
+		return arg_9_0:onDone(true)
 	end
 end
 
-function slot0.onWorkItemDone(slot0, slot1)
-	if slot1 == slot0._workList[slot0._curIndex] then
-		return slot0:_playNext()
+function var_0_0.onWorkItemDone(arg_10_0, arg_10_1)
+	if arg_10_1 == arg_10_0._workList[arg_10_0._curIndex] then
+		return arg_10_0:_playNext()
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4 = #slot0._workList, 1, -1 do
-		slot0._workList[slot4]:disposeSelf()
+function var_0_0.onDestructor(arg_11_0)
+	for iter_11_0 = #arg_11_0._workList, 1, -1 do
+		arg_11_0._workList[iter_11_0]:disposeSelf()
 	end
 end
 
-function slot0.registWorkAtNext(slot0, slot1, ...)
-	return slot0:registWorkAtIndex(slot0._curIndex + 1, slot1, ...)
+function var_0_0.registWorkAtNext(arg_12_0, arg_12_1, ...)
+	return arg_12_0:registWorkAtIndex(arg_12_0._curIndex + 1, arg_12_1, ...)
 end
 
-function slot0.addWorkAtNext(slot0, slot1)
-	if not slot1 then
+function var_0_0.addWorkAtNext(arg_13_0, arg_13_1)
+	if not arg_13_1 then
 		return
 	end
 
-	slot0:addWorkAtIndex(slot0._curIndex + 1, slot1)
+	arg_13_0:addWorkAtIndex(arg_13_0._curIndex + 1, arg_13_1)
 end
 
-function slot0.listen2WorkAtNext(slot0, slot1)
-	slot0:listen2WorkAtIndex(slot0._curIndex + 1, slot1)
+function var_0_0.listen2WorkAtNext(arg_14_0, arg_14_1)
+	arg_14_0:listen2WorkAtIndex(arg_14_0._curIndex + 1, arg_14_1)
 end
 
-return slot0
+return var_0_0

@@ -1,19 +1,19 @@
-module("modules.logic.seasonver.act123.model.Season123EpisodeLoadingMO", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EpisodeLoadingMO", package.seeall)
 
-slot0 = pureTable("Season123EpisodeLoadingMO")
+local var_0_0 = pureTable("Season123EpisodeLoadingMO")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.id = slot1
-	slot0.cfg = slot3
-	slot0.emptyIndex = slot4
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0.id = arg_1_1
+	arg_1_0.cfg = arg_1_3
+	arg_1_0.emptyIndex = arg_1_4
 
-	if slot2 then
-		slot0.isFinished = slot2:isFinished()
-		slot0.round = slot2.round
+	if arg_1_2 then
+		arg_1_0.isFinished = arg_1_2:isFinished()
+		arg_1_0.round = arg_1_2.round
 	else
-		slot0.isFinished = false
-		slot0.round = 0
+		arg_1_0.isFinished = false
+		arg_1_0.round = 0
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,36 +1,39 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBuildingClick", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBuildingClick", package.seeall)
 
-slot0 = class("WaitGuideActionRoomBuildingClick", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionRoomBuildingClick", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 	GuideViewMgr.instance:enableHoleClick()
-	GuideViewMgr.instance:setHoleClickCallback(slot0._onClickTarget, slot0)
+	GuideViewMgr.instance:setHoleClickCallback(arg_2_0._onClickTarget, arg_2_0)
 end
 
-function slot0.clearWork(slot0)
-	GuideViewMgr.instance:setHoleClickCallback(nil, )
-	TaskDispatcher.cancelTask(slot0._onDelayDone, slot0)
+function var_0_0.clearWork(arg_3_0)
+	GuideViewMgr.instance:setHoleClickCallback(nil, nil)
+	TaskDispatcher.cancelTask(arg_3_0._onDelayDone, arg_3_0)
 end
 
-function slot0._onClickTarget(slot0, slot1)
-	if slot1 then
+function var_0_0._onClickTarget(arg_4_0, arg_4_1)
+	if arg_4_1 then
 		GuideViewMgr.instance:disableHoleClick()
-		GuideViewMgr.instance:setHoleClickCallback(nil, )
-		TaskDispatcher.runDelay(slot0._onDelayDone, slot0, 0.01)
+		GuideViewMgr.instance:setHoleClickCallback(nil, nil)
+		TaskDispatcher.runDelay(arg_4_0._onDelayDone, arg_4_0, 0.01)
 
-		if RoomMapBuildingModel.instance:getBuildingMoByBuildingId(tonumber(slot0.actionParam)) then
-			RoomMap3DClickController.instance:onBuildingEntityClick(slot3)
+		local var_4_0 = tonumber(arg_4_0.actionParam)
+		local var_4_1 = RoomMapBuildingModel.instance:getBuildingMoByBuildingId(var_4_0)
+
+		if var_4_1 then
+			RoomMap3DClickController.instance:onBuildingEntityClick(var_4_1)
 		end
 	end
 end
 
-function slot0._onDelayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onDelayDone(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-return slot0
+return var_0_0

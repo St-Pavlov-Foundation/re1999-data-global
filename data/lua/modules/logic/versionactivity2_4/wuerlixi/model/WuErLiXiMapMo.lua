@@ -1,102 +1,101 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapMo", package.seeall)
 
-slot0 = pureTable("WuErLiXiMapMo")
+local var_0_0 = pureTable("WuErLiXiMapMo")
 
-function slot0.ctor(slot0)
-	slot0.mapId = 0
-	slot0.mapOffset = {}
-	slot0.actUnitDict = {}
-	slot0.nodeDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.mapId = 0
+	arg_1_0.mapOffset = {}
+	arg_1_0.actUnitDict = {}
+	arg_1_0.nodeDict = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.mapId = tonumber(slot1[1])
-	slot0.mapOffset = slot1[2]
-	slot0.actUnitDict = slot0._toActUnits(slot1[3])
-	slot0.nodeDict = slot0._toNodes(slot1[5])
-	slot0.lineCount = slot0:_getLineCount()
-	slot0.rowCount = slot0:_getRowCount()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.mapId = tonumber(arg_2_1[1])
+	arg_2_0.mapOffset = arg_2_1[2]
+	arg_2_0.actUnitDict = arg_2_0._toActUnits(arg_2_1[3])
+	arg_2_0.nodeDict = arg_2_0._toNodes(arg_2_1[5])
+	arg_2_0.lineCount = arg_2_0:_getLineCount()
+	arg_2_0.rowCount = arg_2_0:_getRowCount()
 
-	slot0:_setNodeUnits(slot1[4])
+	arg_2_0:_setNodeUnits(arg_2_1[4])
 end
 
-function slot0._toActUnits(slot0)
-	slot1 = {}
+function var_0_0._toActUnits(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = string.split(arg_3_0, "|")
 
-	for slot6, slot7 in ipairs(string.split(slot0, "|")) do
-		slot8 = WuErLiXiMapActUnitMo.New()
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		local var_3_2 = WuErLiXiMapActUnitMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot1, slot8)
+		var_3_2:init(iter_3_1)
+		table.insert(var_3_0, var_3_2)
 	end
 
-	return slot1
+	return var_3_0
 end
 
-function slot0._toNodes(slot0)
-	slot1 = {}
+function var_0_0._toNodes(arg_4_0)
+	local var_4_0 = {}
 
-	for slot5, slot6 in ipairs(slot0) do
-		slot7 = WuErLiXiMapNodeMo.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0) do
+		local var_4_1 = WuErLiXiMapNodeMo.New()
 
-		slot7:init(slot6)
+		var_4_1:init(iter_4_1)
 
-		if not slot1[slot7.y] then
-			slot1[slot7.y] = {}
+		if not var_4_0[var_4_1.y] then
+			var_4_0[var_4_1.y] = {}
 		end
 
-		slot1[slot7.y][slot7.x] = slot7
+		var_4_0[var_4_1.y][var_4_1.x] = var_4_1
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0._setNodeUnits(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.nodeDict[slot6[3]][slot6[2]]:setUnit(slot6)
+function var_0_0._setNodeUnits(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		arg_5_0.nodeDict[iter_5_1[3]][iter_5_1[2]]:setUnit(iter_5_1)
 
-		if slot0.nodeDict[slot6[3]][slot6[2]]:getNodeUnit().unitType == WuErLiXiEnum.UnitType.SignalMulti then
-			if slot7.dir == WuErLiXiEnum.Dir.Up or slot7.dir == WuErLiXiEnum.Dir.Down then
-				slot0.nodeDict[slot6[3]][slot6[2] - 1]:setUnit(slot6)
-				slot0.nodeDict[slot6[3]][slot6[2] + 1]:setUnit(slot6)
+		local var_5_0 = arg_5_0.nodeDict[iter_5_1[3]][iter_5_1[2]]:getNodeUnit()
+
+		if var_5_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+			if var_5_0.dir == WuErLiXiEnum.Dir.Up or var_5_0.dir == WuErLiXiEnum.Dir.Down then
+				arg_5_0.nodeDict[iter_5_1[3]][iter_5_1[2] - 1]:setUnit(iter_5_1)
+				arg_5_0.nodeDict[iter_5_1[3]][iter_5_1[2] + 1]:setUnit(iter_5_1)
 			else
-				slot0.nodeDict[slot6[3] - 1][slot6[2]]:setUnit(slot6)
-				slot0.nodeDict[slot6[3] + 1][slot6[2]]:setUnit(slot6)
+				arg_5_0.nodeDict[iter_5_1[3] - 1][iter_5_1[2]]:setUnit(iter_5_1)
+				arg_5_0.nodeDict[iter_5_1[3] + 1][iter_5_1[2]]:setUnit(iter_5_1)
 			end
 		end
 	end
 end
 
-function slot0._getLineCount(slot0)
-	slot1 = 0
+function var_0_0._getLineCount(arg_6_0)
+	local var_6_0 = 0
 
-	for slot5, slot6 in pairs(slot0.nodeDict) do
-		if slot1 < slot5 then
-			slot1 = slot5 or slot1
-		end
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.nodeDict) do
+		var_6_0 = var_6_0 < iter_6_0 and iter_6_0 or var_6_0
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0._getRowCount(slot0)
-	slot1 = 0
+function var_0_0._getRowCount(arg_7_0)
+	local var_7_0 = 0
 
-	for slot5, slot6 in pairs(slot0.nodeDict[1]) do
-		if slot1 < slot5 then
-			slot1 = slot5 or slot1
-		end
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.nodeDict[1]) do
+		var_7_0 = var_7_0 < iter_7_0 and iter_7_0 or var_7_0
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.getNodeMo(slot0, slot1, slot2)
-	if not slot0.nodeDict[slot1] then
+function var_0_0.getNodeMo(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0.nodeDict[arg_8_1] then
 		return
 	end
 
-	return slot0.nodeDict[slot1][slot2]
+	return arg_8_0.nodeDict[arg_8_1][arg_8_2]
 end
 
-return slot0
+return var_0_0

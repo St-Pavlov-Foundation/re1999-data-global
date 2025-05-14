@@ -1,134 +1,152 @@
-module("modules.logic.room.entity.comp.base.RoomBaseFollowPathComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.base.RoomBaseFollowPathComp", package.seeall)
 
-slot0 = class("RoomBaseFollowPathComp", LuaCompBase)
+local var_0_0 = class("RoomBaseFollowPathComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._tbFollowerList = {}
-	slot0._tbPools = {}
-	slot0._isMoveing = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._tbFollowerList = {}
+	arg_1_0._tbPools = {}
+	arg_1_0._isMoveing = false
 end
 
-function slot0.addPathPos(slot0, slot1)
-	for slot6 = #slot0._tbFollowerList, 1, -1 do
-		if slot0._tbFollowerList[slot6].follower then
-			slot7.follower:addPathPos(slot1)
+function var_0_0.addPathPos(arg_2_0, arg_2_1)
+	for iter_2_0 = #arg_2_0._tbFollowerList, 1, -1 do
+		local var_2_0 = arg_2_0._tbFollowerList[iter_2_0]
+
+		if var_2_0.follower then
+			var_2_0.follower:addPathPos(arg_2_1)
 		else
-			slot0:_push(slot7)
-			table.remove(slot0._tbFollowerList, slot6)
+			arg_2_0:_push(var_2_0)
+			table.remove(arg_2_0._tbFollowerList, iter_2_0)
 		end
 	end
 end
 
-function slot0.addFollower(slot0, slot1)
-	if slot0.__willDestroy or not slot1 or slot1:isWillDestory() then
+function var_0_0.addFollower(arg_3_0, arg_3_1)
+	if arg_3_0.__willDestroy or not arg_3_1 or arg_3_1:isWillDestory() then
 		return
 	end
 
-	if not slot0:_findIndexOf(slot1) then
-		table.insert(slot0._tbFollowerList, slot0:_pop(slot1))
-		slot1:setFollowPath(slot0)
+	if not arg_3_0:_findIndexOf(arg_3_1) then
+		local var_3_0 = arg_3_0:_pop(arg_3_1)
+
+		table.insert(arg_3_0._tbFollowerList, var_3_0)
+		arg_3_1:setFollowPath(arg_3_0)
 	end
 end
 
-function slot0.removeFollower(slot0, slot1)
-	if slot1 and #slot0._tbFollowerList > 0 and tabletool.indexOf(slot0._tbFollowerList, slot1) then
-		slot0._tbFollowerList[slot2].follower = nil
+function var_0_0.removeFollower(arg_4_0, arg_4_1)
+	if arg_4_1 and #arg_4_0._tbFollowerList > 0 then
+		local var_4_0 = tabletool.indexOf(arg_4_0._tbFollowerList, arg_4_1)
 
-		slot1:clearFollowPath()
+		if var_4_0 then
+			arg_4_0._tbFollowerList[var_4_0].follower = nil
+
+			arg_4_1:clearFollowPath()
+		end
 	end
 end
 
-function slot0._pop(slot0, slot1)
-	slot2 = nil
+function var_0_0._pop(arg_5_0, arg_5_1)
+	local var_5_0
 
-	if #slot0._tbPools > 0 then
-		slot2 = slot0._tbPools[#slot0._tbPools]
+	if #arg_5_0._tbPools > 0 then
+		var_5_0 = arg_5_0._tbPools[#arg_5_0._tbPools]
 
-		table.remove(slot0._tbPools, #slot0._tbPools)
+		table.remove(arg_5_0._tbPools, #arg_5_0._tbPools)
 	else
-		slot2 = {}
+		var_5_0 = {}
 	end
 
-	slot2.follower = slot1
+	var_5_0.follower = arg_5_1
 
-	return slot2
+	return var_5_0
 end
 
-function slot0._push(slot0, slot1)
-	if slot1 then
-		slot1.follower = nil
+function var_0_0._push(arg_6_0, arg_6_1)
+	if arg_6_1 then
+		arg_6_1.follower = nil
 
-		table.insert(slot0._tbPools, slot1)
+		table.insert(arg_6_0._tbPools, arg_6_1)
 	end
 end
 
-function slot0._findIndexOf(slot0, slot1)
-	for slot6 = 1, #slot0._tbFollowerList do
-		if slot0._tbFollowerList[slot6].follower == slot1 then
-			return slot6
+function var_0_0._findIndexOf(arg_7_0, arg_7_1)
+	local var_7_0 = #arg_7_0._tbFollowerList
+
+	for iter_7_0 = 1, var_7_0 do
+		if arg_7_0._tbFollowerList[iter_7_0].follower == arg_7_1 then
+			return iter_7_0
 		end
 	end
 end
 
-function slot0.stopMove(slot0)
-	for slot5 = #slot0._tbFollowerList, 1, -1 do
-		if slot0._tbFollowerList[slot5].follower then
-			slot6.follower:stopMove()
+function var_0_0.stopMove(arg_8_0)
+	for iter_8_0 = #arg_8_0._tbFollowerList, 1, -1 do
+		local var_8_0 = arg_8_0._tbFollowerList[iter_8_0]
+
+		if var_8_0.follower then
+			var_8_0.follower:stopMove()
 		else
-			slot0:_push(slot6)
-			table.remove(slot0._tbFollowerList, slot5)
+			arg_8_0:_push(var_8_0)
+			table.remove(arg_8_0._tbFollowerList, iter_8_0)
 		end
 	end
 
-	slot0._isMoveing = false
+	arg_8_0._isMoveing = false
 
-	slot0:onStopMove()
+	arg_8_0:onStopMove()
 end
 
-function slot0.moveByPathData(slot0)
-	if not slot0._isMoveing then
-		slot0._isMoveing = true
+function var_0_0.moveByPathData(arg_9_0)
+	if not arg_9_0._isMoveing then
+		arg_9_0._isMoveing = true
 
-		slot0:onStartMove()
+		arg_9_0:onStartMove()
 	end
 
-	for slot5 = #slot0._tbFollowerList, 1, -1 do
-		if slot0._tbFollowerList[slot5].follower then
-			slot6.follower:moveByPathData()
+	for iter_9_0 = #arg_9_0._tbFollowerList, 1, -1 do
+		local var_9_0 = arg_9_0._tbFollowerList[iter_9_0]
+
+		if var_9_0.follower then
+			var_9_0.follower:moveByPathData()
 		else
-			slot0:_push(slot6)
-			table.remove(slot0._tbFollowerList, slot5)
+			arg_9_0:_push(var_9_0)
+			table.remove(arg_9_0._tbFollowerList, iter_9_0)
 		end
 	end
 end
 
-function slot0.getCount(slot0)
-	return #slot0._tbFollowerList
+function var_0_0.getCount(arg_10_0)
+	return #arg_10_0._tbFollowerList
 end
 
-function slot0.onStopMove(slot0)
+function var_0_0.onStopMove(arg_11_0)
+	return
 end
 
-function slot0.onStartMove(slot0)
+function var_0_0.onStartMove(arg_12_0)
+	return
 end
 
-function slot0.isWillDestory(slot0)
-	return slot0.__willDestroy
+function var_0_0.isWillDestory(arg_13_0)
+	return arg_13_0.__willDestroy
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_14_0)
+	arg_14_0.__willDestroy = true
 
-	if slot0._tbFollowerList and #slot0._tbFollowerList > 0 then
-		slot0._tbFollowerList = {}
+	if arg_14_0._tbFollowerList and #arg_14_0._tbFollowerList > 0 then
+		local var_14_0 = arg_14_0._tbFollowerList
 
-		for slot5, slot6 in ipairs(slot0._tbFollowerList) do
-			if slot6.follower then
-				slot6.follower:clearFollowPath()
+		arg_14_0._tbFollowerList = {}
+
+		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+			if iter_14_1.follower then
+				iter_14_1.follower:clearFollowPath()
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

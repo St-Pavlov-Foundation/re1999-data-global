@@ -1,148 +1,164 @@
-module("modules.logic.activity.view.chessmap.ActivityChessGameResultView", package.seeall)
+﻿module("modules.logic.activity.view.chessmap.ActivityChessGameResultView", package.seeall)
 
-slot0 = class("ActivityChessGameResultView", BaseView)
+local var_0_0 = class("ActivityChessGameResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg2")
-	slot0._btnquitgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_quitgame")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_restart")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "#go_fail")
-	slot0._gotargets = gohelper.findChild(slot0.viewGO, "#go_targets")
-	slot0._gotargetitem = gohelper.findChild(slot0.viewGO, "#go_targets/#go_targetitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_success/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
+	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_quitgame")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_restart")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
+	arg_1_0._gotargets = gohelper.findChild(arg_1_0.viewGO, "#go_targets")
+	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "#go_targets/#go_targetitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_success/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnquitgame:AddClickListener(slot0._btnquitgameOnClick, slot0)
-	slot0._btnrestart:AddClickListener(slot0._btnrestartOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnquitgame:RemoveClickListener()
-	slot0._btnrestart:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnquitgame:RemoveClickListener()
+	arg_3_0._btnrestart:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
 
-	slot0._openTime = Time.time
-	slot0._taskItems = {}
+	arg_4_0._openTime = Time.time
+	arg_4_0._taskItems = {}
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0._simagebg1:UnLoadImage()
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam.result then
-		slot0:refreshWin()
+function var_0_0.onOpen(arg_6_0)
+	if arg_6_0.viewParam.result then
+		arg_6_0:refreshWin()
 	else
-		slot0:refreshLose()
+		arg_6_0:refreshLose()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshWin(slot0)
-	gohelper.setActive(slot0._gosuccess, true)
-	gohelper.setActive(slot0._gofail, false)
-	slot0:refreshTaskConditions()
-	gohelper.setActive(slot0._btnquitgame.gameObject, false)
-	gohelper.setActive(slot0._btnrestart.gameObject, false)
+function var_0_0.refreshWin(arg_8_0)
+	gohelper.setActive(arg_8_0._gosuccess, true)
+	gohelper.setActive(arg_8_0._gofail, false)
+	arg_8_0:refreshTaskConditions()
+	gohelper.setActive(arg_8_0._btnquitgame.gameObject, false)
+	gohelper.setActive(arg_8_0._btnrestart.gameObject, false)
 end
 
-function slot0.refreshLose(slot0)
+function var_0_0.refreshLose(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.ChallengeFailed)
-	gohelper.setActive(slot0._gosuccess, false)
-	gohelper.setActive(slot0._gofail, true)
-	slot0:refreshTaskConditions()
+	gohelper.setActive(arg_9_0._gosuccess, false)
+	gohelper.setActive(arg_9_0._gofail, true)
+	arg_9_0:refreshTaskConditions()
 end
 
-function slot0.refreshTaskConditions(slot0)
-	slot2 = Activity109ChessModel.instance:getEpisodeId()
+function var_0_0.refreshTaskConditions(arg_10_0)
+	local var_10_0 = Activity109ChessModel.instance:getActId()
+	local var_10_1 = Activity109ChessModel.instance:getEpisodeId()
 
-	if not Activity109ChessModel.instance:getActId() or not slot2 then
+	if not var_10_0 or not var_10_1 then
 		return
 	end
 
-	slot3 = Activity109Config.instance:getEpisodeCo(slot1, slot2)
+	local var_10_2 = Activity109Config.instance:getEpisodeCo(var_10_0, var_10_1)
+	local var_10_3 = var_10_2.extStarCondition
+	local var_10_4 = string.split(var_10_3, "|")
+	local var_10_5 = string.split(var_10_2.conditionStr, "|")
+	local var_10_6 = #var_10_4 + 1
 
-	for slot11 = 1, #string.split(slot3.extStarCondition, "|") + 1 do
-		if slot11 == 1 then
-			slot0:refreshTaskItem(slot0:getOrCreateTaskItem(slot11), nil, string.split(slot3.conditionStr, "|")[slot11])
+	for iter_10_0 = 1, var_10_6 do
+		local var_10_7 = arg_10_0:getOrCreateTaskItem(iter_10_0)
+
+		if iter_10_0 == 1 then
+			arg_10_0:refreshTaskItem(var_10_7, nil, var_10_5[iter_10_0])
 		else
-			slot0:refreshTaskItem(slot12, slot5[slot11 - 1], slot6[slot11])
+			arg_10_0:refreshTaskItem(var_10_7, var_10_4[iter_10_0 - 1], var_10_5[iter_10_0])
 		end
 	end
 end
 
-function slot0.refreshTaskItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.go, true)
+function var_0_0.refreshTaskItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	gohelper.setActive(arg_11_1.go, true)
 
-	slot4 = Activity109ChessModel.instance:getActId()
-	slot5 = Activity109ChessModel.instance:getEpisodeId()
-	slot6 = nil
-	slot7 = false
+	local var_11_0 = Activity109ChessModel.instance:getActId()
+	local var_11_1 = Activity109ChessModel.instance:getEpisodeId()
+	local var_11_2
+	local var_11_3 = false
 
-	if not string.nilorempty(slot2) then
-		slot8 = string.splitToNumber(slot2, "#")
-		slot6 = slot3 or ActivityChessMapUtils.getClearConditionDesc(slot8, slot4)
-		slot7 = ActivityChessMapUtils.isClearConditionFinish(slot8, slot4)
+	if not string.nilorempty(arg_11_2) then
+		local var_11_4 = string.splitToNumber(arg_11_2, "#")
+
+		var_11_2 = arg_11_3 or ActivityChessMapUtils.getClearConditionDesc(var_11_4, var_11_0)
+		var_11_3 = ActivityChessMapUtils.isClearConditionFinish(var_11_4, var_11_0)
 	else
-		slot6 = slot3 or luaLang("chessgame_clear_normal")
-		slot7 = ActivityChessGameModel.instance:getResult() == true
+		var_11_2 = arg_11_3 or luaLang("chessgame_clear_normal")
+		var_11_3 = ActivityChessGameModel.instance:getResult() == true
 	end
 
-	slot1.txtTaskDesc.text = slot6
+	arg_11_1.txtTaskDesc.text = var_11_2
 
-	gohelper.setActive(slot1.goFinish, slot7)
-	gohelper.setActive(slot1.goUnFinish, not slot7)
+	gohelper.setActive(arg_11_1.goFinish, var_11_3)
+	gohelper.setActive(arg_11_1.goUnFinish, not var_11_3)
 end
 
-function slot0.getOrCreateTaskItem(slot0, slot1)
-	if not slot0._taskItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._gotargetitem, "taskitem_" .. tostring(slot1))
-		slot2.txtTaskDesc = gohelper.findChildText(slot2.go, "txt_taskdesc")
-		slot2.goFinish = gohelper.findChild(slot2.go, "result/go_finish")
-		slot2.goUnFinish = gohelper.findChild(slot2.go, "result/go_unfinish")
-		slot0._taskItems[slot1] = slot2
+function var_0_0.getOrCreateTaskItem(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._taskItems[arg_12_1]
+
+	if not var_12_0 then
+		var_12_0 = arg_12_0:getUserDataTb_()
+		var_12_0.go = gohelper.cloneInPlace(arg_12_0._gotargetitem, "taskitem_" .. tostring(arg_12_1))
+		var_12_0.txtTaskDesc = gohelper.findChildText(var_12_0.go, "txt_taskdesc")
+		var_12_0.goFinish = gohelper.findChild(var_12_0.go, "result/go_finish")
+		var_12_0.goUnFinish = gohelper.findChild(var_12_0.go, "result/go_unfinish")
+		arg_12_0._taskItems[arg_12_1] = var_12_0
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.handleResetCompleted(slot0)
+function var_0_0.handleResetCompleted(arg_13_0)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.ResetGameByResultView)
 end
 
-function slot0._btnquitgameOnClick(slot0)
+function var_0_0._btnquitgameOnClick(arg_14_0)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.GameResultQuit)
-	Activity109Rpc.instance:sendGetAct109InfoRequest(Activity109ChessModel.instance:getActId())
-	slot0:closeThis()
+
+	local var_14_0 = Activity109ChessModel.instance:getActId()
+
+	Activity109Rpc.instance:sendGetAct109InfoRequest(var_14_0)
+	arg_14_0:closeThis()
 end
 
-function slot0._btnrestartOnClick(slot0)
-	if Activity109ChessModel.instance:getEpisodeId() then
-		Activity109ChessController.instance:startNewEpisode(slot1, slot0.handleResetCompleted, slot0)
+function var_0_0._btnrestartOnClick(arg_15_0)
+	local var_15_0 = Activity109ChessModel.instance:getEpisodeId()
+
+	if var_15_0 then
+		Activity109ChessController.instance:startNewEpisode(var_15_0, arg_15_0.handleResetCompleted, arg_15_0)
 	end
 
-	slot0:closeThis()
+	arg_15_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	if Time.time - (slot0._openTime or 0) >= 1 then
-		slot0:_btnquitgameOnClick()
+function var_0_0._btncloseOnClick(arg_16_0)
+	if Time.time - (arg_16_0._openTime or 0) >= 1 then
+		arg_16_0:_btnquitgameOnClick()
 	end
 end
 
-return slot0
+return var_0_0

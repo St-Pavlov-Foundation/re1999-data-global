@@ -1,77 +1,80 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchRightHeroItem", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchRightHeroItem", package.seeall)
 
-slot0 = class("RoleStoryDispatchRightHeroItem", ListScrollCellExtend)
+local var_0_0 = class("RoleStoryDispatchRightHeroItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0.goAdd = gohelper.findChild(slot0.viewGO, "add")
-	slot0.goHero = gohelper.findChild(slot0.viewGO, "#go_hero")
-	slot0.simageHeroIcon = gohelper.findChildSingleImage(slot0.viewGO, "#go_hero/#simage_heroicon")
-	slot0.imageCareer = gohelper.findChildImage(slot0.viewGO, "#go_hero/#image_career")
-	slot0.btnClick = gohelper.findButtonWithAudio(slot0.viewGO)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goAdd = gohelper.findChild(arg_1_0.viewGO, "add")
+	arg_1_0.goHero = gohelper.findChild(arg_1_0.viewGO, "#go_hero")
+	arg_1_0.simageHeroIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_hero/#simage_heroicon")
+	arg_1_0.imageCareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_hero/#image_career")
+	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.viewGO)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClick, slot0.onClickBtnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClickBtnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.refreshItem(slot0)
-	if slot0.maxCount < slot0.index then
-		gohelper.setActive(slot0.viewGO, false)
+function var_0_0.refreshItem(arg_4_0)
+	if arg_4_0.index > arg_4_0.maxCount then
+		gohelper.setActive(arg_4_0.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
-	gohelper.setActive(slot0.goAdd, not slot0.data)
+	gohelper.setActive(arg_4_0.viewGO, true)
+	gohelper.setActive(arg_4_0.goAdd, not arg_4_0.data)
 
-	if not slot0.data then
-		slot0:clear()
-		gohelper.setActive(slot0.goHero, false)
+	if not arg_4_0.data then
+		arg_4_0:clear()
+		gohelper.setActive(arg_4_0.goHero, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goHero, true)
+	gohelper.setActive(arg_4_0.goHero, true)
 
-	slot1 = slot0.data.config
+	local var_4_0 = arg_4_0.data.config
 
-	slot0.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(slot1.id .. "01"))
-	UISpriteSetMgr.instance:setCommonSprite(slot0.imageCareer, "lssx_" .. slot1.career)
+	arg_4_0.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(var_4_0.id .. "01"))
+	UISpriteSetMgr.instance:setCommonSprite(arg_4_0.imageCareer, "lssx_" .. var_4_0.career)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	slot0.data = slot1
-	slot0.index = slot2
-	slot0.maxCount = slot3
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0.data = arg_5_1
+	arg_5_0.index = arg_5_2
+	arg_5_0.maxCount = arg_5_3
 
-	slot0:refreshItem()
+	arg_5_0:refreshItem()
 end
 
-function slot0.onClickBtnClick(slot0)
-	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickRightHero, slot0.data)
+function var_0_0.onClickBtnClick(arg_6_0)
+	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickRightHero, arg_6_0.data)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:clear()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0:clear()
 
-	if slot0.simageHeroIcon then
-		slot0.simageHeroIcon:UnLoadImage()
+	if arg_9_0.simageHeroIcon then
+		arg_9_0.simageHeroIcon:UnLoadImage()
 
-		slot0.simageHeroIcon = nil
+		arg_9_0.simageHeroIcon = nil
 	end
 end
 
-return slot0
+return var_0_0

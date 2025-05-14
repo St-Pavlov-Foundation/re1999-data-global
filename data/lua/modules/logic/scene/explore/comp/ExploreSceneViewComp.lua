@@ -1,26 +1,28 @@
-module("modules.logic.scene.explore.comp.ExploreSceneViewComp", package.seeall)
+﻿module("modules.logic.scene.explore.comp.ExploreSceneViewComp", package.seeall)
 
-slot0 = class("ExploreSceneViewComp", BaseSceneComp)
+local var_0_0 = class("ExploreSceneViewComp", BaseSceneComp)
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
+function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	ViewMgr.instance:openView(ViewName.ExploreView)
 
-	slot0._uiRoot = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.PopUpTop), "ExploreUnitUI")
+	local var_1_0 = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+
+	arg_1_0._uiRoot = gohelper.create2d(var_1_0, "ExploreUnitUI")
 end
 
-function slot0.getRoot(slot0)
-	return slot0._uiRoot
+function var_0_0.getRoot(arg_2_0)
+	return arg_2_0._uiRoot
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0._uiRoot, slot1)
+function var_0_0.setActive(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0._uiRoot, arg_3_1)
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
+function var_0_0.onSceneClose(arg_4_0, arg_4_1, arg_4_2)
 	ViewMgr.instance:closeView(ViewName.ExploreView)
-	gohelper.destroy(slot0._uiRoot)
+	gohelper.destroy(arg_4_0._uiRoot)
 
-	slot0._uiRoot = nil
+	arg_4_0._uiRoot = nil
 end
 
-return slot0
+return var_0_0

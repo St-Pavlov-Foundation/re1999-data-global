@@ -1,285 +1,337 @@
-module("modules.logic.room.utils.RoomCameraHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomCameraHelper", package.seeall)
 
-return {
-	getConvexHull = function (slot0)
-		return uv0.getSubConvexHull(slot0)
-	end,
-	getSubConvexHull = function (slot0)
-		if not slot0 then
-			return {}
+local var_0_0 = {}
+
+function var_0_0.getConvexHull(arg_1_0)
+	return var_0_0.getSubConvexHull(arg_1_0)
+end
+
+function var_0_0.getSubConvexHull(arg_2_0)
+	if not arg_2_0 then
+		return {}
+	end
+
+	arg_2_0 = var_0_0.derepeat(arg_2_0)
+
+	if #arg_2_0 <= 2 then
+		return arg_2_0
+	end
+
+	local var_2_0 = {}
+	local var_2_1 = 0
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
+		if iter_2_0 == 1 or iter_2_1.y < arg_2_0[var_2_1].y or iter_2_1.y == arg_2_0[var_2_1].y and iter_2_1.x < arg_2_0[var_2_1].x then
+			var_2_1 = iter_2_0
 		end
+	end
 
-		if #uv0.derepeat(slot0) <= 2 then
-			return slot0
-		end
+	arg_2_0[1], arg_2_0[var_2_1] = arg_2_0[var_2_1], arg_2_0[1]
 
-		slot2 = {}
-		slot3 = 0
+	local var_2_2 = arg_2_0[1]
 
-		for slot7, slot8 in ipairs(slot0) do
-			if slot7 == 1 or slot8.y < slot0[slot3].y or slot8.y == slot0[slot3].y and slot8.x < slot0[slot3].x then
-				slot3 = slot7
-			end
-		end
-
-		slot0[slot3] = slot0[1]
-		slot0[1] = slot0[slot3]
-		slot4 = slot0[1]
-
-		table.sort(slot0, function (slot0, slot1)
-			if slot0 == uv0 and slot1 ~= uv0 then
-				return true
-			elseif slot0 ~= uv0 and slot1 == uv0 then
-				return false
-			end
-
-			if uv1.getCross(slot0, slot1, uv0) ~= 0 then
-				return slot2 > 0
-			end
-
-			if slot0.y ~= slot1.y then
-				return slot1.y < slot0.y
-			end
-
-			return math.abs(slot1.x - uv0.x) < math.abs(slot0.x - uv0.x)
-		end)
-
-		slot1 = #uv0.collineation(slot0)
-		slot5 = 1
-		slot6 = 1
-
-		while slot6 <= slot1 + 1 do
-			slot8 = slot0[(slot6 - 1) % slot1 + 1]
-
-			while slot5 > 2 do
-				if uv0.getCross(slot2[slot5 - 1], slot8, slot2[slot5 - 2]) > 0 then
-					break
-				end
-
-				slot5 = slot5 - 1
-			end
-
-			if slot6 <= slot1 then
-				slot2[slot5] = slot8
-			else
-				slot2[slot5] = Vector2(slot8.x, slot8.y)
-			end
-
-			slot5 = slot5 + 1
-			slot6 = slot6 + 1
-		end
-
-		for slot10 = #slot2, 1, -1 do
-			if slot5 <= slot10 then
-				table.remove(slot2, slot10)
-			end
-		end
-
-		return slot2
-	end,
-	getCross = function (slot0, slot1, slot2)
-		return (slot0.x - slot2.x) * (slot1.y - slot2.y) - (slot0.y - slot2.y) * (slot1.x - slot2.x)
-	end,
-	collineation = function (slot0)
-		slot1 = {}
-		slot2 = slot0[1]
-		slot3 = {
-			[slot8] = true
-		}
-
-		for slot8 = 3, #slot0 do
-			if math.abs(uv0.getCross(slot0[2], slot0[slot8], slot2)) < 1e-05 then
-				if slot10.y < slot9.y or slot9.y == slot10.y and math.abs(slot10.x - slot2.x) < math.abs(slot9.x - slot2.x) then
-					-- Nothing
-				else
-					slot3[slot4] = true
-					slot4 = slot8
-				end
-			else
-				slot4 = slot8
-			end
-		end
-
-		for slot8, slot9 in ipairs(slot0) do
-			if not slot3[slot8] then
-				table.insert(slot1, slot9)
-			end
-		end
-
-		return slot1
-	end,
-	derepeat = function (slot0)
-		slot1 = {}
-		slot2 = {}
-
-		for slot6, slot7 in ipairs(slot0) do
-			if not (slot2[slot7.x] and slot2[slot7.x][slot7.y]) then
-				table.insert(slot1, slot7)
-
-				slot2[slot7.x] = slot2[slot7.x] or {}
-				slot2[slot7.x][slot7.y] = true
-			end
-		end
-
-		return slot1
-	end,
-	isPointInConvexHull = function (slot0, slot1)
-		if not slot0 or not slot1 or #slot1 <= 2 then
+	table.sort(arg_2_0, function(arg_3_0, arg_3_1)
+		if arg_3_0 == var_2_2 and arg_3_1 ~= var_2_2 then
 			return true
+		elseif arg_3_0 ~= var_2_2 and arg_3_1 == var_2_2 then
+			return false
 		end
 
-		slot2 = true
-		slot3 = 0
-		slot4, slot5 = nil
-		slot6 = 0
+		local var_3_0 = var_0_0.getCross(arg_3_0, arg_3_1, var_2_2)
 
-		for slot10 = 1, #slot1 do
-			slot12 = slot1[slot10 + 1]
+		if var_3_0 ~= 0 then
+			return var_3_0 > 0
+		end
 
-			if slot1[slot10] and slot12 and uv0.getCross(slot12, slot0, slot11) < 0 then
-				slot2 = false
+		if arg_3_0.y ~= arg_3_1.y then
+			return arg_3_0.y > arg_3_1.y
+		end
 
-				if slot3 < uv0.getDistance(slot0, slot11, slot12) or slot3 == 0 then
-					slot3 = slot13
-					slot4 = slot11
-					slot5 = slot12
-				end
+		return math.abs(arg_3_0.x - var_2_2.x) > math.abs(arg_3_1.x - var_2_2.x)
+	end)
 
-				slot6 = slot6 + 1
+	arg_2_0 = var_0_0.collineation(arg_2_0)
+
+	local var_2_3 = #arg_2_0
+	local var_2_4 = 1
+	local var_2_5 = 1
+
+	while var_2_5 <= var_2_3 + 1 do
+		local var_2_6 = arg_2_0[(var_2_5 - 1) % var_2_3 + 1]
+
+		while var_2_4 > 2 do
+			if var_0_0.getCross(var_2_0[var_2_4 - 1], var_2_6, var_2_0[var_2_4 - 2]) > 0 then
+				break
 			end
+
+			var_2_4 = var_2_4 - 1
 		end
 
-		return slot2, slot3, slot4, slot5, slot6
-	end,
-	getDistance = function (slot0, slot1, slot2)
-		if slot1 == slot2 then
-			return Vector2.Distance(slot1, slot0)
+		if var_2_5 <= var_2_3 then
+			var_2_0[var_2_4] = var_2_6
+		else
+			var_2_0[var_2_4] = Vector2(var_2_6.x, var_2_6.y)
 		end
 
-		if slot1.y == slot2.y then
-			return math.abs(slot0.y - slot1.y)
+		var_2_4 = var_2_4 + 1
+		var_2_5 = var_2_5 + 1
+	end
+
+	for iter_2_2 = #var_2_0, 1, -1 do
+		if var_2_4 <= iter_2_2 then
+			table.remove(var_2_0, iter_2_2)
 		end
+	end
 
-		if slot1.x == slot2.x then
-			return math.abs(slot0.x - slot1.x)
-		end
+	return var_2_0
+end
 
-		slot3 = (slot1.y - slot2.y) / (slot1.x - slot2.x)
+function var_0_0.getCross(arg_4_0, arg_4_1, arg_4_2)
+	return (arg_4_0.x - arg_4_2.x) * (arg_4_1.y - arg_4_2.y) - (arg_4_0.y - arg_4_2.y) * (arg_4_1.x - arg_4_2.x)
+end
 
-		return math.abs((slot3 * slot0.x - slot0.y + (slot1.x * slot2.y - slot2.x * slot1.y) / (slot1.x - slot2.x)) / math.sqrt(slot3 * slot3 + 1))
-	end,
-	getDirection = function (slot0, slot1, slot2)
-		slot3 = Vector2.Normalize(slot2 - slot1)
+function var_0_0.collineation(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = arg_5_0[1]
+	local var_5_2 = {}
+	local var_5_3 = 2
 
-		return Vector2(-slot3.y, slot3.x)
-	end,
-	getOffsetPosition = function (slot0, slot1, slot2)
-		if RoomController.instance:isDebugMode() then
-			return slot1
-		end
+	for iter_5_0 = 3, #arg_5_0 do
+		local var_5_4 = arg_5_0[var_5_3]
+		local var_5_5 = arg_5_0[iter_5_0]
 
-		if not slot2 or #slot2 <= 2 then
-			return slot1
-		end
-
-		slot3, slot4, slot5, slot6, slot7 = uv0.isPointInConvexHull(slot1, slot2)
-
-		if slot3 then
-			return slot1
-		elseif slot7 >= 2 then
-			if uv0.isPointInConvexHull(slot1 + uv0.getDirection(slot1, slot5, slot6) * (slot4 + 0.0001), slot2) then
-				return slot9
+		if math.abs(var_0_0.getCross(var_5_4, var_5_5, var_5_1)) < 1e-05 then
+			if var_5_4.y > var_5_5.y or var_5_4.y == var_5_5.y and math.abs(var_5_4.x - var_5_1.x) > math.abs(var_5_5.x - var_5_1.x) then
+				var_5_2[iter_5_0] = true
 			else
-				return slot0
+				var_5_2[var_5_3] = true
+				var_5_3 = iter_5_0
 			end
 		else
-			return slot1 + uv0.getDirection(slot1, slot5, slot6) * slot4
+			var_5_3 = iter_5_0
 		end
-	end,
-	expandConvexHull = function (slot0, slot1)
-		slot2 = {}
+	end
 
-		if #slot0 <= 0 then
-			return slot0
+	for iter_5_1, iter_5_2 in ipairs(arg_5_0) do
+		if not var_5_2[iter_5_1] then
+			table.insert(var_5_0, iter_5_2)
 		end
+	end
 
-		for slot7, slot8 in ipairs(slot0) do
-			if slot7 < slot3 then
-				slot10 = slot0[slot7 + 1]
+	return var_5_0
+end
 
-				if (slot0[slot7 - 1] or slot0[slot3 - 1]) and slot10 then
-					table.insert(slot2, uv0.expandPoint(slot8, slot9, slot10, slot1))
-				end
+function var_0_0.derepeat(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = {}
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0) do
+		if not (var_6_1[iter_6_1.x] and var_6_1[iter_6_1.x][iter_6_1.y]) then
+			table.insert(var_6_0, iter_6_1)
+
+			var_6_1[iter_6_1.x] = var_6_1[iter_6_1.x] or {}
+			var_6_1[iter_6_1.x][iter_6_1.y] = true
+		end
+	end
+
+	return var_6_0
+end
+
+function var_0_0.isPointInConvexHull(arg_7_0, arg_7_1)
+	if not arg_7_0 or not arg_7_1 or #arg_7_1 <= 2 then
+		return true
+	end
+
+	local var_7_0 = true
+	local var_7_1 = 0
+	local var_7_2
+	local var_7_3
+	local var_7_4 = 0
+
+	for iter_7_0 = 1, #arg_7_1 do
+		local var_7_5 = arg_7_1[iter_7_0]
+		local var_7_6 = arg_7_1[iter_7_0 + 1]
+
+		if var_7_5 and var_7_6 and var_0_0.getCross(var_7_6, arg_7_0, var_7_5) < 0 then
+			var_7_0 = false
+
+			local var_7_7 = var_0_0.getDistance(arg_7_0, var_7_5, var_7_6)
+
+			if var_7_1 < var_7_7 or var_7_1 == 0 then
+				var_7_1 = var_7_7
+				var_7_2 = var_7_5
+				var_7_3 = var_7_6
+			end
+
+			var_7_4 = var_7_4 + 1
+		end
+	end
+
+	return var_7_0, var_7_1, var_7_2, var_7_3, var_7_4
+end
+
+function var_0_0.getDistance(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 == arg_8_2 then
+		return Vector2.Distance(arg_8_1, arg_8_0)
+	end
+
+	if arg_8_1.y == arg_8_2.y then
+		local var_8_0 = arg_8_1.y
+
+		return math.abs(arg_8_0.y - var_8_0)
+	end
+
+	if arg_8_1.x == arg_8_2.x then
+		local var_8_1 = arg_8_1.x
+
+		return math.abs(arg_8_0.x - var_8_1)
+	end
+
+	local var_8_2 = (arg_8_1.y - arg_8_2.y) / (arg_8_1.x - arg_8_2.x)
+	local var_8_3 = (arg_8_1.x * arg_8_2.y - arg_8_2.x * arg_8_1.y) / (arg_8_1.x - arg_8_2.x)
+
+	return math.abs((var_8_2 * arg_8_0.x - arg_8_0.y + var_8_3) / math.sqrt(var_8_2 * var_8_2 + 1))
+end
+
+function var_0_0.getDirection(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = Vector2.Normalize(arg_9_2 - arg_9_1)
+
+	return Vector2(-var_9_0.y, var_9_0.x)
+end
+
+function var_0_0.getOffsetPosition(arg_10_0, arg_10_1, arg_10_2)
+	if RoomController.instance:isDebugMode() then
+		return arg_10_1
+	end
+
+	if not arg_10_2 or #arg_10_2 <= 2 then
+		return arg_10_1
+	end
+
+	local var_10_0, var_10_1, var_10_2, var_10_3, var_10_4 = var_0_0.isPointInConvexHull(arg_10_1, arg_10_2)
+
+	if var_10_0 then
+		return arg_10_1
+	elseif var_10_4 >= 2 then
+		local var_10_5 = arg_10_1 + var_0_0.getDirection(arg_10_1, var_10_2, var_10_3) * (var_10_1 + 0.0001)
+
+		if var_0_0.isPointInConvexHull(var_10_5, arg_10_2) then
+			return var_10_5
+		else
+			return arg_10_0
+		end
+	else
+		return arg_10_1 + var_0_0.getDirection(arg_10_1, var_10_2, var_10_3) * var_10_1
+	end
+end
+
+function var_0_0.expandConvexHull(arg_11_0, arg_11_1)
+	local var_11_0 = {}
+	local var_11_1 = #arg_11_0
+
+	if var_11_1 <= 0 then
+		return arg_11_0
+	end
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0) do
+		if iter_11_0 < var_11_1 then
+			local var_11_2 = arg_11_0[iter_11_0 - 1] or arg_11_0[var_11_1 - 1]
+			local var_11_3 = arg_11_0[iter_11_0 + 1]
+
+			if var_11_2 and var_11_3 then
+				local var_11_4 = var_0_0.expandPoint(iter_11_1, var_11_2, var_11_3, arg_11_1)
+
+				table.insert(var_11_0, var_11_4)
 			end
 		end
+	end
 
-		slot4 = slot2[1]
+	local var_11_5 = var_11_0[1]
 
-		table.insert(slot2, Vector2(slot4.x, slot4.y))
+	table.insert(var_11_0, Vector2(var_11_5.x, var_11_5.y))
 
-		return uv0.getConvexHull(slot2)
-	end,
-	expandPoint = function (slot0, slot1, slot2, slot3)
-		if Mathf.Abs(Vector2.Dot(Vector2.Normalize(slot1 - slot0), Vector2.Normalize(slot2 - slot0))) <= 0.0001 then
-			slot7 = Vector2(slot4.y, slot4.x)
-			slot8 = -slot7
+	return (var_0_0.getConvexHull(var_11_0))
+end
 
-			if Vector2.Dot(slot0, slot7) > 0 then
-				return slot0 + slot7 * slot3
-			elseif Vector2.Dot(slot6, slot8) > 0 then
-				return slot0 + slot8 * slot3
-			end
+function var_0_0.expandPoint(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = Vector2.Normalize(arg_12_1 - arg_12_0)
+	local var_12_1 = Vector2.Normalize(arg_12_2 - arg_12_0)
 
-			return slot0
+	if Mathf.Abs(Vector2.Dot(var_12_0, var_12_1)) <= 0.0001 then
+		local var_12_2 = arg_12_0
+		local var_12_3 = Vector2(var_12_0.y, var_12_0.x)
+		local var_12_4 = -var_12_3
+
+		if Vector2.Dot(var_12_2, var_12_3) > 0 then
+			return arg_12_0 + var_12_3 * arg_12_3
+		elseif Vector2.Dot(var_12_2, var_12_4) > 0 then
+			return arg_12_0 + var_12_4 * arg_12_3
 		end
 
-		slot6 = -Vector2.Normalize(slot4 + slot5)
+		return arg_12_0
+	end
 
-		if Vector2.Dot(slot4, slot5) < -1 then
-			slot7 = -1
-		elseif slot7 > 1 then
-			slot7 = 1
-		end
+	local var_12_5 = -Vector2.Normalize(var_12_0 + var_12_1)
+	local var_12_6 = Vector2.Dot(var_12_0, var_12_1)
 
-		if Mathf.Sin(Mathf.Acos(slot7) / 2) == 0 then
-			return slot0
-		end
+	if var_12_6 < -1 then
+		var_12_6 = -1
+	elseif var_12_6 > 1 then
+		var_12_6 = 1
+	end
 
-		return slot0 + slot6 * slot3 / slot9
-	end,
-	getConvexHexPointDict = function (slot0)
-		if not slot0 or #slot0 <= 2 then
-			return {}
-		end
+	local var_12_7 = Mathf.Acos(var_12_6)
+	local var_12_8 = Mathf.Sin(var_12_7 / 2)
 
-		slot3 = {
-			HexPoint(0, 0)
-		}
-		slot2[0] = ({})[0] or {}
-		slot2[0][0] = true
+	if var_12_8 == 0 then
+		return arg_12_0
+	end
 
-		while #slot3 > 0 do
-			slot4 = {}
+	return arg_12_0 + var_12_5 * (arg_12_3 / var_12_8)
+end
 
-			for slot8, slot9 in ipairs(slot3) do
-				if uv0.isPointInConvexHull(HexMath.hexToPosition(slot9, RoomBlockEnum.BlockSize), slot0) then
-					slot1[slot9.x] = slot1[slot9.x] or {}
-					slot1[slot9.x][slot9.y] = true
+function var_0_0.getConvexHexPointDict(arg_13_0)
+	local var_13_0 = {}
 
-					for slot15, slot16 in ipairs(slot9:getNeighbors()) do
-						if not slot2[slot16.x] or not slot2[slot16.x][slot16.y] then
-							table.insert(slot4, slot16)
+	if not arg_13_0 or #arg_13_0 <= 2 then
+		return var_13_0
+	end
 
-							slot2[slot16.x] = slot2[slot16.x] or {}
-							slot2[slot16.x][slot16.y] = true
-						end
+	local var_13_1 = {}
+	local var_13_2 = {
+		HexPoint(0, 0)
+	}
+
+	var_13_1[0] = var_13_1[0] or {}
+	var_13_1[0][0] = true
+
+	while #var_13_2 > 0 do
+		local var_13_3 = {}
+
+		for iter_13_0, iter_13_1 in ipairs(var_13_2) do
+			local var_13_4 = HexMath.hexToPosition(iter_13_1, RoomBlockEnum.BlockSize)
+
+			if var_0_0.isPointInConvexHull(var_13_4, arg_13_0) then
+				var_13_0[iter_13_1.x] = var_13_0[iter_13_1.x] or {}
+				var_13_0[iter_13_1.x][iter_13_1.y] = true
+
+				local var_13_5 = iter_13_1:getNeighbors()
+
+				for iter_13_2, iter_13_3 in ipairs(var_13_5) do
+					if not var_13_1[iter_13_3.x] or not var_13_1[iter_13_3.x][iter_13_3.y] then
+						table.insert(var_13_3, iter_13_3)
+
+						var_13_1[iter_13_3.x] = var_13_1[iter_13_3.x] or {}
+						var_13_1[iter_13_3.x][iter_13_3.y] = true
 					end
 				end
 			end
-
-			slot3 = slot4
 		end
 
-		return slot1
+		var_13_2 = var_13_3
 	end
-}
+
+	return var_13_0
+end
+
+return var_0_0

@@ -1,4 +1,4 @@
-module("modules.logic.common.defines.UIAnimationName", package.seeall)
+﻿module("modules.logic.common.defines.UIAnimationName", package.seeall)
 
 return {
 	Loop = "loop",

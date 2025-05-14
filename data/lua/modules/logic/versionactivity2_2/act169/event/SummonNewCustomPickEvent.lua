@@ -1,9 +1,10 @@
-module("modules.logic.versionactivity2_2.act169.event.SummonNewCustomPickEvent", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act169.event.SummonNewCustomPickEvent", package.seeall)
 
-slot0 = _M
-slot0.OnGetServerInfoReply = 1
-slot0.OnGetReward = 2
-slot0.OnSummonCustomGet = 3
-slot0.OnCustomPickListChanged = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnGetServerInfoReply = 1
+var_0_0.OnGetReward = 2
+var_0_0.OnSummonCustomGet = 3
+var_0_0.OnCustomPickListChanged = 4
+
+return var_0_0

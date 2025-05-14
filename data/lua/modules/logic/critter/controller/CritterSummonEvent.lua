@@ -1,18 +1,19 @@
-module("modules.logic.critter.controller.CritterSummonEvent", package.seeall)
+﻿module("modules.logic.critter.controller.CritterSummonEvent", package.seeall)
 
-slot0 = _M
-slot0.onSummonSkip = 101
-slot0.onStartSummon = 102
-slot0.onDragEnd = 103
-slot0.onResetSummon = 104
-slot0.onEndSummon = 105
-slot0.onCloseGetCritter = 106
-slot0.onStartSummonAnim = 107
-slot0.onCanDrag = 108
-slot0.onOpenEgg = 109
-slot0.onCloseRoomCriiterDetailSimpleView = 110
-slot0.onSelectParentCritter = 201
-slot0.onRemoveParentCritter = 202
-slot0.onIncubateCritterPreviewReply = 203
+local var_0_0 = _M
 
-return slot0
+var_0_0.onSummonSkip = 101
+var_0_0.onStartSummon = 102
+var_0_0.onDragEnd = 103
+var_0_0.onResetSummon = 104
+var_0_0.onEndSummon = 105
+var_0_0.onCloseGetCritter = 106
+var_0_0.onStartSummonAnim = 107
+var_0_0.onCanDrag = 108
+var_0_0.onOpenEgg = 109
+var_0_0.onCloseRoomCriiterDetailSimpleView = 110
+var_0_0.onSelectParentCritter = 201
+var_0_0.onRemoveParentCritter = 202
+var_0_0.onIncubateCritterPreviewReply = 203
+
+return var_0_0

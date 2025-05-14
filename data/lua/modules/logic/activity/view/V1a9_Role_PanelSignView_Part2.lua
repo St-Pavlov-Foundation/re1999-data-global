@@ -1,11 +1,15 @@
-module("modules.logic.activity.view.V1a9_Role_PanelSignView_Part2", package.seeall)
+﻿module("modules.logic.activity.view.V1a9_Role_PanelSignView_Part2", package.seeall)
 
-slot0 = class("V1a9_Role_PanelSignView_Part2", V1a9_Role_PanelSignView)
+local var_0_0 = class("V1a9_Role_PanelSignView_Part2", V1a9_Role_PanelSignView)
 
-function slot0._editableInitView(slot0)
-	slot0._simagePanelBG:LoadImage(ResUrl.getV1a9SignSingleBg("v1a9_sign_panelbg2"))
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "Root/vx_effect1"), false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "Root/vx_effect2"), true)
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simagePanelBG:LoadImage(ResUrl.getV1a9SignSingleBg("v1a9_sign_panelbg2"))
+
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect1")
+	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect2")
+
+	gohelper.setActive(var_1_0, false)
+	gohelper.setActive(var_1_1, true)
 end
 
-return slot0
+return var_0_0

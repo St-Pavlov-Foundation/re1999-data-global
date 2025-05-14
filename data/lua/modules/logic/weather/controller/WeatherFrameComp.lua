@@ -1,103 +1,112 @@
-module("modules.logic.weather.controller.WeatherFrameComp", package.seeall)
+﻿module("modules.logic.weather.controller.WeatherFrameComp", package.seeall)
 
-slot0 = class("WeatherFrameComp")
+local var_0_0 = class("WeatherFrameComp")
 
-function slot0.ctor(slot0)
-	slot0._TintColorId = UnityEngine.Shader.PropertyToID("_TintColor")
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._TintColorId = UnityEngine.Shader.PropertyToID("_TintColor")
 end
 
-function slot0.onInit(slot0, slot1)
-	slot0._sceneId = slot1
+function var_0_0.onInit(arg_2_0, arg_2_1)
+	arg_2_0._sceneId = arg_2_1
 end
 
-function slot0.getSceneNode(slot0, slot1)
-	return gohelper.findChild(slot0._sceneGo, slot1)
+function var_0_0.getSceneNode(arg_3_0, arg_3_1)
+	return gohelper.findChild(arg_3_0._sceneGo, arg_3_1)
 end
 
-function slot0.initSceneGo(slot0, slot1)
-	slot0._sceneGo = slot1
+function var_0_0.initSceneGo(arg_4_0, arg_4_1)
+	arg_4_0._sceneGo = arg_4_1
 
-	slot0:_initFrame()
-	slot0:loadPhotoFrameBg()
+	arg_4_0:_initFrame()
+	arg_4_0:loadPhotoFrameBg()
 end
 
-function slot0._initFrame(slot0)
-	slot0._frameBg = nil
-	slot0._frameSpineNode = nil
-	slot0._frameBg = slot0:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
+function var_0_0._initFrame(arg_5_0)
+	arg_5_0._frameBg = nil
+	arg_5_0._frameSpineNode = nil
+	arg_5_0._frameBg = arg_5_0:getSceneNode("s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back")
 
-	if not slot0._frameBg then
+	if not arg_5_0._frameBg then
 		logError("_initFrame no frameBg")
 	end
 
-	gohelper.setActive(slot0._frameBg, false)
+	gohelper.setActive(arg_5_0._frameBg, false)
 
-	slot1 = slot0._frameBg:GetComponent(typeof(UnityEngine.Renderer))
-	slot0._frameBgMaterial = UnityEngine.Material.Instantiate(slot1.sharedMaterial)
-	slot1.material = slot0._frameBgMaterial
+	local var_5_0 = arg_5_0._frameBg:GetComponent(typeof(UnityEngine.Renderer))
+
+	arg_5_0._frameBgMaterial = UnityEngine.Material.Instantiate(var_5_0.sharedMaterial)
+	var_5_0.material = arg_5_0._frameBgMaterial
 end
 
-function slot0.loadPhotoFrameBg(slot0)
-	slot1 = MultiAbLoader.New()
-	slot0._photoFrameBgLoader = slot1
+function var_0_0.loadPhotoFrameBg(arg_6_0)
+	local var_6_0 = MultiAbLoader.New()
 
-	slot1:addPath(string.format("scenes/dynamic/m_s01_zjm_a/lightmaps/m_s01_back_a_%s.tga", 0))
-	slot1:startLoad(function ()
-		uv2._frameBgMaterial:SetTexture("_MainTex", uv0:getAssetItem(uv1):GetResource(uv1))
-		gohelper.setActive(uv2._frameBg, true)
+	arg_6_0._photoFrameBgLoader = var_6_0
+
+	local var_6_1 = 0
+	local var_6_2 = string.format("scenes/dynamic/m_s01_zjm_a/lightmaps/m_s01_back_a_%s.tga", var_6_1)
+
+	var_6_0:addPath(var_6_2)
+	var_6_0:startLoad(function()
+		local var_7_0 = var_6_0:getAssetItem(var_6_2):GetResource(var_6_2)
+
+		arg_6_0._frameBgMaterial:SetTexture("_MainTex", var_7_0)
+		gohelper.setActive(arg_6_0._frameBg, true)
 	end)
 end
 
-function slot0.getFrameColor(slot0, slot1)
-	slot2 = nil
+function var_0_0.getFrameColor(arg_8_0, arg_8_1)
+	local var_8_0
+	local var_8_1 = MainSceneSwitchConfig.instance:getSceneEffect(arg_8_0, WeatherEnum.EffectTag.Frame)
 
-	if MainSceneSwitchConfig.instance:getSceneEffect(slot0, WeatherEnum.EffectTag.Frame) then
-		slot4 = slot3["lightColor" .. slot1]
-		slot2 = {
-			slot4[1] / 255,
-			slot4[2] / 255,
-			slot4[3] / 255,
-			slot4[4] / 255
+	if var_8_1 then
+		local var_8_2 = var_8_1["lightColor" .. arg_8_1]
+
+		var_8_0 = {
+			var_8_2[1] / 255,
+			var_8_2[2] / 255,
+			var_8_2[3] / 255,
+			var_8_2[4] / 255
 		}
 	end
 
-	slot2 = slot2 or WeatherEnum.FrameTintColor[slot1]
+	var_8_0 = var_8_0 or WeatherEnum.FrameTintColor[arg_8_1]
 
-	return Color.New(slot2[1], slot2[2], slot2[3], slot2[4])
+	return Color.New(var_8_0[1], var_8_0[2], var_8_0[3], var_8_0[4])
 end
 
-function slot0.onRoleBlend(slot0, slot1, slot2, slot3)
-	if not slot0._targetFrameTintColor then
-		slot4 = slot1:getCurLightMode()
-		slot5 = slot1:getPrevLightMode() or slot4
+function var_0_0.onRoleBlend(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if not arg_9_0._targetFrameTintColor then
+		local var_9_0 = arg_9_1:getCurLightMode()
+		local var_9_1 = arg_9_1:getPrevLightMode() or var_9_0
 
-		if not slot4 then
+		if not var_9_0 then
 			return
 		end
 
-		slot0._targetFrameTintColor = uv0.getFrameColor(slot0._sceneId, slot4)
-		slot0._srcFrameTintColor = uv0.getFrameColor(slot0._sceneId, slot5)
+		arg_9_0._targetFrameTintColor = var_0_0.getFrameColor(arg_9_0._sceneId, var_9_0)
+		arg_9_0._srcFrameTintColor = var_0_0.getFrameColor(arg_9_0._sceneId, var_9_1)
 
-		slot0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
+		arg_9_0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
 	end
 
-	slot0._frameBgMaterial:SetColor(slot0._TintColorId, slot1:lerpColorRGBA(slot0._srcFrameTintColor, slot0._targetFrameTintColor, slot2))
+	arg_9_0._frameBgMaterial:SetColor(arg_9_0._TintColorId, arg_9_1:lerpColorRGBA(arg_9_0._srcFrameTintColor, arg_9_0._targetFrameTintColor, arg_9_2))
 
-	if slot3 then
-		slot0._targetFrameTintColor = nil
+	if arg_9_3 then
+		arg_9_0._targetFrameTintColor = nil
 
-		if slot1:getCurLightMode() == 1 then
-			slot0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
+		if arg_9_1:getCurLightMode() == 1 then
+			arg_9_0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
 		end
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	if slot0._photoFrameBgLoader then
-		slot0._photoFrameBgLoader:dispose()
+function var_0_0.onSceneClose(arg_10_0)
+	if arg_10_0._photoFrameBgLoader then
+		arg_10_0._photoFrameBgLoader:dispose()
 
-		slot0._photoFrameBgLoader = nil
+		arg_10_0._photoFrameBgLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

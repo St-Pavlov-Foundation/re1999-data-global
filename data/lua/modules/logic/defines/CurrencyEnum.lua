@@ -1,7 +1,8 @@
-module("modules.logic.defines.CurrencyEnum", package.seeall)
+﻿module("modules.logic.defines.CurrencyEnum", package.seeall)
 
-slot0 = _M
-slot0.CurrencyType = {
+local var_0_0 = _M
+
+var_0_0.CurrencyType = {
 	SkinCard = 12,
 	V1a8Dungeon = 1804,
 	V1a7Dungeon = 1701,
@@ -45,17 +46,17 @@ slot0.CurrencyType = {
 	V2a3Dungeon = 2301,
 	RoleStory = 24
 }
-slot0.AllCurrency = {
-	slot0.CurrencyType.Diamond,
-	slot0.CurrencyType.FreeDiamondCoupon,
-	slot0.CurrencyType.Gold,
-	slot0.CurrencyType.Power,
-	slot0.CurrencyType.HeroExperience,
-	slot0.CurrencyType.Competition,
-	slot0.CurrencyType.BlueSoul,
-	slot0.CurrencyType.OrangeSoul
+var_0_0.AllCurrency = {
+	var_0_0.CurrencyType.Diamond,
+	var_0_0.CurrencyType.FreeDiamondCoupon,
+	var_0_0.CurrencyType.Gold,
+	var_0_0.CurrencyType.Power,
+	var_0_0.CurrencyType.HeroExperience,
+	var_0_0.CurrencyType.Competition,
+	var_0_0.CurrencyType.BlueSoul,
+	var_0_0.CurrencyType.OrangeSoul
 }
-slot0.PayDiamondExchangeSource = {
+var_0_0.PayDiamondExchangeSource = {
 	Store = 4,
 	HUD = 1,
 	SkinStore = 5,
@@ -63,4 +64,4 @@ slot0.PayDiamondExchangeSource = {
 	Power = 2
 }
 
-return slot0
+return var_0_0

@@ -1,28 +1,29 @@
-module("modules.logic.act201.controller.Activity201Controller", package.seeall)
+﻿module("modules.logic.act201.controller.Activity201Controller", package.seeall)
 
-slot0 = class("Activity201Controller", BaseController)
+local var_0_0 = class("Activity201Controller", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getInvitationInfo(slot0, slot1, slot2, slot3)
-	Activity201Rpc.instance:sendGet201InfoRequest(slot1, slot2, slot3)
+function var_0_0.getInvitationInfo(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	Activity201Rpc.instance:sendGet201InfoRequest(arg_3_1, arg_3_2, arg_3_3)
 end
 
-function slot0.openMainView(slot0, slot1)
-	slot0:getInvitationInfo(slot1, slot0._openMainView, slot0)
+function var_0_0.openMainView(arg_4_0, arg_4_1)
+	arg_4_0:getInvitationInfo(arg_4_1, arg_4_0._openMainView, arg_4_0)
 end
 
-function slot0._openMainView(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ViewMgr.instance:openView(ViewName.TurnBackFullView, slot2.activityId, true)
+function var_0_0._openMainView(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		ViewMgr.instance:openView(ViewName.TurnBackFullView, arg_5_2.activityId, true)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

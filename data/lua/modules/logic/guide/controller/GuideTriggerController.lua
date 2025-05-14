@@ -1,72 +1,72 @@
-module("modules.logic.guide.controller.GuideTriggerController", package.seeall)
+﻿module("modules.logic.guide.controller.GuideTriggerController", package.seeall)
 
-slot0 = class("GuideTriggerController", BaseController)
+local var_0_0 = class("GuideTriggerController", BaseController)
 
-function slot0.onInitFinish(slot0)
-	slot0.triggers = {}
+function var_0_0.onInitFinish(arg_1_0)
+	arg_1_0.triggers = {}
 
-	slot0:_addTrigger(GuideTriggerPlayerLv.New("PlayerLv"))
-	slot0:_addTrigger(GuideTriggerEpisodeFinish.New("EpisodeFinish"))
-	slot0:_addTrigger(GuideTriggerWeekWalkLayerOpen.New("WeekWalkLayerOpen"))
-	slot0:_addTrigger(GuideTriggerUnlockChapter.New("UnlockChapter"))
-	slot0:_addTrigger(GuideTriggerFinishTask.New("FinishTask"))
-	slot0:_addTrigger(GuideTriggerOpenView.New("OpenView"))
-	slot0:_addTrigger(GuideTriggerOpenViewCondition.New("OpenViewCondition"))
-	slot0:_addTrigger(GuideTriggerEnterScene.New("EnterScene"))
-	slot0:_addTrigger(GuideTriggerEnterExplore.New("EnterExplore"))
-	slot0:_addTrigger(GuideTriggerEnterEpisode.New("EnterEpisode"))
-	slot0:_addTrigger(GuideTriggerRoomConfirmBuilding.New("RoomConfirmBuilding"))
-	slot0:_addTrigger(GuideTriggerRoomOpenBuildingStrengthView.New("RoomOpenBuildingStrengthView"))
-	slot0:_addTrigger(GuideTriggerRoomReset.New("RoomReset"))
-	slot0:_addTrigger(GuideTriggerRoomEnterEdit.New("RoomEnterEdit"))
-	slot0:_addTrigger(GuideTriggerFinishGuide.New("FinishGuide"))
-	slot0:_addTrigger(GuideTriggerEpisodeFinishAndTalent.New("EpisodeFinishAndTalent"))
-	slot0:_addTrigger(GuideTriggerEpisodeFinishWithOpen.New("EpisodeFinishWithOpen"))
-	slot0:_addTrigger(GuideTriggerEpisodeFinishAndInMainScene.New("EpisodeFinishAndInMainScene"))
-	slot0:_addTrigger(GuideTriggerRoomCheckGatherFactoryNum.New("RoomCheckGatherFactoryNum"))
-	slot0:_addTrigger(GuideTriggerEpisodeAndGuideFinish.New("EpisodeAndGuideFinish"))
-	slot0:_addTrigger(GuideTriggerEnterActivity109Chess.New("EnterActivity109Chess"))
-	slot0:_addTrigger(GuideTriggerCachotEnterRoom.New("CachotEnterRoom"))
-	slot0:_addTrigger(GuideTriggerMainSceneSkin.New("MainSceneSkin"))
-	slot0:_addTrigger(GuideTriggerTalentStyle.New("TalentStyle"))
-	slot0:_addTrigger(GuideTriggerChessGameGuideStart.New("ChessGameGuideStart"))
-	slot0:_addTrigger(GuideTriggerElementFinish.New("ElementFinish"))
-	slot0:_addTrigger(GuideTriggerRoomLv.New("RoomLv"))
-	slot0:_addTrigger(GuideTriggerRoomTradeLv.New("RoomTradeLv"))
-	slot0:_addTrigger(GuideTriggerDestinyStone.New("DestinyStone"))
-	slot0:_addTrigger(GuideTriggerGuideEvent.New("GuideEvent"))
+	arg_1_0:_addTrigger(GuideTriggerPlayerLv.New("PlayerLv"))
+	arg_1_0:_addTrigger(GuideTriggerEpisodeFinish.New("EpisodeFinish"))
+	arg_1_0:_addTrigger(GuideTriggerWeekWalkLayerOpen.New("WeekWalkLayerOpen"))
+	arg_1_0:_addTrigger(GuideTriggerUnlockChapter.New("UnlockChapter"))
+	arg_1_0:_addTrigger(GuideTriggerFinishTask.New("FinishTask"))
+	arg_1_0:_addTrigger(GuideTriggerOpenView.New("OpenView"))
+	arg_1_0:_addTrigger(GuideTriggerOpenViewCondition.New("OpenViewCondition"))
+	arg_1_0:_addTrigger(GuideTriggerEnterScene.New("EnterScene"))
+	arg_1_0:_addTrigger(GuideTriggerEnterExplore.New("EnterExplore"))
+	arg_1_0:_addTrigger(GuideTriggerEnterEpisode.New("EnterEpisode"))
+	arg_1_0:_addTrigger(GuideTriggerRoomConfirmBuilding.New("RoomConfirmBuilding"))
+	arg_1_0:_addTrigger(GuideTriggerRoomOpenBuildingStrengthView.New("RoomOpenBuildingStrengthView"))
+	arg_1_0:_addTrigger(GuideTriggerRoomReset.New("RoomReset"))
+	arg_1_0:_addTrigger(GuideTriggerRoomEnterEdit.New("RoomEnterEdit"))
+	arg_1_0:_addTrigger(GuideTriggerFinishGuide.New("FinishGuide"))
+	arg_1_0:_addTrigger(GuideTriggerEpisodeFinishAndTalent.New("EpisodeFinishAndTalent"))
+	arg_1_0:_addTrigger(GuideTriggerEpisodeFinishWithOpen.New("EpisodeFinishWithOpen"))
+	arg_1_0:_addTrigger(GuideTriggerEpisodeFinishAndInMainScene.New("EpisodeFinishAndInMainScene"))
+	arg_1_0:_addTrigger(GuideTriggerRoomCheckGatherFactoryNum.New("RoomCheckGatherFactoryNum"))
+	arg_1_0:_addTrigger(GuideTriggerEpisodeAndGuideFinish.New("EpisodeAndGuideFinish"))
+	arg_1_0:_addTrigger(GuideTriggerEnterActivity109Chess.New("EnterActivity109Chess"))
+	arg_1_0:_addTrigger(GuideTriggerCachotEnterRoom.New("CachotEnterRoom"))
+	arg_1_0:_addTrigger(GuideTriggerMainSceneSkin.New("MainSceneSkin"))
+	arg_1_0:_addTrigger(GuideTriggerTalentStyle.New("TalentStyle"))
+	arg_1_0:_addTrigger(GuideTriggerChessGameGuideStart.New("ChessGameGuideStart"))
+	arg_1_0:_addTrigger(GuideTriggerElementFinish.New("ElementFinish"))
+	arg_1_0:_addTrigger(GuideTriggerRoomLv.New("RoomLv"))
+	arg_1_0:_addTrigger(GuideTriggerRoomTradeLv.New("RoomTradeLv"))
+	arg_1_0:_addTrigger(GuideTriggerDestinyStone.New("DestinyStone"))
+	arg_1_0:_addTrigger(GuideTriggerGuideEvent.New("GuideEvent"))
 end
 
-function slot0._addTrigger(slot0, slot1)
-	table.insert(slot0.triggers, slot1)
+function var_0_0._addTrigger(arg_2_0, arg_2_1)
+	table.insert(arg_2_0.triggers, arg_2_1)
 end
 
-function slot0.addConstEvents(slot0)
-	GuideController.instance:registerCallback(GuideEvent.TriggerGuide, slot0._onTriggerGuide, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	GuideController.instance:registerCallback(GuideEvent.TriggerGuide, arg_3_0._onTriggerGuide, arg_3_0)
 end
 
-function slot0.onReset(slot0)
-	for slot4 = 1, #slot0.triggers do
-		slot0.triggers[slot4]:onReset()
+function var_0_0.onReset(arg_4_0)
+	for iter_4_0 = 1, #arg_4_0.triggers do
+		arg_4_0.triggers[iter_4_0]:onReset()
 	end
 end
 
-function slot0.startTrigger(slot0)
-	for slot4 = 1, #slot0.triggers do
-		slot0.triggers[slot4]:setCanTrigger(true)
-		slot0.triggers[slot4]:checkStartGuide(nil, )
+function var_0_0.startTrigger(arg_5_0)
+	for iter_5_0 = 1, #arg_5_0.triggers do
+		arg_5_0.triggers[iter_5_0]:setCanTrigger(true)
+		arg_5_0.triggers[iter_5_0]:checkStartGuide(nil, nil)
 	end
 end
 
-function slot0._onTriggerGuide(slot0, slot1)
-	for slot5 = 1, #slot0.triggers do
-		slot0.triggers[slot5]:checkStartGuide(nil, slot1)
+function var_0_0._onTriggerGuide(arg_6_0, arg_6_1)
+	for iter_6_0 = 1, #arg_6_0.triggers do
+		arg_6_0.triggers[iter_6_0]:checkStartGuide(nil, arg_6_1)
 	end
 end
 
-function slot0.hasSatisfyGuide(slot0)
-	for slot4 = 1, #slot0.triggers do
-		if slot0.triggers[slot4]:hasSatisfyGuide() then
+function var_0_0.hasSatisfyGuide(arg_7_0)
+	for iter_7_0 = 1, #arg_7_0.triggers do
+		if arg_7_0.triggers[iter_7_0]:hasSatisfyGuide() then
 			return true
 		end
 	end
@@ -74,6 +74,6 @@ function slot0.hasSatisfyGuide(slot0)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

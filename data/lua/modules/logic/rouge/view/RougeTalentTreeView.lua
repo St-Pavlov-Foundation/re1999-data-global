@@ -1,94 +1,96 @@
-module("modules.logic.rouge.view.RougeTalentTreeView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeTalentTreeView", package.seeall)
 
-slot0 = class("RougeTalentTreeView", BaseView)
+local var_0_0 = class("RougeTalentTreeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gotalenttree = gohelper.findChild(slot0.viewGO, "#go_talenttree")
-	slot0._gotalentdec = gohelper.findChild(slot0.viewGO, "#go_talentdec")
-	slot0._txttalentname = gohelper.findChildText(slot0.viewGO, "#go_talentdec/bg/#txt_talentname")
-	slot0._txttalentdec = gohelper.findChildText(slot0.viewGO, "#go_talentdec/#txt_talentdec")
-	slot0._gopoint = gohelper.findChild(slot0.viewGO, "#go_point")
-	slot0._gopointitem = gohelper.findChild(slot0.viewGO, "#go_point/point")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_arrow")
-	slot0._btnarrowright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_arrow/#btn_arrowright")
-	slot0._btnarrowleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_arrow/#btn_arrowleft")
-	slot0._btnoverview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_overview")
-	slot0._godetail = gohelper.findChild(slot0.viewGO, "#go_detail")
-	slot0._txtdetailname = gohelper.findChildText(slot0.viewGO, "#go_detail/#txt_talentname")
-	slot0._txtdetaildec = gohelper.findChildText(slot0.viewGO, "#go_detail/#scroll_desc/Viewport/#txt_talentdec")
-	slot0._btnlocked = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_detail/#btn_locked")
-	slot0._txtlocked = gohelper.findChildText(slot0.viewGO, "#go_detail/#btn_locked/#txt_locked")
-	slot0._txtlocked2 = gohelper.findChildText(slot0.viewGO, "#go_detail/#btn_locked/#txt_locked2")
-	slot0._btnlack = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_detail/#btn_lack")
-	slot0._txtlack = gohelper.findChildText(slot0.viewGO, "#go_detail/#btn_lack/#txt_lack")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_detail/#btn_cancel")
-	slot0._gotopright = gohelper.findChild(slot0.viewGO, "#go_topright")
-	slot0._gotoprighttips = gohelper.findChild(slot0.viewGO, "#go_topright/tips")
-	slot0._txttoprighttips = gohelper.findChildText(slot0.viewGO, "#go_topright/tips/#txt_tips")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_topright/#txt_num")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_topright/#btn_click")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._detailAnimator = slot0._godetail:GetComponent(typeof(UnityEngine.Animator))
-	slot0._currentSelectId = nil
-	slot0._isopentips = false
-	slot0._animtime = 0.2
-	slot0._pointList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gotalenttree = gohelper.findChild(arg_1_0.viewGO, "#go_talenttree")
+	arg_1_0._gotalentdec = gohelper.findChild(arg_1_0.viewGO, "#go_talentdec")
+	arg_1_0._txttalentname = gohelper.findChildText(arg_1_0.viewGO, "#go_talentdec/bg/#txt_talentname")
+	arg_1_0._txttalentdec = gohelper.findChildText(arg_1_0.viewGO, "#go_talentdec/#txt_talentdec")
+	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "#go_point")
+	arg_1_0._gopointitem = gohelper.findChild(arg_1_0.viewGO, "#go_point/point")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+	arg_1_0._btnarrowright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_arrow/#btn_arrowright")
+	arg_1_0._btnarrowleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_arrow/#btn_arrowleft")
+	arg_1_0._btnoverview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_overview")
+	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "#go_detail")
+	arg_1_0._txtdetailname = gohelper.findChildText(arg_1_0.viewGO, "#go_detail/#txt_talentname")
+	arg_1_0._txtdetaildec = gohelper.findChildText(arg_1_0.viewGO, "#go_detail/#scroll_desc/Viewport/#txt_talentdec")
+	arg_1_0._btnlocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_detail/#btn_locked")
+	arg_1_0._txtlocked = gohelper.findChildText(arg_1_0.viewGO, "#go_detail/#btn_locked/#txt_locked")
+	arg_1_0._txtlocked2 = gohelper.findChildText(arg_1_0.viewGO, "#go_detail/#btn_locked/#txt_locked2")
+	arg_1_0._btnlack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_detail/#btn_lack")
+	arg_1_0._txtlack = gohelper.findChildText(arg_1_0.viewGO, "#go_detail/#btn_lack/#txt_lack")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_detail/#btn_cancel")
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._gotoprighttips = gohelper.findChild(arg_1_0.viewGO, "#go_topright/tips")
+	arg_1_0._txttoprighttips = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/tips/#txt_tips")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#txt_num")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_click")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._detailAnimator = arg_1_0._godetail:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._currentSelectId = nil
+	arg_1_0._isopentips = false
+	arg_1_0._animtime = 0.2
+	arg_1_0._pointList = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnarrowright:AddClickListener(slot0._btnarrowrightOnClick, slot0)
-	slot0._btnarrowleft:AddClickListener(slot0._btnarrowleftOnClick, slot0)
-	slot0._btnoverview:AddClickListener(slot0._btnoverviewOnClick, slot0)
-	slot0._btnlack:AddClickListener(slot0._btnlackOnClick, slot0)
-	slot0._btnlocked:AddClickListener(slot0._btnlockOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.onSwitchTab, slot0._onSwitchTab, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, slot0._onClickTreeBranchItem, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnClickEmpty, slot0.clickEmpty, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._refreshUI, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.exitTalentView, slot0.exitTalentView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnarrowright:AddClickListener(arg_2_0._btnarrowrightOnClick, arg_2_0)
+	arg_2_0._btnarrowleft:AddClickListener(arg_2_0._btnarrowleftOnClick, arg_2_0)
+	arg_2_0._btnoverview:AddClickListener(arg_2_0._btnoverviewOnClick, arg_2_0)
+	arg_2_0._btnlack:AddClickListener(arg_2_0._btnlackOnClick, arg_2_0)
+	arg_2_0._btnlocked:AddClickListener(arg_2_0._btnlockOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.onSwitchTab, arg_2_0._onSwitchTab, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, arg_2_0._onClickTreeBranchItem, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnClickEmpty, arg_2_0.clickEmpty, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_2_0._refreshUI, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.exitTalentView, arg_2_0.exitTalentView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnarrowright:RemoveClickListener()
-	slot0._btnarrowleft:RemoveClickListener()
-	slot0._btnoverview:RemoveClickListener()
-	slot0._btnlack:RemoveClickListener()
-	slot0._btnlocked:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
-	slot0:removeEventCb(RougeController.instance, RougeEvent.onSwitchTab, slot0._onSwitchTab, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, slot0._onClickTreeBranchItem, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnClickEmpty, slot0.clickEmpty, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._refreshUI, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.exitTalentView, slot0.exitTalentView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnarrowright:RemoveClickListener()
+	arg_3_0._btnarrowleft:RemoveClickListener()
+	arg_3_0._btnoverview:RemoveClickListener()
+	arg_3_0._btnlack:RemoveClickListener()
+	arg_3_0._btnlocked:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.onSwitchTab, arg_3_0._onSwitchTab, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnClickTreeNode, arg_3_0._onClickTreeBranchItem, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnClickEmpty, arg_3_0.clickEmpty, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_3_0._refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(RougeController.instance, RougeEvent.exitTalentView, arg_3_0.exitTalentView, arg_3_0)
 end
 
-function slot0._btnlackOnClick(slot0)
-	if not slot0._currentconfig then
+function var_0_0._btnlackOnClick(arg_4_0)
+	if not arg_4_0._currentconfig then
 		return
 	end
 
-	if RougeTalentModel.instance:checkBigNodeLock(slot0._currentconfig.talent) then
+	local var_4_0 = arg_4_0._currentconfig.talent
+
+	if RougeTalentModel.instance:checkBigNodeLock(var_4_0) then
 		GameFacade.showToast(ToastEnum.RougeTalentTreeBigTalentLock)
 
 		return
 	end
 
-	if RougeTalentModel.instance:checkBeforeNodeLock(slot0._currentconfig.id) then
+	if RougeTalentModel.instance:checkBeforeNodeLock(arg_4_0._currentconfig.id) then
 		GameFacade.showToast(ToastEnum.RougeTalentTreeBeforeTalentLock)
 
 		return
 	end
 
-	if RougeTalentModel.instance:getTalentPoint() < slot0._currentconfig.cost then
+	if RougeTalentModel.instance:getTalentPoint() < arg_4_0._currentconfig.cost then
 		GameFacade.showToast(ToastEnum.RougeTalentTreeNoPoint)
 
 		return
@@ -100,285 +102,317 @@ function slot0._btnlackOnClick(slot0)
 		return
 	end
 
-	if not RougeTalentModel.instance:checkNodeLight(slot0._currentSelectId) then
-		RougeOutsideRpc.instance:sendRougeActiveGeniusRequest(slot0._season, slot0._currentSelectId)
+	if not RougeTalentModel.instance:checkNodeLight(arg_4_0._currentSelectId) then
+		RougeOutsideRpc.instance:sendRougeActiveGeniusRequest(arg_4_0._season, arg_4_0._currentSelectId)
 	end
 end
 
-function slot0._btnlockOnClick(slot0)
-	if not slot0._currentconfig then
+function var_0_0._btnlockOnClick(arg_5_0)
+	if not arg_5_0._currentconfig then
 		return
 	end
 
-	if RougeTalentModel.instance:checkBigNodeLock(slot0._currentconfig.talent) then
+	local var_5_0 = arg_5_0._currentconfig.talent
+
+	if RougeTalentModel.instance:checkBigNodeLock(var_5_0) then
 		GameFacade.showToast(ToastEnum.RougeTalentTreeBigTalentLock)
 
 		return
 	end
 
-	if RougeTalentModel.instance:checkBeforeNodeLock(slot0._currentconfig.id) then
+	if RougeTalentModel.instance:checkBeforeNodeLock(arg_5_0._currentconfig.id) then
 		GameFacade.showToast(ToastEnum.RougeTalentTreeBeforeTalentLock)
 
 		return
 	end
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0._isOpenDetail = false
+function var_0_0._btncancelOnClick(arg_6_0)
+	arg_6_0._isOpenDetail = false
 
-	gohelper.setActive(slot0._godetail, slot0._isOpenDetail)
-	gohelper.setActive(slot0._gopoint, not slot0._isOpenDetail)
-	gohelper.setActive(slot0._btnoverview.gameObject, not slot0._isOpenDetail)
-	RougeController.instance:dispatchEvent(RougeEvent.OnCancelTreeNode, slot0._currentSelectId)
+	gohelper.setActive(arg_6_0._godetail, arg_6_0._isOpenDetail)
+	gohelper.setActive(arg_6_0._gopoint, not arg_6_0._isOpenDetail)
+	gohelper.setActive(arg_6_0._btnoverview.gameObject, not arg_6_0._isOpenDetail)
+	RougeController.instance:dispatchEvent(RougeEvent.OnCancelTreeNode, arg_6_0._currentSelectId)
 end
 
-function slot0._btnarrowrightOnClick(slot0)
-	if slot0._tabIndex < RougeTalentConfig.instance:getTalentNum(slot0._season) then
-		slot0._tabIndex = slot0._tabIndex + 1
+function var_0_0._btnarrowrightOnClick(arg_7_0)
+	if RougeTalentConfig.instance:getTalentNum(arg_7_0._season) > arg_7_0._tabIndex then
+		arg_7_0._tabIndex = arg_7_0._tabIndex + 1
 
-		slot0._animator:Update(0)
-		slot0._animator:Play("switch_right", 0, 0)
+		arg_7_0._animator:Update(0)
+		arg_7_0._animator:Play("switch_right", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.SwtichTalentTreeView)
-		TaskDispatcher.runDelay(slot0._switchfunc, slot0, slot0._animtime)
+		TaskDispatcher.runDelay(arg_7_0._switchfunc, arg_7_0, arg_7_0._animtime)
 	end
 
-	slot0:_btncancelOnClick()
-	slot0:_refreshView()
+	arg_7_0:_btncancelOnClick()
+	arg_7_0:_refreshView()
 end
 
-function slot0._btnarrowleftOnClick(slot0)
-	if slot0._tabIndex > 1 then
-		slot0._tabIndex = slot0._tabIndex - 1
+function var_0_0._btnarrowleftOnClick(arg_8_0)
+	if arg_8_0._tabIndex > 1 then
+		arg_8_0._tabIndex = arg_8_0._tabIndex - 1
 
-		slot0._animator:Update(0)
-		slot0._animator:Play("switch_left", 0, 0)
+		arg_8_0._animator:Update(0)
+		arg_8_0._animator:Play("switch_left", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.SwtichTalentTreeView)
-		TaskDispatcher.runDelay(slot0._switchfunc, slot0, slot0._animtime)
+		TaskDispatcher.runDelay(arg_8_0._switchfunc, arg_8_0, arg_8_0._animtime)
 	end
 
-	slot0:_btncancelOnClick()
-	slot0:_refreshView()
+	arg_8_0:_btncancelOnClick()
+	arg_8_0:_refreshView()
 end
 
-function slot0._onSwitchTab(slot0)
-	RougeTalentModel.instance:setCurrentSelectIndex(slot0._tabIndex)
-	slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot0._tabIndex)
+function var_0_0._onSwitchTab(arg_9_0)
+	RougeTalentModel.instance:setCurrentSelectIndex(arg_9_0._tabIndex)
+	arg_9_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_9_0._tabIndex)
 end
 
-function slot0._btnoverviewOnClick(slot0)
+function var_0_0._btnoverviewOnClick(arg_10_0)
 	ViewMgr.instance:openView(ViewName.RougeTalentTreeOverview)
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0._isopentips = not slot0._isopentips
+function var_0_0._btnclickOnClick(arg_11_0)
+	arg_11_0._isopentips = not arg_11_0._isopentips
 
-	gohelper.setActive(slot0._gotoprighttips, slot0._isopentips)
+	gohelper.setActive(arg_11_0._gotoprighttips, arg_11_0._isopentips)
 end
 
-function slot0.clickEmpty(slot0)
-	if slot0._isopentips then
-		slot0._isopentips = false
+function var_0_0.clickEmpty(arg_12_0)
+	if arg_12_0._isopentips then
+		arg_12_0._isopentips = false
 
-		gohelper.setActive(slot0._gotoprighttips, slot0._isopentips)
+		gohelper.setActive(arg_12_0._gotoprighttips, arg_12_0._isopentips)
 	end
 
-	if slot0._isOpenDetail then
-		slot0:_btncancelOnClick()
+	if arg_12_0._isOpenDetail then
+		arg_12_0:_btncancelOnClick()
 	end
 end
 
-function slot0._onClickTreeBranchItem(slot0, slot1)
-	if not slot1 then
+function var_0_0._onClickTreeBranchItem(arg_13_0, arg_13_1)
+	if not arg_13_1 then
 		return
 	end
 
-	if slot0._currentSelectId ~= slot1.id and slot0._currentSelectId ~= nil then
-		if not slot0._isOpenDetail then
-			slot0._isOpenDetail = not slot0._isOpenDetail
+	if arg_13_0._currentSelectId ~= arg_13_1.id and arg_13_0._currentSelectId ~= nil then
+		if not arg_13_0._isOpenDetail then
+			arg_13_0._isOpenDetail = not arg_13_0._isOpenDetail
 
-			gohelper.setActive(slot0._godetail, slot0._isOpenDetail)
-			gohelper.setActive(slot0._gopoint, not slot0._isOpenDetail)
-			gohelper.setActive(slot0._btnoverview.gameObject, not slot0._isOpenDetail)
-			slot0:_refreshDetail(slot1)
+			gohelper.setActive(arg_13_0._godetail, arg_13_0._isOpenDetail)
+			gohelper.setActive(arg_13_0._gopoint, not arg_13_0._isOpenDetail)
+			gohelper.setActive(arg_13_0._btnoverview.gameObject, not arg_13_0._isOpenDetail)
+			arg_13_0:_refreshDetail(arg_13_1)
 		else
-			slot0._detailAnimator:Update(0)
-			slot0._detailAnimator:Play("close", 0, 0)
+			arg_13_0._detailAnimator:Update(0)
+			arg_13_0._detailAnimator:Play("close", 0, 0)
 
-			function slot0._onDetailCloseEnd()
-				TaskDispatcher.cancelTask(uv0._onDetailCloseEnd, uv0)
-				uv0:_refreshDetail(uv1)
-				uv0._detailAnimator:Update(0)
-				uv0._detailAnimator:Play("open", 0, 0)
+			function arg_13_0._onDetailCloseEnd()
+				TaskDispatcher.cancelTask(arg_13_0._onDetailCloseEnd, arg_13_0)
+				arg_13_0:_refreshDetail(arg_13_1)
+				arg_13_0._detailAnimator:Update(0)
+				arg_13_0._detailAnimator:Play("open", 0, 0)
 			end
 
-			TaskDispatcher.runDelay(slot0._onDetailCloseEnd, slot0, 0.2)
+			local var_13_0 = 0.2
+
+			TaskDispatcher.runDelay(arg_13_0._onDetailCloseEnd, arg_13_0, var_13_0)
 		end
-	elseif not slot0._isOpenDetail then
-		slot0._isOpenDetail = not slot0._isOpenDetail
+	elseif not arg_13_0._isOpenDetail then
+		arg_13_0._isOpenDetail = not arg_13_0._isOpenDetail
 
-		gohelper.setActive(slot0._godetail, slot0._isOpenDetail)
-		gohelper.setActive(slot0._gopoint, not slot0._isOpenDetail)
-		gohelper.setActive(slot0._btnoverview.gameObject, not slot0._isOpenDetail)
-		slot0:_refreshDetail(slot1)
+		gohelper.setActive(arg_13_0._godetail, arg_13_0._isOpenDetail)
+		gohelper.setActive(arg_13_0._gopoint, not arg_13_0._isOpenDetail)
+		gohelper.setActive(arg_13_0._btnoverview.gameObject, not arg_13_0._isOpenDetail)
+		arg_13_0:_refreshDetail(arg_13_1)
 	end
 end
 
-function slot0._onDetailOpenEnd(slot0)
+function var_0_0._onDetailOpenEnd(arg_15_0)
+	return
 end
 
-function slot0._refreshDetail(slot0, slot1, slot2)
-	slot0._currentconfig = slot1
+function var_0_0._refreshDetail(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0._currentconfig = arg_16_1
 
-	if not slot0._currentSelectId then
-		slot0._currentSelectId = slot1.id
-	elseif slot0._currentSelectId ~= slot1.id then
-		slot0._currentSelectId = slot1.id
-		slot0._showDetailAnim = true
+	if not arg_16_0._currentSelectId then
+		arg_16_0._currentSelectId = arg_16_1.id
+	elseif arg_16_0._currentSelectId ~= arg_16_1.id then
+		arg_16_0._currentSelectId = arg_16_1.id
+		arg_16_0._showDetailAnim = true
 	end
 
-	slot0._txtdetailname.text = slot1.name
-	slot0._txtdetaildec.text = slot1.desc
-	slot0._txtlack.text = slot1.cost
-	slot3 = true
+	arg_16_0._txtdetailname.text = arg_16_1.name
+	arg_16_0._txtdetaildec.text = arg_16_1.desc
+	arg_16_0._txtlack.text = arg_16_1.cost
 
-	if not ((slot1.isOrigin ~= 1 or (slot1.id ~= RougeEnum.OutsideConst.StartNode or false) and RougeTalentModel.instance:checkBigNodeLock(slot1.talent)) and RougeTalentModel.instance:checkNodeLock(slot1)) then
-		slot4 = RougeTalentModel.instance:checkNodeLight(slot1.id)
+	local var_16_0 = true
 
-		gohelper.setActive(slot0._btnlocked.gameObject, false)
-		gohelper.setActive(slot0._btnlack.gameObject, not slot4)
-		gohelper.setActive(slot0._btncancel.gameObject, not slot4)
-
-		if RougeTalentModel.instance:getTalentPoint() < slot1.cost then
-			slot0._txtlack.color = GameUtil.parseColor("#9F342C")
+	if arg_16_1.isOrigin == 1 then
+		if arg_16_1.id == RougeEnum.OutsideConst.StartNode then
+			var_16_0 = false
 		else
-			slot0._txtlack.color = GameUtil.parseColor("#E99B56")
+			var_16_0 = RougeTalentModel.instance:checkBigNodeLock(arg_16_1.talent)
 		end
 	else
-		gohelper.setActive(slot0._btnlocked.gameObject, slot3)
-		gohelper.setActive(slot0._btnlack.gameObject, not slot3)
+		var_16_0 = RougeTalentModel.instance:checkNodeLock(arg_16_1)
+	end
 
-		slot4 = slot1.isOrigin == 1
+	if not var_16_0 then
+		local var_16_1 = RougeTalentModel.instance:checkNodeLight(arg_16_1.id)
 
-		gohelper.setActive(slot0._txtlocked.gameObject, not slot4)
-		gohelper.setActive(slot0._txtlocked2.gameObject, slot4)
+		gohelper.setActive(arg_16_0._btnlocked.gameObject, false)
+		gohelper.setActive(arg_16_0._btnlack.gameObject, not var_16_1)
+		gohelper.setActive(arg_16_0._btncancel.gameObject, not var_16_1)
 
-		if slot4 then
-			slot0._txtlocked2.text = string.format(luaLang("rouge_kehua_lock_tip"), RougeTalentModel.instance:getHadConsumeTalentPoint(), RougeTalentConfig.instance:getConfigByTalent(slot0._season, slot1.talent).cost)
+		if RougeTalentModel.instance:getTalentPoint() < arg_16_1.cost then
+			arg_16_0._txtlack.color = GameUtil.parseColor("#9F342C")
 		else
-			slot0._txtlocked.text = luaLang("rouge_talenttree_normal")
+			arg_16_0._txtlack.color = GameUtil.parseColor("#E99B56")
+		end
+	else
+		gohelper.setActive(arg_16_0._btnlocked.gameObject, var_16_0)
+		gohelper.setActive(arg_16_0._btnlack.gameObject, not var_16_0)
+
+		local var_16_2 = arg_16_1.isOrigin == 1
+
+		gohelper.setActive(arg_16_0._txtlocked.gameObject, not var_16_2)
+		gohelper.setActive(arg_16_0._txtlocked2.gameObject, var_16_2)
+
+		if var_16_2 then
+			local var_16_3 = RougeTalentConfig.instance:getConfigByTalent(arg_16_0._season, arg_16_1.talent)
+			local var_16_4 = RougeTalentModel.instance:getHadConsumeTalentPoint()
+
+			arg_16_0._txtlocked2.text = string.format(luaLang("rouge_kehua_lock_tip"), var_16_4, var_16_3.cost)
+		else
+			arg_16_0._txtlocked.text = luaLang("rouge_talenttree_normal")
 		end
 	end
 
-	if slot2 then
-		slot0._detailAnimator:Update(0)
-		slot0._detailAnimator:Play("close", 0, 0)
+	if arg_16_2 then
+		arg_16_0._detailAnimator:Update(0)
+		arg_16_0._detailAnimator:Play("close", 0, 0)
 
-		slot0._isOpenDetail = false
+		arg_16_0._isOpenDetail = false
 
-		gohelper.setActive(slot0._godetail, slot0._isOpenDetail)
-		gohelper.setActive(slot0._gopoint, not slot0._isOpenDetail)
-		gohelper.setActive(slot0._btnoverview.gameObject, not slot0._isOpenDetail)
+		gohelper.setActive(arg_16_0._godetail, arg_16_0._isOpenDetail)
+		gohelper.setActive(arg_16_0._gopoint, not arg_16_0._isOpenDetail)
+		gohelper.setActive(arg_16_0._btnoverview.gameObject, not arg_16_0._isOpenDetail)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	function slot0._switchfunc()
-		TaskDispatcher.cancelTask(uv0._switchfunc, uv0)
-		RougeController.instance:dispatchEvent(RougeEvent.onSwitchTab, uv0._tabIndex)
+function var_0_0._editableInitView(arg_17_0)
+	function arg_17_0._switchfunc()
+		TaskDispatcher.cancelTask(arg_17_0._switchfunc, arg_17_0)
+		RougeController.instance:dispatchEvent(RougeEvent.onSwitchTab, arg_17_0._tabIndex)
 	end
 end
 
-function slot0._refreshUI(slot0, slot1)
-	slot2 = slot0._configList[slot0._tabIndex]
-	slot0._txttalentname.text = slot2.name
-	slot0._txttalentdec.text = slot2.desc
+function var_0_0._refreshUI(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0._configList[arg_19_0._tabIndex]
 
-	if slot0._tabIndex == 1 then
-		gohelper.setActive(slot0._btnarrowleft.gameObject, false)
+	arg_19_0._txttalentname.text = var_19_0.name
+	arg_19_0._txttalentdec.text = var_19_0.desc
+
+	if arg_19_0._tabIndex == 1 then
+		gohelper.setActive(arg_19_0._btnarrowleft.gameObject, false)
 	else
-		gohelper.setActive(slot0._btnarrowleft.gameObject, true)
+		gohelper.setActive(arg_19_0._btnarrowleft.gameObject, true)
 	end
 
-	if slot0._tabIndex == #slot0._configList then
-		gohelper.setActive(slot0._btnarrowright.gameObject, false)
+	if arg_19_0._tabIndex == #arg_19_0._configList then
+		gohelper.setActive(arg_19_0._btnarrowright.gameObject, false)
 	else
-		gohelper.setActive(slot0._btnarrowright.gameObject, true)
+		gohelper.setActive(arg_19_0._btnarrowright.gameObject, true)
 	end
 
-	slot0._txtnum.text = RougeTalentModel.instance:getTalentPoint()
-	slot0._txttoprighttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_talenttree_remaintalent"), {
-		RougeTalentModel.instance:getHadAllTalentPoint(),
-		RougeConfig.instance:getOutSideConstValueByID(RougeEnum.OutsideConst.SkillPointLimit)
-	})
+	arg_19_0._txtnum.text = RougeTalentModel.instance:getTalentPoint()
 
-	if slot1 then
-		slot0:_refreshDetail(RougeTalentConfig.instance:getBranchConfigByID(slot0._season, slot1), slot1)
+	local var_19_1 = RougeConfig.instance:getOutSideConstValueByID(RougeEnum.OutsideConst.SkillPointLimit)
+	local var_19_2 = RougeTalentModel.instance:getHadAllTalentPoint()
+	local var_19_3 = {
+		var_19_2,
+		var_19_1
+	}
+
+	arg_19_0._txttoprighttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_talenttree_remaintalent"), var_19_3)
+
+	if arg_19_1 then
+		local var_19_4 = RougeTalentConfig.instance:getBranchConfigByID(arg_19_0._season, arg_19_1)
+
+		arg_19_0:_refreshDetail(var_19_4, arg_19_1)
 	end
 end
 
-function slot0._refreshView(slot0)
-	for slot4, slot5 in ipairs(slot0._pointList) do
-		if slot0._tabIndex ~= slot4 then
-			gohelper.setActive(slot5.light, false)
+function var_0_0._refreshView(arg_20_0)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0._pointList) do
+		if arg_20_0._tabIndex ~= iter_20_0 then
+			gohelper.setActive(iter_20_1.light, false)
 		else
-			gohelper.setActive(slot5.light, true)
+			gohelper.setActive(iter_20_1.light, true)
 		end
 	end
 
-	slot0:_refreshUI()
+	arg_20_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0._season = RougeOutsideModel.instance:season()
+function var_0_0.onOpen(arg_21_0)
+	arg_21_0._season = RougeOutsideModel.instance:season()
 
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenTalentTreeView)
 
-	slot0._isOpenDetail = false
+	arg_21_0._isOpenDetail = false
 
-	gohelper.setActive(slot0._godetail, slot0._isOpenDetail)
+	gohelper.setActive(arg_21_0._godetail, arg_21_0._isOpenDetail)
 
-	slot0._tabIndex = nil
+	arg_21_0._tabIndex = nil
 
-	if slot0.viewParam then
-		slot0._tabIndex = slot0.viewParam
+	if arg_21_0.viewParam then
+		arg_21_0._tabIndex = arg_21_0.viewParam
 
-		slot0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot0._tabIndex)
+		arg_21_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_21_0._tabIndex)
 	end
 
-	slot0._configList = RougeTalentConfig.instance:getRougeTalentDict(slot0._season)
+	arg_21_0._configList = RougeTalentConfig.instance:getRougeTalentDict(arg_21_0._season)
 
-	for slot4, slot5 in ipairs(slot0._configList) do
-		if not slot0._pointList[slot4] then
-			slot6 = slot0:getUserDataTb_()
-			slot7 = gohelper.cloneInPlace(slot0._gopointitem, "talent" .. slot4)
-			slot6.go = slot7
-			slot6.light = gohelper.findChild(slot7, "point_light")
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._configList) do
+		local var_21_0 = arg_21_0._pointList[iter_21_0]
 
-			gohelper.setActive(slot7, true)
-			table.insert(slot0._pointList, slot6)
+		if not var_21_0 then
+			var_21_0 = arg_21_0:getUserDataTb_()
+
+			local var_21_1 = gohelper.cloneInPlace(arg_21_0._gopointitem, "talent" .. iter_21_0)
+
+			var_21_0.light, var_21_0.go = gohelper.findChild(var_21_1, "point_light"), var_21_1
+
+			gohelper.setActive(var_21_1, true)
+			table.insert(arg_21_0._pointList, var_21_0)
 		end
 
-		if slot0._tabIndex ~= slot4 then
-			gohelper.setActive(slot6.light, false)
+		if arg_21_0._tabIndex ~= iter_21_0 then
+			gohelper.setActive(var_21_0.light, false)
 		else
-			gohelper.setActive(slot6.light, true)
+			gohelper.setActive(var_21_0.light, true)
 		end
 	end
 
-	slot0._animator:Update(0)
-	slot0._animator:Play("open", 0, 0)
-	slot0:_refreshUI()
+	arg_21_0._animator:Update(0)
+	arg_21_0._animator:Play("open", 0, 0)
+	arg_21_0:_refreshUI()
 end
 
-function slot0.exitTalentView(slot0)
-	slot0._animator:Update(0)
-	slot0._animator:Play("close", 0, 0)
+function var_0_0.exitTalentView(arg_22_0)
+	arg_22_0._animator:Update(0)
+	arg_22_0._animator:Play("close", 0, 0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_23_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_24_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,252 +1,259 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballColliderEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballColliderEntity", package.seeall)
 
-slot0 = class("PinballColliderEntity", LuaCompBase)
+local var_0_0 = class("PinballColliderEntity", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0.x = 0
-	slot0.y = 0
-	slot0.vx = 0
-	slot0.vy = 0
-	slot0.ax = 0
-	slot0.ay = 0
-	slot0.decx = 0
-	slot0.decy = 0
-	slot0.curHitEntityIdList = {}
-	slot0.inBlackHoleId = nil
-	slot0.isDead = false
-	slot0.width = 1
-	slot0.height = 1
-	slot0.scale = 1
-	slot0.shape = PinballEnum.Shape.Rect
-	slot0.path = ""
-	slot0.id = 0
-	slot0.angle = 0
-	slot0.baseForceX = 1
-	slot0.baseForceY = 1
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.x = 0
+	arg_1_0.y = 0
+	arg_1_0.vx = 0
+	arg_1_0.vy = 0
+	arg_1_0.ax = 0
+	arg_1_0.ay = 0
+	arg_1_0.decx = 0
+	arg_1_0.decy = 0
+	arg_1_0.curHitEntityIdList = {}
+	arg_1_0.inBlackHoleId = nil
+	arg_1_0.isDead = false
+	arg_1_0.width = 1
+	arg_1_0.height = 1
+	arg_1_0.scale = 1
+	arg_1_0.shape = PinballEnum.Shape.Rect
+	arg_1_0.path = ""
+	arg_1_0.id = 0
+	arg_1_0.angle = 0
+	arg_1_0.baseForceX = 1
+	arg_1_0.baseForceY = 1
 
-	slot0:onInit()
+	arg_1_0:onInit()
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.initByCo(slot0, slot1)
-	if not slot1 then
+function var_0_0.initByCo(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	slot0.x = slot1.posX
-	slot0.y = slot1.posY
-	slot0.angle = slot1.angle
-	slot0.spData = slot1.specialData
-	slot0.path = slot1.spriteName
-	slot0.shape = slot1.shape
-	slot0.scale = slot1.scale
-	slot0.resType = slot1.resType
-	slot0.width = slot1.size.x / 2 * slot0.scale
-	slot0.height = slot1.size.y / 2 * slot0.scale
-	slot0.vx = slot1.speed.x
-	slot0.vy = slot1.speed.y
-	slot0.unitCo = slot1
+	arg_3_0.x = arg_3_1.posX
+	arg_3_0.y = arg_3_1.posY
+	arg_3_0.angle = arg_3_1.angle
+	arg_3_0.spData = arg_3_1.specialData
+	arg_3_0.path = arg_3_1.spriteName
+	arg_3_0.shape = arg_3_1.shape
+	arg_3_0.scale = arg_3_1.scale
+	arg_3_0.resType = arg_3_1.resType
+	arg_3_0.width = arg_3_1.size.x / 2 * arg_3_0.scale
+	arg_3_0.height = arg_3_1.size.y / 2 * arg_3_0.scale
+	arg_3_0.vx = arg_3_1.speed.x
+	arg_3_0.vy = arg_3_1.speed.y
+	arg_3_0.unitCo = arg_3_1
 
-	slot0:onInitByCo()
-	transformhelper.setLocalRotation(slot0.trans, 0, 0, slot0.angle)
-	transformhelper.setLocalScale(slot0.trans, slot0.scale, slot0.scale, slot0.scale)
+	arg_3_0:onInitByCo()
+	transformhelper.setLocalRotation(arg_3_0.trans, 0, 0, arg_3_0.angle)
+	transformhelper.setLocalScale(arg_3_0.trans, arg_3_0.scale, arg_3_0.scale, arg_3_0.scale)
 end
 
-function slot0.onInitByCo(slot0)
+function var_0_0.onInitByCo(arg_4_0)
+	return
 end
 
-function slot0.loadRes(slot0)
-	if not string.nilorempty(slot0.path) then
-		gohelper.setActive(slot0._imageComp, true)
-		UISpriteSetMgr.instance:setAct178Sprite(slot0._imageComp, slot0.path, true)
-		transformhelper.setLocalScale(slot0.trans, slot0.scale, slot0.scale, slot0.scale)
+function var_0_0.loadRes(arg_5_0)
+	if not string.nilorempty(arg_5_0.path) then
+		gohelper.setActive(arg_5_0._imageComp, true)
+		UISpriteSetMgr.instance:setAct178Sprite(arg_5_0._imageComp, arg_5_0.path, true)
+		transformhelper.setLocalScale(arg_5_0.trans, arg_5_0.scale, arg_5_0.scale, arg_5_0.scale)
 
-		if (slot0:isResType() or slot0.unitType == PinballEnum.UnitType.TriggerRefresh) and (slot0.vx ~= 0 or slot0.vy ~= 0) then
-			slot0._imageComp.maskable = true
+		if (arg_5_0:isResType() or arg_5_0.unitType == PinballEnum.UnitType.TriggerRefresh) and (arg_5_0.vx ~= 0 or arg_5_0.vy ~= 0) then
+			arg_5_0._imageComp.maskable = true
 		else
-			slot0._imageComp.maskable = false
+			arg_5_0._imageComp.maskable = false
 		end
 	else
-		gohelper.setActive(slot0._imageComp, false)
+		gohelper.setActive(arg_5_0._imageComp, false)
 	end
 end
 
-function slot0.onResLoaded(slot0)
+function var_0_0.onResLoaded(arg_6_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.trans = slot1.transform
-	slot0._imageComp = gohelper.findChildImage(slot0.go, "icon")
-	slot0._anim = gohelper.findChildAnim(slot1, "")
-	slot0._tail = gohelper.findChild(slot1, "trail")
+function var_0_0.init(arg_7_0, arg_7_1)
+	arg_7_0.go = arg_7_1
+	arg_7_0.trans = arg_7_1.transform
+	arg_7_0._imageComp = gohelper.findChildImage(arg_7_0.go, "icon")
+	arg_7_0._anim = gohelper.findChildAnim(arg_7_1, "")
+	arg_7_0._tail = gohelper.findChild(arg_7_1, "trail")
 
-	if slot0._tail then
-		slot0._tailEffect = gohelper.onceAddComponent(slot0._tail, typeof(ZProj.EffectTimeScale))
+	if arg_7_0._tail then
+		arg_7_0._tailEffect = gohelper.onceAddComponent(arg_7_0._tail, typeof(ZProj.EffectTimeScale))
 	end
 end
 
-function slot0.playAnim(slot0, slot1, slot2)
-	if not slot0._anim then
+function var_0_0.playAnim(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0._anim then
 		return
 	end
 
-	slot0._anim:Play(slot1, 0, slot2 or 0)
+	arg_8_0._anim:Play(arg_8_1, 0, arg_8_2 or 0)
 end
 
-function slot0.tick(slot0, slot1)
-	slot0.vx = (slot0.vx + slot0.ax * slot1) * (1 - slot0.decx * slot1)
-	slot0.vy = (slot0.vy + slot0.ay * slot1) * (1 - slot0.decy * slot1)
-	slot0.x = slot0.x + slot0.vx * slot1
-	slot0.y = slot0.y + slot0.vy * slot1
+function var_0_0.tick(arg_9_0, arg_9_1)
+	arg_9_0.vx = (arg_9_0.vx + arg_9_0.ax * arg_9_1) * (1 - arg_9_0.decx * arg_9_1)
+	arg_9_0.vy = (arg_9_0.vy + arg_9_0.ay * arg_9_1) * (1 - arg_9_0.decy * arg_9_1)
+	arg_9_0.x = arg_9_0.x + arg_9_0.vx * arg_9_1
+	arg_9_0.y = arg_9_0.y + arg_9_0.vy * arg_9_1
 
-	if not slot0._cacheX or slot0._cacheX ~= slot0.x or slot0._cacheY ~= slot0.y then
-		slot0._cacheX = slot0.x
-		slot0._cacheY = slot0.y
+	if not arg_9_0._cacheX or arg_9_0._cacheX ~= arg_9_0.x or arg_9_0._cacheY ~= arg_9_0.y then
+		arg_9_0._cacheX = arg_9_0.x
+		arg_9_0._cacheY = arg_9_0.y
 
-		recthelper.setAnchor(slot0.trans, slot0.x, slot0.y)
+		recthelper.setAnchor(arg_9_0.trans, arg_9_0.x, arg_9_0.y)
 	end
 
-	slot0:fixedPos()
-	slot0:onTick(slot1)
+	arg_9_0:fixedPos()
+	arg_9_0:onTick(arg_9_1)
 end
 
-function slot0._createLinkEntity(slot0, slot1, slot2)
-	if slot0.linkEntity then
+function var_0_0._createLinkEntity(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_0.linkEntity then
 		return
 	end
 
-	slot0.linkEntity = PinballEntityMgr.instance:addEntity(slot0.unitType, slot0.unitCo)
-	slot0.linkEntity.x = slot1
-	slot0.linkEntity.y = slot2
-	slot0.linkEntity.vx = slot0.vx
-	slot0.linkEntity.vy = slot0.vy
-	slot0.linkEntity.linkEntity = slot0
+	arg_10_0.linkEntity = PinballEntityMgr.instance:addEntity(arg_10_0.unitType, arg_10_0.unitCo)
+	arg_10_0.linkEntity.x = arg_10_1
+	arg_10_0.linkEntity.y = arg_10_2
+	arg_10_0.linkEntity.vx = arg_10_0.vx
+	arg_10_0.linkEntity.vy = arg_10_0.vy
+	arg_10_0.linkEntity.linkEntity = arg_10_0
 
-	slot0.linkEntity:tick(0)
-	slot0:onCreateLinkEntity(slot0.linkEntity)
+	arg_10_0.linkEntity:tick(0)
+	arg_10_0:onCreateLinkEntity(arg_10_0.linkEntity)
 end
 
-function slot0.onCreateLinkEntity(slot0, slot1)
+function var_0_0.onCreateLinkEntity(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0._delLinkEntity(slot0)
-	if slot0.linkEntity then
-		slot0.linkEntity.linkEntity = nil
+function var_0_0._delLinkEntity(arg_12_0)
+	if arg_12_0.linkEntity then
+		arg_12_0.linkEntity.linkEntity = nil
 	end
 
-	slot0.isDead = true
+	arg_12_0.isDead = true
 end
 
-function slot0.fixedPos(slot0)
-	if slot0.isDead then
+function var_0_0.fixedPos(arg_13_0)
+	if arg_13_0.isDead then
 		return
 	end
 
-	if slot0.vx > 0 then
-		if PinballConst.Const3 < slot0.x + slot0.width then
-			slot0:_createLinkEntity(PinballConst.Const4 - slot0.width, slot0.y)
+	if arg_13_0.vx > 0 then
+		if arg_13_0.x + arg_13_0.width > PinballConst.Const3 then
+			arg_13_0:_createLinkEntity(PinballConst.Const4 - arg_13_0.width, arg_13_0.y)
 		end
 
-		if PinballConst.Const3 < slot0.x - slot0.width then
-			slot0:_delLinkEntity()
+		if arg_13_0.x - arg_13_0.width > PinballConst.Const3 then
+			arg_13_0:_delLinkEntity()
 
 			return
 		end
-	elseif slot0.vx < 0 then
-		if slot0.x - slot0.width < PinballConst.Const4 then
-			slot0:_createLinkEntity(PinballConst.Const3 + slot0.width, slot0.y)
+	elseif arg_13_0.vx < 0 then
+		if arg_13_0.x - arg_13_0.width < PinballConst.Const4 then
+			arg_13_0:_createLinkEntity(PinballConst.Const3 + arg_13_0.width, arg_13_0.y)
 		end
 
-		if slot0.x + slot0.width < PinballConst.Const4 then
-			slot0:_delLinkEntity()
+		if arg_13_0.x + arg_13_0.width < PinballConst.Const4 then
+			arg_13_0:_delLinkEntity()
 
 			return
 		end
 	end
 
-	if slot0.vy > 0 then
-		if PinballConst.Const1 < slot0.y + slot0.height then
-			slot0:_createLinkEntity(slot0.x, PinballConst.Const2 - slot0.height)
+	if arg_13_0.vy > 0 then
+		if arg_13_0.y + arg_13_0.height > PinballConst.Const1 then
+			arg_13_0:_createLinkEntity(arg_13_0.x, PinballConst.Const2 - arg_13_0.height)
 		end
 
-		if PinballConst.Const1 < slot0.y - slot0.height then
-			slot0:_delLinkEntity()
+		if arg_13_0.y - arg_13_0.height > PinballConst.Const1 then
+			arg_13_0:_delLinkEntity()
 
 			return
 		end
-	elseif slot0.vy < 0 then
-		if slot0.y - slot0.height < PinballConst.Const2 then
-			slot0:_createLinkEntity(slot0.x, PinballConst.Const1 + slot0.height)
+	elseif arg_13_0.vy < 0 then
+		if arg_13_0.y - arg_13_0.height < PinballConst.Const2 then
+			arg_13_0:_createLinkEntity(arg_13_0.x, PinballConst.Const1 + arg_13_0.height)
 		end
 
-		if slot0.y + slot0.height < PinballConst.Const2 then
-			slot0:_delLinkEntity()
+		if arg_13_0.y + arg_13_0.height < PinballConst.Const2 then
+			arg_13_0:_delLinkEntity()
 
 			return
 		end
 	end
 end
 
-function slot0.canHit(slot0)
+function var_0_0.canHit(arg_14_0)
 	return true
 end
 
-function slot0.isCheckHit(slot0)
+function var_0_0.isCheckHit(arg_15_0)
 	return false
 end
 
-function slot0.isBounce(slot0)
+function var_0_0.isBounce(arg_16_0)
 	return true
 end
 
-function slot0.isResType(slot0)
-	return PinballHelper.isResType(slot0.unitType)
+function var_0_0.isResType(arg_17_0)
+	return PinballHelper.isResType(arg_17_0.unitType)
 end
 
-function slot0.isMarblesType(slot0)
-	return PinballHelper.isMarblesType(slot0.unitType)
+function var_0_0.isMarblesType(arg_18_0)
+	return PinballHelper.isMarblesType(arg_18_0.unitType)
 end
 
-function slot0.isOtherType(slot0)
-	return PinballHelper.isOtherType(slot0.unitType)
+function var_0_0.isOtherType(arg_19_0)
+	return PinballHelper.isOtherType(arg_19_0.unitType)
 end
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.onHitEnter(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
+	return
 end
 
-function slot0.onHitExit(slot0, slot1)
+function var_0_0.onHitExit(arg_21_0, arg_21_1)
+	return
 end
 
-function slot0.onEnterHole(slot0)
-	gohelper.setActive(slot0._tail, false)
+function var_0_0.onEnterHole(arg_22_0)
+	gohelper.setActive(arg_22_0._tail, false)
 end
 
-function slot0.onExitHole(slot0)
-	gohelper.setActive(slot0._tail, true)
+function var_0_0.onExitHole(arg_23_0)
+	gohelper.setActive(arg_23_0._tail, true)
 end
 
-function slot0.onTick(slot0, slot1)
+function var_0_0.onTick(arg_24_0, arg_24_1)
+	return
 end
 
-function slot0.markDead(slot0)
-	slot0.isDead = true
+function var_0_0.markDead(arg_25_0)
+	arg_25_0.isDead = true
 
-	if slot0.linkEntity and not slot0.linkEntity.isDead then
-		slot0.linkEntity:markDead()
+	if arg_25_0.linkEntity and not arg_25_0.linkEntity.isDead then
+		arg_25_0.linkEntity:markDead()
 
-		slot0.linkEntity = nil
+		arg_25_0.linkEntity = nil
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0.curHitEntityIdList = {}
+function var_0_0.onDestroy(arg_26_0)
+	arg_26_0.curHitEntityIdList = {}
 end
 
-function slot0.dispose(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.dispose(arg_27_0)
+	gohelper.destroy(arg_27_0.go)
 end
 
-return slot0
+return var_0_0

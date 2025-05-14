@@ -1,246 +1,281 @@
-module("modules.live2d.Live2dVoiceMouthOfflineAuto", package.seeall)
+﻿module("modules.live2d.Live2dVoiceMouthOfflineAuto", package.seeall)
 
-slot0 = class("Live2dVoiceMouthOfflineAuto", SpineVoiceMouth)
-slot0.AutoActionName = "_auto"
-slot0.AutoMouthThreshold = 0.1
+local var_0_0 = class("Live2dVoiceMouthOfflineAuto", SpineVoiceMouth)
 
-function slot0._playMouthActionList(slot0, slot1)
-	slot0._lastMouthId = nil
-	slot0._lastFaceAction = nil
-	slot0._faceActionSpList = nil
-	slot0._voiceStartTime = Time.time
-	slot0._autoMouthRunning = false
-	slot0._manualMouthRunning = false
-	slot0._forceFace = nil
+var_0_0.AutoActionName = "_auto"
+var_0_0.AutoMouthThreshold = 0.1
 
-	if slot0._forceNoMouth then
-		slot0:_onMouthEnd()
+function var_0_0._playMouthActionList(arg_1_0, arg_1_1)
+	arg_1_0._lastMouthId = nil
+	arg_1_0._lastFaceAction = nil
+	arg_1_0._faceActionSpList = nil
+	arg_1_0._voiceStartTime = Time.time
+	arg_1_0._autoMouthRunning = false
+	arg_1_0._manualMouthRunning = false
+	arg_1_0._forceFace = nil
+
+	if arg_1_0._forceNoMouth then
+		arg_1_0:_onMouthEnd()
 
 		return
 	end
 
-	if slot0._voiceConfig.heroId == 3038 and not slot0._hasAudio then
-		slot0:_onMouthEnd()
+	if arg_1_0._voiceConfig.heroId == 3038 and not arg_1_0._hasAudio then
+		arg_1_0:_onMouthEnd()
 	end
 
-	logNormal("start audio mouth: " .. tostring(slot1))
-	logNormal("start audio face: " .. slot0:getFace(slot0._voiceConfig))
+	logNormal("start audio mouth: " .. tostring(arg_1_1))
+	logNormal("start audio face: " .. arg_1_0:getFace(arg_1_0._voiceConfig))
 
-	if LuaUtil.isEmptyStr(slot1) then
-		if slot0._hasAudio then
-			TaskDispatcher.runRepeat(slot0._mouthRepeat, slot0, 0.03, 2000)
+	if LuaUtil.isEmptyStr(arg_1_1) then
+		if arg_1_0._hasAudio then
+			TaskDispatcher.runRepeat(arg_1_0._mouthRepeat, arg_1_0, 0.03, 2000)
 		else
-			slot0:_onMouthEnd()
+			arg_1_0:_onMouthEnd()
 		end
 	else
-		slot0._mouthDelayCallbackList = {}
-		slot2 = nil
+		arg_1_0._mouthDelayCallbackList = {}
 
-		if not string.nilorempty(slot1) then
-			slot0:_configValidity(string.split(slot1, "|"), slot0._spine)
+		local var_1_0
+
+		if not string.nilorempty(arg_1_1) then
+			var_1_0 = string.split(arg_1_1, "|")
+
+			arg_1_0:_configValidity(var_1_0, arg_1_0._spine)
 		else
-			slot2 = {}
+			var_1_0 = {}
 		end
 
-		slot0:startLipSync()
+		arg_1_0:startLipSync()
 
-		slot3 = #slot2
+		local var_1_1 = #var_1_0
 
-		for slot7, slot8 in ipairs(slot2) do
-			slot9 = string.split(slot8, "#")
-			slot11 = tonumber(slot9[2])
-			slot12 = tonumber(slot9[3])
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			local var_1_2 = string.split(iter_1_1, "#")
+			local var_1_3 = var_1_2[1]
+			local var_1_4 = tonumber(var_1_2[2])
+			local var_1_5 = tonumber(var_1_2[3])
 
-			if slot0:_hasAuto(slot9[1]) and slot10 ~= uv0.AutoActionName then
-				slot0._forceFace = string.gsub(slot10, uv0.AutoActionName, "")
-				slot10 = uv0.AutoActionName
+			if arg_1_0:_hasAuto(var_1_3) and var_1_3 ~= var_0_0.AutoActionName then
+				arg_1_0._forceFace = string.gsub(var_1_3, var_0_0.AutoActionName, "")
+				var_1_3 = var_0_0.AutoActionName
 			end
 
-			if not slot0:_hasAuto(slot10) then
-				slot0:_addMouth(slot7 == slot3, slot10, slot11, slot12)
+			if not arg_1_0:_hasAuto(var_1_3) then
+				arg_1_0:_addMouth(iter_1_0 == var_1_1, var_1_3, var_1_4, var_1_5)
 			end
 		end
 
-		if slot3 <= 0 then
-			slot0:_onMouthEnd()
+		if var_1_1 <= 0 then
+			arg_1_0:_onMouthEnd()
 		end
 	end
 end
 
-function slot0._hasAuto(slot0, slot1)
-	return string.find(slot1, uv0.AutoActionName)
+function var_0_0._hasAuto(arg_2_0, arg_2_1)
+	return string.find(arg_2_1, var_0_0.AutoActionName)
 end
 
-function slot0._configValidity(slot0, slot1, slot2)
-	for slot6 = #slot1, 1, -1 do
-		slot9 = true
+function var_0_0._configValidity(arg_3_0, arg_3_1, arg_3_2)
+	for iter_3_0 = #arg_3_1, 1, -1 do
+		local var_3_0 = arg_3_1[iter_3_0]
+		local var_3_1 = string.split(var_3_0, "#")
+		local var_3_2 = true
 
-		if #string.split(slot1[slot6], "#") == 3 and (slot2:hasAnimation("t_" .. slot8[1]) or slot0:_hasAuto(slot8[1])) then
-			slot9 = false
+		if #var_3_1 == 3 then
+			local var_3_3 = "t_" .. var_3_1[1]
+
+			if arg_3_2:hasAnimation(var_3_3) or arg_3_0:_hasAuto(var_3_1[1]) then
+				var_3_2 = false
+			end
 		end
 
-		if slot9 then
-			logError(string.format("id：%s 语音 mouth 无效的配置：%s mouth:%s", slot0._voiceConfig.audio, slot7, slot0._voiceConfig.mouth))
-			table.remove(slot1, slot6)
+		if var_3_2 then
+			logError(string.format("id：%s 语音 mouth 无效的配置：%s mouth:%s", arg_3_0._voiceConfig.audio, var_3_0, arg_3_0._voiceConfig.mouth))
+			table.remove(arg_3_1, iter_3_0)
 		end
 	end
 end
 
-function slot0._addMouth(slot0, slot1, slot2, slot3, slot4)
-	table.insert(slot0._mouthDelayCallbackList, function ()
-		if uv0._spine then
-			uv0._curMouth = "t_" .. uv1
-			uv0._lastFaceAction = uv1 or uv0._lastFaceAction
-			uv0._curMouthEnd = nil
+function var_0_0._addMouth(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local function var_4_0()
+		if arg_4_0._spine then
+			arg_4_0._curMouth = "t_" .. arg_4_2
+			arg_4_0._lastFaceAction = arg_4_2 or arg_4_0._lastFaceAction
+			arg_4_0._curMouthEnd = nil
 
-			uv0._spine:setMouthAnimation(uv0._curMouth, true, 0)
+			arg_4_0._spine:setMouthAnimation(arg_4_0._curMouth, true, 0)
 
-			uv0._manualMouthRunning = true
+			arg_4_0._manualMouthRunning = true
 		end
-	end)
-	table.insert(slot0._mouthDelayCallbackList, function ()
-		if uv0._spine then
-			uv0:stopMouthCallback(true)
+	end
 
-			uv0._manualMouthRunning = false
+	local function var_4_1()
+		if arg_4_0._spine then
+			arg_4_0:stopMouthCallback(true)
 
-			if uv0._autoMouthRunning then
-				-- Nothing
+			arg_4_0._manualMouthRunning = false
+
+			if arg_4_0._autoMouthRunning then
+				-- block empty
 			end
 		end
-	end)
+	end
 
-	if slot3 > 0 then
-		TaskDispatcher.runDelay(slot5, nil, slot3)
+	table.insert(arg_4_0._mouthDelayCallbackList, var_4_0)
+	table.insert(arg_4_0._mouthDelayCallbackList, var_4_1)
+
+	if arg_4_3 > 0 then
+		TaskDispatcher.runDelay(var_4_0, nil, arg_4_3)
 	else
-		slot5()
+		var_4_0()
 	end
 
-	TaskDispatcher.runDelay(slot6, nil, slot4)
+	TaskDispatcher.runDelay(var_4_1, nil, arg_4_4)
 end
 
-function slot0.startLipSync(slot0)
-	if not gohelper.isNil(slot0._spine and slot0._spine:getMouthController()) then
-		slot1:StartListen()
-		TaskDispatcher.runRepeat(slot0._lipSyncUpdate, slot0, 0.01, 2000)
+function var_0_0.startLipSync(arg_7_0)
+	local var_7_0 = arg_7_0._spine and arg_7_0._spine:getMouthController()
+
+	if not gohelper.isNil(var_7_0) then
+		var_7_0:StartListen()
+		TaskDispatcher.runRepeat(arg_7_0._lipSyncUpdate, arg_7_0, 0.01, 2000)
 	end
 end
 
-function slot0.stopLipSync(slot0)
-	if not gohelper.isNil(slot0._spine and slot0._spine:getMouthController()) then
-		slot1:Stop()
+function var_0_0.stopLipSync(arg_8_0)
+	local var_8_0 = arg_8_0._spine and arg_8_0._spine:getMouthController()
+
+	if not gohelper.isNil(var_8_0) then
+		var_8_0:Stop()
 	end
 
-	TaskDispatcher.cancelTask(slot0._lipSyncUpdate, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._lipSyncUpdate, arg_8_0)
 end
 
-function slot0._lipSyncUpdate(slot0)
-	slot1 = slot0._spine._cubismMouthController.MouthValue
+function var_0_0._lipSyncUpdate(arg_9_0)
+	local var_9_0 = arg_9_0._spine._cubismMouthController.MouthValue
 
-	if slot0._manualMouthRunning then
+	if arg_9_0._manualMouthRunning then
 		return
 	end
 
-	slot2 = Time.time - slot0._voiceStartTime
-	slot4 = nil
+	local var_9_1 = Time.time - arg_9_0._voiceStartTime
+	local var_9_2 = arg_9_0:_getFaceActionList()
+	local var_9_3
 
-	for slot8, slot9 in ipairs(slot0:_getFaceActionList()) do
-		if slot9[2] <= slot2 and slot2 < slot9[3] then
-			slot4 = slot9[1]
+	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
+		if var_9_1 >= iter_9_1[2] and var_9_1 < iter_9_1[3] then
+			var_9_3 = iter_9_1[1]
 		end
 	end
 
-	if slot0._forceFace then
-		slot4 = slot0._forceFace
+	if arg_9_0._forceFace then
+		var_9_3 = arg_9_0._forceFace
 	end
 
-	slot5 = slot4 and "t_" .. slot4
-	slot0._lastFaceAction = slot4 or slot0._lastFaceAction
+	local var_9_4 = var_9_3 and "t_" .. var_9_3
 
-	if uv0.AutoMouthThreshold < slot1 then
-		if slot4 and slot0._spine:hasAnimation(slot5) then
-			if slot5 ~= slot0._curMouth then
-				slot0._curMouth = slot5
-				slot0._curMouthEnd = nil
+	arg_9_0._lastFaceAction = var_9_3 or arg_9_0._lastFaceAction
 
-				slot0._spine:setMouthAnimation(slot0._curMouth, true, 0)
+	if var_9_0 > var_0_0.AutoMouthThreshold then
+		if var_9_3 and arg_9_0._spine:hasAnimation(var_9_4) then
+			if var_9_4 ~= arg_9_0._curMouth then
+				arg_9_0._curMouth = var_9_4
+				arg_9_0._curMouthEnd = nil
+
+				arg_9_0._spine:setMouthAnimation(arg_9_0._curMouth, true, 0)
 			end
-		elseif slot0._spine:hasAnimation(StoryAnimName.T_ZhengChang) and slot0._curMouth ~= StoryAnimName.T_ZhengChang then
-			slot0._curMouth = StoryAnimName.T_ZhengChang
+		elseif arg_9_0._spine:hasAnimation(StoryAnimName.T_ZhengChang) and arg_9_0._curMouth ~= StoryAnimName.T_ZhengChang then
+			arg_9_0._curMouth = StoryAnimName.T_ZhengChang
 
-			slot0._spine:setMouthAnimation(slot0._curMouth, true, 0)
+			arg_9_0._spine:setMouthAnimation(arg_9_0._curMouth, true, 0)
 		end
 	else
-		slot0:_setBiZui()
+		arg_9_0:_setBiZui()
 	end
 end
 
-function slot0._getFaceActionList(slot0)
-	if not slot0._faceActionSpList then
-		slot0._faceActionSpList = {}
+function var_0_0._getFaceActionList(arg_10_0)
+	if not arg_10_0._faceActionSpList then
+		arg_10_0._faceActionSpList = {}
 
-		for slot6, slot7 in ipairs(string.split(slot0:getFace(slot0._voiceConfig), "|")) do
-			if #string.split(slot7, "#") >= 3 then
-				table.insert(slot0._faceActionSpList, {
-					slot8[1],
-					tonumber(slot8[2]),
-					tonumber(slot8[3])
+		local var_10_0 = arg_10_0:getFace(arg_10_0._voiceConfig)
+		local var_10_1 = string.split(var_10_0, "|")
+
+		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+			local var_10_2 = string.split(iter_10_1, "#")
+
+			if #var_10_2 >= 3 then
+				local var_10_3 = var_10_2[1]
+				local var_10_4 = tonumber(var_10_2[2])
+				local var_10_5 = tonumber(var_10_2[3])
+
+				table.insert(arg_10_0._faceActionSpList, {
+					var_10_3,
+					var_10_4,
+					var_10_5
 				})
 			end
 		end
 	end
 
-	return slot0._faceActionSpList
+	return arg_10_0._faceActionSpList
 end
 
-function slot0._mouthRepeat(slot0)
+function var_0_0._mouthRepeat(arg_11_0)
+	return
 end
 
-function slot0._setBiZui(slot0)
-	if not string.nilorempty(slot0._lastFaceAction) and not slot0._isVoiceStop and slot0._spine:hasAnimation(string.format("t_%s_%s", slot0._lastFaceAction, "bizui")) then
-		if slot0._curMouth ~= slot1 then
-			slot0._curMouth = slot1
+function var_0_0._setBiZui(arg_12_0)
+	if not string.nilorempty(arg_12_0._lastFaceAction) and not arg_12_0._isVoiceStop then
+		local var_12_0 = string.format("t_%s_%s", arg_12_0._lastFaceAction, "bizui")
 
-			slot0._spine:setMouthAnimation(slot0._curMouth, true, 0)
+		if arg_12_0._spine:hasAnimation(var_12_0) then
+			if arg_12_0._curMouth ~= var_12_0 then
+				arg_12_0._curMouth = var_12_0
+
+				arg_12_0._spine:setMouthAnimation(arg_12_0._curMouth, true, 0)
+			end
+
+			return
 		end
-
-		return
 	end
 
-	if slot0._curMouth ~= StoryAnimName.T_BiZui then
-		if slot0._spine:hasAnimation(StoryAnimName.T_BiZui) then
-			slot0._curMouth = StoryAnimName.T_BiZui
+	if arg_12_0._curMouth ~= StoryAnimName.T_BiZui then
+		if arg_12_0._spine:hasAnimation(StoryAnimName.T_BiZui) then
+			arg_12_0._curMouth = StoryAnimName.T_BiZui
 
-			slot0._spine:setMouthAnimation(slot0._curMouth, true, 0)
+			arg_12_0._spine:setMouthAnimation(arg_12_0._curMouth, true, 0)
 		else
-			slot0._curMouth = StoryAnimName.T_BiZui
+			arg_12_0._curMouth = StoryAnimName.T_BiZui
 
-			logError("no animation:t_bizui, heroId = " .. (slot0._voiceConfig and slot0._voiceConfig.heroId or "nil"))
+			logError("no animation:t_bizui, heroId = " .. (arg_12_0._voiceConfig and arg_12_0._voiceConfig.heroId or "nil"))
 		end
 	end
 end
 
-function slot0.onVoiceStop(slot0)
-	slot0._isVoiceStop = true
+function var_0_0.onVoiceStop(arg_13_0)
+	arg_13_0._isVoiceStop = true
 
-	slot0:stopMouth()
+	arg_13_0:stopMouth()
 
-	slot0._isVoiceStop = false
+	arg_13_0._isVoiceStop = false
 
-	slot0:removeTaskActions()
+	arg_13_0:removeTaskActions()
 
-	slot0._autoMouthRunning = false
-	slot0._manualMouthRunning = false
-	slot0._faceActionSpList = nil
+	arg_13_0._autoMouthRunning = false
+	arg_13_0._manualMouthRunning = false
+	arg_13_0._faceActionSpList = nil
 end
 
-function slot0.removeTaskActions(slot0)
-	uv0.super.removeTaskActions(slot0)
-	slot0:stopLipSync()
+function var_0_0.removeTaskActions(arg_14_0)
+	var_0_0.super.removeTaskActions(arg_14_0)
+	arg_14_0:stopLipSync()
 end
 
-function slot0.suspend(slot0)
-	slot0:removeTaskActions()
+function var_0_0.suspend(arg_15_0)
+	arg_15_0:removeTaskActions()
 end
 
-return slot0
+return var_0_0

@@ -1,231 +1,249 @@
-module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewStageItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewStageItem", package.seeall)
 
-slot0 = class("JiaLaBoNaMapViewStageItem", LuaCompBase)
+local var_0_0 = class("JiaLaBoNaMapViewStageItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._goRoot = gohelper.findChild(slot0.viewGO, "Root")
-	slot0._imagePoint = gohelper.findChildImage(slot0.viewGO, "Root/#image_Point")
-	slot0._imageStageFinishedBG = gohelper.findChildImage(slot0.viewGO, "Root/unlock/#image_StageFinishedBG")
-	slot0._imageLine = gohelper.findChildImage(slot0.viewGO, "Root/unlock/#image_Line")
-	slot0._imageAngle = gohelper.findChildImage(slot0.viewGO, "Root/unlock/#image_Angle")
-	slot0._txtStageName = gohelper.findChildText(slot0.viewGO, "Root/unlock/Info/#txt_StageName")
-	slot0._txtStageNum = gohelper.findChildText(slot0.viewGO, "Root/unlock/Info/#txt_StageName/#txt_StageNum")
-	slot0._imageNoStar = gohelper.findChildImage(slot0.viewGO, "Root/unlock/Info/#txt_StageName/#image_NoStar")
-	slot0._imageHasStar = gohelper.findChildImage(slot0.viewGO, "Root/unlock/Info/#txt_StageName/#image_HasStar")
-	slot0._btnReview = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/unlock/Info/#txt_StageName/#btn_Review")
-	slot0._btnClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/unlock/#btn_Click")
-	slot0._imagechess = gohelper.findChildImage(slot0.viewGO, "Root/unlock/image_chess")
-	slot0._goUnLock = gohelper.findChild(slot0.viewGO, "Root/unlock")
-	slot0._animator = slot0.viewGO:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._goRoot = gohelper.findChild(arg_1_0.viewGO, "Root")
+	arg_1_0._imagePoint = gohelper.findChildImage(arg_1_0.viewGO, "Root/#image_Point")
+	arg_1_0._imageStageFinishedBG = gohelper.findChildImage(arg_1_0.viewGO, "Root/unlock/#image_StageFinishedBG")
+	arg_1_0._imageLine = gohelper.findChildImage(arg_1_0.viewGO, "Root/unlock/#image_Line")
+	arg_1_0._imageAngle = gohelper.findChildImage(arg_1_0.viewGO, "Root/unlock/#image_Angle")
+	arg_1_0._txtStageName = gohelper.findChildText(arg_1_0.viewGO, "Root/unlock/Info/#txt_StageName")
+	arg_1_0._txtStageNum = gohelper.findChildText(arg_1_0.viewGO, "Root/unlock/Info/#txt_StageName/#txt_StageNum")
+	arg_1_0._imageNoStar = gohelper.findChildImage(arg_1_0.viewGO, "Root/unlock/Info/#txt_StageName/#image_NoStar")
+	arg_1_0._imageHasStar = gohelper.findChildImage(arg_1_0.viewGO, "Root/unlock/Info/#txt_StageName/#image_HasStar")
+	arg_1_0._btnReview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/unlock/Info/#txt_StageName/#btn_Review")
+	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/unlock/#btn_Click")
+	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0.viewGO, "Root/unlock/image_chess")
+	arg_1_0._goUnLock = gohelper.findChild(arg_1_0.viewGO, "Root/unlock")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
 
-	gohelper.setActive(slot0._imagechess, false)
+	gohelper.setActive(arg_1_0._imagechess, false)
 
-	slot0._chessAnimator = gohelper.findChild(slot0.viewGO, "Root/unlock/image_chess/ani"):GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+	arg_1_0._chessAnimator = gohelper.findChild(arg_1_0.viewGO, "Root/unlock/image_chess/ani"):GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnClick:AddClickListener(slot0._btnClickOnClick, slot0)
-	slot0._btnReview:AddClickListener(slot0._btnReviewOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
+	arg_2_0._btnReview:AddClickListener(arg_2_0._btnReviewOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	if slot0._btnClick then
-		slot0._btnClick:RemoveClickListener()
-		slot0._btnReview:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	if arg_3_0._btnClick then
+		arg_3_0._btnClick:RemoveClickListener()
+		arg_3_0._btnReview:RemoveClickListener()
 	end
 end
 
-function slot0._btnClickOnClick(slot0)
-	if slot0._config then
-		JiaLaBoNaController.instance:enterChessGame(slot0._config.activityId, slot0._config.id, Activity120Model.instance:getCurEpisodeId() == slot0._config.id and 0.1 or 0.6)
+function var_0_0._btnClickOnClick(arg_4_0)
+	if arg_4_0._config then
+		local var_4_0 = Activity120Model.instance:getCurEpisodeId() == arg_4_0._config.id
+
+		JiaLaBoNaController.instance:enterChessGame(arg_4_0._config.activityId, arg_4_0._config.id, var_4_0 and 0.1 or 0.6)
 		JiaLaBoNaController.instance:dispatchEvent(JiaLaBoNaEvent.SelectEpisode)
 	end
 end
 
-function slot0._btnReviewOnClick(slot0)
-	if slot0._config then
-		JiaLaBoNaController.instance:openStoryView(slot0._config.id)
+function var_0_0._btnReviewOnClick(arg_5_0)
+	if arg_5_0._config then
+		JiaLaBoNaController.instance:openStoryView(arg_5_0._config.id)
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	return
 end
 
-function slot0.onSelect(slot0)
-	if not slot0._config then
+function var_0_0.onSelect(arg_7_0)
+	if not arg_7_0._config then
 		return
 	end
 
-	if slot0._isLasetSelect == (slot0._config.id == Activity120Model.instance:getCurEpisodeId()) then
+	local var_7_0 = Activity120Model.instance:getCurEpisodeId()
+	local var_7_1 = arg_7_0._config.id == var_7_0
+
+	if arg_7_0._isLasetSelect == var_7_1 then
 		return
 	end
 
-	if slot0._isLasetSelect == nil then
-		slot0._isLasetSelect = slot2
-		slot0._isLastSelectId = slot1
+	if arg_7_0._isLasetSelect == nil then
+		arg_7_0._isLasetSelect = var_7_1
+		arg_7_0._isLastSelectId = var_7_0
 
-		gohelper.setActive(slot0._imagechess, slot2)
+		gohelper.setActive(arg_7_0._imagechess, var_7_1)
 	else
-		TaskDispatcher.cancelTask(slot0._playChessAnim, slot0)
+		TaskDispatcher.cancelTask(arg_7_0._playChessAnim, arg_7_0)
 
-		slot0._isLasetSelect = slot2
+		arg_7_0._isLasetSelect = var_7_1
 
-		if slot0._isLasetSelect then
+		if arg_7_0._isLasetSelect then
 			AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_role_move)
-			TaskDispatcher.runDelay(slot0._playChessAnim, slot0, 0.15)
+			TaskDispatcher.runDelay(arg_7_0._playChessAnim, arg_7_0, 0.15)
 		else
-			slot0:_playChessAnim()
+			arg_7_0:_playChessAnim()
 		end
 	end
 end
 
-function slot0._playChessAnim(slot0)
-	if not slot0._config then
+function var_0_0._playChessAnim(arg_8_0)
+	if not arg_8_0._config then
 		return
 	end
 
-	slot1 = Activity120Model.instance:getCurEpisodeId()
-	slot0._isLastSelectId = slot1
-	slot3 = slot0:_getChessAnimName((slot0._isLastSelectId or slot0._config.id) < slot1)
+	local var_8_0 = Activity120Model.instance:getCurEpisodeId()
+	local var_8_1 = arg_8_0._isLastSelectId or arg_8_0._config.id
 
-	if slot0._isLasetSelect then
-		gohelper.setActive(slot0._imagechess, true)
+	arg_8_0._isLastSelectId = var_8_0
+
+	local var_8_2 = arg_8_0:_getChessAnimName(var_8_1 < var_8_0)
+
+	if arg_8_0._isLasetSelect then
+		gohelper.setActive(arg_8_0._imagechess, true)
 	end
 
-	slot0._chessAnimator:Play(slot3)
-	TaskDispatcher.cancelTask(slot0._onChessAnimEnd, slot0)
-	TaskDispatcher.runDelay(slot0._onChessAnimEnd, slot0, 0.3)
+	arg_8_0._chessAnimator:Play(var_8_2)
+	TaskDispatcher.cancelTask(arg_8_0._onChessAnimEnd, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0._onChessAnimEnd, arg_8_0, 0.3)
 end
 
-function slot0._onChessAnimEnd(slot0)
-	gohelper.setActive(slot0._imagechess, slot0._isLasetSelect)
+function var_0_0._onChessAnimEnd(arg_9_0)
+	gohelper.setActive(arg_9_0._imagechess, arg_9_0._isLasetSelect)
 end
 
-function slot0._getChessAnimName(slot0, slot1)
-	if slot0._isLasetSelect then
-		return slot1 and "open_right" or "open_left"
+function var_0_0._getChessAnimName(arg_10_0, arg_10_1)
+	if arg_10_0._isLasetSelect then
+		return arg_10_1 and "open_right" or "open_left"
 	end
 
-	return slot1 and "close_right" or "close_left"
+	return arg_10_1 and "close_right" or "close_left"
 end
 
-function slot0.setStageType(slot0, slot1)
-	slot0._stageType = slot1 or JiaLaBoNaEnum.StageType.Main
+function var_0_0.setStageType(arg_11_0, arg_11_1)
+	arg_11_0._stageType = arg_11_1 or JiaLaBoNaEnum.StageType.Main
 end
 
-function slot0.setCfg(slot0, slot1)
-	slot0._config = slot1
-	slot0._isLock = true
+function var_0_0.setCfg(arg_12_0, arg_12_1)
+	arg_12_0._config = arg_12_1
+	arg_12_0._isLock = true
 end
 
-function slot0.getCfgId(slot0)
-	return slot0._config and slot0._config.id
+function var_0_0.getCfgId(arg_13_0)
+	return arg_13_0._config and arg_13_0._config.id
 end
 
-function slot0.getCfgPreId(slot0)
-	return slot0._config and slot0._config.preEpisode
+function var_0_0.getCfgPreId(arg_14_0)
+	return arg_14_0._config and arg_14_0._config.preEpisode
 end
 
-function slot0.getCfgChapterId(slot0)
-	return slot0._config and slot0._config.chapterId
+function var_0_0.getCfgChapterId(arg_15_0)
+	return arg_15_0._config and arg_15_0._config.chapterId
 end
 
-function slot0.refreshUI(slot0, slot1)
-	if not slot0._config then
-		gohelper.setActive(slot0._goRoot, false)
+function var_0_0.refreshUI(arg_16_0, arg_16_1)
+	if not arg_16_0._config then
+		gohelper.setActive(arg_16_0._goRoot, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goRoot, true)
+	gohelper.setActive(arg_16_0._goRoot, true)
 
-	slot2 = false
+	local var_16_0 = false
 
-	if Activity120Model.instance:isEpisodeClear(slot0._config.id) then
-		slot0:_clearanceUI()
+	if Activity120Model.instance:isEpisodeClear(arg_16_0._config.id) then
+		arg_16_0:_clearanceUI()
 
-		if slot1 then
-			slot0._animator:Play("finish", 0, 0)
+		if arg_16_1 then
+			arg_16_0._animator:Play("finish", 0, 0)
 		end
-	elseif slot0._config.preEpisode == 0 or Activity120Model.instance:isEpisodeClear(slot0._config.preEpisode) and JiaLaBoNaHelper.isOpenDay(slot0._config.id) then
-		slot0:_unLockUI()
+	elseif arg_16_0._config.preEpisode == 0 or Activity120Model.instance:isEpisodeClear(arg_16_0._config.preEpisode) and JiaLaBoNaHelper.isOpenDay(arg_16_0._config.id) then
+		arg_16_0:_unLockUI()
 
-		if slot1 then
-			slot0._animator:Play("unlock", 0, 0)
+		if arg_16_1 then
+			arg_16_0._animator:Play("unlock", 0, 0)
 		end
 	else
-		slot2 = true
+		var_16_0 = true
 
-		slot0:_lockUI()
+		arg_16_0:_lockUI()
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagePoint, slot2 and "#FFFFFF" or slot0:_getValueByType(JiaLaBoNaEnum.Stage.StageNameColor, slot0._stageType))
+	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._imagePoint, var_16_0 and "#FFFFFF" or arg_16_0:_getValueByType(JiaLaBoNaEnum.Stage.StageNameColor, arg_16_0._stageType))
 
-	slot0._txtStageName.text = slot0._config.name
-	slot0._txtStageNum.text = slot0._config.orderId
+	arg_16_0._txtStageName.text = arg_16_0._config.name
+	arg_16_0._txtStageNum.text = arg_16_0._config.orderId
 
-	if slot0._lastStateType ~= slot0._stageType then
-		slot0._lastStateType = slot0._stageType
+	if arg_16_0._lastStateType ~= arg_16_0._stageType then
+		arg_16_0._lastStateType = arg_16_0._stageType
 
-		slot0:_stageTypeUI()
+		arg_16_0:_stageTypeUI()
 	end
 end
 
-function slot0._stageTypeUI(slot0)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtStageName, slot0:_getValueByType(JiaLaBoNaEnum.Stage.StageNameColor, slot0._stageType))
+function var_0_0._stageTypeUI(arg_17_0)
+	local var_17_0 = arg_17_0:_getValueByType(JiaLaBoNaEnum.Stage.StageNameColor, arg_17_0._stageType)
 
-	slot2 = slot0:_getValueByType(JiaLaBoNaEnum.Stage.StageColor, slot0._stageType)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._txtStageName, var_17_0)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageLine, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtStageNum, slot2)
+	local var_17_1 = arg_17_0:_getValueByType(JiaLaBoNaEnum.Stage.StageColor, arg_17_0._stageType)
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._imageLine, var_17_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._txtStageNum, var_17_1)
 end
 
-function slot0._getValueByType(slot0, slot1, slot2)
-	return slot1[slot2] or slot1[JiaLaBoNaEnum.StageType.Main]
+function var_0_0._getValueByType(arg_18_0, arg_18_1, arg_18_2)
+	return arg_18_1[arg_18_2] or arg_18_1[JiaLaBoNaEnum.StageType.Main]
 end
 
-function slot0._lockUI(slot0)
-	gohelper.setActive(slot0._goUnLock, false)
-	UISpriteSetMgr.instance:setJiaLaBoNaSprite(slot0._imagePoint, JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished)
+function var_0_0._lockUI(arg_19_0)
+	gohelper.setActive(arg_19_0._goUnLock, false)
+	UISpriteSetMgr.instance:setJiaLaBoNaSprite(arg_19_0._imagePoint, JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished)
 end
 
-function slot0._unLockUI(slot0)
-	gohelper.setActive(slot0._goUnLock, true)
-	gohelper.setActive(slot0._imageStageFinishedBG, false)
-	gohelper.setActive(slot0._btnReview, false)
-	slot0:_startUI(false)
-	UISpriteSetMgr.instance:setJiaLaBoNaSprite(slot0._imagePoint, JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished)
+function var_0_0._unLockUI(arg_20_0)
+	gohelper.setActive(arg_20_0._goUnLock, true)
+	gohelper.setActive(arg_20_0._imageStageFinishedBG, false)
+	gohelper.setActive(arg_20_0._btnReview, false)
+	arg_20_0:_startUI(false)
+	UISpriteSetMgr.instance:setJiaLaBoNaSprite(arg_20_0._imagePoint, JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished)
 end
 
-function slot0._clearanceUI(slot0)
-	gohelper.setActive(slot0._goUnLock, true)
-	gohelper.setActive(slot0._imageStageFinishedBG, true)
-	gohelper.setActive(slot0._btnReview, slot0:_isHasStory())
-	slot0:_startUI(Activity120Model.instance:getEpisodeData(slot0._config.id) and slot1.star and slot1.star > 1)
-	UISpriteSetMgr.instance:setJiaLaBoNaSprite(slot0._imagePoint, JiaLaBoNaEnum.StatgePiontSpriteName.Finished)
+function var_0_0._clearanceUI(arg_21_0)
+	gohelper.setActive(arg_21_0._goUnLock, true)
+	gohelper.setActive(arg_21_0._imageStageFinishedBG, true)
+	gohelper.setActive(arg_21_0._btnReview, arg_21_0:_isHasStory())
+
+	local var_21_0 = Activity120Model.instance:getEpisodeData(arg_21_0._config.id)
+
+	arg_21_0:_startUI(var_21_0 and var_21_0.star and var_21_0.star > 1)
+	UISpriteSetMgr.instance:setJiaLaBoNaSprite(arg_21_0._imagePoint, JiaLaBoNaEnum.StatgePiontSpriteName.Finished)
 end
 
-function slot0._startUI(slot0, slot1)
-	gohelper.setActive(slot0._imageNoStar, not slot1)
-	gohelper.setActive(slot0._imageHasStar, slot1)
+function var_0_0._startUI(arg_22_0, arg_22_1)
+	gohelper.setActive(arg_22_0._imageNoStar, not arg_22_1)
+	gohelper.setActive(arg_22_0._imageHasStar, arg_22_1)
 end
 
-function slot0._isHasStory(slot0)
-	if slot0._config and Activity120Config.instance:getEpisodeStoryList(slot0._config.activityId, slot0._config.id) and #slot1 > 0 then
-		return true
+function var_0_0._isHasStory(arg_23_0)
+	if arg_23_0._config then
+		local var_23_0 = Activity120Config.instance:getEpisodeStoryList(arg_23_0._config.activityId, arg_23_0._config.id)
+
+		if var_23_0 and #var_23_0 > 0 then
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onChessAnimEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._playChessAnim, slot0)
-	slot0:removeEventListeners()
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._onChessAnimEnd, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._playChessAnim, arg_24_0)
+	arg_24_0:removeEventListeners()
+	arg_24_0:__onDispose()
 end
 
-slot0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_jialabona/v1a3_jialabonamapviewstageitem.prefab"
+var_0_0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_jialabona/v1a3_jialabonamapviewstageitem.prefab"
 
-return slot0
+return var_0_0

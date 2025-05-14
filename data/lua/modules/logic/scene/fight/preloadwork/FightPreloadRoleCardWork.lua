@@ -1,102 +1,114 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadRoleCardWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadRoleCardWork", package.seeall)
 
-slot0 = class("FightPreloadRoleCardWork", BaseWork)
-slot0.isOpen = true
+local var_0_0 = class("FightPreloadRoleCardWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	if not uv0.isOpen then
-		slot0:onDone(true)
+var_0_0.isOpen = true
+
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	if not var_0_0.isOpen then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._loader = SequenceAbLoader.New()
+	arg_1_0._loader = SequenceAbLoader.New()
 
-	slot0:getRoleCardResList()
-	slot0._loader:setConcurrentCount(10)
-	slot0._loader:setPathList(slot0.resList)
-	slot0._loader:setLoadFailCallback(slot0._onPreloadOneFail)
-	slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	arg_1_0:getRoleCardResList()
+	arg_1_0._loader:setConcurrentCount(10)
+	arg_1_0._loader:setPathList(arg_1_0.resList)
+	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
 end
 
-function slot0._onPreloadFinish(slot0)
-	for slot5, slot6 in pairs(slot0._loader:getAssetItemDict()) do
-		slot0.context.callback(slot0.context.callbackObj, slot6)
-		FightPreloadController.instance:addRoleCardAsset(slot6)
+function var_0_0._onPreloadFinish(arg_2_0)
+	local var_2_0 = arg_2_0._loader:getAssetItemDict()
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
+		FightPreloadController.instance:addRoleCardAsset(iter_2_1)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onPreloadOneFail(slot0, slot1, slot2)
-	logError("战斗卡牌加载失败：" .. slot2.ResPath)
+function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
+	logError("战斗卡牌加载失败：" .. arg_3_2.ResPath)
 end
 
-function slot0.getRoleCardResList(slot0)
-	slot0.resList = {}
+function var_0_0.getRoleCardResList(arg_4_0)
+	arg_4_0.resList = {}
 
-	for slot5 = 1, 4 do
-		slot6 = slot0:getSingleGroupModel():getById(slot5)
-		slot8 = slot6:getMonsterCO()
+	local var_4_0 = arg_4_0:getSingleGroupModel()
 
-		if slot6:getHeroCO() then
-			logNormal("预加载 角色 卡牌资源 ： " .. slot7.name or "")
-			slot0:addSkill(slot7.skill)
-			slot0:addHeroExSkill(slot7.exSkill)
-		elseif slot8 then
-			logNormal("预加载 怪物 卡牌资源 ： " .. slot8.name or "")
-			slot0:addSkill(slot8.activeSkill)
-			slot0:addMonsterUniqueSkill(slot8.uniqueSkill)
+	for iter_4_0 = 1, 4 do
+		local var_4_1 = var_4_0:getById(iter_4_0)
+		local var_4_2 = var_4_1:getHeroCO()
+		local var_4_3 = var_4_1:getMonsterCO()
+
+		if var_4_2 then
+			logNormal("预加载 角色 卡牌资源 ： " .. var_4_2.name or "")
+			arg_4_0:addSkill(var_4_2.skill)
+			arg_4_0:addHeroExSkill(var_4_2.exSkill)
+		elseif var_4_3 then
+			logNormal("预加载 怪物 卡牌资源 ： " .. var_4_3.name or "")
+			arg_4_0:addSkill(var_4_3.activeSkill)
+			arg_4_0:addMonsterUniqueSkill(var_4_3.uniqueSkill)
 		end
 	end
 
-	return slot0.resList
+	return arg_4_0.resList
 end
 
-function slot0.getSingleGroupModel(slot0)
-	slot2 = FightModel.instance:getFightParam() and slot1.episodeId
+function var_0_0.getSingleGroupModel(arg_5_0)
+	local var_5_0 = FightModel.instance:getFightParam()
+	local var_5_1 = var_5_0 and var_5_0.episodeId
+	local var_5_2 = var_5_1 and DungeonConfig.instance:getEpisodeCO(var_5_1)
 
-	if slot2 and DungeonConfig.instance:getEpisodeCO(slot2) and slot3.type == DungeonEnum.EpisodeType.Rouge then
+	if var_5_2 and var_5_2.type == DungeonEnum.EpisodeType.Rouge then
 		return RougeHeroSingleGroupModel.instance
 	else
 		return HeroSingleGroupModel.instance
 	end
 end
 
-function slot0.addSkill(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0.addSkill(arg_6_0, arg_6_1)
+	if string.nilorempty(arg_6_1) then
 		return
 	end
 
-	for slot6, slot7 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot1, true)) do
-		slot0:addResBySkillId(slot7[2])
+	local var_6_0 = FightStrUtil.instance:getSplitString2Cache(arg_6_1, true)
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		arg_6_0:addResBySkillId(iter_6_1[2])
 	end
 end
 
-function slot0.addHeroExSkill(slot0, slot1)
-	slot0:addResBySkillId(slot1)
+function var_0_0.addHeroExSkill(arg_7_0, arg_7_1)
+	arg_7_0:addResBySkillId(arg_7_1)
 end
 
-function slot0.addMonsterUniqueSkill(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:addResBySkillId(slot6)
+function var_0_0.addMonsterUniqueSkill(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		arg_8_0:addResBySkillId(iter_8_1)
 	end
 end
 
-function slot0.addResBySkillId(slot0, slot1)
-	if lua_skill.configDict[slot1] then
-		table.insert(slot0.resList, ResUrl.getSkillIcon(slot2.icon))
+function var_0_0.addResBySkillId(arg_9_0, arg_9_1)
+	local var_9_0 = lua_skill.configDict[arg_9_1]
+
+	if var_9_0 then
+		table.insert(arg_9_0.resList, ResUrl.getSkillIcon(var_9_0.icon))
 	else
-		logError("技能表找不到id:" .. slot1)
+		logError("技能表找不到id:" .. arg_9_1)
 	end
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.clearWork(arg_10_0)
+	if arg_10_0._loader then
+		arg_10_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_10_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

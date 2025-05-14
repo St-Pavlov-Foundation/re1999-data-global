@@ -1,23 +1,29 @@
-module("modules.logic.fight.system.work.FightWorkPlayAroundUpRank", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkPlayAroundUpRank", package.seeall)
 
-slot0 = class("FightWorkPlayAroundUpRank", FightEffectBase)
+local var_0_0 = class("FightWorkPlayAroundUpRank", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if FightPlayCardModel.instance:getUsedCards()[slot0._actEffectMO.effectNum] then
-		slot3:init(slot0._actEffectMO.cardInfo)
-		slot0:com_sendFightEvent(FightEvent.PlayCardAroundUpRank, slot1, slot3.skillId)
+	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_1 = FightPlayCardModel.instance:getUsedCards()[var_1_0]
+
+	if var_1_1 then
+		local var_1_2 = var_1_1.skillId
+
+		var_1_1:init(arg_1_0._actEffectMO.cardInfo)
+		arg_1_0:com_sendFightEvent(FightEvent.PlayCardAroundUpRank, var_1_0, var_1_2)
 	end
 
-	slot0:com_registTimer(slot0._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed() + 0.1)
+	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed() + 0.1)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

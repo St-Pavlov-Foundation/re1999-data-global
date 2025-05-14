@@ -1,128 +1,152 @@
-module("modules.logic.room.model.manufacture.OneKeyAddPopListModel", package.seeall)
+﻿module("modules.logic.room.model.manufacture.OneKeyAddPopListModel", package.seeall)
 
-slot0 = class("OneKeyAddPopListModel", ListScrollModel)
-slot0.MINI_COUNT = 1
-slot1 = 1
-slot2 = 200
-slot3 = 2
-slot4 = 262
+local var_0_0 = class("OneKeyAddPopListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+var_0_0.MINI_COUNT = 1
+
+local var_0_1 = 1
+local var_0_2 = 200
+local var_0_3 = 2
+local var_0_4 = 262
+
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_2_0)
+	var_0_0.super.clear(arg_2_0)
 
-	slot0._strCache = nil
+	arg_2_0._strCache = nil
 
-	slot0:setSelectedManufactureItem()
+	arg_2_0:setSelectedManufactureItem()
 end
 
-function slot0.resetSelectManufactureItemFromCache(slot0)
-	if not slot0._strCache then
-		slot0._strCache = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, "")
+function var_0_0.resetSelectManufactureItemFromCache(arg_3_0)
+	if not arg_3_0._strCache then
+		arg_3_0._strCache = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, "")
 	end
 
-	slot1 = string.splitToNumber(slot0._strCache or "", "|")
+	local var_3_0 = string.splitToNumber(arg_3_0._strCache or "", "|")
 
-	slot0:setSelectedManufactureItem(slot1[1], slot1[2])
+	arg_3_0:setSelectedManufactureItem(var_3_0[1], var_3_0[2])
 end
 
-function slot0.recordSelectManufactureItem(slot0)
-	slot1, slot2 = slot0:getSelectedManufactureItem()
+function var_0_0.recordSelectManufactureItem(arg_4_0)
+	local var_4_0, var_4_1 = arg_4_0:getSelectedManufactureItem()
 
-	if slot1 then
-		slot0._strCache = string.format("%s|%s", slot1, slot2)
+	if var_4_0 then
+		arg_4_0._strCache = string.format("%s|%s", var_4_0, var_4_1)
 
-		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, slot0._strCache)
+		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, arg_4_0._strCache)
 	end
 end
 
-function slot0.setOneKeyFormulaItemList(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
-	slot0._isNoMat = true
-	slot4 = {}
+function var_0_0.setOneKeyFormulaItemList(arg_5_0, arg_5_1)
+	local var_5_0 = {}
+	local var_5_1 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		if RoomMapBuildingModel.instance:getBuildingMOById(slot9) then
-			slot0._isNoMat = RoomConfig.instance:getBuildingType(slot10.buildingId) == RoomBuildingEnum.BuildingType.Collect
+	arg_5_0._isNoMat = true
 
-			for slot18, slot19 in ipairs(ManufactureConfig.instance:getAllManufactureItems(slot11)) do
-				slot20 = ManufactureConfig.instance:getUnitCount(slot19)
+	local var_5_2 = {}
 
-				if (not slot4[ManufactureConfig.instance:getItemId(slot19)] or slot20 < slot4[slot21]) and ManufactureConfig.instance:getManufactureItemNeedLevel(slot11, slot19) <= slot10:getLevel() then
-					slot2[slot21] = {
-						id = slot19,
-						buildingUid = slot9
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_3 = RoomMapBuildingModel.instance:getBuildingMOById(iter_5_1)
+
+		if var_5_3 then
+			local var_5_4 = var_5_3.buildingId
+
+			arg_5_0._isNoMat = RoomConfig.instance:getBuildingType(var_5_4) == RoomBuildingEnum.BuildingType.Collect
+
+			local var_5_5 = var_5_3:getLevel()
+			local var_5_6 = ManufactureConfig.instance:getAllManufactureItems(var_5_4)
+
+			for iter_5_2, iter_5_3 in ipairs(var_5_6) do
+				local var_5_7 = ManufactureConfig.instance:getUnitCount(iter_5_3)
+				local var_5_8 = ManufactureConfig.instance:getItemId(iter_5_3)
+
+				if (not var_5_2[var_5_8] or var_5_7 < var_5_2[var_5_8]) and var_5_5 >= ManufactureConfig.instance:getManufactureItemNeedLevel(var_5_4, iter_5_3) then
+					var_5_0[var_5_8] = {
+						id = iter_5_3,
+						buildingUid = iter_5_1
 					}
-					slot4[slot21] = slot20
+					var_5_2[var_5_8] = var_5_7
 				end
 			end
 		end
 	end
 
-	for slot8, slot9 in pairs(slot2) do
-		slot3[#slot3 + 1] = slot9
+	for iter_5_4, iter_5_5 in pairs(var_5_0) do
+		var_5_1[#var_5_1 + 1] = iter_5_5
 	end
 
-	table.sort(slot3, ManufactureFormulaListModel.sortFormula)
-	slot0:setList(slot3)
+	table.sort(var_5_1, ManufactureFormulaListModel.sortFormula)
+	arg_5_0:setList(var_5_1)
 end
 
-function slot0.setSelectedManufactureItem(slot0, slot1, slot2)
-	slot0._selectedManufacture = slot1
-	slot0._selectedManufactureCount = slot2 or uv0.MINI_COUNT
+function var_0_0.setSelectedManufactureItem(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._selectedManufacture = arg_6_1
+	arg_6_0._selectedManufactureCount = arg_6_2 or var_0_0.MINI_COUNT
 end
 
-function slot0.getInfoList(slot0, slot1)
-	if not slot0:getList() or #slot3 <= 0 then
-		return {}
+function var_0_0.getInfoList(arg_7_0, arg_7_1)
+	local var_7_0 = {}
+	local var_7_1 = arg_7_0:getList()
+
+	if not var_7_1 or #var_7_1 <= 0 then
+		return var_7_0
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot0._isNoMat and uv0 or uv1, slot0._isNoMat and uv2 or uv3, nil))
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		local var_7_2 = arg_7_0._isNoMat and var_0_1 or var_0_3
+		local var_7_3 = arg_7_0._isNoMat and var_0_2 or var_0_4
+
+		table.insert(var_7_0, SLFramework.UGUI.MixCellInfo.New(var_7_2, var_7_3, nil))
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getSelectedManufactureItem(slot0)
-	if not slot0._strCache then
-		slot0:resetSelectManufactureItemFromCache()
+function var_0_0.getSelectedManufactureItem(arg_8_0)
+	if not arg_8_0._strCache then
+		arg_8_0:resetSelectManufactureItemFromCache()
 	end
 
-	return slot0._selectedManufacture, slot0._selectedManufactureCount or uv0.MINI_COUNT
+	return arg_8_0._selectedManufacture, arg_8_0._selectedManufactureCount or var_0_0.MINI_COUNT
 end
 
-function slot0.getTabDataList(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0.getTabDataList(arg_9_0)
+	local var_9_0 = {}
+	local var_9_1 = {}
+	local var_9_2 = ManufactureModel.instance:getAllPlacedManufactureBuilding()
 
-	for slot7, slot8 in ipairs(ManufactureModel.instance:getAllPlacedManufactureBuilding()) do
-		if not slot2[RoomConfig.instance:getBuildingType(slot8.buildingId)] then
-			slot2[slot10] = {}
+	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
+		local var_9_3 = iter_9_1.buildingId
+		local var_9_4 = RoomConfig.instance:getBuildingType(var_9_3)
+		local var_9_5 = var_9_1[var_9_4]
+
+		if not var_9_5 then
+			var_9_5 = {}
+			var_9_1[var_9_4] = var_9_5
 		end
 
-		slot11[#slot11 + 1] = slot8.id
+		var_9_5[#var_9_5 + 1] = iter_9_1.id
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		if slot7 == RoomBuildingEnum.BuildingType.Collect then
-			slot1[#slot1 + 1] = slot8
+	for iter_9_2, iter_9_3 in pairs(var_9_1) do
+		if iter_9_2 == RoomBuildingEnum.BuildingType.Collect then
+			var_9_0[#var_9_0 + 1] = iter_9_3
 		else
-			for slot12, slot13 in ipairs(slot8) do
-				slot1[#slot1 + 1] = {
-					slot13
+			for iter_9_4, iter_9_5 in ipairs(iter_9_3) do
+				var_9_0[#var_9_0 + 1] = {
+					iter_9_5
 				}
 			end
 		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

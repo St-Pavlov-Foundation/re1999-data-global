@@ -1,52 +1,59 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionFightGetSpecificCard", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightGetSpecificCard", package.seeall)
 
-slot0 = class("WaitGuideActionFightGetSpecificCard", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionFightGetSpecificCard", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._cardSkillId = tonumber(string.split(slot3, "#")[1])
+	local var_1_0 = string.split(arg_1_3, "#")
+
+	arg_1_0._cardSkillId = tonumber(var_1_0[1])
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	FightController.instance:registerCallback(FightEvent.OnDistributeCards, slot0._onDistributeCardDone, slot0)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
+	FightController.instance:registerCallback(FightEvent.OnDistributeCards, arg_2_0._onDistributeCardDone, arg_2_0)
 end
 
-function slot0._onRoundStart(slot0)
-	if FightModel.instance:getCurStage() == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
-		for slot6, slot7 in ipairs(FightCardModel.instance:getHandCards()) do
-			if slot0._cardSkillId == slot7.skillId then
-				if slot1 == FightEnum.Stage.AutoCard then
+function var_0_0._onRoundStart(arg_3_0)
+	local var_3_0 = FightModel.instance:getCurStage()
+
+	if var_3_0 == FightEnum.Stage.Card or var_3_0 == FightEnum.Stage.AutoCard then
+		local var_3_1 = FightCardModel.instance:getHandCards()
+
+		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+			if arg_3_0._cardSkillId == iter_3_1.skillId then
+				if var_3_0 == FightEnum.Stage.AutoCard then
 					FightController.instance:dispatchEvent(FightEvent.OnGuideStopAutoFight)
 				end
 
-				GuideModel.instance:setFlag(GuideModel.GuideFlag.FightSetSpecificCardIndex, slot6)
-				slot0:clearWork()
-				slot0:onDone(true)
+				GuideModel.instance:setFlag(GuideModel.GuideFlag.FightSetSpecificCardIndex, iter_3_0)
+				arg_3_0:clearWork()
+				arg_3_0:onDone(true)
 			end
 		end
 	end
 end
 
-function slot0._onDistributeCardDone(slot0)
-	slot1 = FightModel.instance:getCurStage()
+function var_0_0._onDistributeCardDone(arg_4_0)
+	local var_4_0 = FightModel.instance:getCurStage()
+	local var_4_1 = FightCardModel.instance:getHandCards()
 
-	for slot6, slot7 in ipairs(FightCardModel.instance:getHandCards()) do
-		if slot0._cardSkillId == slot7.skillId then
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		if arg_4_0._cardSkillId == iter_4_1.skillId then
 			if FightModel.instance:isAuto() then
 				FightController.instance:dispatchEvent(FightEvent.OnGuideStopAutoFight)
 			end
 
-			GuideModel.instance:setFlag(GuideModel.GuideFlag.FightSetSpecificCardIndex, slot6)
-			slot0:clearWork()
-			slot0:onDone(true)
+			GuideModel.instance:setFlag(GuideModel.GuideFlag.FightSetSpecificCardIndex, iter_4_0)
+			arg_4_0:clearWork()
+			arg_4_0:onDone(true)
 		end
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, slot0._onRoundStart, slot0)
+function var_0_0.clearWork(arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnDistributeCards, arg_5_0._onRoundStart, arg_5_0)
 end
 
-return slot0
+return var_0_0

@@ -1,191 +1,205 @@
-module("modules.logic.postprocessing.PostProcessingMgr", package.seeall)
+﻿module("modules.logic.postprocessing.PostProcessingMgr", package.seeall)
 
-slot0 = class("PostProcessingMgr")
-slot0.PPEffectMaskType = typeof(UrpCustom.PPEffectMask)
-slot0.PPCustomCamDataType = typeof(UrpCustom.CustomCameraData)
-slot0.PPVolumeType = typeof(UnityEngine.Rendering.Volume)
-slot0.PPVolumeWrapType = typeof(UrpCustom.PPVolumeWrap)
-slot0.MainHighProfilePath = "ppassets/profiles/main_profile_high.asset"
-slot0.MainMiddleProfilePath = "ppassets/profiles/main_profile_middle.asset"
-slot0.MainLowProfilePath = "ppassets/profiles/main_profile_low.asset"
-slot0.CaptureResPath = "ppassets/capture.prefab"
-slot0.DesamplingRate = {
+local var_0_0 = class("PostProcessingMgr")
+
+var_0_0.PPEffectMaskType = typeof(UrpCustom.PPEffectMask)
+var_0_0.PPCustomCamDataType = typeof(UrpCustom.CustomCameraData)
+var_0_0.PPVolumeType = typeof(UnityEngine.Rendering.Volume)
+var_0_0.PPVolumeWrapType = typeof(UrpCustom.PPVolumeWrap)
+var_0_0.MainHighProfilePath = "ppassets/profiles/main_profile_high.asset"
+var_0_0.MainMiddleProfilePath = "ppassets/profiles/main_profile_middle.asset"
+var_0_0.MainLowProfilePath = "ppassets/profiles/main_profile_low.asset"
+var_0_0.CaptureResPath = "ppassets/capture.prefab"
+var_0_0.DesamplingRate = {
 	x8 = 8,
 	x4 = 4,
 	x1 = 1,
 	x2 = 2
 }
-slot0.BlurMode = {
+var_0_0.BlurMode = {
 	FastBlur = 0,
 	DetailBlur = 2,
 	None = 3,
 	MediumBlur = 1
 }
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0._mainCameraGo = slot1
-	slot0._mainCamera = slot1:GetComponent("Camera")
-	slot0._mainCamData = slot1:GetComponent(uv0.PPCustomCamDataType)
-	slot0._unitCameraGo = slot2
-	slot0._unitCamera = slot2:GetComponent("Camera")
-	slot0._uiCameraGo = slot3
-	slot0._uiCamera = slot3:GetComponent("Camera")
-	slot0._isUIActive = false
-	slot0._isStoryUIActive = false
-	slot0.useMirrorEffect = slot0._mainCamData.useMirrorEffect
-	slot0._unitCamData = slot0._unitCameraGo:GetComponent(uv0.PPCustomCamDataType)
-	slot0._unitPPVolume = gohelper.findChildComponent(slot0._unitCameraGo, "PPVolume", uv0.PPVolumeWrapType)
-	slot0._highProfile = ConstAbCache.instance:getRes(uv0.MainHighProfilePath)
-	slot0._middleProfile = ConstAbCache.instance:getRes(uv0.MainMiddleProfilePath)
-	slot0._lowProfile = ConstAbCache.instance:getRes(uv0.MainLowProfilePath)
-	slot0._uiCamData = slot0._uiCameraGo:GetComponent(uv0.PPCustomCamDataType)
-	slot0._uiPPVolume = gohelper.findChildComponent(slot0._uiCameraGo, "PPUIVolume", uv0.PPVolumeWrapType)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._mainCameraGo = arg_1_1
+	arg_1_0._mainCamera = arg_1_1:GetComponent("Camera")
+	arg_1_0._mainCamData = arg_1_1:GetComponent(var_0_0.PPCustomCamDataType)
+	arg_1_0._unitCameraGo = arg_1_2
+	arg_1_0._unitCamera = arg_1_2:GetComponent("Camera")
+	arg_1_0._uiCameraGo = arg_1_3
+	arg_1_0._uiCamera = arg_1_3:GetComponent("Camera")
+	arg_1_0._isUIActive = false
+	arg_1_0._isStoryUIActive = false
+	arg_1_0.useMirrorEffect = arg_1_0._mainCamData.useMirrorEffect
+	arg_1_0._unitCamData = arg_1_0._unitCameraGo:GetComponent(var_0_0.PPCustomCamDataType)
+	arg_1_0._unitPPVolume = gohelper.findChildComponent(arg_1_0._unitCameraGo, "PPVolume", var_0_0.PPVolumeWrapType)
+	arg_1_0._highProfile = ConstAbCache.instance:getRes(var_0_0.MainHighProfilePath)
+	arg_1_0._middleProfile = ConstAbCache.instance:getRes(var_0_0.MainMiddleProfilePath)
+	arg_1_0._lowProfile = ConstAbCache.instance:getRes(var_0_0.MainLowProfilePath)
+	arg_1_0._uiCamData = arg_1_0._uiCameraGo:GetComponent(var_0_0.PPCustomCamDataType)
+	arg_1_0._uiPPVolume = gohelper.findChildComponent(arg_1_0._uiCameraGo, "PPUIVolume", var_0_0.PPVolumeWrapType)
 
-	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, slot0._reopenWhileOpen, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenFinishView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, arg_1_0._reopenWhileOpen, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenFinishView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._onScreenResize, arg_1_0)
 
-	slot4 = gohelper.clone(ConstAbCache.instance:getRes(uv0.CaptureResPath), gohelper.find("UIRoot/POPUP_TOP"), "CaptureView")
-	slot0._capture = slot4:GetComponent(typeof(UrpCustom.UIGaussianEffect))
-	slot0._captureView = slot4
+	local var_1_0 = gohelper.clone(ConstAbCache.instance:getRes(var_0_0.CaptureResPath), gohelper.find("UIRoot/POPUP_TOP"), "CaptureView")
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._onEnterScene, slot0)
+	arg_1_0._capture = var_1_0:GetComponent(typeof(UrpCustom.UIGaussianEffect))
+	arg_1_0._captureView = var_1_0
 
-	slot0._closeRefreshViewBlurDict = {}
-	slot0._viewNameBlurDict = {}
-	slot0._fullViewCanBlur = {
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterScene, arg_1_0)
+
+	arg_1_0._closeRefreshViewBlurDict = {}
+	arg_1_0._viewNameBlurDict = {}
+	arg_1_0._fullViewCanBlur = {
 		[ViewName.DungeonMapView] = true
 	}
 end
 
-function slot0.getCaptureView(slot0)
-	return slot0._captureView
+function var_0_0.getCaptureView(arg_2_0)
+	return arg_2_0._captureView
 end
 
-function slot0.setViewBlur(slot0, slot1, slot2)
-	slot0._viewNameBlurDict[slot1] = slot2
+function var_0_0.setViewBlur(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._viewNameBlurDict[arg_3_1] = arg_3_2
 end
 
-function slot0._getViewBlur(slot0, slot1)
-	if slot0._viewNameBlurDict[slot1] then
-		return slot0._viewNameBlurDict[slot1]
+function var_0_0._getViewBlur(arg_4_0, arg_4_1)
+	if arg_4_0._viewNameBlurDict[arg_4_1] then
+		return arg_4_0._viewNameBlurDict[arg_4_1]
 	end
 
-	return ViewMgr.instance:getSetting(slot1).bgBlur
+	return ViewMgr.instance:getSetting(arg_4_1).bgBlur
 end
 
-function slot0._reopenWhileOpen(slot0, slot1)
-	slot0:_refreshPopUpBlur(slot1, true, true, ViewEvent.OnOpenView)
-	slot0:_refreshViewBlur(ViewEvent.ReOpenWhileOpen)
-	slot0:_adjustMask(slot1)
+function var_0_0._reopenWhileOpen(arg_5_0, arg_5_1)
+	arg_5_0:_refreshPopUpBlur(arg_5_1, true, true, ViewEvent.OnOpenView)
+	arg_5_0:_refreshViewBlur(ViewEvent.ReOpenWhileOpen)
+	arg_5_0:_adjustMask(arg_5_1)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == "LoginView" or slot1 == "SimulateLoginView" then
-		slot0:setUnitActive(false)
+function var_0_0._onOpenView(arg_6_0, arg_6_1)
+	if arg_6_1 == "LoginView" or arg_6_1 == "SimulateLoginView" then
+		arg_6_0:setUnitActive(false)
 	else
-		slot0:_refreshPopUpBlur(slot1, true, false, ViewEvent.OnOpenView)
-		slot0:_refreshViewBlur(ViewEvent.OnOpenView)
-		slot0:_adjustMask(slot1)
+		arg_6_0:_refreshPopUpBlur(arg_6_1, true, false, ViewEvent.OnOpenView)
+		arg_6_0:_refreshViewBlur(ViewEvent.OnOpenView)
+		arg_6_0:_adjustMask(arg_6_1)
 	end
 end
 
-function slot0._onScreenResize(slot0)
-	slot0:_refreshViewBlur()
+function var_0_0._onScreenResize(arg_7_0)
+	arg_7_0:_refreshViewBlur()
 end
 
-function slot0._adjustMask(slot0, slot1, slot2)
-	slot3 = ViewMgr.instance:getOpenViewNameList()
+function var_0_0._adjustMask(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_8_1 = ViewMgr.instance:getOpenViewNameList()
 
-	for slot8 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if ViewMgr.instance:isModal(slot4[slot8]) then
-			if not slot2 or ViewMgr.instance:isOpenFinish(slot9) then
-				ViewModalMaskMgr.instance:_adjustMask(slot9)
+	for iter_8_0 = #var_8_1, 1, -1 do
+		local var_8_2 = var_8_1[iter_8_0]
+
+		if ViewMgr.instance:isModal(var_8_2) then
+			if not arg_8_2 or ViewMgr.instance:isOpenFinish(var_8_2) then
+				ViewModalMaskMgr.instance:_adjustMask(var_8_2)
 
 				return
 			end
-		elseif ViewMgr.instance:isFull(slot9) then
+		elseif ViewMgr.instance:isFull(var_8_2) then
 			return
 		end
 	end
 end
 
-function slot0._onOpenFinishView(slot0, slot1)
-	if slot1 == ViewName.MessageBoxView and StoryController.instance._curStoryId == 100717 then
+function var_0_0._onOpenFinishView(arg_9_0, arg_9_1)
+	if arg_9_1 == ViewName.MessageBoxView and StoryController.instance._curStoryId == 100717 then
 		return
 	end
 
-	if slot1 == "LoginView" or slot1 == "SimulateLoginView" then
-		slot0:setUnitActive(false)
+	if arg_9_1 == "LoginView" or arg_9_1 == "SimulateLoginView" then
+		arg_9_0:setUnitActive(false)
 	else
-		slot0:_refreshViewBlur(ViewEvent.OnOpenViewFinish)
+		arg_9_0:_refreshViewBlur(ViewEvent.OnOpenViewFinish)
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	slot0:_refreshPopUpBlur(slot1, false, false, ViewEvent.OnCloseView)
-	slot0:_closeRefreshViewBlur(ViewEvent.OnCloseView, slot1)
-	slot0:_adjustMask(slot1, true)
+function var_0_0._onCloseView(arg_10_0, arg_10_1)
+	arg_10_0:_refreshPopUpBlur(arg_10_1, false, false, ViewEvent.OnCloseView)
+	arg_10_0:_closeRefreshViewBlur(ViewEvent.OnCloseView, arg_10_1)
+	arg_10_0:_adjustMask(arg_10_1, true)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	slot0:_refreshPopUpBlur(slot1, false, false, ViewEvent.OnCloseViewFinish)
-	slot0:_closeRefreshViewBlur(ViewEvent.OnCloseViewFinish, slot1)
-	slot0:_adjustMask(slot1, true)
+function var_0_0._onCloseViewFinish(arg_11_0, arg_11_1)
+	arg_11_0:_refreshPopUpBlur(arg_11_1, false, false, ViewEvent.OnCloseViewFinish)
+	arg_11_0:_closeRefreshViewBlur(ViewEvent.OnCloseViewFinish, arg_11_1)
+	arg_11_0:_adjustMask(arg_11_1, true)
 end
 
-function slot0.setCloseSkipRefreshBlur(slot0, slot1, slot2)
-	slot0._closeRefreshViewBlurDict[slot1] = slot2
+function var_0_0.setCloseSkipRefreshBlur(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._closeRefreshViewBlurDict[arg_12_1] = arg_12_2
 end
 
-function slot0.forceRefreshCloseBlur(slot0)
-	slot0:_refreshViewBlur(ViewEvent.OnCloseViewFinish)
+function var_0_0.forceRefreshCloseBlur(arg_13_0)
+	arg_13_0:_refreshViewBlur(ViewEvent.OnCloseViewFinish)
 end
 
-function slot0._closeRefreshViewBlur(slot0, slot1, slot2)
-	if slot0._closeRefreshViewBlurDict[slot2] then
-		if slot1 == ViewEvent.OnCloseViewFinish then
-			slot0._closeRefreshViewBlurDict[slot2] = nil
+function var_0_0._closeRefreshViewBlur(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0._closeRefreshViewBlurDict[arg_14_2] then
+		if arg_14_1 == ViewEvent.OnCloseViewFinish then
+			arg_14_0._closeRefreshViewBlurDict[arg_14_2] = nil
 		end
 
 		return
 	end
 
-	slot0:_refreshViewBlur(slot1)
+	arg_14_0:_refreshViewBlur(arg_14_1)
 end
 
-function slot0._refreshViewBlur(slot0, slot1)
-	slot2, slot3, slot4, slot5 = slot0:_judgeBlur()
+function var_0_0._refreshViewBlur(arg_15_0, arg_15_1)
+	local var_15_0, var_15_1, var_15_2, var_15_3 = arg_15_0:_judgeBlur()
 
-	slot0:setUIBlurActive(slot2 or 0, slot4, slot5, slot1)
+	arg_15_0:setUIBlurActive(var_15_0 or 0, var_15_2, var_15_3, arg_15_1)
 end
 
-function slot0._refreshFreezeBlur(slot0)
-	slot1, slot2, slot3, slot4 = slot0:_judgeBlur()
+function var_0_0._refreshFreezeBlur(arg_16_0)
+	local var_16_0, var_16_1, var_16_2, var_16_3 = arg_16_0:_judgeBlur()
 
-	slot0:setUIBlurActive(2, slot3, slot4)
+	arg_16_0:setUIBlurActive(2, var_16_2, var_16_3)
 end
 
-function slot0._judgeBlur(slot0)
-	for slot5 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if ViewMgr.instance:getSetting(slot1[slot5]).layer == UILayerName.PopUp then
+function var_0_0._judgeBlur(arg_17_0)
+	local var_17_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_17_0 = #var_17_0, 1, -1 do
+		local var_17_1 = var_17_0[iter_17_0]
+		local var_17_2 = ViewMgr.instance:getSetting(var_17_1)
+
+		if var_17_2.layer == UILayerName.PopUp then
 			return false
 		end
 
-		if slot0:_getViewBlur(slot6) and slot8 > 0 then
-			return slot8, slot6, {
-				blurMode = slot7.blurMode,
-				blurFactor = slot7.blurFactor,
-				desampleRate = slot7.desampleRate,
-				reduceRate = slot7.reduceRate,
-				blurIterations = slot7.blurIterations
-			}, slot7.hideUI
+		local var_17_3 = arg_17_0:_getViewBlur(var_17_1)
+
+		if var_17_3 and var_17_3 > 0 then
+			local var_17_4 = {
+				blurMode = var_17_2.blurMode,
+				blurFactor = var_17_2.blurFactor,
+				desampleRate = var_17_2.desampleRate,
+				reduceRate = var_17_2.reduceRate,
+				blurIterations = var_17_2.blurIterations
+			}
+
+			return var_17_3, var_17_1, var_17_4, var_17_2.hideUI
 		end
 
-		if slot7.viewType == ViewType.Full then
+		if var_17_2.viewType == ViewType.Full then
 			return false
 		end
 	end
@@ -193,122 +207,144 @@ function slot0._judgeBlur(slot0)
 	return false
 end
 
-function slot0._refreshPopUpBlur(slot0, slot1, slot2, slot3, slot4)
-	slot5 = ViewMgr.instance:getOpenViewNameList()
-	slot6, slot7 = slot0:_judgeBlur()
+function var_0_0._refreshPopUpBlur(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	local var_18_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_18_1, var_18_2 = arg_18_0:_judgeBlur()
 
-	if slot6 then
-		slot0:_refreshPopUpBlurIsBlur(slot1, slot2, slot7)
+	if var_18_1 then
+		arg_18_0:_refreshPopUpBlurIsBlur(arg_18_1, arg_18_2, var_18_2)
 	else
-		slot0:_refreshPopUpBlurNotBlur(slot1, slot2)
+		arg_18_0:_refreshPopUpBlurNotBlur(arg_18_1, arg_18_2)
 	end
 end
 
-function slot0._refreshPopUpBlurIsBlur(slot0, slot1, slot2, slot3)
-	slot5 = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
-	slot6 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
-	slot7 = 1
-	slot8 = nil
-	slot9 = false
+function var_0_0._refreshPopUpBlurIsBlur(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_19_1 = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
+	local var_19_2 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local var_19_3 = 1
+	local var_19_4
+	local var_19_5 = false
 
-	for slot13 = 1, #ViewMgr.instance:getOpenViewNameList() do
-		if slot4[slot13] == slot3 then
-			slot9 = true
+	for iter_19_0 = 1, #var_19_0 do
+		local var_19_6 = var_19_0[iter_19_0]
+
+		if var_19_6 == arg_19_3 then
+			var_19_5 = true
 		end
 
-		if ViewMgr.instance:getSetting(slot14).layer == "POPUP_TOP" then
-			slot16 = (slot14 == slot3 or slot9) and slot6 or slot5
+		if ViewMgr.instance:getSetting(var_19_6).layer == "POPUP_TOP" then
+			local var_19_7 = (var_19_6 == arg_19_3 or var_19_5) and var_19_2 or var_19_1
+			local var_19_8 = ViewMgr.instance:getContainer(var_19_6).viewGO
+			local var_19_9 = var_19_8 and var_19_8.transform.parent or nil
 
-			if (ViewMgr.instance:getContainer(slot14).viewGO and slot17.transform.parent or nil) == slot6.transform or slot18 == slot5.transform then
-				if slot0:_isKeepTop(slot13, slot4, slot3) then
-					slot16 = slot6
+			if var_19_9 == var_19_2.transform or var_19_9 == var_19_1.transform then
+				if arg_19_0:_isKeepTop(iter_19_0, var_19_0, arg_19_3) then
+					var_19_7 = var_19_2
 				end
 
-				gohelper.addChild(slot16, slot17)
-				slot0:_setChildCanvasLayer(slot17, slot16 == slot6 and UnityLayer.UITop or UnityLayer.UIThird, false)
+				gohelper.addChild(var_19_7, var_19_8)
+				arg_19_0:_setChildCanvasLayer(var_19_8, var_19_7 == var_19_2 and UnityLayer.UITop or UnityLayer.UIThird, false)
 
-				if slot16 == slot6 then
-					slot8 = slot17
+				if var_19_7 == var_19_2 then
+					var_19_4 = var_19_8
 
-					gohelper.setSibling(slot17, slot7)
+					gohelper.setSibling(var_19_8, var_19_3)
 
-					slot7 = slot7 + 1
+					var_19_3 = var_19_3 + 1
 				else
-					gohelper.setAsLastSibling(slot17)
+					gohelper.setAsLastSibling(var_19_8)
 				end
 			end
 		end
 	end
 
-	if slot8 then
-		gohelper.setAsLastSibling(slot8)
+	if var_19_4 then
+		gohelper.setAsLastSibling(var_19_4)
 	end
 end
 
-function slot0._isKeepTop(slot0, slot1, slot2, slot3)
-	slot5 = slot2[slot1 + 1]
+function var_0_0._isKeepTop(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	local var_20_0 = arg_20_2[arg_20_1]
+	local var_20_1 = arg_20_2[arg_20_1 + 1]
+	local var_20_2 = ViewMgr.instance:getContainer(var_20_0)
 
-	if ViewMgr.instance:getContainer(slot2[slot1]) and (string.find(slot4, "HeroGroupFightView") or isTypeOf(slot6, HeroGroupFightViewContainer)) and slot5 == ViewName.HeroGroupCareerTipView then
+	if var_20_2 and (string.find(var_20_0, "HeroGroupFightView") or isTypeOf(var_20_2, HeroGroupFightViewContainer)) and var_20_1 == ViewName.HeroGroupCareerTipView then
 		return true
 	end
 
-	if slot4 == ViewName.RoomInitBuildingView and slot5 == ViewName.RoomFormulaView and slot3 == ViewName.RoomFormulaView then
+	if var_20_0 == ViewName.RoomInitBuildingView and var_20_1 == ViewName.RoomFormulaView and arg_20_3 == ViewName.RoomFormulaView then
 		return true
 	end
 
 	return false
 end
 
-function slot0._refreshPopUpBlurNotBlur(slot0, slot1, slot2)
-	slot5 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
-	slot6 = 1
-	slot7 = nil
+function var_0_0._refreshPopUpBlurNotBlur(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = ViewMgr.instance:getOpenViewNameList()
+	local var_21_1 = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
+	local var_21_2 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local var_21_3 = 1
+	local var_21_4
 
-	for slot11 = 1, #ViewMgr.instance:getOpenViewNameList() do
-		if ViewMgr.instance:getSetting(slot3[slot11]).layer == "POPUP_TOP" and ((ViewMgr.instance:getContainer(slot12).viewGO and slot14.transform.parent or nil) == slot5.transform or slot15 == gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur").transform) then
-			gohelper.addChild(slot5, slot14)
-			slot0:_setChildCanvasLayer(slot14, UnityLayer.UITop, false)
+	for iter_21_0 = 1, #var_21_0 do
+		local var_21_5 = var_21_0[iter_21_0]
 
-			slot7 = slot14
+		if ViewMgr.instance:getSetting(var_21_5).layer == "POPUP_TOP" then
+			local var_21_6 = ViewMgr.instance:getContainer(var_21_5).viewGO
+			local var_21_7 = var_21_6 and var_21_6.transform.parent or nil
 
-			gohelper.setSibling(slot14, slot6)
+			if var_21_7 == var_21_2.transform or var_21_7 == var_21_1.transform then
+				gohelper.addChild(var_21_2, var_21_6)
+				arg_21_0:_setChildCanvasLayer(var_21_6, UnityLayer.UITop, false)
 
-			slot6 = slot6 + 1
+				var_21_4 = var_21_6
+
+				gohelper.setSibling(var_21_6, var_21_3)
+
+				var_21_3 = var_21_3 + 1
+			end
 		end
 	end
 
-	if slot7 and slot2 then
-		gohelper.setAsLastSibling(slot7)
+	if var_21_4 and arg_21_2 then
+		gohelper.setAsLastSibling(var_21_4)
 	end
 end
 
-function slot0._setChildCanvasLayer(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0._setChildCanvasLayer(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if not arg_22_1 then
 		return
 	end
 
-	if slot1:GetComponentsInChildren(typeof(UnityEngine.Canvas), true) then
-		slot5 = slot4:GetEnumerator()
+	local var_22_0 = arg_22_1:GetComponentsInChildren(typeof(UnityEngine.Canvas), true)
 
-		while slot5:MoveNext() do
-			if not LuaUtil.strEndswith(slot5.Current.gameObject.name, "_uicanvas") then
-				gohelper.setLayer(slot5.Current.gameObject, slot2, slot3)
+	if var_22_0 then
+		local var_22_1 = var_22_0:GetEnumerator()
+
+		while var_22_1:MoveNext() do
+			if not LuaUtil.strEndswith(var_22_1.Current.gameObject.name, "_uicanvas") then
+				gohelper.setLayer(var_22_1.Current.gameObject, arg_22_2, arg_22_3)
 			end
 		end
 	end
 end
 
-function slot0._isBlurView(slot0, slot1)
-	if ViewMgr.instance:getSetting(slot1) and slot2.bgBlur and slot2.bgBlur > 0 then
+function var_0_0._isBlurView(arg_23_0, arg_23_1)
+	local var_23_0 = ViewMgr.instance:getSetting(arg_23_1)
+
+	if var_23_0 and var_23_0.bgBlur and var_23_0.bgBlur > 0 then
 		return true
 	end
 
 	return false
 end
 
-function slot0._hasBlurViewOpened(slot0)
-	for slot5, slot6 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if slot0:_isBlurView(slot6) then
+function var_0_0._hasBlurViewOpened(arg_24_0)
+	local var_24_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		if arg_24_0:_isBlurView(iter_24_1) then
 			return true
 		end
 	end
@@ -316,261 +352,278 @@ function slot0._hasBlurViewOpened(slot0)
 	return false
 end
 
-function slot0.setUIActive(slot0, slot1, slot2)
-	if slot2 then
-		slot0._isStoryUIActive = slot1
+function var_0_0.setUIActive(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_2 then
+		arg_25_0._isStoryUIActive = arg_25_1
 	else
-		slot0._isUIActive = slot1
+		arg_25_0._isUIActive = arg_25_1
 	end
 
-	slot0._uiCamData.usePostProcess = slot0._isUIActive or slot0._isStoryUIActive
+	arg_25_0._uiCamData.usePostProcess = arg_25_0._isUIActive or arg_25_0._isStoryUIActive
 end
 
-function slot0.setUnitActive(slot0, slot1)
-	slot0._unitCamData.usePostProcess = slot1
+function var_0_0.setUnitActive(arg_26_0, arg_26_1)
+	arg_26_0._unitCamData.usePostProcess = arg_26_1
 end
 
-function slot0.setUIBlur(slot0, slot1, slot2, slot3)
-	slot9 = GameSceneMgr.instance:getCurSceneType()
+function var_0_0.setUIBlur(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0 = arg_27_3 and arg_27_3.blurMode or var_0_0.BlurMode.MediumBlur
+	local var_27_1 = arg_27_3 and arg_27_3.blurFactor or 0.4
+	local var_27_2 = arg_27_3 and arg_27_3.desampleRate or var_0_0.DesamplingRate.x8
+	local var_27_3 = arg_27_3 and arg_27_3.reduceRate or var_0_0.DesamplingRate.x4
+	local var_27_4 = arg_27_3 and arg_27_3.blurIterations or 3
+	local var_27_5 = GameSceneMgr.instance:getCurSceneType()
 
-	if slot1 then
-		slot0:setBlurMode(slot3 and slot3.blurMode or uv0.BlurMode.MediumBlur)
-		slot0:setDesamplingRate(slot2 and uv0.DesamplingRate.x1 or uv0.DesamplingRate.x8)
-		slot0:setDesamplingRate(slot3 and slot3.desampleRate or uv0.DesamplingRate.x8)
-		slot0:setBlurIterations(slot3 and slot3.blurIterations or 3)
-		slot0:setReduceRate(slot3 and slot3.reduceRate or uv0.DesamplingRate.x4)
-		slot0:setBlurFactor(slot3 and slot3.blurFactor or 0.4)
-		slot0._capture:SetKeepCapture(slot2)
+	if arg_27_1 then
+		arg_27_0:setBlurMode(var_27_0)
+		arg_27_0:setDesamplingRate(arg_27_2 and var_0_0.DesamplingRate.x1 or var_0_0.DesamplingRate.x8)
+		arg_27_0:setDesamplingRate(var_27_2)
+		arg_27_0:setBlurIterations(var_27_4)
+		arg_27_0:setReduceRate(var_27_3)
+		arg_27_0:setBlurFactor(var_27_1)
+		arg_27_0._capture:SetKeepCapture(arg_27_2)
 
-		if not slot2 then
-			slot0:setBlurWeight(1)
-			slot0._capture:Capture()
+		if not arg_27_2 then
+			arg_27_0:setBlurWeight(1)
+			arg_27_0._capture:Capture()
 		end
 	end
 
-	slot0._capture.enabled = slot1
+	arg_27_0._capture.enabled = arg_27_1
 end
 
-function slot0.IsGaussianFreezeStatus(slot0)
-	return slot0._capture.enabled and not slot0._capture.keepToScreen
+function var_0_0.IsGaussianFreezeStatus(arg_28_0)
+	return arg_28_0._capture.enabled and not arg_28_0._capture.keepToScreen
 end
 
-function slot0.setBlurMode(slot0, slot1)
-	slot0._capture:SetBlurMode(slot1)
+function var_0_0.setBlurMode(arg_29_0, arg_29_1)
+	arg_29_0._capture:SetBlurMode(arg_29_1)
 end
 
-function slot0.setBlurFactor(slot0, slot1)
-	slot0._capture.blurFactor = math.max(0, math.min(1, slot1))
+function var_0_0.setBlurFactor(arg_30_0, arg_30_1)
+	arg_30_0._capture.blurFactor = math.max(0, math.min(1, arg_30_1))
 end
 
-function slot0.setBlurWeight(slot0, slot1)
-	if not slot0:IsGaussianFreezeStatus() then
-		slot0._capture.blurWeight = math.max(0, math.min(1, slot1))
+function var_0_0.setBlurWeight(arg_31_0, arg_31_1)
+	if not arg_31_0:IsGaussianFreezeStatus() then
+		arg_31_0._capture.blurWeight = math.max(0, math.min(1, arg_31_1))
 	end
 end
 
-function slot0.setDesamplingRate(slot0, slot1)
-	slot0._capture.desamplingRate = slot1
+function var_0_0.setDesamplingRate(arg_32_0, arg_32_1)
+	arg_32_0._capture.desamplingRate = arg_32_1
 end
 
-function slot0.setReduceRate(slot0, slot1)
-	slot0._capture.reduteRate = slot1
+function var_0_0.setReduceRate(arg_33_0, arg_33_1)
+	arg_33_0._capture.reduteRate = arg_33_1
 end
 
-function slot0.setBlurIterations(slot0, slot1)
-	slot0._capture.blurIterations = slot1
+function var_0_0.setBlurIterations(arg_34_0, arg_34_1)
+	arg_34_0._capture.blurIterations = arg_34_1
 end
 
-function slot0.setUIBloom(slot0, slot1)
-	slot0._uiBloomActive = slot1
+function var_0_0.setUIBloom(arg_35_0, arg_35_1)
+	arg_35_0._uiBloomActive = arg_35_1
 end
 
-function slot0.setUIBlurActive(slot0, slot1, slot2, slot3, slot4)
-	if slot0._uiCamData and slot0._unitCamData and slot0._capture then
-		slot5 = CameraMgr.instance:getMainCamera()
-		slot6 = CameraMgr.instance:getUICamera()
-		slot7 = GameSceneMgr.instance:getCurSceneType()
+function var_0_0.setUIBlurActive(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4)
+	if arg_36_0._uiCamData and arg_36_0._unitCamData and arg_36_0._capture then
+		local var_36_0 = CameraMgr.instance:getMainCamera()
+		local var_36_1 = CameraMgr.instance:getUICamera()
+		local var_36_2 = GameSceneMgr.instance:getCurSceneType()
 
-		if slot1 == false or slot1 == 0 then
-			if slot4 ~= ViewEvent.OnCloseView then
-				slot0:setUIActive(false)
+		if arg_36_1 == false or arg_36_1 == 0 then
+			if arg_36_4 ~= ViewEvent.OnCloseView then
+				arg_36_0:setUIActive(false)
 			end
 
-			slot0._unitCamData.usePostProcess = slot7 ~= SceneType.Room
+			arg_36_0._unitCamData.usePostProcess = var_36_2 ~= SceneType.Room
 
-			slot0:setUIPPValue("bloomActive", false)
-			slot0:setUIPPValue("localMaskActive", false)
-			slot0:setUIPPValue("LocalMaskActive", false)
-			slot0:setFreezeVisble(true)
-			slot0:setUIBlur(false)
+			arg_36_0:setUIPPValue("bloomActive", false)
+			arg_36_0:setUIPPValue("localMaskActive", false)
+			arg_36_0:setUIPPValue("LocalMaskActive", false)
+			arg_36_0:setFreezeVisble(true)
+			arg_36_0:setUIBlur(false)
 		else
-			slot0:setUIActive(true)
+			arg_36_0:setUIActive(true)
 
-			slot0._unitCamData.usePostProcess = (slot1 == 2 or slot1 == 4) and slot7 ~= SceneType.Room
+			arg_36_0._unitCamData.usePostProcess = (arg_36_1 == 2 or arg_36_1 == 4) and var_36_2 ~= SceneType.Room
 
-			slot0:setUIPPValue("bloomActive", false)
-			slot0:setUIPPValue("localMaskActive", slot1 == 2 or slot1 == 4)
-			slot0:setUIPPValue("LocalMaskActive", slot1 == 2 or slot1 == 4)
-			slot0:setFreezeVisble(true, slot3)
-			slot0:setUIBlur(true, slot1 == 3 or slot1 == 4, slot2)
+			arg_36_0:setUIPPValue("bloomActive", false)
+			arg_36_0:setUIPPValue("localMaskActive", arg_36_1 == 2 or arg_36_1 == 4)
+			arg_36_0:setUIPPValue("LocalMaskActive", arg_36_1 == 2 or arg_36_1 == 4)
+			arg_36_0:setFreezeVisble(true, arg_36_3)
+			arg_36_0:setUIBlur(true, arg_36_1 == 3 or arg_36_1 == 4, arg_36_2)
 
-			if slot1 == 1 then
-				TaskDispatcher.runDelay(slot0.setFreezeVisbleBack, slot0, 0)
+			if arg_36_1 == 1 then
+				TaskDispatcher.runDelay(arg_36_0.setFreezeVisbleBack, arg_36_0, 0)
 			end
 		end
 
-		if slot0._uiBloomActive then
-			slot0._uiCamData.usePostProcess = true
+		if arg_36_0._uiBloomActive then
+			arg_36_0._uiCamData.usePostProcess = true
 
-			slot0:setUIPPValue("bloomActive", true)
-			slot0:setUIPPValue("localBloomActive", false)
+			arg_36_0:setUIPPValue("bloomActive", true)
+			arg_36_0:setUIPPValue("localBloomActive", false)
 		end
 	end
 end
 
-function slot0.setFreezeVisbleBack(slot0)
-	slot0:setFreezeVisble(false)
+function var_0_0.setFreezeVisbleBack(arg_37_0)
+	arg_37_0:setFreezeVisble(false)
 end
 
-function slot0.setFreezeVisble(slot0, slot1, slot2)
-	slot3 = CameraMgr.instance:getMainCamera()
-	slot4 = CameraMgr.instance:getUICamera()
+function var_0_0.setFreezeVisble(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = CameraMgr.instance:getMainCamera()
+	local var_38_1 = CameraMgr.instance:getUICamera()
 
-	if slot1 == false then
-		if slot0._capture and not slot0._capture:isCaptureComplete() then
-			slot1 = true
+	if arg_38_1 == false then
+		if arg_38_0._capture and not arg_38_0._capture:isCaptureComplete() then
+			arg_38_1 = true
 		end
 
-		if not slot0:IsGaussianFreezeStatus() then
-			slot1 = true
+		if not arg_38_0:IsGaussianFreezeStatus() then
+			arg_38_1 = true
 		end
 	end
 
-	slot0._unitCamera.enabled = slot1
+	arg_38_0._unitCamera.enabled = arg_38_1
 
-	uv0.setCameraLayer(slot3, "UI3D", slot1)
-	uv0.setCameraLayer(slot3, "Scene", slot1)
-	uv0.setCameraLayer(slot3, "SceneOpaque", slot1)
-	uv0.setCameraLayer(slot4, "UI", slot1 and not slot2)
+	var_0_0.setCameraLayer(var_38_0, "UI3D", arg_38_1)
+	var_0_0.setCameraLayer(var_38_0, "Scene", arg_38_1)
+	var_0_0.setCameraLayer(var_38_0, "SceneOpaque", arg_38_1)
+	var_0_0.setCameraLayer(var_38_1, "UI", arg_38_1 and not arg_38_2)
 end
 
-function slot0.setCameraLayer(slot0, slot1, slot2)
-	slot3 = slot0.cullingMask
+function var_0_0.setCameraLayer(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_0.cullingMask
+	local var_39_1 = LayerMask.GetMask(arg_39_1)
 
-	uv0.setCameraLayerInt(slot0, LayerMask.GetMask(slot1), slot2)
+	var_0_0.setCameraLayerInt(arg_39_0, var_39_1, arg_39_2)
 end
 
-function slot0.setCameraLayerInt(slot0, slot1, slot2)
-	slot3 = slot0.cullingMask
-	slot0.cullingMask = (not slot2 or bit.bor(slot3, slot1)) and bit.band(slot3, bit.bnot(slot1))
+function var_0_0.setCameraLayerInt(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = arg_40_0.cullingMask
+
+	if arg_40_2 then
+		var_40_0 = bit.bor(var_40_0, arg_40_1)
+	else
+		var_40_0 = bit.band(var_40_0, bit.bnot(arg_40_1))
+	end
+
+	arg_40_0.cullingMask = var_40_0
 end
 
-function slot0.getUnitPPValue(slot0, slot1)
-	if slot0._unitPPVolume then
-		return slot0._unitPPVolume[slot1]
+function var_0_0.getUnitPPValue(arg_41_0, arg_41_1)
+	if arg_41_0._unitPPVolume then
+		return arg_41_0._unitPPVolume[arg_41_1]
 	end
 end
 
-function slot0.setUnitPPValue(slot0, slot1, slot2)
-	if slot0._unitPPVolume then
-		slot0._unitPPVolume.refresh = true
-		slot0._unitPPVolume[slot1] = slot2
+function var_0_0.setUnitPPValue(arg_42_0, arg_42_1, arg_42_2)
+	if arg_42_0._unitPPVolume then
+		arg_42_0._unitPPVolume.refresh = true
+		arg_42_0._unitPPVolume[arg_42_1] = arg_42_2
 	end
 end
 
-function slot0.setLocalBloomColor(slot0, slot1)
-	slot0:setUnitPPValue("localBloomColor", slot1)
+function var_0_0.setLocalBloomColor(arg_43_0, arg_43_1)
+	arg_43_0:setUnitPPValue("localBloomColor", arg_43_1)
 end
 
-function slot0.getLocalBloomColor(slot0)
-	if slot0._unitPPVolume then
-		return slot0._unitPPVolume.localBloomColor
+function var_0_0.getLocalBloomColor(arg_44_0)
+	if arg_44_0._unitPPVolume then
+		return arg_44_0._unitPPVolume.localBloomColor
 	end
 end
 
-function slot0.setLocalBloomActive(slot0, slot1)
-	slot0:setUnitPPValue("localBloomActive", slot1)
+function var_0_0.setLocalBloomActive(arg_45_0, arg_45_1)
+	arg_45_0:setUnitPPValue("localBloomActive", arg_45_1)
 end
 
-function slot0.getFlickerSceneFactor(slot0)
-	if slot0._unitPPVolume then
-		return slot0._unitPPVolume.flickerSceneFactor
+function var_0_0.getFlickerSceneFactor(arg_46_0)
+	if arg_46_0._unitPPVolume then
+		return arg_46_0._unitPPVolume.flickerSceneFactor
 	end
 end
 
-function slot0.setFlickerSceneFactor(slot0, slot1)
-	slot0:setUnitPPValue("flickerSceneFactor", slot1)
+function var_0_0.setFlickerSceneFactor(arg_47_0, arg_47_1)
+	arg_47_0:setUnitPPValue("flickerSceneFactor", arg_47_1)
 end
 
-function slot0.getUIPPValue(slot0, slot1)
-	if slot0._uiPPVolume then
-		return slot0._uiPPVolume[slot1]
+function var_0_0.getUIPPValue(arg_48_0, arg_48_1)
+	if arg_48_0._uiPPVolume then
+		return arg_48_0._uiPPVolume[arg_48_1]
 	end
 end
 
-function slot0.setUIPPValue(slot0, slot1, slot2)
-	if slot0._uiPPVolume then
-		slot0._uiPPVolume.refresh = true
-		slot0._uiPPVolume[slot1] = slot2
+function var_0_0.setUIPPValue(arg_49_0, arg_49_1, arg_49_2)
+	if arg_49_0._uiPPVolume then
+		arg_49_0._uiPPVolume.refresh = true
+		arg_49_0._uiPPVolume[arg_49_1] = arg_49_2
 
-		slot0._uiPPVolume:UpdateImmediately()
+		arg_49_0._uiPPVolume:UpdateImmediately()
 	end
 end
 
-function slot0._onEnterScene(slot0, slot1, slot2)
-	if slot0:IsGaussianFreezeStatus() then
-		slot0:setUIBlurActive(1)
+function var_0_0._onEnterScene(arg_50_0, arg_50_1, arg_50_2)
+	if arg_50_0:IsGaussianFreezeStatus() then
+		arg_50_0:setUIBlurActive(1)
 	end
 
-	slot0:setPPMaskType(slot1 ~= SceneType.Fight)
+	arg_50_0:setPPMaskType(arg_50_1 ~= SceneType.Fight)
 end
 
-function slot0.setRenderShadow(slot0, slot1)
-	slot0._mainCamData.renderShadow = slot1
+function var_0_0.setRenderShadow(arg_51_0, arg_51_1)
+	arg_51_0._mainCamData.renderShadow = arg_51_1
 end
 
-function slot0.setLayerCullDistance(slot0, slot1, slot2)
-	slot0._mainCamData:SetCullLayerDistance(slot1, slot2)
+function var_0_0.setLayerCullDistance(arg_52_0, arg_52_1, arg_52_2)
+	arg_52_0._mainCamData:SetCullLayerDistance(arg_52_1, arg_52_2)
 end
 
-function slot0.clearLayerCullDistance(slot0)
-	slot0._mainCamData:ClearCullLayer()
+function var_0_0.clearLayerCullDistance(arg_53_0)
+	arg_53_0._mainCamData:ClearCullLayer()
 end
 
-function slot0.setPPMaskType(slot0, slot1)
-	slot0:setUnitPPValue("rolesStoryMaskActive", slot1)
-	slot0:setUnitPPValue("RolesStoryMaskActive", slot1)
-	slot0:setUnitPPValue("rgbSplitStrength", 0)
-	slot0:setUnitPPValue("RgbSplitStrength", 0)
-	slot0:setUnitPPValue("radialBlurLevel", 1)
-	slot0:setUnitPPValue("RadialBlurLevel", 1)
-	slot0:setUnitPPValue("dofFactor", 0)
-	slot0:setUnitPPValue("DofFactor", 0)
+function var_0_0.setPPMaskType(arg_54_0, arg_54_1)
+	arg_54_0:setUnitPPValue("rolesStoryMaskActive", arg_54_1)
+	arg_54_0:setUnitPPValue("RolesStoryMaskActive", arg_54_1)
+	arg_54_0:setUnitPPValue("rgbSplitStrength", 0)
+	arg_54_0:setUnitPPValue("RgbSplitStrength", 0)
+	arg_54_0:setUnitPPValue("radialBlurLevel", 1)
+	arg_54_0:setUnitPPValue("RadialBlurLevel", 1)
+	arg_54_0:setUnitPPValue("dofFactor", 0)
+	arg_54_0:setUnitPPValue("DofFactor", 0)
 end
 
-function slot0.setMainPPLevel(slot0, slot1)
-	slot0._ppGrade = slot1
+function var_0_0.setMainPPLevel(arg_55_0, arg_55_1)
+	arg_55_0._ppGrade = arg_55_1
 
-	slot0._unitPPVolume:SetProfile(slot0:getProfile())
+	local var_55_0 = arg_55_0:getProfile()
+
+	arg_55_0._unitPPVolume:SetProfile(var_55_0)
 end
 
-function slot0.getProfile(slot0)
-	slot2 = slot0._highProfile
+function var_0_0.getProfile(arg_56_0)
+	local var_56_0 = arg_56_0._ppGrade
+	local var_56_1 = arg_56_0._highProfile
 
-	if slot0._ppGrade == ModuleEnum.Performance.High then
-		slot2 = slot0._highProfile
-	elseif slot1 == ModuleEnum.Performance.Middle then
-		slot2 = slot0._middleProfile
-	elseif slot1 == ModuleEnum.Performance.Low then
-		slot2 = slot0._lowProfile
+	if var_56_0 == ModuleEnum.Performance.High then
+		var_56_1 = arg_56_0._highProfile
+	elseif var_56_0 == ModuleEnum.Performance.Middle then
+		var_56_1 = arg_56_0._middleProfile
+	elseif var_56_0 == ModuleEnum.Performance.Low then
+		var_56_1 = arg_56_0._lowProfile
 	end
 
-	return slot2
+	return var_56_1
 end
 
-function slot0.ClearPPRenderRts(slot0)
+function var_0_0.ClearPPRenderRts(arg_57_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

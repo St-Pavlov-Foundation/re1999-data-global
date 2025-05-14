@@ -1,70 +1,80 @@
-module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationDestinyItem", package.seeall)
+﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationDestinyItem", package.seeall)
 
-slot0 = class("VersionActivity2_3NewCultivationDestinyItem", LuaCompBase)
+local var_0_0 = class("VersionActivity2_3NewCultivationDestinyItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._simagestone = gohelper.findChildSingleImage(slot1, "#simage_stone")
-	slot0._txttitle = gohelper.findChildText(slot1, "title/#txt_title")
-	slot0._godecitem = gohelper.findChild(slot1, "#go_decitem")
-	slot0._descItemList = {}
-	slot0._descCompList = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._simagestone = gohelper.findChildSingleImage(arg_1_1, "#simage_stone")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_1, "title/#txt_title")
+	arg_1_0._godecitem = gohelper.findChild(arg_1_1, "#go_decitem")
+	arg_1_0._descItemList = {}
+	arg_1_0._descCompList = {}
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0._destinyId = slot2
-	slot0._roleId = slot1
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._destinyId = arg_2_2
+	arg_2_0._roleId = arg_2_1
 
-	slot0:refreshUI(slot1, slot2)
+	arg_2_0:refreshUI(arg_2_1, arg_2_2)
 end
 
-function slot0.SetActive(slot0, slot1)
-	gohelper.setActive(slot0._go, slot1)
+function var_0_0.SetActive(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0._go, arg_3_1)
 end
 
-function slot0.refreshUI(slot0, slot1, slot2)
-	slot4 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(slot2)
-	slot0._txttitle.text = slot4.name
+function var_0_0.refreshUI(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = CharacterDestinyConfig.instance:getDestinyFacetCo(arg_4_2)
+	local var_4_1 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_4_2)
 
-	slot0._simagestone:LoadImage(ResUrl.getDestinyIcon(slot4.icon))
+	arg_4_0._txttitle.text = var_4_1.name
 
-	slot5 = 0
-	slot6 = #slot0._descItemList
+	arg_4_0._simagestone:LoadImage(ResUrl.getDestinyIcon(var_4_1.icon))
 
-	for slot10, slot11 in pairs(CharacterDestinyConfig.instance:getDestinyFacetCo(slot2)) do
-		slot12, slot13 = nil
+	local var_4_2 = 0
+	local var_4_3 = #arg_4_0._descItemList
 
-		if slot6 < slot5 + 1 then
-			slot14 = gohelper.clone(slot0._godecitem, slot0._go)
+	for iter_4_0, iter_4_1 in pairs(var_4_0) do
+		var_4_2 = var_4_2 + 1
 
-			gohelper.setActive(slot14, true)
+		local var_4_4
+		local var_4_5
 
-			slot12 = gohelper.findChildTextMesh(slot14, "#txt_dec")
+		if var_4_3 < var_4_2 then
+			local var_4_6 = gohelper.clone(arg_4_0._godecitem, arg_4_0._go)
 
-			gohelper.setAsLastSibling(slot14)
-			table.insert(slot0._descItemList, slot12)
-			table.insert(slot0._descCompList, MonoHelper.addNoUpdateLuaComOnceToGo(slot12.gameObject, SkillDescComp))
+			gohelper.setActive(var_4_6, true)
+
+			var_4_4 = gohelper.findChildTextMesh(var_4_6, "#txt_dec")
+
+			gohelper.setAsLastSibling(var_4_6)
+
+			var_4_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_4.gameObject, SkillDescComp)
+
+			table.insert(arg_4_0._descItemList, var_4_4)
+			table.insert(arg_4_0._descCompList, var_4_5)
 		else
-			slot12 = slot0._descItemList[slot5]
-			slot13 = slot0._descCompList[slot5]
+			var_4_4 = arg_4_0._descItemList[var_4_2]
+			var_4_5 = arg_4_0._descCompList[var_4_2]
 		end
 
-		gohelper.setActive(slot12.transform.parent.gameObject, true)
-		slot13:updateInfo(slot12, slot11.desc, slot1)
-		slot13:setTipParam(0, Vector2(380, 100))
+		gohelper.setActive(var_4_4.transform.parent.gameObject, true)
+		var_4_5:updateInfo(var_4_4, iter_4_1.desc, arg_4_1)
+		var_4_5:setTipParam(0, Vector2(380, 100))
 	end
 
-	if slot5 < slot6 then
-		for slot10 = slot5 + 1, slot6 do
-			gohelper.setActive(slot0._descItemList[slot10].transform.parent.gameObject, false)
+	if var_4_2 < var_4_3 then
+		for iter_4_2 = var_4_2 + 1, var_4_3 do
+			local var_4_7 = arg_4_0._descItemList[iter_4_2]
+
+			gohelper.setActive(var_4_7.transform.parent.gameObject, false)
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if not slot0._isDisposed then
-		slot0._isDisposed = true
+function var_0_0.onDestroy(arg_5_0)
+	if not arg_5_0._isDisposed then
+		arg_5_0._isDisposed = true
 	end
 end
 
-return slot0
+return var_0_0

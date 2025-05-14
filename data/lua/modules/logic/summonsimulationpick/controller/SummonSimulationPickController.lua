@@ -1,125 +1,158 @@
-module("modules.logic.summonsimulationpick.controller.SummonSimulationPickController", package.seeall)
+﻿module("modules.logic.summonsimulationpick.controller.SummonSimulationPickController", package.seeall)
 
-slot0 = class("SummonSimulationPickController", BaseController)
+local var_0_0 = class("SummonSimulationPickController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.getActivityInfo(slot0, slot1, slot2, slot3)
-	SummonSimulationPickRpc.instance:getInfo(slot1, slot2, slot3)
+function var_0_0.getActivityInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	SummonSimulationPickRpc.instance:getInfo(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0.setCurActivityId(slot0, slot1)
-	slot0._activityId = slot1
+function var_0_0.setCurActivityId(arg_6_0, arg_6_1)
+	arg_6_0._activityId = arg_6_1
 end
 
-function slot0.getCurrentActivityInfo(slot0)
-	if not slot0._activityId then
+function var_0_0.getCurrentActivityInfo(arg_7_0)
+	local var_7_0 = arg_7_0._activityId
+
+	if not var_7_0 then
 		return nil
 	end
 
-	return SummonSimulationPickModel.instance:getActInfo(slot1)
+	return SummonSimulationPickModel.instance:getActInfo(var_7_0)
 end
 
-function slot0.setCurSelectType(slot0, slot1)
-	slot0._selectType = slot1
+function var_0_0.setCurSelectType(arg_8_0, arg_8_1)
+	arg_8_0._selectType = arg_8_1
 end
 
-function slot0.summonSimulation(slot0, slot1, slot2)
-	slot0:setCurActivityId(slot1)
+function var_0_0.summonSimulation(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0:setCurActivityId(arg_9_1)
 
-	if slot2 == nil then
-		slot2 = true
+	if arg_9_2 == nil then
+		arg_9_2 = true
 	end
 
-	if slot2 then
-		GameFacade.showMessageBox(SummonSimulationPickModel.instance:getActInfo(slot1):haveSaveCurrent() and MessageBoxIdDefine.SummonSimulationAgain or MessageBoxIdDefine.SummonSimulationNoSaveAgain, MsgBoxEnum.BoxType.Yes_No, slot0.realSummonSimulation, nil, , slot0, nil, , slot3.leftTimes, slot3.maxCount)
+	if arg_9_2 then
+		local var_9_0 = SummonSimulationPickModel.instance:getActInfo(arg_9_1)
+		local var_9_1 = var_9_0:haveSaveCurrent() and MessageBoxIdDefine.SummonSimulationAgain or MessageBoxIdDefine.SummonSimulationNoSaveAgain
+		local var_9_2 = var_9_0.maxCount
+		local var_9_3 = var_9_0.leftTimes
+
+		GameFacade.showMessageBox(var_9_1, MsgBoxEnum.BoxType.Yes_No, arg_9_0.realSummonSimulation, nil, nil, arg_9_0, nil, nil, var_9_3, var_9_2)
 
 		return
 	end
 
-	slot0:realSummonSimulation()
+	arg_9_0:realSummonSimulation()
 end
 
-function slot0.realSummonSimulation(slot0)
-	slot0:registerCallback(SummonSimulationEvent.onSummonSimulation, slot0.onSummonSimulationSuccess, slot0)
-	SummonSimulationPickRpc.instance:summonSimulation(slot0._activityId)
+function var_0_0.realSummonSimulation(arg_10_0)
+	local var_10_0 = arg_10_0._activityId
+
+	arg_10_0:registerCallback(SummonSimulationEvent.onSummonSimulation, arg_10_0.onSummonSimulationSuccess, arg_10_0)
+	SummonSimulationPickRpc.instance:summonSimulation(var_10_0)
 end
 
-function slot0.onSummonSimulationSuccess(slot0, slot1)
-	SummonController.instance:registerCallback(SummonEvent.summonShowBlackScreen, slot0.onReceiveShowBlackScreen, slot0)
-	SummonController.instance:registerCallback(SummonEvent.summonCloseBlackScreen, slot0.onReceiveCloseBlackScreen, slot0)
-	SummonController.instance:registerCallback(SummonEvent.summonMainCloseImmediately, slot0.closeView, slot0)
-	slot0:setCurrentSummonActivityId(slot1)
-	SummonController.instance:doVirtualSummonBehavior(SummonSimulationPickModel.instance:getActInfo(slot1).currentHeroIds, true, true, slot0.backHome, slot0)
-	slot0:unregisterCallback(SummonSimulationEvent.onSummonSimulation, slot0.onSummonSimulationSuccess, slot0)
+function var_0_0.onSummonSimulationSuccess(arg_11_0, arg_11_1)
+	SummonController.instance:registerCallback(SummonEvent.summonShowBlackScreen, arg_11_0.onReceiveShowBlackScreen, arg_11_0)
+	SummonController.instance:registerCallback(SummonEvent.summonCloseBlackScreen, arg_11_0.onReceiveCloseBlackScreen, arg_11_0)
+	SummonController.instance:registerCallback(SummonEvent.summonMainCloseImmediately, arg_11_0.closeView, arg_11_0)
+
+	local var_11_0 = SummonSimulationPickModel.instance:getActInfo(arg_11_1).currentHeroIds
+
+	arg_11_0:setCurrentSummonActivityId(arg_11_1)
+	SummonController.instance:doVirtualSummonBehavior(var_11_0, true, true, arg_11_0.backHome, arg_11_0)
+	arg_11_0:unregisterCallback(SummonSimulationEvent.onSummonSimulation, arg_11_0.onSummonSimulationSuccess, arg_11_0)
 end
 
-function slot0.saveResult(slot0, slot1)
-	slot0:setCurActivityId(slot1)
-	GameFacade.showMessageBox(MessageBoxIdDefine.SummonSimulationSave, MsgBoxEnum.BoxType.Yes_No, slot0.realSaveResult, nil, , slot0)
+function var_0_0.saveResult(arg_12_0, arg_12_1)
+	arg_12_0:setCurActivityId(arg_12_1)
+
+	local var_12_0 = MessageBoxIdDefine.SummonSimulationSave
+
+	GameFacade.showMessageBox(var_12_0, MsgBoxEnum.BoxType.Yes_No, arg_12_0.realSaveResult, nil, nil, arg_12_0)
 end
 
-function slot0.realSaveResult(slot0)
-	SummonSimulationPickRpc.instance:saveResult(slot0:getCurrentSummonActivityId())
+function var_0_0.realSaveResult(arg_13_0)
+	local var_13_0 = arg_13_0:getCurrentSummonActivityId()
+
+	SummonSimulationPickRpc.instance:saveResult(var_13_0)
 end
 
-function slot0.selectResult(slot0, slot1, slot2, slot3)
-	slot0:setCurActivityId(slot1)
-	slot0:setCurSelectType(slot2)
+function var_0_0.selectResult(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	arg_14_0:setCurActivityId(arg_14_1)
+	arg_14_0:setCurSelectType(arg_14_2)
 
-	if slot3 or true then
-		slot6 = MessageBoxIdDefine.SummonSimulationSelectWithLeftTime
+	arg_14_3 = arg_14_3 or true
 
-		if SummonSimulationPickModel.instance:getActInfo(slot1).leftTimes <= 0 then
-			slot6 = slot2 == SummonSimulationEnum.SaveType.Saved and MessageBoxIdDefine.SummonSimulationSelectSaved or MessageBoxIdDefine.SummonSimulationSelectCurrent
+	if arg_14_3 then
+		local var_14_0 = SummonSimulationPickModel.instance:getActInfo(arg_14_1).leftTimes
+		local var_14_1 = MessageBoxIdDefine.SummonSimulationSelectWithLeftTime
+
+		if var_14_0 <= 0 then
+			var_14_1 = arg_14_2 == SummonSimulationEnum.SaveType.Saved and MessageBoxIdDefine.SummonSimulationSelectSaved or MessageBoxIdDefine.SummonSimulationSelectCurrent
 		end
 
-		GameFacade.showMessageBox(slot6, MsgBoxEnum.BoxType.Yes_No, slot0.realSelectResult, nil, , slot0, nil, , slot5)
+		GameFacade.showMessageBox(var_14_1, MsgBoxEnum.BoxType.Yes_No, arg_14_0.realSelectResult, nil, nil, arg_14_0, nil, nil, var_14_0)
 
 		return
 	end
 
-	slot0:realSelectResult()
+	arg_14_0:realSelectResult()
 end
 
-function slot0.realSelectResult(slot0)
+function var_0_0.realSelectResult(arg_15_0)
+	local var_15_0 = arg_15_0._activityId
+	local var_15_1 = arg_15_0._selectType
+
 	CharacterModel.instance:setGainHeroViewShowState(false)
 	CharacterModel.instance:setGainHeroViewNewShowState(true)
-	SummonSimulationPickRpc.instance:selectResult(slot0._activityId, slot0._selectType)
-	slot0:registerCallback(SummonSimulationEvent.onSelectResult, slot0.onSelectResult, slot0)
+	SummonSimulationPickRpc.instance:selectResult(var_15_0, var_15_1)
+	arg_15_0:registerCallback(SummonSimulationEvent.onSelectResult, arg_15_0.onSelectResult, arg_15_0)
 end
 
-function slot0.onSelectResult(slot0)
-	slot0:startBlack(true)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0.onViewOpen, slot0)
+function var_0_0.onSelectResult(arg_16_0)
+	arg_16_0:startBlack(true)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_16_0.onViewOpen, arg_16_0)
 end
 
-function slot0.trySummonSimulation(slot0, slot1)
-	if not SummonSimulationPickModel.instance:getActInfo(slot1).isSelect and slot2.leftTimes < slot2.maxCount then
-		slot0:setCurrentSummonActivityId(slot1)
+function var_0_0.trySummonSimulation(arg_17_0, arg_17_1)
+	local var_17_0 = SummonSimulationPickModel.instance:getActInfo(arg_17_1)
+
+	if not var_17_0.isSelect and var_17_0.leftTimes < var_17_0.maxCount then
+		arg_17_0:setCurrentSummonActivityId(arg_17_1)
+
+		local var_17_1 = #var_17_0.currentHeroIds > 0 and var_17_0.currentHeroIds or var_17_0.saveHeroIds
+		local var_17_2 = SummonController.instance:getVirtualSummonResult(var_17_1, false, false)
+
 		ViewMgr.instance:openView(ViewName.SummonSimulationResultView, {
 			isReprint = true,
-			summonResultList = SummonController.instance:getVirtualSummonResult(#slot2.currentHeroIds > 0 and slot2.currentHeroIds or slot2.saveHeroIds, false, false)
+			summonResultList = var_17_2
 		})
 
 		return
 	end
 
-	uv0.instance:summonSimulation(slot1, false)
+	var_0_0.instance:summonSimulation(arg_17_1, false)
 end
 
-function slot0.startBlack(slot0, slot1)
-	if slot1 then
+function var_0_0.startBlack(arg_18_0, arg_18_1)
+	if arg_18_1 then
 		ViewMgr.instance:openView(ViewName.LoadingBlackView, nil, true)
 	else
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView)
@@ -127,39 +160,42 @@ function slot0.startBlack(slot0, slot1)
 	end
 end
 
-function slot0.endBlack(slot0, slot1)
-	if slot1 then
+function var_0_0.endBlack(arg_19_0, arg_19_1)
+	if arg_19_1 then
 		ViewMgr.instance:closeView(ViewName.LoadingBlackView, true)
 	else
 		GameSceneMgr.instance:hideLoading(SceneType.Main)
 	end
 end
 
-function slot0.closeView(slot0)
-	slot0:endBlack()
-	slot0:unregisterSceneEvent()
+function var_0_0.closeView(arg_20_0)
+	arg_20_0:endBlack()
+	arg_20_0:unregisterSceneEvent()
 	ViewMgr.instance:closeAllViews({
 		ViewName.SummonView
 	})
 end
 
-function slot0.setCurrentSummonActivityId(slot0, slot1)
-	slot0._currentActivityId = slot1
+function var_0_0.setCurrentSummonActivityId(arg_21_0, arg_21_1)
+	arg_21_0._currentActivityId = arg_21_1
 end
 
-function slot0.getCurrentSummonActivityId(slot0)
-	return slot0._currentActivityId
+function var_0_0.getCurrentSummonActivityId(arg_22_0)
+	return arg_22_0._currentActivityId
 end
 
-function slot0.unregisterSceneEvent(slot0)
-	SummonController.instance:unregisterCallback(SummonEvent.summonShowBlackScreen, slot0.onReceiveShowBlackScreen, slot0)
-	SummonController.instance:unregisterCallback(SummonEvent.summonCloseBlackScreen, slot0.onReceiveCloseBlackScreen, slot0)
-	SummonController.instance:unregisterCallback(SummonEvent.summonMainCloseImmediately, slot0.closeView, slot0)
+function var_0_0.unregisterSceneEvent(arg_23_0)
+	SummonController.instance:unregisterCallback(SummonEvent.summonShowBlackScreen, arg_23_0.onReceiveShowBlackScreen, arg_23_0)
+	SummonController.instance:unregisterCallback(SummonEvent.summonCloseBlackScreen, arg_23_0.onReceiveCloseBlackScreen, arg_23_0)
+	SummonController.instance:unregisterCallback(SummonEvent.summonMainCloseImmediately, arg_23_0.closeView, arg_23_0)
 end
 
-function slot0.backHome(slot0)
-	if VirtualSummonScene.instance:isOpen() and not ViewMgr.instance:isOpen(ViewName.BackpackView) then
-		slot0:startBlack(true)
+function var_0_0.backHome(arg_24_0)
+	local var_24_0 = VirtualSummonScene.instance:isOpen()
+	local var_24_1 = ViewMgr.instance:isOpen(ViewName.BackpackView)
+
+	if var_24_0 and not var_24_1 then
+		arg_24_0:startBlack(true)
 	end
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
@@ -168,50 +204,51 @@ function slot0.backHome(slot0)
 
 	VirtualSummonScene.instance:close(true)
 
-	if not slot2 then
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0.onViewOpen, slot0)
+	if not var_24_1 then
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_24_0.onViewOpen, arg_24_0)
 		BackpackController.instance:enterItemBackpack(ItemEnum.CategoryType.UseType)
 	end
 end
 
-function slot0.onViewClose(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		slot0:endBlack(true)
+function var_0_0.onViewClose(arg_25_0, arg_25_1)
+	if arg_25_1 == ViewName.CommonPropView then
+		arg_25_0:endBlack(true)
 	end
 end
 
-function slot0.onViewOpen(slot0, slot1)
-	if slot1 == ViewName.BackpackView or slot1 == ViewName.CharacterGetView or slot1 == ViewName.CommonPropView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0.onViewOpen, slot0)
-		slot0:endBlack(true)
+function var_0_0.onViewOpen(arg_26_0, arg_26_1)
+	if arg_26_1 == ViewName.BackpackView or arg_26_1 == ViewName.CharacterGetView or arg_26_1 == ViewName.CommonPropView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_26_0.onViewOpen, arg_26_0)
+		arg_26_0:endBlack(true)
 	end
 end
 
-function slot0.openSummonTips(slot0, slot1)
-	logNormal("Click SummonSimulationTips actId: " .. slot1)
+function var_0_0.openSummonTips(arg_27_0, arg_27_1)
+	logNormal("Click SummonSimulationTips actId: " .. arg_27_1)
 
-	slot2 = SummonSimulationPickConfig.instance:getSummonConfigById(slot1)
+	local var_27_0 = SummonSimulationPickConfig.instance:getSummonConfigById(arg_27_1)
+	local var_27_1 = SummonConfig.instance:getSummonPool(var_27_0.poolId)
 
-	SummonMainController.instance:openSummonDetail(SummonConfig.instance:getSummonPool(slot2.poolId), nil, slot2.activityId)
+	SummonMainController.instance:openSummonDetail(var_27_1, nil, var_27_0.activityId)
 end
 
-function slot0.onReceiveShowBlackScreen(slot0)
+function var_0_0.onReceiveShowBlackScreen(arg_28_0)
 	logNormal("SummonSimulationPickController onReceiveShowBlackScreen")
-	slot0:startBlack()
-	TaskDispatcher.runDelay(slot0.afterBlackLoading, slot0, 0.3)
+	arg_28_0:startBlack()
+	TaskDispatcher.runDelay(arg_28_0.afterBlackLoading, arg_28_0, 0.3)
 end
 
-function slot0.afterBlackLoading(slot0)
+function var_0_0.afterBlackLoading(arg_29_0)
 	logNormal("SummonSimulationPickController afterBlackLoading")
-	TaskDispatcher.cancelTask(slot0.afterBlackLoading, slot0)
+	TaskDispatcher.cancelTask(arg_29_0.afterBlackLoading, arg_29_0)
 	SummonController.instance:onFirstLoadSceneBlock()
 end
 
-function slot0.onReceiveCloseBlackScreen(slot0)
+function var_0_0.onReceiveCloseBlackScreen(arg_30_0)
 	logNormal("SummonSimulationPickController onReceiveCloseBlackScreen")
-	slot0:closeView()
+	arg_30_0:closeView()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

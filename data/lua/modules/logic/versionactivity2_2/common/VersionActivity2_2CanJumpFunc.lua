@@ -1,3 +1,3 @@
-module("modules.logic.versionactivity2_2.common.VersionActivity2_2CanJumpFunc", package.seeall)
+﻿module("modules.logic.versionactivity2_2.common.VersionActivity2_2CanJumpFunc", package.seeall)
 
-return class("VersionActivity2_2CanJumpFunc")
+return (class("VersionActivity2_2CanJumpFunc"))

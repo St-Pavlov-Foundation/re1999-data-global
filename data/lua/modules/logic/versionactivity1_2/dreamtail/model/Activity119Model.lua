@@ -1,54 +1,55 @@
-module("modules.logic.versionactivity1_2.dreamtail.model.Activity119Model", package.seeall)
+﻿module("modules.logic.versionactivity1_2.dreamtail.model.Activity119Model", package.seeall)
 
-slot0 = class("Activity119Model", BaseModel)
+local var_0_0 = class("Activity119Model", BaseModel)
 
-function slot0.reInit(slot0)
-	slot0.data = nil
-	slot0.userData = nil
+function var_0_0.reInit(arg_1_0)
+	arg_1_0.data = nil
+	arg_1_0.userData = nil
 end
 
-function slot0.getData(slot0)
-	if not slot0.data then
-		if not string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.DreamTailKey, "")) then
-			slot0.data = cjson.decode(slot2)
-			slot0.userData = slot0.data[tostring(PlayerModel.instance:getMyUserId())]
+function var_0_0.getData(arg_2_0)
+	if not arg_2_0.data then
+		local var_2_0 = tostring(PlayerModel.instance:getMyUserId())
+		local var_2_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.DreamTailKey, "")
 
-			if slot0.data.activityId ~= VersionActivity1_2Enum.ActivityId.DreamTail then
-				slot0.data = nil
-				slot0.userData = nil
+		if not string.nilorempty(var_2_1) then
+			arg_2_0.data = cjson.decode(var_2_1)
+			arg_2_0.userData = arg_2_0.data[var_2_0]
+
+			if arg_2_0.data.activityId ~= VersionActivity1_2Enum.ActivityId.DreamTail then
+				arg_2_0.data = nil
+				arg_2_0.userData = nil
 			end
 		end
 
-		if not slot0.data then
-			slot0.data = {
-				activityId = VersionActivity1_2Enum.ActivityId.DreamTail
-			}
+		if not arg_2_0.data then
+			arg_2_0.data = {}
+			arg_2_0.data.activityId = VersionActivity1_2Enum.ActivityId.DreamTail
 		end
 
-		if not slot0.userData then
-			slot0.userData = {
-				unLockDay = 1,
-				lastSelectDay = 1,
-				lastSelectModel = 1,
-				unLockHardList = {}
-			}
-			slot0.data[slot1] = slot0.userData
+		if not arg_2_0.userData then
+			arg_2_0.userData = {}
+			arg_2_0.userData.unLockDay = 1
+			arg_2_0.userData.lastSelectDay = 1
+			arg_2_0.userData.lastSelectModel = 1
+			arg_2_0.userData.unLockHardList = {}
+			arg_2_0.data[var_2_0] = arg_2_0.userData
 
-			slot0:saveData()
+			arg_2_0:saveData()
 		end
 	end
 
-	return slot0.userData
+	return arg_2_0.userData
 end
 
-function slot0.saveData(slot0)
-	if not slot0.data then
+function var_0_0.saveData(arg_3_0)
+	if not arg_3_0.data then
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.DreamTailKey, cjson.encode(slot0.data))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.DreamTailKey, cjson.encode(arg_3_0.data))
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

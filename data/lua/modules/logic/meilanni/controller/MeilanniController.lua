@@ -1,136 +1,165 @@
-module("modules.logic.meilanni.controller.MeilanniController", package.seeall)
+﻿module("modules.logic.meilanni.controller.MeilanniController", package.seeall)
 
-slot0 = class("MeilanniController", BaseController)
+local var_0_0 = class("MeilanniController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._statViewTime = nil
-	slot0._statViewCostAP = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._statViewTime = nil
+	arg_1_0._statViewCostAP = 0
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._statViewTime = nil
-	slot0._statViewCostAP = 0
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._statViewTime = nil
+	arg_4_0._statViewCostAP = 0
 end
 
-function slot0.activityIsEnd(slot0)
-	if not ActivityModel.instance:getActMO(MeilanniEnum.activityId) then
+function var_0_0.activityIsEnd(arg_5_0)
+	local var_5_0 = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
+
+	if not var_5_0 then
 		return false
 	end
 
-	return slot1:getRealEndTimeStamp() <= ServerTime.now()
+	return var_5_0:getRealEndTimeStamp() <= ServerTime.now()
 end
 
-function slot0.openMeilanniView(slot0, slot1, slot2)
-	if not (slot1 or {}).mapId then
+function var_0_0.openMeilanniView(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_1 = arg_6_1 or {}
+
+	if not arg_6_1.mapId then
+		local var_6_0 = FightModel.instance:getBattleId()
+
 		FightModel.instance:clearBattleId()
 
-		if FightModel.instance:getBattleId() then
-			slot1.mapId = MeilanniModel.instance:getMapIdByBattleId(slot3)
+		if var_6_0 then
+			arg_6_1.mapId = MeilanniModel.instance:getMapIdByBattleId(var_6_0)
 		end
 
-		if not slot1.mapId then
-			slot1.mapId = MeilanniModel.instance:getCurMapId()
+		if not arg_6_1.mapId then
+			arg_6_1.mapId = MeilanniModel.instance:getCurMapId()
 		end
 	end
 
-	if slot1.mapId then
-		MeilanniModel.instance:setCurMapId(slot1.mapId)
+	if arg_6_1.mapId then
+		MeilanniModel.instance:setCurMapId(arg_6_1.mapId)
 	end
 
-	ViewMgr.instance:openView(ViewName.MeilanniView, slot1, slot2)
-	slot0:statStart()
+	ViewMgr.instance:openView(ViewName.MeilanniView, arg_6_1, arg_6_2)
+	arg_6_0:statStart()
 end
 
-function slot0.openMeilanniMainView(slot0, slot1, slot2)
-	Activity108Rpc.instance:sendGet108InfosRequest(MeilanniEnum.activityId, function ()
-		ViewMgr.instance:openView(ViewName.MeilanniMainView, uv0, uv1)
-	end, slot0)
+function var_0_0.openMeilanniMainView(arg_7_0, arg_7_1, arg_7_2)
+	Activity108Rpc.instance:sendGet108InfosRequest(MeilanniEnum.activityId, function()
+		ViewMgr.instance:openView(ViewName.MeilanniMainView, arg_7_1, arg_7_2)
+	end, arg_7_0)
 end
 
-function slot0.immediateOpenMeilanniMainView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.MeilanniMainView, slot1, slot2)
+function var_0_0.immediateOpenMeilanniMainView(arg_9_0, arg_9_1, arg_9_2)
+	ViewMgr.instance:openView(ViewName.MeilanniMainView, arg_9_1, arg_9_2)
 end
 
-function slot0.openMeilanniBossInfoView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.MeilanniBossInfoView, slot1, slot2)
+function var_0_0.openMeilanniBossInfoView(arg_10_0, arg_10_1, arg_10_2)
+	ViewMgr.instance:openView(ViewName.MeilanniBossInfoView, arg_10_1, arg_10_2)
 end
 
-function slot0.openMeilanniTaskView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.MeilanniTaskView, slot1, slot2)
+function var_0_0.openMeilanniTaskView(arg_11_0, arg_11_1, arg_11_2)
+	ViewMgr.instance:openView(ViewName.MeilanniTaskView, arg_11_1, arg_11_2)
 end
 
-function slot0.openMeilanniEntrustView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.MeilanniEntrustView, slot1, slot2)
+function var_0_0.openMeilanniEntrustView(arg_12_0, arg_12_1, arg_12_2)
+	ViewMgr.instance:openView(ViewName.MeilanniEntrustView, arg_12_1, arg_12_2)
 end
 
-function slot0.openMeilanniSettlementView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.MeilanniSettlementView, slot1, slot2)
+function var_0_0.openMeilanniSettlementView(arg_13_0, arg_13_1, arg_13_2)
+	ViewMgr.instance:openView(ViewName.MeilanniSettlementView, arg_13_1, arg_13_2)
 end
 
-function slot0.startBattle(slot0, slot1)
-	MeilanniModel.instance:setBattleElementId(slot1)
-	Activity108Rpc.instance:sendEnterFightEventRequest(MeilanniEnum.activityId, slot1)
+function var_0_0.startBattle(arg_14_0, arg_14_1)
+	MeilanniModel.instance:setBattleElementId(arg_14_1)
+	Activity108Rpc.instance:sendEnterFightEventRequest(MeilanniEnum.activityId, arg_14_1)
 end
 
-function slot0.enterFight(slot0, slot1)
-	slot5 = MeilanniEnum.episodeId
-	DungeonModel.instance.curLookEpisodeId = slot5
+function var_0_0.enterFight(arg_15_0, arg_15_1)
+	local var_15_0 = MeilanniModel.instance:getCurMapId()
+	local var_15_1 = MeilanniModel.instance:getEventInfo(var_15_0, arg_15_1):getBattleId()
+	local var_15_2 = MeilanniEnum.episodeId
 
-	DungeonFightController.instance:enterMeilanniFight(DungeonConfig.instance:getEpisodeCO(slot5).chapterId, slot5, MeilanniModel.instance:getEventInfo(MeilanniModel.instance:getCurMapId(), slot1):getBattleId())
+	DungeonModel.instance.curLookEpisodeId = var_15_2
+
+	local var_15_3 = DungeonConfig.instance:getEpisodeCO(var_15_2)
+
+	DungeonFightController.instance:enterMeilanniFight(var_15_3.chapterId, var_15_2, var_15_1)
 end
 
-function slot0.getScoreDesc(slot0)
-	if slot0 ~= 0 then
-		slot1 = nil
+function var_0_0.getScoreDesc(arg_16_0)
+	if arg_16_0 ~= 0 then
+		local var_16_0
 
-		return (slot0 <= 0 or string.format("<#9D1111><b>[</b>%s+%s<b>]</b></color>", luaLang("meilanni_pingfen"), slot0)) and string.format("<#4E7656><b>[</b>%s%s<b>]</b></color>", luaLang("meilanni_pingfen"), slot0)
+		if arg_16_0 > 0 then
+			var_16_0 = string.format("<#9D1111><b>[</b>%s+%s<b>]</b></color>", luaLang("meilanni_pingfen"), arg_16_0)
+		else
+			var_16_0 = string.format("<#4E7656><b>[</b>%s%s<b>]</b></color>", luaLang("meilanni_pingfen"), arg_16_0)
+		end
+
+		return var_16_0
 	end
 end
 
-function slot0.statStart(slot0)
-	if slot0._statViewTime then
+function var_0_0.statStart(arg_17_0)
+	if arg_17_0._statViewTime then
 		return
 	end
 
-	if not MeilanniModel.instance:getMapInfo(MeilanniModel.instance:getCurMapId()) then
+	local var_17_0 = MeilanniModel.instance:getCurMapId()
+	local var_17_1 = MeilanniModel.instance:getMapInfo(var_17_0)
+
+	if not var_17_1 then
 		return
 	end
 
-	slot0._statViewCostAP = slot2:getTotalCostAP()
-	slot0._statViewTime = ServerTime.now()
+	arg_17_0._statViewCostAP = var_17_1:getTotalCostAP()
+	arg_17_0._statViewTime = ServerTime.now()
 end
 
-function slot0.statEnd(slot0, slot1)
-	if not slot0._statViewTime then
+function var_0_0.statEnd(arg_18_0, arg_18_1)
+	if not arg_18_0._statViewTime then
 		return
 	end
 
-	slot2 = ServerTime.now() - slot0._statViewTime
+	local var_18_0 = ServerTime.now() - arg_18_0._statViewTime
+	local var_18_1 = MeilanniModel.instance:getCurMapId()
+	local var_18_2 = MeilanniModel.instance:getMapInfo(var_18_1)
 
-	if not MeilanniModel.instance:getMapInfo(MeilanniModel.instance:getCurMapId()) then
+	if not var_18_2 then
 		return
 	end
 
-	slot6 = slot4:getTotalCostAP()
-	slot0._statViewTime = nil
+	local var_18_3 = var_18_2.score
+	local var_18_4 = var_18_2:getTotalCostAP()
+	local var_18_5 = var_18_4
+	local var_18_6 = math.max(0, var_18_4 - arg_18_0._statViewCostAP)
+	local var_18_7 = var_18_2.totalCount
+
+	arg_18_0._statViewTime = nil
 
 	StatController.instance:track(StatEnum.EventName.ExitMeilanniActivity, {
-		[StatEnum.EventProperties.UseTime] = slot2,
-		[StatEnum.EventProperties.MapId] = tostring(slot3),
-		[StatEnum.EventProperties.ChallengesNum] = slot4.totalCount,
-		[StatEnum.EventProperties.ActionPoint] = slot6,
-		[StatEnum.EventProperties.IncrementActionPoint] = math.max(0, slot6 - slot0._statViewCostAP),
-		[StatEnum.EventProperties.Score] = slot4.score,
-		[StatEnum.EventProperties.Result] = slot1 or StatEnum.Result.None
+		[StatEnum.EventProperties.UseTime] = var_18_0,
+		[StatEnum.EventProperties.MapId] = tostring(var_18_1),
+		[StatEnum.EventProperties.ChallengesNum] = var_18_7,
+		[StatEnum.EventProperties.ActionPoint] = var_18_5,
+		[StatEnum.EventProperties.IncrementActionPoint] = var_18_6,
+		[StatEnum.EventProperties.Score] = var_18_3,
+		[StatEnum.EventProperties.Result] = arg_18_1 or StatEnum.Result.None
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

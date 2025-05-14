@@ -1,54 +1,61 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_ResultPanelItem", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_ResultPanelItem", package.seeall)
 
-slot0 = class("V1a4_BossRush_ResultPanelItem", ListScrollCellExtend)
+local var_0_0 = class("V1a4_BossRush_ResultPanelItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._txtScore = gohelper.findChildText(slot0.viewGO, "txt_Score")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "txt_Score")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._img = gohelper.findChildImage(slot0.viewGO, "")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._img = gohelper.findChildImage(arg_4_0.viewGO, "")
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0:_refresh()
+	arg_5_0:_refresh()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_6_0, arg_6_1)
+	return
 end
 
-function slot0._refresh(slot0)
-	slot1 = slot0._mo
+function var_0_0._refresh(arg_7_0)
+	local var_7_0 = arg_7_0._mo
+	local var_7_1 = var_7_0.isGray
+	local var_7_2 = var_7_0.stageRewardCO.rewardPointNum
+	local var_7_3 = var_7_1 and BossRushEnum.Color.GRAY or BossRushEnum.Color.WHITE
 
-	slot0:setDesc(BossRushConfig.instance:getScoreStr(slot1.stageRewardCO.rewardPointNum))
-	slot0:setImgColor(slot1.isGray and BossRushEnum.Color.GRAY or BossRushEnum.Color.WHITE)
+	arg_7_0:setDesc(BossRushConfig.instance:getScoreStr(var_7_2))
+	arg_7_0:setImgColor(var_7_3)
 end
 
-function slot0.setDesc(slot0, slot1)
-	slot0._txtScore.text = slot1
+function var_0_0.setDesc(arg_8_0, arg_8_1)
+	arg_8_0._txtScore.text = arg_8_1
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0._go, slot1)
+function var_0_0.setActive(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0._go, arg_9_1)
 end
 
-function slot0.setImgColor(slot0, slot1)
-	UIColorHelper.set(slot0._img, slot1)
+function var_0_0.setImgColor(arg_10_0, arg_10_1)
+	UIColorHelper.set(arg_10_0._img, arg_10_1)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

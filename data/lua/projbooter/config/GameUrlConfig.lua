@@ -1,7 +1,8 @@
-module("projbooter.config.GameUrlConfig", package.seeall)
+﻿module("projbooter.config.GameUrlConfig", package.seeall)
 
-slot0 = _M
-slot0.ServerType = {
+local var_0_0 = _M
+
+var_0_0.ServerType = {
 	Develop = 1,
 	OutDevelop = 2,
 	OutRelease = 4,
@@ -9,49 +10,68 @@ slot0.ServerType = {
 	OutPreview = 3
 }
 
-function slot0.getLoginUrls(slot0)
-	slot1 = UrlConfig.getConfig()
-	slot3, slot4 = nil
+function var_0_0.getLoginUrls(arg_1_0)
+	local var_1_0 = UrlConfig.getConfig()
+	local var_1_1 = VersionValidator.instance:isInReviewing(true)
+	local var_1_2
+	local var_1_3
 
-	if type(VersionValidator.instance:isInReviewing(true) and (slot0 and slot1.loginReviewBackup or slot1.loginReview) or slot0 and slot1.loginBackup or slot1.login) == "table" then
-		if not slot4[tostring(SDKMgr.instance:getChannelId())] then
-			for slot9, slot10 in pairs(slot4) do
-				logError(string.format("httpLoginUrl not exist, bak=%s, channelId=%s\nuse %s:%s", slot0 and "true" or "false", slot5, slot9, slot10 or "nil"))
+	if var_1_1 then
+		var_1_3 = arg_1_0 and var_1_0.loginReviewBackup or var_1_0.loginReview
+	else
+		var_1_3 = arg_1_0 and var_1_0.loginBackup or var_1_0.login
+	end
+
+	if type(var_1_3) == "table" then
+		local var_1_4 = tostring(SDKMgr.instance:getChannelId())
+
+		var_1_2 = var_1_3[var_1_4]
+
+		if not var_1_2 then
+			for iter_1_0, iter_1_1 in pairs(var_1_3) do
+				var_1_2 = iter_1_1
+
+				logError(string.format("httpLoginUrl not exist, bak=%s, channelId=%s\nuse %s:%s", arg_1_0 and "true" or "false", var_1_4, iter_1_0, var_1_2 or "nil"))
 
 				break
 			end
 		end
 	else
-		slot3 = slot4
+		var_1_2 = var_1_3
 	end
 
-	return slot3, slot3 .. "/login0.jsp", slot3 .. "/login.jsp", slot3 .. "/loadzone.jsp", slot3 .. "/startgame.jsp"
+	local var_1_5 = var_1_2 .. "/login0.jsp"
+	local var_1_6 = var_1_2 .. "/login.jsp"
+	local var_1_7 = var_1_2 .. "/loadzone.jsp"
+	local var_1_8 = var_1_2 .. "/startgame.jsp"
+
+	return var_1_2, var_1_5, var_1_6, var_1_7, var_1_8
 end
 
-function slot0.getHotUpdateUrl()
-	slot0 = UrlConfig.getConfig()
+function var_0_0.getHotUpdateUrl()
+	local var_2_0 = UrlConfig.getConfig()
 
-	return slot0.hotUpdate, slot0.hotUpdateBackup
+	return var_2_0.hotUpdate, var_2_0.hotUpdateBackup
 end
 
-function slot0.getOptionalUpdateUrl()
-	slot0 = UrlConfig.getConfig()
+function var_0_0.getOptionalUpdateUrl()
+	local var_3_0 = UrlConfig.getConfig()
 
-	return slot0.optionalUpdate, slot0.optionalUpdateBackup
+	return var_3_0.optionalUpdate, var_3_0.optionalUpdateBackup
 end
 
-function slot0.getMassHotUpdateUrl()
-	slot0 = UrlConfig.getConfig()
+function var_0_0.getMassHotUpdateUrl()
+	local var_4_0 = UrlConfig.getConfig()
 
-	return slot0.massHotUpdate, slot0.massHotUpdateBackup
+	return var_4_0.massHotUpdate, var_4_0.massHotUpdateBackup
 end
 
-function slot0.getNoticeUrl()
+function var_0_0.getNoticeUrl()
 	return UrlConfig.getConfig().notice
 end
 
-function slot0.getLogReportUrl()
+function var_0_0.getLogReportUrl()
 	return UrlConfig.getConfig().logReport
 end
 
-return slot0
+return var_0_0

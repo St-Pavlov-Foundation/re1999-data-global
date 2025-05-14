@@ -1,181 +1,209 @@
-module("modules.logic.fight.entity.comp.FightNameUIBuffMgr", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightNameUIBuffMgr", package.seeall)
 
-slot0 = class("FightNameUIBuffMgr")
-slot1 = 4
-slot2 = {
-	[20004.0] = true,
-	[20003.0] = true,
-	[30003.0] = true,
-	[30004.0] = true
+local var_0_0 = class("FightNameUIBuffMgr")
+local var_0_1 = 4
+local var_0_2 = {
+	[20004] = true,
+	[20003] = true,
+	[30003] = true,
+	[30004] = true
 }
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.entity = slot1
-	slot0.goBuffItem = slot2
-	slot0.opContainerTr = slot3
-	slot0.buffItemList = {}
-	slot0.buffLineCount = 0
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.goBuffItem = arg_1_2
+	arg_1_0.opContainerTr = arg_1_3
+	arg_1_0.buffItemList = {}
+	arg_1_0.buffLineCount = 0
 
-	gohelper.setActive(slot0.goBuffItem, false)
-	slot0:refreshBuffList()
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, slot0.updateBuff, slot0)
-	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, slot0.updateBuff, slot0)
-	FightController.instance:registerCallback(FightEvent.MultiHpChange, slot0._onMultiHpChange, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, slot0.updateBuff, slot0)
-	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0.updateBuff, slot0)
-	FightController.instance:registerCallback(FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
-	FightController.instance:registerCallback(FightEvent.AfterForceUpdatePerformanceData, slot0._onAfterForceUpdatePerformanceData, slot0)
+	gohelper.setActive(arg_1_0.goBuffItem, false)
+	arg_1_0:refreshBuffList()
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, arg_1_0.updateBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, arg_1_0.updateBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.MultiHpChange, arg_1_0._onMultiHpChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_1_0.updateBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_1_0.updateBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.GMForceRefreshNameUIBuff, arg_1_0._onGMForceRefreshNameUIBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.AfterForceUpdatePerformanceData, arg_1_0._onAfterForceUpdatePerformanceData, arg_1_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.goBuffItem = nil
-	slot0.opContainerTr = nil
-	slot0.buffItemList = nil
-	slot0.deleteBuffItemList = nil
+function var_0_0.beforeDestroy(arg_2_0)
+	arg_2_0.goBuffItem = nil
+	arg_2_0.opContainerTr = nil
+	arg_2_0.buffItemList = nil
+	arg_2_0.deleteBuffItemList = nil
 
-	TaskDispatcher.cancelTask(slot0.playDeleteAniDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, slot0.updateBuff, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, slot0.updateBuff, slot0)
-	FightController.instance:unregisterCallback(FightEvent.MultiHpChange, slot0._onMultiHpChange, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, slot0.updateBuff, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0.updateBuff, slot0)
-	FightController.instance:unregisterCallback(FightEvent.GMForceRefreshNameUIBuff, slot0._onGMForceRefreshNameUIBuff, slot0)
-	FightController.instance:unregisterCallback(FightEvent.AfterForceUpdatePerformanceData, slot0._onAfterForceUpdatePerformanceData, slot0)
+	TaskDispatcher.cancelTask(arg_2_0.playDeleteAniDone, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, arg_2_0.updateBuff, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, arg_2_0.updateBuff, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.MultiHpChange, arg_2_0._onMultiHpChange, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_2_0.updateBuff, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0.updateBuff, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.GMForceRefreshNameUIBuff, arg_2_0._onGMForceRefreshNameUIBuff, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.AfterForceUpdatePerformanceData, arg_2_0._onAfterForceUpdatePerformanceData, arg_2_0)
 end
 
-function slot0.updateBuff(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1 and slot1 ~= slot0.entity.id then
+function var_0_0.updateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	if arg_3_1 and arg_3_1 ~= arg_3_0.entity.id then
 		return
 	end
 
-	if slot2 == FightEnum.EffectType.BUFFDEL then
-		if not slot0.deleteBuffItemList then
-			slot0.deleteBuffItemList = {}
+	if arg_3_2 == FightEnum.EffectType.BUFFDEL then
+		if not arg_3_0.deleteBuffItemList then
+			arg_3_0.deleteBuffItemList = {}
 		end
 
-		for slot9, slot10 in ipairs(slot0.buffItemList) do
-			if slot10.buffMO.uid == slot4 then
-				slot11 = table.remove(slot0.buffItemList, slot9)
-				slot12 = 1
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0.buffItemList) do
+			if iter_3_1.buffMO.uid == arg_3_4 then
+				local var_3_0 = table.remove(arg_3_0.buffItemList, iter_3_0)
+				local var_3_1 = 1
 
-				table.insert(slot0.deleteBuffItemList, slot11)
-				TaskDispatcher.runDelay(slot0.playDeleteAniDone, slot0, (not uv0[slot5] or slot11:playAni("close")) and slot11:playAni("disappear"))
+				if var_0_2[arg_3_5] then
+					var_3_1 = var_3_0:playAni("close")
+				else
+					var_3_1 = var_3_0:playAni("disappear")
+				end
+
+				table.insert(arg_3_0.deleteBuffItemList, var_3_0)
+				TaskDispatcher.runDelay(arg_3_0.playDeleteAniDone, arg_3_0, var_3_1)
 
 				break
 			end
 		end
 	end
 
-	slot0:refreshBuffList()
+	arg_3_0:refreshBuffList()
 
-	if slot2 == FightEnum.EffectType.BUFFADD and lua_skill_buff.configDict[slot3] and slot6.isNoShow == 0 and slot0.curBuffItemCount ~= 0 then
-		slot0.buffItemList[slot0.curBuffItemCount]:playAni("appear")
+	if arg_3_2 == FightEnum.EffectType.BUFFADD then
+		local var_3_2 = lua_skill_buff.configDict[arg_3_3]
+
+		if var_3_2 and var_3_2.isNoShow == 0 and arg_3_0.curBuffItemCount ~= 0 then
+			arg_3_0.buffItemList[arg_3_0.curBuffItemCount]:playAni("appear")
+		end
 	end
 
-	if slot2 == FightEnum.EffectType.BUFFUPDATE then
-		for slot9, slot10 in ipairs(slot0.buffItemList) do
-			if slot4 == slot10.buffMO.uid and slot10.buffMO._last_clone_mo and slot10.buffMO._last_clone_mo.duration < slot10.buffMO.duration then
-				slot10:playAni("text")
+	if arg_3_2 == FightEnum.EffectType.BUFFUPDATE then
+		for iter_3_2, iter_3_3 in ipairs(arg_3_0.buffItemList) do
+			if arg_3_4 == iter_3_3.buffMO.uid and iter_3_3.buffMO._last_clone_mo and iter_3_3.buffMO.duration > iter_3_3.buffMO._last_clone_mo.duration then
+				iter_3_3:playAni("text")
 			end
 		end
 	end
 end
 
-function slot0.playDeleteAniDone(slot0)
-	if slot0.deleteBuffItemList then
-		for slot4, slot5 in ipairs(slot0.deleteBuffItemList) do
-			slot5:closeAni()
-			gohelper.setActive(slot5.go, false)
-			table.insert(slot0.buffItemList, slot5)
+function var_0_0.playDeleteAniDone(arg_4_0)
+	if arg_4_0.deleteBuffItemList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0.deleteBuffItemList) do
+			iter_4_1:closeAni()
+			gohelper.setActive(iter_4_1.go, false)
+			table.insert(arg_4_0.buffItemList, iter_4_1)
 		end
 
-		slot0.deleteBuffItemList = {}
+		arg_4_0.deleteBuffItemList = {}
 	end
 
-	table.sort(slot0.buffItemList, uv0.sortBuffItem)
-	slot0:refreshBuffList()
+	table.sort(arg_4_0.buffItemList, var_0_0.sortBuffItem)
+	arg_4_0:refreshBuffList()
 end
 
-function slot0.sortBuffItem(slot0, slot1)
-	return slot0.originIndex < slot1.originIndex
+function var_0_0.sortBuffItem(arg_5_0, arg_5_1)
+	return arg_5_0.originIndex < arg_5_1.originIndex
 end
 
-function slot0.sortBuffMo(slot0, slot1)
-	if slot0.time ~= slot1.time then
-		return slot0.time < slot1.time
+function var_0_0.sortBuffMo(arg_6_0, arg_6_1)
+	if arg_6_0.time ~= arg_6_1.time then
+		return arg_6_0.time < arg_6_1.time
 	end
 
-	return slot0.id < slot1.id
+	return arg_6_0.id < arg_6_1.id
 end
 
-function slot0.refreshBuffList(slot0)
-	if not slot0.entity:getMO() then
+function var_0_0.refreshBuffList(arg_7_0)
+	local var_7_0 = arg_7_0.entity:getMO()
+
+	if not var_7_0 then
 		return
 	end
 
-	slot2 = FightBuffHelper.filterBuffType(slot1:getBuffList(), FightBuffTipsView.filterTypeKey)
+	local var_7_1 = var_7_0:getBuffList()
+	local var_7_2 = FightBuffHelper.filterBuffType(var_7_1, FightBuffTipsView.filterTypeKey)
 
-	FightSkillBuffMgr.instance:dealStackerBuff(slot2)
-	table.sort(slot2, uv0.sortBuffMo)
+	FightSkillBuffMgr.instance:dealStackerBuff(var_7_2)
+	table.sort(var_7_2, var_0_0.sortBuffMo)
 
-	slot4 = 0
-	slot0.buffItemOriginIndex = slot0.buffItemOriginIndex or 0
+	local var_7_3 = var_7_2 and #var_7_2 or 0
+	local var_7_4 = 0
 
-	for slot9 = 1, slot2 and #slot2 or 0 do
-		if lua_skill_buff.configDict[slot2[slot9].buffId] and slot11.isNoShow == 0 and slot4 + (slot0.deleteBuffItemList and #slot0.deleteBuffItemList or 0) < FightEnum.MaxBuffIconCount then
-			if not slot0.buffItemList[slot4 + 1] then
-				slot12 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0.goBuffItem, "buff" .. slot4), FightBuffItem)
+	arg_7_0.buffItemOriginIndex = arg_7_0.buffItemOriginIndex or 0
 
-				slot12:setTipsOffset(435, 0)
-				table.insert(slot0.buffItemList, slot12)
+	local var_7_5 = arg_7_0.deleteBuffItemList and #arg_7_0.deleteBuffItemList or 0
 
-				slot0.buffItemOriginIndex = slot0.buffItemOriginIndex + 1
-				slot12.originIndex = slot0.buffItemOriginIndex
+	for iter_7_0 = 1, var_7_3 do
+		local var_7_6 = var_7_2[iter_7_0]
+		local var_7_7 = lua_skill_buff.configDict[var_7_6.buffId]
+
+		if var_7_7 and var_7_7.isNoShow == 0 and var_7_4 + var_7_5 < FightEnum.MaxBuffIconCount then
+			var_7_4 = var_7_4 + 1
+
+			local var_7_8 = arg_7_0.buffItemList[var_7_4]
+
+			if not var_7_8 then
+				local var_7_9 = gohelper.cloneInPlace(arg_7_0.goBuffItem, "buff" .. var_7_4)
+
+				var_7_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_9, FightBuffItem)
+
+				var_7_8:setTipsOffset(435, 0)
+				table.insert(arg_7_0.buffItemList, var_7_8)
+
+				arg_7_0.buffItemOriginIndex = arg_7_0.buffItemOriginIndex + 1
+				var_7_8.originIndex = arg_7_0.buffItemOriginIndex
 			end
 
-			gohelper.setActive(slot12.go, true)
-			slot12:updateBuffMO(slot10)
+			gohelper.setActive(var_7_8.go, true)
+			var_7_8:updateBuffMO(var_7_6)
 		end
 	end
 
-	slot0.curBuffItemCount = slot4
+	arg_7_0.curBuffItemCount = var_7_4
 
-	for slot9 = slot4 + 1, #slot0.buffItemList do
-		slot0.buffItemList[slot9]:closeAni()
-		gohelper.setActive(slot0.buffItemList[slot9].go, false)
+	for iter_7_1 = var_7_4 + 1, #arg_7_0.buffItemList do
+		arg_7_0.buffItemList[iter_7_1]:closeAni()
+		gohelper.setActive(arg_7_0.buffItemList[iter_7_1].go, false)
 	end
 
-	slot0.buffLineCount = Mathf.Ceil((slot4 + slot5) / uv1)
+	arg_7_0.buffLineCount = Mathf.Ceil((var_7_4 + var_7_5) / var_0_1)
 
-	recthelper.setAnchorY(slot0.opContainerTr, slot0.buffLineCount * 34.5 - 24)
+	local var_7_10 = arg_7_0.buffLineCount * 34.5 - 24
+
+	recthelper.setAnchorY(arg_7_0.opContainerTr, var_7_10)
 end
 
-function slot0.getBuffLineCount(slot0)
-	return slot0.buffLineCount
+function var_0_0.getBuffLineCount(arg_8_0)
+	return arg_8_0.buffLineCount
 end
 
-function slot0.showPoisoningEffect(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.buffItemList) do
-		if slot6.buffMO.buffId == slot1.id then
-			slot6:showPoisoningEffect()
+function var_0_0.showPoisoningEffect(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.buffItemList) do
+		if iter_9_1.buffMO.buffId == arg_9_1.id then
+			iter_9_1:showPoisoningEffect()
 		end
 	end
 end
 
-function slot0._onMultiHpChange(slot0, slot1)
-	if slot0.entity and slot0.entity.id == slot1 then
-		slot0:refreshBuffList()
+function var_0_0._onMultiHpChange(arg_10_0, arg_10_1)
+	if arg_10_0.entity and arg_10_0.entity.id == arg_10_1 then
+		arg_10_0:refreshBuffList()
 	end
 end
 
-function slot0._onGMForceRefreshNameUIBuff(slot0, slot1)
-	if slot0.entity and slot0.entity.id == slot1 then
-		slot0:refreshBuffList()
+function var_0_0._onGMForceRefreshNameUIBuff(arg_11_0, arg_11_1)
+	if arg_11_0.entity and arg_11_0.entity.id == arg_11_1 then
+		arg_11_0:refreshBuffList()
 	end
 end
 
-function slot0._onAfterForceUpdatePerformanceData(slot0)
-	slot0:refreshBuffList()
+function var_0_0._onAfterForceUpdatePerformanceData(arg_12_0)
+	arg_12_0:refreshBuffList()
 end
 
-return slot0
+return var_0_0

@@ -1,100 +1,105 @@
-module("modules.logic.rouge.view.RougeFavoriteCollectionViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFavoriteCollectionViewContainer", package.seeall)
 
-slot0 = class("RougeFavoriteCollectionViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeFavoriteCollectionViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeFavoriteCollectionView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_lefttop"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_content"))
-	table.insert(slot1, TabViewGroup.New(3, "#go_rougemapdetailcontainer"))
+	table.insert(var_1_0, RougeFavoriteCollectionView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_content"))
+	table.insert(var_1_0, TabViewGroup.New(3, "#go_rougemapdetailcontainer"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 
-	if slot1 == 2 then
-		slot2 = MixScrollParam.New()
-		slot2.scrollGOPath = "Left/#scroll_collection"
-		slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-		slot2.cellClass = RougeCollectionListRow
-		slot2.scrollDir = ScrollEnum.ScrollDirV
-		slot2.startSpace = 0
-		slot2.endSpace = 0
-		slot3 = ListScrollParam.New()
-		slot3.scrollGOPath = "Left/#scroll_collection"
-		slot3.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot3.prefabUrl = "Left/#scroll_collection/Viewport/Content/#go_collectionitem"
-		slot3.cellClass = RougeCollectionHandBookItem
-		slot3.scrollDir = ScrollEnum.ScrollDirV
-		slot3.lineCount = 4
-		slot3.cellWidth = 224
-		slot3.cellHeight = 224
-		slot3.cellSpaceH = 10
-		slot3.cellSpaceV = 0
-		slot3.startSpace = 61
-		slot3.endSpace = 0
-		slot4 = ListScrollParam.New()
-		slot4.scrollGOPath = "Right/#go_normal/bottom/scrollview"
-		slot4.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot4.prefabUrl = "Right/#go_normal/bottom/scrollview/Viewport/Content/Item"
-		slot4.cellClass = RougeCollectionListDropdownItem
-		slot4.scrollDir = ScrollEnum.ScrollDirV
-		slot4.lineCount = 1
-		slot4.cellWidth = 200
-		slot4.cellHeight = 120
-		slot4.cellSpaceH = 0
-		slot4.cellSpaceV = 0
-		slot4.startSpace = 20
-		slot4.endSpace = 0
-		slot0._dropDownView = RougeCollectionListDropdownView.New()
-		slot0._collectinListView = RougeCollectionListView.New()
+	if arg_2_1 == 2 then
+		local var_2_0 = MixScrollParam.New()
+
+		var_2_0.scrollGOPath = "Left/#scroll_collection"
+		var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+		var_2_0.cellClass = RougeCollectionListRow
+		var_2_0.scrollDir = ScrollEnum.ScrollDirV
+		var_2_0.startSpace = 0
+		var_2_0.endSpace = 0
+
+		local var_2_1 = ListScrollParam.New()
+
+		var_2_1.scrollGOPath = "Left/#scroll_collection"
+		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_1.prefabUrl = "Left/#scroll_collection/Viewport/Content/#go_collectionitem"
+		var_2_1.cellClass = RougeCollectionHandBookItem
+		var_2_1.scrollDir = ScrollEnum.ScrollDirV
+		var_2_1.lineCount = 4
+		var_2_1.cellWidth = 224
+		var_2_1.cellHeight = 224
+		var_2_1.cellSpaceH = 10
+		var_2_1.cellSpaceV = 0
+		var_2_1.startSpace = 61
+		var_2_1.endSpace = 0
+
+		local var_2_2 = ListScrollParam.New()
+
+		var_2_2.scrollGOPath = "Right/#go_normal/bottom/scrollview"
+		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_2.prefabUrl = "Right/#go_normal/bottom/scrollview/Viewport/Content/Item"
+		var_2_2.cellClass = RougeCollectionListDropdownItem
+		var_2_2.scrollDir = ScrollEnum.ScrollDirV
+		var_2_2.lineCount = 1
+		var_2_2.cellWidth = 200
+		var_2_2.cellHeight = 120
+		var_2_2.cellSpaceH = 0
+		var_2_2.cellSpaceV = 0
+		var_2_2.startSpace = 20
+		var_2_2.endSpace = 0
+		arg_2_0._dropDownView = RougeCollectionListDropdownView.New()
+		arg_2_0._collectinListView = RougeCollectionListView.New()
 
 		return {
 			MultiView.New({
-				LuaListScrollView.New(RougeFavoriteCollectionEnchantListModel.instance, slot4),
-				slot0._dropDownView,
-				slot0._collectinListView,
-				LuaMixScrollView.New(RougeCollectionListModel.instance, slot2)
+				LuaListScrollView.New(RougeFavoriteCollectionEnchantListModel.instance, var_2_2),
+				arg_2_0._dropDownView,
+				arg_2_0._collectinListView,
+				LuaMixScrollView.New(RougeCollectionListModel.instance, var_2_0)
 			}),
 			MultiView.New({
 				RougeCollectionHandBookView.New(),
-				LuaListScrollView.New(RougeCollectionHandBookListModel.instance, slot3)
+				LuaListScrollView.New(RougeCollectionHandBookListModel.instance, var_2_1)
 			})
 		}
 	end
 
-	if slot1 == 3 then
+	if arg_2_1 == 3 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-function slot0.getDropDownView(slot0)
-	return slot0._dropDownView
+function var_0_0.getDropDownView(arg_3_0)
+	return arg_3_0._dropDownView
 end
 
-function slot0.getCollectionListView(slot0)
-	return slot0._collectinListView
+function var_0_0.getCollectionListView(arg_4_0)
+	return arg_4_0._collectinListView
 end
 
-function slot0.selectTabView(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.selectTabView(arg_5_0, arg_5_1)
+	arg_5_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_5_1)
 end
 
-return slot0
+return var_0_0

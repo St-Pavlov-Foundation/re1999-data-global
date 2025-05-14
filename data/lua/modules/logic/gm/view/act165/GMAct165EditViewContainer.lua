@@ -1,28 +1,28 @@
-module("modules.logic.gm.view.act165.GMAct165EditViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.act165.GMAct165EditViewContainer", package.seeall)
 
-slot0 = class("GMAct165EditViewContainer", BaseViewContainer)
+local var_0_0 = class("GMAct165EditViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, GMAct165EditView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_pre/#go_topleft"))
+	table.insert(var_1_0, GMAct165EditView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_pre/#go_topleft"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-return slot0
+return var_0_0

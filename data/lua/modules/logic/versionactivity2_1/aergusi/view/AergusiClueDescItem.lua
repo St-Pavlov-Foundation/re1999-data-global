@@ -1,24 +1,24 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueDescItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueDescItem", package.seeall)
 
-slot0 = class("AergusiClueDescItem", LuaCompBase)
+local var_0_0 = class("AergusiClueDescItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._txtDesc = gohelper.findChildText(slot1, "txt_desc")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_1, "txt_desc")
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_2_0)
+	gohelper.setActive(arg_2_0.go, false)
 end
 
-function slot0.refreshItem(slot0, slot1)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.refreshItem(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0.go, true)
 
-	slot0._txtDesc.text = slot1
+	arg_3_0._txtDesc.text = arg_3_1
 end
 
-function slot0.destroy(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.destroy(arg_4_0)
+	gohelper.destroy(arg_4_0.go)
 end
 
-return slot0
+return var_0_0

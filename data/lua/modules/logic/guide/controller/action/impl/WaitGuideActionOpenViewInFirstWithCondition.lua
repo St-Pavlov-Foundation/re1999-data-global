@@ -1,69 +1,77 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewInFirstWithCondition", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewInFirstWithCondition", package.seeall)
 
-slot0 = class("WaitGuideActionOpenViewInFirstWithCondition", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionOpenViewInFirstWithCondition", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot0._viewName = ViewName[slot2[1]]
-	slot0._conditionParam = slot2[3]
-	slot0._delayTime = slot2[4] and tonumber(slot2[4]) or 0.2
-	slot0._conditionCheckFun = slot0[slot2[2]]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	if slot0:checkDone() then
+	arg_1_0._viewName = ViewName[var_1_0[1]]
+
+	local var_1_1 = var_1_0[2]
+
+	arg_1_0._conditionParam = var_1_0[3]
+	arg_1_0._delayTime = var_1_0[4] and tonumber(var_1_0[4]) or 0.2
+	arg_1_0._conditionCheckFun = arg_1_0[var_1_1]
+
+	if arg_1_0:checkDone() then
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, slot0._checkOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._checkOpenView, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, arg_1_0._checkOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._checkOpenView, arg_1_0)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.ReOpenWhileOpen, slot0._checkOpenView, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._checkOpenView, slot0)
+function var_0_0.clearWork(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0._checkOpenView, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.ReOpenWhileOpen, arg_2_0._checkOpenView, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_2_0._checkOpenView, arg_2_0)
 end
 
-function slot0._checkOpenView(slot0, slot1, slot2)
-	if slot1 == ViewName.CharacterView then
-		uv0.heroMo = slot2
+function var_0_0._checkOpenView(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == ViewName.CharacterView then
+		var_0_0.heroMo = arg_3_2
 	end
 
-	slot0:checkDone()
+	arg_3_0:checkDone()
 end
 
-function slot0.checkDone(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.checkDone(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 
-	if slot0:_check() then
-		if slot0._delayTime and slot0._delayTime > 0 then
-			TaskDispatcher.runDelay(slot0._delayDone, slot0, slot0._delayTime)
+	local var_4_0 = arg_4_0:_check()
+
+	if var_4_0 then
+		if arg_4_0._delayTime and arg_4_0._delayTime > 0 then
+			TaskDispatcher.runDelay(arg_4_0._delayDone, arg_4_0, arg_4_0._delayTime)
 		else
-			slot0:onDone(true)
+			arg_4_0:onDone(true)
 		end
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-function slot0._check(slot0)
-	if #ViewMgr.instance:getOpenViewNameList() > 0 then
-		return slot0:isFirstView(slot1, slot0._viewName) and (slot0._conditionCheckFun == nil or slot0._conditionCheckFun(slot0._conditionParam))
+function var_0_0._check(arg_6_0)
+	local var_6_0 = ViewMgr.instance:getOpenViewNameList()
+
+	if #var_6_0 > 0 then
+		return arg_6_0:isFirstView(var_6_0, arg_6_0._viewName) and (arg_6_0._conditionCheckFun == nil or arg_6_0._conditionCheckFun(arg_6_0._conditionParam))
 	else
 		return false
 	end
 end
 
-function slot0.isFirstView(slot0, slot1, slot2)
-	if not uv0.excludeView then
-		uv0.excludeView = {
+function var_0_0.isFirstView(arg_7_0, arg_7_1, arg_7_2)
+	if not var_0_0.excludeView then
+		var_0_0.excludeView = {
 			[ViewName.GMGuideStatusView] = 1,
 			[ViewName.GMToolView2] = 1,
 			[ViewName.GMToolView] = 1,
@@ -71,50 +79,61 @@ function slot0.isFirstView(slot0, slot1, slot2)
 		}
 	end
 
-	slot3 = false
-	slot4 = nil
+	local var_7_0 = false
+	local var_7_1
 
-	for slot8 = #slot1, 1, -1 do
-		if not uv0.excludeView[slot1[slot8]] then
-			slot3 = slot4 == slot2
+	for iter_7_0 = #arg_7_1, 1, -1 do
+		local var_7_2 = arg_7_1[iter_7_0]
+
+		if not var_0_0.excludeView[var_7_2] then
+			var_7_0 = var_7_2 == arg_7_2
 
 			break
 		end
 	end
 
-	if not slot3 then
-		logNormal(string.format("<color=#FFA500>guide_%d_%d %s not is first view! %s</color>", slot0.guideId, slot0.stepId, slot2, table.concat(slot1, "#")))
+	if not var_7_0 then
+		logNormal(string.format("<color=#FFA500>guide_%d_%d %s not is first view! %s</color>", arg_7_0.guideId, arg_7_0.stepId, arg_7_2, table.concat(arg_7_1, "#")))
 	end
 
-	return slot3
+	return var_7_0
 end
 
-slot1 = 8
+local var_0_1 = 8
 
-function slot0.activity109ChessOpenNextStage()
-	if not (Activity109ChessModel.instance:getActId() and Activity109Config.instance:getEpisodeCo(slot0, uv0)) then
+function var_0_0.activity109ChessOpenNextStage()
+	local var_8_0 = Activity109ChessModel.instance:getActId()
+	local var_8_1 = var_8_0 and Activity109Config.instance:getEpisodeCo(var_8_0, var_0_1)
+
+	if not var_8_1 then
 		return false
 	end
 
-	if not ActivityModel.instance:getActivityInfo() then
+	local var_8_2 = ActivityModel.instance:getActivityInfo()
+
+	if not var_8_2 then
 		return false
 	end
 
-	if not slot2[slot0] then
+	local var_8_3 = var_8_2[var_8_0]
+
+	if not var_8_3 then
 		return false
 	end
 
-	if ServerTime.now() < slot3:getRealStartTimeStamp() + (slot1.openDay - 1) * 24 * 60 * 60 then
+	if var_8_3:getRealStartTimeStamp() + (var_8_1.openDay - 1) * 24 * 60 * 60 > ServerTime.now() then
 		return false
 	end
 
 	return true
 end
 
-function slot0.checkDestinyStone()
-	if uv0.heroMo and slot0:isOwnHero() and slot0:isCanOpenDestinySystem() then
+function var_0_0.checkDestinyStone()
+	local var_9_0 = var_0_0.heroMo
+
+	if var_9_0 and var_9_0:isOwnHero() and var_9_0:isCanOpenDestinySystem() then
 		return true
 	end
 end
 
-return slot0
+return var_0_0

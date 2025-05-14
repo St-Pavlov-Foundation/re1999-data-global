@@ -1,21 +1,27 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventLYSpecialSpinePlayAniName", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventLYSpecialSpinePlayAniName", package.seeall)
 
-slot0 = class("FightTLEventLYSpecialSpinePlayAniName")
+local var_0_0 = class("FightTLEventLYSpecialSpinePlayAniName")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	FightController.instance:dispatchEvent(FightEvent.TimelineLYSpecialSpinePlayAniName, slot3[1])
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_3[1]
+
+	FightController.instance:dispatchEvent(FightEvent.TimelineLYSpecialSpinePlayAniName, var_1_0)
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_3_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_4_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

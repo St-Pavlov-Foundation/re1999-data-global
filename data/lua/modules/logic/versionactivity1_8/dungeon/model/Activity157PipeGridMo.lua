@@ -1,87 +1,89 @@
-module("modules.logic.versionactivity1_8.dungeon.model.Activity157PipeGridMo", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.model.Activity157PipeGridMo", package.seeall)
 
-slot0 = pureTable("Activity157PipeGridMo")
+local var_0_0 = pureTable("Activity157PipeGridMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.x = slot1
-	slot0.y = slot2
-	slot0.typeId = 0
-	slot0.value = 0
-	slot0.pathIndex = 0
-	slot0.pathType = 0
-	slot0.numIndex = 0
-	slot0.connectSet = {}
-	slot0.entryConnect = {}
-	slot0.entryCount = 0
-	slot0.connectPathIndex = 0
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.x = arg_1_1
+	arg_1_0.y = arg_1_2
+	arg_1_0.typeId = 0
+	arg_1_0.value = 0
+	arg_1_0.pathIndex = 0
+	arg_1_0.pathType = 0
+	arg_1_0.numIndex = 0
+	arg_1_0.connectSet = {}
+	arg_1_0.entryConnect = {}
+	arg_1_0.entryCount = 0
+	arg_1_0.connectPathIndex = 0
 end
 
-slot1 = {}
+local var_0_1 = {}
 
-function slot0.getConnectValue(slot0)
-	slot1 = 0
-	slot2 = 0
+function var_0_0.getConnectValue(arg_2_0)
+	local var_2_0 = 0
+	local var_2_1 = 0
 
-	if slot0.entryConnect then
-		for slot6, slot7 in pairs(slot0.entryConnect) do
-			table.insert(uv0, slot6)
+	if arg_2_0.entryConnect then
+		for iter_2_0, iter_2_1 in pairs(arg_2_0.entryConnect) do
+			table.insert(var_0_1, iter_2_0)
 
-			slot1 = slot1 + 1
+			var_2_0 = var_2_0 + 1
 		end
 
-		table.sort(uv0)
+		table.sort(var_0_1)
 
-		for slot6, slot7 in ipairs(uv0) do
-			slot2 = slot2 * 10 + slot7
+		for iter_2_2, iter_2_3 in ipairs(var_0_1) do
+			var_2_1 = var_2_1 * 10 + iter_2_3
 		end
 
-		for slot6 = 1, slot1 do
-			uv0[slot6] = nil
+		for iter_2_4 = 1, var_2_0 do
+			var_0_1[iter_2_4] = nil
 		end
 	end
 
-	return slot2
+	return var_2_1
 end
 
-function slot0.getBackgroundRes(slot0)
-	return ArmPuzzleHelper.getBackgroundRes(slot0.typeId, Activity157Enum.res)
+function var_0_0.getBackgroundRes(arg_3_0)
+	return ArmPuzzleHelper.getBackgroundRes(arg_3_0.typeId, Activity157Enum.res)
 end
 
-function slot0.getConnectRes(slot0)
-	return ArmPuzzleHelper.getConnectRes(slot0.typeId, Activity157Enum.res)
+function var_0_0.getConnectRes(arg_4_0)
+	return ArmPuzzleHelper.getConnectRes(arg_4_0.typeId, Activity157Enum.res)
 end
 
-function slot0.getRotation(slot0)
-	return ArmPuzzleHelper.getRotation(slot0.typeId, slot0.value)
+function var_0_0.getRotation(arg_5_0)
+	return ArmPuzzleHelper.getRotation(arg_5_0.typeId, arg_5_0.value)
 end
 
-function slot0.cleanEntrySet(slot0)
-	for slot4, slot5 in pairs(slot0.entryConnect) do
-		slot0.entryConnect[slot4] = nil
+function var_0_0.cleanEntrySet(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.entryConnect) do
+		arg_6_0.entryConnect[iter_6_0] = nil
 	end
 
-	slot0.entryCount = 0
-	slot0.connectPathIndex = 0
+	arg_6_0.entryCount = 0
+	arg_6_0.connectPathIndex = 0
 end
 
-function slot0.getEntryCount(slot0, slot1, slot2)
+function var_0_0.getEntryCount(arg_7_0, arg_7_1, arg_7_2)
+	return
 end
 
-function slot0.isEntry(slot0)
-	return ArmPuzzlePipeEnum.entry[slot0.typeId]
+function var_0_0.isEntry(arg_8_0)
+	return ArmPuzzlePipeEnum.entry[arg_8_0.typeId]
 end
 
-function slot0.setParamStr(slot0, slot1)
-	slot2 = string.splitToNumber(slot1, "#") or {}
-	slot0.typeId = slot2[1] or 0
-	slot0.value = slot2[2] or 0
-	slot0.pathIndex = slot2[3] or 0
-	slot0.pathType = slot2[4] or 0
-	slot0.numIndex = slot2[5] or 0
+function var_0_0.setParamStr(arg_9_0, arg_9_1)
+	local var_9_0 = string.splitToNumber(arg_9_1, "#") or {}
+
+	arg_9_0.typeId = var_9_0[1] or 0
+	arg_9_0.value = var_9_0[2] or 0
+	arg_9_0.pathIndex = var_9_0[3] or 0
+	arg_9_0.pathType = var_9_0[4] or 0
+	arg_9_0.numIndex = var_9_0[5] or 0
 end
 
-function slot0.getParamStr(slot0)
-	return string.format("%s#%s#%s#%s#%s", slot0.typeId, slot0.value, slot0.pathIndex, slot0.pathType, slot0.numIndex)
+function var_0_0.getParamStr(arg_10_0)
+	return string.format("%s#%s#%s#%s#%s", arg_10_0.typeId, arg_10_0.value, arg_10_0.pathIndex, arg_10_0.pathType, arg_10_0.numIndex)
 end
 
-return slot0
+return var_0_0

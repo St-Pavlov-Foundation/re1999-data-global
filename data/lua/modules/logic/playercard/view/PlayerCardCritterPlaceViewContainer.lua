@@ -1,76 +1,91 @@
-module("modules.logic.playercard.view.PlayerCardCritterPlaceViewContainer", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardCritterPlaceViewContainer", package.seeall)
 
-slot0 = class("PlayerCardCritterPlaceViewContainer", BaseViewContainer)
+local var_0_0 = class("PlayerCardCritterPlaceViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, PlayerCardCritterPlaceView.New())
-	table.insert(slot1, LuaListScrollView.New(PlayerCardCritterPlaceListModel.instance, slot0:getScrollParam1()))
-	table.insert(slot1, LuaListScrollView.New(PlayerCardCritterPlaceListModel.instance, slot0:getScrollParam2()))
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, PlayerCardCritterPlaceView.New())
 
-	return slot1
+	local var_1_1 = arg_1_0:getScrollParam1()
+	local var_1_2 = arg_1_0:getScrollParam2()
+	local var_1_3 = LuaListScrollView.New(PlayerCardCritterPlaceListModel.instance, var_1_1)
+	local var_1_4 = LuaListScrollView.New(PlayerCardCritterPlaceListModel.instance, var_1_2)
+
+	table.insert(var_1_0, var_1_3)
+	table.insert(var_1_0, var_1_4)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0.navigateView:setOverrideClose(slot0._overrideClose, slot0)
+		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.getScrollParam1(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_critterview1/critterscroll"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#go_critterview1/critterscroll/Viewport/#go_critterContent1/#go_critterItem"
-	slot1.cellClass = PlayerCardCritterPlaceItem
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.cellWidth = 150
-	slot1.cellHeight = 200
-	slot1.cellSpaceH = 30
-	slot1.startSpace = 30
+function var_0_0.getScrollParam1(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
 
-	return slot1
+	var_3_0.scrollGOPath = "#go_critterview1/critterscroll"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_3_0.prefabUrl = "#go_critterview1/critterscroll/Viewport/#go_critterContent1/#go_critterItem"
+	var_3_0.cellClass = PlayerCardCritterPlaceItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirH
+	var_3_0.cellWidth = 150
+	var_3_0.cellHeight = 200
+	var_3_0.cellSpaceH = 30
+	var_3_0.startSpace = 30
+
+	return var_3_0
 end
 
-function slot0.getScrollParam2(slot0)
-	slot1 = "#go_critterview2/critterscroll"
-	slot3 = ListScrollParam.New()
-	slot3.scrollGOPath = slot1
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot3.prefabUrl = "#go_critterview2/critterscroll/Viewport/#go_critterContent2/#go_critterItem"
-	slot3.cellClass = PlayerCardCritterPlaceItem
-	slot3.scrollDir = ScrollEnum.ScrollDirV
-	slot3.cellWidth = 180
-	slot3.cellHeight = 150
-	slot3.lineCount = slot0:_getLineCount(slot0:_getScrollWidth(slot1), slot3.cellWidth)
-	slot3.cellSpaceV = 20
-	slot3.startSpace = 10
+function var_0_0.getScrollParam2(arg_4_0)
+	local var_4_0 = "#go_critterview2/critterscroll"
+	local var_4_1 = arg_4_0:_getScrollWidth(var_4_0)
+	local var_4_2 = ListScrollParam.New()
 
-	return slot3
+	var_4_2.scrollGOPath = var_4_0
+	var_4_2.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_4_2.prefabUrl = "#go_critterview2/critterscroll/Viewport/#go_critterContent2/#go_critterItem"
+	var_4_2.cellClass = PlayerCardCritterPlaceItem
+	var_4_2.scrollDir = ScrollEnum.ScrollDirV
+	var_4_2.cellWidth = 180
+	var_4_2.cellHeight = 150
+	var_4_2.lineCount = arg_4_0:_getLineCount(var_4_1, var_4_2.cellWidth)
+	var_4_2.cellSpaceV = 20
+	var_4_2.startSpace = 10
+
+	return var_4_2
 end
 
-function slot0._getScrollWidth(slot0, slot1)
-	if gohelper.findChildComponent(slot0.viewGO, slot1, gohelper.Type_Transform) then
-		return recthelper.getWidth(slot2)
+function var_0_0._getScrollWidth(arg_5_0, arg_5_1)
+	local var_5_0 = gohelper.findChildComponent(arg_5_0.viewGO, arg_5_1, gohelper.Type_Transform)
+
+	if var_5_0 then
+		return recthelper.getWidth(var_5_0)
 	end
 
-	return math.floor(UnityEngine.Screen.width * 1080 / UnityEngine.Screen.height + 0.5)
+	local var_5_1 = 1080 / UnityEngine.Screen.height
+
+	return (math.floor(UnityEngine.Screen.width * var_5_1 + 0.5))
 end
 
-function slot0._getLineCount(slot0, slot1, slot2)
-	return math.max(math.floor(slot1 / slot2), 1)
+function var_0_0._getLineCount(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = math.floor(arg_6_1 / arg_6_2)
+
+	return (math.max(var_6_0, 1))
 end
 
-return slot0
+return var_0_0

@@ -1,104 +1,112 @@
-module("modules.logic.versionactivity2_4.act181.model.Activity181MO", package.seeall)
+﻿module("modules.logic.versionactivity2_4.act181.model.Activity181MO", package.seeall)
 
-slot0 = pureTable("Activity181MO")
+local var_0_0 = pureTable("Activity181MO")
 
-function slot0.setInfo(slot0, slot1)
-	slot0.config = Activity181Config.instance:getBoxConfig(slot1.activityId)
-	slot0.id = slot1.activityId
-	slot0.rewardInfo = {}
-	slot0.bonusIdDic = {}
-	slot0.getBonusCount = 0
-	slot0.allBonusCount = 0
+function var_0_0.setInfo(arg_1_0, arg_1_1)
+	arg_1_0.config = Activity181Config.instance:getBoxConfig(arg_1_1.activityId)
+	arg_1_0.id = arg_1_1.activityId
+	arg_1_0.rewardInfo = {}
+	arg_1_0.bonusIdDic = {}
+	arg_1_0.getBonusCount = 0
+	arg_1_0.allBonusCount = 0
 
-	for slot5, slot6 in ipairs(slot1.infos) do
-		slot0.rewardInfo[slot6.pos] = slot6.id
-		slot0.bonusIdDic[slot6.id] = slot6.pos
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.infos) do
+		arg_1_0.rewardInfo[iter_1_1.pos] = iter_1_1.id
+		arg_1_0.bonusIdDic[iter_1_1.id] = iter_1_1.pos
 
-		if slot6.pos ~= 0 then
-			slot0.getBonusCount = slot0.getBonusCount + 1
+		if iter_1_1.pos ~= 0 then
+			arg_1_0.getBonusCount = arg_1_0.getBonusCount + 1
 		end
 	end
 
-	slot0.allBonusCount = #Activity181Config.instance:getBoxListByActivityId(slot0.id)
-	slot0.canGetTimes = slot1.canGetTimes
+	arg_1_0.allBonusCount = #Activity181Config.instance:getBoxListByActivityId(arg_1_0.id)
+	arg_1_0.canGetTimes = arg_1_1.canGetTimes
 
-	if slot0.rewardInfo[0] ~= nil then
-		slot0.spBonusState = Activity181Enum.SPBonusState.HaveGet
+	if arg_1_0.rewardInfo[0] ~= nil then
+		arg_1_0.spBonusState = Activity181Enum.SPBonusState.HaveGet
 	else
-		slot0.spBonusState = slot1.canGetSpBonus
+		arg_1_0.spBonusState = arg_1_1.canGetSpBonus
 	end
 end
 
-function slot0.setBonusInfo(slot0, slot1, slot2)
-	slot0.rewardInfo[slot1] = slot2
-	slot0.bonusIdDic[slot2] = slot1
-	slot0.getBonusCount = slot0.getBonusCount + 1
+function var_0_0.setBonusInfo(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.rewardInfo[arg_2_1] = arg_2_2
+	arg_2_0.bonusIdDic[arg_2_2] = arg_2_1
+	arg_2_0.getBonusCount = arg_2_0.getBonusCount + 1
 
-	slot0:setBonusTimes(math.max(0, slot0.canGetTimes - 1))
+	arg_2_0:setBonusTimes(math.max(0, arg_2_0.canGetTimes - 1))
 
-	if slot0.spBonusState == Activity181Enum.SPBonusState.Locked and slot0:getSPUnlockState() then
-		slot0.spBonusState = Activity181Enum.SPBonusState.Unlock
+	if arg_2_0.spBonusState == Activity181Enum.SPBonusState.Locked and arg_2_0:getSPUnlockState() then
+		arg_2_0.spBonusState = Activity181Enum.SPBonusState.Unlock
 	end
 end
 
-function slot0.refreshSpBonusInfo(slot0)
-	if slot0.spBonusState ~= Activity181Enum.SPBonusState.HaveGet then
-		slot0.spBonusState = slot0:getSPUnlockState() and Activity181Enum.SPBonusState.Unlock or Activity181Enum.SPBonusState.Locked
+function var_0_0.refreshSpBonusInfo(arg_3_0)
+	if arg_3_0.spBonusState ~= Activity181Enum.SPBonusState.HaveGet then
+		arg_3_0.spBonusState = arg_3_0:getSPUnlockState() and Activity181Enum.SPBonusState.Unlock or Activity181Enum.SPBonusState.Locked
 
-		Activity181Controller.instance:dispatchEvent(Activity181Event.OnGetSPBonus, slot0.id)
+		Activity181Controller.instance:dispatchEvent(Activity181Event.OnGetSPBonus, arg_3_0.id)
 	end
 end
 
-function slot0.getBonusState(slot0, slot1)
-	if slot0.rewardInfo[slot1] then
+function var_0_0.getBonusState(arg_4_0, arg_4_1)
+	if arg_4_0.rewardInfo[arg_4_1] then
 		return Activity181Enum.BonusState.HaveGet
 	end
 
 	return Activity181Enum.BonusState.Unlock
 end
 
-function slot0.getBonusIdByPos(slot0, slot1)
-	return slot0.rewardInfo[slot1]
+function var_0_0.getBonusIdByPos(arg_5_0, arg_5_1)
+	return arg_5_0.rewardInfo[arg_5_1]
 end
 
-function slot0.getBonusStateById(slot0, slot1)
-	return slot0:getBonusState(slot0.bonusIdDic[slot1])
+function var_0_0.getBonusStateById(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0.bonusIdDic[arg_6_1]
+
+	return arg_6_0:getBonusState(var_6_0)
 end
 
-function slot0.setSPBonusInfo(slot0)
-	slot0.spBonusState = Activity181Enum.SPBonusState.HaveGet
-	slot0.rewardInfo[0] = 0
-	slot0.bonusIdDic[0] = 0
+function var_0_0.setSPBonusInfo(arg_7_0)
+	arg_7_0.spBonusState = Activity181Enum.SPBonusState.HaveGet
+	arg_7_0.rewardInfo[0] = 0
+	arg_7_0.bonusIdDic[0] = 0
 end
 
-function slot0.getSPUnlockState(slot0)
-	if slot0.config.obtainType == Activity181Enum.SPBonusUnlockType.Time then
-		return slot0:isSpBonusTimeUnlock(slot1)
-	elseif slot1.obtainType == Activity181Enum.SPBonusUnlockType.Count then
-		return slot0:isSpBonusCountUnlock(slot1)
+function var_0_0.getSPUnlockState(arg_8_0)
+	local var_8_0 = arg_8_0.config
+
+	if var_8_0.obtainType == Activity181Enum.SPBonusUnlockType.Time then
+		return arg_8_0:isSpBonusTimeUnlock(var_8_0)
+	elseif var_8_0.obtainType == Activity181Enum.SPBonusUnlockType.Count then
+		return arg_8_0:isSpBonusCountUnlock(var_8_0)
 	else
-		return slot0:isSpBonusTimeUnlock(slot1) or slot0:isSpBonusCountUnlock(slot1)
+		return arg_8_0:isSpBonusTimeUnlock(var_8_0) or arg_8_0:isSpBonusCountUnlock(var_8_0)
 	end
 end
 
-function slot0.isSpBonusTimeUnlock(slot0, slot1)
-	return TimeUtil.stringToTimestamp(slot1.obtainStart) <= ServerTime.now() and slot2 <= TimeUtil.stringToTimestamp(slot1.obtainEnd)
+function var_0_0.isSpBonusTimeUnlock(arg_9_0, arg_9_1)
+	local var_9_0 = ServerTime.now()
+	local var_9_1 = TimeUtil.stringToTimestamp(arg_9_1.obtainStart)
+	local var_9_2 = TimeUtil.stringToTimestamp(arg_9_1.obtainEnd)
+
+	return var_9_1 <= var_9_0 and var_9_0 <= var_9_2
 end
 
-function slot0.isSpBonusCountUnlock(slot0, slot1)
-	return slot1.obtainTimes <= slot0.getBonusCount
+function var_0_0.isSpBonusCountUnlock(arg_10_0, arg_10_1)
+	return arg_10_0.getBonusCount >= arg_10_1.obtainTimes
 end
 
-function slot0.getBonusTimes(slot0)
-	return slot0.canGetTimes
+function var_0_0.getBonusTimes(arg_11_0)
+	return arg_11_0.canGetTimes
 end
 
-function slot0.setBonusTimes(slot0, slot1)
-	slot0.canGetTimes = slot1
+function var_0_0.setBonusTimes(arg_12_0, arg_12_1)
+	arg_12_0.canGetTimes = arg_12_1
 end
 
-function slot0.canGetBonus(slot0)
-	return slot0.getBonusCount < slot0.allBonusCount
+function var_0_0.canGetBonus(arg_13_0)
+	return arg_13_0.getBonusCount < arg_13_0.allBonusCount
 end
 
-return slot0
+return var_0_0

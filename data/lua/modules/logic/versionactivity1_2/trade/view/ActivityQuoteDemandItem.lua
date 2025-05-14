@@ -1,176 +1,182 @@
-module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteDemandItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteDemandItem", package.seeall)
 
-slot0 = class("ActivityQuoteDemandItem", UserDataDispose)
+local var_0_0 = class("ActivityQuoteDemandItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.anim = slot1:GetComponent(typeof(UnityEngine.Animator))
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.go, "simage_bg")
+	arg_1_0.go = arg_1_1
+	arg_1_0.anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.go, "simage_bg")
 
-	slot0._simagebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_changguidi"))
+	arg_1_0._simagebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_changguidi"))
 
-	slot0.goFinish = gohelper.findChild(slot0.go, "go_finish")
-	slot0.txtCurProgress = gohelper.findChildTextMesh(slot0.go, "layout/left/txt_curcount")
-	slot0.txtMaxProgress = gohelper.findChildTextMesh(slot0.go, "layout/right/txt_curcount")
-	slot0.txtDesc = gohelper.findChildTextMesh(slot0.go, "txt_desc")
-	slot0.txtPricerange = gohelper.findChildTextMesh(slot0.go, "bargain/txt_pricerange")
-	slot0.btnJump = gohelper.findChildButtonWithAudio(slot0.go, "btn_jump", AudioEnum.UI.play_ui_petrus_mission_skip)
+	arg_1_0.goFinish = gohelper.findChild(arg_1_0.go, "go_finish")
+	arg_1_0.txtCurProgress = gohelper.findChildTextMesh(arg_1_0.go, "layout/left/txt_curcount")
+	arg_1_0.txtMaxProgress = gohelper.findChildTextMesh(arg_1_0.go, "layout/right/txt_curcount")
+	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.go, "txt_desc")
+	arg_1_0.txtPricerange = gohelper.findChildTextMesh(arg_1_0.go, "bargain/txt_pricerange")
+	arg_1_0.btnJump = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_jump", AudioEnum.UI.play_ui_petrus_mission_skip)
 
-	slot0.btnJump:AddClickListener(slot0.onClickJump, slot0)
+	arg_1_0.btnJump:AddClickListener(arg_1_0.onClickJump, arg_1_0)
 
-	slot0.btnCancel = gohelper.findChildButtonWithAudio(slot0.go, "btn_cancel", AudioEnum.UI.Play_UI_Rolesback)
+	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_cancel", AudioEnum.UI.Play_UI_Rolesback)
 
-	slot0.btnCancel:AddClickListener(slot0.onClickCancel, slot0)
+	arg_1_0.btnCancel:AddClickListener(arg_1_0.onClickCancel, arg_1_0)
 
-	slot0.btnBargain = gohelper.findChildButtonWithAudio(slot0.go, "btn_bargain")
+	arg_1_0.btnBargain = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_bargain")
 
-	slot0.btnBargain:AddClickListener(slot0.onClickStartBargain, slot0)
+	arg_1_0.btnBargain:AddClickListener(arg_1_0.onClickStartBargain, arg_1_0)
 
-	slot0._simageclickbg = gohelper.findChildSingleImage(slot0.go, "click/bg")
+	arg_1_0._simageclickbg = gohelper.findChildSingleImage(arg_1_0.go, "click/bg")
 
-	slot0._simageclickbg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_diehei"))
+	arg_1_0._simageclickbg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_diehei"))
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.data = slot1
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
+	arg_2_0.data = arg_2_1
 
-	if not slot1 then
-		gohelper.setActive(slot0.go, false)
+	if not arg_2_1 then
+		gohelper.setActive(arg_2_0.go, false)
 
 		return
 	end
 
-	slot0.index = slot3
-	slot0.count = slot4
-	slot0.callback = slot5
-	slot0.callbackObj = slot6
+	arg_2_0.index = arg_2_3
+	arg_2_0.count = arg_2_4
+	arg_2_0.callback = arg_2_5
+	arg_2_0.callbackObj = arg_2_6
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_2_0.go, true)
 
-	slot7 = slot1:isProgressEnough()
-	slot8 = slot1.hasGetBonus
+	local var_2_0 = arg_2_1:isProgressEnough()
+	local var_2_1 = arg_2_1.hasGetBonus
 
-	if slot1.id == Activity117Model.instance:getSelectOrder(slot1.activityId) then
-		gohelper.setActive(slot0.btnCancel, true)
-		gohelper.setActive(slot0.goFinish, false)
-		gohelper.setActive(slot0.btnJump, false)
-		gohelper.setActive(slot0.btnBargain, false)
-	elseif slot2 then
-		gohelper.setActive(slot0.goFinish, true)
-		gohelper.setActive(slot0.btnJump, false)
-		gohelper.setActive(slot0.btnBargain, false)
-		gohelper.setActive(slot0.btnCancel, false)
+	if arg_2_1.id == Activity117Model.instance:getSelectOrder(arg_2_1.activityId) then
+		gohelper.setActive(arg_2_0.btnCancel, true)
+		gohelper.setActive(arg_2_0.goFinish, false)
+		gohelper.setActive(arg_2_0.btnJump, false)
+		gohelper.setActive(arg_2_0.btnBargain, false)
+	elseif arg_2_2 then
+		gohelper.setActive(arg_2_0.goFinish, true)
+		gohelper.setActive(arg_2_0.btnJump, false)
+		gohelper.setActive(arg_2_0.btnBargain, false)
+		gohelper.setActive(arg_2_0.btnCancel, false)
 	else
-		gohelper.setActive(slot0.goFinish, slot8)
-		gohelper.setActive(slot0.btnJump, not slot7 and not slot8)
-		gohelper.setActive(slot0.btnBargain, slot7 and not slot8)
-		gohelper.setActive(slot0.btnCancel, false)
+		gohelper.setActive(arg_2_0.goFinish, var_2_1)
+		gohelper.setActive(arg_2_0.btnJump, not var_2_0 and not var_2_1)
+		gohelper.setActive(arg_2_0.btnBargain, var_2_0 and not var_2_1)
+		gohelper.setActive(arg_2_0.btnCancel, false)
 	end
 
-	slot0.txtCurProgress.text = (slot7 or slot8) and "1" or "0"
-	slot0.txtMaxProgress.text = "1"
-	slot0.txtDesc.text = slot1:getDesc() or ""
-	slot0.txtPricerange.text = string.format("%s-%s", slot1.minScore, slot1.maxScore)
+	arg_2_0.txtCurProgress.text = (var_2_0 or var_2_1) and "1" or "0"
+	arg_2_0.txtMaxProgress.text = "1"
+	arg_2_0.txtDesc.text = arg_2_1:getDesc() or ""
+	arg_2_0.txtPricerange.text = string.format("%s-%s", arg_2_1.minScore, arg_2_1.maxScore)
 
-	if not slot0.playedAnim then
-		slot0.playedAnim = true
-		slot0.anim.speed = 0
+	if not arg_2_0.playedAnim then
+		arg_2_0.playedAnim = true
+		arg_2_0.anim.speed = 0
 
-		if (slot3 - 1) * 0.06 and slot10 > 0 then
-			TaskDispatcher.runDelay(slot0.playOpenAnim, slot0, slot10)
+		local var_2_2 = (arg_2_3 - 1) * 0.06
+
+		if var_2_2 and var_2_2 > 0 then
+			TaskDispatcher.runDelay(arg_2_0.playOpenAnim, arg_2_0, var_2_2)
 		else
-			slot0:playOpenAnim()
+			arg_2_0:playOpenAnim()
 		end
 	else
-		slot0:checkDoCallback()
+		arg_2_0:checkDoCallback()
 	end
 end
 
-function slot0.playOpenAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.playOpenAnim, slot0)
+function var_0_0.playOpenAnim(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0.playOpenAnim, arg_3_0)
 
-	slot0.anim.speed = 1
+	arg_3_0.anim.speed = 1
 
-	slot0.anim:Play(UIAnimationName.Open, 0, 0)
-	slot0:checkDoCallback()
+	arg_3_0.anim:Play(UIAnimationName.Open, 0, 0)
+	arg_3_0:checkDoCallback()
 end
 
-function slot0.checkDoCallback(slot0)
-	if slot0.index == slot0.count and slot0.callback then
-		slot0.callback(slot0.callbackObj)
+function var_0_0.checkDoCallback(arg_4_0)
+	if arg_4_0.index == arg_4_0.count and arg_4_0.callback then
+		arg_4_0.callback(arg_4_0.callbackObj)
 
-		slot0.callback = nil
+		arg_4_0.callback = nil
 	end
 end
 
-function slot0.onAllAnimFinish(slot0)
-	if slot0.data then
-		slot1 = gohelper.findChild(slot0.btnBargain.gameObject, "huan")
+function var_0_0.onAllAnimFinish(arg_5_0)
+	if arg_5_0.data then
+		local var_5_0 = gohelper.findChild(arg_5_0.btnBargain.gameObject, "huan")
 
-		gohelper.setActive(slot1, false)
-		gohelper.setActive(slot1, true)
+		gohelper.setActive(var_5_0, false)
+		gohelper.setActive(var_5_0, true)
 	end
 end
 
-function slot0.onClickStartBargain(slot0)
-	if not slot0.data then
+function var_0_0.onClickStartBargain(arg_6_0)
+	if not arg_6_0.data then
 		return
 	end
 
-	slot1 = slot0.data
-	slot2 = slot1.activityId
+	local var_6_0 = arg_6_0.data
+	local var_6_1 = var_6_0.activityId
 
-	Activity117Model.instance:setSelectOrder(slot2, slot1.id)
-	Activity117Model.instance:setInQuote(slot2)
-	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, slot2)
+	Activity117Model.instance:setSelectOrder(var_6_1, var_6_0.id)
+	Activity117Model.instance:setInQuote(var_6_1)
+	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, var_6_1)
 end
 
-function slot0.onClickJump(slot0)
-	if not (slot0.data and slot0.data.jumpId) then
+function var_0_0.onClickJump(arg_7_0)
+	local var_7_0 = arg_7_0.data and arg_7_0.data.jumpId
+
+	if not var_7_0 then
 		return
 	end
 
-	GameFacade.jump(slot1, nil, , {
+	local var_7_1 = {
 		jumpId = 10011205,
 		special = true,
 		desc = luaLang("versionactivity_1_2_tradedemand"),
 		sceneType = SceneType.Main,
-		checkFunc = slot0.data.isProgressEnough,
-		checkFuncObj = slot0.data
-	})
+		checkFunc = arg_7_0.data.isProgressEnough,
+		checkFuncObj = arg_7_0.data
+	}
+
+	GameFacade.jump(var_7_0, nil, nil, var_7_1)
 end
 
-function slot0.onClickCancel(slot0)
-	if not slot0.data then
+function var_0_0.onClickCancel(arg_8_0)
+	if not arg_8_0.data then
 		return
 	end
 
-	slot1 = slot0.data.activityId
+	local var_8_0 = arg_8_0.data.activityId
 
-	Activity117Model.instance:setSelectOrder(slot1)
-	Activity117Model.instance:setInQuote(slot1)
-	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, slot1)
+	Activity117Model.instance:setSelectOrder(var_8_0)
+	Activity117Model.instance:setInQuote(var_8_0)
+	Activity117Controller.instance:dispatchEvent(Activity117Event.RefreshQuoteView, var_8_0)
 end
 
-function slot0.destory(slot0)
-	if slot0.btnBargain then
-		slot0.btnBargain:RemoveClickListener()
+function var_0_0.destory(arg_9_0)
+	if arg_9_0.btnBargain then
+		arg_9_0.btnBargain:RemoveClickListener()
 	end
 
-	if slot0.btnJump then
-		slot0.btnJump:RemoveClickListener()
+	if arg_9_0.btnJump then
+		arg_9_0.btnJump:RemoveClickListener()
 	end
 
-	if slot0.btnCancel then
-		slot0.btnCancel:RemoveClickListener()
+	if arg_9_0.btnCancel then
+		arg_9_0.btnCancel:RemoveClickListener()
 	end
 
-	slot0._simagebg:UnLoadImage()
-	slot0._simageclickbg:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0.playOpenAnim, slot0)
-	slot0:__onDispose()
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0._simageclickbg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_9_0.playOpenAnim, arg_9_0)
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

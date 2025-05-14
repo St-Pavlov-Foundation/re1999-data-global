@@ -1,94 +1,99 @@
-module("modules.logic.season.view1_2.Season1_2EquipBookItem", package.seeall)
+﻿module("modules.logic.season.view1_2.Season1_2EquipBookItem", package.seeall)
 
-slot0 = class("Season1_2EquipBookItem", ListScrollCellExtend)
+local var_0_0 = class("Season1_2EquipBookItem", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._gopos = gohelper.findChild(slot0.viewGO, "go_pos")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._simageroleicon = gohelper.findChildSingleImage(slot0.viewGO, "image_roleicon")
-	slot0._txtcountvalue = gohelper.findChildText(slot0.viewGO, "go_count/bg/#txt_countvalue")
-	slot0._gocount = gohelper.findChild(slot0.viewGO, "go_count")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "#go_new")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_pos")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
+	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_roleicon")
+	arg_1_0._txtcountvalue = gohelper.findChildText(arg_1_0.viewGO, "go_count/bg/#txt_countvalue")
+	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "go_count")
+	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_new")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._cfg = SeasonConfig.instance:getSeasonEquipCo(slot0._mo.id)
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1
+	arg_2_0._cfg = SeasonConfig.instance:getSeasonEquipCo(arg_2_0._mo.id)
 
-	if slot0._cfg then
-		slot0:refreshUI()
+	if arg_2_0._cfg then
+		arg_2_0:refreshUI()
 	end
 
-	slot0:checkPlayAnim()
+	arg_2_0:checkPlayAnim()
 end
 
-slot0.ColumnCount = 6
-slot0.AnimRowCount = 4
-slot0.OpenAnimTime = 0.06
-slot0.OpenAnimStartTime = 0.05
+var_0_0.ColumnCount = 6
+var_0_0.AnimRowCount = 4
+var_0_0.OpenAnimTime = 0.06
+var_0_0.OpenAnimStartTime = 0.05
 
-function slot0.refreshUI(slot0)
-	slot0:checkCreateIcon()
-	slot0.icon:updateData(slot0._mo.id)
-	slot0.icon:setColorDark(slot0._mo.count <= 0)
-	gohelper.setActive(slot0._goselect, Activity104EquipItemBookModel.instance.curSelectItemId == slot0._mo.id)
-	gohelper.setActive(slot0._gonew, slot0._mo.isNew)
+function var_0_0.refreshUI(arg_3_0)
+	arg_3_0:checkCreateIcon()
+	arg_3_0.icon:updateData(arg_3_0._mo.id)
+	arg_3_0.icon:setColorDark(arg_3_0._mo.count <= 0)
+	gohelper.setActive(arg_3_0._goselect, Activity104EquipItemBookModel.instance.curSelectItemId == arg_3_0._mo.id)
+	gohelper.setActive(arg_3_0._gonew, arg_3_0._mo.isNew)
 
-	if slot0._mo.count > 0 then
-		gohelper.setActive(slot0._gocount, true)
+	if arg_3_0._mo.count > 0 then
+		gohelper.setActive(arg_3_0._gocount, true)
 
-		slot0._txtcountvalue.text = luaLang("multiple") .. tostring(slot0._mo.count)
+		arg_3_0._txtcountvalue.text = luaLang("multiple") .. tostring(arg_3_0._mo.count)
 	else
-		gohelper.setActive(slot0._gocount, false)
+		gohelper.setActive(arg_3_0._gocount, false)
 	end
 end
 
-function slot0.checkPlayAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
+function var_0_0.checkPlayAnim(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.onDelayPlayOpen, arg_4_0)
 
-	if Activity104EquipItemBookModel.instance:getDelayPlayTime(slot0._mo) == -1 then
-		slot0._animator:Play("idle", 0, 0)
+	local var_4_0 = Activity104EquipItemBookModel.instance:getDelayPlayTime(arg_4_0._mo)
 
-		slot0._animator.speed = 1
+	if var_4_0 == -1 then
+		arg_4_0._animator:Play("idle", 0, 0)
+
+		arg_4_0._animator.speed = 1
 	else
-		slot0._animator:Play("open", 0, 0)
+		arg_4_0._animator:Play("open", 0, 0)
 
-		slot0._animator.speed = 0
+		arg_4_0._animator.speed = 0
 
-		TaskDispatcher.runDelay(slot0.onDelayPlayOpen, slot0, slot1)
+		TaskDispatcher.runDelay(arg_4_0.onDelayPlayOpen, arg_4_0, var_4_0)
 	end
 end
 
-function slot0.onDelayPlayOpen(slot0)
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
-	slot0._animator:Play("open", 0, 0)
+function var_0_0.onDelayPlayOpen(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.onDelayPlayOpen, arg_5_0)
+	arg_5_0._animator:Play("open", 0, 0)
 
-	slot0._animator.speed = 1
+	arg_5_0._animator.speed = 1
 end
 
-function slot0.checkCreateIcon(slot0)
-	if not slot0.icon then
-		slot0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._view:getResInst(slot0._view.viewContainer:getSetting().otherRes[2], slot0._gopos, "icon"), Season1_2CelebrityCardEquip)
+function var_0_0.checkCreateIcon(arg_6_0)
+	if not arg_6_0.icon then
+		local var_6_0 = arg_6_0._view.viewContainer:getSetting().otherRes[2]
+		local var_6_1 = arg_6_0._view:getResInst(var_6_0, arg_6_0._gopos, "icon")
 
-		slot0.icon:setClickCall(slot0.onClickSelf, slot0)
+		arg_6_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, Season1_2CelebrityCardEquip)
+
+		arg_6_0.icon:setClickCall(arg_6_0.onClickSelf, arg_6_0)
 	end
 end
 
-function slot0.onClickSelf(slot0)
-	if slot0._mo then
-		Activity104EquipBookController.instance:changeSelect(slot0._mo.id)
+function var_0_0.onClickSelf(arg_7_0)
+	if arg_7_0._mo then
+		Activity104EquipBookController.instance:changeSelect(arg_7_0._mo.id)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.icon then
-		slot0.icon:disposeUI()
+function var_0_0.onDestroyView(arg_8_0)
+	if arg_8_0.icon then
+		arg_8_0.icon:disposeUI()
 	end
 
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
+	TaskDispatcher.cancelTask(arg_8_0.onDelayPlayOpen, arg_8_0)
 end
 
-return slot0
+return var_0_0

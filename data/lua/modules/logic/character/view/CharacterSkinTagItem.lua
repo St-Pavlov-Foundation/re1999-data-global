@@ -1,41 +1,46 @@
-module("modules.logic.character.view.CharacterSkinTagItem", package.seeall)
+﻿module("modules.logic.character.view.CharacterSkinTagItem", package.seeall)
 
-slot0 = class("CharacterSkinTagItem", ListScrollCellExtend)
+local var_0_0 = class("CharacterSkinTagItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._color2 = gohelper.findChild(slot0.viewGO, "color2")
-	slot0._color3 = gohelper.findChild(slot0.viewGO, "color3")
-	slot0._color4 = gohelper.findChild(slot0.viewGO, "color4")
-	slot0._color5 = gohelper.findChild(slot0.viewGO, "color5")
-	slot0._txt = gohelper.findChildText(slot0.viewGO, "text")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._color2 = gohelper.findChild(arg_1_0.viewGO, "color2")
+	arg_1_0._color3 = gohelper.findChild(arg_1_0.viewGO, "color3")
+	arg_1_0._color4 = gohelper.findChild(arg_1_0.viewGO, "color4")
+	arg_1_0._color5 = gohelper.findChild(arg_1_0.viewGO, "color5")
+	arg_1_0._txt = gohelper.findChildText(arg_1_0.viewGO, "text")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._txt.text = slot1.desc
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._txt.text = arg_7_1.desc
 
-	gohelper.setActive(slot0._color2, slot1.color == 2)
-	gohelper.setActive(slot0._color3, slot1.color == 3)
-	gohelper.setActive(slot0._color4, slot1.color == 4)
-	gohelper.setActive(slot0._color5, slot1.color == 5)
+	gohelper.setActive(arg_7_0._color2, arg_7_1.color == 2)
+	gohelper.setActive(arg_7_0._color3, arg_7_1.color == 3)
+	gohelper.setActive(arg_7_0._color4, arg_7_1.color == 4)
+	gohelper.setActive(arg_7_0._color5, arg_7_1.color == 5)
 end
 
-return slot0
+return var_0_0

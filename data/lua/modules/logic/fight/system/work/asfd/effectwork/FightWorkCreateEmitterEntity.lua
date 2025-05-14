@@ -1,14 +1,17 @@
-module("modules.logic.fight.system.work.asfd.effectwork.FightWorkCreateEmitterEntity", package.seeall)
+﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkCreateEmitterEntity", package.seeall)
 
-slot0 = class("FightWorkCreateEmitterEntity", FightEffectBase)
+local var_0_0 = class("FightWorkCreateEmitterEntity", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not (GameSceneMgr.instance:getCurScene() and slot1.entityMgr) then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = GameSceneMgr.instance:getCurScene()
+	local var_1_1 = var_1_0 and var_1_0.entityMgr
+
+	if not var_1_1 then
+		return arg_1_0:onDone(true)
 	end
 
-	slot2:addASFDUnit()
-	slot0:onDone(true)
+	var_1_1:addASFDUnit()
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

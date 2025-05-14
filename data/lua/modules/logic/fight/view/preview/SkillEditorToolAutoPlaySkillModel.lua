@@ -1,109 +1,117 @@
-module("modules.logic.fight.view.preview.SkillEditorToolAutoPlaySkillModel", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorToolAutoPlaySkillModel", package.seeall)
 
-slot0 = class("SkillEditorToolAutoPlaySkillModel", ListScrollModel)
+local var_0_0 = class("SkillEditorToolAutoPlaySkillModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._selectList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._selectList = {}
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0:_buildCOList()
+function var_0_0.setSelect(arg_2_0, arg_2_1)
+	arg_2_0:_buildCOList()
 
-	slot2 = {}
+	local var_2_0 = {}
 
-	for slot6, slot7 in pairs(slot0._dataList) do
-		if slot6 ~= SkillEditorMgr.SelectType.Group then
-			for slot11, slot12 in ipairs(slot7) do
-				if string.find(tostring(slot12.id), slot1) or string.find(tostring(slot12.skinId), slot1) or string.find(slot12.name or "", slot1) or string.find(FightConfig.instance:getSkinCO(slot12.skinId) and FightConfig.instance:getSkinCO(slot12.skinId).name or "", slot1) then
-					table.insert(slot2, {
-						co = slot12,
-						type = slot6,
-						skinId = slot12.skinId
-					})
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._dataList) do
+		if iter_2_0 ~= SkillEditorMgr.SelectType.Group then
+			for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
+				if string.find(tostring(iter_2_3.id), arg_2_1) or string.find(tostring(iter_2_3.skinId), arg_2_1) or string.find(iter_2_3.name or "", arg_2_1) or string.find(FightConfig.instance:getSkinCO(iter_2_3.skinId) and FightConfig.instance:getSkinCO(iter_2_3.skinId).name or "", arg_2_1) then
+					local var_2_1 = {
+						co = iter_2_3,
+						type = iter_2_0,
+						skinId = iter_2_3.skinId
+					}
+
+					table.insert(var_2_0, var_2_1)
 				end
 			end
 		else
-			for slot11, slot12 in ipairs(slot7) do
-				slot0:_cacheGroupNames()
+			for iter_2_4, iter_2_5 in ipairs(iter_2_1) do
+				arg_2_0:_cacheGroupNames()
 
-				if slot0._groupId2NameDict[slot12.id] and string.find(slot13, slot1) then
-					table.insert(slot2, {
-						co = slot12,
-						type = slot6,
-						skinId = slot12.skinId
-					})
+				local var_2_2 = arg_2_0._groupId2NameDict[iter_2_5.id]
+
+				if var_2_2 and string.find(var_2_2, arg_2_1) then
+					local var_2_3 = {
+						co = iter_2_5,
+						type = iter_2_0,
+						skinId = iter_2_5.skinId
+					}
+
+					table.insert(var_2_0, var_2_3)
 				end
 			end
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0._buildCOList(slot0)
-	slot0._dataList = {}
-	slot0._dataList[SkillEditorMgr.SelectType.Hero] = slot0._dataList[SkillEditorMgr.SelectType.Hero] or {}
+function var_0_0._buildCOList(arg_3_0)
+	arg_3_0._dataList = {}
+	arg_3_0._dataList[SkillEditorMgr.SelectType.Hero] = arg_3_0._dataList[SkillEditorMgr.SelectType.Hero] or {}
 
-	tabletool.addValues(slot0._dataList[SkillEditorMgr.SelectType.Hero], lua_character.configList)
+	tabletool.addValues(arg_3_0._dataList[SkillEditorMgr.SelectType.Hero], lua_character.configList)
 
-	slot1 = {}
-	slot2 = {}
+	local var_3_0 = {}
+	local var_3_1 = {}
 
-	for slot6, slot7 in ipairs(lua_monster.configList) do
-		if not slot1[slot7.skinId] then
-			slot1[slot7.skinId] = true
+	for iter_3_0, iter_3_1 in ipairs(lua_monster.configList) do
+		if not var_3_0[iter_3_1.skinId] then
+			var_3_0[iter_3_1.skinId] = true
 
-			table.insert(slot2, slot7)
+			table.insert(var_3_1, iter_3_1)
 		end
 	end
 
-	slot0._dataList[SkillEditorMgr.SelectType.Monster] = slot0._dataList[SkillEditorMgr.SelectType.Monster] or {}
-	slot0._dataList[SkillEditorMgr.SelectType.Group] = slot0._dataList[SkillEditorMgr.SelectType.Group] or {}
+	arg_3_0._dataList[SkillEditorMgr.SelectType.Monster] = arg_3_0._dataList[SkillEditorMgr.SelectType.Monster] or {}
+	arg_3_0._dataList[SkillEditorMgr.SelectType.Group] = arg_3_0._dataList[SkillEditorMgr.SelectType.Group] or {}
 
-	tabletool.addValues(slot0._dataList[SkillEditorMgr.SelectType.Monster], slot2)
-	tabletool.addValues(slot0._dataList[SkillEditorMgr.SelectType.Group], lua_monster_group.configList)
-	slot0:_cacheGroupNames()
+	tabletool.addValues(arg_3_0._dataList[SkillEditorMgr.SelectType.Monster], var_3_1)
+	tabletool.addValues(arg_3_0._dataList[SkillEditorMgr.SelectType.Group], lua_monster_group.configList)
+	arg_3_0:_cacheGroupNames()
 end
 
-function slot0._cacheGroupNames(slot0)
-	if slot0._groupId2NameDict then
+function var_0_0._cacheGroupNames(arg_4_0)
+	if arg_4_0._groupId2NameDict then
 		return
 	end
 
-	slot0._groupId2NameDict = {}
+	arg_4_0._groupId2NameDict = {}
 
-	for slot4, slot5 in ipairs(lua_monster_group.configList) do
-		slot6 = string.splitToNumber(slot5.monster, "#")
-		slot7 = lua_monster.configDict[slot6[1]]
+	for iter_4_0, iter_4_1 in ipairs(lua_monster_group.configList) do
+		local var_4_0 = string.splitToNumber(iter_4_1.monster, "#")
+		local var_4_1 = lua_monster.configDict[var_4_0[1]]
 
-		for slot11 = 2, #slot6 do
-			if tabletool.indexOf(string.splitToNumber(slot5.bossId, "#"), slot6[slot11]) then
-				slot7 = lua_monster.configDict[slot6[slot11]]
+		for iter_4_2 = 2, #var_4_0 do
+			if tabletool.indexOf(string.splitToNumber(iter_4_1.bossId, "#"), var_4_0[iter_4_2]) then
+				var_4_1 = lua_monster.configDict[var_4_0[iter_4_2]]
 
 				break
 			end
 		end
 
-		slot0._groupId2NameDict[slot5.id] = slot7 and slot7.name
+		arg_4_0._groupId2NameDict[iter_4_1.id] = var_4_1 and var_4_1.name
 	end
 end
 
-function slot0.addSelect(slot0, slot1)
-	if tabletool.indexOf(slot0._selectList, slot1) then
-		slot0._list[slot2] = slot1
+function var_0_0.addSelect(arg_5_0, arg_5_1)
+	local var_5_0 = tabletool.indexOf(arg_5_0._selectList, arg_5_1)
+
+	if var_5_0 then
+		arg_5_0._list[var_5_0] = arg_5_1
 	else
-		table.insert(slot0._selectList, slot1)
+		table.insert(arg_5_0._selectList, arg_5_1)
 	end
 end
 
-function slot0.removeSelect(slot0, slot1)
-	tabletool.removeValue(slot0._selectList, slot1)
+function var_0_0.removeSelect(arg_6_0, arg_6_1)
+	tabletool.removeValue(arg_6_0._selectList, arg_6_1)
 end
 
-function slot0.getSelectList(slot0)
-	return slot0._selectList
+function var_0_0.getSelectList(arg_7_0)
+	return arg_7_0._selectList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

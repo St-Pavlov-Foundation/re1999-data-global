@@ -1,311 +1,353 @@
-module("modules.logic.character.model.HeroModel", package.seeall)
+﻿module("modules.logic.character.model.HeroModel", package.seeall)
 
-slot0 = class("HeroModel", BaseModel)
+local var_0_0 = class("HeroModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._heroId2MODict = {}
-	slot0._skinIdDict = {}
-	slot0._touchHeadNumber = 0
-	slot0._hookGetHeroId = {}
-	slot0._hookGetHeroUid = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._heroId2MODict = {}
+	arg_1_0._skinIdDict = {}
+	arg_1_0._touchHeadNumber = 0
+	arg_1_0._hookGetHeroId = {}
+	arg_1_0._hookGetHeroUid = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._heroId2MODict = {}
-	slot0._skinIdDict = {}
-	slot0._touchHeadNumber = 0
-	slot0._hookGetHeroId = {}
-	slot0._hookGetHeroUid = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._heroId2MODict = {}
+	arg_2_0._skinIdDict = {}
+	arg_2_0._touchHeadNumber = 0
+	arg_2_0._hookGetHeroId = {}
+	arg_2_0._hookGetHeroUid = {}
 end
 
-function slot0.setTouchHeadNumber(slot0, slot1)
-	slot0._touchHeadNumber = slot1
+function var_0_0.setTouchHeadNumber(arg_3_0, arg_3_1)
+	arg_3_0._touchHeadNumber = arg_3_1
 end
 
-function slot0.getTouchHeadNumber(slot0)
-	return slot0._touchHeadNumber
+function var_0_0.getTouchHeadNumber(arg_4_0)
+	return arg_4_0._touchHeadNumber
 end
 
-function slot0.addGuideHero(slot0, slot1)
-	if slot0._heroId2MODict[slot1] then
+function var_0_0.addGuideHero(arg_5_0, arg_5_1)
+	if arg_5_0._heroId2MODict[arg_5_1] then
 		return
 	end
 
-	slot2 = HeroConfig.instance:getHeroCO(slot1)
-	slot3 = HeroMo.New()
+	local var_5_0 = HeroConfig.instance:getHeroCO(arg_5_1)
+	local var_5_1 = HeroMo.New()
 
-	slot3:init({
-		heroId = slot1,
-		skin = slot2.skinId
-	}, slot2)
+	var_5_1:init({
+		heroId = arg_5_1,
+		skin = var_5_0.skinId
+	}, var_5_0)
 
-	slot3.isGuideAdd = true
-	slot0._heroId2MODict[slot1] = slot3
+	var_5_1.isGuideAdd = true
+	arg_5_0._heroId2MODict[arg_5_1] = var_5_1
 end
 
-function slot0.removeGuideHero(slot0, slot1)
-	if slot0._heroId2MODict[slot1] and slot2.isGuideAdd then
-		slot0._heroId2MODict[slot1] = nil
+function var_0_0.removeGuideHero(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._heroId2MODict[arg_6_1]
+
+	if var_6_0 and var_6_0.isGuideAdd then
+		arg_6_0._heroId2MODict[arg_6_1] = nil
 	end
 end
 
-function slot0.onGetHeroList(slot0, slot1)
-	slot2 = {}
-	slot0._heroId2MODict = {}
+function var_0_0.onGetHeroList(arg_7_0, arg_7_1)
+	local var_7_0 = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot9 = HeroMo.New()
+	arg_7_0._heroId2MODict = {}
 
-			slot9:init(slot7, HeroConfig.instance:getHeroCO(slot7.heroId))
-			table.insert(slot2, slot9)
+	if arg_7_1 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+			local var_7_1 = HeroConfig.instance:getHeroCO(iter_7_1.heroId)
+			local var_7_2 = HeroMo.New()
 
-			slot0._heroId2MODict[slot9.heroId] = slot9
+			var_7_2:init(iter_7_1, var_7_1)
+			table.insert(var_7_0, var_7_2)
+
+			arg_7_0._heroId2MODict[var_7_2.heroId] = var_7_2
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_7_0:setList(var_7_0)
 end
 
-function slot0.onGetSkinList(slot0, slot1)
-	slot0._skinIdDict = {}
+function var_0_0.onGetSkinList(arg_8_0, arg_8_1)
+	arg_8_0._skinIdDict = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0._skinIdDict[slot6] = true
+	if arg_8_1 then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+			arg_8_0._skinIdDict[iter_8_1] = true
 		end
 	end
 end
 
-function slot0.onGainSkinList(slot0, slot1)
-	slot0._skinIdDict[slot1] = true
+function var_0_0.onGainSkinList(arg_9_0, arg_9_1)
+	arg_9_0._skinIdDict[arg_9_1] = true
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.GainSkin, slot1)
+	CharacterController.instance:dispatchEvent(CharacterEvent.GainSkin, arg_9_1)
 end
 
-function slot0.setHeroFavorState(slot0, slot1, slot2)
-	slot0:getByHeroId(slot1).isFavor = slot2
+function var_0_0.setHeroFavorState(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:getByHeroId(arg_10_1).isFavor = arg_10_2
 end
 
-function slot0.setHeroLevel(slot0, slot1, slot2)
-	slot0:getByHeroId(slot1).level = slot2
+function var_0_0.setHeroLevel(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0:getByHeroId(arg_11_1).level = arg_11_2
 end
 
-function slot0.setHeroRank(slot0, slot1, slot2)
-	slot0:getByHeroId(slot1).rank = slot2
+function var_0_0.setHeroRank(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:getByHeroId(arg_12_1).rank = arg_12_2
 end
 
-function slot0.onSetHeroChange(slot0, slot1)
-	if slot1 then
-		slot2 = nil
+function var_0_0.onSetHeroChange(arg_13_0, arg_13_1)
+	if arg_13_1 then
+		local var_13_0
 
-		for slot6, slot7 in ipairs(slot1) do
-			if not slot0:getById(slot7.uid) then
-				HeroMo.New():init(slot7, HeroConfig.instance:getHeroCO(slot7.heroId))
-				table.insert(slot2 or {}, slot10)
+		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+			local var_13_1 = arg_13_0:getById(iter_13_1.uid)
 
-				slot0._heroId2MODict[slot10.heroId] = slot10
+			if not var_13_1 then
+				local var_13_2 = HeroConfig.instance:getHeroCO(iter_13_1.heroId)
+				local var_13_3 = HeroMo.New()
 
-				if SDKMediaEventEnum.HeroGetEvent[slot7.heroId] then
-					SDKDataTrackMgr.instance:trackMediaEvent(SDKMediaEventEnum.HeroGetEvent[slot7.heroId])
+				var_13_3:init(iter_13_1, var_13_2)
+
+				var_13_0 = var_13_0 or {}
+
+				table.insert(var_13_0, var_13_3)
+
+				arg_13_0._heroId2MODict[var_13_3.heroId] = var_13_3
+
+				if SDKMediaEventEnum.HeroGetEvent[iter_13_1.heroId] then
+					SDKDataTrackMgr.instance:trackMediaEvent(SDKMediaEventEnum.HeroGetEvent[iter_13_1.heroId])
 				end
 
-				if slot7.heroId == 3023 then
+				if iter_13_1.heroId == 3023 then
 					SDKChannelEventModel.instance:firstSummon()
 				end
 
-				if slot9.rare == CharacterEnum.MaxRare then
+				if var_13_2.rare == CharacterEnum.MaxRare then
 					SDKChannelEventModel.instance:getMaxRareHero()
 				end
 			else
-				slot8:update(slot7)
+				var_13_1:update(iter_13_1)
 			end
 		end
 
-		if slot2 then
-			slot0:addList(slot2)
+		if var_13_0 then
+			arg_13_0:addList(var_13_0)
 		end
 	end
 end
 
-function slot0._sortSpecialTouch(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot1) do
-		if slot8.type == slot2 then
-			table.insert({}, slot8)
+function var_0_0._sortSpecialTouch(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = {}
+
+	for iter_14_0, iter_14_1 in pairs(arg_14_1) do
+		if iter_14_1.type == arg_14_2 then
+			table.insert(var_14_0, iter_14_1)
 		end
 	end
 
-	if not slot0._specialSortRule then
-		slot0._specialSortRule = {
+	if not arg_14_0._specialSortRule then
+		arg_14_0._specialSortRule = {
 			2,
 			1,
 			3
 		}
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		return uv0._specialSortRule[tonumber(slot1.param)] < uv0._specialSortRule[tonumber(slot0.param)]
+	table.sort(var_14_0, function(arg_15_0, arg_15_1)
+		return arg_14_0._specialSortRule[tonumber(arg_15_0.param)] > arg_14_0._specialSortRule[tonumber(arg_15_1.param)]
 	end)
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.getVoiceConfig(slot0, slot1, slot2, slot3, slot4)
-	if not slot0:getByHeroId(slot1) then
-		print("======not hero:", slot1)
+function var_0_0.getVoiceConfig(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+	if not arg_16_0:getByHeroId(arg_16_1) then
+		print("======not hero:", arg_16_1)
 
 		return
 	end
 
-	if not slot0:getHeroAllVoice(slot1, slot4) or not next(slot6) then
+	local var_16_0 = arg_16_0:getHeroAllVoice(arg_16_1, arg_16_4)
+
+	if not var_16_0 or not next(var_16_0) then
 		return {}
 	end
 
-	if slot2 == CharacterEnum.VoiceType.MainViewSpecialTouch then
-		slot6 = slot0:_sortSpecialTouch(slot6, slot2)
+	if arg_16_2 == CharacterEnum.VoiceType.MainViewSpecialTouch then
+		var_16_0 = arg_16_0:_sortSpecialTouch(var_16_0, arg_16_2)
 	end
 
-	slot7 = {}
+	local var_16_1 = {}
 
-	for slot11, slot12 in pairs(slot6) do
-		if slot12.type == slot2 and (not slot3 or slot3(slot12)) then
-			table.insert(slot7, slot12)
+	for iter_16_0, iter_16_1 in pairs(var_16_0) do
+		if iter_16_1.type == arg_16_2 and (not arg_16_3 or arg_16_3(iter_16_1)) then
+			table.insert(var_16_1, iter_16_1)
 		end
 	end
 
-	return slot7
+	return var_16_1
 end
 
-function slot0.getHeroAllVoice(slot0, slot1, slot2)
-	slot5 = slot0:getByHeroId(slot1)
+function var_0_0.getHeroAllVoice(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = {}
+	local var_17_1 = CharacterDataConfig.instance:getCharacterVoicesCo(arg_17_1)
+	local var_17_2 = arg_17_0:getByHeroId(arg_17_1)
 
-	if not CharacterDataConfig.instance:getCharacterVoicesCo(slot1) then
-		return {}
+	if not var_17_1 then
+		return var_17_0
 	end
 
-	for slot9, slot10 in pairs(slot4) do
-		if slot0:_checkSkin(slot5, slot10, slot2) then
-			slot11 = slot10.audio
+	for iter_17_0, iter_17_1 in pairs(var_17_1) do
+		if arg_17_0:_checkSkin(var_17_2, iter_17_1, arg_17_2) then
+			local var_17_3 = iter_17_1.audio
 
-			if slot10.type == CharacterEnum.VoiceType.GetSkin and string.nilorempty(slot10.unlockCondition) and not string.nilorempty(slot10.param) then
-				for slot16, slot17 in ipairs(slot5.skinInfoList) do
-					if slot17.skin == tonumber(slot10.param) then
-						slot3[slot11] = slot10
+			if iter_17_1.type == CharacterEnum.VoiceType.GetSkin and string.nilorempty(iter_17_1.unlockCondition) and not string.nilorempty(iter_17_1.param) then
+				local var_17_4 = tonumber(iter_17_1.param)
+
+				for iter_17_2, iter_17_3 in ipairs(var_17_2.skinInfoList) do
+					if iter_17_3.skin == var_17_4 then
+						var_17_0[var_17_3] = iter_17_1
 
 						break
 					end
 				end
-			elseif slot10.type == CharacterEnum.VoiceType.BreakThrough and string.nilorempty(slot10.unlockCondition) then
-				if slot5.rank >= 2 then
-					slot3[slot11] = slot10
+			elseif iter_17_1.type == CharacterEnum.VoiceType.BreakThrough and string.nilorempty(iter_17_1.unlockCondition) then
+				if var_17_2.rank >= 2 then
+					var_17_0[var_17_3] = iter_17_1
 				end
-			elseif slot0:_cleckCondition(slot10.unlockCondition, slot1) then
-				slot3[slot11] = slot10
+			elseif arg_17_0:_cleckCondition(iter_17_1.unlockCondition, arg_17_1) then
+				var_17_0[var_17_3] = iter_17_1
 			end
 		end
 	end
 
-	for slot10, slot11 in pairs(slot5.voice) do
-		if not slot3[slot11] and slot0:_checkSkin(slot5, CharacterDataConfig.instance:getCharacterVoiceCO(slot1, slot11), slot2) then
-			slot3[slot11] = slot12
+	local var_17_5 = var_17_2.voice
+
+	for iter_17_4, iter_17_5 in pairs(var_17_5) do
+		if not var_17_0[iter_17_5] then
+			local var_17_6 = CharacterDataConfig.instance:getCharacterVoiceCO(arg_17_1, iter_17_5)
+
+			if arg_17_0:_checkSkin(var_17_2, var_17_6, arg_17_2) then
+				var_17_0[iter_17_5] = var_17_6
+			end
 		end
 	end
 
-	return slot3
+	return var_17_0
 end
 
-function slot0._checkSkin(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0._checkSkin(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if not arg_18_2 then
 		return false
 	end
 
-	if slot2.stateCondition ~= 0 and slot2.stateCondition ~= PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, slot1.heroId, CharacterVoiceController.instance:getDefaultValue(slot1.heroId)) then
-		return false
+	if arg_18_2.stateCondition ~= 0 then
+		local var_18_0 = CharacterVoiceController.instance:getDefaultValue(arg_18_1.heroId)
+		local var_18_1 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_18_1.heroId, var_18_0)
+
+		if arg_18_2.stateCondition ~= var_18_1 then
+			return false
+		end
 	end
 
-	if string.nilorempty(slot2.skins) then
+	if string.nilorempty(arg_18_2.skins) then
 		return true
 	end
 
-	return string.find(slot2.skins, slot3 or slot1.skin)
+	return string.find(arg_18_2.skins, arg_18_3 or arg_18_1.skin)
 end
 
-function slot0._cleckCondition(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0._cleckCondition(arg_19_0, arg_19_1, arg_19_2)
+	if string.nilorempty(arg_19_1) then
 		return true
 	end
 
-	if tonumber(string.split(slot1, "#")[1]) == 1 then
-		return tonumber(slot5[2]) <= HeroConfig.instance:getFaithPercent(slot0:getByHeroId(slot2).faith)[1] * 100
+	local var_19_0 = arg_19_0:getByHeroId(arg_19_2).faith
+	local var_19_1 = HeroConfig.instance:getFaithPercent(var_19_0)[1]
+	local var_19_2 = string.split(arg_19_1, "#")
+
+	if tonumber(var_19_2[1]) == 1 then
+		return tonumber(var_19_2[2]) <= var_19_1 * 100
 	end
 
 	return true
 end
 
-function slot0.addHookGetHeroId(slot0, slot1)
-	slot0._hookGetHeroId[slot1] = slot1
+function var_0_0.addHookGetHeroId(arg_20_0, arg_20_1)
+	arg_20_0._hookGetHeroId[arg_20_1] = arg_20_1
 end
 
-function slot0.removeHookGetHeroId(slot0, slot1)
-	slot0._hookGetHeroId[slot1] = nil
+function var_0_0.removeHookGetHeroId(arg_21_0, arg_21_1)
+	arg_21_0._hookGetHeroId[arg_21_1] = nil
 end
 
-function slot0.addHookGetHeroUid(slot0, slot1)
-	slot0._hookGetHeroUid[slot1] = slot1
+function var_0_0.addHookGetHeroUid(arg_22_0, arg_22_1)
+	arg_22_0._hookGetHeroUid[arg_22_1] = arg_22_1
 end
 
-function slot0.removeHookGetHeroUid(slot0, slot1)
-	slot0._hookGetHeroUid[slot1] = nil
+function var_0_0.removeHookGetHeroUid(arg_23_0, arg_23_1)
+	arg_23_0._hookGetHeroUid[arg_23_1] = nil
 end
 
-function slot0.getById(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._hookGetHeroUid) do
-		if slot5(slot1) then
-			return slot7
+function var_0_0.getById(arg_24_0, arg_24_1)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0._hookGetHeroUid) do
+		local var_24_0 = iter_24_0(arg_24_1)
+
+		if var_24_0 then
+			return var_24_0
 		end
 	end
 
-	return uv0.super.getById(slot0, slot1)
+	return var_0_0.super.getById(arg_24_0, arg_24_1)
 end
 
-function slot0.getByHeroId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._hookGetHeroId) do
-		if slot5(slot1) then
-			return slot7
+function var_0_0.getByHeroId(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._hookGetHeroId) do
+		local var_25_0 = iter_25_0(arg_25_1)
+
+		if var_25_0 then
+			return var_25_0
 		end
 	end
 
-	return slot0._heroId2MODict[slot1]
+	return arg_25_0._heroId2MODict[arg_25_1]
 end
 
-function slot0.getAllHero(slot0)
-	return slot0._heroId2MODict
+function var_0_0.getAllHero(arg_26_0)
+	return arg_26_0._heroId2MODict
 end
 
-function slot0.getAllFavorHeros(slot0)
-	slot1 = {}
+function var_0_0.getAllFavorHeros(arg_27_0)
+	local var_27_0 = {}
 
-	for slot5, slot6 in pairs(slot0._heroId2MODict) do
-		if slot6.isFavor then
-			table.insert(slot1, slot6.heroId)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._heroId2MODict) do
+		if iter_27_1.isFavor then
+			table.insert(var_27_0, iter_27_1.heroId)
 		end
 	end
 
-	return slot1
+	return var_27_0
 end
 
-function slot0.checkHasSkin(slot0, slot1)
-	if slot0._skinIdDict[slot1] then
+function var_0_0.checkHasSkin(arg_28_0, arg_28_1)
+	if arg_28_0._skinIdDict[arg_28_1] then
 		return true
 	end
 
-	if slot0:getByHeroId(SkinConfig.instance:getSkinCo(slot1).characterId) then
-		if slot3.config.skinId == slot1 then
+	local var_28_0 = SkinConfig.instance:getSkinCo(arg_28_1)
+	local var_28_1 = arg_28_0:getByHeroId(var_28_0.characterId)
+
+	if var_28_1 then
+		if var_28_1.config.skinId == arg_28_1 then
 			return true
 		end
 
-		for slot7, slot8 in ipairs(slot3.skinInfoList) do
-			if slot8.skin == slot1 then
+		for iter_28_0, iter_28_1 in ipairs(var_28_1.skinInfoList) do
+			if iter_28_1.skin == arg_28_1 then
 				return true
 			end
 		end
@@ -314,30 +356,37 @@ function slot0.checkHasSkin(slot0, slot1)
 	return false
 end
 
-function slot0.getAllHeroGroup(slot0)
-	slot1 = {}
+function var_0_0.getAllHeroGroup(arg_29_0)
+	local var_29_0 = {}
 
-	for slot5, slot6 in pairs(slot0._heroId2MODict) do
-		if slot1[string.byte(slot6.config.initials)] == nil then
-			slot1[slot7] = {}
+	for iter_29_0, iter_29_1 in pairs(arg_29_0._heroId2MODict) do
+		local var_29_1 = string.byte(iter_29_1.config.initials)
+
+		if var_29_0[var_29_1] == nil then
+			var_29_0[var_29_1] = {}
 		end
 
-		table.insert(slot1[slot7], slot6.heroId)
-		table.sort(slot1[slot7], function (slot0, slot1)
-			if uv0:getByHeroId(slot0).config.rare == uv0:getByHeroId(slot1).config.rare then
-				return slot0 < slot1
+		table.insert(var_29_0[var_29_1], iter_29_1.heroId)
+		table.sort(var_29_0[var_29_1], function(arg_30_0, arg_30_1)
+			local var_30_0 = arg_29_0:getByHeroId(arg_30_0).config.rare
+			local var_30_1 = arg_29_0:getByHeroId(arg_30_1).config.rare
+
+			if var_30_0 == var_30_1 then
+				return arg_30_0 < arg_30_1
 			else
-				return slot3 < slot2
+				return var_30_1 < var_30_0
 			end
 		end)
 	end
 
-	return slot1
+	return var_29_0
 end
 
-function slot0.checkGetRewards(slot0, slot1, slot2)
-	for slot7 = 1, #slot0._heroId2MODict[slot1].itemUnlock do
-		if slot3[slot7] == slot2 then
+function var_0_0.checkGetRewards(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0._heroId2MODict[arg_31_1].itemUnlock
+
+	for iter_31_0 = 1, #var_31_0 do
+		if var_31_0[iter_31_0] == arg_31_2 then
 			return true
 		end
 	end
@@ -345,67 +394,86 @@ function slot0.checkGetRewards(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.getCurrentSkinConfig(slot0, slot1)
-	if SkinConfig.instance:getSkinCo(slot0:getCurrentSkinId(slot1)) then
-		return slot2
+function var_0_0.getCurrentSkinConfig(arg_32_0, arg_32_1)
+	local var_32_0 = SkinConfig.instance:getSkinCo(arg_32_0:getCurrentSkinId(arg_32_1))
+
+	if var_32_0 then
+		return var_32_0
 	else
-		logError("获取当前角色的皮肤配置失败， heroId : " .. tonumber(slot1))
+		logError("获取当前角色的皮肤配置失败， heroId : " .. tonumber(arg_32_1))
 	end
 end
 
-function slot0.getCurrentSkinId(slot0, slot1)
-	if not slot0._heroId2MODict[slot1].skin then
-		logError("获取当前角色的皮肤Id失败， heroId : " .. tonumber(slot1))
+function var_0_0.getCurrentSkinId(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0._heroId2MODict[arg_33_1].skin
+
+	if not var_33_0 then
+		logError("获取当前角色的皮肤Id失败， heroId : " .. tonumber(arg_33_1))
 	end
 
-	return slot2
+	return var_33_0
 end
 
-function slot0.getHighestLevel(slot0)
-	for slot5, slot6 in pairs(slot0._heroId2MODict) do
-		if 0 < slot6.level then
-			slot1 = slot6.level
+function var_0_0.getHighestLevel(arg_34_0)
+	local var_34_0 = 0
+
+	for iter_34_0, iter_34_1 in pairs(arg_34_0._heroId2MODict) do
+		if var_34_0 < iter_34_1.level then
+			var_34_0 = iter_34_1.level
 		end
 	end
 
-	return slot1
+	return var_34_0
 end
 
-function slot0.takeoffAllTalentCube(slot0, slot1)
-	if not slot0:getByHeroId(slot1) then
-		logError("找不到英雄!!!  id:", slot1)
+function var_0_0.takeoffAllTalentCube(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0:getByHeroId(arg_35_1)
+
+	if not var_35_0 then
+		logError("找不到英雄!!!  id:", arg_35_1)
 
 		return
 	end
 
-	slot2:clearCubeData()
+	var_35_0:clearCubeData()
 end
 
-function slot0.getCurTemplateId(slot0, slot1)
-	return slot0:getByHeroId(slot1) and slot2.useTalentTemplateId or 1
+function var_0_0.getCurTemplateId(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0:getByHeroId(arg_36_1)
+
+	return var_36_0 and var_36_0.useTalentTemplateId or 1
 end
 
-function slot0.isMaxExSkill(slot0, slot1, slot2)
-	if not uv0.instance:getByHeroId(slot1) then
-		return false
+function var_0_0.isMaxExSkill(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = false
+	local var_37_1 = var_0_0.instance:getByHeroId(arg_37_1)
+
+	if not var_37_1 then
+		return var_37_0
 	end
 
-	slot5 = slot4.exSkillLevel
+	local var_37_2 = var_37_1.exSkillLevel
 
-	if slot2 then
-		slot6 = 0
+	if arg_37_2 then
+		local var_37_3 = 0
+		local var_37_4 = var_37_1.config.duplicateItem
 
-		if not string.nilorempty(slot4.config.duplicateItem) and string.split(slot7, "|")[1] then
-			slot10 = string.splitToNumber(slot9, "#")
-			slot6 = ItemModel.instance:getItemQuantity(slot10[1], slot10[2])
+		if not string.nilorempty(var_37_4) then
+			local var_37_5 = string.split(var_37_4, "|")[1]
+
+			if var_37_5 then
+				local var_37_6 = string.splitToNumber(var_37_5, "#")
+
+				var_37_3 = ItemModel.instance:getItemQuantity(var_37_6[1], var_37_6[2])
+			end
 		end
 
-		slot5 = slot5 + slot6
+		var_37_2 = var_37_2 + var_37_3
 	end
 
-	return CharacterEnum.MaxSkillExLevel <= slot5
+	return var_37_2 >= CharacterEnum.MaxSkillExLevel
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

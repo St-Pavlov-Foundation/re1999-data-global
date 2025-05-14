@@ -1,9 +1,9 @@
-module("modules.logic.explore.controller.ExploreMapTriggerController", package.seeall)
+﻿module("modules.logic.explore.controller.ExploreMapTriggerController", package.seeall)
 
-slot0 = class("ExploreMapTriggerController", BaseController)
+local var_0_0 = class("ExploreMapTriggerController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0.triggerHandleDic = {
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.triggerHandleDic = {
 		[ExploreEnum.TriggerEvent.Award] = ExploreTriggerAward,
 		[ExploreEnum.TriggerEvent.Story] = ExploreTriggerStory,
 		[ExploreEnum.TriggerEvent.ChangeCamera] = ExploreTriggerCameraCO,
@@ -19,281 +19,328 @@ function slot0.onInit(slot0)
 		[ExploreEnum.TriggerEvent.BubbleDialogue] = ExploreTriggerBubbleDialogue,
 		[ExploreEnum.TriggerEvent.HeroPlayAnim] = ExploreTriggerHeroPlayAnim
 	}
-	slot0._triggerflowPool = LuaObjPool.New(5, function ()
+	arg_1_0._triggerflowPool = LuaObjPool.New(5, function()
 		return BaseExploreSequence.New()
-	end, function (slot0)
-		slot0:dispose()
-	end, function ()
+	end, function(arg_3_0)
+		arg_3_0:dispose()
+	end, function()
+		return
 	end)
-	slot0._usingTriggerflowDic = {}
-	slot0._triggerHandlePoolDic = {}
+	arg_1_0._usingTriggerflowDic = {}
+	arg_1_0._triggerHandlePoolDic = {}
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_5_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.TryTriggerUnit, slot0._tryTriggerUnit, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.TryCancelTriggerUnit, slot0._tryCancelTriggerUnit, slot0)
+function var_0_0.addConstEvents(arg_6_0)
+	ExploreController.instance:registerCallback(ExploreEvent.TryTriggerUnit, arg_6_0._tryTriggerUnit, arg_6_0)
+	ExploreController.instance:registerCallback(ExploreEvent.TryCancelTriggerUnit, arg_6_0._tryCancelTriggerUnit, arg_6_0)
 end
 
-function slot0.reInit(slot0)
-	slot0._triggerflowPool:dispose()
+function var_0_0.reInit(arg_7_0)
+	arg_7_0._triggerflowPool:dispose()
 end
 
-function slot0.getFlow(slot0, slot1)
-	if slot0._usingTriggerflowDic[slot1] == nil then
-		slot2 = slot0._triggerflowPool:getObject()
+function var_0_0.getFlow(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._usingTriggerflowDic[arg_8_1]
+
+	if var_8_0 == nil then
+		var_8_0 = arg_8_0._triggerflowPool:getObject()
 	end
 
-	slot0._usingTriggerflowDic[slot1] = slot2
+	arg_8_0._usingTriggerflowDic[arg_8_1] = var_8_0
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.releaseFlow(slot0, slot1)
-	slot0._triggerflowPool:putObject(slot0._usingTriggerflowDic[slot1])
+function var_0_0.releaseFlow(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._usingTriggerflowDic[arg_9_1]
 
-	slot0._usingTriggerflowDic[slot1] = nil
+	arg_9_0._triggerflowPool:putObject(var_9_0)
+
+	arg_9_0._usingTriggerflowDic[arg_9_1] = nil
 end
 
-function slot0.getTriggerHandle(slot0, slot1)
-	if slot0.triggerHandleDic[slot1] then
-		if slot0._triggerHandlePoolDic[slot1] == nil then
-			slot0._triggerHandlePoolDic[slot1] = LuaObjPool.New(5, function ()
-				return uv0.triggerHandleDic[uv1].New()
-			end, function (slot0)
-				slot0:clearWork()
-			end, function ()
+function var_0_0.getTriggerHandle(arg_10_0, arg_10_1)
+	if arg_10_0.triggerHandleDic[arg_10_1] then
+		local var_10_0 = arg_10_0._triggerHandlePoolDic[arg_10_1]
+
+		if var_10_0 == nil then
+			var_10_0 = LuaObjPool.New(5, function()
+				return arg_10_0.triggerHandleDic[arg_10_1].New()
+			end, function(arg_12_0)
+				arg_12_0:clearWork()
+			end, function()
+				return
 			end)
+			arg_10_0._triggerHandlePoolDic[arg_10_1] = var_10_0
 		end
 
-		return slot2:getObject()
+		return var_10_0:getObject()
 	end
 end
 
-function slot0.registerMap(slot0, slot1)
-	slot0._map = slot1
+function var_0_0.registerMap(arg_14_0, arg_14_1)
+	arg_14_0._map = arg_14_1
 end
 
-function slot0.unRegisterMap(slot0, slot1)
-	if slot0._map == slot1 then
-		slot0._map = nil
+function var_0_0.unRegisterMap(arg_15_0, arg_15_1)
+	if arg_15_0._map == arg_15_1 then
+		arg_15_0._map = nil
 	end
 end
 
-function slot0.getMap(slot0)
-	return slot0._map
+function var_0_0.getMap(arg_16_0)
+	return arg_16_0._map
 end
 
-function slot0._tryCancelTriggerUnit(slot0, slot1)
-	if not slot0._map:isInitDone() then
+function var_0_0._tryCancelTriggerUnit(arg_17_0, arg_17_1)
+	if not arg_17_0._map:isInitDone() then
 		return
 	end
 
-	if slot0._map:getUnit(slot1) then
-		slot2:cancelTrigger()
+	local var_17_0 = arg_17_0._map:getUnit(arg_17_1)
+
+	if var_17_0 then
+		var_17_0:cancelTrigger()
 	end
 end
 
-function slot0._tryTriggerUnit(slot0, slot1, slot2)
-	if not slot0._map:isInitDone() then
+function var_0_0._tryTriggerUnit(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_0._map:isInitDone() then
 		return
 	end
 
-	if slot0._map:getUnit(slot1) then
-		if not slot2 and ExploreModel.instance:getCarryUnit() and (not isTypeOf(slot3, ExplorePipeEntranceUnit) or slot3.mo:getColor() ~= ExploreEnum.PipeColor.None) then
+	local var_18_0 = arg_18_0._map:getUnit(arg_18_1)
+
+	if var_18_0 then
+		local var_18_1 = ExploreModel.instance:getCarryUnit()
+
+		if not arg_18_2 and var_18_1 and (not isTypeOf(var_18_0, ExplorePipeEntranceUnit) or var_18_0.mo:getColor() ~= ExploreEnum.PipeColor.None) then
 			ToastController.instance:showToast(ExploreConstValue.Toast.ExploreCantTrigger)
 
 			return
 		end
 
-		if slot3.mo.isCanMove and not slot3.mo:isInteractFinishState() then
-			table.insert({}, ExploreInteractOptionMO.New(luaLang("explore_op_move"), slot0._beginMoveUnit, slot0, slot3))
+		local var_18_2 = {}
+
+		if var_18_0.mo.isCanMove and not var_18_0.mo:isInteractFinishState() then
+			table.insert(var_18_2, ExploreInteractOptionMO.New(luaLang("explore_op_move"), arg_18_0._beginMoveUnit, arg_18_0, var_18_0))
 		end
 
-		if not slot3.mo:isInteractEnabled() and slot3:getFixItemId() then
-			table.insert(slot5, ExploreInteractOptionMO.New(luaLang("explore_op_fix"), slot0._beginFixUnit, slot0, slot3))
+		if not var_18_0.mo:isInteractEnabled() and var_18_0:getFixItemId() then
+			table.insert(var_18_2, ExploreInteractOptionMO.New(luaLang("explore_op_fix"), arg_18_0._beginFixUnit, arg_18_0, var_18_0))
 		end
 
-		if slot3:canTrigger() then
-			table.insert(slot5, ExploreInteractOptionMO.New(luaLang("explore_op_interact"), slot0._beginTriggerUnit, slot0, slot3, slot2))
+		if var_18_0:canTrigger() then
+			table.insert(var_18_2, ExploreInteractOptionMO.New(luaLang("explore_op_interact"), arg_18_0._beginTriggerUnit, arg_18_0, var_18_0, arg_18_2))
 		end
 
-		if #slot5 == 1 then
-			slot5[1].optionCallBack(slot5[1].optionCallObj, slot5[1].unit, slot5[1].isClient)
-		elseif slot6 > 1 then
-			ViewMgr.instance:openView(ViewName.ExploreInteractOptionView, slot5)
+		local var_18_3 = #var_18_2
+
+		if var_18_3 == 1 then
+			var_18_2[1].optionCallBack(var_18_2[1].optionCallObj, var_18_2[1].unit, var_18_2[1].isClient)
+		elseif var_18_3 > 1 then
+			ViewMgr.instance:openView(ViewName.ExploreInteractOptionView, var_18_2)
 		end
 	end
 end
 
-function slot0._beginMoveUnit(slot0, slot1)
-	ExploreController.instance:dispatchEvent(ExploreEvent.SetMoveUnit, slot1)
+function var_0_0._beginMoveUnit(arg_19_0, arg_19_1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.SetMoveUnit, arg_19_1)
 end
 
-function slot0._beginFixUnit(slot0, slot1)
-	if not ExploreBackpackModel.instance:getItem(slot1:getFixItemId()) then
+function var_0_0._beginFixUnit(arg_20_0, arg_20_1)
+	local var_20_0 = ExploreBackpackModel.instance:getItem(arg_20_1:getFixItemId())
+
+	if not var_20_0 then
 		ToastController.instance:showToast(ExploreConstValue.Toast.NoItem)
 
 		return
 	end
 
-	slot3 = ExploreController.instance:getMap():getHero()
+	local var_20_1 = ExploreController.instance:getMap():getHero()
 
-	slot3:onCheckDir(slot3.nodePos, slot1.nodePos)
-	slot3:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fix, true, true)
-	slot3.uiComp:addUI(ExploreRoleFixView):setFixUnit(slot1)
-	ExploreRpc.instance:sendExploreUseItemRequest(slot2.id, 0, 0, slot1.id)
+	var_20_1:onCheckDir(var_20_1.nodePos, arg_20_1.nodePos)
+	var_20_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fix, true, true)
+	var_20_1.uiComp:addUI(ExploreRoleFixView):setFixUnit(arg_20_1)
+	ExploreRpc.instance:sendExploreUseItemRequest(var_20_0.id, 0, 0, arg_20_1.id)
 
-	slot5, slot6, slot7, slot8 = ExploreConfig.instance:getUnitEffectConfig(slot1:getResPath(), "fix")
+	local var_20_2, var_20_3, var_20_4, var_20_5 = ExploreConfig.instance:getUnitEffectConfig(arg_20_1:getResPath(), "fix")
 
-	ExploreHelper.triggerAudio(slot7, slot8, slot1.go)
+	ExploreHelper.triggerAudio(var_20_4, var_20_5, arg_20_1.go)
 end
 
-function slot0._beginTriggerUnit(slot0, slot1, slot2)
-	slot4 = slot1:tryTrigger()
+function var_0_0._beginTriggerUnit(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_1:getUnitType()
+	local var_21_1 = arg_21_1:tryTrigger()
 
-	if slot1:getUnitType() ~= ExploreEnum.ItemType.Bonus then
-		slot5 = ExploreController.instance:getMap():getHero()
+	if var_21_0 ~= ExploreEnum.ItemType.Bonus then
+		local var_21_2 = ExploreController.instance:getMap():getHero()
 
-		if not slot2 and ExploreHelper.getDistance(slot5.nodePos, slot1.nodePos) == 1 then
-			slot5:onCheckDir(slot5.nodePos, slot1.nodePos)
+		if not arg_21_2 and ExploreHelper.getDistance(var_21_2.nodePos, arg_21_1.nodePos) == 1 then
+			var_21_2:onCheckDir(var_21_2.nodePos, arg_21_1.nodePos)
 		end
 
-		if slot4 then
-			slot6 = ExploreAnimEnum.RoleAnimStatus.Interact
+		if var_21_1 then
+			local var_21_3 = ExploreAnimEnum.RoleAnimStatus.Interact
 
-			if slot3 == ExploreEnum.ItemType.StoneTable or isTypeOf(slot1, ExploreItemUnit) then
-				slot6 = ExploreAnimEnum.RoleAnimStatus.CreateUnit
+			if var_21_0 == ExploreEnum.ItemType.StoneTable or isTypeOf(arg_21_1, ExploreItemUnit) then
+				var_21_3 = ExploreAnimEnum.RoleAnimStatus.CreateUnit
 			end
 
-			slot5:setHeroStatus(slot6, true, true)
+			var_21_2:setHeroStatus(var_21_3, true, true)
 		end
 	end
 end
 
-function slot0.triggerUnit(slot0, slot1, slot2)
-	if slot0._map:isInitDone() == false then
+function var_0_0.triggerUnit(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_0._map:isInitDone() == false then
 		return
 	end
 
-	slot0:getFlow(slot1.id):buildFlow()
+	local var_22_0 = arg_22_1.id
+	local var_22_1 = arg_22_0:getFlow(var_22_0)
 
-	slot5 = true
+	var_22_1:buildFlow()
 
-	if slot1:getUnitType() == ExploreEnum.ItemType.BonusScene then
-		slot7 = ExploreTriggerBonusScene.New()
+	local var_22_2 = true
+	local var_22_3 = arg_22_1:getUnitType()
 
-		slot7:setParam(nil, slot1, 0, slot2)
-		slot4:addWork(slot7)
+	if var_22_3 == ExploreEnum.ItemType.BonusScene then
+		local var_22_4 = ExploreTriggerBonusScene.New()
+
+		var_22_4:setParam(nil, arg_22_1, 0, arg_22_2)
+		var_22_1:addWork(var_22_4)
 	end
 
-	for slot10, slot11 in ipairs(slot1:getExploreUnitMO().triggerEffects) do
-		if slot0:getTriggerHandle(slot11[1]) then
-			slot13:setParam(slot11[2], slot1, slot10, slot2)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_1:getExploreUnitMO().triggerEffects) do
+		local var_22_5 = iter_22_1[1]
+		local var_22_6 = arg_22_0:getTriggerHandle(var_22_5)
 
-			if slot12 == ExploreEnum.TriggerEvent.Dialogue then
-				if slot5 then
-					slot5 = false
+		if var_22_6 then
+			var_22_6:setParam(iter_22_1[2], arg_22_1, iter_22_0, arg_22_2)
+
+			if var_22_5 == ExploreEnum.TriggerEvent.Dialogue then
+				if var_22_2 then
+					var_22_2 = false
 				else
-					slot13.isNoFirstDialog = true
+					var_22_6.isNoFirstDialog = true
 				end
 			end
 
-			slot4:addWork(slot13)
+			var_22_1:addWork(var_22_6)
 		end
 	end
 
-	if not ExploreEnum.ServerTriggerType[slot6] and slot1.mo.triggerByClick or slot1:getUnitType() == ExploreEnum.ItemType.Reset then
-		slot7 = ExploreTriggerNormal.New()
+	if not ExploreEnum.ServerTriggerType[var_22_3] and arg_22_1.mo.triggerByClick or arg_22_1:getUnitType() == ExploreEnum.ItemType.Reset then
+		local var_22_7 = ExploreTriggerNormal.New()
 
-		slot7:setParam(nil, slot1, 0, slot2)
-		slot4:addWork(slot7)
+		var_22_7:setParam(nil, arg_22_1, 0, arg_22_2)
+		var_22_1:addWork(var_22_7)
 	end
 
-	slot4:start(function (slot0)
-		if slot0 then
-			uv0:triggerDone(uv1)
+	var_22_1:start(function(arg_23_0)
+		if arg_23_0 then
+			arg_22_0:triggerDone(var_22_0)
 		end
 	end)
 end
 
-function slot0.triggerDone(slot0, slot1)
-	slot0:releaseFlow(slot1)
-	slot0:doDoneTrigger(slot1)
+function var_0_0.triggerDone(arg_24_0, arg_24_1)
+	arg_24_0:releaseFlow(arg_24_1)
+	arg_24_0:doDoneTrigger(arg_24_1)
 end
 
-function slot0.setDonePerformance(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1:getExploreUnitMO().doneEffects) do
-		if slot0:getTriggerHandle(slot6[1]) then
-			slot7:setParam(slot6[2], slot1)
-			slot7:onStart()
+function var_0_0.setDonePerformance(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in ipairs(arg_25_1:getExploreUnitMO().doneEffects) do
+		local var_25_0 = arg_25_0:getTriggerHandle(iter_25_1[1])
+
+		if var_25_0 then
+			var_25_0:setParam(iter_25_1[2], arg_25_1)
+			var_25_0:onStart()
 		else
-			logError("Explore triggerHandle not find:", slot1.id, slot6[1])
+			logError("Explore triggerHandle not find:", arg_25_1.id, iter_25_1[1])
 		end
 	end
 end
 
-function slot0.doDoneTrigger(slot0, slot1)
-	if not slot0._map then
+function var_0_0.doDoneTrigger(arg_26_0, arg_26_1)
+	if not arg_26_0._map then
 		return
 	end
 
-	if not slot0._map:getUnit(slot1, true) then
+	local var_26_0 = arg_26_0._map:getUnit(arg_26_1, true)
+
+	if not var_26_0 then
 		return
 	end
 
-	slot2:getExploreUnitMO().hasInteract = true
+	var_26_0:getExploreUnitMO().hasInteract = true
 
-	slot0:getFlow(slot1):buildFlow()
+	local var_26_1 = arg_26_0:getFlow(arg_26_1)
 
-	for slot7, slot8 in ipairs(slot2:getExploreUnitMO().doneEffects) do
-		if slot0:getTriggerHandle(slot8[1]) then
-			slot9:setParam(slot8[2], slot2)
-			slot3:addWork(slot9)
+	var_26_1:buildFlow()
+
+	for iter_26_0, iter_26_1 in ipairs(var_26_0:getExploreUnitMO().doneEffects) do
+		local var_26_2 = arg_26_0:getTriggerHandle(iter_26_1[1])
+
+		if var_26_2 then
+			var_26_2:setParam(iter_26_1[2], var_26_0)
+			var_26_1:addWork(var_26_2)
 		end
 	end
 
-	slot3:start(function ()
-		uv0:onTriggerDone()
-		uv1:releaseFlow(uv2)
+	var_26_1:start(function()
+		var_26_0:onTriggerDone()
+		arg_26_0:releaseFlow(arg_26_1)
 	end)
 end
 
-function slot0.triggerEvent(slot0, slot1, slot2)
-	if slot0:getTriggerHandle(slot1) then
-		slot3:handle(slot2)
+function var_0_0.triggerEvent(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = arg_28_0:getTriggerHandle(arg_28_1)
+
+	if var_28_0 then
+		var_28_0:handle(arg_28_2)
 	end
 end
 
-function slot0.cancelTriggerEvent(slot0, slot1, slot2, slot3)
-	if slot0:getTriggerHandle(slot1) then
-		slot4:setParam(slot2, slot3)
-		slot4:cancel(slot2)
+function var_0_0.cancelTriggerEvent(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	local var_29_0 = arg_29_0:getTriggerHandle(arg_29_1)
+
+	if var_29_0 then
+		var_29_0:setParam(arg_29_2, arg_29_3)
+		var_29_0:cancel(arg_29_2)
 	end
 end
 
-function slot0.cancelTrigger(slot0, slot1, slot2)
-	if slot0._map:isInitDone() == false then
+function var_0_0.cancelTrigger(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_0._map:isInitDone() == false then
 		return
 	end
 
-	slot0:getFlow(slot1.id):buildFlow()
+	local var_30_0 = arg_30_1.id
+	local var_30_1 = arg_30_0:getFlow(var_30_0)
 
-	for slot8, slot9 in ipairs(slot1:getExploreUnitMO().triggerEffects) do
-		if slot0:getTriggerHandle(slot9[1]) then
-			slot10:setParam(slot9[2], slot1, slot8, slot2, true)
-			slot4:addWork(slot10)
+	var_30_1:buildFlow()
+
+	for iter_30_0, iter_30_1 in ipairs(arg_30_1:getExploreUnitMO().triggerEffects) do
+		local var_30_2 = arg_30_0:getTriggerHandle(iter_30_1[1])
+
+		if var_30_2 then
+			var_30_2:setParam(iter_30_1[2], arg_30_1, iter_30_0, arg_30_2, true)
+			var_30_1:addWork(var_30_2)
 		end
 	end
 
-	slot4:start(function (slot0)
-		uv0:releaseFlow(uv1)
-		uv2:onTriggerDone()
+	var_30_1:start(function(arg_31_0)
+		arg_30_0:releaseFlow(var_30_0)
+		arg_30_1:onTriggerDone()
 	end)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

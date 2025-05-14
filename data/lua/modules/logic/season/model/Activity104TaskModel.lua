@@ -1,36 +1,41 @@
-module("modules.logic.season.model.Activity104TaskModel", package.seeall)
+﻿module("modules.logic.season.model.Activity104TaskModel", package.seeall)
 
-slot0 = class("Activity104TaskModel", BaseModel)
+local var_0_0 = class("Activity104TaskModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getTaskSeasonList(slot0)
-	slot1 = {}
+function var_0_0.getTaskSeasonList(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season)
 
-	for slot6, slot7 in pairs(TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season)) do
-		if slot7.config then
-			table.insert(slot1, slot7)
+	for iter_3_0, iter_3_1 in pairs(var_3_1) do
+		if iter_3_1.config then
+			table.insert(var_3_0, iter_3_1)
 		end
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		if (slot0.config.maxFinishCount <= slot0.finishCount and 3 or slot0.hasFinished and 1 or 2) ~= (slot1.config.maxFinishCount <= slot1.finishCount and 3 or slot1.hasFinished and 1 or 2) then
-			return slot2 < slot3
-		elseif slot0.config.sortId ~= slot1.config.sortId then
-			return slot0.config.sortId < slot1.config.sortId
+	table.sort(var_3_0, function(arg_4_0, arg_4_1)
+		local var_4_0 = arg_4_0.finishCount >= arg_4_0.config.maxFinishCount and 3 or arg_4_0.hasFinished and 1 or 2
+		local var_4_1 = arg_4_1.finishCount >= arg_4_1.config.maxFinishCount and 3 or arg_4_1.hasFinished and 1 or 2
+
+		if var_4_0 ~= var_4_1 then
+			return var_4_0 < var_4_1
+		elseif arg_4_0.config.sortId ~= arg_4_1.config.sortId then
+			return arg_4_0.config.sortId < arg_4_1.config.sortId
 		else
-			return slot0.config.id < slot1.config.id
+			return arg_4_0.config.id < arg_4_1.config.id
 		end
 	end)
 
-	return slot1
+	return var_3_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,8 +1,9 @@
-module("modules.versionactivitybase.dungeon.define.VersionActivityDungeonEvent", package.seeall)
+﻿module("modules.versionactivitybase.dungeon.define.VersionActivityDungeonEvent", package.seeall)
 
-slot0 = _M
-slot0.OnModeChange = 1
-slot0.OnHardUnlockAnimDone = 2
-slot0.OnActivityDungeonMoChange = 3
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnModeChange = 1
+var_0_0.OnHardUnlockAnimDone = 2
+var_0_0.OnActivityDungeonMoChange = 3
+
+return var_0_0

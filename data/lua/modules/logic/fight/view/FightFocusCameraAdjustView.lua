@@ -1,190 +1,207 @@
-module("modules.logic.fight.view.FightFocusCameraAdjustView", package.seeall)
+﻿module("modules.logic.fight.view.FightFocusCameraAdjustView", package.seeall)
 
-slot0 = class("FightFocusCameraAdjustView", BaseView)
+local var_0_0 = class("FightFocusCameraAdjustView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnblock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_block")
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
-	slot0._gooffset = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset")
-	slot0._gooffset1 = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset/offsets/#go_offset1")
-	slot0._gooffset2 = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset/offsets/#go_offset2")
-	slot0._gooffset3 = gohelper.findChild(slot0.viewGO, "#go_container/component/#go_offset/offsets/#go_offset3")
-	slot0._btnsaveOffset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_offset/#btn_saveOffset")
-	slot0._btnresetOffset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_offset/#btn_resetOffset")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/component/#go_offset/#btn_close")
-	slot0._txtskinId = gohelper.findChildText(slot0.viewGO, "#go_container/component/label/#txt_skinId")
-	slot0._txtoffset = gohelper.findChildText(slot0.viewGO, "#go_container/component/label/#txt_offset")
-	slot0._gomiddlecontainer = gohelper.findChild(slot0.viewGO, "#go_middlecontainer")
-	slot0._gomiddle = gohelper.findChild(slot0.viewGO, "#go_middlecontainer/#go_middle")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnblock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_block")
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+	arg_1_0._gooffset = gohelper.findChild(arg_1_0.viewGO, "#go_container/component/#go_offset")
+	arg_1_0._gooffset1 = gohelper.findChild(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/#go_offset1")
+	arg_1_0._gooffset2 = gohelper.findChild(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/#go_offset2")
+	arg_1_0._gooffset3 = gohelper.findChild(arg_1_0.viewGO, "#go_container/component/#go_offset/offsets/#go_offset3")
+	arg_1_0._btnsaveOffset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#go_offset/#btn_saveOffset")
+	arg_1_0._btnresetOffset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#go_offset/#btn_resetOffset")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/component/#go_offset/#btn_close")
+	arg_1_0._txtskinId = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/label/#txt_skinId")
+	arg_1_0._txtoffset = gohelper.findChildText(arg_1_0.viewGO, "#go_container/component/label/#txt_offset")
+	arg_1_0._gomiddlecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_middlecontainer")
+	arg_1_0._gomiddle = gohelper.findChild(arg_1_0.viewGO, "#go_middlecontainer/#go_middle")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnblock:AddClickListener(slot0._btnblockOnClick, slot0)
-	slot0._btnsaveOffset:AddClickListener(slot0._btnsaveOffsetOnClick, slot0)
-	slot0._btnresetOffset:AddClickListener(slot0._btnresetOffsetOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnblock:AddClickListener(arg_2_0._btnblockOnClick, arg_2_0)
+	arg_2_0._btnsaveOffset:AddClickListener(arg_2_0._btnsaveOffsetOnClick, arg_2_0)
+	arg_2_0._btnresetOffset:AddClickListener(arg_2_0._btnresetOffsetOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnblock:RemoveClickListener()
-	slot0._btnsaveOffset:RemoveClickListener()
-	slot0._btnresetOffset:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnblock:RemoveClickListener()
+	arg_3_0._btnsaveOffset:RemoveClickListener()
+	arg_3_0._btnresetOffset:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-slot0.SliderMaxValue = 50
-slot0.SliderMinValue = -50
-slot0.OffsetKey = {
+var_0_0.SliderMaxValue = 50
+var_0_0.SliderMinValue = -50
+var_0_0.OffsetKey = {
 	Z = "z",
 	X = "x",
 	Y = "y"
 }
 
-function slot0._btnblockOnClick(slot0)
+function var_0_0._btnblockOnClick(arg_4_0)
+	return
 end
 
-function slot0._btnsaveOffsetOnClick(slot0)
+function var_0_0._btnsaveOffsetOnClick(arg_5_0)
+	return
 end
 
-function slot0._btnresetOffsetOnClick(slot0)
-	for slot4, slot5 in pairs(slot0.sliderDict) do
-		slot5.slider:SetValue(0)
+function var_0_0._btnresetOffsetOnClick(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.sliderDict) do
+		iter_6_1.slider:SetValue(0)
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._onSliderValueChanged(slot0)
-	if not slot0.initDone then
+function var_0_0._onSliderValueChanged(arg_8_0)
+	if not arg_8_0.initDone then
 		return
 	end
 
-	slot1 = slot0.sliderDict[uv0.OffsetKey.X].slider:GetValue()
-	slot2 = slot0.sliderDict[uv0.OffsetKey.Y].slider:GetValue()
-	slot3 = slot0.sliderDict[uv0.OffsetKey.Z].slider:GetValue()
-	slot0.sliderDict[uv0.OffsetKey.X].text.text = slot1
-	slot0.sliderDict[uv0.OffsetKey.Y].text.text = slot2
-	slot0.sliderDict[uv0.OffsetKey.Z].text.text = slot3
+	local var_8_0 = arg_8_0.sliderDict[var_0_0.OffsetKey.X].slider:GetValue()
+	local var_8_1 = arg_8_0.sliderDict[var_0_0.OffsetKey.Y].slider:GetValue()
+	local var_8_2 = arg_8_0.sliderDict[var_0_0.OffsetKey.Z].slider:GetValue()
 
-	FightWorkFocusMonster.changeCameraPosition(slot1, slot2, slot3, slot0.updateEntityMiddlePosition, slot0)
-	slot0:refreshOffsetLabel(slot1, slot2, slot3)
+	arg_8_0.sliderDict[var_0_0.OffsetKey.X].text.text = var_8_0
+	arg_8_0.sliderDict[var_0_0.OffsetKey.Y].text.text = var_8_1
+	arg_8_0.sliderDict[var_0_0.OffsetKey.Z].text.text = var_8_2
+
+	FightWorkFocusMonster.changeCameraPosition(var_8_0, var_8_1, var_8_2, arg_8_0.updateEntityMiddlePosition, arg_8_0)
+	arg_8_0:refreshOffsetLabel(var_8_0, var_8_1, var_8_2)
 end
 
-function slot0.addBtnClick(slot0, slot1)
-	slot1.slider:SetValue(slot1.slider:GetValue() + tonumber(slot1.intervalField:GetText()))
+function var_0_0.addBtnClick(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1.slider:GetValue() + tonumber(arg_9_1.intervalField:GetText())
+
+	arg_9_1.slider:SetValue(var_9_0)
 end
 
-function slot0.reduceBtnClick(slot0, slot1)
-	slot1.slider:SetValue(slot1.slider:GetValue() - tonumber(slot1.intervalField:GetText()))
+function var_0_0.reduceBtnClick(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1.slider:GetValue() - tonumber(arg_10_1.intervalField:GetText())
+
+	arg_10_1.slider:SetValue(var_10_0)
 end
 
-function slot0._initSlider(slot0, slot1, slot2)
-	slot3 = gohelper.findChildSlider(slot1, "slider_offset")
-	slot3.slider.maxValue = uv0.SliderMaxValue
-	slot3.slider.minValue = uv0.SliderMinValue
+function var_0_0._initSlider(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = gohelper.findChildSlider(arg_11_1, "slider_offset")
 
-	slot3:AddOnValueChanged(slot0._onSliderValueChanged, slot0)
-	slot3:SetValue(0)
+	var_11_0.slider.maxValue = var_0_0.SliderMaxValue
+	var_11_0.slider.minValue = var_0_0.SliderMinValue
 
-	slot4 = gohelper.findChildText(slot1, "txt_offset")
-	slot5 = gohelper.findChildButtonWithAudio(slot1, "AddBtn")
-	slot6 = gohelper.findChildButtonWithAudio(slot1, "ReduceBtn")
-	slot7 = gohelper.findChildTextMeshInputField(slot1, "IntervalField")
-	slot8 = slot0:getUserDataTb_()
-	slot8.slider = slot3
-	slot8.text = slot4
-	slot8.addBtn = slot5
-	slot8.reduceBtn = slot6
-	slot8.intervalField = slot7
+	var_11_0:AddOnValueChanged(arg_11_0._onSliderValueChanged, arg_11_0)
+	var_11_0:SetValue(0)
 
-	slot5:AddClickListener(slot0.addBtnClick, slot0, slot8)
-	slot6:AddClickListener(slot0.reduceBtnClick, slot0, slot8)
-	slot7:SetText(1)
+	local var_11_1 = gohelper.findChildText(arg_11_1, "txt_offset")
+	local var_11_2 = gohelper.findChildButtonWithAudio(arg_11_1, "AddBtn")
+	local var_11_3 = gohelper.findChildButtonWithAudio(arg_11_1, "ReduceBtn")
+	local var_11_4 = gohelper.findChildTextMeshInputField(arg_11_1, "IntervalField")
+	local var_11_5 = arg_11_0:getUserDataTb_()
 
-	slot4.text = 0
-	slot0.sliderDict[slot2] = slot8
+	var_11_5.slider = var_11_0
+	var_11_5.text = var_11_1
+	var_11_5.addBtn = var_11_2
+	var_11_5.reduceBtn = var_11_3
+	var_11_5.intervalField = var_11_4
+
+	var_11_2:AddClickListener(arg_11_0.addBtnClick, arg_11_0, var_11_5)
+	var_11_3:AddClickListener(arg_11_0.reduceBtnClick, arg_11_0, var_11_5)
+	var_11_4:SetText(1)
+
+	var_11_1.text = 0
+	arg_11_0.sliderDict[arg_11_2] = var_11_5
 end
 
-function slot0._editableInitView(slot0)
-	slot0.initDone = false
-	slot0.sliderDict = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_12_0)
+	arg_12_0.initDone = false
+	arg_12_0.sliderDict = arg_12_0:getUserDataTb_()
 
-	slot0:_initSlider(slot0._gooffset1, uv0.OffsetKey.X)
-	slot0:_initSlider(slot0._gooffset2, uv0.OffsetKey.Y)
-	slot0:_initSlider(slot0._gooffset3, uv0.OffsetKey.Z)
+	arg_12_0:_initSlider(arg_12_0._gooffset1, var_0_0.OffsetKey.X)
+	arg_12_0:_initSlider(arg_12_0._gooffset2, var_0_0.OffsetKey.Y)
+	arg_12_0:_initSlider(arg_12_0._gooffset3, var_0_0.OffsetKey.Z)
 
-	slot0.unitCamera = CameraMgr.instance:getUnitCamera()
-	slot0.initDone = true
+	arg_12_0.unitCamera = CameraMgr.instance:getUnitCamera()
+	arg_12_0.initDone = true
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_13_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:initEntity()
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:initEntity()
 
-	slot0._txtskinId.text = "皮肤ID : " .. slot0:getFocusSkinId()
+	arg_14_0._txtskinId.text = "皮肤ID : " .. arg_14_0:getFocusSkinId()
 
-	slot0:refreshOffsetLabel(0, 0, 0)
-	FightWorkFocusMonster.changeCameraPosition(0, 0, 0, slot0.updateEntityMiddlePosition, slot0)
+	arg_14_0:refreshOffsetLabel(0, 0, 0)
+	FightWorkFocusMonster.changeCameraPosition(0, 0, 0, arg_14_0.updateEntityMiddlePosition, arg_14_0)
 end
 
-function slot0.getFocusSkinId(slot0)
-	return slot0.entity and slot0.entity:getMO().skin or ""
+function var_0_0.getFocusSkinId(arg_15_0)
+	return arg_15_0.entity and arg_15_0.entity:getMO().skin or ""
 end
 
-function slot0.initEntity(slot0)
-	if not ViewMgr.instance:getContainer(ViewName.FightSkillSelectView) then
-		slot0.entity = nil
+function var_0_0.initEntity(arg_16_0)
+	local var_16_0 = ViewMgr.instance:getContainer(ViewName.FightSkillSelectView)
+
+	if not var_16_0 then
+		arg_16_0.entity = nil
 
 		return
 	end
 
-	if not slot1._views[1]:getCurrentFocusEntityId() then
-		slot0.entity = nil
+	local var_16_1 = var_16_0._views[1]:getCurrentFocusEntityId()
+
+	if not var_16_1 then
+		arg_16_0.entity = nil
 
 		return
 	end
 
-	if not FightHelper.getEntity(slot2) then
-		slot0.entity = nil
+	local var_16_2 = FightHelper.getEntity(var_16_1)
+
+	if not var_16_2 then
+		arg_16_0.entity = nil
 
 		return
 	end
 
-	slot0.entity = slot3
-	slot0.mountMiddleGo = slot0.entity:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle)
+	arg_16_0.entity = var_16_2
+	arg_16_0.mountMiddleGo = arg_16_0.entity:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle)
 end
 
-function slot0.refreshOffsetLabel(slot0, slot1, slot2, slot3)
-	slot0._txtoffset.text = string.format("X : <color=red>%.4f</color>;    Y : <color=red>%.4f</color>;    Z : <color=red>%.4f</color>", slot1, slot2, slot3)
+function var_0_0.refreshOffsetLabel(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_0._txtoffset.text = string.format("X : <color=red>%.4f</color>;    Y : <color=red>%.4f</color>;    Z : <color=red>%.4f</color>", arg_17_1, arg_17_2, arg_17_3)
 end
 
-function slot0.updateEntityMiddlePosition(slot0)
-	if not slot0.mountMiddleGo then
+function var_0_0.updateEntityMiddlePosition(arg_18_0)
+	if not arg_18_0.mountMiddleGo then
 		return
 	end
 
-	slot1 = recthelper.worldPosToAnchorPos(slot0.mountMiddleGo.transform.position, slot0._gomiddlecontainer.transform, nil, slot0.unitCamera)
+	local var_18_0 = recthelper.worldPosToAnchorPos(arg_18_0.mountMiddleGo.transform.position, arg_18_0._gomiddlecontainer.transform, nil, arg_18_0.unitCamera)
 
-	recthelper.setAnchor(slot0._gomiddle.transform, slot1.x, slot1.y)
+	recthelper.setAnchor(arg_18_0._gomiddle.transform, var_18_0.x, var_18_0.y)
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in pairs(slot0.sliderDict) do
-		slot5.slider:RemoveOnValueChanged()
-		slot5.addBtn:RemoveClickListener()
-		slot5.reduceBtn:RemoveClickListener()
+function var_0_0.onClose(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0.sliderDict) do
+		iter_19_1.slider:RemoveOnValueChanged()
+		iter_19_1.addBtn:RemoveClickListener()
+		iter_19_1.reduceBtn:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

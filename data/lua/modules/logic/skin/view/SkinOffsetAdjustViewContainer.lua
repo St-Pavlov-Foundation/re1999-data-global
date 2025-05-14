@@ -1,29 +1,31 @@
-module("modules.logic.skin.view.SkinOffsetAdjustViewContainer", package.seeall)
+﻿module("modules.logic.skin.view.SkinOffsetAdjustViewContainer", package.seeall)
 
-slot0 = class("SkinOffsetAdjustViewContainer", BaseViewContainer)
+local var_0_0 = class("SkinOffsetAdjustViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.skinOffsetAdjustView = SkinOffsetAdjustView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.skinOffsetAdjustView)
+	arg_1_0.skinOffsetAdjustView = SkinOffsetAdjustView.New()
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_container/component/#go_skincontainer/#scroll_skin"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = SkinOffsetSkinItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 512
-	slot2.cellHeight = 40
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 2
-	slot2.startSpace = 8
+	table.insert(var_1_0, arg_1_0.skinOffsetAdjustView)
 
-	table.insert(slot1, LuaListScrollView.New(SkinOffsetSkinListModel.instance, slot2))
+	local var_1_1 = ListScrollParam.New()
 
-	return slot1
+	var_1_1.scrollGOPath = "#go_container/component/#go_skincontainer/#scroll_skin"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = SkinOffsetSkinItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 512
+	var_1_1.cellHeight = 40
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 2
+	var_1_1.startSpace = 8
+
+	table.insert(var_1_0, LuaListScrollView.New(SkinOffsetSkinListModel.instance, var_1_1))
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

@@ -1,23 +1,28 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionWaitSeconds", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionWaitSeconds", package.seeall)
 
-slot0 = class("WaitGuideActionWaitSeconds", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionWaitSeconds", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	logNormal(string.format("<color=#EA00B3>start guide_%d_%d WaitGuideActionWaitSeconds second:%s</color>", slot0.guideId, slot0.stepId, slot0.actionParam))
-	GuideBlockMgr.instance:startBlock((tonumber(slot0.actionParam) or 0) + GuideBlockMgr.BlockTime)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	logNormal(string.format("<color=#EA00B3>start guide_%d_%d WaitGuideActionWaitSeconds second:%s</color>", arg_1_0.guideId, arg_1_0.stepId, arg_1_0.actionParam))
 
-	slot0.context = slot1
-	slot0.status = WorkStatus.Running
+	local var_1_0 = tonumber(arg_1_0.actionParam)
 
-	TaskDispatcher.runDelay(slot0._onTimeEnd, slot0, slot2 or 0.01)
+	GuideBlockMgr.instance:startBlock((var_1_0 or 0) + GuideBlockMgr.BlockTime)
+
+	arg_1_0.context = arg_1_1
+	arg_1_0.status = WorkStatus.Running
+
+	local var_1_1 = var_1_0 or 0.01
+
+	TaskDispatcher.runDelay(arg_1_0._onTimeEnd, arg_1_0, var_1_1)
 end
 
-function slot0._onTimeEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onTimeEnd(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._onTimeEnd, slot0)
+function var_0_0.clearWork(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._onTimeEnd, arg_3_0)
 end
 
-return slot0
+return var_0_0

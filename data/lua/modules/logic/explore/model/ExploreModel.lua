@@ -1,197 +1,209 @@
-module("modules.logic.explore.model.ExploreModel", package.seeall)
+﻿module("modules.logic.explore.model.ExploreModel", package.seeall)
 
-slot0 = class("ExploreModel", BaseModel)
+local var_0_0 = class("ExploreModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 
-	slot0.isFirstEnterMap = ExploreEnum.EnterMode.Normal
-	slot0.isJumpToExplore = false
+	arg_2_0.isFirstEnterMap = ExploreEnum.EnterMode.Normal
+	arg_2_0.isJumpToExplore = false
 end
 
-function slot0.clearData(slot0)
-	slot0._heroControlDict = {}
-	slot0._stepPause = false
-	slot0.isReseting = false
-	slot0._useItemUid = 0
-	slot0.isRoleInitDone = false
-	slot0.isShowingResetBoxMessage = false
-	slot0.mapId = 0
-	slot0.challengeCount = 0
-	slot0.unLockAreaIds = {}
-	slot0._interactInfosDic = {}
+function var_0_0.clearData(arg_3_0)
+	arg_3_0._heroControlDict = {}
+	arg_3_0._stepPause = false
+	arg_3_0.isReseting = false
+	arg_3_0._useItemUid = 0
+	arg_3_0.isRoleInitDone = false
+	arg_3_0.isShowingResetBoxMessage = false
+	arg_3_0.mapId = 0
+	arg_3_0.challengeCount = 0
+	arg_3_0.unLockAreaIds = {}
+	arg_3_0._interactInfosDic = {}
 
 	ExploreCounterModel.instance:reInit()
 end
 
-function slot0.isHeroInControl(slot0, slot1)
-	if slot1 then
-		return not slot0._heroControlDict[slot1]
+function var_0_0.isHeroInControl(arg_4_0, arg_4_1)
+	if arg_4_1 then
+		return not arg_4_0._heroControlDict[arg_4_1]
 	end
 
-	return not next(slot0._heroControlDict)
+	return not next(arg_4_0._heroControlDict)
 end
 
-function slot0.setHeroControl(slot0, slot1, slot2)
-	if slot1 then
-		if (slot2 or ExploreEnum.HeroLock.All) == ExploreEnum.HeroLock.All then
-			slot0._heroControlDict = {}
+function var_0_0.setHeroControl(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_2 = arg_5_2 or ExploreEnum.HeroLock.All
+
+	if arg_5_1 then
+		if arg_5_2 == ExploreEnum.HeroLock.All then
+			arg_5_0._heroControlDict = {}
 		else
-			slot0._heroControlDict[slot2] = nil
+			arg_5_0._heroControlDict[arg_5_2] = nil
 		end
 	else
-		slot0._heroControlDict[slot2] = true
+		arg_5_0._heroControlDict[arg_5_2] = true
 
-		if slot0.isShowingResetBoxMessage then
-			slot0.isShowingResetBoxMessage = false
+		if arg_5_0.isShowingResetBoxMessage then
+			arg_5_0.isShowingResetBoxMessage = false
 
 			ViewMgr.instance:closeView(ViewName.MessageBoxView)
 		end
 	end
 end
 
-function slot0.setStepPause(slot0, slot1)
-	if slot0._stepPause == slot1 then
+function var_0_0.setStepPause(arg_6_0, arg_6_1)
+	if arg_6_0._stepPause == arg_6_1 then
 		return
 	end
 
-	slot0._stepPause = slot1
+	arg_6_0._stepPause = arg_6_1
 
-	if not slot1 then
+	if not arg_6_1 then
 		ExploreStepController.instance:startStep()
 	end
 end
 
-function slot0.getStepPause(slot0)
-	return slot0._stepPause
+function var_0_0.getStepPause(arg_7_0)
+	return arg_7_0._stepPause
 end
 
-function slot0.getMapId(slot0)
-	return slot0.mapId
+function var_0_0.getMapId(arg_8_0)
+	return arg_8_0.mapId
 end
 
-function slot0.getNowMapEpisodeId(slot0)
-	return ExploreConfig.instance:getEpisodeId(slot0.mapId)
+function var_0_0.getNowMapEpisodeId(arg_9_0)
+	return ExploreConfig.instance:getEpisodeId(arg_9_0.mapId)
 end
 
-function slot0.addChallengeCount(slot0)
-	slot0.challengeCount = slot0.challengeCount + 1
+function var_0_0.addChallengeCount(arg_10_0)
+	arg_10_0.challengeCount = arg_10_0.challengeCount + 1
 end
 
-function slot0.getChallengeCount(slot0)
-	return slot0.challengeCount
+function var_0_0.getChallengeCount(arg_11_0)
+	return arg_11_0.challengeCount
 end
 
-function slot0.updateExploreInfo(slot0, slot1)
-	slot0:clearData()
+function var_0_0.updateExploreInfo(arg_12_0, arg_12_1)
+	arg_12_0:clearData()
 
-	slot2 = slot1.exploreMap
-	slot0.mapId = slot2.mapId
-	slot0.challengeCount = slot2.challengeCount
+	local var_12_0 = arg_12_1.exploreMap
 
-	for slot6, slot7 in ipairs(slot2.interacts) do
-		slot0:updateInteractInfo(slot7, slot2.mapId)
+	arg_12_0.mapId = var_12_0.mapId
+	arg_12_0.challengeCount = var_12_0.challengeCount
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_0.interacts) do
+		arg_12_0:updateInteractInfo(iter_12_1, var_12_0.mapId)
 	end
 
-	for slot6, slot7 in ipairs(slot2.areaIds) do
-		slot0.unLockAreaIds[slot7] = true
+	for iter_12_2, iter_12_3 in ipairs(var_12_0.areaIds) do
+		arg_12_0.unLockAreaIds[iter_12_3] = true
 	end
 
-	ExploreBackpackModel.instance:updateItems(slot1.exploreItems, true)
-	ExploreMapModel.instance:updatHeroPos(slot2.posx, slot2.posy, slot2.dir)
+	ExploreBackpackModel.instance:updateItems(arg_12_1.exploreItems, true)
+	ExploreMapModel.instance:updatHeroPos(var_12_0.posx, var_12_0.posy, var_12_0.dir)
 
-	ExploreMapModel.instance.moveNodes = slot2.moveNodes
+	ExploreMapModel.instance.moveNodes = var_12_0.moveNodes
 
-	slot0:setUseItemUid(slot1.useItemUid)
+	arg_12_0:setUseItemUid(arg_12_1.useItemUid)
 	ExploreController.instance:dispatchEvent(ExploreEvent.UnitInteractInfoChange)
 end
 
-function slot0.updateInteractInfo(slot0, slot1, slot2, slot3)
-	slot0:getInteractInfo(slot1.id, slot2 or slot0.mapId):initNO(slot1)
+function var_0_0.updateInteractInfo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_2 = arg_13_2 or arg_13_0.mapId
 
-	if slot3 then
+	arg_13_0:getInteractInfo(arg_13_1.id, arg_13_2):initNO(arg_13_1)
+
+	if arg_13_3 then
 		ExploreController.instance:dispatchEvent(ExploreEvent.UnitInteractInfoChange)
 	end
 end
 
-function slot0.updateInteractStatus(slot0, slot1, slot2, slot3)
-	slot0:getInteractInfo(slot2, slot1):updateStatus(slot3)
+function var_0_0.updateInteractStatus(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	arg_14_0:getInteractInfo(arg_14_2, arg_14_1):updateStatus(arg_14_3)
 end
 
-function slot0.updateInteractStatus2(slot0, slot1, slot2, slot3)
-	slot0:getInteractInfo(slot2, slot1):updateStatus2(slot3)
+function var_0_0.updateInteractStatus2(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_0:getInteractInfo(arg_15_2, arg_15_1):updateStatus2(arg_15_3)
 end
 
-function slot0.updateInteractStep(slot0, slot1)
-	slot0:getInteractInfo(slot1.id, slot1.mapId).step = slot1.step
+function var_0_0.updateInteractStep(arg_16_0, arg_16_1)
+	arg_16_0:getInteractInfo(arg_16_1.id, arg_16_1.mapId).step = arg_16_1.step
 end
 
-function slot0.getInteractInfo(slot0, slot1, slot2)
-	slot2 = slot2 or slot0.mapId
-	slot0._interactInfosDic[slot2] = slot0._interactInfosDic[slot2] or {}
+function var_0_0.getInteractInfo(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_2 = arg_17_2 or arg_17_0.mapId
+	arg_17_0._interactInfosDic[arg_17_2] = arg_17_0._interactInfosDic[arg_17_2] or {}
 
-	if slot0._interactInfosDic[slot2][slot1] == nil then
-		slot3 = ExploreInteractInfoMO.New()
+	if arg_17_0._interactInfosDic[arg_17_2][arg_17_1] == nil then
+		local var_17_0 = ExploreInteractInfoMO.New()
 
-		slot3:init(slot1)
+		var_17_0:init(arg_17_1)
 
-		slot0._interactInfosDic[slot2][slot1] = slot3
+		arg_17_0._interactInfosDic[arg_17_2][arg_17_1] = var_17_0
 	end
 
-	return slot0._interactInfosDic[slot2][slot1]
+	return arg_17_0._interactInfosDic[arg_17_2][arg_17_1]
 end
 
-function slot0.hasInteractInfo(slot0, slot1, slot2)
-	slot2 = slot2 or slot0.mapId
-	slot0._interactInfosDic[slot2] = slot0._interactInfosDic[slot2] or {}
+function var_0_0.hasInteractInfo(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_2 = arg_18_2 or arg_18_0.mapId
+	arg_18_0._interactInfosDic[arg_18_2] = arg_18_0._interactInfosDic[arg_18_2] or {}
 
-	return slot0._interactInfosDic[slot2][slot1] ~= nil
+	return arg_18_0._interactInfosDic[arg_18_2][arg_18_1] ~= nil
 end
 
-function slot0.getAllInteractInfo(slot0, slot1)
-	return slot0._interactInfosDic[slot1 or slot0.mapId]
+function var_0_0.getAllInteractInfo(arg_19_0, arg_19_1)
+	arg_19_1 = arg_19_1 or arg_19_0.mapId
+
+	return arg_19_0._interactInfosDic[arg_19_1]
 end
 
-function slot0.getUseItemUid(slot0)
-	return slot0._useItemUid
+function var_0_0.getUseItemUid(arg_20_0)
+	return arg_20_0._useItemUid
 end
 
-function slot0.setUseItemUid(slot0, slot1, slot2)
-	slot0._useItemUid = slot1
+function var_0_0.setUseItemUid(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0._useItemUid
 
-	if slot0._useItemUid ~= slot0._useItemUid and not slot2 then
-		ExploreController.instance:dispatchEvent(ExploreEvent.UseItemChanged, slot0._useItemUid)
+	arg_21_0._useItemUid = arg_21_1
+
+	if var_21_0 ~= arg_21_0._useItemUid and not arg_21_2 then
+		ExploreController.instance:dispatchEvent(ExploreEvent.UseItemChanged, arg_21_0._useItemUid)
 	end
 end
 
-function slot0.getCarryUnit(slot0)
-	if not isTypeOf(ExploreController.instance:getMap():getUnit(tonumber(slot0:getUseItemUid()), true), ExplorePipePotUnit) then
+function var_0_0.getCarryUnit(arg_22_0)
+	local var_22_0 = arg_22_0:getUseItemUid()
+	local var_22_1 = ExploreController.instance:getMap():getUnit(tonumber(var_22_0), true)
+
+	if not isTypeOf(var_22_1, ExplorePipePotUnit) then
 		return nil
 	end
 
-	return slot2
+	return var_22_1
 end
 
-function slot0.isUseItemOrUnit(slot0, slot1)
-	return slot0._useItemUid == slot1 or tonumber(slot0._useItemUid) == slot1
+function var_0_0.isUseItemOrUnit(arg_23_0, arg_23_1)
+	return arg_23_0._useItemUid == arg_23_1 or tonumber(arg_23_0._useItemUid) == arg_23_1
 end
 
-function slot0.hasUseItemOrUnit(slot0)
-	return slot0._useItemUid ~= 0 and slot0._useItemUid ~= "0"
+function var_0_0.hasUseItemOrUnit(arg_24_0)
+	return arg_24_0._useItemUid ~= 0 and arg_24_0._useItemUid ~= "0"
 end
 
-function slot0.isAreaShow(slot0, slot1)
-	if not slot1 or slot1 == 0 then
+function var_0_0.isAreaShow(arg_25_0, arg_25_1)
+	if not arg_25_1 or arg_25_1 == 0 then
 		return true
 	end
 
-	return slot0.unLockAreaIds[slot1] or false
+	return arg_25_0.unLockAreaIds[arg_25_1] or false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,192 +1,231 @@
-module("modules.logic.fight.view.preview.SkillEditorMulSkillView", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorMulSkillView", package.seeall)
 
-slot0 = class("SkillEditorMulSkillView", BaseView)
+local var_0_0 = class("SkillEditorMulSkillView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._infos = {}
-	slot0._btnMulSkill = gohelper.findChildButton(slot0.viewGO, "scene/Grid/btnMulSkill")
-	slot0._btnClose = gohelper.findChildButton(slot0.viewGO, "mulSkill/btnGroup/btnClose")
-	slot0._btnStart = gohelper.findChildButton(slot0.viewGO, "mulSkill/btnGroup/btnStart")
-	slot0._toggleParallel = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleParallel")
-	slot0._toggleNoSpeedUp = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleNoSpeedUp")
-	slot0._toggleHideAllUI = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleHideAllUI")
-	slot0._toggleDelay = gohelper.findChildToggle(slot0.viewGO, "mulSkill/btnGroup/toggleDelay")
-	slot0._inputDelay = gohelper.findChildTextMeshInputField(slot0.viewGO, "mulSkill/btnGroup/toggleDelay/#input_delay")
-	slot0._mulSkillViewGO = gohelper.findChild(slot0.viewGO, "mulSkill")
-	slot0._items = {
-		gohelper.findChild(slot0.viewGO, "mulSkill/content/item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._infos = {}
+	arg_1_0._btnMulSkill = gohelper.findChildButton(arg_1_0.viewGO, "scene/Grid/btnMulSkill")
+	arg_1_0._btnClose = gohelper.findChildButton(arg_1_0.viewGO, "mulSkill/btnGroup/btnClose")
+	arg_1_0._btnStart = gohelper.findChildButton(arg_1_0.viewGO, "mulSkill/btnGroup/btnStart")
+	arg_1_0._toggleParallel = gohelper.findChildToggle(arg_1_0.viewGO, "mulSkill/btnGroup/toggleParallel")
+	arg_1_0._toggleNoSpeedUp = gohelper.findChildToggle(arg_1_0.viewGO, "mulSkill/btnGroup/toggleNoSpeedUp")
+	arg_1_0._toggleHideAllUI = gohelper.findChildToggle(arg_1_0.viewGO, "mulSkill/btnGroup/toggleHideAllUI")
+	arg_1_0._toggleDelay = gohelper.findChildToggle(arg_1_0.viewGO, "mulSkill/btnGroup/toggleDelay")
+	arg_1_0._inputDelay = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "mulSkill/btnGroup/toggleDelay/#input_delay")
+	arg_1_0._mulSkillViewGO = gohelper.findChild(arg_1_0.viewGO, "mulSkill")
+	arg_1_0._items = {
+		gohelper.findChild(arg_1_0.viewGO, "mulSkill/content/item")
 	}
 
-	gohelper.setActive(slot0._mulSkillViewGO, false)
+	gohelper.setActive(arg_1_0._mulSkillViewGO, false)
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._btnMulSkill, slot0._showThis, slot0)
-	slot0:addClickCb(slot0._btnClose, slot0._hideThis, slot0)
-	slot0:addClickCb(slot0._btnStart, slot0._onClickStart, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnMulSkill, arg_2_0._showThis, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnClose, arg_2_0._hideThis, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnStart, arg_2_0._onClickStart, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0._btnMulSkill, slot0._showThis, slot0)
-	slot0:removeClickCb(slot0._btnClose, slot0._hideThis, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0._btnMulSkill, arg_3_0._showThis, arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0._btnClose, arg_3_0._hideThis, arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0._btnStart, arg_3_0._onClickStart, arg_3_0)
 
-	slot4 = slot0._onClickStart
-	slot5 = slot0
-
-	slot0:removeClickCb(slot0._btnStart, slot4, slot5)
-
-	for slot4, slot5 in ipairs(slot0._items) do
-		gohelper.findChildButtonWithAudio(slot5, "imgRemove"):RemoveClickListener()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._items) do
+		gohelper.findChildButtonWithAudio(iter_3_1, "imgRemove"):RemoveClickListener()
 	end
 end
 
-function slot0._showThis(slot0)
-	gohelper.setActive(slot0._mulSkillViewGO, true)
-	slot0:_updateItems()
-	SkillEditorMgr.instance:registerCallback(SkillEditorMgr.OnSelectSkill, slot0._onSelectSkill, slot0)
+function var_0_0._showThis(arg_4_0)
+	gohelper.setActive(arg_4_0._mulSkillViewGO, true)
+	arg_4_0:_updateItems()
+	SkillEditorMgr.instance:registerCallback(SkillEditorMgr.OnSelectSkill, arg_4_0._onSelectSkill, arg_4_0)
 end
 
-function slot0._hideThis(slot0)
-	gohelper.setActive(slot0._mulSkillViewGO, false)
-	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr.OnSelectSkill, slot0._onSelectSkill, slot0)
+function var_0_0._hideThis(arg_5_0)
+	gohelper.setActive(arg_5_0._mulSkillViewGO, false)
+	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr.OnSelectSkill, arg_5_0._onSelectSkill, arg_5_0)
 end
 
-function slot0._onSelectSkill(slot0, slot1, slot2)
-	table.insert(slot0._infos, {
-		side = slot4,
-		stancePos = SkillEditorView.selectPosId[slot4],
-		modelId = slot1.modelId,
-		skillId = slot2,
-		targetId = GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(slot4 == FightEnum.EntitySide.MySide and SceneTag.UnitMonster or SceneTag.UnitPlayer, SkillEditorView.selectPosId[slot1.side == FightEnum.EntitySide.EnemySide and FightEnum.EntitySide.MySide or FightEnum.EntitySide.EnemySide]).id
-	})
-	slot0:_updateItems()
+function var_0_0._onSelectSkill(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = {}
+	local var_6_1 = arg_6_1.side
+	local var_6_2 = var_6_1 == FightEnum.EntitySide.EnemySide and FightEnum.EntitySide.MySide or FightEnum.EntitySide.EnemySide
+
+	var_6_0.stancePos, var_6_0.side = SkillEditorView.selectPosId[var_6_1], var_6_1
+	var_6_0.modelId = arg_6_1.modelId
+	var_6_0.skillId = arg_6_2
+
+	local var_6_3 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_6_4 = var_6_1 == FightEnum.EntitySide.MySide and SceneTag.UnitMonster or SceneTag.UnitPlayer
+
+	var_6_0.targetId = var_6_3:getEntityByPosId(var_6_4, SkillEditorView.selectPosId[var_6_2]).id
+
+	table.insert(arg_6_0._infos, var_6_0)
+	arg_6_0:_updateItems()
 end
 
-function slot0._updateItems(slot0)
-	for slot4, slot5 in ipairs(slot0._infos) do
-		if not slot0._items[slot4] then
-			table.insert(slot0._items, gohelper.cloneInPlace(slot0._items[1], "item" .. slot4))
+function var_0_0._updateItems(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._infos) do
+		local var_7_0 = arg_7_0._items[iter_7_0]
+
+		if not var_7_0 then
+			var_7_0 = gohelper.cloneInPlace(arg_7_0._items[1], "item" .. iter_7_0)
+
+			table.insert(arg_7_0._items, var_7_0)
 		end
 
-		gohelper.setActive(slot6, true)
+		gohelper.setActive(var_7_0, true)
 
-		if FightDataHelper.entityMgr:getByPosId(slot5.side, slot5.stancePos) then
-			slot11 = string.split(FightConfig.instance:getSkinSkillTimeline(slot7.skin, slot5.skillId), "_")
-			gohelper.findChildText(slot6, "Text").text = string.format("%s-%s", slot7:getEntityName(), slot11[#slot11])
+		local var_7_1 = FightDataHelper.entityMgr:getByPosId(iter_7_1.side, iter_7_1.stancePos)
+
+		if var_7_1 then
+			local var_7_2 = gohelper.findChildText(var_7_0, "Text")
+			local var_7_3 = var_7_1:getEntityName()
+			local var_7_4 = FightConfig.instance:getSkinSkillTimeline(var_7_1.skin, iter_7_1.skillId)
+			local var_7_5 = string.split(var_7_4, "_")
+			local var_7_6 = var_7_5[#var_7_5]
+
+			var_7_2.text = string.format("%s-%s", var_7_3, var_7_6)
 		end
 
-		gohelper.findChildButtonWithAudio(slot6, "imgRemove"):AddClickListener(slot0._onClickRemoveInfo, slot0, slot4)
+		gohelper.findChildButtonWithAudio(var_7_0, "imgRemove"):AddClickListener(arg_7_0._onClickRemoveInfo, arg_7_0, iter_7_0)
 	end
 
-	for slot4 = #slot0._infos + 1, #slot0._items do
-		gohelper.setActive(slot0._items[slot4], false)
+	for iter_7_2 = #arg_7_0._infos + 1, #arg_7_0._items do
+		gohelper.setActive(arg_7_0._items[iter_7_2], false)
 	end
 end
 
-function slot0._onClickRemoveInfo(slot0, slot1)
-	table.remove(slot0._infos, slot1)
-	slot0:_updateItems()
+function var_0_0._onClickRemoveInfo(arg_8_0, arg_8_1)
+	table.remove(arg_8_0._infos, arg_8_1)
+	arg_8_0:_updateItems()
 end
 
-function slot0._onClickStart(slot0)
-	if not slot0._infos or #slot0._infos == 0 then
+function var_0_0._onClickStart(arg_9_0)
+	if not arg_9_0._infos or #arg_9_0._infos == 0 then
 		GameFacade.showToast(ToastEnum.IconId, "未添加技能")
 
 		return
 	end
 
-	FightModel.instance:setAuto(slot0._toggleParallel.isOn)
+	FightModel.instance:setAuto(arg_9_0._toggleParallel.isOn)
 
-	if not slot0._toggleNoSpeedUp.isOn then
+	if arg_9_0._toggleNoSpeedUp.isOn then
+		-- block empty
+	else
 		FightReplayModel.instance:setReplay(true)
 		FightModel.instance:setUserSpeed(FightModel.instance:getUserSpeed())
 		FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 	end
 
-	slot1 = FightRoundMO.New()
-	FightModel.instance._curRoundMO = slot1
-	slot1.fightStepMOs = {}
+	local var_9_0 = FightRoundMO.New()
 
-	for slot5, slot6 in ipairs(slot0._infos) do
-		slot7 = slot6.skillId
+	FightModel.instance._curRoundMO = var_9_0
+	var_9_0.fightStepMOs = {}
 
-		if FightDataHelper.entityMgr:getByPosId(slot6.side, slot6.stancePos) then
-			slot9 = slot8.id
-			slot12 = slot6.side == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._infos) do
+		local var_9_1 = iter_9_1.skillId
+		local var_9_2 = FightDataHelper.entityMgr:getByPosId(iter_9_1.side, iter_9_1.stancePos)
 
-			if FightHelper.getTargetLimits(slot11, slot7) and #slot13 > 0 and not tabletool.indexOf(slot13, slot6.targetId) then
-				slot10 = slot13[1]
+		if var_9_2 then
+			local var_9_3 = var_9_2.id
+			local var_9_4 = iter_9_1.targetId
+			local var_9_5 = iter_9_1.side
+
+			if var_9_5 ~= FightEnum.EntitySide.MySide or not FightEnum.EntitySide.EnemySide then
+				local var_9_6 = FightEnum.EntitySide.MySide
 			end
 
-			tabletool.addValues(slot1.fightStepMOs, SkillEditorStepBuilder.buildStepMOs(slot7, slot9, slot10))
+			local var_9_7 = FightHelper.getTargetLimits(var_9_5, var_9_1)
+
+			if var_9_7 and #var_9_7 > 0 and not tabletool.indexOf(var_9_7, var_9_4) then
+				var_9_4 = var_9_7[1]
+			end
+
+			local var_9_8 = SkillEditorStepBuilder.buildStepMOs(var_9_1, var_9_3, var_9_4)
+
+			tabletool.addValues(var_9_0.fightStepMOs, var_9_8)
 		end
 	end
 
-	slot2 = tonumber(slot0._inputDelay:GetText()) or 0
-	slot0._playSkillsFlow = FlowSequence.New()
+	local var_9_9 = arg_9_0._inputDelay:GetText()
+	local var_9_10
 
-	if slot0._toggleDelay.isOn and slot2 > 0 then
-		slot0._playSkillsFlow:addWork(WorkWaitSeconds.New(slot2))
+	var_9_10 = tonumber(var_9_9) or 0
+	arg_9_0._playSkillsFlow = FlowSequence.New()
+
+	if arg_9_0._toggleDelay.isOn and var_9_10 > 0 then
+		arg_9_0._playSkillsFlow:addWork(WorkWaitSeconds.New(var_9_10))
 	end
 
-	slot3, slot4 = FightStepBuilder.buildStepWorkList(slot1.fightStepMOs)
+	local var_9_11, var_9_12 = FightStepBuilder.buildStepWorkList(var_9_0.fightStepMOs)
 
-	for slot8, slot9 in ipairs(slot3) do
-		slot0._playSkillsFlow:addWork(slot9)
+	for iter_9_2, iter_9_3 in ipairs(var_9_11) do
+		arg_9_0._playSkillsFlow:addWork(iter_9_3)
 	end
 
-	if slot0._toggleDelay.isOn and slot2 > 0 then
-		slot0._playSkillsFlow:addWork(WorkWaitSeconds.New(slot2))
+	if arg_9_0._toggleDelay.isOn and var_9_10 > 0 then
+		arg_9_0._playSkillsFlow:addWork(WorkWaitSeconds.New(var_9_10))
 	end
 
-	slot0._playSkillsFlow:registerDoneListener(slot0._onPlaySkillsEnd, slot0)
-	slot0._playSkillsFlow:start()
-	gohelper.setActive(slot0.viewGO, false)
+	arg_9_0._playSkillsFlow:registerDoneListener(arg_9_0._onPlaySkillsEnd, arg_9_0)
+	arg_9_0._playSkillsFlow:start()
+	gohelper.setActive(arg_9_0.viewGO, false)
 
-	if slot0._toggleHideAllUI.isOn then
-		slot0:hideAllUI()
+	if arg_9_0._toggleHideAllUI.isOn then
+		arg_9_0:hideAllUI()
 	end
 end
 
-function slot0.hideAllUI(slot0)
-	slot0:setNameUIActive(false)
-	slot0:setViewActive(false)
-	slot0:setFrameActive(false)
+function var_0_0.hideAllUI(arg_10_0)
+	arg_10_0:setNameUIActive(false)
+	arg_10_0:setViewActive(false)
+	arg_10_0:setFrameActive(false)
 end
 
-function slot0.showAllUI(slot0)
-	slot0:setNameUIActive(true)
-	slot0:setViewActive(true)
-	slot0:setFrameActive(true)
+function var_0_0.showAllUI(arg_11_0)
+	arg_11_0:setNameUIActive(true)
+	arg_11_0:setViewActive(true)
+	arg_11_0:setFrameActive(true)
 end
 
-function slot0.setNameUIActive(slot0, slot1)
-	for slot7, slot8 in pairs(GameSceneMgr.instance:getCurScene().entityMgr._tagUnitDict) do
-		for slot12, slot13 in pairs(slot8) do
-			if slot13.nameUI then
-				gohelper.setActive(slot14:getGO(), slot1)
+function var_0_0.setNameUIActive(arg_12_0, arg_12_1)
+	local var_12_0 = GameSceneMgr.instance:getCurScene().entityMgr._tagUnitDict
+
+	for iter_12_0, iter_12_1 in pairs(var_12_0) do
+		for iter_12_2, iter_12_3 in pairs(iter_12_1) do
+			local var_12_1 = iter_12_3.nameUI
+
+			if var_12_1 then
+				gohelper.setActive(var_12_1:getGO(), arg_12_1)
 			end
 		end
 	end
 end
 
-function slot0.setViewActive(slot0, slot1)
-	if ViewMgr.instance:getContainer(ViewName.SkillEffectStatView) then
-		gohelper.setActive(slot2.viewGO, slot1)
+function var_0_0.setViewActive(arg_13_0, arg_13_1)
+	local var_13_0 = ViewMgr.instance:getContainer(ViewName.SkillEffectStatView)
+
+	if var_13_0 then
+		gohelper.setActive(var_13_0.viewGO, arg_13_1)
 	end
 end
 
-function slot0.setFrameActive(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(ViewMgr.instance:getUIRoot(), "Text"), slot1)
+function var_0_0.setFrameActive(arg_14_0, arg_14_1)
+	local var_14_0 = ViewMgr.instance:getUIRoot()
+	local var_14_1 = gohelper.findChild(var_14_0, "Text")
+
+	gohelper.setActive(var_14_1, arg_14_1)
 end
 
-function slot0._onPlaySkillsEnd(slot0)
-	slot0._playSkillsFlow:unregisterDoneListener(slot0._onPlaySkillsEnd, slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0._onPlaySkillsEnd(arg_15_0)
+	arg_15_0._playSkillsFlow:unregisterDoneListener(arg_15_0._onPlaySkillsEnd, arg_15_0)
+	gohelper.setActive(arg_15_0.viewGO, true)
 	FightReplayModel.instance:setReplay(false)
 	FightModel.instance:setUserSpeed(FightModel.instance:getUserSpeed())
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
-	slot0:showAllUI()
+	arg_15_0:showAllUI()
 end
 
-return slot0
+return var_0_0

@@ -1,41 +1,46 @@
-module("modules.logic.test.view.TestHeroBagItemView", package.seeall)
+﻿module("modules.logic.test.view.TestHeroBagItemView", package.seeall)
 
-slot0 = class("TestHeroBagItemView", BaseViewExtended)
+local var_0_0 = class("TestHeroBagItemView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.onScrollItemRefreshData(slot0, slot1)
-	slot0._data = slot1
+function var_0_0.onScrollItemRefreshData(arg_3_0, arg_3_1)
+	arg_3_0._data = arg_3_1
 
-	if slot0._heroItem then
-		slot0._heroItem:onUpdateMO(slot0._data)
+	if arg_3_0._heroItem then
+		arg_3_0._heroItem:onUpdateMO(arg_3_0._data)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:com_loadAsset("ui/viewres/common/item/commonheroitemnew.prefab", slot0._loaded)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:com_loadAsset("ui/viewres/common/item/commonheroitemnew.prefab", arg_4_0._loaded)
 end
 
-function slot0._loaded(slot0, slot1)
-	slot0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot1:GetResource(), slot0.viewGO), CommonHeroItem)
+function var_0_0._loaded(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1:GetResource()
+	local var_5_1 = gohelper.clone(var_5_0, arg_5_0.viewGO)
 
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
+	arg_5_0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, CommonHeroItem)
+
+	arg_5_0._heroItem:addClickListener(arg_5_0._onItemClick, arg_5_0)
 end
 
-function slot0._onItemClick(slot0)
-	logError("点击了英雄id:" .. slot0._data.heroId)
+function var_0_0._onItemClick(arg_6_0)
+	logError("点击了英雄id:" .. arg_6_0._data.heroId)
 end
 
-function slot0.onClose(slot0)
-	if slot0._heroItem then
-		slot0._heroItem:onDestroy()
+function var_0_0.onClose(arg_7_0)
+	if arg_7_0._heroItem then
+		arg_7_0._heroItem:onDestroy()
 
-		slot0._heroItem = nil
+		arg_7_0._heroItem = nil
 	end
 end
 
-return slot0
+return var_0_0

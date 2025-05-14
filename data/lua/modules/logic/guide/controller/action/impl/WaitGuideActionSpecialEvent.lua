@@ -1,39 +1,41 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionSpecialEvent", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionSpecialEvent", package.seeall)
 
-slot0 = class("WaitGuideActionSpecialEvent", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionSpecialEvent", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._eventName = #string.split(slot3, "#") >= 1 and slot4[1]
-	slot0._eventEnum = slot0._eventName and GuideEnum.SpecialEventEnum[slot0._eventName] or 0
-	slot0._guideId = slot1
-	slot0._stepId = slot2
+	local var_1_0 = string.split(arg_1_3, "#")
+
+	arg_1_0._eventName = #var_1_0 >= 1 and var_1_0[1]
+	arg_1_0._eventEnum = arg_1_0._eventName and GuideEnum.SpecialEventEnum[arg_1_0._eventName] or 0
+	arg_1_0._guideId = arg_1_1
+	arg_1_0._stepId = arg_1_2
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	if slot0._eventEnum == 0 then
-		logError("找不到特殊事件: " .. tostring(slot0._eventName))
-		slot0:onDone(true)
+	if arg_2_0._eventEnum == 0 then
+		logError("找不到特殊事件: " .. tostring(arg_2_0._eventName))
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	GuideController.instance:registerCallback(GuideEvent.SpecialEventDone, slot0._onEventDone, slot0)
-	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventStart, slot0._eventEnum, slot0._guideId, slot0._stepId)
+	GuideController.instance:registerCallback(GuideEvent.SpecialEventDone, arg_2_0._onEventDone, arg_2_0)
+	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventStart, arg_2_0._eventEnum, arg_2_0._guideId, arg_2_0._stepId)
 end
 
-function slot0._onEventDone(slot0, slot1)
-	if slot0._eventEnum == slot1 then
-		GuideController.instance:unregisterCallback(GuideEvent.SpecialEventDone, slot0._onEventDone, slot0)
-		slot0:onDone(true)
+function var_0_0._onEventDone(arg_3_0, arg_3_1)
+	if arg_3_0._eventEnum == arg_3_1 then
+		GuideController.instance:unregisterCallback(GuideEvent.SpecialEventDone, arg_3_0._onEventDone, arg_3_0)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	GuideController.instance:unregisterCallback(GuideEvent.SpecialEventDone, slot0._onEventDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	GuideController.instance:unregisterCallback(GuideEvent.SpecialEventDone, arg_4_0._onEventDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

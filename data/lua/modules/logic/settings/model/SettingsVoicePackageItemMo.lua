@@ -1,17 +1,17 @@
-module("modules.logic.settings.model.SettingsVoicePackageItemMo", package.seeall)
+﻿module("modules.logic.settings.model.SettingsVoicePackageItemMo", package.seeall)
 
-slot0 = pureTable("SettingsVoicePackageItemMo")
+local var_0_0 = pureTable("SettingsVoicePackageItemMo")
 
-function slot0.ctor(slot0)
-	slot0.size = 0
-	slot0.localSize = 0
-	slot0.lang = ""
-	slot0.nameLangId = ""
-	slot0.localVersion = 0
-	slot0.latestVersion = 0
-	slot0.download_url = ""
-	slot0.download_url_bak = ""
-	slot0.downloadResList = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.size = 0
+	arg_1_0.localSize = 0
+	arg_1_0.lang = ""
+	arg_1_0.nameLangId = ""
+	arg_1_0.localVersion = 0
+	arg_1_0.latestVersion = 0
+	arg_1_0.download_url = ""
+	arg_1_0.download_url_bak = ""
+	arg_1_0.downloadResList = {
 		names = {},
 		hashs = {},
 		orders = {},
@@ -19,112 +19,123 @@ function slot0.ctor(slot0)
 	}
 end
 
-function slot0.setLang(slot0, slot1, slot2)
-	slot0.lang = slot1
-	slot0.nameLangId = "langtype_" .. slot1
-	slot0.localVersion = slot2
+function var_0_0.setLang(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.lang = arg_2_1
+	arg_2_0.nameLangId = "langtype_" .. arg_2_1
+	arg_2_0.localVersion = arg_2_2
 end
 
-function slot0.setLangInfo(slot0, slot1)
-	slot0.latestVersion = slot1.latest_ver and (string.splitToNumber(slot2, ".")[2] or 0) or 0
-	slot0.download_url = slot1.download_url
-	slot0.download_url_bak = slot1.download_url_bak
+function var_0_0.setLangInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.latest_ver
 
-	if slot1.res then
-		slot4 = {}
-		slot5 = {}
-		slot6 = {}
-		slot7 = {}
+	var_3_0 = var_3_0 and (string.splitToNumber(var_3_0, ".")[2] or 0)
+	arg_3_0.latestVersion = var_3_0 or 0
+	arg_3_0.download_url = arg_3_1.download_url
+	arg_3_0.download_url_bak = arg_3_1.download_url_bak
 
-		for slot11, slot12 in ipairs(slot1.res) do
-			table.insert(slot4, slot12.name)
-			table.insert(slot5, slot12.hash)
-			table.insert(slot6, slot12.order)
-			table.insert(slot7, slot12.length)
+	if arg_3_1.res then
+		local var_3_1 = 0
+		local var_3_2 = {}
+		local var_3_3 = {}
+		local var_3_4 = {}
+		local var_3_5 = {}
 
-			slot3 = 0 + slot12.length
+		for iter_3_0, iter_3_1 in ipairs(arg_3_1.res) do
+			table.insert(var_3_2, iter_3_1.name)
+			table.insert(var_3_3, iter_3_1.hash)
+			table.insert(var_3_4, iter_3_1.order)
+			table.insert(var_3_5, iter_3_1.length)
+
+			var_3_1 = var_3_1 + iter_3_1.length
 		end
 
-		slot0.downloadResList.names = slot4
-		slot0.downloadResList.hashs = slot5
-		slot0.downloadResList.orders = slot6
-		slot0.downloadResList.lengths = slot7
-		slot0.size = slot3
+		arg_3_0.downloadResList.names = var_3_2
+		arg_3_0.downloadResList.hashs = var_3_3
+		arg_3_0.downloadResList.orders = var_3_4
+		arg_3_0.downloadResList.lengths = var_3_5
+		arg_3_0.size = var_3_1
 	end
 end
 
-function slot0.setLocalSize(slot0, slot1)
-	slot0.localSize = slot1
+function var_0_0.setLocalSize(arg_4_0, arg_4_1)
+	arg_4_0.localSize = arg_4_1
 end
 
-function slot0.getStatus(slot0)
+function var_0_0.getStatus(arg_5_0)
 	if GameResMgr.IsFromEditorDir then
 		return SettingsVoicePackageController.AlreadyLatest
 	end
 
-	if slot0.lang == GameConfig:GetDefaultVoiceShortcut() then
+	if arg_5_0.lang == GameConfig:GetDefaultVoiceShortcut() then
 		return SettingsVoicePackageController.AlreadyLatest
 	end
 
-	if slot0.localVersion and slot0.localVersion > 0 then
+	if arg_5_0.localVersion and arg_5_0.localVersion > 0 then
 		return SettingsVoicePackageController.AlreadyLatest
 	end
 
-	return SettingsVoicePackageController.instance:getPackItemState(slot0.lang, slot0.latestVersion)
+	return SettingsVoicePackageController.instance:getPackItemState(arg_5_0.lang, arg_5_0.latestVersion)
 end
 
-function slot0.hasLocalFile(slot0)
-	if slot0.lang == GameConfig:GetDefaultVoiceShortcut() then
+function var_0_0.hasLocalFile(arg_6_0)
+	if arg_6_0.lang == GameConfig:GetDefaultVoiceShortcut() then
 		return SettingsVoicePackageController.AlreadyLatest
 	end
 
-	if slot0.localVersion and slot0.localVersion > 0 then
+	if arg_6_0.localVersion and arg_6_0.localVersion > 0 then
 		return SettingsVoicePackageController.AlreadyLatest
 	end
 
 	return false
 end
 
-function slot0.needDownload(slot0)
+function var_0_0.needDownload(arg_7_0)
 	if GameResMgr.IsFromEditorDir then
 		return false
 	end
 
-	if slot0.lang == GameConfig:GetDefaultVoiceShortcut() then
+	if arg_7_0.lang == GameConfig:GetDefaultVoiceShortcut() then
 		return false
 	end
 
-	if slot0.localVersion and slot0.localVersion > 0 then
+	if arg_7_0.localVersion and arg_7_0.localVersion > 0 then
 		return false
 	end
 
-	return slot0:getStatus() ~= SettingsVoicePackageController.AlreadyLatest
+	return arg_7_0:getStatus() ~= SettingsVoicePackageController.AlreadyLatest
 end
 
-function slot0.getLeftSizeMBorGB(slot0)
-	slot4 = "GB"
+function var_0_0.getLeftSizeMBorGB(arg_8_0)
+	local var_8_0 = math.max(0, arg_8_0.size - arg_8_0.localSize)
+	local var_8_1 = 1073741824
+	local var_8_2 = var_8_0 / var_8_1
+	local var_8_3 = "GB"
 
-	if math.max(0, slot0.size - slot0.localSize) / 1073741824 < 0.1 then
-		slot4 = "MB"
+	if var_8_2 < 0.1 then
+		var_8_1 = 1048576
+		var_8_2 = var_8_0 / var_8_1
+		var_8_3 = "MB"
 
-		if slot1 / 1048576 < 0.01 then
-			slot3 = 0.01
+		if var_8_2 < 0.01 then
+			var_8_2 = 0.01
 		end
 	end
 
-	return slot3, math.max(0.01, slot0.size / slot2), slot4
+	return var_8_2, math.max(0.01, arg_8_0.size / var_8_1), var_8_3
 end
 
-function slot0.getLeftSizeMBNum(slot0)
-	if math.max(0, slot0.size - slot0.localSize) / 1048576 < 0.01 then
-		slot3 = 0.01
+function var_0_0.getLeftSizeMBNum(arg_9_0)
+	local var_9_0 = math.max(0, arg_9_0.size - arg_9_0.localSize) / 1048576
+
+	if var_9_0 < 0.01 then
+		var_9_0 = 0.01
 	end
 
-	return slot3
+	return var_9_0
 end
 
-function slot0.isCurVoice(slot0)
-	return slot0.lang == GameConfig:GetCurVoiceShortcut()
+function var_0_0.isCurVoice(arg_10_0)
+	return arg_10_0.lang == GameConfig:GetCurVoiceShortcut()
 end
 
-return slot0
+return var_0_0

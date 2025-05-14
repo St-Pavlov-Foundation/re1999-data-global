@@ -1,40 +1,41 @@
-module("modules.logic.versionactivity1_4.act136.controller.Activity136Controller", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.controller.Activity136Controller", package.seeall)
 
-slot0 = class("Activity136Controller", BaseController)
+local var_0_0 = class("Activity136Controller", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._onRefreshActivityState, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0._onRefreshActivityState, arg_2_0)
 end
 
-function slot0.reInit(slot0)
-	TaskDispatcher.cancelTask(slot0._delayGetInfo, slot0)
+function var_0_0.reInit(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._delayGetInfo, arg_3_0)
 end
 
-function slot0._onRefreshActivityState(slot0)
+function var_0_0._onRefreshActivityState(arg_4_0)
 	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.SelfSelectCharacter) then
-		TaskDispatcher.cancelTask(slot0._delayGetInfo, slot0)
-		TaskDispatcher.runDelay(slot0._delayGetInfo, slot0, 0.2)
+		TaskDispatcher.cancelTask(arg_4_0._delayGetInfo, arg_4_0)
+		TaskDispatcher.runDelay(arg_4_0._delayGetInfo, arg_4_0, 0.2)
 	end
 end
 
-function slot0._delayGetInfo(slot0)
+function var_0_0._delayGetInfo(arg_5_0)
 	Activity136Rpc.instance:sendGet136InfoRequest(ActivityEnum.Activity.SelfSelectCharacter)
 end
 
-function slot0.confirmReceiveCharacterCallback(slot0)
+function var_0_0.confirmReceiveCharacterCallback(arg_6_0)
 	ViewMgr.instance:closeView(ViewName.Activity136ChoiceView)
 end
 
-function slot0.openActivity136View(slot0, slot1)
+function var_0_0.openActivity136View(arg_7_0, arg_7_1)
 	if Activity136Model.instance:isActivity136InOpen(true) then
-		ViewMgr.instance:openView(ViewName.Activity136View, slot1)
+		ViewMgr.instance:openView(ViewName.Activity136View, arg_7_1)
 	end
 end
 
-function slot0.openActivity136ChoiceView(slot0)
+function var_0_0.openActivity136ChoiceView(arg_8_0)
 	if not Activity136Model.instance:isActivity136InOpen(true) then
 		return
 	end
@@ -48,12 +49,12 @@ function slot0.openActivity136ChoiceView(slot0)
 	ViewMgr.instance:openView(ViewName.Activity136ChoiceView)
 end
 
-function slot0.receiveCharacter(slot0, slot1)
+function var_0_0.receiveCharacter(arg_9_0, arg_9_1)
 	if not Activity136Model.instance:isActivity136InOpen(true) then
 		return
 	end
 
-	if not slot1 then
+	if not arg_9_1 then
 		GameFacade.showToast(ToastEnum.Activity136NotSelect)
 
 		return
@@ -65,32 +66,50 @@ function slot0.receiveCharacter(slot0, slot1)
 		return
 	end
 
-	slot6 = MessageBoxIdDefine.Activity136SelectCharacter
-	slot7 = HeroConfig.instance:getHeroCO(slot1) and slot5.name or ""
-	slot8 = ""
-	slot9 = ""
+	local var_9_0 = HeroModel.instance:getByHeroId(arg_9_1)
+	local var_9_1 = HeroConfig.instance:getHeroCO(arg_9_1)
+	local var_9_2 = MessageBoxIdDefine.Activity136SelectCharacter
+	local var_9_3 = var_9_1 and var_9_1.name or ""
+	local var_9_4 = ""
+	local var_9_5 = ""
 
-	if HeroModel.instance:getByHeroId(slot1) and slot5 then
-		slot10 = {}
-		slot6 = (HeroModel.instance:isMaxExSkill(slot1, true) or MessageBoxIdDefine.Activity136SelectCharacterRepeat) and MessageBoxIdDefine.Activity136SelectCharacterRepeat2
+	if var_9_0 and var_9_1 then
+		local var_9_6 = {}
 
-		if slot10[1] and slot10[2] then
-			slot14, slot15 = ItemModel.instance:getItemConfigAndIcon(slot10[1], slot10[2])
-			slot8 = slot14 and slot14.name or ""
+		if not HeroModel.instance:isMaxExSkill(arg_9_1, true) then
+			local var_9_7 = GameUtil.splitString2(var_9_1.duplicateItem, true)
+
+			var_9_6 = var_9_7 and var_9_7[1] or var_9_6
+			var_9_2 = MessageBoxIdDefine.Activity136SelectCharacterRepeat
+		else
+			var_9_6 = string.splitToNumber(var_9_1.duplicateItem2, "#") or var_9_6
+			var_9_5 = var_9_6[3] or ""
+			var_9_2 = MessageBoxIdDefine.Activity136SelectCharacterRepeat2
+		end
+
+		local var_9_8 = var_9_6[1]
+		local var_9_9 = var_9_6[2]
+
+		if var_9_8 and var_9_9 then
+			local var_9_10, var_9_11 = ItemModel.instance:getItemConfigAndIcon(var_9_6[1], var_9_6[2])
+
+			var_9_4 = var_9_10 and var_9_10.name or ""
 		end
 	end
 
-	GameFacade.showMessageBox(slot6, MsgBoxEnum.BoxType.Yes_No, function ()
-		uv0:_confirmSelect(uv1)
-	end, nil, , slot0, nil, , slot7, slot8, slot9)
+	GameFacade.showMessageBox(var_9_2, MsgBoxEnum.BoxType.Yes_No, function()
+		arg_9_0:_confirmSelect(arg_9_1)
+	end, nil, nil, arg_9_0, nil, nil, var_9_3, var_9_4, var_9_5)
 end
 
-function slot0._confirmSelect(slot0, slot1)
-	if Activity136Model.instance:getCurActivity136Id() then
-		Activity136Rpc.instance:sendAct136SelectRequest(slot2, slot1)
+function var_0_0._confirmSelect(arg_11_0, arg_11_1)
+	local var_11_0 = Activity136Model.instance:getCurActivity136Id()
+
+	if var_11_0 then
+		Activity136Rpc.instance:sendAct136SelectRequest(var_11_0, arg_11_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

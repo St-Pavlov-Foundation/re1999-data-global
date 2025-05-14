@@ -1,16 +1,16 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerStory", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerStory", package.seeall)
 
-slot0 = class("ExploreTriggerStory", ExploreTriggerBase)
+local var_0_0 = class("ExploreTriggerStory", ExploreTriggerBase)
 
-function slot0.handle(slot0, slot1)
-	slot1 = tonumber(slot1)
+function var_0_0.handle(arg_1_0, arg_1_1)
+	arg_1_1 = tonumber(arg_1_1)
 
-	logNormal("触发剧情：" .. slot1)
-	StoryController.instance:playStory(slot1, nil, slot0.playStoryEnd, slot0, true)
+	logNormal("触发剧情：" .. arg_1_1)
+	StoryController.instance:playStory(arg_1_1, nil, arg_1_0.playStoryEnd, arg_1_0, true)
 end
 
-function slot0.playStoryEnd(slot0, slot1)
-	slot0:onDone(true)
+function var_0_0.playStoryEnd(arg_2_0, arg_2_1)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity1_5.enter.define.VersionActivity1_5Enum", package.seeall)
+﻿module("modules.logic.versionactivity1_5.enter.define.VersionActivity1_5Enum", package.seeall)
 
-slot0 = _M
-slot0.ActivityId = {
+local var_0_0 = _M
+
+var_0_0.ActivityId = {
 	EnterView2 = 11517,
 	DungeonExploreTask = 11505,
 	DungeonStore = 11503,
@@ -16,34 +17,34 @@ slot0.ActivityId = {
 	AiZiLa = 11509,
 	EnterView = 11501
 }
-slot0.EnterViewActIdListWithGroup = {
-	[slot0.ActivityId.EnterView] = {
-		slot0.ActivityId.Activity142,
-		slot0.ActivityId.BossRush,
-		slot0.ActivityId.SportsNews,
-		slot0.ActivityId.DungeonStore,
-		slot0.ActivityId.Dungeon
+var_0_0.EnterViewActIdListWithGroup = {
+	[var_0_0.ActivityId.EnterView] = {
+		var_0_0.ActivityId.Activity142,
+		var_0_0.ActivityId.BossRush,
+		var_0_0.ActivityId.SportsNews,
+		var_0_0.ActivityId.DungeonStore,
+		var_0_0.ActivityId.Dungeon
 	},
-	[slot0.ActivityId.EnterView2] = {
-		slot0.ActivityId.PeaceUlu,
-		slot0.ActivityId.BossRush,
-		slot0.ActivityId.Season,
-		slot0.ActivityId.AiZiLa,
-		slot0.ActivityId.DungeonStore,
-		slot0.ActivityId.Dungeon
+	[var_0_0.ActivityId.EnterView2] = {
+		var_0_0.ActivityId.PeaceUlu,
+		var_0_0.ActivityId.BossRush,
+		var_0_0.ActivityId.Season,
+		var_0_0.ActivityId.AiZiLa,
+		var_0_0.ActivityId.DungeonStore,
+		var_0_0.ActivityId.Dungeon
 	}
 }
-slot0.EnterViewMainActIdList = {
-	slot0.ActivityId.EnterView,
-	slot0.ActivityId.EnterView2
+var_0_0.EnterViewMainActIdList = {
+	var_0_0.ActivityId.EnterView,
+	var_0_0.ActivityId.EnterView2
 }
-slot0.ActId2Ambient = {
-	[slot0.ActivityId.EnterView] = 20150002,
-	[slot0.ActivityId.EnterView2] = 20150004
+var_0_0.ActId2Ambient = {
+	[var_0_0.ActivityId.EnterView] = 20150002,
+	[var_0_0.ActivityId.EnterView2] = 20150004
 }
-slot0.ActId2OpenAudio = {
-	[slot0.ActivityId.EnterView] = 20150001,
-	[slot0.ActivityId.EnterView2] = 20150003
+var_0_0.ActId2OpenAudio = {
+	[var_0_0.ActivityId.EnterView] = 20150001,
+	[var_0_0.ActivityId.EnterView2] = 20150003
 }
 
-return slot0
+return var_0_0

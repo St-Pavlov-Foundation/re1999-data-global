@@ -1,133 +1,154 @@
-module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessIconEffect", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessIconEffect", package.seeall)
 
-slot0 = class("Va3ChessIconEffect", Va3ChessEffectBase)
+local var_0_0 = class("Va3ChessIconEffect", Va3ChessEffectBase)
 
-function slot0.onAvatarLoaded(slot0)
-	if not slot0._loader then
+function var_0_0.onAvatarLoaded(arg_1_0)
+	if not arg_1_0._loader then
 		return
 	end
 
-	if not gohelper.isNil(slot0._loader:getInstGO()) then
-		gohelper.setLayer(slot1, UnityLayer.Scene, true)
+	local var_1_0 = arg_1_0._loader:getInstGO()
 
-		slot2 = gohelper.findChild(slot1, "icon_tanhao")
-		slot0._target.avatar.goTrack = slot2
+	if not gohelper.isNil(var_1_0) then
+		gohelper.setLayer(var_1_0, UnityLayer.Scene, true)
 
-		gohelper.setActive(slot2, false)
+		local var_1_1 = gohelper.findChild(var_1_0, "icon_tanhao")
 
-		slot3 = gohelper.findChild(slot1, "icon_jianshi")
-		slot0._target.avatar.goTracked = slot3
+		arg_1_0._target.avatar.goTrack = var_1_1
 
-		gohelper.setActive(slot3, false)
+		gohelper.setActive(var_1_1, false)
 
-		slot0.moveKillIcon = gohelper.findChild(slot1, "icon_kejisha")
+		local var_1_2 = gohelper.findChild(var_1_0, "icon_jianshi")
 
-		gohelper.setActive(slot0.moveKillIcon, false)
+		arg_1_0._target.avatar.goTracked = var_1_2
 
-		slot0.willKillPlayerIcon = gohelper.findChild(slot1, "icon_yuxi")
+		gohelper.setActive(var_1_2, false)
 
-		gohelper.setActive(slot0.willKillPlayerIcon, false)
+		arg_1_0.moveKillIcon = gohelper.findChild(var_1_0, "icon_kejisha")
 
-		slot0.fireBallKillIcon = gohelper.findChild(slot1, "icon_huoyanbiaoji")
+		gohelper.setActive(arg_1_0.moveKillIcon, false)
 
-		gohelper.setActive(slot0.fireBallKillIcon, false)
+		arg_1_0.willKillPlayerIcon = gohelper.findChild(var_1_0, "icon_yuxi")
+
+		gohelper.setActive(arg_1_0.willKillPlayerIcon, false)
+
+		arg_1_0.fireBallKillIcon = gohelper.findChild(var_1_0, "icon_huoyanbiaoji")
+
+		gohelper.setActive(arg_1_0.fireBallKillIcon, false)
 	end
 
-	slot0._dirPointGODict = {}
-	slot0._dirCanFireKillEffGODict = {}
+	arg_1_0._dirPointGODict = {}
+	arg_1_0._dirCanFireKillEffGODict = {}
 
-	for slot5, slot6 in pairs(Va3ChessEnum.Direction) do
-		if not gohelper.isNil(slot0._target.avatar["goFaceTo" .. slot6]) then
-			slot0._dirPointGODict[slot6] = gohelper.findChild(slot7, slot0._effectCfg.piontName)
-			slot9 = gohelper.findChild(slot7, "selected")
-			slot0._dirCanFireKillEffGODict[slot6] = slot9
+	for iter_1_0, iter_1_1 in pairs(Va3ChessEnum.Direction) do
+		local var_1_3 = arg_1_0._target.avatar["goFaceTo" .. iter_1_1]
 
-			gohelper.setActive(slot9, false)
+		if not gohelper.isNil(var_1_3) then
+			local var_1_4 = gohelper.findChild(var_1_3, arg_1_0._effectCfg.piontName)
+
+			arg_1_0._dirPointGODict[iter_1_1] = var_1_4
+
+			local var_1_5 = gohelper.findChild(var_1_3, "selected")
+
+			arg_1_0._dirCanFireKillEffGODict[iter_1_1] = var_1_5
+
+			gohelper.setActive(var_1_5, false)
 		end
 	end
 
-	slot0:refreshEffectFaceTo()
+	arg_1_0:refreshEffectFaceTo()
 end
 
-function slot0.refreshEffectFaceTo(slot0)
-	if not slot0._dirPointGODict then
+function var_0_0.refreshEffectFaceTo(arg_2_0)
+	if not arg_2_0._dirPointGODict then
 		return
 	end
 
-	if not gohelper.isNil(slot0._dirPointGODict[slot0._target.originData:getDirection()]) then
-		slot3, slot4, slot5 = transformhelper.getPos(slot2.transform)
+	local var_2_0 = arg_2_0._target.originData:getDirection()
+	local var_2_1 = arg_2_0._dirPointGODict[var_2_0]
 
-		transformhelper.setPos(slot0.effectGO.transform, slot3, slot4, slot5)
+	if not gohelper.isNil(var_2_1) then
+		local var_2_2, var_2_3, var_2_4 = transformhelper.getPos(var_2_1.transform)
+
+		transformhelper.setPos(arg_2_0.effectGO.transform, var_2_2, var_2_3, var_2_4)
 	end
 
-	slot0:refreshKillEffect()
+	arg_2_0:refreshKillEffect()
 end
 
-function slot0.refreshKillEffect(slot0)
-	slot1 = false
-	slot2 = {}
+function var_0_0.refreshKillEffect(arg_3_0)
+	local var_3_0 = false
+	local var_3_1 = {}
 
-	if slot0._target and slot0._target.originData and slot0._target.originData.data then
-		slot2 = slot0._target.originData.data.alertArea
+	if arg_3_0._target and arg_3_0._target.originData and arg_3_0._target.originData.data then
+		var_3_1 = arg_3_0._target.originData.data.alertArea
 	end
 
-	if slot2 and #slot2 > 0 then
-		for slot6, slot7 in ipairs(slot2) do
-			if Va3ChessGameController.instance:getPlayerNextCanWalkPosDict()[Activity142Helper.getPosHashKey(slot7.x, slot7.y)] then
+	if var_3_1 and #var_3_1 > 0 then
+		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+			var_3_0 = Va3ChessGameController.instance:getPlayerNextCanWalkPosDict()[Activity142Helper.getPosHashKey(iter_3_1.x, iter_3_1.y)]
+
+			if var_3_0 then
 				break
 			end
 		end
 	end
 
-	gohelper.setActive(slot0.willKillPlayerIcon, slot1)
+	gohelper.setActive(arg_3_0.willKillPlayerIcon, var_3_0)
 
-	slot3 = Activity142Helper.isCanFireKill(slot0._target)
+	local var_3_2 = Activity142Helper.isCanFireKill(arg_3_0._target)
 
-	gohelper.setActive(slot0.fireBallKillIcon, slot3)
-	slot0:refreshCanMoveKillEffect()
-	slot0:refreshCanFireBallKillEffect(slot3)
+	gohelper.setActive(arg_3_0.fireBallKillIcon, var_3_2)
+	arg_3_0:refreshCanMoveKillEffect()
+	arg_3_0:refreshCanFireBallKillEffect(var_3_2)
 end
 
-function slot0.refreshCanMoveKillEffect(slot0)
-	gohelper.setActive(slot0.moveKillIcon, Activity142Helper.isCanMoveKill(slot0._target))
+function var_0_0.refreshCanMoveKillEffect(arg_4_0)
+	local var_4_0 = Activity142Helper.isCanMoveKill(arg_4_0._target)
+
+	gohelper.setActive(arg_4_0.moveKillIcon, var_4_0)
 end
 
-function slot0.refreshCanFireBallKillEffect(slot0, slot1)
-	if not slot0._dirCanFireKillEffGODict then
+function var_0_0.refreshCanFireBallKillEffect(arg_5_0, arg_5_1)
+	if not arg_5_0._dirCanFireKillEffGODict then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0._dirCanFireKillEffGODict) do
-		gohelper.setActive(slot7, slot1 and slot0._target.originData:getDirection() == slot6)
+	local var_5_0 = arg_5_0._target.originData:getDirection()
+
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._dirCanFireKillEffGODict) do
+		gohelper.setActive(iter_5_1, arg_5_1 and var_5_0 == iter_5_0)
 	end
 end
 
-function slot0.isShowEffect(slot0, slot1)
-	if not slot0._loader then
+function var_0_0.isShowEffect(arg_6_0, arg_6_1)
+	if not arg_6_0._loader then
 		return
 	end
 
-	if not gohelper.isNil(slot0._loader:getInstGO()) then
-		gohelper.setActive(slot2, slot1)
+	local var_6_0 = arg_6_0._loader:getInstGO()
+
+	if not gohelper.isNil(var_6_0) then
+		gohelper.setActive(var_6_0, arg_6_1)
 	end
 end
 
-function slot0.onDispose(slot0)
-	if slot0._dirPointGODict then
-		for slot4, slot5 in pairs(slot0._dirPointGODict) do
-			slot5 = nil
+function var_0_0.onDispose(arg_7_0)
+	if arg_7_0._dirPointGODict then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._dirPointGODict) do
+			iter_7_1 = nil
 		end
 
-		slot0._dirPointGODict = nil
+		arg_7_0._dirPointGODict = nil
 	end
 
-	if slot0._dirCanFireKillEffGODict then
-		for slot4, slot5 in pairs(slot0._dirCanFireKillEffGODict) do
-			slot5 = nil
+	if arg_7_0._dirCanFireKillEffGODict then
+		for iter_7_2, iter_7_3 in pairs(arg_7_0._dirCanFireKillEffGODict) do
+			iter_7_3 = nil
 		end
 
-		slot0._dirCanFireKillEffGODict = nil
+		arg_7_0._dirCanFireKillEffGODict = nil
 	end
 end
 
-return slot0
+return var_0_0

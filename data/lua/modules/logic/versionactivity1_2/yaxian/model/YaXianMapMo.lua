@@ -1,38 +1,38 @@
-module("modules.logic.versionactivity1_2.yaxian.model.YaXianMapMo", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.model.YaXianMapMo", package.seeall)
 
-slot0 = pureTable("YaXianMapMo")
+local var_0_0 = pureTable("YaXianMapMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.actId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.actId = arg_1_1
 
-	slot0:updateMO(slot2)
+	arg_1_0:updateMO(arg_1_2)
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.episodeId = slot1.id
-	slot0.currentRound = slot1.currentRound
-	slot0.currentEvent = slot1.currentEvent
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.episodeId = arg_2_1.id
+	arg_2_0.currentRound = arg_2_1.currentRound
+	arg_2_0.currentEvent = arg_2_1.currentEvent
 
-	slot0:updateInteractObjects(slot1.interactObjects)
-	slot0:updateFinishInteracts(slot1.finishInteracts)
+	arg_2_0:updateInteractObjects(arg_2_1.interactObjects)
+	arg_2_0:updateFinishInteracts(arg_2_1.finishInteracts)
 
-	slot0.episodeCo = YaXianConfig.instance:getEpisodeConfig(slot0.actId, slot0.episodeId)
-	slot0.mapId = slot0.episodeCo.mapId
+	arg_2_0.episodeCo = YaXianConfig.instance:getEpisodeConfig(arg_2_0.actId, arg_2_0.episodeId)
+	arg_2_0.mapId = arg_2_0.episodeCo.mapId
 end
 
-function slot0.updateInteractObjects(slot0, slot1)
-	slot0.interactObjs = {}
+function var_0_0.updateInteractObjects(arg_3_0, arg_3_1)
+	arg_3_0.interactObjs = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = YaXianGameInteractMO.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = YaXianGameInteractMO.New()
 
-		slot7:init(slot0.actId, slot6)
-		table.insert(slot0.interactObjs, slot7)
+		var_3_0:init(arg_3_0.actId, iter_3_1)
+		table.insert(arg_3_0.interactObjs, var_3_0)
 	end
 end
 
-function slot0.updateFinishInteracts(slot0, slot1)
-	slot0.finishInteracts = slot1
+function var_0_0.updateFinishInteracts(arg_4_0, arg_4_1)
+	arg_4_0.finishInteracts = arg_4_1
 end
 
-return slot0
+return var_0_0

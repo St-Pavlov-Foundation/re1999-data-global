@@ -1,40 +1,44 @@
-module("modules.logic.gm.view.GM_ClothesStoreView", package.seeall)
+﻿module("modules.logic.gm.view.GM_ClothesStoreView", package.seeall)
 
-slot0 = class("GM_ClothesStoreView", BaseView)
+local var_0_0 = class("GM_ClothesStoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._item1Toggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item1/Toggle")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
+	arg_1_0._item1Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item1/Toggle")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._item1Toggle:AddOnValueChanged(slot0._onItem1ToggleValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._item1Toggle:AddOnValueChanged(arg_2_0._onItem1ToggleValueChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._item1Toggle:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._item1Toggle:RemoveOnValueChanged()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshItem1()
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:_refreshItem1()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-slot0.s_ShowAllTabId = false
+var_0_0.s_ShowAllTabId = false
 
-function slot0._refreshItem1(slot0)
-	slot0._item1Toggle.isOn = uv0.s_ShowAllTabId
+function var_0_0._refreshItem1(arg_6_0)
+	local var_6_0 = var_0_0.s_ShowAllTabId
+
+	arg_6_0._item1Toggle.isOn = var_6_0
 end
 
-function slot0._onItem1ToggleValueChanged(slot0)
-	slot1 = slot0._item1Toggle.isOn
-	uv0.s_ShowAllTabId = slot1
+function var_0_0._onItem1ToggleValueChanged(arg_7_0)
+	local var_7_0 = arg_7_0._item1Toggle.isOn
 
-	GMController.instance:dispatchEvent(GMEvent.ClothesStoreView_ShowAllTabIdUpdate, slot1)
+	var_0_0.s_ShowAllTabId = var_7_0
+
+	GMController.instance:dispatchEvent(GMEvent.ClothesStoreView_ShowAllTabIdUpdate, var_7_0)
 end
 
-return slot0
+return var_0_0

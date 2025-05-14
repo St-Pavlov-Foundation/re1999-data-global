@@ -1,121 +1,133 @@
-module("modules.logic.versionactivity1_4.act134.view.Activity134BonusItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act134.view.Activity134BonusItem", package.seeall)
 
-slot0 = class("Activity134BonusItem", LuaCompBase)
+local var_0_0 = class("Activity134BonusItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._txtnormal = gohelper.findChildText(slot0.viewGO, "normal/#txt_normal")
-	slot0._txtfinished = gohelper.findChildText(slot0.viewGO, "finished/#txt_finished")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_item")
-	slot0._gorewardtemplate = gohelper.findChild(slot0._goitem, "#reward")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "normal")
-	slot0._gofinished = gohelper.findChild(slot0.viewGO, "finished")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._txtnormal = gohelper.findChildText(arg_1_0.viewGO, "normal/#txt_normal")
+	arg_1_0._txtfinished = gohelper.findChildText(arg_1_0.viewGO, "finished/#txt_finished")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
+	arg_1_0._gorewardtemplate = gohelper.findChild(arg_1_0._goitem, "#reward")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "normal")
+	arg_1_0._gofinished = gohelper.findChild(arg_1_0.viewGO, "finished")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 
-	slot0:addEventListeners()
+	arg_1_0:addEventListeners()
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:removeEventListeners()
+function var_0_0.onDestroyView(arg_3_0)
+	arg_3_0:removeEventListeners()
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
-	for slot4, slot5 in ipairs(slot0._rewarditems) do
-		slot5.btn:RemoveClickListener()
-		slot5.simagereward:UnLoadImage()
-	end
-end
-
-function slot0.initMo(slot0, slot1, slot2)
-	slot0.mo = slot2
-	slot0.co = slot2.config
-	slot0.index = slot1
-	slot0._txtnormal.text = slot2.needTokensQuantity
-	slot0._txtfinished.text = slot2.needTokensQuantity
-
-	slot0:rewardItem()
-end
-
-function slot0.refreshProgress(slot0)
-	slot1 = slot0.mo.status == Activity134Enum.StroyStatus.Finish
-
-	slot0:refreshRewardItems(slot1)
-	gohelper.setActive(slot0._gonormal, not slot1)
-	gohelper.setActive(slot0._gofinished, slot1)
-end
-
-function slot0.rewardItem(slot0)
-	slot0._rewarditems = {}
-
-	gohelper.setActive(slot0._gorewardtemplate, false)
-
-	for slot6 = 1, #string.split(slot0.co.bonus, "|") do
-		slot7 = string.splitToNumber(slot2[slot6], "#")
-		slot8 = slot0:getUserDataTb_()
-		slot9 = gohelper.clone(slot0._gorewardtemplate, slot0._goitem, "reward_" .. tostring(slot6))
-		slot8.imagebg = gohelper.findChildImage(slot9, "image_bg")
-		slot8.imagecircle = gohelper.findChildImage(slot9, "image_circle")
-		slot8.simagereward = gohelper.findChildSingleImage(slot9, "simage_reward")
-		slot8.txtrewardcount = gohelper.findChildText(slot9, "txt_rewardcount")
-		slot8.txtpointvalue = gohelper.findChildText(slot9, "txt_pointvalue")
-		slot8.imagereward = slot8.simagereward:GetComponent(gohelper.Type_Image)
-		slot8.btn = gohelper.findChildClick(slot9, "simage_reward")
-		slot8.goalreadygot = gohelper.findChild(slot9, "go_hasget")
-
-		slot8.btn:AddClickListener(slot0.onClickItem, slot0, slot8)
-
-		slot8.go = slot9
-		slot8.rewardCfg = slot7
-		slot8.itemCfg, slot8.iconPath = ItemModel.instance:getItemConfigAndIcon(slot7[1], slot7[2])
-
-		gohelper.setActive(slot8.go, true)
-		UISpriteSetMgr.instance:setUiFBSprite(slot8.imagebg, "bg_pinjidi_" .. slot8.itemCfg.rare)
-		UISpriteSetMgr.instance:setUiFBSprite(slot8.imagecircle, "bg_pinjidi_lanse_" .. slot8.itemCfg.rare)
-		table.insert(slot0._rewarditems, slot8)
+function var_0_0.removeEventListeners(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._rewarditems) do
+		iter_5_1.btn:RemoveClickListener()
+		iter_5_1.simagereward:UnLoadImage()
 	end
 end
 
-function slot0.refreshRewardItems(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._rewarditems) do
-		slot0:refreshRewardUIItem(slot6, slot1)
+function var_0_0.initMo(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.mo = arg_6_2
+	arg_6_0.co = arg_6_2.config
+	arg_6_0.index = arg_6_1
+	arg_6_0._txtnormal.text = arg_6_2.needTokensQuantity
+	arg_6_0._txtfinished.text = arg_6_2.needTokensQuantity
+
+	arg_6_0:rewardItem()
+end
+
+function var_0_0.refreshProgress(arg_7_0)
+	local var_7_0 = arg_7_0.mo.status == Activity134Enum.StroyStatus.Finish
+
+	arg_7_0:refreshRewardItems(var_7_0)
+	gohelper.setActive(arg_7_0._gonormal, not var_7_0)
+	gohelper.setActive(arg_7_0._gofinished, var_7_0)
+end
+
+function var_0_0.rewardItem(arg_8_0)
+	local var_8_0 = arg_8_0.co.bonus
+	local var_8_1 = string.split(var_8_0, "|")
+
+	arg_8_0._rewarditems = {}
+
+	gohelper.setActive(arg_8_0._gorewardtemplate, false)
+
+	for iter_8_0 = 1, #var_8_1 do
+		local var_8_2 = string.splitToNumber(var_8_1[iter_8_0], "#")
+		local var_8_3 = arg_8_0:getUserDataTb_()
+		local var_8_4 = gohelper.clone(arg_8_0._gorewardtemplate, arg_8_0._goitem, "reward_" .. tostring(iter_8_0))
+
+		var_8_3.imagebg = gohelper.findChildImage(var_8_4, "image_bg")
+		var_8_3.imagecircle = gohelper.findChildImage(var_8_4, "image_circle")
+		var_8_3.simagereward = gohelper.findChildSingleImage(var_8_4, "simage_reward")
+		var_8_3.txtrewardcount = gohelper.findChildText(var_8_4, "txt_rewardcount")
+		var_8_3.txtpointvalue = gohelper.findChildText(var_8_4, "txt_pointvalue")
+		var_8_3.imagereward = var_8_3.simagereward:GetComponent(gohelper.Type_Image)
+		var_8_3.btn = gohelper.findChildClick(var_8_4, "simage_reward")
+		var_8_3.goalreadygot = gohelper.findChild(var_8_4, "go_hasget")
+
+		var_8_3.btn:AddClickListener(arg_8_0.onClickItem, arg_8_0, var_8_3)
+
+		var_8_3.go = var_8_4
+		var_8_3.rewardCfg = var_8_2
+		var_8_3.itemCfg, var_8_3.iconPath = ItemModel.instance:getItemConfigAndIcon(var_8_2[1], var_8_2[2])
+
+		gohelper.setActive(var_8_3.go, true)
+		UISpriteSetMgr.instance:setUiFBSprite(var_8_3.imagebg, "bg_pinjidi_" .. var_8_3.itemCfg.rare)
+		UISpriteSetMgr.instance:setUiFBSprite(var_8_3.imagecircle, "bg_pinjidi_lanse_" .. var_8_3.itemCfg.rare)
+		table.insert(arg_8_0._rewarditems, var_8_3)
 	end
 end
 
-slot1 = Color.New(0.6941177, 0.6941177, 0.6941177, 1)
-slot2 = Color.New(1, 1, 1, 1)
-slot3 = Color.New(1, 1, 1, 0.5)
-slot4 = Color.New(1, 1, 1, 1)
-slot5 = Color.New(0.4235, 0.4235, 0.4235, 1)
-slot6 = Color.New(0.9411, 0.9411, 0.9411, 1)
-
-function slot0.refreshRewardUIItem(slot0, slot1, slot2)
-	slot1.imagereward.color = slot2 and uv0 or uv1
-	slot1.imagebg.color = slot2 and uv2 or uv3
-	slot1.txtrewardcount.color = slot2 and uv4 or uv5
-
-	slot1.simagereward:LoadImage(slot1.iconPath)
-
-	slot1.txtrewardcount.text = tostring(slot1.rewardCfg[3])
-
-	gohelper.setActive(slot1.goalreadygot, slot2)
-
-	if slot2 then
-		slot1.go:GetComponent(typeof(UnityEngine.Animator)):Play("dungeoncumulativerewardsitem_received")
+function var_0_0.refreshRewardItems(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._rewarditems) do
+		arg_9_0:refreshRewardUIItem(iter_9_1, arg_9_1)
 	end
 end
 
-function slot0.onClickItem(slot0, slot1)
+local var_0_1 = Color.New(0.6941177, 0.6941177, 0.6941177, 1)
+local var_0_2 = Color.New(1, 1, 1, 1)
+local var_0_3 = Color.New(1, 1, 1, 0.5)
+local var_0_4 = Color.New(1, 1, 1, 1)
+local var_0_5 = Color.New(0.4235, 0.4235, 0.4235, 1)
+local var_0_6 = Color.New(0.9411, 0.9411, 0.9411, 1)
+
+function var_0_0.refreshRewardUIItem(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_2 and var_0_1 or var_0_2
+	local var_10_1 = arg_10_2 and var_0_3 or var_0_4
+	local var_10_2 = arg_10_2 and var_0_5 or var_0_6
+
+	arg_10_1.imagereward.color = var_10_0
+	arg_10_1.imagebg.color = var_10_1
+	arg_10_1.txtrewardcount.color = var_10_2
+
+	arg_10_1.simagereward:LoadImage(arg_10_1.iconPath)
+
+	arg_10_1.txtrewardcount.text = tostring(arg_10_1.rewardCfg[3])
+
+	gohelper.setActive(arg_10_1.goalreadygot, arg_10_2)
+
+	local var_10_3 = arg_10_1.go:GetComponent(typeof(UnityEngine.Animator))
+
+	if arg_10_2 then
+		var_10_3:Play("dungeoncumulativerewardsitem_received")
+	end
+end
+
+function var_0_0.onClickItem(arg_11_0, arg_11_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	MaterialTipController.instance:showMaterialInfo(slot1.rewardCfg[1], slot1.rewardCfg[2])
+	MaterialTipController.instance:showMaterialInfo(arg_11_1.rewardCfg[1], arg_11_1.rewardCfg[2])
 end
 
-return slot0
+return var_0_0

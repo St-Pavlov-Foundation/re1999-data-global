@@ -1,79 +1,86 @@
-module("modules.logic.fight.system.work.FightWorkStartBorn", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkStartBorn", package.seeall)
 
-slot0 = class("FightWorkStartBorn", BaseWork)
-slot1 = 10
+local var_0_0 = class("FightWorkStartBorn", BaseWork)
+local var_0_1 = 10
 
-function slot0.onStart(slot0)
-	slot0:_playEnterVoice()
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:_playEnterVoice()
 
-	slot0._flowParallel = FlowParallel.New()
+	arg_1_0._flowParallel = FlowParallel.New()
 
-	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
-		slot8 = false
+	local var_1_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
-		if slot6:getMO():isAssistBoss() then
-			slot8 = true
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_1 = iter_1_1:getMO()
+		local var_1_2 = false
+
+		if var_1_1:isAssistBoss() then
+			var_1_2 = true
 		end
 
-		if slot6.spine and not slot6.spine:hasAnimation(SpineAnimState.born) then
-			slot8 = true
+		if iter_1_1.spine and not iter_1_1.spine:hasAnimation(SpineAnimState.born) then
+			var_1_2 = true
 		end
 
-		if not slot8 then
-			FightWorkStartBornNormal.New(slot6, true).dontDealBuff = true
+		if not var_1_2 then
+			local var_1_3 = FightWorkStartBornNormal.New(iter_1_1, true)
 
-			if FightDataHelper.entityMgr:isSub(slot6.id) then
-				slot9:onStart()
+			var_1_3.dontDealBuff = true
+
+			if FightDataHelper.entityMgr:isSub(iter_1_1.id) then
+				var_1_3:onStart()
 			else
-				slot0._flowParallel:addWork(slot9)
+				arg_1_0._flowParallel:addWork(var_1_3)
 			end
 		else
-			if slot6.nameUI then
-				slot6.nameUI:setActive(true)
+			if iter_1_1.nameUI then
+				iter_1_1.nameUI:setActive(true)
 			end
 
-			slot6:setAlpha(1, 0)
+			iter_1_1:setAlpha(1, 0)
 		end
 	end
 
-	TaskDispatcher.runDelay(slot0._onBornTimeout, slot0, uv0)
+	TaskDispatcher.runDelay(arg_1_0._onBornTimeout, arg_1_0, var_0_1)
 	FightController.instance:dispatchEvent(FightEvent.OnStartFightPlayBorn)
-	slot0._flowParallel:registerDoneListener(slot0._onBornEnd, slot0)
-	slot0._flowParallel:start()
+	arg_1_0._flowParallel:registerDoneListener(arg_1_0._onBornEnd, arg_1_0)
+	arg_1_0._flowParallel:start()
 end
 
-function slot0._playEnterVoice(slot0)
+function var_0_0._playEnterVoice(arg_2_0)
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 
-	if FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false) and #slot1 > 0 then
-		slot3 = slot1[math.random(#slot1)]:getMO().modelId
+	local var_2_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
 
-		FightAudioMgr.instance:playHeroVoiceRandom(slot3, CharacterEnum.VoiceType.EnterFight)
+	if var_2_0 and #var_2_0 > 0 then
+		local var_2_1 = var_2_0[math.random(#var_2_0)]:getMO().modelId
 
-		FightAudioMgr.instance.enterFightVoiceHeroID = slot3
+		FightAudioMgr.instance:playHeroVoiceRandom(var_2_1, CharacterEnum.VoiceType.EnterFight)
+
+		FightAudioMgr.instance.enterFightVoiceHeroID = var_2_1
 	end
 end
 
-function slot0._onBornEnd(slot0)
+function var_0_0._onBornEnd(arg_3_0)
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-function slot0._onBornTimeout(slot0)
+function var_0_0._onBornTimeout(arg_4_0)
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 
-	logError("播放出生效果时间超过" .. uv0 .. "秒")
-	slot0:onDone(true)
+	logError("播放出生效果时间超过" .. var_0_1 .. "秒")
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._flowParallel then
-		slot0._flowParallel:stop()
-		slot0._flowParallel:unregisterDoneListener(slot0._onBornEnd, slot0)
+function var_0_0.clearWork(arg_5_0)
+	if arg_5_0._flowParallel then
+		arg_5_0._flowParallel:stop()
+		arg_5_0._flowParallel:unregisterDoneListener(arg_5_0._onBornEnd, arg_5_0)
 	end
 
-	TaskDispatcher.cancelTask(slot0._onBornTimeout, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._onBornTimeout, arg_5_0)
 end
 
-return slot0
+return var_0_0

@@ -1,25 +1,25 @@
-module("modules.logic.explore.model.mo.unit.ExploreDoorUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreDoorUnitMO", package.seeall)
 
-slot0 = pureTable("ExploreDoorUnitMO", ExploreBaseUnitMO)
+local var_0_0 = pureTable("ExploreDoorUnitMO", ExploreBaseUnitMO)
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_1_0)
 	return ExploreDoor
 end
 
-function slot0.isWalkable(slot0)
-	return slot0:isDoorOpen()
+function var_0_0.isWalkable(arg_2_0)
+	return arg_2_0:isDoorOpen()
 end
 
-function slot0.initTypeData(slot0)
-	slot0.isPreventItem = tonumber(slot0.specialDatas[1]) == 1
+function var_0_0.initTypeData(arg_3_0)
+	arg_3_0.isPreventItem = tonumber(arg_3_0.specialDatas[1]) == 1
 end
 
-function slot0.updateWalkable(slot0)
-	slot0:setNodeOpenKey(slot0:isWalkable())
+function var_0_0.updateWalkable(arg_4_0)
+	arg_4_0:setNodeOpenKey(arg_4_0:isWalkable())
 end
 
-function slot0.isDoorOpen(slot0)
-	return slot0:isInteractActiveState()
+function var_0_0.isDoorOpen(arg_5_0)
+	return arg_5_0:isInteractActiveState()
 end
 
-return slot0
+return var_0_0

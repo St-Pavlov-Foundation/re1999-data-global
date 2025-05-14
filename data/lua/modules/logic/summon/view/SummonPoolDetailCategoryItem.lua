@@ -1,65 +1,68 @@
-module("modules.logic.summon.view.SummonPoolDetailCategoryItem", package.seeall)
+﻿module("modules.logic.summon.view.SummonPoolDetailCategoryItem", package.seeall)
 
-slot0 = class("SummonPoolDetailCategoryItem", ListScrollCellExtend)
+local var_0_0 = class("SummonPoolDetailCategoryItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gounselect = gohelper.findChild(slot0.viewGO, "#go_unselect")
-	slot0._txttitle1 = gohelper.findChildText(slot0.viewGO, "#go_unselect/#txt_title1")
-	slot0._txttitle1En = gohelper.findChildText(slot0.viewGO, "#go_unselect/#txt_title1En")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0._txttitle2 = gohelper.findChildText(slot0.viewGO, "#go_select/#txt_title2")
-	slot0._txttitle2En = gohelper.findChildText(slot0.viewGO, "#go_select/#txt_title2En")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "#go_unselect")
+	arg_1_0._txttitle1 = gohelper.findChildText(arg_1_0.viewGO, "#go_unselect/#txt_title1")
+	arg_1_0._txttitle1En = gohelper.findChildText(arg_1_0.viewGO, "#go_unselect/#txt_title1En")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0._txttitle2 = gohelper.findChildText(arg_1_0.viewGO, "#go_select/#txt_title2")
+	arg_1_0._txttitle2En = gohelper.findChildText(arg_1_0.viewGO, "#go_select/#txt_title2En")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._click = gohelper.getClickWithAudio(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._click = gohelper.getClickWithAudio(arg_4_0.viewGO)
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_6_0)
+	arg_6_0._click:RemoveClickListener()
 end
 
-function slot0._onClick(slot0)
-	if slot0._isSelect then
+function var_0_0._onClick(arg_7_0)
+	if arg_7_0._isSelect then
 		return
 	end
 
-	slot0._view:selectCell(slot0._index, true)
-	slot0._view.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, slot0._mo.resIndex)
-	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolDetailCategoryClick, slot0._mo.resIndex)
+	arg_7_0._view:selectCell(arg_7_0._index, true)
+	arg_7_0._view.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_7_0._mo.resIndex)
+	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolDetailCategoryClick, arg_7_0._mo.resIndex)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txttitle1.text = slot1.cnName
-	slot0._txttitle2.text = slot1.cnName
-	slot0._txttitle1En.text = slot1.enName
-	slot0._txttitle2En.text = slot1.enName
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
+	arg_8_0._txttitle1.text = arg_8_1.cnName
+	arg_8_0._txttitle2.text = arg_8_1.cnName
+	arg_8_0._txttitle1En.text = arg_8_1.enName
+	arg_8_0._txttitle2En.text = arg_8_1.enName
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	arg_9_0._isSelect = arg_9_1
 
-	slot0._gounselect:SetActive(not slot0._isSelect)
-	slot0._goselect:SetActive(slot0._isSelect)
+	arg_9_0._gounselect:SetActive(not arg_9_0._isSelect)
+	arg_9_0._goselect:SetActive(arg_9_0._isSelect)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

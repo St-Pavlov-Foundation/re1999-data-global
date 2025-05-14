@@ -1,36 +1,45 @@
-module("modules.logic.achievement.model.PlayerViewAchievementModel", package.seeall)
+﻿module("modules.logic.achievement.model.PlayerViewAchievementModel", package.seeall)
 
-slot0 = class("PlayerViewAchievementModel", BaseModel)
+local var_0_0 = class("PlayerViewAchievementModel", BaseModel)
 
-function slot0.decodeShowAchievement(slot0, slot1)
-	slot2, slot3 = AchievementUtils.decodeShowStr(slot1)
+function var_0_0.decodeShowAchievement(arg_1_0, arg_1_1)
+	local var_1_0, var_1_1 = AchievementUtils.decodeShowStr(arg_1_1)
+	local var_1_2 = {}
 
-	for slot8, slot9 in pairs(slot2) do
-		if AchievementConfig.instance:getTask(slot9) then
-			table.insert({}, slot10.id)
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		local var_1_3 = AchievementConfig.instance:getTask(iter_1_1)
+
+		if var_1_3 then
+			table.insert(var_1_2, var_1_3.id)
 		end
 	end
 
-	slot5 = {}
+	local var_1_4 = {}
 
-	for slot9, slot10 in pairs(slot3) do
-		if AchievementConfig.instance:getTask(slot10) and AchievementConfig.instance:getAchievement(slot11.achievementId).groupId ~= 0 then
-			slot5[slot12.groupId] = slot5[slot12.groupId] or {}
+	for iter_1_2, iter_1_3 in pairs(var_1_1) do
+		local var_1_5 = AchievementConfig.instance:getTask(iter_1_3)
 
-			table.insert(slot5[slot12.groupId], slot11.id)
+		if var_1_5 then
+			local var_1_6 = AchievementConfig.instance:getAchievement(var_1_5.achievementId)
+
+			if var_1_6.groupId ~= 0 then
+				var_1_4[var_1_6.groupId] = var_1_4[var_1_6.groupId] or {}
+
+				table.insert(var_1_4[var_1_6.groupId], var_1_5.id)
+			end
 		end
 	end
 
-	return slot4, slot5
+	return var_1_2, var_1_4
 end
 
-function slot0.getShowAchievements(slot0, slot1)
-	slot2, slot3 = slot0:decodeShowAchievement(slot1)
-	slot4 = slot3 and tabletool.len(slot3) > 0
+function var_0_0.getShowAchievements(arg_2_0, arg_2_1)
+	local var_2_0, var_2_1 = arg_2_0:decodeShowAchievement(arg_2_1)
+	local var_2_2 = var_2_1 and tabletool.len(var_2_1) > 0
 
-	return slot4, slot4 and slot3 or slot2
+	return var_2_2, var_2_2 and var_2_1 or var_2_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

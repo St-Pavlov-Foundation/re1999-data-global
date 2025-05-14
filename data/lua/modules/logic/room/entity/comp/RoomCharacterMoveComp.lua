@@ -1,194 +1,218 @@
-module("modules.logic.room.entity.comp.RoomCharacterMoveComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCharacterMoveComp", package.seeall)
 
-slot0 = class("RoomCharacterMoveComp", RoomBaseFollowPathComp)
+local var_0_0 = class("RoomCharacterMoveComp", RoomBaseFollowPathComp)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._forcePosition = nil
-	slot0._forceLookDir = nil
-	slot0._forceMoveState = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._forcePosition = nil
+	arg_1_0._forceLookDir = nil
+	arg_1_0._forceMoveState = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._seeker = ZProj.AStarSeekWrap.Get(slot0.go)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_2_0._seeker = ZProj.AStarSeekWrap.Get(arg_2_0.go)
 
-	slot0._seeker:SetTagTraversable(RoomEnum.AStarLayerTag.Water, slot0.entity:getMO():getCanWade())
-	slot0._seeker:SetTagTraversable(RoomEnum.AStarLayerTag.NoWalkRoad, false)
-	slot0:_updateCharacterMove()
+	local var_2_0 = arg_2_0.entity:getMO()
+
+	arg_2_0._seeker:SetTagTraversable(RoomEnum.AStarLayerTag.Water, var_2_0:getCanWade())
+	arg_2_0._seeker:SetTagTraversable(RoomEnum.AStarLayerTag.NoWalkRoad, false)
+	arg_2_0:_updateCharacterMove()
 end
 
-function slot0.addEventListeners(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, slot0._updateCharacterMove, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.PauseCharacterMove, slot0._pauseCharacterMove, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraStateUpdate, slot0._cameraStateUpdate, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_3_0._cameraTransformUpdate, arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_3_0._updateCharacterMove, arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.PauseCharacterMove, arg_3_0._pauseCharacterMove, arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraStateUpdate, arg_3_0._cameraStateUpdate, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, slot0._updateCharacterMove, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.PauseCharacterMove, slot0._pauseCharacterMove, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraStateUpdate, slot0._cameraStateUpdate, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_4_0._cameraTransformUpdate, arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_4_0._updateCharacterMove, arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.PauseCharacterMove, arg_4_0._pauseCharacterMove, arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraStateUpdate, arg_4_0._cameraStateUpdate, arg_4_0)
 
-	if not gohelper.isNil(slot0._seeker) then
-		slot0._seeker:RemoveOnPathCall()
+	if not gohelper.isNil(arg_4_0._seeker) then
+		arg_4_0._seeker:RemoveOnPathCall()
 	end
 
-	slot0._seeker = nil
+	arg_4_0._seeker = nil
 end
 
-function slot0._cameraTransformUpdate(slot0)
+function var_0_0._cameraTransformUpdate(arg_5_0)
+	return
 end
 
-function slot0.forcePositionAndLookDir(slot0, slot1, slot2, slot3)
-	slot0._forcePosition = slot1
-	slot0._forceLookDir = slot2
-	slot0._forceMoveState = slot3
+function var_0_0.forcePositionAndLookDir(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._forcePosition = arg_6_1
+	arg_6_0._forceLookDir = arg_6_2
+	arg_6_0._forceMoveState = arg_6_3
 
-	slot0:_updateCharacterMove()
+	arg_6_0:_updateCharacterMove()
 end
 
-function slot0.clearForcePositionAndLookDir(slot0)
-	slot0._forcePosition = nil
-	slot0._forceLookDir = nil
-	slot0._forceMoveState = nil
+function var_0_0.clearForcePositionAndLookDir(arg_7_0)
+	arg_7_0._forcePosition = nil
+	arg_7_0._forceLookDir = nil
+	arg_7_0._forceMoveState = nil
 
-	slot0:_updateCharacterMove()
+	arg_7_0:_updateCharacterMove()
 end
 
-function slot0._updateCharacterMove(slot0)
-	slot0:_updateMovingLookDir()
-	slot0:_updateMovingPosition()
-	slot0:_updateMovingState()
+function var_0_0._updateCharacterMove(arg_8_0)
+	arg_8_0:_updateMovingLookDir()
+	arg_8_0:_updateMovingPosition()
+	arg_8_0:_updateMovingState()
 end
 
-function slot0._cameraStateUpdate(slot0)
-	slot1 = slot0._scene.camera:getCameraState()
+function var_0_0._cameraStateUpdate(arg_9_0)
+	local var_9_0 = arg_9_0._scene.camera:getCameraState()
 
-	if slot0._lastCameraState == RoomEnum.CameraState.OverlookAll then
-		slot0._lastCameraState = slot1
+	if arg_9_0._lastCameraState == RoomEnum.CameraState.OverlookAll then
+		arg_9_0._lastCameraState = var_9_0
 
-		if slot0.entity:getMO() then
-			slot2:setLockTime(0.5)
+		local var_9_1 = arg_9_0.entity:getMO()
+
+		if var_9_1 then
+			var_9_1:setLockTime(0.5)
 		end
 	end
 
-	slot0._lastCameraState = slot1
+	arg_9_0._lastCameraState = var_9_0
 end
 
-function slot0._pauseCharacterMove(slot0, slot1)
-	slot0.entity.followPathComp:stopMove()
+function var_0_0._pauseCharacterMove(arg_10_0, arg_10_1)
+	arg_10_0.entity.followPathComp:stopMove()
 end
 
-function slot0._updateMovingLookDir(slot0)
-	if slot0._forceLookDir then
-		slot0.entity.characterspine:changeLookDir(slot0._forceLookDir)
+function var_0_0._updateMovingLookDir(arg_11_0)
+	if arg_11_0._forceLookDir then
+		arg_11_0.entity.characterspine:changeLookDir(arg_11_0._forceLookDir)
 
 		return
 	end
 
-	if slot0.entity.isPressing then
+	if arg_11_0.entity.isPressing then
 		return
 	end
 
-	if not slot0.entity:getMO() then
+	local var_11_0 = arg_11_0.entity:getMO()
+
+	if not var_11_0 then
 		return
 	end
 
-	if not slot0._scene.character:isLock() then
-		slot3 = GameSceneMgr.instance:getCurScene()
-		slot4 = slot1:getMovingDir()
+	if not arg_11_0._scene.character:isLock() then
+		local var_11_1 = GameSceneMgr.instance:getCurScene()
+		local var_11_2 = var_11_0:getMovingDir()
 
-		if slot1:getMoveState() ~= RoomCharacterEnum.CharacterMoveState.Move then
+		if var_11_0:getMoveState() ~= RoomCharacterEnum.CharacterMoveState.Move then
 			return
 		end
 
-		slot5 = slot1.currentPosition
-		slot5 = Vector3(slot5.x, slot5.y, slot5.z)
+		local var_11_3 = var_11_0.currentPosition
+		local var_11_4 = Vector3(var_11_3.x, var_11_3.y, var_11_3.z)
+		local var_11_5 = var_11_4 + Vector3.Normalize(Vector3(var_11_2.x, 0, var_11_2.y))
+		local var_11_6 = arg_11_0:getMoveToLookDirByPos(var_11_4, var_11_5)
 
-		slot0.entity.characterspine:changeLookDir(slot0:getMoveToLookDirByPos(slot5, slot5 + Vector3.Normalize(Vector3(slot4.x, 0, slot4.y))))
+		arg_11_0.entity.characterspine:changeLookDir(var_11_6)
 	end
 end
 
-function slot0.getMoveToLookDirByPos(slot0, slot1, slot2)
-	slot4 = slot0._scene.camera.camera:WorldToScreenPoint(RoomBendingHelper.worldToBendingSimple(slot1))
+function var_0_0.getMoveToLookDirByPos(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = RoomBendingHelper.worldToBendingSimple(arg_12_1)
+	local var_12_1 = arg_12_0._scene.camera.camera:WorldToScreenPoint(var_12_0)
+	local var_12_2 = RoomBendingHelper.worldToBendingSimple(arg_12_2)
+	local var_12_3 = arg_12_0._scene.camera.camera:WorldToScreenPoint(var_12_2)
 
-	if (slot0._scene.camera.camera:WorldToScreenPoint(RoomBendingHelper.worldToBendingSimple(slot2)).z > 0 and slot6.x or -slot6.x) - (slot4.z > 0 and slot4.x or -slot4.x) > 0.0001 then
+	if (var_12_3.z > 0 and var_12_3.x or -var_12_3.x) - (var_12_1.z > 0 and var_12_1.x or -var_12_1.x) > 0.0001 then
 		return SpineLookDir.Right
 	else
 		return SpineLookDir.Left
 	end
 end
 
-function slot0._updateMovingState(slot0)
-	if slot0._forceMoveState then
-		slot0.entity.characterspine:changeMoveState(slot0._forceMoveState)
+function var_0_0._updateMovingState(arg_13_0)
+	if arg_13_0._forceMoveState then
+		arg_13_0.entity.characterspine:changeMoveState(arg_13_0._forceMoveState)
 
 		return
 	end
 
-	if slot0.entity.isPressing then
+	if arg_13_0.entity.isPressing then
 		return
 	end
 
-	if not slot0.entity:getMO() then
+	local var_13_0 = arg_13_0.entity:getMO()
+
+	if not var_13_0 then
 		return
 	end
 
-	if slot0._scene.character:isLock() and slot1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move then
-		slot0.entity.characterspine:changeMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+	local var_13_1 = arg_13_0._scene.character:isLock()
+	local var_13_2 = var_13_0:getMoveState()
+
+	if var_13_1 and var_13_2 == RoomCharacterEnum.CharacterMoveState.Move then
+		arg_13_0.entity.characterspine:changeMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 	else
-		slot0.entity.characterspine:changeMoveState(slot3)
+		arg_13_0.entity.characterspine:changeMoveState(var_13_2)
 	end
 end
 
-function slot0._updateMovingPosition(slot0)
-	if slot0._forcePosition then
-		slot0.entity:setLocalPos(slot0._forcePosition.x, slot0._forcePosition.y, slot0._forcePosition.z)
+function var_0_0._updateMovingPosition(arg_14_0)
+	if arg_14_0._forcePosition then
+		arg_14_0.entity:setLocalPos(arg_14_0._forcePosition.x, arg_14_0._forcePosition.y, arg_14_0._forcePosition.z)
 
 		return
 	end
 
-	if slot0.entity.isPressing then
+	if arg_14_0.entity.isPressing then
 		return
 	end
 
-	if not slot0.entity:getMO() then
+	local var_14_0 = arg_14_0.entity:getMO()
+
+	if not var_14_0 then
 		return
 	end
 
-	slot3 = slot1:getPositionCodeId()
+	local var_14_1 = var_14_0:getMoveState()
+	local var_14_2 = var_14_0:getPositionCodeId()
+	local var_14_3 = var_14_1 == RoomCharacterEnum.CharacterMoveState.Move and var_14_0:canMove()
 
-	if slot1:getMoveState() == RoomCharacterEnum.CharacterMoveState.Move and slot1:canMove() or slot0._lastMoveState ~= slot2 or slot0._lastPositionCodeId ~= slot3 then
-		slot5 = slot0._lastMoveState == RoomCharacterEnum.CharacterMoveState.Move
-		slot0._lastMoveState = slot2
+	if var_14_3 or arg_14_0._lastMoveState ~= var_14_1 or arg_14_0._lastPositionCodeId ~= var_14_2 then
+		local var_14_4 = arg_14_0._lastMoveState == RoomCharacterEnum.CharacterMoveState.Move
 
-		if slot1.currentPosition then
-			slot0._lastPositionCodeId = slot3
+		arg_14_0._lastMoveState = var_14_1
 
-			slot0.entity:setLocalPos(slot6.x, slot6.y, slot6.z)
+		local var_14_5 = var_14_0.currentPosition
 
-			if slot0.entity.followPathComp:getCount() > 0 then
-				slot0.entity.followPathComp:addPathPos(Vector3(slot6.x, slot6.y, slot6.z))
+		if var_14_5 then
+			arg_14_0._lastPositionCodeId = var_14_2
+
+			arg_14_0.entity:setLocalPos(var_14_5.x, var_14_5.y, var_14_5.z)
+
+			if arg_14_0.entity.followPathComp:getCount() > 0 then
+				arg_14_0.entity.followPathComp:addPathPos(Vector3(var_14_5.x, var_14_5.y, var_14_5.z))
 			end
 		end
 
-		if slot4 then
-			slot0.entity.followPathComp:moveByPathData()
-		elseif slot5 then
-			slot0.entity.followPathComp:stopMove()
+		if var_14_3 then
+			arg_14_0.entity.followPathComp:moveByPathData()
+		elseif var_14_4 then
+			arg_14_0.entity.followPathComp:stopMove()
 		end
 	end
 end
 
-function slot0.getSeeker(slot0)
-	return slot0._seeker
+function var_0_0.getSeeker(arg_15_0)
+	return arg_15_0._seeker
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
+function var_0_0.beforeDestroy(arg_16_0)
+	arg_16_0:removeEventListeners()
 end
 
-return slot0
+return var_0_0

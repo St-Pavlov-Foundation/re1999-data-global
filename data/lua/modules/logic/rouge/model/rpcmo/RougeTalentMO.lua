@@ -1,10 +1,10 @@
-module("modules.logic.rouge.model.rpcmo.RougeTalentMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeTalentMO", package.seeall)
 
-slot0 = pureTable("RougeTalentMO")
+local var_0_0 = pureTable("RougeTalentMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.isActive = slot1.isActive
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.isActive = arg_1_1.isActive
 end
 
-return slot0
+return var_0_0

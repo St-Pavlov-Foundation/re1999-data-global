@@ -1,219 +1,236 @@
-module("modules.logic.scene.fight.comp.FightSceneMagicCircleComp", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneMagicCircleComp", package.seeall)
 
-slot0 = class("FightSceneMagicCircleComp", BaseSceneComp)
+local var_0_0 = class("FightSceneMagicCircleComp", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._effectDic = {}
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._effectDic = {}
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0._entity = FightHelper.getEntity(FightEntityScene.MySideId)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._entity = FightHelper.getEntity(FightEntityScene.MySideId)
 
-	FightController.instance:registerCallback(FightEvent.AddMagicCircile, slot0._onAddMagicCircile, slot0)
-	FightController.instance:registerCallback(FightEvent.DeleteMagicCircile, slot0._onDeleteMagicCircile, slot0)
-	FightController.instance:registerCallback(FightEvent.UpdateMagicCircile, slot0._onUpdateMagicCircile, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	FightController.instance:registerCallback(FightEvent.ChangeSceneVisible, slot0._onChangeSceneVisible, slot0)
-	FightController.instance:registerCallback(FightEvent.BeforeEnterStepBehaviour, slot0._onBeforeEnterStepBehaviour, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:registerCallback(FightEvent.StartFightEnd, slot0._onStartFightEnd, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	FightController.instance:registerCallback(FightEvent.AddMagicCircile, arg_2_0._onAddMagicCircile, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.DeleteMagicCircile, arg_2_0._onDeleteMagicCircile, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.UpdateMagicCircile, arg_2_0._onUpdateMagicCircile, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStageBefore, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ChangeSceneVisible, arg_2_0._onChangeSceneVisible, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.BeforeEnterStepBehaviour, arg_2_0._onBeforeEnterStepBehaviour, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.StartFightEnd, arg_2_0._onStartFightEnd, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
 end
 
-function slot0._onLevelLoaded(slot0)
-	slot0._fightScene = GameSceneMgr.instance:getCurScene()
-	slot0._sceneObj = slot0._fightScene.level:getSceneGo()
+function var_0_0._onLevelLoaded(arg_3_0)
+	arg_3_0._fightScene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._sceneObj = arg_3_0._fightScene.level:getSceneGo()
 end
 
-function slot0.createEffect(slot0, slot1, slot2)
-	if not string.nilorempty(slot1) then
-		slot2 = slot2 and slot2 / 1000
-		slot4 = slot0._config.posArr
-		slot5 = {
-			x = slot4[1],
-			y = slot4[2],
-			z = slot4[3]
+function var_0_0.createEffect(arg_4_0, arg_4_1, arg_4_2)
+	if not string.nilorempty(arg_4_1) then
+		arg_4_2 = arg_4_2 and arg_4_2 / 1000
+
+		local var_4_0 = FightModel.instance:getMagicCircleInfo()
+		local var_4_1 = arg_4_0._config.posArr
+		local var_4_2 = {
+			x = var_4_1[1],
+			y = var_4_1[2],
+			z = var_4_1[3]
 		}
-		slot6 = FightHelper.getMagicSide(FightModel.instance:getMagicCircleInfo().createUid)
+		local var_4_3 = FightHelper.getMagicSide(var_4_0.createUid)
+		local var_4_4 = arg_4_0._entity.effect:addGlobalEffect(arg_4_1, var_4_3, arg_4_2)
 
-		slot0._entity.effect:addGlobalEffect(slot1, slot6, slot2):setLocalPos(slot6 == FightEnum.EntitySide.MySide and slot5.x or -slot5.x, slot5.y, slot5.z)
+		var_4_4:setLocalPos(var_4_3 == FightEnum.EntitySide.MySide and var_4_2.x or -var_4_2.x, var_4_2.y, var_4_2.z)
 
-		if not slot2 then
-			slot0._effectDic[slot7.uniqueId] = slot7
+		if not arg_4_2 then
+			arg_4_0._effectDic[var_4_4.uniqueId] = var_4_4
 		end
 
-		return slot7
+		return var_4_4
 	end
 end
 
-function slot0._onBeforeEnterStepBehaviour(slot0)
-	if FightModel.instance:getMagicCircleInfo().magicCircleId then
-		slot0:_onAddMagicCircile(slot1.magicCircleId)
+function var_0_0._onBeforeEnterStepBehaviour(arg_5_0)
+	local var_5_0 = FightModel.instance:getMagicCircleInfo()
+
+	if var_5_0.magicCircleId then
+		arg_5_0:_onAddMagicCircile(var_5_0.magicCircleId)
 	end
 end
 
-function slot0._getConfig(slot0, slot1)
-	return lua_fight_skin_replace_magic_effect.configDict[slot1] and lua_fight_skin_replace_magic_effect.configDict[slot1][FightDataHelper.entityMgr:getById(FightModel.instance:getMagicCircleInfo().createUid) and slot3.skin] or lua_magic_circle.configDict[slot1]
+function var_0_0._getConfig(arg_6_0, arg_6_1)
+	local var_6_0 = FightModel.instance:getMagicCircleInfo()
+	local var_6_1 = FightDataHelper.entityMgr:getById(var_6_0.createUid)
+	local var_6_2 = var_6_1 and var_6_1.skin
+
+	return lua_fight_skin_replace_magic_effect.configDict[arg_6_1] and lua_fight_skin_replace_magic_effect.configDict[arg_6_1][var_6_2] or lua_magic_circle.configDict[arg_6_1]
 end
 
-function slot0._onAddMagicCircile(slot0, slot1)
-	slot0:clearLastLoopEffect()
+function var_0_0._onAddMagicCircile(arg_7_0, arg_7_1)
+	arg_7_0:clearLastLoopEffect()
 
-	slot0._config = slot0:_getConfig(slot1)
+	arg_7_0._config = arg_7_0:_getConfig(arg_7_1)
 
-	slot0:createEffect(slot0._config.enterEffect, slot0._config.enterTime)
+	arg_7_0:createEffect(arg_7_0._config.enterEffect, arg_7_0._config.enterTime)
 
-	slot0._loopEffect = slot0:createEffect(slot0._config.loopEffect, nil)
+	arg_7_0._loopEffect = arg_7_0:createEffect(arg_7_0._config.loopEffect, nil)
 
-	slot0:_playAudio(slot0._config.enterAudio)
+	arg_7_0:_playAudio(arg_7_0._config.enterAudio)
 end
 
-function slot0.clearLastLoopEffect(slot0)
-	if slot0._loopEffect then
-		slot0:_releaseEffect(slot0._loopEffect)
+function var_0_0.clearLastLoopEffect(arg_8_0)
+	if arg_8_0._loopEffect then
+		arg_8_0:_releaseEffect(arg_8_0._loopEffect)
 
-		slot0._loopEffect = nil
+		arg_8_0._loopEffect = nil
 	end
 
-	if slot0._removeEffectWrap then
-		slot0:_releaseEffect(slot0._removeEffectWrap)
+	if arg_8_0._removeEffectWrap then
+		arg_8_0:_releaseEffect(arg_8_0._removeEffectWrap)
 
-		slot0._removeEffectWrap = nil
+		arg_8_0._removeEffectWrap = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._releaseLoopAfterCloseAni, slot0)
-	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, slot0._onRemoveEffectLoaded, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._releaseLoopAfterCloseAni, arg_8_0)
+	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, arg_8_0._onRemoveEffectLoaded, arg_8_0)
 end
 
-function slot0._playAudio(slot0, slot1)
-	if slot1 ~= 0 then
-		AudioMgr.instance:trigger(slot1)
+function var_0_0._playAudio(arg_9_0, arg_9_1)
+	if arg_9_1 ~= 0 then
+		AudioMgr.instance:trigger(arg_9_1)
 	end
 end
 
-function slot0._onDeleteMagicCircile(slot0, slot1)
-	slot0._config = slot0:_getConfig(slot1)
+function var_0_0._onDeleteMagicCircile(arg_10_0, arg_10_1)
+	arg_10_0._config = arg_10_0:_getConfig(arg_10_1)
 
-	if not string.nilorempty(slot0._config.closeAniName) then
-		if slot0._loopEffect and slot0._loopEffect.effectGO then
-			if gohelper.onceAddComponent(slot0._loopEffect.effectGO, typeof(UnityEngine.Animator)) then
-				slot2:Play(slot0._config.closeAniName)
+	if not string.nilorempty(arg_10_0._config.closeAniName) then
+		if arg_10_0._loopEffect and arg_10_0._loopEffect.effectGO then
+			local var_10_0 = gohelper.onceAddComponent(arg_10_0._loopEffect.effectGO, typeof(UnityEngine.Animator))
+
+			if var_10_0 then
+				var_10_0:Play(arg_10_0._config.closeAniName)
 			end
 
-			TaskDispatcher.runDelay(slot0._releaseLoopAfterCloseAni, slot0, slot0._config.closeTime / 1000)
+			TaskDispatcher.runDelay(arg_10_0._releaseLoopAfterCloseAni, arg_10_0, arg_10_0._config.closeTime / 1000)
 		else
-			slot0:_releaseLoopEffect()
+			arg_10_0:_releaseLoopEffect()
 		end
 	else
-		slot0._removeEffectWrap = slot0:createEffect(slot0._config.closeEffect, slot0._config.closeTime)
+		arg_10_0._removeEffectWrap = arg_10_0:createEffect(arg_10_0._config.closeEffect, arg_10_0._config.closeTime)
 
-		if slot0._removeEffectWrap then
-			if slot0._removeEffectWrap.effectGO then
-				slot0:_releaseLoopEffect()
+		if arg_10_0._removeEffectWrap then
+			if arg_10_0._removeEffectWrap.effectGO then
+				arg_10_0:_releaseLoopEffect()
 			else
-				FightController.instance:registerCallback(FightEvent.EntityEffectLoaded, slot0._onRemoveEffectLoaded, slot0)
+				FightController.instance:registerCallback(FightEvent.EntityEffectLoaded, arg_10_0._onRemoveEffectLoaded, arg_10_0)
 			end
 		else
-			slot0:_releaseLoopEffect()
+			arg_10_0:_releaseLoopEffect()
 		end
 	end
 
-	slot0:_playAudio(slot0._config.closeAudio)
+	arg_10_0:_playAudio(arg_10_0._config.closeAudio)
 end
 
-function slot0._releaseLoopAfterCloseAni(slot0)
-	slot0:_releaseLoopEffect()
+function var_0_0._releaseLoopAfterCloseAni(arg_11_0)
+	arg_11_0:_releaseLoopEffect()
 end
 
-function slot0._releaseLoopEffect(slot0)
-	if slot0._loopEffect then
-		slot0:_releaseEffect(slot0._loopEffect)
+function var_0_0._releaseLoopEffect(arg_12_0)
+	if arg_12_0._loopEffect then
+		arg_12_0:_releaseEffect(arg_12_0._loopEffect)
 
-		slot0._loopEffect = nil
+		arg_12_0._loopEffect = nil
 	end
 end
 
-function slot0._onRemoveEffectLoaded(slot0, slot1, slot2)
-	if slot0._removeEffectWrap == slot2 then
-		FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, slot0._onRemoveEffectLoaded, slot0)
-		slot0:_releaseLoopEffect()
+function var_0_0._onRemoveEffectLoaded(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_0._removeEffectWrap == arg_13_2 then
+		FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, arg_13_0._onRemoveEffectLoaded, arg_13_0)
+		arg_13_0:_releaseLoopEffect()
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.FightFocusView and slot0._loopEffect then
-		slot0._loopEffect:setActive(false, "FightSceneMagicCircleComp_FightFocusView")
+function var_0_0._onOpenView(arg_14_0, arg_14_1)
+	if arg_14_1 == ViewName.FightFocusView and arg_14_0._loopEffect then
+		arg_14_0._loopEffect:setActive(false, "FightSceneMagicCircleComp_FightFocusView")
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.FightFocusView and slot0._loopEffect then
-		slot0._loopEffect:setActive(true, "FightSceneMagicCircleComp_FightFocusView")
+function var_0_0._onCloseViewFinish(arg_15_0, arg_15_1)
+	if arg_15_1 == ViewName.FightFocusView and arg_15_0._loopEffect then
+		arg_15_0._loopEffect:setActive(true, "FightSceneMagicCircleComp_FightFocusView")
 	end
 end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2, slot3)
-	if slot1:getMO() and slot4:isUniqueSkill(slot2) and slot0._loopEffect then
-		slot0._loopEffect:setActive(false, "FightSceneMagicCircleComp_onSkillPlayStart" .. slot3.stepUid)
+function var_0_0._onSkillPlayStart(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_1:getMO()
+
+	if var_16_0 and var_16_0:isUniqueSkill(arg_16_2) and arg_16_0._loopEffect then
+		arg_16_0._loopEffect:setActive(false, "FightSceneMagicCircleComp_onSkillPlayStart" .. arg_16_3.stepUid)
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
-	if slot1:getMO() and slot4:isUniqueSkill(slot2) and slot0._loopEffect then
-		slot0._loopEffect:setActive(true, "FightSceneMagicCircleComp_onSkillPlayStart" .. slot3.stepUid)
+function var_0_0._onSkillPlayFinish(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = arg_17_1:getMO()
+
+	if var_17_0 and var_17_0:isUniqueSkill(arg_17_2) and arg_17_0._loopEffect then
+		arg_17_0._loopEffect:setActive(true, "FightSceneMagicCircleComp_onSkillPlayStart" .. arg_17_3.stepUid)
 	end
 end
 
-function slot0._onChangeSceneVisible(slot0, slot1)
+function var_0_0._onChangeSceneVisible(arg_18_0, arg_18_1)
+	return
 end
 
-function slot0._onUpdateMagicCircile(slot0, slot1)
+function var_0_0._onUpdateMagicCircile(arg_19_0, arg_19_1)
+	return
 end
 
-function slot0._onRestartStageBefore(slot0)
-	slot0:releaseAllEffect()
+function var_0_0._onRestartStageBefore(arg_20_0)
+	arg_20_0:releaseAllEffect()
 end
 
-function slot0._releaseEffect(slot0, slot1)
-	slot0._effectDic[slot1.uniqueId] = nil
+function var_0_0._releaseEffect(arg_21_0, arg_21_1)
+	arg_21_0._effectDic[arg_21_1.uniqueId] = nil
 
-	if slot0._entity then
-		slot0._entity.effect:removeEffect(slot1)
+	if arg_21_0._entity then
+		arg_21_0._entity.effect:removeEffect(arg_21_1)
 	end
 end
 
-function slot0.releaseAllEffect(slot0)
-	for slot4, slot5 in pairs(slot0._effectDic) do
-		slot0:_releaseEffect(slot5)
+function var_0_0.releaseAllEffect(arg_22_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._effectDic) do
+		arg_22_0:_releaseEffect(iter_22_1)
 	end
 
-	slot0._effectDic = {}
-	slot0._loopEffect = nil
+	arg_22_0._effectDic = {}
+	arg_22_0._loopEffect = nil
 end
 
-function slot0._onStartFightEnd(slot0)
-	slot0:releaseAllEffect()
+function var_0_0._onStartFightEnd(arg_23_0)
+	arg_23_0:releaseAllEffect()
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	TaskDispatcher.cancelTask(slot0._releaseLoopAfterCloseAni, slot0)
-	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, slot0._onRemoveEffectLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.AddMagicCircile, slot0._onAddMagicCircile, slot0)
-	FightController.instance:unregisterCallback(FightEvent.DeleteMagicCircile, slot0._onDeleteMagicCircile, slot0)
-	FightController.instance:unregisterCallback(FightEvent.UpdateMagicCircile, slot0._onUpdateMagicCircile, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._onRestartStageBefore, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ChangeSceneVisible, slot0._onChangeSceneVisible, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeEnterStepBehaviour, slot0._onBeforeEnterStepBehaviour, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:unregisterCallback(FightEvent.StartFightEnd, slot0._onStartFightEnd, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	slot0:releaseAllEffect()
+function var_0_0.onSceneClose(arg_24_0, arg_24_1, arg_24_2)
+	TaskDispatcher.cancelTask(arg_24_0._releaseLoopAfterCloseAni, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, arg_24_0._onRemoveEffectLoaded, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.AddMagicCircile, arg_24_0._onAddMagicCircile, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.DeleteMagicCircile, arg_24_0._onDeleteMagicCircile, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.UpdateMagicCircile, arg_24_0._onUpdateMagicCircile, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_24_0._onRestartStageBefore, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.ChangeSceneVisible, arg_24_0._onChangeSceneVisible, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforeEnterStepBehaviour, arg_24_0._onBeforeEnterStepBehaviour, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_24_0._onSkillPlayStart, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_24_0._onSkillPlayFinish, arg_24_0)
+	FightController.instance:unregisterCallback(FightEvent.StartFightEnd, arg_24_0._onStartFightEnd, arg_24_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_24_0._onOpenView, arg_24_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_24_0._onCloseViewFinish, arg_24_0)
+	arg_24_0:releaseAllEffect()
 
-	slot0._entity = nil
+	arg_24_0._entity = nil
 end
 
-return slot0
+return var_0_0

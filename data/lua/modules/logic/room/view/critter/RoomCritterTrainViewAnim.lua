@@ -1,46 +1,49 @@
-module("modules.logic.room.view.critter.RoomCritterTrainViewAnim", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterTrainViewAnim", package.seeall)
 
-slot0 = class("RoomCritterTrainViewAnim", BaseView)
+local var_0_0 = class("RoomCritterTrainViewAnim", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._lastIshow = true
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._lastIshow = true
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenView, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseView, arg_6_0)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	slot0:_setShowView(slot0:_isCheckShowView())
+function var_0_0._onOpenView(arg_7_0, arg_7_1)
+	arg_7_0:_setShowView(arg_7_0:_isCheckShowView())
 end
 
-function slot0._onCloseView(slot0, slot1)
-	slot0:_setShowView(slot0:_isCheckShowView())
+function var_0_0._onCloseView(arg_8_0, arg_8_1)
+	arg_8_0:_setShowView(arg_8_0:_isCheckShowView())
 end
 
-function slot0._setShowView(slot0, slot1)
-	if slot0._lastIshow ~= slot1 then
-		slot0._lastIshow = slot1
+function var_0_0._setShowView(arg_9_0, arg_9_1)
+	if arg_9_0._lastIshow ~= arg_9_1 then
+		arg_9_0._lastIshow = arg_9_1
 
-		gohelper.setActive(slot0.viewGO, slot1)
+		gohelper.setActive(arg_9_0.viewGO, arg_9_1)
 
-		if slot1 then
+		if arg_9_1 then
 			CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingShowView)
 		else
 			CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingHideView)
@@ -48,15 +51,15 @@ function slot0._setShowView(slot0, slot1)
 	end
 end
 
-function slot0._setBuildingShowView(slot0, slot1)
-	if slot0._lastBuildingShow ~= slot1 then
-		slot0._lastBuildingShow = slot1
+function var_0_0._setBuildingShowView(arg_10_0, arg_10_1)
+	if arg_10_0._lastBuildingShow ~= arg_10_1 then
+		arg_10_0._lastBuildingShow = arg_10_1
 	end
 end
 
-function slot0._isCheckShowView(slot0)
-	if not slot0._showHitViewNameList then
-		slot0._showHitViewNameList = {
+function var_0_0._isCheckShowView(arg_11_0)
+	if not arg_11_0._showHitViewNameList then
+		arg_11_0._showHitViewNameList = {
 			ViewName.RoomCritterTrainEventView,
 			ViewName.RoomCritterTrainStoryView,
 			ViewName.RoomBranchView,
@@ -64,8 +67,8 @@ function slot0._isCheckShowView(slot0)
 		}
 	end
 
-	for slot4, slot5 in ipairs(slot0._showHitViewNameList) do
-		if ViewMgr.instance:isOpen(slot5) then
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._showHitViewNameList) do
+		if ViewMgr.instance:isOpen(iter_11_1) then
 			return false
 		end
 	end
@@ -73,10 +76,12 @@ function slot0._isCheckShowView(slot0)
 	return true
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

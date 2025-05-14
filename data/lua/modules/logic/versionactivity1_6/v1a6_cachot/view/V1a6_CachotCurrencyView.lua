@@ -1,109 +1,110 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCurrencyView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCurrencyView", package.seeall)
 
-slot0 = class("V1a6_CachotCurrencyView", BaseView)
+local var_0_0 = class("V1a6_CachotCurrencyView", BaseView)
 
-function slot0.ctor(slot0, slot1)
-	slot0._rootPath = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._rootPath = arg_1_1
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onInitView(slot0)
-	slot0._rootGo = gohelper.findChild(slot0.viewGO, slot0._rootPath or "")
-	slot0._txtcoin = gohelper.findChildText(slot0._rootGo, "#go_shop/#txt_num2")
-	slot0._slidercurrency = gohelper.findChildSlider(slot0._rootGo, "#go_hope/bg/#slider_progress")
-	slot0._txtcurrency = gohelper.findChildTextMesh(slot0._rootGo, "#go_hope/#txt_num2")
-	slot0._txtcurrencytotal = gohelper.findChildTextMesh(slot0._rootGo, "#go_hope/#txt_num1")
-	slot0._btnClickCurrency = gohelper.findChildButtonWithAudio(slot0._rootGo, "#go_hope/#btn_click")
-	slot0._btnClickCoin = gohelper.findChildButtonWithAudio(slot0._rootGo, "#go_shop/#btn_click")
-	slot0._goeffectcoinadd = gohelper.findChild(slot0._rootGo, "#go_shop/vx_vitality")
-	slot0._goeffectcurrencyadd = gohelper.findChild(slot0._rootGo, "#go_hope/vx_vitality")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._rootGo = gohelper.findChild(arg_2_0.viewGO, arg_2_0._rootPath or "")
+	arg_2_0._txtcoin = gohelper.findChildText(arg_2_0._rootGo, "#go_shop/#txt_num2")
+	arg_2_0._slidercurrency = gohelper.findChildSlider(arg_2_0._rootGo, "#go_hope/bg/#slider_progress")
+	arg_2_0._txtcurrency = gohelper.findChildTextMesh(arg_2_0._rootGo, "#go_hope/#txt_num2")
+	arg_2_0._txtcurrencytotal = gohelper.findChildTextMesh(arg_2_0._rootGo, "#go_hope/#txt_num1")
+	arg_2_0._btnClickCurrency = gohelper.findChildButtonWithAudio(arg_2_0._rootGo, "#go_hope/#btn_click")
+	arg_2_0._btnClickCoin = gohelper.findChildButtonWithAudio(arg_2_0._rootGo, "#go_shop/#btn_click")
+	arg_2_0._goeffectcoinadd = gohelper.findChild(arg_2_0._rootGo, "#go_shop/vx_vitality")
+	arg_2_0._goeffectcurrencyadd = gohelper.findChild(arg_2_0._rootGo, "#go_hope/vx_vitality")
 end
 
-function slot0.addEvents(slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, slot0.updateCurrency, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateCoin, slot0.updateCurrency, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateCurrency, slot0.updateCurrency, slot0)
+function var_0_0.addEvents(arg_3_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_3_0.updateCurrency, arg_3_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateCoin, arg_3_0.updateCurrency, arg_3_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateCurrency, arg_3_0.updateCurrency, arg_3_0)
 
-	if slot0._btnClickCurrency then
-		slot0._btnClickCurrency:AddClickListener(slot0._clickCurrency, slot0)
+	if arg_3_0._btnClickCurrency then
+		arg_3_0._btnClickCurrency:AddClickListener(arg_3_0._clickCurrency, arg_3_0)
 	end
 
-	if slot0._btnClickCoin then
-		slot0._btnClickCoin:AddClickListener(slot0._clickCoin, slot0)
-	end
-end
-
-function slot0.removeEvents(slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateRogueInfo, slot0.updateCurrency, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateCoin, slot0.updateCurrency, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateCurrency, slot0.updateCurrency, slot0)
-
-	if slot0._btnClickCurrency then
-		slot0._btnClickCurrency:RemoveClickListener()
-	end
-
-	if slot0._btnClickCoin then
-		slot0._btnClickCoin:RemoveClickListener()
+	if arg_3_0._btnClickCoin then
+		arg_3_0._btnClickCoin:AddClickListener(arg_3_0._clickCoin, arg_3_0)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:hideEffect()
-	slot0:updateCurrency()
+function var_0_0.removeEvents(arg_4_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_4_0.updateCurrency, arg_4_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateCoin, arg_4_0.updateCurrency, arg_4_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateCurrency, arg_4_0.updateCurrency, arg_4_0)
+
+	if arg_4_0._btnClickCurrency then
+		arg_4_0._btnClickCurrency:RemoveClickListener()
+	end
+
+	if arg_4_0._btnClickCoin then
+		arg_4_0._btnClickCoin:RemoveClickListener()
+	end
 end
 
-function slot0._clickCurrency(slot0)
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:hideEffect()
+	arg_5_0:updateCurrency()
+end
+
+function var_0_0._clickCurrency(arg_6_0)
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a6CachotCurrency, false, nil, false)
 end
 
-function slot0._clickCoin(slot0)
+function var_0_0._clickCoin(arg_7_0)
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a6CachotCoin, false, nil, false)
 end
 
-function slot0.updateCurrency(slot0)
-	slot0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
-	slot0._txtcoin.text = slot0._rogueInfo.coin
-	slot0._txtcurrency.text = math.min(slot0._rogueInfo.currency, slot0._rogueInfo.currencyTotal)
-	slot0._txtcurrencytotal.text = slot0._rogueInfo.currencyTotal
-	slot1 = false
+function var_0_0.updateCurrency(arg_8_0)
+	arg_8_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	arg_8_0._txtcoin.text = arg_8_0._rogueInfo.coin
+	arg_8_0._txtcurrency.text = math.min(arg_8_0._rogueInfo.currency, arg_8_0._rogueInfo.currencyTotal)
+	arg_8_0._txtcurrencytotal.text = arg_8_0._rogueInfo.currencyTotal
 
-	if slot0._cacheCoin then
-		if slot0._cacheCoin < slot0._rogueInfo.coin then
-			gohelper.setActive(slot0._goeffectcoinadd, true)
+	local var_8_0 = false
 
-			slot1 = true
+	if arg_8_0._cacheCoin then
+		if arg_8_0._cacheCoin < arg_8_0._rogueInfo.coin then
+			gohelper.setActive(arg_8_0._goeffectcoinadd, true)
+
+			var_8_0 = true
 		end
 
-		if slot0._cacheCurrency < slot0._rogueInfo.currency then
-			gohelper.setActive(slot0._goeffectcurrencyadd, true)
+		if arg_8_0._cacheCurrency < arg_8_0._rogueInfo.currency then
+			gohelper.setActive(arg_8_0._goeffectcurrencyadd, true)
 
-			slot1 = true
+			var_8_0 = true
 		end
 	end
 
-	slot0._cacheCoin = slot0._rogueInfo.coin
-	slot0._cacheCurrency = slot0._rogueInfo.currency
+	arg_8_0._cacheCoin = arg_8_0._rogueInfo.coin
+	arg_8_0._cacheCurrency = arg_8_0._rogueInfo.currency
 
-	if slot0._rogueInfo.currencyTotal == 0 then
-		slot0._slidercurrency:SetValue(0)
+	if arg_8_0._rogueInfo.currencyTotal == 0 then
+		arg_8_0._slidercurrency:SetValue(0)
 	else
-		slot0._slidercurrency:SetValue(slot0._rogueInfo.currency / slot0._rogueInfo.currencyTotal)
+		arg_8_0._slidercurrency:SetValue(arg_8_0._rogueInfo.currency / arg_8_0._rogueInfo.currencyTotal)
 	end
 
-	if slot1 then
-		TaskDispatcher.cancelTask(slot0.hideEffect, slot0)
-		TaskDispatcher.runDelay(slot0.hideEffect, slot0, 2)
+	if var_8_0 then
+		TaskDispatcher.cancelTask(arg_8_0.hideEffect, arg_8_0)
+		TaskDispatcher.runDelay(arg_8_0.hideEffect, arg_8_0, 2)
 	end
 end
 
-function slot0.hideEffect(slot0)
-	gohelper.setActive(slot0._goeffectcoinadd, false)
-	gohelper.setActive(slot0._goeffectcurrencyadd, false)
+function var_0_0.hideEffect(arg_9_0)
+	gohelper.setActive(arg_9_0._goeffectcoinadd, false)
+	gohelper.setActive(arg_9_0._goeffectcurrencyadd, false)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.hideEffect, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.hideEffect, arg_10_0)
 end
 
-return slot0
+return var_0_0

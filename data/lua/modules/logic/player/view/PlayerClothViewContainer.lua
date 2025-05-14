@@ -1,62 +1,71 @@
-module("modules.logic.player.view.PlayerClothViewContainer", package.seeall)
+﻿module("modules.logic.player.view.PlayerClothViewContainer", package.seeall)
 
-slot0 = class("PlayerClothViewContainer", BaseViewContainer)
+local var_0_0 = class("PlayerClothViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_skills"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#scroll_skills/Viewport/#go_skillitem"
-	slot1.cellClass = PlayerClothItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 300
-	slot1.cellHeight = 155
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = -4.34
-	slot1.startSpace = 10
-	slot0._clothListView = LuaListScrollView.New(PlayerClothListViewModel.instance, slot1)
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#scroll_skills"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "#scroll_skills/Viewport/#go_skillitem"
+	var_1_0.cellClass = PlayerClothItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 300
+	var_1_0.cellHeight = 155
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = -4.34
+	var_1_0.startSpace = 10
+	arg_1_0._clothListView = LuaListScrollView.New(PlayerClothListViewModel.instance, var_1_0)
 
 	return {
 		PlayerClothView.New(),
-		slot0._clothListView,
+		arg_1_0._clothListView,
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0.viewParam and arg_2_0.viewParam.isTip
+
+	arg_2_0.navigateView = NavigateButtonsView.New({
 		true,
 		false,
-		not (slot0.viewParam and slot0.viewParam.isTip)
+		not var_2_0
 	}, HelpEnum.HelpId.PlayCloth)
 
 	return {
-		slot0.navigateView
+		arg_2_0.navigateView
 	}
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	PlayerClothListViewModel.instance:update()
-	PlayerController.instance:registerCallback(PlayerEvent.SelectCloth, slot0._onSelectCloth, slot0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0.navigateView.showHelpBtnIcon, slot0.navigateView)
+	PlayerController.instance:registerCallback(PlayerEvent.SelectCloth, arg_3_0._onSelectCloth, arg_3_0)
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_3_0.navigateView.showHelpBtnIcon, arg_3_0.navigateView)
 end
 
-function slot0.onContainerDestroy(slot0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.SelectCloth, slot0._onSelectCloth, slot0)
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0.navigateView.showHelpBtnIcon, slot0.navigateView)
+function var_0_0.onContainerDestroy(arg_4_0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.SelectCloth, arg_4_0._onSelectCloth, arg_4_0)
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_4_0.navigateView.showHelpBtnIcon, arg_4_0.navigateView)
 end
 
-function slot0.onContainerOpen(slot0)
+function var_0_0.onContainerOpen(arg_5_0)
 	PlayerClothListViewModel.instance:update()
 end
 
-function slot0._onSelectCloth(slot0, slot1)
-	if PlayerClothListViewModel.instance:getById(slot1) and PlayerClothListViewModel.instance:getIndex(slot2) then
-		slot0._index = slot3
+function var_0_0._onSelectCloth(arg_6_0, arg_6_1)
+	local var_6_0 = PlayerClothListViewModel.instance:getById(arg_6_1)
 
-		slot0._clothListView:selectCell(slot3, true)
+	if var_6_0 then
+		local var_6_1 = PlayerClothListViewModel.instance:getIndex(var_6_0)
+
+		if var_6_1 then
+			arg_6_0._index = var_6_1
+
+			arg_6_0._clothListView:selectCell(var_6_1, true)
+		end
 	end
 end
 
-return slot0
+return var_0_0

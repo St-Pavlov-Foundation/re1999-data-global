@@ -1,14 +1,15 @@
-module("modules.common.global.screen.GameMsgLockState", package.seeall)
+﻿module("modules.common.global.screen.GameMsgLockState", package.seeall)
 
-slot0 = class("GameMsgLockState")
-slot0.IgnoreCmds = {
-	[24032.0] = true,
-	[-31567.0] = true
+local var_0_0 = class("GameMsgLockState")
+
+var_0_0.IgnoreCmds = {
+	[24032] = true,
+	[-31567] = true
 }
-slot0.IgnoreExceptionCmd = {
+var_0_0.IgnoreExceptionCmd = {
 	25708
 }
-slot0.IgnoreExceptionStatus = {
+var_0_0.IgnoreExceptionStatus = {
 	-274,
 	-275,
 	-276,
@@ -26,117 +27,128 @@ slot0.IgnoreExceptionStatus = {
 	-321
 }
 
-function slot0.ctor(slot0)
-	slot0._sendCmdList = {}
-	slot0._sendProtoList = {}
-	slot0._ignoreExceptionCmd = {}
-	slot0._ignoreExceptionStatus = {}
-	slot0._blockCmdDict = {}
-	slot0._blockCount = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._sendCmdList = {}
+	arg_1_0._sendProtoList = {}
+	arg_1_0._ignoreExceptionCmd = {}
+	arg_1_0._ignoreExceptionStatus = {}
+	arg_1_0._blockCmdDict = {}
+	arg_1_0._blockCount = 0
 
-	slot0:addConstEvents()
+	arg_1_0:addConstEvents()
 end
 
-function slot0.addConstEvents(slot0)
-	LuaSocketMgr.instance:registerPreSender(slot0)
-	LuaSocketMgr.instance:registerPreReceiver(slot0)
-	slot0:setIgnoreException(uv0.IgnoreExceptionCmd, uv0.IgnoreExceptionStatus)
-	LoginController.instance:registerCallback(LoginEvent.OnLogout, slot0._endBlock, slot0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, slot0._endBlock, slot0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnMsgTimeout, slot0._endBlock, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	LuaSocketMgr.instance:registerPreSender(arg_2_0)
+	LuaSocketMgr.instance:registerPreReceiver(arg_2_0)
+	arg_2_0:setIgnoreException(var_0_0.IgnoreExceptionCmd, var_0_0.IgnoreExceptionStatus)
+	LoginController.instance:registerCallback(LoginEvent.OnLogout, arg_2_0._endBlock, arg_2_0)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, arg_2_0._endBlock, arg_2_0)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnMsgTimeout, arg_2_0._endBlock, arg_2_0)
 end
 
-function slot0.preSendProto(slot0, slot1, slot2, slot3)
-	if uv0.IgnoreCmds[slot1] then
+function var_0_0.preSendProto(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if var_0_0.IgnoreCmds[arg_3_1] then
 		return
 	end
 
-	if slot0._blockCount == 0 then
+	if arg_3_0._blockCount == 0 then
 		UIBlockMgr.instance:startBlock(UIBlockKey.MsgLock)
 	end
 
-	slot0._blockCmdDict[slot1] = slot0._blockCmdDict[slot1] and slot0._blockCmdDict[slot1] + 1 or 1
-	slot0._blockCount = slot0._blockCount + 1
+	arg_3_0._blockCmdDict[arg_3_1] = arg_3_0._blockCmdDict[arg_3_1] and arg_3_0._blockCmdDict[arg_3_1] + 1 or 1
+	arg_3_0._blockCount = arg_3_0._blockCount + 1
 
-	TaskDispatcher.cancelTask(slot0._onDelayCancelLock, slot0)
-	TaskDispatcher.runDelay(slot0._onDelayCancelLock, slot0, 30)
-	table.insert(slot0._sendCmdList, slot1)
-	table.insert(slot0._sendProtoList, slot2)
+	TaskDispatcher.cancelTask(arg_3_0._onDelayCancelLock, arg_3_0)
+	TaskDispatcher.runDelay(arg_3_0._onDelayCancelLock, arg_3_0, 30)
+	table.insert(arg_3_0._sendCmdList, arg_3_1)
+	table.insert(arg_3_0._sendProtoList, arg_3_2)
 end
 
-function slot0.preReceiveMsg(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if uv0.IgnoreCmds[slot2] then
+function var_0_0.preReceiveMsg(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
+	if var_0_0.IgnoreCmds[arg_4_2] then
 		return
 	end
 
-	slot7 = nil
+	local var_4_0
 
-	while #slot0._sendCmdList > 0 do
-		if table.remove(slot0._sendCmdList, #slot0._sendCmdList) == slot2 then
-			slot7 = table.remove(slot0._sendProtoList, #slot0._sendProtoList)
+	while #arg_4_0._sendCmdList > 0 do
+		local var_4_1 = table.remove(arg_4_0._sendCmdList, #arg_4_0._sendCmdList)
+		local var_4_2 = table.remove(arg_4_0._sendProtoList, #arg_4_0._sendProtoList)
+
+		if var_4_1 == arg_4_2 then
+			var_4_0 = var_4_2
 
 			break
 		end
 	end
 
-	if slot1 ~= 0 and slot0:_canLogException(slot2, slot1) then
-		logError(string.format("<== Recv Msg, cmd:%d %s resultCode:%d desc:%s param:%s", slot2, slot3, slot1, lua_toast.configDict[slot1] and slot8.tips or "", slot7 and tostring(slot7) or ""))
+	if arg_4_1 ~= 0 and arg_4_0:_canLogException(arg_4_2, arg_4_1) then
+		local var_4_3 = lua_toast.configDict[arg_4_1]
+		local var_4_4 = var_4_3 and var_4_3.tips or ""
+		local var_4_5 = var_4_0 and tostring(var_4_0) or ""
+
+		logError(string.format("<== Recv Msg, cmd:%d %s resultCode:%d desc:%s param:%s", arg_4_2, arg_4_3, arg_4_1, var_4_4, var_4_5))
 	end
 
-	if slot0._blockCmdDict[slot2] and slot8 > 0 then
-		if slot8 == 1 then
-			slot0._blockCmdDict[slot2] = nil
+	local var_4_6 = arg_4_0._blockCmdDict[arg_4_2]
+
+	if var_4_6 and var_4_6 > 0 then
+		if var_4_6 == 1 then
+			arg_4_0._blockCmdDict[arg_4_2] = nil
 		else
-			slot0._blockCmdDict[slot2] = slot8 - 1
+			arg_4_0._blockCmdDict[arg_4_2] = var_4_6 - 1
 		end
 
-		slot0._blockCount = slot0._blockCount - 1
+		arg_4_0._blockCount = arg_4_0._blockCount - 1
 
-		if slot0._blockCount == 0 then
+		if arg_4_0._blockCount == 0 then
 			UIBlockMgr.instance:endBlock(UIBlockKey.MsgLock)
-			TaskDispatcher.cancelTask(slot0._onDelayCancelLock, slot0)
+			TaskDispatcher.cancelTask(arg_4_0._onDelayCancelLock, arg_4_0)
 		end
 	end
 end
 
-function slot0._onDelayCancelLock(slot0)
-	for slot5, slot6 in pairs(slot0._blockCmdDict) do
-		table.insert({}, module_cmd[slot5][2])
+function var_0_0._onDelayCancelLock(arg_5_0)
+	local var_5_0 = {}
+
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._blockCmdDict) do
+		table.insert(var_5_0, module_cmd[iter_5_0][2])
 	end
 
-	slot0:_endBlock()
+	arg_5_0:_endBlock()
 
 	if isDebugBuild then
-		logError("msg lock: " .. table.concat(slot1, " "))
+		logError("msg lock: " .. table.concat(var_5_0, " "))
 	end
 end
 
-function slot0._endBlock(slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayCancelLock, slot0)
+function var_0_0._endBlock(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._onDelayCancelLock, arg_6_0)
 	UIBlockMgr.instance:endBlock(UIBlockKey.MsgLock)
 
-	slot0._sendCmdList = {}
-	slot0._sendProtoList = {}
-	slot0._blockCmdDict = {}
-	slot0._blockCount = 0
+	arg_6_0._sendCmdList = {}
+	arg_6_0._sendProtoList = {}
+	arg_6_0._blockCmdDict = {}
+	arg_6_0._blockCount = 0
 end
 
-function slot0.setIgnoreException(slot0, slot1, slot2)
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot0._ignoreExceptionCmd[slot7] = true
+function var_0_0.setIgnoreException(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+			arg_7_0._ignoreExceptionCmd[iter_7_1] = true
 		end
 	end
 
-	if slot2 then
-		for slot6, slot7 in ipairs(slot2) do
-			slot0._ignoreExceptionStatus[slot7] = true
+	if arg_7_2 then
+		for iter_7_2, iter_7_3 in ipairs(arg_7_2) do
+			arg_7_0._ignoreExceptionStatus[iter_7_3] = true
 		end
 	end
 end
 
-function slot0._canLogException(slot0, slot1, slot2)
-	return not slot0._ignoreExceptionCmd[slot1] and not slot0._ignoreExceptionStatus[slot2]
+function var_0_0._canLogException(arg_8_0, arg_8_1, arg_8_2)
+	return not arg_8_0._ignoreExceptionCmd[arg_8_1] and not arg_8_0._ignoreExceptionStatus[arg_8_2]
 end
 
-return slot0
+return var_0_0

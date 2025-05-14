@@ -1,57 +1,66 @@
-module("modules.logic.scene.room.fsm.RoomTransitionUnUseCharacter", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionUnUseCharacter", package.seeall)
 
-slot0 = class("RoomTransitionUnUseCharacter", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionUnUseCharacter", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot2 = slot0._param.heroId
-	slot3 = slot0._param.tempCharacterMO
-	slot4 = slot0._param.anim
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	RoomCharacterController.instance:interruptInteraction(slot3:getCurrentInteractionId())
+	local var_3_0 = arg_3_0._param.heroId
+	local var_3_1 = arg_3_0._param.tempCharacterMO
+	local var_3_2 = arg_3_0._param.anim
 
-	if slot3 and (slot3:isTrainSourceState() or slot3:isTraining()) then
-		slot3.sourceState = RoomCharacterEnum.SourceState.Train
+	RoomCharacterController.instance:interruptInteraction(var_3_1:getCurrentInteractionId())
 
-		slot0:_animDone()
+	if var_3_1 and (var_3_1:isTrainSourceState() or var_3_1:isTraining()) then
+		var_3_1.sourceState = RoomCharacterEnum.SourceState.Train
+
+		arg_3_0:_animDone()
 		GameFacade.showToast(ToastEnum.RoomUnUseTrainCharacter)
 
 		return
 	end
 
-	slot5 = slot0._scene.charactermgr:getCharacterEntity(slot3.id, SceneTag.RoomCharacter)
+	local var_3_3 = arg_3_0._scene.charactermgr:getCharacterEntity(var_3_1.id, SceneTag.RoomCharacter)
 
-	if slot4 and slot5 and slot5.characterspine then
-		slot5.characterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "close", 0, slot0._animDone, slot0)
+	if var_3_2 and var_3_3 and var_3_3.characterspine then
+		var_3_3.characterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "close", 0, arg_3_0._animDone, arg_3_0)
 
-		if slot0._scene.go:spawnEffect(RoomScenePreloader.ResEffectPressingCharacter, nil, "disappearEffect", nil, 2.5) then
-			slot7, slot8, slot9 = transformhelper.getPos(slot5.staticContainerGO.transform)
+		local var_3_4 = arg_3_0._scene.go:spawnEffect(RoomScenePreloader.ResEffectPressingCharacter, nil, "disappearEffect", nil, 2.5)
 
-			transformhelper.setPos(slot6.transform, slot7, slot8, slot9)
+		if var_3_4 then
+			local var_3_5, var_3_6, var_3_7 = transformhelper.getPos(var_3_3.staticContainerGO.transform)
 
-			if slot6:GetComponent(RoomEnum.ComponentType.Animator) then
-				slot10:Play("disappear", 0, 0)
+			transformhelper.setPos(var_3_4.transform, var_3_5, var_3_6, var_3_7)
+
+			local var_3_8 = var_3_4:GetComponent(RoomEnum.ComponentType.Animator)
+
+			if var_3_8 then
+				var_3_8:Play("disappear", 0, 0)
 			end
 		end
 	else
-		slot0:_animDone()
+		arg_3_0:_animDone()
 	end
 end
 
-function slot0._animDone(slot0)
-	if slot0._param.tempCharacterMO:isTrainSourceState() or slot1:isTraining() then
+function var_0_0._animDone(arg_4_0)
+	local var_4_0 = arg_4_0._param.tempCharacterMO
+
+	if var_4_0:isTrainSourceState() or var_4_0:isTraining() then
 		RoomCharacterModel.instance:placeTempCharacterMO()
 	else
-		if slot0._scene.charactermgr:getCharacterEntity(slot1.id, SceneTag.RoomCharacter) then
-			slot0._scene.charactermgr:destroyCharacter(slot2)
+		local var_4_1 = arg_4_0._scene.charactermgr:getCharacterEntity(var_4_0.id, SceneTag.RoomCharacter)
+
+		if var_4_1 then
+			arg_4_0._scene.charactermgr:destroyCharacter(var_4_1)
 		end
 
 		RoomCharacterModel.instance:unUseRevertCharacterMO()
@@ -61,13 +70,15 @@ function slot0._animDone(slot0)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterCanConfirm)
 	RoomMapController.instance:dispatchEvent(RoomEvent.UnUseCharacter)
 	RoomCharacterPlaceListModel.instance:setCharacterPlaceList()
-	slot0:onDone()
+	arg_4_0:onDone()
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_5_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

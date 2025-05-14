@@ -1,30 +1,30 @@
-module("modules.logic.achievement.view.AchievementEntryViewContainer", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementEntryViewContainer", package.seeall)
 
-slot0 = class("AchievementEntryViewContainer", BaseViewContainer)
+local var_0_0 = class("AchievementEntryViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		AchievementEntryView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, slot0.closeCallback)
+		}, nil, arg_2_0.closeCallback)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.closeCallback(slot0)
+function var_0_0.closeCallback(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_close)
 end
 
-return slot0
+return var_0_0

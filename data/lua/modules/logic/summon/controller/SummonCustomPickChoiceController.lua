@@ -1,104 +1,127 @@
-module("modules.logic.summon.controller.SummonCustomPickChoiceController", package.seeall)
+﻿module("modules.logic.summon.controller.SummonCustomPickChoiceController", package.seeall)
 
-slot0 = class("SummonCustomPickChoiceController", BaseController)
+local var_0_0 = class("SummonCustomPickChoiceController", BaseController)
 
-function slot0.onOpenView(slot0, slot1)
-	SummonCustomPickChoiceListModel.instance:initDatas(slot1)
-	slot0:dispatchEvent(SummonEvent.onCustomPickListChanged)
+function var_0_0.onOpenView(arg_1_0, arg_1_1)
+	SummonCustomPickChoiceListModel.instance:initDatas(arg_1_1)
+	arg_1_0:dispatchEvent(SummonEvent.onCustomPickListChanged)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
+	return
 end
 
-function slot0.trySendChoice(slot0)
-	if not SummonMainModel.instance:getPoolServerMO(SummonCustomPickChoiceListModel.instance:getPoolId()) or not slot2:isOpening() then
+function var_0_0.trySendChoice(arg_3_0)
+	local var_3_0 = SummonCustomPickChoiceListModel.instance:getPoolId()
+	local var_3_1 = SummonMainModel.instance:getPoolServerMO(var_3_0)
+
+	if not var_3_1 or not var_3_1:isOpening() then
 		return false
 	end
 
-	if not SummonCustomPickChoiceListModel.instance:getSelectIds() then
+	local var_3_2 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+
+	if not var_3_2 then
 		return false
 	end
 
-	if SummonCustomPickChoiceListModel.instance:getMaxSelectCount() > #slot3 then
-		if slot4 == 1 then
+	local var_3_3 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
+
+	if var_3_3 > #var_3_2 then
+		if var_3_3 == 1 then
 			GameFacade.showToast(ToastEnum.SummonCustomPickOneMoreSelect)
 		end
 
-		if slot4 == 2 then
+		if var_3_3 == 2 then
 			GameFacade.showToast(ToastEnum.SummonCustomPickTwoMoreSelect)
 		end
 
-		if slot4 == 3 then
+		if var_3_3 == 3 then
 			GameFacade.showToast(ToastEnum.SummonCustomPickThreeMoreSelect)
 		end
 
 		return false
 	end
 
-	slot5 = slot0:getSelectHeroNameStr(slot3)
-	slot6, slot7 = slot0:getConfirmParam(slot3)
+	local var_3_4 = arg_3_0:getSelectHeroNameStr(var_3_2)
+	local var_3_5, var_3_6 = arg_3_0:getConfirmParam(var_3_2)
 
-	if SummonConfig.instance:isStrongCustomChoice(slot1) then
-		slot0:realSendChoice()
+	if SummonConfig.instance:isStrongCustomChoice(var_3_0) then
+		arg_3_0:realSendChoice()
 	else
-		GameFacade.showMessageBox(slot6, MsgBoxEnum.BoxType.Yes_No, slot0.realSendChoice, nil, , slot0, nil, , slot5, slot7)
+		GameFacade.showMessageBox(var_3_5, MsgBoxEnum.BoxType.Yes_No, arg_3_0.realSendChoice, nil, nil, arg_3_0, nil, nil, var_3_4, var_3_6)
 	end
 end
 
-function slot0.realSendChoice(slot0)
-	if SummonConfig.instance:isStrongCustomChoice(SummonCustomPickChoiceListModel.instance:getPoolId()) then
-		SummonRpc.instance:sendChooseEnhancedPoolHeroRequest(slot1, SummonCustomPickChoiceListModel.instance:getSelectIds()[1])
+function var_0_0.realSendChoice(arg_4_0)
+	local var_4_0 = SummonCustomPickChoiceListModel.instance:getPoolId()
+
+	if SummonConfig.instance:isStrongCustomChoice(var_4_0) then
+		local var_4_1 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+
+		SummonRpc.instance:sendChooseEnhancedPoolHeroRequest(var_4_0, var_4_1[1])
 	else
-		SummonRpc.instance:sendChooseDoubleUpHeroRequest(slot1, SummonCustomPickChoiceListModel.instance:getSelectIds())
+		local var_4_2 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+
+		SummonRpc.instance:sendChooseDoubleUpHeroRequest(var_4_0, var_4_2)
 	end
 end
 
-function slot0.getSelectHeroNameStr(slot0, slot1)
-	slot2 = ""
+function var_0_0.getSelectHeroNameStr(arg_5_0, arg_5_1)
+	local var_5_0 = ""
 
-	for slot6 = 1, #slot1 do
-		slot7 = HeroConfig.instance:getHeroCO(slot1[slot6])
-		slot2 = (slot6 ~= 1 or slot7.name) and slot7.name .. luaLang("sep_overseas") .. slot7.name
+	for iter_5_0 = 1, #arg_5_1 do
+		local var_5_1 = HeroConfig.instance:getHeroCO(arg_5_1[iter_5_0])
+
+		if iter_5_0 == 1 then
+			var_5_0 = var_5_1.name
+		else
+			var_5_0 = var_5_0 .. luaLang("sep_overseas") .. var_5_1.name
+		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getConfirmParam(slot0, slot1)
-	if SummonConfig.instance:getSummonPool(SummonCustomPickChoiceListModel.instance:getPoolId()).type == SummonEnum.Type.StrongCustomOnePick then
-		return MessageBoxIdDefine.SummonStrongCustomPickConfirm, slot3.nameCn
+function var_0_0.getConfirmParam(arg_6_0, arg_6_1)
+	local var_6_0 = SummonCustomPickChoiceListModel.instance:getPoolId()
+	local var_6_1 = SummonConfig.instance:getSummonPool(var_6_0)
+
+	if var_6_1.type == SummonEnum.Type.StrongCustomOnePick then
+		return MessageBoxIdDefine.SummonStrongCustomPickConfirm, var_6_1.nameCn
 	else
-		return MessageBoxIdDefine.SummonCustomPickConfirm, slot3.nameCn
+		return MessageBoxIdDefine.SummonCustomPickConfirm, var_6_1.nameCn
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot2 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+function var_0_0.setSelect(arg_7_0, arg_7_1)
+	local var_7_0 = SummonCustomPickChoiceListModel.instance:getSelectIds()
+	local var_7_1 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
 
-	if SummonCustomPickChoiceListModel.instance:getMaxSelectCount() == 1 then
+	if var_7_1 == 1 then
 		SummonCustomPickChoiceListModel.instance:clearSelectIds()
-	elseif not SummonCustomPickChoiceListModel.instance:isHeroIdSelected(slot1) and slot3 <= #slot2 then
-		if slot3 == 1 then
+	elseif not SummonCustomPickChoiceListModel.instance:isHeroIdSelected(arg_7_1) and var_7_1 <= #var_7_0 then
+		if var_7_1 == 1 then
 			GameFacade.showToast(ToastEnum.SummonCustomPickOnePleaseCancel)
 		end
 
-		if slot3 == 2 then
+		if var_7_1 == 2 then
 			GameFacade.showToast(ToastEnum.SummonCustomPickTwoPleaseCancel)
 		end
 
-		if slot3 == 3 then
+		if var_7_1 == 3 then
 			GameFacade.showToast(ToastEnum.SummonCustomPickThreePleaseCancel)
 		end
 
 		return
 	end
 
-	SummonCustomPickChoiceListModel.instance:setSelectId(slot1)
-	slot0:dispatchEvent(SummonEvent.onCustomPickListChanged)
+	SummonCustomPickChoiceListModel.instance:setSelectId(arg_7_1)
+	arg_7_0:dispatchEvent(SummonEvent.onCustomPickListChanged)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

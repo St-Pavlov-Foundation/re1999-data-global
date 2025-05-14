@@ -1,59 +1,57 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183TaskOneKeyItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183TaskOneKeyItem", package.seeall)
 
-slot0 = class("Act183TaskOneKeyItem", Act183TaskBaseItem)
+local var_0_0 = class("Act183TaskOneKeyItem", Act183TaskBaseItem)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._btngetall = gohelper.findChildButtonWithAudio(slot0.go, "#btn_getall")
-	slot0._txtdesc = gohelper.findChildText(slot0.go, "txt_desc")
+	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_getall")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.go, "txt_desc")
 end
 
-function slot0.addEventListeners(slot0)
-	uv0.super.addEventListeners(slot0)
-	slot0._btngetall:AddClickListener(slot0._btngetallOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	var_0_0.super.addEventListeners(arg_2_0)
+	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	uv0.super.removeEventListeners(slot0)
-	slot0._btngetall:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	var_0_0.super.removeEventListeners(arg_3_0)
+	arg_3_0._btngetall:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	uv0.super.onUpdateMO(slot0, slot1, slot2, slot3)
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	var_0_0.super.onUpdateMO(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 
-	slot0._canGetRewardTasks = slot1.data
+	arg_4_0._canGetRewardTasks = arg_4_1.data
 end
 
-function slot0._btngetallOnClick(slot0)
-	if not slot0._canGetRewardTasks or #slot0._canGetRewardTasks <= 0 then
+function var_0_0._btngetallOnClick(arg_5_0)
+	if not arg_5_0._canGetRewardTasks or #arg_5_0._canGetRewardTasks <= 0 then
 		return
 	end
 
-	slot0:setBlock(true)
+	arg_5_0:setBlock(true)
+	arg_5_0._animatorPlayer:Play("finish", arg_5_0._sendRpcToFinishTask, arg_5_0)
 
-	slot4 = slot0._sendRpcToFinishTask
-	slot5 = slot0
+	arg_5_0._canGetRewardTaskIds = {}
 
-	slot0._animatorPlayer:Play("finish", slot4, slot5)
-
-	slot0._canGetRewardTaskIds = {}
-
-	for slot4, slot5 in ipairs(slot0._canGetRewardTasks) do
-		table.insert(slot0._canGetRewardTaskIds, slot5.id)
-		Act183Controller.instance:dispatchEvent(Act183Event.ClickToGetReward, slot5.id)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._canGetRewardTasks) do
+		table.insert(arg_5_0._canGetRewardTaskIds, iter_5_1.id)
+		Act183Controller.instance:dispatchEvent(Act183Event.ClickToGetReward, iter_5_1.id)
 	end
 end
 
-function slot0._sendRpcToFinishTask(slot0)
-	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity183, 0, slot0._canGetRewardTaskIds, function (slot0, slot1)
-		if slot1 ~= 0 then
+function var_0_0._sendRpcToFinishTask(arg_6_0)
+	local var_6_0 = Act183Model.instance:getActivityId()
+
+	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity183, 0, arg_6_0._canGetRewardTaskIds, function(arg_7_0, arg_7_1)
+		if arg_7_1 ~= 0 then
 			return
 		end
 
-		Act183Helper.showToastWhileCanTaskRewards(uv0._canGetRewardTaskIds)
-	end, nil, Act183Model.instance:getActivityId())
-	slot0:setBlock(false)
+		Act183Helper.showToastWhileCanTaskRewards(arg_6_0._canGetRewardTaskIds)
+	end, nil, var_6_0)
+	arg_6_0:setBlock(false)
 end
 
-return slot0
+return var_0_0

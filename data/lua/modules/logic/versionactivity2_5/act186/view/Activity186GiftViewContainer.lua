@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186GiftViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GiftViewContainer", package.seeall)
 
-slot0 = class("Activity186GiftViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity186GiftViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Activity186GiftView.New()
 	}
 end
 
-return slot0
+return var_0_0

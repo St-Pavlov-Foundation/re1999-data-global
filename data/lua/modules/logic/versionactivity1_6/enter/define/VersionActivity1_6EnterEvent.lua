@@ -1,6 +1,7 @@
-module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6EnterEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6EnterEvent", package.seeall)
 
-slot0 = _M
-slot0.OnEnterVideoFinished = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnEnterVideoFinished = 1
+
+return var_0_0

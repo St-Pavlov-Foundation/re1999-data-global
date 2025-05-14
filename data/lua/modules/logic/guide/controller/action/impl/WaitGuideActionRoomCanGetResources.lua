@@ -1,44 +1,44 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomCanGetResources", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomCanGetResources", package.seeall)
 
-slot0 = class("WaitGuideActionRoomCanGetResources", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionRoomCanGetResources", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._partId = tonumber(slot0.actionParam)
+	arg_1_0._partId = tonumber(arg_1_0.actionParam)
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._onEnterOneSceneFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
 end
 
-function slot0._onEnterOneSceneFinish(slot0, slot1)
-	if slot0:checkGuideLock() then
+function var_0_0._onEnterOneSceneFinish(arg_2_0, arg_2_1)
+	if arg_2_0:checkGuideLock() then
 		return
 	end
 
-	if slot1 == SceneType.Room and RoomController.instance:isObMode() and #RoomProductionHelper.getCanGainLineIdList(slot0._partId) > 0 then
-		GuidePriorityController.instance:add(slot0.guideId, slot0._satisfyPriority, slot0, 0.01)
+	if arg_2_1 == SceneType.Room and RoomController.instance:isObMode() and #RoomProductionHelper.getCanGainLineIdList(arg_2_0._partId) > 0 then
+		GuidePriorityController.instance:add(arg_2_0.guideId, arg_2_0._satisfyPriority, arg_2_0, 0.01)
 	end
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot0:checkGuideLock() then
+function var_0_0._onOpenViewFinish(arg_3_0, arg_3_1)
+	if arg_3_0:checkGuideLock() then
 		return
 	end
 
-	if slot1 == ViewName.RoomInitBuildingView then
-		slot0:onDone(true)
+	if arg_3_1 == ViewName.RoomInitBuildingView then
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, slot0._onEnterOneSceneFinish, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	GuidePriorityController.instance:remove(slot0.guideId)
+function var_0_0.clearWork(arg_4_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_4_0._onEnterOneSceneFinish, arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
+	GuidePriorityController.instance:remove(arg_4_0.guideId)
 end
 
-function slot0._satisfyPriority(slot0)
-	slot0:onDone(true)
+function var_0_0._satisfyPriority(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-return slot0
+return var_0_0

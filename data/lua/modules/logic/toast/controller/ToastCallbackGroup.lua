@@ -1,26 +1,26 @@
-module("modules.logic.toast.controller.ToastCallbackGroup", package.seeall)
+﻿module("modules.logic.toast.controller.ToastCallbackGroup", package.seeall)
 
-slot0 = class("ToastCallbackGroup")
+local var_0_0 = class("ToastCallbackGroup")
 
-function slot0.ctor(slot0)
-	slot0.onOpen = nil
-	slot0.onOpenObj = nil
-	slot0.onOpenParam = nil
-	slot0.onClose = nil
-	slot0.onCloseObj = nil
-	slot0.onCloseParam = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.onOpen = nil
+	arg_1_0.onOpenObj = nil
+	arg_1_0.onOpenParam = nil
+	arg_1_0.onClose = nil
+	arg_1_0.onCloseObj = nil
+	arg_1_0.onCloseParam = nil
 end
 
-function slot0.tryOnOpen(slot0, slot1)
-	if slot0.onOpen then
-		slot0.onOpen(slot0.onOpenObj, slot0.onOpenParam, slot1)
+function var_0_0.tryOnOpen(arg_2_0, arg_2_1)
+	if arg_2_0.onOpen then
+		arg_2_0.onOpen(arg_2_0.onOpenObj, arg_2_0.onOpenParam, arg_2_1)
 	end
 end
 
-function slot0.tryOnClose(slot0, slot1)
-	if slot0.onClose then
-		slot0.onClose(slot0.onCloseObj, slot0.onCloseParam, slot1)
+function var_0_0.tryOnClose(arg_3_0, arg_3_1)
+	if arg_3_0.onClose then
+		arg_3_0.onClose(arg_3_0.onCloseObj, arg_3_0.onCloseParam, arg_3_1)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,15 +1,15 @@
-module("modules.logic.rouge.model.rpcmo.RougeHeroLifeMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeHeroLifeMO", package.seeall)
 
-slot0 = pureTable("RougeHeroLifeMO")
+local var_0_0 = pureTable("RougeHeroLifeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.life = slot1.life
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.heroId = arg_1_1.heroId
+	arg_1_0.life = arg_1_1.life
 end
 
-function slot0.update(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.life = slot1.life
+function var_0_0.update(arg_2_0, arg_2_1)
+	arg_2_0.heroId = arg_2_1.heroId
+	arg_2_0.life = arg_2_1.life
 end
 
-return slot0
+return var_0_0

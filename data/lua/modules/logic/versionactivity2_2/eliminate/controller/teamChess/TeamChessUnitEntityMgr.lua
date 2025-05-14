@@ -1,237 +1,249 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.TeamChessUnitEntityMgr", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.TeamChessUnitEntityMgr", package.seeall)
 
-slot0 = class("TeamChessUnitEntityMgr")
+local var_0_0 = class("TeamChessUnitEntityMgr")
 
-function slot0.ctor(slot0)
-	slot0._entitys = {}
-	slot0.emptyEntity = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._entitys = {}
+	arg_1_0.emptyEntity = {}
 end
 
-function slot0.addEntity(slot0, slot1, slot2)
-	if slot0._entitys[slot1:getUid()] then
-		return slot0._entitys[slot3]
+function var_0_0.addEntity(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_1:getUid()
+
+	if arg_2_0._entitys[var_2_0] then
+		return arg_2_0._entitys[var_2_0]
 	end
 
-	slot5 = nil
+	local var_2_1 = gohelper.create3d(arg_2_2, var_2_0)
+	local var_2_2
 
-	if slot1.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
-		slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.create3d(slot2, slot3), TeamChessPlayerSoldierUnit)
+	if arg_2_1.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		var_2_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, TeamChessPlayerSoldierUnit)
 	end
 
-	if slot1.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, TeamChessEnemySoldierUnit)
+	if arg_2_1.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		var_2_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, TeamChessEnemySoldierUnit)
 	end
 
-	if slot5 == nil then
-		logError("TeamChessUnitEntityMgr:addEntity entity is nil.. type: " .. slot1.teamType)
+	if var_2_2 == nil then
+		logError("TeamChessUnitEntityMgr:addEntity entity is nil.. type: " .. arg_2_1.teamType)
 
-		slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, TeamChessSoldierUnit)
+		var_2_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, TeamChessSoldierUnit)
 	end
 
-	slot5:updateMo(slot1)
+	var_2_2:updateMo(arg_2_1)
 
-	slot0._entitys[slot3] = slot5
+	arg_2_0._entitys[var_2_0] = var_2_2
 
-	return slot5
+	return var_2_2
 end
 
-function slot0.getEmptyEntity(slot0, slot1, slot2)
-	if slot0.emptyEntity[EliminateConfig.instance:getSoldierChessModelPath(slot2)] then
-		return slot0.emptyEntity[slot3]
+function var_0_0.getEmptyEntity(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = EliminateConfig.instance:getSoldierChessModelPath(arg_3_2)
+
+	if arg_3_0.emptyEntity[var_3_0] then
+		return arg_3_0.emptyEntity[var_3_0]
 	end
 
-	if gohelper.isNil(slot1) then
+	if gohelper.isNil(arg_3_1) then
 		return nil
 	end
 
-	slot4 = gohelper.create3d(slot1, "tempEmpty")
-	slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, TeamChessEmptyUnit)
+	local var_3_1 = gohelper.create3d(arg_3_1, "tempEmpty")
+	local var_3_2 = EliminateConfig.instance:getSoldierChessConfig(arg_3_2)
+	local var_3_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_1, TeamChessEmptyUnit)
 
-	slot6:init(slot4)
-	slot6:setScale(EliminateConfig.instance:getSoldierChessConfig(slot2).resZoom)
-	slot6:setPath(slot3)
+	var_3_3:init(var_3_1)
+	var_3_3:setScale(var_3_2.resZoom)
+	var_3_3:setPath(var_3_0)
 
-	slot0.emptyEntity[slot3] = slot6
+	arg_3_0.emptyEntity[var_3_0] = var_3_3
 
-	return slot6
+	return var_3_3
 end
 
-function slot0.setAllEmptyEntityActive(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.emptyEntity) do
-		if slot6 then
-			slot6:setActive(slot1)
+function var_0_0.setAllEmptyEntityActive(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0.emptyEntity) do
+		if iter_4_1 then
+			iter_4_1:setActive(arg_4_1)
 		end
 	end
 end
 
-function slot0.getEntity(slot0, slot1)
-	return slot0._entitys[slot1]
+function var_0_0.getEntity(arg_5_0, arg_5_1)
+	return arg_5_0._entitys[arg_5_1]
 end
 
-function slot0.getAllEntity(slot0)
-	return slot0._entitys
+function var_0_0.getAllEntity(arg_6_0)
+	return arg_6_0._entitys
 end
 
-function slot0.removeEntity(slot0, slot1)
-	if slot0._entitys[slot1] then
-		slot0._entitys[slot1]:dispose()
+function var_0_0.removeEntity(arg_7_0, arg_7_1)
+	if arg_7_0._entitys[arg_7_1] then
+		arg_7_0._entitys[arg_7_1]:dispose()
 
-		slot0._entitys[slot1] = nil
+		arg_7_0._entitys[arg_7_1] = nil
 	end
 end
 
-function slot0.setAllEntityActive(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 then
-			if slot1 then
-				slot6:updatePosByTr()
+function var_0_0.setAllEntityActive(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._entitys) do
+		if iter_8_1 then
+			if arg_8_1 then
+				iter_8_1:updatePosByTr()
 			end
 
-			slot6:setActive(slot1)
+			iter_8_1:setActive(arg_8_1)
 		end
 	end
 end
 
-function slot0.setAllEntityActiveAndPlayAni(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 then
-			if slot1 then
-				slot6:updatePosByTr()
+function var_0_0.setAllEntityActiveAndPlayAni(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._entitys) do
+		if iter_9_1 then
+			if arg_9_1 then
+				iter_9_1:updatePosByTr()
 			end
 
-			slot6:setActiveAndPlayAni(slot1)
+			iter_9_1:setActiveAndPlayAni(arg_9_1)
 		end
 	end
 end
 
-function slot0.setAllEntityCanClick(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 then
-			slot6:setCanClick(slot1)
+function var_0_0.setAllEntityCanClick(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._entitys) do
+		if iter_10_1 then
+			iter_10_1:setCanClick(arg_10_1)
 		end
 	end
 end
 
-function slot0.setAllEntityCanDrag(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 then
-			slot6:setCanDrag(slot1)
+function var_0_0.setAllEntityCanDrag(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._entitys) do
+		if iter_11_1 then
+			iter_11_1:setCanDrag(arg_11_1)
 		end
 	end
 end
 
-function slot0.setOutlineActive(slot0, slot1, slot2)
-	if slot0._entitys and slot0._entitys[slot1] then
-		slot0._entitys[slot1]:setShowModeType(slot2 and EliminateTeamChessEnum.ModeType.outline or EliminateTeamChessEnum.ModeType.Normal)
+function var_0_0.setOutlineActive(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_2 and EliminateTeamChessEnum.ModeType.outline or EliminateTeamChessEnum.ModeType.Normal
+
+	if arg_12_0._entitys and arg_12_0._entitys[arg_12_1] then
+		arg_12_0._entitys[arg_12_1]:setShowModeType(var_12_0)
 	end
 end
 
-function slot0.setGrayActive(slot0, slot1, slot2)
-	if slot0._entitys and slot0._entitys[slot1] then
-		slot0._entitys[slot1]:setShowModeType(slot2 and EliminateTeamChessEnum.ModeType.Gray or EliminateTeamChessEnum.ModeType.Normal)
+function var_0_0.setGrayActive(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_2 and EliminateTeamChessEnum.ModeType.Gray or EliminateTeamChessEnum.ModeType.Normal
+
+	if arg_13_0._entitys and arg_13_0._entitys[arg_13_1] then
+		arg_13_0._entitys[arg_13_1]:setShowModeType(var_13_0)
 	end
 end
 
-function slot0.moveEntityByTeamTypeAndStrongHold(slot0, slot1, slot2, slot3, slot4, slot5)
-	for slot9, slot10 in pairs(slot0._entitys) do
-		if slot10 and slot10._unitMo.teamType == slot1 and slot10._unitMo.stronghold == slot2 then
-			slot10:moveToPosByTargetTr(slot3, slot4, slot5)
+function var_0_0.moveEntityByTeamTypeAndStrongHold(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._entitys) do
+		if iter_14_1 and iter_14_1._unitMo.teamType == arg_14_1 and iter_14_1._unitMo.stronghold == arg_14_2 then
+			iter_14_1:moveToPosByTargetTr(arg_14_3, arg_14_4, arg_14_5)
 		end
 	end
 end
 
-function slot0.resetEntityPosByTeamTypeAndStrongHold(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._entitys) do
-		if slot7 and slot7._unitMo.teamType == slot1 and slot7._unitMo.stronghold == slot2 then
-			slot7:movePosByTr()
+function var_0_0.resetEntityPosByTeamTypeAndStrongHold(arg_15_0, arg_15_1, arg_15_2)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._entitys) do
+		if iter_15_1 and iter_15_1._unitMo.teamType == arg_15_1 and iter_15_1._unitMo.stronghold == arg_15_2 then
+			iter_15_1:movePosByTr()
 		end
 	end
 end
 
-function slot0.cacheAllEntityShowMode(slot0)
-	if slot0.entityCacheMode == nil then
-		slot0.entityCacheMode = {}
+function var_0_0.cacheAllEntityShowMode(arg_16_0)
+	if arg_16_0.entityCacheMode == nil then
+		arg_16_0.entityCacheMode = {}
 	end
 
-	for slot4, slot5 in pairs(slot0._entitys) do
-		if slot5 then
-			slot0.entityCacheMode[slot4] = slot5:getShowModeType()
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._entitys) do
+		if iter_16_1 then
+			arg_16_0.entityCacheMode[iter_16_0] = iter_16_1:getShowModeType()
 		end
 	end
 end
 
-function slot0.setAllEntityNormal(slot0)
-	for slot4, slot5 in pairs(slot0._entitys) do
-		if slot5 then
-			slot5:setShowModeType(EliminateTeamChessEnum.ModeType.Normal)
+function var_0_0.setAllEntityNormal(arg_17_0)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._entitys) do
+		if iter_17_1 then
+			iter_17_1:setShowModeType(EliminateTeamChessEnum.ModeType.Normal)
 		end
 	end
 end
 
-function slot0.cacheEntityShowMode(slot0, slot1)
-	if slot0.entityCacheMode == nil then
-		slot0.entityCacheMode = {}
+function var_0_0.cacheEntityShowMode(arg_18_0, arg_18_1)
+	if arg_18_0.entityCacheMode == nil then
+		arg_18_0.entityCacheMode = {}
 	end
 
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 and slot6._unitMo.stronghold == slot1 then
-			slot0.entityCacheMode[slot5] = slot6:getShowModeType()
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._entitys) do
+		if iter_18_1 and iter_18_1._unitMo.stronghold == arg_18_1 then
+			arg_18_0.entityCacheMode[iter_18_0] = iter_18_1:getShowModeType()
 		end
 	end
 end
 
-function slot0.restoreEntityShowMode(slot0)
-	if slot0.entityCacheMode == nil then
+function var_0_0.restoreEntityShowMode(arg_19_0)
+	if arg_19_0.entityCacheMode == nil then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0.entityCacheMode) do
-		if slot0._entitys[slot4] then
-			slot6:setShowModeType(slot5)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0.entityCacheMode) do
+		local var_19_0 = arg_19_0._entitys[iter_19_0]
+
+		if var_19_0 then
+			var_19_0:setShowModeType(iter_19_1)
 		end
 	end
 
-	tabletool.clear(slot0.entityCacheMode)
+	tabletool.clear(arg_19_0.entityCacheMode)
 end
 
-function slot0.setTempShowModeAndCacheByTeamType(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._entitys) do
-		if slot7 and slot7._unitMo.teamType == slot1 and slot6 ~= EliminateTeamChessEnum.tempPieceUid then
-			slot7:cacheModel()
-			slot7:setShowModeType(slot2)
-		end
-	end
-end
-
-function slot0.restoreTempShowModeAndCacheByTeamType(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 and slot6._unitMo.teamType == slot1 then
-			slot6:restoreModel()
+function var_0_0.setTempShowModeAndCacheByTeamType(arg_20_0, arg_20_1, arg_20_2)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._entitys) do
+		if iter_20_1 and iter_20_1._unitMo.teamType == arg_20_1 and iter_20_0 ~= EliminateTeamChessEnum.tempPieceUid then
+			iter_20_1:cacheModel()
+			iter_20_1:setShowModeType(arg_20_2)
 		end
 	end
 end
 
-function slot0.refreshShowModeStateByTeamType(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._entitys) do
-		if slot6 and slot6._unitMo.teamType == slot1 then
-			slot6:refreshShowModeState()
+function var_0_0.restoreTempShowModeAndCacheByTeamType(arg_21_0, arg_21_1)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._entitys) do
+		if iter_21_1 and iter_21_1._unitMo.teamType == arg_21_1 then
+			iter_21_1:restoreModel()
 		end
 	end
 end
 
-function slot0.clear(slot0)
-	for slot4, slot5 in pairs(slot0._entitys) do
-		slot5:dispose()
+function var_0_0.refreshShowModeStateByTeamType(arg_22_0, arg_22_1)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._entitys) do
+		if iter_22_1 and iter_22_1._unitMo.teamType == arg_22_1 then
+			iter_22_1:refreshShowModeState()
+		end
 	end
-
-	for slot4, slot5 in pairs(slot0.emptyEntity) do
-		slot5:dispose()
-	end
-
-	slot0._entitys = {}
-	slot0.emptyEntity = {}
 end
 
-slot0.instance = slot0.New()
+function var_0_0.clear(arg_23_0)
+	for iter_23_0, iter_23_1 in pairs(arg_23_0._entitys) do
+		iter_23_1:dispose()
+	end
 
-return slot0
+	for iter_23_2, iter_23_3 in pairs(arg_23_0.emptyEntity) do
+		iter_23_3:dispose()
+	end
+
+	arg_23_0._entitys = {}
+	arg_23_0.emptyEntity = {}
+end
+
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

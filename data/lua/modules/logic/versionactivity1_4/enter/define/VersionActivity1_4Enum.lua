@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity1_4.enter.define.VersionActivity1_4Enum", package.seeall)
+﻿module("modules.logic.versionactivity1_4.enter.define.VersionActivity1_4Enum", package.seeall)
 
-slot0 = _M
-slot0.ActivityId = {
+local var_0_0 = _M
+
+var_0_0.ActivityId = {
 	Dungeon = 11407,
 	Task = 11408,
 	Role6 = 11403,
@@ -17,26 +18,26 @@ slot0.ActivityId = {
 	EnterView = 11401,
 	LimitFirstFall = 11421
 }
-slot0.EnterViewActIdList = {
-	slot0.ActivityId.ShipRepair,
-	slot0.ActivityId.Role37,
-	slot0.ActivityId.BossRush,
-	slot0.ActivityId.Task,
-	slot0.ActivityId.DungeonStore,
-	slot0.ActivityId.Dungeon,
-	slot0.ActivityId.BossRush,
-	slot0.ActivityId.Season,
-	slot0.ActivityId.DustyRecords,
-	slot0.ActivityId.Role6,
-	slot0.ActivityId.DungeonStore,
-	slot0.ActivityId.Dungeon
+var_0_0.EnterViewActIdList = {
+	var_0_0.ActivityId.ShipRepair,
+	var_0_0.ActivityId.Role37,
+	var_0_0.ActivityId.BossRush,
+	var_0_0.ActivityId.Task,
+	var_0_0.ActivityId.DungeonStore,
+	var_0_0.ActivityId.Dungeon,
+	var_0_0.ActivityId.BossRush,
+	var_0_0.ActivityId.Season,
+	var_0_0.ActivityId.DustyRecords,
+	var_0_0.ActivityId.Role6,
+	var_0_0.ActivityId.DungeonStore,
+	var_0_0.ActivityId.Dungeon
 }
-slot0.TabEnum = {
+var_0_0.TabEnum = {
 	Second = 2,
 	First = 1
 }
-slot0.TabActivityList = {
-	[slot0.TabEnum.First] = {
+var_0_0.TabActivityList = {
+	[var_0_0.TabEnum.First] = {
 		1,
 		2,
 		3,
@@ -44,7 +45,7 @@ slot0.TabActivityList = {
 		5,
 		6
 	},
-	[slot0.TabEnum.Second] = {
+	[var_0_0.TabEnum.Second] = {
 		7,
 		8,
 		9,
@@ -54,4 +55,4 @@ slot0.TabActivityList = {
 	}
 }
 
-return slot0
+return var_0_0

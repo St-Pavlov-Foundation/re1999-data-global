@@ -1,37 +1,38 @@
-module("modules.logic.fight.system.work.FightWorkCardLevelChangeDone", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCardLevelChangeDone", package.seeall)
 
-slot0 = class("FightWorkCardLevelChangeDone", BaseWork)
+local var_0_0 = class("FightWorkCardLevelChangeDone", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if FightCardModel.instance:isChanging() then
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
-		FightController.instance:registerCallback(FightEvent.OnChangeCardEffectDone, slot0._onChangeCardEffectDone, slot0)
+		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
+		FightController.instance:registerCallback(FightEvent.OnChangeCardEffectDone, arg_2_0._onChangeCardEffectDone, arg_2_0)
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onChangeCardEffectDone(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnChangeCardEffectDone, slot0._onChangeCardEffectDone, slot0)
-	slot0:onDone(true)
+function var_0_0._onChangeCardEffectDone(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnChangeCardEffectDone, arg_3_0._onChangeCardEffectDone, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_4_0)
 	if FightCardModel.instance:isChanging() then
 		logError("卡牌升降星超时，isChanging=true")
 	else
 		logError("卡牌升降星超时，isChanging=false")
 	end
 
-	slot0:onDone(true)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnChangeCardEffectDone, slot0._onChangeCardEffectDone, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnChangeCardEffectDone, arg_5_0._onChangeCardEffectDone, arg_5_0)
 end
 
-return slot0
+return var_0_0

@@ -1,86 +1,93 @@
-module("modules.logic.room.entity.work.RoomAtmosphereEffectWork", package.seeall)
+﻿module("modules.logic.room.entity.work.RoomAtmosphereEffectWork", package.seeall)
 
-slot0 = class("RoomAtmosphereEffectWork", BaseWork)
-slot1 = 0.3
+local var_0_0 = class("RoomAtmosphereEffectWork", BaseWork)
+local var_0_1 = 0.3
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._effectId = slot1
-	slot0._effResPath = RoomConfig.instance:getRoomEffectPath(slot1)
-	slot3 = nil
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._effectId = arg_1_1
+	arg_1_0._effResPath = RoomConfig.instance:getRoomEffectPath(arg_1_1)
+
+	local var_1_0
 
 	if not GameResMgr.IsFromEditorDir then
-		slot3 = FightHelper.getEffectAbPath(slot0._effResPath)
+		var_1_0 = FightHelper.getEffectAbPath(arg_1_0._effResPath)
 	end
 
-	slot0._effGO = RoomGOPool.getInstance(slot0._effResPath, slot2, "effect_" .. slot1, slot3)
-	slot0._playingId = nil
-	slot0._tmpAudioId = nil
+	arg_1_0._effGO = RoomGOPool.getInstance(arg_1_0._effResPath, arg_1_2, "effect_" .. arg_1_1, var_1_0)
+	arg_1_0._playingId = nil
+	arg_1_0._tmpAudioId = nil
 
-	gohelper.setActive(slot0._effGO, false)
+	gohelper.setActive(arg_1_0._effGO, false)
 end
 
-function slot0.onStart(slot0)
-	gohelper.setActive(slot0._effGO, false)
-	gohelper.setActive(slot0._effGO, true)
+function var_0_0.onStart(arg_2_0)
+	gohelper.setActive(arg_2_0._effGO, false)
+	gohelper.setActive(arg_2_0._effGO, true)
 
-	if RoomConfig.instance:getRoomEffectDuration(slot0._effectId) <= 0 then
-		slot0:finish(true)
+	local var_2_0 = RoomConfig.instance:getRoomEffectDuration(arg_2_0._effectId)
+
+	if var_2_0 <= 0 then
+		arg_2_0:finish(true)
 	else
-		if RoomConfig.instance:getRoomEffectAudioId(slot0._effectId) and slot2 ~= 0 and not gohelper.isNil(slot0._effGO) then
-			slot0._tmpAudioId = slot2
+		local var_2_1 = RoomConfig.instance:getRoomEffectAudioId(arg_2_0._effectId)
 
-			TaskDispatcher.runDelay(slot0.delayPlayAudio, slot0, uv0)
+		if var_2_1 and var_2_1 ~= 0 and not gohelper.isNil(arg_2_0._effGO) then
+			arg_2_0._tmpAudioId = var_2_1
+
+			TaskDispatcher.runDelay(arg_2_0.delayPlayAudio, arg_2_0, var_0_1)
 		end
 
-		TaskDispatcher.runDelay(slot0.finish, slot0, slot1)
+		TaskDispatcher.runDelay(arg_2_0.finish, arg_2_0, var_2_0)
 	end
 end
 
-function slot0.delayPlayAudio(slot0)
-	slot0._playingId = AudioMgr.instance:trigger(slot0._tmpAudioId, slot0._effGO)
-	slot0._tmpAudioId = nil
+function var_0_0.delayPlayAudio(arg_3_0)
+	arg_3_0._playingId = AudioMgr.instance:trigger(arg_3_0._tmpAudioId, arg_3_0._effGO)
+	arg_3_0._tmpAudioId = nil
 end
 
-function slot0.setAudioIsFade(slot0, slot1)
-	if gohelper.isNil(slot0._effGO) then
+function var_0_0.setAudioIsFade(arg_4_0, arg_4_1)
+	if gohelper.isNil(arg_4_0._effGO) then
 		return
 	end
 
-	slot2 = AudioEnum.Room.set_firework_normal
+	local var_4_0 = AudioEnum.Room.set_firework_normal
 
-	if slot1 then
-		slot2 = AudioEnum.Room.set_firework_lower
+	if arg_4_1 then
+		var_4_0 = AudioEnum.Room.set_firework_lower
 	end
 
-	AudioMgr.instance:trigger(slot2, slot0._effGO)
+	AudioMgr.instance:trigger(var_4_0, arg_4_0._effGO)
 end
 
-function slot0.finish(slot0, slot1)
-	slot0:onDone(not slot1)
+function var_0_0.finish(arg_5_0, arg_5_1)
+	local var_5_0 = not arg_5_1
+
+	arg_5_0:onDone(var_5_0)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0.finish, slot0)
-	TaskDispatcher.cancelTask(slot0.delayPlayAudio, slot0)
+function var_0_0.clearWork(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.finish, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.delayPlayAudio, arg_6_0)
 
-	if not gohelper.isNil(slot0._effGO) then
-		gohelper.setActive(slot0._effGO, false)
-		AudioMgr.instance:trigger(AudioEnum.Room.stop_home_activity_firework, slot0._effGO)
-	elseif slot0._playingId then
-		AudioMgr.instance:stopPlayingID(slot0._playingId)
+	if not gohelper.isNil(arg_6_0._effGO) then
+		gohelper.setActive(arg_6_0._effGO, false)
+		AudioMgr.instance:trigger(AudioEnum.Room.stop_home_activity_firework, arg_6_0._effGO)
+	elseif arg_6_0._playingId then
+		AudioMgr.instance:stopPlayingID(arg_6_0._playingId)
 
-		slot0._playingId = nil
+		arg_6_0._playingId = nil
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clearWork()
-	RoomGOPool.returnInstance(slot0._effResPath, slot0._effGO)
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0:clearWork()
+	RoomGOPool.returnInstance(arg_7_0._effResPath, arg_7_0._effGO)
 
-	slot0._effGO = nil
-	slot0._effectId = nil
-	slot0._effResPath = nil
-	slot0._tmpAudioId = nil
+	arg_7_0._effGO = nil
+	arg_7_0._effectId = nil
+	arg_7_0._effResPath = nil
+	arg_7_0._tmpAudioId = nil
 end
 
-return slot0
+return var_0_0

@@ -1,23 +1,27 @@
-module("modules.logic.fight.system.work.FightWorkPlaySetGray", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkPlaySetGray", package.seeall)
 
-slot0 = class("FightWorkPlaySetGray", FightEffectBase)
+local var_0_0 = class("FightWorkPlaySetGray", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if FightPlayCardModel.instance:getUsedCards()[slot0._actEffectMO.effectNum] then
-		slot3:init(slot0._actEffectMO.cardInfo)
-		FightController.instance:dispatchEvent(FightEvent.PlayCardAroundSetGray, slot1)
+	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_1 = FightPlayCardModel.instance:getUsedCards()[var_1_0]
+
+	if var_1_1 then
+		var_1_1:init(arg_1_0._actEffectMO.cardInfo)
+		FightController.instance:dispatchEvent(FightEvent.PlayCardAroundSetGray, var_1_0)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

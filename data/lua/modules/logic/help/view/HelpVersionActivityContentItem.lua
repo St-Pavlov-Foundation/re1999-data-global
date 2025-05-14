@@ -1,131 +1,156 @@
-module("modules.logic.help.view.HelpVersionActivityContentItem", package.seeall)
+﻿module("modules.logic.help.view.HelpVersionActivityContentItem", package.seeall)
 
-slot0 = class("HelpVersionActivityContentItem", LuaCompBase)
+local var_0_0 = class("HelpVersionActivityContentItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1.go
-	slot0._config = slot1.config
-	slot0._index = slot1.index
-	slot0._txtObj = gohelper.findChild(slot0._go, "txtobj")
-	slot0._imgObj = gohelper.findChild(slot0._go, "imgobj")
-	slot0._gocontentRoot = gohelper.findChild(slot0._go, "imgobj/#go_content")
-	slot0._btnquit = gohelper.findChildButtonWithAudio(slot0._imgObj, "#btn_quit")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1.go
+	arg_2_0._config = arg_2_1.config
+	arg_2_0._index = arg_2_1.index
+	arg_2_0._txtObj = gohelper.findChild(arg_2_0._go, "txtobj")
+	arg_2_0._imgObj = gohelper.findChild(arg_2_0._go, "imgobj")
+	arg_2_0._gocontentRoot = gohelper.findChild(arg_2_0._go, "imgobj/#go_content")
+	arg_2_0._btnquit = gohelper.findChildButtonWithAudio(arg_2_0._imgObj, "#btn_quit")
 
-	slot0._btnquit:AddClickListener(slot0._btnquitOnClick, slot0)
-	gohelper.addUIClickAudio(slot0._btnquit.gameObject, AudioEnum.UI.UI_help_close)
-	transformhelper.setLocalPos(slot0._go.transform, slot1.pos, 0, 0)
+	arg_2_0._btnquit:AddClickListener(arg_2_0._btnquitOnClick, arg_2_0)
+	gohelper.addUIClickAudio(arg_2_0._btnquit.gameObject, AudioEnum.UI.UI_help_close)
+	transformhelper.setLocalPos(arg_2_0._go.transform, arg_2_1.pos, 0, 0)
 
-	if not string.nilorempty(slot0._config.icon) then
-		slot0._conImg = gohelper.findChildSingleImage(slot0._imgObj, "img")
+	if not string.nilorempty(arg_2_0._config.icon) then
+		arg_2_0._conImg = gohelper.findChildSingleImage(arg_2_0._imgObj, "img")
 
-		slot0:setImageContent()
-	elseif not string.nilorempty(slot0._config.text) then
-		slot0._conGameObject = gohelper.findChild(slot0._txtObj, "#scroll_desc/viewport/content/desctxt")
+		arg_2_0:setImageContent()
+	elseif not string.nilorempty(arg_2_0._config.text) then
+		arg_2_0._conGameObject = gohelper.findChild(arg_2_0._txtObj, "#scroll_desc/viewport/content/desctxt")
 
-		gohelper.setActive(slot0._conGameObject, false)
+		gohelper.setActive(arg_2_0._conGameObject, false)
 
-		slot0._titleTxt = SLFramework.GameObjectHelper.FindChildComponent(slot0._txtObj, "titletxt", typeof(TMPro.TextMeshProUGUI))
-		slot0._conTexts = {}
+		arg_2_0._titleTxt = SLFramework.GameObjectHelper.FindChildComponent(arg_2_0._txtObj, "titletxt", typeof(TMPro.TextMeshProUGUI))
+		arg_2_0._conTexts = {}
 
-		slot0:setTextContent()
+		arg_2_0:setTextContent()
 	end
 end
 
-function slot0.updatePos(slot0, slot1)
-	transformhelper.setLocalPos(slot0._go.transform, slot1, 0, 0)
+function var_0_0.updatePos(arg_3_0, arg_3_1)
+	transformhelper.setLocalPos(arg_3_0._go.transform, arg_3_1, 0, 0)
 end
 
-function slot0._btnquitOnClick(slot0)
+function var_0_0._btnquitOnClick(arg_4_0)
 	ViewMgr.instance:closeView(ViewName.HelpView)
 end
 
-function slot0.setImageContent(slot0)
-	gohelper.setActive(slot0._imgObj, true)
-	gohelper.setActive(slot0._txtObj, false)
-	slot0._conImg:LoadImage(ResUrl.getVersionActivityHelpItem(slot0._config.icon, slot0._config.isCn == 1))
+function var_0_0.setImageContent(arg_5_0)
+	gohelper.setActive(arg_5_0._imgObj, true)
+	gohelper.setActive(arg_5_0._txtObj, false)
+	arg_5_0._conImg:LoadImage(ResUrl.getVersionActivityHelpItem(arg_5_0._config.icon, arg_5_0._config.isCn == 1))
 
-	if not string.nilorempty(slot0._config.iconText) then
-		slot0._resLoader = PrefabInstantiate.Create(slot0._gocontentRoot)
+	if not string.nilorempty(arg_5_0._config.iconText) then
+		local var_5_0 = string.format("ui/viewres/help/versionactivityimgcontent/%s.prefab", arg_5_0._config.iconText)
 
-		slot0._resLoader:startLoad(string.format("ui/viewres/help/versionactivityimgcontent/%s.prefab", slot0._config.iconText), slot0._onHelpImgLoaded, slot0)
+		arg_5_0._resLoader = PrefabInstantiate.Create(arg_5_0._gocontentRoot)
+
+		arg_5_0._resLoader:startLoad(var_5_0, arg_5_0._onHelpImgLoaded, arg_5_0)
 	end
 end
 
-function slot0._onHelpImgLoaded(slot0)
-	slot0._imgPrefGo = slot0._resLoader:getInstGO()
+function var_0_0._onHelpImgLoaded(arg_6_0)
+	arg_6_0._imgPrefGo = arg_6_0._resLoader:getInstGO()
 
-	gohelper.setActive(slot0._imgPrefGo, true)
+	gohelper.setActive(arg_6_0._imgPrefGo, true)
 
-	if slot0._config.icon == "va_1_1_season_3" then
-		gohelper.findChildTextMesh(slot0._imgPrefGo, "Text1/Text2").text = ServerTime.ReplaceUTCStr(luaLang("p_vahelpcontentitem_season3_7"))
+	if arg_6_0._config.icon == "va_1_1_season_3" then
+		local var_6_0 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "Text1/Text2")
+		local var_6_1 = luaLang("p_vahelpcontentitem_season3_7")
+
+		var_6_0.text = ServerTime.ReplaceUTCStr(var_6_1)
 	end
 
-	if slot0._config.id == 1610105 then
-		gohelper.findChildTextMesh(slot0._imgPrefGo, "Text3").text = string.format(luaLang("p_v1a6_activityboss_help_3_txt_3"), ActivityModel.instance:getActMO(VersionActivity1_6Enum.ActivityId.DungeonBossRush) and 3 - slot2:getOpeningDay() % 3 or 3)
+	if arg_6_0._config.id == 1610105 then
+		local var_6_2 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "Text3")
+		local var_6_3 = ActivityModel.instance:getActMO(VersionActivity1_6Enum.ActivityId.DungeonBossRush)
+		local var_6_4 = var_6_3 and 3 - var_6_3:getOpeningDay() % 3 or 3
+
+		var_6_2.text = string.format(luaLang("p_v1a6_activityboss_help_3_txt_3"), var_6_4)
 	end
 end
 
-function slot0.setTextContent(slot0)
-	gohelper.setActive(slot0._imgObj, false)
-	gohelper.setActive(slot0._txtObj, true)
+function var_0_0.setTextContent(arg_7_0)
+	gohelper.setActive(arg_7_0._imgObj, false)
+	gohelper.setActive(arg_7_0._txtObj, true)
 
-	slot0._titleTxt.text = slot0._config.title
+	arg_7_0._titleTxt.text = arg_7_0._config.title
 
-	for slot5 = 1, #string.split(slot0._config.text, "\n") do
-		if not slot0._conTexts[slot5] then
-			table.insert(slot0._conTexts, gohelper.cloneInPlace(slot0._conGameObject, "item" .. slot5):GetComponent(typeof(TMPro.TextMeshProUGUI)))
+	local var_7_0 = string.split(arg_7_0._config.text, "\n")
+
+	for iter_7_0 = 1, #var_7_0 do
+		local var_7_1 = arg_7_0._conTexts[iter_7_0]
+
+		if not var_7_1 then
+			var_7_1 = gohelper.cloneInPlace(arg_7_0._conGameObject, "item" .. iter_7_0):GetComponent(typeof(TMPro.TextMeshProUGUI))
+
+			table.insert(arg_7_0._conTexts, var_7_1)
 		end
 
-		if GameUtil.utf8sub(slot1[slot5], 1, 1) == luaLang("HelpVersionActivityContentItem_lefttag") then
-			slot9 = luaLang("HelpVersionActivityContentItem_righttag")
-			slot7 = string.gsub(string.gsub(slot7, slot8, "<line-height=108%%><size=32><color=#323c34><alpha=#FF>" .. slot8, 1), slot9, slot9 .. "</size></color>\n<line-height=100%%><margin=14>", 1)
+		local var_7_2 = var_7_0[iter_7_0]
+		local var_7_3 = luaLang("HelpVersionActivityContentItem_lefttag")
+
+		if GameUtil.utf8sub(var_7_2, 1, 1) == var_7_3 then
+			local var_7_4 = luaLang("HelpVersionActivityContentItem_righttag")
+
+			var_7_2 = string.gsub(var_7_2, var_7_3, "<line-height=108%%><size=32><color=#323c34><alpha=#FF>" .. var_7_3, 1)
+			var_7_2 = string.gsub(var_7_2, var_7_4, var_7_4 .. "</size></color>\n<line-height=100%%><margin=14>", 1)
 		else
-			slot7 = "<margin=14><alpha=#BF>" .. slot7
+			var_7_2 = "<margin=14><alpha=#BF>" .. var_7_2
 		end
 
-		slot6.text = slot7
+		var_7_1.text = var_7_2
 
-		gohelper.setActive(slot6.gameObject, true)
+		gohelper.setActive(var_7_1.gameObject, true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._conTexts do
-		gohelper.setActive(slot0._conTexts[slot5], false)
+	for iter_7_1 = #var_7_0 + 1, #arg_7_0._conTexts do
+		gohelper.setActive(arg_7_0._conTexts[iter_7_1], false)
 	end
 end
 
-function slot0.showQuitBtn(slot0, slot1)
-	gohelper.setActive(slot0._btnquit.gameObject, slot1)
+function var_0_0.showQuitBtn(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0._btnquit.gameObject, arg_8_1)
 end
 
-function slot0.updateItem(slot0)
+function var_0_0.updateItem(arg_9_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_10_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_11_0)
+	return
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_12_0)
+	return
 end
 
-function slot0.destroy(slot0)
-	if slot0._conImg then
-		slot0._conImg:UnLoadImage()
+function var_0_0.destroy(arg_13_0)
+	if arg_13_0._conImg then
+		arg_13_0._conImg:UnLoadImage()
 
-		slot0._conImg = nil
+		arg_13_0._conImg = nil
 	end
 
-	if slot0._resloader then
-		slot0._resloader:dispose()
+	if arg_13_0._resloader then
+		arg_13_0._resloader:dispose()
 
-		slot0._resloader = nil
+		arg_13_0._resloader = nil
 	end
 
-	slot0._btnquit:RemoveClickListener()
+	arg_13_0._btnquit:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

@@ -1,21 +1,26 @@
-module("modules.logic.weekwalk.model.WeekWalkRespawnModel", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekWalkRespawnModel", package.seeall)
 
-slot0 = class("WeekWalkRespawnModel", ListScrollModel)
+local var_0_0 = class("WeekWalkRespawnModel", ListScrollModel)
 
-function slot0.setRespawnList(slot0)
+function var_0_0.setRespawnList(arg_1_0)
+	local var_1_0 = WeekWalkModel.instance:getInfo()
+
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.WeekWalk)
 
-	slot3 = {}
+	local var_1_1 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+	local var_1_2 = {}
 
-	for slot7, slot8 in ipairs(CharacterBackpackCardListModel.instance:getCharacterCardList()) do
-		if WeekWalkModel.instance:getInfo():getHeroHp(slot8.heroId) and slot9 <= 0 then
-			table.insert(slot3, slot8)
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_3 = var_1_0:getHeroHp(iter_1_1.heroId)
+
+		if var_1_3 and var_1_3 <= 0 then
+			table.insert(var_1_2, iter_1_1)
 		end
 	end
 
-	slot0:setList(slot3)
+	arg_1_0:setList(var_1_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

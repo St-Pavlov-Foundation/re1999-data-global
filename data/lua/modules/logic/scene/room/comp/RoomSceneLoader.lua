@@ -1,96 +1,104 @@
-module("modules.logic.scene.room.comp.RoomSceneLoader", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneLoader", package.seeall)
 
-slot0 = class("RoomSceneLoader", BaseSceneComp)
+local var_0_0 = class("RoomSceneLoader", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._assetItemDict = {}
-	slot0._loader = nil
-	slot0._needLoadList = {}
-	slot0._needLoadDict = {}
-	slot0._callbackList = {}
-	slot0._loaderList = {}
-	slot0._initialized = false
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._assetItemDict = {}
+	arg_1_0._loader = nil
+	arg_1_0._needLoadList = {}
+	arg_1_0._needLoadDict = {}
+	arg_1_0._callbackList = {}
+	arg_1_0._loaderList = {}
+	arg_1_0._initialized = false
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._initialized = true
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._initialized = true
 end
 
-function slot0.isLoaderInProgress(slot0)
-	if slot0._loader then
+function var_0_0.isLoaderInProgress(arg_3_0)
+	if arg_3_0._loader then
 		return true
 	end
 
-	if slot0._needLoadList and #slot0._needLoadList > 0 then
+	if arg_3_0._needLoadList and #arg_3_0._needLoadList > 0 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.makeSureLoaded(slot0, slot1, slot2, slot3)
-	if not slot0._initialized then
+function var_0_0.makeSureLoaded(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if not arg_4_0._initialized then
 		return
 	end
 
-	slot4 = nil
+	local var_4_0
+	local var_4_1 = arg_4_0:getCurScene().preloader
 
-	for slot9, slot10 in ipairs(slot1) do
-		if not slot0:getCurScene().preloader:exist(slot10) then
-			table.insert(slot4 or {}, slot10)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		if not var_4_1:exist(iter_4_1) then
+			var_4_0 = var_4_0 or {}
+
+			table.insert(var_4_0, iter_4_1)
 		end
 	end
 
-	if not slot4 then
-		slot2(slot3)
+	if not var_4_0 then
+		arg_4_2(arg_4_3)
 
 		return
 	end
 
-	slot6 = MultiAbLoader.New()
+	local var_4_2 = MultiAbLoader.New()
 
-	table.insert(slot0._loaderList, slot6)
-	slot6:setPathList(slot4)
-	slot6:startLoad(function (...)
-		uv0:_onLoadFinish(uv1)
-		uv2(uv3)
-	end, slot0)
+	table.insert(arg_4_0._loaderList, var_4_2)
+	var_4_2:setPathList(var_4_0)
+	var_4_2:startLoad(function(...)
+		arg_4_0:_onLoadFinish(var_4_2)
+		arg_4_2(arg_4_3)
+	end, arg_4_0)
 end
 
-function slot0._delayStartLoad(slot0)
-	slot0._needLoadList = {}
-	slot0._needLoadDict = {}
-	slot0._loader = MultiAbLoader.New()
+function var_0_0._delayStartLoad(arg_6_0)
+	local var_6_0 = arg_6_0._needLoadList
 
-	slot0._loader:setPathList(slot0._needLoadList)
-	slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+	arg_6_0._needLoadList = {}
+	arg_6_0._needLoadDict = {}
+	arg_6_0._loader = MultiAbLoader.New()
+
+	arg_6_0._loader:setPathList(var_6_0)
+	arg_6_0._loader:startLoad(arg_6_0._onLoadFinish, arg_6_0)
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	for slot7, slot8 in pairs(slot1:getAssetItemDict()) do
-		slot0:getCurScene().preloader:addAssetItem(slot7, slot8)
+function var_0_0._onLoadFinish(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1:getAssetItemDict()
+	local var_7_1 = arg_7_0:getCurScene().preloader
+
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		var_7_1:addAssetItem(iter_7_0, iter_7_1)
 	end
 
-	tabletool.removeValue(slot0._loaderList, slot1)
-	slot1:dispose()
+	tabletool.removeValue(arg_7_0._loaderList, arg_7_1)
+	arg_7_1:dispose()
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._initialized = false
+function var_0_0.onSceneClose(arg_8_0)
+	arg_8_0._initialized = false
 
-	TaskDispatcher.cancelTask(slot0._delayStartLoad, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._delayStartLoad, arg_8_0)
 
-	for slot4, slot5 in ipairs(slot0._loaderList) do
-		slot5:dispose()
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._loaderList) do
+		iter_8_1:dispose()
 	end
 
-	slot0._loaderList = {}
+	arg_8_0._loaderList = {}
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_8_0._loader then
+		arg_8_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_8_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

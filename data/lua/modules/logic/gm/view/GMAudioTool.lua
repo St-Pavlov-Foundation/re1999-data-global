@@ -1,198 +1,214 @@
-module("modules.logic.gm.view.GMAudioTool", package.seeall)
+﻿module("modules.logic.gm.view.GMAudioTool", package.seeall)
 
-slot0 = class("GMAudioTool", BaseView)
+local var_0_0 = class("GMAudioTool", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._inpAudio = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/playAudioById/inpAudioId")
-	slot0._btnAudioPlay = gohelper.getClick(gohelper.findChild(slot0.viewGO, "viewport/content/playAudioById/btnPlay"))
-	slot0._btnAudioStop = gohelper.getClick(gohelper.findChild(slot0.viewGO, "viewport/content/playAudioById/btnStop"))
-	slot0._autoStopToggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/audioTool/autoStopAudioToggle")
-	slot0._showLogToggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/audioTool/showLogToggle")
-	slot0._inpEvent = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/playAudioByEventName/inpAudioEventName")
-	slot0._inpBank = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/playAudioByEventName/inpAudioBankName")
-	slot0._btnPlayEvent = gohelper.getClick(gohelper.findChild(slot0.viewGO, "viewport/content/playAudioByEventName/btnPlay"))
-	slot0._btnStopEvent = gohelper.getClick(gohelper.findChild(slot0.viewGO, "viewport/content/playAudioByEventName/btnStop"))
-	slot0._langDrop = gohelper.findChildDropdown(slot0.viewGO, "viewport/content/audioLanguage/audioLanguageDropdown")
-	slot0._inpRtpcName = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/rtpcItem/inpRtpcName")
-	slot0._inpRtpcValue = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/rtpcItem/inpRtpcValue")
-	slot0._btnSetRtpc = gohelper.getClick(gohelper.findChild(slot0.viewGO, "viewport/content/rtpcItem/btnSetRtpc"))
-	slot0._inpSwitchName = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/switchItem/inpSwitchGroup")
-	slot0._inpSwitchValue = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/switchItem/inpSwitchValue")
-	slot0._btnSwitch = gohelper.getClick(gohelper.findChild(slot0.viewGO, "viewport/content/switchItem/btnSetSwitch"))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._inpAudio = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/playAudioById/inpAudioId")
+	arg_1_0._btnAudioPlay = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/playAudioById/btnPlay"))
+	arg_1_0._btnAudioStop = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/playAudioById/btnStop"))
+	arg_1_0._autoStopToggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/audioTool/autoStopAudioToggle")
+	arg_1_0._showLogToggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/audioTool/showLogToggle")
+	arg_1_0._inpEvent = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/playAudioByEventName/inpAudioEventName")
+	arg_1_0._inpBank = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/playAudioByEventName/inpAudioBankName")
+	arg_1_0._btnPlayEvent = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/playAudioByEventName/btnPlay"))
+	arg_1_0._btnStopEvent = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/playAudioByEventName/btnStop"))
+	arg_1_0._langDrop = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/audioLanguage/audioLanguageDropdown")
+	arg_1_0._inpRtpcName = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/rtpcItem/inpRtpcName")
+	arg_1_0._inpRtpcValue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/rtpcItem/inpRtpcValue")
+	arg_1_0._btnSetRtpc = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/rtpcItem/btnSetRtpc"))
+	arg_1_0._inpSwitchName = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/switchItem/inpSwitchGroup")
+	arg_1_0._inpSwitchValue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/switchItem/inpSwitchValue")
+	arg_1_0._btnSwitch = gohelper.getClick(gohelper.findChild(arg_1_0.viewGO, "viewport/content/switchItem/btnSetSwitch"))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnAudioPlay:AddClickListener(slot0._onClickAudioPlay, slot0)
-	slot0._btnAudioStop:AddClickListener(slot0._onClickAudioStop, slot0)
-	slot0._btnPlayEvent:AddClickListener(slot0._onClickEventPlay, slot0)
-	slot0._btnStopEvent:AddClickListener(slot0._onClickEventStop, slot0)
-	slot0._btnSetRtpc:AddClickListener(slot0._onClickSetRtpc, slot0)
-	slot0._btnSwitch:AddClickListener(slot0._onClickSwitch, slot0)
-	slot0._autoStopToggle:AddOnValueChanged(slot0._onAutoStopChange, slot0)
-	slot0._showLogToggle:AddOnValueChanged(slot0._onShowLogChange, slot0)
-	slot0._langDrop:AddOnValueChanged(slot0._onLangDropChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnAudioPlay:AddClickListener(arg_2_0._onClickAudioPlay, arg_2_0)
+	arg_2_0._btnAudioStop:AddClickListener(arg_2_0._onClickAudioStop, arg_2_0)
+	arg_2_0._btnPlayEvent:AddClickListener(arg_2_0._onClickEventPlay, arg_2_0)
+	arg_2_0._btnStopEvent:AddClickListener(arg_2_0._onClickEventStop, arg_2_0)
+	arg_2_0._btnSetRtpc:AddClickListener(arg_2_0._onClickSetRtpc, arg_2_0)
+	arg_2_0._btnSwitch:AddClickListener(arg_2_0._onClickSwitch, arg_2_0)
+	arg_2_0._autoStopToggle:AddOnValueChanged(arg_2_0._onAutoStopChange, arg_2_0)
+	arg_2_0._showLogToggle:AddOnValueChanged(arg_2_0._onShowLogChange, arg_2_0)
+	arg_2_0._langDrop:AddOnValueChanged(arg_2_0._onLangDropChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnAudioPlay:RemoveClickListener()
-	slot0._btnAudioStop:RemoveClickListener()
-	slot0._btnPlayEvent:RemoveClickListener()
-	slot0._btnStopEvent:RemoveClickListener()
-	slot0._btnSetRtpc:RemoveClickListener()
-	slot0._btnSwitch:RemoveClickListener()
-	slot0._autoStopToggle:RemoveOnValueChanged()
-	slot0._showLogToggle:RemoveOnValueChanged()
-	slot0._langDrop:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnAudioPlay:RemoveClickListener()
+	arg_3_0._btnAudioStop:RemoveClickListener()
+	arg_3_0._btnPlayEvent:RemoveClickListener()
+	arg_3_0._btnStopEvent:RemoveClickListener()
+	arg_3_0._btnSetRtpc:RemoveClickListener()
+	arg_3_0._btnSwitch:RemoveClickListener()
+	arg_3_0._autoStopToggle:RemoveOnValueChanged()
+	arg_3_0._showLogToggle:RemoveOnValueChanged()
+	arg_3_0._langDrop:RemoveOnValueChanged()
 end
 
-function slot0.initLangDrop(slot0)
-	slot0.langList = {}
-	slot3 = 0
+function var_0_0.initLangDrop(arg_4_0)
+	arg_4_0.langList = {}
 
-	for slot7 = 0, GameConfig:GetSupportedVoiceShortcuts().Length - 1 do
-		slot8 = slot1[slot7]
+	local var_4_0 = GameConfig:GetSupportedVoiceShortcuts()
+	local var_4_1 = var_4_0.Length
+	local var_4_2 = 0
 
-		table.insert(slot0.langList, slot8)
+	for iter_4_0 = 0, var_4_1 - 1 do
+		local var_4_3 = var_4_0[iter_4_0]
 
-		if slot8 == slot0.curLang then
-			slot3 = slot7
+		table.insert(arg_4_0.langList, var_4_3)
+
+		if var_4_3 == arg_4_0.curLang then
+			var_4_2 = iter_4_0
 		end
 	end
 
-	slot0._langDrop:ClearOptions()
-	slot0._langDrop:AddOptions(slot0.langList)
-	slot0._langDrop:SetValue(slot3)
+	arg_4_0._langDrop:ClearOptions()
+	arg_4_0._langDrop:AddOptions(arg_4_0.langList)
+	arg_4_0._langDrop:SetValue(var_4_2)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.autoStopPrePlayingId = true
-	slot0.prePlayingId = 0
-	slot0.curLang = GameConfig:GetCurVoiceShortcut()
-	slot0._showLogToggle.isOn = GMController.instance:getShowAudioLog()
-	slot0._autoStopToggle.isOn = slot0.autoStopPrePlayingId
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.autoStopPrePlayingId = true
+	arg_5_0.prePlayingId = 0
+	arg_5_0.curLang = GameConfig:GetCurVoiceShortcut()
+	arg_5_0._showLogToggle.isOn = GMController.instance:getShowAudioLog()
+	arg_5_0._autoStopToggle.isOn = arg_5_0.autoStopPrePlayingId
 
-	slot0:initLangDrop()
+	arg_5_0:initLangDrop()
 end
 
-function slot0._onClickAudioPlay(slot0)
-	if not string.nilorempty(slot0._inpAudio:GetText()) and tonumber(slot1) then
-		if slot0.autoStopPrePlayingId then
-			slot0:stopPlayingID()
+function var_0_0._onClickAudioPlay(arg_6_0)
+	local var_6_0 = arg_6_0._inpAudio:GetText()
+
+	if not string.nilorempty(var_6_0) then
+		local var_6_1 = tonumber(var_6_0)
+
+		if var_6_1 then
+			if arg_6_0.autoStopPrePlayingId then
+				arg_6_0:stopPlayingID()
+			end
+
+			arg_6_0.prePlayingId = AudioMgr.instance:trigger(var_6_1) or 0
 		end
-
-		slot0.prePlayingId = AudioMgr.instance:trigger(slot2) or 0
 	end
 end
 
-function slot0._onClickAudioStop(slot0)
-	slot0:stopPlayingID()
+function var_0_0._onClickAudioStop(arg_7_0)
+	arg_7_0:stopPlayingID()
 end
 
-function slot0._onClickEventPlay(slot0)
-	slot2 = slot0._inpBank:GetText()
+function var_0_0._onClickEventPlay(arg_8_0)
+	local var_8_0 = arg_8_0._inpEvent:GetText()
+	local var_8_1 = arg_8_0._inpBank:GetText()
 
-	if string.nilorempty(slot0._inpEvent:GetText()) then
+	if string.nilorempty(var_8_0) then
 		return
 	end
 
-	if string.nilorempty(slot2) then
+	if string.nilorempty(var_8_1) then
 		return
 	end
 
-	slot0:initAudioEditorTool()
+	arg_8_0:initAudioEditorTool()
 
-	if slot0.autoStopPrePlayingId then
-		slot0:stopPlayingID()
+	if arg_8_0.autoStopPrePlayingId then
+		arg_8_0:stopPlayingID()
 	end
 
-	slot0.prePlayingId = slot0.audioTool:PlayEvent(slot1, slot2)
+	arg_8_0.prePlayingId = arg_8_0.audioTool:PlayEvent(var_8_0, var_8_1)
 end
 
-function slot0._onClickEventStop(slot0)
-	slot0:stopPlayingID()
+function var_0_0._onClickEventStop(arg_9_0)
+	arg_9_0:stopPlayingID()
 end
 
-function slot0._onAutoStopChange(slot0, slot1, slot2)
-	slot0.autoStopPrePlayingId = slot2
+function var_0_0._onAutoStopChange(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0.autoStopPrePlayingId = arg_10_2
 end
 
-function slot0._onShowLogChange(slot0, slot1, slot2)
-	if GMController.instance:getShowAudioLog() == slot2 then
+function var_0_0._onShowLogChange(arg_11_0, arg_11_1, arg_11_2)
+	if GMController.instance:getShowAudioLog() == arg_11_2 then
 		return
 	end
 
-	AudioMgr.GMOpenLog = slot2
-	ZProj.AudioManager.Instance.gmOpenLog = slot2
+	AudioMgr.GMOpenLog = arg_11_2
+	ZProj.AudioManager.Instance.gmOpenLog = arg_11_2
 
-	GMController.instance:setShowAudioLog(slot2)
+	GMController.instance:setShowAudioLog(arg_11_2)
 end
 
-function slot0._onLangDropChange(slot0, slot1)
-	if slot0.langList[slot1 + 1] == slot0.curLang then
+function var_0_0._onLangDropChange(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.langList[arg_12_1 + 1]
+
+	if var_12_0 == arg_12_0.curLang then
 		return
 	end
 
-	slot0.curLang = slot2
+	arg_12_0.curLang = var_12_0
 
-	slot0:stopPlayingID()
-	slot0:initAudioEditorTool()
-	slot0.audioTool:SetLanguage(slot0.curLang)
+	arg_12_0:stopPlayingID()
+	arg_12_0:initAudioEditorTool()
+	arg_12_0.audioTool:SetLanguage(arg_12_0.curLang)
 end
 
-function slot0._onClickSetRtpc(slot0)
-	slot2 = slot0._inpRtpcValue:GetText()
+function var_0_0._onClickSetRtpc(arg_13_0)
+	local var_13_0 = arg_13_0._inpRtpcName:GetText()
+	local var_13_1 = arg_13_0._inpRtpcValue:GetText()
 
-	if string.nilorempty(slot0._inpRtpcName:GetText()) then
+	if string.nilorempty(var_13_0) then
 		return
 	end
 
-	if string.nilorempty(slot2) then
+	if string.nilorempty(var_13_1) then
 		return
 	end
 
-	if not tonumber(slot2) then
+	local var_13_2 = tonumber(var_13_1)
+
+	if not var_13_2 then
 		return
 	end
 
-	slot0:initAudioEditorTool()
-	slot0.audioTool:SetRtpc(slot1, slot2)
+	arg_13_0:initAudioEditorTool()
+	arg_13_0.audioTool:SetRtpc(var_13_0, var_13_2)
 end
 
-function slot0._onClickSwitch(slot0)
-	slot2 = slot0._inpSwitchValue:GetText()
+function var_0_0._onClickSwitch(arg_14_0)
+	local var_14_0 = arg_14_0._inpSwitchName:GetText()
+	local var_14_1 = arg_14_0._inpSwitchValue:GetText()
 
-	if string.nilorempty(slot0._inpSwitchName:GetText()) then
+	if string.nilorempty(var_14_0) then
 		return
 	end
 
-	if string.nilorempty(slot2) then
+	if string.nilorempty(var_14_1) then
 		return
 	end
 
-	slot0:initAudioEditorTool()
-	slot0.audioTool:SetSwitch(slot1, slot2)
+	arg_14_0:initAudioEditorTool()
+	arg_14_0.audioTool:SetSwitch(var_14_0, var_14_1)
 end
 
-function slot0.stopPlayingID(slot0)
-	AudioMgr.instance:stopPlayingID(slot0.prePlayingId)
+function var_0_0.stopPlayingID(arg_15_0)
+	AudioMgr.instance:stopPlayingID(arg_15_0.prePlayingId)
 end
 
-function slot0.initAudioEditorTool(slot0)
-	if not slot0.audioTool then
-		slot0.audioTool = ZProj.AudioEditorTool.Instance
+function var_0_0.initAudioEditorTool(arg_16_0)
+	if not arg_16_0.audioTool then
+		arg_16_0.audioTool = ZProj.AudioEditorTool.Instance
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:stopPlayingID()
+function var_0_0.onClose(arg_17_0)
+	arg_17_0:stopPlayingID()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.audioTool = nil
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0.audioTool = nil
 end
 
-return slot0
+return var_0_0

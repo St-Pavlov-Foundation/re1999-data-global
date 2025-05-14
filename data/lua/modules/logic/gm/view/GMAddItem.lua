@@ -1,7 +1,7 @@
-module("modules.logic.gm.view.GMAddItem", package.seeall)
+﻿module("modules.logic.gm.view.GMAddItem", package.seeall)
 
-slot0 = class("GMAddItem", ListScrollCell)
-slot1 = {
+local var_0_0 = class("GMAddItem", ListScrollCell)
+local var_0_1 = {
 	"#319b26",
 	"#4d9af9",
 	"#a368d1",
@@ -9,57 +9,59 @@ slot1 = {
 	"#e11919"
 }
 
-function slot0.init(slot0, slot1)
-	slot0._mo = nil
-	slot0._itemClick = SLFramework.UGUI.UIClickListener.Get(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._mo = nil
+	arg_1_0._itemClick = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
 
-	slot0._itemClick:AddClickListener(slot0._onClickItem, slot0)
+	arg_1_0._itemClick:AddClickListener(arg_1_0._onClickItem, arg_1_0)
 
-	slot0._img1 = gohelper.findChildImage(slot1, "img1")
-	slot0._img2 = gohelper.findChildImage(slot1, "img2")
-	slot0._txtName = gohelper.findChildText(slot1, "txtName")
-	slot0._txtId = gohelper.findChildText(slot1, "txtId")
+	arg_1_0._img1 = gohelper.findChildImage(arg_1_1, "img1")
+	arg_1_0._img2 = gohelper.findChildImage(arg_1_1, "img2")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "txtName")
+	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "txtId")
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1
 
-	gohelper.setActive(slot0._img1.gameObject, slot1.id % 2 == 1)
-	gohelper.setActive(slot0._img2.gameObject, slot1.id % 2 == 0)
+	gohelper.setActive(arg_2_0._img1.gameObject, arg_2_1.id % 2 == 1)
+	gohelper.setActive(arg_2_0._img2.gameObject, arg_2_1.id % 2 == 0)
 
-	slot0._txtName.text = slot0._mo.name
+	arg_2_0._txtName.text = arg_2_0._mo.name
 
-	if slot0._mo.itemId then
-		slot0._txtId.text = slot0._mo.itemId
+	if arg_2_0._mo.itemId then
+		arg_2_0._txtId.text = arg_2_0._mo.itemId
 	else
-		slot0._txtId.text = ""
+		arg_2_0._txtId.text = ""
 	end
 
-	slot2 = "#666666"
+	local var_2_0 = "#666666"
 
-	if slot0._mo.rare then
-		slot2 = uv0[tonumber(slot0._mo.rare)]
+	if arg_2_0._mo.rare then
+		var_2_0 = var_0_1[tonumber(arg_2_0._mo.rare)]
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtName, slot2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._txtName, var_2_0)
 
-	slot0._txtId.color = GameUtil.parseColor(slot2)
+	local var_2_1 = GameUtil.parseColor(var_2_0)
+
+	arg_2_0._txtId.color = var_2_1
 end
 
-function slot0._onClickItem(slot0)
-	if slot0._mo.type == 0 then
-		GMController.instance:dispatchEvent(GMAddItemView.Return, slot0._mo)
+function var_0_0._onClickItem(arg_3_0)
+	if arg_3_0._mo.type == 0 then
+		GMController.instance:dispatchEvent(GMAddItemView.Return, arg_3_0._mo)
 	else
-		GMController.instance:dispatchEvent(GMAddItemView.ClickItem, slot0._mo)
+		GMController.instance:dispatchEvent(GMAddItemView.ClickItem, arg_3_0._mo)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._itemClick then
-		slot0._itemClick:RemoveClickListener()
+function var_0_0.onDestroy(arg_4_0)
+	if arg_4_0._itemClick then
+		arg_4_0._itemClick:RemoveClickListener()
 
-		slot0._itemClick = nil
+		arg_4_0._itemClick = nil
 	end
 end
 
-return slot0
+return var_0_0

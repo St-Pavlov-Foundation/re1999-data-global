@@ -1,28 +1,29 @@
-module("modules.logic.room.view.manufacture.RoomManufactureAddPopViewContainer", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureAddPopViewContainer", package.seeall)
 
-slot0 = class("RoomManufactureAddPopViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomManufactureAddPopViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = MixScrollParam.New()
-	slot2.scrollGOPath = "root/#go_addPop/#scroll_production"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "root/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
-	slot2.cellClass = RoomManufactureFormulaItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = MixScrollParam.New()
 
-	table.insert(slot1, LuaMixScrollView.New(ManufactureFormulaListModel.instance, slot2))
+	var_1_1.scrollGOPath = "root/#go_addPop/#scroll_production"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "root/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
+	var_1_1.cellClass = RoomManufactureFormulaItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
 
-	slot0._popView = RoomManufactureAddPopView.New()
+	table.insert(var_1_0, LuaMixScrollView.New(ManufactureFormulaListModel.instance, var_1_1))
 
-	table.insert(slot1, slot0._popView)
+	arg_1_0._popView = RoomManufactureAddPopView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._popView)
+
+	return var_1_0
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:startViewCloseBlock()
-	slot0._popView.animatorPlayer:Play(UIAnimationName.Close, slot0.onPlayCloseTransitionFinish, slot0)
+function var_0_0.playCloseTransition(arg_2_0)
+	arg_2_0:startViewCloseBlock()
+	arg_2_0._popView.animatorPlayer:Play(UIAnimationName.Close, arg_2_0.onPlayCloseTransitionFinish, arg_2_0)
 end
 
-return slot0
+return var_0_0

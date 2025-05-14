@@ -1,47 +1,47 @@
-module("modules.logic.rouge.map.model.rpcmo.RougeStoreEventMO", package.seeall)
+﻿module("modules.logic.rouge.map.model.rpcmo.RougeStoreEventMO", package.seeall)
 
-slot0 = class("RougeStoreEventMO", RougeBaseEventMO)
+local var_0_0 = class("RougeStoreEventMO", RougeBaseEventMO)
 
-function slot0.init(slot0, slot1, slot2)
-	uv0.super.init(slot0, slot1, slot2)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
 
-	slot0.boughtPosList = slot0.jsonData.boughtGoodsPosSet
+	arg_1_0.boughtPosList = arg_1_0.jsonData.boughtGoodsPosSet
 
-	if slot0.jsonData.posGoodMap then
-		slot0.posGoodsList = {}
+	if arg_1_0.jsonData.posGoodMap then
+		arg_1_0.posGoodsList = {}
 
-		for slot6, slot7 in pairs(slot0.jsonData.posGoodMap) do
-			slot0.posGoodsList[tonumber(slot6)] = slot7
+		for iter_1_0, iter_1_1 in pairs(arg_1_0.jsonData.posGoodMap) do
+			arg_1_0.posGoodsList[tonumber(iter_1_0)] = iter_1_1
 		end
 	end
 
-	slot0.refreshNum = slot0.jsonData.refreshNum
-	slot0.refreshNeedCoin = slot0.jsonData.refreshNeedCoin
+	arg_1_0.refreshNum = arg_1_0.jsonData.refreshNum
+	arg_1_0.refreshNeedCoin = arg_1_0.jsonData.refreshNeedCoin
 end
 
-function slot0.update(slot0, slot1, slot2)
-	uv0.super.update(slot0, slot1, slot2)
+function var_0_0.update(arg_2_0, arg_2_1, arg_2_2)
+	var_0_0.super.update(arg_2_0, arg_2_1, arg_2_2)
 
-	slot0.boughtPosList = slot0.jsonData.boughtGoodsPosSet
+	arg_2_0.boughtPosList = arg_2_0.jsonData.boughtGoodsPosSet
 
-	if slot0.jsonData.posGoodMap then
-		slot0.posGoodsList = {}
+	if arg_2_0.jsonData.posGoodMap then
+		arg_2_0.posGoodsList = {}
 
-		for slot6, slot7 in pairs(slot0.jsonData.posGoodMap) do
-			slot0.posGoodsList[tonumber(slot6)] = slot7
+		for iter_2_0, iter_2_1 in pairs(arg_2_0.jsonData.posGoodMap) do
+			arg_2_0.posGoodsList[tonumber(iter_2_0)] = iter_2_1
 		end
 	end
 
-	slot0.refreshNum = slot0.jsonData.refreshNum
-	slot0.refreshNeedCoin = slot0.jsonData.refreshNeedCoin
+	arg_2_0.refreshNum = arg_2_0.jsonData.refreshNum
+	arg_2_0.refreshNeedCoin = arg_2_0.jsonData.refreshNeedCoin
 end
 
-function slot0.checkIsSellOut(slot0, slot1)
-	return tabletool.indexOf(slot0.boughtPosList, slot1)
+function var_0_0.checkIsSellOut(arg_3_0, arg_3_1)
+	return tabletool.indexOf(arg_3_0.boughtPosList, arg_3_1)
 end
 
-function slot0.__tostring(slot0)
-	return uv0.super.__tostring(slot0)
+function var_0_0.__tostring(arg_4_0)
+	return var_0_0.super.__tostring(arg_4_0)
 end
 
-return slot0
+return var_0_0

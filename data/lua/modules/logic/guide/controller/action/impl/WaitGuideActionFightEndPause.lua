@@ -1,55 +1,60 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEndPause", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEndPause", package.seeall)
 
-slot0 = class("WaitGuideActionFightEndPause", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionFightEndPause", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._needSuccess = slot0.actionParam == "1"
+	arg_1_0._needSuccess = arg_1_0.actionParam == "1"
 
-	if slot0.actionParam and string.find(slot0.actionParam, ",") then
-		slot2 = string.splitToNumber(slot0.actionParam, ",")
-		slot0._needSuccess = slot2[1]
-		slot0._episodeId = slot2[2]
+	if arg_1_0.actionParam and string.find(arg_1_0.actionParam, ",") then
+		local var_1_0 = string.splitToNumber(arg_1_0.actionParam, ",")
+
+		arg_1_0._needSuccess = var_1_0[1]
+		arg_1_0._episodeId = var_1_0[2]
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnGuideFightEndPause, slot0._onGuideFightEndPause, slot0)
+	FightController.instance:registerCallback(FightEvent.OnGuideFightEndPause, arg_1_0._onGuideFightEndPause, arg_1_0)
 end
 
-function slot0._onGuideFightEndPause(slot0, slot1)
-	if slot0._episodeId then
-		if slot0._episodeId == FightModel.instance:getFightParam().episodeId then
-			if slot0._needSuccess then
-				if FightModel.instance:getRecordMO().fightResult == FightEnum.FightResult.Succ then
-					slot1.OnGuideFightEndPause = true
+function var_0_0._onGuideFightEndPause(arg_2_0, arg_2_1)
+	local var_2_0 = FightModel.instance:getRecordMO()
 
-					FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, slot0._onGuideFightEndPause, slot0)
-					slot0:onDone(true)
+	if arg_2_0._episodeId then
+		local var_2_1 = FightModel.instance:getFightParam()
+
+		if arg_2_0._episodeId == var_2_1.episodeId then
+			if arg_2_0._needSuccess then
+				if var_2_0.fightResult == FightEnum.FightResult.Succ then
+					arg_2_1.OnGuideFightEndPause = true
+
+					FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
+					arg_2_0:onDone(true)
 				end
 			else
-				slot1.OnGuideFightEndPause = true
+				arg_2_1.OnGuideFightEndPause = true
 
-				FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, slot0._onGuideFightEndPause, slot0)
-				slot0:onDone(true)
+				FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
+				arg_2_0:onDone(true)
 			end
 		end
-	elseif slot0._needSuccess then
-		if slot2.fightResult == FightEnum.FightResult.Succ then
-			slot1.OnGuideFightEndPause = true
+	elseif arg_2_0._needSuccess then
+		if var_2_0.fightResult == FightEnum.FightResult.Succ then
+			arg_2_1.OnGuideFightEndPause = true
 
-			FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, slot0._onGuideFightEndPause, slot0)
-			slot0:onDone(true)
+			FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
+			arg_2_0:onDone(true)
 		end
 	else
-		slot1.OnGuideFightEndPause = true
+		arg_2_1.OnGuideFightEndPause = true
 
-		FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, slot0._onGuideFightEndPause, slot0)
-		slot0:onDone(true)
+		FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, slot0._onGuideFightEndPause, slot0)
+function var_0_0.clearWork(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_3_0._onGuideFightEndPause, arg_3_0)
 end
 
-return slot0
+return var_0_0

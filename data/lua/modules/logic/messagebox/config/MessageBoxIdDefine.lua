@@ -1,4 +1,4 @@
-module("modules.logic.messagebox.config.MessageBoxIdDefine", package.seeall)
+﻿module("modules.logic.messagebox.config.MessageBoxIdDefine", package.seeall)
 
 return {
 	RoomRemoveCharacter = 61,

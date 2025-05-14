@@ -1,19 +1,19 @@
-module("modules.logic.season.view1_3.Season1_3StoreViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_3.Season1_3StoreViewContainer", package.seeall)
 
-slot0 = class("Season1_3StoreViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_3StoreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Season1_3StoreView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_righttop"))
+	table.insert(var_1_0, Season1_3StoreView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_righttop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -23,24 +23,26 @@ function slot0.buildTabViews(slot0, slot1)
 		}
 	end
 
-	if slot1 == 2 then
-		slot3 = CurrencyView.New({
-			Activity104Enum.StoreUTTU[Activity104Model.instance:getCurSeasonId()]
+	if arg_2_1 == 2 then
+		local var_2_0 = Activity104Model.instance:getCurSeasonId()
+		local var_2_1 = CurrencyView.New({
+			Activity104Enum.StoreUTTU[var_2_0]
 		})
-		slot3.foreHideBtn = true
+
+		var_2_1.foreHideBtn = true
 
 		return {
-			slot3
+			var_2_1
 		}
 	end
 end
 
-function slot0._closeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._closeCallback(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-function slot0._homeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._homeCallback(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

@@ -1,14 +1,14 @@
-module("modules.logic.rouge.view.RougeCollectionChessViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionChessViewContainer", package.seeall)
 
-slot0 = class("RougeCollectionChessViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeCollectionChessViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._poolComp = RougeCollectionChessPoolComp.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._poolComp = RougeCollectionChessPoolComp.New()
 
 	return {
 		TabViewGroup.New(1, "#go_left/#go_btns"),
 		TabViewGroup.New(2, "#go_rougemapdetailcontainer"),
-		slot0._poolComp,
+		arg_1_0._poolComp,
 		RougeCollectionEffectActiveComp.New(),
 		RougeCollectionEffectTriggerComp.New(),
 		RougeCollectionChessView.New(),
@@ -19,28 +19,28 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		})
 
-		slot0._navigateButtonView:setHelpId(HelpEnum.HelpId.RougeCollectionChessViewHelp)
+		arg_2_0._navigateButtonView:setHelpId(HelpEnum.HelpId.RougeCollectionChessViewHelp)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-function slot0.getRougePoolComp(slot0)
-	return slot0._poolComp
+function var_0_0.getRougePoolComp(arg_3_0)
+	return arg_3_0._poolComp
 end
 
-return slot0
+return var_0_0

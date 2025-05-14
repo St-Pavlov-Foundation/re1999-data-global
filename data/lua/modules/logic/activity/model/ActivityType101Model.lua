@@ -1,94 +1,101 @@
-slot0 = string.format
+﻿local var_0_0 = string.format
 
 module("modules.logic.activity.model.ActivityType101Model", package.seeall)
 
-slot1 = class("ActivityType101Model", BaseModel)
-slot2 = 0
-slot3 = 1
-slot4 = 2
+local var_0_1 = class("ActivityType101Model", BaseModel)
+local var_0_2 = 0
+local var_0_3 = 1
+local var_0_4 = 2
 
-function slot1.onInit(slot0)
-	slot0:reInit()
+function var_0_1.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot1.reInit(slot0)
-	slot0._type101Info = {}
+function var_0_1.reInit(arg_2_0)
+	arg_2_0._type101Info = {}
 
-	slot0:setCurIndex(nil)
+	arg_2_0:setCurIndex(nil)
 end
 
-function slot1.setType101Info(slot0, slot1)
-	slot2 = {}
-	slot3 = {
-		[slot9.id] = slot10
-	}
-	slot4 = {}
+function var_0_1.setType101Info(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+	local var_3_1 = {}
+	local var_3_2 = {}
 
-	for slot8, slot9 in ipairs(slot1.infos) do
-		ActivityType101InfoMo.New():init(slot9)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.infos) do
+		local var_3_3 = ActivityType101InfoMo.New()
+
+		var_3_3:init(iter_3_1)
+
+		var_3_1[iter_3_1.id] = var_3_3
 	end
 
-	for slot8, slot9 in ipairs(slot1.spInfos) do
-		slot11 = ActivityType101SpInfoMo.New()
+	for iter_3_2, iter_3_3 in ipairs(arg_3_1.spInfos) do
+		local var_3_4 = iter_3_3.id
+		local var_3_5 = ActivityType101SpInfoMo.New()
 
-		slot11:init(slot9)
+		var_3_5:init(iter_3_3)
 
-		slot4[slot9.id] = slot11
+		var_3_2[var_3_4] = var_3_5
 	end
 
-	slot2.infos = slot3
-	slot2.count = slot1.loginCount
-	slot2.spInfos = slot4
-	slot0._type101Info[slot1.activityId] = slot2
+	var_3_0.infos = var_3_1
+	var_3_0.count = arg_3_1.loginCount
+	var_3_0.spInfos = var_3_2
+	arg_3_0._type101Info[arg_3_1.activityId] = var_3_0
 end
 
-function slot1.setBonusGet(slot0, slot1)
-	if not slot0:isInit(slot1.activityId) then
+function var_0_1.setBonusGet(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.activityId
+
+	if not arg_4_0:isInit(var_4_0) then
 		return
 	end
 
-	slot0._type101Info[slot2].infos[slot1.id].state = uv0
+	arg_4_0._type101Info[var_4_0].infos[arg_4_1.id].state = var_0_4
 end
 
-function slot1.getType101LoginCount(slot0, slot1)
-	if not slot0:isInit(slot1) then
+function var_0_1.getType101LoginCount(arg_5_0, arg_5_1)
+	if not arg_5_0:isInit(arg_5_1) then
 		return 0
 	end
 
-	return slot0._type101Info[slot1].count
+	return arg_5_0._type101Info[arg_5_1].count
 end
 
-function slot1.isType101RewardGet(slot0, slot1, slot2)
-	return slot0:getType101InfoState(slot1, slot2) == uv0
+function var_0_1.isType101RewardGet(arg_6_0, arg_6_1, arg_6_2)
+	return arg_6_0:getType101InfoState(arg_6_1, arg_6_2) == var_0_4
 end
 
-function slot1.isType101RewardCouldGet(slot0, slot1, slot2)
-	return slot0:getType101InfoState(slot1, slot2) == uv0
+function var_0_1.isType101RewardCouldGet(arg_7_0, arg_7_1, arg_7_2)
+	return arg_7_0:getType101InfoState(arg_7_1, arg_7_2) == var_0_3
 end
 
-function slot1.getType101Info(slot0, slot1)
-	if not slot0:isInit(slot1) then
+function var_0_1.getType101Info(arg_8_0, arg_8_1)
+	if not arg_8_0:isInit(arg_8_1) then
 		return
 	end
 
-	return slot0._type101Info[slot1].infos
+	return arg_8_0._type101Info[arg_8_1].infos
 end
 
-function slot1.getCurIndex(slot0)
-	return slot0._curIndex
+function var_0_1.getCurIndex(arg_9_0)
+	return arg_9_0._curIndex
 end
 
-function slot1.setCurIndex(slot0, slot1)
-	slot0._curIndex = slot1
+function var_0_1.setCurIndex(arg_10_0, arg_10_1)
+	arg_10_0._curIndex = arg_10_1
 end
 
-function slot1.isType101RewardCouldGetAnyOne(slot0, slot1)
-	if not slot0:getType101Info(slot1) then
+function var_0_1.isType101RewardCouldGetAnyOne(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getType101Info(arg_11_1)
+
+	if not var_11_0 then
 		return false
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		if slot7.state == uv0 then
+	for iter_11_0, iter_11_1 in pairs(var_11_0) do
+		if iter_11_1.state == var_0_3 then
 			return true
 		end
 	end
@@ -96,13 +103,15 @@ function slot1.isType101RewardCouldGetAnyOne(slot0, slot1)
 	return false
 end
 
-function slot1.hasReceiveAllReward(slot0, slot1)
-	if not slot0:getType101Info(slot1) then
+function var_0_1.hasReceiveAllReward(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getType101Info(arg_12_1)
+
+	if not var_12_0 then
 		return true
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		if slot7.state == uv0 or slot7.state == uv1 then
+	for iter_12_0, iter_12_1 in pairs(var_12_0) do
+		if iter_12_1.state == var_0_2 or iter_12_1.state == var_0_3 then
 			return false
 		end
 	end
@@ -110,115 +119,139 @@ function slot1.hasReceiveAllReward(slot0, slot1)
 	return true
 end
 
-function slot1.isInit(slot0, slot1)
-	return slot0._type101Info[slot1] and true or false
+function var_0_1.isInit(arg_13_0, arg_13_1)
+	return arg_13_0._type101Info[arg_13_1] and true or false
 end
 
-function slot1.isOpen(slot0, slot1)
-	return ActivityHelper.getActivityStatus(slot1, true) == ActivityEnum.ActivityStatus.Normal
+function var_0_1.isOpen(arg_14_0, arg_14_1)
+	return ActivityHelper.getActivityStatus(arg_14_1, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-function slot1.getLastGetIndex(slot0, slot1)
-	if uv0.instance:getType101LoginCount(slot1) == 0 then
+function var_0_1.getLastGetIndex(arg_15_0, arg_15_1)
+	local var_15_0 = var_0_1.instance:getType101LoginCount(arg_15_1)
+
+	if var_15_0 == 0 then
 		return 0
 	end
 
-	if slot0:isType101RewardGet(slot2) then
-		return slot2
+	if arg_15_0:isType101RewardGet(var_15_0) then
+		return var_15_0
 	end
 
-	if not slot0:getType101Info(slot1) then
+	local var_15_1 = arg_15_0:getType101Info(arg_15_1)
+
+	if not var_15_1 then
 		return 0
 	end
 
-	slot5 = {}
+	local var_15_2 = {}
 
-	for slot9, slot10 in pairs(slot4) do
-		if slot10.state == uv1 then
-			slot5[#slot5 + 1] = slot10.id
+	for iter_15_0, iter_15_1 in pairs(var_15_1) do
+		local var_15_3 = iter_15_1.id
+
+		if iter_15_1.state == var_0_4 then
+			var_15_2[#var_15_2 + 1] = var_15_3
 		end
 	end
 
-	table.sort(slot5)
+	table.sort(var_15_2)
 
-	return slot5[#slot5] or 0
+	return var_15_2[#var_15_2] or 0
 end
 
-function slot1.getType101InfoState(slot0, slot1, slot2)
-	if not slot0:isInit(slot1) then
-		return uv0
+function var_0_1.getType101InfoState(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_0:isInit(arg_16_1) then
+		return var_0_2
 	end
 
-	if not slot0:getType101Info(slot1) then
-		return uv0
+	local var_16_0 = arg_16_0:getType101Info(arg_16_1)
+
+	if not var_16_0 then
+		return var_0_2
 	end
 
-	if not slot3[slot2] then
-		return uv0
+	local var_16_1 = var_16_0[arg_16_2]
+
+	if not var_16_1 then
+		return var_0_2
 	end
 
-	return slot4.state or uv0
+	return var_16_1.state or var_0_2
 end
 
-function slot1.getType101SpInfo(slot0, slot1)
-	if not slot0:isInit(slot1) then
+function var_0_1.getType101SpInfo(arg_17_0, arg_17_1)
+	if not arg_17_0:isInit(arg_17_1) then
 		return
 	end
 
-	return slot0._type101Info[slot1].spInfos
+	return arg_17_0._type101Info[arg_17_1].spInfos
 end
 
-function slot1.getType101SpInfoMo(slot0, slot1, slot2)
-	if not slot0:isInit(slot1) then
+function var_0_1.getType101SpInfoMo(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_0:isInit(arg_18_1) then
 		return
 	end
 
-	if not slot0:getType101SpInfo(slot1) then
+	local var_18_0 = arg_18_0:getType101SpInfo(arg_18_1)
+
+	if not var_18_0 then
 		return
 	end
 
-	return slot3[slot2]
+	return var_18_0[arg_18_2]
 end
 
-function slot1.isType101SpRewardUncompleted(slot0, slot1, slot2)
-	if not slot0:getType101SpInfoMo(slot1, slot2) then
+function var_0_1.isType101SpRewardUncompleted(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0:getType101SpInfoMo(arg_19_1, arg_19_2)
+
+	if not var_19_0 then
 		return false
 	end
 
-	return slot3:isNone()
+	return var_19_0:isNone()
 end
 
-function slot1.isType101SpRewardCouldGet(slot0, slot1, slot2)
-	if not slot0:getType101SpInfoMo(slot1, slot2) then
+function var_0_1.isType101SpRewardCouldGet(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0:getType101SpInfoMo(arg_20_1, arg_20_2)
+
+	if not var_20_0 then
 		return false
 	end
 
-	return slot3:isAvailable()
+	return var_20_0:isAvailable()
 end
 
-function slot1.isType101SpRewardGot(slot0, slot1, slot2)
-	if not slot0:getType101SpInfoMo(slot1, slot2) then
+function var_0_1.isType101SpRewardGot(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0:getType101SpInfoMo(arg_21_1, arg_21_2)
+
+	if not var_21_0 then
 		return false
 	end
 
-	return slot3:isReceived()
+	return var_21_0:isReceived()
 end
 
-function slot1.setSpBonusGet(slot0, slot1)
-	if not slot0:getType101SpInfoMo(slot1.activityId, slot1.id) then
+function var_0_1.setSpBonusGet(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_1.activityId
+	local var_22_1 = arg_22_1.id
+	local var_22_2 = arg_22_0:getType101SpInfoMo(var_22_0, var_22_1)
+
+	if not var_22_2 then
 		return
 	end
 
-	slot4:setState_Received()
+	var_22_2:setState_Received()
 end
 
-function slot1.isType101SpRewardCouldGetAnyOne(slot0, slot1)
-	if not slot0:getType101SpInfo(slot1) then
+function var_0_1.isType101SpRewardCouldGetAnyOne(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getType101SpInfo(arg_23_1)
+
+	if not var_23_0 then
 		return false
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		if slot7:isAvailable() then
+	for iter_23_0, iter_23_1 in pairs(var_23_0) do
+		if iter_23_1:isAvailable() then
 			return true
 		end
 	end
@@ -226,45 +259,50 @@ function slot1.isType101SpRewardCouldGetAnyOne(slot0, slot1)
 	return false
 end
 
-function slot1.claimAll(slot0, slot1, slot2, slot3)
-	if uv0.instance:getType101LoginCount(slot1) == 0 then
-		if slot2 then
-			slot2(slot3)
+function var_0_1.claimAll(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if var_0_1.instance:getType101LoginCount(arg_24_1) == 0 then
+		if arg_24_2 then
+			arg_24_2(arg_24_3)
 		end
 
 		return
 	end
 
-	if not slot0:getType101Info(slot1) then
-		if slot2 then
-			slot2(slot3)
+	local var_24_0 = arg_24_0:getType101Info(arg_24_1)
+
+	if not var_24_0 then
+		if arg_24_2 then
+			arg_24_2(arg_24_3)
 		end
 
 		return
 	end
 
-	slot6 = {}
+	local var_24_1 = {}
 
-	for slot10, slot11 in pairs(slot5) do
-		if slot11.state == uv1 then
-			slot6[#slot6 + 1] = slot11.id
+	for iter_24_0, iter_24_1 in pairs(var_24_0) do
+		local var_24_2 = iter_24_1.id
+
+		if iter_24_1.state == var_0_3 then
+			var_24_1[#var_24_1 + 1] = var_24_2
 		end
 	end
 
-	for slot10, slot11 in ipairs(slot6) do
-		slot12, slot13 = nil
+	for iter_24_2, iter_24_3 in ipairs(var_24_1) do
+		local var_24_3
+		local var_24_4
 
-		if slot10 == #slot6 then
-			slot12 = slot2
-			slot13 = slot3
+		if iter_24_2 == #var_24_1 then
+			var_24_3 = arg_24_2
+			var_24_4 = arg_24_3
 		end
 
-		Activity101Rpc.instance:sendGet101BonusRequest(slot1, slot11, slot12, slot13)
+		Activity101Rpc.instance:sendGet101BonusRequest(arg_24_1, iter_24_3, var_24_3, var_24_4)
 	end
 end
 
-slot5 = "_Container"
-slot6 = {
+local var_0_5 = "_Container"
+local var_0_6 = {
 	bgBlur = 0,
 	destroy = 0,
 	mainRes = "ui/viewres/activity/v%sa%s_role_fullsignview.prefab",
@@ -272,22 +310,24 @@ slot6 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default,
 	otherRes = {
-		[1.0] = "ui/viewres/activity/v%sa%s_role_signitem.prefab"
+		[1] = "ui/viewres/activity/v%sa%s_role_signitem.prefab"
 	}
 }
-slot7 = slot6
-slot8 = tabletool.copy(slot6)
-slot7.container = "Vxax_Role_FullSignView_Part1_Container"
-slot8.container = "Vxax_Role_FullSignView_Part2_Container"
-slot7._viewName = "V%sa%s_Role_FullSignView_Part1"
-slot8._viewName = "V%sa%s_Role_FullSignView_Part2"
-slot7._viewContainerName = slot7._viewName .. slot5
-slot8._viewContainerName = slot8._viewName .. slot5
-slot7._isFullView = true
-slot8._isFullView = true
-slot7._whichPart = 1
-slot8._whichPart = 2
-slot9 = {
+local var_0_7 = var_0_6
+local var_0_8 = tabletool.copy(var_0_6)
+
+var_0_7.container = "Vxax_Role_FullSignView_Part1_Container"
+var_0_8.container = "Vxax_Role_FullSignView_Part2_Container"
+var_0_7._viewName = "V%sa%s_Role_FullSignView_Part1"
+var_0_8._viewName = "V%sa%s_Role_FullSignView_Part2"
+var_0_7._viewContainerName = var_0_7._viewName .. var_0_5
+var_0_8._viewContainerName = var_0_8._viewName .. var_0_5
+var_0_7._isFullView = true
+var_0_8._isFullView = true
+var_0_7._whichPart = 1
+var_0_8._whichPart = 2
+
+local var_0_9 = {
 	bgBlur = 1,
 	destroy = 0,
 	mainRes = "ui/viewres/activity/v%sa%s_role_panelsignview.prefab",
@@ -295,22 +335,24 @@ slot9 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default,
 	otherRes = {
-		[1.0] = "ui/viewres/activity/v%sa%s_role_signitem.prefab"
+		[1] = "ui/viewres/activity/v%sa%s_role_signitem.prefab"
 	}
 }
-slot10 = slot9
-slot11 = tabletool.copy(slot9)
-slot10.container = "Vxax_Role_PanelSignView_Part1_Container"
-slot11.container = "Vxax_Role_PanelSignView_Part2_Container"
-slot10._viewName = "V%sa%s_Role_PanelSignView_Part1"
-slot11._viewName = "V%sa%s_Role_PanelSignView_Part2"
-slot10._viewContainerName = slot10._viewName .. slot5
-slot11._viewContainerName = slot11._viewName .. slot5
-slot10._isFullView = false
-slot11._isFullView = false
-slot10._whichPart = 1
-slot11._whichPart = 2
-slot12 = {
+local var_0_10 = var_0_9
+local var_0_11 = tabletool.copy(var_0_9)
+
+var_0_10.container = "Vxax_Role_PanelSignView_Part1_Container"
+var_0_11.container = "Vxax_Role_PanelSignView_Part2_Container"
+var_0_10._viewName = "V%sa%s_Role_PanelSignView_Part1"
+var_0_11._viewName = "V%sa%s_Role_PanelSignView_Part2"
+var_0_10._viewContainerName = var_0_10._viewName .. var_0_5
+var_0_11._viewContainerName = var_0_11._viewName .. var_0_5
+var_0_10._isFullView = false
+var_0_11._isFullView = false
+var_0_10._whichPart = 1
+var_0_11._whichPart = 2
+
+local var_0_12 = {
 	bgBlur = 0,
 	container = "Vxax_Special_FullSignViewContainer",
 	destroy = 0,
@@ -322,7 +364,7 @@ slot12 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-slot13 = {
+local var_0_13 = {
 	bgBlur = 1,
 	container = "Vxax_Special_PanelSignViewContainer",
 	destroy = 0,
@@ -334,7 +376,7 @@ slot13 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-slot14 = {
+local var_0_14 = {
 	bgBlur = 0,
 	container = "Vxax_LinkageActivity_FullViewContainer",
 	destroy = 0,
@@ -346,7 +388,7 @@ slot14 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-slot15 = {
+local var_0_15 = {
 	bgBlur = 1,
 	container = "Vxax_LinkageActivity_PanelViewContainer",
 	destroy = 0,
@@ -359,94 +401,118 @@ slot15 = {
 	anim = ViewAnim.Default
 }
 
-function slot16(slot0, slot1, slot2)
-	function slot3(slot0)
-		slot0.mainRes = uv0(slot0.mainRes, uv1, uv2)
-		slot0.otherRes[1] = uv0(slot0.otherRes[1], uv1, uv2)
-		slot0._viewName = uv0(slot0._viewName, uv1, uv2)
-		slot3 = nil
-		slot4 = _G.class(uv0(slot0._viewContainerName, uv1, uv2), Vxax_Role_SignItem_SignViewContainer)
+local function var_0_16(arg_25_0, arg_25_1, arg_25_2)
+	local function var_25_0(arg_26_0)
+		local var_26_0 = var_0_0(arg_26_0._viewName, arg_25_0, arg_25_1)
+		local var_26_1 = var_0_0(arg_26_0._viewContainerName, arg_25_0, arg_25_1)
 
-		if slot0._isFullView then
-			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_FullSignView_PartX(_G.class(slot1, Vxax_Role_FullSignView), uv1, uv2, slot0._whichPart)
+		arg_26_0.mainRes = var_0_0(arg_26_0.mainRes, arg_25_0, arg_25_1)
+		arg_26_0.otherRes[1] = var_0_0(arg_26_0.otherRes[1], arg_25_0, arg_25_1)
+		arg_26_0._viewName = var_26_0
+
+		local var_26_2
+		local var_26_3 = _G.class(var_26_1, Vxax_Role_SignItem_SignViewContainer)
+
+		if arg_26_0._isFullView then
+			var_26_2 = _G.class(var_26_0, Vxax_Role_FullSignView)
+
+			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_FullSignView_PartX(var_26_2, arg_25_0, arg_25_1, arg_26_0._whichPart)
 		else
-			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX(_G.class(slot1, Vxax_Role_PanelSignView), uv1, uv2, slot0._whichPart)
+			var_26_2 = _G.class(var_26_0, Vxax_Role_PanelSignView)
+
+			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX(var_26_2, arg_25_0, arg_25_1, arg_26_0._whichPart)
 		end
 
-		Vxax_Role_SignItem_SignViewContainer.Vxax_Role_xxxSignView_Container(slot4, slot3)
+		Vxax_Role_SignItem_SignViewContainer.Vxax_Role_xxxSignView_Container(var_26_3, var_26_2)
 
-		uv3[slot1] = slot0
+		arg_25_2[var_26_0] = arg_26_0
 
-		rawset(_G.ViewName, slot1, slot1)
-		rawset(_G, slot1, slot3)
-		rawset(_G, slot2, slot4)
+		rawset(_G.ViewName, var_26_0, var_26_0)
+		rawset(_G, var_26_0, var_26_2)
+		rawset(_G, var_26_1, var_26_3)
 	end
 
-	slot3(uv1)
-	slot3(uv2)
-	slot3(uv3)
-	slot3(uv4)
+	var_25_0(var_0_7)
+	var_25_0(var_0_8)
+	var_25_0(var_0_10)
+	var_25_0(var_0_11)
 end
 
-function slot17(slot0, slot1, slot2)
-	function slot3(slot0)
-		slot0.mainRes = uv0(slot0.mainRes, uv1, uv2)
-		slot0._viewName = uv0(slot0._viewName, uv1, uv2)
-		slot3 = nil
-		slot4 = _G.class(uv0(slot0._viewContainerName, uv1, uv2), Vxax_Special_SignItemViewContainer)
+local function var_0_17(arg_27_0, arg_27_1, arg_27_2)
+	local function var_27_0(arg_28_0)
+		local var_28_0 = var_0_0(arg_28_0._viewName, arg_27_0, arg_27_1)
+		local var_28_1 = var_0_0(arg_28_0._viewContainerName, arg_27_0, arg_27_1)
 
-		if slot0._isFullView then
-			Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView(_G.class(slot1, uv3), uv1, uv2)
+		arg_28_0.mainRes = var_0_0(arg_28_0.mainRes, arg_27_0, arg_27_1)
+		arg_28_0._viewName = var_28_0
+
+		local var_28_2
+		local var_28_3 = _G.class(var_28_1, Vxax_Special_SignItemViewContainer)
+
+		if arg_28_0._isFullView then
+			var_28_2 = _G.class(var_28_0, var_0_12)
+
+			Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView(var_28_2, arg_27_0, arg_27_1)
 		else
-			Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView(_G.class(slot1, uv4), uv1, uv2)
+			var_28_2 = _G.class(var_28_0, var_0_13)
+
+			Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView(var_28_2, arg_27_0, arg_27_1)
 		end
 
-		Vxax_Special_SignItemViewContainer.Vxax_Special_xxxSignView_Container(slot4, slot3)
+		Vxax_Special_SignItemViewContainer.Vxax_Special_xxxSignView_Container(var_28_3, var_28_2)
 
-		uv5[slot1] = slot0
+		arg_27_2[var_28_0] = arg_28_0
 
-		rawset(_G.ViewName, slot1, slot1)
-		rawset(_G, slot1, slot3)
-		rawset(_G, slot2, slot4)
+		rawset(_G.ViewName, var_28_0, var_28_0)
+		rawset(_G, var_28_0, var_28_2)
+		rawset(_G, var_28_1, var_28_3)
 	end
 
-	slot3(uv1)
-	slot3(uv2)
+	var_27_0(var_0_12)
+	var_27_0(var_0_13)
 end
 
-function slot18(slot0, slot1, slot2)
-	function slot3(slot0)
-		slot0.mainRes = uv0(slot0.mainRes, uv1, uv2)
-		slot0._viewName = uv0(slot0._viewName, uv1, uv2)
-		slot3 = nil
-		slot4 = _G.class(uv0(slot0._viewContainerName, uv1, uv2), LinkageActivity_BaseViewContainer)
+local function var_0_18(arg_29_0, arg_29_1, arg_29_2)
+	local function var_29_0(arg_30_0)
+		local var_30_0 = var_0_0(arg_30_0._viewName, arg_29_0, arg_29_1)
+		local var_30_1 = var_0_0(arg_30_0._viewContainerName, arg_29_0, arg_29_1)
 
-		if slot0._isFullView then
-			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(_G.class(slot1, LinkageActivity_FullView), uv1, uv2)
+		arg_30_0.mainRes = var_0_0(arg_30_0.mainRes, arg_29_0, arg_29_1)
+		arg_30_0._viewName = var_30_0
+
+		local var_30_2
+		local var_30_3 = _G.class(var_30_1, LinkageActivity_BaseViewContainer)
+
+		if arg_30_0._isFullView then
+			var_30_2 = _G.class(var_30_0, LinkageActivity_FullView)
+
+			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(var_30_2, arg_29_0, arg_29_1)
 		else
-			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(_G.class(slot1, LinkageActivity_PanelView), uv1, uv2)
+			var_30_2 = _G.class(var_30_0, LinkageActivity_PanelView)
+
+			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(var_30_2, arg_29_0, arg_29_1)
 		end
 
-		LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(slot4, slot3)
+		LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(var_30_3, var_30_2)
 
-		uv3[slot1] = slot0
+		arg_29_2[var_30_0] = arg_30_0
 
-		rawset(_G.ViewName, slot1, slot1)
-		rawset(_G, slot1, slot3)
-		rawset(_G, slot2, slot4)
+		rawset(_G.ViewName, var_30_0, var_30_0)
+		rawset(_G, var_30_0, var_30_2)
+		rawset(_G, var_30_1, var_30_3)
 	end
 
-	slot3(uv1)
-	slot3(uv2)
+	var_29_0(var_0_14)
+	var_29_0(var_0_15)
 end
 
-function slot1.onModuleViews(slot0, slot1, slot2)
-	slot3 = slot1.curV
-	slot4 = slot1.curA
+function var_0_1.onModuleViews(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_1.curV
+	local var_31_1 = arg_31_1.curA
 
-	uv0(2, 7, slot2)
+	var_0_18(2, 7, arg_31_2)
 end
 
-slot1.instance = slot1.New()
+var_0_1.instance = var_0_1.New()
 
-return slot1
+return var_0_1

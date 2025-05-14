@@ -1,260 +1,279 @@
-module("modules.logic.versionactivity1_3.armpipe.model.ArmPuzzlePipeModel", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.model.ArmPuzzlePipeModel", package.seeall)
 
-slot0 = class("ArmPuzzlePipeModel", BaseModel)
-slot0.constWidth = 7
-slot0.constHeight = 5
-slot0.constEntry = 0
+local var_0_0 = class("ArmPuzzlePipeModel", BaseModel)
 
-function slot0.reInit(slot0)
-	slot0:release()
+var_0_0.constWidth = 7
+var_0_0.constHeight = 5
+var_0_0.constEntry = 0
+
+function var_0_0.reInit(arg_1_0)
+	arg_1_0:release()
 end
 
-function slot0.release(slot0)
-	slot0._cfgElement = nil
-	slot0._startX = nil
-	slot0._startY = nil
-	slot0._gridDatas = nil
-	slot0._isGameClear = false
-	slot0._entryList = nil
-	slot0._isHasPlaceOP = false
+function var_0_0.release(arg_2_0)
+	arg_2_0._cfgElement = nil
+	arg_2_0._startX = nil
+	arg_2_0._startY = nil
+	arg_2_0._gridDatas = nil
+	arg_2_0._isGameClear = false
+	arg_2_0._entryList = nil
+	arg_2_0._isHasPlaceOP = false
 end
 
-function slot0.initByEpisodeCo(slot0, slot1)
-	slot0._cfgElement = slot1
+function var_0_0.initByEpisodeCo(arg_3_0, arg_3_1)
+	arg_3_0._cfgElement = arg_3_1
 
-	if slot0._cfgElement then
-		slot0._isHasPlaceOP = false
-		slot2 = Activity124Config.instance:getMapCo(slot1.activityId, slot1.mapId)
+	if arg_3_0._cfgElement then
+		arg_3_0._isHasPlaceOP = false
 
-		slot0:initData()
-		slot0:initPuzzle(slot2.tilebase)
-		slot0:initPuzzlePlace(slot2.objects)
+		local var_3_0 = Activity124Config.instance:getMapCo(arg_3_1.activityId, arg_3_1.mapId)
+
+		arg_3_0:initData()
+		arg_3_0:initPuzzle(var_3_0.tilebase)
+		arg_3_0:initPuzzlePlace(var_3_0.objects)
 	end
 end
 
-function slot0.initData(slot0)
-	slot0._gridDatas = {}
-	slot1, slot2 = slot0:getGameSize()
-	slot3 = nil
+function var_0_0.initData(arg_4_0)
+	arg_4_0._gridDatas = {}
 
-	for slot7 = 1, slot1 do
-		for slot11 = 1, slot2 do
-			slot0._gridDatas[slot7] = slot0._gridDatas[slot7] or {}
-			slot3 = ArmPuzzlePipeMO.New()
+	local var_4_0, var_4_1 = arg_4_0:getGameSize()
+	local var_4_2
 
-			slot3:init(slot7, slot11)
+	for iter_4_0 = 1, var_4_0 do
+		for iter_4_1 = 1, var_4_1 do
+			arg_4_0._gridDatas[iter_4_0] = arg_4_0._gridDatas[iter_4_0] or {}
 
-			slot0._gridDatas[slot7][slot11] = slot3
+			local var_4_3 = ArmPuzzlePipeMO.New()
+
+			var_4_3:init(iter_4_0, iter_4_1)
+
+			arg_4_0._gridDatas[iter_4_0][iter_4_1] = var_4_3
 		end
 	end
 
-	slot0._startX = -slot1 * 0.5 - 0.5
-	slot0._startY = -slot2 * 0.5 - 0.5
+	arg_4_0._startX = -var_4_0 * 0.5 - 0.5
+	arg_4_0._startY = -var_4_1 * 0.5 - 0.5
 end
 
-function slot0.initPuzzle(slot0, slot1)
-	slot0._entryList = {}
-	slot0._pathIndexList = {}
-	slot0._pathIndexDict = {}
-	slot0._pathNumListDict = {}
-	slot0._placeDataDict = {}
-	slot3 = 0
-	slot4, slot5 = slot0:getGameSize()
+function var_0_0.initPuzzle(arg_5_0, arg_5_1)
+	arg_5_0._entryList = {}
+	arg_5_0._pathIndexList = {}
+	arg_5_0._pathIndexDict = {}
+	arg_5_0._pathNumListDict = {}
+	arg_5_0._placeDataDict = {}
 
-	if #string.split(slot1, ",") >= slot4 * slot5 then
-		slot6 = 1
+	local var_5_0 = string.split(arg_5_1, ",")
+	local var_5_1 = 0
+	local var_5_2, var_5_3 = arg_5_0:getGameSize()
 
-		for slot10 = 1, slot4 do
-			for slot14 = 1, slot5 do
-				slot16 = slot0._gridDatas[slot10][slot14]
+	if #var_5_0 >= var_5_2 * var_5_3 then
+		local var_5_4 = 1
 
-				slot16:setParamStr(slot2[slot6])
+		for iter_5_0 = 1, var_5_2 do
+			for iter_5_1 = 1, var_5_3 do
+				local var_5_5 = var_5_0[var_5_4]
+				local var_5_6 = arg_5_0._gridDatas[iter_5_0][iter_5_1]
 
-				if slot16:isEntry() then
-					table.insert(slot0._entryList, slot16)
-					slot0:_initPathByMO(slot16)
+				var_5_6:setParamStr(var_5_5)
+
+				if var_5_6:isEntry() then
+					table.insert(arg_5_0._entryList, var_5_6)
+					arg_5_0:_initPathByMO(var_5_6)
 				end
 
-				if slot16.typeId == ArmPuzzlePipeEnum.type.zhanwei then
-					slot0._placeDataDict[slot16] = slot15
-					slot0._isHasPlaceOP = true
+				if var_5_6.typeId == ArmPuzzlePipeEnum.type.zhanwei then
+					arg_5_0._placeDataDict[var_5_6] = var_5_5
+					arg_5_0._isHasPlaceOP = true
 				end
 
-				slot6 = slot6 + 1
+				var_5_4 = var_5_4 + 1
 			end
 		end
 	end
 
-	for slot9, slot10 in pairs(slot0._pathNumListDict) do
-		if slot10 and #slot10 > 1 then
-			table.sort(slot10, uv0._numIndexSort)
+	for iter_5_2, iter_5_3 in pairs(arg_5_0._pathNumListDict) do
+		if iter_5_3 and #iter_5_3 > 1 then
+			table.sort(iter_5_3, var_0_0._numIndexSort)
 		end
 	end
 end
 
-function slot0.initPuzzlePlace(slot0, slot1)
-	slot0._placeTypeDataDict = {
+function var_0_0.initPuzzlePlace(arg_6_0, arg_6_1)
+	arg_6_0._placeTypeDataDict = {
 		[ArmPuzzlePipeEnum.type.straight] = 0,
 		[ArmPuzzlePipeEnum.type.corner] = 0,
 		[ArmPuzzlePipeEnum.type.t_shape] = 0
 	}
 
-	if GameUtil.splitString2(slot1, true, ",", "#") then
-		for slot6, slot7 in ipairs(slot2) do
-			if #slot7 >= 2 and slot0._placeTypeDataDict[slot7[1]] then
-				slot0._isHasPlaceOP = true
-				slot0._placeTypeDataDict[slot7[1]] = slot7[2]
+	local var_6_0 = GameUtil.splitString2(arg_6_1, true, ",", "#")
+
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+			if #iter_6_1 >= 2 and arg_6_0._placeTypeDataDict[iter_6_1[1]] then
+				arg_6_0._isHasPlaceOP = true
+				arg_6_0._placeTypeDataDict[iter_6_1[1]] = iter_6_1[2]
 			end
 		end
 	end
 end
 
-function slot0._numIndexSort(slot0, slot1)
-	if slot0 ~= slot1 then
-		return slot0 < slot1
+function var_0_0._numIndexSort(arg_7_0, arg_7_1)
+	if arg_7_0 ~= arg_7_1 then
+		return arg_7_0 < arg_7_1
 	end
 end
 
-function slot0._initPathByMO(slot0, slot1)
-	if slot1:isEntry() then
-		if not slot0._pathIndexDict[slot1.pathIndex] then
-			slot0._pathIndexDict[slot1.pathIndex] = true
+function var_0_0._initPathByMO(arg_8_0, arg_8_1)
+	if arg_8_1:isEntry() then
+		if not arg_8_0._pathIndexDict[arg_8_1.pathIndex] then
+			arg_8_0._pathIndexDict[arg_8_1.pathIndex] = true
 
-			table.insert(slot0._pathIndexList, slot1.pathIndex)
+			table.insert(arg_8_0._pathIndexList, arg_8_1.pathIndex)
 		end
 
-		if slot1.pathType == ArmPuzzlePipeEnum.PathType.Order then
-			slot0._pathNumListDict[slot2] = slot0._pathNumListDict[slot1.pathIndex] or {}
+		if arg_8_1.pathType == ArmPuzzlePipeEnum.PathType.Order then
+			local var_8_0 = arg_8_1.pathIndex
+			local var_8_1 = arg_8_1.numIndex
 
-			if tabletool.indexOf(slot0._pathNumListDict[slot2], slot1.numIndex) == nil then
-				table.insert(slot0._pathNumListDict[slot2], slot3)
+			arg_8_0._pathNumListDict[var_8_0] = arg_8_0._pathNumListDict[var_8_0] or {}
+
+			if tabletool.indexOf(arg_8_0._pathNumListDict[var_8_0], var_8_1) == nil then
+				table.insert(arg_8_0._pathNumListDict[var_8_0], var_8_1)
 			end
 		end
 	end
 end
 
-function slot0.resetEntryConnect(slot0)
-	slot1, slot2 = slot0:getGameSize()
+function var_0_0.resetEntryConnect(arg_9_0)
+	local var_9_0, var_9_1 = arg_9_0:getGameSize()
 
-	for slot6 = 1, slot1 do
-		for slot10 = 1, slot2 do
-			slot0._gridDatas[slot6][slot10]:cleanEntrySet()
+	for iter_9_0 = 1, var_9_0 do
+		for iter_9_1 = 1, var_9_1 do
+			arg_9_0._gridDatas[iter_9_0][iter_9_1]:cleanEntrySet()
 		end
 	end
 end
 
-function slot0.setGameClear(slot0, slot1)
-	slot0._isGameClear = slot1
+function var_0_0.setGameClear(arg_10_0, arg_10_1)
+	arg_10_0._isGameClear = arg_10_1
 end
 
-function slot0.isHasPlace(slot0)
-	return slot0._isHasPlaceOP
+function var_0_0.isHasPlace(arg_11_0)
+	return arg_11_0._isHasPlaceOP
 end
 
-function slot0.isHasPlaceByTypeId(slot0, slot1)
-	if slot0._placeTypeDataDict and slot0._placeTypeDataDict[slot1] > 0 then
+function var_0_0.isHasPlaceByTypeId(arg_12_0, arg_12_1)
+	if arg_12_0._placeTypeDataDict and arg_12_0._placeTypeDataDict[arg_12_1] > 0 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getPlaceNum(slot0, slot1)
-	slot2 = 0
+function var_0_0.getPlaceNum(arg_13_0, arg_13_1)
+	local var_13_0 = 0
 
-	if slot0._placeTypeDataDict and slot0._placeTypeDataDict[slot1] then
-		for slot6, slot7 in pairs(slot0._placeDataDict) do
-			if slot6.typeId == slot1 then
-				slot2 = slot0._placeTypeDataDict[slot1] - 1
+	if arg_13_0._placeTypeDataDict and arg_13_0._placeTypeDataDict[arg_13_1] then
+		var_13_0 = arg_13_0._placeTypeDataDict[arg_13_1]
+
+		for iter_13_0, iter_13_1 in pairs(arg_13_0._placeDataDict) do
+			if iter_13_0.typeId == arg_13_1 then
+				var_13_0 = var_13_0 - 1
 			end
 		end
 	end
 
-	return math.max(0, slot2)
+	return math.max(0, var_13_0)
 end
 
-function slot0.getData(slot0, slot1, slot2)
-	return slot0._gridDatas[slot1][slot2]
+function var_0_0.getData(arg_14_0, arg_14_1, arg_14_2)
+	return arg_14_0._gridDatas[arg_14_1][arg_14_2]
 end
 
-function slot0.isPlaceByXY(slot0, slot1, slot2)
-	if slot0:getPlaceStrByXY(slot1, slot2) then
+function var_0_0.isPlaceByXY(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0:getPlaceStrByXY(arg_15_1, arg_15_2) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getPlaceStrByXY(slot0, slot1, slot2)
-	if slot0._placeDataDict and slot0:getData(slot1, slot2) then
-		return slot0._placeDataDict[slot3]
+function var_0_0.getPlaceStrByXY(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_0._placeDataDict then
+		local var_16_0 = arg_16_0:getData(arg_16_1, arg_16_2)
+
+		if var_16_0 then
+			return arg_16_0._placeDataDict[var_16_0]
+		end
 	end
 end
 
-function slot0.setPlaceSelectXY(slot0, slot1, slot2)
-	slot0._placeSelectX = slot1
-	slot0._placeSelectY = slot2
+function var_0_0.setPlaceSelectXY(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._placeSelectX = arg_17_1
+	arg_17_0._placeSelectY = arg_17_2
 end
 
-function slot0.getPlaceSelectXY(slot0)
-	return slot0._placeSelectX, slot0._placeSelectY
+function var_0_0.getPlaceSelectXY(arg_18_0)
+	return arg_18_0._placeSelectX, arg_18_0._placeSelectY
 end
 
-function slot0.isPlaceSelectXY(slot0, slot1, slot2)
-	if slot1 == nil or slot2 == nil then
+function var_0_0.isPlaceSelectXY(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 == nil or arg_19_2 == nil then
 		return false
 	end
 
-	return slot0._placeSelectX == slot1 and slot0._placeSelectY == slot2
+	return arg_19_0._placeSelectX == arg_19_1 and arg_19_0._placeSelectY == arg_19_2
 end
 
-function slot0.getGameSize(slot0)
-	return uv0.constWidth, uv0.constHeight
+function var_0_0.getGameSize(arg_20_0)
+	return var_0_0.constWidth, var_0_0.constHeight
 end
 
-function slot0.getGameClear(slot0)
-	return slot0._isGameClear
+function var_0_0.getGameClear(arg_21_0)
+	return arg_21_0._isGameClear
 end
 
-function slot0.getEntryList(slot0)
-	return slot0._entryList
+function var_0_0.getEntryList(arg_22_0)
+	return arg_22_0._entryList
 end
 
-function slot0.getEpisodeCo(slot0)
-	return slot0._cfgElement
+function var_0_0.getEpisodeCo(arg_23_0)
+	return arg_23_0._cfgElement
 end
 
-function slot0.getPathIndexList(slot0)
-	return slot0._pathIndexList
+function var_0_0.getPathIndexList(arg_24_0)
+	return arg_24_0._pathIndexList
 end
 
-function slot0.getIndexByMO(slot0, slot1)
-	if slot1.pathType == ArmPuzzlePipeEnum.PathType.Order and slot0._pathNumListDict[slot1.pathIndex] then
-		return tabletool.indexOf(slot0._pathNumListDict[slot1.pathIndex], slot1.numIndex) or -1
+function var_0_0.getIndexByMO(arg_25_0, arg_25_1)
+	if arg_25_1.pathType == ArmPuzzlePipeEnum.PathType.Order and arg_25_0._pathNumListDict[arg_25_1.pathIndex] then
+		return tabletool.indexOf(arg_25_0._pathNumListDict[arg_25_1.pathIndex], arg_25_1.numIndex) or -1
 	end
 
 	return 0
 end
 
-function slot0.isHasPathIndex(slot0, slot1)
-	return slot0._pathIndexDict and slot0._pathIndexDict[slot1] or false
+function var_0_0.isHasPathIndex(arg_26_0, arg_26_1)
+	return arg_26_0._pathIndexDict and arg_26_0._pathIndexDict[arg_26_1] or false
 end
 
-function slot0.getRelativePosition(slot0, slot1, slot2, slot3, slot4)
-	return (slot0._startX + slot1) * slot3, (slot0._startY + slot2) * slot4
+function var_0_0.getRelativePosition(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
+	return (arg_27_0._startX + arg_27_1) * arg_27_3, (arg_27_0._startY + arg_27_2) * arg_27_4
 end
 
-function slot0.getIndexByTouchPos(slot0, slot1, slot2, slot3, slot4)
-	slot6 = math.floor((slot2 - (slot0._startY + 0.5) * slot4) / slot4)
-	slot7, slot8 = slot0:getGameSize()
+function var_0_0.getIndexByTouchPos(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4)
+	local var_28_0 = math.floor((arg_28_1 - (arg_28_0._startX + 0.5) * arg_28_3) / arg_28_3)
+	local var_28_1 = math.floor((arg_28_2 - (arg_28_0._startY + 0.5) * arg_28_4) / arg_28_4)
+	local var_28_2, var_28_3 = arg_28_0:getGameSize()
 
-	if math.floor((slot1 - (slot0._startX + 0.5) * slot3) / slot3) >= 0 and slot5 < slot7 and slot6 >= 0 and slot6 < slot8 then
-		return slot5 + 1, slot6 + 1
+	if var_28_0 >= 0 and var_28_0 < var_28_2 and var_28_1 >= 0 and var_28_1 < var_28_3 then
+		return var_28_0 + 1, var_28_1 + 1
 	end
 
 	return -1, -1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

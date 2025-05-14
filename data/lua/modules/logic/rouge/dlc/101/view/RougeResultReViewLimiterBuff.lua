@@ -1,19 +1,21 @@
-module("modules.logic.rouge.dlc.101.view.RougeResultReViewLimiterBuff", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeResultReViewLimiterBuff", package.seeall)
 
-slot0 = class("RougeResultReViewLimiterBuff", RougeLimiterBuffEntry)
+local var_0_0 = class("RougeResultReViewLimiterBuff", RougeLimiterBuffEntry)
 
-function slot0.ctor(slot0, slot1)
-	slot0._totalRiskValue = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._totalRiskValue = arg_1_1
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.getTotalRiskValue(slot0)
-	return slot0._totalRiskValue
+function var_0_0.getTotalRiskValue(arg_4_0)
+	return arg_4_0._totalRiskValue
 end
 
-return slot0
+return var_0_0

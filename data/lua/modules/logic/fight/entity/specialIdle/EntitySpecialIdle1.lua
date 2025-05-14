@@ -1,40 +1,46 @@
-module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle1", package.seeall)
+﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle1", package.seeall)
 
-slot0 = class("EntitySpecialIdle1", UserDataDispose)
+local var_0_0 = class("EntitySpecialIdle1", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
 
-	slot0._entity = slot1
+	arg_1_0._entity = arg_1_1
 end
 
-function slot0.detectState(slot0)
-	if slot0._entity:getMO() and slot1:getBuffDic() then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.buffId == 30513 or slot7.buffId == 30515 then
-				FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, slot0._entity.id)
+function var_0_0.detectState(arg_2_0)
+	local var_2_0 = arg_2_0._entity:getMO()
+
+	if var_2_0 then
+		local var_2_1 = var_2_0:getBuffDic()
+
+		if var_2_1 then
+			for iter_2_0, iter_2_1 in pairs(var_2_1) do
+				if iter_2_1.buffId == 30513 or iter_2_1.buffId == 30515 then
+					FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_0._entity.id)
+				end
 			end
 		end
 	end
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
-	if slot1 ~= slot0._entity.id then
+function var_0_0._onBuffUpdate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 ~= arg_3_0._entity.id then
 		return
 	end
 
-	if slot2 == FightEnum.EffectType.BUFFADD and (slot3 == 30513 or slot3 == 30515) then
-		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, slot0._entity.id)
+	if arg_3_2 == FightEnum.EffectType.BUFFADD and (arg_3_3 == 30513 or arg_3_3 == 30515) then
+		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_3_0._entity.id)
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
+function var_0_0.releaseSelf(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, arg_4_0._onBuffUpdate, arg_4_0)
 
-	slot0._entity = nil
+	arg_4_0._entity = nil
 
-	slot0:__onDispose()
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

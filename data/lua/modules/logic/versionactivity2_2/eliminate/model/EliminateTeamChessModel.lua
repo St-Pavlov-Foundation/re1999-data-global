@@ -1,305 +1,338 @@
-module("modules.logic.versionactivity2_2.eliminate.model.EliminateTeamChessModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateTeamChessModel", package.seeall)
 
-slot0 = class("EliminateTeamChessModel", BaseModel)
+local var_0_0 = class("EliminateTeamChessModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.curTeamChessWar = nil
-	slot0.serverTeamChessWar = nil
-	slot0.warFightResult = nil
-	slot0.teamChessStepList = {}
-	slot0._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.curTeamChessWar = nil
+	arg_1_0.serverTeamChessWar = nil
+	arg_1_0.warFightResult = nil
+	arg_1_0.teamChessStepList = {}
+	arg_1_0._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
 end
 
-function slot0.reInit(slot0)
-	slot0.curTeamChessWar = nil
-	slot0.serverTeamChessWar = nil
-	slot0.warFightResult = nil
-	slot0._teamChessSkillState = nil
-	slot0.teamChessStepList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.curTeamChessWar = nil
+	arg_2_0.serverTeamChessWar = nil
+	arg_2_0.warFightResult = nil
+	arg_2_0._teamChessSkillState = nil
+	arg_2_0.teamChessStepList = {}
 end
 
-function slot0.initTeamChess(slot0, slot1)
-	slot0._warChessId = slot1
+function var_0_0.initTeamChess(arg_3_0, arg_3_1)
+	arg_3_0._warChessId = arg_3_1
 end
 
-function slot0.getCurWarChessEpisodeConfig(slot0)
-	return EliminateConfig.instance:getWarChessEpisodeConfig(slot0._warChessId)
+function var_0_0.getCurWarChessEpisodeConfig(arg_4_0)
+	return EliminateConfig.instance:getWarChessEpisodeConfig(arg_4_0._warChessId)
 end
 
-function slot0.handleCurTeamChessWarFightInfo(slot0, slot1)
-	if slot0.curTeamChessWar == nil then
-		slot0.curTeamChessWar = EliminateTeamChessWarMO.New()
+function var_0_0.handleCurTeamChessWarFightInfo(arg_5_0, arg_5_1)
+	if arg_5_0.curTeamChessWar == nil then
+		arg_5_0.curTeamChessWar = EliminateTeamChessWarMO.New()
 
-		slot0.curTeamChessWar:init(slot1)
+		arg_5_0.curTeamChessWar:init(arg_5_1)
 	end
 
-	slot0.curTeamChessWar:updateInfo(slot1)
+	arg_5_0.curTeamChessWar:updateInfo(arg_5_1)
 end
 
-function slot0.handleServerTeamChessWarFightInfo(slot0, slot1)
-	if slot0.serverTeamChessWar == nil then
-		slot0.serverTeamChessWar = EliminateTeamChessWarMO.New()
+function var_0_0.handleServerTeamChessWarFightInfo(arg_6_0, arg_6_1)
+	if arg_6_0.serverTeamChessWar == nil then
+		arg_6_0.serverTeamChessWar = EliminateTeamChessWarMO.New()
 
-		slot0.serverTeamChessWar:init(slot1)
+		arg_6_0.serverTeamChessWar:init(arg_6_1)
 	end
 
-	slot0.serverTeamChessWar:updateInfo(slot1)
+	arg_6_0.serverTeamChessWar:updateInfo(arg_6_1)
 end
 
-function slot0.handleTeamFightResult(slot0, slot1)
-	if not slot0.warFightResult then
-		slot0.warFightResult = WarChessFightResultMO.New()
+function var_0_0.handleTeamFightResult(arg_7_0, arg_7_1)
+	if not arg_7_0.warFightResult then
+		arg_7_0.warFightResult = WarChessFightResultMO.New()
 	end
 
-	slot0.warFightResult:updateInfo(slot1)
+	arg_7_0.warFightResult:updateInfo(arg_7_1)
 end
 
-function slot0.handleTeamFightTurn(slot0, slot1)
-	if slot1 == nil or slot1.step == nil then
+function var_0_0.handleTeamFightTurn(arg_8_0, arg_8_1)
+	if arg_8_1 == nil or arg_8_1.step == nil then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1.step) do
-		slot7 = WarChessStepMO.New()
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1.step) do
+		local var_8_0 = WarChessStepMO.New()
 
-		slot7:init(slot6)
+		var_8_0:init(iter_8_1)
 
-		slot0.teamChessStepList[#slot0.teamChessStepList + 1] = slot7
+		arg_8_0.teamChessStepList[#arg_8_0.teamChessStepList + 1] = var_8_0
 	end
 end
 
-function slot0.getTeamChessStepList(slot0)
-	return slot0.teamChessStepList
+function var_0_0.getTeamChessStepList(arg_9_0)
+	return arg_9_0.teamChessStepList
 end
 
-function slot0.getCurTeamChessWar(slot0)
-	return slot0.curTeamChessWar
+function var_0_0.getCurTeamChessWar(arg_10_0)
+	return arg_10_0.curTeamChessWar
 end
 
-function slot0.getServerTeamChessWar(slot0)
-	return slot0.serverTeamChessWar
+function var_0_0.getServerTeamChessWar(arg_11_0)
+	return arg_11_0.serverTeamChessWar
 end
 
-function slot0.getSlotIds(slot0)
-	return slot0.curTeamChessWar and slot0.curTeamChessWar:getSlotIds() or {}
+function var_0_0.getSlotIds(arg_12_0)
+	return arg_12_0.curTeamChessWar and arg_12_0.curTeamChessWar:getSlotIds() or {}
 end
 
-function slot0.getStrongholds(slot0)
-	return slot0.curTeamChessWar and slot0.curTeamChessWar:getStrongholds() or {}
+function var_0_0.getStrongholds(arg_13_0)
+	return arg_13_0.curTeamChessWar and arg_13_0.curTeamChessWar:getStrongholds() or {}
 end
 
-function slot0.getStronghold(slot0, slot1)
-	return slot0.curTeamChessWar and slot0.curTeamChessWar:getStronghold(slot1) or nil
+function var_0_0.getStronghold(arg_14_0, arg_14_1)
+	return arg_14_0.curTeamChessWar and arg_14_0.curTeamChessWar:getStronghold(arg_14_1) or nil
 end
 
-function slot0.getCurTeamMyInfo(slot0)
-	return slot0.curTeamChessWar and slot0.curTeamChessWar.myCharacter or nil
+function var_0_0.getCurTeamMyInfo(arg_15_0)
+	return arg_15_0.curTeamChessWar and arg_15_0.curTeamChessWar.myCharacter or nil
 end
 
-function slot0.getCurTeamEnemyInfo(slot0)
-	return slot0.curTeamChessWar and slot0.curTeamChessWar.enemyCharacter or nil
+function var_0_0.getCurTeamEnemyInfo(arg_16_0)
+	return arg_16_0.curTeamChessWar and arg_16_0.curTeamChessWar.enemyCharacter or nil
 end
 
-function slot0.getEnemyForecastChess(slot0)
-	if uv0.instance:getCurTeamEnemyInfo() and #slot1.forecastBehavior ~= 0 then
-		return slot2
-	end
+function var_0_0.getEnemyForecastChess(arg_17_0)
+	local var_17_0 = var_0_0.instance:getCurTeamEnemyInfo()
 
-	return nil
-end
+	if var_17_0 then
+		local var_17_1 = var_17_0.forecastBehavior
 
-function slot0.getAllPlayerSoliderCount(slot0)
-	for slot6, slot7 in pairs(slot0:getStrongholds()) do
-		slot2 = 0 + slot7:getPlayerSoliderCount()
-	end
-
-	return slot2
-end
-
-function slot0.getCurTeamResource(slot0)
-	return slot0:getCurTeamMyInfo() and slot1.diamonds or {}
-end
-
-function slot0.getResourceNumber(slot0, slot1)
-	return slot0:getCurTeamMyInfo() and slot2.diamonds and slot2.diamonds[slot1] or 0
-end
-
-function slot0.getWarFightResult(slot0)
-	return slot0.warFightResult
-end
-
-function slot0.updateChessPower(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateChessPower(slot1, slot2)
-	end
-end
-
-function slot0.updateDisplacementState(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateDisplacementState(slot1, slot2)
-	end
-end
-
-function slot0.updateStrongholdsScore(slot0, slot1, slot2, slot3)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateStrongholdsScore(slot1, slot2, slot3)
-	end
-end
-
-function slot0.updateMainCharacterHp(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateMainCharacterHp(slot1, slot2)
-	end
-end
-
-function slot0.updateMainCharacterPower(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateMainCharacterPower(slot1, slot2)
-	end
-end
-
-function slot0.updateResourceData(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateResourceData(slot1, slot2)
-	end
-end
-
-function slot0.removeStrongholdChess(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:removeStrongholdChess(slot1, slot2)
-	end
-end
-
-function slot0.getChess(slot0, slot1)
-	if slot0.curTeamChessWar then
-		return slot0.curTeamChessWar:getChess(slot1)
+		if #var_17_1 ~= 0 then
+			return var_17_1
+		end
 	end
 
 	return nil
 end
 
-function slot0.strongHoldSettle(slot0, slot1, slot2)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:strongHoldSettle(slot1, slot2)
+function var_0_0.getAllPlayerSoliderCount(arg_18_0)
+	local var_18_0 = arg_18_0:getStrongholds()
+	local var_18_1 = 0
+
+	for iter_18_0, iter_18_1 in pairs(var_18_0) do
+		var_18_1 = var_18_1 + iter_18_1:getPlayerSoliderCount()
+	end
+
+	return var_18_1
+end
+
+function var_0_0.getCurTeamResource(arg_19_0)
+	local var_19_0 = arg_19_0:getCurTeamMyInfo()
+
+	return var_19_0 and var_19_0.diamonds or {}
+end
+
+function var_0_0.getResourceNumber(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:getCurTeamMyInfo()
+
+	return var_20_0 and var_20_0.diamonds and var_20_0.diamonds[arg_20_1] or 0
+end
+
+function var_0_0.getWarFightResult(arg_21_0)
+	return arg_21_0.warFightResult
+end
+
+function var_0_0.updateChessPower(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_0.curTeamChessWar then
+		arg_22_0.curTeamChessWar:updateChessPower(arg_22_1, arg_22_2)
 	end
 end
 
-function slot0.updateSkillGrowUp(slot0, slot1, slot2, slot3)
-	if slot0.curTeamChessWar then
-		slot0.curTeamChessWar:updateSkillGrowUp(slot1, slot2, slot3)
+function var_0_0.updateDisplacementState(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_0.curTeamChessWar then
+		arg_23_0.curTeamChessWar:updateDisplacementState(arg_23_1, arg_23_2)
 	end
 end
 
-function slot0.diamondsIsEnough(slot0, slot1, slot2)
-	if not slot0.curTeamChessWar then
+function var_0_0.updateStrongholdsScore(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if arg_24_0.curTeamChessWar then
+		arg_24_0.curTeamChessWar:updateStrongholdsScore(arg_24_1, arg_24_2, arg_24_3)
+	end
+end
+
+function var_0_0.updateMainCharacterHp(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_0.curTeamChessWar then
+		arg_25_0.curTeamChessWar:updateMainCharacterHp(arg_25_1, arg_25_2)
+	end
+end
+
+function var_0_0.updateMainCharacterPower(arg_26_0, arg_26_1, arg_26_2)
+	if arg_26_0.curTeamChessWar then
+		arg_26_0.curTeamChessWar:updateMainCharacterPower(arg_26_1, arg_26_2)
+	end
+end
+
+function var_0_0.updateResourceData(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_0.curTeamChessWar then
+		arg_27_0.curTeamChessWar:updateResourceData(arg_27_1, arg_27_2)
+	end
+end
+
+function var_0_0.removeStrongholdChess(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_0.curTeamChessWar then
+		arg_28_0.curTeamChessWar:removeStrongholdChess(arg_28_1, arg_28_2)
+	end
+end
+
+function var_0_0.getChess(arg_29_0, arg_29_1)
+	if arg_29_0.curTeamChessWar then
+		return arg_29_0.curTeamChessWar:getChess(arg_29_1)
+	end
+
+	return nil
+end
+
+function var_0_0.strongHoldSettle(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_0.curTeamChessWar then
+		arg_30_0.curTeamChessWar:strongHoldSettle(arg_30_1, arg_30_2)
+	end
+end
+
+function var_0_0.updateSkillGrowUp(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	if arg_31_0.curTeamChessWar then
+		arg_31_0.curTeamChessWar:updateSkillGrowUp(arg_31_1, arg_31_2, arg_31_3)
+	end
+end
+
+function var_0_0.diamondsIsEnough(arg_32_0, arg_32_1, arg_32_2)
+	if not arg_32_0.curTeamChessWar then
 		return false
 	end
 
-	return slot0.curTeamChessWar:diamondsIsEnough(slot1, slot2)
+	return arg_32_0.curTeamChessWar:diamondsIsEnough(arg_32_1, arg_32_2)
 end
 
-function slot0.getViewCanvas(slot0)
-	return slot0._canvas
+function var_0_0.getViewCanvas(arg_33_0)
+	return arg_33_0._canvas
 end
 
-function slot0.setViewCanvas(slot0, slot1)
-	slot0._canvas = slot1
+function var_0_0.setViewCanvas(arg_34_0, arg_34_1)
+	arg_34_0._canvas = arg_34_1
 end
 
-function slot0.getTipViewParent(slot0)
-	return slot0._tipViewParent
+function var_0_0.getTipViewParent(arg_35_0)
+	return arg_35_0._tipViewParent
 end
 
-function slot0.setTipViewParent(slot0, slot1)
-	slot0._tipViewParent = slot1
+function var_0_0.setTipViewParent(arg_36_0, arg_36_1)
+	arg_36_0._tipViewParent = arg_36_1
 end
 
-function slot0.setCurTeamRoundStepState(slot0, slot1)
-	slot0._curTeamRoundStepState = slot1
+function var_0_0.setCurTeamRoundStepState(arg_37_0, arg_37_1)
+	arg_37_0._curTeamRoundStepState = arg_37_1
 end
 
-function slot0.getCurTeamRoundStepState(slot0)
-	return slot0._curTeamRoundStepState
+function var_0_0.getCurTeamRoundStepState(arg_38_0)
+	return arg_38_0._curTeamRoundStepState
 end
 
-function slot0.clear(slot0)
-	slot0._canvas = nil
-	slot0._tipViewParent = nil
-	slot0.curTeamChessWar = nil
-	slot0.serverTeamChessWar = nil
-	slot0.warFightResult = nil
-	slot0.teamChessStepList = {}
+function var_0_0.clear(arg_39_0)
+	arg_39_0._canvas = nil
+	arg_39_0._tipViewParent = nil
+	arg_39_0.curTeamChessWar = nil
+	arg_39_0.serverTeamChessWar = nil
+	arg_39_0.warFightResult = nil
+	arg_39_0.teamChessStepList = {}
 
-	if slot0._cacheRuleLimit ~= nil then
-		slot0._cacheRuleLimit = nil
+	if arg_39_0._cacheRuleLimit ~= nil then
+		arg_39_0._cacheRuleLimit = nil
 	end
 
-	slot0._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
+	arg_39_0._curTeamRoundStepState = EliminateTeamChessEnum.TeamChessRoundType.enemy
 end
 
-function slot0.getSellResourceData(slot0, slot1)
-	slot2 = {}
+function var_0_0.getSellResourceData(arg_40_0, arg_40_1)
+	local var_40_0 = {}
+	local var_40_1 = EliminateConfig.instance:getSellSoliderPermillage()
 
-	for slot7 = 1, #slot1 do
-		slot8 = slot1[slot7]
+	for iter_40_0 = 1, #arg_40_1 do
+		local var_40_2 = arg_40_1[iter_40_0]
+		local var_40_3 = math.floor(var_40_2[2] * var_40_1 / 1000)
 
-		table.insert(slot2, {
-			slot8[1],
-			math.floor(slot8[2] * EliminateConfig.instance:getSellSoliderPermillage() / 1000)
+		table.insert(var_40_0, {
+			var_40_2[1],
+			var_40_3
 		})
 	end
 
-	return slot2
+	return var_40_0
 end
 
-function slot0.canUseChess(slot0, slot1)
-	slot3 = true
+function var_0_0.canUseChess(arg_41_0, arg_41_1)
+	local var_41_0 = EliminateConfig.instance:getSoldierChessConfigConst(arg_41_1)
+	local var_41_1 = true
 
-	if EliminateConfig.instance:getSoldierChessConfigConst(slot1) then
-		for slot7, slot8 in ipairs(slot2) do
-			if slot0:getResourceNumber(slot8[1]) < tonumber(slot8[2]) then
-				slot3 = false
+	if var_41_0 then
+		for iter_41_0, iter_41_1 in ipairs(var_41_0) do
+			local var_41_2 = iter_41_1[1]
+
+			if tonumber(iter_41_1[2]) > arg_41_0:getResourceNumber(var_41_2) then
+				var_41_1 = false
 
 				break
 			end
 		end
 	else
-		slot3 = true
+		var_41_1 = true
 	end
 
-	return slot3
+	return var_41_1
 end
 
-function slot0.getSoliderIdEffectParam(slot0, slot1)
-	slot7 = "#"
+function var_0_0.getSoliderIdEffectParam(arg_42_0, arg_42_1)
+	local var_42_0 = EliminateConfig.instance:getSoldierChessConfig(arg_42_1)
+	local var_42_1 = var_42_0 and var_42_0.skillId or ""
 
-	for slot7, slot8 in ipairs(string.splitToNumber(EliminateConfig.instance:getSoldierChessConfig(slot1) and slot2.skillId or "", slot7)) do
-		if EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[string.split(EliminateConfig.instance:getSoldierSkillConfig(slot8) and slot9.effect or "", "#")[1]] and EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[slot11][slot10[2]] then
-			return slot13.teamType, slot13.count, slot13.limitStrongHold
+	for iter_42_0, iter_42_1 in ipairs(string.splitToNumber(var_42_1, "#")) do
+		local var_42_2 = EliminateConfig.instance:getSoldierSkillConfig(iter_42_1)
+		local var_42_3 = string.split(var_42_2 and var_42_2.effect or "", "#")
+		local var_42_4 = var_42_3[1]
+
+		if EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[var_42_4] then
+			local var_42_5 = var_42_3[2]
+			local var_42_6 = EliminateTeamChessEnum.placeSkillEffectParamConfigEnum[var_42_4][var_42_5]
+
+			if var_42_6 then
+				return var_42_6.teamType, var_42_6.count, var_42_6.limitStrongHold
+			end
 		end
 	end
 
-	return nil, , false
+	return nil, nil, false
 end
 
-function slot0.createPlaceMo(slot0, slot1, slot2, slot3)
-	slot4 = SoliderSkillMOBase.New()
+function var_0_0.createPlaceMo(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
+	local var_43_0 = SoliderSkillMOBase.New()
 
-	slot4:init(slot1, slot2, slot3)
+	var_43_0:init(arg_43_1, arg_43_2, arg_43_3)
 
-	return slot4
+	return var_43_0
 end
 
-function slot0.haveSoliderByTeamTypeAndStrongholdId(slot0, slot1, slot2)
-	for slot8 = 1, #slot0:getStrongholds() do
-		if slot2 == nil or slot2 == slot2 then
-			if not false then
-				if slot1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-					slot4 = #slot3[slot8].mySidePiece > 0
+function var_0_0.haveSoliderByTeamTypeAndStrongholdId(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = arg_44_0:getStrongholds()
+	local var_44_1 = false
+
+	for iter_44_0 = 1, #var_44_0 do
+		local var_44_2 = var_44_0[iter_44_0]
+
+		if arg_44_2 == nil or arg_44_2 == arg_44_2 then
+			if not var_44_1 then
+				if arg_44_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
+					var_44_1 = #var_44_2.mySidePiece > 0
 				end
 
-				if slot1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-					slot4 = #slot9.enemySidePiece > 0
+				if arg_44_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+					var_44_1 = #var_44_2.enemySidePiece > 0
 				end
 			else
 				break
@@ -307,52 +340,64 @@ function slot0.haveSoliderByTeamTypeAndStrongholdId(slot0, slot1, slot2)
 		end
 	end
 
-	return slot4
+	return var_44_1
 end
 
-function slot0.sourceStrongHoldInRight(slot0, slot1, slot2)
-	slot4 = 0
-	slot5 = 0
+function var_0_0.sourceStrongHoldInRight(arg_45_0, arg_45_1, arg_45_2)
+	local var_45_0 = arg_45_0:getStrongholds()
+	local var_45_1 = 0
+	local var_45_2 = 0
 
-	for slot9 = 1, #slot0:getStrongholds() do
-		if slot3[slot9].id == slot2 then
-			slot4 = slot9
+	for iter_45_0 = 1, #var_45_0 do
+		local var_45_3 = var_45_0[iter_45_0]
+
+		if var_45_3.id == arg_45_2 then
+			var_45_1 = iter_45_0
 		end
 
-		if slot10.id == slot1 then
-			slot5 = slot9
+		if var_45_3.id == arg_45_1 then
+			var_45_2 = iter_45_0
 		end
 	end
 
-	return slot5 < slot4
+	return var_45_2 < var_45_1
 end
 
-function slot0.strongHoldIsFull(slot0, slot1)
-	for slot6 = 1, #slot0:getStrongholds() do
-		if slot1 == slot2[slot6].id then
-			return slot7:isFull(EliminateTeamChessEnum.TeamChessTeamType.player)
+function var_0_0.strongHoldIsFull(arg_46_0, arg_46_1)
+	local var_46_0 = arg_46_0:getStrongholds()
+
+	for iter_46_0 = 1, #var_46_0 do
+		local var_46_1 = var_46_0[iter_46_0]
+
+		if arg_46_1 == var_46_1.id then
+			return var_46_1:isFull(EliminateTeamChessEnum.TeamChessTeamType.player)
 		end
 	end
 
 	return false
 end
 
-function slot0.allStrongHoldIsIsFull(slot0)
-	slot1 = false
+function var_0_0.allStrongHoldIsIsFull(arg_47_0)
+	local var_47_0 = false
+	local var_47_1 = arg_47_0:getStrongholds()
 
-	for slot6 = 1, #slot0:getStrongholds() do
-		if slot2[slot6]:isFull(EliminateTeamChessEnum.TeamChessTeamType.player) then
-			slot1 = true
+	for iter_47_0 = 1, #var_47_1 do
+		if var_47_1[iter_47_0]:isFull(EliminateTeamChessEnum.TeamChessTeamType.player) then
+			var_47_0 = true
 		end
 	end
 
-	return slot1
+	return var_47_0
 end
 
-function slot0.haveEnoughResource(slot0)
-	if EliminateLevelModel.instance:getCurLevelPieceIds() ~= nil then
-		for slot5 = 1, #slot1 do
-			if slot0:canUseChess(slot1[slot5]) then
+function var_0_0.haveEnoughResource(arg_48_0)
+	local var_48_0 = EliminateLevelModel.instance:getCurLevelPieceIds()
+
+	if var_48_0 ~= nil then
+		for iter_48_0 = 1, #var_48_0 do
+			local var_48_1 = var_48_0[iter_48_0]
+
+			if arg_48_0:canUseChess(var_48_1) then
 				return true
 			end
 		end
@@ -361,58 +406,80 @@ function slot0.haveEnoughResource(slot0)
 	return false
 end
 
-function slot0.canReleaseSkillAddResource(slot0)
+function var_0_0.canReleaseSkillAddResource(arg_49_0)
 	if not EliminateLevelModel.instance:mainCharacterSkillIsUnLock() then
 		return false
 	end
 
-	slot2 = false
+	local var_49_0 = var_0_0.instance:getCurTeamMyInfo()
+	local var_49_1 = false
 
-	if uv0.instance:getCurTeamMyInfo() then
-		slot3 = nil
-		slot5 = EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).activeSkillIds)
-		slot2 = EliminateLevelController.instance:canReleaseByRound(EliminateLevelController.instance:getTempSkillMo(slot5.id, slot5.effect)) and slot5.cost <= slot1.power
+	if var_49_0 then
+		local var_49_2
+		local var_49_3 = EliminateConfig.instance:getTeamChessCharacterConfig(var_49_0.id)
+		local var_49_4 = EliminateConfig.instance:getMainCharacterSkillConfig(var_49_3.activeSkillIds)
+		local var_49_5 = EliminateLevelController.instance:getTempSkillMo(var_49_4.id, var_49_4.effect)
+
+		var_49_1 = EliminateLevelController.instance:canReleaseByRound(var_49_5) and var_49_0.power >= var_49_4.cost
 	end
 
-	return slot2
+	return var_49_1
 end
 
-function slot0.strongHoldTotalScoreWin(slot0)
-	for slot7 = 1, #slot0:getStrongholds() do
-		slot8 = slot3[slot7]
-		slot1 = 0 + slot8.enemyScore
-		slot2 = 0 + slot8.myScore
+function var_0_0.strongHoldTotalScoreWin(arg_50_0)
+	local var_50_0 = 0
+	local var_50_1 = 0
+	local var_50_2 = arg_50_0:getStrongholds()
+
+	for iter_50_0 = 1, #var_50_2 do
+		local var_50_3 = var_50_2[iter_50_0]
+
+		var_50_0 = var_50_0 + var_50_3.enemyScore
+		var_50_1 = var_50_1 + var_50_3.myScore
 	end
 
-	return slot1 < slot2
+	return var_50_0 < var_50_1
 end
 
-function slot0.calDamageGear(slot0, slot1)
-	slot3 = 1
+function var_0_0.calDamageGear(arg_51_0, arg_51_1)
+	local var_51_0 = EliminateConfig.instance:getCharacterDamageGear()
+	local var_51_1 = 1
 
-	if EliminateConfig.instance:getCharacterDamageGear() and #slot2 == 2 and slot1 then
-		slot3 = slot1 < slot2[2] and (slot2[1] <= slot1 and 2 or 1) or 3
+	if var_51_0 and #var_51_0 == 2 and arg_51_1 then
+		if arg_51_1 < var_51_0[2] then
+			var_51_1 = arg_51_1 >= var_51_0[1] and 2 or 1
+		else
+			var_51_1 = 3
+		end
 	end
 
-	return slot3
+	return var_51_1
 end
 
-function slot0.isCanPlaceByStrongHoldRule(slot0, slot1, slot2)
-	slot5 = EliminateLevelModel.instance:getRoundNumber()
-	slot6 = EliminateConfig.instance:getStrongHoldRuleRuleConfig(EliminateConfig.instance:getStrongHoldConfig(slot1).ruleId) and slot4.putLimit or 0
+function var_0_0.isCanPlaceByStrongHoldRule(arg_52_0, arg_52_1, arg_52_2)
+	local var_52_0 = EliminateConfig.instance:getStrongHoldConfig(arg_52_1)
+	local var_52_1 = EliminateConfig.instance:getStrongHoldRuleRuleConfig(var_52_0.ruleId)
+	local var_52_2 = EliminateLevelModel.instance:getRoundNumber()
+	local var_52_3 = var_52_1 and var_52_1.putLimit or 0
 
-	if slot0._cacheRuleLimit == nil then
-		slot0._cacheRuleLimit = {}
+	if arg_52_0._cacheRuleLimit == nil then
+		arg_52_0._cacheRuleLimit = {}
 	end
 
-	if slot0._cacheRuleLimit[slot4.id] == nil then
-		slot0._cacheRuleLimit[slot4.id] = string.splitToNumber(slot6, "#")
-		slot7 = slot0._cacheRuleLimit[slot4.id]
+	local var_52_4 = arg_52_0._cacheRuleLimit[var_52_1.id]
+
+	if var_52_4 == nil then
+		arg_52_0._cacheRuleLimit[var_52_1.id] = string.splitToNumber(var_52_3, "#")
+		var_52_4 = arg_52_0._cacheRuleLimit[var_52_1.id]
 	end
 
-	if slot4.startEffectRound <= slot5 and slot5 <= slot4.endEffectRound and tabletool.len(slot7) > 0 then
-		for slot12 = 1, #slot7 do
-			if tonumber(slot7[slot12]) == EliminateConfig.instance:getSoldierChessConfig(slot2).level then
+	if var_52_2 >= var_52_1.startEffectRound and var_52_2 <= var_52_1.endEffectRound and tabletool.len(var_52_4) > 0 then
+		local var_52_5 = EliminateConfig.instance:getSoldierChessConfig(arg_52_2)
+
+		for iter_52_0 = 1, #var_52_4 do
+			local var_52_6 = var_52_4[iter_52_0]
+
+			if tonumber(var_52_6) == var_52_5.level then
 				return false
 			end
 		end
@@ -421,22 +488,24 @@ function slot0.isCanPlaceByStrongHoldRule(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.setTeamChessSkillState(slot0, slot1)
-	slot0._teamChessSkillState = slot1
+function var_0_0.setTeamChessSkillState(arg_53_0, arg_53_1)
+	arg_53_0._teamChessSkillState = arg_53_1
 end
 
-function slot0.getTeamChessSkillState(slot0)
-	if slot0._teamChessSkillState == nil then
-		-- Nothing
+function var_0_0.getTeamChessSkillState(arg_54_0)
+	if arg_54_0._teamChessSkillState == nil then
+		-- block empty
 	end
 
-	return slot0._teamChessSkillState
+	return arg_54_0._teamChessSkillState
 end
 
-function slot0.chessSkillIsGrowUp(slot0)
-	return EliminateConfig.instance:getSoliderSkillConfig(slot0) and slot1.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp
+function var_0_0.chessSkillIsGrowUp(arg_55_0)
+	local var_55_0 = EliminateConfig.instance:getSoliderSkillConfig(arg_55_0)
+
+	return var_55_0 and var_55_0.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

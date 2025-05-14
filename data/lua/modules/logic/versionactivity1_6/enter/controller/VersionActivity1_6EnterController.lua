@@ -1,156 +1,165 @@
-module("modules.logic.versionactivity1_6.enter.controller.VersionActivity1_6EnterController", package.seeall)
+﻿module("modules.logic.versionactivity1_6.enter.controller.VersionActivity1_6EnterController", package.seeall)
 
-slot0 = class("VersionActivity1_6EnterController", BaseController)
+local var_0_0 = class("VersionActivity1_6EnterController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0.selectActId = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.selectActId = nil
 end
 
-function slot0.reInit(slot0)
-	slot0.selectActId = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.selectActId = nil
 end
 
-function slot0.setSelectActId(slot0, slot1)
-	slot0.selectActId = slot1
+function var_0_0.setSelectActId(arg_3_0, arg_3_1)
+	arg_3_0.selectActId = arg_3_1
 end
 
-function slot0.getSelectActId(slot0)
-	return slot0.selectActId
+function var_0_0.getSelectActId(arg_4_0)
+	return arg_4_0.selectActId
 end
 
-function slot0.openVersionActivityEnterViewIfNotOpened(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_5EnterView) then
-		if slot1 then
-			slot1(slot2)
+		if arg_5_1 then
+			arg_5_1(arg_5_2)
 		end
 
 		return
 	end
 
-	slot0:openVersionActivityEnterView(slot1, slot2, slot3, slot4)
+	arg_5_0:openVersionActivityEnterView(arg_5_1, arg_5_2, arg_5_3, arg_5_4)
 end
 
-function slot0.openVersionActivityEnterView(slot0, slot1, slot2, slot3, slot4)
-	slot0.openedCallback = slot1
-	slot0.openedCallbackObj = slot2
-	slot0.actId = slot3
+function var_0_0.openVersionActivityEnterView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	arg_6_0.openedCallback = arg_6_1
+	arg_6_0.openedCallbackObj = arg_6_2
+	arg_6_0.actId = arg_6_3
 
-	slot0:_enterVersionActivityView(ViewName.VersionActivity2_5EnterView, VersionActivity2_5Enum.ActivityId.EnterView, slot0._openVersionActivityEnterView, slot0, {
-		jumpActId = slot3,
-		enterVideo = slot4
-	})
+	local var_6_0 = {
+		jumpActId = arg_6_3,
+		enterVideo = arg_6_4
+	}
+
+	arg_6_0:_enterVersionActivityView(ViewName.VersionActivity2_5EnterView, VersionActivity2_5Enum.ActivityId.EnterView, arg_6_0._openVersionActivityEnterView, arg_6_0, var_6_0)
 end
 
-function slot0._onFinishStory(slot0, slot1)
+function var_0_0._onFinishStory(arg_7_0, arg_7_1)
 	if ActivityHelper.getActivityStatus(VersionActivity1_6Enum.ActivityId.EnterView) ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	slot0:_openVersionActivityEnterView(nil, , slot1)
+	arg_7_0:_openVersionActivityEnterView(nil, nil, arg_7_1)
 end
 
-function slot0._openVersionActivityEnterView(slot0, slot1, slot2, slot3)
+function var_0_0._openVersionActivityEnterView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	if not VersionActivityBaseController.instance:isPlayedActivityVideo(VersionActivity1_6Enum.ActivityId.EnterView) then
-		if not (ActivityModel.instance:getActMO(VersionActivity1_6Enum.ActivityId.EnterView) and slot4.config and slot4.config.storyId) then
-			logError(string.format("act id %s dot config story id", slot5))
+		local var_8_0 = ActivityModel.instance:getActMO(VersionActivity1_6Enum.ActivityId.EnterView)
+		local var_8_1 = var_8_0 and var_8_0.config and var_8_0.config.storyId
 
-			slot5 = 100010
+		if not var_8_1 then
+			logError(string.format("act id %s dot config story id", var_8_1))
+
+			var_8_1 = 100010
 		end
 
-		StoryController.instance:playStory(slot5, {
-			isVersionActivityPV = true
-		}, slot0._onFinishStory, slot0)
+		local var_8_2 = {}
+
+		var_8_2.isVersionActivityPV = true
+
+		StoryController.instance:playStory(var_8_1, var_8_2, arg_8_0._onFinishStory, arg_8_0)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.VersionActivity1_6EnterView, {
 		activityIdList = VersionActivity1_6Enum.EnterViewActIdList,
-		actId = slot0.actId,
-		jumpActId = slot3 and slot3.jumpActId,
-		enterVideo = slot3 and slot3.enterVideo
+		actId = arg_8_0.actId,
+		jumpActId = arg_8_3 and arg_8_3.jumpActId,
+		enterVideo = arg_8_3 and arg_8_3.enterVideo
 	})
 
-	if slot0.openedCallback then
-		slot0.openedCallback(slot0.openedCallbackObj)
+	if arg_8_0.openedCallback then
+		arg_8_0.openedCallback(arg_8_0.openedCallbackObj)
 
-		slot0.openedCallback = nil
-		slot0.openedCallbackObj = nil
+		arg_8_0.openedCallback = nil
+		arg_8_0.openedCallbackObj = nil
 	end
 end
 
-function slot0.directOpenVersionActivityEnterView(slot0)
-	slot0:_enterVersionActivityView(ViewName.VersionActivity1_6EnterView, VersionActivity1_6Enum.ActivityId.EnterView, function ()
+function var_0_0.directOpenVersionActivityEnterView(arg_9_0)
+	arg_9_0:_enterVersionActivityView(ViewName.VersionActivity1_6EnterView, VersionActivity1_6Enum.ActivityId.EnterView, function()
 		ViewMgr.instance:openView(ViewName.VersionActivity1_6EnterView, {
 			skipOpenAnim = true,
 			actId = VersionActivity1_6Enum.ActivityId.EnterView,
 			activityIdList = VersionActivity1_6Enum.EnterViewActIdList
 		})
-	end, slot0)
+	end, arg_9_0)
 end
 
-function slot0.openStoreView(slot0)
-	slot0:_enterVersionActivityView(ViewName.VersionActivity1_6StoreView, VersionActivity1_6Enum.ActivityId.DungeonStore, slot0._openStoreView, slot0)
+function var_0_0.openStoreView(arg_11_0)
+	arg_11_0:_enterVersionActivityView(ViewName.VersionActivity1_6StoreView, VersionActivity1_6Enum.ActivityId.DungeonStore, arg_11_0._openStoreView, arg_11_0)
 end
 
-function slot0._openStoreView(slot0, slot1, slot2)
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(slot2, function ()
-		ViewMgr.instance:openView(uv0, {
-			actId = uv1
+function var_0_0._openStoreView(arg_12_0, arg_12_1, arg_12_2)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_12_2, function()
+		ViewMgr.instance:openView(arg_12_1, {
+			actId = arg_12_2
 		})
 	end)
 end
 
-function slot0.openSeasonStoreView(slot0)
-	slot1 = Activity104Model.instance:getCurSeasonId()
+function var_0_0.openSeasonStoreView(arg_14_0)
+	local var_14_0 = Activity104Model.instance:getCurSeasonId()
+	local var_14_1 = SeasonViewHelper.getViewName(var_14_0, Activity104Enum.ViewName.StoreView)
+	local var_14_2 = Activity104Enum.SeasonStore[var_14_0]
 
-	slot0:_enterVersionActivityView(SeasonViewHelper.getViewName(slot1, Activity104Enum.ViewName.StoreView), Activity104Enum.SeasonStore[slot1], slot0._openStoreView, slot0)
+	arg_14_0:_enterVersionActivityView(var_14_1, var_14_2, arg_14_0._openStoreView, arg_14_0)
 end
 
-function slot0.openTaskView(slot0)
-	slot0:_enterVersionActivityView(ViewName.VersionActivityTaskView, VersionActivity1_6Enum.ActivityId.Act113, slot0._openTaskView, slot0)
+function var_0_0.openTaskView(arg_15_0)
+	arg_15_0:_enterVersionActivityView(ViewName.VersionActivityTaskView, VersionActivity1_6Enum.ActivityId.Act113, arg_15_0._openTaskView, arg_15_0)
 end
 
-function slot0._openTaskView(slot0)
+function var_0_0._openTaskView(arg_16_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, function ()
+	}, function()
 		ViewMgr.instance:openView(ViewName.VersionActivityTaskView)
 	end)
 end
 
-function slot0.openCachotEnterView(slot0)
-	slot0:_enterVersionActivityView(ViewName.V1a6_CachotEnterView, VersionActivity1_6Enum.ActivityId.Cachot, slot0._openCachotEnterView, slot0)
+function var_0_0.openCachotEnterView(arg_18_0)
+	arg_18_0:_enterVersionActivityView(ViewName.V1a6_CachotEnterView, VersionActivity1_6Enum.ActivityId.Cachot, arg_18_0._openCachotEnterView, arg_18_0)
 end
 
-function slot0._openCachotEnterView(slot0)
+function var_0_0._openCachotEnterView(arg_19_0)
 	ViewMgr.instance:openView(ViewName.V1a6_CachotEnterView)
 end
 
-function slot0._enterVersionActivityView(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6, slot7, slot8 = ActivityHelper.getActivityStatusAndToast(slot2)
+function var_0_0._enterVersionActivityView(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
+	local var_20_0, var_20_1, var_20_2 = ActivityHelper.getActivityStatusAndToast(arg_20_2)
 
-	if slot6 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot7 then
-			GameFacade.showToast(slot7, slot8)
+	if var_20_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_20_1 then
+			GameFacade.showToast(var_20_1, var_20_2)
 		end
 
 		return
 	end
 
-	if slot3 then
-		slot3(slot4, slot1, slot2, slot5)
+	if arg_20_3 then
+		arg_20_3(arg_20_4, arg_20_1, arg_20_2, arg_20_5)
 
 		return
 	end
 
-	ViewMgr.instance:openView(slot1, slot5)
+	ViewMgr.instance:openView(arg_20_1, arg_20_5)
 end
 
-function slot0.GetActivityPrefsKey(slot0)
-	return VersionActivity1_6Enum.ActivityId.EnterView .. slot0
+function var_0_0.GetActivityPrefsKey(arg_21_0)
+	return VersionActivity1_6Enum.ActivityId.EnterView .. arg_21_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,28 +1,29 @@
-module("modules.logic.explore.model.mo.unit.ExploreArchiveUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreArchiveUnitMO", package.seeall)
 
-slot0 = class("ExploreArchiveUnitMO", ExploreBaseUnitMO)
+local var_0_0 = class("ExploreArchiveUnitMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.archiveId = tonumber(slot0.specialDatas[1])
-	slot0.triggerEffects = tabletool.copy(slot0.triggerEffects)
-	slot1 = {
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.archiveId = tonumber(arg_1_0.specialDatas[1])
+	arg_1_0.triggerEffects = tabletool.copy(arg_1_0.triggerEffects)
+
+	local var_1_0 = {
 		ExploreEnum.TriggerEvent.OpenArchiveView
 	}
-	slot2 = nil
+	local var_1_1
 
-	for slot6, slot7 in ipairs(slot0.triggerEffects) do
-		if slot7[1] == ExploreEnum.TriggerEvent.Dialogue then
-			slot2 = slot6
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0.triggerEffects) do
+		if iter_1_1[1] == ExploreEnum.TriggerEvent.Dialogue then
+			var_1_1 = iter_1_0
 
 			break
 		end
 	end
 
-	if slot2 then
-		table.insert(slot0.triggerEffects, slot2 + 1, slot1)
+	if var_1_1 then
+		table.insert(arg_1_0.triggerEffects, var_1_1 + 1, var_1_0)
 	else
-		table.insert(slot0.triggerEffects, 1, slot1)
+		table.insert(arg_1_0.triggerEffects, 1, var_1_0)
 	end
 end
 
-return slot0
+return var_0_0

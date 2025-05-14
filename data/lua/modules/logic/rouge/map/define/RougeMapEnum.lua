@@ -1,15 +1,16 @@
-module("modules.logic.rouge.map.define.RougeMapEnum", package.seeall)
+﻿module("modules.logic.rouge.map.define.RougeMapEnum", package.seeall)
 
-slot0 = _M
-slot0.RedNodeResPath = "ui/viewres/gm/rouge/red_point.prefab"
-slot0.GreenNodeResPath = "ui/viewres/gm/rouge/green_point.prefab"
-slot0.PathSelectLayerPath = "ui/viewres/gm/rouge/green_point.prefab"
-slot0.LineResPath = "ui/viewres/gm/rouge/line_local.prefab"
-slot0.ActorPiecePath = "v1a9_m_s16_saide"
-slot0.CollectionLeftItemRes = "ui/viewres/rouge/map/rougecollectionleftitem.prefab"
-slot0.CollectionRightItemRes = "ui/viewres/rouge/map/rougecollectionrightitem.prefab"
-slot0.ChapterId = 2901
-slot0.ConstKey = {
+local var_0_0 = _M
+
+var_0_0.RedNodeResPath = "ui/viewres/gm/rouge/red_point.prefab"
+var_0_0.GreenNodeResPath = "ui/viewres/gm/rouge/green_point.prefab"
+var_0_0.PathSelectLayerPath = "ui/viewres/gm/rouge/green_point.prefab"
+var_0_0.LineResPath = "ui/viewres/gm/rouge/line_local.prefab"
+var_0_0.ActorPiecePath = "v1a9_m_s16_saide"
+var_0_0.CollectionLeftItemRes = "ui/viewres/rouge/map/rougecollectionleftitem.prefab"
+var_0_0.CollectionRightItemRes = "ui/viewres/rouge/map/rougecollectionrightitem.prefab"
+var_0_0.ChapterId = 2901
+var_0_0.ConstKey = {
 	ShowNormalFightUnlockTalentId = 32,
 	ShowEliteFightUnlockTalentId = 31,
 	RestStoreRefreshCount = 13,
@@ -24,32 +25,32 @@ slot0.ConstKey = {
 	EliteFightDropRefreshCount = 35,
 	StoreRefreshCost = 21
 }
-slot0.PathSelectIndex = -1
-slot0.MapState = {
+var_0_0.PathSelectIndex = -1
+var_0_0.MapState = {
 	Normal = 4,
 	SwitchMapAnim = 1,
 	LoadingMap = 2,
 	WaitFlow = 3,
 	Empty = 0
 }
-slot0.MapType = {
+var_0_0.MapType = {
 	Edit = 0,
 	Middle = 2,
 	PathSelect = 3,
 	Normal = 1
 }
-slot0.MapType2ModelCls = {
-	[slot0.MapType.Normal] = RougeLayerMapModel,
-	[slot0.MapType.Middle] = RougeMiddleLayerMapModel,
-	[slot0.MapType.PathSelect] = RougePathSelectMapModel
+var_0_0.MapType2ModelCls = {
+	[var_0_0.MapType.Normal] = RougeLayerMapModel,
+	[var_0_0.MapType.Middle] = RougeMiddleLayerMapModel,
+	[var_0_0.MapType.PathSelect] = RougePathSelectMapModel
 }
-slot0.ChangeMapEnum = {
+var_0_0.ChangeMapEnum = {
 	PathSelectToNormal = 3,
 	MiddleToPathSelect = 2,
 	NormalToMiddle = 1
 }
-slot0.ScenePrefabFormat = "scenes/v1a9_m_s16_dilao/prefab/%s.prefab"
-slot0.Arrive = {
+var_0_0.ScenePrefabFormat = "scenes/v1a9_m_s16_dilao/prefab/%s.prefab"
+var_0_0.Arrive = {
 	CantArrive = 1,
 	CanArrive = 3,
 	ArrivingFinish = 5,
@@ -57,8 +58,8 @@ slot0.Arrive = {
 	NotArrive = 2,
 	ArrivingNotFinish = 4
 }
-slot0.NodeSelectArriveStatus = slot0.Arrive.ArrivingNotFinish
-slot0.EventType = {
+var_0_0.NodeSelectArriveStatus = var_0_0.Arrive.ArrivingNotFinish
+var_0_0.EventType = {
 	Reward = 5,
 	HardFight = 2,
 	BossFight = 4,
@@ -75,126 +76,126 @@ slot0.EventType = {
 	EliteFight = 3,
 	Empty = 0
 }
-slot0.EventDefaultPic = {
-	[slot0.EventType.NormalFight] = "rouge_map_detailmap_01",
-	[slot0.EventType.HardFight] = "rouge_map_detailmap_02",
-	[slot0.EventType.EliteFight] = "rouge_map_detailmap_03",
-	[slot0.EventType.Reward] = "rouge_map_detailmap_04",
-	[slot0.EventType.Choice] = "rouge_map_detailmap_05",
-	[slot0.EventType.Store] = "rouge_map_detailmap_06",
-	[slot0.EventType.Rest] = "rouge_map_detailmap_07",
-	[slot0.EventType.WatchTower] = "rouge_map_detailmap_08",
-	[slot0.EventType.TreasurePlace] = "rouge_map_detailmap_09",
-	[slot0.EventType.ChoiceLair] = "rouge_map_detailmap_10",
-	[slot0.EventType.FightLair] = "rouge_map_detailmap_10",
-	[slot0.EventType.Unknow] = "rouge_map_detailmap_11",
-	[slot0.EventType.LevelUpSp] = "rouge_map_detailmap_12"
+var_0_0.EventDefaultPic = {
+	[var_0_0.EventType.NormalFight] = "rouge_map_detailmap_01",
+	[var_0_0.EventType.HardFight] = "rouge_map_detailmap_02",
+	[var_0_0.EventType.EliteFight] = "rouge_map_detailmap_03",
+	[var_0_0.EventType.Reward] = "rouge_map_detailmap_04",
+	[var_0_0.EventType.Choice] = "rouge_map_detailmap_05",
+	[var_0_0.EventType.Store] = "rouge_map_detailmap_06",
+	[var_0_0.EventType.Rest] = "rouge_map_detailmap_07",
+	[var_0_0.EventType.WatchTower] = "rouge_map_detailmap_08",
+	[var_0_0.EventType.TreasurePlace] = "rouge_map_detailmap_09",
+	[var_0_0.EventType.ChoiceLair] = "rouge_map_detailmap_10",
+	[var_0_0.EventType.FightLair] = "rouge_map_detailmap_10",
+	[var_0_0.EventType.Unknow] = "rouge_map_detailmap_11",
+	[var_0_0.EventType.LevelUpSp] = "rouge_map_detailmap_12"
 }
-slot0.PicFormat = "singlebg/rouge/mapdetail/%s.png"
-slot0.MonsterMaskFormat = "singlebg/rouge/mapdetail/monster/%s.png"
-slot0.EventType2Cls = {
-	[slot0.EventType.Reward] = RougeChoiceEventMO,
-	[slot0.EventType.Choice] = RougeChoiceEventMO,
-	[slot0.EventType.Rest] = RougeChoiceEventMO,
-	[slot0.EventType.Store] = RougeStoreEventMO,
-	[slot0.EventType.NormalFight] = RougeFightEventMO,
-	[slot0.EventType.HardFight] = RougeFightEventMO,
-	[slot0.EventType.EliteFight] = RougeFightEventMO,
-	[slot0.EventType.BossFight] = RougeFightEventMO,
-	[slot0.EventType.WatchTower] = RougeChoiceEventMO,
-	[slot0.EventType.TreasurePlace] = RougeChoiceEventMO,
-	[slot0.EventType.ChoiceLair] = RougeChoiceEventMO,
-	[slot0.EventType.FightLair] = RougeFightEventMO,
-	[slot0.EventType.Unknow] = RougeChoiceEventMO,
-	[slot0.EventType.LevelUpSp] = RougeChoiceEventMO
+var_0_0.PicFormat = "singlebg/rouge/mapdetail/%s.png"
+var_0_0.MonsterMaskFormat = "singlebg/rouge/mapdetail/monster/%s.png"
+var_0_0.EventType2Cls = {
+	[var_0_0.EventType.Reward] = RougeChoiceEventMO,
+	[var_0_0.EventType.Choice] = RougeChoiceEventMO,
+	[var_0_0.EventType.Rest] = RougeChoiceEventMO,
+	[var_0_0.EventType.Store] = RougeStoreEventMO,
+	[var_0_0.EventType.NormalFight] = RougeFightEventMO,
+	[var_0_0.EventType.HardFight] = RougeFightEventMO,
+	[var_0_0.EventType.EliteFight] = RougeFightEventMO,
+	[var_0_0.EventType.BossFight] = RougeFightEventMO,
+	[var_0_0.EventType.WatchTower] = RougeChoiceEventMO,
+	[var_0_0.EventType.TreasurePlace] = RougeChoiceEventMO,
+	[var_0_0.EventType.ChoiceLair] = RougeChoiceEventMO,
+	[var_0_0.EventType.FightLair] = RougeFightEventMO,
+	[var_0_0.EventType.Unknow] = RougeChoiceEventMO,
+	[var_0_0.EventType.LevelUpSp] = RougeChoiceEventMO
 }
-slot0.NodeType = {
+var_0_0.NodeType = {
 	End = 3,
 	Start = 1,
 	Normal = 2
 }
-slot0.EventState = {
+var_0_0.EventState = {
 	Finish = 2,
 	Start = 1,
 	Init = 0
 }
-slot0.IconPath = {
-	[slot0.EventType.NormalFight] = "icon_normal_fight",
-	[slot0.EventType.HardFight] = "icon_hard_fight",
-	[slot0.EventType.EliteFight] = "icon_elite_fight",
-	[slot0.EventType.Reward] = "icon_reward",
-	[slot0.EventType.Choice] = "icon_choice",
-	[slot0.EventType.Store] = "icon_store",
-	[slot0.EventType.Rest] = "icon_rest",
-	[slot0.EventType.WatchTower] = "icon_8",
-	[slot0.EventType.TreasurePlace] = "icon_9",
-	[slot0.EventType.ChoiceLair] = "icon_10",
-	[slot0.EventType.FightLair] = "icon_10",
-	[slot0.EventType.Unknow] = "icon_11",
-	[slot0.EventType.LevelUpSp] = "icon_12"
+var_0_0.IconPath = {
+	[var_0_0.EventType.NormalFight] = "icon_normal_fight",
+	[var_0_0.EventType.HardFight] = "icon_hard_fight",
+	[var_0_0.EventType.EliteFight] = "icon_elite_fight",
+	[var_0_0.EventType.Reward] = "icon_reward",
+	[var_0_0.EventType.Choice] = "icon_choice",
+	[var_0_0.EventType.Store] = "icon_store",
+	[var_0_0.EventType.Rest] = "icon_rest",
+	[var_0_0.EventType.WatchTower] = "icon_8",
+	[var_0_0.EventType.TreasurePlace] = "icon_9",
+	[var_0_0.EventType.ChoiceLair] = "icon_10",
+	[var_0_0.EventType.FightLair] = "icon_10",
+	[var_0_0.EventType.Unknow] = "icon_11",
+	[var_0_0.EventType.LevelUpSp] = "icon_12"
 }
-slot0.StartNodeBgPath = "bg_start"
-slot0.NodeBgPath = {
+var_0_0.StartNodeBgPath = "bg_start"
+var_0_0.NodeBgPath = {
 	Normal = {
-		[slot0.Arrive.CantArrive] = "bg_normal_cant_arrive",
-		[slot0.Arrive.NotArrive] = "bg_normal_cant_arrive",
-		[slot0.Arrive.CanArrive] = "bg_normal_can_arrive",
-		[slot0.Arrive.ArrivingNotFinish] = "bg_normal_arriving_not_finish",
-		[slot0.Arrive.ArrivingFinish] = "bg_normal_arriving_finish",
-		[slot0.Arrive.Arrived] = "bg_normal_arrived"
+		[var_0_0.Arrive.CantArrive] = "bg_normal_cant_arrive",
+		[var_0_0.Arrive.NotArrive] = "bg_normal_cant_arrive",
+		[var_0_0.Arrive.CanArrive] = "bg_normal_can_arrive",
+		[var_0_0.Arrive.ArrivingNotFinish] = "bg_normal_arriving_not_finish",
+		[var_0_0.Arrive.ArrivingFinish] = "bg_normal_arriving_finish",
+		[var_0_0.Arrive.Arrived] = "bg_normal_arrived"
 	},
 	Special = {
-		[slot0.Arrive.CantArrive] = "bg_special_cant_arrive",
-		[slot0.Arrive.NotArrive] = "bg_special_cant_arrive",
-		[slot0.Arrive.CanArrive] = "bg_special_can_arrive",
-		[slot0.Arrive.ArrivingNotFinish] = "bg_special_arriving_not_finish",
-		[slot0.Arrive.ArrivingFinish] = "bg_special_arriving_finish",
-		[slot0.Arrive.Arrived] = "bg_special_arrived"
+		[var_0_0.Arrive.CantArrive] = "bg_special_cant_arrive",
+		[var_0_0.Arrive.NotArrive] = "bg_special_cant_arrive",
+		[var_0_0.Arrive.CanArrive] = "bg_special_can_arrive",
+		[var_0_0.Arrive.ArrivingNotFinish] = "bg_special_arriving_not_finish",
+		[var_0_0.Arrive.ArrivingFinish] = "bg_special_arriving_finish",
+		[var_0_0.Arrive.Arrived] = "bg_special_arrived"
 	}
 }
-slot0.FogMaterialUrl = "scenes/v1a9_m_s16_dilao/scene_prefab/v2a1_smoke_mask.prefab"
-slot0.MaxHoleNum = 5
-slot0.HoleSize = -1.21
-slot0.FogDuration = 1
-slot0.NormalLineCutValue = 0
-slot0.HideLineCutValue = 1
-slot0.FogLineCutValue = 0.4
-slot0.HoleLineCutValue = 0.85
-slot0.FogOffset = {
+var_0_0.FogMaterialUrl = "scenes/v1a9_m_s16_dilao/scene_prefab/v2a1_smoke_mask.prefab"
+var_0_0.MaxHoleNum = 5
+var_0_0.HoleSize = -1.21
+var_0_0.FogDuration = 1
+var_0_0.NormalLineCutValue = 0
+var_0_0.HideLineCutValue = 1
+var_0_0.FogLineCutValue = 0.4
+var_0_0.HoleLineCutValue = 0.85
+var_0_0.FogOffset = {
 	-4,
 	0
 }
-slot0.HolePosOffset = {
+var_0_0.HolePosOffset = {
 	0,
 	0.18
 }
-slot0.OutSideAreaPos = {
+var_0_0.OutSideAreaPos = {
 	X = -1000,
 	Y = -1000
 }
-slot0.MiddleLayerPointType = {
+var_0_0.MiddleLayerPointType = {
 	Leave = 3,
 	Pieces = 1,
 	Path = 2
 }
-slot0.LeaveId = -1
-slot0.LeaveAnchorOffset = Vector2(-21, 77.7)
-slot0.OffsetZ = {
+var_0_0.LeaveId = -1
+var_0_0.LeaveAnchorOffset = Vector2(-21, 77.7)
+var_0_0.OffsetZ = {
 	PiecesContainer = -7,
 	PieceIcon = -8,
 	NodeContainer = -2,
 	PathContainer = -6,
 	Map = 10
 }
-slot0.NodeOffsetZInterval = 0.1
-slot0.NodeIconOffsetZInterval = 0.5
-slot0.Scale = {
+var_0_0.NodeOffsetZInterval = 0.1
+var_0_0.NodeIconOffsetZInterval = 0.5
+var_0_0.Scale = {
 	Icon = 1.3,
 	NodeBg = 1.3
 }
-slot0.MapStartOffsetX = 2.5
-slot0.NodeLocalPosXRange = 1
-slot0.NodeLocalPosY = {
+var_0_0.MapStartOffsetX = 2.5
+var_0_0.NodeLocalPosXRange = 1
+var_0_0.NodeLocalPosY = {
 	{
 		0.5
 	},
@@ -214,38 +215,38 @@ slot0.NodeLocalPosY = {
 		0.8
 	}
 }
-slot0.NodeGlobalOffsetY = 0.075
-slot0.StartBgOffset = Vector2(0, 0)
-slot0.NodeBgOffset = {
-	[slot0.Arrive.CantArrive] = Vector2(0, 0),
-	[slot0.Arrive.NotArrive] = Vector2(0, 0),
-	[slot0.Arrive.CanArrive] = Vector2(0.23, 0.84),
-	[slot0.Arrive.ArrivingNotFinish] = Vector2(0.188, 1.739),
-	[slot0.Arrive.ArrivingFinish] = Vector2(0.204, 1.77),
-	[slot0.Arrive.Arrived] = Vector2(0.195, 0.86)
+var_0_0.NodeGlobalOffsetY = 0.075
+var_0_0.StartBgOffset = Vector2(0, 0)
+var_0_0.NodeBgOffset = {
+	[var_0_0.Arrive.CantArrive] = Vector2(0, 0),
+	[var_0_0.Arrive.NotArrive] = Vector2(0, 0),
+	[var_0_0.Arrive.CanArrive] = Vector2(0.23, 0.84),
+	[var_0_0.Arrive.ArrivingNotFinish] = Vector2(0.188, 1.739),
+	[var_0_0.Arrive.ArrivingFinish] = Vector2(0.204, 1.77),
+	[var_0_0.Arrive.Arrived] = Vector2(0.195, 0.86)
 }
-slot0.IconOffset = {
-	[slot0.Arrive.CantArrive] = Vector2(0, 0.47),
-	[slot0.Arrive.NotArrive] = Vector2(0, 0.47),
-	[slot0.Arrive.CanArrive] = Vector2(0, 1.2),
-	[slot0.Arrive.ArrivingNotFinish] = Vector2(0, 2.02),
-	[slot0.Arrive.ArrivingFinish] = Vector2(0, 2.18),
-	[slot0.Arrive.Arrived] = Vector2(0, 1.21)
+var_0_0.IconOffset = {
+	[var_0_0.Arrive.CantArrive] = Vector2(0, 0.47),
+	[var_0_0.Arrive.NotArrive] = Vector2(0, 0.47),
+	[var_0_0.Arrive.CanArrive] = Vector2(0, 1.2),
+	[var_0_0.Arrive.ArrivingNotFinish] = Vector2(0, 2.02),
+	[var_0_0.Arrive.ArrivingFinish] = Vector2(0, 2.18),
+	[var_0_0.Arrive.Arrived] = Vector2(0, 1.21)
 }
-slot0.ActorOffset = Vector2(-0.05, 0.623)
-slot0.StartClickArea = Vector4(80, 50, 0, 0)
-slot0.ClickArea = {
-	[slot0.Arrive.CantArrive] = Vector4(120, 100, 0.66, 14.09),
-	[slot0.Arrive.NotArrive] = Vector4(120, 110, 1.55, 26.89),
-	[slot0.Arrive.CanArrive] = Vector4(200, 170, -12.65, -26.41),
-	[slot0.Arrive.ArrivingNotFinish] = Vector4(235, 330, -8.14, -22.11),
-	[slot0.Arrive.ArrivingFinish] = Vector4(236, 345, -7.95, -5.48),
-	[slot0.Arrive.Arrived] = Vector4(160, 190, -13.62, -11.17)
+var_0_0.ActorOffset = Vector2(-0.05, 0.623)
+var_0_0.StartClickArea = Vector4(80, 50, 0, 0)
+var_0_0.ClickArea = {
+	[var_0_0.Arrive.CantArrive] = Vector4(120, 100, 0.66, 14.09),
+	[var_0_0.Arrive.NotArrive] = Vector4(120, 110, 1.55, 26.89),
+	[var_0_0.Arrive.CanArrive] = Vector4(200, 170, -12.65, -26.41),
+	[var_0_0.Arrive.ArrivingNotFinish] = Vector4(235, 330, -8.14, -22.11),
+	[var_0_0.Arrive.ArrivingFinish] = Vector4(236, 345, -7.95, -5.48),
+	[var_0_0.Arrive.Arrived] = Vector4(160, 190, -13.62, -11.17)
 }
-slot0.LeaveItemClickArea = Vector4(320.29, 184.6, -18.2, 78.39)
-slot0.LayerItemClickArea = Vector4(120, 100, 0, 0)
-slot0.PieceClickArea = Vector4(120, 270, 0, 49.42)
-slot0.ChoiceItemPos = {
+var_0_0.LeaveItemClickArea = Vector4(320.29, 184.6, -18.2, 78.39)
+var_0_0.LayerItemClickArea = Vector4(120, 100, 0, 0)
+var_0_0.PieceClickArea = Vector4(120, 270, 0, 49.42)
+var_0_0.ChoiceItemPos = {
 	{
 		Vector2(29.7, 10.8)
 	},
@@ -265,23 +266,23 @@ slot0.ChoiceItemPos = {
 		Vector2(-88, -382)
 	}
 }
-slot0.ChoiceStatus = {
+var_0_0.ChoiceStatus = {
 	UnSelect = 5,
 	Bought = 4,
 	Select = 3,
 	Lock = 1,
 	Normal = 2
 }
-slot0.PieceChoiceViewStatus = {
+var_0_0.PieceChoiceViewStatus = {
 	Store = 2,
 	Choice = 1
 }
-slot0.DialogueOffsetX = {
+var_0_0.DialogueOffsetX = {
 	WithChoice = -172.8,
 	Normal = 0
 }
-slot0.DialogueInterval = 0.05
-slot0.InteractType = {
+var_0_0.DialogueInterval = 0.05
+var_0_0.InteractType = {
 	Recruit = 5,
 	LossCollection = 2,
 	ReturnBlood = 3,
@@ -297,45 +298,45 @@ slot0.InteractType = {
 	StorageCollection = 10,
 	LossAssignCollection = 8
 }
-slot0.ReturnBloodEnum = {
+var_0_0.ReturnBloodEnum = {
 	All = 1,
 	Select = 2
 }
-slot0.ShowMapRightEnum = {
+var_0_0.ShowMapRightEnum = {
 	Piece = 3,
 	Node = 1,
 	Layer = 2
 }
-slot0.PieceEntrustType = {
+var_0_0.PieceEntrustType = {
 	Hard = 3,
 	Rest = 1,
 	Boss = 5,
 	Ending = 4,
 	Normal = 2
 }
-slot0.MiddleLayerLeavePath = "scenes/v1a9_m_s16_dilao_room/prefab/chukou.prefab"
-slot0.PieceIconBgEnum = {
+var_0_0.MiddleLayerLeavePath = "scenes/v1a9_m_s16_dilao_room/prefab/chukou.prefab"
+var_0_0.PieceIconBgEnum = {
 	Hard = 2,
 	Normal = 1
 }
-slot0.PieceIconBgRes = {
-	[slot0.PieceIconBgEnum.Normal] = "scenes/v1a9_m_s16_dilao_room/prefab/yuanjian_di.prefab",
-	[slot0.PieceIconBgEnum.Hard] = "scenes/v1a9_m_s16_dilao_room/prefab/yuanjian_di2.prefab"
+var_0_0.PieceIconBgRes = {
+	[var_0_0.PieceIconBgEnum.Normal] = "scenes/v1a9_m_s16_dilao_room/prefab/yuanjian_di.prefab",
+	[var_0_0.PieceIconBgEnum.Hard] = "scenes/v1a9_m_s16_dilao_room/prefab/yuanjian_di2.prefab"
 }
-slot0.PieceIconRes = {
-	[slot0.PieceEntrustType.Rest] = "scenes/v1a9_m_s16_dilao_room/prefab/xiuzheng.prefab",
-	[slot0.PieceEntrustType.Normal] = "scenes/v1a9_m_s16_dilao_room/prefab/chuanwen_1.prefab",
-	[slot0.PieceEntrustType.Hard] = "scenes/v1a9_m_s16_dilao_room/prefab/chuanwen_2.prefab",
-	[slot0.PieceEntrustType.Ending] = "scenes/v1a9_m_s16_dilao_room/prefab/chuanwen_jieju.prefab"
+var_0_0.PieceIconRes = {
+	[var_0_0.PieceEntrustType.Rest] = "scenes/v1a9_m_s16_dilao_room/prefab/xiuzheng.prefab",
+	[var_0_0.PieceEntrustType.Normal] = "scenes/v1a9_m_s16_dilao_room/prefab/chuanwen_1.prefab",
+	[var_0_0.PieceEntrustType.Hard] = "scenes/v1a9_m_s16_dilao_room/prefab/chuanwen_2.prefab",
+	[var_0_0.PieceEntrustType.Ending] = "scenes/v1a9_m_s16_dilao_room/prefab/chuanwen_jieju.prefab"
 }
-slot0.PieceIconBg = {
-	[slot0.PieceEntrustType.Rest] = slot0.PieceIconBgEnum.Normal,
-	[slot0.PieceEntrustType.Normal] = slot0.PieceIconBgEnum.Normal,
-	[slot0.PieceEntrustType.Hard] = slot0.PieceIconBgEnum.Hard,
-	[slot0.PieceEntrustType.Ending] = slot0.PieceIconBgEnum.Normal
+var_0_0.PieceIconBg = {
+	[var_0_0.PieceEntrustType.Rest] = var_0_0.PieceIconBgEnum.Normal,
+	[var_0_0.PieceEntrustType.Normal] = var_0_0.PieceIconBgEnum.Normal,
+	[var_0_0.PieceEntrustType.Hard] = var_0_0.PieceIconBgEnum.Hard,
+	[var_0_0.PieceEntrustType.Ending] = var_0_0.PieceIconBgEnum.Normal
 }
-slot0.PieceIconOffset = Vector2(0, 1.65)
-slot0.PieceTriggerType = {
+var_0_0.PieceIconOffset = Vector2(0, 1.65)
+var_0_0.PieceTriggerType = {
 	Compound = 3,
 	Shop = 4,
 	Reward = 2,
@@ -345,104 +346,104 @@ slot0.PieceTriggerType = {
 	LevelUpSp = 7,
 	Empty = 0
 }
-slot0.MiddleLayerCameraSizeRate = 0.8
-slot0.PathSelectMapWaitTime = 1
-slot0.LossType = {
+var_0_0.MiddleLayerCameraSizeRate = 0.8
+var_0_0.PathSelectMapWaitTime = 1
+var_0_0.LossType = {
 	Storage = 3,
 	Abandon = 1,
 	Exchange = 2,
 	Copy = 4,
 	AbandonSp = 5
 }
-slot0.LineType = {
+var_0_0.LineType = {
 	Arrived = 4,
 	CanArrive = 3,
 	NotArrive = 2,
 	CantArrive = 1,
 	None = 0
 }
-slot0.LinePrefabRes = "scenes/v1a9_m_s16_dilao/prefab/dituxian_1.prefab"
-slot0.LineIconRes = {
-	[slot0.LineType.CantArrive] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_1.png",
-	[slot0.LineType.NotArrive] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_2.png",
-	[slot0.LineType.CanArrive] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_3.png",
-	[slot0.LineType.Arrived] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_4.png"
+var_0_0.LinePrefabRes = "scenes/v1a9_m_s16_dilao/prefab/dituxian_1.prefab"
+var_0_0.LineIconRes = {
+	[var_0_0.LineType.CantArrive] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_1.png",
+	[var_0_0.LineType.NotArrive] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_2.png",
+	[var_0_0.LineType.CanArrive] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_3.png",
+	[var_0_0.LineType.Arrived] = "scenes/dynamic/rouge/texture/v1a9_m_s16_dilao_icon_a01_4.png"
 }
-slot0.StatusLineMap = {
-	[slot0.Arrive.CantArrive] = {
-		[slot0.Arrive.CantArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.NotArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.CanArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.ArrivingNotFinish] = slot0.LineType.CantArrive,
-		[slot0.Arrive.ArrivingFinish] = slot0.LineType.CantArrive,
-		[slot0.Arrive.Arrived] = slot0.LineType.CantArrive
+var_0_0.StatusLineMap = {
+	[var_0_0.Arrive.CantArrive] = {
+		[var_0_0.Arrive.CantArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.NotArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.CanArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.ArrivingNotFinish] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.ArrivingFinish] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.Arrived] = var_0_0.LineType.CantArrive
 	},
-	[slot0.Arrive.NotArrive] = {
-		[slot0.Arrive.CantArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.NotArrive] = slot0.LineType.NotArrive,
-		[slot0.Arrive.CanArrive] = slot0.LineType.NotArrive,
-		[slot0.Arrive.ArrivingNotFinish] = slot0.LineType.NotArrive,
-		[slot0.Arrive.ArrivingFinish] = slot0.LineType.CanArrive,
-		[slot0.Arrive.Arrived] = slot0.LineType.None
+	[var_0_0.Arrive.NotArrive] = {
+		[var_0_0.Arrive.CantArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.NotArrive] = var_0_0.LineType.NotArrive,
+		[var_0_0.Arrive.CanArrive] = var_0_0.LineType.NotArrive,
+		[var_0_0.Arrive.ArrivingNotFinish] = var_0_0.LineType.NotArrive,
+		[var_0_0.Arrive.ArrivingFinish] = var_0_0.LineType.CanArrive,
+		[var_0_0.Arrive.Arrived] = var_0_0.LineType.None
 	},
-	[slot0.Arrive.CanArrive] = {
-		[slot0.Arrive.CantArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.NotArrive] = slot0.LineType.None,
-		[slot0.Arrive.CanArrive] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingNotFinish] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingFinish] = slot0.LineType.CanArrive,
-		[slot0.Arrive.Arrived] = slot0.LineType.None
+	[var_0_0.Arrive.CanArrive] = {
+		[var_0_0.Arrive.CantArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.NotArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.CanArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingNotFinish] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingFinish] = var_0_0.LineType.CanArrive,
+		[var_0_0.Arrive.Arrived] = var_0_0.LineType.None
 	},
-	[slot0.Arrive.ArrivingNotFinish] = {
-		[slot0.Arrive.CantArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.NotArrive] = slot0.LineType.None,
-		[slot0.Arrive.CanArrive] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingNotFinish] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingFinish] = slot0.LineType.Arrived,
-		[slot0.Arrive.Arrived] = slot0.LineType.Arrived
+	[var_0_0.Arrive.ArrivingNotFinish] = {
+		[var_0_0.Arrive.CantArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.NotArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.CanArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingNotFinish] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingFinish] = var_0_0.LineType.Arrived,
+		[var_0_0.Arrive.Arrived] = var_0_0.LineType.Arrived
 	},
-	[slot0.Arrive.ArrivingFinish] = {
-		[slot0.Arrive.CantArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.NotArrive] = slot0.LineType.None,
-		[slot0.Arrive.CanArrive] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingNotFinish] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingFinish] = slot0.LineType.Arrived,
-		[slot0.Arrive.Arrived] = slot0.LineType.Arrived
+	[var_0_0.Arrive.ArrivingFinish] = {
+		[var_0_0.Arrive.CantArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.NotArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.CanArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingNotFinish] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingFinish] = var_0_0.LineType.Arrived,
+		[var_0_0.Arrive.Arrived] = var_0_0.LineType.Arrived
 	},
-	[slot0.Arrive.Arrived] = {
-		[slot0.Arrive.CantArrive] = slot0.LineType.CantArrive,
-		[slot0.Arrive.NotArrive] = slot0.LineType.None,
-		[slot0.Arrive.CanArrive] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingNotFinish] = slot0.LineType.None,
-		[slot0.Arrive.ArrivingFinish] = slot0.LineType.Arrived,
-		[slot0.Arrive.Arrived] = slot0.LineType.Arrived
+	[var_0_0.Arrive.Arrived] = {
+		[var_0_0.Arrive.CantArrive] = var_0_0.LineType.CantArrive,
+		[var_0_0.Arrive.NotArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.CanArrive] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingNotFinish] = var_0_0.LineType.None,
+		[var_0_0.Arrive.ArrivingFinish] = var_0_0.LineType.Arrived,
+		[var_0_0.Arrive.Arrived] = var_0_0.LineType.Arrived
 	}
 }
-slot0.LineOffset = 0.636
-slot0.CollectionDropViewEnum = {
+var_0_0.LineOffset = 0.636
+var_0_0.CollectionDropViewEnum = {
 	Select = 1,
 	OnlyShow = 2
 }
-slot0.RevertDuration = 0.4
-slot0.MoveSpeed = 7
-slot0.CameraTweenLine = EaseType.OutCubic
-slot0.TipShowDuration = 2.5
-slot0.TipShowInterval = 0.5
-slot0.DayOrNight = {
+var_0_0.RevertDuration = 0.4
+var_0_0.MoveSpeed = 7
+var_0_0.CameraTweenLine = EaseType.OutCubic
+var_0_0.TipShowDuration = 2.5
+var_0_0.TipShowInterval = 0.5
+var_0_0.DayOrNight = {
 	Day = 1,
 	Night = 2
 }
-slot0.DayOrNightSuffix = {
-	[slot0.DayOrNight.Day] = "day",
-	[slot0.DayOrNight.Night] = "night"
+var_0_0.DayOrNightSuffix = {
+	[var_0_0.DayOrNight.Day] = "day",
+	[var_0_0.DayOrNight.Night] = "night"
 }
-slot0.PieceDir = {
+var_0_0.PieceDir = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-slot0.ActorDir = {
+var_0_0.ActorDir = {
 	Bottom = 2,
 	Right = 6,
 	LeftBottom = 1,
@@ -452,7 +453,7 @@ slot0.ActorDir = {
 	Left = 4,
 	LeftTop = 7
 }
-slot0.EntrustEventType = {
+var_0_0.EntrustEventType = {
 	Curse = 4,
 	LevelUpSpCollection = 9,
 	Event = 3,
@@ -463,22 +464,22 @@ slot0.EntrustEventType = {
 	GetCollection = 8,
 	CostPower = 5
 }
-slot0.FinishEnum = {
+var_0_0.FinishEnum = {
 	Finish = 1,
 	Fail = 2
 }
-slot0.UnSelectLineAlpha = 0.3
-slot0.SwitchLayerMinDuration = 3
-slot0.SwitchLayerMaxDuration = 10
-slot0.CoinChangeDuration = 1
-slot0.PowerChangeDuration = 1
-slot0.TalkAnchorOffset = {
-	[slot0.MapType.Normal] = Vector2(0, 31.46),
-	[slot0.MapType.Middle] = Vector2(0, 73.34)
+var_0_0.UnSelectLineAlpha = 0.3
+var_0_0.SwitchLayerMinDuration = 3
+var_0_0.SwitchLayerMaxDuration = 10
+var_0_0.CoinChangeDuration = 1
+var_0_0.PowerChangeDuration = 1
+var_0_0.TalkAnchorOffset = {
+	[var_0_0.MapType.Normal] = Vector2(0, 31.46),
+	[var_0_0.MapType.Middle] = Vector2(0, 73.34)
 }
-slot0.TalkDuration = 2
-slot0.TalkCD = 5
-slot0.ShortVoiceTriggerType = {
+var_0_0.TalkDuration = 2
+var_0_0.TalkCD = 5
+var_0_0.ShortVoiceTriggerType = {
 	EnterPathSelectLayer = 3,
 	FinishEvent = 6,
 	EnterMiddleLayer = 2,
@@ -488,50 +489,50 @@ slot0.ShortVoiceTriggerType = {
 	NormalLayerMove = 7,
 	ExitPieceTalk = 4
 }
-slot0.ChoiceSelectAnimDuration = 0.667
-slot0.EffectType = {
+var_0_0.ChoiceSelectAnimDuration = 0.667
+var_0_0.EffectType = {
 	UnlockFightDropRefresh = 23,
 	UnlockRestRefresh = 21,
 	UpdateExchangeDisplaceNum = 28,
 	UnlockShowPassFightMask = 26
 }
-slot0.ExpAddDuration = 0.5
-slot0.WaitSuccAnimDuration = 2
-slot0.WaitSuccPlayAudioDuration = 1
-slot0.WaitSwitchMapAnim = 0.33
-slot0.SwitchMapAnimDuration = 1.33
-slot0.WaitStoryCloseAnim = 1
-slot0.PieceBossEffect = "scenes/v1a9_m_s16_dilao_room/scene_prefab/chesseffect/luoleilai_effect.prefab"
-slot0.MaxTipHeight = 924
-slot0.CollectionChangeAnimDuration = 0.5
-slot0.LifeChangeStatus = {
+var_0_0.ExpAddDuration = 0.5
+var_0_0.WaitSuccAnimDuration = 2
+var_0_0.WaitSuccPlayAudioDuration = 1
+var_0_0.WaitSwitchMapAnim = 0.33
+var_0_0.SwitchMapAnimDuration = 1.33
+var_0_0.WaitStoryCloseAnim = 1
+var_0_0.PieceBossEffect = "scenes/v1a9_m_s16_dilao_room/scene_prefab/chesseffect/luoleilai_effect.prefab"
+var_0_0.MaxTipHeight = 924
+var_0_0.CollectionChangeAnimDuration = 0.5
+var_0_0.LifeChangeStatus = {
 	Add = 3,
 	Reduce = 1,
 	Idle = 2
 }
-slot0.WaitStoreRefreshAnimDuration = 0.2
-slot0.WaitMapRightRefreshTime = 0.16
-slot0.ScrollPosition = {
+var_0_0.WaitStoreRefreshAnimDuration = 0.2
+var_0_0.WaitMapRightRefreshTime = 0.16
+var_0_0.ScrollPosition = {
 	Top = 1,
 	Bottom = 0
 }
-slot0.ChoiceViewState = {
+var_0_0.ChoiceViewState = {
 	Finish = 3,
 	PlayingDialogue = 1,
 	WaitSelect = 2
 }
-slot0.WaitChoiceItemAnimBlock = "WaitChoiceItemAnimBlock"
-slot0.EntrustStatus = {
+var_0_0.WaitChoiceItemAnimBlock = "WaitChoiceItemAnimBlock"
+var_0_0.EntrustStatus = {
 	Brief = 1,
 	Detail = 2
 }
-slot0.ChangeEntrustTime = 3
-slot0.FinishEntrustEffect = 3
-slot0.WaitMiddleLayerEnterTime = 0.5
-slot0.MovingBlock = "ActorMovingBlock"
-slot0.StoreGoodsDescHeight = {
+var_0_0.ChangeEntrustTime = 3
+var_0_0.FinishEntrustEffect = 3
+var_0_0.WaitMiddleLayerEnterTime = 0.5
+var_0_0.MovingBlock = "ActorMovingBlock"
+var_0_0.StoreGoodsDescHeight = {
 	NoHole = 400,
 	WithHole = 247
 }
 
-return slot0
+return var_0_0

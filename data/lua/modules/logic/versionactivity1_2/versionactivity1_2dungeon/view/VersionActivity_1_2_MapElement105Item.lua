@@ -1,37 +1,45 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_MapElement105Item", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_MapElement105Item", package.seeall)
 
-slot0 = class("VersionActivity_1_2_MapElement105Item", BaseViewExtended)
+local var_0_0 = class("VersionActivity_1_2_MapElement105Item", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onClick(slot0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, slot0._elementId)
+function var_0_0._onClick(arg_4_0)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, arg_4_0._elementId)
 end
 
-function slot0.onRefreshViewParam(slot0, slot1)
-	slot0._elementId = slot1
-	slot0._elementConfig = lua_chapter_map_element.configDict[slot1]
-	slot0._episodeConfig = DungeonConfig.instance:getEpisodeCO(tonumber(slot0._elementConfig.param))
-	slot0.leftChallenge = 10
+function var_0_0.onRefreshViewParam(arg_5_0, arg_5_1)
+	arg_5_0._elementId = arg_5_1
+	arg_5_0._elementConfig = lua_chapter_map_element.configDict[arg_5_1]
+
+	local var_5_0 = tonumber(arg_5_0._elementConfig.param)
+
+	arg_5_0._episodeConfig = DungeonConfig.instance:getEpisodeCO(var_5_0)
+	arg_5_0.leftChallenge = 10
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

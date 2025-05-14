@@ -1,37 +1,37 @@
-module("framework.core.workflow.flow.BaseFlow", package.seeall)
+﻿module("framework.core.workflow.flow.BaseFlow", package.seeall)
 
-slot0 = class("BaseFlow", BaseWork)
+local var_0_0 = class("BaseFlow", BaseWork)
 
-function slot0.start(slot0, slot1)
-	slot0:onStartInternal(slot1)
+function var_0_0.start(arg_1_0, arg_1_1)
+	arg_1_0:onStartInternal(arg_1_1)
 end
 
-function slot0.stop(slot0)
-	slot0:onStopInternal()
+function var_0_0.stop(arg_2_0)
+	arg_2_0:onStopInternal()
 end
 
-function slot0.resume(slot0)
-	slot0:onResumeInternal()
+function var_0_0.resume(arg_3_0)
+	arg_3_0:onResumeInternal()
 end
 
-function slot0.destroy(slot0)
-	slot0:onDestroyInternal()
+function var_0_0.destroy(arg_4_0)
+	arg_4_0:onDestroyInternal()
 end
 
-function slot0.reset(slot0)
-	slot0:onResetInternal()
+function var_0_0.reset(arg_5_0)
+	arg_5_0:onResetInternal()
 end
 
-function slot0.addWork(slot0, slot1)
-	slot1:initInternal()
+function var_0_0.addWork(arg_6_0, arg_6_1)
+	arg_6_1:initInternal()
 
-	slot1.flowName = slot0.flowName
+	arg_6_1.flowName = arg_6_0.flowName
 
-	slot1:setParentInternal(slot0)
+	arg_6_1:setParentInternal(arg_6_0)
 end
 
-function slot0.onWorkDone(slot0, slot1)
-	slot1:onResetInternal()
+function var_0_0.onWorkDone(arg_7_0, arg_7_1)
+	arg_7_1:onResetInternal()
 end
 
-return slot0
+return var_0_0

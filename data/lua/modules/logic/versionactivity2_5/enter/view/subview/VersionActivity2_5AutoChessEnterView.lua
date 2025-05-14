@@ -1,31 +1,31 @@
-module("modules.logic.versionactivity2_5.enter.view.subview.VersionActivity2_5AutoChessEnterView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.enter.view.subview.VersionActivity2_5AutoChessEnterView", package.seeall)
 
-slot0 = class("VersionActivity2_5AutoChessEnterView", BaseView)
+local var_0_0 = class("VersionActivity2_5AutoChessEnterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "LimitTime/#txt_LimitTime")
-	slot0._txtDesc = gohelper.findChildText(slot0.viewGO, "#txt_Desc")
-	slot0._btnEnter = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Enter")
-	slot0._btnAchievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Achievement")
-	slot0._goTip = gohelper.findChild(slot0.viewGO, "#go_Tip")
-	slot0._txtTip = gohelper.findChildText(slot0.viewGO, "#go_Tip/#txt_Tip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/#txt_LimitTime")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_Desc")
+	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Enter")
+	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Achievement")
+	arg_1_0._goTip = gohelper.findChild(arg_1_0.viewGO, "#go_Tip")
+	arg_1_0._txtTip = gohelper.findChildText(arg_1_0.viewGO, "#go_Tip/#txt_Tip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnEnter:AddClickListener(slot0._btnEnterOnClick, slot0)
-	slot0._btnAchievement:AddClickListener(slot0._btnAchievementOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
+	arg_2_0._btnAchievement:AddClickListener(arg_2_0._btnAchievementOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnEnter:RemoveClickListener()
-	slot0._btnAchievement:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnEnter:RemoveClickListener()
+	arg_3_0._btnAchievement:RemoveClickListener()
 end
 
-function slot0._btnEnterOnClick(slot0)
+function var_0_0._btnEnterOnClick(arg_4_0)
 	if not Activity182Model.instance:getActMo() then
 		return
 	end
@@ -33,47 +33,54 @@ function slot0._btnEnterOnClick(slot0)
 	AutoChessController.instance:openMainView()
 end
 
-function slot0._btnAchievementOnClick(slot0)
-	JumpController.instance:jump(slot0.config.achievementJumpId)
+function var_0_0._btnAchievementOnClick(arg_5_0)
+	local var_5_0 = arg_5_0.config.achievementJumpId
+
+	JumpController.instance:jump(var_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = slot0.viewContainer.activityId
-	slot0.config = ActivityConfig.instance:getActivityCo(slot0.actId)
-	slot0.animComp = VersionActivity2_5SubAnimatorComp.get(slot0.viewGO, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0.actId = arg_6_0.viewContainer.activityId
+	arg_6_0.config = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
+	arg_6_0.animComp = VersionActivity2_5SubAnimatorComp.get(arg_6_0.viewGO, arg_6_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Activity182Controller.instance, Activity182Event.UpdateInfo, slot0.refreshUI, slot0)
-	slot0.animComp:playOpenAnim()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addEventCb(Activity182Controller.instance, Activity182Event.UpdateInfo, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0.animComp:playOpenAnim()
 
-	slot0._txtDesc.text = slot0.config.actDesc
+	arg_7_0._txtDesc.text = arg_7_0.config.actDesc
 
-	slot0:_showLeftTime()
-	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 1)
-	Activity182Rpc.instance:sendGetAct182InfoRequest(slot0.actId)
+	arg_7_0:_showLeftTime()
+	TaskDispatcher.runRepeat(arg_7_0._showLeftTime, arg_7_0, 1)
+	Activity182Rpc.instance:sendGetAct182InfoRequest(arg_7_0.actId)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.animComp:destroy()
-	TaskDispatcher.cancelTask(slot0._showLeftTime, slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0.animComp:destroy()
+	TaskDispatcher.cancelTask(arg_8_0._showLeftTime, arg_8_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreRank].value)
-	slot4 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreCnt].value)
+function var_0_0.refreshUI(arg_9_0)
+	local var_9_0 = Activity182Model.instance:getActMo()
+	local var_9_1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreRank].value)
+	local var_9_2 = lua_auto_chess_rank.configDict[arg_9_0.actId][var_9_1].name
+	local var_9_3 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreCnt].value)
 
-	if Activity182Model.instance:getActMo().rank <= slot2 then
-		slot0._txtTip.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("autochess_mainview_tips1"), lua_auto_chess_rank.configDict[slot0.actId][slot2].name, slot4, string.format("（%d/%d）", slot1.doubleScoreTimes, slot4))
+	if var_9_1 >= var_9_0.rank then
+		local var_9_4 = luaLang("autochess_mainview_tips1")
+		local var_9_5 = string.format("（%d/%d）", var_9_0.doubleScoreTimes, var_9_3)
 
-		gohelper.setActive(slot0._goTip, true)
+		arg_9_0._txtTip.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_9_4, var_9_2, var_9_3, var_9_5)
+
+		gohelper.setActive(arg_9_0._goTip, true)
 	else
-		gohelper.setActive(slot0._goTip, false)
+		gohelper.setActive(arg_9_0._goTip, false)
 	end
 end
 
-function slot0._showLeftTime(slot0)
-	slot0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(slot0.actId)
+function var_0_0._showLeftTime(arg_10_0)
+	arg_10_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_10_0.actId)
 end
 
-return slot0
+return var_0_0

@@ -1,19 +1,19 @@
-module("modules.logic.video.controller.VideoController", package.seeall)
+﻿module("modules.logic.video.controller.VideoController", package.seeall)
 
-slot0 = class("VideoController", BaseController)
+local var_0_0 = class("VideoController", BaseController)
 
-function slot0.openFullScreenVideoView(slot0, slot1, slot2, slot3, slot4, slot5)
+function var_0_0.openFullScreenVideoView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
 	ViewMgr.instance:openView(ViewName.FullScreenVideoView, {
-		videoPath = slot1,
-		videoAudio = slot2,
-		videoDuration = slot3,
-		doneCb = slot4,
-		doneCbObj = slot5
+		videoPath = arg_1_1,
+		videoAudio = arg_1_2,
+		videoDuration = arg_1_3,
+		doneCb = arg_1_4,
+		doneCbObj = arg_1_5
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

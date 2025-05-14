@@ -1,8 +1,8 @@
-module("modules.logic.rouge.config.RougeConfig", package.seeall)
+﻿module("modules.logic.rouge.config.RougeConfig", package.seeall)
 
-slot0 = class("RougeConfig", BaseConfig)
+local var_0_0 = class("RougeConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"rouge_season",
 		"rouge_const",
@@ -22,420 +22,498 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot1(slot0)
-	return lua_rouge_season.configDict[slot0]
+local function var_0_1(arg_2_0)
+	return lua_rouge_season.configDict[arg_2_0]
 end
 
-function slot0._openList(slot0)
-	slot2 = {
+function var_0_0._openList(arg_3_0)
+	local var_3_0 = lua_rouge_season.configList
+	local var_3_1 = {
 		0
 	}
 
-	for slot6, slot7 in ipairs(lua_rouge_season.configList) do
-		table.insert(slot2, slot7.id)
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		table.insert(var_3_1, iter_3_1.id)
 	end
 
-	return slot2
+	return var_3_1
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "rouge_season" then
-		slot0._openDict = {}
+function var_0_0.onConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == "rouge_season" then
+		arg_4_0._openDict = {}
 
-		slot0:_getOrCreateOpenDict()
-	elseif slot1 == "rouge_difficulty" then
-		slot0._difficultyDlcDict = {}
-		slot0._difficultBaseDict = {}
-		slot0._difficultyStartViewInfoDict = {}
+		arg_4_0:_getOrCreateOpenDict()
+	elseif arg_4_1 == "rouge_difficulty" then
+		arg_4_0._difficultyDlcDict = {}
+		arg_4_0._difficultBaseDict = {}
+		arg_4_0._difficultyStartViewInfoDict = {}
 
-		slot0:_getOrCreateDifficultyDict()
-	elseif slot1 == "rouge_style" then
-		slot0._styleBaseDict = {}
-		slot0._styleDlcDict = {}
+		arg_4_0:_getOrCreateDifficultyDict()
+	elseif arg_4_1 == "rouge_style" then
+		arg_4_0._styleBaseDict = {}
+		arg_4_0._styleDlcDict = {}
 
-		slot0:_getOrCreateRougeStyleDict()
-	elseif slot1 == "rouge_const" then
-		slot0:_initConst()
-	elseif slot1 == "rouge_genius_branch" then
-		slot0._geniusBranchStartViewInfoDict = {}
-		slot0._geniusBranchIdListWithStartView = {}
+		arg_4_0:_getOrCreateRougeStyleDict()
+	elseif arg_4_1 == "rouge_const" then
+		arg_4_0:_initConst()
+	elseif arg_4_1 == "rouge_genius_branch" then
+		arg_4_0._geniusBranchStartViewInfoDict = {}
+		arg_4_0._geniusBranchIdListWithStartView = {}
 	end
 end
 
-function slot0._initConst(slot0)
-	slot0._roleCapacity = slot0:_initRoleCapacity(RougeEnum.Const.RoleCapacity)
-	slot0._roleHalfCapacity = slot0:_initRoleCapacity(RougeEnum.Const.RoleHalfCapacity)
+function var_0_0._initConst(arg_5_0)
+	arg_5_0._roleCapacity = arg_5_0:_initRoleCapacity(RougeEnum.Const.RoleCapacity)
+	arg_5_0._roleHalfCapacity = arg_5_0:_initRoleCapacity(RougeEnum.Const.RoleHalfCapacity)
 end
 
-function slot0._initRoleCapacity(slot0, slot1)
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0:getConstValueByID(slot1), true, "|", "#")) do
-		-- Nothing
+function var_0_0._initRoleCapacity(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getConstValueByID(arg_6_1)
+	local var_6_1 = GameUtil.splitString2(var_6_0, true, "|", "#")
+	local var_6_2 = {}
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		var_6_2[iter_6_1[1]] = iter_6_1[2]
 	end
 
-	return {
-		[slot9[1]] = slot9[2]
-	}
+	return var_6_2
 end
 
-function slot0.getRoleCapacity(slot0, slot1)
-	return slot0._roleCapacity[slot1] or 1
+function var_0_0.getRoleCapacity(arg_7_0, arg_7_1)
+	return arg_7_0._roleCapacity[arg_7_1] or 1
 end
 
-function slot0.getRoleHalfCapacity(slot0, slot1)
-	return slot0._roleHalfCapacity[slot1] or 1
+function var_0_0.getRoleHalfCapacity(arg_8_0, arg_8_1)
+	return arg_8_0._roleHalfCapacity[arg_8_1] or 1
 end
 
-function slot0.getSeasonAndVersion(slot0, slot1)
-	slot2 = uv0(slot1)
+function var_0_0.getSeasonAndVersion(arg_9_0, arg_9_1)
+	local var_9_0 = var_0_1(arg_9_1)
 
-	return slot2.season, slot2.version
+	return var_9_0.season, var_9_0.version
 end
 
-function slot0.getConstValueByID(slot0, slot1)
-	return lua_rouge_const.configDict[slot1].value
+function var_0_0.getConstValueByID(arg_10_0, arg_10_1)
+	return lua_rouge_const.configDict[arg_10_1].value
 end
 
-function slot0.getConstNumValue(slot0, slot1)
-	return tonumber(slot0:getConstValueByID(slot1))
+function var_0_0.getConstNumValue(arg_11_0, arg_11_1)
+	return tonumber(arg_11_0:getConstValueByID(arg_11_1))
 end
 
-function slot0.getOutSideConstValueByID(slot0, slot1)
-	return lua_rouge_outside_const.configList[slot1].value
+function var_0_0.getOutSideConstValueByID(arg_12_0, arg_12_1)
+	return lua_rouge_outside_const.configList[arg_12_1].value
 end
 
-function slot0._getOrCreateDifficultyDict(slot0)
-	if slot0._difficultBaseDict[slot0:season()] then
-		return slot0._difficultBaseDict[slot1], slot0._difficultyDlcDict[slot1]
+function var_0_0._getOrCreateDifficultyDict(arg_13_0)
+	local var_13_0 = arg_13_0:season()
+
+	if arg_13_0._difficultBaseDict[var_13_0] then
+		return arg_13_0._difficultBaseDict[var_13_0], arg_13_0._difficultyDlcDict[var_13_0]
 	end
 
-	slot0._difficultyDlcDict[slot1] = {}
-	slot0._difficultBaseDict[slot1] = {}
+	local var_13_1 = {}
+	local var_13_2 = {}
 
-	if lua_rouge_difficulty.configDict[slot1] then
-		for slot7, slot8 in pairs(lua_rouge_difficulty.configDict[slot1]) do
-			if string.nilorempty(slot8.version) then
-				table.insert(slot3, slot8)
+	arg_13_0._difficultyDlcDict[var_13_0] = var_13_1
+	arg_13_0._difficultBaseDict[var_13_0] = var_13_2
+
+	if lua_rouge_difficulty.configDict[var_13_0] then
+		for iter_13_0, iter_13_1 in pairs(lua_rouge_difficulty.configDict[var_13_0]) do
+			if string.nilorempty(iter_13_1.version) then
+				table.insert(var_13_2, iter_13_1)
 			else
-				for slot13, slot14 in ipairs(RougeDLCHelper.versionStrToList(slot8.version)) do
-					slot2[slot14] = slot2[slot14] or {}
+				local var_13_3 = RougeDLCHelper.versionStrToList(iter_13_1.version)
 
-					if slot0:isRougeSeasonIdOpen(slot14) then
-						table.insert(slot2[slot14], slot8)
+				for iter_13_2, iter_13_3 in ipairs(var_13_3) do
+					var_13_1[iter_13_3] = var_13_1[iter_13_3] or {}
+
+					if arg_13_0:isRougeSeasonIdOpen(iter_13_3) then
+						table.insert(var_13_1[iter_13_3], iter_13_1)
 					end
 				end
 			end
 		end
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		table.sort(slot8, function (slot0, slot1)
-			if slot0.difficulty ~= slot1.difficulty then
-				return slot0.difficulty < slot1.difficulty
+	for iter_13_4, iter_13_5 in pairs(var_13_1) do
+		table.sort(iter_13_5, function(arg_14_0, arg_14_1)
+			if arg_14_0.difficulty ~= arg_14_1.difficulty then
+				return arg_14_0.difficulty < arg_14_1.difficulty
 			end
 
 			return false
 		end)
 	end
 
-	return slot3, slot2
+	return var_13_2, var_13_1
 end
 
-function slot0._getOrCreateOpenDict(slot0)
-	if slot0._openDict[slot0:season()] then
-		return slot0._openDict[slot1]
+function var_0_0._getOrCreateOpenDict(arg_15_0)
+	local var_15_0 = arg_15_0:season()
+
+	if arg_15_0._openDict[var_15_0] then
+		return arg_15_0._openDict[var_15_0]
 	end
 
-	slot0._openDict[slot1] = {}
+	local var_15_1 = {}
 
-	for slot7, slot8 in ipairs(slot0:_openList()) do
-		slot2[slot8] = true
+	arg_15_0._openDict[var_15_0] = var_15_1
+
+	local var_15_2 = arg_15_0:_openList()
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_2) do
+		var_15_1[iter_15_1] = true
 	end
 
-	return slot2
+	return var_15_1
 end
 
-function slot0._getOrCreateRougeStyleDict(slot0)
-	if slot0._styleBaseDict[slot0:season()] then
-		return slot0._styleBaseDict[slot1], slot0._styleDlcDict[slot1]
+function var_0_0._getOrCreateRougeStyleDict(arg_16_0)
+	local var_16_0 = arg_16_0:season()
+
+	if arg_16_0._styleBaseDict[var_16_0] then
+		return arg_16_0._styleBaseDict[var_16_0], arg_16_0._styleDlcDict[var_16_0]
 	end
 
-	slot0._styleBaseDict[slot1] = {}
-	slot0._styleDlcDict[slot1] = {}
+	local var_16_1 = {}
+	local var_16_2 = {}
 
-	if lua_rouge_style.configDict[slot1] then
-		for slot7, slot8 in pairs(lua_rouge_style.configDict[slot1]) do
-			if string.nilorempty(slot8.version) then
-				table.insert(slot3, slot8)
+	arg_16_0._styleBaseDict[var_16_0] = var_16_2
+	arg_16_0._styleDlcDict[var_16_0] = var_16_1
+
+	if lua_rouge_style.configDict[var_16_0] then
+		for iter_16_0, iter_16_1 in pairs(lua_rouge_style.configDict[var_16_0]) do
+			if string.nilorempty(iter_16_1.version) then
+				table.insert(var_16_2, iter_16_1)
 			else
-				for slot13, slot14 in ipairs(RougeDLCHelper.versionStrToList(slot8.version)) do
-					slot2[slot14] = slot2[slot14] or {}
+				local var_16_3 = RougeDLCHelper.versionStrToList(iter_16_1.version)
 
-					if slot0:isRougeSeasonIdOpen(slot14) then
-						table.insert(slot2[slot14], slot8)
+				for iter_16_2, iter_16_3 in ipairs(var_16_3) do
+					var_16_1[iter_16_3] = var_16_1[iter_16_3] or {}
+
+					if arg_16_0:isRougeSeasonIdOpen(iter_16_3) then
+						table.insert(var_16_1[iter_16_3], iter_16_1)
 					end
 				end
 			end
 		end
 	end
 
-	for slot7, slot8 in pairs(slot2) do
-		table.sort(slot8, function (slot0, slot1)
-			return slot0.id < slot1.id
+	for iter_16_4, iter_16_5 in pairs(var_16_1) do
+		table.sort(iter_16_5, function(arg_17_0, arg_17_1)
+			return arg_17_0.id < arg_17_1.id
 		end)
 	end
 
-	return slot3, slot2
+	return var_16_2, var_16_1
 end
 
-function slot0.isRougeSeasonIdOpen(slot0, slot1)
-	return slot0:_getOrCreateOpenDict()[slot1] and true or false
+function var_0_0.isRougeSeasonIdOpen(arg_18_0, arg_18_1)
+	return arg_18_0:_getOrCreateOpenDict()[arg_18_1] and true or false
 end
 
-function slot0.getDifficultyCOList(slot0, slot1, slot2)
-	if not slot2 or #slot2 <= 0 then
+function var_0_0.getDifficultyCOList(arg_19_0, arg_19_1, arg_19_2)
+	if not arg_19_2 or #arg_19_2 <= 0 then
 		return
 	end
 
-	slot3 = {}
+	local var_19_0 = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot9, slot10 = slot0:_getOrCreateDifficultyDict()
+	for iter_19_0, iter_19_1 in ipairs(arg_19_2) do
+		local var_19_1, var_19_2 = arg_19_0:_getOrCreateDifficultyDict()
+		local var_19_3 = var_19_2 and var_19_2[iter_19_1]
 
-		if slot10 and slot10[slot8] then
-			for slot15, slot16 in ipairs(slot11) do
-				if RougeDLCHelper.isCurrentUsingContent(slot16.version) and not slot3[slot16.difficulty] then
-					table.insert(slot1, slot16)
+		if var_19_3 then
+			for iter_19_2, iter_19_3 in ipairs(var_19_3) do
+				if RougeDLCHelper.isCurrentUsingContent(iter_19_3.version) and not var_19_0[iter_19_3.difficulty] then
+					table.insert(arg_19_1, iter_19_3)
 
-					slot3[slot16.difficulty] = true
+					var_19_0[iter_19_3.difficulty] = true
 				end
 			end
 		end
 	end
 end
 
-function slot0.getStylesCOList(slot0, slot1, slot2)
-	if not slot2 or #slot2 <= 0 then
+function var_0_0.getStylesCOList(arg_20_0, arg_20_1, arg_20_2)
+	if not arg_20_2 or #arg_20_2 <= 0 then
 		return
 	end
 
-	slot3, slot4 = slot0:_getOrCreateRougeStyleDict()
-	slot5 = {}
+	local var_20_0, var_20_1 = arg_20_0:_getOrCreateRougeStyleDict()
+	local var_20_2 = {}
 
-	for slot9, slot10 in ipairs(slot2) do
-		if slot4 and slot4[slot10] then
-			for slot15, slot16 in ipairs(slot11) do
-				if RougeDLCHelper.isCurrentUsingContent(slot16.version) and not slot5[slot16.id] then
-					table.insert(slot1, slot16)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_2) do
+		local var_20_3 = var_20_1 and var_20_1[iter_20_1]
 
-					slot5[slot16.id] = true
+		if var_20_3 then
+			for iter_20_2, iter_20_3 in ipairs(var_20_3) do
+				if RougeDLCHelper.isCurrentUsingContent(iter_20_3.version) and not var_20_2[iter_20_3.id] then
+					table.insert(arg_20_1, iter_20_3)
+
+					var_20_2[iter_20_3.id] = true
 				end
 			end
 		end
 	end
 end
 
-function slot0.getStyleConfig(slot0, slot1)
-	return lua_rouge_style.configDict[slot0:season()][slot1]
+function var_0_0.getStyleConfig(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:season()
+
+	return lua_rouge_style.configDict[var_21_0][arg_21_1]
 end
 
-function slot0.getSeasonStyleConfigs(slot0)
-	return lua_rouge_style.configDict[slot0:season()]
+function var_0_0.getSeasonStyleConfigs(arg_22_0)
+	local var_22_0 = arg_22_0:season()
+
+	return lua_rouge_style.configDict[var_22_0]
 end
 
-function slot0.getCollectionBackpackCO(slot0, slot1)
-	return lua_rogue_collection_backpack.configDict[slot0:getStyleConfig(slot1).layoutId]
+function var_0_0.getCollectionBackpackCO(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getStyleConfig(arg_23_1).layoutId
+
+	return lua_rogue_collection_backpack.configDict[var_23_0]
 end
 
-function slot0.getDifficultyCO(slot0, slot1)
-	return lua_rouge_difficulty.configDict[slot0:season()][slot1]
+function var_0_0.getDifficultyCO(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:season()
+
+	return lua_rouge_difficulty.configDict[var_24_0][arg_24_1]
 end
 
-function slot0.getDifficultyCOStartViewInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.getDifficultyCOStartViewInfo(arg_25_0, arg_25_1)
+	if not arg_25_1 then
 		return {}
 	end
 
-	if slot0._difficultyStartViewInfoDict[slot0:season()] and slot3[slot1] then
-		return slot3[slot1]
+	local var_25_0 = arg_25_0:season()
+	local var_25_1 = arg_25_0._difficultyStartViewInfoDict[var_25_0]
+
+	if var_25_1 and var_25_1[arg_25_1] then
+		return var_25_1[arg_25_1]
 	end
 
-	slot0._difficultyStartViewInfoDict[slot2] = slot0._difficultyStartViewInfoDict[slot2] or {}
-	slot0._difficultyStartViewInfoDict[slot2][slot1] = {}
+	arg_25_0._difficultyStartViewInfoDict[var_25_0] = arg_25_0._difficultyStartViewInfoDict[var_25_0] or {}
 
-	if not GameUtil.splitString2(slot0:getDifficultyCO(slot1).startView, false, "|", "#") then
-		return slot4
+	local var_25_2 = {}
+
+	arg_25_0._difficultyStartViewInfoDict[var_25_0][arg_25_1] = var_25_2
+
+	local var_25_3 = arg_25_0:getDifficultyCO(arg_25_1).startView
+	local var_25_4 = GameUtil.splitString2(var_25_3, false, "|", "#")
+
+	if not var_25_4 then
+		return var_25_2
 	end
 
-	for slot11, slot12 in ipairs(slot7) do
-		slot13 = slot12[1]
+	for iter_25_0, iter_25_1 in ipairs(var_25_4) do
+		local var_25_5 = iter_25_1[1]
 
-		assert(RougeEnum.StartViewEnum[slot13], "unsupported error excel:R肉鸽表.xlsx export_难度表.sheet difficulty=" .. slot1 .. " 列'startView'=" .. slot6 .. " 配了代码未支持的类型:" .. slot13)
+		assert(RougeEnum.StartViewEnum[var_25_5], "unsupported error excel:R肉鸽表.xlsx export_难度表.sheet difficulty=" .. arg_25_1 .. " 列'startView'=" .. var_25_3 .. " 配了代码未支持的类型:" .. var_25_5)
 
-		slot4[slot13] = (slot4[slot13] or 0) + (tonumber(slot12[2]) or 0)
+		local var_25_6 = tonumber(iter_25_1[2]) or 0
+
+		var_25_2[var_25_5] = (var_25_2[var_25_5] or 0) + var_25_6
 	end
 
-	return slot4
+	return var_25_2
 end
 
-function slot0.getDifficultyCOStartViewDeltaValue(slot0, slot1, slot2)
-	return slot0:getDifficultyCOStartViewInfo(slot1)[slot2] or 0
+function var_0_0.getDifficultyCOStartViewDeltaValue(arg_26_0, arg_26_1, arg_26_2)
+	return arg_26_0:getDifficultyCOStartViewInfo(arg_26_1)[arg_26_2] or 0
 end
 
-function slot0.getDifficultyCOTitle(slot0, slot1)
-	return slot0:getDifficultyCO(slot1).title
+function var_0_0.getDifficultyCOTitle(arg_27_0, arg_27_1)
+	return arg_27_0:getDifficultyCO(arg_27_1).title
 end
 
-function slot0.getActiveSkillCO(slot0, slot1)
-	if not lua_rouge_active_skill.configDict[slot1] then
-		logError("缺少肉鸽激活技能配置, 技能id :" .. tostring(slot1))
+function var_0_0.getActiveSkillCO(arg_28_0, arg_28_1)
+	local var_28_0 = lua_rouge_active_skill.configDict[arg_28_1]
+
+	if not var_28_0 then
+		logError("缺少肉鸽激活技能配置, 技能id :" .. tostring(arg_28_1))
 	end
 
-	return slot2
+	return var_28_0
 end
 
-function slot0.getMapSkillCo(slot0, slot1)
-	if not lua_rouge_map_skill.configDict[slot1] then
-		logError("缺少肉鸽地图技能配置, 地图技能id :" .. tostring(slot1))
+function var_0_0.getMapSkillCo(arg_29_0, arg_29_1)
+	local var_29_0 = lua_rouge_map_skill.configDict[arg_29_1]
+
+	if not var_29_0 then
+		logError("缺少肉鸽地图技能配置, 地图技能id :" .. tostring(arg_29_1))
 	end
 
-	return slot2
+	return var_29_0
 end
 
-function slot0.getRougeBadgeCO(slot0, slot1, slot2)
-	return lua_rouge_badge.configDict[slot1][slot2]
+function var_0_0.getRougeBadgeCO(arg_30_0, arg_30_1, arg_30_2)
+	return lua_rouge_badge.configDict[arg_30_1][arg_30_2]
 end
 
-function slot0.getEndingCO(slot0, slot1)
-	if not lua_rouge_ending.configDict[slot1] then
-		logError("rouge end config not exist, endId : " .. tostring(slot1))
+function var_0_0.getEndingCO(arg_31_0, arg_31_1)
+	local var_31_0 = lua_rouge_ending.configDict[arg_31_1]
+
+	if not var_31_0 then
+		logError("rouge end config not exist, endId : " .. tostring(arg_31_1))
 
 		return
 	end
 
-	return slot2
+	return var_31_0
 end
 
-function slot0.getLastRewardCO(slot0, slot1)
-	return lua_rouge_last_reward.configDict[slot0:season()][slot1]
+function var_0_0.getLastRewardCO(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_0:season()
+
+	return lua_rouge_last_reward.configDict[var_32_0][arg_32_1]
 end
 
-function slot0.getStyleLockDesc(slot0, slot1)
-	if not slot0:getStyleConfig(slot1).unlockType or slot3 == 0 then
+function var_0_0.getStyleLockDesc(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0:getStyleConfig(arg_33_1)
+	local var_33_1 = var_33_0.unlockType
+
+	if not var_33_1 or var_33_1 == 0 then
 		return ""
 	end
 
-	return RougeMapUnlockHelper.getLockTips(slot3, slot2.unlockParam)
+	return RougeMapUnlockHelper.getLockTips(var_33_1, var_33_0.unlockParam)
 end
 
-function slot0.getAbortCDDuration(slot0)
-	return math.max(0, slot0:getConstNumValue(44) or 0)
+function var_0_0.getAbortCDDuration(arg_34_0)
+	return math.max(0, arg_34_0:getConstNumValue(44) or 0)
 end
 
-function slot0.getDifficultyCOListByVersions(slot0, slot1)
-	slot2 = {}
+function var_0_0.getDifficultyCOListByVersions(arg_35_0, arg_35_1)
+	local var_35_0 = {}
+	local var_35_1 = arg_35_0:_getOrCreateDifficultyDict()
 
-	tabletool.addValues(slot2, slot0:_getOrCreateDifficultyDict())
-	slot0:getDifficultyCOList(slot2, slot1)
-	table.sort(slot2, function (slot0, slot1)
-		if slot0.difficulty ~= slot1.difficulty then
-			return slot0.difficulty < slot1.difficulty
+	tabletool.addValues(var_35_0, var_35_1)
+	arg_35_0:getDifficultyCOList(var_35_0, arg_35_1)
+	table.sort(var_35_0, function(arg_36_0, arg_36_1)
+		if arg_36_0.difficulty ~= arg_36_1.difficulty then
+			return arg_36_0.difficulty < arg_36_1.difficulty
 		end
 
-		if slot0.version ~= slot1.version then
-			return slot0.version < slot1.version
+		if arg_36_0.version ~= arg_36_1.version then
+			return arg_36_0.version < arg_36_1.version
 		end
 
 		return false
 	end)
 
-	return slot2
+	return var_35_0
 end
 
-function slot0.getStyleCOListByVersions(slot0, slot1)
-	slot2 = {}
+function var_0_0.getStyleCOListByVersions(arg_37_0, arg_37_1)
+	local var_37_0 = {}
+	local var_37_1 = arg_37_0:_getOrCreateRougeStyleDict()
 
-	tabletool.addValues(slot2, slot0:_getOrCreateRougeStyleDict())
-	slot0:getStylesCOList(slot2, slot1)
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.id < slot1.id
+	tabletool.addValues(var_37_0, var_37_1)
+	arg_37_0:getStylesCOList(var_37_0, arg_37_1)
+	table.sort(var_37_0, function(arg_38_0, arg_38_1)
+		return arg_38_0.id < arg_38_1.id
 	end)
 
-	return slot2
+	return var_37_0
 end
 
-function slot0.getGeniusBranchCO(slot0, slot1)
-	return lua_rouge_genius_branch.configDict[slot0:season()][slot1]
+function var_0_0.getGeniusBranchCO(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0:season()
+
+	return lua_rouge_genius_branch.configDict[var_39_0][arg_39_1]
 end
 
-function slot0.getGeniusBranchStartViewInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.getGeniusBranchStartViewInfo(arg_40_0, arg_40_1)
+	if not arg_40_1 then
 		return {}
 	end
 
-	if slot0._geniusBranchStartViewInfoDict[slot0:season()] and slot3[slot1] then
-		return slot3[slot1]
+	local var_40_0 = arg_40_0:season()
+	local var_40_1 = arg_40_0._geniusBranchStartViewInfoDict[var_40_0]
+
+	if var_40_1 and var_40_1[arg_40_1] then
+		return var_40_1[arg_40_1]
 	end
 
-	slot0._geniusBranchStartViewInfoDict[slot2] = slot0._geniusBranchStartViewInfoDict[slot2] or {}
-	slot0._geniusBranchStartViewInfoDict[slot2][slot1] = {}
+	arg_40_0._geniusBranchStartViewInfoDict[var_40_0] = arg_40_0._geniusBranchStartViewInfoDict[var_40_0] or {}
 
-	if not GameUtil.splitString2(slot0:getGeniusBranchCO(slot1).startView, false, "|", "#") then
-		return slot4
+	local var_40_2 = {}
+
+	arg_40_0._geniusBranchStartViewInfoDict[var_40_0][arg_40_1] = var_40_2
+
+	local var_40_3 = arg_40_0:getGeniusBranchCO(arg_40_1).startView
+	local var_40_4 = GameUtil.splitString2(var_40_3, false, "|", "#")
+
+	if not var_40_4 then
+		return var_40_2
 	end
 
-	for slot11, slot12 in ipairs(slot7) do
-		slot13 = slot12[1]
+	for iter_40_0, iter_40_1 in ipairs(var_40_4) do
+		local var_40_5 = iter_40_1[1]
 
-		assert(RougeEnum.StartViewEnum[slot13], "unsupported error R肉鸽局外表.xlsx export_天赋分支表.sheet id=" .. slot1 .. " 列'startView'=" .. slot6 .. " 配了代码未支持的类型:" .. slot13)
+		assert(RougeEnum.StartViewEnum[var_40_5], "unsupported error R肉鸽局外表.xlsx export_天赋分支表.sheet id=" .. arg_40_1 .. " 列'startView'=" .. var_40_3 .. " 配了代码未支持的类型:" .. var_40_5)
 
-		slot4[slot13] = (slot4[slot13] or 0) + (tonumber(slot12[2]) or 0)
+		local var_40_6 = tonumber(iter_40_1[2]) or 0
+
+		var_40_2[var_40_5] = (var_40_2[var_40_5] or 0) + var_40_6
 	end
 
-	return slot4
+	return var_40_2
 end
 
-function slot0.getGeniusBranchStartViewDeltaValue(slot0, slot1, slot2)
-	return slot0:getGeniusBranchStartViewInfo(slot1)[slot2] or 0
+function var_0_0.getGeniusBranchStartViewDeltaValue(arg_41_0, arg_41_1, arg_41_2)
+	return arg_41_0:getGeniusBranchStartViewInfo(arg_41_1)[arg_41_2] or 0
 end
 
-function slot0.getGeniusBranchIdListWithStartView(slot0)
-	if slot0._geniusBranchIdListWithStartView[slot0:season()] then
-		return slot2
+function var_0_0.getGeniusBranchIdListWithStartView(arg_42_0)
+	local var_42_0 = arg_42_0:season()
+	local var_42_1 = arg_42_0._geniusBranchIdListWithStartView[var_42_0]
+
+	if var_42_1 then
+		return var_42_1
 	end
 
-	slot0._geniusBranchIdListWithStartView[slot1] = {}
+	local var_42_2 = {}
 
-	for slot8, slot9 in pairs(lua_rouge_genius_branch.configDict[slot1]) do
-		if not string.nilorempty(slot9.startView) then
-			table.insert(slot3, slot9.id)
+	arg_42_0._geniusBranchIdListWithStartView[var_42_0] = var_42_2
+
+	local var_42_3 = lua_rouge_genius_branch.configDict[var_42_0]
+
+	for iter_42_0, iter_42_1 in pairs(var_42_3) do
+		if not string.nilorempty(iter_42_1.startView) then
+			table.insert(var_42_2, iter_42_1.id)
 		end
 	end
 
-	return slot3
+	return var_42_2
 end
 
-function slot0.getSkillCo(slot0, slot1, slot2)
-	if slot1 == RougeEnum.SkillType.Map then
-		return slot0:getMapSkillCo(slot2)
-	elseif slot1 == RougeEnum.SkillType.Style then
-		return slot0:getActiveSkillCO(slot2)
+function var_0_0.getSkillCo(arg_43_0, arg_43_1, arg_43_2)
+	if arg_43_1 == RougeEnum.SkillType.Map then
+		return arg_43_0:getMapSkillCo(arg_43_2)
+	elseif arg_43_1 == RougeEnum.SkillType.Style then
+		return arg_43_0:getActiveSkillCO(arg_43_2)
 	else
-		logError("未定义的技能类型:" .. tostring(slot1))
+		logError("未定义的技能类型:" .. tostring(arg_43_1))
 	end
 end
 
-function slot0.season(slot0)
+function var_0_0.season(arg_44_0)
 	assert(false, "please override this function")
 end
 
-function slot0.openUnlockId(slot0)
+function var_0_0.openUnlockId(arg_45_0)
 	assert(false, "please override this function")
 end
 
-function slot0.achievementJumpId(slot0)
+function var_0_0.achievementJumpId(arg_46_0)
 	assert(false, "please override this function")
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

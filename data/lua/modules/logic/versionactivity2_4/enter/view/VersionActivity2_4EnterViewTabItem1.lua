@@ -1,53 +1,55 @@
-module("modules.logic.versionactivity2_4.enter.view.VersionActivity2_4EnterViewTabItem1", package.seeall)
+﻿module("modules.logic.versionactivity2_4.enter.view.VersionActivity2_4EnterViewTabItem1", package.seeall)
 
-slot0 = class("VersionActivity2_4EnterViewTabItem1", VersionActivity2_4EnterViewTabItemBase)
+local var_0_0 = class("VersionActivity2_4EnterViewTabItem1", VersionActivity2_4EnterViewTabItemBase)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0.simageSelectTabImg = gohelper.findChildSingleImage(slot0.go, "#go_select/#simage_tabimg")
-	slot0._goUnSelectTab = gohelper.findChild(slot0.go, "#go_unselect/#simage_tabimg")
-	slot0.simageUnSelectTabImg = slot0._goUnSelectTab:GetComponent(typeof(SLFramework.UGUI.SingleImage))
+	arg_1_0.simageSelectTabImg = gohelper.findChildSingleImage(arg_1_0.go, "#go_select/#simage_tabimg")
+	arg_1_0._goUnSelectTab = gohelper.findChild(arg_1_0.go, "#go_unselect/#simage_tabimg")
+	arg_1_0.simageUnSelectTabImg = arg_1_0._goUnSelectTab:GetComponent(typeof(SLFramework.UGUI.SingleImage))
 end
 
-function slot0._getTagPath(slot0)
+function var_0_0._getTagPath(arg_2_0)
 	return "#go_tag"
 end
 
-function slot0.afterSetData(slot0)
-	uv0.super.afterSetData(slot0)
+function var_0_0.afterSetData(arg_3_0)
+	var_0_0.super.afterSetData(arg_3_0)
 
-	if not slot0.actId then
+	if not arg_3_0.actId then
 		return
 	end
 
-	slot1 = VersionActivity2_4Enum.TabSetting
+	local var_3_0 = VersionActivity2_4Enum.TabSetting
+	local var_3_1 = var_3_0.select.act2TabImg[arg_3_0.actId]
+	local var_3_2 = var_3_0.unselect.act2TabImg[arg_3_0.actId]
 
-	slot0:setTabImg("simageSelectTabImg", slot1.select.act2TabImg[slot0.actId])
+	arg_3_0:setTabImg("simageSelectTabImg", var_3_1)
 
-	if slot1.unselect.act2TabImg[slot0.actId] then
-		slot0:setTabImg("simageUnSelectTabImg", slot3)
+	if var_3_2 then
+		arg_3_0:setTabImg("simageUnSelectTabImg", var_3_2)
 	end
 end
 
-function slot0.setTabImg(slot0, slot1, slot2)
-	if string.nilorempty(slot1) or string.nilorempty(slot2) or not slot0[slot1] then
+function var_0_0.setTabImg(arg_4_0, arg_4_1, arg_4_2)
+	if string.nilorempty(arg_4_1) or string.nilorempty(arg_4_2) or not arg_4_0[arg_4_1] then
 		return
 	end
 
-	slot0[slot1]:LoadImage(slot2)
+	arg_4_0[arg_4_1]:LoadImage(arg_4_2)
 end
 
-function slot0.dispose(slot0)
-	if slot0.simageSelectTabImg then
-		slot0.simageSelectTabImg:UnLoadImage()
+function var_0_0.dispose(arg_5_0)
+	if arg_5_0.simageSelectTabImg then
+		arg_5_0.simageSelectTabImg:UnLoadImage()
 	end
 
-	if slot0.simageUnSelectTabImg then
-		slot0.simageUnSelectTabImg:UnLoadImage()
+	if arg_5_0.simageUnSelectTabImg then
+		arg_5_0.simageUnSelectTabImg:UnLoadImage()
 	end
 
-	uv0.super.dispose(slot0)
+	var_0_0.super.dispose(arg_5_0)
 end
 
-return slot0
+return var_0_0

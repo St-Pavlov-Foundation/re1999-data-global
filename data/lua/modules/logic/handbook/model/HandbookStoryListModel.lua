@@ -1,34 +1,38 @@
-module("modules.logic.handbook.model.HandbookStoryListModel", package.seeall)
+﻿module("modules.logic.handbook.model.HandbookStoryListModel", package.seeall)
 
-slot0 = class("HandbookStoryListModel", ListScrollModel)
+local var_0_0 = class("HandbookStoryListModel", ListScrollModel)
 
-function slot0.setStoryList(slot0, slot1, slot2)
-	slot0.moList = {}
+function var_0_0.setStoryList(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.moList = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		if slot8.storyChapterId == slot2 and HandbookModel.instance:isStoryGroupUnlock(slot8.id) then
-			slot9 = HandbookStoryMO.New()
+	local var_1_0 = 0
 
-			slot9:init(slot8.id, 0 + 1)
-			table.insert(slot0.moList, slot9)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		if iter_1_1.storyChapterId == arg_1_2 and HandbookModel.instance:isStoryGroupUnlock(iter_1_1.id) then
+			var_1_0 = var_1_0 + 1
+
+			local var_1_1 = HandbookStoryMO.New()
+
+			var_1_1:init(iter_1_1.id, var_1_0)
+			table.insert(arg_1_0.moList, var_1_1)
 		end
 	end
 
-	slot0:setList(slot0.moList)
+	arg_1_0:setList(arg_1_0.moList)
 end
 
-function slot0.getStoryList(slot0)
-	if GameUtil.getTabLen(slot0.moList) > 0 then
-		return slot0.moList
+function var_0_0.getStoryList(arg_2_0)
+	if GameUtil.getTabLen(arg_2_0.moList) > 0 then
+		return arg_2_0.moList
 	end
 
 	return nil
 end
 
-function slot0.clearStoryList(slot0)
-	slot0:setList({})
+function var_0_0.clearStoryList(arg_3_0)
+	arg_3_0:setList({})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,75 +1,77 @@
-module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameInteractMO", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameInteractMO", package.seeall)
 
-slot0 = pureTable("Va3ChessGameInteractMO")
+local var_0_0 = pureTable("Va3ChessGameInteractMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot2.id
-	slot0.actId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_2.id
+	arg_1_0.actId = arg_1_1
 
-	slot0:updateMO(slot2)
+	arg_1_0:updateMO(arg_1_2)
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.posX = slot1.x
-	slot0.posY = slot1.y
-	slot0.direction = slot1.direction or 6
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.posX = arg_2_1.x
+	arg_2_0.posY = arg_2_1.y
+	arg_2_0.direction = arg_2_1.direction or 6
 
-	if slot1.data and not string.nilorempty(slot1.data) then
-		slot0.data = cjson.decode(slot1.data)
+	if arg_2_1.data and not string.nilorempty(arg_2_1.data) then
+		arg_2_0.data = cjson.decode(arg_2_1.data)
 	end
 end
 
-function slot0.setXY(slot0, slot1, slot2)
-	slot0.posX = slot1
-	slot0.posY = slot2
+function var_0_0.setXY(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.posX = arg_3_1
+	arg_3_0.posY = arg_3_2
 end
 
-function slot0.getXY(slot0)
-	return slot0.posX, slot0.posY
+function var_0_0.getXY(arg_4_0)
+	return arg_4_0.posX, arg_4_0.posY
 end
 
-function slot0.getPosIndex(slot0)
-	return Va3ChessMapUtils.calPosIndex(slot0.posX, slot0.posY)
+function var_0_0.getPosIndex(arg_5_0)
+	return Va3ChessMapUtils.calPosIndex(arg_5_0.posX, arg_5_0.posY)
 end
 
-function slot0.getPedalStatusInDataField(slot0)
-	if slot0.data then
-		return slot0.data.pedalStatus
+function var_0_0.getPedalStatusInDataField(arg_6_0)
+	if arg_6_0.data then
+		return arg_6_0.data.pedalStatus
 	end
 end
 
-function slot0.setPedalStatus(slot0, slot1)
-	if slot0.data then
-		slot0.data.pedalStatus = slot1
+function var_0_0.setPedalStatus(arg_7_0, arg_7_1)
+	if arg_7_0.data then
+		arg_7_0.data.pedalStatus = arg_7_1
 	end
 
-	if Va3ChessGameController.instance.interacts:get(slot0.id) and slot2:getHandler().refreshPedalStatus then
-		slot2:getHandler():refreshPedalStatus()
+	local var_7_0 = Va3ChessGameController.instance.interacts:get(arg_7_0.id)
+
+	if var_7_0 and var_7_0:getHandler().refreshPedalStatus then
+		var_7_0:getHandler():refreshPedalStatus()
 	end
 end
 
-function slot0.setBrazierIsLight(slot0, slot1)
-	slot0._isLight = slot1
+function var_0_0.setBrazierIsLight(arg_8_0, arg_8_1)
+	arg_8_0._isLight = arg_8_1
 end
 
-function slot0.getBrazierIsLight(slot0)
-	return slot0._isLight or false
+function var_0_0.getBrazierIsLight(arg_9_0)
+	return arg_9_0._isLight or false
 end
 
-function slot0.setDirection(slot0, slot1)
-	slot0.direction = slot1
+function var_0_0.setDirection(arg_10_0, arg_10_1)
+	arg_10_0.direction = arg_10_1
 end
 
-function slot0.getDirection(slot0)
-	return slot0.direction
+function var_0_0.getDirection(arg_11_0)
+	return arg_11_0.direction
 end
 
-function slot0.setHaveBornEff(slot0, slot1)
-	slot0.haveBornEff = slot1
+function var_0_0.setHaveBornEff(arg_12_0, arg_12_1)
+	arg_12_0.haveBornEff = arg_12_1
 end
 
-function slot0.getHaveBornEff(slot0)
-	return slot0.haveBornEff
+function var_0_0.getHaveBornEff(arg_13_0)
+	return arg_13_0.haveBornEff
 end
 
-return slot0
+return var_0_0

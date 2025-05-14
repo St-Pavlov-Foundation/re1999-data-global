@@ -1,21 +1,22 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessGrowUpUpdateStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessGrowUpUpdateStep", package.seeall)
 
-slot0 = class("TeamChessGrowUpUpdateStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessGrowUpUpdateStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data
-	slot3 = slot1.skillId
-	slot4 = slot1.upValue
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data
+	local var_1_1 = var_1_0.uid
+	local var_1_2 = var_1_0.skillId
+	local var_1_3 = var_1_0.upValue
 
-	if slot1.uid == nil or slot3 == nil or slot4 == nil then
-		slot0:onDone(true)
+	if var_1_1 == nil or var_1_2 == nil or var_1_3 == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	EliminateTeamChessModel.instance:updateSkillGrowUp(slot2, slot3, slot4)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessGrowUpSkillChange, slot2, slot3, slot4)
-	TaskDispatcher.runDelay(slot0._onDone, slot0, EliminateTeamChessEnum.teamChessGrowUpChangeStepTime)
+	EliminateTeamChessModel.instance:updateSkillGrowUp(var_1_1, var_1_2, var_1_3)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessGrowUpSkillChange, var_1_1, var_1_2, var_1_3)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessGrowUpChangeStepTime)
 end
 
-return slot0
+return var_0_0

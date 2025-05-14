@@ -1,118 +1,139 @@
-module("modules.logic.character.view.CharacterSkinTagView", package.seeall)
+﻿module("modules.logic.character.view.CharacterSkinTagView", package.seeall)
 
-slot0 = class("CharacterSkinTagView", BaseView)
-slot0.MAX_TAG_HEIGHT = 825
+local var_0_0 = class("CharacterSkinTagView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._scrollprop = gohelper.findChildScrollRect(slot0.viewGO, "bg/#scroll_prop")
-	slot0._btnplay = gohelper.findChildButton(slot0.viewGO, "bg/#go_btnRoot/#btn_play")
-	slot0._gocontentroot = gohelper.findChild(slot0.viewGO, "bg/#scroll_prop/Viewport/Content")
-	slot0._goviewport = gohelper.findChild(slot0.viewGO, "bg/#scroll_prop/Viewport")
-	slot0._goitem = gohelper.findChild(slot0._gocontentroot, "item")
+var_0_0.MAX_TAG_HEIGHT = 825
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "bg")
+	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "bg/#scroll_prop")
+	arg_1_0._btnplay = gohelper.findChildButton(arg_1_0.viewGO, "bg/#go_btnRoot/#btn_play")
+	arg_1_0._gocontentroot = gohelper.findChild(arg_1_0.viewGO, "bg/#scroll_prop/Viewport/Content")
+	arg_1_0._goviewport = gohelper.findChild(arg_1_0.viewGO, "bg/#scroll_prop/Viewport")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0._gocontentroot, "item")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnplay:AddClickListener(slot0._btnplayOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplayOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnplay:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnplay:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._itemList = {}
-	slot0._bgLayoutElement = gohelper.onceAddComponent(slot0._gobg, typeof(UnityEngine.UI.LayoutElement))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._itemList = {}
+	arg_4_0._bgLayoutElement = gohelper.onceAddComponent(arg_4_0._gobg, typeof(UnityEngine.UI.LayoutElement))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._skinCo = slot0.viewParam.skinCo
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._skinCo = arg_6_0.viewParam.skinCo
 
-	recthelper.setHeight(slot0._gobg.transform, math.min(#string.splitToNumber(slot0._skinCo.storeTag, "|") * 62 + 120, 400))
-	gohelper.setActive(slot0._btnplay, not VersionValidator.instance:isInReviewing() and slot0._skinCo.isSkinVideo)
-	slot0:_refreshContent()
+	local var_6_0 = string.splitToNumber(arg_6_0._skinCo.storeTag, "|")
+	local var_6_1 = math.min(#var_6_0 * 62 + 120, 400)
+
+	recthelper.setHeight(arg_6_0._gobg.transform, var_6_1)
+
+	local var_6_2 = not VersionValidator.instance:isInReviewing() and arg_6_0._skinCo.isSkinVideo
+
+	gohelper.setActive(arg_6_0._btnplay, var_6_2)
+	arg_6_0:_refreshContent()
 end
 
-function slot0._refreshContent(slot0)
-	slot1 = {}
-	slot3 = slot0._gocontentroot
+function var_0_0._refreshContent(arg_7_0)
+	local var_7_0 = {}
+	local var_7_1 = arg_7_0._skinCo
+	local var_7_2 = arg_7_0._gocontentroot
 
-	if string.nilorempty(slot0._skinCo.storeTag) == false then
-		for slot8, slot9 in ipairs(string.splitToNumber(slot2.storeTag, "|")) do
-			table.insert(slot1, SkinConfig.instance:getSkinStoreTagConfig(slot9))
+	if string.nilorempty(var_7_1.storeTag) == false then
+		local var_7_3 = string.splitToNumber(var_7_1.storeTag, "|")
+
+		for iter_7_0, iter_7_1 in ipairs(var_7_3) do
+			table.insert(var_7_0, SkinConfig.instance:getSkinStoreTagConfig(iter_7_1))
 		end
 	end
 
-	slot5 = #slot0._itemList
+	local var_7_4 = arg_7_0._itemList
+	local var_7_5 = #var_7_4
+	local var_7_6 = #var_7_0
 
-	for slot10 = 1, #slot1 do
-		slot11 = slot1[slot10]
-		slot12 = nil
+	for iter_7_2 = 1, var_7_6 do
+		local var_7_7 = var_7_0[iter_7_2]
+		local var_7_8
 
-		if slot10 <= slot5 then
-			slot12 = slot4[slot10]
+		if iter_7_2 <= var_7_5 then
+			var_7_8 = var_7_4[iter_7_2]
 		else
-			slot12 = CharacterSkinTagItem.New()
+			local var_7_9 = gohelper.clone(arg_7_0._goitem, var_7_2)
 
-			slot12:init(gohelper.clone(slot0._goitem, slot3))
-			table.insert(slot4, slot12)
+			var_7_8 = CharacterSkinTagItem.New()
+
+			var_7_8:init(var_7_9)
+			table.insert(var_7_4, var_7_8)
 		end
 
-		gohelper.setActive(slot12.viewGO, true)
-		slot12:onUpdateMO(slot11)
+		gohelper.setActive(var_7_8.viewGO, true)
+		var_7_8:onUpdateMO(var_7_7)
 	end
 
-	if slot6 < slot5 then
-		for slot10 = slot6 + 1, slot5 do
-			gohelper.setActive(slot4[slot10].viewGO, false)
+	if var_7_6 < var_7_5 then
+		for iter_7_3 = var_7_6 + 1, var_7_5 do
+			local var_7_10 = var_7_4[iter_7_3]
+
+			gohelper.setActive(var_7_10.viewGO, false)
 		end
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._goviewport.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_7_0._goviewport.transform)
 
-	slot8 = math.min(recthelper.getHeight(slot3.transform), slot0.MAX_TAG_HEIGHT)
+	local var_7_11 = recthelper.getHeight(var_7_2.transform)
+	local var_7_12 = math.min(var_7_11, arg_7_0.MAX_TAG_HEIGHT)
 
-	recthelper.setHeight(slot0._gocontentroot.transform, slot8)
-	recthelper.setHeight(slot0._goviewport.transform, slot8)
-	recthelper.setHeight(slot0._gobg.transform, slot8)
+	recthelper.setHeight(arg_7_0._gocontentroot.transform, var_7_12)
+	recthelper.setHeight(arg_7_0._goviewport.transform, var_7_12)
+	recthelper.setHeight(arg_7_0._gobg.transform, var_7_12)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._btnplayOnClick(slot0)
-	slot3 = WebViewController.instance:getVideoUrl(slot0._skinCo.characterId, slot0._skinCo.id)
+function var_0_0._btnplayOnClick(arg_9_0)
+	local var_9_0 = arg_9_0._skinCo.id
+	local var_9_1 = arg_9_0._skinCo.characterId
+	local var_9_2 = WebViewController.instance:getVideoUrl(var_9_1, var_9_0)
 
 	if UnityEngine.Application.version == "2.2.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
-		UnityEngine.Application.OpenURL(slot3)
+		UnityEngine.Application.OpenURL(var_9_2)
 
 		return
 	end
 
-	WebViewController.instance:openWebView(slot3, false, slot0.OnWebViewBack, slot0)
+	WebViewController.instance:openWebView(var_9_2, false, arg_9_0.OnWebViewBack, arg_9_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_skin_tag)
 end
 
-function slot0.OnWebViewBack(slot0, slot1, slot2)
-	if slot1 == WebViewEnum.WebViewCBType.Cb and slot2 == "webClose" then
+function var_0_0.OnWebViewBack(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 == WebViewEnum.WebViewCBType.Cb and arg_11_2 == "webClose" then
 		ViewMgr.instance:closeView(ViewName.WebView)
 	end
 
-	logNormal("URL Jump Callback msg" .. slot2)
+	logNormal("URL Jump Callback msg" .. arg_11_2)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

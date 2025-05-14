@@ -1,33 +1,35 @@
-module("modules.logic.room.view.record.RoomCritterHandBookBackViewContanier", package.seeall)
+﻿module("modules.logic.room.view.record.RoomCritterHandBookBackViewContanier", package.seeall)
 
-slot0 = class("RoomCritterHandBookBackViewContanier", BaseViewContainer)
+local var_0_0 = class("RoomCritterHandBookBackViewContanier", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "bg/#scroll_view/"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "bg/#scroll_view/Viewport/Content/item"
-	slot1.cellClass = RoomCritterHandBookBackItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.cellWidth = 230
-	slot1.cellHeight = 220
-	slot1.cellSpaceV = 0
-	slot1.cellSpaceH = 20
-	slot1.startSpace = 20
-	slot1.cellSpaceH = 0
-	slot1.lineCount = 4
-	slot0._handbookbackView = RoomCritterHandBookBackView.New()
-	slot0._handbookbackScrollView = LuaListScrollView.New(RoomHandBookBackListModel.instance, slot1)
-	slot2 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	table.insert(slot2, slot0._handbookbackView)
-	table.insert(slot2, slot0._handbookbackScrollView)
+	var_1_0.scrollGOPath = "bg/#scroll_view/"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "bg/#scroll_view/Viewport/Content/item"
+	var_1_0.cellClass = RoomCritterHandBookBackItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.cellWidth = 230
+	var_1_0.cellHeight = 220
+	var_1_0.cellSpaceV = 0
+	var_1_0.cellSpaceH = 20
+	var_1_0.startSpace = 20
+	var_1_0.cellSpaceH = 0
+	var_1_0.lineCount = 4
+	arg_1_0._handbookbackView = RoomCritterHandBookBackView.New()
+	arg_1_0._handbookbackScrollView = LuaListScrollView.New(RoomHandBookBackListModel.instance, var_1_0)
 
-	return slot2
+	local var_1_1 = {}
+
+	table.insert(var_1_1, arg_1_0._handbookbackView)
+	table.insert(var_1_1, arg_1_0._handbookbackScrollView)
+
+	return var_1_1
 end
 
-function slot0.getScrollView(slot0)
-	return slot0._handbookbackScrollView
+function var_0_0.getScrollView(arg_2_0)
+	return arg_2_0._handbookbackScrollView
 end
 
-return slot0
+return var_0_0

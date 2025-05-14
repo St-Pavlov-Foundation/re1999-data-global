@@ -1,96 +1,99 @@
-module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day2", package.seeall)
+﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day2", package.seeall)
 
-slot1 = class("V2a2_WarmUpLeftView_Day2", require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase"))
+local var_0_0 = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
+local var_0_1 = class("V2a2_WarmUpLeftView_Day2", var_0_0)
 
-function slot1.onInitView(slot0)
-	slot0._btn1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "before/#btn_1")
-	slot0._simageicon2 = gohelper.findChildSingleImage(slot0.viewGO, "after/#simage_icon2")
+function var_0_1.onInitView(arg_1_0)
+	arg_1_0._btn1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "before/#btn_1")
+	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "after/#simage_icon2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot1.addEvents(slot0)
-	slot0._btn1:AddClickListener(slot0._btn1OnClick, slot0)
+function var_0_1.addEvents(arg_2_0)
+	arg_2_0._btn1:AddClickListener(arg_2_0._btn1OnClick, arg_2_0)
 end
 
-function slot1.removeEvents(slot0)
-	slot0._btn1:RemoveClickListener()
+function var_0_1.removeEvents(arg_3_0)
+	arg_3_0._btn1:RemoveClickListener()
 end
 
-function slot1._btn1OnClick(slot0)
+function var_0_1._btn1OnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20220217)
 
-	if not slot0._allowClick then
+	if not arg_4_0._allowClick then
 		return
 	end
 
-	slot0:markGuided()
-	slot0:_setActive_guide(false)
+	arg_4_0:markGuided()
+	arg_4_0:_setActive_guide(false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_horn_20220218)
-	slot0:playAnim_before_click(slot0._click_before_doneCb, slot0)
+	arg_4_0:playAnim_before_click(arg_4_0._click_before_doneCb, arg_4_0)
 end
 
-function slot1._click_before_doneCb(slot0)
-	slot0._allowClick = false
-	slot0._needWaitCount = 2
+function var_0_1._click_before_doneCb(arg_5_0)
+	arg_5_0._allowClick = false
+	arg_5_0._needWaitCount = 2
 
-	slot0:playAnim_before_out(slot0._onAfterDone, slot0)
-	slot0:playAnim_after_in(slot0._onAfterDone, slot0)
+	arg_5_0:playAnim_before_out(arg_5_0._onAfterDone, arg_5_0)
+	arg_5_0:playAnim_after_in(arg_5_0._onAfterDone, arg_5_0)
 end
 
-function slot1._onAfterDone(slot0)
-	slot0._needWaitCount = slot0._needWaitCount - 1
+function var_0_1._onAfterDone(arg_6_0)
+	arg_6_0._needWaitCount = arg_6_0._needWaitCount - 1
 
-	if slot0._needWaitCount > 0 then
+	if arg_6_0._needWaitCount > 0 then
 		return
 	end
 
-	slot0:markIsFinishedInteractive(true)
+	arg_6_0:markIsFinishedInteractive(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_release_20220219)
-	slot0:saveStateDone(true)
-	slot0:setActive_before(false)
-	slot0:setActive_after(true)
-	slot0:openDesc()
+	arg_6_0:saveStateDone(true)
+	arg_6_0:setActive_before(false)
+	arg_6_0:setActive_after(true)
+	arg_6_0:openDesc()
 end
 
-function slot1.ctor(slot0, slot1)
-	uv0.ctor(slot0, slot1)
+function var_0_1.ctor(arg_7_0, arg_7_1)
+	var_0_0.ctor(arg_7_0, arg_7_1)
 
-	slot0._needWaitCount = 0
-	slot0._allowClick = false
+	arg_7_0._needWaitCount = 0
+	arg_7_0._allowClick = false
 end
 
-function slot1._editableInitView(slot0)
-	uv0._editableInitView(slot0)
+function var_0_1._editableInitView(arg_8_0)
+	var_0_0._editableInitView(arg_8_0)
 
-	slot0._guideGo = gohelper.findChild(slot0.viewGO, "guide_day2")
-	slot0._click_after = gohelper.getClick(slot0._simageicon2.gameObject)
+	arg_8_0._guideGo = gohelper.findChild(arg_8_0.viewGO, "guide_day2")
+	arg_8_0._click_after = gohelper.getClick(arg_8_0._simageicon2.gameObject)
 
-	slot0._click_after:AddClickListener(slot0._onclick_after, slot0)
+	arg_8_0._click_after:AddClickListener(arg_8_0._onclick_after, arg_8_0)
 end
 
-function slot1._onclick_after(slot0)
+function var_0_1._onclick_after(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20220217)
 end
 
-function slot1.onDestroyView(slot0)
-	uv0.onDestroyView(slot0)
-	slot0._click_after:RemoveClickListener()
+function var_0_1.onDestroyView(arg_10_0)
+	var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._click_after:RemoveClickListener()
 end
 
-function slot1.setData(slot0)
-	uv0.setData(slot0)
+function var_0_1.setData(arg_11_0)
+	var_0_0.setData(arg_11_0)
 
-	if not slot0:checkIsDone() then
-		slot0:playAnimRaw_before_idle(0, 1)
+	local var_11_0 = arg_11_0:checkIsDone()
+
+	if not var_11_0 then
+		arg_11_0:playAnimRaw_before_idle(0, 1)
 	end
 
-	slot0._allowClick = not slot1
+	arg_11_0._allowClick = not var_11_0
 
-	slot0:setActive_before(not slot1)
-	slot0:setActive_after(slot1)
+	arg_11_0:setActive_before(not var_11_0)
+	arg_11_0:setActive_after(var_11_0)
 end
 
-return slot1
+return var_0_1

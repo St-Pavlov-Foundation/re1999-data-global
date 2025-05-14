@@ -1,114 +1,124 @@
-module("modules.logic.chessgame.model.ChessGameInteractModel", package.seeall)
+﻿module("modules.logic.chessgame.model.ChessGameInteractModel", package.seeall)
 
-slot0 = class("ChessGameInteractModel", BaseModel)
+local var_0_0 = class("ChessGameInteractModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._interacts = {}
-	slot0._finishInteractMap = {}
-	slot0._interactsByMapIndex = {}
-	slot0._showEffect = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._interacts = {}
+	arg_1_0._finishInteractMap = {}
+	arg_1_0._interactsByMapIndex = {}
+	arg_1_0._showEffect = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.setInteractDatas(slot0, slot1, slot2)
-	slot0._interacts = {}
-	slot0._interactsByMapIndex = {}
-	slot0._finishInteractMap = {}
+function var_0_0.setInteractDatas(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._interacts = {}
+	arg_3_0._interactsByMapIndex = {}
+	arg_3_0._finishInteractMap = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = ChessGameInteractMo.New()
-		slot11 = ChessGameConfig.instance:getInteractCoById(slot7.mapGroupId or ChessGameConfig.instance:getCurrentMapGroupId(), slot7.id)
-		slot7.mapIndex = slot2
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = ChessGameInteractMo.New()
+		local var_3_1 = iter_3_1.id
+		local var_3_2 = iter_3_1.mapGroupId or ChessGameConfig.instance:getCurrentMapGroupId()
+		local var_3_3 = ChessGameConfig.instance:getInteractCoById(var_3_2, var_3_1)
 
-		slot8:init(slot11, slot7)
+		iter_3_1.mapIndex = arg_3_2
 
-		slot0._interacts[slot11.id] = slot8
-		slot0._interactsByMapIndex[slot2] = slot0._interactsByMapIndex[slot2] or {}
-		slot0._interactsByMapIndex[slot2][slot11.id] = slot8
+		var_3_0:init(var_3_3, iter_3_1)
+
+		arg_3_0._interacts[var_3_3.id] = var_3_0
+		arg_3_0._interactsByMapIndex[arg_3_2] = arg_3_0._interactsByMapIndex[arg_3_2] or {}
+		arg_3_0._interactsByMapIndex[arg_3_2][var_3_3.id] = var_3_0
 	end
 
-	slot0:setInteractFinishMap()
+	arg_3_0:setInteractFinishMap()
 end
 
-function slot0.addInteractMo(slot0, slot1, slot2)
-	slot3 = ChessGameInteractMo.New()
+function var_0_0.addInteractMo(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = ChessGameInteractMo.New()
 
-	slot3:init(slot1, slot2)
+	var_4_0:init(arg_4_1, arg_4_2)
 
-	slot0._interacts[slot1.id] = slot3
+	arg_4_0._interacts[arg_4_1.id] = var_4_0
 
-	return slot3
+	return var_4_0
 end
 
-function slot0.getInteractById(slot0, slot1)
-	return slot0._interacts[slot1]
+function var_0_0.getInteractById(arg_5_0, arg_5_1)
+	return arg_5_0._interacts[arg_5_1]
 end
 
-function slot0.deleteInteractById(slot0, slot1)
-	slot0._interacts[slot1] = nil
-	slot0._interactsByMapIndex[ChessGameModel.instance.nowMapIndex][slot1] = nil
+function var_0_0.deleteInteractById(arg_6_0, arg_6_1)
+	arg_6_0._interacts[arg_6_1] = nil
+
+	local var_6_0 = ChessGameModel.instance.nowMapIndex
+
+	arg_6_0._interactsByMapIndex[var_6_0][arg_6_1] = nil
 end
 
-function slot0.getAllInteracts(slot0)
-	return slot0._interacts
+function var_0_0.getAllInteracts(arg_7_0)
+	return arg_7_0._interacts
 end
 
-function slot0.getInteractsByMapIndex(slot0, slot1)
-	return slot0._interactsByMapIndex[slot1 or ChessGameModel.instance.nowMapIndex] or {}
+function var_0_0.getInteractsByMapIndex(arg_8_0, arg_8_1)
+	arg_8_1 = arg_8_1 or ChessGameModel.instance.nowMapIndex
+
+	return arg_8_0._interactsByMapIndex[arg_8_1] or {}
 end
 
-function slot0.getInteractByPos(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0.getInteractByPos(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = {}
 
-	if not slot0._interactsByMapIndex[slot3 or ChessGameModel.instance.nowMapIndex] then
+	arg_9_3 = arg_9_3 or ChessGameModel.instance.nowMapIndex
+
+	if not arg_9_0._interactsByMapIndex[arg_9_3] then
 		return
 	end
 
-	for slot8, slot9 in pairs(slot0._interactsByMapIndex[slot3]) do
-		slot10, slot11 = slot9:getXY()
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._interactsByMapIndex[arg_9_3]) do
+		local var_9_1, var_9_2 = iter_9_1:getXY()
 
-		if slot10 == slot1 and slot11 == slot2 then
-			table.insert(slot4, slot9)
+		if var_9_1 == arg_9_1 and var_9_2 == arg_9_2 then
+			table.insert(var_9_0, iter_9_1)
 		end
 	end
 
-	return slot4
+	return var_9_0
 end
 
-function slot0.setInteractFinishMap(slot0)
-	for slot4, slot5 in pairs(slot0._interacts) do
-		if slot5:CheckInteractFinish() then
-			slot0._finishInteractMap[slot4] = true
+function var_0_0.setInteractFinishMap(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._interacts) do
+		if iter_10_1:CheckInteractFinish() then
+			arg_10_0._finishInteractMap[iter_10_0] = true
 		end
 	end
 end
 
-function slot0.checkInteractFinish(slot0, slot1)
-	return slot0._finishInteractMap[slot1]
+function var_0_0.checkInteractFinish(arg_11_0, arg_11_1)
+	return arg_11_0._finishInteractMap[arg_11_1]
 end
 
-function slot0.setShowEffect(slot0, slot1)
-	slot0._showEffect[slot1] = true
+function var_0_0.setShowEffect(arg_12_0, arg_12_1)
+	arg_12_0._showEffect[arg_12_1] = true
 end
 
-function slot0.setHideEffect(slot0, slot1)
-	slot0._showEffect[slot1] = false
+function var_0_0.setHideEffect(arg_13_0, arg_13_1)
+	arg_13_0._showEffect[arg_13_1] = false
 end
 
-function slot0.getShowEffects(slot0)
-	return slot0._showEffect
+function var_0_0.getShowEffects(arg_14_0)
+	return arg_14_0._showEffect
 end
 
-function slot0.clear(slot0)
-	slot0._interacts = {}
-	slot0._interactsByMapIndex = {}
-	slot0._finishInteractMap = {}
-	slot0._showEffect = {}
+function var_0_0.clear(arg_15_0)
+	arg_15_0._interacts = {}
+	arg_15_0._interactsByMapIndex = {}
+	arg_15_0._finishInteractMap = {}
+	arg_15_0._showEffect = {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

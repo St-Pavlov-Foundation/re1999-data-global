@@ -1,29 +1,29 @@
-module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaStatMo", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaStatMo", package.seeall)
 
-slot0 = pureTable("TianShiNaNaStatMo")
+local var_0_0 = pureTable("TianShiNaNaStatMo")
 
-function slot0.ctor(slot0)
-	slot0.beginTime = Time.realtimeSinceStartup
-	slot0.backNum = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.beginTime = Time.realtimeSinceStartup
+	arg_1_0.backNum = 0
 end
 
-function slot0.reset(slot0)
-	slot0.beginTime = Time.realtimeSinceStartup
-	slot0.backNum = 0
+function var_0_0.reset(arg_2_0)
+	arg_2_0.beginTime = Time.realtimeSinceStartup
+	arg_2_0.backNum = 0
 end
 
-function slot0.addBackNum(slot0)
-	slot0.backNum = slot0.backNum + 1
+function var_0_0.addBackNum(arg_3_0)
+	arg_3_0.backNum = arg_3_0.backNum + 1
 end
 
-function slot0.sendStatData(slot0, slot1)
+function var_0_0.sendStatData(arg_4_0, arg_4_1)
 	StatController.instance:track(StatEnum.EventName.Exit_Anjo_Nala_activity, {
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - slot0.beginTime,
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_4_0.beginTime,
 		[StatEnum.EventProperties.EpisodeId] = tostring(TianShiNaNaModel.instance.episodeCo.id),
-		[StatEnum.EventProperties.Result] = slot1,
+		[StatEnum.EventProperties.Result] = arg_4_1,
 		[StatEnum.EventProperties.RoundNum] = TianShiNaNaModel.instance.nowRound,
-		[StatEnum.EventProperties.BackNum] = slot0.backNum
+		[StatEnum.EventProperties.BackNum] = arg_4_0.backNum
 	})
 end
 
-return slot0
+return var_0_0

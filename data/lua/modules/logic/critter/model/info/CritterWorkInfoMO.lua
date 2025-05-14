@@ -1,14 +1,14 @@
-module("modules.logic.critter.model.info.CritterWorkInfoMO", package.seeall)
+﻿module("modules.logic.critter.model.info.CritterWorkInfoMO", package.seeall)
 
-slot0 = pureTable("CritterWorkInfoMO")
+local var_0_0 = pureTable("CritterWorkInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.workBuildingUid = slot1 and slot1.buildingUid
-	slot0.critterSlotId = slot1 and slot1.critterSlotId
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.workBuildingUid = arg_1_1 and arg_1_1.buildingUid
+	arg_1_0.critterSlotId = arg_1_1 and arg_1_1.critterSlotId
 end
 
-function slot0.getBuildingInfo(slot0)
-	return slot0.workBuildingUid, slot0.critterSlotId
+function var_0_0.getBuildingInfo(arg_2_0)
+	return arg_2_0.workBuildingUid, arg_2_0.critterSlotId
 end
 
-return slot0
+return var_0_0

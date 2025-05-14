@@ -1,65 +1,65 @@
-module("modules.logic.scene.pushbox.comp.PushBoxScenePreloader", package.seeall)
+﻿module("modules.logic.scene.pushbox.comp.PushBoxScenePreloader", package.seeall)
 
-slot0 = class("PushBoxScenePreloader", BaseSceneComp)
+local var_0_0 = class("PushBoxScenePreloader", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.startPreload(slot0, slot1)
-	slot0.loader = MultiAbLoader.New()
-	slot5 = "pushboxmainpre"
+function var_0_0.startPreload(arg_2_0, arg_2_1)
+	arg_2_0.loader = MultiAbLoader.New()
 
-	slot0.loader:addPath(ResUrl.getPushBoxPre(slot5))
+	arg_2_0.loader:addPath(ResUrl.getPushBoxPre("pushboxmainpre"))
 
-	for slot5, slot6 in pairs(slot0:getElementType2Url()) do
-		if not tabletool.indexOf(slot0.loader._pathList, slot6) then
-			slot0.loader:addPath(slot6)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0:getElementType2Url()) do
+		if not tabletool.indexOf(arg_2_0.loader._pathList, iter_2_1) then
+			arg_2_0.loader:addPath(iter_2_1)
 		end
 	end
 
-	slot0.loader:startLoad(slot0._onAssetLoaded, slot0)
+	arg_2_0.loader:startLoad(arg_2_0._onAssetLoaded, arg_2_0)
 end
 
-function slot0._onAssetLoaded(slot0)
-	slot0._scene_obj = gohelper.clone(slot0.loader:getAssetItem(ResUrl.getPushBoxPre("pushboxmainpre")):GetResource(), slot0._scene:getSceneContainerGO())
-	slot0._scene_obj.name = "Root"
-	slot4 = 0
-	slot5 = -5
+function var_0_0._onAssetLoaded(arg_3_0)
+	arg_3_0._scene_obj = gohelper.clone(arg_3_0.loader:getAssetItem(ResUrl.getPushBoxPre("pushboxmainpre")):GetResource(), arg_3_0._scene:getSceneContainerGO())
+	arg_3_0._scene_obj.name = "Root"
 
-	transformhelper.setLocalPos(slot0._scene_obj.transform, 0, slot4, slot5)
+	transformhelper.setLocalPos(arg_3_0._scene_obj.transform, 0, 0, -5)
 
-	for slot4, slot5 in pairs(slot0:getElementType2Url()) do
-		gohelper.clone(slot0.loader:getAssetItem(slot5):GetResource(), gohelper.findChild(slot0._scene_obj, "OriginElement")).name = slot4
+	for iter_3_0, iter_3_1 in pairs(arg_3_0:getElementType2Url()) do
+		gohelper.clone(arg_3_0.loader:getAssetItem(iter_3_1):GetResource(), gohelper.findChild(arg_3_0._scene_obj, "OriginElement")).name = iter_3_0
 	end
 
-	gohelper.clone(slot0.loader:getAssetItem(slot0:getElementType2Url().Background):GetResource(), slot0._scene_obj).transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = -10
-	slot3 = CameraMgr.instance:getMainCamera()
-	slot3.orthographic = true
-	slot3.orthographicSize = 7.5
+	gohelper.clone(arg_3_0.loader:getAssetItem(arg_3_0:getElementType2Url().Background):GetResource(), arg_3_0._scene_obj).transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = -10
 
-	slot0._scene.director:onPushBoxAssetLoadFinish()
+	local var_3_0 = CameraMgr.instance:getMainCamera()
+
+	var_3_0.orthographic = true
+	var_3_0.orthographicSize = 7.5
+
+	arg_3_0._scene.director:onPushBoxAssetLoadFinish()
 end
 
-function slot0.getAssetItem(slot0, slot1)
-	return slot0.loader:getAssetItem(slot1):GetResource()
+function var_0_0.getAssetItem(arg_4_0, arg_4_1)
+	return arg_4_0.loader:getAssetItem(arg_4_1):GetResource()
 end
 
-function slot0.onSceneClose(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographicSize = 5
-	slot1.orthographic = false
+function var_0_0.onSceneClose(arg_5_0)
+	local var_5_0 = CameraMgr.instance:getMainCamera()
 
-	if slot0.loader then
-		slot0.loader:dispose()
+	var_5_0.orthographicSize = 5
+	var_5_0.orthographic = false
+
+	if arg_5_0.loader then
+		arg_5_0.loader:dispose()
 	end
 
-	if slot0._scene_obj then
-		gohelper.destroy(slot0._scene_obj)
+	if arg_5_0._scene_obj then
+		gohelper.destroy(arg_5_0._scene_obj)
 	end
 end
 
-function slot0.getElementType2Url(slot0)
+function var_0_0.getElementType2Url(arg_6_0)
 	return {
 		[PushBoxGameMgr.ElementType.Goal] = ResUrl.getPushBoxPre("men_1x1_a"),
 		[PushBoxGameMgr.ElementType.Empty] = ResUrl.getPushBoxPre("diban_a"),
@@ -101,4 +101,4 @@ function slot0.getElementType2Url(slot0)
 	}
 end
 
-return slot0
+return var_0_0

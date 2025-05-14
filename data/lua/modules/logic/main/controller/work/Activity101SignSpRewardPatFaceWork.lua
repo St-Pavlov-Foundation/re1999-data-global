@@ -1,13 +1,15 @@
-module("modules.logic.main.controller.work.Activity101SignSpRewardPatFaceWork", package.seeall)
+﻿module("modules.logic.main.controller.work.Activity101SignSpRewardPatFaceWork", package.seeall)
 
-slot0 = class("Activity101SignSpRewardPatFaceWork", Activity101SignPatFaceWork)
+local var_0_0 = class("Activity101SignSpRewardPatFaceWork", Activity101SignPatFaceWork)
 
-function slot0.isType101RewardCouldGetAnyOne(slot0)
-	if uv0.super.isType101RewardCouldGetAnyOne(slot0) then
+function var_0_0.isType101RewardCouldGetAnyOne(arg_1_0)
+	if var_0_0.super.isType101RewardCouldGetAnyOne(arg_1_0) then
 		return true
 	end
 
-	return ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(slot0:_actId())
+	local var_1_0 = arg_1_0:_actId()
+
+	return ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(var_1_0)
 end
 
-return slot0
+return var_0_0

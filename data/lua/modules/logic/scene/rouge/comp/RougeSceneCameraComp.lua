@@ -1,113 +1,118 @@
-module("modules.logic.scene.rouge.comp.RougeSceneCameraComp", package.seeall)
+﻿module("modules.logic.scene.rouge.comp.RougeSceneCameraComp", package.seeall)
 
-slot0 = class("RougeSceneCameraComp", BaseSceneComp)
+local var_0_0 = class("RougeSceneCameraComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, slot0.onLoadMapDone, slot0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onExitPieceChoiceEvent, slot0.onExitPieceChoiceEvent, slot0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onMiddleActorBeforeMove, slot0.onMiddleActorBeforeMove, slot0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onPathSelectMapFocus, slot0.onPathSelectMapFocus, slot0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.focusChangeCameraSize, slot0.focusChangeCameraSize, slot0)
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, arg_2_0.onLoadMapDone, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onExitPieceChoiceEvent, arg_2_0.onExitPieceChoiceEvent, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onMiddleActorBeforeMove, arg_2_0.onMiddleActorBeforeMove, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onPathSelectMapFocus, arg_2_0.onPathSelectMapFocus, arg_2_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.focusChangeCameraSize, arg_2_0.focusChangeCameraSize, arg_2_0)
 end
 
-function slot0.focusChangeCameraSize(slot0)
-	if slot0.camera then
-		slot0.camera.orthographicSize = RougeMapModel.instance:getCameraSize()
+function var_0_0.focusChangeCameraSize(arg_3_0)
+	if arg_3_0.camera then
+		arg_3_0.camera.orthographicSize = RougeMapModel.instance:getCameraSize()
 	end
 end
 
-function slot0.onLoadMapDone(slot0)
-	slot0:initCameraSize()
+function var_0_0.onLoadMapDone(arg_4_0)
+	arg_4_0:initCameraSize()
 end
 
-function slot0.initCameraSize(slot0)
+function var_0_0.initCameraSize(arg_5_0)
 	gohelper.setActive(CameraMgr.instance:getVirtualCameraGO(), false)
 	transformhelper.setLocalPos(CameraMgr.instance:getMainCameraTrs(), 0, 0, 0)
 	transformhelper.setLocalRotation(CameraMgr.instance:getMainCameraTrs(), 0, 0, 0)
 
-	if CameraMgr.instance:getCameraTrace() then
-		slot1.EnableTrace = false
+	local var_5_0 = CameraMgr.instance:getCameraTrace()
+
+	if var_5_0 then
+		var_5_0.EnableTrace = false
 	end
 
-	slot0.camera = CameraMgr.instance:getMainCamera()
-	slot0.camera.orthographic = true
-	slot0.camera.orthographicSize = RougeMapModel.instance:getCameraSize()
+	arg_5_0.camera = CameraMgr.instance:getMainCamera()
+	arg_5_0.camera.orthographic = true
+	arg_5_0.camera.orthographicSize = RougeMapModel.instance:getCameraSize()
 end
 
-function slot0.clearCamera(slot0)
-	if slot0.camera then
-		slot0.camera.orthographicSize = 5
-		slot0.camera.orthographic = false
+function var_0_0.clearCamera(arg_6_0)
+	if arg_6_0.camera then
+		arg_6_0.camera.orthographicSize = 5
+		arg_6_0.camera.orthographic = false
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:clearCamera()
+function var_0_0.onSceneClose(arg_7_0)
+	arg_7_0:clearCamera()
 
-	slot0.camera = nil
+	arg_7_0.camera = nil
 
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, slot0.onLoadMapDone, slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onExitPieceChoiceEvent, slot0.onExitPieceChoiceEvent, slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMiddleActorBeforeMove, slot0.onMiddleActorBeforeMove, slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPathSelectMapFocus, slot0.onPathSelectMapFocus, slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.focusChangeCameraSize, slot0.focusChangeCameraSize, slot0)
-	slot0:clearTween()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, arg_7_0.onLoadMapDone, arg_7_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onExitPieceChoiceEvent, arg_7_0.onExitPieceChoiceEvent, arg_7_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMiddleActorBeforeMove, arg_7_0.onMiddleActorBeforeMove, arg_7_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPathSelectMapFocus, arg_7_0.onPathSelectMapFocus, arg_7_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.focusChangeCameraSize, arg_7_0.focusChangeCameraSize, arg_7_0)
+	arg_7_0:clearTween()
 end
 
-function slot0.clearTween(slot0)
-	if slot0.movingTweenId then
-		ZProj.TweenHelper.KillById(slot0.movingTweenId)
+function var_0_0.clearTween(arg_8_0)
+	if arg_8_0.movingTweenId then
+		ZProj.TweenHelper.KillById(arg_8_0.movingTweenId)
 	end
 
-	slot0.movingTweenId = nil
+	arg_8_0.movingTweenId = nil
 end
 
-function slot0.onMiddleActorBeforeMove(slot0)
+function var_0_0.onMiddleActorBeforeMove(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.MiddleLayerFocus)
-	slot0:clearTween()
+	arg_9_0:clearTween()
 
-	slot0.movingTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, RougeMapEnum.RevertDuration, slot0.frameCallback, slot0.onTweenDone, slot0, nil, RougeMapEnum.CameraTweenLine)
+	arg_9_0.movingTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, RougeMapEnum.RevertDuration, arg_9_0.frameCallback, arg_9_0.onTweenDone, arg_9_0, nil, RougeMapEnum.CameraTweenLine)
 end
 
-function slot0.onExitPieceChoiceEvent(slot0)
+function var_0_0.onExitPieceChoiceEvent(arg_10_0)
 	if not RougeMapModel.instance:isMiddle() then
 		return
 	end
 
-	slot0:clearTween()
+	arg_10_0:clearTween()
 
-	slot0.movingTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, RougeMapEnum.RevertDuration, slot0.frameCallback, slot0.onTweenDone, slot0, nil, RougeMapEnum.CameraTweenLine)
+	arg_10_0.movingTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, RougeMapEnum.RevertDuration, arg_10_0.frameCallback, arg_10_0.onTweenDone, arg_10_0, nil, RougeMapEnum.CameraTweenLine)
 end
 
-function slot0.frameCallback(slot0, slot1)
-	slot2 = RougeMapModel.instance:getCameraSize()
-	slot3 = RougeMapEnum.MiddleLayerCameraSizeRate * slot2
-	slot5 = slot3 + slot1 * (slot2 - slot3)
-	slot0.camera.orthographicSize = slot5
+function var_0_0.frameCallback(arg_11_0, arg_11_1)
+	local var_11_0 = RougeMapModel.instance:getCameraSize()
+	local var_11_1 = RougeMapEnum.MiddleLayerCameraSizeRate * var_11_0
+	local var_11_2 = var_11_1 + arg_11_1 * (var_11_0 - var_11_1)
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onCameraSizeChange, slot5)
+	arg_11_0.camera.orthographicSize = var_11_2
+
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onCameraSizeChange, var_11_2)
 end
 
-function slot0.onPathSelectMapFocus(slot0, slot1)
-	slot0:clearTween()
+function var_0_0.onPathSelectMapFocus(arg_12_0, arg_12_1)
+	arg_12_0:clearTween()
 
-	slot0.targetCameraSize = slot1
-	slot0.movingTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, RougeMapEnum.RevertDuration, slot0.pathSelectMapFrameCallback, slot0.onTweenDone, slot0, nil, RougeMapEnum.CameraTweenLine)
+	arg_12_0.targetCameraSize = arg_12_1
+	arg_12_0.movingTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, RougeMapEnum.RevertDuration, arg_12_0.pathSelectMapFrameCallback, arg_12_0.onTweenDone, arg_12_0, nil, RougeMapEnum.CameraTweenLine)
 end
 
-function slot0.pathSelectMapFrameCallback(slot0, slot1)
-	slot2 = RougeMapModel.instance:getCameraSize()
-	slot4 = slot2 + slot1 * (slot0.targetCameraSize - slot2)
-	slot0.camera.orthographicSize = slot4
+function var_0_0.pathSelectMapFrameCallback(arg_13_0, arg_13_1)
+	local var_13_0 = RougeMapModel.instance:getCameraSize()
+	local var_13_1 = var_13_0 + arg_13_1 * (arg_13_0.targetCameraSize - var_13_0)
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onCameraSizeChange, slot4)
+	arg_13_0.camera.orthographicSize = var_13_1
+
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onCameraSizeChange, var_13_1)
 end
 
-function slot0.onTweenDone(slot0)
-	slot0.movingTweenId = nil
+function var_0_0.onTweenDone(arg_14_0)
+	arg_14_0.movingTweenId = nil
 end
 
-return slot0
+return var_0_0

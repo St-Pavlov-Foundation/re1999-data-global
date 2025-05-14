@@ -1,43 +1,43 @@
-module("modules.logic.permanent.view.enterview.Permanent1_8EnterView", package.seeall)
+﻿module("modules.logic.permanent.view.enterview.Permanent1_8EnterView", package.seeall)
 
-slot0 = class("Permanent1_8EnterView", BaseView)
+local var_0_0 = class("Permanent1_8EnterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
-	slot0._goReddot1 = gohelper.findChild(slot0.viewGO, "Left/EntranceRole1/#go_Reddot1")
-	slot0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
-	slot0._goReddot2 = gohelper.findChild(slot0.viewGO, "Left/EntranceRole2/#go_Reddot2")
-	slot0._btnPlay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#simage_FullBG/Title/#btn_Play")
-	slot0._btnAchievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Achievement")
-	slot0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
+	arg_1_0._goReddot1 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole1/#go_Reddot1")
+	arg_1_0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
+	arg_1_0._goReddot2 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole2/#go_Reddot2")
+	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#simage_FullBG/Title/#btn_Play")
+	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Achievement")
+	arg_1_0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._btnEntranceRole1, slot0._btnEntranceRole1OnClick, slot0)
-	slot0:addClickCb(slot0._btnEntranceRole2, slot0._btnEntranceRole2OnClick, slot0)
-	slot0:addClickCb(slot0._btnPlay, slot0._btnPlayOnClick, slot0)
-	slot0:addClickCb(slot0._btnAchievement, slot0._btnAchievementOnClick, slot0)
-	slot0:addClickCb(slot0._btnEntranceDungeon, slot0._btnEntranceDungeonOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnEntranceRole1, arg_2_0._btnEntranceRole1OnClick, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnEntranceRole2, arg_2_0._btnEntranceRole2OnClick, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnPlay, arg_2_0._btnPlayOnClick, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnAchievement, arg_2_0._btnAchievementOnClick, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnEntranceDungeon, arg_2_0._btnEntranceDungeonOnClick, arg_2_0)
 end
 
-function slot0._btnEntranceRole1OnClick(slot0)
+function var_0_0._btnEntranceRole1OnClick(arg_3_0)
 	ActWeilaController.instance:enterActivity()
 end
 
-function slot0._btnEntranceRole2OnClick(slot0)
+function var_0_0._btnEntranceRole2OnClick(arg_4_0)
 	ActWindSongController.instance:enterActivity()
 end
 
-function slot0._btnPlayOnClick(slot0)
-	StoryController.instance:playStory(slot0.actCfg.storyId)
+function var_0_0._btnPlayOnClick(arg_5_0)
+	StoryController.instance:playStory(arg_5_0.actCfg.storyId)
 end
 
-function slot0._btnAchievementOnClick(slot0)
+function var_0_0._btnAchievementOnClick(arg_6_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		ViewMgr.instance:openView(ViewName.AchievementMainView, {
 			categoryType = AchievementEnum.Type.Activity
@@ -47,30 +47,31 @@ function slot0._btnAchievementOnClick(slot0)
 	end
 end
 
-function slot0._btnEntranceDungeonOnClick(slot0)
+function var_0_0._btnEntranceDungeonOnClick(arg_7_0)
 	VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.EnterView)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.EnterView)
 
-	gohelper.setActive(slot0._btnAchievement.gameObject, false)
+	gohelper.setActive(arg_8_0._btnAchievement.gameObject, false)
 end
 
-function slot0.onOpen(slot0)
-	slot2 = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.WindSong)
+function var_0_0.onOpen(arg_9_0)
+	local var_9_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.Weila)
+	local var_9_1 = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.WindSong)
 
-	if ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.Weila).redDotId ~= 0 then
-		RedDotController.instance:addRedDot(slot0._goReddot1, slot1.redDotId, slot1.id)
+	if var_9_0.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(arg_9_0._goReddot1, var_9_0.redDotId, var_9_0.id)
 	end
 
-	if slot2.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(slot0._goReddot2, slot2.redDotId, slot2.id)
+	if var_9_1.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(arg_9_0._goReddot2, var_9_1.redDotId, var_9_1.id)
 	end
 end
 
-function slot0.onClose(slot0)
-	PermanentModel.instance:undateActivityInfo(slot0.actCfg.id)
+function var_0_0.onClose(arg_10_0)
+	PermanentModel.instance:undateActivityInfo(arg_10_0.actCfg.id)
 end
 
-return slot0
+return var_0_0

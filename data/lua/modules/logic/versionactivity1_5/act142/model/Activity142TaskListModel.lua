@@ -1,57 +1,65 @@
-module("modules.logic.versionactivity1_5.act142.model.Activity142TaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.model.Activity142TaskListModel", package.seeall)
 
-slot0 = class("Activity142TaskListModel", ListScrollModel)
+local var_0_0 = class("Activity142TaskListModel", ListScrollModel)
 
-function slot1(slot0)
-	if slot0.id == Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID then
+local function var_0_1(arg_1_0)
+	if arg_1_0.id == Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID then
 		return 1
-	elseif slot0:haveRewardToGet() then
+	elseif arg_1_0:haveRewardToGet() then
 		return 2
-	elseif slot0:alreadyGotReward() then
+	elseif arg_1_0:alreadyGotReward() then
 		return 100
 	end
 
 	return 50
 end
 
-function slot2(slot0, slot1)
-	if uv0(slot0) ~= uv0(slot1) then
-		return slot2 < slot3
-	elseif slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+local function var_0_2(arg_2_0, arg_2_1)
+	local var_2_0 = var_0_1(arg_2_0)
+	local var_2_1 = var_0_1(arg_2_1)
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_0 < var_2_1
+	elseif arg_2_0.id ~= arg_2_1.id then
+		return arg_2_0.id < arg_2_1.id
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot3 = {}
-	slot4 = 0
+function var_0_0.init(arg_3_0, arg_3_1)
+	local var_3_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity142)
+	local var_3_1 = {}
+	local var_3_2 = 0
 
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity142) then
-		for slot9, slot10 in ipairs(Activity142Config.instance:getTaskByActId(slot1)) do
-			slot12 = Activity142TaskMO.New()
+	if var_3_0 then
+		local var_3_3 = Activity142Config.instance:getTaskByActId(arg_3_1)
 
-			slot12:init(slot10, slot2[slot10.id])
+		for iter_3_0, iter_3_1 in ipairs(var_3_3) do
+			local var_3_4 = var_3_0[iter_3_1.id]
+			local var_3_5 = Activity142TaskMO.New()
 
-			if slot12:haveRewardToGet() then
-				slot4 = slot4 + 1
+			var_3_5:init(iter_3_1, var_3_4)
+
+			if var_3_5:haveRewardToGet() then
+				var_3_2 = var_3_2 + 1
 			end
 
-			table.insert(slot3, slot12)
+			table.insert(var_3_1, var_3_5)
 		end
 	end
 
-	if slot4 > 1 then
-		slot5 = Activity142TaskMO.New()
-		slot5.id = Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID
-		slot5.activityId = slot1
+	if var_3_2 > 1 then
+		local var_3_6 = Activity142TaskMO.New()
 
-		table.insert(slot3, slot5)
+		var_3_6.id = Activity142Enum.TASK_ALL_RECEIVE_ITEM_EMPTY_ID
+		var_3_6.activityId = arg_3_1
+
+		table.insert(var_3_1, var_3_6)
 	end
 
-	table.sort(slot3, uv0)
-	slot0:setList(slot3)
+	table.sort(var_3_1, var_0_2)
+	arg_3_0:setList(var_3_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,454 +1,512 @@
-module("modules.logic.room.view.transport.RoomTransportSiteView", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportSiteView", package.seeall)
 
-slot0 = class("RoomTransportSiteView", BaseView)
+local var_0_0 = class("RoomTransportSiteView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnmaskable = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_maskable")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "go_content/#go_BackBtns")
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "go_content/#go_left")
-	slot0._golayoutSwitchBtns = gohelper.findChild(slot0.viewGO, "go_content/#go_left/#go_layoutSwitchBtns")
-	slot0._gositesitem = gohelper.findChild(slot0.viewGO, "go_content/#go_left/#go_layoutSwitchBtns/#go_sitesitem")
-	slot0._gocritterInfoItem = gohelper.findChild(slot0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem")
-	slot0._gohascritter = gohelper.findChild(slot0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_hascritter")
-	slot0._gocritterIcon = gohelper.findChild(slot0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_hascritter/#go_critterIcon")
-	slot0._gonocritter = gohelper.findChild(slot0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_nocritter")
-	slot0._gocritterselected = gohelper.findChild(slot0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_critterselected")
-	slot0._btncritterclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#btn_critterclick")
-	slot0._goright = gohelper.findChild(slot0.viewGO, "go_content/#go_right")
-	slot0._btnhideui = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#btn_hideui")
-	slot0._gobuildinginfo = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_buildinginfo")
-	slot0._gohasBuilding = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding")
-	slot0._imagebuildingrare = gohelper.findChildImage(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#image_buildingrare")
-	slot0._simagebuildingicon = gohelper.findChildSingleImage(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#simage_buildingicon")
-	slot0._txtbuildingname = gohelper.findChildText(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#txt_buildingname")
-	slot0._txtbuildingbase = gohelper.findChildText(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#txt_buildingbase")
-	slot0._gonobuilding = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_nobuilding")
-	slot0._btnbuilding = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_buildinginfo/#btn_building")
-	slot0._btncamerastate = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#btn_camerastate")
-	slot0._gofirstperson = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#btn_camerastate/#go_firstperson")
-	slot0._gothirdperson = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#btn_camerastate/#go_thirdperson")
-	slot0._gobuildinglist = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_buildinglist")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "go_content/#go_right/#go_buildinglist/#simage_rightbg")
-	slot0._scrollbuilding = gohelper.findChildScrollRect(slot0.viewGO, "go_content/#go_right/#go_buildinglist/#scroll_building")
-	slot0._scrollbuildingskin = gohelper.findChildScrollRect(slot0.viewGO, "go_content/#go_right/#go_buildinglist/#scroll_buildingskin")
-	slot0._btnbuildingconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_buildinglist/#btn_buildingconfirm")
-	slot0._btncloseBuilding = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_buildinglist/#btn_closeBuilding")
-	slot0._gocritterlist = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist")
-	slot0._btnmood = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_mood")
-	slot0._gomoodnormal = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_mood/#go_moodnormal")
-	slot0._gomoodselected = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_mood/#go_moodselected")
-	slot0._btnrare = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_rare")
-	slot0._goratenormal = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_rare/#go_ratenormal")
-	slot0._gorateselected = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_rare/#go_rateselected")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_filter")
-	slot0._gonotfilter = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_filter/#go_notfilter")
-	slot0._gofilter = gohelper.findChild(slot0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_filter/#go_filter")
-	slot0._scrollcritter = gohelper.findChildScrollRect(slot0.viewGO, "go_content/#go_right/#go_critterlist/#scroll_critter")
-	slot0._btncloseCritter = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_right/#go_critterlist/#btn_closeCritter")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnmaskable = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_maskable")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_BackBtns")
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left")
+	arg_1_0._golayoutSwitchBtns = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/#go_layoutSwitchBtns")
+	arg_1_0._gositesitem = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/#go_layoutSwitchBtns/#go_sitesitem")
+	arg_1_0._gocritterInfoItem = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem")
+	arg_1_0._gohascritter = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_hascritter")
+	arg_1_0._gocritterIcon = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_hascritter/#go_critterIcon")
+	arg_1_0._gonocritter = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_nocritter")
+	arg_1_0._gocritterselected = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#go_critterselected")
+	arg_1_0._btncritterclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_left/critterInfo/#go_critterInfoItem/#btn_critterclick")
+	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right")
+	arg_1_0._btnhideui = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#btn_hideui")
+	arg_1_0._gobuildinginfo = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo")
+	arg_1_0._gohasBuilding = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding")
+	arg_1_0._imagebuildingrare = gohelper.findChildImage(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#image_buildingrare")
+	arg_1_0._simagebuildingicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#simage_buildingicon")
+	arg_1_0._txtbuildingname = gohelper.findChildText(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#txt_buildingname")
+	arg_1_0._txtbuildingbase = gohelper.findChildText(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_hasBuilding/#txt_buildingbase")
+	arg_1_0._gonobuilding = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#go_nobuilding")
+	arg_1_0._btnbuilding = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_buildinginfo/#btn_building")
+	arg_1_0._btncamerastate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#btn_camerastate")
+	arg_1_0._gofirstperson = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#btn_camerastate/#go_firstperson")
+	arg_1_0._gothirdperson = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#btn_camerastate/#go_thirdperson")
+	arg_1_0._gobuildinglist = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_buildinglist")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_content/#go_right/#go_buildinglist/#simage_rightbg")
+	arg_1_0._scrollbuilding = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_content/#go_right/#go_buildinglist/#scroll_building")
+	arg_1_0._scrollbuildingskin = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_content/#go_right/#go_buildinglist/#scroll_buildingskin")
+	arg_1_0._btnbuildingconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_buildinglist/#btn_buildingconfirm")
+	arg_1_0._btncloseBuilding = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_buildinglist/#btn_closeBuilding")
+	arg_1_0._gocritterlist = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist")
+	arg_1_0._btnmood = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_mood")
+	arg_1_0._gomoodnormal = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_mood/#go_moodnormal")
+	arg_1_0._gomoodselected = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_mood/#go_moodselected")
+	arg_1_0._btnrare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_rare")
+	arg_1_0._goratenormal = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_rare/#go_ratenormal")
+	arg_1_0._gorateselected = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_rare/#go_rateselected")
+	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_filter")
+	arg_1_0._gonotfilter = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_filter/#go_notfilter")
+	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/sort/#btn_filter/#go_filter")
+	arg_1_0._scrollcritter = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/#scroll_critter")
+	arg_1_0._btncloseCritter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_right/#go_critterlist/#btn_closeCritter")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmaskable:AddClickListener(slot0._btnmaskableOnClick, slot0)
-	slot0._btncritterclick:AddClickListener(slot0._btncritterclickOnClick, slot0)
-	slot0._btnhideui:AddClickListener(slot0._btnhideuiOnClick, slot0)
-	slot0._btnbuilding:AddClickListener(slot0._btnbuildingOnClick, slot0)
-	slot0._btncamerastate:AddClickListener(slot0._btncamerastateOnClick, slot0)
-	slot0._btnbuildingconfirm:AddClickListener(slot0._btnbuildingconfirmOnClick, slot0)
-	slot0._btncloseBuilding:AddClickListener(slot0._btncloseBuildingOnClick, slot0)
-	slot0._btnmood:AddClickListener(slot0._btnmoodOnClick, slot0)
-	slot0._btnrare:AddClickListener(slot0._btnrareOnClick, slot0)
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
-	slot0._btncloseCritter:AddClickListener(slot0._btncloseCritterOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmaskable:AddClickListener(arg_2_0._btnmaskableOnClick, arg_2_0)
+	arg_2_0._btncritterclick:AddClickListener(arg_2_0._btncritterclickOnClick, arg_2_0)
+	arg_2_0._btnhideui:AddClickListener(arg_2_0._btnhideuiOnClick, arg_2_0)
+	arg_2_0._btnbuilding:AddClickListener(arg_2_0._btnbuildingOnClick, arg_2_0)
+	arg_2_0._btncamerastate:AddClickListener(arg_2_0._btncamerastateOnClick, arg_2_0)
+	arg_2_0._btnbuildingconfirm:AddClickListener(arg_2_0._btnbuildingconfirmOnClick, arg_2_0)
+	arg_2_0._btncloseBuilding:AddClickListener(arg_2_0._btncloseBuildingOnClick, arg_2_0)
+	arg_2_0._btnmood:AddClickListener(arg_2_0._btnmoodOnClick, arg_2_0)
+	arg_2_0._btnrare:AddClickListener(arg_2_0._btnrareOnClick, arg_2_0)
+	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+	arg_2_0._btncloseCritter:AddClickListener(arg_2_0._btncloseCritterOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmaskable:RemoveClickListener()
-	slot0._btncritterclick:RemoveClickListener()
-	slot0._btnhideui:RemoveClickListener()
-	slot0._btnbuilding:RemoveClickListener()
-	slot0._btncamerastate:RemoveClickListener()
-	slot0._btnbuildingconfirm:RemoveClickListener()
-	slot0._btncloseBuilding:RemoveClickListener()
-	slot0._btnmood:RemoveClickListener()
-	slot0._btnrare:RemoveClickListener()
-	slot0._btnfilter:RemoveClickListener()
-	slot0._btncloseCritter:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmaskable:RemoveClickListener()
+	arg_3_0._btncritterclick:RemoveClickListener()
+	arg_3_0._btnhideui:RemoveClickListener()
+	arg_3_0._btnbuilding:RemoveClickListener()
+	arg_3_0._btncamerastate:RemoveClickListener()
+	arg_3_0._btnbuildingconfirm:RemoveClickListener()
+	arg_3_0._btncloseBuilding:RemoveClickListener()
+	arg_3_0._btnmood:RemoveClickListener()
+	arg_3_0._btnrare:RemoveClickListener()
+	arg_3_0._btnfilter:RemoveClickListener()
+	arg_3_0._btncloseCritter:RemoveClickListener()
 end
 
-function slot0._btncloseBuildingOnClick(slot0)
-	slot0:_setRightTabId(slot0._RightTabId.BuildingInfo)
+function var_0_0._btncloseBuildingOnClick(arg_4_0)
+	arg_4_0:_setRightTabId(arg_4_0._RightTabId.BuildingInfo)
 end
 
-function slot0._btnmoodOnClick(slot0)
+function var_0_0._btnmoodOnClick(arg_5_0)
+	return
 end
 
-function slot0._btnrareOnClick(slot0)
+function var_0_0._btnrareOnClick(arg_6_0)
+	return
 end
 
-function slot0._btnfilterOnClick(slot0)
+function var_0_0._btnfilterOnClick(arg_7_0)
+	return
 end
 
-function slot0._btncamerastateOnClick(slot0)
-	slot0._isFirstPerson = slot0._isFirstPerson ~= true
+function var_0_0._btncamerastateOnClick(arg_8_0)
+	arg_8_0._isFirstPerson = arg_8_0._isFirstPerson ~= true
 
-	RoomTransportController.instance:tweenCameraFocusSite(slot0._selectSiteType, slot0._isFirstPerson)
-	slot0:_refreshCameraStateUI()
+	RoomTransportController.instance:tweenCameraFocusSite(arg_8_0._selectSiteType, arg_8_0._isFirstPerson)
+	arg_8_0:_refreshCameraStateUI()
 
-	slot1 = slot0:getPathMOBySiteType(slot0._selectSiteType)
+	local var_8_0 = arg_8_0:getPathMOBySiteType(arg_8_0._selectSiteType)
 
-	RoomStatController.instance:roomTransportCameraSwitch(slot0._isFirstPerson, slot1, slot1)
+	RoomStatController.instance:roomTransportCameraSwitch(arg_8_0._isFirstPerson, var_8_0, var_8_0)
 end
 
-function slot0._btnmaskableOnClick(slot0)
-	if not slot0._curUIIsShow then
-		slot0:_setUIShow(true)
+function var_0_0._btnmaskableOnClick(arg_9_0)
+	if not arg_9_0._curUIIsShow then
+		arg_9_0:_setUIShow(true)
 
 		return
 	end
 end
 
-function slot0._btnswithItemOnClick(slot0)
+function var_0_0._btnswithItemOnClick(arg_10_0)
+	return
 end
 
-function slot0._btnbuildingconfirmOnClick(slot0)
-	slot1 = RoomTransportBuildingListModel.instance:getSelectMO()
-	slot3 = RoomTransportBuildingSkinListModel.instance:getSelectMO()
+function var_0_0._btnbuildingconfirmOnClick(arg_11_0)
+	local var_11_0 = RoomTransportBuildingListModel.instance:getSelectMO()
+	local var_11_1 = arg_11_0:getPathMOBySiteType(arg_11_0._selectSiteType)
+	local var_11_2 = RoomTransportBuildingSkinListModel.instance:getSelectMO()
 
-	if slot0:getPathMOBySiteType(slot0._selectSiteType) and slot1 then
-		slot2.buildingUid = slot1.id
-		slot2.buildingId = slot1.buildingId
-		slot4 = slot3 and slot3.id or 0
-		slot2.buildingSkinId = slot4
+	if var_11_1 and var_11_0 then
+		var_11_1.buildingUid = var_11_0.id
+		var_11_1.buildingId = var_11_0.buildingId
 
-		RoomRpc.instance:sendAllotVehicleRequest(slot2.id, slot1.id, slot4)
+		local var_11_3 = var_11_2 and var_11_2.id or 0
 
-		slot0._waitReplyRightTabId = slot0._RightTabId.BuildingInfo
+		var_11_1.buildingSkinId = var_11_3
+
+		RoomRpc.instance:sendAllotVehicleRequest(var_11_1.id, var_11_0.id, var_11_3)
+
+		arg_11_0._waitReplyRightTabId = arg_11_0._RightTabId.BuildingInfo
 	else
-		slot0:_setRightTabId(slot0._RightTabId.BuildingInfo)
+		arg_11_0:_setRightTabId(arg_11_0._RightTabId.BuildingInfo)
 	end
 end
 
-function slot0._btnhideuiOnClick(slot0)
-	slot0:_setUIShow(false)
+function var_0_0._btnhideuiOnClick(arg_12_0)
+	arg_12_0:_setUIShow(false)
 end
 
-function slot0._btnbuildingOnClick(slot0)
-	slot0:_setRightTabId(slot0._RightTabId.BuildingList)
+function var_0_0._btnbuildingOnClick(arg_13_0)
+	arg_13_0:_setRightTabId(arg_13_0._RightTabId.BuildingList)
 
-	if slot0:getPathMOBySiteType(slot0._selectSiteType) then
-		slot0:_setBuildingSelect(slot1.buildingId, slot1.buildingSkinId)
-		RoomTransportBuildingListModel.instance:setSelect(slot1.buildingUid)
+	local var_13_0 = arg_13_0:getPathMOBySiteType(arg_13_0._selectSiteType)
+
+	if var_13_0 then
+		arg_13_0:_setBuildingSelect(var_13_0.buildingId, var_13_0.buildingSkinId)
+		RoomTransportBuildingListModel.instance:setSelect(var_13_0.buildingUid)
 	end
 end
 
-function slot0._btncritterclickOnClick(slot0)
-	if slot0:getPathMOBySiteType(slot0._selectSiteType) then
-		ManufactureController.instance:clickTransportCritterSlotItem(slot1.id)
+function var_0_0._btncritterclickOnClick(arg_14_0)
+	local var_14_0 = arg_14_0:getPathMOBySiteType(arg_14_0._selectSiteType)
+
+	if var_14_0 then
+		ManufactureController.instance:clickTransportCritterSlotItem(var_14_0.id)
 	end
 end
 
-function slot0._btncloseCritterOnClick(slot0)
-	slot0:_setRightTabId(slot0._RightTabId.BuildingInfo)
+function var_0_0._btncloseCritterOnClick(arg_15_0)
+	arg_15_0:_setRightTabId(arg_15_0._RightTabId.BuildingInfo)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gocritterselected, false)
+function var_0_0._editableInitView(arg_16_0)
+	gohelper.setActive(arg_16_0._gocritterselected, false)
 
-	slot0._goAddAnim = gohelper.findChild(slot0._gohascritter, "#add")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "go_content")
-	slot0._RightTabId = {
+	arg_16_0._goAddAnim = gohelper.findChild(arg_16_0._gohascritter, "#add")
+	arg_16_0._gocontent = gohelper.findChild(arg_16_0.viewGO, "go_content")
+	arg_16_0._RightTabId = {
 		CritterList = 2,
 		BuildingInfo = 3,
 		BuildingList = 1
 	}
 
-	slot0:_setRightTabId(slot0._RightTabId.BuildingInfo)
-	slot0:_initSiteItemList()
+	arg_16_0:_setRightTabId(arg_16_0._RightTabId.BuildingInfo)
+	arg_16_0:_initSiteItemList()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_17_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_18_0)
 	RoomStatController.instance:startOpenTransportSiteView()
 
-	slot0._selectSiteType = slot0.viewParam.siteType
-	slot0._addAnimCritterUid = slot0:getPathMOBySiteType(slot0._selectSiteType) and slot1.critterUid or 0
-	slot0._isFirstPerson = false
+	arg_18_0._selectSiteType = arg_18_0.viewParam.siteType
 
-	if slot0.viewContainer then
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportSiteSelect, slot0._onSelectSiteItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportCritterSelect, slot0._onSelectCritterItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportBuildingSelect, slot0._onSelectBuildingItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportBuildingSkinSelect, slot0._onSelectBuildingSkinItem, slot0)
+	local var_18_0 = arg_18_0:getPathMOBySiteType(arg_18_0._selectSiteType)
+
+	arg_18_0._addAnimCritterUid = var_18_0 and var_18_0.critterUid or 0
+	arg_18_0._isFirstPerson = false
+
+	if arg_18_0.viewContainer then
+		arg_18_0:addEventCb(arg_18_0.viewContainer, RoomEvent.TransportSiteSelect, arg_18_0._onSelectSiteItem, arg_18_0)
+		arg_18_0:addEventCb(arg_18_0.viewContainer, RoomEvent.TransportCritterSelect, arg_18_0._onSelectCritterItem, arg_18_0)
+		arg_18_0:addEventCb(arg_18_0.viewContainer, RoomEvent.TransportBuildingSelect, arg_18_0._onSelectBuildingItem, arg_18_0)
+		arg_18_0:addEventCb(arg_18_0.viewContainer, RoomEvent.TransportBuildingSkinSelect, arg_18_0._onSelectBuildingSkinItem, arg_18_0)
 	end
 
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ShowUI, slot0._onShowUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.HideUI, slot0._onHideUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenCloseView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onOpenCloseView, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.NewBuildingPush, slot0._newBuildingPush, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refreshSkinList, slot0)
+	arg_18_0:addEventCb(RoomMapController.instance, RoomEvent.TransportCritterChanged, arg_18_0._refreshUI, arg_18_0)
+	arg_18_0:addEventCb(RoomMapController.instance, RoomEvent.TransportBuildingChanged, arg_18_0._refreshUI, arg_18_0)
+	arg_18_0:addEventCb(RoomMapController.instance, RoomEvent.ShowUI, arg_18_0._onShowUI, arg_18_0)
+	arg_18_0:addEventCb(RoomMapController.instance, RoomEvent.HideUI, arg_18_0._onHideUI, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_18_0._onOpenCloseView, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_18_0._onOpenCloseView, arg_18_0)
+	arg_18_0:addEventCb(RoomMapController.instance, RoomEvent.NewBuildingPush, arg_18_0._newBuildingPush, arg_18_0)
+	arg_18_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_18_0._refreshSkinList, arg_18_0)
 	RoomTransportCritterListModel.instance:setCritterList()
 	RoomTransportBuildingListModel.instance:setBuildingList()
-	slot0:_refreshUI()
+	arg_18_0:_refreshUI()
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportSiteViewShowChanged)
 end
 
-function slot0.onClose(slot0)
-	slot1 = slot0:getPathMOBySiteType(slot0._selectSiteType)
+function var_0_0.onClose(arg_19_0)
+	local var_19_0 = arg_19_0:getPathMOBySiteType(arg_19_0._selectSiteType)
+	local var_19_1 = RoomCameraController.instance:getRoomScene()
 
 	RoomCameraController.instance:resetCameraStateByKey(ViewName.RoomTransportSiteView)
 
-	if RoomCameraController.instance:getRoomScene() then
-		slot2.cameraFollow:setFollowTarget(nil)
+	if var_19_1 then
+		var_19_1.cameraFollow:setFollowTarget(nil)
 	end
 
-	RoomStatController.instance:closeTransportSiteView(slot1)
+	RoomStatController.instance:closeTransportSiteView(var_19_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportSiteViewShowChanged)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-function slot0._onShowUI(slot0)
-	slot0:_setUIShow(true)
+function var_0_0._onShowUI(arg_21_0)
+	arg_21_0:_setUIShow(true)
 end
 
-function slot0._onHideUI(slot0)
-	slot0:_setUIShow(false)
+function var_0_0._onHideUI(arg_22_0)
+	arg_22_0:_setUIShow(false)
 end
 
-function slot0._onOpenCloseView(slot0, slot1)
-	gohelper.setActive(slot0._gocritterselected, ViewMgr.instance:isOpen(ViewName.RoomCritterListView))
+function var_0_0._onOpenCloseView(arg_23_0, arg_23_1)
+	gohelper.setActive(arg_23_0._gocritterselected, ViewMgr.instance:isOpen(ViewName.RoomCritterListView))
 end
 
-function slot0._setUIShow(slot0, slot1)
-	slot0._curUIIsShow = slot1
+function var_0_0._setUIShow(arg_24_0, arg_24_1)
+	arg_24_0._curUIIsShow = arg_24_1
 
-	gohelper.setActive(slot0._gocontent, slot1)
+	gohelper.setActive(arg_24_0._gocontent, arg_24_1)
 end
 
-function slot0._newBuildingPush(slot0)
+function var_0_0._newBuildingPush(arg_25_0)
 	RoomTransportBuildingListModel.instance:setBuildingList()
 end
 
-function slot0._refreshSkinList(slot0)
-	RoomTransportBuildingSkinListModel.instance:setBuildingUid(RoomTransportBuildingListModel.instance:getSelect())
+function var_0_0._refreshSkinList(arg_26_0)
+	local var_26_0 = RoomTransportBuildingListModel.instance:getSelect()
+
+	RoomTransportBuildingSkinListModel.instance:setBuildingUid(var_26_0)
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshCritterUI()
-	slot0:_refreshBuildingUI()
-	slot0:_applyReplyRightTabId()
-	slot0:_refreshCameraStateUI()
-	slot0:_refreshSiteItemUI()
+function var_0_0._refreshUI(arg_27_0)
+	arg_27_0:_refreshCritterUI()
+	arg_27_0:_refreshBuildingUI()
+	arg_27_0:_applyReplyRightTabId()
+	arg_27_0:_refreshCameraStateUI()
+	arg_27_0:_refreshSiteItemUI()
 end
 
-function slot0._applyReplyRightTabId(slot0)
-	if slot0._waitReplyRightTabId then
-		slot0:_setRightTabId(slot0._waitReplyRightTabId)
+function var_0_0._applyReplyRightTabId(arg_28_0)
+	if arg_28_0._waitReplyRightTabId then
+		arg_28_0:_setRightTabId(arg_28_0._waitReplyRightTabId)
 	end
 end
 
-function slot0._refreshCameraStateUI(slot0)
-	gohelper.setActive(slot0._gofirstperson, not slot0._isFirstPerson)
-	gohelper.setActive(slot0._gothirdperson, slot0._isFirstPerson)
+function var_0_0._refreshCameraStateUI(arg_29_0)
+	gohelper.setActive(arg_29_0._gofirstperson, not arg_29_0._isFirstPerson)
+	gohelper.setActive(arg_29_0._gothirdperson, arg_29_0._isFirstPerson)
 end
 
-function slot0._refreshCritterUI(slot0)
-	slot2 = nil
+function var_0_0._refreshCritterUI(arg_30_0)
+	local var_30_0 = arg_30_0:getPathMOBySiteType(arg_30_0._selectSiteType)
+	local var_30_1
 
-	if slot0:getPathMOBySiteType(slot0._selectSiteType) then
-		slot2 = CritterModel.instance:getCritterMOByUid(slot1.critterUid)
+	if var_30_0 then
+		var_30_1 = CritterModel.instance:getCritterMOByUid(var_30_0.critterUid)
 	end
 
-	if slot2 ~= nil then
-		if not slot0.critterIcon then
-			slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocritterIcon)
+	local var_30_2 = var_30_1 ~= nil
+
+	if var_30_2 then
+		if not arg_30_0.critterIcon then
+			arg_30_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_30_0._gocritterIcon)
 		end
 
-		slot0.critterIcon:setMOValue(slot2:getId(), slot2:getDefineId())
-		slot0.critterIcon:showMood()
+		arg_30_0.critterIcon:setMOValue(var_30_1:getId(), var_30_1:getDefineId())
+		arg_30_0.critterIcon:showMood()
 	end
 
-	gohelper.setActive(slot0._gohascritter, slot3)
-	gohelper.setActive(slot0._gonocritter, not slot3)
+	gohelper.setActive(arg_30_0._gohascritter, var_30_2)
+	gohelper.setActive(arg_30_0._gonocritter, not var_30_2)
 
-	if slot0._addAnimCritterUid ~= (slot1 and slot1.critterUid or 0) then
-		slot0._addAnimCritterUid = slot4
+	local var_30_3 = var_30_0 and var_30_0.critterUid or 0
 
-		if slot3 then
-			gohelper.setActive(slot0._goAddAnim, false)
+	if arg_30_0._addAnimCritterUid ~= var_30_3 then
+		arg_30_0._addAnimCritterUid = var_30_3
+
+		if var_30_2 then
+			gohelper.setActive(arg_30_0._goAddAnim, false)
 		end
 	end
 
-	gohelper.setActive(slot0._goAddAnim, slot3)
+	gohelper.setActive(arg_30_0._goAddAnim, var_30_2)
 end
 
-function slot0._refreshBuildingUI(slot0)
-	slot2 = nil
+function var_0_0._refreshBuildingUI(arg_31_0)
+	local var_31_0 = arg_31_0:getPathMOBySiteType(arg_31_0._selectSiteType)
+	local var_31_1
 
-	if slot0:getPathMOBySiteType(slot0._selectSiteType) then
-		slot2 = RoomConfig.instance:getBuildingConfig(slot1.buildingId)
+	if var_31_0 then
+		var_31_1 = RoomConfig.instance:getBuildingConfig(var_31_0.buildingId)
 	end
 
-	slot3 = slot2 ~= nil
+	local var_31_2 = var_31_1 ~= nil
 
-	gohelper.setActive(slot0._gohasBuilding, slot3)
-	gohelper.setActive(slot0._gonobuilding, not slot3)
+	gohelper.setActive(arg_31_0._gohasBuilding, var_31_2)
+	gohelper.setActive(arg_31_0._gonobuilding, not var_31_2)
 
-	if slot2 then
-		slot0._simagebuildingicon:LoadImage(ResUrl.getRoomImage("building/" .. slot2.icon))
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imagebuildingrare, RoomBuildingEnum.RareFrame[slot2.rare] or RoomBuildingEnum.RareFrame[1])
+	if var_31_1 then
+		arg_31_0._simagebuildingicon:LoadImage(ResUrl.getRoomImage("building/" .. var_31_1.icon))
 
-		slot0._txtbuildingname.text = slot2.name
-		slot0._txtbuildingbase.text = slot2.useDesc
+		local var_31_3 = RoomBuildingEnum.RareFrame[var_31_1.rare] or RoomBuildingEnum.RareFrame[1]
+
+		UISpriteSetMgr.instance:setRoomSprite(arg_31_0._imagebuildingrare, var_31_3)
+
+		arg_31_0._txtbuildingname.text = var_31_1.name
+		arg_31_0._txtbuildingbase.text = var_31_1.useDesc
 	end
 
-	slot0.viewContainer:setUseBuildingUid(slot1 and slot1.buildingUid)
+	arg_31_0.viewContainer:setUseBuildingUid(var_31_0 and var_31_0.buildingUid)
 end
 
-function slot0._setRightTabId(slot0, slot1)
-	slot0._waitReplyRightTabId = nil
+function var_0_0._setRightTabId(arg_32_0, arg_32_1)
+	arg_32_0._waitReplyRightTabId = nil
 
-	if slot0._lastRightTabId ~= slot1 then
-		slot0._lastRightTabId = slot1
+	if arg_32_0._lastRightTabId ~= arg_32_1 then
+		arg_32_0._lastRightTabId = arg_32_1
 
-		gohelper.setActive(slot0._gobuildinginfo, slot1 == slot0._RightTabId.BuildingInfo)
-		gohelper.setActive(slot0._gobuildinglist, slot1 == slot0._RightTabId.BuildingList)
-		gohelper.setActive(slot0._gocritterlist, slot1 == slot0._RightTabId.CritterList)
+		gohelper.setActive(arg_32_0._gobuildinginfo, arg_32_1 == arg_32_0._RightTabId.BuildingInfo)
+		gohelper.setActive(arg_32_0._gobuildinglist, arg_32_1 == arg_32_0._RightTabId.BuildingList)
+		gohelper.setActive(arg_32_0._gocritterlist, arg_32_1 == arg_32_0._RightTabId.CritterList)
 	end
 end
 
-function slot0._onSelectSiteItem(slot0, slot1)
-	if not slot1 or slot1.buildingType == slot0._selectSiteType then
+function var_0_0._onSelectSiteItem(arg_33_0, arg_33_1)
+	if not arg_33_1 or arg_33_1.buildingType == arg_33_0._selectSiteType then
 		return
 	end
 
-	slot0._selectSiteType = slot1.buildingType
-	slot0._addAnimCritterUid = slot0:getPathMOBySiteType(slot0._selectSiteType) and slot3.critterUid or 0
+	local var_33_0 = arg_33_0:getPathMOBySiteType(arg_33_0._selectSiteType)
 
-	RoomTransportController.instance:tweenCameraFocusSite(slot0._selectSiteType, slot0._isFirstPerson)
-	slot0:_refreshUI()
-	RoomStatController.instance:roomTransportCameraSwitch(slot0._isFirstPerson, slot0:getPathMOBySiteType(slot0._selectSiteType), slot3)
+	arg_33_0._selectSiteType = arg_33_1.buildingType
+
+	local var_33_1 = arg_33_0:getPathMOBySiteType(arg_33_0._selectSiteType)
+
+	arg_33_0._addAnimCritterUid = var_33_1 and var_33_1.critterUid or 0
+
+	RoomTransportController.instance:tweenCameraFocusSite(arg_33_0._selectSiteType, arg_33_0._isFirstPerson)
+	arg_33_0:_refreshUI()
+	RoomStatController.instance:roomTransportCameraSwitch(arg_33_0._isFirstPerson, var_33_0, var_33_1)
 
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterListView) then
 		ViewMgr.instance:closeView(ViewName.RoomCritterListView)
 	end
 end
 
-function slot0._onSelectCritterItem(slot0, slot1)
-	if not slot1 then
+function var_0_0._onSelectCritterItem(arg_34_0, arg_34_1)
+	if not arg_34_1 then
 		return
 	end
 
-	RoomRpc.instance:sendAllotCritterRequestt(slot0:getPathMOBySiteType(slot0._selectSiteType).id, slot1.id)
+	local var_34_0 = arg_34_0:getPathMOBySiteType(arg_34_0._selectSiteType)
 
-	slot0._waitReplyRightTabId = slot0._RightTabId.BuildingInfo
+	RoomRpc.instance:sendAllotCritterRequestt(var_34_0.id, arg_34_1.id)
+
+	arg_34_0._waitReplyRightTabId = arg_34_0._RightTabId.BuildingInfo
 end
 
-function slot0._onSelectBuildingItem(slot0, slot1)
-	if slot1.isNeedToBuy then
-		if RoomBuildingEnum.TransportBuyTosatDic[slot1.buildingId] then
-			GameFacade.showToast(RoomBuildingEnum.TransportBuyTosatDic[slot1.buildingId])
+function var_0_0._onSelectBuildingItem(arg_35_0, arg_35_1)
+	if arg_35_1.isNeedToBuy then
+		if RoomBuildingEnum.TransportBuyTosatDic[arg_35_1.buildingId] then
+			GameFacade.showToast(RoomBuildingEnum.TransportBuyTosatDic[arg_35_1.buildingId])
 
 			return
 		end
 
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomTransportBuildingSkinShopBuy, MsgBoxEnum.BoxType.Yes_No, slot0._yseGoToShop, nil, , slot0, nil, )
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomTransportBuildingSkinShopBuy, MsgBoxEnum.BoxType.Yes_No, arg_35_0._yseGoToShop, nil, nil, arg_35_0, nil, nil)
 
 		return
 	end
 
-	RoomTransportBuildingListModel.instance:setSelect(slot1.id)
+	RoomTransportBuildingListModel.instance:setSelect(arg_35_1.id)
 
-	if slot0:getPathMOByBuildingUid(slot1.id) and RoomTransportBuildingSkinListModel.instance:getById(slot2.buildingSkinId) then
-		slot3 = slot2.buildingSkinId or 0
-	end
+	local var_35_0 = arg_35_0:getPathMOByBuildingUid(arg_35_1.id)
+	local var_35_1 = 0
 
-	slot0:_setBuildingSelect(slot1.buildingId, slot3)
+	var_35_1 = var_35_0 and RoomTransportBuildingSkinListModel.instance:getById(var_35_0.buildingSkinId) and var_35_0.buildingSkinId or var_35_1
+
+	arg_35_0:_setBuildingSelect(arg_35_1.buildingId, var_35_1)
 end
 
-function slot0._setBuildingSelect(slot0, slot1, slot2)
-	RoomTransportBuildingSkinListModel.instance:setBuildingId(slot1)
-	gohelper.setActive(slot0._scrollbuildingskin, RoomTransportBuildingSkinListModel.instance:getCount() > 0)
-	RoomTransportBuildingSkinListModel.instance:setSelect(RoomTransportBuildingSkinListModel.instance:getById(slot2).id or 0)
+function var_0_0._setBuildingSelect(arg_36_0, arg_36_1, arg_36_2)
+	RoomTransportBuildingSkinListModel.instance:setBuildingId(arg_36_1)
+
+	local var_36_0 = RoomTransportBuildingSkinListModel.instance:getCount()
+
+	gohelper.setActive(arg_36_0._scrollbuildingskin, var_36_0 > 0)
+
+	local var_36_1 = RoomTransportBuildingSkinListModel.instance:getById(arg_36_2)
+
+	RoomTransportBuildingSkinListModel.instance:setSelect(var_36_1.id or 0)
 end
 
-function slot0._onSelectBuildingSkinItem(slot0, slot1)
-	if slot1 and not slot1.isLock then
-		RoomTransportBuildingSkinListModel.instance:setSelect(slot1.id)
+function var_0_0._onSelectBuildingSkinItem(arg_37_0, arg_37_1)
+	if arg_37_1 and not arg_37_1.isLock then
+		RoomTransportBuildingSkinListModel.instance:setSelect(arg_37_1.id)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomTransportBuildingSkinShopBuy, MsgBoxEnum.BoxType.Yes_No, slot0._yseGoToShop, nil, , slot0, nil, )
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomTransportBuildingSkinShopBuy, MsgBoxEnum.BoxType.Yes_No, arg_37_0._yseGoToShop, nil, nil, arg_37_0, nil, nil)
 	end
 end
 
-function slot0._yseGoToShop(slot0)
+function var_0_0._yseGoToShop(arg_38_0)
 	GameFacade.jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function slot0._initSiteItemList(slot0)
-	slot0._dataList = slot0:getPathDataList()
-	slot0._siteItemCompList = {}
+function var_0_0._initSiteItemList(arg_39_0)
+	arg_39_0._dataList = arg_39_0:getPathDataList()
+	arg_39_0._siteItemCompList = {}
 
-	gohelper.CreateObjList(slot0, slot0._siteItemShow, slot0._dataList, slot0._golayoutSwitchBtns, slot0._gositesitem, RoomTransportSiteItem)
+	local var_39_0 = arg_39_0._golayoutSwitchBtns
+	local var_39_1 = arg_39_0._gositesitem
+
+	gohelper.CreateObjList(arg_39_0, arg_39_0._siteItemShow, arg_39_0._dataList, var_39_0, var_39_1, RoomTransportSiteItem)
 end
 
-function slot0._siteItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
+function var_0_0._siteItemShow(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	arg_40_1:onUpdateMO(arg_40_2)
 
-	if not slot1._view then
-		slot1._view = slot0
+	if not arg_40_1._view then
+		arg_40_1._view = arg_40_0
 	end
 
-	table.insert(slot0._siteItemCompList, slot1)
+	table.insert(arg_40_0._siteItemCompList, arg_40_1)
 end
 
-function slot0._refreshSiteItemUI(slot0)
-	if slot0._siteItemCompList then
-		for slot4, slot5 in ipairs(slot0._siteItemCompList) do
-			slot5:onSelect(slot5:getDataMO() and slot6.buildingType == slot0._selectSiteType)
-			slot5:refreshUI()
+function var_0_0._refreshSiteItemUI(arg_41_0)
+	if arg_41_0._siteItemCompList then
+		for iter_41_0, iter_41_1 in ipairs(arg_41_0._siteItemCompList) do
+			local var_41_0 = iter_41_1:getDataMO()
+
+			iter_41_1:onSelect(var_41_0 and var_41_0.buildingType == arg_41_0._selectSiteType)
+			iter_41_1:refreshUI()
 		end
 	end
 end
 
-function slot0.getPathMOBySiteType(slot0, slot1)
-	slot2, slot3 = RoomTransportHelper.getSiteFromToByType(slot1)
+function var_0_0.getPathMOBySiteType(arg_42_0, arg_42_1)
+	local var_42_0, var_42_1 = RoomTransportHelper.getSiteFromToByType(arg_42_1)
 
-	return RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot2, slot3)
+	return RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_42_0, var_42_1)
 end
 
-function slot0.getPathMOByBuildingUid(slot0, slot1)
-	for slot6 = 1, #RoomMapTransportPathModel.instance:getTransportPathMOList() do
-		if slot2[slot6] and slot7.buildingUid == slot1 then
-			return slot7
+function var_0_0.getPathMOByBuildingUid(arg_43_0, arg_43_1)
+	local var_43_0 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+
+	for iter_43_0 = 1, #var_43_0 do
+		local var_43_1 = var_43_0[iter_43_0]
+
+		if var_43_1 and var_43_1.buildingUid == arg_43_1 then
+			return var_43_1
 		end
 	end
 end
 
-function slot0.getPathDataList(slot0)
-	slot2 = {}
+function var_0_0.getPathDataList(arg_44_0)
+	local var_44_0 = RoomTransportHelper.getPathBuildingTypesList()
+	local var_44_1 = {}
 
-	for slot6, slot7 in ipairs(RoomTransportHelper.getPathBuildingTypesList()) do
-		if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot7[1], slot7[2]) then
-			table.insert(slot2, {
-				buildingType = slot8,
-				fromType = slot8,
-				toType = slot9,
-				pathId = slot10.id
-			})
+	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
+		local var_44_2 = iter_44_1[1]
+		local var_44_3 = iter_44_1[2]
+		local var_44_4 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_44_2, var_44_3)
+
+		if var_44_4 then
+			local var_44_5 = {
+				buildingType = var_44_2,
+				fromType = var_44_2,
+				toType = var_44_3,
+				pathId = var_44_4.id
+			}
+
+			table.insert(var_44_1, var_44_5)
 		end
 	end
 
-	return slot2
+	return var_44_1
 end
 
-return slot0
+return var_0_0

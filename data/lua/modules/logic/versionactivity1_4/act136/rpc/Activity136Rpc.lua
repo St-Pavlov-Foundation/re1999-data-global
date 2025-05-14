@@ -1,35 +1,37 @@
-module("modules.logic.versionactivity1_4.act136.rpc.Activity136Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.rpc.Activity136Rpc", package.seeall)
 
-slot0 = class("Activity136Rpc", BaseRpc)
+local var_0_0 = class("Activity136Rpc", BaseRpc)
 
-function slot0.sendGet136InfoRequest(slot0, slot1)
-	slot2 = Activity136Module_pb.Get136InfoRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGet136InfoRequest(arg_1_0, arg_1_1)
+	local var_1_0 = Activity136Module_pb.Get136InfoRequest()
 
-	return slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGet136InfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity136Model.instance:setActivityInfo(slot2)
+function var_0_0.onReceiveGet136InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		Activity136Model.instance:setActivityInfo(arg_2_2)
 	end
 end
 
-function slot0.sendAct136SelectRequest(slot0, slot1, slot2)
-	slot3 = Activity136Module_pb.Act136SelectRequest()
-	slot3.activityId = slot1
-	slot3.selectHeroId = slot2
+function var_0_0.sendAct136SelectRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = Activity136Module_pb.Act136SelectRequest()
 
-	return slot0:sendMsg(slot3)
+	var_3_0.activityId = arg_3_1
+	var_3_0.selectHeroId = arg_3_2
+
+	return arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveAct136SelectReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity136Model.instance:setActivityInfo(slot2)
+function var_0_0.onReceiveAct136SelectReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		Activity136Model.instance:setActivityInfo(arg_4_2)
 		Activity136Controller.instance:confirmReceiveCharacterCallback()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

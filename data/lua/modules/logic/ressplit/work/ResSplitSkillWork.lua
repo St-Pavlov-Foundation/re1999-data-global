@@ -1,7 +1,7 @@
-module("modules.logic.ressplit.work.ResSplitSkillWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitSkillWork", package.seeall)
 
-slot0 = class("ResSplitSkillWork", BaseWork)
-slot1 = {
+local var_0_0 = class("ResSplitSkillWork", BaseWork)
+local var_0_1 = {
 	"FightTLEventTargetEffect",
 	nil,
 	nil,
@@ -10,70 +10,90 @@ slot1 = {
 	"FightTLEventAtkFlyEffect",
 	"FightTLEventAtkFullEffect",
 	"FightTLEventDefEffect",
-	[28.0] = "FightTLEventDefEffect"
+	[28] = "FightTLEventDefEffect"
 }
 
-function slot0.onStart(slot0, slot1)
-	slot0.includeTimeLineDic = {}
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0.includeTimeLineDic = {}
 
-	for slot6, slot7 in pairs(ResSplitModel.instance:getIncludeSkill()) do
-		if lua_skill.configDict[slot6] then
-			slot0.includeTimeLineDic[ResUrl.getSkillTimeline(slot8.timeline)] = true
+	local var_1_0 = ResSplitModel.instance:getIncludeSkill()
+
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		local var_1_1 = lua_skill.configDict[iter_1_0]
+
+		if var_1_1 then
+			arg_1_0.includeTimeLineDic[ResUrl.getSkillTimeline(var_1_1.timeline)] = true
 		end
 	end
 
-	for slot7, slot8 in pairs(ResSplitModel.instance:getIncludeTimelineDic()) do
-		slot0.includeTimeLineDic[ResUrl.getSkillTimeline(slot7)] = true
+	local var_1_2 = ResSplitModel.instance:getIncludeTimelineDic()
+
+	for iter_1_2, iter_1_3 in pairs(var_1_2) do
+		arg_1_0.includeTimeLineDic[ResUrl.getSkillTimeline(iter_1_2)] = true
 	end
 
-	slot0._loader = MultiAbLoader.New()
-	slot5 = {}
+	local var_1_3 = SLFramework.FileHelper.GetDirFilePaths("Assets/ZResourcesLib/rolestimeline")
 
-	for slot9 = 0, SLFramework.FileHelper.GetDirFilePaths("Assets/ZResourcesLib/rolestimeline").Length - 1 do
-		if not string.find(slot4[slot9], ".meta") then
-			slot0._loader:addPath(string.lower("rolestimeline/" .. SLFramework.FileHelper.GetFileName(slot10, true)))
+	arg_1_0._loader = MultiAbLoader.New()
+
+	local var_1_4 = {}
+
+	for iter_1_4 = 0, var_1_3.Length - 1 do
+		local var_1_5 = var_1_3[iter_1_4]
+
+		if not string.find(var_1_5, ".meta") then
+			local var_1_6 = SLFramework.FileHelper.GetFileName(var_1_5, true)
+
+			arg_1_0._loader:addPath(string.lower("rolestimeline/" .. var_1_6))
 		end
 	end
 
-	slot0._loader:startLoad(slot0._dealSkillTimeLine, slot0)
+	arg_1_0._loader:startLoad(arg_1_0._dealSkillTimeLine, arg_1_0)
 end
 
-function slot0._dealSkillTimeLine(slot0)
-	for slot4, slot5 in ipairs(slot0._loader._resList) do
-		if not string.nilorempty(ZProj.SkillTimelineAssetHelper.GeAssetJson(slot5)) then
-			for slot11 = 1, #cjson.decode(slot6), 2 do
-				slot14 = slot7[slot11 + 1][1]
+function var_0_0._dealSkillTimeLine(arg_2_0)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._loader._resList) do
+		local var_2_0 = ZProj.SkillTimelineAssetHelper.GeAssetJson(iter_2_1)
 
-				if uv0[tonumber(slot7[slot11])] and not ResSplitHelper.checkConfigEmpty(string.format("SkillTimeLine:%s", slot5.ResPath), slot12, slot14) then
-					slot15 = FightHelper.getEffectUrlWithLod(slot14)
-					slot16 = ResSplitEnum.Folder
-					slot17 = slot15
+		if not string.nilorempty(var_2_0) then
+			local var_2_1 = cjson.decode(var_2_0)
 
-					if string.find(slot15, "effects/prefabs/buff/") or string.find(slot15, "effects/prefabs/story/") then
-						slot16 = ResSplitEnum.Path
+			for iter_2_2 = 1, #var_2_1, 2 do
+				local var_2_2 = tonumber(var_2_1[iter_2_2])
+				local var_2_3 = var_2_1[iter_2_2 + 1][1]
+
+				if var_0_1[var_2_2] and not ResSplitHelper.checkConfigEmpty(string.format("SkillTimeLine:%s", iter_2_1.ResPath), var_2_2, var_2_3) then
+					local var_2_4 = FightHelper.getEffectUrlWithLod(var_2_3)
+					local var_2_5 = ResSplitEnum.Folder
+					local var_2_6 = var_2_4
+
+					if string.find(var_2_4, "effects/prefabs/buff/") or string.find(var_2_4, "effects/prefabs/story/") then
+						var_2_5 = ResSplitEnum.Path
 					else
-						slot17 = string.gsub(slot15, "/" .. SLFramework.FileHelper.GetFileName(slot15, true), "")
+						local var_2_7 = SLFramework.FileHelper.GetFileName(var_2_4, true)
+
+						var_2_6 = string.gsub(var_2_4, "/" .. var_2_7, "")
 					end
 
-					if slot0.includeTimeLineDic[slot5.ResPath] then
-						ResSplitModel.instance:setExclude(slot16, slot17, false)
+					if arg_2_0.includeTimeLineDic[iter_2_1.ResPath] then
+						ResSplitModel.instance:setExclude(var_2_5, var_2_6, false)
 					else
-						ResSplitModel.instance:setExclude(slot16, slot17, true)
+						ResSplitModel.instance:setExclude(var_2_5, var_2_6, true)
 					end
-				elseif slot12 == 16 and not ResSplitHelper.checkConfigEmpty(string.format("SkillTimeLine:%s", slot5.ResPath), slot12, slot14) then
-					slot15 = ResUrl.getVideo(slot14)
+				elseif var_2_2 == 16 and not ResSplitHelper.checkConfigEmpty(string.format("SkillTimeLine:%s", iter_2_1.ResPath), var_2_2, var_2_3) then
+					local var_2_8 = ResUrl.getVideo(var_2_3)
 
-					if slot0.includeTimeLineDic[slot5.ResPath] then
-						ResSplitModel.instance:setExclude(ResSplitEnum.Video, slot14, false)
+					if arg_2_0.includeTimeLineDic[iter_2_1.ResPath] then
+						ResSplitModel.instance:setExclude(ResSplitEnum.Video, var_2_3, false)
 					else
-						ResSplitModel.instance:setExclude(ResSplitEnum.Video, slot14, true)
+						ResSplitModel.instance:setExclude(ResSplitEnum.Video, var_2_3, true)
 					end
 				end
 			end
 		end
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

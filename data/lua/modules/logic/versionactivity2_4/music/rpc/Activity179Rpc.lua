@@ -1,43 +1,47 @@
-module("modules.logic.versionactivity2_4.music.rpc.Activity179Rpc", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.rpc.Activity179Rpc", package.seeall)
 
-slot0 = class("Activity179Rpc", BaseRpc)
+local var_0_0 = class("Activity179Rpc", BaseRpc)
 
-function slot0.sendGet179InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity179Module_pb.Get179InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet179InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity179Module_pb.Get179InfosRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet179InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet179InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.activityId
+	local var_2_0 = arg_2_2.activityId
+	local var_2_1 = arg_2_2.act179EpisodeNO
 
-	Activity179Model.instance:initEpisodeList(slot2.act179EpisodeNO)
+	Activity179Model.instance:initEpisodeList(var_2_1)
 end
 
-function slot0.sendSet179ScoreRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity179Module_pb.Set179ScoreRequest()
-	slot6.activityId = slot1
-	slot6.episodeId = slot2
-	slot6.score = slot3
+function var_0_0.sendSet179ScoreRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = Activity179Module_pb.Set179ScoreRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_3_0.activityId = arg_3_1
+	var_3_0.episodeId = arg_3_2
+	var_3_0.score = arg_3_3
+
+	arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
 end
 
-function slot0.onReceiveSet179ScoreReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSet179ScoreReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.activityId
+	local var_4_0 = arg_4_2.activityId
+	local var_4_1 = arg_4_2.act179EpisodeNO
 
-	Activity179Model.instance:updateEpisode(slot2.act179EpisodeNO)
+	Activity179Model.instance:updateEpisode(var_4_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

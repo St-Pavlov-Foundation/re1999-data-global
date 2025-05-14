@@ -1,101 +1,116 @@
-module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaWaveMO", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaWaveMO", package.seeall)
 
-slot0 = math.randomseed
-slot1 = table.insert
-slot2 = string.format
-slot3 = class("V2a4_WarmUpGachaWaveMO")
+local var_0_0 = math.randomseed
+local var_0_1 = table.insert
+local var_0_2 = string.format
+local var_0_3 = class("V2a4_WarmUpGachaWaveMO")
 
-function slot3.ctor(slot0, slot1, slot2)
-	slot0._index = slot1
-	slot0._type = slot2
-	slot0._roundMOList = {}
+function var_0_3.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._index = arg_1_1
+	arg_1_0._type = arg_1_2
+	arg_1_0._roundMOList = {}
 end
 
-function slot3._getYesOrNo(slot0)
-	slot0.__rdSet = slot0.__rdSet or {}
+function var_0_3._getYesOrNo(arg_2_0)
+	local var_2_0 = arg_2_0.__rdIdxList or {}
+	local var_2_1 = arg_2_0.__curRdIdx or 0
 
-	if (slot0.__curRdIdx or 0) < #(slot0.__rdIdxList or {}) then
-		slot3, slot4 = slot0:_nextRandomYesNo()
-		slot5 = 10
+	arg_2_0.__rdSet = arg_2_0.__rdSet or {}
 
-		while slot0.__rdSet[slot4] do
-			if slot5 - 1 < 0 then
+	if var_2_1 < #var_2_0 then
+		local var_2_2, var_2_3 = arg_2_0:_nextRandomYesNo()
+		local var_2_4 = 10
+
+		while arg_2_0.__rdSet[var_2_3] do
+			var_2_4 = var_2_4 - 1
+
+			if var_2_4 < 0 then
 				logError("[V2a4_WarmUpGachaWaveMO - _getYesOrNo] stack overflow")
 
 				break
 			end
 
-			slot3, slot4 = slot0:_nextRandomYesNo()
+			var_2_2, var_2_3 = arg_2_0:_nextRandomYesNo()
 		end
 
-		if slot0.__curRdIdx <= #slot1 then
-			slot0.__rdSet[slot4] = true
+		if arg_2_0.__curRdIdx <= #var_2_0 then
+			arg_2_0.__rdSet[var_2_3] = true
 
-			return slot3, slot4
+			return var_2_2, var_2_3
 		end
 
-		slot0.__rdSet = {}
+		arg_2_0.__rdSet = {}
 	end
 
-	slot3 = V2a4_WarmUpConfig.instance:getYesAndNoMaxCount(slot0._type)
+	local var_2_5 = V2a4_WarmUpConfig.instance:getYesAndNoMaxCount(arg_2_0._type)
 
 	if isDebugBuild then
-		assert(slot3 > 0, uv0("unsupported V2a4_WarmUpEnum.AskType.xxx = %s", slot0._type))
+		assert(var_2_5 > 0, var_0_2("unsupported V2a4_WarmUpEnum.AskType.xxx = %s", arg_2_0._type))
 	end
 
-	for slot7 = #slot1 + 1, slot3 do
-		uv1(slot1, slot7)
+	for iter_2_0 = #var_2_0 + 1, var_2_5 do
+		var_0_1(var_2_0, iter_2_0)
 	end
 
-	uv2(os.time())
+	var_0_0(os.time())
 
-	slot0.__rdIdxList = GameUtil.randomTable(slot1)
-	slot0.__curRdIdx = 0
-	slot4, slot5 = slot0:_nextRandomYesNo()
-	slot0.__rdSet[slot5] = true
+	arg_2_0.__rdIdxList = GameUtil.randomTable(var_2_0)
+	arg_2_0.__curRdIdx = 0
 
-	return slot4, slot5
+	local var_2_6, var_2_7 = arg_2_0:_nextRandomYesNo()
+
+	arg_2_0.__rdSet[var_2_7] = true
+
+	return var_2_6, var_2_7
 end
 
-function slot3._nextRandomYesNo(slot0)
-	slot0.__curRdIdx = slot1
+function var_0_3._nextRandomYesNo(arg_3_0)
+	local var_3_0 = arg_3_0.__curRdIdx + 1
+	local var_3_1 = arg_3_0.__rdIdxList[var_3_0]
+	local var_3_2 = var_3_1 % 2 == 0
+	local var_3_3 = math.ceil(var_3_1 / 2)
 
-	return slot0.__rdIdxList[slot0.__curRdIdx + 1] % 2 == 0, math.ceil(slot2 / 2)
+	arg_3_0.__curRdIdx = var_3_0
+
+	return var_3_2, var_3_3
 end
 
-function slot3.index(slot0)
-	return slot0._index
+function var_0_3.index(arg_4_0)
+	return arg_4_0._index
 end
 
-function slot3.type(slot0)
-	return slot0._type
+function var_0_3.type(arg_5_0)
+	return arg_5_0._type
 end
 
-function slot3.roundCount(slot0)
-	return #slot0._roundMOList
+function var_0_3.roundCount(arg_6_0)
+	return #arg_6_0._roundMOList
 end
 
-function slot3.roundMOList(slot0)
-	return slot0._roundMOList
+function var_0_3.roundMOList(arg_7_0)
+	return arg_7_0._roundMOList
 end
 
-function slot3.isAllAskYes(slot0)
-	for slot5, slot6 in ipairs(slot0._roundMOList) do
-		if slot6:ansIsYes() then
-			slot1 = 0 + 1
+function var_0_3.isAllAskYes(arg_8_0)
+	local var_8_0 = 0
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._roundMOList) do
+		if iter_8_1:ansIsYes() then
+			var_8_0 = var_8_0 + 1
 		end
 	end
 
-	return slot1 > 0 and slot1 == slot0:roundCount()
+	return var_8_0 > 0 and var_8_0 == arg_8_0:roundCount()
 end
 
-function slot3.genRound(slot0, slot1)
-	slot2, slot3 = slot0:_getYesOrNo()
-	slot5 = V2a4_WarmUpGachaRoundMO.New(slot0, slot0:roundCount() + 1, slot1, slot2, slot3)
+function var_0_3.genRound(arg_9_0, arg_9_1)
+	local var_9_0, var_9_1 = arg_9_0:_getYesOrNo()
+	local var_9_2 = arg_9_0:roundCount() + 1
+	local var_9_3 = V2a4_WarmUpGachaRoundMO.New(arg_9_0, var_9_2, arg_9_1, var_9_0, var_9_1)
 
-	uv0(slot0._roundMOList, slot5)
+	var_0_1(arg_9_0._roundMOList, var_9_3)
 
-	return slot5
+	return var_9_3
 end
 
-return slot3
+return var_0_3

@@ -1,115 +1,115 @@
-module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase", package.seeall)
+﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase", package.seeall)
 
-slot0 = class("V2a2_WarmUpLeftView_DayBase", RougeSimpleItemBase)
-slot1 = SLFramework.AnimatorPlayer
-slot2 = ZProj.TweenHelper
-slot3 = -1
-slot4 = 0
-slot5 = 1
+local var_0_0 = class("V2a2_WarmUpLeftView_DayBase", RougeSimpleItemBase)
+local var_0_1 = SLFramework.AnimatorPlayer
+local var_0_2 = ZProj.TweenHelper
+local var_0_3 = -1
+local var_0_4 = 0
+local var_0_5 = 1
 
-function slot0.ctor(slot0, slot1)
-	RougeSimpleItemBase.ctor(slot0, slot1)
-	slot0:markIsFinishedInteractive(false)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	RougeSimpleItemBase.ctor(arg_1_0, arg_1_1)
+	arg_1_0:markIsFinishedInteractive(false)
 end
 
-function slot0._editableInitView(slot0)
-	RougeSimpleItemBase._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	RougeSimpleItemBase._editableInitView(arg_2_0)
 
-	slot0._beforeGo = gohelper.findChild(slot0.viewGO, "before")
-	slot0._afterGo = gohelper.findChild(slot0.viewGO, "after")
-	slot0._animPlayer_before = uv0.Get(slot0._beforeGo)
-	slot0._animPlayer_after = uv0.Get(slot0._afterGo)
-	slot0._anim_before = slot0._animPlayer_before and slot0._animPlayer_before.animator
-	slot0._anim_after = slot0._animPlayer_after and slot0._animPlayer_after.animator
+	arg_2_0._beforeGo = gohelper.findChild(arg_2_0.viewGO, "before")
+	arg_2_0._afterGo = gohelper.findChild(arg_2_0.viewGO, "after")
+	arg_2_0._animPlayer_before = var_0_1.Get(arg_2_0._beforeGo)
+	arg_2_0._animPlayer_after = var_0_1.Get(arg_2_0._afterGo)
+	arg_2_0._anim_before = arg_2_0._animPlayer_before and arg_2_0._animPlayer_before.animator
+	arg_2_0._anim_after = arg_2_0._animPlayer_after and arg_2_0._animPlayer_after.animator
 
-	slot0:setActive_before(false)
-	slot0:setActive_after(false)
+	arg_2_0:setActive_before(false)
+	arg_2_0:setActive_after(false)
 
-	slot0._guideState = uv1
-	slot0._isDestroying = false
+	arg_2_0._guideState = var_0_3
+	arg_2_0._isDestroying = false
 end
 
-function slot0.episodeId(slot0)
-	return slot0._episodeId
+function var_0_0.episodeId(arg_3_0)
+	return arg_3_0._episodeId
 end
 
-function slot0._internal_setEpisode(slot0, slot1)
-	slot0._episodeId = slot1
+function var_0_0._internal_setEpisode(arg_4_0, arg_4_1)
+	arg_4_0._episodeId = arg_4_1
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0.viewGO, arg_5_1)
 end
 
-function slot0.setActive_before(slot0, slot1)
-	gohelper.setActive(slot0._beforeGo, slot1)
+function var_0_0.setActive_before(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._beforeGo, arg_6_1)
 end
 
-function slot0.setActive_after(slot0, slot1)
-	gohelper.setActive(slot0._afterGo, slot1)
+function var_0_0.setActive_after(arg_7_0, arg_7_1)
+	gohelper.setActive(arg_7_0._afterGo, arg_7_1)
 end
 
-function slot0.saveState(slot0, slot1)
-	assert(slot1 ~= 1999, "please call saveStateDone instead")
-	slot0:_assetGetViewContainer():saveState(slot0:episodeId(), slot1)
+function var_0_0.saveState(arg_8_0, arg_8_1)
+	assert(arg_8_1 ~= 1999, "please call saveStateDone instead")
+	arg_8_0:_assetGetViewContainer():saveState(arg_8_0:episodeId(), arg_8_1)
 end
 
-function slot0.getState(slot0, slot1)
-	return slot0:_assetGetViewContainer():getState(slot0:episodeId(), slot1)
+function var_0_0.getState(arg_9_0, arg_9_1)
+	return arg_9_0:_assetGetViewContainer():getState(arg_9_0:episodeId(), arg_9_1)
 end
 
-function slot0.saveStateDone(slot0, slot1)
-	slot0:_assetGetViewContainer():saveStateDone(slot0:episodeId(), slot1)
+function var_0_0.saveStateDone(arg_10_0, arg_10_1)
+	arg_10_0:_assetGetViewContainer():saveStateDone(arg_10_0:episodeId(), arg_10_1)
 end
 
-function slot0.checkIsDone(slot0)
-	return slot0:_assetGetViewContainer():checkIsDone(slot0:episodeId())
+function var_0_0.checkIsDone(arg_11_0)
+	return arg_11_0:_assetGetViewContainer():checkIsDone(arg_11_0:episodeId())
 end
 
-function slot0.openDesc(slot0)
-	return slot0:_assetGetViewContainer():openDesc()
+function var_0_0.openDesc(arg_12_0)
+	return arg_12_0:_assetGetViewContainer():openDesc()
 end
 
-function slot0.setPosToEnd(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = recthelper.rectToRelativeAnchorPos(slot1.position, slot2.parent)
+function var_0_0.setPosToEnd(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5, arg_13_6)
+	local var_13_0 = recthelper.rectToRelativeAnchorPos(arg_13_1.position, arg_13_2.parent)
 
-	if slot3 then
-		slot0._tweenIds = slot0._tweenIds or {}
+	if arg_13_3 then
+		arg_13_0._tweenIds = arg_13_0._tweenIds or {}
 
-		uv0.KillByObj(slot2)
-		table.insert(slot0._tweenIds, uv0.DOAnchorPos(slot2, slot7.x, slot7.y, slot4 or 0.2, slot5, slot6))
+		var_0_2.KillByObj(arg_13_2)
+
+		local var_13_1 = var_0_2.DOAnchorPos(arg_13_2, var_13_0.x, var_13_0.y, arg_13_4 or 0.2, arg_13_5, arg_13_6)
+
+		table.insert(arg_13_0._tweenIds, var_13_1)
 	else
-		recthelper.setAnchor(slot2, slot7.x, slot7.y)
+		recthelper.setAnchor(arg_13_2, var_13_0.x, var_13_0.y)
 	end
 end
 
-function slot0.tweenAnchorPos(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId_DOAnchorPos")
+function var_0_0.tweenAnchorPos(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
+	GameUtil.onDestroyViewMember_TweenId(arg_14_0, "_tweenId_DOAnchorPos")
 
-	slot0._tweenId_DOAnchorPos = uv0.DOAnchorPos(slot1, slot2, slot3, slot4 or 0.2, slot5, slot6)
+	arg_14_0._tweenId_DOAnchorPos = var_0_2.DOAnchorPos(arg_14_1, arg_14_2, arg_14_3, arg_14_4 or 0.2, arg_14_5, arg_14_6)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._isDestroying = true
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._isDestroying = true
 
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenId_DOAnchorPos")
+	GameUtil.onDestroyViewMember_TweenId(arg_15_0, "_tweenId_DOAnchorPos")
 
-	if slot0._tweenIds then
-		for slot4, slot5 in ipairs(slot0._tweenIds) do
-			uv0.KillById(slot5)
+	if arg_15_0._tweenIds then
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0._tweenIds) do
+			var_0_2.KillById(iter_15_1)
 		end
 
-		slot0._tweenIds = nil
+		arg_15_0._tweenIds = nil
 	end
 
 	CommonDragHelper.instance:setGlobalEnabled(true)
-	RougeSimpleItemBase.onDestroyView(slot0)
+	RougeSimpleItemBase.onDestroyView(arg_15_0)
 end
 
-function slot11()
-end
-
-for slot15, slot16 in ipairs({
+local var_0_6 = {
 	"click",
 	"click_r",
 	"in",
@@ -117,94 +117,108 @@ for slot15, slot16 in ipairs({
 	"finish",
 	"idle",
 	"loop"
-}) do
-	slot0["playAnim_before_" .. slot16] = function (slot0, slot1, slot2)
-		if not slot0._beforeGo.activeInHierarchy then
-			slot0:setActive_before(true)
+}
+local var_0_7 = "playAnim_before_"
+local var_0_8 = "playAnim_after_"
+local var_0_9 = "playAnimRaw_before_"
+local var_0_10 = "playAnimRaw_after_"
+
+local function var_0_11()
+	return
+end
+
+for iter_0_0, iter_0_1 in ipairs(var_0_6) do
+	var_0_0[var_0_7 .. iter_0_1] = function(arg_17_0, arg_17_1, arg_17_2)
+		if not arg_17_0._beforeGo.activeInHierarchy then
+			arg_17_0:setActive_before(true)
 		end
 
-		slot0._animPlayer_before:Play(uv0, slot1 or uv1, slot2)
+		arg_17_0._animPlayer_before:Play(iter_0_1, arg_17_1 or var_0_11, arg_17_2)
 	end
+	var_0_0[var_0_9 .. iter_0_1] = function(arg_18_0, arg_18_1, arg_18_2)
+		local var_18_0 = arg_18_0._anim_before
 
-	slot0["playAnimRaw_before_" .. slot16] = function (slot0, slot1, slot2)
-		slot3 = slot0._anim_before
-		slot3.enabled = true
+		var_18_0.enabled = true
 
-		slot3:Play(uv0, slot1, slot2)
+		var_18_0:Play(iter_0_1, arg_18_1, arg_18_2)
 	end
-
-	slot0["playAnim_after_" .. slot16] = function (slot0, slot1, slot2)
-		if not slot0._afterGo.activeInHierarchy then
-			slot0:setActive_after(true)
+	var_0_0[var_0_8 .. iter_0_1] = function(arg_19_0, arg_19_1, arg_19_2)
+		if not arg_19_0._afterGo.activeInHierarchy then
+			arg_19_0:setActive_after(true)
 		end
 
-		slot0._animPlayer_after:Play(uv0, slot1 or uv1, slot2)
+		arg_19_0._animPlayer_after:Play(iter_0_1, arg_19_1 or var_0_11, arg_19_2)
 	end
+	var_0_0[var_0_10 .. iter_0_1] = function(arg_20_0, arg_20_1, arg_20_2)
+		local var_20_0 = arg_20_0._anim_after
 
-	slot0["playAnimRaw_after_" .. slot16] = function (slot0, slot1, slot2)
-		slot3 = slot0._anim_after
-		slot3.enabled = true
+		var_20_0.enabled = true
 
-		slot3:Play(uv0, slot1, slot2)
+		var_20_0:Play(iter_0_1, arg_20_1, arg_20_2)
 	end
 end
 
-function slot0.markGuided(slot0)
-	slot0._guideState = uv0
+function var_0_0.markGuided(arg_21_0)
+	arg_21_0._guideState = var_0_5
 end
 
-function slot0.markIsFinishedInteractive(slot0, slot1)
-	slot0._isFinishInteractive = slot1
+function var_0_0.markIsFinishedInteractive(arg_22_0, arg_22_1)
+	arg_22_0._isFinishInteractive = arg_22_1
 end
 
-function slot0.isFinishInteractive(slot0)
-	return slot0._isFinishInteractive
+function var_0_0.isFinishInteractive(arg_23_0)
+	return arg_23_0._isFinishInteractive
 end
 
-function slot0._onDragBegin(slot0)
-	slot0:_setActive_guide(false)
-	slot0:markGuided()
+function var_0_0._onDragBegin(arg_24_0)
+	arg_24_0:_setActive_guide(false)
+	arg_24_0:markGuided()
 end
 
-function slot0._setActive_guide(slot0, slot1)
-	gohelper.setActive(slot0._guideGo, slot1)
+function var_0_0._setActive_guide(arg_25_0, arg_25_1)
+	gohelper.setActive(arg_25_0._guideGo, arg_25_1)
 end
 
-function slot0.setData(slot0)
-	if slot0:isFinishInteractive() then
+function var_0_0.setData(arg_26_0)
+	if arg_26_0:isFinishInteractive() then
 		return
 	end
 
-	if slot0._isDestroying then
+	if arg_26_0._isDestroying then
 		return
 	end
 
 	CommonDragHelper.instance:setGlobalEnabled(true)
-	slot0:_setActive_guide(not slot0:checkIsDone() and slot0._guideState <= uv0)
+
+	local var_26_0 = arg_26_0:checkIsDone()
+
+	arg_26_0:_setActive_guide(not var_26_0 and arg_26_0._guideState <= var_0_3)
 end
 
-function slot0.onDataUpdateFirst(slot0)
-	slot0._guideState = slot0:checkIsDone() and uv0 or uv1
+function var_0_0.onDataUpdateFirst(arg_27_0)
+	arg_27_0._guideState = arg_27_0:checkIsDone() and var_0_4 or var_0_3
 
-	slot0:_setActive_guide(true)
+	arg_27_0:_setActive_guide(true)
 end
 
-function slot0.onDataUpdate(slot0)
-	if slot0:isFinishInteractive() then
+function var_0_0.onDataUpdate(arg_28_0)
+	if arg_28_0:isFinishInteractive() then
 		return
 	end
 
-	slot0:setData()
+	arg_28_0:setData()
 end
 
-function slot0.onSwitchEpisode(slot0)
-	if slot0._guideState == uv0 and not slot0:checkIsDone() then
-		slot0._guideState = uv1 - 1
-	elseif slot0._guideState < uv1 and slot1 then
-		slot0._guideState = uv0
+function var_0_0.onSwitchEpisode(arg_29_0)
+	local var_29_0 = arg_29_0:checkIsDone()
+
+	if arg_29_0._guideState == var_0_4 and not var_29_0 then
+		arg_29_0._guideState = var_0_3 - 1
+	elseif arg_29_0._guideState < var_0_3 and var_29_0 then
+		arg_29_0._guideState = var_0_4
 	end
 
-	slot0:setData()
+	arg_29_0:setData()
 end
 
-return slot0
+return var_0_0

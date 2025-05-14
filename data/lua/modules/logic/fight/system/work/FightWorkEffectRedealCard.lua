@@ -1,35 +1,38 @@
-module("modules.logic.fight.system.work.FightWorkEffectRedealCard", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectRedealCard", package.seeall)
 
-slot0 = class("FightWorkEffectRedealCard", FightEffectBase)
+local var_0_0 = class("FightWorkEffectRedealCard", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	FightCardModel.instance:clearCardOps()
 	FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
 
 	if FightCardModel.instance.redealCardInfoList then
-		slot0:_playRedealCardEffect()
+		arg_1_0:_playRedealCardEffect()
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._playRedealCardEffect(slot0)
+function var_0_0._playRedealCardEffect(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_shuffle_allcard)
 
-	slot1 = FightCardModel.instance:getHandCards()
+	local var_2_0 = FightCardModel.instance:getHandCards()
+	local var_2_1 = FightCardModel.instance.redealCardInfoList
+
 	FightCardModel.instance.redealCardInfoList = nil
 
-	FightCardModel.instance:coverCard(FightCardModel.instance.redealCardInfoList)
+	FightCardModel.instance:coverCard(var_2_1)
 
 	if FightModel.instance:getVersion() < 4 then
-		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(slot2))
+		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(var_2_1))
 	end
 
-	slot0:com_registTimer(slot0._delayAfterPerformance, 1.5 / FightModel.instance:getUISpeed())
-	FightController.instance:dispatchEvent(FightEvent.PlayRedealCardEffect, slot1, slot2)
+	arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 1.5 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.PlayRedealCardEffect, var_2_0, var_2_1)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

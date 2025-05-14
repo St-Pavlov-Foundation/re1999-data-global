@@ -1,39 +1,44 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverPrepareItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverPrepareItem", package.seeall)
 
-slot0 = class("V1a6_CachotRoleRecoverPrepareItem", V1a6_CachotTeamPrepareItem)
+local var_0_0 = class("V1a6_CachotRoleRecoverPrepareItem", V1a6_CachotTeamPrepareItem)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, slot0._onClickTeamItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, arg_2_0._onClickTeamItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, slot0._onClickTeamItem, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, arg_3_0._onClickTeamItem, arg_3_0)
 end
 
-function slot0._onClickTeamItem(slot0, slot1)
-	slot0:setSelected(slot0._mo == slot1)
+function var_0_0._onClickTeamItem(arg_4_0, arg_4_1)
+	arg_4_0:setSelected(arg_4_0._mo == arg_4_1)
 end
 
-function slot0._getEquipMO(slot0)
+function var_0_0._getEquipMO(arg_5_0)
+	return
 end
 
-function slot0.showNone(slot0)
-	gohelper.setActive(slot0._gorole, false)
-	gohelper.setActive(slot0._goheart, false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg_normal"), false)
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "bg_none"), true)
+function var_0_0.showNone(arg_6_0)
+	gohelper.setActive(arg_6_0._gorole, false)
+	gohelper.setActive(arg_6_0._goheart, false)
+
+	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "bg_normal")
+	local var_6_1 = gohelper.findChild(arg_6_0.viewGO, "bg_none")
+
+	gohelper.setActive(var_6_0, false)
+	gohelper.setActive(var_6_1, true)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
-	slot0:_updateHp()
-	slot0:setSelectEnable(true)
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	var_0_0.super.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0:_updateHp()
+	arg_7_0:setSelectEnable(true)
 end
 
-return slot0
+return var_0_0

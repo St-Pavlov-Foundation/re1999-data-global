@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueChangeTrigger", package.seeall)
+﻿module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueChangeTrigger", package.seeall)
 
-slot0 = class("FightWorkRedOrBlueChangeTrigger", FightEffectBase)
+local var_0_0 = class("FightWorkRedOrBlueChangeTrigger", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	FightDataHelper.LYDataMgr:refreshShowAreaSize()
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,362 +1,415 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballUpgradeView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballUpgradeView", package.seeall)
 
-slot0 = class("PinballUpgradeView", BaseView)
+local var_0_0 = class("PinballUpgradeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._imageicon = gohelper.findChildSingleImage(slot0.viewGO, "#image_icon")
-	slot0._txtname = gohelper.findChildTextMesh(slot0.viewGO, "#txt_buildingname")
-	slot0._txttitle = gohelper.findChildTextMesh(slot0.viewGO, "#scroll_dec/Viewport/Content/#txt_title")
-	slot0._txtdesc = gohelper.findChildTextMesh(slot0.viewGO, "#scroll_dec/Viewport/Content/#txt_dec")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnremove = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_remove")
-	slot0._goupgrade = gohelper.findChild(slot0.viewGO, "#go_upgrade")
-	slot0._btnupgrade = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_upgrade/#btn_upgrade")
-	slot0._btnupgradeEffect = gohelper.findChild(slot0.viewGO, "#go_upgrade/#btn_upgrade/vx_ink")
-	slot0._txtnowlv = gohelper.findChildTextMesh(slot0.viewGO, "#go_upgrade/#txt_nowLv")
-	slot0._txtnextlv = gohelper.findChildTextMesh(slot0.viewGO, "#go_upgrade/#txt_nextLv")
-	slot0._gomax = gohelper.findChild(slot0.viewGO, "#go_max")
-	slot0._txtmaxlv = gohelper.findChildTextMesh(slot0.viewGO, "#go_max/#txt_lv")
-	slot0._gocostitem = gohelper.findChild(slot0.viewGO, "#go_upgrade/#go_currency/go_item")
-	slot0._gopreviewitem = gohelper.findChild(slot0.viewGO, "#go_preview/#go_group/go_item")
-	slot0._gopreviewtitle = gohelper.findChild(slot0.viewGO, "#go_preview/txt_preview")
-	slot0._topCurrencyRoot = gohelper.findChild(slot0.viewGO, "#go_topright")
-	slot0._goeffect = gohelper.findChild(slot0.viewGO, "vx_upgrade")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#image_icon")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_buildingname")
+	arg_1_0._txttitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "#scroll_dec/Viewport/Content/#txt_title")
+	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "#scroll_dec/Viewport/Content/#txt_dec")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnremove = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_remove")
+	arg_1_0._goupgrade = gohelper.findChild(arg_1_0.viewGO, "#go_upgrade")
+	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_upgrade/#btn_upgrade")
+	arg_1_0._btnupgradeEffect = gohelper.findChild(arg_1_0.viewGO, "#go_upgrade/#btn_upgrade/vx_ink")
+	arg_1_0._txtnowlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_upgrade/#txt_nowLv")
+	arg_1_0._txtnextlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_upgrade/#txt_nextLv")
+	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "#go_max")
+	arg_1_0._txtmaxlv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_max/#txt_lv")
+	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "#go_upgrade/#go_currency/go_item")
+	arg_1_0._gopreviewitem = gohelper.findChild(arg_1_0.viewGO, "#go_preview/#go_group/go_item")
+	arg_1_0._gopreviewtitle = gohelper.findChild(arg_1_0.viewGO, "#go_preview/txt_preview")
+	arg_1_0._topCurrencyRoot = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "vx_upgrade")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnremove:AddClickListener(slot0.removeBuilding, slot0)
-	slot0._btnupgrade:AddClickListener(slot0.upgradeBuilding, slot0)
-	PinballController.instance:registerCallback(PinballEvent.UpgradeBuilding, slot0._buildingUpdate, slot0)
-	PinballController.instance:registerCallback(PinballEvent.RemoveBuilding, slot0._buildingRemove, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnremove:AddClickListener(arg_2_0.removeBuilding, arg_2_0)
+	arg_2_0._btnupgrade:AddClickListener(arg_2_0.upgradeBuilding, arg_2_0)
+	PinballController.instance:registerCallback(PinballEvent.UpgradeBuilding, arg_2_0._buildingUpdate, arg_2_0)
+	PinballController.instance:registerCallback(PinballEvent.RemoveBuilding, arg_2_0._buildingRemove, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnremove:RemoveClickListener()
-	slot0._btnupgrade:RemoveClickListener()
-	PinballController.instance:unregisterCallback(PinballEvent.UpgradeBuilding, slot0._buildingUpdate, slot0)
-	PinballController.instance:unregisterCallback(PinballEvent.RemoveBuilding, slot0._buildingRemove, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnremove:RemoveClickListener()
+	arg_3_0._btnupgrade:RemoveClickListener()
+	PinballController.instance:unregisterCallback(PinballEvent.UpgradeBuilding, arg_3_0._buildingUpdate, arg_3_0)
+	PinballController.instance:unregisterCallback(PinballEvent.RemoveBuilding, arg_3_0._buildingRemove, arg_3_0)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio3)
-	slot0:createCurrencyItem()
-	slot0:_refreshBuilding()
+	arg_5_0:createCurrencyItem()
+	arg_5_0:_refreshBuilding()
 end
 
-function slot0._refreshBuilding(slot0)
-	if not PinballModel.instance:getBuildingInfo(slot0.viewParam.index) then
+function var_0_0._refreshBuilding(arg_6_0)
+	local var_6_0 = PinballModel.instance:getBuildingInfo(arg_6_0.viewParam.index)
+
+	if not var_6_0 then
 		return
 	end
 
-	slot3 = slot1.nextCo
+	local var_6_1 = var_6_0.co
+	local var_6_2 = var_6_0.nextCo
 
-	slot0._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s.png", slot1.baseCo.icon))
+	arg_6_0._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s.png", var_6_0.baseCo.icon))
 
-	slot0._txtname.text = slot1.baseCo.name
-	slot0._txttitle.text = slot1.baseCo.desc
-	slot0._txtdesc.text = slot1.baseCo.desc2
+	arg_6_0._txtname.text = var_6_0.baseCo.name
+	arg_6_0._txttitle.text = var_6_0.baseCo.desc
+	arg_6_0._txtdesc.text = var_6_0.baseCo.desc2
 
-	gohelper.setActive(slot0._gomax, not slot3)
-	gohelper.setActive(slot0._goupgrade, slot3)
-	gohelper.setActive(slot0._gopreviewtitle, slot3)
-	gohelper.setActive(slot0._btnremove, slot1.co.destory)
+	gohelper.setActive(arg_6_0._gomax, not var_6_2)
+	gohelper.setActive(arg_6_0._goupgrade, var_6_2)
+	gohelper.setActive(arg_6_0._gopreviewtitle, var_6_2)
+	gohelper.setActive(arg_6_0._btnremove, var_6_1.destory)
 
-	if slot3 then
-		slot0._txtnowlv.text = slot2.level
-		slot0._txtnextlv.text = slot3.level
+	if var_6_2 then
+		arg_6_0._txtnowlv.text = var_6_1.level
+		arg_6_0._txtnextlv.text = var_6_2.level
 
-		slot0:updateCost(slot3)
+		arg_6_0:updateCost(var_6_2)
 
-		slot4 = slot0._costNoEnough and true or slot0:checkLock(slot3) or false
+		local var_6_3 = arg_6_0._costNoEnough and true or arg_6_0:checkLock(var_6_2) or false
 
-		ZProj.UGUIHelper.SetGrayscale(slot0._btnupgrade.gameObject, slot4)
-		gohelper.setActive(slot0._btnupgradeEffect, not slot4)
+		ZProj.UGUIHelper.SetGrayscale(arg_6_0._btnupgrade.gameObject, var_6_3)
+		gohelper.setActive(arg_6_0._btnupgradeEffect, not var_6_3)
 	else
-		slot0._txtmaxlv.text = slot2.level
+		arg_6_0._txtmaxlv.text = var_6_1.level
 	end
 
-	slot0:updatePreview(slot2, slot3)
+	arg_6_0:updatePreview(var_6_1, var_6_2)
 end
 
-function slot0.createCurrencyItem(slot0)
-	for slot5, slot6 in ipairs({
+function var_0_0.createCurrencyItem(arg_7_0)
+	local var_7_0 = {
 		PinballEnum.ResType.Wood,
 		PinballEnum.ResType.Mine,
 		PinballEnum.ResType.Stone
-	}) do
-		MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes.currency, slot0._topCurrencyRoot), PinballCurrencyItem):setCurrencyType(slot6)
+	}
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = arg_7_0:getResInst(arg_7_0.viewContainer._viewSetting.otherRes.currency, arg_7_0._topCurrencyRoot)
+
+		MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, PinballCurrencyItem):setCurrencyType(iter_7_1)
 	end
 end
 
-function slot0.updatePreview(slot0, slot1, slot2)
-	slot3 = {}
-	slot5 = {}
+function var_0_0.updatePreview(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = {}
+	local var_8_1 = arg_8_1.effect
+	local var_8_2 = {}
 
-	if not string.nilorempty(slot1.effect) then
-		for slot10, slot11 in pairs(GameUtil.splitString2(slot4, true)) do
-			if slot11[1] == PinballEnum.BuildingEffectType.AddScore then
-				table.insert(slot3, {
+	if not string.nilorempty(var_8_1) then
+		local var_8_3 = GameUtil.splitString2(var_8_1, true)
+
+		for iter_8_0, iter_8_1 in pairs(var_8_3) do
+			if iter_8_1[1] == PinballEnum.BuildingEffectType.AddScore then
+				table.insert(var_8_0, {
 					resType = PinballEnum.ResType.Score,
-					value = slot11[2]
+					value = iter_8_1[2]
 				})
 
-				slot5[slot11[1]] = #slot3
-			elseif slot11[1] == PinballEnum.BuildingEffectType.AddFood then
-				table.insert(slot3, {
+				var_8_2[iter_8_1[1]] = #var_8_0
+			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.AddFood then
+				table.insert(var_8_0, {
 					resType = PinballEnum.ResType.Food,
-					value = slot11[2]
+					value = iter_8_1[2]
 				})
 
-				slot5[slot11[1]] = #slot3
-			elseif slot11[1] == PinballEnum.BuildingEffectType.AddPlay then
-				table.insert(slot3, {
+				var_8_2[iter_8_1[1]] = #var_8_0
+			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.AddPlay then
+				table.insert(var_8_0, {
 					resType = PinballEnum.ResType.Play,
-					value = slot11[2]
+					value = iter_8_1[2]
 				})
 
-				slot5[slot11[1]] = #slot3
-			elseif slot11[1] == PinballEnum.BuildingEffectType.CostFood then
-				table.insert(slot3, {
+				var_8_2[iter_8_1[1]] = #var_8_0
+			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.CostFood then
+				table.insert(var_8_0, {
 					resType = PinballEnum.ResType.Food,
-					value = slot11[2],
+					value = iter_8_1[2],
 					text = luaLang("pinball_food_need")
 				})
 
-				slot5[slot11[1]] = #slot3
-			elseif slot11[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
-				table.insert(slot3, {
+				var_8_2[iter_8_1[1]] = #var_8_0
+			elseif iter_8_1[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
+				table.insert(var_8_0, {
 					resType = PinballEnum.ResType.Play,
-					value = slot11[2],
+					value = iter_8_1[2],
 					text = luaLang("pinball_play_need")
 				})
 
-				slot5[slot11[1]] = #slot3
+				var_8_2[iter_8_1[1]] = #var_8_0
 			end
 		end
 	end
 
-	if slot2 and not string.nilorempty(slot2.effect) then
-		for slot10, slot11 in pairs(GameUtil.splitString2(slot4, true)) do
-			if slot11[1] == PinballEnum.BuildingEffectType.AddScore then
-				if slot5[slot11[1]] then
-					slot3[slot12].nextVal = slot11[2]
-				else
-					table.insert(slot3, {
-						resType = PinballEnum.ResType.Score,
-						nextVal = slot11[2]
-					})
-				end
-			elseif slot11[1] == PinballEnum.BuildingEffectType.AddFood then
-				if slot5[slot11[1]] then
-					slot3[slot12].nextVal = slot11[2]
-				else
-					table.insert(slot3, {
-						resType = PinballEnum.ResType.Food,
-						nextVal = slot11[2]
-					})
-				end
-			elseif slot11[1] == PinballEnum.BuildingEffectType.AddPlay then
-				if slot5[slot11[1]] then
-					slot3[slot12].nextVal = slot11[2]
-				else
-					table.insert(slot3, {
-						resType = PinballEnum.ResType.Play,
-						nextVal = slot11[2]
-					})
-				end
-			elseif slot11[1] == PinballEnum.BuildingEffectType.CostFood then
-				if slot5[slot11[1]] then
-					slot3[slot12].nextVal = slot11[2]
-				else
-					table.insert(slot3, {
-						resType = PinballEnum.ResType.Food,
-						nextVal = slot11[2],
-						text = luaLang("pinball_food_need")
-					})
-				end
-			elseif slot11[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
-				if slot5[slot11[1]] then
-					slot3[slot12].nextVal = slot11[2]
-				else
-					table.insert(slot3, {
-						resType = PinballEnum.ResType.Play,
-						nextVal = slot11[2],
-						text = luaLang("pinball_play_need")
-					})
+	if arg_8_2 then
+		local var_8_4 = arg_8_2.effect
+
+		if not string.nilorempty(var_8_4) then
+			local var_8_5 = GameUtil.splitString2(var_8_4, true)
+
+			for iter_8_2, iter_8_3 in pairs(var_8_5) do
+				if iter_8_3[1] == PinballEnum.BuildingEffectType.AddScore then
+					local var_8_6 = var_8_2[iter_8_3[1]]
+
+					if var_8_6 then
+						var_8_0[var_8_6].nextVal = iter_8_3[2]
+					else
+						table.insert(var_8_0, {
+							resType = PinballEnum.ResType.Score,
+							nextVal = iter_8_3[2]
+						})
+					end
+				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.AddFood then
+					local var_8_7 = var_8_2[iter_8_3[1]]
+
+					if var_8_7 then
+						var_8_0[var_8_7].nextVal = iter_8_3[2]
+					else
+						table.insert(var_8_0, {
+							resType = PinballEnum.ResType.Food,
+							nextVal = iter_8_3[2]
+						})
+					end
+				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.AddPlay then
+					local var_8_8 = var_8_2[iter_8_3[1]]
+
+					if var_8_8 then
+						var_8_0[var_8_8].nextVal = iter_8_3[2]
+					else
+						table.insert(var_8_0, {
+							resType = PinballEnum.ResType.Play,
+							nextVal = iter_8_3[2]
+						})
+					end
+				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.CostFood then
+					local var_8_9 = var_8_2[iter_8_3[1]]
+
+					if var_8_9 then
+						var_8_0[var_8_9].nextVal = iter_8_3[2]
+					else
+						table.insert(var_8_0, {
+							resType = PinballEnum.ResType.Food,
+							nextVal = iter_8_3[2],
+							text = luaLang("pinball_food_need")
+						})
+					end
+				elseif iter_8_3[1] == PinballEnum.BuildingEffectType.AddPlayDemand then
+					local var_8_10 = var_8_2[iter_8_3[1]]
+
+					if var_8_10 then
+						var_8_0[var_8_10].nextVal = iter_8_3[2]
+					else
+						table.insert(var_8_0, {
+							resType = PinballEnum.ResType.Play,
+							nextVal = iter_8_3[2],
+							text = luaLang("pinball_play_need")
+						})
+					end
 				end
 			end
 		end
 	end
 
-	for slot9, slot10 in pairs(slot3) do
-		slot10.haveNext = slot2
+	for iter_8_4, iter_8_5 in pairs(var_8_0) do
+		iter_8_5.haveNext = arg_8_2
 	end
 
-	slot0._goeffects = slot0._goeffects or slot0:getUserDataTb_()
+	arg_8_0._goeffects = arg_8_0._goeffects or arg_8_0:getUserDataTb_()
 
-	tabletool.clear(slot0._goeffects)
-	gohelper.CreateObjList(slot0, slot0._createEffectItem, slot3, nil, slot0._gopreviewitem)
+	tabletool.clear(arg_8_0._goeffects)
+	gohelper.CreateObjList(arg_8_0, arg_8_0._createEffectItem, var_8_0, nil, arg_8_0._gopreviewitem)
 end
 
-function slot0._createEffectItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildImage(slot1, "#image_icon")
-	slot5 = gohelper.findChildTextMesh(slot1, "#txt_base")
-	slot6 = gohelper.findChildTextMesh(slot1, "#txt_curnum")
-	slot7 = gohelper.findChildTextMesh(slot1, "#txt_num")
+function var_0_0._createEffectItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = gohelper.findChildImage(arg_9_1, "#image_icon")
+	local var_9_1 = gohelper.findChildTextMesh(arg_9_1, "#txt_base")
+	local var_9_2 = gohelper.findChildTextMesh(arg_9_1, "#txt_curnum")
+	local var_9_3 = gohelper.findChildTextMesh(arg_9_1, "#txt_num")
+	local var_9_4 = gohelper.findChild(arg_9_1, "vx_eff")
 
-	table.insert(slot0._goeffects, gohelper.findChild(slot1, "vx_eff"))
+	table.insert(arg_9_0._goeffects, var_9_4)
 
-	if not lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot2.resType] then
-		logError("资源配置不存在" .. slot2.resType)
+	local var_9_5 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_9_2.resType]
+
+	if not var_9_5 then
+		logError("资源配置不存在" .. arg_9_2.resType)
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(slot4, slot9.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(var_9_0, var_9_5.icon)
 
-	slot5.text = slot2.text or slot9.name
+	var_9_1.text = arg_9_2.text or var_9_5.name
 
-	if slot2.haveNext then
-		slot6.text = string.format("%d", slot2.value or 0)
+	if arg_9_2.haveNext then
+		var_9_2.text = string.format("%d", arg_9_2.value or 0)
 
-		if (slot2.nextVal or 0) - (slot2.value or 0) >= 0 then
-			slot7.text = string.format("<color=#BCFF85>+%s", slot10)
+		local var_9_6 = (arg_9_2.nextVal or 0) - (arg_9_2.value or 0)
+
+		if var_9_6 >= 0 then
+			var_9_3.text = string.format("<color=#BCFF85>+%s", var_9_6)
 		else
-			slot7.text = string.format("<color=#FC8A6A>%s", slot10)
+			var_9_3.text = string.format("<color=#FC8A6A>%s", var_9_6)
 		end
 	else
-		slot6.text = ""
-		slot7.text = string.format("%d", slot2.value)
+		var_9_2.text = ""
+		var_9_3.text = string.format("%d", arg_9_2.value)
 	end
 end
 
-function slot0.updateCost(slot0, slot1)
-	slot2 = {}
+function var_0_0.updateCost(arg_10_0, arg_10_1)
+	local var_10_0 = {}
+	local var_10_1 = arg_10_1.cost
 
-	if not string.nilorempty(slot1.cost) then
-		for slot8, slot9 in pairs(GameUtil.splitString2(slot3, true)) do
-			table.insert(slot2, {
-				resType = slot9[1],
-				value = slot9[2]
+	if not string.nilorempty(var_10_1) then
+		local var_10_2 = GameUtil.splitString2(var_10_1, true)
+
+		for iter_10_0, iter_10_1 in pairs(var_10_2) do
+			table.insert(var_10_0, {
+				resType = iter_10_1[1],
+				value = iter_10_1[2]
 			})
 		end
 	end
 
-	slot0._costNoEnough = nil
+	arg_10_0._costNoEnough = nil
 
-	gohelper.CreateObjList(slot0, slot0._createCostItem, slot2, nil, slot0._gocostitem)
+	gohelper.CreateObjList(arg_10_0, arg_10_0._createCostItem, var_10_0, nil, arg_10_0._gocostitem)
 end
 
-function slot0.checkLock(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.checkLock(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_1 then
 		return
 	end
 
-	if string.nilorempty(slot1.condition) then
+	local var_11_0 = arg_11_1.condition
+
+	if string.nilorempty(var_11_0) then
 		return false
 	end
 
-	for slot8, slot9 in pairs(GameUtil.splitString2(slot3, true)) do
-		if slot9[1] == PinballEnum.ConditionType.Talent then
-			if not PinballModel.instance:getTalentMo(slot9[2]) then
-				if slot2 then
-					GameFacade.showToast(ToastEnum.Act178TalentCondition, lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot11].name)
+	local var_11_1 = GameUtil.splitString2(var_11_0, true)
+
+	for iter_11_0, iter_11_1 in pairs(var_11_1) do
+		local var_11_2 = iter_11_1[1]
+
+		if var_11_2 == PinballEnum.ConditionType.Talent then
+			local var_11_3 = iter_11_1[2]
+
+			if not PinballModel.instance:getTalentMo(var_11_3) then
+				if arg_11_2 then
+					local var_11_4 = lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_11_3]
+
+					GameFacade.showToast(ToastEnum.Act178TalentCondition, var_11_4.name)
 				end
 
 				return true
 			end
-		elseif slot10 == PinballEnum.ConditionType.Score and PinballModel.instance.maxProsperity < slot9[2] then
-			if slot2 then
-				GameFacade.showToast(ToastEnum.Act178ScoreCondition, PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, slot11))
-			end
+		elseif var_11_2 == PinballEnum.ConditionType.Score then
+			local var_11_5 = iter_11_1[2]
 
-			return true
+			if var_11_5 > PinballModel.instance.maxProsperity then
+				if arg_11_2 then
+					local var_11_6 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_11_5)
+
+					GameFacade.showToast(ToastEnum.Act178ScoreCondition, var_11_6)
+				end
+
+				return true
+			end
 		end
 	end
 
 	return false
 end
 
-function slot0._createCostItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildTextMesh(slot1, "#txt_num")
-	slot5 = gohelper.findChildImage(slot1, "#txt_num/#image_icon")
+function var_0_0._createCostItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = gohelper.findChildTextMesh(arg_12_1, "#txt_num")
+	local var_12_1 = gohelper.findChildImage(arg_12_1, "#txt_num/#image_icon")
+	local var_12_2 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_12_2.resType]
 
-	if not lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot2.resType] then
-		logError("资源配置不存在" .. slot2.resType)
+	if not var_12_2 then
+		logError("资源配置不存在" .. arg_12_2.resType)
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(slot5, slot6.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(var_12_1, var_12_2.icon)
 
-	slot7 = ""
+	local var_12_3 = ""
 
-	if PinballModel.instance:getResNum(slot2.resType) < slot2.value then
-		slot7 = "<color=#FC8A6A>"
-		slot0._costNoEnough = slot0._costNoEnough or slot6.name
+	if arg_12_2.value > PinballModel.instance:getResNum(arg_12_2.resType) then
+		var_12_3 = "<color=#FC8A6A>"
+		arg_12_0._costNoEnough = arg_12_0._costNoEnough or var_12_2.name
 	end
 
-	slot4.text = string.format("%s-%d", slot7, slot2.value)
+	var_12_0.text = string.format("%s-%d", var_12_3, arg_12_2.value)
 end
 
-function slot0.removeBuilding(slot0)
-	PinballController.instance:removeBuilding(slot0.viewParam.index)
+function var_0_0.removeBuilding(arg_13_0)
+	PinballController.instance:removeBuilding(arg_13_0.viewParam.index)
 end
 
-function slot0.upgradeBuilding(slot0)
-	if not PinballModel.instance:getBuildingInfo(slot0.viewParam.index) then
+function var_0_0.upgradeBuilding(arg_14_0)
+	local var_14_0 = PinballModel.instance:getBuildingInfo(arg_14_0.viewParam.index)
+
+	if not var_14_0 then
 		return
 	end
 
-	if slot0._costNoEnough then
-		GameFacade.showToast(ToastEnum.DiamondBuy, slot0._costNoEnough)
+	if arg_14_0._costNoEnough then
+		GameFacade.showToast(ToastEnum.DiamondBuy, arg_14_0._costNoEnough)
 
 		return
 	end
 
-	if slot0:checkLock(slot1.nextCo, true) then
+	if arg_14_0:checkLock(var_14_0.nextCo, true) then
 		return
 	end
 
-	Activity178Rpc.instance:sendAct178Build(VersionActivity2_4Enum.ActivityId.Pinball, slot1.configId, PinballEnum.BuildingOperType.Upgrade, slot0.viewParam.index)
+	Activity178Rpc.instance:sendAct178Build(VersionActivity2_4Enum.ActivityId.Pinball, var_14_0.configId, PinballEnum.BuildingOperType.Upgrade, arg_14_0.viewParam.index)
 end
 
-function slot0._buildingUpdate(slot0, slot1)
-	if slot1 == slot0.viewParam.index then
-		gohelper.setActive(slot0._goeffect, false)
-		gohelper.setActive(slot0._goeffect, true)
+function var_0_0._buildingUpdate(arg_15_0, arg_15_1)
+	if arg_15_1 == arg_15_0.viewParam.index then
+		gohelper.setActive(arg_15_0._goeffect, false)
+		gohelper.setActive(arg_15_0._goeffect, true)
 
-		for slot5, slot6 in pairs(slot0._goeffects) do
-			gohelper.setActive(slot6, false)
-			gohelper.setActive(slot6, true)
+		for iter_15_0, iter_15_1 in pairs(arg_15_0._goeffects) do
+			gohelper.setActive(iter_15_1, false)
+			gohelper.setActive(iter_15_1, true)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio34)
 		UIBlockMgr.instance:startBlock("PinballUpgradeView_Effect")
-		TaskDispatcher.runDelay(slot0._effectEnd, slot0, 1)
+		TaskDispatcher.runDelay(arg_15_0._effectEnd, arg_15_0, 1)
 	end
 end
 
-function slot0._effectEnd(slot0)
+function var_0_0._effectEnd(arg_16_0)
 	UIBlockMgr.instance:endBlock("PinballUpgradeView_Effect")
-	slot0:_refreshBuilding()
+	arg_16_0:_refreshBuilding()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._effectEnd, slot0)
+function var_0_0.onClose(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._effectEnd, arg_17_0)
 	UIBlockMgr.instance:endBlock("PinballUpgradeView_Effect")
 end
 
-function slot0._buildingRemove(slot0, slot1)
-	if slot1 == slot0.viewParam.index then
-		slot0:closeThis()
+function var_0_0._buildingRemove(arg_18_0, arg_18_1)
+	if arg_18_1 == arg_18_0.viewParam.index then
+		arg_18_0:closeThis()
 	end
 end
 
-return slot0
+return var_0_0

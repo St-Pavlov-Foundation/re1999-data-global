@@ -1,79 +1,93 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepMove", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepMove", package.seeall)
 
-slot0 = class("Va3ChessStepMove", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepMove", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot1 = slot0.originData.id
-	slot2 = slot0.originData.x
-	slot3 = slot0.originData.y
-	slot4 = slot0.originData.direction
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+	local var_1_1 = arg_1_0.originData.x
+	local var_1_2 = arg_1_0.originData.y
+	local var_1_3 = arg_1_0.originData.direction
+	local var_1_4 = Va3ChessGameController.instance.interacts
 
-	if Va3ChessGameController.instance.interacts then
-		slot6 = slot5:get(slot1)
+	if var_1_4 then
+		local var_1_5 = var_1_4:get(var_1_0)
 
-		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ObjMoveStep, slot1, slot2, slot3)
-		slot0:updatePosInfo(slot6, slot2, slot3)
-		slot0:startMove(slot6, slot2, slot3)
+		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ObjMoveStep, var_1_0, var_1_1, var_1_2)
+		arg_1_0:updatePosInfo(var_1_5, var_1_1, var_1_2)
+		arg_1_0:startMove(var_1_5, var_1_1, var_1_2)
 
-		if slot4 ~= nil then
-			slot6:getHandler():faceTo(slot4)
+		if var_1_3 ~= nil then
+			var_1_5:getHandler():faceTo(var_1_3)
 		end
 	end
 end
 
-function slot0.updatePosInfo(slot0, slot1, slot2, slot3)
-	if slot1 and slot1:getHandler() then
-		slot1:getHandler():updatePos(slot2, slot3)
+function var_0_0.updatePosInfo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if arg_2_1 and arg_2_1:getHandler() then
+		arg_2_1:getHandler():updatePos(arg_2_2, arg_2_3)
 	else
-		slot0:finish()
+		arg_2_0:finish()
 	end
 end
 
-function slot0.startMove(slot0, slot1, slot2, slot3)
-	if slot1 and slot1:getHandler() then
-		slot4 = slot1.config.interactType
+function var_0_0.startMove(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 and arg_3_1:getHandler() then
+		local var_3_0 = arg_3_1.config.interactType
+		local var_3_1 = arg_3_1.config and arg_3_1.config.moveAudioId
 
-		if slot1.config and slot1.config.moveAudioId and slot5 ~= 0 then
-			slot0:playEnemyMoveAudio(slot5)
+		if var_3_1 and var_3_1 ~= 0 then
+			arg_3_0:playEnemyMoveAudio(var_3_1)
 		end
 
-		if slot4 == Va3ChessEnum.InteractType.Player or slot4 == Va3ChessEnum.InteractType.AssistPlayer then
-			slot1:getHandler():moveTo(slot2, slot3, slot0.onMainPlayerMoveEnd, slot0)
+		if var_3_0 == Va3ChessEnum.InteractType.Player or var_3_0 == Va3ChessEnum.InteractType.AssistPlayer then
+			arg_3_1:getHandler():moveTo(arg_3_2, arg_3_3, arg_3_0.onMainPlayerMoveEnd, arg_3_0)
 		else
-			slot1:getHandler():moveTo(slot2, slot3, slot0.onOtherObjMoveEnd, slot0)
+			arg_3_1:getHandler():moveTo(arg_3_2, arg_3_3, arg_3_0.onOtherObjMoveEnd, arg_3_0)
 		end
 	else
-		slot0:finish()
+		arg_3_0:finish()
 	end
 end
 
-function slot0.onMainPlayerMoveEnd(slot0)
-	slot0:onObjMoveEnd()
-	slot0:finish()
+function var_0_0.onMainPlayerMoveEnd(arg_4_0)
+	arg_4_0:onObjMoveEnd()
+	arg_4_0:finish()
 end
 
-function slot0.onOtherObjMoveEnd(slot0)
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ObjMoveEnd, slot0.originData.id, slot0.originData.x, slot0.originData.y)
-	slot0:finish()
+function var_0_0.onOtherObjMoveEnd(arg_5_0)
+	local var_5_0 = arg_5_0.originData.id
+	local var_5_1 = arg_5_0.originData.x
+	local var_5_2 = arg_5_0.originData.y
+
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ObjMoveEnd, var_5_0, var_5_1, var_5_2)
+	arg_5_0:finish()
 end
 
-function slot0.onObjMoveEnd(slot0)
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ObjMoveEnd, slot0.originData.id, slot0.originData.x, slot0.originData.y)
+function var_0_0.onObjMoveEnd(arg_6_0)
+	local var_6_0 = arg_6_0.originData.id
+	local var_6_1 = arg_6_0.originData.x
+	local var_6_2 = arg_6_0.originData.y
+
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ObjMoveEnd, var_6_0, var_6_1, var_6_2)
 end
 
-slot0.lastEnemyMoveTime = {}
-slot0.minSkipAudioTime = 0.01
+var_0_0.lastEnemyMoveTime = {}
+var_0_0.minSkipAudioTime = 0.01
 
-function slot0.playEnemyMoveAudio(slot0, slot1)
-	if slot1 and slot1 ~= 0 and Time.realtimeSinceStartup >= (uv0.lastEnemyMoveTime[slot1] or -1) then
-		uv0.lastEnemyMoveTime[slot1] = slot2 + uv0.minSkipAudioTime
+function var_0_0.playEnemyMoveAudio(arg_7_0, arg_7_1)
+	if arg_7_1 and arg_7_1 ~= 0 then
+		local var_7_0 = Time.realtimeSinceStartup
 
-		AudioMgr.instance:trigger(slot1)
+		if var_7_0 >= (var_0_0.lastEnemyMoveTime[arg_7_1] or -1) then
+			var_0_0.lastEnemyMoveTime[arg_7_1] = var_7_0 + var_0_0.minSkipAudioTime
+
+			AudioMgr.instance:trigger(arg_7_1)
+		end
 	end
 end
 
-function slot0.finish(slot0)
-	uv0.super.finish(slot0)
+function var_0_0.finish(arg_8_0)
+	var_0_0.super.finish(arg_8_0)
 end
 
-return slot0
+return var_0_0

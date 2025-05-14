@@ -1,35 +1,37 @@
-module("modules.logic.reddot.config.RedDotConfig", package.seeall)
+﻿module("modules.logic.reddot.config.RedDotConfig", package.seeall)
 
-slot0 = class("RedDotConfig", BaseConfig)
+local var_0_0 = class("RedDotConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._dotConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._dotConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"reddot"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "reddot" then
-		slot0._dotConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "reddot" then
+		arg_3_0._dotConfig = arg_3_2
 	end
 end
 
-function slot0.getRedDotsCO(slot0)
-	return slot0._dotConfig.configDict
+function var_0_0.getRedDotsCO(arg_4_0)
+	return arg_4_0._dotConfig.configDict
 end
 
-function slot0.getRedDotCO(slot0, slot1)
-	return slot0._dotConfig.configDict[slot1]
+function var_0_0.getRedDotCO(arg_5_0, arg_5_1)
+	return arg_5_0._dotConfig.configDict[arg_5_1]
 end
 
-function slot0.getParentRedDotId(slot0, slot1)
-	return slot0:getRedDotCO(slot1) and slot2.parent or 0
+function var_0_0.getParentRedDotId(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getRedDotCO(arg_6_1)
+
+	return var_6_0 and var_6_0.parent or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,39 +1,39 @@
-module("modules.logic.scene.explore.comp.ExploreSceneLevel", package.seeall)
+﻿module("modules.logic.scene.explore.comp.ExploreSceneLevel", package.seeall)
 
-slot0 = class("ExploreSceneLevel", CommonSceneLevelComp)
+local var_0_0 = class("ExploreSceneLevel", CommonSceneLevelComp)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:loadLevel(slot2)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:loadLevel(arg_1_2)
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._sceneId = slot1
-	slot0._levelId = slot2
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._sceneId = arg_2_1
+	arg_2_0._levelId = arg_2_2
 end
 
-function slot0.loadLevel(slot0, slot1)
-	if slot0._isLoadingRes then
-		logError("is loading scene level res, cur id = " .. (slot0._levelId or "nil") .. ", try to load id = " .. (slot1 or "nil"))
+function var_0_0.loadLevel(arg_3_0, arg_3_1)
+	if arg_3_0._isLoadingRes then
+		logError("is loading scene level res, cur id = " .. (arg_3_0._levelId or "nil") .. ", try to load id = " .. (arg_3_1 or "nil"))
 
 		return
 	end
 
-	if slot0._assetItem then
-		gohelper.destroy(slot0._instGO)
-		slot0._assetItem:Release()
+	if arg_3_0._assetItem then
+		gohelper.destroy(arg_3_0._instGO)
+		arg_3_0._assetItem:Release()
 
-		slot0._assetItem = nil
-		slot0._instGO = nil
+		arg_3_0._assetItem = nil
+		arg_3_0._instGO = nil
 	end
 
-	slot0._isLoadingRes = true
-	slot0._levelId = slot1
+	arg_3_0._isLoadingRes = true
+	arg_3_0._levelId = arg_3_1
 
-	slot0:getCurScene():setCurLevelId(slot0._levelId)
+	arg_3_0:getCurScene():setCurLevelId(arg_3_0._levelId)
 
-	slot0._resPath = ResUrl.getExploreSceneLevelUrl(slot1)
+	arg_3_0._resPath = ResUrl.getExploreSceneLevelUrl(arg_3_1)
 
-	loadAbAsset(slot0._resPath, false, slot0._onLoadCallback, slot0)
+	loadAbAsset(arg_3_0._resPath, false, arg_3_0._onLoadCallback, arg_3_0)
 end
 
-return slot0
+return var_0_0

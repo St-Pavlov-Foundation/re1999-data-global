@@ -1,80 +1,84 @@
-module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBase", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBase", package.seeall)
 
-slot0 = class("FightEntitySpecialEffectBase", UserDataDispose)
+local var_0_0 = class("FightEntitySpecialEffectBase", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._entity = slot1
-	slot0._internalEffects = {}
-	slot0._internalClass = {}
+	arg_1_0._entity = arg_1_1
+	arg_1_0._internalEffects = {}
+	arg_1_0._internalClass = {}
 
-	slot0:initClass()
+	arg_1_0:initClass()
 end
 
-function slot0.initClass(slot0)
+function var_0_0.initClass(arg_2_0)
+	return
 end
 
-function slot0.newClass(slot0, slot1)
-	table.insert(slot0._internalClass, slot1.New(slot0._entity))
+function var_0_0.newClass(arg_3_0, arg_3_1)
+	table.insert(arg_3_0._internalClass, arg_3_1.New(arg_3_0._entity))
 end
 
-function slot0.addHangEffect(slot0, ...)
-	slot1 = slot0._entity:addHangEffect(...)
-	slot0._internalEffects[slot1.uniqueId] = slot1
+function var_0_0.addHangEffect(arg_4_0, ...)
+	local var_4_0 = arg_4_0._entity:addHangEffect(...)
 
-	return slot1
+	arg_4_0._internalEffects[var_4_0.uniqueId] = var_4_0
+
+	return var_4_0
 end
 
-function slot0.addGlobalEffect(slot0, ...)
-	slot1 = slot0._entity:addGlobalEffect(...)
-	slot0._internalEffects[slot1.uniqueId] = slot1
+function var_0_0.addGlobalEffect(arg_5_0, ...)
+	local var_5_0 = arg_5_0._entity:addGlobalEffect(...)
 
-	return slot1
+	arg_5_0._internalEffects[var_5_0.uniqueId] = var_5_0
+
+	return var_5_0
 end
 
-function slot0.removeEffect(slot0, slot1)
-	slot0._internalEffects[slot1.uniqueId] = nil
+function var_0_0.removeEffect(arg_6_0, arg_6_1)
+	arg_6_0._internalEffects[arg_6_1.uniqueId] = nil
 
-	slot0._entity.effect:removeEffect(slot1)
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._entity.id, slot1)
+	arg_6_0._entity.effect:removeEffect(arg_6_1)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_6_0._entity.id, arg_6_1)
 end
 
-function slot0.setEffectActive(slot0, slot1)
-	if slot0._internalClass then
-		for slot5, slot6 in ipairs(slot0._internalClass) do
-			if slot6.setEffectActive then
-				slot6:setEffectActive(slot1)
+function var_0_0.setEffectActive(arg_7_0, arg_7_1)
+	if arg_7_0._internalClass then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._internalClass) do
+			if iter_7_1.setEffectActive then
+				iter_7_1:setEffectActive(arg_7_1)
 			end
 		end
 	end
 
-	if slot0._internalEffects then
-		for slot5, slot6 in pairs(slot0._internalEffects) do
-			slot6:setActive(slot1, "FightEntitySpecialEffectBase")
+	if arg_7_0._internalEffects then
+		for iter_7_2, iter_7_3 in pairs(arg_7_0._internalEffects) do
+			iter_7_3:setActive(arg_7_1, "FightEntitySpecialEffectBase")
 		end
 	end
 end
 
-function slot0.releaseSelf(slot0)
+function var_0_0.releaseSelf(arg_8_0)
+	return
 end
 
-function slot0.disposeSelf(slot0)
-	for slot4, slot5 in ipairs(slot0._internalClass) do
-		slot5:disposeSelf()
+function var_0_0.disposeSelf(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._internalClass) do
+		iter_9_1:disposeSelf()
 	end
 
-	for slot4, slot5 in pairs(slot0._internalEffects) do
-		slot0:removeEffect(slot5)
+	for iter_9_2, iter_9_3 in pairs(arg_9_0._internalEffects) do
+		arg_9_0:removeEffect(iter_9_3)
 	end
 
-	slot0:releaseSelf()
+	arg_9_0:releaseSelf()
 
-	slot0._internalClass = nil
-	slot0._internalEffects = nil
-	slot0._entity = nil
+	arg_9_0._internalClass = nil
+	arg_9_0._internalEffects = nil
+	arg_9_0._entity = nil
 
-	slot0:__onDispose()
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

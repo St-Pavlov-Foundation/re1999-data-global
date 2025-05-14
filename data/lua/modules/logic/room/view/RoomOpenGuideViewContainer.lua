@@ -1,13 +1,13 @@
-module("modules.logic.room.view.RoomOpenGuideViewContainer", package.seeall)
+﻿module("modules.logic.room.view.RoomOpenGuideViewContainer", package.seeall)
 
-slot0 = class("RoomOpenGuideViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomOpenGuideViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomOpenGuideView.New())
+	table.insert(var_1_0, RoomOpenGuideView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

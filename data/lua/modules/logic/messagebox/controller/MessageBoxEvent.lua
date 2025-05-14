@@ -1,6 +1,7 @@
-module("modules.logic.messagebox.controller.MessageBoxEvent", package.seeall)
+﻿module("modules.logic.messagebox.controller.MessageBoxEvent", package.seeall)
 
-slot0 = _M
-slot0.CloseSpecificMessageBoxView = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.CloseSpecificMessageBoxView = 1
+
+return var_0_0

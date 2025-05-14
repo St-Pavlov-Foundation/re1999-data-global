@@ -1,43 +1,50 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueView", package.seeall)
 
-slot0 = class("AergusiClueView", BaseView)
+local var_0_0 = class("AergusiClueView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._simagenotebg = gohelper.findChildSingleImage(slot0.viewGO, "Right/#simage_notebg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._simagenotebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_notebg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_addEvents()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:_addEvents()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
+	return
 end
 
-function slot0._addEvents(slot0)
+function var_0_0._addEvents(arg_7_0)
+	return
 end
 
-function slot0._removeEvents(slot0)
+function var_0_0._removeEvents(arg_8_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

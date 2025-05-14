@@ -1,18 +1,18 @@
-module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMO", package.seeall)
+﻿module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMO", package.seeall)
 
-slot0 = pureTable("PuzzleRecordMO")
+local var_0_0 = pureTable("PuzzleRecordMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.index = slot1
-	slot0.desc = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.index = arg_1_1
+	arg_1_0.desc = arg_1_2
 end
 
-function slot0.GetIndex(slot0)
-	return slot0.index
+function var_0_0.GetIndex(arg_2_0)
+	return arg_2_0.index
 end
 
-function slot0.GetRecord(slot0)
-	return slot0.desc
+function var_0_0.GetRecord(arg_3_0)
+	return arg_3_0.desc
 end
 
-return slot0
+return var_0_0

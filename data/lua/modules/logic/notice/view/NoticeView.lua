@@ -1,179 +1,184 @@
-module("modules.logic.notice.view.NoticeView", package.seeall)
+﻿module("modules.logic.notice.view.NoticeView", package.seeall)
 
-slot0 = class("NoticeView", BaseView)
+local var_0_0 = class("NoticeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btncloseBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#simage_bg/top/#btn_closeBtn")
-	slot0._scrollnotice = gohelper.findChildScrollRect(slot0.viewGO, "left/#scroll_notice")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_normal")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_select")
-	slot0._goredtip = gohelper.findChild(slot0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_redtip")
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "right/#scroll_content")
-	slot0._gotoptitle = gohelper.findChild(slot0.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle/#txt_title")
-	slot0._simagecontent = gohelper.findChildSingleImage(slot0.viewGO, "right/#scroll_content/Viewport/Content/#simage_content")
-	slot0._txtcontentTitle = gohelper.findChildText(slot0.viewGO, "right/#scroll_content/Viewport/Content/contentTitle/#txt_contentTitle")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "right/#scroll_content/Viewport/Content/#txt_content")
-	slot0._simagenotice = gohelper.findChildSingleImage(slot0.viewGO, "right/#simage_notice")
-	slot0._gocontentMask = gohelper.findChild(slot0.viewGO, "right/#scroll_content/#go_contentMask")
-	slot0._btncloseview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeview")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btncloseBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#simage_bg/top/#btn_closeBtn")
+	arg_1_0._scrollnotice = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_notice")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_normal")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_select")
+	arg_1_0._goredtip = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_redtip")
+	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_content")
+	arg_1_0._gotoptitle = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle/#txt_title")
+	arg_1_0._simagecontent = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#simage_content")
+	arg_1_0._txtcontentTitle = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/contentTitle/#txt_contentTitle")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#txt_content")
+	arg_1_0._simagenotice = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#simage_notice")
+	arg_1_0._gocontentMask = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_content/#go_contentMask")
+	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloseBtn:AddClickListener(slot0._btncloseBtnOnClick, slot0)
-	slot0._btncloseview:AddClickListener(slot0._btncloseBtnOnClick, slot0)
-	slot0._scrollcontent:AddOnValueChanged(slot0._onContentScrollValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloseBtn:AddClickListener(arg_2_0._btncloseBtnOnClick, arg_2_0)
+	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseBtnOnClick, arg_2_0)
+	arg_2_0._scrollcontent:AddOnValueChanged(arg_2_0._onContentScrollValueChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloseBtn:RemoveClickListener()
-	slot0._btncloseview:RemoveClickListener()
-	slot0._scrollcontent:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloseBtn:RemoveClickListener()
+	arg_3_0._btncloseview:RemoveClickListener()
+	arg_3_0._scrollcontent:RemoveOnValueChanged()
 end
 
-function slot0._btncloseBtnOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseBtnOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.createToggleItem(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.type = slot2
-	slot3.goToggle = slot1
-	slot3.click = gohelper.getClick(slot1)
-	slot3.selectLabel = gohelper.findChild(slot1, "selectLabel")
-	slot3.unselectLabel = gohelper.findChild(slot1, "unselectLabel")
-	slot3.goReddot = gohelper.findChild(slot1, "unselectLabel/reddot")
+function var_0_0.createToggleItem(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getUserDataTb_()
 
-	slot3.click:AddClickListener(slot0._toggleBeSelect, slot0)
-	slot3.click:AddClickDownListener(slot0._toggleBeClickDown, slot0, slot3)
-	slot3.click:AddClickUpListener(slot0._toggleBeClickUp, slot0, slot3)
-	gohelper.addUIClickAudio(slot1, AudioEnum.UI.play_ui_feedback_open)
-	table.insert(slot0.toggleItemList, slot3)
+	var_5_0.type = arg_5_2
+	var_5_0.goToggle = arg_5_1
+	var_5_0.click = gohelper.getClick(arg_5_1)
+	var_5_0.selectLabel = gohelper.findChild(arg_5_1, "selectLabel")
+	var_5_0.unselectLabel = gohelper.findChild(arg_5_1, "unselectLabel")
+	var_5_0.goReddot = gohelper.findChild(arg_5_1, "unselectLabel/reddot")
 
-	return slot3
+	var_5_0.click:AddClickListener(arg_5_0._toggleBeSelect, arg_5_0)
+	var_5_0.click:AddClickDownListener(arg_5_0._toggleBeClickDown, arg_5_0, var_5_0)
+	var_5_0.click:AddClickUpListener(arg_5_0._toggleBeClickUp, arg_5_0, var_5_0)
+	gohelper.addUIClickAudio(arg_5_1, AudioEnum.UI.play_ui_feedback_open)
+	table.insert(arg_5_0.toggleItemList, var_5_0)
+
+	return var_5_0
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getNoticeBg("bg_announcement"))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simagebg:LoadImage(ResUrl.getNoticeBg("bg_announcement"))
 
-	slot0._goContent = gohelper.findChild(slot0._scrollcontent.gameObject, "Viewport/Content")
-	slot0.toggleItemList = {}
-	slot0.goToggle1 = gohelper.findChild(slot0.viewGO, "right/#toggleGroup/Toggle1")
-	slot0.goToggle2 = gohelper.findChild(slot0.viewGO, "right/#toggleGroup/Toggle2")
-	slot0.goToggle3 = gohelper.findChild(slot0.viewGO, "right/#toggleGroup/Toggle3")
-	slot0.goToggle4 = gohelper.findChild(slot0.viewGO, "right/#toggleGroup/Toggle4")
+	arg_6_0._goContent = gohelper.findChild(arg_6_0._scrollcontent.gameObject, "Viewport/Content")
+	arg_6_0.toggleItemList = {}
+	arg_6_0.goToggle1 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle1")
+	arg_6_0.goToggle2 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle2")
+	arg_6_0.goToggle3 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle3")
+	arg_6_0.goToggle4 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle4")
 
-	slot0:createToggleItem(slot0.goToggle1, NoticeType.Activity)
-	slot0:createToggleItem(slot0.goToggle2, NoticeType.Game)
-	slot0:createToggleItem(slot0.goToggle3, NoticeType.System)
-	slot0:createToggleItem(slot0.goToggle4, NoticeType.Information)
+	arg_6_0:createToggleItem(arg_6_0.goToggle1, NoticeType.Activity)
+	arg_6_0:createToggleItem(arg_6_0.goToggle2, NoticeType.Game)
+	arg_6_0:createToggleItem(arg_6_0.goToggle3, NoticeType.System)
+	arg_6_0:createToggleItem(arg_6_0.goToggle4, NoticeType.Information)
 
-	slot0._scrollContentHeight = recthelper.getHeight(slot0._goContent.transform)
+	arg_6_0._scrollContentHeight = recthelper.getHeight(arg_6_0._goContent.transform)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_7_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	NoticeModel.instance:onOpenNoticeView()
-	slot0:_addEvent()
-	slot0:updateUI()
-	NavigateMgr.instance:addEscape(ViewName.NoticeView, slot0._btncloseBtnOnClick, slot0)
+	arg_9_0:_addEvent()
+	arg_9_0:updateUI()
+	NavigateMgr.instance:addEscape(ViewName.NoticeView, arg_9_0._btncloseBtnOnClick, arg_9_0)
 end
 
-function slot0._addEvent(slot0)
-	NoticeController.instance:registerCallback(NoticeEvent.OnSelectNoticeItem, slot0._onSelectNoticeItem, slot0)
-	slot0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, slot0.updateUI, slot0)
-	slot0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, slot0.refreshRedDot, slot0)
-	slot0:addEventCb(GameSceneMgr.instance, SceneEventName.EnterScene, slot0._enterScene, slot0)
+function var_0_0._addEvent(arg_10_0)
+	NoticeController.instance:registerCallback(NoticeEvent.OnSelectNoticeItem, arg_10_0._onSelectNoticeItem, arg_10_0)
+	arg_10_0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, arg_10_0.updateUI, arg_10_0)
+	arg_10_0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, arg_10_0.refreshRedDot, arg_10_0)
+	arg_10_0:addEventCb(GameSceneMgr.instance, SceneEventName.EnterScene, arg_10_0._enterScene, arg_10_0)
 end
 
-function slot0._enterScene(slot0, slot1, slot2)
-	slot0:closeThis()
+function var_0_0._enterScene(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0:closeThis()
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeEvent()
+function var_0_0.onClose(arg_12_0)
+	arg_12_0:_removeEvent()
 	NoticeModel.instance:onCloseNoticeView()
 end
 
-function slot0._removeEvent(slot0)
-	NoticeController.instance:unregisterCallback(NoticeEvent.OnSelectNoticeItem, slot0._onSelectNoticeItem, slot0)
+function var_0_0._removeEvent(arg_13_0)
+	NoticeController.instance:unregisterCallback(NoticeEvent.OnSelectNoticeItem, arg_13_0._onSelectNoticeItem, arg_13_0)
 end
 
-function slot0.updateUI(slot0)
-	NoticeModel.instance:switchNoticeType(slot0.viewContainer:getFirstShowNoticeType())
+function var_0_0.updateUI(arg_14_0)
+	local var_14_0 = arg_14_0.viewContainer:getFirstShowNoticeType()
 
-	for slot5, slot6 in ipairs(slot0.toggleItemList) do
-		gohelper.setActive(slot6.goToggle, #NoticeModel.instance:getNoticesByType(slot6.type) > 0)
+	NoticeModel.instance:switchNoticeType(var_14_0)
+
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.toggleItemList) do
+		gohelper.setActive(iter_14_1.goToggle, #NoticeModel.instance:getNoticesByType(iter_14_1.type) > 0)
 	end
 
-	slot0:refreshRedDot()
-	slot0.viewContainer:selectFirstNotice()
-	slot0:_toggleBeSelect()
+	arg_14_0:refreshRedDot()
+	arg_14_0.viewContainer:selectFirstNotice()
+	arg_14_0:_toggleBeSelect()
 end
 
-function slot0.refreshRedDot(slot0)
-	for slot4, slot5 in ipairs(slot0.toggleItemList) do
-		gohelper.setActive(slot5.goReddot, not NoticeModel.instance:getNoticeTypeIsRead(slot5.type))
-	end
-end
-
-function slot0._onSelectNoticeItem(slot0, slot1)
-	NoticeContentListModel.instance:setNoticeMO(slot1)
-
-	slot0._scrollcontent.verticalNormalizedPosition = 1
-
-	slot0:_refreshScrollContent()
-end
-
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-
-	for slot4, slot5 in ipairs(slot0.toggleItemList) do
-		slot5.click:RemoveClickListener()
-		slot5.click:RemoveClickDownListener()
-		slot5.click:RemoveClickUpListener()
-	end
-
-	slot0.toggleItemList = nil
-end
-
-function slot0._toggleBeSelect(slot0)
-	slot1 = NoticeModel.instance:getSelectType()
-
-	for slot5, slot6 in ipairs(slot0.toggleItemList) do
-		gohelper.setActive(slot6.selectLabel, slot1 == slot6.type)
-		gohelper.setActive(slot6.unselectLabel, slot1 ~= slot6.type)
+function var_0_0.refreshRedDot(arg_15_0)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.toggleItemList) do
+		gohelper.setActive(iter_15_1.goReddot, not NoticeModel.instance:getNoticeTypeIsRead(iter_15_1.type))
 	end
 end
 
-function slot0._toggleBeClickDown(slot0, slot1)
-	UIColorHelper.setGameObjectPressState(slot0, slot1.goToggle, true)
+function var_0_0._onSelectNoticeItem(arg_16_0, arg_16_1)
+	NoticeContentListModel.instance:setNoticeMO(arg_16_1)
+
+	arg_16_0._scrollcontent.verticalNormalizedPosition = 1
+
+	arg_16_0:_refreshScrollContent()
 end
 
-function slot0._toggleBeClickUp(slot0, slot1)
-	UIColorHelper.setGameObjectPressState(slot0, slot1.goToggle, false)
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0._simagebg:UnLoadImage()
+
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0.toggleItemList) do
+		iter_17_1.click:RemoveClickListener()
+		iter_17_1.click:RemoveClickDownListener()
+		iter_17_1.click:RemoveClickUpListener()
+	end
+
+	arg_17_0.toggleItemList = nil
 end
 
-function slot0._refreshScrollContent(slot0)
-	ZProj.UGUIHelper.RebuildLayout(slot0._goContent.transform)
+function var_0_0._toggleBeSelect(arg_18_0)
+	local var_18_0 = NoticeModel.instance:getSelectType()
 
-	slot0._couldScroll = slot0._scrollContentHeight < recthelper.getHeight(slot0._goContent.transform) and true or false
-
-	gohelper.setActive(slot0._gocontentMask, slot0._couldScroll)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.toggleItemList) do
+		gohelper.setActive(iter_18_1.selectLabel, var_18_0 == iter_18_1.type)
+		gohelper.setActive(iter_18_1.unselectLabel, var_18_0 ~= iter_18_1.type)
+	end
 end
 
-function slot0._onContentScrollValueChanged(slot0, slot1)
-	gohelper.setActive(slot0._gocontentMask, slot0._couldScroll and gohelper.getRemindFourNumberFloat(slot0._scrollcontent.verticalNormalizedPosition) > 0)
+function var_0_0._toggleBeClickDown(arg_19_0, arg_19_1)
+	UIColorHelper.setGameObjectPressState(arg_19_0, arg_19_1.goToggle, true)
 end
 
-return slot0
+function var_0_0._toggleBeClickUp(arg_20_0, arg_20_1)
+	UIColorHelper.setGameObjectPressState(arg_20_0, arg_20_1.goToggle, false)
+end
+
+function var_0_0._refreshScrollContent(arg_21_0)
+	ZProj.UGUIHelper.RebuildLayout(arg_21_0._goContent.transform)
+
+	arg_21_0._couldScroll = recthelper.getHeight(arg_21_0._goContent.transform) > arg_21_0._scrollContentHeight and true or false
+
+	gohelper.setActive(arg_21_0._gocontentMask, arg_21_0._couldScroll)
+end
+
+function var_0_0._onContentScrollValueChanged(arg_22_0, arg_22_1)
+	gohelper.setActive(arg_22_0._gocontentMask, arg_22_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_22_0._scrollcontent.verticalNormalizedPosition) <= 0))
+end
+
+return var_0_0

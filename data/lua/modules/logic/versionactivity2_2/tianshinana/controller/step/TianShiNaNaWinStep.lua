@@ -1,33 +1,35 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaWinStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaWinStep", package.seeall)
 
-slot0 = class("TianShiNaNaWinStep", TianShiNaNaStepBase)
+local var_0_0 = class("TianShiNaNaWinStep", TianShiNaNaStepBase)
 
-function slot0.onStart(slot0, slot1)
-	if TianShiNaNaModel.instance.episodeCo.storyClear > 0 then
-		slot0._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
-		slot0._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = TianShiNaNaModel.instance.episodeCo.storyClear
+
+	if var_1_0 > 0 then
+		arg_1_0._initMaskActive = PostProcessingMgr.instance:getUIPPValue("LocalMaskActive")
+		arg_1_0._initDistortStrength = PostProcessingMgr.instance:getUIPPValue("LocalDistortStrength")
 
 		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", false)
 		PostProcessingMgr.instance:setUIPPValue("localDistortStrength", 0)
-		StoryController.instance:playStory(slot2, nil, slot0._onStoryEnd, slot0)
+		StoryController.instance:playStory(var_1_0, nil, arg_1_0._onStoryEnd, arg_1_0)
 	else
-		slot0:_onStoryEnd()
+		arg_1_0:_onStoryEnd()
 	end
 end
 
-function slot0._onStoryEnd(slot0)
+function var_0_0._onStoryEnd(arg_2_0)
 	ViewMgr.instance:openView(ViewName.TianShiNaNaResultView, {
 		isWin = true,
-		star = slot0._data.star
+		star = arg_2_0._data.star
 	})
-	slot0:onDone(false)
+	arg_2_0:onDone(false)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._initMaskActive ~= nil then
-		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", slot0._initMaskActive)
-		PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", slot0._initDistortStrength)
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._initMaskActive ~= nil then
+		PostProcessingMgr.instance:setUIPPValue("LocalMaskActive", arg_3_0._initMaskActive)
+		PostProcessingMgr.instance:setUIPPValue("LocalDistortStrength", arg_3_0._initDistortStrength)
 	end
 end
 
-return slot0
+return var_0_0

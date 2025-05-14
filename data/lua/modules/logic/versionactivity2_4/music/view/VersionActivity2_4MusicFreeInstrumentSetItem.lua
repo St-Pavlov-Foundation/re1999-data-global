@@ -1,83 +1,92 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentSetItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentSetItem", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeInstrumentSetItem", ListScrollCellExtend)
+local var_0_0 = class("VersionActivity2_4MusicFreeInstrumentSetItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._btnroot = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_root")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#btn_root/#go_select")
-	slot0._gounselect = gohelper.findChild(slot0.viewGO, "#btn_root/#go_unselect")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#btn_root/#image_icon")
-	slot0._imageselectframe = gohelper.findChildImage(slot0.viewGO, "#btn_root/#image_selectframe")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_root/#btn_click")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnroot = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_root")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#btn_root/#go_select")
+	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "#btn_root/#go_unselect")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_root/#image_icon")
+	arg_1_0._imageselectframe = gohelper.findChildImage(arg_1_0.viewGO, "#btn_root/#image_selectframe")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_root/#btn_click")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnroot:AddClickListener(slot0._btnrootOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnroot:AddClickListener(arg_2_0._btnrootOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnroot:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnroot:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._showIndex then
-		slot0._parentView:removeInstrument(slot0._mo.id)
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._showIndex then
+		arg_4_0._parentView:removeInstrument(arg_4_0._mo.id)
 
 		return
 	end
 
-	slot0._parentView:addInstrument(slot0._mo.id)
+	arg_4_0._parentView:addInstrument(arg_4_0._mo.id)
 end
 
-function slot0._btnrootOnClick(slot0)
+function var_0_0._btnrootOnClick(arg_5_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_7_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_8_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0._mo = slot1
-	slot0._parentView = slot2
-	slot0._txtname.text = slot0._mo.name
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._mo = arg_9_1
+	arg_9_0._parentView = arg_9_2
+	arg_9_0._txtname.text = arg_9_0._mo.name
 
-	slot0:updateIndex()
-	UISpriteSetMgr.instance:setMusicSprite(slot0._imageicon, "v2a4_bakaluoer_freeinstrument_icon_t_" .. slot1.icon)
+	arg_9_0:updateIndex()
+	UISpriteSetMgr.instance:setMusicSprite(arg_9_0._imageicon, "v2a4_bakaluoer_freeinstrument_icon_t_" .. arg_9_1.icon)
 end
 
-function slot0.updateIndex(slot0)
-	slot0._showIndex = tabletool.indexOf(slot0._parentView._indexList, slot0._mo.id) ~= nil
+function var_0_0.updateIndex(arg_10_0)
+	local var_10_0 = tabletool.indexOf(arg_10_0._parentView._indexList, arg_10_0._mo.id)
 
-	gohelper.setActive(slot0._imageselectframe, slot0._showIndex)
-	gohelper.setActive(slot0._goselect, slot0._showIndex)
-	gohelper.setActive(slot0._gounselect, not slot0._showIndex)
+	arg_10_0._showIndex = var_10_0 ~= nil
 
-	if slot0._showIndex then
-		UISpriteSetMgr.instance:setMusicSprite(slot0._imageselectframe, "v2a4_bakaluoer_freeinstrument_set_num" .. slot1)
+	gohelper.setActive(arg_10_0._imageselectframe, arg_10_0._showIndex)
+	gohelper.setActive(arg_10_0._goselect, arg_10_0._showIndex)
+	gohelper.setActive(arg_10_0._gounselect, not arg_10_0._showIndex)
+
+	if arg_10_0._showIndex then
+		UISpriteSetMgr.instance:setMusicSprite(arg_10_0._imageselectframe, "v2a4_bakaluoer_freeinstrument_set_num" .. var_10_0)
 	end
 
-	slot2 = slot0._imageicon.color
-	slot2.a = slot0._showIndex and 1 or 0.35
-	slot0._imageicon.color = slot2
-	slot0._txtname.color = GameUtil.parseColor(slot0._showIndex and "#ebf0f4" or "#728698")
+	local var_10_1 = arg_10_0._imageicon.color
+
+	var_10_1.a = arg_10_0._showIndex and 1 or 0.35
+	arg_10_0._imageicon.color = var_10_1
+	arg_10_0._txtname.color = GameUtil.parseColor(arg_10_0._showIndex and "#ebf0f4" or "#728698")
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

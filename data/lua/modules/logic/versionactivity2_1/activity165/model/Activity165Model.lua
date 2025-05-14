@@ -1,153 +1,171 @@
-module("modules.logic.versionactivity2_1.activity165.model.Activity165Model", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.model.Activity165Model", package.seeall)
 
-slot0 = class("Activity165Model", BaseModel)
+local var_0_0 = class("Activity165Model", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitInfo(slot0)
-	slot0._actId = VersionActivity2_1Enum.ActivityId.StoryDeduction
+function var_0_0.onInitInfo(arg_2_0)
+	arg_2_0._actId = VersionActivity2_1Enum.ActivityId.StoryDeduction
 
-	if ActivityModel.instance:isActOnLine(slot0._actId) then
-		Activity165Rpc.instance:sendAct165GetInfoRequest(slot0._actId)
+	if ActivityModel.instance:isActOnLine(arg_2_0._actId) then
+		Activity165Rpc.instance:sendAct165GetInfoRequest(arg_2_0._actId)
 	end
 end
 
-function slot0.onGetInfo(slot0, slot1, slot2)
-	slot0._actId = slot1
+function var_0_0.onGetInfo(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._actId = arg_3_1
 
-	for slot6, slot7 in pairs(slot2) do
-		if slot7.storyId then
-			slot0:onGetStoryInfo(slot7)
+	for iter_3_0, iter_3_1 in pairs(arg_3_2) do
+		if iter_3_1.storyId then
+			arg_3_0:onGetStoryInfo(iter_3_1)
 		end
 	end
 
-	slot0:_initAllElements()
+	arg_3_0:_initAllElements()
 end
 
-function slot0.getStoryCount(slot0)
+function var_0_0.getStoryCount(arg_4_0)
 	return 3
 end
 
-function slot0.onGetStoryInfo(slot0, slot1)
-	slot0:setStoryMo(slot0._actId, slot1)
+function var_0_0.onGetStoryInfo(arg_5_0, arg_5_1)
+	arg_5_0:setStoryMo(arg_5_0._actId, arg_5_1)
 end
 
-function slot0.onModifyKeywordCallback(slot0, slot1, slot2)
-	slot0:getStoryMo(slot1, slot2.storyId):onModifyKeywordCallback(slot2)
+function var_0_0.onModifyKeywordCallback(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_2.storyId
+
+	arg_6_0:getStoryMo(arg_6_1, var_6_0):onModifyKeywordCallback(arg_6_2)
 end
 
-function slot0.onGenerateEnding(slot0, slot1, slot2, slot3)
+function var_0_0.onGenerateEnding(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	return
 end
 
-function slot0.setEndingRedDot(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getStoryMo(slot0._actId, slot1).unlockEndings) do
-		GameUtil.playerPrefsSetNumberByUserId(slot0:getEndingRedDotKey(slot6), 1)
+function var_0_0.setEndingRedDot(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getStoryMo(arg_8_0._actId, arg_8_1)
+
+	for iter_8_0, iter_8_1 in pairs(var_8_0.unlockEndings) do
+		GameUtil.playerPrefsSetNumberByUserId(arg_8_0:getEndingRedDotKey(iter_8_0), 1)
 	end
 end
 
-function slot0.isShowEndingRedDot(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getStoryMo(slot0._actId, slot1).unlockEndings) do
-		if GameUtil.playerPrefsGetNumberByUserId(slot0:getEndingRedDotKey(slot6), 0) == 0 then
+function var_0_0.isShowEndingRedDot(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getStoryMo(arg_9_0._actId, arg_9_1)
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0.unlockEndings) do
+		if GameUtil.playerPrefsGetNumberByUserId(arg_9_0:getEndingRedDotKey(iter_9_0), 0) == 0 then
 			return true
 		end
 	end
 end
 
-function slot0.getEndingRedDotIndex(slot0)
-	for slot4 = 1, slot0:getStoryCount() do
-		if slot0:isShowEndingRedDot(slot4) then
-			return slot4
+function var_0_0.getEndingRedDotIndex(arg_10_0)
+	for iter_10_0 = 1, arg_10_0:getStoryCount() do
+		if arg_10_0:isShowEndingRedDot(iter_10_0) then
+			return iter_10_0
 		end
 	end
 end
 
-function slot0.getEndingRedDotKey(slot0, slot1)
-	return slot0:_getStoryPrefsKey("Ending", slot1)
+function var_0_0.getEndingRedDotKey(arg_11_0, arg_11_1)
+	return arg_11_0:_getStoryPrefsKey("Ending", arg_11_1)
 end
 
-function slot0._getStoryPrefsKey(slot0, slot1, slot2)
-	return string.format("Activity165_%s_%s_%s", slot1, slot0._actId, slot2)
+function var_0_0._getStoryPrefsKey(arg_12_0, arg_12_1, arg_12_2)
+	return string.format("Activity165_%s_%s_%s", arg_12_1, arg_12_0._actId, arg_12_2)
 end
 
-function slot0.onRestart(slot0, slot1, slot2)
-	slot0:setStoryMo(slot1, slot2)
+function var_0_0.onRestart(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0:setStoryMo(arg_13_1, arg_13_2)
 end
 
-function slot0.onGetReward(slot0, slot1, slot2, slot3)
-	slot0:getStoryMo(slot1, slot2):setclaimRewardCount(slot3)
+function var_0_0.onGetReward(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	arg_14_0:getStoryMo(arg_14_1, arg_14_2):setclaimRewardCount(arg_14_3)
 end
 
-function slot0.getActivityId(slot0)
-	return slot0._actId or VersionActivity2_1Enum.ActivityId.StoryDeduction
+function var_0_0.getActivityId(arg_15_0)
+	return arg_15_0._actId or VersionActivity2_1Enum.ActivityId.StoryDeduction
 end
 
-function slot0.setStoryMo(slot0, slot1, slot2)
-	slot0:getStoryMo(slot1, slot2.storyId):setMo(slot2)
+function var_0_0.setStoryMo(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0:getStoryMo(arg_16_1, arg_16_2.storyId):setMo(arg_16_2)
 end
 
-function slot0.getStoryMo(slot0, slot1, slot2)
-	if not slot0._storyMoDict then
-		slot0._storyMoDict = {}
+function var_0_0.getStoryMo(arg_17_0, arg_17_1, arg_17_2)
+	if not arg_17_0._storyMoDict then
+		arg_17_0._storyMoDict = {}
 	end
 
-	if not slot0._storyMoDict[slot1] then
-		slot0._storyMoDict[slot1] = {}
+	if not arg_17_0._storyMoDict[arg_17_1] then
+		arg_17_0._storyMoDict[arg_17_1] = {}
 	end
 
-	if not slot0._storyMoDict[slot1][slot2] then
-		slot3 = Activity165StoryMo.New()
+	local var_17_0 = arg_17_0._storyMoDict[arg_17_1][arg_17_2]
 
-		slot3:onInit(slot1, slot2)
+	if not var_17_0 then
+		var_17_0 = Activity165StoryMo.New()
 
-		slot0._storyMoDict[slot1][slot2] = slot3
+		var_17_0:onInit(arg_17_1, arg_17_2)
+
+		arg_17_0._storyMoDict[arg_17_1][arg_17_2] = var_17_0
 	end
 
-	return slot3
+	return var_17_0
 end
 
-function slot0.getAllActStory(slot0)
-	return slot0._storyMoDict and slot0._storyMoDict[slot0._actId] or {}
+function var_0_0.getAllActStory(arg_18_0)
+	return arg_18_0._storyMoDict and arg_18_0._storyMoDict[arg_18_0._actId] or {}
 end
 
-function slot0.hasUnlockStory(slot0)
-	if LuaUtil.tableNotEmpty(slot0:getAllActStory()) then
-		for slot5, slot6 in pairs(slot1) do
-			if slot6.isUnlock then
+function var_0_0.hasUnlockStory(arg_19_0)
+	local var_19_0 = arg_19_0:getAllActStory()
+
+	if LuaUtil.tableNotEmpty(var_19_0) then
+		for iter_19_0, iter_19_1 in pairs(var_19_0) do
+			if iter_19_1.isUnlock then
 				return true
 			end
 		end
 	end
 end
 
-function slot0.isHasUnlockEnding(slot0)
-	if LuaUtil.tableNotEmpty(slot0:getAllActStory()) then
-		for slot5, slot6 in pairs(slot1) do
-			if slot6:getUnlockEndingCount() > 0 then
+function var_0_0.isHasUnlockEnding(arg_20_0)
+	local var_20_0 = arg_20_0:getAllActStory()
+
+	if LuaUtil.tableNotEmpty(var_20_0) then
+		for iter_20_0, iter_20_1 in pairs(var_20_0) do
+			if iter_20_1:getUnlockEndingCount() > 0 then
 				return true
 			end
 		end
 	end
 end
 
-function slot0._initAllElements(slot0)
-	slot0._elements = {}
+function var_0_0._initAllElements(arg_21_0)
+	local var_21_0 = arg_21_0:getAllActStory()
 
-	if LuaUtil.tableNotEmpty(slot0:getAllActStory()) then
-		for slot5, slot6 in pairs(slot1) do
-			tabletool.addValues(slot0._elements, slot6:getElements())
+	arg_21_0._elements = {}
+
+	if LuaUtil.tableNotEmpty(var_21_0) then
+		for iter_21_0, iter_21_1 in pairs(var_21_0) do
+			tabletool.addValues(arg_21_0._elements, iter_21_1:getElements())
 		end
 	end
 end
 
-function slot0.getAllElements(slot0)
-	return slot0._elements
+function var_0_0.getAllElements(arg_22_0)
+	return arg_22_0._elements
 end
 
-function slot0.isShowAct165Reddot(slot0)
-	if slot0:getAllActStory() then
-		for slot5, slot6 in pairs(slot1) do
-			if slot6:isShowReddot() then
+function var_0_0.isShowAct165Reddot(arg_23_0)
+	local var_23_0 = arg_23_0:getAllActStory()
+
+	if var_23_0 then
+		for iter_23_0, iter_23_1 in pairs(var_23_0) do
+			if iter_23_1:isShowReddot() then
 				return true
 			end
 		end
@@ -156,77 +174,100 @@ function slot0.isShowAct165Reddot(slot0)
 	return false
 end
 
-function slot0.setSeparateChars(slot0, slot1)
-	slot2 = {}
+function var_0_0.setSeparateChars(arg_24_0, arg_24_1)
+	local var_24_0 = {}
 
-	if not string.nilorempty(slot1) then
-		slot4 = ""
+	if not string.nilorempty(arg_24_1) then
+		local var_24_1 = string.split(arg_24_1, "\n")
+		local var_24_2 = ""
 
-		for slot8 = 1, #string.split(slot1, "\n") do
-			if not string.nilorempty(slot3[slot8]) then
-				for slot13 = 1, #LuaUtil.getUCharArr(slot3[slot8]) do
-					table.insert(slot2, slot4 .. slot9[slot13])
+		for iter_24_0 = 1, #var_24_1 do
+			if not string.nilorempty(var_24_1[iter_24_0]) then
+				local var_24_3 = LuaUtil.getUCharArr(var_24_1[iter_24_0])
+
+				for iter_24_1 = 1, #var_24_3 do
+					var_24_2 = var_24_2 .. var_24_3[iter_24_1]
+
+					table.insert(var_24_0, var_24_2)
 				end
 
-				table.insert(slot2, slot4 .. "\n")
+				var_24_2 = var_24_2 .. "\n"
+
+				table.insert(var_24_0, var_24_2)
 			end
 		end
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0.GMCheckConfig(slot0)
-	for slot5, slot6 in pairs(lua_activity165_step.configDict) do
-		if slot6.answersKeywordIds == "-1" then
-			table.insert({}, slot6.stepId)
+function var_0_0.GMCheckConfig(arg_25_0)
+	local var_25_0 = {}
+
+	for iter_25_0, iter_25_1 in pairs(lua_activity165_step.configDict) do
+		if iter_25_1.answersKeywordIds == "-1" then
+			table.insert(var_25_0, iter_25_1.stepId)
 		end
 	end
 
-	slot0.allRounds = {}
-	slot2 = {}
+	arg_25_0.allRounds = {}
 
-	for slot6, slot7 in pairs(lua_activity165_step.configDict) do
-		if not string.nilorempty(slot7.nextStepConditionIds) then
-			for slot12, slot13 in pairs(GameUtil.splitString2(slot7.nextStepConditionIds, true)) do
-				if not slot0.allRounds[slot6] then
-					slot0.allRounds[slot6] = {}
+	local var_25_1 = {}
+
+	for iter_25_2, iter_25_3 in pairs(lua_activity165_step.configDict) do
+		if not string.nilorempty(iter_25_3.nextStepConditionIds) then
+			local var_25_2 = GameUtil.splitString2(iter_25_3.nextStepConditionIds, true)
+
+			for iter_25_4, iter_25_5 in pairs(var_25_2) do
+				if not arg_25_0.allRounds[iter_25_2] then
+					arg_25_0.allRounds[iter_25_2] = {}
 				end
 
-				table.insert(slot0.allRounds[slot6], slot13)
+				table.insert(arg_25_0.allRounds[iter_25_2], iter_25_5)
 
-				if not LuaUtil.tableContains(slot2, slot13[2]) then
-					table.insert(slot2, slot13[2])
+				if not LuaUtil.tableContains(var_25_1, iter_25_5[2]) then
+					table.insert(var_25_1, iter_25_5[2])
 				end
 			end
 		end
 	end
 
-	slot0:GMCheckAllRounds()
+	arg_25_0:GMCheckAllRounds()
 end
 
-function slot0.GMCheckAllRounds(slot0)
-	for slot4, slot5 in pairs(slot0.allRounds) do
-		slot0:GMCheckisSameRound1(slot4, slot5)
+function var_0_0.GMCheckAllRounds(arg_26_0)
+	for iter_26_0, iter_26_1 in pairs(arg_26_0.allRounds) do
+		arg_26_0:GMCheckisSameRound1(iter_26_0, iter_26_1)
 	end
 end
 
-function slot0.GMCheckisSameRound1(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot2) do
-		if LuaUtil.tableNotEmpty(slot7) then
-			if not slot0:GMCheckisSameRound2(slot1, slot7, slot7[1]) then
-				SLFramework.SLLogger.LogError(string.format("跳转步骤错误: 当前检查：%s步骤%s,\n%s中通过%s的步骤有：\n%s", slot1, slot0:logRound(slot7), slot8, slot1, slot0:logRounds(slot0:GMNextRoundByLast(slot8, slot1))))
-			elseif not slot0:GMCheckisSameRound4(slot1, slot7) then
-				SLFramework.SLLogger.LogError(string.format("跳转步骤错误: 当前检查：%s步骤%s,请检查%s是否缺少这条路径", slot1, slot0:logRound(slot7), slot7[#slot7]))
+function var_0_0.GMCheckisSameRound1(arg_27_0, arg_27_1, arg_27_2)
+	for iter_27_0, iter_27_1 in pairs(arg_27_2) do
+		if LuaUtil.tableNotEmpty(iter_27_1) then
+			local var_27_0 = iter_27_1[1]
+
+			if not arg_27_0:GMCheckisSameRound2(arg_27_1, iter_27_1, var_27_0) then
+				local var_27_1 = arg_27_0:GMNextRoundByLast(var_27_0, arg_27_1)
+				local var_27_2 = string.format("跳转步骤错误: 当前检查：%s步骤%s,\n%s中通过%s的步骤有：\n%s", arg_27_1, arg_27_0:logRound(iter_27_1), var_27_0, arg_27_1, arg_27_0:logRounds(var_27_1))
+
+				SLFramework.SLLogger.LogError(var_27_2)
+			elseif not arg_27_0:GMCheckisSameRound4(arg_27_1, iter_27_1) then
+				local var_27_3 = string.format("跳转步骤错误: 当前检查：%s步骤%s,请检查%s是否缺少这条路径", arg_27_1, arg_27_0:logRound(iter_27_1), iter_27_1[#iter_27_1])
+
+				SLFramework.SLLogger.LogError(var_27_3)
 			end
 		end
 	end
 end
 
-function slot0.GMCheckisSameRound2(slot0, slot1, slot2, slot3)
-	if not slot0.allRounds[slot3] then
-		if not Activity165Config.instance:getStepCo(slot0._actId, slot3) or slot5.answersKeywordIds ~= "-1" then
-			SLFramework.SLLogger.LogError("跳转步骤错误 " .. slot1 .. "    " .. slot3)
+function var_0_0.GMCheckisSameRound2(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	local var_28_0 = arg_28_0.allRounds[arg_28_3]
+
+	if not var_28_0 then
+		local var_28_1 = Activity165Config.instance:getStepCo(arg_28_0._actId, arg_28_3)
+
+		if not var_28_1 or var_28_1.answersKeywordIds ~= "-1" then
+			SLFramework.SLLogger.LogError("跳转步骤错误 " .. arg_28_1 .. "    " .. arg_28_3)
 
 			return false
 		else
@@ -234,8 +275,8 @@ function slot0.GMCheckisSameRound2(slot0, slot1, slot2, slot3)
 		end
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		if slot0:GMCheckisSameRound3(2, slot2, slot9) then
+	for iter_28_0, iter_28_1 in pairs(var_28_0) do
+		if arg_28_0:GMCheckisSameRound3(2, arg_28_2, iter_28_1) then
 			return true
 		end
 	end
@@ -243,18 +284,22 @@ function slot0.GMCheckisSameRound2(slot0, slot1, slot2, slot3)
 	return false
 end
 
-function slot0.GMCheckisSameRound4(slot0, slot1, slot2)
-	table.insert({}, slot1)
+function var_0_0.GMCheckisSameRound4(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = {}
 
-	slot4 = slot2[#slot2]
+	table.insert(var_29_0, arg_29_1)
 
-	for slot8 = 2, #slot2 - 1 do
-		table.insert(slot3, slot2[slot8])
+	local var_29_1 = arg_29_2[#arg_29_2]
+
+	for iter_29_0 = 2, #arg_29_2 - 1 do
+		table.insert(var_29_0, arg_29_2[iter_29_0])
 	end
 
-	if slot0.allRounds[slot4] then
-		for slot9, slot10 in pairs(slot5) do
-			if slot0:GMCheckisSameRound3(1, slot3, slot10) then
+	local var_29_2 = arg_29_0.allRounds[var_29_1]
+
+	if var_29_2 then
+		for iter_29_1, iter_29_2 in pairs(var_29_2) do
+			if arg_29_0:GMCheckisSameRound3(1, var_29_0, iter_29_2) then
 				return true
 			end
 		end
@@ -265,39 +310,46 @@ function slot0.GMCheckisSameRound4(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.GMNextRoundByLast(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.GMNextRoundByLast(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = arg_30_0.allRounds[arg_30_1]
+	local var_30_1 = {}
 
-	if slot0.allRounds[slot1] then
-		for slot8, slot9 in pairs(slot3) do
-			if slot9[#slot9] == slot2 then
-				table.insert(slot4, slot9)
+	if var_30_0 then
+		for iter_30_0, iter_30_1 in pairs(var_30_0) do
+			if iter_30_1[#iter_30_1] == arg_30_2 then
+				table.insert(var_30_1, iter_30_1)
 			end
 		end
 	end
 
-	return slot4
+	return var_30_1
 end
 
-function slot0.logRounds(slot0, slot1)
-	for slot6, slot7 in pairs(slot1) do
-		slot2 = "" .. "         " .. slot0:logRound(slot7)
+function var_0_0.logRounds(arg_31_0, arg_31_1)
+	local var_31_0 = ""
+
+	for iter_31_0, iter_31_1 in pairs(arg_31_1) do
+		local var_31_1 = arg_31_0:logRound(iter_31_1)
+
+		var_31_0 = var_31_0 .. "         " .. var_31_1
 	end
 
-	return slot2
+	return var_31_0
 end
 
-function slot0.logRound(slot0, slot1)
-	for slot6, slot7 in pairs(slot1) do
-		slot2 = "" .. "#" .. slot7
+function var_0_0.logRound(arg_32_0, arg_32_1)
+	local var_32_0 = ""
+
+	for iter_32_0, iter_32_1 in pairs(arg_32_1) do
+		var_32_0 = var_32_0 .. "#" .. iter_32_1
 	end
 
-	return slot2
+	return var_32_0
 end
 
-function slot0.GMCheckisSameRound3(slot0, slot1, slot2, slot3)
-	for slot7 = slot1, #slot2 do
-		if slot2[slot7] ~= slot3[slot7] then
+function var_0_0.GMCheckisSameRound3(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	for iter_33_0 = arg_33_1, #arg_33_2 do
+		if arg_33_2[iter_33_0] ~= arg_33_3[iter_33_0] then
 			return false
 		end
 	end
@@ -305,17 +357,18 @@ function slot0.GMCheckisSameRound3(slot0, slot1, slot2, slot3)
 	return true
 end
 
-function slot0.isPrintLog(slot0)
-	return slot0._isPrintLog
+function var_0_0.isPrintLog(arg_34_0)
+	return arg_34_0._isPrintLog
 end
 
-function slot0.setPrintLog(slot0, slot1)
-	slot0._isPrintLog = slot1
+function var_0_0.setPrintLog(arg_35_0, arg_35_1)
+	arg_35_0._isPrintLog = arg_35_1
 end
 
-function slot0.closeEditView(slot0)
+function var_0_0.closeEditView(arg_36_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

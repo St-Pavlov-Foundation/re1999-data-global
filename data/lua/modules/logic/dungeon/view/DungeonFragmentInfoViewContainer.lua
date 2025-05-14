@@ -1,13 +1,13 @@
-module("modules.logic.dungeon.view.DungeonFragmentInfoViewContainer", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonFragmentInfoViewContainer", package.seeall)
 
-slot0 = class("DungeonFragmentInfoViewContainer", BaseViewContainer)
+local var_0_0 = class("DungeonFragmentInfoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, DungeonFragmentInfoView.New())
+	table.insert(var_1_0, DungeonFragmentInfoView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

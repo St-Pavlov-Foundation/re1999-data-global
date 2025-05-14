@@ -1,141 +1,151 @@
-module("modules.logic.social.view.SocialRequestItem", package.seeall)
+﻿module("modules.logic.social.view.SocialRequestItem", package.seeall)
 
-slot0 = class("SocialRequestItem", ListScrollCellExtend)
+local var_0_0 = class("SocialRequestItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goplayericon = gohelper.findChild(slot0.viewGO, "#go_playericon")
-	slot0._goskinbg = gohelper.findChild(slot0.viewGO, "#go_skinbg")
-	slot0._imagebg = gohelper.findChildImage(slot0.viewGO, "image_ItemBG")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txtstatus = gohelper.findChildText(slot0.viewGO, "status/#txt_status")
-	slot0._txtofflinetime = gohelper.findChildText(slot0.viewGO, "status/#txt_offlinetime")
-	slot0._goofflinebg = gohelper.findChild(slot0.viewGO, "status/bg")
-	slot0._txtuid = gohelper.findChildText(slot0.viewGO, "#txt_uid")
-	slot0._btnagree = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_agree")
-	slot0._btnreject = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_reject")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "#go_playericon")
+	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "#go_skinbg")
+	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "image_ItemBG")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtstatus = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_status")
+	arg_1_0._txtofflinetime = gohelper.findChildText(arg_1_0.viewGO, "status/#txt_offlinetime")
+	arg_1_0._goofflinebg = gohelper.findChild(arg_1_0.viewGO, "status/bg")
+	arg_1_0._txtuid = gohelper.findChildText(arg_1_0.viewGO, "#txt_uid")
+	arg_1_0._btnagree = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_agree")
+	arg_1_0._btnreject = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reject")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnagree:AddClickListener(slot0._btnagreeOnClick, slot0)
-	slot0._btnreject:AddClickListener(slot0._btnrejectOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnagree:AddClickListener(arg_2_0._btnagreeOnClick, arg_2_0)
+	arg_2_0._btnreject:AddClickListener(arg_2_0._btnrejectOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnagree:RemoveClickListener()
-	slot0._btnreject:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnagree:RemoveClickListener()
+	arg_3_0._btnreject:RemoveClickListener()
 end
 
-function slot0._btnagreeOnClick(slot0)
-	if SocialConfig.instance:getMaxFriendsCount() <= SocialModel.instance:getFriendsCount() then
+function var_0_0._btnagreeOnClick(arg_4_0)
+	if SocialModel.instance:getFriendsCount() >= SocialConfig.instance:getMaxFriendsCount() then
 		GameFacade.showToast(ToastEnum.SocialRequest1)
 
 		return
 	end
 
-	if SocialModel.instance:isMyBlackListByUserId(slot0._mo.userId) then
+	if SocialModel.instance:isMyBlackListByUserId(arg_4_0._mo.userId) then
 		GameFacade.showToast(ToastEnum.SocialRequest2)
 
 		return
 	end
 
-	FriendRpc.instance:sendHandleApplyRequest(slot0._mo.userId, true)
+	FriendRpc.instance:sendHandleApplyRequest(arg_4_0._mo.userId, true)
 end
 
-function slot0._btnrejectOnClick(slot0)
-	FriendRpc.instance:sendHandleApplyRequest(slot0._mo.userId, false)
+function var_0_0._btnrejectOnClick(arg_5_0)
+	FriendRpc.instance:sendHandleApplyRequest(arg_5_0._mo.userId, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._heros = {}
-	slot0._heroParents = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._heros = {}
+	arg_6_0._heroParents = arg_6_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		slot0._heroParents[slot4] = gohelper.findChild(slot0.viewGO, "Role/" .. slot4)
+	for iter_6_0 = 1, 3 do
+		arg_6_0._heroParents[iter_6_0] = gohelper.findChild(arg_6_0.viewGO, "Role/" .. iter_6_0)
 	end
 
-	slot0._playericon = IconMgr.instance:getCommonPlayerIcon(slot0._goplayericon)
+	arg_6_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_6_0._goplayericon)
 end
 
-function slot0._refreshUI(slot0)
-	slot0._playericon:onUpdateMO(slot0._mo)
-	slot0._playericon:setShowLevel(true)
+function var_0_0._refreshUI(arg_7_0)
+	arg_7_0._playericon:onUpdateMO(arg_7_0._mo)
+	arg_7_0._playericon:setShowLevel(true)
 
-	slot0._txtname.text = slot0._mo.name
-	slot0._txtuid.text = tostring(slot0._mo.userId)
-	slot0._txtstatus.text = SocialConfig.instance:getRequestTimeText(slot0._mo.time)
+	arg_7_0._txtname.text = arg_7_0._mo.name
+	arg_7_0._txtuid.text = tostring(arg_7_0._mo.userId)
+	arg_7_0._txtstatus.text = SocialConfig.instance:getRequestTimeText(arg_7_0._mo.time)
 
-	gohelper.setActive(slot0._goofflinebg, false)
-	slot0:_loadBg()
+	gohelper.setActive(arg_7_0._goofflinebg, false)
+	arg_7_0:_loadBg()
 end
 
-function slot0._loadBg(slot0)
-	if not slot0._mo.bg or slot0._mo.bg == 0 then
-		slot0._hasSkin = false
+function var_0_0._loadBg(arg_8_0)
+	if not arg_8_0._mo.bg or arg_8_0._mo.bg == 0 then
+		arg_8_0._hasSkin = false
 	else
-		slot0._hasSkin = true
+		arg_8_0._hasSkin = true
 
-		if not slot0.lastskinId or slot0.lastskinId ~= slot0._mo.bg then
-			slot0._skinPath = string.format("ui/viewres/social/socialrequestitem_bg_%s.prefab", slot0._mo.bg)
+		if not arg_8_0.lastskinId or arg_8_0.lastskinId ~= arg_8_0._mo.bg then
+			arg_8_0._skinPath = string.format("ui/viewres/social/socialrequestitem_bg_%s.prefab", arg_8_0._mo.bg)
 
-			slot0:_disposeBg()
+			arg_8_0:_disposeBg()
 
-			slot0._loader = MultiAbLoader.New()
+			arg_8_0._loader = MultiAbLoader.New()
 
-			slot0._loader:addPath(slot0._skinPath)
-			slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+			arg_8_0._loader:addPath(arg_8_0._skinPath)
+			arg_8_0._loader:startLoad(arg_8_0._onLoadFinish, arg_8_0)
 		end
 	end
 
-	gohelper.setActive(slot0._imagebg.gameObject, not slot0._hasSkin)
-	gohelper.setActive(slot0._goskinbg, slot0._hasSkin)
+	gohelper.setActive(arg_8_0._imagebg.gameObject, not arg_8_0._hasSkin)
+	gohelper.setActive(arg_8_0._goskinbg, arg_8_0._hasSkin)
 end
 
-function slot0._disposeBg(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0._disposeBg(arg_9_0)
+	if arg_9_0._loader then
+		arg_9_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_9_0._loader = nil
 	end
 
-	if slot0._goskinEffect then
-		gohelper.destroy(slot0._goskinEffect)
+	if arg_9_0._goskinEffect then
+		gohelper.destroy(arg_9_0._goskinEffect)
 
-		slot0._goskinEffect = nil
+		arg_9_0._goskinEffect = nil
 	end
 end
 
-function slot0._onLoadFinish(slot0)
-	slot0._goskinEffect = gohelper.clone(slot0._loader:getAssetItem(slot0._skinPath):GetResource(slot0._skinPath), slot0._goskinbg)
-	slot0.lastskinId = slot0._mo.bg
+function var_0_0._onLoadFinish(arg_10_0)
+	local var_10_0 = arg_10_0._loader:getAssetItem(arg_10_0._skinPath):GetResource(arg_10_0._skinPath)
+
+	arg_10_0._goskinEffect = gohelper.clone(var_10_0, arg_10_0._goskinbg)
+	arg_10_0.lastskinId = arg_10_0._mo.bg
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
 
-	slot0:_refreshUI()
+	arg_11_0:_refreshUI()
 
-	for slot7 = 1, 3 do
-		if slot7 <= #(slot1.infos or {}) then
-			slot0:getHeroIcon(slot7):updateMo(slot2[slot7])
+	local var_11_0 = arg_11_1.infos or {}
+	local var_11_1 = #var_11_0
+
+	for iter_11_0 = 1, 3 do
+		local var_11_2 = arg_11_0:getHeroIcon(iter_11_0)
+
+		if iter_11_0 <= var_11_1 then
+			var_11_2:updateMo(var_11_0[iter_11_0])
 		else
-			slot8:setActive(false)
+			var_11_2:setActive(false)
 		end
 	end
 end
 
-function slot0.getHeroIcon(slot0, slot1)
-	if not slot0._heros[slot1] then
-		slot0._heros[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._view:getResInst("ui/viewres/social/socialheroitem.prefab", slot0._heroParents[slot1], "HeroItem"), SocialHeroItem)
+function var_0_0.getHeroIcon(arg_12_0, arg_12_1)
+	if not arg_12_0._heros[arg_12_1] then
+		local var_12_0 = arg_12_0._view:getResInst("ui/viewres/social/socialheroitem.prefab", arg_12_0._heroParents[arg_12_1], "HeroItem")
+
+		arg_12_0._heros[arg_12_1] = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, SocialHeroItem)
 	end
 
-	return slot0._heros[slot1]
+	return arg_12_0._heros[arg_12_1]
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

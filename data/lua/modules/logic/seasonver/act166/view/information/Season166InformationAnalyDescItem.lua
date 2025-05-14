@@ -1,37 +1,37 @@
-module("modules.logic.seasonver.act166.view.information.Season166InformationAnalyDescItem", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.information.Season166InformationAnalyDescItem", package.seeall)
 
-slot0 = class("Season166InformationAnalyDescItem", Season166InformationAnalyDetailItemBase)
+local var_0_0 = class("Season166InformationAnalyDescItem", Season166InformationAnalyDetailItemBase)
 
-function slot0.onInit(slot0)
-	slot0.txtDesc = gohelper.findChildTextMesh(slot0.go, "#txt_Descr")
-	slot0.goLine = gohelper.findChild(slot0.go, "#txt_Descr/image_Line")
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.go, "#txt_Descr")
+	arg_1_0.goLine = gohelper.findChild(arg_1_0.go, "#txt_Descr/image_Line")
 end
 
-function slot0.onUpdate(slot0)
-	if slot0.txtFadeIn and slot0.txtFadeIn:isPlaying() then
-		slot0.txtFadeIn:conFinished()
-		slot0.txtFadeIn:onDestroy()
+function var_0_0.onUpdate(arg_2_0)
+	if arg_2_0.txtFadeIn and arg_2_0.txtFadeIn:isPlaying() then
+		arg_2_0.txtFadeIn:conFinished()
+		arg_2_0.txtFadeIn:onDestroy()
 	end
 
-	slot0.txtDesc.text = slot0.data.config.content
+	arg_2_0.txtDesc.text = arg_2_0.data.config.content
 end
 
-function slot0.playFadeIn(slot0)
-	if not slot0.txtFadeIn then
-		slot0.txtFadeIn = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.txtDesc.gameObject, TMPFadeInWithScroll)
+function var_0_0.playFadeIn(arg_3_0)
+	if not arg_3_0.txtFadeIn then
+		arg_3_0.txtFadeIn = MonoHelper.addNoUpdateLuaComOnceToGo(arg_3_0.txtDesc.gameObject, TMPFadeInWithScroll)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_feichi_yure_caption)
-	slot0.txtFadeIn:playNormalText(slot0.data.config.content, slot0.onTextFinish, slot0)
+	arg_3_0.txtFadeIn:playNormalText(arg_3_0.data.config.content, arg_3_0.onTextFinish, arg_3_0)
 end
 
-function slot0.onTextFinish(slot0)
+function var_0_0.onTextFinish(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.Season166.stop_ui_feichi_yure_caption)
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.Season166.stop_ui_feichi_yure_caption)
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_5_0)
 end
 
-return slot0
+return var_0_0

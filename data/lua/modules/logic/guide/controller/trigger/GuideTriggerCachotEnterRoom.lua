@@ -1,36 +1,40 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerCachotEnterRoom", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerCachotEnterRoom", package.seeall)
 
-slot0 = class("GuideTriggerCachotEnterRoom", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerCachotEnterRoom", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, slot0._onUpdateRogueInfo, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_1_0._onUpdateRogueInfo, arg_1_0)
 end
 
-function slot0._onUpdateRogueInfo(slot0)
-	slot0:checkStartGuide()
+function var_0_0._onUpdateRogueInfo(arg_2_0)
+	arg_2_0:checkStartGuide()
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
+function var_0_0.assertGuideSatisfy(arg_3_0, arg_3_1, arg_3_2)
 	if not ViewMgr.instance:isOpen(ViewName.V1a6_CachotRoomView) then
 		return
 	end
 
-	if not V1a6_CachotModel.instance:getRogueInfo() then
+	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not var_3_0 then
 		return
 	end
 
-	slot4, slot5 = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(slot3.room)
-	slot6 = string.splitToNumber(slot2, "_")
+	local var_3_1, var_3_2 = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(var_3_0.room)
+	local var_3_3 = string.splitToNumber(arg_3_2, "_")
+	local var_3_4 = var_3_3[1]
+	local var_3_5 = var_3_3[2]
 
-	return slot6[1] == slot3.layer and slot6[2] == slot4
+	return var_3_4 == var_3_0.layer and var_3_5 == var_3_1
 end
 
-function slot0._onOpenView(slot0, slot1, slot2)
-	if slot1 == ViewName.V1a6_CachotRoomView then
-		slot0:checkStartGuide()
+function var_0_0._onOpenView(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == ViewName.V1a6_CachotRoomView then
+		arg_4_0:checkStartGuide()
 	end
 end
 
-return slot0
+return var_0_0

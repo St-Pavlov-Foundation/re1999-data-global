@@ -1,42 +1,42 @@
-module("modules.logic.versionactivity1_5.dungeon.view.store.VersionActivity1_5NormalStoreGoodsViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.store.VersionActivity1_5NormalStoreGoodsViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_5NormalStoreGoodsViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_5NormalStoreGoodsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		TabViewGroup.New(1, "#go_topright"),
 		VersionActivity1_5NormalStoreGoodsView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot2 = CurrencyEnum.CurrencyType.LeiMiTeBei
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = CurrencyEnum.CurrencyType.LeiMiTeBei
 
-	if slot0.viewParam then
-		slot2 = string.splitToNumber(slot0.viewParam.cost, "#")[2]
+	if arg_2_0.viewParam then
+		var_2_0 = string.splitToNumber(arg_2_0.viewParam.cost, "#")[2]
 	end
 
-	slot0._currencyView = CurrencyView.New({
-		slot2
+	arg_2_0._currencyView = CurrencyView.New({
+		var_2_0
 	})
 
-	slot0._currencyView:setOpenCallback(slot0._onCurrencyOpen, slot0)
+	arg_2_0._currencyView:setOpenCallback(arg_2_0._onCurrencyOpen, arg_2_0)
 
 	return {
-		slot0._currencyView
+		arg_2_0._currencyView
 	}
 end
 
-function slot0._onCurrencyOpen(slot0)
-	slot1 = slot0._currencyView:getCurrencyItem(1)
+function var_0_0._onCurrencyOpen(arg_3_0)
+	local var_3_0 = arg_3_0._currencyView:getCurrencyItem(1)
 
-	gohelper.setActive(slot1.btn, false)
-	gohelper.setActive(slot1.click, true)
-	recthelper.setAnchorX(slot1.txt.transform, 313)
+	gohelper.setActive(var_3_0.btn, false)
+	gohelper.setActive(var_3_0.click, true)
+	recthelper.setAnchorX(var_3_0.txt.transform, 313)
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

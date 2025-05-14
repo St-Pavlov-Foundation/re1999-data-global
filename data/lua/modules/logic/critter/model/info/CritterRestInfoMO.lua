@@ -1,10 +1,10 @@
-module("modules.logic.critter.model.info.CritterRestInfoMO", package.seeall)
+﻿module("modules.logic.critter.model.info.CritterRestInfoMO", package.seeall)
 
-slot0 = pureTable("CritterRestInfoMO")
+local var_0_0 = pureTable("CritterRestInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.restBuildingUid = slot1 and slot1.buildingUid
-	slot0.seatSlotId = slot1 and slot1.restSlotId
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.restBuildingUid = arg_1_1 and arg_1_1.buildingUid
+	arg_1_0.seatSlotId = arg_1_1 and arg_1_1.restSlotId
 end
 
-return slot0
+return var_0_0

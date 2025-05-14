@@ -1,50 +1,53 @@
-module("modules.logic.herogroup.view.HeroGroupRecommendViewContainer", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupRecommendViewContainer", package.seeall)
 
-slot0 = class("HeroGroupRecommendViewContainer", BaseViewContainer)
+local var_0_0 = class("HeroGroupRecommendViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_character"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = HeroGroupRecommendCharacterItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 482
-	slot1.cellHeight = 172
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 7.19
-	slot1.startSpace = 0
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_group"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[2]
-	slot2.cellClass = HeroGroupRecommendGroupItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 1362
-	slot2.cellHeight = 172
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 7.19
-	slot2.startSpace = 0
-	slot3 = {
-		[slot8] = (slot8 - 1) * 0.06
-	}
-	slot4 = nil
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	for slot8 = 1, 5 do
+	var_1_0.scrollGOPath = "#scroll_character"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = HeroGroupRecommendCharacterItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 482
+	var_1_0.cellHeight = 172
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 7.19
+	var_1_0.startSpace = 0
+
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.scrollGOPath = "#scroll_group"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[2]
+	var_1_1.cellClass = HeroGroupRecommendGroupItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 1362
+	var_1_1.cellHeight = 172
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 7.19
+	var_1_1.startSpace = 0
+
+	local var_1_2 = {}
+	local var_1_3
+
+	for iter_1_0 = 1, 5 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
 	end
 
 	return {
 		HeroGroupRecommendView.New(),
-		LuaListScrollViewWithAnimator.New(HeroGroupRecommendCharacterListModel.instance, slot1, slot3),
-		LuaListScrollViewWithAnimator.New(HeroGroupRecommendGroupListModel.instance, slot2, slot3),
+		LuaListScrollViewWithAnimator.New(HeroGroupRecommendCharacterListModel.instance, var_1_0, var_1_2),
+		LuaListScrollViewWithAnimator.New(HeroGroupRecommendGroupListModel.instance, var_1_1, var_1_2),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -55,4 +58,4 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

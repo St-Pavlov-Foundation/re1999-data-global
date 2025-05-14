@@ -1,22 +1,22 @@
-module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardMO", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardMO", package.seeall)
 
-slot0 = pureTable("Activity124RewardMO")
+local var_0_0 = pureTable("Activity124RewardMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.episodeId
-	slot0.config = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.episodeId
+	arg_1_0.config = arg_1_1
 end
 
-function slot0.isLock(slot0)
+function var_0_0.isLock(arg_2_0)
 	return false
 end
 
-function slot0.isReceived(slot0)
-	return Activity124Model.instance:isReceived(slot0.config.activityId, slot0.config.episodeId)
+function var_0_0.isReceived(arg_3_0)
+	return Activity124Model.instance:isReceived(arg_3_0.config.activityId, arg_3_0.config.episodeId)
 end
 
-function slot0.isHasReard(slot0)
-	return Activity124Model.instance:isHasReard(slot0.config.activityId, slot0.config.episodeId)
+function var_0_0.isHasReard(arg_4_0)
+	return Activity124Model.instance:isHasReard(arg_4_0.config.activityId, arg_4_0.config.episodeId)
 end
 
-return slot0
+return var_0_0

@@ -1,289 +1,312 @@
-module("modules.logic.versionactivity2_1.activity165.model.Activity165StoryMo", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.model.Activity165StoryMo", package.seeall)
 
-slot0 = class("Activity165StoryMo")
+local var_0_0 = class("Activity165StoryMo")
 
-function slot0.ctor(slot0)
-	slot0._actId = nil
-	slot0.storyId = nil
-	slot0.storyCo = nil
-	slot0.isUnlock = nil
-	slot0._isNewUnlock = nil
-	slot0.allKeywordMos = nil
-	slot0.stepMoDic = nil
-	slot0.unlockSteps = nil
-	slot0.firstStepMo = nil
-	slot0.finalStepMo = nil
-	slot0.curStepIndex = nil
-	slot0.stepUseKeywords = nil
-	slot0.unlockEndings = nil
-	slot0.claimRewardCount = nil
-	slot0.endingAllBranch = nil
-	slot0.canEndingBranch = nil
-	slot0.curUnlockEndingId = nil
-	slot0._isShowDialog = nil
-	slot0.curStage = nil
-	slot0.reviewEnding = nil
-	slot0._elements = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._actId = nil
+	arg_1_0.storyId = nil
+	arg_1_0.storyCo = nil
+	arg_1_0.isUnlock = nil
+	arg_1_0._isNewUnlock = nil
+	arg_1_0.allKeywordMos = nil
+	arg_1_0.stepMoDic = nil
+	arg_1_0.unlockSteps = nil
+	arg_1_0.firstStepMo = nil
+	arg_1_0.finalStepMo = nil
+	arg_1_0.curStepIndex = nil
+	arg_1_0.stepUseKeywords = nil
+	arg_1_0.unlockEndings = nil
+	arg_1_0.claimRewardCount = nil
+	arg_1_0.endingAllBranch = nil
+	arg_1_0.canEndingBranch = nil
+	arg_1_0.curUnlockEndingId = nil
+	arg_1_0._isShowDialog = nil
+	arg_1_0.curStage = nil
+	arg_1_0.reviewEnding = nil
+	arg_1_0._elements = nil
 end
 
-function slot0.onInit(slot0, slot1, slot2)
-	slot0._actId = slot1
-	slot0.storyId = slot2
-	slot0.storyCo = Activity165Config.instance:getStoryCo(slot1, slot2)
-	slot0.unlockSteps = {}
-	slot0.stepMoDic = {}
-	slot0.unlockEndings = {}
-	slot0.endingAllBranch = {}
-	slot0.canEndingBranch = {}
+function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._actId = arg_2_1
+	arg_2_0.storyId = arg_2_2
+	arg_2_0.storyCo = Activity165Config.instance:getStoryCo(arg_2_1, arg_2_2)
+	arg_2_0.unlockSteps = {}
+	arg_2_0.stepMoDic = {}
+	arg_2_0.unlockEndings = {}
+	arg_2_0.endingAllBranch = {}
+	arg_2_0.canEndingBranch = {}
 
-	slot0:_initKeywordMo()
-	slot0:_initStepMo(slot1, slot2)
-	slot0:_initElements()
+	arg_2_0:_initKeywordMo()
+	arg_2_0:_initStepMo(arg_2_1, arg_2_2)
+	arg_2_0:_initElements()
 end
 
-function slot0.setMo(slot0, slot1)
-	slot0.reviewEnding = nil
-	slot2 = slot1 and slot1.storyState == 1
+function var_0_0.setMo(arg_3_0, arg_3_1)
+	arg_3_0.reviewEnding = nil
 
-	if not slot0.isUnlock and slot2 and slot0._isInit then
-		GameFacade.showToast(ToastEnum.Act165StoryUnlock, slot0:getStoryName())
+	local var_3_0 = arg_3_1 and arg_3_1.storyState == 1
+
+	if not arg_3_0.isUnlock and var_3_0 and arg_3_0._isInit then
+		GameFacade.showToast(ToastEnum.Act165StoryUnlock, arg_3_0:getStoryName())
 	end
 
-	slot0.isUnlock = slot2
-	slot0._isInit = true
-	slot0.unlockEndings = {}
-	slot0.claimRewardCount = slot1.gainedEndingCount or 0
-	slot0.stepUseKeywords = slot0:_getStepUseKeywords()
+	arg_3_0.isUnlock = var_3_0
+	arg_3_0._isInit = true
+	arg_3_0.unlockEndings = {}
+	arg_3_0.claimRewardCount = arg_3_1.gainedEndingCount or 0
+	arg_3_0.stepUseKeywords = arg_3_0:_getStepUseKeywords()
 
-	slot0:setCurState(slot1.inferState or 0)
+	arg_3_0:setCurState(arg_3_1.inferState or 0)
 
-	for slot6 = 1, #slot1.unlockEndingInfos do
-		slot8 = {}
+	for iter_3_0 = 1, #arg_3_1.unlockEndingInfos do
+		local var_3_1 = arg_3_1.unlockEndingInfos[iter_3_0]
+		local var_3_2 = {}
 
-		for slot12 = 1, #slot1.unlockEndingInfos[slot6].inferredSteps do
-			slot13 = slot7.inferredSteps[slot12]
+		for iter_3_1 = 1, #var_3_1.inferredSteps do
+			local var_3_3 = var_3_1.inferredSteps[iter_3_1]
+			local var_3_4 = {
+				stepId = var_3_3.stepId,
+				stepKeywords = arg_3_0:getStepKws(var_3_3.stepKeywords)
+			}
 
-			table.insert(slot8, {
-				stepId = slot13.stepId,
-				stepKeywords = slot0:getStepKws(slot13.stepKeywords)
-			})
+			table.insert(var_3_2, var_3_4)
 		end
 
-		slot0.unlockEndings[slot7.endingId] = slot8
+		arg_3_0.unlockEndings[var_3_1.endingId] = var_3_2
 	end
 
-	slot0.unlockSteps = {}
-	slot4 = nil
+	arg_3_0.unlockSteps = {}
 
-	for slot8 = 1, #slot1.inferredSteps do
-		slot9 = slot1.inferredSteps[slot8].stepId
+	local var_3_5 = #arg_3_1.inferredSteps
+	local var_3_6
 
-		table.insert(slot0.unlockSteps, slot9)
+	for iter_3_2 = 1, var_3_5 do
+		local var_3_7 = arg_3_1.inferredSteps[iter_3_2].stepId
 
-		slot4 = slot9
-		slot11 = {}
+		table.insert(arg_3_0.unlockSteps, var_3_7)
 
-		if #slot1.inferredSteps[slot8].stepKeywords > 0 then
-			for slot15 = 1, #slot10 do
-				table.insert(slot11, slot10[slot15])
+		var_3_6 = var_3_7
+
+		local var_3_8 = arg_3_1.inferredSteps[iter_3_2].stepKeywords
+		local var_3_9 = {}
+
+		if #var_3_8 > 0 then
+			for iter_3_3 = 1, #var_3_8 do
+				table.insert(var_3_9, var_3_8[iter_3_3])
 			end
 		else
-			slot11 = slot0.stepUseKeywords[slot3]
+			var_3_9 = arg_3_0.stepUseKeywords[var_3_5]
 		end
 
-		slot0.stepUseKeywords[slot8] = slot11
+		arg_3_0.stepUseKeywords[iter_3_2] = var_3_9
 	end
 
-	slot0.stepUseKeywords[slot3] = slot0.stepUseKeywords[slot3] or {}
-	slot0.finalStepMo = slot0.firstStepMo
+	local var_3_10 = arg_3_0.stepUseKeywords[var_3_5] or {}
 
-	if LuaUtil.tableNotEmpty(slot0.unlockSteps) then
-		if slot4 ~= 0 then
-			slot0.finalStepMo = slot0.stepMoDic[slot4]
+	arg_3_0.stepUseKeywords[var_3_5] = var_3_10
+	arg_3_0.finalStepMo = arg_3_0.firstStepMo
+
+	if LuaUtil.tableNotEmpty(arg_3_0.unlockSteps) then
+		if var_3_6 ~= 0 then
+			arg_3_0.finalStepMo = arg_3_0.stepMoDic[var_3_6]
 		end
 
-		slot0:checkIsFinishStroy()
+		arg_3_0:checkIsFinishStroy()
 	end
 
-	slot0:setCanUnlockRound()
-	slot0:_checkNewUnlockStory()
+	arg_3_0:setCanUnlockRound()
+	arg_3_0:_checkNewUnlockStory()
 end
 
-function slot0.getStepKws(slot0, slot1)
-	slot2 = {}
+function var_0_0.getStepKws(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6 = 1, #slot1 do
-		table.insert(slot2, slot1[slot6])
+	for iter_4_0 = 1, #arg_4_1 do
+		table.insert(var_4_0, arg_4_1[iter_4_0])
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.getStoryName(slot0, slot1)
-	if slot1 then
-		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang(GameUtil.getSubPlaceholderLuaLangTwoParam("act126_story_name_change_size_▩1%s_▩2%s", slot0._actId, slot0.storyId)), slot1)
-	elseif slot0.storyCo then
-		return slot0.storyCo.name
-	end
-end
+function var_0_0.getStoryName(arg_5_0, arg_5_1)
+	if arg_5_1 then
+		local var_5_0 = GameUtil.getSubPlaceholderLuaLangTwoParam("act126_story_name_change_size_▩1%s_▩2%s", arg_5_0._actId, arg_5_0.storyId)
 
-function slot0.getStoryFirstStepMo(slot0)
-	return slot0.firstStepMo
-end
-
-function slot0.setReviewEnding(slot0, slot1)
-	slot0.reviewEnding = slot1
-
-	if slot1 then
-		slot2, slot0.reviewStepUseKeywords = slot0:getEndingStepInfo(slot0.reviewEnding)
+		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang(var_5_0), arg_5_1)
+	elseif arg_5_0.storyCo then
+		return arg_5_0.storyCo.name
 	end
 end
 
-function slot0.onRestart(slot0)
-	slot0.finalStepList = {}
-	slot0.unlockSteps = {}
-	slot0.stepUseKeywords = {}
-
-	for slot4, slot5 in pairs(slot0.stepMoDic) do
-		slot5:onReset()
-	end
-
-	for slot4, slot5 in pairs(slot0.allKeywordMos) do
-		slot5:onReset()
-	end
-
-	slot0.canEndingBranch = slot0.endingAllBranch
-	slot0.finalStepMo = slot0.firstStepMo
-
-	slot0:setCurState(Activity165Enum.StoryStage.Filling)
-
-	slot0.reviewEnding = nil
-
-	slot0:saveStepUseKeywords()
+function var_0_0.getStoryFirstStepMo(arg_6_0)
+	return arg_6_0.firstStepMo
 end
 
-function slot0.checkIsFinishStroy(slot0)
-	if slot0.finalStepMo.isEndingStep then
-		slot0:setSelectStepIndex()
+function var_0_0.setReviewEnding(arg_7_0, arg_7_1)
+	arg_7_0.reviewEnding = arg_7_1
 
-		if slot0.curStage == Activity165Enum.StoryStage.Filling then
-			slot0:finishStroy()
-		elseif slot0.curStage == Activity165Enum.StoryStage.Ending then
-			slot0.curUnlockEndingId = slot0:getEndingCo().endingId
+	if arg_7_1 then
+		local var_7_0, var_7_1 = arg_7_0:getEndingStepInfo(arg_7_0.reviewEnding)
+
+		arg_7_0.reviewStepUseKeywords = var_7_1
+	end
+end
+
+function var_0_0.onRestart(arg_8_0)
+	arg_8_0.finalStepList = {}
+	arg_8_0.unlockSteps = {}
+	arg_8_0.stepUseKeywords = {}
+
+	for iter_8_0, iter_8_1 in pairs(arg_8_0.stepMoDic) do
+		iter_8_1:onReset()
+	end
+
+	for iter_8_2, iter_8_3 in pairs(arg_8_0.allKeywordMos) do
+		iter_8_3:onReset()
+	end
+
+	arg_8_0.canEndingBranch = arg_8_0.endingAllBranch
+	arg_8_0.finalStepMo = arg_8_0.firstStepMo
+
+	arg_8_0:setCurState(Activity165Enum.StoryStage.Filling)
+
+	arg_8_0.reviewEnding = nil
+
+	arg_8_0:saveStepUseKeywords()
+end
+
+function var_0_0.checkIsFinishStroy(arg_9_0)
+	local var_9_0 = arg_9_0.finalStepMo.isEndingStep
+
+	if var_9_0 then
+		arg_9_0:setSelectStepIndex()
+
+		if arg_9_0.curStage == Activity165Enum.StoryStage.Filling then
+			arg_9_0:finishStroy()
+		elseif arg_9_0.curStage == Activity165Enum.StoryStage.Ending then
+			arg_9_0.curUnlockEndingId = arg_9_0:getEndingCo().endingId
 		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.finishStroy(slot0)
-	slot0:setCurState(Activity165Enum.StoryStage.isEndFill)
+function var_0_0.finishStroy(arg_10_0)
+	arg_10_0:setCurState(Activity165Enum.StoryStage.isEndFill)
 	Activity165Controller.instance:dispatchEvent(Activity165Event.canfinishStory)
 end
 
-function slot0.setCurState(slot0, slot1)
-	slot0.curStage = slot1
+function var_0_0.setCurState(arg_11_0, arg_11_1)
+	arg_11_0.curStage = arg_11_1
 end
 
-function slot0._initStepMo(slot0, slot1, slot2)
-	slot3 = Activity165Config.instance:getStoryStepCoList(slot1, slot2)
+function var_0_0._initStepMo(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = Activity165Config.instance:getStoryStepCoList(arg_12_1, arg_12_2)
 
-	if not slot0.storyCo then
+	if not arg_12_0.storyCo then
 		return
 	end
 
-	slot4 = slot0.storyCo.firstStepId
-	slot5 = {}
+	local var_12_1 = arg_12_0.storyCo.firstStepId
+	local var_12_2 = {}
 
-	if slot3 then
-		for slot9, slot10 in pairs(slot3) do
-			slot11 = Activity165StepMo.New()
+	if var_12_0 then
+		for iter_12_0, iter_12_1 in pairs(var_12_0) do
+			local var_12_3 = Activity165StepMo.New()
 
-			slot11:onInit(slot0._actId, slot10.stepId, slot0)
+			var_12_3:onInit(arg_12_0._actId, iter_12_1.stepId, arg_12_0)
 
-			slot0.stepMoDic[slot10.stepId] = slot11
+			arg_12_0.stepMoDic[iter_12_1.stepId] = var_12_3
 
-			if slot11.isEndingStep then
-				table.insert(slot5, slot10.stepId)
+			if var_12_3.isEndingStep then
+				table.insert(var_12_2, iter_12_1.stepId)
 			end
 		end
 
-		for slot9, slot10 in pairs(slot0.stepMoDic) do
-			if LuaUtil.tableNotEmpty(slot10:getCanEndingRound(slot5)) then
-				tabletool.addValues(slot0.endingAllBranch, tabletool.copy(slot11))
+		for iter_12_2, iter_12_3 in pairs(arg_12_0.stepMoDic) do
+			local var_12_4 = iter_12_3:getCanEndingRound(var_12_2)
+
+			if LuaUtil.tableNotEmpty(var_12_4) then
+				local var_12_5 = tabletool.copy(var_12_4)
+
+				tabletool.addValues(arg_12_0.endingAllBranch, var_12_5)
 			end
 		end
 
-		slot0.firstStepMo = slot0.stepMoDic[slot4]
-		slot0.firstStepMo.isFirstStep = true
+		arg_12_0.firstStepMo = arg_12_0.stepMoDic[var_12_1]
+		arg_12_0.firstStepMo.isFirstStep = true
 	end
 
-	slot0.canEndingBranch = slot0.endingAllBranch
+	arg_12_0.canEndingBranch = arg_12_0.endingAllBranch
 end
 
-function slot0.getStepMo(slot0, slot1)
-	return slot0.stepMoDic[slot1]
+function var_0_0.getStepMo(arg_13_0, arg_13_1)
+	return arg_13_0.stepMoDic[arg_13_1]
 end
 
-function slot0.checkIsFinishStep(slot0)
-	slot1 = slot0:getKwIdsByStepIndex(slot0.curStepIndex)
+function var_0_0.checkIsFinishStep(arg_14_0)
+	local var_14_0 = arg_14_0:getKwIdsByStepIndex(arg_14_0.curStepIndex)
 
-	slot0:onModifyKeyword(slot1)
+	arg_14_0:onModifyKeyword(var_14_0)
 
-	if not LuaUtil.tableNotEmpty(slot1) then
+	if not LuaUtil.tableNotEmpty(var_14_0) then
 		return false
 	end
 
-	if not LuaUtil.tableNotEmpty(slot0.canEndingBranch) then
-		slot0:failUnlockStep()
+	if not LuaUtil.tableNotEmpty(arg_14_0.canEndingBranch) then
+		arg_14_0:failUnlockStep()
 
 		return false
 	end
 
-	slot2 = nil
+	local var_14_1
 
-	if LuaUtil.tableNotEmpty(slot0.finalStepMo) then
-		slot2 = slot0.finalStepMo:getNextStep(slot1)
+	if LuaUtil.tableNotEmpty(arg_14_0.finalStepMo) then
+		var_14_1 = arg_14_0.finalStepMo:getNextStep(var_14_0)
 	end
 
-	if slot2 and slot0:checkNextStep(slot2) then
-		slot0:successUnlockStep(slot2, {})
+	if var_14_1 and arg_14_0:checkNextStep(var_14_1) then
+		local var_14_2 = {}
+
+		arg_14_0:successUnlockStep(var_14_1, var_14_2)
 
 		return true
 	else
-		slot0:failUnlockStep()
+		arg_14_0:failUnlockStep()
 
 		return false
 	end
 end
 
-function slot0.checkNextStep(slot0, slot1)
-	for slot6, slot7 in pairs(slot0.canEndingBranch) do
-		if slot1 == slot7[slot0:unlockStepCount() + 1] then
+function var_0_0.checkNextStep(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:unlockStepCount() + 1
+
+	for iter_15_0, iter_15_1 in pairs(arg_15_0.canEndingBranch) do
+		if arg_15_1 == iter_15_1[var_15_0] then
 			return true
 		end
 	end
 end
 
-function slot0.setCanUnlockRound(slot0)
-	slot1 = {}
+function var_0_0.setCanUnlockRound(arg_16_0)
+	local var_16_0 = {}
 
-	if not LuaUtil.tableNotEmpty(slot0.unlockSteps) then
-		return slot0.endingAllBranch
+	if not LuaUtil.tableNotEmpty(arg_16_0.unlockSteps) then
+		return arg_16_0.endingAllBranch
 	end
 
-	for slot5, slot6 in pairs(slot0.canEndingBranch) do
-		if slot0:isSameRound(slot6, slot0.unlockSteps) then
-			table.insert(slot1, slot6)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.canEndingBranch) do
+		if arg_16_0:isSameRound(iter_16_1, arg_16_0.unlockSteps) then
+			table.insert(var_16_0, iter_16_1)
 		end
 	end
 
-	slot0.canEndingBranch = slot1
+	arg_16_0.canEndingBranch = var_16_0
 end
 
-function slot0.isSameRound(slot0, slot1, slot2)
-	for slot6 = 1, #slot2 do
-		if slot1[slot6] ~= slot2[slot6] then
+function var_0_0.isSameRound(arg_17_0, arg_17_1, arg_17_2)
+	for iter_17_0 = 1, #arg_17_2 do
+		if arg_17_1[iter_17_0] ~= arg_17_2[iter_17_0] then
 			return false
 		end
 	end
@@ -291,445 +314,506 @@ function slot0.isSameRound(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.successUnlockStep(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.successUnlockStep(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_1 then
 		return
 	end
 
-	slot0:setSelectStepIndex()
+	arg_18_0:setSelectStepIndex()
 
-	slot0.finalStepMo = slot0:getStepMo(slot1)
+	arg_18_0.finalStepMo = arg_18_0:getStepMo(arg_18_1)
 
-	if not slot0.finalStepMo then
+	if not arg_18_0.finalStepMo then
 		return
 	end
 
-	slot0.finalStepMo:setUnlock(true)
+	arg_18_0.finalStepMo:setUnlock(true)
 
-	if not LuaUtil.tableContains(slot0.unlockSteps, slot1) then
-		table.insert(slot0.unlockSteps, slot1)
+	if not LuaUtil.tableContains(arg_18_0.unlockSteps, arg_18_1) then
+		table.insert(arg_18_0.unlockSteps, arg_18_1)
 	end
 
-	slot0:setCanUnlockRound()
+	arg_18_0:setCanUnlockRound()
 
 	if Activity165Model.instance:isPrintLog() then
-		slot0:logCanRound()
+		arg_18_0:logCanRound()
 	end
 
-	table.insert(slot2, slot1)
+	table.insert(arg_18_2, arg_18_1)
 
-	if not slot0:checkNextIsFixNext(slot2) then
-		Activity165Controller.instance:dispatchEvent(Activity165Event.OnFinishStep, slot2)
+	if arg_18_0:checkNextIsFixNext(arg_18_2) then
+		-- block empty
+	else
+		Activity165Controller.instance:dispatchEvent(Activity165Event.OnFinishStep, arg_18_2)
 	end
 end
 
-function slot0.logCanRound(slot0)
-	slot1 = "当前步骤：" .. slot0.finalStepMo.stepId .. "\n"
+function var_0_0.logCanRound(arg_19_0)
+	local var_19_0 = "当前步骤：" .. arg_19_0.finalStepMo.stepId .. "\n"
 
-	for slot5, slot6 in pairs(slot0.canEndingBranch) do
-		for slot10, slot11 in pairs(slot6) do
-			slot1 = slot1 .. "#" .. slot11
+	for iter_19_0, iter_19_1 in pairs(arg_19_0.canEndingBranch) do
+		for iter_19_2, iter_19_3 in pairs(iter_19_1) do
+			var_19_0 = var_19_0 .. "#" .. iter_19_3
 		end
 
-		slot1 = slot1 .. "\n"
+		var_19_0 = var_19_0 .. "\n"
 	end
 
-	SLFramework.SLLogger.Log(slot1)
+	SLFramework.SLLogger.Log(var_19_0)
 end
 
-function slot0.checkNextIsFixNext(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.canEndingBranch) do
-		slot7 = slot0:unlockStepCount()
-		slot9 = slot6[slot7 + 1]
-		slot12 = slot9 and slot0:getStepMo(slot6[slot7]).nextSteps[slot9]
+function var_0_0.checkNextIsFixNext(arg_20_0, arg_20_1)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0.canEndingBranch) do
+		local var_20_0 = arg_20_0:unlockStepCount()
+		local var_20_1 = iter_20_1[var_20_0]
+		local var_20_2 = iter_20_1[var_20_0 + 1]
+		local var_20_3 = arg_20_0:getStepMo(var_20_1)
+		local var_20_4 = arg_20_0:getStepMo(var_20_2)
+		local var_20_5 = var_20_2 and var_20_3.nextSteps[var_20_2]
 
-		if slot0:getStepMo(slot9) and slot11.isEndingStep then
-			slot0:successUnlockStep(slot9, slot1)
+		if var_20_4 and var_20_4.isEndingStep then
+			arg_20_0:successUnlockStep(var_20_2, arg_20_1)
 
 			return true
 		end
 
-		if slot12 and LuaUtil.tableNotEmpty(slot12.needKws) then
-			for slot17, slot18 in pairs(slot13) do
-				if not LuaUtil.tableNotEmpty(slot18) then
-					slot0:successUnlockStep(slot9, slot1)
+		if var_20_5 then
+			local var_20_6 = var_20_5.needKws
 
-					return true
+			if LuaUtil.tableNotEmpty(var_20_6) then
+				for iter_20_2, iter_20_3 in pairs(var_20_6) do
+					if not LuaUtil.tableNotEmpty(iter_20_3) then
+						arg_20_0:successUnlockStep(var_20_2, arg_20_1)
+
+						return true
+					end
 				end
 			end
 		end
 	end
 end
 
-function slot0.failUnlockStep(slot0)
+function var_0_0.failUnlockStep(arg_21_0)
 	GameFacade.showToast(ToastEnum.Act165StepFillFail)
 	AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_fill_fail)
 end
 
-function slot0.getUnlockStepIdList(slot0)
-	return slot0.unlockSteps
+function var_0_0.getUnlockStepIdList(arg_22_0)
+	return arg_22_0.unlockSteps
 end
 
-function slot0.getUnlockStepIdRemoveEnding(slot0)
-	slot1 = {}
+function var_0_0.getUnlockStepIdRemoveEnding(arg_23_0)
+	local var_23_0 = {}
 
-	if slot0.reviewEnding then
-		for slot6 = 1, #slot0:getEndingStepInfo(slot0.reviewEnding) do
-			if not slot0:getStepMo(slot2[slot6]).isEndingStep and not slot7.isFirstStep then
-				table.insert(slot1, slot7.stepId)
+	if arg_23_0.reviewEnding then
+		local var_23_1 = arg_23_0:getEndingStepInfo(arg_23_0.reviewEnding)
+
+		for iter_23_0 = 1, #var_23_1 do
+			local var_23_2 = arg_23_0:getStepMo(var_23_1[iter_23_0])
+
+			if not var_23_2.isEndingStep and not var_23_2.isFirstStep then
+				table.insert(var_23_0, var_23_2.stepId)
 			end
 		end
 	else
-		for slot5, slot6 in pairs(slot0.unlockSteps) do
-			if not slot0:getStepMo(slot6).isEndingStep and not slot7.isFirstStep then
-				table.insert(slot1, slot7.stepId)
+		for iter_23_1, iter_23_2 in pairs(arg_23_0.unlockSteps) do
+			local var_23_3 = arg_23_0:getStepMo(iter_23_2)
+
+			if not var_23_3.isEndingStep and not var_23_3.isFirstStep then
+				table.insert(var_23_0, var_23_3.stepId)
 			end
 		end
 	end
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.getEndingStepInfo(slot0, slot1)
-	slot3 = {}
-	slot4 = {}
-	slot5 = slot0:getFirstStepId()
+function var_0_0.getEndingStepInfo(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0.unlockEndings[arg_24_1]
+	local var_24_1 = {}
+	local var_24_2 = {}
+	local var_24_3 = arg_24_0:getFirstStepId()
 
-	if slot0.unlockEndings[slot1] then
-		for slot9, slot10 in pairs(slot2) do
-			slot3[slot9] = slot10.stepId
-			slot4[slot9] = slot10.stepKeywords
-			slot5 = slot10.stepId
+	if var_24_0 then
+		for iter_24_0, iter_24_1 in pairs(var_24_0) do
+			var_24_1[iter_24_0] = iter_24_1.stepId
+			var_24_2[iter_24_0] = iter_24_1.stepKeywords
+			var_24_3 = iter_24_1.stepId
 		end
 	end
 
-	return slot3, slot4, slot5
+	return var_24_1, var_24_2, var_24_3
 end
 
-function slot0.getUnlockStepIdRemoveEndingCount(slot0)
-	return tabletool.len(slot0:getUnlockStepIdRemoveEnding())
+function var_0_0.getUnlockStepIdRemoveEndingCount(arg_25_0)
+	return (tabletool.len(arg_25_0:getUnlockStepIdRemoveEnding()))
 end
 
-function slot0.unlockStepCount(slot0)
-	return tabletool.len(slot0.unlockSteps)
+function var_0_0.unlockStepCount(arg_26_0)
+	return tabletool.len(arg_26_0.unlockSteps)
 end
 
-function slot0.removeUnlockStep(slot0, slot1)
-	table.remove(slot0.unlockSteps, slot1)
+function var_0_0.removeUnlockStep(arg_27_0, arg_27_1)
+	table.remove(arg_27_0.unlockSteps, arg_27_1)
 end
 
-function slot0.setSelectStepIndex(slot0, slot1)
-	slot0.curStepIndex = slot1
+function var_0_0.setSelectStepIndex(arg_28_0, arg_28_1)
+	arg_28_0.curStepIndex = arg_28_1
 
-	slot0:onResfreshKeywordState(slot1)
+	arg_28_0:onResfreshKeywordState(arg_28_1)
 end
 
-function slot0.getSelectStepIndex(slot0)
-	return slot0.curStepIndex
+function var_0_0.getSelectStepIndex(arg_29_0)
+	return arg_29_0.curStepIndex
 end
 
-function slot0.getSelectStepMo(slot0)
-	return slot0:getUnlockStepMoByIndex(slot0.curStepIndex)
+function var_0_0.getSelectStepMo(arg_30_0)
+	return arg_30_0:getUnlockStepMoByIndex(arg_30_0.curStepIndex)
 end
 
-function slot0.getUnlockStepMoByIndex(slot0, slot1)
-	if slot0.unlockSteps[slot1] then
-		return slot0:getStepMo(slot2)
+function var_0_0.getUnlockStepMoByIndex(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0.unlockSteps[arg_31_1]
+
+	if var_31_0 then
+		return arg_31_0:getStepMo(var_31_0)
 	end
 end
 
-function slot0.isFillingStep(slot0)
-	return slot0.curStepIndex == slot0:unlockStepCount()
+function var_0_0.isFillingStep(arg_32_0)
+	return arg_32_0.curStepIndex == arg_32_0:unlockStepCount()
 end
 
-function slot0.resetStep(slot0)
-	slot1 = {}
-	slot2 = slot0:getFirstStepId()
-	slot3 = nil
-	slot4 = {}
+function var_0_0.resetStep(arg_33_0)
+	local var_33_0 = {}
+	local var_33_1 = arg_33_0:getFirstStepId()
+	local var_33_2
+	local var_33_3 = {}
 
-	if slot0.curStepIndex then
-		for slot8 = 1, slot0.curStepIndex do
-			slot4[slot8] = slot0.stepUseKeywords[slot8]
+	if arg_33_0.curStepIndex then
+		for iter_33_0 = 1, arg_33_0.curStepIndex do
+			var_33_1 = arg_33_0.unlockSteps[iter_33_0]
+			var_33_3[iter_33_0] = arg_33_0.stepUseKeywords[iter_33_0]
 
-			table.insert(slot1, slot0.unlockSteps[slot8])
+			table.insert(var_33_0, var_33_1)
 		end
 
-		slot3 = slot0.unlockSteps[slot0.curStepIndex]
+		var_33_2 = arg_33_0.unlockSteps[arg_33_0.curStepIndex]
 	else
-		slot1 = slot0.unlockSteps
+		var_33_0 = arg_33_0.unlockSteps
 	end
 
-	slot0.stepUseKeywords = slot4
+	arg_33_0.stepUseKeywords = var_33_3
 
-	slot0:setCurState(Activity165Enum.StoryStage.Filling)
+	arg_33_0:setCurState(Activity165Enum.StoryStage.Filling)
 
-	slot0.unlockSteps = slot1
-	slot0.finalStepMo = slot0:getStepMo(slot2)
-	slot0.canEndingBranch = slot0.endingAllBranch
+	arg_33_0.unlockSteps = var_33_0
+	arg_33_0.finalStepMo = arg_33_0:getStepMo(var_33_1)
+	arg_33_0.canEndingBranch = arg_33_0.endingAllBranch
 
-	slot0:setCanUnlockRound()
-	slot0:saveStepUseKeywords()
+	arg_33_0:setCanUnlockRound()
+	arg_33_0:saveStepUseKeywords()
 
-	if slot3 then
-		Activity165Rpc.instance:sendAct165RestartRequest(slot0._actId, slot0.storyId, slot3)
+	if var_33_2 then
+		Activity165Rpc.instance:sendAct165RestartRequest(arg_33_0._actId, arg_33_0.storyId, var_33_2)
 	end
 end
 
-function slot0.getFirstStepId(slot0)
-	return slot0.firstStepMo.stepId
+function var_0_0.getFirstStepId(arg_34_0)
+	return arg_34_0.firstStepMo.stepId
 end
 
-function slot0._initKeywordMo(slot0)
-	slot0.allKeywordMos = {}
+function var_0_0._initKeywordMo(arg_35_0)
+	local var_35_0 = Activity165Config.instance:getStoryKeywordCoList(arg_35_0._actId, arg_35_0.storyId)
 
-	if Activity165Config.instance:getStoryKeywordCoList(slot0._actId, slot0.storyId) then
-		for slot5, slot6 in pairs(slot1) do
-			slot7 = Activity165KeywordMo.New()
+	arg_35_0.allKeywordMos = {}
 
-			slot7:onInit(slot6)
+	if var_35_0 then
+		for iter_35_0, iter_35_1 in pairs(var_35_0) do
+			local var_35_1 = Activity165KeywordMo.New()
 
-			slot0.allKeywordMos[slot6.keywordId] = slot7
+			var_35_1:onInit(iter_35_1)
+
+			arg_35_0.allKeywordMos[iter_35_1.keywordId] = var_35_1
 		end
 	end
 end
 
-function slot0.getKeywordList(slot0)
-	slot1 = {}
+function var_0_0.getKeywordList(arg_36_0)
+	local var_36_0 = {}
+	local var_36_1 = arg_36_0:getSelectStepMo()
 
-	if slot0:getSelectStepMo() then
-		slot1 = slot2:getCanUseKeywords()
+	if var_36_1 then
+		var_36_0 = var_36_1:getCanUseKeywords()
 	end
 
-	return slot1
+	return var_36_0
 end
 
-function slot0.getKeywordMo(slot0, slot1)
-	return slot0.allKeywordMos[slot1]
+function var_0_0.getKeywordMo(arg_37_0, arg_37_1)
+	return arg_37_0.allKeywordMos[arg_37_1]
 end
 
-function slot0.onResfreshKeywordState(slot0, slot1)
-	for slot6, slot7 in pairs(slot0.allKeywordMos) do
-		slot7:setUsed(LuaUtil.tableContains(slot0:getKwIdsByStepIndex(slot1), slot7.keywordId))
+function var_0_0.onResfreshKeywordState(arg_38_0, arg_38_1)
+	local var_38_0 = arg_38_0:getKwIdsByStepIndex(arg_38_1)
+
+	for iter_38_0, iter_38_1 in pairs(arg_38_0.allKeywordMos) do
+		local var_38_1 = LuaUtil.tableContains(var_38_0, iter_38_1.keywordId)
+
+		iter_38_1:setUsed(var_38_1)
 	end
 end
 
-function slot0.fillKeyword(slot0, slot1)
-	if not LuaUtil.tableContains(slot0:getKwIdsByStepIndex(slot0.curStepIndex), slot1) then
-		table.insert(slot2, slot1)
+function var_0_0.fillKeyword(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0:getKwIdsByStepIndex(arg_39_0.curStepIndex)
 
-		slot0.stepUseKeywords[slot0.curStepIndex] = slot2
+	if not LuaUtil.tableContains(var_39_0, arg_39_1) then
+		table.insert(var_39_0, arg_39_1)
+
+		arg_39_0.stepUseKeywords[arg_39_0.curStepIndex] = var_39_0
 	end
 
-	slot0.allKeywordMos[slot1]:setUsed(true)
+	arg_39_0.allKeywordMos[arg_39_1]:setUsed(true)
 end
 
-function slot0.removeUseKeywords(slot0, slot1)
-	if LuaUtil.tableContains(slot0:getKwIdsByStepIndex(slot0.curStepIndex), slot1) then
-		tabletool.removeValue(slot2, slot1)
+function var_0_0.removeUseKeywords(arg_40_0, arg_40_1)
+	local var_40_0 = arg_40_0:getKwIdsByStepIndex(arg_40_0.curStepIndex)
 
-		slot0.stepUseKeywords[slot0.curStepIndex] = slot2
+	if LuaUtil.tableContains(var_40_0, arg_40_1) then
+		tabletool.removeValue(var_40_0, arg_40_1)
+
+		arg_40_0.stepUseKeywords[arg_40_0.curStepIndex] = var_40_0
 	end
 
-	slot0.allKeywordMos[slot1]:setUsed(false)
+	arg_40_0.allKeywordMos[arg_40_1]:setUsed(false)
 end
 
-function slot0.onModifyKeyword(slot0, slot1)
-	Activity165Rpc.instance:sendAct165ModifyKeywordRequest(slot0._actId, slot0.storyId, slot1 or {})
+function var_0_0.onModifyKeyword(arg_41_0, arg_41_1)
+	Activity165Rpc.instance:sendAct165ModifyKeywordRequest(arg_41_0._actId, arg_41_0.storyId, arg_41_1 or {})
 end
 
-function slot0.onModifyKeywordCallback(slot0, slot1)
+function var_0_0.onModifyKeywordCallback(arg_42_0, arg_42_1)
+	return
 end
 
-function slot0.getKwIdsByStepIndex(slot0, slot1)
-	if not slot1 then
-		return {}
+function var_0_0.getKwIdsByStepIndex(arg_43_0, arg_43_1)
+	local var_43_0 = {}
+
+	if not arg_43_1 then
+		return var_43_0
 	end
 
-	return slot0.reviewEnding and (slot0.reviewStepUseKeywords and slot0.reviewStepUseKeywords[slot1] or {}) or slot0.stepUseKeywords and slot0.stepUseKeywords[slot1] or {}
-end
-
-function slot0.generateStroy(slot0)
-	slot1 = slot0:getEndingCo()
-	slot0.curUnlockEndingId = slot1.endingId
-
-	slot0:setCurState(Activity165Enum.StoryStage.Ending)
-	slot0:UnlockEnding(slot1.endingId)
-end
-
-function slot0.getEndingCo(slot0)
-	slot1 = slot0.finalStepMo.stepId
-
-	if slot0.reviewEnding then
-		slot2, slot3, slot1 = slot0:getEndingStepInfo(slot0.reviewEnding)
-	end
-
-	return Activity165Config.instance:getEndingCoByFinalStep(slot0._actId, slot0.storyId, slot1)
-end
-
-function slot0.getEndingText(slot0)
-	if slot0.reviewEnding then
-		slot1, slot2, slot3 = slot0:getEndingStepInfo(slot0.reviewEnding)
-
-		return slot0:getStepMo(slot3).stepCo.text
+	if arg_43_0.reviewEnding then
+		var_43_0 = arg_43_0.reviewStepUseKeywords and arg_43_0.reviewStepUseKeywords[arg_43_1] or {}
 	else
-		if not slot0.finalStepMo then
+		var_43_0 = arg_43_0.stepUseKeywords and arg_43_0.stepUseKeywords[arg_43_1] or {}
+	end
+
+	return var_43_0
+end
+
+function var_0_0.generateStroy(arg_44_0)
+	local var_44_0 = arg_44_0:getEndingCo()
+
+	arg_44_0.curUnlockEndingId = var_44_0.endingId
+
+	arg_44_0:setCurState(Activity165Enum.StoryStage.Ending)
+	arg_44_0:UnlockEnding(var_44_0.endingId)
+end
+
+function var_0_0.getEndingCo(arg_45_0)
+	local var_45_0 = arg_45_0.finalStepMo.stepId
+
+	if arg_45_0.reviewEnding then
+		local var_45_1, var_45_2, var_45_3 = arg_45_0:getEndingStepInfo(arg_45_0.reviewEnding)
+
+		var_45_0 = var_45_3
+	end
+
+	return (Activity165Config.instance:getEndingCoByFinalStep(arg_45_0._actId, arg_45_0.storyId, var_45_0))
+end
+
+function var_0_0.getEndingText(arg_46_0)
+	if arg_46_0.reviewEnding then
+		local var_46_0, var_46_1, var_46_2 = arg_46_0:getEndingStepInfo(arg_46_0.reviewEnding)
+
+		return arg_46_0:getStepMo(var_46_2).stepCo.text
+	else
+		if not arg_46_0.finalStepMo then
 			return
 		end
 
-		if slot0.finalStepMo.isEndingStep then
-			return slot0.finalStepMo.stepCo.text
+		if arg_46_0.finalStepMo.isEndingStep then
+			return arg_46_0.finalStepMo.stepCo.text
 		end
 
-		logError("不是结局步骤  " .. slot0.finalStepMo.stepId)
+		logError("不是结局步骤  " .. arg_46_0.finalStepMo.stepId)
 	end
 end
 
-function slot0.getState(slot0)
-	return slot0.reviewEnding and Activity165Enum.StoryStage.Ending or slot0.curStage
+function var_0_0.getState(arg_47_0)
+	return arg_47_0.reviewEnding and Activity165Enum.StoryStage.Ending or arg_47_0.curStage
 end
 
-function slot0.UnlockEnding(slot0, slot1)
-	slot2 = {}
+function var_0_0.UnlockEnding(arg_48_0, arg_48_1)
+	local var_48_0 = {}
 
-	for slot6 = 1, #slot0.unlockSteps do
-		table.insert(slot2, {
-			stepId = slot0.unlockSteps[slot6],
-			stepKeywords = slot0.stepUseKeywords[slot6]
-		})
+	for iter_48_0 = 1, #arg_48_0.unlockSteps do
+		local var_48_1 = {
+			stepId = arg_48_0.unlockSteps[iter_48_0],
+			stepKeywords = arg_48_0.stepUseKeywords[iter_48_0]
+		}
+
+		table.insert(var_48_0, var_48_1)
 	end
 
-	slot0._isShowDialog = slot0.unlockEndings[slot1] == nil
-	slot0.unlockEndings[slot1] = slot2
+	arg_48_0._isShowDialog = arg_48_0.unlockEndings[arg_48_1] == nil
+	arg_48_0.unlockEndings[arg_48_1] = var_48_0
 
-	Activity165Rpc.instance:sendAct165GenerateEndingRequest(slot0._actId, slot0.storyId)
+	Activity165Rpc.instance:sendAct165GenerateEndingRequest(arg_48_0._actId, arg_48_0.storyId)
 
-	slot0.curUnlockEndingId = slot1
+	arg_48_0.curUnlockEndingId = arg_48_1
 end
 
-function slot0.getUnlockEndingCount(slot0)
-	if LuaUtil.tableNotEmpty(slot0.unlockEndings) then
-		return tabletool.len(slot0.unlockEndings)
+function var_0_0.getUnlockEndingCount(arg_49_0)
+	if LuaUtil.tableNotEmpty(arg_49_0.unlockEndings) then
+		return tabletool.len(arg_49_0.unlockEndings)
 	end
 
 	return 0
 end
 
-function slot0.isShowDialog(slot0)
-	return slot0._isShowDialog
+function var_0_0.isShowDialog(arg_50_0)
+	return arg_50_0._isShowDialog
 end
 
-function slot0.getAllEndingRewardCo(slot0)
-	return Activity165Config.instance:getStoryRewardCoList(slot0._actId, slot0.storyId)
+function var_0_0.getAllEndingRewardCo(arg_51_0)
+	return Activity165Config.instance:getStoryRewardCoList(arg_51_0._actId, arg_51_0.storyId)
 end
 
-function slot0.gmCreateEndingStep(slot0)
-	slot1 = tabletool.copy(slot0.endingAllBranch[1])
+function var_0_0.gmCreateEndingStep(arg_52_0)
+	local var_52_0 = tabletool.copy(arg_52_0.endingAllBranch[1])
 
-	table.remove(slot1, 1)
+	table.remove(var_52_0, 1)
 
-	slot0.unlockSteps = slot1
-	slot2 = slot1[#slot1]
-	slot0.finalStepMo = slot0:getStepMo(slot2)
+	arg_52_0.unlockSteps = var_52_0
 
-	slot0:checkIsFinishStroy()
+	local var_52_1 = var_52_0[#var_52_0]
 
-	slot0.curUnlockEndingId = Activity165Config.instance:getEndingCoByFinalStep(slot0._actId, slot0.storyId, slot2).endingId
+	arg_52_0.finalStepMo = arg_52_0:getStepMo(var_52_1)
 
-	slot0:setCurState(Activity165Enum.StoryStage.isEndFill)
+	arg_52_0:checkIsFinishStroy()
+
+	arg_52_0.curUnlockEndingId = Activity165Config.instance:getEndingCoByFinalStep(arg_52_0._actId, arg_52_0.storyId, var_52_1).endingId
+
+	arg_52_0:setCurState(Activity165Enum.StoryStage.isEndFill)
 	Activity165Controller.instance:dispatchEvent(Activity165Event.refrshEditView)
 end
 
-function slot0.getclaimRewardCount(slot0)
-	return slot0.claimRewardCount
+function var_0_0.getclaimRewardCount(arg_53_0)
+	return arg_53_0.claimRewardCount
 end
 
-function slot0.setclaimRewardCount(slot0, slot1)
-	slot0.claimRewardCount = slot1
+function var_0_0.setclaimRewardCount(arg_54_0, arg_54_1)
+	arg_54_0.claimRewardCount = arg_54_1
 end
 
-function slot0.isFinish(slot0)
-	return slot0:getUnlockEndingCount() > 0
+function var_0_0.isFinish(arg_55_0)
+	return arg_55_0:getUnlockEndingCount() > 0
 end
 
-function slot0._initElements(slot0)
-	slot0._elements = {}
+function var_0_0._initElements(arg_56_0)
+	arg_56_0._elements = {}
 
-	if slot0.storyCo then
-		if not string.nilorempty(slot0.storyCo.unlockElementIds1) then
-			tabletool.addValues(slot0._elements, string.splitToNumber(slot1, "#"))
+	if arg_56_0.storyCo then
+		local var_56_0 = arg_56_0.storyCo.unlockElementIds1
+
+		if not string.nilorempty(var_56_0) then
+			local var_56_1 = string.splitToNumber(var_56_0, "#")
+
+			tabletool.addValues(arg_56_0._elements, var_56_1)
 		end
 
-		if not string.nilorempty(slot0.storyCo.unlockElementIds2) then
-			tabletool.addValues(slot0._elements, string.splitToNumber(slot2, "#"))
+		local var_56_2 = arg_56_0.storyCo.unlockElementIds2
+
+		if not string.nilorempty(var_56_2) then
+			local var_56_3 = string.splitToNumber(var_56_2, "#")
+
+			tabletool.addValues(arg_56_0._elements, var_56_3)
 		end
 	end
 end
 
-function slot0.getElements(slot0)
-	return slot0._elements
+function var_0_0.getElements(arg_57_0)
+	return arg_57_0._elements
 end
 
-function slot0.isShowReddot(slot0)
-	return slot0._isNewUnlock or slot0:_isShowRewardReddot()
+function var_0_0.isShowReddot(arg_58_0)
+	return arg_58_0._isNewUnlock or arg_58_0:_isShowRewardReddot()
 end
 
-function slot0._isShowRewardReddot(slot0)
-	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Act165HasReward, slot0.storyId)
+function var_0_0._isShowRewardReddot(arg_59_0)
+	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Act165HasReward, arg_59_0.storyId)
 end
 
-function slot0.isNewUnlock(slot0)
-	return slot0._isNewUnlock
+function var_0_0.isNewUnlock(arg_60_0)
+	return arg_60_0._isNewUnlock
 end
 
-function slot0.cancelNewUnlockStory(slot0)
-	if slot0._isNewUnlock then
-		slot0._isNewUnlock = false
+function var_0_0.cancelNewUnlockStory(arg_61_0)
+	if arg_61_0._isNewUnlock then
+		arg_61_0._isNewUnlock = false
 
-		GameUtil.playerPrefsSetNumberByUserId(slot0:_getNewUnlockStoryKey(), 1)
+		GameUtil.playerPrefsSetNumberByUserId(arg_61_0:_getNewUnlockStoryKey(), 1)
 	end
 end
 
-function slot0._checkNewUnlockStory(slot0)
-	if slot0.isUnlock and GameUtil.playerPrefsGetNumberByUserId(slot0:_getNewUnlockStoryKey(), 0) == 0 then
-		slot0._isNewUnlock = true
+function var_0_0._checkNewUnlockStory(arg_62_0)
+	if arg_62_0.isUnlock and GameUtil.playerPrefsGetNumberByUserId(arg_62_0:_getNewUnlockStoryKey(), 0) == 0 then
+		arg_62_0._isNewUnlock = true
 
 		return
 	end
 
-	slot0._isNewUnlock = false
+	arg_62_0._isNewUnlock = false
 end
 
-function slot0.saveStepUseKeywords(slot0)
-	for slot5, slot6 in pairs(slot0.stepUseKeywords) do
-		if slot5 > 1 then
-			slot1 = "" .. "|"
+function var_0_0.saveStepUseKeywords(arg_63_0)
+	local var_63_0 = ""
+
+	for iter_63_0, iter_63_1 in pairs(arg_63_0.stepUseKeywords) do
+		if iter_63_0 > 1 then
+			var_63_0 = var_63_0 .. "|"
 		end
 
-		for slot10, slot11 in pairs(slot6) do
-			slot1 = slot10 > 1 and slot1 .. "#" .. slot11 or slot1 .. "#" .. slot11 .. slot11
+		for iter_63_2, iter_63_3 in pairs(iter_63_1) do
+			if iter_63_2 > 1 then
+				var_63_0 = var_63_0 .. "#" .. iter_63_3
+			else
+				var_63_0 = var_63_0 .. iter_63_3
+			end
 		end
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(slot0:_getStepUseKeywordsKey(), slot1)
+	GameUtil.playerPrefsSetStringByUserId(arg_63_0:_getStepUseKeywordsKey(), var_63_0)
 end
 
-function slot0._getStepUseKeywords(slot0)
-	slot2 = {}
+function var_0_0._getStepUseKeywords(arg_64_0)
+	local var_64_0 = GameUtil.playerPrefsGetStringByUserId(arg_64_0:_getStepUseKeywordsKey(), "")
+	local var_64_1 = {}
 
-	if not string.nilorempty(GameUtil.playerPrefsGetStringByUserId(slot0:_getStepUseKeywordsKey(), "")) then
-		slot2 = GameUtil.splitString2(slot1, true)
+	if not string.nilorempty(var_64_0) then
+		var_64_1 = GameUtil.splitString2(var_64_0, true)
 	end
 
-	return slot2
+	return var_64_1
 end
 
-function slot0._getStepUseKeywordsKey(slot0)
-	return Activity165Model.instance:_getStoryPrefsKey("StepUseKeywords2", slot0.storyId)
+function var_0_0._getStepUseKeywordsKey(arg_65_0)
+	return Activity165Model.instance:_getStoryPrefsKey("StepUseKeywords2", arg_65_0.storyId)
 end
 
-function slot0._getNewUnlockStoryKey(slot0)
-	return Activity165Model.instance:_getStoryPrefsKey("NewUnlockStory", slot0.storyId)
+function var_0_0._getNewUnlockStoryKey(arg_66_0)
+	return Activity165Model.instance:_getStoryPrefsKey("NewUnlockStory", arg_66_0.storyId)
 end
 
-return slot0
+return var_0_0

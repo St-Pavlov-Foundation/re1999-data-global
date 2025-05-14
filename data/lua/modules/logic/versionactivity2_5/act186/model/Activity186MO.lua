@@ -1,196 +1,219 @@
-module("modules.logic.versionactivity2_5.act186.model.Activity186MO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.model.Activity186MO", package.seeall)
 
-slot0 = pureTable("Activity186MO")
+local var_0_0 = pureTable("Activity186MO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.spBonusStage = 0
-	slot0.taskDict = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.spBonusStage = 0
+	arg_1_0.taskDict = {}
 end
 
-function slot0.setSpBonusStage(slot0, slot1)
-	slot0.spBonusStage = slot1
+function var_0_0.setSpBonusStage(arg_2_0, arg_2_1)
+	arg_2_0.spBonusStage = arg_2_1
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0:updateActivityInfo(slot1.info)
-	slot0:updateTaskInfos(slot1.taskInfos)
-	slot0:updateLikeInfos(slot1.likeInfos)
-	slot0:updateGameInfos(slot1.gameInfos)
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0:updateActivityInfo(arg_3_1.info)
+	arg_3_0:updateTaskInfos(arg_3_1.taskInfos)
+	arg_3_0:updateLikeInfos(arg_3_1.likeInfos)
+	arg_3_0:updateGameInfos(arg_3_1.gameInfos)
 end
 
-function slot0.updateActivityInfo(slot0, slot1)
-	slot0.currentStage = slot1.currentStage
-	slot0.getDailyCollection = slot1.getDailyCollection
-	slot0.getOneceBonus = slot1.getOneceBonus
-	slot0.getMilestoneProgress = tonumber(slot1.getMilestoneProgress)
+function var_0_0.updateActivityInfo(arg_4_0, arg_4_1)
+	arg_4_0.currentStage = arg_4_1.currentStage
+	arg_4_0.getDailyCollection = arg_4_1.getDailyCollection
+	arg_4_0.getOneceBonus = arg_4_1.getOneceBonus
+	arg_4_0.getMilestoneProgress = tonumber(arg_4_1.getMilestoneProgress)
 end
 
-function slot0.onGetOnceBonus(slot0)
-	slot0.getOneceBonus = true
+function var_0_0.onGetOnceBonus(arg_5_0)
+	arg_5_0.getOneceBonus = true
 
-	if slot0.spBonusStage == 0 then
-		slot0.spBonusStage = 1
+	if arg_5_0.spBonusStage == 0 then
+		arg_5_0.spBonusStage = 1
 	end
 end
 
-function slot0.acceptRewards(slot0, slot1)
-	slot0.getMilestoneProgress = tonumber(slot1)
+function var_0_0.acceptRewards(arg_6_0, arg_6_1)
+	arg_6_0.getMilestoneProgress = tonumber(arg_6_1)
 end
 
-function slot0.getMilestoneRewardStatus(slot0, slot1)
-	slot2 = Activity186Enum.RewardStatus.None
+function var_0_0.getMilestoneRewardStatus(arg_7_0, arg_7_1)
+	local var_7_0 = Activity186Enum.RewardStatus.None
+	local var_7_1 = Activity186Config.instance:getMileStoneConfig(arg_7_0.id, arg_7_1)
+	local var_7_2 = var_7_1 and var_7_1.coinNum or 0
+	local var_7_3 = var_7_1 and var_7_1.isLoopBonus or false
+	local var_7_4 = Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId)
+	local var_7_5 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_7_4)
 
-	if slot3 and slot3.isLoopBonus or false then
-		if (Activity186Config.instance:getMileStoneConfig(slot0.id, slot1) and slot3.coinNum or 0) <= slot0.getMilestoneProgress then
-			if (slot3 and slot3.loopBonusIntervalNum or 1) <= ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId)) - slot0.getMilestoneProgress then
-				slot2 = Activity186Enum.RewardStatus.Canget
+	if var_7_3 then
+		if var_7_2 <= arg_7_0.getMilestoneProgress then
+			if (var_7_1 and var_7_1.loopBonusIntervalNum or 1) <= var_7_5 - arg_7_0.getMilestoneProgress then
+				var_7_0 = Activity186Enum.RewardStatus.Canget
 			end
-		elseif slot4 <= slot7 then
-			slot2 = Activity186Enum.RewardStatus.Canget
+		elseif var_7_2 <= var_7_5 then
+			var_7_0 = Activity186Enum.RewardStatus.Canget
 		end
-	elseif slot4 <= slot0.getMilestoneProgress then
-		slot2 = Activity186Enum.RewardStatus.Hasget
-	elseif slot4 <= slot7 then
-		slot2 = Activity186Enum.RewardStatus.Canget
+	elseif var_7_2 <= arg_7_0.getMilestoneProgress then
+		var_7_0 = Activity186Enum.RewardStatus.Hasget
+	elseif var_7_2 <= var_7_5 then
+		var_7_0 = Activity186Enum.RewardStatus.Canget
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getMilestoneValue(slot0, slot1)
-	slot3 = Activity186Config.instance:getMileStoneConfig(slot0.id, slot1) and slot2.coinNum or 0
+function var_0_0.getMilestoneValue(arg_8_0, arg_8_1)
+	local var_8_0 = Activity186Config.instance:getMileStoneConfig(arg_8_0.id, arg_8_1)
+	local var_8_1 = var_8_0 and var_8_0.coinNum or 0
 
-	if not (slot2 and slot2.isLoopBonus or false) then
-		return slot3
+	if not (var_8_0 and var_8_0.isLoopBonus or false) then
+		return var_8_1
 	end
 
-	slot5 = slot2 and slot2.loopBonusIntervalNum or 1
-	slot7 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId))
-	slot8 = slot3
+	local var_8_2 = var_8_0 and var_8_0.loopBonusIntervalNum or 1
+	local var_8_3 = Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId)
+	local var_8_4 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_8_3)
+	local var_8_5 = var_8_1
 
-	if slot3 <= slot0.getMilestoneProgress then
-		slot8 = slot3 + math.floor((slot0.getMilestoneProgress - slot3) / slot5) * slot5 + slot5
+	if var_8_1 <= arg_8_0.getMilestoneProgress then
+		var_8_5 = var_8_1 + math.floor((arg_8_0.getMilestoneProgress - var_8_1) / var_8_2) * var_8_2 + var_8_2
 	end
 
-	return slot8
+	return var_8_5
 end
 
-function slot0.onGetDailyCollection(slot0)
-	slot0.getDailyCollection = true
+function var_0_0.onGetDailyCollection(arg_9_0)
+	arg_9_0.getDailyCollection = true
 end
 
-function slot0.updateTaskInfos(slot0, slot1)
-	slot0.taskDict = {}
+function var_0_0.updateTaskInfos(arg_10_0, arg_10_1)
+	arg_10_0.taskDict = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0:updateTaskInfo(slot1[slot5])
+	if arg_10_1 then
+		for iter_10_0 = 1, #arg_10_1 do
+			arg_10_0:updateTaskInfo(arg_10_1[iter_10_0])
 		end
 	end
 end
 
-function slot0.updateTaskInfo(slot0, slot1)
-	slot2 = slot0:getTaskInfo(slot1.taskId, true)
-	slot2.progress = slot1.progress
-	slot2.hasGetBonus = slot1.hasGetBonus
+function var_0_0.updateTaskInfo(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getTaskInfo(arg_11_1.taskId, true)
+
+	var_11_0.progress = arg_11_1.progress
+	var_11_0.hasGetBonus = arg_11_1.hasGetBonus
 end
 
-function slot0.getTaskInfo(slot0, slot1, slot2)
-	if not slot0.taskDict[slot1] and slot2 then
-		slot0.taskDict[slot1] = {
-			taskId = slot1,
-			progress = 0,
-			hasGetBonus = false
+function var_0_0.getTaskInfo(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0.taskDict[arg_12_1]
+
+	if not var_12_0 and arg_12_2 then
+		var_12_0 = {
+			taskId = arg_12_1
 		}
+		var_12_0.progress = 0
+		var_12_0.hasGetBonus = false
+		arg_12_0.taskDict[arg_12_1] = var_12_0
 	end
 
-	return slot3
+	return var_12_0
 end
 
-function slot0.getTaskList(slot0)
-	slot1 = {}
+function var_0_0.getTaskList(arg_13_0)
+	local var_13_0 = {}
 
-	if slot0.taskDict then
-		for slot5, slot6 in pairs(slot0.taskDict) do
-			slot7 = {
-				id = slot6.taskId,
-				progress = slot6.progress,
-				hasGetBonus = slot6.hasGetBonus,
-				canGetReward = slot0:checkTaskCanReward(slot6),
-				config = Activity186Config.instance:getTaskConfig(slot6.taskId)
+	if arg_13_0.taskDict then
+		for iter_13_0, iter_13_1 in pairs(arg_13_0.taskDict) do
+			local var_13_1 = {
+				id = iter_13_1.taskId,
+				progress = iter_13_1.progress,
+				hasGetBonus = iter_13_1.hasGetBonus,
+				canGetReward = arg_13_0:checkTaskCanReward(iter_13_1),
+				config = Activity186Config.instance:getTaskConfig(iter_13_1.taskId)
 			}
-			slot7.missionorder = slot7.config.missionorder
-			slot7.status = Activity186Enum.TaskStatus.None
 
-			if slot7.hasGetBonus then
-				slot7.status = Activity186Enum.TaskStatus.Hasget
-			elseif slot7.canGetReward then
-				slot7.status = Activity186Enum.TaskStatus.Canget
+			var_13_1.missionorder = var_13_1.config.missionorder
+			var_13_1.status = Activity186Enum.TaskStatus.None
+
+			if var_13_1.hasGetBonus then
+				var_13_1.status = Activity186Enum.TaskStatus.Hasget
+			elseif var_13_1.canGetReward then
+				var_13_1.status = Activity186Enum.TaskStatus.Canget
 			end
 
-			table.insert(slot1, slot7)
+			table.insert(var_13_0, var_13_1)
 		end
 	end
 
-	slot3 = Activity186Config.instance:getStageConfig(slot0.id, slot0.currentStage) and slot2.globalTaskId or 0
-	slot5 = {
-		id = slot3,
-		config = Activity173Config.instance:getTaskConfig(slot3),
-		progress = TaskModel.instance:getTaskById(slot3) and slot4.progress or 0,
-		hasGetBonus = slot4 and slot4.finishCount > 0 or false
+	local var_13_2 = Activity186Config.instance:getStageConfig(arg_13_0.id, arg_13_0.currentStage)
+	local var_13_3 = var_13_2 and var_13_2.globalTaskId or 0
+	local var_13_4 = TaskModel.instance:getTaskById(var_13_3)
+	local var_13_5 = {
+		id = var_13_3,
+		config = Activity173Config.instance:getTaskConfig(var_13_3),
+		progress = var_13_4 and var_13_4.progress or 0,
+		hasGetBonus = var_13_4 and var_13_4.finishCount > 0 or false
 	}
-	slot5.canGetReward = not slot5.hasGetBonus and slot4 and slot5.config.maxProgress <= slot5.progress
-	slot5.missionorder = 0
-	slot5.isGlobalTask = true
-	slot5.status = Activity186Enum.TaskStatus.None
 
-	if slot5.hasGetBonus then
-		slot5.status = Activity186Enum.TaskStatus.Hasget
-	elseif slot5.canGetReward then
-		slot5.status = Activity186Enum.TaskStatus.Canget
+	var_13_5.canGetReward = not var_13_5.hasGetBonus and var_13_4 and var_13_5.progress >= var_13_5.config.maxProgress
+	var_13_5.missionorder = 0
+	var_13_5.isGlobalTask = true
+	var_13_5.status = Activity186Enum.TaskStatus.None
+
+	if var_13_5.hasGetBonus then
+		var_13_5.status = Activity186Enum.TaskStatus.Hasget
+	elseif var_13_5.canGetReward then
+		var_13_5.status = Activity186Enum.TaskStatus.Canget
 	end
 
-	table.insert(slot1, slot5)
+	table.insert(var_13_0, var_13_5)
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.finishTask(slot0, slot1)
-	if slot0:getTaskInfo(slot1) then
-		slot2.hasGetBonus = true
+function var_0_0.finishTask(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getTaskInfo(arg_14_1)
+
+	if var_14_0 then
+		var_14_0.hasGetBonus = true
 	end
 end
 
-function slot0.pushTask(slot0, slot1, slot2)
-	if slot1 then
-		for slot6 = 1, #slot1 do
-			slot0:updateTaskInfo(slot1[slot6])
+function var_0_0.pushTask(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 then
+		for iter_15_0 = 1, #arg_15_1 do
+			arg_15_0:updateTaskInfo(arg_15_1[iter_15_0])
 		end
 	end
 
-	if slot2 then
-		for slot6 = 1, #slot2 do
-			slot0.taskDict[slot2[slot6].taskId] = nil
+	if arg_15_2 then
+		for iter_15_1 = 1, #arg_15_2 do
+			local var_15_0 = arg_15_2[iter_15_1]
+
+			arg_15_0.taskDict[var_15_0.taskId] = nil
 		end
 	end
 end
 
-function slot0.checkTaskCanReward(slot0, slot1)
-	if not (type(slot1) == "number" and slot0:getTaskInfo(slot1) or slot1) then
+function var_0_0.checkTaskCanReward(arg_16_0, arg_16_1)
+	local var_16_0 = type(arg_16_1) == "number" and arg_16_0:getTaskInfo(arg_16_1) or arg_16_1
+
+	if not var_16_0 then
 		return false
 	end
 
-	if slot2.hasGetBonus then
+	if var_16_0.hasGetBonus then
 		return false
 	end
 
-	return (Activity186Config.instance:getTaskConfig(slot2.taskId) and slot3.maxProgress or 0) <= slot2.progress
+	local var_16_1 = Activity186Config.instance:getTaskConfig(var_16_0.taskId)
+
+	return (var_16_1 and var_16_1.maxProgress or 0) <= var_16_0.progress
 end
 
-function slot0.hasCanRewardTask(slot0)
-	for slot4, slot5 in pairs(slot0.taskDict) do
-		if slot0:checkTaskCanReward(slot5) then
+function var_0_0.hasCanRewardTask(arg_17_0)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0.taskDict) do
+		if arg_17_0:checkTaskCanReward(iter_17_1) then
 			return true
 		end
 	end
@@ -198,149 +221,172 @@ function slot0.hasCanRewardTask(slot0)
 	return false
 end
 
-function slot0.updateLikeInfos(slot0, slot1)
-	slot0.likeDict = {}
+function var_0_0.updateLikeInfos(arg_18_0, arg_18_1)
+	arg_18_0.likeDict = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0:updateLikeInfo(slot1[slot5])
+	if arg_18_1 then
+		for iter_18_0 = 1, #arg_18_1 do
+			arg_18_0:updateLikeInfo(arg_18_1[iter_18_0])
 		end
 	end
 end
 
-function slot0.updateLikeInfo(slot0, slot1)
-	if not slot0:getLikeInfo(slot1.likeType) then
-		slot0.likeDict[slot1.likeType] = {
-			likeType = slot1.likeType
+function var_0_0.updateLikeInfo(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0:getLikeInfo(arg_19_1.likeType)
+
+	if not var_19_0 then
+		var_19_0 = {
+			likeType = arg_19_1.likeType
 		}
+		arg_19_0.likeDict[arg_19_1.likeType] = var_19_0
 	end
 
-	slot2.value = slot1.value
+	var_19_0.value = arg_19_1.value
 end
 
-function slot0.getLikeInfo(slot0, slot1)
-	return slot0.likeDict[slot1]
+function var_0_0.getLikeInfo(arg_20_0, arg_20_1)
+	return arg_20_0.likeDict[arg_20_1]
 end
 
-function slot0.getLikeValue(slot0, slot1)
-	return slot0:getLikeInfo(slot1) and slot2.value or 0
+function var_0_0.getLikeValue(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:getLikeInfo(arg_21_1)
+
+	return var_21_0 and var_21_0.value or 0
 end
 
-function slot0.pushLike(slot0, slot1)
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0:updateLikeInfo(slot1[slot5])
+function var_0_0.pushLike(arg_22_0, arg_22_1)
+	if arg_22_1 then
+		for iter_22_0 = 1, #arg_22_1 do
+			arg_22_0:updateLikeInfo(arg_22_1[iter_22_0])
 		end
 	end
 end
 
-function slot0.getCurLikeType(slot0)
-	if slot0:getLikeValue(4) < Activity186Config.instance:getConstNum(Activity186Enum.ConstId.BaseLikeValue) then
+function var_0_0.getCurLikeType(arg_23_0)
+	if Activity186Config.instance:getConstNum(Activity186Enum.ConstId.BaseLikeValue) > arg_23_0:getLikeValue(4) then
 		return 0
 	end
 
-	slot3 = nil
-	slot4 = 0
+	local var_23_0
+	local var_23_1 = 0
 
-	for slot8, slot9 in pairs(slot0.likeDict) do
-		if slot8 ~= 4 and (not slot3 or slot3 < slot9.value) then
-			slot4 = slot8
-			slot3 = slot9.value
+	for iter_23_0, iter_23_1 in pairs(arg_23_0.likeDict) do
+		if iter_23_0 ~= 4 and (not var_23_0 or var_23_0 < iter_23_1.value) then
+			var_23_1 = iter_23_0
+			var_23_0 = iter_23_1.value
 		end
 	end
 
-	return slot4
+	return var_23_1
 end
 
-function slot0.checkLikeEqual(slot0, slot1)
-	return slot0:getCurLikeType() == slot1
+function var_0_0.checkLikeEqual(arg_24_0, arg_24_1)
+	return arg_24_0:getCurLikeType() == arg_24_1
 end
 
-function slot0.updateGameInfos(slot0, slot1)
-	slot0.gameDict = {}
+function var_0_0.updateGameInfos(arg_25_0, arg_25_1)
+	arg_25_0.gameDict = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0:updateGameInfo(slot1[slot5])
+	if arg_25_1 then
+		for iter_25_0 = 1, #arg_25_1 do
+			arg_25_0:updateGameInfo(arg_25_1[iter_25_0])
 		end
 	end
 end
 
-function slot0.updateGameInfo(slot0, slot1)
-	if not slot0:getGameInfo(slot1.gameId) then
-		slot0.gameDict[slot1.gameId] = {
-			gameId = slot1.gameId
+function var_0_0.updateGameInfo(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getGameInfo(arg_26_1.gameId)
+
+	if not var_26_0 then
+		var_26_0 = {
+			gameId = arg_26_1.gameId
 		}
+		arg_26_0.gameDict[arg_26_1.gameId] = var_26_0
 	end
 
-	slot2.gameTypeId = slot1.gameTypeId
-	slot2.expireTime = slot1.expireTime
+	var_26_0.gameTypeId = arg_26_1.gameTypeId
+	var_26_0.expireTime = arg_26_1.expireTime
 
-	if slot1.bTypeGameInfo then
-		slot2.rewardId = slot3.rewardId
-		slot2.bTypeRetryCount = slot3.bTypeRetryCount
-	end
-end
+	local var_26_1 = arg_26_1.bTypeGameInfo
 
-function slot0.getGameInfo(slot0, slot1)
-	return slot0.gameDict[slot1]
-end
-
-function slot0.finishGame(slot0, slot1)
-	if slot0:getGameInfo(slot1.gameId) then
-		slot0.gameDict[slot1.gameId] = nil
+	if var_26_1 then
+		var_26_0.rewardId = var_26_1.rewardId
+		var_26_0.bTypeRetryCount = var_26_1.bTypeRetryCount
 	end
 end
 
-function slot0.playBTypeGame(slot0, slot1)
-	if slot0:getGameInfo(slot1.gameId) then
-		slot2.rewardId = slot1.rewardId
+function var_0_0.getGameInfo(arg_27_0, arg_27_1)
+	return arg_27_0.gameDict[arg_27_1]
+end
 
-		if slot2.bTypeRetryCount then
-			slot2.bTypeRetryCount = slot2.bTypeRetryCount - 1
+function var_0_0.finishGame(arg_28_0, arg_28_1)
+	if arg_28_0:getGameInfo(arg_28_1.gameId) then
+		arg_28_0.gameDict[arg_28_1.gameId] = nil
+	end
+end
+
+function var_0_0.playBTypeGame(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:getGameInfo(arg_29_1.gameId)
+
+	if var_29_0 then
+		var_29_0.rewardId = arg_29_1.rewardId
+
+		if var_29_0.bTypeRetryCount then
+			var_29_0.bTypeRetryCount = var_29_0.bTypeRetryCount - 1
 		end
 	end
 end
 
-function slot0.getOnlineGameList(slot0)
-	slot1 = {}
+function var_0_0.getOnlineGameList(arg_30_0)
+	local var_30_0 = {}
 
-	if slot0.gameDict then
-		for slot5, slot6 in pairs(slot0.gameDict) do
-			if ServerTime.now() < slot6.expireTime then
-				table.insert(slot1, slot6)
+	if arg_30_0.gameDict then
+		for iter_30_0, iter_30_1 in pairs(arg_30_0.gameDict) do
+			if iter_30_1.expireTime > ServerTime.now() then
+				table.insert(var_30_0, iter_30_1)
 			end
 		end
 	end
 
-	return slot1
+	return var_30_0
 end
 
-function slot0.isGameOnline(slot0, slot1)
-	return slot0:getGameInfo(slot1) and ServerTime.now() < slot2.expireTime
+function var_0_0.isGameOnline(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0:getGameInfo(arg_31_1)
+
+	return var_31_0 and var_31_0.expireTime > ServerTime.now()
 end
 
-function slot0.hasGameCanPlay(slot0)
-	return #slot0:getOnlineGameList() > 0
+function var_0_0.hasGameCanPlay(arg_32_0)
+	return #arg_32_0:getOnlineGameList() > 0
 end
 
-function slot0.getQuestionConfig(slot0, slot1)
-	slot4 = string.splitToNumber(Activity186Controller.instance:getPlayerPrefs(Activity186Model.instance:prefabKeyPrefs(Activity186Enum.LocalPrefsKey.Question, slot0.id)), "#")
-	slot6 = slot4[2]
+function var_0_0.getQuestionConfig(arg_33_0, arg_33_1)
+	local var_33_0 = Activity186Model.instance:prefabKeyPrefs(Activity186Enum.LocalPrefsKey.Question, arg_33_0.id)
+	local var_33_1 = Activity186Controller.instance:getPlayerPrefs(var_33_0)
+	local var_33_2 = string.splitToNumber(var_33_1, "#")
+	local var_33_3 = var_33_2[1]
+	local var_33_4 = var_33_2[2]
 
-	if slot4[1] == slot1 and Activity186Config.instance:getQuestionConfig(slot1, slot6) then
-		return slot7
+	if var_33_3 == arg_33_1 then
+		local var_33_5 = Activity186Config.instance:getQuestionConfig(arg_33_1, var_33_4)
+
+		if var_33_5 then
+			return var_33_5
+		end
 	end
 
-	if Activity186Config.instance:getNextQuestion(slot0.id, slot6) then
-		Activity186Controller.instance:setPlayerPrefs(slot2, string.format("%s#%s", slot1, slot7.id))
+	local var_33_6 = Activity186Config.instance:getNextQuestion(arg_33_0.id, var_33_4)
+
+	if var_33_6 then
+		Activity186Controller.instance:setPlayerPrefs(var_33_0, string.format("%s#%s", arg_33_1, var_33_6.id))
 	end
 
-	return slot7
+	return var_33_6
 end
 
-function slot0.hasActivityReward(slot0)
-	if not slot0.getDailyCollection then
+function var_0_0.hasActivityReward(arg_34_0)
+	if not arg_34_0.getDailyCollection then
 		return true
 	end
 
@@ -348,9 +394,11 @@ function slot0.hasActivityReward(slot0)
 		return true
 	end
 
-	if Activity186Config.instance:getMileStoneList(slot0.id) then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot0:getMilestoneRewardStatus(slot6.rewardId) == Activity186Enum.RewardStatus.Canget then
+	local var_34_0 = Activity186Config.instance:getMileStoneList(arg_34_0.id)
+
+	if var_34_0 then
+		for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+			if arg_34_0:getMilestoneRewardStatus(iter_34_1.rewardId) == Activity186Enum.RewardStatus.Canget then
 				return true
 			end
 		end
@@ -359,30 +407,34 @@ function slot0.hasActivityReward(slot0)
 	return false
 end
 
-function slot0.isInAvgTime(slot0)
-	slot2 = string.split(Activity186Config.instance:getConstStr(Activity186Enum.ConstId.AvgOpenTime), "#")
+function var_0_0.isInAvgTime(arg_35_0)
+	local var_35_0 = Activity186Config.instance:getConstStr(Activity186Enum.ConstId.AvgOpenTime)
+	local var_35_1 = string.split(var_35_0, "#")
+	local var_35_2 = TimeUtil.stringToTimestamp(var_35_1[1])
+	local var_35_3 = TimeUtil.stringToTimestamp(var_35_1[2])
+	local var_35_4 = ServerTime.now()
 
-	return TimeUtil.stringToTimestamp(slot2[1]) <= ServerTime.now() and slot5 <= TimeUtil.stringToTimestamp(slot2[2])
+	return var_35_2 <= var_35_4 and var_35_4 <= var_35_3
 end
 
-function slot0.isCanShowAvgBtn(slot0)
-	if slot0.getOneceBonus then
+function var_0_0.isCanShowAvgBtn(arg_36_0)
+	if arg_36_0.getOneceBonus then
 		return false
 	end
 
-	return slot0:isInAvgTime()
+	return arg_36_0:isInAvgTime()
 end
 
-function slot0.isCanPlayAvgStory(slot0)
-	if slot0.getOneceBonus then
+function var_0_0.isCanPlayAvgStory(arg_37_0)
+	if arg_37_0.getOneceBonus then
 		return false
 	end
 
-	if not slot0:isInAvgTime() then
+	if not arg_37_0:isInAvgTime() then
 		return
 	end
 
 	return Activity186Controller.instance:getPlayerPrefs(Activity186Enum.LocalPrefsKey.AvgMark, 0) == 0
 end
 
-return slot0
+return var_0_0

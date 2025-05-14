@@ -1,9 +1,9 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupView", package.seeall)
 
-slot0 = class("VersionActivity_1_2_HeroGroupView", HeroGroupFightView)
+local var_0_0 = class("VersionActivity_1_2_HeroGroupView", HeroGroupFightView)
 
-function slot0.openHeroGroupEditView(slot0)
-	ViewMgr.instance:openView(ViewName.VersionActivity_1_2_HeroGroupEditView, slot0._param)
+function var_0_0.openHeroGroupEditView(arg_1_0)
+	ViewMgr.instance:openView(ViewName.VersionActivity_1_2_HeroGroupEditView, arg_1_0._param)
 end
 
-return slot0
+return var_0_0

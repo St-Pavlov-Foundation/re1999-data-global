@@ -1,12 +1,16 @@
-module("modules.logic.room.model.common.RoomStoreOrderModel", package.seeall)
+﻿module("modules.logic.room.model.common.RoomStoreOrderModel", package.seeall)
 
-slot0 = class("RoomStoreOrderModel", BaseModel)
+local var_0_0 = class("RoomStoreOrderModel", BaseModel)
 
-function slot0.getMOByList(slot0, slot1)
-	if slot1 and #slot1 > 0 then
-		for slot6 = 1, #slot0:getList() do
-			if slot2[slot6]:isSameValue(slot1) then
-				return slot7
+function var_0_0.getMOByList(arg_1_0, arg_1_1)
+	if arg_1_1 and #arg_1_1 > 0 then
+		local var_1_0 = arg_1_0:getList()
+
+		for iter_1_0 = 1, #var_1_0 do
+			local var_1_1 = var_1_0[iter_1_0]
+
+			if var_1_1:isSameValue(arg_1_1) then
+				return var_1_1
 			end
 		end
 	end
@@ -14,24 +18,29 @@ function slot0.getMOByList(slot0, slot1)
 	return nil
 end
 
-function slot0.addByStoreItemMOList(slot0, slot1, slot2, slot3)
-	if not slot0:getById(slot2) then
-		slot0:addAtLast(RoomStoreOrderMO.New())
+function var_0_0.addByStoreItemMOList(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = arg_2_0:getById(arg_2_2)
+
+	if not var_2_0 then
+		var_2_0 = RoomStoreOrderMO.New()
+
+		arg_2_0:addAtLast(var_2_0)
 	end
 
-	slot8 = slot3
+	var_2_0:init(arg_2_2, arg_2_3)
 
-	slot4:init(slot2, slot8)
+	for iter_2_0 = 1, #arg_2_1 do
+		local var_2_1 = arg_2_1[iter_2_0]
+		local var_2_2 = var_2_1:getCanBuyNum()
 
-	for slot8 = 1, #slot1 do
-		if slot1[slot8]:getCanBuyNum() > 0 then
-			slot4:addValue(slot9.materialType, slot9.itemId, slot10)
+		if var_2_2 > 0 then
+			var_2_0:addValue(var_2_1.materialType, var_2_1.itemId, var_2_2)
 		end
 	end
 
-	return slot4
+	return var_2_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

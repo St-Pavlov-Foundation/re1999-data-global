@@ -1,18 +1,19 @@
-module("modules.logic.activity.view.V2a3_Special_PanelsViewContainer", package.seeall)
+﻿module("modules.logic.activity.view.V2a3_Special_PanelsViewContainer", package.seeall)
 
-slot0 = class("V2a3_Special_PanelsViewContainer", V2a3_Special_SignItemViewContainer)
+local var_0_0 = class("V2a3_Special_PanelsViewContainer", V2a3_Special_SignItemViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._view = V2a3_Special_PanelsView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._view)
+	arg_1_0._view = V2a3_Special_PanelsView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._view)
+
+	return var_1_0
 end
 
-function slot0.view(slot0)
-	return slot0._view
+function var_0_0.view(arg_2_0)
+	return arg_2_0._view
 end
 
-return slot0
+return var_0_0

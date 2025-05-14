@@ -1,44 +1,50 @@
-module("modules.logic.rouge.view.RougeFactionItem_Base", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionItem_Base", package.seeall)
 
-slot0 = class("RougeFactionItem_Base", RougeItemNodeBase)
+local var_0_0 = class("RougeFactionItem_Base", RougeItemNodeBase)
 
-function slot0._editableInitView(slot0)
-	slot0._itemClick = gohelper.getClickWithAudio(slot0._goBg)
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0._goBg)
 end
 
-function slot0.addEventListeners(slot0)
-	RougeItemNodeBase.addEventListeners(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	RougeItemNodeBase.addEventListeners(arg_2_0)
+	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RougeItemNodeBase.removeEventListeners(slot0)
-	GameUtil.onDestroyViewMember_ClickListener(slot0, "_itemClick")
+function var_0_0.removeEventListeners(arg_3_0)
+	RougeItemNodeBase.removeEventListeners(arg_3_0)
+	GameUtil.onDestroyViewMember_ClickListener(arg_3_0, "_itemClick")
 end
 
-function slot0._onItemClick(slot0)
-	if not slot0:staticData() then
+function var_0_0._onItemClick(arg_4_0)
+	local var_4_0 = arg_4_0:staticData()
+
+	if not var_4_0 then
 		return
 	end
 
-	if not slot1.baseViewContainer then
+	local var_4_1 = var_4_0.baseViewContainer
+
+	if not var_4_1 then
 		return
 	end
 
-	slot2:dispatchEvent(RougeEvent.RougeFactionView_OnSelectIndex, slot0:index())
+	var_4_1:dispatchEvent(RougeEvent.RougeFactionView_OnSelectIndex, arg_4_0:index())
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot1.styleCO
-	slot0._txtname.text = slot2.name
-	slot0._txtscrollDesc.text = slot2.desc
+function var_0_0.setData(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	UISpriteSetMgr.instance:setRouge2Sprite(slot0._imageicon, slot2.icon)
+	local var_5_0 = arg_5_1.styleCO
+
+	arg_5_0._txtname.text = var_5_0.name
+	arg_5_0._txtscrollDesc.text = var_5_0.desc
+
+	UISpriteSetMgr.instance:setRouge2Sprite(arg_5_0._imageicon, var_5_0.icon)
 end
 
-function slot0.difficulty(slot0)
-	return slot0:parent():difficulty()
+function var_0_0.difficulty(arg_6_0)
+	return arg_6_0:parent():difficulty()
 end
 
-return slot0
+return var_0_0

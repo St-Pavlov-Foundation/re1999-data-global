@@ -1,201 +1,224 @@
-module("modules.logic.tips.view.FightFocusTowerView", package.seeall)
+﻿module("modules.logic.tips.view.FightFocusTowerView", package.seeall)
 
-slot0 = class("FightFocusTowerView", BaseRoleStoryView)
+local var_0_0 = class("FightFocusTowerView", BaseRoleStoryView)
 
-function slot0.onInit(slot0)
-	slot0.resPathList = {
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.resPathList = {
 		mainRes = "ui/viewres/fight/fightfocustowerview.prefab"
 	}
 end
 
-function slot0.onInitView(slot0)
-	slot0.anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0.txtLev = gohelper.findChildTextMesh(slot0.viewGO, "root/left/boss/lev")
-	slot0.imgCareer = gohelper.findChildImage(slot0.viewGO, "root/right/info/career")
-	slot0.txtName = gohelper.findChildTextMesh(slot0.viewGO, "root/right/info/name")
-	slot0.btnTalent = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/btnTalent")
-	slot0.txtPassiveName = gohelper.findChildTextMesh(slot0.viewGO, "root/right/info/passiveskill/bg/#txt_passivename")
-	slot0.passiveSkillItems = {}
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0.anim = arg_2_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_2_0.txtLev = gohelper.findChildTextMesh(arg_2_0.viewGO, "root/left/boss/lev")
+	arg_2_0.imgCareer = gohelper.findChildImage(arg_2_0.viewGO, "root/right/info/career")
+	arg_2_0.txtName = gohelper.findChildTextMesh(arg_2_0.viewGO, "root/right/info/name")
+	arg_2_0.btnTalent = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "root/right/btnTalent")
+	arg_2_0.txtPassiveName = gohelper.findChildTextMesh(arg_2_0.viewGO, "root/right/info/passiveskill/bg/#txt_passivename")
+	arg_2_0.passiveSkillItems = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, string.format("root/right/info/passiveskill/#go_passiveskills/passiveskill%s", slot4))
-		slot5.goOff = gohelper.findChild(slot5.go, "off")
-		slot5.goOn = gohelper.findChild(slot5.go, "on")
-		slot0.passiveSkillItems[slot4] = slot5
+	for iter_2_0 = 1, 3 do
+		local var_2_0 = arg_2_0:getUserDataTb_()
+
+		var_2_0.go = gohelper.findChild(arg_2_0.viewGO, string.format("root/right/info/passiveskill/#go_passiveskills/passiveskill%s", iter_2_0))
+		var_2_0.goOff = gohelper.findChild(var_2_0.go, "off")
+		var_2_0.goOn = gohelper.findChild(var_2_0.go, "on")
+		arg_2_0.passiveSkillItems[iter_2_0] = var_2_0
 	end
 
-	slot0.btnSkill = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon")
-	slot0.skillIcon = gohelper.findChildSingleImage(slot0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/imgIcon")
-	slot0.skillTagIcon = gohelper.findChildSingleImage(slot0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/tagIcon")
-	slot0.goTagIcon = gohelper.findChild(slot0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/tagIcon")
-	slot0.btnPassiveskill = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/info/passiveskill/#btn_passiveskill")
-	slot0.goTagItem = gohelper.findChild(slot0.viewGO, "root/right/info/base/scroll_tag/Viewport/Content/#txt_tag")
-	slot0.tagItems = {}
+	arg_2_0.btnSkill = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon")
+	arg_2_0.skillIcon = gohelper.findChildSingleImage(arg_2_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/imgIcon")
+	arg_2_0.skillTagIcon = gohelper.findChildSingleImage(arg_2_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/tagIcon")
+	arg_2_0.goTagIcon = gohelper.findChild(arg_2_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/tagIcon")
+	arg_2_0.btnPassiveskill = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "root/right/info/passiveskill/#btn_passiveskill")
+	arg_2_0.goTagItem = gohelper.findChild(arg_2_0.viewGO, "root/right/info/base/scroll_tag/Viewport/Content/#txt_tag")
+	arg_2_0.tagItems = {}
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnSkill, slot0.onBtnActiveSkillClick, slot0)
-	slot0:addClickCb(slot0.btnTalent, slot0.onBtnTalentClick, slot0)
-	slot0:addClickCb(slot0.btnPassiveskill, slot0.onBtnPassiveskillClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0:addClickCb(arg_3_0.btnSkill, arg_3_0.onBtnActiveSkillClick, arg_3_0)
+	arg_3_0:addClickCb(arg_3_0.btnTalent, arg_3_0.onBtnTalentClick, arg_3_0)
+	arg_3_0:addClickCb(arg_3_0.btnPassiveskill, arg_3_0.onBtnPassiveskillClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0.btnSkill)
-	slot0:removeClickCb(slot0.btnTalent)
-	slot0:removeClickCb(slot0.btnPassiveskill)
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0:removeClickCb(arg_4_0.btnSkill)
+	arg_4_0:removeClickCb(arg_4_0.btnTalent)
+	arg_4_0:removeClickCb(arg_4_0.btnPassiveskill)
 end
 
-function slot0.onBtnActiveSkillClick(slot0)
-	if not slot0.skillIdList then
+function var_0_0.onBtnActiveSkillClick(arg_5_0)
+	if not arg_5_0.skillIdList then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.TowerSkillTipView, {
-		skillIdList = slot0.skillIdList,
-		monsterName = slot0.config.name,
-		super = true
-	})
+	local var_5_0 = {
+		skillIdList = arg_5_0.skillIdList,
+		monsterName = arg_5_0.config.name
+	}
+
+	var_5_0.super = true
+
+	ViewMgr.instance:openView(ViewName.TowerSkillTipView, var_5_0)
 end
 
-function slot0.onBtnPassiveskillClick(slot0)
-	if not slot0.bossId then
+function var_0_0.onBtnPassiveskillClick(arg_6_0)
+	if not arg_6_0.bossId then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerBossSkillTipsView, {
-		bossId = slot0.bossId
+		bossId = arg_6_0.bossId
 	})
 end
 
-function slot0.onBtnTalentClick(slot0)
-	if not slot0.bossId then
+function var_0_0.onBtnTalentClick(arg_7_0)
+	if not arg_7_0.bossId then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossTalentTallView, {
-		bossId = slot0.bossId
+		bossId = arg_7_0.bossId
 	})
 end
 
-function slot0.onShow(slot0)
-	slot0.bossMo = TowerAssistBossModel.instance:getById(slot0.bossId)
-	slot0.config = TowerConfig.instance:getAssistBossConfig(slot0.bossId)
+function var_0_0.onShow(arg_8_0)
+	arg_8_0.bossMo = TowerAssistBossModel.instance:getById(arg_8_0.bossId)
+	arg_8_0.config = TowerConfig.instance:getAssistBossConfig(arg_8_0.bossId)
 
-	slot0:refreshView()
+	arg_8_0:refreshView()
 end
 
-function slot0.refreshView(slot0)
-	slot1 = slot0.bossMo and slot0.bossMo.level or 1
-	slot0.txtLev.text = tostring(slot1)
-	slot0.txtName.text = slot0.config.name
+function var_0_0.refreshView(arg_9_0)
+	local var_9_0 = arg_9_0.bossMo and arg_9_0.bossMo.level or 1
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0.imgCareer, string.format("lssx_%s", slot0.config.career))
-	gohelper.setActive(slot0.btnBase, #TowerConfig.instance:getHeroGroupAddAttr(slot0.bossId, 0, slot1) > 0)
-	slot0:refreshPassiveSkill()
-	slot0:refreshActiveSkill()
-	slot0:refreshTags()
+	arg_9_0.txtLev.text = tostring(var_9_0)
+	arg_9_0.txtName.text = arg_9_0.config.name
+
+	UISpriteSetMgr.instance:setCommonSprite(arg_9_0.imgCareer, string.format("lssx_%s", arg_9_0.config.career))
+
+	local var_9_1 = TowerConfig.instance:getHeroGroupAddAttr(arg_9_0.bossId, 0, var_9_0)
+
+	gohelper.setActive(arg_9_0.btnBase, #var_9_1 > 0)
+	arg_9_0:refreshPassiveSkill()
+	arg_9_0:refreshActiveSkill()
+	arg_9_0:refreshTags()
 end
 
-function slot0.refreshPassiveSkill(slot0)
-	slot0.txtPassiveName.text = slot0.config.passiveSkillName
+function var_0_0.refreshPassiveSkill(arg_10_0)
+	local var_10_0 = TowerConfig.instance:getPassiveSKills(arg_10_0.bossId)
 
-	for slot6, slot7 in ipairs(slot0.passiveSkillItems) do
-		if TowerConfig.instance:getPassiveSKills(slot0.bossId)[slot6] then
-			gohelper.setActive(slot7.go, true)
-			gohelper.setActive(slot7.goOn, TowerConfig.instance:isSkillActive(slot0.bossId, slot8[1], slot0.bossMo and slot0.bossMo.level or 1))
+	arg_10_0.txtPassiveName.text = arg_10_0.config.passiveSkillName
+
+	local var_10_1 = arg_10_0.bossMo and arg_10_0.bossMo.level or 1
+
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.passiveSkillItems) do
+		local var_10_2 = var_10_0[iter_10_0]
+
+		if var_10_2 then
+			gohelper.setActive(iter_10_1.go, true)
+			gohelper.setActive(iter_10_1.goOn, TowerConfig.instance:isSkillActive(arg_10_0.bossId, var_10_2[1], var_10_1))
 		else
-			gohelper.setActive(slot7.go, false)
+			gohelper.setActive(iter_10_1.go, false)
 		end
 	end
 end
 
-function slot0.refreshActiveSkill(slot0)
-	slot2 = (GameUtil.splitString2(slot0.config.activeSkills, true) or {})[1]
-	slot0.skillIdList = {}
+function var_0_0.refreshActiveSkill(arg_11_0)
+	local var_11_0 = GameUtil.splitString2(arg_11_0.config.activeSkills, true) or {}
+	local var_11_1 = var_11_0[1]
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot0.skillIdList, slot7[1])
+	arg_11_0.skillIdList = {}
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		table.insert(arg_11_0.skillIdList, iter_11_1[1])
 	end
 
-	if not lua_skill.configDict[slot2[1]] then
+	local var_11_2 = lua_skill.configDict[var_11_1[1]]
+
+	if not var_11_2 then
 		return
 	end
 
-	slot0.skillIcon:LoadImage(ResUrl.getSkillIcon(slot3.icon))
-	slot0.skillTagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot3.showTag))
-	gohelper.setActive(slot0.goTagIcon, false)
+	arg_11_0.skillIcon:LoadImage(ResUrl.getSkillIcon(var_11_2.icon))
+	arg_11_0.skillTagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_11_2.showTag))
+	gohelper.setActive(arg_11_0.goTagIcon, false)
 end
 
-function slot0.refreshTags(slot0)
-	slot1 = string.split(slot0.config.tag, "#") or {}
+function var_0_0.refreshTags(arg_12_0)
+	local var_12_0 = string.split(arg_12_0.config.tag, "#") or {}
+	local var_12_1 = #var_12_0
+	local var_12_2 = math.max(#arg_12_0.tagItems, var_12_1)
 
-	for slot7 = 1, math.max(#slot0.tagItems, #slot1) do
-		if not slot0.tagItems[slot7] then
-			slot8 = slot0:getUserDataTb_()
-			slot8.go = gohelper.cloneInPlace(slot0.goTagItem)
-			slot8.txt = slot8.go:GetComponent(gohelper.Type_TextMesh)
-			slot0.tagItems[slot7] = slot8
+	for iter_12_0 = 1, var_12_2 do
+		local var_12_3 = arg_12_0.tagItems[iter_12_0]
+
+		if not var_12_3 then
+			var_12_3 = arg_12_0:getUserDataTb_()
+			var_12_3.go = gohelper.cloneInPlace(arg_12_0.goTagItem)
+			var_12_3.txt = var_12_3.go:GetComponent(gohelper.Type_TextMesh)
+			arg_12_0.tagItems[iter_12_0] = var_12_3
 		end
 
-		if slot1[slot7] then
-			slot8.txt.text = slot1[slot7]
+		if var_12_0[iter_12_0] then
+			var_12_3.txt.text = var_12_0[iter_12_0]
 		end
 
-		gohelper.setActive(slot8.go, slot1[slot7] ~= nil)
+		gohelper.setActive(var_12_3.go, var_12_0[iter_12_0] ~= nil)
 	end
 end
 
-function slot0.onHide(slot0)
+function var_0_0.onHide(arg_13_0)
+	return
 end
 
-function slot0.show(slot0, slot1)
-	if slot0.isShow and not slot1 then
+function var_0_0.show(arg_14_0, arg_14_1)
+	if arg_14_0.isShow and not arg_14_1 then
 		return
 	end
 
-	slot0.isShow = true
+	arg_14_0.isShow = true
 
-	if not slot0.viewGO then
-		slot0:_loadPrefab()
+	if not arg_14_0.viewGO then
+		arg_14_0:_loadPrefab()
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
+	gohelper.setActive(arg_14_0.viewGO, true)
 
-	if slot1 then
-		slot0.anim:Play("open")
+	if arg_14_1 then
+		arg_14_0.anim:Play("open")
 	else
-		slot0.anim:Play("switch")
+		arg_14_0.anim:Play("switch")
 	end
 
-	slot0:onShow()
+	arg_14_0:onShow()
 end
 
-function slot0.hide(slot0, slot1)
-	if not slot0.isShow and not slot1 then
+function var_0_0.hide(arg_15_0, arg_15_1)
+	if not arg_15_0.isShow and not arg_15_1 then
 		return
 	end
 
-	slot0.isShow = false
+	arg_15_0.isShow = false
 
-	if not slot0.viewGO then
+	if not arg_15_0.viewGO then
 		return
 	end
 
-	if slot1 then
-		slot0.anim:Play("close")
+	if arg_15_1 then
+		arg_15_0.anim:Play("close")
 	else
-		gohelper.setActive(slot0.viewGO, false)
+		gohelper.setActive(arg_15_0.viewGO, false)
 	end
 
-	slot0:onHide()
+	arg_15_0:onHide()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.skillIcon:UnLoadImage()
-	slot0.skillTagIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0.skillIcon:UnLoadImage()
+	arg_16_0.skillTagIcon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,45 +1,49 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.status.YaXianInteractEnemyStatus", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.status.YaXianInteractEnemyStatus", package.seeall)
 
-slot0 = class("YaXianInteractEnemyStatus", YaXianInteractStatusBase)
+local var_0_0 = class("YaXianInteractEnemyStatus", YaXianInteractStatusBase)
 
-function slot0.updateStatus(slot0)
-	slot0.statusDict = {}
-	slot0.hadInVisibleEffect = YaXianGameModel.instance:hasInVisibleEffect()
+function var_0_0.updateStatus(arg_1_0)
+	arg_1_0.statusDict = {}
+	arg_1_0.hadInVisibleEffect = YaXianGameModel.instance:hasInVisibleEffect()
 
-	if slot0.interactItem:isFighting() then
-		slot0:addStatus(YaXianGameEnum.IconStatus.Fight)
+	if arg_1_0.interactItem:isFighting() then
+		arg_1_0:addStatus(YaXianGameEnum.IconStatus.Fight)
 	end
 
-	slot0.playerCanWalkPos2Direction = YaXianGameModel.instance:getCanWalkPos2Direction()
+	arg_1_0.playerCanWalkPos2Direction = YaXianGameModel.instance:getCanWalkPos2Direction()
 
-	slot0:handleInteractPos()
-	slot0:handleInteractAlertArea()
-	slot0:handleInteractMoving()
+	arg_1_0:handleInteractPos()
+	arg_1_0:handleInteractAlertArea()
+	arg_1_0:handleInteractMoving()
 end
 
-function slot0.handleInteractPos(slot0)
-	if not slot0.playerCanWalkPos2Direction[YaXianGameHelper.getPosHashKey(slot0.interactMo.posX, slot0.interactMo.posY)] then
+function var_0_0.handleInteractPos(arg_2_0)
+	local var_2_0 = arg_2_0.playerCanWalkPos2Direction[YaXianGameHelper.getPosHashKey(arg_2_0.interactMo.posX, arg_2_0.interactMo.posY)]
+
+	if not var_2_0 then
 		return
 	end
 
-	if slot0.interactItem:isFighting() then
-		slot0:addStatus(YaXianGameEnum.IconStatus.Fight, YaXianGameEnum.OppositeDirection[slot1])
-	elseif slot0.hadInVisibleEffect then
-		slot0:addStatus(YaXianGameEnum.IconStatus.Assassinate)
-	elseif YaXianGameEnum.OppositeDirection[slot1] ~= slot0.interactMo.direction then
-		slot0:addStatus(YaXianGameEnum.IconStatus.Assassinate)
+	if arg_2_0.interactItem:isFighting() then
+		arg_2_0:addStatus(YaXianGameEnum.IconStatus.Fight, YaXianGameEnum.OppositeDirection[var_2_0])
+	elseif arg_2_0.hadInVisibleEffect then
+		arg_2_0:addStatus(YaXianGameEnum.IconStatus.Assassinate)
+	elseif YaXianGameEnum.OppositeDirection[var_2_0] ~= arg_2_0.interactMo.direction then
+		arg_2_0:addStatus(YaXianGameEnum.IconStatus.Assassinate)
 	end
 end
 
-function slot0.handleInteractAlertArea(slot0)
-	if not slot0.interactItem:isFighting() then
+function var_0_0.handleInteractAlertArea(arg_3_0)
+	if not arg_3_0.interactItem:isFighting() then
 		return
 	end
 
-	if slot0.interactMo.alertPosList and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot0.playerCanWalkPos2Direction[YaXianGameHelper.getPosHashKey(slot6.posX, slot6.posY)] then
-				slot0:addStatus(YaXianGameEnum.IconStatus.Fight)
+	local var_3_0 = arg_3_0.interactMo.alertPosList
+
+	if var_3_0 and #var_3_0 > 0 then
+		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+			if arg_3_0.playerCanWalkPos2Direction[YaXianGameHelper.getPosHashKey(iter_3_1.posX, iter_3_1.posY)] then
+				arg_3_0:addStatus(YaXianGameEnum.IconStatus.Fight)
 
 				break
 			end
@@ -47,27 +51,25 @@ function slot0.handleInteractAlertArea(slot0)
 	end
 end
 
-function slot0.handleInteractMoving(slot0)
-	slot1 = slot0.interactItem.interactMo
+function var_0_0.handleInteractMoving(arg_4_0)
+	local var_4_0 = arg_4_0.interactItem.interactMo
+	local var_4_1 = arg_4_0.interactItem.interactMo.nextPos
 
-	if not slot0.interactItem.interactMo.nextPos then
+	if not var_4_1 then
 		return
 	end
 
-	if not slot0.hadInVisibleEffect then
+	if not arg_4_0.hadInVisibleEffect then
 		return
 	end
 
-	slot6 = slot2.posX
-	slot7 = slot2.posY
-
-	for slot6, slot7 in YaXianGameHelper.getPassPosGenerator(slot1.posX, slot1.posY, slot6, slot7) do
-		if slot0.playerCanWalkPos2Direction[YaXianGameHelper.getPosHashKey(slot6, slot7)] then
-			slot0:addStatus(YaXianGameEnum.IconStatus.Assassinate)
+	for iter_4_0, iter_4_1 in YaXianGameHelper.getPassPosGenerator(var_4_0.posX, var_4_0.posY, var_4_1.posX, var_4_1.posY) do
+		if arg_4_0.playerCanWalkPos2Direction[YaXianGameHelper.getPosHashKey(iter_4_0, iter_4_1)] then
+			arg_4_0:addStatus(YaXianGameEnum.IconStatus.Assassinate)
 
 			break
 		end
 	end
 end
 
-return slot0
+return var_0_0

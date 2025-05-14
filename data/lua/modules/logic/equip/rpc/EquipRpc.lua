@@ -1,52 +1,64 @@
-module("modules.logic.equip.rpc.EquipRpc", package.seeall)
+﻿module("modules.logic.equip.rpc.EquipRpc", package.seeall)
 
-slot0 = class("EquipRpc", BaseRpc)
+local var_0_0 = class("EquipRpc", BaseRpc)
 
-function slot0.sendGetEquipInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(EquipModule_pb.GetEquipInfoRequest(), slot1, slot2)
+function var_0_0.sendGetEquipInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = EquipModule_pb.GetEquipInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetEquipInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetEquipInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	EquipModel.instance:addEquips(slot2.equips)
+	local var_2_0 = arg_2_2.equips
+
+	EquipModel.instance:addEquips(var_2_0)
 end
 
-function slot0.onReceiveEquipUpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveEquipUpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	EquipModel.instance:addEquips(slot2.equips)
+	local var_3_0 = arg_3_2.equips
+
+	EquipModel.instance:addEquips(var_3_0)
 end
 
-function slot0.onReceiveEquipDeletePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveEquipDeletePush(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	EquipModel.instance:removeEquips(slot2.uids)
+	local var_4_0 = arg_4_2.uids
+
+	EquipModel.instance:removeEquips(var_4_0)
 end
 
-function slot0.sendEquipStrengthenRequest(slot0, slot1, slot2)
-	EquipModule_pb.EquipStrengthenRequest().targetUid = slot1
-	slot4 = EquipModel.instance:getEquip(slot1)
+function var_0_0.sendEquipStrengthenRequest(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = EquipModule_pb.EquipStrengthenRequest()
 
-	for slot8, slot9 in ipairs(slot2) do
-		slot10 = EquipModule_pb.EatEquip()
-		slot10.eatUid = slot9[1]
-		slot10.count = slot9[2]
+	var_5_0.targetUid = arg_5_1
 
-		table.insert(slot3.eatEquips, slot10)
+	local var_5_1 = EquipModel.instance:getEquip(arg_5_1)
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
+		local var_5_2 = EquipModule_pb.EatEquip()
+
+		var_5_2.eatUid = iter_5_1[1]
+		var_5_2.count = iter_5_1[2]
+
+		table.insert(var_5_0.eatEquips, var_5_2)
 	end
 
-	slot0:sendMsg(slot3)
+	arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveEquipStrengthenReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveEquipStrengthenReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
@@ -54,86 +66,93 @@ function slot0.onReceiveEquipStrengthenReply(slot0, slot1, slot2)
 	EquipController.instance:dispatchEvent(EquipEvent.onEquipStrengthenReply)
 end
 
-function slot0.sendEquipBreakRequest(slot0, slot1)
-	slot2 = EquipModule_pb.EquipBreakRequest()
-	slot2.targetUid = slot1
+function var_0_0.sendEquipBreakRequest(arg_7_0, arg_7_1)
+	local var_7_0 = EquipModule_pb.EquipBreakRequest()
 
-	slot0:sendMsg(slot2)
+	var_7_0.targetUid = arg_7_1
+
+	arg_7_0:sendMsg(var_7_0)
 end
 
-function slot0.onReceiveEquipBreakReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveEquipBreakReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
 	EquipController.instance:dispatchEvent(EquipEvent.onBreakSuccess)
 end
 
-function slot0.sendEquipLockRequest(slot0, slot1, slot2)
-	if not EquipModel.instance:getEquip(tostring(slot1)) or EquipHelper.isSpRefineEquip(slot3.config) then
+function var_0_0.sendEquipLockRequest(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = EquipModel.instance:getEquip(tostring(arg_9_1))
+
+	if not var_9_0 or EquipHelper.isSpRefineEquip(var_9_0.config) then
 		return
 	end
 
-	slot4 = EquipModule_pb.EquipLockRequest()
-	slot4.targetUid = slot1
-	slot4.lock = slot2
+	local var_9_1 = EquipModule_pb.EquipLockRequest()
 
-	slot0:sendMsg(slot4)
+	var_9_1.targetUid = arg_9_1
+	var_9_1.lock = arg_9_2
+
+	arg_9_0:sendMsg(var_9_1)
 end
 
-function slot0.onReceiveEquipLockReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveEquipLockReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= 0 then
 		return
 	end
 
-	slot4 = slot2.lock
+	local var_10_0 = arg_10_2.targetUid
+	local var_10_1 = arg_10_2.lock
 
 	EquipController.instance:dispatchEvent(EquipEvent.onEquipLockChange, {
-		uid = slot2.targetUid,
-		isLock = slot4
+		uid = var_10_0,
+		isLock = var_10_1
 	})
 
-	if slot4 then
+	if var_10_1 then
 		GameFacade.showToast(ToastEnum.EquipLock)
 	else
 		GameFacade.showToast(ToastEnum.EquipUnLock)
 	end
 end
 
-function slot0.sendEquipDecomposeRequest(slot0)
-	slot1 = EquipModule_pb.EquipDecomposeRequest()
+function var_0_0.sendEquipDecomposeRequest(arg_11_0)
+	local var_11_0 = EquipModule_pb.EquipDecomposeRequest()
 
-	for slot5, slot6 in pairs(EquipDecomposeListModel.instance.selectedEquipDict) do
-		table.insert(slot1.equipUids, slot5)
+	for iter_11_0, iter_11_1 in pairs(EquipDecomposeListModel.instance.selectedEquipDict) do
+		table.insert(var_11_0.equipUids, iter_11_0)
 	end
 
-	slot0:sendMsg(slot1)
+	arg_11_0:sendMsg(var_11_0)
 end
 
-function slot0.onReceiveEquipDecomposeReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveEquipDecomposeReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == 0 then
 		EquipController.instance:dispatchEvent(EquipEvent.onDecomposeSuccess)
 	end
 end
 
-function slot0.sendEquipRefineRequest(slot0, slot1, slot2)
-	EquipModule_pb.EquipRefineRequest().targetUid = slot1
+function var_0_0.sendEquipRefineRequest(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = EquipModule_pb.EquipRefineRequest()
 
-	for slot7, slot8 in ipairs(slot2) do
-		table.insert(slot3.eatUids, slot8)
+	var_13_0.targetUid = arg_13_1
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
+		table.insert(var_13_0.eatUids, iter_13_1)
 	end
 
-	slot0:sendMsg(slot3)
+	arg_13_0:sendMsg(var_13_0)
 end
 
-function slot0.onReceiveEquipRefineReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveEquipRefineReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 ~= 0 then
 		return
 	end
 
 	EquipController.instance:dispatchEvent(EquipEvent.onEquipRefineReply)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

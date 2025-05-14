@@ -1,17 +1,17 @@
-module("modules.logic.achievement.model.mo.AchiementTaskMO", package.seeall)
+﻿module("modules.logic.achievement.model.mo.AchiementTaskMO", package.seeall)
 
-slot0 = pureTable("AchiementTaskMO")
+local var_0_0 = pureTable("AchiementTaskMO")
 
-function slot0.init(slot0, slot1)
-	slot0.cfg = slot1
-	slot0.id = slot1.id
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.cfg = arg_1_1
+	arg_1_0.id = arg_1_1.id
 end
 
-function slot0.updateByServerData(slot0, slot1)
-	slot0.progress = slot1.progress
-	slot0.hasFinished = slot1.hasFinish
-	slot0.isNew = slot1.new
-	slot0.finishTime = slot1.finishTime
+function var_0_0.updateByServerData(arg_2_0, arg_2_1)
+	arg_2_0.progress = arg_2_1.progress
+	arg_2_0.hasFinished = arg_2_1.hasFinish
+	arg_2_0.isNew = arg_2_1.new
+	arg_2_0.finishTime = arg_2_1.finishTime
 end
 
-return slot0
+return var_0_0

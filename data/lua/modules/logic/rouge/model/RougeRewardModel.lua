@@ -1,111 +1,121 @@
-module("modules.logic.rouge.model.RougeRewardModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeRewardModel", package.seeall)
 
-slot0 = class("RougeRewardModel", BaseModel)
+local var_0_0 = class("RougeRewardModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.setReward(slot0, slot1)
-	if not slot0._season then
-		slot0._season = RougeOutsideModel.instance:season()
+function var_0_0.setReward(arg_3_0, arg_3_1)
+	if not arg_3_0._season then
+		arg_3_0._season = RougeOutsideModel.instance:season()
 	end
 
-	if slot1.point then
-		slot0.point = slot1.point
+	if arg_3_1.point then
+		arg_3_0.point = arg_3_1.point
 	end
 
-	if slot1.bonus then
-		if #slot1.bonus.bonusStages > 0 then
-			slot0:_initStageInfo(slot1.bonus.bonusStages)
+	if arg_3_1.bonus then
+		if #arg_3_1.bonus.bonusStages > 0 then
+			local var_3_0 = arg_3_1.bonus.bonusStages
+
+			arg_3_0:_initStageInfo(var_3_0)
 		end
 
-		slot0._isNewStage = slot1.bonus.isNewStage
+		arg_3_0._isNewStage = arg_3_1.bonus.isNewStage
 	end
 
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeRewardInfo)
 end
 
-function slot0.updateReward(slot0, slot1)
-	if slot1 and next(slot1) then
-		slot0:_updateStageInfo(slot1)
+function var_0_0.updateReward(arg_4_0, arg_4_1)
+	if arg_4_1 and next(arg_4_1) then
+		arg_4_0:_updateStageInfo(arg_4_1)
 	end
 
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeRewardInfo)
 end
 
-function slot0._initStageInfo(slot0, slot1)
-	if not slot0._stageInfo then
-		slot0._stageInfo = {}
+function var_0_0._initStageInfo(arg_5_0, arg_5_1)
+	if not arg_5_0._stageInfo then
+		arg_5_0._stageInfo = {}
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:_updateStageInfo(slot6)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		arg_5_0:_updateStageInfo(iter_5_1)
 	end
 end
 
-function slot0._updateStageInfo(slot0, slot1)
-	if not slot0._stageInfo then
-		slot0._stageInfo = {}
+function var_0_0._updateStageInfo(arg_6_0, arg_6_1)
+	if not arg_6_0._stageInfo then
+		arg_6_0._stageInfo = {}
 	end
 
-	if not slot0._stageInfo[slot1.stage] then
-		slot0._stageInfo[slot1.stage] = {}
+	if not arg_6_0._stageInfo[arg_6_1.stage] then
+		arg_6_0._stageInfo[arg_6_1.stage] = {}
 	end
 
-	slot0._stageInfo[slot1.stage] = slot1.bonusIds
+	arg_6_0._stageInfo[arg_6_1.stage] = arg_6_1.bonusIds
 end
 
-function slot0.checkCanGetBigReward(slot0, slot1)
-	if slot0:getLastRewardCounter(slot1) < RougeRewardConfig.instance:getNeedUnlockNum(slot1) then
+function var_0_0.checkCanGetBigReward(arg_7_0, arg_7_1)
+	if RougeRewardConfig.instance:getNeedUnlockNum(arg_7_1) > arg_7_0:getLastRewardCounter(arg_7_1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getRewardPoint(slot0)
-	return slot0.point or 0
+function var_0_0.getRewardPoint(arg_8_0)
+	return arg_8_0.point or 0
 end
 
-function slot0.checkIsNewStage(slot0)
-	return slot0._isNewStage
+function var_0_0.checkIsNewStage(arg_9_0)
+	return arg_9_0._isNewStage
 end
 
-function slot0.setNewStage(slot0, slot1)
-	slot0._isNewStage = slot1
+function var_0_0.setNewStage(arg_10_0, arg_10_1)
+	arg_10_0._isNewStage = arg_10_1
 end
 
-function slot0.checkRewardCanGet(slot0, slot1, slot2)
-	if not slot0:isStageUnLock(slot1) then
+function var_0_0.checkRewardCanGet(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0:isStageUnLock(arg_11_1) then
 		return
 	end
 
-	if RougeRewardConfig.instance:getConfigById(slot0._season, slot2).type == 3 then
+	local var_11_0 = RougeRewardConfig.instance:getConfigById(arg_11_0._season, arg_11_2)
+
+	if var_11_0.type == 3 then
 		return true
 	end
 
-	if not slot0:checkRewardGot(slot1, slot3.preId) then
+	local var_11_1 = var_11_0.preId
+
+	if not arg_11_0:checkRewardGot(arg_11_1, var_11_1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.checkRewardGot(slot0, slot1, slot2)
-	if not slot0._stageInfo or not next(slot0._stageInfo) then
+function var_0_0.checkRewardGot(arg_12_0, arg_12_1, arg_12_2)
+	if not arg_12_0._stageInfo or not next(arg_12_0._stageInfo) then
 		return
 	end
 
-	if not slot0:isStageUnLock(slot1) then
+	if not arg_12_0:isStageUnLock(arg_12_1) then
 		return false
 	end
 
-	if slot0._stageInfo[slot1] then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot2 == slot8 then
+	local var_12_0 = arg_12_0._stageInfo[arg_12_1]
+
+	if var_12_0 then
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			if arg_12_2 == iter_12_1 then
 				return true
 			end
 		end
@@ -114,64 +124,73 @@ function slot0.checkRewardGot(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.getHadConsumeRewardPoint(slot0)
-	slot1 = 0
+function var_0_0.getHadConsumeRewardPoint(arg_13_0)
+	local var_13_0 = 0
 
-	if not slot0._stageInfo or #slot0._stageInfo == 0 then
+	if not arg_13_0._stageInfo or #arg_13_0._stageInfo == 0 then
 		return 0
 	end
 
-	for slot5, slot6 in ipairs(slot0._stageInfo) do
-		slot7 = false
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._stageInfo) do
+		local var_13_1 = false
 
-		if slot0:checkBigRewardGot(slot5) then
-			slot7 = true
+		if arg_13_0:checkBigRewardGot(iter_13_0) then
+			var_13_1 = true
 		end
 
-		if slot6 and #slot6 > 0 then
-			slot1 = slot1 + #slot6
+		if iter_13_1 and #iter_13_1 > 0 then
+			var_13_0 = var_13_0 + #iter_13_1
 		end
 
-		if slot7 and slot1 > 0 then
-			slot1 = slot1 - 1
+		if var_13_1 and var_13_0 > 0 then
+			var_13_0 = var_13_0 - 1
 		end
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.getHadGetRewardPoint(slot0)
-	slot2 = slot0:getHadConsumeRewardPoint()
-	slot4 = RougeRewardConfig.instance:getPointLimitByStage(slot0._season, slot0:getLastOpenStage())
+function var_0_0.getHadGetRewardPoint(arg_14_0)
+	local var_14_0 = arg_14_0:getHadConsumeRewardPoint()
+	local var_14_1 = var_14_0
+	local var_14_2 = arg_14_0:getLastOpenStage()
+	local var_14_3 = RougeRewardConfig.instance:getPointLimitByStage(arg_14_0._season, var_14_2)
 
-	if slot0.point then
-		slot2 = slot4 < slot1 + slot0.point and slot4 or slot5
+	if arg_14_0.point then
+		local var_14_4 = var_14_0 + arg_14_0.point
+
+		var_14_1 = var_14_3 < var_14_4 and var_14_3 or var_14_4
 	end
 
-	return slot2
+	return var_14_1
 end
 
-function slot0.isStageOpen(slot0, slot1)
-	if slot1 == 1 or slot1 == 2 then
+function var_0_0.isStageOpen(arg_15_0, arg_15_1)
+	if arg_15_1 == 1 or arg_15_1 == 2 then
 		return true
 	end
 
-	if not slot0._season then
-		slot0._season = RougeOutsideModel.instance:season()
+	if not arg_15_0._season then
+		arg_15_0._season = RougeOutsideModel.instance:season()
 	end
 
-	if not string.nilorempty(RougeRewardConfig.instance:getStageRewardConfigById(slot0._season, slot1).openTime) then
-		return TimeUtil.stringToTimestamp(slot2.openTime) <= ServerTime.now()
+	local var_15_0 = RougeRewardConfig.instance:getStageRewardConfigById(arg_15_0._season, arg_15_1)
+	local var_15_1 = ServerTime.now()
+
+	if not string.nilorempty(var_15_0.openTime) then
+		return var_15_1 >= TimeUtil.stringToTimestamp(var_15_0.openTime)
 	end
 
 	return false
 end
 
-function slot0.setNextUnlockStage(slot0)
-	for slot5, slot6 in ipairs(RougeRewardConfig.instance:getBigRewardToStage()) do
-		for slot10, slot11 in ipairs(slot6) do
-			if not slot0:isStageOpen(slot11.stage) then
-				slot0.nextstage = slot11.stage
+function var_0_0.setNextUnlockStage(arg_16_0)
+	local var_16_0 = RougeRewardConfig.instance:getBigRewardToStage()
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		for iter_16_2, iter_16_3 in ipairs(iter_16_1) do
+			if not arg_16_0:isStageOpen(iter_16_3.stage) then
+				arg_16_0.nextstage = iter_16_3.stage
 
 				break
 			end
@@ -179,151 +198,168 @@ function slot0.setNextUnlockStage(slot0)
 	end
 end
 
-function slot0.isShowNextStageTag(slot0, slot1)
-	if slot1 == slot0.nextstage then
+function var_0_0.isShowNextStageTag(arg_17_0, arg_17_1)
+	if arg_17_1 == arg_17_0.nextstage then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isStageUnLock(slot0, slot1)
-	if not slot0._season then
-		slot0._season = RougeOutsideModel.instance:season()
+function var_0_0.isStageUnLock(arg_18_0, arg_18_1)
+	if not arg_18_0._season then
+		arg_18_0._season = RougeOutsideModel.instance:season()
 	end
 
-	if slot1 == 1 then
+	if arg_18_1 == 1 then
 		return true
 	end
 
-	if not slot0:isStageOpen(slot1) then
+	if not arg_18_0:isStageOpen(arg_18_1) then
 		return false
 	end
 
-	if slot0:isStageClear(RougeRewardConfig.instance:getStageRewardConfigById(slot0._season, slot1).preStage) then
+	local var_18_0 = RougeRewardConfig.instance:getStageRewardConfigById(arg_18_0._season, arg_18_1).preStage
+
+	if arg_18_0:isStageClear(var_18_0) then
 		return true
 	else
 		return false
 	end
 end
 
-function slot0.isStageClear(slot0, slot1)
-	if not slot0._stageInfo or #slot0._stageInfo == 0 then
+function var_0_0.isStageClear(arg_19_0, arg_19_1)
+	if not arg_19_0._stageInfo or #arg_19_0._stageInfo == 0 then
 		return
 	end
 
-	if not slot0._stageInfo[slot1] then
+	local var_19_0 = arg_19_0._stageInfo[arg_19_1]
+
+	if not var_19_0 then
 		return false
 	end
 
-	if RougeRewardConfig.instance:getRewardStageDictNum(slot1) > #slot2 then
+	if RougeRewardConfig.instance:getRewardStageDictNum(arg_19_1) > #var_19_0 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getLastOpenStage(slot0)
-	slot3 = 1
+function var_0_0.getLastOpenStage(arg_20_0)
+	local var_20_0 = RougeOutsideModel.instance:season()
+	local var_20_1 = RougeRewardConfig.instance:getStageRewardCount(var_20_0)
+	local var_20_2 = 1
 
-	for slot7 = 1, RougeRewardConfig.instance:getStageRewardCount(RougeOutsideModel.instance:season()) do
-		if slot0:isStageOpen(slot7) then
-			slot3 = slot7
+	for iter_20_0 = 1, var_20_1 do
+		if arg_20_0:isStageOpen(iter_20_0) then
+			var_20_2 = iter_20_0
 		else
-			return slot3
+			return var_20_2
 		end
 	end
 
-	return slot3
+	return var_20_2
 end
 
-function slot0.getLastUnlockStage(slot0)
-	slot3 = 1
+function var_0_0.getLastUnlockStage(arg_21_0)
+	local var_21_0 = RougeOutsideModel.instance:season()
+	local var_21_1 = RougeRewardConfig.instance:getStageRewardCount(var_21_0)
+	local var_21_2 = 1
 
-	for slot7 = 1, RougeRewardConfig.instance:getStageRewardCount(RougeOutsideModel.instance:season()) do
-		if slot0:isStageUnLock(slot7) then
-			slot3 = slot7
+	for iter_21_0 = 1, var_21_1 do
+		if arg_21_0:isStageUnLock(iter_21_0) then
+			var_21_2 = iter_21_0
 		else
-			return slot3
+			return var_21_2
 		end
 	end
 
-	return slot3
+	return var_21_2
 end
 
-function slot0.checkOpenStage(slot0, slot1)
-	slot2 = RougeRewardConfig.instance:getBigRewardToStageConfigById(slot1)
-	slot3 = false
-	slot4 = nil
+function var_0_0.checkOpenStage(arg_22_0, arg_22_1)
+	local var_22_0 = RougeRewardConfig.instance:getBigRewardToStageConfigById(arg_22_1)
+	local var_22_1 = false
+	local var_22_2
 
-	if slot1 == 1 then
-		for slot8, slot9 in pairs(slot2) do
-			if slot0:isStageUnLock(slot9.stage) then
-				slot3 = true
-				slot4 = slot9.stage
+	if arg_22_1 == 1 then
+		for iter_22_0, iter_22_1 in pairs(var_22_0) do
+			if arg_22_0:isStageUnLock(iter_22_1.stage) then
+				var_22_1 = true
+				var_22_2 = iter_22_1.stage
 			end
 		end
 	else
-		for slot8, slot9 in pairs(slot2) do
-			if slot0:isStageOpen(slot9.stage) then
-				slot3 = true
-				slot4 = slot9.stage
+		for iter_22_2, iter_22_3 in pairs(var_22_0) do
+			if arg_22_0:isStageOpen(iter_22_3.stage) then
+				var_22_1 = true
+				var_22_2 = iter_22_3.stage
 			end
 		end
 	end
 
-	if slot3 then
-		return slot4
+	if var_22_1 then
+		return var_22_2
 	end
 end
 
-function slot0.getLastRewardCounter(slot0, slot1)
-	if not slot0._stageInfo or #slot0._stageInfo == 0 then
-		return 0
+function var_0_0.getLastRewardCounter(arg_23_0, arg_23_1)
+	local var_23_0 = 0
+
+	if not arg_23_0._stageInfo or #arg_23_0._stageInfo == 0 then
+		return var_23_0
 	end
 
-	if not slot0._stageInfo[slot1] then
-		return slot2
+	local var_23_1 = arg_23_0._stageInfo[arg_23_1]
+
+	if not var_23_1 then
+		return var_23_0
 	end
 
-	slot4 = RougeRewardConfig.instance:getConfigByStage(slot1)
+	local var_23_2 = RougeRewardConfig.instance:getConfigByStage(arg_23_1)
 
-	for slot8, slot9 in ipairs(slot3) do
-		for slot13, slot14 in ipairs(slot4) do
-			if slot14.id == slot9 and slot14.type == 2 then
-				slot2 = slot2 + 1
+	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
+		for iter_23_2, iter_23_3 in ipairs(var_23_2) do
+			if iter_23_3.id == iter_23_1 and iter_23_3.type == 2 then
+				var_23_0 = var_23_0 + 1
 			end
 		end
 	end
 
-	return slot2
+	return var_23_0
 end
 
-function slot0.checShowBigRewardGot(slot0, slot1)
-	for slot7, slot8 in ipairs(RougeRewardConfig.instance:getBigRewardToStageConfigById(slot1)) do
-		if slot0:checkBigRewardGot(slot8.stage) then
-			slot3 = 0 + 1
+function var_0_0.checShowBigRewardGot(arg_24_0, arg_24_1)
+	local var_24_0 = RougeRewardConfig.instance:getBigRewardToStageConfigById(arg_24_1)
+	local var_24_1 = 0
+
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		if arg_24_0:checkBigRewardGot(iter_24_1.stage) then
+			var_24_1 = var_24_1 + 1
 		end
 	end
 
-	if #slot2 == slot3 then
+	if #var_24_0 == var_24_1 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.checkBigRewardGot(slot0, slot1)
-	if not slot0._stageInfo or #slot0._stageInfo == 0 then
+function var_0_0.checkBigRewardGot(arg_25_0, arg_25_1)
+	if not arg_25_0._stageInfo or #arg_25_0._stageInfo == 0 then
 		return false
 	end
 
-	if not slot0._stageInfo[slot1] then
+	local var_25_0 = arg_25_0._stageInfo[arg_25_1]
+
+	if not var_25_0 then
 		return false
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		if RougeRewardConfig.instance:getConfigById(slot0._season, slot7).type == 1 then
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		if RougeRewardConfig.instance:getConfigById(arg_25_0._season, iter_25_1).type == 1 then
 			return true
 		end
 	end
@@ -331,6 +367,6 @@ function slot0.checkBigRewardGot(slot0, slot1)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

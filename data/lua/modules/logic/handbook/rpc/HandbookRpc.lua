@@ -1,43 +1,46 @@
-module("modules.logic.handbook.rpc.HandbookRpc", package.seeall)
+﻿module("modules.logic.handbook.rpc.HandbookRpc", package.seeall)
 
-slot0 = class("HandbookRpc", BaseRpc)
+local var_0_0 = class("HandbookRpc", BaseRpc)
 
-function slot0.sendGetHandbookInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(HandbookModule_pb.GetHandbookInfoRequest(), slot1, slot2)
+function var_0_0.sendGetHandbookInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = HandbookModule_pb.GetHandbookInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetHandbookInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetHandbookInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	HandbookModel.instance:setReadInfos(slot2.infos)
-	HandbookModel.instance:setFragmentInfo(slot2.elementInfo)
+	HandbookModel.instance:setReadInfos(arg_2_2.infos)
+	HandbookModel.instance:setFragmentInfo(arg_2_2.elementInfo)
 end
 
-function slot0.sendHandbookReadRequest(slot0, slot1, slot2)
-	slot3 = HandbookModule_pb.HandbookReadRequest()
-	slot3.type = slot1
-	slot3.id = slot2
+function var_0_0.sendHandbookReadRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = HandbookModule_pb.HandbookReadRequest()
 
-	return slot0:sendMsg(slot3)
+	var_3_0.type = arg_3_1
+	var_3_0.id = arg_3_2
+
+	return arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveHandbookReadReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHandbookReadReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	slot3 = {
+	local var_4_0 = {
 		isRead = true,
-		type = slot2.type,
-		id = slot2.id
+		type = arg_4_2.type,
+		id = arg_4_2.id
 	}
 
-	HandbookModel.instance:setReadInfo(slot3)
-	HandbookController.instance:dispatchEvent(HandbookEvent.OnReadInfoChanged, slot3)
+	HandbookModel.instance:setReadInfo(var_4_0)
+	HandbookController.instance:dispatchEvent(HandbookEvent.OnReadInfoChanged, var_4_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

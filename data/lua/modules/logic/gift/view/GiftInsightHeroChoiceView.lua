@@ -1,44 +1,48 @@
-module("modules.logic.gift.view.GiftInsightHeroChoiceView", package.seeall)
+﻿module("modules.logic.gift.view.GiftInsightHeroChoiceView", package.seeall)
 
-slot0 = class("GiftInsightHeroChoiceView", BaseView)
+local var_0_0 = class("GiftInsightHeroChoiceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0._goconfirm = gohelper.findChild(slot0.viewGO, "#btn_confirm/#go_confirm")
-	slot0._gonoconfirm = gohelper.findChild(slot0.viewGO, "#btn_confirm/#go_noconfirm")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_cancel")
-	slot0._scrollrule = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_rule")
-	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
-	slot0._gotitle1 = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
-	slot0._gonogain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
-	slot0._gotitle2 = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
-	slot0._goown = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0._goconfirm = gohelper.findChild(arg_1_0.viewGO, "#btn_confirm/#go_confirm")
+	arg_1_0._gonoconfirm = gohelper.findChild(arg_1_0.viewGO, "#btn_confirm/#go_noconfirm")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
+	arg_1_0._scrollrule = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rule")
+	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
+	arg_1_0._gotitle1 = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
+	arg_1_0._gonogain = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
+	arg_1_0._gotitle2 = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
+	arg_1_0._goown = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	if ItemInsightModel.instance:getInsightItemCount(slot0.viewParam.uid) < 1 then
+function var_0_0._btnconfirmOnClick(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam.uid
+
+	if ItemInsightModel.instance:getInsightItemCount(var_4_0) < 1 then
 		GameFacade.showToast(ToastEnum.GiftInsightNoEnoughItem)
 
 		return
 	end
 
-	if GiftInsightHeroChoiceModel.instance:getCurHeroId() > 0 then
-		ItemRpc.instance:sendUseInsightItemRequest(slot1, slot2, slot0._onUseFinished, slot0)
+	local var_4_1 = GiftInsightHeroChoiceModel.instance:getCurHeroId()
+
+	if var_4_1 > 0 then
+		ItemRpc.instance:sendUseInsightItemRequest(var_4_0, var_4_1, arg_4_0._onUseFinished, arg_4_0)
 
 		return
 	end
@@ -46,118 +50,127 @@ function slot0._btnconfirmOnClick(slot0)
 	GameFacade.showToast(ToastEnum.GiftInsightNoChooseHero)
 end
 
-function slot0._onUseFinished(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._onUseFinished(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_2 ~= 0 then
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0._useItemSuccess, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_5_0._useItemSuccess, arg_5_0, 0.5)
 end
 
-function slot0._useItemSuccess(slot0)
-	slot0:_refreshHeros()
-	slot0:closeThis()
+function var_0_0._useItemSuccess(arg_6_0)
+	arg_6_0:_refreshHeros()
+	arg_6_0:closeThis()
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._addEvents(slot0)
+function var_0_0._addEvents(arg_9_0)
+	return
 end
 
-function slot0._removeEvents(slot0)
+function var_0_0._removeEvents(arg_10_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._upHeroItems = {}
-	slot0._noUpHeroItems = {}
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._upHeroItems = {}
+	arg_11_0._noUpHeroItems = {}
 
-	slot0:_addEvents()
+	arg_11_0:_addEvents()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._itemConfig = ItemConfig.instance:getInsightItemCo(slot0.viewParam.id)
-	slot0._txtTitle.text = slot0._itemConfig.useTitle
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0._itemConfig = ItemConfig.instance:getInsightItemCo(arg_13_0.viewParam.id)
+	arg_13_0._txtTitle.text = arg_13_0._itemConfig.useTitle
 
-	slot0:_refreshHeros()
+	arg_13_0:_refreshHeros()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
 	GiftInsightHeroChoiceModel.instance:setCurHeroId(0)
 end
 
-function slot0._refreshHeros(slot0)
-	slot1, slot2 = GiftInsightHeroChoiceModel.instance:getFitHeros(slot0.viewParam.id)
+function var_0_0._refreshHeros(arg_15_0)
+	local var_15_0, var_15_1 = GiftInsightHeroChoiceModel.instance:getFitHeros(arg_15_0.viewParam.id)
 
-	gohelper.setActive(slot0._gotitle1, slot1 and #slot1 > 0)
-	gohelper.setActive(slot0._gonoconfirm, not slot1 or #slot1 < 1)
-	gohelper.setActive(slot0._goconfirm, slot1 and #slot1 > 0)
-	slot0:_refreshUpHeros(slot1)
-	gohelper.setActive(slot0._gotitle2, #slot2 > 0)
-	slot0:_refreshNoUpHeros(slot2)
+	gohelper.setActive(arg_15_0._gotitle1, var_15_0 and #var_15_0 > 0)
+	gohelper.setActive(arg_15_0._gonoconfirm, not var_15_0 or #var_15_0 < 1)
+	gohelper.setActive(arg_15_0._goconfirm, var_15_0 and #var_15_0 > 0)
+	arg_15_0:_refreshUpHeros(var_15_0)
+	gohelper.setActive(arg_15_0._gotitle2, #var_15_1 > 0)
+	arg_15_0:_refreshNoUpHeros(var_15_1)
 end
 
-function slot0._refreshUpHeros(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._upHeroItems) do
-		slot6:hide()
+function var_0_0._refreshUpHeros(arg_16_0, arg_16_1)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._upHeroItems) do
+		iter_16_1:hide()
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._upHeroItems[slot5] then
-			slot0._upHeroItems[slot5] = GiftInsightHeroChoiceListItem.New()
+	for iter_16_2, iter_16_3 in ipairs(arg_16_1) do
+		if not arg_16_0._upHeroItems[iter_16_2] then
+			local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes[1]
+			local var_16_1 = arg_16_0:getResInst(var_16_0, arg_16_0._gonogain)
 
-			slot0._upHeroItems[slot5]:init(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gonogain))
+			arg_16_0._upHeroItems[iter_16_2] = GiftInsightHeroChoiceListItem.New()
+
+			arg_16_0._upHeroItems[iter_16_2]:init(var_16_1)
 		end
 
-		slot0._upHeroItems[slot5]:refreshItem(slot6)
-		slot0._upHeroItems[slot5]:showUp(true)
-	end
-end
-
-function slot0._refreshNoUpHeros(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._noUpHeroItems) do
-		slot6:hide()
-	end
-
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._noUpHeroItems[slot5] then
-			slot0._noUpHeroItems[slot5] = GiftInsightHeroChoiceListItem.New()
-
-			slot0._noUpHeroItems[slot5]:init(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goown))
-		end
-
-		slot0._noUpHeroItems[slot5]:refreshItem(slot6)
-		slot0._noUpHeroItems[slot5]:showUp(false)
+		arg_16_0._upHeroItems[iter_16_2]:refreshItem(iter_16_3)
+		arg_16_0._upHeroItems[iter_16_2]:showUp(true)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._useItemSuccess, slot0)
-	slot0:_removeEvents()
-
-	if slot0._upHeroItems then
-		for slot4, slot5 in pairs(slot0._upHeroItems) do
-			slot5:destroy()
-		end
-
-		slot0._upHeroItems = nil
+function var_0_0._refreshNoUpHeros(arg_17_0, arg_17_1)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._noUpHeroItems) do
+		iter_17_1:hide()
 	end
 
-	if slot0._noUpHeroItems then
-		for slot4, slot5 in pairs(slot0._noUpHeroItems) do
-			slot5:destroy()
+	for iter_17_2, iter_17_3 in ipairs(arg_17_1) do
+		if not arg_17_0._noUpHeroItems[iter_17_2] then
+			local var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[1]
+			local var_17_1 = arg_17_0:getResInst(var_17_0, arg_17_0._goown)
+
+			arg_17_0._noUpHeroItems[iter_17_2] = GiftInsightHeroChoiceListItem.New()
+
+			arg_17_0._noUpHeroItems[iter_17_2]:init(var_17_1)
 		end
 
-		slot0._noUpHeroItems = nil
+		arg_17_0._noUpHeroItems[iter_17_2]:refreshItem(iter_17_3)
+		arg_17_0._noUpHeroItems[iter_17_2]:showUp(false)
 	end
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._useItemSuccess, arg_18_0)
+	arg_18_0:_removeEvents()
+
+	if arg_18_0._upHeroItems then
+		for iter_18_0, iter_18_1 in pairs(arg_18_0._upHeroItems) do
+			iter_18_1:destroy()
+		end
+
+		arg_18_0._upHeroItems = nil
+	end
+
+	if arg_18_0._noUpHeroItems then
+		for iter_18_2, iter_18_3 in pairs(arg_18_0._noUpHeroItems) do
+			iter_18_3:destroy()
+		end
+
+		arg_18_0._noUpHeroItems = nil
+	end
+end
+
+return var_0_0

@@ -1,76 +1,83 @@
-module("modules.logic.bossrush.model.V1a4_BossRush_ScheduleViewListModel", package.seeall)
+﻿module("modules.logic.bossrush.model.V1a4_BossRush_ScheduleViewListModel", package.seeall)
 
-slot0 = class("V1a4_BossRush_ScheduleViewListModel", ListScrollModel)
+local var_0_0 = class("V1a4_BossRush_ScheduleViewListModel", ListScrollModel)
 
-function slot0.setStaticData(slot0, slot1)
-	slot0._staticData = slot1
+function var_0_0.setStaticData(arg_1_0, arg_1_1)
+	arg_1_0._staticData = arg_1_1
 end
 
-function slot0.getStaticData(slot0)
-	return slot0._staticData
+function var_0_0.getStaticData(arg_2_0)
+	return arg_2_0._staticData
 end
 
-function slot0.getFinishCount(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot1) do
-		if not slot8.isGot and slot8.isAlready then
-			slot3 = 0 + 1
+function var_0_0.getFinishCount(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = 0
+
+	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
+		if not iter_3_1.isGot and iter_3_1.isAlready then
+			var_3_0 = var_3_0 + 1
 		end
 	end
 
-	return slot3
+	return var_3_0
 end
 
-function slot0.setScheduleMoList(slot0, slot1)
-	slot2 = BossRushModel.instance:getScheduleViewRewardList(slot1)
+function var_0_0.setScheduleMoList(arg_4_0, arg_4_1)
+	local var_4_0 = BossRushModel.instance:getScheduleViewRewardList(arg_4_1)
+	local var_4_1 = BossRushModel.instance:getLastPointInfo(arg_4_1)
+	local var_4_2 = var_4_1 and var_4_1.cur or 0
 
-	for slot8, slot9 in pairs(slot2) do
-		slot9.isAlready = slot9.stageRewardCO.rewardPointNum <= (BossRushModel.instance:getLastPointInfo(slot1) and slot3.cur or 0)
-		slot9.stage = slot1
+	for iter_4_0, iter_4_1 in pairs(var_4_0) do
+		iter_4_1.isAlready = var_4_2 >= iter_4_1.stageRewardCO.rewardPointNum
+		iter_4_1.stage = arg_4_1
 	end
 
-	if slot0:getFinishCount(slot2, slot1) > 1 then
-		table.insert(slot2, 1, {
+	if arg_4_0:getFinishCount(var_4_0, arg_4_1) > 1 then
+		table.insert(var_4_0, 1, {
 			getAll = true,
-			stage = slot1
+			stage = arg_4_1
 		})
 	end
 
-	table.sort(slot2, slot0._sort)
-	slot0:setList(slot2)
+	table.sort(var_4_0, arg_4_0._sort)
+	arg_4_0:setList(var_4_0)
 end
 
-function slot0._sort(slot0, slot1)
-	if slot0.getAll then
+function var_0_0._sort(arg_5_0, arg_5_1)
+	if arg_5_0.getAll then
 		return true
 	end
 
-	if slot1.getAll then
+	if arg_5_1.getAll then
 		return false
 	end
 
-	slot2 = slot0.stageRewardCO
-	slot4 = slot2.id
-	slot5 = slot2.id
-	slot8 = slot0.isAlready and 1 or 0
-	slot9 = slot1.isAlready and 1 or 0
-	slot10 = slot2.rewardPointNum
-	slot11 = slot1.stageRewardCO.rewardPointNum
+	local var_5_0 = arg_5_0.stageRewardCO
+	local var_5_1 = arg_5_1.stageRewardCO
+	local var_5_2 = var_5_0.id
+	local var_5_3 = var_5_0.id
+	local var_5_4 = arg_5_0.isGot and 1 or 0
+	local var_5_5 = arg_5_1.isGot and 1 or 0
+	local var_5_6 = arg_5_0.isAlready and 1 or 0
+	local var_5_7 = arg_5_1.isAlready and 1 or 0
+	local var_5_8 = var_5_0.rewardPointNum
+	local var_5_9 = var_5_1.rewardPointNum
 
-	if (slot0.isGot and 1 or 0) ~= (slot1.isGot and 1 or 0) then
-		return slot6 < slot7
+	if var_5_4 ~= var_5_5 then
+		return var_5_4 < var_5_5
 	end
 
-	if slot8 ~= slot9 then
-		return slot9 < slot8
+	if var_5_6 ~= var_5_7 then
+		return var_5_7 < var_5_6
 	end
 
-	if slot10 ~= slot11 then
-		return slot10 < slot11
+	if var_5_8 ~= var_5_9 then
+		return var_5_8 < var_5_9
 	end
 
-	return slot4 < slot5
+	return var_5_2 < var_5_3
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

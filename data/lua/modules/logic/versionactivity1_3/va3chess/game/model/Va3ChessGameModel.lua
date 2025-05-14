@@ -1,499 +1,538 @@
-module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameModel", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameModel", package.seeall)
 
-slot0 = class("Va3ChessGameModel", BaseModel)
+local var_0_0 = class("Va3ChessGameModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._mapTileMOList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._mapTileMOList = {}
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
-	slot0.width = nil
-	slot0.height = nil
-	slot0._mapTileBaseList = nil
-	slot0._mapInteractObjs = nil
-	slot0._mapInteractObjDict = nil
-	slot0._actId = nil
-	slot0._mapId = nil
-	slot0._optList = nil
-	slot0._round = nil
-	slot0._result = nil
-	slot0._finishInteract = nil
-	slot0._allFinishInteract = nil
-	slot0.failReason = nil
-	slot0.lastMapRound = nil
-	slot0._playingStory = nil
+function var_0_0.release(arg_3_0)
+	arg_3_0.width = nil
+	arg_3_0.height = nil
+	arg_3_0._mapTileBaseList = nil
+	arg_3_0._mapInteractObjs = nil
+	arg_3_0._mapInteractObjDict = nil
+	arg_3_0._actId = nil
+	arg_3_0._mapId = nil
+	arg_3_0._optList = nil
+	arg_3_0._round = nil
+	arg_3_0._result = nil
+	arg_3_0._finishInteract = nil
+	arg_3_0._allFinishInteract = nil
+	arg_3_0.failReason = nil
+	arg_3_0.lastMapRound = nil
+	arg_3_0._playingStory = nil
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot3 = Va3ChessConfig.instance:getMapCo(slot1, slot2)
-	slot0._actId = slot1
-	slot0._mapId = slot2
-	slot0.width = slot3.width
-	slot0.height = slot3.height
-	slot0._optList = {}
+function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = Va3ChessConfig.instance:getMapCo(arg_4_1, arg_4_2)
 
-	slot0:_initTileNum()
+	arg_4_0._actId = arg_4_1
+	arg_4_0._mapId = arg_4_2
+	arg_4_0.width = var_4_0.width
+	arg_4_0.height = var_4_0.height
+	arg_4_0._optList = {}
 
-	slot0._mapTileBaseList = {}
+	arg_4_0:_initTileNum()
 
-	for slot8 = 1, #slot0._mapTileMOList do
-		slot0._mapTileMOList[slot8]:setParamStr((string.split(slot3.tilebase, ",") or {})[slot8])
+	arg_4_0._mapTileBaseList = {}
+
+	local var_4_1 = string.split(var_4_0.tilebase, ",") or {}
+
+	for iter_4_0 = 1, #arg_4_0._mapTileMOList do
+		arg_4_0._mapTileMOList[iter_4_0]:setParamStr(var_4_1[iter_4_0])
 	end
 end
 
-function slot0._initTileNum(slot0)
-	slot0._mapTileMOList = {}
+function var_0_0._initTileNum(arg_5_0)
+	arg_5_0._mapTileMOList = {}
 
-	for slot5 = 1, slot0.width * slot0.height do
-		if not slot0._mapTileMOList[slot5] then
-			slot0._mapTileMOList[slot5] = Va3ChessGameTileMO.New()
+	local var_5_0 = arg_5_0.width * arg_5_0.height
+
+	for iter_5_0 = 1, var_5_0 do
+		local var_5_1 = arg_5_0._mapTileMOList[iter_5_0]
+
+		if not var_5_1 then
+			var_5_1 = Va3ChessGameTileMO.New()
+			arg_5_0._mapTileMOList[iter_5_0] = var_5_1
 		end
 
-		slot6:init(slot5)
+		var_5_1:init(iter_5_0)
 	end
 end
 
-function slot0.addInteractData(slot0, slot1)
-	table.insert(slot0._mapInteractObjs, slot1)
+function var_0_0.addInteractData(arg_6_0, arg_6_1)
+	table.insert(arg_6_0._mapInteractObjs, arg_6_1)
 
-	slot0._mapInteractObjDict[slot1.id] = slot1
+	arg_6_0._mapInteractObjDict[arg_6_1.id] = arg_6_1
 end
 
-function slot0.removeInteractData(slot0, slot1)
-	tabletool.removeValue(slot0._mapInteractObjs, slot1)
+function var_0_0.removeInteractData(arg_7_0, arg_7_1)
+	tabletool.removeValue(arg_7_0._mapInteractObjs, arg_7_1)
 
-	slot0._mapInteractObjDict[slot1.id] = nil
+	arg_7_0._mapInteractObjDict[arg_7_1.id] = nil
 end
 
-function slot0.initObjects(slot0, slot1, slot2)
-	slot0._mapInteractObjs = {}
-	slot0._mapInteractObjDict = {}
+function var_0_0.initObjects(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._mapInteractObjs = {}
+	arg_8_0._mapInteractObjDict = {}
 
-	for slot7 = 1, #slot2 do
-		if Va3ChessConfig.instance:getInteractObjectCo(slot1, slot2[slot7].id) then
-			slot9 = Va3ChessGameInteractMO.New()
+	local var_8_0 = #arg_8_2
 
-			slot9:init(slot1, slot8)
-			table.insert(slot0._mapInteractObjs, slot9)
+	for iter_8_0 = 1, var_8_0 do
+		local var_8_1 = arg_8_2[iter_8_0]
 
-			slot0._mapInteractObjDict[slot9.id] = slot9
-		end
-	end
-end
+		if Va3ChessConfig.instance:getInteractObjectCo(arg_8_1, var_8_1.id) then
+			local var_8_2 = Va3ChessGameInteractMO.New()
 
-function slot0.addObject(slot0, slot1, slot2)
-	slot3 = Va3ChessGameInteractMO.New()
+			var_8_2:init(arg_8_1, var_8_1)
+			table.insert(arg_8_0._mapInteractObjs, var_8_2)
 
-	slot3:init(slot1, slot2)
-	table.insert(slot0._mapInteractObjs, slot3)
-
-	slot0._mapInteractObjDict[slot3.id] = slot3
-
-	return slot3
-end
-
-function slot0.removeObjectById(slot0, slot1)
-	for slot5 = 1, #slot0._mapInteractObjs do
-		if slot0._mapInteractObjs[slot5].id == slot1 then
-			table.remove(slot0._mapInteractObjs, slot5)
-
-			slot0._mapInteractObjDict[slot1] = nil
-
-			return slot0._mapInteractObjs[slot5]
+			arg_8_0._mapInteractObjDict[var_8_2.id] = var_8_2
 		end
 	end
 end
 
-function slot0.syncObjectData(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.addObject(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = Va3ChessGameInteractMO.New()
 
-	if slot0._mapInteractObjDict[slot1] then
-		slot3 = slot0:compareObjectData(slot4.data, slot2)
-		slot4.data = slot2
+	var_9_0:init(arg_9_1, arg_9_2)
+	table.insert(arg_9_0._mapInteractObjs, var_9_0)
+
+	arg_9_0._mapInteractObjDict[var_9_0.id] = var_9_0
+
+	return var_9_0
+end
+
+function var_0_0.removeObjectById(arg_10_0, arg_10_1)
+	for iter_10_0 = 1, #arg_10_0._mapInteractObjs do
+		if arg_10_0._mapInteractObjs[iter_10_0].id == arg_10_1 then
+			local var_10_0 = arg_10_0._mapInteractObjs[iter_10_0]
+
+			table.remove(arg_10_0._mapInteractObjs, iter_10_0)
+
+			arg_10_0._mapInteractObjDict[arg_10_1] = nil
+
+			return var_10_0
+		end
+	end
+end
+
+function var_0_0.syncObjectData(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0
+	local var_11_1 = arg_11_0._mapInteractObjDict[arg_11_1]
+
+	if var_11_1 then
+		local var_11_2 = var_11_1.data
+
+		var_11_0 = arg_11_0:compareObjectData(var_11_2, arg_11_2)
+		var_11_1.data = arg_11_2
 	end
 
-	return slot3
+	return var_11_0
 end
 
-function slot0.compareObjectData(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.compareObjectData(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = {}
 
-	slot0:compareAlertArea(slot3, slot1, slot2)
-	slot0:compareValueTypeField(slot3, slot1, slot2, "goToObject")
-	slot0:compareValueTypeField(slot3, slot1, slot2, "lostTarget")
-	slot0:compareValueTypeField(slot3, slot1, slot2, "status")
-	slot0:compareValueTypeField(slot3, slot1, slot2, "attributes")
-	slot0:compareValueTypeField(slot3, slot1, slot2, "pedalStatus")
+	arg_12_0:compareAlertArea(var_12_0, arg_12_1, arg_12_2)
+	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "goToObject")
+	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "lostTarget")
+	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "status")
+	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "attributes")
+	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "pedalStatus")
 
-	return slot3
+	return var_12_0
 end
 
-function slot0.compareAlertArea(slot0, slot1, slot2, slot3)
-	if slot2 and slot3 and slot2.alertArea and slot3.alertArea and #slot2.alertArea == #slot3.alertArea then
-		for slot7 = 1, #slot2.alertArea do
-			if slot2.alertArea[slot7].x ~= slot3.alertArea[slot7].x or slot2.alertArea[slot7].y ~= slot3.alertArea[slot7].y then
-				slot1.alertArea = slot3.alertArea
+function var_0_0.compareAlertArea(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_2 and arg_13_3 and arg_13_2.alertArea and arg_13_3.alertArea and #arg_13_2.alertArea == #arg_13_3.alertArea then
+		for iter_13_0 = 1, #arg_13_2.alertArea do
+			if arg_13_2.alertArea[iter_13_0].x ~= arg_13_3.alertArea[iter_13_0].x or arg_13_2.alertArea[iter_13_0].y ~= arg_13_3.alertArea[iter_13_0].y then
+				arg_13_1.alertArea = arg_13_3.alertArea
 
 				break
 			end
 		end
 	else
-		slot0:compareValueOverride(slot1, slot2, slot3, "alertArea")
+		arg_13_0:compareValueOverride(arg_13_1, arg_13_2, arg_13_3, "alertArea")
 	end
 end
 
-function slot0.compareValueTypeField(slot0, slot1, slot2, slot3, slot4)
-	if slot2 and slot3 then
-		if slot2[slot4] ~= slot3[slot4] then
-			if slot2[slot4] ~= nil and slot3[slot4] == nil then
-				slot1.__deleteFields = slot1.__deleteFields or {}
-				slot1.__deleteFields[slot4] = true
+function var_0_0.compareValueTypeField(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	if arg_14_2 and arg_14_3 then
+		if arg_14_2[arg_14_4] ~= arg_14_3[arg_14_4] then
+			if arg_14_2[arg_14_4] ~= nil and arg_14_3[arg_14_4] == nil then
+				arg_14_1.__deleteFields = arg_14_1.__deleteFields or {}
+				arg_14_1.__deleteFields[arg_14_4] = true
 			else
-				slot1[slot4] = slot3[slot4]
+				arg_14_1[arg_14_4] = arg_14_3[arg_14_4]
 			end
 		end
 	else
-		slot0:compareValueOverride(slot1, slot2, slot3, slot4)
+		arg_14_0:compareValueOverride(arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 	end
 end
 
-function slot0.compareValueOverride(slot0, slot1, slot2, slot3, slot4)
-	if slot2 and slot2[slot4] ~= nil and (slot3 == null or slot3[slot4] == nil) then
-		slot1.__deleteFields = slot1.__deleteFields or {}
-		slot1.__deleteFields[slot4] = true
-	elseif slot3 then
-		slot1[slot4] = slot3[slot4]
+function var_0_0.compareValueOverride(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	if arg_15_2 and arg_15_2[arg_15_4] ~= nil and (arg_15_3 == null or arg_15_3[arg_15_4] == nil) then
+		arg_15_1.__deleteFields = arg_15_1.__deleteFields or {}
+		arg_15_1.__deleteFields[arg_15_4] = true
+	elseif arg_15_3 then
+		arg_15_1[arg_15_4] = arg_15_3[arg_15_4]
 	end
 end
 
-function slot0.getObjectDataById(slot0, slot1)
-	return slot0._mapInteractObjDict[slot1]
+function var_0_0.getObjectDataById(arg_16_0, arg_16_1)
+	return arg_16_0._mapInteractObjDict[arg_16_1]
 end
 
-function slot0.appendOpt(slot0, slot1)
-	table.insert(slot0._optList, slot1)
+function var_0_0.appendOpt(arg_17_0, arg_17_1)
+	table.insert(arg_17_0._optList, arg_17_1)
 end
 
-function slot0.getOptList(slot0)
-	return slot0._optList
+function var_0_0.getOptList(arg_18_0)
+	return arg_18_0._optList
 end
 
-function slot0.cleanOptList(slot0)
-	for slot4, slot5 in pairs(slot0._optList) do
-		slot0._optList[slot4] = nil
+function var_0_0.cleanOptList(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._optList) do
+		arg_19_0._optList[iter_19_0] = nil
 	end
 end
 
-function slot0.updateFinishInteracts(slot0, slot1)
-	slot0._finishInteract = {}
+function var_0_0.updateFinishInteracts(arg_20_0, arg_20_1)
+	arg_20_0._finishInteract = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0._finishInteract[slot1[slot5]] = true
+	if arg_20_1 then
+		for iter_20_0 = 1, #arg_20_1 do
+			arg_20_0._finishInteract[arg_20_1[iter_20_0]] = true
 		end
 	end
 end
 
-function slot0.updateBrokenTilebases(slot0, slot1, slot2)
-	if not slot2 then
+function var_0_0.updateBrokenTilebases(arg_21_0, arg_21_1, arg_21_2)
+	if not arg_21_2 then
 		return
 	end
 
-	if Activity142Model.instance:getActivityId() == slot1 then
-		for slot7, slot8 in ipairs(slot2) do
-			slot9 = Va3ChessEnum.TileTrigger.Broken
+	if Activity142Model.instance:getActivityId() == arg_21_1 then
+		for iter_21_0, iter_21_1 in ipairs(arg_21_2) do
+			local var_21_0 = Va3ChessEnum.TileTrigger.Broken
+			local var_21_1 = Va3ChessEnum.TriggerStatus[var_21_0].Broken
 
-			slot0:updateTileTriggerStatus(slot8.x, slot8.y, slot9, Va3ChessEnum.TriggerStatus[slot9].Broken)
-			slot0:addTileFinishTrigger(slot8.x, slot8.y, slot9)
+			arg_21_0:updateTileTriggerStatus(iter_21_1.x, iter_21_1.y, var_21_0, var_21_1)
+			arg_21_0:addTileFinishTrigger(iter_21_1.x, iter_21_1.y, var_21_0)
 		end
 	else
-		for slot7, slot8 in ipairs(slot2) do
-			slot0:addTileFinishTrigger(slot8.x, slot8.y, Va3ChessEnum.TileTrigger.PoSui)
+		for iter_21_2, iter_21_3 in ipairs(arg_21_2) do
+			arg_21_0:addTileFinishTrigger(iter_21_3.x, iter_21_3.y, Va3ChessEnum.TileTrigger.PoSui)
 		end
 	end
 end
 
-function slot0.updateLightUpBrazier(slot0, slot1, slot2)
-	if not slot2 then
+function var_0_0.updateLightUpBrazier(arg_22_0, arg_22_1, arg_22_2)
+	if not arg_22_2 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		if slot0:getObjectDataById(slot7) then
-			slot8:setBrazierIsLight(true)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_2) do
+		local var_22_0 = arg_22_0:getObjectDataById(iter_22_1)
+
+		if var_22_0 then
+			var_22_0:setBrazierIsLight(true)
 		end
 	end
 end
 
-function slot0.updateFragileTilebases(slot0, slot1, slot2)
-	if not slot2 then
+function var_0_0.updateFragileTilebases(arg_23_0, arg_23_1, arg_23_2)
+	if not arg_23_2 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		slot8 = Va3ChessEnum.TileTrigger.Broken
+	for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
+		local var_23_0 = Va3ChessEnum.TileTrigger.Broken
+		local var_23_1 = Va3ChessEnum.TriggerStatus[var_23_0].Fragile
 
-		slot0:updateTileTriggerStatus(slot7.x, slot7.y, slot8, Va3ChessEnum.TriggerStatus[slot8].Fragile)
+		arg_23_0:updateTileTriggerStatus(iter_23_1.x, iter_23_1.y, var_23_0, var_23_1)
 	end
 end
 
-function slot0.updateTileTriggerStatus(slot0, slot1, slot2, slot3, slot4)
-	if slot0:getTileMO(slot1, slot2) then
-		slot5:updateTrigger(slot3, slot4)
+function var_0_0.updateTileTriggerStatus(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+	local var_24_0 = arg_24_0:getTileMO(arg_24_1, arg_24_2)
+
+	if var_24_0 then
+		var_24_0:updateTrigger(arg_24_3, arg_24_4)
 	end
 end
 
-function slot0.addTileFinishTrigger(slot0, slot1, slot2, slot3)
-	if slot0:getTileMO(slot1, slot2) then
-		slot4:addFinishTrigger(slot3)
+function var_0_0.addTileFinishTrigger(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = arg_25_0:getTileMO(arg_25_1, arg_25_2)
+
+	if var_25_0 then
+		var_25_0:addFinishTrigger(arg_25_3)
 	end
 end
 
-function slot0.addFinishInteract(slot0, slot1)
-	slot0._finishInteract[slot1] = true
+function var_0_0.addFinishInteract(arg_26_0, arg_26_1)
+	arg_26_0._finishInteract[arg_26_1] = true
 end
 
-function slot0.isInteractFinish(slot0, slot1, slot2)
-	if slot2 and slot0._allFinishInteract then
-		return slot0._allFinishInteract[slot1]
+function var_0_0.isInteractFinish(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_2 and arg_27_0._allFinishInteract then
+		return arg_27_0._allFinishInteract[arg_27_1]
 	end
 
-	if slot0._finishInteract then
-		return slot0._finishInteract[slot1]
+	if arg_27_0._finishInteract then
+		return arg_27_0._finishInteract[arg_27_1]
 	end
 end
 
-function slot0.findInteractFinishIds(slot0, slot1)
-	slot2 = slot0._finishInteract
+function var_0_0.findInteractFinishIds(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0._finishInteract
 
-	if slot1 then
-		slot2 = slot0._allFinishInteract
+	if arg_28_1 then
+		var_28_0 = arg_28_0._allFinishInteract
 	end
 
-	if not slot2 then
+	if not var_28_0 then
 		return nil
 	end
 
-	slot3 = {}
+	local var_28_1 = {}
 
-	for slot7, slot8 in pairs(slot2) do
-		if slot8 == true then
-			table.insert(slot3, slot7)
+	for iter_28_0, iter_28_1 in pairs(var_28_0) do
+		if iter_28_1 == true then
+			table.insert(var_28_1, iter_28_0)
 		end
 	end
 
-	return slot3
+	return var_28_1
 end
 
-function slot0.addAllMapFinishInteract(slot0, slot1)
-	slot0._allFinishInteract[slot1] = true
+function var_0_0.addAllMapFinishInteract(arg_29_0, arg_29_1)
+	arg_29_0._allFinishInteract[arg_29_1] = true
 end
 
-function slot0.updateAllFinishInteracts(slot0, slot1)
-	slot0._allFinishInteract = {}
+function var_0_0.updateAllFinishInteracts(arg_30_0, arg_30_1)
+	arg_30_0._allFinishInteract = {}
 
-	if slot1 then
-		for slot5 = 1, #slot1 do
-			slot0._allFinishInteract[slot1[slot5]] = true
+	if arg_30_1 then
+		for iter_30_0 = 1, #arg_30_1 do
+			arg_30_0._allFinishInteract[arg_30_1[iter_30_0]] = true
 		end
 	end
 end
 
-function slot0.getTileMO(slot0, slot1, slot2)
-	return slot0._mapTileMOList[slot0:getIndex(slot1, slot2)]
+function var_0_0.getTileMO(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0:getIndex(arg_31_1, arg_31_2)
+
+	return arg_31_0._mapTileMOList[var_31_0]
 end
 
-function slot0.getBaseTile(slot0, slot1, slot2)
-	return slot0:getTileMO(slot1, slot2) and slot3.tileType
+function var_0_0.getBaseTile(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = arg_32_0:getTileMO(arg_32_1, arg_32_2)
+
+	return var_32_0 and var_32_0.tileType
 end
 
-function slot0.setBaseTile(slot0, slot1, slot2, slot3)
-	if slot0:getTileMO(slot1, slot2) then
-		slot4.tileType = slot3
+function var_0_0.setBaseTile(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	local var_33_0 = arg_33_0:getTileMO(arg_33_1, arg_33_2)
+
+	if var_33_0 then
+		var_33_0.tileType = arg_33_3
 	end
 end
 
-function slot0.setResult(slot0, slot1)
-	slot0._isWin = slot1
+function var_0_0.setResult(arg_34_0, arg_34_1)
+	arg_34_0._isWin = arg_34_1
 end
 
-function slot0.getResult(slot0)
-	return slot0._isWin
+function var_0_0.getResult(arg_35_0)
+	return arg_35_0._isWin
 end
 
-function slot0.setFailReason(slot0, slot1)
-	slot0.failReason = slot1
+function var_0_0.setFailReason(arg_36_0, arg_36_1)
+	arg_36_0.failReason = arg_36_1
 end
 
-function slot0.getFailReason(slot0)
-	return slot0.failReason
+function var_0_0.getFailReason(arg_37_0)
+	return arg_37_0.failReason
 end
 
-function slot0.getInteractDatas(slot0)
-	return slot0._mapInteractObjs
+function var_0_0.getInteractDatas(arg_38_0)
+	return arg_38_0._mapInteractObjs
 end
 
-function slot0.getIndex(slot0, slot1, slot2)
-	return slot2 * slot0.width + slot1 + 1
+function var_0_0.getIndex(arg_39_0, arg_39_1, arg_39_2)
+	return arg_39_2 * arg_39_0.width + arg_39_1 + 1
 end
 
-function slot0.getGameSize(slot0)
-	return slot0.width, slot0.height
+function var_0_0.getGameSize(arg_40_0)
+	return arg_40_0.width, arg_40_0.height
 end
 
-function slot0.getMapId(slot0)
-	return slot0._mapId
+function var_0_0.getMapId(arg_41_0)
+	return arg_41_0._mapId
 end
 
-function slot0.getActId(slot0)
-	return slot0._actId
+function var_0_0.getActId(arg_42_0)
+	return arg_42_0._actId
 end
 
-function slot0.getRound(slot0)
-	return math.max(slot0._round or 1, 1)
+function var_0_0.getRound(arg_43_0)
+	return math.max(arg_43_0._round or 1, 1)
 end
 
-function slot0.setRound(slot0, slot1)
-	if slot0.lastMapRound then
-		slot0._round = slot1 + slot0.lastMapRound
+function var_0_0.setRound(arg_44_0, arg_44_1)
+	if arg_44_0.lastMapRound then
+		arg_44_0._round = arg_44_1 + arg_44_0.lastMapRound
 
 		return
 	end
 
-	slot0._round = slot1
+	arg_44_0._round = arg_44_1
 end
 
-function slot0.recordLastMapRound(slot0)
-	slot0.lastMapRound = slot0._round
+function var_0_0.recordLastMapRound(arg_45_0)
+	arg_45_0.lastMapRound = arg_45_0._round
 end
 
-function slot0.clearLastMapRound(slot0)
-	slot0.lastMapRound = nil
+function var_0_0.clearLastMapRound(arg_46_0)
+	arg_46_0.lastMapRound = nil
 end
 
-function slot0.getHp(slot0)
-	return math.max(slot0._hp or 1, 1)
+function var_0_0.getHp(arg_47_0)
+	return math.max(arg_47_0._hp or 1, 1)
 end
 
-function slot0.setHp(slot0, slot1)
-	slot0._hp = slot1
+function var_0_0.setHp(arg_48_0, arg_48_1)
+	arg_48_0._hp = arg_48_1
 end
 
-function slot0.setPlayingStory(slot0, slot1)
-	slot0._playingStory = slot1
+function var_0_0.setPlayingStory(arg_49_0, arg_49_1)
+	arg_49_0._playingStory = arg_49_1
 end
 
-function slot0.isPlayingStory(slot0)
-	return slot0._playingStory
+function var_0_0.isPlayingStory(arg_50_0)
+	return arg_50_0._playingStory
 end
 
-function slot0.isPosInChessBoard(slot0, slot1, slot2)
-	return slot1 >= 0 and slot1 < slot0.width and slot2 >= 0 and slot2 < slot0.height
+function var_0_0.isPosInChessBoard(arg_51_0, arg_51_1, arg_51_2)
+	return arg_51_1 >= 0 and arg_51_1 < arg_51_0.width and arg_51_2 >= 0 and arg_51_2 < arg_51_0.height
 end
 
-function slot0.isPosValid(slot0, slot1, slot2)
+function var_0_0.isPosValid(arg_52_0, arg_52_1, arg_52_2)
+	return
 end
 
-function slot0.setFinishedTargetNum(slot0, slot1)
-	slot0._finishedTargetNum = slot1
+function var_0_0.setFinishedTargetNum(arg_53_0, arg_53_1)
+	arg_53_0._finishedTargetNum = arg_53_1
 end
 
-function slot0.getFinishedTargetNum(slot0)
-	return slot0._finishedTargetNum
+function var_0_0.getFinishedTargetNum(arg_54_0)
+	return arg_54_0._finishedTargetNum
 end
 
-function slot0.getFinishGoalNum(slot0)
-	if not slot0._actId then
+function var_0_0.getFinishGoalNum(arg_55_0)
+	if not arg_55_0._actId then
 		return 0
 	end
 
-	if not Va3ChessModel.instance:getEpisodeId() then
+	local var_55_0 = Va3ChessModel.instance:getEpisodeId()
+
+	if not var_55_0 then
 		return 0
 	end
 
-	slot2 = Va3ChessConfig.instance:getEpisodeCo(slot0._actId, slot1)
-	slot3, slot4 = nil
+	local var_55_1 = Va3ChessConfig.instance:getEpisodeCo(arg_55_0._actId, var_55_0)
+	local var_55_2
+	local var_55_3
 
-	if slot0._actId == VersionActivity1_3Enum.ActivityId.Act304 then
-		slot3 = slot2.starCondition
-		slot4 = slot2.extStarCondition
-	elseif slot0._actId == VersionActivity1_3Enum.ActivityId.Act306 then
-		slot3 = slot2.mainConfition
-		slot4 = slot2.extStarCondition
+	if arg_55_0._actId == VersionActivity1_3Enum.ActivityId.Act304 then
+		var_55_2 = var_55_1.starCondition
+		var_55_3 = var_55_1.extStarCondition
+	elseif arg_55_0._actId == VersionActivity1_3Enum.ActivityId.Act306 then
+		var_55_2 = var_55_1.mainConfition
+		var_55_3 = var_55_1.extStarCondition
 	end
 
-	slot5 = {}
+	local var_55_4 = {}
 
-	if not string.nilorempty(slot3) then
-		slot9 = true
-
-		for slot9, slot10 in ipairs(GameUtil.splitString2(slot3, slot9)) do
-			table.insert(slot5, slot10)
+	if not string.nilorempty(var_55_2) then
+		for iter_55_0, iter_55_1 in ipairs(GameUtil.splitString2(var_55_2, true)) do
+			table.insert(var_55_4, iter_55_1)
 		end
 	end
 
-	if not string.nilorempty(slot4) then
-		slot9 = true
-
-		for slot9, slot10 in ipairs(GameUtil.splitString2(slot4, slot9)) do
-			table.insert(slot5, slot10)
+	if not string.nilorempty(var_55_3) then
+		for iter_55_2, iter_55_3 in ipairs(GameUtil.splitString2(var_55_3, true)) do
+			table.insert(var_55_4, iter_55_3)
 		end
 	end
 
-	if slot0:getResult() then
-		slot6 = 0 + 1
+	local var_55_5 = 0
+
+	if arg_55_0:getResult() then
+		var_55_5 = var_55_5 + 1
 	end
 
-	for slot10, slot11 in ipairs(slot5) do
-		if Va3ChessMapUtils.isClearConditionFinish(slot11, slot0._actId) then
-			slot6 = slot6 + 1
+	for iter_55_4, iter_55_5 in ipairs(var_55_4) do
+		if Va3ChessMapUtils.isClearConditionFinish(iter_55_5, arg_55_0._actId) then
+			var_55_5 = var_55_5 + 1
 		end
 	end
 
-	return slot6
+	return var_55_5
 end
 
-function slot0.isGoalFinished(slot0, slot1)
-	if not slot0._actId then
+function var_0_0.isGoalFinished(arg_56_0, arg_56_1)
+	if not arg_56_0._actId then
 		return false
 	end
 
-	if not string.nilorempty(slot1) then
-		return Va3ChessMapUtils.isClearConditionFinish(string.splitToNumber(slot1, "#"), slot0._actId)
+	if not string.nilorempty(arg_56_1) then
+		local var_56_0 = string.splitToNumber(arg_56_1, "#")
+
+		return Va3ChessMapUtils.isClearConditionFinish(var_56_0, arg_56_0._actId)
 	else
-		return slot0:getResult() == true
+		return arg_56_0:getResult() == true
 	end
 end
 
-function slot0.getFireBallCount(slot0)
-	return slot0._fireBallCount or 0
+function var_0_0.getFireBallCount(arg_57_0)
+	return arg_57_0._fireBallCount or 0
 end
 
-function slot0.setFireBallCount(slot0, slot1, slot2)
-	if not slot1 or slot1 < 0 then
-		slot1 = 0
+function var_0_0.setFireBallCount(arg_58_0, arg_58_1, arg_58_2)
+	if not arg_58_1 or arg_58_1 < 0 then
+		arg_58_1 = 0
 	end
 
-	slot0._fireBallCount = slot1
+	arg_58_0._fireBallCount = arg_58_1
 
-	if not slot2 then
+	if not arg_58_2 then
 		return
 	end
 
-	slot3 = nil
+	local var_58_0
+	local var_58_1 = Va3ChessGameController.instance.interacts
 
-	if Va3ChessGameController.instance.interacts then
-		slot3 = slot4:getMainPlayer(true) and slot5:getHandler() or nil
+	if var_58_1 then
+		local var_58_2 = var_58_1:getMainPlayer(true)
+
+		var_58_0 = var_58_2 and var_58_2:getHandler() or nil
 	end
 
-	if slot3 and slot3.updateFireBallCount then
-		slot3:updateFireBallCount()
+	if var_58_0 and var_58_0.updateFireBallCount then
+		var_58_0:updateFireBallCount()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

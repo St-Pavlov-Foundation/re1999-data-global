@@ -1,323 +1,339 @@
-module("modules.logic.help.view.HelpContentVideoItem", package.seeall)
+﻿module("modules.logic.help.view.HelpContentVideoItem", package.seeall)
 
-slot0 = class("HelpContentVideoItem", ListScrollCellExtend)
+local var_0_0 = class("HelpContentVideoItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gocenter = gohelper.findChild(slot0.viewGO, "#go_center")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_center/ScrollView/Viewport/Content/#txt_desc")
-	slot0._btnstoryPlay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_center/#btn_storyPlay")
-	slot0._btnvideoplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_center/#btn_videoplay")
-	slot0._gocontentvideo = gohelper.findChild(slot0.viewGO, "#go_contentvideo")
-	slot0._govideo = gohelper.findChild(slot0.viewGO, "#go_contentvideo/#go_video")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_contentvideo/#btn_start")
-	slot0._gobottom = gohelper.findChild(slot0.viewGO, "#go_contentvideo/#go_bottom")
-	slot0._btnpaused = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_contentvideo/#go_bottom/#btn_paused")
-	slot0._btnfullScreen = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_contentvideo/#go_bottom/#btn_fullScreen")
-	slot0._goiconFull = gohelper.findChild(slot0.viewGO, "#go_contentvideo/#go_bottom/#btn_fullScreen/#go_iconFull")
-	slot0._goiconSmall = gohelper.findChild(slot0.viewGO, "#go_contentvideo/#go_bottom/#btn_fullScreen/#go_iconSmall")
-	slot0._slidertime = gohelper.findChildSlider(slot0.viewGO, "#go_contentvideo/#go_bottom/#slider_time")
-	slot0._txtvideoTime = gohelper.findChildText(slot0.viewGO, "#go_contentvideo/#go_bottom/#txt_videoTime")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "#go_center")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_center/ScrollView/Viewport/Content/#txt_desc")
+	arg_1_0._btnstoryPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_center/#btn_storyPlay")
+	arg_1_0._btnvideoplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_center/#btn_videoplay")
+	arg_1_0._gocontentvideo = gohelper.findChild(arg_1_0.viewGO, "#go_contentvideo")
+	arg_1_0._govideo = gohelper.findChild(arg_1_0.viewGO, "#go_contentvideo/#go_video")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_contentvideo/#btn_start")
+	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "#go_contentvideo/#go_bottom")
+	arg_1_0._btnpaused = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_contentvideo/#go_bottom/#btn_paused")
+	arg_1_0._btnfullScreen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_contentvideo/#go_bottom/#btn_fullScreen")
+	arg_1_0._goiconFull = gohelper.findChild(arg_1_0.viewGO, "#go_contentvideo/#go_bottom/#btn_fullScreen/#go_iconFull")
+	arg_1_0._goiconSmall = gohelper.findChild(arg_1_0.viewGO, "#go_contentvideo/#go_bottom/#btn_fullScreen/#go_iconSmall")
+	arg_1_0._slidertime = gohelper.findChildSlider(arg_1_0.viewGO, "#go_contentvideo/#go_bottom/#slider_time")
+	arg_1_0._txtvideoTime = gohelper.findChildText(arg_1_0.viewGO, "#go_contentvideo/#go_bottom/#txt_videoTime")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstoryPlay:AddClickListener(slot0._btnstoryPlayOnClick, slot0)
-	slot0._btnvideoplay:AddClickListener(slot0._btnvideoplayOnClick, slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0._btnpaused:AddClickListener(slot0._btnpausedOnClick, slot0)
-	slot0._btnfullScreen:AddClickListener(slot0._btnfullScreenOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstoryPlay:AddClickListener(arg_2_0._btnstoryPlayOnClick, arg_2_0)
+	arg_2_0._btnvideoplay:AddClickListener(arg_2_0._btnvideoplayOnClick, arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0._btnpaused:AddClickListener(arg_2_0._btnpausedOnClick, arg_2_0)
+	arg_2_0._btnfullScreen:AddClickListener(arg_2_0._btnfullScreenOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstoryPlay:RemoveClickListener()
-	slot0._btnvideoplay:RemoveClickListener()
-	slot0._btnstart:RemoveClickListener()
-	slot0._btnpaused:RemoveClickListener()
-	slot0._btnfullScreen:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstoryPlay:RemoveClickListener()
+	arg_3_0._btnvideoplay:RemoveClickListener()
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btnpaused:RemoveClickListener()
+	arg_3_0._btnfullScreen:RemoveClickListener()
 end
 
-function slot0._btnstoryPlayOnClick(slot0)
-	if slot0._helpVideoCfg and slot0._helpVideoCfg.storyId ~= 0 then
-		StoryController.instance:playStory(slot0._helpVideoCfg.storyId)
+function var_0_0._btnstoryPlayOnClick(arg_4_0)
+	if arg_4_0._helpVideoCfg and arg_4_0._helpVideoCfg.storyId ~= 0 then
+		StoryController.instance:playStory(arg_4_0._helpVideoCfg.storyId)
 	end
 end
 
-function slot0._btnfullScreenOnClick(slot0)
-	slot0:_showFullScreen(slot0._isLastIsFullScreen ~= true)
+function var_0_0._btnfullScreenOnClick(arg_5_0)
+	arg_5_0:_showFullScreen(arg_5_0._isLastIsFullScreen ~= true)
 end
 
-function slot0._btnpausedOnClick(slot0)
-	if slot0._videoPlayer and slot0._videoPlayer:IsPlaying() then
-		slot0._videoPlayer:Pause()
-		slot0:_stopSlideTimeTween()
-		slot0:_showPlayIcon(true)
+function var_0_0._btnpausedOnClick(arg_6_0)
+	if arg_6_0._videoPlayer and arg_6_0._videoPlayer:IsPlaying() then
+		arg_6_0._videoPlayer:Pause()
+		arg_6_0:_stopSlideTimeTween()
+		arg_6_0:_showPlayIcon(true)
 	end
 end
 
-function slot0._btnvideoplayOnClick(slot0)
-	slot0:play()
+function var_0_0._btnvideoplayOnClick(arg_7_0)
+	arg_7_0:play()
 end
 
-function slot0._slidertimeOnValueChange(slot0, slot1)
-	if slot0._isDotweenSet then
+function var_0_0._slidertimeOnValueChange(arg_8_0, arg_8_1)
+	if arg_8_0._isDotweenSet then
 		return
 	end
 
-	if slot0._videoPlayer:IsPlaying() then
-		slot0._videoPlayer:Pause()
-		slot0:_showPlayIcon(true)
+	if arg_8_0._videoPlayer:IsPlaying() then
+		arg_8_0._videoPlayer:Pause()
+		arg_8_0:_showPlayIcon(true)
 	end
 
-	slot0:_stopSlideTimeTween()
+	arg_8_0:_stopSlideTimeTween()
 
-	slot0._curTime = slot0._startTime + slot0._duration * slot0._slidertime:GetValue()
+	local var_8_0 = arg_8_0._slidertime:GetValue()
 
-	slot0._videoPlayer:Seek(slot0._curTime)
-	slot0:_setVoideTime(slot0._curTime, slot0._duration)
+	arg_8_0._curTime = arg_8_0._startTime + arg_8_0._duration * var_8_0
+
+	arg_8_0._videoPlayer:Seek(arg_8_0._curTime)
+	arg_8_0:_setVoideTime(arg_8_0._curTime, arg_8_0._duration)
 end
 
-function slot0._btnstartOnClick(slot0)
-	if slot0._videoPlayer then
-		if slot0._lastVideoId == nil then
+function var_0_0._btnstartOnClick(arg_9_0)
+	if arg_9_0._videoPlayer then
+		if arg_9_0._lastVideoId == nil then
 			logNormal(":_btnstartOnClick() isnew")
-			slot0:play()
-		elseif slot0._videoPlayer:IsPaused() then
+			arg_9_0:play()
+		elseif arg_9_0._videoPlayer:IsPaused() then
 			logNormal(":_btnstartOnClick() isPaused")
-			slot0._videoPlayer:Play()
-		elseif slot0._videoPlayer:IsPlaying() then
+			arg_9_0._videoPlayer:Play()
+		elseif arg_9_0._videoPlayer:IsPlaying() then
 			logNormal(":_btnstartOnClick() IsPlaying")
-			slot0._videoPlayer:Pause()
-			slot0:_stopSlideTimeTween()
-			slot0:_showPlayIcon(true)
-		elseif slot0._videoPlayer:IsFinished() then
+			arg_9_0._videoPlayer:Pause()
+			arg_9_0:_stopSlideTimeTween()
+			arg_9_0:_showPlayIcon(true)
+		elseif arg_9_0._videoPlayer:IsFinished() then
 			logNormal(":_btnstartOnClick() IsFinished")
-			slot0._videoPlayer:Play()
+			arg_9_0._videoPlayer:Play()
 		end
 	else
-		slot0:play()
+		arg_9_0:play()
 		logNormal(":_btnstartOnClick() play")
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._govideoTrs = slot0._govideo.transform
-	slot0._gocontentvideoTrs = slot0._gocontentvideo.transform
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._govideoTrs = arg_10_0._govideo.transform
+	arg_10_0._gocontentvideoTrs = arg_10_0._gocontentvideo.transform
 
-	gohelper.setActive(slot0._btnpaused, false)
+	gohelper.setActive(arg_10_0._btnpaused, false)
 
-	slot0._goplayIcon = gohelper.findChild(slot0.viewGO, "#go_contentvideo/#btn_start/image")
-	slot0._isDotweenSet = false
-	slot0._isLastIsFullScreen = false
+	arg_10_0._goplayIcon = gohelper.findChild(arg_10_0.viewGO, "#go_contentvideo/#btn_start/image")
+	arg_10_0._isDotweenSet = false
+	arg_10_0._isLastIsFullScreen = false
 
-	gohelper.setActive(slot0._goiconSmall, false)
+	gohelper.setActive(arg_10_0._goiconSmall, false)
 
-	slot3, slot4 = recthelper.getAnchor(slot0._gocontentvideoTrs)
-	slot0._curRectParam = {
-		width = recthelper.getWidth(slot0._gocontentvideoTrs),
-		height = recthelper.getHeight(slot0._gocontentvideoTrs),
-		anchorX = slot3,
-		anchorY = slot4
+	local var_10_0 = recthelper.getWidth(arg_10_0._gocontentvideoTrs)
+	local var_10_1 = recthelper.getHeight(arg_10_0._gocontentvideoTrs)
+	local var_10_2, var_10_3 = recthelper.getAnchor(arg_10_0._gocontentvideoTrs)
+
+	arg_10_0._curRectParam = {
+		width = var_10_0,
+		height = var_10_1,
+		anchorX = var_10_2,
+		anchorY = var_10_3
 	}
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._slidertime:AddOnValueChanged(slot0._slidertimeOnValueChange, slot0)
+function var_0_0._editableAddEvents(arg_11_0)
+	arg_11_0._slidertime:AddOnValueChanged(arg_11_0._slidertimeOnValueChange, arg_11_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._slidertime:RemoveOnValueChanged()
+function var_0_0._editableRemoveEvents(arg_12_0)
+	arg_12_0._slidertime:RemoveOnValueChanged()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._helpVideoCfg = slot1
-	slot0._startTime = 0
-	slot0._duration = 0
-	slot0._curTime = 0
+function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
+	arg_13_0._helpVideoCfg = arg_13_1
+	arg_13_0._startTime = 0
+	arg_13_0._duration = 0
+	arg_13_0._curTime = 0
 
-	slot0:_refreshUI()
+	arg_13_0:_refreshUI()
 
-	if slot0._videoPlayer then
-		slot0._lastVideoId = nil
+	if arg_13_0._videoPlayer then
+		arg_13_0._lastVideoId = nil
 
-		slot0._videoPlayer:Stop()
-		slot0:_stopSlideTimeTween()
-		gohelper.setActive(slot0._gocontentvideo, false)
+		arg_13_0._videoPlayer:Stop()
+		arg_13_0:_stopSlideTimeTween()
+		gohelper.setActive(arg_13_0._gocontentvideo, false)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_14_0, arg_14_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._videoPlayer then
-		slot0._videoPlayer:Stop()
-		slot0._videoPlayer:Clear()
+function var_0_0.onDestroyView(arg_15_0)
+	if arg_15_0._videoPlayer then
+		arg_15_0._videoPlayer:Stop()
+		arg_15_0._videoPlayer:Clear()
 
-		slot0._videoPlayer = nil
+		arg_15_0._videoPlayer = nil
 	end
 
-	slot0:_stopSlideTimeTween()
+	arg_15_0:_stopSlideTimeTween()
 end
 
-function slot0._refreshUI(slot0)
-	if slot0._helpVideoCfg then
-		slot0._txtdesc.text = slot0._helpVideoCfg.text
+function var_0_0._refreshUI(arg_16_0)
+	if arg_16_0._helpVideoCfg then
+		arg_16_0._txtdesc.text = arg_16_0._helpVideoCfg.text
 	end
 
-	gohelper.setActive(slot0._btnstoryPlay, slot0._helpVideoCfg and slot0._helpVideoCfg.storyId and slot0._helpVideoCfg.storyId ~= 0)
+	gohelper.setActive(arg_16_0._btnstoryPlay, arg_16_0._helpVideoCfg and arg_16_0._helpVideoCfg.storyId and arg_16_0._helpVideoCfg.storyId ~= 0)
 end
 
-function slot0.getIsFullScreen(slot0)
-	return slot0._isLastIsFullScreen
+function var_0_0.getIsFullScreen(arg_17_0)
+	return arg_17_0._isLastIsFullScreen
 end
 
-function slot0._showFullScreen(slot0, slot1)
-	if slot0._isLastIsFullScreen == (slot1 and true or false) then
+function var_0_0._showFullScreen(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_1 and true or false
+
+	if arg_18_0._isLastIsFullScreen == var_18_0 then
 		return
 	end
 
-	slot0._isLastIsFullScreen = slot2
-	slot3 = slot0._curRectParam.width
-	slot4 = slot0._curRectParam.height
-	slot5 = slot0._curRectParam.anchorX
-	slot6 = slot0._curRectParam.anchorY
+	arg_18_0._isLastIsFullScreen = var_18_0
 
-	if slot2 then
-		slot5 = 0
-		slot6 = 0
-		slot3 = UnityEngine.Screen.width
-		slot4 = UnityEngine.Screen.height
+	local var_18_1 = arg_18_0._curRectParam.width
+	local var_18_2 = arg_18_0._curRectParam.height
+	local var_18_3 = arg_18_0._curRectParam.anchorX
+	local var_18_4 = arg_18_0._curRectParam.anchorY
+
+	if var_18_0 then
+		var_18_3 = 0
+		var_18_4 = 0
+		var_18_1 = UnityEngine.Screen.width
+		var_18_2 = UnityEngine.Screen.height
 	end
 
-	recthelper.setSize(slot0._gocontentvideoTrs, slot3, slot4)
-	recthelper.setAnchor(slot0._gocontentvideoTrs, slot5, slot6)
+	recthelper.setSize(arg_18_0._gocontentvideoTrs, var_18_1, var_18_2)
+	recthelper.setAnchor(arg_18_0._gocontentvideoTrs, var_18_3, var_18_4)
 
-	if slot0._isInitVideoPlayer then
-		recthelper.setSize(slot0._videoPlayerGOTrs, slot3, slot4)
+	if arg_18_0._isInitVideoPlayer then
+		recthelper.setSize(arg_18_0._videoPlayerGOTrs, var_18_1, var_18_2)
 	end
 
-	gohelper.setActive(slot0._goiconFull, not slot2)
-	gohelper.setActive(slot0._goiconSmall, slot2)
+	gohelper.setActive(arg_18_0._goiconFull, not var_18_0)
+	gohelper.setActive(arg_18_0._goiconSmall, var_18_0)
 
-	if slot0._view and slot0._view.viewContainer then
-		slot0._view.viewContainer:dispatchEvent(HelpEvent.UIVoideFullScreenChange, slot2)
-	end
-end
-
-function slot0._showPlayIcon(slot0, slot1)
-	gohelper.setActive(slot0._goplayIcon, slot1)
-end
-
-function slot0._initVideoPlayer(slot0)
-	if not slot0._isInitVideoPlayer then
-		slot0._isInitVideoPlayer = true
-		slot0._videoPlayer, slot0._displauUGUI, slot0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(slot0._govideo)
-		slot0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleToFit
-		slot0._videoPlayerGOTrs = slot0._videoPlayerGO.transform
-
-		slot0:_updateVideoSize()
+	if arg_18_0._view and arg_18_0._view.viewContainer then
+		arg_18_0._view.viewContainer:dispatchEvent(HelpEvent.UIVoideFullScreenChange, var_18_0)
 	end
 end
 
-function slot0._updateVideoSize(slot0)
-	slot0:_initVideoPlayer()
-	recthelper.setSize(slot0._videoPlayerGOTrs, recthelper.getWidth(slot0._gocontentvideoTrs), recthelper.getHeight(slot0._gocontentvideoTrs))
+function var_0_0._showPlayIcon(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._goplayIcon, arg_19_1)
 end
 
-function slot0.play(slot0)
-	slot0:_initVideoPlayer()
+function var_0_0._initVideoPlayer(arg_20_0)
+	if not arg_20_0._isInitVideoPlayer then
+		arg_20_0._isInitVideoPlayer = true
+		arg_20_0._videoPlayer, arg_20_0._displauUGUI, arg_20_0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(arg_20_0._govideo)
+		arg_20_0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleToFit
+		arg_20_0._videoPlayerGOTrs = arg_20_0._videoPlayerGO.transform
 
-	slot0._lastVideoId = slot0._helpVideoCfg.id
-
-	slot0._videoPlayer:Play(slot0._displauUGUI, slot0._helpVideoCfg.videopath, false, slot0._videoStatusUpdate, slot0)
-	gohelper.setActive(slot0._gocontentvideo, true)
-end
-
-function slot0.stop(slot0)
-	if slot0._videoPlayer then
-		slot0._videoPlayer:Stop()
+		arg_20_0:_updateVideoSize()
 	end
 end
 
-function slot0._videoStatusUpdate(slot0, slot1, slot2, slot3)
-	if slot2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		slot0:_showPlayIcon(true)
-	elseif slot2 == AvProEnum.PlayerStatus.FirstFrameReady then
-		-- Nothing
-	elseif slot2 == AvProEnum.PlayerStatus.Started then
-		slot0:_showPlayIcon(false)
-	elseif slot2 == AvProEnum.PlayerStatus.StartedSeeking then
-		-- Nothing
+function var_0_0._updateVideoSize(arg_21_0)
+	arg_21_0:_initVideoPlayer()
+
+	local var_21_0 = recthelper.getWidth(arg_21_0._gocontentvideoTrs)
+	local var_21_1 = recthelper.getHeight(arg_21_0._gocontentvideoTrs)
+
+	recthelper.setSize(arg_21_0._videoPlayerGOTrs, var_21_0, var_21_1)
+end
+
+function var_0_0.play(arg_22_0)
+	arg_22_0:_initVideoPlayer()
+
+	arg_22_0._lastVideoId = arg_22_0._helpVideoCfg.id
+
+	arg_22_0._videoPlayer:Play(arg_22_0._displauUGUI, arg_22_0._helpVideoCfg.videopath, false, arg_22_0._videoStatusUpdate, arg_22_0)
+	gohelper.setActive(arg_22_0._gocontentvideo, true)
+end
+
+function var_0_0.stop(arg_23_0)
+	if arg_23_0._videoPlayer then
+		arg_23_0._videoPlayer:Stop()
+	end
+end
+
+function var_0_0._videoStatusUpdate(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if arg_24_2 == AvProEnum.PlayerStatus.FinishedPlaying then
+		arg_24_0:_showPlayIcon(true)
+	elseif arg_24_2 == AvProEnum.PlayerStatus.FirstFrameReady then
+		-- block empty
+	elseif arg_24_2 == AvProEnum.PlayerStatus.Started then
+		arg_24_0:_showPlayIcon(false)
+	elseif arg_24_2 == AvProEnum.PlayerStatus.StartedSeeking then
+		-- block empty
 	end
 
-	slot0._startTime, slot0._duration, slot0._curTime = slot0._videoPlayer:GetTimeRange(0, 0, 0)
+	arg_24_0._startTime, arg_24_0._duration, arg_24_0._curTime = arg_24_0._videoPlayer:GetTimeRange(0, 0, 0)
 
-	if slot0._videoPlayer:IsPlaying() then
-		slot0:_startSlideTimeTween()
+	if arg_24_0._videoPlayer:IsPlaying() then
+		arg_24_0:_startSlideTimeTween()
 	else
-		slot0:_stopSlideTimeTween()
+		arg_24_0:_stopSlideTimeTween()
 	end
 
-	logNormal(string.format("status:%s name:%s timeRange(%s,%s,%s) ", slot2, AvProEnum.getPlayerStatusEnumName(slot2), slot0._startTime, slot0._duration, slot0._curTime))
+	logNormal(string.format("status:%s name:%s timeRange(%s,%s,%s) ", arg_24_2, AvProEnum.getPlayerStatusEnumName(arg_24_2), arg_24_0._startTime, arg_24_0._duration, arg_24_0._curTime))
 end
 
-function slot0._stopSlideTimeTween(slot0)
-	if slot0._slideTimeTweenId then
-		ZProj.TweenHelper.KillById(slot0._slideTimeTweenId)
+function var_0_0._stopSlideTimeTween(arg_25_0)
+	if arg_25_0._slideTimeTweenId then
+		ZProj.TweenHelper.KillById(arg_25_0._slideTimeTweenId)
 
-		slot0._slideTimeTweenId = nil
-	end
-end
-
-function slot0._startSlideTimeTween(slot0)
-	slot0:_stopSlideTimeTween()
-
-	slot3 = 1
-
-	if math.max(0, slot0._duration - math.max(0, slot0._curTime - slot0._startTime)) ~= 0 then
-		slot3 = slot1 / slot0._duration
-	end
-
-	logNormal(string.format("time:(%s,%s) ftd(%s,%s,%s) ", slot1, slot0._duration, slot3, 1, slot2))
-
-	slot0._slideTimeTweenId = ZProj.TweenHelper.DOTweenFloat(slot3, 1, slot2, slot0._onSlideTimeframeCallback, slot0._onOpenTweenFinishCallback, slot0, nil, EaseType.Linear)
-end
-
-function slot0._onSlideTimeframeCallback(slot0, slot1)
-	slot0._isDotweenSet = true
-
-	slot0._slidertime:SetValue(slot1)
-
-	slot0._isDotweenSet = false
-
-	slot0:_setVoideTime(slot0._duration * slot1, slot0._duration)
-end
-
-function slot0._setVoideTime(slot0, slot1, slot2)
-	slot4 = math.floor(slot2)
-
-	if slot0._lastRunTime_ ~= math.floor(slot1) or slot0._lastDuration_ ~= slot4 then
-		slot0._lastRunTime_ = slot3
-		slot0._lastDuration_ = slot4
-		slot0._txtvideoTime.text = slot0:_formatTime(slot3) .. "/" .. slot0:_formatTime(slot4)
+		arg_25_0._slideTimeTweenId = nil
 	end
 end
 
-function slot0._formatTime(slot0, slot1)
-	slot2, slot3, slot4 = TimeUtil.secondToHMS(slot1)
+function var_0_0._startSlideTimeTween(arg_26_0)
+	arg_26_0:_stopSlideTimeTween()
 
-	return string.format("%s:%s:%s", slot0:_formatNum(slot2), slot0:_formatNum(slot3), slot0:_formatNum(slot4))
-end
+	local var_26_0 = math.max(0, arg_26_0._curTime - arg_26_0._startTime)
+	local var_26_1 = math.max(0, arg_26_0._duration - var_26_0)
+	local var_26_2 = 1
 
-function slot0._formatNum(slot0, slot1)
-	if slot1 >= 10 then
-		return slot1
+	if var_26_1 ~= 0 then
+		var_26_2 = var_26_0 / arg_26_0._duration
 	end
 
-	return "0" .. slot1
+	logNormal(string.format("time:(%s,%s) ftd(%s,%s,%s) ", var_26_0, arg_26_0._duration, var_26_2, 1, var_26_1))
+
+	arg_26_0._slideTimeTweenId = ZProj.TweenHelper.DOTweenFloat(var_26_2, 1, var_26_1, arg_26_0._onSlideTimeframeCallback, arg_26_0._onOpenTweenFinishCallback, arg_26_0, nil, EaseType.Linear)
 end
 
-return slot0
+function var_0_0._onSlideTimeframeCallback(arg_27_0, arg_27_1)
+	arg_27_0._isDotweenSet = true
+
+	arg_27_0._slidertime:SetValue(arg_27_1)
+
+	arg_27_0._isDotweenSet = false
+
+	arg_27_0:_setVoideTime(arg_27_0._duration * arg_27_1, arg_27_0._duration)
+end
+
+function var_0_0._setVoideTime(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = math.floor(arg_28_1)
+	local var_28_1 = math.floor(arg_28_2)
+
+	if arg_28_0._lastRunTime_ ~= var_28_0 or arg_28_0._lastDuration_ ~= var_28_1 then
+		arg_28_0._lastRunTime_ = var_28_0
+		arg_28_0._lastDuration_ = var_28_1
+		arg_28_0._txtvideoTime.text = arg_28_0:_formatTime(var_28_0) .. "/" .. arg_28_0:_formatTime(var_28_1)
+	end
+end
+
+function var_0_0._formatTime(arg_29_0, arg_29_1)
+	local var_29_0, var_29_1, var_29_2 = TimeUtil.secondToHMS(arg_29_1)
+
+	return string.format("%s:%s:%s", arg_29_0:_formatNum(var_29_0), arg_29_0:_formatNum(var_29_1), arg_29_0:_formatNum(var_29_2))
+end
+
+function var_0_0._formatNum(arg_30_0, arg_30_1)
+	if arg_30_1 >= 10 then
+		return arg_30_1
+	end
+
+	return "0" .. arg_30_1
+end
+
+return var_0_0

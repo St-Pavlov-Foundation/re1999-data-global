@@ -1,117 +1,132 @@
-module("modules.logic.room.view.debug.RoomDebugBuildingAreaView", package.seeall)
+﻿module("modules.logic.room.view.debug.RoomDebugBuildingAreaView", package.seeall)
 
-slot0 = class("RoomDebugBuildingAreaView", BaseView)
+local var_0_0 = class("RoomDebugBuildingAreaView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_content/#btn_close")
-	slot0._goarearoot = gohelper.findChild(slot0.viewGO, "#go_content/#go_arearoot")
-	slot0._goareaitem = gohelper.findChild(slot0.viewGO, "#go_content/#go_arearoot/#go_areaitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_close")
+	arg_1_0._goarearoot = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_arearoot")
+	arg_1_0._goareaitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_arearoot/#go_areaitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goarearootTrs = slot0._goarearoot.transform
-	slot0._itemTbList = {}
-	slot0._lastIndex = 1
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goarearootTrs = arg_5_0._goarearoot.transform
+	arg_5_0._itemTbList = {}
+	arg_5_0._lastIndex = 1
 
-	table.insert(slot0._itemTbList, slot0:_createTbByGO(slot0._goareaitem))
+	table.insert(arg_5_0._itemTbList, arg_5_0:_createTbByGO(arg_5_0._goareaitem))
 end
 
-function slot0._createTbByGO(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goTrs = slot1.transform
-	slot2.txtname = gohelper.findChildText(slot1, "txt_name")
-	slot2._canvasGroup = slot1:GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0._createTbByGO(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getUserDataTb_()
 
-	return slot2
+	var_6_0.go = arg_6_1
+	var_6_0.goTrs = arg_6_1.transform
+	var_6_0.txtname = gohelper.findChildText(arg_6_1, "txt_name")
+	var_6_0._canvasGroup = arg_6_1:GetComponent(typeof(UnityEngine.CanvasGroup))
+
+	return var_6_0
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
-		slot0:closeThis()
+		arg_7_0:closeThis()
 
 		return
 	end
 
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, slot0._refreshUI, slot0)
+	arg_7_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_7_0._refreshUI, arg_7_0)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_7_0._scene = GameSceneMgr.instance:getCurScene()
 
-	slot0:_refreshUI()
+	arg_7_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, slot0._refreshUI, slot0)
+function var_0_0.onClose(arg_8_0)
+	arg_8_0:removeEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_8_0._refreshUI, arg_8_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	slot0._focusPos = slot0._scene.camera:getCameraFocus()
-	slot2 = 1
+function var_0_0._refreshUI(arg_10_0)
+	arg_10_0._focusPos = arg_10_0._scene.camera:getCameraFocus()
 
-	for slot6, slot7 in pairs(RoomMapBuildingModel.instance:getAllOccupyDict()) do
-		for slot11, slot12 in pairs(slot7) do
-			if slot2 > #slot0._itemTbList then
-				table.insert(slot0._itemTbList, slot0:_createTbByGO(gohelper.cloneInPlace(slot0._goareaitem)))
+	local var_10_0 = RoomMapBuildingModel.instance:getAllOccupyDict()
+	local var_10_1 = 1
+
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		for iter_10_2, iter_10_3 in pairs(iter_10_1) do
+			if var_10_1 > #arg_10_0._itemTbList then
+				local var_10_2 = gohelper.cloneInPlace(arg_10_0._goareaitem)
+
+				table.insert(arg_10_0._itemTbList, arg_10_0:_createTbByGO(var_10_2))
 			end
 
-			slot13 = slot0._itemTbList[slot2]
-			slot2 = slot2 + 1
+			local var_10_3 = arg_10_0._itemTbList[var_10_1]
 
-			slot0:_setTbItemAvtive(slot13, true)
-			slot0:_refreshByParam(slot13, slot12)
+			var_10_1 = var_10_1 + 1
+
+			arg_10_0:_setTbItemAvtive(var_10_3, true)
+			arg_10_0:_refreshByParam(var_10_3, iter_10_3)
 		end
 	end
 
-	for slot6 = slot2, #slot0._itemTbList do
-		slot0:_setTbItemAvtive(slot0._itemTbList[slot6], false)
+	for iter_10_4 = var_10_1, #arg_10_0._itemTbList do
+		arg_10_0:_setTbItemAvtive(arg_10_0._itemTbList[iter_10_4], false)
 	end
 end
 
-function slot0._setTbItemAvtive(slot0, slot1, slot2)
-	if slot1.isActive ~= slot2 then
-		slot1.isActive = slot2
+function var_0_0._setTbItemAvtive(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1.isActive ~= arg_11_2 then
+		arg_11_1.isActive = arg_11_2
 
-		gohelper.setActive(slot1.go, slot2)
+		gohelper.setActive(arg_11_1.go, arg_11_2)
 	end
 end
 
-function slot0._refreshByParam(slot0, slot1, slot2)
-	if slot1.buildingId ~= slot2.buildingId or slot1.posindex ~= slot2.index then
-		slot1.buildingId = slot2.buildingId
-		slot1.posindex = slot2.index
-		slot5 = RoomMapModel.instance:getBuildingConfigParam(slot2.buildingId).pointList[slot2.index]
-		slot1.txtname.text = slot5.x .. "#" .. slot5.y
+function var_0_0._refreshByParam(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1.buildingId ~= arg_12_2.buildingId or arg_12_1.posindex ~= arg_12_2.index then
+		arg_12_1.buildingId = arg_12_2.buildingId
+		arg_12_1.posindex = arg_12_2.index
+
+		local var_12_0 = RoomMapModel.instance:getBuildingConfigParam(arg_12_2.buildingId).pointList[arg_12_2.index]
+
+		arg_12_1.txtname.text = var_12_0.x .. "#" .. var_12_0.y
 	end
 
-	slot0:_setTbItemPos(HexMath.hexToPosition(slot2.hexPoint, RoomBlockEnum.BlockSize), slot1, slot0._goarearootTrs)
+	local var_12_1 = HexMath.hexToPosition(arg_12_2.hexPoint, RoomBlockEnum.BlockSize)
+
+	arg_12_0:_setTbItemPos(var_12_1, arg_12_1, arg_12_0._goarearootTrs)
 end
 
-function slot0._setTbItemPos(slot0, slot1, slot2, slot3)
-	slot5 = recthelper.worldPosToAnchorPos(Vector3(slot1.x, 0.12, slot1.y), slot3)
-	slot7 = 1
-	slot2._canvasGroup.alpha = Vector2.Distance(slot0._focusPos, slot1) <= 2.5 and 1 or slot6 >= 3.5 and 0 or 3.5 - slot6
+function var_0_0._setTbItemPos(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = Vector3(arg_13_1.x, 0.12, arg_13_1.y)
+	local var_13_1 = recthelper.worldPosToAnchorPos(var_13_0, arg_13_3)
+	local var_13_2 = Vector2.Distance(arg_13_0._focusPos, arg_13_1)
+	local var_13_3 = 1
+	local var_13_4 = var_13_2 <= 2.5 and 1 or var_13_2 >= 3.5 and 0 or 3.5 - var_13_2
 
-	recthelper.setAnchor(slot2.goTrs, slot5.x, slot5.y)
+	arg_13_2._canvasGroup.alpha = var_13_4
+
+	recthelper.setAnchor(arg_13_2.goTrs, var_13_1.x, var_13_1.y)
 end
 
-return slot0
+return var_0_0

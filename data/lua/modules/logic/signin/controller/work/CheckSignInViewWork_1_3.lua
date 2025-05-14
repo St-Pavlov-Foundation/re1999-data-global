@@ -1,90 +1,91 @@
-module("modules.logic.signin.controller.work.CheckSignInViewWork_1_3", package.seeall)
+﻿module("modules.logic.signin.controller.work.CheckSignInViewWork_1_3", package.seeall)
 
-slot0 = class("CheckSignInViewWork_1_3", BaseWork)
+local var_0_0 = class("CheckSignInViewWork_1_3", BaseWork)
 
-function slot0.onStart(slot0)
-	slot0._funcs = {}
+function var_0_0.onStart(arg_1_0)
+	arg_1_0._funcs = {}
 
-	SignInController.instance:registerCallback(SignInEvent.OnSignInPopupFlowUpdate, slot0._onSignInPopupFlowUpdate, slot0)
+	SignInController.instance:registerCallback(SignInEvent.OnSignInPopupFlowUpdate, arg_1_0._onSignInPopupFlowUpdate, arg_1_0)
 end
 
-function slot0._removeSingleEvent(slot0, slot1)
-	if slot0._funcs[slot1] then
-		SignInController.instance:unregisterCallback(slot1, slot2, slot0)
+function var_0_0._removeSingleEvent(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._funcs[arg_2_1]
 
-		slot0._funcs[slot1] = nil
+	if var_2_0 then
+		SignInController.instance:unregisterCallback(arg_2_1, var_2_0, arg_2_0)
+
+		arg_2_0._funcs[arg_2_1] = nil
 	end
 
-	if not next(slot0._funcs) then
-		slot0:_startBlock()
-		slot0:onDone(true)
+	if not next(arg_2_0._funcs) then
+		arg_2_0:_startBlock()
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onSignInPopupFlowUpdate(slot0, slot1)
-	if slot1 == false then
-		slot0:_clear()
-		slot0:onDone(true)
+function var_0_0._onSignInPopupFlowUpdate(arg_3_0, arg_3_1)
+	if arg_3_1 == false then
+		arg_3_0:_clear()
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	if slot1 == nil then
+	if arg_3_1 == nil then
 		logError("impossible ?!")
 
 		return
 	end
 
-	if slot0._funcs[slot1] then
+	if arg_3_0._funcs[arg_3_1] then
 		return
 	end
 
-	slot2 = string.format("__internal_%s", slot1)
+	local var_3_0 = string.format("__internal_%s", arg_3_1)
 
-	slot0[slot2] = function ()
-		uv0:_removeSingleEvent(uv1)
+	arg_3_0[var_3_0] = function()
+		arg_3_0:_removeSingleEvent(arg_3_1)
 	end
+	arg_3_0._funcs[arg_3_1] = arg_3_0[var_3_0]
 
-	slot0._funcs[slot1] = slot0[slot2]
-
-	SignInController.instance:registerCallback(slot1, slot0[slot2], slot0)
+	SignInController.instance:registerCallback(arg_3_1, arg_3_0[var_3_0], arg_3_0)
 end
 
-function slot0._clear(slot0)
-	for slot4, slot5 in pairs(slot0._funcs) do
-		SignInController.instance:unregisterCallback(slot4, slot5, slot0)
+function var_0_0._clear(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._funcs) do
+		SignInController.instance:unregisterCallback(iter_5_0, iter_5_1, arg_5_0)
 	end
 
-	slot0._funcs = {}
+	arg_5_0._funcs = {}
 end
 
-function slot0.clearWork(slot0)
-	if not slot0.isSuccess then
-		slot0:_endBlock()
+function var_0_0.clearWork(arg_6_0)
+	if not arg_6_0.isSuccess then
+		arg_6_0:_endBlock()
 	end
 
-	slot0:_clear()
-	SignInController.instance:unregisterCallback(SignInEvent.OnSignInPopupFlowUpdate, slot0._onSignInPopupFlowUpdate, slot0)
+	arg_6_0:_clear()
+	SignInController.instance:unregisterCallback(SignInEvent.OnSignInPopupFlowUpdate, arg_6_0._onSignInPopupFlowUpdate, arg_6_0)
 end
 
-function slot0._endBlock(slot0)
-	if not slot0:_isBlock() then
+function var_0_0._endBlock(arg_7_0)
+	if not arg_7_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function slot0._startBlock(slot0)
-	if slot0:_isBlock() then
+function var_0_0._startBlock(arg_8_0)
+	if arg_8_0:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function slot0._isBlock(slot0)
+function var_0_0._isBlock(arg_9_0)
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-return slot0
+return var_0_0

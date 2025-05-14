@@ -1,205 +1,230 @@
-module("modules.logic.activity.model.warmup.ActivityWarmUpModel", package.seeall)
+﻿module("modules.logic.activity.model.warmup.ActivityWarmUpModel", package.seeall)
 
-slot0 = class("ActivityWarmUpModel", BaseModel)
+local var_0_0 = class("ActivityWarmUpModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
-	slot0._startTime = nil
-	slot0._activityDurationDay = nil
-	slot0._selectedIndex = nil
-	slot0._orderInfoMap = nil
-	slot0._daysOrderMap = nil
-	slot0._actId = nil
-	slot0._hasOrderAccepted = nil
+function var_0_0.release(arg_3_0)
+	arg_3_0._startTime = nil
+	arg_3_0._activityDurationDay = nil
+	arg_3_0._selectedIndex = nil
+	arg_3_0._orderInfoMap = nil
+	arg_3_0._daysOrderMap = nil
+	arg_3_0._actId = nil
+	arg_3_0._hasOrderAccepted = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0._actId = slot1
-	slot0._selectedIndex = nil
-	slot0._startTime = 0
+function var_0_0.init(arg_4_0, arg_4_1)
+	arg_4_0._actId = arg_4_1
+	arg_4_0._selectedIndex = nil
+	arg_4_0._startTime = 0
 
-	slot0:initOrders()
-	slot0:updateAcceptedStatus()
+	arg_4_0:initOrders()
+	arg_4_0:updateAcceptedStatus()
 end
 
-function slot0.setStartTime(slot0, slot1)
-	slot0._startTime = slot1 / 1000
+function var_0_0.setStartTime(arg_5_0, arg_5_1)
+	arg_5_0._startTime = arg_5_1 / 1000
 end
 
-function slot0.initOrders(slot0)
-	slot0._daysOrderMap = {}
-	slot0._orderInfoMap = {}
-	slot2 = -1
+function var_0_0.initOrders(arg_6_0)
+	local var_6_0 = Activity106Config.instance:getActivityWarmUpAllOrderCo(arg_6_0._actId)
 
-	if not Activity106Config.instance:getActivityWarmUpAllOrderCo(slot0._actId) then
-		logNormal("can't find config warmup : " .. tostring(slot0._actId))
+	arg_6_0._daysOrderMap = {}
+	arg_6_0._orderInfoMap = {}
+
+	local var_6_1 = -1
+
+	if not var_6_0 then
+		logNormal("can't find config warmup : " .. tostring(arg_6_0._actId))
 	else
-		for slot6, slot7 in pairs(slot1) do
-			slot8 = ActivityWarmUpOrderMO.New()
+		for iter_6_0, iter_6_1 in pairs(var_6_0) do
+			local var_6_2 = ActivityWarmUpOrderMO.New()
 
-			slot8:init(slot7)
+			var_6_2:init(iter_6_1)
 
-			slot0._orderInfoMap[slot6] = slot8
-			slot0._daysOrderMap[slot9] = slot0._daysOrderMap[slot7.openDay] or {}
+			arg_6_0._orderInfoMap[iter_6_0] = var_6_2
 
-			table.insert(slot0._daysOrderMap[slot9], slot8)
+			local var_6_3 = iter_6_1.openDay
 
-			if slot2 < slot9 then
-				slot2 = slot9
+			arg_6_0._daysOrderMap[var_6_3] = arg_6_0._daysOrderMap[var_6_3] or {}
+
+			table.insert(arg_6_0._daysOrderMap[var_6_3], var_6_2)
+
+			if var_6_1 < var_6_3 then
+				var_6_1 = var_6_3
 			end
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._daysOrderMap) do
-		table.sort(slot7, uv0.sortOrder)
+	for iter_6_2, iter_6_3 in pairs(arg_6_0._daysOrderMap) do
+		table.sort(iter_6_3, var_0_0.sortOrder)
 	end
 
-	slot0._activityDurationDay = slot2
+	arg_6_0._activityDurationDay = var_6_1
 end
 
-function slot0.sortOrder(slot0, slot1)
-	return slot0.cfg.order < slot1.cfg.order
+function var_0_0.sortOrder(arg_7_0, arg_7_1)
+	return arg_7_0.cfg.order < arg_7_1.cfg.order
 end
 
-function slot0.setServerOrderInfos(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		if slot0._orderInfoMap[slot1[slot5].orderId] then
-			slot7:initServerData(slot6)
+function var_0_0.setServerOrderInfos(arg_8_0, arg_8_1)
+	for iter_8_0 = 1, #arg_8_1 do
+		local var_8_0 = arg_8_1[iter_8_0]
+		local var_8_1 = arg_8_0._orderInfoMap[var_8_0.orderId]
+
+		if var_8_1 then
+			var_8_1:initServerData(var_8_0)
 		end
 	end
 
-	slot0:updateAcceptedStatus()
+	arg_8_0:updateAcceptedStatus()
 end
 
-function slot0.updateSingleOrder(slot0, slot1)
-	if not slot0._orderInfoMap then
+function var_0_0.updateSingleOrder(arg_9_0, arg_9_1)
+	if not arg_9_0._orderInfoMap then
 		return
 	end
 
-	if slot0._orderInfoMap[slot1.orderId] then
-		slot2:initServerData(slot1)
+	local var_9_0 = arg_9_0._orderInfoMap[arg_9_1.orderId]
+
+	if var_9_0 then
+		var_9_0:initServerData(arg_9_1)
 	end
 
-	slot0:updateAcceptedStatus()
+	arg_9_0:updateAcceptedStatus()
 end
 
-function slot0.updateAcceptedStatus(slot0)
-	for slot4, slot5 in pairs(slot0._orderInfoMap) do
-		if slot5.accept then
-			slot0._hasOrderAccepted = true
+function var_0_0.updateAcceptedStatus(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._orderInfoMap) do
+		if iter_10_1.accept then
+			arg_10_0._hasOrderAccepted = true
 
 			return
 		end
 	end
 
-	slot0._hasOrderAccepted = false
+	arg_10_0._hasOrderAccepted = false
 end
 
-function slot0.selectDayTab(slot0, slot1)
-	slot0._selectedIndex = slot1
+function var_0_0.selectDayTab(arg_11_0, arg_11_1)
+	arg_11_0._selectedIndex = arg_11_1
 end
 
-function slot0.getSelectedDay(slot0)
-	return slot0._selectedIndex
+function var_0_0.getSelectedDay(arg_12_0)
+	return arg_12_0._selectedIndex
 end
 
-function slot0.getCurrentDay(slot0)
-	slot2 = os.date("*t", ServerTime.timeInLocal(slot0._startTime))
-	slot2.hour = 5
-	slot2.min = 0
-	slot2.sec = 0
+function var_0_0.getCurrentDay(arg_13_0)
+	local var_13_0 = 86400
+	local var_13_1 = os.date("*t", ServerTime.timeInLocal(arg_13_0._startTime))
 
-	return math.min(math.floor((ServerTime.now() - ((os.time(slot2) or 0) - ServerTime.clientToServerOffset())) / 86400 + 1), slot0._activityDurationDay)
+	var_13_1.hour = 5
+	var_13_1.min = 0
+	var_13_1.sec = 0
+
+	local var_13_2 = (os.time(var_13_1) or 0) - ServerTime.clientToServerOffset()
+	local var_13_3 = ServerTime.now() - var_13_2
+	local var_13_4 = math.floor(var_13_3 / var_13_0 + 1)
+
+	return math.min(var_13_4, arg_13_0._activityDurationDay)
 end
 
-function slot0.getSelectedDayOrders(slot0)
-	return slot0._daysOrderMap[slot0._selectedIndex]
+function var_0_0.getSelectedDayOrders(arg_14_0)
+	return arg_14_0._daysOrderMap[arg_14_0._selectedIndex]
 end
 
-function slot0.getAllOrders(slot0)
-	return slot0._orderInfoMap
+function var_0_0.getAllOrders(arg_15_0)
+	return arg_15_0._orderInfoMap
 end
 
-function slot0.getTotalContentDays(slot0)
-	return slot0._activityDurationDay
+function var_0_0.getTotalContentDays(arg_16_0)
+	return arg_16_0._activityDurationDay
 end
 
-function slot0.hasOrderAccepted(slot0)
-	return slot0._hasOrderAccepted
+function var_0_0.hasOrderAccepted(arg_17_0)
+	return arg_17_0._hasOrderAccepted
 end
 
-function slot0.getOrderAccepted(slot0)
-	if not slot0._orderInfoMap then
+function var_0_0.getOrderAccepted(arg_18_0)
+	if not arg_18_0._orderInfoMap then
 		return nil
 	end
 
-	for slot4, slot5 in pairs(slot0._orderInfoMap) do
-		if slot5.accept then
-			return slot5
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._orderInfoMap) do
+		if iter_18_1.accept then
+			return iter_18_1
 		end
 	end
 end
 
-function slot0.getBriefName(slot0, slot1, slot2)
-	if LuaUtil.isEmptyStr(slot0) then
+function var_0_0.getBriefName(arg_19_0, arg_19_1, arg_19_2)
+	if LuaUtil.isEmptyStr(arg_19_0) then
 		return ""
 	end
 
-	if LuaUtil.getStrLen(slot0) <= slot1 then
-		return slot0
+	if arg_19_1 >= LuaUtil.getStrLen(arg_19_0) then
+		return arg_19_0
 	end
 
-	if uv0.getUCharArrIncludeSpace(slot0) == nil or #slot4 <= 0 then
+	local var_19_0 = var_0_0.getUCharArrIncludeSpace(arg_19_0)
+
+	if var_19_0 == nil or #var_19_0 <= 0 then
 		return LuaUtil.emptyStr
 	end
 
-	slot2 = slot2 or "..."
-	slot5 = LuaUtil.emptyStr
+	arg_19_2 = arg_19_2 or "..."
 
-	for slot10 = 1, #slot4 do
-		if string.byte(slot4[slot10]) > 0 and slot11 <= 127 then
-			slot6 = 0 + 1
-		elseif slot11 >= 192 and slot11 <= 239 then
-			slot6 = slot6 + 2
+	local var_19_1 = LuaUtil.emptyStr
+	local var_19_2 = 0
+
+	for iter_19_0 = 1, #var_19_0 do
+		local var_19_3 = string.byte(var_19_0[iter_19_0])
+
+		if var_19_3 > 0 and var_19_3 <= 127 then
+			var_19_2 = var_19_2 + 1
+		elseif var_19_3 >= 192 and var_19_3 <= 239 then
+			var_19_2 = var_19_2 + 2
 		end
 
-		if slot1 >= slot6 then
-			slot5 = slot5 .. slot4[slot10]
+		if var_19_2 <= arg_19_1 then
+			var_19_1 = var_19_1 .. var_19_0[iter_19_0]
 		end
 	end
 
-	return slot5 .. slot2
+	return var_19_1 .. arg_19_2
 end
 
-function slot0.getUCharArrIncludeSpace(slot0)
-	if LuaUtil.isEmptyStr(slot0) then
+function var_0_0.getUCharArrIncludeSpace(arg_20_0)
+	if LuaUtil.isEmptyStr(arg_20_0) then
 		return
 	end
 
-	slot1 = {}
+	local var_20_0 = {}
 
-	for slot5 in string.gmatch(slot0, "[%z-\\xc2-\\xf4][\\x80-\\xbf ]*") do
-		if not LuaUtil.isEmptyStr(slot5) then
-			table.insert(slot1, slot5)
+	for iter_20_0 in string.gmatch(arg_20_0, "[%z\x01-\x7F\xC2-\xF4][\x80-\xBF ]*") do
+		if not LuaUtil.isEmptyStr(iter_20_0) then
+			table.insert(var_20_0, iter_20_0)
 		end
 	end
 
-	return slot1
+	return var_20_0
 end
 
-function slot0.getActId(slot0)
-	return slot0._actId
+function var_0_0.getActId(arg_21_0)
+	return arg_21_0._actId
 end
 
-function slot0.getOrderMo(slot0, slot1)
-	return slot0._orderInfoMap[slot1]
+function var_0_0.getOrderMo(arg_22_0, arg_22_1)
+	return arg_22_0._orderInfoMap[arg_22_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

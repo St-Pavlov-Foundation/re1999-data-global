@@ -1,427 +1,508 @@
-module("modules.common.utils.GoHelperExtend", package.seeall)
+﻿module("modules.common.utils.GoHelperExtend", package.seeall)
 
-slot0 = gohelper
-slot0.Type_UIClickAudio = typeof(ZProj.UIClickAudio)
-slot0.Type_CanvasGroup = typeof(UnityEngine.CanvasGroup)
-slot0.Type_TMPInputField = typeof(TMPro.TMP_InputField)
-slot0.Type_Animator = typeof(UnityEngine.Animator)
-slot0.Type_LimitedScrollRect = typeof(ZProj.LimitedScrollRect)
-slot0.Type_RectTransform = typeof(UnityEngine.RectTransform)
-slot0.Type_Transform = typeof(UnityEngine.Transform)
-slot0.Type_ParticleSystem = typeof(UnityEngine.ParticleSystem)
-slot0.Type_AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
-slot0.Type_Animation = typeof(UnityEngine.Animation)
-slot0.Type_TMP_SubMeshUI = typeof(TMPro.TMP_SubMeshUI)
-slot0.Type_RectMask2D = typeof(UnityEngine.UI.RectMask2D)
-slot0.Type_GridLayoutGroup = typeof(UnityEngine.UI.GridLayoutGroup)
-slot0.Type_ContentSizeFitter = typeof(UnityEngine.UI.ContentSizeFitter)
-slot0.Type_LangTextDynamicSize = typeof(ZProj.LangTextDynamicSize)
-slot1 = SLFramework.UGUI.ButtonWrap
-slot2 = SLFramework.UGUI.UIClickListener
-slot3 = ZProj.GameHelper
-slot4 = ZProj.LangTextDynamicSize
+local var_0_0 = gohelper
 
-function slot0.addUIClickAudio(slot0, slot1)
-	uv0.onceAddComponent(slot0, uv0.Type_UIClickAudio).audioId = slot1 or AudioEnum.UI.UI_Common_Click
+var_0_0.Type_UIClickAudio = typeof(ZProj.UIClickAudio)
+var_0_0.Type_CanvasGroup = typeof(UnityEngine.CanvasGroup)
+var_0_0.Type_TMPInputField = typeof(TMPro.TMP_InputField)
+var_0_0.Type_Animator = typeof(UnityEngine.Animator)
+var_0_0.Type_LimitedScrollRect = typeof(ZProj.LimitedScrollRect)
+var_0_0.Type_RectTransform = typeof(UnityEngine.RectTransform)
+var_0_0.Type_Transform = typeof(UnityEngine.Transform)
+var_0_0.Type_ParticleSystem = typeof(UnityEngine.ParticleSystem)
+var_0_0.Type_AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
+var_0_0.Type_Animation = typeof(UnityEngine.Animation)
+var_0_0.Type_TMP_SubMeshUI = typeof(TMPro.TMP_SubMeshUI)
+var_0_0.Type_RectMask2D = typeof(UnityEngine.UI.RectMask2D)
+var_0_0.Type_GridLayoutGroup = typeof(UnityEngine.UI.GridLayoutGroup)
+var_0_0.Type_ContentSizeFitter = typeof(UnityEngine.UI.ContentSizeFitter)
+var_0_0.Type_LangTextDynamicSize = typeof(ZProj.LangTextDynamicSize)
+
+local var_0_1 = SLFramework.UGUI.ButtonWrap
+local var_0_2 = SLFramework.UGUI.UIClickListener
+local var_0_3 = ZProj.GameHelper
+local var_0_4 = ZProj.LangTextDynamicSize
+
+function var_0_0.addUIClickAudio(arg_1_0, arg_1_1)
+	arg_1_1 = arg_1_1 or AudioEnum.UI.UI_Common_Click
+	var_0_0.onceAddComponent(arg_1_0, var_0_0.Type_UIClickAudio).audioId = arg_1_1
 end
 
-function slot0.removeUIClickAudio(slot0)
-	uv0.onceAddComponent(slot0, uv0.Type_UIClickAudio).audioId = 0
+function var_0_0.removeUIClickAudio(arg_2_0)
+	var_0_0.onceAddComponent(arg_2_0, var_0_0.Type_UIClickAudio).audioId = 0
 end
 
-function slot0.findChildButtonWithAudio(slot0, slot1, slot2)
-	if uv0.GetWithPath(slot0, slot1) then
-		uv1.addUIClickAudio(slot3.gameObject, slot2)
+function var_0_0.findChildButtonWithAudio(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = var_0_1.GetWithPath(arg_3_0, arg_3_1)
+
+	if var_3_0 then
+		var_0_0.addUIClickAudio(var_3_0.gameObject, arg_3_2)
 	end
 
-	return slot3
+	return var_3_0
 end
 
-function slot0.findButtonWithAudio(slot0, slot1)
-	if uv0.Get(slot0) then
-		uv1.addUIClickAudio(slot2.gameObject, slot1)
+function var_0_0.findButtonWithAudio(arg_4_0, arg_4_1)
+	local var_4_0 = var_0_1.Get(arg_4_0)
+
+	if var_4_0 then
+		var_0_0.addUIClickAudio(var_4_0.gameObject, arg_4_1)
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.findChildClickWithAudio(slot0, slot1, slot2)
-	if uv0.GetWithPath(slot0, slot1) and slot2 then
-		uv1.addUIClickAudio(slot3.gameObject, slot2)
+function var_0_0.findChildClickWithAudio(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = var_0_2.GetWithPath(arg_5_0, arg_5_1)
+
+	if var_5_0 and arg_5_2 then
+		var_0_0.addUIClickAudio(var_5_0.gameObject, arg_5_2)
 	end
 
-	return slot3
+	return var_5_0
 end
 
-function slot0.findChildAnim(slot0, slot1)
-	if uv0.findChild(slot0, slot1) then
-		return slot2:GetComponent(uv0.Type_Animator)
-	end
-end
+function var_0_0.findChildAnim(arg_6_0, arg_6_1)
+	local var_6_0 = var_0_0.findChild(arg_6_0, arg_6_1)
 
-function slot0.getClickWithAudio(slot0, slot1)
-	if uv0.Get(slot0) and slot1 then
-		uv1.addUIClickAudio(slot2.gameObject, slot1)
-	end
-
-	return slot2
-end
-
-function slot0.getClickWithDefaultAudio(slot0)
-	return uv0.getClickWithAudio(slot0, AudioEnum.UI.UI_Common_Click)
-end
-
-function slot0.findChildClickWithDefaultAudio(slot0, slot1)
-	return uv0.findChildClickWithAudio(slot0, slot1, AudioEnum.UI.UI_Common_Click)
-end
-
-function slot0.findChildTextMeshInputField(slot0, slot1)
-	return ZProj.TextMeshInputFieldWrap.GetWithPath(slot0, slot1)
-end
-
-function slot0.findChildDropdown(slot0, slot1)
-	return ZProj.DropdownWrap.GetWithPath(slot0, slot1) or ZProj.TMPDropdownWrap.GetWithPath(slot0, slot1)
-end
-
-function slot0.findChildScrollbar(slot0, slot1)
-	return ZProj.ScrollbarWrap.GetWithPath(slot0, slot1)
-end
-
-function slot0.findChildUIMesh(slot0, slot1)
-	if string.nilorempty(slot1) then
-		return slot0:GetComponent(typeof(UIMesh))
-	end
-
-	if uv0.findChild(slot0, slot1) then
-		return slot2:GetComponent(typeof(UIMesh))
+	if var_6_0 then
+		return var_6_0:GetComponent(var_0_0.Type_Animator)
 	end
 end
 
-function slot0.setActiveCanvasGroup(slot0, slot1)
-	uv0.SetActiveCanvasGroup(slot0, slot1)
-end
+function var_0_0.getClickWithAudio(arg_7_0, arg_7_1)
+	local var_7_0 = var_0_2.Get(arg_7_0)
 
-function slot0.getRichColorText(slot0, slot1)
-	return string.format("<color=%s>%s</color>", slot1, slot0)
-end
-
-function slot0.getRemindFourNumberFloat(slot0)
-	return slot0 - slot0 % 0.0001
-end
-
-function slot0.activateExtend()
-end
-
-function slot0.CreateObjList(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if uv0.isNil(slot3) and not uv0.isNil(slot4) then
-		slot3 = slot4.transform.parent.gameObject
+	if var_7_0 and arg_7_1 then
+		var_0_0.addUIClickAudio(var_7_0.gameObject, arg_7_1)
 	end
 
-	slot8 = nil
-	slot10 = slot3.transform
-	slot7 = slot7 or #slot2
-	slot11 = 0
+	return var_7_0
+end
 
-	if (slot6 or 1) > 1 then
-		for slot15 = 1, slot6 - 1 do
-			slot16 = nil
+function var_0_0.getClickWithDefaultAudio(arg_8_0)
+	return var_0_0.getClickWithAudio(arg_8_0, AudioEnum.UI.UI_Common_Click)
+end
 
-			if slot2[slot15] and (slot10.childCount >= slot15 + slot11 and slot10:GetChild(slot15 - 1 + slot11).gameObject) == slot4 then
-				uv0.setActive(slot16, false)
+function var_0_0.findChildClickWithDefaultAudio(arg_9_0, arg_9_1)
+	return var_0_0.findChildClickWithAudio(arg_9_0, arg_9_1, AudioEnum.UI.UI_Common_Click)
+end
 
-				slot11 = slot11 + 1
-				slot8 = slot16
+function var_0_0.findChildTextMeshInputField(arg_10_0, arg_10_1)
+	return ZProj.TextMeshInputFieldWrap.GetWithPath(arg_10_0, arg_10_1)
+end
 
-				break
+function var_0_0.findChildDropdown(arg_11_0, arg_11_1)
+	return ZProj.DropdownWrap.GetWithPath(arg_11_0, arg_11_1) or ZProj.TMPDropdownWrap.GetWithPath(arg_11_0, arg_11_1)
+end
+
+function var_0_0.findChildScrollbar(arg_12_0, arg_12_1)
+	return ZProj.ScrollbarWrap.GetWithPath(arg_12_0, arg_12_1)
+end
+
+function var_0_0.findChildUIMesh(arg_13_0, arg_13_1)
+	if string.nilorempty(arg_13_1) then
+		return arg_13_0:GetComponent(typeof(UIMesh))
+	end
+
+	local var_13_0 = var_0_0.findChild(arg_13_0, arg_13_1)
+
+	if var_13_0 then
+		return var_13_0:GetComponent(typeof(UIMesh))
+	end
+end
+
+function var_0_0.setActiveCanvasGroup(arg_14_0, arg_14_1)
+	var_0_3.SetActiveCanvasGroup(arg_14_0, arg_14_1)
+end
+
+function var_0_0.getRichColorText(arg_15_0, arg_15_1)
+	return string.format("<color=%s>%s</color>", arg_15_1, arg_15_0)
+end
+
+function var_0_0.getRemindFourNumberFloat(arg_16_0)
+	return arg_16_0 - arg_16_0 % 0.0001
+end
+
+function var_0_0.activateExtend()
+	return
+end
+
+function var_0_0.CreateObjList(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5, arg_18_6, arg_18_7)
+	if var_0_0.isNil(arg_18_3) and not var_0_0.isNil(arg_18_4) then
+		arg_18_3 = arg_18_4.transform.parent.gameObject
+	end
+
+	local var_18_0
+	local var_18_1 = #arg_18_2
+	local var_18_2 = arg_18_3.transform
+
+	arg_18_6 = arg_18_6 or 1
+	arg_18_7 = arg_18_7 or var_18_1
+
+	local var_18_3 = 0
+
+	if arg_18_6 > 1 then
+		for iter_18_0 = 1, arg_18_6 - 1 do
+			local var_18_4
+
+			if arg_18_2[iter_18_0] then
+				local var_18_5 = var_18_2.childCount >= iter_18_0 + var_18_3 and var_18_2:GetChild(iter_18_0 - 1 + var_18_3).gameObject
+
+				if var_18_5 == arg_18_4 then
+					var_0_0.setActive(var_18_5, false)
+
+					var_18_3 = var_18_3 + 1
+					var_18_0 = var_18_5
+
+					break
+				end
 			end
 		end
 	end
 
-	for slot15 = slot6, slot7 do
-		slot16 = nil
+	for iter_18_1 = arg_18_6, arg_18_7 do
+		local var_18_6
 
-		if slot2[slot15] then
-			if (slot10.childCount >= slot15 + slot11 and slot10:GetChild(slot15 - 1 + slot11).gameObject or uv0.clone(slot4, slot3, slot15)) == slot4 then
-				uv0.setActive(slot16, false)
+		if arg_18_2[iter_18_1] then
+			local var_18_7 = var_18_2.childCount >= iter_18_1 + var_18_3 and var_18_2:GetChild(iter_18_1 - 1 + var_18_3).gameObject or var_0_0.clone(arg_18_4, arg_18_3, iter_18_1)
 
-				slot8 = slot16
-				slot16 = slot10.childCount >= slot15 + slot11 + 1 and slot10:GetChild(slot15 - 1 + slot11).gameObject or uv0.clone(slot4, slot3, slot15)
+			if var_18_7 == arg_18_4 then
+				var_0_0.setActive(var_18_7, false)
+
+				var_18_3 = var_18_3 + 1
+				var_18_0 = var_18_7
+				var_18_7 = var_18_2.childCount >= iter_18_1 + var_18_3 and var_18_2:GetChild(iter_18_1 - 1 + var_18_3).gameObject or var_0_0.clone(arg_18_4, arg_18_3, iter_18_1)
 			end
 
-			uv0.setActive(slot16, true)
+			var_0_0.setActive(var_18_7, true)
 
-			if slot1 then
-				if slot5 then
-					slot1(slot0, MonoHelper.addNoUpdateLuaComOnceToGo(slot16, slot5), slot2[slot15], slot15)
+			if arg_18_1 then
+				if arg_18_5 then
+					arg_18_1(arg_18_0, MonoHelper.addNoUpdateLuaComOnceToGo(var_18_7, arg_18_5), arg_18_2[iter_18_1], iter_18_1)
 				else
-					slot1(slot0, slot16, slot2[slot15], slot15)
+					arg_18_1(arg_18_0, var_18_7, arg_18_2[iter_18_1], iter_18_1)
 				end
 			end
 		else
-			slot7 = slot15 - 1
+			arg_18_7 = iter_18_1 - 1
 
 			break
 		end
 	end
 
-	if slot7 + 1 + slot11 < 1 then
-		slot6 = 1
-	end
+	arg_18_6 = arg_18_7 + 1 + var_18_3
+	arg_18_6 = arg_18_6 < 1 and 1 or arg_18_6
 
-	for slot15 = slot6, slot10.childCount do
-		if slot10:GetChild(slot15 - 1) and slot16.gameObject then
-			uv0.setActive(slot17, false)
+	for iter_18_2 = arg_18_6, var_18_2.childCount do
+		local var_18_8 = var_18_2:GetChild(iter_18_2 - 1)
+		local var_18_9 = var_18_8 and var_18_8.gameObject
+
+		if var_18_9 then
+			var_0_0.setActive(var_18_9, false)
 		end
 	end
 
-	if slot8 then
-		slot8.transform:SetSiblingIndex(slot10.childCount - 1)
+	if var_18_0 then
+		var_18_0.transform:SetSiblingIndex(var_18_2.childCount - 1)
 	end
 end
 
-function slot0.CreateNumObjList(slot0, slot1, slot2)
-	for slot9 = 1, slot0.transform.childCount <= slot2 and slot2 or slot4 do
-		slot10 = nil
+function var_0_0.CreateNumObjList(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0.transform
+	local var_19_1 = var_19_0.childCount
+	local var_19_2 = var_19_1 <= arg_19_2 and arg_19_2 or var_19_1
 
-		if slot9 <= slot2 then
-			uv0.setActive(slot9 <= slot4 and slot3:GetChild(slot9 - 1).gameObject or uv0.clone(slot1, slot0, slot9), true)
-		elseif slot9 <= slot4 and slot3:GetChild(slot9 - 1).gameObject then
-			uv0.setActive(slot10, false)
+	for iter_19_0 = 1, var_19_2 do
+		local var_19_3
+
+		if iter_19_0 <= arg_19_2 then
+			local var_19_4 = iter_19_0 <= var_19_1 and var_19_0:GetChild(iter_19_0 - 1).gameObject or var_0_0.clone(arg_19_1, arg_19_0, iter_19_0)
+
+			var_0_0.setActive(var_19_4, true)
+		else
+			local var_19_5 = iter_19_0 <= var_19_1 and var_19_0:GetChild(iter_19_0 - 1).gameObject
+
+			if var_19_5 then
+				var_0_0.setActive(var_19_5, false)
+			end
 		end
 	end
 end
 
-function slot0.removeComponent(slot0, slot1)
-	uv0.RemoveComponent(slot0, slot1)
+function var_0_0.removeComponent(arg_20_0, arg_20_1)
+	var_0_3.RemoveComponent(arg_20_0, arg_20_1)
 end
 
-function slot0.enableAkListener(slot0, slot1)
-	if slot1 then
-		ZProj.AudioHelper.EnableAkListener(slot0)
+function var_0_0.enableAkListener(arg_21_0, arg_21_1)
+	if arg_21_1 then
+		ZProj.AudioHelper.EnableAkListener(arg_21_0)
 	else
-		ZProj.AudioHelper.DisableAkListener(slot0)
+		ZProj.AudioHelper.DisableAkListener(arg_21_0)
 	end
 end
 
-function slot0.addAkGameObject(slot0)
-	ZProj.AudioHelper.AddAkGameObject(slot0)
+function var_0_0.addAkGameObject(arg_22_0)
+	ZProj.AudioHelper.AddAkGameObject(arg_22_0)
 end
 
-function slot0.fitScreenOffset(slot0)
-	ZProj.UGUIHelper.RebuildLayout(slot0)
+function var_0_0.fitScreenOffset(arg_23_0)
+	ZProj.UGUIHelper.RebuildLayout(arg_23_0)
 
-	slot1 = ViewMgr.instance:getUIRoot().transform
-	slot4 = recthelper.getWidth(slot1) / recthelper.getHeight(slot1) < 1.7777777777777777 and 1080 or slot3
-	slot5, slot6, slot7, slot8 = nil
+	local var_23_0 = ViewMgr.instance:getUIRoot().transform
+	local var_23_1 = recthelper.getWidth(var_23_0)
+	local var_23_2 = recthelper.getHeight(var_23_0)
+	local var_23_3 = var_23_1 / var_23_2 < 1.7777777777777777 and 1080 or var_23_2
+	local var_23_4
+	local var_23_5
+	local var_23_6
+	local var_23_7
+	local var_23_8 = arg_23_0.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic))
 
-	if slot0.gameObject:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic)) then
-		slot10 = slot9:GetEnumerator()
+	if var_23_8 then
+		local var_23_9 = var_23_8:GetEnumerator()
 
-		while slot10:MoveNext() do
-			slot11 = slot10.Current.gameObject:GetComponent(typeof(UnityEngine.RectTransform))
-			slot12 = slot1:InverseTransformPoint(slot11.position)
-			slot13 = slot12.x - slot11.pivot.x * recthelper.getWidth(slot11)
-			slot14 = slot12.x + (1 - slot11.pivot.x) * recthelper.getWidth(slot11)
-			slot15 = slot12.y + (1 - slot11.pivot.y) * recthelper.getHeight(slot11)
-			slot16 = slot12.y - slot11.pivot.y * recthelper.getHeight(slot11)
+		while var_23_9:MoveNext() do
+			local var_23_10 = var_23_9.Current.gameObject:GetComponent(typeof(UnityEngine.RectTransform))
+			local var_23_11 = var_23_0:InverseTransformPoint(var_23_10.position)
+			local var_23_12 = var_23_11.x - var_23_10.pivot.x * recthelper.getWidth(var_23_10)
+			local var_23_13 = var_23_11.x + (1 - var_23_10.pivot.x) * recthelper.getWidth(var_23_10)
+			local var_23_14 = var_23_11.y + (1 - var_23_10.pivot.y) * recthelper.getHeight(var_23_10)
+			local var_23_15 = var_23_11.y - var_23_10.pivot.y * recthelper.getHeight(var_23_10)
 
-			if slot13 < (slot5 or slot13) then
-				slot5 = slot13
+			var_23_4 = var_23_4 or var_23_12
+
+			if var_23_12 < var_23_4 then
+				var_23_4 = var_23_12
 			end
 
-			if (slot6 or slot14) < slot14 then
-				slot6 = slot14
+			var_23_5 = var_23_5 or var_23_13
+
+			if var_23_5 < var_23_13 then
+				var_23_5 = var_23_13
 			end
 
-			if slot16 < (slot7 or slot16) then
-				slot7 = slot16
+			var_23_6 = var_23_6 or var_23_15
+
+			if var_23_15 < var_23_6 then
+				var_23_6 = var_23_15
 			end
 
-			if (slot8 or slot15) < slot15 then
-				slot8 = slot15
+			var_23_7 = var_23_7 or var_23_14
+
+			if var_23_7 < var_23_14 then
+				var_23_7 = var_23_14
 			end
 		end
 	end
 
-	slot11 = slot4 / 2
-	slot12 = false
+	local var_23_16 = var_23_1 / 2
+	local var_23_17 = var_23_3 / 2
+	local var_23_18 = false
 
-	if slot5 < -(slot2 / 2) then
-		slot12 = true
+	if var_23_4 < -var_23_16 then
+		var_23_18 = true
 
-		recthelper.setAnchorX(slot0, recthelper.getAnchorX(slot0) - (slot5 + slot10))
-	elseif slot10 < slot6 then
-		slot12 = true
+		recthelper.setAnchorX(arg_23_0, recthelper.getAnchorX(arg_23_0) - (var_23_4 + var_23_16))
+	elseif var_23_16 < var_23_5 then
+		var_23_18 = true
 
-		recthelper.setAnchorX(slot0, recthelper.getAnchorX(slot0) - (slot6 - slot10))
+		recthelper.setAnchorX(arg_23_0, recthelper.getAnchorX(arg_23_0) - (var_23_5 - var_23_16))
 	end
 
-	if slot7 < -slot11 then
-		slot12 = true
+	if var_23_6 < -var_23_17 then
+		var_23_18 = true
 
-		recthelper.setAnchorY(slot0, recthelper.getAnchorY(slot0) - (slot7 + slot11))
-	elseif slot11 < slot8 then
-		slot12 = true
+		recthelper.setAnchorY(arg_23_0, recthelper.getAnchorY(arg_23_0) - (var_23_6 + var_23_17))
+	elseif var_23_17 < var_23_7 then
+		var_23_18 = true
 
-		recthelper.setAnchorY(slot0, recthelper.getAnchorY(slot0) - (slot8 - slot11))
+		recthelper.setAnchorY(arg_23_0, recthelper.getAnchorY(arg_23_0) - (var_23_7 - var_23_17))
 	end
 
-	return slot12
+	return var_23_18
 end
 
-function slot0.addChildPosStay(slot0, slot1)
-	if uv0.isNil(slot1) then
+function var_0_0.addChildPosStay(arg_24_0, arg_24_1)
+	if var_0_0.isNil(arg_24_1) then
 		return
 	end
 
-	if uv0.isNil(slot0) then
-		slot1.transform:SetParent(nil, true)
+	if var_0_0.isNil(arg_24_0) then
+		arg_24_1.transform:SetParent(nil, true)
 	else
-		slot1.transform:SetParent(slot0.transform, true)
+		arg_24_1.transform:SetParent(arg_24_0.transform, true)
 	end
 end
 
-function slot0.addBoxCollider2D(slot0, slot1)
-	uv0.onceAddComponent(slot0, typeof(UnityEngine.BoxCollider2D)).enabled = true
-	slot2.size = slot1 or Vector2(1.5, 1.5)
+function var_0_0.addBoxCollider2D(arg_25_0, arg_25_1)
+	local var_25_0 = var_0_0.onceAddComponent(arg_25_0, typeof(UnityEngine.BoxCollider2D))
 
-	return slot2
+	var_25_0.enabled = true
+	var_25_0.size = arg_25_1 or Vector2(1.5, 1.5)
+
+	return var_25_0
 end
 
-function slot0.fitScrollItemOffset(slot0, slot1, slot2, slot3)
-	slot5 = slot0:GetComponent(typeof(UnityEngine.RectTransform))
-	slot6 = ViewMgr.instance:getUIRoot().transform:InverseTransformPoint(slot5.position)
-	slot7 = transformhelper.getLocalScale(slot0.transform) * uv0.getTotalParentScale(slot0)
-	slot8 = slot6.x - slot5.pivot.x * recthelper.getWidth(slot5) * slot7
-	slot9 = slot6.x + (1 - slot5.pivot.x) * recthelper.getWidth(slot5) * slot7
-	slot10 = slot6.y + (1 - slot5.pivot.y) * recthelper.getHeight(slot5) * slot7
-	slot11 = slot6.y - slot5.pivot.y * recthelper.getHeight(slot5) * slot7
-	slot12 = 100000
-	slot13 = -100000
-	slot14 = 100000
-	slot15 = -100000
-	slot16 = 0
+function var_0_0.fitScrollItemOffset(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = ViewMgr.instance:getUIRoot().transform
+	local var_26_1 = arg_26_0:GetComponent(typeof(UnityEngine.RectTransform))
+	local var_26_2 = var_26_0:InverseTransformPoint(var_26_1.position)
+	local var_26_3 = transformhelper.getLocalScale(arg_26_0.transform) * var_0_0.getTotalParentScale(arg_26_0)
+	local var_26_4 = var_26_2.x - var_26_1.pivot.x * recthelper.getWidth(var_26_1) * var_26_3
+	local var_26_5 = var_26_2.x + (1 - var_26_1.pivot.x) * recthelper.getWidth(var_26_1) * var_26_3
+	local var_26_6 = var_26_2.y + (1 - var_26_1.pivot.y) * recthelper.getHeight(var_26_1) * var_26_3
+	local var_26_7 = var_26_2.y - var_26_1.pivot.y * recthelper.getHeight(var_26_1) * var_26_3
+	local var_26_8 = 100000
+	local var_26_9 = -100000
+	local var_26_10 = 100000
+	local var_26_11 = -100000
+	local var_26_12 = 0
+	local var_26_13 = arg_26_2:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic))
 
-	if slot2:GetComponentsInChildren(typeof(UnityEngine.UI.Graphic)) then
-		slot18 = slot17:GetEnumerator()
+	if var_26_13 then
+		local var_26_14 = var_26_13:GetEnumerator()
 
-		while slot18:MoveNext() do
-			if slot18.Current.gameObject:GetComponent(uv0.Type_ParticleSystem) == nil then
-				slot20 = slot19:GetComponent(typeof(UnityEngine.RectTransform))
-				slot21 = transformhelper.getLocalScale(slot19.transform) * uv0.getTotalParentScale(slot19)
-				slot22 = slot4:InverseTransformPoint(slot20.position)
-				slot12 = math.min(slot12, slot22.x - slot20.pivot.x * recthelper.getWidth(slot20) * slot21)
-				slot13 = math.max(slot13, slot22.x + (1 - slot20.pivot.x) * recthelper.getWidth(slot20) * slot21)
-				slot14 = math.min(slot14, slot22.y - slot20.pivot.y * recthelper.getHeight(slot20) * slot21)
-				slot15 = math.max(slot15, slot22.y + (1 - slot20.pivot.y) * recthelper.getHeight(slot20) * slot21)
+		while var_26_14:MoveNext() do
+			local var_26_15 = var_26_14.Current.gameObject
+
+			if var_26_15:GetComponent(var_0_0.Type_ParticleSystem) == nil then
+				local var_26_16 = var_26_15:GetComponent(typeof(UnityEngine.RectTransform))
+				local var_26_17 = transformhelper.getLocalScale(var_26_15.transform) * var_0_0.getTotalParentScale(var_26_15)
+				local var_26_18 = var_26_0:InverseTransformPoint(var_26_16.position)
+				local var_26_19 = var_26_18.x - var_26_16.pivot.x * recthelper.getWidth(var_26_16) * var_26_17
+				local var_26_20 = var_26_18.x + (1 - var_26_16.pivot.x) * recthelper.getWidth(var_26_16) * var_26_17
+				local var_26_21 = var_26_18.y + (1 - var_26_16.pivot.y) * recthelper.getHeight(var_26_16) * var_26_17
+				local var_26_22 = var_26_18.y - var_26_16.pivot.y * recthelper.getHeight(var_26_16) * var_26_17
+
+				var_26_8 = math.min(var_26_8, var_26_19)
+				var_26_9 = math.max(var_26_9, var_26_20)
+				var_26_10 = math.min(var_26_10, var_26_22)
+				var_26_11 = math.max(var_26_11, var_26_21)
 			end
 		end
 	end
 
-	if slot3 == ScrollEnum.ScrollDirH then
-		if slot12 < slot8 then
-			slot16 = slot8 - slot12
+	if arg_26_3 == ScrollEnum.ScrollDirH then
+		if var_26_8 < var_26_4 then
+			var_26_12 = var_26_4 - var_26_8
 		end
 
-		if slot9 < slot13 then
-			slot16 = slot9 - slot13
+		if var_26_5 < var_26_9 then
+			var_26_12 = var_26_5 - var_26_9
 		end
-	elseif slot3 == ScrollEnum.ScrollDirV then
-		if slot14 < slot11 then
-			slot16 = slot11 - slot14
+	elseif arg_26_3 == ScrollEnum.ScrollDirV then
+		if var_26_10 < var_26_7 then
+			var_26_12 = var_26_7 - var_26_10
 		end
 
-		if slot10 < slot15 then
-			slot16 = slot10 - slot15
+		if var_26_6 < var_26_11 then
+			var_26_12 = var_26_6 - var_26_11
 		end
 	end
 
-	return slot16 / uv0.getTotalParentScale(slot1)
+	return var_26_12 / var_0_0.getTotalParentScale(arg_26_1)
 end
 
-function slot0.getTotalParentScale(slot0)
-	slot2 = transformhelper.getLocalScale(slot0.transform.parent.gameObject.transform)
+function var_0_0.getTotalParentScale(arg_27_0)
+	local var_27_0 = arg_27_0.transform.parent.gameObject
+	local var_27_1 = transformhelper.getLocalScale(var_27_0.transform)
 
-	while slot1.transform.parent.gameObject.name ~= "UIRoot" do
-		slot2 = slot2 * transformhelper.getLocalScale(slot1.transform.parent.gameObject.transform)
+	while var_27_0.transform.parent.gameObject.name ~= "UIRoot" do
+		var_27_0 = var_27_0.transform.parent.gameObject
+		var_27_1 = var_27_1 * transformhelper.getLocalScale(var_27_0.transform)
 	end
 
-	return slot2
+	return var_27_1
 end
 
-function slot0.isMouseOverGo(slot0, slot1)
-	if not slot0 then
+function var_0_0.isMouseOverGo(arg_28_0, arg_28_1)
+	if not arg_28_0 then
 		return false
 	end
 
-	slot2 = slot0.transform
-	slot4 = recthelper.getHeight(slot2)
+	local var_28_0 = arg_28_0.transform
+	local var_28_1 = recthelper.getWidth(var_28_0)
+	local var_28_2 = recthelper.getHeight(var_28_0)
 
-	if recthelper.screenPosToAnchorPos(slot1 or GamepadController.instance:getMousePosition(), slot2).x >= -recthelper.getWidth(slot2) * slot2.pivot.x and slot5.x <= slot3 * (1 - slot6.x) and slot5.y <= slot4 * slot6.x and slot5.y >= -slot4 * (1 - slot6.x) then
+	arg_28_1 = arg_28_1 or GamepadController.instance:getMousePosition()
+
+	local var_28_3 = recthelper.screenPosToAnchorPos(arg_28_1, var_28_0)
+	local var_28_4 = var_28_0.pivot
+
+	if var_28_3.x >= -var_28_1 * var_28_4.x and var_28_3.x <= var_28_1 * (1 - var_28_4.x) and var_28_3.y <= var_28_2 * var_28_4.x and var_28_3.y >= -var_28_2 * (1 - var_28_4.x) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.removeEffectNode(slot0)
-	if not slot0 then
+function var_0_0.removeEffectNode(arg_29_0)
+	if not arg_29_0 then
 		return
 	end
 
-	slot3 = slot1 == ModuleEnum.Performance.Low
+	local var_29_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local var_29_1 = var_29_0 == ModuleEnum.Performance.Middle or var_29_0 == ModuleEnum.Performance.Low
+	local var_29_2 = var_29_0 == ModuleEnum.Performance.Low
 
-	if GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.Middle or slot1 == ModuleEnum.Performance.Low or slot3 then
-		uv0._deleteLodNode(slot0.transform, slot2, slot3)
+	if var_29_1 or var_29_2 then
+		var_0_0._deleteLodNode(arg_29_0.transform, var_29_1, var_29_2)
 	end
 end
 
-function slot0._deleteLodNode(slot0, slot1, slot2)
-	for slot7 = slot0.childCount - 1, 0, -1 do
-		slot8 = slot0:GetChild(slot7)
+function var_0_0._deleteLodNode(arg_30_0, arg_30_1, arg_30_2)
+	for iter_30_0 = arg_30_0.childCount - 1, 0, -1 do
+		local var_30_0 = arg_30_0:GetChild(iter_30_0)
 
-		if slot1 and string.find(slot8.name, "^h_") then
-			uv0.destroy(slot8.gameObject)
-		elseif slot2 and string.find(slot8.name, "^m_") then
-			uv0.destroy(slot8.gameObject)
+		if arg_30_1 and string.find(var_30_0.name, "^h_") then
+			var_0_0.destroy(var_30_0.gameObject)
+		elseif arg_30_2 and string.find(var_30_0.name, "^m_") then
+			var_0_0.destroy(var_30_0.gameObject)
 		else
-			uv0._deleteLodNode(slot8, slot1, slot2)
+			var_0_0._deleteLodNode(var_30_0, arg_30_1, arg_30_2)
 		end
 	end
 end
 
-function slot0.getParent(slot0, slot1)
-	slot2 = slot0
+function var_0_0.getParent(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0
 
-	for slot6 = 1, slot1 do
-		if not slot2 then
+	for iter_31_0 = 1, arg_31_1 do
+		if not var_31_0 then
 			return
 		end
 
-		slot2 = slot2.parent
+		var_31_0 = var_31_0.parent
 	end
 
-	return slot2
+	return var_31_0
 end
 
-function slot0.getChildDynamicSizeText(slot0, slot1)
-	return uv1.Get(uv0.findChild(slot0, slot1))
+function var_0_0.getChildDynamicSizeText(arg_32_0, arg_32_1)
+	local var_32_0 = var_0_0.findChild(arg_32_0, arg_32_1)
+
+	return var_0_4.Get(var_32_0)
 end
 
-function slot0.findChildDynamicSizeText(slot0, slot1)
-	return uv0.findChildComponent(slot0, slot1, uv0.Type_LangTextDynamicSize)
+function var_0_0.findChildDynamicSizeText(arg_33_0, arg_33_1)
+	return var_0_0.findChildComponent(arg_33_0, arg_33_1, var_0_0.Type_LangTextDynamicSize)
 end
 
-function slot0.getDynamicSizeText(slot0)
-	return slot0:GetComponent(uv0.Type_LangTextDynamicSize)
+function var_0_0.getDynamicSizeText(arg_34_0)
+	return arg_34_0:GetComponent(var_0_0.Type_LangTextDynamicSize)
 end
 
-function slot0.getUIScreenWidth()
-	if UnityEngine.GameObject.Find("UIRoot/POPUP_TOP") then
-		return recthelper.getWidth(slot0.transform)
+function var_0_0.getUIScreenWidth()
+	local var_35_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
+
+	if var_35_0 then
+		return recthelper.getWidth(var_35_0.transform)
 	end
 
-	return math.floor(UnityEngine.Screen.width * 1080 / UnityEngine.Screen.height + 0.5)
+	local var_35_1 = 1080 / UnityEngine.Screen.height
+
+	return (math.floor(UnityEngine.Screen.width * var_35_1 + 0.5))
 end
 
-return slot0
+return var_0_0

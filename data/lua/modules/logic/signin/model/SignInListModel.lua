@@ -1,19 +1,19 @@
-module("modules.logic.signin.model.SignInListModel", package.seeall)
+﻿module("modules.logic.signin.model.SignInListModel", package.seeall)
 
-slot0 = class("SignInListModel", ListScrollModel)
+local var_0_0 = class("SignInListModel", ListScrollModel)
 
-function slot0.setPropList(slot0, slot1)
-	slot0._moList = slot1 and slot1 or {}
+function var_0_0.setPropList(arg_1_0, arg_1_1)
+	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-function slot0.clearPropList(slot0)
-	slot0._moList = nil
+function var_0_0.clearPropList(arg_2_0)
+	arg_2_0._moList = nil
 
-	slot0:clear()
+	arg_2_0:clear()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

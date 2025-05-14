@@ -1,46 +1,48 @@
-module("modules.logic.summon.model.SummonModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonModel", package.seeall)
 
-slot0 = class("SummonModel", BaseModel)
+local var_0_0 = class("SummonModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._summonResult = nil
-	slot0._orderedSummonResult = nil
-	slot0._duplicateCountList = nil
-	slot0._freeEquipSummon = nil
-	slot0._isEquipSendFree = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._summonResult = nil
+	arg_1_0._orderedSummonResult = nil
+	arg_1_0._duplicateCountList = nil
+	arg_1_0._freeEquipSummon = nil
+	arg_1_0._isEquipSendFree = nil
 
-	slot0:setIsDrawing(false)
+	arg_1_0:setIsDrawing(false)
 end
 
-function slot0.reInit(slot0)
-	slot0._summonResult = nil
-	slot0._orderedSummonResult = nil
-	slot0._duplicateCountList = nil
-	slot0._freeEquipSummon = nil
-	slot0._isEquipSendFree = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._summonResult = nil
+	arg_2_0._orderedSummonResult = nil
+	arg_2_0._duplicateCountList = nil
+	arg_2_0._freeEquipSummon = nil
+	arg_2_0._isEquipSendFree = nil
 
-	slot0:setIsDrawing(false)
+	arg_2_0:setIsDrawing(false)
 end
 
-function slot0.updateSummonResult(slot0, slot1, slot2)
-	slot0._summonResult = {}
-	slot0._orderedSummonResult = {}
-	slot0._duplicateCountList = {}
+function var_0_0.updateSummonResult(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._summonResult = {}
+	arg_3_0._orderedSummonResult = {}
+	arg_3_0._duplicateCountList = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot6, slot7 in ipairs(slot1) do
-			SummonResultMO.New():init(slot7)
+	if arg_3_1 and #arg_3_1 > 0 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+			local var_3_0 = SummonResultMO.New()
 
-			if slot7.heroId and slot7.heroId ~= 0 then
-				slot0._duplicateCountList[slot7.heroId] = slot0._duplicateCountList[slot7.heroId] or {}
+			var_3_0:init(iter_3_1)
 
-				table.insert(slot0._duplicateCountList[slot7.heroId], slot7.duplicateCount or 0)
+			if iter_3_1.heroId and iter_3_1.heroId ~= 0 then
+				arg_3_0._duplicateCountList[iter_3_1.heroId] = arg_3_0._duplicateCountList[iter_3_1.heroId] or {}
+
+				table.insert(arg_3_0._duplicateCountList[iter_3_1.heroId], iter_3_1.duplicateCount or 0)
 			end
 
-			table.insert(slot0._summonResult, slot8)
+			table.insert(arg_3_0._summonResult, var_3_0)
 		end
 
-		slot3 = {
+		local var_3_1 = {
 			1,
 			10,
 			2,
@@ -52,60 +54,76 @@ function slot0.updateSummonResult(slot0, slot1, slot2)
 			5,
 			6
 		}
-		slot4 = {}
+		local var_3_2 = {}
 
-		for slot8 = 1, #slot0._summonResult do
-			table.insert(slot4, slot0._summonResult[slot8])
+		for iter_3_2 = 1, #arg_3_0._summonResult do
+			table.insert(var_3_2, arg_3_0._summonResult[iter_3_2])
 		end
 
-		uv0.sortResult(slot4, slot2)
+		var_0_0.sortResult(var_3_2, arg_3_2)
 
-		slot0._orderedSummonResult = {}
+		arg_3_0._orderedSummonResult = {}
 
-		for slot8 = 1, #slot4 do
-			slot0._orderedSummonResult[slot3[slot8]] = slot4[slot8]
+		for iter_3_3 = 1, #var_3_2 do
+			arg_3_0._orderedSummonResult[var_3_1[iter_3_3]] = var_3_2[iter_3_3]
 		end
 	end
 end
 
-function slot0.sortResult(slot0, slot1)
-	if SummonConfig.poolIsLuckyBag(slot1) then
-		table.sort(slot0, uv0.sortResultLuckyBag)
+function var_0_0.sortResult(arg_4_0, arg_4_1)
+	if SummonConfig.poolIsLuckyBag(arg_4_1) then
+		table.sort(arg_4_0, var_0_0.sortResultLuckyBag)
 	else
-		table.sort(slot0, uv0.sortResultByRare)
+		table.sort(arg_4_0, var_0_0.sortResultByRare)
 	end
 end
 
-function slot0.sortResultByRare(slot0, slot1)
-	if slot0.heroId ~= 0 and slot1.heroId ~= 0 then
-		if HeroConfig.instance:getHeroCO(slot0.heroId).rare ~= HeroConfig.instance:getHeroCO(slot1.heroId).rare then
-			return slot3.rare < slot2.rare
+function var_0_0.sortResultByRare(arg_5_0, arg_5_1)
+	if arg_5_0.heroId ~= 0 and arg_5_1.heroId ~= 0 then
+		local var_5_0 = HeroConfig.instance:getHeroCO(arg_5_0.heroId)
+		local var_5_1 = HeroConfig.instance:getHeroCO(arg_5_1.heroId)
+
+		if var_5_0.rare ~= var_5_1.rare then
+			return var_5_0.rare > var_5_1.rare
 		else
-			return slot3.id < slot2.id
+			return var_5_0.id > var_5_1.id
 		end
-	elseif EquipConfig.instance:getEquipCo(slot0.equipId).rare ~= EquipConfig.instance:getEquipCo(slot1.equipId).rare then
-		return slot3.rare < slot2.rare
 	else
-		return slot3.id < slot2.id
-	end
-end
+		local var_5_2 = EquipConfig.instance:getEquipCo(arg_5_0.equipId)
+		local var_5_3 = EquipConfig.instance:getEquipCo(arg_5_1.equipId)
 
-function slot0.sortHeroIsResultByRare(slot0, slot1)
-	if slot0 ~= 0 and slot1 ~= 0 then
-		if HeroConfig.instance:getHeroCO(slot0).rare ~= HeroConfig.instance:getHeroCO(slot1).rare then
-			return slot3.rare < slot2.rare
+		if var_5_2.rare ~= var_5_3.rare then
+			return var_5_2.rare > var_5_3.rare
 		else
-			return slot3.id < slot2.id
+			return var_5_2.id > var_5_3.id
 		end
-	elseif EquipConfig.instance:getEquipCo(slot0).rare ~= EquipConfig.instance:getEquipCo(slot1).rare then
-		return slot3.rare < slot2.rare
-	else
-		return slot3.id < slot2.id
 	end
 end
 
-function slot0.sortResultByHeroIds(slot0)
-	slot1 = {
+function var_0_0.sortHeroIsResultByRare(arg_6_0, arg_6_1)
+	if arg_6_0 ~= 0 and arg_6_1 ~= 0 then
+		local var_6_0 = HeroConfig.instance:getHeroCO(arg_6_0)
+		local var_6_1 = HeroConfig.instance:getHeroCO(arg_6_1)
+
+		if var_6_0.rare ~= var_6_1.rare then
+			return var_6_0.rare > var_6_1.rare
+		else
+			return var_6_0.id > var_6_1.id
+		end
+	else
+		local var_6_2 = EquipConfig.instance:getEquipCo(arg_6_0)
+		local var_6_3 = EquipConfig.instance:getEquipCo(arg_6_1)
+
+		if var_6_2.rare ~= var_6_3.rare then
+			return var_6_2.rare > var_6_3.rare
+		else
+			return var_6_2.id > var_6_3.id
+		end
+	end
+end
+
+function var_0_0.sortResultByHeroIds(arg_7_0)
+	local var_7_0 = {
 		1,
 		10,
 		2,
@@ -117,85 +135,90 @@ function slot0.sortResultByHeroIds(slot0)
 		5,
 		6
 	}
-	slot2 = {}
+	local var_7_1 = {}
 
-	for slot6 = 1, #slot0 do
-		table.insert(slot2, slot0[slot6])
+	for iter_7_0 = 1, #arg_7_0 do
+		table.insert(var_7_1, arg_7_0[iter_7_0])
 	end
 
-	table.sort(slot0, uv0.sortHeroIsResultByRare)
+	table.sort(arg_7_0, var_0_0.sortHeroIsResultByRare)
 
-	slot0 = {
-		[slot1[slot6]] = slot2[slot6]
-	}
+	arg_7_0 = {}
 
-	for slot6 = 1, #slot2 do
+	for iter_7_1 = 1, #var_7_1 do
+		arg_7_0[var_7_0[iter_7_1]] = var_7_1[iter_7_1]
 	end
 end
 
-function slot0.sortResultLuckyBag(slot0, slot1)
-	if slot0:isLuckyBag() ~= slot1:isLuckyBag() then
-		return slot2
-	elseif slot2 then
-		return slot0.luckyBagId < slot1.luckyBagId
+function var_0_0.sortResultLuckyBag(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:isLuckyBag()
+
+	if var_8_0 ~= arg_8_1:isLuckyBag() then
+		return var_8_0
+	elseif var_8_0 then
+		return arg_8_0.luckyBagId < arg_8_1.luckyBagId
 	else
-		return uv0.sortResultByRare(slot0, slot1)
+		return var_0_0.sortResultByRare(arg_8_0, arg_8_1)
 	end
 end
 
-function slot0.getSummonResult(slot0, slot1)
-	if slot1 then
-		return slot0._orderedSummonResult
+function var_0_0.getSummonResult(arg_9_0, arg_9_1)
+	if arg_9_1 then
+		return arg_9_0._orderedSummonResult
 	else
-		return slot0._summonResult
+		return arg_9_0._summonResult
 	end
 end
 
-function slot0.openSummonResult(slot0, slot1)
-	if slot0:getSummonResult(true) and slot2[slot1] and not slot2[slot1]:isOpened() then
-		slot3 = slot2[slot1]
+function var_0_0.openSummonResult(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getSummonResult(true)
 
-		slot3:setOpen()
+	if var_10_0 and var_10_0[arg_10_1] and not var_10_0[arg_10_1]:isOpened() then
+		local var_10_1 = var_10_0[arg_10_1]
 
-		slot4 = -1
-		slot5 = 0
+		var_10_1:setOpen()
 
-		if not slot3:isLuckyBag() then
-			slot6 = slot0._duplicateCountList[slot3.heroId] or {}
+		local var_10_2 = -1
+		local var_10_3 = 0
 
-			for slot10 = 1, #slot6 do
-				if slot6[slot10] < slot4 or slot4 < 0 then
-					slot4 = slot6[slot10]
-					slot5 = slot10
+		if not var_10_1:isLuckyBag() then
+			local var_10_4 = arg_10_0._duplicateCountList[var_10_1.heroId] or {}
+
+			for iter_10_0 = 1, #var_10_4 do
+				if var_10_2 > var_10_4[iter_10_0] or var_10_2 < 0 then
+					var_10_2 = var_10_4[iter_10_0]
+					var_10_3 = iter_10_0
 				end
 			end
 
-			if slot5 > 0 then
-				table.remove(slot6, slot5)
+			if var_10_3 > 0 then
+				table.remove(var_10_4, var_10_3)
 			end
 		end
 
-		return slot3, slot4
+		return var_10_1, var_10_2
 	end
 end
 
-function slot0.openSummonEquipResult(slot0, slot1)
-	if slot0:getSummonResult(true) and slot2[slot1] and not slot2[slot1]:isOpened() then
-		slot3 = slot2[slot1]
+function var_0_0.openSummonEquipResult(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getSummonResult(true)
 
-		slot3:setOpen()
+	if var_11_0 and var_11_0[arg_11_1] and not var_11_0[arg_11_1]:isOpened() then
+		local var_11_1 = var_11_0[arg_11_1]
 
-		return slot3, slot3.isNew
+		var_11_1:setOpen()
+
+		return var_11_1, var_11_1.isNew
 	end
 end
 
-function slot0.isAllOpened(slot0)
-	if not slot0._summonResult or #slot0._summonResult <= 0 then
+function var_0_0.isAllOpened(arg_12_0)
+	if not arg_12_0._summonResult or #arg_12_0._summonResult <= 0 then
 		return true
 	end
 
-	for slot4, slot5 in ipairs(slot0._summonResult) do
-		if not slot5:isOpened() then
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._summonResult) do
+		if not iter_12_1:isOpened() then
 			return false
 		end
 	end
@@ -203,153 +226,174 @@ function slot0.isAllOpened(slot0)
 	return true
 end
 
-function slot0.setFreeEquipSummon(slot0, slot1)
-	slot0._freeEquipSummon = slot1
+function var_0_0.setFreeEquipSummon(arg_13_0, arg_13_1)
+	arg_13_0._freeEquipSummon = arg_13_1
 end
 
-function slot0.getFreeEquipSummon(slot0)
-	return slot0._freeEquipSummon
+function var_0_0.getFreeEquipSummon(arg_14_0)
+	return arg_14_0._freeEquipSummon
 end
 
-function slot0.setSendEquipFreeSummon(slot0, slot1)
-	slot0._isEquipSendFree = slot1
+function var_0_0.setSendEquipFreeSummon(arg_15_0, arg_15_1)
+	arg_15_0._isEquipSendFree = arg_15_1
 end
 
-function slot0.getSendEquipFreeSummon(slot0)
-	return slot0._isEquipSendFree
+function var_0_0.getSendEquipFreeSummon(arg_16_0)
+	return arg_16_0._isEquipSendFree
 end
 
-function slot0.getBestRare(slot0)
-	if not slot0 then
-		return 2
+function var_0_0.getBestRare(arg_17_0)
+	local var_17_0 = 2
+
+	if not arg_17_0 then
+		return var_17_0
 	end
 
-	for slot5, slot6 in pairs(slot0) do
-		slot7 = 2
+	for iter_17_0, iter_17_1 in pairs(arg_17_0) do
+		local var_17_1 = 2
 
-		if slot6.heroId and slot6.heroId ~= 0 then
-			slot7 = HeroConfig.instance:getHeroCO(slot6.heroId).rare
-		elseif slot6.equipId and slot6.equipId ~= 0 then
-			slot7 = EquipConfig.instance:getEquipCo(slot6.equipId).rare
-		elseif slot6.luckyBagId and slot6.luckyBagId ~= 0 then
-			slot7 = SummonEnum.LuckyBagRare
+		if iter_17_1.heroId and iter_17_1.heroId ~= 0 then
+			var_17_1 = HeroConfig.instance:getHeroCO(iter_17_1.heroId).rare
+		elseif iter_17_1.equipId and iter_17_1.equipId ~= 0 then
+			var_17_1 = EquipConfig.instance:getEquipCo(iter_17_1.equipId).rare
+		elseif iter_17_1.luckyBagId and iter_17_1.luckyBagId ~= 0 then
+			var_17_1 = SummonEnum.LuckyBagRare
 		end
 
-		slot1 = math.max(slot1, slot7)
+		var_17_0 = math.max(var_17_0, var_17_1)
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0.getRewardList(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0.getRewardList(arg_18_0, arg_18_1)
+	local var_18_0 = {}
+	local var_18_1 = {}
 
-	for slot7 = 1, #slot0 do
-		slot9 = nil
-		slot9 = (slot0[slot7].heroId == 0 or SummonConfig.instance:getRewardItems(slot8.heroId, slot8.duplicateCount, slot1)) and uv0.getEquipRewardItem(slot8)
+	for iter_18_0 = 1, #arg_18_0 do
+		local var_18_2 = arg_18_0[iter_18_0]
+		local var_18_3
 
-		for slot13 = 1, #slot9 do
-			slot14 = slot9[slot13]
-			slot3[slot14.type] = slot3[slot14.type] or {}
-			slot3[slot14.type][slot14.id] = (slot3[slot14.type][slot14.id] or 0) + slot14.quantity
+		if var_18_2.heroId ~= 0 then
+			var_18_3 = SummonConfig.instance:getRewardItems(var_18_2.heroId, var_18_2.duplicateCount, arg_18_1)
+		else
+			var_18_3 = var_0_0.getEquipRewardItem(var_18_2)
 		end
-	end
 
-	for slot7, slot8 in pairs(slot3) do
-		for slot12, slot13 in pairs(slot8) do
-			slot14 = MaterialDataMO.New()
+		for iter_18_1 = 1, #var_18_3 do
+			local var_18_4 = var_18_3[iter_18_1]
 
-			slot14:initValue(slot7, slot12, slot13)
-
-			slot14.config = ItemModel.instance:getItemConfig(slot7, slot12)
-
-			table.insert(slot2, slot14)
+			var_18_1[var_18_4.type] = var_18_1[var_18_4.type] or {}
+			var_18_1[var_18_4.type][var_18_4.id] = (var_18_1[var_18_4.type][var_18_4.id] or 0) + var_18_4.quantity
 		end
 	end
 
-	return slot2
+	for iter_18_2, iter_18_3 in pairs(var_18_1) do
+		for iter_18_4, iter_18_5 in pairs(iter_18_3) do
+			local var_18_5 = MaterialDataMO.New()
+
+			var_18_5:initValue(iter_18_2, iter_18_4, iter_18_5)
+
+			var_18_5.config = ItemModel.instance:getItemConfig(iter_18_2, iter_18_4)
+
+			table.insert(var_18_0, var_18_5)
+		end
+	end
+
+	return var_18_0
 end
 
-function slot0.appendRewardTicket(slot0, slot1, slot2)
-	if #slot0 > 0 then
-		slot4 = MaterialDataMO.New()
+function var_0_0.appendRewardTicket(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = #arg_19_0
 
-		slot4:initValue(MaterialEnum.MaterialType.Item, slot2, slot3)
+	if var_19_0 > 0 then
+		local var_19_1 = MaterialDataMO.New()
 
-		slot4.config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, slot2)
+		var_19_1:initValue(MaterialEnum.MaterialType.Item, arg_19_2, var_19_0)
 
-		table.insert(slot1, slot4)
+		var_19_1.config = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, arg_19_2)
+
+		table.insert(arg_19_1, var_19_1)
 	end
 end
 
-function slot0.getEquipRewardItem(slot0)
-	slot1 = {}
+function var_0_0.getEquipRewardItem(arg_20_0)
+	local var_20_0 = {}
 
-	if slot0.returnMaterials then
-		for slot5, slot6 in ipairs(slot0.returnMaterials) do
-			table.insert(slot1, {
-				type = slot6.materilType,
-				id = slot6.materilId,
-				quantity = slot6.quantity
+	if arg_20_0.returnMaterials then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_0.returnMaterials) do
+			table.insert(var_20_0, {
+				type = iter_20_1.materilType,
+				id = iter_20_1.materilId,
+				quantity = iter_20_1.quantity
 			})
 		end
 	end
 
-	return slot1
+	return var_20_0
 end
 
-function slot0.sortRewards(slot0, slot1)
-	slot2 = nil
+function var_0_0.sortRewards(arg_21_0, arg_21_1)
+	local var_21_0
 
-	if slot0.config.rare == slot1.config.rare then
+	if arg_21_0.config.rare == arg_21_1.config.rare then
 		return nil
 	else
-		slot2 = slot1.config.rare < slot0.config.rare
+		var_21_0 = arg_21_0.config.rare > arg_21_1.config.rare
 	end
 
-	if slot2 ~= nil then
-		return slot2
+	if var_21_0 ~= nil then
+		return var_21_0
 	end
 
-	if ((slot0.materilType ~= slot1.materilType or nil) and slot1.materilType < slot0.materilType) ~= nil then
-		return slot2
+	local var_21_1 = (arg_21_0.materilType ~= arg_21_1.materilType or nil) and arg_21_0.materilType > arg_21_1.materilType
+
+	if var_21_1 ~= nil then
+		return var_21_1
 	end
 
-	return (slot0.materilId ~= slot1.materilId or nil) and slot1.materilId < slot0.materilId
+	return (arg_21_0.materilId ~= arg_21_1.materilId or nil) and arg_21_0.materilId > arg_21_1.materilId
 end
 
-function slot0.formatRemainTime(slot0)
-	if slot0 <= 0 then
+function var_0_0.formatRemainTime(arg_22_0)
+	if arg_22_0 <= 0 then
 		return string.format(luaLang("summonmain_deadline_time_min"), 0, 0)
 	end
 
-	slot0 = math.floor(slot0)
+	arg_22_0 = math.floor(arg_22_0)
 
-	if math.floor(slot0 / 86400) > 0 then
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time_day"), {
-			slot1,
-			math.floor(slot0 % 86400 / 3600),
-			math.floor(slot0 % 3600 / 60)
-		})
-	elseif slot2 < 1 and slot3 < 1 then
+	local var_22_0 = math.floor(arg_22_0 / 86400)
+	local var_22_1 = math.floor(arg_22_0 % 86400 / 3600)
+	local var_22_2 = math.floor(arg_22_0 % 3600 / 60)
+
+	if var_22_0 > 0 then
+		local var_22_3 = {
+			var_22_0,
+			var_22_1,
+			var_22_2
+		}
+
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time_day"), var_22_3)
+	elseif var_22_1 < 1 and var_22_2 < 1 then
 		return luaLang("summonmain_deadline_time_min")
 	else
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			slot2,
-			slot3
-		})
+		local var_22_4 = {
+			var_22_1,
+			var_22_2
+		}
+
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), var_22_4)
 	end
 end
 
-function slot0.setIsDrawing(slot0, slot1)
-	slot0._isDrawing = slot1
+function var_0_0.setIsDrawing(arg_23_0, arg_23_1)
+	arg_23_0._isDrawing = arg_23_1
 end
 
-function slot0.getIsDrawing(slot0)
-	return slot0._isDrawing
+function var_0_0.getIsDrawing(arg_24_0)
+	return arg_24_0._isDrawing
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

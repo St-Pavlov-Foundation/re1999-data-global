@@ -1,20 +1,20 @@
-module("modules.logic.resonance.config.HeroResonanceConfig", package.seeall)
+﻿module("modules.logic.resonance.config.HeroResonanceConfig", package.seeall)
 
-slot0 = class("HeroResonanceConfig", BaseConfig)
+local var_0_0 = class("HeroResonanceConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.resonance_config = nil
-	slot0.resonance_cost_config = nil
-	slot0.resonance_cube_shape = nil
-	slot0.resonance_model_config = nil
-	slot0.resonance_style_config = nil
-	slot0.resonance_style_cost_config = nil
-	slot0.cube_rightful = {}
-	slot0.matrix_data = {}
-	slot0.cube_lastrowful = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.resonance_config = nil
+	arg_1_0.resonance_cost_config = nil
+	arg_1_0.resonance_cube_shape = nil
+	arg_1_0.resonance_model_config = nil
+	arg_1_0.resonance_style_config = nil
+	arg_1_0.resonance_style_cost_config = nil
+	arg_1_0.cube_rightful = {}
+	arg_1_0.matrix_data = {}
+	arg_1_0.cube_lastrowful = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"talent_cube_attr",
 		"character_talent",
@@ -25,231 +25,260 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "talent_cube_attr" then
-		slot0.resonance_config = slot2
-	elseif slot1 == "character_talent" then
-		slot0.resonance_cost_config = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "talent_cube_attr" then
+		arg_3_0.resonance_config = arg_3_2
+	elseif arg_3_1 == "character_talent" then
+		arg_3_0.resonance_cost_config = arg_3_2
 
-		slot0:_initCharacterTalent()
-	elseif slot1 == "talent_cube_shape" then
-		slot0.resonance_cube_shape = slot2
-	elseif slot1 == "talent_mould" then
-		slot0.resonance_model_config = slot2
-	elseif slot1 == "talent_style" then
-		slot0.resonance_style_config = slot2
+		arg_3_0:_initCharacterTalent()
+	elseif arg_3_1 == "talent_cube_shape" then
+		arg_3_0.resonance_cube_shape = arg_3_2
+	elseif arg_3_1 == "talent_mould" then
+		arg_3_0.resonance_model_config = arg_3_2
+	elseif arg_3_1 == "talent_style" then
+		arg_3_0.resonance_style_config = arg_3_2
 
-		slot0:initParseTalentStyle()
-	elseif slot1 == "talent_style_cost" then
-		slot0.resonance_style_cost_config = slot2
+		arg_3_0:initParseTalentStyle()
+	elseif arg_3_1 == "talent_style_cost" then
+		arg_3_0.resonance_style_cost_config = arg_3_2
 	end
 end
 
-function slot0._initCharacterTalent(slot0)
-	slot0._talentMaxLvMap = {}
+function var_0_0._initCharacterTalent(arg_4_0)
+	arg_4_0._talentMaxLvMap = {}
 
-	for slot4, slot5 in ipairs(lua_character_talent.configList) do
-		slot0._talentMaxLvMap[slot5.heroId] = math.max(slot5.talentId, slot0._talentMaxLvMap[slot5.heroId] or 0)
+	for iter_4_0, iter_4_1 in ipairs(lua_character_talent.configList) do
+		local var_4_0 = arg_4_0._talentMaxLvMap[iter_4_1.heroId] or 0
+		local var_4_1 = math.max(iter_4_1.talentId, var_4_0)
+
+		arg_4_0._talentMaxLvMap[iter_4_1.heroId] = var_4_1
 	end
 end
 
-function slot0.getHeroMaxTalentLv(slot0, slot1)
-	return slot0._talentMaxLvMap[slot1] or 1
+function var_0_0.getHeroMaxTalentLv(arg_5_0, arg_5_1)
+	return arg_5_0._talentMaxLvMap[arg_5_1] or 1
 end
 
-function slot0.getCubeConfig(slot0, slot1)
-	return slot0.resonance_cube_shape.configDict[slot1] or logError("共鸣形状表找不到id：", slot1)
+function var_0_0.getCubeConfig(arg_6_0, arg_6_1)
+	return arg_6_0.resonance_cube_shape.configDict[arg_6_1] or logError("共鸣形状表找不到id：", arg_6_1)
 end
 
-function slot0.getCubeConfigNotError(slot0, slot1)
-	return slot0.resonance_cube_shape.configDict[slot1]
+function var_0_0.getCubeConfigNotError(arg_7_0, arg_7_1)
+	return arg_7_0.resonance_cube_shape.configDict[arg_7_1]
 end
 
-function slot0.getCubeRightful(slot0, slot1)
-	if not slot0.cube_rightful[slot1] then
-		slot3 = 0
+function var_0_0.getCubeRightful(arg_8_0, arg_8_1)
+	if not arg_8_0.cube_rightful[arg_8_1] then
+		local var_8_0 = arg_8_0:getCubeConfig(arg_8_1)
+		local var_8_1 = 0
+		local var_8_2 = string.split(var_8_0.shape, "#")
 
-		for slot8, slot9 in ipairs(string.split(slot0:getCubeConfig(slot1).shape, "#")) do
-			for slot14, slot15 in ipairs(string.splitToNumber(slot9, ",")) do
-				if slot15 == 1 then
-					slot3 = slot3 + 1
+		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
+			local var_8_3 = string.splitToNumber(iter_8_1, ",")
+
+			for iter_8_2, iter_8_3 in ipairs(var_8_3) do
+				if iter_8_3 == 1 then
+					var_8_1 = var_8_1 + 1
 				end
 			end
 		end
 
-		slot0.cube_rightful[slot1] = slot3
+		arg_8_0.cube_rightful[arg_8_1] = var_8_1
 	end
 
-	return slot0.cube_rightful[slot1]
+	return arg_8_0.cube_rightful[arg_8_1]
 end
 
-function slot0.getLastRowfulPos(slot0, slot1)
-	if not slot0.cube_lastrowful[slot1] then
-		slot4 = string.split(slot0:getCubeConfig(slot1).shape, "#")
+function var_0_0.getLastRowfulPos(arg_9_0, arg_9_1)
+	if not arg_9_0.cube_lastrowful[arg_9_1] then
+		local var_9_0 = arg_9_0:getCubeConfig(arg_9_1)
+		local var_9_1 = 0
+		local var_9_2 = string.split(var_9_0.shape, "#")
+		local var_9_3 = string.splitToNumber(var_9_2[#var_9_2], ",")
 
-		for slot9 = #string.splitToNumber(slot4[#slot4], ","), 1, -1 do
-			if slot5[slot9] ~= 1 then
-				slot3 = 0 + 1
+		for iter_9_0 = #var_9_3, 1, -1 do
+			if var_9_3[iter_9_0] ~= 1 then
+				var_9_1 = var_9_1 + 1
 			else
-				slot0.cube_lastrowful[slot1] = slot3
+				arg_9_0.cube_lastrowful[arg_9_1] = var_9_1
 
-				return slot0.cube_lastrowful[slot1]
+				return arg_9_0.cube_lastrowful[arg_9_1]
 			end
 		end
 
-		slot0.cube_lastrowful[slot1] = slot3
+		arg_9_0.cube_lastrowful[arg_9_1] = var_9_1
 	end
 
-	return slot0.cube_lastrowful[slot1]
+	return arg_9_0.cube_lastrowful[arg_9_1]
 end
 
-function slot0.getCubeMatrix(slot0, slot1)
-	if slot0.matrix_data[slot1] then
-		return slot0.matrix_data[slot1]
+function var_0_0.getCubeMatrix(arg_10_0, arg_10_1)
+	if arg_10_0.matrix_data[arg_10_1] then
+		return arg_10_0.matrix_data[arg_10_1]
 	end
 
-	for slot8 = 0, #string.split(slot0:getCubeConfig(slot1).shape, "#") - 1 do
-		slot12 = ","
+	local var_10_0 = arg_10_0:getCubeConfig(arg_10_1)
+	local var_10_1 = {}
+	local var_10_2 = string.split(var_10_0.shape, "#")
 
-		for slot12, slot13 in ipairs(string.split(slot4[slot8 + 1], slot12)) do
-			slot3[slot8][slot12 - 1] = tonumber(slot13)
+	for iter_10_0 = 0, #var_10_2 - 1 do
+		var_10_1[iter_10_0] = {}
+
+		for iter_10_1, iter_10_2 in ipairs(string.split(var_10_2[iter_10_0 + 1], ",")) do
+			var_10_1[iter_10_0][iter_10_1 - 1] = tonumber(iter_10_2)
 		end
 	end
 
-	slot0.matrix_data[slot1] = {
-		[slot8] = {}
-	}
+	arg_10_0.matrix_data[arg_10_1] = var_10_1
 
-	return slot0.matrix_data[slot1]
+	return arg_10_0.matrix_data[arg_10_1]
 end
 
-function slot0.getTalentConfig(slot0, slot1, slot2)
-	if not slot0.resonance_cost_config.configDict[slot1] then
-		logError("共鸣表找不到,英雄id：", slot1, "共鸣等级：", slot2)
+function var_0_0.getTalentConfig(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0.resonance_cost_config.configDict[arg_11_1]
+
+	if not var_11_0 then
+		logError("共鸣表找不到,英雄id：", arg_11_1, "共鸣等级：", arg_11_2)
 	end
 
-	return slot3 and slot3[slot2]
+	return var_11_0 and var_11_0[arg_11_2]
 end
 
-function slot0.getTalentAllShape(slot0, slot1, slot2)
-	if not slot0:getTalentModelConfig(slot1, slot2) then
-		logError("共鸣表找不到,英雄id：", slot1, "共鸣等级：", slot2)
+function var_0_0.getTalentAllShape(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getTalentModelConfig(arg_12_1, arg_12_2)
+
+	if not var_12_0 then
+		logError("共鸣表找不到,英雄id：", arg_12_1, "共鸣等级：", arg_12_2)
 
 		return
 	end
 
-	return slot3.allShape
+	return var_12_0.allShape
 end
 
-function slot0.getTalentModelConfig(slot0, slot1, slot2)
-	return slot0.resonance_model_config.configDict[slot2] and slot0:getTalentConfig(slot1, slot2) and slot0.resonance_model_config.configDict[slot2][slot0:getTalentConfig(slot1, slot2).talentMould]
+function var_0_0.getTalentModelConfig(arg_13_0, arg_13_1, arg_13_2)
+	return arg_13_0.resonance_model_config.configDict[arg_13_2] and arg_13_0:getTalentConfig(arg_13_1, arg_13_2) and arg_13_0.resonance_model_config.configDict[arg_13_2][arg_13_0:getTalentConfig(arg_13_1, arg_13_2).talentMould]
 end
 
-function slot0.getTalentModelShapeMaxLevel(slot0, slot1)
-	if not slot0.max_talent_model_shape_level then
-		slot0.max_talent_model_shape_level = {}
+function var_0_0.getTalentModelShapeMaxLevel(arg_14_0, arg_14_1)
+	if not arg_14_0.max_talent_model_shape_level then
+		arg_14_0.max_talent_model_shape_level = {}
 	end
 
-	if slot0.max_talent_model_shape_level[slot1] then
-		return slot0.max_talent_model_shape_level[slot1]
+	if arg_14_0.max_talent_model_shape_level[arg_14_1] then
+		return arg_14_0.max_talent_model_shape_level[arg_14_1]
 	end
 
-	slot2 = 0
-	slot3 = slot0:getTalentConfig(slot1, 1).talentMould
-	slot4 = nil
-	slot5 = {}
+	local var_14_0 = 0
+	local var_14_1 = arg_14_0:getTalentConfig(arg_14_1, 1).talentMould
+	local var_14_2
+	local var_14_3 = {}
 
-	for slot9, slot10 in pairs(slot0.resonance_model_config.configDict) do
-		for slot14, slot15 in pairs(slot10) do
-			if slot15.talentMould == slot3 then
-				table.insert(slot5, {
-					talentId = slot15.talentId,
-					allShape = slot15.allShape
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.resonance_model_config.configDict) do
+		for iter_14_2, iter_14_3 in pairs(iter_14_1) do
+			if iter_14_3.talentMould == var_14_1 then
+				table.insert(var_14_3, {
+					talentId = iter_14_3.talentId,
+					allShape = iter_14_3.allShape
 				})
 
-				if slot15.allShape ~= slot4 then
-					slot4 = slot15.allShape
-					slot2 = slot2 + 1
+				if iter_14_3.allShape ~= var_14_2 then
+					var_14_2 = iter_14_3.allShape
+					var_14_0 = var_14_0 + 1
 				end
 			end
 		end
 	end
 
-	table.sort(slot5, function (slot0, slot1)
-		return slot0.talentId < slot1.talentId
+	table.sort(var_14_3, function(arg_15_0, arg_15_1)
+		return arg_15_0.talentId < arg_15_1.talentId
 	end)
 
-	if not slot0.cur_talent_model_shape_level then
-		slot0.cur_talent_model_shape_level = {}
+	if not arg_14_0.cur_talent_model_shape_level then
+		arg_14_0.cur_talent_model_shape_level = {}
 	end
 
-	slot0.cur_talent_model_shape_level[slot3] = slot5
-	slot0.max_talent_model_shape_level[slot1] = slot2
+	arg_14_0.cur_talent_model_shape_level[var_14_1] = var_14_3
+	arg_14_0.max_talent_model_shape_level[arg_14_1] = var_14_0
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.getCurTalentModelShapeLevel(slot0, slot1, slot2)
-	for slot9, slot10 in ipairs(slot0.cur_talent_model_shape_level[slot0:getTalentConfig(slot1, 1).talentMould]) do
-		if slot10.allShape ~= nil then
-			slot4 = 0 + 1
-			slot5 = slot10.allShape
+function var_0_0.getCurTalentModelShapeLevel(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0:getTalentConfig(arg_16_1, 1).talentMould
+	local var_16_1 = 0
+	local var_16_2
+
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0.cur_talent_model_shape_level[var_16_0]) do
+		if iter_16_1.allShape ~= var_16_2 then
+			var_16_1 = var_16_1 + 1
+			var_16_2 = iter_16_1.allShape
 		end
 
-		if slot2 <= slot10.talentId then
+		if arg_16_2 <= iter_16_1.talentId then
 			break
 		end
 	end
 
-	return slot4
+	return var_16_1
 end
 
-function slot0.initParseTalentStyle(slot0)
-	slot0.talent_style_replace_cube_list = {}
+function var_0_0.initParseTalentStyle(arg_17_0)
+	arg_17_0.talent_style_replace_cube_list = {}
 
-	if slot0.resonance_style_config then
-		for slot4, slot5 in pairs(slot0.resonance_style_config.configList) do
-			if slot5 and not string.nilorempty(slot5.replaceCube) then
-				for slot10, slot11 in pairs(GameUtil.splitString2(slot5.replaceCube)) do
-					slot12 = TalentStyleMo.New()
-					slot14 = tonumber(slot11[2])
+	if arg_17_0.resonance_style_config then
+		for iter_17_0, iter_17_1 in pairs(arg_17_0.resonance_style_config.configList) do
+			if iter_17_1 and not string.nilorempty(iter_17_1.replaceCube) then
+				local var_17_0 = GameUtil.splitString2(iter_17_1.replaceCube)
 
-					if tonumber(slot11[1]) and slot14 then
-						slot12:setMo(slot5, slot13, slot14)
+				for iter_17_2, iter_17_3 in pairs(var_17_0) do
+					local var_17_1 = TalentStyleMo.New()
+					local var_17_2 = tonumber(iter_17_3[1])
+					local var_17_3 = tonumber(iter_17_3[2])
 
-						slot15 = slot0.talent_style_replace_cube_list[slot13] or {}
-						slot15[slot5.styleId] = slot12
-						slot0.talent_style_replace_cube_list[slot13] = slot15
+					if var_17_2 and var_17_3 then
+						var_17_1:setMo(iter_17_1, var_17_2, var_17_3)
+
+						local var_17_4 = arg_17_0.talent_style_replace_cube_list[var_17_2] or {}
+
+						var_17_4[iter_17_1.styleId] = var_17_1
+						arg_17_0.talent_style_replace_cube_list[var_17_2] = var_17_4
 					end
 				end
 			end
 		end
 
-		for slot4, slot5 in pairs(slot0.talent_style_replace_cube_list) do
-			slot6 = TalentStyleMo.New()
-			slot7, slot8 = next(slot5)
+		for iter_17_4, iter_17_5 in pairs(arg_17_0.talent_style_replace_cube_list) do
+			local var_17_5 = TalentStyleMo.New()
+			local var_17_6, var_17_7 = next(iter_17_5)
+			local var_17_8 = arg_17_0.resonance_style_config.configDict[var_17_7._styleCo.talentMould][0]
 
-			slot6:setMo(slot0.resonance_style_config.configDict[slot8._styleCo.talentMould][0], slot4, slot4)
+			var_17_5:setMo(var_17_8, iter_17_4, iter_17_4)
 
-			slot5[0] = slot6
+			iter_17_5[0] = var_17_5
 		end
 	end
 end
 
-function slot0.getTalentStyle(slot0, slot1)
-	return slot0.talent_style_replace_cube_list and slot0.talent_style_replace_cube_list[slot1]
+function var_0_0.getTalentStyle(arg_18_0, arg_18_1)
+	return arg_18_0.talent_style_replace_cube_list and arg_18_0.talent_style_replace_cube_list[arg_18_1]
 end
 
-function slot0.getTalentStyleUnlockConsume(slot0, slot1, slot2)
-	return slot0:getTalentStyleCostConfig(slot1, slot2) and slot3.consume
+function var_0_0.getTalentStyleUnlockConsume(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0:getTalentStyleCostConfig(arg_19_1, arg_19_2)
+
+	return var_19_0 and var_19_0.consume
 end
 
-function slot0.getTalentStyleCostConfig(slot0, slot1, slot2)
-	if slot0.resonance_style_cost_config and slot0.resonance_style_cost_config.configDict[slot1] then
-		return slot3[slot2]
+function var_0_0.getTalentStyleCostConfig(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0.resonance_style_cost_config and arg_20_0.resonance_style_cost_config.configDict[arg_20_1]
+
+	if var_20_0 then
+		return var_20_0[arg_20_2]
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

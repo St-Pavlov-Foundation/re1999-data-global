@@ -1,129 +1,145 @@
-module("modules.logic.help.view.HelpPageHelpView", package.seeall)
+﻿module("modules.logic.help.view.HelpPageHelpView", package.seeall)
 
-slot0 = class("HelpPageHelpView", HelpView)
+local var_0_0 = class("HelpPageHelpView", HelpView)
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_1_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewContainer then
-		slot0:addEventCb(slot0.viewContainer, HelpEvent.UIPageTabSelectChange, slot0._onVoideFullScreenChange, slot0)
+function var_0_0.onOpen(arg_2_0)
+	if arg_2_0.viewContainer then
+		arg_2_0:addEventCb(arg_2_0.viewContainer, HelpEvent.UIPageTabSelectChange, arg_2_0._onVoideFullScreenChange, arg_2_0)
 	end
 
-	slot0._showParam = {}
+	arg_2_0._showParam = {}
 end
 
-function slot0._refreshHelpPage(slot0)
-	if slot0._helpItems then
-		for slot4, slot5 in pairs(slot0._helpItems) do
-			slot5:destroy()
-			gohelper.destroy(slot5._go)
+function var_0_0._refreshHelpPage(arg_3_0)
+	if arg_3_0._helpItems then
+		for iter_3_0, iter_3_1 in pairs(arg_3_0._helpItems) do
+			iter_3_1:destroy()
+			gohelper.destroy(iter_3_1._go)
 		end
 	end
 
-	slot0._helpItems = {}
+	arg_3_0._helpItems = {}
 
-	slot0:_refreshView()
+	arg_3_0:_refreshView()
 end
 
-function slot0.setSelectItem(slot0)
-	for slot5 = 1, #slot0._pagesCo do
-		if not slot0._selectItems[slot5] then
-			slot8 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goslider, "HelpSelectItem")
-			slot6 = HelpSelectItem.New()
+function var_0_0.setSelectItem(arg_4_0)
+	local var_4_0 = arg_4_0.viewContainer:getSetting().otherRes[1]
 
-			slot6:init({
-				go = slot8,
-				index = slot5,
-				config = slot0._pagesCo[slot5],
-				pos = 55 * (slot5 - 0.5 * (#slot0._pagesCo + 1))
+	for iter_4_0 = 1, #arg_4_0._pagesCo do
+		local var_4_1 = arg_4_0._selectItems[iter_4_0]
+		local var_4_2 = 55 * (iter_4_0 - 0.5 * (#arg_4_0._pagesCo + 1))
+
+		if not var_4_1 then
+			local var_4_3 = arg_4_0:getResInst(var_4_0, arg_4_0._goslider, "HelpSelectItem")
+
+			var_4_1 = HelpSelectItem.New()
+
+			var_4_1:init({
+				go = var_4_3,
+				index = iter_4_0,
+				config = arg_4_0._pagesCo[iter_4_0],
+				pos = var_4_2
 			})
 
-			slot6._goTrs = slot8.transform
+			var_4_1._goTrs = var_4_3.transform
 
-			table.insert(slot0._selectItems, slot6)
+			table.insert(arg_4_0._selectItems, var_4_1)
 		else
-			transformhelper.setLocalPos(slot6._goTrs, slot7, 0, 0)
-			gohelper.setActive(slot6._go, true)
+			transformhelper.setLocalPos(var_4_1._goTrs, var_4_2, 0, 0)
+			gohelper.setActive(var_4_1._go, true)
 		end
 
-		slot6:updateItem()
+		var_4_1:updateItem()
 	end
 
-	for slot5 = #slot0._pagesCo + 1, #slot0._selectItems do
-		gohelper.setActive(slot0._selectItems[slot5]._go, false)
+	for iter_4_1 = #arg_4_0._pagesCo + 1, #arg_4_0._selectItems do
+		gohelper.setActive(arg_4_0._selectItems[iter_4_1]._go, false)
 	end
 end
 
-function slot0._onlyShowLastGuideQuitBtn(slot0)
-	for slot4, slot5 in ipairs(slot0._helpItems) do
-		slot5:showQuitBtn(false)
+function var_0_0._onlyShowLastGuideQuitBtn(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._helpItems) do
+		iter_5_1:showQuitBtn(false)
 	end
 end
 
-function slot0._refreshView(slot0)
-	slot0._helpId = slot0.viewParam.id
-	slot0._pageId = slot0.viewParam.pageId
+function var_0_0._refreshView(arg_6_0)
+	arg_6_0._helpId = arg_6_0.viewParam.id
+	arg_6_0._pageId = arg_6_0.viewParam.pageId
 
-	if slot0.viewParam.guideId then
-		slot0._helpId = tonumber(slot0.viewParam.viewParam)
-		slot0._matchGuideId = tonumber(slot0.viewParam.guideId)
-		slot0._matchAllPage = slot0.viewParam.matchAllPage
+	if arg_6_0.viewParam.guideId then
+		arg_6_0._helpId = tonumber(arg_6_0.viewParam.viewParam)
+		arg_6_0._matchGuideId = tonumber(arg_6_0.viewParam.guideId)
+		arg_6_0._matchAllPage = arg_6_0.viewParam.matchAllPage
 	end
 
-	if not slot0.viewParam.openFromGuide then
-		slot0:addEventCb(GuideController.instance, GuideEvent.FinishStep, slot0._onFinishGuideStep, slot0)
+	if not arg_6_0.viewParam.openFromGuide then
+		arg_6_0:addEventCb(GuideController.instance, GuideEvent.FinishStep, arg_6_0._onFinishGuideStep, arg_6_0)
 	end
 
-	slot0._pagesCo = {}
+	arg_6_0._pagesCo = {}
 
-	if slot0._helpId then
-		if not HelpConfig.instance:getHelpCO(slot0._helpId) then
-			logError("请检查帮助说明配置" .. tostring(slot0._helpId) .. "相关配置是否完整！")
+	if arg_6_0._helpId then
+		local var_6_0 = HelpConfig.instance:getHelpCO(arg_6_0._helpId)
+
+		if not var_6_0 then
+			logError("请检查帮助说明配置" .. tostring(arg_6_0._helpId) .. "相关配置是否完整！")
 		end
 
-		if #string.split(slot1.page, "#") < 1 then
-			logError("请检查帮助界面" .. tostring(slot0._helpId) .. "相关配置是否完整！")
+		local var_6_1 = string.split(var_6_0.page, "#")
+
+		if #var_6_1 < 1 then
+			logError("请检查帮助界面" .. tostring(arg_6_0._helpId) .. "相关配置是否完整！")
 
 			return
 		end
 
 		HelpModel.instance:setTargetPageIndex(1)
 
-		for slot6 = 1, #slot2 do
-			table.insert(slot0._pagesCo, HelpConfig.instance:getHelpPageCo(tonumber(slot2[slot6])))
+		for iter_6_0 = 1, #var_6_1 do
+			local var_6_2 = HelpConfig.instance:getHelpPageCo(tonumber(var_6_1[iter_6_0]))
+
+			table.insert(arg_6_0._pagesCo, var_6_2)
 		end
-	elseif slot0._pageId then
+	elseif arg_6_0._pageId then
 		HelpModel.instance:setTargetPageIndex(1)
-		table.insert(slot0._pagesCo, HelpConfig.instance:getHelpPageCo(slot0._pageId))
+
+		local var_6_3 = HelpConfig.instance:getHelpPageCo(arg_6_0._pageId)
+
+		table.insert(arg_6_0._pagesCo, var_6_3)
 	end
 
-	if #slot0._pagesCo < 1 then
-		logError(string.format("help view(helpId : %s) not found can show pages", slot0._helpId))
+	if #arg_6_0._pagesCo < 1 then
+		logError(string.format("help view(helpId : %s) not found can show pages", arg_6_0._helpId))
 
 		return
 	end
 
-	slot0:setSelectItem()
-	slot0:setHelpItem()
-	slot0:setBtnItem()
-	slot0:_onlyShowLastGuideQuitBtn()
-	NavigateMgr.instance:addEscape(ViewName.HelpView, slot0.closeThis, slot0)
+	arg_6_0:setSelectItem()
+	arg_6_0:setHelpItem()
+	arg_6_0:setBtnItem()
+	arg_6_0:_onlyShowLastGuideQuitBtn()
+	NavigateMgr.instance:addEscape(ViewName.HelpView, arg_6_0.closeThis, arg_6_0)
 	FightAudioMgr.instance:obscureBgm(true)
 end
 
-function slot0._onVoideFullScreenChange(slot0, slot1)
-	slot0:setPageTabCfg(slot1)
+function var_0_0._onVoideFullScreenChange(arg_7_0, arg_7_1)
+	arg_7_0:setPageTabCfg(arg_7_1)
 end
 
-function slot0.setPageTabCfg(slot0, slot1)
-	if slot1 and slot1.showType == HelpEnum.PageTabShowType.HelpView and slot0._curShowHelpId ~= slot1.helpId then
-		slot0._curShowHelpId = slot1.helpId
-		slot0._showParam.id = slot1.helpId
-		slot0.viewParam = slot0._showParam
+function var_0_0.setPageTabCfg(arg_8_0, arg_8_1)
+	if arg_8_1 and arg_8_1.showType == HelpEnum.PageTabShowType.HelpView and arg_8_0._curShowHelpId ~= arg_8_1.helpId then
+		arg_8_0._curShowHelpId = arg_8_1.helpId
+		arg_8_0._showParam.id = arg_8_1.helpId
+		arg_8_0.viewParam = arg_8_0._showParam
 
-		slot0:_refreshHelpPage()
+		arg_8_0:_refreshHelpPage()
 	end
 end
 
-return slot0
+return var_0_0

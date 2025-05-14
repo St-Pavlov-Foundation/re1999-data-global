@@ -1,54 +1,70 @@
-module("modules.logic.versionactivity1_3.chess.controller.Activity1_3ChessGameController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.controller.Activity1_3ChessGameController", package.seeall)
 
-slot0 = class("Activity1_3ChessGameController", BaseController)
+local var_0_0 = class("Activity1_3ChessGameController", BaseController)
 
-function slot0.init(slot0)
+function var_0_0.init(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
+function var_0_0.release(arg_3_0)
+	return
 end
 
-function slot0.getViewName(slot0)
+function var_0_0.getViewName(arg_4_0)
+	return
 end
 
-function slot0.onInitServerMap(slot0, slot1)
-	Activity122Model.instance:initSight(slot1.act122Sight or slot1.activity122Sights)
-	Activity122Model.instance:initFire(slot1.act122Fire)
-	slot0:dispatchEvent(Activity1_3ChessEvent.InitGameScene, slot1)
+function var_0_0.onInitServerMap(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.act122Sight or arg_5_1.activity122Sights
+	local var_5_1 = arg_5_1.act122Fire
+
+	Activity122Model.instance:initSight(var_5_0)
+	Activity122Model.instance:initFire(var_5_1)
+	arg_5_0:dispatchEvent(Activity1_3ChessEvent.InitGameScene, arg_5_1)
 end
 
-function slot0.onUpdateServerMap(slot0, slot1)
-	Activity122Model.instance:updateSight(slot1.addSights)
-	Activity122Model.instance:updateFire(slot1.addFires)
-	slot0:dispatchEvent(Activity1_3ChessEvent.UpdateGameScene, slot1)
+function var_0_0.onUpdateServerMap(arg_6_0, arg_6_1)
+	Activity122Model.instance:updateSight(arg_6_1.addSights)
+	Activity122Model.instance:updateFire(arg_6_1.addFires)
+	arg_6_0:dispatchEvent(Activity1_3ChessEvent.UpdateGameScene, arg_6_1)
 end
 
-function slot0.onInitObjects(slot0)
-	if not Activity122Config.instance:getMapCo(Va3ChessGameModel.instance:getActId(), Va3ChessGameModel.instance:getMapId()).decorateObjects or string.nilorempty(slot4) then
+function var_0_0.onInitObjects(arg_7_0)
+	local var_7_0 = Va3ChessGameModel.instance:getActId()
+	local var_7_1 = Va3ChessGameModel.instance:getMapId()
+	local var_7_2 = Activity122Config.instance:getMapCo(var_7_0, var_7_1).decorateObjects
+
+	if not var_7_2 or string.nilorempty(var_7_2) then
 		return
 	end
 
-	for slot9, slot10 in ipairs(cjson.decode(slot4)) do
-		slot11 = Va3ChessInteractObject.New()
-		slot10.actId = slot1
+	local var_7_3 = cjson.decode(var_7_2)
 
-		slot11:init(slot10)
-		slot11:setIgnoreSight(true)
+	for iter_7_0, iter_7_1 in ipairs(var_7_3) do
+		local var_7_4 = Va3ChessInteractObject.New()
 
-		if slot11.config ~= nil then
-			Va3ChessGameController.instance.interacts:add(slot11)
+		iter_7_1.actId = var_7_0
+
+		var_7_4:init(iter_7_1)
+		var_7_4:setIgnoreSight(true)
+
+		if var_7_4.config ~= nil then
+			Va3ChessGameController.instance.interacts:add(var_7_4)
 		end
 	end
 end
 
-function slot0.setSceneCamera(slot0, slot1)
-	if slot1 then
-		slot3 = CameraMgr.instance:getUnitCamera()
-		slot3.orthographic = true
-		slot3.orthographicSize = CameraMgr.instance:getMainCamera().orthographicSize
+function var_0_0.setSceneCamera(arg_8_0, arg_8_1)
+	if arg_8_1 then
+		local var_8_0 = CameraMgr.instance:getMainCamera()
+		local var_8_1 = CameraMgr.instance:getUnitCamera()
+
+		var_8_1.orthographic = true
+		var_8_1.orthographicSize = var_8_0.orthographicSize
 
 		gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), true)
 		gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, true)
@@ -66,8 +82,8 @@ function slot0.setSceneCamera(slot0, slot1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

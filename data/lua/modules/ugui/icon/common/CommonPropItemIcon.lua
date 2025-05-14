@@ -1,461 +1,477 @@
-module("modules.ugui.icon.common.CommonPropItemIcon", package.seeall)
+﻿module("modules.ugui.icon.common.CommonPropItemIcon", package.seeall)
 
-slot0 = class("CommonPropItemIcon", ListScrollCellExtend)
+local var_0_0 = class("CommonPropItemIcon", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.go = slot0.viewGO
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "go_item")
-	slot0._goequip = gohelper.findChild(slot0.viewGO, "go_equip")
-	slot0._gogold = gohelper.findChild(slot0.viewGO, "#go_gold")
-	slot0._nameTxt = gohelper.findChildText(slot0.viewGO, "txt")
-	slot0._rareInGos = slot0:getUserDataTb_()
-	slot0._hightQualityEffect = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.go = arg_4_0.viewGO
+	arg_4_0._goitem = gohelper.findChild(arg_4_0.viewGO, "go_item")
+	arg_4_0._goequip = gohelper.findChild(arg_4_0.viewGO, "go_equip")
+	arg_4_0._gogold = gohelper.findChild(arg_4_0.viewGO, "#go_gold")
+	arg_4_0._nameTxt = gohelper.findChildText(arg_4_0.viewGO, "txt")
+	arg_4_0._rareInGos = arg_4_0:getUserDataTb_()
+	arg_4_0._hightQualityEffect = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, 6 do
-		table.insert(slot0._rareInGos, gohelper.findChild(slot0.viewGO, "vx/" .. tostring(slot4)))
+	for iter_4_0 = 1, 6 do
+		local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "vx/" .. tostring(iter_4_0))
+
+		table.insert(arg_4_0._rareInGos, var_4_0)
 	end
 
-	for slot4 = 4, 5 do
-		table.insert(slot0._hightQualityEffect, slot4, gohelper.findChild(slot0.viewGO, "vx/" .. tostring(slot4) .. "/#teshudaoju"))
+	for iter_4_1 = 4, 5 do
+		local var_4_1 = gohelper.findChild(arg_4_0.viewGO, "vx/" .. tostring(iter_4_1) .. "/#teshudaoju")
+
+		table.insert(arg_4_0._hightQualityEffect, iter_4_1, var_4_1)
 	end
 
-	gohelper.setActive(slot0._nameTxt.gameObject, false)
+	gohelper.setActive(arg_4_0._nameTxt.gameObject, false)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0:setMOValue(slot1.materilType, slot1.materilId, slot1.quantity, slot1.uid, slot1.isIcon, slot1.isGold, slot1.roomBuildingLevel)
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0:setMOValue(arg_7_1.materilType, arg_7_1.materilId, arg_7_1.quantity, arg_7_1.uid, arg_7_1.isIcon, arg_7_1.isGold, arg_7_1.roomBuildingLevel)
 end
 
-function slot0.setMOValue(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0._type = tonumber(slot1)
+function var_0_0.setMOValue(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
+	arg_8_0._type = tonumber(arg_8_1)
 
-	if slot0._type == MaterialEnum.MaterialType.Equip then
-		if not slot0._equipIcon then
-			slot0._equipIcon = IconMgr.instance:getCommonEquipIcon(slot0._goequip, 1)
+	if arg_8_0._type == MaterialEnum.MaterialType.Equip then
+		if not arg_8_0._equipIcon then
+			arg_8_0._equipIcon = IconMgr.instance:getCommonEquipIcon(arg_8_0._goequip, 1)
 
-			slot0._equipIcon:addClick()
+			arg_8_0._equipIcon:addClick()
 		end
 
-		slot0._equipIcon:setMOValue(slot1, slot2, slot3, slot4)
+		arg_8_0._equipIcon:setMOValue(arg_8_1, arg_8_2, arg_8_3, arg_8_4)
 	else
-		slot0._itemIcon = slot0._itemIcon or IconMgr.instance:getCommonItemIcon(slot0._goitem)
+		arg_8_0._itemIcon = arg_8_0._itemIcon or IconMgr.instance:getCommonItemIcon(arg_8_0._goitem)
 
-		if slot0._itemIcon and slot0._itemIcon.setQuantityColor then
-			slot0._itemIcon:setQuantityColor(slot0._quantityColor)
+		if arg_8_0._itemIcon and arg_8_0._itemIcon.setQuantityColor then
+			arg_8_0._itemIcon:setQuantityColor(arg_8_0._quantityColor)
 		end
 
-		slot0._itemIcon:setMOValue(slot1, slot2, slot3, slot4, slot5)
+		arg_8_0._itemIcon:setMOValue(arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
 
-		slot8 = nil
+		local var_8_0
 
-		if slot1 == MaterialEnum.MaterialType.Building and slot7 and slot7 > 0 then
-			slot8 = RoomConfig.instance:getLevelGroupConfig(slot2, slot7) and ResUrl.getRoomBuildingPropIcon(slot9.icon)
+		if arg_8_1 == MaterialEnum.MaterialType.Building and arg_8_7 and arg_8_7 > 0 then
+			local var_8_1 = RoomConfig.instance:getLevelGroupConfig(arg_8_2, arg_8_7)
+
+			var_8_0 = var_8_1 and ResUrl.getRoomBuildingPropIcon(var_8_1.icon)
 		end
 
-		slot0._itemIcon:setSpecificIcon(slot8)
-		slot0._itemIcon:setRoomBuildingLevel(slot7)
+		arg_8_0._itemIcon:setSpecificIcon(var_8_0)
+		arg_8_0._itemIcon:setRoomBuildingLevel(arg_8_7)
 	end
 
-	gohelper.setActive(slot0._goequip, slot0._type == MaterialEnum.MaterialType.Equip)
-	gohelper.setActive(slot0._goitem, slot0._type ~= MaterialEnum.MaterialType.Equip)
-	gohelper.setActive(slot0._gogold, slot6)
+	gohelper.setActive(arg_8_0._goequip, arg_8_0._type == MaterialEnum.MaterialType.Equip)
+	gohelper.setActive(arg_8_0._goitem, arg_8_0._type ~= MaterialEnum.MaterialType.Equip)
+	gohelper.setActive(arg_8_0._gogold, arg_8_6)
 
-	slot0._isEquip = slot0._type == MaterialEnum.MaterialType.Equip
+	arg_8_0._isEquip = arg_8_0._type == MaterialEnum.MaterialType.Equip
 end
 
-function slot0.setAlpha(slot0, slot1, slot2)
-	if slot0._equipIcon then
-		slot0._equipIcon:setAlpha(slot1, slot2)
+function var_0_0.setAlpha(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._equipIcon then
+		arg_9_0._equipIcon:setAlpha(arg_9_1, arg_9_2)
 	end
 
-	if slot0._itemIcon then
-		slot0._itemIcon:setAlpha(slot1, slot2)
-	end
-end
-
-function slot0.hideEffect(slot0)
-	for slot4, slot5 in pairs(slot0._rareInGos) do
-		gohelper.setActive(slot5, false)
+	if arg_9_0._itemIcon then
+		arg_9_0._itemIcon:setAlpha(arg_9_1, arg_9_2)
 	end
 end
 
-function slot0.showVxEffect(slot0, slot1, slot2)
-	slot1 = tonumber(slot1)
-	slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot1, slot2)
-
-	if slot1 == MaterialEnum.MaterialType.PlayerCloth then
-		slot5 = slot3.rare or 5
-	end
-
-	for slot9, slot10 in pairs(slot0._rareInGos) do
-		gohelper.setActive(slot10, false)
-		gohelper.setActive(slot10, slot9 == slot5)
+function var_0_0.hideEffect(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._rareInGos) do
+		gohelper.setActive(iter_10_1, false)
 	end
 end
 
-function slot0.showHighQualityEffect(slot0, slot1, slot2, slot3)
-	if tonumber(slot1) == MaterialEnum.MaterialType.PlayerCloth then
-		slot3 = slot3 or 5
+function var_0_0.showVxEffect(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_1 = tonumber(arg_11_1)
+
+	local var_11_0, var_11_1 = ItemModel.instance:getItemConfigAndIcon(arg_11_1, arg_11_2)
+	local var_11_2 = var_11_0.rare
+
+	if arg_11_1 == MaterialEnum.MaterialType.PlayerCloth then
+		var_11_2 = var_11_2 or 5
 	end
 
-	for slot8, slot9 in pairs(slot0._hightQualityEffect) do
-		if slot8 == slot3 and ItemModel.canShowVfx(slot1, slot2, slot3) then
-			gohelper.setActive(slot9, false)
-			gohelper.setActive(slot9, true)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._rareInGos) do
+		gohelper.setActive(iter_11_1, false)
+		gohelper.setActive(iter_11_1, iter_11_0 == var_11_2)
+	end
+end
+
+function var_0_0.showHighQualityEffect(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_1 = tonumber(arg_12_1)
+
+	if arg_12_1 == MaterialEnum.MaterialType.PlayerCloth then
+		arg_12_3 = arg_12_3 or 5
+	end
+
+	local var_12_0 = ItemModel.canShowVfx(arg_12_1, arg_12_2, arg_12_3)
+
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._hightQualityEffect) do
+		if iter_12_0 == arg_12_3 and var_12_0 then
+			gohelper.setActive(iter_12_1, false)
+			gohelper.setActive(iter_12_1, true)
 		else
-			gohelper.setActive(slot9, false)
+			gohelper.setActive(iter_12_1, false)
 		end
 	end
 end
 
-function slot0.setItemIconScale(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setItemIconScale(slot1)
+function var_0_0.setItemIconScale(arg_13_0, arg_13_1)
+	if arg_13_0._itemIcon then
+		arg_13_0._itemIcon:setItemIconScale(arg_13_1)
 	end
 
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setItemIconScale(slot1)
-	end
-end
-
-function slot0.setItemOffset(slot0, slot1, slot2)
-	if slot0._itemIcon then
-		slot0._itemIcon:setItemOffset(slot1, slot2)
-	end
-
-	if slot0._equipIcon then
-		slot0._equipIcon:setItemOffset(slot1, slot2)
+	if arg_13_0._equipIcon and arg_13_0._isEquip then
+		arg_13_0._equipIcon:setItemIconScale(arg_13_1)
 	end
 end
 
-function slot0.setCountTxtSize(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setCountFontSize(slot1)
+function var_0_0.setItemOffset(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0._itemIcon then
+		arg_14_0._itemIcon:setItemOffset(arg_14_1, arg_14_2)
 	end
 
-	if slot0._equipIcon then
-		slot0._equipIcon:setCountFontSize(slot1)
-	end
-end
-
-function slot0.setScale(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setScale(slot1)
-	end
-
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setScale(slot1)
+	if arg_14_0._equipIcon then
+		arg_14_0._equipIcon:setItemOffset(arg_14_1, arg_14_2)
 	end
 end
 
-function slot0.setPropItemScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.viewGO.transform, slot1, slot1, slot1)
-end
+function var_0_0.setCountTxtSize(arg_15_0, arg_15_1)
+	if arg_15_0._itemIcon then
+		arg_15_0._itemIcon:setCountFontSize(arg_15_1)
+	end
 
-function slot0.showName(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:showName(slot1)
+	if arg_15_0._equipIcon then
+		arg_15_0._equipIcon:setCountFontSize(arg_15_1)
 	end
 end
 
-function slot0.setNameType(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setNameType(slot1)
+function var_0_0.setScale(arg_16_0, arg_16_1)
+	if arg_16_0._itemIcon then
+		arg_16_0._itemIcon:setScale(arg_16_1)
+	end
+
+	if arg_16_0._equipIcon and arg_16_0._isEquip then
+		arg_16_0._equipIcon:setScale(arg_16_1)
 	end
 end
 
-function slot0.customOnClickCallback(slot0, slot1, slot2)
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:customClick(slot1, slot2)
-	end
+function var_0_0.setPropItemScale(arg_17_0, arg_17_1)
+	transformhelper.setLocalScale(arg_17_0.viewGO.transform, arg_17_1, arg_17_1, arg_17_1)
+end
 
-	if slot0._itemIcon then
-		slot0._itemIcon:customOnClickCallback(slot1, slot2)
+function var_0_0.showName(arg_18_0, arg_18_1)
+	if arg_18_0._itemIcon then
+		arg_18_0._itemIcon:showName(arg_18_1)
 	end
 end
 
-function slot0.setOnBeforeClickCallback(slot0, slot1, slot2, slot3)
-	if slot0._itemIcon then
-		slot0._itemIcon:setOnBeforeClickCallback(slot1, slot2, slot3)
+function var_0_0.setNameType(arg_19_0, arg_19_1)
+	if arg_19_0._itemIcon then
+		arg_19_0._itemIcon:setNameType(arg_19_1)
 	end
 end
 
-function slot0.showStackableNum(slot0)
-	if slot0._itemIcon and slot0._itemIcon.showStackableNum then
-		slot0._itemIcon:showStackableNum()
+function var_0_0.customOnClickCallback(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_0._equipIcon and arg_20_0._isEquip then
+		arg_20_0._equipIcon:customClick(arg_20_1, arg_20_2)
+	end
+
+	if arg_20_0._itemIcon then
+		arg_20_0._itemIcon:customOnClickCallback(arg_20_1, arg_20_2)
 	end
 end
 
-function slot0.setFrameMaskable(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon._setFrameMaskable then
-		slot0._itemIcon:_setFrameMaskable(slot1)
+function var_0_0.setOnBeforeClickCallback(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	if arg_21_0._itemIcon then
+		arg_21_0._itemIcon:setOnBeforeClickCallback(arg_21_1, arg_21_2, arg_21_3)
 	end
 end
 
-function slot0.isShowCount(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.isShowCount then
-		slot0._itemIcon:isShowCount(slot1)
+function var_0_0.showStackableNum(arg_22_0)
+	if arg_22_0._itemIcon and arg_22_0._itemIcon.showStackableNum then
+		arg_22_0._itemIcon:showStackableNum()
 	end
 end
 
-function slot0.isShowQuality(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.isShowQuality then
-		slot0._itemIcon:isShowQuality(slot1)
-	end
-
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:isShowQuality(slot1)
+function var_0_0.setFrameMaskable(arg_23_0, arg_23_1)
+	if arg_23_0._itemIcon and arg_23_0._itemIcon._setFrameMaskable then
+		arg_23_0._itemIcon:_setFrameMaskable(arg_23_1)
 	end
 end
 
-function slot0.isShowEquipAndItemCount(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.isShowCount then
-		slot0._itemIcon:isShowCount(slot1)
-	end
-
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:isShowCount(slot1)
+function var_0_0.isShowCount(arg_24_0, arg_24_1)
+	if arg_24_0._itemIcon and arg_24_0._itemIcon.isShowCount then
+		arg_24_0._itemIcon:isShowCount(arg_24_1)
 	end
 end
 
-function slot0.setHideLvAndBreakFlag(slot0, slot1)
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setHideLvAndBreakFlag(slot1)
+function var_0_0.isShowQuality(arg_25_0, arg_25_1)
+	if arg_25_0._itemIcon and arg_25_0._itemIcon.isShowQuality then
+		arg_25_0._itemIcon:isShowQuality(arg_25_1)
+	end
+
+	if arg_25_0._equipIcon and arg_25_0._isEquip then
+		arg_25_0._equipIcon:isShowQuality(arg_25_1)
 	end
 end
 
-function slot0.setShowCountFlag(slot0, slot1)
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setShowCountFlag(slot1)
+function var_0_0.isShowEquipAndItemCount(arg_26_0, arg_26_1)
+	if arg_26_0._itemIcon and arg_26_0._itemIcon.isShowCount then
+		arg_26_0._itemIcon:isShowCount(arg_26_1)
+	end
+
+	if arg_26_0._equipIcon and arg_26_0._isEquip then
+		arg_26_0._equipIcon:isShowCount(arg_26_1)
 	end
 end
 
-function slot0.isShowName(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.isShowName then
-		slot0._itemIcon:isShowName(slot1)
+function var_0_0.setHideLvAndBreakFlag(arg_27_0, arg_27_1)
+	if arg_27_0._equipIcon and arg_27_0._isEquip then
+		arg_27_0._equipIcon:setHideLvAndBreakFlag(arg_27_1)
 	end
 end
 
-function slot0.isShowEffect(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.isShowEffect then
-		slot0._itemIcon:isShowEffect(slot1)
+function var_0_0.setShowCountFlag(arg_28_0, arg_28_1)
+	if arg_28_0._equipIcon and arg_28_0._isEquip then
+		arg_28_0._equipIcon:setShowCountFlag(arg_28_1)
 	end
 end
 
-function slot0.isShowAddition(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.isShowAddition then
-		slot0._itemIcon:isShowAddition(slot1)
-	elseif slot0._isEquip and slot0._equipIcon then
-		slot0._equipIcon:isShowAddition(slot1)
+function var_0_0.isShowName(arg_29_0, arg_29_1)
+	if arg_29_0._itemIcon and arg_29_0._itemIcon.isShowName then
+		arg_29_0._itemIcon:isShowName(arg_29_1)
 	end
 end
 
-function slot0.ShowEquipCount(slot0, slot1, slot2)
-	if slot0._isEquip and slot0._equipIcon then
-		slot0._equipIcon:showEquipCount(slot1, slot2)
+function var_0_0.isShowEffect(arg_30_0, arg_30_1)
+	if arg_30_0._itemIcon and arg_30_0._itemIcon.isShowEffect then
+		arg_30_0._itemIcon:isShowEffect(arg_30_1)
 	end
 end
 
-function slot0.isShowEquipCount(slot0, slot1)
-	if slot0._isEquip and slot0._equipIcon then
-		slot0._equipIcon:isShowCount(slot1)
+function var_0_0.isShowAddition(arg_31_0, arg_31_1)
+	if arg_31_0._itemIcon and arg_31_0._itemIcon.isShowAddition then
+		arg_31_0._itemIcon:isShowAddition(arg_31_1)
+	elseif arg_31_0._isEquip and arg_31_0._equipIcon then
+		arg_31_0._equipIcon:isShowAddition(arg_31_1)
 	end
 end
 
-function slot0.hideExpEquipState(slot0)
-	if slot0._isEquip and slot0._equipIcon then
-		slot0._equipIcon:hideExpEquipState()
+function var_0_0.ShowEquipCount(arg_32_0, arg_32_1, arg_32_2)
+	if arg_32_0._isEquip and arg_32_0._equipIcon then
+		arg_32_0._equipIcon:showEquipCount(arg_32_1, arg_32_2)
 	end
 end
 
-function slot0.hideEquipLvAndBreak(slot0, slot1)
-	if slot0._isEquip and slot0._equipIcon then
-		slot0._equipIcon:hideLvAndBreak(slot1)
+function var_0_0.isShowEquipCount(arg_33_0, arg_33_1)
+	if arg_33_0._isEquip and arg_33_0._equipIcon then
+		arg_33_0._equipIcon:isShowCount(arg_33_1)
 	end
 end
 
-function slot0.showEquipRefineContainer(slot0, slot1)
-	if slot0._isEquip and slot0._equipIcon then
-		slot0._equipIcon:showEquipRefineContainer(slot1)
+function var_0_0.hideExpEquipState(arg_34_0)
+	if arg_34_0._isEquip and arg_34_0._equipIcon then
+		arg_34_0._equipIcon:hideExpEquipState()
 	end
 end
 
-function slot0.setCantJump(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.setCantJump then
-		slot0._itemIcon:setCantJump(slot1)
-	end
-
-	if slot0._equipIcon and slot0._equipIcon.setCantJump then
-		slot0._equipIcon:setCantJump(slot1)
+function var_0_0.hideEquipLvAndBreak(arg_35_0, arg_35_1)
+	if arg_35_0._isEquip and arg_35_0._equipIcon then
+		arg_35_0._equipIcon:hideLvAndBreak(arg_35_1)
 	end
 end
 
-function slot0.setRecordFarmItem(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon.setRecordFarmItem then
-		slot0._itemIcon:setRecordFarmItem(slot1)
+function var_0_0.showEquipRefineContainer(arg_36_0, arg_36_1)
+	if arg_36_0._isEquip and arg_36_0._equipIcon then
+		arg_36_0._equipIcon:showEquipRefineContainer(arg_36_1)
 	end
 end
 
-function slot0.setQuantityColor(slot0, slot1)
-	slot0._quantityColor = slot1
+function var_0_0.setCantJump(arg_37_0, arg_37_1)
+	if arg_37_0._itemIcon and arg_37_0._itemIcon.setCantJump then
+		arg_37_0._itemIcon:setCantJump(arg_37_1)
+	end
 
-	if slot0._itemIcon and slot0._itemIcon.setQuantityColor then
-		slot0._itemIcon:setQuantityColor(slot1)
+	if arg_37_0._equipIcon and arg_37_0._equipIcon.setCantJump then
+		arg_37_0._equipIcon:setCantJump(arg_37_1)
 	end
 end
 
-function slot0.setItemColor(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setItemColor(slot1)
-	end
-
-	if slot0._equipIcon then
-		slot0._equipIcon:setItemColor(slot1)
+function var_0_0.setRecordFarmItem(arg_38_0, arg_38_1)
+	if arg_38_0._itemIcon and arg_38_0._itemIcon.setRecordFarmItem then
+		arg_38_0._itemIcon:setRecordFarmItem(arg_38_1)
 	end
 end
 
-function slot0.showStackableNum2(slot0, slot1, slot2)
-	if slot0._itemIcon and slot0._itemIcon.showStackableNum2 then
-		slot0._itemIcon:showStackableNum2(slot1, slot2)
+function var_0_0.setQuantityColor(arg_39_0, arg_39_1)
+	arg_39_0._quantityColor = arg_39_1
+
+	if arg_39_0._itemIcon and arg_39_0._itemIcon.setQuantityColor then
+		arg_39_0._itemIcon:setQuantityColor(arg_39_1)
 	end
 end
 
-function slot0.setCountText(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setCountText(slot1)
+function var_0_0.setItemColor(arg_40_0, arg_40_1)
+	if arg_40_0._itemIcon then
+		arg_40_0._itemIcon:setItemColor(arg_40_1)
+	end
+
+	if arg_40_0._equipIcon then
+		arg_40_0._equipIcon:setItemColor(arg_40_1)
 	end
 end
 
-function slot0.getItemIcon(slot0)
-	return slot0._isEquip and slot0._equipIcon or slot0._itemIcon
+function var_0_0.showStackableNum2(arg_41_0, arg_41_1, arg_41_2)
+	if arg_41_0._itemIcon and arg_41_0._itemIcon.showStackableNum2 then
+		arg_41_0._itemIcon:showStackableNum2(arg_41_1, arg_41_2)
+	end
 end
 
-function slot0.isEquipIcon(slot0)
-	return slot0._isEquip
+function var_0_0.setCountText(arg_42_0, arg_42_1)
+	if arg_42_0._itemIcon then
+		arg_42_0._itemIcon:setCountText(arg_42_1)
+	end
 end
 
-function slot0.setCountFontSize(slot0, slot1)
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setCountFontSize(slot1)
+function var_0_0.getItemIcon(arg_43_0)
+	return arg_43_0._isEquip and arg_43_0._equipIcon or arg_43_0._itemIcon
+end
+
+function var_0_0.isEquipIcon(arg_44_0)
+	return arg_44_0._isEquip
+end
+
+function var_0_0.setCountFontSize(arg_45_0, arg_45_1)
+	if arg_45_0._equipIcon and arg_45_0._isEquip then
+		arg_45_0._equipIcon:setCountFontSize(arg_45_1)
 	else
-		slot0._itemIcon:setCountFontSize(slot1)
+		arg_45_0._itemIcon:setCountFontSize(arg_45_1)
 	end
 end
 
-function slot0.setEquipLevelScaleAndColor(slot0, slot1, slot2)
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setLevelScaleAndColor(slot1, slot2)
+function var_0_0.setEquipLevelScaleAndColor(arg_46_0, arg_46_1, arg_46_2)
+	if arg_46_0._equipIcon and arg_46_0._isEquip then
+		arg_46_0._equipIcon:setLevelScaleAndColor(arg_46_1, arg_46_2)
 	end
 end
 
-function slot0.setCarrerIconAndRefineVisible(slot0, slot1)
-	if slot0._equipIcon and slot0._isEquip then
-		slot0._equipIcon:setCarrerIconAndRefineVisible(slot1)
+function var_0_0.setCarrerIconAndRefineVisible(arg_47_0, arg_47_1)
+	if arg_47_0._equipIcon and arg_47_0._isEquip then
+		arg_47_0._equipIcon:setCarrerIconAndRefineVisible(arg_47_1)
 	end
 end
 
-function slot0.playAnimation(slot0)
-	if slot0._itemIcon then
-		slot0._itemIcon:playAnimation()
+function var_0_0.playAnimation(arg_48_0)
+	if arg_48_0._itemIcon then
+		arg_48_0._itemIcon:playAnimation()
 	end
 end
 
-function slot0.setAutoPlay(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setAutoPlay(slot1)
+function var_0_0.setAutoPlay(arg_49_0, arg_49_1)
+	if arg_49_0._itemIcon then
+		arg_49_0._itemIcon:setAutoPlay(arg_49_1)
 	end
 end
 
-function slot0.setConsume(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setConsume(slot1)
+function var_0_0.setConsume(arg_50_0, arg_50_1)
+	if arg_50_0._itemIcon then
+		arg_50_0._itemIcon:setConsume(arg_50_1)
 	end
 end
 
-function slot0.isShowEquipRefineLv(slot0, slot1)
-	if slot0._isEquip then
-		slot0._equipIcon:isShowRefineLv(slot1)
+function var_0_0.isShowEquipRefineLv(arg_51_0, arg_51_1)
+	if arg_51_0._isEquip then
+		arg_51_0._equipIcon:isShowRefineLv(arg_51_1)
 	end
 end
 
-function slot0.SetCountLocalY(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon._txtQuantity then
-		recthelper.setAnchorY(slot0._itemIcon._txtQuantity.transform, slot1)
+function var_0_0.SetCountLocalY(arg_52_0, arg_52_1)
+	if arg_52_0._itemIcon and arg_52_0._itemIcon._txtQuantity then
+		recthelper.setAnchorY(arg_52_0._itemIcon._txtQuantity.transform, arg_52_1)
 	end
 
-	if slot0._equipIcon and slot0._equipIcon._txtnum then
-		recthelper.setAnchorY(slot0._equipIcon._txtnum.transform, slot1 - 39.6)
-	end
-end
-
-function slot0.SetCountBgHeight(slot0, slot1)
-	if slot0._itemIcon and slot0._itemIcon._countbg then
-		recthelper.setHeight(slot0._itemIcon._countbg.transform, slot1)
-	end
-
-	if slot0._equipIcon and slot0._equipIcon._countbg then
-		recthelper.setHeight(slot0._equipIcon._countbg.transform, slot1)
+	if arg_52_0._equipIcon and arg_52_0._equipIcon._txtnum then
+		recthelper.setAnchorY(arg_52_0._equipIcon._txtnum.transform, arg_52_1 - 39.6)
 	end
 end
 
-function slot0.SetCountBgScale(slot0, slot1, slot2, slot3)
-	if slot0._itemIcon and slot0._itemIcon._countbg then
-		transformhelper.setLocalScale(slot0._itemIcon._countbg.transform, slot1, slot2, slot3)
+function var_0_0.SetCountBgHeight(arg_53_0, arg_53_1)
+	if arg_53_0._itemIcon and arg_53_0._itemIcon._countbg then
+		recthelper.setHeight(arg_53_0._itemIcon._countbg.transform, arg_53_1)
 	end
 
-	if slot0._equipIcon and slot0._equipIcon._countbg then
-		transformhelper.setLocalScale(slot0._equipIcon._countbg.transform, slot1, slot2, slot3)
-	end
-end
-
-function slot0.setGetMask(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setGetMask(slot1)
-	end
-
-	if slot0._equipIcon then
-		slot0._equipIcon:setGetMask(slot1)
+	if arg_53_0._equipIcon and arg_53_0._equipIcon._countbg then
+		recthelper.setHeight(arg_53_0._equipIcon._countbg.transform, arg_53_1)
 	end
 end
 
-function slot0.setIconBg(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setIconBg(slot1)
+function var_0_0.SetCountBgScale(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
+	if arg_54_0._itemIcon and arg_54_0._itemIcon._countbg then
+		transformhelper.setLocalScale(arg_54_0._itemIcon._countbg.transform, arg_54_1, arg_54_2, arg_54_3)
+	end
+
+	if arg_54_0._equipIcon and arg_54_0._equipIcon._countbg then
+		transformhelper.setLocalScale(arg_54_0._equipIcon._countbg.transform, arg_54_1, arg_54_2, arg_54_3)
 	end
 end
 
-function slot0.setCanShowDeadLine(slot0, slot1)
-	if slot0._itemIcon then
-		slot0._itemIcon:setCanShowDeadLine(slot1)
+function var_0_0.setGetMask(arg_55_0, arg_55_1)
+	if arg_55_0._itemIcon then
+		arg_55_0._itemIcon:setGetMask(arg_55_1)
+	end
+
+	if arg_55_0._equipIcon then
+		arg_55_0._equipIcon:setGetMask(arg_55_1)
 	end
 end
 
-function slot0.isExpiredItem(slot0)
-	if slot0._itemIcon then
-		return slot0._itemIcon:isExpiredItem()
-	end
-
-	if slot0._equipIcon then
-		return slot0._equipIcon:isExpiredItem()
+function var_0_0.setIconBg(arg_56_0, arg_56_1)
+	if arg_56_0._itemIcon then
+		arg_56_0._itemIcon:setIconBg(arg_56_1)
 	end
 end
 
-return slot0
+function var_0_0.setCanShowDeadLine(arg_57_0, arg_57_1)
+	if arg_57_0._itemIcon then
+		arg_57_0._itemIcon:setCanShowDeadLine(arg_57_1)
+	end
+end
+
+function var_0_0.isExpiredItem(arg_58_0)
+	if arg_58_0._itemIcon then
+		return arg_58_0._itemIcon:isExpiredItem()
+	end
+
+	if arg_58_0._equipIcon then
+		return arg_58_0._equipIcon:isExpiredItem()
+	end
+end
+
+return var_0_0

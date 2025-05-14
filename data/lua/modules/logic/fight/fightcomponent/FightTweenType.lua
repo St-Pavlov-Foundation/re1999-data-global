@@ -1,6 +1,6 @@
-module("modules.logic.fight.fightcomponent.FightTweenType", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightTweenType", package.seeall)
 
-slot0 = {}
+local var_0_0 = {}
 
 return {
 	DOAnchorPosY = "DOAnchorPosY",

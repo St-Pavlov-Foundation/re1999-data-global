@@ -1,38 +1,38 @@
-module("modules.logic.gm.controller.sequencework.DelayDoFuncWork", package.seeall)
+﻿module("modules.logic.gm.controller.sequencework.DelayDoFuncWork", package.seeall)
 
-slot0 = class("DelayDoFuncWork", BaseWork)
+local var_0_0 = class("DelayDoFuncWork", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4)
-	slot0._func = slot1
-	slot0._target = slot2
-	slot0._delayTime = slot3
-	slot0._param = slot4
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0._func = arg_1_1
+	arg_1_0._target = arg_1_2
+	arg_1_0._delayTime = arg_1_3
+	arg_1_0._param = arg_1_4
 end
 
-function slot0.onStart(slot0)
-	if not slot0._delayTime or slot0._delayTime == 0 then
-		slot0.hadDelayTask = false
+function var_0_0.onStart(arg_2_0)
+	if not arg_2_0._delayTime or arg_2_0._delayTime == 0 then
+		arg_2_0.hadDelayTask = false
 
-		slot0._func(slot0._target, slot0._param)
-		slot0:onDone(true)
+		arg_2_0._func(arg_2_0._target, arg_2_0._param)
+		arg_2_0:onDone(true)
 	else
-		slot0.hadDelayTask = true
+		arg_2_0.hadDelayTask = true
 
-		TaskDispatcher.runDelay(slot0._delayDoFunc, slot0, slot0._delayTime)
+		TaskDispatcher.runDelay(arg_2_0._delayDoFunc, arg_2_0, arg_2_0._delayTime)
 	end
 end
 
-function slot0._delayDoFunc(slot0)
-	slot0._func(slot0._target, slot0._param)
-	slot0:onDone(true)
+function var_0_0._delayDoFunc(arg_3_0)
+	arg_3_0._func(arg_3_0._target, arg_3_0._param)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	uv0.super.clearWork(slot0)
+function var_0_0.clearWork(arg_4_0)
+	var_0_0.super.clearWork(arg_4_0)
 
-	if slot0.hadDelayTask then
-		TaskDispatcher.cancelTask(slot0._delayDoFunc, slot0)
+	if arg_4_0.hadDelayTask then
+		TaskDispatcher.cancelTask(arg_4_0._delayDoFunc, arg_4_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,12 +1,6 @@
-module("projbooter.config.BooterLoadingConfig", package.seeall)
+﻿module("projbooter.config.BooterLoadingConfig", package.seeall)
 
-function booterLoadingConfig()
-	return uv0
-end
-
-setGlobal("booterLoadingConfig", booterLoadingConfig)
-
-return {
+local var_0_0 = {
 	{
 		twDesc = "它的到來讓時間變得無足輕重。時而回到過去，時而重返未來。又或是一無所有，又或是浴火重生。",
 		enTitle = "The Storm",
@@ -42,12 +36,7 @@ return {
 		deDesc = "",
 		twTitle = "暴雨症候/時代病",
 		deTitle = "",
-		krDesc = [[
-황당하고 믿을 수 없는 증상.
-빗 속에서 세상의 질서가 씻겨져 내려가고, 모든 것이 광기에 물들어 낯선 것들로 바뀌어 버린다.
-아무것도 모르는 사람들은 황금을 삼키고 석유를 마시며  작열하는 철판 위에서 춤을 춘다. 
-환자들은 자신들의 문제를 인지하지 못한다, 늘 그랬던 것 처럼.
-]],
+		krDesc = "황당하고 믿을 수 없는 증상.\n빗 속에서 세상의 질서가 씻겨져 내려가고, 모든 것이 광기에 물들어 낯선 것들로 바뀌어 버린다.\n아무것도 모르는 사람들은 황금을 삼키고 석유를 마시며  작열하는 철판 위에서 춤을 춘다. \n환자들은 자신들의 문제를 인지하지 못한다, 늘 그랬던 것 처럼.\n",
 		bg = "originbg2",
 		jpDesc = "不条理で滑稽な、例えようもない病。\nストームが世界の秩序を飲み込んだとき、何もかもが狂い、何もかもが奇怪に変わる。\n黄金を食べ、石油を飲み、灼けた鉄で踊りあかす。患者たちは、自らの病に決して気づかない。",
 		krTitle = "폭풍우 증후군",
@@ -69,11 +58,7 @@ return {
 		deDesc = "",
 		twTitle = "1999年",
 		deTitle = "",
-		krDesc = [[
-원래였다면, 찬란하고 멋진 한 세기의 마무리였어야 했다. 
-연말의 파티, 새천년을 맞이하는 카운트다운, 밀레니엄 버그, 15인치 컬러 모니터, 그리고 불야성.
-마음껏 지난 세기를 돌아보도록 하자. 우리에게는 셀 수 없을 만큼의 과거가 있으니까. 
-혹시 금을 매수할 생각은 없나?]],
+		krDesc = "원래였다면, 찬란하고 멋진 한 세기의 마무리였어야 했다. \n연말의 파티, 새천년을 맞이하는 카운트다운, 밀레니엄 버그, 15인치 컬러 모니터, 그리고 불야성.\n마음껏 지난 세기를 돌아보도록 하자. 우리에게는 셀 수 없을 만큼의 과거가 있으니까. \n혹시 금을 매수할 생각은 없나?",
 		bg = "originbg3",
 		jpDesc = "本来ならば、すばらしい年になるはずだった。パーティーにカウントダウン、２０００年問題に１５インチのカラーディスプレイ、\nそして眠らない夜。\nさぁ好きなだけ、振り返るといい。我々には限りない過去があるのだから！　ところで、黄金はいかが？",
 		krTitle = "1999년",
@@ -149,41 +134,33 @@ return {
 		zhTitle = "拉普拉斯科算中心"
 	},
 	{
-		twDesc = [[
-服從，堅定，從不退怯。
-以優補優，主張融合神秘學界武裝力量與人類社會武裝力量的組織。
-作為鴿子屋的常備軍隊活動於世界各地，同時擔負著篩選與培育下一代戰鬥力量的責任。
-在《視界線公約》簽署後陸續與各國簽訂引渡條約，接收來自於不同國家的適齡兒童，進行系統戰術訓練。]],
+		twDesc = "服從，堅定，從不退怯。\n以優補優，主張融合神秘學界武裝力量與人類社會武裝力量的組織。\n作為鴿子屋的常備軍隊活動於世界各地，同時擔負著篩選與培育下一代戰鬥力量的責任。\n在《視界線公約》簽署後陸續與各國簽訂引渡條約，接收來自於不同國家的適齡兒童，進行系統戰術訓練。",
 		enTitle = "Zeno Arms Academy",
 		thaiTitle = "",
 		frTitle = "",
 		jpTitle = "ゼノミリタリーアカデミー",
-		enDesc = [[
-Obedient, loyal, unwavering.
-Zeno is an elite organization that advocates for the integration of armed forces of arcanum with those of human society.
-As the standing army of the Pax House, it operates worldwide, taking on the crucial task of vetting and preparing future generations of soldiers.
-After the Event Horizon Convention, Zeno signed extradition agreements with countries all over the world to take in age-appropriate children and provide them with systematic training.]],
+		enDesc = "Obedient, loyal, unwavering.\nZeno is an elite organization that advocates for the integration of armed forces of arcanum with those of human society.\nAs the standing army of the Pax House, it operates worldwide, taking on the crucial task of vetting and preparing future generations of soldiers.\nAfter the Event Horizon Convention, Zeno signed extradition agreements with countries all over the world to take in age-appropriate children and provide them with systematic training.",
 		frDesc = "",
 		thaiDesc = "",
 		titleen = "Zeno Armaments Engineering and Technology Academy",
 		deDesc = "",
 		twTitle = "芝諾軍備學院",
 		deTitle = "",
-		krDesc = [[
-복종하며, 강인하고, 결코 물러서지 않는다.
-최고를 최고로 보완하며, 마도학계의 군대와 인간 사회 군대의 통합을 지향하는 조직이다.
-팍스 하우스의 상비군으로서 전 세계에서 활동하며, 차세대 전투원을 선별하고 육성하는 임무를 맡고 있다.
-<이벤트 호라이즌 협약> 체결 이후, 여러 국가와 인도 조약을 체결하여 여러 국가의 어린이들을 받아 체계적인 군사 훈련을 실시하고 있다.]],
+		krDesc = "복종하며, 강인하고, 결코 물러서지 않는다.\n최고를 최고로 보완하며, 마도학계의 군대와 인간 사회 군대의 통합을 지향하는 조직이다.\n팍스 하우스의 상비군으로서 전 세계에서 활동하며, 차세대 전투원을 선별하고 육성하는 임무를 맡고 있다.\n<이벤트 호라이즌 협약> 체결 이후, 여러 국가와 인도 조약을 체결하여 여러 국가의 어린이들을 받아 체계적인 군사 훈련을 실시하고 있다.",
 		bg = "originbg7",
 		jpDesc = "従順にして堅実、そして常に恐れを知らない。 「最高のものを最高のものと結合させる」と、神秘学界の力と人類社会の武装との融合を提唱する組織。 鳩小屋の常備軍として世界各地で活動し、次世代の戦闘員の選抜と育成をも担っている。 『事象の地平線条約』締結後、様々な国家と引き渡し条約を結び、各国からの適齢期の子どもたちを受け入れ、体系的な戦術訓練を受けさせている。",
 		krTitle = "제노 군사 아카데미",
-		zhDesc = [[
-服从，坚定，从不退怯。
-以优补优，主张融合神秘学界武装力量与人类社会武装力量的组织。
-作为鸽子屋的常备军队活动于世界各地，同时担负着筛选与培育下一代战斗力量的责任。
-在《视界线公约》签署后陆续与各国签订引渡条约，接收来自于不同国家的适龄儿童，进行系统战术训练。]],
+		zhDesc = "服从，坚定，从不退怯。\n以优补优，主张融合神秘学界武装力量与人类社会武装力量的组织。\n作为鸽子屋的常备军队活动于世界各地，同时担负着筛选与培育下一代战斗力量的责任。\n在《视界线公约》签署后陆续与各国签订引渡条约，接收来自于不同国家的适龄儿童，进行系统战术训练。",
 		id = 7,
 		weight = 100,
 		zhTitle = "芝诺军备学院"
 	}
 }
+
+function booterLoadingConfig()
+	return var_0_0
+end
+
+setGlobal("booterLoadingConfig", booterLoadingConfig)
+
+return var_0_0

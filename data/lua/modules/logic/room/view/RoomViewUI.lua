@@ -1,128 +1,143 @@
-module("modules.logic.room.view.RoomViewUI", package.seeall)
+﻿module("modules.logic.room.view.RoomViewUI", package.seeall)
 
-slot0 = class("RoomViewUI", BaseView)
+local var_0_0 = class("RoomViewUI", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._cameraStateShowUIMap = {
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._cameraStateShowUIMap = {
 		[RoomEnum.CameraState.Overlook] = true,
 		[RoomEnum.CameraState.OverlookAll] = true
 	}
-	slot0._showBuildingItemTypeMap = {
+	arg_4_0._showBuildingItemTypeMap = {
 		[RoomBuildingEnum.BuildingType.Interact] = true
 	}
-	slot0._gopart = gohelper.findChild(slot0.viewGO, "go_normalroot/go_ui/go_part")
-	slot0._canvasGroup = gohelper.onceAddComponent(slot0._gopart, typeof(UnityEngine.CanvasGroup))
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._manufactureItemDict = {}
+	arg_4_0._gopart = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_ui/go_part")
+	arg_4_0._canvasGroup = gohelper.onceAddComponent(arg_4_0._gopart, typeof(UnityEngine.CanvasGroup))
+	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_4_0._manufactureItemDict = {}
 end
 
-function slot0._onDelayInit(slot0)
-	slot0._isRunDalayInit = true
+function var_0_0._onDelayInit(arg_5_0)
+	arg_5_0._isRunDalayInit = true
 
-	slot0:_initPartItem()
-	slot0:_initInitItem()
-	slot0:_initCharacterItem()
-	slot0:_initCharacterInteractionItem()
-	slot0:_refreshCharacterItem()
-	slot0:_refreshCharacterInteractionItem()
-	slot0:_refreshManufactureItem()
-	slot0:_refreshTransportSiteItem()
-	slot0:_refreshCritterBuildingItem()
-	slot0:_refreshTradeBuildingItem()
-	slot0:_refreshCritterItem()
-	slot0:_refreshBuildingItem()
-	slot0:_sort()
+	arg_5_0:_initPartItem()
+	arg_5_0:_initInitItem()
+	arg_5_0:_initCharacterItem()
+	arg_5_0:_initCharacterInteractionItem()
+	arg_5_0:_refreshCharacterItem()
+	arg_5_0:_refreshCharacterInteractionItem()
+	arg_5_0:_refreshManufactureItem()
+	arg_5_0:_refreshTransportSiteItem()
+	arg_5_0:_refreshCritterBuildingItem()
+	arg_5_0:_refreshTradeBuildingItem()
+	arg_5_0:_refreshCritterItem()
+	arg_5_0:_refreshBuildingItem()
+	arg_5_0:_sort()
 end
 
-function slot0._sort(slot0)
-	if not slot0._isRunDalayInit then
+function var_0_0._sort(arg_6_0)
+	if not arg_6_0._isRunDalayInit then
 		return
 	end
 
-	slot0._uiItemList = {}
+	arg_6_0._uiItemList = {}
 
-	LuaUtil.insertDict(slot0._uiItemList, slot0._partItemDict)
-	table.insert(slot0._uiItemList, slot0._initItem)
-	LuaUtil.insertDict(slot0._uiItemList, slot0._characterItemDict)
-	LuaUtil.insertDict(slot0._uiItemList, slot0._characterInteractionItemDict)
-	LuaUtil.insertDict(slot0._uiItemList, slot0._manufactureItemDict)
-	LuaUtil.insertDict(slot0._uiItemList, slot0._transportSiteItemDict)
-	table.insert(slot0._uiItemList, slot0._critterBuildingItem)
-	table.insert(slot0._uiItemList, slot0._tradeBuildingItem)
-	LuaUtil.insertDict(slot0._uiItemList, slot0._critterItemDict)
-	LuaUtil.insertDict(slot0._uiItemList, slot0._buildingItemDict)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._partItemDict)
+	table.insert(arg_6_0._uiItemList, arg_6_0._initItem)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._characterItemDict)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._characterInteractionItemDict)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._manufactureItemDict)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._transportSiteItemDict)
+	table.insert(arg_6_0._uiItemList, arg_6_0._critterBuildingItem)
+	table.insert(arg_6_0._uiItemList, arg_6_0._tradeBuildingItem)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._critterItemDict)
+	LuaUtil.insertDict(arg_6_0._uiItemList, arg_6_0._buildingItemDict)
 
-	for slot5, slot6 in ipairs(slot0._uiItemList) do
-		slot6.__distance = Vector3.Distance(slot0._scene.camera:getCameraPosition(), slot6:getUI3DPos())
+	local var_6_0 = arg_6_0._scene.camera:getCameraPosition()
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._uiItemList) do
+		local var_6_1 = iter_6_1:getUI3DPos()
+
+		iter_6_1.__distance = Vector3.Distance(var_6_0, var_6_1)
 	end
 
-	table.sort(slot0._uiItemList, function (slot0, slot1)
-		return slot1.__distance < slot0.__distance
+	table.sort(arg_6_0._uiItemList, function(arg_7_0, arg_7_1)
+		return arg_7_0.__distance > arg_7_1.__distance
 	end)
 
-	for slot5, slot6 in ipairs(slot0._uiItemList) do
-		gohelper.setAsLastSibling(slot6.go)
+	for iter_6_2, iter_6_3 in ipairs(arg_6_0._uiItemList) do
+		gohelper.setAsLastSibling(iter_6_3.go)
 	end
 end
 
-function slot0._initPartItem(slot0)
-	slot1 = slot0.viewContainer._viewSetting.otherRes[10]
-	slot0._partItemDict = {}
+function var_0_0._initPartItem(arg_8_0)
+	local var_8_0 = arg_8_0.viewContainer._viewSetting.otherRes[10]
+
+	arg_8_0._partItemDict = {}
 
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	for slot5, slot6 in ipairs(lua_production_part.configList) do
-		if not slot0._partItemDict[slot6.id] then
-			slot0._partItemDict[slot7] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot1, slot0._gopart, "partId" .. slot7), RoomViewUIPartItem, slot7)
+	for iter_8_0, iter_8_1 in ipairs(lua_production_part.configList) do
+		local var_8_1 = iter_8_1.id
+
+		if not arg_8_0._partItemDict[var_8_1] then
+			local var_8_2 = arg_8_0:getResInst(var_8_0, arg_8_0._gopart, "partId" .. var_8_1)
+			local var_8_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_2, RoomViewUIPartItem, var_8_1)
+
+			arg_8_0._partItemDict[var_8_1] = var_8_3
 		end
 	end
 end
 
-function slot0._initInitItem(slot0)
-	slot1 = slot0.viewContainer._viewSetting.otherRes[10]
-	slot0._initItem = nil
+function var_0_0._initInitItem(arg_9_0)
+	local var_9_0 = arg_9_0.viewContainer._viewSetting.otherRes[10]
+
+	arg_9_0._initItem = nil
 
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	if not slot0._initItem then
-		slot0._initItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot1, slot0._gopart, "init"), RoomViewUIInitItem)
+	if not arg_9_0._initItem then
+		local var_9_1 = arg_9_0:getResInst(var_9_0, arg_9_0._gopart, "init")
+
+		arg_9_0._initItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, RoomViewUIInitItem)
 	end
 end
 
-function slot0._initCharacterItem(slot0)
-	slot0._gocharacterui = gohelper.findChild(slot0.viewGO, "go_normalroot/go_ui/go_part/go_characterui")
+function var_0_0._initCharacterItem(arg_10_0)
+	arg_10_0._gocharacterui = gohelper.findChild(arg_10_0.viewGO, "go_normalroot/go_ui/go_part/go_characterui")
 
-	gohelper.setActive(slot0._gocharacterui, false)
+	gohelper.setActive(arg_10_0._gocharacterui, false)
 
-	slot0._characterItemDict = {}
+	arg_10_0._characterItemDict = {}
 end
 
-function slot0._initCharacterInteractionItem(slot0)
-	slot0._gocharacterinteractionui = gohelper.findChild(slot0.viewGO, "go_normalroot/go_ui/go_part/go_characterinteractionui")
+function var_0_0._initCharacterInteractionItem(arg_11_0)
+	arg_11_0._gocharacterinteractionui = gohelper.findChild(arg_11_0.viewGO, "go_normalroot/go_ui/go_part/go_characterinteractionui")
 
-	gohelper.setActive(slot0._gocharacterinteractionui, false)
+	gohelper.setActive(arg_11_0._gocharacterinteractionui, false)
 
-	slot0._characterInteractionItemDict = {}
+	arg_11_0._characterInteractionItemDict = {}
 end
 
-function slot0._refreshCharacterItem(slot0)
-	if not slot0._isRunDalayInit then
+function var_0_0._refreshCharacterItem(arg_12_0)
+	if not arg_12_0._isRunDalayInit then
 		return
 	end
 
@@ -130,24 +145,30 @@ function slot0._refreshCharacterItem(slot0)
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0._scene.charactermgr:getRoomCharacterEntityDict()) do
-		if not slot0._characterItemDict[slot6] then
-			slot0._characterItemDict[slot6] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[9], slot0._gopart, "heroId" .. slot6), RoomViewUICharacterItem, slot6)
+	local var_12_0 = arg_12_0.viewContainer._viewSetting.otherRes[9]
+	local var_12_1 = arg_12_0._scene.charactermgr:getRoomCharacterEntityDict()
+
+	for iter_12_0, iter_12_1 in pairs(var_12_1) do
+		if not arg_12_0._characterItemDict[iter_12_0] then
+			local var_12_2 = arg_12_0:getResInst(var_12_0, arg_12_0._gopart, "heroId" .. iter_12_0)
+			local var_12_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_2, RoomViewUICharacterItem, iter_12_0)
+
+			arg_12_0._characterItemDict[iter_12_0] = var_12_3
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._characterItemDict) do
-		if not slot2[slot6] then
-			slot7:removeEventListeners()
-			gohelper.destroy(slot7.go)
+	for iter_12_2, iter_12_3 in pairs(arg_12_0._characterItemDict) do
+		if not var_12_1[iter_12_2] then
+			iter_12_3:removeEventListeners()
+			gohelper.destroy(iter_12_3.go)
 
-			slot0._characterItemDict[slot6] = nil
+			arg_12_0._characterItemDict[iter_12_2] = nil
 		end
 	end
 end
 
-function slot0._refreshCharacterInteractionItem(slot0)
-	if not slot0._isRunDalayInit then
+function var_0_0._refreshCharacterInteractionItem(arg_13_0)
+	if not arg_13_0._isRunDalayInit then
 		return
 	end
 
@@ -155,241 +176,286 @@ function slot0._refreshCharacterInteractionItem(slot0)
 		return
 	end
 
-	for slot6, slot7 in pairs(slot0._scene.charactermgr:getRoomCharacterEntityDict()) do
-		if not slot0._characterInteractionItemDict[slot6] then
-			slot0._characterInteractionItemDict[slot6] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[8], slot0._gopart, "interaction" .. slot6), RoomViewUICharacterInteractionItem, slot6)
+	local var_13_0 = arg_13_0.viewContainer._viewSetting.otherRes[8]
+	local var_13_1 = arg_13_0._scene.charactermgr:getRoomCharacterEntityDict()
+
+	for iter_13_0, iter_13_1 in pairs(var_13_1) do
+		if not arg_13_0._characterInteractionItemDict[iter_13_0] then
+			local var_13_2 = arg_13_0:getResInst(var_13_0, arg_13_0._gopart, "interaction" .. iter_13_0)
+			local var_13_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_2, RoomViewUICharacterInteractionItem, iter_13_0)
+
+			arg_13_0._characterInteractionItemDict[iter_13_0] = var_13_3
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._characterInteractionItemDict) do
-		if not slot2[slot6] then
-			slot7:removeEventListeners()
-			gohelper.destroy(slot7.go)
+	for iter_13_2, iter_13_3 in pairs(arg_13_0._characterInteractionItemDict) do
+		if not var_13_1[iter_13_2] then
+			iter_13_3:removeEventListeners()
+			gohelper.destroy(iter_13_3.go)
 
-			slot0._characterInteractionItemDict[slot6] = nil
-		end
-	end
-end
-
-function slot0.onClickBellTower(slot0)
-	slot1 = slot0._partItemDict[1]
-
-	if not RoomController.instance:isObMode() or not slot1 or not slot1._isShow then
-		return
-	end
-
-	slot1:_onClick()
-end
-
-function slot0.onClickMarket(slot0)
-	slot1 = slot0._partItemDict[2]
-
-	if not RoomController.instance:isObMode() or not slot1 or not slot1._isShow then
-		return
-	end
-
-	slot1:_onClick()
-end
-
-function slot0._refreshManufactureItem(slot0)
-	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
-		return
-	end
-
-	for slot6, slot7 in pairs(RoomMapBuildingAreaModel.instance:getBuildingType2AreaMODict()) do
-		if not slot0._manufactureItemDict[slot6] then
-			slot0._manufactureItemDict[slot6] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[11], slot0._gopart, "manufacture" .. slot6), RoomViewUIManufactureItem, slot6)
-		end
-	end
-
-	for slot6, slot7 in pairs(slot0._manufactureItemDict) do
-		if not slot1[slot6] then
-			slot7:removeEventListeners()
-			gohelper.destroy(slot7.go)
-
-			slot0._manufactureItemDict[slot6] = nil
+			arg_13_0._characterInteractionItemDict[iter_13_2] = nil
 		end
 	end
 end
 
-function slot0._refreshTransportSiteItem(slot0)
-	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
+function var_0_0.onClickBellTower(arg_14_0)
+	local var_14_0 = arg_14_0._partItemDict[1]
+
+	if not RoomController.instance:isObMode() or not var_14_0 or not var_14_0._isShow then
 		return
 	end
 
-	slot0._transportSiteItemDict = slot0._transportSiteItemDict or {}
+	var_14_0:_onClick()
+end
 
-	for slot6 = 1, #RoomTransportHelper.getSiteBuildingTypeList() do
-		slot7 = slot2[slot6]
+function var_0_0.onClickMarket(arg_15_0)
+	local var_15_0 = arg_15_0._partItemDict[2]
 
-		if RoomMapTransportPathModel.instance:getSiteHexPointByType(slot7) then
-			if not slot0._transportSiteItemDict[slot7] then
-				slot0._transportSiteItemDict[slot7] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(RoomViewUITransportSiteItem.prefabPath, slot0._gopart, "site_" .. slot7), RoomViewUITransportSiteItem, slot7)
+	if not RoomController.instance:isObMode() or not var_15_0 or not var_15_0._isShow then
+		return
+	end
+
+	var_15_0:_onClick()
+end
+
+function var_0_0._refreshManufactureItem(arg_16_0)
+	if not RoomController.instance:isObMode() or not arg_16_0._isRunDalayInit then
+		return
+	end
+
+	local var_16_0 = RoomMapBuildingAreaModel.instance:getBuildingType2AreaMODict()
+	local var_16_1 = arg_16_0.viewContainer._viewSetting.otherRes[11]
+
+	for iter_16_0, iter_16_1 in pairs(var_16_0) do
+		if not arg_16_0._manufactureItemDict[iter_16_0] then
+			local var_16_2 = arg_16_0:getResInst(var_16_1, arg_16_0._gopart, "manufacture" .. iter_16_0)
+			local var_16_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_2, RoomViewUIManufactureItem, iter_16_0)
+
+			arg_16_0._manufactureItemDict[iter_16_0] = var_16_3
+		end
+	end
+
+	for iter_16_2, iter_16_3 in pairs(arg_16_0._manufactureItemDict) do
+		if not var_16_0[iter_16_2] then
+			iter_16_3:removeEventListeners()
+			gohelper.destroy(iter_16_3.go)
+
+			arg_16_0._manufactureItemDict[iter_16_2] = nil
+		end
+	end
+end
+
+function var_0_0._refreshTransportSiteItem(arg_17_0)
+	if not RoomController.instance:isObMode() or not arg_17_0._isRunDalayInit then
+		return
+	end
+
+	arg_17_0._transportSiteItemDict = arg_17_0._transportSiteItemDict or {}
+
+	local var_17_0 = RoomViewUITransportSiteItem.prefabPath
+	local var_17_1 = RoomTransportHelper.getSiteBuildingTypeList()
+
+	for iter_17_0 = 1, #var_17_1 do
+		local var_17_2 = var_17_1[iter_17_0]
+		local var_17_3 = RoomMapTransportPathModel.instance:getSiteHexPointByType(var_17_2)
+		local var_17_4 = arg_17_0._transportSiteItemDict[var_17_2]
+
+		if var_17_3 then
+			if not var_17_4 then
+				local var_17_5 = arg_17_0:getResInst(var_17_0, arg_17_0._gopart, "site_" .. var_17_2)
+
+				var_17_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_5, RoomViewUITransportSiteItem, var_17_2)
+				arg_17_0._transportSiteItemDict[var_17_2] = var_17_4
 			end
-		elseif slot9 then
-			slot9:removeEventListeners()
-			gohelper.destroy(slot9.go)
+		elseif var_17_4 then
+			var_17_4:removeEventListeners()
+			gohelper.destroy(var_17_4.go)
 
-			slot0._transportSiteItemDict[slot7] = nil
+			arg_17_0._transportSiteItemDict[var_17_2] = nil
 		end
 	end
 end
 
-function slot0._refreshCritterItem(slot0, slot1, slot2)
-	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
+function var_0_0._refreshCritterItem(arg_18_0, arg_18_1, arg_18_2)
+	if not RoomController.instance:isObMode() or not arg_18_0._isRunDalayInit then
 		return
 	end
 
-	slot0._critterItemDict = slot0._critterItemDict or {}
+	arg_18_0._critterItemDict = arg_18_0._critterItemDict or {}
 
-	for slot7 = 1, #CritterModel.instance:getAllCritters() do
-		slot8 = slot3[slot7]
-		slot9 = slot8.id
+	local var_18_0 = CritterModel.instance:getAllCritters()
 
-		if slot0:_isShowCritterItem(slot8) and not slot0._critterItemDict[slot9] then
-			slot0._critterItemDict[slot8.id] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(RoomViewUICritterEventItem.prefabPath, slot0._gopart, "critter_" .. slot9), RoomViewUICritterEventItem, slot9)
+	for iter_18_0 = 1, #var_18_0 do
+		local var_18_1 = var_18_0[iter_18_0]
+		local var_18_2 = var_18_1.id
+
+		if arg_18_0:_isShowCritterItem(var_18_1) and not arg_18_0._critterItemDict[var_18_2] then
+			local var_18_3 = arg_18_0:getResInst(RoomViewUICritterEventItem.prefabPath, arg_18_0._gopart, "critter_" .. var_18_2)
+
+			arg_18_0._critterItemDict[var_18_1.id] = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_3, RoomViewUICritterEventItem, var_18_2)
 		end
 	end
 
-	for slot7, slot8 in pairs(slot0._critterItemDict) do
-		if not slot0:_isShowCritterItem(CritterModel.instance:getCritterMOByUid(slot7)) then
-			if slot8 then
-				slot8:removeEventListeners()
-				gohelper.destroy(slot8.go)
-			end
+	for iter_18_1, iter_18_2 in pairs(arg_18_0._critterItemDict) do
+		local var_18_4 = CritterModel.instance:getCritterMOByUid(iter_18_1)
 
-			slot0._critterItemDict[slot7] = nil
-		end
-	end
-end
-
-function slot0._isShowCritterItem(slot0, slot1)
-	slot2 = nil
-	slot3 = false
-
-	if slot1:isCultivating() then
-		slot3 = slot1.trainInfo:isHasEventTrigger()
-		slot2 = slot0._scene.crittermgr:getCritterEntity(slot1:getId(), SceneTag.RoomCharacter)
-	end
-
-	slot6 = false
-
-	if not slot3 then
-		slot6 = slot1:isNoMoodWorking()
-		slot2 = slot0._scene.buildingcrittermgr:getCritterEntity(slot4, SceneTag.RoomCharacter)
-	end
-
-	return slot1 and slot2 and (slot3 or slot6)
-end
-
-function slot0._refreshCritterBuildingItem(slot0)
-	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
-		return
-	end
-
-	slot1 = nil
-
-	if ManufactureModel.instance:getCritterBuildingListInOrder() then
-		slot1 = slot2[1].buildingUid
-	end
-
-	if slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) then
-		if not slot0._critterBuildingItem then
-			slot0._critterBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[12], slot0._gopart, "critterBuilding"), RoomViewUICritterBuildingItem)
-		end
-	elseif slot0._critterBuildingItem then
-		slot0._critterBuildingItem:removeEventListeners()
-		gohelper.destroy(slot0._critterBuildingItem.go)
-
-		slot0._critterBuildingItem = nil
-	end
-end
-
-function slot0._refreshTradeBuildingItem(slot0)
-	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
-		return
-	end
-
-	slot1 = nil
-
-	if ManufactureModel.instance:getTradeBuildingListInOrder() then
-		slot1 = slot2[1].buildingUid
-	end
-
-	if slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) then
-		if not slot0._tradeBuildingItem then
-			slot0._tradeBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[12], slot0._gopart, "tradeBuilding"), RoomViewUITradeBuildingItem)
-		end
-	elseif slot0._tradeBuildingItem then
-		slot0._tradeBuildingItem:removeEventListeners()
-		gohelper.destroy(slot0._tradeBuildingItem.go)
-
-		slot0._tradeBuildingItem = nil
-	end
-end
-
-function slot0._refreshBuildingItem(slot0)
-	if not RoomController.instance:isObMode() or not slot0._isRunDalayInit then
-		return
-	end
-
-	slot0._buildingItemDict = slot0._buildingItemDict or {}
-
-	for slot5 = 1, #RoomMapBuildingModel.instance:getBuildingMOList() do
-		slot6 = slot1[slot5]
-		slot7 = slot6.id
-
-		if slot6.config and slot6.config.buildingType and slot0._showBuildingItemTypeMap[slot8] and not slot0._buildingItemDict[slot7] then
-			slot0._buildingItemDict[slot7] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[12], slot0._gopart, "building_" .. slot7), RoomViewUIBuildingItem, slot7)
-		end
-	end
-
-	for slot5, slot6 in pairs(slot0._buildingItemDict) do
-		if not RoomMapBuildingModel.instance:getBuildingMOById(slot5) then
-			if slot6 then
-				slot6:removeEventListeners()
-				gohelper.destroy(slot6.go)
+		if not arg_18_0:_isShowCritterItem(var_18_4) then
+			if iter_18_2 then
+				iter_18_2:removeEventListeners()
+				gohelper.destroy(iter_18_2.go)
 			end
 
-			slot0._buildingItemDict[slot5] = nil
+			arg_18_0._critterItemDict[iter_18_1] = nil
 		end
 	end
 end
 
-function slot0._onUseBuildingReply(slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayInit, slot0)
-	TaskDispatcher.runDelay(slot0._onDelayInit, slot0, 0.1)
+function var_0_0._isShowCritterItem(arg_19_0, arg_19_1)
+	local var_19_0
+	local var_19_1 = false
+	local var_19_2 = arg_19_1:getId()
+
+	if arg_19_1:isCultivating() then
+		var_19_1 = arg_19_1.trainInfo:isHasEventTrigger()
+		var_19_0 = arg_19_0._scene.crittermgr:getCritterEntity(var_19_2, SceneTag.RoomCharacter)
+	end
+
+	local var_19_3 = false
+
+	if not var_19_1 then
+		var_19_3 = arg_19_1:isNoMoodWorking()
+		var_19_0 = arg_19_0._scene.buildingcrittermgr:getCritterEntity(var_19_2, SceneTag.RoomCharacter)
+	end
+
+	return arg_19_1 and var_19_0 and (var_19_1 or var_19_3)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, slot0._refreshCharacterItem, slot0)
-	slot0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, slot0._refreshCharacterInteractionItem, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, slot0.onClickBellTower, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, slot0.onClickMarket, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, slot0._onUseBuildingReply, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, slot0._cameraStateUpdate, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.SceneTrainChangeSpine, slot0._refreshCritterItem, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, slot0._refreshCritterItem, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._refreshCritterItem, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._refreshCritterItem, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._refreshCritterItem, slot0)
-	TaskDispatcher.runDelay(slot0._onDelayInit, slot0, 0.1)
-	TaskDispatcher.runRepeat(slot0._sort, slot0, 1)
+function var_0_0._refreshCritterBuildingItem(arg_20_0)
+	if not RoomController.instance:isObMode() or not arg_20_0._isRunDalayInit then
+		return
+	end
+
+	local var_20_0
+	local var_20_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
+
+	if var_20_1 then
+		var_20_0 = var_20_1[1].buildingUid
+	end
+
+	if arg_20_0._scene.buildingmgr:getBuildingEntity(var_20_0, SceneTag.RoomBuilding) then
+		if not arg_20_0._critterBuildingItem then
+			local var_20_2 = arg_20_0.viewContainer._viewSetting.otherRes[12]
+			local var_20_3 = arg_20_0:getResInst(var_20_2, arg_20_0._gopart, "critterBuilding")
+
+			arg_20_0._critterBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_3, RoomViewUICritterBuildingItem)
+		end
+	elseif arg_20_0._critterBuildingItem then
+		arg_20_0._critterBuildingItem:removeEventListeners()
+		gohelper.destroy(arg_20_0._critterBuildingItem.go)
+
+		arg_20_0._critterBuildingItem = nil
+	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._sort, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayInit, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, slot0.onClickBellTower, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, slot0.onClickMarket, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, slot0._onUseBuildingReply, slot0)
+function var_0_0._refreshTradeBuildingItem(arg_21_0)
+	if not RoomController.instance:isObMode() or not arg_21_0._isRunDalayInit then
+		return
+	end
+
+	local var_21_0
+	local var_21_1 = ManufactureModel.instance:getTradeBuildingListInOrder()
+
+	if var_21_1 then
+		var_21_0 = var_21_1[1].buildingUid
+	end
+
+	if arg_21_0._scene.buildingmgr:getBuildingEntity(var_21_0, SceneTag.RoomBuilding) then
+		if not arg_21_0._tradeBuildingItem then
+			local var_21_2 = arg_21_0.viewContainer._viewSetting.otherRes[12]
+			local var_21_3 = arg_21_0:getResInst(var_21_2, arg_21_0._gopart, "tradeBuilding")
+
+			arg_21_0._tradeBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_3, RoomViewUITradeBuildingItem)
+		end
+	elseif arg_21_0._tradeBuildingItem then
+		arg_21_0._tradeBuildingItem:removeEventListeners()
+		gohelper.destroy(arg_21_0._tradeBuildingItem.go)
+
+		arg_21_0._tradeBuildingItem = nil
+	end
 end
 
-function slot0._cameraStateUpdate(slot0)
-	slot0._canvasGroup.alpha = slot0._cameraStateShowUIMap[slot0._scene.camera:getCameraState()] and 1 or 0
+function var_0_0._refreshBuildingItem(arg_22_0)
+	if not RoomController.instance:isObMode() or not arg_22_0._isRunDalayInit then
+		return
+	end
+
+	arg_22_0._buildingItemDict = arg_22_0._buildingItemDict or {}
+
+	local var_22_0 = RoomMapBuildingModel.instance:getBuildingMOList()
+
+	for iter_22_0 = 1, #var_22_0 do
+		local var_22_1 = var_22_0[iter_22_0]
+		local var_22_2 = var_22_1.id
+		local var_22_3 = var_22_1.config and var_22_1.config.buildingType
+
+		if var_22_3 and arg_22_0._showBuildingItemTypeMap[var_22_3] and not arg_22_0._buildingItemDict[var_22_2] then
+			local var_22_4 = arg_22_0.viewContainer._viewSetting.otherRes[12]
+			local var_22_5 = arg_22_0:getResInst(var_22_4, arg_22_0._gopart, "building_" .. var_22_2)
+
+			arg_22_0._buildingItemDict[var_22_2] = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_5, RoomViewUIBuildingItem, var_22_2)
+		end
+	end
+
+	for iter_22_1, iter_22_2 in pairs(arg_22_0._buildingItemDict) do
+		if not RoomMapBuildingModel.instance:getBuildingMOById(iter_22_1) then
+			if iter_22_2 then
+				iter_22_2:removeEventListeners()
+				gohelper.destroy(iter_22_2.go)
+			end
+
+			arg_22_0._buildingItemDict[iter_22_1] = nil
+		end
+	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0._onUseBuildingReply(arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._onDelayInit, arg_23_0)
+	TaskDispatcher.runDelay(arg_23_0._onDelayInit, arg_23_0, 0.1)
 end
 
-return slot0
+function var_0_0.onOpen(arg_24_0)
+	arg_24_0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, arg_24_0._refreshCharacterItem, arg_24_0)
+	arg_24_0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, arg_24_0._refreshCharacterInteractionItem, arg_24_0)
+	arg_24_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, arg_24_0.onClickBellTower, arg_24_0)
+	arg_24_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, arg_24_0.onClickMarket, arg_24_0)
+	arg_24_0:addEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, arg_24_0._onUseBuildingReply, arg_24_0)
+	arg_24_0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, arg_24_0._cameraStateUpdate, arg_24_0)
+	arg_24_0:addEventCb(RoomMapController.instance, RoomEvent.SceneTrainChangeSpine, arg_24_0._refreshCritterItem, arg_24_0)
+	arg_24_0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, arg_24_0._refreshCritterItem, arg_24_0)
+	arg_24_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_24_0._refreshCritterItem, arg_24_0)
+	arg_24_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_24_0._refreshCritterItem, arg_24_0)
+	arg_24_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_24_0._refreshCritterItem, arg_24_0)
+	TaskDispatcher.runDelay(arg_24_0._onDelayInit, arg_24_0, 0.1)
+	TaskDispatcher.runRepeat(arg_24_0._sort, arg_24_0, 1)
+end
+
+function var_0_0.onClose(arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._sort, arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._onDelayInit, arg_25_0)
+	arg_25_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, arg_25_0.onClickBellTower, arg_25_0)
+	arg_25_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, arg_25_0.onClickMarket, arg_25_0)
+	arg_25_0:removeEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, arg_25_0._onUseBuildingReply, arg_25_0)
+end
+
+function var_0_0._cameraStateUpdate(arg_26_0)
+	local var_26_0 = arg_26_0._scene.camera:getCameraState()
+	local var_26_1 = arg_26_0._cameraStateShowUIMap[var_26_0] and 1 or 0
+
+	arg_26_0._canvasGroup.alpha = var_26_1
+end
+
+function var_0_0.onDestroyView(arg_27_0)
+	return
+end
+
+return var_0_0

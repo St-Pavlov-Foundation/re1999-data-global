@@ -1,105 +1,106 @@
-module("modules.logic.pcInput.activityAdapter.MainActivityAdapter", package.seeall)
+﻿module("modules.logic.pcInput.activityAdapter.MainActivityAdapter", package.seeall)
 
-slot0 = class("MainActivityAdapter", BaseActivityAdapter)
-slot0.keytoFunction = {
-	function ()
+local var_0_0 = class("MainActivityAdapter", BaseActivityAdapter)
+
+var_0_0.keytoFunction = {
+	function()
 		BpController.instance:openBattlePassView()
 	end,
-	function ()
+	function()
 		ActivityController.instance:openActivityBeginnerView()
 	end,
-	function ()
+	function()
 		PlayerController.instance:openSelfPlayerView()
 	end,
-	function ()
+	function()
 		MailController.instance:open()
 	end,
-	function ()
+	function()
 		TaskController.instance:enterTaskViewCheckUnlock()
 	end,
-	function ()
+	function()
 		BackpackController.instance:enterItemBackpack()
 	end,
-	function ()
+	function()
 		StoreController.instance:openStoreView()
 	end,
-	function ()
+	function()
 		ViewMgr.instance:openView(ViewName.MainThumbnailView)
 		SettingsController.instance:openView()
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifySetMainViewVisible)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterCurActivity)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterActivityCenter)
 	end,
-	function ()
+	function()
 		DungeonController.instance:enterDungeonView(true, true)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterRoom)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterRole)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterSummon)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterBook)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterAchievement)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterFriend)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterTravelCollection)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterNotice)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterSign)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterSetting)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterFeedback)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyEnterStore)
 	end
 }
 
-function slot0.ctor(slot0)
-	BaseActivityAdapter.ctor(slot0)
+function var_0_0.ctor(arg_25_0)
+	BaseActivityAdapter.ctor(arg_25_0)
 
-	slot0.keytoFunction = uv0.keytoFunction
-	slot0.activitid = PCInputModel.Activity.MainActivity
+	arg_25_0.keytoFunction = var_0_0.keytoFunction
+	arg_25_0.activitid = PCInputModel.Activity.MainActivity
 
-	slot0:registerFunction()
+	arg_25_0:registerFunction()
 end
 
-function slot0.OnkeyUp(slot0, slot1)
+function var_0_0.OnkeyUp(arg_26_0, arg_26_1)
 	if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) or ViewMgr.instance:isOpen(ViewName.SettingsView) then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+	BaseActivityAdapter.OnkeyUp(arg_26_0, arg_26_1)
 end
 
-function slot0.OnkeyDown(slot0, slot1)
+function var_0_0.OnkeyDown(arg_27_0, arg_27_1)
 	if ViewMgr.instance:IsPopUpViewOpen() then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyDown(slot0, slot1)
+	BaseActivityAdapter.OnkeyDown(arg_27_0, arg_27_1)
 end
 
-return slot0
+return var_0_0

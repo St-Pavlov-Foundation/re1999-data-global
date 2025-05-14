@@ -1,143 +1,161 @@
-module("modules.logic.room.view.manufacture.RoomCritterRestViewMapUI", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomCritterRestViewMapUI", package.seeall)
 
-slot0 = class("RoomCritterRestViewMapUI", BaseView)
+local var_0_0 = class("RoomCritterRestViewMapUI", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "content/go_map")
-	slot0._gomood = gohelper.findChild(slot0.viewGO, "content/#go_select/mood")
-	slot0._moodItemCompList = {}
-	slot0._critterMoodShowDict = {}
-	slot0._gomapTrs = slot0._gomap.transform
-	slot0._offX, slot0._offY = recthelper.getAnchor(slot0._gomood.transform)
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._gomap = gohelper.findChild(arg_2_0.viewGO, "content/go_map")
+	arg_2_0._gomood = gohelper.findChild(arg_2_0.viewGO, "content/#go_select/mood")
+	arg_2_0._moodItemCompList = {}
+	arg_2_0._critterMoodShowDict = {}
+	arg_2_0._gomapTrs = arg_2_0._gomap.transform
+	arg_2_0._offX, arg_2_0._offY = recthelper.getAnchor(arg_2_0._gomood.transform)
 
-	gohelper.setActive(slot0._gomood, false)
+	gohelper.setActive(arg_2_0._gomood, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSelectCritter, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
-	slot0:addEventCb(slot0.viewContainer, CritterEvent.UICritterDragIng, slot0._cameraTransformUpdate, slot0)
-	slot0:addEventCb(slot0.viewContainer, CritterEvent.UICritterDragEnd, slot0._startRefreshMoodTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, slot0._startRequestTask, slot0)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSelectCritter, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingSetCanOperateRestingCritter, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingCameraTweenFinish, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeReply, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_4_0._cameraTransformUpdate, arg_4_0)
+	arg_4_0:addEventCb(arg_4_0.viewContainer, CritterEvent.UICritterDragIng, arg_4_0._cameraTransformUpdate, arg_4_0)
+	arg_4_0:addEventCb(arg_4_0.viewContainer, CritterEvent.UICritterDragEnd, arg_4_0._startRefreshMoodTask, arg_4_0)
+	arg_4_0:addEventCb(CritterController.instance, CritterEvent.CritterBuildingChangeRestingCritter, arg_4_0._startRequestTask, arg_4_0)
 
-	slot0._scene = RoomCameraController.instance:getRoomScene()
+	arg_4_0._scene = RoomCameraController.instance:getRoomScene()
 
-	slot0:_startRefreshMoodTask()
+	arg_4_0:_startRefreshMoodTask()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_stopRefreshMoodTask()
+function var_0_0.onDestroyView(arg_6_0)
+	arg_6_0:_stopRefreshMoodTask()
 end
 
-function slot0._startRequestTask(slot0)
-	slot1, slot2 = slot0:getViewBuilding()
+function var_0_0._startRequestTask(arg_7_0)
+	local var_7_0, var_7_1 = arg_7_0:getViewBuilding()
 
-	CritterController.instance:waitSendBuildManufacturAttrByBuid(slot1)
+	CritterController.instance:waitSendBuildManufacturAttrByBuid(var_7_0)
 end
 
-function slot0._startRefreshMoodTask(slot0)
-	if not slot0._hasWaitRefreshMoodTask then
-		slot0._hasWaitRefreshMoodTask = true
+function var_0_0._startRefreshMoodTask(arg_8_0)
+	if not arg_8_0._hasWaitRefreshMoodTask then
+		arg_8_0._hasWaitRefreshMoodTask = true
 
-		TaskDispatcher.runDelay(slot0._onRunRefreshMoodTask, slot0, 0.1)
+		TaskDispatcher.runDelay(arg_8_0._onRunRefreshMoodTask, arg_8_0, 0.1)
 	end
 end
 
-function slot0._stopRefreshMoodTask(slot0)
-	slot0._hasWaitRefreshMoodTask = false
+function var_0_0._stopRefreshMoodTask(arg_9_0)
+	arg_9_0._hasWaitRefreshMoodTask = false
 
-	TaskDispatcher.cancelTask(slot0._onRunRefreshMoodTask, slot0)
+	TaskDispatcher.cancelTask(arg_9_0._onRunRefreshMoodTask, arg_9_0)
 end
 
-function slot0._onRunRefreshMoodTask(slot0)
-	slot0._hasWaitRefreshMoodTask = false
+function var_0_0._onRunRefreshMoodTask(arg_10_0)
+	arg_10_0._hasWaitRefreshMoodTask = false
 
-	if not slot0:_refreshMood() then
-		slot0:_startRefreshMoodTask()
+	if not arg_10_0:_refreshMood() then
+		arg_10_0:_startRefreshMoodTask()
 	end
 
-	if not slot0._isSendCritterRequest then
-		slot2, slot3 = slot0:getViewBuilding()
+	if not arg_10_0._isSendCritterRequest then
+		local var_10_0, var_10_1 = arg_10_0:getViewBuilding()
 
-		if slot3 and slot3.config and slot3.config.buildingType then
-			slot0._isSendCritterRequest = true
+		if var_10_1 and var_10_1.config and var_10_1.config.buildingType then
+			arg_10_0._isSendCritterRequest = true
 
-			CritterController.instance:sendBuildManufacturAttrByBtype(slot3.config.buildingType)
+			CritterController.instance:sendBuildManufacturAttrByBtype(var_10_1.config.buildingType)
 		end
 	end
 end
 
-function slot0._cameraTransformUpdate(slot0)
-	slot0:_refreshMood()
+function var_0_0._cameraTransformUpdate(arg_11_0)
+	arg_11_0:_refreshMood()
 end
 
-slot1 = {}
+local var_0_1 = {}
 
-function slot0._refreshMood(slot0)
-	slot3, slot4 = slot0:getViewBuilding()
-	slot5 = true
+function var_0_0._refreshMood(arg_12_0)
+	local var_12_0 = CritterModel.instance:getAllCritters()
+	local var_12_1 = 0
+	local var_12_2, var_12_3 = arg_12_0:getViewBuilding()
+	local var_12_4 = true
 
-	for slot9, slot10 in ipairs(CritterModel.instance:getAllCritters()) do
-		slot11 = slot10:getId()
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_5 = iter_12_1:getId()
 
-		if slot4 and slot4:isCritterInSeatSlot(slot11) then
-			if not slot0._moodItemCompList[0 + 1] then
-				slot13 = gohelper.clone(slot0._gomood, slot0._gomap)
-				slot12 = MonoHelper.addNoUpdateLuaComOnceToGo(slot13, CritterMoodItem)
-				slot12.goViewTrs = slot13.transform
+		if var_12_3 and var_12_3:isCritterInSeatSlot(var_12_5) then
+			var_12_1 = var_12_1 + 1
 
-				table.insert(slot0._moodItemCompList, slot12)
-				slot12:setShowMoodRestore(false)
+			local var_12_6 = arg_12_0._moodItemCompList[var_12_1]
+
+			if not var_12_6 then
+				local var_12_7 = gohelper.clone(arg_12_0._gomood, arg_12_0._gomap)
+
+				var_12_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_7, CritterMoodItem)
+				var_12_6.goViewTrs = var_12_7.transform
+
+				table.insert(arg_12_0._moodItemCompList, var_12_6)
+				var_12_6:setShowMoodRestore(false)
 			end
 
-			slot12:setCritterUid(slot11)
+			var_12_6:setCritterUid(var_12_5)
 
-			slot13 = slot0:_updateMoodPos(slot11, slot12.goViewTrs)
-			slot0._critterMoodShowDict[slot11] = slot13
+			local var_12_8 = arg_12_0:_updateMoodPos(var_12_5, var_12_6.goViewTrs)
 
-			if not slot13 then
-				slot5 = false
+			arg_12_0._critterMoodShowDict[var_12_5] = var_12_8
+
+			if not var_12_8 then
+				var_12_4 = false
 			end
 		end
 	end
 
-	for slot9 = 1, #slot0._moodItemCompList do
-		slot10 = slot0._moodItemCompList[slot9]
+	for iter_12_2 = 1, #arg_12_0._moodItemCompList do
+		local var_12_9 = arg_12_0._moodItemCompList[iter_12_2]
+		local var_12_10 = var_12_9.critterUid
 
-		gohelper.setActive(slot10.go, slot0._critterMoodShowDict[slot10.critterUid] and slot9 <= slot2)
+		gohelper.setActive(var_12_9.go, arg_12_0._critterMoodShowDict[var_12_10] and iter_12_2 <= var_12_1)
 	end
 
-	return slot5
+	return var_12_4
 end
 
-function slot0._updateMoodPos(slot0, slot1, slot2)
-	if not slot0._scene then
+function var_0_0._updateMoodPos(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_0._scene then
 		return false
 	end
 
-	if gohelper.isNil(slot0._scene.buildingcrittermgr:getCritterEntity(slot1) and slot3.critterspine:getMountheadGOTrs()) then
+	local var_13_0 = arg_13_0._scene.buildingcrittermgr:getCritterEntity(arg_13_1)
+	local var_13_1 = var_13_0 and var_13_0.critterspine:getMountheadGOTrs()
+
+	if gohelper.isNil(var_13_1) then
 		return false
 	end
 
-	if RoomBendingHelper.worldPosToAnchorPos(RoomBendingHelper.worldToBendingSimple(slot4.position), slot0._gomapTrs) then
-		recthelper.setAnchor(slot2, slot7.x + slot0._offX, slot7.y + slot0._offY)
+	local var_13_2 = var_13_1.position
+	local var_13_3 = RoomBendingHelper.worldToBendingSimple(var_13_2)
+	local var_13_4 = RoomBendingHelper.worldPosToAnchorPos(var_13_3, arg_13_0._gomapTrs)
+
+	if var_13_4 then
+		recthelper.setAnchor(arg_13_2, var_13_4.x + arg_13_0._offX, var_13_4.y + arg_13_0._offY)
 
 		return true
 	end
@@ -145,8 +163,8 @@ function slot0._updateMoodPos(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.getViewBuilding(slot0)
-	return slot0.viewContainer:getContainerViewBuilding()
+function var_0_0.getViewBuilding(arg_14_0)
+	return arg_14_0.viewContainer:getContainerViewBuilding()
 end
 
-return slot0
+return var_0_0

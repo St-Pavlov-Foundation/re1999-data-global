@@ -1,24 +1,26 @@
-module("modules.logic.chessgame.game.event.ChessStateBase", package.seeall)
+﻿module("modules.logic.chessgame.game.event.ChessStateBase", package.seeall)
 
-slot0 = class("ChessStateBase")
+local var_0_0 = class("ChessStateBase")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._stateType = slot1
-	slot0.originData = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._stateType = arg_1_1
+	arg_1_0.originData = arg_1_2
 end
 
-function slot0.start(slot0)
-	slot0._stateType = nil
+function var_0_0.start(arg_2_0)
+	arg_2_0._stateType = nil
 end
 
-function slot0.onClickPos(slot0, slot1, slot2, slot3)
+function var_0_0.onClickPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	return
 end
 
-function slot0.getStateType(slot0)
-	return slot0._stateType
+function var_0_0.getStateType(arg_4_0)
+	return arg_4_0._stateType
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

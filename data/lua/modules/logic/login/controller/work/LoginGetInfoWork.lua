@@ -1,9 +1,9 @@
-module("modules.logic.login.controller.work.LoginGetInfoWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LoginGetInfoWork", package.seeall)
 
-slot0 = class("LoginGetInfoWork", BaseWork)
+local var_0_0 = class("LoginGetInfoWork", BaseWork)
 
-function slot0._initInfo(slot0)
-	slot0.GetInfoFuncList = {
+function var_0_0._initInfo(arg_1_0)
+	arg_1_0.GetInfoFuncList = {
 		{
 			PlayerRpc.sendGetSimplePropertyRequest,
 			PlayerRpc.instance,
@@ -127,7 +127,7 @@ function slot0._initInfo(slot0)
 	}
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.WeekWalk) then
-		table.insert(slot0.GetInfoFuncList, {
+		table.insert(arg_1_0.GetInfoFuncList, {
 			WeekwalkRpc.sendGetWeekwalkInfoRequest,
 			WeekwalkRpc.instance,
 			"sendGetWeekwalkInfoRequest",
@@ -136,7 +136,7 @@ function slot0._initInfo(slot0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Explore) then
-		table.insert(slot0.GetInfoFuncList, {
+		table.insert(arg_1_0.GetInfoFuncList, {
 			ExploreRpc.sendGetExploreSimpleInfoRequest,
 			ExploreRpc.instance,
 			"sendGetExploreSimpleInfoRequest",
@@ -145,7 +145,7 @@ function slot0._initInfo(slot0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
-		table.insert(slot0.GetInfoFuncList, {
+		table.insert(arg_1_0.GetInfoFuncList, {
 			TowerRpc.sendGetTowerInfoRequest,
 			TowerRpc.instance,
 			"sendGetTowerInfoRequest",
@@ -154,7 +154,7 @@ function slot0._initInfo(slot0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
-		table.insert(slot0.GetInfoFuncList, {
+		table.insert(arg_1_0.GetInfoFuncList, {
 			PlayerCardRpc.sendGetPlayerCardInfoRequest,
 			PlayerCardRpc.instance,
 			"sendGetPlayerCardInfoRequest",
@@ -162,112 +162,120 @@ function slot0._initInfo(slot0)
 		})
 	end
 
-	slot0._callbackIdDict = {}
+	arg_1_0._callbackIdDict = {}
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0:_initInfo()
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	arg_2_0:_initInfo()
 
-	slot0._leftInfoCount = #slot0.GetInfoFuncList
-	slot0._waitCount = 0
-	slot0._waitCount = slot0._waitCount + 1
-	slot5 = slot0._onDungeonInfoUpdateAll
-	slot6 = slot0
+	arg_2_0._leftInfoCount = #arg_2_0.GetInfoFuncList
+	arg_2_0._waitCount = 0
+	arg_2_0._waitCount = arg_2_0._waitCount + 1
 
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, slot5, slot6)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_2_0._onDungeonInfoUpdateAll, arg_2_0)
 
-	for slot5, slot6 in ipairs(slot0.GetInfoFuncList) do
-		slot7 = slot6[1]
-		slot8 = slot6[2]
-		slot9 = slot6[3]
-		slot10 = slot6[4]
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.GetInfoFuncList) do
+		local var_2_0 = iter_2_1[1]
+		local var_2_1 = iter_2_1[2]
+		local var_2_2 = iter_2_1[3]
+		local var_2_3 = iter_2_1[4]
+		local var_2_4 = iter_2_1[5]
 
-		function slot12(slot0, slot1, slot2)
-			if not uv0 and slot1 ~= 0 then
-				logWarn((uv1.__cname or "nil") .. " " .. uv2 .. " 服务端报错了 resultCode = " .. slot1)
+		local function var_2_5(arg_3_0, arg_3_1, arg_3_2)
+			if not var_2_3 and arg_3_1 ~= 0 then
+				logWarn((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 服务端报错了 resultCode = " .. arg_3_1)
 			end
 
-			uv3:_onGetInfo(uv4)
+			arg_2_0:_onGetInfo(iter_2_0)
 		end
 
-		slot13 = nil
+		local var_2_6
 
-		if (slot6[5] == nil or slot7(slot8, slot11, slot12)) and slot7(slot8, slot12) then
-			slot0._callbackIdDict[slot5] = slot13
+		if var_2_4 ~= nil then
+			var_2_6 = var_2_0(var_2_1, var_2_4, var_2_5)
 		else
-			logWarn((slot8.__cname or "nil") .. " " .. slot9 .. " 不支持callback")
-			slot0:_onGetInfo(slot5)
+			var_2_6 = var_2_0(var_2_1, var_2_5)
+		end
+
+		if var_2_6 then
+			arg_2_0._callbackIdDict[iter_2_0] = var_2_6
+		else
+			logWarn((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 不支持callback")
+			arg_2_0:_onGetInfo(iter_2_0)
 		end
 	end
 
-	TaskDispatcher.runDelay(slot0._getInfoTimeout, slot0, 30)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, slot0._onLostConnect, slot0)
+	TaskDispatcher.runDelay(arg_2_0._getInfoTimeout, arg_2_0, 30)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, arg_2_0._onLostConnect, arg_2_0)
 end
 
-function slot0._onGetInfo(slot0, slot1)
-	if slot0._callbackIdDict[slot1] == nil then
-		logError("登录流程有问题 index:" .. slot1)
+function var_0_0._onGetInfo(arg_4_0, arg_4_1)
+	if arg_4_0._callbackIdDict[arg_4_1] == nil then
+		logError("登录流程有问题 index:" .. arg_4_1)
 
 		return
 	end
 
-	slot0._leftInfoCount = slot0._leftInfoCount - 1
-	slot0._callbackIdDict[slot1] = nil
+	arg_4_0._leftInfoCount = arg_4_0._leftInfoCount - 1
+	arg_4_0._callbackIdDict[arg_4_1] = nil
 
-	slot0:_checkIsDone()
+	arg_4_0:_checkIsDone()
 end
 
-function slot0._checkIsDone(slot0)
-	if slot0._leftInfoCount == 0 and slot0._waitCount == 0 then
+function var_0_0._checkIsDone(arg_5_0)
+	if arg_5_0._leftInfoCount == 0 and arg_5_0._waitCount == 0 then
 		LoginController.instance:dispatchEvent(LoginEvent.OnGetInfoFinish)
-		slot0:onDone(true)
+		arg_5_0:onDone(true)
 	end
 end
 
-function slot0._onDungeonInfoUpdateAll(slot0)
-	slot0._waitCount = slot0._waitCount - 1
+function var_0_0._onDungeonInfoUpdateAll(arg_6_0)
+	arg_6_0._waitCount = arg_6_0._waitCount - 1
 
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, slot0._onDungeonInfoUpdateAll, slot0)
-	slot0:_checkIsDone()
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_6_0._onDungeonInfoUpdateAll, arg_6_0)
+	arg_6_0:_checkIsDone()
 end
 
-function slot0._getInfoTimeout(slot0)
-	for slot4, slot5 in pairs(slot0._callbackIdDict) do
-		slot6 = slot0.GetInfoFuncList[slot4]
+function var_0_0._getInfoTimeout(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._callbackIdDict) do
+		local var_7_0 = arg_7_0.GetInfoFuncList[iter_7_0]
+		local var_7_1 = var_7_0[2]
+		local var_7_2 = var_7_0[3]
 
-		slot6[2]:removeCallbackById(slot5)
-		logError("获取信息超时，跳过保证不卡登录流程：" .. slot6[3])
+		var_7_1:removeCallbackById(iter_7_1)
+		logError("获取信息超时，跳过保证不卡登录流程：" .. var_7_2)
 	end
 
 	PayController.instance:clearAllQueryProductDetailsCallBack()
 
-	slot0._callbackIdDict = {}
+	arg_7_0._callbackIdDict = {}
 
 	LoginController.instance:stopHeartBeat()
 	ConnectAliveMgr.instance:stopReconnect()
-	MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect1, MsgBoxEnum.BoxType.Yes, function ()
+	MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect1, MsgBoxEnum.BoxType.Yes, function()
 		LoginController.instance:logout()
 	end)
-	slot0:onDone(false)
+	arg_7_0:onDone(false)
 end
 
-function slot0._onLostConnect(slot0)
+function var_0_0._onLostConnect(arg_9_0)
+	return
 end
 
-function slot0.clearWork(slot0)
-	slot0:_removeEvents()
+function var_0_0.clearWork(arg_10_0)
+	arg_10_0:_removeEvents()
 
-	for slot4, slot5 in pairs(slot0._callbackIdDict) do
-		slot0.GetInfoFuncList[slot4][2]:removeCallbackById(slot5)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._callbackIdDict) do
+		arg_10_0.GetInfoFuncList[iter_10_0][2]:removeCallbackById(iter_10_1)
 	end
 
-	slot0._callbackIdDict = {}
+	arg_10_0._callbackIdDict = {}
 end
 
-function slot0._removeEvents(slot0)
-	TaskDispatcher.cancelTask(slot0._getInfoTimeout, slot0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostConnect, slot0._onLostConnect, slot0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, slot0._onDungeonInfoUpdateAll, slot0)
+function var_0_0._removeEvents(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._getInfoTimeout, arg_11_0)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostConnect, arg_11_0._onLostConnect, arg_11_0)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_11_0._onDungeonInfoUpdateAll, arg_11_0)
 end
 
-return slot0
+return var_0_0

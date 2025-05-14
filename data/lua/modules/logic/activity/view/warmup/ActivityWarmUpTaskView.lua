@@ -1,151 +1,172 @@
-module("modules.logic.activity.view.warmup.ActivityWarmUpTaskView", package.seeall)
+﻿module("modules.logic.activity.view.warmup.ActivityWarmUpTaskView", package.seeall)
 
-slot0 = class("ActivityWarmUpTaskView", BaseView)
+local var_0_0 = class("ActivityWarmUpTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotaskitemcontent = gohelper.findChild(slot0.viewGO, "#scroll_task/viewport/#go_taskitemcontent")
-	slot0._godayitem = gohelper.findChild(slot0.viewGO, "#scroll_days/Viewport/Content/#go_dayitem")
-	slot0._btncloseview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeview")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotaskitemcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_task/viewport/#go_taskitemcontent")
+	arg_1_0._godayitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_days/Viewport/Content/#go_dayitem")
+	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloseview:AddClickListener(slot0._btncloseviewOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseviewOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloseview:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloseview:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._taskItems = {}
-	slot0._taskDayTabs = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._taskItems = {}
+	arg_4_0._taskDayTabs = {}
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._taskItems) do
-		gohelper.setActive(slot5.go, true)
+function var_0_0.onDestroyView(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._taskItems) do
+		gohelper.setActive(iter_5_1.go, true)
 	end
 
-	for slot4, slot5 in pairs(slot0._taskDayTabs) do
-		slot5.btn:RemoveClickListener()
+	for iter_5_2, iter_5_3 in pairs(arg_5_0._taskDayTabs) do
+		iter_5_3.btn:RemoveClickListener()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ActivityWarmUpTaskController.instance, ActivityWarmUpEvent.TaskListUpdated, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityWarmUpTaskController.instance, ActivityWarmUpEvent.TaskDayChanged, slot0.refreshUI, slot0)
-	slot0:addEventCb(ActivityWarmUpTaskController.instance, ActivityWarmUpEvent.TaskListNeedClose, slot0.closeThis, slot0)
-	ActivityWarmUpTaskController.instance:init(slot0.viewParam.actId, slot0.viewParam.index)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.index
+
+	arg_6_0:addEventCb(ActivityWarmUpTaskController.instance, ActivityWarmUpEvent.TaskListUpdated, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(ActivityWarmUpTaskController.instance, ActivityWarmUpEvent.TaskDayChanged, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(ActivityWarmUpTaskController.instance, ActivityWarmUpEvent.TaskListNeedClose, arg_6_0.closeThis, arg_6_0)
+	ActivityWarmUpTaskController.instance:init(arg_6_0.viewParam.actId, var_6_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity106
 	})
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
 	ActivityWarmUpTaskController.instance:release()
 end
 
-function slot0._btncloseviewOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseviewOnClick(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshList()
-	slot0:refreshTab()
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshList()
+	arg_9_0:refreshTab()
 end
 
-function slot0.refreshList(slot0)
-	for slot6 = 1, math.max(#ActivityWarmUpTaskListModel.instance:getList(), #slot0._taskItems) do
-		slot8 = slot0:getOrCreateTaskItem(slot6)
+function var_0_0.refreshList(arg_10_0)
+	local var_10_0 = ActivityWarmUpTaskListModel.instance:getList()
+	local var_10_1 = math.max(#var_10_0, #arg_10_0._taskItems)
 
-		if slot1[slot6] then
-			gohelper.setActive(slot8.go, true)
-			slot8.component:onUpdateMO(slot7)
+	for iter_10_0 = 1, var_10_1 do
+		local var_10_2 = var_10_0[iter_10_0]
+		local var_10_3 = arg_10_0:getOrCreateTaskItem(iter_10_0)
+
+		if var_10_2 then
+			gohelper.setActive(var_10_3.go, true)
+			var_10_3.component:onUpdateMO(var_10_2)
 		else
-			gohelper.setActive(slot8.go, false)
+			gohelper.setActive(var_10_3.go, false)
 		end
 	end
 end
 
-function slot0.refreshTab(slot0)
-	slot3 = ActivityWarmUpTaskListModel.instance:getSelectedDay()
+function var_0_0.refreshTab(arg_11_0)
+	local var_11_0 = ActivityWarmUpModel.instance:getTotalContentDays()
+	local var_11_1 = ActivityWarmUpModel.instance:getCurrentDay()
+	local var_11_2 = ActivityWarmUpTaskListModel.instance:getSelectedDay()
 
-	for slot7 = 1, ActivityWarmUpModel.instance:getTotalContentDays() do
-		slot8 = slot0:getOrCreateTaskDayTab(slot7)
+	for iter_11_0 = 1, var_11_0 do
+		local var_11_3 = arg_11_0:getOrCreateTaskDayTab(iter_11_0)
 
-		UISpriteSetMgr.instance:setActivityWarmUpSprite(slot8.imageChooseDay, "bg_rw" .. slot7)
+		UISpriteSetMgr.instance:setActivityWarmUpSprite(var_11_3.imageChooseDay, "bg_rw" .. iter_11_0)
 
-		slot8.txtUnchooseDay.text = tostring(slot7)
-		slot8.txtLockDay.text = tostring(slot7)
+		var_11_3.txtUnchooseDay.text = tostring(iter_11_0)
+		var_11_3.txtLockDay.text = tostring(iter_11_0)
 
-		if slot7 <= ActivityWarmUpModel.instance:getCurrentDay() then
-			gohelper.setActive(slot8.goLock, false)
-			gohelper.setActive(slot8.goUnchoose, slot3 ~= slot7)
-			gohelper.setActive(slot8.goChoose, slot3 == slot7)
+		if iter_11_0 <= var_11_1 then
+			gohelper.setActive(var_11_3.goLock, false)
+			gohelper.setActive(var_11_3.goUnchoose, var_11_2 ~= iter_11_0)
+			gohelper.setActive(var_11_3.goChoose, var_11_2 == iter_11_0)
 		else
-			gohelper.setActive(slot8.goLock, true)
+			gohelper.setActive(var_11_3.goLock, true)
 		end
 
-		gohelper.setActive(slot8.goreddot, ActivityWarmUpTaskListModel.instance:dayHasReward(slot7))
+		local var_11_4 = ActivityWarmUpTaskListModel.instance:dayHasReward(iter_11_0)
+
+		gohelper.setActive(var_11_3.goreddot, var_11_4)
 	end
 end
 
-function slot0.getOrCreateTaskItem(slot0, slot1)
-	if not slot0._taskItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot4 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gotaskitemcontent, "task_item" .. tostring(slot1))
-		slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, ActivityWarmUpTaskItem)
+function var_0_0.getOrCreateTaskItem(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._taskItems[arg_12_1]
 
-		slot5:initData(slot1, slot4)
+	if not var_12_0 then
+		var_12_0 = arg_12_0:getUserDataTb_()
 
-		slot2.go = slot4
-		slot2.component = slot5
-		slot0._taskItems[slot1] = slot2
+		local var_12_1 = arg_12_0.viewContainer:getSetting().otherRes[1]
+		local var_12_2 = arg_12_0:getResInst(var_12_1, arg_12_0._gotaskitemcontent, "task_item" .. tostring(arg_12_1))
+		local var_12_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_2, ActivityWarmUpTaskItem)
+
+		var_12_3:initData(arg_12_1, var_12_2)
+
+		var_12_0.go = var_12_2
+		var_12_0.component = var_12_3
+		arg_12_0._taskItems[arg_12_1] = var_12_0
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getOrCreateTaskDayTab(slot0, slot1)
-	if not slot0._taskDayTabs[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._godayitem, "tabday_" .. tostring(slot1))
-		slot2.go = slot3
-		slot2.goUnchoose = gohelper.findChild(slot3, "go_unselected")
-		slot2.goChoose = gohelper.findChild(slot3, "go_selected")
-		slot2.txtUnchooseDay = gohelper.findChildText(slot3, "go_unselected/txt_index")
-		slot2.imageChooseDay = gohelper.findChildImage(slot3, "go_selected/img_index")
-		slot2.goreddot = gohelper.findChild(slot3, "go_reddot")
-		slot2.goLock = gohelper.findChild(slot3, "go_lock")
-		slot2.txtLockDay = gohelper.findChildText(slot3, "go_lock/txt_index")
-		slot2.btn = gohelper.findChildButtonWithAudio(slot3, "btn_click")
+function var_0_0.getOrCreateTaskDayTab(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._taskDayTabs[arg_13_1]
 
-		slot2.btn:AddClickListener(uv0.onClickTabItem, {
-			self = slot0,
-			index = slot1
+	if not var_13_0 then
+		var_13_0 = arg_13_0:getUserDataTb_()
+
+		local var_13_1 = gohelper.cloneInPlace(arg_13_0._godayitem, "tabday_" .. tostring(arg_13_1))
+
+		var_13_0.go = var_13_1
+		var_13_0.goUnchoose = gohelper.findChild(var_13_1, "go_unselected")
+		var_13_0.goChoose = gohelper.findChild(var_13_1, "go_selected")
+		var_13_0.txtUnchooseDay = gohelper.findChildText(var_13_1, "go_unselected/txt_index")
+		var_13_0.imageChooseDay = gohelper.findChildImage(var_13_1, "go_selected/img_index")
+		var_13_0.goreddot = gohelper.findChild(var_13_1, "go_reddot")
+		var_13_0.goLock = gohelper.findChild(var_13_1, "go_lock")
+		var_13_0.txtLockDay = gohelper.findChildText(var_13_1, "go_lock/txt_index")
+		var_13_0.btn = gohelper.findChildButtonWithAudio(var_13_1, "btn_click")
+
+		var_13_0.btn:AddClickListener(var_0_0.onClickTabItem, {
+			self = arg_13_0,
+			index = arg_13_1
 		})
-		gohelper.setActive(slot2.go, true)
+		gohelper.setActive(var_13_0.go, true)
 
-		slot0._taskDayTabs[slot1] = slot2
+		arg_13_0._taskDayTabs[arg_13_1] = var_13_0
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.onClickTabItem(slot0)
-	slot1 = slot0.self
-	slot5 = ActivityWarmUpModel.instance:getSelectedDayOrders()
+function var_0_0.onClickTabItem(arg_14_0)
+	local var_14_0 = arg_14_0.self
+	local var_14_1 = arg_14_0.index
+	local var_14_2 = ActivityWarmUpTaskListModel.instance:getSelectedDay()
+	local var_14_3 = ActivityWarmUpModel.instance:getCurrentDay()
+	local var_14_4 = ActivityWarmUpModel.instance:getSelectedDayOrders()
 
-	if ActivityWarmUpTaskListModel.instance:getSelectedDay() ~= slot0.index and slot2 <= ActivityWarmUpModel.instance:getCurrentDay() then
-		ActivityWarmUpTaskController.instance:changeSelectedDay(slot2)
+	if var_14_2 ~= var_14_1 and var_14_1 <= var_14_3 then
+		ActivityWarmUpTaskController.instance:changeSelectedDay(var_14_1)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,109 +1,119 @@
-module("modules.logic.turnback.view.TurnbackRewardShowView", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackRewardShowView", package.seeall)
 
-slot0 = class("TurnbackRewardShowView", BaseView)
+local var_0_0 = class("TurnbackRewardShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "timebg/#txt_time")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_reward")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_rewardContent")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_reward")
-	slot0._gocanget = gohelper.findChild(slot0.viewGO, "#btn_reward/#go_canget")
-	slot0._gohasget = gohelper.findChild(slot0.viewGO, "#btn_reward/#go_hasget")
-	slot0._btnstory = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_story")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_time")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_rewardContent")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reward")
+	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "#btn_reward/#go_canget")
+	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "#btn_reward/#go_hasget")
+	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_story")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0._btnstory:AddClickListener(slot0._btnstoryOnClick, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshOnceBonusGetState, slot0._refreshOnceBonusGetState, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, slot0._refreshRemainTime, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0._refreshUI, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshOnceBonusGetState, arg_2_0._refreshOnceBonusGetState, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_2_0._refreshRemainTime, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0._refreshUI, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreward:RemoveClickListener()
-	slot0._btnstory:RemoveClickListener()
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshOnceBonusGetState, slot0._refreshOnceBonusGetState, slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, slot0._refreshRemainTime, slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0._refreshUI, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0._btnstory:RemoveClickListener()
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshOnceBonusGetState, arg_3_0._refreshOnceBonusGetState, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_3_0._refreshRemainTime, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0._refreshUI, arg_3_0)
 end
 
-function slot0._btnrewardOnClick(slot0)
-	if not slot0.hasGet then
-		TurnbackRpc.instance:sendTurnbackOnceBonusRequest(slot0.turnbackId)
+function var_0_0._btnrewardOnClick(arg_4_0)
+	if not arg_4_0.hasGet then
+		TurnbackRpc.instance:sendTurnbackOnceBonusRequest(arg_4_0.turnbackId)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_task_slide)
 	end
 end
 
-function slot0._btnstoryOnClick(slot0)
-	if TurnbackModel.instance:getCurTurnbackMo() and slot1.config and slot1.config.startStory then
-		StoryController.instance:playStory(slot2)
+function var_0_0._btnstoryOnClick(arg_5_0)
+	local var_5_0 = TurnbackModel.instance:getCurTurnbackMo()
+	local var_5_1 = var_5_0 and var_5_0.config and var_5_0.config.startStory
+
+	if var_5_1 then
+		StoryController.instance:playStory(var_5_1)
 	else
-		logError(string.format("TurnbackRewardShowView startStoryId is nil", slot2))
+		logError(string.format("TurnbackRewardShowView startStoryId is nil", var_5_1))
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getTurnbackIcon("turnback_rewardfullbg"))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simagebg:LoadImage(ResUrl.getTurnbackIcon("turnback_rewardfullbg"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
+function var_0_0.onOpen(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam.parent
 
-	slot0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	gohelper.addChild(var_8_0, arg_8_0.viewGO)
 
-	slot0:_createReward()
-	slot0:_refreshUI()
-	slot0:_refreshOnceBonusGetState()
+	arg_8_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+
+	arg_8_0:_createReward()
+	arg_8_0:_refreshUI()
+	arg_8_0:_refreshOnceBonusGetState()
 end
 
-function slot0._refreshUI(slot0)
-	slot0.config = TurnbackConfig.instance:getTurnbackSubModuleCo(slot0.viewParam.actId)
-	slot0._txtdesc.text = slot0.config.actDesc
+function var_0_0._refreshUI(arg_9_0)
+	arg_9_0.config = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_9_0.viewParam.actId)
+	arg_9_0._txtdesc.text = arg_9_0.config.actDesc
 
-	slot0:_refreshRemainTime()
-	gohelper.setActive(slot0._btnstory, true)
+	arg_9_0:_refreshRemainTime()
+	gohelper.setActive(arg_9_0._btnstory, true)
 end
 
-function slot0._refreshRemainTime(slot0)
-	slot0._txttime.text = TurnbackController.instance:refreshRemainTime()
+function var_0_0._refreshRemainTime(arg_10_0)
+	arg_10_0._txttime.text = TurnbackController.instance:refreshRemainTime()
 end
 
-function slot0._createReward(slot0)
-	for slot6 = 1, #string.split(TurnbackConfig.instance:getTurnbackCo(slot0.turnbackId).onceBonus, "|") do
-		slot7 = string.split(slot2[slot6], "#")
-		slot8 = IconMgr.instance:getCommonPropItemIcon(slot0._gorewardContent)
+function var_0_0._createReward(arg_11_0)
+	local var_11_0 = TurnbackConfig.instance:getTurnbackCo(arg_11_0.turnbackId)
+	local var_11_1 = string.split(var_11_0.onceBonus, "|")
 
-		slot8:setMOValue(slot7[1], slot7[2], slot7[3], nil, true)
-		slot8:setPropItemScale(0.9)
-		slot8:setCountFontSize(36)
-		slot8:setHideLvAndBreakFlag(true)
-		slot8:hideEquipLvAndBreak(true)
-		gohelper.setActive(slot8.go, true)
+	for iter_11_0 = 1, #var_11_1 do
+		local var_11_2 = string.split(var_11_1[iter_11_0], "#")
+		local var_11_3 = IconMgr.instance:getCommonPropItemIcon(arg_11_0._gorewardContent)
+
+		var_11_3:setMOValue(var_11_2[1], var_11_2[2], var_11_2[3], nil, true)
+		var_11_3:setPropItemScale(0.9)
+		var_11_3:setCountFontSize(36)
+		var_11_3:setHideLvAndBreakFlag(true)
+		var_11_3:hideEquipLvAndBreak(true)
+		gohelper.setActive(var_11_3.go, true)
 	end
 end
 
-function slot0._refreshOnceBonusGetState(slot0)
-	slot0.hasGet = TurnbackModel.instance:getOnceBonusGetState()
+function var_0_0._refreshOnceBonusGetState(arg_12_0)
+	arg_12_0.hasGet = TurnbackModel.instance:getOnceBonusGetState()
 
-	gohelper.setActive(slot0._gocanget, not slot0.hasGet)
-	gohelper.setActive(slot0._gohasget, slot0.hasGet)
+	gohelper.setActive(arg_12_0._gocanget, not arg_12_0.hasGet)
+	gohelper.setActive(arg_12_0._gohasget, arg_12_0.hasGet)
 end
 
-function slot0.onClose(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onClose(arg_13_0)
+	arg_13_0._simagebg:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

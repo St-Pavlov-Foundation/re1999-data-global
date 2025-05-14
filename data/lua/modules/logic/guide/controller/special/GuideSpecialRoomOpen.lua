@@ -1,32 +1,32 @@
-module("modules.logic.guide.controller.special.GuideSpecialRoomOpen", package.seeall)
+﻿module("modules.logic.guide.controller.special.GuideSpecialRoomOpen", package.seeall)
 
-slot0 = class("GuideSpecialRoomOpen", BaseGuideAction)
-slot1 = 401
-slot2 = 17
+local var_0_0 = class("GuideSpecialRoomOpen", BaseGuideAction)
+local var_0_1 = 401
+local var_0_2 = 17
 
-function slot0.ctor(slot0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, slot0._onGetInfoFinish, slot0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, slot0._onUpdateDungeonInfo, slot0)
-	GuideController.instance:registerCallback(GuideEvent.StartGuide, slot0._onStartGuide, slot0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
+function var_0_0.ctor(arg_1_0)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._onGetInfoFinish, arg_1_0)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_1_0._onUpdateDungeonInfo, arg_1_0)
+	GuideController.instance:registerCallback(GuideEvent.StartGuide, arg_1_0._onStartGuide, arg_1_0)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_1_0._onFinishGuide, arg_1_0)
 end
 
-function slot0.reInit(slot0)
-	slot0._hasGetInfo = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._hasGetInfo = nil
 end
 
-function slot0._onGetInfoFinish(slot0)
-	slot0._hasGetInfo = true
+function var_0_0._onGetInfoFinish(arg_3_0)
+	arg_3_0._hasGetInfo = true
 end
 
-function slot0._onUpdateDungeonInfo(slot0, slot1)
-	if slot0._hasGetInfo then
-		slot0:_checkStart()
+function var_0_0._onUpdateDungeonInfo(arg_4_0, arg_4_1)
+	if arg_4_0._hasGetInfo then
+		arg_4_0:_checkStart()
 	end
 end
 
-function slot0._checkStart(slot0)
-	if not slot0._hasGetInfo then
+function var_0_0._checkStart(arg_5_0)
+	if not arg_5_0._hasGetInfo then
 		return
 	end
 
@@ -34,44 +34,54 @@ function slot0._checkStart(slot0)
 		return
 	end
 
-	if GuideModel.instance:getDoingGuideId() and slot1 ~= uv0 then
+	local var_5_0 = GuideModel.instance:getDoingGuideId()
+
+	if var_5_0 and var_5_0 ~= var_0_1 then
 		return
 	end
 
-	if GuideModel.instance:isStepFinish(uv0, uv1) then
+	if GuideModel.instance:isStepFinish(var_0_1, var_0_2) then
 		return
 	end
 
-	if GuideConfig.instance:getTriggerType(uv0) == "EpisodeFinishAndInMainScene" then
-		slot6 = OpenConfig.instance:getOpenCo(tonumber(GuideConfig.instance:getTriggerParam(uv0))) and slot5.episodeId or slot4
-		slot7 = DungeonModel.instance:getEpisodeInfo(slot6)
+	if GuideConfig.instance:getTriggerType(var_0_1) == "EpisodeFinishAndInMainScene" then
+		local var_5_1 = GuideConfig.instance:getTriggerParam(var_0_1)
+		local var_5_2 = tonumber(var_5_1)
+		local var_5_3 = OpenConfig.instance:getOpenCo(var_5_2)
+		local var_5_4 = var_5_3 and var_5_3.episodeId or var_5_2
+		local var_5_5 = DungeonModel.instance:getEpisodeInfo(var_5_4)
+		local var_5_6 = DungeonConfig.instance:getEpisodeCO(var_5_4)
 
-		if DungeonConfig.instance:getEpisodeCO(slot6) and slot7 and DungeonEnum.StarType.None < slot7.star and (slot8.afterStory <= 0 or slot8.afterStory > 0 and StoryModel.instance:isStoryFinished(slot8.afterStory)) then
-			GuideModel.instance:setFlag(GuideModel.GuideFlag.DontOpenMain, true, uv0)
+		if var_5_6 and var_5_5 and var_5_5.star > DungeonEnum.StarType.None and (var_5_6.afterStory <= 0 or var_5_6.afterStory > 0 and StoryModel.instance:isStoryFinished(var_5_6.afterStory)) then
+			GuideModel.instance:setFlag(GuideModel.GuideFlag.DontOpenMain, true, var_0_1)
 		end
 	else
 		logError("小屋401触发条件有修改")
 	end
 end
 
-function slot0._onStartGuide(slot0, slot1)
-	if not slot1 then
+function var_0_0._onStartGuide(arg_6_0, arg_6_1)
+	if not arg_6_1 then
 		return
 	end
 
-	if slot1 == uv0 then
-		slot0:_checkStart()
-	elseif GuideConfig.instance:getGuideCO(slot1) and slot2.parallel ~= 1 then
-		GuideModel.instance:setFlag(GuideModel.GuideFlag.DontOpenMain, nil)
+	if arg_6_1 == var_0_1 then
+		arg_6_0:_checkStart()
+	else
+		local var_6_0 = GuideConfig.instance:getGuideCO(arg_6_1)
+
+		if var_6_0 and var_6_0.parallel ~= 1 then
+			GuideModel.instance:setFlag(GuideModel.GuideFlag.DontOpenMain, nil)
+		end
 	end
 end
 
-function slot0._onFinishGuide(slot0, slot1)
-	if not slot1 then
+function var_0_0._onFinishGuide(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	if slot1 == uv0 then
+	if arg_7_1 == var_0_1 then
 		if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 			return
 		end
@@ -86,19 +96,19 @@ function slot0._onFinishGuide(slot0, slot1)
 
 		ViewMgr.instance:openView(ViewName.MainView)
 	else
-		slot0:_checkStart()
+		arg_7_0:_checkStart()
 	end
 end
 
-function slot0._removeEvents(slot0)
-	LoginController.instance:unregisterCallback(LoginEvent.OnGetInfoFinish, slot0._onGetInfoFinish, slot0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, slot0._onUpdateDungeonInfo, slot0)
-	GuideController.instance:unregisterCallback(GuideEvent.StartGuide, slot0._onStartGuide, slot0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
+function var_0_0._removeEvents(arg_8_0)
+	LoginController.instance:unregisterCallback(LoginEvent.OnGetInfoFinish, arg_8_0._onGetInfoFinish, arg_8_0)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_8_0._onUpdateDungeonInfo, arg_8_0)
+	GuideController.instance:unregisterCallback(GuideEvent.StartGuide, arg_8_0._onStartGuide, arg_8_0)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_8_0._onFinishGuide, arg_8_0)
 end
 
-function slot0.clearWork(slot0)
-	slot0:_removeEvents()
+function var_0_0.clearWork(arg_9_0)
+	arg_9_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

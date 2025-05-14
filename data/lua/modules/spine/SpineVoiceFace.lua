@@ -1,209 +1,240 @@
-module("modules.spine.SpineVoiceFace", package.seeall)
+﻿module("modules.spine.SpineVoiceFace", package.seeall)
 
-slot0 = class("SpineVoiceFace")
-slot1 = "_biyan"
+local var_0_0 = class("SpineVoiceFace")
+local var_0_1 = "_biyan"
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	slot0:removeTaskActions()
-	TaskDispatcher.cancelTask(slot0._stopTransition, slot0)
+function var_0_0.onDestroy(arg_2_0)
+	arg_2_0:removeTaskActions()
+	TaskDispatcher.cancelTask(arg_2_0._stopTransition, arg_2_0)
 
-	slot0._spineVoice = nil
-	slot0._voiceConfig = nil
-	slot0._spine = nil
+	arg_2_0._spineVoice = nil
+	arg_2_0._voiceConfig = nil
+	arg_2_0._spine = nil
 end
 
-function slot0.setFaceAnimation(slot0, slot1, slot2)
-	if string.find(slot1, uv0) then
-		slot2 = false
+function var_0_0.setFaceAnimation(arg_3_0, arg_3_1, arg_3_2)
+	if string.find(arg_3_1, var_0_1) then
+		arg_3_2 = false
 	end
 
-	slot0._loop = slot2
+	arg_3_0._loop = arg_3_2
 
-	TaskDispatcher.cancelTask(slot0._nonLoopFaceEnd, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._nonLoopFaceEnd, arg_3_0)
 
-	slot0._lastFaceName = slot1
+	arg_3_0._lastFaceName = arg_3_1
 
-	slot0:_doSetFaceAnimation(slot1, slot2)
+	arg_3_0:_doSetFaceAnimation(arg_3_1, arg_3_2)
 end
 
-function slot0._doSetFaceAnimation(slot0, slot1, slot2)
-	if slot1 ~= slot0._spine:getCurFace() then
-		slot3 = slot0._mixTime or 0.5
+function var_0_0._doSetFaceAnimation(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= arg_4_0._spine:getCurFace() then
+		local var_4_0 = arg_4_0._mixTime or 0.5
 
-		if string.find(slot1, uv0) then
-			slot3 = 0.3
+		if string.find(arg_4_1, var_0_1) then
+			var_4_0 = 0.3
 		end
 
-		slot0._spine:setFaceAnimation(slot1, slot2, slot3)
+		arg_4_0._spine:setFaceAnimation(arg_4_1, arg_4_2, var_4_0)
 	end
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0._spineVoice = slot1
-	slot0._voiceConfig = slot2
-	slot0._spine = slot3
+function var_0_0.init(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0._spineVoice = arg_5_1
+	arg_5_0._voiceConfig = arg_5_2
+	arg_5_0._spine = arg_5_3
 
-	slot0:playFaceActionList(slot0:getFace(slot2))
+	local var_5_0 = arg_5_0:getFace(arg_5_2)
+
+	arg_5_0:playFaceActionList(var_5_0)
 end
 
-function slot0.getFace(slot0, slot1)
-	if slot0._spineVoice:getVoiceLang() == "zh" then
-		return slot1.face
+function var_0_0.getFace(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._spineVoice:getVoiceLang()
+
+	if var_6_0 == "zh" then
+		return arg_6_1.face
 	else
-		return slot1[slot2 .. "face"] or slot1.face
+		return arg_6_1[var_6_0 .. "face"] or arg_6_1.face
 	end
 end
 
-function slot0._configValidity(slot0, slot1, slot2)
-	for slot6 = #slot1, 1, -1 do
-		slot9 = true
+function var_0_0._configValidity(arg_7_0, arg_7_1, arg_7_2)
+	for iter_7_0 = #arg_7_1, 1, -1 do
+		local var_7_0 = arg_7_1[iter_7_0]
+		local var_7_1 = string.split(var_7_0, "#")
+		local var_7_2 = true
 
-		if #string.split(slot1[slot6], "#") >= 3 and slot2:hasAnimation("e_" .. slot8[1]) then
-			slot9 = false
+		if #var_7_1 >= 3 then
+			local var_7_3 = "e_" .. var_7_1[1]
+
+			if arg_7_2:hasAnimation(var_7_3) then
+				var_7_2 = false
+			end
 		end
 
-		if slot9 then
-			logError(string.format("id：%s 语音 face 无效的配置：%s face:%s", slot0._voiceConfig.audio, slot7, slot0:getFace(slot0._voiceConfig)))
-			table.remove(slot1, slot6)
+		if var_7_2 then
+			logError(string.format("id：%s 语音 face 无效的配置：%s face:%s", arg_7_0._voiceConfig.audio, var_7_0, arg_7_0:getFace(arg_7_0._voiceConfig)))
+			table.remove(arg_7_1, iter_7_0)
 		end
 	end
 end
 
-function slot0.playFaceActionList(slot0, slot1)
-	slot0._faceStart = 0
+function var_0_0.playFaceActionList(arg_8_0, arg_8_1)
+	arg_8_0._faceStart = 0
 
-	if not string.nilorempty(slot1) then
-		slot0._faceList = string.split(slot1, "|")
+	if not string.nilorempty(arg_8_1) then
+		arg_8_0._faceList = string.split(arg_8_1, "|")
 
-		slot0:_configValidity(slot0._faceList, slot0._spine)
+		arg_8_0:_configValidity(arg_8_0._faceList, arg_8_0._spine)
 	else
-		slot0._faceList = {}
+		arg_8_0._faceList = {}
 	end
 
-	slot0:_playFaceAction(slot0._diffFaceBiYan)
+	arg_8_0:_playFaceAction(arg_8_0._diffFaceBiYan)
 end
 
-function slot0._playFaceAction(slot0, slot1)
-	slot0._faceActionName = nil
-	slot2 = true
+function var_0_0._playFaceAction(arg_9_0, arg_9_1)
+	arg_9_0._faceActionName = nil
 
-	slot0:removeTaskActions()
+	local var_9_0 = true
 
-	slot3 = true
+	arg_9_0:removeTaskActions()
 
-	if #slot0._faceList > 0 and #string.split(table.remove(slot0._faceList, 1), "#") >= 3 then
-		slot0._faceActionName = "e_" .. slot5[1]
-		slot0._faceActionDuration = tonumber(slot5[3]) - tonumber(slot5[2])
-		slot0._mixTime = tonumber(slot5[4])
-		slot0._setLoop = slot5[5] == nil
-		slot0._delayTime = slot6 - slot0._faceStart
-		slot0._faceStart = slot7
-		slot0._faceActionStartTime = Time.time
+	local var_9_1 = true
 
-		if slot0._delayTime > 0 then
-			TaskDispatcher.runDelay(slot0._faceActionDelay, slot0, slot0._delayTime)
-		else
-			slot2 = false
+	if #arg_9_0._faceList > 0 then
+		local var_9_2 = table.remove(arg_9_0._faceList, 1)
+		local var_9_3 = string.split(var_9_2, "#")
 
-			slot0:_faceActionDelay()
+		if #var_9_3 >= 3 then
+			arg_9_0._faceActionName = "e_" .. var_9_3[1]
+
+			local var_9_4 = tonumber(var_9_3[2])
+			local var_9_5 = tonumber(var_9_3[3])
+
+			arg_9_0._faceActionDuration = var_9_5 - var_9_4
+			arg_9_0._mixTime = tonumber(var_9_3[4])
+			arg_9_0._setLoop = var_9_3[5] == nil
+			arg_9_0._delayTime = var_9_4 - arg_9_0._faceStart
+			arg_9_0._faceStart = var_9_5
+			arg_9_0._faceActionStartTime = Time.time
+
+			if arg_9_0._delayTime > 0 then
+				TaskDispatcher.runDelay(arg_9_0._faceActionDelay, arg_9_0, arg_9_0._delayTime)
+			else
+				var_9_0 = false
+
+				arg_9_0:_faceActionDelay()
+			end
+
+			var_9_1 = false
 		end
-
-		slot3 = false
 	end
 
-	if slot2 then
-		slot0:setNormal()
+	if var_9_0 then
+		local var_9_6 = arg_9_0:_needBiYan(StoryAnimName.E_ZhengChang)
 
-		if slot1 then
-			slot0:setBiYan(slot0:_needBiYan(StoryAnimName.E_ZhengChang))
+		arg_9_0:setNormal()
+
+		if arg_9_1 then
+			arg_9_0:setBiYan(var_9_6)
 		end
 	end
 
-	if slot3 then
-		slot0:_onFaceEnd()
+	if var_9_1 then
+		arg_9_0:_onFaceEnd()
 	end
 end
 
-function slot0._onFaceEnd(slot0)
-	slot0._spineVoice:_onComponentStop(slot0)
+function var_0_0._onFaceEnd(arg_10_0)
+	arg_10_0._spineVoice:_onComponentStop(arg_10_0)
 end
 
-function slot0.setNormal(slot0)
-	slot0:setFaceAnimation(StoryAnimName.E_ZhengChang, true)
+function var_0_0.setNormal(arg_11_0)
+	arg_11_0:setFaceAnimation(StoryAnimName.E_ZhengChang, true)
 end
 
-function slot0._faceActionDelay(slot0)
-	slot0:setFaceAnimation(slot0._faceActionName, slot0._setLoop)
+function var_0_0._faceActionDelay(arg_12_0)
+	local var_12_0 = arg_12_0:_needBiYan(arg_12_0._faceActionName)
 
-	if not string.find(slot0._faceActionName, uv0) then
-		slot0:setBiYan(slot0:_needBiYan(slot0._faceActionName))
+	arg_12_0:setFaceAnimation(arg_12_0._faceActionName, arg_12_0._setLoop)
+
+	if not string.find(arg_12_0._faceActionName, var_0_1) then
+		arg_12_0:setBiYan(var_12_0)
 	end
 end
 
-function slot0.setBiYan(slot0, slot1)
-	if not slot0._spine then
+function var_0_0.setBiYan(arg_13_0, arg_13_1)
+	if not arg_13_0._spine then
 		return
 	end
 
-	if slot1 then
-		slot0._spine:setTransition(StoryAnimName.H_BiYan, false, 0)
-	elseif slot1 == false then
-		slot0._spine:setTransition(StoryAnimName.H_ZhengYan, false, 0)
+	if arg_13_1 then
+		arg_13_0._spine:setTransition(StoryAnimName.H_BiYan, false, 0)
+	elseif arg_13_1 == false then
+		arg_13_0._spine:setTransition(StoryAnimName.H_ZhengYan, false, 0)
 	end
 
-	TaskDispatcher.cancelTask(slot0._stopTransition, slot0)
-	TaskDispatcher.runDelay(slot0._stopTransition, slot0, 1)
+	TaskDispatcher.cancelTask(arg_13_0._stopTransition, arg_13_0)
+	TaskDispatcher.runDelay(arg_13_0._stopTransition, arg_13_0, 1)
 end
 
-function slot0._stopTransition(slot0)
-	slot0._spine:stopTransition()
+function var_0_0._stopTransition(arg_14_0)
+	arg_14_0._spine:stopTransition()
 end
 
-function slot0._needBiYan(slot0, slot1)
-	slot2 = slot0._diffFaceBiYan and slot0._lastFaceName or slot0._spine:getCurFace()
+function var_0_0._needBiYan(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._diffFaceBiYan and arg_15_0._lastFaceName or arg_15_0._spine:getCurFace()
+	local var_15_1 = var_15_0 and not string.find(var_15_0, var_0_1)
 
-	if slot2 and not string.find(slot2, uv0) and slot0._diffFaceBiYan then
-		slot3 = slot1 ~= slot0._lastFaceName and true or nil
+	if var_15_1 and arg_15_0._diffFaceBiYan then
+		var_15_1 = arg_15_1 ~= arg_15_0._lastFaceName and true or nil
 	end
 
-	return slot3
+	return var_15_1
 end
 
-function slot0.setDiffFaceBiYan(slot0, slot1)
-	slot0._diffFaceBiYan = slot1
+function var_0_0.setDiffFaceBiYan(arg_16_0, arg_16_1)
+	arg_16_0._diffFaceBiYan = arg_16_1
 end
 
-function slot0.checkFaceEnd(slot0, slot1)
-	if slot1 == slot0._faceActionName then
-		if slot0._faceActionStartTime + slot0._faceActionDuration + slot0._delayTime <= Time.time then
-			slot0:_playFaceAction(true)
+function var_0_0.checkFaceEnd(arg_17_0, arg_17_1)
+	if arg_17_1 == arg_17_0._faceActionName then
+		local var_17_0 = arg_17_0._faceActionStartTime + arg_17_0._faceActionDuration + arg_17_0._delayTime
+		local var_17_1 = Time.time
+
+		if var_17_0 <= var_17_1 then
+			arg_17_0:_playFaceAction(true)
 
 			return true
 		end
 
-		if not slot0._loop then
-			TaskDispatcher.runDelay(slot0._nonLoopFaceEnd, slot0, slot2 - slot3)
+		if not arg_17_0._loop then
+			local var_17_2 = var_17_0 - var_17_1
+
+			TaskDispatcher.runDelay(arg_17_0._nonLoopFaceEnd, arg_17_0, var_17_2)
 		end
 
 		return true
 	end
 end
 
-function slot0._nonLoopFaceEnd(slot0)
-	slot0:_playFaceAction(true)
+function var_0_0._nonLoopFaceEnd(arg_18_0)
+	arg_18_0:_playFaceAction(true)
 end
 
-function slot0.removeTaskActions(slot0)
-	TaskDispatcher.cancelTask(slot0._faceActionDelay, slot0)
-	TaskDispatcher.cancelTask(slot0._nonLoopFaceEnd, slot0)
+function var_0_0.removeTaskActions(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._faceActionDelay, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._nonLoopFaceEnd, arg_19_0)
 end
 
-function slot0.onVoiceStop(slot0)
-	slot0:removeTaskActions()
-	slot0:_doSetFaceAnimation(StoryAnimName.E_ZhengChang, true)
+function var_0_0.onVoiceStop(arg_20_0)
+	arg_20_0:removeTaskActions()
+	arg_20_0:_doSetFaceAnimation(StoryAnimName.E_ZhengChang, true)
 end
 
-return slot0
+return var_0_0

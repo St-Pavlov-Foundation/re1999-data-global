@@ -1,45 +1,46 @@
-module("modules.logic.versionactivity2_5.act187.view.Activity187ViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act187.view.Activity187ViewContainer", package.seeall)
 
-slot0 = class("Activity187ViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity187ViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._act187View = Activity187View.New()
-	slot0._act187PaintView = Activity187PaintingView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._act187View)
-	table.insert(slot1, slot0._act187PaintView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
+	arg_1_0._act187View = Activity187View.New()
+	arg_1_0._act187PaintView = Activity187PaintingView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._act187View)
+	table.insert(var_1_0, arg_1_0._act187PaintView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot0.navigateView:setOverrideClose(slot0._overrideClose, slot0)
+		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0._overrideClose(slot0)
-	slot0._act187View:onBtnEsc()
+function var_0_0._overrideClose(arg_3_0)
+	arg_3_0._act187View:onBtnEsc()
 end
 
-function slot0.setPaintingViewDisplay(slot0, slot1)
-	slot0._act187View:setPaintingViewDisplay(slot1)
+function var_0_0.setPaintingViewDisplay(arg_4_0, arg_4_1)
+	arg_4_0._act187View:setPaintingViewDisplay(arg_4_1)
 end
 
-function slot0.isShowPaintView(slot0)
-	return slot0._act187View.isShowPaintView
+function var_0_0.isShowPaintView(arg_5_0)
+	return arg_5_0._act187View.isShowPaintView
 end
 
-return slot0
+return var_0_0

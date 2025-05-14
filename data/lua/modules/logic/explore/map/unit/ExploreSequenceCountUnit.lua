@@ -1,40 +1,42 @@
-module("modules.logic.explore.map.unit.ExploreSequenceCountUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreSequenceCountUnit", package.seeall)
 
-slot0 = class("ExploreSequenceCountUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreSequenceCountUnit", ExploreBaseDisplayUnit)
 
-function slot0.onTrigger(slot0)
-	if slot0.mo:isInteractEnabled() == false then
+function var_0_0.onTrigger(arg_1_0)
+	if arg_1_0.mo:isInteractEnabled() == false then
 		return
 	end
 
-	if slot0.mo:isInteractActiveState() == false then
-		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.UnitIdLock + slot0.id)
+	if arg_1_0.mo:isInteractActiveState() == false then
+		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.UnitIdLock + arg_1_0.id)
 		ExploreController.instance:getMap():getHero():stopMoving()
 		ExploreModel.instance:setStepPause(true)
-		slot0:playAnim(ExploreAnimEnum.AnimName.nToA)
-		slot0:setInteractActive(true)
+		arg_1_0:playAnim(ExploreAnimEnum.AnimName.nToA)
+		arg_1_0:setInteractActive(true)
 	end
 end
 
-function slot0.onAnimEnd(slot0, slot1, slot2)
-	if slot2 == ExploreAnimEnum.AnimName.active then
-		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.UnitIdLock + slot0.id)
+function var_0_0.onAnimEnd(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 == ExploreAnimEnum.AnimName.active then
+		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.UnitIdLock + arg_2_0.id)
 
-		if slot0.mo:isInteractActiveState() then
-			ExploreStepController.instance:insertClientStep({
+		if arg_2_0.mo:isInteractActiveState() then
+			local var_2_0 = {
 				stepType = ExploreEnum.StepType.CheckCounter,
-				id = slot0.id
-			}, 1)
-			slot0:tryTrigger()
+				id = arg_2_0.id
+			}
+
+			ExploreStepController.instance:insertClientStep(var_2_0, 1)
+			arg_2_0:tryTrigger()
 			ExploreStepController.instance:startStep()
 		else
-			slot0:playAnim(ExploreAnimEnum.AnimName.aToN)
+			arg_2_0:playAnim(ExploreAnimEnum.AnimName.aToN)
 		end
 
 		ExploreModel.instance:setStepPause(false)
 	end
 
-	uv0.super.onAnimEnd(slot0, slot1, slot2)
+	var_0_0.super.onAnimEnd(arg_2_0, arg_2_1, arg_2_2)
 end
 
-return slot0
+return var_0_0

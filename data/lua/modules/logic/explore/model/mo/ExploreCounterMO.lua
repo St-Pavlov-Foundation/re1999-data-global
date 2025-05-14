@@ -1,56 +1,64 @@
-module("modules.logic.explore.model.mo.ExploreCounterMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.ExploreCounterMO", package.seeall)
 
-slot0 = pureTable("ExploreCounterMO")
+local var_0_0 = pureTable("ExploreCounterMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.tarUnitId = slot1
-	slot0.dic = {}
-	slot0.tarCount = 0
-	slot0.nowCount = 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.tarUnitId = arg_1_1
+	arg_1_0.dic = {}
+	arg_1_0.tarCount = 0
+	arg_1_0.nowCount = 0
 end
 
-function slot0.addTarCount(slot0)
-	slot0.tarCount = slot0.tarCount + 1
+function var_0_0.addTarCount(arg_2_0)
+	arg_2_0.tarCount = arg_2_0.tarCount + 1
 end
 
-function slot0.addCountSource(slot0, slot1)
-	slot0.dic[slot1] = false
-	slot0.tarCount = tabletool.len(slot0.dic)
+function var_0_0.addCountSource(arg_3_0, arg_3_1)
+	arg_3_0.dic[arg_3_1] = false
+	arg_3_0.tarCount = tabletool.len(arg_3_0.dic)
 end
 
-function slot0.reCalcCount(slot0)
-	for slot5 in pairs(slot0.dic) do
-		slot0.dic[slot5] = ExploreMapModel.instance:getUnitDic()[slot5]:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
+function var_0_0.reCalcCount(arg_4_0)
+	local var_4_0 = ExploreMapModel.instance:getUnitDic()
+
+	for iter_4_0 in pairs(arg_4_0.dic) do
+		local var_4_1 = var_4_0[iter_4_0]:getInteractInfoMO()
+
+		arg_4_0.dic[iter_4_0] = var_4_1:getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
 	end
 
-	slot0:updateNowCount()
+	arg_4_0:updateNowCount()
 end
 
-function slot0.add(slot0, slot1)
-	slot0.dic[slot1] = true
+function var_0_0.add(arg_5_0, arg_5_1)
+	arg_5_0.dic[arg_5_1] = true
 
-	slot0:updateNowCount()
+	local var_5_0 = arg_5_0.nowCount
 
-	return slot0.nowCount < slot0.tarCount and slot0.tarCount <= slot0.nowCount
+	arg_5_0:updateNowCount()
+
+	return var_5_0 < arg_5_0.tarCount and arg_5_0.nowCount >= arg_5_0.tarCount
 end
 
-function slot0.reduce(slot0, slot1)
-	slot0.dic[slot1] = false
+function var_0_0.reduce(arg_6_0, arg_6_1)
+	arg_6_0.dic[arg_6_1] = false
 
-	slot0:updateNowCount()
+	local var_6_0 = arg_6_0.nowCount
 
-	return slot0.tarCount <= slot0.nowCount and slot0.nowCount < slot0.tarCount
+	arg_6_0:updateNowCount()
+
+	return var_6_0 >= arg_6_0.tarCount and arg_6_0.nowCount < arg_6_0.tarCount
 end
 
-function slot0.updateNowCount(slot0)
-	slot0.nowCount = 0
+function var_0_0.updateNowCount(arg_7_0)
+	arg_7_0.nowCount = 0
 
-	for slot4, slot5 in pairs(slot0.dic) do
-		if slot5 then
-			slot0.nowCount = slot0.nowCount + 1
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.dic) do
+		if iter_7_1 then
+			arg_7_0.nowCount = arg_7_0.nowCount + 1
 		end
 	end
 end
 
-return slot0
+return var_0_0

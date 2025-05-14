@@ -1,113 +1,137 @@
-module("modules.logic.seasonver.act166.controller.Season166HeroGroupController", package.seeall)
+﻿module("modules.logic.seasonver.act166.controller.Season166HeroGroupController", package.seeall)
 
-slot0 = class("Season166HeroGroupController", BaseController)
+local var_0_0 = class("Season166HeroGroupController", BaseController)
 
-function slot0.onOpenViewInitData(slot0, slot1, slot2)
-	if Season166Model.instance:getBattleContext() and DungeonConfig.instance:getEpisodeCO(slot3.episodeId) then
-		HeroGroupTrialModel.instance:setTrialByBattleId(slot4.battleId)
+function var_0_0.onOpenViewInitData(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = Season166Model.instance:getBattleContext()
+
+	if var_1_0 then
+		local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0.episodeId)
+
+		if var_1_1 then
+			HeroGroupTrialModel.instance:setTrialByBattleId(var_1_1.battleId)
+		end
 	end
 
-	Season166HeroGroupEditModel.instance:init(slot1, slot2)
-	Season166HeroGroupQuickEditModel.instance:init(slot1, slot2)
+	Season166HeroGroupEditModel.instance:init(arg_1_1, arg_1_2)
+	Season166HeroGroupQuickEditModel.instance:init(arg_1_1, arg_1_2)
 end
 
-function slot0.onCloseViewCleanData(slot0)
-	slot0:saveCurrentHeroGroup()
+function var_0_0.onCloseViewCleanData(arg_2_0)
+	arg_2_0:saveCurrentHeroGroup()
 end
 
-function slot0.cleanAssistHeroGroup(slot0)
-	if not Season166HeroSingleGroupModel.instance.assistMO then
+function var_0_0.cleanAssistHeroGroup(arg_3_0)
+	local var_3_0 = Season166HeroSingleGroupModel.instance.assistMO
+
+	if not var_3_0 then
 		return
 	end
 
-	Season166HeroSingleGroupModel.instance:removeFrom(slot1.id)
+	Season166HeroSingleGroupModel.instance:removeFrom(var_3_0.id)
 	Season166HeroSingleGroupModel.instance:setAssistHeroGroupMO(nil)
 end
 
-function slot0.openHeroGroupView(slot0, slot1, slot2)
-	if not Season166Model.instance:getBattleContext() then
+function var_0_0.openHeroGroupView(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = Season166Model.instance:getBattleContext()
+
+	if not var_4_0 then
 		return
 	end
 
-	Season166HeroGroupModel.instance:setParam(slot1, slot2)
+	Season166HeroGroupModel.instance:setParam(arg_4_1, arg_4_2)
 	Season166HeroGroupModel.instance:cleanAssistData()
 
-	HeroGroupModel.instance.battleId = slot1
+	HeroGroupModel.instance.battleId = arg_4_1
 
-	Season166HeroSingleGroupModel.instance:setMaxHeroCount(Season166HeroGroupModel.instance:getMaxHeroCountInGroup())
+	local var_4_1 = Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
+
+	Season166HeroSingleGroupModel.instance:setMaxHeroCount(var_4_1)
 	Season166HeroGroupModel.instance:setCurGroupId(1)
 	Season166Controller.instance:openHeroGroupFightView({
-		actId = slot3.actId,
-		battleId = slot3.battleId,
-		episodeId = slot3.episodeId
+		actId = var_4_0.actId,
+		battleId = var_4_0.battleId,
+		episodeId = var_4_0.episodeId
 	})
 end
 
-function slot0.checkEquipClothSkill()
+function var_0_0.checkEquipClothSkill()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
 		return
 	end
 
-	if PlayerClothModel.instance:getById(HeroGroupModel.instance:getCurGroupMO().clothId) then
+	local var_5_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if PlayerClothModel.instance:getById(var_5_0.clothId) then
 		return
 	end
 
-	for slot5, slot6 in ipairs(PlayerClothModel.instance:getList()) do
-		if PlayerClothModel.instance:hasCloth(slot6.id) then
-			HeroGroupModel.instance:replaceCloth(slot6.id)
+	local var_5_1 = PlayerClothModel.instance:getList()
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		if PlayerClothModel.instance:hasCloth(iter_5_1.id) then
+			HeroGroupModel.instance:replaceCloth(iter_5_1.id)
 
 			return true
 		end
 	end
 end
 
-function slot0.saveCurrentHeroGroup(slot0)
-	if not Season166HeroGroupModel.instance.actId then
+function var_0_0.saveCurrentHeroGroup(arg_6_0)
+	local var_6_0 = Season166HeroGroupModel.instance.actId
+
+	if not var_6_0 then
 		return
 	end
 
-	if not Season166Model.instance:getActInfo(slot1) then
+	if not Season166Model.instance:getActInfo(var_6_0) then
 		return
 	end
 
-	if not Season166HeroGroupModel.instance:getCurGroupMO() then
+	local var_6_1 = Season166HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_6_1 then
 		return
 	end
 
-	if slot3.isHaveTrial then
+	if var_6_1.isHaveTrial then
 		return
 	end
 
-	slot0:syncHeroGroup(slot3, 1, slot1)
+	arg_6_0:syncHeroGroup(var_6_1, 1, var_6_0)
 end
 
-function slot0.syncHeroGroup(slot0, slot1, slot2, slot3)
-	Season166HeroSingleGroupModel.instance:setSingleGroup(slot1, true)
+function var_0_0.syncHeroGroup(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	Season166HeroSingleGroupModel.instance:setSingleGroup(arg_7_1, true)
+
+	local var_7_0 = Season166Model.instance:getBattleContext()
+	local var_7_1 = {
+		groupIndex = arg_7_2,
+		heroGroup = arg_7_1
+	}
 
 	if Season166HeroGroupModel.instance:isSeason166BaseSpotEpisode() then
-		Season166HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season166Base, Season166Model.instance:getBattleContext().episodeId, true, {
-			groupIndex = slot2,
-			heroGroup = slot1
-		})
+		Season166HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season166Base, var_7_0.episodeId, true, var_7_1)
 	elseif Season166HeroGroupModel.instance:isSeason166TrainEpisode() then
-		Season166HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season166Train, slot4.episodeId, true, slot5)
+		Season166HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season166Train, var_7_0.episodeId, true, var_7_1)
 	elseif Season166HeroGroupModel.instance:isSeason166TeachEpisode() then
-		Season166HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season166Teach, slot4.episodeId, true, slot5)
+		Season166HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season166Teach, var_7_0.episodeId, true, var_7_1)
 	end
 end
 
-function slot0.sendStartAct166Battle(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11)
-	slot12 = Season166HeroGroupModel.instance.actId
+function var_0_0.sendStartAct166Battle(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7, arg_8_8, arg_8_9, arg_8_10, arg_8_11)
+	local var_8_0 = Season166HeroGroupModel.instance.actId
+	local var_8_1 = arg_8_3 and lua_episode.configDict[arg_8_3].type
 
-	if not (slot3 and lua_episode.configDict[slot3].type) then
-		logError("episodeType is nil, episodeId = " .. slot3)
+	if not var_8_1 then
+		logError("episodeType is nil, episodeId = " .. arg_8_3)
 
 		return
 	end
 
-	Activity166Rpc.instance:sendStartAct166BattleRequest(slot12, slot13, slot1, slot4, slot2, slot3, slot5, slot6, slot7, slot8, slot9, slot10, slot11)
+	Activity166Rpc.instance:sendStartAct166BattleRequest(var_8_0, var_8_1, arg_8_1, arg_8_4, arg_8_2, arg_8_3, arg_8_5, arg_8_6, arg_8_7, arg_8_8, arg_8_9, arg_8_10, arg_8_11)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

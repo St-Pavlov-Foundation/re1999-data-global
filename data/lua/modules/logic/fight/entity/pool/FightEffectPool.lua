@@ -1,312 +1,356 @@
-module("modules.logic.fight.entity.pool.FightEffectPool", package.seeall)
+﻿module("modules.logic.fight.entity.pool.FightEffectPool", package.seeall)
 
-slot0 = _M
-slot1 = 1
-slot2 = {}
-slot3 = {}
-slot4 = {}
-slot5 = {}
-slot0.isForbidEffect = nil
+local var_0_0 = _M
+local var_0_1 = 1
+local var_0_2 = {}
+local var_0_3 = {}
+local var_0_4 = {}
+local var_0_5 = {}
+local var_0_6
+local var_0_7
 
-function slot0.getId2UsingWrapDict()
-	return uv0
+var_0_0.isForbidEffect = nil
+
+function var_0_0.getId2UsingWrapDict()
+	return var_0_4
 end
 
-function slot0.releaseUnuseEffect()
-	for slot3, slot4 in pairs(uv0) do
-		for slot8, slot9 in pairs(slot4) do
-			for slot13, slot14 in ipairs(slot9) do
-				slot14:markCanDestroy()
-				gohelper.destroy(slot14.containerGO)
+function var_0_0.releaseUnuseEffect()
+	for iter_2_0, iter_2_1 in pairs(var_0_3) do
+		for iter_2_2, iter_2_3 in pairs(iter_2_1) do
+			for iter_2_4, iter_2_5 in ipairs(iter_2_3) do
+				iter_2_5:markCanDestroy()
+				gohelper.destroy(iter_2_5.containerGO)
 			end
 		end
 	end
 
-	uv0 = {}
-	slot0 = {
-		[slot5.path] = true
-	}
+	var_0_3 = {}
 
-	for slot4, slot5 in pairs(uv1) do
-		-- Nothing
+	local var_2_0 = {}
+
+	for iter_2_6, iter_2_7 in pairs(var_0_4) do
+		var_2_0[iter_2_7.path] = true
 	end
 
-	for slot5, slot6 in pairs(uv2) do
-		if not slot0[slot5] then
-			slot6:Release()
+	local var_2_1 = {}
 
-			uv2[slot5] = nil
+	for iter_2_8, iter_2_9 in pairs(var_0_2) do
+		if not var_2_0[iter_2_8] then
+			var_2_1[iter_2_8] = true
+
+			iter_2_9:Release()
+
+			var_0_2[iter_2_8] = nil
 		end
 	end
 
-	return {
-		[slot5] = true
-	}
+	return var_2_1
 end
 
-function slot0.dispose()
-	for slot3, slot4 in pairs(uv0) do
-		slot4:Release()
+function var_0_0.dispose()
+	for iter_3_0, iter_3_1 in pairs(var_0_2) do
+		iter_3_1:Release()
 
-		uv0[slot3] = nil
+		var_0_2[iter_3_0] = nil
 	end
 
-	for slot3, slot4 in pairs(uv1) do
-		for slot8, slot9 in pairs(slot4) do
-			for slot13, slot14 in ipairs(slot9) do
-				slot14:markCanDestroy()
-				gohelper.destroy(slot14.containerGO)
+	for iter_3_2, iter_3_3 in pairs(var_0_3) do
+		for iter_3_4, iter_3_5 in pairs(iter_3_3) do
+			for iter_3_6, iter_3_7 in ipairs(iter_3_5) do
+				iter_3_7:markCanDestroy()
+				gohelper.destroy(iter_3_7.containerGO)
 			end
 		end
 	end
 
-	for slot3, slot4 in pairs(uv2) do
-		slot4:markCanDestroy()
-		gohelper.destroy(slot4.containerGO)
+	for iter_3_8, iter_3_9 in pairs(var_0_4) do
+		iter_3_9:markCanDestroy()
+		gohelper.destroy(iter_3_9.containerGO)
 	end
 
-	for slot3, slot4 in pairs(uv3) do
-		for slot8, slot9 in ipairs(slot4) do
-			slot9:markCanDestroy()
-			gohelper.destroy(slot9.containerGO)
+	for iter_3_10, iter_3_11 in pairs(var_0_5) do
+		for iter_3_12, iter_3_13 in ipairs(iter_3_11) do
+			iter_3_13:markCanDestroy()
+			gohelper.destroy(iter_3_13.containerGO)
 		end
 	end
 
-	uv0 = {}
-	uv1 = {}
-	uv2 = {}
-	uv3 = {}
+	var_0_2 = {}
+	var_0_3 = {}
+	var_0_4 = {}
+	var_0_5 = {}
 
-	gohelper.destroy(uv4)
+	gohelper.destroy(var_0_6)
 
-	uv4 = nil
-	uv5 = nil
-	uv6 = 1
+	var_0_6 = nil
+	var_0_7 = nil
+	var_0_1 = 1
 end
 
-function slot0.hasLoaded(slot0)
-	return (uv0 and uv0[slot0]) ~= nil
+function var_0_0.hasLoaded(arg_4_0)
+	return (var_0_2 and var_0_2[arg_4_0]) ~= nil
 end
 
-function slot0.isLoading(slot0)
-	return uv0[slot0]
+function var_0_0.isLoading(arg_5_0)
+	return var_0_5[arg_5_0]
 end
 
-function slot0.getEffect(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot7 = uv1.getPoolContainerGO()
-	slot8 = nil
+function var_0_0.getEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
+	local var_6_0 = var_0_2[arg_6_0]
+	local var_6_1 = var_0_0.getPoolContainerGO()
+	local var_6_2
 
-	if uv0[slot0] then
-		slot8 = uv1._getLoadedEffect(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+	if var_6_0 then
+		var_6_2 = var_0_0._getLoadedEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, var_6_0)
 	else
-		slot8 = uv1._getNotLoadEffect(slot0, slot1, slot2, slot3, slot4, slot5)
-		uv2[slot8.uniqueId] = slot8
+		var_6_2 = var_0_0._getNotLoadEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
+		var_0_4[var_6_2.uniqueId] = var_6_2
 
-		if not uv1.isForbidEffect then
-			slot9 = MultiAbLoader.New()
+		if not var_0_0.isForbidEffect then
+			local var_6_3 = MultiAbLoader.New()
 
-			slot9:addPath(slot8.abPath)
-			slot9:startLoad(uv1._onEffectLoaded)
+			var_6_3:addPath(var_6_2.abPath)
+			var_6_3:startLoad(var_0_0._onEffectLoaded)
 		end
 	end
 
-	uv2[slot8.uniqueId] = slot8
+	var_0_4[var_6_2.uniqueId] = var_6_2
 
-	return slot8
+	return var_6_2
 end
 
-function slot0._getLoadedEffect(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = nil
-	slot8 = uv0.getPoolContainerGO()
+function var_0_0._getLoadedEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6)
+	local var_7_0
+	local var_7_1 = var_0_0.getPoolContainerGO()
+	local var_7_2 = var_0_3[arg_7_0]
+	local var_7_3 = var_7_2 and var_7_2[arg_7_1]
 
-	if uv1[slot0] and slot9[slot1] and #slot10 > 0 then
-		slot11 = #slot10
+	if var_7_3 and #var_7_3 > 0 then
+		local var_7_4 = #var_7_3
 
-		for slot15, slot16 in ipairs(slot10) do
-			if slot4 == nil and slot16.hangPointGO == slot8 or slot4 ~= nil and slot16.hangPointGO == slot4 then
-				slot11 = slot15
+		for iter_7_0, iter_7_1 in ipairs(var_7_3) do
+			if arg_7_4 == nil and iter_7_1.hangPointGO == var_7_1 or arg_7_4 ~= nil and iter_7_1.hangPointGO == arg_7_4 then
+				var_7_4 = iter_7_0
 
 				break
 			end
 		end
 
-		table.remove(slot10, slot11):setHangPointGO(slot4 or slot8)
+		var_7_0 = table.remove(var_7_3, var_7_4)
+
+		var_7_0:setHangPointGO(arg_7_4 or var_7_1)
 	else
-		slot7 = uv0._createWrap(slot0)
+		var_7_0 = var_0_0._createWrap(arg_7_0)
 
-		slot7:setHangPointGO(slot4 or slot8)
+		var_7_0:setHangPointGO(arg_7_4 or var_7_1)
 
-		slot7.side = slot1
+		var_7_0.side = arg_7_1
 
-		uv0._instantiateEffectGO(slot6, slot7)
+		var_0_0._instantiateEffectGO(arg_7_6, var_7_0)
 	end
 
-	slot7:setCallback(slot2, slot3)
-	slot7:doCallback(true)
-	slot7:setTimeScale(FightModel.instance:getSpeed())
+	var_7_0:setCallback(arg_7_2, arg_7_3)
+	var_7_0:doCallback(true)
+	var_7_0:setTimeScale(FightModel.instance:getSpeed())
 
-	slot7.dontPlay = slot5
+	var_7_0.dontPlay = arg_7_5
 
-	slot7:play()
+	var_7_0:play()
 
-	return slot7
+	return var_7_0
 end
 
-function slot0._getNotLoadEffect(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot7 = uv0._createWrap(slot0)
-	slot7.side = slot1
+function var_0_0._getNotLoadEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	local var_8_0 = var_0_0.getPoolContainerGO()
+	local var_8_1 = var_0_0._createWrap(arg_8_0)
 
-	slot7:setHangPointGO(slot4 or uv0.getPoolContainerGO())
-	slot7:setCallback(slot2, slot3)
+	var_8_1.side = arg_8_1
 
-	slot7.dontPlay = slot5
+	var_8_1:setHangPointGO(arg_8_4 or var_8_0)
+	var_8_1:setCallback(arg_8_2, arg_8_3)
 
-	if not uv1[slot0] then
-		uv1[slot0] = {}
+	var_8_1.dontPlay = arg_8_5
+
+	local var_8_2 = var_0_5[arg_8_0]
+
+	if not var_8_2 then
+		var_8_2 = {}
+		var_0_5[arg_8_0] = var_8_2
 	end
 
-	table.insert(slot8, slot7)
+	table.insert(var_8_2, var_8_1)
 
-	return slot7
+	return var_8_1
 end
 
-function slot0.returnEffect(slot0)
-	if gohelper.isNil(slot0.containerGO) then
+function var_0_0.returnEffect(arg_9_0)
+	if gohelper.isNil(arg_9_0.containerGO) then
 		return
 	end
 
-	slot0:setActive(false)
-	slot0:onReturnPool()
+	arg_9_0:setActive(false)
+	arg_9_0:onReturnPool()
 
-	uv0[slot0.uniqueId] = nil
+	var_0_4[arg_9_0.uniqueId] = nil
 
-	if not uv1[slot0.path] then
-		uv1[slot0.path] = {}
+	local var_9_0 = var_0_3[arg_9_0.path]
+
+	if not var_9_0 then
+		var_9_0 = {}
+		var_0_3[arg_9_0.path] = var_9_0
 	end
 
-	if not slot1[slot0.side] then
-		slot1[slot0.side] = {}
+	local var_9_1 = var_9_0[arg_9_0.side]
+
+	if not var_9_1 then
+		var_9_1 = {}
+		var_9_0[arg_9_0.side] = var_9_1
 	end
 
-	if not tabletool.indexOf(slot2, slot0) then
-		table.insert(slot2, slot0)
+	if not tabletool.indexOf(var_9_1, arg_9_0) then
+		table.insert(var_9_1, arg_9_0)
 	end
 end
 
-function slot0.returnEffectToPoolContainer(slot0)
-	slot0:setHangPointGO(uv0.getPoolContainerGO())
+function var_0_0.returnEffectToPoolContainer(arg_10_0)
+	arg_10_0:setHangPointGO(var_0_0.getPoolContainerGO())
 end
 
-function slot0.getPoolContainerGO()
-	if not uv0 then
-		uv0 = gohelper.create3d(GameSceneMgr.instance:getScene(SceneType.Fight):getSceneContainerGO(), "EffectPool")
-		uv1 = uv0.transform
+function var_0_0.getPoolContainerGO()
+	if not var_0_6 then
+		local var_11_0 = GameSceneMgr.instance:getScene(SceneType.Fight):getSceneContainerGO()
+
+		var_0_6 = gohelper.create3d(var_11_0, "EffectPool")
+		var_0_7 = var_0_6.transform
 	end
 
-	return uv0
+	return var_0_6
 end
 
-function slot0._onEffectLoaded(slot0)
-	if slot0:getFirstAssetItem() and slot1.IsLoadSuccess then
+function var_0_0._onEffectLoaded(arg_12_0)
+	local var_12_0 = arg_12_0:getFirstAssetItem()
+
+	if var_12_0 and var_12_0.IsLoadSuccess then
 		if GameResMgr.IsFromEditorDir then
-			uv0._createLoadedEffectWrap(slot1, slot1.ResPath)
-		elseif slot1.AllAssetNames then
-			for slot6 = 0, slot2.Length - 1 do
-				uv0._createLoadedEffectWrap(slot1, ResUrl.getPathWithoutAssetLib(slot2[slot6]))
+			var_0_0._createLoadedEffectWrap(var_12_0, var_12_0.ResPath)
+		else
+			local var_12_1 = var_12_0.AllAssetNames
+
+			if var_12_1 then
+				for iter_12_0 = 0, var_12_1.Length - 1 do
+					local var_12_2 = var_12_1[iter_12_0]
+					local var_12_3 = ResUrl.getPathWithoutAssetLib(var_12_2)
+
+					var_0_0._createLoadedEffectWrap(var_12_0, var_12_3)
+				end
 			end
 		end
 	else
-		for slot5, slot6 in pairs(uv1) do
-			slot7 = nil
+		for iter_12_1, iter_12_2 in pairs(var_0_5) do
+			local var_12_4
 
-			for slot11, slot12 in ipairs(slot6) do
-				if slot1 then
-					if slot12.abPath == slot1.ResPath then
-						slot12:doCallback(false)
+			for iter_12_3, iter_12_4 in ipairs(iter_12_2) do
+				if var_12_0 then
+					if iter_12_4.abPath == var_12_0.ResPath then
+						iter_12_4:doCallback(false)
 
-						slot7 = true
+						var_12_4 = true
 					end
-				elseif slot0._pathList and slot12.abPath == slot0._pathList[1] then
-					slot12:doCallback(false)
+				elseif arg_12_0._pathList and iter_12_4.abPath == arg_12_0._pathList[1] then
+					iter_12_4:doCallback(false)
 
-					slot7 = true
+					var_12_4 = true
 				end
 			end
 
-			if slot7 then
-				uv1[slot5] = nil
+			if var_12_4 then
+				var_0_5[iter_12_1] = nil
 			end
 		end
 
-		if slot1 then
-			logError("load effect fail: " .. slot1.ResPath)
+		if var_12_0 then
+			logError("load effect fail: " .. var_12_0.ResPath)
 		end
 	end
 
-	slot0:dispose()
+	arg_12_0:dispose()
 end
 
-function slot0._createLoadedEffectWrap(slot0, slot1)
-	if not uv0[slot1] then
-		uv0[slot1] = slot0
+function var_0_0._createLoadedEffectWrap(arg_13_0, arg_13_1)
+	if not var_0_2[arg_13_1] then
+		var_0_2[arg_13_1] = arg_13_0
 
-		slot0:Retain()
+		arg_13_0:Retain()
 	end
 
-	uv1[slot1] = nil
+	local var_13_0 = var_0_5[arg_13_1]
 
-	for slot7 = 1, uv1[slot1] and #slot2 or 0 do
-		slot8 = slot2[slot7]
+	var_0_5[arg_13_1] = nil
 
-		uv2._instantiateEffectGO(slot0, slot8)
+	local var_13_1 = var_13_0 and #var_13_0 or 0
 
-		if uv3[slot8.uniqueId] then
-			slot8:doCallback(true)
-			slot8:setTimeScale(FightModel.instance:getSpeed())
-			slot8:setActive(false)
-			slot8:play()
+	for iter_13_0 = 1, var_13_1 do
+		local var_13_2 = var_13_0[iter_13_0]
+
+		var_0_0._instantiateEffectGO(arg_13_0, var_13_2)
+
+		if var_0_4[var_13_2.uniqueId] then
+			var_13_2:doCallback(true)
+			var_13_2:setTimeScale(FightModel.instance:getSpeed())
+			var_13_2:setActive(false)
+			var_13_2:play()
 		end
 	end
 end
 
-function slot0._instantiateEffectGO(slot0, slot1)
-	slot3 = gohelper.clone(slot0:GetResource(slot1.path), slot1.containerGO)
-	slot4 = nil
+function var_0_0._instantiateEffectGO(arg_14_0, arg_14_1)
+	local var_14_0 = gohelper.clone(arg_14_0:GetResource(arg_14_1.path), arg_14_1.containerGO)
+	local var_14_1 = var_14_0
+	local var_14_2
 
-	if slot1.side == FightEnum.EntitySide.MySide then
-		slot4 = "_r"
-	elseif slot1.side == FightEnum.EntitySide.EnemySide then
-		slot4 = "_l"
+	if arg_14_1.side == FightEnum.EntitySide.MySide then
+		var_14_2 = "_r"
+	elseif arg_14_1.side == FightEnum.EntitySide.EnemySide then
+		var_14_2 = "_l"
 	end
 
-	if not string.nilorempty(slot4) then
-		for slot10 = 0, slot2.transform.childCount - 1 do
-			slot12 = slot5:GetChild(slot10).name
-			slot13 = string.len(slot12)
+	if not string.nilorempty(var_14_2) then
+		local var_14_3 = var_14_0.transform
+		local var_14_4 = var_14_3.childCount
 
-			if string.sub(slot12, slot13 - 1, slot13) == slot4 then
-				gohelper.addChild(slot1.containerGO, slot11.gameObject)
-				gohelper.destroy(slot2)
+		for iter_14_0 = 0, var_14_4 - 1 do
+			local var_14_5 = var_14_3:GetChild(iter_14_0)
+			local var_14_6 = var_14_5.name
+			local var_14_7 = string.len(var_14_6)
+
+			if string.sub(var_14_6, var_14_7 - 1, var_14_7) == var_14_2 then
+				var_14_1 = var_14_5.gameObject
+
+				gohelper.addChild(arg_14_1.containerGO, var_14_1)
+				gohelper.destroy(var_14_0)
 
 				break
 			end
 		end
 	end
 
-	gohelper.removeEffectNode(slot3)
-	slot1:setEffectGO(slot3)
+	gohelper.removeEffectNode(var_14_1)
+	arg_14_1:setEffectGO(var_14_1)
 end
 
-function slot0._createWrap(slot0)
-	slot1 = FightStrUtil.instance:getSplitCache(slot0, "/")
-	slot4 = MonoHelper.addLuaComOnceToGo(gohelper.create3d(uv0.getPoolContainerGO(), slot1[#slot1]), FightEffectWrap)
+function var_0_0._createWrap(arg_15_0)
+	local var_15_0 = FightStrUtil.instance:getSplitCache(arg_15_0, "/")
+	local var_15_1 = var_15_0[#var_15_0]
+	local var_15_2 = gohelper.create3d(var_0_0.getPoolContainerGO(), var_15_1)
+	local var_15_3 = MonoHelper.addLuaComOnceToGo(var_15_2, FightEffectWrap)
 
-	slot4:setUniqueId(uv1)
-	slot4:setPath(slot0)
+	var_15_3:setUniqueId(var_0_1)
+	var_15_3:setPath(arg_15_0)
 
-	uv1 = uv1 + 1
+	var_0_1 = var_0_1 + 1
 
-	return slot4
+	return var_15_3
 end
 
-return slot0
+return var_0_0

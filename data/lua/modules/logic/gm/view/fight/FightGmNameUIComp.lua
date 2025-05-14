@@ -1,94 +1,99 @@
-module("modules.logic.gm.view.fight.FightGmNameUIComp", package.seeall)
+﻿module("modules.logic.gm.view.fight.FightGmNameUIComp", package.seeall)
 
-slot0 = class("FightGmNameUIComp", LuaCompBase)
+local var_0_0 = class("FightGmNameUIComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
 end
 
-slot0.GmNameUIPath = "ui/viewres/gm/gmnameui.prefab"
-slot0.SideAnchorY = {
+var_0_0.GmNameUIPath = "ui/viewres/gm/gmnameui.prefab"
+var_0_0.SideAnchorY = {
 	[FightEnum.EntitySide.MySide] = 93,
 	[FightEnum.EntitySide.EnemySide] = 147
 }
 
-function slot0.init(slot0, slot1)
-	slot0.goContainer = slot1
-	slot0.loaded = false
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.goContainer = arg_2_1
+	arg_2_0.loaded = false
 
-	loadAbAsset(uv0.GmNameUIPath, true, slot0.onLoadDone, slot0)
+	loadAbAsset(var_0_0.GmNameUIPath, true, arg_2_0.onLoadDone, arg_2_0)
 end
 
-function slot0.onLoadDone(slot0, slot1)
-	slot0.assetItem = slot1
+function var_0_0.onLoadDone(arg_3_0, arg_3_1)
+	arg_3_0.assetItem = arg_3_1
 
-	slot0.assetItem:Retain()
+	arg_3_0.assetItem:Retain()
 
-	slot0.go = gohelper.clone(slot1:GetResource(), slot0.goContainer)
-	slot0.labelText = gohelper.findChildText(slot0.go, "label")
-	slot0.labelText.text = ""
+	arg_3_0.go = gohelper.clone(arg_3_1:GetResource(), arg_3_0.goContainer)
+	arg_3_0.labelText = gohelper.findChildText(arg_3_0.go, "label")
+	arg_3_0.labelText.text = ""
 
-	recthelper.setAnchorY(slot0.go.transform, uv0.SideAnchorY[slot0.entity:getMO().side] or 0)
-	slot0:hide()
+	local var_3_0 = arg_3_0.entity:getMO().side
 
-	slot0.loaded = true
+	recthelper.setAnchorY(arg_3_0.go.transform, var_0_0.SideAnchorY[var_3_0] or 0)
+	arg_3_0:hide()
 
-	slot0:_startStatBuffType()
+	arg_3_0.loaded = true
+
+	arg_3_0:_startStatBuffType()
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.show(arg_4_0)
+	gohelper.setActive(arg_4_0.go, true)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_5_0)
+	gohelper.setActive(arg_5_0.go, false)
 end
 
-function slot0.startStatBuffType(slot0, slot1)
-	slot0.buffTypeId = slot1
+function var_0_0.startStatBuffType(arg_6_0, arg_6_1)
+	arg_6_0.buffTypeId = arg_6_1
 
-	slot0:_startStatBuffType()
+	arg_6_0:_startStatBuffType()
 end
 
-function slot0._startStatBuffType(slot0)
-	if not slot0.loaded then
+function var_0_0._startStatBuffType(arg_7_0)
+	if not arg_7_0.loaded then
 		return
 	end
 
-	if not slot0.buffTypeId then
+	if not arg_7_0.buffTypeId then
 		return
 	end
 
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0.refreshLabel, slot0)
-	slot0:show()
-	slot0:refreshLabel()
+	arg_7_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_7_0.refreshLabel, arg_7_0)
+	arg_7_0:show()
+	arg_7_0:refreshLabel()
 end
 
-function slot0.stopStatBuffType(slot0)
-	slot0.buffTypeId = nil
+function var_0_0.stopStatBuffType(arg_8_0)
+	arg_8_0.buffTypeId = nil
 
-	slot0:hide()
-	slot0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0.refreshLabel, slot0)
+	arg_8_0:hide()
+	arg_8_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_8_0.refreshLabel, arg_8_0)
 end
 
-function slot0.refreshLabel(slot0)
-	for slot7, slot8 in ipairs(slot0.entity:getMO():getBuffList()) do
-		if slot8:getCO().typeId == slot0.buffTypeId then
-			slot3 = 0 + 1
+function var_0_0.refreshLabel(arg_9_0)
+	local var_9_0 = arg_9_0.entity:getMO():getBuffList()
+	local var_9_1 = 0
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1:getCO().typeId == arg_9_0.buffTypeId then
+			var_9_1 = var_9_1 + 1
 		end
 	end
 
-	slot0.labelText.text = string.format("%s : %s", slot0.buffTypeId, slot3)
+	arg_9_0.labelText.text = string.format("%s : %s", arg_9_0.buffTypeId, var_9_1)
 end
 
-function slot0.onDestroy(slot0)
-	removeAssetLoadCb(uv0.GmNameUIPath, slot0.onLoadDone, slot0)
+function var_0_0.onDestroy(arg_10_0)
+	removeAssetLoadCb(var_0_0.GmNameUIPath, arg_10_0.onLoadDone, arg_10_0)
 
-	slot0.entity = nil
+	arg_10_0.entity = nil
 
-	if slot0.assetItem then
-		slot0.assetItem:Release()
+	if arg_10_0.assetItem then
+		arg_10_0.assetItem:Release()
 	end
 end
 
-return slot0
+return var_0_0

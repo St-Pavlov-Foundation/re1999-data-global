@@ -1,16 +1,18 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepDeleteObject", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepDeleteObject", package.seeall)
 
-slot0 = class("YaXianStepDeleteObject", YaXianStepBase)
+local var_0_0 = class("YaXianStepDeleteObject", YaXianStepBase)
 
-function slot0.start(slot0)
-	if YaXianGameModel.instance:getPlayerInteractMo() and slot1.id == slot0.originData.id and slot0.originData.reason == YaXianGameEnum.DeleteInteractReason.Win then
-		slot0:finish()
+function var_0_0.start(arg_1_0)
+	local var_1_0 = YaXianGameModel.instance:getPlayerInteractMo()
+
+	if var_1_0 and var_1_0.id == arg_1_0.originData.id and arg_1_0.originData.reason == YaXianGameEnum.DeleteInteractReason.Win then
+		arg_1_0:finish()
 
 		return
 	end
 
-	YaXianGameController.instance:dispatchEvent(YaXianEvent.DeleteInteractObj, slot0.originData.id)
-	slot0:finish()
+	YaXianGameController.instance:dispatchEvent(YaXianEvent.DeleteInteractObj, arg_1_0.originData.id)
+	arg_1_0:finish()
 end
 
-return slot0
+return var_0_0

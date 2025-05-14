@@ -1,16 +1,17 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteViewContainer", package.seeall)
 
-slot0 = class("Activity186GameInviteViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity186GameInviteViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.heroView = Activity186GameHeroView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.heroView)
-	table.insert(slot1, Activity186GameInviteView.New())
-	table.insert(slot1, Activity186GameDialogueView.New())
+	arg_1_0.heroView = Activity186GameHeroView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.heroView)
+	table.insert(var_1_0, Activity186GameInviteView.New())
+	table.insert(var_1_0, Activity186GameDialogueView.New())
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

@@ -1,273 +1,290 @@
-module("modules.logic.versionactivity2_4.dungeon.view.map.VersionActivity2_4DungeonMapView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.dungeon.view.map.VersionActivity2_4DungeonMapView", package.seeall)
 
-slot0 = class("VersionActivity2_4DungeonMapView", BaseView)
-slot1 = Vector4(0, 0, 0, 0)
-slot2 = Vector4(0, 0, 600, 0)
-slot3 = 0.5
+local var_0_0 = class("VersionActivity2_4DungeonMapView", BaseView)
+local var_0_1 = Vector4(0, 0, 0, 0)
+local var_0_2 = Vector4(0, 0, 600, 0)
+local var_0_3 = 0.5
 
-function slot0.onInitView(slot0)
-	slot0.animator = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0._simagenormalmask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_normalmask")
-	slot0._simagehardmask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_hardmask")
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_content")
-	slot0._rectmask2D = slot0._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	slot0._goswitchmodecontainer = gohelper.findChild(slot0.viewGO, "#go_switchmodecontainer")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._gotopright = gohelper.findChild(slot0.viewGO, "#go_topright")
-	slot0._txtstorename = gohelper.findChildText(slot0.viewGO, "#go_topright/#btn_activitystore/normal/txt_shop")
-	slot0._txtstorenum = gohelper.findChildText(slot0.viewGO, "#go_topright/#btn_activitystore/normal/#txt_num")
-	slot0._imagestoreicon = gohelper.findChildImage(slot0.viewGO, "#go_topright/#btn_activitystore/normal/#simage_icon")
-	slot0._txtStoreRemainTime = gohelper.findChildText(slot0.viewGO, "#go_topright/#btn_activitystore/#go_time/#txt_time")
-	slot0._goTaskReddot = gohelper.findChild(slot0.viewGO, "#go_topright/#btn_activitytask/#go_reddot")
-	slot0._goexcessive = gohelper.findChild(slot0.viewGO, "#go_excessive")
-	slot0._btncloseview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeview")
-	slot0._btnactivitystore = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_topright/#btn_activitystore")
-	slot0._btnactivitytask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_topright/#btn_activitytask")
-	slot0._btnwuerlixi = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_wuerlixi")
-	slot0._btnwuerlixiAnimator = slot0._btnwuerlixi.gameObject:GetComponent(gohelper.Type_Animator)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.animator = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_1_0._simagenormalmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_normalmask")
+	arg_1_0._simagehardmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_hardmask")
+	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_content")
+	arg_1_0._rectmask2D = arg_1_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	arg_1_0._goswitchmodecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_switchmodecontainer")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._txtstorename = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/normal/txt_shop")
+	arg_1_0._txtstorenum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/normal/#txt_num")
+	arg_1_0._imagestoreicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_topright/#btn_activitystore/normal/#simage_icon")
+	arg_1_0._txtStoreRemainTime = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/#go_time/#txt_time")
+	arg_1_0._goTaskReddot = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_activitytask/#go_reddot")
+	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
+	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+	arg_1_0._btnactivitystore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_activitystore")
+	arg_1_0._btnactivitytask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_activitytask")
+	arg_1_0._btnwuerlixi = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_wuerlixi")
+	arg_1_0._btnwuerlixiAnimator = arg_1_0._btnwuerlixi.gameObject:GetComponent(gohelper.Type_Animator)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, slot0.onRemoveElement, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, slot0.beginShowRewardView, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, slot0.endShowRewardView, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshActivityCurrency, slot0)
-	slot0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, slot0.onModeChange, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivityState, slot0)
-	slot0:addEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnClickElement, slot0.onClickElement, slot0)
-	slot0:addEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnHideInteractUI, slot0.showBtnUI, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, slot0._OnUpdateMapElementState, slot0)
-	slot0:addEventCb(GameSceneMgr.instance, SceneEventName.LoadingAnimEnd, slot0.checkLoadingAndRefresh, slot0)
-	slot0._btncloseview:AddClickListener(slot0._btncloseviewOnClick, slot0)
-	slot0._btnactivitystore:AddClickListener(slot0._btnactivitystoreOnClick, slot0)
-	slot0._btnactivitytask:AddClickListener(slot0._btnactivitytaskOnClick, slot0)
-	slot0._btnwuerlixi:AddClickListener(slot0._btnwuerlixiOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0.onRemoveElement, arg_2_0, LuaEventSystem.Low)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, arg_2_0.beginShowRewardView, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, arg_2_0.endShowRewardView, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshActivityCurrency, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivityState, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnClickElement, arg_2_0.onClickElement, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnHideInteractUI, arg_2_0.showBtnUI, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_2_0._OnUpdateMapElementState, arg_2_0)
+	arg_2_0:addEventCb(GameSceneMgr.instance, SceneEventName.LoadingAnimEnd, arg_2_0.checkLoadingAndRefresh, arg_2_0)
+	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
+	arg_2_0._btnactivitystore:AddClickListener(arg_2_0._btnactivitystoreOnClick, arg_2_0)
+	arg_2_0._btnactivitytask:AddClickListener(arg_2_0._btnactivitytaskOnClick, arg_2_0)
+	arg_2_0._btnwuerlixi:AddClickListener(arg_2_0._btnwuerlixiOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, slot0.onRemoveElement, slot0, LuaEventSystem.Low)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, slot0.beginShowRewardView, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, slot0.endShowRewardView, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshActivityCurrency, slot0)
-	slot0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, slot0.onModeChange, slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivityState, slot0)
-	slot0:removeEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnClickElement, slot0.onClickElement, slot0)
-	slot0:removeEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnHideInteractUI, slot0.showBtnUI, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, slot0._OnUpdateMapElementState, slot0)
-	slot0:addEventCb(GameSceneMgr.instance, SceneEventName.LoadingAnimEnd, slot0.checkLoadingAndRefresh, slot0)
-	slot0._btncloseview:RemoveClickListener()
-	slot0._btnactivitystore:RemoveClickListener()
-	slot0._btnactivitytask:RemoveClickListener()
-	slot0._btnwuerlixi:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_3_0.onRemoveElement, arg_3_0, LuaEventSystem.Low)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.BeginShowRewardView, arg_3_0.beginShowRewardView, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.EndShowRewardView, arg_3_0.endShowRewardView, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshActivityCurrency, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_3_0.onModeChange, arg_3_0)
+	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.onRefreshActivityState, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnClickElement, arg_3_0.onClickElement, arg_3_0)
+	arg_3_0:removeEventCb(VersionActivity2_4DungeonController.instance, VersionActivity2_4DungeonEvent.OnHideInteractUI, arg_3_0.showBtnUI, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_3_0._OnUpdateMapElementState, arg_3_0)
+	arg_3_0:addEventCb(GameSceneMgr.instance, SceneEventName.LoadingAnimEnd, arg_3_0.checkLoadingAndRefresh, arg_3_0)
+	arg_3_0._btncloseview:RemoveClickListener()
+	arg_3_0._btnactivitystore:RemoveClickListener()
+	arg_3_0._btnactivitytask:RemoveClickListener()
+	arg_3_0._btnwuerlixi:RemoveClickListener()
 end
 
-function slot0._btncloseviewOnClick(slot0)
+function var_0_0._btncloseviewOnClick(arg_4_0)
 	ViewMgr.instance:closeView(ViewName.VersionActivity2_4DungeonMapLevelView)
 end
 
-function slot0._btnactivitystoreOnClick(slot0)
+function var_0_0._btnactivitystoreOnClick(arg_5_0)
 	VersionActivity2_4DungeonController.instance:openStoreView()
 end
 
-function slot0._btnactivitytaskOnClick(slot0)
+function var_0_0._btnactivitytaskOnClick(arg_6_0)
 	VersionActivity2_4DungeonController.instance:openTaskView()
 end
 
-function slot0._btnwuerlixiOnClick(slot0)
+function var_0_0._btnwuerlixiOnClick(arg_7_0)
 	WuErLiXiController.instance:enterLevelView()
 end
 
-function slot0._onEscBtnClick(slot0)
+function var_0_0._onEscBtnClick(arg_8_0)
 	if VersionActivity2_4DungeonModel.instance:checkIsShowInteractView() then
-		slot0.viewContainer.interactView:hide()
+		arg_8_0.viewContainer.interactView:hide()
 	else
-		slot0:closeThis()
+		arg_8_0:closeThis()
 	end
 end
 
-function slot0.beginShowRewardView(slot0)
-	slot0._showRewardView = true
+function var_0_0.beginShowRewardView(arg_9_0)
+	arg_9_0._showRewardView = true
 end
 
-function slot0.endShowRewardView(slot0)
-	slot0._showRewardView = false
+function var_0_0.endShowRewardView(arg_10_0)
+	arg_10_0._showRewardView = false
 end
 
-function slot0.onRemoveElement(slot0, slot1)
+function var_0_0.onRemoveElement(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtstorename.text = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.DungeonStore].config.name
+function var_0_0._editableInitView(arg_12_0)
+	local var_12_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_4Enum.ActivityId.DungeonStore]
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._onEscBtnClick, slot0)
-	TaskDispatcher.runRepeat(slot0._everyMinuteCall, slot0, TimeUtil.OneMinuteSecond)
-	RedDotController.instance:addRedDot(slot0._goTaskReddot, RedDotEnum.DotNode.V2a4DungeonTask)
+	arg_12_0._txtstorename.text = var_12_0.config.name
+
+	NavigateMgr.instance:addEscape(arg_12_0.viewName, arg_12_0._onEscBtnClick, arg_12_0)
+	TaskDispatcher.runRepeat(arg_12_0._everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
+	RedDotController.instance:addRedDot(arg_12_0._goTaskReddot, RedDotEnum.DotNode.V2a4DungeonTask)
 end
 
-function slot0._everyMinuteCall(slot0)
-	slot0:refreshUI()
+function var_0_0._everyMinuteCall(arg_13_0)
+	arg_13_0:refreshUI()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_14_0)
+	arg_14_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_15_0)
 	VersionActivity2_4DungeonController.instance:onVersionActivityDungeonMapViewOpen()
-	slot0:refreshUI()
+	arg_15_0:refreshUI()
 end
 
-function slot0.checkLoadingAndRefresh(slot0)
+function var_0_0.checkLoadingAndRefresh(arg_16_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshActivityCurrency()
-	slot0:refreshMask()
-	slot0:refreshStoreRemainTime()
-	slot0:refreshBtnState()
+function var_0_0.refreshUI(arg_17_0)
+	arg_17_0:refreshActivityCurrency()
+	arg_17_0:refreshMask()
+	arg_17_0:refreshStoreRemainTime()
+	arg_17_0:refreshBtnState()
 end
 
-function slot0.refreshBtnState(slot0)
-	gohelper.setActive(slot0._btnwuerlixi.gameObject, ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.WuErLiXi, true) == ActivityEnum.ActivityStatus.Normal)
+function var_0_0.refreshBtnState(arg_18_0)
+	local var_18_0 = ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.WuErLiXi, true)
 
-	slot0._wuerlixiunlock = slot1 == ActivityEnum.ActivityStatus.Normal
+	gohelper.setActive(arg_18_0._btnwuerlixi.gameObject, var_18_0 == ActivityEnum.ActivityStatus.Normal)
+
+	arg_18_0._wuerlixiunlock = var_18_0 == ActivityEnum.ActivityStatus.Normal
 end
 
-function slot0.refreshActivityCurrency(slot0)
-	slot0._txtstorenum.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a4Dungeon) and slot1.quantity or 0)
+function var_0_0.refreshActivityCurrency(arg_19_0)
+	local var_19_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a4Dungeon)
+	local var_19_1 = var_19_0 and var_19_0.quantity or 0
+
+	arg_19_0._txtstorenum.text = GameUtil.numberDisplay(var_19_1)
 end
 
-function slot0.onRefreshActivityState(slot0, slot1)
-	if slot1 == VersionActivity2_4Enum.ActivityId.Dungeon and not (ActivityHelper.getActivityStatusAndToast(slot1) == ActivityEnum.ActivityStatus.Normal) then
-		slot0:closeThis()
+function var_0_0.onRefreshActivityState(arg_20_0, arg_20_1)
+	if arg_20_1 == VersionActivity2_4Enum.ActivityId.Dungeon and not (ActivityHelper.getActivityStatusAndToast(arg_20_1) == ActivityEnum.ActivityStatus.Normal) then
+		arg_20_0:closeThis()
 		GameFacade.showToast(ToastEnum.ActivityEnd)
 
 		return
 	end
 
-	if slot1 == VersionActivity2_4Enum.ActivityId.WuErLiXi then
-		slot0:refreshBtnState()
+	if arg_20_1 == VersionActivity2_4Enum.ActivityId.WuErLiXi then
+		arg_20_0:refreshBtnState()
 
-		if ActivityHelper.getActivityStatusAndToast(slot1) == ActivityEnum.ActivityStatus.Normal and not slot0._wuerlixiunlock then
-			slot0._btnwuerlixiAnimator:Play("show", 0, 0)
+		if ActivityHelper.getActivityStatusAndToast(arg_20_1) == ActivityEnum.ActivityStatus.Normal and not arg_20_0._wuerlixiunlock then
+			arg_20_0._btnwuerlixiAnimator:Play("show", 0, 0)
 
-			slot0._wuerlixiunlock = true
+			arg_20_0._wuerlixiunlock = true
 
 			return
 		end
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 ~= ViewName.VersionActivity2_4DungeonMapLevelView then
+function var_0_0._onOpenView(arg_21_0, arg_21_1)
+	if arg_21_1 ~= ViewName.VersionActivity2_4DungeonMapLevelView then
 		return
 	end
 
-	slot0._rectmask2D.padding = uv0
+	arg_21_0._rectmask2D.padding = var_0_2
 
-	gohelper.setActive(slot0._btncloseview, true)
-	slot0:hideBtnUI()
+	gohelper.setActive(arg_21_0._btncloseview, true)
+	arg_21_0:hideBtnUI()
 end
 
-function slot0.hideBtnUI(slot0)
-	slot0.animator:Play(UIAnimationName.Close, 0, 0)
+function var_0_0.hideBtnUI(arg_22_0)
+	arg_22_0.animator:Play(UIAnimationName.Close, 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock(VersionActivity2_4DungeonEnum.BlockKey.MapViewPlayCloseAnim)
-	TaskDispatcher.runDelay(slot0.playCloseAnimaDone, slot0, uv0)
-	slot0._btnwuerlixiAnimator:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(arg_22_0.playCloseAnimaDone, arg_22_0, var_0_3)
+	arg_22_0._btnwuerlixiAnimator:Play(UIAnimationName.Close, 0, 0)
 end
 
-function slot0.playCloseAnimaDone(slot0)
-	gohelper.setActive(slot0._gotopright, false)
-	gohelper.setActive(slot0._goswitchmodecontainer, false)
+function var_0_0.playCloseAnimaDone(arg_23_0)
+	gohelper.setActive(arg_23_0._gotopright, false)
+	gohelper.setActive(arg_23_0._goswitchmodecontainer, false)
 	UIBlockMgr.instance:endBlock(VersionActivity2_4DungeonEnum.BlockKey.MapViewPlayCloseAnim)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 ~= ViewName.VersionActivity2_4DungeonMapLevelView then
+function var_0_0._onCloseView(arg_24_0, arg_24_1)
+	if arg_24_1 ~= ViewName.VersionActivity2_4DungeonMapLevelView then
 		return
 	end
 
-	slot0._rectmask2D.padding = uv0
+	arg_24_0._rectmask2D.padding = var_0_1
 
-	gohelper.setActive(slot0._btncloseview, false)
-	slot0:showBtnUI()
+	gohelper.setActive(arg_24_0._btncloseview, false)
+	arg_24_0:showBtnUI()
 end
 
-function slot0.showBtnUI(slot0)
-	slot0:setNavBtnIsShow(true)
-	gohelper.setActive(slot0._gotopright, true)
-	gohelper.setActive(slot0._goswitchmodecontainer, true)
-	slot0.animator:Play(UIAnimationName.Open, 0, 0)
-	slot0._btnwuerlixiAnimator:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.showBtnUI(arg_25_0)
+	arg_25_0:setNavBtnIsShow(true)
+	gohelper.setActive(arg_25_0._gotopright, true)
+	gohelper.setActive(arg_25_0._goswitchmodecontainer, true)
+	arg_25_0.animator:Play(UIAnimationName.Open, 0, 0)
+	arg_25_0._btnwuerlixiAnimator:Play(UIAnimationName.Open, 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock(VersionActivity2_4DungeonEnum.BlockKey.MapViewPlayOpenAnim)
-	TaskDispatcher.runDelay(slot0.playOpenAnimaDone, slot0, uv0)
+	TaskDispatcher.runDelay(arg_25_0.playOpenAnimaDone, arg_25_0, var_0_3)
 end
 
-function slot0.playOpenAnimaDone(slot0)
+function var_0_0.playOpenAnimaDone(arg_26_0)
 	UIBlockMgr.instance:endBlock(VersionActivity2_4DungeonEnum.BlockKey.MapViewPlayOpenAnim)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.setNavBtnIsShow(slot0, slot1)
-	gohelper.setActive(slot0._gotopleft, slot1)
+function var_0_0.setNavBtnIsShow(arg_27_0, arg_27_1)
+	gohelper.setActive(arg_27_0._gotopleft, arg_27_1)
 end
 
-function slot0.onClickElement(slot0)
-	slot0:hideBtnUI()
-	slot0:setNavBtnIsShow(false)
+function var_0_0.onClickElement(arg_28_0)
+	arg_28_0:hideBtnUI()
+	arg_28_0:setNavBtnIsShow(false)
 end
 
-function slot0.onModeChange(slot0)
-	slot0:refreshMask()
+function var_0_0.onModeChange(arg_29_0)
+	arg_29_0:refreshMask()
 end
 
-function slot0.refreshMask(slot0)
-	slot1 = slot0.activityDungeonMo:isHardMode()
+function var_0_0.refreshMask(arg_30_0)
+	local var_30_0 = arg_30_0.activityDungeonMo:isHardMode()
 
-	gohelper.setActive(slot0._simagenormalmask.gameObject, not slot1)
-	gohelper.setActive(slot0._simagehardmask.gameObject, slot1)
+	gohelper.setActive(arg_30_0._simagenormalmask.gameObject, not var_30_0)
+	gohelper.setActive(arg_30_0._simagehardmask.gameObject, var_30_0)
 end
 
-function slot0.refreshStoreRemainTime(slot0)
-	if TimeUtil.OneDaySecond < ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.DungeonStore):getRealEndTimeStamp() - ServerTime.now() then
-		slot0._txtStoreRemainTime.text = Mathf.Floor(slot4 / TimeUtil.OneDaySecond) .. "d"
+function var_0_0.refreshStoreRemainTime(arg_31_0)
+	local var_31_0 = VersionActivity2_4Enum.ActivityId.DungeonStore
+	local var_31_1 = ActivityModel.instance:getActMO(var_31_0):getRealEndTimeStamp() - ServerTime.now()
+
+	if var_31_1 > TimeUtil.OneDaySecond then
+		local var_31_2 = Mathf.Floor(var_31_1 / TimeUtil.OneDaySecond) .. "d"
+
+		arg_31_0._txtStoreRemainTime.text = var_31_2
 
 		return
 	end
 
-	if TimeUtil.OneHourSecond < slot4 then
-		slot0._txtStoreRemainTime.text = Mathf.Floor(slot4 / TimeUtil.OneHourSecond) .. "h"
+	if var_31_1 > TimeUtil.OneHourSecond then
+		local var_31_3 = Mathf.Floor(var_31_1 / TimeUtil.OneHourSecond) .. "h"
+
+		arg_31_0._txtStoreRemainTime.text = var_31_3
 
 		return
 	end
 
-	slot0._txtStoreRemainTime.text = "1h"
+	arg_31_0._txtStoreRemainTime.text = "1h"
 end
 
-function slot0._OnUpdateMapElementState(slot0, slot1)
+function var_0_0._OnUpdateMapElementState(arg_32_0, arg_32_1)
+	return
 end
 
-function slot0.onClose(slot0)
-	slot0._showRewardView = false
+function var_0_0.onClose(arg_33_0)
+	arg_33_0._showRewardView = false
 
-	TaskDispatcher.cancelTask(slot0._everyMinuteCall, slot0)
+	TaskDispatcher.cancelTask(arg_33_0._everyMinuteCall, arg_33_0)
 	UIBlockMgr.instance:endBlock(VersionActivity2_4DungeonEnum.BlockKey.MapViewPlayOpenAnim)
 	UIBlockMgr.instance:endBlock(VersionActivity2_4DungeonEnum.BlockKey.MapViewPlayCloseAnim)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_34_0)
+	return
 end
 
-return slot0
+return var_0_0

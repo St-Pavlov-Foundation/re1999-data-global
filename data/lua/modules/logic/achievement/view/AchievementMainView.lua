@@ -1,246 +1,281 @@
-module("modules.logic.achievement.view.AchievementMainView", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementMainView", package.seeall)
 
-slot0 = class("AchievementMainView", BaseView)
+local var_0_0 = class("AchievementMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocategoryitem = gohelper.findChild(slot0.viewGO, "#scroll_category/categorycontent/#go_categoryitem")
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageBottomBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_BottomBG")
-	slot0._btnedit = gohelper.findChildButtonWithAudio(slot0.viewGO, "Bottom/Edit/#btn_edit")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "#go_groupTips/image_TipsBG/#txt_Descr")
-	slot0._btnswitchscrolltype = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_switchscrolltype")
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "#go_container/#scroll_content")
-	slot0._scrolllist = gohelper.findChildScrollRect(slot0.viewGO, "#go_container/#scroll_list")
-	slot0._btnrare = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_sort/#btn_rare")
-	slot0._btnunlocktime = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_sort/#btn_unlocktime")
-	slot0._txtunlockcount = gohelper.findChildText(slot0.viewGO, "Bottom/UnLockCount/image_UnLockBG/#txt_unlockcount")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_container/#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocategoryitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_category/categorycontent/#go_categoryitem")
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageBottomBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_BottomBG")
+	arg_1_0._btnedit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Bottom/Edit/#btn_edit")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_groupTips/image_TipsBG/#txt_Descr")
+	arg_1_0._btnswitchscrolltype = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_switchscrolltype")
+	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_container/#scroll_content")
+	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_container/#scroll_list")
+	arg_1_0._btnrare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_sort/#btn_rare")
+	arg_1_0._btnunlocktime = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_sort/#btn_unlocktime")
+	arg_1_0._txtunlockcount = gohelper.findChildText(arg_1_0.viewGO, "Bottom/UnLockCount/image_UnLockBG/#txt_unlockcount")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnedit:AddClickListener(slot0._btneditOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnedit:AddClickListener(arg_2_0._btneditOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnedit:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnedit:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(AchievementMainController.instance, AchievementEvent.AchievementMainViewUpdate, slot0.refreshUI, slot0)
-	slot0:addEventCb(AchievementController.instance, AchievementEvent.UpdateAchievementState, slot0.updateAchievementState, slot0)
-	slot0:addEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, slot0.onClickGroupFoldBtn, slot0)
-	slot0._simageFullBG:LoadImage(ResUrl.getAchievementIcon("achievement_editfullbg"))
-	slot0._simageBottomBG:LoadImage(ResUrl.getAchievementIcon("achievement_editbottombg"))
-	slot0:initCategory()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(AchievementMainController.instance, AchievementEvent.AchievementMainViewUpdate, arg_4_0.refreshUI, arg_4_0)
+	arg_4_0:addEventCb(AchievementController.instance, AchievementEvent.UpdateAchievementState, arg_4_0.updateAchievementState, arg_4_0)
+	arg_4_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, arg_4_0.onClickGroupFoldBtn, arg_4_0)
+	arg_4_0._simageFullBG:LoadImage(ResUrl.getAchievementIcon("achievement_editfullbg"))
+	arg_4_0._simageBottomBG:LoadImage(ResUrl.getAchievementIcon("achievement_editbottombg"))
+	arg_4_0:initCategory()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._categoryItems then
-		for slot4, slot5 in pairs(slot0._categoryItems) do
-			slot5.btnself:RemoveClickListener()
+function var_0_0.onDestroyView(arg_5_0)
+	if arg_5_0._categoryItems then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._categoryItems) do
+			iter_5_1.btnself:RemoveClickListener()
 		end
 
-		slot0._categoryItems = nil
+		arg_5_0._categoryItems = nil
 	end
 
-	slot0._simageFullBG:UnLoadImage()
-	slot0._simageBottomBG:UnLoadImage()
+	arg_5_0._simageFullBG:UnLoadImage()
+	arg_5_0._simageBottomBG:UnLoadImage()
 	AchievementMainController.instance:onCloseView()
 end
 
-function slot0.onOpen(slot0)
-	slot5 = slot0.viewParam and slot0.viewParam.focusDataId
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam and arg_6_0.viewParam.categoryType
+	local var_6_1 = arg_6_0.viewParam and arg_6_0.viewParam.viewType
+	local var_6_2 = arg_6_0.viewParam and arg_6_0.viewParam.sortType
+	local var_6_3 = arg_6_0.viewParam and arg_6_0.viewParam.filterType
+	local var_6_4 = arg_6_0.viewParam and arg_6_0.viewParam.focusDataId
+	local var_6_5 = arg_6_0.viewParam and arg_6_0.viewParam.achievementType
+	local var_6_6 = arg_6_0.viewParam and arg_6_0.viewParam.isOpenLevelView
 
-	AchievementMainController.instance:onOpenView(slot0.viewParam and slot0.viewParam.categoryType, slot0.viewParam and slot0.viewParam.viewType, slot0.viewParam and slot0.viewParam.sortType, slot0.viewParam and slot0.viewParam.filterType)
+	AchievementMainController.instance:onOpenView(var_6_0, var_6_1, var_6_2, var_6_3)
 
-	if slot0.viewParam and slot0.viewParam.isOpenLevelView and slot5 and (slot0.viewParam and slot0.viewParam.achievementType) == AchievementEnum.AchievementType.Single then
-		AchievementController.instance:openAchievementLevelView(slot5)
+	if var_6_6 and var_6_4 and var_6_5 == AchievementEnum.AchievementType.Single then
+		AchievementController.instance:openAchievementLevelView(var_6_4)
 	end
 
-	slot0:refreshUI()
+	arg_6_0:refreshUI()
 end
 
-function slot0.updateAchievementState(slot0)
+function var_0_0.updateAchievementState(arg_7_0)
 	AchievementMainController.instance:updateAchievementState()
-	slot0:refreshUI()
+	arg_7_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(AchievementMainController.instance, AchievementEvent.AchievementMainViewUpdate, slot0.refreshUI, slot0)
-	slot0:removeEventCb(AchievementController.instance, AchievementEvent.UpdateAchievementState, slot0.updateAchievementState, slot0)
-	slot0:removeEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, slot0.onClickGroupFoldBtn, slot0)
-	TaskDispatcher.cancelTask(slot0.onEndPlayGroupFadeAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.onPreEndPlayGroupFadeAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.onDispatchAchievementFadeAnimationEvent, slot0)
+function var_0_0.onClose(arg_8_0)
+	arg_8_0:removeEventCb(AchievementMainController.instance, AchievementEvent.AchievementMainViewUpdate, arg_8_0.refreshUI, arg_8_0)
+	arg_8_0:removeEventCb(AchievementController.instance, AchievementEvent.UpdateAchievementState, arg_8_0.updateAchievementState, arg_8_0)
+	arg_8_0:removeEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, arg_8_0.onClickGroupFoldBtn, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.onEndPlayGroupFadeAnim, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.onPreEndPlayGroupFadeAnim, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.onDispatchAchievementFadeAnimationEvent, arg_8_0)
 
-	slot0._modifyMap = nil
+	arg_8_0._modifyMap = nil
 
-	slot0:onEndPlayGroupFadeAnim()
+	arg_8_0:onEndPlayGroupFadeAnim()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshCategory()
-	slot0:refreshUnlockCount()
-	slot0:refreshEmptyUI()
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0:refreshCategory()
+	arg_9_0:refreshUnlockCount()
+	arg_9_0:refreshEmptyUI()
 end
 
-function slot0.refreshCategory(slot0)
-	for slot5, slot6 in pairs(slot0._categoryItems) do
-		slot7 = AchievementMainCommonModel.instance:getCurrentCategory() == slot0._focusTypes[slot5]
+function var_0_0.refreshCategory(arg_10_0)
+	local var_10_0 = AchievementMainCommonModel.instance:getCurrentCategory()
 
-		gohelper.setActive(slot6.goselected, slot7)
-		gohelper.setActive(slot6.gounselected, not slot7)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._categoryItems) do
+		local var_10_1 = var_10_0 == arg_10_0._focusTypes[iter_10_0]
 
-		slot8 = AchievementMainCommonModel.instance:categoryHasNew(slot0._focusTypes[slot5])
+		gohelper.setActive(iter_10_1.goselected, var_10_1)
+		gohelper.setActive(iter_10_1.gounselected, not var_10_1)
 
-		gohelper.setActive(slot6.goreddot1, slot8)
-		gohelper.setActive(slot6.goreddot2, slot8)
+		local var_10_2 = AchievementMainCommonModel.instance:categoryHasNew(arg_10_0._focusTypes[iter_10_0])
+
+		gohelper.setActive(iter_10_1.goreddot1, var_10_2)
+		gohelper.setActive(iter_10_1.goreddot2, var_10_2)
 	end
 end
 
-function slot0.refreshUnlockCount(slot0)
-	slot2, slot3 = AchievementMainCommonModel.instance:getCategoryAchievementUnlockInfo(AchievementMainCommonModel.instance:getCurrentCategory())
-	slot0._txtunlockcount.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementmainview_unlockTaskCount"), {
-		slot3,
-		slot2
-	})
+function var_0_0.refreshUnlockCount(arg_11_0)
+	local var_11_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+	local var_11_1, var_11_2 = AchievementMainCommonModel.instance:getCategoryAchievementUnlockInfo(var_11_0)
+	local var_11_3 = {
+		var_11_2,
+		var_11_1
+	}
+
+	arg_11_0._txtunlockcount.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementmainview_unlockTaskCount"), var_11_3)
 end
 
-function slot0.refreshEmptyUI(slot0)
-	gohelper.setActive(slot0._goempty, AchievementMainCommonModel.instance:isCurrentViewBagEmpty())
+function var_0_0.refreshEmptyUI(arg_12_0)
+	local var_12_0 = AchievementMainCommonModel.instance:isCurrentViewBagEmpty()
+
+	gohelper.setActive(arg_12_0._goempty, var_12_0)
 end
 
-function slot0.initCategory(slot0)
-	slot0._focusTypes = {
+function var_0_0.initCategory(arg_13_0)
+	arg_13_0._focusTypes = {
 		AchievementEnum.Type.Story,
 		AchievementEnum.Type.Normal,
 		AchievementEnum.Type.GamePlay,
 		AchievementEnum.Type.Activity
 	}
-	slot0._categoryItems = {}
+	arg_13_0._categoryItems = {}
 
-	for slot4, slot5 in pairs(slot0._focusTypes) do
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = gohelper.cloneInPlace(slot0._gocategoryitem, "category_" .. tostring(slot4))
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._focusTypes) do
+		local var_13_0 = arg_13_0:getUserDataTb_()
 
-		gohelper.setActive(slot6.go, true)
+		var_13_0.go = gohelper.cloneInPlace(arg_13_0._gocategoryitem, "category_" .. tostring(iter_13_0))
 
-		slot6.gounselected = gohelper.findChild(slot6.go, "go_unselected")
-		slot6.txtitemcn1 = gohelper.findChildText(slot6.go, "go_unselected/txt_itemcn1")
-		slot6.txtitemen1 = gohelper.findChildText(slot6.go, "go_unselected/txt_itemen1")
-		slot6.goselected = gohelper.findChild(slot6.go, "go_selected")
-		slot6.txtitemcn2 = gohelper.findChildText(slot6.go, "go_selected/txt_itemcn2")
-		slot6.txtitemen2 = gohelper.findChildText(slot6.go, "go_selected/txt_itemen2")
-		slot6.btnself = gohelper.findChildButtonWithAudio(slot6.go, "btn_self")
+		gohelper.setActive(var_13_0.go, true)
 
-		slot6.btnself:AddClickListener(slot0.onClickCategory, slot0, slot4)
+		var_13_0.gounselected = gohelper.findChild(var_13_0.go, "go_unselected")
+		var_13_0.txtitemcn1 = gohelper.findChildText(var_13_0.go, "go_unselected/txt_itemcn1")
+		var_13_0.txtitemen1 = gohelper.findChildText(var_13_0.go, "go_unselected/txt_itemen1")
+		var_13_0.goselected = gohelper.findChild(var_13_0.go, "go_selected")
+		var_13_0.txtitemcn2 = gohelper.findChildText(var_13_0.go, "go_selected/txt_itemcn2")
+		var_13_0.txtitemen2 = gohelper.findChildText(var_13_0.go, "go_selected/txt_itemen2")
+		var_13_0.btnself = gohelper.findChildButtonWithAudio(var_13_0.go, "btn_self")
 
-		slot6.goreddot1 = gohelper.findChild(slot6.go, "go_unselected/txt_itemcn1/#go_reddot1")
-		slot6.goreddot2 = gohelper.findChild(slot6.go, "go_selected/txt_itemcn2/#go_reddot2")
-		slot8 = AchievementEnum.TypeNameEn[slot5]
+		var_13_0.btnself:AddClickListener(arg_13_0.onClickCategory, arg_13_0, iter_13_0)
 
-		if not string.nilorempty(AchievementEnum.TypeName[slot5]) then
-			slot6.txtitemcn1.text = luaLang(slot7)
-			slot6.txtitemcn2.text = luaLang(slot7)
-			slot6.txtitemen1.text = tostring(slot8)
-			slot6.txtitemen2.text = tostring(slot8)
+		var_13_0.goreddot1 = gohelper.findChild(var_13_0.go, "go_unselected/txt_itemcn1/#go_reddot1")
+		var_13_0.goreddot2 = gohelper.findChild(var_13_0.go, "go_selected/txt_itemcn2/#go_reddot2")
+
+		local var_13_1 = AchievementEnum.TypeName[iter_13_1]
+		local var_13_2 = AchievementEnum.TypeNameEn[iter_13_1]
+
+		if not string.nilorempty(var_13_1) then
+			var_13_0.txtitemcn1.text = luaLang(var_13_1)
+			var_13_0.txtitemcn2.text = luaLang(var_13_1)
+			var_13_0.txtitemen1.text = tostring(var_13_2)
+			var_13_0.txtitemen2.text = tostring(var_13_2)
 		end
 
-		slot0._categoryItems[slot4] = slot6
+		arg_13_0._categoryItems[iter_13_0] = var_13_0
 	end
 end
 
-function slot0.onClickCategory(slot0, slot1)
-	if AchievementMainCommonModel.instance:getCurrentCategory() == slot0._focusTypes[slot1] then
+function var_0_0.onClickCategory(arg_14_0, arg_14_1)
+	local var_14_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+	local var_14_1 = arg_14_0._focusTypes[arg_14_1]
+
+	if var_14_0 == var_14_1 then
 		return
 	end
 
-	AchievementMainController.instance:setCategory(slot3)
+	AchievementMainController.instance:setCategory(var_14_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_switch)
 end
 
-function slot0._btneditOnClick(slot0)
+function var_0_0._btneditOnClick(arg_15_0)
 	ViewMgr.instance:openView(ViewName.AchievementSelectView)
 
-	if slot0.viewParam.jumpFrom == ViewName.AchievementSelectView then
-		slot0:closeThis()
+	if arg_15_0.viewParam.jumpFrom == ViewName.AchievementSelectView then
+		arg_15_0:closeThis()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_thumbnail_click)
 end
 
-function slot0.onClickGroupFoldBtn(slot0, slot1, slot2)
-	slot0:onStartPlayGroupFadeAnim()
-	slot0:doAchievementFadeAnimation(slot1, slot2)
+function var_0_0.onClickGroupFoldBtn(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0:onStartPlayGroupFadeAnim()
+	arg_16_0:doAchievementFadeAnimation(arg_16_1, arg_16_2)
 end
 
-function slot0.onStartPlayGroupFadeAnim(slot0)
+function var_0_0.onStartPlayGroupFadeAnim(arg_17_0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("AchievementMainView_BeginPlayGroupFadeAnim")
 end
 
-function slot0.onEndPlayGroupFadeAnim(slot0)
+function var_0_0.onEndPlayGroupFadeAnim(arg_18_0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("AchievementMainView_BeginPlayGroupFadeAnim")
 end
 
-slot1 = 0.001
-slot2 = 0.0003
-slot3 = 0
-slot4 = 0.35
+local var_0_1 = 0.001
+local var_0_2 = 0.0003
+local var_0_3 = 0
+local var_0_4 = 0.35
 
-function slot0.doAchievementFadeAnimation(slot0, slot1, slot2)
-	slot5 = slot0:getCurRenderCellCount(slot1, slot3, slot2)
-	slot8 = 0
-	slot0._modifyMap = slot0:getUserDataTb_()
-	slot9 = nil
-	slot0._modifyGroupId = slot1
-	slot0._isFold = slot2
-	slot10 = AchievementMainCommonModel.instance:getCurrentFilterType()
+function var_0_0.doAchievementFadeAnimation(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = AchievementMainListModel.instance:getGroupMOList(arg_19_1)
+	local var_19_1 = var_19_0 and var_19_0[1]
+	local var_19_2 = arg_19_0:getCurRenderCellCount(arg_19_1, var_19_0, arg_19_2)
+	local var_19_3 = arg_19_2 and var_19_2 or 1
+	local var_19_4 = arg_19_2 and 1 or var_19_2
+	local var_19_5 = 0
 
-	for slot15 = slot2 and slot5 or 1, slot2 and 1 or slot5, slot2 and -1 or 1 do
-		slot16 = slot3[slot15]
-		slot0._modifyMap[slot16] = true
+	arg_19_0._modifyMap = arg_19_0:getUserDataTb_()
 
-		slot16:clearOverrideLineHeight()
+	local var_19_6
 
-		if not slot2 and not slot16.isGroupTop then
-			AchievementMainListModel.instance:addAt(slot16, AchievementMainListModel.instance:getIndex(AchievementMainListModel.instance:getGroupMOList(slot1) and slot3[1]) + slot15 - 1)
+	arg_19_0._modifyGroupId = arg_19_1
+	arg_19_0._isFold = arg_19_2
+
+	local var_19_7 = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local var_19_8 = AchievementMainListModel.instance:getIndex(var_19_1)
+
+	for iter_19_0 = var_19_3, var_19_4, arg_19_2 and -1 or 1 do
+		local var_19_9 = var_19_0[iter_19_0]
+
+		arg_19_0._modifyMap[var_19_9] = true
+
+		var_19_9:clearOverrideLineHeight()
+
+		if not arg_19_2 and not var_19_9.isGroupTop then
+			local var_19_10 = var_19_8 + iter_19_0 - 1
+
+			AchievementMainListModel.instance:addAt(var_19_9, var_19_10)
 		end
 
-		slot17 = slot0:getEffectParams(slot10, slot2, slot16, slot9)
+		local var_19_11 = arg_19_0:getEffectParams(var_19_7, arg_19_2, var_19_9, var_19_6)
 
-		if not slot2 and not slot16.isGroupTop then
-			slot16:overrideLineHeight(0)
+		if not arg_19_2 and not var_19_9.isGroupTop then
+			var_19_9:overrideLineHeight(0)
 		end
 
-		TaskDispatcher.runDelay(slot0.onDispatchAchievementFadeAnimationEvent, slot17, slot8)
+		TaskDispatcher.runDelay(arg_19_0.onDispatchAchievementFadeAnimationEvent, var_19_11, var_19_5)
 
-		slot8 = slot8 + slot17.duration
-		slot9 = slot16
+		var_19_5 = var_19_5 + var_19_11.duration
+		var_19_6 = var_19_9
 	end
 
-	if slot2 then
-		slot0:onBeginFoldIn(slot0._modifyGroupId, slot0._isFold)
+	if arg_19_2 then
+		arg_19_0:onBeginFoldIn(arg_19_0._modifyGroupId, arg_19_0._isFold)
 	end
 
-	TaskDispatcher.cancelTask(slot0.onPreEndPlayGroupFadeAnim, slot0)
-	TaskDispatcher.runDelay(slot0.onPreEndPlayGroupFadeAnim, slot0, slot8)
-	TaskDispatcher.cancelTask(slot0.onEndPlayGroupFadeAnim, slot0)
-	TaskDispatcher.runDelay(slot0.onEndPlayGroupFadeAnim, slot0, slot8)
+	TaskDispatcher.cancelTask(arg_19_0.onPreEndPlayGroupFadeAnim, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0.onPreEndPlayGroupFadeAnim, arg_19_0, var_19_5)
+	TaskDispatcher.cancelTask(arg_19_0.onEndPlayGroupFadeAnim, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0.onEndPlayGroupFadeAnim, arg_19_0, var_19_5)
 end
 
-function slot0.onBeginFoldIn(slot0, slot1, slot2)
-	if AchievementMainListModel.instance:getGroupMOList(slot1) then
-		for slot7 = 1, #slot3 do
-			if not slot0._modifyMap[slot3[slot7]] then
-				slot8:setIsFold(slot2)
-				slot8:clearOverrideLineHeight()
-				AchievementMainListModel.instance:remove(slot8)
+function var_0_0.onBeginFoldIn(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = AchievementMainListModel.instance:getGroupMOList(arg_20_1)
+
+	if var_20_0 then
+		for iter_20_0 = 1, #var_20_0 do
+			local var_20_1 = var_20_0[iter_20_0]
+
+			if not arg_20_0._modifyMap[var_20_1] then
+				var_20_1:setIsFold(arg_20_2)
+				var_20_1:clearOverrideLineHeight()
+				AchievementMainListModel.instance:remove(var_20_1)
 			end
 		end
 
@@ -248,16 +283,23 @@ function slot0.onBeginFoldIn(slot0, slot1, slot2)
 	end
 end
 
-function slot0.onPreEndPlayGroupFadeAnim(slot0)
-	if AchievementMainListModel.instance:getGroupMOList(slot0._modifyGroupId) then
-		for slot7 = 1, #slot1 do
-			slot8 = slot1[slot7]
+function var_0_0.onPreEndPlayGroupFadeAnim(arg_21_0)
+	local var_21_0 = AchievementMainListModel.instance:getGroupMOList(arg_21_0._modifyGroupId)
 
-			slot8:setIsFold(slot0._isFold)
-			slot8:clearOverrideLineHeight()
+	if var_21_0 then
+		local var_21_1 = var_21_0 and var_21_0[1]
+		local var_21_2 = AchievementMainListModel.instance:getIndex(var_21_1)
 
-			if not slot0._isFold and not slot0._modifyMap[slot8] then
-				AchievementMainListModel.instance:addAt(slot8, AchievementMainListModel.instance:getIndex(slot1 and slot1[1]) + slot7 - 1)
+		for iter_21_0 = 1, #var_21_0 do
+			local var_21_3 = var_21_0[iter_21_0]
+
+			var_21_3:setIsFold(arg_21_0._isFold)
+			var_21_3:clearOverrideLineHeight()
+
+			if not arg_21_0._isFold and not arg_21_0._modifyMap[var_21_3] then
+				local var_21_4 = var_21_2 + iter_21_0 - 1
+
+				AchievementMainListModel.instance:addAt(var_21_3, var_21_4)
 			end
 		end
 
@@ -265,93 +307,110 @@ function slot0.onPreEndPlayGroupFadeAnim(slot0)
 	end
 end
 
-function slot0.getEffectParams(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot3:getLineHeight(slot1, not slot2)
-	slot6 = slot3:getLineHeight(slot1, slot2)
+function var_0_0.getEffectParams(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	local var_22_0 = arg_22_3:getLineHeight(arg_22_1, not arg_22_2)
+	local var_22_1 = arg_22_3:getLineHeight(arg_22_1, arg_22_2)
+	local var_22_2 = arg_22_2 and var_0_2 or var_0_1
+	local var_22_3 = math.abs(var_22_1 - var_22_0) * var_22_2
+	local var_22_4 = Mathf.Clamp(var_22_3, var_0_3, var_0_4)
 
 	return {
-		achievementId = slot3.id,
-		isFold = slot2,
-		orginLineHeight = slot5,
-		targetLineHeight = slot6,
-		duration = Mathf.Clamp(math.abs(slot6 - slot5) * (slot2 and uv0 or uv1), uv2, uv3),
-		lastModifyMO = slot4
+		achievementId = arg_22_3.id,
+		isFold = arg_22_2,
+		orginLineHeight = var_22_0,
+		targetLineHeight = var_22_1,
+		duration = var_22_4,
+		lastModifyMO = arg_22_4
 	}
 end
 
-function slot0.onDispatchAchievementFadeAnimationEvent(slot0)
-	slot2 = slot0.lastModifyMO
+function var_0_0.onDispatchAchievementFadeAnimationEvent(arg_23_0)
+	local var_23_0 = arg_23_0.isFold
+	local var_23_1 = arg_23_0.lastModifyMO
 
-	if slot0.isFold and slot2 and not slot2.isGroupTop then
-		AchievementMainListModel.instance:remove(slot2)
+	if var_23_0 and var_23_1 and not var_23_1.isGroupTop then
+		AchievementMainListModel.instance:remove(var_23_1)
 	end
 
-	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnPlayGroupFadeAnim, slot0)
+	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnPlayGroupFadeAnim, arg_23_0)
 end
 
-slot5 = 3
+local var_0_5 = 3
 
-function slot0.getCurRenderCellCount(slot0, slot1, slot2, slot3)
-	slot5 = slot0.viewContainer:getScrollView(AchievementEnum.ViewType.List):getCsScroll()
-	slot6 = 0
+function var_0_0.getCurRenderCellCount(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	local var_24_0 = arg_24_0.viewContainer:getScrollView(AchievementEnum.ViewType.List)
+	local var_24_1 = var_24_0:getCsScroll()
+	local var_24_2 = 0
 
-	return Mathf.Clamp((slot3 or slot0:getCurRenderCellCountWhileFoldIn(slot1, slot2, slot5)) and slot0:getCurRenderCellCountWhileFoldOut(slot1, slot2, slot4, slot5), 1, uv0)
+	if not arg_24_3 then
+		var_24_2 = arg_24_0:getCurRenderCellCountWhileFoldIn(arg_24_1, arg_24_2, var_24_1)
+	else
+		var_24_2 = arg_24_0:getCurRenderCellCountWhileFoldOut(arg_24_1, arg_24_2, var_24_0, var_24_1)
+	end
+
+	return (Mathf.Clamp(var_24_2, 1, var_0_5))
 end
 
-function slot0.getCurRenderCellCountWhileFoldIn(slot0, slot1, slot2, slot3)
-	slot6 = 1
-	slot7 = 0
+function var_0_0.getCurRenderCellCountWhileFoldIn(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local var_25_1 = 0
+	local var_25_2 = 1
+	local var_25_3 = 0
 
-	for slot11, slot12 in ipairs(slot2) do
-		if AchievementConfig.instance:getAchievement(slot12.id).groupId ~= slot1 then
-			slot5 = 0 + slot12:getLineHeight(AchievementMainCommonModel.instance:getCurrentFilterType(), slot12:getIsFold())
+	for iter_25_0, iter_25_1 in ipairs(arg_25_2) do
+		if AchievementConfig.instance:getAchievement(iter_25_1.id).groupId ~= arg_25_1 then
+			var_25_1 = var_25_1 + iter_25_1:getLineHeight(var_25_0, iter_25_1:getIsFold())
 		else
-			slot6 = slot11
+			var_25_2 = iter_25_0
 
 			break
 		end
 	end
 
-	slot9 = recthelper.getHeight(slot3.transform)
+	local var_25_4 = arg_25_3.VerticalScrollPixel
+	local var_25_5 = recthelper.getHeight(arg_25_3.transform)
+	local var_25_6 = Mathf.Clamp(var_25_5 - var_25_1 - var_25_4, 0, var_25_5)
 
-	for slot14 = slot6, #slot2 do
-		if Mathf.Clamp(slot9 - slot5 - slot3.VerticalScrollPixel, 0, slot9) - slot2[slot14]:getLineHeight(slot4, false) > 0 then
-			slot7 = slot7 + 1
+	for iter_25_2 = var_25_2, #arg_25_2 do
+		var_25_6 = var_25_6 - arg_25_2[iter_25_2]:getLineHeight(var_25_0, false)
+
+		if var_25_6 > 0 then
+			var_25_3 = var_25_3 + 1
 		else
 			break
 		end
 	end
 
-	return slot7
+	return var_25_3
 end
 
-function slot0.getCurRenderCellCountWhileFoldOut(slot0, slot1, slot2, slot3, slot4)
-	slot6 = {
-		[slot11._mo.id] = slot11
-	}
-	slot7 = 0
+function var_0_0.getCurRenderCellCountWhileFoldOut(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
+	local var_26_0 = arg_26_3._cellCompDict
+	local var_26_1 = {}
+	local var_26_2 = 0
 
-	for slot11, slot12 in pairs(slot3._cellCompDict) do
-		if AchievementConfig.instance:getAchievement(slot11._mo.id).groupId == slot1 then
-			-- Nothing
+	for iter_26_0, iter_26_1 in pairs(var_26_0) do
+		if AchievementConfig.instance:getAchievement(iter_26_0._mo.id).groupId == arg_26_1 then
+			var_26_1[iter_26_0._mo.id] = iter_26_0
 		end
 	end
 
-	for slot11 = 1, #slot2 do
-		slot14 = slot6[slot2[slot11].id] and slot13._index - 1 or -1
+	for iter_26_2 = 1, #arg_26_2 do
+		local var_26_3 = var_26_1[arg_26_2[iter_26_2].id]
+		local var_26_4 = var_26_3 and var_26_3._index - 1 or -1
 
-		if not slot13 then
+		if not var_26_3 then
 			break
 		end
 
-		if not slot4:IsVisual(slot14) then
+		if not arg_26_4:IsVisual(var_26_4) then
 			break
 		end
 
-		slot7 = slot7 + 1
+		var_26_2 = var_26_2 + 1
 	end
 
-	return slot7
+	return var_26_2
 end
 
-return slot0
+return var_0_0

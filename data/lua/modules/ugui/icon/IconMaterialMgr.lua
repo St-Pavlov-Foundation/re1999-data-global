@@ -1,10 +1,11 @@
-module("modules.ugui.icon.IconMaterialMgr", package.seeall)
+﻿module("modules.ugui.icon.IconMaterialMgr", package.seeall)
 
-slot0 = class("IconMaterialMgr")
-slot0.LoadFail = -1
+local var_0_0 = class("IconMaterialMgr")
 
-function slot0.init(slot0)
-	slot0.variantIdToMaterialPath = {
+var_0_0.LoadFail = -1
+
+function var_0_0.init(arg_1_0)
+	arg_1_0.variantIdToMaterialPath = {
 		"ui/materials/dynamic/ui_headicon_stylization_1.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_2.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_3.mat",
@@ -14,7 +15,7 @@ function slot0.init(slot0)
 		"ui/materials/dynamic/ui_headicon_stylization_assist.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_7.mat"
 	}
-	slot0.variantIdToMaterialPathWithRound = {
+	arg_1_0.variantIdToMaterialPathWithRound = {
 		[0] = "ui/materials/dynamic/ui_enemyinfo_headicon_mask.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_1_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_2_round.mat",
@@ -25,78 +26,80 @@ function slot0.init(slot0)
 		"ui/materials/dynamic/ui_headicon_stylization_assist_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_7_round.mat"
 	}
-	slot0.needSetMaterialIconImages = {}
-	slot0.loadedMaterials = {}
-	slot0.loadingMaterialCount = 0
-	slot0.assetItems = {}
+	arg_1_0.needSetMaterialIconImages = {}
+	arg_1_0.loadedMaterials = {}
+	arg_1_0.loadingMaterialCount = 0
+	arg_1_0.assetItems = {}
 end
 
-function slot0.getMaterialPath(slot0, slot1)
-	return slot0.variantIdToMaterialPath[slot1]
+function var_0_0.getMaterialPath(arg_2_0, arg_2_1)
+	return arg_2_0.variantIdToMaterialPath[arg_2_1]
 end
 
-function slot0.getMaterialPathWithRound(slot0, slot1)
-	return slot0.variantIdToMaterialPathWithRound[slot1]
+function var_0_0.getMaterialPathWithRound(arg_3_0, arg_3_1)
+	return arg_3_0.variantIdToMaterialPathWithRound[arg_3_1]
 end
 
-function slot0.loadMaterialAddSet(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.loadMaterialAddSet(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_1 then
 		logError("materialPath is nil")
 
 		return
 	end
 
-	if slot0.loadedMaterials[slot1] then
-		if slot0.loadedMaterials[slot1] ~= uv0.LoadFail then
-			slot2.material = slot0.loadedMaterials[slot1]
+	if arg_4_0.loadedMaterials[arg_4_1] then
+		if arg_4_0.loadedMaterials[arg_4_1] ~= var_0_0.LoadFail then
+			arg_4_2.material = arg_4_0.loadedMaterials[arg_4_1]
 		end
 
 		return
 	end
 
-	slot0.loadingMaterialCount = slot0.loadingMaterialCount + 1
+	arg_4_0.loadingMaterialCount = arg_4_0.loadingMaterialCount + 1
 
-	if not slot0.needSetMaterialIconImages[slot1] then
-		slot0.needSetMaterialIconImages[slot1] = {}
+	if not arg_4_0.needSetMaterialIconImages[arg_4_1] then
+		arg_4_0.needSetMaterialIconImages[arg_4_1] = {}
 	end
 
-	table.insert(slot0.needSetMaterialIconImages[slot1], slot2)
-	loadAbAsset(slot1, false, slot0.loadAssetCallback, slot0)
+	table.insert(arg_4_0.needSetMaterialIconImages[arg_4_1], arg_4_2)
+	loadAbAsset(arg_4_1, false, arg_4_0.loadAssetCallback, arg_4_0)
 end
 
-function slot0.loadAssetCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		table.insert(slot0.assetItems, slot1)
-		slot1:Retain()
+function var_0_0.loadAssetCallback(arg_5_0, arg_5_1)
+	if arg_5_1.IsLoadSuccess then
+		table.insert(arg_5_0.assetItems, arg_5_1)
+		arg_5_1:Retain()
 
-		slot0.loadedMaterials[slot1.AssetUrl] = slot1:GetResource(slot1.AssetUrl)
+		arg_5_0.loadedMaterials[arg_5_1.AssetUrl] = arg_5_1:GetResource(arg_5_1.AssetUrl)
 	else
-		logError(string.format("load '%s' failed", slot1.AssetUrl))
+		logError(string.format("load '%s' failed", arg_5_1.AssetUrl))
 
-		slot0.loadedMaterials[slot1.AssetUrl] = uv0.LoadFail
+		arg_5_0.loadedMaterials[arg_5_1.AssetUrl] = var_0_0.LoadFail
 	end
 
-	slot0.loadingMaterialCount = slot0.loadingMaterialCount - 1
+	arg_5_0.loadingMaterialCount = arg_5_0.loadingMaterialCount - 1
 
-	if slot0.loadingMaterialCount == 0 then
-		for slot5, slot6 in pairs(slot0.needSetMaterialIconImages) do
-			for slot10 = 1, #slot6 do
-				if slot0.loadedMaterials[slot5] ~= uv0.LoadFail and not gohelper.isNil(slot6[slot10]) then
-					slot6[slot10].material = slot11
+	if arg_5_0.loadingMaterialCount == 0 then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0.needSetMaterialIconImages) do
+			for iter_5_2 = 1, #iter_5_1 do
+				local var_5_0 = arg_5_0.loadedMaterials[iter_5_0]
+
+				if var_5_0 ~= var_0_0.LoadFail and not gohelper.isNil(iter_5_1[iter_5_2]) then
+					iter_5_1[iter_5_2].material = var_5_0
 				end
 			end
 		end
 
-		slot0:recycleNeedSetMaterialImages()
+		arg_5_0:recycleNeedSetMaterialImages()
 	end
 end
 
-function slot0.recycleNeedSetMaterialImages(slot0)
-	for slot4, slot5 in pairs(slot0.needSetMaterialIconImages) do
-		tabletool.clear(slot5)
+function var_0_0.recycleNeedSetMaterialImages(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.needSetMaterialIconImages) do
+		tabletool.clear(iter_6_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

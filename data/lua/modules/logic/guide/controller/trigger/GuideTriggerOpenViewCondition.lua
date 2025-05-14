@@ -1,50 +1,63 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerOpenViewCondition", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerOpenViewCondition", package.seeall)
 
-slot0 = class("GuideTriggerOpenViewCondition", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerOpenViewCondition", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	slot3 = string.split(slot2, "_")
-	slot5 = slot3[2]
-	slot6 = slot3[3]
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = string.split(arg_2_2, "_")
+	local var_2_1 = var_2_0[1]
+	local var_2_2 = var_2_0[2]
+	local var_2_3 = var_2_0[3]
 
-	if slot1 ~= slot3[1] then
+	if arg_2_1 ~= var_2_1 then
 		return false
 	end
 
-	return uv0[slot5](slot6)
+	return var_0_0[var_2_2](var_2_3)
 end
 
-function slot0._onOpenView(slot0, slot1, slot2)
-	slot0:checkStartGuide(slot1)
+function var_0_0._onOpenView(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0:checkStartGuide(arg_3_1)
 end
 
-function slot0.checkInEliminateEpisode(slot0)
-	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(slot0)
+function var_0_0.checkInEliminateEpisode(arg_4_0)
+	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(arg_4_0)
 end
 
-function slot0.checkInWindows(slot0)
+function var_0_0.checkInWindows(arg_5_0)
 	return BootNativeUtil.isWindows()
 end
 
-function slot0.checkTowerMopUpOpen()
-	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)) <= TowerPermanentModel.instance:getCurPermanentPassLayer()
+function var_0_0.checkTowerMopUpOpen()
+	local var_6_0 = TowerPermanentModel.instance:getCurPermanentPassLayer()
+	local var_6_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
+
+	return var_6_0 >= tonumber(var_6_1)
 end
 
-function slot0.checkTowerBossOpen()
-	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)) <= TowerPermanentModel.instance:getCurPermanentPassLayer()
+function var_0_0.checkTowerBossOpen()
+	local var_7_0 = TowerPermanentModel.instance:getCurPermanentPassLayer()
+	local var_7_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
+
+	return var_7_0 >= tonumber(var_7_1)
 end
 
-function slot0.checkTowerLimitOpen()
-	return tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)) <= TowerPermanentModel.instance:getCurPermanentPassLayer() and TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() ~= nil
+function var_0_0.checkTowerLimitOpen()
+	local var_8_0 = TowerPermanentModel.instance:getCurPermanentPassLayer()
+	local var_8_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)
+	local var_8_2 = var_8_0 >= tonumber(var_8_1)
+
+	var_8_2 = var_8_2 and TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() ~= nil
+
+	return var_8_2
 end
 
-function slot0.checkTowerPermanentElite()
+function var_0_0.checkTowerPermanentElite()
 	return TowerPermanentModel.instance:checkNewLayerIsElite()
 end
 
-return slot0
+return var_0_0

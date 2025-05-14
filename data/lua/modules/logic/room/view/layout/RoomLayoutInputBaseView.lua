@@ -1,135 +1,144 @@
-module("modules.logic.room.view.layout.RoomLayoutInputBaseView", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutInputBaseView", package.seeall)
 
-slot0 = class("RoomLayoutInputBaseView", BaseView)
+local var_0_0 = class("RoomLayoutInputBaseView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "window/#simage_rightbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "window/#simage_leftbg")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_close")
-	slot0._btnsure = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_sure")
-	slot0._txtdes = gohelper.findChildText(slot0.viewGO, "message/#txt_des")
-	slot0._inputsignature = gohelper.findChildTextMeshInputField(slot0.viewGO, "message/#input_signature")
-	slot0._txttext = gohelper.findChildText(slot0.viewGO, "message/#input_signature/textarea/#txt_text")
-	slot0._btncleanname = gohelper.findChildButtonWithAudio(slot0.viewGO, "message/#input_signature/#btn_cleanname")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/#simage_rightbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/#simage_leftbg")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_close")
+	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_sure")
+	arg_1_0._txtdes = gohelper.findChildText(arg_1_0.viewGO, "message/#txt_des")
+	arg_1_0._inputsignature = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "message/#input_signature")
+	arg_1_0._txttext = gohelper.findChildText(arg_1_0.viewGO, "message/#input_signature/textarea/#txt_text")
+	arg_1_0._btncleanname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "message/#input_signature/#btn_cleanname")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnsure:AddClickListener(slot0._btnsureOnClick, slot0)
-	slot0._btncleanname:AddClickListener(slot0._btncleannameOnClick, slot0)
-	slot0._inputsignature:AddOnEndEdit(slot0._onInputNameEndEdit, slot0)
-	slot0._inputsignature:AddOnValueChanged(slot0._onInputNameValueChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
+	arg_2_0._btncleanname:AddClickListener(arg_2_0._btncleannameOnClick, arg_2_0)
+	arg_2_0._inputsignature:AddOnEndEdit(arg_2_0._onInputNameEndEdit, arg_2_0)
+	arg_2_0._inputsignature:AddOnValueChanged(arg_2_0._onInputNameValueChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnsure:RemoveClickListener()
-	slot0._btncleanname:RemoveClickListener()
-	slot0._inputsignature:RemoveOnEndEdit()
-	slot0._inputsignature:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnsure:RemoveClickListener()
+	arg_3_0._btncleanname:RemoveClickListener()
+	arg_3_0._inputsignature:RemoveOnEndEdit()
+	arg_3_0._inputsignature:RemoveOnValueChanged()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
-	slot0:_closeInvokeCallback(false)
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
+	arg_4_0:_closeInvokeCallback(false)
 end
 
-function slot0._btnsureOnClick(slot0)
-	if not string.nilorempty(slot0._inputsignature:GetText()) then
-		slot0:closeThis()
-		slot0:_closeInvokeCallback(true, slot1)
+function var_0_0._btnsureOnClick(arg_5_0)
+	local var_5_0 = arg_5_0._inputsignature:GetText()
+
+	if string.nilorempty(var_5_0) then
+		-- block empty
+	else
+		arg_5_0:closeThis()
+		arg_5_0:_closeInvokeCallback(true, var_5_0)
 	end
 end
 
-function slot0._btncleannameOnClick(slot0)
-	slot0._inputsignature:SetText("")
+function var_0_0._btncleannameOnClick(arg_6_0)
+	arg_6_0._inputsignature:SetText("")
 end
 
-function slot0._onInputNameEndEdit(slot0)
-	slot0:_checkLimit()
+function var_0_0._onInputNameEndEdit(arg_7_0)
+	arg_7_0:_checkLimit()
 end
 
-function slot0._onInputNameValueChange(slot0)
-	slot0:_checkLimit()
+function var_0_0._onInputNameValueChange(arg_8_0)
+	arg_8_0:_checkLimit()
 end
 
-function slot0._checkLimit(slot0)
-	slot1 = slot0._inputsignature:GetText()
+function var_0_0._checkLimit(arg_9_0)
+	local var_9_0 = arg_9_0._inputsignature:GetText()
+	local var_9_1 = arg_9_0:_getInputLimit()
+	local var_9_2 = GameUtil.utf8sub(var_9_0, 1, math.min(GameUtil.utf8len(var_9_0), var_9_1))
 
-	if GameUtil.utf8sub(slot1, 1, math.min(GameUtil.utf8len(slot1), slot0:_getInputLimit())) ~= slot1 then
-		slot0._inputsignature:SetText(slot3)
+	if var_9_2 ~= var_9_0 then
+		arg_9_0._inputsignature:SetText(var_9_2)
 	end
 end
 
-function slot0._getInputLimit(slot0)
+function var_0_0._getInputLimit(arg_10_0)
 	return CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutNameLimit)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txttitlecn = gohelper.findChildText(slot0.viewGO, "titlecn")
-	slot0._txttitleen = gohelper.findChildText(slot0.viewGO, "titlecn/titleen")
-	slot0._txtbtnsurecn = gohelper.findChildText(slot0.viewGO, "bottom/#btn_sure/text")
-	slot0._txtbtnsureed = gohelper.findChildText(slot0.viewGO, "bottom/#btn_sure/texten")
-	slot0._txtinputlang = gohelper.findChildText(slot0.viewGO, "message/#input_signature/textarea/lang_txt")
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._txttitlecn = gohelper.findChildText(arg_11_0.viewGO, "titlecn")
+	arg_11_0._txttitleen = gohelper.findChildText(arg_11_0.viewGO, "titlecn/titleen")
+	arg_11_0._txtbtnsurecn = gohelper.findChildText(arg_11_0.viewGO, "bottom/#btn_sure/text")
+	arg_11_0._txtbtnsureed = gohelper.findChildText(arg_11_0.viewGO, "bottom/#btn_sure/texten")
+	arg_11_0._txtinputlang = gohelper.findChildText(arg_11_0.viewGO, "message/#input_signature/textarea/lang_txt")
 
-	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_11_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_11_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshInitUI()
+function var_0_0.onUpdateParam(arg_12_0)
+	arg_12_0:_refreshInitUI()
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewContainer then
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onEscape, slot0)
+function var_0_0.onOpen(arg_13_0)
+	if arg_13_0.viewContainer then
+		NavigateMgr.instance:addEscape(arg_13_0.viewContainer.viewName, arg_13_0._onEscape, arg_13_0)
 	end
 
-	slot0:_refreshInitUI()
+	arg_13_0:_refreshInitUI()
 end
 
-function slot0._onEscape(slot0)
-	slot0:_btncloseOnClick()
+function var_0_0._onEscape(arg_14_0)
+	arg_14_0:_btncloseOnClick()
 end
 
-function slot0._refreshInitUI(slot0)
-	if slot0.viewParam then
-		if string.nilorempty(slot0.viewParam.defaultName) then
-			slot0._inputsignature:SetText("")
+function var_0_0._refreshInitUI(arg_15_0)
+	if arg_15_0.viewParam then
+		local var_15_0 = arg_15_0.viewParam.defaultName
+
+		if string.nilorempty(var_15_0) then
+			arg_15_0._inputsignature:SetText("")
 		else
-			slot0._inputsignature:SetText(slot1)
+			arg_15_0._inputsignature:SetText(var_15_0)
 		end
 	end
 end
 
-function slot0._closeInvokeCallback(slot0, slot1, slot2)
-	if not slot0.viewParam then
+function var_0_0._closeInvokeCallback(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_0.viewParam then
 		return
 	end
 
-	if slot1 then
-		if slot0.viewParam.yesCallback then
-			if slot0.viewParam.callbockObj then
-				slot0.viewParam.yesCallback(slot0.viewParam.callbockObj, slot2)
+	if arg_16_1 then
+		if arg_16_0.viewParam.yesCallback then
+			if arg_16_0.viewParam.callbockObj then
+				arg_16_0.viewParam.yesCallback(arg_16_0.viewParam.callbockObj, arg_16_2)
 			else
-				slot0.viewParam.yesCallback(slot2)
+				arg_16_0.viewParam.yesCallback(arg_16_2)
 			end
 		end
-	elseif slot0.viewParam.noCallback then
-		slot0.viewParam.noCallback(slot0.viewParam.noCallbackObj)
+	elseif arg_16_0.viewParam.noCallback then
+		arg_16_0.viewParam.noCallback(arg_16_0.viewParam.noCallbackObj)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagerightbg:UnLoadImage()
-	slot0._simageleftbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0._simagerightbg:UnLoadImage()
+	arg_18_0._simageleftbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

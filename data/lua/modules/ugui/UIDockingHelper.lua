@@ -1,137 +1,168 @@
-module("modules.ugui.UIDockingHelper", package.seeall)
+﻿module("modules.ugui.UIDockingHelper", package.seeall)
 
-slot0 = SLFramework.UGUI.RectTrHelper
-slot2 = 16
+local var_0_0 = SLFramework.UGUI.RectTrHelper
+local var_0_1 = {
+	__calcSudokuNilLocalPosV2 = function(arg_1_0, arg_1_1)
+		local var_1_0 = CameraMgr.instance:getUICamera()
+		local var_1_1 = var_1_0:WorldToScreenPoint(arg_1_1.position)
 
-return {
-	__calcSudokuNilLocalPosV2 = function (slot0, slot1)
-		slot2 = CameraMgr.instance:getUICamera()
-
-		return uv0.ScreenPosToAnchorPos(slot2:WorldToScreenPoint(slot1.position), slot0.parent, slot2)
-	end,
-	Dock = {
-		LB_RT = 10,
-		RB_RT = 14,
-		LB_RB = 8,
-		RT_RT = 6,
-		LT_LB = 1,
-		LT_RB = 0,
-		LT_LT = 3,
-		RT_RB = 4,
-		LB_LB = 9,
-		RT_LB = 5,
-		RB_LT = 15,
-		LT_RT = 2,
-		RB_LB = 13,
-		RB_RB = 12,
-		LB_LT = 11,
-		RT_LT = 7,
-		LT_U = 0 + slot2,
-		MT_U = 3 + slot2,
-		RT_U = 6 + slot2,
-		LT_M = 1 + slot2,
-		MT_M = 3 + slot2,
-		RT_M = 7 + slot2,
-		LT_D = 2 + slot2,
-		MT_D = 5 + slot2,
-		RT_D = 8 + slot2,
-		ML_L = 9 + slot2,
-		ML_M = 10 + slot2,
-		ML_R = 11 + slot2,
-		MR_L = 12 + slot2,
-		MR_M = 13 + slot2,
-		MR_R = 14 + slot2,
-		LB_U = 15 + slot2,
-		MB_U = 18 + slot2,
-		RB_U = 21 + slot2,
-		LB_M = 16 + slot2,
-		MB_M = 19 + slot2,
-		RB_M = 22 + slot2,
-		LB_D = 17 + slot2,
-		MB_D = 20 + slot2,
-		RB_D = 23 + slot2
-	},
-	_calcDockSudokuLocalPosV2 = function (slot0, slot1, slot2)
-		if not slot0 then
-			return uv0.__calcSudokuNilLocalPosV2(slot1, slot2)
-		end
-
-		slot8 = slot2.rect
-		slot11 = slot1.rect
-		slot12 = slot11.width * 0.5
-
-		if math.modf(slot0 / 3) <= 2 then
-			slot5 = 0 + slot8.height * 0.5 - slot11.height * 0.5 * (slot0 % 3 - 1)
-			slot4 = 0 + slot8.width * 0.5 * (slot6 - 1)
-		elseif slot6 <= 4 then
-			slot4 = slot4 + slot9 * (slot6 * 2 - 7) + slot12 * slot7
-		else
-			slot5 = slot5 - slot10 - slot13 * slot7
-			slot4 = slot4 + slot9 * (slot6 - 6)
-		end
-
-		slot3.x = slot3.x + slot4
-		slot3.y = slot3.y + slot5
-
-		return slot3
-	end,
-	_calcDockCornorLocalPosV2 = function (slot0, slot1, slot2)
-		if not slot0 then
-			return uv0.__calcSudokuNilLocalPosV2(slot1, slot2)
-		end
-
-		slot7 = slot0 % 4
-		slot8 = slot2.rect
-
-		if math.modf(slot0 / 4) == 0 then
-			slot4 = 0 - slot8.width * 0.5
-			slot5 = 0 + slot8.height * 0.5
-		elseif slot6 == 1 then
-			slot4 = slot4 + slot9
-			slot5 = slot5 + slot10
-		elseif slot6 == 2 then
-			slot4 = slot4 - slot9
-			slot5 = slot5 - slot10
-		elseif slot6 == 3 then
-			slot4 = slot4 + slot9
-			slot5 = slot5 - slot10
-		end
-
-		slot11 = slot1.rect
-
-		if slot7 == 0 then
-			slot4 = slot4 + slot11.width * 0.5
-			slot5 = slot5 - slot11.height * 0.5
-		elseif slot7 == 1 then
-			slot4 = slot4 - slot12
-			slot5 = slot5 - slot13
-		elseif slot7 == 2 then
-			slot4 = slot4 + slot12
-			slot5 = slot5 + slot13
-		elseif slot7 == 3 then
-			slot4 = slot4 - slot12
-			slot5 = slot5 + slot13
-		end
-
-		slot3.x = slot3.x + slot4
-		slot3.y = slot3.y + slot5
-
-		return slot3
-	end,
-	calcDockLocalPosV2 = function (slot0, slot1, slot2)
-		if not slot0 then
-			return uv0.__calcSudokuNilLocalPosV2(slot1, slot2)
-		end
-
-		assert(slot0 >= 0 and slot0 <= 23 + uv1, "eDock=" .. tostring(slot0))
-
-		if uv1 <= slot0 then
-			return uv0._calcDockSudokuLocalPosV2(slot0 - uv1, slot1, slot2)
-		else
-			return uv0._calcDockCornorLocalPosV2(slot0, slot1, slot2)
-		end
-	end,
-	setDock = function (slot0, slot1, slot2, slot3, slot4)
-		transformhelper.setLocalPos(slot1, uv0.calcDockLocalPosV2(slot0 or uv0.Dock.MM_M, slot1, slot2).x + (slot3 or 0), slot5.y + (slot4 or 0), 0)
+		return var_0_0.ScreenPosToAnchorPos(var_1_1, arg_1_0.parent, var_1_0)
 	end
 }
+local var_0_2 = 16
+
+var_0_1.Dock = {
+	LB_RT = 10,
+	RB_RT = 14,
+	LB_RB = 8,
+	RT_RT = 6,
+	LT_LB = 1,
+	LT_RB = 0,
+	LT_LT = 3,
+	RT_RB = 4,
+	LB_LB = 9,
+	RT_LB = 5,
+	RB_LT = 15,
+	LT_RT = 2,
+	RB_LB = 13,
+	RB_RB = 12,
+	LB_LT = 11,
+	RT_LT = 7,
+	LT_U = 0 + var_0_2,
+	MT_U = 3 + var_0_2,
+	RT_U = 6 + var_0_2,
+	LT_M = 1 + var_0_2,
+	MT_M = 3 + var_0_2,
+	RT_M = 7 + var_0_2,
+	LT_D = 2 + var_0_2,
+	MT_D = 5 + var_0_2,
+	RT_D = 8 + var_0_2,
+	ML_L = 9 + var_0_2,
+	ML_M = 10 + var_0_2,
+	ML_R = 11 + var_0_2,
+	MR_L = 12 + var_0_2,
+	MR_M = 13 + var_0_2,
+	MR_R = 14 + var_0_2,
+	LB_U = 15 + var_0_2,
+	MB_U = 18 + var_0_2,
+	RB_U = 21 + var_0_2,
+	LB_M = 16 + var_0_2,
+	MB_M = 19 + var_0_2,
+	RB_M = 22 + var_0_2,
+	LB_D = 17 + var_0_2,
+	MB_D = 20 + var_0_2,
+	RB_D = 23 + var_0_2
+}
+
+function var_0_1._calcDockSudokuLocalPosV2(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = var_0_1.__calcSudokuNilLocalPosV2(arg_2_1, arg_2_2)
+
+	if not arg_2_0 then
+		return var_2_0
+	end
+
+	local var_2_1 = 0
+	local var_2_2 = 0
+	local var_2_3 = math.modf(arg_2_0 / 3)
+	local var_2_4 = arg_2_0 % 3 - 1
+	local var_2_5 = arg_2_2.rect
+	local var_2_6 = var_2_5.width * 0.5
+	local var_2_7 = var_2_5.height * 0.5
+	local var_2_8 = arg_2_1.rect
+	local var_2_9 = var_2_8.width * 0.5
+	local var_2_10 = var_2_8.height * 0.5
+
+	if var_2_3 <= 2 then
+		var_2_2 = var_2_2 + var_2_7 - var_2_10 * var_2_4
+		var_2_3 = var_2_3 - 1
+		var_2_1 = var_2_1 + var_2_6 * var_2_3
+	elseif var_2_3 <= 4 then
+		var_2_3 = var_2_3 * 2 - 7
+		var_2_1 = var_2_1 + var_2_6 * var_2_3 + var_2_9 * var_2_4
+	else
+		var_2_2 = var_2_2 - var_2_7 - var_2_10 * var_2_4
+		var_2_1 = var_2_1 + var_2_6 * (var_2_3 - 6)
+	end
+
+	var_2_0.x = var_2_0.x + var_2_1
+	var_2_0.y = var_2_0.y + var_2_2
+
+	return var_2_0
+end
+
+function var_0_1._calcDockCornorLocalPosV2(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = var_0_1.__calcSudokuNilLocalPosV2(arg_3_1, arg_3_2)
+
+	if not arg_3_0 then
+		return var_3_0
+	end
+
+	local var_3_1 = 0
+	local var_3_2 = 0
+	local var_3_3 = math.modf(arg_3_0 / 4)
+	local var_3_4 = arg_3_0 % 4
+	local var_3_5 = arg_3_2.rect
+	local var_3_6 = var_3_5.width * 0.5
+	local var_3_7 = var_3_5.height * 0.5
+
+	if var_3_3 == 0 then
+		var_3_1 = var_3_1 - var_3_6
+		var_3_2 = var_3_2 + var_3_7
+	elseif var_3_3 == 1 then
+		var_3_1 = var_3_1 + var_3_6
+		var_3_2 = var_3_2 + var_3_7
+	elseif var_3_3 == 2 then
+		var_3_1 = var_3_1 - var_3_6
+		var_3_2 = var_3_2 - var_3_7
+	elseif var_3_3 == 3 then
+		var_3_1 = var_3_1 + var_3_6
+		var_3_2 = var_3_2 - var_3_7
+	end
+
+	local var_3_8 = arg_3_1.rect
+	local var_3_9 = var_3_8.width * 0.5
+	local var_3_10 = var_3_8.height * 0.5
+
+	if var_3_4 == 0 then
+		var_3_1 = var_3_1 + var_3_9
+		var_3_2 = var_3_2 - var_3_10
+	elseif var_3_4 == 1 then
+		var_3_1 = var_3_1 - var_3_9
+		var_3_2 = var_3_2 - var_3_10
+	elseif var_3_4 == 2 then
+		var_3_1 = var_3_1 + var_3_9
+		var_3_2 = var_3_2 + var_3_10
+	elseif var_3_4 == 3 then
+		var_3_1 = var_3_1 - var_3_9
+		var_3_2 = var_3_2 + var_3_10
+	end
+
+	var_3_0.x = var_3_0.x + var_3_1
+	var_3_0.y = var_3_0.y + var_3_2
+
+	return var_3_0
+end
+
+function var_0_1.calcDockLocalPosV2(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0 then
+		return var_0_1.__calcSudokuNilLocalPosV2(arg_4_1, arg_4_2)
+	end
+
+	assert(arg_4_0 >= 0 and arg_4_0 <= 23 + var_0_2, "eDock=" .. tostring(arg_4_0))
+
+	if arg_4_0 >= var_0_2 then
+		return var_0_1._calcDockSudokuLocalPosV2(arg_4_0 - var_0_2, arg_4_1, arg_4_2)
+	else
+		return var_0_1._calcDockCornorLocalPosV2(arg_4_0, arg_4_1, arg_4_2)
+	end
+end
+
+function var_0_1.setDock(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	arg_5_0 = arg_5_0 or var_0_1.Dock.MM_M
+
+	local var_5_0 = var_0_1.calcDockLocalPosV2(arg_5_0, arg_5_1, arg_5_2)
+
+	transformhelper.setLocalPos(arg_5_1, var_5_0.x + (arg_5_3 or 0), var_5_0.y + (arg_5_4 or 0), 0)
+end
+
+return var_0_1

@@ -1,35 +1,43 @@
-module("modules.logic.versionactivity1_9.roomgift.controller.RoomGiftController", package.seeall)
+﻿module("modules.logic.versionactivity1_9.roomgift.controller.RoomGiftController", package.seeall)
 
-slot0 = class("RoomGiftController", BaseController)
+local var_0_0 = class("RoomGiftController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.getAct159Info(slot0)
+function var_0_0.getAct159Info(arg_5_0)
 	if RoomGiftModel.instance:isActOnLine() then
-		RoomGiftRpc.instance:sendGet159InfosRequest(RoomGiftModel.instance:getActId())
+		local var_5_0 = RoomGiftModel.instance:getActId()
+
+		RoomGiftRpc.instance:sendGet159InfosRequest(var_5_0)
 	else
-		slot0:dispatchEvent(RoomGiftEvent.UpdateActInfo)
+		arg_5_0:dispatchEvent(RoomGiftEvent.UpdateActInfo)
 	end
 end
 
-function slot0.getAct159Bonus(slot0)
+function var_0_0.getAct159Bonus(arg_6_0)
 	if not RoomGiftModel.instance:isActOnLine(true) then
 		return
 	end
 
-	RoomGiftRpc.instance:sendGet159BonusRequest(RoomGiftModel.instance:getActId())
+	local var_6_0 = RoomGiftModel.instance:getActId()
+
+	RoomGiftRpc.instance:sendGet159BonusRequest(var_6_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

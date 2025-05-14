@@ -1,98 +1,103 @@
-module("modules.common.others.UIBlockMgrExtend", package.seeall)
+﻿module("modules.common.others.UIBlockMgrExtend", package.seeall)
 
-slot0 = class("UIBlockMgrExtend", LuaCompBase)
-slot1 = "ui/viewres/common/blockanimui.prefab"
-slot2 = "UIRoot/TOP/UIEndBlock"
-slot3 = "effects/prefabs/weak_network"
-slot4 = "effects/prefabs/weak_network/weak_network_effect_loop.prefab"
-slot5 = "effects/prefabs/weak_network/weak_network_effect_end.prefab"
-slot6 = 2
-slot7 = 1.2
-slot8 = true
-slot0.CircleMvDelay = nil
+local var_0_0 = class("UIBlockMgrExtend", LuaCompBase)
+local var_0_1 = "ui/viewres/common/blockanimui.prefab"
+local var_0_2 = "UIRoot/TOP/UIEndBlock"
+local var_0_3 = "effects/prefabs/weak_network"
+local var_0_4 = "effects/prefabs/weak_network/weak_network_effect_loop.prefab"
+local var_0_5 = "effects/prefabs/weak_network/weak_network_effect_end.prefab"
+local var_0_6 = 2
+local var_0_7 = 1.2
+local var_0_8 = true
 
-function slot0.setNeedCircleMv(slot0)
-	if uv0 ~= slot0 then
+var_0_0.CircleMvDelay = nil
+
+function var_0_0.setNeedCircleMv(arg_1_0)
+	if var_0_8 ~= arg_1_0 then
 		if canLogNormal then
-			logNormal((slot0 and "显示菊花" or "隐藏菊花") .. debug.traceback("", 2))
+			logNormal((arg_1_0 and "显示菊花" or "隐藏菊花") .. debug.traceback("", 2))
 		end
 
-		uv0 = slot0
+		var_0_8 = arg_1_0
 	end
 end
 
-function slot0.preload(slot0, slot1)
-	uv0._callback = slot0
-	uv0._callbackObj = slot1
-	uv0._loader = PrefabInstantiate.Create(UIBlockMgr.instance:getBlockGO())
+function var_0_0.preload(arg_2_0, arg_2_1)
+	var_0_0._callback = arg_2_0
+	var_0_0._callbackObj = arg_2_1
+	var_0_0._loader = PrefabInstantiate.Create(UIBlockMgr.instance:getBlockGO())
 
-	uv0._loader:startLoad(uv1, uv0._onCallback)
+	var_0_0._loader:startLoad(var_0_1, var_0_0._onCallback)
 end
 
-function slot0._onCallback()
-	if uv0._callback then
-		uv0._callback(uv0._callbackObj)
+function var_0_0._onCallback()
+	if var_0_0._callback then
+		var_0_0._callback(var_0_0._callbackObj)
 	end
 
-	uv0._callback = nil
-	uv0._callbackObj = nil
-	slot1 = MonoHelper.addNoUpdateLuaComOnceToGo(UIBlockMgr.instance:getBlockGO(), uv0)
+	var_0_0._callback = nil
+	var_0_0._callbackObj = nil
 
-	slot1:setGO(uv0._loader:getInstGO())
+	local var_3_0 = UIBlockMgr.instance:getBlockGO()
+	local var_3_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, var_0_0)
 
-	uv0.instance = slot1
+	var_3_1:setGO(var_0_0._loader:getInstGO())
+
+	var_0_0.instance = var_3_1
 end
 
-function slot0.getEndUIBlockGo()
-	if not uv0._endUIBlockGo then
-		uv0._endUIBlockGo = gohelper.find(uv1)
+function var_0_0.getEndUIBlockGo()
+	if not var_0_0._endUIBlockGo then
+		var_0_0._endUIBlockGo = gohelper.find(var_0_2)
 	end
 
-	return uv0._endUIBlockGo
+	return var_0_0._endUIBlockGo
 end
 
-function slot0.setGO(slot0, slot1)
-	slot0._loopGoWrapper = slot1
-	slot0._endGoWrapper = gohelper.clone(slot0._loopGoWrapper, uv0.getEndUIBlockGo(), "endblockanimui")
-	slot0.isPlay = false
+function var_0_0.setGO(arg_5_0, arg_5_1)
+	arg_5_0._loopGoWrapper = arg_5_1
+	arg_5_0._endGoWrapper = gohelper.clone(arg_5_0._loopGoWrapper, var_0_0.getEndUIBlockGo(), "endblockanimui")
+	arg_5_0.isPlay = false
 
 	if GameResMgr.IsFromEditorDir then
-		loadAbAsset(uv1, false, slot0._onLoopLoadCallback, slot0)
-		loadAbAsset(uv2, false, slot0._onEndLoadCallback, slot0)
+		loadAbAsset(var_0_4, false, arg_5_0._onLoopLoadCallback, arg_5_0)
+		loadAbAsset(var_0_5, false, arg_5_0._onEndLoadCallback, arg_5_0)
 	else
-		loadAbAsset(uv3, false, slot0._onAbLoadCallback, slot0)
+		loadAbAsset(var_0_3, false, arg_5_0._onAbLoadCallback, arg_5_0)
 	end
 
-	slot0._txt = gohelper.findChildText(slot1, "Text")
-	slot0._clickCounter = 0
+	arg_5_0._txt = gohelper.findChildText(arg_5_1, "Text")
+	arg_5_0._clickCounter = 0
 
-	SLFramework.UGUI.UIClickListener.Get(slot1.transform.parent.gameObject):AddClickListener(slot0._onClickBlock, slot0)
+	SLFramework.UGUI.UIClickListener.Get(arg_5_1.transform.parent.gameObject):AddClickListener(arg_5_0._onClickBlock, arg_5_0)
 end
 
-function slot0.setTips(slot0, slot1)
-	if gohelper.isNil(slot0._txt) then
+function var_0_0.setTips(arg_6_0, arg_6_1)
+	if gohelper.isNil(arg_6_0._txt) then
 		return
 	end
 
-	if string.nilorempty(slot1) then
-		slot0._txt.text = "CONNECTING"
+	if string.nilorempty(arg_6_1) then
+		arg_6_0._txt.text = "CONNECTING"
 	else
-		slot0._txt.text = slot1
+		arg_6_0._txt.text = arg_6_1
 	end
 end
 
-function slot0._onClickBlock(slot0)
-	slot0._clickCounter = slot0._clickCounter + 1
+function var_0_0._onClickBlock(arg_7_0)
+	arg_7_0._clickCounter = arg_7_0._clickCounter + 1
 
-	if slot0._clickCounter == 30 then
-		slot1 = {}
+	if arg_7_0._clickCounter == 30 then
+		local var_7_0 = {}
 
-		for slot5, slot6 in pairs(UIBlockMgr.instance._blockKeyDict) do
-			table.insert(slot1, slot5)
+		for iter_7_0, iter_7_1 in pairs(UIBlockMgr.instance._blockKeyDict) do
+			table.insert(var_7_0, iter_7_0)
 		end
 
-		if #slot1 == 1 and slot1[1] == UIBlockKey.MsgLock then
-			if #ConnectAliveMgr.instance:getUnresponsiveMsgList() == 0 then
+		local var_7_1 = ConnectAliveMgr.instance:getUnresponsiveMsgList()
+
+		if #var_7_0 == 1 and var_7_0[1] == UIBlockKey.MsgLock then
+			if #var_7_1 == 0 then
 				UIBlockMgr.instance:endAll()
 				logError("没有要等待的回包，关闭遮罩")
 
@@ -104,90 +109,95 @@ function slot0._onClickBlock(slot0)
 			end
 		end
 
-		if isDebugBuild and tabletool.indexOf(slot1, UIBlockKey.MsgLock) then
-			for slot7, slot8 in ipairs(slot2) do
-				slot3 = string.format("%s%s,", "", slot8.msg.__cname)
+		if isDebugBuild and tabletool.indexOf(var_7_0, UIBlockKey.MsgLock) then
+			local var_7_2 = ""
+
+			for iter_7_2, iter_7_3 in ipairs(var_7_1) do
+				var_7_2 = string.format("%s%s,", var_7_2, iter_7_3.msg.__cname)
 			end
 
-			logError(string.format("Block Msg count=%d: %s", #slot2, slot3))
+			logError(string.format("Block Msg count=%d: %s", #var_7_1, var_7_2))
 		end
 
-		logError("BlockKeys: " .. table.concat(slot1, ","))
+		logError("BlockKeys: " .. table.concat(var_7_0, ","))
 	end
 end
 
-function slot0._onLoopLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot1:Retain()
-		gohelper.clone(slot1:GetResource(uv0), gohelper.findChild(slot0._loopGoWrapper, "network_wrapper"))
+function var_0_0._onLoopLoadCallback(arg_8_0, arg_8_1)
+	if arg_8_1.IsLoadSuccess then
+		arg_8_1:Retain()
+		gohelper.clone(arg_8_1:GetResource(var_0_4), gohelper.findChild(arg_8_0._loopGoWrapper, "network_wrapper"))
 	end
 end
 
-function slot0._onEndLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot1:Retain()
-		gohelper.clone(slot1:GetResource(uv0), gohelper.findChild(slot0._endGoWrapper, "network_wrapper"))
+function var_0_0._onEndLoadCallback(arg_9_0, arg_9_1)
+	if arg_9_1.IsLoadSuccess then
+		arg_9_1:Retain()
+		gohelper.clone(arg_9_1:GetResource(var_0_5), gohelper.findChild(arg_9_0._endGoWrapper, "network_wrapper"))
 	end
 end
 
-function slot0._onAbLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot1:Retain()
-		gohelper.clone(slot1:GetResource(uv0), gohelper.findChild(slot0._loopGoWrapper, "network_wrapper"))
-		gohelper.clone(slot1:GetResource(uv1), gohelper.findChild(slot0._endGoWrapper, "network_wrapper"))
+function var_0_0._onAbLoadCallback(arg_10_0, arg_10_1)
+	if arg_10_1.IsLoadSuccess then
+		arg_10_1:Retain()
+		gohelper.clone(arg_10_1:GetResource(var_0_4), gohelper.findChild(arg_10_0._loopGoWrapper, "network_wrapper"))
+		gohelper.clone(arg_10_1:GetResource(var_0_5), gohelper.findChild(arg_10_0._endGoWrapper, "network_wrapper"))
 	end
 end
 
-function slot0.onEnable(slot0)
-	slot0._clickCounter = 0
+function var_0_0.onEnable(arg_11_0)
+	arg_11_0._clickCounter = 0
 
-	TaskDispatcher.cancelTask(slot0._onEndAnimationFinished, slot0)
-	gohelper.setActive(uv0.getEndUIBlockGo(), false)
-	gohelper.setActive(slot0._loopGoWrapper, false)
+	TaskDispatcher.cancelTask(arg_11_0._onEndAnimationFinished, arg_11_0)
+	gohelper.setActive(var_0_0.getEndUIBlockGo(), false)
+	gohelper.setActive(arg_11_0._loopGoWrapper, false)
 
-	if uv1 then
-		TaskDispatcher.runDelay(slot0._onDelayShow, slot0, uv0.CircleMvDelay and uv0.CircleMvDelay > 0 and uv0.CircleMvDelay or uv2)
+	if var_0_8 then
+		local var_11_0 = var_0_0.CircleMvDelay and var_0_0.CircleMvDelay > 0 and var_0_0.CircleMvDelay or var_0_6
+
+		TaskDispatcher.runDelay(arg_11_0._onDelayShow, arg_11_0, var_11_0)
 	end
 end
 
-function slot0.onDisable(slot0)
-	slot0._clickCounter = 0
+function var_0_0.onDisable(arg_12_0)
+	arg_12_0._clickCounter = 0
 
-	TaskDispatcher.cancelTask(slot0._onDelayShow, slot0)
-	gohelper.setActive(slot0._loopGoWrapper, false)
+	TaskDispatcher.cancelTask(arg_12_0._onDelayShow, arg_12_0)
+	gohelper.setActive(arg_12_0._loopGoWrapper, false)
 
-	if not slot0.isPlay then
+	if not arg_12_0.isPlay then
 		return
 	end
 
-	if uv0 then
-		gohelper.setActive(uv1.getEndUIBlockGo(), true)
-		TaskDispatcher.runDelay(slot0._onEndAnimationFinished, slot0, uv2)
+	if var_0_8 then
+		gohelper.setActive(var_0_0.getEndUIBlockGo(), true)
+		TaskDispatcher.runDelay(arg_12_0._onEndAnimationFinished, arg_12_0, var_0_7)
 	end
 end
 
-function slot0._onDelayShow(slot0)
-	if not uv0 then
+function var_0_0._onDelayShow(arg_13_0)
+	if not var_0_8 then
 		return
 	end
 
-	gohelper.setActive(slot0._loopGoWrapper, true)
+	gohelper.setActive(arg_13_0._loopGoWrapper, true)
 
-	slot0.isPlay = true
-	slot1 = {}
+	arg_13_0.isPlay = true
 
-	for slot5, slot6 in pairs(UIBlockMgr.instance._blockKeyDict) do
-		table.insert(slot1, slot5)
+	local var_13_0 = {}
+
+	for iter_13_0, iter_13_1 in pairs(UIBlockMgr.instance._blockKeyDict) do
+		table.insert(var_13_0, iter_13_0)
 	end
 
-	logNormal("BlockKeys: " .. table.concat(slot1, ","))
+	logNormal("BlockKeys: " .. table.concat(var_13_0, ","))
 end
 
-function slot0._onEndAnimationFinished(slot0)
-	slot0.isPlay = false
+function var_0_0._onEndAnimationFinished(arg_14_0)
+	arg_14_0.isPlay = false
 
-	TaskDispatcher.cancelTask(slot0._onEndAnimationFinished, slot0)
-	gohelper.setActive(uv0.getEndUIBlockGo(), false)
+	TaskDispatcher.cancelTask(arg_14_0._onEndAnimationFinished, arg_14_0)
+	gohelper.setActive(var_0_0.getEndUIBlockGo(), false)
 end
 
-return slot0
+return var_0_0

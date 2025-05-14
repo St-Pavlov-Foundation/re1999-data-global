@@ -1,84 +1,94 @@
-module("modules.logic.equip.view.EquipSkillLevelUpView", package.seeall)
+﻿module("modules.logic.equip.view.EquipSkillLevelUpView", package.seeall)
 
-slot0 = class("EquipSkillLevelUpView", BaseView)
+local var_0_0 = class("EquipSkillLevelUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtcurleveldesc2 = gohelper.findChildText(slot0.viewGO, "#go_rootinfo/info/curleveldesc/#go_curbaseskill/#txt_curleveldesc2")
-	slot0._txtnextleveldesc2 = gohelper.findChildText(slot0.viewGO, "#go_rootinfo/info/nextleveldesc/#go_nextbaseskill/#txt_nextleveldesc2")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gocurbaseskill = gohelper.findChild(slot0.viewGO, "#go_rootinfo/info/curleveldesc/#go_curbaseskill")
-	slot0._txtcurlevel = gohelper.findChildText(slot0.viewGO, "#go_rootinfo/info/curleveldesc/#txt_curlevel")
-	slot0._gonextbaseskill = gohelper.findChild(slot0.viewGO, "#go_rootinfo/info/nextleveldesc/#go_nextbaseskill")
-	slot0._txtnextlevel = gohelper.findChildText(slot0.viewGO, "#go_rootinfo/info/nextleveldesc/#txt_nextlevel")
-	slot0._gorootinfo = gohelper.findChild(slot0.viewGO, "#go_rootinfo")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtcurleveldesc2 = gohelper.findChildText(arg_1_0.viewGO, "#go_rootinfo/info/curleveldesc/#go_curbaseskill/#txt_curleveldesc2")
+	arg_1_0._txtnextleveldesc2 = gohelper.findChildText(arg_1_0.viewGO, "#go_rootinfo/info/nextleveldesc/#go_nextbaseskill/#txt_nextleveldesc2")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gocurbaseskill = gohelper.findChild(arg_1_0.viewGO, "#go_rootinfo/info/curleveldesc/#go_curbaseskill")
+	arg_1_0._txtcurlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_rootinfo/info/curleveldesc/#txt_curlevel")
+	arg_1_0._gonextbaseskill = gohelper.findChild(arg_1_0.viewGO, "#go_rootinfo/info/nextleveldesc/#go_nextbaseskill")
+	arg_1_0._txtnextlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_rootinfo/info/nextleveldesc/#txt_nextlevel")
+	arg_1_0._gorootinfo = gohelper.findChild(arg_1_0.viewGO, "#go_rootinfo")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_4_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onCloseEquipLevelUpView)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._txtcurleveldesc2.gameObject, false)
-	gohelper.setActive(slot0._txtnextleveldesc2.gameObject, false)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._txtcurleveldesc2.gameObject, false)
+	gohelper.setActive(arg_5_0._txtnextleveldesc2.gameObject, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._equip_mo = slot0.viewParam[1]
-	slot0.last_refine_lv = slot0.viewParam[2]
-	slot0._txtcurlevel.text = "<size=22>Lv.</size>" .. slot0.last_refine_lv
-	slot0._txtnextlevel.text = "<size=22>Lv.</size>" .. slot0._equip_mo.refineLv
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._equip_mo = arg_7_0.viewParam[1]
+	arg_7_0.last_refine_lv = arg_7_0.viewParam[2]
+	arg_7_0._txtcurlevel.text = "<size=22>Lv.</size>" .. arg_7_0.last_refine_lv
+	arg_7_0._txtnextlevel.text = "<size=22>Lv.</size>" .. arg_7_0._equip_mo.refineLv
 
-	slot0:_showBaseSkillDes({
-		rootGo = slot0._gocurbaseskill,
-		txtBaseDes = slot0._txtcurleveldesc2,
-		skillType = slot0._equip_mo.equipId,
-		refineLv = slot0.last_refine_lv
-	})
-	slot0:_showBaseSkillDes({
-		rootGo = slot0._gonextbaseskill,
-		txtBaseDes = slot0._txtnextleveldesc2,
-		skillType = slot0._equip_mo.equipId,
-		refineLv = slot0._equip_mo.refineLv
-	})
+	local var_7_0 = {
+		rootGo = arg_7_0._gocurbaseskill,
+		txtBaseDes = arg_7_0._txtcurleveldesc2,
+		skillType = arg_7_0._equip_mo.equipId,
+		refineLv = arg_7_0.last_refine_lv
+	}
+	local var_7_1 = {
+		rootGo = arg_7_0._gonextbaseskill,
+		txtBaseDes = arg_7_0._txtnextleveldesc2,
+		skillType = arg_7_0._equip_mo.equipId,
+		refineLv = arg_7_0._equip_mo.refineLv
+	}
+
+	arg_7_0:_showBaseSkillDes(var_7_0)
+	arg_7_0:_showBaseSkillDes(var_7_1)
 end
 
-function slot0._showBaseSkillDes(slot0, slot1)
-	if #EquipHelper.getEquipSkillDescList(slot1.skillType, slot1.refineLv, "#D9A06F") == 0 then
-		gohelper.setActive(slot1.rootGo, false)
+function var_0_0._showBaseSkillDes(arg_8_0, arg_8_1)
+	local var_8_0 = EquipHelper.getEquipSkillDescList(arg_8_1.skillType, arg_8_1.refineLv, "#D9A06F")
+
+	if #var_8_0 == 0 then
+		gohelper.setActive(arg_8_1.rootGo, false)
 	else
-		gohelper.setActive(slot1.rootGo, true)
+		gohelper.setActive(arg_8_1.rootGo, true)
 
-		slot3, slot4 = nil
+		local var_8_1
+		local var_8_2
 
-		for slot8, slot9 in ipairs(slot2) do
-			slot3 = gohelper.cloneInPlace(slot1.txtBaseDes.gameObject, "item_" .. slot8):GetComponent(gohelper.Type_TextMesh)
-			slot3.text = slot9
+		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+			local var_8_3 = gohelper.cloneInPlace(arg_8_1.txtBaseDes.gameObject, "item_" .. iter_8_0):GetComponent(gohelper.Type_TextMesh)
 
-			gohelper.setActive(slot3.gameObject, true)
+			var_8_3.text = iter_8_1
+
+			gohelper.setActive(var_8_3.gameObject, true)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

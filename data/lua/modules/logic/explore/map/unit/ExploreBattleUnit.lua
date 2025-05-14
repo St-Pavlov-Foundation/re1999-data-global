@@ -1,25 +1,25 @@
-module("modules.logic.explore.map.unit.ExploreBattleUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreBattleUnit", package.seeall)
 
-slot0 = class("ExploreBattleUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreBattleUnit", ExploreBaseDisplayUnit)
 
-function slot0.onResLoaded(slot0)
-	uv0.super.onResLoaded(slot0)
+function var_0_0.onResLoaded(arg_1_0)
+	var_0_0.super.onResLoaded(arg_1_0)
 
-	if slot0.mo:getInteractInfoMO().statusInfo.success == 1 then
-		ExploreRpc.instance:sendExploreInteractRequest(slot0.id)
+	if arg_1_0.mo:getInteractInfoMO().statusInfo.success == 1 then
+		ExploreRpc.instance:sendExploreInteractRequest(arg_1_0.id)
 	end
 end
 
-function slot0.canTrigger(slot0)
-	if not slot0.mo:isInteractActiveState() then
+function var_0_0.canTrigger(arg_2_0)
+	if not arg_2_0.mo:isInteractActiveState() then
 		return false
 	end
 
-	if slot0.mo:getInteractInfoMO().statusInfo.success == 1 then
+	if arg_2_0.mo:getInteractInfoMO().statusInfo.success == 1 then
 		return false
 	end
 
-	return uv0.super.canTrigger(slot0)
+	return var_0_0.super.canTrigger(arg_2_0)
 end
 
-return slot0
+return var_0_0

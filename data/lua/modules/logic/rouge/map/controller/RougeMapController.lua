@@ -1,96 +1,108 @@
-module("modules.logic.rouge.map.controller.RougeMapController", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougeMapController", package.seeall)
 
-slot0 = class("RougeMapController")
+local var_0_0 = class("RougeMapController")
 
-function slot0.registerMap(slot0, slot1)
-	slot0.mapComp = slot1
+function var_0_0.registerMap(arg_1_0, arg_1_1)
+	arg_1_0.mapComp = arg_1_1
 end
 
-function slot0.unregisterMap(slot0)
-	slot0.mapComp = nil
+function var_0_0.unregisterMap(arg_2_0)
+	arg_2_0.mapComp = nil
 end
 
-function slot0.getMapComp(slot0)
-	return slot0.mapComp
+function var_0_0.getMapComp(arg_3_0)
+	return arg_3_0.mapComp
 end
 
-function slot0.startMove(slot0, slot1, slot2)
-	slot0.mapComp:getActorComp():moveToMapItem(nil, slot1, slot2)
+function var_0_0.startMove(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.mapComp:getActorComp():moveToMapItem(nil, arg_4_1, arg_4_2)
 end
 
-function slot0.moveToPieceItem(slot0, slot1, slot2, slot3)
-	slot0.mapComp:getActorComp():moveToPieceItem(slot1, slot2, slot3)
+function var_0_0.moveToPieceItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0.mapComp:getActorComp():moveToPieceItem(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0.moveToLeaveItem(slot0, slot1, slot2)
-	slot0.mapComp:getActorComp():moveToLeaveItem(slot1, slot2)
+function var_0_0.moveToLeaveItem(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.mapComp:getActorComp():moveToLeaveItem(arg_6_1, arg_6_2)
 end
 
-function slot0.getActorMap(slot0)
-	return slot0.mapComp and slot0.mapComp:getActorComp()
+function var_0_0.getActorMap(arg_7_0)
+	return arg_7_0.mapComp and arg_7_0.mapComp:getActorComp()
 end
 
-function slot0.openRougeFinishView(slot0)
+function var_0_0.openRougeFinishView(arg_8_0)
 	ViewMgr.instance:openView(ViewName.RougeFinishView, RougeMapEnum.FinishEnum.Finish)
 end
 
-function slot0.openRougeFailView(slot0)
+function var_0_0.openRougeFailView(arg_9_0)
 	ViewMgr.instance:openView(ViewName.RougeFinishView, RougeMapEnum.FinishEnum.Fail)
 end
 
-function slot0.checkEventChoicePlayedUnlockAnim(slot0, slot1)
-	slot0:_initPlayedChoiceList()
+function var_0_0.checkEventChoicePlayedUnlockAnim(arg_10_0, arg_10_1)
+	arg_10_0:_initPlayedChoiceList()
 
-	return tabletool.indexOf(slot0.playedChoiceIdList, slot1)
+	return tabletool.indexOf(arg_10_0.playedChoiceIdList, arg_10_1)
 end
 
-function slot0.playedEventChoiceEvent(slot0, slot1)
-	slot0:_initPlayedChoiceList()
+function var_0_0.playedEventChoiceEvent(arg_11_0, arg_11_1)
+	arg_11_0:_initPlayedChoiceList()
 
-	if tabletool.indexOf(slot0.playedChoiceIdList, slot1) then
+	if tabletool.indexOf(arg_11_0.playedChoiceIdList, arg_11_1) then
 		return
 	end
 
-	table.insert(slot0.playedChoiceIdList, slot1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId), table.concat(slot0.playedChoiceIdList, "#"))
+	table.insert(arg_11_0.playedChoiceIdList, arg_11_1)
+
+	local var_11_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId)
+
+	PlayerPrefsHelper.setString(var_11_0, table.concat(arg_11_0.playedChoiceIdList, "#"))
 end
 
-function slot0._initPlayedChoiceList(slot0)
-	if not slot0.playedChoiceIdList then
-		slot0.playedChoiceIdList = string.splitToNumber(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId), ""), "#")
+function var_0_0._initPlayedChoiceList(arg_12_0)
+	if not arg_12_0.playedChoiceIdList then
+		local var_12_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId)
+		local var_12_1 = PlayerPrefsHelper.getString(var_12_0, "")
+
+		arg_12_0.playedChoiceIdList = string.splitToNumber(var_12_1, "#")
 	end
 end
 
-function slot0.checkPieceChoicePlayedUnlockAnim(slot0, slot1)
-	slot0:_initPlayedPieceChoiceList()
+function var_0_0.checkPieceChoicePlayedUnlockAnim(arg_13_0, arg_13_1)
+	arg_13_0:_initPlayedPieceChoiceList()
 
-	return tabletool.indexOf(slot0.playedPieceChoiceIdList, slot1)
+	return tabletool.indexOf(arg_13_0.playedPieceChoiceIdList, arg_13_1)
 end
 
-function slot0.playedPieceChoiceEvent(slot0, slot1)
-	slot0:_initPlayedPieceChoiceList()
+function var_0_0.playedPieceChoiceEvent(arg_14_0, arg_14_1)
+	arg_14_0:_initPlayedPieceChoiceList()
 
-	if tabletool.indexOf(slot0.playedPieceChoiceIdList, slot1) then
+	if tabletool.indexOf(arg_14_0.playedPieceChoiceIdList, arg_14_1) then
 		return
 	end
 
-	table.insert(slot0.playedPieceChoiceIdList, slot1)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId), table.concat(slot0.playedPieceChoiceIdList, "#"))
+	table.insert(arg_14_0.playedPieceChoiceIdList, arg_14_1)
+
+	local var_14_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId)
+
+	PlayerPrefsHelper.setString(var_14_0, table.concat(arg_14_0.playedPieceChoiceIdList, "#"))
 end
 
-function slot0._initPlayedPieceChoiceList(slot0)
-	if not slot0.playedPieceChoiceIdList then
-		slot0.playedPieceChoiceIdList = string.splitToNumber(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId), ""), "#")
+function var_0_0._initPlayedPieceChoiceList(arg_15_0)
+	if not arg_15_0.playedPieceChoiceIdList then
+		local var_15_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId)
+		local var_15_1 = PlayerPrefsHelper.getString(var_15_0, "")
+
+		arg_15_0.playedPieceChoiceIdList = string.splitToNumber(var_15_1, "#")
 	end
 end
 
-function slot0.clear(slot0)
-	slot0.playedChoiceIdList = nil
-	slot0.playedPieceChoiceIdList = nil
-	slot0.mapComp = nil
+function var_0_0.clear(arg_16_0)
+	arg_16_0.playedChoiceIdList = nil
+	arg_16_0.playedPieceChoiceIdList = nil
+	arg_16_0.mapComp = nil
 end
 
-function slot0.onExistFight(slot0)
+function var_0_0.onExistFight(arg_17_0)
 	DungeonModel.instance.curSendEpisodeId = nil
 
 	if RougeModel.instance:isFinish() then
@@ -100,8 +112,8 @@ function slot0.onExistFight(slot0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

@@ -1,90 +1,105 @@
-module("modules.logic.versionactivity2_4.enter.controller.VersionActivity2_4EnterController", package.seeall)
+﻿module("modules.logic.versionactivity2_4.enter.controller.VersionActivity2_4EnterController", package.seeall)
 
-slot0 = class("VersionActivity2_4EnterController", BaseController)
+local var_0_0 = class("VersionActivity2_4EnterController", BaseController)
 
-function slot0._internalOpenView(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if not VersionActivityEnterHelper.checkCanOpen(slot2) then
+function var_0_0._internalOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6, arg_1_7)
+	if not VersionActivityEnterHelper.checkCanOpen(arg_1_2) then
 		return
 	end
 
-	if slot3 then
-		slot3(slot4, slot1, slot2, slot5)
+	if arg_1_3 then
+		arg_1_3(arg_1_4, arg_1_1, arg_1_2, arg_1_5)
 	else
-		ViewMgr.instance:openView(slot1, slot5)
+		ViewMgr.instance:openView(arg_1_1, arg_1_5)
 
-		if slot6 then
-			slot6(slot7)
+		if arg_1_6 then
+			arg_1_6(arg_1_7)
 		end
 	end
 end
 
-function slot0._internalOpenEnterView(slot0, slot1, slot2, slot3)
-	if VersionActivityBaseController.instance:isPlayedActivityVideo(slot2) then
-		ViewMgr.instance:openView(slot1, slot3)
+function var_0_0._internalOpenEnterView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if VersionActivityBaseController.instance:isPlayedActivityVideo(arg_2_2) then
+		ViewMgr.instance:openView(arg_2_1, arg_2_3)
 
-		if slot0.openEnterViewCb then
-			slot0.openEnterViewCb(slot0.openEnterViewCbObj)
+		if arg_2_0.openEnterViewCb then
+			arg_2_0.openEnterViewCb(arg_2_0.openEnterViewCbObj)
 
-			slot0.openEnterViewCb = nil
-			slot0.openEnterViewCbObj = nil
+			arg_2_0.openEnterViewCb = nil
+			arg_2_0.openEnterViewCbObj = nil
 		end
 	else
-		if not (ActivityModel.instance:getActMO(slot2) and slot5.config and slot5.config.storyId) then
-			logError(string.format("act id %s dot config story id", 100010))
+		local var_2_0 = ActivityModel.instance:getActMO(arg_2_2)
+		local var_2_1 = var_2_0 and var_2_0.config and var_2_0.config.storyId
+
+		if not var_2_1 then
+			var_2_1 = 100010
+
+			logError(string.format("act id %s dot config story id", var_2_1))
 		end
 
-		StoryController.instance:playStory(slot6, {
+		local var_2_2 = {
 			isVersionActivityPV = true
-		}, slot0._onFinishEnterStory, slot0, {
-			actId = slot2,
-			viewName = slot1,
-			viewParams = slot3
-		})
+		}
+		local var_2_3 = {
+			actId = arg_2_2,
+			viewName = arg_2_1,
+			viewParams = arg_2_3
+		}
+
+		StoryController.instance:playStory(var_2_1, var_2_2, arg_2_0._onFinishEnterStory, arg_2_0, var_2_3)
 	end
 end
 
-function slot0._onFinishEnterStory(slot0, slot1)
-	if not VersionActivityEnterHelper.checkCanOpen(slot1.actId) then
+function var_0_0._onFinishEnterStory(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.actId
+
+	if not VersionActivityEnterHelper.checkCanOpen(var_3_0) then
 		return
 	end
 
-	slot0:_internalOpenEnterView(slot1.viewName, slot2, slot1.viewParams)
+	arg_3_0:_internalOpenEnterView(arg_3_1.viewName, var_3_0, arg_3_1.viewParams)
 end
 
-function slot0.openVersionActivityEnterViewIfNotOpened(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_4EnterView) then
-		if slot1 then
-			slot1(slot2)
+		if arg_4_1 then
+			arg_4_1(arg_4_2)
 		end
 	else
-		slot0:openVersionActivityEnterView(slot1, slot2, slot3, slot4)
+		arg_4_0:openVersionActivityEnterView(arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 	end
 end
 
-function slot0.directOpenVersionActivityEnterView(slot0, slot1)
-	slot0:openVersionActivityEnterView(nil, , slot1, true)
+function var_0_0.directOpenVersionActivityEnterView(arg_5_0, arg_5_1)
+	arg_5_0:openVersionActivityEnterView(nil, nil, arg_5_1, true)
 end
 
-function slot0.openVersionActivityEnterView(slot0, slot1, slot2, slot3, slot4)
-	slot0.openEnterViewCb = slot1
-	slot0.openEnterViewCbObj = slot2
-	slot8 = nil
+function var_0_0.openVersionActivityEnterView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	arg_6_0.openEnterViewCb = arg_6_1
+	arg_6_0.openEnterViewCbObj = arg_6_2
 
-	if slot4 then
-		-- Nothing
+	local var_6_0 = VersionActivity2_4Enum.ActivityId.EnterView
+	local var_6_1 = VersionActivityEnterHelper.getActIdList(VersionActivity2_4Enum.EnterViewActSetting)
+	local var_6_2 = {
+		actId = var_6_0,
+		jumpActId = arg_6_3,
+		activityIdList = var_6_1,
+		activitySettingList = VersionActivity2_4Enum.EnterViewActSetting
+	}
+	local var_6_3
+
+	if arg_6_4 then
+		var_6_2.isDirectOpen = true
 	else
-		slot8 = slot0._internalOpenEnterView
+		var_6_3 = arg_6_0._internalOpenEnterView
 	end
 
-	slot0:_internalOpenView(ViewName.VersionActivity2_4EnterView, slot5, slot8, slot0, {
-		actId = VersionActivity2_4Enum.ActivityId.EnterView,
-		jumpActId = slot3,
-		activityIdList = VersionActivityEnterHelper.getActIdList(VersionActivity2_4Enum.EnterViewActSetting),
-		activitySettingList = VersionActivity2_4Enum.EnterViewActSetting,
-		isDirectOpen = true
-	}, slot0.openEnterViewCb, slot0.openEnterViewCbObj)
+	local var_6_4 = ViewName.VersionActivity2_4EnterView
+
+	arg_6_0:_internalOpenView(var_6_4, var_6_0, var_6_3, arg_6_0, var_6_2, arg_6_0.openEnterViewCb, arg_6_0.openEnterViewCbObj)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

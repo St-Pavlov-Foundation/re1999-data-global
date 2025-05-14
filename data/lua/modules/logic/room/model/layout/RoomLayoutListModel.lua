@@ -1,71 +1,79 @@
-module("modules.logic.room.model.layout.RoomLayoutListModel", package.seeall)
+﻿module("modules.logic.room.model.layout.RoomLayoutListModel", package.seeall)
 
-slot0 = class("RoomLayoutListModel", ListScrollModel)
+local var_0_0 = class("RoomLayoutListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.init(slot0)
-	slot1 = {}
+function var_0_0.init(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = RoomLayoutModel.instance
+	local var_3_2 = var_3_1:getMaxPlanCount()
 
-	for slot7 = 0, RoomLayoutModel.instance:getMaxPlanCount() do
-		if not slot2:getById(slot7) then
-			slot8 = RoomLayoutMO.New()
+	for iter_3_0 = 0, var_3_2 do
+		local var_3_3 = var_3_1:getById(iter_3_0)
 
-			slot8:init(slot7)
-			slot8:setName("name_" .. slot7)
-			slot8:setEmpty(true)
+		if not var_3_3 then
+			var_3_3 = RoomLayoutMO.New()
+
+			var_3_3:init(iter_3_0)
+			var_3_3:setName("name_" .. iter_3_0)
+			var_3_3:setEmpty(true)
 		else
-			slot8:setEmpty(false)
+			var_3_3:setEmpty(false)
 		end
 
-		table.insert(slot1, slot8)
+		table.insert(var_3_0, var_3_3)
 	end
 
-	slot0:setList(slot1)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectId))
+function var_0_0._refreshSelect(arg_4_0)
+	local var_4_0 = arg_4_0:getById(arg_4_0._selectId)
+
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
+		iter_4_1:setSelect(var_4_0)
 	end
 end
 
-function slot0.getSelectMO(slot0)
-	return slot0:getById(slot0._selectId)
+function var_0_0.getSelectMO(arg_5_0)
+	return arg_5_0:getById(arg_5_0._selectId)
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectId = slot1
+function var_0_0.setSelect(arg_6_0, arg_6_1)
+	arg_6_0._selectId = arg_6_1
 
-	slot0:_refreshSelect()
+	arg_6_0:_refreshSelect()
 end
 
-function slot0.refreshList(slot0)
-	slot0:onModelUpdate()
+function var_0_0.refreshList(arg_7_0)
+	arg_7_0:onModelUpdate()
 end
 
-function slot0.initScelect(slot0, slot1)
-	slot2 = 0
+function var_0_0.initScelect(arg_8_0, arg_8_1)
+	local var_8_0 = 0
 
-	if slot1 == true then
-		for slot7, slot8 in ipairs(slot0:getList()) do
-			if slot8:isEmpty() then
-				slot2 = slot8.id
+	if arg_8_1 == true then
+		local var_8_1 = arg_8_0:getList()
+
+		for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+			if iter_8_1:isEmpty() then
+				var_8_0 = iter_8_1.id
 
 				break
 			end
 		end
 	end
 
-	slot0:setSelect(slot2)
+	arg_8_0:setSelect(var_8_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

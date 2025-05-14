@@ -1,79 +1,95 @@
-module("modules.logic.season.view1_2.Season1_2CelebrityCardGetItem", package.seeall)
+﻿module("modules.logic.season.view1_2.Season1_2CelebrityCardGetItem", package.seeall)
 
-slot0 = class("Season1_2CelebrityCardGetItem", BaseViewExtended)
+local var_0_0 = class("Season1_2CelebrityCardGetItem", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._gorare1 = gohelper.findChild(slot0.viewGO, "#go_rare1")
-	slot0._gorare2 = gohelper.findChild(slot0.viewGO, "#go_rare2")
-	slot0._gorare3 = gohelper.findChild(slot0.viewGO, "#go_rare3")
-	slot0._gorare4 = gohelper.findChild(slot0.viewGO, "#go_rare4")
-	slot0._gorare5 = gohelper.findChild(slot0.viewGO, "#go_rare5")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorare1 = gohelper.findChild(arg_1_0.viewGO, "#go_rare1")
+	arg_1_0._gorare2 = gohelper.findChild(arg_1_0.viewGO, "#go_rare2")
+	arg_1_0._gorare3 = gohelper.findChild(arg_1_0.viewGO, "#go_rare3")
+	arg_1_0._gorare4 = gohelper.findChild(arg_1_0.viewGO, "#go_rare4")
+	arg_1_0._gorare5 = gohelper.findChild(arg_1_0.viewGO, "#go_rare5")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onRefreshViewParam(slot0, slot1, slot2, slot3)
-	slot0._uid = slot1
-	slot0._noClick = slot2
-	slot0._equipId = slot3
+function var_0_0.onRefreshViewParam(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0._uid = arg_4_1
+	arg_4_0._noClick = arg_4_2
+	arg_4_0._equipId = arg_4_3
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshData(slot0._uid)
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:refreshData(arg_5_0._uid)
 end
 
-function slot0.refreshData(slot0, slot1)
-	slot2 = slot0:_getItemID(slot1)
-	slot0._itemId = slot2
+function var_0_0.refreshData(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:_getItemID(arg_6_1)
 
-	slot0:_checkCreateIcon()
-	slot0._icon:updateData(slot2)
+	arg_6_0._itemId = var_6_0
+
+	arg_6_0:_checkCreateIcon()
+	arg_6_0._icon:updateData(var_6_0)
 end
 
-function slot0._checkCreateIcon(slot0)
-	if not slot0._icon then
-		slot0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewGO, Season1_2CelebrityCardEquip)
+function var_0_0._checkCreateIcon(arg_7_0)
+	if not arg_7_0._icon then
+		arg_7_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.viewGO, Season1_2CelebrityCardEquip)
 
-		slot0._icon:setClickCall(slot0.onBtnClick, slot0)
+		arg_7_0._icon:setClickCall(arg_7_0.onBtnClick, arg_7_0)
 
-		if slot0._noClick then
-			slot1 = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup))
-			slot1.interactable = false
-			slot1.blocksRaycasts = false
+		if arg_7_0._noClick then
+			local var_7_0 = gohelper.onceAddComponent(arg_7_0.viewGO, typeof(UnityEngine.CanvasGroup))
+
+			var_7_0.interactable = false
+			var_7_0.blocksRaycasts = false
 		end
 	end
 end
 
-function slot0.onBtnClick(slot0)
-	if slot0._noClick then
+function var_0_0.onBtnClick(arg_8_0)
+	if arg_8_0._noClick then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.EquipCard, slot0._itemId)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.EquipCard, arg_8_0._itemId)
 end
 
-function slot0._getItemID(slot0, slot1)
-	slot2 = nil
+function var_0_0._getItemID(arg_9_0, arg_9_1)
+	local var_9_0
+	local var_9_1 = arg_9_0:getParentView()
 
-	return slot0._equipId or (slot0:getParentView() and slot3.isItemID and slot3:isItemID() and slot1 or Activity104Model.instance:getAllItemMo()[slot1] and slot4[slot1].itemId)
+	if var_9_1 and var_9_1.isItemID and var_9_1:isItemID() then
+		var_9_0 = arg_9_1
+	else
+		local var_9_2 = Activity104Model.instance:getAllItemMo()
+
+		var_9_0 = var_9_2[arg_9_1] and var_9_2[arg_9_1].itemId
+	end
+
+	var_9_0 = arg_9_0._equipId or var_9_0
+
+	return var_9_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._icon then
-		slot0._icon:setClickCall(nil, )
-		slot0._icon:disposeUI()
+function var_0_0.onDestroyView(arg_11_0)
+	if arg_11_0._icon then
+		arg_11_0._icon:setClickCall(nil, nil)
+		arg_11_0._icon:disposeUI()
 	end
 end
 
-return slot0
+return var_0_0

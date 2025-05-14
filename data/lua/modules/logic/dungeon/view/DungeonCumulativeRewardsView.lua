@@ -1,333 +1,361 @@
-module("modules.logic.dungeon.view.DungeonCumulativeRewardsView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonCumulativeRewardsView", package.seeall)
 
-slot0 = class("DungeonCumulativeRewardsView", BaseView)
+local var_0_0 = class("DungeonCumulativeRewardsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btncloseview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeview")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_leftbg")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_rightbg")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "#go_tips")
-	slot0._txttipsinfo = gohelper.findChildText(slot0.viewGO, "#go_tips/#txt_tipsinfo")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_reward")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content")
-	slot0._gograyline = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content/#go_grayline")
-	slot0._gonormalline = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_content/#go_normalline")
-	slot0._gotarget = gohelper.findChild(slot0.viewGO, "#go_target")
-	slot0._txtprogress = gohelper.findChildText(slot0.viewGO, "progresstip/#txt_progress")
-	slot0._simagetargetbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_target/#simage_targetbg")
-	slot0._simagerightfademask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_rightfademask")
-	slot0._simageleftfademask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_leftfademask")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightbg")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
+	arg_1_0._txttipsinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_tipsinfo")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content")
+	arg_1_0._gograyline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_grayline")
+	arg_1_0._gonormalline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_normalline")
+	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_target")
+	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "progresstip/#txt_progress")
+	arg_1_0._simagetargetbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_target/#simage_targetbg")
+	arg_1_0._simagerightfademask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_rightfademask")
+	arg_1_0._simageleftfademask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftfademask")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btncloseview:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btncloseview:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btncloseview:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getDungeonIcon("full/guankajianlibiejing_038"))
-	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._simagetargetbg:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao"))
-	slot0._simagerightfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao2"))
-	slot0._simageleftfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao1"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getDungeonIcon("full/guankajianlibiejing_038"))
+	arg_5_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_5_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_5_0._simagetargetbg:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao"))
+	arg_5_0._simagerightfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao2"))
+	arg_5_0._simageleftfademask:LoadImage(ResUrl.getDungeonIcon("bg_zhezhao1"))
 	AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_main_eject)
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._scrollreward.gameObject)
+	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._scrollreward.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBeginHandler, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEndHandler, slot0)
+	arg_5_0._drag:AddDragBeginListener(arg_5_0._onDragBeginHandler, arg_5_0)
+	arg_5_0._drag:AddDragEndListener(arg_5_0._onDragEndHandler, arg_5_0)
 
-	slot0._audioScroll = MonoHelper.addLuaComOnceToGo(slot0._scrollreward.gameObject, DungeonMapEpisodeAudio, slot0._scrollreward)
-	slot0._touch = SLFramework.UGUI.UIClickListener.Get(slot0._scrollreward.gameObject)
+	arg_5_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_5_0._scrollreward.gameObject, DungeonMapEpisodeAudio, arg_5_0._scrollreward)
+	arg_5_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_5_0._scrollreward.gameObject)
 
-	slot0._touch:AddClickDownListener(slot0._onClickDownHandler, slot0)
+	arg_5_0._touch:AddClickDownListener(arg_5_0._onClickDownHandler, arg_5_0)
 end
 
-function slot0._onDragBeginHandler(slot0)
-	slot0._audioScroll:onDragBegin()
+function var_0_0._onDragBeginHandler(arg_6_0)
+	arg_6_0._audioScroll:onDragBegin()
 end
 
-function slot0._onDragEndHandler(slot0)
-	slot0._audioScroll:onDragEnd()
+function var_0_0._onDragEndHandler(arg_7_0)
+	arg_7_0._audioScroll:onDragEnd()
 end
 
-function slot0._onClickDownHandler(slot0)
-	slot0._audioScroll:onClickDown()
+function var_0_0._onClickDownHandler(arg_8_0)
+	arg_8_0._audioScroll:onClickDown()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0._getPointRewardRequest(slot0)
-	if DungeonMapModel.instance:canGetRewardsList(slot0._maxChapterId) and #slot1 > 0 then
-		slot0._getRewardLen = #slot1
+function var_0_0._getPointRewardRequest(arg_10_0)
+	local var_10_0 = DungeonMapModel.instance:canGetRewardsList(arg_10_0._maxChapterId)
 
-		DungeonRpc.instance:sendGetPointRewardRequest(slot1)
+	if var_10_0 and #var_10_0 > 0 then
+		arg_10_0._getRewardLen = #var_10_0
+
+		DungeonRpc.instance:sendGetPointRewardRequest(var_10_0)
 	end
 end
 
-function slot0._onScrollChange(slot0, slot1)
-	slot0:_showTarget()
-	gohelper.setActive(slot0._simagerightfademask.gameObject, slot0._isNormalMode and slot0._scrollreward.horizontalNormalizedPosition < 1)
+function var_0_0._onScrollChange(arg_11_0, arg_11_1)
+	arg_11_0:_showTarget()
+	gohelper.setActive(arg_11_0._simagerightfademask.gameObject, arg_11_0._isNormalMode and arg_11_0._scrollreward.horizontalNormalizedPosition < 1)
 end
 
-function slot0.onOpen(slot0)
-	slot0._maxChapterId = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList].chapterId
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._maxChapterId = lua_chapter_point_reward.configList[#lua_chapter_point_reward.configList].chapterId
 
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointReward, slot0._onGetPointReward, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointRewardMaterials, slot0._onGetPointRewardMaterials, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.GuideGetPointReward, slot0._getPointRewardRequest, slot0)
-	slot0._scrollreward:AddOnValueChanged(slot0._onScrollChange, slot0)
+	arg_12_0:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointReward, arg_12_0._onGetPointReward, arg_12_0)
+	arg_12_0:addEventCb(DungeonController.instance, DungeonEvent.OnGetPointRewardMaterials, arg_12_0._onGetPointRewardMaterials, arg_12_0)
+	arg_12_0:addEventCb(DungeonController.instance, DungeonEvent.GuideGetPointReward, arg_12_0._getPointRewardRequest, arg_12_0)
+	arg_12_0._scrollreward:AddOnValueChanged(arg_12_0._onScrollChange, arg_12_0)
 
 	if not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DelayGetPointReward) then
-		TaskDispatcher.runDelay(slot0._getPointRewardRequest, slot0, 0.6)
+		TaskDispatcher.runDelay(arg_12_0._getPointRewardRequest, arg_12_0, 0.6)
 	end
 
-	slot0:_showChapters()
-	slot0:_showProgress()
-	slot0:_moveCenter()
-	slot0:_showTarget()
-	NavigateMgr.instance:addEscape(ViewName.DungeonCumulativeRewardsView, slot0._btncloseOnClick, slot0)
+	arg_12_0:_showChapters()
+	arg_12_0:_showProgress()
+	arg_12_0:_moveCenter()
+	arg_12_0:_showTarget()
+	NavigateMgr.instance:addEscape(ViewName.DungeonCumulativeRewardsView, arg_12_0._btncloseOnClick, arg_12_0)
 end
 
-function slot0._onGetPointRewardMaterials(slot0, slot1)
-	slot0._rewardsMaterials = slot1
+function var_0_0._onGetPointRewardMaterials(arg_13_0, arg_13_1)
+	arg_13_0._rewardsMaterials = arg_13_1
 end
 
-function slot0._showMaterials(slot0)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot0._rewardsMaterials)
+function var_0_0._showMaterials(arg_14_0)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_14_0._rewardsMaterials)
 end
 
-function slot0._onGetPointReward(slot0)
-	if slot0._getRewardLen == 1 then
+function var_0_0._onGetPointReward(arg_15_0)
+	if arg_15_0._getRewardLen == 1 then
 		AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_single)
 	else
 		AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_multiple)
 	end
 
-	slot0:_refreshItems()
-	slot0:_showProgress()
-	slot0:_showTarget()
+	arg_15_0:_refreshItems()
+	arg_15_0:_showProgress()
+	arg_15_0:_showTarget()
 
-	if slot0._rewardsMaterials then
-		TaskDispatcher.cancelTask(slot0._showMaterials, slot0)
-		TaskDispatcher.runDelay(slot0._showMaterials, slot0, 0.8)
+	if arg_15_0._rewardsMaterials then
+		TaskDispatcher.cancelTask(arg_15_0._showMaterials, arg_15_0)
+		TaskDispatcher.runDelay(arg_15_0._showMaterials, arg_15_0, 0.8)
 	end
 end
 
-function slot0._refreshItems(slot0)
-	for slot4, slot5 in ipairs(slot0._itemList) do
-		slot5:refreshRewardItems(true)
+function var_0_0._refreshItems(arg_16_0)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._itemList) do
+		iter_16_1:refreshRewardItems(true)
 	end
 end
 
-function slot0._showChapters(slot0)
-	slot0._firstPosX = 145
-	slot0._sliderBasePosx = 59.5
-	slot0._posX = 0
-	slot0._posY = -506.8
-	slot0._deltaPosX = 335
-	slot0._endNormalGap = 165
-	slot0._endTargetGap = 280
-	slot0._targetModeWidth = 1266
-	slot0._normalModeWidth = 1630
-	slot0._itemList = slot0:getUserDataTb_()
-	slot0._itemMap = slot0:getUserDataTb_()
+function var_0_0._showChapters(arg_17_0)
+	arg_17_0._firstPosX = 145
+	arg_17_0._sliderBasePosx = 59.5
+	arg_17_0._posX = 0
+	arg_17_0._posY = -506.8
+	arg_17_0._deltaPosX = 335
+	arg_17_0._endNormalGap = 165
+	arg_17_0._endTargetGap = 280
+	arg_17_0._targetModeWidth = 1266
+	arg_17_0._normalModeWidth = 1630
+	arg_17_0._itemList = arg_17_0:getUserDataTb_()
+	arg_17_0._itemMap = arg_17_0:getUserDataTb_()
 
-	recthelper.setAnchor(slot0._gograyline.transform, slot0._sliderBasePosx, slot0._posY)
+	recthelper.setAnchor(arg_17_0._gograyline.transform, arg_17_0._sliderBasePosx, arg_17_0._posY)
+	recthelper.setAnchor(arg_17_0._gonormalline.transform, arg_17_0._sliderBasePosx, arg_17_0._posY)
 
-	slot4 = slot0._posY
+	arg_17_0._prevPointValue = 0
 
-	recthelper.setAnchor(slot0._gonormalline.transform, slot0._sliderBasePosx, slot4)
-
-	slot0._prevPointValue = 0
-
-	for slot4 = 101, slot0._maxChapterId do
-		slot0:_showChapter(slot4)
+	for iter_17_0 = 101, arg_17_0._maxChapterId do
+		arg_17_0:_showChapter(iter_17_0)
 	end
 end
 
-function slot0._showChapter(slot0, slot1)
-	slot3 = DungeonMapModel.instance:getRewardPointInfo()
+function var_0_0._showChapter(arg_18_0, arg_18_1)
+	local var_18_0 = DungeonConfig.instance:getChapterPointReward(arg_18_1)
+	local var_18_1 = DungeonMapModel.instance:getRewardPointInfo()
 
-	for slot7, slot8 in ipairs(DungeonConfig.instance:getChapterPointReward(slot1)) do
-		slot10 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocontent, "item" .. slot8.id)
-		slot12 = slot0._posX + (slot0._posX == 0 and slot0._firstPosX or slot0._deltaPosX)
-		slot0._posX = slot12
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		local var_18_2 = arg_18_0.viewContainer:getSetting().otherRes[1]
+		local var_18_3 = arg_18_0:getResInst(var_18_2, arg_18_0._gocontent, "item" .. iter_18_1.id)
+		local var_18_4 = arg_18_0._posX
+		local var_18_5 = arg_18_0._posX + (arg_18_0._posX == 0 and arg_18_0._firstPosX or arg_18_0._deltaPosX)
 
-		recthelper.setAnchor(slot10.transform, slot12, slot0._posY)
-		recthelper.setWidth(slot0._gocontent.transform, slot0._posX)
-		recthelper.setWidth(slot0._gograyline.transform, slot0._posX + slot0._sliderBasePosx)
+		arg_18_0._posX = var_18_5
 
-		slot14 = MonoHelper.addLuaComOnceToGo(slot10, DungeonCumulativeRewardsItem, {
-			slot1,
-			slot8,
+		recthelper.setAnchor(var_18_3.transform, var_18_5, arg_18_0._posY)
+		recthelper.setWidth(arg_18_0._gocontent.transform, arg_18_0._posX)
+
+		local var_18_6 = arg_18_0._posX + arg_18_0._sliderBasePosx
+
+		recthelper.setWidth(arg_18_0._gograyline.transform, var_18_6)
+
+		local var_18_7 = MonoHelper.addLuaComOnceToGo(var_18_3, DungeonCumulativeRewardsItem, {
+			arg_18_1,
+			iter_18_1,
 			false,
-			slot0._posX,
-			slot12,
-			slot0._prevPointValue
+			var_18_4,
+			var_18_5,
+			arg_18_0._prevPointValue
 		})
 
-		table.insert(slot0._itemList, slot14)
+		table.insert(arg_18_0._itemList, var_18_7)
 
-		slot0._itemMap[slot8.id] = slot14
-		slot0._prevPointValue = slot8.rewardPointNum
+		arg_18_0._itemMap[iter_18_1.id] = var_18_7
+		arg_18_0._prevPointValue = iter_18_1.rewardPointNum
 	end
 end
 
-function slot0._showTarget(slot0)
-	slot1 = recthelper.getAnchorX(slot0._gocontent.transform)
-	slot2 = recthelper.getWidth(slot0._scrollreward.transform)
-	slot3, slot4 = nil
-	slot5 = DungeonMapModel.instance:getRewardPointInfo()
+function var_0_0._showTarget(arg_19_0)
+	local var_19_0 = recthelper.getAnchorX(arg_19_0._gocontent.transform)
+	local var_19_1 = recthelper.getWidth(arg_19_0._scrollreward.transform)
+	local var_19_2
+	local var_19_3
+	local var_19_4 = DungeonMapModel.instance:getRewardPointInfo()
 
-	for slot9 = 101, slot0._maxChapterId do
-		for slot14, slot15 in ipairs(DungeonConfig.instance:getChapterPointReward(slot9)) do
-			if slot15.display > 0 and slot5.rewardPoint < slot15.rewardPointNum then
-				slot4 = slot15
+	for iter_19_0 = 101, arg_19_0._maxChapterId do
+		local var_19_5 = DungeonConfig.instance:getChapterPointReward(iter_19_0)
 
-				if slot2 < slot0._itemMap[slot15.id].curPosX + slot1 then
-					slot3 = slot15
+		for iter_19_1, iter_19_2 in ipairs(var_19_5) do
+			if iter_19_2.display > 0 and var_19_4.rewardPoint < iter_19_2.rewardPointNum then
+				var_19_3 = iter_19_2
+
+				if var_19_1 < arg_19_0._itemMap[iter_19_2.id].curPosX + var_19_0 then
+					var_19_2 = iter_19_2
 
 					break
 				end
 			end
 		end
 
-		if slot3 then
+		if var_19_2 then
 			break
 		end
 	end
 
-	slot0._isNormalMode = true
+	var_19_2 = var_19_2 or var_19_3
+	arg_19_0._isNormalMode = true
 
-	if slot3 or slot4 then
-		slot0._isNormalMode = false
+	if var_19_2 then
+		arg_19_0._isNormalMode = false
 
-		if slot0._targetItem then
-			if slot0._targetItem.rewardId == slot3.id then
+		if arg_19_0._targetItem then
+			if arg_19_0._targetItem.rewardId == var_19_2.id then
 				return
 			end
 
-			slot0:_playTargetItemQuitAmim()
+			arg_19_0:_playTargetItemQuitAmim()
 
-			slot0._targetItem = nil
+			arg_19_0._targetItem = nil
 		end
 
-		recthelper.setWidth(slot0._scrollreward.transform, slot0._targetModeWidth)
+		recthelper.setWidth(arg_19_0._scrollreward.transform, arg_19_0._targetModeWidth)
 
-		slot7 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gotarget, "item" .. slot3.id)
+		local var_19_6 = arg_19_0.viewContainer:getSetting().otherRes[1]
+		local var_19_7 = arg_19_0:getResInst(var_19_6, arg_19_0._gotarget, "item" .. var_19_2.id)
 
-		gohelper.setActive(slot7, not slot0._unUseTargetItemGo)
+		gohelper.setActive(var_19_7, not arg_19_0._unUseTargetItemGo)
 
-		slot0._targetItem = MonoHelper.addLuaComOnceToGo(slot7, DungeonCumulativeRewardsItem, {
+		arg_19_0._targetItem = MonoHelper.addLuaComOnceToGo(var_19_7, DungeonCumulativeRewardsItem, {
 			nil,
-			slot3,
+			var_19_2,
 			true
 		})
 
-		TaskDispatcher.cancelTask(slot0._showTargetItem, slot0)
-		TaskDispatcher.runDelay(slot0._showTargetItem, slot0, 0.1)
-		gohelper.setActive(slot0._gotarget, true)
-		gohelper.setActive(slot0._simagerightfademask.gameObject, false)
+		TaskDispatcher.cancelTask(arg_19_0._showTargetItem, arg_19_0)
+		TaskDispatcher.runDelay(arg_19_0._showTargetItem, arg_19_0, 0.1)
+		gohelper.setActive(arg_19_0._gotarget, true)
+		gohelper.setActive(arg_19_0._simagerightfademask.gameObject, false)
 	else
-		gohelper.setActive(slot0._gotarget, false)
-		recthelper.setWidth(slot0._scrollreward.transform, slot0._normalModeWidth)
+		gohelper.setActive(arg_19_0._gotarget, false)
+		recthelper.setWidth(arg_19_0._scrollreward.transform, arg_19_0._normalModeWidth)
 	end
 
-	recthelper.setWidth(slot0._gocontent.transform, slot0._posX + (slot0._isNormalMode and slot0._endNormalGap or slot0._endTargetGap))
-	gohelper.setActive(slot0._simagerightfademask.gameObject, slot0._isNormalMode and slot0._scrollreward.horizontalNormalizedPosition < 1)
+	local var_19_8 = arg_19_0._isNormalMode and arg_19_0._endNormalGap or arg_19_0._endTargetGap
+
+	recthelper.setWidth(arg_19_0._gocontent.transform, arg_19_0._posX + var_19_8)
+	gohelper.setActive(arg_19_0._simagerightfademask.gameObject, arg_19_0._isNormalMode and arg_19_0._scrollreward.horizontalNormalizedPosition < 1)
 end
 
-function slot0._playTargetItemQuitAmim(slot0)
-	if not slot0._targetItem or not slot0._targetItem.viewGO then
+function var_0_0._playTargetItemQuitAmim(arg_20_0)
+	if not arg_20_0._targetItem or not arg_20_0._targetItem.viewGO then
 		return
 	end
 
-	slot0._unUseTargetItemGo = slot0._targetItem.viewGO
+	arg_20_0._unUseTargetItemGo = arg_20_0._targetItem.viewGO
 
-	slot0._unUseTargetItemGo:GetComponent(typeof(UnityEngine.Animator)):Play("dungeoncumulativerewardsitem_switch_out")
-	TaskDispatcher.cancelTask(slot0._destroyUnUseTargetItem, slot0)
-	TaskDispatcher.runDelay(slot0._destroyUnUseTargetItem, slot0, 0.1)
+	arg_20_0._unUseTargetItemGo:GetComponent(typeof(UnityEngine.Animator)):Play("dungeoncumulativerewardsitem_switch_out")
+	TaskDispatcher.cancelTask(arg_20_0._destroyUnUseTargetItem, arg_20_0)
+	TaskDispatcher.runDelay(arg_20_0._destroyUnUseTargetItem, arg_20_0, 0.1)
 end
 
-function slot0._destroyUnUseTargetItem(slot0)
-	if not slot0._unUseTargetItemGo then
+function var_0_0._destroyUnUseTargetItem(arg_21_0)
+	if not arg_21_0._unUseTargetItemGo then
 		return
 	end
 
-	gohelper.destroy(slot0._unUseTargetItemGo)
+	gohelper.destroy(arg_21_0._unUseTargetItemGo)
 
-	slot0._unUseTargetItemGo = nil
+	arg_21_0._unUseTargetItemGo = nil
 end
 
-function slot0._showTargetItem(slot0)
-	if not slot0._targetItem or not slot0._targetItem.viewGO then
+function var_0_0._showTargetItem(arg_22_0)
+	if not arg_22_0._targetItem or not arg_22_0._targetItem.viewGO then
 		return
 	end
 
-	gohelper.setActive(slot0._targetItem.viewGO, true)
+	gohelper.setActive(arg_22_0._targetItem.viewGO, true)
 	AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_flip)
 end
 
-function slot0._showProgress(slot0)
-	slot1 = DungeonMapModel.instance:getRewardPointInfo()
+function var_0_0._showProgress(arg_23_0)
+	local var_23_0 = DungeonMapModel.instance:getRewardPointInfo()
 
-	for slot5, slot6 in ipairs(slot0._itemList) do
-		if slot6.curPointValue <= slot1.rewardPoint then
-			recthelper.setWidth(slot0._gonormalline.transform, slot6.curPosX - slot0._sliderBasePosx)
-		elseif slot6.prevPointValue <= slot1.rewardPoint then
-			slot8 = slot5 == 1 and slot0._sliderBasePosx or slot6.prevPosX
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0._itemList) do
+		if iter_23_1.curPointValue <= var_23_0.rewardPoint then
+			local var_23_1 = iter_23_1.curPosX - arg_23_0._sliderBasePosx
 
-			recthelper.setWidth(slot0._gonormalline.transform, slot8 + (slot1.rewardPoint - slot6.prevPointValue) / (slot6.curPointValue - slot6.prevPointValue) * (slot6.curPosX - slot8) - slot0._sliderBasePosx)
+			recthelper.setWidth(arg_23_0._gonormalline.transform, var_23_1)
+		elseif var_23_0.rewardPoint >= iter_23_1.prevPointValue then
+			local var_23_2 = iter_23_1.curPointValue - iter_23_1.prevPointValue
+			local var_23_3 = iter_23_0 == 1 and arg_23_0._sliderBasePosx or iter_23_1.prevPosX
+			local var_23_4 = iter_23_1.curPosX - var_23_3
+			local var_23_5 = var_23_3 + (var_23_0.rewardPoint - iter_23_1.prevPointValue) / var_23_2 * var_23_4 - arg_23_0._sliderBasePosx
 
-			break
-		end
-	end
-
-	if (slot0._itemList and #slot0._itemList or 0) > 0 and slot0._itemList[slot2].curPointValue <= slot1.rewardPoint then
-		recthelper.setWidth(slot0._gonormalline.transform, recthelper.getWidth(slot0._gograyline.transform))
-	end
-
-	slot0._txtprogress.text = slot1.rewardPoint
-end
-
-function slot0._moveCenter(slot0)
-	slot2 = nil
-
-	for slot6, slot7 in ipairs(slot0._itemList) do
-		if DungeonMapModel.instance:getRewardPointInfo().rewardPoint < slot7.curPointValue then
-			slot2 = slot7
+			recthelper.setWidth(arg_23_0._gonormalline.transform, var_23_5)
 
 			break
 		end
 	end
 
-	recthelper.setAnchorX(slot0._gocontent.transform, -(slot2 or slot0._itemList[#slot0._itemList]).curPosX + recthelper.getWidth(slot0._scrollreward.transform) / 2)
+	local var_23_6 = arg_23_0._itemList and #arg_23_0._itemList or 0
+
+	if var_23_6 > 0 and arg_23_0._itemList[var_23_6].curPointValue <= var_23_0.rewardPoint then
+		local var_23_7 = recthelper.getWidth(arg_23_0._gograyline.transform)
+
+		recthelper.setWidth(arg_23_0._gonormalline.transform, var_23_7)
+	end
+
+	arg_23_0._txtprogress.text = var_23_0.rewardPoint
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._getPointRewardRequest, slot0)
-	TaskDispatcher.cancelTask(slot0._destroyUnUseTargetItem, slot0)
-	TaskDispatcher.cancelTask(slot0._showTargetItem, slot0)
-	slot0._scrollreward:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(slot0._showMaterials, slot0)
+function var_0_0._moveCenter(arg_24_0)
+	local var_24_0 = DungeonMapModel.instance:getRewardPointInfo()
+	local var_24_1
+
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0._itemList) do
+		if iter_24_1.curPointValue > var_24_0.rewardPoint then
+			var_24_1 = iter_24_1
+
+			break
+		end
+	end
+
+	var_24_1 = var_24_1 or arg_24_0._itemList[#arg_24_0._itemList]
+
+	local var_24_2 = recthelper.getWidth(arg_24_0._scrollreward.transform)
+
+	recthelper.setAnchorX(arg_24_0._gocontent.transform, -var_24_1.curPosX + var_24_2 / 2)
+end
+
+function var_0_0.onClose(arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._getPointRewardRequest, arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._destroyUnUseTargetItem, arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._showTargetItem, arg_25_0)
+	arg_25_0._scrollreward:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(arg_25_0._showMaterials, arg_25_0)
 
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DelayGetPointReward) then
 		GuideModel.instance:setFlag(GuideModel.GuideFlag.DelayGetPointReward, nil)
@@ -335,26 +363,26 @@ function slot0.onClose(slot0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
-	slot0._simagetargetbg:UnLoadImage()
-	slot0._simageleftfademask:UnLoadImage()
-	slot0._simagerightfademask:UnLoadImage()
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0._simagebg:UnLoadImage()
+	arg_26_0._simageleftbg:UnLoadImage()
+	arg_26_0._simagerightbg:UnLoadImage()
+	arg_26_0._simagetargetbg:UnLoadImage()
+	arg_26_0._simageleftfademask:UnLoadImage()
+	arg_26_0._simagerightfademask:UnLoadImage()
 
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragEndListener()
+	if arg_26_0._drag then
+		arg_26_0._drag:RemoveDragBeginListener()
+		arg_26_0._drag:RemoveDragEndListener()
 
-		slot0._drag = nil
+		arg_26_0._drag = nil
 	end
 
-	if slot0._touch then
-		slot0._touch:RemoveClickDownListener()
+	if arg_26_0._touch then
+		arg_26_0._touch:RemoveClickDownListener()
 
-		slot0._touch = nil
+		arg_26_0._touch = nil
 	end
 end
 
-return slot0
+return var_0_0

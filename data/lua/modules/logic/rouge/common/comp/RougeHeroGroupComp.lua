@@ -1,63 +1,63 @@
-module("modules.logic.rouge.common.comp.RougeHeroGroupComp", package.seeall)
+﻿module("modules.logic.rouge.common.comp.RougeHeroGroupComp", package.seeall)
 
-slot0 = class("RougeHeroGroupComp", UserDataDispose)
+local var_0_0 = class("RougeHeroGroupComp", UserDataDispose)
 
-function slot0.Get(slot0)
-	slot1 = uv0.New()
+function var_0_0.Get(arg_1_0)
+	local var_1_0 = var_0_0.New()
 
-	slot1:init(slot0)
+	var_1_0:init(arg_1_0)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0:__onInit()
 
-	slot0.go = slot1
+	arg_2_0.go = arg_2_1
 
-	slot0:_editableInitView()
+	arg_2_0:_editableInitView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnMember = gohelper.findChildButtonWithAudio(slot0.go, "Root/#btn_Member")
-	slot0._goRecovery = gohelper.findChild(slot0.go, "Root/recovery")
-	slot0._goLossLife = gohelper.findChild(slot0.go, "Root/bleeding")
+function var_0_0._editableInitView(arg_3_0)
+	arg_3_0._btnMember = gohelper.findChildButtonWithAudio(arg_3_0.go, "Root/#btn_Member")
+	arg_3_0._goRecovery = gohelper.findChild(arg_3_0.go, "Root/recovery")
+	arg_3_0._goLossLife = gohelper.findChild(arg_3_0.go, "Root/bleeding")
 
-	gohelper.setActive(slot0._goRecovery, false)
-	gohelper.setActive(slot0._goLossLife, false)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onTeamLifeChange, slot0.onLifeChange, slot0)
+	gohelper.setActive(arg_3_0._goRecovery, false)
+	gohelper.setActive(arg_3_0._goLossLife, false)
+	arg_3_0:addEventCb(RougeMapController.instance, RougeMapEvent.onTeamLifeChange, arg_3_0.onLifeChange, arg_3_0)
 end
 
-function slot0.onLifeChange(slot0, slot1)
-	if slot1 == RougeMapEnum.LifeChangeStatus.Idle then
+function var_0_0.onLifeChange(arg_4_0, arg_4_1)
+	if arg_4_1 == RougeMapEnum.LifeChangeStatus.Idle then
 		return
 	end
 
-	if slot1 == RougeMapEnum.LifeChangeStatus.Add then
-		gohelper.setActive(slot0._goRecovery, false)
-		gohelper.setActive(slot0._goRecovery, true)
+	if arg_4_1 == RougeMapEnum.LifeChangeStatus.Add then
+		gohelper.setActive(arg_4_0._goRecovery, false)
+		gohelper.setActive(arg_4_0._goRecovery, true)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goLossLife, false)
-	gohelper.setActive(slot0._goLossLife, true)
+	gohelper.setActive(arg_4_0._goLossLife, false)
+	gohelper.setActive(arg_4_0._goLossLife, true)
 end
 
-function slot0._btnMemberOnClick(slot0)
+function var_0_0._btnMemberOnClick(arg_5_0)
 	RougeController.instance:openRougeTeamView()
 end
 
-function slot0.onOpen(slot0)
-	slot0._btnMember:AddClickListener(slot0._btnMemberOnClick, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._btnMember:AddClickListener(arg_6_0._btnMemberOnClick, arg_6_0)
 end
 
-function slot0.onClose(slot0)
-	slot0._btnMember:RemoveClickListener()
+function var_0_0.onClose(arg_7_0)
+	arg_7_0._btnMember:RemoveClickListener()
 end
 
-function slot0.destroy(slot0)
-	slot0:__onDispose()
+function var_0_0.destroy(arg_8_0)
+	arg_8_0:__onDispose()
 end
 
-return slot0
+return var_0_0

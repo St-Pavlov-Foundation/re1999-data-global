@@ -1,108 +1,110 @@
-module("modules.logic.fight.view.FightGuideView", package.seeall)
+﻿module("modules.logic.fight.view.FightGuideView", package.seeall)
 
-slot0 = class("FightGuideView", BaseView)
+local var_0_0 = class("FightGuideView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goslider = gohelper.findChild(slot0.viewGO, "#go_slider")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "mask/#go_content")
-	slot0._goscroll = gohelper.findChild(slot0.viewGO, "#go_scroll")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_left")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_right")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "#go_slider")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "mask/#go_content")
+	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "#go_scroll")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_left")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_right")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
-	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0._btnright.gameObject.activeInHierarchy then
+function var_0_0._btncloseOnClick(arg_4_0)
+	if arg_4_0._btnright.gameObject.activeInHierarchy then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_help_switch)
-		slot0:_setSelect(slot0._index + 1)
+		arg_4_0:_setSelect(arg_4_0._index + 1)
 	else
-		slot0:closeThis()
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0._btnleftOnClick(slot0)
-	slot0:_setSelect(slot0._index - 1)
+function var_0_0._btnleftOnClick(arg_5_0)
+	arg_5_0:_setSelect(arg_5_0._index - 1)
 end
 
-function slot0._btnrightOnClick(slot0)
-	slot0:_setSelect(slot0._index + 1)
+function var_0_0._btnrightOnClick(arg_6_0)
+	arg_6_0:_setSelect(arg_6_0._index + 1)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
-	gohelper.addUIClickAudio(slot0._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
+function var_0_0._editableInitView(arg_7_0)
+	gohelper.addUIClickAudio(arg_7_0._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
+	gohelper.addUIClickAudio(arg_7_0._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
 
-	slot0._selectItems = {}
-	slot0._contentItems = {}
-	slot0._space = recthelper.getWidth(slot0._gocontent.transform)
-	slot0._scroll = SLFramework.UGUI.UIDragListener.Get(slot0._goscroll)
+	arg_7_0._selectItems = {}
+	arg_7_0._contentItems = {}
+	arg_7_0._space = recthelper.getWidth(arg_7_0._gocontent.transform)
+	arg_7_0._scroll = SLFramework.UGUI.UIDragListener.Get(arg_7_0._goscroll)
 
-	slot0._scroll:AddDragBeginListener(slot0._onScrollDragBegin, slot0)
-	slot0._scroll:AddDragEndListener(slot0._onScrollDragEnd, slot0)
+	arg_7_0._scroll:AddDragBeginListener(arg_7_0._onScrollDragBegin, arg_7_0)
+	arg_7_0._scroll:AddDragEndListener(arg_7_0._onScrollDragEnd, arg_7_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._scroll:RemoveDragBeginListener()
-	slot0._scroll:RemoveDragEndListener()
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0._scroll:RemoveDragBeginListener()
+	arg_8_0._scroll:RemoveDragEndListener()
 end
 
-function slot0._onScrollDragBegin(slot0, slot1, slot2)
-	slot0._scrollStartPos = slot2.position
+function var_0_0._onScrollDragBegin(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._scrollStartPos = arg_9_2.position
 end
 
-function slot0._onScrollDragEnd(slot0, slot1, slot2)
-	slot3 = slot2.position
+function var_0_0._onScrollDragEnd(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_2.position
+	local var_10_1 = var_10_0.x - arg_10_0._scrollStartPos.x
+	local var_10_2 = var_10_0.y - arg_10_0._scrollStartPos.y
 
-	if math.abs(slot3.x - slot0._scrollStartPos.x) < math.abs(slot3.y - slot0._scrollStartPos.y) then
+	if math.abs(var_10_1) < math.abs(var_10_2) then
 		return
 	end
 
-	if slot4 > 100 and slot0._btnleft.gameObject.activeInHierarchy then
+	if var_10_1 > 100 and arg_10_0._btnleft.gameObject.activeInHierarchy then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_help_switch)
-		slot0:_setSelect(slot0._index - 1)
-	elseif slot4 < -100 and slot0._btnright.gameObject.activeInHierarchy then
+		arg_10_0:_setSelect(arg_10_0._index - 1)
+	elseif var_10_1 < -100 and arg_10_0._btnright.gameObject.activeInHierarchy then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_help_switch)
-		slot0:_setSelect(slot0._index + 1)
+		arg_10_0:_setSelect(arg_10_0._index + 1)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	if slot0._contentItems then
-		for slot4, slot5 in pairs(slot0._contentItems) do
-			gohelper.destroy(slot5.go)
+function var_0_0.onUpdateParam(arg_11_0)
+	if arg_11_0._contentItems then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0._contentItems) do
+			gohelper.destroy(iter_11_1.go)
 		end
 	end
 
-	slot0._contentItems = {}
+	arg_11_0._contentItems = {}
 
-	slot0:_refreshView()
+	arg_11_0:_refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshView()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:_refreshView()
 end
 
-function slot0._refreshView(slot0)
-	if slot0.viewParam then
-		slot0._list = slot0.viewParam.viewParam
+function var_0_0._refreshView(arg_13_0)
+	if arg_13_0.viewParam then
+		arg_13_0._list = arg_13_0.viewParam.viewParam
 	else
-		slot0._list = {
+		arg_13_0._list = {
 			1,
 			2,
 			3,
@@ -111,66 +113,75 @@ function slot0._refreshView(slot0)
 		}
 	end
 
-	slot0:_setSelectItems()
-	slot0:_setContentItems()
-	slot0:_setSelect(1)
-	gohelper.setActive(slot0._goslider, #slot0._list > 1)
+	arg_13_0:_setSelectItems()
+	arg_13_0:_setContentItems()
+	arg_13_0:_setSelect(1)
+	gohelper.setActive(arg_13_0._goslider, #arg_13_0._list > 1)
 end
 
-function slot0._setSelectItems(slot0, slot1)
-	for slot6 = 1, #slot0._list do
-		slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goslider, "SelectItem" .. slot6), FightTechniqueSelectItem)
+function var_0_0._setSelectItems(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.viewContainer:getSetting().otherRes[1]
 
-		slot8:updateItem({
-			index = slot6,
-			pos = 55 * (slot6 - 0.5 * (#slot0._list + 1))
+	for iter_14_0 = 1, #arg_14_0._list do
+		local var_14_1 = arg_14_0:getResInst(var_14_0, arg_14_0._goslider, "SelectItem" .. iter_14_0)
+		local var_14_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_1, FightTechniqueSelectItem)
+
+		var_14_2:updateItem({
+			index = iter_14_0,
+			pos = 55 * (iter_14_0 - 0.5 * (#arg_14_0._list + 1))
 		})
-		slot8:setView(slot0)
-		table.insert(slot0._selectItems, slot8)
+		var_14_2:setView(arg_14_0)
+		table.insert(arg_14_0._selectItems, var_14_2)
 	end
 end
 
-function slot0._setContentItems(slot0)
-	for slot6 = #slot0._list, 1, -1 do
-		slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._gocontent, "ContentItem" .. slot6), FightGuideItem)
+function var_0_0._setContentItems(arg_15_0)
+	local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes[2]
+	local var_15_1 = #arg_15_0._list
 
-		slot8:updateItem({
-			index = slot6,
-			maxIndex = slot2,
-			id = slot0._list[slot6],
-			pos = slot0._space * (slot6 - 1)
+	for iter_15_0 = var_15_1, 1, -1 do
+		local var_15_2 = arg_15_0:getResInst(var_15_0, arg_15_0._gocontent, "ContentItem" .. iter_15_0)
+		local var_15_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_2, FightGuideItem)
+
+		var_15_3:updateItem({
+			index = iter_15_0,
+			maxIndex = var_15_1,
+			id = arg_15_0._list[iter_15_0],
+			pos = arg_15_0._space * (iter_15_0 - 1)
 		})
 
-		slot0._contentItems[slot6] = slot8
+		arg_15_0._contentItems[iter_15_0] = var_15_3
 	end
 end
 
-function slot0._updateBtns(slot0)
-	gohelper.setActive(slot0._btnright.gameObject, slot0._index < #slot0._list)
-	gohelper.setActive(slot0._btnleft.gameObject, slot0._index > 1)
+function var_0_0._updateBtns(arg_16_0)
+	gohelper.setActive(arg_16_0._btnright.gameObject, arg_16_0._index < #arg_16_0._list)
+	gohelper.setActive(arg_16_0._btnleft.gameObject, arg_16_0._index > 1)
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0:_setSelect(slot1)
+function var_0_0.setSelect(arg_17_0, arg_17_1)
+	arg_17_0:_setSelect(arg_17_1)
 end
 
-function slot0._setSelect(slot0, slot1)
-	slot0._index = slot1
+function var_0_0._setSelect(arg_18_0, arg_18_1)
+	arg_18_0._index = arg_18_1
 
-	for slot5, slot6 in pairs(slot0._selectItems) do
-		slot6:setSelect(slot1)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._selectItems) do
+		iter_18_1:setSelect(arg_18_1)
 	end
 
-	for slot5, slot6 in pairs(slot0._contentItems) do
-		slot6:setSelect(slot1)
+	for iter_18_2, iter_18_3 in pairs(arg_18_0._contentItems) do
+		iter_18_3:setSelect(arg_18_1)
 	end
 
-	ZProj.TweenHelper.DOAnchorPosX(slot0._gocontent.transform, (1 - slot0._index) * slot0._space, 0.25)
-	slot0:_updateBtns()
+	local var_18_0 = (1 - arg_18_0._index) * arg_18_0._space
+
+	ZProj.TweenHelper.DOAnchorPosX(arg_18_0._gocontent.transform, var_18_0, 0.25)
+	arg_18_0:_updateBtns()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_help_close)
 end
 
-return slot0
+return var_0_0

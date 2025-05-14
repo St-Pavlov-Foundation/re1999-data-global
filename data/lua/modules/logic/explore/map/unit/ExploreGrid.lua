@@ -1,38 +1,42 @@
-module("modules.logic.explore.map.unit.ExploreGrid", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreGrid", package.seeall)
 
-slot0 = class("ExploreGrid", ExploreBaseUnit)
+local var_0_0 = class("ExploreGrid", ExploreBaseUnit)
 
-function slot0.onInit(slot0)
-	slot0._resLoader = PrefabInstantiate.Create(slot0.go)
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._resLoader = PrefabInstantiate.Create(arg_1_0.go)
 
-	slot0._resLoader:startLoad("explore/prefabs/unit/m_s10_dynamic_ground_01.prefab")
+	arg_1_0._resLoader:startLoad("explore/prefabs/unit/m_s10_dynamic_ground_01.prefab")
 end
 
-function slot0.setName(slot0, slot1)
-	slot0.go.name = slot1
+function var_0_0.setName(arg_2_0, arg_2_1)
+	arg_2_0.go.name = arg_2_1
 end
 
-function slot0.setPos(slot0, slot1)
-	if gohelper.isNil(slot0.go) == false then
-		slot1.y = 10
-		slot2, slot3 = UnityEngine.Physics.Raycast(slot1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+function var_0_0.setPos(arg_3_0, arg_3_1)
+	if gohelper.isNil(arg_3_0.go) == false then
+		arg_3_1.y = 10
 
-		if slot2 then
-			slot1.y = slot3.point.y
+		local var_3_0, var_3_1 = UnityEngine.Physics.Raycast(arg_3_1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+
+		if var_3_0 then
+			arg_3_1.y = var_3_1.point.y
 		else
-			slot1.y = slot0.trans.position.y
+			arg_3_1.y = arg_3_0.trans.position.y
 		end
 
-		slot0.position = slot1
+		arg_3_0.position = arg_3_1
 
-		transformhelper.setPos(slot0.trans, slot0.position.x, slot0.position.y, slot0.position.z)
+		transformhelper.setPos(arg_3_0.trans, arg_3_0.position.x, arg_3_0.position.y, arg_3_0.position.z)
 
-		if ExploreHelper.posToTile(slot1) ~= slot0.nodePos then
-			slot5 = slot0.nodePos
-			slot0.nodePos = slot4
-			slot0.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0.nodePos))
+		local var_3_2 = ExploreHelper.posToTile(arg_3_1)
+
+		if var_3_2 ~= arg_3_0.nodePos then
+			local var_3_3 = arg_3_0.nodePos
+
+			arg_3_0.nodePos = var_3_2
+			arg_3_0.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_3_0.nodePos))
 		end
 	end
 end
 
-return slot0
+return var_0_0

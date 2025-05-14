@@ -1,39 +1,40 @@
-module("modules.logic.turnback.view.TurnbackBeginnerViewContainer", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackBeginnerViewContainer", package.seeall)
 
-slot0 = class("TurnbackBeginnerViewContainer", BaseViewContainer)
+local var_0_0 = class("TurnbackBeginnerViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_category/#scroll_categoryitem"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = TurnbackCategoryItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 300
-	slot2.cellHeight = 125
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 9.8
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(TurnbackBeginnerCategoryListModel.instance, slot2))
-	table.insert(slot1, TurnbackBeginnerView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	var_1_1.scrollGOPath = "#go_category/#scroll_categoryitem"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = TurnbackCategoryItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 300
+	var_1_1.cellHeight = 125
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 9.8
+	var_1_1.startSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(TurnbackBeginnerCategoryListModel.instance, var_1_1))
+	table.insert(var_1_0, TurnbackBeginnerView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigationView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		slot0.navigationView
+		arg_2_0.navigationView
 	}
 end
 
-return slot0
+return var_0_0

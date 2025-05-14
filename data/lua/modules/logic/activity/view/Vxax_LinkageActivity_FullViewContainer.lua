@@ -1,3 +1,5 @@
-module("modules.logic.activity.view.Vxax_LinkageActivity_FullViewContainer", package.seeall)
+﻿module("modules.logic.activity.view.Vxax_LinkageActivity_FullViewContainer", package.seeall)
 
-return class("Vxax_LinkageActivity_FullViewContainer", LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView_ContainerImpl())
+local var_0_0 = LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView_ContainerImpl()
+
+return (class("Vxax_LinkageActivity_FullViewContainer", var_0_0))

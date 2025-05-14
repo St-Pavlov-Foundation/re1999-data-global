@@ -1,162 +1,181 @@
-module("modules.logic.activity.view.LinkageActivity_FullView_Page2", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_FullView_Page2", package.seeall)
 
-slot0 = class("LinkageActivity_FullView_Page2", LinkageActivity_Page2)
+local var_0_0 = class("LinkageActivity_FullView_Page2", LinkageActivity_Page2)
 
-function slot0.onInitView(slot0)
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "#txt_Descr")
-	slot0._btnArrow = gohelper.findChildButtonWithAudio(slot0.viewGO, "Video/#btn_Arrow")
-	slot0._simageIcon = gohelper.findChildSingleImage(slot0.viewGO, "Video/#simage_Icon")
-	slot0._btnChange = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Change")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#txt_Descr")
+	arg_1_0._btnArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Video/#btn_Arrow")
+	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Video/#simage_Icon")
+	arg_1_0._btnChange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Change")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnArrow:AddClickListener(slot0._btnArrowOnClick, slot0)
-	slot0._btnChange:AddClickListener(slot0._btnChangeOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnArrow:AddClickListener(arg_2_0._btnArrowOnClick, arg_2_0)
+	arg_2_0._btnChange:AddClickListener(arg_2_0._btnChangeOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnArrow:RemoveClickListener()
-	slot0._btnChange:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnArrow:RemoveClickListener()
+	arg_3_0._btnChange:RemoveClickListener()
 end
 
-slot1 = 2
-slot2 = "switch"
+local var_0_1 = 2
+local var_0_2 = "switch"
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMember_SImage(slot0, "_simageIcon")
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	GameUtil.onDestroyViewMember_SImage(arg_5_0, "_simageIcon")
+	var_0_0.super.onDestroyView(arg_5_0)
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._animEvent_video:AddEventListener(uv0, slot0._onSwitch, slot0)
-	slot0._clickIcon:AddClickListener(slot0._onClickIcon, slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	arg_6_0._animEvent_video:AddEventListener(var_0_2, arg_6_0._onSwitch, arg_6_0)
+	arg_6_0._clickIcon:AddClickListener(arg_6_0._onClickIcon, arg_6_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._clickIcon:RemoveClickListener()
-	slot0._animEvent_video:RemoveEventListener(uv0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	arg_7_0._clickIcon:RemoveClickListener()
+	arg_7_0._animEvent_video:RemoveEventListener(var_0_2)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
+	var_0_0.super._editableInitView(arg_8_0)
 
-	for slot5, slot6 in ipairs(slot0:getDataList()) do
-		slot0:addReward(slot5, gohelper.findChild(slot0.viewGO, "Reward/" .. slot5), LinkageActivity_Page2Reward)
+	local var_8_0 = arg_8_0:getDataList()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		arg_8_0:addReward(iter_8_0, gohelper.findChild(arg_8_0.viewGO, "Reward/" .. iter_8_0), LinkageActivity_Page2Reward)
 	end
 
-	slot2 = gohelper.findChild(slot0.viewGO, "Video")
-	slot0._txtTips = gohelper.findChildText(slot2, "image_TipsBG/txt_Tips")
+	local var_8_1 = gohelper.findChild(arg_8_0.viewGO, "Video")
 
-	slot0:addVideo(1, gohelper.findChild(slot2, "av/1"), LinkageActivity_Page2Video)
-	slot0:addVideo(2, gohelper.findChild(slot2, "av/2"), LinkageActivity_Page2Video)
+	arg_8_0._txtTips = gohelper.findChildText(var_8_1, "image_TipsBG/txt_Tips")
 
-	slot0._clickIcon = gohelper.getClick(slot0._simageIcon.gameObject)
-	slot0._anim_video = slot2:GetComponent(gohelper.Type_Animator)
-	slot0._animEvent_video = gohelper.onceAddComponent(slot2, gohelper.Type_AnimationEventWrap)
-	slot0._s_isReceiveGetian = ActivityType101Model.instance:isType101RewardGet(slot0:actId(), 1)
+	arg_8_0:addVideo(1, gohelper.findChild(var_8_1, "av/1"), LinkageActivity_Page2Video)
+	arg_8_0:addVideo(2, gohelper.findChild(var_8_1, "av/2"), LinkageActivity_Page2Video)
 
-	slot0:setActive(false)
+	arg_8_0._clickIcon = gohelper.getClick(arg_8_0._simageIcon.gameObject)
+	arg_8_0._anim_video = var_8_1:GetComponent(gohelper.Type_Animator)
+	arg_8_0._animEvent_video = gohelper.onceAddComponent(var_8_1, gohelper.Type_AnimationEventWrap)
+	arg_8_0._s_isReceiveGetian = ActivityType101Model.instance:isType101RewardGet(arg_8_0:actId(), 1)
+
+	arg_8_0:setActive(false)
 end
 
-function slot0._btnArrowOnClick(slot0)
-	slot0:selectedVideo(3 - slot0:_currentVideoIndex())
+function var_0_0._btnArrowOnClick(arg_9_0)
+	local var_9_0 = 3 - arg_9_0:_currentVideoIndex()
+
+	arg_9_0:selectedVideo(var_9_0)
 end
 
-function slot0._btnChangeOnClick(slot0)
+function var_0_0._btnChangeOnClick(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_switch_20220009)
-	slot0:selectedPage(1)
+	arg_10_0:selectedPage(1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
-	slot0:selectedVideo(slot0:_currentVideoIndex())
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	var_0_0.super.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0:selectedVideo(arg_11_0:_currentVideoIndex())
 end
 
-function slot0.onSelectedVideo(slot0, slot1, slot2, slot3)
-	if slot3 then
-		slot0._anim_video:Play(UIAnimationName.Idle, 0, 1)
-		slot0:_refreshByIndex(slot1)
-		slot0:_onSwitch()
+function var_0_0.onSelectedVideo(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if arg_12_3 then
+		arg_12_0._anim_video:Play(UIAnimationName.Idle, 0, 1)
+		arg_12_0:_refreshByIndex(arg_12_1)
+		arg_12_0:_onSwitch()
 
 		return
 	end
 
-	slot0:_playAnim_switchTo(slot1)
+	arg_12_0:_playAnim_switchTo(arg_12_1)
 end
 
-function slot0._currentVideoIndex(slot0)
-	return slot0:curVideoIndex() or uv0
+function var_0_0._currentVideoIndex(arg_13_0)
+	return arg_13_0:curVideoIndex() or var_0_1
 end
 
-function slot0._onClickIcon(slot0)
-	slot2, slot3 = slot0:itemCo2TIQ(slot0:_getCurConfigIndex())
+function var_0_0._onClickIcon(arg_14_0)
+	local var_14_0 = arg_14_0:_getCurConfigIndex()
+	local var_14_1, var_14_2 = arg_14_0:itemCo2TIQ(var_14_0)
 
-	MaterialTipController.instance:showMaterialInfo(slot2, slot3)
+	MaterialTipController.instance:showMaterialInfo(var_14_1, var_14_2)
 end
 
-function slot0._playAnim_switchTo(slot0, slot1)
-	slot0._anim_video:Play("switch" .. tostring(slot1), 0, 0)
+function var_0_0._playAnim_switchTo(arg_15_0, arg_15_1)
+	local var_15_0 = "switch" .. tostring(arg_15_1)
+
+	arg_15_0._anim_video:Play(var_15_0, 0, 0)
 end
 
-function slot0._onSwitch(slot0)
-	slot1 = slot0:_currentVideoIndex()
+function var_0_0._onSwitch(arg_16_0)
+	local var_16_0 = arg_16_0:_currentVideoIndex()
 
-	slot0:getVideo(slot1):setAsLastSibling()
-	slot0:_refreshByIndex(slot1)
+	arg_16_0:getVideo(var_16_0):setAsLastSibling()
+	arg_16_0:_refreshByIndex(var_16_0)
 end
 
-function slot0._refreshByIndex(slot0, slot1)
-	slot1 = slot0:_getCurConfigIndex(slot1)
+function var_0_0._refreshByIndex(arg_17_0, arg_17_1)
+	arg_17_1 = arg_17_0:_getCurConfigIndex(arg_17_1)
 
-	GameUtil.loadSImage(slot0._simageIcon, slot0:getItemIconResUrl(slot1))
+	local var_17_0 = arg_17_0:getItemIconResUrl(arg_17_1)
 
-	slot0._txtTips.text = slot0:getLinkageActivityCO_desc(slot1)
+	GameUtil.loadSImage(arg_17_0._simageIcon, var_17_0)
+
+	arg_17_0._txtTips.text = arg_17_0:getLinkageActivityCO_desc(arg_17_1)
 end
 
-function slot0._onUpdateMO_videoList(slot0)
-	assert(#slot0._videoItemList == 2)
+function var_0_0._onUpdateMO_videoList(arg_18_0)
+	local var_18_0 = arg_18_0:_isReceiveGetian()
 
-	for slot5, slot6 in ipairs(slot0._videoItemList) do
-		slot6:onUpdateMO({
-			videoName = slot0:getLinkageActivityCO_res_video(slot0:_isReceiveGetian() and slot5 or 3 - slot5)
-		})
+	assert(#arg_18_0._videoItemList == 2)
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0._videoItemList) do
+		local var_18_1 = arg_18_0:getLinkageActivityCO_res_video(var_18_0 and iter_18_0 or 3 - iter_18_0)
+		local var_18_2 = {
+			videoName = var_18_1
+		}
+
+		iter_18_1:onUpdateMO(var_18_2)
 	end
 end
 
-function slot0._isReceiveGetian(slot0)
-	return slot0._s_isReceiveGetian
+function var_0_0._isReceiveGetian(arg_19_0)
+	return arg_19_0._s_isReceiveGetian
 end
 
-function slot0._selectedVideo_slient(slot0, slot1)
-	slot0._curVideoIndex = slot1
+function var_0_0._selectedVideo_slient(arg_20_0, arg_20_1)
+	arg_20_0._curVideoIndex = arg_20_1
 
-	slot0:_onSwitch()
+	arg_20_0:_onSwitch()
 end
 
-function slot0.onPostSelectedPage(slot0, slot1, slot2)
-	if slot0 ~= slot1 then
-		if slot0._s_isReceiveGetian and slot0._s_isReceiveGetian ~= ActivityType101Model.instance:isType101RewardGet(slot0:actId(), 1) then
-			slot0._s_isReceiveGetian = slot3
+function var_0_0.onPostSelectedPage(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_0 ~= arg_21_1 then
+		if arg_21_0._s_isReceiveGetian then
+			local var_21_0 = ActivityType101Model.instance:isType101RewardGet(arg_21_0:actId(), 1)
+
+			if arg_21_0._s_isReceiveGetian ~= var_21_0 then
+				arg_21_0._s_isReceiveGetian = var_21_0
+			end
 		end
 
-		slot0:_selectedVideo_slient(uv0)
+		arg_21_0:_selectedVideo_slient(var_0_1)
 	end
 
-	uv1.super.onPostSelectedPage(slot0, slot1, slot2)
+	var_0_0.super.onPostSelectedPage(arg_21_0, arg_21_1, arg_21_2)
 end
 
-function slot0._getCurConfigIndex(slot0, slot1)
-	slot1 = slot1 or slot0:_currentVideoIndex()
+function var_0_0._getCurConfigIndex(arg_22_0, arg_22_1)
+	arg_22_1 = arg_22_1 or arg_22_0:_currentVideoIndex()
 
-	return slot0:_isReceiveGetian() and slot1 or 3 - slot1
+	return arg_22_0:_isReceiveGetian() and arg_22_1 or 3 - arg_22_1
 end
 
-return slot0
+return var_0_0

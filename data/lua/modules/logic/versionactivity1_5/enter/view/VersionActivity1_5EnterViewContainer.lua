@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity1_5.enter.view.VersionActivity1_5EnterViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.enter.view.VersionActivity1_5EnterViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_5EnterViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_5EnterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_5EnterView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,22 +19,24 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-function slot0.onContainerInit(slot0)
-	for slot5 = #slot0.viewParam.mainActIdList, 1, -1 do
-		if ActivityHelper.getActivityStatus(slot1[slot5]) == ActivityEnum.ActivityStatus.Normal then
-			ActivityStageHelper.recordActivityStage(slot0.viewParam.activityIdListWithGroup[slot1[slot5]])
+function var_0_0.onContainerInit(arg_3_0)
+	local var_3_0 = arg_3_0.viewParam.mainActIdList
+
+	for iter_3_0 = #var_3_0, 1, -1 do
+		if ActivityHelper.getActivityStatus(var_3_0[iter_3_0]) == ActivityEnum.ActivityStatus.Normal then
+			ActivityStageHelper.recordActivityStage(arg_3_0.viewParam.activityIdListWithGroup[var_3_0[iter_3_0]])
 
 			return
 		end
 	end
 
-	ActivityStageHelper.recordActivityStage(slot0.viewParam.activityIdListWithGroup[slot1[1]])
+	ActivityStageHelper.recordActivityStage(arg_3_0.viewParam.activityIdListWithGroup[var_3_0[1]])
 end
 
-function slot0.onContainerClose(slot0)
-	if slot0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function var_0_0.onContainerClose(arg_4_0)
+	if arg_4_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-return slot0
+return var_0_0

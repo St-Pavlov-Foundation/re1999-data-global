@@ -1,9 +1,10 @@
-module("modules.logic.main.controller.MainEnum", package.seeall)
+﻿module("modules.logic.main.controller.MainEnum", package.seeall)
 
-slot0 = _M
-slot0.SwitchType = {
+local var_0_0 = _M
+
+var_0_0.SwitchType = {
 	Character = 1,
 	Scene = 2
 }
 
-return slot0
+return var_0_0

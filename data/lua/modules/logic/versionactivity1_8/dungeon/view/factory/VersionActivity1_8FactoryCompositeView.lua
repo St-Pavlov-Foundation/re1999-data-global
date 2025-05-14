@@ -1,180 +1,208 @@
-module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryCompositeView", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryCompositeView", package.seeall)
 
-slot0 = class("VersionActivity1_8FactoryCompositeView", BaseView)
-slot1 = 1
+local var_0_0 = class("VersionActivity1_8FactoryCompositeView", BaseView)
+local var_0_1 = 1
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._translayout1 = gohelper.findChild(slot0.viewGO, "left/layout").gameObject
-	slot0._txtitemname1 = gohelper.findChildText(slot0.viewGO, "left/layout/#txt_leftproductname")
-	slot0._txtitemnum1 = gohelper.findChildText(slot0.viewGO, "left/layout/#txt_leftproductnum")
-	slot0._simageitemicon1 = gohelper.findChildSingleImage(slot0.viewGO, "left/leftproduct_icon")
-	slot0._translayout2 = gohelper.findChild(slot0.viewGO, "right/layout").gameObject
-	slot0._txtitemname2 = gohelper.findChildText(slot0.viewGO, "right/layout/#txt_rightproductname")
-	slot0._txtitemnum2 = gohelper.findChildText(slot0.viewGO, "right/layout/#txt_rightproductnum")
-	slot0._simageitemicon2 = gohelper.findChildSingleImage(slot0.viewGO, "right/rightproduct_icon")
-	slot0._inputvalue = gohelper.findChildTextMeshInputField(slot0.viewGO, "#go_composite/valuebg/#input_value")
-	slot0._btnmin = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_composite/#btn_min")
-	slot0._btnsub = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_composite/#btn_sub")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_composite/#btn_add")
-	slot0._btnmax = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_composite/#btn_max")
-	slot0._btncomposite = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_composite/#btn_composite")
-	slot0._simagecosticon1 = gohelper.findChildImage(slot0.viewGO, "#go_composite/cost/#simage_costicon")
-	slot0._txtoriginalCost = gohelper.findChildText(slot0.viewGO, "#go_composite/cost/#txt_originalCost")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._translayout1 = gohelper.findChild(arg_1_0.viewGO, "left/layout").gameObject
+	arg_1_0._txtitemname1 = gohelper.findChildText(arg_1_0.viewGO, "left/layout/#txt_leftproductname")
+	arg_1_0._txtitemnum1 = gohelper.findChildText(arg_1_0.viewGO, "left/layout/#txt_leftproductnum")
+	arg_1_0._simageitemicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/leftproduct_icon")
+	arg_1_0._translayout2 = gohelper.findChild(arg_1_0.viewGO, "right/layout").gameObject
+	arg_1_0._txtitemname2 = gohelper.findChildText(arg_1_0.viewGO, "right/layout/#txt_rightproductname")
+	arg_1_0._txtitemnum2 = gohelper.findChildText(arg_1_0.viewGO, "right/layout/#txt_rightproductnum")
+	arg_1_0._simageitemicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/rightproduct_icon")
+	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_composite/valuebg/#input_value")
+	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_min")
+	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_sub")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_add")
+	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_max")
+	arg_1_0._btncomposite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_composite")
+	arg_1_0._simagecosticon1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_composite/cost/#simage_costicon")
+	arg_1_0._txtoriginalCost = gohelper.findChildText(arg_1_0.viewGO, "#go_composite/cost/#txt_originalCost")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseClick, slot0)
-	slot0._btnmin:AddClickListener(slot0._btnminOnClick, slot0)
-	slot0._btnsub:AddClickListener(slot0._btnsubOnClick, slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btnmax:AddClickListener(slot0._btnmaxOnClick, slot0)
-	slot0._btncomposite:AddClickListener(slot0._btncompositeOnClick, slot0)
-	slot0._inputvalue:AddOnValueChanged(slot0.onCompositeCountValueChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseClick, arg_2_0)
+	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
+	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
+	arg_2_0._btncomposite:AddClickListener(arg_2_0._btncompositeOnClick, arg_2_0)
+	arg_2_0._inputvalue:AddOnValueChanged(arg_2_0.onCompositeCountValueChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnmin:RemoveClickListener()
-	slot0._btnsub:RemoveClickListener()
-	slot0._btnadd:RemoveClickListener()
-	slot0._btnmax:RemoveClickListener()
-	slot0._btncomposite:RemoveClickListener()
-	slot0._inputvalue:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnmin:RemoveClickListener()
+	arg_3_0._btnsub:RemoveClickListener()
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btnmax:RemoveClickListener()
+	arg_3_0._btncomposite:RemoveClickListener()
+	arg_3_0._inputvalue:RemoveOnValueChanged()
 end
 
-function slot0._btncloseClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnminOnClick(slot0)
-	slot0:changeCompositeCount(uv0)
+function var_0_0._btnminOnClick(arg_5_0)
+	arg_5_0:changeCompositeCount(var_0_1)
 end
 
-function slot0._btnsubOnClick(slot0)
-	slot0:changeCompositeCount(slot0.compositeCount - 1)
+function var_0_0._btnsubOnClick(arg_6_0)
+	arg_6_0:changeCompositeCount(arg_6_0.compositeCount - 1)
 end
 
-function slot0._btnaddOnClick(slot0)
-	slot0:changeCompositeCount(slot0.compositeCount + 1)
+function var_0_0._btnaddOnClick(arg_7_0)
+	arg_7_0:changeCompositeCount(arg_7_0.compositeCount + 1)
 end
 
-function slot0._btnmaxOnClick(slot0)
-	slot0:changeCompositeCount(slot0:getMaxCompositeCount())
+function var_0_0._btnmaxOnClick(arg_8_0)
+	local var_8_0 = arg_8_0:getMaxCompositeCount()
+
+	arg_8_0:changeCompositeCount(var_8_0)
 end
 
-function slot0._btncompositeOnClick(slot0)
-	Activity157Controller.instance:factoryComposite(slot0.compositeCount, slot0.compositeCount * slot0.costPerComposite, slot0.closeThis, slot0)
+function var_0_0._btncompositeOnClick(arg_9_0)
+	local var_9_0 = arg_9_0.compositeCount * arg_9_0.costPerComposite
+
+	Activity157Controller.instance:factoryComposite(arg_9_0.compositeCount, var_9_0, arg_9_0.closeThis, arg_9_0)
 end
 
-function slot0.onCompositeCountValueChange(slot0, slot1)
-	if not tonumber(slot1) then
+function var_0_0.onCompositeCountValueChange(arg_10_0, arg_10_1)
+	local var_10_0 = tonumber(arg_10_1)
+
+	if not var_10_0 then
 		return
 	end
 
-	slot0:changeCompositeCount(slot2, true)
+	arg_10_0:changeCompositeCount(var_10_0, true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = Activity157Model.instance:getActId()
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0.actId = Activity157Model.instance:getActId()
 
-	for slot6, slot7 in ipairs(Activity157Config.instance:getAct157CompositeFormula(slot0.actId)) do
-		if true then
-			slot0.costItemType = slot7.materilType
-			slot0.costItemId = slot7.materilId
-			slot0.costPerComposite = slot7.quantity or 0
-			slot2 = false
+	local var_11_0 = Activity157Config.instance:getAct157CompositeFormula(arg_11_0.actId)
+	local var_11_1 = true
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if var_11_1 then
+			arg_11_0.costItemType = iter_11_1.materilType
+			arg_11_0.costItemId = iter_11_1.materilId
+			arg_11_0.costPerComposite = iter_11_1.quantity or 0
+			var_11_1 = false
 		else
-			slot0.targetPerComposite = slot7.quantity or 0
+			arg_11_0.targetPerComposite = iter_11_1.quantity or 0
 		end
 
-		slot8, slot9 = ItemModel.instance:getItemConfigAndIcon(slot7.materilType, slot7.materilId)
+		local var_11_2, var_11_3 = ItemModel.instance:getItemConfigAndIcon(iter_11_1.materilType, iter_11_1.materilId)
+		local var_11_4 = "_txtitemname" .. iter_11_0
 
-		if slot0["_txtitemname" .. slot6] then
-			slot0[slot10].text = slot8.name
+		if arg_11_0[var_11_4] then
+			arg_11_0[var_11_4].text = var_11_2.name
 		end
 
-		if slot0["_simageitemicon" .. slot6] then
-			slot0[slot11]:LoadImage(slot9)
+		local var_11_5 = "_simageitemicon" .. iter_11_0
+
+		if arg_11_0[var_11_5] then
+			arg_11_0[var_11_5]:LoadImage(var_11_3)
 		end
 
-		if slot0["_simagecosticon" .. slot6] then
-			UISpriteSetMgr.instance:setCurrencyItemSprite(slot0[slot12], slot8.icon .. "_1")
+		local var_11_6 = "_simagecosticon" .. iter_11_0
+
+		if arg_11_0[var_11_6] then
+			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_11_0[var_11_6], var_11_2.icon .. "_1")
 		end
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = uv0
+function var_0_0.onOpen(arg_13_0)
+	local var_13_0 = var_0_1
+	local var_13_1 = Activity157Model.instance:getLastWillBeRepairedComponent()
 
-	if Activity157Model.instance:getLastWillBeRepairedComponent() then
-		slot3, slot4, slot5 = Activity157Config.instance:getComponentUnlockCondition(slot0.actId, slot2)
+	if var_13_1 then
+		local var_13_2, var_13_3, var_13_4 = Activity157Config.instance:getComponentUnlockCondition(arg_13_0.actId, var_13_1)
+		local var_13_5 = var_13_4 - ItemModel.instance:getItemQuantity(var_13_2, var_13_3)
 
-		if slot5 - ItemModel.instance:getItemQuantity(slot3, slot4) > 0 then
-			slot1 = slot0:getMaxCompositeCount() < slot7 and slot8 or slot7
+		if var_13_5 > 0 then
+			local var_13_6 = arg_13_0:getMaxCompositeCount()
+
+			var_13_0 = var_13_6 < var_13_5 and var_13_6 or var_13_5
 		end
 	end
 
-	slot0:changeCompositeCount(slot1)
+	arg_13_0:changeCompositeCount(var_13_0)
 end
 
-function slot0.getMaxCompositeCount(slot0)
-	slot1 = uv0
+function var_0_0.getMaxCompositeCount(arg_14_0)
+	local var_14_0 = var_0_1
+	local var_14_1 = ItemModel.instance:getItemQuantity(arg_14_0.costItemType, arg_14_0.costItemId)
 
-	if ItemModel.instance:getItemQuantity(slot0.costItemType, slot0.costItemId) then
-		slot1 = math.floor(slot2 / slot0.costPerComposite)
+	if var_14_1 then
+		var_14_0 = math.floor(var_14_1 / arg_14_0.costPerComposite)
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.changeCompositeCount(slot0, slot1, slot2)
-	if slot0:getMaxCompositeCount() < slot1 then
-		slot1 = slot3
+function var_0_0.changeCompositeCount(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getMaxCompositeCount()
+
+	if var_15_0 < arg_15_1 then
+		arg_15_1 = var_15_0
 	end
 
-	if slot1 < uv0 then
-		slot1 = uv0
+	if arg_15_1 < var_0_1 then
+		arg_15_1 = var_0_1
 	end
 
-	slot0.compositeCount = slot1
+	arg_15_0.compositeCount = arg_15_1
 
-	if slot2 then
-		slot0._inputvalue:SetTextWithoutNotify(tostring(slot1))
+	if arg_15_2 then
+		arg_15_0._inputvalue:SetTextWithoutNotify(tostring(arg_15_1))
 	else
-		slot0._inputvalue:SetText(slot1)
+		arg_15_0._inputvalue:SetText(arg_15_1)
 	end
 
-	slot0:refreshUI()
+	arg_15_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = slot0.compositeCount * slot0.costPerComposite
-	slot0._txtitemnum1.text = luaLang("multiple") .. slot1
-	slot0._txtitemnum2.text = luaLang("multiple") .. slot0.compositeCount * slot0.targetPerComposite
+function var_0_0.refreshUI(arg_16_0)
+	local var_16_0 = arg_16_0.compositeCount * arg_16_0.costPerComposite
+	local var_16_1 = arg_16_0.compositeCount * arg_16_0.targetPerComposite
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._translayout1.transform)
-	ZProj.UGUIHelper.RebuildLayout(slot0._translayout2.transform)
-	slot0:showOriginalCostTxt(slot1, ItemModel.instance:getItemQuantity(slot0.costItemType, slot0.costItemId))
+	arg_16_0._txtitemnum1.text = luaLang("multiple") .. var_16_0
+	arg_16_0._txtitemnum2.text = luaLang("multiple") .. var_16_1
+
+	ZProj.UGUIHelper.RebuildLayout(arg_16_0._translayout1.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_16_0._translayout2.transform)
+
+	local var_16_2 = ItemModel.instance:getItemQuantity(arg_16_0.costItemType, arg_16_0.costItemId)
+
+	arg_16_0:showOriginalCostTxt(var_16_0, var_16_2)
 end
 
-function slot0.showOriginalCostTxt(slot0, slot1, slot2)
-	slot0._txtoriginalCost.text = string.format("<color=#E07E25>%s</color>/%s", slot1, slot2)
+function var_0_0.showOriginalCostTxt(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._txtoriginalCost.text = string.format("<color=#E07E25>%s</color>/%s", arg_17_1, arg_17_2)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_18_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageitemicon1:UnLoadImage()
-	slot0._simageitemicon2:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0._simageitemicon1:UnLoadImage()
+	arg_19_0._simageitemicon2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

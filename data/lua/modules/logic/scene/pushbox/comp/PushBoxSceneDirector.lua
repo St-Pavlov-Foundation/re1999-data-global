@@ -1,24 +1,25 @@
-module("modules.logic.scene.pushbox.comp.PushBoxSceneDirector", package.seeall)
+﻿module("modules.logic.scene.pushbox.comp.PushBoxSceneDirector", package.seeall)
 
-slot0 = class("PushBoxSceneDirector", BaseSceneComp)
+local var_0_0 = class("PushBoxSceneDirector", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._scene.preloader:startPreload()
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene.preloader:startPreload()
 end
 
-function slot0.onPushBoxAssetLoadFinish(slot0)
-	slot0:_onRefreshActivityData()
+function var_0_0.onPushBoxAssetLoadFinish(arg_3_0)
+	arg_3_0:_onRefreshActivityData()
 end
 
-function slot0._onRefreshActivityData(slot0)
-	slot0._scene:onPrepared()
+function var_0_0._onRefreshActivityData(arg_4_0)
+	arg_4_0._scene:onPrepared()
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

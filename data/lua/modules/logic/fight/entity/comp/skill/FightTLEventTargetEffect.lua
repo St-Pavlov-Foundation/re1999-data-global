@@ -1,186 +1,212 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventTargetEffect", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventTargetEffect", package.seeall)
 
-slot0 = class("FightTLEventTargetEffect")
-slot1 = {
+local var_0_0 = class("FightTLEventTargetEffect")
+local var_0_1 = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.FIGHTSTEP] = true
 }
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._fightStepMO = slot1
-	slot0._delayReleaseEffect = not string.nilorempty(slot3[8]) and tonumber(slot3[8])
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._delayReleaseEffect = not string.nilorempty(arg_1_3[8]) and tonumber(arg_1_3[8])
 
-	if slot0._delayReleaseEffect then
-		slot0._delayReleaseEffect = slot0._delayReleaseEffect / FightModel.instance:getSpeed()
+	if arg_1_0._delayReleaseEffect then
+		arg_1_0._delayReleaseEffect = arg_1_0._delayReleaseEffect / FightModel.instance:getSpeed()
 	end
 
-	if string.nilorempty(slot3[1]) then
+	local var_1_0 = arg_1_3[1]
+
+	if string.nilorempty(var_1_0) then
 		logError("目标特效名称不能为空")
 
 		return
 	end
 
-	slot5 = slot3[2]
-	slot6 = slot3[3]
-	slot8 = 0
-	slot9 = 0
+	local var_1_1 = arg_1_3[2]
+	local var_1_2 = arg_1_3[3]
+	local var_1_3 = 0
+	local var_1_4 = 0
+	local var_1_5 = 0
 
-	if slot3[4] then
-		if string.split(slot3[4], ",")[1] then
-			slot7 = tonumber(slot10[1]) or 0
-		end
+	if arg_1_3[4] then
+		local var_1_6 = string.split(arg_1_3[4], ",")
 
-		if slot10[2] then
-			slot8 = tonumber(slot10[2]) or slot8
-		end
-
-		if slot10[3] then
-			slot9 = tonumber(slot10[3]) or slot9
-		end
+		var_1_3 = var_1_6[1] and tonumber(var_1_6[1]) or var_1_3
+		var_1_4 = var_1_6[2] and tonumber(var_1_6[2]) or var_1_4
+		var_1_5 = var_1_6[3] and tonumber(var_1_6[3]) or var_1_5
 	end
 
-	slot10 = tonumber(slot3[5]) or -1
+	local var_1_7 = tonumber(arg_1_3[5]) or -1
+	local var_1_8 = {}
 
-	if string.nilorempty(slot3[6]) or slot3[6] == "1" then
-		if FightHelper.getEntity(slot1.toId) then
-			table.insert({}, slot12)
+	if string.nilorempty(arg_1_3[6]) or arg_1_3[6] == "1" then
+		local var_1_9 = FightHelper.getEntity(arg_1_1.toId)
+
+		if var_1_9 then
+			table.insert(var_1_8, var_1_9)
 		end
-	elseif not string.nilorempty(slot3[9]) then
-		slot13 = {
-			[slot18] = slot18
-		}
+	elseif not string.nilorempty(arg_1_3[9]) then
+		local var_1_10 = string.splitToNumber(arg_1_3[9], "#")
+		local var_1_11 = {}
 
-		for slot17, slot18 in ipairs(string.splitToNumber(slot3[9], "#")) do
-			-- Nothing
+		for iter_1_0, iter_1_1 in ipairs(var_1_10) do
+			var_1_11[iter_1_1] = iter_1_1
 		end
 
-		for slot17, slot18 in ipairs(slot1.actEffectMOs) do
-			if slot13[slot18.effectType] and FightHelper.getEntity(slot18.targetId) then
-				slot20 = FightHelper.getEntity(slot0._fightStepMO.fromId)
-				slot21 = false
+		for iter_1_2, iter_1_3 in ipairs(arg_1_1.actEffectMOs) do
+			if var_1_11[iter_1_3.effectType] then
+				local var_1_12 = FightHelper.getEntity(iter_1_3.targetId)
 
-				if slot3[6] == "2" then
-					slot21 = true
-				elseif slot3[6] == "3" then
-					slot21 = slot19:getSide() == slot20:getSide()
-				elseif slot3[6] == "4" then
-					slot21 = slot19:getSide() ~= slot20:getSide()
-				end
+				if var_1_12 then
+					local var_1_13 = FightHelper.getEntity(arg_1_0._fightStepMO.fromId)
+					local var_1_14 = false
 
-				if slot21 and not tabletool.indexOf(slot11, slot19) then
-					table.insert(slot11, slot19)
+					if arg_1_3[6] == "2" then
+						var_1_14 = true
+					elseif arg_1_3[6] == "3" then
+						var_1_14 = var_1_12:getSide() == var_1_13:getSide()
+					elseif arg_1_3[6] == "4" then
+						var_1_14 = var_1_12:getSide() ~= var_1_13:getSide()
+					end
+
+					if var_1_14 and not tabletool.indexOf(var_1_8, var_1_12) then
+						table.insert(var_1_8, var_1_12)
+					end
 				end
 			end
 		end
 	else
-		for slot15, slot16 in ipairs(slot1.actEffectMOs) do
-			slot17 = false
+		for iter_1_4, iter_1_5 in ipairs(arg_1_1.actEffectMOs) do
+			local var_1_15 = false
+			local var_1_16 = iter_1_5
 
-			if slot16.effectType == FightEnum.EffectType.SHIELD and not FightHelper.checkShieldHit(slot18) then
-				slot17 = true
+			if var_1_16.effectType == FightEnum.EffectType.SHIELD and not FightHelper.checkShieldHit(var_1_16) then
+				var_1_15 = true
 			end
 
-			if not slot17 and not uv0[slot16.effectType] and FightHelper.getEntity(slot16.targetId) then
-				slot20 = FightHelper.getEntity(slot0._fightStepMO.fromId)
-				slot21 = false
+			if not var_1_15 and not var_0_1[iter_1_5.effectType] then
+				local var_1_17 = FightHelper.getEntity(iter_1_5.targetId)
 
-				if slot3[6] == "2" then
-					slot21 = true
-				elseif slot3[6] == "3" then
-					slot21 = slot19:getSide() == slot20:getSide()
-				elseif slot3[6] == "4" then
-					slot21 = slot19:getSide() ~= slot20:getSide()
-				end
+				if var_1_17 then
+					local var_1_18 = FightHelper.getEntity(arg_1_0._fightStepMO.fromId)
+					local var_1_19 = false
 
-				if slot21 and not tabletool.indexOf(slot11, slot19) then
-					table.insert(slot11, slot19)
+					if arg_1_3[6] == "2" then
+						var_1_19 = true
+					elseif arg_1_3[6] == "3" then
+						var_1_19 = var_1_17:getSide() == var_1_18:getSide()
+					elseif arg_1_3[6] == "4" then
+						var_1_19 = var_1_17:getSide() ~= var_1_18:getSide()
+					end
+
+					if var_1_19 and not tabletool.indexOf(var_1_8, var_1_17) then
+						table.insert(var_1_8, var_1_17)
+					end
 				end
 			end
 		end
 	end
 
-	if not string.nilorempty(slot3[7]) then
-		for slot17, slot18 in pairs(GameSceneMgr.instance:getCurScene().deadEntityMgr._entityDic) do
-			if slot18:getMO() and tabletool.indexOf(string.splitToNumber(slot3[7], "#"), slot19.skin) then
-				table.insert({}, slot18)
+	if not string.nilorempty(arg_1_3[7]) then
+		var_1_8 = {}
+
+		local var_1_20 = GameSceneMgr.instance:getCurScene().deadEntityMgr
+		local var_1_21 = string.splitToNumber(arg_1_3[7], "#")
+
+		for iter_1_6, iter_1_7 in pairs(var_1_20._entityDic) do
+			local var_1_22 = iter_1_7:getMO()
+
+			if var_1_22 and tabletool.indexOf(var_1_21, var_1_22.skin) then
+				table.insert(var_1_8, iter_1_7)
 			end
 		end
 	end
 
-	if #slot11 > 0 then
-		slot0._effectWrapDict = {}
+	if #var_1_8 > 0 then
+		arg_1_0._effectWrapDict = {}
 
-		for slot15, slot16 in ipairs(slot11) do
-			slot17 = slot0:_createEffect(slot16, slot4, slot5, slot6, slot7, slot8, slot9)
+		for iter_1_8, iter_1_9 in ipairs(var_1_8) do
+			local var_1_23 = arg_1_0:_createEffect(iter_1_9, var_1_0, var_1_1, var_1_2, var_1_3, var_1_4, var_1_5)
 
-			slot0:_setRenderOrder(slot16.id, slot17, slot10)
+			arg_1_0:_setRenderOrder(iter_1_9.id, var_1_23, var_1_7)
 
-			slot0._effectWrapDict[slot16] = slot17
+			arg_1_0._effectWrapDict[iter_1_9] = var_1_23
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_removeEffect()
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	arg_2_0:_removeEffect()
 end
 
-function slot0._createEffect(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot9 = nil
+function var_0_0._createEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7)
+	local var_3_0 = FightHelper.getEntity(arg_3_0._fightStepMO.fromId)
+	local var_3_1
 
-	if not string.nilorempty(slot3) then
-		slot1.effect:addHangEffect(slot2, slot3, FightHelper.getEntity(slot0._fightStepMO.fromId):getSide(), slot0._delayReleaseEffect):setLocalPos(slot5, slot6, slot7)
+	if not string.nilorempty(arg_3_3) then
+		var_3_1 = arg_3_1.effect:addHangEffect(arg_3_2, arg_3_3, var_3_0:getSide(), arg_3_0._delayReleaseEffect)
+
+		var_3_1:setLocalPos(arg_3_5, arg_3_6, arg_3_7)
 	else
-		slot9 = slot1.effect:addGlobalEffect(slot2, slot8:getSide(), slot0._delayReleaseEffect)
-		slot10, slot11, slot12 = nil
+		var_3_1 = arg_3_1.effect:addGlobalEffect(arg_3_2, var_3_0:getSide(), arg_3_0._delayReleaseEffect)
 
-		if slot4 == "0" then
-			slot10, slot11, slot12 = FightHelper.getEntityWorldBottomPos(slot1)
-		elseif slot4 == "1" then
-			slot10, slot11, slot12 = FightHelper.getEntityWorldCenterPos(slot1)
-		elseif slot4 == "2" then
-			slot10, slot11, slot12 = FightHelper.getEntityWorldTopPos(slot1)
-		elseif slot4 == "3" then
-			slot10, slot11, slot12 = FightHelper.getProcessEntitySpinePos(slot1)
-		elseif not string.nilorempty(slot4) and slot1:getHangPoint(slot4) then
-			slot14 = slot13.transform.position
-			slot12 = slot14.z
-			slot11 = slot14.y
-			slot10 = slot14.x
+		local var_3_2
+		local var_3_3
+		local var_3_4
+
+		if arg_3_4 == "0" then
+			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldBottomPos(arg_3_1)
+		elseif arg_3_4 == "1" then
+			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldCenterPos(arg_3_1)
+		elseif arg_3_4 == "2" then
+			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldTopPos(arg_3_1)
+		elseif arg_3_4 == "3" then
+			var_3_2, var_3_3, var_3_4 = FightHelper.getProcessEntitySpinePos(arg_3_1)
 		else
-			slot10, slot11, slot12 = FightHelper.getEntityWorldCenterPos(slot1)
+			local var_3_5 = not string.nilorempty(arg_3_4) and arg_3_1:getHangPoint(arg_3_4)
+
+			if var_3_5 then
+				local var_3_6 = var_3_5.transform.position
+
+				var_3_2, var_3_3, var_3_4 = var_3_6.x, var_3_6.y, var_3_6.z
+			else
+				var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldCenterPos(arg_3_1)
+			end
 		end
 
-		slot9:setWorldPos(slot10 + (slot1:isMySide() and -slot5 or slot5), slot11 + slot6, slot12 + slot7)
+		local var_3_7 = arg_3_1:isMySide() and -arg_3_5 or arg_3_5
+
+		var_3_1:setWorldPos(var_3_2 + var_3_7, var_3_3 + arg_3_6, var_3_4 + arg_3_7)
 	end
 
-	return slot9
+	return var_3_1
 end
 
-function slot0._setRenderOrder(slot0, slot1, slot2, slot3)
-	if slot3 == -1 then
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot1, slot2)
+function var_0_0._setRenderOrder(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_3 == -1 then
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_4_1, arg_4_2)
 	else
-		FightRenderOrderMgr.instance:setEffectOrder(slot2, slot3)
+		FightRenderOrderMgr.instance:setEffectOrder(arg_4_2, arg_4_3)
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:_removeEffect()
+function var_0_0.reset(arg_5_0)
+	arg_5_0:_removeEffect()
 end
 
-function slot0.dispose(slot0)
-	slot0:_removeEffect()
+function var_0_0.dispose(arg_6_0)
+	arg_6_0:_removeEffect()
 end
 
-function slot0._removeEffect(slot0)
-	if slot0._effectWrapDict and not slot0._delayReleaseEffect then
-		for slot4, slot5 in pairs(slot0._effectWrapDict) do
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(slot4.id, slot5)
-			slot4.effect:removeEffect(slot5)
+function var_0_0._removeEffect(arg_7_0)
+	if arg_7_0._effectWrapDict and not arg_7_0._delayReleaseEffect then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._effectWrapDict) do
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_7_0.id, iter_7_1)
+			iter_7_0.effect:removeEffect(iter_7_1)
 		end
 	end
 
-	slot0._effectWrapDict = nil
+	arg_7_0._effectWrapDict = nil
 end
 
-return slot0
+return var_0_0

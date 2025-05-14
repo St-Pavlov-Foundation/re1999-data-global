@@ -1,13 +1,13 @@
-module("modules.logic.story.view.StoryFrontViewContainer", package.seeall)
+﻿module("modules.logic.story.view.StoryFrontViewContainer", package.seeall)
 
-slot0 = class("StoryFrontViewContainer", BaseViewContainer)
+local var_0_0 = class("StoryFrontViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, StoryFrontView.New())
+	table.insert(var_1_0, StoryFrontView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

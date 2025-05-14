@@ -1,39 +1,48 @@
-module("modules.logic.versionactivity1_9.matildagift.model.V1a9_MatildaGiftModel", package.seeall)
+﻿module("modules.logic.versionactivity1_9.matildagift.model.V1a9_MatildaGiftModel", package.seeall)
 
-slot0 = class("V1a9_MatildaGiftModel", BaseModel)
+local var_0_0 = class("V1a9_MatildaGiftModel", BaseModel)
 
-function slot0.getMatildagiftActId(slot0)
+function var_0_0.getMatildagiftActId(arg_1_0)
 	return ActivityEnum.Activity.V1a9_Matildagift
 end
 
-function slot0.isMatildaGiftOpen(slot0, slot1)
-	if not ActivityType101Model.instance:isOpen(slot0:getMatildagiftActId()) and slot1 then
+function var_0_0.isMatildaGiftOpen(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getMatildagiftActId()
+	local var_2_1 = ActivityType101Model.instance:isOpen(var_2_0)
+
+	if not var_2_1 and arg_2_1 then
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
 
-	return slot3
+	return var_2_1
 end
 
-function slot0.isShowRedDot(slot0)
-	slot1 = false
+function var_0_0.isShowRedDot(arg_3_0)
+	local var_3_0 = false
 
-	if slot0:isMatildaGiftOpen() then
-		slot1 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot0:getMatildagiftActId())
+	if arg_3_0:isMatildaGiftOpen() then
+		local var_3_1 = arg_3_0:getMatildagiftActId()
+
+		var_3_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_1)
 	end
 
-	return slot1
+	return var_3_0
 end
 
-function slot0.couldGet(slot0)
-	return ActivityType101Model.instance:isType101RewardCouldGet(slot0:getMatildagiftActId(), 1)
+function var_0_0.couldGet(arg_4_0)
+	local var_4_0 = arg_4_0:getMatildagiftActId()
+
+	return (ActivityType101Model.instance:isType101RewardCouldGet(var_4_0, 1))
 end
 
-function slot0.onGetBonus(slot0)
-	if slot0:couldGet() then
-		Activity101Rpc.instance:sendGet101BonusRequest(slot0:getMatildagiftActId(), 1)
+function var_0_0.onGetBonus(arg_5_0)
+	if arg_5_0:couldGet() then
+		local var_5_0 = arg_5_0:getMatildagiftActId()
+
+		Activity101Rpc.instance:sendGet101BonusRequest(var_5_0, 1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

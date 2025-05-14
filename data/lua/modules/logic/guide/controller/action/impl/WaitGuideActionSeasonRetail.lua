@@ -1,61 +1,72 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionSeasonRetail", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionSeasonRetail", package.seeall)
 
-slot0 = class("WaitGuideActionSeasonRetail", BaseGuideAction)
-slot1 = nil
+local var_0_0 = class("WaitGuideActionSeasonRetail", BaseGuideAction)
+local var_0_1
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot0._viewName = ViewName[slot2[1]]
-	slot0._conditionParam = slot2[3]
-	slot0._conditionCheckFun = slot0[slot2[2]]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
-	Activity104Controller.instance:registerCallback(Activity104Event.RefreshRetail, slot0._refreshRetail, slot0)
+	arg_1_0._viewName = ViewName[var_1_0[1]]
+
+	local var_1_1 = var_1_0[2]
+
+	arg_1_0._conditionParam = var_1_0[3]
+	arg_1_0._conditionCheckFun = arg_1_0[var_1_1]
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenView, arg_1_0)
+	Activity104Controller.instance:registerCallback(Activity104Event.RefreshRetail, arg_1_0._refreshRetail, arg_1_0)
 end
 
-function slot0._checkOpenView(slot0, slot1, slot2)
-	if slot0._viewName == slot1 and slot0._conditionCheckFun(slot0._conditionParam) then
-		uv0 = uv0 or {}
+function var_0_0._checkOpenView(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_0._viewName == arg_2_1 and arg_2_0._conditionCheckFun(arg_2_0._conditionParam) then
+		var_0_1 = var_0_1 or {}
 
-		if not tabletool.indexOf(uv0, slot0.guideId) then
-			table.insert(uv0, slot0.guideId)
+		if not tabletool.indexOf(var_0_1, arg_2_0.guideId) then
+			table.insert(var_0_1, arg_2_0.guideId)
 		end
 
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.01)
+		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.01)
 	end
 end
 
-function slot0._refreshRetail(slot0)
-	if ViewMgr.instance:isOpen(slot0._viewName) and slot0._conditionCheckFun(slot0._conditionParam) then
-		uv0 = uv0 or {}
+function var_0_0._refreshRetail(arg_3_0)
+	if ViewMgr.instance:isOpen(arg_3_0._viewName) and arg_3_0._conditionCheckFun(arg_3_0._conditionParam) then
+		var_0_1 = var_0_1 or {}
 
-		if not tabletool.indexOf(uv0, slot0.guideId) then
-			table.insert(uv0, slot0.guideId)
+		if not tabletool.indexOf(var_0_1, arg_3_0.guideId) then
+			table.insert(var_0_1, arg_3_0.guideId)
 		end
 
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.01)
+		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 0.01)
 	end
 end
 
-function slot0._delayDone(slot0)
-	if uv0 and GuideConfig.instance:getHighestPriorityGuideId(uv0) == slot0.guideId then
-		uv0 = nil
+function var_0_0._delayDone(arg_4_0)
+	if var_0_1 and GuideConfig.instance:getHighestPriorityGuideId(var_0_1) == arg_4_0.guideId then
+		var_0_1 = nil
 
-		slot0:onDone(true)
+		arg_4_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
-	Activity104Controller.instance:unregisterCallback(Activity104Event.RefreshRetail, slot0._refreshRetail, slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._checkOpenView, arg_5_0)
+	Activity104Controller.instance:unregisterCallback(Activity104Event.RefreshRetail, arg_5_0._refreshRetail, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
 end
 
-function slot0.seasonRetailRare(slot0)
-	for slot6, slot7 in pairs(Activity104Model.instance:getAct104Retails()) do
-		if tabletool.indexOf(string.splitToNumber(slot0, "_"), slot7.position) and slot7.advancedId ~= 0 and slot7.advancedRare ~= 0 then
+function var_0_0.seasonRetailRare(arg_6_0)
+	local var_6_0 = string.splitToNumber(arg_6_0, "_")
+	local var_6_1 = Activity104Model.instance:getAct104Retails()
+
+	for iter_6_0, iter_6_1 in pairs(var_6_1) do
+		local var_6_2 = iter_6_1.position
+		local var_6_3 = iter_6_1.advancedId
+		local var_6_4 = iter_6_1.advancedRare
+
+		if tabletool.indexOf(var_6_0, var_6_2) and var_6_3 ~= 0 and var_6_4 ~= 0 then
 			return true
 		end
 	end
@@ -63,4 +74,4 @@ function slot0.seasonRetailRare(slot0)
 	return false
 end
 
-return slot0
+return var_0_0

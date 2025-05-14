@@ -1,21 +1,21 @@
-module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNodeEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNodeEntity", package.seeall)
 
-slot0 = class("TianShiNaNaNodeEntity", LuaCompBase)
+local var_0_0 = class("TianShiNaNaNodeEntity", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.updateCo(slot0, slot1)
-	PrefabInstantiate.Create(slot0.go):startLoad(slot1.nodePath)
+function var_0_0.updateCo(arg_2_0, arg_2_1)
+	PrefabInstantiate.Create(arg_2_0.go):startLoad(arg_2_1.nodePath)
 
-	slot3 = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(slot1.x, slot1.y))
+	local var_2_0 = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(arg_2_1.x, arg_2_1.y))
 
-	transformhelper.setLocalPos(slot0.go.transform, slot3.x, slot3.y, slot3.z)
+	transformhelper.setLocalPos(arg_2_0.go.transform, var_2_0.x, var_2_0.y, var_2_0.z)
 end
 
-function slot0.dispose(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.dispose(arg_3_0)
+	gohelper.destroy(arg_3_0.go)
 end
 
-return slot0
+return var_0_0

@@ -1,104 +1,120 @@
-module("modules.logic.login.controller.work.LoginParseFightConfigWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LoginParseFightConfigWork", package.seeall)
 
-slot0 = class("LoginParseFightConfigWork", BaseWork)
+local var_0_0 = class("LoginParseFightConfigWork", BaseWork)
 
-function slot0._timeOut(slot0)
+function var_0_0._timeOut(arg_1_0)
 	logError("解析战斗配置出错了")
 
-	return slot0:onDone(true)
+	return arg_1_0:onDone(true)
 end
 
-function slot0.onStart(slot0, slot1)
-	TaskDispatcher.runDelay(slot0._timeOut, slot0, 10)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	TaskDispatcher.runDelay(arg_2_0._timeOut, arg_2_0, 10)
 
-	slot0._skillCurrCardLvDict = {}
-	slot0._skillNextCardLvDict = {}
-	slot0._skillPrevCardLvDict = {}
-	slot0._skillHeroIdDict = {}
-	slot0._skillMonsterIdDict = {}
-	slot0.parseFlow = FlowSequence.New()
+	arg_2_0._skillCurrCardLvDict = {}
+	arg_2_0._skillNextCardLvDict = {}
+	arg_2_0._skillPrevCardLvDict = {}
+	arg_2_0._skillHeroIdDict = {}
+	arg_2_0._skillMonsterIdDict = {}
+	arg_2_0.parseFlow = FlowSequence.New()
 
-	slot0.parseFlow:addWork(FunctionWork.New(slot0.parseCharacterCo, slot0))
-	slot0.parseFlow:addWork(WorkWaitSeconds.New())
-	slot0.parseFlow:addWork(FunctionWork.New(slot0.parseSkillExLevelCo, slot0))
-	slot0.parseFlow:addWork(WorkWaitSeconds.New())
-	slot0.parseFlow:addWork(LoginParseMonsterConfigWork.New(slot0._skillMonsterIdDict, slot0._skillCurrCardLvDict))
-	slot0.parseFlow:addWork(WorkWaitSeconds.New())
-	slot0.parseFlow:registerDoneListener(slot0.parseDone, slot0)
-	slot0.parseFlow:start()
+	arg_2_0.parseFlow:addWork(FunctionWork.New(arg_2_0.parseCharacterCo, arg_2_0))
+	arg_2_0.parseFlow:addWork(WorkWaitSeconds.New())
+	arg_2_0.parseFlow:addWork(FunctionWork.New(arg_2_0.parseSkillExLevelCo, arg_2_0))
+	arg_2_0.parseFlow:addWork(WorkWaitSeconds.New())
+	arg_2_0.parseFlow:addWork(LoginParseMonsterConfigWork.New(arg_2_0._skillMonsterIdDict, arg_2_0._skillCurrCardLvDict))
+	arg_2_0.parseFlow:addWork(WorkWaitSeconds.New())
+	arg_2_0.parseFlow:registerDoneListener(arg_2_0.parseDone, arg_2_0)
+	arg_2_0.parseFlow:start()
 end
 
-function slot0.parseCharacterCo(slot0)
-	for slot4, slot5 in ipairs(lua_character.configList) do
-		if not string.nilorempty(slot5.skill) then
-			for slot11, slot12 in ipairs(FightStrUtil.instance:getSplitString2Cache(slot6, true)) do
-				slot13 = slot12[2]
-				slot14 = slot12[3]
-				slot15 = slot12[4]
-				slot0._skillCurrCardLvDict[slot13] = 1
-				slot0._skillCurrCardLvDict[slot14] = 2
-				slot0._skillCurrCardLvDict[slot15] = 3
-				slot0._skillNextCardLvDict[slot13] = slot14
-				slot0._skillNextCardLvDict[slot14] = slot15
-				slot0._skillPrevCardLvDict[slot14] = slot13
-				slot0._skillPrevCardLvDict[slot15] = slot14
-				slot16 = slot5.id
-				slot0._skillHeroIdDict[slot13] = slot16
-				slot0._skillHeroIdDict[slot14] = slot16
-				slot0._skillHeroIdDict[slot15] = slot16
+function var_0_0.parseCharacterCo(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(lua_character.configList) do
+		local var_3_0 = iter_3_1.skill
+
+		if not string.nilorempty(var_3_0) then
+			local var_3_1 = FightStrUtil.instance:getSplitString2Cache(var_3_0, true)
+
+			for iter_3_2, iter_3_3 in ipairs(var_3_1) do
+				local var_3_2 = iter_3_3[2]
+				local var_3_3 = iter_3_3[3]
+				local var_3_4 = iter_3_3[4]
+
+				arg_3_0._skillCurrCardLvDict[var_3_2] = 1
+				arg_3_0._skillCurrCardLvDict[var_3_3] = 2
+				arg_3_0._skillCurrCardLvDict[var_3_4] = 3
+				arg_3_0._skillNextCardLvDict[var_3_2] = var_3_3
+				arg_3_0._skillNextCardLvDict[var_3_3] = var_3_4
+				arg_3_0._skillPrevCardLvDict[var_3_3] = var_3_2
+				arg_3_0._skillPrevCardLvDict[var_3_4] = var_3_3
+
+				local var_3_5 = iter_3_1.id
+
+				arg_3_0._skillHeroIdDict[var_3_2] = var_3_5
+				arg_3_0._skillHeroIdDict[var_3_3] = var_3_5
+				arg_3_0._skillHeroIdDict[var_3_4] = var_3_5
 			end
 		end
 	end
 end
 
-function slot0.parseSkillExLevelCo(slot0)
-	for slot4, slot5 in ipairs(lua_skill_ex_level.configList) do
-		slot6 = slot5.heroId
+function var_0_0.parseSkillExLevelCo(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(lua_skill_ex_level.configList) do
+		local var_4_0 = iter_4_1.heroId
+		local var_4_1 = iter_4_1.skillGroup1
 
-		if not string.nilorempty(slot5.skillGroup1) then
-			for slot12, slot13 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot7, "|")) do
-				slot0._skillHeroIdDict[slot13] = slot6
-				slot0._skillCurrCardLvDict[slot13] = slot12
+		if not string.nilorempty(var_4_1) then
+			local var_4_2 = FightStrUtil.instance:getSplitToNumberCache(var_4_1, "|")
+
+			for iter_4_2, iter_4_3 in ipairs(var_4_2) do
+				arg_4_0._skillHeroIdDict[iter_4_3] = var_4_0
+				arg_4_0._skillCurrCardLvDict[iter_4_3] = iter_4_2
 			end
 		end
 
-		if not string.nilorempty(slot5.skillGroup2) then
-			for slot13, slot14 in ipairs(FightStrUtil.instance:getSplitToNumberCache(slot8, "|")) do
-				slot0._skillHeroIdDict[slot14] = slot6
-				slot0._skillCurrCardLvDict[slot14] = slot13
+		local var_4_3 = iter_4_1.skillGroup2
+
+		if not string.nilorempty(var_4_3) then
+			local var_4_4 = FightStrUtil.instance:getSplitToNumberCache(var_4_3, "|")
+
+			for iter_4_4, iter_4_5 in ipairs(var_4_4) do
+				arg_4_0._skillHeroIdDict[iter_4_5] = var_4_0
+				arg_4_0._skillCurrCardLvDict[iter_4_5] = iter_4_4
 			end
 		end
 
-		slot0._skillHeroIdDict[slot5.skillEx] = slot6
+		local var_4_5 = iter_4_1.skillEx
+
+		arg_4_0._skillHeroIdDict[var_4_5] = var_4_0
 	end
 end
 
-function slot0.parseDone(slot0)
-	if not slot0.parseFlow.isSuccess then
+function var_0_0.parseDone(arg_5_0)
+	if not arg_5_0.parseFlow.isSuccess then
 		logError("解析战斗配置出错了")
 
-		return slot0:onDone(true)
+		return arg_5_0:onDone(true)
 	end
 
-	FightConfig.instance:setSkillDict(slot0._skillCurrCardLvDict, slot0._skillNextCardLvDict, slot0._skillPrevCardLvDict, slot0._skillHeroIdDict, slot0._skillMonsterIdDict)
+	FightConfig.instance:setSkillDict(arg_5_0._skillCurrCardLvDict, arg_5_0._skillNextCardLvDict, arg_5_0._skillPrevCardLvDict, arg_5_0._skillHeroIdDict, arg_5_0._skillMonsterIdDict)
 
-	return slot0:onDone(true)
+	return arg_5_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._timeOut, slot0)
+function var_0_0.clearWork(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._timeOut, arg_6_0)
 
-	if slot0.parseFlow then
-		slot0.parseFlow:destroy()
+	if arg_6_0.parseFlow then
+		arg_6_0.parseFlow:destroy()
 
-		slot0.parseFlow = nil
+		arg_6_0.parseFlow = nil
 	end
 
-	slot0._skillCurrCardLvDict = nil
-	slot0._skillNextCardLvDict = nil
-	slot0._skillPrevCardLvDict = nil
-	slot0._skillHeroIdDict = nil
-	slot0._skillMonsterIdDict = nil
+	arg_6_0._skillCurrCardLvDict = nil
+	arg_6_0._skillNextCardLvDict = nil
+	arg_6_0._skillPrevCardLvDict = nil
+	arg_6_0._skillHeroIdDict = nil
+	arg_6_0._skillMonsterIdDict = nil
 end
 
-return slot0
+return var_0_0

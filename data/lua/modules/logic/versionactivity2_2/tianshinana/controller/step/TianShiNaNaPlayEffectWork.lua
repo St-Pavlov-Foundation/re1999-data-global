@@ -1,33 +1,35 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaPlayEffectWork", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaPlayEffectWork", package.seeall)
 
-slot0 = class("TianShiNaNaPlayEffectWork", BaseWork)
+local var_0_0 = class("TianShiNaNaPlayEffectWork", BaseWork)
 
-function slot0.setWalkPath(slot0, slot1)
-	slot0._playerWalkPaths = slot1
+function var_0_0.setWalkPath(arg_1_0, arg_1_1)
+	arg_1_0._playerWalkPaths = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	if #slot0._playerWalkPaths == 0 then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	local var_2_0 = #arg_2_0._playerWalkPaths
+
+	if var_2_0 == 0 then
+		arg_2_0:onDone(true)
 	else
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_paving_succeed)
 
-		for slot6 = 1, slot2 do
-			slot7 = slot0._playerWalkPaths[slot6]
+		for iter_2_0 = 1, var_2_0 do
+			local var_2_1 = arg_2_0._playerWalkPaths[iter_2_0]
 
-			TianShiNaNaEffectPool.instance:getFromPool(slot7.x, slot7.y, 2, (slot6 - 1) * 0.1, 0.1)
+			TianShiNaNaEffectPool.instance:getFromPool(var_2_1.x, var_2_1.y, 2, (iter_2_0 - 1) * 0.1, 0.1)
 		end
 
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, slot2 * 0.1)
+		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, var_2_0 * 0.1)
 	end
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_challenge_condition", package.seeall)
+﻿module("modules.configs.excel2json.lua_challenge_condition", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	decs1 = 4,
 	decs2 = 6,
 	id = 1,
@@ -8,16 +9,16 @@ slot1 = {
 	value = 3,
 	rule = 5
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	decs2 = 2,
 	decs1 = 1
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

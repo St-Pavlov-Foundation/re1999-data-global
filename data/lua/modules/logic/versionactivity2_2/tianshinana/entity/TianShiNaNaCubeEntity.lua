@@ -1,164 +1,176 @@
-module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaCubeEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaCubeEntity", package.seeall)
 
-slot0 = class("TianShiNaNaCubeEntity", LuaCompBase)
-slot1 = TianShiNaNaEnum.Dir
-slot2 = TianShiNaNaEnum.OperDir
-slot3 = TianShiNaNaEnum.OperEffect
-slot4 = TianShiNaNaEnum.DirToQuaternion
-slot5 = {
-	[slot1.Forward] = true,
-	[slot1.Left] = true,
-	[slot1.Down] = true
+local var_0_0 = class("TianShiNaNaCubeEntity", LuaCompBase)
+local var_0_1 = TianShiNaNaEnum.Dir
+local var_0_2 = TianShiNaNaEnum.OperDir
+local var_0_3 = TianShiNaNaEnum.OperEffect
+local var_0_4 = TianShiNaNaEnum.DirToQuaternion
+local var_0_5 = {
+	[var_0_1.Forward] = true,
+	[var_0_1.Left] = true,
+	[var_0_1.Down] = true
 }
 
-function slot0.Create(slot0, slot1, slot2)
-	slot3 = UnityEngine.GameObject.New("Cube")
+function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = UnityEngine.GameObject.New("Cube")
 
-	if slot2 then
-		slot3.transform:SetParent(slot2.transform, false)
+	if arg_1_2 then
+		var_1_0.transform:SetParent(arg_1_2.transform, false)
 	end
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(slot3, uv0, {
-		x = slot0,
-		y = slot1
-	})
+	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, {
+		x = arg_1_0,
+		y = arg_1_1
+	}))
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0.planDirs = {
-		uv0.Up,
-		uv0.Back,
-		uv0.Right,
-		uv0.Left,
-		uv0.Forward,
-		uv0.Down
+function var_0_0.ctor(arg_2_0, arg_2_1)
+	arg_2_0.planDirs = {
+		var_0_1.Up,
+		var_0_1.Back,
+		var_0_1.Right,
+		var_0_1.Left,
+		var_0_1.Forward,
+		var_0_1.Down
 	}
-	slot0.l = 1
-	slot0.w = 1
-	slot0.h = 2
-	slot0.x = slot1.x + slot0.l / 2 - 0.5
-	slot0.y = slot0.h / 2 - 1
-	slot0.z = slot1.y + slot0.w / 2 - 0.5
-	slot0.finalV3 = Vector3(slot0.x, slot0.y, slot0.z)
-	slot0.curOper = nil
-	slot0.nowTweenValue = 0
+	arg_2_0.l = 1
+	arg_2_0.w = 1
+	arg_2_0.h = 2
+	arg_2_0.x = arg_2_1.x + arg_2_0.l / 2 - 0.5
+	arg_2_0.y = arg_2_0.h / 2 - 1
+	arg_2_0.z = arg_2_1.y + arg_2_0.w / 2 - 0.5
+	arg_2_0.finalV3 = Vector3(arg_2_0.x, arg_2_0.y, arg_2_0.z)
+	arg_2_0.curOper = nil
+	arg_2_0.nowTweenValue = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.loader = PrefabInstantiate.Create(slot0.go)
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.go = arg_3_1
+	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.go)
 
-	slot0.loader:startLoad("scenes/v2a2_m_s12_tsnn_jshd/prefab/v2a2_m_s12_tsnn_box_p.prefab", slot0.onLoadResEnd, slot0)
+	arg_3_0.loader:startLoad("scenes/v2a2_m_s12_tsnn_jshd/prefab/v2a2_m_s12_tsnn_box_p.prefab", arg_3_0.onLoadResEnd, arg_3_0)
 
-	slot0.trans = slot0.instGo.transform:GetChild(0)
+	arg_3_0.trans = arg_3_0.instGo.transform:GetChild(0)
 
-	transformhelper.setLocalPos(slot0.trans, slot0.x, slot0.y, slot0.z)
+	transformhelper.setLocalPos(arg_3_0.trans, arg_3_0.x, arg_3_0.y, arg_3_0.z)
 
 	TianShiNaNaModel.instance.curPointList = {}
 end
 
-function slot0.onLoadResEnd(slot0)
-	slot0.plans = slot0:getUserDataTb_()
-	slot0.renderers = slot0:getUserDataTb_()
-	slot0.hideRenderers = slot0:getUserDataTb_()
-	slot0.instGo = slot0.loader:getInstGO()
-	slot0.rootGo = slot0.instGo.transform:GetChild(0):GetChild(0).gameObject
-	slot0.anim = slot0.instGo:GetComponent(typeof(UnityEngine.Animator))
-	slot4 = 0
+function var_0_0.onLoadResEnd(arg_4_0)
+	arg_4_0.plans = arg_4_0:getUserDataTb_()
+	arg_4_0.renderers = arg_4_0:getUserDataTb_()
+	arg_4_0.hideRenderers = arg_4_0:getUserDataTb_()
+	arg_4_0.instGo = arg_4_0.loader:getInstGO()
+	arg_4_0.rootGo = arg_4_0.instGo.transform:GetChild(0):GetChild(0).gameObject
+	arg_4_0.anim = arg_4_0.instGo:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0.anim:Play("open1", slot4, 1)
+	arg_4_0.anim:Play("open1", 0, 1)
 
-	for slot4 = 1, 6 do
-		slot0.plans[slot4] = gohelper.findChild(slot0.rootGo, slot4)
-		slot0.renderers[slot4] = slot0.plans[slot4]:GetComponent(typeof(UnityEngine.Renderer))
+	for iter_4_0 = 1, 6 do
+		arg_4_0.plans[iter_4_0] = gohelper.findChild(arg_4_0.rootGo, iter_4_0)
+		arg_4_0.renderers[iter_4_0] = arg_4_0.plans[iter_4_0]:GetComponent(typeof(UnityEngine.Renderer))
 	end
 
-	slot0:updateSortOrder()
+	arg_4_0:updateSortOrder()
 end
 
-function slot0.playOpenAnim(slot0, slot1)
-	if slot1 == TianShiNaNaEnum.CubeType.Type1 then
-		slot0.anim:Play("open1", 0, 0)
+function var_0_0.playOpenAnim(arg_5_0, arg_5_1)
+	if arg_5_1 == TianShiNaNaEnum.CubeType.Type1 then
+		arg_5_0.anim:Play("open1", 0, 0)
 	else
-		slot0.anim:Play("open2", 0, 0)
+		arg_5_0.anim:Play("open2", 0, 0)
 	end
 end
 
-function slot0.updateSortOrder(slot0)
-	if not slot0.renderers then
+function var_0_0.updateSortOrder(arg_6_0)
+	if not arg_6_0.renderers then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0.renderers) do
-		if uv0[slot0.planDirs[slot4]] then
-			slot5.sortingOrder = TianShiNaNaHelper.getSortIndex(slot0.x, slot0.z) - 1
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.renderers) do
+		local var_6_0 = arg_6_0.planDirs[iter_6_0]
+
+		if var_0_5[var_6_0] then
+			iter_6_1.sortingOrder = TianShiNaNaHelper.getSortIndex(arg_6_0.x, arg_6_0.z) - 1
 		else
-			slot5.sortingOrder = TianShiNaNaHelper.getSortIndex(slot0.x, slot0.z) + 1
+			iter_6_1.sortingOrder = TianShiNaNaHelper.getSortIndex(arg_6_0.x, arg_6_0.z) + 1
 		end
 	end
 end
 
-function slot0.doCubeTween(slot0, slot1, slot2)
-	slot3 = (slot1 == uv0.Left or slot1 == uv0.Right) and slot0.l or slot0.w
-	slot0.finalV3.y = math.sqrt((slot3 / 2)^2 + (slot0.h / 2)^2 - (slot3 * Mathf.Clamp(slot2, 0, 0.5) + slot0.h * Mathf.Clamp(slot2 - 0.5, 0, 0.5) - slot3 / 2)^2)
+function var_0_0.doCubeTween(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = (arg_7_1 == var_0_2.Left or arg_7_1 == var_0_2.Right) and arg_7_0.l or arg_7_0.w
+	local var_7_1 = (var_7_0 / 2)^2 + (arg_7_0.h / 2)^2
+	local var_7_2 = var_7_0 * Mathf.Clamp(arg_7_2, 0, 0.5)
+	local var_7_3 = arg_7_0.h * Mathf.Clamp(arg_7_2 - 0.5, 0, 0.5)
+	local var_7_4 = var_7_2 + var_7_3
 
-	if slot1 == uv0.Left then
-		slot0.finalV3.x = slot0.x - slot7
-	elseif slot1 == uv0.Right then
-		slot0.finalV3.x = slot0.x + slot7
-	elseif slot1 == uv0.Forward then
-		slot0.finalV3.z = slot0.z + slot7
-	elseif slot1 == uv0.Back then
-		slot0.finalV3.z = slot0.z - slot7
+	arg_7_0.finalV3.y = math.sqrt(var_7_1 - (var_7_4 - var_7_0 / 2)^2)
+
+	if arg_7_1 == var_0_2.Left then
+		arg_7_0.finalV3.x = arg_7_0.x - var_7_4
+	elseif arg_7_1 == var_0_2.Right then
+		arg_7_0.finalV3.x = arg_7_0.x + var_7_4
+	elseif arg_7_1 == var_0_2.Forward then
+		arg_7_0.finalV3.z = arg_7_0.z + var_7_4
+	elseif arg_7_1 == var_0_2.Back then
+		arg_7_0.finalV3.z = arg_7_0.z - var_7_4
 	end
 
-	slot12 = TianShiNaNaHelper.lerpQ(uv1[slot0.planDirs[1]][slot0.planDirs[2]], uv1[slot0:getNextDir(slot1, slot0.planDirs[1])][slot0:getNextDir(slot1, slot0.planDirs[2])], (math.atan2(slot0.finalV3.y, slot2 > 0.5 and -slot6 or slot3 / 2 - slot5) - math.atan2(slot0.h, slot3)) / math.pi * 2)
+	local var_7_5 = var_0_4[arg_7_0.planDirs[1]][arg_7_0.planDirs[2]]
+	local var_7_6 = var_0_4[arg_7_0:getNextDir(arg_7_1, arg_7_0.planDirs[1])][arg_7_0:getNextDir(arg_7_1, arg_7_0.planDirs[2])]
+	local var_7_7 = math.atan2(arg_7_0.h, var_7_0)
+	local var_7_8 = math.atan2(arg_7_0.finalV3.y, arg_7_2 > 0.5 and -var_7_3 or var_7_0 / 2 - var_7_2)
+	local var_7_9 = TianShiNaNaHelper.lerpQ(var_7_5, var_7_6, (var_7_8 - var_7_7) / math.pi * 2)
 
-	transformhelper.setLocalRotation2(slot0.trans, slot12.x, slot12.y, slot12.z, slot12.w)
-	transformhelper.setLocalPos(slot0.trans, slot0.finalV3.x, slot0.finalV3.y - 1, slot0.finalV3.z)
+	transformhelper.setLocalRotation2(arg_7_0.trans, var_7_9.x, var_7_9.y, var_7_9.z, var_7_9.w)
+	transformhelper.setLocalPos(arg_7_0.trans, arg_7_0.finalV3.x, arg_7_0.finalV3.y - 1, arg_7_0.finalV3.z)
 
-	if slot2 > 0.5 then
-		slot0:doRotate(slot1, true)
-		slot0:updateSortOrder()
-		slot0:doRotate(-slot1, true)
+	if arg_7_2 > 0.5 then
+		arg_7_0:doRotate(arg_7_1, true)
+		arg_7_0:updateSortOrder()
+		arg_7_0:doRotate(-arg_7_1, true)
 	else
-		slot0:updateSortOrder()
+		arg_7_0:updateSortOrder()
 	end
 end
 
-function slot0.getPlaneByIndex(slot0, slot1)
-	return slot0.plans[slot1]
+function var_0_0.getPlaneByIndex(arg_8_0, arg_8_1)
+	return arg_8_0.plans[arg_8_1]
 end
 
-function slot0.setPlaneParent(slot0, slot1, slot2)
-	slot0.renderers[slot1].sortingOrder = 1
-	slot0.hideRenderers[slot1] = slot0.renderers[slot1]
-	slot0.renderers[slot1] = nil
+function var_0_0.setPlaneParent(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.renderers[arg_9_1].sortingOrder = 1
+	arg_9_0.hideRenderers[arg_9_1] = arg_9_0.renderers[arg_9_1]
+	arg_9_0.renderers[arg_9_1] = nil
 
-	slot0:getPlaneByIndex(slot1).transform:SetParent(slot2, true)
-	tabletool.addValues(TianShiNaNaModel.instance.curPointList, slot0:getCurGrids())
+	arg_9_0:getPlaneByIndex(arg_9_1).transform:SetParent(arg_9_2, true)
+	tabletool.addValues(TianShiNaNaModel.instance.curPointList, arg_9_0:getCurGrids())
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.CubePointUpdate)
 end
 
-function slot0.revertPlane(slot0, slot1)
-	slot2, slot3 = next(slot0.renderers)
+function var_0_0.revertPlane(arg_10_0, arg_10_1)
+	local var_10_0, var_10_1 = next(arg_10_0.renderers)
 
-	if not slot3 or not slot0.hideRenderers[slot1] then
+	if not var_10_1 or not arg_10_0.hideRenderers[arg_10_1] then
 		return
 	end
 
-	slot0.renderers[slot1] = slot0.hideRenderers[slot1]
-	slot0.renderers[slot1].sortingOrder = slot3.sortingOrder
-	slot0.hideRenderers[slot1] = nil
+	arg_10_0.renderers[arg_10_1] = arg_10_0.hideRenderers[arg_10_1]
+	arg_10_0.renderers[arg_10_1].sortingOrder = var_10_1.sortingOrder
+	arg_10_0.hideRenderers[arg_10_1] = nil
 
-	slot0:getPlaneByIndex(slot1).transform:SetParent(slot0.rootGo.transform, true)
+	arg_10_0:getPlaneByIndex(arg_10_1).transform:SetParent(arg_10_0.rootGo.transform, true)
 
-	slot5 = slot0:getCurGrids()
+	local var_10_2 = arg_10_0:getCurGrids()
 
-	for slot9 = #TianShiNaNaModel.instance.curPointList, 1, -1 do
-		for slot14, slot15 in pairs(slot5) do
-			if TianShiNaNaHelper.isPosSame(slot15, TianShiNaNaModel.instance.curPointList[slot9]) then
-				table.remove(TianShiNaNaModel.instance.curPointList, slot9)
+	for iter_10_0 = #TianShiNaNaModel.instance.curPointList, 1, -1 do
+		local var_10_3 = TianShiNaNaModel.instance.curPointList[iter_10_0]
+
+		for iter_10_1, iter_10_2 in pairs(var_10_2) do
+			if TianShiNaNaHelper.isPosSame(iter_10_2, var_10_3) then
+				table.remove(TianShiNaNaModel.instance.curPointList, iter_10_0)
 
 				break
 			end
@@ -168,132 +180,133 @@ function slot0.revertPlane(slot0, slot1)
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.CubePointUpdate)
 end
 
-function slot0.hideOtherPlane(slot0)
-	for slot4 in pairs(slot0.renderers) do
-		gohelper.setActive(slot0:getPlaneByIndex(slot4), false)
+function var_0_0.hideOtherPlane(arg_11_0)
+	for iter_11_0 in pairs(arg_11_0.renderers) do
+		gohelper.setActive(arg_11_0:getPlaneByIndex(iter_11_0), false)
 	end
 end
 
-function slot0.doRotate(slot0, slot1, slot2)
-	if slot1 == uv0.Left then
-		slot0.x = slot0.x - slot0.l / 2 - slot0.h / 2
-		slot0.h = slot0.l
-		slot0.l = slot0.h
-	elseif slot1 == uv0.Right then
-		slot0.x = slot0.x + slot0.l / 2 + slot0.h / 2
-		slot0.h = slot0.l
-		slot0.l = slot0.h
-	elseif slot1 == uv0.Forward then
-		slot0.z = slot0.z + slot0.w / 2 + slot0.h / 2
-		slot0.h = slot0.w
-		slot0.w = slot0.h
-	elseif slot1 == uv0.Back then
-		slot0.z = slot0.z - slot0.w / 2 - slot0.h / 2
-		slot0.h = slot0.w
-		slot0.w = slot0.h
+function var_0_0.doRotate(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == var_0_2.Left then
+		arg_12_0.x = arg_12_0.x - arg_12_0.l / 2 - arg_12_0.h / 2
+		arg_12_0.l, arg_12_0.h = arg_12_0.h, arg_12_0.l
+	elseif arg_12_1 == var_0_2.Right then
+		arg_12_0.x = arg_12_0.x + arg_12_0.l / 2 + arg_12_0.h / 2
+		arg_12_0.l, arg_12_0.h = arg_12_0.h, arg_12_0.l
+	elseif arg_12_1 == var_0_2.Forward then
+		arg_12_0.z = arg_12_0.z + arg_12_0.w / 2 + arg_12_0.h / 2
+		arg_12_0.w, arg_12_0.h = arg_12_0.h, arg_12_0.w
+	elseif arg_12_1 == var_0_2.Back then
+		arg_12_0.z = arg_12_0.z - arg_12_0.w / 2 - arg_12_0.h / 2
+		arg_12_0.w, arg_12_0.h = arg_12_0.h, arg_12_0.w
 	end
 
-	slot0.y = slot0.h / 2 - 1
-	slot0.allPoint = nil
+	arg_12_0.y = arg_12_0.h / 2 - 1
+	arg_12_0.allPoint = nil
 
-	if not slot2 then
-		for slot6, slot7 in pairs(slot0.planDirs) do
-			slot0.planDirs[slot6] = slot0:getNextDir(slot1, slot7)
+	if not arg_12_2 then
+		for iter_12_0, iter_12_1 in pairs(arg_12_0.planDirs) do
+			arg_12_0.planDirs[iter_12_0] = arg_12_0:getNextDir(arg_12_1, iter_12_1)
 		end
 
-		slot0.finalV3:Set(slot0.x, slot0.y, slot0.z)
-		transformhelper.setLocalPos(slot0.trans, slot0.finalV3.x, slot0.finalV3.y, slot0.finalV3.z)
+		arg_12_0.finalV3:Set(arg_12_0.x, arg_12_0.y, arg_12_0.z)
+		transformhelper.setLocalPos(arg_12_0.trans, arg_12_0.finalV3.x, arg_12_0.finalV3.y, arg_12_0.finalV3.z)
 
-		slot3 = uv1[slot0.planDirs[1]][slot0.planDirs[2]]
+		local var_12_0 = var_0_4[arg_12_0.planDirs[1]][arg_12_0.planDirs[2]]
 
-		transformhelper.setLocalRotation2(slot0.trans, slot3.x, slot3.y, slot3.z, slot3.w)
-		slot0:updateSortOrder()
+		transformhelper.setLocalRotation2(arg_12_0.trans, var_12_0.x, var_12_0.y, var_12_0.z, var_12_0.w)
+		arg_12_0:updateSortOrder()
 	end
 end
 
-function slot0.resetPos(slot0)
-	slot0.finalV3:Set(slot0.x, slot0.y, slot0.z)
-	transformhelper.setLocalPos(slot0.trans, slot0.finalV3.x, slot0.finalV3.y, slot0.finalV3.z)
+function var_0_0.resetPos(arg_13_0)
+	arg_13_0.finalV3:Set(arg_13_0.x, arg_13_0.y, arg_13_0.z)
+	transformhelper.setLocalPos(arg_13_0.trans, arg_13_0.finalV3.x, arg_13_0.finalV3.y, arg_13_0.finalV3.z)
 
-	slot1 = uv0[slot0.planDirs[1]][slot0.planDirs[2]]
+	local var_13_0 = var_0_4[arg_13_0.planDirs[1]][arg_13_0.planDirs[2]]
 
-	transformhelper.setLocalRotation2(slot0.trans, slot1.x, slot1.y, slot1.z, slot1.w)
+	transformhelper.setLocalRotation2(arg_13_0.trans, var_13_0.x, var_13_0.y, var_13_0.z, var_13_0.w)
 end
 
-function slot0.getCurDownIndex(slot0)
-	for slot4, slot5 in pairs(slot0.planDirs) do
-		if slot5 == uv0.Down then
-			return slot4
+function var_0_0.getCurDownIndex(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.planDirs) do
+		if iter_14_1 == var_0_1.Down then
+			return iter_14_0
 		end
 	end
 
 	return 1
 end
 
-function slot0.getDirByIndex(slot0, slot1)
-	return slot0.planDirs[slot1] or uv0.Up
+function var_0_0.getDirByIndex(arg_15_0, arg_15_1)
+	return arg_15_0.planDirs[arg_15_1] or var_0_1.Up
 end
 
-function slot0.getCurGrids(slot0)
-	if slot0.allPoint then
-		return slot0.allPoint
+function var_0_0.getCurGrids(arg_16_0)
+	if arg_16_0.allPoint then
+		return arg_16_0.allPoint
 	end
 
-	slot3 = Mathf.Round(slot0.z - slot0.w / 2)
-	slot4 = Mathf.Round(slot0.z + slot0.w / 2)
-	slot5 = {}
+	local var_16_0 = Mathf.Round(arg_16_0.x - arg_16_0.l / 2)
+	local var_16_1 = Mathf.Round(arg_16_0.x + arg_16_0.l / 2)
+	local var_16_2 = Mathf.Round(arg_16_0.z - arg_16_0.w / 2)
+	local var_16_3 = Mathf.Round(arg_16_0.z + arg_16_0.w / 2)
+	local var_16_4 = {}
 
-	for slot9 = Mathf.Round(slot0.x - slot0.l / 2), Mathf.Round(slot0.x + slot0.l / 2) - 1 do
-		for slot13 = slot3, slot4 - 1 do
-			table.insert(slot5, {
-				x = slot9,
-				y = slot13
+	for iter_16_0 = var_16_0, var_16_1 - 1 do
+		for iter_16_1 = var_16_2, var_16_3 - 1 do
+			table.insert(var_16_4, {
+				x = iter_16_0,
+				y = iter_16_1
 			})
 		end
 	end
 
-	slot0.allPoint = slot5
+	arg_16_0.allPoint = var_16_4
 
-	return slot5
+	return var_16_4
 end
 
-function slot0.getOperGrids(slot0, slot1)
-	slot0:doRotate(slot1, true)
-	slot0:doRotate(-slot1, true)
+function var_0_0.getOperGrids(arg_17_0, arg_17_1)
+	arg_17_0:doRotate(arg_17_1, true)
 
-	return slot0:getCurGrids()
+	local var_17_0 = arg_17_0:getCurGrids()
+
+	arg_17_0:doRotate(-arg_17_1, true)
+
+	return var_17_0
 end
 
-function slot0.getOperDownIndex(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.planDirs) do
-		if slot0:getNextDir(slot1, slot6) == uv0.Down then
-			return slot5
+function var_0_0.getOperDownIndex(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0.planDirs) do
+		if arg_18_0:getNextDir(arg_18_1, iter_18_1) == var_0_1.Down then
+			return iter_18_0
 		end
 	end
 
 	return 1
 end
 
-function slot0.getNextDir(slot0, slot1, slot2)
-	slot3 = uv0[slot1]
+function var_0_0.getNextDir(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = var_0_3[arg_19_1]
 
-	if not slot1 then
-		return slot2
+	if not arg_19_1 then
+		return arg_19_2
 	end
 
-	return slot3[slot2] or slot2
+	return var_19_0[arg_19_2] or arg_19_2
 end
 
-function slot0.onDestroy(slot0)
-	for slot4 = 1, 6 do
-		gohelper.destroy(slot0.plans[slot4])
+function var_0_0.onDestroy(arg_20_0)
+	for iter_20_0 = 1, 6 do
+		gohelper.destroy(arg_20_0.plans[iter_20_0])
 	end
 
-	if slot0.loader then
-		slot0.loader:dispose()
+	if arg_20_0.loader then
+		arg_20_0.loader:dispose()
 
-		slot0.loader = nil
+		arg_20_0.loader = nil
 	end
 end
 
-return slot0
+return var_0_0

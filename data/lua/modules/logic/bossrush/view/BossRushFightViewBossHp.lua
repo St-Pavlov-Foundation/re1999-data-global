@@ -1,223 +1,246 @@
-module("modules.logic.bossrush.view.BossRushFightViewBossHp", package.seeall)
+﻿module("modules.logic.bossrush.view.BossRushFightViewBossHp", package.seeall)
 
-slot0 = class("BossRushFightViewBossHp", FightViewBossHp)
+local var_0_0 = class("BossRushFightViewBossHp", FightViewBossHp)
 
-function slot0.onInitView(slot0)
-	FightViewBossHp.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	FightViewBossHp.onInitView(arg_1_0)
 
-	slot0._gounlimited = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/mask/container/imgHp/#go_unlimited")
-	slot0._imgunlimited = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp/mask/container/unlimitedhp")
-	slot1 = gohelper.findChild(slot0._gounlimited, "vx_hp")
-	slot0._vxColor = {
-		[BossRushEnum.HpColor.Red] = gohelper.findChild(slot1, "red"),
-		[BossRushEnum.HpColor.Orange] = gohelper.findChild(slot1, "orange"),
-		[BossRushEnum.HpColor.Yellow] = gohelper.findChild(slot1, "yellow"),
-		[BossRushEnum.HpColor.Green] = gohelper.findChild(slot1, "green"),
-		[BossRushEnum.HpColor.Blue] = gohelper.findChild(slot1, "blue"),
-		[BossRushEnum.HpColor.Purple] = gohelper.findChild(slot1, "purple")
+	arg_1_0._gounlimited = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgHp/#go_unlimited")
+	arg_1_0._imgunlimited = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/mask/container/unlimitedhp")
+
+	local var_1_0 = gohelper.findChild(arg_1_0._gounlimited, "vx_hp")
+
+	arg_1_0._vxColor = {
+		[BossRushEnum.HpColor.Red] = gohelper.findChild(var_1_0, "red"),
+		[BossRushEnum.HpColor.Orange] = gohelper.findChild(var_1_0, "orange"),
+		[BossRushEnum.HpColor.Yellow] = gohelper.findChild(var_1_0, "yellow"),
+		[BossRushEnum.HpColor.Green] = gohelper.findChild(var_1_0, "green"),
+		[BossRushEnum.HpColor.Blue] = gohelper.findChild(var_1_0, "blue"),
+		[BossRushEnum.HpColor.Purple] = gohelper.findChild(var_1_0, "purple")
 	}
 end
 
-slot1 = "ui/viewres/bossrush/bossrushfightviewbosshpext.prefab"
+local var_0_1 = "ui/viewres/bossrush/bossrushfightviewbosshpext.prefab"
 
-function slot0.onOpen(slot0)
-	slot0._damage = 0
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0._damage = 0
 
-	slot0:_resetUnlimitedHp()
-	uv0.super.onOpen(slot0)
+	arg_2_0:_resetUnlimitedHp()
+	var_0_0.super.onOpen(arg_2_0)
 end
 
-function slot0.onClose(slot0)
-	uv0.super.onClose(slot0)
-	slot0:_resetUnlimitedHp()
+function var_0_0.onClose(arg_3_0)
+	var_0_0.super.onClose(arg_3_0)
+	arg_3_0:_resetUnlimitedHp()
 end
 
-function slot0._onHpChange(slot0, slot1, slot2)
-	uv0.super._onHpChange(slot0, slot1, slot2)
+function var_0_0._onHpChange(arg_4_0, arg_4_1, arg_4_2)
+	var_0_0.super._onHpChange(arg_4_0, arg_4_1, arg_4_2)
 
-	if slot2 ~= 0 and slot0._bossEntityMO and slot1.id == slot0._bossEntityMO.id then
-		if slot0._isUnlimitedHp then
-			slot0._damage = slot0._damage + slot2
+	if arg_4_2 ~= 0 and arg_4_0._bossEntityMO and arg_4_1.id == arg_4_0._bossEntityMO.id then
+		if arg_4_0._isUnlimitedHp then
+			arg_4_0._damage = arg_4_0._damage + arg_4_2
 
-			slot0:_checkUnlimitedHp()
+			arg_4_0:_checkUnlimitedHp()
 		else
-			slot0._damage = 0
+			arg_4_0._damage = 0
 		end
 	end
 end
 
-function slot0._checkUnlimitedHp(slot0)
-	slot1 = slot0:_getFinalBossHp()
-	slot2 = Mathf.Floor(Mathf.Abs(slot0._damage / slot1))
-	slot4 = 0.5 / FightModel.instance:getUISpeed()
-	slot5 = (slot1 - Mathf.Abs(slot0._damage) % slot1) / slot1
-	slot0._unlimitedFillAmount = slot5
+function var_0_0._checkUnlimitedHp(arg_5_0)
+	local var_5_0 = arg_5_0:_getFinalBossHp()
+	local var_5_1 = Mathf.Abs(arg_5_0._damage / var_5_0)
+	local var_5_2 = Mathf.Floor(var_5_1)
+	local var_5_3 = Mathf.Abs(arg_5_0._damage) % var_5_0
+	local var_5_4 = 0.5 / FightModel.instance:getUISpeed()
+	local var_5_5 = (var_5_0 - var_5_3) / var_5_0
 
-	ZProj.TweenHelper.KillByObj(slot0._imgHp)
+	arg_5_0._unlimitedFillAmount = var_5_5
 
-	if slot0._imgHp.fillAmount < slot5 and slot0._curShield == 0 then
-		slot7 = slot0._imgHp.fillAmount / (slot0._imgHp.fillAmount + slot5) * slot4
-		slot0._unlimitedTime2 = slot4 - slot7
+	ZProj.TweenHelper.KillByObj(arg_5_0._imgHp)
 
-		ZProj.TweenHelper.DOFillAmount(slot0._imgHp, 0, slot7)
+	if var_5_5 > arg_5_0._imgHp.fillAmount and arg_5_0._curShield == 0 then
+		local var_5_6 = arg_5_0._imgHp.fillAmount + var_5_5
+		local var_5_7 = arg_5_0._imgHp.fillAmount / var_5_6 * var_5_4
 
-		if slot0._curShield == 0 then
-			ZProj.TweenHelper.KillByObj(slot0._imgHpShield)
+		arg_5_0._unlimitedTime2 = var_5_4 - var_5_7
 
-			slot0._imgHpShield.fillAmount = 0
+		ZProj.TweenHelper.DOFillAmount(arg_5_0._imgHp, 0, var_5_7)
+
+		if arg_5_0._curShield == 0 then
+			ZProj.TweenHelper.KillByObj(arg_5_0._imgHpShield)
+
+			arg_5_0._imgHpShield.fillAmount = 0
 		end
 
-		TaskDispatcher.cancelTask(slot0._onEndTween, slot0)
-		TaskDispatcher.runDelay(slot0._onEndTween, slot0, slot7)
+		TaskDispatcher.cancelTask(arg_5_0._onEndTween, arg_5_0)
+		TaskDispatcher.runDelay(arg_5_0._onEndTween, arg_5_0, var_5_7)
 	else
-		ZProj.TweenHelper.DOFillAmount(slot0._imgHp, slot5, slot4)
-		BossRushModel.instance:syncUnlimitedHp(nil, slot5)
+		ZProj.TweenHelper.DOFillAmount(arg_5_0._imgHp, var_5_5, var_5_4)
+		BossRushModel.instance:syncUnlimitedHp(nil, var_5_5)
 	end
 end
 
-function slot0._onEndTween(slot0)
-	slot1, slot2 = slot0:_getFillAmount()
+function var_0_0._onEndTween(arg_6_0)
+	local var_6_0, var_6_1 = arg_6_0:_getFillAmount()
 
-	if slot0._unlimitedFillAmount then
-		slot1 = slot0._unlimitedFillAmount
+	if arg_6_0._unlimitedFillAmount then
+		var_6_0 = arg_6_0._unlimitedFillAmount
 
-		slot0:_changeUnlimitedHpColor(slot0._unlimitedHpNum + 1, slot1)
-		ZProj.TweenHelper.KillByObj(slot0._imgHp)
+		arg_6_0:_changeUnlimitedHpColor(arg_6_0._unlimitedHpNum + 1, var_6_0)
+		ZProj.TweenHelper.KillByObj(arg_6_0._imgHp)
 
-		slot0._imgHp.fillAmount = 1
+		arg_6_0._imgHp.fillAmount = 1
 
-		ZProj.TweenHelper.DOFillAmount(slot0._imgHp, slot1, slot0._unlimitedTime2 or 0.5)
+		ZProj.TweenHelper.DOFillAmount(arg_6_0._imgHp, var_6_0, arg_6_0._unlimitedTime2 or 0.5)
 	end
 
-	slot0:_changeShieldPos(slot1)
-	ZProj.TweenHelper.KillByObj(slot0._imgHpShield)
+	arg_6_0:_changeShieldPos(var_6_0)
+	ZProj.TweenHelper.KillByObj(arg_6_0._imgHpShield)
 
-	slot0._imgHpShield.fillAmount = slot2
+	arg_6_0._imgHpShield.fillAmount = var_6_1
 end
 
-function slot0._updateUI(slot0)
-	uv0.super._updateUI(slot0)
+function var_0_0._updateUI(arg_7_0)
+	var_0_0.super._updateUI(arg_7_0)
 
-	if slot0._unlimitedHpNum and slot0._unlimitedHpNum > 0 then
-		slot1 = slot0:_getFinalBossHp()
+	if arg_7_0._unlimitedHpNum and arg_7_0._unlimitedHpNum > 0 then
+		local var_7_0 = arg_7_0:_getFinalBossHp()
+		local var_7_1 = Mathf.Abs(arg_7_0._damage) % var_7_0
+		local var_7_2 = var_7_0 - arg_7_0._curHp
 
-		if slot0._curHp ~= slot1 - Mathf.Abs(slot0._damage) % slot1 then
-			slot0._damage = -(slot1 * slot0._unlimitedHpNum + slot1 - slot0._curHp)
+		if arg_7_0._curHp ~= var_7_0 - var_7_1 then
+			arg_7_0._damage = -(var_7_0 * arg_7_0._unlimitedHpNum + var_7_2)
 		end
 	end
 end
 
-function slot0._detectBossMultiHp(slot0)
-	slot1 = BossRushModel.instance:getMultiHpInfo()
-	slot3 = slot1.multiHpNum
+function var_0_0._detectBossMultiHp(arg_8_0)
+	local var_8_0 = BossRushModel.instance:getMultiHpInfo()
+	local var_8_1 = var_8_0.multiHpIdx
+	local var_8_2 = var_8_0.multiHpNum
 
-	if not slot0._hpMultiAni or slot1.multiHpIdx == 0 then
-		slot0._hpMultiAni = {}
+	if not arg_8_0._hpMultiAni or var_8_1 == 0 then
+		arg_8_0._hpMultiAni = {}
 	end
 
-	gohelper.setActive(slot0._multiHpRoot, slot3 > 1)
+	gohelper.setActive(arg_8_0._multiHpRoot, var_8_2 > 1)
 
-	if slot3 > 1 then
-		slot0:com_createObjList(slot0._onMultiHpItemShow, slot3, slot0._multiHpItemContent, slot0._multiHpItem)
+	if var_8_2 > 1 then
+		arg_8_0:com_createObjList(arg_8_0._onMultiHpItemShow, var_8_2, arg_8_0._multiHpItemContent, arg_8_0._multiHpItem)
 	end
 
-	gohelper.setActive(slot0._multiHpItem.gameObject, true)
-	gohelper.setActive(gohelper.findChild(slot0._multiHpItem.gameObject, "hp_unlimited"), true)
-	gohelper.setActive(gohelper.findChild(slot0._multiHpItem.gameObject, "hp"), false)
-	slot0._multiHpItem.transform:SetSiblingIndex(0)
+	gohelper.setActive(arg_8_0._multiHpItem.gameObject, true)
 
-	if not slot0._lastMultiHpIdx or slot0._lastMultiHpIdx ~= slot2 then
-		slot0:_oneHpClear(slot2 - slot3 + 1)
+	local var_8_3 = gohelper.findChild(arg_8_0._multiHpItem.gameObject, "hp_unlimited")
+	local var_8_4 = gohelper.findChild(arg_8_0._multiHpItem.gameObject, "hp")
+
+	gohelper.setActive(var_8_3, true)
+	gohelper.setActive(var_8_4, false)
+	arg_8_0._multiHpItem.transform:SetSiblingIndex(0)
+
+	if not arg_8_0._lastMultiHpIdx or arg_8_0._lastMultiHpIdx ~= var_8_1 then
+		arg_8_0:_oneHpClear(var_8_1 - var_8_2 + 1)
 	end
 
-	slot0._lastMultiHpIdx = slot2
+	arg_8_0._lastMultiHpIdx = var_8_1
 
-	if slot0._imgHp.fillAmount == 0 then
-		ZProj.TweenHelper.KillByObj(slot0._imgHp)
+	if arg_8_0._imgHp.fillAmount == 0 then
+		ZProj.TweenHelper.KillByObj(arg_8_0._imgHp)
 
-		slot0._imgHp.fillAmount = 1
+		arg_8_0._imgHp.fillAmount = 1
 	end
 end
 
-slot2 = "idle"
-slot3 = "close"
+local var_0_2 = "idle"
+local var_0_3 = "close"
 
-function slot0._onMultiHpItemShow(slot0, slot1, slot2, slot3)
-	if slot3 == 1 then
-		gohelper.setActive(slot1, false)
+function var_0_0._onMultiHpItemShow(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_3 == 1 then
+		gohelper.setActive(arg_9_1, false)
 	else
-		slot4 = BossRushModel.instance:getMultiHpInfo()
-		slot8 = slot1:GetComponent(typeof(UnityEngine.Animator))
-		slot9 = slot3 <= slot4.multiHpNum - slot4.multiHpIdx
+		local var_9_0 = BossRushModel.instance:getMultiHpInfo()
+		local var_9_1 = var_9_0.multiHpIdx
+		local var_9_2 = var_9_0.multiHpNum
+		local var_9_3 = gohelper.findChild(arg_9_1, "hp")
+		local var_9_4 = arg_9_1:GetComponent(typeof(UnityEngine.Animator))
+		local var_9_5 = arg_9_3 <= var_9_2 - var_9_1
 
-		if not slot0._hpMultiAni[slot3] then
-			gohelper.setActive(gohelper.findChild(slot1, "hp"), slot9)
+		if not arg_9_0._hpMultiAni[arg_9_3] then
+			gohelper.setActive(var_9_3, var_9_5)
 
-			slot0._hpMultiAni[slot3] = slot9 and uv0 or uv1
-		elseif slot0._hpMultiAni[slot3] ~= (slot9 and uv0 or uv1) then
-			slot0._hpMultiAni[slot3] = slot10
+			arg_9_0._hpMultiAni[arg_9_3] = var_9_5 and var_0_2 or var_0_3
+		else
+			local var_9_6 = var_9_5 and var_0_2 or var_0_3
 
-			slot8:Play(slot0._hpMultiAni[slot3])
+			if arg_9_0._hpMultiAni[arg_9_3] ~= var_9_6 then
+				arg_9_0._hpMultiAni[arg_9_3] = var_9_6
+
+				var_9_4:Play(arg_9_0._hpMultiAni[arg_9_3])
+			end
 		end
 	end
 end
 
-function slot0._changeUnlimitedHpColor(slot0, slot1, slot2)
-	slot3, slot4, slot5 = BossRushModel.instance:getUnlimitedTopAndBotHpColor(slot1)
+function var_0_0._changeUnlimitedHpColor(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0, var_10_1, var_10_2 = BossRushModel.instance:getUnlimitedTopAndBotHpColor(arg_10_1)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgHp, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imgunlimited, slot4)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._imgHp, var_10_0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._imgunlimited, var_10_1)
 
-	for slot9, slot10 in ipairs(slot0._vxColor) do
-		gohelper.setActive(slot10, slot9 == slot5)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._vxColor) do
+		gohelper.setActive(iter_10_1, iter_10_0 == var_10_2)
 	end
 
-	BossRushModel.instance:syncUnlimitedHp(slot1, slot2)
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnUnlimitedHp, slot1, slot2)
+	BossRushModel.instance:syncUnlimitedHp(arg_10_1, arg_10_2)
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnUnlimitedHp, arg_10_1, arg_10_2)
 end
 
-function slot0._oneHpClear(slot0, slot1)
-	slot0._unlimitedHpNum = slot1
+function var_0_0._oneHpClear(arg_11_0, arg_11_1)
+	arg_11_0._unlimitedHpNum = arg_11_1
 
-	if slot0._unlimitedHpNum >= 0 then
-		slot0._isUnlimitedHp = true
+	if arg_11_0._unlimitedHpNum >= 0 then
+		arg_11_0._isUnlimitedHp = true
 
-		gohelper.setActive(slot0._gounlimited, true)
-		gohelper.setActive(slot0._imgunlimited.gameObject, true)
+		gohelper.setActive(arg_11_0._gounlimited, true)
+		gohelper.setActive(arg_11_0._imgunlimited.gameObject, true)
 	end
 
-	if slot0._unlimitedHpNum == 0 then
-		ZProj.TweenHelper.KillByObj(slot0._imgHp)
+	if arg_11_0._unlimitedHpNum == 0 then
+		ZProj.TweenHelper.KillByObj(arg_11_0._imgHp)
 
-		slot0._imgHp.fillAmount = 1
+		arg_11_0._imgHp.fillAmount = 1
 
-		slot0:_changeUnlimitedHpColor(slot0._unlimitedHpNum, 1)
-	end
-end
-
-function slot0._getFinalBossHp(slot0)
-	if slot0._bossEntityMO then
-		return slot1.attrMO and slot1.attrMO.hp > 0 and slot1.attrMO.hp or 1
+		arg_11_0:_changeUnlimitedHpColor(arg_11_0._unlimitedHpNum, 1)
 	end
 end
 
-function slot0._resetUnlimitedHp(slot0)
-	slot0._unlimitedHpNum = nil
-	slot0._isUnlimitedHp = nil
+function var_0_0._getFinalBossHp(arg_12_0)
+	local var_12_0 = arg_12_0._bossEntityMO
 
-	ZProj.TweenHelper.KillByObj(slot0._imgHp)
-	TaskDispatcher.cancelTask(slot0._onEndTween, slot0)
-	gohelper.setActive(slot0._gounlimited, false)
-	gohelper.setActive(slot0._imgunlimited, false)
+	if var_12_0 then
+		return var_12_0.attrMO and var_12_0.attrMO.hp > 0 and var_12_0.attrMO.hp or 1
+	end
+end
+
+function var_0_0._resetUnlimitedHp(arg_13_0)
+	arg_13_0._unlimitedHpNum = nil
+	arg_13_0._isUnlimitedHp = nil
+
+	ZProj.TweenHelper.KillByObj(arg_13_0._imgHp)
+	TaskDispatcher.cancelTask(arg_13_0._onEndTween, arg_13_0)
+	gohelper.setActive(arg_13_0._gounlimited, false)
+	gohelper.setActive(arg_13_0._imgunlimited, false)
 	BossRushModel.instance:resetUnlimitedHp()
 end
 
-function slot0._onMonsterChange(slot0, slot1, slot2)
-	uv0.super._onMonsterChange(slot0, slot1, slot2)
+function var_0_0._onMonsterChange(arg_14_0, arg_14_1, arg_14_2)
+	var_0_0.super._onMonsterChange(arg_14_0, arg_14_1, arg_14_2)
 
-	if slot2 then
+	if arg_14_2 then
 		BossRushController.instance:_refreshCurBossHP()
 	end
 end
 
-return slot0
+return var_0_0

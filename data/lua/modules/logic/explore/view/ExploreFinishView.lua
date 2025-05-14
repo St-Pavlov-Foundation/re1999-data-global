@@ -1,70 +1,80 @@
-module("modules.logic.explore.view.ExploreFinishView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreFinishView", package.seeall)
 
-slot0 = class("ExploreFinishView", BaseView)
+local var_0_0 = class("ExploreFinishView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#btn_close")
-	slot0._gohorizontal = gohelper.findChild(slot0.viewGO, "center/progressbar/content")
-	slot0._txtchapter = gohelper.findChildTextMesh(slot0.viewGO, "center/bg/#txt_chaptername")
-	slot0._txtchapterEn = gohelper.findChildTextMesh(slot0.viewGO, "center/bg/#txt_chapternameen")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "center/progressbar/content/#go_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gohorizontal = gohelper.findChild(arg_1_0.viewGO, "center/progressbar/content")
+	arg_1_0._txtchapter = gohelper.findChildTextMesh(arg_1_0.viewGO, "center/bg/#txt_chaptername")
+	arg_1_0._txtchapterEn = gohelper.findChildTextMesh(arg_1_0.viewGO, "center/bg/#txt_chapternameen")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "center/progressbar/content/#go_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 
-	slot1 = ExploreModel.instance:getMapId()
-	slot3 = DungeonConfig.instance:getEpisodeCO(ExploreConfig.instance:getMapIdConfig(slot1).episodeId)
-	slot0._txtchapter.text = slot3.name
-	slot0._txtchapterEn.text = slot3.name_En
-	slot4, slot5, slot6, slot7, slot8, slot9 = ExploreSimpleModel.instance:getCoinCountByMapId(slot1)
+	local var_5_0 = ExploreModel.instance:getMapId()
+	local var_5_1 = ExploreConfig.instance:getMapIdConfig(var_5_0)
+	local var_5_2 = DungeonConfig.instance:getEpisodeCO(var_5_1.episodeId)
 
-	gohelper.CreateObjList(slot0, slot0.setItem, {
+	arg_5_0._txtchapter.text = var_5_2.name
+	arg_5_0._txtchapterEn.text = var_5_2.name_En
+
+	local var_5_3, var_5_4, var_5_5, var_5_6, var_5_7, var_5_8 = ExploreSimpleModel.instance:getCoinCountByMapId(var_5_0)
+	local var_5_9 = {
 		{
-			slot6,
-			slot9,
+			var_5_5,
+			var_5_8,
 			"dungeon_secretroom_btn_triangle"
 		},
 		{
-			slot5,
-			slot8,
+			var_5_4,
+			var_5_7,
 			"dungeon_secretroom_btn_sandglass"
 		},
 		{
-			slot4,
-			slot7,
+			var_5_3,
+			var_5_6,
 			"dungeon_secretroom_btn_box"
 		}
-	}, slot0._gohorizontal, slot0._goitem)
+	}
+
+	gohelper.CreateObjList(arg_5_0, arg_5_0.setItem, var_5_9, arg_5_0._gohorizontal, arg_5_0._goitem)
 end
 
-function slot0.setItem(slot0, slot1, slot2, slot3)
-	slot7 = slot2[1] == slot2[2]
+function var_0_0.setItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = gohelper.findChildImage(arg_6_1, "bg2")
+	local var_6_1 = gohelper.findChildImage(arg_6_1, "bg2/image_icon")
+	local var_6_2 = gohelper.findChildTextMesh(arg_6_1, "txt_progress")
+	local var_6_3 = arg_6_2[1] == arg_6_2[2]
 
-	UISpriteSetMgr.instance:setExploreSprite(gohelper.findChildImage(slot1, "bg2"), slot7 and "dungeon_secretroom_img_full" or "dungeon_secretroom_img_unfull")
-	UISpriteSetMgr.instance:setExploreSprite(gohelper.findChildImage(slot1, "bg2/image_icon"), slot2[3] .. (slot7 and "1" or "2"))
+	UISpriteSetMgr.instance:setExploreSprite(var_6_0, var_6_3 and "dungeon_secretroom_img_full" or "dungeon_secretroom_img_unfull")
+	UISpriteSetMgr.instance:setExploreSprite(var_6_1, arg_6_2[3] .. (var_6_3 and "1" or "2"))
 
-	gohelper.findChildTextMesh(slot1, "txt_progress").text = string.format("<color=#%s>%d/%d", slot7 and "E0BB6D" or "D5D4BC", slot2[1], slot2[2])
+	local var_6_4 = var_6_3 and "E0BB6D" or "D5D4BC"
+
+	var_6_2.text = string.format("<color=#%s>%d/%d", var_6_4, arg_6_2[1], arg_6_2[2])
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feedback_close)
 	ExploreController.instance:exit()
 end
 
-return slot0
+return var_0_0

@@ -1,246 +1,284 @@
-module("modules.logic.seasonver.act123.utils.Season123HeroGroupUtils", package.seeall)
+﻿module("modules.logic.seasonver.act123.utils.Season123HeroGroupUtils", package.seeall)
 
-slot0 = class("Season123HeroGroupUtils")
+local var_0_0 = class("Season123HeroGroupUtils")
 
-function slot0.buildSnapshotHeroGroups(slot0)
-	slot1 = {}
+function var_0_0.buildSnapshotHeroGroups(arg_1_0)
+	local var_1_0 = {}
 
-	for slot5, slot6 in ipairs(slot0) do
-		HeroGroupMO.New():setSeasonCardLimit(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
+		local var_1_1 = HeroGroupMO.New()
 
-		if slot6.heroList == nil or #slot6.heroList <= 0 then
-			if not uv0.checkFirstCopyHeroGroup(slot6, slot7) then
-				uv0.createEmptyGroup(slot6, slot7)
+		var_1_1:setSeasonCardLimit(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+
+		if iter_1_1.heroList == nil or #iter_1_1.heroList <= 0 then
+			if not var_0_0.checkFirstCopyHeroGroup(iter_1_1, var_1_1) then
+				var_0_0.createEmptyGroup(iter_1_1, var_1_1)
 			end
 		else
-			slot7:init(slot6)
+			var_1_1:init(iter_1_1)
 		end
 
-		uv0.formation104Equips(slot7)
+		var_0_0.formation104Equips(var_1_1)
 
-		slot1[slot6.groupId] = slot7
+		var_1_0[iter_1_1.groupId] = var_1_1
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot0.groupId < slot1.groupId
+	table.sort(var_1_0, function(arg_2_0, arg_2_1)
+		return arg_2_0.groupId < arg_2_1.groupId
 	end)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.checkFirstCopyHeroGroup(slot0, slot1)
-	if slot0.groupId == 1 and HeroGroupModel.instance:getById(1) then
-		slot1.id = slot0.groupId
-		slot1.groupId = slot0.groupId
-		slot1.name = slot2.name
-		slot1.heroList = {
-			Activity123Enum.EmptyUid,
-			Activity123Enum.EmptyUid,
-			Activity123Enum.EmptyUid,
-			Activity123Enum.EmptyUid
-		}
-		slot1.aidDict = LuaUtil.deepCopy(slot2.aidDict)
-		slot1.clothId = slot2.clothId
-		slot1.equips = LuaUtil.deepCopy(slot2.equips)
-		slot1.activity104Equips = LuaUtil.deepCopy(slot2.activity104Equips)
+function var_0_0.checkFirstCopyHeroGroup(arg_3_0, arg_3_1)
+	if arg_3_0.groupId == 1 then
+		local var_3_0 = HeroGroupModel.instance:getById(1)
 
-		uv0.formation104Equips(slot1)
+		if var_3_0 then
+			arg_3_1.id = arg_3_0.groupId
+			arg_3_1.groupId = arg_3_0.groupId
+			arg_3_1.name = var_3_0.name
+			arg_3_1.heroList = {
+				Activity123Enum.EmptyUid,
+				Activity123Enum.EmptyUid,
+				Activity123Enum.EmptyUid,
+				Activity123Enum.EmptyUid
+			}
+			arg_3_1.aidDict = LuaUtil.deepCopy(var_3_0.aidDict)
+			arg_3_1.clothId = var_3_0.clothId
+			arg_3_1.equips = LuaUtil.deepCopy(var_3_0.equips)
+			arg_3_1.activity104Equips = LuaUtil.deepCopy(var_3_0.activity104Equips)
 
-		return true
+			var_0_0.formation104Equips(arg_3_1)
+
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.formation104Equips(slot0)
-	if not slot0.activity104Equips then
-		slot0.activity104Equips = {}
+function var_0_0.formation104Equips(arg_4_0)
+	if not arg_4_0.activity104Equips then
+		arg_4_0.activity104Equips = {}
 	end
 
-	for slot4 = 0, Activity123Enum.MainCharPos do
-		if not slot0.activity104Equips[slot4] then
-			slot0:updateActivity104PosEquips({
-				index = slot4
+	for iter_4_0 = 0, Activity123Enum.MainCharPos do
+		if not arg_4_0.activity104Equips[iter_4_0] then
+			arg_4_0:updateActivity104PosEquips({
+				index = iter_4_0
 			})
 		end
 	end
 
-	for slot4, slot5 in pairs(slot0.activity104Equips) do
-		slot5:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
-		uv0.formationSingle104Equips(slot5, slot4 < ModuleEnum.MaxHeroCountInGroup and Activity123Enum.HeroCardNum or Activity123Enum.MainCardNum)
+	for iter_4_1, iter_4_2 in pairs(arg_4_0.activity104Equips) do
+		iter_4_2:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+
+		local var_4_0 = iter_4_1 < ModuleEnum.MaxHeroCountInGroup and Activity123Enum.HeroCardNum or Activity123Enum.MainCardNum
+
+		var_0_0.formationSingle104Equips(iter_4_2, var_4_0)
 	end
 end
 
-function slot0.formationSingle104Equips(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.equipUid) do
-		if slot1 < slot5 then
-			slot0.equipUid[slot5] = nil
+function var_0_0.formationSingle104Equips(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0.equipUid) do
+		if arg_5_1 < iter_5_0 then
+			arg_5_0.equipUid[iter_5_0] = nil
 		end
 	end
 
-	for slot5 = 1, slot1 do
-		if slot0.equipUid[slot5] == nil then
-			slot0.equipUid[slot5] = Activity123Enum.EmptyUid
+	for iter_5_2 = 1, arg_5_1 do
+		if arg_5_0.equipUid[iter_5_2] == nil then
+			arg_5_0.equipUid[iter_5_2] = Activity123Enum.EmptyUid
 		end
 	end
 end
 
-function slot0.createEmptyGroup(slot0, slot1)
-	slot1.id = slot0.groupId
-	slot1.groupId = slot0.groupId
-	slot1.name = ""
-	slot1.heroList = {
+function var_0_0.createEmptyGroup(arg_6_0, arg_6_1)
+	local var_6_0 = HeroGroupModel.instance:getById(1)
+
+	arg_6_1.id = arg_6_0.groupId
+	arg_6_1.groupId = arg_6_0.groupId
+	arg_6_1.name = ""
+	arg_6_1.heroList = {
 		Activity123Enum.EmptyUid,
 		Activity123Enum.EmptyUid,
 		Activity123Enum.EmptyUid,
 		Activity123Enum.EmptyUid
 	}
 
-	if HeroGroupModel.instance:getById(1) then
-		slot1.clothId = slot2.clothId
+	if var_6_0 then
+		arg_6_1.clothId = var_6_0.clothId
 	end
 
-	slot1.equips = {}
+	arg_6_1.equips = {}
 
-	for slot6 = 0, ModuleEnum.MaxHeroCountInGroup - 1 do
-		slot7 = HeroGroupEquipMO.New()
+	for iter_6_0 = 0, ModuleEnum.MaxHeroCountInGroup - 1 do
+		local var_6_1 = HeroGroupEquipMO.New()
 
-		slot7:init({
-			index = slot6,
+		var_6_1:init({
+			index = iter_6_0,
 			equipUid = {
 				Activity123Enum.EmptyUid
 			}
 		})
 
-		slot1.equips[slot6] = slot7
+		arg_6_1.equips[iter_6_0] = var_6_1
 	end
 
-	slot1.activity104Equips = {}
+	arg_6_1.activity104Equips = {}
 
-	for slot7 = 0, ModuleEnum.MaxHeroCountInGroup do
-		slot8 = HeroGroupActivity104EquipMo.New()
+	local var_6_2 = ModuleEnum.MaxHeroCountInGroup
 
-		slot8:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
-		slot8:init({
-			index = slot7,
+	for iter_6_1 = 0, var_6_2 do
+		local var_6_3 = HeroGroupActivity104EquipMo.New()
+
+		var_6_3:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+		var_6_3:init({
+			index = iter_6_1,
 			equipUid = {
 				Activity123Enum.EmptyUid,
 				Activity123Enum.EmptyUid
 			}
 		})
 
-		slot1.activity104Equips[slot7] = slot8
+		arg_6_1.activity104Equips[iter_6_1] = var_6_3
 	end
 end
 
-function slot0.swapHeroItem(slot0, slot1)
-	logNormal(string.format("swap hero pos %s to %s", slot0, slot1))
+function var_0_0.swapHeroItem(arg_7_0, arg_7_1)
+	logNormal(string.format("swap hero pos %s to %s", arg_7_0, arg_7_1))
 
-	slot2 = HeroGroupModel.instance:getCurGroupMO()
-	slot3 = slot0 - 1
-	slot4 = slot1 - 1
-	slot2.equips[slot3].equipUid = {
-		slot2:getPosEquips(slot4).equipUid[1]
+	local var_7_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_7_1 = arg_7_0 - 1
+	local var_7_2 = arg_7_1 - 1
+	local var_7_3 = var_7_0:getPosEquips(var_7_1).equipUid[1]
+	local var_7_4 = var_7_0:getPosEquips(var_7_2).equipUid[1]
+
+	var_7_0.equips[var_7_1].equipUid = {
+		var_7_4
 	}
-	slot2.equips[slot4].equipUid = {
-		slot2:getPosEquips(slot3).equipUid[1]
+	var_7_0.equips[var_7_2].equipUid = {
+		var_7_3
 	}
-	slot2.activity104Equips[slot3].equipUid = slot2:getAct104PosEquips(slot4).equipUid
-	slot2.activity104Equips[slot4].equipUid = slot2:getAct104PosEquips(slot3).equipUid
-	slot2.heroList[slot3 + 1] = slot2.heroList[slot4 + 1]
-	slot2.heroList[slot4 + 1] = slot2.heroList[slot3 + 1]
+
+	local var_7_5 = var_7_0:getAct104PosEquips(var_7_1).equipUid
+	local var_7_6 = var_7_0:getAct104PosEquips(var_7_2).equipUid
+
+	var_7_0.activity104Equips[var_7_1].equipUid = var_7_6
+	var_7_0.activity104Equips[var_7_2].equipUid = var_7_5
+
+	local var_7_7 = var_7_0.heroList[var_7_1 + 1]
+	local var_7_8 = var_7_0.heroList[var_7_2 + 1]
+
+	var_7_0.heroList[var_7_1 + 1] = var_7_8
+	var_7_0.heroList[var_7_2 + 1] = var_7_7
 end
 
-function slot0.syncHeroGroupFromFightGroup(slot0, slot1)
-	slot0.heroList = {}
+function var_0_0.syncHeroGroupFromFightGroup(arg_8_0, arg_8_1)
+	arg_8_0.heroList = {}
 
-	for slot5, slot6 in ipairs(slot1.heroList) do
-		table.insert(slot0.heroList, slot6)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1.heroList) do
+		table.insert(arg_8_0.heroList, iter_8_1)
 	end
 
-	for slot5, slot6 in ipairs(slot1.subHeroList) do
-		table.insert(slot0.heroList, slot6)
+	for iter_8_2, iter_8_3 in ipairs(arg_8_1.subHeroList) do
+		table.insert(arg_8_0.heroList, iter_8_3)
 	end
 
-	slot0.clothId = slot1.clothId
-	slot0.equips = {}
+	arg_8_0.clothId = arg_8_1.clothId
+	arg_8_0.equips = {}
 
-	for slot5, slot6 in ipairs(slot1.equips) do
-		if slot0.equips[slot5 - 1] == nil then
-			slot0.equips[slot7] = HeroGroupEquipMO.New()
+	for iter_8_4, iter_8_5 in ipairs(arg_8_1.equips) do
+		local var_8_0 = iter_8_4 - 1
+
+		if arg_8_0.equips[var_8_0] == nil then
+			arg_8_0.equips[var_8_0] = HeroGroupEquipMO.New()
 		end
 
-		slot0.equips[slot7]:init({
-			index = slot7,
-			equipUid = slot6.equipUid
+		arg_8_0.equips[var_8_0]:init({
+			index = var_8_0,
+			equipUid = iter_8_5.equipUid
 		})
 	end
 
-	slot0.activity104Equips = {}
+	arg_8_0.activity104Equips = {}
 
-	for slot5, slot6 in ipairs(slot1.activity104Equips) do
-		if slot0.activity104Equips[slot5 - 1] == nil then
-			slot0.activity104Equips[slot7] = HeroGroupActivity104EquipMo.New()
+	for iter_8_6, iter_8_7 in ipairs(arg_8_1.activity104Equips) do
+		local var_8_1 = iter_8_6 - 1
 
-			slot0.activity104Equips[slot7]:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+		if arg_8_0.activity104Equips[var_8_1] == nil then
+			arg_8_0.activity104Equips[var_8_1] = HeroGroupActivity104EquipMo.New()
+
+			arg_8_0.activity104Equips[var_8_1]:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
 		end
 
-		slot0.activity104Equips[slot7]:init({
-			index = slot7,
-			equipUid = slot6.equipUid
+		arg_8_0.activity104Equips[var_8_1]:init({
+			index = var_8_1,
+			equipUid = iter_8_7.equipUid
 		})
 	end
 end
 
-function slot0.getHeroGroupEquipCardId(slot0, slot1, slot2, slot3)
-	if not slot0.heroGroupSnapshot[slot1] then
+function var_0_0.getHeroGroupEquipCardId(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = arg_9_0.heroGroupSnapshot[arg_9_1]
+
+	if not var_9_0 then
 		return
 	end
 
-	if not slot4.activity104Equips[slot3] then
+	local var_9_1 = var_9_0.activity104Equips[arg_9_3]
+
+	if not var_9_1 then
 		return
 	end
 
-	if slot0:getItemIdByUid(slot5.equipUid[slot2]) ~= nil then
-		return slot7, slot6
-	elseif slot6 ~= "0" then
-		logError(string.format("can't find season123 item, itemUid = %s", slot6))
+	local var_9_2 = var_9_1.equipUid[arg_9_2]
+	local var_9_3 = arg_9_0:getItemIdByUid(var_9_2)
+
+	if var_9_3 ~= nil then
+		return var_9_3, var_9_2
+	elseif var_9_2 ~= "0" then
+		logError(string.format("can't find season123 item, itemUid = %s", var_9_2))
 	end
 
 	return 0
 end
 
-function slot0.processFightGroupAssistHero(slot0, slot1, slot2)
-	if slot0 ~= ModuleEnum.HeroGroupType.Season123 then
+function var_0_0.processFightGroupAssistHero(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_0 ~= ModuleEnum.HeroGroupType.Season123 then
 		return
 	end
 
-	if Season123Model.instance:getBattleContext() then
-		slot4, slot5 = Season123Model.instance:getAssistData(slot3.actId, slot3.stage)
-		slot6, slot7 = nil
+	local var_10_0 = Season123Model.instance:getBattleContext()
 
-		if slot4 and slot5 and slot4.uid ~= "0" then
-			slot7 = slot5.userId
-			slot6 = slot4.uid
+	if var_10_0 then
+		local var_10_1, var_10_2 = Season123Model.instance:getAssistData(var_10_0.actId, var_10_0.stage)
+		local var_10_3
+		local var_10_4
+
+		if var_10_1 and var_10_2 and var_10_1.uid ~= "0" then
+			var_10_3, var_10_4 = var_10_1.uid, var_10_2.userId
 		end
 
-		if slot6 and slot6 ~= "0" then
-			slot8 = false
+		if var_10_3 and var_10_3 ~= "0" then
+			local var_10_5 = false
 
-			for slot12 = 1, #slot1.heroList do
-				if slot6 == slot1.heroList[slot12] then
-					slot1.assistHeroUid = slot6
-					slot1.assistUserId = slot7
-					slot8 = true
+			for iter_10_0 = 1, #arg_10_1.heroList do
+				if var_10_3 == arg_10_1.heroList[iter_10_0] then
+					arg_10_1.assistHeroUid = var_10_3
+					arg_10_1.assistUserId = var_10_4
+					var_10_5 = true
 				end
 			end
 
-			if not slot8 then
-				for slot12 = 1, #slot1.subHeroList do
-					if slot6 == slot1.subHeroList[slot12] then
-						slot1.assistHeroUid = slot6
-						slot1.assistUserId = slot7
-						slot8 = true
+			if not var_10_5 then
+				for iter_10_1 = 1, #arg_10_1.subHeroList do
+					if var_10_3 == arg_10_1.subHeroList[iter_10_1] then
+						arg_10_1.assistHeroUid = var_10_3
+						arg_10_1.assistUserId = var_10_4
+
+						local var_10_6 = true
 					end
 				end
 			end
@@ -248,174 +286,202 @@ function slot0.processFightGroupAssistHero(slot0, slot1, slot2)
 	end
 end
 
-function slot0.cleanAllHeroGroup(slot0, slot1)
-	if not Season123Model.instance:getActInfo(slot0) then
+function var_0_0.cleanAllHeroGroup(arg_11_0, arg_11_1)
+	local var_11_0 = Season123Model.instance:getActInfo(arg_11_0)
+
+	if not var_11_0 then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot2.heroGroupSnapshot) do
-		uv0.cleanHeroGroup(slot7, slot1)
+	for iter_11_0, iter_11_1 in pairs(var_11_0.heroGroupSnapshot) do
+		var_0_0.cleanHeroGroup(iter_11_1, arg_11_1)
 	end
 end
 
-function slot0.cleanHeroGroup(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.heroList) do
-		slot0.heroList[slot5] = Activity123Enum.EmptyUid
+function var_0_0.cleanHeroGroup(arg_12_0, arg_12_1)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.heroList) do
+		arg_12_0.heroList[iter_12_0] = Activity123Enum.EmptyUid
 	end
 
-	for slot5 = 0, ModuleEnum.MaxHeroCountInGroup - 1 do
-		for slot10, slot11 in pairs(slot0.equips[slot5].equipUid) do
-			slot6.equipUid[slot10] = Activity123Enum.EmptyUid
+	for iter_12_2 = 0, ModuleEnum.MaxHeroCountInGroup - 1 do
+		local var_12_0 = arg_12_0.equips[iter_12_2]
+
+		for iter_12_3, iter_12_4 in pairs(var_12_0.equipUid) do
+			var_12_0.equipUid[iter_12_3] = Activity123Enum.EmptyUid
 		end
 	end
 
-	for slot6 = 0, ModuleEnum.MaxHeroCountInGroup do
-		for slot11, slot12 in pairs(slot0.activity104Equips[slot6].equipUid) do
-			if slot7.index == slot2 and slot1 then
-				slot7.equipUid[slot11] = slot1[slot11] or Activity123Enum.EmptyUid
+	local var_12_1 = ModuleEnum.MaxHeroCountInGroup
+
+	for iter_12_5 = 0, var_12_1 do
+		local var_12_2 = arg_12_0.activity104Equips[iter_12_5]
+
+		for iter_12_6, iter_12_7 in pairs(var_12_2.equipUid) do
+			if var_12_2.index == var_12_1 and arg_12_1 then
+				var_12_2.equipUid[iter_12_6] = arg_12_1[iter_12_6] or Activity123Enum.EmptyUid
 			else
-				slot7.equipUid[slot11] = Activity123Enum.EmptyUid
+				var_12_2.equipUid[iter_12_6] = Activity123Enum.EmptyUid
 			end
 		end
 	end
 
-	uv0.formation104Equips(slot0)
+	var_0_0.formation104Equips(arg_12_0)
 end
 
-function slot0.getAllHeroActivity123Equips(slot0)
-	slot1 = {}
-	slot4 = Season123Model.instance:getActInfo(Season123Model.instance:getBattleContext() and slot2.actId)
+function var_0_0.getAllHeroActivity123Equips(arg_13_0)
+	local var_13_0 = {}
+	local var_13_1 = Season123Model.instance:getBattleContext()
+	local var_13_2 = var_13_1 and var_13_1.actId
+	local var_13_3 = Season123Model.instance:getActInfo(var_13_2)
 
-	for slot8, slot9 in pairs(slot0.activity104Equips) do
-		if slot8 + 1 == Season123EquipItemListModel.MainCharPos + 1 then
-			FightEquipMO.New().heroUid = "-100000"
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.activity104Equips) do
+		local var_13_4 = iter_13_0 + 1
+		local var_13_5 = FightEquipMO.New()
+
+		if var_13_4 == Season123EquipItemListModel.MainCharPos + 1 then
+			var_13_5.heroUid = "-100000"
 		else
-			slot11.heroUid = slot0.heroList[slot10] or Activity123Enum.EmptyUid
+			var_13_5.heroUid = arg_13_0.heroList[var_13_4] or Activity123Enum.EmptyUid
 		end
 
-		for slot15, slot16 in ipairs(slot9.equipUid) do
-			if slot16 and slot16 ~= Activity123Enum.EmptyUid then
-				if slot4 then
-					slot9.equipUid[slot15] = slot4:getItemIdByUid(slot16) and slot17 > 0 and slot16 or Activity123Enum.EmptyUid
+		for iter_13_2, iter_13_3 in ipairs(iter_13_1.equipUid) do
+			if iter_13_3 and iter_13_3 ~= Activity123Enum.EmptyUid then
+				if var_13_3 then
+					local var_13_6 = var_13_3:getItemIdByUid(iter_13_3)
+
+					iter_13_1.equipUid[iter_13_2] = var_13_6 and var_13_6 > 0 and iter_13_3 or Activity123Enum.EmptyUid
 				else
-					slot9.equipUid[slot15] = Activity123Enum.EmptyUid
+					iter_13_1.equipUid[iter_13_2] = Activity123Enum.EmptyUid
 				end
 			end
 		end
 
-		slot11.equipUid = slot9.equipUid
+		var_13_5.equipUid = iter_13_1.equipUid
 
-		table.insert(slot1, slot11)
+		table.insert(var_13_0, var_13_5)
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.fiterFightCardDataList(slot0, slot1, slot2)
-	slot3 = {}
-	slot4 = {}
+function var_0_0.fiterFightCardDataList(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = {}
+	local var_14_1 = {}
 
-	if slot1 then
-		slot6 = FightModel.instance:getBattleId() and lua_battle.configDict[slot5]
+	if arg_14_1 then
+		local var_14_2 = FightModel.instance:getBattleId()
+		local var_14_3 = var_14_2 and lua_battle.configDict[var_14_2]
+		local var_14_4 = var_14_3 and var_14_3.playerMax or ModuleEnum.HeroCountInGroup
 
-		for slot11, slot12 in ipairs(slot1) do
-			if slot12.pos < 0 then
-				slot13 = (slot6 and slot6.playerMax or ModuleEnum.HeroCountInGroup) - slot13
+		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+			local var_14_5 = iter_14_1.pos
+
+			if var_14_5 < 0 then
+				var_14_5 = var_14_4 - var_14_5
 			end
 
-			slot4[slot13] = slot12.trialId
+			var_14_1[var_14_5] = iter_14_1.trialId
 		end
 	end
 
-	slot8 = slot0
+	var_0_0.fiterFightCardData(Season123EquipItemListModel.TotalEquipPos, var_14_0, arg_14_0, nil, arg_14_2)
 
-	uv0.fiterFightCardData(Season123EquipItemListModel.TotalEquipPos, slot3, slot8, nil, slot2)
-
-	for slot8 = 1, Season123EquipItemListModel.TotalEquipPos - 1 do
-		uv0.fiterFightCardData(slot8, slot3, slot0, slot4, slot2)
+	for iter_14_2 = 1, Season123EquipItemListModel.TotalEquipPos - 1 do
+		var_0_0.fiterFightCardData(iter_14_2, var_14_0, arg_14_0, var_14_1, arg_14_2)
 	end
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.fiterFightCardData(slot0, slot1, slot2, slot3, slot4)
-	slot6 = slot3 and slot3[slot0]
-	slot7 = slot2 and slot2[slot0] and slot2[slot0].heroUid
+function var_0_0.fiterFightCardData(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	local var_15_0 = arg_15_0 - 1
+	local var_15_1 = arg_15_3 and arg_15_3[arg_15_0]
+	local var_15_2 = arg_15_2 and arg_15_2[arg_15_0] and arg_15_2[arg_15_0].heroUid
 
-	if slot0 - 1 == Season123EquipItemListModel.MainCharPos then
-		slot7 = nil
+	if var_15_0 == Season123EquipItemListModel.MainCharPos then
+		var_15_2 = nil
 	end
 
-	if (not slot7 or slot7 == Season123EquipItemListModel.EmptyUid) and slot5 ~= Season123EquipItemListModel.MainCharPos then
+	if (not var_15_2 or var_15_2 == Season123EquipItemListModel.EmptyUid) and var_15_0 ~= Season123EquipItemListModel.MainCharPos then
 		return
 	end
 
-	slot9 = Season123EquipItemListModel.instance:getEquipMaxCount(slot5)
-	slot10 = 1
+	local var_15_3 = Season123EquipItemListModel.instance:getEquipMaxCount(var_15_0)
+	local var_15_4 = 1
+	local var_15_5 = Season123Model.instance:getActInfo(arg_15_4)
 
-	if not Season123Model.instance:getActInfo(slot4) then
+	if not var_15_5 then
 		return
 	end
 
-	for slot15 = 1, slot9 do
-		slot17 = nil
+	for iter_15_0 = 1, var_15_3 do
+		local var_15_6 = arg_15_2 and arg_15_2[arg_15_0] and arg_15_2[arg_15_0].equipUid and arg_15_2[arg_15_0].equipUid[iter_15_0]
+		local var_15_7
 
-		if slot2 and slot2[slot0] and slot2[slot0].equipUid and slot2[slot0].equipUid[slot15] then
-			slot17 = slot11:getItemIdByUid(slot16)
+		if var_15_6 then
+			var_15_7 = var_15_5:getItemIdByUid(var_15_6)
 		end
 
-		if not slot17 or slot17 == 0 then
-			if slot6 then
-				slot17 = HeroConfig.instance:getTrial104Equip(slot15, slot6)
-			elseif slot5 == Season123EquipItemListModel.MainCharPos then
-				slot19 = FightModel.instance:getBattleId() and lua_battle.configDict[slot18]
-				slot17 = slot19 and slot19.trialMainAct104EuqipId
+		if not var_15_7 or var_15_7 == 0 then
+			if var_15_1 then
+				var_15_7 = HeroConfig.instance:getTrial104Equip(iter_15_0, var_15_1)
+			elseif var_15_0 == Season123EquipItemListModel.MainCharPos then
+				local var_15_8 = FightModel.instance:getBattleId()
+				local var_15_9 = var_15_8 and lua_battle.configDict[var_15_8]
+
+				var_15_7 = var_15_9 and var_15_9.trialMainAct104EuqipId
 			end
 		end
 
-		if slot17 and slot17 > 0 then
-			table.insert(slot1, {
-				equipId = slot17,
-				heroUid = slot7,
-				trialId = slot6,
-				count = slot10 + 1
-			})
+		if var_15_7 and var_15_7 > 0 then
+			local var_15_10 = {
+				equipId = var_15_7,
+				heroUid = var_15_2,
+				trialId = var_15_1,
+				count = var_15_4
+			}
+
+			var_15_4 = var_15_4 + 1
+
+			table.insert(arg_15_1, var_15_10)
 		end
 	end
 end
 
-function slot0.getUnlockIndexSlot(slot0)
-	if slot0 >= 1 and slot0 <= 4 then
+function var_0_0.getUnlockIndexSlot(arg_16_0)
+	if arg_16_0 >= 1 and arg_16_0 <= 4 then
 		return 1
 	end
 
-	if slot0 >= 5 and slot0 <= 8 then
+	if arg_16_0 >= 5 and arg_16_0 <= 8 then
 		return 2
 	end
 
-	if slot0 >= 9 then
+	if arg_16_0 >= 9 then
 		return 3
 	end
 
 	return 0
 end
 
-function slot0.getUnlockSlotSet(slot0)
-	if not Season123Model.instance:getActInfo(slot0) then
+function var_0_0.getUnlockSlotSet(arg_17_0)
+	local var_17_0 = Season123Model.instance:getActInfo(arg_17_0)
+
+	if not var_17_0 then
 		return {}
 	end
 
-	return tabletool.copy(slot1.unlockIndexSet)
+	return tabletool.copy(var_17_0.unlockIndexSet)
 end
 
-function slot0.setHpBar(slot0, slot1)
-	if slot1 >= 0.69 then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0, "#63955C")
-	elseif slot1 >= 0.3 then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0, "#E99B56")
+function var_0_0.setHpBar(arg_18_0, arg_18_1)
+	if arg_18_1 >= 0.69 then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_18_0, "#63955C")
+	elseif arg_18_1 >= 0.3 then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_18_0, "#E99B56")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0, "#BF2E11")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_18_0, "#BF2E11")
 	end
 end
 
-return slot0
+return var_0_0

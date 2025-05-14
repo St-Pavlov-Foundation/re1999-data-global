@@ -1,114 +1,109 @@
-module("modules.logic.gm.view.rouge.RougeProfileController", package.seeall)
+﻿module("modules.logic.gm.view.rouge.RougeProfileController", package.seeall)
 
-slot0 = class("RougeProfileController")
+local var_0_0 = class("RougeProfileController")
 
-function slot0.startRecordMemory(slot0)
-	if slot0.startRecord then
+function var_0_0.startRecordMemory(arg_1_0)
+	if arg_1_0.startRecord then
 		GameFacade.showToastString("recording ")
 
 		return
 	end
 
-	slot0.startRecord = true
-	slot0.memoryTimeList = {}
-	slot0.maxMemory = collectgarbage("count")
-	slot0.maxMemoryScene = GameSceneMgr.instance:getCurSceneType()
-	slot0.maxOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
-	slot0.minMemory = slot0.maxMemory
-	slot0.minMemoryScene = GameSceneMgr.instance:getCurSceneType()
-	slot0.minOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
+	arg_1_0.startRecord = true
+	arg_1_0.memoryTimeList = {}
+	arg_1_0.maxMemory = collectgarbage("count")
+	arg_1_0.maxMemoryScene = GameSceneMgr.instance:getCurSceneType()
+	arg_1_0.maxOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
+	arg_1_0.minMemory = arg_1_0.maxMemory
+	arg_1_0.minMemoryScene = GameSceneMgr.instance:getCurSceneType()
+	arg_1_0.minOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
 
-	TaskDispatcher.runRepeat(slot0._calLuaMemory, slot0, 1)
+	TaskDispatcher.runRepeat(arg_1_0._calLuaMemory, arg_1_0, 1)
 end
 
-function slot0._calLuaMemory(slot0)
-	slot1 = collectgarbage("count")
-	slot0.memoryTimeList[#slot0.memoryTimeList + 1] = {
+function var_0_0._calLuaMemory(arg_2_0)
+	local var_2_0 = collectgarbage("count")
+
+	arg_2_0.memoryTimeList[#arg_2_0.memoryTimeList + 1] = {
 		time = os.time(),
-		memory = slot1,
+		memory = var_2_0,
 		scene = GameSceneMgr.instance:getCurSceneType()
 	}
 
-	if slot0.maxMemory < slot1 then
-		slot0.maxMemory = slot1
-		slot0.maxMemoryScene = GameSceneMgr.instance:getCurSceneType()
-		slot0.maxOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
+	if var_2_0 > arg_2_0.maxMemory then
+		arg_2_0.maxMemory = var_2_0
+		arg_2_0.maxMemoryScene = GameSceneMgr.instance:getCurSceneType()
+		arg_2_0.maxOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
 	end
 
-	if slot1 < slot0.minMemory then
-		slot0.minMemory = slot1
-		slot0.minMemoryScene = GameSceneMgr.instance:getCurSceneType()
-		slot0.minOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
+	if var_2_0 < arg_2_0.minMemory then
+		arg_2_0.minMemory = var_2_0
+		arg_2_0.minMemoryScene = GameSceneMgr.instance:getCurSceneType()
+		arg_2_0.minOpenNameList = table.concat(ViewMgr.instance:getOpenViewNameList(), ",")
 	end
 end
 
-function slot0.endRecord(slot0)
-	if not slot0.startRecord then
+function var_0_0.endRecord(arg_3_0)
+	if not arg_3_0.startRecord then
 		return
 	end
 
-	slot0.startRecord = nil
+	arg_3_0.startRecord = nil
 
-	TaskDispatcher.cancelTask(slot0._calLuaMemory, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._calLuaMemory, arg_3_0)
 
-	slot1 = "" .. string.format("占用最大内存 ：%s, 场景 ： %s, openView : %s\n", slot0.maxMemory / 1024, slot0.maxMemoryScene, slot0.maxOpenNameList) .. string.format([[
-占用最小内存 ：%s, 场景 ： %s, openView : %s
+	local var_3_0 = ("" .. string.format("占用最大内存 ：%s, 场景 ： %s, openView : %s\n", arg_3_0.maxMemory / 1024, arg_3_0.maxMemoryScene, arg_3_0.maxOpenNameList)) .. string.format("占用最小内存 ：%s, 场景 ： %s, openView : %s\n\n\n", arg_3_0.minMemory / 1024, arg_3_0.minMemoryScene, arg_3_0.minOpenNameList)
+	local var_3_1 = {}
+	local var_3_2 = 0
+	local var_3_3 = true
 
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.memoryTimeList) do
+		local var_3_4 = iter_3_1.time
+		local var_3_5 = iter_3_1.memory / 1024
 
-]], slot0.minMemory / 1024, slot0.minMemoryScene, slot0.minOpenNameList)
-	slot2 = {}
-	slot3 = 0
+		if var_3_3 then
+			if var_3_5 < var_3_2 then
+				table.insert(var_3_1, arg_3_0:getLineLog(var_3_2, var_3_5, var_3_4, iter_3_1.scene))
 
-	for slot8, slot9 in ipairs(slot0.memoryTimeList) do
-		slot11 = slot9.memory / 1024
-
-		if true then
-			if slot11 < slot3 then
-				table.insert(slot2, slot0:getLineLog(slot3, slot11, slot9.time, slot9.scene))
-
-				slot4 = false
+				var_3_3 = false
 			end
-		elseif slot3 < slot11 then
-			table.insert(slot2, slot0:getLineLog(slot3, slot11, slot10, slot9.scene))
+		elseif var_3_2 < var_3_5 then
+			table.insert(var_3_1, arg_3_0:getLineLog(var_3_2, var_3_5, var_3_4, iter_3_1.scene))
 
-			slot4 = true
+			var_3_3 = true
 		end
 
-		slot3 = slot11
+		var_3_2 = var_3_5
 	end
 
-	slot9 = slot3
+	table.insert(var_3_1, arg_3_0:getLineLog(var_3_2, var_3_2, arg_3_0.memoryTimeList[#arg_3_0.memoryTimeList].time, arg_3_0.memoryTimeList[#arg_3_0.memoryTimeList].scene))
 
-	table.insert(slot2, slot0:getLineLog(slot9, slot3, slot0.memoryTimeList[#slot0.memoryTimeList].time, slot0.memoryTimeList[#slot0.memoryTimeList].scene))
+	local var_3_6 = (var_3_0 .. table.concat(var_3_1, "\n")) .. "\n\n详细内存统计 : \n"
 
-	slot8 = "\n"
-
-	for slot8, slot9 in ipairs(slot0.memoryTimeList) do
-		slot1 = slot1 .. table.concat(slot2, slot8) .. [[
-
-
-详细内存统计 : 
-]] .. slot9.time .. " : " .. slot9.memory / 1024 .. "MB\n"
+	for iter_3_2, iter_3_3 in ipairs(arg_3_0.memoryTimeList) do
+		var_3_6 = var_3_6 .. iter_3_3.time .. " : " .. iter_3_3.memory / 1024 .. "MB\n"
 	end
 
-	slot6 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/luaMemoryTest/"
+	local var_3_7 = os.time()
+	local var_3_8 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/luaMemoryTest/"
+	local var_3_9 = var_3_8 .. var_3_7 .. ".log"
 
-	SLFramework.FileHelper.WriteTextToPath(slot6 .. os.time() .. ".log", slot1)
-	ZProj.OpenSelectFileWindow.OpenExplorer(slot6)
+	SLFramework.FileHelper.WriteTextToPath(var_3_9, var_3_6)
+	ZProj.OpenSelectFileWindow.OpenExplorer(var_3_8)
 
-	slot0.memoryTimeList = nil
-	slot0.maxMemory = nil
-	slot0.maxMemoryScene = nil
-	slot0.maxOpenNameList = nil
-	slot0.minMemory = nil
-	slot0.minMemoryScene = nil
-	slot0.minOpenNameList = nil
+	arg_3_0.memoryTimeList = nil
+	arg_3_0.maxMemory = nil
+	arg_3_0.maxMemoryScene = nil
+	arg_3_0.maxOpenNameList = nil
+	arg_3_0.minMemory = nil
+	arg_3_0.minMemoryScene = nil
+	arg_3_0.minOpenNameList = nil
 end
 
-function slot0.getLineLog(slot0, slot1, slot2, slot3, slot4)
-	return string.format("preMemory : %s ---- curMemory : %s, time : %s, scene : %s", slot1, slot2, slot3, slot4)
+function var_0_0.getLineLog(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	return string.format("preMemory : %s ---- curMemory : %s, time : %s, scene : %s", arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

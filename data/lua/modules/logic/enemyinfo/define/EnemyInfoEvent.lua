@@ -1,9 +1,10 @@
-module("modules.logic.enemyinfo.define.EnemyInfoEvent", package.seeall)
+﻿module("modules.logic.enemyinfo.define.EnemyInfoEvent", package.seeall)
 
-slot0 = _M
-slot0.UpdateBattleInfo = 1
-slot0.SelectMonsterChange = 2
-slot0.ShowTip = 3
-slot0.HideTip = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.UpdateBattleInfo = 1
+var_0_0.SelectMonsterChange = 2
+var_0_0.ShowTip = 3
+var_0_0.HideTip = 4
+
+return var_0_0

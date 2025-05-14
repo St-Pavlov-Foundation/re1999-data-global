@@ -1,154 +1,169 @@
-module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessMapUtils", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessMapUtils", package.seeall)
 
-slot0 = class("Va3ChessMapUtils")
-slot1 = 8
+local var_0_0 = class("Va3ChessMapUtils")
+local var_0_1 = 8
 
-function slot0.ToDirection(slot0, slot1, slot2, slot3)
-	if slot2 < slot0 then
-		if slot3 < slot1 then
+function var_0_0.ToDirection(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if arg_1_2 < arg_1_0 then
+		if arg_1_3 < arg_1_1 then
 			return 1
-		elseif slot1 < slot3 then
+		elseif arg_1_1 < arg_1_3 then
 			return 7
 		else
 			return 4
 		end
-	elseif slot0 < slot2 then
-		if slot3 < slot1 then
+	elseif arg_1_0 < arg_1_2 then
+		if arg_1_3 < arg_1_1 then
 			return 3
-		elseif slot1 < slot3 then
+		elseif arg_1_1 < arg_1_3 then
 			return 9
 		else
 			return 6
 		end
-	elseif slot3 < slot1 then
+	elseif arg_1_3 < arg_1_1 then
 		return 2
-	elseif slot1 < slot3 then
+	elseif arg_1_1 < arg_1_3 then
 		return 8
 	else
 		return 5
 	end
 end
 
-function slot0.CalNextCellPos(slot0, slot1, slot2)
-	if slot2 == 2 then
-		return slot0, slot1 - 1
-	elseif slot2 == 8 then
-		return slot0, slot1 + 1
-	elseif slot2 == 6 then
-		return slot0 + 1, slot1
-	elseif slot2 == 4 then
-		return slot0 - 1, slot1
+function var_0_0.CalNextCellPos(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 == 2 then
+		return arg_2_0, arg_2_1 - 1
+	elseif arg_2_2 == 8 then
+		return arg_2_0, arg_2_1 + 1
+	elseif arg_2_2 == 6 then
+		return arg_2_0 + 1, arg_2_1
+	elseif arg_2_2 == 4 then
+		return arg_2_0 - 1, arg_2_1
 	end
 end
 
-function slot0.CalOppositeDir(slot0)
-	if slot0 == 2 then
+function var_0_0.CalOppositeDir(arg_3_0)
+	if arg_3_0 == 2 then
 		return 8
-	elseif slot0 == 8 then
+	elseif arg_3_0 == 8 then
 		return 2
-	elseif slot0 == 6 then
+	elseif arg_3_0 == 6 then
 		return 4
-	elseif slot0 == 4 then
+	elseif arg_3_0 == 4 then
 		return 6
 	end
 end
 
-function slot0.IsEdgeTile(slot0, slot1)
-	return slot1 == uv0 - 1
+function var_0_0.IsEdgeTile(arg_4_0, arg_4_1)
+	return arg_4_1 == var_0_1 - 1
 end
 
-function slot0.getClearConditionDesc(slot0, slot1)
-	return uv0.conditionDescFuncMap[slot0[1]] and slot3(slot0, slot1) or ""
+function var_0_0.getClearConditionDesc(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0[1]
+	local var_5_1 = var_0_0.conditionDescFuncMap[var_5_0]
+
+	return var_5_1 and var_5_1(arg_5_0, arg_5_1) or ""
 end
 
-function slot0.isClearConditionFinish(slot0, slot1)
-	if uv0.conditionCheckMap[slot0[1]] then
-		return slot3(slot0, slot1)
+function var_0_0.isClearConditionFinish(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0[1]
+	local var_6_1 = var_0_0.conditionCheckMap[var_6_0]
+
+	if var_6_1 then
+		return var_6_1(arg_6_0, arg_6_1)
 	end
 
 	return false
 end
 
-function slot0.calPosIndex(slot0, slot1)
-	return slot0 + slot1 * uv0
+function var_0_0.calPosIndex(arg_7_0, arg_7_1)
+	return arg_7_0 + arg_7_1 * var_0_1
 end
 
-function slot0.calPosXY(slot0)
-	return slot0 % uv0, math.floor(slot0 / uv0)
+function var_0_0.calPosXY(arg_8_0)
+	return arg_8_0 % var_0_1, math.floor(arg_8_0 / var_0_1)
 end
 
-function slot0.getConditionDescRoundLimit(slot0, slot1)
-	return string.format(luaLang("chessgame_clear_round_limit"), slot0[2])
+function var_0_0.getConditionDescRoundLimit(arg_9_0, arg_9_1)
+	return string.format(luaLang("chessgame_clear_round_limit"), arg_9_0[2])
 end
 
-function slot0.getConditionDescInteractFinish(slot0, slot1)
-	return Va3ChessConfig.instance:getInteractObjectCo(slot1, slot0[2]) and string.format(luaLang("chessgame_clear_interact_finish"), slot2.name) or string.format(luaLang("chessgame_clear_interact_finish"), slot0[2])
+function var_0_0.getConditionDescInteractFinish(arg_10_0, arg_10_1)
+	local var_10_0 = Va3ChessConfig.instance:getInteractObjectCo(arg_10_1, arg_10_0[2])
+
+	return var_10_0 and string.format(luaLang("chessgame_clear_interact_finish"), var_10_0.name) or string.format(luaLang("chessgame_clear_interact_finish"), arg_10_0[2])
 end
 
-slot0.conditionDescFuncMap = {
-	[Va3ChessEnum.ChessClearCondition.RoundLimit] = slot0.getConditionDescRoundLimit,
-	[Va3ChessEnum.ChessClearCondition.InteractFinish] = slot0.getConditionDescInteractFinish
+var_0_0.conditionDescFuncMap = {
+	[Va3ChessEnum.ChessClearCondition.RoundLimit] = var_0_0.getConditionDescRoundLimit,
+	[Va3ChessEnum.ChessClearCondition.InteractFinish] = var_0_0.getConditionDescInteractFinish
 }
 
-function slot0.checkRoundLimit(slot0, slot1)
+function var_0_0.checkRoundLimit(arg_11_0, arg_11_1)
 	if not Va3ChessGameModel.instance:getResult() then
 		return false
 	else
-		return Va3ChessGameModel.instance:getRound() <= slot0[2]
+		return Va3ChessGameModel.instance:getRound() <= arg_11_0[2]
 	end
 end
 
-function slot0.checkInteractFinish(slot0, slot1)
-	if slot1 == VersionActivity1_3Enum.ActivityId.Act304 then
-		return Va3ChessGameModel.instance:isInteractFinish(slot0[2], true)
+function var_0_0.checkInteractFinish(arg_12_0, arg_12_1)
+	if arg_12_1 == VersionActivity1_3Enum.ActivityId.Act304 then
+		return Va3ChessGameModel.instance:isInteractFinish(arg_12_0[2], true)
 	end
 
-	for slot5 = 2, #slot0 do
-		if not Va3ChessGameModel.instance:isInteractFinish(slot0[slot5]) then
+	for iter_12_0 = 2, #arg_12_0 do
+		if not Va3ChessGameModel.instance:isInteractFinish(arg_12_0[iter_12_0]) then
 			return false
 		end
 	end
 
-	return #slot0 > 1
+	return #arg_12_0 > 1
 end
 
-function slot0.checkHpLimit(slot0, slot1)
-	return slot0[2] <= Va3ChessGameModel.instance:getHp()
+function var_0_0.checkHpLimit(arg_13_0, arg_13_1)
+	return Va3ChessGameModel.instance:getHp() >= arg_13_0[2]
 end
 
-function slot0.checkAllInteractFinish(slot0, slot1)
+function var_0_0.checkAllInteractFinish(arg_14_0, arg_14_1)
 	if Va3ChessGameModel.instance:getResult() == false then
 		return false
 	end
 
-	for slot7 = 2, #slot0 do
-		if not Va3ChessGameModel.instance:isInteractFinish(slot0[slot7]) then
-			slot3 = 0 + 1
+	local var_14_0 = 0
+
+	for iter_14_0 = 2, #arg_14_0 do
+		if not Va3ChessGameModel.instance:isInteractFinish(arg_14_0[iter_14_0]) then
+			var_14_0 = var_14_0 + 1
 		end
 	end
 
-	if slot3 > 0 then
-		return false, slot3
+	if var_14_0 > 0 then
+		return false, var_14_0
 	else
 		return true
 	end
 end
 
-function slot0.calBulletFlyTime(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Va3ChessEnum.DEFAULT_BULLET_FLY_TIME
+function var_0_0.calBulletFlyTime(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	local var_15_0 = Va3ChessEnum.DEFAULT_BULLET_FLY_TIME
 
-	if slot1 and slot2 and slot3 and slot4 then
-		slot5 = math.sqrt(math.pow(slot3 - slot1, 2) + math.pow(slot4 - slot2, 2)) / (slot0 or Va3ChessEnum.DEFAULT_BULLET_SPEED)
+	arg_15_0 = arg_15_0 or Va3ChessEnum.DEFAULT_BULLET_SPEED
+
+	if arg_15_1 and arg_15_2 and arg_15_3 and arg_15_4 then
+		local var_15_1 = math.pow(arg_15_3 - arg_15_1, 2)
+		local var_15_2 = math.pow(arg_15_4 - arg_15_2, 2)
+
+		var_15_0 = math.sqrt(var_15_1 + var_15_2) / arg_15_0
 	end
 
-	return slot5
+	return var_15_0
 end
 
-slot0.conditionCheckMap = {
-	[Va3ChessEnum.ChessClearCondition.RoundLimit] = slot0.checkRoundLimit,
-	[Va3ChessEnum.ChessClearCondition.InteractFinish] = slot0.checkInteractFinish,
-	[Va3ChessEnum.ChessClearCondition.HpLimit] = slot0.checkHpLimit,
-	[Va3ChessEnum.ChessClearCondition.InteractAllFinish] = slot0.checkAllInteractFinish
+var_0_0.conditionCheckMap = {
+	[Va3ChessEnum.ChessClearCondition.RoundLimit] = var_0_0.checkRoundLimit,
+	[Va3ChessEnum.ChessClearCondition.InteractFinish] = var_0_0.checkInteractFinish,
+	[Va3ChessEnum.ChessClearCondition.HpLimit] = var_0_0.checkHpLimit,
+	[Va3ChessEnum.ChessClearCondition.InteractAllFinish] = var_0_0.checkAllInteractFinish
 }
 
-return slot0
+return var_0_0

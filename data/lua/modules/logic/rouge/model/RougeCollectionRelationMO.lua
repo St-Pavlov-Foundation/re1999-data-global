@@ -1,26 +1,26 @@
-module("modules.logic.rouge.model.RougeCollectionRelationMO", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionRelationMO", package.seeall)
 
-slot0 = pureTable("RougeCollectionRelationMO")
+local var_0_0 = pureTable("RougeCollectionRelationMO")
 
-function slot0.init(slot0, slot1)
-	slot0.effectIndex = tonumber(slot1.effectIndex)
-	slot0.showType = tonumber(slot1.showType)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.effectIndex = tonumber(arg_1_1.effectIndex)
+	arg_1_0.showType = tonumber(arg_1_1.showType)
 
-	slot0:updateTrueCollectionIds(slot1.trueGuids)
+	arg_1_0:updateTrueCollectionIds(arg_1_1.trueGuids)
 end
 
-function slot0.updateTrueCollectionIds(slot0, slot1)
-	slot0.trueIds = {}
+function var_0_0.updateTrueCollectionIds(arg_2_0, arg_2_1)
+	arg_2_0.trueIds = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			table.insert(slot0.trueIds, tonumber(slot6))
+	if arg_2_1 then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+			table.insert(arg_2_0.trueIds, tonumber(iter_2_1))
 		end
 	end
 end
 
-function slot0.getTrueCollectionIds(slot0)
-	return slot0.trueIds
+function var_0_0.getTrueCollectionIds(arg_3_0)
+	return arg_3_0.trueIds
 end
 
-return slot0
+return var_0_0

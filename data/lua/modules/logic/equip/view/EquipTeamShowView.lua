@@ -1,58 +1,58 @@
-module("modules.logic.equip.view.EquipTeamShowView", package.seeall)
+﻿module("modules.logic.equip.view.EquipTeamShowView", package.seeall)
 
-slot0 = class("EquipTeamShowView", BaseView)
+local var_0_0 = class("EquipTeamShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCloseEquipTeamShowView, slot0._closeThisView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCloseEquipTeamShowView, arg_2_0._closeThisView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0._inTeam = true
-	slot0._targetEquipUid = EquipTeamListModel.instance:getTeamEquip()[1]
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0._targetEquipUid, arg_4_0._inTeam = EquipTeamListModel.instance:getTeamEquip()[1], true
 
-	slot0:_refreshUI()
+	arg_4_0:_refreshUI()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, false)
 end
 
-function slot0._closeThisView(slot0)
-	slot0:closeThis()
+function var_0_0._closeThisView(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._targetEquipUid = slot0.viewParam[1]
-	slot0._inTeam = slot0.viewParam[2]
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0._targetEquipUid = arg_7_0.viewParam[1]
+	arg_7_0._inTeam = arg_7_0.viewParam[2]
 
-	slot0:_refreshUI()
+	arg_7_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0._showHideItem2 = false
-	slot0._lastItem2Uid = nil
-	slot0._itemList = slot0._itemList or slot0:getUserDataTb_()
-	slot0._itemTipList = slot0._itemTipList or slot0:getUserDataTb_()
-	slot0._targetEquipUid = slot0.viewParam[1]
-	slot0._inTeam = slot0.viewParam[2]
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._showHideItem2 = false
+	arg_8_0._lastItem2Uid = nil
+	arg_8_0._itemList = arg_8_0._itemList or arg_8_0:getUserDataTb_()
+	arg_8_0._itemTipList = arg_8_0._itemTipList or arg_8_0:getUserDataTb_()
+	arg_8_0._targetEquipUid = arg_8_0.viewParam[1]
+	arg_8_0._inTeam = arg_8_0.viewParam[2]
 
-	slot0:_refreshUI()
+	arg_8_0:_refreshUI()
 end
 
-slot0.TeamShowItemPosList = {
+var_0_0.TeamShowItemPosList = {
 	{
 		-134.1,
 		23.4
@@ -63,90 +63,104 @@ slot0.TeamShowItemPosList = {
 	}
 }
 
-function slot0._refreshUI(slot0)
-	slot0._heroId = EquipTeamListModel.instance:getHero() and slot1.heroId
-	slot0._showHideItem2 = false
-	slot2 = 2
+function var_0_0._refreshUI(arg_9_0)
+	local var_9_0 = EquipTeamListModel.instance:getHero()
 
-	if slot0._inTeam then
-		slot0:addItem(uv0.TeamShowItemPosList[slot2][1], uv0.TeamShowItemPosList[slot2][2], slot0._targetEquipUid, true, nil, 1)
+	arg_9_0._heroId = var_9_0 and var_9_0.heroId
+	arg_9_0._showHideItem2 = false
+
+	local var_9_1 = 2
+
+	if arg_9_0._inTeam then
+		arg_9_0:addItem(var_0_0.TeamShowItemPosList[var_9_1][1], var_0_0.TeamShowItemPosList[var_9_1][2], arg_9_0._targetEquipUid, true, nil, 1)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, false)
 
 		return
 	end
 
-	slot5 = uv0.TeamShowItemPosList[slot2]
+	local var_9_2 = EquipTeamListModel.instance:getTeamEquip()[1]
+	local var_9_3 = var_0_0.TeamShowItemPosList[var_9_1]
 
-	if EquipTeamListModel.instance:getTeamEquip()[1] and EquipModel.instance:getEquip(slot4) then
-		slot0._showHideItem2 = true
+	if var_9_2 and EquipModel.instance:getEquip(var_9_2) then
+		arg_9_0._showHideItem2 = true
 
-		slot0:addItem(slot5[1], slot5[2], slot0._targetEquipUid, false, true, 1)
+		arg_9_0:addItem(var_9_3[1], var_9_3[2], arg_9_0._targetEquipUid, false, true, 1)
 
-		slot5 = uv0.TeamShowItemPosList[slot2 - 1]
+		var_9_1 = var_9_1 - 1
 
-		slot0:addItem(slot5[1], slot5[2], slot4, true, true, 2)
+		local var_9_4 = var_0_0.TeamShowItemPosList[var_9_1]
+
+		arg_9_0:addItem(var_9_4[1], var_9_4[2], var_9_2, true, true, 2)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, true)
 	else
-		slot0:addItem(uv0.TeamShowItemPosList[slot2][1], uv0.TeamShowItemPosList[slot2][2], slot0._targetEquipUid, false, false, 1)
+		arg_9_0:addItem(var_0_0.TeamShowItemPosList[var_9_1][1], var_0_0.TeamShowItemPosList[var_9_1][2], arg_9_0._targetEquipUid, false, false, 1)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCompareEquip, false)
 	end
 
-	if slot0.viewContainer.animBgUpdate then
-		slot0.viewContainer:animBgUpdate()
+	if arg_9_0.viewContainer.animBgUpdate then
+		arg_9_0.viewContainer:animBgUpdate()
 	end
 end
 
-function slot0.addItem(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if not slot0._itemTipList[slot6] then
-		table.insert(slot0._itemTipList, slot6, slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0.viewGO, "item" .. slot6))
+function var_0_0.addItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
+	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[1]
+	local var_10_1 = arg_10_0._itemTipList[arg_10_6]
+
+	if not var_10_1 then
+		var_10_1 = arg_10_0:getResInst(var_10_0, arg_10_0.viewGO, "item" .. arg_10_6)
+
+		table.insert(arg_10_0._itemTipList, arg_10_6, var_10_1)
 	end
 
-	if slot0._itemTipList[2] then
-		gohelper.setActive(slot0._itemTipList[2], slot0._showHideItem2)
+	if arg_10_0._itemTipList[2] then
+		gohelper.setActive(arg_10_0._itemTipList[2], arg_10_0._showHideItem2)
 
-		if slot6 == 2 and slot0._lastItem2Uid ~= slot3 then
-			gohelper.setActive(slot0._itemTipList[2], false)
+		if arg_10_6 == 2 and arg_10_0._lastItem2Uid ~= arg_10_3 then
+			gohelper.setActive(arg_10_0._itemTipList[2], false)
 
-			slot0._lastItem2Uid = slot3
+			arg_10_0._lastItem2Uid = arg_10_3
 		end
 	end
 
-	gohelper.setActive(slot8, true)
-	recthelper.setAnchor(slot8.transform, slot1, slot2)
+	gohelper.setActive(var_10_1, true)
+	recthelper.setAnchor(var_10_1.transform, arg_10_1, arg_10_2)
 
-	if not slot0._itemList[slot6] then
-		slot9 = EquipTeamShowItem.New()
+	local var_10_2 = arg_10_0._itemList[arg_10_6]
 
-		table.insert(slot0._itemList, slot6, slot9)
-		slot9:initView(slot8, {
-			slot3,
-			slot4,
-			slot5,
-			slot0,
-			slot0._heroId,
-			slot6
+	if not var_10_2 then
+		var_10_2 = EquipTeamShowItem.New()
+
+		table.insert(arg_10_0._itemList, arg_10_6, var_10_2)
+		var_10_2:initView(var_10_1, {
+			arg_10_3,
+			arg_10_4,
+			arg_10_5,
+			arg_10_0,
+			arg_10_0._heroId,
+			arg_10_6
 		})
 	else
-		slot9.viewParam = {
-			slot3,
-			slot4,
-			slot5,
-			slot0,
-			slot0._heroId,
-			slot6
+		var_10_2.viewParam = {
+			arg_10_3,
+			arg_10_4,
+			arg_10_5,
+			arg_10_0,
+			arg_10_0._heroId,
+			arg_10_6
 		}
 
-		slot9:onUpdateParam()
+		var_10_2:onUpdateParam()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._itemList) do
-		slot5:destroyView()
+function var_0_0.onDestroyView(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._itemList) do
+		iter_12_1:destroyView()
 	end
 end
 
-return slot0
+return var_0_0

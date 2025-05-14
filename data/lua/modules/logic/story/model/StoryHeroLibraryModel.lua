@@ -1,38 +1,38 @@
-module("modules.logic.story.model.StoryHeroLibraryModel", package.seeall)
+﻿module("modules.logic.story.model.StoryHeroLibraryModel", package.seeall)
 
-slot0 = class("StoryHeroLibraryModel", BaseModel)
+local var_0_0 = class("StoryHeroLibraryModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._herolibrary = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._herolibrary = {}
 end
 
-function slot0.setStoryHeroLibraryList(slot0, slot1)
-	slot0._herolibrary = {}
+function var_0_0.setStoryHeroLibraryList(arg_2_0, arg_2_1)
+	arg_2_0._herolibrary = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = StoryHeroLibraryMo.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_0 = StoryHeroLibraryMo.New()
 
-		slot7:init(slot6, slot5)
-		table.insert(slot0._herolibrary, slot7)
+		var_2_0:init(iter_2_1, iter_2_0)
+		table.insert(arg_2_0._herolibrary, var_2_0)
 	end
 
-	slot0:setList(slot0._herolibrary)
+	arg_2_0:setList(arg_2_0._herolibrary)
 end
 
-function slot0.getStoryHeroLibraryList(slot0)
-	return slot0._herolibrary
+function var_0_0.getStoryHeroLibraryList(arg_3_0)
+	return arg_3_0._herolibrary
 end
 
-function slot0.getStoryLibraryHeroByIndex(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._herolibrary) do
-		if slot6.index == slot1 then
-			return slot6
+function var_0_0.getStoryLibraryHeroByIndex(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._herolibrary) do
+		if iter_4_1.index == arg_4_1 then
+			return iter_4_1
 		end
 	end
 
 	return nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

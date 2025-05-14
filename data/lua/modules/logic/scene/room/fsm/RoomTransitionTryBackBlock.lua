@@ -1,104 +1,122 @@
-module("modules.logic.scene.room.fsm.RoomTransitionTryBackBlock", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionTryBackBlock", package.seeall)
 
-slot0 = class("RoomTransitionTryBackBlock", JompFSMBaseTransition)
+local var_0_0 = class("RoomTransitionTryBackBlock", JompFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._opToDis = {
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_1_0._opToDis = {
 		[RoomBlockEnum.OpState.Normal] = RoomBlockEnum.OpState.Back,
 		[RoomBlockEnum.OpState.Back] = RoomBlockEnum.OpState.Normal
 	}
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot2 = slot0._param.hexPoint
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	if RoomEnum.ConstNum.InventoryBlockOneBackMax <= RoomMapBlockModel.instance:getBackBlockModel():getCount() and slot4:getById(RoomMapBlockModel.instance:getBlockMO(slot2.x, slot2.y).id) == nil then
+	local var_3_0 = arg_3_0._param.hexPoint
+	local var_3_1 = RoomMapBlockModel.instance:getBlockMO(var_3_0.x, var_3_0.y)
+	local var_3_2 = RoomMapBlockModel.instance:getBackBlockModel()
+
+	if var_3_2:getCount() >= RoomEnum.ConstNum.InventoryBlockOneBackMax and var_3_2:getById(var_3_1.id) == nil then
 		GameFacade.showToast(RoomEnum.Toast.InventoryBlockOneBackMax)
-		slot0:onDone()
+		arg_3_0:onDone()
 
 		return
 	end
 
 	if not RoomMapBlockModel.instance:isBackMore() then
-		slot0:_backOne(slot3.id)
+		arg_3_0:_backOne(var_3_1.id)
 	end
 
-	slot5 = slot0._scene.mapmgr:getBlockEntity(slot3.id, SceneTag.RoomMapBlock)
-	slot6 = slot0._opToDis[slot3:getOpState()] or RoomBlockEnum.OpState.Normal
+	local var_3_3 = arg_3_0._scene.mapmgr:getBlockEntity(var_3_1.id, SceneTag.RoomMapBlock)
+	local var_3_4 = arg_3_0._opToDis[var_3_1:getOpState()] or RoomBlockEnum.OpState.Normal
 
-	slot3:setOpState(slot6)
+	var_3_1:setOpState(var_3_4)
 
-	if slot6 == RoomBlockEnum.OpState.Back then
-		slot4:addAtLast(slot3)
+	if var_3_4 == RoomBlockEnum.OpState.Back then
+		var_3_2:addAtLast(var_3_1)
 	else
-		slot4:remove(slot3)
-		slot5:refreshBlock()
+		var_3_2:remove(var_3_1)
+		var_3_3:refreshBlock()
 
-		slot2 = nil
+		var_3_0 = nil
 	end
 
-	slot0:onDone()
-	slot0:_refreshBackBlock()
+	arg_3_0:onDone()
+	arg_3_0:_refreshBackBlock()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ClientTryBackBlock)
 
-	if slot2 then
-		if slot0:_isOutScreen(HexMath.hexToPosition(slot2, RoomBlockEnum.BlockSize)) then
-			-- Nothing
+	if var_3_0 then
+		local var_3_5 = HexMath.hexToPosition(var_3_0, RoomBlockEnum.BlockSize)
+		local var_3_6 = {}
+
+		if arg_3_0:_isOutScreen(var_3_5) then
+			var_3_6.focusX = var_3_5.x
+			var_3_6.focusY = var_3_5.y
 		end
 
-		slot0._scene.camera:tweenCamera({
-			focusX = slot7.x,
-			focusY = slot7.y
-		})
+		arg_3_0._scene.camera:tweenCamera(var_3_6)
 	end
 end
 
-function slot0._refreshBackBlock(slot0)
-	slot1 = RoomMapBlockModel.instance:isCanBackBlock()
+function var_0_0._refreshBackBlock(arg_4_0)
+	local var_4_0 = RoomMapBlockModel.instance:isCanBackBlock()
+	local var_4_1 = RoomMapBlockModel.instance:getBackBlockModel():getList()
 
-	for slot7 = 1, #RoomMapBlockModel.instance:getBackBlockModel():getList() do
-		if slot3[slot7]:getOpStateParam() ~= slot1 then
-			slot8:setOpState(RoomBlockEnum.OpState.Back, slot1)
+	for iter_4_0 = 1, #var_4_1 do
+		local var_4_2 = var_4_1[iter_4_0]
 
-			if slot0._scene.mapmgr:getBlockEntity(slot8.id, SceneTag.RoomMapBlock) then
-				slot9:refreshBlock()
+		if var_4_2:getOpStateParam() ~= var_4_0 then
+			var_4_2:setOpState(RoomBlockEnum.OpState.Back, var_4_0)
+
+			local var_4_3 = arg_4_0._scene.mapmgr:getBlockEntity(var_4_2.id, SceneTag.RoomMapBlock)
+
+			if var_4_3 then
+				var_4_3:refreshBlock()
 			end
 		end
 	end
 end
 
-function slot0._backOne(slot0, slot1)
-	for slot7 = 1, #RoomMapBlockModel.instance:getBackBlockModel():getList() do
-		if slot3[slot7] and slot8.id ~= slot1 then
-			slot8:setOpState(RoomBlockEnum.OpState.Normal)
+function var_0_0._backOne(arg_5_0, arg_5_1)
+	local var_5_0 = RoomMapBlockModel.instance:getBackBlockModel()
+	local var_5_1 = var_5_0:getList()
 
-			if slot0._scene.mapmgr:getBlockEntity(slot8.id, SceneTag.RoomMapBlock) then
-				slot9:refreshBlock()
+	for iter_5_0 = 1, #var_5_1 do
+		local var_5_2 = var_5_1[iter_5_0]
+
+		if var_5_2 and var_5_2.id ~= arg_5_1 then
+			var_5_2:setOpState(RoomBlockEnum.OpState.Normal)
+
+			local var_5_3 = arg_5_0._scene.mapmgr:getBlockEntity(var_5_2.id, SceneTag.RoomMapBlock)
+
+			if var_5_3 then
+				var_5_3:refreshBlock()
 			end
 		end
 	end
 
-	slot2:clear()
+	var_5_0:clear()
 end
 
-function slot0._isOutScreen(slot0, slot1)
-	return RoomHelper.isOutCameraFocus(slot1)
+function var_0_0._isOutScreen(arg_6_0, arg_6_1)
+	return RoomHelper.isOutCameraFocus(arg_6_1)
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_7_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_8_0)
+	return
 end
 
-function slot0.onDone(slot0)
-	uv0.super.onDone(slot0)
+function var_0_0.onDone(arg_9_0)
+	var_0_0.super.onDone(arg_9_0)
 end
 
-return slot0
+return var_0_0

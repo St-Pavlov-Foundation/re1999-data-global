@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_8FactoryBlueprintViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_8FactoryBlueprintViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_8FactoryBlueprintView.New(),
 		TabViewGroup.New(1, "#go_topleft"),
@@ -10,33 +10,35 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		return {
-			NavigateButtonsView.New({
-				true,
-				true,
-				false
-			})
-		}
-	elseif slot1 == 2 then
-		slot0._currencyView = CurrencyView.New({
-			CurrencyEnum.CurrencyType.V1a8FactoryPart
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
+			true,
+			true,
+			false
 		})
-		slot0._currencyView.foreHideBtn = true
 
 		return {
-			slot0._currencyView
+			var_2_0
+		}
+	elseif arg_2_1 == 2 then
+		arg_2_0._currencyView = CurrencyView.New({
+			CurrencyEnum.CurrencyType.V1a8FactoryPart
+		})
+		arg_2_0._currencyView.foreHideBtn = true
+
+		return {
+			arg_2_0._currencyView
 		}
 	end
 end
 
-function slot0.setCurrencyType(slot0, slot1)
-	if not slot0._currencyView then
+function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
+	if not arg_3_0._currencyView then
 		return
 	end
 
-	slot0._currencyView:setCurrencyType(slot1)
+	arg_3_0._currencyView:setCurrencyType(arg_3_1)
 end
 
-return slot0
+return var_0_0

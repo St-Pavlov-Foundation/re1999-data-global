@@ -1,90 +1,96 @@
-module("modules.logic.rouge.map.view.coin.RougeMapCoinView", package.seeall)
+﻿module("modules.logic.rouge.map.view.coin.RougeMapCoinView", package.seeall)
 
-slot0 = class("RougeMapCoinView", BaseView)
+local var_0_0 = class("RougeMapCoinView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goCoinContainer = gohelper.findChild(slot0.viewGO, "#go_coincontainer")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goCoinContainer = gohelper.findChild(arg_1_0.viewGO, "#go_coincontainer")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goCoin = slot0.viewContainer:getResInst(RougeEnum.ResPath.CoinView, slot0.goCoinContainer)
-	slot0._txtcoinnum = gohelper.findChildText(slot0.goCoin, "#txt_coinnum")
-	slot0.coinVx = gohelper.findChild(slot0.goCoin, "#go_vx_vitality")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.goCoin = arg_4_0.viewContainer:getResInst(RougeEnum.ResPath.CoinView, arg_4_0.goCoinContainer)
+	arg_4_0._txtcoinnum = gohelper.findChildText(arg_4_0.goCoin, "#txt_coinnum")
+	arg_4_0.coinVx = gohelper.findChild(arg_4_0.goCoin, "#go_vx_vitality")
 
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeInfoCoin, slot0.refreshUI, slot0)
+	arg_4_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeInfoCoin, arg_4_0.refreshUI, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshCoin()
+function var_0_0.refreshUI(arg_6_0)
+	arg_6_0:refreshCoin()
 end
 
-function slot0.refreshCoin(slot0)
-	if RougeModel.instance:getRougeInfo() then
-		if not slot0.preCoin then
-			slot0._txtcoinnum.text = slot1.coin
-			slot0.preCoin = slot1.coin
+function var_0_0.refreshCoin(arg_7_0)
+	local var_7_0 = RougeModel.instance:getRougeInfo()
+
+	if var_7_0 then
+		if not arg_7_0.preCoin then
+			arg_7_0._txtcoinnum.text = var_7_0.coin
+			arg_7_0.preCoin = var_7_0.coin
 		else
-			if slot1.coin == slot0.preCoin then
-				slot0._txtcoinnum.text = slot1.coin
-				slot0.preCoin = slot1.coin
+			if var_7_0.coin == arg_7_0.preCoin then
+				arg_7_0._txtcoinnum.text = var_7_0.coin
+				arg_7_0.preCoin = var_7_0.coin
 
 				return
 			end
 
-			slot0:killTween()
+			arg_7_0:killTween()
 
-			slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot0.preCoin, slot1.coin, RougeMapEnum.CoinChangeDuration, slot0.frameCallback, slot0.doneCallback, slot0)
+			arg_7_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_0.preCoin, var_7_0.coin, RougeMapEnum.CoinChangeDuration, arg_7_0.frameCallback, arg_7_0.doneCallback, arg_7_0)
 
-			gohelper.setActive(slot0.coinVx, true)
+			gohelper.setActive(arg_7_0.coinVx, true)
 			AudioMgr.instance:trigger(AudioEnum.UI.CoinChange)
 		end
 	end
 end
 
-function slot0.frameCallback(slot0, slot1)
-	slot1 = math.ceil(slot1)
-	slot0._txtcoinnum.text = slot1
-	slot0.preCoin = slot1
+function var_0_0.frameCallback(arg_8_0, arg_8_1)
+	arg_8_1 = math.ceil(arg_8_1)
+	arg_8_0._txtcoinnum.text = arg_8_1
+	arg_8_0.preCoin = arg_8_1
 end
 
-function slot0.doneCallback(slot0)
-	gohelper.setActive(slot0.coinVx, false)
+function var_0_0.doneCallback(arg_9_0)
+	gohelper.setActive(arg_9_0.coinVx, false)
 
-	slot0.tweenId = nil
+	arg_9_0.tweenId = nil
 end
 
-function slot0.killTween(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.killTween(arg_10_0)
+	if arg_10_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_10_0.tweenId)
 
-		slot0.tweenId = nil
+		arg_10_0.tweenId = nil
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:killTween()
+function var_0_0.onClose(arg_11_0)
+	arg_11_0:killTween()
 
-	if RougeModel.instance:getRougeInfo() then
-		slot0.preCoin = slot1.coin
+	local var_11_0 = RougeModel.instance:getRougeInfo()
+
+	if var_11_0 then
+		arg_11_0.preCoin = var_11_0.coin
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:killTween()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0:killTween()
 end
 
-return slot0
+return var_0_0

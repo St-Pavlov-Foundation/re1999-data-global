@@ -1,20 +1,21 @@
-module("modules.logic.activity.rpc.Activity113Rpc", package.seeall)
+﻿module("modules.logic.activity.rpc.Activity113Rpc", package.seeall)
 
-slot0 = class("Activity113Rpc", BaseRpc)
+local var_0_0 = class("Activity113Rpc", BaseRpc)
 
-function slot0.sendGetAct113InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity113Module_pb.GetAct113InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct113InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity113Module_pb.GetAct113InfoRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct113InfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct113InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

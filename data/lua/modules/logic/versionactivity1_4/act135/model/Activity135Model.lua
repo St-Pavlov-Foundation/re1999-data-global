@@ -1,36 +1,49 @@
-module("modules.logic.versionactivity1_4.act135.model.Activity135Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act135.model.Activity135Model", package.seeall)
 
-slot0 = class("Activity135Model", BaseModel)
+local var_0_0 = class("Activity135Model", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getActivityShowReward(slot0, slot1)
-	if not Activity135Config.instance:getEpisodeCos(slot1) then
+function var_0_0.getActivityShowReward(arg_3_0, arg_3_1)
+	local var_3_0 = Activity135Config.instance:getEpisodeCos(arg_3_1)
+
+	if not var_3_0 then
 		return
 	end
 
-	slot3 = {}
+	local var_3_1 = {}
+	local var_3_2 = {}
 
-	for slot8, slot9 in pairs(slot2) do
-		if ActivityHelper.getActivityStatus(slot9.activityId, true) == ActivityEnum.ActivityStatus.Normal and DungeonConfig.instance:getBonusCO(slot9.firstBounsId) and GameUtil.splitString2(slot10.fixBonus, true) then
-			for slot15, slot16 in ipairs(slot11) do
-				slot16.activityId = slot9.activityId
-				slot16.isLimitFirstReward = true
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		var_3_2[iter_3_1.activityId] = true
+
+		if ActivityHelper.getActivityStatus(iter_3_1.activityId, true) == ActivityEnum.ActivityStatus.Normal then
+			local var_3_3 = DungeonConfig.instance:getBonusCO(iter_3_1.firstBounsId)
+
+			if var_3_3 then
+				local var_3_4 = GameUtil.splitString2(var_3_3.fixBonus, true)
+
+				if var_3_4 then
+					for iter_3_2, iter_3_3 in ipairs(var_3_4) do
+						iter_3_3.activityId = iter_3_1.activityId
+						iter_3_3.isLimitFirstReward = true
+					end
+
+					tabletool.addValues(var_3_1, var_3_4)
+				end
 			end
-
-			tabletool.addValues(slot3, slot11)
 		end
 	end
 
-	return slot3, {
-		[slot9.activityId] = true
-	}
+	return var_3_1, var_3_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

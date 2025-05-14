@@ -1,54 +1,57 @@
-module("modules.logic.gift.model.GiftInsightHeroChoiceModel", package.seeall)
+﻿module("modules.logic.gift.model.GiftInsightHeroChoiceModel", package.seeall)
 
-slot0 = class("GiftInsightHeroChoiceModel", BaseModel)
+local var_0_0 = class("GiftInsightHeroChoiceModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._curHeroId = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._curHeroId = 0
 end
 
-function slot0.setCurHeroId(slot0, slot1)
-	slot0._curHeroId = slot1
+function var_0_0.setCurHeroId(arg_2_0, arg_2_1)
+	arg_2_0._curHeroId = arg_2_1
 end
 
-function slot0.getCurHeroId(slot0)
-	return slot0._curHeroId
+function var_0_0.getCurHeroId(arg_3_0)
+	return arg_3_0._curHeroId
 end
 
-function slot0.getFitHeros(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
-	slot5 = ItemConfig.instance:getInsightItemCo(slot1)
+function var_0_0.getFitHeros(arg_4_0, arg_4_1)
+	local var_4_0 = {}
+	local var_4_1 = {}
+	local var_4_2 = HeroModel.instance:getAllHero()
+	local var_4_3 = ItemConfig.instance:getInsightItemCo(arg_4_1)
 
-	for slot9, slot10 in pairs(HeroModel.instance:getAllHero()) do
-		for slot15, slot16 in pairs(string.splitToNumber(slot5.heroRares, "#")) do
-			if slot10.config.rare + 1 == slot16 then
-				if slot10.rank < slot5.heroRank + 1 then
-					table.insert(slot2, slot10)
+	for iter_4_0, iter_4_1 in pairs(var_4_2) do
+		local var_4_4 = string.splitToNumber(var_4_3.heroRares, "#")
+
+		for iter_4_2, iter_4_3 in pairs(var_4_4) do
+			if iter_4_1.config.rare + 1 == iter_4_3 then
+				if iter_4_1.rank < var_4_3.heroRank + 1 then
+					table.insert(var_4_0, iter_4_1)
 				else
-					table.insert(slot3, slot10)
+					table.insert(var_4_1, iter_4_1)
 				end
 			end
 		end
 	end
 
-	table.sort(slot2, uv0._sortFunc)
-	table.sort(slot3, uv0._sortFunc)
+	table.sort(var_4_0, var_0_0._sortFunc)
+	table.sort(var_4_1, var_0_0._sortFunc)
 
-	return slot2, slot3
+	return var_4_0, var_4_1
 end
 
-function slot0._sortFunc(slot0, slot1)
-	if slot0.config.rare ~= slot1.config.rare then
-		return slot1.config.rare < slot0.config.rare
-	elseif slot0.rank ~= slot1.rank then
-		return slot1.rank < slot0.rank
-	elseif slot0.level ~= slot1.level then
-		return slot1.level < slot0.level
+function var_0_0._sortFunc(arg_5_0, arg_5_1)
+	if arg_5_0.config.rare ~= arg_5_1.config.rare then
+		return arg_5_0.config.rare > arg_5_1.config.rare
+	elseif arg_5_0.rank ~= arg_5_1.rank then
+		return arg_5_0.rank > arg_5_1.rank
+	elseif arg_5_0.level ~= arg_5_1.level then
+		return arg_5_0.level > arg_5_1.level
 	else
-		return slot1.heroId < slot0.heroId
+		return arg_5_0.heroId > arg_5_1.heroId
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

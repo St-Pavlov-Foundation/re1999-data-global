@@ -1,15 +1,16 @@
-module("modules.logic.fight.system.work.FightWorkResonanceLevel", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkResonanceLevel", package.seeall)
 
-slot0 = class("FightWorkResonanceLevel", FightEffectBase)
+local var_0_0 = class("FightWorkResonanceLevel", FightEffectBase)
 
-function slot0.onStart(slot0)
-	FightRoundSequence.roundTempData.ResonanceLevel = slot0._actEffectMO.effectNum
+function var_0_0.onStart(arg_1_0)
+	FightRoundSequence.roundTempData.ResonanceLevel = arg_1_0._actEffectMO.effectNum
 
-	FightController.instance:dispatchEvent(FightEvent.ResonanceLevel, slot0._actEffectMO.effectNum)
-	slot0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.ResonanceLevel, arg_1_0._actEffectMO.effectNum)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

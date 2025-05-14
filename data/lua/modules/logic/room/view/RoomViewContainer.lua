@@ -1,26 +1,26 @@
-module("modules.logic.room.view.RoomViewContainer", package.seeall)
+﻿module("modules.logic.room.view.RoomViewContainer", package.seeall)
 
-slot0 = class("RoomViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "navigatebuttonscontainer"))
-	table.insert(slot1, RoomView.New())
-	table.insert(slot1, RoomViewTouch.New())
-	table.insert(slot1, RoomViewBlur.New())
-	table.insert(slot1, RoomViewCameraState.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "navigatebuttonscontainer"))
+	table.insert(var_1_0, RoomView.New())
+	table.insert(var_1_0, RoomViewTouch.New())
+	table.insert(var_1_0, RoomViewBlur.New())
+	table.insert(var_1_0, RoomViewCameraState.New())
 
 	if RoomController.instance:isEditMode() then
-		table.insert(slot1, TabViewGroup.New(2, "blockop_tab"))
+		table.insert(var_1_0, TabViewGroup.New(2, "blockop_tab"))
 	end
 
-	table.insert(slot1, TabViewGroup.New(3, "go_normalroot/go_confirm"))
+	table.insert(var_1_0, TabViewGroup.New(3, "go_normalroot/go_confirm"))
 
 	if RoomController.instance:isObMode() then
-		table.insert(slot1, RoomViewNavigateBubble.New())
-		table.insert(slot1, RoomViewSceneTask.New())
-		table.insert(slot1, RoomViewTopRight.New("go_normalroot/go_topright", slot0._viewSetting.otherRes[3], {
+		table.insert(var_1_0, RoomViewNavigateBubble.New())
+		table.insert(var_1_0, RoomViewSceneTask.New())
+		table.insert(var_1_0, RoomViewTopRight.New("go_normalroot/go_topright", arg_1_0._viewSetting.otherRes[3], {
 			{
 				type = 2,
 				id = 5,
@@ -72,8 +72,8 @@ function slot0.buildViews(slot0)
 			}
 		}))
 	elseif RoomController.instance:isEditMode() then
-		table.insert(slot1, RoomViewSceneTask.New())
-		table.insert(slot1, RoomViewTopRight.New("go_normalroot/go_topright", slot0._viewSetting.otherRes[3], {
+		table.insert(var_1_0, RoomViewSceneTask.New())
+		table.insert(var_1_0, RoomViewTopRight.New("go_normalroot/go_topright", arg_1_0._viewSetting.otherRes[3], {
 			{
 				classDefine = RoomViewTopRightMaterialItem,
 				type = MaterialEnum.MaterialType.Currency,
@@ -94,8 +94,8 @@ function slot0.buildViews(slot0)
 			}
 		}))
 	elseif RoomController.instance:isVisitMode() then
-		table.insert(slot1, TabViewGroup.New(4, "go_normalroot/go_confirm"))
-		table.insert(slot1, RoomViewTopRight.New("go_normalroot/go_topright", slot0._viewSetting.otherRes[3], {
+		table.insert(var_1_0, TabViewGroup.New(4, "go_normalroot/go_confirm"))
+		table.insert(var_1_0, RoomViewTopRight.New("go_normalroot/go_topright", arg_1_0._viewSetting.otherRes[3], {
 			{
 				ismap = true,
 				bgType = 2,
@@ -111,116 +111,124 @@ function slot0.buildViews(slot0)
 		}))
 	end
 
-	table.insert(slot1, RoomViewUI.New())
+	table.insert(var_1_0, RoomViewUI.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		if RoomController.instance:isObMode() then
-			slot0._navigateButtonsView = NavigateButtonsView.New({
+			arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 				true,
 				false,
 				true
 			}, HelpEnum.HelpId.RoomOb)
 		elseif RoomController.instance:isEditMode() then
-			slot0._navigateButtonsView = NavigateButtonsView.New({
+			arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 				true,
 				false,
 				false
 			})
 		elseif RoomController.instance:isVisitMode() then
-			slot0._navigateButtonsView = NavigateButtonsView.New({
+			arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomOb)
 		else
-			slot0._navigateButtonsView = NavigateButtonsView.New({
+			arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 				true,
 				false,
 				false
 			})
 		end
 
-		slot0._navigateButtonsView:setOverrideClose(slot0._overrideCloseFunc, slot0)
+		arg_2_0._navigateButtonsView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_2_0._navigateButtonsView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
+		local var_2_0 = arg_2_0:buildRoomWaterReformScrollViews()
+		local var_2_1 = MultiView.New({
+			RoomWaterReformView.New(),
+			var_2_0
+		})
+
 		return {
 			RoomBackBlockView.New(),
-			MultiView.New({
-				RoomWaterReformView.New(),
-				slot0:buildRoomWaterReformScrollViews()
-			})
+			var_2_1
 		}
-	elseif slot1 == 3 then
+	elseif arg_2_1 == 3 then
 		return {
 			RoomViewConfirm.New()
 		}
-	elseif slot1 == 4 then
+	elseif arg_2_1 == 4 then
 		return {
 			RoomLayoutVisitPlan.New()
 		}
 	end
 end
 
-function slot0.buildRoomWaterReformScrollViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_bottom/#go_blockContent/scroll_block"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#go_bottom/#go_blockContent/#go_item"
-	slot1.cellClass = RoomWaterReformItem
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = 170
-	slot1.cellHeight = 231
-	slot1.cellSpaceH = 0.5
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 5
+function var_0_0.buildRoomWaterReformScrollViews(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
 
-	return LuaListScrollView.New(RoomWaterReformListModel.instance, slot1)
+	var_3_0.scrollGOPath = "#go_bottom/#go_blockContent/scroll_block"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_3_0.prefabUrl = "#go_bottom/#go_blockContent/#go_item"
+	var_3_0.cellClass = RoomWaterReformItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirH
+	var_3_0.lineCount = 1
+	var_3_0.cellWidth = 170
+	var_3_0.cellHeight = 231
+	var_3_0.cellSpaceH = 0.5
+	var_3_0.cellSpaceV = 0
+	var_3_0.startSpace = 5
+
+	return (LuaListScrollView.New(RoomWaterReformListModel.instance, var_3_0))
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonsView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
-	slot0._navigateButtonsView:resetHomeBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0._navigateButtonsView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
+	arg_4_0._navigateButtonsView:resetHomeBtnAudioId(AudioEnum.UI.Play_UI_CloseHouse)
 
 	if RoomController.instance:isEditMode() then
-		slot1 = nil
+		local var_4_0
 
 		if ManufactureModel.instance:getIsJump2ManufactureBuildingList() then
-			slot1 = RoomBuildingEnum.BuildingListViewResTabType.Produce
+			var_4_0 = RoomBuildingEnum.BuildingListViewResTabType.Produce
 		end
+
+		local var_4_1 = RoomTransportPathModel.instance:getisJumpTransportSite()
 
 		RoomTransportPathModel.instance:setIsJumpTransportSite()
 		ManufactureModel.instance:setIsJump2ManufactureBuildingList()
 		ViewMgr.instance:openView(ViewName.RoomInventorySelectView, {
-			defaultBuildingResType = slot1,
-			isJumpTransportSite = RoomTransportPathModel.instance:getisJumpTransportSite()
+			defaultBuildingResType = var_4_0,
+			isJumpTransportSite = var_4_1
 		})
 	end
 
 	if RoomController.instance:isObMode() or RoomController.instance:isVisitMode() then
-		slot0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomOb)
+		arg_4_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomOb)
 	end
 
 	if RoomController.instance:isEditMode() then
-		slot0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomManufacture)
+		arg_4_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.RoomManufacture)
 	end
 end
 
-function slot0._overrideCloseFunc(slot0)
+function var_0_0._overrideCloseFunc(arg_5_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)
 
 		return
 	end
 
-	if GameSceneMgr.instance:getCurScene().camera:isTweening() then
+	local var_5_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_5_0.camera:isTweening() then
 		return
 	end
 
@@ -230,12 +238,12 @@ function slot0._overrideCloseFunc(slot0)
 		return
 	end
 
-	if slot0:shouldShowUI() then
+	if arg_5_0:shouldShowUI() then
 		return
 	end
 
-	if slot1.camera:getCameraState() ~= RoomEnum.CameraState.Overlook then
-		slot1.camera:switchCameraState(RoomEnum.CameraState.Overlook, {})
+	if var_5_0.camera:getCameraState() ~= RoomEnum.CameraState.Overlook then
+		var_5_0.camera:switchCameraState(RoomEnum.CameraState.Overlook, {})
 
 		return
 	end
@@ -243,15 +251,15 @@ function slot0._overrideCloseFunc(slot0)
 	RoomController.instance:exitRoom()
 end
 
-function slot0._overrideHelpFunc(slot0)
+function var_0_0._overrideHelpFunc(arg_6_0)
 	ViewMgr.instance:openView(ViewName.HelpPageTabView)
 end
 
-function slot0._onEscape(slot0)
+function var_0_0._onEscape(arg_7_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)
 	else
-		if slot0:shouldShowUI() then
+		if arg_7_0:shouldShowUI() then
 			return
 		end
 
@@ -269,7 +277,7 @@ function slot0._onEscape(slot0)
 	end
 end
 
-function slot0.shouldShowUI(slot0)
+function var_0_0.shouldShowUI(arg_8_0)
 	if RoomMapController.instance:isUIHide() then
 		RoomMapController.instance:setUIHide(false)
 
@@ -279,38 +287,38 @@ function slot0.shouldShowUI(slot0)
 	return false
 end
 
-function slot0.setNavigateButtonShow(slot0, slot1)
-	if slot1 then
+function var_0_0.setNavigateButtonShow(arg_9_0, arg_9_1)
+	if arg_9_1 then
 		NavigateMgr.instance:removeEscape(ViewName.RoomView)
 
 		if RoomController.instance:isObMode() then
-			slot0._navigateButtonsView:setParam({
+			arg_9_0._navigateButtonsView:setParam({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomOb)
 		elseif RoomController.instance:isEditMode() then
-			slot0._navigateButtonsView:setParam({
+			arg_9_0._navigateButtonsView:setParam({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomManufacture)
 		elseif RoomController.instance:isVisitMode() then
-			slot0._navigateButtonsView:setParam({
+			arg_9_0._navigateButtonsView:setParam({
 				true,
 				true,
 				true
 			}, HelpEnum.HelpId.RoomOb)
 		else
-			slot0._navigateButtonsView:setParam({
+			arg_9_0._navigateButtonsView:setParam({
 				true,
 				false,
 				false
 			})
 		end
 	else
-		NavigateMgr.instance:addEscape(ViewName.RoomView, slot0._onEscape, slot0)
-		slot0._navigateButtonsView:setParam({
+		NavigateMgr.instance:addEscape(ViewName.RoomView, arg_9_0._onEscape, arg_9_0)
+		arg_9_0._navigateButtonsView:setParam({
 			false,
 			false,
 			false
@@ -318,12 +326,12 @@ function slot0.setNavigateButtonShow(slot0, slot1)
 	end
 end
 
-function slot0.selectBlockOpTab(slot0, slot1)
-	if not slot1 then
+function var_0_0.selectBlockOpTab(arg_10_0, arg_10_1)
+	if not arg_10_1 then
 		return
 	end
 
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+	arg_10_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_10_1)
 end
 
-return slot0
+return var_0_0

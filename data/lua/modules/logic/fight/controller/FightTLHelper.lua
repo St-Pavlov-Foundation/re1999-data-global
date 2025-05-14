@@ -1,21 +1,21 @@
-module("modules.logic.fight.controller.FightTLHelper", package.seeall)
+﻿module("modules.logic.fight.controller.FightTLHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.getTableParam(slot0, slot1, slot2)
-	if slot2 then
-		return FightStrUtil.instance:getSplitToNumberCache(slot0, slot1)
+function var_0_0.getTableParam(arg_1_0, arg_1_1, arg_1_2)
+	if arg_1_2 then
+		return FightStrUtil.instance:getSplitToNumberCache(arg_1_0, arg_1_1)
 	else
-		return FightStrUtil.instance:getSplitCache(slot0, slot1)
+		return FightStrUtil.instance:getSplitCache(arg_1_0, arg_1_1)
 	end
 end
 
-function slot0.getBoolParam(slot0)
-	return slot0 == "1"
+function var_0_0.getBoolParam(arg_2_0)
+	return arg_2_0 == "1"
 end
 
-function slot0.getNumberParam(slot0)
-	return tonumber(slot0)
+function var_0_0.getNumberParam(arg_3_0)
+	return tonumber(arg_3_0)
 end
 
-return slot0
+return var_0_0

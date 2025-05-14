@@ -1,34 +1,37 @@
-module("modules.logic.activity.view.ActivityBeginnerView", package.seeall)
+﻿module("modules.logic.activity.view.ActivityBeginnerView", package.seeall)
 
-slot0 = class("ActivityBeginnerView", BaseView)
+local var_0_0 = class("ActivityBeginnerView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocategory = gohelper.findChild(slot0.viewGO, "#go_category")
-	slot0._scrollitem = gohelper.findChildScrollRect(slot0.viewGO, "#go_category/#scroll_categoryitem")
-	slot0._gosubview = gohelper.findChild(slot0.viewGO, "#go_subview")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
+	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_categoryitem")
+	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-slot1 = {
+local var_0_1 = {
 	[ActivityEnum.Activity.GuestBind] = ViewName.ActivityGuestBindView,
 	[ActivityEnum.Activity.RoleSignViewPart1] = ViewName.V1a5_Role_FullSignView_Part1,
 	[ActivityEnum.Activity.RoleSignViewPart2] = ViewName.V1a5_Role_FullSignView_Part2,
-	[slot2:getActivityId()] = ViewName.ActivityGiftForTheVoyage,
+	[VoyageConfig.instance:getActivityId()] = ViewName.ActivityGiftForTheVoyage,
 	[ActivityEnum.Activity.HarvestSeasonView_1_5] = ViewName.V1a5_HarvestSeason_FullSignView,
 	[ActivityEnum.Activity.V2a2_SpringFestival] = ViewName.V2a2_SpringFestival_FullView,
-	[slot2:getActivityId()] = ViewName.ShortenAct_FullView,
+	[ShortenActConfig.instance:getActivityId()] = ViewName.ShortenAct_FullView,
 	[ActivityEnum.Activity.V2a7_Labor_Sign] = ViewName.V2a7_Labor_FullSignView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.NorSign] = ViewName.ActivityNorSignView,
@@ -101,164 +104,189 @@ slot1 = {
 	[ActivityEnum.Activity.V2a5_GoldenMilletPresent] = ViewName.V2a5_GoldenMilletPresentFullView,
 	[ActivityEnum.Activity.V2a5_WarmUp] = ViewName.V2a5_WarmUp
 }
-slot2 = VoyageConfig.instance
-slot2 = ShortenActConfig.instance
-slot2 = {
+local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
 	[ActivityEnum.ActivityTypeID.OpenTestWarmUp] = ViewName.ActivityWarmUpView,
 	[ActivityEnum.ActivityTypeID.DoubleDrop] = ViewName.V1a7_DoubleDropView
 }
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, slot0.setCategoryListInteractable, slot0)
-	slot0:_initLinkageActivity_FullView()
+	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0._refreshView, arg_6_0)
+	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_6_0.setCategoryListInteractable, arg_6_0)
+	arg_6_0:_initLinkageActivity_FullView()
 
-	slot0._needSetSortInfos = true
+	arg_6_0._needSetSortInfos = true
 
-	slot0:_refreshView()
+	arg_6_0:_refreshView()
 
-	slot0._needSetSortInfos = false
+	arg_6_0._needSetSortInfos = false
 end
 
-function slot0._refreshView(slot0)
-	if not ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner) or not next(slot1) then
-		slot0:closeThis()
+function var_0_0._refreshView(arg_7_0)
+	local var_7_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
+
+	if not var_7_0 or not next(var_7_0) then
+		arg_7_0:closeThis()
 	end
 
-	ActivityModel.instance:removeFinishedCategory(slot1)
+	ActivityModel.instance:removeFinishedCategory(var_7_0)
 
-	slot0.data = {}
+	arg_7_0.data = {}
 
-	for slot5, slot6 in pairs(slot1) do
-		table.insert(slot0.data, {
-			id = slot6,
-			co = ActivityConfig.instance:getActivityCo(slot6),
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		local var_7_1 = {
+			id = iter_7_1,
+			co = ActivityConfig.instance:getActivityCo(iter_7_1),
 			type = ActivityEnum.ActivityType.Beginner
-		})
+		}
+
+		table.insert(arg_7_0.data, var_7_1)
 	end
 
-	if slot0._needSetSortInfos then
-		slot0._needSetSortInfos = false
+	if arg_7_0._needSetSortInfos then
+		arg_7_0._needSetSortInfos = false
 
-		ActivityBeginnerCategoryListModel.instance:setSortInfos(slot0.data)
-		ActivityBeginnerCategoryListModel.instance:checkTargetCategory(slot0.data)
+		ActivityBeginnerCategoryListModel.instance:setSortInfos(arg_7_0.data)
+		ActivityBeginnerCategoryListModel.instance:checkTargetCategory(arg_7_0.data)
 	end
 
 	ActivityBeginnerCategoryListModel.instance:setOpenViewTime()
-	ActivityBeginnerCategoryListModel.instance:setCategoryList(slot0.data)
-	slot0:_openSubView()
+	ActivityBeginnerCategoryListModel.instance:setCategoryList(arg_7_0.data)
+	arg_7_0:_openSubView()
 end
 
-function slot0._openSubView(slot0)
-	if slot0._viewName then
-		ViewMgr.instance:closeView(slot0._viewName, true)
+function var_0_0._openSubView(arg_8_0)
+	if arg_8_0._viewName then
+		ViewMgr.instance:closeView(arg_8_0._viewName, true)
 	end
 
-	slot1 = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Beginner)
-	slot0._viewName = uv0[slot1]
+	local var_8_0 = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Beginner)
 
-	if slot1 ~= 0 then
-		slot0:setCategoryRedDotData(slot1)
+	arg_8_0._viewName = var_0_1[var_8_0]
+
+	if var_8_0 ~= 0 then
+		arg_8_0:setCategoryRedDotData(var_8_0)
 	end
 
-	if not slot0._viewName then
-		if ActivityConfig.instance:getActivityCo(slot1) then
-			if uv1[slot2.typeId] then
-				slot0._viewName = uv1[slot2.typeId]
+	if not arg_8_0._viewName then
+		local var_8_1 = ActivityConfig.instance:getActivityCo(var_8_0)
+
+		if var_8_1 then
+			if var_0_2[var_8_1.typeId] then
+				arg_8_0._viewName = var_0_2[var_8_1.typeId]
 			end
 
-			slot0.viewContainer:refreshHelp(slot2.typeId)
+			arg_8_0.viewContainer:refreshHelp(var_8_1.typeId)
 		else
-			slot0.viewContainer:hideHelp()
+			arg_8_0.viewContainer:hideHelp()
 
 			return
 		end
 	else
-		slot0.viewContainer:hideHelp()
+		arg_8_0.viewContainer:hideHelp()
 	end
 
-	ViewMgr.instance:openView(slot0._viewName, {
-		parent = slot0._gosubview,
-		actId = slot1,
-		root = slot0.viewGO
-	}, true)
+	local var_8_2 = {
+		parent = arg_8_0._gosubview,
+		actId = var_8_0,
+		root = arg_8_0.viewGO
+	}
+
+	ViewMgr.instance:openView(arg_8_0._viewName, var_8_2, true)
 end
 
-function slot0.setCategoryRedDotData(slot0, slot1)
-	slot2 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(slot1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.setCategoryRedDotData(arg_9_0, arg_9_1)
+	local var_9_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_9_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(slot2, "hasEnter")
+	PlayerPrefsHelper.setString(var_9_0, "hasEnter")
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.closeSubView(slot0)
-	if slot0._viewName then
-		ViewMgr.instance:closeView(slot0._viewName, true)
+function var_0_0.closeSubView(arg_10_0)
+	if arg_10_0._viewName then
+		ViewMgr.instance:closeView(arg_10_0._viewName, true)
 
-		slot0._viewName = nil
+		arg_10_0._viewName = nil
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
 	ActivityModel.instance:setTargetActivityCategoryId(0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, slot0.setCategoryListInteractable, slot0)
-	slot0:closeSubView()
+	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_11_0._refreshView, arg_11_0)
+	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_11_0.setCategoryListInteractable, arg_11_0)
+	arg_11_0:closeSubView()
 	ActivityModel.instance:setTargetActivityCategoryId(0)
 	ActivityBeginnerCategoryListModel.instance:clear()
 end
 
-function slot0.setCategoryListInteractable(slot0, slot1)
-	if not slot0._categoryListCanvasGroup then
-		slot0._categoryListCanvasGroup = gohelper.onceAddComponent(slot0._gocategory, typeof(UnityEngine.CanvasGroup))
+function var_0_0.setCategoryListInteractable(arg_12_0, arg_12_1)
+	if not arg_12_0._categoryListCanvasGroup then
+		arg_12_0._categoryListCanvasGroup = gohelper.onceAddComponent(arg_12_0._gocategory, typeof(UnityEngine.CanvasGroup))
 	end
 
-	slot0._categoryListCanvasGroup.interactable = slot1
-	slot0._categoryListCanvasGroup.blocksRaycasts = slot1
-	slot0._categoryListCanvasGroup.blocksRaycasts = slot1
+	arg_12_0._categoryListCanvasGroup.interactable = arg_12_1
+	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
+	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-slot3 = false
+local var_0_3 = false
 
-function slot0._initRole_FullSignView(slot0)
-	if uv0 then
+function var_0_0._initRole_FullSignView(arg_14_0)
+	if var_0_3 then
 		return
 	end
 
-	uv0 = true
-	uv1[GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)] = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.V2a5_Role_FullSignView_Part1)
-	uv1[GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)] = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.V2a5_Role_FullSignView_Part2)
+	var_0_3 = true
+
+	local var_14_0 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)
+	local var_14_1 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.V2a5_Role_FullSignView_Part1)
+
+	var_0_1[var_14_0] = var_14_1
+
+	local var_14_2 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)
+	local var_14_3 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.V2a5_Role_FullSignView_Part2)
+
+	var_0_1[var_14_2] = var_14_3
 end
 
-slot4 = false
+local var_0_4 = false
 
-function slot0._initSpecial_FullSignView(slot0)
-	if uv0 then
+function var_0_0._initSpecial_FullSignView(arg_15_0)
+	if var_0_4 then
 		return
 	end
 
-	uv0 = true
-	uv1[GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)] = GameBranchMgr.instance:Vxax_ViewName("Special_FullSignView", ViewName.V2a3_Special_FullSignView)
+	var_0_4 = true
+
+	local var_15_0 = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
+	local var_15_1 = GameBranchMgr.instance:Vxax_ViewName("Special_FullSignView", ViewName.V2a3_Special_FullSignView)
+
+	var_0_1[var_15_0] = var_15_1
 end
 
-slot5 = false
+local var_0_5 = false
 
-function slot0._initLinkageActivity_FullView(slot0)
-	if uv0 then
+function var_0_0._initLinkageActivity_FullView(arg_16_0)
+	if var_0_5 then
 		return
 	end
 
-	uv0 = true
-	uv1[GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)] = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.V2a7_LinkageActivity_FullView)
+	var_0_5 = true
+
+	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)
+	local var_16_1 = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.V2a7_LinkageActivity_FullView)
+
+	var_0_1[var_16_0] = var_16_1
 end
 
-return slot0
+return var_0_0

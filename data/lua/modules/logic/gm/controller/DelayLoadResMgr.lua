@@ -1,274 +1,289 @@
-module("modules.logic.gm.controller.DelayLoadResMgr", package.seeall)
+﻿module("modules.logic.gm.controller.DelayLoadResMgr", package.seeall)
 
-slot0 = class("ResObj")
-slot0.Stage = {
+local var_0_0 = class("ResObj")
+
+var_0_0.Stage = {
 	Using = 2,
 	Callbacking = 3,
 	InPool = 4,
 	Init = 1
 }
 
-function slot0.ctor(slot0)
-	slot0.stage = uv0.Stage.Init
-	slot0.resUrl = nil
-	slot0.startLoadTime = nil
-	slot0.startLoadFrame = nil
-	slot0.realLoadedTime = nil
-	slot0.delayTime = nil
-	slot0.assetItem = nil
-	slot0.callbackList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.stage = var_0_0.Stage.Init
+	arg_1_0.resUrl = nil
+	arg_1_0.startLoadTime = nil
+	arg_1_0.startLoadFrame = nil
+	arg_1_0.realLoadedTime = nil
+	arg_1_0.delayTime = nil
+	arg_1_0.assetItem = nil
+	arg_1_0.callbackList = {}
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.stage = uv0.Stage.Using
-	slot0.resUrl = slot1
-	slot0.startLoadTime = slot2
-	slot0.startLoadFrame = slot3
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.stage = var_0_0.Stage.Using
+	arg_2_0.resUrl = arg_2_1
+	arg_2_0.startLoadTime = arg_2_2
+	arg_2_0.startLoadFrame = arg_2_3
 end
 
-function slot0.addCallback(slot0, slot1, slot2)
-	if slot0.stage ~= uv0.Stage.Using then
-		logError("【add】 callback error, cur stage : " .. slot0.stage)
+function var_0_0.addCallback(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_0.stage ~= var_0_0.Stage.Using then
+		logError("【add】 callback error, cur stage : " .. arg_3_0.stage)
 
 		return
 	end
 
-	table.insert(slot0.callbackList, DelayLoadResMgr.instance:getResCallbackObj(slot1, slot2))
+	local var_3_0 = DelayLoadResMgr.instance:getResCallbackObj(arg_3_1, arg_3_2)
+
+	table.insert(arg_3_0.callbackList, var_3_0)
 end
 
-function slot0.removeCallback(slot0, slot1, slot2)
-	if slot0.stage ~= uv0.Stage.Using then
-		logError("【remove】 callback error, cur stage : " .. slot0.stage)
+function var_0_0.removeCallback(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0.stage ~= var_0_0.Stage.Using then
+		logError("【remove】 callback error, cur stage : " .. arg_4_0.stage)
 
 		return
 	end
 
-	for slot6 = #slot0.callbackList, 1, -1 do
-		if slot0.callbackList[slot6].callback == slot1 and slot7.callbackObj == slot2 then
-			DelayLoadResMgr.instance:recycleResCallbackObj(slot7)
-			table.remove(slot0.callbackList, slot6)
+	for iter_4_0 = #arg_4_0.callbackList, 1, -1 do
+		local var_4_0 = arg_4_0.callbackList[iter_4_0]
+
+		if var_4_0.callback == arg_4_1 and var_4_0.callbackObj == arg_4_2 then
+			DelayLoadResMgr.instance:recycleResCallbackObj(var_4_0)
+			table.remove(arg_4_0.callbackList, iter_4_0)
 		end
 	end
 end
 
-function slot0.hadAnyOneCallback(slot0)
-	return #slot0.callbackList > 0
+function var_0_0.hadAnyOneCallback(arg_5_0)
+	return #arg_5_0.callbackList > 0
 end
 
-function slot0.doCallbackAddRecycle(slot0)
-	slot0.stage = uv0.Stage.Callbacking
+function var_0_0.doCallbackAddRecycle(arg_6_0)
+	arg_6_0.stage = var_0_0.Stage.Callbacking
 
-	for slot4, slot5 in ipairs(slot0.callbackList) do
-		if slot5.callbackObj then
-			slot5.callback(slot7, slot0.assetItem)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.callbackList) do
+		local var_6_0 = iter_6_1.callback
+		local var_6_1 = iter_6_1.callbackObj
+
+		if var_6_1 then
+			var_6_0(var_6_1, arg_6_0.assetItem)
 		else
-			slot6(slot0.assetItem)
+			var_6_0(arg_6_0.assetItem)
 		end
 	end
 
-	DelayLoadResMgr.instance:recycleResObj(slot0)
+	DelayLoadResMgr.instance:recycleResObj(arg_6_0)
 end
 
-function slot0.reset(slot0)
-	slot0.stage = uv0.Stage.InPool
-	slot0.resUrl = nil
-	slot0.startLoadTime = nil
-	slot0.startLoadFrame = nil
-	slot0.realLoadedTime = nil
-	slot0.delayTime = nil
+function var_0_0.reset(arg_7_0)
+	arg_7_0.stage = var_0_0.Stage.InPool
+	arg_7_0.resUrl = nil
+	arg_7_0.startLoadTime = nil
+	arg_7_0.startLoadFrame = nil
+	arg_7_0.realLoadedTime = nil
+	arg_7_0.delayTime = nil
 
-	if slot0.assetItem then
-		slot0.assetItem:Release()
+	if arg_7_0.assetItem then
+		arg_7_0.assetItem:Release()
 	end
 
-	slot0.assetItem = nil
+	arg_7_0.assetItem = nil
 
-	for slot4, slot5 in ipairs(slot0.callbackList) do
-		DelayLoadResMgr.instance:recycleResCallbackObj(slot5)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.callbackList) do
+		DelayLoadResMgr.instance:recycleResCallbackObj(iter_7_1)
 	end
 
-	tabletool.clear(slot0.callbackList)
+	tabletool.clear(arg_7_0.callbackList)
 end
 
-slot1 = class("DelayLoadResMgr")
-slot1.DelayStrategyEnum = {
+local var_0_1 = class("DelayLoadResMgr")
+
+var_0_1.DelayStrategyEnum = {
 	Multiple = 1,
 	Fixed = 2
 }
-slot1.DelayStrategyName = {
-	[slot1.DelayStrategyEnum.Multiple] = "延长倍数",
-	[slot1.DelayStrategyEnum.Fixed] = "延长固定时间"
+var_0_1.DelayStrategyName = {
+	[var_0_1.DelayStrategyEnum.Multiple] = "延长倍数",
+	[var_0_1.DelayStrategyEnum.Fixed] = "延长固定时间"
 }
 
-function slot1.ctor(slot0)
-	slot0.srcLoadAbAsset = loadAbAsset
-	slot0.srcLoadNonAbAsset = loadNonAbAsset
-	slot0.srcLoadPersistentRes = loadPersistentRes
-	slot0.srcRemoveAssetLoadCb = removeAssetLoadCb
-	slot0.loadingResDict = {}
-	slot0.loadedResDict = {}
-	slot0.doingCallbackList = {}
-	slot0.resPool = {}
-	slot0.callbackObjPool = {}
-	slot0.enablePatternList = {}
-	slot0.disablePatternList = {
+function var_0_1.ctor(arg_8_0)
+	arg_8_0.srcLoadAbAsset = loadAbAsset
+	arg_8_0.srcLoadNonAbAsset = loadNonAbAsset
+	arg_8_0.srcLoadPersistentRes = loadPersistentRes
+	arg_8_0.srcRemoveAssetLoadCb = removeAssetLoadCb
+	arg_8_0.loadingResDict = {}
+	arg_8_0.loadedResDict = {}
+	arg_8_0.doingCallbackList = {}
+	arg_8_0.resPool = {}
+	arg_8_0.callbackObjPool = {}
+	arg_8_0.enablePatternList = {}
+	arg_8_0.disablePatternList = {
 		"ui/viewres/"
 	}
-	slot0.strategy = uv0.DelayStrategyEnum.Multiple
-	slot0.strategyValue = 2
-	slot0.frameHandle = UpdateBeat:CreateListener(slot0._onFrame, slot0)
+	arg_8_0.strategy = var_0_1.DelayStrategyEnum.Multiple
+	arg_8_0.strategyValue = 2
+	arg_8_0.frameHandle = UpdateBeat:CreateListener(arg_8_0._onFrame, arg_8_0)
 end
 
-function slot1.setDelayStrategy(slot0, slot1)
-	slot0.strategy = slot1
+function var_0_1.setDelayStrategy(arg_9_0, arg_9_1)
+	arg_9_0.strategy = arg_9_1
 end
 
-function slot1.getDelayStrategy(slot0)
-	return slot0.strategy
+function var_0_1.getDelayStrategy(arg_10_0)
+	return arg_10_0.strategy
 end
 
-function slot1.setDelayStrategyValue(slot0, slot1)
-	slot0.strategyValue = slot1
+function var_0_1.setDelayStrategyValue(arg_11_0, arg_11_1)
+	arg_11_0.strategyValue = arg_11_1
 end
 
-function slot1.getDelayStrategyValue(slot0)
-	return slot0.strategyValue
+function var_0_1.getDelayStrategyValue(arg_12_0)
+	return arg_12_0.strategyValue
 end
 
-function slot1.setEnablePatternList(slot0, slot1)
-	tabletool.clear(slot0.enablePatternList)
+function var_0_1.setEnablePatternList(arg_13_0, arg_13_1)
+	tabletool.clear(arg_13_0.enablePatternList)
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not string.nilorempty(slot6) then
-			slot0.enablePatternList[#slot0.enablePatternList + 1] = slot6
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		if not string.nilorempty(iter_13_1) then
+			arg_13_0.enablePatternList[#arg_13_0.enablePatternList + 1] = iter_13_1
 		end
 	end
 end
 
-function slot1.setDisablePatternList(slot0, slot1)
-	tabletool.clear(slot0.disablePatternList)
+function var_0_1.setDisablePatternList(arg_14_0, arg_14_1)
+	tabletool.clear(arg_14_0.disablePatternList)
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not string.nilorempty(slot6) then
-			slot0.disablePatternList[#slot0.disablePatternList + 1] = slot6
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		if not string.nilorempty(iter_14_1) then
+			arg_14_0.disablePatternList[#arg_14_0.disablePatternList + 1] = iter_14_1
 		end
 	end
 end
 
-function slot1.getEnablePatternList(slot0)
-	return slot0.enablePatternList
+function var_0_1.getEnablePatternList(arg_15_0)
+	return arg_15_0.enablePatternList
 end
 
-function slot1.getDisablePatternList(slot0)
-	return slot0.disablePatternList
+function var_0_1.getDisablePatternList(arg_16_0)
+	return arg_16_0.disablePatternList
 end
 
-function slot1.startDelayLoad(slot0)
-	slot0.start = true
+function var_0_1.startDelayLoad(arg_17_0)
+	arg_17_0.start = true
 
-	setGlobal("loadAbAsset", uv0.LoadAbAssetWrap)
-	setGlobal("loadNonAbAsset", uv0.LoadNonAbAssetWrap)
-	setGlobal("loadPersistentRes", uv0.LoadPersistentResWrap)
-	setGlobal("removeAssetLoadCb", uv0.RemoveAssetLoadCbWrap)
-	UpdateBeat:AddListener(slot0.frameHandle)
+	setGlobal("loadAbAsset", var_0_1.LoadAbAssetWrap)
+	setGlobal("loadNonAbAsset", var_0_1.LoadNonAbAssetWrap)
+	setGlobal("loadPersistentRes", var_0_1.LoadPersistentResWrap)
+	setGlobal("removeAssetLoadCb", var_0_1.RemoveAssetLoadCbWrap)
+	UpdateBeat:AddListener(arg_17_0.frameHandle)
 end
 
-function slot1.stopDelayLoad(slot0)
-	for slot4, slot5 in pairs(slot0.loadingResDict) do
-		slot0:recycleResObj(slot5)
+function var_0_1.stopDelayLoad(arg_18_0)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0.loadingResDict) do
+		arg_18_0:recycleResObj(iter_18_1)
 	end
 
-	for slot4, slot5 in pairs(slot0.loadedResDict) do
-		slot0:recycleResObj(slot5)
+	for iter_18_2, iter_18_3 in pairs(arg_18_0.loadedResDict) do
+		arg_18_0:recycleResObj(iter_18_3)
 	end
 
-	for slot4, slot5 in ipairs(slot0.doingCallbackList) do
-		slot0:recycleResObj(slot5)
+	for iter_18_4, iter_18_5 in ipairs(arg_18_0.doingCallbackList) do
+		arg_18_0:recycleResObj(iter_18_5)
 	end
 
-	tabletool.clear(slot0.loadingResDict)
-	tabletool.clear(slot0.loadedResDict)
-	tabletool.clear(slot0.doingCallbackList)
+	tabletool.clear(arg_18_0.loadingResDict)
+	tabletool.clear(arg_18_0.loadedResDict)
+	tabletool.clear(arg_18_0.doingCallbackList)
 
-	slot0.start = false
+	arg_18_0.start = false
 
-	setGlobal("loadAbAsset", slot0.srcLoadAbAsset)
-	setGlobal("loadNonAbAsset", slot0.srcLoadNonAbAsset)
-	setGlobal("loadPersistentRes", slot0.srcLoadPersistentRes)
-	setGlobal("removeAssetLoadCb", slot0.srcRemoveAssetLoadCb)
-	UpdateBeat:RemoveListener(slot0.frameHandle)
+	setGlobal("loadAbAsset", arg_18_0.srcLoadAbAsset)
+	setGlobal("loadNonAbAsset", arg_18_0.srcLoadNonAbAsset)
+	setGlobal("loadPersistentRes", arg_18_0.srcLoadPersistentRes)
+	setGlobal("removeAssetLoadCb", arg_18_0.srcRemoveAssetLoadCb)
+	UpdateBeat:RemoveListener(arg_18_0.frameHandle)
 end
 
-function slot1.getResObj(slot0)
-	if #slot0.resPool > 0 then
-		return table.remove(slot0.resPool)
+function var_0_1.getResObj(arg_19_0)
+	if #arg_19_0.resPool > 0 then
+		return table.remove(arg_19_0.resPool)
 	end
 
-	return uv0.New()
+	return var_0_0.New()
 end
 
-function slot1.recycleResObj(slot0, slot1)
-	slot1:reset()
-	table.insert(slot0.resPool, slot1)
+function var_0_1.recycleResObj(arg_20_0, arg_20_1)
+	arg_20_1:reset()
+	table.insert(arg_20_0.resPool, arg_20_1)
 end
 
-function slot1.recycleResCallbackObj(slot0, slot1)
-	tabletool.clear(slot1)
-	table.insert(slot0.callbackObjPool, slot1)
+function var_0_1.recycleResCallbackObj(arg_21_0, arg_21_1)
+	tabletool.clear(arg_21_1)
+	table.insert(arg_21_0.callbackObjPool, arg_21_1)
 end
 
-function slot1.getResCallbackObj(slot0, slot1, slot2)
-	slot3 = nil
-	slot3 = (#slot0.callbackObjPool <= 0 or table.remove(slot0.callbackObjPool)) and {}
-	slot3.callback = slot1
-	slot3.callbackObj = slot2
+function var_0_1.getResCallbackObj(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0
 
-	return slot3
+	if #arg_22_0.callbackObjPool > 0 then
+		var_22_0 = table.remove(arg_22_0.callbackObjPool)
+	else
+		var_22_0 = {}
+	end
+
+	var_22_0.callback = arg_22_1
+	var_22_0.callbackObj = arg_22_2
+
+	return var_22_0
 end
 
-function slot1.isStartDelayLoad(slot0)
-	return slot0.start
+function var_0_1.isStartDelayLoad(arg_23_0)
+	return arg_23_0.start
 end
 
-function slot1.getLoadingResObj(slot0, slot1)
-	return slot0.loadingResDict[slot1]
+function var_0_1.getLoadingResObj(arg_24_0, arg_24_1)
+	return arg_24_0.loadingResDict[arg_24_1]
 end
 
-function slot1.addLoadingResObj(slot0, slot1)
-	slot0.loadingResDict[slot1.resUrl] = slot1
+function var_0_1.addLoadingResObj(arg_25_0, arg_25_1)
+	arg_25_0.loadingResDict[arg_25_1.resUrl] = arg_25_1
 end
 
-function slot1.removeLoadingResObj(slot0, slot1)
-	slot0.loadingResDict[slot1.resUrl] = nil
+function var_0_1.removeLoadingResObj(arg_26_0, arg_26_1)
+	arg_26_0.loadingResDict[arg_26_1.resUrl] = nil
 end
 
-function slot1.getLoadedResObj(slot0, slot1)
-	return slot0.loadedResDict[slot1]
+function var_0_1.getLoadedResObj(arg_27_0, arg_27_1)
+	return arg_27_0.loadedResDict[arg_27_1]
 end
 
-function slot1.addLoadedResObj(slot0, slot1)
-	slot0.loadedResDict[slot1.resUrl] = slot1
+function var_0_1.addLoadedResObj(arg_28_0, arg_28_1)
+	arg_28_0.loadedResDict[arg_28_1.resUrl] = arg_28_1
 end
 
-function slot1.removeLoadedResObj(slot0, slot1)
-	slot0.loadedResDict[slot1.resUrl] = nil
+function var_0_1.removeLoadedResObj(arg_29_0, arg_29_1)
+	arg_29_0.loadedResDict[arg_29_1.resUrl] = nil
 end
 
-function slot1.checkNeedDelay(slot0, slot1)
-	if not slot0.start then
+function var_0_1.checkNeedDelay(arg_30_0, arg_30_1)
+	if not arg_30_0.start then
 		return false
 	end
 
-	if slot0:checkIsDisableFile(slot1) then
+	if arg_30_0:checkIsDisableFile(arg_30_1) then
 		return false
 	end
 
-	if #slot0.enablePatternList <= 0 then
+	if #arg_30_0.enablePatternList <= 0 then
 		return true
 	end
 
-	for slot5, slot6 in ipairs(slot0.enablePatternList) do
-		if string.match(slot1, slot6) then
+	for iter_30_0, iter_30_1 in ipairs(arg_30_0.enablePatternList) do
+		if string.match(arg_30_1, iter_30_1) then
 			return true
 		end
 	end
@@ -276,9 +291,9 @@ function slot1.checkNeedDelay(slot0, slot1)
 	return false
 end
 
-function slot1.checkIsDisableFile(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.disablePatternList) do
-		if string.match(slot1, slot6) then
+function var_0_1.checkIsDisableFile(arg_31_0, arg_31_1)
+	for iter_31_0, iter_31_1 in ipairs(arg_31_0.disablePatternList) do
+		if string.match(arg_31_1, iter_31_1) then
 			return true
 		end
 	end
@@ -286,124 +301,136 @@ function slot1.checkIsDisableFile(slot0, slot1)
 	return false
 end
 
-function slot1.getDelayTime(slot0, slot1)
-	if not slot0.start then
+function var_0_1.getDelayTime(arg_32_0, arg_32_1)
+	if not arg_32_0.start then
 		return 0
 	end
 
-	if slot0.strategy == uv0.DelayStrategyEnum.Fixed then
-		return slot0.strategyValue
+	if arg_32_0.strategy == var_0_1.DelayStrategyEnum.Fixed then
+		return arg_32_0.strategyValue
 	else
-		return (slot1.realLoadedTime - slot1.startLoadTime) * slot0.strategyValue
+		return (arg_32_1.realLoadedTime - arg_32_1.startLoadTime) * arg_32_0.strategyValue
 	end
 end
 
-function slot1._onFrame(slot0)
-	tabletool.clear(slot0.doingCallbackList)
+function var_0_1._onFrame(arg_33_0)
+	local var_33_0 = UnityEngine.Time.time
 
-	for slot5, slot6 in pairs(slot0.loadedResDict) do
-		if slot6.realLoadedTime and slot6.delayTime <= UnityEngine.Time.time - slot6.realLoadedTime then
-			table.insert(slot0.doingCallbackList, slot6)
+	tabletool.clear(arg_33_0.doingCallbackList)
+
+	for iter_33_0, iter_33_1 in pairs(arg_33_0.loadedResDict) do
+		if iter_33_1.realLoadedTime and var_33_0 - iter_33_1.realLoadedTime >= iter_33_1.delayTime then
+			table.insert(arg_33_0.doingCallbackList, iter_33_1)
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0.doingCallbackList) do
-		slot0:removeLoadedResObj(slot6)
-		slot6:doCallbackAddRecycle()
+	for iter_33_2, iter_33_3 in ipairs(arg_33_0.doingCallbackList) do
+		arg_33_0:removeLoadedResObj(iter_33_3)
+		iter_33_3:doCallbackAddRecycle()
 	end
 end
 
-function slot1.loadAssetBase(slot0, slot1, slot2, slot3)
-	uv0.log("load Asset Base : " .. slot1)
+function var_0_1.loadAssetBase(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
+	var_0_1.log("load Asset Base : " .. arg_34_1)
 
-	if not (slot0:getLoadingResObj(slot1) ~= nil) then
-		slot4 = slot0:getResObj()
+	local var_34_0 = arg_34_0:getLoadingResObj(arg_34_1)
+	local var_34_1 = var_34_0 ~= nil
 
-		slot4:init(slot1, UnityEngine.Time.time, UnityEngine.Time.frameCount)
-		slot0:addLoadingResObj(slot4)
+	if not var_34_1 then
+		var_34_0 = arg_34_0:getResObj()
+
+		var_34_0:init(arg_34_1, UnityEngine.Time.time, UnityEngine.Time.frameCount)
+		arg_34_0:addLoadingResObj(var_34_0)
 	end
 
-	slot4:addCallback(slot2, slot3)
+	var_34_0:addCallback(arg_34_2, arg_34_3)
 
-	return slot5
+	return var_34_1
 end
 
-function slot1.LoadAbAssetWrap(slot0, slot1, slot2, slot3)
-	if not uv0.instance:loadAssetBase(slot0, slot2, slot3) then
-		uv0.instance.srcLoadAbAsset(slot0, slot1, uv0.onLoadAssetDone)
-	end
-end
-
-function slot1.LoadNonAbAssetWrap(slot0, slot1, slot2, slot3)
-	if not uv0.instance:loadAssetBase(slot0, slot2, slot3) then
-		uv0.instance.srcLoadNonAbAsset(slot0, slot1, uv0.onLoadAssetDone)
+function var_0_1.LoadAbAssetWrap(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	if not var_0_1.instance:loadAssetBase(arg_35_0, arg_35_2, arg_35_3) then
+		var_0_1.instance.srcLoadAbAsset(arg_35_0, arg_35_1, var_0_1.onLoadAssetDone)
 	end
 end
 
-function slot1.LoadPersistentResWrap(slot0, slot1, slot2, slot3)
-	if not uv0.instance:loadAssetBase(slot0, slot2, slot3) then
-		uv0.instance.srcLoadPersistentRes(slot0, slot1, uv0.onLoadAssetDone)
+function var_0_1.LoadNonAbAssetWrap(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	if not var_0_1.instance:loadAssetBase(arg_36_0, arg_36_2, arg_36_3) then
+		var_0_1.instance.srcLoadNonAbAsset(arg_36_0, arg_36_1, var_0_1.onLoadAssetDone)
 	end
 end
 
-function slot1.RemoveAssetLoadCbWrap(slot0, slot1, slot2)
-	if uv0.instance:getLoadedResObj(slot0) then
-		uv0.log("remove asset load : " .. slot0)
-		slot3:removeCallback(slot1, slot2)
-		uv0.instance:tryRecycleResObj(slot3)
-	end
-
-	if uv0.instance:getLoadingResObj(slot0) then
-		uv0.log("remove asset load : " .. slot0)
-		slot3:removeCallback(slot1, slot2)
-		uv0.instance:tryRecycleResObj(slot3)
+function var_0_1.LoadPersistentResWrap(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	if not var_0_1.instance:loadAssetBase(arg_37_0, arg_37_2, arg_37_3) then
+		var_0_1.instance.srcLoadPersistentRes(arg_37_0, arg_37_1, var_0_1.onLoadAssetDone)
 	end
 end
 
-function slot1.tryRecycleResObj(slot0, slot1)
-	if not slot1:hadAnyOneCallback() then
-		uv0.instance:removeLoadingResObj(slot1)
-		uv0.instance:recycleResObj(slot1)
-		uv0.instance.srcRemoveAssetLoadCb(slot1.resUrl, uv0.onLoadAssetDone)
+function var_0_1.RemoveAssetLoadCbWrap(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = var_0_1.instance:getLoadedResObj(arg_38_0)
+
+	if var_38_0 then
+		var_0_1.log("remove asset load : " .. arg_38_0)
+		var_38_0:removeCallback(arg_38_1, arg_38_2)
+		var_0_1.instance:tryRecycleResObj(var_38_0)
+	end
+
+	local var_38_1 = var_0_1.instance:getLoadingResObj(arg_38_0)
+
+	if var_38_1 then
+		var_0_1.log("remove asset load : " .. arg_38_0)
+		var_38_1:removeCallback(arg_38_1, arg_38_2)
+		var_0_1.instance:tryRecycleResObj(var_38_1)
 	end
 end
 
-function slot1.onLoadAssetDone(slot0)
-	if not uv0.instance:getLoadingResObj(slot0.ResPath) then
+function var_0_1.tryRecycleResObj(arg_39_0, arg_39_1)
+	if not arg_39_1:hadAnyOneCallback() then
+		var_0_1.instance:removeLoadingResObj(arg_39_1)
+		var_0_1.instance:recycleResObj(arg_39_1)
+		var_0_1.instance.srcRemoveAssetLoadCb(arg_39_1.resUrl, var_0_1.onLoadAssetDone)
+	end
+end
+
+function var_0_1.onLoadAssetDone(arg_40_0)
+	local var_40_0 = arg_40_0.ResPath
+	local var_40_1 = var_0_1.instance:getLoadingResObj(var_40_0)
+
+	if not var_40_1 then
 		return
 	end
 
-	slot2.assetItem = slot0
+	var_40_1.assetItem = arg_40_0
 
-	slot0:Retain()
-	uv0.instance:removeLoadingResObj(slot2)
+	arg_40_0:Retain()
+	var_0_1.instance:removeLoadingResObj(var_40_1)
 
-	if UnityEngine.Time.frameCount == slot2.startLoadFrame then
-		uv0.log(string.format("%s 在同一帧加载完", slot1))
-		slot2:doCallbackAddRecycle()
-
-		return
-	end
-
-	if not uv0.instance:checkNeedDelay(slot1) then
-		uv0.log(string.format("%s 不需要延迟", slot1))
-		slot2:doCallbackAddRecycle()
+	if UnityEngine.Time.frameCount == var_40_1.startLoadFrame then
+		var_0_1.log(string.format("%s 在同一帧加载完", var_40_0))
+		var_40_1:doCallbackAddRecycle()
 
 		return
 	end
 
-	uv0.instance:addLoadedResObj(slot2)
+	if not var_0_1.instance:checkNeedDelay(var_40_0) then
+		var_0_1.log(string.format("%s 不需要延迟", var_40_0))
+		var_40_1:doCallbackAddRecycle()
 
-	slot2.realLoadedTime = UnityEngine.Time.time
-	slot2.delayTime = uv0.instance:getDelayTime(slot2)
+		return
+	end
 
-	uv0.log(string.format("%s 延迟了 %s 秒", slot1, slot2.delayTime))
+	var_0_1.instance:addLoadedResObj(var_40_1)
+
+	var_40_1.realLoadedTime = UnityEngine.Time.time
+	var_40_1.delayTime = var_0_1.instance:getDelayTime(var_40_1)
+
+	var_0_1.log(string.format("%s 延迟了 %s 秒", var_40_0, var_40_1.delayTime))
 end
 
-function slot1.log(slot0)
-	logNormal("[DelayLoadResMgr] " .. (slot0 or "") .. "\n" .. debug.traceback())
+function var_0_1.log(arg_41_0)
+	logNormal("[DelayLoadResMgr] " .. (arg_41_0 or "") .. "\n" .. debug.traceback())
 end
 
-slot1.instance = slot1.New()
+var_0_1.instance = var_0_1.New()
 
-return slot1
+return var_0_1

@@ -1,59 +1,61 @@
-module("modules.logic.playercard.model.PlayerCardSkinMo", package.seeall)
+﻿module("modules.logic.playercard.model.PlayerCardSkinMo", package.seeall)
 
-slot0 = class("PlayerCardSkinMo")
+local var_0_0 = class("PlayerCardSkinMo")
 
-function slot0.ctor(slot0)
-	slot0._config = nil
-	slot0.id = nil
-	slot0.icon = nil
-	slot0._isEmpty = false
-	slot0._isNew = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._config = nil
+	arg_1_0.id = nil
+	arg_1_0.icon = nil
+	arg_1_0._isEmpty = false
+	arg_1_0._isNew = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0._mo = slot1
-	slot0.id = slot1.id
-	slot0._config = ItemConfig.instance:getItemCo(slot0.id)
-	slot0.icon = slot0._config.icon
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1
+	arg_2_0.id = arg_2_1.id
+	arg_2_0._config = ItemConfig.instance:getItemCo(arg_2_0.id)
+	arg_2_0.icon = arg_2_0._config.icon
 end
 
-function slot0.getConfig(slot0)
-	return slot0._config
+function var_0_0.getConfig(arg_3_0)
+	return arg_3_0._config
 end
 
-function slot0.checkNew(slot0)
-	return slot0._isNew
+function var_0_0.checkNew(arg_4_0)
+	return arg_4_0._isNew
 end
 
-function slot0.clearNewState(slot0)
-	slot0._isNew = false
+function var_0_0.clearNewState(arg_5_0)
+	arg_5_0._isNew = false
 end
 
-function slot0.isEmpty(slot0)
-	return slot0._isEmpty
+function var_0_0.isEmpty(arg_6_0)
+	return arg_6_0._isEmpty
 end
 
-function slot0.setEmpty(slot0)
-	slot0._isEmpty = true
-	slot0.id = 0
+function var_0_0.setEmpty(arg_7_0)
+	arg_7_0._isEmpty = true
+	arg_7_0.id = 0
 end
 
-function slot0.isUnLock(slot0)
-	if slot0._isEmpty then
+function var_0_0.isUnLock(arg_8_0)
+	if arg_8_0._isEmpty then
 		return true
 	end
 
-	return ItemModel.instance:getItemCount(slot0.id) > 0
+	return ItemModel.instance:getItemCount(arg_8_0.id) > 0
 end
 
-function slot0.checkIsUse(slot0)
-	if PlayerCardModel.instance:getPlayerCardSkinId() and slot1 ~= 0 then
-		return slot1 == slot0.id
-	elseif slot0._isEmpty then
+function var_0_0.checkIsUse(arg_9_0)
+	local var_9_0 = PlayerCardModel.instance:getPlayerCardSkinId()
+
+	if var_9_0 and var_9_0 ~= 0 then
+		return var_9_0 == arg_9_0.id
+	elseif arg_9_0._isEmpty then
 		return true
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

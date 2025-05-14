@@ -1,20 +1,22 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.ResourceDataChangeStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.ResourceDataChangeStep", package.seeall)
 
-slot0 = class("ResourceDataChangeStep", EliminateTeamChessStepBase)
+local var_0_0 = class("ResourceDataChangeStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	if slot0._data.resourceIdMap == nil then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data.resourceIdMap
+
+	if var_1_0 == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		EliminateTeamChessModel.instance:updateResourceData(slot6, slot7)
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		EliminateTeamChessModel.instance:updateResourceData(iter_1_0, iter_1_1)
 	end
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ResourceDataChange, slot2)
-	slot0:onDone(true)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ResourceDataChange, var_1_0)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

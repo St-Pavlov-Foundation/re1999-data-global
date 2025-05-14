@@ -1,20 +1,20 @@
-module("modules.logic.login.model.ServerListModel", package.seeall)
+﻿module("modules.logic.login.model.ServerListModel", package.seeall)
 
-slot0 = class("ServerListModel", ListScrollModel)
+local var_0_0 = class("ServerListModel", ListScrollModel)
 
-function slot0.setServerList(slot0, slot1)
-	slot2 = {}
+function var_0_0.setServerList(arg_1_0, arg_1_1)
+	local var_1_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = ServerMO.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		local var_1_1 = ServerMO.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_1_1:init(iter_1_1)
+		table.insert(var_1_0, var_1_1)
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

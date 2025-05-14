@@ -1,47 +1,53 @@
-module("modules.logic.toughbattle.view.ToughBattleMapViewContainer", package.seeall)
+﻿module("modules.logic.toughbattle.view.ToughBattleMapViewContainer", package.seeall)
 
-slot0 = class("ToughBattleMapViewContainer", BaseViewContainer)
+local var_0_0 = class("ToughBattleMapViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._mapScene = ToughBattleMapScene.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._mapScene = ToughBattleMapScene.New()
 
 	return {
-		slot0._mapScene,
+		arg_1_0._mapScene,
 		ToughBattleMapView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigateView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		slot0.navigateView
+		arg_2_0.navigateView
 	}
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_3_0, arg_3_1)
+	var_0_0.super.setVisibleInternal(arg_3_0, arg_3_1)
 
-	if slot0._mapScene then
-		slot0._mapScene:setSceneVisible(slot1)
+	if arg_3_0._mapScene then
+		arg_3_0._mapScene:setSceneVisible(arg_3_1)
 	end
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
-	slot0:startViewCloseBlock()
+function var_0_0.playCloseTransition(arg_4_0)
+	arg_4_0:_cancelBlock()
+	arg_4_0:_stopOpenCloseAnim()
+	arg_4_0:startViewCloseBlock()
 
-	if not gohelper.isNil(slot0:__getAnimatorPlayer()) then
-		slot1:Play("close", slot0.onPlayCloseTransitionFinish, slot0)
+	local var_4_0 = arg_4_0:__getAnimatorPlayer()
+
+	if not gohelper.isNil(var_4_0) then
+		local var_4_1 = "close"
+
+		var_4_0:Play(var_4_1, arg_4_0.onPlayCloseTransitionFinish, arg_4_0)
 	end
 
-	TaskDispatcher.runDelay(slot0.onPlayCloseTransitionFinish, slot0, 2)
+	local var_4_2 = 2
+
+	TaskDispatcher.runDelay(arg_4_0.onPlayCloseTransitionFinish, arg_4_0, var_4_2)
 end
 
-return slot0
+return var_0_0

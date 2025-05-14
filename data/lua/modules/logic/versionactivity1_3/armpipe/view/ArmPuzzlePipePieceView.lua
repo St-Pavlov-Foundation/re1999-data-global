@@ -1,288 +1,313 @@
-module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipePieceView", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmPuzzlePipePieceView", package.seeall)
 
-slot0 = class("ArmPuzzlePipePieceView", BaseView)
+local var_0_0 = class("ArmPuzzlePipePieceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "#go_map")
-	slot0._gorightPiece = gohelper.findChild(slot0.viewGO, "#go_rightPiece")
-	slot0._goPiecePanel = gohelper.findChild(slot0.viewGO, "#go_PiecePanel")
-	slot0._gopieceItem = gohelper.findChild(slot0.viewGO, "#go_rightPiece/#go_pieceItem")
-	slot0._godragItem = gohelper.findChild(slot0.viewGO, "#go_dragItem")
-	slot0._imagedrag = gohelper.findChildImage(slot0.viewGO, "#go_dragItem/#image_drag")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
+	arg_1_0._gorightPiece = gohelper.findChild(arg_1_0.viewGO, "#go_rightPiece")
+	arg_1_0._goPiecePanel = gohelper.findChild(arg_1_0.viewGO, "#go_PiecePanel")
+	arg_1_0._gopieceItem = gohelper.findChild(arg_1_0.viewGO, "#go_rightPiece/#go_pieceItem")
+	arg_1_0._godragItem = gohelper.findChild(arg_1_0.viewGO, "#go_dragItem")
+	arg_1_0._imagedrag = gohelper.findChildImage(arg_1_0.viewGO, "#go_dragItem/#image_drag")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	if slot0._btnUIClick then
-		slot0._btnUIClick:AddClickDownListener(slot0._onUIClickDown, slot0)
-		slot0._btnUIClick:AddClickUpListener(slot0._onUIClickUp, slot0)
+function var_0_0.addEvents(arg_2_0)
+	if arg_2_0._btnUIClick then
+		arg_2_0._btnUIClick:AddClickDownListener(arg_2_0._onUIClickDown, arg_2_0)
+		arg_2_0._btnUIClick:AddClickUpListener(arg_2_0._onUIClickUp, arg_2_0)
 	end
 
-	if slot0._btnUIdrag then
-		slot0._btnUIdrag:AddDragListener(slot0._onDragIng, slot0)
-		slot0._btnUIdrag:AddDragBeginListener(slot0._onDragBegin, slot0)
-		slot0._btnUIdrag:AddDragEndListener(slot0._onDragEnd, slot0)
-	end
-end
-
-function slot0.removeEvents(slot0)
-	if slot0._btnUIClick then
-		slot0._btnUIClick:RemoveClickDownListener()
-		slot0._btnUIClick:RemoveClickUpListener()
-	end
-
-	if slot0._btnUIdrag then
-		slot0._btnUIdrag:RemoveDragBeginListener()
-		slot0._btnUIdrag:RemoveDragListener()
-		slot0._btnUIdrag:RemoveDragEndListener()
+	if arg_2_0._btnUIdrag then
+		arg_2_0._btnUIdrag:AddDragListener(arg_2_0._onDragIng, arg_2_0)
+		arg_2_0._btnUIdrag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
+		arg_2_0._btnUIdrag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnUIdrag = SLFramework.UGUI.UIDragListener.Get(slot0._gomap)
-	slot0._isDrag = false
-	slot0._godragItemTrs = slot0._godragItem.transform
-	slot0._gomapTrs = slot0.viewGO.transform
-	slot0._dragItemAnimator = slot0._godragItem:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
-	slot0._typeIdList = {}
-	slot0._pieceItemList = slot0:getUserDataTb_()
+function var_0_0.removeEvents(arg_3_0)
+	if arg_3_0._btnUIClick then
+		arg_3_0._btnUIClick:RemoveClickDownListener()
+		arg_3_0._btnUIClick:RemoveClickUpListener()
+	end
 
-	for slot5, slot6 in ipairs({
+	if arg_3_0._btnUIdrag then
+		arg_3_0._btnUIdrag:RemoveDragBeginListener()
+		arg_3_0._btnUIdrag:RemoveDragListener()
+		arg_3_0._btnUIdrag:RemoveDragEndListener()
+	end
+end
+
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._btnUIdrag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._gomap)
+	arg_4_0._isDrag = false
+	arg_4_0._godragItemTrs = arg_4_0._godragItem.transform
+	arg_4_0._gomapTrs = arg_4_0.viewGO.transform
+	arg_4_0._dragItemAnimator = arg_4_0._godragItem:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
+
+	local var_4_0 = {
 		ArmPuzzlePipeEnum.type.straight,
 		ArmPuzzlePipeEnum.type.corner,
 		ArmPuzzlePipeEnum.type.t_shape
-	}) do
-		if ArmPuzzlePipeModel.instance:isHasPlaceByTypeId(slot6) then
-			table.insert(slot0._typeIdList, slot6)
+	}
 
-			slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gopieceItem, slot0._gorightPiece, "pieceitem_" .. slot6), ArmPuzzlePipePieceItem, slot0)
+	arg_4_0._typeIdList = {}
+	arg_4_0._pieceItemList = arg_4_0:getUserDataTb_()
 
-			slot8:setTypeId(slot6)
-			table.insert(slot0._pieceItemList, slot8)
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if ArmPuzzlePipeModel.instance:isHasPlaceByTypeId(iter_4_1) then
+			table.insert(arg_4_0._typeIdList, iter_4_1)
+
+			local var_4_1 = gohelper.clone(arg_4_0._gopieceItem, arg_4_0._gorightPiece, "pieceitem_" .. iter_4_1)
+			local var_4_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_1, ArmPuzzlePipePieceItem, arg_4_0)
+
+			var_4_2:setTypeId(iter_4_1)
+			table.insert(arg_4_0._pieceItemList, var_4_2)
 		end
 	end
 
-	for slot5 = 1, 3 do
-		gohelper.setActive(gohelper.findChild(slot0.viewGO, "#go_PiecePanel/#image_PanelBG" .. slot5), slot5 == #slot0._pieceItemList)
+	for iter_4_2 = 1, 3 do
+		local var_4_3 = gohelper.findChild(arg_4_0.viewGO, "#go_PiecePanel/#image_PanelBG" .. iter_4_2)
+
+		gohelper.setActive(var_4_3, iter_4_2 == #arg_4_0._pieceItemList)
 	end
 
-	gohelper.setActive(slot0._gopieceItem, false)
+	gohelper.setActive(arg_4_0._gopieceItem, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PipeGameClear, slot0._onGameClear, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.UIPipeDragBegin, slot0._onDragBeginEvent, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.UIPipeDragIng, slot0._onDragIngEvent, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.UIPipeDragEnd, slot0._onDragEndEvent, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PlaceItemRefresh, slot0._refreshUI, slot0)
-	slot0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.ResetGameRefresh, slot0._refreshUI, slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PipeGameClear, arg_6_0._onGameClear, arg_6_0)
+	arg_6_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.UIPipeDragBegin, arg_6_0._onDragBeginEvent, arg_6_0)
+	arg_6_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.UIPipeDragIng, arg_6_0._onDragIngEvent, arg_6_0)
+	arg_6_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.UIPipeDragEnd, arg_6_0._onDragEndEvent, arg_6_0)
+	arg_6_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.PlaceItemRefresh, arg_6_0._refreshUI, arg_6_0)
+	arg_6_0:addEventCb(ArmPuzzlePipeController.instance, ArmPuzzlePipeEvent.ResetGameRefresh, arg_6_0._refreshUI, arg_6_0)
+	arg_6_0:_refreshUI()
 end
 
-function slot0._onGameClear(slot0)
-	slot0._isDrag = false
+function var_0_0._onGameClear(arg_7_0)
+	arg_7_0._isDrag = false
 
-	slot0:_refreshDragUI()
+	arg_7_0:_refreshDragUI()
 end
 
-function slot0._onUIClickDown(slot0, slot1, slot2)
-	slot0:_cancelLongPressDown()
+function var_0_0._onUIClickDown(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0:_cancelLongPressDown()
 
 	if ArmPuzzlePipeModel.instance:isHasPlace() then
-		slot3, slot4 = slot0:_getPipesXY(GamepadController.instance:getMousePosition())
+		local var_8_0, var_8_1 = arg_8_0:_getPipesXY(GamepadController.instance:getMousePosition())
 
-		if slot3 and slot4 and ArmPuzzlePipeModel.instance:isPlaceByXY(slot3, slot4) then
-			slot0._isHasLongPressTask = true
+		if var_8_0 and var_8_1 and ArmPuzzlePipeModel.instance:isPlaceByXY(var_8_0, var_8_1) then
+			arg_8_0._isHasLongPressTask = true
 
-			TaskDispatcher.runDelay(slot0._onLongPressDown, slot0, 0.3)
+			TaskDispatcher.runDelay(arg_8_0._onLongPressDown, arg_8_0, 0.3)
 		end
 	end
 end
 
-function slot0._onUIClickUp(slot0)
-	slot0:_cancelLongPressDown()
+function var_0_0._onUIClickUp(arg_9_0)
+	arg_9_0:_cancelLongPressDown()
 
-	if slot0._isCanDragUIOP then
-		slot0._isCanDragUIOP = false
+	if arg_9_0._isCanDragUIOP then
+		arg_9_0._isCanDragUIOP = false
 
-		slot0:_onDragEndEvent(GamepadController.instance:getMousePosition(), slot0._fromX, slot0._fromY)
+		arg_9_0:_onDragEndEvent(GamepadController.instance:getMousePosition(), arg_9_0._fromX, arg_9_0._fromY)
 	end
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	if not slot0._isCanDragUIOP then
-		slot0:_checkDragBegin(slot2.position)
+function var_0_0._onDragBegin(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_0._isCanDragUIOP then
+		arg_10_0:_checkDragBegin(arg_10_2.position)
 	end
 end
 
-function slot0._onDragIng(slot0, slot1, slot2)
-	if slot0._isCanDragUIOP then
-		slot0:_onDragIngEvent(slot2.position)
+function var_0_0._onDragIng(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_0._isCanDragUIOP then
+		arg_11_0:_onDragIngEvent(arg_11_2.position)
 	end
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if slot0._isCanDragUIOP then
-		slot0._isCanDragUIOP = false
+function var_0_0._onDragEnd(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_0._isCanDragUIOP then
+		arg_12_0._isCanDragUIOP = false
 
-		slot0:_onDragEndEvent(slot2.position, slot0._fromX, slot0._fromY)
+		arg_12_0:_onDragEndEvent(arg_12_2.position, arg_12_0._fromX, arg_12_0._fromY)
 	end
 end
 
-function slot0._onDragBeginEvent(slot0, slot1, slot2, slot3)
-	slot0._isDrag = false
+function var_0_0._onDragBeginEvent(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_0._isDrag = false
 
-	if ArmPuzzlePipeEnum.UIDragRes[slot2] then
-		slot0._isDrag = true
-		slot0._curDragPipeTypeId = slot2
-		slot0._curDragPipeValue = slot3
+	if ArmPuzzlePipeEnum.UIDragRes[arg_13_2] then
+		arg_13_0._isDrag = true
+		arg_13_0._curDragPipeTypeId = arg_13_2
+		arg_13_0._curDragPipeValue = arg_13_3
 
-		UISpriteSetMgr.instance:setArmPipeSprite(slot0._imagedrag, ArmPuzzlePipeEnum.UIDragRes[slot2], true)
-		transformhelper.setLocalRotation(slot0._godragItemTrs, 0, 0, ArmPuzzleHelper.getRotation(slot2, slot3))
-		slot0:_refreshDragUI()
-		slot0:_onDragIngEvent(slot1)
+		UISpriteSetMgr.instance:setArmPipeSprite(arg_13_0._imagedrag, ArmPuzzlePipeEnum.UIDragRes[arg_13_2], true)
+		transformhelper.setLocalRotation(arg_13_0._godragItemTrs, 0, 0, ArmPuzzleHelper.getRotation(arg_13_2, arg_13_3))
+		arg_13_0:_refreshDragUI()
+		arg_13_0:_onDragIngEvent(arg_13_1)
 		AudioMgr.instance:trigger(AudioEnum.Va3Armpipe.play_ui_activity_lyrics_wrongs)
 	end
 end
 
-function slot0._cancelLongPressDown(slot0)
-	if slot0._isHasLongPressTask then
-		slot0._isHasLongPressTask = false
+function var_0_0._cancelLongPressDown(arg_14_0)
+	if arg_14_0._isHasLongPressTask then
+		arg_14_0._isHasLongPressTask = false
 
-		TaskDispatcher.cancelTask(slot0._onLongPressDown, slot0)
+		TaskDispatcher.cancelTask(arg_14_0._onLongPressDown, arg_14_0)
 	end
 end
 
-function slot0._onLongPressDown(slot0)
-	slot0._isHasLongPressTask = false
+function var_0_0._onLongPressDown(arg_15_0)
+	arg_15_0._isHasLongPressTask = false
 
-	if ArmPuzzlePipeModel.instance:isHasPlace() and not slot0._isCanDragUIOP then
-		slot0:_checkDragBegin()
+	if ArmPuzzlePipeModel.instance:isHasPlace() and not arg_15_0._isCanDragUIOP then
+		arg_15_0:_checkDragBegin()
 	end
 end
 
-function slot0._checkDragBegin(slot0, slot1)
-	slot0._isCanDragUIOP = false
-	slot0._fromX = nil
-	slot0._fromY = nil
-	slot3, slot4 = slot0:_getPipesXY(slot1 or GamepadController.instance:getMousePosition())
-	slot5 = ArmPuzzlePipeModel.instance
+function var_0_0._checkDragBegin(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1 or GamepadController.instance:getMousePosition()
 
-	if slot3 and slot4 and slot5:isPlaceByXY(slot3, slot4) and slot5:getData(slot3, slot4) and ArmPuzzlePipeEnum.UIDragRes[slot6.typeId] then
-		slot0._isCanDragUIOP = true
-		slot0._fromX = slot3
-		slot0._fromY = slot4
+	arg_16_0._isCanDragUIOP = false
+	arg_16_0._fromX = nil
+	arg_16_0._fromY = nil
 
-		slot6:setParamStr(slot5:getPlaceStrByXY(slot3, slot4))
-		slot0:_onDragBeginEvent(slot2, slot6.typeId, slot6.value)
-		ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, slot3, slot4)
-		ArmPuzzlePipeModel.instance:setPlaceSelectXY(slot3, slot4)
-		slot0:_refreshPlacePipeItem(slot3, slot4)
-		AudioMgr.instance:trigger(AudioEnum.Va3Armpipe.play_ui_activity_mark_finish)
+	local var_16_1, var_16_2 = arg_16_0:_getPipesXY(var_16_0)
+	local var_16_3 = ArmPuzzlePipeModel.instance
+
+	if var_16_1 and var_16_2 and var_16_3:isPlaceByXY(var_16_1, var_16_2) then
+		local var_16_4 = var_16_3:getData(var_16_1, var_16_2)
+
+		if var_16_4 and ArmPuzzlePipeEnum.UIDragRes[var_16_4.typeId] then
+			arg_16_0._isCanDragUIOP = true
+
+			local var_16_5 = var_16_4.typeId
+			local var_16_6 = var_16_4.value
+
+			arg_16_0._fromX = var_16_1
+			arg_16_0._fromY = var_16_2
+
+			var_16_4:setParamStr(var_16_3:getPlaceStrByXY(var_16_1, var_16_2))
+			arg_16_0:_onDragBeginEvent(var_16_0, var_16_5, var_16_6)
+			ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, var_16_1, var_16_2)
+			ArmPuzzlePipeModel.instance:setPlaceSelectXY(var_16_1, var_16_2)
+			arg_16_0:_refreshPlacePipeItem(var_16_1, var_16_2)
+			AudioMgr.instance:trigger(AudioEnum.Va3Armpipe.play_ui_activity_mark_finish)
+		end
 	end
 end
 
-function slot0._onDragIngEvent(slot0, slot1)
-	if slot0._isDrag then
-		slot2 = recthelper.screenPosToAnchorPos(slot1, slot0._gomapTrs)
+function var_0_0._onDragIngEvent(arg_17_0, arg_17_1)
+	if arg_17_0._isDrag then
+		local var_17_0 = recthelper.screenPosToAnchorPos(arg_17_1, arg_17_0._gomapTrs)
 
-		transformhelper.setLocalPosXY(slot0._godragItemTrs, slot2.x, slot2.y)
+		transformhelper.setLocalPosXY(arg_17_0._godragItemTrs, var_17_0.x, var_17_0.y)
 
-		slot3, slot4 = slot0:_getPipesXY(slot1)
-		slot6, slot7 = ArmPuzzlePipeModel.instance:getPlaceSelectXY()
+		local var_17_1, var_17_2 = arg_17_0:_getPipesXY(arg_17_1)
+		local var_17_3 = ArmPuzzlePipeModel.instance
+		local var_17_4, var_17_5 = var_17_3:getPlaceSelectXY()
 
-		if slot3 and slot4 and slot5:isPlaceByXY(slot3, slot4) then
-			if not slot5:isPlaceSelectXY(slot3, slot4) then
-				slot5:setPlaceSelectXY(slot3, slot4)
-				slot0:_refreshPlacePipeItem(slot6, slot7)
-				slot0:_refreshPlacePipeItem(slot3, slot4)
+		if var_17_1 and var_17_2 and var_17_3:isPlaceByXY(var_17_1, var_17_2) then
+			if not var_17_3:isPlaceSelectXY(var_17_1, var_17_2) then
+				var_17_3:setPlaceSelectXY(var_17_1, var_17_2)
+				arg_17_0:_refreshPlacePipeItem(var_17_4, var_17_5)
+				arg_17_0:_refreshPlacePipeItem(var_17_1, var_17_2)
 			end
 		else
-			slot5:setPlaceSelectXY(nil, )
-			slot0:_refreshPlacePipeItem(slot6, slot7)
+			var_17_3:setPlaceSelectXY(nil, nil)
+			arg_17_0:_refreshPlacePipeItem(var_17_4, var_17_5)
 		end
 	end
 end
 
-function slot0._onDragEndEvent(slot0, slot1, slot2, slot3)
-	if slot0._isDrag then
-		slot0._isDrag = false
-		slot4 = ArmPuzzlePipeModel.instance
-		slot5, slot6 = slot4:getPlaceSelectXY()
+function var_0_0._onDragEndEvent(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if arg_18_0._isDrag then
+		arg_18_0._isDrag = false
 
-		slot4:setPlaceSelectXY(nil, )
+		local var_18_0 = ArmPuzzlePipeModel.instance
+		local var_18_1, var_18_2 = var_18_0:getPlaceSelectXY()
 
-		slot7, slot8 = slot0:_getPipesXY(slot1)
-		slot9 = nil
+		var_18_0:setPlaceSelectXY(nil, nil)
 
-		if slot7 and slot8 and slot4:isPlaceByXY(slot7, slot8) and slot4:getData(slot7, slot8) then
-			if ArmPuzzlePipeEnum.UIDragRes[slot10.typeId] and slot2 and slot3 and slot4:isPlaceByXY(slot2, slot3) then
-				slot9 = slot4:getData(slot2, slot3)
-				slot9.typeId = slot10.typeId
-				slot9.value = slot10.value
+		local var_18_3, var_18_4 = arg_18_0:_getPipesXY(arg_18_1)
+		local var_18_5
+
+		if var_18_3 and var_18_4 and var_18_0:isPlaceByXY(var_18_3, var_18_4) then
+			local var_18_6 = var_18_0:getData(var_18_3, var_18_4)
+
+			if var_18_6 then
+				if ArmPuzzlePipeEnum.UIDragRes[var_18_6.typeId] and arg_18_2 and arg_18_3 and var_18_0:isPlaceByXY(arg_18_2, arg_18_3) then
+					var_18_5 = var_18_0:getData(arg_18_2, arg_18_3)
+					var_18_5.typeId = var_18_6.typeId
+					var_18_5.value = var_18_6.value
+				end
+
+				var_18_6:setParamStr(var_18_0:getPlaceStrByXY(var_18_3, var_18_4))
+
+				var_18_6.typeId = arg_18_0._curDragPipeTypeId
+				var_18_6.value = arg_18_0._curDragPipeValue
+
+				ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, var_18_3, var_18_4)
+
+				if var_18_5 and arg_18_2 and arg_18_3 then
+					ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, arg_18_2, arg_18_3)
+				end
 			end
-
-			slot10:setParamStr(slot4:getPlaceStrByXY(slot7, slot8))
-
-			slot10.typeId = slot0._curDragPipeTypeId
-			slot10.value = slot0._curDragPipeValue
-
-			ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, slot7, slot8)
-
-			if slot9 and slot2 and slot3 then
-				ArmPuzzlePipeController.instance:dispatchEvent(ArmPuzzlePipeEvent.PlaceRefreshPipesGrid, slot2, slot3)
-			end
 		end
 
-		slot0:_refreshUI()
+		arg_18_0:_refreshUI()
 
-		if slot5 ~= slot7 or slot6 ~= slot8 then
-			slot0:_refreshPlacePipeItem(slot5, slot6)
+		if var_18_1 ~= var_18_3 or var_18_2 ~= var_18_4 then
+			arg_18_0:_refreshPlacePipeItem(var_18_1, var_18_2)
 		end
 	end
 end
 
-function slot0._refreshDragUI(slot0)
-	gohelper.setActive(slot0._godragItem, slot0._isDrag)
+function var_0_0._refreshDragUI(arg_19_0)
+	gohelper.setActive(arg_19_0._godragItem, arg_19_0._isDrag)
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = ArmPuzzlePipeModel.instance:isHasPlace()
+function var_0_0._refreshUI(arg_20_0)
+	local var_20_0 = ArmPuzzlePipeModel.instance:isHasPlace()
 
-	gohelper.setActive(slot0._gorightPiece, slot1)
-	gohelper.setActive(slot0._goPiecePanel, slot1)
-	slot0:_refreshDragUI()
+	gohelper.setActive(arg_20_0._gorightPiece, var_20_0)
+	gohelper.setActive(arg_20_0._goPiecePanel, var_20_0)
+	arg_20_0:_refreshDragUI()
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot0._pieceItemList) do
-			slot6:refreshUI()
+	if var_20_0 then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_0._pieceItemList) do
+			iter_20_1:refreshUI()
 		end
 	end
 end
 
-function slot0._getPipesXY(slot0, slot1)
-	if slot0.viewContainer then
-		return slot0.viewContainer:getPipesXYByPostion(slot1)
+function var_0_0._getPipesXY(arg_21_0, arg_21_1)
+	if arg_21_0.viewContainer then
+		return arg_21_0.viewContainer:getPipesXYByPostion(arg_21_1)
 	end
 end
 
-function slot0._refreshPlacePipeItem(slot0, slot1, slot2)
-	if slot1 and slot2 and ArmPuzzlePipeModel.instance:isPlaceByXY(slot1, slot2) then
-		slot0.viewContainer:getPipes():initItem(slot1, slot2)
+function var_0_0._refreshPlacePipeItem(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_1 and arg_22_2 and ArmPuzzlePipeModel.instance:isPlaceByXY(arg_22_1, arg_22_2) then
+		arg_22_0.viewContainer:getPipes():initItem(arg_22_1, arg_22_2)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_23_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_cancelLongPressDown()
+function var_0_0.onDestroyView(arg_24_0)
+	arg_24_0:_cancelLongPressDown()
 end
 
-return slot0
+return var_0_0

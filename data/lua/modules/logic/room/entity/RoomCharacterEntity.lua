@@ -1,216 +1,239 @@
-module("modules.logic.room.entity.RoomCharacterEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomCharacterEntity", package.seeall)
 
-slot0 = class("RoomCharacterEntity", RoomBaseEntity)
+local var_0_0 = class("RoomCharacterEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.RoomCharacter
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = slot0.containerGO
-	slot0.containerGOTrs = slot0.containerGO.transform
-	slot0.goTrs = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = arg_3_0.containerGO
+	arg_3_0.containerGOTrs = arg_3_0.containerGO.transform
+	arg_3_0.goTrs = arg_3_1.transform
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	arg_3_0._scene = GameSceneMgr.instance:getCurScene()
 
 	if RoomController.instance:isObMode() then
-		slot0.effect:addParams({
+		arg_3_0.effect:addParams({
 			[RoomEnum.EffectKey.BuildingGOKey] = {
 				res = RoomScenePreloader.ResCharacterClickHelper
 			}
 		})
-		slot0.effect:refreshEffect()
+		arg_3_0.effect:refreshEffect()
 	end
 
-	slot0.isPressing = false
+	arg_3_0.isPressing = false
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("characterspineeffect", RoomCharacterSpineEffectComp)
-	slot0:addComp("characterspine", RoomCharacterSpineComp)
-	slot0:addComp("followPathComp", RoomCharacterFollowPathComp)
-	slot0:addComp("charactermove", RoomCharacterMoveComp)
-	slot0:addComp("effect", RoomEffectComp)
-	slot0:addComp("birthday", RoomCharacterBirthdayComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("characterspineeffect", RoomCharacterSpineEffectComp)
+	arg_4_0:addComp("characterspine", RoomCharacterSpineComp)
+	arg_4_0:addComp("followPathComp", RoomCharacterFollowPathComp)
+	arg_4_0:addComp("charactermove", RoomCharacterMoveComp)
+	arg_4_0:addComp("effect", RoomEffectComp)
+	arg_4_0:addComp("birthday", RoomCharacterBirthdayComp)
 
 	if RoomController.instance:isObMode() then
-		slot0:addComp("collider", RoomColliderComp)
+		arg_4_0:addComp("collider", RoomColliderComp)
 	end
 
 	if not RoomEnum.IsShowUICharacterInteraction then
-		slot0:addComp("characterinterac", RoomCharacterInteractionComp)
+		arg_4_0:addComp("characterinterac", RoomCharacterInteractionComp)
 	end
 
-	if slot0:getMO() and not slot1:getCanWade() then
-		slot0:addComp("characterfootprint", RoomCharacterFootPrintComp)
+	local var_4_0 = arg_4_0:getMO()
+
+	if var_4_0 and not var_4_0:getCanWade() then
+		arg_4_0:addComp("characterfootprint", RoomCharacterFootPrintComp)
 	end
 
-	slot0:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
-	slot0:addComp("interactActionComp", RoomCharacterInteractActionComp)
+	arg_4_0:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
+	arg_4_0:addComp("interactActionComp", RoomCharacterInteractActionComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
 end
 
-function slot0.setLocalPos(slot0, slot1, slot2, slot3, slot4)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0.setLocalPos(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	if arg_6_0._tweenId then
+		arg_6_0._scene.tween:killById(arg_6_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_6_0._tweenId = nil
 	end
 
-	if slot4 then
-		slot5, slot6, slot7 = transformhelper.getLocalPos(slot0.goTrs)
-		slot0._tweenId = slot0._scene.tween:tweenFloat(0, 1, 0.05, slot0._frameCallback, slot0._finishCallback, slot0, {
-			originalX = slot5,
-			originalY = slot6,
-			originalZ = slot7,
-			x = slot1,
-			y = slot2,
-			z = slot3
+	if arg_6_4 then
+		local var_6_0, var_6_1, var_6_2 = transformhelper.getLocalPos(arg_6_0.goTrs)
+
+		arg_6_0._tweenId = arg_6_0._scene.tween:tweenFloat(0, 1, 0.05, arg_6_0._frameCallback, arg_6_0._finishCallback, arg_6_0, {
+			originalX = var_6_0,
+			originalY = var_6_1,
+			originalZ = var_6_2,
+			x = arg_6_1,
+			y = arg_6_2,
+			z = arg_6_3
 		})
 	else
-		transformhelper.setLocalPos(slot0.goTrs, slot1, slot2, slot3)
+		transformhelper.setLocalPos(arg_6_0.goTrs, arg_6_1, arg_6_2, arg_6_3)
 	end
 
-	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterPositionChanged, slot0:getMO().id)
+	local var_6_3 = arg_6_0:getMO()
 
-	if slot0.characterspine then
-		slot0.characterspine:characterPosChanged()
+	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterPositionChanged, var_6_3.id)
+
+	if arg_6_0.characterspine then
+		arg_6_0.characterspine:characterPosChanged()
 	end
 end
 
-function slot0.getLocalPosXYZ(slot0)
-	return transformhelper.getLocalPos(slot0.goTrs)
+function var_0_0.getLocalPosXYZ(arg_7_0)
+	return transformhelper.getLocalPos(arg_7_0.goTrs)
 end
 
-function slot0._frameCallback(slot0, slot1, slot2)
-	transformhelper.setLocalPos(slot0.goTrs, slot2.originalX + (slot2.x - slot2.originalX) * slot1, slot2.originalY + (slot2.y - slot2.originalY) * slot1, slot2.originalZ + (slot2.z - slot2.originalZ) * slot1)
+function var_0_0._frameCallback(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_2.originalX + (arg_8_2.x - arg_8_2.originalX) * arg_8_1
+	local var_8_1 = arg_8_2.originalY + (arg_8_2.y - arg_8_2.originalY) * arg_8_1
+	local var_8_2 = arg_8_2.originalZ + (arg_8_2.z - arg_8_2.originalZ) * arg_8_1
+
+	transformhelper.setLocalPos(arg_8_0.goTrs, var_8_0, var_8_1, var_8_2)
 end
 
-function slot0._finishCallback(slot0, slot1)
-	transformhelper.setLocalPos(slot0.goTrs, slot1.x, slot1.y, slot1.z)
+function var_0_0._finishCallback(arg_9_0, arg_9_1)
+	transformhelper.setLocalPos(arg_9_0.goTrs, arg_9_1.x, arg_9_1.y, arg_9_1.z)
 end
 
-function slot0._getCharacterRes(slot0)
-	return RoomResHelper.getCharacterPath(slot0:getMO().skinId)
+function var_0_0._getCharacterRes(arg_10_0)
+	local var_10_0 = arg_10_0:getMO()
+
+	return (RoomResHelper.getCharacterPath(var_10_0.skinId))
 end
 
-function slot0.beforeDestroy(slot0)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0.beforeDestroy(arg_11_0)
+	if arg_11_0._tweenId then
+		arg_11_0._scene.tween:killById(arg_11_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_11_0._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._pressingEffectDelayDestroy, slot0)
-	uv0.super.beforeDestroy(slot0)
+	TaskDispatcher.cancelTask(arg_11_0._pressingEffectDelayDestroy, arg_11_0)
+	var_0_0.super.beforeDestroy(arg_11_0)
 end
 
-function slot0.playConfirmEffect(slot0)
-	slot0.effect:addParams({
+function var_0_0.playConfirmEffect(arg_12_0)
+	arg_12_0.effect:addParams({
 		[RoomEnum.EffectKey.ConfirmCharacterEffectKey] = {
 			res = RoomScenePreloader.ResEffectConfirmCharacter,
-			containerGO = slot0.staticContainerGO
+			containerGO = arg_12_0.staticContainerGO
 		}
 	}, 2)
-	slot0.effect:refreshEffect()
+	arg_12_0.effect:refreshEffect()
 end
 
-function slot0.playClickEffect(slot0)
-	slot0.effect:addParams({
+function var_0_0.playClickEffect(arg_13_0)
+	arg_13_0.effect:addParams({
 		[RoomEnum.EffectKey.ConfirmCharacterEffectKey] = {
 			res = RoomScenePreloader.ResCharacterClickEffect,
-			containerGO = slot0.staticContainerGO
+			containerGO = arg_13_0.staticContainerGO
 		}
 	}, 1)
-	slot0.effect:refreshEffect()
+	arg_13_0.effect:refreshEffect()
 end
 
-function slot0.tweenUp(slot0)
-	TaskDispatcher.cancelTask(slot0._pressingEffectDelayDestroy, slot0)
+function var_0_0.tweenUp(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._pressingEffectDelayDestroy, arg_14_0)
 
-	slot0.isPressing = true
+	arg_14_0.isPressing = true
 
-	slot0.characterspine:updateAlpha()
-	slot0.effect:addParams({
+	arg_14_0.characterspine:updateAlpha()
+	arg_14_0.effect:addParams({
 		[RoomEnum.EffectKey.PressingEffectKey] = {
 			res = RoomScenePreloader.ResEffectPressingCharacter,
-			containerGO = slot0.staticContainerGO
+			containerGO = arg_14_0.staticContainerGO
 		}
 	})
-	slot0.effect:refreshEffect()
+	arg_14_0.effect:refreshEffect()
 
-	if slot0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey) and slot1:GetComponent(typeof(UnityEngine.Animator)) then
-		slot2:Play("open", 0, 0)
+	local var_14_0 = arg_14_0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey)
+
+	if var_14_0 then
+		local var_14_1 = var_14_0:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_14_1 then
+			var_14_1:Play("open", 0, 0)
+		end
 	end
 
-	if slot0.characterspine then
-		slot0.characterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "up")
+	if arg_14_0.characterspine then
+		arg_14_0.characterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "up")
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_role_drag)
 end
 
-function slot0.tweenDown(slot0)
-	slot0.isPressing = false
+function var_0_0.tweenDown(arg_15_0)
+	arg_15_0.isPressing = false
 
-	slot0.characterspine:updateAlpha()
+	arg_15_0.characterspine:updateAlpha()
 
-	if slot0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey) and slot1:GetComponent(typeof(UnityEngine.Animator)) then
-		slot2:Play("close", 0, 0)
+	local var_15_0 = arg_15_0.effect:getEffectGO(RoomEnum.EffectKey.PressingEffectKey)
+
+	if var_15_0 then
+		local var_15_1 = var_15_0:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_15_1 then
+			var_15_1:Play("close", 0, 0)
+		end
 	end
 
-	if slot0.characterspine then
-		slot0.characterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "down", 0, slot0._downDone, slot0)
+	if arg_15_0.characterspine then
+		arg_15_0.characterspine:playAnim(RoomScenePreloader.ResAnim.PressingCharacter, "down", 0, arg_15_0._downDone, arg_15_0)
 	end
 
-	TaskDispatcher.runDelay(slot0._pressingEffectDelayDestroy, slot0, 2)
+	TaskDispatcher.runDelay(arg_15_0._pressingEffectDelayDestroy, arg_15_0, 2)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_role_put)
 end
 
-function slot0._downDone(slot0)
-	if slot0.characterspine then
-		slot0.characterspine:clearAnim()
+function var_0_0._downDone(arg_16_0)
+	if arg_16_0.characterspine then
+		arg_16_0.characterspine:clearAnim()
 	end
 end
 
-function slot0._pressingEffectDelayDestroy(slot0)
-	slot0.effect:removeParams({
+function var_0_0._pressingEffectDelayDestroy(arg_17_0)
+	arg_17_0.effect:removeParams({
 		RoomEnum.EffectKey.PressingEffectKey
 	})
-	slot0.effect:refreshEffect()
+	arg_17_0.effect:refreshEffect()
 end
 
-function slot0.playFaithEffect(slot0)
-	if not slot0.characterspine:getCharacterGO() then
+function var_0_0.playFaithEffect(arg_18_0)
+	if not arg_18_0.characterspine:getCharacterGO() then
 		return
 	end
 
-	slot0.effect:addParams({
+	arg_18_0.effect:addParams({
 		[RoomEnum.EffectKey.FaithEffectKey] = {
 			res = RoomScenePreloader.ResCharacterFaithEffect,
-			containerGO = slot0.staticContainerGO
+			containerGO = arg_18_0.staticContainerGO
 		}
 	}, 1.8)
-	slot0.effect:refreshEffect()
+	arg_18_0.effect:refreshEffect()
 end
 
-function slot0.getMO(slot0)
-	slot0._mo = RoomCharacterModel.instance:getCharacterMOById(slot0.id) or slot0._mo
+function var_0_0.getMO(arg_19_0)
+	arg_19_0._mo = RoomCharacterModel.instance:getCharacterMOById(arg_19_0.id) or arg_19_0._mo
 
-	return slot0._mo
+	return arg_19_0._mo
 end
 
-return slot0
+return var_0_0

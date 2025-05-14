@@ -1,10 +1,10 @@
-module("modules.logic.explore.controller.steps.ExploreCheckCounterStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreCheckCounterStep", package.seeall)
 
-slot0 = class("ExploreCheckCounterStep", ExploreStepBase)
+local var_0_0 = class("ExploreCheckCounterStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	ExploreController.instance:getMap():getUnit(slot0._data.id).mo:checkActiveCount()
-	slot0:onDone()
+function var_0_0.onStart(arg_1_0)
+	ExploreController.instance:getMap():getUnit(arg_1_0._data.id).mo:checkActiveCount()
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

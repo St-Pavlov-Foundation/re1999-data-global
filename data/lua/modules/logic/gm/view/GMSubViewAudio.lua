@@ -1,365 +1,390 @@
-module("modules.logic.gm.view.GMSubViewAudio", package.seeall)
+﻿module("modules.logic.gm.view.GMSubViewAudio", package.seeall)
 
-slot0 = class("GMSubViewAudio", GMSubViewBase)
+local var_0_0 = class("GMSubViewAudio", GMSubViewBase)
 
-function slot0.ctor(slot0)
-	slot0.tabName = "音效"
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.tabName = "音效"
 end
 
-function slot0.addLineIndex(slot0)
-	slot0.lineIndex = slot0.lineIndex + 1
+function var_0_0.addLineIndex(arg_2_0)
+	arg_2_0.lineIndex = arg_2_0.lineIndex + 1
 end
 
-function slot0.getLineGroup(slot0)
-	return "L" .. slot0.lineIndex
+function var_0_0.getLineGroup(arg_3_0)
+	return "L" .. arg_3_0.lineIndex
 end
 
-function slot0.initViewContent(slot0)
-	if slot0._inited then
+function var_0_0.initViewContent(arg_4_0)
+	if arg_4_0._inited then
 		return
 	end
 
-	slot0.lineIndex = 1
+	arg_4_0.lineIndex = 1
 
-	GMSubViewBase.initViewContent(slot0)
-	slot0:addTitleSplitLine("音频播放")
-	slot0:addLabel(slot0:getLineGroup(), "音效")
+	GMSubViewBase.initViewContent(arg_4_0)
+	arg_4_0:addTitleSplitLine("音频播放")
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "音效")
 
-	slot0._inpAudio = slot0:addInputText("L1", "", "音效配置Id")
+	arg_4_0._inpAudio = arg_4_0:addInputText("L1", "", "音效配置Id")
 
-	slot0:addButton(slot0:getLineGroup(), "播放", slot0._onClickAudioPlay, slot0)
-	slot0:addButton(slot0:getLineGroup(), "停止", slot0._onClickAudioStop, slot0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "播放", arg_4_0._onClickAudioPlay, arg_4_0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "停止", arg_4_0._onClickAudioStop, arg_4_0)
 
-	slot0._autoStopToggle = slot0:addToggle(slot0:getLineGroup(), "播放音效自动关闭上次音效", slot0._onAutoStopChange, slot0, {
+	arg_4_0._autoStopToggle = arg_4_0:addToggle(arg_4_0:getLineGroup(), "播放音效自动关闭上次音效", arg_4_0._onAutoStopChange, arg_4_0, {
 		fsize = 24
 	})
-	slot0._showLogToggle = slot0:addToggle(slot0:getLineGroup(), "打开日志", slot0._onShowLogChange, slot0)
+	arg_4_0._showLogToggle = arg_4_0:addToggle(arg_4_0:getLineGroup(), "打开日志", arg_4_0._onShowLogChange, arg_4_0)
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0._inpEvent = slot0:addInputText(slot0:getLineGroup(), "", "事件名称")
-	slot0._inpBank = slot0:addInputText(slot0:getLineGroup(), "", "bank名称")
+	arg_4_0._inpEvent = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "事件名称")
+	arg_4_0._inpBank = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "bank名称")
 
-	slot0:addButton(slot0:getLineGroup(), "播放", slot0._onClickEventPlay, slot0)
-	slot0:addButton(slot0:getLineGroup(), "停止", slot0._onClickEventStop, slot0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "播放", arg_4_0._onClickEventPlay, arg_4_0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "停止", arg_4_0._onClickEventStop, arg_4_0)
 
-	slot0._langDrop = slot0:addDropDown(slot0:getLineGroup(), "语言", nil, slot0._onLangDropChange, slot0)
+	arg_4_0._langDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "语言", nil, arg_4_0._onLangDropChange, arg_4_0)
 
-	slot0:addLineIndex()
+	arg_4_0:addLineIndex()
 
-	slot0._inpRtpcName = slot0:addInputText(slot0:getLineGroup(), "", "RTPC名称", nil, , {
+	arg_4_0._inpRtpcName = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "RTPC名称", nil, nil, {
 		w = 230
 	})
-	slot0._inpRtpcValue = slot0:addInputText(slot0:getLineGroup(), "", "RTPC值", nil, , {
+	arg_4_0._inpRtpcValue = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "RTPC值", nil, nil, {
 		w = 200
 	})
 
-	slot0:addButton(slot0:getLineGroup(), "设置", slot0._onClickSetRtpc, slot0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "设置", arg_4_0._onClickSetRtpc, arg_4_0)
 
-	slot0._inpSwitchName = slot0:addInputText(slot0:getLineGroup(), "", "Switch Group")
-	slot0._inpSwitchValue = slot0:addInputText(slot0:getLineGroup(), "", "Switch Value")
+	arg_4_0._inpSwitchName = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "Switch Group")
+	arg_4_0._inpSwitchValue = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "Switch Value")
 
-	slot0:addButton(slot0:getLineGroup(), "设置", slot0._onClickSwitch, slot0)
-	slot0:addTitleSplitLine("音频资源检查")
-	slot0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "设置", arg_4_0._onClickSwitch, arg_4_0)
+	arg_4_0:addTitleSplitLine("音频资源检查")
+	arg_4_0:addLineIndex()
 
-	slot0._textCheckAudio2 = slot0:addButton(slot0:getLineGroup(), "检查音效调用", slot0._onClickCheckAudioCall, slot0)[2]
+	arg_4_0._textCheckAudio2 = arg_4_0:addButton(arg_4_0:getLineGroup(), "检查音效调用", arg_4_0._onClickCheckAudioCall, arg_4_0)[2]
 
-	slot0:addLabel(slot0:getLineGroup(), "调用音频数量/GC:", {
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "调用音频数量/GC:", {
 		fsize = 30
 	})
 
-	slot0._textCallAudioGCThreshold = slot0:addInputText(slot0:getLineGroup(), "10000")
+	arg_4_0._textCallAudioGCThreshold = arg_4_0:addInputText(arg_4_0:getLineGroup(), "10000")
 
-	slot0:addButton(slot0:getLineGroup(), "检查音效调用(仅章节,活动部分)", slot0._onClickCheckAudioChapterAndActiviy, slot0, {
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "检查音效调用(仅章节,活动部分)", arg_4_0._onClickCheckAudioChapterAndActiviy, arg_4_0, {
 		fsize = 32
 	})
-	slot0:addLineIndex()
-	slot0:addLabel(slot0:getLineGroup(), "章节ID:\n[逗号分隔]", {
+	arg_4_0:addLineIndex()
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "章节ID:\n[逗号分隔]", {
 		w = 100,
 		h = 200,
 		fsize = 36
 	})
 
-	slot0._chatperIdsToCheckAudio = slot0:addInputText(slot0:getLineGroup(), PlayerPrefsHelper.getString("checkAudioChatperIdsKey", ""), "", slot0._onChatperIdsChange, slot0, {
+	local var_4_0 = PlayerPrefsHelper.getString("checkAudioChatperIdsKey", "")
+
+	arg_4_0._chatperIdsToCheckAudio = arg_4_0:addInputText(arg_4_0:getLineGroup(), var_4_0, "", arg_4_0._onChatperIdsChange, arg_4_0, {
 		w = 500,
 		h = 200,
 		align = UnityEngine.TextAnchor.UpperLeft
 	})
 
-	slot0:addLabel(slot0:getLineGroup(), "角色活动:", {
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "角色活动:", {
 		fsize = 30,
 		align = TMPro.TextAlignmentOptions.TopLeft
 	})
 
-	slot0._charActCfgsToCheckAudio = slot0:addInputText(slot0:getLineGroup(), PlayerPrefsHelper.getString("checkAudioCharActCfgsKey", ""), "", slot0._onCharActCfgsChange, slot0, {
+	local var_4_1 = PlayerPrefsHelper.getString("checkAudioCharActCfgsKey", "")
+
+	arg_4_0._charActCfgsToCheckAudio = arg_4_0:addInputText(arg_4_0:getLineGroup(), var_4_1, "", arg_4_0._onCharActCfgsChange, arg_4_0, {
 		w = 500,
 		h = 200,
 		align = UnityEngine.TextAnchor.UpperLeft
 	})
 
-	slot0:addLineIndex()
-	slot0:addLabel(slot0:getLineGroup(), "音频Id调用:\n[表,字段1,字段2|表，字段]", {
+	arg_4_0:addLineIndex()
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "音频Id调用:\n[表,字段1,字段2|表，字段]", {
 		fsize = 30,
 		align = TMPro.TextAlignmentOptions.TopLeft
 	})
 
-	slot8 = slot0
-	slot0._charAudioIdInConfig = slot0:addInputText(slot0:getLineGroup(), PlayerPrefsHelper.getString("checkAudioIdInConfigKey", ""), "", slot0._CallAudioInConfig, slot8, {
+	local var_4_2 = PlayerPrefsHelper.getString("checkAudioIdInConfigKey", "")
+
+	arg_4_0._charAudioIdInConfig = arg_4_0:addInputText(arg_4_0:getLineGroup(), var_4_2, "", arg_4_0._CallAudioInConfig, arg_4_0, {
 		w = 600,
 		h = 200,
 		align = UnityEngine.TextAnchor.UpperLeft
 	})
-	slot0._textCheckAudioIdInConfig = slot0:addButton(slot0:getLineGroup(), "调用配置音效", slot0._callAudioInConfig, slot0)[2]
+	arg_4_0._textCheckAudioIdInConfig = arg_4_0:addButton(arg_4_0:getLineGroup(), "调用配置音效", arg_4_0._callAudioInConfig, arg_4_0)[2]
 
-	slot0:addLineIndex()
-	slot0:addButton(slot0:getLineGroup(), "检查音效配置项", slot0._onClickCheckAudio1, slot0)
-	slot0:addLineIndex()
-	slot0:addButton(slot0:getLineGroup(), "检查冗余音效", slot0._onClickCheckAudioResource, slot0)
-	slot0:addLabel(slot0:getLineGroup(), "（检查不在音效表和代码中的音效）", {
+	arg_4_0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "检查音效配置项", arg_4_0._onClickCheckAudio1, arg_4_0)
+	arg_4_0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "检查冗余音效", arg_4_0._onClickCheckAudioResource, arg_4_0)
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "（检查不在音效表和代码中的音效）", {
 		fsize = 30
 	})
-	slot0:addLineIndex()
-	slot0:addButton(slot0:getLineGroup(), "检查Bnk文件冗余", slot0._checkAudioResInSoundbanksInfoXml, slot0)
-	slot0:addButton(slot0:getLineGroup(), "检查Bnk多语言缺失", slot0._checkBnkLangInSoundbanksInfoXml, slot0)
-	slot0:addLabel(slot0:getLineGroup(), "(扫描本地文件和Soundbanksinfo中音频文件资源)", {
+	arg_4_0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "检查Bnk文件冗余", arg_4_0._checkAudioResInSoundbanksInfoXml, arg_4_0)
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "检查Bnk多语言缺失", arg_4_0._checkBnkLangInSoundbanksInfoXml, arg_4_0)
+	arg_4_0:addLabel(arg_4_0:getLineGroup(), "(扫描本地文件和Soundbanksinfo中音频文件资源)", {
 		fsize = 26
 	})
-	slot0:addLineIndex()
-	slot0:addButton(slot0:getLineGroup(), "释放音效Bnk", slot0._onReleaseAudioResource, slot0)
+	arg_4_0:addLineIndex()
+	arg_4_0:addButton(arg_4_0:getLineGroup(), "释放音效Bnk", arg_4_0._onReleaseAudioResource, arg_4_0)
 
-	slot0.autoStopPrePlayingId = true
-	slot0.prePlayingId = 0
-	slot0.curLang = GameConfig:GetCurVoiceShortcut()
-	slot0._autoStopToggle.isOn = slot0.autoStopPrePlayingId
-	slot0._showLogToggle.isOn = GMController.instance:getShowAudioLog()
-	slot0.langList = {}
-	slot4 = 0
+	arg_4_0.autoStopPrePlayingId = true
+	arg_4_0.prePlayingId = 0
+	arg_4_0.curLang = GameConfig:GetCurVoiceShortcut()
+	arg_4_0._autoStopToggle.isOn = arg_4_0.autoStopPrePlayingId
+	arg_4_0._showLogToggle.isOn = GMController.instance:getShowAudioLog()
+	arg_4_0.langList = {}
 
-	for slot8 = 0, GameConfig:GetSupportedVoiceShortcuts().Length - 1 do
-		slot9 = slot2[slot8]
+	local var_4_3 = GameConfig:GetSupportedVoiceShortcuts()
+	local var_4_4 = var_4_3.Length
+	local var_4_5 = 0
 
-		table.insert(slot0.langList, slot9)
+	for iter_4_0 = 0, var_4_4 - 1 do
+		local var_4_6 = var_4_3[iter_4_0]
 
-		if slot9 == slot0.curLang then
-			slot4 = slot8
+		table.insert(arg_4_0.langList, var_4_6)
+
+		if var_4_6 == arg_4_0.curLang then
+			var_4_5 = iter_4_0
 		end
 	end
 
-	slot0._langDrop:ClearOptions()
-	slot0._langDrop:AddOptions(slot0.langList)
-	slot0._langDrop:SetValue(slot4)
+	arg_4_0._langDrop:ClearOptions()
+	arg_4_0._langDrop:AddOptions(arg_4_0.langList)
+	arg_4_0._langDrop:SetValue(var_4_5)
 
-	slot0._inited = true
+	arg_4_0._inited = true
 end
 
-function slot0._onClickAudioPlay(slot0)
-	if not string.nilorempty(slot0._inpAudio:GetText()) and tonumber(slot1) then
-		if slot0.autoStopPrePlayingId then
-			slot0:stopPlayingID()
+function var_0_0._onClickAudioPlay(arg_5_0)
+	local var_5_0 = arg_5_0._inpAudio:GetText()
+
+	if not string.nilorempty(var_5_0) then
+		local var_5_1 = tonumber(var_5_0)
+
+		if var_5_1 then
+			if arg_5_0.autoStopPrePlayingId then
+				arg_5_0:stopPlayingID()
+			end
+
+			arg_5_0.prePlayingId = AudioMgr.instance:trigger(var_5_1)
 		end
-
-		slot0.prePlayingId = AudioMgr.instance:trigger(slot2)
 	end
 end
 
-function slot0._getVoiceEmitter(slot0)
-	if not slot0._emitter then
-		slot0._emitter = ZProj.AudioEmitter.Get(slot0.viewGO)
+function var_0_0._getVoiceEmitter(arg_6_0)
+	if not arg_6_0._emitter then
+		arg_6_0._emitter = ZProj.AudioEmitter.Get(arg_6_0.viewGO)
 	end
 
-	return slot0._emitter
+	return arg_6_0._emitter
 end
 
-function slot0._onClickAudioStop(slot0)
-	slot0:stopPlayingID()
+function var_0_0._onClickAudioStop(arg_7_0)
+	arg_7_0:stopPlayingID()
 end
 
-function slot0.stopPlayingID(slot0)
-	AudioMgr.instance:stopPlayingID(slot0.prePlayingId)
+function var_0_0.stopPlayingID(arg_8_0)
+	AudioMgr.instance:stopPlayingID(arg_8_0.prePlayingId)
 end
 
-function slot0._onAutoStopChange(slot0, slot1, slot2)
-	slot0.autoStopPrePlayingId = slot2
+function var_0_0._onAutoStopChange(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.autoStopPrePlayingId = arg_9_2
 end
 
-function slot0._onShowLogChange(slot0, slot1, slot2)
-	if GMController.instance:getShowAudioLog() == slot2 then
+function var_0_0._onShowLogChange(arg_10_0, arg_10_1, arg_10_2)
+	if GMController.instance:getShowAudioLog() == arg_10_2 then
 		return
 	end
 
-	AudioMgr.GMOpenLog = slot2
-	ZProj.AudioManager.Instance.gmOpenLog = slot2
+	AudioMgr.GMOpenLog = arg_10_2
+	ZProj.AudioManager.Instance.gmOpenLog = arg_10_2
 
-	GMController.instance:setShowAudioLog(slot2)
+	GMController.instance:setShowAudioLog(arg_10_2)
 end
 
-function slot0._onClickEventPlay(slot0)
-	slot2 = slot0._inpBank:GetText()
+function var_0_0._onClickEventPlay(arg_11_0)
+	local var_11_0 = arg_11_0._inpEvent:GetText()
+	local var_11_1 = arg_11_0._inpBank:GetText()
 
-	if string.nilorempty(slot0._inpEvent:GetText()) then
+	if string.nilorempty(var_11_0) then
 		return
 	end
 
-	if string.nilorempty(slot2) then
+	if string.nilorempty(var_11_1) then
 		return
 	end
 
-	slot0:initAudioEditorTool()
+	arg_11_0:initAudioEditorTool()
 
-	if slot0.autoStopPrePlayingId then
-		slot0:stopPlayingID()
+	if arg_11_0.autoStopPrePlayingId then
+		arg_11_0:stopPlayingID()
 	end
 
-	slot0.prePlayingId = slot0.audioTool:PlayEvent(slot1, slot2)
+	arg_11_0.prePlayingId = arg_11_0.audioTool:PlayEvent(var_11_0, var_11_1)
 end
 
-function slot0._onClickEventStop(slot0)
-	slot0:stopPlayingID()
+function var_0_0._onClickEventStop(arg_12_0)
+	arg_12_0:stopPlayingID()
 end
 
-function slot0.initAudioEditorTool(slot0)
-	if not slot0.audioTool then
-		slot0.audioTool = ZProj.AudioEditorTool.Instance
+function var_0_0.initAudioEditorTool(arg_13_0)
+	if not arg_13_0.audioTool then
+		arg_13_0.audioTool = ZProj.AudioEditorTool.Instance
 	end
 end
 
-function slot0._onLangDropChange(slot0, slot1)
-	if slot0.langList[slot1 + 1] == slot0.curLang then
+function var_0_0._onLangDropChange(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.langList[arg_14_1 + 1]
+
+	if var_14_0 == arg_14_0.curLang then
 		return
 	end
 
-	slot0.curLang = slot2
+	arg_14_0.curLang = var_14_0
 
-	slot0:stopPlayingID()
-	slot0:initAudioEditorTool()
-	slot0.audioTool:SetLanguage(slot0.curLang)
+	arg_14_0:stopPlayingID()
+	arg_14_0:initAudioEditorTool()
+	arg_14_0.audioTool:SetLanguage(arg_14_0.curLang)
 end
 
-function slot0._onClickSetRtpc(slot0)
-	slot2 = slot0._inpRtpcValue:GetText()
+function var_0_0._onClickSetRtpc(arg_15_0)
+	local var_15_0 = arg_15_0._inpRtpcName:GetText()
+	local var_15_1 = arg_15_0._inpRtpcValue:GetText()
 
-	if string.nilorempty(slot0._inpRtpcName:GetText()) then
+	if string.nilorempty(var_15_0) then
 		return
 	end
 
-	if string.nilorempty(slot2) then
+	if string.nilorempty(var_15_1) then
 		return
 	end
 
-	if not tonumber(slot2) then
+	local var_15_2 = tonumber(var_15_1)
+
+	if not var_15_2 then
 		return
 	end
 
-	slot0:initAudioEditorTool()
-	slot0.audioTool:SetRtpc(slot1, slot2)
+	arg_15_0:initAudioEditorTool()
+	arg_15_0.audioTool:SetRtpc(var_15_0, var_15_2)
 end
 
-function slot0._onClickSwitch(slot0)
-	slot2 = slot0._inpSwitchValue:GetText()
+function var_0_0._onClickSwitch(arg_16_0)
+	local var_16_0 = arg_16_0._inpSwitchName:GetText()
+	local var_16_1 = arg_16_0._inpSwitchValue:GetText()
 
-	if string.nilorempty(slot0._inpSwitchName:GetText()) then
+	if string.nilorempty(var_16_0) then
 		return
 	end
 
-	if string.nilorempty(slot2) then
+	if string.nilorempty(var_16_1) then
 		return
 	end
 
-	slot0:initAudioEditorTool()
-	slot0.audioTool:SetSwitch(slot1, slot2)
+	arg_16_0:initAudioEditorTool()
+	arg_16_0.audioTool:SetSwitch(var_16_0, var_16_1)
 end
 
-function slot0._onChatperIdsChange(slot0, slot1)
-	PlayerPrefsHelper.setString("checkAudioChatperIdsKey", slot1)
+function var_0_0._onChatperIdsChange(arg_17_0, arg_17_1)
+	PlayerPrefsHelper.setString("checkAudioChatperIdsKey", arg_17_1)
 end
 
-function slot0._onCharActCfgsChange(slot0, slot1)
-	PlayerPrefsHelper.setString("checkAudioCharActCfgsKey", slot1)
+function var_0_0._onCharActCfgsChange(arg_18_0, arg_18_1)
+	PlayerPrefsHelper.setString("checkAudioCharActCfgsKey", arg_18_1)
 end
 
-function slot0._onCharAudioIdInConfigKeyChange(slot0, slot1)
-	PlayerPrefsHelper.setString("checkAudioIdInConfigKey", slot1)
+function var_0_0._onCharAudioIdInConfigKeyChange(arg_19_0, arg_19_1)
+	PlayerPrefsHelper.setString("checkAudioIdInConfigKey", arg_19_1)
 end
 
-function slot0._onClickCheckAudio1(slot0)
+function var_0_0._onClickCheckAudio1(arg_20_0)
 	logNormal("检查音效配置项--------------------------------")
 
-	slot0._audioConfigs = {}
+	arg_20_0._audioConfigs = {}
 
-	slot0:_checkAudioConfigs(lua_role_audio, "Y音效表.xlsx export_角色语音")
-	slot0:_checkAudioConfigs(lua_ui_audio, "Y音效表-UI音效表.xlsx export_UI音效")
-	slot0:_checkAudioConfigs(lua_bg_audio, "Y音效表-战斗&场景音效表.xlsx export_背景音乐")
-	slot0:_checkAudioConfigs(lua_fight_audio, "Y音效表-战斗&场景音效表.xlsx export_战斗音效")
-	slot0:_checkAudioConfigs(lua_story_audio, "Y音效表.xlsx export_剧情音效")
-	slot0:_checkAudioConfigs(lua_story_audio_main, "Y剧情配音2.0.xlsx export_主线剧情配音")
-	slot0:_checkAudioConfigs(lua_story_audio_branch, "Y剧情配音2.0.xlsx export_支线剧情配音")
-	slot0:_checkAudioConfigs(lua_story_audio_system, "Y剧情配音2.0.xlsx export_系统剧情配音")
-	slot0:_checkAudioConfigs(lua_story_audio_role, "Y剧情配音2.0.xlsx export_角色语音")
-	slot0:_checkAudioConfigs(lua_story_audio_effect, "Y剧情配音2.0.xlsx export_剧情音效")
-	slot0:_checkAudioConfigs(lua_story_audio_short, "Y剧情配音2.0.xlsx export_短语音")
-	slot0:_checkAudioConfigs(lua_story_role_audio, "Y音效表.xlsx export_剧情配音")
-	slot0:_checkAudioConfigs(lua_effect_audio, "Y音效表-战斗&场景音效表.xlsx export_特效音效")
-	slot0:_checkLowerName(slot0._audioConfigs)
-	logNormal("count = " .. #slot0._audioConfigs)
-	ZProj.AudioManager.Instance:SetErrorCallback(slot0._onErrorCallback, slot0)
-	TaskDispatcher.runRepeat(slot0._checkPlayConfigAudio, slot0, 0.1)
+	arg_20_0:_checkAudioConfigs(lua_role_audio, "Y音效表.xlsx export_角色语音")
+	arg_20_0:_checkAudioConfigs(lua_ui_audio, "Y音效表-UI音效表.xlsx export_UI音效")
+	arg_20_0:_checkAudioConfigs(lua_bg_audio, "Y音效表-战斗&场景音效表.xlsx export_背景音乐")
+	arg_20_0:_checkAudioConfigs(lua_fight_audio, "Y音效表-战斗&场景音效表.xlsx export_战斗音效")
+	arg_20_0:_checkAudioConfigs(lua_story_audio, "Y音效表.xlsx export_剧情音效")
+	arg_20_0:_checkAudioConfigs(lua_story_audio_main, "Y剧情配音2.0.xlsx export_主线剧情配音")
+	arg_20_0:_checkAudioConfigs(lua_story_audio_branch, "Y剧情配音2.0.xlsx export_支线剧情配音")
+	arg_20_0:_checkAudioConfigs(lua_story_audio_system, "Y剧情配音2.0.xlsx export_系统剧情配音")
+	arg_20_0:_checkAudioConfigs(lua_story_audio_role, "Y剧情配音2.0.xlsx export_角色语音")
+	arg_20_0:_checkAudioConfigs(lua_story_audio_effect, "Y剧情配音2.0.xlsx export_剧情音效")
+	arg_20_0:_checkAudioConfigs(lua_story_audio_short, "Y剧情配音2.0.xlsx export_短语音")
+	arg_20_0:_checkAudioConfigs(lua_story_role_audio, "Y音效表.xlsx export_剧情配音")
+	arg_20_0:_checkAudioConfigs(lua_effect_audio, "Y音效表-战斗&场景音效表.xlsx export_特效音效")
+	arg_20_0:_checkLowerName(arg_20_0._audioConfigs)
+	logNormal("count = " .. #arg_20_0._audioConfigs)
+	ZProj.AudioManager.Instance:SetErrorCallback(arg_20_0._onErrorCallback, arg_20_0)
+	TaskDispatcher.runRepeat(arg_20_0._checkPlayConfigAudio, arg_20_0, 0.1)
 end
 
-function slot0._checkAudioConfigs(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1.configList) do
-		if slot7.id and slot7.id > 0 and not tabletool.indexOf(slot0._audioConfigs, slot7.id) then
-			table.insert(slot0._audioConfigs, slot7.id)
+function var_0_0._checkAudioConfigs(arg_21_0, arg_21_1, arg_21_2)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_1.configList) do
+		if iter_21_1.id and iter_21_1.id > 0 and not tabletool.indexOf(arg_21_0._audioConfigs, iter_21_1.id) then
+			table.insert(arg_21_0._audioConfigs, iter_21_1.id)
 
-			slot0._audioId2Excel = slot0._audioId2Excel or {}
-			slot0._audioId2Excel[slot7.id] = slot2
+			arg_21_0._audioId2Excel = arg_21_0._audioId2Excel or {}
+			arg_21_0._audioId2Excel[iter_21_1.id] = arg_21_2
 		end
 	end
 end
 
-function slot0._checkLowerName(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0._checkLowerName(arg_22_0, arg_22_1)
+	local var_22_0 = {}
+	local var_22_1 = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = AudioConfig.instance:getAudioCOById(slot8)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
+		local var_22_2 = AudioConfig.instance:getAudioCOById(iter_22_1)
 
-		if string.lower(slot9.bankName) ~= slot9.bankName and not slot3[slot9.bankName] then
-			slot3[slot9.bankName] = true
+		if string.lower(var_22_2.bankName) ~= var_22_2.bankName and not var_22_1[var_22_2.bankName] then
+			var_22_1[var_22_2.bankName] = true
 
-			table.insert(slot2, "bank: " .. slot9.bankName)
+			table.insert(var_22_0, "bank: " .. var_22_2.bankName)
 		end
 
-		if string.lower(slot9.eventName) ~= slot9.eventName then
-			table.insert(slot2, "event: " .. slot9.eventName)
+		if string.lower(var_22_2.eventName) ~= var_22_2.eventName then
+			table.insert(var_22_0, "event: " .. var_22_2.eventName)
 		end
 	end
 
-	if #slot2 > 0 then
-		logError("大小写问题：\n" .. table.concat(slot2, "\n"))
+	if #var_22_0 > 0 then
+		logError("大小写问题：\n" .. table.concat(var_22_0, "\n"))
 	end
 end
 
-function slot0._checkPlayConfigAudio(slot0)
-	if slot0._audioConfigs and #slot0._audioConfigs > 0 then
-		for slot5 = 1, 1000 do
-			if table.remove(slot0._audioConfigs, #slot0._audioConfigs) then
-				if #slot0._audioConfigs % 100 == 0 and not false then
-					GameFacade.showToast(ToastEnum.IconId, "剩余" .. #slot0._audioConfigs)
+function var_0_0._checkPlayConfigAudio(arg_23_0)
+	if arg_23_0._audioConfigs and #arg_23_0._audioConfigs > 0 then
+		local var_23_0 = false
 
-					slot1 = true
+		for iter_23_0 = 1, 1000 do
+			local var_23_1 = table.remove(arg_23_0._audioConfigs, #arg_23_0._audioConfigs)
+
+			if var_23_1 then
+				if #arg_23_0._audioConfigs % 100 == 0 and not var_23_0 then
+					GameFacade.showToast(ToastEnum.IconId, "剩余" .. #arg_23_0._audioConfigs)
+
+					var_23_0 = true
 				end
 
-				if not slot0:_triggerAudio(slot6) then
-					slot0._errorAudioId = slot6
+				if not arg_23_0:_triggerAudio(var_23_1) then
+					arg_23_0._errorAudioId = var_23_1
 
 					return
 				end
 			else
 				GameFacade.showToast(ToastEnum.IconId, "检查完毕")
-				slot0:_logAudioError()
-				ZProj.AudioManager.Instance:SetErrorCallback(nil, )
-				TaskDispatcher.cancelTask(slot0._checkPlayConfigAudio, slot0)
+				arg_23_0:_logAudioError()
+				ZProj.AudioManager.Instance:SetErrorCallback(nil, nil)
+				TaskDispatcher.cancelTask(arg_23_0._checkPlayConfigAudio, arg_23_0)
 
 				break
 			end
@@ -367,32 +392,36 @@ function slot0._checkPlayConfigAudio(slot0)
 	end
 end
 
-function slot0._triggerAudio(slot0, slot1)
-	if slot1 > 0 and slot0:_getAudioConfig(slot1) and AudioMgr.instance:trigger(slot1) > 0 then
-		AudioMgr.instance:stopPlayingID(slot2)
+function var_0_0._triggerAudio(arg_24_0, arg_24_1)
+	if arg_24_1 > 0 and arg_24_0:_getAudioConfig(arg_24_1) then
+		local var_24_0 = AudioMgr.instance:trigger(arg_24_1)
 
-		return true
+		if var_24_0 > 0 then
+			AudioMgr.instance:stopPlayingID(var_24_0)
+
+			return true
+		end
 	end
 end
 
-function slot0._getAudioConfig(slot0, slot1)
-	return AudioConfig.instance:getAudioCOById(slot1)
+function var_0_0._getAudioConfig(arg_25_0, arg_25_1)
+	return AudioConfig.instance:getAudioCOById(arg_25_1)
 end
 
-function slot0._onClickCheckAudioCall(slot0)
-	slot0:_CheckAudioCall()
+function var_0_0._onClickCheckAudioCall(arg_26_0)
+	arg_26_0:_CheckAudioCall()
 end
 
-function slot0._CheckAudioCall(slot0)
-	slot0._checkAudioTextStr = slot0._textCheckAudio2.text
+function var_0_0._CheckAudioCall(arg_27_0)
+	arg_27_0._checkAudioTextStr = arg_27_0._textCheckAudio2.text
 
 	logNormal("检查音效调用--------------------------------")
 
-	slot0._callAudioIdList = {}
+	arg_27_0._callAudioIdList = {}
 
-	slot0:_checkAddConfigCallAudios(lua_character_voice, "audio", "J角色语音表.xlsx export_角色语音")
-	slot0:_checkAddConfigCallAudios(lua_effect_with_audio, "audioId", "T特效音效表.xlsx export_特效音效")
-	slot0:_checkAddConfigCallAudios(lua_fight_voice, {
+	arg_27_0:_checkAddConfigCallAudios(lua_character_voice, "audio", "J角色语音表.xlsx export_角色语音")
+	arg_27_0:_checkAddConfigCallAudios(lua_effect_with_audio, "audioId", "T特效音效表.xlsx export_特效音效")
+	arg_27_0:_checkAddConfigCallAudios(lua_fight_voice, {
 		"audio_type1",
 		"audio_type2",
 		"audio_type3",
@@ -404,99 +433,106 @@ function slot0._CheckAudioCall(slot0)
 		"audio_type9",
 		"audio_type10"
 	}, "J角色语音表.xlsx export_角色战斗语音")
-	slot0:_checkAddConfigCallAudios(lua_guide_step, "audio", "Z指引表.xlsx export_指引步骤")
-	slot0:_checkAddConfigCallAudios(lua_skill_behavior, "audioId", "J技能表.xlsx export_技能效果")
-	slot0:_checkAddConfigCallAudios(lua_skill_buff, {
+	arg_27_0:_checkAddConfigCallAudios(lua_guide_step, "audio", "Z指引表.xlsx export_指引步骤")
+	arg_27_0:_checkAddConfigCallAudios(lua_skill_behavior, "audioId", "J技能表.xlsx export_技能效果")
+	arg_27_0:_checkAddConfigCallAudios(lua_skill_buff, {
 		"audio",
 		"triggerAudio",
 		"delAudio"
 	}, "J技能表.xlsx export_buff")
-	slot0:_checkAddConfigCallAudios(lua_buff_act, "audioId", "J技能表.xlsx export_基础buff效果")
-	slot0:_checkAddConfigCallAudios(lua_skin_spine_action, "audioId", "P皮肤表.xlsx export_战斗动作表现")
-	slot0:_checkAddConfigCallAudios(lua_chapter_map_element_dialog, "audio", "F副本表.xlsx export_元件对话")
-	slot0:_checkAddConfigCallAudios(lua_battle_dialog, "audioId", "Z战斗喊话表.xlsx export_战斗喊话")
-	slot0:_checkAddConfigCallAudios(lua_fight_debut_show, "audioId", "Z战斗补丁-出场表现表.xlsx export_出场表现")
-	slot0:_checkAddConfigCallAudios(lua_fight_summon_show, "audioId", "Z战斗补丁-召唤表现表.xlsx export_召唤表现")
-	slot0:_checkAddConfigCallAudios(lua_guide_step_addition, "audio", "Z指引表.xlsx export_附加步骤")
-	slot0:_checkAddConfigCallAudios(lua_production_part, "audio", "X小屋.xlsx export_枢纽部件")
-	slot0:_checkAddConfigCallAudios(lua_room_audio_extend, "audioId", "X小屋地块包表.xlsx export_音效拓展")
-	slot0:_checkAddConfigCallAudios(lua_character_shop_voice, "audio", "J角色语音表.xlsx export_商店语音表")
-	slot0:_checkAddConfigCallAudios(lua_explore_dialogue, "audio", "M密室探索表.xlsx export_对话")
-	slot0:_checkAddConfigCallAudios(lua_explore_hero_effect, "audioId", "M密室探索表.xlsx export_角色特效")
-	slot0:_checkAddConfigCallAudios(lua_explore_item, "audioId", "M密室探索表.xlsx export_物品")
-	slot0:_checkAddConfigCallAudios(lua_explore_unit_effect, "audioId", "M密室探索表.xlsx export_元件特效")
-	slot0:_checkAddConfigCallAudios(lua_toast, "audioId", "P飘字表.xlsx export_飘字表")
-	slot0:_checkAddConfigCallAudios(lua_character_limited, {
+	arg_27_0:_checkAddConfigCallAudios(lua_buff_act, "audioId", "J技能表.xlsx export_基础buff效果")
+	arg_27_0:_checkAddConfigCallAudios(lua_skin_spine_action, "audioId", "P皮肤表.xlsx export_战斗动作表现")
+	arg_27_0:_checkAddConfigCallAudios(lua_chapter_map_element_dialog, "audio", "F副本表.xlsx export_元件对话")
+	arg_27_0:_checkAddConfigCallAudios(lua_battle_dialog, "audioId", "Z战斗喊话表.xlsx export_战斗喊话")
+	arg_27_0:_checkAddConfigCallAudios(lua_fight_debut_show, "audioId", "Z战斗补丁-出场表现表.xlsx export_出场表现")
+	arg_27_0:_checkAddConfigCallAudios(lua_fight_summon_show, "audioId", "Z战斗补丁-召唤表现表.xlsx export_召唤表现")
+	arg_27_0:_checkAddConfigCallAudios(lua_guide_step_addition, "audio", "Z指引表.xlsx export_附加步骤")
+	arg_27_0:_checkAddConfigCallAudios(lua_production_part, "audio", "X小屋.xlsx export_枢纽部件")
+	arg_27_0:_checkAddConfigCallAudios(lua_room_audio_extend, "audioId", "X小屋地块包表.xlsx export_音效拓展")
+	arg_27_0:_checkAddConfigCallAudios(lua_character_shop_voice, "audio", "J角色语音表.xlsx export_商店语音表")
+	arg_27_0:_checkAddConfigCallAudios(lua_explore_dialogue, "audio", "M密室探索表.xlsx export_对话")
+	arg_27_0:_checkAddConfigCallAudios(lua_explore_hero_effect, "audioId", "M密室探索表.xlsx export_角色特效")
+	arg_27_0:_checkAddConfigCallAudios(lua_explore_item, "audioId", "M密室探索表.xlsx export_物品")
+	arg_27_0:_checkAddConfigCallAudios(lua_explore_unit_effect, "audioId", "M密室探索表.xlsx export_元件特效")
+	arg_27_0:_checkAddConfigCallAudios(lua_toast, "audioId", "P飘字表.xlsx export_飘字表")
+	arg_27_0:_checkAddConfigCallAudios(lua_character_limited, {
 		"audio",
 		"stopAudio"
 	}, "J角色限定表现.xlsx export_限定角色表现")
-	slot0:_checkAddConfigCallAudios(lua_chapter_map, "effectAudio", "F副本表.xlsx export_主线地图")
-	slot0:_checkAddConfigCallAudios(lua_bgm_switch, "audio", "B背景音效切换.xlsx export_背景音效切换")
-	slot0:_checkAddConfigCallAudios(lua_fairyland_puzzle_talk, "audioId", "H幻境.xlsx export_幻境对话")
-	slot0:_checkAddConfigCallAudios(lua_fight_buff_layer_effect, {
+	arg_27_0:_checkAddConfigCallAudios(lua_chapter_map, "effectAudio", "F副本表.xlsx export_主线地图")
+	arg_27_0:_checkAddConfigCallAudios(lua_bgm_switch, "audio", "B背景音效切换.xlsx export_背景音效切换")
+	arg_27_0:_checkAddConfigCallAudios(lua_fairyland_puzzle_talk, "audioId", "H幻境.xlsx export_幻境对话")
+	arg_27_0:_checkAddConfigCallAudios(lua_fight_buff_layer_effect, {
 		"loopEffectAudio",
 		"createAudio",
 		"destroyEffectAudio"
 	}, "Z战斗配置-buff层数特效.xlsx export_buff层数特效")
-	slot0:_checkAddConfigCallAudios(lua_fight_effect_buff_skin, "audio", "Z战斗补丁-被动特效对应皮肤表.xlsx export_释放技能后延迟")
-	slot0:_checkAddConfigCallAudios(lua_magic_circle, {
+	arg_27_0:_checkAddConfigCallAudios(lua_fight_effect_buff_skin, "audio", "Z战斗补丁-被动特效对应皮肤表.xlsx export_释放技能后延迟")
+	arg_27_0:_checkAddConfigCallAudios(lua_magic_circle, {
 		"enterAudio",
 		"closeAudio"
 	}, "S术阵表.xlsx export_法阵")
-	slot0:_checkAddConfigCallAudios(lua_room_building, "placeAudio", "X小屋地块包表.xlsx export_建筑")
-	slot0:_checkAddConfigCallAudios(lua_room_character_interaction, "buildingAudio", "X小屋角色表.xlsx export_角色交互")
-	slot0:_checkAddConfigCallAudios(lua_room_effect, "audioId", "X小屋.xlsx export_特效配置")
-	slot0:_checkAddConfigCallAudios(lua_room_vehicle, {
+	arg_27_0:_checkAddConfigCallAudios(lua_room_building, "placeAudio", "X小屋地块包表.xlsx export_建筑")
+	arg_27_0:_checkAddConfigCallAudios(lua_room_character_interaction, "buildingAudio", "X小屋角色表.xlsx export_角色交互")
+	arg_27_0:_checkAddConfigCallAudios(lua_room_effect, "audioId", "X小屋.xlsx export_特效配置")
+	arg_27_0:_checkAddConfigCallAudios(lua_room_vehicle, {
 		"audioTurn",
 		"audioTurnAround",
 		"audioCrossload",
 		"audioWalk",
 		"audioStop"
 	}, "X小屋地块包表.xlsx export_交通工具")
-	slot0:_checkAddConfigCallAudios(lua_rouge_short_voice, "audioId", "R肉鸽地图表.xlsx export_短语音表")
-	slot0:_checkAddConfigCallAudios(lua_summoned, {
+	arg_27_0:_checkAddConfigCallAudios(lua_rouge_short_voice, "audioId", "R肉鸽地图表.xlsx export_短语音表")
+	arg_27_0:_checkAddConfigCallAudios(lua_summoned, {
 		"enterAudio",
 		"closeAudio"
 	}, "Z召唤物挂件表.xlsx export_召唤物挂件")
-	slot0:_checkAddAudioEnumCall()
-	slot0:_checkTimelineCall(function ()
-		uv0:_checkStoryCall()
+	arg_27_0:_checkAddAudioEnumCall()
+	arg_27_0:_checkTimelineCall(function()
+		arg_27_0:_checkStoryCall()
 	end)
 end
 
-function slot0._checkStoryCall(slot0)
+function var_0_0._checkStoryCall(arg_29_0)
 	if not SLFramework.FrameworkSettings.IsEditor then
-		slot0._storyLoaded = true
+		arg_29_0._storyLoaded = true
 
 		return
 	end
 
-	slot3 = {}
+	local var_29_0 = SLFramework.FrameworkSettings.AssetRootDir .. "/configs/story/steps/"
+	local var_29_1 = SLFramework.FileHelper.GetDirFilePaths(var_29_0)
+	local var_29_2 = {}
+	local var_29_3 = var_29_1.Length
 
-	for slot8 = 0, SLFramework.FileHelper.GetDirFilePaths(SLFramework.FrameworkSettings.AssetRootDir .. "/configs/story/steps/").Length - 1 do
-		if string.sub(slot2[slot8], -5) == ".json" then
-			table.insert(slot3, string.getLastNum(slot9))
+	for iter_29_0 = 0, var_29_3 - 1 do
+		local var_29_4 = var_29_1[iter_29_0]
+
+		if string.sub(var_29_4, -5) == ".json" then
+			local var_29_5 = string.getLastNum(var_29_4)
+
+			table.insert(var_29_2, var_29_5)
 		end
 	end
 
-	slot0._loadStoryCount = #slot3
-	slot0._storyAudioIdDict = {}
+	arg_29_0._loadStoryCount = #var_29_2
+	arg_29_0._storyAudioIdDict = {}
 
-	for slot8, slot9 in ipairs(slot3) do
-		StoryController.instance:initStoryData(slot9, function ()
-			uv0:_loadStoryStepConfigCallback(uv1)
+	for iter_29_1, iter_29_2 in ipairs(var_29_2) do
+		StoryController.instance:initStoryData(iter_29_2, function()
+			arg_29_0:_loadStoryStepConfigCallback(iter_29_2)
 		end)
 	end
 end
 
-function slot0._checkAddAudioEnumCall(slot0)
-	slot1 = {}
+function var_0_0._checkAddAudioEnumCall(arg_31_0)
+	local var_31_0 = {}
 
-	for slot5, slot6 in pairs(AudioEnum) do
-		if type(slot6) == "table" then
-			for slot10, slot11 in pairs(slot6) do
-				if type(slot11) == "number" and slot11 > 500000 then
-					slot0:_tableAddValues(slot1, slot6, "代码调用 AudioEnum." .. slot5)
+	for iter_31_0, iter_31_1 in pairs(AudioEnum) do
+		if type(iter_31_1) == "table" then
+			for iter_31_2, iter_31_3 in pairs(iter_31_1) do
+				if type(iter_31_3) == "number" and iter_31_3 > 500000 then
+					arg_31_0:_tableAddValues(var_31_0, iter_31_1, "代码调用 AudioEnum." .. iter_31_0)
 				end
 
 				break
@@ -504,290 +540,349 @@ function slot0._checkAddAudioEnumCall(slot0)
 		end
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		if not tabletool.indexOf(slot0._callAudioIdList, slot6[1]) and tonumber(slot7) then
-			table.insert(slot0._callAudioIdList, slot7)
+	for iter_31_4, iter_31_5 in pairs(var_31_0) do
+		local var_31_1 = iter_31_5[1]
+		local var_31_2 = iter_31_5[2]
 
-			slot0._audioId2CallExcel = slot0._audioId2CallExcel or {}
-			slot0._audioId2CallExcel[slot7] = slot6[2]
+		if not tabletool.indexOf(arg_31_0._callAudioIdList, var_31_1) and tonumber(var_31_1) then
+			table.insert(arg_31_0._callAudioIdList, var_31_1)
+
+			arg_31_0._audioId2CallExcel = arg_31_0._audioId2CallExcel or {}
+			arg_31_0._audioId2CallExcel[var_31_1] = var_31_2
 		end
 	end
 end
 
-function slot0._checkAddConfigCallAudios(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot1.configList) do
-		if type(slot2) == "string" then
-			if not tabletool.indexOf(slot0._callAudioIdList, slot8[slot2]) then
-				table.insert(slot0._callAudioIdList, slot9)
+function var_0_0._checkAddConfigCallAudios(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	for iter_32_0, iter_32_1 in ipairs(arg_32_1.configList) do
+		if type(arg_32_2) == "string" then
+			local var_32_0 = iter_32_1[arg_32_2]
 
-				slot0._audioId2CallExcel = slot0._audioId2CallExcel or {}
-				slot0._audioId2CallExcel[slot9] = slot3
+			if not tabletool.indexOf(arg_32_0._callAudioIdList, var_32_0) then
+				table.insert(arg_32_0._callAudioIdList, var_32_0)
+
+				arg_32_0._audioId2CallExcel = arg_32_0._audioId2CallExcel or {}
+				arg_32_0._audioId2CallExcel[var_32_0] = arg_32_3
 			end
-		elseif type(slot2) == "table" then
-			for slot12, slot13 in ipairs(slot2) do
-				if not tabletool.indexOf(slot0._callAudioIdList, slot8[slot13]) then
-					table.insert(slot0._callAudioIdList, slot14)
+		elseif type(arg_32_2) == "table" then
+			for iter_32_2, iter_32_3 in ipairs(arg_32_2) do
+				local var_32_1 = iter_32_1[iter_32_3]
 
-					slot0._audioId2CallExcel = slot0._audioId2CallExcel or {}
-					slot0._audioId2CallExcel[slot14] = slot3
+				if not tabletool.indexOf(arg_32_0._callAudioIdList, var_32_1) then
+					table.insert(arg_32_0._callAudioIdList, var_32_1)
+
+					arg_32_0._audioId2CallExcel = arg_32_0._audioId2CallExcel or {}
+					arg_32_0._audioId2CallExcel[var_32_1] = arg_32_3
 				end
 			end
 		end
 	end
 end
 
-function slot0._checkTimelineCall(slot0, slot1)
-	slot0._timelineLoadedCb = slot1
-	slot0._timelienLoader = MultiAbLoader.New()
-	slot2 = {}
+function var_0_0._checkTimelineCall(arg_33_0, arg_33_1)
+	arg_33_0._timelineLoadedCb = arg_33_1
+	arg_33_0._timelienLoader = MultiAbLoader.New()
 
-	for slot6, slot7 in ipairs(lua_skill.configList) do
-		if not string.nilorempty(slot7.timeline) and not tabletool.indexOf(slot2, FightHelper.getRolesTimelinePath(slot7.timeline)) and SLFramework.FileHelper.IsFileExists(SLFramework.FrameworkSettings.AssetRootDir .. "/" .. slot8) then
-			table.insert(slot2, slot8)
+	local var_33_0 = {}
+
+	for iter_33_0, iter_33_1 in ipairs(lua_skill.configList) do
+		if not string.nilorempty(iter_33_1.timeline) then
+			local var_33_1 = FightHelper.getRolesTimelinePath(iter_33_1.timeline)
+
+			if not tabletool.indexOf(var_33_0, var_33_1) then
+				local var_33_2 = SLFramework.FrameworkSettings.AssetRootDir .. "/" .. var_33_1
+
+				if SLFramework.FileHelper.IsFileExists(var_33_2) then
+					table.insert(var_33_0, var_33_1)
+				end
+			end
 		end
 	end
 
-	slot0._timelienLoader:setPathList(slot2)
-	slot0._timelienLoader:startLoad(slot0._onLoadTimelineDone, slot0)
+	arg_33_0._timelienLoader:setPathList(var_33_0)
+	arg_33_0._timelienLoader:startLoad(arg_33_0._onLoadTimelineDone, arg_33_0)
 end
 
-function slot0._onLoadTimelineDone(slot0)
-	slot1 = {}
+function var_0_0._onLoadTimelineDone(arg_34_0)
+	local var_34_0 = {}
 
-	for slot5, slot6 in pairs(slot0._timelienLoader:getAssetItemDict()) do
-		if not string.nilorempty(ZProj.SkillTimelineAssetHelper.GeAssetJson(slot6, slot5)) then
-			for slot12 = 1, #cjson.decode(slot7), 2 do
-				if tonumber(slot8[slot12]) == 3 then
-					if tonumber(slot8[slot12 + 1][5]) then
-						slot1[slot15] = true
-						slot0._audioId2CallExcel = slot0._audioId2CallExcel or {}
-						slot0._audioId2CallExcel[slot15] = "Timeline " .. SLFramework.FileHelper.GetFileName(slot5, false)
+	for iter_34_0, iter_34_1 in pairs(arg_34_0._timelienLoader:getAssetItemDict()) do
+		local var_34_1 = ZProj.SkillTimelineAssetHelper.GeAssetJson(iter_34_1, iter_34_0)
+
+		if not string.nilorempty(var_34_1) then
+			local var_34_2 = cjson.decode(var_34_1)
+
+			for iter_34_2 = 1, #var_34_2, 2 do
+				local var_34_3 = tonumber(var_34_2[iter_34_2])
+				local var_34_4 = var_34_2[iter_34_2 + 1]
+
+				if var_34_3 == 3 then
+					local var_34_5 = tonumber(var_34_4[5])
+
+					if var_34_5 then
+						var_34_0[var_34_5] = true
+						arg_34_0._audioId2CallExcel = arg_34_0._audioId2CallExcel or {}
+
+						local var_34_6 = SLFramework.FileHelper.GetFileName(iter_34_0, false)
+
+						arg_34_0._audioId2CallExcel[var_34_5] = "Timeline " .. var_34_6
 					end
-				elseif slot13 == 10 and tonumber(slot14[1]) then
-					slot1[slot15] = true
-					slot0._audioId2CallExcel = slot0._audioId2CallExcel or {}
-					slot0._audioId2CallExcel[slot15] = "Timeline " .. SLFramework.FileHelper.GetFileName(slot5, false)
+				elseif var_34_3 == 10 then
+					local var_34_7 = tonumber(var_34_4[1])
+
+					if var_34_7 then
+						var_34_0[var_34_7] = true
+						arg_34_0._audioId2CallExcel = arg_34_0._audioId2CallExcel or {}
+
+						local var_34_8 = SLFramework.FileHelper.GetFileName(iter_34_0, false)
+
+						arg_34_0._audioId2CallExcel[var_34_7] = "Timeline " .. var_34_8
+					end
 				end
 			end
 		end
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		table.insert(slot0._callAudioIdList, slot5)
+	for iter_34_3, iter_34_4 in pairs(var_34_0) do
+		table.insert(arg_34_0._callAudioIdList, iter_34_3)
 	end
 
-	if slot0._timelineLoadedCb then
-		slot0._timelineLoadedCb()
+	if arg_34_0._timelineLoadedCb then
+		arg_34_0._timelineLoadedCb()
 
-		slot0._timelineLoadedCb = nil
+		arg_34_0._timelineLoadedCb = nil
 	end
 end
 
-function slot0._beginCallAudiosLoop(slot0)
-	for slot5, slot6 in ipairs(slot0._callAudioIdList) do
-		-- Nothing
+function var_0_0._beginCallAudiosLoop(arg_35_0)
+	local var_35_0 = {}
+
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0._callAudioIdList) do
+		var_35_0[iter_35_1] = true
 	end
 
-	slot0._callAudioIdList = {}
+	arg_35_0._callAudioIdList = {}
 
-	for slot5, slot6 in pairs({
-		[slot6] = true
-	}) do
-		table.insert(slot0._callAudioIdList, slot5)
+	for iter_35_2, iter_35_3 in pairs(var_35_0) do
+		table.insert(arg_35_0._callAudioIdList, iter_35_2)
 	end
 
-	slot0._totalAudioCount = #slot0._callAudioIdList
+	arg_35_0._totalAudioCount = #arg_35_0._callAudioIdList
 
-	logNormal("Total audio Id count = " .. slot0._totalAudioCount)
-	ZProj.AudioManager.Instance:SetErrorCallback(slot0._onErrorCallback, slot0)
+	logNormal("Total audio Id count = " .. arg_35_0._totalAudioCount)
+	ZProj.AudioManager.Instance:SetErrorCallback(arg_35_0._onErrorCallback, arg_35_0)
 
-	slot0._callAudioLoopParams = {
+	arg_35_0._callAudioLoopParams = {
 		callAudioPerLoop = 2
 	}
-	slot0._callAudioIdx = 1
-	slot0._releaseAudioThreshold = tonumber(slot0._textCallAudioGCThreshold:GetText()) or 10000
-	slot0._releaseAudioCountNum = 0
+	arg_35_0._callAudioIdx = 1
+	arg_35_0._releaseAudioThreshold = tonumber(arg_35_0._textCallAudioGCThreshold:GetText()) or 10000
+	arg_35_0._releaseAudioCountNum = 0
 
-	logNormal("Audio GC Per " .. slot0._releaseAudioThreshold .. " Audio Call")
-	TaskDispatcher.runRepeat(slot0._callAudiosLoopAction, slot0, 0.01)
+	logNormal("Audio GC Per " .. arg_35_0._releaseAudioThreshold .. " Audio Call")
+	TaskDispatcher.runRepeat(arg_35_0._callAudiosLoopAction, arg_35_0, 0.01)
 end
 
-function slot0._callAudiosLoopAction(slot0)
-	if not slot0._callAudioIdList or #slot0._callAudioIdList == 0 then
-		slot0:_endCallAudiosLoop()
+function var_0_0._callAudiosLoopAction(arg_36_0)
+	if not arg_36_0._callAudioIdList or #arg_36_0._callAudioIdList == 0 then
+		arg_36_0:_endCallAudiosLoop()
 
 		return
 	end
 
-	for slot4 = 1, slot0._callAudioLoopParams.callAudioPerLoop do
-		slot0._callAudioIdx = slot0._callAudioIdx + 1
+	for iter_36_0 = 1, arg_36_0._callAudioLoopParams.callAudioPerLoop do
+		local var_36_0 = arg_36_0._callAudioIdList[arg_36_0._callAudioIdx]
 
-		if slot0._callAudioIdList[slot0._callAudioIdx] then
-			slot0._errorAudioId = nil
+		arg_36_0._callAudioIdx = arg_36_0._callAudioIdx + 1
 
-			if not slot0:_triggerAndStopAudio(slot5) then
-				slot0._errorAudioId = slot5
+		if var_36_0 then
+			local var_36_1 = arg_36_0:_triggerAndStopAudio(var_36_0)
+
+			arg_36_0._errorAudioId = nil
+
+			if not var_36_1 then
+				arg_36_0._errorAudioId = var_36_0
 
 				return
 			end
 		else
-			slot0:_endCallAudiosLoop()
+			arg_36_0:_endCallAudiosLoop()
 
 			return
 		end
 	end
 
-	slot0._textCheckAudio2.text = slot0._callAudioIdx .. "/" .. slot0._totalAudioCount
-	slot0._releaseAudioCountNum = slot0._releaseAudioCountNum + slot0._callAudioLoopParams.callAudioPerLoop
+	arg_36_0._textCheckAudio2.text = arg_36_0._callAudioIdx .. "/" .. arg_36_0._totalAudioCount
+	arg_36_0._releaseAudioCountNum = arg_36_0._releaseAudioCountNum + arg_36_0._callAudioLoopParams.callAudioPerLoop
 
-	if slot0._releaseAudioCountNum == slot0._releaseAudioThreshold then
+	if arg_36_0._releaseAudioCountNum == arg_36_0._releaseAudioThreshold then
 		AudioMgr.instance:clearUnusedBanks()
 
-		slot0._releaseAudioCountNum = 0
+		arg_36_0._releaseAudioCountNum = 0
 
-		logNormal("Call Audio Bnk GC, Cur Call Audio Count:" .. slot0._callAudioIdx)
+		logNormal("Call Audio Bnk GC, Cur Call Audio Count:" .. arg_36_0._callAudioIdx)
 	end
 end
 
-function slot0._endCallAudiosLoop(slot0)
+function var_0_0._endCallAudiosLoop(arg_37_0)
 	logNormal("Check Audio Done")
 	GameFacade.showToast(ToastEnum.IconId, "检查完毕")
-	slot0:_logAudioError()
-	ZProj.AudioManager.Instance:SetErrorCallback(nil, )
-	TaskDispatcher.cancelTask(slot0._callAudiosLoopAction, slot0)
+	arg_37_0:_logAudioError()
+	ZProj.AudioManager.Instance:SetErrorCallback(nil, nil)
+	TaskDispatcher.cancelTask(arg_37_0._callAudiosLoopAction, arg_37_0)
 	AudioMgr.instance:clearUnusedBanks()
 
-	slot0._textCheckAudio2.text = slot0._checkAudioTextStr
+	arg_37_0._textCheckAudio2.text = arg_37_0._checkAudioTextStr
 end
 
-function slot0._triggerAndStopAudio(slot0, slot1)
-	if slot1 > 0 and slot0:_getAudioConfig(slot1) and AudioMgr.instance:trigger(slot1) > 0 then
-		AudioMgr.instance:stopPlayingID(slot2)
+function var_0_0._triggerAndStopAudio(arg_38_0, arg_38_1)
+	if arg_38_1 > 0 and arg_38_0:_getAudioConfig(arg_38_1) then
+		local var_38_0 = AudioMgr.instance:trigger(arg_38_1)
 
-		return true
-	end
-end
+		if var_38_0 > 0 then
+			AudioMgr.instance:stopPlayingID(var_38_0)
 
-slot1 = {
-	[54.0] = true,
-	[52.0] = true,
-	[46.0] = true
-}
-
-function slot0._onErrorCallback(slot0, slot1, slot2, slot3)
-	if slot0._errorAudioId then
-		slot4 = slot0._errorAudioId
-		slot0._errorList = slot0._errorList or {}
-
-		table.insert(slot0._errorList, {
-			audioId = slot4,
-			errorCode = slot1,
-			msg = slot3
-		})
-
-		slot5 = AudioConfig.instance:getAudioCOById(slot4)
-
-		if slot1 ~= 0 and not uv0[slot1] then
-			logError("error_" .. slot1 .. " bank:" .. slot5.bankName .. " evt:" .. slot5.eventName .. "\n" .. slot3)
+			return true
 		end
 	end
 end
 
-function slot0._logAudioError(slot0)
-	if not slot0._errorList then
+local var_0_1 = {
+	[54] = true,
+	[52] = true,
+	[46] = true
+}
+
+function var_0_0._onErrorCallback(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
+	if arg_39_0._errorAudioId then
+		local var_39_0 = arg_39_0._errorAudioId
+
+		arg_39_0._errorList = arg_39_0._errorList or {}
+
+		table.insert(arg_39_0._errorList, {
+			audioId = var_39_0,
+			errorCode = arg_39_1,
+			msg = arg_39_3
+		})
+
+		local var_39_1 = AudioConfig.instance:getAudioCOById(var_39_0)
+
+		if arg_39_1 ~= 0 and not var_0_1[arg_39_1] then
+			logError("error_" .. arg_39_1 .. " bank:" .. var_39_1.bankName .. " evt:" .. var_39_1.eventName .. "\n" .. arg_39_3)
+		end
+	end
+end
+
+function var_0_0._logAudioError(arg_40_0)
+	if not arg_40_0._errorList then
 		return
 	end
 
-	slot1 = {}
+	local var_40_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._errorList) do
-		slot7 = AudioConfig.instance:getAudioCOById(slot6.audioId)
+	for iter_40_0, iter_40_1 in ipairs(arg_40_0._errorList) do
+		local var_40_1 = AudioConfig.instance:getAudioCOById(iter_40_1.audioId)
 
-		if uv0[slot6.errorCode] then
-			if not slot1[slot6.errorCode] then
-				slot1[slot6.errorCode] = {
-					slot6.msg
+		if var_0_1[iter_40_1.errorCode] then
+			if not var_40_0[iter_40_1.errorCode] then
+				var_40_0[iter_40_1.errorCode] = {
+					iter_40_1.msg
 				}
 			end
 
-			slot8 = nil
-			slot10 = slot0._audioId2CallExcel and slot0._audioId2CallExcel[slot6.audioId]
+			local var_40_2
+			local var_40_3 = arg_40_0._audioId2Excel and arg_40_0._audioId2Excel[iter_40_1.audioId]
+			local var_40_4 = arg_40_0._audioId2CallExcel and arg_40_0._audioId2CallExcel[iter_40_1.audioId]
 
-			if slot0._audioId2Excel and slot0._audioId2Excel[slot6.audioId] then
-				if not slot7 then
-					logError("没有找到音效配置：" .. slot6.audioId)
+			if var_40_3 then
+				if not var_40_1 then
+					logError("没有找到音效配置：" .. iter_40_1.audioId)
 				else
-					slot8 = slot9 .. " " .. slot6.audioId .. " " .. slot7.bankName .. " " .. slot7.eventName
+					var_40_2 = var_40_3 .. " " .. iter_40_1.audioId .. " " .. var_40_1.bankName .. " " .. var_40_1.eventName
 				end
-			elseif slot10 then
-				if not slot7 then
-					logError("没有找到音效配置：" .. slot6.audioId)
+			elseif var_40_4 then
+				if not var_40_1 then
+					logError("没有找到音效配置：" .. iter_40_1.audioId)
 				else
-					slot8 = slot10 .. " " .. slot6.audioId .. " " .. slot7.bankName .. " " .. slot7.eventName
+					var_40_2 = var_40_4 .. " " .. iter_40_1.audioId .. " " .. var_40_1.bankName .. " " .. var_40_1.eventName
 				end
-			elseif not slot7 then
-				logError("没有找到音效调用源：" .. slot6.audioId)
+			elseif not var_40_1 then
+				logError("没有找到音效调用源：" .. iter_40_1.audioId)
 			else
-				logError("没有设置源配置/调用源名称：" .. slot6.audioId)
+				logError("没有设置源配置/调用源名称：" .. iter_40_1.audioId)
 			end
 
-			table.insert(slot1[slot6.errorCode], slot8)
+			table.insert(var_40_0[iter_40_1.errorCode], var_40_2)
 		end
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		for slot11 = 1, math.ceil(#slot6 / 100) do
-			logError("error_" .. slot5 .. " count = " .. #slot6 - 1 .. "\n" .. table.concat(slot6, "\n", (slot11 - 1) * 100 + 1, math.min(slot11 * 100, #slot6)))
+	for iter_40_2, iter_40_3 in pairs(var_40_0) do
+		local var_40_5 = math.ceil(#iter_40_3 / 100)
+
+		for iter_40_4 = 1, var_40_5 do
+			local var_40_6 = (iter_40_4 - 1) * 100 + 1
+			local var_40_7 = math.min(iter_40_4 * 100, #iter_40_3)
+
+			logError("error_" .. iter_40_2 .. " count = " .. #iter_40_3 - 1 .. "\n" .. table.concat(iter_40_3, "\n", var_40_6, var_40_7))
 		end
 	end
 
-	slot0._audioId2Excel = nil
-	slot0._audioId2CallExcel = nil
-	slot0._errorList = nil
+	arg_40_0._audioId2Excel = nil
+	arg_40_0._audioId2CallExcel = nil
+	arg_40_0._errorList = nil
 end
 
-function slot0._tableAddValues(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in pairs(slot2) do
-		slot1[slot7] = {
-			slot8,
-			slot3
+function var_0_0._tableAddValues(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	for iter_41_0, iter_41_1 in pairs(arg_41_2) do
+		arg_41_1[iter_41_0] = {
+			iter_41_1,
+			arg_41_3
 		}
 	end
 end
 
-function slot0._onClickCheckAudioChapterAndActiviy(slot0)
-	slot0._checkAudioTextStr = slot0._textCheckAudio2.text
-	slot0._callAudioIdList = {}
-	slot1 = {}
-	slot2 = slot0._charActCfgsToCheckAudio:GetText()
-	slot3 = string.split(slot2, "|")
+function var_0_0._onClickCheckAudioChapterAndActiviy(arg_42_0)
+	arg_42_0._checkAudioTextStr = arg_42_0._textCheckAudio2.text
+	arg_42_0._callAudioIdList = {}
 
-	if not string.nilorempty(slot2) then
-		for slot7, slot8 in ipairs(slot3) do
-			slot9 = string.split(slot8, ",")
-			slot11 = slot9[2]
+	local var_42_0 = {}
+	local var_42_1 = arg_42_0._charActCfgsToCheckAudio:GetText()
+	local var_42_2 = string.split(var_42_1, "|")
 
-			if not ConfigMgr.instance._configDict[slot9[1]] then
-				logError("配置名称错误 " .. slot10)
+	if not string.nilorempty(var_42_1) then
+		for iter_42_0, iter_42_1 in ipairs(var_42_2) do
+			local var_42_3 = string.split(iter_42_1, ",")
+			local var_42_4 = var_42_3[1]
+			local var_42_5 = var_42_3[2]
+			local var_42_6 = ConfigMgr.instance._configDict[var_42_4]
+
+			if not var_42_6 then
+				logError("配置名称错误 " .. var_42_4)
 
 				return
 			end
 
-			for slot16, slot17 in ipairs(slot12.configList) do
-				if type(slot11) == "string" then
-					if type(slot17[slot11]) == "string" then
-						for slot23, slot24 in ipairs(string.splitToNumber(slot18, "#")) do
-							if slot24 ~= 0 then
-								slot1[#slot1 + 1] = slot24
+			for iter_42_2, iter_42_3 in ipairs(var_42_6.configList) do
+				if type(var_42_5) == "string" then
+					local var_42_7 = iter_42_3[var_42_5]
+
+					if type(var_42_7) == "string" then
+						local var_42_8 = string.splitToNumber(var_42_7, "#")
+
+						for iter_42_4, iter_42_5 in ipairs(var_42_8) do
+							if iter_42_5 ~= 0 then
+								var_42_0[#var_42_0 + 1] = iter_42_5
 							end
 						end
-					elseif slot18 ~= 0 then
-						slot1[#slot1 + 1] = slot18
+					elseif var_42_7 ~= 0 then
+						var_42_0[#var_42_0 + 1] = var_42_7
 					end
-				elseif type(slot11) == "table" then
-					for slot21, slot22 in ipairs(slot11) do
-						if slot17[slot22] ~= 0 then
-							slot1[#slot1 + 1] = slot23
+				elseif type(var_42_5) == "table" then
+					for iter_42_6, iter_42_7 in ipairs(var_42_5) do
+						local var_42_9 = iter_42_3[iter_42_7]
+
+						if var_42_9 ~= 0 then
+							var_42_0[#var_42_0 + 1] = var_42_9
 						end
 					end
 				end
@@ -795,347 +890,426 @@ function slot0._onClickCheckAudioChapterAndActiviy(slot0)
 		end
 	end
 
-	if not string.nilorempty(slot0._chatperIdsToCheckAudio:GetText()) then
-		for slot9, slot10 in ipairs(string.split(slot4, ",")) do
-			if DungeonConfig.instance:getChapterEpisodeCOList(tonumber(slot10)) then
-				for slot15, slot16 in ipairs(slot11) do
-					if slot16.beforeStory > 0 then
-						slot1[#slot1 + 1] = slot16.beforeStory
+	local var_42_10 = arg_42_0._chatperIdsToCheckAudio:GetText()
+
+	if not string.nilorempty(var_42_10) then
+		local var_42_11 = string.split(var_42_10, ",")
+
+		for iter_42_8, iter_42_9 in ipairs(var_42_11) do
+			local var_42_12 = DungeonConfig.instance:getChapterEpisodeCOList(tonumber(iter_42_9))
+
+			if var_42_12 then
+				for iter_42_10, iter_42_11 in ipairs(var_42_12) do
+					if iter_42_11.beforeStory > 0 then
+						var_42_0[#var_42_0 + 1] = iter_42_11.beforeStory
 					end
 
-					if slot16.afterStory > 0 then
-						slot1[#slot1 + 1] = slot16.afterStory
+					if iter_42_11.afterStory > 0 then
+						var_42_0[#var_42_0 + 1] = iter_42_11.afterStory
 					end
 
-					if not string.nilorempty(slot16.story) then
-						for slot21 = 1, #string.split(slot16.story, "|") do
-							if string.split(slot17[slot9], "#")[3] and tonumber(slot22[3]) and slot23 > 0 then
-								slot1[#slot1 + 1] = slot23
+					if not string.nilorempty(iter_42_11.story) then
+						local var_42_13 = string.split(iter_42_11.story, "|")
+
+						for iter_42_12 = 1, #var_42_13 do
+							local var_42_14 = var_42_13[iter_42_8]
+							local var_42_15 = string.split(var_42_14, "#")
+							local var_42_16 = var_42_15[3] and tonumber(var_42_15[3])
+
+							if var_42_16 and var_42_16 > 0 then
+								var_42_0[#var_42_0 + 1] = var_42_16
 							end
 						end
 					end
 				end
 			else
-				logError("未找到章节数据 " .. slot10)
+				logError("未找到章节数据 " .. iter_42_9)
 
 				return
 			end
 		end
 	end
 
-	slot0._loadStoryCount = #slot1
-	slot0._storyAudioIdDict = {}
+	arg_42_0._loadStoryCount = #var_42_0
+	arg_42_0._storyAudioIdDict = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		StoryController.instance:initStoryData(slot9, function ()
-			uv0:_loadStoryStepConfigCallback(uv1)
+	for iter_42_13, iter_42_14 in ipairs(var_42_0) do
+		StoryController.instance:initStoryData(iter_42_14, function()
+			arg_42_0:_loadStoryStepConfigCallback(iter_42_14)
 		end)
 	end
 end
 
-function slot0._loadStoryStepConfigCallback(slot0, slot1)
-	slot0._loadStoryCount = slot0._loadStoryCount - 1
+function var_0_0._loadStoryStepConfigCallback(arg_44_0, arg_44_1)
+	arg_44_0._loadStoryCount = arg_44_0._loadStoryCount - 1
 
-	for slot6, slot7 in ipairs(StoryStepModel.instance:getStepList()) do
-		for slot12, slot13 in ipairs(slot7.audioList) do
-			if slot13.audio > 0 then
-				slot0._storyAudioIdDict[slot13.audio] = slot1
+	local var_44_0 = StoryStepModel.instance:getStepList()
+
+	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
+		local var_44_1 = iter_44_1.audioList
+
+		for iter_44_2, iter_44_3 in ipairs(var_44_1) do
+			if iter_44_3.audio > 0 then
+				arg_44_0._storyAudioIdDict[iter_44_3.audio] = arg_44_1
 			end
 		end
 
-		for slot14, slot15 in ipairs(slot7.conversation.audios) do
-			if slot15 > 0 then
-				slot0._storyAudioIdDict[slot15] = slot1
+		local var_44_2 = iter_44_1.conversation.audios
+
+		for iter_44_4, iter_44_5 in ipairs(var_44_2) do
+			if iter_44_5 > 0 then
+				arg_44_0._storyAudioIdDict[iter_44_5] = arg_44_1
 			end
 		end
 	end
 
-	if slot0._loadStoryCount == 0 then
-		slot0._audioId2CallExcel = slot0._audioId2CallExcel or {}
+	if arg_44_0._loadStoryCount == 0 then
+		arg_44_0._audioId2CallExcel = arg_44_0._audioId2CallExcel or {}
 
-		for slot6, slot7 in pairs(slot0._storyAudioIdDict) do
-			slot0._audioId2CallExcel[slot6] = "剧情" .. slot7
+		for iter_44_6, iter_44_7 in pairs(arg_44_0._storyAudioIdDict) do
+			arg_44_0._audioId2CallExcel[iter_44_6] = "剧情" .. iter_44_7
 
-			table.insert(slot0._callAudioIdList, slot6)
+			table.insert(arg_44_0._callAudioIdList, iter_44_6)
 		end
 
-		slot0:_beginCallAudiosLoop()
+		arg_44_0:_beginCallAudiosLoop()
 	end
 end
 
-function slot0._callAudioInConfig(slot0)
-	slot0._audioIdInConfigTextStr = slot0._charAudioIdInConfig:GetText()
-	slot0._callAudioIdList = {}
+function var_0_0._callAudioInConfig(arg_45_0)
+	arg_45_0._audioIdInConfigTextStr = arg_45_0._charAudioIdInConfig:GetText()
+	arg_45_0._callAudioIdList = {}
 
-	for slot5, slot6 in ipairs(string.split(slot0._audioIdInConfigTextStr, "|")) do
-		if not _G["lua_" .. string.split(slot6, ",")[1]] then
-			logError("配置名称错误 " .. slot8)
+	local var_45_0 = string.split(arg_45_0._audioIdInConfigTextStr, "|")
+
+	for iter_45_0, iter_45_1 in ipairs(var_45_0) do
+		local var_45_1 = string.split(iter_45_1, ",")
+		local var_45_2 = var_45_1[1]
+		local var_45_3 = _G["lua_" .. var_45_2]
+
+		if not var_45_3 then
+			logError("配置名称错误 " .. var_45_2)
 
 			return
 		end
 
-		table.remove(slot7, 1)
-		slot0:_checkAddConfigCallAudios(slot9, slot7, slot8)
+		table.remove(var_45_1, 1)
+
+		local var_45_4 = var_45_1
+
+		arg_45_0:_checkAddConfigCallAudios(var_45_3, var_45_4, var_45_2)
 	end
 
-	slot0:_beginCallAudiosLoop()
+	arg_45_0:_beginCallAudiosLoop()
 end
 
-function slot0._onClickCheckAudioResource(slot0)
+function var_0_0._onClickCheckAudioResource(arg_46_0)
 	logNormal("开始检查冗余音效资源--------------------------------")
 
-	slot1 = {
-		[slot7.eventName] = true
-	}
+	local var_46_0 = {}
+	local var_46_1 = AudioConfig.instance:getAudioCO()
 
-	for slot6, slot7 in pairs(AudioConfig.instance:getAudioCO()) do
-		-- Nothing
+	for iter_46_0, iter_46_1 in pairs(var_46_1) do
+		var_46_0[iter_46_1.eventName] = true
 	end
 
-	slot3 = {}
+	local var_46_2 = {}
 
-	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Android", slot3)
-	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/iOS", slot3)
-	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Mac", slot3)
-	slot0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Windows", slot3)
+	arg_46_0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Android", var_46_2)
+	arg_46_0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/iOS", var_46_2)
+	arg_46_0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Mac", var_46_2)
+	arg_46_0:_getAudioEventsInResourceDir("Assets/ZResourcesLib/audios/Windows", var_46_2)
 
-	slot4 = {}
+	local var_46_3 = {}
 
-	for slot8, slot9 in pairs(slot3) do
-		if not slot1[slot8] then
-			if not slot4[SLFramework.FileHelper.GetFileName(slot9, false)] then
-				slot4[slot10] = {}
+	for iter_46_2, iter_46_3 in pairs(var_46_2) do
+		if not var_46_0[iter_46_2] then
+			local var_46_4 = SLFramework.FileHelper.GetFileName(iter_46_3, false)
+
+			if not var_46_3[var_46_4] then
+				var_46_3[var_46_4] = {}
 			end
 
-			slot11 = slot4[slot10]
-			slot11[#slot11 + 1] = slot8
+			local var_46_5 = var_46_3[var_46_4]
+
+			var_46_5[#var_46_5 + 1] = iter_46_2
 		end
 	end
 
-	slot6 = 0
+	local var_46_6 = ""
+	local var_46_7 = 0
 
-	for slot10, slot11 in pairs(slot4) do
-		slot12 = ""
+	for iter_46_4, iter_46_5 in pairs(var_46_3) do
+		local var_46_8 = ""
 
-		if #slot11 > 0 then
-			slot16 = " ------------"
-			slot17 = "\n"
+		if #iter_46_5 > 0 then
+			var_46_6 = var_46_6 .. "----------- bnk：" .. iter_46_4 .. " ------------" .. "\n"
 
-			for slot16, slot17 in ipairs(slot11) do
-				slot5 = "" .. "----------- bnk：" .. slot10 .. slot16 .. slot17 .. slot17 .. "\n"
-				slot6 = slot6 + 1
+			for iter_46_6, iter_46_7 in ipairs(iter_46_5) do
+				var_46_6 = var_46_6 .. iter_46_7 .. "\n"
+				var_46_7 = var_46_7 + 1
 			end
 
-			slot5 = slot5 .. "\n"
+			var_46_6 = var_46_6 .. "\n"
 		end
 	end
 
-	if slot5 ~= "" then
-		slot7 = "AudioCheckResult.txt"
+	if var_46_6 ~= "" then
+		local var_46_9 = "AudioCheckResult.txt"
+		local var_46_10 = string.format("%s/../", UnityEngine.Application.dataPath) .. var_46_9
 
-		SLFramework.FileHelper.WriteTextToPath(string.format("%s/../", UnityEngine.Application.dataPath) .. slot7, slot5)
-		logNormal("共发现 " .. slot6 .. " 个未配置音频 Event，" .. "结果已保存至 " .. (string.gsub(UnityEngine.Application.dataPath, "Assets", "") .. slot7))
+		SLFramework.FileHelper.WriteTextToPath(var_46_10, var_46_6)
+
+		local var_46_11 = string.gsub(UnityEngine.Application.dataPath, "Assets", "") .. var_46_9
+
+		logNormal("共发现 " .. var_46_7 .. " 个未配置音频 Event，" .. "结果已保存至 " .. var_46_11)
 	else
 		logNormal("未发现冗余音频资源")
 	end
 end
 
-function slot0._getAudioEventsInResourceDir(slot0, slot1, slot2)
-	for slot7 = 0, SLFramework.FileHelper.GetDirFilePaths(slot1).Length - 1 do
-		if slot3[slot7]:match("[.txt]$") then
-			for slot13 in SLFramework.FileHelper.ReadText(slot8):gmatch("[^\\]play_[%w_]+") do
-				slot2[slot13:match("^[%s]*(.-)[%s]*$")] = slot8
+function var_0_0._getAudioEventsInResourceDir(arg_47_0, arg_47_1, arg_47_2)
+	local var_47_0 = SLFramework.FileHelper.GetDirFilePaths(arg_47_1)
+
+	for iter_47_0 = 0, var_47_0.Length - 1 do
+		local var_47_1 = var_47_0[iter_47_0]
+
+		if var_47_1:match("[.txt]$") then
+			for iter_47_1 in SLFramework.FileHelper.ReadText(var_47_1):gmatch("[^\\]play_[%w_]+") do
+				iter_47_1 = iter_47_1:match("^[%s]*(.-)[%s]*$")
+				arg_47_2[iter_47_1] = var_47_1
 			end
 		end
 	end
 end
 
-function slot0._fillAudioBnkWemFilePath(slot0, slot1, slot2, slot3, slot4)
-	for slot9 = 0, SLFramework.FileHelper.GetDirFilePaths(slot2).Length - 1 do
-		if slot5[slot9]:match("[.wem]$") then
-			slot11, slot12 = uv0._getFolderAndParent(slot10)
+function var_0_0._fillAudioBnkWemFilePath(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4)
+	local var_48_0 = SLFramework.FileHelper.GetDirFilePaths(arg_48_2)
 
-			if slot11 == slot1 then
-				slot4[SLFramework.FileHelper.GetFileName(slot10, false)] = SLFramework.FileHelper.GetFileName(slot10, true)
-			elseif slot12 == slot1 then
-				slot4[slot14] = slot11 .. "/" .. slot13
+	for iter_48_0 = 0, var_48_0.Length - 1 do
+		local var_48_1 = var_48_0[iter_48_0]
+
+		if var_48_1:match("[.wem]$") then
+			local var_48_2, var_48_3 = var_0_0._getFolderAndParent(var_48_1)
+			local var_48_4 = SLFramework.FileHelper.GetFileName(var_48_1, true)
+			local var_48_5 = SLFramework.FileHelper.GetFileName(var_48_1, false)
+
+			if var_48_2 == arg_48_1 then
+				arg_48_4[var_48_5] = var_48_4
+			elseif var_48_3 == arg_48_1 then
+				arg_48_4[var_48_5] = var_48_2 .. "/" .. var_48_4
 			end
-		elseif slot10:match("[.bnk]$") then
-			slot11, slot12 = uv0._getFolderAndParent(slot10)
+		elseif var_48_1:match("[.bnk]$") then
+			local var_48_6, var_48_7 = var_0_0._getFolderAndParent(var_48_1)
+			local var_48_8 = SLFramework.FileHelper.GetFileName(var_48_1, true)
 
-			if slot11 == slot1 then
-				slot3[SLFramework.FileHelper.GetFileName(slot10, true)] = true
-			elseif slot12 == slot1 then
-				slot3[slot11 .. "/" .. slot13] = true
+			if var_48_6 == arg_48_1 then
+				arg_48_3[var_48_8] = true
+			elseif var_48_7 == arg_48_1 then
+				arg_48_3[var_48_6 .. "/" .. var_48_8] = true
 			end
 		end
 	end
 end
 
-function slot0._checkAudioResInSoundbanksInfoXml(slot0)
+function var_0_0._checkAudioResInSoundbanksInfoXml(arg_49_0)
 	logNormal("开始检查 SoundbanksInfo 冗余音效资源--------------------------------")
 
-	slot3 = io.open("Assets/ZResourcesLib/audios/Android/SoundbanksInfo.xml", "r")
-
-	slot3:close()
-
-	slot5 = ResSplitXmlTree:new()
-
-	ResSplitXml2lua.parser(slot5):parse(slot3:read("*a"))
-
-	slot7 = {
-		[slot14.Path:gsub("\\", "/")] = true
+	local var_49_0 = "Assets/ZResourcesLib/audios/Android/SoundbanksInfo.xml"
+	local var_49_1 = {
+		zh = true,
+		en = true
 	}
-	slot8 = {}
-	slot9 = {}
+	local var_49_2 = io.open(var_49_0, "r")
+	local var_49_3 = var_49_2:read("*a")
 
-	for slot13, slot14 in pairs(slot5.root.SoundBanksInfo.SoundBanks.SoundBank) do
-		slot16 = slot14.ShortName
+	var_49_2:close()
 
-		if ({
-			zh = true,
-			en = true
-		})[slot14._attr.Language] then
-			slot9[slot16] = slot9[slot16] or {}
-			slot18 = slot9[slot16]
-			slot18[#slot18 + 1] = slot15
+	local var_49_4 = ResSplitXmlTree:new()
+
+	ResSplitXml2lua.parser(var_49_4):parse(var_49_3)
+
+	local var_49_5 = {}
+	local var_49_6 = {}
+	local var_49_7 = {}
+
+	for iter_49_0, iter_49_1 in pairs(var_49_4.root.SoundBanksInfo.SoundBanks.SoundBank) do
+		local var_49_8 = iter_49_1._attr.Language
+		local var_49_9 = iter_49_1.ShortName
+
+		var_49_5[iter_49_1.Path:gsub("\\", "/")] = true
+
+		if var_49_1[var_49_8] then
+			var_49_7[var_49_9] = var_49_7[var_49_9] or {}
+
+			local var_49_10 = var_49_7[var_49_9]
+
+			var_49_10[#var_49_10 + 1] = var_49_8
 		end
 	end
 
-	for slot13, slot14 in pairs(slot5.root.SoundBanksInfo.StreamedFiles.File) do
-		slot15 = slot14._attr.Language
-		slot8[slot14._attr.Id] = true
+	for iter_49_2, iter_49_3 in pairs(var_49_4.root.SoundBanksInfo.StreamedFiles.File) do
+		local var_49_11 = iter_49_3._attr.Language
+
+		var_49_6[iter_49_3._attr.Id] = true
 	end
 
-	slot15 = "Assets/ZResourcesLib/audios/Android"
-	slot16 = {}
+	local var_49_12 = {}
+	local var_49_13 = {}
 
-	slot0:_fillAudioBnkWemFilePath("Android", slot15, slot16, {})
+	arg_49_0:_fillAudioBnkWemFilePath("Android", "Assets/ZResourcesLib/audios/Android", var_49_12, var_49_13)
 
-	for slot15, slot16 in pairs(slot7) do
-		if slot10[slot15] then
-			slot10[slot15] = nil
+	for iter_49_4, iter_49_5 in pairs(var_49_5) do
+		if var_49_12[iter_49_4] then
+			var_49_12[iter_49_4] = nil
 		end
 	end
 
-	for slot15, slot16 in pairs(slot8) do
-		if slot11[slot15] then
-			slot11[slot15] = nil
+	for iter_49_6, iter_49_7 in pairs(var_49_6) do
+		if var_49_13[iter_49_6] then
+			var_49_13[iter_49_6] = nil
 		end
 	end
 
-	slot12 = {}
-	slot13 = {}
+	local var_49_14 = {}
+	local var_49_15 = {}
 
-	for slot17, slot18 in pairs(slot10) do
-		slot12[#slot12 + 1] = slot17
+	for iter_49_8, iter_49_9 in pairs(var_49_12) do
+		var_49_14[#var_49_14 + 1] = iter_49_8
 	end
 
-	table.sort(slot12, function (slot0, slot1)
-		return slot0:sub(1, 1) < slot1:sub(1, 1)
+	table.sort(var_49_14, function(arg_50_0, arg_50_1)
+		return arg_50_0:sub(1, 1) < arg_50_1:sub(1, 1)
 	end)
 
-	for slot17, slot18 in pairs(slot11) do
-		slot13[#slot13 + 1] = slot18
+	for iter_49_10, iter_49_11 in pairs(var_49_13) do
+		var_49_15[#var_49_15 + 1] = iter_49_11
 	end
 
-	table.sort(slot13, function (slot0, slot1)
-		return slot0:sub(1, 1) < slot1:sub(1, 1)
+	table.sort(var_49_15, function(arg_51_0, arg_51_1)
+		return arg_51_0:sub(1, 1) < arg_51_1:sub(1, 1)
 	end)
 
-	if #slot12 + #slot11 > 0 then
-		for slot19, slot20 in ipairs(slot12) do
-			slot15 = "SoundbanksInfo.xml 中不存在的 Bnk：\n" .. "\t" .. slot20 .. "\n"
+	local var_49_16 = #var_49_14 + #var_49_13
+
+	if var_49_16 > 0 then
+		local var_49_17 = "SoundbanksInfo.xml 中不存在的 Bnk：\n"
+
+		for iter_49_12, iter_49_13 in ipairs(var_49_14) do
+			var_49_17 = var_49_17 .. "\t" .. iter_49_13 .. "\n"
 		end
 
-		for slot19, slot20 in pairs(slot11) do
-			slot15 = slot15 .. "SoundbanksInfo.xml 中不存在的 Wem:\n" .. "\t" .. slot20 .. "\n"
+		local var_49_18 = var_49_17 .. "SoundbanksInfo.xml 中不存在的 Wem:\n"
+
+		for iter_49_14, iter_49_15 in pairs(var_49_13) do
+			var_49_18 = var_49_18 .. "\t" .. iter_49_15 .. "\n"
 		end
 
-		slot16 = "bnkCheckResult.txt"
+		local var_49_19 = "bnkCheckResult.txt"
+		local var_49_20 = string.format("%s/../", UnityEngine.Application.dataPath) .. var_49_19
 
-		SLFramework.FileHelper.WriteTextToPath(string.format("%s/../", UnityEngine.Application.dataPath) .. slot16, slot15)
-		logNormal("扫描 SoundbanksInfo.xml 发现 " .. slot14 .. " 个冗余资源，" .. "结果已保存至 " .. (string.gsub(UnityEngine.Application.dataPath, "Assets", "") .. slot16))
+		SLFramework.FileHelper.WriteTextToPath(var_49_20, var_49_18)
+
+		local var_49_21 = string.gsub(UnityEngine.Application.dataPath, "Assets", "") .. var_49_19
+
+		logNormal("扫描 SoundbanksInfo.xml 发现 " .. var_49_16 .. " 个冗余资源，" .. "结果已保存至 " .. var_49_21)
 	else
 		logNormal("扫描 SoundbanksInfo.xml 未发现冗余音频资源")
 	end
 end
 
-function slot0._checkBnkLangInSoundbanksInfoXml(slot0)
+function var_0_0._checkBnkLangInSoundbanksInfoXml(arg_52_0)
 	logNormal("开始检查 Bnk 文件多语言缺失--------------------------------")
 
-	slot3 = io.open("Assets/ZResourcesLib/audios/Android/SoundbanksInfo.xml", "r")
+	local var_52_0 = "Assets/ZResourcesLib/audios/Android/SoundbanksInfo.xml"
+	local var_52_1 = {
+		zh = true,
+		en = true
+	}
+	local var_52_2 = io.open(var_52_0, "r")
+	local var_52_3 = var_52_2:read("*a")
 
-	slot3:close()
+	var_52_2:close()
 
-	slot5 = ResSplitXmlTree:new()
+	local var_52_4 = ResSplitXmlTree:new()
 
-	ResSplitXml2lua.parser(slot5):parse(slot3:read("*a"))
+	ResSplitXml2lua.parser(var_52_4):parse(var_52_3)
 
-	slot7 = {}
-	slot8 = {}
-	slot9 = {}
+	local var_52_5 = {}
+	local var_52_6 = {}
+	local var_52_7 = {}
 
-	for slot13, slot14 in pairs(slot5.root.SoundBanksInfo.SoundBanks.SoundBank) do
-		slot16 = slot14.ShortName
-		slot17 = slot14.Path:gsub("\\", "/")
+	for iter_52_0, iter_52_1 in pairs(var_52_4.root.SoundBanksInfo.SoundBanks.SoundBank) do
+		local var_52_8 = iter_52_1._attr.Language
+		local var_52_9 = iter_52_1.ShortName
+		local var_52_10 = iter_52_1.Path:gsub("\\", "/")
 
-		if ({
-			zh = true,
-			en = true
-		})[slot14._attr.Language] then
-			slot9[slot16] = slot9[slot16] or {}
-			slot18 = slot9[slot16]
-			slot18[#slot18 + 1] = slot15
+		if var_52_1[var_52_8] then
+			var_52_7[var_52_9] = var_52_7[var_52_9] or {}
+
+			local var_52_11 = var_52_7[var_52_9]
+
+			var_52_11[#var_52_11 + 1] = var_52_8
 		end
 	end
 
-	slot10 = {}
+	local var_52_12 = {}
 
-	for slot14, slot15 in pairs(slot9) do
-		if slot15 and #slot15 ~= tabletool.len(slot2) then
-			slot10[#slot10 + 1] = slot10
+	for iter_52_2, iter_52_3 in pairs(var_52_7) do
+		if iter_52_3 and #iter_52_3 ~= tabletool.len(var_52_1) then
+			var_52_12[#var_52_12 + 1] = var_52_12
 		end
 	end
 
-	if #slot10 > 0 then
-		slot11 = ""
+	if #var_52_12 > 0 then
+		local var_52_13 = ""
 
-		for slot15, slot16 in ipairs(slot10) do
-			for slot21, slot22 in pairs(slot2) do
-				if not tabletool.indexOf(slot9[slot16], slot21) then
-					slot11 = slot11 .. slot16 .. "缺少" .. slot21 .. " 内容\n"
+		for iter_52_4, iter_52_5 in ipairs(var_52_12) do
+			local var_52_14 = var_52_7[iter_52_5]
+
+			for iter_52_6, iter_52_7 in pairs(var_52_1) do
+				if not tabletool.indexOf(var_52_14, iter_52_6) then
+					var_52_13 = var_52_13 .. iter_52_5 .. "缺少" .. iter_52_6 .. " 内容\n"
 				end
 			end
 		end
 
-		slot12 = "SoundbanksInfoCheckLangResult.txt"
+		local var_52_15 = "SoundbanksInfoCheckLangResult.txt"
+		local var_52_16 = string.format("%s/../", UnityEngine.Application.dataPath) .. var_52_15
 
-		SLFramework.FileHelper.WriteTextToPath(string.format("%s/../", UnityEngine.Application.dataPath) .. slot12, slot11)
-		logNormal("扫描 SoundbanksInfo.xml 发现 " .. #slot10 .. " 个多语言版本缺失的资源，" .. "结果已保存至 " .. (string.gsub(UnityEngine.Application.dataPath, "Assets", "") .. slot12))
+		SLFramework.FileHelper.WriteTextToPath(var_52_16, var_52_13)
+
+		local var_52_17 = string.gsub(UnityEngine.Application.dataPath, "Assets", "") .. var_52_15
+
+		logNormal("扫描 SoundbanksInfo.xml 发现 " .. #var_52_12 .. " 个多语言版本缺失的资源，" .. "结果已保存至 " .. var_52_17)
 	else
 		logNormal("扫描 SoundbanksInfo.xml 未发现多语言缺失资源")
 	end
 end
 
-function slot0._onReleaseAudioResource(slot0)
+function var_0_0._onReleaseAudioResource(arg_53_0)
 	AudioMgr.instance:clearUnusedBanks()
 end
 
-function slot0._getFolderAndParent(slot0)
-	slot1 = {}
+function var_0_0._getFolderAndParent(arg_54_0)
+	local var_54_0 = {}
 
-	for slot5 in slot0:gmatch("[^/]+") do
-		table.insert(slot1, slot5)
+	for iter_54_0 in arg_54_0:gmatch("[^/]+") do
+		table.insert(var_54_0, iter_54_0)
 	end
 
-	if #slot1 >= 2 then
-		return slot1[slot2 - 1], slot1[slot2 - 2]
-	elseif slot2 == 1 then
-		return slot1[1], nil
+	local var_54_1 = #var_54_0
+
+	if var_54_1 >= 2 then
+		local var_54_2 = var_54_0[var_54_1 - 1]
+		local var_54_3 = var_54_0[var_54_1 - 2]
+
+		return var_54_2, var_54_3
+	elseif var_54_1 == 1 then
+		return var_54_0[1], nil
 	else
-		return nil, 
+		return nil, nil
 	end
 end
 
-return slot0
+return var_0_0

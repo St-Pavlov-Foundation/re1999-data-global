@@ -1,10 +1,10 @@
-module("modules.logic.story.model.StoryStepMourningBorderMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepMourningBorderMo", package.seeall)
 
-slot0 = pureTable("StoryStepMourningBorderMo")
+local var_0_0 = pureTable("StoryStepMourningBorderMo")
 
-function slot0.ctor(slot0)
-	slot0.borderType = 0
-	slot0.borderTimes = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.borderType = 0
+	arg_1_0.borderTimes = {
 		0,
 		0,
 		0,
@@ -16,9 +16,9 @@ function slot0.ctor(slot0)
 	}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.borderType = slot1[1]
-	slot0.borderTimes = slot1[2]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.borderType = arg_2_1[1]
+	arg_2_0.borderTimes = arg_2_1[2]
 end
 
-return slot0
+return var_0_0

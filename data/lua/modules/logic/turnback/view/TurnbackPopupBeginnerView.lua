@@ -1,81 +1,90 @@
-module("modules.logic.turnback.view.TurnbackPopupBeginnerView", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackPopupBeginnerView", package.seeall)
 
-slot0 = class("TurnbackPopupBeginnerView", BaseViewExtended)
+local var_0_0 = class("TurnbackPopupBeginnerView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._gosubview = gohelper.findChild(slot0.viewGO, "#go_subview")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	NavigateMgr.instance:addEscape(ViewName.TurnbackPopupBeginnerView, slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	NavigateMgr.instance:addEscape(ViewName.TurnbackPopupBeginnerView, arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	NavigateMgr.instance:removeEscape(ViewName.TurnbackPopupBeginnerView, slot0._btncloseOnClick, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	NavigateMgr.instance:removeEscape(ViewName.TurnbackPopupBeginnerView, arg_3_0._btncloseOnClick, arg_3_0)
 end
 
-slot1 = {
+local var_0_1 = {
 	TurnbackPopupRewardView
 }
 
-function slot0._btncloseOnClick(slot0)
-	slot0.viewIndex = slot0.viewIndex + 1
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0.viewIndex = arg_4_0.viewIndex + 1
 
-	if uv0[slot0.viewIndex] then
-		slot0:openSubPopupView(slot0.viewIndex)
+	if var_0_1[arg_4_0.viewIndex] then
+		arg_4_0:openSubPopupView(arg_4_0.viewIndex)
 	else
-		slot0:closeThis()
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.openSubPopupView(slot0, slot1)
-	if slot0.viewObjDict[slot0.viewContainer:getSetting().otherRes[slot0.viewIndex]] then
-		gohelper.setActive(slot0.viewObjDict[slot2], true)
+function var_0_0.openSubPopupView(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[arg_6_0.viewIndex]
+
+	if arg_6_0.viewObjDict[var_6_0] then
+		gohelper.setActive(arg_6_0.viewObjDict[var_6_0], true)
 	end
 
-	slot0:openExclusiveView(nil, slot1, uv0[slot1], slot0.viewObjDict[slot2] or slot2, slot0._gosubview, {
-		callbackObject = slot0,
-		closeCallback = slot0._btncloseOnClick
-	})
+	local var_6_1 = {
+		callbackObject = arg_6_0,
+		closeCallback = arg_6_0._btncloseOnClick
+	}
+
+	arg_6_0:openExclusiveView(nil, arg_6_1, var_0_1[arg_6_1], arg_6_0.viewObjDict[var_6_0] or var_6_0, arg_6_0._gosubview, var_6_1)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.viewObjDict = slot0:getUserDataTb_()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0.viewObjDict = arg_8_0:getUserDataTb_()
 
-	slot0:com_loadListAsset(slot0.viewContainer:getSetting().otherRes, slot0._assetLoaded, slot0.onLoadFinish)
+	arg_8_0:com_loadListAsset(arg_8_0.viewContainer:getSetting().otherRes, arg_8_0._assetLoaded, arg_8_0.onLoadFinish)
 end
 
-function slot0._assetLoaded(slot0, slot1)
-	slot3 = gohelper.clone(slot1:GetResource(), slot0.viewGO)
+function var_0_0._assetLoaded(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1:GetResource()
+	local var_9_1 = gohelper.clone(var_9_0, arg_9_0.viewGO)
 
-	gohelper.setActive(slot3, false)
+	gohelper.setActive(var_9_1, false)
 
-	slot0.viewObjDict[slot1.ResPath] = slot3
+	arg_9_0.viewObjDict[arg_9_1.ResPath] = var_9_1
 end
 
-function slot0.onLoadFinish(slot0)
-	slot0.viewIndex = 1
+function var_0_0.onLoadFinish(arg_10_0)
+	arg_10_0.viewIndex = 1
 
-	slot0:openSubPopupView(slot0.viewIndex)
+	arg_10_0:openSubPopupView(arg_10_0.viewIndex)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

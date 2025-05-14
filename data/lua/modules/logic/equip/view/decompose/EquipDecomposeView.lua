@@ -1,90 +1,90 @@
-module("modules.logic.equip.view.decompose.EquipDecomposeView", package.seeall)
+﻿module("modules.logic.equip.view.decompose.EquipDecomposeView", package.seeall)
 
-slot0 = class("EquipDecomposeView", BaseView)
+local var_0_0 = class("EquipDecomposeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btnrarerank = gohelper.findChildButtonWithAudio(slot0.viewGO, "left_container/#go_equipsort/#btn_rarerank")
-	slot0._btnlvrank = gohelper.findChildButtonWithAudio(slot0.viewGO, "left_container/#go_equipsort/#btn_lvrank")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "left_container/#go_equipsort/#btn_filter")
-	slot0._gonotfilter = gohelper.findChild(slot0.viewGO, "left_container/#go_equipsort/#btn_filter/#go_notfilter")
-	slot0._gofilter = gohelper.findChild(slot0.viewGO, "left_container/#go_equipsort/#btn_filter/#go_filter")
-	slot0._btnfastadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "left_container/#go_cost/fast/#btn_fastadd")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "left_container/#go_cost/txt_selected/#txt_num")
-	slot0._btnclear = gohelper.findChildButtonWithAudio(slot0.viewGO, "left_container/go_clear/#btn_clear")
-	slot0._simageequipicon = gohelper.findChildSingleImage(slot0.viewGO, "right_container/frame/#simage_equipicon")
-	slot0._txtequipname = gohelper.findChildText(slot0.viewGO, "right_container/#txt_equipname")
-	slot0._txtcount = gohelper.findChildText(slot0.viewGO, "right_container/#txt_count")
-	slot0._btndecompose = gohelper.findChildButtonWithAudio(slot0.viewGO, "right_container/#btn_decompose")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "left_container/#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_rarerank")
+	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_lvrank")
+	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_filter")
+	arg_1_0._gonotfilter = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_filter/#go_notfilter")
+	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_filter/#go_filter")
+	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_cost/fast/#btn_fastadd")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "left_container/#go_cost/txt_selected/#txt_num")
+	arg_1_0._btnclear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/go_clear/#btn_clear")
+	arg_1_0._simageequipicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "right_container/frame/#simage_equipicon")
+	arg_1_0._txtequipname = gohelper.findChildText(arg_1_0.viewGO, "right_container/#txt_equipname")
+	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "right_container/#txt_count")
+	arg_1_0._btndecompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right_container/#btn_decompose")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrarerank:AddClickListener(slot0._btnrarerankOnClick, slot0)
-	slot0._btnlvrank:AddClickListener(slot0._btnlvrankOnClick, slot0)
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
-	slot0._btnfastadd:AddClickListener(slot0._btnfastaddOnClick, slot0)
-	slot0._btnclear:AddClickListener(slot0._btnclearOnClick, slot0)
-	slot0._btndecompose:AddClickListener(slot0._btndecomposeOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
+	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
+	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
+	arg_2_0._btnclear:AddClickListener(arg_2_0._btnclearOnClick, arg_2_0)
+	arg_2_0._btndecompose:AddClickListener(arg_2_0._btndecomposeOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrarerank:RemoveClickListener()
-	slot0._btnlvrank:RemoveClickListener()
-	slot0._btnfilter:RemoveClickListener()
-	slot0._btnfastadd:RemoveClickListener()
-	slot0._btnclear:RemoveClickListener()
-	slot0._btndecompose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnrarerank:RemoveClickListener()
+	arg_3_0._btnlvrank:RemoveClickListener()
+	arg_3_0._btnfilter:RemoveClickListener()
+	arg_3_0._btnfastadd:RemoveClickListener()
+	arg_3_0._btnclear:RemoveClickListener()
+	arg_3_0._btndecompose:RemoveClickListener()
 end
 
-slot0.Color = {
+var_0_0.Color = {
 	Select = "#DF6931",
 	Normal = "#717070"
 }
 
-function slot0._btnrarerankOnClick(slot0)
+function var_0_0._btnrarerankOnClick(arg_4_0)
 	EquipDecomposeListModel.instance:changeRareStatus()
 end
 
-function slot0._btnlvrankOnClick(slot0)
+function var_0_0._btnlvrankOnClick(arg_5_0)
 	EquipDecomposeListModel.instance:changeLevelSortStatus()
 end
 
-function slot0._btnfilterOnClick(slot0)
+function var_0_0._btnfilterOnClick(arg_6_0)
 	ViewMgr.instance:openView(ViewName.EquipFilterView, {
 		isNotShowObtain = true,
-		viewName = slot0.viewName
+		viewName = arg_6_0.viewName
 	})
 end
 
-function slot0._btnfastaddOnClick(slot0)
+function var_0_0._btnfastaddOnClick(arg_7_0)
 	EquipDecomposeListModel.instance:fastAddEquip()
 end
 
-function slot0._btnclearOnClick(slot0)
+function var_0_0._btnclearOnClick(arg_8_0)
 	EquipDecomposeListModel.instance:clearSelectEquip()
 end
 
-slot0.DecomposeAnimKey = "DecomposeAnimKey"
+var_0_0.DecomposeAnimKey = "DecomposeAnimKey"
 
-function slot0._btndecomposeOnClick(slot0)
+function var_0_0._btndecomposeOnClick(arg_9_0)
 	if EquipDecomposeListModel.instance:getSelectCount() < 1 then
 		return
 	end
 
-	slot0.scrollRect.velocity = Vector2.zero
+	arg_9_0.scrollRect.velocity = Vector2.zero
 
-	UIBlockMgr.instance:startBlock(uv0.DecomposeAnimKey)
+	UIBlockMgr.instance:startBlock(var_0_0.DecomposeAnimKey)
 	EquipController.instance:dispatchEvent(EquipEvent.OnEquipBeforeDecompose)
-	TaskDispatcher.runDelay(slot0._sendDecomposeRequest, slot0, EquipEnum.DecomposeAnimDuration)
+	TaskDispatcher.runDelay(arg_9_0._sendDecomposeRequest, arg_9_0, EquipEnum.DecomposeAnimDuration)
 end
 
-function slot0._sendDecomposeRequest(slot0)
-	UIBlockMgr.instance:endBlock(uv0.DecomposeAnimKey)
+function var_0_0._sendDecomposeRequest(arg_10_0)
+	UIBlockMgr.instance:endBlock(var_0_0.DecomposeAnimKey)
 
 	if EquipDecomposeListModel.instance:getSelectCount() < 1 then
 		return
@@ -93,268 +93,275 @@ function slot0._sendDecomposeRequest(slot0)
 	EquipRpc.instance:sendEquipDecomposeRequest()
 end
 
-function slot0.onClickDecomposeEquip(slot0)
+function var_0_0.onClickDecomposeEquip(arg_11_0)
 	EquipController.instance:openEquipView({
 		equipId = EquipConfig.instance.equipDecomposeEquipId
 	})
 end
 
-function slot0._editableInitView(slot0)
-	slot0.multipleChar = luaLang("multiple")
-	slot0._txtcount.text = string.format("%s0", slot0.multipleChar)
-	slot0.preCount = 0
-	slot0.scrollRect = gohelper.findChild(slot0.viewGO, "left_container/#go_scrollcontainer/#scroll_equip"):GetComponent(typeof(UnityEngine.UI.ScrollRect))
-	slot0.txtCountAnimator = gohelper.findChildComponent(slot0.viewGO, "right_container/vx_count/ani", gohelper.Type_Animator)
+function var_0_0._editableInitView(arg_12_0)
+	arg_12_0.multipleChar = luaLang("multiple")
+	arg_12_0._txtcount.text = string.format("%s0", arg_12_0.multipleChar)
+	arg_12_0.preCount = 0
+	arg_12_0.scrollRect = gohelper.findChild(arg_12_0.viewGO, "left_container/#go_scrollcontainer/#scroll_equip"):GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	arg_12_0.txtCountAnimator = gohelper.findChildComponent(arg_12_0.viewGO, "right_container/vx_count/ani", gohelper.Type_Animator)
 
-	slot0._simagebg:LoadImage(ResUrl.getEquipBg("full/equip_decompose_fullbg.png"))
+	arg_12_0._simagebg:LoadImage(ResUrl.getEquipBg("full/equip_decompose_fullbg.png"))
 
-	slot0.goclear = gohelper.findChild(slot0.viewGO, "left_container/go_clear")
-	slot0.goDecomposeBtn = slot0._btndecompose.gameObject
-	slot0.rareBtnItem = slot0:createBtnItem(slot0._btnrarerank.gameObject)
-	slot0.lvBtnItem = slot0:createBtnItem(slot0._btnlvrank.gameObject)
-	slot0.rareBtnItem.tag = EquipDecomposeListModel.SortTag.Rare
-	slot0.lvBtnItem.tag = EquipDecomposeListModel.SortTag.Level
+	arg_12_0.goclear = gohelper.findChild(arg_12_0.viewGO, "left_container/go_clear")
+	arg_12_0.goDecomposeBtn = arg_12_0._btndecompose.gameObject
+	arg_12_0.rareBtnItem = arg_12_0:createBtnItem(arg_12_0._btnrarerank.gameObject)
+	arg_12_0.lvBtnItem = arg_12_0:createBtnItem(arg_12_0._btnlvrank.gameObject)
+	arg_12_0.rareBtnItem.tag = EquipDecomposeListModel.SortTag.Rare
+	arg_12_0.lvBtnItem.tag = EquipDecomposeListModel.SortTag.Level
 
-	gohelper.setActive(slot0._goempty, false)
-	slot0:initFilterDrop()
-	gohelper.addUIClickAudio(slot0._btndecompose.gameObject, AudioEnum.HeroGroupUI.Play_UI_Action_Mainstart)
+	gohelper.setActive(arg_12_0._goempty, false)
+	arg_12_0:initFilterDrop()
+	gohelper.addUIClickAudio(arg_12_0._btndecompose.gameObject, AudioEnum.HeroGroupUI.Play_UI_Action_Mainstart)
 
-	slot0.decomposeEquipClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "right_container/frame/#simage_equipicon")
+	arg_12_0.decomposeEquipClick = gohelper.findChildClickWithDefaultAudio(arg_12_0.viewGO, "right_container/frame/#simage_equipicon")
 
-	slot0.decomposeEquipClick:AddClickListener(slot0.onClickDecomposeEquip, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, slot0.onEquipTypeHasChange, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.OnEquipDecomposeSelectEquipChange, slot0.onEquipDecomposeSelectEquipChange, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.OnEquipDecomposeSortStatusChange, slot0.onEquipDecomposeSortStatusChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0.onOpenView, slot0)
+	arg_12_0.decomposeEquipClick:AddClickListener(arg_12_0.onClickDecomposeEquip, arg_12_0)
+	arg_12_0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, arg_12_0.onEquipTypeHasChange, arg_12_0)
+	arg_12_0:addEventCb(EquipController.instance, EquipEvent.OnEquipDecomposeSelectEquipChange, arg_12_0.onEquipDecomposeSelectEquipChange, arg_12_0)
+	arg_12_0:addEventCb(EquipController.instance, EquipEvent.OnEquipDecomposeSortStatusChange, arg_12_0.onEquipDecomposeSortStatusChange, arg_12_0)
+	arg_12_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_12_0.onOpenView, arg_12_0)
 end
 
-function slot0.createBtnItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goSelect = gohelper.findChild(slot2.go, "select")
-	slot2.txtGraphic = gohelper.findChildComponent(slot2.go, "normal/txt", gohelper.Type_Graphic)
-	slot2.arrowGraphic = gohelper.findChildComponent(slot2.go, "normal/txt/arrow", gohelper.Type_Graphic)
-	slot2.arrowTr = gohelper.findChildComponent(slot2.go, "normal/txt/arrow", gohelper.Type_Transform)
+function var_0_0.createBtnItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getUserDataTb_()
 
-	return slot2
+	var_13_0.go = arg_13_1
+	var_13_0.goSelect = gohelper.findChild(var_13_0.go, "select")
+	var_13_0.txtGraphic = gohelper.findChildComponent(var_13_0.go, "normal/txt", gohelper.Type_Graphic)
+	var_13_0.arrowGraphic = gohelper.findChildComponent(var_13_0.go, "normal/txt/arrow", gohelper.Type_Graphic)
+	var_13_0.arrowTr = gohelper.findChildComponent(var_13_0.go, "normal/txt/arrow", gohelper.Type_Transform)
+
+	return var_13_0
 end
 
-function slot0.initFilterDrop(slot0)
-	slot0.dropFilter = gohelper.findChildDropdown(slot0.viewGO, "left_container/#go_cost/#drop_filter")
-	slot0._goDrop = slot0.dropFilter.gameObject
-	slot0.dropArrowTr = gohelper.findChildComponent(slot0._goDrop, "Arrow", gohelper.Type_Transform)
-	slot0.dropClick = gohelper.getClick(slot0._goDrop)
-	slot0.dropExtend = DropDownExtend.Get(slot0._goDrop)
-	slot4 = slot0.onDropHide
+function var_0_0.initFilterDrop(arg_14_0)
+	arg_14_0.dropFilter = gohelper.findChildDropdown(arg_14_0.viewGO, "left_container/#go_cost/#drop_filter")
+	arg_14_0._goDrop = arg_14_0.dropFilter.gameObject
+	arg_14_0.dropArrowTr = gohelper.findChildComponent(arg_14_0._goDrop, "Arrow", gohelper.Type_Transform)
+	arg_14_0.dropClick = gohelper.getClick(arg_14_0._goDrop)
+	arg_14_0.dropExtend = DropDownExtend.Get(arg_14_0._goDrop)
 
-	slot0.dropExtend:init(slot0.onDropShow, slot4, slot0)
+	arg_14_0.dropExtend:init(arg_14_0.onDropShow, arg_14_0.onDropHide, arg_14_0)
 
-	slot0.filterRareList = {}
+	arg_14_0.filterRareList = {}
 
-	for slot4 = EquipEnum.EquipDecomposeMinRare, EquipEnum.EquipDecomposeMaxRare do
-		table.insert(slot0.filterRareList, slot4)
+	for iter_14_0 = EquipEnum.EquipDecomposeMinRare, EquipEnum.EquipDecomposeMaxRare do
+		table.insert(arg_14_0.filterRareList, iter_14_0)
 	end
 
-	slot1 = {}
+	local var_14_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.filterRareList) do
-		if slot6 == 0 then
-			table.insert(slot1, luaLang("equip_filter_all"))
+	for iter_14_1, iter_14_2 in ipairs(arg_14_0.filterRareList) do
+		if iter_14_2 == 0 then
+			table.insert(var_14_0, luaLang("equip_filter_all"))
 		else
-			table.insert(slot1, string.format(luaLang("equip_filter_str"), slot6 + 1))
+			table.insert(var_14_0, string.format(luaLang("equip_filter_str"), iter_14_2 + 1))
 		end
 	end
 
-	slot0.dropFilter:ClearOptions()
-	slot0.dropFilter:AddOptions(slot1)
-	slot0.dropFilter:AddOnValueChanged(slot0.onDropValueChanged, slot0)
-	slot0.dropClick:AddClickListener(function ()
+	arg_14_0.dropFilter:ClearOptions()
+	arg_14_0.dropFilter:AddOptions(var_14_0)
+	arg_14_0.dropFilter:AddOnValueChanged(arg_14_0.onDropValueChanged, arg_14_0)
+	arg_14_0.dropClick:AddClickListener(function()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	end, slot0)
-	EquipDecomposeListModel.instance:setFilterRare(slot0.filterRareList[1])
+	end, arg_14_0)
+	EquipDecomposeListModel.instance:setFilterRare(arg_14_0.filterRareList[1])
 
-	slot0.initDropDone = true
+	arg_14_0.initDropDone = true
 end
 
-function slot0.onDropValueChanged(slot0, slot1)
-	if not slot0.initDropDone then
+function var_0_0.onDropValueChanged(arg_16_0, arg_16_1)
+	if not arg_16_0.initDropDone then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_volume_button)
-	EquipDecomposeListModel.instance:setFilterRare(slot0.filterRareList[slot1 + 1])
+	EquipDecomposeListModel.instance:setFilterRare(arg_16_0.filterRareList[arg_16_1 + 1])
 end
 
-function slot0.onDropHide(slot0)
-	transformhelper.setLocalScale(slot0.dropArrowTr, 1, 1, 1)
+function var_0_0.onDropHide(arg_17_0)
+	transformhelper.setLocalScale(arg_17_0.dropArrowTr, 1, 1, 1)
 end
 
-function slot0.onDropShow(slot0)
-	transformhelper.setLocalScale(slot0.dropArrowTr, 1, -1, 1)
+function var_0_0.onDropShow(arg_18_0)
+	transformhelper.setLocalScale(arg_18_0.dropArrowTr, 1, -1, 1)
 end
 
-function slot0.onOpen(slot0)
-	slot0.decomposeEquipConfig = EquipConfig.instance:getEquipCo(EquipConfig.instance.equipDecomposeEquipId)
-	slot0.decomposeEquipUnitCount = EquipConfig.instance.equipDecomposeEquipUnitCount
-	slot0.filterMo = EquipFilterModel.instance:generateFilterMo(slot0.viewName)
+function var_0_0.onOpen(arg_19_0)
+	arg_19_0.decomposeEquipConfig = EquipConfig.instance:getEquipCo(EquipConfig.instance.equipDecomposeEquipId)
+	arg_19_0.decomposeEquipUnitCount = EquipConfig.instance.equipDecomposeEquipUnitCount
+	arg_19_0.filterMo = EquipFilterModel.instance:generateFilterMo(arg_19_0.viewName)
 
 	EquipDecomposeListModel.instance:initEquipData()
-	slot0:refreshUI()
-	TaskDispatcher.runDelay(slot0.firstRefreshEquip, slot0, EquipEnum.EquipEnterAnimWaitTime)
+	arg_19_0:refreshUI()
+	TaskDispatcher.runDelay(arg_19_0.firstRefreshEquip, arg_19_0, EquipEnum.EquipEnterAnimWaitTime)
 end
 
-function slot0.firstRefreshEquip(slot0)
-	slot0.viewContainer._views[2]._animationStartTime = Time.time
+function var_0_0.firstRefreshEquip(arg_20_0)
+	arg_20_0.viewContainer._views[2]._animationStartTime = Time.time
 
-	slot0:refreshCenterGroupUI()
+	arg_20_0:refreshCenterGroupUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshLeft()
-	slot0:refreshRight()
+function var_0_0.refreshUI(arg_21_0)
+	arg_21_0:refreshLeft()
+	arg_21_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshTopGroupUI()
-	slot0:refreshBottomGroup()
+function var_0_0.refreshLeft(arg_22_0)
+	arg_22_0:refreshTopGroupUI()
+	arg_22_0:refreshBottomGroup()
 end
 
-function slot0.refreshRight(slot0)
-	slot0:refreshDecomposeEquip()
-	slot0:refreshCount()
-	slot0:refreshDecomposeBtn()
+function var_0_0.refreshRight(arg_23_0)
+	arg_23_0:refreshDecomposeEquip()
+	arg_23_0:refreshCount()
+	arg_23_0:refreshDecomposeBtn()
 end
 
-function slot0.refreshTopGroupUI(slot0)
-	slot0:refreshBtnItem(slot0.rareBtnItem)
-	slot0:refreshBtnItem(slot0.lvBtnItem)
-	slot0:refreshFilterBtn()
+function var_0_0.refreshTopGroupUI(arg_24_0)
+	arg_24_0:refreshBtnItem(arg_24_0.rareBtnItem)
+	arg_24_0:refreshBtnItem(arg_24_0.lvBtnItem)
+	arg_24_0:refreshFilterBtn()
 end
 
-function slot0.refreshCenterGroupUI(slot0)
+function var_0_0.refreshCenterGroupUI(arg_25_0)
 	EquipDecomposeListModel.instance:refreshEquip()
-	gohelper.setActive(slot0._goempty, EquipDecomposeListModel.instance:isEmpty())
+	gohelper.setActive(arg_25_0._goempty, EquipDecomposeListModel.instance:isEmpty())
 end
 
-function slot0.refreshBottomGroup(slot0)
-	slot0._txtnum.text = string.format("<color=#ff7933>%s</color>/%s", EquipDecomposeListModel.instance:getSelectCount(), EquipEnum.DecomposeMaxCount)
+function var_0_0.refreshBottomGroup(arg_26_0)
+	local var_26_0 = EquipDecomposeListModel.instance:getSelectCount()
 
-	slot0:refreshClear()
+	arg_26_0._txtnum.text = string.format("<color=#ff7933>%s</color>/%s", var_26_0, EquipEnum.DecomposeMaxCount)
+
+	arg_26_0:refreshClear()
 end
 
-function slot0.refreshBtnItem(slot0, slot1)
-	slot2 = EquipDecomposeListModel.instance:getSortTag() == slot1.tag
+function var_0_0.refreshBtnItem(arg_27_0, arg_27_1)
+	local var_27_0 = EquipDecomposeListModel.instance:getSortTag() == arg_27_1.tag
+	local var_27_1 = EquipDecomposeListModel.instance:getSortIsAscend(arg_27_1.tag)
 
-	gohelper.setActive(slot1.goSelect, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot1.txtGraphic, slot2 and uv0.Color.Select or uv0.Color.Normal)
-	SLFramework.UGUI.GuiHelper.SetColor(slot1.arrowGraphic, slot2 and uv0.Color.Select or uv0.Color.Normal)
-	transformhelper.setLocalScale(slot1.arrowTr, 1, EquipDecomposeListModel.instance:getSortIsAscend(slot1.tag) and 1 or -1, 1)
+	gohelper.setActive(arg_27_1.goSelect, var_27_0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_27_1.txtGraphic, var_27_0 and var_0_0.Color.Select or var_0_0.Color.Normal)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_27_1.arrowGraphic, var_27_0 and var_0_0.Color.Select or var_0_0.Color.Normal)
+	transformhelper.setLocalScale(arg_27_1.arrowTr, 1, var_27_1 and 1 or -1, 1)
 end
 
-function slot0.refreshFilterBtn(slot0)
-	slot1 = slot0.filterMo:isFiltering()
+function var_0_0.refreshFilterBtn(arg_28_0)
+	local var_28_0 = arg_28_0.filterMo:isFiltering()
 
-	gohelper.setActive(slot0._gonotfilter, not slot1)
-	gohelper.setActive(slot0._gofilter, slot1)
+	gohelper.setActive(arg_28_0._gonotfilter, not var_28_0)
+	gohelper.setActive(arg_28_0._gofilter, var_28_0)
 end
 
-function slot0.refreshClear(slot0)
-	gohelper.setActive(slot0.goclear, EquipDecomposeListModel.instance:getDecomposeEquipCount() > 0)
+function var_0_0.refreshClear(arg_29_0)
+	gohelper.setActive(arg_29_0.goclear, EquipDecomposeListModel.instance:getDecomposeEquipCount() > 0)
 end
 
-function slot0.refreshCount(slot0)
-	if slot0.preCount == EquipDecomposeListModel.instance:getDecomposeEquipCount() * slot0.decomposeEquipUnitCount then
+function var_0_0.refreshCount(arg_30_0)
+	local var_30_0 = EquipDecomposeListModel.instance:getDecomposeEquipCount() * arg_30_0.decomposeEquipUnitCount
+
+	if arg_30_0.preCount == var_30_0 then
 		return
 	end
 
-	slot0.preCount = slot1
+	arg_30_0.preCount = var_30_0
 
-	slot0:killTween()
+	arg_30_0:killTween()
 
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot0.preCount, slot1, EquipEnum.DecomposeTxtAnimDuration, slot0.frameCallback, slot0.finishCallback, slot0)
+	arg_30_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_30_0.preCount, var_30_0, EquipEnum.DecomposeTxtAnimDuration, arg_30_0.frameCallback, arg_30_0.finishCallback, arg_30_0)
 
-	slot0.txtCountAnimator:Play("vx_count", 0, 0)
+	arg_30_0.txtCountAnimator:Play("vx_count", 0, 0)
 end
 
-function slot0.frameCallback(slot0, slot1)
-	slot0._txtcount.text = string.format("%s%s", slot0.multipleChar, math.ceil(slot1))
+function var_0_0.frameCallback(arg_31_0, arg_31_1)
+	arg_31_0._txtcount.text = string.format("%s%s", arg_31_0.multipleChar, math.ceil(arg_31_1))
 end
 
-function slot0.finishCallback(slot0)
-	slot0.tweenId = nil
+function var_0_0.finishCallback(arg_32_0)
+	arg_32_0.tweenId = nil
 end
 
-function slot0.refreshDecomposeEquip(slot0)
-	slot0._simageequipicon:LoadImage(ResUrl.getEquipIcon(slot0.decomposeEquipConfig.icon .. "_equip"))
+function var_0_0.refreshDecomposeEquip(arg_33_0)
+	arg_33_0._simageequipicon:LoadImage(ResUrl.getEquipIcon(arg_33_0.decomposeEquipConfig.icon .. "_equip"))
 
-	slot0._txtequipname.text = slot0.decomposeEquipConfig.name
+	arg_33_0._txtequipname.text = arg_33_0.decomposeEquipConfig.name
 end
 
-function slot0.refreshDecomposeBtn(slot0)
-	ZProj.UGUIHelper.SetGrayscale(slot0.goDecomposeBtn, EquipDecomposeListModel.instance:getSelectCount() < 1)
+function var_0_0.refreshDecomposeBtn(arg_34_0)
+	local var_34_0 = EquipDecomposeListModel.instance:getSelectCount()
+
+	ZProj.UGUIHelper.SetGrayscale(arg_34_0.goDecomposeBtn, var_34_0 < 1)
 end
 
-function slot0.onEquipTypeHasChange(slot0, slot1)
-	if slot1 ~= slot0.viewName then
+function var_0_0.onEquipTypeHasChange(arg_35_0, arg_35_1)
+	if arg_35_1 ~= arg_35_0.viewName then
 		return
 	end
 
-	EquipDecomposeListModel.instance:updateEquipData(slot0.filterMo)
-	slot0:refreshCenterGroupUI()
-	slot0:refreshFilterBtn()
+	EquipDecomposeListModel.instance:updateEquipData(arg_35_0.filterMo)
+	arg_35_0:refreshCenterGroupUI()
+	arg_35_0:refreshFilterBtn()
 end
 
-function slot0.onEquipDecomposeSelectEquipChange(slot0)
-	slot0:refreshBottomGroup()
-	slot0:refreshCount()
-	slot0:refreshDecomposeBtn()
+function var_0_0.onEquipDecomposeSelectEquipChange(arg_36_0)
+	arg_36_0:refreshBottomGroup()
+	arg_36_0:refreshCount()
+	arg_36_0:refreshDecomposeBtn()
 end
 
-function slot0.onOpenView(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		slot0:onDecomposeSuccess()
+function var_0_0.onOpenView(arg_37_0, arg_37_1)
+	if arg_37_1 == ViewName.CommonPropView then
+		arg_37_0:onDecomposeSuccess()
 	end
 end
 
-function slot0.onDecomposeSuccess(slot0)
-	slot0.preCount = 0
+function var_0_0.onDecomposeSuccess(arg_38_0)
+	arg_38_0.preCount = 0
 
-	EquipDecomposeListModel.instance:updateEquipData(slot0.filterMo)
-	slot0:refreshCenterGroupUI()
-	slot0:refreshDecomposeBtn()
+	EquipDecomposeListModel.instance:updateEquipData(arg_38_0.filterMo)
+	arg_38_0:refreshCenterGroupUI()
+	arg_38_0:refreshDecomposeBtn()
 
-	slot0._txtcount.text = string.format("%s0", slot0.multipleChar)
+	arg_38_0._txtcount.text = string.format("%s0", arg_38_0.multipleChar)
 end
 
-function slot0.onEquipDecomposeSortStatusChange(slot0)
+function var_0_0.onEquipDecomposeSortStatusChange(arg_39_0)
 	EquipDecomposeListModel.instance:sortEquipList()
-	slot0:refreshCenterGroupUI()
-	slot0:refreshBtnItem(slot0.rareBtnItem)
-	slot0:refreshBtnItem(slot0.lvBtnItem)
+	arg_39_0:refreshCenterGroupUI()
+	arg_39_0:refreshBtnItem(arg_39_0.rareBtnItem)
+	arg_39_0:refreshBtnItem(arg_39_0.lvBtnItem)
 end
 
-function slot0.killTween(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.killTween(arg_40_0)
+	if arg_40_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_40_0.tweenId)
 
-		slot0.tweenId = nil
+		arg_40_0.tweenId = nil
 	end
 end
 
-function slot0.onClose(slot0)
-	UIBlockMgr.instance:endBlock(uv0.DecomposeAnimKey)
-	TaskDispatcher.cancelTask(slot0._sendDecomposeRequest, slot0)
-	TaskDispatcher.cancelTask(slot0.firstRefreshEquip, slot0)
-	slot0:killTween()
+function var_0_0.onClose(arg_41_0)
+	UIBlockMgr.instance:endBlock(var_0_0.DecomposeAnimKey)
+	TaskDispatcher.cancelTask(arg_41_0._sendDecomposeRequest, arg_41_0)
+	TaskDispatcher.cancelTask(arg_41_0.firstRefreshEquip, arg_41_0)
+	arg_41_0:killTween()
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageequipicon:UnLoadImage()
-	slot0.dropFilter:RemoveOnValueChanged()
-	slot0.dropClick:RemoveClickListener()
-	slot0.decomposeEquipClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_42_0)
+	arg_42_0._simagebg:UnLoadImage()
+	arg_42_0._simageequipicon:UnLoadImage()
+	arg_42_0.dropFilter:RemoveOnValueChanged()
+	arg_42_0.dropClick:RemoveClickListener()
+	arg_42_0.decomposeEquipClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

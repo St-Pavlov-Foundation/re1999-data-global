@@ -1,71 +1,73 @@
-module("modules.logic.achievement.view.AchievementMainViewContainer", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementMainViewContainer", package.seeall)
 
-slot0 = class("AchievementMainViewContainer", BaseViewContainer)
+local var_0_0 = class("AchievementMainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._scrollListView = LuaMixScrollView.New(AchievementMainListModel.instance, slot0:getListContentParam())
-	slot0._scrollTileView = LuaMixScrollView.New(AchievementMainTileModel.instance, slot0:getMixContentParam())
-	slot0._poolView = AchievementMainViewPool.New(AchievementEnum.MainIconPath)
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._scrollListView = LuaMixScrollView.New(AchievementMainListModel.instance, arg_1_0:getListContentParam())
+	arg_1_0._scrollTileView = LuaMixScrollView.New(AchievementMainTileModel.instance, arg_1_0:getMixContentParam())
+	arg_1_0._poolView = AchievementMainViewPool.New(AchievementEnum.MainIconPath)
 
 	return {
 		AchievementMainView.New(),
 		TabViewGroup.New(1, "#go_btns"),
-		slot0._scrollTileView,
-		slot0._scrollListView,
-		slot0._poolView,
+		arg_1_0._scrollTileView,
+		arg_1_0._scrollListView,
+		arg_1_0._poolView,
 		AchievementMainViewFocus.New(),
 		AchievementMainTopView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-function slot0.getMixContentParam(slot0)
-	slot1 = MixScrollParam.New()
-	slot1.scrollGOPath = "#go_container/#scroll_content"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = AchievementMainItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.startSpace = -20
-	slot1.endSpace = 50
+function var_0_0.getMixContentParam(arg_3_0)
+	local var_3_0 = MixScrollParam.New()
 
-	return slot1
+	var_3_0.scrollGOPath = "#go_container/#scroll_content"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+	var_3_0.cellClass = AchievementMainItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirV
+	var_3_0.startSpace = -20
+	var_3_0.endSpace = 50
+
+	return var_3_0
 end
 
-function slot0.getListContentParam(slot0)
-	slot1 = MixScrollParam.New()
-	slot1.scrollGOPath = "#go_container/#scroll_list"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#go_container/#scroll_list/Viewport/content/#go_listitem"
-	slot1.cellClass = AchievementMainListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.getListContentParam(arg_4_0)
+	local var_4_0 = MixScrollParam.New()
 
-	return slot1
+	var_4_0.scrollGOPath = "#go_container/#scroll_list"
+	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_4_0.prefabUrl = "#go_container/#scroll_list/Viewport/content/#go_listitem"
+	var_4_0.cellClass = AchievementMainListItem
+	var_4_0.scrollDir = ScrollEnum.ScrollDirV
+
+	return var_4_0
 end
 
-function slot0.getScrollView(slot0, slot1)
-	if slot1 == AchievementEnum.ViewType.Tile then
-		return slot0._scrollTileView
+function var_0_0.getScrollView(arg_5_0, arg_5_1)
+	if arg_5_1 == AchievementEnum.ViewType.Tile then
+		return arg_5_0._scrollTileView
 	else
-		return slot0._scrollListView
+		return arg_5_0._scrollListView
 	end
 end
 
-function slot0.getPoolView(slot0)
-	return slot0._poolView
+function var_0_0.getPoolView(arg_6_0)
+	return arg_6_0._poolView
 end
 
-return slot0
+return var_0_0

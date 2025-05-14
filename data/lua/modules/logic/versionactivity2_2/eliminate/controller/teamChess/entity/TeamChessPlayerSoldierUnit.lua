@@ -1,71 +1,71 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessPlayerSoldierUnit", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessPlayerSoldierUnit", package.seeall)
 
-slot0 = class("TeamChessPlayerSoldierUnit", TeamChessSoldierUnit)
+local var_0_0 = class("TeamChessPlayerSoldierUnit", TeamChessSoldierUnit)
 
-function slot0._onResLoaded(slot0)
-	uv0.super._onResLoaded(slot0)
+function var_0_0._onResLoaded(arg_1_0)
+	var_0_0.super._onResLoaded(arg_1_0)
 
-	if gohelper.isNil(slot0._backGo) then
+	if gohelper.isNil(arg_1_0._backGo) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_put)
-	slot0:playAnimator("in")
-	slot0:refreshMeshOrder()
-	slot0:setActive(true)
-	slot0:refreshShowModeState()
+	arg_1_0:playAnimator("in")
+	arg_1_0:refreshMeshOrder()
+	arg_1_0:setActive(true)
+	arg_1_0:refreshShowModeState()
 end
 
-function slot0.setOutlineActive(slot0, slot1)
-	if gohelper.isNil(slot0._backOutLineGo) then
+function var_0_0.setOutlineActive(arg_2_0, arg_2_1)
+	if gohelper.isNil(arg_2_0._backOutLineGo) then
 		return
 	end
 
-	gohelper.setActive(slot0._backOutLineGo.gameObject, slot1)
-	uv0.super.setOutlineActive(slot0, slot1)
+	gohelper.setActive(arg_2_0._backOutLineGo.gameObject, arg_2_1)
+	var_0_0.super.setOutlineActive(arg_2_0, arg_2_1)
 end
 
-function slot0.setNormalActive(slot0, slot1)
-	if gohelper.isNil(slot0._backGo) then
+function var_0_0.setNormalActive(arg_3_0, arg_3_1)
+	if gohelper.isNil(arg_3_0._backGo) then
 		return
 	end
 
-	gohelper.setActive(slot0._backGo.gameObject, slot1)
-	uv0.super.setNormalActive(slot0, slot1)
+	gohelper.setActive(arg_3_0._backGo.gameObject, arg_3_1)
+	var_0_0.super.setNormalActive(arg_3_0, arg_3_1)
 end
 
-function slot0.setGrayActive(slot0, slot1)
-	if gohelper.isNil(slot0._backGrayGo) then
+function var_0_0.setGrayActive(arg_4_0, arg_4_1)
+	if gohelper.isNil(arg_4_0._backGrayGo) then
 		return
 	end
 
-	gohelper.setActive(slot0._backGrayGo.gameObject, slot1)
-	uv0.super.setGrayActive(slot0, slot1)
+	gohelper.setActive(arg_4_0._backGrayGo.gameObject, arg_4_1)
+	var_0_0.super.setGrayActive(arg_4_0, arg_4_1)
 end
 
-function slot0.onDrag(slot0, slot1, slot2)
-	if not slot0._unitMo:canActiveMove() then
+function var_0_0.onDrag(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_0._unitMo:canActiveMove() then
 		return
 	end
 
-	slot0:cacheModel()
-	slot0:setShowModeType()
+	arg_5_0:cacheModel()
+	arg_5_0:setShowModeType()
 
-	slot3 = slot0._unitMo
+	local var_5_0 = arg_5_0._unitMo
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDrag, slot3.soldierId, slot3.uid, slot3.stronghold, slot1, slot2)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDrag, var_5_0.soldierId, var_5_0.uid, var_5_0.stronghold, arg_5_1, arg_5_2)
 end
 
-function slot0.onDragEnd(slot0, slot1, slot2)
-	if not slot0._unitMo:canActiveMove() then
+function var_0_0.onDragEnd(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_0._unitMo:canActiveMove() then
 		return
 	end
 
-	slot0:restoreModel()
+	arg_6_0:restoreModel()
 
-	slot3 = slot0._unitMo
+	local var_6_0 = arg_6_0._unitMo
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragEnd, slot3.soldierId, slot3.uid, slot3.stronghold, slot1, slot2)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragEnd, var_6_0.soldierId, var_6_0.uid, var_6_0.stronghold, arg_6_1, arg_6_2)
 end
 
-return slot0
+return var_0_0

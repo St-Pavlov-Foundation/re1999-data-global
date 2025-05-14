@@ -1,130 +1,130 @@
-module("modules.logic.explore.map.unit.ExplorePrismUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExplorePrismUnit", package.seeall)
 
-slot0 = class("ExplorePrismUnit", ExploreBaseLightUnit)
+local var_0_0 = class("ExplorePrismUnit", ExploreBaseLightUnit)
 
-function slot0.getLightRecvType(slot0)
+function var_0_0.getLightRecvType(arg_1_0)
 	return ExploreEnum.LightRecvType.Custom
 end
 
-function slot0.onLightEnter(slot0, slot1)
-	if not slot0.mo:isInteractEnabled() then
+function var_0_0.onLightEnter(arg_2_0, arg_2_1)
+	if not arg_2_0.mo:isInteractEnabled() then
 		return
 	end
 
-	slot2 = ExploreController.instance:getMapLight()
+	local var_2_0 = ExploreController.instance:getMapLight()
 
-	slot2:beginCheckStatusChange(slot0.id, slot0:haveLight())
-	slot0:addLights()
-	slot2:endCheckStatus()
+	var_2_0:beginCheckStatusChange(arg_2_0.id, arg_2_0:haveLight())
+	arg_2_0:addLights()
+	var_2_0:endCheckStatus()
 end
 
-function slot0.onInteractChange(slot0, slot1)
-	uv0.super.onInteractChange(slot0, slot1)
+function var_0_0.onInteractChange(arg_3_0, arg_3_1)
+	var_0_0.super.onInteractChange(arg_3_0, arg_3_1)
 
-	if slot0.animComp._curAnim ~= ExploreAnimEnum.AnimName.uToN then
-		slot2 = ExploreController.instance:getMapLight()
+	if arg_3_0.animComp._curAnim ~= ExploreAnimEnum.AnimName.uToN then
+		local var_3_0 = ExploreController.instance:getMapLight()
 
-		slot2:beginCheckStatusChange(slot0.id, slot0:haveLight())
-		slot0:checkLight()
-		slot2:endCheckStatus()
+		var_3_0:beginCheckStatusChange(arg_3_0.id, arg_3_0:haveLight())
+		arg_3_0:checkLight()
+		var_3_0:endCheckStatus()
 	else
 		ExploreModel.instance:setStepPause(true)
 	end
 end
 
-function slot0.onAnimEnd(slot0, slot1, slot2)
-	uv0.super.onAnimEnd(slot0, slot1, slot2)
+function var_0_0.onAnimEnd(arg_4_0, arg_4_1, arg_4_2)
+	var_0_0.super.onAnimEnd(arg_4_0, arg_4_1, arg_4_2)
 
-	if slot1 == ExploreAnimEnum.AnimName.uToN then
-		slot3 = ExploreController.instance:getMapLight()
+	if arg_4_1 == ExploreAnimEnum.AnimName.uToN then
+		local var_4_0 = ExploreController.instance:getMapLight()
 
-		slot3:beginCheckStatusChange(slot0.id, slot0:haveLight())
-		slot0:checkLight()
-		slot3:endCheckStatus()
+		var_4_0:beginCheckStatusChange(arg_4_0.id, arg_4_0:haveLight())
+		arg_4_0:checkLight()
+		var_4_0:endCheckStatus()
 		ExploreModel.instance:setStepPause(false)
 	end
 end
 
-function slot0.onLightExit(slot0)
-	slot1 = ExploreController.instance:getMapLight()
+function var_0_0.onLightExit(arg_5_0)
+	local var_5_0 = ExploreController.instance:getMapLight()
 
-	slot1:beginCheckStatusChange(slot0.id, slot0:haveLight())
-	slot0:removeLights()
-	slot1:endCheckStatus()
+	var_5_0:beginCheckStatusChange(arg_5_0.id, arg_5_0:haveLight())
+	arg_5_0:removeLights()
+	var_5_0:endCheckStatus()
 end
 
-function slot0.setEmitLight(slot0, slot1)
-	uv0.super.setEmitLight(slot0, slot1)
+function var_0_0.setEmitLight(arg_6_0, arg_6_1)
+	var_0_0.super.setEmitLight(arg_6_0, arg_6_1)
 
-	if slot1 then
-		slot2 = ExploreController.instance:getMapLight()
+	if arg_6_1 then
+		local var_6_0 = ExploreController.instance:getMapLight()
 
-		slot2:removeUnitEmitLight(slot0)
-		slot0:removeLights()
-		slot2:updateLightsByUnit(slot0)
-		slot0:playAnim(slot0:getIdleAnim())
+		var_6_0:removeUnitEmitLight(arg_6_0)
+		arg_6_0:removeLights()
+		var_6_0:updateLightsByUnit(arg_6_0)
+		arg_6_0:playAnim(arg_6_0:getIdleAnim())
 	else
-		slot0:checkLight()
+		arg_6_0:checkLight()
 	end
 end
 
-function slot0.checkLight(slot0)
+function var_0_0.checkLight(arg_7_0)
 	if not ExploreController.instance:getMap():isInitDone() then
 		return
 	end
 
-	slot2 = ExploreController.instance:getMapLight()
+	local var_7_0 = ExploreController.instance:getMapLight()
 
-	if not slot0.mo:isInteractEnabled() then
-		slot2:removeUnitEmitLight(slot0)
-		slot0:removeLights()
-		slot2:updateLightsByUnit(slot0)
+	if not arg_7_0.mo:isInteractEnabled() then
+		var_7_0:removeUnitEmitLight(arg_7_0)
+		arg_7_0:removeLights()
+		var_7_0:updateLightsByUnit(arg_7_0)
 
 		return
 	end
 
-	slot3 = slot0:haveLight()
+	local var_7_1 = arg_7_0:haveLight()
 
-	slot2:beginCheckStatusChange(slot0.id, slot0:haveLight())
-	slot2:removeUnitEmitLight(slot0)
-	slot2:updateLightsByUnit(slot0)
-	slot0:removeLights()
+	var_7_0:beginCheckStatusChange(arg_7_0.id, arg_7_0:haveLight())
+	var_7_0:removeUnitEmitLight(arg_7_0)
+	var_7_0:updateLightsByUnit(arg_7_0)
+	arg_7_0:removeLights()
 
-	if slot0:isHaveIlluminant() and not slot0._isNoEmitLight then
-		slot0:addLights()
+	if arg_7_0:isHaveIlluminant() and not arg_7_0._isNoEmitLight then
+		arg_7_0:addLights()
 	end
 
-	slot2:endCheckStatus()
+	var_7_0:endCheckStatus()
 end
 
-function slot0.haveLight(slot0)
-	return slot0.lightComp:haveLight()
+function var_0_0.haveLight(arg_8_0)
+	return arg_8_0.lightComp:haveLight()
 end
 
-function slot0.onBallLightChange(slot0)
-	slot0:checkLight()
+function var_0_0.onBallLightChange(arg_9_0)
+	arg_9_0:checkLight()
 end
 
-function slot0.addLights(slot0)
-	slot0.lightComp:addLight(slot0.mo.unitDir)
+function var_0_0.addLights(arg_10_0)
+	arg_10_0.lightComp:addLight(arg_10_0.mo.unitDir)
 end
 
-function slot0.removeLights(slot0)
-	slot0.lightComp:removeAllLight()
+function var_0_0.removeLights(arg_11_0)
+	arg_11_0.lightComp:removeAllLight()
 end
 
-function slot0.isCustomShowOutLine(slot0)
-	slot1 = not slot0.mo:isInteractEnabled()
+function var_0_0.isCustomShowOutLine(arg_12_0)
+	local var_12_0 = not arg_12_0.mo:isInteractEnabled()
 
-	return slot1, slot1 and "explore/common/sprite/prefabs/msts_icon_xiuli.prefab"
+	return var_12_0, var_12_0 and "explore/common/sprite/prefabs/msts_icon_xiuli.prefab"
 end
 
-function slot0.isHaveIlluminant(slot0)
-	return ExploreController.instance:getMapLight():haveLight(slot0)
+function var_0_0.isHaveIlluminant(arg_13_0)
+	return ExploreController.instance:getMapLight():haveLight(arg_13_0)
 end
 
-function slot0.getFixItemId(slot0)
-	return slot0.mo.fixItemId
+function var_0_0.getFixItemId(arg_14_0)
+	return arg_14_0.mo.fixItemId
 end
 
-return slot0
+return var_0_0

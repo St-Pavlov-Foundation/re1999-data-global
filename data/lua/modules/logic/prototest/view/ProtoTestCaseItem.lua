@@ -1,102 +1,112 @@
-module("modules.logic.prototest.view.ProtoTestCaseItem", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoTestCaseItem", package.seeall)
 
-slot0 = class("ProtoTestCaseItem", MixScrollCell)
+local var_0_0 = class("ProtoTestCaseItem", MixScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._tr = slot1.transform
-	slot0._txtId = gohelper.findChildText(slot1, "Txt_id")
-	slot0._txtFields = {
-		gohelper.findChildText(slot1, "Txt_field")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._tr = arg_1_1.transform
+	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "Txt_id")
+	arg_1_0._txtFields = {
+		gohelper.findChildText(arg_1_1, "Txt_field")
 	}
-	slot0._btnRemove = gohelper.findChildButtonWithAudio(slot1, "Btn_remove")
-	slot0._btnCopy = gohelper.findChildButtonWithAudio(slot1, "Btn_copy")
-	slot0._btnSend = gohelper.findChildButtonWithAudio(slot1, "Btn_send")
+	arg_1_0._btnRemove = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_remove")
+	arg_1_0._btnCopy = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_copy")
+	arg_1_0._btnSend = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_send")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnRemove:AddClickListener(slot0._onClickRemove, slot0)
-	slot0._btnCopy:AddClickListener(slot0._onClickCopy, slot0)
-	slot0._btnSend:AddClickListener(slot0._onClickSend, slot0)
-	gohelper.getClick(slot0._go):AddClickListener(slot0._onClickItem, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnRemove:AddClickListener(arg_2_0._onClickRemove, arg_2_0)
+	arg_2_0._btnCopy:AddClickListener(arg_2_0._onClickCopy, arg_2_0)
+	arg_2_0._btnSend:AddClickListener(arg_2_0._onClickSend, arg_2_0)
+	gohelper.getClick(arg_2_0._go):AddClickListener(arg_2_0._onClickItem, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnRemove:RemoveClickListener()
-	slot0._btnCopy:RemoveClickListener()
-	slot0._btnSend:RemoveClickListener()
-	gohelper.getClick(slot0._go):RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnRemove:RemoveClickListener()
+	arg_3_0._btnCopy:RemoveClickListener()
+	arg_3_0._btnSend:RemoveClickListener()
+	gohelper.getClick(arg_3_0._go):RemoveClickListener()
 
-	for slot4 = 1, #slot0._txtFields do
-		gohelper.getClick(slot0._txtFields[slot4].gameObject):RemoveClickListener()
+	for iter_3_0 = 1, #arg_3_0._txtFields do
+		local var_3_0 = arg_3_0._txtFields[iter_3_0]
+
+		gohelper.getClick(var_3_0.gameObject):RemoveClickListener()
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	recthelper.setHeight(slot0._tr, slot3)
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	recthelper.setHeight(arg_4_0._tr, arg_4_3)
 
-	slot0._mo = slot1
-	slot7 = slot0._mo.struct
-	slot0._txtId.text = slot0._mo.id .. ". " .. slot7
+	arg_4_0._mo = arg_4_1
+	arg_4_0._txtId.text = arg_4_0._mo.id .. ". " .. arg_4_0._mo.struct
 
-	for slot7, slot8 in ipairs(slot0._mo.value) do
-		slot9 = slot0._txtFields[1].gameObject
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._mo.value) do
+		local var_4_0 = arg_4_0._txtFields[1].gameObject
+		local var_4_1 = arg_4_0._txtFields[iter_4_0]
 
-		if not slot0._txtFields[slot7] then
-			slot10 = gohelper.clone(slot9, slot9.transform.parent.gameObject, slot9.name .. slot7):GetComponent(gohelper.Type_Text) or slot11:GetComponent(gohelper.Type_TextMesh)
+		if not var_4_1 then
+			local var_4_2 = gohelper.clone(var_4_0, var_4_0.transform.parent.gameObject, var_4_0.name .. iter_4_0)
 
-			recthelper.setAnchorY(slot10.transform, recthelper.getAnchorY(slot9.transform) - 28 * (slot7 - 1))
-			table.insert(slot0._txtFields, slot10)
+			var_4_1 = var_4_2:GetComponent(gohelper.Type_Text)
+			var_4_1 = var_4_1 or var_4_2:GetComponent(gohelper.Type_TextMesh)
+
+			recthelper.setAnchorY(var_4_1.transform, recthelper.getAnchorY(var_4_0.transform) - 28 * (iter_4_0 - 1))
+			table.insert(arg_4_0._txtFields, var_4_1)
 		end
 
-		slot10.text = slot8:getParamDescLine()
+		var_4_1.text = iter_4_1:getParamDescLine()
 
-		gohelper.setActive(slot10.gameObject, true)
-		gohelper.getClick(slot10.gameObject):AddClickListener(slot0._onClickParam, slot0, slot7)
+		gohelper.setActive(var_4_1.gameObject, true)
+		gohelper.getClick(var_4_1.gameObject):AddClickListener(arg_4_0._onClickParam, arg_4_0, iter_4_0)
 	end
 
-	for slot7 = #slot0._mo.value + 1, #slot0._txtFields do
-		gohelper.setActive(slot0._txtFields[slot7].gameObject, false)
+	for iter_4_2 = #arg_4_0._mo.value + 1, #arg_4_0._txtFields do
+		gohelper.setActive(arg_4_0._txtFields[iter_4_2].gameObject, false)
 	end
 end
 
-function slot0._onClickItem(slot0)
+function var_0_0._onClickItem(arg_5_0)
 	ViewMgr.instance:openView(ViewName.ProtoModifyView, {
-		protoMO = slot0._mo
+		protoMO = arg_5_0._mo
 	})
 end
 
-function slot0._onClickParam(slot0, slot1)
+function var_0_0._onClickParam(arg_6_0, arg_6_1)
 	ViewMgr.instance:openView(ViewName.ProtoModifyView, {
-		protoMO = slot0._mo,
-		paramId = slot1
+		protoMO = arg_6_0._mo,
+		paramId = arg_6_1
 	})
 end
 
-function slot0._onClickRemove(slot0)
-	ProtoTestCaseModel.instance:remove(slot0._mo)
+function var_0_0._onClickRemove(arg_7_0)
+	ProtoTestCaseModel.instance:remove(arg_7_0._mo)
 
-	for slot5, slot6 in ipairs(ProtoTestCaseModel.instance:getList()) do
-		slot6.id = slot5
+	local var_7_0 = ProtoTestCaseModel.instance:getList()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		iter_7_1.id = iter_7_0
 	end
 
-	ProtoTestCaseModel.instance:setList(slot1)
+	ProtoTestCaseModel.instance:setList(var_7_0)
 end
 
-function slot0._onClickCopy(slot0)
-	slot2 = ProtoTestCaseModel.instance:getList()
+function var_0_0._onClickCopy(arg_8_0)
+	local var_8_0 = arg_8_0._mo:clone()
+	local var_8_1 = ProtoTestCaseModel.instance:getList()
 
-	table.insert(slot2, slot0._mo:clone())
+	table.insert(var_8_1, var_8_0)
 
-	for slot6, slot7 in ipairs(slot2) do
-		slot7.id = slot6
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		iter_8_1.id = iter_8_0
 	end
 
-	ProtoTestCaseModel.instance:setList(slot2)
+	ProtoTestCaseModel.instance:setList(var_8_1)
 end
 
-function slot0._onClickSend(slot0)
-	LuaSocketMgr.instance:sendMsg(slot0._mo:buildProtoMsg())
+function var_0_0._onClickSend(arg_9_0)
+	local var_9_0 = arg_9_0._mo:buildProtoMsg()
+
+	LuaSocketMgr.instance:sendMsg(var_9_0)
 end
 
-return slot0
+return var_0_0

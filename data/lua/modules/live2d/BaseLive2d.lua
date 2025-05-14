@@ -1,515 +1,526 @@
-module("modules.live2d.BaseLive2d", package.seeall)
+﻿module("modules.live2d.BaseLive2d", package.seeall)
 
-slot0 = class("BaseLive2d", LuaCompBase)
-slot0.BodyTrackIndex = 0
-slot0.FaceTrackIndex = 1
-slot0.MouthTrackIndex = 2
-slot0.TransitionTrackIndex = 3
-slot0.enableMainInterfaceLight = false
+local var_0_0 = class("BaseLive2d", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._gameObj = slot1
-	slot0._gameTr = slot1.transform
-	slot0._resLoader = SpinePrefabInstantiate.Create(slot0._gameObj)
-	slot0._resPath = nil
-	slot0._cubismController = nil
-	slot0._spineGo = nil
-	slot0._spineTr = nil
-	slot0._isLoop = false
-	slot0._lookDir = SpineLookDir.Left
-	slot0._bFreeze = false
-	slot0._actionCb = nil
-	slot0._actionCbObj = nil
-	slot0._resLoadedCb = nil
-	slot0._resLoadedCbObj = nil
+var_0_0.BodyTrackIndex = 0
+var_0_0.FaceTrackIndex = 1
+var_0_0.MouthTrackIndex = 2
+var_0_0.TransitionTrackIndex = 3
+var_0_0.enableMainInterfaceLight = false
+
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._gameObj = arg_1_1
+	arg_1_0._gameTr = arg_1_1.transform
+	arg_1_0._resLoader = SpinePrefabInstantiate.Create(arg_1_0._gameObj)
+	arg_1_0._resPath = nil
+	arg_1_0._cubismController = nil
+	arg_1_0._spineGo = nil
+	arg_1_0._spineTr = nil
+	arg_1_0._isLoop = false
+	arg_1_0._lookDir = SpineLookDir.Left
+	arg_1_0._bFreeze = false
+	arg_1_0._actionCb = nil
+	arg_1_0._actionCbObj = nil
+	arg_1_0._resLoadedCb = nil
+	arg_1_0._resLoadedCbObj = nil
 end
 
-function slot0.setResPath(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0.setResPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if not arg_2_1 then
 		return
 	end
 
-	if slot0._resPath == slot1 and not gohelper.isNil(slot0._spineGo) then
-		if slot2 then
-			slot2(slot3)
+	if arg_2_0._resPath == arg_2_1 and not gohelper.isNil(arg_2_0._spineGo) then
+		if arg_2_2 then
+			arg_2_2(arg_2_3)
 		end
 
 		return
 	end
 
-	slot0:_clear()
+	arg_2_0:_clear()
 
-	slot0._resPath = slot1
-	slot0._resLoadedCb = slot2
-	slot0._resLoadedCbObj = slot3
+	arg_2_0._resPath = arg_2_1
+	arg_2_0._resLoadedCb = arg_2_2
+	arg_2_0._resLoadedCbObj = arg_2_3
 
-	slot0._resLoader:startLoad(slot0._resPath, slot0._resPath, slot0._onResLoaded, slot0)
+	arg_2_0._resLoader:startLoad(arg_2_0._resPath, arg_2_0._resPath, arg_2_0._onResLoaded, arg_2_0)
 end
 
-function slot0.setHeroId(slot0, slot1)
-	slot0._heroId = slot1
+function var_0_0.setHeroId(arg_3_0, arg_3_1)
+	arg_3_0._heroId = arg_3_1
 end
 
-function slot0.setSkinId(slot0, slot1)
-	slot0._skinId = slot1
+function var_0_0.setSkinId(arg_4_0, arg_4_1)
+	arg_4_0._skinId = arg_4_1
 end
 
-function slot0.getResPath(slot0)
-	return slot0._resPath
+function var_0_0.getResPath(arg_5_0)
+	return arg_5_0._resPath
 end
 
-function slot0.doClear(slot0)
-	slot0:_clear()
+function var_0_0.doClear(arg_6_0)
+	arg_6_0:_clear()
 end
 
-function slot0._clear(slot0)
-	if slot0._resLoader then
-		slot0._resLoader:dispose()
+function var_0_0._clear(arg_7_0)
+	if arg_7_0._resLoader then
+		arg_7_0._resLoader:dispose()
 	end
 
-	if slot0._roleEffectComp then
-		slot0._roleEffectComp:onDestroy()
+	if arg_7_0._roleEffectComp then
+		arg_7_0._roleEffectComp:onDestroy()
 
-		slot0._roleEffectComp = nil
+		arg_7_0._roleEffectComp = nil
 	end
 
-	if slot0._roleFaceComp then
-		slot0._roleFaceComp:onDestroy()
+	if arg_7_0._roleFaceComp then
+		arg_7_0._roleFaceComp:onDestroy()
 
-		slot0._roleFaceComp = nil
+		arg_7_0._roleFaceComp = nil
 	end
 
-	slot0._cubismController = nil
-	slot0._resPath = nil
+	arg_7_0._cubismController = nil
+	arg_7_0._resPath = nil
 
-	if slot0._spineGo then
-		Live2dMaskController.instance:removeLive2dGo(slot0._spineGo)
+	if arg_7_0._spineGo then
+		Live2dMaskController.instance:removeLive2dGo(arg_7_0._spineGo)
 
-		slot0._spineGo = nil
+		arg_7_0._spineGo = nil
 	end
 
-	slot0._spineTr = nil
-	slot0._bFreeze = false
-	slot0._renderer = nil
-	slot0._curBodyName = nil
+	arg_7_0._spineTr = nil
+	arg_7_0._bFreeze = false
+	arg_7_0._renderer = nil
+	arg_7_0._curBodyName = nil
 end
 
-function slot0.isPlayingVoice(slot0)
-	return slot0._live2dVoice and slot0._live2dVoice:playing()
+function var_0_0.isPlayingVoice(arg_8_0)
+	return arg_8_0._live2dVoice and arg_8_0._live2dVoice:playing()
 end
 
-function slot0.getPlayVoiceStartTime(slot0)
-	return slot0._live2dVoice and slot0._live2dVoice:getPlayVoiceStartTime()
+function var_0_0.getPlayVoiceStartTime(arg_9_0)
+	return arg_9_0._live2dVoice and arg_9_0._live2dVoice:getPlayVoiceStartTime()
 end
 
-function slot0._initVoice(slot0)
-	slot0._live2dVoice = slot0._live2dVoice or Live2dVoice.New()
+function var_0_0._initVoice(arg_10_0)
+	arg_10_0._live2dVoice = arg_10_0._live2dVoice or Live2dVoice.New()
 end
 
-function slot0.playVoice(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0:_initVoice()
-	slot0._live2dVoice:playVoice(slot0, slot1, slot2, slot3, slot4, slot5)
+function var_0_0.playVoice(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	arg_11_0:_initVoice()
+	arg_11_0._live2dVoice:playVoice(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
 end
 
-function slot0.stopVoice(slot0)
-	if slot0._live2dVoice then
-		slot0._live2dVoice:stopVoice()
-	end
-end
-
-function slot0.setSwitch(slot0, slot1, slot2)
-	slot0:_initVoice()
-	slot0._live2dVoice:setSwitch(slot0, slot1, slot2)
-end
-
-function slot0.getSpineVoice(slot0)
-	slot0:_initVoice()
-
-	return slot0._live2dVoice
-end
-
-function slot0.initSkeletonComponent(slot0)
-	slot0._cubismController = slot0._spineGo:GetComponent(typeof(ZProj.CubismController))
-	slot0._cubismMouthController = slot0._spineGo:AddComponent(typeof(CubismMouthProxy))
-
-	if slot0._cubismController and uv0.enableMainInterfaceLight then
-		slot0._cubismController:SetMainColor(Color.white)
+function var_0_0.stopVoice(arg_12_0)
+	if arg_12_0._live2dVoice then
+		arg_12_0._live2dVoice:stopVoice()
 	end
 end
 
-function slot0.setAlwaysFade(slot0, slot1)
-	if slot0._cubismController then
-		Live2dSpecialLogic.setAlwaysFade(slot0._cubismController, slot0._resPath, slot1)
+function var_0_0.setSwitch(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0:_initVoice()
+	arg_13_0._live2dVoice:setSwitch(arg_13_0, arg_13_1, arg_13_2)
+end
+
+function var_0_0.getSpineVoice(arg_14_0)
+	arg_14_0:_initVoice()
+
+	return arg_14_0._live2dVoice
+end
+
+function var_0_0.initSkeletonComponent(arg_15_0)
+	arg_15_0._cubismController = arg_15_0._spineGo:GetComponent(typeof(ZProj.CubismController))
+	arg_15_0._cubismMouthController = arg_15_0._spineGo:AddComponent(typeof(CubismMouthProxy))
+
+	if arg_15_0._cubismController and var_0_0.enableMainInterfaceLight then
+		arg_15_0._cubismController:SetMainColor(Color.white)
 	end
 end
 
-function slot0.onAnimEventCallback(slot0, slot1)
-	if slot0._actionCb then
-		slot0._actionCb(slot0._actionCbObj, slot1, SpineAnimEvent.ActionComplete)
-	end
-
-	if slot0._live2dVoice then
-		slot0._live2dVoice:onAnimationEvent(slot1, SpineAnimEvent.ActionComplete)
+function var_0_0.setAlwaysFade(arg_16_0, arg_16_1)
+	if arg_16_0._cubismController then
+		Live2dSpecialLogic.setAlwaysFade(arg_16_0._cubismController, arg_16_0._resPath, arg_16_1)
 	end
 end
 
-function slot0.getSpineGo(slot0)
-	return slot0._spineGo
+function var_0_0.onAnimEventCallback(arg_17_0, arg_17_1)
+	if arg_17_0._actionCb then
+		arg_17_0._actionCb(arg_17_0._actionCbObj, arg_17_1, SpineAnimEvent.ActionComplete)
+	end
+
+	if arg_17_0._live2dVoice then
+		arg_17_0._live2dVoice:onAnimationEvent(arg_17_1, SpineAnimEvent.ActionComplete)
+	end
 end
 
-function slot0.getRenderer(slot0)
-	if gohelper.isNil(slot0._spineGo) then
+function var_0_0.getSpineGo(arg_18_0)
+	return arg_18_0._spineGo
+end
+
+function var_0_0.getRenderer(arg_19_0)
+	if gohelper.isNil(arg_19_0._spineGo) then
 		return nil
 	end
 
-	slot0._renderer = slot0._renderer or slot0._spineGo:GetComponentInChildren(typeof(UnityEngine.Renderer))
+	arg_19_0._renderer = arg_19_0._renderer or arg_19_0._spineGo:GetComponentInChildren(typeof(UnityEngine.Renderer))
 
-	return slot0._renderer
+	return arg_19_0._renderer
 end
 
-function slot0.getSpineTr(slot0)
-	return slot0._spineTr
+function var_0_0.getSpineTr(arg_20_0)
+	return arg_20_0._spineTr
 end
 
-function slot0._onResLoaded(slot0)
-	slot0._spineGo = slot0._resLoader:getInstGO()
+function var_0_0._onResLoaded(arg_21_0)
+	arg_21_0._spineGo = arg_21_0._resLoader:getInstGO()
 
-	Live2dMaskController.instance:addLive2dGo(slot0._spineGo)
+	Live2dMaskController.instance:addLive2dGo(arg_21_0._spineGo)
 
-	slot0._spineTr = slot0._spineGo.transform
-	slot0._renderer = nil
+	arg_21_0._spineTr = arg_21_0._spineGo.transform
+	arg_21_0._renderer = nil
 
-	slot0:_initRoleEffect()
-	slot0:_initFaceEffect()
-	slot0:initSkeletonComponent()
-	slot0:_changeLookDir()
+	arg_21_0:_initRoleEffect()
+	arg_21_0:_initFaceEffect()
+	arg_21_0:initSkeletonComponent()
+	arg_21_0:_changeLookDir()
 
-	if slot0._isStory then
-		slot0._cubismController:SetAnimEventCallback(slot0.onAnimEventCallback, slot0)
+	if arg_21_0._isStory then
+		arg_21_0._cubismController:SetAnimEventCallback(arg_21_0.onAnimEventCallback, arg_21_0)
 
-		slot0._curBodyName = slot0._curBodyName or CharacterVoiceController.instance:getIdle(slot0._heroId)
-		slot0._curFaceName = slot0._curFaceName or StoryAnimName.E_ZhengChang
+		arg_21_0._curBodyName = arg_21_0._curBodyName or CharacterVoiceController.instance:getIdle(arg_21_0._heroId)
+		arg_21_0._curFaceName = arg_21_0._curFaceName or StoryAnimName.E_ZhengChang
 
-		slot0:playStory(slot0._curBodyName, slot0._curFaceName)
+		arg_21_0:playStory(arg_21_0._curBodyName, arg_21_0._curFaceName)
 	else
-		slot0._curBodyName = slot0._curBodyName or SpineAnimState.idle1
+		arg_21_0._curBodyName = arg_21_0._curBodyName or SpineAnimState.idle1
 
-		slot0:setBodyAnimation(slot0._curBodyName, true, 0.5)
+		arg_21_0:setBodyAnimation(arg_21_0._curBodyName, true, 0.5)
 	end
 
-	if slot0._resLoadedCb then
-		slot0._resLoadedCb(slot0._resLoadedCbObj)
+	if arg_21_0._resLoadedCb then
+		arg_21_0._resLoadedCb(arg_21_0._resLoadedCbObj)
 	end
 
-	slot0._resLoadedCb = nil
-	slot0._resLoadedCbObj = nil
+	arg_21_0._resLoadedCb = nil
+	arg_21_0._resLoadedCbObj = nil
 end
 
-function slot0._initRoleEffect(slot0)
-	slot1 = nil
-	slot0._roleEffectComp, slot1 = slot0:_getRoleEffectComp(slot0._resPath)
+function var_0_0._initRoleEffect(arg_22_0)
+	local var_22_0
+	local var_22_1
 
-	if slot0._roleEffectComp then
-		slot0._roleEffectComp:setSpine(slot0)
-		slot0._roleEffectComp:init(slot1)
+	arg_22_0._roleEffectComp, var_22_1 = arg_22_0:_getRoleEffectComp(arg_22_0._resPath)
+
+	if arg_22_0._roleEffectComp then
+		arg_22_0._roleEffectComp:setSpine(arg_22_0)
+		arg_22_0._roleEffectComp:init(var_22_1)
 	end
 end
 
-function slot0._getRoleEffectComp(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_character_motion_effect.configList) do
-		if string.find(slot1, slot6.heroResName) then
-			return _G[slot6.effectCompName].New(), slot6
+function var_0_0._getRoleEffectComp(arg_23_0, arg_23_1)
+	for iter_23_0, iter_23_1 in ipairs(lua_character_motion_effect.configList) do
+		if string.find(arg_23_1, iter_23_1.heroResName) then
+			local var_23_0 = iter_23_1.effectCompName
+
+			return _G[var_23_0].New(), iter_23_1
 		end
 	end
 end
 
-function slot0._initFaceEffect(slot0)
-	slot1 = nil
-	slot0._faceEffectComp, slot1 = slot0:_getRoleFaceEffectComp(slot0._resPath)
+function var_0_0._initFaceEffect(arg_24_0)
+	local var_24_0
+	local var_24_1
 
-	if slot0._faceEffectComp then
-		slot0._faceEffectComp:setSpine(slot0)
-		slot0._faceEffectComp:init(slot1)
+	arg_24_0._faceEffectComp, var_24_1 = arg_24_0:_getRoleFaceEffectComp(arg_24_0._resPath)
+
+	if arg_24_0._faceEffectComp then
+		arg_24_0._faceEffectComp:setSpine(arg_24_0)
+		arg_24_0._faceEffectComp:init(var_24_1)
 	end
 end
 
-function slot0._getRoleFaceEffectComp(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_character_face_effect.configList) do
-		if string.find(slot1, slot6.heroResName) then
-			return _G[slot6.effectCompName].New(), slot6
+function var_0_0._getRoleFaceEffectComp(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in ipairs(lua_character_face_effect.configList) do
+		if string.find(arg_25_1, iter_25_1.heroResName) then
+			local var_25_0 = iter_25_1.effectCompName
+
+			return _G[var_25_0].New(), iter_25_1
 		end
 	end
 end
 
-function slot0._showBodyEffect(slot0, slot1)
-	if slot0._roleEffectComp then
-		slot0._roleEffectComp:showBodyEffect(slot1, slot0._onBodyEffectShow, slot0)
+function var_0_0._showBodyEffect(arg_26_0, arg_26_1)
+	if arg_26_0._roleEffectComp then
+		arg_26_0._roleEffectComp:showBodyEffect(arg_26_1, arg_26_0._onBodyEffectShow, arg_26_0)
 	end
 end
 
-function slot0._onBodyEffectShow(slot0, slot1)
+function var_0_0._onBodyEffectShow(arg_27_0, arg_27_1)
+	return
 end
 
-function slot0.showEverNodes(slot0, slot1)
-	if slot0._roleEffectComp and slot0._roleEffectComp.showEverNodes then
-		slot0._roleEffectComp:showEverNodes(slot1)
+function var_0_0.showEverNodes(arg_28_0, arg_28_1)
+	if arg_28_0._roleEffectComp and arg_28_0._roleEffectComp.showEverNodes then
+		arg_28_0._roleEffectComp:showEverNodes(arg_28_1)
 	end
 end
 
-function slot0._showFaceEffect(slot0, slot1)
-	if slot0._faceEffectComp then
-		slot0._faceEffectComp:showFaceEffect(slot1)
+function var_0_0._showFaceEffect(arg_29_0, arg_29_1)
+	if arg_29_0._faceEffectComp then
+		arg_29_0._faceEffectComp:showFaceEffect(arg_29_1)
 	end
 end
 
-function slot0.play(slot0, slot1, slot2)
-	slot0._curBodyName = slot1
+function var_0_0.play(arg_30_0, arg_30_1, arg_30_2)
+	arg_30_0._curBodyName = arg_30_1
 
-	slot0:setBodyAnimation(slot1, slot2, 0.5)
+	arg_30_0:setBodyAnimation(arg_30_1, arg_30_2, 0.5)
 end
 
-function slot0.playStory(slot0, slot1, slot2)
-	slot0._curBodyName = slot1
-	slot0._curFaceName = slot2
+function var_0_0.playStory(arg_31_0, arg_31_1, arg_31_2)
+	arg_31_0._curBodyName = arg_31_1
+	arg_31_0._curFaceName = arg_31_2
 
-	if slot1 ~= StoryAnimName.B_IDLE or slot0:hasAnimation(slot1) then
-		slot0:setBodyAnimation(slot1, true, 0.5)
+	if arg_31_1 ~= StoryAnimName.B_IDLE or arg_31_0:hasAnimation(arg_31_1) then
+		arg_31_0:setBodyAnimation(arg_31_1, true, 0.5)
 	end
 
-	if slot2 ~= StoryAnimName.E_ZhengChang or slot0:hasAnimation(slot2) then
-		slot0:setFaceAnimation(slot2, true, 0.5)
+	if arg_31_2 ~= StoryAnimName.E_ZhengChang or arg_31_0:hasAnimation(arg_31_2) then
+		arg_31_0:setFaceAnimation(arg_31_2, true, 0.5)
 	end
 end
 
-function slot0.setBodyAnimation(slot0, slot1, slot2, slot3)
-	slot0._curBodyName = slot1
+function var_0_0.setBodyAnimation(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	arg_32_0._curBodyName = arg_32_1
 
-	slot0:_setBodyAnimation(uv0.BodyTrackIndex, slot1, slot2, slot3)
-	slot0:_showBodyEffect(slot1)
+	arg_32_0:_setBodyAnimation(var_0_0.BodyTrackIndex, arg_32_1, arg_32_2, arg_32_3)
+	arg_32_0:_showBodyEffect(arg_32_1)
 end
 
-function slot0.getCurBody(slot0)
-	return slot0._curBodyName
+function var_0_0.getCurBody(arg_33_0)
+	return arg_33_0._curBodyName
 end
 
-function slot0.setFaceAnimation(slot0, slot1, slot2, slot3)
-	slot0._curFaceName = slot1
+function var_0_0.setFaceAnimation(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
+	arg_34_0._curFaceName = arg_34_1
 
-	if gohelper.isNil(slot0._cubismController) then
+	if gohelper.isNil(arg_34_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:PlayExpression(slot1)
-	slot0:_showFaceEffect(slot1)
+	arg_34_0._cubismController:PlayExpression(arg_34_1)
+	arg_34_0:_showFaceEffect(arg_34_1)
 end
 
-function slot0.getCurFace(slot0)
-	return slot0._curFaceName
+function var_0_0.getCurFace(arg_35_0)
+	return arg_35_0._curFaceName
 end
 
-function slot0.getCurMouth(slot0)
-	return slot0._curMouthName
+function var_0_0.getCurMouth(arg_36_0)
+	return arg_36_0._curMouthName
 end
 
-function slot0.setSortingOrder(slot0, slot1)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.setSortingOrder(arg_37_0, arg_37_1)
+	if gohelper.isNil(arg_37_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController.SortingOrder = slot1
+	arg_37_0._cubismController.SortingOrder = arg_37_1
 end
 
-function slot0.setAlpha(slot0, slot1)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.setAlpha(arg_38_0, arg_38_1)
+	if gohelper.isNil(arg_38_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetAlpha(slot1)
+	arg_38_0._cubismController:SetAlpha(arg_38_1)
 end
 
-function slot0.setSceneTexture(slot0, slot1)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.setSceneTexture(arg_39_0, arg_39_1)
+	if gohelper.isNil(arg_39_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetSceneTexture(slot1)
+	arg_39_0._cubismController:SetSceneTexture(arg_39_1)
 end
 
-function slot0.setUIMaskKeyword(slot0, slot1)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.setUIMaskKeyword(arg_40_0, arg_40_1)
+	if gohelper.isNil(arg_40_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetUIMaskKeyword(slot1)
+	arg_40_0._cubismController:SetUIMaskKeyword(arg_40_1)
 end
 
-function slot0.enableSceneAlpha(slot0)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.enableSceneAlpha(arg_41_0)
+	if gohelper.isNil(arg_41_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetSceneAlphaKeyword(true)
+	arg_41_0._cubismController:SetSceneAlphaKeyword(true)
 end
 
-function slot0.disableSceneAlpha(slot0)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.disableSceneAlpha(arg_42_0)
+	if gohelper.isNil(arg_42_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetSceneAlphaKeyword(false)
+	arg_42_0._cubismController:SetSceneAlphaKeyword(false)
 end
 
-function slot0.SetDark(slot0)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.SetDark(arg_43_0)
+	if gohelper.isNil(arg_43_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetColorFactor(0.6)
+	arg_43_0._cubismController:SetColorFactor(0.6)
 end
 
-function slot0.SetBright(slot0)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.SetBright(arg_44_0)
+	if gohelper.isNil(arg_44_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:SetColorFactor(1)
+	arg_44_0._cubismController:SetColorFactor(1)
 end
 
-function slot0.setMouthAnimation(slot0, slot1, slot2, slot3)
-	slot0._curMouthName = slot1
+function var_0_0.setMouthAnimation(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
+	arg_45_0._curMouthName = arg_45_1
 
-	slot0:SetAnimation(uv0.MouthTrackIndex, slot1, slot2, slot3)
+	arg_45_0:SetAnimation(var_0_0.MouthTrackIndex, arg_45_1, arg_45_2, arg_45_3)
 end
 
-function slot0.setTransition(slot0, slot1, slot2, slot3)
-	slot0:SetAnimation(uv0.TransitionTrackIndex, slot1, slot2, slot3)
+function var_0_0.setTransition(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
+	arg_46_0:SetAnimation(var_0_0.TransitionTrackIndex, arg_46_1, arg_46_2, arg_46_3)
 end
 
-function slot0.SetAnimation(slot0, slot1, slot2, slot3, slot4)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.SetAnimation(arg_47_0, arg_47_1, arg_47_2, arg_47_3, arg_47_4)
+	if gohelper.isNil(arg_47_0._cubismController) then
 		return
 	end
 
-	if slot0:hasAnimation(slot2) == false then
+	if arg_47_0:hasAnimation(arg_47_2) == false then
 		return
 	end
 
-	if slot1 <= uv0.MouthTrackIndex then
-		slot0._cubismController:PlayAnimation(slot2, slot3, 1, slot1)
+	if arg_47_1 <= var_0_0.MouthTrackIndex then
+		arg_47_0._cubismController:PlayAnimation(arg_47_2, arg_47_3, 1, arg_47_1)
 	end
 end
 
-function slot0._setBodyAnimation(slot0, slot1, slot2, slot3, slot4)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0._setBodyAnimation(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4)
+	if gohelper.isNil(arg_48_0._cubismController) then
 		return
 	end
 
-	if slot0:hasAnimation(slot2) == false then
+	if arg_48_0:hasAnimation(arg_48_2) == false then
 		return
 	end
 
-	if slot1 <= uv0.MouthTrackIndex then
-		slot0._cubismController:PlayAnimation(slot2, slot3, slot4 == 0 and 0 or 1, slot1)
+	if arg_48_1 <= var_0_0.MouthTrackIndex then
+		arg_48_0._cubismController:PlayAnimation(arg_48_2, arg_48_3, arg_48_4 == 0 and 0 or 1, arg_48_1)
 	end
 end
 
-function slot0.hasAnimation(slot0, slot1)
-	return not gohelper.isNil(slot0._cubismController) and slot0._cubismController:HasAnimation(slot1)
+function var_0_0.hasAnimation(arg_49_0, arg_49_1)
+	return not gohelper.isNil(arg_49_0._cubismController) and arg_49_0._cubismController:HasAnimation(arg_49_1)
 end
 
-function slot0.hasExpression(slot0, slot1)
-	return not gohelper.isNil(slot0._cubismController) and slot0._cubismController:HasExpression(slot1)
+function var_0_0.hasExpression(arg_50_0, arg_50_1)
+	return not gohelper.isNil(arg_50_0._cubismController) and arg_50_0._cubismController:HasExpression(arg_50_1)
 end
 
-function slot0.setParameterStoreEnabled(slot0, slot1)
-	return not gohelper.isNil(slot0._cubismController) and slot0._cubismController:SetParameterStoreEnabled(slot1)
+function var_0_0.setParameterStoreEnabled(arg_51_0, arg_51_1)
+	return not gohelper.isNil(arg_51_0._cubismController) and arg_51_0._cubismController:SetParameterStoreEnabled(arg_51_1)
 end
 
-function slot0.stopMouthAnimation(slot0)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.stopMouthAnimation(arg_52_0)
+	if gohelper.isNil(arg_52_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:StopAnimation(uv0.MouthTrackIndex)
+	arg_52_0._cubismController:StopAnimation(var_0_0.MouthTrackIndex)
 end
 
-function slot0.stopTransition(slot0)
-	if gohelper.isNil(slot0._cubismController) then
+function var_0_0.stopTransition(arg_53_0)
+	if gohelper.isNil(arg_53_0._cubismController) then
 		return
 	end
 
-	slot0._cubismController:StopAnimation(uv0.TransitionTrackIndex)
+	arg_53_0._cubismController:StopAnimation(var_0_0.TransitionTrackIndex)
 end
 
-function slot0.setActionEventCb(slot0, slot1, slot2)
-	if slot0._isStory then
-		slot0._actionCb = slot1
-		slot0._actionCbObj = slot2
+function var_0_0.setActionEventCb(arg_54_0, arg_54_1, arg_54_2)
+	if arg_54_0._isStory then
+		arg_54_0._actionCb = arg_54_1
+		arg_54_0._actionCbObj = arg_54_2
 	end
 end
 
-function slot0.changeLookDir(slot0, slot1)
-	if slot1 == slot0._lookDir then
+function var_0_0.changeLookDir(arg_55_0, arg_55_1)
+	if arg_55_1 == arg_55_0._lookDir then
 		return
 	end
 
-	slot0._lookDir = slot1
+	arg_55_0._lookDir = arg_55_1
 
-	slot0:_changeLookDir()
+	arg_55_0:_changeLookDir()
 end
 
-function slot0._changeLookDir(slot0)
+function var_0_0._changeLookDir(arg_56_0)
+	return
 end
 
-function slot0.getLookDir(slot0)
-	return slot0._lookDir
+function var_0_0.getLookDir(arg_57_0)
+	return arg_57_0._lookDir
 end
 
-function slot0.getMouthController(slot0)
-	return slot0._cubismMouthController
+function var_0_0.getMouthController(arg_58_0)
+	return arg_58_0._cubismMouthController
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._resLoader then
-		slot0._resLoader:onDestroy()
+function var_0_0.onDestroy(arg_59_0)
+	if arg_59_0._resLoader then
+		arg_59_0._resLoader:onDestroy()
 
-		slot0._resLoader = nil
+		arg_59_0._resLoader = nil
 	end
 
-	if slot0._live2dVoice then
-		slot0._live2dVoice:onDestroy()
+	if arg_59_0._live2dVoice then
+		arg_59_0._live2dVoice:onDestroy()
 
-		slot0._live2dVoice = nil
+		arg_59_0._live2dVoice = nil
 	end
 
-	if slot0._roleEffectComp then
-		slot0._roleEffectComp:onDestroy()
+	if arg_59_0._roleEffectComp then
+		arg_59_0._roleEffectComp:onDestroy()
 
-		slot0._roleEffectComp = nil
+		arg_59_0._roleEffectComp = nil
 	end
 
-	if slot0._roleFaceComp then
-		slot0._roleFaceComp:onDestroy()
+	if arg_59_0._roleFaceComp then
+		arg_59_0._roleFaceComp:onDestroy()
 
-		slot0._roleFaceComp = nil
+		arg_59_0._roleFaceComp = nil
 	end
 
-	slot0._gameObj = nil
-	slot0._resPath = nil
-	slot0._cubismController = nil
-	slot0._cubismMouthController = nil
+	arg_59_0._gameObj = nil
+	arg_59_0._resPath = nil
+	arg_59_0._cubismController = nil
+	arg_59_0._cubismMouthController = nil
 
-	if slot0._spineGo then
-		Live2dMaskController.instance:removeLive2dGo(slot0._spineGo)
+	if arg_59_0._spineGo then
+		Live2dMaskController.instance:removeLive2dGo(arg_59_0._spineGo)
 
-		slot0._spineGo = nil
+		arg_59_0._spineGo = nil
 	end
 
-	slot0._renderer = nil
-	slot0._actionCb = nil
-	slot0._actionCbObj = nil
-	slot0._resLoadedCb = nil
-	slot0._resLoadedCbObj = nil
+	arg_59_0._renderer = nil
+	arg_59_0._actionCb = nil
+	arg_59_0._actionCbObj = nil
+	arg_59_0._resLoadedCb = nil
+	arg_59_0._resLoadedCbObj = nil
 end
 
-return slot0
+return var_0_0

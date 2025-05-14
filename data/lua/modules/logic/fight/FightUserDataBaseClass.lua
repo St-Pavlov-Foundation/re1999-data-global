@@ -1,13 +1,13 @@
-module("modules.logic.fight.FightUserDataBaseClass", package.seeall)
+﻿module("modules.logic.fight.FightUserDataBaseClass", package.seeall)
 
-slot0 = class("FightUserDataBaseClass", UserDataDispose)
+local var_0_0 = class("FightUserDataBaseClass", UserDataDispose)
 
-function slot0.init(slot0)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0)
+	arg_1_0:__onInit()
 end
 
-function slot0.dispose(slot0)
-	slot0:__onDispose()
+function var_0_0.dispose(arg_2_0)
+	arg_2_0:__onDispose()
 end
 
-return slot0
+return var_0_0

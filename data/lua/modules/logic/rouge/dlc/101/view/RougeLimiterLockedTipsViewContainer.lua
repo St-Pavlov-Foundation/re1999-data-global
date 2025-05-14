@@ -1,13 +1,13 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsViewContainer", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsViewContainer", package.seeall)
 
-slot0 = class("RougeLimiterLockedTipsViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeLimiterLockedTipsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeLimiterLockedTipsView.New())
+	table.insert(var_1_0, RougeLimiterLockedTipsView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

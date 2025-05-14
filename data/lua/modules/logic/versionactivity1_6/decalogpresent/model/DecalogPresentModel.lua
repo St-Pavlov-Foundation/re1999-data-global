@@ -1,32 +1,35 @@
-module("modules.logic.versionactivity1_6.decalogpresent.model.DecalogPresentModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.decalogpresent.model.DecalogPresentModel", package.seeall)
 
-slot0 = class("DecalogPresentModel", BaseModel)
-slot0.REWARD_INDEX = 1
+local var_0_0 = class("DecalogPresentModel", BaseModel)
 
-function slot0.getDecalogPresentActId(slot0)
+var_0_0.REWARD_INDEX = 1
+
+function var_0_0.getDecalogPresentActId(arg_1_0)
 	return ActivityEnum.Activity.V2a5_DecaLogPresent
 end
 
-function slot0.isDecalogPresentOpen(slot0)
-	slot1 = false
+function var_0_0.isDecalogPresentOpen(arg_2_0)
+	local var_2_0 = false
+	local var_2_1 = arg_2_0:getDecalogPresentActId()
 
-	if ActivityType101Model.instance:isOpen(slot0:getDecalogPresentActId()) then
-		slot1 = true
+	if ActivityType101Model.instance:isOpen(var_2_1) then
+		var_2_0 = true
 	end
 
-	return slot1
+	return var_2_0
 end
 
-function slot0.isShowRedDot(slot0)
-	slot1 = false
+function var_0_0.isShowRedDot(arg_3_0)
+	local var_3_0 = false
+	local var_3_1 = arg_3_0:getDecalogPresentActId()
 
-	if ActivityType101Model.instance:isOpen(slot0:getDecalogPresentActId()) then
-		slot1 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(slot2)
+	if ActivityType101Model.instance:isOpen(var_3_1) then
+		var_3_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_1)
 	end
 
-	return slot1
+	return var_3_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

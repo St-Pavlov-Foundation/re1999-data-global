@@ -1,43 +1,51 @@
-module("modules.logic.character.model.CharacterDataModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterDataModel", package.seeall)
 
-slot0 = class("CharacterDataModel", BaseModel)
+local var_0_0 = class("CharacterDataModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._playingList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._playingList = {}
 end
 
-function slot0.getCurHeroVoices(slot0)
-	slot1 = {}
+function var_0_0.getCurHeroVoices(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = CharacterDataConfig.instance:getCharacterVoicesCo(arg_2_0._heroId)
 
-	if CharacterDataConfig.instance:getCharacterVoicesCo(slot0._heroId) then
-		for slot6, slot7 in pairs(slot2) do
-			if slot0:_checkShow(slot0._heroId, slot7) then
-				slot9 = 0
+	if var_2_1 then
+		for iter_2_0, iter_2_1 in pairs(var_2_1) do
+			local var_2_2 = {}
 
-				if not string.nilorempty(slot7.unlockCondition) and tonumber(string.split(slot7.unlockCondition, "#")[1]) == 1 then
-					slot9 = tonumber(slot10[2])
+			if arg_2_0:_checkShow(arg_2_0._heroId, iter_2_1) then
+				var_2_2.id = iter_2_1.audio
+				var_2_2.sortId = iter_2_1.sortId
+				var_2_2.name = iter_2_1.name
+				var_2_2.content = iter_2_1.content
+				var_2_2.englishContent = iter_2_1.encontent
+				var_2_2.unlockCondition = iter_2_1.unlockCondition
+				var_2_2.type = iter_2_1.type
+				var_2_2.param = iter_2_1.param
+				var_2_2.heroId = iter_2_1.heroId
+
+				local var_2_3 = 0
+
+				if not string.nilorempty(iter_2_1.unlockCondition) then
+					local var_2_4 = string.split(iter_2_1.unlockCondition, "#")
+
+					if tonumber(var_2_4[1]) == 1 then
+						var_2_3 = tonumber(var_2_4[2])
+					end
 				end
 
-				table.insert(slot1, {
-					id = slot7.audio,
-					sortId = slot7.sortId,
-					name = slot7.name,
-					content = slot7.content,
-					englishContent = slot7.encontent,
-					unlockCondition = slot7.unlockCondition,
-					type = slot7.type,
-					param = slot7.param,
-					heroId = slot7.heroId,
-					score = slot9
-				})
+				var_2_2.score = var_2_3
+
+				table.insert(var_2_0, var_2_2)
 			end
 		end
 	end
 
-	return slot1
+	return var_2_0
 end
 
-slot1 = {
+local var_0_1 = {
 	[CharacterEnum.VoiceType.GreetingInThumbnail] = true,
 	[CharacterEnum.VoiceType.LimitedEntrance] = true,
 	[CharacterEnum.VoiceType.MainViewSpecialInteraction] = true,
@@ -45,37 +53,44 @@ slot1 = {
 	[CharacterEnum.VoiceType.MainViewDragSpecialRespond] = true
 }
 
-function slot0._checkShow(slot0, slot1, slot2)
-	if slot2.show == 2 or uv0[slot2.type] then
+function var_0_0._checkShow(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_2.show == 2 or var_0_1[arg_3_2.type] then
 		return false
 	end
 
-	if slot0:_checkSpecialType(slot2) then
+	if arg_3_0:_checkSpecialType(arg_3_2) then
 		return false
 	end
 
-	if slot2.stateCondition ~= 0 and slot2.stateCondition ~= PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, slot1, CharacterVoiceController.instance:getDefaultValue(slot1)) then
-		return false
+	if arg_3_2.stateCondition ~= 0 then
+		local var_3_0 = CharacterVoiceController.instance:getDefaultValue(arg_3_1)
+		local var_3_1 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_3_1, var_3_0)
+
+		if arg_3_2.stateCondition ~= var_3_1 then
+			return false
+		end
 	end
 
-	if string.nilorempty(slot2.skins) then
+	if string.nilorempty(arg_3_2.skins) then
 		return true
 	end
 
-	return string.find(slot2.skins, HeroModel.instance:getByHeroId(slot1).skin)
+	local var_3_2 = HeroModel.instance:getByHeroId(arg_3_1).skin
+
+	return string.find(arg_3_2.skins, var_3_2)
 end
 
-function slot0._checkSpecialType(slot0, slot1)
-	return CharacterEnum.VoiceType.SpecialIdle1 <= slot1.type and slot1.type <= CharacterEnum.VoiceType.SpecialIdle2
+function var_0_0._checkSpecialType(arg_4_0, arg_4_1)
+	return arg_4_1.type >= CharacterEnum.VoiceType.SpecialIdle1 and arg_4_1.type <= CharacterEnum.VoiceType.SpecialIdle2
 end
 
-function slot0.isCurHeroAudioLocked(slot0, slot1)
-	return HeroModel.instance:getHeroAllVoice(slot0._heroId)[slot1] == nil
+function var_0_0.isCurHeroAudioLocked(arg_5_0, arg_5_1)
+	return HeroModel.instance:getHeroAllVoice(arg_5_0._heroId)[arg_5_1] == nil
 end
 
-function slot0.isCurHeroAudioPlaying(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._playingList) do
-		if slot6 == slot1 then
+function var_0_0.isCurHeroAudioPlaying(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._playingList) do
+		if iter_6_1 == arg_6_1 then
 			return true
 		end
 	end
@@ -83,33 +98,33 @@ function slot0.isCurHeroAudioPlaying(slot0, slot1)
 	return false
 end
 
-function slot0.setCurHeroAudioPlaying(slot0, slot1)
-	slot0._playingList = {}
+function var_0_0.setCurHeroAudioPlaying(arg_7_0, arg_7_1)
+	arg_7_0._playingList = {}
 
-	table.insert(slot0._playingList, slot1)
+	table.insert(arg_7_0._playingList, arg_7_1)
 end
 
-function slot0.setCurHeroAudioFinished(slot0, slot1)
-	for slot5 = #slot0._playingList, 1, -1 do
-		if slot0._playingList[slot5] == slot1 then
-			table.remove(slot0._playingList, slot5)
+function var_0_0.setCurHeroAudioFinished(arg_8_0, arg_8_1)
+	for iter_8_0 = #arg_8_0._playingList, 1, -1 do
+		if arg_8_0._playingList[iter_8_0] == arg_8_1 then
+			table.remove(arg_8_0._playingList, iter_8_0)
 
 			break
 		end
 	end
 end
 
-function slot0.getCurHeroId(slot0)
-	return slot0._heroId
+function var_0_0.getCurHeroId(arg_9_0)
+	return arg_9_0._heroId
 end
 
-function slot0.setCurHeroId(slot0, slot1)
-	if slot0._heroId ~= slot1 then
-		slot0._playingList = {}
-		slot0._heroId = slot1
+function var_0_0.setCurHeroId(arg_10_0, arg_10_1)
+	if arg_10_0._heroId ~= arg_10_1 then
+		arg_10_0._playingList = {}
+		arg_10_0._heroId = arg_10_1
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

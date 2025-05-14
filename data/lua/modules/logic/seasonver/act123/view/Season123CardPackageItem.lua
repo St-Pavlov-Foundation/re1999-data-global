@@ -1,63 +1,68 @@
-module("modules.logic.seasonver.act123.view.Season123CardPackageItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view.Season123CardPackageItem", package.seeall)
 
-slot0 = class("Season123CardPackageItem", ListScrollCellExtend)
+local var_0_0 = class("Season123CardPackageItem", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._gopos = gohelper.findChild(slot0.viewGO, "go_itempos/go_pos")
-	slot0._gocount = gohelper.findChild(slot0.viewGO, "go_itempos/go_count")
-	slot0._txtcountvalue = gohelper.findChildText(slot0.viewGO, "go_itempos/go_count/bg/#txt_countvalue")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_itempos/go_pos")
+	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "go_itempos/go_count")
+	arg_1_0._txtcountvalue = gohelper.findChildText(arg_1_0.viewGO, "go_itempos/go_count/bg/#txt_countvalue")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0:refreshUI()
+	arg_4_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:checkCreateIcon()
-	slot0.icon:updateData(slot0._mo.itemId)
+function var_0_0.refreshUI(arg_5_0)
+	arg_5_0:checkCreateIcon()
+	arg_5_0.icon:updateData(arg_5_0._mo.itemId)
 
-	if slot0._mo.count > 0 then
-		gohelper.setActive(slot0._gocount, true)
+	if arg_5_0._mo.count > 0 then
+		gohelper.setActive(arg_5_0._gocount, true)
 
-		slot0._txtcountvalue.text = luaLang("multiple") .. tostring(slot0._mo.count)
+		arg_5_0._txtcountvalue.text = luaLang("multiple") .. tostring(arg_5_0._mo.count)
 	else
-		gohelper.setActive(slot0._gocount, false)
+		gohelper.setActive(arg_5_0._gocount, false)
 	end
 end
 
-function slot0.checkCreateIcon(slot0)
-	if not slot0.icon then
-		slot0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._view:getResInst(slot0._view.viewContainer:getSetting().otherRes[2], slot0._gopos, "icon"), Season123_1_8CelebrityCardEquip)
+function var_0_0.checkCreateIcon(arg_6_0)
+	if not arg_6_0.icon then
+		local var_6_0 = arg_6_0._view.viewContainer:getSetting().otherRes[2]
+		local var_6_1 = arg_6_0._view:getResInst(var_6_0, arg_6_0._gopos, "icon")
 
-		slot0.icon:setClickCall(slot0.onClickSelf, slot0)
+		arg_6_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, Season123_1_8CelebrityCardEquip)
+
+		arg_6_0.icon:setClickCall(arg_6_0.onClickSelf, arg_6_0)
 	end
 end
 
-function slot0.onClickSelf(slot0)
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, slot0._mo.itemId)
+function var_0_0.onClickSelf(arg_7_0)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, arg_7_0._mo.itemId)
 end
 
-function slot0.getAnimator(slot0)
-	slot0._animator.enabled = true
+function var_0_0.getAnimator(arg_8_0)
+	arg_8_0._animator.enabled = true
 
-	return slot0._animator
+	return arg_8_0._animator
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.icon then
-		slot0.icon:disposeUI()
+function var_0_0.onDestroyView(arg_9_0)
+	if arg_9_0.icon then
+		arg_9_0.icon:disposeUI()
 	end
 end
 
-return slot0
+return var_0_0

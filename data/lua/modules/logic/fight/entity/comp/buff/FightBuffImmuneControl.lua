@@ -1,7 +1,7 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffImmuneControl", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffImmuneControl", package.seeall)
 
-slot0 = class("FightBuffImmuneControl")
-slot1 = {
+local var_0_0 = class("FightBuffImmuneControl")
+local var_0_1 = {
 	buff_immune = {
 		"_TempOffsetTwoPass",
 		"Vector4",
@@ -14,7 +14,7 @@ slot1 = {
 		"0.1,0.1,0,0"
 	}
 }
-slot2 = {
+local var_0_2 = {
 	["304901_kachakacha"] = {
 		"_AlphaRange",
 		"Vector4",
@@ -27,58 +27,67 @@ slot2 = {
 	}
 }
 
-function slot0.onBuffStart(slot0, slot1, slot2)
-	slot0.entity = slot1
-	slot0.buffMO = slot2
+function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.buffMO = arg_1_2
 
-	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, slot0._onChangeMaterial, slot0)
+	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, arg_1_0._onChangeMaterial, arg_1_0)
 end
 
-function slot0.onBuffEnd(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, slot0._onChangeMaterial, slot0)
+function var_0_0.onBuffEnd(arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_2_0._onChangeMaterial, arg_2_0)
 end
 
-function slot0.reset(slot0)
-	slot0._preMatName = nil
+function var_0_0.reset(arg_3_0)
+	arg_3_0._preMatName = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, slot0._onChangeMaterial, slot0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_3_0._onChangeMaterial, arg_3_0)
 end
 
-function slot0.dispose(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, slot0._onChangeMaterial, slot0)
+function var_0_0.dispose(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_4_0._onChangeMaterial, arg_4_0)
 end
 
-function slot0._onChangeMaterial(slot0, slot1, slot2)
-	if slot1 ~= slot0.entity.id then
+function var_0_0._onChangeMaterial(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= arg_5_0.entity.id then
 		return
 	end
 
-	if slot0._preMatName and slot0._preMatName == slot2.name then
+	if arg_5_0._preMatName and arg_5_0._preMatName == arg_5_2.name then
 		return
 	end
 
-	slot0._preMatName = slot2.name
+	arg_5_0._preMatName = arg_5_2.name
 
-	if not uv0[lua_skill_buff.configDict[slot0.buffMO.buffId].mat] then
+	local var_5_0 = lua_skill_buff.configDict[arg_5_0.buffMO.buffId]
+	local var_5_1 = var_0_1[var_5_0.mat]
+
+	if not var_5_1 then
 		return
 	end
 
-	for slot8 = 1, 9, 3 do
-		slot10 = slot4[slot8 + 1]
+	for iter_5_0 = 1, 9, 3 do
+		local var_5_2 = var_5_1[iter_5_0]
+		local var_5_3 = var_5_1[iter_5_0 + 1]
+		local var_5_4 = var_5_1[iter_5_0 + 2]
 
-		MaterialUtil.setPropValue(slot2, slot4[slot8], slot10, MaterialUtil.getPropValueFromStr(slot10, slot4[slot8 + 2]))
+		MaterialUtil.setPropValue(arg_5_2, var_5_2, var_5_3, MaterialUtil.getPropValueFromStr(var_5_3, var_5_4))
 	end
 
-	slot6 = slot0.entity:getMO() and slot5:getSpineSkinCO()
-	slot7 = slot6 and slot6.spine
+	local var_5_5 = arg_5_0.entity:getMO()
+	local var_5_6 = var_5_5 and var_5_5:getSpineSkinCO()
+	local var_5_7 = var_5_6 and var_5_6.spine
+	local var_5_8 = not string.nilorempty(var_5_7) and var_0_2[var_5_7]
 
-	if not string.nilorempty(slot7) and uv1[slot7] then
-		for slot12 = 1, 9, 3 do
-			slot14 = slot8[slot12 + 1]
+	if var_5_8 then
+		for iter_5_1 = 1, 9, 3 do
+			local var_5_9 = var_5_8[iter_5_1]
+			local var_5_10 = var_5_8[iter_5_1 + 1]
+			local var_5_11 = var_5_8[iter_5_1 + 2]
 
-			MaterialUtil.setPropValue(slot2, slot8[slot12], slot14, MaterialUtil.getPropValueFromStr(slot14, slot8[slot12 + 2]))
+			MaterialUtil.setPropValue(arg_5_2, var_5_9, var_5_10, MaterialUtil.getPropValueFromStr(var_5_10, var_5_11))
 		end
 	end
 end
 
-return slot0
+return var_0_0

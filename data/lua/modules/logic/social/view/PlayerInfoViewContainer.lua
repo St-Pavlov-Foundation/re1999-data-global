@@ -1,18 +1,18 @@
-module("modules.logic.social.view.PlayerInfoViewContainer", package.seeall)
+﻿module("modules.logic.social.view.PlayerInfoViewContainer", package.seeall)
 
-slot0 = class("PlayerInfoViewContainer", BaseViewContainer)
+local var_0_0 = class("PlayerInfoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, PlayerInfoView.New())
+	table.insert(var_1_0, PlayerInfoView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

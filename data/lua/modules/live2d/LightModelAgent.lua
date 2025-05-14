@@ -1,244 +1,272 @@
-module("modules.live2d.LightModelAgent", package.seeall)
+﻿module("modules.live2d.LightModelAgent", package.seeall)
 
-slot0 = class("LightModelAgent", LuaCompBase)
+local var_0_0 = class("LightModelAgent", LuaCompBase)
 
-function slot0.Create(slot0, slot1)
-	slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
-	slot2._isStory = slot1
+function var_0_0.Create(arg_1_0, arg_1_1)
+	local var_1_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
 
-	return slot2
+	var_1_0._isStory = arg_1_1
+
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1
 end
 
-function slot0.clear(slot0)
-	slot0._curModel:doClear()
+function var_0_0.clear(arg_3_0)
+	arg_3_0._curModel:doClear()
 end
 
-function slot0._getSpine(slot0)
-	if not slot0._spine then
-		slot0._spine = LightSpine.Create(slot0._go, slot0._isStory)
+function var_0_0._getSpine(arg_4_0)
+	if not arg_4_0._spine then
+		arg_4_0._spine = LightSpine.Create(arg_4_0._go, arg_4_0._isStory)
 	end
 
-	return slot0._spine
+	return arg_4_0._spine
 end
 
-function slot0._getLive2d(slot0)
-	if not slot0._live2d then
-		slot0._live2d = LightLive2d.Create(slot0._go, slot0._isStory)
+function var_0_0._getLive2d(arg_5_0)
+	if not arg_5_0._live2d then
+		arg_5_0._live2d = LightLive2d.Create(arg_5_0._go, arg_5_0._isStory)
 	end
 
-	return slot0._live2d
+	return arg_5_0._live2d
 end
 
-function slot0.fadeIn(slot0)
-	slot0._ppEffectMask = gohelper.onceAddComponent(slot0:getSpineGo(), PostProcessingMgr.PPEffectMaskType)
-	slot0._ppEffectMask.useLocalBloom = true
-	slot0._ppEffectMask.enabled = true
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, slot0._onFadeInUpdate, slot0._onFadeInFinish, slot0, nil, EaseType.Linear)
+function var_0_0.fadeIn(arg_6_0)
+	local var_6_0 = arg_6_0:getSpineGo()
+
+	arg_6_0._ppEffectMask = gohelper.onceAddComponent(var_6_0, PostProcessingMgr.PPEffectMaskType)
+	arg_6_0._ppEffectMask.useLocalBloom = true
+	arg_6_0._ppEffectMask.enabled = true
+	arg_6_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, arg_6_0._onFadeInUpdate, arg_6_0._onFadeInFinish, arg_6_0, nil, EaseType.Linear)
 end
 
-function slot0._onFadeInUpdate(slot0, slot1)
-	if gohelper.isNil(slot0:getSpineGo()) then
-		if slot0._tweenId then
-			ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._onFadeInUpdate(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getSpineGo()
 
-			slot0._tweenId = nil
+	if gohelper.isNil(var_7_0) then
+		if arg_7_0._tweenId then
+			ZProj.TweenHelper.KillById(arg_7_0._tweenId)
+
+			arg_7_0._tweenId = nil
 		end
 
 		return
 	end
 
-	slot3 = Vector4(0, 0, slot1, 0)
+	local var_7_1 = Vector4(0, 0, arg_7_1, 0)
 
-	if not slot0._isLive2D then
-		for slot9 = 0, slot0._curModel:getRenderer().materials.Length - 1 do
-			slot10 = slot4[slot9]
+	if not arg_7_0._isLive2D then
+		local var_7_2 = arg_7_0._curModel:getRenderer().materials
+		local var_7_3 = var_7_2.Length
 
-			slot10:EnableKeyword("USE_INVISIBLE")
-			slot0._ppEffectMask:SetPassEnable(slot10, "useInvisible", true)
-			slot10:SetVector("_InvisibleOffset", slot3)
+		for iter_7_0 = 0, var_7_3 - 1 do
+			local var_7_4 = var_7_2[iter_7_0]
+
+			var_7_4:EnableKeyword("USE_INVISIBLE")
+			arg_7_0._ppEffectMask:SetPassEnable(var_7_4, "useInvisible", true)
+			var_7_4:SetVector("_InvisibleOffset", var_7_1)
 		end
 
 		return
 	end
 
-	for slot8 = 0, slot2:GetComponentsInChildren(typeof(UnityEngine.Renderer)).Length - 1 do
-		if not gohelper.isNil(slot4[slot8]) and not gohelper.isNil(slot9.sharedMaterial) then
-			slot10:EnableKeyword("USE_INVISIBLE")
-			slot0._ppEffectMask:SetPassEnable(slot10, "useInvisible", true)
-			slot10:SetVector("_InvisibleOffset", slot3)
+	local var_7_5 = var_7_0:GetComponentsInChildren(typeof(UnityEngine.Renderer))
+
+	for iter_7_1 = 0, var_7_5.Length - 1 do
+		local var_7_6 = var_7_5[iter_7_1]
+
+		if not gohelper.isNil(var_7_6) then
+			local var_7_7 = var_7_6.sharedMaterial
+
+			if not gohelper.isNil(var_7_7) then
+				var_7_7:EnableKeyword("USE_INVISIBLE")
+				arg_7_0._ppEffectMask:SetPassEnable(var_7_7, "useInvisible", true)
+				var_7_7:SetVector("_InvisibleOffset", var_7_1)
+			end
 		end
 	end
 end
 
-function slot0._onFadeInFinish(slot0)
-	if gohelper.isNil(slot0:getSpineGo()) then
+function var_0_0._onFadeInFinish(arg_8_0)
+	local var_8_0 = arg_8_0:getSpineGo()
+
+	if gohelper.isNil(var_8_0) then
 		return
 	end
 
-	slot0._ppEffectMask.enabled = false
+	arg_8_0._ppEffectMask.enabled = false
 
-	if not slot0._isLive2D then
-		slot0._curModel:getRenderer().materials = slot0._curModel:getSharedMats()
+	if not arg_8_0._isLive2D then
+		arg_8_0._curModel:getRenderer().materials = arg_8_0._curModel:getSharedMats()
 
 		return
 	end
 
-	for slot6 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.Renderer)).Length - 1 do
-		if not gohelper.isNil(slot2[slot6]) and not gohelper.isNil(slot7.sharedMaterial) then
-			slot8:DisableKeyword("USE_INVISIBLE")
-			slot0._ppEffectMask:SetPassEnable(slot8, "useInvisible", false)
+	local var_8_1 = var_8_0:GetComponentsInChildren(typeof(UnityEngine.Renderer))
+
+	for iter_8_0 = 0, var_8_1.Length - 1 do
+		local var_8_2 = var_8_1[iter_8_0]
+
+		if not gohelper.isNil(var_8_2) then
+			local var_8_3 = var_8_2.sharedMaterial
+
+			if not gohelper.isNil(var_8_3) then
+				var_8_3:DisableKeyword("USE_INVISIBLE")
+				arg_8_0._ppEffectMask:SetPassEnable(var_8_3, "useInvisible", false)
+			end
 		end
 	end
 
-	slot0._curModel:clearSharedMaterials()
+	arg_8_0._curModel:clearSharedMaterials()
 end
 
-function slot0.setResPath(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot1.live2d) then
-		slot0._isLive2D = false
-		slot0._curModel = slot0:_getSpine()
+function var_0_0.setResPath(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if string.nilorempty(arg_9_1.live2d) then
+		arg_9_0._isLive2D = false
+		arg_9_0._curModel = arg_9_0:_getSpine()
 
-		slot0._curModel:setHeroId(slot1.characterId)
-		slot0._curModel:setSkinId(slot1.id)
-		slot0._curModel:setResPath(ResUrl.getLightSpine(slot1.verticalDrawing), slot2, slot3)
+		arg_9_0._curModel:setHeroId(arg_9_1.characterId)
+		arg_9_0._curModel:setSkinId(arg_9_1.id)
+		arg_9_0._curModel:setResPath(ResUrl.getLightSpine(arg_9_1.verticalDrawing), arg_9_2, arg_9_3)
 	else
-		slot0._isLive2D = true
-		slot0._curModel = slot0:_getLive2d()
+		arg_9_0._isLive2D = true
+		arg_9_0._curModel = arg_9_0:_getLive2d()
 
-		slot0._curModel:setHeroId(slot1.characterId)
-		slot0._curModel:setSkinId(slot1.id)
-		slot0._curModel:setResPath(ResUrl.getLightLive2d(slot1.live2d), slot2, slot3)
+		arg_9_0._curModel:setHeroId(arg_9_1.characterId)
+		arg_9_0._curModel:setSkinId(arg_9_1.id)
+		arg_9_0._curModel:setResPath(ResUrl.getLightLive2d(arg_9_1.live2d), arg_9_2, arg_9_3)
 	end
 end
 
-function slot0.setInMainView(slot0)
-	if not slot0._isLive2D then
-		slot0._curModel:setInMainView()
+function var_0_0.setInMainView(arg_10_0)
+	if not arg_10_0._isLive2D then
+		arg_10_0._curModel:setInMainView()
 	end
 end
 
-function slot0.setMainColor(slot0, slot1)
-	slot0._curModel:setMainColor(slot1)
+function var_0_0.setMainColor(arg_11_0, arg_11_1)
+	arg_11_0._curModel:setMainColor(arg_11_1)
 end
 
-function slot0.setLumFactor(slot0, slot1)
-	slot0._curModel:setLumFactor(slot1)
+function var_0_0.setLumFactor(arg_12_0, arg_12_1)
+	arg_12_0._curModel:setLumFactor(arg_12_1)
 end
 
-function slot0.setEmissionColor(slot0, slot1)
-	if slot0._isLive2D then
-		slot0._curModel:setEmissionColor(slot1)
+function var_0_0.setEmissionColor(arg_13_0, arg_13_1)
+	if arg_13_0._isLive2D then
+		arg_13_0._curModel:setEmissionColor(arg_13_1)
 	end
 end
 
-function slot0.processModelEffect(slot0)
-	if slot0._isLive2D then
-		slot0._curModel:processModelEffect()
+function var_0_0.processModelEffect(arg_14_0)
+	if arg_14_0._isLive2D then
+		arg_14_0._curModel:processModelEffect()
 	end
 end
 
-function slot0.setEffectVisible(slot0, slot1)
-	if slot0._isLive2D then
-		slot0._curModel:setEffectVisible(slot1)
+function var_0_0.setEffectVisible(arg_15_0, arg_15_1)
+	if arg_15_0._isLive2D then
+		arg_15_0._curModel:setEffectVisible(arg_15_1)
 	end
 end
 
-function slot0.setLayer(slot0, slot1)
-	if slot0._isLive2D then
-		gohelper.setLayer(slot0._curModel:getSpineGo(), slot1, true)
+function var_0_0.setLayer(arg_16_0, arg_16_1)
+	if arg_16_0._isLive2D then
+		local var_16_0 = arg_16_0._curModel:getSpineGo()
+
+		gohelper.setLayer(var_16_0, arg_16_1, true)
 	end
 end
 
-function slot0.setEffectFrameVisible(slot0, slot1)
-	if slot0._isLive2D then
-		slot0._curModel:setEffectFrameVisible(slot1)
+function var_0_0.setEffectFrameVisible(arg_17_0, arg_17_1)
+	if arg_17_0._isLive2D then
+		arg_17_0._curModel:setEffectFrameVisible(arg_17_1)
 	end
 end
 
-function slot0.addParameter(slot0, slot1, slot2, slot3)
-	if slot0._isLive2D then
-		return slot0._curModel:addParameter(slot1, slot2, slot3)
+function var_0_0.addParameter(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if arg_18_0._isLive2D then
+		return arg_18_0._curModel:addParameter(arg_18_1, arg_18_2, arg_18_3)
 	end
 end
 
-function slot0.updateParameter(slot0, slot1, slot2)
-	if slot0._isLive2D then
-		slot0._curModel:updateParameter(slot1, slot2)
+function var_0_0.updateParameter(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_0._isLive2D then
+		arg_19_0._curModel:updateParameter(arg_19_1, arg_19_2)
 	end
 end
 
-function slot0.removeParameter(slot0, slot1)
-	if slot0._isLive2D then
-		slot0._curModel:removeParameter(slot1)
+function var_0_0.removeParameter(arg_20_0, arg_20_1)
+	if arg_20_0._isLive2D then
+		arg_20_0._curModel:removeParameter(arg_20_1)
 	end
 end
 
-function slot0.getSpineGo(slot0)
-	return slot0._curModel:getSpineGo()
+function var_0_0.getSpineGo(arg_21_0)
+	return arg_21_0._curModel:getSpineGo()
 end
 
-function slot0.getRenderer(slot0)
-	return slot0._curModel:getRenderer()
+function var_0_0.getRenderer(arg_22_0)
+	return arg_22_0._curModel:getRenderer()
 end
 
-function slot0.changeRenderQueue(slot0, slot1)
-	slot0._curModel:changeRenderQueue(slot1)
+function var_0_0.changeRenderQueue(arg_23_0, arg_23_1)
+	arg_23_0._curModel:changeRenderQueue(arg_23_1)
 end
 
-function slot0.setStencilRef(slot0, slot1)
-	slot0._curModel:setStencilRef(slot1)
+function var_0_0.setStencilRef(arg_24_0, arg_24_1)
+	arg_24_0._curModel:setStencilRef(arg_24_1)
 end
 
-function slot0.setStencilValues(slot0, slot1, slot2, slot3)
-	slot0._curModel:setStencilValues(slot1, slot2, slot3)
+function var_0_0.setStencilValues(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	arg_25_0._curModel:setStencilValues(arg_25_1, arg_25_2, arg_25_3)
 end
 
-function slot0.isPlayingVoice(slot0)
-	return slot0._curModel:isPlayingVoice()
+function var_0_0.isPlayingVoice(arg_26_0)
+	return arg_26_0._curModel:isPlayingVoice()
 end
 
-function slot0.getPlayVoiceStartTime(slot0)
-	return slot0._curModel:getPlayVoiceStartTime()
+function var_0_0.getPlayVoiceStartTime(arg_27_0)
+	return arg_27_0._curModel:getPlayVoiceStartTime()
 end
 
-function slot0.getBoundsMinMaxPos(slot0)
-	return slot0._curModel:getBoundsMinMaxPos()
+function var_0_0.getBoundsMinMaxPos(arg_28_0)
+	return arg_28_0._curModel:getBoundsMinMaxPos()
 end
 
-function slot0.playVoice(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._curModel:playVoice(slot1, slot2, slot3, slot4, slot5)
+function var_0_0.playVoice(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
+	arg_29_0._curModel:playVoice(arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
 end
 
-function slot0.stopVoice(slot0)
-	if not slot0._curModel then
+function var_0_0.stopVoice(arg_30_0)
+	if not arg_30_0._curModel then
 		return
 	end
 
-	slot0._curModel:stopVoice()
+	arg_30_0._curModel:stopVoice()
 end
 
-function slot0.play(slot0, slot1, slot2)
-	if not slot0._curModel then
+function var_0_0.play(arg_31_0, arg_31_1, arg_31_2)
+	if not arg_31_0._curModel then
 		return
 	end
 
-	slot0._curModel:play(slot1, slot2)
+	arg_31_0._curModel:play(arg_31_1, arg_31_2)
 end
 
-function slot0.doDestroy(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.doDestroy(arg_32_0)
+	if arg_32_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_32_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_32_0._tweenId = nil
 	end
 
-	slot0:stopVoice()
-	slot0:onDestroy()
-	slot0:clear()
+	arg_32_0:stopVoice()
+	arg_32_0:onDestroy()
+	arg_32_0:clear()
 end
 
-return slot0
+return var_0_0

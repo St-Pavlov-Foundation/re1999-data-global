@@ -1,263 +1,286 @@
-module("modules.logic.scene.GameSceneMgr", package.seeall)
+﻿module("modules.logic.scene.GameSceneMgr", package.seeall)
 
-slot0 = class("GameSceneMgr")
+local var_0_0 = class("GameSceneMgr")
 
-function slot0.ctor(slot0)
-	slot0._curSceneType = nil
-	slot0._curSceneId = nil
-	slot0._preSceneType = nil
-	slot0._preSceneId = nil
-	slot0._preLevelId = nil
-	slot0._nextSceneType = nil
-	slot0._allScenes = {}
-	slot0._allRootGo = nil
-	slot0._isStarting = false
-	slot0._isClosing = false
-	slot0._startArgs = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._curSceneType = nil
+	arg_1_0._curSceneId = nil
+	arg_1_0._preSceneType = nil
+	arg_1_0._preSceneId = nil
+	arg_1_0._preLevelId = nil
+	arg_1_0._nextSceneType = nil
+	arg_1_0._allScenes = {}
+	arg_1_0._allRootGo = nil
+	arg_1_0._isStarting = false
+	arg_1_0._isClosing = false
+	arg_1_0._startArgs = {}
 
-	LuaEventSystem.addEventMechanism(slot0)
+	LuaEventSystem.addEventMechanism(arg_1_0)
 end
 
-function slot0.init(slot0)
-	slot0._allRootGo = CameraMgr.instance:getSceneRoot()
-	slot1 = SceneMacro
+function var_0_0.init(arg_2_0)
+	arg_2_0._allRootGo = CameraMgr.instance:getSceneRoot()
 
-	slot0:_addScenes()
+	local var_2_0 = SceneMacro
+
+	arg_2_0:_addScenes()
 end
 
-function slot0._addScenes(slot0)
-	slot0:_addSceneObj(SceneType.Main, MainScene)
-	slot0:_addSceneObj(SceneType.Fight, FightScene)
-	slot0:_addSceneObj(SceneType.Newbie, NewbieScene)
-	slot0:_addSceneObj(SceneType.Room, RoomScene)
-	slot0:_addSceneObj(SceneType.Explore, ExploreScene)
-	slot0:_addSceneObj(SceneType.PushBox, PushBoxScene)
-	slot0:_addSceneObj(SceneType.Cachot, CachotScene)
-	slot0:_addSceneObj(SceneType.Rouge, RougeScene)
+function var_0_0._addScenes(arg_3_0)
+	arg_3_0:_addSceneObj(SceneType.Main, MainScene)
+	arg_3_0:_addSceneObj(SceneType.Fight, FightScene)
+	arg_3_0:_addSceneObj(SceneType.Newbie, NewbieScene)
+	arg_3_0:_addSceneObj(SceneType.Room, RoomScene)
+	arg_3_0:_addSceneObj(SceneType.Explore, ExploreScene)
+	arg_3_0:_addSceneObj(SceneType.PushBox, PushBoxScene)
+	arg_3_0:_addSceneObj(SceneType.Cachot, CachotScene)
+	arg_3_0:_addSceneObj(SceneType.Rouge, RougeScene)
 end
 
-function slot0._addSceneObj(slot0, slot1, slot2)
-	slot4 = slot2.New(gohelper.findChild(slot0._allRootGo, slot2.__cname) or gohelper.create3d(slot0._allRootGo, slot2.__cname))
+function var_0_0._addSceneObj(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = gohelper.findChild(arg_4_0._allRootGo, arg_4_2.__cname) or gohelper.create3d(arg_4_0._allRootGo, arg_4_2.__cname)
+	local var_4_1 = arg_4_2.New(var_4_0)
 
-	slot4:setOnPreparedCb(slot0.onScenePrepared, slot0)
-	slot4:setOnPreparedOneCb(slot0.onScenePreparedOne, slot0)
+	var_4_1:setOnPreparedCb(arg_4_0.onScenePrepared, arg_4_0)
+	var_4_1:setOnPreparedOneCb(arg_4_0.onScenePreparedOne, arg_4_0)
 
-	slot0._allScenes[slot1] = slot4
+	arg_4_0._allScenes[arg_4_1] = var_4_1
 end
 
-function slot0.getScene(slot0, slot1)
-	return slot0._allScenes[slot1]
+function var_0_0.getScene(arg_5_0, arg_5_1)
+	return arg_5_0._allScenes[arg_5_1]
 end
 
-function slot0.getCurSceneType(slot0)
-	return slot0._curSceneType
+function var_0_0.getCurSceneType(arg_6_0)
+	return arg_6_0._curSceneType
 end
 
-function slot0.getCurSceneId(slot0)
-	return slot0._curSceneId
+function var_0_0.getCurSceneId(arg_7_0)
+	return arg_7_0._curSceneId
 end
 
-function slot0.getCurLevelId(slot0)
-	if slot0:getCurScene() then
-		return slot1:getCurLevelId()
+function var_0_0.getCurLevelId(arg_8_0)
+	local var_8_0 = arg_8_0:getCurScene()
+
+	if var_8_0 then
+		return var_8_0:getCurLevelId()
 	end
 end
 
-function slot0.getPreSceneType(slot0)
-	return slot0._preSceneType
+function var_0_0.getPreSceneType(arg_9_0)
+	return arg_9_0._preSceneType
 end
 
-function slot0.getPreSceneId(slot0)
-	return slot0._preSceneId
+function var_0_0.getPreSceneId(arg_10_0)
+	return arg_10_0._preSceneId
 end
 
-function slot0.getPreLevelId(slot0)
-	return slot0._preLevelId
+function var_0_0.getPreLevelId(arg_11_0)
+	return arg_11_0._preLevelId
 end
 
-function slot0.setPrevScene(slot0, slot1, slot2, slot3)
-	slot0._preSceneType = slot1
-	slot0._preSceneId = slot2
-	slot0._preLevelId = slot3
+function var_0_0.setPrevScene(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_0._preSceneType = arg_12_1
+	arg_12_0._preSceneId = arg_12_2
+	arg_12_0._preLevelId = arg_12_3
 end
 
-function slot0.getCurScene(slot0)
-	return slot0._curSceneType and slot0._allScenes[slot0._curSceneType] or nil
+function var_0_0.getCurScene(arg_13_0)
+	return arg_13_0._curSceneType and arg_13_0._allScenes[arg_13_0._curSceneType] or nil
 end
 
-function slot0.onScenePrepared(slot0)
-	slot0._isStarting = false
+function var_0_0.onScenePrepared(arg_14_0)
+	arg_14_0._isStarting = false
 
-	slot0:hideLoading()
-	slot0:_runNextArgs()
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0.1, slot0)
-	uv0.instance:dispatchEvent(slot0._curSceneType, slot0._curSceneId, 1)
-	uv0.instance:dispatchEvent(SceneEventName.EnterSceneFinish, slot0._curSceneType, slot0._curSceneId)
+	arg_14_0:hideLoading()
+	arg_14_0:_runNextArgs()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0.1, arg_14_0)
+	var_0_0.instance:dispatchEvent(arg_14_0._curSceneType, arg_14_0._curSceneId, 1)
+	var_0_0.instance:dispatchEvent(SceneEventName.EnterSceneFinish, arg_14_0._curSceneType, arg_14_0._curSceneId)
 end
 
-function slot0.onScenePreparedOne(slot0)
+function var_0_0.onScenePreparedOne(arg_15_0)
+	return
 end
 
-function slot0._runNextArgs(slot0)
-	if #slot0._startArgs > 0 then
-		slot1 = slot0._startArgs[1]
+function var_0_0._runNextArgs(arg_16_0)
+	if #arg_16_0._startArgs > 0 then
+		local var_16_0 = arg_16_0._startArgs[1]
 
-		table.remove(slot0._startArgs, 1)
-		slot0:startScene(slot1[1], slot1[2], slot1[3])
+		table.remove(arg_16_0._startArgs, 1)
+		arg_16_0:startScene(var_16_0[1], var_16_0[2], var_16_0[3])
 	end
 end
 
-function slot0.startSceneDefaultLevel(slot0, slot1, slot2, slot3, slot4)
-	if SceneConfig.instance:getSceneLevelCOs(slot2) then
-		slot0:startScene(slot1, slot2, slot5[1].id, slot3, slot4)
+function var_0_0.startSceneDefaultLevel(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = SceneConfig.instance:getSceneLevelCOs(arg_17_2)
+
+	if var_17_0 then
+		arg_17_0:startScene(arg_17_1, arg_17_2, var_17_0[1].id, arg_17_3, arg_17_4)
 	else
-		logError("scene config not exist, sceneId = " .. slot2)
+		logError("scene config not exist, sceneId = " .. arg_17_2)
 	end
 end
 
-function slot0.startScene(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0:useDefaultScene() and slot1 == SceneType.Fight then
-		slot2 = 13101
-		slot3 = 13101
+function var_0_0.startScene(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
+	if arg_18_0:useDefaultScene() and arg_18_1 == SceneType.Fight then
+		arg_18_2 = 13101
+		arg_18_3 = 13101
 	end
 
-	if not slot4 and slot0._isStarting then
-		table.insert(slot0._startArgs, {
-			slot1,
-			slot2,
-			slot3
-		})
+	if not arg_18_4 and arg_18_0._isStarting then
+		local var_18_0 = {
+			arg_18_1,
+			arg_18_2,
+			arg_18_3
+		}
+
+		table.insert(arg_18_0._startArgs, var_18_0)
 
 		return
 	end
 
-	if not slot5 and slot0._curSceneType == slot1 and slot0._curSceneId == slot2 then
-		slot0:_runNextArgs()
+	if not arg_18_5 and arg_18_0._curSceneType == arg_18_1 and arg_18_0._curSceneId == arg_18_2 then
+		arg_18_0:_runNextArgs()
 
 		return
 	end
 
-	slot0._nextSceneType = slot1
+	arg_18_0._nextSceneType = arg_18_1
 
-	slot0:showLoading(slot1)
-	slot0:closeScene(slot1, slot2, slot3)
+	arg_18_0:showLoading(arg_18_1)
+	arg_18_0:closeScene(arg_18_1, arg_18_2, arg_18_3)
 
-	if slot1 == SceneType.Main or slot1 == SceneType.Room or slot1 == SceneType.Explore or slot1 == SceneType.Cachot then
-		TaskDispatcher.runDelay(slot0._onDelayStartScene, slot0, 1.467)
+	if arg_18_1 == SceneType.Main or arg_18_1 == SceneType.Room or arg_18_1 == SceneType.Explore or arg_18_1 == SceneType.Cachot then
+		TaskDispatcher.runDelay(arg_18_0._onDelayStartScene, arg_18_0, 1.467)
 	else
-		slot0._isStarting = true
-		slot0._curSceneType = slot1
-		slot0._curSceneId = slot2
-		slot0._curSceneLevel = slot3
+		arg_18_0._isStarting = true
+		arg_18_0._curSceneType = arg_18_1
+		arg_18_0._curSceneId = arg_18_2
+		arg_18_0._curSceneLevel = arg_18_3
 
-		TaskDispatcher.runDelay(slot0._onOtherDelayStartScene, slot0, 0.1)
+		TaskDispatcher.runDelay(arg_18_0._onOtherDelayStartScene, arg_18_0, 0.1)
 	end
 end
 
-function slot0._onOtherDelayStartScene(slot0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, slot0)
-	slot0:getCurScene():onStart(slot0._curSceneId, slot0._curSceneLevel)
-	uv0.instance:dispatchEvent(SceneEventName.EnterScene, slot0._curSceneType, slot0._curSceneId)
-	logNormal(string.format("start scene: %s %d level_%d", SceneType.NameDict[slot0._curSceneType], slot0._curSceneId, slot0._curSceneLevel))
+function var_0_0._onOtherDelayStartScene(arg_19_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, arg_19_0)
+	arg_19_0:getCurScene():onStart(arg_19_0._curSceneId, arg_19_0._curSceneLevel)
+	var_0_0.instance:dispatchEvent(SceneEventName.EnterScene, arg_19_0._curSceneType, arg_19_0._curSceneId)
+
+	local var_19_0 = SceneType.NameDict[arg_19_0._curSceneType]
+
+	logNormal(string.format("start scene: %s %d level_%d", var_19_0, arg_19_0._curSceneId, arg_19_0._curSceneLevel))
 end
 
-function slot0._onDelayStartScene(slot0)
-	slot0._isStarting = true
-	slot0._curSceneType = slot0._nextSceneType and slot0._nextSceneType or slot0._curSceneType
-	slot0._nextSceneType = nil
-	slot0._curSceneId = slot0._nextSceneId and slot0._nextSceneId or slot0._curSceneId
-	slot0._nextSceneId = nil
-	slot0._curSceneLevel = slot0._nextLevelId and slot0._nextLevelId or slot0._curSceneLevel
-	slot0._nextLevelId = nil
+function var_0_0._onDelayStartScene(arg_20_0)
+	arg_20_0._isStarting = true
+	arg_20_0._curSceneType = arg_20_0._nextSceneType and arg_20_0._nextSceneType or arg_20_0._curSceneType
+	arg_20_0._nextSceneType = nil
+	arg_20_0._curSceneId = arg_20_0._nextSceneId and arg_20_0._nextSceneId or arg_20_0._curSceneId
+	arg_20_0._nextSceneId = nil
+	arg_20_0._curSceneLevel = arg_20_0._nextLevelId and arg_20_0._nextLevelId or arg_20_0._curSceneLevel
+	arg_20_0._nextLevelId = nil
 
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, slot0)
-	slot0:getCurScene():onStart(slot0._curSceneId, slot0._curSceneLevel)
-	uv0.instance:dispatchEvent(SceneEventName.EnterScene, slot0._curSceneType, slot0._curSceneId)
-	logNormal(string.format("start scene: %s %d level_%d", SceneType.NameDict[slot0._curSceneType], slot0._curSceneId, slot0._curSceneLevel))
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, arg_20_0)
+	arg_20_0:getCurScene():onStart(arg_20_0._curSceneId, arg_20_0._curSceneLevel)
+	var_0_0.instance:dispatchEvent(SceneEventName.EnterScene, arg_20_0._curSceneType, arg_20_0._curSceneId)
+
+	local var_20_0 = SceneType.NameDict[arg_20_0._curSceneType]
+
+	logNormal(string.format("start scene: %s %d level_%d", var_20_0, arg_20_0._curSceneId, arg_20_0._curSceneLevel))
 end
 
-function slot0.closeScene(slot0, slot1, slot2, slot3, slot4)
-	TaskDispatcher.cancelTask(slot0._onDelayStartScene, slot0)
-	TaskDispatcher.cancelTask(slot0._onOtherDelayStartScene, slot0)
+function var_0_0.closeScene(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
+	TaskDispatcher.cancelTask(arg_21_0._onDelayStartScene, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._onOtherDelayStartScene, arg_21_0)
 
-	slot0._nextSceneType = slot1
-	slot0._nextSceneId = slot2
-	slot0._nextLevelId = slot3
+	arg_21_0._nextSceneType = arg_21_1
+	arg_21_0._nextSceneId = arg_21_2
+	arg_21_0._nextLevelId = arg_21_3
 
-	if not slot0._curSceneType or not slot0._curSceneId then
+	if not arg_21_0._curSceneType or not arg_21_0._curSceneId then
 		return
 	end
 
-	slot0._isClosing = true
-	slot0._preSceneType = slot0._curSceneType
-	slot0._preSceneId = slot0._curSceneId
-	slot0._preLevelId = slot0:getCurLevelId()
+	arg_21_0._isClosing = true
+	arg_21_0._preSceneType = arg_21_0._curSceneType
+	arg_21_0._preSceneId = arg_21_0._curSceneId
+	arg_21_0._preLevelId = arg_21_0:getCurLevelId()
 
-	if slot4 then
-		TaskDispatcher.cancelTask(slot0._delayCloseScene, slot0)
-		slot0:_delayCloseScene()
-	elseif slot0._nextSceneType == SceneType.Main or slot0._nextSceneType == SceneType.Room or slot0._nextSceneType == SceneType.Explore or slot0._nextSceneType == SceneType.Cachot then
-		TaskDispatcher.runDelay(slot0._delayCloseScene, slot0, 0.5)
+	if arg_21_4 then
+		TaskDispatcher.cancelTask(arg_21_0._delayCloseScene, arg_21_0)
+		arg_21_0:_delayCloseScene()
+	elseif arg_21_0._nextSceneType == SceneType.Main or arg_21_0._nextSceneType == SceneType.Room or arg_21_0._nextSceneType == SceneType.Explore or arg_21_0._nextSceneType == SceneType.Cachot then
+		TaskDispatcher.runDelay(arg_21_0._delayCloseScene, arg_21_0, 0.5)
 	else
-		TaskDispatcher.cancelTask(slot0._delayCloseScene, slot0)
-		slot0:_delayCloseScene()
+		TaskDispatcher.cancelTask(arg_21_0._delayCloseScene, arg_21_0)
+		arg_21_0:_delayCloseScene()
 	end
 end
 
-function slot0._delayCloseScene(slot0)
-	slot0:getCurScene():onClose()
-	uv0.instance:dispatchEvent(slot0._curSceneType, slot0._curSceneId, 0)
-	uv0.instance:dispatchEvent(SceneEventName.ExitScene, slot0._curSceneType, slot0._curSceneId, slot0._nextSceneType)
-	logNormal(string.format("close scene: %s %d level_%d", SceneType.NameDict[slot0._preSceneType], slot0._preSceneId or -1, slot0._preLevelId or -1))
+function var_0_0._delayCloseScene(arg_22_0)
+	arg_22_0:getCurScene():onClose()
+	var_0_0.instance:dispatchEvent(arg_22_0._curSceneType, arg_22_0._curSceneId, 0)
+	var_0_0.instance:dispatchEvent(SceneEventName.ExitScene, arg_22_0._curSceneType, arg_22_0._curSceneId, arg_22_0._nextSceneType)
 
-	slot0._curSceneType = nil
-	slot0._curSceneId = nil
-	slot0._isStarting = false
-	slot0._isClosing = false
+	local var_22_0 = SceneType.NameDict[arg_22_0._preSceneType]
+	local var_22_1 = arg_22_0._preSceneId or -1
+	local var_22_2 = arg_22_0._preLevelId or -1
+
+	logNormal(string.format("close scene: %s %d level_%d", var_22_0, var_22_1, var_22_2))
+
+	arg_22_0._curSceneType = nil
+	arg_22_0._curSceneId = nil
+	arg_22_0._isStarting = false
+	arg_22_0._isClosing = false
 end
 
-function slot0.showLoading(slot0, slot1)
-	if not slot0._allScenes[slot1] then
+function var_0_0.showLoading(arg_23_0, arg_23_1)
+	if not arg_23_0._allScenes[arg_23_1] then
 		return
 	end
 
-	uv0.instance:dispatchEvent(SceneEventName.OpenLoading, slot1)
+	var_0_0.instance:dispatchEvent(SceneEventName.OpenLoading, arg_23_1)
 end
 
-function slot0.hideLoading(slot0)
-	uv0.instance:dispatchEvent(SceneEventName.CloseLoading)
+function var_0_0.hideLoading(arg_24_0)
+	var_0_0.instance:dispatchEvent(SceneEventName.CloseLoading)
 end
 
-function slot0.isLoading(slot0)
-	return slot0._isStarting
+function var_0_0.isLoading(arg_25_0)
+	return arg_25_0._isStarting
 end
 
-function slot0.isClosing(slot0)
-	return slot0._isClosing
+function var_0_0.isClosing(arg_26_0)
+	return arg_26_0._isClosing
 end
 
-function slot0.isSpScene(slot0)
-	if slot0:getCurScene() and slot1.level and slot1.level._sceneId and slot2 == 11501 then
+function var_0_0.isSpScene(arg_27_0)
+	local var_27_0 = arg_27_0:getCurScene()
+	local var_27_1 = var_27_0 and var_27_0.level and var_27_0.level._sceneId
+
+	if var_27_1 and var_27_1 == 11501 then
 		return true
 	end
 end
 
-function slot0.isFightScene(slot0)
-	return slot0:getCurSceneType() == SceneType.Fight
+function var_0_0.isFightScene(arg_28_0)
+	return arg_28_0:getCurSceneType() == SceneType.Fight
 end
 
-function slot0.isPushBoxScene(slot0)
-	return slot0:getCurSceneType() == SceneType.PushBox
+function var_0_0.isPushBoxScene(arg_29_0)
+	return arg_29_0:getCurSceneType() == SceneType.PushBox
 end
 
-function slot0.getNextSceneType(slot0)
-	return slot0._nextSceneType
+function var_0_0.getNextSceneType(arg_30_0)
+	return arg_30_0._nextSceneType
 end
 
-function slot0.useDefaultScene(slot0)
+function var_0_0.useDefaultScene(arg_31_0)
 	return VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

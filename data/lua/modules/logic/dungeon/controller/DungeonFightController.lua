@@ -1,128 +1,134 @@
-module("modules.logic.dungeon.controller.DungeonFightController", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonFightController", package.seeall)
 
-slot0 = class("DungeonFightController", BaseController)
+local var_0_0 = class("DungeonFightController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._battleEpisodeType = nil
-	slot0._otherBattleReqAction = nil
-	slot0._otherBattleObj = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._battleEpisodeType = nil
+	arg_1_0._otherBattleReqAction = nil
+	arg_1_0._otherBattleObj = nil
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._battleEpisodeType = nil
-	slot0._otherBattleReqAction = nil
-	slot0._otherBattleObj = nil
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._battleEpisodeType = nil
+	arg_4_0._otherBattleReqAction = nil
+	arg_4_0._otherBattleObj = nil
 end
 
-function slot0.enterNewbieFight(slot0, slot1, slot2)
-	slot0:sendStartDungeonRequest(slot1, slot2, FightController.instance:setNewBieFightParamByEpisodeId(slot2))
+function var_0_0.enterNewbieFight(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = FightController.instance:setNewBieFightParamByEpisodeId(arg_5_2)
+
+	arg_5_0:sendStartDungeonRequest(arg_5_1, arg_5_2, var_5_0)
 end
 
-function slot0.enterFightByBattleId(slot0, slot1, slot2, slot3)
-	DungeonModel.instance:SetSendChapterEpisodeId(slot1, slot2)
+function var_0_0.enterFightByBattleId(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	DungeonModel.instance:SetSendChapterEpisodeId(arg_6_1, arg_6_2)
 
-	slot4 = FightController.instance:setFightParamByEpisodeAndBattle(slot2, slot3)
+	local var_6_0 = FightController.instance:setFightParamByEpisodeAndBattle(arg_6_2, arg_6_3)
 
-	slot4:setDungeon(slot1, slot2)
-	slot4:setPreload()
+	var_6_0:setDungeon(arg_6_1, arg_6_2)
+	var_6_0:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function slot0.enterWeekwalkFight(slot0, slot1, slot2, slot3)
-	DungeonModel.instance:SetSendChapterEpisodeId(slot1, slot2)
+function var_0_0.enterWeekwalkFight(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	DungeonModel.instance:SetSendChapterEpisodeId(arg_7_1, arg_7_2)
 
-	slot4 = FightController.instance:setFightParamByEpisodeAndBattle(slot2, slot3)
+	local var_7_0 = FightController.instance:setFightParamByEpisodeAndBattle(arg_7_2, arg_7_3)
 
-	slot4:setDungeon(slot1, slot2)
-	slot4:setPreload()
+	var_7_0:setDungeon(arg_7_1, arg_7_2)
+	var_7_0:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function slot0.enterMeilanniFight(slot0, slot1, slot2, slot3)
-	DungeonModel.instance:SetSendChapterEpisodeId(slot1, slot2)
+function var_0_0.enterMeilanniFight(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	DungeonModel.instance:SetSendChapterEpisodeId(arg_8_1, arg_8_2)
 
-	slot4 = FightController.instance:setFightParamByEpisodeAndBattle(slot2, slot3)
+	local var_8_0 = FightController.instance:setFightParamByEpisodeAndBattle(arg_8_2, arg_8_3)
 
-	slot4:setDungeon(slot1, slot2)
-	slot4:setPreload()
+	var_8_0:setDungeon(arg_8_1, arg_8_2)
+	var_8_0:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function slot0.enterSeasonFight(slot0, slot1, slot2)
+function var_0_0.enterSeasonFight(arg_9_0, arg_9_1, arg_9_2)
 	FightModel.instance:clear()
-	DungeonModel.instance:SetSendChapterEpisodeId(slot1, slot2)
+	DungeonModel.instance:SetSendChapterEpisodeId(arg_9_1, arg_9_2)
 
-	slot3 = FightController.instance:setFightParamByEpisodeId(slot2)
+	local var_9_0 = FightController.instance:setFightParamByEpisodeId(arg_9_2)
 
-	slot3:setDungeon(slot1, slot2)
-	slot3:setPreload()
+	var_9_0:setDungeon(arg_9_1, arg_9_2)
+	var_9_0:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function slot0.enterFight(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.enterFight(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 	FightModel.instance:clear()
-	DungeonModel.instance:SetSendChapterEpisodeId(slot1, slot2)
+	DungeonModel.instance:SetSendChapterEpisodeId(arg_10_1, arg_10_2)
 
-	slot5 = FightController.instance:setFightParamByEpisodeId(slot2)
+	local var_10_0 = FightController.instance:setFightParamByEpisodeId(arg_10_2)
 
-	slot5:setDungeon(slot1, slot2, slot3)
-	slot5:setPreload()
-	slot5:setAdventure(slot4)
+	var_10_0:setDungeon(arg_10_1, arg_10_2, arg_10_3)
+	var_10_0:setPreload()
+	var_10_0:setAdventure(arg_10_4)
 	FightController.instance:enterFightScene()
 end
 
-function slot0.sendStartDungeonRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if slot0._otherBattleReqAction then
-		slot0._otherBattleReqAction(slot0._otherBattleObj)
-		slot0:setBattleRequestAction(nil, )
+function var_0_0.sendStartDungeonRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6)
+	if arg_11_0._otherBattleReqAction then
+		arg_11_0._otherBattleReqAction(arg_11_0._otherBattleObj)
+		arg_11_0:setBattleRequestAction(nil, nil)
 	else
-		DungeonRpc.instance:sendStartDungeonRequest(slot1, slot2, slot3, slot4, slot5, slot6)
+		DungeonRpc.instance:sendStartDungeonRequest(arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6)
 	end
 end
 
-function slot0.onReceiveStartDungeonReply(slot0, slot1, slot2)
-	FightRpc.instance:onReceiveTestFightReply(slot1, slot2)
+function var_0_0.onReceiveStartDungeonReply(arg_12_0, arg_12_1, arg_12_2)
+	FightRpc.instance:onReceiveTestFightReply(arg_12_1, arg_12_2)
 end
 
-function slot0.sendEndFightRequest(slot0, slot1)
-	DungeonRpc.instance:sendEndDungeonRequest(slot1)
+function var_0_0.sendEndFightRequest(arg_13_0, arg_13_1)
+	DungeonRpc.instance:sendEndDungeonRequest(arg_13_1)
 end
 
-function slot0.onReceiveEndDungeonReply(slot0, slot1, slot2)
-	FightRpc.instance:onReceiveEndFightReply(slot1, slot2)
+function var_0_0.onReceiveEndDungeonReply(arg_14_0, arg_14_1, arg_14_2)
+	FightRpc.instance:onReceiveEndFightReply(arg_14_1, arg_14_2)
 end
 
-function slot0.restartStage()
-	slot0 = FightModel.instance:getFightParam()
-	slot0.chapterId = DungeonConfig.instance:getEpisodeCO(slot0.episodeId).chapterId
+function var_0_0.restartStage()
+	local var_15_0 = FightModel.instance:getFightParam()
 
-	DungeonRpc.instance:sendStartDungeonRequest(slot0.chapterId, slot0.episodeId, slot0, slot0.multiplication, nil, , true)
+	var_15_0.chapterId = DungeonConfig.instance:getEpisodeCO(var_15_0.episodeId).chapterId
+
+	DungeonRpc.instance:sendStartDungeonRequest(var_15_0.chapterId, var_15_0.episodeId, var_15_0, var_15_0.multiplication, nil, nil, true)
 end
 
-function slot0.restartSpStage()
-	slot0 = GameSceneMgr.instance:getCurScene()
+function var_0_0.restartSpStage()
+	local var_16_0 = GameSceneMgr.instance:getCurScene()
 
-	slot0.entityMgr:removeAllUnits()
-	slot0.director:registRespBeginFight()
-	slot0.bgm:resumeBgm()
+	var_16_0.entityMgr:removeAllUnits()
+	var_16_0.director:registRespBeginFight()
+	var_16_0.bgm:resumeBgm()
 
-	slot1 = FightModel.instance:getFightParam()
-	slot1.chapterId = DungeonConfig.instance:getEpisodeCO(slot1.episodeId).chapterId
+	local var_16_1 = FightModel.instance:getFightParam()
 
-	uv0.instance:sendStartDungeonRequest(slot1.chapterId, slot1.episodeId, slot1, slot1.multiplication)
+	var_16_1.chapterId = DungeonConfig.instance:getEpisodeCO(var_16_1.episodeId).chapterId
+
+	var_0_0.instance:sendStartDungeonRequest(var_16_1.chapterId, var_16_1.episodeId, var_16_1, var_16_1.multiplication)
 end
 
-function slot0.setBattleRequestAction(slot0, slot1, slot2)
-	slot0._otherBattleReqAction = slot1
-	slot0._otherBattleObj = slot2
+function var_0_0.setBattleRequestAction(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._otherBattleReqAction = arg_17_1
+	arg_17_0._otherBattleObj = arg_17_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

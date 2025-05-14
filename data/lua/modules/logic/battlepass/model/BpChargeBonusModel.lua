@@ -1,12 +1,12 @@
-module("modules.logic.battlepass.model.BpChargeBonusModel", package.seeall)
+﻿module("modules.logic.battlepass.model.BpChargeBonusModel", package.seeall)
 
-slot0 = class("BpChargeBonusModel", ListScrollModel)
+local var_0_0 = class("BpChargeBonusModel", ListScrollModel)
 
-function slot0.setConfigList(slot0, slot1)
-	slot0:setList(slot1)
+function var_0_0.setConfigList(arg_1_0, arg_1_1)
+	arg_1_0:setList(arg_1_1)
 end
 
-slot0.left = slot0.New()
-slot0.right = slot0.New()
+var_0_0.left = var_0_0.New()
+var_0_0.right = var_0_0.New()
 
-return slot0
+return var_0_0

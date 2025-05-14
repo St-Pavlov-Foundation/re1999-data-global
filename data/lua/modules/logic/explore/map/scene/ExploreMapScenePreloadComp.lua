@@ -1,276 +1,297 @@
-module("modules.logic.explore.map.scene.ExploreMapScenePreloadComp", package.seeall)
+﻿module("modules.logic.explore.map.scene.ExploreMapScenePreloadComp", package.seeall)
 
-slot0 = class("ExploreMapScenePreloadComp", LuaCompBase)
-slot1 = "scenes/dynamic/textures/empty_white.png"
-slot2 = 0.01
-slot3 = 0.3
-slot4 = 20
-slot5 = 2
-slot6 = 15
-slot7 = 1
+local var_0_0 = class("ExploreMapScenePreloadComp", LuaCompBase)
+local var_0_1 = "scenes/dynamic/textures/empty_white.png"
+local var_0_2 = 0.01
+local var_0_3 = 0.3
+local var_0_4 = 20
+local var_0_5 = 2
+local var_0_6 = 15
+local var_0_7 = 1
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.showRage = Vector4.New(0, 0, 6, 6)
-	slot0._allObjDic = {}
-	slot0._allMajorDic = {}
-	slot0._allShadowObjDic = {}
-	slot0._lightMapObjs = {}
-	slot0._lightmapUseByDic = {}
-	slot0._lightMapCSArr = nil
-	slot0.showObjIdDict = {}
-	slot3 = lua_scene_level.configDict[GameSceneMgr.instance:getCurLevelId()]
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.showRage = Vector4.New(0, 0, 6, 6)
+	arg_1_0._allObjDic = {}
+	arg_1_0._allMajorDic = {}
+	arg_1_0._allShadowObjDic = {}
+	arg_1_0._lightMapObjs = {}
+	arg_1_0._lightmapUseByDic = {}
+	arg_1_0._lightMapCSArr = nil
+	arg_1_0.showObjIdDict = {}
 
-	if SLFramework.FrameworkSettings.IsEditor and SLFramework.FileHelper.IsFileExists(SLFramework.FrameworkSettings.ProjLuaRootDir .. "/modules/configs/explore/lua_explore_scene_" .. slot3.resName .. ".lua") == false then
-		slot0.hasInit = false
+	local var_1_0 = GameSceneMgr.instance:getCurLevelId()
+	local var_1_1 = lua_scene_level.configDict[var_1_0]
 
-		logError("congfig not find :" .. slot4)
+	if SLFramework.FrameworkSettings.IsEditor then
+		local var_1_2 = SLFramework.FrameworkSettings.ProjLuaRootDir .. "/modules/configs/explore/lua_explore_scene_" .. var_1_1.resName .. ".lua"
 
-		return
+		if SLFramework.FileHelper.IsFileExists(var_1_2) == false then
+			arg_1_0.hasInit = false
+
+			logError("congfig not find :" .. var_1_2)
+
+			return
+		end
 	end
 
-	slot0._config = addGlobalModule("modules.configs.explore.lua_explore_scene_" .. slot3.resName)
-	slot0.hasInit = true
-	slot0._waitAtiveDict = {}
-	slot0.camera = CameraMgr.instance:getMainCamera()
-	slot0._lights = nil
+	local var_1_3 = "modules.configs.explore.lua_explore_scene_" .. var_1_1.resName
 
-	if GameSceneMgr.instance:getCurScene() then
-		slot0._lights = slot5.level:getSceneGo():GetComponentsInChildren(typeof(UnityEngine.Light))
+	arg_1_0._config = addGlobalModule(var_1_3)
+	arg_1_0.hasInit = true
+	arg_1_0._waitAtiveDict = {}
+	arg_1_0.camera = CameraMgr.instance:getMainCamera()
+
+	local var_1_4 = GameSceneMgr.instance:getCurScene()
+
+	arg_1_0._lights = nil
+
+	if var_1_4 then
+		arg_1_0._lights = var_1_4.level:getSceneGo():GetComponentsInChildren(typeof(UnityEngine.Light))
 	end
 
-	slot0._lightmapABPath = "explore/scene/" .. slot3.resName
-	slot0._lightMapLoader = MultiAbLoader.New()
+	arg_1_0._lightmapABPath = "explore/scene/" .. var_1_1.resName
+	arg_1_0._lightMapLoader = MultiAbLoader.New()
 
-	for slot9, slot10 in ipairs(slot0._config.lightmapList) do
-		slot0._lightmapUseByDic[slot9] = {}
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0._config.lightmapList) do
+		arg_1_0._lightmapUseByDic[iter_1_0] = {}
 
 		if GameResMgr.IsFromEditorDir then
-			slot0._lightMapLoader:addPath(slot10[1])
-			slot0._lightMapLoader:addPath(slot10[2])
+			arg_1_0._lightMapLoader:addPath(iter_1_1[1])
+			arg_1_0._lightMapLoader:addPath(iter_1_1[2])
 		end
 	end
 
-	if not GameResMgr.IsFromEditorDir and #slot0._config.lightmapList > 0 then
-		slot0._lightMapLoader:addPath(slot0._lightmapABPath)
+	if not GameResMgr.IsFromEditorDir and #arg_1_0._config.lightmapList > 0 then
+		arg_1_0._lightMapLoader:addPath(arg_1_0._lightmapABPath)
 	end
 
-	slot0._lightMapLoader:addPath(uv0)
-	slot0._lightMapLoader:startLoad(slot0._initLightMap, slot0)
+	arg_1_0._lightMapLoader:addPath(var_0_1)
+	arg_1_0._lightMapLoader:startLoad(arg_1_0._initLightMap, arg_1_0)
 
-	for slot11, slot12 in ipairs(slot0._config.objList) do
-		slot13 = gohelper.create3d(slot0.go, "sceneObj")
+	local var_1_5 = gohelper.create3d(arg_1_0.go, "sceneObj")
+	local var_1_6 = ExploreController.instance:getMap()
 
-		if slot12.areaId and slot12.areaId > 0 then
-			slot13 = ExploreController.instance:getMap():getContainRootByAreaId(slot12.areaId).sceneObj
+	for iter_1_2, iter_1_3 in ipairs(arg_1_0._config.objList) do
+		local var_1_7 = var_1_5
+
+		if iter_1_3.areaId and iter_1_3.areaId > 0 then
+			var_1_7 = var_1_6:getContainRootByAreaId(iter_1_3.areaId).sceneObj
 		end
 
-		slot14 = ExploreMapSceneObj.New(slot13)
+		local var_1_8 = ExploreMapSceneObj.New(var_1_7)
 
-		slot14:setData(slot12)
+		var_1_8:setData(iter_1_3)
 
-		slot0._allObjDic[slot12.id] = slot14
+		arg_1_0._allObjDic[iter_1_3.id] = var_1_8
 
-		if slot12.major == 1 then
-			slot0._allMajorDic[slot12.id] = true
+		if iter_1_3.major == 1 then
+			arg_1_0._allMajorDic[iter_1_3.id] = true
 		end
 
-		if ExploreConstValue.MapSceneObjAlwaysShowEffectType[slot14.effectType] then
-			slot14:show()
+		if ExploreConstValue.MapSceneObjAlwaysShowEffectType[var_1_8.effectType] then
+			var_1_8:show()
 		end
 	end
 
-	slot0:_buildTree()
+	arg_1_0:_buildTree()
 
-	if slot0._config.shadowObjs then
-		for slot11, slot12 in ipairs(slot0._config.shadowObjs) do
-			slot13 = slot6
+	if arg_1_0._config.shadowObjs then
+		for iter_1_4, iter_1_5 in ipairs(arg_1_0._config.shadowObjs) do
+			local var_1_9 = var_1_5
 
-			if slot12.areaId and slot12.areaId > 0 then
-				slot13 = slot7:getContainRootByAreaId(slot12.areaId).sceneObj
+			if iter_1_5.areaId and iter_1_5.areaId > 0 then
+				var_1_9 = var_1_6:getContainRootByAreaId(iter_1_5.areaId).sceneObj
 			end
 
-			slot14 = ExploreMapShadowObj.New(slot13)
+			local var_1_10 = ExploreMapShadowObj.New(var_1_9)
 
-			slot14:setData(slot12)
+			var_1_10:setData(iter_1_5)
 
-			slot0._allShadowObjDic[slot12.id] = slot14
+			arg_1_0._allShadowObjDic[iter_1_5.id] = var_1_10
 		end
 	end
 
-	slot0:addEventListeners()
+	arg_1_0:addEventListeners()
 end
 
-function slot0.addEventListeners(slot0)
-	if slot0.hasInit then
-		slot0:addEventCb(ExploreController.instance, ExploreEvent.SetCameraPos, slot0.updateCameraPos, slot0)
-		slot0:addEventCb(ExploreController.instance, ExploreEvent.ShowSceneObj, slot0.showSceneObj, slot0)
-		slot0:addEventCb(ExploreController.instance, ExploreEvent.HideSceneObj, slot0.hideSceneObj, slot0)
-		slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-		TaskDispatcher.runRepeat(slot0._checkActive, slot0, uv0)
+function var_0_0.addEventListeners(arg_2_0)
+	if arg_2_0.hasInit then
+		arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.SetCameraPos, arg_2_0.updateCameraPos, arg_2_0)
+		arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.ShowSceneObj, arg_2_0.showSceneObj, arg_2_0)
+		arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.HideSceneObj, arg_2_0.hideSceneObj, arg_2_0)
+		arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
+		TaskDispatcher.runRepeat(arg_2_0._checkActive, arg_2_0, var_0_2)
 	end
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.SetCameraPos, slot0.updateCameraPos, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.ShowSceneObj, slot0.showSceneObj, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.HideSceneObj, slot0.hideSceneObj, slot0)
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0._onScreenResize, slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.SceneObjLoadedCb, slot0.SceneObjLoadedCb, slot0)
-	TaskDispatcher.cancelTask(slot0._checkActive, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.SetCameraPos, arg_3_0.updateCameraPos, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.ShowSceneObj, arg_3_0.showSceneObj, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.HideSceneObj, arg_3_0.hideSceneObj, arg_3_0)
+	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.SceneObjLoadedCb, arg_3_0.SceneObjLoadedCb, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._checkActive, arg_3_0)
 end
 
-function slot0.showSceneObj(slot0, slot1)
-	slot2 = slot0._allObjDic[slot1]
+function var_0_0.showSceneObj(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._allObjDic[arg_4_1]
 
-	slot2:markShow()
+	var_4_0:markShow()
 
-	slot0._waitAtiveDict[slot1] = true
+	arg_4_0._waitAtiveDict[arg_4_1] = true
 
-	slot0:_updateLightMapUseBy(slot2, true)
+	arg_4_0:_updateLightMapUseBy(var_4_0, true)
 end
 
-function slot0.hideSceneObj(slot0, slot1)
-	slot0._waitAtiveDict[slot1] = nil
+function var_0_0.hideSceneObj(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._allObjDic[arg_5_1]
 
-	if ExploreConstValue.MapSceneObjAlwaysShowEffectType[slot0._allObjDic[slot1].effectType] ~= true and slot2:hide() then
-		slot0:_updateLightMapUseBy(slot2, false)
+	arg_5_0._waitAtiveDict[arg_5_1] = nil
+
+	if ExploreConstValue.MapSceneObjAlwaysShowEffectType[var_5_0.effectType] ~= true and var_5_0:hide() then
+		arg_5_0:_updateLightMapUseBy(var_5_0, false)
 	end
 end
 
-function slot0._onScreenResize(slot0)
-	slot0:updateCameraPos(slot0._targetPos)
+function var_0_0._onScreenResize(arg_6_0)
+	arg_6_0:updateCameraPos(arg_6_0._targetPos)
 end
 
-function slot0.updateCameraPos(slot0, slot1)
-	slot0._targetPos = slot1 or slot0._targetPos
-	slot0.showRage.x = slot0._targetPos.x
-	slot0.showRage.y = slot0._targetPos.z
+function var_0_0.updateCameraPos(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._targetPos == nil
 
-	if slot0._targetPos == nil then
-		slot0:_firstInitMap()
-	elseif slot0.markDelayUpdate ~= true then
-		slot0.markDelayUpdate = true
+	arg_7_0._targetPos = arg_7_1 or arg_7_0._targetPos
+	arg_7_0.showRage.x = arg_7_0._targetPos.x
+	arg_7_0.showRage.y = arg_7_0._targetPos.z
 
-		TaskDispatcher.runDelay(slot0._delayUpdate, slot0, uv0)
+	if var_7_0 then
+		arg_7_0:_firstInitMap()
+	elseif arg_7_0.markDelayUpdate ~= true then
+		arg_7_0.markDelayUpdate = true
+
+		TaskDispatcher.runDelay(arg_7_0._delayUpdate, arg_7_0, var_0_3)
 	end
 end
 
-function slot0._firstInitMap(slot0)
-	slot0.leftInitActiveNum = slot0:calcNeedLoadedSceneObj()
+function var_0_0._firstInitMap(arg_8_0)
+	arg_8_0.leftInitActiveNum = arg_8_0:calcNeedLoadedSceneObj()
 
-	if slot0.leftInitActiveNum > 0 then
-		slot0:addEventCb(ExploreController.instance, ExploreEvent.SceneObjLoadedCb, slot0.SceneObjLoadedCb, slot0)
+	if arg_8_0.leftInitActiveNum > 0 then
+		arg_8_0:addEventCb(ExploreController.instance, ExploreEvent.SceneObjLoadedCb, arg_8_0.SceneObjLoadedCb, arg_8_0)
 	end
 end
 
-function slot0.calcNeedLoadedSceneObj(slot0)
-	slot0.markDelayUpdate = false
+function var_0_0.calcNeedLoadedSceneObj(arg_9_0)
+	arg_9_0.markDelayUpdate = false
 
-	slot0:_delayUpdate()
-	TaskDispatcher.cancelTask(slot0._delayUpdate, slot0)
+	arg_9_0:_delayUpdate()
+	TaskDispatcher.cancelTask(arg_9_0._delayUpdate, arg_9_0)
 
-	return slot0:_checkActive(tabletool.len(slot0._waitAtiveDict))
+	return arg_9_0:_checkActive(tabletool.len(arg_9_0._waitAtiveDict))
 end
 
-function slot0.SceneObjLoadedCb(slot0)
-	slot0.leftInitActiveNum = slot0.leftInitActiveNum - 1
+function var_0_0.SceneObjLoadedCb(arg_10_0)
+	arg_10_0.leftInitActiveNum = arg_10_0.leftInitActiveNum - 1
 
-	if slot0.leftInitActiveNum <= 0 then
+	if arg_10_0.leftInitActiveNum <= 0 then
 		ExploreController.instance:dispatchEvent(ExploreEvent.InitMapDone)
-		slot0:removeEventCb(ExploreController.instance, ExploreEvent.SceneObjLoadedCb, slot0.SceneObjLoadedCb, slot0)
+		arg_10_0:removeEventCb(ExploreController.instance, ExploreEvent.SceneObjLoadedCb, arg_10_0.SceneObjLoadedCb, arg_10_0)
 	end
 end
 
-function slot0.clearUnUseObj(slot0)
-	for slot4, slot5 in pairs(slot0._allObjDic) do
-		slot5:unloadnow()
+function var_0_0.clearUnUseObj(arg_11_0)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._allObjDic) do
+		iter_11_1:unloadnow()
 	end
 end
 
-slot8 = LuaProfiler.GetID("RebuildFrustumPlanes")
-slot9 = LuaProfiler.GetID("GetTreeCheckResult")
-slot10 = LuaProfiler.GetID("GetTreeCheckResult_For")
+local var_0_8 = LuaProfiler.GetID("RebuildFrustumPlanes")
+local var_0_9 = LuaProfiler.GetID("GetTreeCheckResult")
+local var_0_10 = LuaProfiler.GetID("GetTreeCheckResult_For")
 
-function slot0._delayUpdate(slot0)
+function var_0_0._delayUpdate(arg_12_0)
 	if ExploreConstValue.UseCSharpTree then
-		slot1 = CameraMgr.instance:getMainCamera()
+		local var_12_0 = CameraMgr.instance:getMainCamera()
+		local var_12_1 = var_12_0.fieldOfView + var_0_5
+		local var_12_2 = var_12_0.aspect
+		local var_12_3 = var_0_6
+		local var_12_4 = var_0_7
 
-		LuaProfiler.BeginSample(uv3)
-
-		slot11 = slot1.aspect
-
-		ZProj.ExploreHelper.RebuildFrustumPlanes(slot1, uv1, uv2, slot1.fieldOfView + uv0, slot11)
+		LuaProfiler.BeginSample(var_0_8)
+		ZProj.ExploreHelper.RebuildFrustumPlanes(var_12_0, var_12_3, var_12_4, var_12_1, var_12_2)
 		LuaProfiler.EndSample()
-		LuaProfiler.BeginSample(uv4)
+		LuaProfiler.BeginSample(var_0_9)
 
-		slot6, slot7 = ZProj.ExploreHelper.GetTreeCheckResult(slot0.showRage, 1)
+		local var_12_5, var_12_6 = ZProj.ExploreHelper.GetTreeCheckResult(arg_12_0.showRage, 1)
 
 		LuaProfiler.EndSample()
-		LuaProfiler.BeginSample(uv5)
+		LuaProfiler.BeginSample(var_0_10)
 
-		for slot11 = 0, slot7 - 1 do
-			if slot0._allObjDic[slot6[slot11] + 1].ishide == true then
-				slot0:showSceneObj(slot12)
+		for iter_12_0 = 0, var_12_6 - 1 do
+			local var_12_7 = var_12_5[iter_12_0] + 1
+
+			if arg_12_0._allObjDic[var_12_7].ishide == true then
+				arg_12_0:showSceneObj(var_12_7)
 			else
-				slot0:hideSceneObj(slot12)
+				arg_12_0:hideSceneObj(var_12_7)
 			end
 		end
 
 		LuaProfiler.EndSample()
 	else
-		for slot4, slot5 in pairs(slot0.showObjIdDict) do
-			slot0.showObjIdDict[slot4] = 0
+		for iter_12_1, iter_12_2 in pairs(arg_12_0.showObjIdDict) do
+			arg_12_0.showObjIdDict[iter_12_1] = 0
 		end
 
-		slot4 = slot0.showObjIdDict
+		arg_12_0._tree:triggerMove(arg_12_0.showRage, arg_12_0.showObjIdDict)
 
-		slot0._tree:triggerMove(slot0.showRage, slot4)
-
-		for slot4 in pairs(slot0._allObjDic) do
-			if slot0.showObjIdDict[slot4] == 1 then
-				slot0:showSceneObj(slot4)
+		for iter_12_3 in pairs(arg_12_0._allObjDic) do
+			if arg_12_0.showObjIdDict[iter_12_3] == 1 then
+				arg_12_0:showSceneObj(iter_12_3)
 			else
-				slot0:hideSceneObj(slot4)
+				arg_12_0:hideSceneObj(iter_12_3)
 			end
 		end
 	end
 
-	slot0:_updateLightMap()
-	slot0:_updateShadow()
+	arg_12_0:_updateLightMap()
+	arg_12_0:_updateShadow()
 
-	slot0.markDelayUpdate = false
+	arg_12_0.markDelayUpdate = false
 end
 
-function slot0._buildTree(slot0)
+function var_0_0._buildTree(arg_13_0)
 	if ExploreConstValue.UseCSharpTree then
-		ZProj.ExploreHelper.InitTreeObj(slot0._config.tree, #slot0._allObjDic)
+		ZProj.ExploreHelper.InitTreeObj(arg_13_0._config.tree, #arg_13_0._allObjDic)
 	else
-		slot0._tree = ExploreMapTree.New()
+		arg_13_0._tree = ExploreMapTree.New()
 
-		slot0._tree:setup(slot0._config.tree, slot0)
+		arg_13_0._tree:setup(arg_13_0._config.tree, arg_13_0)
 	end
 end
 
-function slot0._updateShadow(slot0)
-	if slot0._lights then
-		slot8 = 0.01
-		slot9 = slot0.camera.fieldOfView + 2
+function var_0_0._updateShadow(arg_14_0)
+	if arg_14_0._lights then
+		local var_14_0 = arg_14_0.camera.fieldOfView + 2
+		local var_14_1 = arg_14_0.camera.aspect
+		local var_14_2 = 25
+		local var_14_3 = 0.01
 
-		ZProj.ExploreHelper.RebuildDirectionalCullingPlanes(slot0.camera, 25, slot8, slot9, slot0.camera.aspect, slot0._lights)
+		ZProj.ExploreHelper.RebuildDirectionalCullingPlanes(arg_14_0.camera, var_14_2, var_14_3, var_14_0, var_14_1, arg_14_0._lights)
 
-		for slot8, slot9 in pairs(slot0._allShadowObjDic) do
-			if ZProj.ExploreHelper.CheckBoundIsInDirectionalCullingPlanes(slot9.bounds) then
-				slot9:show()
+		for iter_14_0, iter_14_1 in pairs(arg_14_0._allShadowObjDic) do
+			if ZProj.ExploreHelper.CheckBoundIsInDirectionalCullingPlanes(iter_14_1.bounds) then
+				iter_14_1:show()
 			else
-				slot9:hide()
+				iter_14_1:hide()
 			end
 		end
 	end
 end
 
-function slot0._initLightMap(slot0)
-	if #slot0._config.lightmapList <= 0 then
+function var_0_0._initLightMap(arg_15_0)
+	if #arg_15_0._config.lightmapList <= 0 then
 		UnityEngine.LightmapSettings.lightmaps = tolua.toarray({}, typeof(UnityEngine.LightmapData))
 
 		ExploreController.instance:dispatchEvent(ExploreEvent.UpdateLightMap, 0)
@@ -278,141 +299,160 @@ function slot0._initLightMap(slot0)
 		return
 	end
 
-	slot2 = slot0._lightMapLoader:getAssetItem(slot0._lightmapABPath)
-	slot3 = slot0._lightMapLoader:getAssetItem(slot0._lightmapABPath)
-	slot4 = slot0._lightMapLoader:getAssetItem(uv0):GetResource(uv0)
-	slot5 = {}
+	local var_15_0 = arg_15_0._lightMapLoader:getAssetItem(var_0_1)
+	local var_15_1 = arg_15_0._lightMapLoader:getAssetItem(arg_15_0._lightmapABPath)
+	local var_15_2 = arg_15_0._lightMapLoader:getAssetItem(arg_15_0._lightmapABPath)
+	local var_15_3 = var_15_0:GetResource(var_0_1)
+	local var_15_4 = {}
 
-	for slot9, slot10 in ipairs(slot0._config.lightmapList) do
-		slot11 = UnityEngine.LightmapData()
-		slot11.lightmapColor = slot4
-		slot11.lightmapDir = slot4
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._config.lightmapList) do
+		local var_15_5 = UnityEngine.LightmapData()
+
+		var_15_5.lightmapColor = var_15_3
+		var_15_5.lightmapDir = var_15_3
 
 		if GameResMgr.IsFromEditorDir then
-			slot2 = slot0._lightMapLoader:getAssetItem(slot10[1])
-			slot3 = slot0._lightMapLoader:getAssetItem(slot10[2])
+			var_15_1 = arg_15_0._lightMapLoader:getAssetItem(iter_15_1[1])
+			var_15_2 = arg_15_0._lightMapLoader:getAssetItem(iter_15_1[2])
 		end
 
-		slot5[slot9] = slot11
-		slot0._lightMapObjs[slot9] = ExploreMapLightMapObj.New(slot11, slot10, slot4, slot2, slot3)
+		local var_15_6 = ExploreMapLightMapObj.New(var_15_5, iter_15_1, var_15_3, var_15_1, var_15_2)
+
+		var_15_4[iter_15_0] = var_15_5
+		arg_15_0._lightMapObjs[iter_15_0] = var_15_6
 	end
 
-	slot0._lightMapCSArr = tolua.toarray(slot5, typeof(UnityEngine.LightmapData))
-	UnityEngine.LightmapSettings.lightmaps = slot0._lightMapCSArr
+	arg_15_0._lightMapCSArr = tolua.toarray(var_15_4, typeof(UnityEngine.LightmapData))
+	UnityEngine.LightmapSettings.lightmaps = arg_15_0._lightMapCSArr
 
-	slot0:_updateLightMap()
+	arg_15_0:_updateLightMap()
 end
 
-function slot0._updateLightMapUseBy(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot1.useLightMapIndexList) do
-		if slot8 + 1 > 0 then
-			if slot2 then
-				slot0._lightmapUseByDic[slot8][slot1.id] = true
+function var_0_0._updateLightMapUseBy(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_1.useLightMapIndexList
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		iter_16_1 = iter_16_1 + 1
+
+		if iter_16_1 > 0 then
+			if arg_16_2 then
+				arg_16_0._lightmapUseByDic[iter_16_1][arg_16_1.id] = true
 			else
-				slot0._lightmapUseByDic[slot8][slot1.id] = nil
+				arg_16_0._lightmapUseByDic[iter_16_1][arg_16_1.id] = nil
 			end
 		end
 	end
 end
 
-function slot0._updateLightMap(slot0)
-	for slot5, slot6 in ipairs(slot0._lightMapObjs) do
-		if tabletool.len(slot0._lightmapUseByDic[slot5]) > 0 then
-			slot6:show()
+function var_0_0._updateLightMap(arg_17_0)
+	local var_17_0 = 0
 
-			slot1 = 0 + 1
-		elseif slot7 == 0 then
-			slot6:hide()
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._lightMapObjs) do
+		local var_17_1 = tabletool.len(arg_17_0._lightmapUseByDic[iter_17_0])
+
+		if var_17_1 > 0 then
+			iter_17_1:show()
+
+			var_17_0 = var_17_0 + 1
+		elseif var_17_1 == 0 then
+			iter_17_1:hide()
 		end
 	end
 
-	UnityEngine.LightmapSettings.lightmaps = slot0._lightMapCSArr
+	UnityEngine.LightmapSettings.lightmaps = arg_17_0._lightMapCSArr
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.UpdateLightMap, slot1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.UpdateLightMap, var_17_0)
 end
 
-function slot0._checkActive(slot0, slot1)
-	slot1 = slot1 or uv0
-	slot2 = 0
+function var_0_0._checkActive(arg_18_0, arg_18_1)
+	arg_18_1 = arg_18_1 or var_0_4
 
-	if next(slot0._waitAtiveDict) then
-		for slot6 in pairs(slot0._waitAtiveDict) do
-			if slot1 == 0 then
+	local var_18_0 = 0
+
+	if next(arg_18_0._waitAtiveDict) then
+		for iter_18_0 in pairs(arg_18_0._waitAtiveDict) do
+			if arg_18_1 == 0 then
 				break
 			end
 
-			if slot0._allMajorDic[slot6] then
-				slot0._waitAtiveDict[slot6] = nil
+			if arg_18_0._allMajorDic[iter_18_0] then
+				local var_18_1 = arg_18_0._allObjDic[iter_18_0]
 
-				if slot0._allObjDic[slot6].ishide == false and slot7:show() then
-					slot2 = slot2 + 1
-					slot1 = slot1 - 1
+				arg_18_0._waitAtiveDict[iter_18_0] = nil
+
+				if var_18_1.ishide == false and var_18_1:show() then
+					var_18_0 = var_18_0 + 1
+					arg_18_1 = arg_18_1 - 1
 				end
 			end
 		end
 
-		for slot6 in pairs(slot0._waitAtiveDict) do
-			if slot1 == 0 then
+		for iter_18_1 in pairs(arg_18_0._waitAtiveDict) do
+			if arg_18_1 == 0 then
 				break
 			end
 
-			slot0._waitAtiveDict[slot6] = nil
+			local var_18_2 = arg_18_0._allObjDic[iter_18_1]
 
-			if slot0._allObjDic[slot6].ishide == false and slot7:show() then
-				slot2 = slot2 + 1
-				slot1 = slot1 - 1
+			arg_18_0._waitAtiveDict[iter_18_1] = nil
+
+			if var_18_2.ishide == false and var_18_2:show() then
+				var_18_0 = var_18_0 + 1
+				arg_18_1 = arg_18_1 - 1
 			end
 		end
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0._getFirstActive(slot0)
-	slot1 = next(slot0._waitAtiveDict)
+function var_0_0._getFirstActive(arg_19_0)
+	local var_19_0 = next(arg_19_0._waitAtiveDict)
 
-	while slot1 do
-		slot0._waitAtiveDict[slot1] = nil
+	while var_19_0 do
+		arg_19_0._waitAtiveDict[var_19_0] = nil
 
-		if slot0._allObjDic[slot1].ishide == false then
-			return slot2
+		local var_19_1 = arg_19_0._allObjDic[var_19_0]
+
+		if var_19_1.ishide == false then
+			return var_19_1
 		end
 
-		slot1 = next(slot0._waitAtiveDict)
+		var_19_0 = next(arg_19_0._waitAtiveDict)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in pairs(slot0._allObjDic) do
-		slot5:dispose()
+function var_0_0.onDestroy(arg_20_0)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._allObjDic) do
+		iter_20_1:dispose()
 	end
 
-	for slot4, slot5 in pairs(slot0._lightMapObjs) do
-		slot5:dispose()
+	for iter_20_2, iter_20_3 in pairs(arg_20_0._lightMapObjs) do
+		iter_20_3:dispose()
 	end
 
-	for slot4, slot5 in pairs(slot0._allShadowObjDic) do
-		slot5:dispose()
+	for iter_20_4, iter_20_5 in pairs(arg_20_0._allShadowObjDic) do
+		iter_20_5:dispose()
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayUpdate, slot0)
+	TaskDispatcher.cancelTask(arg_20_0._delayUpdate, arg_20_0)
 
-	if slot0._tree then
-		slot0._tree:onDestroy()
+	if arg_20_0._tree then
+		arg_20_0._tree:onDestroy()
 	end
 
-	slot0._tree = nil
-	slot0._waitAtiveDict = nil
-	slot0._allObjDic = nil
-	slot0._lightMapObjs = nil
-	slot0._allShadowObjDic = nil
-	slot0._lightMapCSArr = nil
+	arg_20_0._tree = nil
+	arg_20_0._waitAtiveDict = nil
+	arg_20_0._allObjDic = nil
+	arg_20_0._lightMapObjs = nil
+	arg_20_0._allShadowObjDic = nil
+	arg_20_0._lightMapCSArr = nil
 
-	if slot0._lightMapLoader then
-		slot0._lightMapLoader:dispose()
+	if arg_20_0._lightMapLoader then
+		arg_20_0._lightMapLoader:dispose()
 	end
 
-	slot0._lightMapLoader = nil
+	arg_20_0._lightMapLoader = nil
 end
 
-return slot0
+return var_0_0

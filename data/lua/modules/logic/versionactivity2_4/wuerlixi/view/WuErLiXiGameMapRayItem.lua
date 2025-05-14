@@ -1,151 +1,160 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapRayItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameMapRayItem", package.seeall)
 
-slot0 = class("WuErLiXiGameMapRayItem", LuaCompBase)
+local var_0_0 = class("WuErLiXiGameMapRayItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._uiRootTrans = ViewMgr.instance:getUIRoot().transform
-	slot0.go = slot1
-	slot0._imageicon = gohelper.findChildImage(slot1, "icon")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._uiRootTrans = ViewMgr.instance:getUIRoot().transform
+	arg_1_0.go = arg_1_1
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "icon")
 
-	gohelper.setActive(slot0._imageicon.gameObject, false)
+	gohelper.setActive(arg_1_0._imageicon.gameObject, false)
 
-	slot0._imagenormalsignal = gohelper.findChildImage(slot1, "icon1")
-	slot0._imageswitchsignal = gohelper.findChildImage(slot1, "icon2")
-	slot0._imagenormalMat = UnityEngine.GameObject.Instantiate(slot0._imagenormalsignal.material)
-	slot0._imagenormalsignal.material = slot0._imagenormalMat
-	slot0._imageswitchMat = UnityEngine.GameObject.Instantiate(slot0._imageswitchsignal.material)
-	slot0._imageswitchsignal.material = slot0._imageswitchMat
-	slot0._matTempVector = Vector4(0, 0, 0, 0)
-	slot2 = UnityEngine.Shader
-	slot0._startKey = slot2.PropertyToID("_StartVec")
-	slot0._endKey = slot2.PropertyToID("_EndVec")
+	arg_1_0._imagenormalsignal = gohelper.findChildImage(arg_1_1, "icon1")
+	arg_1_0._imageswitchsignal = gohelper.findChildImage(arg_1_1, "icon2")
+	arg_1_0._imagenormalMat = UnityEngine.GameObject.Instantiate(arg_1_0._imagenormalsignal.material)
+	arg_1_0._imagenormalsignal.material = arg_1_0._imagenormalMat
+	arg_1_0._imageswitchMat = UnityEngine.GameObject.Instantiate(arg_1_0._imageswitchsignal.material)
+	arg_1_0._imageswitchsignal.material = arg_1_0._imageswitchMat
+	arg_1_0._matTempVector = Vector4(0, 0, 0, 0)
+
+	local var_1_0 = UnityEngine.Shader
+
+	arg_1_0._startKey = var_1_0.PropertyToID("_StartVec")
+	arg_1_0._endKey = var_1_0.PropertyToID("_EndVec")
 end
 
-function slot0.setItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.setItem(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	gohelper.setActive(arg_2_0.go, false)
 
-	slot0._mo = slot1
-	slot0.go.name = string.format("%s_%s#%s_%s", slot0._mo.startPos[2], slot0._mo.startPos[1], slot0._mo.endPos[2], slot0._mo.endPos[1])
-	slot0._startNodeItem = slot2
-	slot0._endNodeItem = slot3
+	arg_2_0._mo = arg_2_1
+	arg_2_0.go.name = string.format("%s_%s#%s_%s", arg_2_0._mo.startPos[2], arg_2_0._mo.startPos[1], arg_2_0._mo.endPos[2], arg_2_0._mo.endPos[1])
+	arg_2_0._startNodeItem = arg_2_2
+	arg_2_0._endNodeItem = arg_2_3
 
-	transformhelper.setLocalRotation(slot0.go.transform, 0, 0, -90 * slot0._mo.rayDir)
-	recthelper.setHeight(slot0._imageicon.gameObject.transform, slot0._mo:getSignalLength() * WuErLiXiEnum.GameMapNodeWidth)
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, string.format("v2a4_wuerlixi_ray_icon%s", slot0._mo.rayType))
-	gohelper.setActive(slot0._imagenormalsignal.gameObject, slot0._mo.rayType == WuErLiXiEnum.RayType.NormalSignal)
-	gohelper.setActive(slot0._imageswitchsignal.gameObject, slot0._mo.rayType == WuErLiXiEnum.RayType.SwitchSignal)
-	TaskDispatcher.runDelay(slot0.setPos, slot0, 0.05)
+	transformhelper.setLocalRotation(arg_2_0.go.transform, 0, 0, -90 * arg_2_0._mo.rayDir)
+	recthelper.setHeight(arg_2_0._imageicon.gameObject.transform, arg_2_0._mo:getSignalLength() * WuErLiXiEnum.GameMapNodeWidth)
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_2_0._imageicon, string.format("v2a4_wuerlixi_ray_icon%s", arg_2_0._mo.rayType))
+	gohelper.setActive(arg_2_0._imagenormalsignal.gameObject, arg_2_0._mo.rayType == WuErLiXiEnum.RayType.NormalSignal)
+	gohelper.setActive(arg_2_0._imageswitchsignal.gameObject, arg_2_0._mo.rayType == WuErLiXiEnum.RayType.SwitchSignal)
+	TaskDispatcher.runDelay(arg_2_0.setPos, arg_2_0, 0.05)
 end
 
-function slot0.setPos(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.setPos(arg_3_0)
+	gohelper.setActive(arg_3_0.go, true)
 
-	slot1, slot2, slot3 = transformhelper.getPos(slot0._startNodeItem.go.transform)
+	local var_3_0, var_3_1, var_3_2 = transformhelper.getPos(arg_3_0._startNodeItem.go.transform)
 
-	transformhelper.setPos(slot0.go.transform, slot1, slot2, 0)
+	transformhelper.setPos(arg_3_0.go.transform, var_3_0, var_3_1, 0)
 
-	slot0._curRayLength = 0
-	slot0._lastEndNodeItem = slot0._startNodeItem
+	arg_3_0._curRayLength = 0
+	arg_3_0._lastEndNodeItem = arg_3_0._startNodeItem
 
-	slot0:_setLineStartPos()
-	slot0:_playItemForward()
+	arg_3_0:_setLineStartPos()
+	arg_3_0:_playItemForward()
 end
 
-function slot0._setLinePosition(slot0, slot1, slot2, slot3, slot4)
-	slot0._matTempVector.x = slot3
-	slot0._matTempVector.y = slot4
+function var_0_0._setLinePosition(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	arg_4_0._matTempVector.x = arg_4_3
+	arg_4_0._matTempVector.y = arg_4_4
 
-	slot1:SetVector(slot2, slot0._matTempVector)
+	arg_4_1:SetVector(arg_4_2, arg_4_0._matTempVector)
 end
 
-function slot0._setLineStartPos(slot0)
-	slot2, slot3 = recthelper.rectToRelativeAnchorPos2(slot0._startNodeItem.go.gameObject.transform.position, slot0._uiRootTrans)
+function var_0_0._setLineStartPos(arg_5_0)
+	local var_5_0 = arg_5_0._startNodeItem.go.gameObject.transform.position
+	local var_5_1, var_5_2 = recthelper.rectToRelativeAnchorPos2(var_5_0, arg_5_0._uiRootTrans)
 
-	slot0:_setLinePosition(slot0._imagenormalMat, slot0._startKey, slot2, slot3)
-	slot0:_setLinePosition(slot0._imageswitchMat, slot0._startKey, slot2, slot3)
+	arg_5_0:_setLinePosition(arg_5_0._imagenormalMat, arg_5_0._startKey, var_5_1, var_5_2)
+	arg_5_0:_setLinePosition(arg_5_0._imageswitchMat, arg_5_0._startKey, var_5_1, var_5_2)
 end
 
-function slot0._setLineEndPos(slot0)
-	slot2, slot3 = recthelper.rectToRelativeAnchorPos2(slot0._endNodeItem.go.transform.position, slot0._uiRootTrans)
+function var_0_0._setLineEndPos(arg_6_0)
+	local var_6_0 = arg_6_0._endNodeItem.go.transform.position
+	local var_6_1, var_6_2 = recthelper.rectToRelativeAnchorPos2(var_6_0, arg_6_0._uiRootTrans)
 
-	slot0:_setLinePosition(slot0._imagenormalMat, slot0._endKey, slot2, slot3)
-	slot0:_setLinePosition(slot0._imageswitchMat, slot0._endKey, slot2, slot3)
+	arg_6_0:_setLinePosition(arg_6_0._imagenormalMat, arg_6_0._endKey, var_6_1, var_6_2)
+	arg_6_0:_setLinePosition(arg_6_0._imageswitchMat, arg_6_0._endKey, var_6_1, var_6_2)
 end
 
-function slot0.resetItem(slot0, slot1, slot2)
-	if not slot0._curRayLength then
-		TaskDispatcher.cancelTask(slot0.setPos, slot0, 0.05)
+function var_0_0.resetItem(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0._curRayLength then
+		TaskDispatcher.cancelTask(arg_7_0.setPos, arg_7_0, 0.05)
 
-		slot0._curRayLength = 0
-		slot0._lastEndNodeItem = slot0._startNodeItem
+		arg_7_0._curRayLength = 0
+		arg_7_0._lastEndNodeItem = arg_7_0._startNodeItem
 
-		slot0:_setLineStartPos()
+		arg_7_0:_setLineStartPos()
 	end
 
-	if slot1.rayType ~= slot0._mo.rayType or slot1.rayDir ~= slot0._mo.rayDir then
-		slot0:hide()
+	if arg_7_1.rayType ~= arg_7_0._mo.rayType or arg_7_1.rayDir ~= arg_7_0._mo.rayDir then
+		arg_7_0:hide()
 	end
 
-	if slot0._forwardTweenId then
-		ZProj.TweenHelper.KillById(slot0._forwardTweenId)
+	if arg_7_0._forwardTweenId then
+		ZProj.TweenHelper.KillById(arg_7_0._forwardTweenId)
 
-		slot0._forwardTweenId = nil
+		arg_7_0._forwardTweenId = nil
 	end
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_7_0.go, true)
 
-	slot0._lastEndNodeItem = slot0._endNodeItem
-	slot0._endNodeItem = slot2
-	slot0._mo = slot1
+	arg_7_0._lastEndNodeItem = arg_7_0._endNodeItem
+	arg_7_0._endNodeItem = arg_7_2
+	arg_7_0._mo = arg_7_1
 
-	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, string.format("v2a4_wuerlixi_ray_icon%s", slot0._mo.rayType))
+	UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_7_0._imageicon, string.format("v2a4_wuerlixi_ray_icon%s", arg_7_0._mo.rayType))
 
-	slot0.go.name = string.format("%s_%s#%s_%s", slot0._mo.startPos[2], slot0._mo.startPos[1], slot0._mo.endPos[2], slot0._mo.endPos[1])
+	arg_7_0.go.name = string.format("%s_%s#%s_%s", arg_7_0._mo.startPos[2], arg_7_0._mo.startPos[1], arg_7_0._mo.endPos[2], arg_7_0._mo.endPos[1])
 
-	gohelper.setActive(slot0._imagenormalsignal.gameObject, slot0._mo.rayType == WuErLiXiEnum.RayType.NormalSignal)
-	gohelper.setActive(slot0._imageswitchsignal.gameObject, slot0._mo.rayType == WuErLiXiEnum.RayType.SwitchSignal)
-	slot0:_playItemForward()
+	gohelper.setActive(arg_7_0._imagenormalsignal.gameObject, arg_7_0._mo.rayType == WuErLiXiEnum.RayType.NormalSignal)
+	gohelper.setActive(arg_7_0._imageswitchsignal.gameObject, arg_7_0._mo.rayType == WuErLiXiEnum.RayType.SwitchSignal)
+	arg_7_0:_playItemForward()
 end
 
-function slot0._playItemForward(slot0)
-	slot0._curRayLength = math.abs(slot0._mo.startPos[2] + slot0._mo.startPos[1] - slot0._mo.endPos[2] - slot0._mo.endPos[1])
+function var_0_0._playItemForward(arg_8_0)
+	local var_8_0 = arg_8_0._curRayLength
+
+	arg_8_0._curRayLength = math.abs(arg_8_0._mo.startPos[2] + arg_8_0._mo.startPos[1] - arg_8_0._mo.endPos[2] - arg_8_0._mo.endPos[1])
+
+	local var_8_1 = CommonConfig.instance:getConstNum(ConstEnum.WuErLiXiOnNodeSec)
+	local var_8_2 = arg_8_0._curRayLength - var_8_0 > 0 and 0.001 * (arg_8_0._curRayLength - var_8_0) * var_8_1 or 0
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("forwardPlaying")
 
-	slot0._forwardTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, slot0._curRayLength - slot0._curRayLength > 0 and 0.001 * (slot0._curRayLength - slot1) * CommonConfig.instance:getConstNum(ConstEnum.WuErLiXiOnNodeSec) or 0, slot0._forwardUpdate, slot0._forwardFinished, slot0)
+	arg_8_0._forwardTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, var_8_2, arg_8_0._forwardUpdate, arg_8_0._forwardFinished, arg_8_0)
 end
 
-function slot0._forwardUpdate(slot0, slot1)
-	slot2, slot3 = recthelper.rectToRelativeAnchorPos2(slot0._lastEndNodeItem.go.transform.position, slot0._uiRootTrans)
-	slot4, slot5 = recthelper.rectToRelativeAnchorPos2(slot0._endNodeItem.go.transform.position, slot0._uiRootTrans)
+function var_0_0._forwardUpdate(arg_9_0, arg_9_1)
+	local var_9_0, var_9_1 = recthelper.rectToRelativeAnchorPos2(arg_9_0._lastEndNodeItem.go.transform.position, arg_9_0._uiRootTrans)
+	local var_9_2, var_9_3 = recthelper.rectToRelativeAnchorPos2(arg_9_0._endNodeItem.go.transform.position, arg_9_0._uiRootTrans)
 
-	slot0:_setLinePosition(slot0._imagenormalMat, slot0._endKey, slot2 + slot1 * (slot4 - slot2), slot3 + slot1 * (slot5 - slot3))
-	slot0:_setLinePosition(slot0._imageswitchMat, slot0._endKey, slot2 + slot1 * (slot4 - slot2), slot3 + slot1 * (slot5 - slot3))
+	arg_9_0:_setLinePosition(arg_9_0._imagenormalMat, arg_9_0._endKey, var_9_0 + arg_9_1 * (var_9_2 - var_9_0), var_9_1 + arg_9_1 * (var_9_3 - var_9_1))
+	arg_9_0:_setLinePosition(arg_9_0._imageswitchMat, arg_9_0._endKey, var_9_0 + arg_9_1 * (var_9_2 - var_9_0), var_9_1 + arg_9_1 * (var_9_3 - var_9_1))
 end
 
-function slot0._forwardFinished(slot0)
+function var_0_0._forwardFinished(arg_10_0)
 	UIBlockMgr.instance:endBlock("forwardPlaying")
-	slot0:_setLineEndPos()
+	arg_10_0:_setLineEndPos()
 end
 
-function slot0.hide(slot0)
-	slot0._curRayLength = 0
-	slot0._endNodeItem = slot0._startNodeItem
-	slot0._lastEndNodeItem = slot0._startNodeItem
+function var_0_0.hide(arg_11_0)
+	arg_11_0._curRayLength = 0
+	arg_11_0._endNodeItem = arg_11_0._startNodeItem
+	arg_11_0._lastEndNodeItem = arg_11_0._startNodeItem
 
-	slot0:_setLineEndPos()
-	gohelper.setActive(slot0.go, false)
+	arg_11_0:_setLineEndPos()
+	gohelper.setActive(arg_11_0.go, false)
 end
 
-function slot0.destroy(slot0)
-	if slot0._forwardTweenId then
-		ZProj.TweenHelper.KillById(slot0._forwardTweenId)
+function var_0_0.destroy(arg_12_0)
+	if arg_12_0._forwardTweenId then
+		ZProj.TweenHelper.KillById(arg_12_0._forwardTweenId)
 
-		slot0._forwardTweenId = nil
+		arg_12_0._forwardTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.setPos, slot0)
+	TaskDispatcher.cancelTask(arg_12_0.setPos, arg_12_0)
 end
 
-return slot0
+return var_0_0

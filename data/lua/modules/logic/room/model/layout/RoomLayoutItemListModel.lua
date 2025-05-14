@@ -1,114 +1,127 @@
-module("modules.logic.room.model.layout.RoomLayoutItemListModel", package.seeall)
+﻿module("modules.logic.room.model.layout.RoomLayoutItemListModel", package.seeall)
 
-slot0 = class("RoomLayoutItemListModel", ListScrollModel)
+local var_0_0 = class("RoomLayoutItemListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot4 = {}
-	slot0._isBirthdayBlock = slot3 and true or false
-	slot5, slot6 = slot0:_findBlockInfos(slot1)
-	slot7 = slot0:_findbuildingInfos(slot2)
+function var_0_0.init(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = {}
 
-	for slot11, slot12 in pairs(slot5) do
-		slot13 = RoomLayoutItemMO.New()
+	arg_3_0._isBirthdayBlock = arg_3_3 and true or false
 
-		slot13:init(#slot4 + 1, slot11, MaterialEnum.MaterialType.BlockPackage, slot12)
-		table.insert(slot4, slot13)
+	local var_3_1, var_3_2 = arg_3_0:_findBlockInfos(arg_3_1)
+	local var_3_3 = arg_3_0:_findbuildingInfos(arg_3_2)
+
+	for iter_3_0, iter_3_1 in pairs(var_3_1) do
+		local var_3_4 = RoomLayoutItemMO.New()
+
+		var_3_4:init(#var_3_0 + 1, iter_3_0, MaterialEnum.MaterialType.BlockPackage, iter_3_1)
+		table.insert(var_3_0, var_3_4)
 	end
 
-	for slot11, slot12 in ipairs(slot6) do
-		slot13 = RoomLayoutItemMO.New()
+	for iter_3_2, iter_3_3 in ipairs(var_3_2) do
+		local var_3_5 = RoomLayoutItemMO.New()
 
-		slot13:init(#slot4 + 1, slot12, MaterialEnum.MaterialType.SpecialBlock, 1)
-		table.insert(slot4, slot13)
+		var_3_5:init(#var_3_0 + 1, iter_3_3, MaterialEnum.MaterialType.SpecialBlock, 1)
+		table.insert(var_3_0, var_3_5)
 	end
 
-	for slot11, slot12 in pairs(slot7) do
-		for slot16 = 1, slot12 do
-			slot17 = RoomLayoutItemMO.New()
+	for iter_3_4, iter_3_5 in pairs(var_3_3) do
+		for iter_3_6 = 1, iter_3_5 do
+			local var_3_6 = RoomLayoutItemMO.New()
 
-			slot17:init(#slot4 + 1, slot11, MaterialEnum.MaterialType.Building, 1)
+			var_3_6:init(#var_3_0 + 1, iter_3_4, MaterialEnum.MaterialType.Building, 1)
 
-			slot17.itemIndex = slot16
+			var_3_6.itemIndex = iter_3_6
 
-			table.insert(slot4, slot17)
+			table.insert(var_3_0, var_3_6)
 		end
 	end
 
-	table.sort(slot4, uv0.sortFuc)
-	slot0:setList(slot4)
+	table.sort(var_3_0, var_0_0.sortFuc)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0.resortList(slot0)
-	slot1 = slot0:getList()
+function var_0_0.resortList(arg_4_0)
+	local var_4_0 = arg_4_0:getList()
 
-	table.sort(slot1, uv0.sortFuc)
-	slot0:setList(slot1)
+	table.sort(var_4_0, var_0_0.sortFuc)
+	arg_4_0:setList(var_4_0)
 end
 
-function slot0._findBlockInfos(slot0, slot1)
-	slot2, slot3 = RoomLayoutHelper.findBlockInfos(slot1, slot0._isBirthdayBlock)
+function var_0_0._findBlockInfos(arg_5_0, arg_5_1)
+	local var_5_0, var_5_1 = RoomLayoutHelper.findBlockInfos(arg_5_1, arg_5_0._isBirthdayBlock)
 
-	return slot2, slot3
+	return var_5_0, var_5_1
 end
 
-function slot0._findbuildingInfos(slot0, slot1)
-	return RoomLayoutHelper.findbuildingInfos(slot1)
+function var_0_0._findbuildingInfos(arg_6_0, arg_6_1)
+	return (RoomLayoutHelper.findbuildingInfos(arg_6_1))
 end
 
-function slot0.sortFuc(slot0, slot1)
-	if uv0._getLackOrder(slot0) ~= uv0._getLackOrder(slot1) then
-		return slot2 < slot3
+function var_0_0.sortFuc(arg_7_0, arg_7_1)
+	local var_7_0 = var_0_0._getLackOrder(arg_7_0)
+	local var_7_1 = var_0_0._getLackOrder(arg_7_1)
+
+	if var_7_0 ~= var_7_1 then
+		return var_7_0 < var_7_1
 	end
 
-	if uv0._getItemTypeOrder(slot0) ~= uv0._getItemTypeOrder(slot1) then
-		return slot4 < slot5
+	local var_7_2 = var_0_0._getItemTypeOrder(arg_7_0)
+	local var_7_3 = var_0_0._getItemTypeOrder(arg_7_1)
+
+	if var_7_2 ~= var_7_3 then
+		return var_7_2 < var_7_3
 	end
 
-	if (slot0:getItemConfig().rare or 0) ~= (slot1:getItemConfig().rare or 0) then
-		return slot9 < slot8
+	local var_7_4 = arg_7_0:getItemConfig()
+	local var_7_5 = arg_7_1:getItemConfig()
+	local var_7_6 = var_7_4.rare or 0
+	local var_7_7 = var_7_5.rare or 0
+
+	if var_7_6 ~= var_7_7 then
+		return var_7_7 < var_7_6
 	end
 
-	if slot0:isBlockPackage() and slot1:isBlockPackage() and slot0.itemNum ~= slot1.itemNum then
-		return slot1.itemNum < slot0.itemNum
+	if arg_7_0:isBlockPackage() and arg_7_1:isBlockPackage() and arg_7_0.itemNum ~= arg_7_1.itemNum then
+		return arg_7_0.itemNum > arg_7_1.itemNum
 	end
 
-	if slot0:isBuilding() and slot1:isBuilding() and slot6.buildDegree ~= slot7.buildDegree then
-		return slot7.buildDegree < slot6.buildDegree
+	if arg_7_0:isBuilding() and arg_7_1:isBuilding() and var_7_4.buildDegree ~= var_7_5.buildDegree then
+		return var_7_4.buildDegree > var_7_5.buildDegree
 	end
 
-	if slot0.itemId ~= slot1.itemId then
-		return slot0.itemId < slot1.itemId
+	if arg_7_0.itemId ~= arg_7_1.itemId then
+		return arg_7_0.itemId < arg_7_1.itemId
 	end
 end
 
-function slot0._getLackOrder(slot0)
-	if slot0:isLack() then
+function var_0_0._getLackOrder(arg_8_0)
+	if arg_8_0:isLack() then
 		return 1
 	end
 
 	return 2
 end
 
-function slot0._getItemTypeOrder(slot0)
-	if slot0:isBlockPackage() then
+function var_0_0._getItemTypeOrder(arg_9_0)
+	if arg_9_0:isBlockPackage() then
 		return 1
-	elseif slot0:isSpecialBlock() then
+	elseif arg_9_0:isSpecialBlock() then
 		return 2
-	elseif slot0:isBuilding() then
+	elseif arg_9_0:isBuilding() then
 		return 3
 	end
 
 	return 100
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,67 +1,68 @@
-module("modules.logic.fight.system.flow.FightEndSequence", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightEndSequence", package.seeall)
 
-slot0 = class("FightEndSequence", BaseFightSequence)
+local var_0_0 = class("FightEndSequence", BaseFightSequence)
 
-function slot0.buildFlow(slot0, slot1)
-	uv0.super.buildFlow(slot0, slot1)
+function var_0_0.buildFlow(arg_1_0, arg_1_1)
+	var_0_0.super.buildFlow(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.StartFightEnd)
 	FightController.instance:dispatchEvent(FightEvent.SwitchFightendBgm)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_fightingsfx)
 
 	if FightModel.instance:getRecordMO().fightResult == FightEnum.FightResult.Succ then
-		slot0:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.Success, FightDataHelper.fieldMgr.battleId))
-		slot0:_addDialogView()
-		slot0:_addCloseFightView()
-		slot0:addWork(FightWorkEndVictory.New())
-		slot0:addWork(FightWorkStepShowNoteWhenChangeWave.New())
+		arg_1_0:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.Success, FightDataHelper.fieldMgr.battleId))
+		arg_1_0:_addDialogView()
+		arg_1_0:_addCloseFightView()
+		arg_1_0:addWork(FightWorkEndVictory.New())
+		arg_1_0:addWork(FightWorkStepShowNoteWhenChangeWave.New())
 	else
-		slot0:addWork(FunctionWork.New(function ()
+		arg_1_0:addWork(FunctionWork.New(function()
 			FightViewPartVisible.set()
 			FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, true)
 		end))
-		slot0:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.FightFail))
-		slot0:_addCloseFightView()
-		slot0:addWork(FightWorkEndLose.New())
+		arg_1_0:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.FightFail))
+		arg_1_0:_addCloseFightView()
+		arg_1_0:addWork(FightWorkEndLose.New())
 	end
 
-	slot0:addWork(FightWorkEndGuide.New())
-	slot0:addWork(FunctionWork.New(function ()
+	arg_1_0:addWork(FightWorkEndGuide.New())
+	arg_1_0:addWork(FunctionWork.New(function()
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_combatnoise_bus)
 	end))
-	slot0:addWork(FightWorkEndGC.New())
-	slot0:addWork(FightWorkEndResultViewShow.New())
-	slot0:addWork(FightWorkSeasonPopupAndStory.New())
-	slot0:addWork(FightWorkWeekWalkRevive.New())
-	slot0:addWork(FightWorkAct114RoundEndStory.New())
-	slot0:addWork(FightWorkCachotResult.New())
-	slot0:addWork(FightWorkCachotStory.New())
-	slot0:addWork(FightWorkCachotEnding.New())
-	slot0:addWork(FightWorkAct183Repress.New())
-	slot0:addWork(FightWorkAct183Ending.New())
-	slot0:addWork(FightWorkOpenLoadingBlackView.New())
-	slot0:addWork(FunctionWork.New(function ()
+	arg_1_0:addWork(FightWorkEndGC.New())
+	arg_1_0:addWork(FightWorkEndResultViewShow.New())
+	arg_1_0:addWork(FightWorkSeasonPopupAndStory.New())
+	arg_1_0:addWork(FightWorkWeekWalkRevive.New())
+	arg_1_0:addWork(FightWorkAct114RoundEndStory.New())
+	arg_1_0:addWork(FightWorkCachotResult.New())
+	arg_1_0:addWork(FightWorkCachotStory.New())
+	arg_1_0:addWork(FightWorkCachotEnding.New())
+	arg_1_0:addWork(FightWorkAct183Repress.New())
+	arg_1_0:addWork(FightWorkAct183Ending.New())
+	arg_1_0:addWork(FightWorkOpenLoadingBlackView.New())
+	arg_1_0:addWork(FunctionWork.New(function()
 		FightSystem.instance:dispose()
 		FightController.instance:exitFightScene()
 		FightModel.instance:clearRecordMO()
 	end))
 end
 
-function slot0._addDialogView(slot0)
-	slot1 = FightModel.instance:getCurWaveId()
-	uv0.needStopMonsterWave = nil
+function var_0_0._addDialogView(arg_5_0)
+	local var_5_0 = FightModel.instance:getCurWaveId()
 
-	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEnd, slot1)
-	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEndAndCheckBuffId, slot1)
+	var_0_0.needStopMonsterWave = nil
 
-	if uv0.needStopMonsterWave then
-		slot0:addWork(FightWorkWaitDialog.New())
+	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEnd, var_5_0)
+	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEndAndCheckBuffId, var_5_0)
+
+	if var_0_0.needStopMonsterWave then
+		arg_5_0:addWork(FightWorkWaitDialog.New())
 	end
 end
 
-function slot0._addCloseFightView(slot0)
-	slot0:addWork(FunctionWork.New(function ()
+function var_0_0._addCloseFightView(arg_6_0)
+	arg_6_0:addWork(FunctionWork.New(function()
 		ViewMgr.instance:closeView(ViewName.FightView)
 	end))
 end
 
-return slot0
+return var_0_0

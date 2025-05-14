@@ -1,40 +1,45 @@
-module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceCharacter", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionConfirmPlaceCharacter", package.seeall)
 
-slot0 = class("RoomTransitionConfirmPlaceCharacter", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionConfirmPlaceCharacter", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot2 = slot0._param.tempCharacterMO
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	RoomCharacterController.instance:interruptInteraction(slot2:getCurrentInteractionId())
+	local var_3_0 = arg_3_0._param.tempCharacterMO
 
-	if slot0._scene.charactermgr:getCharacterEntity(slot2.id, SceneTag.RoomCharacter) then
-		slot0._scene.charactermgr:moveTo(slot3, slot2.currentPosition)
-		slot3:playConfirmEffect()
+	RoomCharacterController.instance:interruptInteraction(var_3_0:getCurrentInteractionId())
+
+	local var_3_1 = arg_3_0._scene.charactermgr:getCharacterEntity(var_3_0.id, SceneTag.RoomCharacter)
+
+	if var_3_1 then
+		arg_3_0._scene.charactermgr:moveTo(var_3_1, var_3_0.currentPosition)
+		var_3_1:playConfirmEffect()
 	end
 
-	if not slot2:isPlaceSourceState() and RoomModel.instance:getCharacterById(slot2.id) then
-		slot2.sourceState = RoomCharacterEnum.SourceState.Place
+	if not var_3_0:isPlaceSourceState() and RoomModel.instance:getCharacterById(var_3_0.id) then
+		var_3_0.sourceState = RoomCharacterEnum.SourceState.Place
 	end
 
 	RoomCharacterPlaceListModel.instance:clearSelect()
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterCanConfirm)
 	RoomMapController.instance:dispatchEvent(RoomEvent.ConfirmCharacter)
-	slot0:onDone()
+	arg_3_0:onDone()
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_4_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

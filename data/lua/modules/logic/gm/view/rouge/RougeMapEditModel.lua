@@ -1,283 +1,303 @@
-module("modules.logic.gm.view.rouge.RougeMapEditModel", package.seeall)
+﻿module("modules.logic.gm.view.rouge.RougeMapEditModel", package.seeall)
 
-slot0 = class("RougeMapEditModel")
+local var_0_0 = class("RougeMapEditModel")
 
-function slot0.init(slot0, slot1)
-	slot0.middleLayerId = slot1
-	slot0.middleLayerCo = RougeMapConfig.instance:getMiddleLayerCo(slot0.middleLayerId)
-	slot0.idCounter = 0
-	slot0.pathPointIdCounter = 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.middleLayerId = arg_1_1
+	arg_1_0.middleLayerCo = RougeMapConfig.instance:getMiddleLayerCo(arg_1_0.middleLayerId)
+	arg_1_0.idCounter = 0
+	arg_1_0.pathPointIdCounter = 0
 
-	slot0:loadLayerCo()
+	arg_1_0:loadLayerCo()
 end
 
-function slot0.getMiddleLayerId(slot0)
-	return slot0.middleLayerId
+function var_0_0.getMiddleLayerId(arg_2_0)
+	return arg_2_0.middleLayerId
 end
 
-function slot0.loadLayerCo(slot0)
-	slot0:loadPoints()
-	slot0:loadPathPoints()
-	slot0:loadPath()
-	slot0:loadLeavePoint()
+function var_0_0.loadLayerCo(arg_3_0)
+	arg_3_0:loadPoints()
+	arg_3_0:loadPathPoints()
+	arg_3_0:loadPath()
+	arg_3_0:loadLeavePoint()
 end
 
-function slot0.getPointId(slot0)
-	slot0.idCounter = slot0.idCounter + 1
+function var_0_0.getPointId(arg_4_0)
+	arg_4_0.idCounter = arg_4_0.idCounter + 1
 
-	return slot0.idCounter
+	return arg_4_0.idCounter
 end
 
-function slot0.getPathPointId(slot0)
-	slot0.pathPointIdCounter = slot0.pathPointIdCounter + 1
+function var_0_0.getPathPointId(arg_5_0)
+	arg_5_0.pathPointIdCounter = arg_5_0.pathPointIdCounter + 1
 
-	return slot0.pathPointIdCounter
+	return arg_5_0.pathPointIdCounter
 end
 
-function slot0.loadPoints(slot0)
-	slot0.pointDict = {}
-	slot0.pointList = {}
-	slot0.pointId2PathIdDict = {}
+function var_0_0.loadPoints(arg_6_0)
+	local var_6_0 = arg_6_0.middleLayerCo.pointPos
 
-	for slot5, slot6 in ipairs(slot0.middleLayerCo.pointPos) do
-		slot7 = Vector3.New(slot6.x, slot6.y, 0)
-		slot8 = slot0:getPointId()
-		slot0.pointDict[slot8] = slot7
+	arg_6_0.pointDict = {}
+	arg_6_0.pointList = {}
+	arg_6_0.pointId2PathIdDict = {}
 
-		table.insert(slot0.pointList, {
-			id = slot8,
-			pos = slot7
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = Vector3.New(iter_6_1.x, iter_6_1.y, 0)
+		local var_6_2 = arg_6_0:getPointId()
+
+		arg_6_0.pointDict[var_6_2] = var_6_1
+
+		table.insert(arg_6_0.pointList, {
+			id = var_6_2,
+			pos = var_6_1
 		})
 
-		slot0.pointId2PathIdDict[slot8] = slot6.z
+		arg_6_0.pointId2PathIdDict[var_6_2] = iter_6_1.z
 	end
 
-	table.sort(slot0.pointList, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(arg_6_0.pointList, function(arg_7_0, arg_7_1)
+		return arg_7_0.id < arg_7_1.id
 	end)
 end
 
-function slot0.loadPathPoints(slot0)
-	slot0.pathPointDict = {}
-	slot0.pathPointList = {}
+function var_0_0.loadPathPoints(arg_8_0)
+	local var_8_0 = arg_8_0.middleLayerCo.pathPointPos
 
-	for slot5, slot6 in ipairs(slot0.middleLayerCo.pathPointPos) do
-		slot7 = Vector3.New(slot6.x, slot6.y, 0)
-		slot8 = slot0:getPathPointId()
-		slot0.pathPointDict[slot8] = slot7
+	arg_8_0.pathPointDict = {}
+	arg_8_0.pathPointList = {}
 
-		table.insert(slot0.pathPointList, {
-			id = slot8,
-			pos = slot7
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		local var_8_1 = Vector3.New(iter_8_1.x, iter_8_1.y, 0)
+		local var_8_2 = arg_8_0:getPathPointId()
+
+		arg_8_0.pathPointDict[var_8_2] = var_8_1
+
+		table.insert(arg_8_0.pathPointList, {
+			id = var_8_2,
+			pos = var_8_1
 		})
 	end
 
-	table.sort(slot0.pathPointList, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(arg_8_0.pathPointList, function(arg_9_0, arg_9_1)
+		return arg_9_0.id < arg_9_1.id
 	end)
 end
 
-function slot0.loadPath(slot0)
-	slot0.lineList = {}
+function var_0_0.loadPath(arg_10_0)
+	local var_10_0 = arg_10_0.middleLayerCo.path
 
-	for slot5, slot6 in ipairs(slot0.middleLayerCo.path) do
-		table.insert(slot0.lineList, {
-			startId = slot6.x,
-			endId = slot6.y
+	arg_10_0.lineList = {}
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		table.insert(arg_10_0.lineList, {
+			startId = iter_10_1.x,
+			endId = iter_10_1.y
 		})
 	end
 
-	slot0.point2PathMapLineList = {}
+	arg_10_0.point2PathMapLineList = {}
 
-	for slot5, slot6 in pairs(slot0.pointId2PathIdDict) do
-		table.insert(slot0.point2PathMapLineList, {
-			startId = slot5,
-			endId = slot6
+	for iter_10_2, iter_10_3 in pairs(arg_10_0.pointId2PathIdDict) do
+		table.insert(arg_10_0.point2PathMapLineList, {
+			startId = iter_10_2,
+			endId = iter_10_3
 		})
 	end
 end
 
-function slot0.loadLeavePoint(slot0)
-	if not slot0.middleLayerCo.leavePos then
-		slot0:setLeavePoint(nil)
+function var_0_0.loadLeavePoint(arg_11_0)
+	local var_11_0 = arg_11_0.middleLayerCo.leavePos
+
+	if not var_11_0 then
+		arg_11_0:setLeavePoint(nil)
 
 		return
 	end
 
-	slot0:setLeavePoint(Vector2(slot1.x, slot1.y))
+	local var_11_1 = Vector2(var_11_0.x, var_11_0.y)
+	local var_11_2 = var_11_0.z
 
-	if not slot0.pathPointDict[slot1.z] then
+	arg_11_0:setLeavePoint(var_11_1)
+
+	if not arg_11_0.pathPointDict[var_11_2] then
 		return
 	end
 
-	table.insert(slot0.point2PathMapLineList, {
+	table.insert(arg_11_0.point2PathMapLineList, {
 		startId = RougeMapEnum.LeaveId,
-		endId = slot3
+		endId = var_11_2
 	})
 
-	slot0.pointId2PathIdDict[RougeMapEnum.LeaveId] = slot3
+	arg_11_0.pointId2PathIdDict[RougeMapEnum.LeaveId] = var_11_2
 end
 
-function slot0.addPoint(slot0, slot1)
-	slot2 = slot0:getPointId()
-	slot0.pointDict[slot2] = slot1
+function var_0_0.addPoint(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getPointId()
 
-	table.insert(slot0.pointList, {
-		id = slot2,
-		pos = slot1
+	arg_12_0.pointDict[var_12_0] = arg_12_1
+
+	table.insert(arg_12_0.pointList, {
+		id = var_12_0,
+		pos = arg_12_1
 	})
-	table.sort(slot0.pointList, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(arg_12_0.pointList, function(arg_13_0, arg_13_1)
+		return arg_13_0.id < arg_13_1.id
 	end)
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.addPathPoint(slot0, slot1)
-	slot2 = slot0:getPathPointId()
-	slot0.pathPointDict[slot2] = slot1
+function var_0_0.addPathPoint(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getPathPointId()
 
-	table.insert(slot0.pathPointList, {
-		id = slot2,
-		pos = slot1
+	arg_14_0.pathPointDict[var_14_0] = arg_14_1
+
+	table.insert(arg_14_0.pathPointList, {
+		id = var_14_0,
+		pos = arg_14_1
 	})
-	table.sort(slot0.pathPointList, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(arg_14_0.pathPointList, function(arg_15_0, arg_15_1)
+		return arg_15_0.id < arg_15_1.id
 	end)
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.setLeavePoint(slot0, slot1)
-	slot0.leavePos = slot1
+function var_0_0.setLeavePoint(arg_16_0, arg_16_1)
+	arg_16_0.leavePos = arg_16_1
 end
 
-function slot0.getLeavePos(slot0)
-	return slot0.leavePos
+function var_0_0.getLeavePos(arg_17_0)
+	return arg_17_0.leavePos
 end
 
-function slot0.deleteLeavePoint(slot0)
-	slot0.leavePos = nil
-	slot0.pointId2PathIdDict[RougeMapEnum.LeaveId] = nil
+function var_0_0.deleteLeavePoint(arg_18_0)
+	arg_18_0.leavePos = nil
+	arg_18_0.pointId2PathIdDict[RougeMapEnum.LeaveId] = nil
 end
 
-function slot0.deletePoint(slot0, slot1, slot2)
-	if slot2 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		slot0.pointDict[slot1] = nil
+function var_0_0.deletePoint(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_2 == RougeMapEnum.MiddleLayerPointType.Pieces then
+		arg_19_0.pointDict[arg_19_1] = nil
 
-		if slot0:getPointIndex(slot1) then
-			table.remove(slot0.pointList, slot3)
-			table.sort(slot0.pointList, function (slot0, slot1)
-				return slot0.id < slot1.id
+		local var_19_0 = arg_19_0:getPointIndex(arg_19_1)
+
+		if var_19_0 then
+			table.remove(arg_19_0.pointList, var_19_0)
+			table.sort(arg_19_0.pointList, function(arg_20_0, arg_20_1)
+				return arg_20_0.id < arg_20_1.id
 			end)
 		end
 
-		slot0.pointId2PathIdDict[slot1] = nil
+		arg_19_0.pointId2PathIdDict[arg_19_1] = nil
 
 		return
 	end
 
-	slot0.pathPointDict[slot1] = nil
+	arg_19_0.pathPointDict[arg_19_1] = nil
 
-	if slot0:getPathPointIndex(slot1) then
-		table.remove(slot0.pathPointList, slot3)
-		table.sort(slot0.pathPointList, function (slot0, slot1)
-			return slot0.id < slot1.id
+	local var_19_1 = arg_19_0:getPathPointIndex(arg_19_1)
+
+	if var_19_1 then
+		table.remove(arg_19_0.pathPointList, var_19_1)
+		table.sort(arg_19_0.pathPointList, function(arg_21_0, arg_21_1)
+			return arg_21_0.id < arg_21_1.id
 		end)
 
-		for slot7, slot8 in pairs(slot0.pointId2PathIdDict) do
-			if slot8 == slot1 then
-				slot0.pointId2PathIdDict[slot7] = nil
+		for iter_19_0, iter_19_1 in pairs(arg_19_0.pointId2PathIdDict) do
+			if iter_19_1 == arg_19_1 then
+				arg_19_0.pointId2PathIdDict[iter_19_0] = nil
 			end
 		end
 	end
 end
 
-function slot0.addLine(slot0, slot1, slot2, slot3, slot4)
-	if slot1 == RougeMapEnum.MiddleLayerPointType.Pieces or slot1 == RougeMapEnum.MiddleLayerPointType.Leave then
-		slot0.pointId2PathIdDict[slot2] = slot4
+function var_0_0.addLine(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	if arg_22_1 == RougeMapEnum.MiddleLayerPointType.Pieces or arg_22_1 == RougeMapEnum.MiddleLayerPointType.Leave then
+		arg_22_0.pointId2PathIdDict[arg_22_2] = arg_22_4
 
-		table.insert(slot0.point2PathMapLineList, {
-			startId = slot2,
-			endId = slot4
+		table.insert(arg_22_0.point2PathMapLineList, {
+			startId = arg_22_2,
+			endId = arg_22_4
 		})
 
 		return
 	end
 
-	table.insert(slot0.lineList, {
-		startId = slot2,
-		endId = slot4
+	table.insert(arg_22_0.lineList, {
+		startId = arg_22_2,
+		endId = arg_22_4
 	})
 end
 
-function slot0.removeLine(slot0, slot1)
-	table.remove(slot0.lineList, slot1)
+function var_0_0.removeLine(arg_23_0, arg_23_1)
+	table.remove(arg_23_0.lineList, arg_23_1)
 end
 
-function slot0.removeMapLine(slot0, slot1)
-	table.remove(slot0.point2PathMapLineList, slot1)
+function var_0_0.removeMapLine(arg_24_0, arg_24_1)
+	table.remove(arg_24_0.point2PathMapLineList, arg_24_1)
 end
 
-function slot0.checkNeedRemoveMap(slot0, slot1, slot2, slot3)
-	slot5 = slot3.startId
-	slot6 = slot3.endType
-	slot7 = slot3.endId
+function var_0_0.checkNeedRemoveMap(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = arg_25_3.startType
+	local var_25_1 = arg_25_3.startId
+	local var_25_2 = arg_25_3.endType
+	local var_25_3 = arg_25_3.endId
 
-	if slot3.startType == RougeMapEnum.MiddleLayerPointType.Pieces and slot5 == slot1 then
+	if var_25_0 == RougeMapEnum.MiddleLayerPointType.Pieces and var_25_1 == arg_25_1 then
 		return true
 	end
 
-	if slot4 == RougeMapEnum.MiddleLayerPointType.Path and slot5 == slot2 then
+	if var_25_0 == RougeMapEnum.MiddleLayerPointType.Path and var_25_1 == arg_25_2 then
 		return true
 	end
 
-	if slot6 == RougeMapEnum.MiddleLayerPointType.Pieces and slot7 == slot1 then
+	if var_25_2 == RougeMapEnum.MiddleLayerPointType.Pieces and var_25_3 == arg_25_1 then
 		return true
 	end
 
-	if slot6 == RougeMapEnum.MiddleLayerPointType.Path and slot7 == slot2 then
+	if var_25_2 == RougeMapEnum.MiddleLayerPointType.Path and var_25_3 == arg_25_2 then
 		return true
 	end
 end
 
-function slot0.getPointsDict(slot0)
-	return slot0.pointDict
+function var_0_0.getPointsDict(arg_26_0)
+	return arg_26_0.pointDict
 end
 
-function slot0.getPointList(slot0)
-	return slot0.pointList
+function var_0_0.getPointList(arg_27_0)
+	return arg_27_0.pointList
 end
 
-function slot0.getPointMap(slot0)
-	return slot0.pointId2PathIdDict
+function var_0_0.getPointMap(arg_28_0)
+	return arg_28_0.pointId2PathIdDict
 end
 
-function slot0.getPathPointsDict(slot0)
-	return slot0.pathPointDict
+function var_0_0.getPathPointsDict(arg_29_0)
+	return arg_29_0.pathPointDict
 end
 
-function slot0.getPathPointList(slot0)
-	return slot0.pathPointList
+function var_0_0.getPathPointList(arg_30_0)
+	return arg_30_0.pathPointList
 end
 
-function slot0.getLineList(slot0)
-	return slot0.lineList
+function var_0_0.getLineList(arg_31_0)
+	return arg_31_0.lineList
 end
 
-function slot0.getMapLineList(slot0)
-	return slot0.point2PathMapLineList
+function var_0_0.getMapLineList(arg_32_0)
+	return arg_32_0.point2PathMapLineList
 end
 
-function slot0.getPointPos(slot0, slot1)
-	return slot0.pointDict[slot1]
+function var_0_0.getPointPos(arg_33_0, arg_33_1)
+	return arg_33_0.pointDict[arg_33_1]
 end
 
-function slot0.getPathPointPos(slot0, slot1)
-	return slot0.pathPointDict[slot1]
+function var_0_0.getPathPointPos(arg_34_0, arg_34_1)
+	return arg_34_0.pathPointDict[arg_34_1]
 end
 
-slot0.PointTypeCanAddLineDict = {
+var_0_0.PointTypeCanAddLineDict = {
 	[RougeMapEnum.MiddleLayerPointType.Pieces] = {
 		[RougeMapEnum.MiddleLayerPointType.Pieces] = {
 			false,
@@ -317,15 +337,17 @@ slot0.PointTypeCanAddLineDict = {
 	}
 }
 
-function slot0.checkCanAddLine(slot0, slot1, slot2, slot3, slot4)
-	if not uv0.PointTypeCanAddLineDict[1] then
-		GameFacade.showToastString(slot5[1])
+function var_0_0.checkCanAddLine(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4)
+	local var_35_0 = var_0_0.PointTypeCanAddLineDict
+
+	if not var_35_0[1] then
+		GameFacade.showToastString(var_35_0[1])
 
 		return false
 	end
 
-	if slot1 == RougeMapEnum.MiddleLayerPointType.Leave or slot4 == RougeMapEnum.MiddleLayerPointType.Leave then
-		if slot0.pointId2PathIdDict[RougeMapEnum.LeaveId] then
+	if arg_35_1 == RougeMapEnum.MiddleLayerPointType.Leave or arg_35_4 == RougeMapEnum.MiddleLayerPointType.Leave then
+		if arg_35_0.pointId2PathIdDict[RougeMapEnum.LeaveId] then
 			GameFacade.showToastString("一个离开点只能映射一个路径点")
 
 			return false
@@ -334,9 +356,9 @@ function slot0.checkCanAddLine(slot0, slot1, slot2, slot3, slot4)
 		return false
 	end
 
-	for slot9, slot10 in ipairs(slot0.lineList) do
-		if slot1 == slot10.startType and slot2 == slot10.startId and slot3 == slot10.endType and slot4 == slot10.endId or slot1 == slot10.endType and slot2 == slot10.endId and slot3 == slot10.startType and slot4 == slot10.startId then
-			if slot1 == slot3 then
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0.lineList) do
+		if arg_35_1 == iter_35_1.startType and arg_35_2 == iter_35_1.startId and arg_35_3 == iter_35_1.endType and arg_35_4 == iter_35_1.endId or arg_35_1 == iter_35_1.endType and arg_35_2 == iter_35_1.endId and arg_35_3 == iter_35_1.startType and arg_35_4 == iter_35_1.startId then
+			if arg_35_1 == arg_35_3 then
 				GameFacade.showToastString("已添加路径")
 			else
 				GameFacade.showToastString("已添加映射")
@@ -346,9 +368,9 @@ function slot0.checkCanAddLine(slot0, slot1, slot2, slot3, slot4)
 		end
 	end
 
-	slot6, slot2, slot8, slot4 = RougeMapHelper.formatLineParam(slot1, slot2, slot3, slot4)
+	arg_35_1, arg_35_2, arg_35_3, arg_35_4 = RougeMapHelper.formatLineParam(arg_35_1, arg_35_2, arg_35_3, arg_35_4)
 
-	if slot6 ~= slot8 and slot0.pointId2PathIdDict[slot2] then
+	if arg_35_1 ~= arg_35_3 and arg_35_0.pointId2PathIdDict[arg_35_2] then
 		GameFacade.showToastString("一个元件只能映射一个路径点")
 
 		return
@@ -357,210 +379,233 @@ function slot0.checkCanAddLine(slot0, slot1, slot2, slot3, slot4)
 	return true
 end
 
-slot0.Radius = 1
+var_0_0.Radius = 1
 
-function slot0.getPointByPos(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.pointDict) do
-		if Vector2.Distance(slot6, slot1) <= uv0.Radius then
-			return slot5, RougeMapEnum.MiddleLayerPointType.Pieces
+function var_0_0.getPointByPos(arg_36_0, arg_36_1)
+	for iter_36_0, iter_36_1 in pairs(arg_36_0.pointDict) do
+		if Vector2.Distance(iter_36_1, arg_36_1) <= var_0_0.Radius then
+			return iter_36_0, RougeMapEnum.MiddleLayerPointType.Pieces
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0.pathPointDict) do
-		if Vector2.Distance(slot6, slot1) <= uv0.Radius then
-			return slot5, RougeMapEnum.MiddleLayerPointType.Path
+	for iter_36_2, iter_36_3 in pairs(arg_36_0.pathPointDict) do
+		if Vector2.Distance(iter_36_3, arg_36_1) <= var_0_0.Radius then
+			return iter_36_2, RougeMapEnum.MiddleLayerPointType.Path
 		end
 	end
 
-	if slot0.leavePos and Vector2.Distance(slot0.leavePos, slot1) <= uv0.Radius then
+	if arg_36_0.leavePos and Vector2.Distance(arg_36_0.leavePos, arg_36_1) <= var_0_0.Radius then
 		return RougeMapEnum.LeaveId, RougeMapEnum.MiddleLayerPointType.Leave
 	end
 end
 
-function slot0.generateNodeConfig(slot0)
-	if #slot0.pointList < 1 then
+function var_0_0.generateNodeConfig(arg_37_0)
+	local var_37_0 = arg_37_0.pointList
+
+	if #var_37_0 < 1 then
 		GameFacade.showToastString("没有添加任何节点")
 
 		return
 	end
 
-	slot2 = {}
+	local var_37_1 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = slot7.pos
+	for iter_37_0, iter_37_1 in ipairs(var_37_0) do
+		local var_37_2 = iter_37_1.pos
+		local var_37_3 = arg_37_0.pointId2PathIdDict[iter_37_1.id]
+		local var_37_4 = arg_37_0:getPathPointIndex(var_37_3)
 
-		if slot0:getPathPointIndex(slot0.pointId2PathIdDict[slot7.id]) == nil then
-			slot11 = string.format("节点id : %s 没有添加路径节点映射", slot7.id)
+		if var_37_4 == nil then
+			local var_37_5 = string.format("节点id : %s 没有添加路径节点映射", iter_37_1.id)
 
-			GameFacade.showToastString(slot11)
-			logError(slot11)
+			GameFacade.showToastString(var_37_5)
+			logError(var_37_5)
 
 			return
 		end
 
-		table.insert(slot2, string.format("%s#%s#%s", slot8.x, slot8.y, slot10))
+		table.insert(var_37_1, string.format("%s#%s#%s", var_37_2.x, var_37_2.y, var_37_4))
 	end
 
-	if not slot0:checkNavigation() then
+	if not arg_37_0:checkNavigation() then
 		return
 	end
 
-	ZProj.GameHelper.SetSystemBuffer(table.concat(slot2, "|"))
+	ZProj.GameHelper.SetSystemBuffer(table.concat(var_37_1, "|"))
 	GameFacade.showToastString("生成节点配置成功")
 end
 
-function slot0.generatePathNodeConfig(slot0)
-	if #slot0.pathPointList < 1 then
+function var_0_0.generatePathNodeConfig(arg_38_0)
+	local var_38_0 = arg_38_0.pathPointList
+
+	if #var_38_0 < 1 then
 		GameFacade.showToastString("没有添加任何路径节点")
 
 		return
 	end
 
-	if not slot0:checkNavigation() then
+	if not arg_38_0:checkNavigation() then
 		return
 	end
 
-	slot2 = {}
+	local var_38_1 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = slot7.pos
+	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
+		local var_38_2 = iter_38_1.pos
 
-		table.insert(slot2, string.format("%s#%s", slot8.x, slot8.y))
+		table.insert(var_38_1, string.format("%s#%s", var_38_2.x, var_38_2.y))
 	end
 
-	ZProj.GameHelper.SetSystemBuffer(table.concat(slot2, "|"))
+	ZProj.GameHelper.SetSystemBuffer(table.concat(var_38_1, "|"))
 	GameFacade.showToastString("生成路径节点配置成功")
 end
 
-function slot0.generateNodePath(slot0)
-	if #slot0.lineList < 1 then
+function var_0_0.generateNodePath(arg_39_0)
+	if #arg_39_0.lineList < 1 then
 		GameFacade.showToastString("没有添加任何路径")
 
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0.lineList) do
-		table.insert({}, string.format("%s#%s", slot0:getPathPointIndex(slot6.startId), slot0:getPathPointIndex(slot6.endId)))
+	local var_39_0 = {}
+
+	for iter_39_0, iter_39_1 in ipairs(arg_39_0.lineList) do
+		local var_39_1 = arg_39_0:getPathPointIndex(iter_39_1.startId)
+		local var_39_2 = arg_39_0:getPathPointIndex(iter_39_1.endId)
+
+		table.insert(var_39_0, string.format("%s#%s", var_39_1, var_39_2))
 	end
 
-	if not slot0:checkNavigation() then
+	if not arg_39_0:checkNavigation() then
 		return
 	end
 
-	ZProj.GameHelper.SetSystemBuffer(table.concat(slot1, "|"))
+	ZProj.GameHelper.SetSystemBuffer(table.concat(var_39_0, "|"))
 	GameFacade.showToastString("生成路径配置成功")
 end
 
-function slot0.getPointIndex(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		if slot6.id == slot1 then
-			return slot5
+function var_0_0.getPointIndex(arg_40_0, arg_40_1)
+	for iter_40_0, iter_40_1 in ipairs(arg_40_0.pointList) do
+		if iter_40_1.id == arg_40_1 then
+			return iter_40_0
 		end
 	end
 end
 
-function slot0.getPathPointIndex(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.pathPointList) do
-		if slot6.id == slot1 then
-			return slot5
+function var_0_0.getPathPointIndex(arg_41_0, arg_41_1)
+	for iter_41_0, iter_41_1 in ipairs(arg_41_0.pathPointList) do
+		if iter_41_1.id == arg_41_1 then
+			return iter_41_0
 		end
 	end
 end
 
-function slot0.getLineDict(slot0)
-	slot0.lineDict = {}
+function var_0_0.getLineDict(arg_42_0)
+	arg_42_0.lineDict = {}
 
-	for slot4, slot5 in ipairs(slot0.lineList) do
-		slot0.lineDict[slot5.startId] = slot0.lineDict[slot5.startId] or {}
-		slot0.lineDict[slot5.endId] = slot0.lineDict[slot5.endId] or {}
-		slot0.lineDict[slot5.startId][slot5.endId] = true
-		slot0.lineDict[slot5.endId][slot5.startId] = true
+	for iter_42_0, iter_42_1 in ipairs(arg_42_0.lineList) do
+		arg_42_0.lineDict[iter_42_1.startId] = arg_42_0.lineDict[iter_42_1.startId] or {}
+		arg_42_0.lineDict[iter_42_1.endId] = arg_42_0.lineDict[iter_42_1.endId] or {}
+		arg_42_0.lineDict[iter_42_1.startId][iter_42_1.endId] = true
+		arg_42_0.lineDict[iter_42_1.endId][iter_42_1.startId] = true
 	end
 
-	return slot0.lineDict
+	return arg_42_0.lineDict
 end
 
-function slot0.checkNavigation(slot0)
-	slot0:getLineDict()
+function var_0_0.checkNavigation(arg_43_0)
+	arg_43_0:getLineDict()
 
-	slot1 = true
-	slot4 = {}
+	local var_43_0 = true
+	local var_43_1 = #arg_43_0.pointList
+	local var_43_2 = arg_43_0.pointId2PathIdDict[arg_43_0.pointList[1].id]
+	local var_43_3 = {}
 
-	for slot8 = 2, #slot0.pointList do
-		tabletool.clear(slot4)
+	for iter_43_0 = 2, var_43_1 do
+		local var_43_4 = arg_43_0.pointList[iter_43_0]
+		local var_43_5 = arg_43_0.pointId2PathIdDict[var_43_4.id]
 
-		if not slot0:navigationTo(slot0.pointId2PathIdDict[slot0.pointList[1].id], slot0.pointId2PathIdDict[slot0.pointList[slot8].id], 1, slot4) then
-			GameFacade.showToastString(string.format("id : %s, 不可达", slot9.id))
+		tabletool.clear(var_43_3)
 
-			slot1 = false
+		if not arg_43_0:navigationTo(var_43_2, var_43_5, 1, var_43_3) then
+			local var_43_6 = string.format("id : %s, 不可达", var_43_4.id)
+
+			GameFacade.showToastString(var_43_6)
+
+			var_43_0 = false
 		end
 	end
 
-	return slot1
+	return var_43_0
 end
 
-function slot0.navigationTo(slot0, slot1, slot2, slot3, slot4)
-	if tabletool.indexOf(slot4, slot1) then
+function var_0_0.navigationTo(arg_44_0, arg_44_1, arg_44_2, arg_44_3, arg_44_4)
+	if tabletool.indexOf(arg_44_4, arg_44_1) then
 		return
 	end
 
-	table.insert(slot4, slot1)
+	table.insert(arg_44_4, arg_44_1)
 
-	if slot3 > 20 then
+	if arg_44_3 > 20 then
 		GameFacade.showToastString("死循环了...")
-		table.remove(slot4)
+		table.remove(arg_44_4)
 
 		return
 	end
 
-	if not slot0.lineDict[slot1] then
-		table.remove(slot4)
+	local var_44_0 = arg_44_0.lineDict[arg_44_1]
+
+	if not var_44_0 then
+		table.remove(arg_44_4)
 
 		return
 	end
 
-	for slot9, slot10 in pairs(slot5) do
-		if slot9 == slot2 then
-			table.insert(slot4, slot2)
+	for iter_44_0, iter_44_1 in pairs(var_44_0) do
+		if iter_44_0 == arg_44_2 then
+			table.insert(arg_44_4, arg_44_2)
 
 			return true
 		end
 	end
 
-	for slot9, slot10 in pairs(slot5) do
-		if slot0:navigationTo(slot9, slot2, slot3 + 1, slot4) then
+	for iter_44_2, iter_44_3 in pairs(var_44_0) do
+		if arg_44_0:navigationTo(iter_44_2, arg_44_2, arg_44_3 + 1, arg_44_4) then
 			return true
 		end
 	end
 end
 
-function slot0.generateLeaveNodeConfig(slot0)
-	if not slot0.pointId2PathIdDict[RougeMapEnum.LeaveId] then
+function var_0_0.generateLeaveNodeConfig(arg_45_0)
+	local var_45_0 = arg_45_0.pointId2PathIdDict[RougeMapEnum.LeaveId]
+
+	if not var_45_0 then
 		GameFacade.showToastString("离开点 没有添加路径节点映射")
 
 		return
 	end
 
-	slot3 = slot0:getLeavePos()
+	local var_45_1 = arg_45_0:getPathPointIndex(var_45_0)
+	local var_45_2 = arg_45_0:getLeavePos()
 
-	ZProj.GameHelper.SetSystemBuffer(string.format("%s#%s#%s", slot3.x, slot3.y, slot0:getPathPointIndex(slot1)))
+	ZProj.GameHelper.SetSystemBuffer(string.format("%s#%s#%s", var_45_2.x, var_45_2.y, var_45_1))
 	GameFacade.showToastString("生成离开点配置成功")
 end
 
-function slot0.setHook(slot0)
-	slot1 = UnityEngine.Time.frameCount
-	slot2 = os.clock()
+function var_0_0.setHook(arg_46_0)
+	local var_46_0 = UnityEngine.Time.frameCount
+	local var_46_1 = os.clock()
 
-	debug.sethook(function ()
-		if uv0 ~= UnityEngine.Time.frameCount then
-			uv0 = UnityEngine.Time.frameCount
-			uv1 = os.clock()
-		elseif os.clock() - uv1 > 5 then
+	debug.sethook(function()
+		if var_46_0 ~= UnityEngine.Time.frameCount then
+			var_46_0 = UnityEngine.Time.frameCount
+			var_46_1 = os.clock()
+		elseif os.clock() - var_46_1 > 5 then
 			error("loop !!!")
 		end
 	end, "l")
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

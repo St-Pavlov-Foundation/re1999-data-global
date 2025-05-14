@@ -1,65 +1,85 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessResultView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessResultView", package.seeall)
 
-slot0 = class("AutoChessResultView", BaseView)
+local var_0_0 = class("AutoChessResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtHp = gohelper.findChildText(slot0.viewGO, "Hp/#txt_Hp")
-	slot0._txtDamage = gohelper.findChildText(slot0.viewGO, "Damage/#txt_Damage")
-	slot0._txtTarDesc1 = gohelper.findChildText(slot0.viewGO, "Target/Target1/#txt_TarDesc1")
-	slot0._goTarStar1 = gohelper.findChild(slot0.viewGO, "Target/Target1/start/#go_TarStar1")
-	slot0._txtTarDesc2 = gohelper.findChildText(slot0.viewGO, "Target/Target2/#txt_TarDesc2")
-	slot0._goTarStar2 = gohelper.findChild(slot0.viewGO, "Target/Target2/start/#go_TarStar2")
-	slot0._txtTarDesc3 = gohelper.findChildText(slot0.viewGO, "Target/Target3/#txt_TarDesc3")
-	slot0._goTarStar3 = gohelper.findChild(slot0.viewGO, "Target/Target3/start/#go_TarStar3")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtHp = gohelper.findChildText(arg_1_0.viewGO, "Hp/#txt_Hp")
+	arg_1_0._txtDamage = gohelper.findChildText(arg_1_0.viewGO, "Damage/#txt_Damage")
+	arg_1_0._txtTarDesc1 = gohelper.findChildText(arg_1_0.viewGO, "Target/Target1/#txt_TarDesc1")
+	arg_1_0._goTarStar1 = gohelper.findChild(arg_1_0.viewGO, "Target/Target1/start/#go_TarStar1")
+	arg_1_0._txtTarDesc2 = gohelper.findChildText(arg_1_0.viewGO, "Target/Target2/#txt_TarDesc2")
+	arg_1_0._goTarStar2 = gohelper.findChild(arg_1_0.viewGO, "Target/Target2/start/#go_TarStar2")
+	arg_1_0._txtTarDesc3 = gohelper.findChildText(arg_1_0.viewGO, "Target/Target3/#txt_TarDesc3")
+	arg_1_0._goTarStar3 = gohelper.findChild(arg_1_0.viewGO, "Target/Target3/start/#go_TarStar3")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString("autochess"), AudioMgr.instance:getIdFromString("prepare"))
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = AudioMgr.instance:getIdFromString("autochess")
+	local var_7_1 = AudioMgr.instance:getIdFromString("prepare")
+
+	AudioMgr.instance:setSwitch(var_7_0, var_7_1)
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 
-	if AutoChessModel.instance.resultData then
-		slot0._txtHp.text = slot3.remainingHp
-		slot0._txtDamage.text = slot3.injury
+	local var_7_2 = AutoChessModel.instance.resultData
 
-		if lua_auto_chess_round.configDict[Activity182Model.instance:getCurActId()][AutoChessModel.instance:getChessMo().sceneRound] then
-			for slot14 = 1, 3 do
-				slot0["_txtTarDesc" .. slot14].text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("autochess_resultview_damage"), string.split(slot7.assess, "#")[slot14])
+	if var_7_2 then
+		local var_7_3 = AutoChessModel.instance:getChessMo()
+		local var_7_4 = Activity182Model.instance:getCurActId()
+		local var_7_5 = var_7_3.sceneRound
 
-				gohelper.setActive(slot0["_goTarStar" .. slot14], slot14 <= slot3.star)
+		arg_7_0._txtHp.text = var_7_2.remainingHp
+		arg_7_0._txtDamage.text = var_7_2.injury
+
+		local var_7_6 = lua_auto_chess_round.configDict[var_7_4][var_7_5]
+
+		if var_7_6 then
+			local var_7_7 = var_7_6.assess
+			local var_7_8 = string.split(var_7_7, "#")
+			local var_7_9 = luaLang("autochess_resultview_damage")
+
+			for iter_7_0 = 1, 3 do
+				arg_7_0["_txtTarDesc" .. iter_7_0].text = GameUtil.getSubPlaceholderLuaLangOneParam(var_7_9, var_7_8[iter_7_0])
+
+				gohelper.setActive(arg_7_0["_goTarStar" .. iter_7_0], iter_7_0 <= var_7_2.star)
 			end
 		else
-			logError(string.format("异常:不存在轮数配置actId:%sround:%s", slot5, slot6))
+			logError(string.format("异常:不存在轮数配置actId:%sround:%s", var_7_4, var_7_5))
 		end
 
-		AutoChessController.instance:statFightEnd(tonumber(slot3.remainingHp))
+		AutoChessController.instance:statFightEnd(tonumber(var_7_2.remainingHp))
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	AutoChessController.instance:onResultViewClose()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

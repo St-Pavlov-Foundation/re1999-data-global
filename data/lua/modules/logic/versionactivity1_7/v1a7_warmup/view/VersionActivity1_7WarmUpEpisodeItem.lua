@@ -1,102 +1,113 @@
-module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpEpisodeItem", package.seeall)
+﻿module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpEpisodeItem", package.seeall)
 
-slot0 = class("VersionActivity1_7WarmUpEpisodeItem", UserDataDispose)
+local var_0_0 = class("VersionActivity1_7WarmUpEpisodeItem", UserDataDispose)
 
-function slot0.onInit(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.onInit(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._go = slot1
-	slot0._gopic = gohelper.findChild(slot0._go, "pic")
-	slot0._golocked = gohelper.findChild(slot0._go, "locked")
-	slot0._gonormal = gohelper.findChild(slot0._go, "normal")
-	slot0._goselect = gohelper.findChild(slot0._go, "select")
-	slot0._btnselect = gohelper.findChildButtonWithAudio(slot0._go, "#btn_select")
+	arg_1_0._go = arg_1_1
+	arg_1_0._gopic = gohelper.findChild(arg_1_0._go, "pic")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0._go, "locked")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0._go, "normal")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0._go, "select")
+	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0._go, "#btn_select")
 
-	slot0:addClickCb(slot0._btnselect, slot0.onClickSelect, slot0)
+	arg_1_0:addClickCb(arg_1_0._btnselect, arg_1_0.onClickSelect, arg_1_0)
 
-	slot0._animator = slot0._go:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._animator = arg_1_0._go:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.onClickSelect(slot0)
-	if slot0.viewContainer:isPlayingDesc() then
+function var_0_0.onClickSelect(arg_2_0)
+	if arg_2_0.viewContainer:isPlayingDesc() then
 		return
 	end
 
-	if not slot0.episodeCo then
+	if not arg_2_0.episodeCo then
 		return
 	end
 
-	if not Activity125Model.instance:isEpisodeReallyOpen(slot0.activityId, slot0.episodeId) then
+	if not Activity125Model.instance:isEpisodeReallyOpen(arg_2_0.activityId, arg_2_0.episodeId) then
 		return
 	end
 
-	if (Activity125Model.instance:checkIsOldEpisode(slot0.activityId, slot0.episodeId) or Activity125Model.instance:checkLocalIsPlay(slot0.activityId, slot0.episodeId) or Activity125Model.instance:isEpisodeFinished(slot0.activityId, slot0.episodeId)) and Activity125Model.instance:getSelectEpisodeId(slot0.activityId) == slot0.episodeId then
+	local var_2_0 = Activity125Model.instance:getSelectEpisodeId(arg_2_0.activityId)
+	local var_2_1 = Activity125Model.instance:checkIsOldEpisode(arg_2_0.activityId, arg_2_0.episodeId)
+	local var_2_2 = Activity125Model.instance:checkLocalIsPlay(arg_2_0.activityId, arg_2_0.episodeId)
+	local var_2_3 = Activity125Model.instance:isEpisodeFinished(arg_2_0.activityId, arg_2_0.episodeId)
+
+	if (var_2_1 or var_2_2 or var_2_3) and var_2_0 == arg_2_0.episodeId then
 		return
 	end
 
-	Activity125Model.instance:setSelectEpisodeId(slot0.activityId, slot0.episodeId)
+	Activity125Model.instance:setSelectEpisodeId(arg_2_0.activityId, arg_2_0.episodeId)
 
-	if not slot3 then
-		Activity125Model.instance:setOldEpisode(slot0.activityId, slot0.episodeId)
+	if not var_2_1 then
+		Activity125Model.instance:setOldEpisode(arg_2_0.activityId, arg_2_0.episodeId)
 	end
 
 	Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0.episodeCo = slot1
+function var_0_0.updateData(arg_3_0, arg_3_1)
+	arg_3_0.episodeCo = arg_3_1
 
-	slot0:refreshItem()
+	arg_3_0:refreshItem()
 end
 
-function slot0.refreshItem(slot0)
-	if not slot0.episodeCo then
-		gohelper.setActive(slot0._go, false)
+function var_0_0.refreshItem(arg_4_0)
+	if not arg_4_0.episodeCo then
+		gohelper.setActive(arg_4_0._go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._go, true)
+	gohelper.setActive(arg_4_0._go, true)
 
-	slot0.activityId = slot0.episodeCo.activityId
-	slot0.episodeId = slot0.episodeCo.id
-	slot1 = Activity125Model.instance:isEpisodeReallyOpen(slot0.activityId, slot0.episodeId)
+	arg_4_0.activityId = arg_4_0.episodeCo.activityId
+	arg_4_0.episodeId = arg_4_0.episodeCo.id
 
-	if slot0.episodeIsOpen == false and slot1 then
+	local var_4_0 = Activity125Model.instance:isEpisodeReallyOpen(arg_4_0.activityId, arg_4_0.episodeId)
+
+	if arg_4_0.episodeIsOpen == false and var_4_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_no_effect)
 	end
 
-	slot0.episodeIsOpen = slot1
+	arg_4_0.episodeIsOpen = var_4_0
 
-	if not slot1 then
-		slot0:playAnimation("locked")
+	if not var_4_0 then
+		arg_4_0:playAnimation("locked")
 
 		return
 	end
 
-	if Activity125Model.instance:getSelectEpisodeId(slot0.activityId) == slot0.episodeId and (Activity125Model.instance:checkLocalIsPlay(slot0.activityId, slot0.episodeId) or Activity125Model.instance:isEpisodeFinished(slot0.activityId, slot0.episodeId) or Activity125Model.instance:checkIsOldEpisode(slot0.activityId, slot0.episodeId)) then
-		slot0:playAnimation("select")
-	elseif slot4 then
-		slot0._animator:Play("finish", 0, 1)
+	local var_4_1 = Activity125Model.instance:isEpisodeFinished(arg_4_0.activityId, arg_4_0.episodeId)
+	local var_4_2 = Activity125Model.instance:getSelectEpisodeId(arg_4_0.activityId)
+	local var_4_3 = Activity125Model.instance:checkLocalIsPlay(arg_4_0.activityId, arg_4_0.episodeId)
+	local var_4_4 = Activity125Model.instance:checkIsOldEpisode(arg_4_0.activityId, arg_4_0.episodeId)
+
+	if var_4_2 == arg_4_0.episodeId and (var_4_3 or var_4_1 or var_4_4) then
+		arg_4_0:playAnimation("select")
+	elseif var_4_3 then
+		arg_4_0._animator:Play("finish", 0, 1)
 	else
-		slot0:playAnimation("normal")
+		arg_4_0:playAnimation("normal")
 	end
 end
 
-function slot0.playAnimation(slot0, slot1)
-	slot0._animator:Play(slot1)
+function var_0_0.playAnimation(arg_5_0, arg_5_1)
+	arg_5_0._animator:Play(arg_5_1)
 end
 
-function slot0.getPos(slot0)
-	return recthelper.getAnchorX(slot0._go.transform)
+function var_0_0.getPos(arg_6_0)
+	return recthelper.getAnchorX(arg_6_0._go.transform)
 end
 
-function slot0.onDestroy(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0:__onDispose()
 end
 
-return slot0
+return var_0_0

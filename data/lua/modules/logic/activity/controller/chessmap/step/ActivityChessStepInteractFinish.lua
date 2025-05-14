@@ -1,15 +1,17 @@
-module("modules.logic.activity.controller.chessmap.step.ActivityChessStepInteractFinish", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepInteractFinish", package.seeall)
 
-slot0 = class("ActivityChessStepInteractFinish", ActivityChessStepBase)
+local var_0_0 = class("ActivityChessStepInteractFinish", ActivityChessStepBase)
 
-function slot0.start(slot0)
-	ActivityChessGameModel.instance:addFinishInteract(slot0.originData.id)
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+
+	ActivityChessGameModel.instance:addFinishInteract(var_1_0)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.CurrentConditionUpdate)
-	slot0:finish()
+	arg_1_0:finish()
 end
 
-function slot0.finish(slot0)
-	uv0.super.finish(slot0)
+function var_0_0.finish(arg_2_0)
+	var_0_0.super.finish(arg_2_0)
 end
 
-return slot0
+return var_0_0

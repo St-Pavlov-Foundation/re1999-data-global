@@ -1,130 +1,150 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterOverView", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterOverView", package.seeall)
 
-slot0 = class("RougeLimiterOverView", BaseView)
-slot0.TabType = {
+local var_0_0 = class("RougeLimiterOverView", BaseView)
+
+var_0_0.TabType = {
 	Buff = 2,
 	Debuff = 1
 }
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._btndebuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/top/#btn_debuff")
-	slot0._btnbuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/top/#btn_buff")
-	slot0._txtdifficulty = gohelper.findChildText(slot0.viewGO, "root/bottom/difficultybg/#txt_difficulty")
-	slot0._txtdec1 = gohelper.findChildText(slot0.viewGO, "root/bottom/#txt_dec1")
-	slot0._txtdec2 = gohelper.findChildText(slot0.viewGO, "root/bottom/#txt_dec2")
-	slot0._txtdec3 = gohelper.findChildText(slot0.viewGO, "root/bottom/#txt_dec3")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "root/#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._btndebuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/top/#btn_debuff")
+	arg_1_0._btnbuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/top/#btn_buff")
+	arg_1_0._txtdifficulty = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/difficultybg/#txt_difficulty")
+	arg_1_0._txtdec1 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_dec1")
+	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_dec2")
+	arg_1_0._txtdec3 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_dec3")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btndebuff:AddClickListener(slot0._btndebuffOnClick, slot0)
-	slot0._btnbuff:AddClickListener(slot0._btnbuffOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btndebuff:AddClickListener(arg_2_0._btndebuffOnClick, arg_2_0)
+	arg_2_0._btnbuff:AddClickListener(arg_2_0._btnbuffOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btndebuff:RemoveClickListener()
-	slot0._btnbuff:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btndebuff:RemoveClickListener()
+	arg_3_0._btnbuff:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btndebuffOnClick(slot0)
-	slot0:try2SwtichTabView(uv0.TabType.Debuff)
+function var_0_0._btndebuffOnClick(arg_5_0)
+	arg_5_0:try2SwtichTabView(var_0_0.TabType.Debuff)
 end
 
-function slot0._btnbuffOnClick(slot0)
-	slot0:try2SwtichTabView(uv0.TabType.Buff)
+function var_0_0._btnbuffOnClick(arg_6_0)
+	arg_6_0:try2SwtichTabView(var_0_0.TabType.Buff)
 end
 
-function slot0.try2SwtichTabView(slot0, slot1)
-	if slot0._curTabId == slot1 then
+function var_0_0.try2SwtichTabView(arg_7_0, arg_7_1)
+	if arg_7_0._curTabId == arg_7_1 then
 		return
 	end
 
-	slot0._curTabId = slot1
+	arg_7_0._curTabId = arg_7_1
 
-	slot0.viewContainer:switchTab(slot1)
-	slot0:refreshUI()
+	arg_7_0.viewContainer:switchTab(arg_7_1)
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshBarUI()
-	slot0:refreshDifficulty()
-	slot0:refreshEmptyUI()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshBarUI()
+	arg_8_0:refreshDifficulty()
+	arg_8_0:refreshEmptyUI()
 end
 
-function slot0.refreshBarUI(slot0)
-	gohelper.setActive(gohelper.findChild(slot0._btndebuff.gameObject, "unselect"), slot0._curTabId ~= uv0.TabType.Debuff)
-	gohelper.setActive(gohelper.findChild(slot0._btndebuff.gameObject, "selected"), slot0._curTabId == uv0.TabType.Debuff)
-	gohelper.setActive(gohelper.findChild(slot0._btnbuff.gameObject, "unselect"), slot0._curTabId ~= uv0.TabType.Buff)
-	gohelper.setActive(gohelper.findChild(slot0._btnbuff.gameObject, "selected"), slot0._curTabId == uv0.TabType.Buff)
+function var_0_0.refreshBarUI(arg_9_0)
+	local var_9_0 = gohelper.findChild(arg_9_0._btndebuff.gameObject, "unselect")
+	local var_9_1 = gohelper.findChild(arg_9_0._btndebuff.gameObject, "selected")
+	local var_9_2 = gohelper.findChild(arg_9_0._btnbuff.gameObject, "unselect")
+	local var_9_3 = gohelper.findChild(arg_9_0._btnbuff.gameObject, "selected")
+
+	gohelper.setActive(var_9_0, arg_9_0._curTabId ~= var_0_0.TabType.Debuff)
+	gohelper.setActive(var_9_1, arg_9_0._curTabId == var_0_0.TabType.Debuff)
+	gohelper.setActive(var_9_2, arg_9_0._curTabId ~= var_0_0.TabType.Buff)
+	gohelper.setActive(var_9_3, arg_9_0._curTabId == var_0_0.TabType.Buff)
 end
 
-function slot0.refreshDifficulty(slot0)
-	slot0._txtdifficulty.text = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(slot0.viewParam and slot0.viewParam.totalRiskValue or 0) and slot2.title
+function var_0_0.refreshDifficulty(arg_10_0)
+	local var_10_0 = arg_10_0.viewParam and arg_10_0.viewParam.totalRiskValue or 0
+	local var_10_1 = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(var_10_0)
 
-	slot0:refreshDesc(slot2 and slot2.desc)
+	arg_10_0._txtdifficulty.text = var_10_1 and var_10_1.title
+
+	arg_10_0:refreshDesc(var_10_1 and var_10_1.desc)
 end
 
-function slot0.refreshDesc(slot0, slot1)
-	slot2 = {}
+function var_0_0.refreshDesc(arg_11_0, arg_11_1)
+	local var_11_0 = {}
 
-	if not string.nilorempty(slot1) then
-		for slot7, slot8 in ipairs(string.split(slot1, "|")) do
-			slot9 = slot0["_txtdec" .. slot7]
-			slot9.text = slot8
-			slot2[slot9] = true
+	if not string.nilorempty(arg_11_1) then
+		local var_11_1 = string.split(arg_11_1, "|")
 
-			gohelper.setActive(slot9.gameObject, true)
+		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+			local var_11_2 = arg_11_0["_txtdec" .. iter_11_0]
+
+			var_11_2.text = iter_11_1
+			var_11_0[var_11_2] = true
+
+			gohelper.setActive(var_11_2.gameObject, true)
 		end
 	end
 
-	for slot6 = 1, RougeDLCEnum101.MaxRiskDescCount do
-		if slot0["_txtdec" .. slot6] and not slot2[slot7] then
-			gohelper.setActive(slot7.gameObject, false)
+	for iter_11_2 = 1, RougeDLCEnum101.MaxRiskDescCount do
+		local var_11_3 = arg_11_0["_txtdec" .. iter_11_2]
+
+		if var_11_3 and not var_11_0[var_11_3] then
+			gohelper.setActive(var_11_3.gameObject, false)
 		end
 	end
 end
 
-function slot0.refreshEmptyUI(slot0)
-	slot1 = false
+function var_0_0.refreshEmptyUI(arg_12_0)
+	local var_12_0 = false
 
-	if slot0._curTabId == uv0.TabType.Debuff then
-		slot2 = slot0.viewParam and slot0.viewParam.limiterIds
-		slot1 = (slot2 and #slot2 or 0) <= 0
-	elseif slot0._curTabId == uv0.TabType.Buff then
-		slot2 = slot0.viewParam and slot0.viewParam.buffIds
-		slot1 = (slot2 and #slot2 or 0) <= 0
+	if arg_12_0._curTabId == var_0_0.TabType.Debuff then
+		local var_12_1 = arg_12_0.viewParam and arg_12_0.viewParam.limiterIds
+
+		var_12_0 = (var_12_1 and #var_12_1 or 0) <= 0
+	elseif arg_12_0._curTabId == var_0_0.TabType.Buff then
+		local var_12_2 = arg_12_0.viewParam and arg_12_0.viewParam.buffIds
+
+		var_12_0 = (var_12_2 and #var_12_2 or 0) <= 0
 	end
 
-	gohelper.setActive(slot0._goempty, slot1)
+	gohelper.setActive(arg_12_0._goempty, var_12_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_13_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_14_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._curTabId = uv0.TabType.Debuff
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0._curTabId = var_0_0.TabType.Debuff
 
-	slot0:refreshUI()
+	arg_15_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

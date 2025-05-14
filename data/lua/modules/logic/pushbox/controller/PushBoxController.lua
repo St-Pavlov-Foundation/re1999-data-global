@@ -1,25 +1,29 @@
-module("modules.logic.pushbox.controller.PushBoxController", package.seeall)
+﻿module("modules.logic.pushbox.controller.PushBoxController", package.seeall)
 
-slot0 = class("PushBoxController", BaseController)
+local var_0_0 = class("PushBoxController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.enterPushBoxGame(slot0)
-	PushBoxRpc.instance:sendGet111InfosRequest(function ()
+function var_0_0.enterPushBoxGame(arg_5_0)
+	PushBoxRpc.instance:sendGet111InfosRequest(function()
 		GameSceneMgr.instance:startScene(SceneType.PushBox, 1, 1)
-	end, slot0)
+	end, arg_5_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

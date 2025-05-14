@@ -1,31 +1,33 @@
-module("modules.logic.versionactivity1_4.act135.config.Activity135Config", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act135.config.Activity135Config", package.seeall)
 
-slot0 = class("Activity135Config", BaseConfig)
+local var_0_0 = class("Activity135Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.rewardDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.rewardDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity135_reward"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("on%sConfigLoaded", slot1)] then
-		slot4(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("on%sConfigLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_1, arg_3_2)
 	end
 end
 
-function slot0.onactivity135_rewardConfigLoaded(slot0, slot1, slot2)
-	slot0.rewardDict = slot2.configDict
+function var_0_0.onactivity135_rewardConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.rewardDict = arg_4_2.configDict
 end
 
-function slot0.getEpisodeCos(slot0, slot1)
-	return slot0.rewardDict[slot1]
+function var_0_0.getEpisodeCos(arg_5_0, arg_5_1)
+	return arg_5_0.rewardDict[arg_5_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

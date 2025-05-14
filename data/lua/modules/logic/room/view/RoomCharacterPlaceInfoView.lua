@@ -1,251 +1,280 @@
-module("modules.logic.room.view.RoomCharacterPlaceInfoView", package.seeall)
+﻿module("modules.logic.room.view.RoomCharacterPlaceInfoView", package.seeall)
 
-slot0 = class("RoomCharacterPlaceInfoView", BaseView)
+local var_0_0 = class("RoomCharacterPlaceInfoView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_close")
-	slot0._btnsure = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/#btn_sure")
-	slot0._txttip = gohelper.findChildText(slot0.viewGO, "tip/#txt_tip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_close")
+	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_sure")
+	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "tip/#txt_tip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnsure:AddClickListener(slot0._btnsureOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnsure:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnsure:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 
-	if slot0._closeCallback then
-		if slot0._callbackObj then
-			slot0._closeCallback(slot0._callbackObj, slot0._callbackParam)
+	if arg_4_0._closeCallback then
+		if arg_4_0._callbackObj then
+			arg_4_0._closeCallback(arg_4_0._callbackObj, arg_4_0._callbackParam)
 		else
-			slot0._closeCallback(slot0._callbackParam)
+			arg_4_0._closeCallback(arg_4_0._callbackParam)
 		end
 	end
 end
 
-function slot0._btnsureOnClick(slot0)
-	if #slot0._removeHeroMOList < slot0._needRemoveCount then
-		GameFacade.showToast(ToastEnum.RoomCharacterPlaceInfo, slot0._needRemoveCount - slot1)
+function var_0_0._btnsureOnClick(arg_5_0)
+	local var_5_0 = #arg_5_0._removeHeroMOList
+
+	if var_5_0 < arg_5_0._needRemoveCount then
+		GameFacade.showToast(ToastEnum.RoomCharacterPlaceInfo, arg_5_0._needRemoveCount - var_5_0)
 
 		return
 	end
 
-	if slot1 > 0 then
-		if slot0._notUpdateMapModel ~= true then
-			for slot5, slot6 in ipairs(slot0._removeHeroMOList) do
-				RoomCharacterModel.instance:editRemoveCharacterMO(slot6.heroId)
+	if var_5_0 > 0 then
+		if arg_5_0._notUpdateMapModel ~= true then
+			for iter_5_0, iter_5_1 in ipairs(arg_5_0._removeHeroMOList) do
+				RoomCharacterModel.instance:editRemoveCharacterMO(iter_5_1.heroId)
 			end
 		end
 
-		slot2 = {}
+		local var_5_1 = {}
 
-		for slot6, slot7 in ipairs(slot0._currentHeroMOList) do
-			slot8, slot9 = slot0:_findHeroMOById(slot0._removeHeroMOList, slot7.heroId)
+		for iter_5_2, iter_5_3 in ipairs(arg_5_0._currentHeroMOList) do
+			local var_5_2, var_5_3 = arg_5_0:_findHeroMOById(arg_5_0._removeHeroMOList, iter_5_3.heroId)
 
-			if not slot8 then
-				table.insert(slot2, slot7.heroId)
+			if not var_5_2 then
+				table.insert(var_5_1, iter_5_3.heroId)
 			end
 		end
 
-		RoomRpc.instance:sendUpdateRoomHeroDataRequest(slot2)
+		RoomRpc.instance:sendUpdateRoomHeroDataRequest(var_5_1)
 	end
 
-	slot0:closeThis()
+	arg_5_0:closeThis()
 
-	if slot0._sureCallback then
-		if slot0._callbackObj then
-			slot0._sureCallback(slot0._callbackObj, slot0._callbackParam)
+	if arg_5_0._sureCallback then
+		if arg_5_0._callbackObj then
+			arg_5_0._sureCallback(arg_5_0._callbackObj, arg_5_0._callbackParam)
 		else
-			slot0._sureCallback(slot0._callbackParam)
+			arg_5_0._sureCallback(arg_5_0._callbackParam)
 		end
 	end
 end
 
-function slot0._btnclickOnclick(slot0, slot1)
-	slot2, slot3 = slot0:_findHeroMOById(slot0._currentHeroMOList, slot1)
+function var_0_0._btnclickOnclick(arg_6_0, arg_6_1)
+	local var_6_0, var_6_1 = arg_6_0:_findHeroMOById(arg_6_0._currentHeroMOList, arg_6_1)
 
-	if slot2 then
-		table.remove(slot0._currentHeroMOList, slot3)
-		table.insert(slot0._removeHeroMOList, slot2)
+	if var_6_0 then
+		table.remove(arg_6_0._currentHeroMOList, var_6_1)
+		table.insert(arg_6_0._removeHeroMOList, var_6_0)
 	else
-		slot4, slot3 = slot0:_findHeroMOById(slot0._removeHeroMOList, slot1)
+		local var_6_2, var_6_3 = arg_6_0:_findHeroMOById(arg_6_0._removeHeroMOList, arg_6_1)
 
-		if slot4 then
-			table.remove(slot0._removeHeroMOList, slot3)
-			table.insert(slot0._currentHeroMOList, slot2)
+		if var_6_2 then
+			table.remove(arg_6_0._removeHeroMOList, var_6_3)
+			table.insert(arg_6_0._currentHeroMOList, var_6_2)
 		end
 	end
 
-	slot0:_sort()
-	slot0:_refreshUI()
+	arg_6_0:_sort()
+	arg_6_0:_refreshUI()
 end
 
-function slot0._findHeroMOById(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.heroId == slot2 then
-			return slot7, slot6
+function var_0_0._findHeroMOById(arg_7_0, arg_7_1, arg_7_2)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		if iter_7_1.heroId == arg_7_2 then
+			return iter_7_1, iter_7_0
 		end
 	end
 
 	return nil
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gocurrentplacecontent = gohelper.findChild(slot0.viewGO, "currentplace/#scroll_currentplace/Viewport/Content")
-	slot0._goremoveplacecontent = gohelper.findChild(slot0.viewGO, "removeplace/#scroll_removeplace/Viewport/Content")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "tip")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._gocurrentplacecontent = gohelper.findChild(arg_8_0.viewGO, "currentplace/#scroll_currentplace/Viewport/Content")
+	arg_8_0._goremoveplacecontent = gohelper.findChild(arg_8_0.viewGO, "removeplace/#scroll_removeplace/Viewport/Content")
+	arg_8_0._gotip = gohelper.findChild(arg_8_0.viewGO, "tip")
 
-	slot0._simagebg:LoadImage(ResUrl.getRoomImage("characterplace/bg_dajiandi"))
+	arg_8_0._simagebg:LoadImage(ResUrl.getRoomImage("characterplace/bg_dajiandi"))
 end
 
-function slot0.initCharacterItem(slot0)
-	slot0.simageicon = gohelper.findChildSingleImage(slot0.go, "role/heroicon")
-	slot0.goclick = gohelper.findChild(slot0.go, "go_click")
-	slot0.txttrust = gohelper.findChildText(slot0.go, "trust/txt_trust")
-	slot0.gorole = gohelper.findChild(slot0.go, "role")
-	slot0.imagecareer = gohelper.findChildImage(slot0.go, "role/career")
-	slot0.imagerare = gohelper.findChildImage(slot0.go, "role/rare")
-	slot0.txtname = gohelper.findChildText(slot0.go, "role/name")
-	slot0.txtnameen = gohelper.findChildText(slot0.go, "role/name/nameEn")
-	slot0.btnclick = gohelper.getClickWithAudio(slot0.goclick)
+function var_0_0.initCharacterItem(arg_9_0)
+	arg_9_0.simageicon = gohelper.findChildSingleImage(arg_9_0.go, "role/heroicon")
+	arg_9_0.goclick = gohelper.findChild(arg_9_0.go, "go_click")
+	arg_9_0.txttrust = gohelper.findChildText(arg_9_0.go, "trust/txt_trust")
+	arg_9_0.gorole = gohelper.findChild(arg_9_0.go, "role")
+	arg_9_0.imagecareer = gohelper.findChildImage(arg_9_0.go, "role/career")
+	arg_9_0.imagerare = gohelper.findChildImage(arg_9_0.go, "role/rare")
+	arg_9_0.txtname = gohelper.findChildText(arg_9_0.go, "role/name")
+	arg_9_0.txtnameen = gohelper.findChildText(arg_9_0.go, "role/name/nameEn")
+	arg_9_0.btnclick = gohelper.getClickWithAudio(arg_9_0.goclick)
 
-	gohelper.setActive(gohelper.findChild(slot0.go, "trust"), true)
-	gohelper.setActive(gohelper.findChild(slot0.go, "placeicon"), false)
-	gohelper.setActive(gohelper.findChild(slot0.go, "select"), false)
-	gohelper.setActive(gohelper.findChild(slot0.go, "#go_onbirthdayicon"), false)
+	local var_9_0 = gohelper.findChild(arg_9_0.go, "trust")
+	local var_9_1 = gohelper.findChild(arg_9_0.go, "placeicon")
+	local var_9_2 = gohelper.findChild(arg_9_0.go, "select")
+	local var_9_3 = gohelper.findChild(arg_9_0.go, "#go_onbirthdayicon")
+	local var_9_4 = arg_9_0.gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	slot0.gorole:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 1
+	gohelper.setActive(var_9_0, true)
+	gohelper.setActive(var_9_1, false)
+	gohelper.setActive(var_9_2, false)
+	gohelper.setActive(var_9_3, false)
+
+	var_9_4.alpha = 1
 end
 
-function slot0.refreshCharacterItem(slot0, slot1)
-	slot0.simageicon:LoadImage(ResUrl.getHeadIconSmall(slot1.skinConfig.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(slot0.imagecareer, "lssx_" .. slot1.heroConfig.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0.imagerare, "equipbar" .. CharacterEnum.Color[slot1.heroConfig.rare])
+function var_0_0.refreshCharacterItem(arg_10_0, arg_10_1)
+	arg_10_0.simageicon:LoadImage(ResUrl.getHeadIconSmall(arg_10_1.skinConfig.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(arg_10_0.imagecareer, "lssx_" .. arg_10_1.heroConfig.career)
+	UISpriteSetMgr.instance:setCommonSprite(arg_10_0.imagerare, "equipbar" .. CharacterEnum.Color[arg_10_1.heroConfig.rare])
 
-	slot0.txtname.text = slot1.heroConfig.name
-	slot0.txtnameen.text = slot1.heroConfig.nameEng
-	slot0.txttrust.text = string.format("%s%%", (HeroModel.instance:getByHeroId(slot1.heroId) and HeroConfig.instance:getFaithPercent(slot2.faith)[1] or 0) * 100)
+	arg_10_0.txtname.text = arg_10_1.heroConfig.name
+	arg_10_0.txtnameen.text = arg_10_1.heroConfig.nameEng
+
+	local var_10_0 = HeroModel.instance:getByHeroId(arg_10_1.heroId)
+	local var_10_1 = var_10_0 and HeroConfig.instance:getFaithPercent(var_10_0.faith)[1] or 0
+
+	arg_10_0.txttrust.text = string.format("%s%%", var_10_1 * 100)
 end
 
-function slot0.destroyCharacterItem(slot0)
-	slot0.simageicon:UnLoadImage()
-	slot0.btnclick:RemoveClickListener()
+function var_0_0.destroyCharacterItem(arg_11_0)
+	arg_11_0.simageicon:UnLoadImage()
+	arg_11_0.btnclick:RemoveClickListener()
 end
 
-function slot0._sort(slot0)
-	table.sort(slot0._currentHeroMOList, function (slot0, slot1)
-		slot3 = HeroModel.instance:getByHeroId(slot1.heroId)
+function var_0_0._sort(arg_12_0)
+	table.sort(arg_12_0._currentHeroMOList, function(arg_13_0, arg_13_1)
+		local var_13_0 = HeroModel.instance:getByHeroId(arg_13_0.heroId)
+		local var_13_1 = HeroModel.instance:getByHeroId(arg_13_1.heroId)
+		local var_13_2 = var_13_0 and HeroConfig.instance:getFaithPercent(var_13_0.faith)[1] or 0
+		local var_13_3 = var_13_1 and HeroConfig.instance:getFaithPercent(var_13_1.faith)[1] or 0
 
-		if (HeroModel.instance:getByHeroId(slot0.heroId) and HeroConfig.instance:getFaithPercent(slot2.faith)[1] or 0) ~= (slot3 and HeroConfig.instance:getFaithPercent(slot3.faith)[1] or 0) then
-			return slot5 < slot4
+		if var_13_2 ~= var_13_3 then
+			return var_13_3 < var_13_2
 		end
 
-		if slot0.heroConfig.rare ~= slot1.heroConfig.rare then
-			return slot1.heroConfig.rare < slot0.heroConfig.rare
+		if arg_13_0.heroConfig.rare ~= arg_13_1.heroConfig.rare then
+			return arg_13_0.heroConfig.rare > arg_13_1.heroConfig.rare
 		end
 
-		return slot0.heroId < slot1.heroId
+		return arg_13_0.heroId < arg_13_1.heroId
 	end)
 end
 
-function slot0._refreshBtnTips(slot0)
-	gohelper.setActive(slot0._gotip, #slot0._removeHeroMOList < slot0._needRemoveCount)
+function var_0_0._refreshBtnTips(arg_14_0)
+	local var_14_0 = #arg_14_0._removeHeroMOList
 
-	if slot1 < slot0._needRemoveCount then
-		slot0._txttip.text = string.format(luaLang("room_character_remove_tips"), slot0._needRemoveCount - slot1)
+	gohelper.setActive(arg_14_0._gotip, var_14_0 < arg_14_0._needRemoveCount)
+
+	if var_14_0 < arg_14_0._needRemoveCount then
+		arg_14_0._txttip.text = string.format(luaLang("room_character_remove_tips"), arg_14_0._needRemoveCount - var_14_0)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	for slot4, slot5 in ipairs(slot0._currentHeroMOList) do
-		if not slot0._currentHeroItemList[slot4] then
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = slot0.viewContainer:getResInst(slot0.viewContainer._viewSetting.otherRes[1], slot0._gocurrentplacecontent, "item" .. slot4)
+function var_0_0._refreshUI(arg_15_0)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._currentHeroMOList) do
+		local var_15_0 = arg_15_0._currentHeroItemList[iter_15_0]
 
-			uv0.initCharacterItem(slot6)
-			table.insert(slot0._currentHeroItemList, slot6)
+		if not var_15_0 then
+			var_15_0 = arg_15_0:getUserDataTb_()
+			var_15_0.go = arg_15_0.viewContainer:getResInst(arg_15_0.viewContainer._viewSetting.otherRes[1], arg_15_0._gocurrentplacecontent, "item" .. iter_15_0)
+
+			var_0_0.initCharacterItem(var_15_0)
+			table.insert(arg_15_0._currentHeroItemList, var_15_0)
 		end
 
-		slot6.btnclick:RemoveClickListener()
-		slot6.btnclick:AddClickListener(slot0._btnclickOnclick, slot0, slot5.heroId)
-		uv0.refreshCharacterItem(slot6, slot5)
-		gohelper.setActive(slot6.go, true)
+		var_15_0.btnclick:RemoveClickListener()
+		var_15_0.btnclick:AddClickListener(arg_15_0._btnclickOnclick, arg_15_0, iter_15_1.heroId)
+		var_0_0.refreshCharacterItem(var_15_0, iter_15_1)
+		gohelper.setActive(var_15_0.go, true)
 	end
 
-	for slot4 = #slot0._currentHeroMOList + 1, #slot0._currentHeroItemList do
-		gohelper.setActive(slot0._currentHeroItemList[slot4].go, false)
+	for iter_15_2 = #arg_15_0._currentHeroMOList + 1, #arg_15_0._currentHeroItemList do
+		local var_15_1 = arg_15_0._currentHeroItemList[iter_15_2]
+
+		gohelper.setActive(var_15_1.go, false)
 	end
 
-	for slot4, slot5 in ipairs(slot0._removeHeroMOList) do
-		if not slot0._removeHeroItemList[slot4] then
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = slot0.viewContainer:getResInst(slot0.viewContainer._viewSetting.otherRes[1], slot0._goremoveplacecontent, "item" .. slot4)
+	for iter_15_3, iter_15_4 in ipairs(arg_15_0._removeHeroMOList) do
+		local var_15_2 = arg_15_0._removeHeroItemList[iter_15_3]
 
-			uv0.initCharacterItem(slot6)
-			table.insert(slot0._removeHeroItemList, slot6)
+		if not var_15_2 then
+			var_15_2 = arg_15_0:getUserDataTb_()
+			var_15_2.go = arg_15_0.viewContainer:getResInst(arg_15_0.viewContainer._viewSetting.otherRes[1], arg_15_0._goremoveplacecontent, "item" .. iter_15_3)
+
+			var_0_0.initCharacterItem(var_15_2)
+			table.insert(arg_15_0._removeHeroItemList, var_15_2)
 		end
 
-		slot6.btnclick:RemoveClickListener()
-		slot6.btnclick:AddClickListener(slot0._btnclickOnclick, slot0, slot5.heroId)
-		uv0.refreshCharacterItem(slot6, slot5)
-		gohelper.setActive(slot6.go, true)
+		var_15_2.btnclick:RemoveClickListener()
+		var_15_2.btnclick:AddClickListener(arg_15_0._btnclickOnclick, arg_15_0, iter_15_4.heroId)
+		var_0_0.refreshCharacterItem(var_15_2, iter_15_4)
+		gohelper.setActive(var_15_2.go, true)
 	end
 
-	for slot4 = #slot0._removeHeroMOList + 1, #slot0._removeHeroItemList do
-		gohelper.setActive(slot0._removeHeroItemList[slot4].go, false)
+	for iter_15_5 = #arg_15_0._removeHeroMOList + 1, #arg_15_0._removeHeroItemList do
+		local var_15_3 = arg_15_0._removeHeroItemList[iter_15_5]
+
+		gohelper.setActive(var_15_3.go, false)
 	end
 
-	slot0:_refreshBtnTips()
+	arg_15_0:_refreshBtnTips()
 end
 
-function slot0.onOpen(slot0)
-	slot0._needRemoveCount = slot0.viewParam and slot0.viewParam.needRemoveCount or 0
-	slot0._closeCallback = slot0.viewParam and slot0.viewParam.closeCallback
-	slot0._sureCallback = slot0.viewParam and slot0.viewParam.sureCallback
-	slot0._callbackObj = slot0.viewParam and slot0.viewParam.callbackObj
-	slot0._callbackParam = slot0.viewParam and slot0.viewParam.callbackParam
-	slot0._notUpdateMapModel = slot0.viewParam and slot0.viewParam.notUpdateMapModel
-	slot0._currentHeroMOList = {}
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0._needRemoveCount = arg_16_0.viewParam and arg_16_0.viewParam.needRemoveCount or 0
+	arg_16_0._closeCallback = arg_16_0.viewParam and arg_16_0.viewParam.closeCallback
+	arg_16_0._sureCallback = arg_16_0.viewParam and arg_16_0.viewParam.sureCallback
+	arg_16_0._callbackObj = arg_16_0.viewParam and arg_16_0.viewParam.callbackObj
+	arg_16_0._callbackParam = arg_16_0.viewParam and arg_16_0.viewParam.callbackParam
+	arg_16_0._notUpdateMapModel = arg_16_0.viewParam and arg_16_0.viewParam.notUpdateMapModel
 
-	for slot5, slot6 in ipairs(slot0.viewParam and slot0.viewParam.roomCharacterMOList or RoomCharacterModel.instance:getList()) do
-		if slot6:isPlaceSourceState() then
-			table.insert(slot0._currentHeroMOList, slot6)
+	local var_16_0 = arg_16_0.viewParam and arg_16_0.viewParam.roomCharacterMOList or RoomCharacterModel.instance:getList()
+
+	arg_16_0._currentHeroMOList = {}
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		if iter_16_1:isPlaceSourceState() then
+			table.insert(arg_16_0._currentHeroMOList, iter_16_1)
 		end
 	end
 
-	slot0._removeHeroMOList = {}
-	slot0._currentHeroItemList = {}
-	slot0._removeHeroItemList = {}
+	arg_16_0._removeHeroMOList = {}
+	arg_16_0._currentHeroItemList = {}
+	arg_16_0._removeHeroItemList = {}
 
-	slot0:_sort()
-	slot0:_refreshUI()
+	arg_16_0:_sort()
+	arg_16_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0._simagebg:UnLoadImage()
 
-	for slot4, slot5 in ipairs(slot0._currentHeroItemList) do
-		uv0.destroyCharacterItem(slot5)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0._currentHeroItemList) do
+		var_0_0.destroyCharacterItem(iter_18_1)
 	end
 
-	for slot4, slot5 in ipairs(slot0._removeHeroItemList) do
-		uv0.destroyCharacterItem(slot5)
+	for iter_18_2, iter_18_3 in ipairs(arg_18_0._removeHeroItemList) do
+		var_0_0.destroyCharacterItem(iter_18_3)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,47 +1,49 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114GuideWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114GuideWork", package.seeall)
 
-slot0 = class("Activity114GuideWork", Activity114BaseWork)
+local var_0_0 = class("Activity114GuideWork", Activity114BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._guideId = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._guideId = arg_1_1
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onStart(slot0)
-	if GuideModel.instance:getById(slot0._guideId) and slot1.isFinish or not slot1 then
-		if not slot1 then
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = GuideModel.instance:getById(arg_2_0._guideId)
+
+	if var_2_0 and var_2_0.isFinish or not var_2_0 then
+		if not var_2_0 then
 			logError("指引没有自动接？？？")
 		end
 
-		slot0:onDone(false)
+		arg_2_0:onDone(false)
 
 		return
 	end
 
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
-	Activity114Controller.instance:dispatchEvent(Activity114Event.GuideBegin, tostring(slot0._guideId))
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_2_0._onGuideFinish, arg_2_0)
+	Activity114Controller.instance:dispatchEvent(Activity114Event.GuideBegin, tostring(arg_2_0._guideId))
 end
 
-function slot0._onGuideFinish(slot0, slot1)
-	if slot0._guideId ~= slot1 then
+function var_0_0._onGuideFinish(arg_3_0, arg_3_1)
+	if arg_3_0._guideId ~= arg_3_1 then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_3_0._onGuideFinish, arg_3_0)
 
 	if Activity114Model.instance:isEnd() then
-		slot0:onDone(false)
+		arg_3_0:onDone(false)
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
-	uv0.super.clearWork(slot0)
+function var_0_0.clearWork(arg_4_0)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_4_0._onGuideFinish, arg_4_0)
+	var_0_0.super.clearWork(arg_4_0)
 end
 
-return slot0
+return var_0_0

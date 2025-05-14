@@ -1,8 +1,8 @@
-module("modules.logic.task.view.TaskViewContainer", package.seeall)
+﻿module("modules.logic.task.view.TaskViewContainer", package.seeall)
 
-slot0 = class("TaskViewContainer", BaseViewContainer)
+local var_0_0 = class("TaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_container"),
@@ -10,18 +10,18 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			TaskNoviceView.New(),
 			TaskDailyView.New(),
@@ -30,12 +30,12 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.switchTab(arg_3_0, arg_3_1)
+	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Mission_close)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Mission_close)
 end
 
-return slot0
+return var_0_0

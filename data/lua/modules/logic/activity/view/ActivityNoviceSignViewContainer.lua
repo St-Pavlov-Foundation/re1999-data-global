@@ -1,26 +1,27 @@
-module("modules.logic.activity.view.ActivityNoviceSignViewContainer", package.seeall)
+﻿module("modules.logic.activity.view.ActivityNoviceSignViewContainer", package.seeall)
 
-slot0 = class("ActivityNoviceSignViewContainer", BaseViewContainer)
+local var_0_0 = class("ActivityNoviceSignViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_daylist/#scroll_item"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = ActivityNoviceSignItem
-	slot2.scrollDir = ScrollEnum.ScrollDirH
-	slot2.lineCount = 1
-	slot2.cellWidth = 190
-	slot2.cellHeight = 520
-	slot2.cellSpaceH = 3.16
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 5
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(ActivityNoviceSignItemListModel.instance, slot2))
-	table.insert(slot1, ActivityNoviceSignView.New())
+	var_1_1.scrollGOPath = "#go_daylist/#scroll_item"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = ActivityNoviceSignItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirH
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 190
+	var_1_1.cellHeight = 520
+	var_1_1.cellSpaceH = 3.16
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 5
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(ActivityNoviceSignItemListModel.instance, var_1_1))
+	table.insert(var_1_0, ActivityNoviceSignView.New())
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

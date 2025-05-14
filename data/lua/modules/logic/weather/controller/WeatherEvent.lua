@@ -1,9 +1,10 @@
-module("modules.logic.weather.controller.WeatherEvent", package.seeall)
+﻿module("modules.logic.weather.controller.WeatherEvent", package.seeall)
 
-slot0 = _M
-slot0.PlayVoice = 1
-slot0.LoadPhotoFrameBg = 2
-slot0.OnRoleBlend = 3
-slot0.WeatherChanged = 10
+local var_0_0 = _M
 
-return slot0
+var_0_0.PlayVoice = 1
+var_0_0.LoadPhotoFrameBg = 2
+var_0_0.OnRoleBlend = 3
+var_0_0.WeatherChanged = 10
+
+return var_0_0

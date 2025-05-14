@@ -1,28 +1,33 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepNextMap", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepNextMap", package.seeall)
 
-slot0 = class("Va3ChessStepNextMap", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepNextMap", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot0:processNextMapStatus()
+function var_0_0.start(arg_1_0)
+	arg_1_0:processNextMapStatus()
 end
 
-function slot0.processNextMapStatus(slot0)
+function var_0_0.processNextMapStatus(arg_2_0)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.BeforeEnterNextMap)
-	TaskDispatcher.runDelay(slot0.beginEnterNextMap, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_2_0.beginEnterNextMap, arg_2_0, 0.5)
 end
 
-function slot0.beginEnterNextMap(slot0)
-	slot4 = Va3ChessModel.instance:getMapId()
+function var_0_0.beginEnterNextMap(arg_3_0)
+	local var_3_0 = Va3ChessModel.instance:getActId()
+	local var_3_1 = Va3ChessModel.instance:getEpisodeId()
+	local var_3_2 = Va3ChessConfig.instance:getEpisodeCo(var_3_0, var_3_1)
+	local var_3_3 = Va3ChessModel.instance:getMapId()
 
-	if Va3ChessConfig.instance:getEpisodeCo(Va3ChessModel.instance:getActId(), Va3ChessModel.instance:getEpisodeId()) and slot3.mapIds then
-		slot4 = tonumber(string.split(slot3.mapIds, "#")[2])
+	if var_3_2 and var_3_2.mapIds then
+		local var_3_4 = string.split(var_3_2.mapIds, "#")
+
+		var_3_3 = tonumber(var_3_4[2])
 	end
 
 	Va3ChessGameModel.instance:recordLastMapRound()
-	Va3ChessController.instance:initMapData(slot1, slot0.originData.act122Map)
-	Va3ChessGameController.instance:enterChessGame(slot1, slot4, ViewName.Activity1_3ChessGameView)
+	Va3ChessController.instance:initMapData(var_3_0, arg_3_0.originData.act122Map)
+	Va3ChessGameController.instance:enterChessGame(var_3_0, var_3_3, ViewName.Activity1_3ChessGameView)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EnterNextMap)
-	slot0:finish()
+	arg_3_0:finish()
 end
 
-return slot0
+return var_0_0

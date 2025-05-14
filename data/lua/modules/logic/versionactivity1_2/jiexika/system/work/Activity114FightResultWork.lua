@@ -1,26 +1,26 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114FightResultWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114FightResultWork", package.seeall)
 
-slot0 = class("Activity114FightResultWork", Activity114BaseWork)
+local var_0_0 = class("Activity114FightResultWork", Activity114BaseWork)
 
-function slot0.onStart(slot0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnFightResult, slot0.onFightResult, slot0)
+function var_0_0.onStart(arg_1_0)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnFightResult, arg_1_0.onFightResult, arg_1_0)
 end
 
-function slot0.onFightResult(slot0, slot1)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, slot0.onFightResult, slot0)
+function var_0_0.onFightResult(arg_2_0, arg_2_1)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, arg_2_0.onFightResult, arg_2_0)
 
-	slot0.context.result = slot1
+	arg_2_0.context.result = arg_2_1
 
-	if slot0.context.type == Activity114Enum.EventType.KeyDay then
-		slot0.context.storyId = slot1 == Activity114Enum.Result.Success and slot0.context.eventCo.config.successStoryId or slot0.context.eventCo.config.failureStoryId
+	if arg_2_0.context.type == Activity114Enum.EventType.KeyDay then
+		arg_2_0.context.storyId = arg_2_1 == Activity114Enum.Result.Success and arg_2_0.context.eventCo.config.successStoryId or arg_2_0.context.eventCo.config.failureStoryId
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, slot0.onFightResult, slot0)
-	uv0.super.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, arg_3_0.onFightResult, arg_3_0)
+	var_0_0.super.clearWork(arg_3_0)
 end
 
-return slot0
+return var_0_0

@@ -1,274 +1,294 @@
-module("modules.logic.versionactivity.view.VersionActivityExchangeView", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityExchangeView", package.seeall)
 
-slot0 = class("VersionActivityExchangeView", BaseView)
+local var_0_0 = class("VersionActivityExchangeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gochat = gohelper.findChild(slot0.viewGO, "taklkarea/#go_chat")
-	slot0._txttalk1 = gohelper.findChildText(slot0.viewGO, "taklkarea/#go_chat/#txt_talk1")
-	slot0._txttalk2 = gohelper.findChildText(slot0.viewGO, "taklkarea/#go_chat/#txt_talk2")
-	slot0._gohero1 = gohelper.findChild(slot0.viewGO, "taklkarea/hero1/#go_hero1")
-	slot0._gohero2 = gohelper.findChild(slot0.viewGO, "taklkarea/hero2/#go_hero2")
-	slot0._goroleimage = gohelper.findChild(slot0.viewGO, "taklkarea/#go_role_image")
-	slot0._txtdeadline = gohelper.findChildText(slot0.viewGO, "#txt_deadline")
-	slot0._txthas = gohelper.findChildText(slot0.viewGO, "gohas/#txt_has")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_reward")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_Content")
-	slot0._gorewardItem = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_Content/#go_rewardItem")
-	slot0._gorewardcontent = gohelper.findChild(slot0.viewGO, "#scroll_reward/Viewport/#go_Content/#go_rewardItem/#go_rewardcontent")
-	slot0._btngetres = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_getres")
-	slot0._btnrule = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_rule")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._slider = gohelper.findChildSlider(slot0.viewGO, "#scroll_reward/Viewport/#go_Content/#slider_progress")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gochat = gohelper.findChild(arg_1_0.viewGO, "taklkarea/#go_chat")
+	arg_1_0._txttalk1 = gohelper.findChildText(arg_1_0.viewGO, "taklkarea/#go_chat/#txt_talk1")
+	arg_1_0._txttalk2 = gohelper.findChildText(arg_1_0.viewGO, "taklkarea/#go_chat/#txt_talk2")
+	arg_1_0._gohero1 = gohelper.findChild(arg_1_0.viewGO, "taklkarea/hero1/#go_hero1")
+	arg_1_0._gohero2 = gohelper.findChild(arg_1_0.viewGO, "taklkarea/hero2/#go_hero2")
+	arg_1_0._goroleimage = gohelper.findChild(arg_1_0.viewGO, "taklkarea/#go_role_image")
+	arg_1_0._txtdeadline = gohelper.findChildText(arg_1_0.viewGO, "#txt_deadline")
+	arg_1_0._txthas = gohelper.findChildText(arg_1_0.viewGO, "gohas/#txt_has")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_Content")
+	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_Content/#go_rewardItem")
+	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_Content/#go_rewardItem/#go_rewardcontent")
+	arg_1_0._btngetres = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_getres")
+	arg_1_0._btnrule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rule")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._slider = gohelper.findChildSlider(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_Content/#slider_progress")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btngetres:AddClickListener(slot0._btngetresOnClick, slot0)
-	slot0._btnrule:AddClickListener(slot0.openTips, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btngetres:AddClickListener(arg_2_0._btngetresOnClick, arg_2_0)
+	arg_2_0._btnrule:AddClickListener(arg_2_0.openTips, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btngetres:RemoveClickListener()
-	slot0._btnrule:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btngetres:RemoveClickListener()
+	arg_3_0._btnrule:RemoveClickListener()
 end
 
-function slot0._btngetresOnClick(slot0)
-	if ActivityModel.instance:getActEndTime(slot0.actId) / 1000 - ServerTime.now() < tonumber(slot0._actMO.config.param) * 3600 then
+function var_0_0._btngetresOnClick(arg_4_0)
+	if ActivityModel.instance:getActEndTime(arg_4_0.actId) / 1000 - ServerTime.now() < tonumber(arg_4_0._actMO.config.param) * 3600 then
 		ToastController.instance:showToast(185)
 	else
 		ViewMgr.instance:openView(ViewName.VersionActivityExchangeTaskView, {
-			actId = slot0.actId
+			actId = arg_4_0.actId
 		})
 	end
 end
 
-function slot0.openTips(slot0)
+function var_0_0.openTips(arg_5_0)
 	ViewMgr.instance:openView(ViewName.VersionActivityTipsView)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gorewardItem, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._gorewardItem, false)
 
-	slot0.rewardItemList = {}
-	slot0.actId = 11114
-	slot0._actMO = ActivityModel.instance:getActMO(slot0.actId)
-	slot0._uiSpine1 = GuiModelAgentNew.Create(slot0._gohero1, true)
-	slot0._uiSpine2 = GuiModelAgentNew.Create(slot0._gohero2, true)
+	arg_6_0.rewardItemList = {}
+	arg_6_0.actId = 11114
+	arg_6_0._actMO = ActivityModel.instance:getActMO(arg_6_0.actId)
+	arg_6_0._uiSpine1 = GuiModelAgentNew.Create(arg_6_0._gohero1, true)
+	arg_6_0._uiSpine2 = GuiModelAgentNew.Create(arg_6_0._gohero2, true)
 
-	slot0._simagebg:LoadImage(ResUrl.getVersionActivityExchangeIcon("full/bg"))
+	arg_6_0._simagebg:LoadImage(ResUrl.getVersionActivityExchangeIcon("full/bg"))
 
-	slot0._animator = gohelper.findChild(slot0.viewGO, "taklkarea"):GetComponent(typeof(UnityEngine.Animator))
-	slot2 = ViewMgr.instance:getUIRoot().transform
-	slot3 = recthelper.getHeight(slot2)
-	slot4 = recthelper.getWidth(slot2)
+	arg_6_0._animator = gohelper.findChild(arg_6_0.viewGO, "taklkarea"):GetComponent(typeof(UnityEngine.Animator))
 
-	recthelper.setSize(gohelper.findChild(slot0._goroleimage, "maskhero1Shadow/img_hero1").transform, slot4, slot3)
-	recthelper.setSize(gohelper.findChild(slot0._goroleimage, "maskhero2Shadow/img_hero2").transform, slot4, slot3)
-	recthelper.setSize(gohelper.findChild(slot0._goroleimage, "maskhero1/img_hero1").transform, slot4, slot3)
-	recthelper.setSize(gohelper.findChild(slot0._goroleimage, "maskhero2/img_hero2").transform, slot4, slot3)
+	local var_6_0 = ViewMgr.instance:getUIRoot().transform
+	local var_6_1 = recthelper.getHeight(var_6_0)
+	local var_6_2 = recthelper.getWidth(var_6_0)
+	local var_6_3 = gohelper.findChild(arg_6_0._goroleimage, "maskhero1Shadow/img_hero1").transform
+	local var_6_4 = gohelper.findChild(arg_6_0._goroleimage, "maskhero2Shadow/img_hero2").transform
+	local var_6_5 = gohelper.findChild(arg_6_0._goroleimage, "maskhero1/img_hero1").transform
+	local var_6_6 = gohelper.findChild(arg_6_0._goroleimage, "maskhero2/img_hero2").transform
 
-	slot0.iconClick = gohelper.findChildClick(slot0.viewGO, "gohas/icon")
+	recthelper.setSize(var_6_3, var_6_2, var_6_1)
+	recthelper.setSize(var_6_4, var_6_2, var_6_1)
+	recthelper.setSize(var_6_5, var_6_2, var_6_1)
+	recthelper.setSize(var_6_6, var_6_2, var_6_1)
 
-	slot0.iconClick:AddClickListener(slot0.onClickIcon, slot0)
+	arg_6_0.iconClick = gohelper.findChildClick(arg_6_0.viewGO, "gohas/icon")
 
-	slot0._firstShow = true
-	slot0._gotaskdot = gohelper.findChild(slot0.viewGO, "#btn_getres/dot")
+	arg_6_0.iconClick:AddClickListener(arg_6_0.onClickIcon, arg_6_0)
 
-	RedDotController.instance:addRedDot(slot0._gotaskdot, RedDotEnum.DotNode.VersionActivityExchangeTask)
+	arg_6_0._firstShow = true
+	arg_6_0._gotaskdot = gohelper.findChild(arg_6_0.viewGO, "#btn_getres/dot")
+
+	RedDotController.instance:addRedDot(arg_6_0._gotaskdot, RedDotEnum.DotNode.VersionActivityExchangeTask)
 end
 
-function slot0.onClickIcon(slot0)
+function var_0_0.onClickIcon(arg_7_0)
 	MaterialTipController.instance:showMaterialInfo(1, 970002, false, nil, false)
 end
 
-function slot0.onUpdateParam(slot0)
-	Activity112Rpc.instance:sendGet112InfosRequest(slot0.actId)
-	slot0:refreshReward()
-	slot0:updateItemNum()
-	slot0:updateDeadline()
+function var_0_0.onUpdateParam(arg_8_0)
+	Activity112Rpc.instance:sendGet112InfosRequest(arg_8_0.actId)
+	arg_8_0:refreshReward()
+	arg_8_0:updateItemNum()
+	arg_8_0:updateDeadline()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_paraphrase_open)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.updateItemNum, slot0)
+	arg_9_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_9_0.updateItemNum, arg_9_0)
+	arg_9_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.VersionActivity112Update, arg_9_0.refreshReward, arg_9_0)
+	Activity112Rpc.instance:sendGet112InfosRequest(arg_9_0.actId)
 
-	slot5 = slot0.refreshReward
-	slot6 = slot0
+	local var_9_0 = VersionActivityConfig.instance:getAct112Config(arg_9_0.actId)
 
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.VersionActivity112Update, slot5, slot6)
-	Activity112Rpc.instance:sendGet112InfosRequest(slot0.actId)
+	arg_9_0._needList = {}
 
-	slot0._needList = {}
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_1 = string.splitToNumber(iter_9_1.items, "#")
 
-	for slot5, slot6 in ipairs(VersionActivityConfig.instance:getAct112Config(slot0.actId)) do
-		slot0._needList[slot5] = string.splitToNumber(slot6.items, "#")[3]
+		arg_9_0._needList[iter_9_0] = var_9_1[3]
 	end
 
-	slot0:updateItemNum()
-	slot0:updateDeadline()
-	TaskDispatcher.runRepeat(slot0.updateDeadline, slot0, 60)
+	arg_9_0:updateItemNum()
+	arg_9_0:updateDeadline()
+	TaskDispatcher.runRepeat(arg_9_0.updateDeadline, arg_9_0, 60)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.updateItemNum, slot0)
-	slot0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.VersionActivity112Update, slot0.refreshReward, slot0)
-	TaskDispatcher.cancelTask(slot0.updateDeadline, slot0)
+function var_0_0.onClose(arg_10_0)
+	arg_10_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_10_0.updateItemNum, arg_10_0)
+	arg_10_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.VersionActivity112Update, arg_10_0.refreshReward, arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.updateDeadline, arg_10_0)
 end
 
-function slot0.removeEventCb(slot0)
+function var_0_0.removeEventCb(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.rewardItemList) do
-		slot5:onDestroyView()
+function var_0_0.onDestroyView(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.rewardItemList) do
+		iter_12_1:onDestroyView()
 	end
 
-	slot0.iconClick:RemoveClickListener()
+	arg_12_0.iconClick:RemoveClickListener()
 
-	slot0.rewardItemList = nil
+	arg_12_0.rewardItemList = nil
 
-	slot0._simagebg:UnLoadImage()
+	arg_12_0._simagebg:UnLoadImage()
 end
 
-function slot0.refreshReward(slot0)
-	slot1 = VersionActivityConfig.instance:getAct112Config(slot0.actId)
-	slot3 = (ServerTime.now() - ActivityModel.instance:getActStartTime(slot0.actId) / 1000) / 86400
-	slot4 = nil
+function var_0_0.refreshReward(arg_13_0)
+	local var_13_0 = VersionActivityConfig.instance:getAct112Config(arg_13_0.actId)
+	local var_13_1 = ActivityModel.instance:getActStartTime(arg_13_0.actId) / 1000
+	local var_13_2 = (ServerTime.now() - var_13_1) / 86400
+	local var_13_3
+	local var_13_4 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, 0)
 
-	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, 0) == 0 then
-		PlayerPrefsHelper.setNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, slot1[1].id)
+	if var_13_4 == 0 then
+		var_13_4 = var_13_0[1].id
+
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, var_13_4)
 	end
 
-	slot6 = nil
+	local var_13_5
 
-	for slot10, slot11 in ipairs(slot1) do
-		if slot0.rewardItemList[slot10] == nil then
-			slot13 = gohelper.cloneInPlace(slot0._gorewardItem, "item" .. slot10)
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_6 = arg_13_0.rewardItemList[iter_13_0]
 
-			gohelper.setActive(slot13, true)
+		if var_13_6 == nil then
+			local var_13_7 = gohelper.cloneInPlace(arg_13_0._gorewardItem, "item" .. iter_13_0)
 
-			slot12 = MonoHelper.addLuaComOnceToGo(slot13, VersionActivityExchangeItem, slot0)
-			slot0.rewardItemList[slot10] = slot12
+			gohelper.setActive(var_13_7, true)
 
-			slot12:setSelectFunc(slot0.onSelectItem, slot0)
+			var_13_6 = MonoHelper.addLuaComOnceToGo(var_13_7, VersionActivityExchangeItem, arg_13_0)
+			arg_13_0.rewardItemList[iter_13_0] = var_13_6
+
+			var_13_6:setSelectFunc(arg_13_0.onSelectItem, arg_13_0)
 		end
 
-		if slot5 == slot11.id then
-			slot6 = slot11
+		if var_13_4 == iter_13_1.id then
+			var_13_5 = iter_13_1
 		end
 
-		slot12:updateItem(slot11, slot10, slot0._firstShow)
-		slot12:updateSelect(slot5)
+		var_13_6:updateItem(iter_13_1, iter_13_0, arg_13_0._firstShow)
+		var_13_6:updateSelect(var_13_4)
 	end
 
-	slot0._firstShow = false
+	arg_13_0._firstShow = false
 
-	if slot6 == nil then
-		slot6 = slot1[1]
-		slot5 = slot1[1].id
+	if var_13_5 == nil then
+		var_13_5 = var_13_0[1]
 
-		slot0.rewardItemList[1]:updateSelect(slot5)
-		PlayerPrefsHelper.setNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, slot5)
+		local var_13_8 = var_13_0[1].id
+
+		arg_13_0.rewardItemList[1]:updateSelect(var_13_8)
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, var_13_8)
 	end
 
-	slot0.selectConfig = slot6
+	arg_13_0.selectConfig = var_13_5
 
-	slot0:updateSelectInfo()
+	arg_13_0:updateSelectInfo()
 end
 
-function slot0.updateDeadline(slot0)
-	slot0._txtdeadline.text = string.format(luaLang("activity_remain_time"), ActivityModel.instance:getActivityInfo()[slot0.actId]:getRemainTimeStr2ByEndTime())
+function var_0_0.updateDeadline(arg_14_0)
+	local var_14_0 = ActivityModel.instance:getActivityInfo()[arg_14_0.actId]:getRemainTimeStr2ByEndTime()
+
+	arg_14_0._txtdeadline.text = string.format(luaLang("activity_remain_time"), var_14_0)
 end
 
-function slot0.updateItemNum(slot0)
-	slot0._txthas.text = ItemModel.instance:getItemQuantity(1, 970002)
-	slot2 = 0
-	slot3 = 0
-	slot4 = 0
-	slot5 = 0
-	slot7 = 1 - 0.2
-	slot8 = 0.1
+function var_0_0.updateItemNum(arg_15_0)
+	local var_15_0 = ItemModel.instance:getItemQuantity(1, 970002)
 
-	for slot12, slot13 in ipairs(slot0._needList) do
-		if slot13 <= slot1 then
-			slot2 = slot12
-			slot3 = slot13
-			slot4 = slot13
-		elseif slot4 <= slot3 then
-			slot4 = slot13
+	arg_15_0._txthas.text = var_15_0
+
+	local var_15_1 = 0
+	local var_15_2 = 0
+	local var_15_3 = 0
+	local var_15_4 = 0
+	local var_15_5 = 0.2
+	local var_15_6 = 1 - var_15_5
+	local var_15_7 = 0.1
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._needList) do
+		if iter_15_1 <= var_15_0 then
+			var_15_1 = iter_15_0
+			var_15_2 = iter_15_1
+			var_15_3 = iter_15_1
+		elseif var_15_3 <= var_15_2 then
+			var_15_3 = iter_15_1
 		end
 	end
 
-	if slot4 ~= slot3 then
-		slot5 = (slot1 - slot3) / (slot4 - slot3)
+	if var_15_3 ~= var_15_2 then
+		var_15_4 = (var_15_0 - var_15_2) / (var_15_3 - var_15_2)
 	end
 
-	if slot2 == 0 then
-		slot0._slider:SetValue((slot8 + 0.3 * slot5) / (#slot0._needList - 0.5))
+	if var_15_1 == 0 then
+		arg_15_0._slider:SetValue((var_15_7 + 0.3 * var_15_4) / (#arg_15_0._needList - 0.5))
 	else
-		slot0._slider:SetValue((slot2 - 0.5 + slot8 + slot7 * slot5) / (#slot0._needList - 0.5))
+		arg_15_0._slider:SetValue((var_15_1 - 0.5 + var_15_7 + var_15_6 * var_15_4) / (#arg_15_0._needList - 0.5))
 	end
 
-	for slot12, slot13 in ipairs(slot0.rewardItemList) do
-		slot13:updateNeed()
+	for iter_15_2, iter_15_3 in ipairs(arg_15_0.rewardItemList) do
+		iter_15_3:updateNeed()
 	end
 end
 
-function slot0.onSelectItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.rewardItemList) do
-		slot6:updateSelect(slot1.id)
+function var_0_0.onSelectItem(arg_16_0, arg_16_1)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0.rewardItemList) do
+		iter_16_1:updateSelect(arg_16_1.id)
 	end
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, slot1.id)
-	slot0._animator:Play(UIAnimationName.Click, 0, 0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.VersionActivityExchangeViewSelKey, arg_16_1.id)
+	arg_16_0._animator:Play(UIAnimationName.Click, 0, 0)
 
-	slot0.selectConfig = slot1
+	arg_16_0.selectConfig = arg_16_1
 
-	TaskDispatcher.cancelTask(slot0.updateSelectInfo, slot0)
-	TaskDispatcher.runDelay(slot0.updateSelectInfo, slot0, 0.3)
+	TaskDispatcher.cancelTask(arg_16_0.updateSelectInfo, arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0.updateSelectInfo, arg_16_0, 0.3)
 end
 
-function slot0.updateSelectInfo(slot0)
-	slot1 = slot0.selectConfig
-	slot0.state = VersionActivity112Model.instance:getRewardState(slot1.activityId, slot1.id)
+function var_0_0.updateSelectInfo(arg_17_0)
+	local var_17_0 = arg_17_0.selectConfig
 
-	if slot0.state == 1 then
-		slot0._txttalk1.text = slot1.themeDone
-		slot0._txttalk2.text = slot1.themeDone2
+	arg_17_0.state = VersionActivity112Model.instance:getRewardState(var_17_0.activityId, var_17_0.id)
+
+	if arg_17_0.state == 1 then
+		arg_17_0._txttalk1.text = var_17_0.themeDone
+		arg_17_0._txttalk2.text = var_17_0.themeDone2
 	else
-		slot0._txttalk1.text = slot1.theme
-		slot0._txttalk2.text = slot1.theme2
+		arg_17_0._txttalk1.text = var_17_0.theme
+		arg_17_0._txttalk2.text = var_17_0.theme2
 	end
 
-	gohelper.setActive(slot0._gochat, true)
-	gohelper.setActive(slot0._goroleimage, false)
-	transformhelper.setLocalScale(slot0._gohero1.transform, 1, 1, 1)
-	transformhelper.setLocalScale(slot0._gohero2.transform, 1, 1, 1)
-	slot0._uiSpine1:setResPath(slot1.skin, string.find(slot1.skin, "live2d"), slot0._onSpineLoaded1, slot0)
-	slot0._uiSpine2:setResPath(slot1.skin2, string.find(slot1.skin2, "live2d"), slot0._onSpineLoaded2, slot0)
+	gohelper.setActive(arg_17_0._gochat, true)
+	gohelper.setActive(arg_17_0._goroleimage, false)
+	transformhelper.setLocalScale(arg_17_0._gohero1.transform, 1, 1, 1)
+	transformhelper.setLocalScale(arg_17_0._gohero2.transform, 1, 1, 1)
+	arg_17_0._uiSpine1:setResPath(var_17_0.skin, string.find(var_17_0.skin, "live2d"), arg_17_0._onSpineLoaded1, arg_17_0)
+	arg_17_0._uiSpine2:setResPath(var_17_0.skin2, string.find(var_17_0.skin2, "live2d"), arg_17_0._onSpineLoaded2, arg_17_0)
 end
 
-function slot0._onSpineLoaded1(slot0)
-	gohelper.setActive(slot0._goroleimage, true)
+function var_0_0._onSpineLoaded1(arg_18_0)
+	gohelper.setActive(arg_18_0._goroleimage, true)
 
-	slot1 = string.splitToNumber(slot0.selectConfig.skinOffSet, "#")
+	local var_18_0 = string.splitToNumber(arg_18_0.selectConfig.skinOffSet, "#")
 
-	recthelper.setAnchor(slot0._gohero1.transform, slot1[1], slot1[2])
-	transformhelper.setLocalScale(slot0._gohero1.transform, slot1[3], slot1[3], slot1[3])
+	recthelper.setAnchor(arg_18_0._gohero1.transform, var_18_0[1], var_18_0[2])
+	transformhelper.setLocalScale(arg_18_0._gohero1.transform, var_18_0[3], var_18_0[3], var_18_0[3])
 end
 
-function slot0._onSpineLoaded2(slot0)
-	gohelper.setActive(slot0._goroleimage, true)
+function var_0_0._onSpineLoaded2(arg_19_0)
+	gohelper.setActive(arg_19_0._goroleimage, true)
 
-	slot1 = string.splitToNumber(slot0.selectConfig.skin2OffSet, "#")
+	local var_19_0 = string.splitToNumber(arg_19_0.selectConfig.skin2OffSet, "#")
 
-	recthelper.setAnchor(slot0._gohero2.transform, slot1[1], slot1[2])
-	transformhelper.setLocalScale(slot0._gohero2.transform, slot1[3], slot1[3], slot1[3])
+	recthelper.setAnchor(arg_19_0._gohero2.transform, var_19_0[1], var_19_0[2])
+	transformhelper.setLocalScale(arg_19_0._gohero2.transform, var_19_0[3], var_19_0[3], var_19_0[3])
 end
 
-return slot0
+return var_0_0

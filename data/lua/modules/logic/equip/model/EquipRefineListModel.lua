@@ -1,150 +1,158 @@
-module("modules.logic.equip.model.EquipRefineListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipRefineListModel", package.seeall)
 
-slot0 = class("EquipRefineListModel", ListScrollModel)
-slot0.SelectStatusEnum = {
+local var_0_0 = class("EquipRefineListModel", ListScrollModel)
+
+var_0_0.SelectStatusEnum = {
 	Selected = 2,
 	OutMaxRefineLv = 1,
 	Success = 0
 }
 
-function slot0.onInit(slot0)
-	slot0.selectedEquipMoList = {}
-	slot0.selectedEquipUidDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.selectedEquipMoList = {}
+	arg_1_0.selectedEquipUidDict = {}
 end
 
-function slot0.reInit(slot0)
-	slot0.selectedEquipMoList = {}
-	slot0.selectedEquipUidDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.selectedEquipMoList = {}
+	arg_2_0.selectedEquipUidDict = {}
 end
 
-function slot0.initData(slot0, slot1)
-	slot0.targetEquipMo = slot1
-	slot0.targetEquipRefineLv = slot1.refineLv
+function var_0_0.initData(arg_3_0, arg_3_1)
+	arg_3_0.targetEquipMo = arg_3_1
+	arg_3_0.targetEquipRefineLv = arg_3_1.refineLv
 
-	if not string.nilorempty(slot0.targetEquipMo.config.useSpRefine) then
-		slot0.useSpRefineList = string.splitToNumber(slot2.useSpRefine, "#")
+	local var_3_0 = arg_3_0.targetEquipMo.config
+
+	if not string.nilorempty(var_3_0.useSpRefine) then
+		arg_3_0.useSpRefineList = string.splitToNumber(var_3_0.useSpRefine, "#")
 	end
 
-	slot0.data = {}
+	arg_3_0.data = {}
 
-	for slot7, slot8 in ipairs(EquipModel.instance:getEquips()) do
-		if slot0:canAddToData(slot8) then
-			table.insert(slot0.data, slot8)
+	local var_3_1 = EquipModel.instance:getEquips()
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		if arg_3_0:canAddToData(iter_3_1) then
+			table.insert(arg_3_0.data, iter_3_1)
 		end
 	end
 end
 
-function slot0.canAddToData(slot0, slot1)
-	if slot1.equipId == EquipConfig.instance:getEquipUniversalId() then
+function var_0_0.canAddToData(arg_4_0, arg_4_1)
+	if arg_4_1.equipId == EquipConfig.instance:getEquipUniversalId() then
 		return true
 	end
 
-	if slot1.equipId == slot0.targetEquipMo.equipId and slot1.uid ~= slot0.targetEquipMo.uid and slot1.config.isExpEquip ~= 1 then
+	if arg_4_1.equipId == arg_4_0.targetEquipMo.equipId and arg_4_1.uid ~= arg_4_0.targetEquipMo.uid and arg_4_1.config.isExpEquip ~= 1 then
 		return true
 	end
 
-	if slot0.useSpRefineList and tabletool.indexOf(slot0.useSpRefineList, slot1.equipId) then
+	if arg_4_0.useSpRefineList and tabletool.indexOf(arg_4_0.useSpRefineList, arg_4_1.equipId) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.sortData(slot0)
-	table.sort(slot0.data, EquipHelper.sortRefineList)
+function var_0_0.sortData(arg_5_0)
+	table.sort(arg_5_0.data, EquipHelper.sortRefineList)
 end
 
-function slot0.refreshData(slot0)
-	slot0:setList(slot0.data)
+function var_0_0.refreshData(arg_6_0)
+	arg_6_0:setList(arg_6_0.data)
 end
 
-function slot0.getDataCount(slot0)
-	return GameUtil.getTabLen(slot0.data)
+function var_0_0.getDataCount(arg_7_0)
+	return GameUtil.getTabLen(arg_7_0.data)
 end
 
-function slot0.selectEquip(slot0, slot1)
-	if slot0.selectedEquipUidDict[slot1.uid] then
-		return uv0.SelectStatusEnum.Selected
+function var_0_0.selectEquip(arg_8_0, arg_8_1)
+	if arg_8_0.selectedEquipUidDict[arg_8_1.uid] then
+		return var_0_0.SelectStatusEnum.Selected
 	end
 
-	if EquipConfig.instance:getEquipRefineLvMax() <= slot0:getAddRefineLv() + slot0.targetEquipRefineLv then
-		return uv0.SelectStatusEnum.OutMaxRefineLv
+	if arg_8_0:getAddRefineLv() + arg_8_0.targetEquipRefineLv >= EquipConfig.instance:getEquipRefineLvMax() then
+		return var_0_0.SelectStatusEnum.OutMaxRefineLv
 	end
 
-	slot0.selectedEquipUidDict[slot1.uid] = true
+	arg_8_0.selectedEquipUidDict[arg_8_1.uid] = true
 
-	table.insert(slot0.selectedEquipMoList, slot1)
-	slot0:setSelectedEquipMoList()
+	table.insert(arg_8_0.selectedEquipMoList, arg_8_1)
+	arg_8_0:setSelectedEquipMoList()
 	EquipController.instance:dispatchEvent(EquipEvent.OnRefineSelectedEquipChange)
 
-	return uv0.SelectStatusEnum.Success
+	return var_0_0.SelectStatusEnum.Success
 end
 
-function slot0.deselectEquip(slot0, slot1)
-	slot0.selectedEquipUidDict[slot1.uid] = nil
-	slot2 = {}
+function var_0_0.deselectEquip(arg_9_0, arg_9_1)
+	arg_9_0.selectedEquipUidDict[arg_9_1.uid] = nil
 
-	for slot6, slot7 in ipairs(slot0.selectedEquipMoList) do
-		if slot7.uid ~= slot1.uid then
-			table.insert(slot2, slot7)
+	local var_9_0 = {}
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.selectedEquipMoList) do
+		if iter_9_1.uid ~= arg_9_1.uid then
+			table.insert(var_9_0, iter_9_1)
 		end
 	end
 
-	slot0.selectedEquipMoList = slot2
+	arg_9_0.selectedEquipMoList = var_9_0
 
-	slot0:setSelectedEquipMoList()
+	arg_9_0:setSelectedEquipMoList()
 	EquipController.instance:dispatchEvent(EquipEvent.OnRefineSelectedEquipChange)
 end
 
-function slot0.clearSelectedEquipList(slot0)
-	slot0.selectedEquipMoList = {}
-	slot0.selectedEquipUidDict = {}
+function var_0_0.clearSelectedEquipList(arg_10_0)
+	arg_10_0.selectedEquipMoList = {}
+	arg_10_0.selectedEquipUidDict = {}
 
 	EquipRefineSelectedListModel.instance:updateList()
 end
 
-function slot0.setSelectedEquipMoList(slot0)
-	EquipRefineSelectedListModel.instance:updateList(slot0.selectedEquipMoList)
+function var_0_0.setSelectedEquipMoList(arg_11_0)
+	EquipRefineSelectedListModel.instance:updateList(arg_11_0.selectedEquipMoList)
 end
 
-function slot0.getSelectedEquipMoList(slot0)
-	return slot0.selectedEquipMoList
+function var_0_0.getSelectedEquipMoList(arg_12_0)
+	return arg_12_0.selectedEquipMoList
 end
 
-function slot0.getSelectedEquipUidList(slot0)
-	slot1 = {}
+function var_0_0.getSelectedEquipUidList(arg_13_0)
+	local var_13_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.selectedEquipMoList) do
-		table.insert(slot1, slot6.uid)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.selectedEquipMoList) do
+		table.insert(var_13_0, iter_13_1.uid)
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.getAddRefineLv(slot0)
-	for slot5, slot6 in ipairs(slot0.selectedEquipMoList) do
-		slot1 = 0 + slot6.refineLv
+function var_0_0.getAddRefineLv(arg_14_0)
+	local var_14_0 = 0
+
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.selectedEquipMoList) do
+		var_14_0 = var_14_0 + iter_14_1.refineLv
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.isSelected(slot0, slot1)
-	if not slot1 then
+function var_0_0.isSelected(arg_15_0, arg_15_1)
+	if not arg_15_1 then
 		return false
 	end
 
-	return slot0.selectedEquipUidDict[slot1.uid]
+	return arg_15_0.selectedEquipUidDict[arg_15_1.uid]
 end
 
-function slot0.clearData(slot0)
-	slot0:clear()
+function var_0_0.clearData(arg_16_0)
+	arg_16_0:clear()
 
-	slot0.selectedEquipMoList = {}
-	slot0.selectedEquipUidDict = {}
-	slot0.useSpRefineList = nil
+	arg_16_0.selectedEquipMoList = {}
+	arg_16_0.selectedEquipUidDict = {}
+	arg_16_0.useSpRefineList = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

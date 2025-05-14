@@ -1,26 +1,29 @@
-module("modules.logic.rouge.dlc.101.view.RougeHeroGroupFightView_1_101", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeHeroGroupFightView_1_101", package.seeall)
 
-slot0 = class("RougeHeroGroupFightView_1_101", BaseView)
+local var_0_0 = class("RougeHeroGroupFightView_1_101", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gorouge = gohelper.findChild(slot0.viewGO, "herogroupcontain/hero/heroitem/#go_rouge")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorouge = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero/heroitem/#go_rouge")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot2 = RougeMapModel.instance:getCurNode() and slot1.eventMo
+function var_0_0.onOpen(arg_2_0)
+	local var_2_0 = RougeMapModel.instance:getCurNode()
+	local var_2_1 = var_2_0 and var_2_0.eventMo
+	local var_2_2 = var_2_1 and var_2_1:getSurpriseAttackList()
 
-	if not slot2 or not slot2:getSurpriseAttackList() or #slot3 <= 0 then
+	if not var_2_2 or #var_2_2 <= 0 then
 		return
 	end
 
 	RougeDLCController101.instance:openRougeDangerousView()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

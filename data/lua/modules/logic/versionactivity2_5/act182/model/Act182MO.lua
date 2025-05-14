@@ -1,79 +1,83 @@
-module("modules.logic.versionactivity2_5.act182.model.Act182MO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act182.model.Act182MO", package.seeall)
 
-slot0 = pureTable("Act182MO")
+local var_0_0 = pureTable("Act182MO")
 
-function slot0.init(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.passEpisodeIds = slot1.passEpisodeIds
-	slot0.rank = slot1.rank
-	slot0.score = slot1.score
-	slot0.gameMoDic = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.passEpisodeIds = arg_1_1.passEpisodeIds
+	arg_1_0.rank = arg_1_1.rank
+	arg_1_0.score = arg_1_1.score
+	arg_1_0.gameMoDic = {}
 
-	for slot5, slot6 in ipairs(slot1.gameInfos) do
-		slot7 = AutoChessGameMO.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.gameInfos) do
+		local var_1_0 = AutoChessGameMO.New()
 
-		slot7:init(slot6)
+		var_1_0:init(iter_1_1)
 
-		slot0.gameMoDic[slot6.module] = slot7
+		arg_1_0.gameMoDic[iter_1_1.module] = var_1_0
 	end
 
-	slot0.historyInfo = slot1.historyInfo
-	slot0.doubleScoreTimes = slot1.doubleScoreTimes
-	slot0.gainRewardRank = slot1.gainRewardRank
+	arg_1_0.historyInfo = arg_1_1.historyInfo
+	arg_1_0.doubleScoreTimes = arg_1_1.doubleScoreTimes
+	arg_1_0.gainRewardRank = arg_1_1.gainRewardRank
 end
 
-function slot0.update(slot0, slot1)
-	if slot1.rank - slot0.rank > 0 then
-		slot0.isRankUp = true
+function var_0_0.update(arg_2_0, arg_2_1)
+	if arg_2_1.rank - arg_2_0.rank > 0 then
+		arg_2_0.isRankUp = true
 
-		if slot0.historyInfo.maxRank < slot1.rank then
-			slot0.newRankUp = true
+		if arg_2_1.rank > arg_2_0.historyInfo.maxRank then
+			arg_2_0.newRankUp = true
 		end
 	end
 
-	slot0.passEpisodeIds = slot1.passEpisodeIds
-	slot0.rank = slot1.rank
-	slot0.score = slot1.score
+	arg_2_0.passEpisodeIds = arg_2_1.passEpisodeIds
+	arg_2_0.rank = arg_2_1.rank
+	arg_2_0.score = arg_2_1.score
 
-	for slot5, slot6 in ipairs(slot1.gameInfos) do
-		slot0.gameMoDic[slot6.module]:init(slot6)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.gameInfos) do
+		local var_2_0 = iter_2_1.module
+
+		arg_2_0.gameMoDic[var_2_0]:init(iter_2_1)
 	end
 
-	slot0.historyInfo = slot1.historyInfo
-	slot0.doubleScoreTimes = slot1.doubleScoreTimes
-	slot0.gainRewardRank = slot1.gainRewardRank
+	arg_2_0.historyInfo = arg_2_1.historyInfo
+	arg_2_0.doubleScoreTimes = arg_2_1.doubleScoreTimes
+	arg_2_0.gainRewardRank = arg_2_1.gainRewardRank
 end
 
-function slot0.updateMasterIdBox(slot0, slot1, slot2)
-	slot3 = slot0.gameMoDic[AutoChessEnum.ModuleId.PVP]
+function var_0_0.updateMasterIdBox(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0.gameMoDic[AutoChessEnum.ModuleId.PVP]
 
-	slot3:updateMasterIdBox(slot1)
+	var_3_0:updateMasterIdBox(arg_3_1)
 
-	slot3.refreshed = slot2
-	slot3.start = true
+	var_3_0.refreshed = arg_3_2
+	var_3_0.start = true
 end
 
-function slot0.isEpisodePass(slot0, slot1)
-	if tabletool.indexOf(slot0.passEpisodeIds, slot1) then
+function var_0_0.isEpisodePass(arg_4_0, arg_4_1)
+	if tabletool.indexOf(arg_4_0.passEpisodeIds, arg_4_1) then
 		return true
 	else
 		return false
 	end
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	if lua_auto_chess_episode.configDict[slot1].preEpisode == 0 then
+function var_0_0.isEpisodeUnlock(arg_5_0, arg_5_1)
+	local var_5_0 = lua_auto_chess_episode.configDict[arg_5_1].preEpisode
+
+	if var_5_0 == 0 then
 		return true
-	elseif slot0:isEpisodePass(slot3) then
+	elseif arg_5_0:isEpisodePass(var_5_0) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.clearRankUpMark(slot0)
-	slot0.isRankUp = false
-	slot0.newRankUp = false
+function var_0_0.clearRankUpMark(arg_6_0)
+	arg_6_0.isRankUp = false
+	arg_6_0.newRankUp = false
 end
 
-return slot0
+return var_0_0

@@ -1,47 +1,52 @@
-module("modules.logic.dungeon.view.DungeonMapLevelViewContainer", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonMapLevelViewContainer", package.seeall)
 
-slot0 = class("DungeonMapLevelViewContainer", BaseViewContainer)
+local var_0_0 = class("DungeonMapLevelViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, DungeonMapLevelView.New())
-	table.insert(slot1, DungeonMapLevelRewardView.New())
-	table.insert(slot1, TabViewGroup.New(1, "anim/#go_righttop"))
-	table.insert(slot1, TabViewGroup.New(2, "anim/top_left"))
+	table.insert(var_1_0, DungeonMapLevelView.New())
+	table.insert(var_1_0, DungeonMapLevelRewardView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "anim/#go_righttop"))
+	table.insert(var_1_0, TabViewGroup.New(2, "anim/top_left"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		return {
-			CurrencyView.New({
-				CurrencyEnum.CurrencyType.Power
-			})
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = CurrencyEnum.CurrencyType
+		local var_2_1 = {
+			var_2_0.Power
 		}
-	elseif slot1 == 2 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+
+		return {
+			CurrencyView.New(var_2_1)
+		}
+	elseif arg_2_1 == 2 then
+		local var_2_2 = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
-			DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+			var_2_2
 		}, HelpEnum.HelpId.Dungeon)
 
-		slot0._navigateButtonView:setOverrideClose(slot0._overrideClose, slot0)
-		slot0._navigateButtonView:setAnimEnabled(false)
+		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		arg_2_0._navigateButtonView:setAnimEnabled(false)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio(0)
-	DungeonModel.instance:setLastSelectMode(nil, )
+function var_0_0.onContainerOpenFinish(arg_3_0)
+	arg_3_0._navigateButtonView:resetOnCloseViewAudio(0)
+	DungeonModel.instance:setLastSelectMode(nil, nil)
 end
 
-function slot0._overrideClose(slot0)
+function var_0_0._overrideClose(arg_4_0)
 	if ViewMgr.instance:isOpen(ViewName.DungeonView) or ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchMainView) then
 		ViewMgr.instance:closeView(ViewName.DungeonMapView, false, true)
 		ViewMgr.instance:closeView(ViewName.DungeonMapLevelView, false, true)
@@ -49,21 +54,23 @@ function slot0._overrideClose(slot0)
 		return
 	end
 
-	module_views_preloader.DungeonViewPreload(function ()
+	module_views_preloader.DungeonViewPreload(function()
 		DungeonController.instance:openDungeonView(nil, true)
 		ViewMgr.instance:closeView(ViewName.DungeonMapView, false, true)
 		ViewMgr.instance:closeView(ViewName.DungeonMapLevelView, false, true)
 	end)
 end
 
-function slot0.refreshHelp(slot0)
-	if slot0._navigateButtonView then
-		slot0._navigateButtonView:setParam({
+function var_0_0.refreshHelp(arg_6_0)
+	if arg_6_0._navigateButtonView then
+		local var_6_0 = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+
+		arg_6_0._navigateButtonView:setParam({
 			true,
 			true,
-			DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+			var_6_0
 		})
 	end
 end
 
-return slot0
+return var_0_0

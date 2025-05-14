@@ -1,40 +1,42 @@
-module("modules.logic.versionactivity2_0.dungeon.model.Activity161MO", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.model.Activity161MO", package.seeall)
 
-slot0 = pureTable("Activity161MO")
+local var_0_0 = pureTable("Activity161MO")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.state = 0
-	slot0.cdBeginTime = nil
-	slot0.config = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.state = 0
+	arg_1_0.cdBeginTime = nil
+	arg_1_0.config = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1.id
-	slot0.state = slot1.state
-	slot0.cdBeginTime = tonumber(slot1.mainElementCdBeginTime)
-	slot0.config = slot2
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.state = arg_2_1.state
+	arg_2_0.cdBeginTime = tonumber(arg_2_1.mainElementCdBeginTime)
+	arg_2_0.config = arg_2_2
 end
 
-function slot0.isInCdTime(slot0)
-	if slot0.cdBeginTime and slot0.cdBeginTime > 0 then
-		return ServerTime.now() - slot0.cdBeginTime / 1000 < slot0.config.mainElementCd
+function var_0_0.isInCdTime(arg_3_0)
+	if arg_3_0.cdBeginTime and arg_3_0.cdBeginTime > 0 then
+		return ServerTime.now() - arg_3_0.cdBeginTime / 1000 < arg_3_0.config.mainElementCd
 	end
 
 	return false
 end
 
-function slot0.getRemainUnlockTime(slot0)
-	if slot0.cdBeginTime and slot0.cdBeginTime > 0 then
-		return Mathf.Max(slot0.cdBeginTime / 1000 + slot0.config.mainElementCd - ServerTime.now(), 0)
+function var_0_0.getRemainUnlockTime(arg_4_0)
+	if arg_4_0.cdBeginTime and arg_4_0.cdBeginTime > 0 then
+		local var_4_0 = arg_4_0.cdBeginTime / 1000 + arg_4_0.config.mainElementCd
+
+		return Mathf.Max(var_4_0 - ServerTime.now(), 0)
 	end
 
 	return 0
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.state = slot1.state
-	slot0.cdBeginTime = tonumber(slot1.mainElementCdBeginTime)
+function var_0_0.updateInfo(arg_5_0, arg_5_1)
+	arg_5_0.state = arg_5_1.state
+	arg_5_0.cdBeginTime = tonumber(arg_5_1.mainElementCdBeginTime)
 end
 
-return slot0
+return var_0_0

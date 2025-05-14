@@ -1,49 +1,51 @@
-module("modules.logic.seasonver.act123.view.Season123PickAssistViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view.Season123PickAssistViewContainer", package.seeall)
 
-slot0 = class("Season123PickAssistViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123PickAssistViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.viewOpenAnimTime = 0.4
-	slot0.scrollView = slot0:instantiateListScrollView()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.viewOpenAnimTime = 0.4
+	arg_1_0.scrollView = arg_1_0:instantiateListScrollView()
 
 	return {
 		Season123PickAssistView.New(),
-		slot0.scrollView,
+		arg_1_0.scrollView,
 		TabViewGroup.New(1, "#go_lefttopbtns")
 	}
 end
 
-function slot0.instantiateListScrollView(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_selection"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = Season123PickAssistItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 6
-	slot1.cellWidth = 296
-	slot1.cellHeight = 636
+function var_0_0.instantiateListScrollView(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	for slot6 = 1, 15 do
+	var_2_0.scrollGOPath = "#scroll_selection"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+	var_2_0.cellClass = Season123PickAssistItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+	var_2_0.lineCount = 6
+	var_2_0.cellWidth = 296
+	var_2_0.cellHeight = 636
+
+	local var_2_1 = {}
+
+	for iter_2_0 = 1, 15 do
+		var_2_1[iter_2_0] = math.ceil((iter_2_0 - 1) % 6) * 0.03 + arg_2_0.viewOpenAnimTime
 	end
 
-	return LuaListScrollViewWithAnimator.New(Season123PickAssistListModel.instance, slot1, {
-		[slot6] = math.ceil((slot6 - 1) % 6) * 0.03 + slot0.viewOpenAnimTime
-	})
+	return LuaListScrollViewWithAnimator.New(Season123PickAssistListModel.instance, var_2_0, var_2_1)
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_3_0._navigateButtonView
 		}
 	end
 end
 
-return slot0
+return var_0_0

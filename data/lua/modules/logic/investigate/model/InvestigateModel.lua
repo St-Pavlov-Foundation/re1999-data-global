@@ -1,134 +1,136 @@
-module("modules.logic.investigate.model.InvestigateModel", package.seeall)
+﻿module("modules.logic.investigate.model.InvestigateModel", package.seeall)
 
-slot0 = class("InvestigateModel", BaseModel)
+local var_0_0 = class("InvestigateModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._newClueDict = nil
-	slot0._noPlayClueDict = nil
-	slot0._allUnLockClues = {}
-	slot0._waitFirstInit = true
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._newClueDict = nil
+	arg_1_0._noPlayClueDict = nil
+	arg_1_0._allUnLockClues = {}
+	arg_1_0._waitFirstInit = true
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.refreshUnlock(slot0, slot1)
-	if not slot1 and slot0._waitFirstInit then
+function var_0_0.refreshUnlock(arg_3_0, arg_3_1)
+	if not arg_3_1 and arg_3_0._waitFirstInit then
 		return
 	end
 
-	slot0._waitFirstInit = false
+	arg_3_0._waitFirstInit = false
 
-	if slot1 then
-		slot0._allUnLockClues = {}
+	if arg_3_1 then
+		arg_3_0._allUnLockClues = {}
 
-		for slot5, slot6 in ipairs(lua_investigate_info.configList) do
-			if slot6.episode > 0 and DungeonModel.instance:hasPassLevel(slot6.episode) then
-				table.insert(slot0._allUnLockClues, slot6.id)
+		for iter_3_0, iter_3_1 in ipairs(lua_investigate_info.configList) do
+			if iter_3_1.episode > 0 and DungeonModel.instance:hasPassLevel(iter_3_1.episode) then
+				table.insert(arg_3_0._allUnLockClues, iter_3_1.id)
 			end
 		end
 	else
-		slot2 = false
+		local var_3_0 = false
 
-		for slot6, slot7 in ipairs(lua_investigate_info.configList) do
-			if slot7.episode > 0 and slot7.entrance > 0 and not tabletool.indexOf(slot0._allUnLockClues, slot7.id) and DungeonModel.instance:hasPassLevel(slot7.episode) then
-				table.insert(slot0._allUnLockClues, slot7.id)
-				slot0:onGetNewId(slot7.id)
+		for iter_3_2, iter_3_3 in ipairs(lua_investigate_info.configList) do
+			if iter_3_3.episode > 0 and iter_3_3.entrance > 0 and not tabletool.indexOf(arg_3_0._allUnLockClues, iter_3_3.id) and DungeonModel.instance:hasPassLevel(iter_3_3.episode) then
+				table.insert(arg_3_0._allUnLockClues, iter_3_3.id)
+				arg_3_0:onGetNewId(iter_3_3.id)
 
-				slot2 = true
+				var_3_0 = true
 			end
 		end
 
-		if slot2 then
-			slot0:_saveLocalData()
+		if var_3_0 then
+			arg_3_0:_saveLocalData()
 			InvestigateController.instance:dispatchEvent(InvestigateEvent.ClueUpdate)
 		end
 	end
 end
 
-function slot0.getAllNewIds(slot0)
-	slot0:_initLocalData()
+function var_0_0.getAllNewIds(arg_4_0)
+	arg_4_0:_initLocalData()
 
-	return slot0._newClueDict
+	return arg_4_0._newClueDict
 end
 
-function slot0.getAllNoPlayIds(slot0)
-	slot0:_initLocalData()
+function var_0_0.getAllNoPlayIds(arg_5_0)
+	arg_5_0:_initLocalData()
 
-	return slot0._noPlayClueDict
+	return arg_5_0._noPlayClueDict
 end
 
-function slot0.markAllNewIds(slot0)
-	if not slot0._newClueDict[1] then
+function var_0_0.markAllNewIds(arg_6_0)
+	if not arg_6_0._newClueDict[1] then
 		return
 	end
 
-	slot0._newClueDict = {}
+	arg_6_0._newClueDict = {}
 
 	PlayerPrefsHelper.deleteKey(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNew))
 end
 
-function slot0.markAllNoPlayIds(slot0)
-	if not slot0._noPlayClueDict[1] then
+function var_0_0.markAllNoPlayIds(arg_7_0)
+	if not arg_7_0._noPlayClueDict[1] then
 		return
 	end
 
-	slot0._noPlayClueDict = {}
+	arg_7_0._noPlayClueDict = {}
 
 	PlayerPrefsHelper.deleteKey(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNoPlayAnim))
 end
 
-function slot0._initLocalData(slot0)
-	if not slot0._newClueDict then
-		slot0._newClueDict = {}
-		slot0._noPlayClueDict = {}
-		slot2 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNoPlayAnim), "")
+function var_0_0._initLocalData(arg_8_0)
+	if not arg_8_0._newClueDict then
+		arg_8_0._newClueDict = {}
+		arg_8_0._noPlayClueDict = {}
 
-		if not string.nilorempty(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNew), "")) then
-			slot0._newClueDict = cjson.decode(slot1)
+		local var_8_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNew), "")
+		local var_8_1 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNoPlayAnim), "")
+
+		if not string.nilorempty(var_8_0) then
+			arg_8_0._newClueDict = cjson.decode(var_8_0)
 		end
 
-		if not string.nilorempty(slot2) then
-			slot0._noPlayClueDict = cjson.decode(slot2)
+		if not string.nilorempty(var_8_1) then
+			arg_8_0._noPlayClueDict = cjson.decode(var_8_1)
 		end
 	end
 end
 
-function slot0.onGetNewId(slot0, slot1)
+function var_0_0.onGetNewId(arg_9_0, arg_9_1)
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapView) then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.InvestigateClueView, {
 			isGet = true,
-			id = slot1
+			id = arg_9_1
 		})
 
 		return
 	end
 
-	slot0:_initLocalData()
-	table.insert(slot0._newClueDict, slot1)
-	table.insert(slot0._noPlayClueDict, slot1)
-	table.sort(slot0._newClueDict)
-	table.sort(slot0._noPlayClueDict)
+	arg_9_0:_initLocalData()
+	table.insert(arg_9_0._newClueDict, arg_9_1)
+	table.insert(arg_9_0._noPlayClueDict, arg_9_1)
+	table.sort(arg_9_0._newClueDict)
+	table.sort(arg_9_0._noPlayClueDict)
 end
 
-function slot0._saveLocalData(slot0)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNew), cjson.encode(slot0._newClueDict))
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNoPlayAnim), cjson.encode(slot0._noPlayClueDict))
+function var_0_0._saveLocalData(arg_10_0)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNew), cjson.encode(arg_10_0._newClueDict))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.InvestigateNoPlayAnim), cjson.encode(arg_10_0._noPlayClueDict))
 end
 
-function slot0.isClueUnlock(slot0, slot1)
-	return tabletool.indexOf(slot0._allUnLockClues, slot1)
+function var_0_0.isClueUnlock(arg_11_0, arg_11_1)
+	return tabletool.indexOf(arg_11_0._allUnLockClues, arg_11_1)
 end
 
-function slot0.isHaveClue(slot0)
-	return slot0._allUnLockClues[1] and true or false
+function var_0_0.isHaveClue(arg_12_0)
+	return arg_12_0._allUnLockClues[1] and true or false
 end
 
-function slot0.isGetAllClue(slot0)
-	return #slot0._allUnLockClues == #lua_investigate_info.configList
+function var_0_0.isGetAllClue(arg_13_0)
+	return #arg_13_0._allUnLockClues == #lua_investigate_info.configList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,14 +1,14 @@
-module("modules.logic.mainsceneswitch.view.MainSceneSkinMaterialTipViewContainer", package.seeall)
+﻿module("modules.logic.mainsceneswitch.view.MainSceneSkinMaterialTipViewContainer", package.seeall)
 
-slot0 = class("MainSceneSkinMaterialTipViewContainer", BaseViewContainer)
+local var_0_0 = class("MainSceneSkinMaterialTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, MainSceneSkinMaterialTipView.New())
-	table.insert(slot1, MainSceneSkinMaterialTipViewBanner.New())
+	table.insert(var_1_0, MainSceneSkinMaterialTipView.New())
+	table.insert(var_1_0, MainSceneSkinMaterialTipViewBanner.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

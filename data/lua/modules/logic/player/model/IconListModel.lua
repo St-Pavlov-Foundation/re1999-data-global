@@ -1,21 +1,21 @@
-module("modules.logic.player.model.IconListModel", package.seeall)
+﻿module("modules.logic.player.model.IconListModel", package.seeall)
 
-slot0 = class("IconListModel", ListScrollModel)
+local var_0_0 = class("IconListModel", ListScrollModel)
 
-function slot0.setIconList(slot0, slot1)
-	slot0._moList = {}
+function var_0_0.setIconList(arg_1_0, arg_1_1)
+	arg_1_0._moList = {}
 
-	if slot1 then
-		slot0._moList = slot1
+	if arg_1_1 then
+		arg_1_0._moList = arg_1_1
 
-		table.sort(slot0._moList, function (slot0, slot1)
-			return slot0.id < slot1.id
+		table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
+			return arg_2_0.id < arg_2_1.id
 		end)
 	end
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

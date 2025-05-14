@@ -1,97 +1,100 @@
-module("modules.logic.versionactivity.view.VersionActivityPuzzleOptionItem", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityPuzzleOptionItem", package.seeall)
 
-slot0 = class("VersionActivityPuzzleOptionItem", UserDataDispose)
+local var_0_0 = class("VersionActivityPuzzleOptionItem", UserDataDispose)
 
-function slot0.onInitView(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.onInitView(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.parentView = slot2
-	slot0.txtInfo = gohelper.findChildText(slot1, "info")
-	slot0.head = gohelper.findChild(slot0.go, "head")
-	slot0.txtLineIndex = gohelper.findChildText(slot0.go, "head/txt_index")
-	slot0.bgLineIndex = gohelper.findChildImage(slot0.go, "head/bg")
+	arg_1_0.go = arg_1_1
+	arg_1_0.parentView = arg_1_2
+	arg_1_0.txtInfo = gohelper.findChildText(arg_1_1, "info")
+	arg_1_0.head = gohelper.findChild(arg_1_0.go, "head")
+	arg_1_0.txtLineIndex = gohelper.findChildText(arg_1_0.go, "head/txt_index")
+	arg_1_0.bgLineIndex = gohelper.findChildImage(arg_1_0.go, "head/bg")
 
-	if not slot2.isFinish then
-		slot0.drag = SLFramework.UGUI.UIDragListener.Get(slot0.go)
+	if not arg_1_2.isFinish then
+		arg_1_0.drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0.go)
 
-		slot0.drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-		slot0.drag:AddDragEndListener(slot0._onDragEnd, slot0)
-		slot0.drag:AddDragListener(slot0._onDrag, slot0)
+		arg_1_0.drag:AddDragBeginListener(arg_1_0._onDragBegin, arg_1_0)
+		arg_1_0.drag:AddDragEndListener(arg_1_0._onDragEnd, arg_1_0)
+		arg_1_0.drag:AddDragListener(arg_1_0._onDrag, arg_1_0)
 	end
 end
 
-function slot0.updateInfo(slot0, slot1, slot2)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.updateInfo(arg_2_0, arg_2_1, arg_2_2)
+	gohelper.setActive(arg_2_0.go, true)
 
-	slot0.txtInfo.text = slot1
-	slot0.info = slot1
-	slot0.answerIndex = slot2
+	arg_2_0.txtInfo.text = arg_2_1
+	arg_2_0.info = arg_2_1
+	arg_2_0.answerIndex = arg_2_2
 
-	gohelper.setActive(slot0.head, false)
+	gohelper.setActive(arg_2_0.head, false)
 
-	if (slot0.answerIndex - 1) % 4 == 2 then
-		gohelper.setActive(slot0.head, true)
+	local var_2_0 = (arg_2_0.answerIndex - 1) % 4
 
-		slot0.txtLineIndex.text = math.ceil(slot0.answerIndex / 4)
+	if var_2_0 == 2 then
+		gohelper.setActive(arg_2_0.head, true)
 
-		UISpriteSetMgr.instance:setActivityPuzzle(slot0.bgLineIndex, math.ceil(slot0.answerIndex / 4), true)
+		arg_2_0.txtLineIndex.text = math.ceil(arg_2_0.answerIndex / 4)
+
+		local var_2_1 = math.ceil(arg_2_0.answerIndex / 4)
+
+		UISpriteSetMgr.instance:setActivityPuzzle(arg_2_0.bgLineIndex, var_2_1, true)
 	end
 
-	slot5 = 2
-	slot6 = 350
+	local var_2_2 = 2
+	local var_2_3 = 350
 
-	if slot3 == 0 or slot3 == 2 then
-		slot6 = 290
-		slot5 = 30
+	if var_2_0 == 0 or var_2_0 == 2 then
+		var_2_2, var_2_3 = 30, 290
 	end
 
-	transformhelper.setLocalPosXY(slot0.txtInfo.transform, slot5, 0)
-	recthelper.setWidth(slot0.txtInfo.transform, slot6)
+	transformhelper.setLocalPosXY(arg_2_0.txtInfo.transform, var_2_2, 0)
+	recthelper.setWidth(arg_2_0.txtInfo.transform, var_2_3)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_3_0)
+	gohelper.setActive(arg_3_0.go, false)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0.parentView:onDragItemDragBegin(slot2, slot0.info, slot0.answerIndex)
+function var_0_0._onDragBegin(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.parentView:onDragItemDragBegin(arg_4_2, arg_4_0.info, arg_4_0.answerIndex)
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	slot0.parentView:onDragItemDragging(slot2)
+function var_0_0._onDrag(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.parentView:onDragItemDragging(arg_5_2)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	slot0.parentView:onDragItemDragEnd(slot2)
+function var_0_0._onDragEnd(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.parentView:onDragItemDragEnd(arg_6_2)
 end
 
-function slot0.unUse(slot0)
-	slot0.txtInfo.text = slot0.info
+function var_0_0.unUse(arg_7_0)
+	arg_7_0.txtInfo.text = arg_7_0.info
 end
 
-function slot0.matchCorrect(slot0)
-	slot0.txtInfo.text = string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, slot0.info)
+function var_0_0.matchCorrect(arg_8_0)
+	arg_8_0.txtInfo.text = string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, arg_8_0.info)
 end
 
-function slot0.matchError(slot0)
-	slot0.txtInfo.text = string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchErrorColor, slot0.info)
+function var_0_0.matchError(arg_9_0)
+	arg_9_0.txtInfo.text = string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchErrorColor, arg_9_0.info)
 end
 
-function slot0.getScreenPos(slot0)
-	return recthelper.uiPosToScreenPos(slot0.go.transform)
+function var_0_0.getScreenPos(arg_10_0)
+	return recthelper.uiPosToScreenPos(arg_10_0.go.transform)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0.drag then
-		slot0.drag:RemoveDragListener()
-		slot0.drag:RemoveDragBeginListener()
-		slot0.drag:RemoveDragEndListener()
+function var_0_0.onDestroy(arg_11_0)
+	if arg_11_0.drag then
+		arg_11_0.drag:RemoveDragListener()
+		arg_11_0.drag:RemoveDragBeginListener()
+		arg_11_0.drag:RemoveDragEndListener()
 
-		slot0.drag = nil
+		arg_11_0.drag = nil
 	end
 
-	slot0:__onDispose()
+	arg_11_0:__onDispose()
 end
 
-return slot0
+return var_0_0

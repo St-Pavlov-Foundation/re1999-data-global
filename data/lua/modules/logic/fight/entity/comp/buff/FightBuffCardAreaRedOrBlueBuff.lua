@@ -1,267 +1,285 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffCardAreaRedOrBlueBuff", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffCardAreaRedOrBlueBuff", package.seeall)
 
-slot0 = class("FightBuffCardAreaRedOrBlueBuff")
+local var_0_0 = class("FightBuffCardAreaRedOrBlueBuff")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onBuffStart(slot0, slot1, slot2)
-	slot0.entity = slot1
-	slot0.entityMo = slot1:getMO()
-	slot0.side = slot0.entityMo.side
-	slot0.sceneEntityMgr = GameSceneMgr.instance:getCurScene() and slot3.entityMgr
-	slot0.effectCo = FightHeroSpEffectConfig.instance:getLYEffectCo(slot0.entityMo.originSkin)
-	slot0.buffRes = slot0.effectCo.path
-	slot0.spine1EffectRes = slot0.effectCo.spine1EffectRes
-	slot0.spine2EffectRes = slot0.effectCo.spine2EffectRes
-	slot0.spine1Res = slot0:getFullSpineResPath(slot0.effectCo.spine1Res)
-	slot0.spine2Res = slot0:getFullSpineResPath(slot0.effectCo.spine2Res)
-	slot0.playingUniqueSkill = false
+function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.entity = arg_2_1
+	arg_2_0.entityMo = arg_2_1:getMO()
+	arg_2_0.side = arg_2_0.entityMo.side
 
-	FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, slot0.onBeforePlayUniqueSkill, slot0)
-	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, slot0.onAfterPlayUniqueSkill, slot0)
-	FightController.instance:registerCallback(FightEvent.ReleaseAllEntrustedEntity, slot0.onReleaseAllEntrustedEntity, slot0)
-	FightController.instance:registerCallback(FightEvent.OnCameraFocusChanged, slot0.onCameraFocusChanged, slot0)
+	local var_2_0 = GameSceneMgr.instance:getCurScene()
 
-	slot0.loaded = false
+	arg_2_0.sceneEntityMgr = var_2_0 and var_2_0.entityMgr
+	arg_2_0.effectCo = FightHeroSpEffectConfig.instance:getLYEffectCo(arg_2_0.entityMo.originSkin)
+	arg_2_0.buffRes = arg_2_0.effectCo.path
+	arg_2_0.spine1EffectRes = arg_2_0.effectCo.spine1EffectRes
+	arg_2_0.spine2EffectRes = arg_2_0.effectCo.spine2EffectRes
+	arg_2_0.spine1Res = arg_2_0:getFullSpineResPath(arg_2_0.effectCo.spine1Res)
+	arg_2_0.spine2Res = arg_2_0:getFullSpineResPath(arg_2_0.effectCo.spine2Res)
+	arg_2_0.playingUniqueSkill = false
 
-	slot0:startLoadRes()
-	FightDataHelper.LYDataMgr:setLYCardAreaBuff(slot2)
+	FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, arg_2_0.onBeforePlayUniqueSkill, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, arg_2_0.onAfterPlayUniqueSkill, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ReleaseAllEntrustedEntity, arg_2_0.onReleaseAllEntrustedEntity, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnCameraFocusChanged, arg_2_0.onCameraFocusChanged, arg_2_0)
+
+	arg_2_0.loaded = false
+
+	arg_2_0:startLoadRes()
+	FightDataHelper.LYDataMgr:setLYCardAreaBuff(arg_2_2)
 end
 
-function slot0.startLoadRes(slot0)
-	slot0:clearLoader()
+function var_0_0.startLoadRes(arg_3_0)
+	arg_3_0:clearLoader()
 
-	slot0.resLoader = MultiAbLoader.New()
+	arg_3_0.resLoader = MultiAbLoader.New()
 
-	slot0.resLoader:addPath(slot0:getEffectAbPath(slot0.buffRes))
-	slot0.resLoader:addPath(slot0:getEffectAbPath(slot0.spine1EffectRes))
-	slot0.resLoader:addPath(slot0:getEffectAbPath(slot0.spine2EffectRes))
-	slot0.resLoader:addPath(slot0.spine1Res)
-	slot0.resLoader:addPath(slot0.spine2Res)
-	slot0.resLoader:startLoad(slot0.onResLoaded, slot0)
+	arg_3_0.resLoader:addPath(arg_3_0:getEffectAbPath(arg_3_0.buffRes))
+	arg_3_0.resLoader:addPath(arg_3_0:getEffectAbPath(arg_3_0.spine1EffectRes))
+	arg_3_0.resLoader:addPath(arg_3_0:getEffectAbPath(arg_3_0.spine2EffectRes))
+	arg_3_0.resLoader:addPath(arg_3_0.spine1Res)
+	arg_3_0.resLoader:addPath(arg_3_0.spine2Res)
+	arg_3_0.resLoader:startLoad(arg_3_0.onResLoaded, arg_3_0)
 
-	if slot0.effectCo.audioId and slot1 ~= 0 then
-		AudioMgr.instance:trigger(slot1)
+	local var_3_0 = arg_3_0.effectCo.audioId
+
+	if var_3_0 and var_3_0 ~= 0 then
+		AudioMgr.instance:trigger(var_3_0)
 	end
 end
 
-function slot0.getEffectAbPath(slot0, slot1)
-	return FightHelper.getEffectAbPath(FightHelper.getEffectUrlWithLod(slot1))
+function var_0_0.getEffectAbPath(arg_4_0, arg_4_1)
+	local var_4_0 = FightHelper.getEffectUrlWithLod(arg_4_1)
+
+	return FightHelper.getEffectAbPath(var_4_0)
 end
 
-function slot0.getEffectPos(slot0, slot1)
-	slot2 = slot0.effectCo.pos
+function var_0_0.getEffectPos(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0.effectCo.pos
 
-	if slot1 == FightEnum.EntitySide.EnemySide then
-		return -slot2[1], slot2[2], slot2[3]
+	if arg_5_1 == FightEnum.EntitySide.EnemySide then
+		return -var_5_0[1], var_5_0[2], var_5_0[3]
 	else
-		return slot2[1], slot2[2], slot2[3]
+		return var_5_0[1], var_5_0[2], var_5_0[3]
 	end
 end
 
-function slot0.onResLoaded(slot0, slot1)
-	slot0.loaded = true
-	slot2 = slot0.entity:getSide()
-	slot0.spine1 = slot0.sceneEntityMgr:buildTempSpine(slot0.spine1Res, slot0.entity.id .. "_1", slot2, UnityLayer.EffectMask, FightEntityLyTemp)
-	slot0.spine2 = slot0.sceneEntityMgr:buildTempSpine(slot0.spine2Res, slot0.entity.id .. "_2", slot2, UnityLayer.EffectMask, FightEntityLyTemp)
+function var_0_0.onResLoaded(arg_6_0, arg_6_1)
+	arg_6_0.loaded = true
 
-	slot0:hideEntity()
+	local var_6_0 = arg_6_0.entity:getSide()
 
-	slot0.spine1Effect = slot0.spine1.effect:addHangEffect(slot0.spine1EffectRes, ModuleEnum.SpineHangPointRoot)
-	slot0.spine2Effect = slot0.spine2.effect:addHangEffect(slot0.spine2EffectRes, ModuleEnum.SpineHangPointRoot)
-	slot0.effectWrap = slot0.entity.effect:addGlobalEffect(slot0.buffRes)
-	slot3 = FightRenderOrderMgr.LYEffect * FightEnum.OrderRegion
+	arg_6_0.spine1 = arg_6_0.sceneEntityMgr:buildTempSpine(arg_6_0.spine1Res, arg_6_0.entity.id .. "_1", var_6_0, UnityLayer.EffectMask, FightEntityLyTemp)
+	arg_6_0.spine2 = arg_6_0.sceneEntityMgr:buildTempSpine(arg_6_0.spine2Res, arg_6_0.entity.id .. "_2", var_6_0, UnityLayer.EffectMask, FightEntityLyTemp)
 
-	slot0.spine1Effect:setRenderOrder(slot3)
-	slot0.spine2Effect:setRenderOrder(slot3)
-	slot0.effectWrap:setRenderOrder(slot3)
+	arg_6_0:hideEntity()
 
-	slot4 = slot0.spine1Effect.effectGO and gohelper.findChild(slot0.spine1Effect.effectGO, "root")
-	slot0.spine1EffectAnimator = slot4 and ZProj.ProjAnimatorPlayer.Get(slot4)
-	slot5 = slot0.spine2Effect.effectGO and gohelper.findChild(slot0.spine2Effect.effectGO, "root")
-	slot0.spine2EffectAnimator = slot5 and ZProj.ProjAnimatorPlayer.Get(slot5)
-	slot6 = slot0.effectWrap.effectGO and gohelper.findChild(slot0.effectWrap.effectGO, "root")
-	slot0.effectAnimator = slot6 and ZProj.ProjAnimatorPlayer.Get(slot6)
+	arg_6_0.spine1Effect = arg_6_0.spine1.effect:addHangEffect(arg_6_0.spine1EffectRes, ModuleEnum.SpineHangPointRoot)
+	arg_6_0.spine2Effect = arg_6_0.spine2.effect:addHangEffect(arg_6_0.spine2EffectRes, ModuleEnum.SpineHangPointRoot)
+	arg_6_0.effectWrap = arg_6_0.entity.effect:addGlobalEffect(arg_6_0.buffRes)
 
-	slot0.effectWrap:setWorldPos(slot0:getEffectPos(slot2))
-	slot0:addEffect(slot0.spine1, slot0.spine1Effect, slot2)
-	slot0:addEffect(slot0.spine2, slot0.spine2Effect, slot2)
-	slot0:showEntity()
-	slot0.spine1.spine:addAnimEventCallback(slot0.onAnimEventCallback, slot0)
-	slot0:playAnim(SpineAnimState.born)
-	slot0:refreshEffectActive()
-	FightController.instance:registerCallback(FightEvent.TimelineLYSpecialSpinePlayAniName, slot0.playAnim, slot0)
+	local var_6_1 = FightRenderOrderMgr.LYEffect * FightEnum.OrderRegion
+
+	arg_6_0.spine1Effect:setRenderOrder(var_6_1)
+	arg_6_0.spine2Effect:setRenderOrder(var_6_1)
+	arg_6_0.effectWrap:setRenderOrder(var_6_1)
+
+	local var_6_2 = arg_6_0.spine1Effect.effectGO and gohelper.findChild(arg_6_0.spine1Effect.effectGO, "root")
+
+	arg_6_0.spine1EffectAnimator = var_6_2 and ZProj.ProjAnimatorPlayer.Get(var_6_2)
+
+	local var_6_3 = arg_6_0.spine2Effect.effectGO and gohelper.findChild(arg_6_0.spine2Effect.effectGO, "root")
+
+	arg_6_0.spine2EffectAnimator = var_6_3 and ZProj.ProjAnimatorPlayer.Get(var_6_3)
+
+	local var_6_4 = arg_6_0.effectWrap.effectGO and gohelper.findChild(arg_6_0.effectWrap.effectGO, "root")
+
+	arg_6_0.effectAnimator = var_6_4 and ZProj.ProjAnimatorPlayer.Get(var_6_4)
+
+	arg_6_0.effectWrap:setWorldPos(arg_6_0:getEffectPos(var_6_0))
+	arg_6_0:addEffect(arg_6_0.spine1, arg_6_0.spine1Effect, var_6_0)
+	arg_6_0:addEffect(arg_6_0.spine2, arg_6_0.spine2Effect, var_6_0)
+	arg_6_0:showEntity()
+	arg_6_0.spine1.spine:addAnimEventCallback(arg_6_0.onAnimEventCallback, arg_6_0)
+	arg_6_0:playAnim(SpineAnimState.born)
+	arg_6_0:refreshEffectActive()
+	FightController.instance:registerCallback(FightEvent.TimelineLYSpecialSpinePlayAniName, arg_6_0.playAnim, arg_6_0)
 end
 
-function slot0.addEffect(slot0, slot1, slot2, slot3)
-	slot2:setWorldPos(slot0:getEffectPos(slot3))
-	FightRenderOrderMgr.instance:onAddEffectWrap(slot1.id, slot2)
+function var_0_0.addEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_2:setWorldPos(arg_7_0:getEffectPos(arg_7_3))
+	FightRenderOrderMgr.instance:onAddEffectWrap(arg_7_1.id, arg_7_2)
 end
 
-function slot0.playAnim(slot0, slot1)
-	if not slot0.loaded then
+function var_0_0.playAnim(arg_8_0, arg_8_1)
+	if not arg_8_0.loaded then
 		return
 	end
 
-	if slot0:isIdleAnim(slot1) then
-		slot0.spine1.spine:play(slot1, true, true)
+	if arg_8_0:isIdleAnim(arg_8_1) then
+		arg_8_0.spine1.spine:play(arg_8_1, true, true)
 	else
-		slot0.spine1.spine:play(slot1, false, true)
+		arg_8_0.spine1.spine:play(arg_8_1, false, true)
 	end
 end
 
-function slot0.onAnimEventCallback(slot0, slot1, slot2, slot3)
-	if slot0:isIdleAnim(slot1) then
+function var_0_0.onAnimEventCallback(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_0:isIdleAnim(arg_9_1) then
 		return
 	end
 
-	if slot2 == SpineAnimEvent.ActionComplete then
-		return slot0:playAnim(SpineAnimState.idle1)
+	if arg_9_2 == SpineAnimEvent.ActionComplete then
+		return arg_9_0:playAnim(SpineAnimState.idle1)
 	end
 end
 
-function slot0.isIdleAnim(slot0, slot1)
-	return SpineAnimState.idle1 == slot1 or SpineAnimState.idle2 == slot1
+function var_0_0.isIdleAnim(arg_10_0, arg_10_1)
+	return SpineAnimState.idle1 == arg_10_1 or SpineAnimState.idle2 == arg_10_1
 end
 
-function slot0.onCameraFocusChanged(slot0, slot1)
-	slot0.focusing = slot1
+function var_0_0.onCameraFocusChanged(arg_11_0, arg_11_1)
+	arg_11_0.focusing = arg_11_1
 
-	slot0:refreshEffectActive()
+	arg_11_0:refreshEffectActive()
 end
 
-function slot0.onBeforePlayUniqueSkill(slot0)
-	slot0.playingUniqueSkill = true
+function var_0_0.onBeforePlayUniqueSkill(arg_12_0)
+	arg_12_0.playingUniqueSkill = true
 
-	slot0:refreshEffectActive()
+	arg_12_0:refreshEffectActive()
 end
 
-function slot0.onAfterPlayUniqueSkill(slot0)
-	slot0.playingUniqueSkill = false
+function var_0_0.onAfterPlayUniqueSkill(arg_13_0)
+	arg_13_0.playingUniqueSkill = false
 
-	slot0:refreshEffectActive()
+	arg_13_0:refreshEffectActive()
 end
 
-function slot0.refreshEffectActive(slot0)
-	if slot0.loaded then
-		slot1 = not slot0.playingUniqueSkill and not slot0.focusing
+function var_0_0.refreshEffectActive(arg_14_0)
+	if arg_14_0.loaded then
+		local var_14_0 = not arg_14_0.playingUniqueSkill and not arg_14_0.focusing
 
-		slot0.spine1Effect:setActive(slot1)
-		slot0.spine2Effect:setActive(slot1)
-		slot0.effectWrap:setActive(slot1)
+		arg_14_0.spine1Effect:setActive(var_14_0)
+		arg_14_0.spine2Effect:setActive(var_14_0)
+		arg_14_0.effectWrap:setActive(var_14_0)
 
-		if slot1 then
-			slot0:showEntity()
+		if var_14_0 then
+			arg_14_0:showEntity()
 		else
-			slot0:hideEntity()
+			arg_14_0:hideEntity()
 		end
 	end
 end
 
-function slot0.setEntityAlpha(slot0, slot1)
-	if not slot0.loaded then
+function var_0_0.setEntityAlpha(arg_15_0, arg_15_1)
+	if not arg_15_0.loaded then
 		return
 	end
 
-	slot0.spine1.spineRenderer:setAlpha(slot1)
-	slot0.spine2.spineRenderer:setAlpha(slot1)
+	arg_15_0.spine1.spineRenderer:setAlpha(arg_15_1)
+	arg_15_0.spine2.spineRenderer:setAlpha(arg_15_1)
 end
 
-function slot0.hideEntity(slot0)
-	slot0:setEntityAlpha(0)
+function var_0_0.hideEntity(arg_16_0)
+	arg_16_0:setEntityAlpha(0)
 end
 
-function slot0.showEntity(slot0)
-	TaskDispatcher.cancelTask(slot0._showEntity, slot0)
-	TaskDispatcher.runDelay(slot0._showEntity, slot0, 0.01)
+function var_0_0.showEntity(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._showEntity, arg_17_0)
+	TaskDispatcher.runDelay(arg_17_0._showEntity, arg_17_0, 0.01)
 end
 
-function slot0._showEntity(slot0)
-	if slot0.playingUniqueSkill then
-		slot0:setEntityAlpha(0)
+function var_0_0._showEntity(arg_18_0)
+	if arg_18_0.playingUniqueSkill then
+		arg_18_0:setEntityAlpha(0)
 	else
-		slot0:setEntityAlpha(1)
+		arg_18_0:setEntityAlpha(1)
 	end
 end
 
-function slot0.getFullSpineResPath(slot0, slot1)
-	return string.format("roles/%s.prefab", slot1)
+function var_0_0.getFullSpineResPath(arg_19_0, arg_19_1)
+	return string.format("roles/%s.prefab", arg_19_1)
 end
 
-function slot0.onReleaseAllEntrustedEntity(slot0)
-	slot0:clear()
+function var_0_0.onReleaseAllEntrustedEntity(arg_20_0)
+	arg_20_0:clear()
 end
 
-function slot0.clearLoader(slot0)
-	if slot0.resLoader then
-		slot0.resLoader:dispose()
+function var_0_0.clearLoader(arg_21_0)
+	if arg_21_0.resLoader then
+		arg_21_0.resLoader:dispose()
 
-		slot0.resLoader = nil
+		arg_21_0.resLoader = nil
 	end
 end
 
-function slot0.clear(slot0)
-	slot0:clearLoader()
-	TaskDispatcher.cancelTask(slot0._showEntity, slot0)
+function var_0_0.clear(arg_22_0)
+	arg_22_0:clearLoader()
+	TaskDispatcher.cancelTask(arg_22_0._showEntity, arg_22_0)
 
-	if slot0.effectAnimator then
-		if slot0.effectCo and slot0.effectCo.fadeAudioId and slot1 ~= 0 then
-			AudioMgr.instance:trigger(slot1)
+	if arg_22_0.effectAnimator then
+		local var_22_0 = arg_22_0.effectCo and arg_22_0.effectCo.fadeAudioId
+
+		if var_22_0 and var_22_0 ~= 0 then
+			AudioMgr.instance:trigger(var_22_0)
 		end
 
-		slot0.spine1EffectAnimator:Play("close")
-		slot0.spine2EffectAnimator:Play("close")
-		slot0.effectAnimator:Play("close", slot0.clearEffectAndEntity, slot0)
+		arg_22_0.spine1EffectAnimator:Play("close")
+		arg_22_0.spine2EffectAnimator:Play("close")
+		arg_22_0.effectAnimator:Play("close", arg_22_0.clearEffectAndEntity, arg_22_0)
 	else
-		slot0:clearEffectAndEntity()
+		arg_22_0:clearEffectAndEntity()
 	end
 
 	FightDataHelper.LYDataMgr:setLYCardAreaBuff(nil)
-	FightController.instance:unregisterCallback(FightEvent.TimelineLYSpecialSpinePlayAniName, slot0.playAnim, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, slot0.onBeforePlayUniqueSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, slot0.onAfterPlayUniqueSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ReleaseAllEntrustedEntity, slot0.onReleaseAllEntrustedEntity, slot0)
+	FightController.instance:unregisterCallback(FightEvent.TimelineLYSpecialSpinePlayAniName, arg_22_0.playAnim, arg_22_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, arg_22_0.onBeforePlayUniqueSkill, arg_22_0)
+	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, arg_22_0.onAfterPlayUniqueSkill, arg_22_0)
+	FightController.instance:unregisterCallback(FightEvent.ReleaseAllEntrustedEntity, arg_22_0.onReleaseAllEntrustedEntity, arg_22_0)
 
-	slot0.loaded = false
+	arg_22_0.loaded = false
 end
 
-function slot0.clearEffectAndEntity(slot0)
-	slot0:clearSpine(slot0.spine1, slot0.spine1Effect)
-	slot0:clearSpine(slot0.spine2, slot0.spine2Effect)
-	slot0:clearEffect(slot0.entity, slot0.effectWrap)
+function var_0_0.clearEffectAndEntity(arg_23_0)
+	arg_23_0:clearSpine(arg_23_0.spine1, arg_23_0.spine1Effect)
+	arg_23_0:clearSpine(arg_23_0.spine2, arg_23_0.spine2Effect)
+	arg_23_0:clearEffect(arg_23_0.entity, arg_23_0.effectWrap)
 
-	slot0.spine1 = nil
-	slot0.spine2 = nil
-	slot0.spine1Effect = nil
-	slot0.spine2Effect = nil
-	slot0.effectWrap = nil
-	slot0.effectAnimator = nil
-	slot0.spine1EffectAnimator = nil
-	slot0.spine2EffectAnimator = nil
-	slot0.entity = nil
+	arg_23_0.spine1 = nil
+	arg_23_0.spine2 = nil
+	arg_23_0.spine1Effect = nil
+	arg_23_0.spine2Effect = nil
+	arg_23_0.effectWrap = nil
+	arg_23_0.effectAnimator = nil
+	arg_23_0.spine1EffectAnimator = nil
+	arg_23_0.spine2EffectAnimator = nil
+	arg_23_0.entity = nil
 end
 
-function slot0.clearSpine(slot0, slot1, slot2)
-	if slot1 then
-		slot0:clearEffect(slot1, slot2)
-		slot0.sceneEntityMgr:removeUnit(slot1:getTag(), slot1.id)
+function var_0_0.clearSpine(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_1 then
+		arg_24_0:clearEffect(arg_24_1, arg_24_2)
+		arg_24_0.sceneEntityMgr:removeUnit(arg_24_1:getTag(), arg_24_1.id)
 	end
 end
 
-function slot0.clearEffect(slot0, slot1, slot2)
-	if slot1 and slot2 then
-		slot1.effect:removeEffect(slot2)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(slot1.id, slot2)
+function var_0_0.clearEffect(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_1 and arg_25_2 then
+		arg_25_1.effect:removeEffect(arg_25_2)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_25_1.id, arg_25_2)
 	end
 end
 
-function slot0.onBuffEnd(slot0)
-	slot0:clear()
+function var_0_0.onBuffEnd(arg_26_0)
+	arg_26_0:clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:clear()
+function var_0_0.dispose(arg_27_0)
+	arg_27_0:clear()
 end
 
-return slot0
+return var_0_0

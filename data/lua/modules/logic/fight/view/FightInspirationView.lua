@@ -1,76 +1,78 @@
-module("modules.logic.fight.view.FightInspirationView", package.seeall)
+﻿module("modules.logic.fight.view.FightInspirationView", package.seeall)
 
-slot0 = class("FightInspirationView", BaseView)
+local var_0_0 = class("FightInspirationView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._godesc1 = gohelper.findChild(slot0.viewGO, "#go_desc1")
-	slot0._simageicon1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_desc1/#simage_icon1")
-	slot0._simageicon2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_desc1/#simage_icon2")
-	slot0._godesc2 = gohelper.findChild(slot0.viewGO, "#go_desc2")
-	slot0._imagecareer4 = gohelper.findChildImage(slot0.viewGO, "#go_desc2/careers/#image_career4")
-	slot0._imagecareer3 = gohelper.findChildImage(slot0.viewGO, "#go_desc2/careers/#image_career3")
-	slot0._imagecareer2 = gohelper.findChildImage(slot0.viewGO, "#go_desc2/careers/#image_career2")
-	slot0._imagecareer1 = gohelper.findChildImage(slot0.viewGO, "#go_desc2/careers/#image_career1")
-	slot0._imagecareer6 = gohelper.findChildImage(slot0.viewGO, "#go_desc2/careers/#image_career6")
-	slot0._imagecareer5 = gohelper.findChildImage(slot0.viewGO, "#go_desc2/careers/#image_career5")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._godesc1 = gohelper.findChild(arg_1_0.viewGO, "#go_desc1")
+	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_desc1/#simage_icon1")
+	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_desc1/#simage_icon2")
+	arg_1_0._godesc2 = gohelper.findChild(arg_1_0.viewGO, "#go_desc2")
+	arg_1_0._imagecareer4 = gohelper.findChildImage(arg_1_0.viewGO, "#go_desc2/careers/#image_career4")
+	arg_1_0._imagecareer3 = gohelper.findChildImage(arg_1_0.viewGO, "#go_desc2/careers/#image_career3")
+	arg_1_0._imagecareer2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_desc2/careers/#image_career2")
+	arg_1_0._imagecareer1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_desc2/careers/#image_career1")
+	arg_1_0._imagecareer6 = gohelper.findChildImage(arg_1_0.viewGO, "#go_desc2/careers/#image_career6")
+	arg_1_0._imagecareer5 = gohelper.findChildImage(arg_1_0.viewGO, "#go_desc2/careers/#image_career5")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._change then
-		slot0:closeThis()
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._change then
+		arg_4_0:closeThis()
 
 		return
 	end
 
-	gohelper.setActive(slot0._godesc1, false)
-	gohelper.setActive(slot0._godesc2, true)
+	gohelper.setActive(arg_4_0._godesc1, false)
+	gohelper.setActive(arg_4_0._godesc2, true)
 
-	slot0._change = true
+	arg_4_0._change = true
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._godesc1, true)
-	gohelper.setActive(slot0._godesc2, false)
-	slot0._simagebg:LoadImage(ResUrl.getFightIcon("bg_zhandouyindao_tanchuang") .. ".png")
-	slot0._simageicon1:LoadImage(ResUrl.getFightIcon("bg_zhandouyindao_kezhi") .. ".png")
-	slot0._simageicon2:LoadImage(ResUrl.getFightIcon("bg_zhandouyindao_beike") .. ".png")
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._godesc1, true)
+	gohelper.setActive(arg_5_0._godesc2, false)
+	arg_5_0._simagebg:LoadImage(ResUrl.getFightIcon("bg_zhandouyindao_tanchuang") .. ".png")
+	arg_5_0._simageicon1:LoadImage(ResUrl.getFightIcon("bg_zhandouyindao_kezhi") .. ".png")
+	arg_5_0._simageicon2:LoadImage(ResUrl.getFightIcon("bg_zhandouyindao_beike") .. ".png")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer1, "lssx_1")
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer2, "lssx_2")
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer3, "lssx_3")
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer4, "lssx_4")
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer5, "lssx_5")
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer6, "lssx_6")
+function var_0_0.onOpen(arg_7_0)
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer1, "lssx_1")
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer2, "lssx_2")
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer3, "lssx_3")
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer4, "lssx_4")
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer5, "lssx_5")
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer6, "lssx_6")
 
-	slot0._change = false
+	arg_7_0._change = false
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageicon1:UnLoadImage()
-	slot0._simageicon2:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0._simageicon1:UnLoadImage()
+	arg_9_0._simageicon2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

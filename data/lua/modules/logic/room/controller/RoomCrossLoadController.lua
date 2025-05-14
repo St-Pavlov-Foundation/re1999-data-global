@@ -1,54 +1,60 @@
-module("modules.logic.room.controller.RoomCrossLoadController", package.seeall)
+﻿module("modules.logic.room.controller.RoomCrossLoadController", package.seeall)
 
-slot0 = class("RoomCrossLoadController", BaseController)
+local var_0_0 = class("RoomCrossLoadController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._lastUpdatePathGraphicTimeDic = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._lastUpdatePathGraphicTimeDic = {}
 
-	slot0:clear()
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	return
 end
 
-function slot0.findDirectionPathList(slot0, slot1, slot2)
-	if not slot0._directionPathDic then
-		slot0._directionPathDic = {}
+function var_0_0.findDirectionPathList(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._directionPathDic then
+		arg_4_0._directionPathDic = {}
 	end
 
-	if not slot0._directionPathDic[slot1] then
-		slot0._directionPathDic[slot1] = {}
+	if not arg_4_0._directionPathDic[arg_4_1] then
+		arg_4_0._directionPathDic[arg_4_1] = {}
 	end
 
-	if not slot0._directionPathDic[slot1][slot2] then
-		slot0._directionPathDic[slot1][slot2] = {
-			slot1
+	if not arg_4_0._directionPathDic[arg_4_1][arg_4_2] then
+		local var_4_0 = {
+			arg_4_1
 		}
 
-		if slot1 ~= slot2 then
-			table.insert(slot3, slot2)
+		arg_4_0._directionPathDic[arg_4_1][arg_4_2] = var_4_0
+
+		if arg_4_1 ~= arg_4_2 then
+			table.insert(var_4_0, arg_4_2)
 		end
 
-		if math.abs(slot1 - slot2) > 1 and not tabletool.indexOf(slot3, 0) then
-			table.insert(slot3, 0)
+		if math.abs(arg_4_1 - arg_4_2) > 1 and not tabletool.indexOf(var_4_0, 0) then
+			table.insert(var_4_0, 0)
 		end
 	end
 
-	return slot0._directionPathDic[slot1][slot2]
+	return arg_4_0._directionPathDic[arg_4_1][arg_4_2]
 end
 
-function slot0.isEnterBuilingCrossLoad(slot0, slot1, slot2, slot3, slot4)
-	if RoomMapBuildingModel.instance:getBuildingParam(slot1, slot2) and slot5.isCrossload and slot5.replacResPoins then
-		slot7 = slot0:findDirectionPathList(slot3, slot4)
+function var_0_0.isEnterBuilingCrossLoad(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = RoomMapBuildingModel.instance:getBuildingParam(arg_5_1, arg_5_2)
 
-		for slot11, slot12 in pairs(slot5.replacResPoins) do
-			for slot16, slot17 in ipairs(slot7) do
-				if slot12[RoomRotateHelper.rotateDirection(slot17, -slot5.blockRotate)] then
-					return true, slot5.buildingUid
+	if var_5_0 and var_5_0.isCrossload and var_5_0.replacResPoins then
+		local var_5_1 = var_5_0.replacResPoins
+		local var_5_2 = arg_5_0:findDirectionPathList(arg_5_3, arg_5_4)
+
+		for iter_5_0, iter_5_1 in pairs(var_5_1) do
+			for iter_5_2, iter_5_3 in ipairs(var_5_2) do
+				if iter_5_1[RoomRotateHelper.rotateDirection(iter_5_3, -var_5_0.blockRotate)] then
+					return true, var_5_0.buildingUid
 				end
 			end
 		end
@@ -57,67 +63,82 @@ function slot0.isEnterBuilingCrossLoad(slot0, slot1, slot2, slot3, slot4)
 	return false
 end
 
-function slot0.crossload(slot0, slot1, slot2)
-	if not GameSceneMgr.instance:getCurScene() then
+function var_0_0.crossload(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = GameSceneMgr.instance:getCurScene()
+
+	if not var_6_0 then
 		return
 	end
 
-	if slot3.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) and slot4.crossloadComp then
-		slot4.crossloadComp:playAnim(slot2)
+	local var_6_1 = var_6_0.buildingmgr:getBuildingEntity(arg_6_1, SceneTag.RoomBuilding)
 
-		return slot4.crossloadComp:getCurResId(), slot4.crossloadComp:getCanMove()
+	if var_6_1 and var_6_1.crossloadComp then
+		var_6_1.crossloadComp:playAnim(arg_6_2)
+
+		return var_6_1.crossloadComp:getCurResId(), var_6_1.crossloadComp:getCanMove()
 	end
 
-	return slot2
+	return arg_6_2
 end
 
-function slot0.getUpateGraphicTime(slot0, slot1)
-	return slot0._lastUpdatePathGraphicTimeDic[slot1] or 0
+function var_0_0.getUpateGraphicTime(arg_7_0, arg_7_1)
+	return arg_7_0._lastUpdatePathGraphicTimeDic[arg_7_1] or 0
 end
 
-function slot0.updatePathGraphic(slot0, slot1)
-	if not GameSceneMgr.instance:getCurScene() then
+function var_0_0.updatePathGraphic(arg_8_0, arg_8_1)
+	local var_8_0 = GameSceneMgr.instance:getCurScene()
+
+	if not var_8_0 then
 		return
 	end
 
-	if not slot2.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) then
+	local var_8_1 = var_8_0.buildingmgr:getBuildingEntity(arg_8_1, SceneTag.RoomBuilding)
+
+	if not var_8_1 then
 		return
 	end
 
-	if not slot3:getMO() then
+	local var_8_2 = var_8_1:getMO()
+
+	if not var_8_2 then
 		return
 	end
 
-	slot0._lastUpdatePathGraphicTimeDic[slot1] = Time.time
-	slot9 = slot4.buildingUid
+	arg_8_0._lastUpdatePathGraphicTimeDic[arg_8_1] = Time.time
 
-	for slot9, slot10 in pairs(RoomBuildingHelper.getOccupyDict(slot4.buildingId, slot4.hexPoint, slot4.rotate, slot9)) do
-		for slot14, slot15 in pairs(slot10) do
-			if slot2.mapmgr:getBlockEntity(RoomMapBlockModel.instance:getBlockMO(slot9, slot14).id, SceneTag.RoomMapBlock) then
-				slot2.path:updatePathGraphic(slot17.go)
+	local var_8_3 = RoomBuildingHelper.getOccupyDict(var_8_2.buildingId, var_8_2.hexPoint, var_8_2.rotate, var_8_2.buildingUid)
+
+	for iter_8_0, iter_8_1 in pairs(var_8_3) do
+		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
+			local var_8_4 = RoomMapBlockModel.instance:getBlockMO(iter_8_0, iter_8_2)
+			local var_8_5 = var_8_0.mapmgr:getBlockEntity(var_8_4.id, SceneTag.RoomMapBlock)
+
+			if var_8_5 then
+				var_8_0.path:updatePathGraphic(var_8_5.go)
 			end
 		end
 	end
 
-	slot2.path:updatePathGraphic(slot3:getBuildingGO())
+	var_8_0.path:updatePathGraphic(var_8_1:getBuildingGO())
 end
 
-function slot0._closeGraphic(slot0, slot1)
-	if not gohelper.isNil(slot1) then
-		slot3 = {}
+function var_0_0._closeGraphic(arg_9_0, arg_9_1)
+	if not gohelper.isNil(arg_9_1) then
+		local var_9_0 = ZProj.AStarPathBridge.FindChildrenByName(arg_9_1, "#collider")
+		local var_9_1 = {}
 
-		ZProj.AStarPathBridge.ArrayToLuaTable(ZProj.AStarPathBridge.FindChildrenByName(slot1, "#collider"), slot3)
+		ZProj.AStarPathBridge.ArrayToLuaTable(var_9_0, var_9_1)
 
-		for slot7, slot8 in ipairs(slot3) do
-			gohelper.setActive(slot8, false)
+		for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+			gohelper.setActive(iter_9_1, false)
 		end
 	end
 end
 
-function slot0.isLock(slot0)
+function var_0_0.isLock(arg_10_0)
 	return ViewMgr.instance:hasOpenFullView()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

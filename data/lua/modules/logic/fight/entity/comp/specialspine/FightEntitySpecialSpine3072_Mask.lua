@@ -1,220 +1,230 @@
-module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072_Mask", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialspine.FightEntitySpecialSpine3072_Mask", package.seeall)
 
-slot0 = class("FightEntitySpecialSpine3072_Mask", UserDataDispose)
-slot1 = 30720101
+local var_0_0 = class("FightEntitySpecialSpine3072_Mask", UserDataDispose)
+local var_0_1 = 30720101
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._entity = slot1
+	arg_1_0._entity = arg_1_1
 
-	slot0:_initSpine()
-	slot0:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, slot0._onSetEntityAlpha, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, slot0._onFightReconnectLastWork, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.TimelinePlayEntityAni, slot0._onTimelinePlayEntityAni, slot0)
+	arg_1_0:_initSpine()
+	arg_1_0:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, arg_1_0._onSetEntityAlpha, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, arg_1_0._onFightReconnectLastWork, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.TimelinePlayEntityAni, arg_1_0._onTimelinePlayEntityAni, arg_1_0)
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
-	if slot1 ~= slot0._entity.id then
+function var_0_0._onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if arg_2_1 ~= arg_2_0._entity.id then
 		return
 	end
 
-	if slot3 ~= uv0 then
+	if arg_2_3 ~= var_0_1 then
 		return
 	end
 
-	slot0:_detectMaskBuff()
+	arg_2_0:_detectMaskBuff()
 end
 
-function slot0._detectMaskBuff(slot0)
-	slot1 = false
+function var_0_0._detectMaskBuff(arg_3_0)
+	local var_3_0 = false
+	local var_3_1 = arg_3_0._entity:getMO()
 
-	if slot0._entity:getMO() then
-		for slot7, slot8 in pairs(slot2:getBuffDic()) do
-			if slot8.buffId == uv0 then
-				slot1 = true
+	if var_3_1 then
+		local var_3_2 = var_3_1:getBuffDic()
+
+		for iter_3_0, iter_3_1 in pairs(var_3_2) do
+			if iter_3_1.buffId == var_0_1 then
+				var_3_0 = true
 
 				break
 			end
 		end
 	end
 
-	slot0._showMask = slot1
+	arg_3_0._showMask = var_3_0
 
-	slot0:_refreshMaskVisible()
+	arg_3_0:_refreshMaskVisible()
 end
 
-function slot0._refreshMaskVisible(slot0)
-	if not gohelper.isNil(slot0._spineRoot) then
-		slot1 = true
+function var_0_0._refreshMaskVisible(arg_4_0)
+	if not gohelper.isNil(arg_4_0._spineRoot) then
+		local var_4_0 = true
 
-		if not slot0._showMask then
-			slot1 = false
+		if not arg_4_0._showMask then
+			var_4_0 = false
 		end
 
-		if slot0._entity.marked_alpha == 0 then
-			slot1 = false
+		if arg_4_0._entity.marked_alpha == 0 then
+			var_4_0 = false
 		end
 
-		if slot0._playingSkill then
-			slot1 = false
+		if arg_4_0._playingSkill then
+			var_4_0 = false
 		end
 
-		if slot0._playingAni then
-			slot1 = false
+		if arg_4_0._playingAni then
+			var_4_0 = false
 		end
 
-		transformhelper.setLocalPos(slot0._spineRootTransform, slot1 and 0 or 20000, 0, 0)
+		transformhelper.setLocalPos(arg_4_0._spineRootTransform, var_4_0 and 0 or 20000, 0, 0)
 
-		if slot1 then
-			slot0:_correctAniTime()
+		if var_4_0 then
+			arg_4_0:_correctAniTime()
 		end
 	end
 end
 
-function slot0._onSetEntityAlpha(slot0, slot1)
-	slot0:_refreshMaskVisible()
+function var_0_0._onSetEntityAlpha(arg_5_0, arg_5_1)
+	arg_5_0:_refreshMaskVisible()
 end
 
-function slot0._initSpine(slot0)
-	slot0._spineRoot = gohelper.create3d(slot0._entity.go, "specialSpine")
-	slot0._spineRootTransform = slot0._spineRoot.transform
-	slot0._spine = MonoHelper.addLuaComOnceToGo(slot0._spineRoot, UnitSpine, slot0._entity)
-	slot2 = nil
+function var_0_0._initSpine(arg_6_0)
+	arg_6_0._spineRoot = gohelper.create3d(arg_6_0._entity.go, "specialSpine")
+	arg_6_0._spineRootTransform = arg_6_0._spineRoot.transform
+	arg_6_0._spine = MonoHelper.addLuaComOnceToGo(arg_6_0._spineRoot, UnitSpine, arg_6_0._entity)
 
-	slot0._spine:setResPath(slot0._entity:getMO().skin == 307203 and "roles/v2a2_307203_zmsl_m/307203_zmsl_m_fight.prefab" or string.format("roles/v1a3_%d_zongmaoshali_m/%d_zongmaoshali_m_fight.prefab", slot1.skin, slot1.skin), slot0._onSpineLoaded, slot0)
+	local var_6_0 = arg_6_0._entity:getMO()
+	local var_6_1
+	local var_6_2 = var_6_0.skin == 307203 and "roles/v2a2_307203_zmsl_m/307203_zmsl_m_fight.prefab" or string.format("roles/v1a3_%d_zongmaoshali_m/%d_zongmaoshali_m_fight.prefab", var_6_0.skin, var_6_0.skin)
+
+	arg_6_0._spine:setResPath(var_6_2, arg_6_0._onSpineLoaded, arg_6_0)
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if slot0._layer then
-		slot0:setLayer(slot0._layer, slot0._recursive)
+function var_0_0._onSpineLoaded(arg_7_0, arg_7_1)
+	if arg_7_0._layer then
+		arg_7_0:setLayer(arg_7_0._layer, arg_7_0._recursive)
 	end
 
-	if slot0._order then
-		slot0:setRenderOrder(slot0._order, true)
+	if arg_7_0._order then
+		arg_7_0:setRenderOrder(arg_7_0._order, true)
 	end
 
-	if slot0._isActive ~= nil then
-		slot0:setActive(slot0._isActive)
+	if arg_7_0._isActive ~= nil then
+		arg_7_0:setActive(arg_7_0._isActive)
 	end
 
-	slot0._spine._skeletonAnim.freeze = slot0._entity.spine._bFreeze
-	slot0._spine._skeletonAnim.timeScale = slot0._entity.spine._timeScale
+	arg_7_0._spine._skeletonAnim.freeze = arg_7_0._entity.spine._bFreeze
+	arg_7_0._spine._skeletonAnim.timeScale = arg_7_0._entity.spine._timeScale
 
-	if slot0._entity.spine._skeletonAnim.state:GetCurrent(0) and slot0._spine._skeletonAnim then
-		slot0:playAnim(slot2:getAnimState(), slot2._isLoop, true)
+	local var_7_0 = arg_7_0._entity.spine
+
+	if var_7_0._skeletonAnim.state:GetCurrent(0) and arg_7_0._spine._skeletonAnim then
+		arg_7_0:playAnim(var_7_0:getAnimState(), var_7_0._isLoop, true)
 	end
 
-	slot0:_detectMaskBuff()
-	slot0:_refreshMaskVisible()
+	arg_7_0:_detectMaskBuff()
+	arg_7_0:_refreshMaskVisible()
 end
 
-function slot0._correctAniTime(slot0)
-	if slot0._entity.spine._skeletonAnim.state:GetCurrent(0) and slot0._spine._skeletonAnim then
-		slot0._spine._skeletonAnim:Jump2Time(slot2.TrackTime)
-	end
-end
+function var_0_0._correctAniTime(arg_8_0)
+	local var_8_0 = arg_8_0._entity.spine._skeletonAnim.state:GetCurrent(0)
 
-function slot0.playAnim(slot0, slot1, slot2, slot3)
-	if slot0._spine and slot0._spine._skeletonAnim and slot0._spine:hasAnimation(slot1) then
-		slot0._spine:playAnim(slot1, slot2, slot3)
-	end
-end
-
-function slot0.setFreeze(slot0, slot1)
-	if slot0._spine then
-		slot0._spine:setFreeze(slot1)
+	if var_8_0 and arg_8_0._spine._skeletonAnim then
+		arg_8_0._spine._skeletonAnim:Jump2Time(var_8_0.TrackTime)
 	end
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	if slot0._spine then
-		slot0._spine:setTimeScale(slot1)
+function var_0_0.playAnim(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_0._spine and arg_9_0._spine._skeletonAnim and arg_9_0._spine:hasAnimation(arg_9_1) then
+		arg_9_0._spine:playAnim(arg_9_1, arg_9_2, arg_9_3)
 	end
 end
 
-function slot0.setLayer(slot0, slot1, slot2)
-	slot0._layer = slot1
-	slot0._recursive = slot2
-
-	if slot0._spine and slot1 then
-		slot0._spine:setLayer(slot1, slot2)
+function var_0_0.setFreeze(arg_10_0, arg_10_1)
+	if arg_10_0._spine then
+		arg_10_0._spine:setFreeze(arg_10_1)
 	end
 end
 
-function slot0.setRenderOrder(slot0, slot1, slot2)
-	slot0._order = slot1
-
-	if slot0._spine and slot1 then
-		slot0._spine:setRenderOrder(slot1 + 1, slot2)
+function var_0_0.setTimeScale(arg_11_0, arg_11_1)
+	if arg_11_0._spine then
+		arg_11_0._spine:setTimeScale(arg_11_1)
 	end
 end
 
-function slot0.changeLookDir(slot0, slot1)
-	if slot0._spine then
-		slot0._spine:changeLookDir(slot1)
+function var_0_0.setLayer(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._layer = arg_12_1
+	arg_12_0._recursive = arg_12_2
+
+	if arg_12_0._spine and arg_12_1 then
+		arg_12_0._spine:setLayer(arg_12_1, arg_12_2)
 	end
 end
 
-function slot0._changeLookDir(slot0)
-	if slot0._spine then
-		slot0._spine:_changeLookDir()
+function var_0_0.setRenderOrder(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._order = arg_13_1
+
+	if arg_13_0._spine and arg_13_1 then
+		arg_13_0._spine:setRenderOrder(arg_13_1 + 1, arg_13_2)
 	end
 end
 
-function slot0.setActive(slot0, slot1)
-	slot0._isActive = slot1
-
-	if slot0._spine then
-		slot0._spine:setActive(slot1)
+function var_0_0.changeLookDir(arg_14_0, arg_14_1)
+	if arg_14_0._spine then
+		arg_14_0._spine:changeLookDir(arg_14_1)
 	end
 end
 
-function slot0.setAnimation(slot0, slot1, slot2, slot3)
-	if slot0._spine then
-		slot0._spine:setAnimation(slot1, slot2, slot3)
+function var_0_0._changeLookDir(arg_15_0)
+	if arg_15_0._spine then
+		arg_15_0._spine:_changeLookDir()
 	end
 end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2)
-	if slot1.id == slot0._entity.id then
-		slot0._playingSkill = true
+function var_0_0.setActive(arg_16_0, arg_16_1)
+	arg_16_0._isActive = arg_16_1
 
-		slot0:_refreshMaskVisible()
+	if arg_16_0._spine then
+		arg_16_0._spine:setActive(arg_16_1)
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1, slot2)
-	if slot1.id == slot0._entity.id then
-		slot0._playingSkill = false
-
-		slot0:_refreshMaskVisible()
+function var_0_0.setAnimation(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_0._spine then
+		arg_17_0._spine:setAnimation(arg_17_1, arg_17_2, arg_17_3)
 	end
 end
 
-function slot0._onTimelinePlayEntityAni(slot0, slot1, slot2)
-	if slot1 == slot0._entity.id then
-		slot0._playingAni = slot2
+function var_0_0._onSkillPlayStart(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1.id == arg_18_0._entity.id then
+		arg_18_0._playingSkill = true
 
-		slot0:_refreshMaskVisible()
+		arg_18_0:_refreshMaskVisible()
 	end
 end
 
-function slot0._onFightReconnectLastWork(slot0)
-	slot0:_onBuffUpdate(slot0._entity.id, nil, uv0)
+function var_0_0._onSkillPlayFinish(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1.id == arg_19_0._entity.id then
+		arg_19_0._playingSkill = false
+
+		arg_19_0:_refreshMaskVisible()
+	end
 end
 
-function slot0.releaseSelf(slot0)
-	if slot0._spineRoot then
-		gohelper.destroy(slot0._spineRoot)
+function var_0_0._onTimelinePlayEntityAni(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_1 == arg_20_0._entity.id then
+		arg_20_0._playingAni = arg_20_2
+
+		arg_20_0:_refreshMaskVisible()
+	end
+end
+
+function var_0_0._onFightReconnectLastWork(arg_21_0)
+	arg_21_0:_onBuffUpdate(arg_21_0._entity.id, nil, var_0_1)
+end
+
+function var_0_0.releaseSelf(arg_22_0)
+	if arg_22_0._spineRoot then
+		gohelper.destroy(arg_22_0._spineRoot)
 	end
 
-	slot0._entity = nil
+	arg_22_0._entity = nil
 
-	slot0:__onDispose()
+	arg_22_0:__onDispose()
 end
 
-return slot0
+return var_0_0

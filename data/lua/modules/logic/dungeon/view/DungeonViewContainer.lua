@@ -1,124 +1,128 @@
-module("modules.logic.dungeon.view.DungeonViewContainer", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonViewContainer", package.seeall)
 
-slot0 = class("DungeonViewContainer", BaseViewContainer)
+local var_0_0 = class("DungeonViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = TabViewGroupDynamic.New(2)
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = TabViewGroupDynamic.New(2)
 
-	slot2:stopOpenDefaultTab(true)
-	slot2:setDynamicNodeContainers({
+	var_1_1:stopOpenDefaultTab(true)
+	var_1_1:setDynamicNodeContainers({
 		"#go_weekwalk",
 		"#go_explore",
 		"#go_permanent"
 	})
-	slot2:setDynamicNodeResHandlers({
-		[2] = uv0._getExploreRes
+	var_1_1:setDynamicNodeResHandlers({
+		[2] = var_0_0._getExploreRes
 	})
-	table.insert(slot1, slot2)
+	table.insert(var_1_0, var_1_1)
 
-	slot0._dungeonViewAudio = DungeonViewAudio.New()
+	arg_1_0._dungeonViewAudio = DungeonViewAudio.New()
 
-	table.insert(slot1, slot0._dungeonViewAudio)
-	table.insert(slot1, DungeonView.New())
+	table.insert(var_1_0, arg_1_0._dungeonViewAudio)
+	table.insert(var_1_0, DungeonView.New())
 
-	slot3 = MixScrollParam.New()
-	slot3.scrollGOPath = "#go_story/chapterlist/#scroll_chapter"
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot3.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot3.cellClass = DungeonChapterItem
-	slot3.scrollDir = ScrollEnum.ScrollDirH
-	slot3.startSpace = 147.5
-	slot3.endSpace = 0
-	slot0._scrollParam = slot3
-	slot0._scrollView = LuaMixScrollView.New(DungeonChapterListModel.instance, slot3)
+	local var_1_2 = MixScrollParam.New()
 
-	slot0._scrollView:setDynamicGetItem(slot0._dynamicGetItem, slot0)
-	table.insert(slot1, slot0._scrollView)
-	table.insert(slot1, TabViewGroup.New(1, "top_left"))
-	table.insert(slot1, DungeonResourceView.New())
-	table.insert(slot1, DungeonViewEffect.New())
-	table.insert(slot1, DungeonViewPointReward.New())
+	var_1_2.scrollGOPath = "#go_story/chapterlist/#scroll_chapter"
+	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_2.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_2.cellClass = DungeonChapterItem
+	var_1_2.scrollDir = ScrollEnum.ScrollDirH
+	var_1_2.startSpace = 147.5
+	var_1_2.endSpace = 0
+	arg_1_0._scrollParam = var_1_2
+	arg_1_0._scrollView = LuaMixScrollView.New(DungeonChapterListModel.instance, var_1_2)
 
-	return slot1
+	arg_1_0._scrollView:setDynamicGetItem(arg_1_0._dynamicGetItem, arg_1_0)
+	table.insert(var_1_0, arg_1_0._scrollView)
+	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	table.insert(var_1_0, DungeonResourceView.New())
+	table.insert(var_1_0, DungeonViewEffect.New())
+	table.insert(var_1_0, DungeonViewPointReward.New())
+
+	return var_1_0
 end
 
-function slot0._getExploreRes()
-	slot0, slot1, slot2 = ExploreSimpleModel.instance:getChapterIndex(ExploreSimpleModel.instance:getLastSelectMap())
+function var_0_0._getExploreRes()
+	local var_2_0, var_2_1, var_2_2 = ExploreSimpleModel.instance:getChapterIndex(ExploreSimpleModel.instance:getLastSelectMap())
+	local var_2_3 = ExploreSimpleModel.instance:isChapterFinish(var_2_2) and "level/levelbg" .. var_2_0 .. "_1" or "level/levelbg" .. var_2_0
 
 	return {
-		ResUrl.getExploreBg(ExploreSimpleModel.instance:isChapterFinish(slot2) and "level/levelbg" .. slot0 .. "_1" or "level/levelbg" .. slot0)
+		ResUrl.getExploreBg(var_2_3)
 	}
 end
 
-function slot0._dynamicGetItem(slot0, slot1)
-	if slot1 and DungeonModel.instance:isSpecialMainPlot(slot1.id) then
-		return "mini_item", DungeonChapterMiniItem, slot0._viewSetting.otherRes.mini_item
+function var_0_0._dynamicGetItem(arg_3_0, arg_3_1)
+	if arg_3_1 and DungeonModel.instance:isSpecialMainPlot(arg_3_1.id) then
+		return "mini_item", DungeonChapterMiniItem, arg_3_0._viewSetting.otherRes.mini_item
 	end
 end
 
-function slot0.onContainerOpen(slot0)
+function var_0_0.onContainerOpen(arg_4_0)
+	return
 end
 
-function slot0.getScrollView(slot0)
-	return slot0._scrollView
+function var_0_0.getScrollView(arg_5_0)
+	return arg_5_0._scrollView
 end
 
-function slot0.getScrollParam(slot0)
-	return slot0._scrollParam
+function var_0_0.getScrollParam(arg_6_0)
+	return arg_6_0._scrollParam
 end
 
-function slot0.getItemSpace(slot0)
-	slot1 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+function var_0_0.getItemSpace(arg_7_0)
+	local var_7_0 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local var_7_1 = recthelper.getWidth(var_7_0.transform) / recthelper.getHeight(var_7_0.transform)
 
-	if recthelper.getWidth(slot1.transform) / recthelper.getHeight(slot1.transform) >= 2.2 then
+	if var_7_1 >= 2.2 then
 		return 16
-	elseif slot4 >= 2 then
+	elseif var_7_1 >= 2 then
 		return 8
 	else
 		return 0
 	end
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_8_0, arg_8_1)
+	if arg_8_1 == 1 then
+		arg_8_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, 100, slot0._closeCallback, nil, , slot0)
+		}, 100, arg_8_0._closeCallback, nil, nil, arg_8_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_8_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
-		slot0._exploreView = DungeonExploreView.New()
+	elseif arg_8_1 == 2 then
+		arg_8_0._exploreView = DungeonExploreView.New()
 
 		return {
 			DungeonWeekWalkView.New(),
-			slot0._exploreView,
+			arg_8_0._exploreView,
 			PermanentMainView.New()
 		}
 	end
 end
 
-function slot0.getExploreView(slot0)
-	return slot0._exploreView
+function var_0_0.getExploreView(arg_9_0)
+	return arg_9_0._exploreView
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.switchTab(arg_10_0, arg_10_1)
+	arg_10_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_10_1)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio()
+function var_0_0.onContainerOpenFinish(arg_11_0)
+	arg_11_0._navigateButtonView:resetOnCloseViewAudio()
 end
 
-function slot0.setOverrideClose(slot0, slot1, slot2)
-	slot0._navigateButtonView:setOverrideClose(slot1, slot2)
+function var_0_0.setOverrideClose(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._navigateButtonView:setOverrideClose(arg_12_1, arg_12_2)
 end
 
-function slot0._closeCallback(slot0)
+function var_0_0._closeCallback(arg_13_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
 		if ViewMgr.instance:isOpen(ViewName.MainView) then
 			ViewMgr.instance:closeView(ViewName.MainView)
@@ -128,22 +132,22 @@ function slot0._closeCallback(slot0)
 	end
 end
 
-function slot0.setNavigateButtonViewLight(slot0, slot1)
-	if slot0._navigateButtonView then
-		slot0._navigateButtonView:setLight(slot1)
+function var_0_0.setNavigateButtonViewLight(arg_14_0, arg_14_1)
+	if arg_14_0._navigateButtonView then
+		arg_14_0._navigateButtonView:setLight(arg_14_1)
 	end
 end
 
-function slot0.setNavigateButtonViewHelpId(slot0)
-	if slot0._navigateButtonView then
-		slot0._navigateButtonView:setHelpId(HelpEnum.HelpId.WeekWalk)
+function var_0_0.setNavigateButtonViewHelpId(arg_15_0)
+	if arg_15_0._navigateButtonView then
+		arg_15_0._navigateButtonView:setHelpId(HelpEnum.HelpId.WeekWalk)
 	end
 end
 
-function slot0.resetNavigateButtonViewHelpId(slot0)
-	if slot0._navigateButtonView then
-		slot0._navigateButtonView:hideHelpIcon()
+function var_0_0.resetNavigateButtonViewHelpId(arg_16_0)
+	if arg_16_0._navigateButtonView then
+		arg_16_0._navigateButtonView:hideHelpIcon()
 	end
 end
 
-return slot0
+return var_0_0

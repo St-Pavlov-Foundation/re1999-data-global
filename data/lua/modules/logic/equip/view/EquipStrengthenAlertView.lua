@@ -1,72 +1,74 @@
-module("modules.logic.equip.view.EquipStrengthenAlertView", package.seeall)
+﻿module("modules.logic.equip.view.EquipStrengthenAlertView", package.seeall)
 
-slot0 = class("EquipStrengthenAlertView", BaseView)
+local var_0_0 = class("EquipStrengthenAlertView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagetipbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_tipbg")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "#txt_content")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._btnselect = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#btn_select")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_btns/#btn_select/#go_selected")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#btn_cancel")
-	slot0._btnok = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#btn_ok")
-	slot0._simagebgnum = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg_num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#txt_content")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_select")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_btns/#btn_select/#go_selected")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_cancel")
+	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_ok")
+	arg_1_0._simagebgnum = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg_num")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnselect:AddClickListener(slot0._btnselectOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
-	slot0._btnok:AddClickListener(slot0._btnokOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnselect:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnok:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnselect:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnok:RemoveClickListener()
 end
 
-function slot0._btnselectOnClick(slot0)
-	slot0._isSelected = not slot0._isSelected
+function var_0_0._btnselectOnClick(arg_4_0)
+	arg_4_0._isSelected = not arg_4_0._isSelected
 
-	slot0._goselected:SetActive(slot0._isSelected)
+	arg_4_0._goselected:SetActive(arg_4_0._isSelected)
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnokOnClick(slot0)
-	slot0:closeThis()
-	slot0.viewParam.callback(slot0._isSelected)
+function var_0_0._btnokOnClick(arg_6_0)
+	arg_6_0:closeThis()
+	arg_6_0.viewParam.callback(arg_6_0._isSelected)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
-	slot0._simagebgnum:LoadImage(ResUrl.getMessageIcon("bg_num"))
-	gohelper.addUIClickAudio(slot0._btncancel.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
-	gohelper.addUIClickAudio(slot0._btnok.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	arg_7_0._simagebgnum:LoadImage(ResUrl.getMessageIcon("bg_num"))
+	gohelper.addUIClickAudio(arg_7_0._btncancel.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+	gohelper.addUIClickAudio(arg_7_0._btnok.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtcontent.text = slot0.viewParam.content
-	slot0._isSelected = false
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._txtcontent.text = arg_9_0.viewParam.content
+	arg_9_0._isSelected = false
 
-	slot0._goselected:SetActive(slot0._isSelected)
+	arg_9_0._goselected:SetActive(arg_9_0._isSelected)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetipbg:UnLoadImage()
-	slot0._simagebgnum:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simagetipbg:UnLoadImage()
+	arg_11_0._simagebgnum:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,74 +1,81 @@
-module("modules.logic.playercard.view.comp.PlayerCardAchievement", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardAchievement", package.seeall)
 
-slot0 = class("PlayerCardAchievement", BaseView)
+local var_0_0 = class("PlayerCardAchievement", BaseView)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
 
-	slot0:onInitView()
+	arg_1_0:onInitView()
 end
 
-function slot0.onInitView(slot0)
-	slot0.go = gohelper.findChild(slot0.viewGO, "root/main/achieve")
-	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.go, "#btn_click")
-	slot0.txtDec = gohelper.findChildTextMesh(slot0.go, "#txt_dec")
-	slot0.goAchievement = gohelper.findChild(slot0.go, "#go_achievement")
-	slot0.goSingle = gohelper.findChild(slot0.goAchievement, "#go_singlecontainer")
-	slot0.goSingleItem = gohelper.findChild(slot0.goAchievement, "#go_singlecontainer/horizontal/#go_singleitem")
-	slot0.goSingleSelectedEffect = gohelper.findChild(slot0.goAchievement, "#go_singlecontainer/selected_eff")
-	slot0.goGroup = gohelper.findChild(slot0.goAchievement, "#go_group")
-	slot0.groupSimageBg = gohelper.findChildSingleImage(slot0.goAchievement, "#go_group/#image_bg")
-	slot0.goGroupContainer = gohelper.findChild(slot0.goAchievement, "#go_group/#go_groupcontainer")
-	slot0.goGroupSelectedEffect = gohelper.findChild(slot0.goAchievement, "#go_group/selected_eff")
-	slot0.goEmpty = gohelper.findChild(slot0.goAchievement, "#go_showempty")
-	slot0._singleAchieveTabs = {}
-	slot0._iconItems = {}
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0.go = gohelper.findChild(arg_2_0.viewGO, "root/main/achieve")
+	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_0.go, "#btn_click")
+	arg_2_0.txtDec = gohelper.findChildTextMesh(arg_2_0.go, "#txt_dec")
+	arg_2_0.goAchievement = gohelper.findChild(arg_2_0.go, "#go_achievement")
+	arg_2_0.goSingle = gohelper.findChild(arg_2_0.goAchievement, "#go_singlecontainer")
+	arg_2_0.goSingleItem = gohelper.findChild(arg_2_0.goAchievement, "#go_singlecontainer/horizontal/#go_singleitem")
+	arg_2_0.goSingleSelectedEffect = gohelper.findChild(arg_2_0.goAchievement, "#go_singlecontainer/selected_eff")
+	arg_2_0.goGroup = gohelper.findChild(arg_2_0.goAchievement, "#go_group")
+	arg_2_0.groupSimageBg = gohelper.findChildSingleImage(arg_2_0.goAchievement, "#go_group/#image_bg")
+	arg_2_0.goGroupContainer = gohelper.findChild(arg_2_0.goAchievement, "#go_group/#go_groupcontainer")
+	arg_2_0.goGroupSelectedEffect = gohelper.findChild(arg_2_0.goAchievement, "#go_group/selected_eff")
+	arg_2_0.goEmpty = gohelper.findChild(arg_2_0.goAchievement, "#go_showempty")
+	arg_2_0._singleAchieveTabs = {}
+	arg_2_0._iconItems = {}
 end
 
-function slot0.playSelelctEffect(slot0)
-	gohelper.setActive(slot0.goGroupSelectedEffect, false)
-	gohelper.setActive(slot0.goGroupSelectedEffect, true)
-	gohelper.setActive(slot0.goSingleSelectedEffect, false)
-	gohelper.setActive(slot0.goSingleSelectedEffect, true)
+function var_0_0.playSelelctEffect(arg_3_0)
+	gohelper.setActive(arg_3_0.goGroupSelectedEffect, false)
+	gohelper.setActive(arg_3_0.goGroupSelectedEffect, true)
+	gohelper.setActive(arg_3_0.goSingleSelectedEffect, false)
+	gohelper.setActive(arg_3_0.goSingleSelectedEffect, true)
 	PlayerCardController.instance:playChangeEffectAudio()
 end
 
-function slot0.addEvents(slot0)
-	slot0.btnClick:AddClickListener(slot0.btnClickOnClick, slot0)
-	slot0:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, slot0.onRefreshView, slot0)
+function var_0_0.addEvents(arg_4_0)
+	arg_4_0.btnClick:AddClickListener(arg_4_0.btnClickOnClick, arg_4_0)
+	arg_4_0:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, arg_4_0.onRefreshView, arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.btnClick:RemoveClickListener()
-	slot0:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, slot0.onRefreshView, slot0)
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0.btnClick:RemoveClickListener()
+	arg_5_0:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, arg_5_0.onRefreshView, arg_5_0)
 end
 
-function slot0.canOpen(slot0)
-	slot0:onOpen()
-	slot0:addEvents()
+function var_0_0.canOpen(arg_6_0)
+	arg_6_0:onOpen()
+	arg_6_0:addEvents()
 end
 
-function slot0.onOpen(slot0)
-	slot0.userId = slot0.viewParam.userId
-	slot0.itemRes = slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes.achieveitem)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.userId = arg_7_0.viewParam.userId
 
-	slot0:onRefreshView()
+	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes.achieveitem
+
+	arg_7_0.itemRes = arg_7_0.viewContainer:getRes(var_7_0)
+
+	arg_7_0:onRefreshView()
 end
 
-function slot0.getCardInfo(slot0)
-	return PlayerCardModel.instance:getCardInfo(slot0.userId)
+function var_0_0.getCardInfo(arg_8_0)
+	return PlayerCardModel.instance:getCardInfo(arg_8_0.userId)
 end
 
-function slot0.isPlayerSelf(slot0)
-	return slot0:getCardInfo() and slot1:isSelf()
+function var_0_0.isPlayerSelf(arg_9_0)
+	local var_9_0 = arg_9_0:getCardInfo()
+
+	return var_9_0 and var_9_0:isSelf()
 end
 
-function slot0.getPlayerInfo(slot0)
-	return slot0:getCardInfo() and slot1:getPlayerInfo()
+function var_0_0.getPlayerInfo(arg_10_0)
+	local var_10_0 = arg_10_0:getCardInfo()
+
+	return var_10_0 and var_10_0:getPlayerInfo()
 end
 
-function slot0.btnClickOnClick(slot0)
-	if slot0:isPlayerSelf() then
+function var_0_0.btnClickOnClick(arg_11_0)
+	if arg_11_0:isPlayerSelf() then
 		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 			ViewMgr.instance:openView(ViewName.PlayerCardAchievementSelectView)
 		else
@@ -77,183 +84,203 @@ function slot0.btnClickOnClick(slot0)
 	end
 end
 
-function slot0.onRefreshView(slot0)
-	if slot0:getCardInfo().achievementCount == -1 then
-		slot0.txtDec.text = PlayerCardEnum.EmptyString2
+function var_0_0.onRefreshView(arg_12_0)
+	local var_12_0 = arg_12_0:getCardInfo()
+
+	if var_12_0.achievementCount == -1 then
+		arg_12_0.txtDec.text = PlayerCardEnum.EmptyString2
 	else
-		slot0.txtDec.text = tostring(slot1.achievementCount)
+		arg_12_0.txtDec.text = tostring(var_12_0.achievementCount)
 	end
 
-	slot0:_refreshAchievements()
+	arg_12_0:_refreshAchievements()
 end
 
-function slot0._refreshAchievements(slot0)
-	slot4, slot5 = PlayerViewAchievementModel.instance:getShowAchievements(slot0:getCardInfo():getShowAchievement() or slot0:getPlayerInfo().showAchievement)
-	slot6 = not slot5 or tabletool.len(slot5) <= 0
+function var_0_0._refreshAchievements(arg_13_0)
+	local var_13_0 = arg_13_0:getCardInfo()
+	local var_13_1 = arg_13_0:getPlayerInfo()
+	local var_13_2 = var_13_0:getShowAchievement() or var_13_1.showAchievement
+	local var_13_3, var_13_4 = PlayerViewAchievementModel.instance:getShowAchievements(var_13_2)
+	local var_13_5 = not var_13_4 or tabletool.len(var_13_4) <= 0
 
-	gohelper.setActive(slot0.goEmpty, slot6)
-	gohelper.setActive(slot0.goGroup, slot4 and not slot6)
-	gohelper.setActive(slot0.goSingle, not slot4 and not slot6)
+	gohelper.setActive(arg_13_0.goEmpty, var_13_5)
+	gohelper.setActive(arg_13_0.goGroup, var_13_3 and not var_13_5)
+	gohelper.setActive(arg_13_0.goSingle, not var_13_3 and not var_13_5)
 
-	if slot0.notIsFirst and slot0.showStr ~= slot3 then
-		slot0:playSelelctEffect()
+	if arg_13_0.notIsFirst and arg_13_0.showStr ~= var_13_2 then
+		arg_13_0:playSelelctEffect()
 	end
 
-	slot0.showStr = slot3
-	slot0.notIsFirst = true
+	arg_13_0.showStr = var_13_2
+	arg_13_0.notIsFirst = true
 
-	if slot6 then
+	if var_13_5 then
 		return
 	end
 
-	if not slot4 then
-		slot0:_refreshSingle(slot5)
+	if not var_13_3 then
+		arg_13_0:_refreshSingle(var_13_4)
 	else
-		for slot10, slot11 in pairs(slot5) do
-			slot0:_refreshGroup(slot10, slot11)
+		for iter_13_0, iter_13_1 in pairs(var_13_4) do
+			arg_13_0:_refreshGroup(iter_13_0, iter_13_1)
 
 			break
 		end
 	end
 end
 
-function slot0._refreshSingle(slot0, slot1)
-	slot2 = 1
+function var_0_0._refreshSingle(arg_14_0, arg_14_1)
+	local var_14_0 = 1
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = slot0:_getOrCreateSingleItem(slot2)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
+		local var_14_1 = arg_14_0:_getOrCreateSingleItem(var_14_0)
 
-		gohelper.setActive(slot8.viewGo, true)
-		gohelper.setActive(slot8.goempty, false)
-		gohelper.setActive(slot8.gohas, true)
+		gohelper.setActive(var_14_1.viewGo, true)
+		gohelper.setActive(var_14_1.goempty, false)
+		gohelper.setActive(var_14_1.gohas, true)
 
-		if AchievementConfig.instance:getTask(slot7) then
-			slot8.simageicon:LoadImage(ResUrl.getAchievementIcon("badgeicon/" .. slot9.icon))
+		local var_14_2 = AchievementConfig.instance:getTask(iter_14_1)
+
+		if var_14_2 then
+			var_14_1.simageicon:LoadImage(ResUrl.getAchievementIcon("badgeicon/" .. var_14_2.icon))
 		end
 
-		slot2 = slot2 + 1
+		var_14_0 = var_14_0 + 1
 	end
 
-	for slot6 = slot2, AchievementEnum.ShowMaxSingleCount do
-		slot7 = slot0:_getOrCreateSingleItem(slot6)
+	for iter_14_2 = var_14_0, AchievementEnum.ShowMaxSingleCount do
+		local var_14_3 = arg_14_0:_getOrCreateSingleItem(iter_14_2)
 
-		gohelper.setActive(slot7.viewGo, true)
-		gohelper.setActive(slot7.goempty, true)
-		gohelper.setActive(slot7.gohas, false)
-	end
-end
-
-function slot0._getOrCreateSingleItem(slot0, slot1)
-	if not slot0._singleAchieveTabs[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGo = gohelper.cloneInPlace(slot0.goSingleItem, "singleitem_" .. slot1)
-		slot2.goempty = gohelper.findChild(slot2.viewGo, "go_empty")
-		slot2.gohas = gohelper.findChild(slot2.viewGo, "go_has")
-		slot2.simageicon = gohelper.findChildSingleImage(slot2.viewGo, "go_has/simage_icon")
-
-		table.insert(slot0._singleAchieveTabs, slot1, slot2)
-	end
-
-	return slot0._singleAchieveTabs[slot1]
-end
-
-function slot0._refreshGroup(slot0, slot1, slot2)
-	if AchievementConfig.instance:getGroup(slot1) then
-		slot0.groupSimageBg:LoadImage(AchievementConfig.instance:getGroupBgUrl(slot1, AchievementEnum.GroupParamType.List, AchievementModel.instance:isAchievementTaskFinished(slot3.unLockAchievement)))
-		slot0:refreshSingleInGroup(slot1, slot2)
+		gohelper.setActive(var_14_3.viewGo, true)
+		gohelper.setActive(var_14_3.goempty, true)
+		gohelper.setActive(var_14_3.gohas, false)
 	end
 end
 
-function slot0.refreshSingleInGroup(slot0, slot1, slot2)
-	slot3 = AchievementConfig.instance:getAchievementsByGroupId(slot1)
-	slot5 = {}
-	slot11 = AchievementConfig.instance:getGroupParamIdTab(slot1, AchievementEnum.GroupParamType.List) and #slot6 or 0
+function var_0_0._getOrCreateSingleItem(arg_15_0, arg_15_1)
+	if not arg_15_0._singleAchieveTabs[arg_15_1] then
+		local var_15_0 = arg_15_0:getUserDataTb_()
 
-	for slot11 = 1, math.max(#slot0._iconItems, slot11) do
-		slot12 = slot0:_getOrCreateGroupItem(slot11)
-		slot13 = slot3 and slot3[slot6[slot11]]
+		var_15_0.viewGo = gohelper.cloneInPlace(arg_15_0.goSingleItem, "singleitem_" .. arg_15_1)
+		var_15_0.goempty = gohelper.findChild(var_15_0.viewGo, "go_empty")
+		var_15_0.gohas = gohelper.findChild(var_15_0.viewGo, "go_has")
+		var_15_0.simageicon = gohelper.findChildSingleImage(var_15_0.viewGo, "go_has/simage_icon")
 
-		slot0:_setGroupAchievementPosAndScale(slot12.viewGO, slot1, slot11)
-		gohelper.setActive(slot12.viewGO, slot13 ~= nil)
+		table.insert(arg_15_0._singleAchieveTabs, arg_15_1, var_15_0)
+	end
 
-		if slot13 then
-			slot14 = slot13.id
+	return arg_15_0._singleAchieveTabs[arg_15_1]
+end
 
-			if slot0:getExistTaskCo(slot0:buildAchievementAndTaskMap(slot2), slot13) then
-				slot12:setData(slot15)
-				slot12:setIconVisible(true)
-				slot12:setBgVisible(false)
-				slot12:setNameTxtVisible(false)
+function var_0_0._refreshGroup(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = AchievementConfig.instance:getGroup(arg_16_1)
+
+	if var_16_0 then
+		local var_16_1 = AchievementModel.instance:isAchievementTaskFinished(var_16_0.unLockAchievement)
+		local var_16_2 = AchievementConfig.instance:getGroupBgUrl(arg_16_1, AchievementEnum.GroupParamType.List, var_16_1)
+
+		arg_16_0.groupSimageBg:LoadImage(var_16_2)
+		arg_16_0:refreshSingleInGroup(arg_16_1, arg_16_2)
+	end
+end
+
+function var_0_0.refreshSingleInGroup(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_17_1)
+	local var_17_1 = arg_17_0:buildAchievementAndTaskMap(arg_17_2)
+	local var_17_2 = {}
+	local var_17_3 = AchievementConfig.instance:getGroupParamIdTab(arg_17_1, AchievementEnum.GroupParamType.List)
+	local var_17_4 = var_17_3 and #var_17_3 or 0
+
+	for iter_17_0 = 1, math.max(#arg_17_0._iconItems, var_17_4) do
+		local var_17_5 = arg_17_0:_getOrCreateGroupItem(iter_17_0)
+		local var_17_6 = var_17_0 and var_17_0[var_17_3[iter_17_0]]
+
+		arg_17_0:_setGroupAchievementPosAndScale(var_17_5.viewGO, arg_17_1, iter_17_0)
+		gohelper.setActive(var_17_5.viewGO, var_17_6 ~= nil)
+
+		if var_17_6 then
+			local var_17_7 = var_17_6.id
+			local var_17_8 = arg_17_0:getExistTaskCo(var_17_1, var_17_6)
+
+			if var_17_8 then
+				var_17_5:setData(var_17_8)
+				var_17_5:setIconVisible(true)
+				var_17_5:setBgVisible(false)
+				var_17_5:setNameTxtVisible(false)
 			else
-				gohelper.setActive(slot12.viewGO, false)
+				gohelper.setActive(var_17_5.viewGO, false)
 			end
 		end
 	end
 end
 
-function slot0.buildAchievementAndTaskMap(slot0, slot1)
-	slot2 = {}
+function var_0_0.buildAchievementAndTaskMap(arg_18_0, arg_18_1)
+	local var_18_0 = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			if not slot2[AchievementConfig.instance:getTask(slot7).achievementId] then
-				slot2[slot9] = slot8
+	if arg_18_1 then
+		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+			local var_18_1 = AchievementConfig.instance:getTask(iter_18_1)
+			local var_18_2 = var_18_1.achievementId
+
+			if not var_18_0[var_18_2] then
+				var_18_0[var_18_2] = var_18_1
 			end
 		end
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0._setGroupAchievementPosAndScale(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6, slot7 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(slot2, slot3, AchievementEnum.GroupParamType.List)
+function var_0_0._setGroupAchievementPosAndScale(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0, var_19_1, var_19_2, var_19_3 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(arg_19_2, arg_19_3, AchievementEnum.GroupParamType.List)
 
-	if slot1 then
-		recthelper.setAnchor(slot1.transform, slot4 or 0, slot5 or 0)
-		transformhelper.setLocalScale(slot1.transform, slot6 or 1, slot7 or 1, 1)
+	if arg_19_1 then
+		recthelper.setAnchor(arg_19_1.transform, var_19_0 or 0, var_19_1 or 0)
+		transformhelper.setLocalScale(arg_19_1.transform, var_19_2 or 1, var_19_3 or 1, 1)
 	end
 end
 
-function slot0.getExistTaskCo(slot0, slot1, slot2)
-	return slot1[slot2.id]
+function var_0_0.getExistTaskCo(arg_20_0, arg_20_1, arg_20_2)
+	return arg_20_1[arg_20_2.id]
 end
 
-function slot0._getOrCreateGroupItem(slot0, slot1)
-	if not slot0._iconItems[slot1] then
-		slot2 = AchievementMainIcon.New()
+function var_0_0._getOrCreateGroupItem(arg_21_0, arg_21_1)
+	if not arg_21_0._iconItems[arg_21_1] then
+		local var_21_0 = AchievementMainIcon.New()
+		local var_21_1 = gohelper.clone(arg_21_0.itemRes, arg_21_0.goGroupContainer, tostring(arg_21_1))
 
-		slot2:init(gohelper.clone(slot0.itemRes, slot0.goGroupContainer, tostring(slot1)))
+		var_21_0:init(var_21_1)
 
-		slot0._iconItems[slot1] = slot2
+		arg_21_0._iconItems[arg_21_1] = var_21_0
 	end
 
-	return slot0._iconItems[slot1]
+	return arg_21_0._iconItems[arg_21_1]
 end
 
-function slot0._tryDisposeSingleItems(slot0)
-	if slot0._singleAchieveTabs then
-		for slot4, slot5 in pairs(slot0._singleAchieveTabs) do
-			if slot5.simageicon then
-				slot5.simageicon:UnLoadImage()
+function var_0_0._tryDisposeSingleItems(arg_22_0)
+	if arg_22_0._singleAchieveTabs then
+		for iter_22_0, iter_22_1 in pairs(arg_22_0._singleAchieveTabs) do
+			if iter_22_1.simageicon then
+				iter_22_1.simageicon:UnLoadImage()
 			end
 		end
 
-		slot0._singleAchieveTabs = nil
+		arg_22_0._singleAchieveTabs = nil
 	end
 
-	if slot0._iconItems then
-		for slot4, slot5 in pairs(slot0._iconItems) do
-			slot5:dispose()
+	if arg_22_0._iconItems then
+		for iter_22_2, iter_22_3 in pairs(arg_22_0._iconItems) do
+			iter_22_3:dispose()
 		end
 
-		slot0._iconItems = nil
+		arg_22_0._iconItems = nil
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:_tryDisposeSingleItems()
-	slot0.groupSimageBg:UnLoadImage()
-	slot0:removeEvents()
+function var_0_0.onDestroy(arg_23_0)
+	arg_23_0:_tryDisposeSingleItems()
+	arg_23_0.groupSimageBg:UnLoadImage()
+	arg_23_0:removeEvents()
 end
 
-return slot0
+return var_0_0

@@ -1,94 +1,105 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183InfoMO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183InfoMO", package.seeall)
 
-slot0 = pureTable("Act183InfoMO")
+local var_0_0 = pureTable("Act183InfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0:_onGetGroupListInfo(slot1.groupList)
-	slot0:_onGetBadgeNum(slot1.badgeNum)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:_onGetGroupListInfo(arg_1_1.groupList)
+	arg_1_0:_onGetBadgeNum(arg_1_1.badgeNum)
 
-	slot0._params = slot1.params
+	arg_1_0._params = arg_1_1.params
 end
 
-function slot0._onGetGroupListInfo(slot0, slot1)
-	slot0._groupList = {}
-	slot0._groupMap = {}
-	slot0._groupTypeMap = {}
+function var_0_0._onGetGroupListInfo(arg_2_0, arg_2_1)
+	arg_2_0._groupList = {}
+	arg_2_0._groupMap = {}
+	arg_2_0._groupTypeMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = Act183GroupEpisodeMO.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_0 = Act183GroupEpisodeMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0._groupList, slot7)
+		var_2_0:init(iter_2_1)
+		table.insert(arg_2_0._groupList, var_2_0)
 
-		slot0._groupMap[slot7:getGroupId()] = slot7
-		slot0._groupTypeMap[slot9] = slot0._groupTypeMap[slot7:getGroupType()] or {}
+		local var_2_1 = var_2_0:getGroupId()
 
-		table.insert(slot0._groupTypeMap[slot9], slot7)
+		arg_2_0._groupMap[var_2_1] = var_2_0
+
+		local var_2_2 = var_2_0:getGroupType()
+
+		arg_2_0._groupTypeMap[var_2_2] = arg_2_0._groupTypeMap[var_2_2] or {}
+
+		table.insert(arg_2_0._groupTypeMap[var_2_2], var_2_0)
 	end
 
-	table.sort(slot0._groupList, slot0._sortGroupMoById)
+	table.sort(arg_2_0._groupList, arg_2_0._sortGroupMoById)
 
-	for slot5, slot6 in pairs(slot0._groupTypeMap) do
-		table.sort(slot6, slot0._sortGroupMoById)
-	end
-end
-
-function slot0._sortGroupMoById(slot0, slot1)
-	return slot0:getGroupId() < slot1:getGroupId()
-end
-
-function slot0._onGetBadgeNum(slot0, slot1)
-	slot0._badgeNum = slot1 or 0
-	slot0._unlockSupportHeros = {}
-	slot0._unlockSupportHeroIds = {}
-
-	for slot7, slot8 in ipairs(Act183Helper.getUnlockSupportHeroIds(Act183Model.instance:getActivityId(), slot1)) do
-		slot9 = HeroMo.New()
-
-		slot9:initFromTrial(slot8)
-		table.insert(slot0._unlockSupportHeros, slot9)
-		table.insert(slot0._unlockSupportHeroIds, slot8)
+	for iter_2_2, iter_2_3 in pairs(arg_2_0._groupTypeMap) do
+		table.sort(iter_2_3, arg_2_0._sortGroupMoById)
 	end
 end
 
-function slot0.getGroupEpisodes(slot0)
-	return slot0._groupList
+function var_0_0._sortGroupMoById(arg_3_0, arg_3_1)
+	return arg_3_0:getGroupId() < arg_3_1:getGroupId()
 end
 
-function slot0.getBadgeNum(slot0)
-	return slot0._badgeNum
+function var_0_0._onGetBadgeNum(arg_4_0, arg_4_1)
+	arg_4_0._badgeNum = arg_4_1 or 0
+	arg_4_0._unlockSupportHeros = {}
+	arg_4_0._unlockSupportHeroIds = {}
+
+	local var_4_0 = Act183Model.instance:getActivityId()
+	local var_4_1 = Act183Helper.getUnlockSupportHeroIds(var_4_0, arg_4_1)
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		local var_4_2 = HeroMo.New()
+
+		var_4_2:initFromTrial(iter_4_1)
+		table.insert(arg_4_0._unlockSupportHeros, var_4_2)
+		table.insert(arg_4_0._unlockSupportHeroIds, iter_4_1)
+	end
 end
 
-function slot0.updateBadgeNum(slot0, slot1)
-	slot0:_onGetBadgeNum(slot1)
+function var_0_0.getGroupEpisodes(arg_5_0)
+	return arg_5_0._groupList
 end
 
-function slot0.getGroupEpisodeMos(slot0, slot1)
-	return slot0._groupTypeMap[slot1]
+function var_0_0.getBadgeNum(arg_6_0)
+	return arg_6_0._badgeNum
 end
 
-function slot0.getGroupEpisodeMo(slot0, slot1)
-	return slot0._groupMap and slot0._groupMap[slot1]
+function var_0_0.updateBadgeNum(arg_7_0, arg_7_1)
+	arg_7_0:_onGetBadgeNum(arg_7_1)
 end
 
-function slot0.getUnlockSupportHeros(slot0)
-	return slot0._unlockSupportHeros
+function var_0_0.getGroupEpisodeMos(arg_8_0, arg_8_1)
+	return arg_8_0._groupTypeMap[arg_8_1]
 end
 
-function slot0.getUnlockSupportHeroIds(slot0)
-	return slot0._unlockSupportHeroIds
+function var_0_0.getGroupEpisodeMo(arg_9_0, arg_9_1)
+	return arg_9_0._groupMap and arg_9_0._groupMap[arg_9_1]
 end
 
-function slot0.updateGroupMo(slot0, slot1)
-	slot2 = Act183GroupEpisodeMO.New()
+function var_0_0.getUnlockSupportHeros(arg_10_0)
+	return arg_10_0._unlockSupportHeros
+end
 
-	slot2:init(slot1)
+function var_0_0.getUnlockSupportHeroIds(arg_11_0)
+	return arg_11_0._unlockSupportHeroIds
+end
 
-	if slot0:getGroupEpisodeMo(slot2:getGroupId()) then
-		slot4:init(slot1)
+function var_0_0.updateGroupMo(arg_12_0, arg_12_1)
+	local var_12_0 = Act183GroupEpisodeMO.New()
+
+	var_12_0:init(arg_12_1)
+
+	local var_12_1 = var_12_0:getGroupId()
+	local var_12_2 = arg_12_0:getGroupEpisodeMo(var_12_1)
+
+	if var_12_2 then
+		var_12_2:init(arg_12_1)
 	end
 
-	return slot4
+	return var_12_2
 end
 
-return slot0
+return var_0_0

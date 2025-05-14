@@ -1,16 +1,19 @@
-module("modules.logic.seasonver.act123.controller.Season123ControllerCardEffectHandleFunc", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123ControllerCardEffectHandleFunc", package.seeall)
 
-slot0 = Season123Controller
+local var_0_0 = Season123Controller
 
-function slot0.activeHandleFuncController()
+function var_0_0.activeHandleFuncController()
+	return
 end
 
-function slot0.ReduceRoundCount(slot0, slot1, slot2)
-	Season123Model.instance:getActInfo(slot2.actId):getStageMO(slot2.stage):updateReduceEpisodeRoundState(slot2.layer, GameUtil.getTabLen(slot1) > 0)
+function var_0_0.ReduceRoundCount(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = GameUtil.getTabLen(arg_2_1) > 0
+
+	Season123Model.instance:getActInfo(arg_2_2.actId):getStageMO(arg_2_2.stage):updateReduceEpisodeRoundState(arg_2_2.layer, var_2_0)
 end
 
-slot0.SpecialEffctHandleFunc = {
-	[Activity123Enum.EquipCardEffect.ReduceRoundCount] = slot0.ReduceRoundCount
+var_0_0.SpecialEffctHandleFunc = {
+	[Activity123Enum.EquipCardEffect.ReduceRoundCount] = var_0_0.ReduceRoundCount
 }
 
-return slot0
+return var_0_0

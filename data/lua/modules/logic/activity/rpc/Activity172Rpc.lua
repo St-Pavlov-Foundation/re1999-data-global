@@ -1,31 +1,32 @@
-module("modules.logic.activity.rpc.Activity172Rpc", package.seeall)
+﻿module("modules.logic.activity.rpc.Activity172Rpc", package.seeall)
 
-slot0 = class("Activity172Rpc", BaseRpc)
+local var_0_0 = class("Activity172Rpc", BaseRpc)
 
-function slot0.sendGetAct172InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity172Module_pb.GetAct172InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct172InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity172Module_pb.GetAct172InfoRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct172InfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct172InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	ActivityType172Model.instance:setType172Info(slot2.activityId, slot2.info)
+	ActivityType172Model.instance:setType172Info(arg_2_2.activityId, arg_2_2.info)
 end
 
-function slot0.onReceiveAct172UseItemTaskIdsUpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct172UseItemTaskIdsUpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	ActivityType172Model.instance:updateType172Info(slot2.activityId, slot2.useItemTaskIds)
+	ActivityType172Model.instance:updateType172Info(arg_3_2.activityId, arg_3_2.useItemTaskIds)
 	ActivityController.instance:dispatchEvent(ActivityEvent.Act172TaskUpdate)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

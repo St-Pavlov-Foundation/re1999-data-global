@@ -1,23 +1,26 @@
-module("modules.logic.scene.room.fsm.RoomTransitionEnterWaterReform", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionEnterWaterReform", package.seeall)
 
-slot0 = class("RoomTransitionEnterWaterReform", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionEnterWaterReform", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
 	RoomWaterReformListModel.instance:initShowBlock()
 	RoomWaterReformModel.instance:initWaterArea()
 	RoomWaterReformModel.instance:setWaterReform(true)
 	RoomWaterReformController.instance:refreshHighlightWaterBlock()
 	RoomMapController.instance:dispatchEvent(RoomEvent.SelectRoomViewBlockOpTab, RoomEnum.RoomViewBlockOpMode.WaterReform)
-	slot0:onDone()
+	arg_2_0:onDone()
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_3_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

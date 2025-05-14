@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeSimulatePlaneComp", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeSimulatePlaneComp", package.seeall)
 
-slot0 = class("PuzzleMazeSimulatePlaneComp", BaseView)
-slot1 = 1
-slot2 = {
+local var_0_0 = class("PuzzleMazeSimulatePlaneComp", BaseView)
+local var_0_1 = 1
+local var_0_2 = {
 	[PuzzleEnum.dir.left] = {
 		0,
 		180,
@@ -25,95 +25,100 @@ slot2 = {
 	}
 }
 
-function slot0.onInitView(slot0)
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "#go_map")
-	slot0._goplane = gohelper.findChild(slot0.viewGO, "#go_map/#go_plane")
-	slot0._gobigplane = gohelper.findChild(slot0.viewGO, "image_Dec")
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0._gobigplane)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
+	arg_1_0._goplane = gohelper.findChild(arg_1_0.viewGO, "#go_map/#go_plane")
+	arg_1_0._gobigplane = gohelper.findChild(arg_1_0.viewGO, "image_Dec")
+	arg_1_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0._gobigplane)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.InitGameDone, slot0._initGameDone, slot0)
-	slot0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.SimulatePlane, slot0._onTriggerSwitch, slot0)
-	slot0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.RecyclePlane, slot0._recyclePlane, slot0)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.InitGameDone, arg_4_0._initGameDone, arg_4_0)
+	arg_4_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.SimulatePlane, arg_4_0._onTriggerSwitch, arg_4_0)
+	arg_4_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.RecyclePlane, arg_4_0._recyclePlane, arg_4_0)
 end
 
-function slot0._initGameDone(slot0)
-	slot0._animatorPlayer.animator.enabled = true
+function var_0_0._initGameDone(arg_5_0)
+	arg_5_0._animatorPlayer.animator.enabled = true
 
-	slot0._animatorPlayer.animator:Play("in", 0, 0)
+	arg_5_0._animatorPlayer.animator:Play("in", 0, 0)
 end
 
-function slot0._onTriggerSwitch(slot0, slot1, slot2)
-	slot0._objPosX = slot1
-	slot0._objPosY = slot2
+function var_0_0._onTriggerSwitch(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._objPosX = arg_6_1
+	arg_6_0._objPosY = arg_6_2
 
-	slot0._animatorPlayer:Play("out", slot0._simulateFlyPlane, slot0)
+	arg_6_0._animatorPlayer:Play("out", arg_6_0._simulateFlyPlane, arg_6_0)
 end
 
-function slot0._simulateFlyPlane(slot0)
-	slot1, slot2 = PuzzleMazeDrawController.instance:getLastPos()
-	slot3, slot4 = PuzzleMazeDrawModel.instance:getObjectAnchor(slot1, slot2)
-	slot5, slot6 = PuzzleMazeDrawModel.instance:getObjectAnchor(slot0._objPosX, slot0._objPosY)
-	slot7, slot8, slot9 = slot0:_getPlaneTargetRotation(slot1, slot2, slot0._objPosX, slot0._objPosY)
+function var_0_0._simulateFlyPlane(arg_7_0)
+	local var_7_0, var_7_1 = PuzzleMazeDrawController.instance:getLastPos()
+	local var_7_2, var_7_3 = PuzzleMazeDrawModel.instance:getObjectAnchor(var_7_0, var_7_1)
+	local var_7_4, var_7_5 = PuzzleMazeDrawModel.instance:getObjectAnchor(arg_7_0._objPosX, arg_7_0._objPosY)
+	local var_7_6, var_7_7, var_7_8 = arg_7_0:_getPlaneTargetRotation(var_7_0, var_7_1, arg_7_0._objPosX, arg_7_0._objPosY)
 
-	transformhelper.setEulerAngles(slot0._goplane.transform, slot7, slot8, slot9)
-	recthelper.setAnchor(slot0._goplane.transform, slot3, slot4)
-	gohelper.setAsLastSibling(slot0._goplane)
-	gohelper.setActive(slot0._goplane, true)
-	slot0:_lockScreen(true)
+	transformhelper.setEulerAngles(arg_7_0._goplane.transform, var_7_6, var_7_7, var_7_8)
+	recthelper.setAnchor(arg_7_0._goplane.transform, var_7_2, var_7_3)
+	gohelper.setAsLastSibling(arg_7_0._goplane)
+	gohelper.setActive(arg_7_0._goplane, true)
+	arg_7_0:_lockScreen(true)
 
-	slot0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(slot0._goplane.transform, slot5, slot6, uv0, slot0._onSlimulateFlyPlaneDone, slot0)
+	arg_7_0._moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_7_0._goplane.transform, var_7_4, var_7_5, var_0_1, arg_7_0._onSlimulateFlyPlaneDone, arg_7_0)
 end
 
-function slot0._getPlaneTargetRotation(slot0, slot1, slot2, slot3, slot4)
-	slot5 = PuzzleEnum.dir.left
+function var_0_0._getPlaneTargetRotation(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	local var_8_0 = PuzzleEnum.dir.left
 
-	if slot1 ~= slot3 then
-		slot5 = slot3 < slot1 and PuzzleEnum.dir.left or PuzzleEnum.dir.right
-	elseif slot2 ~= slot4 then
-		slot5 = slot4 < slot2 and PuzzleEnum.dir.down or PuzzleEnum.dir.up
+	if arg_8_1 ~= arg_8_3 then
+		var_8_0 = arg_8_3 < arg_8_1 and PuzzleEnum.dir.left or PuzzleEnum.dir.right
+	elseif arg_8_2 ~= arg_8_4 then
+		var_8_0 = arg_8_4 < arg_8_2 and PuzzleEnum.dir.down or PuzzleEnum.dir.up
 	end
 
-	slot6 = uv0 and uv0[slot5]
+	local var_8_1 = var_0_2 and var_0_2[var_8_0]
+	local var_8_2 = var_8_1 and var_8_1[1] or 0
+	local var_8_3 = var_8_1 and var_8_1[2] or 0
+	local var_8_4 = var_8_1 and var_8_1[3] or 0
 
-	return slot6 and slot6[1] or 0, slot6 and slot6[2] or 0, slot6 and slot6[3] or 0
+	return var_8_2, var_8_3, var_8_4
 end
 
-function slot0._onSlimulateFlyPlaneDone(slot0)
-	slot0:_lockScreen(false)
-	slot0:_killSimulatePlaneTween()
+function var_0_0._onSlimulateFlyPlaneDone(arg_9_0)
+	arg_9_0:_lockScreen(false)
+	arg_9_0:_killSimulatePlaneTween()
 	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.OnSimulatePlaneDone)
 end
 
-function slot0._killSimulatePlaneTween(slot0)
-	if slot0._moveTweenId then
-		ZProj.TweenHelper.KillById(slot0._moveTweenId)
+function var_0_0._killSimulatePlaneTween(arg_10_0)
+	if arg_10_0._moveTweenId then
+		ZProj.TweenHelper.KillById(arg_10_0._moveTweenId)
 
-		slot0._moveTweenId = nil
+		arg_10_0._moveTweenId = nil
 	end
 end
 
-function slot0._recyclePlane(slot0)
-	gohelper.setActive(slot0._goplane, false)
+function var_0_0._recyclePlane(arg_11_0)
+	gohelper.setActive(arg_11_0._goplane, false)
 
-	slot0._animatorPlayer.animator.enabled = true
+	arg_11_0._animatorPlayer.animator.enabled = true
 
-	slot0._animatorPlayer.animator:Play("in", 0, 0)
+	arg_11_0._animatorPlayer.animator:Play("in", 0, 0)
 end
 
-function slot0._lockScreen(slot0, slot1)
-	if slot1 then
+function var_0_0._lockScreen(arg_12_0, arg_12_1)
+	if arg_12_1 then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("PuzzleMazeSimulatePlaneComp SimulatePlane")
 	else
@@ -122,9 +127,9 @@ function slot0._lockScreen(slot0, slot1)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_lockScreen(false)
-	slot0:_killSimulatePlaneTween()
+function var_0_0.onClose(arg_13_0)
+	arg_13_0:_lockScreen(false)
+	arg_13_0:_killSimulatePlaneTween()
 end
 
-return slot0
+return var_0_0

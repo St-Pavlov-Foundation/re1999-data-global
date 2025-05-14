@@ -1,35 +1,37 @@
-module("modules.logic.act189.rpc.Activity189Rpc", package.seeall)
+﻿module("modules.logic.act189.rpc.Activity189Rpc", package.seeall)
 
-slot0 = class("Activity189Rpc", BaseRpc)
+local var_0_0 = class("Activity189Rpc", BaseRpc)
 
-function slot0.sendGetAct189InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity189Module_pb.GetAct189InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct189InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity189Module_pb.GetAct189InfoRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct189InfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity189Model.instance:onReceiveGetAct189InfoReply(slot2)
-		Activity189Controller.instance:dispatchEvent(Activity189Event.onReceiveGetAct189InfoReply, slot2)
+function var_0_0.onReceiveGetAct189InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		Activity189Model.instance:onReceiveGetAct189InfoReply(arg_2_2)
+		Activity189Controller.instance:dispatchEvent(Activity189Event.onReceiveGetAct189InfoReply, arg_2_2)
 	end
 end
 
-function slot0.sendGetAct189OnceBonusRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity189Module_pb.GetAct189OnceBonusRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct189OnceBonusRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = Activity189Module_pb.GetAct189OnceBonusRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_3_0.activityId = arg_3_1
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
 end
 
-function slot0.onReceiveGetAct189OnceBonusReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity189Model.instance:onReceiveGetAct189OnceBonusReply(slot2)
-		Activity189Controller.instance:dispatchEvent(Activity189Event.onReceiveGetAct189OnceBonusReply, slot2)
+function var_0_0.onReceiveGetAct189OnceBonusReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		Activity189Model.instance:onReceiveGetAct189OnceBonusReply(arg_4_2)
+		Activity189Controller.instance:dispatchEvent(Activity189Event.onReceiveGetAct189OnceBonusReply, arg_4_2)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

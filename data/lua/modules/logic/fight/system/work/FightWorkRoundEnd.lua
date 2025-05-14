@@ -1,58 +1,62 @@
-module("modules.logic.fight.system.work.FightWorkRoundEnd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRoundEnd", package.seeall)
 
-slot0 = class("FightWorkRoundEnd", BaseWork)
+local var_0_0 = class("FightWorkRoundEnd", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightPlayCardModel.instance:onEndRound()
 	FightCardModel.instance:onEndRound()
 
-	for slot6, slot7 in ipairs(FightHelper.getAllEntitys()) do
-		slot7:resetEntity()
+	local var_1_0 = FightHelper.getAllEntitys()
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		iter_1_1:resetEntity()
 	end
 
-	FightController.instance:registerCallback(FightEvent.NeedWaitEnemyOPEnd, slot0._needWaitEnemyOPEnd, slot0)
-	TaskDispatcher.runDelay(slot0._dontNeedWaitEnemyOPEnd, slot0, 0.01)
+	FightController.instance:registerCallback(FightEvent.NeedWaitEnemyOPEnd, arg_1_0._needWaitEnemyOPEnd, arg_1_0)
+	TaskDispatcher.runDelay(arg_1_0._dontNeedWaitEnemyOPEnd, arg_1_0, 0.01)
 	FightController.instance:dispatchEvent(FightEvent.FightRoundEnd)
 end
 
-function slot0._needWaitEnemyOPEnd(slot0)
-	FightController.instance:unregisterCallback(FightEvent.NeedWaitEnemyOPEnd, slot0._needWaitEnemyOPEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._dontNeedWaitEnemyOPEnd, slot0)
-	TaskDispatcher.runDelay(slot0._playCardExpand, slot0, 0.5 / FightModel.instance:getUISpeed())
+function var_0_0._needWaitEnemyOPEnd(arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.NeedWaitEnemyOPEnd, arg_2_0._needWaitEnemyOPEnd, arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._dontNeedWaitEnemyOPEnd, arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._playCardExpand, arg_2_0, 0.5 / FightModel.instance:getUISpeed())
 end
 
-function slot0._dontNeedWaitEnemyOPEnd(slot0)
-	FightController.instance:unregisterCallback(FightEvent.NeedWaitEnemyOPEnd, slot0._needWaitEnemyOPEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._dontNeedWaitEnemyOPEnd, slot0)
-	slot0:_playCardExpand()
+function var_0_0._dontNeedWaitEnemyOPEnd(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.NeedWaitEnemyOPEnd, arg_3_0._needWaitEnemyOPEnd, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._dontNeedWaitEnemyOPEnd, arg_3_0)
+	arg_3_0:_playCardExpand()
 end
 
-function slot0._playCardExpand(slot0)
-	slot1 = FightViewHandCard.handCardContainer
+function var_0_0._playCardExpand(arg_4_0)
+	local var_4_0 = FightViewHandCard.handCardContainer
 
-	if not FightModel.instance:isFinish() and not gohelper.isNil(slot1) then
-		slot3 = FightCardModel.instance:getHandCardContainerScale()
-		slot0._tweenId = ZProj.TweenHelper.DOScale(slot1.transform, slot3, slot3, slot3, FightWorkEffectDistributeCard.getHandCardScaleTime(), slot0._onHandCardsExpand, slot0)
+	if not FightModel.instance:isFinish() and not gohelper.isNil(var_4_0) then
+		local var_4_1 = FightWorkEffectDistributeCard.getHandCardScaleTime()
+		local var_4_2 = FightCardModel.instance:getHandCardContainerScale()
+
+		arg_4_0._tweenId = ZProj.TweenHelper.DOScale(var_4_0.transform, var_4_2, var_4_2, var_4_2, var_4_1, arg_4_0._onHandCardsExpand, arg_4_0)
 	else
-		slot0:_onHandCardsExpand()
+		arg_4_0:_onHandCardsExpand()
 	end
 end
 
-function slot0._onHandCardsExpand(slot0)
+function var_0_0._onHandCardsExpand(arg_5_0)
 	logNormal("回合结束")
-	slot0:onDone(true)
+	arg_5_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.NeedWaitEnemyOPEnd, slot0._needWaitEnemyOPEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._dontNeedWaitEnemyOPEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._playCardExpand, slot0)
+function var_0_0.clearWork(arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.NeedWaitEnemyOPEnd, arg_6_0._needWaitEnemyOPEnd, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._dontNeedWaitEnemyOPEnd, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._playCardExpand, arg_6_0)
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_6_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_6_0._tweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

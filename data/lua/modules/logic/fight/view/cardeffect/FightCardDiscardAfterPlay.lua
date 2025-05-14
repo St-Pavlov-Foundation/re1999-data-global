@@ -1,92 +1,98 @@
-module("modules.logic.fight.view.cardeffect.FightCardDiscardAfterPlay", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardDiscardAfterPlay", package.seeall)
 
-slot0 = class("FightCardDiscardAfterPlay", BaseWork)
+local var_0_0 = class("FightCardDiscardAfterPlay", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, true)
 
-	if slot1.param2 then
-		if slot2 ~= 0 then
-			slot0:_playDiscard(slot2)
+	local var_1_0 = arg_1_1.param2
+
+	if var_1_0 then
+		if var_1_0 ~= 0 then
+			arg_1_0:_playDiscard(var_1_0)
 
 			return
 		end
-	elseif slot1.needDiscard then
-		slot5 = false
+	elseif arg_1_1.needDiscard then
+		local var_1_1 = FightCardModel.instance:getHandCards()
+		local var_1_2 = false
 
-		for slot9, slot10 in ipairs(FightCardModel.instance:getHandCards()) do
-			if FightDataHelper.entityMgr:getById(slot10.uid) then
-				if not slot11:isUniqueSkill(slot10.skillId) then
-					slot5 = true
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			local var_1_3 = FightDataHelper.entityMgr:getById(iter_1_1.uid)
+
+			if var_1_3 then
+				if not var_1_3:isUniqueSkill(iter_1_1.skillId) then
+					var_1_2 = true
 
 					break
 				end
 			else
-				slot5 = true
+				var_1_2 = true
 
 				break
 			end
 		end
 
-		if slot5 then
+		if var_1_2 then
 			FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, false)
-			FightController.instance:registerCallback(FightEvent.PlayDiscardEffect, slot0._onPlayDiscardEffect, slot0)
+			FightController.instance:registerCallback(FightEvent.PlayDiscardEffect, arg_1_0._onPlayDiscardEffect, arg_1_0)
 			FightDataHelper.stageMgr:enterOperateState(FightStageMgr.OperateStateType.Discard)
 
 			return
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0._onPlayDiscardEffect(slot0, slot1)
-	slot0:_playDiscard(slot1)
+function var_0_0._onPlayDiscardEffect(arg_2_0, arg_2_1)
+	arg_2_0:_playDiscard(arg_2_1)
 end
 
-function slot0._playDiscard(slot0, slot1)
-	slot0.context.view:cancelAbandonState()
+function var_0_0._playDiscard(arg_3_0, arg_3_1)
+	arg_3_0.context.view:cancelAbandonState()
 	FightDataHelper.stageMgr:enterOperateState(FightStageMgr.OperateStateType.DiscardEffect)
 	FightController.instance:dispatchEvent(FightEvent.StartPlayDiscardEffect)
 
-	slot2 = slot0.context.cards
+	local var_3_0 = arg_3_0.context.cards
 
-	slot0.context.view:_updateHandCards(slot2)
+	arg_3_0.context.view:_updateHandCards(var_3_0)
 
-	slot0.context.fightBeginRoundOp.param2 = slot1
-	slot3 = {
-		slot1
+	arg_3_0.context.fightBeginRoundOp.param2 = arg_3_1
+
+	local var_3_1 = {
+		arg_3_1
 	}
 
-	table.sort(slot3, FightWorkCardRemove2.sort)
+	table.sort(var_3_1, FightWorkCardRemove2.sort)
 
-	slot4 = FightCardDataHelper.calcRemoveCardTime2(slot2, slot3)
+	local var_3_2 = FightCardDataHelper.calcRemoveCardTime2(var_3_0, var_3_1)
 
-	table.remove(slot2, slot1)
+	table.remove(var_3_0, arg_3_1)
 	FightController.instance:dispatchEvent(FightEvent.CancelAutoPlayCardFinishEvent)
-	TaskDispatcher.cancelTask(slot0._afterRemoveCard, slot0)
-	TaskDispatcher.runDelay(slot0._afterRemoveCard, slot0, slot4 / FightModel.instance:getUISpeed())
-	FightController.instance:dispatchEvent(FightEvent.CardRemove, slot3, slot4)
+	TaskDispatcher.cancelTask(arg_3_0._afterRemoveCard, arg_3_0)
+	TaskDispatcher.runDelay(arg_3_0._afterRemoveCard, arg_3_0, var_3_2 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.CardRemove, var_3_1, var_3_2)
 end
 
-function slot0._afterRemoveCard(slot0)
-	TaskDispatcher.cancelTask(slot0._afterRemoveCard, slot0)
-	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
-	FightController.instance:dispatchEvent(FightEvent.PlayCombineCards, slot0.context.cards)
+function var_0_0._afterRemoveCard(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._afterRemoveCard, arg_4_0)
+	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_4_0._onCombineDone, arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.PlayCombineCards, arg_4_0.context.cards)
 end
 
-function slot0._onCombineDone(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
+function var_0_0._onCombineDone(arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_5_0._onCombineDone, arg_5_0)
 	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.DiscardEffect)
 	FightController.instance:dispatchEvent(FightEvent.RevertAutoPlayCardFinishEvent)
-	slot0:onDone(true)
+	arg_5_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_6_0)
 	FightController.instance:dispatchEvent(FightEvent.DiscardAfterPlayCardFinish)
-	TaskDispatcher.cancelTask(slot0._afterRemoveCard, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.PlayDiscardEffect, slot0._onPlayDiscardEffect, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._afterRemoveCard, arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_6_0._onCombineDone, arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.PlayDiscardEffect, arg_6_0._onPlayDiscardEffect, arg_6_0)
 end
 
-return slot0
+return var_0_0

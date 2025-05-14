@@ -1,159 +1,172 @@
-module("modules.logic.playercard.model.PlayerCardCharacterSwitchListModel", package.seeall)
+﻿module("modules.logic.playercard.model.PlayerCardCharacterSwitchListModel", package.seeall)
 
-slot0 = class("PlayerCardCharacterSwitchListModel", ListScrollModel)
+local var_0_0 = class("PlayerCardCharacterSwitchListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._tempHeroId = nil
-	slot0._tempSkinId = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._tempHeroId = nil
+	arg_1_0._tempSkinId = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._tempHeroId = nil
-	slot0._tempSkinId = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._tempHeroId = nil
+	arg_2_0._tempSkinId = nil
 end
 
-function slot0.initHeroList(slot0)
-	slot0._mainHeroList = {}
-	slot0.curHeroId = nil
+function var_0_0.initHeroList(arg_3_0)
+	arg_3_0._mainHeroList = {}
+	arg_3_0.curHeroId = nil
 
-	for slot5, slot6 in ipairs(HeroModel.instance:getList()) do
-		slot7 = CharacterMainHeroMO.New()
+	local var_3_0 = HeroModel.instance:getList()
 
-		slot7:init(slot6, slot6.config.skinId, false)
-		table.insert(slot0._mainHeroList, slot7)
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		local var_3_1 = CharacterMainHeroMO.New()
+
+		var_3_1:init(iter_3_1, iter_3_1.config.skinId, false)
+		table.insert(arg_3_0._mainHeroList, var_3_1)
 	end
 end
 
-function slot0._isDefaultSkinId(slot0, slot1)
-	return slot1.skinId == slot1.heroMO.config.skinId
+function var_0_0._isDefaultSkinId(arg_4_0, arg_4_1)
+	return arg_4_1.skinId == arg_4_1.heroMO.config.skinId
 end
 
-function slot0._commonSort(slot0, slot1, slot2)
-	if slot1.heroMO.heroId == slot0.curHeroId then
+function var_0_0._commonSort(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1.heroMO.heroId == arg_5_0.curHeroId then
 		return true
 	end
 
-	if slot2.heroMO.heroId == slot0.curHeroId then
+	if arg_5_2.heroMO.heroId == arg_5_0.curHeroId then
 		return false
 	end
 
-	if slot1.heroMO.heroId == slot2.heroMO.heroId then
-		return slot0:_isDefaultSkinId(slot1) and not slot0:_isDefaultSkinId(slot2)
+	if arg_5_1.heroMO.heroId == arg_5_2.heroMO.heroId then
+		return arg_5_0:_isDefaultSkinId(arg_5_1) and not arg_5_0:_isDefaultSkinId(arg_5_2)
 	end
 
 	return nil
 end
 
-function slot0.sortByTime(slot0, slot1)
-	table.sort(slot0._mainHeroList, function (slot0, slot1)
-		if uv0:_commonSort(slot0, slot1) ~= nil then
-			return slot2
+function var_0_0.sortByTime(arg_6_0, arg_6_1)
+	table.sort(arg_6_0._mainHeroList, function(arg_7_0, arg_7_1)
+		local var_7_0 = arg_6_0:_commonSort(arg_7_0, arg_7_1)
+
+		if var_7_0 ~= nil then
+			return var_7_0
 		end
 
-		if slot0.heroMO.createTime ~= slot1.heroMO.createTime then
-			if uv1 then
-				return slot0.heroMO.createTime < slot1.heroMO.createTime
+		if arg_7_0.heroMO.createTime ~= arg_7_1.heroMO.createTime then
+			if arg_6_1 then
+				return arg_7_0.heroMO.createTime < arg_7_1.heroMO.createTime
 			else
-				return slot1.heroMO.createTime < slot0.heroMO.createTime
+				return arg_7_0.heroMO.createTime > arg_7_1.heroMO.createTime
 			end
 		end
 
-		return slot0.heroMO.heroId < slot1.heroMO.heroId
+		return arg_7_0.heroMO.heroId < arg_7_1.heroMO.heroId
 	end)
-	slot0:setList(slot0._mainHeroList)
+	arg_6_0:setList(arg_6_0._mainHeroList)
 end
 
-function slot0.sortByRare(slot0, slot1)
-	table.sort(slot0._mainHeroList, function (slot0, slot1)
-		if uv0:_commonSort(slot0, slot1) ~= nil then
-			return slot2
+function var_0_0.sortByRare(arg_8_0, arg_8_1)
+	table.sort(arg_8_0._mainHeroList, function(arg_9_0, arg_9_1)
+		local var_9_0 = arg_8_0:_commonSort(arg_9_0, arg_9_1)
+
+		if var_9_0 ~= nil then
+			return var_9_0
 		end
 
-		if slot0.heroMO.config.rare == slot1.heroMO.config.rare then
-			return slot0.heroMO.config.id < slot1.heroMO.config.id
+		if arg_9_0.heroMO.config.rare == arg_9_1.heroMO.config.rare then
+			return arg_9_0.heroMO.config.id < arg_9_1.heroMO.config.id
 		end
 
-		if slot0.heroMO.config.rare ~= slot1.heroMO.config.rare then
-			if uv1 then
-				return slot0.heroMO.config.rare < slot1.heroMO.config.rare
+		if arg_9_0.heroMO.config.rare ~= arg_9_1.heroMO.config.rare then
+			if arg_8_1 then
+				return arg_9_0.heroMO.config.rare < arg_9_1.heroMO.config.rare
 			else
-				return slot1.heroMO.config.rare < slot0.heroMO.config.rare
+				return arg_9_0.heroMO.config.rare > arg_9_1.heroMO.config.rare
 			end
 		end
 
-		return slot0.heroMO.heroId < slot1.heroMO.heroId
+		return arg_9_0.heroMO.heroId < arg_9_1.heroMO.heroId
 	end)
-	slot0:setList(slot0._mainHeroList)
+	arg_8_0:setList(arg_8_0._mainHeroList)
 end
 
-function slot0.getMoByHeroId(slot0, slot1)
-	if not slot0._mainHeroList then
+function var_0_0.getMoByHeroId(arg_10_0, arg_10_1)
+	if not arg_10_0._mainHeroList then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._mainHeroList) do
-		if not slot6.heroMO and not slot1 or slot6.heroMO and slot6.heroMO.heroId == slot1 then
-			return slot6
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._mainHeroList) do
+		if not iter_10_1.heroMO and not arg_10_1 or iter_10_1.heroMO and iter_10_1.heroMO.heroId == arg_10_1 then
+			return iter_10_1
 		end
 	end
 end
 
-function slot0.getMoByHero(slot0, slot1, slot2)
-	if not slot0._mainHeroList then
+function var_0_0.getMoByHero(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0._mainHeroList then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._mainHeroList) do
-		if slot2 and slot7.skinId == slot2 then
-			return slot7
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._mainHeroList) do
+		if arg_11_2 and iter_11_1.skinId == arg_11_2 then
+			return iter_11_1
 		end
 
-		if not slot2 and slot7.heroMO.heroId and slot7.skinId == slot7.heroMO.config.skinId then
-			return slot7
+		if not arg_11_2 and iter_11_1.heroMO.heroId and iter_11_1.skinId == iter_11_1.heroMO.config.skinId then
+			return iter_11_1
 		end
 	end
 end
 
-function slot0.changeMainHero(slot0, slot1, slot2, slot3, slot4)
-	slot1 = slot1 and tonumber(slot1)
-	slot5 = slot4 and 1 or 0
+function var_0_0.changeMainHero(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	arg_12_1 = arg_12_1 and tonumber(arg_12_1)
+	arg_12_2 = arg_12_2 and tonumber(arg_12_2)
 
-	if not slot2 or not tonumber(slot2) or slot2 == 0 then
-		slot2 = HeroConfig.instance:getHeroCO(slot1).skinId
+	local var_12_0 = arg_12_4 and 1 or 0
+
+	if not arg_12_2 or arg_12_2 == 0 then
+		arg_12_2 = HeroConfig.instance:getHeroCO(arg_12_1).skinId
 	end
 
-	if not string.nilorempty(table.concat({
-		slot1,
-		slot2,
-		slot5
-	}, "#")) then
-		if PlayerCardModel.instance:isCharacterSwitchFlag() == nil then
+	local var_12_1 = table.concat({
+		arg_12_1,
+		arg_12_2,
+		var_12_0
+	}, "#")
+
+	if not string.nilorempty(var_12_1) then
+		local var_12_2 = PlayerCardModel.instance:isCharacterSwitchFlag()
+
+		if var_12_2 == nil then
 			ViewMgr.instance:openView(ViewName.PlayerCardCharacterSwitchTipsView, {
-				heroParam = slot6
+				heroParam = var_12_1
 			})
 		else
-			slot0:changeMainHeroByParam(slot6, slot7)
+			arg_12_0:changeMainHeroByParam(var_12_1, var_12_2)
 		end
 	end
 end
 
-function slot0.changeMainHeroByParam(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0.changeMainHeroByParam(arg_13_0, arg_13_1, arg_13_2)
+	if string.nilorempty(arg_13_1) then
 		return
 	end
 
-	if slot2 then
-		slot3 = string.splitToNumber(slot1, "#")
-		slot4 = slot3[1]
+	if arg_13_2 then
+		local var_13_0 = string.splitToNumber(arg_13_1, "#")
+		local var_13_1 = var_13_0[1]
+		local var_13_2 = var_13_0[2]
 
-		CharacterSwitchListModel.instance:changeMainHero(slot4, slot3[2])
+		CharacterSwitchListModel.instance:changeMainHero(var_13_1, var_13_2)
 		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshMainHeroSkin)
-		CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, slot4)
+		CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, var_13_1)
 	end
 
-	PlayerCardRpc.instance:sendSetPlayerCardHeroCoverRequest(slot1)
+	PlayerCardRpc.instance:sendSetPlayerCardHeroCoverRequest(arg_13_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

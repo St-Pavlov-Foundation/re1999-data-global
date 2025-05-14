@@ -1,38 +1,41 @@
-module("modules.logic.permanent.config.PermanentConfig", package.seeall)
+﻿module("modules.logic.permanent.config.PermanentConfig", package.seeall)
 
-slot0 = class("PermanentConfig", BaseConfig)
+local var_0_0 = class("PermanentConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"permanent"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "permanent" then
-		slot0._permanentConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "permanent" then
+		arg_3_0._permanentConfig = arg_3_2
 	end
 end
 
-function slot0.getKvIconName(slot0, slot1)
-	return slot0:getPermanentCO(slot1).kvIcon
+function var_0_0.getKvIconName(arg_4_0, arg_4_1)
+	return arg_4_0:getPermanentCO(arg_4_1).kvIcon
 end
 
-function slot0.getPermanentDic(slot0)
-	return slot0._permanentConfig.configDict
+function var_0_0.getPermanentDic(arg_5_0)
+	return arg_5_0._permanentConfig.configDict
 end
 
-function slot0.getPermanentCO(slot0, slot1)
-	if not slot0._permanentConfig.configDict[slot1] then
-		logError("config permanent no activityId" .. slot1)
+function var_0_0.getPermanentCO(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._permanentConfig.configDict[arg_6_1]
+
+	if not var_6_0 then
+		logError("config permanent no activityId" .. arg_6_1)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

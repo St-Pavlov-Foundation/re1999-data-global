@@ -1,206 +1,218 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9EntryScene", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9EntryScene", package.seeall)
 
-slot0 = class("Season123_1_9EntryScene", BaseView)
+local var_0_0 = class("Season123_1_9EntryScene", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._cameraHelper = Season123_1_9EntryCamera.New()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._cameraHelper = Season123_1_9EntryCamera.New()
 
-	slot0._cameraHelper:init()
+	arg_4_0._cameraHelper:init()
 
-	slot0._loadHelper = Season123_1_9EntryLoadScene.New()
+	arg_4_0._loadHelper = Season123_1_9EntryLoadScene.New()
 
-	slot0._loadHelper:init()
+	arg_4_0._loadHelper:init()
 
-	slot0._sceneRoot = slot0._loadHelper:createSceneRoot()
-	slot0._sceneRootTrs = slot0._sceneRoot.transform
+	arg_4_0._sceneRoot = arg_4_0._loadHelper:createSceneRoot()
+	arg_4_0._sceneRootTrs = arg_4_0._sceneRoot.transform
 
-	slot0._loadHelper:loadRes(slot0.onSceneResLoaded, slot0)
+	arg_4_0._loadHelper:loadRes(arg_4_0.onSceneResLoaded, arg_4_0)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._loadHelper then
-		slot0._loadHelper:disposeSceneRoot()
-		slot0._loadHelper:dispose()
+function var_0_0.onDestroyView(arg_5_0)
+	if arg_5_0._loadHelper then
+		arg_5_0._loadHelper:disposeSceneRoot()
+		arg_5_0._loadHelper:dispose()
 
-		slot0._sceneRoot = nil
-		slot0._loadHelper = nil
+		arg_5_0._sceneRoot = nil
+		arg_5_0._loadHelper = nil
 	end
 
-	if slot0._cameraHelper then
-		slot0._cameraHelper:dispose()
+	if arg_5_0._cameraHelper then
+		arg_5_0._cameraHelper:dispose()
 
-		slot0._cameraHelper = nil
+		arg_5_0._cameraHelper = nil
 	end
 
-	if slot0._dragHelper then
-		slot0._dragHelper:dispose()
+	if arg_5_0._dragHelper then
+		arg_5_0._dragHelper:dispose()
 
-		slot0._dragHelper = nil
+		arg_5_0._dragHelper = nil
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.LocateToStage, slot0.handleLocateToStage, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.SetRetailScene, slot0.handleSetRetailScene, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.SwitchRetailPrefab, slot0.handleSwitchRetailScene, slot0)
-	slot0:addEventCb(Season123EntryController.instance, Season123Event.EntrySceneFocusPos, slot0.handleFocusPos, slot0)
-	slot0:addEventCb(Season123EntryController.instance, Season123Event.ReleaseFocusPos, slot0.handleReleaseFocusPos, slot0)
-	slot0:addEventCb(Season123EntryController.instance, Season123Event.RetailObjLoaded, slot0.handleRetailObjLoaded, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.EnterEpiosdeList, slot0.enterEpiosdeList, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.EnterRetailView, slot0.playCloseAnim, slot0)
-	slot0:refreshStage(true)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.LocateToStage, arg_6_0.handleLocateToStage, arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.SetRetailScene, arg_6_0.handleSetRetailScene, arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.SwitchRetailPrefab, arg_6_0.handleSwitchRetailScene, arg_6_0)
+	arg_6_0:addEventCb(Season123EntryController.instance, Season123Event.EntrySceneFocusPos, arg_6_0.handleFocusPos, arg_6_0)
+	arg_6_0:addEventCb(Season123EntryController.instance, Season123Event.ReleaseFocusPos, arg_6_0.handleReleaseFocusPos, arg_6_0)
+	arg_6_0:addEventCb(Season123EntryController.instance, Season123Event.RetailObjLoaded, arg_6_0.handleRetailObjLoaded, arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.EnterEpiosdeList, arg_6_0.enterEpiosdeList, arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.EnterRetailView, arg_6_0.playCloseAnim, arg_6_0)
+	arg_6_0:refreshStage(true)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onSceneResLoaded(slot0, slot1)
-	slot0._sceneBgGo = slot1
-	slot0._sceneAnim = slot0._sceneBgGo:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onSceneResLoaded(arg_8_0, arg_8_1)
+	arg_8_0._sceneBgGo = arg_8_1
+	arg_8_0._sceneAnim = arg_8_0._sceneBgGo:GetComponent(typeof(UnityEngine.Animator))
 
-	transformhelper.setLocalPos(slot0._sceneBgGo.transform, SeasonEntryEnum.DefaultScenePosX, SeasonEntryEnum.DefaultScenePosY, SeasonEntryEnum.DefaultScenePosZ)
+	transformhelper.setLocalPos(arg_8_0._sceneBgGo.transform, SeasonEntryEnum.DefaultScenePosX, SeasonEntryEnum.DefaultScenePosY, SeasonEntryEnum.DefaultScenePosZ)
 	Season123EntryController.instance:dispatchEvent(Season123Event.EntrySceneLoaded)
 
-	slot0._dragHelper = Season123_1_9EntryDrag.New()
+	arg_8_0._dragHelper = Season123_1_9EntryDrag.New()
 
-	slot0._dragHelper:init(slot0._gofullscreen, slot0._sceneBgGo.transform)
-	slot0._dragHelper:initBound()
-	slot0._dragHelper:setDragEnabled(false)
-	slot0:refreshRetailStatus()
+	arg_8_0._dragHelper:init(arg_8_0._gofullscreen, arg_8_0._sceneBgGo.transform)
+	arg_8_0._dragHelper:initBound()
+	arg_8_0._dragHelper:setDragEnabled(false)
+	arg_8_0:refreshRetailStatus()
 end
 
-function slot0.handleLocateToStage(slot0, slot1)
-	if not slot0._sceneBgGo then
+function var_0_0.handleLocateToStage(arg_9_0, arg_9_1)
+	if not arg_9_0._sceneBgGo then
 		return
 	end
 
-	if Season123Config.instance:getStageCo(slot1.actId, slot1.stageId) then
-		Season123EntryController.instance:goToStage(slot3)
-		slot0:refreshStage()
+	local var_9_0 = arg_9_1.actId
+	local var_9_1 = arg_9_1.stageId
+
+	if Season123Config.instance:getStageCo(var_9_0, var_9_1) then
+		Season123EntryController.instance:goToStage(var_9_1)
+		arg_9_0:refreshStage()
 	end
 end
 
-function slot0.refreshStage(slot0, slot1)
-	if not slot0._loadHelper then
+function var_0_0.refreshStage(arg_10_0, arg_10_1)
+	if not arg_10_0._loadHelper then
 		return
 	end
 
-	if not Season123EntryModel.instance:getCurrentStage() then
+	local var_10_0 = Season123EntryModel.instance:getCurrentStage()
+
+	if not var_10_0 then
 		return
 	end
 
-	slot0._loadHelper:showStageRes(slot2, slot1)
+	arg_10_0._loadHelper:showStageRes(var_10_0, arg_10_1)
 end
 
-function slot0.refreshRetail(slot0, slot1)
-	if not slot0._loadHelper or not slot0._sceneBgGo or not slot0._retailId then
+function var_0_0.refreshRetail(arg_11_0, arg_11_1)
+	if not arg_11_0._loadHelper or not arg_11_0._sceneBgGo or not arg_11_0._retailId then
 		return
 	end
 
-	slot0._loadHelper:showRetailRes(slot0._retailSceneId)
+	arg_11_0._loadHelper:showRetailRes(arg_11_0._retailSceneId)
 end
 
-function slot0.refreshRetailStatus(slot0)
-	if not slot0._loadHelper or not slot0._sceneBgGo then
+function var_0_0.refreshRetailStatus(arg_12_0)
+	if not arg_12_0._loadHelper or not arg_12_0._sceneBgGo then
 		return
 	end
 
-	gohelper.setActive(slot0._sceneBgGo, slot0._isRetailVisible)
+	gohelper.setActive(arg_12_0._sceneBgGo, arg_12_0._isRetailVisible)
 
-	if slot0._isRetailVisible then
-		slot0._loadHelper:hideAllStage()
-		slot0:refreshRetail()
+	if arg_12_0._isRetailVisible then
+		arg_12_0._loadHelper:hideAllStage()
+		arg_12_0:refreshRetail()
 	else
-		slot0._loadHelper:hideAllRetail()
-		slot0:refreshStage()
+		arg_12_0._loadHelper:hideAllRetail()
+		arg_12_0:refreshStage()
 	end
 end
 
-function slot0.handleFocusPos(slot0, slot1, slot2)
-	if not slot0._sceneBgGo then
+function var_0_0.handleFocusPos(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_0._sceneBgGo then
 		return
 	end
 
-	logNormal("focus to pos " .. tostring(slot1) .. "," .. tostring(slot2))
+	logNormal("focus to pos " .. tostring(arg_13_1) .. "," .. tostring(arg_13_2))
 
-	slot3 = slot0._dragHelper:getTempPos()
-	slot3.y = slot2
-	slot3.x = slot1
+	local var_13_0 = arg_13_0._dragHelper:getTempPos()
 
-	slot0._dragHelper:setDragEnabled(false)
-	slot0._dragHelper:setScenePosTween(slot3, SeasonEntryEnum.FocusTweenTime)
+	var_13_0.x, var_13_0.y = arg_13_1, arg_13_2
+
+	arg_13_0._dragHelper:setDragEnabled(false)
+	arg_13_0._dragHelper:setScenePosTween(var_13_0, SeasonEntryEnum.FocusTweenTime)
 end
 
-function slot0.handleReleaseFocusPos(slot0)
-	slot0._cameraHelper:tweenToScale(1, SeasonEntryEnum.FocusTweenTime)
+function var_0_0.handleReleaseFocusPos(arg_14_0)
+	arg_14_0._cameraHelper:tweenToScale(1, SeasonEntryEnum.FocusTweenTime)
 end
 
-function slot0.handleSetRetailScene(slot0, slot1)
-	slot0._isRetailVisible = slot1
+function var_0_0.handleSetRetailScene(arg_15_0, arg_15_1)
+	arg_15_0._isRetailVisible = arg_15_1
 
-	slot0:refreshRetailStatus()
+	arg_15_0:refreshRetailStatus()
 end
 
-function slot0.handleSwitchRetailScene(slot0, slot1)
-	slot0._retailId = slot1
-	slot0._retailSceneId = Season123Model.instance.retailSceneId
-	slot0._retailFocusId = nil
+function var_0_0.handleSwitchRetailScene(arg_16_0, arg_16_1)
+	arg_16_0._retailId = arg_16_1
+	arg_16_0._retailSceneId = Season123Model.instance.retailSceneId
+	arg_16_0._retailFocusId = nil
 
-	slot0:refreshRetail()
-	slot0:tryFocusOnRetailObj()
+	arg_16_0:refreshRetail()
+	arg_16_0:tryFocusOnRetailObj()
 end
 
-function slot0.handleRetailObjLoaded(slot0, slot1)
-	if slot0._retailId and slot0._retailFocusId == nil then
-		slot2, slot3 = Season123EntryModel.getRandomRetailRes(slot0._retailSceneId)
+function var_0_0.handleRetailObjLoaded(arg_17_0, arg_17_1)
+	if arg_17_0._retailId and arg_17_0._retailFocusId == nil then
+		local var_17_0, var_17_1 = Season123EntryModel.getRandomRetailRes(arg_17_0._retailSceneId)
 
-		if slot2 == slot1 then
-			slot0:tryFocusOnRetailObj()
+		if var_17_0 == arg_17_1 then
+			arg_17_0:tryFocusOnRetailObj()
 		end
 	end
 end
 
-function slot0.tryFocusOnRetailObj(slot0)
-	if slot0._retailId and slot0._retailFocusId == nil then
-		slot1, slot2 = Season123EntryModel.getRandomRetailRes(slot0._retailSceneId)
-		slot3, slot4 = slot0._loadHelper:getRetailPosByIndex(slot1)
+function var_0_0.tryFocusOnRetailObj(arg_18_0)
+	if arg_18_0._retailId and arg_18_0._retailFocusId == nil then
+		local var_18_0, var_18_1 = Season123EntryModel.getRandomRetailRes(arg_18_0._retailSceneId)
+		local var_18_2, var_18_3 = arg_18_0._loadHelper:getRetailPosByIndex(var_18_0)
 
-		if slot3 and slot4 then
-			slot0._retailFocusId = slot0._retailId
+		if var_18_2 and var_18_3 then
+			arg_18_0._retailFocusId = arg_18_0._retailId
 
-			slot0:handleFocusPos(slot3, slot4)
+			arg_18_0:handleFocusPos(var_18_2, var_18_3)
 		end
 	end
 end
 
-function slot0.enterEpiosdeList(slot0, slot1)
-	if not Season123EntryModel.instance:getCurrentStage() then
+function var_0_0.enterEpiosdeList(arg_19_0, arg_19_1)
+	local var_19_0 = Season123EntryModel.instance:getCurrentStage()
+
+	if not var_19_0 then
 		return
 	end
 
-	slot0._loadHelper:tweenStage(slot2, slot1)
+	arg_19_0._loadHelper:tweenStage(var_19_0, arg_19_1)
 
-	if not slot1 then
-		slot0._loadHelper:playAnim(slot2, Activity123Enum.StageSceneAnim.Idle)
+	if not arg_19_1 then
+		arg_19_0._loadHelper:playAnim(var_19_0, Activity123Enum.StageSceneAnim.Idle)
 	end
 end
 
-function slot0.playCloseAnim(slot0)
-	slot0._loadHelper:playAnim(Season123EntryModel.instance:getCurrentStage(), Activity123Enum.StageSceneAnim.Close)
+function var_0_0.playCloseAnim(arg_20_0)
+	local var_20_0 = Season123EntryModel.instance:getCurrentStage()
+
+	arg_20_0._loadHelper:playAnim(var_20_0, Activity123Enum.StageSceneAnim.Close)
 end
 
-return slot0
+return var_0_0

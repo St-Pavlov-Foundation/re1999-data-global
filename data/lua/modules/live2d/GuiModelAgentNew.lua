@@ -1,225 +1,236 @@
-module("modules.live2d.GuiModelAgentNew", package.seeall)
+﻿module("modules.live2d.GuiModelAgentNew", package.seeall)
 
-slot0 = class("GuiModelAgentNew", LuaCompBase)
-slot1 = "live2d/custom/live2d_camera_2.prefab"
+local var_0_0 = class("GuiModelAgentNew", LuaCompBase)
+local var_0_1 = "live2d/custom/live2d_camera_2.prefab"
 
-function slot0.Create(slot0, slot1)
-	slot2 = nil
-	slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
-	slot2._isStory = slot1
+function var_0_0.Create(arg_1_0, arg_1_1)
+	local var_1_0
+	local var_1_1 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
 
-	return slot2
+	var_1_1._isStory = arg_1_1
+
+	return var_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1
 end
 
-function slot0._getSpine(slot0)
-	if not slot0._spine then
-		slot0._spine = LightSpine.Create(slot0._go, slot0._isStory)
+function var_0_0._getSpine(arg_3_0)
+	if not arg_3_0._spine then
+		arg_3_0._spine = LightSpine.Create(arg_3_0._go, arg_3_0._isStory)
 	end
 
-	return slot0._spine
+	return arg_3_0._spine
 end
 
-function slot0._getLive2d(slot0)
-	if not slot0._live2d then
-		slot0._live2d = GuiLive2d.Create(slot0._go, slot0._isStory)
+function var_0_0._getLive2d(arg_4_0)
+	if not arg_4_0._live2d then
+		arg_4_0._live2d = GuiLive2d.Create(arg_4_0._go, arg_4_0._isStory)
 	end
 
-	slot0._live2d:cancelCamera()
+	arg_4_0._live2d:cancelCamera()
 
-	return slot0._live2d
+	return arg_4_0._live2d
 end
 
-function slot0.setSkinCfg(slot0, slot1, slot2, slot3)
-	slot4 = slot0._curModel
-	slot5 = slot0._isLive2D
-	slot0.loadedCb = slot2
-	slot0.loadedCbObj = slot3
+function var_0_0.setSkinCfg(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_0._curModel
+	local var_5_1 = arg_5_0._isLive2D
 
-	if string.nilorempty(slot1.live2d) then
-		slot0._isLive2D = false
-		slot0._curModel = slot0:_getSpine()
+	arg_5_0.loadedCb = arg_5_2
+	arg_5_0.loadedCbObj = arg_5_3
 
-		gohelper.setActive(slot0._curModel._spineGo, true)
-		slot0._curModel:setResPath(ResUrl.getLightSpine(slot1.verticalDrawing), slot0._loadResCb, slot0)
+	if string.nilorempty(arg_5_1.live2d) then
+		arg_5_0._isLive2D = false
+		arg_5_0._curModel = arg_5_0:_getSpine()
+
+		gohelper.setActive(arg_5_0._curModel._spineGo, true)
+		arg_5_0._curModel:setResPath(ResUrl.getLightSpine(arg_5_1.verticalDrawing), arg_5_0._loadResCb, arg_5_0)
 	else
-		slot0._isLive2D = true
-		slot0._curModel = slot0:_getLive2d()
+		arg_5_0._isLive2D = true
+		arg_5_0._curModel = arg_5_0:_getLive2d()
 
-		gohelper.setActive(slot0._curModel._spineGo, true)
-		slot0._curModel:setResPath(ResUrl.getLightLive2d(slot1.live2d), slot0._loadResCb, slot0)
+		gohelper.setActive(arg_5_0._curModel._spineGo, true)
+		arg_5_0._curModel:setResPath(ResUrl.getLightLive2d(arg_5_1.live2d), arg_5_0._loadResCb, arg_5_0)
 	end
 
-	if slot4 and slot0._isLive2D ~= slot5 then
-		gohelper.setActive(slot4._spineGo, false)
+	if var_5_0 and arg_5_0._isLive2D ~= var_5_1 then
+		gohelper.setActive(var_5_0._spineGo, false)
 	end
 end
 
-function slot0.setResPath(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot0._curModel
-	slot6 = slot0._isLive2D
-	slot0.loadedCb = slot3
-	slot0.loadedCbObj = slot4
+function var_0_0.setResPath(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	local var_6_0 = arg_6_0._curModel
+	local var_6_1 = arg_6_0._isLive2D
 
-	if slot2 then
-		slot0._isLive2D = true
-		slot0._curModel = slot0:_getLive2d()
+	arg_6_0.loadedCb = arg_6_3
+	arg_6_0.loadedCbObj = arg_6_4
 
-		gohelper.setActive(slot0._curModel._spineGo, true)
-		slot0._curModel:setResPath(slot1, slot0._loadResCb, slot0)
+	if arg_6_2 then
+		arg_6_0._isLive2D = true
+		arg_6_0._curModel = arg_6_0:_getLive2d()
+
+		gohelper.setActive(arg_6_0._curModel._spineGo, true)
+		arg_6_0._curModel:setResPath(arg_6_1, arg_6_0._loadResCb, arg_6_0)
 	else
-		slot0._isLive2D = false
-		slot0._curModel = slot0:_getSpine()
+		arg_6_0._isLive2D = false
+		arg_6_0._curModel = arg_6_0:_getSpine()
 
-		gohelper.setActive(slot0._curModel._spineGo, true)
-		slot0._curModel:setResPath(slot1, slot0._loadResCb, slot0)
+		gohelper.setActive(arg_6_0._curModel._spineGo, true)
+		arg_6_0._curModel:setResPath(arg_6_1, arg_6_0._loadResCb, arg_6_0)
 	end
 
-	if slot5 and slot0._isLive2D ~= slot6 then
-		gohelper.setActive(slot5._spineGo, false)
+	if var_6_0 and arg_6_0._isLive2D ~= var_6_1 then
+		gohelper.setActive(var_6_0._spineGo, false)
 	end
 end
 
-function slot0.setVerticalDrawing(slot0, slot1, slot2, slot3)
-	slot6 = nil
-	slot7 = slot0._curModel
-	slot8 = slot0._isLive2D
+function var_0_0.setVerticalDrawing(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = string.split(arg_7_1, "/")
+	local var_7_1 = var_7_0 and var_7_0[#var_7_0]
+	local var_7_2
+	local var_7_3 = arg_7_0._curModel
+	local var_7_4 = arg_7_0._isLive2D
 
-	if string.split(slot1, "/") and slot4[#slot4] then
-		slot6 = SkinConfig.instance:getLive2dSkin(string.gsub(slot5, ".prefab", ""))
+	if var_7_1 then
+		local var_7_5 = string.gsub(var_7_1, ".prefab", "")
+
+		var_7_2 = SkinConfig.instance:getLive2dSkin(var_7_5)
 	end
 
-	slot0.loadedCb = slot2
-	slot0.loadedCbObj = slot3
+	arg_7_0.loadedCb = arg_7_2
+	arg_7_0.loadedCbObj = arg_7_3
 
-	if not slot6 then
-		slot0._isLive2D = false
-		slot0._curModel = slot0:_getSpine()
+	if not var_7_2 then
+		arg_7_0._isLive2D = false
+		arg_7_0._curModel = arg_7_0:_getSpine()
 
-		slot0._curModel:showModel()
-		slot0._curModel:setResPath(slot1, slot0._loadResCb, slot0)
+		arg_7_0._curModel:showModel()
+		arg_7_0._curModel:setResPath(arg_7_1, arg_7_0._loadResCb, arg_7_0)
 	else
-		slot0._isLive2D = true
-		slot0._curModel = slot0:_getLive2d()
+		arg_7_0._isLive2D = true
+		arg_7_0._curModel = arg_7_0:_getLive2d()
 
-		slot0._curModel:showModel()
-		slot0._curModel:cancelCamera()
-		slot0._curModel:setResPath(ResUrl.getLightLive2d(slot6), slot0._loadResCb, slot0)
+		arg_7_0._curModel:showModel()
+		arg_7_0._curModel:cancelCamera()
+		arg_7_0._curModel:setResPath(ResUrl.getLightLive2d(var_7_2), arg_7_0._loadResCb, arg_7_0)
 	end
 
-	if slot0._isLive2D ~= slot8 then
-		slot7:hideModel()
+	if arg_7_0._isLive2D ~= var_7_4 then
+		var_7_3:hideModel()
 	end
 end
 
-function slot0._loadResCb(slot0)
-	slot2 = slot0._curModel:getSpineGo()
-	slot3, slot4 = nil
+function var_0_0._loadResCb(arg_8_0)
+	local var_8_0 = arg_8_0._curModel:getSpineGo()
+	local var_8_1 = var_8_0
+	local var_8_2
+	local var_8_3
 
-	if slot0._isLive2D then
-		slot2 = gohelper.findChild(slot1, "Drawables").transform:GetChild(0).gameObject
+	if arg_8_0._isLive2D then
+		var_8_1 = gohelper.findChild(var_8_0, "Drawables").transform:GetChild(0).gameObject
 	end
 
-	if gohelper.findChild(slot2, "roleeffect_for_ui") == nil then
-		slot3 = gohelper.create2d(slot2, "roleeffect_for_ui")
+	local var_8_4 = gohelper.findChild(var_8_1, "roleeffect_for_ui")
+
+	if var_8_4 == nil then
+		var_8_4 = gohelper.create2d(var_8_1, "roleeffect_for_ui")
 	end
 
-	gohelper.onceAddComponent(slot2, typeof(UrpCustom.PPEffectMask)).useLocalBloom = true
+	gohelper.onceAddComponent(var_8_1, typeof(UrpCustom.PPEffectMask)).useLocalBloom = true
 
-	gohelper.setActive(slot3, false)
+	gohelper.setActive(var_8_4, false)
 
-	if slot0._curModel.setLocalScale then
-		slot0._curModel:setLocalScale(1)
+	if arg_8_0._curModel.setLocalScale then
+		arg_8_0._curModel:setLocalScale(1)
 	else
-		transformhelper.setLocalScale(slot1.transform, 1, 1, 1)
+		transformhelper.setLocalScale(var_8_0.transform, 1, 1, 1)
 	end
 
-	gohelper.onceAddComponent(slot3, typeof(ZProj.RoleEffectCtrl)).forUI = true
+	gohelper.onceAddComponent(var_8_4, typeof(ZProj.RoleEffectCtrl)).forUI = true
 
-	gohelper.setActive(slot3, true)
+	gohelper.setActive(var_8_4, true)
 
-	if slot0.loadedCb then
-		slot0.loadedCb(slot0.loadedCbObj)
+	if arg_8_0.loadedCb then
+		arg_8_0.loadedCb(arg_8_0.loadedCbObj)
 	end
 end
 
-function slot0.setModelVisible(slot0, slot1)
-	if not slot0._curModel then
+function var_0_0.setModelVisible(arg_9_0, arg_9_1)
+	if not arg_9_0._curModel then
 		return
 	end
 
-	gohelper.setActive(slot0._go, slot1)
+	gohelper.setActive(arg_9_0._go, arg_9_1)
 end
 
-function slot0.processModelEffect(slot0)
-	if slot0:isLive2D() then
-		slot0._curModel:processModelEffect()
+function var_0_0.processModelEffect(arg_10_0)
+	if arg_10_0:isLive2D() then
+		arg_10_0._curModel:processModelEffect()
 	end
 end
 
-function slot0.hideModelEffect(slot0)
-	if slot0:isLive2D() then
-		slot0._curModel:hideModelEffect()
+function var_0_0.hideModelEffect(arg_11_0)
+	if arg_11_0:isLive2D() then
+		arg_11_0._curModel:hideModelEffect()
 	end
 end
 
-function slot0.getSpineGo(slot0)
-	if slot0._curModel then
-		return slot0._curModel:getSpineGo()
+function var_0_0.getSpineGo(arg_12_0)
+	if arg_12_0._curModel then
+		return arg_12_0._curModel:getSpineGo()
 	end
 end
 
-function slot0.setSortingOrder(slot0, slot1)
-	if slot0._curModel and slot0._curModel.setSortingOrder then
-		return slot0._curModel:setSortingOrder(slot1)
+function var_0_0.setSortingOrder(arg_13_0, arg_13_1)
+	if arg_13_0._curModel and arg_13_0._curModel.setSortingOrder then
+		return arg_13_0._curModel:setSortingOrder(arg_13_1)
 	end
 end
 
-function slot0.setAlpha(slot0, slot1)
-	if slot0._curModel and slot0:isLive2D() then
-		slot0._curModel:setAlpha(slot1)
+function var_0_0.setAlpha(arg_14_0, arg_14_1)
+	if arg_14_0._curModel and arg_14_0:isLive2D() then
+		arg_14_0._curModel:setAlpha(arg_14_1)
 	end
 end
 
-function slot0.isLive2D(slot0)
-	return slot0._isLive2D == true
+function var_0_0.isLive2D(arg_15_0)
+	return arg_15_0._isLive2D == true
 end
 
-function slot0.isSpine(slot0)
-	return slot0._isLive2D ~= true
+function var_0_0.isSpine(arg_16_0)
+	return arg_16_0._isLive2D ~= true
 end
 
-function slot0.getSpineVoice(slot0)
-	if slot0._curModel then
-		return slot0._curModel:getSpineVoice()
+function var_0_0.getSpineVoice(arg_17_0)
+	if arg_17_0._curModel then
+		return arg_17_0._curModel:getSpineVoice()
 	end
 end
 
-function slot0.isPlayingVoice(slot0)
-	if slot0._curModel then
-		return slot0._curModel:isPlayingVoice()
+function var_0_0.isPlayingVoice(arg_18_0)
+	if arg_18_0._curModel then
+		return arg_18_0._curModel:isPlayingVoice()
 	end
 end
 
-function slot0.playVoice(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0._curModel then
-		slot0._curModel:playVoice(slot1, slot2, slot3, slot4, slot5)
+function var_0_0.playVoice(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5)
+	if arg_19_0._curModel then
+		arg_19_0._curModel:playVoice(arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5)
 	end
 end
 
-function slot0.stopVoice(slot0)
-	if slot0._curModel then
-		slot0._curModel:stopVoice()
+function var_0_0.stopVoice(arg_20_0)
+	if arg_20_0._curModel then
+		arg_20_0._curModel:stopVoice()
 	end
 end
 
-function slot0.setSwitch(slot0, slot1, slot2)
-	if slot0._curModel then
-		slot0._curModel:setSwitch(slot1, slot2)
+function var_0_0.setSwitch(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_0._curModel then
+		arg_21_0._curModel:setSwitch(arg_21_1, arg_21_2)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,34 +1,40 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotProgressListMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotProgressListMO", package.seeall)
 
-slot0 = pureTable("V1a6_CachotProgressListMO")
+local var_0_0 = pureTable("V1a6_CachotProgressListMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.index = slot1
-	slot0.id = slot2
-	slot0.isLocked = slot3
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.index = arg_1_1
+	arg_1_0.id = arg_1_2
+	arg_1_0.isLocked = arg_1_3
 end
 
-function slot0.getLineWidth(slot0)
-	if not slot0.isLocked then
+function var_0_0.getLineWidth(arg_2_0)
+	if not arg_2_0.isLocked then
 		return V1a6_CachotEnum.UnLockedRewardItemWidth
 	end
 
-	slot3 = 0
+	local var_2_0 = V1a6_CachotProgressListModel.instance._scrollViews
+	local var_2_1 = var_2_0 and var_2_0[1]
+	local var_2_2 = 0
 
-	if V1a6_CachotProgressListModel.instance._scrollViews and slot1[1] then
-		slot3 = recthelper.getWidth(slot2:getCsScroll().transform)
+	if var_2_1 then
+		local var_2_3 = var_2_1:getCsScroll()
+
+		var_2_2 = recthelper.getWidth(var_2_3.transform)
 	end
 
-	slot4 = V1a6_CachotEnum.LockedRewardItemWidth
+	local var_2_4 = V1a6_CachotEnum.LockedRewardItemWidth
+	local var_2_5 = (arg_2_0.index - 1) * V1a6_CachotEnum.UnLockedRewardItemWidth - var_2_2
 
-	if (slot0.index - 1) * V1a6_CachotEnum.UnLockedRewardItemWidth - slot3 < 0 then
-		slot4 = math.abs(slot5)
+	if var_2_5 < 0 then
+		var_2_4 = math.abs(var_2_5)
 	end
 
-	return slot4
+	return var_2_4
 end
 
-function slot0.computeLockedItemWidth(slot0)
+function var_0_0.computeLockedItemWidth(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

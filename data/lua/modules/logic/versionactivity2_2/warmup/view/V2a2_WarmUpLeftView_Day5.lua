@@ -1,153 +1,158 @@
-module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day5", package.seeall)
+﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day5", package.seeall)
 
-slot1 = class("V2a2_WarmUpLeftView_Day5", require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase"))
+local var_0_0 = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
+local var_0_1 = class("V2a2_WarmUpLeftView_Day5", var_0_0)
 
-function slot1.onInitView(slot0)
-	slot0._simageicon1 = gohelper.findChildSingleImage(slot0.viewGO, "before/#simage_icon1")
-	slot0._goValidArea = gohelper.findChild(slot0.viewGO, "before/#go_ValidArea")
-	slot0._btn1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "before/#btn_1")
-	slot0._simageicon2 = gohelper.findChildSingleImage(slot0.viewGO, "after/#simage_icon2")
+function var_0_1.onInitView(arg_1_0)
+	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "before/#simage_icon1")
+	arg_1_0._goValidArea = gohelper.findChild(arg_1_0.viewGO, "before/#go_ValidArea")
+	arg_1_0._btn1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "before/#btn_1")
+	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "after/#simage_icon2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot1.addEvents(slot0)
-	slot0._btn1:AddClickListener(slot0._btn1OnClick, slot0)
+function var_0_1.addEvents(arg_2_0)
+	arg_2_0._btn1:AddClickListener(arg_2_0._btn1OnClick, arg_2_0)
 end
 
-function slot1.removeEvents(slot0)
-	slot0._btn1:RemoveClickListener()
+function var_0_1.removeEvents(arg_3_0)
+	arg_3_0._btn1:RemoveClickListener()
 end
 
-slot2 = {
+local var_0_2 = {
 	Clicked = 1
 }
 
-function slot1._btn1OnClick(slot0)
+function var_0_1._btn1OnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20220226)
 end
 
-function slot1.ctor(slot0, slot1)
-	uv0.ctor(slot0, slot1)
+function var_0_1.ctor(arg_5_0, arg_5_1)
+	var_0_0.ctor(arg_5_0, arg_5_1)
 
-	slot0._dragEnabled = false
-	slot0._needWaitCount = 0
+	arg_5_0._dragEnabled = false
+	arg_5_0._needWaitCount = 0
 end
 
-function slot1._editableInitView(slot0)
-	uv0._editableInitView(slot0)
+function var_0_1._editableInitView(arg_6_0)
+	var_0_0._editableInitView(arg_6_0)
 
-	slot0._guideGo = gohelper.findChild(slot0.viewGO, "guide_day5")
-	slot0._startGo = slot0._btn1.gameObject
-	slot0._startTrans = slot0._startGo.transform
-	slot0._startX, slot0._startY = recthelper.getAnchor(slot0._startTrans)
-	slot0._startAnimation = slot0._startGo:GetComponent(gohelper.Type_Animation)
-	slot0._endGo = slot0._goValidArea
-	slot0._endTrans = slot0._endGo.transform
+	arg_6_0._guideGo = gohelper.findChild(arg_6_0.viewGO, "guide_day5")
+	arg_6_0._startGo = arg_6_0._btn1.gameObject
+	arg_6_0._startTrans = arg_6_0._startGo.transform
+	arg_6_0._startX, arg_6_0._startY = recthelper.getAnchor(arg_6_0._startTrans)
+	arg_6_0._startAnimation = arg_6_0._startGo:GetComponent(gohelper.Type_Animation)
+	arg_6_0._endGo = arg_6_0._goValidArea
+	arg_6_0._endTrans = arg_6_0._endGo.transform
 
-	CommonDragHelper.instance:registerDragObj(slot0._startGo, slot0._onBeginDrag, slot0._onDrag, slot0._onEndDrag, slot0._checkCanDrag, slot0)
+	CommonDragHelper.instance:registerDragObj(arg_6_0._startGo, arg_6_0._onBeginDrag, arg_6_0._onDrag, arg_6_0._onEndDrag, arg_6_0._checkCanDrag, arg_6_0)
 end
 
-function slot1.onDestroyView(slot0)
-	CommonDragHelper.instance:unregisterDragObj(slot0._startGo)
+function var_0_1.onDestroyView(arg_7_0)
+	CommonDragHelper.instance:unregisterDragObj(arg_7_0._startGo)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_youyu_yure_cut_loop_20220229)
-	uv0.onDestroyView(slot0)
+	var_0_0.onDestroyView(arg_7_0)
 end
 
-function slot1._checkCanDrag(slot0)
-	return not slot0:_canDrag()
+function var_0_1._checkCanDrag(arg_8_0)
+	return not arg_8_0:_canDrag()
 end
 
-function slot1._canDrag(slot0)
-	return slot0._dragEnabled
+function var_0_1._canDrag(arg_9_0)
+	return arg_9_0._dragEnabled
 end
 
-function slot1._onBeginDrag(slot0, slot1, slot2)
-	if not slot0:_canDrag() then
+function var_0_1._onBeginDrag(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_0:_canDrag() then
 		return
 	end
 
-	slot0._startAnimation.enabled = false
+	arg_10_0._startAnimation.enabled = false
 
-	uv0._onDragBegin(slot0)
+	var_0_0._onDragBegin(arg_10_0)
 end
 
-function slot1._onDrag(slot0, slot1, slot2)
-	if not slot0:_canDrag() then
+function var_0_1._onDrag(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0:_canDrag() then
 		return
 	end
 
-	if gohelper.isMouseOverGo(slot0._endTrans, slot2.position) then
+	if gohelper.isMouseOverGo(arg_11_0._endTrans, arg_11_2.position) then
 		CommonDragHelper.instance:setGlobalEnabled(false)
 
-		slot0._dragEnabled = false
+		arg_11_0._dragEnabled = false
 
-		slot0:saveState(uv0.Clicked)
-		slot0:_onStateClicked()
+		arg_11_0:saveState(var_0_2.Clicked)
+		arg_11_0:_onStateClicked()
 	end
 end
 
-function slot1._onEndDrag(slot0, slot1, slot2)
-	if not slot0:_canDrag() then
+function var_0_1._onEndDrag(arg_12_0, arg_12_1, arg_12_2)
+	if not arg_12_0:_canDrag() then
 		return
 	end
 
-	slot0:tweenAnchorPos(slot0._startTrans, slot0._startX, slot0._startY)
+	arg_12_0:tweenAnchorPos(arg_12_0._startTrans, arg_12_0._startX, arg_12_0._startY)
 end
 
-function slot1._onStateClicked(slot0)
+function var_0_1._onStateClicked(arg_13_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_cut_loop_20220227)
-	slot0:playAnim_before_click(slot0._click_before_doneCb, slot0)
+	arg_13_0:playAnim_before_click(arg_13_0._click_before_doneCb, arg_13_0)
 end
 
-function slot1._click_before_doneCb(slot0)
+function var_0_1._click_before_doneCb(arg_14_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_youyu_yure_cut_loop_20220229)
 
-	slot0._needWaitCount = 2
+	arg_14_0._needWaitCount = 2
 
-	slot0:playAnim_before_out(slot0._onAfterDone, slot0)
-	slot0:playAnim_after_in(slot0._onAfterDone, slot0)
+	arg_14_0:playAnim_before_out(arg_14_0._onAfterDone, arg_14_0)
+	arg_14_0:playAnim_after_in(arg_14_0._onAfterDone, arg_14_0)
 end
 
-function slot1._onAfterDone(slot0)
-	slot0._needWaitCount = slot0._needWaitCount - 1
+function var_0_1._onAfterDone(arg_15_0)
+	arg_15_0._needWaitCount = arg_15_0._needWaitCount - 1
 
-	if slot0._needWaitCount > 0 then
+	if arg_15_0._needWaitCount > 0 then
 		return
 	end
 
-	slot0:saveStateDone(true)
-	slot0:setActive_before(false)
-	slot0:setActive_after(true)
-	slot0:openDesc()
+	arg_15_0:saveStateDone(true)
+	arg_15_0:setActive_before(false)
+	arg_15_0:setActive_after(true)
+	arg_15_0:openDesc()
 end
 
-function slot1.setData(slot0)
-	uv0.setData(slot0)
+function var_0_1.setData(arg_16_0)
+	var_0_0.setData(arg_16_0)
 
-	slot1 = slot0:checkIsDone()
+	local var_16_0 = arg_16_0:checkIsDone()
 
-	slot0:setActive_before(not slot1)
-	slot0:setActive_after(slot1)
-	slot0:playAnimRaw_before_idle(0, 1)
+	arg_16_0:setActive_before(not var_16_0)
+	arg_16_0:setActive_after(var_16_0)
+	arg_16_0:playAnimRaw_before_idle(0, 1)
 
-	slot0._startAnimation.enabled = true
+	arg_16_0._startAnimation.enabled = true
 
-	if slot1 then
-		slot0._dragEnabled = false
-	elseif slot0:getState() == 0 then
-		slot0._dragEnabled = true
-
-		recthelper.setAnchor(slot0._startTrans, slot0._startX, slot0._startY)
-	elseif uv1.Clicked == slot2 then
-		slot0._dragEnabled = false
-
-		slot0:_onStateClicked()
+	if var_16_0 then
+		arg_16_0._dragEnabled = false
 	else
-		logError("[V2a2_WarmUpLeftView_Day5] invalid state:" .. slot2)
+		local var_16_1 = arg_16_0:getState()
+
+		if var_16_1 == 0 then
+			arg_16_0._dragEnabled = true
+
+			recthelper.setAnchor(arg_16_0._startTrans, arg_16_0._startX, arg_16_0._startY)
+		elseif var_0_2.Clicked == var_16_1 then
+			arg_16_0._dragEnabled = false
+
+			arg_16_0:_onStateClicked()
+		else
+			logError("[V2a2_WarmUpLeftView_Day5] invalid state:" .. var_16_1)
+		end
 	end
 end
 
-return slot1
+return var_0_1

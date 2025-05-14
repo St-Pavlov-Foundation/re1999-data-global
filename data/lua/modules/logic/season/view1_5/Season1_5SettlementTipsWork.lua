@@ -1,109 +1,123 @@
-module("modules.logic.season.view1_5.Season1_5SettlementTipsWork", package.seeall)
+﻿module("modules.logic.season.view1_5.Season1_5SettlementTipsWork", package.seeall)
 
-slot0 = class("Season1_5SettlementTipsWork", BaseWork)
+local var_0_0 = class("Season1_5SettlementTipsWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot0._context = slot1
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0._context = arg_1_1
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
 
 	if PopupController.instance:getPopupCount() > 0 then
 		PopupController.instance:setPause("fightsuccess", false)
 
-		slot0._showPopupView = true
+		arg_1_0._showPopupView = true
 	else
-		slot0:_showEquipGet()
+		arg_1_0:_showEquipGet()
 	end
 end
 
-function slot0._showEquipGet(slot0)
+function var_0_0._showEquipGet(arg_2_0)
 	PopupController.instance:setPause("fightsuccess", false)
 
-	slot1 = {}
+	local var_2_0 = {}
 
-	tabletool.addValues(slot1, FightResultModel.instance:getFirstMaterialDataList())
-	tabletool.addValues(slot1, FightResultModel.instance:getExtraMaterialDataList())
-	tabletool.addValues(slot1, FightResultModel.instance:getMaterialDataList())
+	tabletool.addValues(var_2_0, FightResultModel.instance:getFirstMaterialDataList())
+	tabletool.addValues(var_2_0, FightResultModel.instance:getExtraMaterialDataList())
+	tabletool.addValues(var_2_0, FightResultModel.instance:getMaterialDataList())
 
-	slot2 = {}
+	local var_2_1 = {}
 
-	for slot6 = #slot1, 1, -1 do
-		if slot1[slot6].materilType == MaterialEnum.MaterialType.EquipCard then
-			table.insert(slot2, table.remove(slot1, slot6).materilId)
+	for iter_2_0 = #var_2_0, 1, -1 do
+		if var_2_0[iter_2_0].materilType == MaterialEnum.MaterialType.EquipCard then
+			local var_2_2 = table.remove(var_2_0, iter_2_0)
+
+			table.insert(var_2_1, var_2_2.materilId)
 		end
 	end
 
-	slot0._showEquipCard = {}
-	slot0._choiceCards = {}
-	slot3 = slot0._context.onlyShowNewCard
+	arg_2_0._showEquipCard = {}
+	arg_2_0._choiceCards = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		if SeasonConfig.instance:getEquipIsOptional(slot8) then
-			table.insert(slot0._choiceCards, slot8)
-		elseif slot3 then
-			if Activity104Model.instance:isNew104Equip(slot8) then
-				table.insert(slot0._showEquipCard, slot8)
+	local var_2_3 = arg_2_0._context.onlyShowNewCard
+
+	for iter_2_1, iter_2_2 in ipairs(var_2_1) do
+		if SeasonConfig.instance:getEquipIsOptional(iter_2_2) then
+			table.insert(arg_2_0._choiceCards, iter_2_2)
+		elseif var_2_3 then
+			if Activity104Model.instance:isNew104Equip(iter_2_2) then
+				table.insert(arg_2_0._showEquipCard, iter_2_2)
 			end
 		else
-			table.insert(slot0._showEquipCard, slot8)
+			table.insert(arg_2_0._showEquipCard, iter_2_2)
 		end
 	end
 
-	slot4 = slot0._context.delayTime
+	local var_2_4 = arg_2_0._context.delayTime
 
-	if #slot0._showEquipCard > 0 then
-		for slot9 = #slot0._showEquipCard, 1, -1 do
-			if ({})[slot0._showEquipCard[slot9]] then
-				table.remove(slot0._showEquipCard, slot9)
+	if #arg_2_0._showEquipCard > 0 then
+		local var_2_5 = {}
+
+		for iter_2_3 = #arg_2_0._showEquipCard, 1, -1 do
+			local var_2_6 = arg_2_0._showEquipCard[iter_2_3]
+
+			if var_2_5[var_2_6] then
+				table.remove(arg_2_0._showEquipCard, iter_2_3)
 			else
-				slot5[slot10] = true
+				var_2_5[var_2_6] = true
 			end
 		end
 
-		TaskDispatcher.runDelay(slot0._showGetCardView, slot0, slot4)
-	elseif #slot0._choiceCards > 0 then
-		TaskDispatcher.runDelay(slot0._showChoiceCardView, slot0, slot4)
+		TaskDispatcher.runDelay(arg_2_0._showGetCardView, arg_2_0, var_2_4)
+	elseif #arg_2_0._choiceCards > 0 then
+		TaskDispatcher.runDelay(arg_2_0._showChoiceCardView, arg_2_0, var_2_4)
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot0._showPopupView then
+function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
+	if arg_3_0._showPopupView then
 		if PopupController.instance:getPopupCount() == 0 then
-			slot0._showPopupView = nil
+			arg_3_0._showPopupView = nil
 
-			slot0:_showEquipGet()
+			arg_3_0:_showEquipGet()
 		end
-	elseif slot1 == SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.CelebrityCardGetlView) then
-		if slot0:_showChoiceCardView() then
+	elseif arg_3_1 == SeasonViewHelper.getViewName(Activity104Model.instance:getCurSeasonId(), Activity104Enum.ViewName.CelebrityCardGetlView) then
+		if arg_3_0:_showChoiceCardView() then
 			return
 		end
 
-		slot0:onDone(true)
+		arg_3_0:onDone(true)
 	end
 end
 
-function slot0._showGetCardView(slot0)
+function var_0_0._showGetCardView(arg_4_0)
 	Activity104Controller.instance:openSeasonCelebrityCardGetlView({
 		is_item_id = true,
-		data = slot0._showEquipCard
+		data = arg_4_0._showEquipCard
 	})
 end
 
-function slot0._showChoiceCardView(slot0)
-	if slot0._choiceCards and #slot0._choiceCards > 0 and Activity104Model.instance:getItemEquipUid(table.remove(slot0._choiceCards, 1)) then
-		Activity104Controller.instance:openSeasonEquipSelectChoiceView({
-			actId = Activity104Model.instance:getCurSeasonId(),
-			costItemUid = slot2
-		})
+function var_0_0._showChoiceCardView(arg_5_0)
+	if arg_5_0._choiceCards and #arg_5_0._choiceCards > 0 then
+		local var_5_0 = table.remove(arg_5_0._choiceCards, 1)
+		local var_5_1 = Activity104Model.instance:getItemEquipUid(var_5_0)
 
-		return true
+		if var_5_1 then
+			local var_5_2 = {
+				actId = Activity104Model.instance:getCurSeasonId(),
+				costItemUid = var_5_1
+			}
+
+			Activity104Controller.instance:openSeasonEquipSelectChoiceView(var_5_2)
+
+			return true
+		end
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_6_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0._onCloseViewFinish, arg_6_0)
 end
 
-return slot0
+return var_0_0

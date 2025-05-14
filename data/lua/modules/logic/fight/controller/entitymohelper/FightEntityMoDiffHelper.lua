@@ -1,219 +1,233 @@
-module("modules.logic.fight.controller.entitymohelper.FightEntityMoDiffHelper", package.seeall)
+﻿module("modules.logic.fight.controller.entitymohelper.FightEntityMoDiffHelper", package.seeall)
 
-slot0 = _M
-slot0.DeepMaxStack = 100
-slot1 = {}
-slot2 = "entityMo1"
-slot3 = "[表现层数据] entityMo2"
-slot4 = 0
+local var_0_0 = _M
 
-function slot0.getDiffMsg(slot0, slot1)
-	uv0.initGetDiffHandleDict()
-	tabletool.clear(uv1)
+var_0_0.DeepMaxStack = 100
 
-	uv2 = 0
+local var_0_1 = {}
+local var_0_2 = "entityMo1"
+local var_0_3 = "[表现层数据] entityMo2"
+local var_0_4 = 0
 
-	for slot5, slot6 in pairs(slot0) do
-		if not FightEntityMoCompareHelper.CompareFilterAttrDict[slot5] then
-			uv0.diffHandleDict[slot5] or uv0.defaultDiff(slot6, slot1[slot5], slot5)
+function var_0_0.getDiffMsg(arg_1_0, arg_1_1)
+	var_0_0.initGetDiffHandleDict()
+	tabletool.clear(var_0_1)
+
+	var_0_4 = 0
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
+		if not FightEntityMoCompareHelper.CompareFilterAttrDict[iter_1_0] then
+			(var_0_0.diffHandleDict[iter_1_0] or var_0_0.defaultDiff)(iter_1_1, arg_1_1[iter_1_0], iter_1_0)
 		end
 	end
 
-	return table.concat(uv1, "\n")
+	return table.concat(var_0_1, "\n")
 end
 
-function slot0.getTypeDiffMsg(slot0, slot1, slot2, slot3, slot4)
-	uv0 = uv0 + 1
+function var_0_0.getTypeDiffMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	var_0_4 = var_0_4 + 1
 
-	table.insert(uv1, string.format([[
-
-[error %s] key : %s, 
-%s.%s type is %s, 
-%s.%s type is %s]], uv0, slot0, slot1, slot0, slot2, slot3, slot0, slot4))
+	table.insert(var_0_1, string.format("\n[error %s] key : %s, \n%s.%s type is %s, \n%s.%s type is %s", var_0_4, arg_2_0, arg_2_1, arg_2_0, arg_2_2, arg_2_3, arg_2_0, arg_2_4))
 end
 
-function slot0.getValueDiffMsg(slot0, slot1, slot2, slot3, slot4)
-	uv0 = uv0 + 1
+function var_0_0.getValueDiffMsg(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	var_0_4 = var_0_4 + 1
 
-	table.insert(uv1, string.format([[
-
-[error %s] key : %s, 
-%s.%s = %s, 
-%s.%s = %s]], uv0, slot0, slot1, slot0, slot2, slot3, slot0, slot4))
+	table.insert(var_0_1, string.format("\n[error %s] key : %s, \n%s.%s = %s, \n%s.%s = %s", var_0_4, arg_3_0, arg_3_1, arg_3_0, arg_3_2, arg_3_3, arg_3_0, arg_3_4))
 end
 
-function slot0.addDiffMsg(slot0)
-	table.insert(uv0, "\n" .. tostring(slot0))
+function var_0_0.addDiffMsg(arg_4_0)
+	table.insert(var_0_1, "\n" .. tostring(arg_4_0))
 end
 
-function slot0.initGetDiffHandleDict()
-	if not uv0.diffHandleDict then
-		uv0.diffHandleDict = {
-			buffModel = uv0.buffModelDiff,
-			_powerInfos = uv0.defaultTableDeepDiff,
-			summonedInfo = uv0.summonedInfoDiff
+function var_0_0.initGetDiffHandleDict()
+	if not var_0_0.diffHandleDict then
+		var_0_0.diffHandleDict = {
+			buffModel = var_0_0.buffModelDiff,
+			_powerInfos = var_0_0.defaultTableDeepDiff,
+			summonedInfo = var_0_0.summonedInfoDiff
 		}
 	end
 end
 
-function slot0.defaultDiff(slot0, slot1, slot2)
-	if slot0 == slot1 then
+function var_0_0.defaultDiff(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0 == arg_6_1 then
 		return
 	end
 
-	if not slot0 or not slot1 then
-		uv0.getValueDiffMsg(slot2, uv1, slot0, uv2, slot1)
-
-		return
-	end
-
-	if type(slot0) ~= type(slot1) then
-		uv0.getTypeDiffMsg(slot2, uv1, slot3, uv2, slot4)
+	if not arg_6_0 or not arg_6_1 then
+		var_0_0.getValueDiffMsg(arg_6_2, var_0_2, arg_6_0, var_0_3, arg_6_1)
 
 		return
 	end
 
-	if slot3 == "table" then
-		return uv0.defaultTableDiff(slot0, slot1, slot2)
+	local var_6_0 = type(arg_6_0)
+	local var_6_1 = type(arg_6_1)
+
+	if var_6_0 ~= var_6_1 then
+		var_0_0.getTypeDiffMsg(arg_6_2, var_0_2, var_6_0, var_0_3, var_6_1)
+
+		return
 	end
 
-	if slot0 ~= slot1 then
-		uv0.getValueDiffMsg(slot2, uv1, slot0, uv2, slot1)
+	if var_6_0 == "table" then
+		return var_0_0.defaultTableDiff(arg_6_0, arg_6_1, arg_6_2)
+	end
+
+	if arg_6_0 ~= arg_6_1 then
+		var_0_0.getValueDiffMsg(arg_6_2, var_0_2, arg_6_0, var_0_3, arg_6_1)
 	end
 end
 
-slot0.CompareStatus = {
+var_0_0.CompareStatus = {
 	CompareFinish = 2,
 	WaitCompare = 1
 }
 
-function slot0._innerTableDiff(slot0, slot1, slot2)
-	if slot0 == slot1 then
-		return uv0.CompareStatus.CompareFinish
+function var_0_0._innerTableDiff(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0 == arg_7_1 then
+		return var_0_0.CompareStatus.CompareFinish
 	end
 
-	if not slot0 or not slot1 then
-		uv0.getValueDiffMsg(slot2, uv1, slot0, uv2, slot1)
+	if not arg_7_0 or not arg_7_1 then
+		var_0_0.getValueDiffMsg(arg_7_2, var_0_2, arg_7_0, var_0_3, arg_7_1)
 
-		return uv0.CompareStatus.CompareFinish
+		return var_0_0.CompareStatus.CompareFinish
 	end
 
-	if type(slot0) ~= type(slot1) then
-		uv0.getTypeDiffMsg(slot2, uv1, slot3, uv2, slot4)
+	local var_7_0 = type(arg_7_0)
+	local var_7_1 = type(arg_7_1)
 
-		return uv0.CompareStatus.CompareFinish
+	if var_7_0 ~= var_7_1 then
+		var_0_0.getTypeDiffMsg(arg_7_2, var_0_2, var_7_0, var_0_3, var_7_1)
+
+		return var_0_0.CompareStatus.CompareFinish
 	end
 
-	return uv0.CompareStatus.WaitCompare
+	return var_0_0.CompareStatus.WaitCompare
 end
 
-function slot0.defaultTableDiff(slot0, slot1, slot2)
-	if uv0._innerTableDiff(slot0, slot1, slot2) == uv0.CompareStatus.CompareFinish then
+function var_0_0.defaultTableDiff(arg_8_0, arg_8_1, arg_8_2)
+	if var_0_0._innerTableDiff(arg_8_0, arg_8_1, arg_8_2) == var_0_0.CompareStatus.CompareFinish then
 		return
 	end
 
-	slot4 = true
+	local var_8_0 = true
 
-	for slot8, slot9 in pairs(slot1) do
-		if slot9 ~= slot0[slot8] then
-			slot4 = false
+	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
+		if iter_8_1 ~= arg_8_0[iter_8_0] then
+			var_8_0 = false
 
-			uv0.getValueDiffMsg(slot2 .. slot8, uv1, slot9, uv2, slot0[slot2])
+			var_0_0.getValueDiffMsg(arg_8_2 .. iter_8_0, var_0_2, iter_8_1, var_0_3, arg_8_0[arg_8_2])
 		end
 	end
 
-	if not slot4 then
-		uv0.addDiffMsg(GameUtil.logTab(slot0))
-		uv0.addDiffMsg(GameUtil.logTab(slot1))
+	if not var_8_0 then
+		var_0_0.addDiffMsg(GameUtil.logTab(arg_8_0))
+		var_0_0.addDiffMsg(GameUtil.logTab(arg_8_1))
 	end
 end
 
-function slot0.defaultTableDeepDiff(slot0, slot1, slot2, slot3)
-	if uv0.DeepMaxStack < (slot3 or 0) then
+function var_0_0.defaultTableDeepDiff(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	arg_9_3 = arg_9_3 or 0
+
+	if arg_9_3 > var_0_0.DeepMaxStack then
 		logError("stackoverflow")
 
 		return
 	end
 
-	if uv0._innerTableDiff(slot0, slot1, slot2) == uv0.CompareStatus.CompareFinish then
+	if var_0_0._innerTableDiff(arg_9_0, arg_9_1, arg_9_2) == var_0_0.CompareStatus.CompareFinish then
 		return
 	end
 
-	slot5 = true
+	local var_9_0 = true
 
-	for slot9, slot10 in pairs(slot0) do
-		if type(slot10) ~= type(slot1[slot9]) then
-			slot5 = false
+	for iter_9_0, iter_9_1 in pairs(arg_9_0) do
+		local var_9_1 = arg_9_2 .. "." .. iter_9_0
+		local var_9_2 = arg_9_1[iter_9_0]
+		local var_9_3 = type(iter_9_1)
+		local var_9_4 = type(var_9_2)
 
-			uv0.getTypeDiffMsg(slot2 .. "." .. slot9, uv1, slot13, uv2, slot14)
-		elseif slot13 == "table" then
-			uv0.defaultTableDeepDiff(slot10, slot12, slot11, slot3 + 1)
-		elseif slot10 ~= slot12 then
-			slot5 = false
+		if var_9_3 ~= var_9_4 then
+			var_9_0 = false
 
-			uv0.getValueDiffMsg(slot11, uv1, slot10, uv2, slot12)
+			var_0_0.getTypeDiffMsg(var_9_1, var_0_2, var_9_3, var_0_3, var_9_4)
+		elseif var_9_3 == "table" then
+			var_0_0.defaultTableDeepDiff(iter_9_1, var_9_2, var_9_1, arg_9_3 + 1)
+		elseif iter_9_1 ~= var_9_2 then
+			var_9_0 = false
+
+			var_0_0.getValueDiffMsg(var_9_1, var_0_2, iter_9_1, var_0_3, var_9_2)
 		end
 	end
 
-	if not slot5 then
-		uv0.addDiffMsg(GameUtil.logTab(slot0))
-		uv0.addDiffMsg(GameUtil.logTab(slot1))
+	if not var_9_0 then
+		var_0_0.addDiffMsg(GameUtil.logTab(arg_9_0))
+		var_0_0.addDiffMsg(GameUtil.logTab(arg_9_1))
 	end
 end
 
-function slot0.buffModelDiff(slot0, slot1, slot2)
-	if uv0._innerTableDiff(slot0, slot1, slot2) == uv0.CompareStatus.CompareFinish then
+function var_0_0.buffModelDiff(arg_10_0, arg_10_1, arg_10_2)
+	if var_0_0._innerTableDiff(arg_10_0, arg_10_1, arg_10_2) == var_0_0.CompareStatus.CompareFinish then
 		return
 	end
 
-	if uv0._innerTableDiff(slot0.getDict and slot0:getDict(), slot1.getDict and slot1:getDict(), slot2 .. "._dict") == uv0.CompareStatus.CompareFinish then
+	local var_10_0 = arg_10_0.getDict and arg_10_0:getDict()
+	local var_10_1 = arg_10_1.getDict and arg_10_1:getDict()
+
+	if var_0_0._innerTableDiff(var_10_0, var_10_1, arg_10_2 .. "._dict") == var_0_0.CompareStatus.CompareFinish then
 		return
 	end
 
-	slot6 = true
+	local var_10_2 = true
 
-	for slot10, slot11 in pairs(slot4) do
-		slot12 = slot2 .. "._dict." .. slot10
-		slot14, slot15 = FightEntityMoCompareHelper.defaultTableDeepCompare(slot11, slot5[slot10])
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		local var_10_3 = arg_10_2 .. "._dict." .. iter_10_0
+		local var_10_4 = var_10_1[iter_10_0]
+		local var_10_5, var_10_6 = FightEntityMoCompareHelper.defaultTableDeepCompare(iter_10_1, var_10_4)
 
-		if not slot14 then
-			slot6 = false
+		if not var_10_5 then
+			var_10_2 = false
+			var_10_3 = var_10_6 and var_10_3 .. var_10_6 or var_10_3
 
-			if slot15 then
-				slot12 = slot12 .. slot15 or slot12
-			end
-
-			uv0.getValueDiffMsg(slot12, uv1, GameUtil.logTab(slot11), uv2, GameUtil.logTab(slot13))
+			var_0_0.getValueDiffMsg(var_10_3, var_0_2, GameUtil.logTab(iter_10_1), var_0_3, GameUtil.logTab(var_10_4))
 		end
 	end
 
-	if not slot6 then
-		uv0.addDiffMsg(FightLogHelper.getFightBuffDictString(slot4))
-		uv0.addDiffMsg(FightLogHelper.getFightBuffDictString(slot5))
+	if not var_10_2 then
+		var_0_0.addDiffMsg(FightLogHelper.getFightBuffDictString(var_10_0))
+		var_0_0.addDiffMsg(FightLogHelper.getFightBuffDictString(var_10_1))
 	end
 end
 
-function slot0.summonedInfoDiff(slot0, slot1, slot2)
-	if uv0._innerTableDiff(slot0, slot1, slot2) == uv0.CompareStatus.CompareFinish then
+function var_0_0.summonedInfoDiff(arg_11_0, arg_11_1, arg_11_2)
+	if var_0_0._innerTableDiff(arg_11_0, arg_11_1, arg_11_2) == var_0_0.CompareStatus.CompareFinish then
 		return
 	end
 
-	if uv0._innerTableDiff(slot0.getDataDic and slot0:getDataDic(), slot0.getDataDic and slot1:getDataDic(), slot2 .. ".dataDic") == uv0.CompareStatus.CompareFinish then
+	local var_11_0 = arg_11_0.getDataDic and arg_11_0:getDataDic()
+	local var_11_1 = arg_11_0.getDataDic and arg_11_1:getDataDic()
+
+	if var_0_0._innerTableDiff(var_11_0, var_11_1, arg_11_2 .. ".dataDic") == var_0_0.CompareStatus.CompareFinish then
 		return
 	end
 
-	slot6 = true
+	local var_11_2 = true
 
-	for slot10, slot11 in pairs(slot4) do
-		if not FightEntityMoCompareHelper.defaultTableDeepCompare(slot11, slot5[slot10]) then
-			uv0.getValueDiffMsg(slot2 .. ".dataDic." .. slot10, uv1, GameUtil.logTab(slot11), uv2, GameUtil.logTab(slot13))
+	for iter_11_0, iter_11_1 in pairs(var_11_0) do
+		local var_11_3 = arg_11_2 .. ".dataDic." .. iter_11_0
+		local var_11_4 = var_11_1[iter_11_0]
+
+		if not FightEntityMoCompareHelper.defaultTableDeepCompare(iter_11_1, var_11_4) then
+			var_0_0.getValueDiffMsg(var_11_3, var_0_2, GameUtil.logTab(iter_11_1), var_0_3, GameUtil.logTab(var_11_4))
 		end
 	end
 
-	if not slot6 then
-		uv0.addDiffMsg(GameUtil.logTab(slot4))
-		uv0.addDiffMsg(GameUtil.logTab(slot5))
+	if not var_11_2 then
+		var_0_0.addDiffMsg(GameUtil.logTab(var_11_0))
+		var_0_0.addDiffMsg(GameUtil.logTab(var_11_1))
 	end
 end
 
-return slot0
+return var_0_0

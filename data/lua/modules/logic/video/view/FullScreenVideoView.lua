@@ -1,70 +1,71 @@
-module("modules.logic.video.view.FullScreenVideoView", package.seeall)
+﻿module("modules.logic.video.view.FullScreenVideoView", package.seeall)
 
-slot0 = class("FullScreenVideoView", BaseView)
-slot0.DefaultMaxDuration = 3
+local var_0_0 = class("FullScreenVideoView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._govideo = gohelper.findChild(slot0.viewGO, "#go_video")
+var_0_0.DefaultMaxDuration = 3
+
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._govideo = gohelper.findChild(arg_1_0.viewGO, "#go_video")
 end
 
-function slot0.onOpen(slot0)
-	slot0.videoDone = false
-	slot0.videoPlayer, slot0.displayUGUI, slot0.videoGo = AvProMgr.instance:getVideoPlayer(slot0._govideo)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0.videoDone = false
+	arg_2_0.videoPlayer, arg_2_0.displayUGUI, arg_2_0.videoGo = AvProMgr.instance:getVideoPlayer(arg_2_0._govideo)
 
-	if slot0.viewParam.videoAudio then
-		AudioMgr.instance:trigger(slot0.viewParam.videoAudio)
+	if arg_2_0.viewParam.videoAudio then
+		AudioMgr.instance:trigger(arg_2_0.viewParam.videoAudio)
 	end
 
-	slot0.videoPlayer:Play(slot0.displayUGUI, slot0.viewParam.videoPath, false, slot0.videoStatusUpdate, slot0)
+	arg_2_0.videoPlayer:Play(arg_2_0.displayUGUI, arg_2_0.viewParam.videoPath, false, arg_2_0.videoStatusUpdate, arg_2_0)
 
-	slot0.doneCb = slot0.viewParam.doneCb
-	slot0.doneCbObj = slot0.viewParam.doneCbObj
-	slot0.videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter)).enabled = false
+	arg_2_0.doneCb = arg_2_0.viewParam.doneCb
+	arg_2_0.doneCbObj = arg_2_0.viewParam.doneCbObj
+	arg_2_0.videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter)).enabled = false
 
-	TaskDispatcher.runDelay(slot0.onVideoOverTime, slot0, slot0.viewParam.videoDuration or uv0.DefaultMaxDuration)
+	TaskDispatcher.runDelay(arg_2_0.onVideoOverTime, arg_2_0, arg_2_0.viewParam.videoDuration or var_0_0.DefaultMaxDuration)
 end
 
-function slot0.videoStatusUpdate(slot0, slot1, slot2, slot3)
-	if slot2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		slot0:onPlayVideoDone()
-	elseif slot2 == AvProEnum.PlayerStatus.Closing then
-		slot0:onPlayVideoDone()
+function var_0_0.videoStatusUpdate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_2 == AvProEnum.PlayerStatus.FinishedPlaying then
+		arg_3_0:onPlayVideoDone()
+	elseif arg_3_2 == AvProEnum.PlayerStatus.Closing then
+		arg_3_0:onPlayVideoDone()
 	end
 end
 
-function slot0.onPlayVideoDone(slot0)
-	if slot0.videoDone then
+function var_0_0.onPlayVideoDone(arg_4_0)
+	if arg_4_0.videoDone then
 		return
 	end
 
-	slot0.videoDone = true
+	arg_4_0.videoDone = true
 
-	TaskDispatcher.cancelTask(slot0.onVideoOverTime, slot0)
-	slot0:closeThis()
+	TaskDispatcher.cancelTask(arg_4_0.onVideoOverTime, arg_4_0)
+	arg_4_0:closeThis()
 
-	if slot0.doneCb then
-		slot0.doneCb(slot0.doneCbObj)
+	if arg_4_0.doneCb then
+		arg_4_0.doneCb(arg_4_0.doneCbObj)
 	end
 
-	slot0.doneCb = nil
-	slot0.doneCbObj = nil
+	arg_4_0.doneCb = nil
+	arg_4_0.doneCbObj = nil
 
 	VideoController.instance:dispatchEvent(VideoEvent.OnVideoPlayFinished)
 end
 
-function slot0.onVideoOverTime(slot0)
-	slot0:onPlayVideoDone()
+function var_0_0.onVideoOverTime(arg_5_0)
+	arg_5_0:onPlayVideoDone()
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.onVideoOverTime, slot0)
+function var_0_0.onDestroyView(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.onVideoOverTime, arg_6_0)
 
-	if slot0._videoPlayer then
-		slot0._videoPlayer:Stop()
-		slot0._videoPlayer:Clear()
+	if arg_6_0._videoPlayer then
+		arg_6_0._videoPlayer:Stop()
+		arg_6_0._videoPlayer:Clear()
 
-		slot0._videoPlayer = nil
+		arg_6_0._videoPlayer = nil
 	end
 end
 
-return slot0
+return var_0_0

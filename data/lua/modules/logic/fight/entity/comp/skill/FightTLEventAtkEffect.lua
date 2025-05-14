@@ -1,222 +1,252 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventAtkEffect", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkEffect", package.seeall)
 
-slot0 = class("FightTLEventAtkEffect")
+local var_0_0 = class("FightTLEventAtkEffect")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if not FightHelper.detectTimelinePlayEffectCondition(slot1, slot3[10]) then
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[10]) then
 		return
 	end
 
-	slot0._attacker = FightHelper.getEntity(slot1.fromId)
+	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
-	if slot0._attacker.skill and slot0._attacker.skill:atkEffectNeedFilter(slot3[1]) then
+	if arg_1_0._attacker.skill and arg_1_0._attacker.skill:atkEffectNeedFilter(arg_1_3[1]) then
 		return
 	end
 
-	slot0.fightStepMO = slot1
-	slot0.duration = slot2
-	slot0.paramsArr = slot3
-	slot0.release_time = not string.nilorempty(slot3[9]) and slot3[9] ~= "0" and tonumber(slot3[9])
+	arg_1_0.fightStepMO = arg_1_1
+	arg_1_0.duration = arg_1_2
+	arg_1_0.paramsArr = arg_1_3
+	arg_1_0.release_time = not string.nilorempty(arg_1_3[9]) and arg_1_3[9] ~= "0" and tonumber(arg_1_3[9])
 
-	if slot3[6] == "1" then
-		slot0._targetEntity = slot0._attacker
-	elseif not string.nilorempty(slot4) then
-		if GameSceneMgr.instance:getCurScene().entityMgr:getUnit(SceneTag.UnitNpc, slot1.stepUid .. "_" .. slot4) then
-			slot0._targetEntity = slot7
+	local var_1_0 = arg_1_3[6]
+
+	if var_1_0 == "1" then
+		arg_1_0._targetEntity = arg_1_0._attacker
+	elseif not string.nilorempty(var_1_0) then
+		local var_1_1 = GameSceneMgr.instance:getCurScene().entityMgr
+		local var_1_2 = arg_1_1.stepUid .. "_" .. var_1_0
+		local var_1_3 = var_1_1:getUnit(SceneTag.UnitNpc, var_1_2)
+
+		if var_1_3 then
+			arg_1_0._targetEntity = var_1_3
 		else
-			slot0.load_entity_id = slot6
+			arg_1_0.load_entity_id = var_1_2
 
-			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
 
 			return
 		end
 	else
-		slot0._targetEntity = slot0._attacker
+		arg_1_0._targetEntity = arg_1_0._attacker
 	end
 
-	slot0:_bootLogic(slot1, slot2, slot3)
+	arg_1_0:_bootLogic(arg_1_1, arg_1_2, arg_1_3)
 
-	if not string.nilorempty(slot3[11]) then
-		AudioMgr.instance:trigger(tonumber(slot3[11]))
+	if not string.nilorempty(arg_1_3[11]) then
+		AudioMgr.instance:trigger(tonumber(arg_1_3[11]))
 	end
 end
 
-function slot0._bootLogic(slot0, slot1, slot2, slot3)
-	slot0._effectName = slot3[1]
+function var_0_0._bootLogic(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._effectName = arg_2_3[1]
 
-	if not string.nilorempty(slot3[12]) and slot0._attacker:getMO() and slot4.skin then
-		for slot10, slot11 in ipairs(string.split(slot3[12], "|")) do
-			if tonumber(string.split(slot11, "#")[1]) == slot5 then
-				slot0._effectName = slot12[2]
+	if not string.nilorempty(arg_2_3[12]) then
+		local var_2_0 = arg_2_0._attacker:getMO()
+		local var_2_1 = var_2_0 and var_2_0.skin
 
-				break
+		if var_2_1 then
+			local var_2_2 = string.split(arg_2_3[12], "|")
+
+			for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+				local var_2_3 = string.split(iter_2_1, "#")
+
+				if tonumber(var_2_3[1]) == var_2_1 then
+					arg_2_0._effectName = var_2_3[2]
+
+					break
+				end
 			end
 		end
 	end
 
-	slot0._hangPoint = slot3[2]
-	slot0._offsetZ = 0
-	slot0._offsetY = 0
-	slot0._offsetX = 0
+	arg_2_0._hangPoint = arg_2_3[2]
+	arg_2_0._offsetX, arg_2_0._offsetY, arg_2_0._offsetZ = 0, 0, 0
 
-	if slot3[3] then
-		slot0._offsetX = string.split(slot3[3], ",")[1] and tonumber(slot4[1]) or slot0._offsetX
-		slot0._offsetY = slot4[2] and tonumber(slot4[2]) or slot0._offsetY
-		slot0._offsetZ = slot4[3] and tonumber(slot4[3]) or slot0._offsetZ
+	if arg_2_3[3] then
+		local var_2_4 = string.split(arg_2_3[3], ",")
+
+		arg_2_0._offsetX = var_2_4[1] and tonumber(var_2_4[1]) or arg_2_0._offsetX
+		arg_2_0._offsetY = var_2_4[2] and tonumber(var_2_4[2]) or arg_2_0._offsetY
+		arg_2_0._offsetZ = var_2_4[3] and tonumber(var_2_4[3]) or arg_2_0._offsetZ
 	end
 
-	slot4 = tonumber(slot3[4]) or -1
-	slot0._notHangCenter = slot3[5]
-	slot5 = slot3[6]
-	slot6 = slot3[7] == "1"
-	slot7 = slot3[8] == "1"
+	local var_2_5 = tonumber(arg_2_3[4]) or -1
 
-	if slot0._targetEntity and not slot0._targetEntity:isMySide() then
-		slot0._offsetX = -slot0._offsetX
+	arg_2_0._notHangCenter = arg_2_3[5]
+
+	local var_2_6 = arg_2_3[6]
+	local var_2_7 = arg_2_3[7] == "1"
+	local var_2_8 = arg_2_3[8] == "1"
+
+	if arg_2_0._targetEntity and not arg_2_0._targetEntity:isMySide() then
+		arg_2_0._offsetX = -arg_2_0._offsetX
 	end
 
-	if string.nilorempty(slot0._effectName) then
+	if string.nilorempty(arg_2_0._effectName) then
 		logError("atk effect name is nil,攻击特效配了空，")
 	else
-		slot0._effectWrap = slot0:_createEffect(slot0._effectName, slot0._hangPoint)
+		arg_2_0._effectWrap = arg_2_0:_createEffect(arg_2_0._effectName, arg_2_0._hangPoint)
 
-		if slot0._effectWrap then
-			slot0:_setRenderOrder(slot0._effectWrap, slot4)
+		if arg_2_0._effectWrap then
+			arg_2_0:_setRenderOrder(arg_2_0._effectWrap, var_2_5)
 
-			if string.nilorempty(slot0._hangPoint) and slot6 then
-				TaskDispatcher.runRepeat(slot0._onFrameUpdateEffectPos, slot0, 0.01)
+			if string.nilorempty(arg_2_0._hangPoint) and var_2_7 then
+				TaskDispatcher.runRepeat(arg_2_0._onFrameUpdateEffectPos, arg_2_0, 0.01)
 			end
 
-			if slot7 then
-				TaskDispatcher.runRepeat(slot0._onFrameUpdateEffectRotation, slot0, 0.01)
+			if var_2_8 then
+				TaskDispatcher.runRepeat(arg_2_0._onFrameUpdateEffectRotation, arg_2_0, 0.01)
 			end
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_removeEffect()
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	arg_3_0:_removeEffect()
 end
 
-function slot0._createEffect(slot0)
-	slot1 = nil
+function var_0_0._createEffect(arg_4_0)
+	local var_4_0
 
-	if not string.nilorempty(slot0._hangPoint) then
-		slot0._targetEntity.effect:addHangEffect(slot0._effectName, slot0._hangPoint, nil, slot0.release_time, {
-			x = slot0._offsetX,
-			y = slot0._offsetY,
-			z = slot0._offsetZ
-		}):setLocalPos(slot0._offsetX, slot0._offsetY, slot0._offsetZ)
+	if not string.nilorempty(arg_4_0._hangPoint) then
+		local var_4_1 = {
+			x = arg_4_0._offsetX,
+			y = arg_4_0._offsetY,
+			z = arg_4_0._offsetZ
+		}
+
+		var_4_0 = arg_4_0._targetEntity.effect:addHangEffect(arg_4_0._effectName, arg_4_0._hangPoint, nil, arg_4_0.release_time, var_4_1)
+
+		var_4_0:setLocalPos(arg_4_0._offsetX, arg_4_0._offsetY, arg_4_0._offsetZ)
 	else
-		slot2, slot3, slot4 = slot0:_getTargetPosXYZ()
+		var_4_0 = arg_4_0._targetEntity.effect:addGlobalEffect(arg_4_0._effectName, nil, arg_4_0.release_time)
 
-		slot0._targetEntity.effect:addGlobalEffect(slot0._effectName, nil, slot0.release_time):setWorldPos(slot2 + slot0._offsetX, slot3 + slot0._offsetY, slot4 + slot0._offsetZ)
+		local var_4_2, var_4_3, var_4_4 = arg_4_0:_getTargetPosXYZ()
+
+		var_4_0:setWorldPos(var_4_2 + arg_4_0._offsetX, var_4_3 + arg_4_0._offsetY, var_4_4 + arg_4_0._offsetZ)
 	end
 
-	if slot0.paramsArr[1] == "v2a2_tsnn/tsnn_unique_08_s5" or slot0.paramsArr[1] == "v2a2_tsnn/tsnn_unique_09_s6" then
-		TaskDispatcher.runRepeat(function ()
-			uv0:setLocalPos(0, 0, 0)
-		end, slot0, 0.01, 5)
+	if arg_4_0.paramsArr[1] == "v2a2_tsnn/tsnn_unique_08_s5" or arg_4_0.paramsArr[1] == "v2a2_tsnn/tsnn_unique_09_s6" then
+		TaskDispatcher.runRepeat(function()
+			var_4_0:setLocalPos(0, 0, 0)
+		end, arg_4_0, 0.01, 5)
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0._getTargetPosXYZ(slot0)
-	slot1, slot2, slot3 = nil
+function var_0_0._getTargetPosXYZ(arg_6_0)
+	local var_6_0
+	local var_6_1
+	local var_6_2
 
-	if slot0._notHangCenter == "0" then
-		slot1, slot2, slot3 = FightHelper.getEntityWorldBottomPos(slot0._targetEntity)
-	elseif slot0._notHangCenter == "1" then
-		slot1, slot2, slot3 = FightHelper.getEntityWorldCenterPos(slot0._targetEntity)
-	elseif slot0._notHangCenter == "2" then
-		slot1, slot2, slot3 = FightHelper.getEntityWorldTopPos(slot0._targetEntity)
-	elseif slot0._notHangCenter == "3" then
-		slot1, slot2, slot3 = transformhelper.getPos(slot0._targetEntity.go.transform)
-	elseif slot0._notHangCenter == "4" then
-		slot1, slot2, slot3 = FightHelper.getEntityStandPos(FightDataHelper.entityMgr:getById(slot0._targetEntity.id))
-	elseif not string.nilorempty(slot0._notHangCenter) and slot0._targetEntity:getHangPoint(slot0._notHangCenter) then
-		slot5 = slot4.transform.position
-		slot3 = slot5.z
-		slot2 = slot5.y
-		slot1 = slot5.x
+	if arg_6_0._notHangCenter == "0" then
+		var_6_0, var_6_1, var_6_2 = FightHelper.getEntityWorldBottomPos(arg_6_0._targetEntity)
+	elseif arg_6_0._notHangCenter == "1" then
+		var_6_0, var_6_1, var_6_2 = FightHelper.getEntityWorldCenterPos(arg_6_0._targetEntity)
+	elseif arg_6_0._notHangCenter == "2" then
+		var_6_0, var_6_1, var_6_2 = FightHelper.getEntityWorldTopPos(arg_6_0._targetEntity)
+	elseif arg_6_0._notHangCenter == "3" then
+		var_6_0, var_6_1, var_6_2 = transformhelper.getPos(arg_6_0._targetEntity.go.transform)
+	elseif arg_6_0._notHangCenter == "4" then
+		local var_6_3 = FightDataHelper.entityMgr:getById(arg_6_0._targetEntity.id)
+
+		var_6_0, var_6_1, var_6_2 = FightHelper.getEntityStandPos(var_6_3)
 	else
-		slot1, slot2, slot3 = transformhelper.getPos(slot0._targetEntity.go.transform)
+		local var_6_4 = not string.nilorempty(arg_6_0._notHangCenter) and arg_6_0._targetEntity:getHangPoint(arg_6_0._notHangCenter)
+
+		if var_6_4 then
+			local var_6_5 = var_6_4.transform.position
+
+			var_6_0, var_6_1, var_6_2 = var_6_5.x, var_6_5.y, var_6_5.z
+		else
+			var_6_0, var_6_1, var_6_2 = transformhelper.getPos(arg_6_0._targetEntity.go.transform)
+		end
 	end
 
-	return slot1, slot2, slot3
+	return var_6_0, var_6_1, var_6_2
 end
 
-function slot0._setRenderOrder(slot0, slot1, slot2)
-	if slot2 == -1 then
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._attacker.id, slot1)
+function var_0_0._setRenderOrder(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_2 == -1 then
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_7_0._attacker.id, arg_7_1)
 	else
-		FightRenderOrderMgr.instance:setEffectOrder(slot1, slot2)
+		FightRenderOrderMgr.instance:setEffectOrder(arg_7_1, arg_7_2)
 	end
 end
 
-function slot0._onFrameUpdateEffectPos(slot0)
-	if not slot0._targetEntity then
+function var_0_0._onFrameUpdateEffectPos(arg_8_0)
+	if not arg_8_0._targetEntity then
 		return
 	end
 
-	if gohelper.isNil(slot0._targetEntity.go) then
+	if gohelper.isNil(arg_8_0._targetEntity.go) then
 		return
 	end
 
-	if slot0._effectWrap then
-		slot1, slot2, slot3 = slot0:_getTargetPosXYZ()
+	if arg_8_0._effectWrap then
+		local var_8_0, var_8_1, var_8_2 = arg_8_0:_getTargetPosXYZ()
 
-		slot0._effectWrap:setWorldPos(slot1 + slot0._offsetX, slot2 + slot0._offsetY, slot3 + slot0._offsetZ)
+		arg_8_0._effectWrap:setWorldPos(var_8_0 + arg_8_0._offsetX, var_8_1 + arg_8_0._offsetY, var_8_2 + arg_8_0._offsetZ)
 	end
 end
 
-function slot0._onFrameUpdateEffectRotation(slot0)
-	if not slot0._targetEntity then
+function var_0_0._onFrameUpdateEffectRotation(arg_9_0)
+	if not arg_9_0._targetEntity then
 		return
 	end
 
-	if gohelper.isNil(slot0._targetEntity.go) then
+	if gohelper.isNil(arg_9_0._targetEntity.go) then
 		return
 	end
 
-	if slot0._effectWrap and not gohelper.isNil(slot0._effectWrap.containerTr) then
-		transformhelper.setRotation(slot0._effectWrap.containerTr, 0, 0, 0, 1)
+	if arg_9_0._effectWrap and not gohelper.isNil(arg_9_0._effectWrap.containerTr) then
+		transformhelper.setRotation(arg_9_0._effectWrap.containerTr, 0, 0, 0, 1)
 	end
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if slot1 and slot1.unitSpawn and slot1.unitSpawn.id == slot0.load_entity_id then
-		slot0._targetEntity = slot1.unitSpawn
+function var_0_0._onSpineLoaded(arg_10_0, arg_10_1)
+	if arg_10_1 and arg_10_1.unitSpawn and arg_10_1.unitSpawn.id == arg_10_0.load_entity_id then
+		arg_10_0._targetEntity = arg_10_1.unitSpawn
 
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-		slot0:_bootLogic(slot0.fightStepMO, slot0.duration, slot0.paramsArr)
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_10_0._onSpineLoaded, arg_10_0)
+		arg_10_0:_bootLogic(arg_10_0.fightStepMO, arg_10_0.duration, arg_10_0.paramsArr)
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:_removeEffect()
-	TaskDispatcher.cancelTask(slot0._onFrameUpdateEffectPos, slot0)
-	TaskDispatcher.cancelTask(slot0._onFrameUpdateEffectRotation, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+function var_0_0.reset(arg_11_0)
+	arg_11_0:_removeEffect()
+	TaskDispatcher.cancelTask(arg_11_0._onFrameUpdateEffectPos, arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._onFrameUpdateEffectRotation, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_11_0._onSpineLoaded, arg_11_0)
 end
 
-function slot0.dispose(slot0)
-	slot0:_removeEffect()
-	TaskDispatcher.cancelTask(slot0._onFrameUpdateEffectPos, slot0)
-	TaskDispatcher.cancelTask(slot0._onFrameUpdateEffectRotation, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+function var_0_0.dispose(arg_12_0)
+	arg_12_0:_removeEffect()
+	TaskDispatcher.cancelTask(arg_12_0._onFrameUpdateEffectPos, arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._onFrameUpdateEffectRotation, arg_12_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_12_0._onSpineLoaded, arg_12_0)
 end
 
-function slot0._removeEffect(slot0)
-	if slot0._effectWrap and not slot0.release_time then
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._targetEntity.id, slot0._effectWrap)
-		slot0._targetEntity.effect:removeEffect(slot0._effectWrap)
+function var_0_0._removeEffect(arg_13_0)
+	if arg_13_0._effectWrap and not arg_13_0.release_time then
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_13_0._targetEntity.id, arg_13_0._effectWrap)
+		arg_13_0._targetEntity.effect:removeEffect(arg_13_0._effectWrap)
 
-		slot0._effectWrap = nil
+		arg_13_0._effectWrap = nil
 	end
 
-	slot0._targetEntity = nil
+	arg_13_0._targetEntity = nil
 end
 
-return slot0
+return var_0_0

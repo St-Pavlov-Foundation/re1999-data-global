@@ -1,63 +1,74 @@
-module("modules.common.others.LuaMixScrollViewExtended", package.seeall)
+﻿module("modules.common.others.LuaMixScrollViewExtended", package.seeall)
 
-slot0 = LuaMixScrollView
-slot0.__onUpdateCell = slot0._onUpdateCell
+local var_0_0 = LuaMixScrollView
 
-function slot0.setDynamicGetItem(slot0, slot1, slot2)
-	slot0._dynamicGetCallback = slot1
-	slot0._dynamicGetCallbackObj = slot2
-	slot0._useDynamicGetItem = true
+var_0_0.__onUpdateCell = var_0_0._onUpdateCell
+
+function var_0_0.setDynamicGetItem(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._dynamicGetCallback = arg_1_1
+	arg_1_0._dynamicGetCallbackObj = arg_1_2
+	arg_1_0._useDynamicGetItem = true
 end
 
-function slot0._onUpdateCell(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._useDynamicGetItem then
-		uv0.__onUpdateCell(slot0, slot1, slot2, slot3, slot4)
+function var_0_0._onUpdateCell(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	if not arg_2_0._useDynamicGetItem then
+		var_0_0.__onUpdateCell(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 
 		return
 	end
 
-	slot6, slot7, slot8 = slot0._dynamicGetCallback(slot0._dynamicGetCallbackObj, slot0._model:getByIndex(slot2 + 1))
-	slot6 = slot6 or LuaListScrollView.PrefabInstName
-	slot7 = slot7 or slot0._param.cellClass
-	slot8 = slot8 or slot0._param.prefabUrl
+	local var_2_0 = arg_2_0._model:getByIndex(arg_2_2 + 1)
+	local var_2_1, var_2_2, var_2_3 = arg_2_0._dynamicGetCallback(arg_2_0._dynamicGetCallbackObj, var_2_0)
 
-	for slot14 = 1, slot1.transform.childCount do
-		slot15 = slot9:GetChild(slot14 - 1)
+	var_2_1 = var_2_1 or LuaListScrollView.PrefabInstName
+	var_2_2 = var_2_2 or arg_2_0._param.cellClass
+	var_2_3 = var_2_3 or arg_2_0._param.prefabUrl
 
-		gohelper.setActive(slot15, slot15.name == slot6)
+	local var_2_4 = arg_2_1.transform
+	local var_2_5 = var_2_4.childCount
+
+	for iter_2_0 = 1, var_2_5 do
+		local var_2_6 = var_2_4:GetChild(iter_2_0 - 1)
+
+		gohelper.setActive(var_2_6, var_2_6.name == var_2_1)
 	end
 
-	slot11 = slot0:_getLuaCellComp(slot1, slot6, slot7, slot8)
-	slot11._index = slot2 + 1
+	local var_2_7 = arg_2_0:_getLuaCellComp(arg_2_1, var_2_1, var_2_2, var_2_3)
 
-	slot11:onUpdateMO(slot5, slot3, slot4)
+	var_2_7._index = arg_2_2 + 1
+
+	var_2_7:onUpdateMO(var_2_0, arg_2_3, arg_2_4)
 end
 
-function slot0._getLuaCellComp(slot0, slot1, slot2, slot3, slot4)
-	slot6 = nil
+function var_0_0._getLuaCellComp(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = gohelper.findChild(arg_3_1, arg_3_2)
+	local var_3_1
 
-	if gohelper.findChild(slot1, slot2) then
-		slot6 = MonoHelper.getLuaComFromGo(slot5, slot3)
+	if var_3_0 then
+		var_3_1 = MonoHelper.getLuaComFromGo(var_3_0, arg_3_3)
 	else
-		if slot0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
-			slot5 = slot0:getResInst(slot4, slot1, slot2)
-		elseif slot0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
-			gohelper.setActive(gohelper.clone(slot0._cellSourceGO, slot1, slot2), true)
+		if arg_3_0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
+			var_3_0 = arg_3_0:getResInst(arg_3_4, arg_3_1, arg_3_2)
+		elseif arg_3_0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+			var_3_0 = gohelper.clone(arg_3_0._cellSourceGO, arg_3_1, arg_3_2)
+
+			gohelper.setActive(var_3_0, true)
 		else
-			logError("LuaMixScrollView prefabType not support: " .. slot0._param.prefabType)
+			logError("LuaMixScrollView prefabType not support: " .. arg_3_0._param.prefabType)
 		end
 
-		slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, slot3)
+		var_3_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, arg_3_3)
 
-		slot6:initInternal(slot5, slot0)
+		var_3_1:initInternal(var_3_0, arg_3_0)
 
-		slot0._cellCompDict[slot6] = true
+		arg_3_0._cellCompDict[var_3_1] = true
 	end
 
-	return slot6
+	return var_3_1
 end
 
-function slot0.activateExtend()
+function var_0_0.activateExtend()
+	return
 end
 
-return slot0
+return var_0_0

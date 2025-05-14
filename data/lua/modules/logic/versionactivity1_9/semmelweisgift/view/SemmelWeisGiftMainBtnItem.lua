@@ -1,19 +1,19 @@
-module("modules.logic.versionactivity1_9.semmelweisgift.view.SemmelWeisGiftMainBtnItem", package.seeall)
+﻿module("modules.logic.versionactivity1_9.semmelweisgift.view.SemmelWeisGiftMainBtnItem", package.seeall)
 
-slot0 = class("SemmelWeisGiftMainBtnItem", Activity101SignViewBtnBase)
+local var_0_0 = class("SemmelWeisGiftMainBtnItem", Activity101SignViewBtnBase)
 
-function slot0.onRefresh(slot0)
-	slot0:_setMainSprite("v1a6_act_icon3")
+function var_0_0.onRefresh(arg_1_0)
+	arg_1_0:_setMainSprite("v1a6_act_icon3")
 end
 
-function slot0.onClick(slot0)
-	slot1, slot2 = slot0:onGetViewNameAndParam()
+function var_0_0.onClick(arg_2_0)
+	local var_2_0, var_2_1 = arg_2_0:onGetViewNameAndParam()
 
-	if ViewMgr.instance:isOpen(slot1) then
+	if ViewMgr.instance:isOpen(var_2_0) then
 		return
 	end
 
 	SemmelWeisGiftController.instance:openSemmelWeisGiftView()
 end
 
-return slot0
+return var_0_0

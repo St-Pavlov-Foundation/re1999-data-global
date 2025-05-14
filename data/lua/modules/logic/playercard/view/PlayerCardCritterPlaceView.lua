@@ -1,191 +1,201 @@
-module("modules.logic.playercard.view.PlayerCardCritterPlaceView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardCritterPlaceView", package.seeall)
 
-slot0 = class("PlayerCardCritterPlaceView", BaseView)
+local var_0_0 = class("PlayerCardCritterPlaceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocritterview1 = gohelper.findChild(slot0.viewGO, "#go_critterview1")
-	slot0._btnunfold = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critterview1/critterscroll/#btn_unfold")
-	slot0._gocritterview2 = gohelper.findChild(slot0.viewGO, "#go_critterview2")
-	slot0._btnfold = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critterview2/critterscroll/#btn_fold")
-	slot0._btnclose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critterview1/#btn_close")
-	slot0._btnclose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critterview2/#btn_close")
-	slot0.animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocritterview1 = gohelper.findChild(arg_1_0.viewGO, "#go_critterview1")
+	arg_1_0._btnunfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critterview1/critterscroll/#btn_unfold")
+	arg_1_0._gocritterview2 = gohelper.findChild(arg_1_0.viewGO, "#go_critterview2")
+	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critterview2/critterscroll/#btn_fold")
+	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critterview1/#btn_close")
+	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critterview2/#btn_close")
+	arg_1_0.animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnunfold:AddClickListener(slot0._btnunfoldOnClick, slot0)
-	slot0._btnfold:AddClickListener(slot0._btnfoldOnClick, slot0, true)
-	slot0._btnclose1:AddClickListener(slot0.closeThis, slot0, true)
-	slot0._btnclose2:AddClickListener(slot0.closeThis, slot0, true)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectCritter, slot0._onRefreshCritter, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnunfold:AddClickListener(arg_2_0._btnunfoldOnClick, arg_2_0)
+	arg_2_0._btnfold:AddClickListener(arg_2_0._btnfoldOnClick, arg_2_0, true)
+	arg_2_0._btnclose1:AddClickListener(arg_2_0.closeThis, arg_2_0, true)
+	arg_2_0._btnclose2:AddClickListener(arg_2_0.closeThis, arg_2_0, true)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectCritter, arg_2_0._onRefreshCritter, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnunfold:RemoveClickListener()
-	slot0._btnfold:RemoveClickListener()
-	slot0._btnclose1:RemoveClickListener()
-	slot0._btnclose2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnunfold:RemoveClickListener()
+	arg_3_0._btnfold:RemoveClickListener()
+	arg_3_0._btnclose1:RemoveClickListener()
+	arg_3_0._btnclose2:RemoveClickListener()
 end
 
-function slot0._btnunfoldOnClick(slot0)
-	slot0._isFold = false
-	slot0._canvasGroup1.blocksRaycasts = false
-	slot0._canvasGroup2.blocksRaycasts = true
-	slot0.currentScrollView = slot0._critterView2
-	slot0._critterView1.scrollCritter.horizontalNormalizedPosition = 0
-	slot0._critterView2.scrollCritter.verticalNormalizedPosition = 1
+function var_0_0._btnunfoldOnClick(arg_4_0)
+	arg_4_0._isFold = false
+	arg_4_0._canvasGroup1.blocksRaycasts = false
+	arg_4_0._canvasGroup2.blocksRaycasts = true
+	arg_4_0.currentScrollView = arg_4_0._critterView2
+	arg_4_0._critterView1.scrollCritter.horizontalNormalizedPosition = 0
+	arg_4_0._critterView2.scrollCritter.verticalNormalizedPosition = 1
 
-	slot0:playAnim("switchup")
-	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(slot0.filterMO)
+	arg_4_0:playAnim("switchup")
+	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(arg_4_0.filterMO)
 
-	slot0._scrollRect = slot0._critterView2.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	arg_4_0._scrollRect = arg_4_0._critterView2.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
 end
 
-function slot0._btnfoldOnClick(slot0, slot1)
-	slot0._isFold = true
-	slot0._canvasGroup1.blocksRaycasts = true
-	slot0._canvasGroup2.blocksRaycasts = false
-	slot0.currentScrollView = slot0._critterView1
-	slot0._critterView1.scrollCritter.horizontalNormalizedPosition = 0
-	slot0._critterView2.scrollCritter.verticalNormalizedPosition = 1
+function var_0_0._btnfoldOnClick(arg_5_0, arg_5_1)
+	arg_5_0._isFold = true
+	arg_5_0._canvasGroup1.blocksRaycasts = true
+	arg_5_0._canvasGroup2.blocksRaycasts = false
+	arg_5_0.currentScrollView = arg_5_0._critterView1
+	arg_5_0._critterView1.scrollCritter.horizontalNormalizedPosition = 0
+	arg_5_0._critterView2.scrollCritter.verticalNormalizedPosition = 1
 
-	if slot1 then
-		slot0:playAnim("switchdown")
+	if arg_5_1 then
+		arg_5_0:playAnim("switchdown")
 	end
 
-	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(slot0.filterMO)
+	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(arg_5_0.filterMO)
 
-	slot0._scrollRect = slot0._critterView1.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	arg_5_0._scrollRect = arg_5_0._critterView1.scrollCritter.gameObject:GetComponent(typeof(UnityEngine.UI.ScrollRect))
 end
 
-function slot0._editableInitView(slot0)
-	slot0._canvasGroup1 = slot0._gocritterview1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._canvasGroup2 = slot0._gocritterview2:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._critterView1 = slot0:getUserDataTb_()
-	slot0._critterView2 = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._canvasGroup1 = arg_6_0._gocritterview1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_6_0._canvasGroup2 = arg_6_0._gocritterview2:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_6_0._critterView1 = arg_6_0:getUserDataTb_()
+	arg_6_0._critterView2 = arg_6_0:getUserDataTb_()
 
-	slot0:initCritterView(slot0._critterView1, slot0._gocritterview1, 1)
-	slot0:initCritterView(slot0._critterView2, slot0._gocritterview2, 2)
+	arg_6_0:initCritterView(arg_6_0._critterView1, arg_6_0._gocritterview1, 1)
+	arg_6_0:initCritterView(arg_6_0._critterView2, arg_6_0._gocritterview2, 2)
 
-	slot0.currentScrollView = slot0._critterView1
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0.currentScrollView = arg_6_0._critterView1
+	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.initMatureDropFilter(slot0, slot1)
-	slot0._filterTypeList = {
+function var_0_0.initMatureDropFilter(arg_7_0, arg_7_1)
+	arg_7_0._filterTypeList = {
 		CritterEnum.MatureFilterType.All,
 		CritterEnum.MatureFilterType.Mature,
 		CritterEnum.MatureFilterType.NotMature
 	}
-	slot2 = {}
 
-	for slot6, slot7 in ipairs(slot0._filterTypeList) do
-		table.insert(slot2, luaLang(CritterEnum.MatureFilterTypeName[slot7]))
+	local var_7_0 = {}
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._filterTypeList) do
+		local var_7_1 = CritterEnum.MatureFilterTypeName[iter_7_1]
+		local var_7_2 = luaLang(var_7_1)
+
+		table.insert(var_7_0, var_7_2)
 	end
 
-	slot1:ClearOptions()
-	slot1:AddOptions(slot2)
+	arg_7_1:ClearOptions()
+	arg_7_1:AddOptions(var_7_0)
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0.animator.enabled = true
+function var_0_0.playAnim(arg_8_0, arg_8_1)
+	arg_8_0.animator.enabled = true
 
-	slot0.animator:Play(slot1)
+	arg_8_0.animator:Play(arg_8_1)
 end
 
-function slot0.onDropShow(slot0)
-	transformhelper.setLocalScale(slot0._critterView1._transmatureDroparrow, 1, 1, 1)
-	transformhelper.setLocalScale(slot0._critterView2._transmatureDroparrow, 1, 1, 1)
+function var_0_0.onDropShow(arg_9_0)
+	transformhelper.setLocalScale(arg_9_0._critterView1._transmatureDroparrow, 1, 1, 1)
+	transformhelper.setLocalScale(arg_9_0._critterView2._transmatureDroparrow, 1, 1, 1)
 end
 
-function slot0.onMatureDropValueChange(slot0, slot1)
-	slot0:_refreshDropCareer(slot0._critterView1._dropmaturefilter, slot1)
-	slot0:_refreshDropCareer(slot0._critterView2._dropmaturefilter, slot1)
+function var_0_0.onMatureDropValueChange(arg_10_0, arg_10_1)
+	arg_10_0:_refreshDropCareer(arg_10_0._critterView1._dropmaturefilter, arg_10_1)
+	arg_10_0:_refreshDropCareer(arg_10_0._critterView2._dropmaturefilter, arg_10_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_volume_button)
-	PlayerCardCritterPlaceListModel.instance:selectMatureFilterType(slot0._filterTypeList and slot0._filterTypeList[slot1 + 1], slot0.filterMO)
+
+	local var_10_0 = arg_10_0._filterTypeList and arg_10_0._filterTypeList[arg_10_1 + 1]
+
+	PlayerCardCritterPlaceListModel.instance:selectMatureFilterType(var_10_0, arg_10_0.filterMO)
 end
 
-function slot0._refreshDropCareer(slot0, slot1, slot2)
-	slot1:SetValue(slot2)
+function var_0_0._refreshDropCareer(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_1:SetValue(arg_11_2)
 end
 
-function slot0.onDropHide(slot0)
-	transformhelper.setLocalScale(slot0._critterView1._transmatureDroparrow, 1, -1, 1)
-	transformhelper.setLocalScale(slot0._critterView2._transmatureDroparrow, 1, -1, 1)
+function var_0_0.onDropHide(arg_12_0)
+	transformhelper.setLocalScale(arg_12_0._critterView1._transmatureDroparrow, 1, -1, 1)
+	transformhelper.setLocalScale(arg_12_0._critterView2._transmatureDroparrow, 1, -1, 1)
 end
 
-function slot0.initCritterView(slot0, slot1, slot2, slot3)
-	slot1._btncirtterRare = gohelper.findChildButtonWithAudio(slot2, "crittersort/#btn_cirtterRare")
-	slot1._transcritterRareArrow = gohelper.findChild(slot2, "crittersort/#btn_cirtterRare/selected/txt/arrow").transform
-	slot1._dropmaturefilter = gohelper.findChildDropdown(slot2, "crittersort/#drop_mature")
-	slot1._transmatureDroparrow = gohelper.findChild(slot2, "crittersort/#drop_mature/#go_arrow").transform
-	slot1.scrollCritter = gohelper.findChildScrollRect(slot2, "critterscroll")
-	slot1.sortMoodItem = slot0:getUserDataTb_()
-	slot1.sortRareItem = slot0:getUserDataTb_()
-	slot1.dropExtend = DropDownExtend.Get(slot1._dropmaturefilter.gameObject)
+function var_0_0.initCritterView(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_1._btncirtterRare = gohelper.findChildButtonWithAudio(arg_13_2, "crittersort/#btn_cirtterRare")
+	arg_13_1._transcritterRareArrow = gohelper.findChild(arg_13_2, "crittersort/#btn_cirtterRare/selected/txt/arrow").transform
+	arg_13_1._dropmaturefilter = gohelper.findChildDropdown(arg_13_2, "crittersort/#drop_mature")
+	arg_13_1._transmatureDroparrow = gohelper.findChild(arg_13_2, "crittersort/#drop_mature/#go_arrow").transform
+	arg_13_1.scrollCritter = gohelper.findChildScrollRect(arg_13_2, "critterscroll")
+	arg_13_1.sortMoodItem = arg_13_0:getUserDataTb_()
+	arg_13_1.sortRareItem = arg_13_0:getUserDataTb_()
+	arg_13_1.dropExtend = DropDownExtend.Get(arg_13_1._dropmaturefilter.gameObject)
 
-	slot1.dropExtend:init(slot0.onDropShow, slot0.onDropHide, slot0)
-	slot1._dropmaturefilter:AddOnValueChanged(slot0.onMatureDropValueChange, slot0)
-	slot1._btncirtterRare:AddClickListener(slot0._btncirtterRareOnClick, slot0)
-	slot0:initMatureDropFilter(slot1._dropmaturefilter)
+	arg_13_1.dropExtend:init(arg_13_0.onDropShow, arg_13_0.onDropHide, arg_13_0)
+	arg_13_1._dropmaturefilter:AddOnValueChanged(arg_13_0.onMatureDropValueChange, arg_13_0)
+	arg_13_1._btncirtterRare:AddClickListener(arg_13_0._btncirtterRareOnClick, arg_13_0)
+	arg_13_0:initMatureDropFilter(arg_13_1._dropmaturefilter)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_14_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.animator:Play("open")
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0.animator:Play("open")
 
-	slot0.filterMO = CritterFilterModel.instance:generateFilterMO(slot0.viewName)
+	arg_15_0.filterMO = CritterFilterModel.instance:generateFilterMO(arg_15_0.viewName)
 
-	slot0:_btnfoldOnClick()
-	slot0:refreshRareSort()
+	arg_15_0:_btnfoldOnClick()
+	arg_15_0:refreshRareSort()
 end
 
-function slot0.refreshRareSort(slot0)
-	slot2 = PlayerCardCritterPlaceListModel.instance:getIsSortByRareAscend() and 1 or -1
+function var_0_0.refreshRareSort(arg_16_0)
+	local var_16_0 = PlayerCardCritterPlaceListModel.instance:getIsSortByRareAscend() and 1 or -1
 
-	transformhelper.setLocalScale(slot0._critterView1._transcritterRareArrow, 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._critterView2._transcritterRareArrow, 1, slot2, 1)
+	transformhelper.setLocalScale(arg_16_0._critterView1._transcritterRareArrow, 1, var_16_0, 1)
+	transformhelper.setLocalScale(arg_16_0._critterView2._transcritterRareArrow, 1, var_16_0, 1)
 end
 
-function slot0._btncirtterRareOnClick(slot0)
-	PlayerCardCritterPlaceListModel.instance:setIsSortByRareAscend(not PlayerCardCritterPlaceListModel.instance:getIsSortByRareAscend())
-	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(slot0.filterMO)
-	slot0:refreshRareSort()
+function var_0_0._btncirtterRareOnClick(arg_17_0)
+	local var_17_0 = PlayerCardCritterPlaceListModel.instance:getIsSortByRareAscend()
+
+	PlayerCardCritterPlaceListModel.instance:setIsSortByRareAscend(not var_17_0)
+	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(arg_17_0.filterMO)
+	arg_17_0:refreshRareSort()
 end
 
-function slot0._onRefreshCritter(slot0)
-	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(slot0.filterMO)
+function var_0_0._onRefreshCritter(arg_18_0)
+	PlayerCardCritterPlaceListModel.instance:setPlayerCardCritterList(arg_18_0.filterMO)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
 	PlayerCardCritterPlaceListModel.instance:clearData()
-	slot0.animator:Play("close")
+	arg_19_0.animator:Play("close")
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.OnCloseCritterView)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_critterViewOnDestroy(slot0._critterView1)
-	slot0:_critterViewOnDestroy(slot0._critterView2)
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0:_critterViewOnDestroy(arg_20_0._critterView1)
+	arg_20_0:_critterViewOnDestroy(arg_20_0._critterView2)
 end
 
-function slot0._critterViewOnDestroy(slot0, slot1)
-	if slot1.dropExtend then
-		slot1.dropExtend:dispose()
+function var_0_0._critterViewOnDestroy(arg_21_0, arg_21_1)
+	if arg_21_1.dropExtend then
+		arg_21_1.dropExtend:dispose()
 	end
 
-	if slot1._btncirtterRare then
-		slot1._btncirtterRare:RemoveClickListener()
+	if arg_21_1._btncirtterRare then
+		arg_21_1._btncirtterRare:RemoveClickListener()
 	end
 
-	if slot1._dropmaturefilter then
-		slot1._dropmaturefilter:RemoveOnValueChanged()
+	if arg_21_1._dropmaturefilter then
+		arg_21_1._dropmaturefilter:RemoveOnValueChanged()
 	end
 end
 
-return slot0
+return var_0_0

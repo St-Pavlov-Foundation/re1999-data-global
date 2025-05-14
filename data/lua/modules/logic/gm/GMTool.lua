@@ -1,136 +1,143 @@
-slot1 = _G.debug.getupvalue
-slot2 = _G.tostring
-slot3 = _G.tonumber
-slot4 = _G.assert
-slot5 = _G.string.find
-slot6 = _G.type
-slot7 = table.concat
-slot8 = "#00FF00"
-slot9 = "#FFFFFF"
-slot10 = "#FFFF00"
+﻿local var_0_0 = "Partial_GMTool"
+local var_0_1 = _G.debug.getupvalue
+local var_0_2 = _G.tostring
+local var_0_3 = _G.tonumber
+local var_0_4 = _G.assert
+local var_0_5 = _G.string.find
+local var_0_6 = _G.type
+local var_0_7 = table.concat
+local var_0_8 = "#00FF00"
+local var_0_9 = "#FFFFFF"
+local var_0_10 = "#FFFF00"
 
-function slot12(slot0, slot1)
-	if slot0 ~= nil and uv0(slot0) ~= "string" then
-		slot0 = uv1(slot0)
+local function var_0_11(arg_1_0)
+	UpdateBeat:Remove(arg_1_0._update, arg_1_0)
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
+		if var_0_6(iter_1_1) == "table" and iter_1_1.onClear then
+			iter_1_1:onClear()
+			logNormal(iter_1_0 .. "<color=#00FF00> clear finished </color>")
+		end
 	end
-
-	if string.nilorempty(slot0) then
-		slot0 = "[None]"
-	end
-
-	return gohelper.getRichColorText(slot0, slot1 or uv2)
 end
 
-function slot13(slot0)
-	return slot0 and uv0("true", uv1) or uv0("false", uv2)
-end
-
-function slot14(slot0, slot1, slot2, slot3)
-	uv0(slot1)
-
-	if slot3 then
-		uv0(uv1(slot2) ~= nil)
+local function var_0_12(arg_2_0, arg_2_1)
+	if arg_2_0 ~= nil and var_0_6(arg_2_0) ~= "string" then
+		arg_2_0 = var_0_2(arg_2_0)
 	end
 
-	for slot7 = slot2 or 1, slot3 or math.huge do
-		slot8, slot9 = uv2(slot0, slot7)
+	if string.nilorempty(arg_2_0) then
+		arg_2_0 = "[None]"
+	end
 
-		if not slot8 then
+	return gohelper.getRichColorText(arg_2_0, arg_2_1 or var_0_9)
+end
+
+local function var_0_13(arg_3_0)
+	return arg_3_0 and var_0_12("true", var_0_8) or var_0_12("false", var_0_10)
+end
+
+local function var_0_14(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	var_0_4(arg_4_1)
+
+	if arg_4_3 then
+		var_0_4(var_0_3(arg_4_2) ~= nil)
+	end
+
+	for iter_4_0 = arg_4_2 or 1, arg_4_3 or math.huge do
+		local var_4_0, var_4_1 = var_0_1(arg_4_0, iter_4_0)
+
+		if not var_4_0 then
 			break
 		end
 
-		if slot8 == slot1 then
-			return slot9
+		if var_4_0 == arg_4_1 then
+			return var_4_1
 		end
 	end
 end
 
-function slot15(slot0, slot1)
-	if string.nilorempty(slot0) or string.nilorempty(slot1) then
+local function var_0_15(arg_5_0, arg_5_1)
+	if string.nilorempty(arg_5_0) or string.nilorempty(arg_5_1) then
 		return false
 	end
 
-	slot2, slot3 = uv0(slot0, slot1)
+	local var_5_0, var_5_1 = var_0_5(arg_5_0, arg_5_1)
 
-	return slot2 == 1
+	return var_5_0 == 1
 end
 
-function slot16(slot0, slot1)
-	if string.nilorempty(slot0) or string.nilorempty(slot1) then
+local function var_0_16(arg_6_0, arg_6_1)
+	if string.nilorempty(arg_6_0) or string.nilorempty(arg_6_1) then
 		return false
 	end
 
-	if #slot0 - #slot1 + 1 < 1 then
+	local var_6_0 = #arg_6_0 - #arg_6_1 + 1
+
+	if var_6_0 < 1 then
 		return false
 	end
 
-	return slot0:sub(slot2) == slot1
+	return arg_6_0:sub(var_6_0) == arg_6_1
 end
 
-function slot17(slot0)
-	ZProj.UGUIHelper.CopyText(slot0)
+local function var_0_17(arg_7_0)
+	ZProj.UGUIHelper.CopyText(arg_7_0)
 end
 
-function slot18()
-	function slot1(slot0, slot1)
-		if not slot1 then
-			table.insert(uv0, slot0)
+local function var_0_18()
+	local var_8_0 = {}
+
+	local function var_8_1(arg_9_0, arg_9_1)
+		if not arg_9_1 then
+			table.insert(var_8_0, arg_9_0)
 		else
-			table.insert(uv0, uv1(slot0, uv2) .. ": " .. uv1(slot1, uv3))
+			table.insert(var_8_0, var_0_12(arg_9_0, var_0_8) .. ": " .. var_0_12(arg_9_1, var_0_10))
 		end
 	end
 
-	slot1("================= (海外GM) 使用方式 =================")
-	slot1("LCtrl(x2)", "                             可打印玩家信息")
-	slot1("Ctrl + 鼠标左键 + 点击UI", "可查看UI最顶层点击到的节点路径")
-	slot1("Ctrl + Alt + 4", "                            通关所有关卡")
-	slot1("F12", "                                       退出登录")
-	slot1("Ctrl + Alt + 3", "                      开/关资源加载耗时Log")
-	slot1("Ctrl + Alt + 2", "                      查看正在打开的ViewNames")
-	slot1("Ctrl + Alt + 1", "                      显示/隐藏LangKey")
+	var_8_1("================= (海外GM) 使用方式 =================")
+	var_8_1("LCtrl(x2)", "                             可打印玩家信息")
+	var_8_1("Ctrl + 鼠标左键 + 点击UI", "可查看UI最顶层点击到的节点路径")
+	var_8_1("Ctrl + Alt + 4", "                            通关所有关卡")
+	var_8_1("F12", "                                       退出登录")
+	var_8_1("Ctrl + Alt + 3", "                      开/关资源加载耗时Log")
+	var_8_1("Ctrl + Alt + 2", "                      查看正在打开的ViewNames")
+	var_8_1("Ctrl + Alt + 1", "                      显示/隐藏LangKey")
 
-	return uv3({}, "\n")
+	return var_0_7(var_8_0, "\n")
 end
 
-if getGlobal("Partial_GMTool") then
+local var_0_19 = getGlobal(var_0_0)
+
+if var_0_19 then
 	logNormal("<color=#00FF00> hotfix finished </color>")
-	function (slot0)
-		slot4 = slot0
-
-		UpdateBeat:Remove(slot0._update, slot4)
-
-		for slot4, slot5 in pairs(slot0) do
-			if uv0(slot5) == "table" and slot5.onClear then
-				slot5:onClear()
-				logNormal(slot4 .. "<color=#00FF00> clear finished </color>")
-			end
-		end
-	end(slot19)
+	var_0_11(var_0_19)
 else
-	logNormal("<color=#00FF00>Hello World!</color>\n" .. slot18())
+	logNormal("<color=#00FF00>Hello World!</color>\n" .. var_0_18())
 end
 
-slot20 = slot19 or {}
+local var_0_20 = var_0_19 or {}
 
-setGlobal(slot0, slot20)
+setGlobal(var_0_0, var_0_20)
 
-function slot20._update()
-	uv0._accountDummper:onUpdate()
-	uv0._input:onUpdate()
+function var_0_20._update()
+	var_0_20._accountDummper:onUpdate()
+	var_0_20._input:onUpdate()
 end
 
-slot20.util = {
-	setColorDesc = slot12,
-	getUpvalue = slot14,
-	startsWith = slot15,
-	endsWith = slot16,
-	colorBoolStr = slot13,
-	saveClipboard = slot17
+var_0_20.util = {
+	setColorDesc = var_0_12,
+	getUpvalue = var_0_14,
+	startsWith = var_0_15,
+	endsWith = var_0_16,
+	colorBoolStr = var_0_13,
+	saveClipboard = var_0_17
 }
 
 require("modules/logic/gm/GMTool__Input")
 require("modules/logic/gm/GMTool__AccountDummper")
 require("modules/logic/gm/GMTool__ViewHooker")
-UpdateBeat:Add(slot20._update, slot20)
+UpdateBeat:Add(var_0_20._update, var_0_20)
 
 return {}

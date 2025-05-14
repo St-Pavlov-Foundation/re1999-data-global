@@ -1,73 +1,78 @@
-module("modules.logic.fight.system.work.FightWorkSkillSwitchSpineEnd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSkillSwitchSpineEnd", package.seeall)
 
-slot0 = class("FightWorkSkillSwitchSpineEnd", BaseWork)
+local var_0_0 = class("FightWorkSkillSwitchSpineEnd", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.5)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
 
-	if not (FightHelper.getEntity(slot0._fightStepMO.fromId) and slot1:getMO()) then
-		slot0:onDone(true)
+	local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+	local var_2_1 = var_2_0 and var_2_0:getMO()
 
-		return
-	end
-
-	if FightEntityDataHelper.isPlayerUid(slot2.id) then
-		slot0:onDone(true)
+	if not var_2_1 then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if not slot0._fightStepMO.supportHeroId then
-		slot0:onDone(true)
+	if FightEntityDataHelper.isPlayerUid(var_2_1.id) then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot3 ~= 0 and slot3 ~= slot2.modelId then
-		if slot0.context.Custom_OriginSkin then
-			slot2.skin = slot0.context.Custom_OriginSkin
+	local var_2_2 = arg_2_0._fightStepMO.supportHeroId
 
-			if slot1.spine and slot1.spine.releaseSpecialSpine then
-				slot1.spine.LOCK_SPECIALSPINE = false
+	if not var_2_2 then
+		arg_2_0:onDone(true)
+
+		return
+	end
+
+	if var_2_2 ~= 0 and var_2_2 ~= var_2_1.modelId then
+		if arg_2_0.context.Custom_OriginSkin then
+			var_2_1.skin = arg_2_0.context.Custom_OriginSkin
+
+			if var_2_0.spine and var_2_0.spine.releaseSpecialSpine then
+				var_2_0.spine.LOCK_SPECIALSPINE = false
 			end
 		end
 
-		TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
+		TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
+		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
 
-		slot0._flow = FlowSequence.New()
+		arg_2_0._flow = FlowSequence.New()
 
-		slot0._flow:addWork(FightWorkChangeEntitySpine.New(slot1))
-		slot0._flow:registerDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:start()
+		arg_2_0._flow:addWork(FightWorkChangeEntitySpine.New(var_2_0))
+		arg_2_0._flow:registerDoneListener(arg_2_0._onFlowDone, arg_2_0)
+		arg_2_0._flow:start()
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
 
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:stop()
+	if arg_5_0._flow then
+		arg_5_0._flow:unregisterDoneListener(arg_5_0._onFlowDone, arg_5_0)
+		arg_5_0._flow:stop()
 
-		slot0._flow = nil
+		arg_5_0._flow = nil
 	end
 end
 
-return slot0
+return var_0_0

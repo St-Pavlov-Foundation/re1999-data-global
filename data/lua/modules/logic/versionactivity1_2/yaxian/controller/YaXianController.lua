@@ -1,61 +1,71 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.YaXianController", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.YaXianController", package.seeall)
 
-slot0 = class("YaXianController", BaseController)
+local var_0_0 = class("YaXianController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.openYaXianMapView(slot0, slot1)
-	slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(YaXianEnum.ActivityId)
+function var_0_0.openYaXianMapView(arg_3_0, arg_3_1)
+	local var_3_0, var_3_1, var_3_2 = ActivityHelper.getActivityStatusAndToast(YaXianEnum.ActivityId)
 
-	if slot2 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot3 then
-			GameFacade.showToastWithTableParam(slot3, slot4)
+	if var_3_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_3_1 then
+			GameFacade.showToastWithTableParam(var_3_1, var_3_2)
 		end
 
 		return
 	end
 
-	if not VersionActivityBaseController.instance:isPlayedActivityVideo(YaXianEnum.ActivityId) and ActivityConfig.instance:getActivityCo(YaXianEnum.ActivityId) and slot5.storyId and slot6 ~= 0 then
-		slot0.enterChapterId = slot1
+	if not VersionActivityBaseController.instance:isPlayedActivityVideo(YaXianEnum.ActivityId) then
+		local var_3_3 = ActivityConfig.instance:getActivityCo(YaXianEnum.ActivityId)
+		local var_3_4 = var_3_3 and var_3_3.storyId
 
-		StoryController.instance:playStory(slot6, nil, slot0._onFinishStory, slot0)
+		if var_3_4 and var_3_4 ~= 0 then
+			arg_3_0.enterChapterId = arg_3_1
 
-		return
+			StoryController.instance:playStory(var_3_4, nil, arg_3_0._onFinishStory, arg_3_0)
+
+			return
+		end
 	end
 
-	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianEnum.ActivityId, function ()
+	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianEnum.ActivityId, function()
 		ViewMgr.instance:openView(ViewName.YaXianMapView, {
-			chapterId = uv0
+			chapterId = arg_3_1
 		})
 	end)
 end
 
-function slot0._onFinishStory(slot0)
-	slot0:openYaXianMapView(slot0.enterChapterId)
+function var_0_0._onFinishStory(arg_5_0)
+	arg_5_0:openYaXianMapView(arg_5_0.enterChapterId)
 
-	slot0.enterChapterId = nil
+	arg_5_0.enterChapterId = nil
 end
 
-function slot0.getChapterStatus(slot0, slot1)
-	if YaXianConfig.instance:getChapterConfig(slot1) and slot2.openId and slot3 ~= 0 and not OpenModel.instance:isFunctionUnlock(slot3) then
+function var_0_0.getChapterStatus(arg_6_0, arg_6_1)
+	local var_6_0 = YaXianConfig.instance:getChapterConfig(arg_6_1)
+	local var_6_1 = var_6_0 and var_6_0.openId
+
+	if var_6_1 and var_6_1 ~= 0 and not OpenModel.instance:isFunctionUnlock(var_6_1) then
 		return YaXianEnum.ChapterStatus.notOpen
 	end
 
-	if not YaXianModel.instance:chapterIsUnlock(slot1) then
+	if not YaXianModel.instance:chapterIsUnlock(arg_6_1) then
 		return YaXianEnum.ChapterStatus.Lock
 	end
 
 	return YaXianEnum.ChapterStatus.Normal
 end
 
-function slot0.checkChapterIsUnlock(slot0, slot1)
-	return slot0:getChapterStatus(slot1) == YaXianEnum.ChapterStatus.Normal
+function var_0_0.checkChapterIsUnlock(arg_7_0, arg_7_1)
+	return arg_7_0:getChapterStatus(arg_7_1) == YaXianEnum.ChapterStatus.Normal
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

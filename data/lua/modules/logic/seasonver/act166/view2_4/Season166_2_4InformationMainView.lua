@@ -1,70 +1,72 @@
-module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationMainView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationMainView", package.seeall)
 
-slot0 = class("Season166_2_4InformationMainView", BaseView)
+local var_0_0 = class("Season166_2_4InformationMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.reportItems = {}
-	slot0.btnReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Reward/#btn_Reward")
-	slot0.txtRewardNum = gohelper.findChildTextMesh(slot0.viewGO, "Reward/#txt_RewardNum")
-	slot0.slider = gohelper.findChildImage(slot0.viewGO, "Reward/#go_Slider")
-	slot0.gorewardReddot = gohelper.findChild(slot0.viewGO, "Reward/#go_rewardReddot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.reportItems = {}
+	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Reward/#btn_Reward")
+	arg_1_0.txtRewardNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Reward/#txt_RewardNum")
+	arg_1_0.slider = gohelper.findChildImage(arg_1_0.viewGO, "Reward/#go_Slider")
+	arg_1_0.gorewardReddot = gohelper.findChild(arg_1_0.viewGO, "Reward/#go_rewardReddot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnReward, slot0.onClickReward, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, slot0.onInformationUpdate, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, slot0.onAnalyInfoSuccess, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, slot0.onGetInfoBonus, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.OnGetInformationBonus, slot0.onGetInformationBonus, slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.ClickInfoReportItem, slot0.setLocalUnlockState, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onViewClose, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnReward, arg_2_0.onClickReward, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnInformationUpdate, arg_2_0.onInformationUpdate, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnAnalyInfoSuccess, arg_2_0.onAnalyInfoSuccess, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnGetInfoBonus, arg_2_0.onGetInfoBonus, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.OnGetInformationBonus, arg_2_0.onGetInformationBonus, arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.ClickInfoReportItem, arg_2_0.setLocalUnlockState, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onViewClose, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.localUnlockStateTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.localUnlockStateTab = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onClickReward(slot0)
+function var_0_0.onClickReward(arg_5_0)
 	ViewMgr.instance:openView(ViewName.Season166InformationRewardView, {
-		actId = slot0.actId
+		actId = arg_5_0.actId
 	})
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onAnalyInfoSuccess(slot0)
-	slot0:refreshUI()
+function var_0_0.onAnalyInfoSuccess(arg_7_0)
+	arg_7_0:refreshUI()
 end
 
-function slot0.onGetInfoBonus(slot0)
-	slot0:refreshUI()
+function var_0_0.onGetInfoBonus(arg_8_0)
+	arg_8_0:refreshUI()
 end
 
-function slot0.onInformationUpdate(slot0)
-	slot0:refreshUI()
+function var_0_0.onInformationUpdate(arg_9_0)
+	arg_9_0:refreshUI()
 end
 
-function slot0.onGetInformationBonus(slot0)
-	slot0:refreshUI()
+function var_0_0.onGetInformationBonus(arg_10_0)
+	arg_10_0:refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0.actId = arg_11_0.viewParam.actId
 
-	slot0:refreshUI()
-	RedDotController.instance:addRedDot(slot0.gorewardReddot, RedDotEnum.DotNode.Season166InfoBigReward)
+	arg_11_0:refreshUI()
+	RedDotController.instance:addRedDot(arg_11_0.gorewardReddot, RedDotEnum.DotNode.Season166InfoBigReward)
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0.actId then
+function var_0_0.refreshUI(arg_12_0)
+	if not arg_12_0.actId then
 		return
 	end
 
@@ -72,80 +74,97 @@ function slot0.refreshUI(slot0)
 		return
 	end
 
-	slot0:refreshReport()
+	arg_12_0:refreshReport()
 
-	slot2, slot3 = Season166Model.instance:getActInfo(slot0.actId):getBonusNum()
-	slot0.txtRewardNum.text = string.format("<color=#de9754>%s</color>/%s", slot2, slot3)
-	slot0.slider.fillAmount = slot2 / slot3
+	local var_12_0, var_12_1 = Season166Model.instance:getActInfo(arg_12_0.actId):getBonusNum()
 
-	slot0:refreshItemUnlockState()
+	arg_12_0.txtRewardNum.text = string.format("<color=#de9754>%s</color>/%s", var_12_0, var_12_1)
+	arg_12_0.slider.fillAmount = var_12_0 / var_12_1
+
+	arg_12_0:refreshItemUnlockState()
 end
 
-function slot0.refreshReport(slot0)
-	slot5 = #slot0.reportItems
+function var_0_0.refreshReport(arg_13_0)
+	local var_13_0 = Season166Config.instance:getSeasonInfos(arg_13_0.actId) or {}
 
-	for slot5 = 1, math.max(#(Season166Config.instance:getSeasonInfos(slot0.actId) or {}), slot5) do
-		if not slot0.reportItems[slot5] and gohelper.findChild(slot0.viewGO, string.format("Report%s", slot5)) then
-			slot0.reportItems[slot5] = MonoHelper.addNoUpdateLuaComOnceToGo(slot7, Season166_2_4InformationReportItem)
+	for iter_13_0 = 1, math.max(#var_13_0, #arg_13_0.reportItems) do
+		local var_13_1 = arg_13_0.reportItems[iter_13_0]
+
+		if not var_13_1 then
+			local var_13_2 = gohelper.findChild(arg_13_0.viewGO, string.format("Report%s", iter_13_0))
+
+			if var_13_2 then
+				var_13_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_2, Season166_2_4InformationReportItem)
+				arg_13_0.reportItems[iter_13_0] = var_13_1
+			end
 		end
 
-		if slot6 then
-			slot6:refreshUI(slot1[slot5])
+		if var_13_1 then
+			var_13_1:refreshUI(var_13_0[iter_13_0])
 		end
 	end
 end
 
-function slot0.refreshItemUnlockState(slot0)
-	slot2 = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportUnlockAnimLocalSaveKey)
-	slot3 = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportFinishAnimLocalSaveKey)
+function var_0_0.refreshItemUnlockState(arg_14_0)
+	local var_14_0 = Season166Model.instance:getLocalUnlockState(Season166Enum.InforMainLocalSaveKey)
+	local var_14_1 = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportUnlockAnimLocalSaveKey)
+	local var_14_2 = Season166Model.instance:getLocalPrefsTab(Season166Enum.ReportFinishAnimLocalSaveKey)
 
-	for slot7, slot8 in pairs(slot0.reportItems) do
-		if GameUtil.getTabLen(Season166Model.instance:getLocalUnlockState(Season166Enum.InforMainLocalSaveKey)) == 0 then
-			slot8:refreshUnlockState(Season166Enum.LockState)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.reportItems) do
+		if GameUtil.getTabLen(var_14_0) == 0 then
+			iter_14_1:refreshUnlockState(Season166Enum.LockState)
 
-			slot0.localUnlockStateTab[slot7] = Season166Enum.LockState
+			arg_14_0.localUnlockStateTab[iter_14_0] = Season166Enum.LockState
 		else
-			slot9 = slot1[slot7]
+			local var_14_3 = var_14_0[iter_14_0]
 
-			slot8:refreshUnlockState(slot9)
+			iter_14_1:refreshUnlockState(var_14_3)
 
-			slot0.localUnlockStateTab[slot7] = slot9
+			arg_14_0.localUnlockStateTab[iter_14_0] = var_14_3
 		end
 
-		slot8:refreshUnlockAnimState(slot2)
-		slot8:refreshFinishAnimState(slot3)
+		iter_14_1:refreshUnlockAnimState(var_14_1)
+		iter_14_1:refreshFinishAnimState(var_14_2)
 	end
 
-	slot0:saveUnlockState()
+	arg_14_0:saveUnlockState()
 end
 
-function slot0.saveUnlockState(slot0)
-	slot1 = {}
+function var_0_0.saveUnlockState(arg_15_0)
+	local var_15_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.localUnlockStateTab) do
-		table.insert(slot1, string.format("%s|%s", slot5, slot6))
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.localUnlockStateTab) do
+		local var_15_1 = string.format("%s|%s", iter_15_0, iter_15_1)
+
+		table.insert(var_15_0, var_15_1)
 	end
 
-	Season166Controller.instance:savePlayerPrefs(Season166Enum.InforMainLocalSaveKey, cjson.encode(slot1))
+	local var_15_2 = cjson.encode(var_15_0)
+
+	Season166Controller.instance:savePlayerPrefs(Season166Enum.InforMainLocalSaveKey, var_15_2)
 end
 
-function slot0.setLocalUnlockState(slot0, slot1)
-	slot0.localUnlockStateTab[slot1.infoId] = slot1.unlockState
+function var_0_0.setLocalUnlockState(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.infoId
+	local var_16_1 = arg_16_1.unlockState
 
-	slot0:saveUnlockState()
+	arg_16_0.localUnlockStateTab[var_16_0] = var_16_1
+
+	arg_16_0:saveUnlockState()
 end
 
-function slot0._onViewClose(slot0, slot1)
-	if slot1 == ViewName.Season166InformationAnalyView then
-		slot0:refreshUI()
+function var_0_0._onViewClose(arg_17_0, arg_17_1)
+	if arg_17_1 == ViewName.Season166InformationAnalyView then
+		arg_17_0:refreshUI()
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:saveUnlockState()
+function var_0_0.onClose(arg_18_0)
+	arg_18_0:saveUnlockState()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_19_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,667 +1,750 @@
-module("modules.logic.equip.model.EquipChooseListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipChooseListModel", package.seeall)
 
-slot0 = class("EquipChooseListModel", ListScrollModel)
+local var_0_0 = class("EquipChooseListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
-	slot0._maxCount = EquipEnum.StrengthenMaxCount
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._chooseEquipDic = {}
+	arg_1_0._chooseEquipList = {}
+	arg_1_0._maxCount = EquipEnum.StrengthenMaxCount
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.initEquipMo(slot0, slot1, slot2)
-	slot0._targetMO = slot1
-	slot0._config = slot0._targetMO.config
+function var_0_0.initEquipMo(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._targetMO = arg_3_1
+	arg_3_0._config = arg_3_0._targetMO.config
 
-	if slot2 then
-		slot0:resetSortStatus()
+	if arg_3_2 then
+		arg_3_0:resetSortStatus()
 	end
 end
 
-function slot0.updateStrengthenList(slot0)
-	slot0:initEquipList()
-	slot0:_onChooseChange()
+function var_0_0.updateStrengthenList(arg_4_0)
+	arg_4_0:initEquipList()
+	arg_4_0:_onChooseChange()
 end
 
-function slot0.updateStrengthenListAndRefresh(slot0)
-	slot0:updateStrengthenList()
-	slot0:setEquipList()
+function var_0_0.updateStrengthenListAndRefresh(arg_5_0)
+	arg_5_0:updateStrengthenList()
+	arg_5_0:setEquipList()
 end
 
-function slot0.initEquipList(slot0, slot1, slot2)
-	slot0.filterMo = slot1
-	slot0._equipList = {}
+function var_0_0.initEquipList(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.filterMo = arg_6_1
+	arg_6_0._equipList = {}
 
-	slot0:getEquipList(slot0._equipList, slot2)
-	slot0:filterEquip()
-	slot0:filterStrengthen(slot0._equipList)
+	arg_6_0:getEquipList(arg_6_0._equipList, arg_6_2)
+	arg_6_0:filterEquip()
+	arg_6_0:filterStrengthen(arg_6_0._equipList)
 end
 
-function slot0.filterEquip(slot0)
-	if not slot0.filterMo then
+function var_0_0.filterEquip(arg_7_0)
+	if not arg_7_0.filterMo then
 		return
 	end
 
-	slot1 = {}
+	local var_7_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._equipList) do
-		if slot6.config and slot0.filterMo:checkIsIncludeTag(slot6.config) then
-			table.insert(slot1, slot6)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._equipList) do
+		if iter_7_1.config and arg_7_0.filterMo:checkIsIncludeTag(iter_7_1.config) then
+			table.insert(var_7_0, iter_7_1)
 		end
 	end
 
-	slot0._equipList = slot1
+	arg_7_0._equipList = var_7_0
 end
 
-function slot0.getEquipList(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in ipairs(EquipModel.instance:getEquips()) do
-		if not slot9._chooseNum then
-			slot9._chooseNum = 0
+function var_0_0.getEquipList(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = EquipModel.instance:getEquips()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		if not iter_8_1._chooseNum then
+			iter_8_1._chooseNum = 0
 		end
 
-		if not slot2 then
-			slot9._chooseNum = 0
+		if not arg_8_2 then
+			iter_8_1._chooseNum = 0
 		end
 
-		if slot9.config and slot9.id ~= slot0._targetMO.id and not EquipHelper.isSpRefineEquip(slot10) and slot9.equipId ~= EquipConfig.instance:getEquipUniversalId() then
-			if slot3 then
-				if slot10.rare < slot3 then
-					table.insert(slot1, slot9)
+		local var_8_1 = iter_8_1.config
+
+		if var_8_1 and iter_8_1.id ~= arg_8_0._targetMO.id and not EquipHelper.isSpRefineEquip(var_8_1) and iter_8_1.equipId ~= EquipConfig.instance:getEquipUniversalId() then
+			if arg_8_3 then
+				if arg_8_3 > var_8_1.rare then
+					table.insert(arg_8_1, iter_8_1)
 				end
 			else
-				table.insert(slot1, slot9)
+				table.insert(arg_8_1, iter_8_1)
 			end
 		end
 	end
 end
 
-function slot0.setEquipList(slot0)
-	slot0:setList(slot0._equipList)
+function var_0_0.setEquipList(arg_9_0)
+	arg_9_0:setList(arg_9_0._equipList)
 end
 
-function slot0.resetSelectedEquip(slot0)
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
+function var_0_0.resetSelectedEquip(arg_10_0)
+	arg_10_0._chooseEquipDic = {}
+	arg_10_0._chooseEquipList = {}
 
-	slot0:_onChooseChange()
+	arg_10_0:_onChooseChange()
 end
 
-function slot0.getChooseNum(slot0)
-	if not slot0._chooseEquipList then
-		return 0
+function var_0_0.getChooseNum(arg_11_0)
+	local var_11_0 = 0
+
+	if not arg_11_0._chooseEquipList then
+		return var_11_0
 	end
 
-	for slot5, slot6 in ipairs(slot0._chooseEquipList) do
-		slot1 = slot1 + slot6._chooseNum
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._chooseEquipList) do
+		var_11_0 = var_11_0 + iter_11_1._chooseNum
 	end
 
-	return slot1
+	return var_11_0
 end
 
-function slot0.getChooseEquipsNum(slot0)
-	return slot0._chooseEquipList and #slot0._chooseEquipList or 0
+function var_0_0.getChooseEquipsNum(arg_12_0)
+	return arg_12_0._chooseEquipList and #arg_12_0._chooseEquipList or 0
 end
 
-function slot0._selectEquip(slot0, slot1)
-	if slot1.count <= slot1._chooseNum then
+function var_0_0._selectEquip(arg_13_0, arg_13_1)
+	if arg_13_1._chooseNum >= arg_13_1.count then
 		return EquipEnum.ChooseEquipStatus.BeyondEquipHadNum
 	end
 
-	if slot1._chooseNum <= 0 and slot0._maxCount <= slot0:getChooseEquipsNum() then
+	if arg_13_1._chooseNum <= 0 and arg_13_0:getChooseEquipsNum() >= arg_13_0._maxCount then
 		return EquipEnum.ChooseEquipStatus.BeyondMaxSelectEquip
 	end
 
-	if EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._targetMO) <= EquipConfig.instance:getStrengthenToLv(slot0._config.rare, slot0._targetMO.level, slot0._targetMO.exp + (slot0:calcStrengthen() or 0)) then
+	local var_13_0 = arg_13_0:calcStrengthen() or 0
+
+	if EquipConfig.instance:getStrengthenToLv(arg_13_0._config.rare, arg_13_0._targetMO.level, arg_13_0._targetMO.exp + var_13_0) >= EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_13_0._targetMO) then
 		return EquipEnum.ChooseEquipStatus.BeyondMaxStrengthenExperience
 	end
 
-	if slot1._chooseNum == 0 then
-		table.insert(slot0._chooseEquipList, slot1)
+	if arg_13_1._chooseNum == 0 then
+		table.insert(arg_13_0._chooseEquipList, arg_13_1)
 	end
 
-	slot1._chooseNum = slot1._chooseNum + 1
-	slot0._chooseEquipDic[slot1.id] = true
+	arg_13_1._chooseNum = arg_13_1._chooseNum + 1
+	arg_13_0._chooseEquipDic[arg_13_1.id] = true
 
 	return EquipEnum.ChooseEquipStatus.Success
 end
 
-function slot0.selectEquip(slot0, slot1)
-	if slot0.isLock then
+function var_0_0.selectEquip(arg_14_0, arg_14_1)
+	if arg_14_0.isLock then
 		return EquipEnum.ChooseEquipStatus.Lock
 	end
 
-	if slot0:_selectEquip(slot1) == EquipEnum.ChooseEquipStatus.Success then
-		slot0:_onChooseChange()
+	local var_14_0 = arg_14_0:_selectEquip(arg_14_1)
+
+	if var_14_0 == EquipEnum.ChooseEquipStatus.Success then
+		arg_14_0:_onChooseChange()
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.deselectEquip(slot0, slot1)
-	if slot0.isLock then
+function var_0_0.deselectEquip(arg_15_0, arg_15_1)
+	if arg_15_0.isLock then
 		return EquipEnum.ChooseEquipStatus.Lock
 	end
 
-	if not slot1._chooseNum or slot1._chooseNum <= 0 then
+	if not arg_15_1._chooseNum or arg_15_1._chooseNum <= 0 then
 		return EquipEnum.ChooseEquipStatus.ReduceNotSelectedEquip
 	end
 
-	slot1._chooseNum = slot1._chooseNum - 1
+	arg_15_1._chooseNum = arg_15_1._chooseNum - 1
 
-	if slot1._chooseNum == 0 then
-		for slot5, slot6 in ipairs(slot0._chooseEquipList) do
-			if slot6.id == slot1.id then
-				slot1._isBreak = false
-				slot1._canBreak = nil
+	if arg_15_1._chooseNum == 0 then
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0._chooseEquipList) do
+			if iter_15_1.id == arg_15_1.id then
+				arg_15_1._isBreak = false
+				arg_15_1._canBreak = nil
 
-				table.remove(slot0._chooseEquipList, slot5)
+				table.remove(arg_15_0._chooseEquipList, iter_15_0)
 
 				break
 			end
 		end
 	end
 
-	slot0._chooseEquipDic[slot1.id] = slot1._chooseNum > 0
+	arg_15_0._chooseEquipDic[arg_15_1.id] = arg_15_1._chooseNum > 0
 
-	slot0:_onChooseChange()
+	arg_15_0:_onChooseChange()
 
 	return EquipEnum.ChooseEquipStatus.Success
 end
 
-function slot0.calcStrengthen(slot0)
-	if not slot0._targetMO then
-		return 0
+function var_0_0.calcStrengthen(arg_16_0)
+	local var_16_0 = 0
+
+	if not arg_16_0._targetMO then
+		return var_16_0
 	end
 
-	for slot5, slot6 in ipairs(slot0._chooseEquipList) do
-		for slot10 = 1, slot6._chooseNum do
-			slot1 = slot1 + EquipConfig.instance:getIncrementalExp(slot6)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._chooseEquipList) do
+		for iter_16_2 = 1, iter_16_1._chooseNum do
+			var_16_0 = var_16_0 + EquipConfig.instance:getIncrementalExp(iter_16_1)
 		end
 	end
 
-	return slot1
+	return var_16_0
 end
 
-function slot0._onChooseChange(slot0)
-	EquipSelectedListModel.instance:updateList(slot0._chooseEquipList)
+function var_0_0._onChooseChange(arg_17_0)
+	EquipSelectedListModel.instance:updateList(arg_17_0._chooseEquipList)
 	EquipController.instance:dispatchEvent(EquipEvent.onChooseChange)
 end
 
-function slot0.getChooseEquipList(slot0)
-	return slot0._chooseEquipList
+function var_0_0.getChooseEquipList(arg_18_0)
+	return arg_18_0._chooseEquipList
 end
 
-function slot0.isChoose(slot0, slot1)
-	return slot0._chooseEquipDic[slot1.id]
+function var_0_0.isChoose(arg_19_0, arg_19_1)
+	return arg_19_0._chooseEquipDic[arg_19_1.id]
 end
 
-function slot0.canBreak(slot0, slot1)
-	return EquipConfig.instance:canBreak(slot0._targetMO, slot1)
+function var_0_0.canBreak(arg_20_0, arg_20_1)
+	return EquipConfig.instance:canBreak(arg_20_0._targetMO, arg_20_1)
 end
 
-function slot0._sortNormalEquip(slot0, slot1)
-	if slot0.config.rare ~= slot1.config.rare then
-		return slot0.config.rare < slot1.config.rare
+function var_0_0._sortNormalEquip(arg_21_0, arg_21_1)
+	if arg_21_0.config.rare ~= arg_21_1.config.rare then
+		return arg_21_0.config.rare < arg_21_1.config.rare
 	else
-		return slot0.id < slot1.id
+		return arg_21_0.id < arg_21_1.id
 	end
 end
 
-function slot0.canFastAdd(slot0, slot1)
-	if slot1.isLock then
+function var_0_0.canFastAdd(arg_22_0, arg_22_1)
+	if arg_22_1.isLock then
 		return false
 	end
 
-	if slot0.equipUidToHeroMo and slot0.equipUidToHeroMo[slot1.uid] then
+	if arg_22_0.equipUidToHeroMo and arg_22_0.equipUidToHeroMo[arg_22_1.uid] then
 		return false
 	end
 
-	if slot1.level > 1 or slot1.refineLv > 1 then
+	if arg_22_1.level > 1 or arg_22_1.refineLv > 1 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.onlyAddExpEquip(slot0, slot1, slot2)
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
+function var_0_0.onlyAddExpEquip(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0._chooseEquipDic = {}
+	arg_23_0._chooseEquipList = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if EquipEnum.StrengthenMaxCount < slot6 then
+	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
+		if iter_23_0 > EquipEnum.StrengthenMaxCount then
 			break
 		end
 
-		if slot2 <= slot7.count * EquipConfig.instance:getOneLevelEquipProduceExp(slot7.equipId) then
-			slot0:addEquipMo(slot7, Mathf.Ceil(slot2 / slot8))
+		local var_23_0 = EquipConfig.instance:getOneLevelEquipProduceExp(iter_23_1.equipId)
+		local var_23_1 = iter_23_1.count * var_23_0
+
+		if arg_23_2 <= var_23_1 then
+			local var_23_2 = Mathf.Ceil(arg_23_2 / var_23_0)
+
+			arg_23_0:addEquipMo(iter_23_1, var_23_2)
 
 			break
 		end
 
-		slot2 = slot2 - slot9
+		arg_23_2 = arg_23_2 - var_23_1
 
-		slot0:addEquipMo(slot7, slot7.count)
+		arg_23_0:addEquipMo(iter_23_1, iter_23_1.count)
 	end
 end
 
-function slot0.onlyAddNormalEquip(slot0, slot1, slot2)
-	slot3 = 0
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
+function var_0_0.onlyAddNormalEquip(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = 0
 
-	for slot7, slot8 in ipairs(slot1) do
-		if EquipEnum.StrengthenMaxCount < slot7 then
+	arg_24_0._chooseEquipDic = {}
+	arg_24_0._chooseEquipList = {}
+
+	for iter_24_0, iter_24_1 in ipairs(arg_24_1) do
+		if iter_24_0 > EquipEnum.StrengthenMaxCount then
 			break
 		end
 
-		slot0:addEquipMo(slot8, 1)
+		var_24_0 = var_24_0 + EquipConfig.instance:getOneLevelEquipProduceExp(iter_24_1.config.rare)
 
-		if slot2 <= slot3 + EquipConfig.instance:getOneLevelEquipProduceExp(slot8.config.rare) then
+		arg_24_0:addEquipMo(iter_24_1, 1)
+
+		if arg_24_2 <= var_24_0 then
 			break
 		end
 	end
 end
 
-function slot0.mixtureExpAndNormalEquip(slot0, slot1, slot2, slot3)
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
+function var_0_0.mixtureExpAndNormalEquip(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	arg_25_0._chooseEquipDic = {}
+	arg_25_0._chooseEquipList = {}
 
-	if slot3 <= EquipConfig.instance:getOneLevelEquipProduceExp(slot1[1].equipId) then
-		slot0:addEquipMo(slot4, 1)
+	local var_25_0 = arg_25_1[1]
+	local var_25_1 = EquipConfig.instance:getOneLevelEquipProduceExp(var_25_0.equipId)
+
+	if arg_25_3 <= var_25_1 then
+		arg_25_0:addEquipMo(var_25_0, 1)
 
 		return
 	end
 
-	for slot11, slot12 in ipairs(slot2) do
-		slot0:addEquipMo(slot12, 1)
+	arg_25_3 = arg_25_3 - var_25_1
 
-		if EquipEnum.StrengthenMaxCount - 1 <= 0 + 1 or slot3 - slot5 - EquipConfig.instance:getOneLevelEquipProduceExp(slot12.config.rare) <= 0 then
+	local var_25_2 = 0
+	local var_25_3 = EquipEnum.StrengthenMaxCount - 1
+
+	for iter_25_0, iter_25_1 in ipairs(arg_25_2) do
+		local var_25_4 = EquipConfig.instance:getOneLevelEquipProduceExp(iter_25_1.config.rare)
+
+		arg_25_0:addEquipMo(iter_25_1, 1)
+
+		var_25_2 = var_25_2 + 1
+		arg_25_3 = arg_25_3 - var_25_4
+
+		if var_25_3 <= var_25_2 or arg_25_3 <= 0 then
 			break
 		end
 	end
 
-	slot8 = 0
+	local var_25_5 = 0
 
-	if slot3 > 0 then
-		slot3 = slot3 + slot5
+	if arg_25_3 > 0 then
+		arg_25_3 = arg_25_3 + var_25_1
 
-		for slot12, slot13 in ipairs(slot1) do
-			slot6 = slot6 + 1
-			slot8 = slot8 + 1
+		for iter_25_2, iter_25_3 in ipairs(arg_25_1) do
+			local var_25_6 = EquipConfig.instance:getOneLevelEquipProduceExp(iter_25_3.equipId)
 
-			if slot3 <= slot13.count * EquipConfig.instance:getOneLevelEquipProduceExp(slot13.equipId) then
-				slot0:addEquipMo(slot13, Mathf.Ceil(slot3 / slot14), slot8)
+			var_25_2 = var_25_2 + 1
+			var_25_5 = var_25_5 + 1
+
+			local var_25_7 = iter_25_3.count * var_25_6
+
+			if arg_25_3 <= var_25_7 then
+				arg_25_0:addEquipMo(iter_25_3, Mathf.Ceil(arg_25_3 / var_25_6), var_25_5)
 
 				break
 			end
 
-			slot0:addEquipMo(slot13, slot13.count, slot8)
+			arg_25_0:addEquipMo(iter_25_3, iter_25_3.count, var_25_5)
 
-			slot3 = slot3 - slot15
+			arg_25_3 = arg_25_3 - var_25_7
 
-			if EquipEnum.StrengthenMaxCount <= slot6 then
+			if var_25_2 >= EquipEnum.StrengthenMaxCount then
 				break
 			end
 		end
 	else
-		slot0:addEquipMo(slot4, 1, 1)
+		arg_25_0:addEquipMo(var_25_0, 1, 1)
 	end
 end
 
-function slot0.addEquipMo(slot0, slot1, slot2, slot3)
-	slot1._chooseNum = slot2
-	slot0._chooseEquipDic[slot1.id] = true
+function var_0_0.addEquipMo(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	arg_26_1._chooseNum = arg_26_2
+	arg_26_0._chooseEquipDic[arg_26_1.id] = true
 
-	if not tabletool.indexOf(slot0._chooseEquipList, slot1) then
-		if slot3 then
-			table.insert(slot0._chooseEquipList, slot3, slot1)
+	if not tabletool.indexOf(arg_26_0._chooseEquipList, arg_26_1) then
+		if arg_26_3 then
+			table.insert(arg_26_0._chooseEquipList, arg_26_3, arg_26_1)
 		else
-			table.insert(slot0._chooseEquipList, slot1)
+			table.insert(arg_26_0._chooseEquipList, arg_26_1)
 		end
 	end
 end
 
-function slot0.fastAddEquip(slot0)
-	if EquipConfig.instance:getNeedExpToMaxLevel(slot0._targetMO) <= 0 then
+function var_0_0.fastAddEquip(arg_27_0)
+	local var_27_0 = EquipConfig.instance:getNeedExpToMaxLevel(arg_27_0._targetMO)
+
+	if var_27_0 <= 0 then
 		GameFacade.showToast(ToastEnum.MaxLevEquips)
 
 		return
 	end
 
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
-	slot2 = {}
+	arg_27_0._chooseEquipDic = {}
+	arg_27_0._chooseEquipList = {}
 
-	slot0:getEquipList(slot2, false, slot0:getFilterRare())
+	local var_27_1 = {}
 
-	slot4 = {}
-	slot5 = true
+	arg_27_0:getEquipList(var_27_1, false, arg_27_0:getFilterRare())
 
-	for slot9, slot10 in ipairs(slot2) do
-		if EquipHelper.isExpEquip(slot10.config) then
-			table.insert({}, slot10)
+	local var_27_2 = {}
+	local var_27_3 = {}
+	local var_27_4 = true
 
-			slot5 = false
-		elseif EquipHelper.isNormalEquip(slot10.config) and slot0:canFastAdd(slot10) then
-			table.insert(slot4, slot10)
+	for iter_27_0, iter_27_1 in ipairs(var_27_1) do
+		if EquipHelper.isExpEquip(iter_27_1.config) then
+			table.insert(var_27_2, iter_27_1)
 
-			slot5 = false
+			var_27_4 = false
+		elseif EquipHelper.isNormalEquip(iter_27_1.config) and arg_27_0:canFastAdd(iter_27_1) then
+			table.insert(var_27_3, iter_27_1)
+
+			var_27_4 = false
 		end
 	end
 
-	if slot5 then
-		slot0:refreshEquip()
+	if var_27_4 then
+		arg_27_0:refreshEquip()
 		GameFacade.showToast(ToastEnum.NoFastEquips)
 
 		return
 	end
 
-	slot7 = #slot4
+	local var_27_5 = #var_27_2
+	local var_27_6 = #var_27_3
 
-	if #slot3 ~= 0 then
-		table.sort(slot3, function (slot0, slot1)
-			return slot0.config.rare < slot1.config.rare
+	if var_27_5 ~= 0 then
+		table.sort(var_27_2, function(arg_28_0, arg_28_1)
+			return arg_28_0.config.rare < arg_28_1.config.rare
 		end)
 	end
 
-	if slot7 ~= 0 then
-		table.sort(slot4, uv0._sortNormalEquip)
+	if var_27_6 ~= 0 then
+		table.sort(var_27_3, var_0_0._sortNormalEquip)
 	end
 
-	if slot7 == 0 then
-		slot0:onlyAddExpEquip(slot3, slot1)
-	elseif slot6 == 0 then
-		slot0:onlyAddNormalEquip(slot4, slot1)
+	if var_27_6 == 0 then
+		arg_27_0:onlyAddExpEquip(var_27_2, var_27_0)
+	elseif var_27_5 == 0 then
+		arg_27_0:onlyAddNormalEquip(var_27_3, var_27_0)
 	else
-		slot0:mixtureExpAndNormalEquip(slot3, slot4, slot1)
+		arg_27_0:mixtureExpAndNormalEquip(var_27_2, var_27_3, var_27_0)
 	end
 
-	slot0:refreshEquip()
+	arg_27_0:refreshEquip()
 end
 
-function slot0.refreshEquip(slot0)
+function var_0_0.refreshEquip(arg_29_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onChooseEquip)
-	slot0:_onChooseChange()
-	slot0:setList(slot0._equipList)
+	arg_29_0:_onChooseChange()
+	arg_29_0:setList(arg_29_0._equipList)
 
-	slot1 = {}
+	local var_29_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._chooseEquipList) do
-		table.insert(slot1, slot6.uid)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_0._chooseEquipList) do
+		table.insert(var_29_0, iter_29_1.uid)
 	end
 
-	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, slot1)
+	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, var_29_0)
 end
 
-function slot0._sortNormal(slot0, slot1)
-	if uv0.instance:sortChoose(slot0, slot1) == nil then
-		slot3 = slot2:sortSame(slot0, slot1)
+function var_0_0._sortNormal(arg_30_0, arg_30_1)
+	local var_30_0 = var_0_0.instance
+	local var_30_1 = var_30_0:sortChoose(arg_30_0, arg_30_1)
+
+	if var_30_1 == nil then
+		var_30_1 = var_30_0:sortSame(arg_30_0, arg_30_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortQuality(slot0, slot1)
+	if var_30_1 == nil then
+		var_30_1 = var_30_0:sortQuality(arg_30_0, arg_30_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortExp(slot0, slot1)
+	if var_30_1 == nil then
+		var_30_1 = var_30_0:sortExp(arg_30_0, arg_30_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortLevel(slot0, slot1)
+	if var_30_1 == nil then
+		var_30_1 = var_30_0:sortLevel(arg_30_0, arg_30_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortId(slot0, slot1)
+	if var_30_1 == nil then
+		var_30_1 = var_30_0:sortId(arg_30_0, arg_30_1)
 	end
 
-	return slot3
+	return var_30_1
 end
 
-function slot0._sortMaxLevel(slot0, slot1)
-	if uv0.instance:sortChoose(slot0, slot1) == nil then
-		slot3 = slot2:sortLevel(slot0, slot1)
+function var_0_0._sortMaxLevel(arg_31_0, arg_31_1)
+	local var_31_0 = var_0_0.instance
+	local var_31_1 = var_31_0:sortChoose(arg_31_0, arg_31_1)
+
+	if var_31_1 == nil then
+		var_31_1 = var_31_0:sortLevel(arg_31_0, arg_31_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortId(slot0, slot1)
+	if var_31_1 == nil then
+		var_31_1 = var_31_0:sortId(arg_31_0, arg_31_1)
 	end
 
-	return slot3
+	return var_31_1
 end
 
-function slot0._sortMaxBreak(slot0, slot1)
-	if uv0.instance:sortChoose(slot0, slot1) == nil then
-		slot3 = slot2:sortQuality(slot0, slot1)
+function var_0_0._sortMaxBreak(arg_32_0, arg_32_1)
+	local var_32_0 = var_0_0.instance
+	local var_32_1 = var_32_0:sortChoose(arg_32_0, arg_32_1)
+
+	if var_32_1 == nil then
+		var_32_1 = var_32_0:sortQuality(arg_32_0, arg_32_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortExp(slot0, slot1)
+	if var_32_1 == nil then
+		var_32_1 = var_32_0:sortExp(arg_32_0, arg_32_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortLevel(slot0, slot1)
+	if var_32_1 == nil then
+		var_32_1 = var_32_0:sortLevel(arg_32_0, arg_32_1)
 	end
 
-	if slot3 == nil then
-		slot3 = slot2:sortId(slot0, slot1)
+	if var_32_1 == nil then
+		var_32_1 = var_32_0:sortId(arg_32_0, arg_32_1)
 	end
 
-	return slot3
+	return var_32_1
 end
 
-function slot0.filterStrengthen(slot0, slot1)
-	if slot0._btnTag == 1 then
-		table.sort(slot1, EquipHelper.sortByLevelFuncChooseListModel)
+function var_0_0.filterStrengthen(arg_33_0, arg_33_1)
+	if arg_33_0._btnTag == 1 then
+		table.sort(arg_33_1, EquipHelper.sortByLevelFuncChooseListModel)
 	else
-		table.sort(slot1, EquipHelper.sortByQualityFuncChooseListModel)
+		table.sort(arg_33_1, EquipHelper.sortByQualityFuncChooseListModel)
 	end
 end
 
-function slot0.sortId(slot0, slot1, slot2)
-	if slot1.config.id == slot2.config.id then
+function var_0_0.sortId(arg_34_0, arg_34_1, arg_34_2)
+	local var_34_0 = arg_34_1.config.id
+	local var_34_1 = arg_34_2.config.id
+
+	if var_34_0 == var_34_1 then
 		return false
 	end
 
-	return slot3 < slot4
+	return var_34_0 < var_34_1
 end
 
-function slot0.sortLevel(slot0, slot1, slot2)
-	if slot1.level == slot2.level then
+function var_0_0.sortLevel(arg_35_0, arg_35_1, arg_35_2)
+	local var_35_0 = arg_35_1.level
+	local var_35_1 = arg_35_2.level
+
+	if var_35_0 == var_35_1 then
 		return nil
 	end
 
-	if slot0._levelAscend then
-		return slot3 < slot4
+	if arg_35_0._levelAscend then
+		return var_35_0 < var_35_1
 	else
-		return slot4 < slot3
+		return var_35_1 < var_35_0
 	end
 end
 
-function slot0.sortExp(slot0, slot1, slot2)
-	if slot1.config.isExpEquip == slot2.config.isExpEquip then
+function var_0_0.sortExp(arg_36_0, arg_36_1, arg_36_2)
+	local var_36_0 = arg_36_1.config.isExpEquip
+	local var_36_1 = arg_36_2.config.isExpEquip
+
+	if var_36_0 == var_36_1 then
 		return nil
 	end
 
-	return slot4 < slot3
+	return var_36_1 < var_36_0
 end
 
-function slot0.sortQuality(slot0, slot1, slot2)
-	if slot1.config.rare == slot2.config.rare then
+function var_0_0.sortQuality(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = arg_37_1.config.rare
+	local var_37_1 = arg_37_2.config.rare
+
+	if var_37_0 == var_37_1 then
 		return nil
 	end
 
-	if slot0._qualityAscend then
-		return slot3 < slot4
+	if arg_37_0._qualityAscend then
+		return var_37_0 < var_37_1
 	else
-		return slot4 < slot3
+		return var_37_1 < var_37_0
 	end
 end
 
-function slot0.sortSame(slot0, slot1, slot2)
-	if slot1.config.id == slot0._config.id and slot2.config.id == slot0._config.id then
+function var_0_0.sortSame(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = arg_38_1.config.id == arg_38_0._config.id
+	local var_38_1 = arg_38_2.config.id == arg_38_0._config.id
+
+	if var_38_0 and var_38_1 then
 		return nil
 	end
 
-	if slot3 then
+	if var_38_0 then
 		return true
 	end
 
-	if slot4 then
+	if var_38_1 then
 		return false
 	end
 end
 
-function slot0.sortChoose(slot0, slot1, slot2)
-	if slot0._chooseEquipDic[slot1.id] and slot0._chooseEquipDic[slot2.id] then
+function var_0_0.sortChoose(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_0._chooseEquipDic[arg_39_1.id]
+	local var_39_1 = arg_39_0._chooseEquipDic[arg_39_2.id]
+
+	if var_39_0 and var_39_1 then
 		return nil
 	end
 
-	if slot3 then
+	if var_39_0 then
 		return true
 	end
 
-	if slot4 then
+	if var_39_1 then
 		return false
 	end
 end
 
-function slot0.getBtnTag(slot0)
-	return slot0._btnTag
+function var_0_0.getBtnTag(arg_40_0)
+	return arg_40_0._btnTag
 end
 
-function slot0.getRankState(slot0)
-	return slot0._levelAscend and 1 or -1, slot0._qualityAscend and 1 or -1
+function var_0_0.getRankState(arg_41_0)
+	return arg_41_0._levelAscend and 1 or -1, arg_41_0._qualityAscend and 1 or -1
 end
 
-function slot0.sordByLevel(slot0)
-	slot0:resetQualitySortStatus()
+function var_0_0.sordByLevel(arg_42_0)
+	arg_42_0:resetQualitySortStatus()
 
-	if slot0._btnTag == 1 then
-		slot0._levelAscend = not slot0._levelAscend
+	if arg_42_0._btnTag == 1 then
+		arg_42_0._levelAscend = not arg_42_0._levelAscend
 	else
-		slot0._btnTag = 1
+		arg_42_0._btnTag = 1
 	end
 
-	slot0:filterStrengthen(slot0._equipList)
-	slot0:setList(slot0._equipList)
+	arg_42_0:filterStrengthen(arg_42_0._equipList)
+	arg_42_0:setList(arg_42_0._equipList)
 end
 
-function slot0.sordByQuality(slot0)
-	slot0:resetLevelSortStatus()
+function var_0_0.sordByQuality(arg_43_0)
+	arg_43_0:resetLevelSortStatus()
 
-	if slot0._btnTag == 2 then
-		slot0._qualityAscend = not slot0._qualityAscend
+	if arg_43_0._btnTag == 2 then
+		arg_43_0._qualityAscend = not arg_43_0._qualityAscend
 	else
-		slot0._btnTag = 2
+		arg_43_0._btnTag = 2
 	end
 
-	slot0:filterStrengthen(slot0._equipList)
-	slot0:setList(slot0._equipList)
+	arg_43_0:filterStrengthen(arg_43_0._equipList)
+	arg_43_0:setList(arg_43_0._equipList)
 end
 
-function slot0.clearEquipList(slot0)
-	for slot5, slot6 in ipairs(EquipModel.instance:getEquips()) do
-		slot6._canBreak = nil
-		slot6._isBreak = nil
+function var_0_0.clearEquipList(arg_44_0)
+	local var_44_0 = EquipModel.instance:getEquips()
+
+	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
+		iter_44_1._canBreak = nil
+		iter_44_1._isBreak = nil
 	end
 
-	slot0._equipList = {}
-	slot0._chooseEquipDic = {}
-	slot0._chooseEquipList = {}
-	slot0._targetMO = nil
+	arg_44_0._equipList = {}
+	arg_44_0._chooseEquipDic = {}
+	arg_44_0._chooseEquipList = {}
+	arg_44_0._targetMO = nil
 end
 
-function slot0.equipInTeam(slot0, slot1)
-	if not slot0._allInTeamEquips then
-		slot0._allInTeamEquips = {}
+function var_0_0.equipInTeam(arg_45_0, arg_45_1)
+	if not arg_45_0._allInTeamEquips then
+		arg_45_0._allInTeamEquips = {}
 
-		if HeroGroupModel.instance:getCurGroupMO() then
-			for slot7, slot8 in pairs(slot2:getAllPosEquips()) do
-				for slot12, slot13 in pairs(slot8.equipUid) do
-					if not slot0._allInTeamEquips[slot13] then
-						slot0._allInTeamEquips[slot13] = {}
+		local var_45_0 = HeroGroupModel.instance:getCurGroupMO()
+
+		if var_45_0 then
+			local var_45_1 = var_45_0:getAllPosEquips()
+
+			for iter_45_0, iter_45_1 in pairs(var_45_1) do
+				for iter_45_2, iter_45_3 in pairs(iter_45_1.equipUid) do
+					local var_45_2 = arg_45_0._allInTeamEquips[iter_45_3]
+
+					if not var_45_2 then
+						var_45_2 = {}
+						arg_45_0._allInTeamEquips[iter_45_3] = var_45_2
 					end
 
-					table.insert(slot14, {
+					table.insert(var_45_2, {
 						1,
-						slot7 + 1
+						iter_45_0 + 1
 					})
 				end
 			end
 		end
 	end
 
-	return slot0._allInTeamEquips[slot1]
+	return arg_45_0._allInTeamEquips[arg_45_1]
 end
 
-function slot0.clearTeamInfo(slot0)
-	slot0._allInTeamEquips = nil
+function var_0_0.clearTeamInfo(arg_46_0)
+	arg_46_0._allInTeamEquips = nil
 end
 
-function slot0.openEquipView(slot0)
-	slot0.equipUidToHeroMo = {}
-	slot0.equipUidToInGroup = {}
-	slot1 = HeroGroupModel.instance:getMainGroupMo()
+function var_0_0.openEquipView(arg_47_0)
+	arg_47_0.equipUidToHeroMo = {}
+	arg_47_0.equipUidToInGroup = {}
 
-	for slot7, slot8 in pairs(slot1:getAllPosEquips()) do
-		slot0.equipUidToHeroMo[slot8.equipUid[1]] = HeroModel.instance:getById(slot1.heroList[slot7 + 1])
-		slot0.equipUidToInGroup[slot8.equipUid[1]] = true
+	local var_47_0 = HeroGroupModel.instance:getMainGroupMo()
+	local var_47_1 = var_47_0:getAllPosEquips()
+	local var_47_2 = var_47_0.heroList
+
+	for iter_47_0, iter_47_1 in pairs(var_47_1) do
+		local var_47_3 = HeroModel.instance:getById(var_47_2[iter_47_0 + 1])
+
+		arg_47_0.equipUidToHeroMo[iter_47_1.equipUid[1]] = var_47_3
+		arg_47_0.equipUidToInGroup[iter_47_1.equipUid[1]] = true
 	end
 
-	slot0:resetSortStatus()
+	arg_47_0:resetSortStatus()
 end
 
-function slot0.getHeroMoByEquipUid(slot0, slot1)
-	return slot0.equipUidToHeroMo and slot0.equipUidToHeroMo[slot1]
+function var_0_0.getHeroMoByEquipUid(arg_48_0, arg_48_1)
+	return arg_48_0.equipUidToHeroMo and arg_48_0.equipUidToHeroMo[arg_48_1]
 end
 
-function slot0.isInGroup(slot0, slot1)
-	return slot0.equipUidToInGroup and slot0.equipUidToInGroup[slot1]
+function var_0_0.isInGroup(arg_49_0, arg_49_1)
+	return arg_49_0.equipUidToInGroup and arg_49_0.equipUidToInGroup[arg_49_1]
 end
 
-function slot0.resetSortStatus(slot0)
-	slot0._btnTag = 1
+function var_0_0.resetSortStatus(arg_50_0)
+	arg_50_0._btnTag = 1
 
-	slot0:resetLevelSortStatus()
-	slot0:resetQualitySortStatus()
+	arg_50_0:resetLevelSortStatus()
+	arg_50_0:resetQualitySortStatus()
 end
 
-function slot0.resetLevelSortStatus(slot0)
-	slot0._levelAscend = false
+function var_0_0.resetLevelSortStatus(arg_51_0)
+	arg_51_0._levelAscend = false
 end
 
-function slot0.resetQualitySortStatus(slot0)
-	slot0._qualityAscend = false
+function var_0_0.resetQualitySortStatus(arg_52_0)
+	arg_52_0._qualityAscend = false
 end
 
-function slot0.getFilterRare(slot0)
-	if not slot0.filterRare then
-		slot0.filterRare = EquipConfig.instance:getMinFilterRare()
+function var_0_0.getFilterRare(arg_53_0)
+	if not arg_53_0.filterRare then
+		arg_53_0.filterRare = EquipConfig.instance:getMinFilterRare()
 	end
 
-	logNormal("EquipChooseListModel : get filter rare : " .. tostring(slot0.filterRare))
+	logNormal("EquipChooseListModel : get filter rare : " .. tostring(arg_53_0.filterRare))
 
-	return slot0.filterRare
+	return arg_53_0.filterRare
 end
 
-function slot0.setFilterRare(slot0, slot1)
-	logNormal("EquipChooseListModel : set filter rare : " .. tostring(slot1))
+function var_0_0.setFilterRare(arg_54_0, arg_54_1)
+	logNormal("EquipChooseListModel : set filter rare : " .. tostring(arg_54_1))
 
-	slot0.filterRare = slot1
+	arg_54_0.filterRare = arg_54_1
 end
 
-function slot0.setIsLock(slot0, slot1)
-	slot0.isLock = slot1
+function var_0_0.setIsLock(arg_55_0, arg_55_1)
+	arg_55_0.isLock = arg_55_1
 end
 
-function slot0.clear(slot0)
-	slot0.equipUidToHeroMo = {}
-	slot0.equipUidToInGroup = {}
+function var_0_0.clear(arg_56_0)
+	arg_56_0.equipUidToHeroMo = {}
+	arg_56_0.equipUidToInGroup = {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

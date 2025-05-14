@@ -1,124 +1,135 @@
-module("modules.logic.room.view.trade.RoomWholesaleView", package.seeall)
+﻿module("modules.logic.room.view.trade.RoomWholesaleView", package.seeall)
 
-slot0 = class("RoomWholesaleView", BaseView)
+local var_0_0 = class("RoomWholesaleView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttip = gohelper.findChildText(slot0.viewGO, "#txt_tip")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "tipsbg2/#txt_num")
-	slot0._goroot = gohelper.findChild(slot0.viewGO, "#go_root")
-	slot0._btnleft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_left")
-	slot0._btnright = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_right")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "#txt_tip")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "tipsbg2/#txt_num")
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
+	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_left")
+	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_right")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnleft:AddClickListener(slot0._btnleftOnClick, slot0)
-	slot0._btnright:AddClickListener(slot0._btnrightOnClick, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnGetTradeOrderInfo, slot0.onRefresh, slot0)
-	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, slot0.finishOrder, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
+	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnGetTradeOrderInfo, arg_2_0.onRefresh, arg_2_0)
+	RoomTradeController.instance:registerCallback(RoomTradeEvent.OnFinishOrder, arg_2_0.finishOrder, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnleft:RemoveClickListener()
-	slot0._btnright:RemoveClickListener()
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnGetTradeOrderInfo, slot0.onRefresh, slot0)
-	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, slot0.finishOrder, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnleft:RemoveClickListener()
+	arg_3_0._btnright:RemoveClickListener()
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnGetTradeOrderInfo, arg_3_0.onRefresh, arg_3_0)
+	RoomTradeController.instance:unregisterCallback(RoomTradeEvent.OnFinishOrder, arg_3_0.finishOrder, arg_3_0)
 end
 
-function slot0._btnleftOnClick(slot0)
-	if slot0._selectPageIndex <= 0 or slot0._isPlaySwitchAnim then
+function var_0_0._btnleftOnClick(arg_4_0)
+	if arg_4_0._selectPageIndex <= 0 or arg_4_0._isPlaySwitchAnim then
 		return
 	end
 
-	slot0._selectPageIndex = slot0._selectPageIndex - 1
+	arg_4_0._selectPageIndex = arg_4_0._selectPageIndex - 1
 
-	slot0:_cutPage()
+	arg_4_0:_cutPage()
 end
 
-function slot0._btnrightOnClick(slot0)
-	if RoomTradeModel.instance:getWholesaleGoodsPageMaxCount() <= slot0._selectPageIndex or slot0._isPlaySwitchAnim then
+function var_0_0._btnrightOnClick(arg_5_0)
+	if arg_5_0._selectPageIndex >= RoomTradeModel.instance:getWholesaleGoodsPageMaxCount() or arg_5_0._isPlaySwitchAnim then
 		return
 	end
 
-	slot0._selectPageIndex = slot0._selectPageIndex + 1
+	arg_5_0._selectPageIndex = arg_5_0._selectPageIndex + 1
 
-	slot0:_cutPage()
+	arg_5_0:_cutPage()
 end
 
-function slot0._cutPage(slot0)
-	slot0._isPlaySwitchAnim = true
+function var_0_0._cutPage(arg_6_0)
+	arg_6_0._isPlaySwitchAnim = true
 
-	slot0.viewContainer:playAnim(RoomTradeEnum.TradeAnim.Swicth)
-	TaskDispatcher.cancelTask(slot0.refreshOrderPage, slot0)
-	TaskDispatcher.runDelay(slot0.refreshOrderPage, slot0, 0.16)
+	arg_6_0.viewContainer:playAnim(RoomTradeEnum.TradeAnim.Swicth)
+	TaskDispatcher.cancelTask(arg_6_0.refreshOrderPage, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0.refreshOrderPage, arg_6_0, 0.16)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txttip.text = ServerTime.ReplaceUTCStr(luaLang("p_roomwholesaleview_txt_tip2"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._txttip.text = ServerTime.ReplaceUTCStr(luaLang("p_roomwholesaleview_txt_tip2"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._selectPageIndex = 0
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._selectPageIndex = 0
 
-	slot0:onRefresh()
+	arg_9_0:onRefresh()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshOrderPage, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.refreshOrderPage, arg_10_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0.onRefresh(slot0)
-	slot0:refreshOrderPage()
+function var_0_0.onRefresh(arg_12_0)
+	arg_12_0:refreshOrderPage()
 
-	slot0._txtnum.text = RoomTradeModel.instance:getWeeklyWholesaleRevenue()
+	arg_12_0._txtnum.text = RoomTradeModel.instance:getWeeklyWholesaleRevenue()
 end
 
-function slot0._getOrderItem(slot0, slot1)
-	if not slot0._orderItems[slot1] then
-		slot0._orderItems[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(RoomWholesaleItem.ResUrl, slot0._goroot), RoomWholesaleItem)
+function var_0_0._getOrderItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._orderItems[arg_13_1]
+
+	if not var_13_0 then
+		local var_13_1 = arg_13_0:getResInst(RoomWholesaleItem.ResUrl, arg_13_0._goroot)
+
+		var_13_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1, RoomWholesaleItem)
+		arg_13_0._orderItems[arg_13_1] = var_13_0
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.refreshOrderPage(slot0)
-	slot0._isPlaySwitchAnim = nil
-	slot1 = RoomTradeModel.instance:getWholesaleGoodsByPageIndex(slot0._selectPageIndex)
+function var_0_0.refreshOrderPage(arg_14_0)
+	arg_14_0._isPlaySwitchAnim = nil
 
-	if not slot0._orderItems then
-		slot0._orderItems = slot0:getUserDataTb_()
+	local var_14_0 = RoomTradeModel.instance:getWholesaleGoodsByPageIndex(arg_14_0._selectPageIndex)
+
+	if not arg_14_0._orderItems then
+		arg_14_0._orderItems = arg_14_0:getUserDataTb_()
 	end
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0:_getOrderItem(slot5):onUpdateMo(slot6)
+	if var_14_0 then
+		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+			arg_14_0:_getOrderItem(iter_14_0):onUpdateMo(iter_14_1)
 		end
 
-		for slot5 = 1, #slot0._orderItems do
-			gohelper.setActive(slot0._orderItems[slot5].viewGO, slot5 <= #slot1)
+		for iter_14_2 = 1, #arg_14_0._orderItems do
+			gohelper.setActive(arg_14_0._orderItems[iter_14_2].viewGO, iter_14_2 <= #var_14_0)
 		end
 	end
 
-	gohelper.setActive(slot0._btnleft.gameObject, slot0._selectPageIndex > 0)
-	gohelper.setActive(slot0._btnright.gameObject, slot0._selectPageIndex < RoomTradeModel.instance:getWholesaleGoodsPageMaxCount() - 1)
-	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnCutOrderPage, slot0._selectPageIndex + 1)
+	local var_14_1 = arg_14_0._selectPageIndex > 0
+	local var_14_2 = arg_14_0._selectPageIndex < RoomTradeModel.instance:getWholesaleGoodsPageMaxCount() - 1
+
+	gohelper.setActive(arg_14_0._btnleft.gameObject, var_14_1)
+	gohelper.setActive(arg_14_0._btnright.gameObject, var_14_2)
+	RoomTradeController.instance:dispatchEvent(RoomTradeEvent.OnCutOrderPage, arg_14_0._selectPageIndex + 1)
 end
 
-function slot0.finishOrder(slot0, slot1)
-	if slot1 ~= RoomTradeEnum.Mode.Wholesale then
+function var_0_0.finishOrder(arg_15_0, arg_15_1)
+	if arg_15_1 ~= RoomTradeEnum.Mode.Wholesale then
 		return
 	end
 
-	slot0:onRefresh()
+	arg_15_0:onRefresh()
 end
 
-return slot0
+return var_0_0

@@ -1,84 +1,101 @@
-module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessEffectComp", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessEffectComp", package.seeall)
 
-slot0 = class("AutoChessEffectComp", LuaCompBase)
+local var_0_0 = class("AutoChessEffectComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.goEffPointU = gohelper.findChild(slot1, "eff_up")
-	slot0.goEffPointD = gohelper.findChild(slot1, "eff_down")
-	slot0.effectGoDic = slot0:getUserDataTb_()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.goEffPointU = gohelper.findChild(arg_1_1, "eff_up")
+	arg_1_0.goEffPointD = gohelper.findChild(arg_1_1, "eff_down")
+	arg_1_0.effectGoDic = arg_1_0:getUserDataTb_()
 end
 
-function slot0.playEffect(slot0, slot1)
-	if lua_auto_chess_effect.configDict[slot1] then
-		if slot2.soundId ~= 0 then
-			AudioMgr.instance:trigger(slot2.soundId)
+function var_0_0.playEffect(arg_2_0, arg_2_1)
+	local var_2_0 = lua_auto_chess_effect.configDict[arg_2_1]
+
+	if var_2_0 then
+		if var_2_0.soundId ~= 0 then
+			AudioMgr.instance:trigger(var_2_0.soundId)
 		end
 
-		if not string.nilorempty(slot2.offset) then
-			slot3 = AutoChessEnum.EffectPos[slot2.position] - string.splitToVector2(slot2.offset, ",")
+		local var_2_1 = AutoChessEnum.EffectPos[var_2_0.position]
+
+		if not string.nilorempty(var_2_0.offset) then
+			var_2_1 = var_2_1 - string.splitToVector2(var_2_0.offset, ",")
 		end
 
-		slot0:activeEffect(slot2, slot2.nameUp, slot3, slot0.goEffPointU)
-		slot0:activeEffect(slot2, slot2.nameDown, slot3, slot0.goEffPointD)
+		arg_2_0:activeEffect(var_2_0, var_2_0.nameUp, var_2_1, arg_2_0.goEffPointU)
+		arg_2_0:activeEffect(var_2_0, var_2_0.nameDown, var_2_1, arg_2_0.goEffPointD)
 
-		return slot2.duration
+		return var_2_0.duration
 	end
 
 	return 0
 end
 
-function slot0.activeEffect(slot0, slot1, slot2, slot3, slot4)
-	if string.nilorempty(slot2) then
+function var_0_0.activeEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	if string.nilorempty(arg_3_2) then
 		return
 	end
 
-	if slot0.effectGoDic[slot2] then
-		gohelper.setActive(slot5, true)
+	local var_3_0 = arg_3_0.effectGoDic[arg_3_2]
+
+	if var_3_0 then
+		gohelper.setActive(var_3_0, true)
 	else
-		slot5 = gohelper.create2d(slot4, slot2)
+		var_3_0 = gohelper.create2d(arg_3_4, arg_3_2)
 
-		recthelper.setAnchor(slot5.transform, slot3.x, slot3.y)
+		recthelper.setAnchor(var_3_0.transform, arg_3_3.x, arg_3_3.y)
 
-		slot0.effectGoDic[slot2] = slot5
+		arg_3_0.effectGoDic[arg_3_2] = var_3_0
 
-		AutoChessEffectMgr.instance:getEffectRes(slot2, slot5)
+		AutoChessEffectMgr.instance:getEffectRes(arg_3_2, var_3_0)
 	end
 
-	if slot1.loop ~= 1 then
-		TaskDispatcher.runDelay(function ()
-			gohelper.setActive(uv0, false)
-		end, nil, slot1.duration + 0.2)
+	if arg_3_1.loop ~= 1 then
+		TaskDispatcher.runDelay(function()
+			gohelper.setActive(var_3_0, false)
+		end, nil, arg_3_1.duration + 0.2)
 	end
 end
 
-function slot0.removeEffect(slot0, slot1)
-	if lua_auto_chess_effect.configDict[slot1] and slot2.loop == 1 then
-		if not string.nilorempty(slot2.nameUp) then
-			gohelper.setActive(slot0.effectGoDic[slot3], false)
+function var_0_0.removeEffect(arg_5_0, arg_5_1)
+	local var_5_0 = lua_auto_chess_effect.configDict[arg_5_1]
+
+	if var_5_0 and var_5_0.loop == 1 then
+		local var_5_1 = var_5_0.nameUp
+
+		if not string.nilorempty(var_5_1) then
+			local var_5_2 = arg_5_0.effectGoDic[var_5_1]
+
+			gohelper.setActive(var_5_2, false)
 		end
 
-		if not string.nilorempty(slot2.nameDown) then
-			gohelper.setActive(slot0.effectGoDic[slot3], false)
+		local var_5_3 = var_5_0.nameDown
+
+		if not string.nilorempty(var_5_3) then
+			local var_5_4 = arg_5_0.effectGoDic[var_5_3]
+
+			gohelper.setActive(var_5_4, false)
 		end
 	end
 end
 
-function slot0.moveEffect(slot0, slot1, slot2, slot3)
-	slot4 = slot0.effectGoDic[slot1]
-	slot2 = recthelper.rectToRelativeAnchorPos(slot2, slot4.transform.parent)
+function var_0_0.moveEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_0.effectGoDic[arg_6_1]
 
-	if slot4 then
-		ZProj.TweenHelper.DOAnchorPos(slot4.transform, slot2.x, slot2.y, slot3, nil, , , EaseType.Linear)
+	arg_6_2 = recthelper.rectToRelativeAnchorPos(arg_6_2, var_6_0.transform.parent)
+
+	if var_6_0 then
+		ZProj.TweenHelper.DOAnchorPos(var_6_0.transform, arg_6_2.x, arg_6_2.y, arg_6_3, nil, nil, nil, EaseType.Linear)
 	else
-		logError(string.format("异常:未加载特效%s", slot1))
+		logError(string.format("异常:未加载特效%s", arg_6_1))
 	end
 end
 
-function slot0.hideAll(slot0)
-	for slot4, slot5 in pairs(slot0.effectGoDic) do
-		gohelper.setActive(slot5, false)
+function var_0_0.hideAll(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.effectGoDic) do
+		gohelper.setActive(iter_7_1, false)
 	end
 end
 
-return slot0
+return var_0_0

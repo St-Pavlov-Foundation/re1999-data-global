@@ -1,53 +1,56 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErDialogStep", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErDialogStep", package.seeall)
 
-slot0 = class("ZhiXinQuanErDialogStep", BaseWork)
+local var_0_0 = class("ZhiXinQuanErDialogStep", BaseWork)
 
-function slot0.initData(slot0, slot1)
-	slot0._data = slot1
-	slot0._dialogueId = tonumber(slot1.param)
+function var_0_0.initData(arg_1_0, arg_1_1)
+	arg_1_0._data = arg_1_1
+	arg_1_0._dialogueId = tonumber(arg_1_1.param)
 end
 
-function slot0.onStart(slot0, slot1)
-	if slot0._data.param == 0 then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if arg_2_0._data.param == 0 then
+		return arg_2_0:onDone(true)
 	end
 
-	slot0:beginPlayDialog()
+	arg_2_0:beginPlayDialog()
 end
 
-function slot0.beginPlayDialog(slot0)
-	if not Activity176Config.instance:getBubbleCo(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, slot0._dialogueId) then
-		logError("纸信圈儿对话配置不存在" .. slot0._dialogueId)
-		slot0:onDone(true)
+function var_0_0.beginPlayDialog(arg_3_0)
+	local var_3_0 = Activity176Config.instance:getBubbleCo(VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr, arg_3_0._dialogueId)
+
+	if not var_3_0 then
+		logError("纸信圈儿对话配置不存在" .. arg_3_0._dialogueId)
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	PuzzleMazeDrawController.instance:registerCallback(PuzzleEvent.OnFinishDialog, slot0._onFinishDialog, slot0)
+	PuzzleMazeDrawController.instance:registerCallback(PuzzleEvent.OnFinishDialog, arg_3_0._onFinishDialog, arg_3_0)
 
-	slot2, slot3 = slot0:_getDialogPos()
+	local var_3_1, var_3_2 = arg_3_0:_getDialogPos()
+	local var_3_3 = {
+		co = var_3_0,
+		dialogPosX = var_3_1,
+		dialogPosY = var_3_2
+	}
 
-	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.OnStartDialog, {
-		co = slot1,
-		dialogPosX = slot2,
-		dialogPosY = slot3
-	})
+	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.OnStartDialog, var_3_3)
 end
 
-function slot0._getDialogPos(slot0)
-	slot1, slot2 = PuzzleMazeDrawController.instance:getLastPos()
-	slot3, slot4 = PuzzleMazeDrawModel.instance:getObjectAnchor(slot1, slot2)
+function var_0_0._getDialogPos(arg_4_0)
+	local var_4_0, var_4_1 = PuzzleMazeDrawController.instance:getLastPos()
+	local var_4_2, var_4_3 = PuzzleMazeDrawModel.instance:getObjectAnchor(var_4_0, var_4_1)
 
-	return slot3, slot4 + 100
+	return var_4_2, var_4_3 + 100
 end
 
-function slot0._onFinishDialog(slot0)
-	PuzzleMazeDrawController.instance:unregisterAllCallback(PuzzleEvent.OnFinishDialog, slot0._onFinishDialog, slot0)
-	slot0:onDone(true)
+function var_0_0._onFinishDialog(arg_5_0)
+	PuzzleMazeDrawController.instance:unregisterAllCallback(PuzzleEvent.OnFinishDialog, arg_5_0._onFinishDialog, arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	PuzzleMazeDrawController.instance:unregisterCallback(PuzzleEvent.OnFinishDialog, slot0._onFinishDialog, slot0)
+function var_0_0.clearWork(arg_6_0)
+	PuzzleMazeDrawController.instance:unregisterCallback(PuzzleEvent.OnFinishDialog, arg_6_0._onFinishDialog, arg_6_0)
 end
 
-return slot0
+return var_0_0

@@ -1,26 +1,28 @@
-module("modules.logic.activity.view.show.ActivityGuestBindViewContainer", package.seeall)
+﻿module("modules.logic.activity.view.show.ActivityGuestBindViewContainer", package.seeall)
 
-slot0 = class("ActivityGuestBindViewContainer", BaseViewContainer)
+local var_0_0 = class("ActivityGuestBindViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.cellClass = ActivityGuestBindViewItem
-	slot1.scrollGOPath = "leftbottom/#scroll_reward"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = 172
-	slot1.cellHeight = 185
-	slot1.cellSpaceH = 35
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 0
-	slot1.endSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+	local var_1_1 = ActivityGuestBindViewListModel.instance
+
+	var_1_0.cellClass = ActivityGuestBindViewItem
+	var_1_0.scrollGOPath = "leftbottom/#scroll_reward"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.scrollDir = ScrollEnum.ScrollDirH
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 172
+	var_1_0.cellHeight = 185
+	var_1_0.cellSpaceH = 35
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 0
+	var_1_0.endSpace = 0
 
 	return {
 		ActivityGuestBindView.New(),
-		LuaListScrollView.New(ActivityGuestBindViewListModel.instance, slot1)
+		(LuaListScrollView.New(var_1_1, var_1_0))
 	}
 end
 
-return slot0
+return var_0_0

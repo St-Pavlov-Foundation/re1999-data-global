@@ -1,28 +1,36 @@
-module("modules.logic.fight.system.work.FightWorkEffectPowerMaxAdd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectPowerMaxAdd", package.seeall)
 
-slot0 = class("FightWorkEffectPowerMaxAdd", FightEffectBase)
+local var_0_0 = class("FightWorkEffectPowerMaxAdd", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.targetId
+	local var_1_1 = FightHelper.getEntity(var_1_0)
 
-		return
-	end
-
-	if not slot2:getMO() then
-		slot0:onDone(true)
+	if not var_1_1 then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if slot3:getPowerInfo(slot0._actEffectMO.configEffect) then
-		FightController.instance:dispatchEvent(FightEvent.PowerMaxChange, slot1, slot4, slot0._actEffectMO.effectNum)
+	local var_1_2 = var_1_1:getMO()
+
+	if not var_1_2 then
+		arg_1_0:onDone(true)
+
+		return
 	end
 
-	slot0:onDone(true)
+	local var_1_3 = arg_1_0._actEffectMO.configEffect
+
+	if var_1_2:getPowerInfo(var_1_3) then
+		FightController.instance:dispatchEvent(FightEvent.PowerMaxChange, var_1_0, var_1_3, arg_1_0._actEffectMO.effectNum)
+	end
+
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

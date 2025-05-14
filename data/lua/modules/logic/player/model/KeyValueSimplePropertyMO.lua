@@ -1,45 +1,56 @@
-module("modules.logic.player.model.KeyValueSimplePropertyMO", package.seeall)
+﻿module("modules.logic.player.model.KeyValueSimplePropertyMO", package.seeall)
 
-slot0 = pureTable("KeyValueSimplePropertyMO")
+local var_0_0 = pureTable("KeyValueSimplePropertyMO")
 
-function slot0.ctor(slot0)
-	slot0._isNumber = true
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._isNumber = true
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.property = slot1.property
-	slot0._map = {}
-	slot6 = "#"
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.property = arg_2_1.property
+	arg_2_0._map = {}
 
-	for slot6, slot7 in ipairs(GameUtil.splitString2(slot1.property, slot0._isNumber, "|", slot6)) do
-		slot0._map[slot7[1]] = slot7[2]
+	local var_2_0 = GameUtil.splitString2(arg_2_1.property, arg_2_0._isNumber, "|", "#")
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		local var_2_1 = iter_2_1[1]
+		local var_2_2 = iter_2_1[2]
+
+		arg_2_0._map[var_2_1] = var_2_2
 	end
 end
 
-function slot0.getValue(slot0, slot1, slot2)
-	return slot0._map and slot0._map[slot1] or slot2
+function var_0_0.getValue(arg_3_0, arg_3_1, arg_3_2)
+	return arg_3_0._map and arg_3_0._map[arg_3_1] or arg_3_2
 end
 
-function slot0.setValue(slot0, slot1, slot2)
-	if not slot0._map then
-		slot0._map = {}
+function var_0_0.setValue(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._map then
+		arg_4_0._map = {}
 	end
 
-	slot0._map[slot1] = slot2
+	arg_4_0._map[arg_4_1] = arg_4_2
 end
 
-function slot0.getString(slot0)
-	if not slot0._map then
-		return ""
+function var_0_0.getString(arg_5_0)
+	local var_5_0 = ""
+
+	if not arg_5_0._map then
+		return var_5_0
 	end
 
-	for slot5, slot6 in pairs(slot0._map) do
-		slot7 = string.format("%s#%s", slot5, slot6)
-		slot1 = not string.nilorempty(slot1) and slot1 .. "|" .. slot7 or slot7
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._map) do
+		local var_5_1 = string.format("%s#%s", iter_5_0, iter_5_1)
+
+		if not string.nilorempty(var_5_0) then
+			var_5_0 = var_5_0 .. "|" .. var_5_1
+		else
+			var_5_0 = var_5_1
+		end
 	end
 
-	return slot1
+	return var_5_0
 end
 
-return slot0
+return var_0_0

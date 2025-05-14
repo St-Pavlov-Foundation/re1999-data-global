@@ -1,62 +1,70 @@
-module("modules.common.facade.GameFacade", package.seeall)
+﻿module("modules.common.facade.GameFacade", package.seeall)
 
-return {
-	openInputBox = function (slot0)
-		ViewMgr.instance:openView(ViewName.CommonInputView, slot0)
+local var_0_0 = {
+	openInputBox = function(arg_1_0)
+		ViewMgr.instance:openView(ViewName.CommonInputView, arg_1_0)
 	end,
-	closeInputBox = function ()
+	closeInputBox = function()
 		ViewMgr.instance:closeView(ViewName.CommonInputView)
 	end,
-	jump = function (slot0, slot1, slot2, slot3)
-		return JumpController.instance:jump(slot0, slot1, slot2, slot3)
+	jump = function(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+		return JumpController.instance:jump(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	end,
-	jumpByAdditionParam = function (slot0, slot1, slot2, slot3)
-		return JumpController.instance:jumpByAdditionParam(slot0, slot1, slot2, slot3)
+	jumpByAdditionParam = function(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+		return JumpController.instance:jumpByAdditionParam(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	end,
-	jumpByStr = function (slot0)
-		CommonJumpUtil.jump(slot0)
+	jumpByStr = function(arg_5_0)
+		CommonJumpUtil.jump(arg_5_0)
 	end,
-	showMessageBox = function (slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, ...)
-		MessageBoxController.instance:showMsgBox(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, ...)
+	showMessageBox = function(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7, ...)
+		MessageBoxController.instance:showMsgBox(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7, ...)
 	end,
-	showToastWithTableParam = function (slot0, slot1)
-		if slot1 then
-			ToastController.instance:showToast(slot0, unpack(slot1))
+	showToastWithTableParam = function(arg_7_0, arg_7_1)
+		if arg_7_1 then
+			ToastController.instance:showToast(arg_7_0, unpack(arg_7_1))
 		else
-			ToastController.instance:showToast(slot0)
+			ToastController.instance:showToast(arg_7_0)
 		end
 	end,
-	showToast = function (slot0, ...)
-		ToastController.instance:showToast(slot0, ...)
+	showToast = function(arg_8_0, ...)
+		ToastController.instance:showToast(arg_8_0, ...)
 	end,
-	showToastString = function (slot0)
-		ToastController.instance:showToastWithString(slot0)
+	showToastString = function(arg_9_0)
+		ToastController.instance:showToastWithString(arg_9_0)
 	end,
-	showToastWithIcon = function (slot0, slot1, ...)
-		ToastController.instance:showToastWithIcon(slot0, slot1, ...)
-	end,
-	showIconToastWithTableParam = function (slot0, slot1, slot2)
-		if type(slot2) == "table" then
-			uv0.showToastWithIcon(slot0, slot1, unpack(slot2))
-		else
-			uv0.showToastWithIcon(slot0, slot1)
-		end
-	end,
-	isExternalTest = function ()
-		return GameConfig:GetCurServerType() == 6 and SettingsModel.instance:isZhRegion()
-	end,
-	isKOLTest = function ()
-		return GameConfig:GetCurServerType() == GameUrlConfig.ServerType.OutExperience or slot0 == 8
-	end,
-	showOptionMessageBox = function (slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, ...)
-		if not MessageBoxController.instance:canShowMessageOptionBoxView(slot0, slot2) then
-			if slot3 then
-				slot3(slot6)
-			end
-
-			return
-		end
-
-		MessageBoxController.instance:showOptionMsgBox(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, ...)
+	showToastWithIcon = function(arg_10_0, arg_10_1, ...)
+		ToastController.instance:showToastWithIcon(arg_10_0, arg_10_1, ...)
 	end
 }
+
+function var_0_0.showIconToastWithTableParam(arg_11_0, arg_11_1, arg_11_2)
+	if type(arg_11_2) == "table" then
+		var_0_0.showToastWithIcon(arg_11_0, arg_11_1, unpack(arg_11_2))
+	else
+		var_0_0.showToastWithIcon(arg_11_0, arg_11_1)
+	end
+end
+
+function var_0_0.isExternalTest()
+	return GameConfig:GetCurServerType() == 6 and SettingsModel.instance:isZhRegion()
+end
+
+function var_0_0.isKOLTest()
+	local var_13_0 = GameConfig:GetCurServerType()
+
+	return var_13_0 == GameUrlConfig.ServerType.OutExperience or var_13_0 == 8
+end
+
+function var_0_0.showOptionMessageBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6, arg_14_7, arg_14_8, ...)
+	if not MessageBoxController.instance:canShowMessageOptionBoxView(arg_14_0, arg_14_2) then
+		if arg_14_3 then
+			arg_14_3(arg_14_6)
+		end
+
+		return
+	end
+
+	MessageBoxController.instance:showOptionMsgBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6, arg_14_7, arg_14_8, ...)
+end
+
+return var_0_0

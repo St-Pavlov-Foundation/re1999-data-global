@@ -1,88 +1,114 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightView", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightView", package.seeall)
 
-slot0 = class("RoleStoryHeroGroupFightView", HeroGroupFightView)
+local var_0_0 = class("RoleStoryHeroGroupFightView", HeroGroupFightView)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._gotarget = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain")
+	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain")
 
-	gohelper.setActive(slot0._gotarget, false)
+	gohelper.setActive(arg_1_0._gotarget, false)
 end
 
-function slot0._refreshCost(slot0, slot1)
-	gohelper.setActive(slot0._gocost, slot1)
-	gohelper.setActive(slot0._gopower, not slot0._enterAfterFreeLimit)
-	gohelper.setActive(slot0._gocount, not slot0._enterAfterFreeLimit and slot0:_getfreeCount() > 0)
-	gohelper.setActive(slot0._gonormallackpower, false)
-	gohelper.setActive(slot0._goreplaylackpower, false)
+function var_0_0._refreshCost(arg_2_0, arg_2_1)
+	gohelper.setActive(arg_2_0._gocost, arg_2_1)
 
-	if slot0._enterAfterFreeLimit or slot2 > 0 then
-		slot3 = tostring(-1 * math.min(slot0._multiplication, slot2))
-		slot0._txtCostNum.text = slot3
-		slot0._txtReplayCostNum.text = slot3
-		slot0._txtcostcount.text = string.format("<color=#B3AFAC>%s</color><color=#B26161>%s</color>", luaLang("p_dungeonmaplevel_costcount"), slot3)
+	local var_2_0 = arg_2_0:_getfreeCount()
 
-		if slot0._multiplication <= slot2 then
-			slot0:_refreshBtns(false)
+	gohelper.setActive(arg_2_0._gopower, not arg_2_0._enterAfterFreeLimit)
+	gohelper.setActive(arg_2_0._gocount, not arg_2_0._enterAfterFreeLimit and var_2_0 > 0)
+	gohelper.setActive(arg_2_0._gonormallackpower, false)
+	gohelper.setActive(arg_2_0._goreplaylackpower, false)
+
+	if arg_2_0._enterAfterFreeLimit or var_2_0 > 0 then
+		local var_2_1 = tostring(-1 * math.min(arg_2_0._multiplication, var_2_0))
+
+		arg_2_0._txtCostNum.text = var_2_1
+		arg_2_0._txtReplayCostNum.text = var_2_1
+		arg_2_0._txtcostcount.text = string.format("<color=#B3AFAC>%s</color><color=#B26161>%s</color>", luaLang("p_dungeonmaplevel_costcount"), var_2_1)
+
+		if var_2_0 >= arg_2_0._multiplication then
+			arg_2_0:_refreshBtns(false)
 
 			return
 		end
 	end
 
-	slot5 = nil
+	local var_2_2 = GameUtil.splitString2(arg_2_0.episodeConfig.cost, true)[1]
+	local var_2_3
 
-	slot0._simagepower:LoadImage((GameUtil.splitString2(slot0.episodeConfig.cost, true)[1][1] ~= MaterialEnum.MaterialType.Currency or slot4[2] ~= CurrencyEnum.CurrencyType.Power or ResUrl.getCurrencyItemIcon(CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).icon .. "_btn")) and ItemModel.instance:getItemSmallIcon(slot4[2]))
-	recthelper.setSize(slot0._simagepower.transform, 100, 100)
-	slot0:_refreshCostPower()
+	if var_2_2[1] == MaterialEnum.MaterialType.Currency and var_2_2[2] == CurrencyEnum.CurrencyType.Power then
+		local var_2_4 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+
+		var_2_3 = ResUrl.getCurrencyItemIcon(var_2_4.icon .. "_btn")
+	else
+		var_2_3 = ItemModel.instance:getItemSmallIcon(var_2_2[2])
+	end
+
+	arg_2_0._simagepower:LoadImage(var_2_3)
+	recthelper.setSize(arg_2_0._simagepower.transform, 100, 100)
+	arg_2_0:_refreshCostPower()
 end
 
-function slot0._onClickStart(slot0)
-	slot4 = {}
+function var_0_0._onClickStart(arg_3_0)
+	local var_3_0 = GameUtil.splitString2(arg_3_0.episodeConfig.cost, true)
+	local var_3_1 = arg_3_0:_getfreeCount()
+	local var_3_2 = (arg_3_0._multiplication or 1) - var_3_1
+	local var_3_3 = {}
 
-	for slot8, slot9 in ipairs(GameUtil.splitString2(slot0.episodeConfig.cost, true)) do
-		table.insert(slot4, {
-			type = slot9[1],
-			id = slot9[2],
-			quantity = slot9[3] * ((slot0._multiplication or 1) - slot0:_getfreeCount())
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		table.insert(var_3_3, {
+			type = iter_3_1[1],
+			id = iter_3_1[2],
+			quantity = iter_3_1[3] * var_3_2
 		})
 	end
 
-	slot5, slot6, slot7 = ItemModel.instance:hasEnoughItems(slot4)
+	local var_3_4, var_3_5, var_3_6 = ItemModel.instance:hasEnoughItems(var_3_3)
 
-	if not slot6 then
-		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, slot7, slot5)
+	if not var_3_5 then
+		GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_3_6, var_3_4)
 
 		return
 	end
 
-	slot0:_closemultcontent()
-	slot0:_enterFight()
+	arg_3_0:_closemultcontent()
+	arg_3_0:_enterFight()
 end
 
-function slot0._refreshCostPower(slot0)
-	slot4 = (GameUtil.splitString2(slot0.episodeConfig.cost, true)[1][3] or 0) > 0
+function var_0_0._refreshCostPower(arg_4_0)
+	local var_4_0 = GameUtil.splitString2(arg_4_0.episodeConfig.cost, true)[1]
+	local var_4_1 = var_4_0[3] or 0
+	local var_4_2 = var_4_1 > 0
 
-	if slot0._enterAfterFreeLimit then
-		slot4 = false
+	if arg_4_0._enterAfterFreeLimit then
+		var_4_2 = false
 	end
 
-	gohelper.setActive(slot0._gopower, slot4)
-	slot0:_refreshBtns(slot4)
+	gohelper.setActive(arg_4_0._gopower, var_4_2)
+	arg_4_0:_refreshBtns(var_4_2)
 
-	if not slot4 then
+	if not var_4_2 then
 		return
 	end
 
-	slot0._txtusepower.text = string.format("-%s", slot3 * ((slot0._multiplication or 1) - slot0:_getfreeCount()))
+	local var_4_3 = var_4_1 * ((arg_4_0._multiplication or 1) - arg_4_0:_getfreeCount())
 
-	if slot5 <= ItemModel.instance:getItemQuantity(slot2[1], slot2[2]) then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepower, slot0._replayMode and "#070706" or (slot0._chapterConfig.type == DungeonEnum.ChapterType.Hard and "#FFFFFF" or "#070706"))
+	arg_4_0._txtusepower.text = string.format("-%s", var_4_3)
+
+	local var_4_4 = arg_4_0._chapterConfig.type == DungeonEnum.ChapterType.Hard
+
+	if var_4_3 <= ItemModel.instance:getItemQuantity(var_4_0[1], var_4_0[2]) then
+		local var_4_5 = var_4_4 and "#FFFFFF" or "#070706"
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtusepower, arg_4_0._replayMode and "#070706" or var_4_5)
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtusepower, slot0._replayMode and "#800015" or (slot6 and "#C44945" or "#800015"))
-		gohelper.setActive(slot0._gonormallackpower, not slot0._replayMode)
-		gohelper.setActive(slot0._goreplaylackpower, slot0._replayMode)
+		local var_4_6 = var_4_4 and "#C44945" or "#800015"
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._txtusepower, arg_4_0._replayMode and "#800015" or var_4_6)
+		gohelper.setActive(arg_4_0._gonormallackpower, not arg_4_0._replayMode)
+		gohelper.setActive(arg_4_0._goreplaylackpower, arg_4_0._replayMode)
 	end
 end
 
-return slot0
+return var_0_0

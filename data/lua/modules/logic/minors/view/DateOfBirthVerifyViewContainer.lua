@@ -1,11 +1,11 @@
-module("modules.logic.minors.view.DateOfBirthVerifyViewContainer", package.seeall)
+﻿module("modules.logic.minors.view.DateOfBirthVerifyViewContainer", package.seeall)
 
-slot0 = class("DateOfBirthVerifyViewContainer", BaseViewContainer)
+local var_0_0 = class("DateOfBirthVerifyViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
-		DateOfBirthVerifyView.New()
+		(DateOfBirthVerifyView.New())
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_room_building", package.seeall)
+﻿module("modules.configs.excel2json.lua_room_building", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	alphaThreshold = 22,
 	name = 4,
 	rotate = 18,
@@ -40,18 +41,18 @@ slot1 = {
 	reflerction = 36,
 	dragUpHeight = 21
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	produceDesc = 4,
 	name = 1,
 	useDesc = 2,
 	desc = 3
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

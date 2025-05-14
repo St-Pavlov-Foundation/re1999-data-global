@@ -1,64 +1,72 @@
-module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonBossModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonBossModel", package.seeall)
 
-slot0 = class("VersionActivity1_6DungeonBossModel", Activity149Model)
-slot1 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "Score"
+local var_0_0 = class("VersionActivity1_6DungeonBossModel", Activity149Model)
+local var_0_1 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "Score"
 
-function slot0.onInit(slot0)
-	uv0.super.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	var_0_0.super.onInit(arg_1_0)
 
-	slot0._receivedMsgInit = false
+	arg_1_0._receivedMsgInit = false
 end
 
-function slot0.reInit(slot0)
-	uv0.super.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	var_0_0.super.reInit(arg_2_0)
 end
 
-function slot0.isInBossFight(slot0)
+function var_0_0.isInBossFight(arg_3_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return false
 	end
 
-	return slot0:checkBattleEpisodeType(DungeonEnum.EpisodeType.Act1_6DungeonBoss)
+	return arg_3_0:checkBattleEpisodeType(DungeonEnum.EpisodeType.Act1_6DungeonBoss)
 end
 
-function slot0.checkBattleEpisodeType(slot0, slot1)
-	if not DungeonModel.instance.curSendEpisodeId then
+function var_0_0.checkBattleEpisodeType(arg_4_0, arg_4_1)
+	local var_4_0 = DungeonModel.instance.curSendEpisodeId
+
+	if not var_4_0 then
 		return false
 	end
 
-	if not DungeonConfig.instance:getEpisodeCO(slot2) then
+	local var_4_1 = DungeonConfig.instance:getEpisodeCO(var_4_0)
+
+	if not var_4_1 then
 		return false
 	end
 
-	return slot3.type == slot1
+	return var_4_1.type == arg_4_1
 end
 
-function slot0.onReceiveInfos(slot0, slot1)
-	uv0.super.onReceiveInfos(slot0, slot1)
+function var_0_0.onReceiveInfos(arg_5_0, arg_5_1)
+	var_0_0.super.onReceiveInfos(arg_5_0, arg_5_1)
 
-	if not slot0._receivedMsgInit then
-		slot0:applyPreScoreToCurScore()
+	if not arg_5_0._receivedMsgInit then
+		arg_5_0:applyPreScoreToCurScore()
 
-		slot0._receivedMsgInit = true
+		arg_5_0._receivedMsgInit = true
 	end
 end
 
-function slot0.getScorePrefValue(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(uv0)) or 0
+function var_0_0.getScorePrefValue(arg_6_0)
+	local var_6_0 = PlayerModel.instance:getPlayerPrefsKey(var_0_1)
+
+	return PlayerPrefsHelper.getNumber(var_6_0) or 0
 end
 
-function slot0.setScorePrefValue(slot0, slot1)
-	PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(uv0), slot1)
+function var_0_0.setScorePrefValue(arg_7_0, arg_7_1)
+	local var_7_0 = PlayerModel.instance:getPlayerPrefsKey(var_0_1)
+
+	PlayerPrefsHelper.setNumber(var_7_0, arg_7_1)
 end
 
-function slot0.SetOpenBossViewWithDailyBonus(slot0, slot1)
-	slot0._getDailyBonus = slot1
+function var_0_0.SetOpenBossViewWithDailyBonus(arg_8_0, arg_8_1)
+	arg_8_0._getDailyBonus = arg_8_1
 end
 
-function slot0.GetOpenBossViewWithDailyBonus(slot0)
-	return slot0._getDailyBonus
+function var_0_0.GetOpenBossViewWithDailyBonus(arg_9_0)
+	return arg_9_0._getDailyBonus
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

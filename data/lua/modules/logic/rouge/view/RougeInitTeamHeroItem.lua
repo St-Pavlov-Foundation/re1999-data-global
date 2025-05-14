@@ -1,143 +1,152 @@
-module("modules.logic.rouge.view.RougeInitTeamHeroItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeInitTeamHeroItem", package.seeall)
 
-slot0 = class("RougeInitTeamHeroItem", LuaCompBase)
+local var_0_0 = class("RougeInitTeamHeroItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._clickGO = gohelper.findChild(slot1, "clickarea")
-	slot0._emptyGO = gohelper.findChild(slot1, "empty")
-	slot0._selectedEffect = gohelper.findChild(slot1, "selectedeffect")
-	slot0._clickThis = gohelper.getClick(slot0._clickGO)
-	slot0._heroGOParent = gohelper.findChild(slot1, "heroitem")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._clickGO = gohelper.findChild(arg_1_1, "clickarea")
+	arg_1_0._emptyGO = gohelper.findChild(arg_1_1, "empty")
+	arg_1_0._selectedEffect = gohelper.findChild(arg_1_1, "selectedeffect")
+	arg_1_0._clickThis = gohelper.getClick(arg_1_0._clickGO)
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "heroitem")
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0._index = slot1
+function var_0_0.setIndex(arg_2_0, arg_2_1)
+	arg_2_0._index = arg_2_1
 end
 
-function slot0.setRougeInitTeamView(slot0, slot1)
-	slot0._teamView = slot1
+function var_0_0.setRougeInitTeamView(arg_3_0, arg_3_1)
+	arg_3_0._teamView = arg_3_1
 end
 
-function slot0.setHeroItem(slot0, slot1)
-	slot0._heroItemGo = gohelper.clone(slot1, slot0._heroGOParent)
+function var_0_0.setHeroItem(arg_4_0, arg_4_1)
+	arg_4_0._heroItemGo = gohelper.clone(arg_4_1, arg_4_0._heroGOParent)
 
-	gohelper.setActive(gohelper.findChild(slot0._heroItemGo, "#go_hp"), false)
+	local var_4_0 = gohelper.findChild(arg_4_0._heroItemGo, "hero")
+	local var_4_1 = gohelper.findChild(arg_4_0._heroItemGo, "#go_hp")
 
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(gohelper.findChild(slot0._heroItemGo, "hero"))
+	gohelper.setActive(var_4_1, false)
 
-	slot0._heroItem:hideFavor(true)
+	arg_4_0._heroItem = IconMgr.instance:getCommonHeroItem(var_4_0)
 
-	slot0._heroAnimator = slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._heroItem:hideFavor(true)
 
-	slot0:_initCapacity()
+	arg_4_0._heroAnimator = arg_4_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+
+	arg_4_0:_initCapacity()
 end
 
-function slot0._initCapacity(slot0)
-	slot0._capacityComp = RougeCapacityComp.Add(gohelper.findChild(slot0._heroItemGo, "volume"), nil, , true)
+function var_0_0._initCapacity(arg_5_0)
+	local var_5_0 = gohelper.findChild(arg_5_0._heroItemGo, "volume")
 
-	slot0._capacityComp:setSpriteType(RougeCapacityComp.SpriteType3, RougeCapacityComp.SpriteType3)
+	arg_5_0._capacityComp = RougeCapacityComp.Add(var_5_0, nil, nil, true)
+
+	arg_5_0._capacityComp:setSpriteType(RougeCapacityComp.SpriteType3, RougeCapacityComp.SpriteType3)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._clickThis:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_6_0)
+	arg_6_0._clickThis:AddClickListener(arg_6_0._onClickThis, arg_6_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._clickThis:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_7_0)
+	arg_7_0._clickThis:RemoveClickListener()
 end
 
-function slot0.getHeroMo(slot0)
-	return slot0._heroMO
+function var_0_0.getHeroMo(arg_8_0)
+	return arg_8_0._heroMO
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
-	slot0._heroMO = slot1:getHeroMO()
-	slot2 = slot0._heroMO ~= nil
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0.mo = arg_9_1
+	arg_9_0._heroMO = arg_9_1:getHeroMO()
 
-	gohelper.setActive(slot0._emptyGO, not slot2)
-	gohelper.setActive(slot0._heroGOParent, slot2)
+	local var_9_0 = arg_9_0._heroMO ~= nil
 
-	slot0._capacity = 0
+	gohelper.setActive(arg_9_0._emptyGO, not var_9_0)
+	gohelper.setActive(arg_9_0._heroGOParent, var_9_0)
 
-	if slot2 then
-		slot0._heroItem:onUpdateMO(slot0._heroMO)
-		slot0._heroItem:setNewShow(false)
+	arg_9_0._capacity = 0
 
-		slot0._capacity = RougeController.instance:getRoleStyleCapacity(slot0._heroMO)
+	if var_9_0 then
+		arg_9_0._heroItem:onUpdateMO(arg_9_0._heroMO)
+		arg_9_0._heroItem:setNewShow(false)
 
-		slot0._capacityComp:updateMaxNum(slot0._capacity)
+		arg_9_0._capacity = RougeController.instance:getRoleStyleCapacity(arg_9_0._heroMO)
 
-		if slot0._heroMO.level < RougeHeroGroupBalanceHelper.getHeroBalanceLv(slot0._heroMO.heroId) then
-			slot0._heroItem:setBalanceLv(slot3)
+		arg_9_0._capacityComp:updateMaxNum(arg_9_0._capacity)
+
+		local var_9_1 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(arg_9_0._heroMO.heroId)
+
+		if var_9_1 > arg_9_0._heroMO.level then
+			arg_9_0._heroItem:setBalanceLv(var_9_1)
 		end
 
-		slot0:updateTrialTag()
+		arg_9_0:updateTrialTag()
 	end
 end
 
-function slot0.setTrialValue(slot0, slot1)
-	slot0._isTrial = slot1
+function var_0_0.setTrialValue(arg_10_0, arg_10_1)
+	arg_10_0._isTrial = arg_10_1
 end
 
-function slot0.updateTrialTag(slot0)
-	slot1 = nil
+function var_0_0.updateTrialTag(arg_11_0)
+	local var_11_0
 
-	if slot0._isTrial then
-		slot1 = luaLang("herogroup_trial_tag0")
+	if arg_11_0._isTrial then
+		var_11_0 = luaLang("herogroup_trial_tag0")
 	end
 
-	slot0._heroItem:setTrialTxt(slot1)
+	arg_11_0._heroItem:setTrialTxt(var_11_0)
 end
 
-function slot0.showSelectEffect(slot0)
-	slot0._heroAnimator:Play(UIAnimationName.Idle, 0, 0)
-	gohelper.setActive(slot0._selectedEffect, false)
-	gohelper.setActive(slot0._selectedEffect, true)
+function var_0_0.showSelectEffect(arg_12_0)
+	arg_12_0._heroAnimator:Play(UIAnimationName.Idle, 0, 0)
+	gohelper.setActive(arg_12_0._selectedEffect, false)
+	gohelper.setActive(arg_12_0._selectedEffect, true)
 end
 
-function slot0.getCapacity(slot0)
-	return slot0._capacity
+function var_0_0.getCapacity(arg_13_0)
+	return arg_13_0._capacity
 end
 
-function slot0._onClickThis(slot0)
-	if slot0._isTrial then
+function var_0_0._onClickThis(arg_14_0)
+	if arg_14_0._isTrial then
 		return
 	end
 
-	slot1, slot2 = slot0._teamView:getCapacityProgress()
+	local var_14_0, var_14_1 = arg_14_0._teamView:getCapacityProgress()
 
-	if slot2 <= slot1 and not slot0._heroMO then
+	if var_14_1 <= var_14_0 and not arg_14_0._heroMO then
 		GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 		return
 	end
 
-	slot0:_openRougeHeroGroupEditView(slot0.mo.id)
+	arg_14_0:_openRougeHeroGroupEditView(arg_14_0.mo.id)
 end
 
-function slot0._openRougeHeroGroupEditView(slot0, slot1)
-	slot2, slot3 = slot0._teamView:getNoneAssistCapacityProgress()
-
-	ViewMgr.instance:openView(ViewName.RougeHeroGroupEditView, {
-		singleGroupMOId = slot1,
-		originalHeroUid = RougeHeroSingleGroupModel.instance:getHeroUid(slot1),
+function var_0_0._openRougeHeroGroupEditView(arg_15_0, arg_15_1)
+	local var_15_0, var_15_1 = arg_15_0._teamView:getNoneAssistCapacityProgress()
+	local var_15_2 = {
+		singleGroupMOId = arg_15_1,
+		originalHeroUid = RougeHeroSingleGroupModel.instance:getHeroUid(arg_15_1),
 		equips = {
 			"0"
 		},
 		heroGroupEditType = RougeEnum.HeroGroupEditType.Init,
-		selectHeroCapacity = slot0._capacity,
-		curCapacity = slot2,
-		totalCapacity = slot3,
-		assistCapacity = slot0._teamView:getAssistCapacity(),
-		assistPos = slot0._teamView:getAssistPos(),
-		assistHeroId = slot0._teamView:getAssistHeroId()
-	})
+		selectHeroCapacity = arg_15_0._capacity,
+		curCapacity = var_15_0,
+		totalCapacity = var_15_1,
+		assistCapacity = arg_15_0._teamView:getAssistCapacity(),
+		assistPos = arg_15_0._teamView:getAssistPos(),
+		assistHeroId = arg_15_0._teamView:getAssistHeroId()
+	}
+
+	ViewMgr.instance:openView(ViewName.RougeHeroGroupEditView, var_15_2)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._teamView = nil
+function var_0_0.onDestroy(arg_16_0)
+	arg_16_0._teamView = nil
 end
 
-return slot0
+return var_0_0

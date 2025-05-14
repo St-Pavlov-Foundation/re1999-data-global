@@ -1,197 +1,216 @@
-module("modules.logic.mainsceneswitch.view.MainSceneSkinMaterialTipView", package.seeall)
+﻿module("modules.logic.mainsceneswitch.view.MainSceneSkinMaterialTipView", package.seeall)
 
-slot0 = class("MainSceneSkinMaterialTipView", BaseView)
+local var_0_0 = class("MainSceneSkinMaterialTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageblur = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blur")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg2")
-	slot0._gobannerContent = gohelper.findChild(slot0.viewGO, "left/banner/#go_bannerContent")
-	slot0._goroominfoItem = gohelper.findChild(slot0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
-	slot0._simagepic = gohelper.findChildSingleImage(slot0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/#simage_pic")
-	slot0._goSceneLogo = gohelper.findChild(slot0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo")
-	slot0._gotag = gohelper.findChild(slot0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/#go_tag")
-	slot0._gobannerscroll = gohelper.findChild(slot0.viewGO, "left/banner/#go_bannerscroll")
-	slot0._gobuyContent = gohelper.findChild(slot0.viewGO, "right/#go_buyContent")
-	slot0._goblockInfoItem = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/#go_blockInfoItem")
-	slot0._gopay = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/#go_pay")
-	slot0._gopayitem = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
-	slot0._gochange = gohelper.findChild(slot0.viewGO, "right/#go_buyContent/#go_change")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "right/#go_buyContent/#go_change/#txt_desc")
-	slot0._btninsight = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_buyContent/buy/#btn_insight")
-	slot0._txtcostnum = gohelper.findChildText(slot0.viewGO, "right/#go_buyContent/buy/#txt_costnum")
-	slot0._simagecosticon = gohelper.findChildSingleImage(slot0.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
-	slot0._gosource = gohelper.findChild(slot0.viewGO, "right/#go_source")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "right/#go_source/title/#txt_time")
-	slot0._scrolljump = gohelper.findChildScrollRect(slot0.viewGO, "right/#go_source/#scroll_jump")
-	slot0._gojumpItem = gohelper.findChild(slot0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content/#go_jumpItem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gotopright = gohelper.findChild(slot0.viewGO, "#go_topright")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
+	arg_1_0._gobannerContent = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent")
+	arg_1_0._goroominfoItem = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
+	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/#simage_pic")
+	arg_1_0._goSceneLogo = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo")
+	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/#go_tag")
+	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerscroll")
+	arg_1_0._gobuyContent = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent")
+	arg_1_0._goblockInfoItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_blockInfoItem")
+	arg_1_0._gopay = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_pay")
+	arg_1_0._gopayitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
+	arg_1_0._gochange = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_change")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/#go_buyContent/#go_change/#txt_desc")
+	arg_1_0._btninsight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_buyContent/buy/#btn_insight")
+	arg_1_0._txtcostnum = gohelper.findChildText(arg_1_0.viewGO, "right/#go_buyContent/buy/#txt_costnum")
+	arg_1_0._simagecosticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
+	arg_1_0._gosource = gohelper.findChild(arg_1_0.viewGO, "right/#go_source")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "right/#go_source/title/#txt_time")
+	arg_1_0._scrolljump = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#go_source/#scroll_jump")
+	arg_1_0._gojumpItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content/#go_jumpItem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btninsight:AddClickListener(slot0._btninsightOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btninsight:AddClickListener(arg_2_0._btninsightOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btninsight:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btninsight:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btninsightOnClick(slot0)
+function var_0_0._btninsightOnClick(arg_4_0)
+	return
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gojumpItem, false)
-	gohelper.setActive(slot0._gobuyContent, false)
-	gohelper.setActive(slot0._gosource, true)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._gojumpItem, false)
+	gohelper.setActive(arg_6_0._gobuyContent, false)
+	gohelper.setActive(arg_6_0._gosource, true)
 
-	slot0._jumpParentGo = gohelper.findChild(slot0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content")
-	slot0.jumpItemGos = {}
+	arg_6_0._jumpParentGo = gohelper.findChild(arg_6_0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content")
+	arg_6_0.jumpItemGos = {}
 
-	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_6_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_6_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 end
 
-function slot0._refreshUI(slot0)
-	slot0._canJump = slot0.viewParam.canJump
-	slot0._config = ItemModel.instance:getItemConfig(slot0.viewParam.type, slot0.viewParam.id)
-	slot0._sceneConfig = MainSceneSwitchConfig.instance:getConfigByItemId(slot0.viewParam.id)
+function var_0_0._refreshUI(arg_7_0)
+	arg_7_0._canJump = arg_7_0.viewParam.canJump
+	arg_7_0._config = ItemModel.instance:getItemConfig(arg_7_0.viewParam.type, arg_7_0.viewParam.id)
+	arg_7_0._sceneConfig = MainSceneSwitchConfig.instance:getConfigByItemId(arg_7_0.viewParam.id)
 
-	slot0:_cloneJumpItem()
+	arg_7_0:_cloneJumpItem()
 end
 
-function slot0._cloneJumpItem(slot0)
-	slot0._scrolljump.verticalNormalizedPosition = 1
-	slot1 = {}
+function var_0_0._cloneJumpItem(arg_8_0)
+	arg_8_0._scrolljump.verticalNormalizedPosition = 1
 
-	if slot0._config then
-		slot1 = slot0:_sourcesStrToTables(slot0._config.sources)
+	local var_8_0 = {}
+
+	if arg_8_0._config then
+		var_8_0 = arg_8_0:_sourcesStrToTables(arg_8_0._config.sources)
 	end
 
-	for slot5 = 1, #slot1 do
-		if not slot0.jumpItemGos[slot5] then
-			slot7 = slot5 == 1 and slot0._gojumpItem or gohelper.clone(slot0._gojumpItem, slot0._jumpParentGo, "item" .. slot5)
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = slot7
-			slot6.originText = gohelper.findChildText(slot7, "frame/txt_chapter")
-			slot6.indexText = gohelper.findChildText(slot7, "frame/txt_name")
-			slot6.jumpBtn = gohelper.findChildButtonWithAudio(slot7, "frame/btn_jump")
-			slot6.jumpBgGO = gohelper.findChild(slot7, "frame/btn_jump/jumpbg")
+	for iter_8_0 = 1, #var_8_0 do
+		local var_8_1 = arg_8_0.jumpItemGos[iter_8_0]
 
-			table.insert(slot0.jumpItemGos, slot6)
-			slot6.jumpBtn:AddClickListener(function (slot0)
-				if slot0.cantJumpTips then
-					GameFacade.showToastWithTableParam(slot0.cantJumpTips, slot0.cantJumpParam)
-				elseif slot0.canJump then
+		if not var_8_1 then
+			local var_8_2 = iter_8_0 == 1 and arg_8_0._gojumpItem or gohelper.clone(arg_8_0._gojumpItem, arg_8_0._jumpParentGo, "item" .. iter_8_0)
+
+			var_8_1 = arg_8_0:getUserDataTb_()
+			var_8_1.go = var_8_2
+			var_8_1.originText = gohelper.findChildText(var_8_2, "frame/txt_chapter")
+			var_8_1.indexText = gohelper.findChildText(var_8_2, "frame/txt_name")
+			var_8_1.jumpBtn = gohelper.findChildButtonWithAudio(var_8_2, "frame/btn_jump")
+			var_8_1.jumpBgGO = gohelper.findChild(var_8_2, "frame/btn_jump/jumpbg")
+
+			table.insert(arg_8_0.jumpItemGos, var_8_1)
+			var_8_1.jumpBtn:AddClickListener(function(arg_9_0)
+				if arg_9_0.cantJumpTips then
+					GameFacade.showToastWithTableParam(arg_9_0.cantJumpTips, arg_9_0.cantJumpParam)
+				elseif arg_9_0.canJump then
 					if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.ForceJumpToMainView) then
 						NavigateButtonsView.homeClick()
 
 						return
 					end
 
-					uv0:checkViewOpenAndClose()
-					GameFacade.jump(slot0.jumpId, uv0._onJumpFinish, uv0, uv0.viewParam.recordFarmItem)
+					arg_8_0:checkViewOpenAndClose()
+					GameFacade.jump(arg_9_0.jumpId, arg_8_0._onJumpFinish, arg_8_0, arg_8_0.viewParam.recordFarmItem)
 				else
 					GameFacade.showToast(ToastEnum.MaterialTipJump)
 				end
-			end, slot6)
+			end, var_8_1)
 		end
 
-		slot7 = slot1[slot5]
-		slot6.canJump = slot0._canJump
-		slot6.jumpId = slot7.sourceId
-		slot8, slot9 = JumpConfig.instance:getJumpName(slot7.sourceId)
-		slot6.originText.text = slot8 or ""
-		slot6.indexText.text = slot9 or ""
-		slot10, slot6.cantJumpParam = slot0:_getCantJump(slot7)
+		local var_8_3 = var_8_0[iter_8_0]
 
-		ZProj.UGUIHelper.SetGrayscale(slot6.jumpBgGO, slot10 ~= nil)
+		var_8_1.canJump = arg_8_0._canJump
+		var_8_1.jumpId = var_8_3.sourceId
 
-		slot6.cantJumpTips = slot10
+		local var_8_4, var_8_5 = JumpConfig.instance:getJumpName(var_8_3.sourceId)
 
-		gohelper.setActive(slot6.go, true)
-		gohelper.setActive(slot6.jumpBtn, not JumpController.instance:isOnlyShowJump(slot7.sourceId))
+		var_8_1.originText.text = var_8_4 or ""
+		var_8_1.indexText.text = var_8_5 or ""
+
+		local var_8_6, var_8_7 = arg_8_0:_getCantJump(var_8_3)
+
+		ZProj.UGUIHelper.SetGrayscale(var_8_1.jumpBgGO, var_8_6 ~= nil)
+
+		var_8_1.cantJumpTips = var_8_6
+		var_8_1.cantJumpParam = var_8_7
+
+		gohelper.setActive(var_8_1.go, true)
+
+		local var_8_8 = JumpController.instance:isOnlyShowJump(var_8_3.sourceId)
+
+		gohelper.setActive(var_8_1.jumpBtn, not var_8_8)
 	end
 
-	gohelper.setActive(slot0._gosource, #slot1 > 0)
+	gohelper.setActive(arg_8_0._gosource, #var_8_0 > 0)
 
-	for slot5 = #slot1 + 1, #slot0.jumpItemGos do
-		gohelper.setActive(slot0.jumpItemGos[slot5].go, false)
+	for iter_8_1 = #var_8_0 + 1, #arg_8_0.jumpItemGos do
+		gohelper.setActive(arg_8_0.jumpItemGos[iter_8_1].go, false)
 	end
 end
 
-function slot0._sourcesStrToTables(slot0, slot1)
-	slot2 = {}
+function var_0_0._sourcesStrToTables(arg_10_0, arg_10_1)
+	local var_10_0 = {}
 
-	if not string.nilorempty(slot1) then
-		for slot7, slot8 in ipairs(string.split(slot1, "|")) do
-			slot9 = string.splitToNumber(slot8, "#")
-			slot10 = {
-				sourceId = slot9[1],
-				probability = slot9[2]
+	if not string.nilorempty(arg_10_1) then
+		local var_10_1 = string.split(arg_10_1, "|")
+
+		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+			local var_10_2 = string.splitToNumber(iter_10_1, "#")
+			local var_10_3 = {
+				sourceId = var_10_2[1],
+				probability = var_10_2[2]
 			}
-			slot10.episodeId = JumpConfig.instance:getJumpEpisodeId(slot10.sourceId)
 
-			if slot10.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(slot10.episodeId) then
-				table.insert(slot2, slot10)
+			var_10_3.episodeId = JumpConfig.instance:getJumpEpisodeId(var_10_3.sourceId)
+
+			if var_10_3.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(var_10_3.episodeId) then
+				table.insert(var_10_0, var_10_3)
 			end
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0._getCantJump(slot0, slot1)
-	slot3, slot4 = nil
+function var_0_0._getCantJump(arg_11_0, arg_11_1)
+	local var_11_0 = JumpController.instance:isJumpOpen(arg_11_1.sourceId)
+	local var_11_1
+	local var_11_2
+	local var_11_3 = JumpConfig.instance:getJumpConfig(arg_11_1.sourceId)
 
-	if not JumpController.instance:isJumpOpen(slot1.sourceId) then
-		slot3, slot4 = OpenHelper.getToastIdAndParam(JumpConfig.instance:getJumpConfig(slot1.sourceId).openId)
+	if not var_11_0 then
+		var_11_1, var_11_2 = OpenHelper.getToastIdAndParam(var_11_3.openId)
 	else
-		slot3, slot4 = JumpController.instance:cantJump(slot5.param)
+		var_11_1, var_11_2 = JumpController.instance:cantJump(var_11_3.param)
 	end
 
-	return slot3, slot4
+	return var_11_1, var_11_2
 end
 
-slot0.NeedCloseView = {
+var_0_0.NeedCloseView = {
 	ViewName.PackageStoreGoodsView
 }
 
-function slot0.checkViewOpenAndClose(slot0)
-	for slot4, slot5 in pairs(uv0.NeedCloseView) do
-		if ViewMgr.instance:isOpen(slot5) then
-			ViewMgr.instance:closeView(slot5)
+function var_0_0.checkViewOpenAndClose(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(var_0_0.NeedCloseView) do
+		if ViewMgr.instance:isOpen(iter_12_1) then
+			ViewMgr.instance:closeView(iter_12_1)
 		end
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_13_0)
+	arg_13_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	for slot4 = 1, #slot0.jumpItemGos do
-		slot0.jumpItemGos[slot4].jumpBtn:RemoveClickListener()
+function var_0_0.onClose(arg_15_0)
+	for iter_15_0 = 1, #arg_15_0.jumpItemGos do
+		arg_15_0.jumpItemGos[iter_15_0].jumpBtn:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0._simagebg1:UnLoadImage()
+	arg_16_0._simagebg2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

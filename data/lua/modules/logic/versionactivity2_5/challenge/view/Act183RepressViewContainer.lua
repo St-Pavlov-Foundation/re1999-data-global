@@ -1,18 +1,18 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183RepressViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183RepressViewContainer", package.seeall)
 
-slot0 = class("Act183RepressViewContainer", BaseViewContainer)
+local var_0_0 = class("Act183RepressViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Act183RepressView.New())
+	table.insert(var_1_0, Act183RepressView.New())
 
-	slot0.helpView = HelpShowView.New()
+	arg_1_0.helpView = HelpShowView.New()
 
-	slot0.helpView:setHelpId(HelpEnum.HelpId.Act183Repress)
-	table.insert(slot1, slot0.helpView)
+	arg_1_0.helpView:setHelpId(HelpEnum.HelpId.Act183Repress)
+	table.insert(var_1_0, arg_1_0.helpView)
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

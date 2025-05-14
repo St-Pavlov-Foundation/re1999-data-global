@@ -1,61 +1,68 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesDivisionEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesDivisionEntity", package.seeall)
 
-slot0 = class("PinballMarblesDivisionEntity", PinballMarblesEntity)
-slot1 = {
+local var_0_0 = class("PinballMarblesDivisionEntity", PinballMarblesEntity)
+local var_0_1 = {
 	Done = 2,
 	Hit = 1,
 	None = 0
 }
 
-function slot0.initByCo(slot0)
-	uv0.super.initByCo(slot0)
+function var_0_0.initByCo(arg_1_0)
+	var_0_0.super.initByCo(arg_1_0)
 
-	slot0._statu = uv1.None
-	slot0._canHitNum = 0
+	arg_1_0._statu = var_0_1.None
+	arg_1_0._canHitNum = 0
 end
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	uv0.super.onHitEnter(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.onHitEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	var_0_0.super.onHitEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 
-	if not PinballEntityMgr.instance:getEntity(slot1) or not slot5:isResType() then
+	local var_2_0 = PinballEntityMgr.instance:getEntity(arg_2_1)
+
+	if not var_2_0 or not var_2_0:isResType() then
 		return
 	end
 
-	if slot0._statu == uv1.None then
-		slot0._statu = uv1.Hit
+	if arg_2_0._statu == var_0_1.None then
+		arg_2_0._statu = var_0_1.Hit
 	end
 
-	if slot0._canHitNum > 0 then
-		slot0._canHitNum = slot0._canHitNum - 1
+	if arg_2_0._canHitNum > 0 then
+		arg_2_0._canHitNum = arg_2_0._canHitNum - 1
 
-		if slot0._canHitNum == 0 then
-			slot0:markDead()
+		if arg_2_0._canHitNum == 0 then
+			arg_2_0:markDead()
 		end
 	end
 end
 
-function slot0.onHitExit(slot0, slot1)
-	uv0.super.onHitExit(slot0, slot1)
+function var_0_0.onHitExit(arg_3_0, arg_3_1)
+	var_0_0.super.onHitExit(arg_3_0, arg_3_1)
 
-	if slot0._statu == uv1.Hit then
-		slot0._statu = uv1.Done
+	if arg_3_0._statu == var_0_1.Hit then
+		arg_3_0._statu = var_0_1.Done
 
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio17)
 
-		for slot5 = 1, slot0.effectNum - 1 do
-			slot6 = math.random(0, 360)
-			slot7, slot8 = PinballHelper.rotateAngle(slot0.width * 2.1, 0, slot6)
-			slot9 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.MarblesDivision)
-			slot9._statu = uv1.Done
-			slot9.x = slot0.x + slot7
-			slot9.y = slot0.y + slot8
-			slot9.vx, slot9.vy = PinballHelper.rotateAngle(slot0.vx, slot0.vy, slot6)
-			slot9._canHitNum = slot0.effectNum2
+		for iter_3_0 = 1, arg_3_0.effectNum - 1 do
+			local var_3_0 = math.random(0, 360)
+			local var_3_1, var_3_2 = PinballHelper.rotateAngle(arg_3_0.width * 2.1, 0, var_3_0)
+			local var_3_3 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.MarblesDivision)
 
-			slot9:tick(0)
-			slot9:playAnim("clone")
+			var_3_3._statu = var_0_1.Done
+			var_3_3.x = arg_3_0.x + var_3_1
+			var_3_3.y = arg_3_0.y + var_3_2
+
+			local var_3_4, var_3_5 = PinballHelper.rotateAngle(arg_3_0.vx, arg_3_0.vy, var_3_0)
+
+			var_3_3.vx = var_3_4
+			var_3_3.vy = var_3_5
+			var_3_3._canHitNum = arg_3_0.effectNum2
+
+			var_3_3:tick(0)
+			var_3_3:playAnim("clone")
 		end
 	end
 end
 
-return slot0
+return var_0_0

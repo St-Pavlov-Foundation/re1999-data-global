@@ -1,6 +1,7 @@
-module("modules.logic.patface.define.PatFaceEvent", package.seeall)
+﻿module("modules.logic.patface.define.PatFaceEvent", package.seeall)
 
-slot0 = _M
-slot0.FinishAllPatFace = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.FinishAllPatFace = 1
+
+return var_0_0

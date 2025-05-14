@@ -1,199 +1,215 @@
-module("modules.logic.rouge.model.RougeCollectionListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionListModel", package.seeall)
 
-slot0 = class("RougeCollectionListModel", MixScrollModel)
+local var_0_0 = class("RougeCollectionListModel", MixScrollModel)
 
-function slot0.onInitData(slot0, slot1, slot2, slot3, slot4)
-	slot0._selectedConfig = nil
-	slot0._baseTagFilterMap = slot1
-	slot0._extraTagFilterMap = slot2
-	slot0._selectedType = slot3
-	slot0._updatePos = slot4
+function var_0_0.onInitData(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0._selectedConfig = nil
+	arg_1_0._baseTagFilterMap = arg_1_1
+	arg_1_0._extraTagFilterMap = arg_1_2
+	arg_1_0._selectedType = arg_1_3
+	arg_1_0._updatePos = arg_1_4
 
-	if slot4 then
-		slot0._posMap = {}
+	if arg_1_4 then
+		arg_1_0._posMap = {}
 	end
 
-	slot0:onCollectionDataUpdate()
+	arg_1_0:onCollectionDataUpdate()
 end
 
-function slot0.getPos(slot0, slot1)
-	return lua_rouge_collection_unlock.configDict[slot1] and slot2.sortId or 0
+function var_0_0.getPos(arg_2_0, arg_2_1)
+	local var_2_0 = lua_rouge_collection_unlock.configDict[arg_2_1]
+
+	return var_2_0 and var_2_0.sortId or 0
 end
 
-function slot0.setSelectedConfig(slot0, slot1)
-	slot0._selectedConfig = slot1
+function var_0_0.setSelectedConfig(arg_3_0, arg_3_1)
+	arg_3_0._selectedConfig = arg_3_1
 
 	RougeController.instance:dispatchEvent(RougeEvent.OnClickCollectionListItem)
 end
 
-function slot0.getSelectedConfig(slot0)
-	return slot0._selectedConfig
+function var_0_0.getSelectedConfig(arg_4_0)
+	return arg_4_0._selectedConfig
 end
 
-function slot0._canShow(slot0, slot1)
-	if not slot1.interactable then
+function var_0_0._canShow(arg_5_0, arg_5_1)
+	if not arg_5_1.interactable then
 		return false
 	end
 
-	if slot0._selectedType == 1 then
+	if arg_5_0._selectedType == 1 then
 		return true
 	end
 
-	slot2 = RougeOutsideModel.instance:collectionIsPass(slot1.id)
+	local var_5_0 = RougeOutsideModel.instance:collectionIsPass(arg_5_1.id)
 
-	if slot0._selectedType == 2 then
-		return slot2
+	if arg_5_0._selectedType == 2 then
+		return var_5_0
 	end
 
-	return not slot2
+	return not var_5_0
 end
 
-function slot0.onCollectionDataUpdate(slot0)
-	slot1 = {}
-	slot2 = {}
-	slot3 = {}
-	slot4 = 0
-	slot5 = {}
+function var_0_0.onCollectionDataUpdate(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = {}
+	local var_6_2 = {}
+	local var_6_3 = 0
+	local var_6_4 = {}
+	local var_6_5 = RougeCollectionConfig.instance:getAllInteractCollections()
 
-	if RougeCollectionConfig.instance:getAllInteractCollections() then
-		for slot10, slot11 in pairs(slot6) do
-			if RougeCollectionHelper.checkCollectionHasAnyOneTag(slot11.id, nil, slot0._baseTagFilterMap, slot0._extraTagFilterMap) then
-				if not slot1[slot11.type] then
-					slot13 = {
-						type = slot11.type
+	if var_6_5 then
+		for iter_6_0, iter_6_1 in pairs(var_6_5) do
+			if RougeCollectionHelper.checkCollectionHasAnyOneTag(iter_6_1.id, nil, arg_6_0._baseTagFilterMap, arg_6_0._extraTagFilterMap) then
+				local var_6_6 = var_6_0[iter_6_1.type]
+
+				if not var_6_6 then
+					var_6_6 = {
+						type = iter_6_1.type
 					}
-					slot1[slot11.type] = slot13
+					var_6_0[iter_6_1.type] = var_6_6
 
-					table.insert(slot2, slot13)
+					table.insert(var_6_1, var_6_6)
 				end
 
-				if slot0:_canShow(slot11) then
-					table.insert(slot13, slot11)
+				if arg_6_0:_canShow(iter_6_1) then
+					table.insert(var_6_6, iter_6_1)
 				end
 			end
 		end
 	end
 
-	table.sort(slot2, uv0.sortType)
+	table.sort(var_6_1, var_0_0.sortType)
 
-	slot7 = 1
-	slot0._firstType = nil
+	local var_6_7 = 1
 
-	for slot11, slot12 in ipairs(slot2) do
-		slot13 = slot1[slot12.type]
+	arg_6_0._firstType = nil
 
-		table.sort(slot13, uv0.sortTypeList)
+	for iter_6_2, iter_6_3 in ipairs(var_6_1) do
+		local var_6_8 = var_6_0[iter_6_3.type]
 
-		for slot18, slot19 in ipairs(slot13) do
-			if not nil then
-				slot14 = {
-					type = slot12.type
-				}
+		table.sort(var_6_8, var_0_0.sortTypeList)
 
-				if slot18 == 1 and slot0._firstType then
-					-- Nothing
+		local var_6_9
+
+		for iter_6_4, iter_6_5 in ipairs(var_6_8) do
+			if not var_6_9 then
+				var_6_9 = {}
+
+				if iter_6_4 == 1 and arg_6_0._firstType then
+					var_6_9.type = iter_6_3.type
 				end
 
-				if not slot0._firstType then
-					slot0._firstType = slot12.type
+				if not arg_6_0._firstType then
+					arg_6_0._firstType = iter_6_3.type
 				end
 
-				table.insert(slot3, slot14)
+				table.insert(var_6_2, var_6_9)
 
-				if slot14.type then
-					slot5[slot14.type] = slot4
+				if var_6_9.type then
+					var_6_4[var_6_9.type] = var_6_3
 				end
 
-				slot4 = slot4 + (slot14.type and RougeEnum.CollectionHeight.Big or RougeEnum.CollectionHeight.Small)
+				var_6_3 = var_6_3 + (var_6_9.type and RougeEnum.CollectionHeight.Big or RougeEnum.CollectionHeight.Small)
 			end
 
-			table.insert(slot14, slot19)
+			table.insert(var_6_9, iter_6_5)
 
-			if slot0._updatePos then
-				slot0._posMap[slot19.id] = slot7
-				slot7 = slot7 + 1
+			if arg_6_0._updatePos then
+				arg_6_0._posMap[iter_6_5.id] = var_6_7
+				var_6_7 = var_6_7 + 1
 			end
 
-			if not slot0._selectedConfig then
-				slot0:setSelectedConfig(slot19)
+			if not arg_6_0._selectedConfig then
+				arg_6_0:setSelectedConfig(iter_6_5)
 			end
 
-			if RougeEnum.CollectionListRowNum <= #slot14 then
-				slot14 = nil
+			if #var_6_9 >= RougeEnum.CollectionListRowNum then
+				var_6_9 = nil
 			end
 		end
 	end
 
-	if slot0._updatePos then
-		slot0._enchantList = slot1[RougeEnum.CollectionType.Enchant]
+	if arg_6_0._updatePos then
+		arg_6_0._enchantList = var_6_0[RougeEnum.CollectionType.Enchant]
 	end
 
-	slot0._typeHeightMap = slot5
-	slot0._typeList = slot2
+	arg_6_0._typeHeightMap = var_6_4
+	arg_6_0._typeList = var_6_1
 
-	slot0:setList(slot3)
+	arg_6_0:setList(var_6_2)
 end
 
-function slot0.getTypeHeightMap(slot0)
-	return slot0._typeHeightMap
+function var_0_0.getTypeHeightMap(arg_7_0)
+	return arg_7_0._typeHeightMap
 end
 
-function slot0.getTypeList(slot0)
-	return slot0._typeList
+function var_0_0.getTypeList(arg_8_0)
+	return arg_8_0._typeList
 end
 
-function slot0.getFirstType(slot0)
-	return slot0._firstType
+function var_0_0.getFirstType(arg_9_0)
+	return arg_9_0._firstType
 end
 
-function slot0.getEnchantList(slot0)
-	return slot0._enchantList
+function var_0_0.getEnchantList(arg_10_0)
+	return arg_10_0._enchantList
 end
 
-function slot0.sortType(slot0, slot1)
-	slot3 = RougeEnum.CollectionTypeSort[slot1.type]
+function var_0_0.sortType(arg_11_0, arg_11_1)
+	local var_11_0 = RougeEnum.CollectionTypeSort[arg_11_0.type]
+	local var_11_1 = RougeEnum.CollectionTypeSort[arg_11_1.type]
 
-	if not RougeEnum.CollectionTypeSort[slot0.type] or not slot3 then
-		if not slot2 then
-			logError(string.format("无法查询到收藏夹造物类型排序，类型 = %s", slot0.type))
+	if not var_11_0 or not var_11_1 then
+		if not var_11_0 then
+			logError(string.format("无法查询到收藏夹造物类型排序，类型 = %s", arg_11_0.type))
 		end
 
-		if not slot3 then
-			logError(string.format("无法查询到收藏夹造物类型排序，类型 = %s", slot1.type))
+		if not var_11_1 then
+			logError(string.format("无法查询到收藏夹造物类型排序，类型 = %s", arg_11_1.type))
 		end
 
-		return slot2 ~= nil
+		return var_11_0 ~= nil
 	end
 
-	return slot2 < slot3
+	return var_11_0 < var_11_1
 end
 
-function slot0.getSize(slot0)
-	return RougeCollectionConfig.instance:getCollectionCellCount(slot0, RougeEnum.CollectionEditorParamType.Shape)
+function var_0_0.getSize(arg_12_0)
+	return (RougeCollectionConfig.instance:getCollectionCellCount(arg_12_0, RougeEnum.CollectionEditorParamType.Shape))
 end
 
-function slot0.sortTypeList(slot0, slot1)
-	if uv0.instance:getPos(slot0.id) ~= uv0.instance:getPos(slot1.id) then
-		return slot2 < slot3
+function var_0_0.sortTypeList(arg_13_0, arg_13_1)
+	local var_13_0 = var_0_0.instance:getPos(arg_13_0.id)
+	local var_13_1 = var_0_0.instance:getPos(arg_13_1.id)
+
+	if var_13_0 ~= var_13_1 then
+		return var_13_0 < var_13_1
 	end
 
-	return slot0.id < slot1.id
+	return arg_13_0.id < arg_13_1.id
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot0._mixCellInfo = {}
+function var_0_0.getInfoList(arg_14_0, arg_14_1)
+	arg_14_0._mixCellInfo = {}
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		table.insert(slot0._mixCellInfo, SLFramework.UGUI.MixCellInfo.New(slot7.type and 1 or 2, slot7.type and RougeEnum.CollectionHeight.Big or RougeEnum.CollectionHeight.Small))
+	local var_14_0 = arg_14_0:getList()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_1 = iter_14_1.type and RougeEnum.CollectionHeight.Big or RougeEnum.CollectionHeight.Small
+		local var_14_2 = iter_14_1.type and 1 or 2
+		local var_14_3 = SLFramework.UGUI.MixCellInfo.New(var_14_2, var_14_1)
+
+		table.insert(arg_14_0._mixCellInfo, var_14_3)
 	end
 
-	return slot0._mixCellInfo
+	return arg_14_0._mixCellInfo
 end
 
-function slot0.isFiltering(slot0)
-	return not GameUtil.tabletool_dictIsEmpty(slot0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(slot0._extraTagFilterMap)
+function var_0_0.isFiltering(arg_15_0)
+	return not GameUtil.tabletool_dictIsEmpty(arg_15_0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(arg_15_0._extraTagFilterMap)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

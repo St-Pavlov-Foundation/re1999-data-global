@@ -1,11 +1,11 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccViewContainer", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryFightSuccViewContainer", package.seeall)
 
-slot0 = class("RoleStoryFightSuccViewContainer", BaseViewContainer)
+local var_0_0 = class("RoleStoryFightSuccViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		RoleStoryFightSuccView.New()
 	}
 end
 
-return slot0
+return var_0_0

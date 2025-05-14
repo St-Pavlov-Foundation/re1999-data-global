@@ -1,40 +1,42 @@
-module("modules.logic.rouge.map.view.tip.RougeMapTipView", package.seeall)
+﻿module("modules.logic.rouge.map.view.tip.RougeMapTipView", package.seeall)
 
-slot0 = class("RougeMapTipView", BaseView)
+local var_0_0 = class("RougeMapTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goTip = gohelper.findChild(slot0.viewGO, "#go_tip")
-	slot0.txtTip = gohelper.findChildText(slot0.viewGO, "#go_tip/#txt_Tips")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.goTip = gohelper.findChild(arg_4_0.viewGO, "#go_tip")
+	arg_4_0.txtTip = gohelper.findChildText(arg_4_0.viewGO, "#go_tip/#txt_Tips")
 
-	gohelper.setActive(slot0.goTip, false)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onShowTip, slot0.onShowTip, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onHideTip, slot0.onHideTip, slot0)
+	gohelper.setActive(arg_4_0.goTip, false)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onShowTip, arg_4_0.onShowTip, arg_4_0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onHideTip, arg_4_0.onHideTip, arg_4_0)
 
-	slot0.animator = slot0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_4_0.animator = arg_4_0.viewGO:GetComponent(gohelper.Type_Animator)
 
-	slot0.animator:Play("close", 0, 1)
+	arg_4_0.animator:Play("close", 0, 1)
 end
 
-function slot0.onShowTip(slot0, slot1)
-	slot0.txtTip.text = slot1
+function var_0_0.onShowTip(arg_5_0, arg_5_1)
+	arg_5_0.txtTip.text = arg_5_1
 
-	slot0.animator:Play("open", 0, 0)
+	arg_5_0.animator:Play("open", 0, 0)
 end
 
-function slot0.onHideTip(slot0)
-	slot0.animator:Play("close", 0, 0)
+function var_0_0.onHideTip(arg_6_0)
+	arg_6_0.animator:Play("close", 0, 0)
 end
 
-return slot0
+return var_0_0

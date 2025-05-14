@@ -1,9 +1,10 @@
-module("modules.logic.versionactivity1_7.isolde.define.ActIsoldeEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_7.isolde.define.ActIsoldeEvent", package.seeall)
 
-slot0 = _M
-slot0.OneClickClaimReward = 1
-slot0.StoryItemClick = 2
-slot0.FightItemClick = 3
-slot0.TabSwitch = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.OneClickClaimReward = 1
+var_0_0.StoryItemClick = 2
+var_0_0.FightItemClick = 3
+var_0_0.TabSwitch = 4
+
+return var_0_0

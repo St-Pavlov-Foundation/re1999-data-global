@@ -1,43 +1,48 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaStoryListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaStoryListModel", package.seeall)
 
-slot0 = class("AiZiLaStoryListModel", ListScrollModel)
+local var_0_0 = class("AiZiLaStoryListModel", ListScrollModel)
 
-function slot0.init(slot0, slot1, slot2)
-	slot4 = {}
-	slot0._episodeId = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = AiZiLaConfig.instance:getStoryList(arg_1_1)
+	local var_1_1 = {}
 
-	if AiZiLaConfig.instance:getStoryList(slot1) then
-		for slot8, slot9 in ipairs(slot3) do
-			if AiZiLaEnum.AllStoryEpisodeId == slot2 or slot9.episodeId == slot2 then
-				slot10 = AiZiLaStoryMO.New()
+	arg_1_0._episodeId = arg_1_2
 
-				slot10:init(slot8, slot9)
-				table.insert(slot4, slot10)
+	if var_1_0 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			if AiZiLaEnum.AllStoryEpisodeId == arg_1_2 or iter_1_1.episodeId == arg_1_2 then
+				local var_1_2 = AiZiLaStoryMO.New()
+
+				var_1_2:init(iter_1_0, iter_1_1)
+				table.insert(var_1_1, var_1_2)
 			end
 		end
 	end
 
-	if #slot4 > 1 then
-		table.sort(slot4, uv0.sortMO)
+	if #var_1_1 > 1 then
+		table.sort(var_1_1, var_0_0.sortMO)
 	end
 
-	for slot8, slot9 in ipairs(slot4) do
-		slot9.index = slot8
+	for iter_1_2, iter_1_3 in ipairs(var_1_1) do
+		iter_1_3.index = iter_1_2
 	end
 
-	slot0:setList(slot4)
+	arg_1_0:setList(var_1_1)
 end
 
-function slot0.sortMO(slot0, slot1)
-	if slot0.config.order ~= slot1.config.order then
-		return slot2 < slot3
+function var_0_0.sortMO(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0.config.order
+	local var_2_1 = arg_2_1.config.order
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_0 < var_2_1
 	end
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._episodeId
+function var_0_0.getEpisodeId(arg_3_0)
+	return arg_3_0._episodeId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

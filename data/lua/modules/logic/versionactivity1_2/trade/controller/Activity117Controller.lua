@@ -1,46 +1,51 @@
-module("modules.logic.versionactivity1_2.trade.controller.Activity117Controller", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.controller.Activity117Controller", package.seeall)
 
-slot0 = class("Activity117Controller", BaseController)
+local var_0_0 = class("Activity117Controller", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.openView(slot0, slot1, slot2)
-	slot3, slot4, slot5 = ActivityHelper.getActivityStatusAndToast(slot1)
+function var_0_0.openView(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0, var_3_1, var_3_2 = ActivityHelper.getActivityStatusAndToast(arg_3_1)
 
-	if slot3 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot4 then
-			GameFacade.showToastWithTableParam(slot4, slot5)
+	if var_3_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_3_1 then
+			GameFacade.showToastWithTableParam(var_3_1, var_3_2)
 		end
 
 		return
 	end
 
-	slot0:initAct(slot1)
-	slot0:openTradeBargainView({
-		actId = slot1,
-		tabIndex = slot2
-	})
+	arg_3_0:initAct(arg_3_1)
+
+	local var_3_3 = {
+		actId = arg_3_1,
+		tabIndex = arg_3_2
+	}
+
+	arg_3_0:openTradeBargainView(var_3_3)
 end
 
-function slot0.initAct(slot0, slot1)
-	Activity117Model.instance:initAct(slot1)
-	Activity117Rpc.instance:sendAct117InfoRequest(slot1)
+function var_0_0.initAct(arg_4_0, arg_4_1)
+	Activity117Model.instance:initAct(arg_4_1)
+	Activity117Rpc.instance:sendAct117InfoRequest(arg_4_1)
 end
 
-function slot0.openTradeBargainView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.ActivityTradeBargain, slot1)
+function var_0_0.openTradeBargainView(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.ActivityTradeBargain, arg_5_1)
 end
 
-function slot0.openTradeSuccessView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.ActivityTradeSuccessView, slot1)
+function var_0_0.openTradeSuccessView(arg_6_0, arg_6_1)
+	ViewMgr.instance:openView(ViewName.ActivityTradeSuccessView, arg_6_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

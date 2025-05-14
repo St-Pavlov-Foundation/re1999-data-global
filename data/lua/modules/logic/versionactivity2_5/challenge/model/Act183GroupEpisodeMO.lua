@@ -1,88 +1,102 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183GroupEpisodeMO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183GroupEpisodeMO", package.seeall)
 
-slot0 = pureTable("Act183GroupEpisodeMO")
+local var_0_0 = pureTable("Act183GroupEpisodeMO")
 
-function slot0.init(slot0, slot1)
-	slot0._groupId = slot1.groupId
-	slot0._finished = slot1.finished
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._groupId = arg_1_1.groupId
+	arg_1_0._finished = arg_1_1.finished
 
-	slot0:_onGetEpisodeList(slot1.episodeList)
+	arg_1_0:_onGetEpisodeList(arg_1_1.episodeList)
 end
 
-function slot0._onGetEpisodeList(slot0, slot1)
-	slot0._episodeList = {}
-	slot0._episodeMap = {}
-	slot0._bossPassCount = 0
-	slot0._episodeFinishCount = 0
+function var_0_0._onGetEpisodeList(arg_2_0, arg_2_1)
+	arg_2_0._episodeList = {}
+	arg_2_0._episodeMap = {}
+	arg_2_0._bossPassCount = 0
+	arg_2_0._episodeFinishCount = 0
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = Act183EpisodeMO.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_0 = Act183EpisodeMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0._episodeList, slot7)
+		var_2_0:init(iter_2_1)
+		table.insert(arg_2_0._episodeList, var_2_0)
 
-		slot0._episodeMap[slot7:getEpisodeId()] = slot7
+		local var_2_1 = var_2_0:getEpisodeId()
+
+		arg_2_0._episodeMap[var_2_1] = var_2_0
 	end
 
-	slot0._groupType = slot0._episodeList[1] and slot2:getGroupType()
-	slot0._episodeCount = slot0._episodeList and #slot0._episodeList or 0
+	local var_2_2 = arg_2_0._episodeList[1]
+
+	arg_2_0._groupType = var_2_2 and var_2_2:getGroupType()
+	arg_2_0._episodeCount = arg_2_0._episodeList and #arg_2_0._episodeList or 0
 end
 
-function slot0.isHasFinished(slot0)
-	return slot0._finished
+function var_0_0.isHasFinished(arg_3_0)
+	return arg_3_0._finished
 end
 
-function slot0.getEpisodeMos(slot0)
-	return slot0._episodeList
+function var_0_0.getEpisodeMos(arg_4_0)
+	return arg_4_0._episodeList
 end
 
-function slot0.getGroupId(slot0)
-	return slot0._groupId
+function var_0_0.getGroupId(arg_5_0)
+	return arg_5_0._groupId
 end
 
-function slot0.getGroupType(slot0)
-	return slot0._groupType
+function var_0_0.getGroupType(arg_6_0)
+	return arg_6_0._groupType
 end
 
-function slot0.getStatus(slot0)
-	slot1 = Act183Enum.GroupStatus.Locked
+function var_0_0.getStatus(arg_7_0)
+	local var_7_0 = Act183Enum.GroupStatus.Locked
 
-	if slot0._groupType == Act183Enum.GroupType.Daily then
-		if not slot0:getUnlockRemainTime() or slot2 <= 0 then
-			slot1 = Act183Enum.GroupStatus.Unlocked
+	if arg_7_0._groupType == Act183Enum.GroupType.Daily then
+		local var_7_1 = arg_7_0:getUnlockRemainTime()
+
+		if not var_7_1 or var_7_1 <= 0 then
+			var_7_0 = Act183Enum.GroupStatus.Unlocked
 		end
-	elseif slot0._groupType == Act183Enum.GroupType.NormalMain then
-		slot1 = slot0:isGroupFinished() and Act183Enum.GroupStatus.Finished or Act183Enum.GroupStatus.Unlocked
-	elseif slot0._groupType == Act183Enum.GroupType.HardMain then
-		slot4 = Act183Model.instance:getActInfo():getGroupEpisodeMos(Act183Enum.GroupType.NormalMain) and slot3[1]
+	elseif arg_7_0._groupType == Act183Enum.GroupType.NormalMain then
+		var_7_0 = arg_7_0:isGroupFinished() and Act183Enum.GroupStatus.Finished or Act183Enum.GroupStatus.Unlocked
+	elseif arg_7_0._groupType == Act183Enum.GroupType.HardMain then
+		local var_7_2 = Act183Model.instance:getActInfo():getGroupEpisodeMos(Act183Enum.GroupType.NormalMain)
+		local var_7_3 = var_7_2 and var_7_2[1]
 
-		if slot4 and slot4:isHasFinished() then
-			slot1 = slot0:isGroupFinished() and Act183Enum.GroupStatus.Finished or Act183Enum.GroupStatus.Unlocked
+		if var_7_3 and var_7_3:isHasFinished() then
+			var_7_0 = arg_7_0:isGroupFinished() and Act183Enum.GroupStatus.Finished or Act183Enum.GroupStatus.Unlocked
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.isGroupFinished(slot0)
-	return slot0._episodeCount <= (slot0:getStatusEpisodes(Act183Enum.GroupStatus.Finished) and #slot1 or 0)
+function var_0_0.isGroupFinished(arg_8_0)
+	local var_8_0 = arg_8_0:getStatusEpisodes(Act183Enum.GroupStatus.Finished)
+
+	return (var_8_0 and #var_8_0 or 0) >= arg_8_0._episodeCount
 end
 
-function slot0.getUnlockRemainTime(slot0)
-	return Act183Helper.getDailyGroupEpisodeUnlockRemainTime(slot0._groupId) or 0
+function var_0_0.getUnlockRemainTime(arg_9_0)
+	return Act183Helper.getDailyGroupEpisodeUnlockRemainTime(arg_9_0._groupId) or 0
 end
 
-function slot0.getEpisodeCount(slot0)
-	return slot0._episodeCount
+function var_0_0.getEpisodeCount(arg_10_0)
+	return arg_10_0._episodeCount
 end
 
-function slot0.getEpisodeFinishCount(slot0)
-	return slot0:getStatusEpisodes(Act183Enum.EpisodeStatus.Finished) and #slot1 or 0
+function var_0_0.getEpisodeFinishCount(arg_11_0)
+	local var_11_0 = arg_11_0:getStatusEpisodes(Act183Enum.EpisodeStatus.Finished)
+
+	return var_11_0 and #var_11_0 or 0
 end
 
-function slot0.isAllSubEpisodeFinished(slot0)
-	for slot4, slot5 in ipairs(slot0._episodeList) do
-		if slot5:getEpisodeType() == Act183Enum.EpisodeType.Sub and slot5:getStatus() ~= Act183Enum.EpisodeStatus.Finished then
+function var_0_0.isAllSubEpisodeFinished(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._episodeList) do
+		local var_12_0 = iter_12_1:getEpisodeType()
+		local var_12_1 = iter_12_1:getStatus()
+
+		if var_12_0 == Act183Enum.EpisodeType.Sub and var_12_1 ~= Act183Enum.EpisodeStatus.Finished then
 			return false
 		end
 	end
@@ -90,181 +104,244 @@ function slot0.isAllSubEpisodeFinished(slot0)
 	return true
 end
 
-function slot0.getTotalAndPassConditionIds(slot0, slot1)
-	slot4 = {
-		slot0:getEpisodeMo(slot1)
+function var_0_0.getTotalAndPassConditionIds(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getEpisodeMo(arg_13_1)
+	local var_13_1 = arg_13_0:getPreEpisodeMos(arg_13_1)
+	local var_13_2 = {
+		var_13_0
 	}
 
-	tabletool.addValues(slot4, slot0:getPreEpisodeMos(slot1))
-	table.sort(slot4, slot0._sortEpisodeByPassOrder)
+	tabletool.addValues(var_13_2, var_13_1)
+	table.sort(var_13_2, arg_13_0._sortEpisodeByPassOrder)
 
-	slot5 = {}
-	slot6 = {}
+	local var_13_3 = {}
+	local var_13_4 = {}
 
-	for slot10, slot11 in ipairs(slot4) do
-		tabletool.addValues(slot5, slot11:getConditionIds())
-		tabletool.addValues(slot6, slot11:getPassConditions())
+	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
+		local var_13_5 = iter_13_1:getConditionIds()
+		local var_13_6 = iter_13_1:getPassConditions()
+
+		tabletool.addValues(var_13_3, var_13_5)
+		tabletool.addValues(var_13_4, var_13_6)
 	end
 
-	return slot5, slot6
+	return var_13_3, var_13_4
 end
 
-function slot0.getEpisodeListByPassOrder(slot0)
-	slot1 = tabletool.copy(slot0._episodeList)
+function var_0_0.getEpisodeListByPassOrder(arg_14_0)
+	local var_14_0 = tabletool.copy(arg_14_0._episodeList)
 
-	table.sort(slot1, slot0._sortEpisodeByPassOrder)
+	table.sort(var_14_0, arg_14_0._sortEpisodeByPassOrder)
 
-	return slot1
+	return var_14_0
 end
 
-function slot0._sortEpisodeByPassOrder(slot0, slot1)
-	if slot0:isFinished() ~= slot1:isFinished() then
-		return slot2
+function var_0_0._sortEpisodeByPassOrder(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:isFinished()
+
+	if var_15_0 ~= arg_15_1:isFinished() then
+		return var_15_0
 	end
 
-	if slot0:getPassOrder() ~= slot1:getPassOrder() then
-		return slot4 < slot5
+	local var_15_1 = arg_15_0:getPassOrder()
+	local var_15_2 = arg_15_1:getPassOrder()
+
+	if var_15_1 ~= var_15_2 then
+		return var_15_1 < var_15_2
 	end
 
-	if slot0:getConfig().order ~= slot1:getConfig().order then
-		return slot8 < slot9
+	local var_15_3 = arg_15_0:getConfig()
+	local var_15_4 = arg_15_1:getConfig()
+	local var_15_5 = var_15_3.order
+	local var_15_6 = var_15_4.order
+
+	if var_15_5 ~= var_15_6 then
+		return var_15_5 < var_15_6
 	end
 
-	return slot0:getEpisodeId() < slot1:getEpisodeId()
+	return arg_15_0:getEpisodeId() < arg_15_1:getEpisodeId()
 end
 
-function slot0.isConditionPass(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._episodeList) do
-		if slot6:isConditionPass(slot1) then
+function var_0_0.isConditionPass(arg_16_0, arg_16_1)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._episodeList) do
+		if iter_16_1:isConditionPass(arg_16_1) then
 			return true
 		end
 	end
 end
 
-function slot0.getPreEpisodeMos(slot0, slot1)
-	slot3 = {}
+function var_0_0.getPreEpisodeMos(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:getEpisodeMo(arg_17_1)
+	local var_17_1 = {}
 
-	if slot0:getEpisodeMo(slot1) and slot2:getPreEpisodeIds() then
-		for slot8, slot9 in ipairs(slot4) do
-			table.insert(slot3, slot0:getEpisodeMo(slot9))
+	if var_17_0 then
+		local var_17_2 = var_17_0:getPreEpisodeIds()
+
+		if var_17_2 then
+			for iter_17_0, iter_17_1 in ipairs(var_17_2) do
+				local var_17_3 = arg_17_0:getEpisodeMo(iter_17_1)
+
+				table.insert(var_17_1, var_17_3)
+			end
 		end
 	end
 
-	return slot3
+	return var_17_1
 end
 
-function slot0.getConditionFinishCount(slot0)
-	for slot5, slot6 in ipairs(slot0._episodeList) do
-		slot1 = 0 + (slot6:getPassConditions() and #slot7 or 0)
+function var_0_0.getConditionFinishCount(arg_18_0)
+	local var_18_0 = 0
+
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0._episodeList) do
+		local var_18_1 = iter_18_1:getPassConditions()
+
+		var_18_0 = var_18_0 + (var_18_1 and #var_18_1 or 0)
 	end
 
-	return slot1
+	return var_18_0
 end
 
-function slot0.getBossEpisodePassCount(slot0)
-	for slot5, slot6 in ipairs(slot0._episodeList) do
-		if slot6:getEpisodeType() == Act183Enum.EpisodeType.Boss and slot6:getStatus() == Act183Enum.EpisodeStatus.Finished then
-			slot1 = 0 + 1
+function var_0_0.getBossEpisodePassCount(arg_19_0)
+	local var_19_0 = 0
+
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._episodeList) do
+		local var_19_1 = iter_19_1:getEpisodeType()
+		local var_19_2 = iter_19_1:getStatus()
+
+		if var_19_1 == Act183Enum.EpisodeType.Boss and var_19_2 == Act183Enum.EpisodeStatus.Finished then
+			var_19_0 = var_19_0 + 1
 		end
 	end
 
-	return slot1
+	return var_19_0
 end
 
-function slot0.getEpisodeMo(slot0, slot1)
-	return slot0._episodeMap[slot1]
+function var_0_0.getEpisodeMo(arg_20_0, arg_20_1)
+	return arg_20_0._episodeMap[arg_20_1]
 end
 
-function slot0.getEscapeRules(slot0, slot1)
-	if not slot0:getEpisodeMo(slot1) then
+function var_0_0.getEscapeRules(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:getEpisodeMo(arg_21_1)
+
+	if not var_21_0 then
 		return
 	end
 
-	slot3 = {}
+	local var_21_1 = {}
+	local var_21_2 = arg_21_0:getEpisodeListByPassOrder()
 
-	for slot8, slot9 in ipairs(slot0:getEpisodeListByPassOrder()) do
-		if not slot9:isFinished() then
+	for iter_21_0, iter_21_1 in ipairs(var_21_2) do
+		if not iter_21_1:isFinished() then
 			break
 		end
 
-		if slot9:getEpisodeId() == slot2:getEpisodeId() then
+		if iter_21_1:getEpisodeId() == var_21_0:getEpisodeId() then
 			break
 		end
 
-		if slot9:getEscapeRules() and #slot10 > 0 then
-			for slot14, slot15 in ipairs(slot10) do
-				if not string.nilorempty(slot15) then
-					table.insert(slot3, {
-						episodeId = slot9:getEpisodeId(),
-						ruleDesc = slot15,
-						ruleIndex = slot14,
-						passOrder = slot9:getPassOrder()
-					})
+		local var_21_3 = iter_21_1:getEscapeRules()
+
+		if var_21_3 and #var_21_3 > 0 then
+			for iter_21_2, iter_21_3 in ipairs(var_21_3) do
+				if not string.nilorempty(iter_21_3) then
+					local var_21_4 = {
+						episodeId = iter_21_1:getEpisodeId(),
+						ruleDesc = iter_21_3,
+						ruleIndex = iter_21_2,
+						passOrder = iter_21_1:getPassOrder()
+					}
+
+					table.insert(var_21_1, var_21_4)
 				end
 			end
 		end
 	end
 
-	return slot3
+	return var_21_1
 end
 
-function slot0.isEpisodeCanRestart(slot0, slot1)
-	if not slot0:getEpisodeMo(slot1) then
+function var_0_0.isEpisodeCanRestart(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getEpisodeMo(arg_22_1)
+
+	if not var_22_0 then
 		return
 	end
 
-	slot3 = slot2:isFinished()
+	local var_22_1 = var_22_0:isFinished()
 
-	if slot2:getEpisodeType() == Act183Enum.EpisodeType.Boss and slot3 then
+	if var_22_0:getEpisodeType() == Act183Enum.EpisodeType.Boss and var_22_1 then
 		return true
 	end
 
-	return slot3 and slot2:getPassOrder() == slot0:findMaxPassOrder()
+	local var_22_2 = var_22_0:getPassOrder()
+	local var_22_3 = arg_22_0:findMaxPassOrder()
+
+	return var_22_1 and var_22_2 == var_22_3
 end
 
-function slot0.isEpisodeCanReset(slot0, slot1)
-	if not slot0:getEpisodeMo(slot1) then
+function var_0_0.isEpisodeCanReset(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getEpisodeMo(arg_23_1)
+
+	if not var_23_0 then
 		return
 	end
 
-	if slot2:getEpisodeType() == Act183Enum.EpisodeType.Boss then
+	if var_23_0:getEpisodeType() == Act183Enum.EpisodeType.Boss then
 		return
 	end
 
-	return slot2:getStatus() == Act183Enum.EpisodeStatus.Finished and slot2:getPassOrder() < slot0:findMaxPassOrder()
+	local var_23_1 = var_23_0:getStatus()
+	local var_23_2 = var_23_0:getPassOrder()
+	local var_23_3 = arg_23_0:findMaxPassOrder()
+
+	return var_23_1 == Act183Enum.EpisodeStatus.Finished and var_23_2 < var_23_3
 end
 
-function slot0.isCanStart(slot0, slot1)
-	if not slot0:getEpisodeMo(slot1) then
+function var_0_0.isCanStart(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:getEpisodeMo(arg_24_1)
+
+	if not var_24_0 then
 		return
 	end
 
-	if slot2:getStatus() ~= Act183Enum.EpisodeStatus.Unlocked then
+	if var_24_0:getStatus() ~= Act183Enum.EpisodeStatus.Unlocked then
 		return
 	end
 
-	if slot2:getEpisodeType() == Act183Enum.EpisodeType.Sub then
+	local var_24_1 = var_24_0:getEpisodeType()
+
+	if var_24_1 == Act183Enum.EpisodeType.Sub then
 		return true
-	elseif slot4 == Act183Enum.EpisodeType.Boss then
-		return slot0:isAllSubEpisodeFinished()
+	elseif var_24_1 == Act183Enum.EpisodeType.Boss then
+		return arg_24_0:isAllSubEpisodeFinished()
 	end
 end
 
-function slot0.isEpisodeCanReRepress(slot0, slot1)
-	if not slot0:getEpisodeMo(slot1) then
+function var_0_0.isEpisodeCanReRepress(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0:getEpisodeMo(arg_25_1)
+
+	if not var_25_0 then
 		return
 	end
 
-	if slot2:getEpisodeType() == Act183Enum.EpisodeType.Boss then
+	if var_25_0:getEpisodeType() == Act183Enum.EpisodeType.Boss then
 		return
 	end
 
-	return slot2:isFinished() and slot2:getPassOrder() == slot0:findMaxPassOrder() and not Act183Helper.isLastPassEpisodeInType(slot2)
+	local var_25_1 = var_25_0:getPassOrder()
+	local var_25_2 = var_25_0:isFinished()
+	local var_25_3 = arg_25_0:findMaxPassOrder()
+	local var_25_4 = Act183Helper.isLastPassEpisodeInType(var_25_0)
+
+	return var_25_2 and var_25_1 == var_25_3 and not var_25_4
 end
 
-function slot0.isHeroRepress(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0._episodeList) do
-		if slot7:isHeroRepress(slot1) and (not slot2 or slot2 == slot7:getEpisodeId()) then
+function var_0_0.isHeroRepress(arg_26_0, arg_26_1, arg_26_2)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0._episodeList) do
+		local var_26_0 = iter_26_1:isHeroRepress(arg_26_1)
+		local var_26_1 = iter_26_1:getEpisodeId()
+
+		if var_26_0 and (not arg_26_2 or arg_26_2 == var_26_1) then
 			return true
 		end
 	end
@@ -272,21 +349,29 @@ function slot0.isHeroRepress(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.findMaxPassOrder(slot0)
-	for slot5, slot6 in ipairs(slot0._episodeList) do
-		if slot6:isFinished() and 0 < slot6:getPassOrder() then
-			slot1 = slot8
+function var_0_0.findMaxPassOrder(arg_27_0)
+	local var_27_0 = 0
+
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0._episodeList) do
+		if iter_27_1:isFinished() then
+			local var_27_1 = iter_27_1:getPassOrder()
+
+			if var_27_0 < var_27_1 then
+				var_27_0 = var_27_1
+			end
 		end
 	end
 
-	return slot1
+	return var_27_0
 end
 
-function slot0.isHeroRepressInPreEpisode(slot0, slot1, slot2)
-	slot3 = slot0:getEpisodeMo(slot1)
+function var_0_0.isHeroRepressInPreEpisode(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = arg_28_0:getEpisodeMo(arg_28_1)
+	local var_28_1 = var_28_0:isFinished()
+	local var_28_2 = var_28_0:getPassOrder()
 
-	for slot9, slot10 in ipairs(slot0._episodeList) do
-		if slot10:isFinished() and (not slot3:isFinished() or slot10:getPassOrder() < slot3:getPassOrder()) and slot10:isHeroRepress(slot2) then
+	for iter_28_0, iter_28_1 in ipairs(arg_28_0._episodeList) do
+		if iter_28_1:isFinished() and (not var_28_1 or var_28_2 > iter_28_1:getPassOrder()) and iter_28_1:isHeroRepress(arg_28_2) then
 			return true
 		end
 	end
@@ -294,16 +379,16 @@ function slot0.isHeroRepressInPreEpisode(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.getStatusEpisodes(slot0, slot1)
-	slot2 = {}
+function var_0_0.getStatusEpisodes(arg_29_0, arg_29_1)
+	local var_29_0 = {}
 
-	for slot6, slot7 in ipairs(slot0._episodeList) do
-		if slot1 == slot7:getStatus() then
-			table.insert(slot2, slot7)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_0._episodeList) do
+		if arg_29_1 == iter_29_1:getStatus() then
+			table.insert(var_29_0, iter_29_1)
 		end
 	end
 
-	return slot2
+	return var_29_0
 end
 
-return slot0
+return var_0_0

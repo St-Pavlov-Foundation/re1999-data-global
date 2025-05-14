@@ -1,716 +1,806 @@
-module("modules.logic.versionactivity2_1.activity165.view.Activity165StepItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165StepItem", package.seeall)
 
-slot0 = class("Activity165StepItem", LuaCompBase)
+local var_0_0 = class("Activity165StepItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#go_left")
-	slot0._txtstory = gohelper.findChildText(slot0.viewGO, "#go_left/scroll_story/Viewport/#txt_story")
-	slot0._goright = gohelper.findChild(slot0.viewGO, "#go_right")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_right/icon/bg/#go_select")
-	slot0._goadd = gohelper.findChild(slot0.viewGO, "#go_right/icon/#go_add")
-	slot0._gocorrect = gohelper.findChild(slot0.viewGO, "#go_right/icon/#go_correct")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_right/icon/#image_icon")
-	slot0._gopoint = gohelper.findChild(slot0.viewGO, "#go_right/icon/#go_point")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_right/icon/#btn_click")
-	slot0._txtindex = gohelper.findChildText(slot0.viewGO, "#go_right/indexbg/#txt_index")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+	arg_1_0._txtstory = gohelper.findChildText(arg_1_0.viewGO, "#go_left/scroll_story/Viewport/#txt_story")
+	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_right")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_right/icon/bg/#go_select")
+	arg_1_0._goadd = gohelper.findChild(arg_1_0.viewGO, "#go_right/icon/#go_add")
+	arg_1_0._gocorrect = gohelper.findChild(arg_1_0.viewGO, "#go_right/icon/#go_correct")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_right/icon/#image_icon")
+	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "#go_right/icon/#go_point")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_right/icon/#btn_click")
+	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "#go_right/indexbg/#txt_index")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_5_0)
+	arg_5_0:removeEvents()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0.isFixed then
+function var_0_0._btnclickOnClick(arg_6_0)
+	if arg_6_0.isFixed then
 		return
 	end
 
-	if (slot0._storyMo and slot0._storyMo:getState()) == Activity165Enum.StoryStage.Ending then
+	if (arg_6_0._storyMo and arg_6_0._storyMo:getState()) == Activity165Enum.StoryStage.Ending then
 		return
 	end
 
-	Activity165Controller.instance:dispatchEvent(Activity165Event.onClickStepBtn, slot0._index)
+	Activity165Controller.instance:dispatchEvent(Activity165Event.onClickStepBtn, arg_6_0._index)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goindex = gohelper.findChild(slot0.viewGO, "#go_right/indexbg")
-	slot0._goDecorate = gohelper.findChild(slot0.viewGO, "#go_left/img_tex")
-	slot0._goTxt = gohelper.findChild(slot0.viewGO, "#go_left/scroll_story")
-	slot0._scrollStory = gohelper.findChildScrollRect(slot0.viewGO, "#go_left/scroll_story")
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_right/icon/bg")
-	slot0._tex1 = gohelper.findChild(slot0.viewGO, "#go_left/img_tex/img_en1")
-	slot0._tex2 = gohelper.findChild(slot0.viewGO, "#go_left/img_tex/img_en2")
-	slot0._goeglocked = gohelper.findChild(slot0.viewGO, "#go_eglocked")
-	slot0._goline = gohelper.findChild(slot0.viewGO, "line")
-	slot0._anieglocked = SLFramework.AnimatorPlayer.Get(slot0._goeglocked.gameObject)
-	slot0._aniTex = SLFramework.AnimatorPlayer.Get(slot0._goDecorate.gameObject)
-	slot0._aniView = SLFramework.AnimatorPlayer.Get(slot0.viewGO.gameObject)
-	slot0._keywordPointList = slot0:getUserDataTb_()
-	slot0._typeMarkItemList = slot0:getUserDataTb_()
-	slot0._markItemList = slot0:getUserDataTb_()
-	slot0._goMarkPrefabs = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._goindex = gohelper.findChild(arg_7_0.viewGO, "#go_right/indexbg")
+	arg_7_0._goDecorate = gohelper.findChild(arg_7_0.viewGO, "#go_left/img_tex")
+	arg_7_0._goTxt = gohelper.findChild(arg_7_0.viewGO, "#go_left/scroll_story")
+	arg_7_0._scrollStory = gohelper.findChildScrollRect(arg_7_0.viewGO, "#go_left/scroll_story")
+	arg_7_0._gobg = gohelper.findChild(arg_7_0.viewGO, "#go_right/icon/bg")
+	arg_7_0._tex1 = gohelper.findChild(arg_7_0.viewGO, "#go_left/img_tex/img_en1")
+	arg_7_0._tex2 = gohelper.findChild(arg_7_0.viewGO, "#go_left/img_tex/img_en2")
+	arg_7_0._goeglocked = gohelper.findChild(arg_7_0.viewGO, "#go_eglocked")
+	arg_7_0._goline = gohelper.findChild(arg_7_0.viewGO, "line")
+	arg_7_0._anieglocked = SLFramework.AnimatorPlayer.Get(arg_7_0._goeglocked.gameObject)
+	arg_7_0._aniTex = SLFramework.AnimatorPlayer.Get(arg_7_0._goDecorate.gameObject)
+	arg_7_0._aniView = SLFramework.AnimatorPlayer.Get(arg_7_0.viewGO.gameObject)
+	arg_7_0._keywordPointList = arg_7_0:getUserDataTb_()
+	arg_7_0._typeMarkItemList = arg_7_0:getUserDataTb_()
+	arg_7_0._markItemList = arg_7_0:getUserDataTb_()
 
-	for slot5 = 1, 4 do
-		slot0._goMarkPrefabs[slot5] = gohelper.findChild(gohelper.findChild(slot0.viewGO, "#go_left/scroll_story/Viewport/#txt_story/go_mark"), "mark_" .. slot5)
+	local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "#go_left/scroll_story/Viewport/#txt_story/go_mark")
 
-		gohelper.setActive(slot0._goMarkPrefabs[slot5], false)
+	arg_7_0._goMarkPrefabs = arg_7_0:getUserDataTb_()
 
-		slot0._typeMarkItemList[slot5] = slot0:getUserDataTb_()
+	for iter_7_0 = 1, 4 do
+		arg_7_0._goMarkPrefabs[iter_7_0] = gohelper.findChild(var_7_0, "mark_" .. iter_7_0)
+
+		gohelper.setActive(arg_7_0._goMarkPrefabs[iter_7_0], false)
+
+		arg_7_0._typeMarkItemList[iter_7_0] = arg_7_0:getUserDataTb_()
 	end
 
-	for slot5 = 1, slot0._gopoint.transform.childCount do
-		slot6 = gohelper.findChild(slot0._gopoint, slot5)
+	for iter_7_1 = 1, arg_7_0._gopoint.transform.childCount do
+		local var_7_1 = gohelper.findChild(arg_7_0._gopoint, iter_7_1)
 
-		for slot10 = 1, slot5 do
-			slot11 = gohelper.findChildImage(slot6, slot10)
+		for iter_7_2 = 1, iter_7_1 do
+			local var_7_2 = gohelper.findChildImage(var_7_1, iter_7_2)
 
-			if not slot0._keywordPointList[slot5] then
-				slot0._keywordPointList[slot5] = slot0:getUserDataTb_()
-				slot0._keywordPointList[slot5].go = slot6
-				slot0._keywordPointList[slot5].ponit = slot0:getUserDataTb_()
+			if not arg_7_0._keywordPointList[iter_7_1] then
+				arg_7_0._keywordPointList[iter_7_1] = arg_7_0:getUserDataTb_()
+				arg_7_0._keywordPointList[iter_7_1].go = var_7_1
+				arg_7_0._keywordPointList[iter_7_1].ponit = arg_7_0:getUserDataTb_()
 			end
 
-			slot12 = slot0:getUserDataTb_()
-			slot12.go = slot11.gameObject
-			slot12.icon = slot11
-			slot12.canvasgroup = slot11.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+			local var_7_3 = arg_7_0:getUserDataTb_()
 
-			table.insert(slot0._keywordPointList[slot5].ponit, slot12)
+			var_7_3.go = var_7_2.gameObject
+			var_7_3.icon = var_7_2
+			var_7_3.canvasgroup = var_7_2.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+
+			table.insert(arg_7_0._keywordPointList[iter_7_1].ponit, var_7_3)
 		end
 	end
 
-	slot0._txtstory.text = ""
-	slot0._keywordMaxCount = tabletool.len(slot0._keywordPointList)
-	slot0._keywordItem = slot0:getUserDataTb_()
-	slot0._keywordIdList = {}
-	slot0._bogusId = nil
+	arg_7_0._txtstory.text = ""
+	arg_7_0._keywordMaxCount = tabletool.len(arg_7_0._keywordPointList)
+	arg_7_0._keywordItem = arg_7_0:getUserDataTb_()
+	arg_7_0._keywordIdList = {}
+	arg_7_0._bogusId = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_8_0, arg_8_1)
+	arg_8_0.viewGO = arg_8_1
 
-	slot0:onInitView()
+	arg_8_0:onInitView()
 end
 
-function slot0.onInitItem(slot0, slot1, slot2)
-	slot0._index = slot2
-	slot0._storyMo = slot1
-	slot0._actId = slot1._actId
+function var_0_0.onInitItem(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._index = arg_9_2
+	arg_9_0._storyMo = arg_9_1
+	arg_9_0._actId = arg_9_1._actId
 
-	if slot0._index == 3 then
-		transformhelper.setLocalPosXY(slot0._goeglocked.transform, 763, 850)
+	if arg_9_0._index == 3 then
+		transformhelper.setLocalPosXY(arg_9_0._goeglocked.transform, 763, 850)
 	end
 
-	slot0:activeStep(false)
+	arg_9_0:activeStep(false)
 end
 
-function slot0.onRefreshMo(slot0, slot1)
-	slot0._stepMo = slot1 and slot0._storyMo:getStepMo(slot1)
-	slot0._keywordIdList = slot0._storyMo:getKwIdsByStepIndex(slot0._index) or {}
-	slot0._isUnlock = slot0._index - slot0._storyMo:getUnlockStepIdRemoveEndingCount() <= 0
+function var_0_0.onRefreshMo(arg_10_0, arg_10_1)
+	arg_10_0._stepMo = arg_10_1 and arg_10_0._storyMo:getStepMo(arg_10_1)
+	arg_10_0._keywordIdList = arg_10_0._storyMo:getKwIdsByStepIndex(arg_10_0._index) or {}
 
-	if slot0._storyMo:getState() == Activity165Enum.StoryStage.Filling then
-		slot0._isCurStep = slot5 == 1
+	local var_10_0 = arg_10_0._storyMo:getState() == Activity165Enum.StoryStage.Filling
+	local var_10_1 = arg_10_0._storyMo:getUnlockStepIdRemoveEndingCount()
+	local var_10_2 = arg_10_0._index - var_10_1
+
+	arg_10_0._isUnlock = var_10_2 <= 0
+
+	if var_10_0 then
+		arg_10_0._isCurStep = var_10_2 == 1
 	else
-		slot0._isCurStep = false
+		arg_10_0._isCurStep = false
 	end
 
-	slot0.isFixed = slot0._isUnlock and not LuaUtil.tableNotEmpty(slot0._keywordIdList)
+	arg_10_0.isFixed = arg_10_0._isUnlock and not LuaUtil.tableNotEmpty(arg_10_0._keywordIdList)
 
-	if slot0._stepMo and slot0._isUnlock and slot0.isFixed and not string.nilorempty(slot0._stepMo.stepCo.pic) then
-		UISpriteSetMgr.instance:setV2a1Act165Sprite(slot0._imageicon, slot6, true)
+	if arg_10_0._stepMo and arg_10_0._isUnlock and arg_10_0.isFixed then
+		local var_10_3 = arg_10_0._stepMo.stepCo.pic
+
+		if not string.nilorempty(var_10_3) then
+			UISpriteSetMgr.instance:setV2a1Act165Sprite(arg_10_0._imageicon, var_10_3, true)
+		end
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0:killTween()
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0:killTween()
 
-	slot0._stepId = slot1
+	arg_11_0._stepId = arg_11_1
 
-	slot0:onRefreshMo(slot1)
-	slot0:refreshIndex(slot0._index)
-	gohelper.setActive(slot0._gocorrect.gameObject, slot0._isUnlock)
+	arg_11_0:onRefreshMo(arg_11_1)
+	arg_11_0:refreshIndex(arg_11_0._index)
+	gohelper.setActive(arg_11_0._gocorrect.gameObject, arg_11_0._isUnlock)
 
-	if slot0._isCurStep then
-		slot0:showEgLock()
+	if arg_11_0._isCurStep then
+		arg_11_0:showEgLock()
 	else
-		slot0:_hideEglocked()
+		arg_11_0:_hideEglocked()
 	end
 
-	if not slot0._isUnlock and not slot0._isCurStep then
-		slot0:activeStep(false)
+	if not arg_11_0._isUnlock and not arg_11_0._isCurStep then
+		arg_11_0:activeStep(false)
 
 		return
 	end
 
-	slot0:activeStep(true)
+	arg_11_0:activeStep(true)
 
-	if slot0._isUnlock then
-		slot0:showStoryTxt()
+	if arg_11_0._isUnlock then
+		arg_11_0:showStoryTxt()
 	end
 
-	slot0:refreshState()
-	gohelper.setActive(slot0._goTxt.gameObject, slot0._isUnlock)
-	slot0:showDecorateTexture()
-	slot0:setKeywordItem()
+	arg_11_0:refreshState()
+	gohelper.setActive(arg_11_0._goTxt.gameObject, arg_11_0._isUnlock)
+	arg_11_0:showDecorateTexture()
+	arg_11_0:setKeywordItem()
 end
 
-function slot0.showEgLock(slot0, slot1)
-	gohelper.setActive(slot0._goeglocked.gameObject, true)
-	slot0._anieglocked:Play(Activity165Enum.EditViewAnim.Idle, slot1, slot0)
+function var_0_0.showEgLock(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._goeglocked.gameObject, true)
+	arg_12_0._anieglocked:Play(Activity165Enum.EditViewAnim.Idle, arg_12_1, arg_12_0)
 end
 
-function slot0.unlockEgLock(slot0)
-	if not slot0.isFixed and LuaUtil.tableNotEmpty(slot0._keywordIdList) then
-		gohelper.setActive(slot0._goeglocked.gameObject, true)
-		slot0._anieglocked:Play(Activity165Enum.EditViewAnim.Unlock, slot0._hideEglocked, slot0)
+function var_0_0.unlockEgLock(arg_13_0)
+	if not arg_13_0.isFixed and LuaUtil.tableNotEmpty(arg_13_0._keywordIdList) then
+		gohelper.setActive(arg_13_0._goeglocked.gameObject, true)
+		arg_13_0._anieglocked:Play(Activity165Enum.EditViewAnim.Unlock, arg_13_0._hideEglocked, arg_13_0)
 	else
-		slot0:_hideEglocked()
+		arg_13_0:_hideEglocked()
 	end
 end
 
-function slot0._hideEglocked(slot0)
-	gohelper.setActive(slot0._goeglocked.gameObject, false)
+function var_0_0._hideEglocked(arg_14_0)
+	gohelper.setActive(arg_14_0._goeglocked.gameObject, false)
 end
 
-function slot0.showDecorateTexture(slot0, slot1)
-	slot2 = not slot0._isUnlock and slot0:getFillKwCount() >= 1
+function var_0_0.showDecorateTexture(arg_15_0, arg_15_1)
+	local var_15_0 = not arg_15_0._isUnlock and arg_15_0:getFillKwCount() >= 1
 
-	gohelper.setActive(slot0._goDecorate.gameObject, slot2)
+	gohelper.setActive(arg_15_0._goDecorate.gameObject, var_15_0)
 
-	if slot2 then
-		slot0._aniTex:Play(Activity165Enum.EditViewAnim.Idle, slot1, slot0)
+	if var_15_0 then
+		arg_15_0._aniTex:Play(Activity165Enum.EditViewAnim.Idle, arg_15_1, arg_15_0)
 	end
 end
 
-function slot0.unlockDecorateTexture(slot0, slot1)
-	gohelper.setActive(slot0._goDecorate.gameObject, true)
-	slot0._aniTex:Play(Activity165Enum.EditViewAnim.Unlock, slot1, slot0)
+function var_0_0.unlockDecorateTexture(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._goDecorate.gameObject, true)
+	arg_16_0._aniTex:Play(Activity165Enum.EditViewAnim.Unlock, arg_16_1, arg_16_0)
 end
 
-function slot0.playDecorateTexture(slot0, slot1)
-	gohelper.setActive(slot0._goDecorate.gameObject, true)
-	slot0._aniTex:Play(Activity165Enum.EditViewAnim.Unlock, slot1, slot0)
+function var_0_0.playDecorateTexture(arg_17_0, arg_17_1)
+	gohelper.setActive(arg_17_0._goDecorate.gameObject, true)
+	arg_17_0._aniTex:Play(Activity165Enum.EditViewAnim.Unlock, arg_17_1, arg_17_0)
 end
 
-function slot0.hideyDecorateTexture(slot0)
-	gohelper.setActive(slot0._goDecorate.gameObject, false)
+function var_0_0.hideyDecorateTexture(arg_18_0)
+	gohelper.setActive(arg_18_0._goDecorate.gameObject, false)
 end
 
-function slot0.onFinishStep(slot0, slot1)
-	slot0._isUnlock = true
+function var_0_0.onFinishStep(arg_19_0, arg_19_1)
+	arg_19_0._isUnlock = true
 
-	slot0:beginShowTxt(slot1)
-	slot0:unlockEgLock()
-	gohelper.setActive(slot0._gocorrect.gameObject, true)
+	arg_19_0:beginShowTxt(arg_19_1)
+	arg_19_0:unlockEgLock()
+	gohelper.setActive(arg_19_0._gocorrect.gameObject, true)
 end
 
-function slot0.activeStep(slot0, slot1)
-	gohelper.setActive(slot0._goleft.gameObject, slot1)
-	gohelper.setActive(slot0._goright.gameObject, slot1)
-	gohelper.setActive(slot0._goline.gameObject, slot1)
+function var_0_0.activeStep(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0._goleft.gameObject.activeSelf
 
-	if not slot0._goleft.gameObject.activeSelf and slot1 then
-		slot0._aniView:Play(Activity165Enum.EditViewAnim.EgOpen, nil, slot0)
+	gohelper.setActive(arg_20_0._goleft.gameObject, arg_20_1)
+	gohelper.setActive(arg_20_0._goright.gameObject, arg_20_1)
+	gohelper.setActive(arg_20_0._goline.gameObject, arg_20_1)
+
+	if not var_20_0 and arg_20_1 then
+		arg_20_0._aniView:Play(Activity165Enum.EditViewAnim.EgOpen, nil, arg_20_0)
 	end
 end
 
-function slot0.refreshIndex(slot0, slot1)
-	slot0._txtindex.text = slot1 > 10 and slot1 or "0" .. slot1
-	slot2 = Activity165Enum.StepOffsetObj[slot1 % 2 + 1]
+function var_0_0.refreshIndex(arg_21_0, arg_21_1)
+	arg_21_0._txtindex.text = arg_21_1 > 10 and arg_21_1 or "0" .. arg_21_1
 
-	recthelper.setWidth(slot0._goTxt.transform, slot0.isFixed and 480 or 530)
+	local var_21_0 = Activity165Enum.StepOffsetObj[arg_21_1 % 2 + 1]
+	local var_21_1 = arg_21_0.isFixed and 480 or 530
+	local var_21_2 = arg_21_1 % 2 == 0 and -15 or 15
+	local var_21_3 = arg_21_0.isFixed and var_21_0.gotxt.PosX + var_21_2 or var_21_0.gotxt.PosX
 
-	slot0._scrollTxtHeight = slot0._goTxt.transform.rect.height
+	recthelper.setWidth(arg_21_0._goTxt.transform, var_21_1)
 
-	transformhelper.setLocalPosXY(slot0._goleft.transform, slot2.goleft.PosX, slot2.goleft.PosY)
-	transformhelper.setLocalPosXY(slot0._goright.transform, slot2.goright.PosX, slot2.goright.PosY)
-	transformhelper.setLocalPosXY(slot0._goindex.transform, slot2.goindex.PosX, slot2.goindex.PosY)
-	transformhelper.setLocalPosXY(slot0._goTxt.transform, slot0.isFixed and slot2.gotxt.PosX + (slot1 % 2 == 0 and -15 or 15) or slot2.gotxt.PosX, slot2.gotxt.PosY)
-	gohelper.setActive(slot0._tex1, slot1 % 2 == 0)
-	gohelper.setActive(slot0._tex2, slot1 % 2 == 1)
+	arg_21_0._scrollTxtHeight = arg_21_0._goTxt.transform.rect.height
+
+	transformhelper.setLocalPosXY(arg_21_0._goleft.transform, var_21_0.goleft.PosX, var_21_0.goleft.PosY)
+	transformhelper.setLocalPosXY(arg_21_0._goright.transform, var_21_0.goright.PosX, var_21_0.goright.PosY)
+	transformhelper.setLocalPosXY(arg_21_0._goindex.transform, var_21_0.goindex.PosX, var_21_0.goindex.PosY)
+	transformhelper.setLocalPosXY(arg_21_0._goTxt.transform, var_21_3, var_21_0.gotxt.PosY)
+	gohelper.setActive(arg_21_0._tex1, arg_21_1 % 2 == 0)
+	gohelper.setActive(arg_21_0._tex2, arg_21_1 % 2 == 1)
 end
 
-function slot0.onDestroy(slot0)
-	slot0:killTween()
+function var_0_0.onDestroy(arg_22_0)
+	arg_22_0:killTween()
 end
 
-function slot0.refreshState(slot0)
-	if not slot0.isFixed then
-		gohelper.setActive(slot0._goadd.gameObject, not slot0._isUnlock and slot0:isNullKeyword() and not slot0._bogusId)
-		slot0:refreshFillStepState()
+function var_0_0.refreshState(arg_23_0)
+	if not arg_23_0.isFixed then
+		local var_23_0 = arg_23_0:isNullKeyword()
+
+		gohelper.setActive(arg_23_0._goadd.gameObject, not arg_23_0._isUnlock and var_23_0 and not arg_23_0._bogusId)
+		arg_23_0:refreshFillStepState()
 	end
 
-	gohelper.setActive(slot0._gobg, not slot0.isFixed)
-	gohelper.setActive(slot0._imageicon.gameObject, slot0.isFixed)
+	gohelper.setActive(arg_23_0._gobg, not arg_23_0.isFixed)
+	gohelper.setActive(arg_23_0._imageicon.gameObject, arg_23_0.isFixed)
 end
 
-function slot0.setBogusKeyword(slot0, slot1)
-	if slot0._bogusId or not slot0:tryFillKeyword() then
+function var_0_0.setBogusKeyword(arg_24_0, arg_24_1)
+	if arg_24_0._bogusId or not arg_24_0:tryFillKeyword() then
 		return
 	end
 
-	slot0._bogusId = slot1
+	arg_24_0._bogusId = arg_24_1
 
-	slot0:setKeywordItem()
+	arg_24_0:setKeywordItem()
 end
 
-function slot0.cancelBogusKeyword(slot0)
-	slot0._bogusId = nil
+function var_0_0.cancelBogusKeyword(arg_25_0)
+	arg_25_0._bogusId = nil
 end
 
-function slot0.refreshBogusKeyword(slot0)
-	if slot0._bogusId then
-		slot0._bogusId = nil
+function var_0_0.refreshBogusKeyword(arg_26_0)
+	if arg_26_0._bogusId then
+		arg_26_0._bogusId = nil
 
-		slot0:setKeywordItem()
+		arg_26_0:setKeywordItem()
 	end
 end
 
-function slot0.refreshFillStepState(slot0)
-	slot1 = slot0._storyMo and slot0._storyMo:getSelectStepIndex()
+function var_0_0.refreshFillStepState(arg_27_0)
+	local var_27_0 = arg_27_0._storyMo and arg_27_0._storyMo:getSelectStepIndex()
+	local var_27_1 = var_27_0 and var_27_0 == arg_27_0._index or false
 
-	gohelper.setActive(slot0._goselect.gameObject, slot1 and slot1 == slot0._index or false)
+	gohelper.setActive(arg_27_0._goselect.gameObject, var_27_1)
 end
 
-function slot0.tryFillKeyword(slot0, slot1)
-	if slot0:isFullKeyword() then
+function var_0_0.tryFillKeyword(arg_28_0, arg_28_1)
+	if arg_28_0:isFullKeyword() then
 		return false
 	end
 
-	if LuaUtil.tableContains(slot0._keywordIdList, slot1) then
+	if LuaUtil.tableContains(arg_28_0._keywordIdList, arg_28_1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getFillKwCount(slot0)
-	return tabletool.len(slot0._keywordIdList)
+function var_0_0.getFillKwCount(arg_29_0)
+	return tabletool.len(arg_29_0._keywordIdList)
 end
 
-function slot0.fillKeyword(slot0, slot1)
-	slot0:addKeywordItem(slot1)
+function var_0_0.fillKeyword(arg_30_0, arg_30_1)
+	arg_30_0:addKeywordItem(arg_30_1)
 
-	if slot0:getFillKwCount() == 1 then
-		slot0:unlockDecorateTexture()
+	if arg_30_0:getFillKwCount() == 1 then
+		arg_30_0:unlockDecorateTexture()
 	end
 end
 
-function slot0.failFillKeyword(slot0, slot1)
-	slot0:removeKeywordItem(slot1)
+function var_0_0.failFillKeyword(arg_31_0, arg_31_1)
+	arg_31_0:removeKeywordItem(arg_31_1)
 end
 
-function slot0.addKeywordItem(slot0, slot1)
-	if not LuaUtil.tableContains(slot0._keywordIdList, slot1) then
-		table.insert(slot0._keywordIdList, slot1)
+function var_0_0.addKeywordItem(arg_32_0, arg_32_1)
+	if not LuaUtil.tableContains(arg_32_0._keywordIdList, arg_32_1) then
+		table.insert(arg_32_0._keywordIdList, arg_32_1)
 	end
 
-	slot0:setKeywordItem()
+	arg_32_0:setKeywordItem()
 end
 
-function slot0.removeKeywordItem(slot0, slot1)
-	if LuaUtil.tableContains(slot0._keywordIdList, slot1) then
-		tabletool.removeValue(slot0._keywordIdList, slot1)
-		slot0:showDecorateTexture()
+function var_0_0.removeKeywordItem(arg_33_0, arg_33_1)
+	if LuaUtil.tableContains(arg_33_0._keywordIdList, arg_33_1) then
+		tabletool.removeValue(arg_33_0._keywordIdList, arg_33_1)
+		arg_33_0:showDecorateTexture()
 	end
 
-	slot0:setKeywordItem()
+	arg_33_0:setKeywordItem()
 end
 
-function slot0.clearStep(slot0)
-	slot0._keywordIdList = {}
+function var_0_0.clearStep(arg_34_0)
+	arg_34_0._keywordIdList = {}
 
-	for slot4, slot5 in pairs(slot0._keywordPointList) do
-		gohelper.setActive(slot5.go, false)
+	for iter_34_0, iter_34_1 in pairs(arg_34_0._keywordPointList) do
+		gohelper.setActive(iter_34_1.go, false)
 	end
 
-	slot0.isFixed = false
+	arg_34_0.isFixed = false
 
-	slot0:_hideAllMark()
-	slot0:onUpdateMO()
-	gohelper.setActive(slot0._goTxt.gameObject, false)
-	slot0:showDecorateTexture()
+	arg_34_0:_hideAllMark()
+	arg_34_0:onUpdateMO()
+	gohelper.setActive(arg_34_0._goTxt.gameObject, false)
+	arg_34_0:showDecorateTexture()
 end
 
-function slot0.setKeywordItem(slot0)
-	if slot0._bogusId then
-		slot1 = slot0:getFillKwCount() + 1
+function var_0_0.setKeywordItem(arg_35_0)
+	local var_35_0 = arg_35_0:getFillKwCount()
+
+	if arg_35_0._bogusId then
+		var_35_0 = var_35_0 + 1
 	end
 
-	if slot1 > 0 and slot1 <= slot0._keywordMaxCount then
-		slot2 = 1
+	if var_35_0 > 0 and var_35_0 <= arg_35_0._keywordMaxCount then
+		local var_35_1 = 1
 
-		if LuaUtil.tableNotEmpty(slot0._keywordIdList) then
-			for slot6, slot7 in pairs(slot0._keywordIdList) do
-				slot8 = slot0._keywordPointList[slot1].ponit[slot2]
+		if LuaUtil.tableNotEmpty(arg_35_0._keywordIdList) then
+			for iter_35_0, iter_35_1 in pairs(arg_35_0._keywordIdList) do
+				local var_35_2 = arg_35_0._keywordPointList[var_35_0].ponit[var_35_1]
+				local var_35_3 = Activity165Config.instance:getKeywordCo(arg_35_0._actId, iter_35_1).pic
 
-				if not string.nilorempty(Activity165Config.instance:getKeywordCo(slot0._actId, slot7).pic) then
-					UISpriteSetMgr.instance:setV2a1Act165Sprite(slot8.icon, slot10)
+				if not string.nilorempty(var_35_3) then
+					UISpriteSetMgr.instance:setV2a1Act165Sprite(var_35_2.icon, var_35_3)
 				end
 
-				if slot8.canvasgroup then
-					slot8.canvasgroup.alpha = 1
+				if var_35_2.canvasgroup then
+					var_35_2.canvasgroup.alpha = 1
 				end
 
-				slot2 = slot2 + 1
+				var_35_1 = var_35_1 + 1
 			end
 		end
 
-		if slot0._bogusId then
-			slot3 = slot0._keywordPointList[slot1].ponit[slot2]
+		if arg_35_0._bogusId then
+			local var_35_4 = arg_35_0._keywordPointList[var_35_0].ponit[var_35_1]
+			local var_35_5 = Activity165Config.instance:getKeywordCo(arg_35_0._actId, arg_35_0._bogusId).pic
 
-			if not string.nilorempty(Activity165Config.instance:getKeywordCo(slot0._actId, slot0._bogusId).pic) then
-				UISpriteSetMgr.instance:setV2a1Act165Sprite(slot3.icon, slot5)
+			if not string.nilorempty(var_35_5) then
+				UISpriteSetMgr.instance:setV2a1Act165Sprite(var_35_4.icon, var_35_5)
 			end
 
-			if slot3.canvasgroup then
-				slot3.canvasgroup.alpha = 0.5
+			if var_35_4.canvasgroup then
+				var_35_4.canvasgroup.alpha = 0.5
 			end
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0._keywordPointList) do
-		gohelper.setActive(slot6.go, slot1 == slot5)
+	for iter_35_2, iter_35_3 in pairs(arg_35_0._keywordPointList) do
+		gohelper.setActive(iter_35_3.go, var_35_0 == iter_35_2)
 	end
 
-	slot0:refreshState()
+	arg_35_0:refreshState()
 end
 
-function slot0.getKeywordItem(slot0, slot1)
-	if not slot0._keywordItem[slot1] then
-		slot3 = gohelper.cloneInPlace(slot0._gokeyword, "kw_" .. slot1)
-		slot0._keywordItem[slot1] = {
-			go = slot3,
-			icon = gohelper.findChildImage(slot3, "#image_keyword"),
-			anim = SLFramework.AnimatorPlayer.Get(slot3.gameObject)
+function var_0_0.getKeywordItem(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0._keywordItem[arg_36_1]
+
+	if not var_36_0 then
+		local var_36_1 = gohelper.cloneInPlace(arg_36_0._gokeyword, "kw_" .. arg_36_1)
+
+		var_36_0 = {
+			go = var_36_1,
+			icon = gohelper.findChildImage(var_36_1, "#image_keyword"),
+			anim = SLFramework.AnimatorPlayer.Get(var_36_1.gameObject)
 		}
+		arg_36_0._keywordItem[arg_36_1] = var_36_0
 	end
 
-	return slot2
+	return var_36_0
 end
 
-function slot0.getKeywordList(slot0)
-	return slot0._keywordIdList
+function var_0_0.getKeywordList(arg_37_0)
+	return arg_37_0._keywordIdList
 end
 
-function slot0.isKeyword(slot0, slot1)
-	return LuaUtil.tableContains(slot0._keywordIdList, slot1)
+function var_0_0.isKeyword(arg_38_0, arg_38_1)
+	return LuaUtil.tableContains(arg_38_0._keywordIdList, arg_38_1)
 end
 
-function slot0.isNullKeyword(slot0)
-	return not LuaUtil.tableNotEmpty(slot0._keywordIdList)
+function var_0_0.isNullKeyword(arg_39_0)
+	return not LuaUtil.tableNotEmpty(arg_39_0._keywordIdList)
 end
 
-function slot0.isFullKeyword(slot0)
-	if slot0._keywordMaxCount <= slot0:getFillKwCount() then
-		GameFacade.showToast(ToastEnum.Act165StepMaxCount, slot0._keywordMaxCount)
+function var_0_0.isFullKeyword(arg_40_0)
+	local var_40_0 = arg_40_0._keywordMaxCount <= arg_40_0:getFillKwCount()
+
+	if var_40_0 then
+		GameFacade.showToast(ToastEnum.Act165StepMaxCount, arg_40_0._keywordMaxCount)
 		AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_fill_fail)
 	end
 
-	return slot1
+	return var_40_0
 end
 
-function slot0.beginShowTxt(slot0, slot1)
-	if not LuaUtil.tableNotEmpty(slot0._stepMo) then
-		slot0._stepMo = slot0._storyMo:getStepMo(slot1)
+function var_0_0.beginShowTxt(arg_41_0, arg_41_1)
+	if not LuaUtil.tableNotEmpty(arg_41_0._stepMo) then
+		arg_41_0._stepMo = arg_41_0._storyMo:getStepMo(arg_41_1)
 	end
 
-	slot0:_setStepText()
+	arg_41_0:_setStepText()
 
-	slot0._markItemPos = {}
+	arg_41_0._markItemPos = {}
 
-	slot0:_setMarkItemPos()
+	arg_41_0:_setMarkItemPos()
 
-	slot0._txtstory.text = ""
-	slot0._finsihShowTxt = nil
-	slot0._scrollHeight = recthelper.getHeight(slot0._scrollStory.transform)
-	slot0._tweenTime = 0
-	slot0._separateChars = Activity165Model.instance:setSeparateChars(slot0._reallyTxt)
+	arg_41_0._txtstory.text = ""
+	arg_41_0._finsihShowTxt = nil
+	arg_41_0._scrollHeight = recthelper.getHeight(arg_41_0._scrollStory.transform)
+	arg_41_0._tweenTime = 0
+	arg_41_0._separateChars = Activity165Model.instance:setSeparateChars(arg_41_0._reallyTxt)
 
-	gohelper.setActive(slot0._goTxt.gameObject, false)
-	slot0:playDecorateTexture(slot0.beginShowTxtCallback)
+	gohelper.setActive(arg_41_0._goTxt.gameObject, false)
+	arg_41_0:playDecorateTexture(arg_41_0.beginShowTxtCallback)
 end
 
-function slot0.beginShowTxtCallback(slot0)
-	slot1 = #slot0._separateChars
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, slot1, slot1 * 0.033, slot0._onTweenFrameCallback, slot0._onTweenFinishCallback, slot0, nil, EaseType.Linear)
+function var_0_0.beginShowTxtCallback(arg_42_0)
+	local var_42_0 = #arg_42_0._separateChars
+	local var_42_1 = var_42_0 * 0.033
 
-	gohelper.setActive(slot0._goTxt.gameObject, true)
-	slot0:hideyDecorateTexture()
+	arg_42_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, var_42_0, var_42_1, arg_42_0._onTweenFrameCallback, arg_42_0._onTweenFinishCallback, arg_42_0, nil, EaseType.Linear)
+
+	gohelper.setActive(arg_42_0._goTxt.gameObject, true)
+	arg_42_0:hideyDecorateTexture()
 end
 
-function slot0._onTweenFrameCallback(slot0, slot1)
-	if slot0._finsihShowTxt or slot1 - slot0._tweenTime < 1 then
+function var_0_0._onTweenFrameCallback(arg_43_0, arg_43_1)
+	if arg_43_0._finsihShowTxt or arg_43_1 - arg_43_0._tweenTime < 1 then
 		return
 	end
 
-	if slot1 <= #slot0._separateChars then
-		slot0._txtstory.text = slot0._separateChars[math.floor(slot1)]
+	if arg_43_1 <= #arg_43_0._separateChars then
+		local var_43_0 = math.floor(arg_43_1)
 
-		if slot0._scrollStory.verticalNormalizedPosition ~= 0 then
-			slot0._scrollStory.verticalNormalizedPosition = 0
+		arg_43_0._txtstory.text = arg_43_0._separateChars[var_43_0]
+
+		if arg_43_0._scrollStory.verticalNormalizedPosition ~= 0 then
+			arg_43_0._scrollStory.verticalNormalizedPosition = 0
 		end
 	else
-		slot0._txtstory.text = slot0._reallyTxt
+		arg_43_0._txtstory.text = arg_43_0._reallyTxt
 	end
 
-	slot0._tweenTime = slot1
+	arg_43_0._tweenTime = arg_43_1
 end
 
-function slot0._onTweenFinishCallback(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._onTweenFinishCallback(arg_44_0)
+	if arg_44_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_44_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_44_0._tweenId = nil
 	end
 
-	recthelper.setHeight(slot0._txtstory.transform, slot0._txtstory:GetPreferredValues().y)
-	slot0:_showStoryTxt()
-	slot0:_markNote()
-	slot0:_playMarkItemAnim()
+	local var_44_0 = arg_44_0._txtstory:GetPreferredValues()
+
+	recthelper.setHeight(arg_44_0._txtstory.transform, var_44_0.y)
+	arg_44_0:_showStoryTxt()
+	arg_44_0:_markNote()
+	arg_44_0:_playMarkItemAnim()
 end
 
-function slot0.isPlayingTxt(slot0)
-	return slot0._tweenId ~= nil
+function var_0_0.isPlayingTxt(arg_45_0)
+	return arg_45_0._tweenId ~= nil
 end
 
-function slot0._setStepText(slot0)
-	if not slot0._stepMo then
+function var_0_0._setStepText(arg_46_0)
+	if not arg_46_0._stepMo then
 		return
 	end
 
-	slot0:_setReallyStepText(slot0._stepMo.stepCo.text, "<%d-:.->", "<%d-:(.-)>")
+	local var_46_0 = arg_46_0._stepMo.stepCo.text
+	local var_46_1 = "<%d-:.->"
+	local var_46_2 = "<%d-:(.-)>"
+
+	arg_46_0:_setReallyStepText(var_46_0, var_46_1, var_46_2)
 end
 
-function slot0._setReallyStepText(slot0, slot1, slot2, slot3)
-	slot0._reallyTxt, slot5 = slot0:_matchData(slot1, slot2, slot3)
+function var_0_0._setReallyStepText(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
+	local var_47_0, var_47_1 = arg_47_0:_matchData(arg_47_1, arg_47_2, arg_47_3)
 
-	if not slot5 then
+	if not var_47_1 then
+		arg_47_0._reallyTxt = var_47_0
+
 		return
 	end
 
-	slot0:_getReallyStepText(slot4, slot2, slot3)
+	arg_47_0:_getReallyStepText(var_47_0, arg_47_2, arg_47_3)
 end
 
-function slot0._showStoryTxt(slot0)
-	if string.nilorempty(slot0._reallyTxt) then
-		slot0:_setStepText()
+function var_0_0._showStoryTxt(arg_48_0)
+	if string.nilorempty(arg_48_0._reallyTxt) then
+		arg_48_0:_setStepText()
 	end
 
-	slot0._txtstory.text = slot0._reallyTxt
+	arg_48_0._txtstory.text = arg_48_0._reallyTxt
 
-	recthelper.setHeight(slot0._txtstory.transform, slot0._txtstory:GetPreferredValues().y)
+	local var_48_0 = arg_48_0._txtstory:GetPreferredValues()
+
+	recthelper.setHeight(arg_48_0._txtstory.transform, var_48_0.y)
 end
 
-function slot0.finishStoryAnim(slot0)
-	slot0:showStoryTxt()
-	slot0:_hideEglocked()
-	Activity165Controller.instance:dispatchEvent(Activity165Event.finishStepAnim, slot0._index)
+function var_0_0.finishStoryAnim(arg_49_0)
+	arg_49_0:showStoryTxt()
+	arg_49_0:_hideEglocked()
+	Activity165Controller.instance:dispatchEvent(Activity165Event.finishStepAnim, arg_49_0._index)
 end
 
-function slot0.showStoryTxt(slot0)
-	slot0:killTween()
-	slot0:_showStoryTxt()
-	slot0:_markNote()
+function var_0_0.showStoryTxt(arg_50_0)
+	arg_50_0:killTween()
+	arg_50_0:_showStoryTxt()
+	arg_50_0:_markNote()
 
-	slot0._finsihShowTxt = true
+	arg_50_0._finsihShowTxt = true
 
-	for slot4, slot5 in pairs(slot0._markItemList) do
-		gohelper.setActive(slot5.go, true)
+	for iter_50_0, iter_50_1 in pairs(arg_50_0._markItemList) do
+		gohelper.setActive(iter_50_1.go, true)
 	end
 end
 
-function slot0._markNote(slot0)
-	if not slot0._stepMo then
+function var_0_0._markNote(arg_51_0)
+	if not arg_51_0._stepMo then
 		return
 	end
 
-	slot0._markItemPos = {}
+	local var_51_0 = arg_51_0._stepMo.stepCo.text
+	local var_51_1 = "<%d-:.->"
+	local var_51_2 = "<%d-:(.-)>"
 
-	slot0:_matchData(slot0._stepMo.stepCo.text, "<%d-:.->", "<%d-:(.-)>", nil, slot0._markData)
-	slot0:_setMarkItemPos()
+	arg_51_0._markItemPos = {}
 
-	slot0._curShowMarkIndex = 1
+	arg_51_0:_matchData(var_51_0, var_51_1, var_51_2, nil, arg_51_0._markData)
+	arg_51_0:_setMarkItemPos()
+
+	arg_51_0._curShowMarkIndex = 1
 end
 
-function slot0._matchData(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6, slot7 = string.find(slot1, slot2)
+function var_0_0._matchData(arg_52_0, arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5)
+	local var_52_0, var_52_1 = string.find(arg_52_1, arg_52_2)
 
-	if not slot6 then
-		return slot1, slot6, slot4
+	if not var_52_0 then
+		return arg_52_1, var_52_0, arg_52_4
 	end
 
-	if not tonumber(string.match(slot1, "<(%d-):.->")) then
+	local var_52_2 = string.match(arg_52_1, "<(%d-):.->")
+	local var_52_3 = tonumber(var_52_2)
+
+	if not var_52_3 then
 		return
 	end
 
-	slot1 = string.gsub(slot1, slot3, function (slot0)
-		uv0 = slot0
+	local var_52_4 = ""
 
-		return slot0
+	arg_52_1 = string.gsub(arg_52_1, arg_52_3, function(arg_53_0)
+		var_52_4 = arg_53_0
+
+		return arg_53_0
 	end, 1)
 
-	if slot5 then
-		slot5(slot0, slot1, slot6, slot8, "")
+	if arg_52_5 then
+		arg_52_5(arg_52_0, arg_52_1, var_52_0, var_52_3, var_52_4)
 	end
 
-	return slot0:_matchData(slot1, slot2, slot3, slot8, slot5)
+	return arg_52_0:_matchData(arg_52_1, arg_52_2, arg_52_3, var_52_3, arg_52_5)
 end
 
-function slot0._markData(slot0, slot1, slot2, slot3, slot4)
-	slot6 = slot0._txtstory:GetTextInfo(slot1)
-	slot7 = GameUtil.utf8len(string.sub(slot1, 1, slot2 - 1))
-	slot14 = slot0._txtstory.transform.rect.width
-	slot15 = slot0:parseMark(slot3, 4)
+function var_0_0._markData(arg_54_0, arg_54_1, arg_54_2, arg_54_3, arg_54_4)
+	local var_54_0 = string.sub(arg_54_1, 1, arg_54_2 - 1)
+	local var_54_1 = arg_54_0._txtstory:GetTextInfo(arg_54_1)
+	local var_54_2 = GameUtil.utf8len(var_54_0)
+	local var_54_3 = GameUtil.utf8len(arg_54_4) + var_54_2 - 1
+	local var_54_4 = var_54_1.characterInfo[var_54_2]
+	local var_54_5 = var_54_1.characterInfo[var_54_3]
+	local var_54_6 = var_54_4.bottomLeft
+	local var_54_7 = var_54_5.bottomRight
+	local var_54_8 = arg_54_0._txtstory.fontSize
+	local var_54_9 = arg_54_0._txtstory.transform.rect.width
+	local var_54_10 = arg_54_0:parseMark(arg_54_3, 4)
+	local var_54_11 = math.floor(math.abs(var_54_7.y - var_54_6.y) / var_54_8)
 
-	if math.floor(math.abs(slot6.characterInfo[GameUtil.utf8len(slot4) + slot7 - 1].bottomRight.y - slot6.characterInfo[slot7].bottomLeft.y) / slot0._txtstory.fontSize) > 0 then
-		for slot20 = 1, slot16 + 1 do
-			if slot20 == 1 then
-				table.insert(slot0._markItemPos, {
-					types = slot15,
-					posX = slot11.x,
-					posY = slot11.y,
-					width = slot14 - slot11.x,
-					fillContent = slot4
-				})
-			elseif slot20 == slot16 + 1 then
-				table.insert(slot0._markItemPos, {
-					types = slot15,
-					posX = 0,
-					posY = slot12.y,
-					width = slot12.x,
-					fillContent = slot4
-				})
+	if var_54_11 > 0 then
+		for iter_54_0 = 1, var_54_11 + 1 do
+			if iter_54_0 == 1 then
+				local var_54_12 = {
+					types = var_54_10,
+					posX = var_54_6.x,
+					posY = var_54_6.y,
+					width = var_54_9 - var_54_6.x,
+					fillContent = arg_54_4
+				}
+
+				table.insert(arg_54_0._markItemPos, var_54_12)
+			elseif iter_54_0 == var_54_11 + 1 then
+				local var_54_13 = {
+					types = var_54_10
+				}
+
+				var_54_13.posX = 0
+				var_54_13.posY = var_54_7.y
+				var_54_13.width = var_54_7.x
+				var_54_13.fillContent = arg_54_4
+
+				table.insert(arg_54_0._markItemPos, var_54_13)
 			else
-				table.insert(slot0._markItemPos, {
-					types = slot15,
-					posX = 0,
-					posY = slot11.y - slot13 * slot20,
-					width = slot14,
-					fillContent = slot4
-				})
+				local var_54_14 = {
+					types = var_54_10
+				}
+
+				var_54_14.posX = 0
+				var_54_14.posY = var_54_6.y - var_54_8 * iter_54_0
+				var_54_14.width = var_54_9
+				var_54_14.fillContent = arg_54_4
+
+				table.insert(arg_54_0._markItemPos, var_54_14)
 			end
 		end
 	else
-		table.insert(slot0._markItemPos, {
-			types = slot15,
-			posX = slot11.x,
-			posY = slot11.y,
-			width = slot12.x - slot11.x,
-			fillContent = slot4
-		})
+		local var_54_15 = {
+			types = var_54_10,
+			posX = var_54_6.x,
+			posY = var_54_6.y,
+			width = var_54_7.x - var_54_6.x,
+			fillContent = arg_54_4
+		}
+
+		table.insert(arg_54_0._markItemPos, var_54_15)
 	end
 end
 
-function slot0.getMarkItemByType(slot0, slot1, slot2)
-	if not slot0._typeMarkItemList[slot1][slot2] then
-		slot4 = gohelper.cloneInPlace(slot0._goMarkPrefabs[slot1])
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = slot4
-		slot3.icon = gohelper.findChildImage(slot4, "mark")
-		slot3.anim = SLFramework.AnimatorPlayer.Get(slot4.gameObject)
-		slot0._typeMarkItemList[slot1][slot2] = slot3
+function var_0_0.getMarkItemByType(arg_55_0, arg_55_1, arg_55_2)
+	local var_55_0 = arg_55_0._typeMarkItemList[arg_55_1][arg_55_2]
 
-		gohelper.setActive(slot3.go, false)
+	if not var_55_0 then
+		local var_55_1 = gohelper.cloneInPlace(arg_55_0._goMarkPrefabs[arg_55_1])
+
+		var_55_0 = arg_55_0:getUserDataTb_()
+		var_55_0.go = var_55_1
+		var_55_0.icon = gohelper.findChildImage(var_55_1, "mark")
+		var_55_0.anim = SLFramework.AnimatorPlayer.Get(var_55_1.gameObject)
+		arg_55_0._typeMarkItemList[arg_55_1][arg_55_2] = var_55_0
+
+		gohelper.setActive(var_55_0.go, false)
 	end
 
-	return slot3
+	return var_55_0
 end
 
-function slot0._setMarkItemPos(slot0)
-	slot0._markItemList = {}
-	slot2 = slot0._txtstory:GetPreferredValues().y
+function var_0_0._setMarkItemPos(arg_56_0)
+	arg_56_0._markItemList = {}
 
-	for slot6, slot7 in pairs(slot0._markItemPos) do
-		for slot11, slot12 in pairs(slot7.types) do
-			slot13 = slot0:getMarkItemByType(slot12, slot6)
-			slot13.go.name = slot7.fillContent .. "_" .. slot12 .. "_" .. slot11 .. "_" .. slot6
+	local var_56_0 = arg_56_0._txtstory:GetPreferredValues().y
 
-			table.insert(slot0._markItemList, slot13)
+	for iter_56_0, iter_56_1 in pairs(arg_56_0._markItemPos) do
+		for iter_56_2, iter_56_3 in pairs(iter_56_1.types) do
+			local var_56_1 = arg_56_0:getMarkItemByType(iter_56_3, iter_56_0)
 
-			slot14 = slot7.posY
+			var_56_1.go.name = iter_56_1.fillContent .. "_" .. iter_56_3 .. "_" .. iter_56_2 .. "_" .. iter_56_0
 
-			if slot2 < slot0._scrollTxtHeight then
-				slot14 = slot7.posY - (slot0._scrollTxtHeight - slot2) * 0.5
+			table.insert(arg_56_0._markItemList, var_56_1)
+
+			local var_56_2 = iter_56_1.posY
+
+			if var_56_0 < arg_56_0._scrollTxtHeight then
+				local var_56_3 = (arg_56_0._scrollTxtHeight - var_56_0) * 0.5
+
+				var_56_2 = iter_56_1.posY - var_56_3
 			end
 
-			recthelper.setAnchor(slot13.go.transform, slot7.posX, slot14)
-			recthelper.setWidth(slot13.icon.transform, math.max(slot7.width, slot0._goMarkPrefabs[slot12] and slot0._goMarkPrefabs[slot12].transform.rect.width or 100))
+			recthelper.setAnchor(var_56_1.go.transform, iter_56_1.posX, var_56_2)
+
+			local var_56_4 = arg_56_0._goMarkPrefabs[iter_56_3] and arg_56_0._goMarkPrefabs[iter_56_3].transform.rect.width or 100
+			local var_56_5 = math.max(iter_56_1.width, var_56_4)
+
+			recthelper.setWidth(var_56_1.icon.transform, var_56_5)
 		end
 	end
 end
 
-function slot0._playMarkItemAnim(slot0)
-	if slot0._curShowMarkIndex > #slot0._markItemList then
-		return slot0:finishStoryAnim()
+function var_0_0._playMarkItemAnim(arg_57_0)
+	if arg_57_0._curShowMarkIndex > #arg_57_0._markItemList then
+		return arg_57_0:finishStoryAnim()
 	end
 
-	if not slot0._markItemList[slot0._curShowMarkIndex] or not slot1.go then
-		return slot0:finishStoryAnim()
+	local var_57_0 = arg_57_0._markItemList[arg_57_0._curShowMarkIndex]
+
+	if not var_57_0 or not var_57_0.go then
+		return arg_57_0:finishStoryAnim()
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(var_57_0.go, true)
 
-	slot0._curShowMarkIndex = slot0._curShowMarkIndex + 1
+	arg_57_0._curShowMarkIndex = arg_57_0._curShowMarkIndex + 1
 
-	slot1.anim:Play(Activity165Enum.EditViewAnim.Open, slot0._playMarkItemAnim, slot0)
+	var_57_0.anim:Play(Activity165Enum.EditViewAnim.Open, arg_57_0._playMarkItemAnim, arg_57_0)
 end
 
-function slot0.parseMark(slot0, slot1, slot2)
-	slot3 = {}
-	slot4 = slot1
+function var_0_0.parseMark(arg_58_0, arg_58_1, arg_58_2)
+	local var_58_0 = {}
+	local var_58_1 = arg_58_1
 
-	for slot8 = slot2, 1, -1 do
-		if slot4 >= 2^slot8 then
-			table.insert(slot3, slot8)
+	for iter_58_0 = arg_58_2, 1, -1 do
+		local var_58_2 = 2^iter_58_0
 
-			if slot4 - slot9 == 0 then
+		if var_58_2 <= var_58_1 then
+			table.insert(var_58_0, iter_58_0)
+
+			var_58_1 = var_58_1 - var_58_2
+
+			if var_58_1 == 0 then
 				break
 			end
 		end
 	end
 
-	return slot3
+	return var_58_0
 end
 
-function slot0._hideAllMark(slot0)
-	for slot4, slot5 in pairs(slot0._markItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0._hideAllMark(arg_59_0)
+	for iter_59_0, iter_59_1 in pairs(arg_59_0._markItemList) do
+		gohelper.setActive(iter_59_1.go, false)
 	end
 
-	slot0._markItemList = {}
+	arg_59_0._markItemList = {}
 end
 
-function slot0.killTween(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.killTween(arg_60_0)
+	if arg_60_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_60_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_60_0._tweenId = nil
 	end
 
-	if slot0._markTweenId then
-		ZProj.TweenHelper.KillById(slot0._markTweenId)
+	if arg_60_0._markTweenId then
+		ZProj.TweenHelper.KillById(arg_60_0._markTweenId)
 
-		slot0._markTweenId = nil
+		arg_60_0._markTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._playMarkItemAnim, slot0)
+	TaskDispatcher.cancelTask(arg_60_0._playMarkItemAnim, arg_60_0)
 end
 
-return slot0
+return var_0_0

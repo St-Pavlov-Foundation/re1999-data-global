@@ -1,108 +1,114 @@
-module("modules.logic.bgmswitch.view.BGMSwitchAudioTrigger", package.seeall)
+﻿module("modules.logic.bgmswitch.view.BGMSwitchAudioTrigger", package.seeall)
 
-slot0 = class("BGMSwitchAudioTrigger")
-slot1 = {
+local var_0_0 = class("BGMSwitchAudioTrigger")
+local var_0_1 = {
 	[BGMSwitchEnum.Gear.On2] = true,
 	[BGMSwitchEnum.Gear.On3] = true
 }
 
-function slot0.switchGearTo(slot0, slot1)
-	uv0._play_ui_replay_tunetable()
+function var_0_0.switchGearTo(arg_1_0, arg_1_1)
+	local var_1_0 = math.abs(arg_1_1 - arg_1_0)
 
-	if math.abs(slot1 - slot0) > 1 then
-		TaskDispatcher.runRepeat(uv0._play_ui_replay_tunetable, nil, 0.2, slot2 - 1)
+	var_0_0._play_ui_replay_tunetable()
+
+	if var_1_0 > 1 then
+		TaskDispatcher.runRepeat(var_0_0._play_ui_replay_tunetable, nil, 0.2, var_1_0 - 1)
 	end
 
-	if slot0 == BGMSwitchEnum.Gear.OFF then
-		TaskDispatcher.runDelay(uv0._play_ui_replay_boot, nil, slot2 * 0.2)
+	if arg_1_0 == BGMSwitchEnum.Gear.OFF then
+		TaskDispatcher.runDelay(var_0_0._play_ui_replay_boot, nil, var_1_0 * 0.2)
 	end
 
-	if slot1 == BGMSwitchEnum.Gear.OFF then
-		TaskDispatcher.runDelay(uv0._play_ui_replay_shutdown, nil, slot2 * 0.2)
+	if arg_1_1 == BGMSwitchEnum.Gear.OFF then
+		TaskDispatcher.runDelay(var_0_0._play_ui_replay_shutdown, nil, var_1_0 * 0.2)
 	end
 
-	if not uv1[slot0] and uv1[slot1] then
+	if not var_0_1[arg_1_0] and var_0_1[arg_1_1] then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_whitenoise_loop)
-	elseif uv1[slot0] and not uv1[slot1] then
+	elseif var_0_1[arg_1_0] and not var_0_1[arg_1_1] then
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_replay_whitenoise_loop)
 	end
 end
 
-function slot0._play_ui_replay_tunetable()
+function var_0_0._play_ui_replay_tunetable()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_tunetable)
 end
 
-function slot0._play_ui_replay_boot()
+function var_0_0._play_ui_replay_boot()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_boot)
 end
 
-function slot0._play_ui_replay_shutdown()
+function var_0_0._play_ui_replay_shutdown()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_shutdown)
 end
 
-function slot0.play_ui_replay_open()
+function var_0_0.play_ui_replay_open()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_open)
 
-	if uv0[BGMSwitchModel.instance:getMechineGear()] then
+	local var_5_0 = BGMSwitchModel.instance:getMechineGear()
+
+	if var_0_1[var_5_0] then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_whitenoise_loop)
 	end
 end
 
-function slot0.play_ui_replay_close()
+function var_0_0.play_ui_replay_close()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_close)
 
-	if uv0[BGMSwitchModel.instance:getMechineGear()] then
+	local var_6_0 = BGMSwitchModel.instance:getMechineGear()
+
+	if var_0_1[var_6_0] then
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_replay_whitenoise_loop)
 	end
 end
 
-function slot0.play_ui_replay_tinyopen()
+function var_0_0.play_ui_replay_tinyopen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_tinyopen)
 end
 
-function slot0.play_ui_replay_tinyclose()
+function var_0_0.play_ui_replay_tinyclose()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_tinyclose)
 end
 
-function slot0.play_ui_replay_buttonsilp()
+function var_0_0.play_ui_replay_buttonsilp()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_buttonsilp)
 end
 
-function slot0.play_ui_replay_buttoncut()
+function var_0_0.play_ui_replay_buttoncut()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_buttoncut)
 end
 
-function slot0.play_ui_replay_tapswitch()
+function var_0_0.play_ui_replay_tapswitch()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_tapswitch)
 end
 
-function slot0.play_ui_replay_buttonegg()
+function var_0_0.play_ui_replay_buttonegg()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_buttonegg)
 end
 
-function slot0.play_ui_replay_flap()
+function var_0_0.play_ui_replay_flap()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_flap)
 end
 
-function slot0.play_ui_replay_heart(slot0)
-	if slot0 then
+function var_0_0.play_ui_replay_heart(arg_14_0)
+	if arg_14_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_hearton)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_heartoff)
 	end
 end
 
-function slot0.play_ui_rolesgo()
+function var_0_0.play_ui_rolesgo()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesgo)
 end
 
-function slot0.play_ui_achieve_weiqicard_switch()
+function var_0_0.play_ui_achieve_weiqicard_switch()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_weiqicard_switch)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_weiqicard_saga)
 end
 
-function slot0.play_ui_checkpoint_resources_cardpass()
+function var_0_0.play_ui_checkpoint_resources_cardpass()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_resources_cardpass)
 end
 
-return slot0
+return var_0_0

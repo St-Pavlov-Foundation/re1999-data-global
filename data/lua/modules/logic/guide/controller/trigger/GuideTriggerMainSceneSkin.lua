@@ -1,58 +1,64 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerMainSceneSkin", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerMainSceneSkin", package.seeall)
 
-slot0 = class("GuideTriggerMainSceneSkin", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerMainSceneSkin", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onViewChange, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onViewChange, slot0)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, slot0._onMainScene, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onViewChange, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onViewChange, arg_1_0)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onMainScene, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return slot0:_isHasSkinItem() and slot0:_checkInMain()
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	return arg_2_0:_isHasSkinItem() and arg_2_0:_checkInMain()
 end
 
-function slot0._isHasSkinItem(slot0)
-	for slot5, slot6 in ipairs(MainSceneSwitchConfig.instance:getItemLockList()) do
-		if ItemModel.instance:getItemCount(slot6) > 0 then
+function var_0_0._isHasSkinItem(arg_3_0)
+	local var_3_0 = MainSceneSwitchConfig.instance:getItemLockList()
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		if ItemModel.instance:getItemCount(iter_3_1) > 0 then
 			return true
 		end
 	end
 end
 
-function slot0._onMainScene(slot0, slot1, slot2)
-	if slot2 == 1 then
-		slot0:checkStartGuide()
+function var_0_0._onMainScene(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_2 == 1 then
+		arg_4_0:checkStartGuide()
 	end
 end
 
-function slot0._onViewChange(slot0)
-	slot0:checkStartGuide()
+function var_0_0._onViewChange(arg_5_0)
+	arg_5_0:checkStartGuide()
 end
 
-function slot0._checkInMain(slot0)
-	slot1 = ViewName.MainView
+function var_0_0._checkInMain(arg_6_0)
+	local var_6_0 = ViewName.MainView
+	local var_6_1 = GameSceneMgr.instance:getCurSceneType() == SceneType.Main
+	local var_6_2 = GameSceneMgr.instance:isLoading()
+	local var_6_3 = GameSceneMgr.instance:isClosing()
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not GameSceneMgr.instance:isLoading() and not GameSceneMgr.instance:isClosing() then
-		slot5 = false
+	if var_6_1 and not var_6_2 and not var_6_3 then
+		local var_6_4 = false
+		local var_6_5 = ViewMgr.instance:getOpenViewNameList()
 
-		for slot10, slot11 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-			if slot11 ~= slot1 and (ViewMgr.instance:isModal(slot11) or ViewMgr.instance:isFull(slot11)) then
-				slot5 = true
+		for iter_6_0, iter_6_1 in ipairs(var_6_5) do
+			if iter_6_1 ~= var_6_0 and (ViewMgr.instance:isModal(iter_6_1) or ViewMgr.instance:isFull(iter_6_1)) then
+				var_6_4 = true
 
 				break
 			end
 		end
 
-		if not slot5 and (string.nilorempty(slot1) or ViewMgr.instance:isOpen(slot1)) then
+		if not var_6_4 and (string.nilorempty(var_6_0) or ViewMgr.instance:isOpen(var_6_0)) then
 			return true
 		end
 	end
 end
 
-function slot0._checkStartGuide(slot0)
-	slot0:checkStartGuide()
+function var_0_0._checkStartGuide(arg_7_0)
+	arg_7_0:checkStartGuide()
 end
 
-return slot0
+return var_0_0

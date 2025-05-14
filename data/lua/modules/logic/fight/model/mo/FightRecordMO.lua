@@ -1,14 +1,14 @@
-module("modules.logic.fight.model.mo.FightRecordMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightRecordMO", package.seeall)
 
-slot0 = pureTable("FightRecordMO")
+local var_0_0 = pureTable("FightRecordMO")
 
-function slot0.init(slot0, slot1)
-	slot0.fightId = slot1.fightId
-	slot0.fightName = slot1.fightName
-	slot0.fightTime = slot1.fightTime
-	slot0.fightResult = slot1.fightResult
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.fightId = arg_1_1.fightId
+	arg_1_0.fightName = arg_1_1.fightName
+	arg_1_0.fightTime = arg_1_1.fightTime
+	arg_1_0.fightResult = arg_1_1.fightResult
 
-	FightStatModel.instance:setAtkStatInfo(slot1.attackStatistics)
+	FightStatModel.instance:setAtkStatInfo(arg_1_1.attackStatistics)
 end
 
-return slot0
+return var_0_0

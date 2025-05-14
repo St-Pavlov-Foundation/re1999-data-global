@@ -1,111 +1,116 @@
-module("modules.logic.fight.system.work.FightWorkEffectSummon", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectSummon", package.seeall)
 
-slot0 = class("FightWorkEffectSummon", FightEffectBase)
+local var_0_0 = class("FightWorkEffectSummon", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._actEffectMO.entityMO.id)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._actEffectMO.entityMO.id)
 
-	if slot0._entityMO then
-		if FightDataHelper.entityMgr:isDeadUid(slot0._entityMO.uid) then
-			slot0:onDone(true)
+	if arg_1_0._entityMO then
+		if FightDataHelper.entityMgr:isDeadUid(arg_1_0._entityMO.uid) then
+			arg_1_0:onDone(true)
 
 			return
 		end
 
-		slot0:com_registTimer(slot0._delayDone, 10)
-		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+		arg_1_0:com_registTimer(arg_1_0._delayDone, 10)
+		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
 
-		slot0._entityId = slot0._entityMO.id
+		local var_1_0 = GameSceneMgr.instance:getCurScene().entityMgr
 
-		if isTypeOf(GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot0._entityMO), FightEntityAssembledMonsterSub) then
-			slot0:onDone(true)
+		arg_1_0._entityId = arg_1_0._entityMO.id
+
+		local var_1_1 = var_1_0:buildSpine(arg_1_0._entityMO)
+
+		if isTypeOf(var_1_1, FightEntityAssembledMonsterSub) then
+			arg_1_0:onDone(true)
 
 			return
 		end
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if slot0._entityId == slot1.unitSpawn.id then
-		slot0._entity = FightHelper.getEntity(slot0._entityId)
-		slot0._audioId = 410000038
+function var_0_0._onSpineLoaded(arg_2_0, arg_2_1)
+	if arg_2_0._entityId == arg_2_1.unitSpawn.id then
+		arg_2_0._entity = FightHelper.getEntity(arg_2_0._entityId)
+		arg_2_0._audioId = 410000038
 
-		if slot0._entityMO.side == FightEnum.EntitySide.MySide then
-			slot0._flow = FlowParallel.New()
+		if arg_2_0._entityMO.side == FightEnum.EntitySide.MySide then
+			arg_2_0._flow = FlowParallel.New()
 
-			slot0._flow:addWork(FightWorkStartBornNormal.New(slot0._entity, false))
+			arg_2_0._flow:addWork(FightWorkStartBornNormal.New(arg_2_0._entity, false))
 		else
-			slot0._flow = FlowParallel.New()
-			slot2 = "buff/buff_zhaohuan"
-			slot3 = 0.6
-			slot4 = ModuleEnum.SpineHangPoint.mountbody
+			arg_2_0._flow = FlowParallel.New()
 
-			if lua_fight_summon_show.configDict[slot0._entityMO.skin] then
-				if not string.nilorempty(slot5.actionName) then
-					slot2 = nil
+			local var_2_0 = "buff/buff_zhaohuan"
+			local var_2_1 = 0.6
+			local var_2_2 = ModuleEnum.SpineHangPoint.mountbody
+			local var_2_3 = lua_fight_summon_show.configDict[arg_2_0._entityMO.skin]
 
-					slot0._flow:addWork(FightWorkEntityPlayAct.New(slot0._entity, slot5.actionName))
+			if var_2_3 then
+				if not string.nilorempty(var_2_3.actionName) then
+					var_2_0 = nil
+
+					arg_2_0._flow:addWork(FightWorkEntityPlayAct.New(arg_2_0._entity, var_2_3.actionName))
 				end
 
-				if slot5.audioId ~= 0 then
-					slot0._audioId = slot5.audioId
+				if var_2_3.audioId ~= 0 then
+					arg_2_0._audioId = var_2_3.audioId
 				end
 
-				if not string.nilorempty(slot5.effect) then
-					slot2 = slot5.effect
-
-					if slot5.effectTime and slot5.effectTime ~= 0 then
-						slot3 = slot5.effectTime / 1000 or slot3
-					end
+				if not string.nilorempty(var_2_3.effect) then
+					var_2_0 = var_2_3.effect
+					var_2_1 = var_2_3.effectTime and var_2_3.effectTime ~= 0 and var_2_3.effectTime / 1000 or var_2_1
 				end
 
-				if not string.nilorempty(slot5.effectHangPoint) then
-					slot4 = slot5.effectHangPoint
+				if not string.nilorempty(var_2_3.effectHangPoint) then
+					var_2_2 = var_2_3.effectHangPoint
 				end
 
-				if slot5.ingoreEffect == 1 then
-					slot2 = nil
+				if var_2_3.ingoreEffect == 1 then
+					var_2_0 = nil
 				end
 			end
 
-			if slot2 then
-				slot0._flow:addWork(FightWorkStartBornExtendForEffect.New(slot0._entity, false, slot2, slot4, slot3 / FightModel.instance:getSpeed()))
+			if var_2_0 then
+				local var_2_4 = var_2_1 / FightModel.instance:getSpeed()
+
+				arg_2_0._flow:addWork(FightWorkStartBornExtendForEffect.New(arg_2_0._entity, false, var_2_0, var_2_2, var_2_4))
 			end
 		end
 
-		slot0:com_registTimer(slot0._delayDone, 60)
-		slot0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterSummon, slot0._entityMO.modelId))
-		slot0._flow:registerDoneListener(slot0._onSummonBornDone, slot0)
-		slot0._flow:start()
-		AudioMgr.instance:trigger(slot0._audioId)
-		FightController.instance:dispatchEvent(FightEvent.OnSummon, slot0._entity)
+		arg_2_0:com_registTimer(arg_2_0._delayDone, 60)
+		arg_2_0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterSummon, arg_2_0._entityMO.modelId))
+		arg_2_0._flow:registerDoneListener(arg_2_0._onSummonBornDone, arg_2_0)
+		arg_2_0._flow:start()
+		AudioMgr.instance:trigger(arg_2_0._audioId)
+		FightController.instance:dispatchEvent(FightEvent.OnSummon, arg_2_0._entity)
 	end
 end
 
-function slot0._playAudio(slot0, slot1)
-	AudioMgr.instance:trigger(slot1)
+function var_0_0._playAudio(arg_3_0, arg_3_1)
+	AudioMgr.instance:trigger(arg_3_1)
 end
 
-function slot0._onSummonBornDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onSummonBornDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_5_0)
 	logError("召唤效果超时")
-	slot0:onDone(true)
+	arg_5_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
+function var_0_0.clearWork(arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_6_0._onSpineLoaded, arg_6_0)
 
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onAniFlowDone, slot0)
-		slot0._flow:stop()
+	if arg_6_0._flow then
+		arg_6_0._flow:unregisterDoneListener(arg_6_0._onAniFlowDone, arg_6_0)
+		arg_6_0._flow:stop()
 
-		slot0._flow = nil
+		arg_6_0._flow = nil
 	end
 end
 
-return slot0
+return var_0_0

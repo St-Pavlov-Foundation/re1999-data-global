@@ -1,183 +1,192 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_DungeonMapLevelUpItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_DungeonMapLevelUpItem", package.seeall)
 
-slot0 = class("VersionActivity_1_2_DungeonMapLevelUpItem", BaseViewExtended)
+local var_0_0 = class("VersionActivity_1_2_DungeonMapLevelUpItem", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._topRight = gohelper.findChild(slot0.viewGO, "topRight")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gomaxbg = gohelper.findChild(slot0.viewGO, "rotate/#go_maxbg")
-	slot0._txtmaxlv = gohelper.findChildText(slot0.viewGO, "rotate/#go_maxbg/bgimag/#txt_max_lv")
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "rotate/#go_bg")
-	slot0._gocurrentlv = gohelper.findChild(slot0.viewGO, "rotate/#go_bg/#go_currentlv")
-	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "rotate/#go_bg/#go_currentlv/#txt_lv")
-	slot0._gonextlv = gohelper.findChild(slot0.viewGO, "rotate/#go_bg/#go_nextlv")
-	slot0._txtnextlv = gohelper.findChildText(slot0.viewGO, "rotate/#go_bg/#go_nextlv/#txt_next_lv")
-	slot0._goop = gohelper.findChild(slot0.viewGO, "rotate/#go_op")
-	slot0._simageicon = gohelper.findChildImage(slot0.viewGO, "rotate/#go_op/cost/iconnode/icon")
-	slot0._txtcost = gohelper.findChildText(slot0.viewGO, "rotate/#go_op/cost/#txt_cost")
-	slot0._txtdoit = gohelper.findChildText(slot0.viewGO, "rotate/#go_op/bg/#txt_doit")
-	slot0._btndoit = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op/bg/#btn_doit")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "rotate/layout/top/title/#txt_title")
-	slot0._upEffect = gohelper.findChild(slot0.viewGO, "rotate/#go_bg/#go_nextlv/vx")
-	slot0._simagebgimag = gohelper.findChildSingleImage(slot0.viewGO, "rotate/#go_maxbg/bgimag")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._topRight = gohelper.findChild(arg_1_0.viewGO, "topRight")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gomaxbg = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_maxbg")
+	arg_1_0._txtmaxlv = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_maxbg/bgimag/#txt_max_lv")
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_bg")
+	arg_1_0._gocurrentlv = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_bg/#go_currentlv")
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_bg/#go_currentlv/#txt_lv")
+	arg_1_0._gonextlv = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_bg/#go_nextlv")
+	arg_1_0._txtnextlv = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_bg/#go_nextlv/#txt_next_lv")
+	arg_1_0._goop = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op")
+	arg_1_0._simageicon = gohelper.findChildImage(arg_1_0.viewGO, "rotate/#go_op/cost/iconnode/icon")
+	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op/cost/#txt_cost")
+	arg_1_0._txtdoit = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op/bg/#txt_doit")
+	arg_1_0._btndoit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op/bg/#btn_doit")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "rotate/layout/top/title/#txt_title")
+	arg_1_0._upEffect = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_bg/#go_nextlv/vx")
+	arg_1_0._simagebgimag = gohelper.findChildSingleImage(arg_1_0.viewGO, "rotate/#go_maxbg/bgimag")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btndoit:AddClickListener(slot0._btndoitOnClick, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, slot0._onReceiveUpgradeElementReply, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.closeElementView, slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.closeChildElementView, slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btndoit:AddClickListener(arg_2_0._btndoitOnClick, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, arg_2_0._onReceiveUpgradeElementReply, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.closeElementView, arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.closeChildElementView, arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btndoit:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btndoit:RemoveClickListener()
 end
 
-function slot0._onReceiveUpgradeElementReply(slot0, slot1)
-	if slot1 == slot0._config.id then
-		gohelper.setActive(slot0._upEffect, false)
-		gohelper.setActive(slot0._upEffect, true)
+function var_0_0._onReceiveUpgradeElementReply(arg_4_0, arg_4_1)
+	if arg_4_1 == arg_4_0._config.id then
+		gohelper.setActive(arg_4_0._upEffect, false)
+		gohelper.setActive(arg_4_0._upEffect, true)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_preference_open)
-		slot0:onOpen()
+		arg_4_0:onOpen()
 	end
 end
 
-function slot0._btndoitOnClick(slot0)
-	if #slot0._costData > 0 and not ItemModel.instance:goodsIsEnough(slot0._costData[1], slot0._costData[2], slot0._costData[3]) then
+function var_0_0._btndoitOnClick(arg_5_0)
+	if #arg_5_0._costData > 0 and not ItemModel.instance:goodsIsEnough(arg_5_0._costData[1], arg_5_0._costData[2], arg_5_0._costData[3]) then
 		GameFacade.showToast(ToastEnum.Acticity1_2MaterialNotEnough)
 
 		return
 	end
 
 	StatController.instance:track(StatEnum.EventName.FacilityMutually, {
-		[StatEnum.EventProperties.FacilityName] = slot0._config.title,
-		[StatEnum.EventProperties.AfterLevel] = slot0._buildingConfig.level + 1,
+		[StatEnum.EventProperties.FacilityName] = arg_5_0._config.title,
+		[StatEnum.EventProperties.AfterLevel] = arg_5_0._buildingConfig.level + 1,
 		[StatEnum.EventProperties.PlotProgress2] = tostring(VersionActivity1_2DungeonController.instance:getNowEpisodeId())
 	})
-	Activity116Rpc.instance:sendUpgradeElementRequest(slot0._config.id)
+	Activity116Rpc.instance:sendUpgradeElementRequest(arg_5_0._config.id)
 end
 
-function slot0._btncloseOnClick(slot0)
-	SLFramework.AnimatorPlayer.Get(slot0.viewGO):Play("close", slot0.DESTROYSELF, slot0)
+function var_0_0._btncloseOnClick(arg_6_0)
+	SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO):Play("close", arg_6_0.DESTROYSELF, arg_6_0)
 end
 
-function slot0.onRefreshViewParam(slot0, slot1)
-	slot0._config = slot1
+function var_0_0.onRefreshViewParam(arg_7_0, arg_7_1)
+	arg_7_0._config = arg_7_1
 end
 
-function slot0.onOpen(slot0)
-	slot0._simagebgimag:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg_neirongdi_2"))
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._simagebgimag:LoadImage(ResUrl.getVersionActivityDungeon_1_2("bg_neirongdi_2"))
 
-	slot0._elementData = VersionActivity1_2DungeonModel.instance:getElementData(slot0._config.id)
-	slot0._levelList = {}
-	slot4 = slot0._config.id
+	arg_8_0._elementData = VersionActivity1_2DungeonModel.instance:getElementData(arg_8_0._config.id)
+	arg_8_0._levelList = {}
 
-	for slot4, slot5 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot4)) do
-		table.insert(slot0._levelList, slot5)
+	for iter_8_0, iter_8_1 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(arg_8_0._config.id)) do
+		table.insert(arg_8_0._levelList, iter_8_1)
 	end
 
-	table.sort(slot0._levelList, function (slot0, slot1)
-		return slot0.level < slot1.level
+	table.sort(arg_8_0._levelList, function(arg_9_0, arg_9_1)
+		return arg_9_0.level < arg_9_1.level
 	end)
 
-	slot0._curLevel = slot0._elementData and slot0._elementData.level or 0
-	slot0._nextLevel = slot0._curLevel + 1
-	slot0._buildingConfig = slot0._levelList[slot0._curLevel + 1]
-	slot0._nextBuildingConfig = slot0._levelList[slot0._nextLevel + 1]
+	arg_8_0._curLevel = arg_8_0._elementData and arg_8_0._elementData.level or 0
+	arg_8_0._nextLevel = arg_8_0._curLevel + 1
+	arg_8_0._buildingConfig = arg_8_0._levelList[arg_8_0._curLevel + 1]
+	arg_8_0._nextBuildingConfig = arg_8_0._levelList[arg_8_0._nextLevel + 1]
 
-	gohelper.setActive(slot0._gobg, slot0._nextBuildingConfig)
-	gohelper.setActive(slot0._goop, slot0._nextBuildingConfig)
-	gohelper.setActive(slot0._gomaxbg, not slot0._nextBuildingConfig)
+	gohelper.setActive(arg_8_0._gobg, arg_8_0._nextBuildingConfig)
+	gohelper.setActive(arg_8_0._goop, arg_8_0._nextBuildingConfig)
+	gohelper.setActive(arg_8_0._gomaxbg, not arg_8_0._nextBuildingConfig)
 
-	if not slot0._nextBuildingConfig then
-		slot0:_showMaxLevel()
+	if not arg_8_0._nextBuildingConfig then
+		arg_8_0:_showMaxLevel()
 	else
-		slot0:_showLevelUpDate()
-		slot0:_showCost()
+		arg_8_0:_showLevelUpDate()
+		arg_8_0:_showCost()
 	end
 
-	slot0._txttitle.text = slot0._buildingConfig and slot0._buildingConfig.name or slot0._nextBuildingConfig.name
+	arg_8_0._txttitle.text = arg_8_0._buildingConfig and arg_8_0._buildingConfig.name or arg_8_0._nextBuildingConfig.name
 end
 
-function slot0._showCurrency(slot0)
-	slot0:com_loadAsset(CurrencyView.prefabPath, slot0._onCurrencyLoaded)
+function var_0_0._showCurrency(arg_10_0)
+	arg_10_0:com_loadAsset(CurrencyView.prefabPath, arg_10_0._onCurrencyLoaded)
 end
 
-function slot0._onCurrencyLoaded(slot0, slot1)
-	slot6 = slot0:openSubView(CurrencyView, gohelper.clone(slot1:GetResource(), slot0._topRight), nil, {
-		CurrencyEnum.CurrencyType.DryForest
-	})
-	slot6.foreShowBtn = true
+function var_0_0._onCurrencyLoaded(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1:GetResource()
+	local var_11_1 = gohelper.clone(var_11_0, arg_11_0._topRight)
+	local var_11_2 = CurrencyEnum.CurrencyType
+	local var_11_3 = {
+		var_11_2.DryForest
+	}
+	local var_11_4 = arg_11_0:openSubView(CurrencyView, var_11_1, nil, var_11_3)
 
-	slot6:_hideAddBtn(CurrencyEnum.CurrencyType.DryForest)
+	var_11_4.foreShowBtn = true
+
+	var_11_4:_hideAddBtn(CurrencyEnum.CurrencyType.DryForest)
 end
 
-function slot0._showMaxLevel(slot0)
-	slot0._txtmaxlv.text = "Lv. " .. slot0._buildingConfig.level
+function var_0_0._showMaxLevel(arg_12_0)
+	arg_12_0._txtmaxlv.text = "Lv. " .. arg_12_0._buildingConfig.level
 
-	slot0:_showGianText(slot0._buildingConfig.desc, gohelper.findChild(slot0.viewGO, "rotate/#go_maxbg/bgimag/content"))
+	arg_12_0:_showGianText(arg_12_0._buildingConfig.desc, gohelper.findChild(arg_12_0.viewGO, "rotate/#go_maxbg/bgimag/content"))
 end
 
-function slot0._showLevelUpDate(slot0)
-	slot0._txtlv.text = "Lv. " .. slot0._curLevel
+function var_0_0._showLevelUpDate(arg_13_0)
+	arg_13_0._txtlv.text = "Lv. " .. arg_13_0._curLevel
 
-	slot0:_showGianText(slot0._buildingConfig.desc, gohelper.findChild(slot0.viewGO, "rotate/#go_bg/#go_currentlv/content"))
+	arg_13_0:_showGianText(arg_13_0._buildingConfig.desc, gohelper.findChild(arg_13_0.viewGO, "rotate/#go_bg/#go_currentlv/content"))
 
-	slot0._txtnextlv.text = "Lv. " .. slot0._nextLevel
+	arg_13_0._txtnextlv.text = "Lv. " .. arg_13_0._nextLevel
 
-	slot0:_showGianText(slot0._nextBuildingConfig.desc, gohelper.findChild(slot0.viewGO, "rotate/#go_bg/#go_nextlv/content"))
+	arg_13_0:_showGianText(arg_13_0._nextBuildingConfig.desc, gohelper.findChild(arg_13_0.viewGO, "rotate/#go_bg/#go_nextlv/content"))
 end
 
-function slot0._showGianText(slot0, slot1, slot2)
-	slot0:com_createObjList(slot0._onAttrShow, string.split(slot1, "|"), slot2, gohelper.findChild(slot2, "line1"))
+function var_0_0._showGianText(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = string.split(arg_14_1, "|")
+
+	arg_14_0:com_createObjList(arg_14_0._onAttrShow, var_14_0, arg_14_2, gohelper.findChild(arg_14_2, "line1"))
 end
 
-function slot0._onAttrShow(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "").text = slot2
+function var_0_0._onAttrShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	gohelper.findChildText(arg_15_1, "").text = arg_15_2
 end
 
-function slot0._showCost(slot0)
-	slot1 = string.splitToNumber(slot0._nextBuildingConfig.cost, "#")
-	slot0._costData = slot1
+function var_0_0._showCost(arg_16_0)
+	local var_16_0 = string.splitToNumber(arg_16_0._nextBuildingConfig.cost, "#")
 
-	if #slot1 > 0 then
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._simageicon, CurrencyConfig.instance:getCurrencyCo(slot1[2]).icon .. "_1")
+	arg_16_0._costData = var_16_0
 
-		slot0._txtcost.text = slot1[3]
-		slot0._costIconClick = gohelper.getClick(slot0._simageicon.gameObject)
+	if #var_16_0 > 0 then
+		local var_16_1 = CurrencyConfig.instance:getCurrencyCo(var_16_0[2]).icon
 
-		slot0._costIconClick:AddClickListener(slot0._onBtnCostIcon, slot0)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._simageicon, var_16_1 .. "_1")
 
-		if ItemModel.instance:goodsIsEnough(slot1[1], slot1[2], slot1[3]) then
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcost, "#ACCB8A")
+		arg_16_0._txtcost.text = var_16_0[3]
+		arg_16_0._costIconClick = gohelper.getClick(arg_16_0._simageicon.gameObject)
+
+		arg_16_0._costIconClick:AddClickListener(arg_16_0._onBtnCostIcon, arg_16_0)
+
+		if ItemModel.instance:goodsIsEnough(var_16_0[1], var_16_0[2], var_16_0[3]) then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcost, "#ACCB8A")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcost, "#D97373")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcost, "#D97373")
 		end
 	else
-		gohelper.setActive(gohelper.findChild(slot0.viewGO, "rotate/#go_op/cost"))
+		gohelper.setActive(gohelper.findChild(arg_16_0.viewGO, "rotate/#go_op/cost"))
 	end
 end
 
-function slot0._onBtnCostIcon(slot0)
-	slot1 = string.splitToNumber(slot0._nextBuildingConfig.cost, "#")
+function var_0_0._onBtnCostIcon(arg_17_0)
+	local var_17_0 = string.splitToNumber(arg_17_0._nextBuildingConfig.cost, "#")
 
-	MaterialTipController.instance:showMaterialInfo(slot1[1], slot1[2])
+	MaterialTipController.instance:showMaterialInfo(var_17_0[1], var_17_0[2])
 end
 
-function slot0.onClose(slot0)
-	if slot0._costIconClick then
-		slot0._costIconClick:RemoveClickListener()
+function var_0_0.onClose(arg_18_0)
+	if arg_18_0._costIconClick then
+		arg_18_0._costIconClick:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebgimag:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0._simagebgimag:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,7 +1,7 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupListView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupListView", package.seeall)
 
-slot0 = class("Act183HeroGroupListView", HeroGroupListView)
-slot1 = {
+local var_0_0 = class("Act183HeroGroupListView", HeroGroupListView)
+local var_0_1 = {
 	[ModuleEnum.HeroGroupSnapshotType.Act183Normal] = {
 		{
 			-967.6,
@@ -43,7 +43,7 @@ slot1 = {
 		}
 	}
 }
-slot2 = {
+local var_0_2 = {
 	[ModuleEnum.HeroGroupSnapshotType.Act183Normal] = {
 		{
 			-959.6,
@@ -85,7 +85,7 @@ slot2 = {
 		}
 	}
 }
-slot3 = {
+local var_0_3 = {
 	[ModuleEnum.HeroGroupSnapshotType.Act183Normal] = {
 		1,
 		1,
@@ -98,266 +98,306 @@ slot3 = {
 	}
 }
 
-function slot0._editableInitView(slot0)
-	slot2 = lua_battle.configDict[HeroGroupModel.instance.battleId]
-	slot0._playerMax = slot2.playerMax
-	slot0._roleNum = slot2.roleNum
-	slot0._snapshotType = HeroGroupModel.instance:getHeroGroupSnapshotType()
+function var_0_0._editableInitView(arg_1_0)
+	local var_1_0 = HeroGroupModel.instance.battleId
+	local var_1_1 = lua_battle.configDict[var_1_0]
 
-	slot0:initHeroBgList()
-	slot0:initHeroList()
+	arg_1_0._playerMax = var_1_1.playerMax
+	arg_1_0._roleNum = var_1_1.roleNum
+	arg_1_0._snapshotType = HeroGroupModel.instance:getHeroGroupSnapshotType()
+
+	arg_1_0:initHeroBgList()
+	arg_1_0:initHeroList()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCreateHeroItemDone)
-	HeroGroupModel.instance:setHeroGroupItemPos(slot0._heroItemPosList)
+	HeroGroupModel.instance:setHeroGroupItemPos(arg_1_0._heroItemPosList)
 end
 
-function slot0.initHeroList(slot0)
-	gohelper.setActive(slot0._goheroitem, false)
+function var_0_0.initHeroList(arg_2_0)
+	gohelper.setActive(arg_2_0._goheroitem, false)
 
-	slot0._heroItemList = {}
-	slot0.heroPosTrList = slot0:getUserDataTb_()
-	slot0._heroItemPosList = slot0:getUserDataTb_()
-	slot0._cardScale = uv0[slot0._snapshotType]
+	arg_2_0._heroItemList = {}
+	arg_2_0.heroPosTrList = arg_2_0:getUserDataTb_()
+	arg_2_0._heroItemPosList = arg_2_0:getUserDataTb_()
+	arg_2_0._cardScale = var_0_3[arg_2_0._snapshotType]
 
-	for slot4 = 1, slot0._roleNum do
-		slot7 = gohelper.cloneInPlace(slot0._goheroitem, "item" .. slot4)
-		slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot7, slot0:_getHeroItemCls(), slot0)
+	for iter_2_0 = 1, arg_2_0._roleNum do
+		local var_2_0 = arg_2_0:_getOrCreateHeroGO(iter_2_0)
+		local var_2_1 = gohelper.findChild(var_2_0, "container")
+		local var_2_2 = gohelper.cloneInPlace(arg_2_0._goheroitem, "item" .. iter_2_0)
+		local var_2_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_2, arg_2_0:_getHeroItemCls(), arg_2_0)
 
-		slot8:setIndex(slot4)
-		slot8:setScale(slot0._cardScale[1], slot0._cardScale[2], slot0._cardScale[3])
-		table.insert(slot0.heroPosTrList, gohelper.findChild(slot0:_getOrCreateHeroGO(slot4), "container").transform)
-		table.insert(slot0._heroItemList, slot8)
-		gohelper.setActive(slot7, true)
-		slot0:_setHeroItemPos(slot8, slot4)
-		table.insert(slot0._heroItemPosList, slot8.go.transform)
-		slot8:setParent(slot0.heroPosTrList[slot4])
-		CommonDragHelper.instance:registerDragObj(slot8.go, slot0._onBeginDrag, nil, slot0._onEndDrag, slot0._checkCanDrag, slot0, slot4)
+		var_2_3:setIndex(iter_2_0)
+		var_2_3:setScale(arg_2_0._cardScale[1], arg_2_0._cardScale[2], arg_2_0._cardScale[3])
+		table.insert(arg_2_0.heroPosTrList, var_2_1.transform)
+		table.insert(arg_2_0._heroItemList, var_2_3)
+		gohelper.setActive(var_2_2, true)
+		arg_2_0:_setHeroItemPos(var_2_3, iter_2_0)
+		table.insert(arg_2_0._heroItemPosList, var_2_3.go.transform)
+		var_2_3:setParent(arg_2_0.heroPosTrList[iter_2_0])
+		CommonDragHelper.instance:registerDragObj(var_2_3.go, arg_2_0._onBeginDrag, nil, arg_2_0._onEndDrag, arg_2_0._checkCanDrag, arg_2_0, iter_2_0)
 	end
 end
 
-function slot0._getHeroItemCls(slot0)
+function var_0_0._getHeroItemCls(arg_3_0)
 	return Act183HeroGroupHeroItem
 end
 
-function slot0._calcIndex(slot0, slot1)
-	for slot5 = 1, slot0._roleNum do
-		if gohelper.isMouseOverGo(slot0.heroPosTrList[slot5] and slot0.heroPosTrList[slot5].parent, slot1) then
-			return slot5
+function var_0_0._calcIndex(arg_4_0, arg_4_1)
+	for iter_4_0 = 1, arg_4_0._roleNum do
+		local var_4_0 = arg_4_0.heroPosTrList[iter_4_0] and arg_4_0.heroPosTrList[iter_4_0].parent
+
+		if gohelper.isMouseOverGo(var_4_0, arg_4_1) then
+			return iter_4_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.canDrag(slot0, slot1, slot2)
+function var_0_0.canDrag(arg_5_0, arg_5_1, arg_5_2)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return false
 	end
 
-	if slot0._heroItemList[slot1].isAid then
+	local var_5_0 = arg_5_1
+	local var_5_1 = arg_5_0._heroItemList[var_5_0]
+
+	if var_5_1.isAid then
 		return false
 	end
 
-	if slot4.isTrialLock then
+	if var_5_1.isTrialLock then
 		return false
 	end
 
-	if not slot2 and (slot4.mo:isEmpty() or slot4.mo.aid == -1) then
+	if not arg_5_2 and (var_5_1.mo:isEmpty() or var_5_1.mo.aid == -1) then
 		return false
 	end
 
 	return true
 end
 
-function slot0._onEndDrag(slot0, slot1, slot2)
-	if not slot0:canDrag(slot1) then
+function var_0_0._onEndDrag(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_0:canDrag(arg_6_1) then
 		return
 	end
 
-	if slot0._nowDragingIndex ~= slot1 then
+	if arg_6_0._nowDragingIndex ~= arg_6_1 then
 		return
 	end
 
-	slot0._nowDragingIndex = nil
-	slot3 = slot0:_calcIndex(slot2.position)
-	slot4 = slot0._heroItemList[slot1]
+	arg_6_0._nowDragingIndex = nil
 
-	for slot9, slot10 in ipairs(slot0._heroItemList) do
-		slot10:onItemEndDrag(slot1, slot3)
+	local var_6_0 = arg_6_0:_calcIndex(arg_6_2.position)
+	local var_6_1 = arg_6_0._heroItemList[arg_6_1]
+	local var_6_2 = arg_6_1
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._heroItemList) do
+		iter_6_1:onItemEndDrag(var_6_2, var_6_0)
 	end
 
 	CommonDragHelper.instance:setGlobalEnabled(false)
 
-	if slot3 == slot1 or slot3 <= 0 then
-		slot0._orderList[slot1].text = ""
+	if var_6_0 == arg_6_1 or var_6_0 <= 0 then
+		arg_6_0._orderList[arg_6_1].text = ""
 	end
 
-	if slot3 <= 0 then
-		slot0:_setHeroItemPos(slot4, slot5, true, function (slot0, slot1)
-			for slot5, slot6 in ipairs(slot0._heroItemList) do
-				slot6:onItemCompleteDrag(uv0, uv1, slot1)
-			end
+	local function var_6_3(arg_7_0, arg_7_1)
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._heroItemList) do
+			iter_7_1:onItemCompleteDrag(var_6_2, var_6_0, arg_7_1)
+		end
 
-			CommonDragHelper.instance:setGlobalEnabled(true)
+		CommonDragHelper.instance:setGlobalEnabled(true)
 
-			for slot5, slot6 in ipairs(slot0._heroItemList) do
-				slot6:flowCurrentParent()
-			end
-		end, slot0)
+		for iter_7_2, iter_7_3 in ipairs(arg_7_0._heroItemList) do
+			iter_7_3:flowCurrentParent()
+		end
+	end
+
+	if var_6_0 <= 0 then
+		arg_6_0:_setHeroItemPos(var_6_1, var_6_2, true, var_6_3, arg_6_0)
 
 		return
 	end
 
-	if not slot0:canDrag(slot3, true) then
-		if slot0._heroItemList[slot3] and slot7.isTrialLock then
+	if not arg_6_0:canDrag(var_6_0, true) then
+		local var_6_4 = arg_6_0._heroItemList[var_6_0]
+
+		if var_6_4 and var_6_4.isTrialLock then
 			GameFacade.showToast(ToastEnum.TrialCantChangePos)
 		end
 
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+		arg_6_0:_setHeroItemPos(var_6_1, var_6_2, true, var_6_3, arg_6_0)
 
 		return
 	end
 
-	if slot3 <= 0 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_6_0 <= 0 then
+		arg_6_0:_setHeroItemPos(var_6_1, var_6_2, true, var_6_3, arg_6_0)
 
 		return
 	end
 
-	slot8 = HeroGroupModel.instance.battleId and lua_battle.configDict[slot7]
+	local var_6_5 = HeroGroupModel.instance.battleId
+	local var_6_6 = var_6_5 and lua_battle.configDict[var_6_5]
+	local var_6_7 = HeroGroupModel.instance:getBattleRoleNum()
 
-	if HeroGroupModel.instance:getBattleRoleNum() and slot9 < slot3 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_6_7 and var_6_7 < var_6_0 then
+		arg_6_0:_setHeroItemPos(var_6_1, var_6_2, true, var_6_3, arg_6_0)
 		GameFacade.showToast(ToastEnum.HeroGroupRoleNum)
 
 		return
 	end
 
-	if slot8 and slot4.mo.aid and slot8.playerMax < slot3 then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	if var_6_6 and var_6_1.mo.aid and var_6_0 > var_6_6.playerMax then
+		arg_6_0:_setHeroItemPos(var_6_1, var_6_2, true, var_6_3, arg_6_0)
 		GameFacade.showToast(ToastEnum.HeroGroupPlayerMax)
 
 		return
 	end
 
-	if slot0._heroItemList[slot3].mo.aid then
-		slot0:_setHeroItemPos(slot4, slot5, true, slot6, slot0)
+	local var_6_8 = arg_6_0._heroItemList[var_6_0]
+
+	if var_6_8.mo.aid then
+		arg_6_0:_setHeroItemPos(var_6_1, var_6_2, true, var_6_3, arg_6_0)
 
 		return
 	end
 
-	if slot5 ~= slot3 then
+	if var_6_2 ~= var_6_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_release)
 	end
 
-	gohelper.setAsLastSibling(slot10.go)
-	gohelper.setAsLastSibling(slot4.go)
-	slot10:flowOriginParent()
+	gohelper.setAsLastSibling(var_6_8.go)
+	gohelper.setAsLastSibling(var_6_1.go)
+	var_6_8:flowOriginParent()
 
-	slot0._tweenId = slot0:_setHeroItemPos(slot10, slot5, true)
+	arg_6_0._tweenId = arg_6_0:_setHeroItemPos(var_6_8, var_6_2, true)
 
-	slot0:_setHeroItemPos(slot4, slot3, true, function ()
-		if uv0._tweenId then
-			ZProj.TweenHelper.KillById(uv0._tweenId)
+	arg_6_0:_setHeroItemPos(var_6_1, var_6_0, true, function()
+		if arg_6_0._tweenId then
+			ZProj.TweenHelper.KillById(arg_6_0._tweenId)
 		end
 
-		for slot3, slot4 in ipairs(uv0._heroItemList) do
-			uv0:_setHeroItemPos(slot4, slot3)
+		for iter_8_0, iter_8_1 in ipairs(arg_6_0._heroItemList) do
+			arg_6_0:_setHeroItemPos(iter_8_1, iter_8_0)
 		end
 
-		uv1(uv0, true)
+		var_6_3(arg_6_0, true)
 
-		slot0 = HeroGroupModel.instance:getCurGroupMO()
-		slot1 = uv2.mo.id - 1
-		slot2 = uv3.mo.id - 1
-		slot0.equips[slot1].equipUid = {
-			slot0:getPosEquips(slot2).equipUid[1]
+		local var_8_0 = HeroGroupModel.instance:getCurGroupMO()
+		local var_8_1 = var_6_1.mo.id - 1
+		local var_8_2 = var_6_8.mo.id - 1
+		local var_8_3 = var_8_0:getPosEquips(var_8_1).equipUid[1]
+		local var_8_4 = var_8_0:getPosEquips(var_8_2).equipUid[1]
+
+		var_8_0.equips[var_8_1].equipUid = {
+			var_8_4
 		}
-		slot0.equips[slot2].equipUid = {
-			slot0:getPosEquips(slot1).equipUid[1]
+		var_8_0.equips[var_8_2].equipUid = {
+			var_8_3
 		}
 
-		HeroSingleGroupModel.instance:swap(uv4, uv5)
+		HeroSingleGroupModel.instance:swap(var_6_2, var_6_0)
 
-		for slot9, slot10 in ipairs(slot0.heroList) do
-			if HeroSingleGroupModel.instance:getHeroUids()[slot9] ~= slot10 then
+		local var_8_5 = HeroSingleGroupModel.instance:getHeroUids()
+
+		for iter_8_2, iter_8_3 in ipairs(var_8_0.heroList) do
+			if var_8_5[iter_8_2] ~= iter_8_3 then
 				HeroGroupModel.instance:replaceSingleGroup()
 				HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 				HeroGroupModel.instance:saveCurGroupData()
-				uv0:_updateHeroList()
+				arg_6_0:_updateHeroList()
 
 				break
 			end
 		end
-	end, slot0)
+	end, arg_6_0)
 end
 
-function slot0._getOrCreateHeroGO(slot0, slot1)
-	if gohelper.isNil(gohelper.findChild(slot0.heroContainer, "pos" .. slot1)) then
-		gohelper.setActive(gohelper.cloneInPlace(gohelper.findChild(slot0.heroContainer, "pos_template"), "pos" .. slot1), true)
+function var_0_0._getOrCreateHeroGO(arg_9_0, arg_9_1)
+	local var_9_0 = gohelper.findChild(arg_9_0.heroContainer, "pos" .. arg_9_1)
+
+	if gohelper.isNil(var_9_0) then
+		local var_9_1 = gohelper.findChild(arg_9_0.heroContainer, "pos_template")
+
+		var_9_0 = gohelper.cloneInPlace(var_9_1, "pos" .. arg_9_1)
+
+		gohelper.setActive(var_9_0, true)
 	end
 
-	slot5 = uv1[slot0._snapshotType]
+	local var_9_2 = var_0_1[arg_9_0._snapshotType]
+	local var_9_3 = var_9_2 and var_9_2[arg_9_1]
+	local var_9_4 = var_0_3[arg_9_0._snapshotType]
 
-	if uv0[slot0._snapshotType] and slot3[slot1] and slot5 then
-		transformhelper.setLocalScale(slot2.transform, slot5[1], slot5[2], slot5[3])
-		recthelper.setAnchor(slot2.transform, slot4[1], slot4[2])
+	if var_9_3 and var_9_4 then
+		transformhelper.setLocalScale(var_9_0.transform, var_9_4[1], var_9_4[2], var_9_4[3])
+		recthelper.setAnchor(var_9_0.transform, var_9_3[1], var_9_3[2])
 	else
-		logError(string.format("编队界面卡牌缺少坐标配置(HeroContainerPostionMap) or 缩放配置(BgAndCardScaleMap) : snapshotType = %s, index = %s", slot0._snapshotType, slot1))
+		logError(string.format("编队界面卡牌缺少坐标配置(HeroContainerPostionMap) or 缩放配置(BgAndCardScaleMap) : snapshotType = %s, index = %s", arg_9_0._snapshotType, arg_9_1))
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.initHeroBgList(slot0)
-	slot0._bgList = slot0:getUserDataTb_()
-	slot0._orderList = slot0:getUserDataTb_()
-	slot0._openCount = slot0._roleNum
+function var_0_0.initHeroBgList(arg_10_0)
+	arg_10_0._bgList = arg_10_0:getUserDataTb_()
+	arg_10_0._orderList = arg_10_0:getUserDataTb_()
+	arg_10_0._openCount = arg_10_0._roleNum
 
-	for slot4 = 1, slot0._roleNum do
-		slot5 = slot0:_getOrCreateHeroBg(slot4)
+	for iter_10_0 = 1, arg_10_0._roleNum do
+		local var_10_0 = arg_10_0:_getOrCreateHeroBg(iter_10_0)
+		local var_10_1 = gohelper.findChild(var_10_0, "bg")
 
-		table.insert(slot0._bgList, gohelper.findChild(slot5, "bg"))
+		table.insert(arg_10_0._bgList, var_10_1)
 
-		slot7 = gohelper.findChildTextMesh(slot5, "bg/#txt_order")
-		slot7.text = slot4 <= slot0._openCount and tostring(slot4) or ""
+		local var_10_2 = gohelper.findChildTextMesh(var_10_0, "bg/#txt_order")
 
-		table.insert(slot0._orderList, slot7)
+		var_10_2.text = iter_10_0 <= arg_10_0._openCount and tostring(iter_10_0) or ""
+
+		table.insert(arg_10_0._orderList, var_10_2)
 	end
 end
 
-function slot0._getOrCreateHeroBg(slot0, slot1)
-	if gohelper.isNil(gohelper.findChild(slot0.viewGO, "herogroupcontain/hero/bg" .. slot1)) then
-		slot2 = gohelper.cloneInPlace(gohelper.findChild(slot0.viewGO, "herogroupcontain/hero/bg1"), "bg" .. slot1)
+function var_0_0._getOrCreateHeroBg(arg_11_0, arg_11_1)
+	local var_11_0 = gohelper.findChild(arg_11_0.viewGO, "herogroupcontain/hero/bg" .. arg_11_1)
+
+	if gohelper.isNil(var_11_0) then
+		local var_11_1 = gohelper.findChild(arg_11_0.viewGO, "herogroupcontain/hero/bg1")
+
+		var_11_0 = gohelper.cloneInPlace(var_11_1, "bg" .. arg_11_1)
 	end
 
-	slot5 = uv1[slot0._snapshotType]
+	local var_11_2 = var_0_2[arg_11_0._snapshotType]
+	local var_11_3 = var_11_2 and var_11_2[arg_11_1]
+	local var_11_4 = var_0_3[arg_11_0._snapshotType]
 
-	if uv0[slot0._snapshotType] and slot3[slot1] and slot5 then
-		transformhelper.setLocalScale(slot2.transform, slot5[1], slot5[2], slot5[3])
-		recthelper.setAnchor(slot2.transform, slot4[1], slot4[2])
+	if var_11_3 and var_11_4 then
+		transformhelper.setLocalScale(var_11_0.transform, var_11_4[1], var_11_4[2], var_11_4[3])
+		recthelper.setAnchor(var_11_0.transform, var_11_3[1], var_11_3[2])
 	else
-		logError(string.format("编队界面卡牌背景缺少坐标配置(HeroBgPositionMap) or 缩放配置(BgAndCardScaleMap) : snapshotType = %s, index = %s", slot0._snapshotType, slot1))
+		logError(string.format("编队界面卡牌背景缺少坐标配置(HeroBgPositionMap) or 缩放配置(BgAndCardScaleMap) : snapshotType = %s, index = %s", arg_11_0._snapshotType, arg_11_1))
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0._onScreenSizeChange(slot0)
-	if slot0._heroItemList then
-		for slot4, slot5 in ipairs(slot0._heroItemList) do
-			slot0:_setHeroItemPos(slot5, slot4)
+function var_0_0._onScreenSizeChange(arg_12_0)
+	if arg_12_0._heroItemList then
+		for iter_12_0, iter_12_1 in ipairs(arg_12_0._heroItemList) do
+			arg_12_0:_setHeroItemPos(iter_12_1, iter_12_0)
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	var_0_0.super.onDestroyView(arg_13_0)
 
-	if slot0._heroItemList then
-		for slot4, slot5 in pairs(slot0._heroItemList) do
-			CommonDragHelper.instance:unregisterDragObj(slot5.go)
+	if arg_13_0._heroItemList then
+		for iter_13_0, iter_13_1 in pairs(arg_13_0._heroItemList) do
+			CommonDragHelper.instance:unregisterDragObj(iter_13_1.go)
 		end
 	end
 end
 
-return slot0
+return var_0_0

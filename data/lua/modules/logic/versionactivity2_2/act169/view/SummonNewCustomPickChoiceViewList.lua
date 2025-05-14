@@ -1,76 +1,78 @@
-module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickChoiceViewList", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickChoiceViewList", package.seeall)
 
-slot0 = class("SummonNewCustomPickChoiceViewList", BaseView)
+local var_0_0 = class("SummonNewCustomPickChoiceViewList", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._ownHeroes = {}
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/content")
-	slot0._tfcontent = slot0._gocontent.transform
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem")
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._ownHeroes = {}
+	arg_2_0._gocontent = gohelper.findChild(arg_2_0.viewGO, "#scroll_rule/Viewport/content")
+	arg_2_0._tfcontent = arg_2_0._gocontent.transform
+	arg_2_0._goitem = gohelper.findChild(arg_2_0.viewGO, "#scroll_rule/Viewport/content/selfselectsixchoiceitem")
 
-	gohelper.setActive(slot0._goitem, false)
+	gohelper.setActive(arg_2_0._goitem, false)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_3_0)
 	logNormal("SummonNewCustomPickChoiceViewList onOpen")
 	SummonNewCustomPickChoiceListModel.instance:clearSelectIds()
-	slot0:refreshUI()
+	arg_3_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshList()
+function var_0_0.refreshUI(arg_4_0)
+	arg_4_0:refreshList()
 end
 
-function slot0.refreshList(slot0)
-	slot0:refreshItems(SummonNewCustomPickChoiceListModel.instance.ownList, slot0._ownHeroes, slot0._gocontent)
-	ZProj.UGUIHelper.RebuildLayout(slot0._tfcontent)
+function var_0_0.refreshList(arg_5_0)
+	arg_5_0:refreshItems(SummonNewCustomPickChoiceListModel.instance.ownList, arg_5_0._ownHeroes, arg_5_0._gocontent)
+	ZProj.UGUIHelper.RebuildLayout(arg_5_0._tfcontent)
 end
 
-function slot0.refreshItems(slot0, slot1, slot2, slot3)
-	if slot1 and #slot1 > 0 then
-		gohelper.setActive(slot3, true)
+function var_0_0.refreshItems(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_1 and #arg_6_1 > 0 then
+		gohelper.setActive(arg_6_3, true)
 
-		for slot7, slot8 in ipairs(slot1) do
-			slot0:getOrCreateItem(slot7, slot2, slot3).component:onUpdateMO(slot8)
+		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+			arg_6_0:getOrCreateItem(iter_6_0, arg_6_2, arg_6_3).component:onUpdateMO(iter_6_1)
 		end
 	else
-		gohelper.setActive(slot3, false)
+		gohelper.setActive(arg_6_3, false)
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1, slot2, slot3)
-	if not slot2[slot1] then
-		slot4 = slot0:getUserDataTb_()
-		slot4.go = gohelper.clone(slot0._goitem, slot3, "item" .. tostring(slot1))
+function var_0_0.getOrCreateItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_2[arg_7_1]
 
-		gohelper.setActive(slot4.go, true)
+	if not var_7_0 then
+		var_7_0 = arg_7_0:getUserDataTb_()
+		var_7_0.go = gohelper.clone(arg_7_0._goitem, arg_7_3, "item" .. tostring(arg_7_1))
 
-		slot4.component = MonoHelper.addNoUpdateLuaComOnceToGo(slot4.go, SummonNewCustomPickChoiceItem)
+		gohelper.setActive(var_7_0.go, true)
 
-		slot4.component:init(slot4.go)
-		slot4.component:addEvents()
-		slot4.component:setClickCallBack(function (slot0)
-			SummonNewCustomPickChoiceController.instance:setSelect(slot0)
+		var_7_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0.go, SummonNewCustomPickChoiceItem)
+
+		var_7_0.component:init(var_7_0.go)
+		var_7_0.component:addEvents()
+		var_7_0.component:setClickCallBack(function(arg_8_0)
+			SummonNewCustomPickChoiceController.instance:setSelect(arg_8_0)
 		end)
 
-		slot2[slot1] = slot4
+		arg_7_2[arg_7_1] = var_7_0
 	end
 
-	return slot4
+	return var_7_0
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, slot0.refreshUI, slot0)
+function var_0_0.addEvents(arg_9_0)
+	arg_9_0:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_9_0.refreshUI, arg_9_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, slot0.refreshUI, slot0)
+function var_0_0.removeEvents(arg_10_0)
+	arg_10_0:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_10_0.refreshUI, arg_10_0)
 end
 
-return slot0
+return var_0_0

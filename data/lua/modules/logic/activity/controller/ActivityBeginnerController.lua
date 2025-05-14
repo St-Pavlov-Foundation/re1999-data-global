@@ -1,45 +1,56 @@
-module("modules.logic.activity.controller.ActivityBeginnerController", package.seeall)
+﻿module("modules.logic.activity.controller.ActivityBeginnerController", package.seeall)
 
-slot0 = class("ActivityBeginnerController", BaseController)
+local var_0_0 = class("ActivityBeginnerController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:_initHandlers()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_initHandlers()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0._initHandlers(slot0)
-	if slot0._handlerList then
+function var_0_0._initHandlers(arg_3_0)
+	if arg_3_0._handlerList then
 		return
 	end
 
-	slot0._handlerList = {
+	arg_3_0._handlerList = {
 		[ActivityEnum.Activity.StoryShow] = {
-			slot0.checkRedDotWithActivityId,
-			slot0.checkFirstEnter
+			arg_3_0.checkRedDotWithActivityId,
+			arg_3_0.checkFirstEnter
 		},
 		[ActivityEnum.Activity.DreamShow] = {
-			slot0.checkRedDot,
-			slot0.checkFirstEnter
+			arg_3_0.checkRedDot,
+			arg_3_0.checkFirstEnter
 		},
 		[ActivityEnum.Activity.ClassShow] = {
-			slot0.checkRedDotWithActivityId,
-			slot0.checkFirstEnter
+			arg_3_0.checkRedDotWithActivityId,
+			arg_3_0.checkFirstEnter
 		},
 		[ActivityEnum.Activity.V2a4_WarmUp] = {
-			slot0.checkRedDotWithActivityId,
+			arg_3_0.checkRedDotWithActivityId,
 			Activity125Controller.checkRed_Task
 		}
 	}
-	slot0._defaultHandler = {
-		slot0.checkRedDotWithActivityId
+	arg_3_0._defaultHandler = {
+		arg_3_0.checkRedDotWithActivityId
 	}
 end
 
-function slot0.showRedDot(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0._handlerList[slot1] or (slot1 ~= DoubleDropModel.instance:getActId() or slot0._handlerList[ActivityEnum.Activity.ClassShow]) and slot0._defaultHandler) do
-		if slot7(slot0, slot1) then
+function var_0_0.showRedDot(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._handlerList[arg_4_1]
+
+	if not var_4_0 then
+		if arg_4_1 == DoubleDropModel.instance:getActId() then
+			var_4_0 = arg_4_0._handlerList[ActivityEnum.Activity.ClassShow]
+		else
+			var_4_0 = arg_4_0._defaultHandler
+		end
+	end
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if iter_4_1(arg_4_0, arg_4_1) then
 			return true
 		end
 	end
@@ -47,50 +58,66 @@ function slot0.showRedDot(slot0, slot1)
 	return false
 end
 
-function slot0._getRedDotId(slot0, slot1)
-	if not ActivityConfig.instance:getActivityCo(slot1) then
+function var_0_0._getRedDotId(arg_5_0, arg_5_1)
+	local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_1)
+
+	if not var_5_0 then
 		return 0
 	end
 
-	if slot2.redDotId > 0 then
-		return slot3
+	local var_5_1 = var_5_0.redDotId
+
+	if var_5_1 > 0 then
+		return var_5_1
 	end
 
-	if not ActivityConfig.instance:getActivityCenterCo(slot2.showCenter) then
+	local var_5_2 = var_5_0.showCenter
+	local var_5_3 = ActivityConfig.instance:getActivityCenterCo(var_5_2)
+
+	if not var_5_3 then
 		return 0
 	end
 
-	return slot2.reddotid
+	return var_5_3.reddotid
 end
 
-function slot0.checkRedDot(slot0, slot1)
-	if slot0:_getRedDotId(slot1) > 0 then
-		return RedDotModel.instance:isDotShow(slot2)
+function var_0_0.checkRedDot(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:_getRedDotId(arg_6_1)
+
+	if var_6_0 > 0 then
+		return RedDotModel.instance:isDotShow(var_6_0)
 	end
 
 	return false
 end
 
-function slot0.checkRedDotWithActivityId(slot0, slot1)
-	if slot0:_getRedDotId(slot1) > 0 then
-		return RedDotModel.instance:isDotShow(slot2, slot1)
+function var_0_0.checkRedDotWithActivityId(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:_getRedDotId(arg_7_1)
+
+	if var_7_0 > 0 then
+		return RedDotModel.instance:isDotShow(var_7_0, arg_7_1)
 	end
 
 	return false
 end
 
-function slot0.checkFirstEnter(slot0, slot1)
-	return string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(slot1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId), ""))
+function var_0_0.checkFirstEnter(arg_8_0, arg_8_1)
+	local var_8_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_8_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local var_8_1 = PlayerPrefsHelper.getString(var_8_0, "")
+
+	return string.nilorempty(var_8_1)
 end
 
-function slot0.setFirstEnter(slot0, slot1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(slot1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId), "hasEnter")
+function var_0_0.setFirstEnter(arg_9_0, arg_9_1)
+	local var_9_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_9_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+
+	PlayerPrefsHelper.setString(var_9_0, "hasEnter")
 end
 
-function slot0.checkActivityNewStage(slot0, slot1)
-	return ActivityModel.instance:getActivityInfo()[slot1]:isNewStageOpen()
+function var_0_0.checkActivityNewStage(arg_10_0, arg_10_1)
+	return ActivityModel.instance:getActivityInfo()[arg_10_1]:isNewStageOpen()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

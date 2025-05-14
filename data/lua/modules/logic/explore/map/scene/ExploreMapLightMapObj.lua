@@ -1,66 +1,66 @@
-module("modules.logic.explore.map.scene.ExploreMapLightMapObj", package.seeall)
+﻿module("modules.logic.explore.map.scene.ExploreMapLightMapObj", package.seeall)
 
-slot0 = class("ExploreMapLightMapObj", UserDataDispose)
+local var_0_0 = class("ExploreMapLightMapObj", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0:__onInit()
 
-	slot0.isActive = false
-	slot0._lightmapData = slot1
-	slot0._emptRes = slot3
-	slot0._lightmapColorAssetItem = slot4
-	slot0._lightmapDirAssetItem = slot5
-	slot0.lightmapColorPath = string.gsub(slot2[1], "lightmap", "Lightmap")
-	slot0.lightmapDirPath = string.gsub(slot2[2], "lightmap", "Lightmap")
+	arg_1_0.isActive = false
+	arg_1_0._lightmapData = arg_1_1
+	arg_1_0._emptRes = arg_1_3
+	arg_1_0._lightmapColorAssetItem = arg_1_4
+	arg_1_0._lightmapDirAssetItem = arg_1_5
+	arg_1_0.lightmapColorPath = string.gsub(arg_1_2[1], "lightmap", "Lightmap")
+	arg_1_0.lightmapDirPath = string.gsub(arg_1_2[2], "lightmap", "Lightmap")
 end
 
-function slot0.show(slot0)
-	slot0.isActive = true
+function var_0_0.show(arg_2_0)
+	arg_2_0.isActive = true
 
-	slot0:updateLightMap()
+	arg_2_0:updateLightMap()
 end
 
-function slot0.hide(slot0)
-	slot0.isActive = false
+function var_0_0.hide(arg_3_0)
+	arg_3_0.isActive = false
 
-	slot0:updateLightMap()
+	arg_3_0:updateLightMap()
 end
 
-function slot0.updateLightMap(slot0, slot1)
-	if slot0.isActive then
-		slot0._colorRes = slot0._colorRes or slot0._lightmapColorAssetItem:GetResource(slot0.lightmapColorPath)
-		slot0._dirRes = slot0._dirRes or slot0._lightmapDirAssetItem:GetResource(slot0.lightmapDirPath)
-		slot0._lightmapData.lightmapColor = slot0._colorRes
-		slot0._lightmapData.lightmapDir = slot0._dirRes
+function var_0_0.updateLightMap(arg_4_0, arg_4_1)
+	if arg_4_0.isActive then
+		arg_4_0._colorRes = arg_4_0._colorRes or arg_4_0._lightmapColorAssetItem:GetResource(arg_4_0.lightmapColorPath)
+		arg_4_0._dirRes = arg_4_0._dirRes or arg_4_0._lightmapDirAssetItem:GetResource(arg_4_0.lightmapDirPath)
+		arg_4_0._lightmapData.lightmapColor = arg_4_0._colorRes
+		arg_4_0._lightmapData.lightmapDir = arg_4_0._dirRes
 	else
-		slot0:_clear()
+		arg_4_0:_clear()
 
-		slot0._lightmapData.lightmapColor = slot0._emptRes
-		slot0._lightmapData.lightmapDir = slot0._emptRes
+		arg_4_0._lightmapData.lightmapColor = arg_4_0._emptRes
+		arg_4_0._lightmapData.lightmapDir = arg_4_0._emptRes
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0:_clear()
+function var_0_0.dispose(arg_5_0)
+	arg_5_0:_clear()
 
-	slot0._lightmapData = nil
-	slot0._lightmapColorAssetItem = nil
-	slot0._lightmapDirAssetItem = nil
+	arg_5_0._lightmapData = nil
+	arg_5_0._lightmapColorAssetItem = nil
+	arg_5_0._lightmapDirAssetItem = nil
 
-	slot0:__onDispose()
+	arg_5_0:__onDispose()
 end
 
-function slot0._clear(slot0)
-	if slot0._colorRes then
-		UnityEngine.Resources.UnloadAsset(slot0._colorRes)
+function var_0_0._clear(arg_6_0)
+	if arg_6_0._colorRes then
+		UnityEngine.Resources.UnloadAsset(arg_6_0._colorRes)
 	end
 
-	if slot0._dirRes then
-		UnityEngine.Resources.UnloadAsset(slot0._dirRes)
+	if arg_6_0._dirRes then
+		UnityEngine.Resources.UnloadAsset(arg_6_0._dirRes)
 	end
 
-	slot0._dirRes = nil
-	slot0._colorRes = nil
+	arg_6_0._dirRes = nil
+	arg_6_0._colorRes = nil
 end
 
-return slot0
+return var_0_0

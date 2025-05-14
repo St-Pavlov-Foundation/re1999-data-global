@@ -1,142 +1,152 @@
-module("projbooter.ui.BootMsgBox", package.seeall)
+﻿module("projbooter.ui.BootMsgBox", package.seeall)
 
-slot0 = class("BootMsgBox")
+local var_0_0 = class("BootMsgBox")
 
-function slot0.init(slot0)
-	slot0._go = BootResMgr.instance:getMsgBoxGo()
-	slot0._rootTr = slot0._go.transform
-	slot1 = typeof(UnityEngine.UI.Text)
-	slot0._txtTitle = slot0._rootTr:Find("txtTitle"):GetComponent(slot1)
-	slot0._gotopTipEn = slot0._rootTr:Find("topTip/txtEn").gameObject
-	slot0._txttopTipCn = slot0._rootTr:Find("topTip/txtCn"):GetComponent(slot1)
-	slot0._txtContent = slot0._rootTr:Find("txtContent"):GetComponent(slot1)
-	slot0._leftBtnGo = slot0._rootTr:Find("btnLeft").gameObject
-	slot0._leftBtn = SLFramework.UGUI.ButtonWrap.Get(slot0._leftBtnGo)
-	slot0._leftBtnTxt = slot0._rootTr:Find("btnLeft/Text"):GetComponent(slot1)
-	slot0._leftBtnTxtEn = slot0._rootTr:Find("btnLeft/Text-EN"):GetComponent(slot1)
-	slot0._rightBtnGo = slot0._rootTr:Find("btnRight").gameObject
-	slot0._rightBtn = SLFramework.UGUI.ButtonWrap.Get(slot0._rightBtnGo)
-	slot0._rightBtnTxt = slot0._rootTr:Find("btnRight/Text"):GetComponent(slot1)
-	slot0._rightBtnTxtEn = slot0._rootTr:Find("btnRight/Text-EN"):GetComponent(slot1)
+function var_0_0.init(arg_1_0)
+	arg_1_0._go = BootResMgr.instance:getMsgBoxGo()
+	arg_1_0._rootTr = arg_1_0._go.transform
 
-	slot0._leftBtn:AddClickListener(slot0._onClickLeftBtn, slot0)
-	slot0._rightBtn:AddClickListener(slot0._onClickRightBtn, slot0)
-	GamepadBooter.instance:setBootMsgBoxClick(slot0._onClickRightBtn, slot0, slot0._onClickLeftBtn, slot0)
+	local var_1_0 = typeof(UnityEngine.UI.Text)
+
+	arg_1_0._txtTitle = arg_1_0._rootTr:Find("txtTitle"):GetComponent(var_1_0)
+	arg_1_0._gotopTipEn = arg_1_0._rootTr:Find("topTip/txtEn").gameObject
+	arg_1_0._txttopTipCn = arg_1_0._rootTr:Find("topTip/txtCn"):GetComponent(var_1_0)
+	arg_1_0._txtContent = arg_1_0._rootTr:Find("txtContent"):GetComponent(var_1_0)
+	arg_1_0._leftBtnGo = arg_1_0._rootTr:Find("btnLeft").gameObject
+	arg_1_0._leftBtn = SLFramework.UGUI.ButtonWrap.Get(arg_1_0._leftBtnGo)
+	arg_1_0._leftBtnTxt = arg_1_0._rootTr:Find("btnLeft/Text"):GetComponent(var_1_0)
+	arg_1_0._leftBtnTxtEn = arg_1_0._rootTr:Find("btnLeft/Text-EN"):GetComponent(var_1_0)
+	arg_1_0._rightBtnGo = arg_1_0._rootTr:Find("btnRight").gameObject
+	arg_1_0._rightBtn = SLFramework.UGUI.ButtonWrap.Get(arg_1_0._rightBtnGo)
+	arg_1_0._rightBtnTxt = arg_1_0._rootTr:Find("btnRight/Text"):GetComponent(var_1_0)
+	arg_1_0._rightBtnTxtEn = arg_1_0._rootTr:Find("btnRight/Text-EN"):GetComponent(var_1_0)
+
+	arg_1_0._leftBtn:AddClickListener(arg_1_0._onClickLeftBtn, arg_1_0)
+	arg_1_0._rightBtn:AddClickListener(arg_1_0._onClickRightBtn, arg_1_0)
+	GamepadBooter.instance:setBootMsgBoxClick(arg_1_0._onClickRightBtn, arg_1_0, arg_1_0._onClickLeftBtn, arg_1_0)
 end
 
-function slot0.show(slot0, slot1)
-	if slot0._isDisable then
+function var_0_0.show(arg_2_0, arg_2_1)
+	if arg_2_0._isDisable then
 		return
 	end
 
-	slot0.args = slot1
-	slot3 = true
+	arg_2_0.args = arg_2_1
 
-	if GameConfig:GetCurLangShortcut() ~= "zh" then
-		slot3 = false
+	local var_2_0 = GameConfig:GetCurLangShortcut()
+	local var_2_1 = true
 
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(slot0._leftBtnTxt.transform, 15)
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(slot0._rightBtnTxt.transform, 15)
+	if var_2_0 ~= "zh" then
+		var_2_1 = false
+
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(arg_2_0._leftBtnTxt.transform, 15)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(arg_2_0._rightBtnTxt.transform, 15)
 	end
 
-	slot0._gotopTipEn:SetActive(slot3)
-	slot0._leftBtnTxtEn.gameObject:SetActive(slot3)
-	slot0._rightBtnTxtEn.gameObject:SetActive(slot3)
+	arg_2_0._gotopTipEn:SetActive(var_2_1)
+	arg_2_0._leftBtnTxtEn.gameObject:SetActive(var_2_1)
+	arg_2_0._rightBtnTxtEn.gameObject:SetActive(var_2_1)
 
-	slot0._txtTitle.text = slot1.title
-	slot0._txtContent.text = slot1.content
-	slot0._txttopTipCn.text = booterLang("notice")
+	arg_2_0._txtTitle.text = arg_2_1.title
+	arg_2_0._txtContent.text = arg_2_1.content
+	arg_2_0._txttopTipCn.text = booterLang("notice")
 
-	slot0._leftBtnGo:SetActive(slot1.leftMsg ~= nil)
+	arg_2_0._leftBtnGo:SetActive(arg_2_1.leftMsg ~= nil)
 
-	slot0._leftBtnTxt.text = slot1.leftMsg and slot1.leftMsg or ""
-	slot0._leftCb = slot1.leftCb
-	slot0._leftCbObj = slot1.leftCbObj
+	arg_2_0._leftBtnTxt.text = arg_2_1.leftMsg and arg_2_1.leftMsg or ""
+	arg_2_0._leftCb = arg_2_1.leftCb
+	arg_2_0._leftCbObj = arg_2_1.leftCbObj
 
-	slot0._rightBtnGo:SetActive(slot1.rightMsg ~= nil)
+	arg_2_0._rightBtnGo:SetActive(arg_2_1.rightMsg ~= nil)
 
-	slot0._rightBtnTxt.text = slot1.rightMsg and slot1.rightMsg or ""
-	slot0._rightCb = slot1.rightCb
-	slot0._rightCbObj = slot1.rightCbObj
-	slot0._leftBtnTxtEn.text = slot1.leftMsgEn or "EXIT"
-	slot0._rightBtnTxtEn.text = slot1.rightMsgEn or "DOWNLOAD"
+	arg_2_0._rightBtnTxt.text = arg_2_1.rightMsg and arg_2_1.rightMsg or ""
+	arg_2_0._rightCb = arg_2_1.rightCb
+	arg_2_0._rightCbObj = arg_2_1.rightCbObj
+	arg_2_0._leftBtnTxtEn.text = arg_2_1.leftMsgEn or "EXIT"
+	arg_2_0._rightBtnTxtEn.text = arg_2_1.rightMsgEn or "DOWNLOAD"
 
-	SLFramework.UGUI.RectTrHelper.SetAnchorY(slot0._txtTitle.transform, slot1.titleAnchorY or 55)
+	SLFramework.UGUI.RectTrHelper.SetAnchorY(arg_2_0._txtTitle.transform, arg_2_1.titleAnchorY or 55)
 
-	if slot1.rightMsg ~= nil then
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(slot0._leftBtnGo.transform, -247.1)
+	if arg_2_1.rightMsg ~= nil then
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._leftBtnGo.transform, -247.1)
 	else
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(slot0._leftBtnGo.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._leftBtnGo.transform, 0)
 	end
 
-	if slot1.leftMsg ~= nil then
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(slot0._rightBtnGo.transform, 246.7)
+	if arg_2_1.leftMsg ~= nil then
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._rightBtnGo.transform, 246.7)
 	else
-		SLFramework.UGUI.RectTrHelper.SetAnchorX(slot0._rightBtnGo.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorX(arg_2_0._rightBtnGo.transform, 0)
 	end
 
-	slot0._go:SetActive(true)
+	arg_2_0._go:SetActive(true)
 end
 
-function slot0.isShow(slot0)
-	if slot0._go then
-		return slot0._go.activeInHierarchy
-	end
-end
-
-function slot0.hide(slot0)
-	slot0._go:SetActive(false)
-end
-
-function slot0.dispose(slot0)
-	for slot4, slot5 in pairs(slot0) do
-		slot0[slot4] = nil
+function var_0_0.isShow(arg_3_0)
+	if arg_3_0._go then
+		return arg_3_0._go.activeInHierarchy
 	end
 end
 
-function slot0._onClickLeftBtn(slot0)
-	slot0:hide()
+function var_0_0.hide(arg_4_0)
+	arg_4_0._go:SetActive(false)
+end
 
-	if slot0._leftCb == nil then
+function var_0_0.dispose(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0) do
+		arg_5_0[iter_5_0] = nil
+	end
+end
+
+function var_0_0._onClickLeftBtn(arg_6_0)
+	arg_6_0:hide()
+
+	if arg_6_0._leftCb == nil then
 		return
 	end
 
-	slot0._leftCb = nil
-	slot0._leftCbObj = nil
+	local var_6_0 = arg_6_0._leftCb
+	local var_6_1 = arg_6_0._leftCbObj
 
-	slot0._leftCb(slot0._leftCbObj)
+	arg_6_0._leftCb = nil
+	arg_6_0._leftCbObj = nil
+
+	var_6_0(var_6_1)
 end
 
-function slot0._onClickRightBtn(slot0)
-	slot0:hide()
+function var_0_0._onClickRightBtn(arg_7_0)
+	arg_7_0:hide()
 
-	if slot0._rightCb == nil then
+	if arg_7_0._rightCb == nil then
 		return
 	end
 
-	slot0._rightCb = nil
-	slot0._rightCbObj = nil
+	local var_7_0 = arg_7_0._rightCb
+	local var_7_1 = arg_7_0._rightCbObj
 
-	slot0._rightCb(slot0._rightCbObj)
+	arg_7_0._rightCb = nil
+	arg_7_0._rightCbObj = nil
+
+	var_7_0(var_7_1)
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_8_0)
 	GamepadBooter.instance:dispose()
-	slot0._leftBtn:RemoveClickListener()
-	slot0._rightBtn:RemoveClickListener()
+	arg_8_0._leftBtn:RemoveClickListener()
+	arg_8_0._rightBtn:RemoveClickListener()
 
-	for slot4, slot5 in pairs(slot0) do
-		if type(slot5) == "userdata" then
-			rawset(slot0, slot4, nil)
-			logNormal("key = " .. tostring(slot4) .. " value = " .. tostring(slot5))
+	for iter_8_0, iter_8_1 in pairs(arg_8_0) do
+		if type(iter_8_1) == "userdata" then
+			rawset(arg_8_0, iter_8_0, nil)
+			logNormal("key = " .. tostring(iter_8_0) .. " value = " .. tostring(iter_8_1))
 		end
 	end
 end
 
-function slot0.disable(slot0)
-	slot0._isDisable = true
+function var_0_0.disable(arg_9_0)
+	arg_9_0._isDisable = true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

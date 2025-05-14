@@ -1,25 +1,33 @@
-module("modules.logic.fight.system.work.FightWorkAddHandCardContainer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkAddHandCardContainer", package.seeall)
 
-slot0 = class("FightWorkAddHandCardContainer", FightStepEffectFlow)
-slot1 = {
+local var_0_0 = class("FightWorkAddHandCardContainer", FightStepEffectFlow)
+local var_0_1 = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true
 }
 
-function slot0.onStart(slot0)
-	slot2 = slot0:com_registWorkDoneFlowParallel()
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0:getAdjacentSameEffectList(var_0_1, true)
+	local var_1_1 = arg_1_0:com_registWorkDoneFlowParallel()
+	local var_1_2 = 0
 
-	for slot7, slot8 in ipairs(slot0:getAdjacentSameEffectList(uv0, true)) do
-		slot11 = slot2:registWork(FightWorkFlowSequence)
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		local var_1_3 = iter_1_1.effect.effectType
+		local var_1_4 = FightStepBuilder.ActEffectWorkCls[var_1_3]
 
-		slot11:registWork(FightWorkDelayTimer, 0.05 * (0 + 1))
-		slot11:registWork(FightStepBuilder.ActEffectWorkCls[slot8.effect.effectType], slot8.stepMO, slot8.effect)
+		var_1_2 = var_1_2 + 1
+
+		local var_1_5 = var_1_1:registWork(FightWorkFlowSequence)
+
+		var_1_5:registWork(FightWorkDelayTimer, 0.05 * var_1_2)
+		var_1_5:registWork(var_1_4, iter_1_1.stepMO, iter_1_1.effect)
 	end
 
-	slot2:start()
+	var_1_1:start()
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

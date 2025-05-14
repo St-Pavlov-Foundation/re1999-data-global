@@ -1,43 +1,47 @@
-module("modules.logic.guide.view.GuideView", package.seeall)
+﻿module("modules.logic.guide.view.GuideView", package.seeall)
 
-slot0 = class("GuideView", BaseView)
+local var_0_0 = class("GuideView", BaseView)
 
-function slot0.onInitView(slot0)
-	if GMController.instance:getGMNode("guideview", slot0.viewGO) then
-		slot0._btnJump = gohelper.findChildButtonWithAudio(slot1, "btnJump")
+function var_0_0.onInitView(arg_1_0)
+	local var_1_0 = GMController.instance:getGMNode("guideview", arg_1_0.viewGO)
+
+	if var_1_0 then
+		arg_1_0._btnJump = gohelper.findChildButtonWithAudio(var_1_0, "btnJump")
 	end
 end
 
-function slot0.isOpenGM(slot0)
+function var_0_0.isOpenGM(arg_2_0)
 	return isDebugBuild and PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewShowGMBtn, 1) == 1
 end
 
-function slot0.onOpen(slot0)
-	if slot0._btnJump then
-		gohelper.setActive(slot0._btnJump.gameObject, slot0:isOpenGM())
+function var_0_0.onOpen(arg_3_0)
+	if arg_3_0._btnJump then
+		gohelper.setActive(arg_3_0._btnJump.gameObject, arg_3_0:isOpenGM())
 	end
 end
 
-function slot0.addEvents(slot0)
-	if slot0._btnJump then
-		slot0._btnJump:AddClickListener(slot0._onClickBtnJump, slot0)
+function var_0_0.addEvents(arg_4_0)
+	if arg_4_0._btnJump then
+		arg_4_0._btnJump:AddClickListener(arg_4_0._onClickBtnJump, arg_4_0)
 	end
 end
 
-function slot0.removeEvents(slot0)
-	if slot0._btnJump then
-		slot0._btnJump:RemoveClickListener()
+function var_0_0.removeEvents(arg_5_0)
+	if arg_5_0._btnJump then
+		arg_5_0._btnJump:RemoveClickListener()
 	end
 end
 
-function slot0._onClickBtnJump(slot0)
+function var_0_0._onClickBtnJump(arg_6_0)
 	GuideModel.instance:onClickJumpGuides()
 
-	slot2 = GuideModel.instance:getDoingGuideId() and GuideModel.instance:getById(slot1)
+	local var_6_0 = GuideModel.instance:getDoingGuideId()
+	local var_6_1 = var_6_0 and GuideModel.instance:getById(var_6_0)
+	local var_6_2 = var_6_1 and var_6_1.currStepId
 
-	logWarn(string.format("点击了指引跳过按钮！！！！！当前指引：%d_%d", slot1 or -1, slot2 and slot2.currStepId or -1))
+	logWarn(string.format("点击了指引跳过按钮！！！！！当前指引：%d_%d", var_6_0 or -1, var_6_2 or -1))
 
-	if slot1 == GuideController.FirstGuideId then
+	if var_6_0 == GuideController.FirstGuideId then
 		DungeonFightController.instance:sendEndFightRequest(true)
 	end
 
@@ -45,4 +49,4 @@ function slot0._onClickBtnJump(slot0)
 	GuideStepController.instance:clearStep()
 end
 
-return slot0
+return var_0_0

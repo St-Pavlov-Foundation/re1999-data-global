@@ -1,86 +1,97 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183BaseEpisodeItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183BaseEpisodeItem", package.seeall)
 
-slot0 = class("Act183BaseEpisodeItem", LuaCompBase)
+local var_0_0 = class("Act183BaseEpisodeItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._golock = gohelper.findChild(slot0.go, "go_lock")
-	slot0._gounlock = gohelper.findChild(slot0.go, "go_unlock")
-	slot0._gofinish = gohelper.findChild(slot0.go, "go_finish")
-	slot0._gocheck = gohelper.findChild(slot0.go, "go_finish/image")
-	slot0._btnclick = gohelper.findChildButton(slot0.go, "btn_click")
-	slot0._goselect = gohelper.findChild(slot0.go, "go_select")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.go, "image_icon")
-	slot0._animfinish = gohelper.onceAddComponent(slot0._gofinish, gohelper.Type_Animator)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._golock = gohelper.findChild(arg_1_0.go, "go_lock")
+	arg_1_0._gounlock = gohelper.findChild(arg_1_0.go, "go_unlock")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.go, "go_finish")
+	arg_1_0._gocheck = gohelper.findChild(arg_1_0.go, "go_finish/image")
+	arg_1_0._btnclick = gohelper.findChildButton(arg_1_0.go, "btn_click")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.go, "go_select")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.go, "image_icon")
+	arg_1_0._animfinish = gohelper.onceAddComponent(arg_1_0._gofinish, gohelper.Type_Animator)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnClickEpisode, slot0._onSelectEpisode, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnClickEpisode, arg_2_0._onSelectEpisode, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_ClickEpisode)
-	Act183Controller.instance:dispatchEvent(Act183Event.OnClickEpisode, slot0._episodeId)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnClickEpisode, arg_4_0._episodeId)
 end
 
-function slot0._onSelectEpisode(slot0, slot1)
-	slot0:onSelect(slot1 == slot0._episodeId)
+function var_0_0._onSelectEpisode(arg_5_0, arg_5_1)
+	arg_5_0:onSelect(arg_5_1 == arg_5_0._episodeId)
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0.onSelect(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._goselect, arg_6_1)
 end
 
-function slot0.onUpdateMo(slot0, slot1)
-	slot0._episodeMo = slot1
-	slot0._status = slot1:getStatus()
-	slot0._episodeId = slot1:getEpisodeId()
-	slot0._isFinishedButNotNew = slot0._status == Act183Enum.EpisodeStatus.Finished and Act183Model.instance:getNewFinishEpisodeId() ~= slot0._episodeId
+function var_0_0.onUpdateMo(arg_7_0, arg_7_1)
+	arg_7_0._episodeMo = arg_7_1
+	arg_7_0._status = arg_7_1:getStatus()
+	arg_7_0._episodeId = arg_7_1:getEpisodeId()
 
-	gohelper.setActive(slot0._goselect, false)
-	gohelper.setActive(slot0._golock, slot0._status == Act183Enum.EpisodeStatus.Locked)
-	gohelper.setActive(slot0._gounlock, slot0._status ~= Act183Enum.EpisodeStatus.Locked)
-	gohelper.setActive(slot0._gofinish, slot0._isFinishedButNotNew)
-	Act183Helper.setEpisodeIcon(slot0._episodeId, slot0._status, slot0._simageicon)
-	slot0:setVisible(true)
-	slot0:setCheckIconPosition()
+	local var_7_0 = Act183Model.instance:getNewFinishEpisodeId()
+
+	arg_7_0._isFinishedButNotNew = arg_7_0._status == Act183Enum.EpisodeStatus.Finished and var_7_0 ~= arg_7_0._episodeId
+
+	gohelper.setActive(arg_7_0._goselect, false)
+	gohelper.setActive(arg_7_0._golock, arg_7_0._status == Act183Enum.EpisodeStatus.Locked)
+	gohelper.setActive(arg_7_0._gounlock, arg_7_0._status ~= Act183Enum.EpisodeStatus.Locked)
+	gohelper.setActive(arg_7_0._gofinish, arg_7_0._isFinishedButNotNew)
+	Act183Helper.setEpisodeIcon(arg_7_0._episodeId, arg_7_0._status, arg_7_0._simageicon)
+	arg_7_0:setVisible(true)
+	arg_7_0:setCheckIconPosition()
 end
 
-function slot0.getConfigOrder(slot0)
-	slot1 = slot0._episodeMo and slot0._episodeMo:getConfig()
+function var_0_0.getConfigOrder(arg_8_0)
+	local var_8_0 = arg_8_0._episodeMo and arg_8_0._episodeMo:getConfig()
 
-	return slot1 and slot1.order
+	return var_8_0 and var_8_0.order
 end
 
-function slot0.setVisible(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0.setVisible(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0.go, arg_9_1)
 end
 
-function slot0.getIconTran(slot0)
-	return slot0._simageicon.transform
+function var_0_0.getIconTran(arg_10_0)
+	return arg_10_0._simageicon.transform
 end
 
-function slot0.playFinishAnim(slot0)
-	gohelper.setActive(slot0._gofinish, true)
-	slot0._animfinish:Play("in", 0, 0)
+function var_0_0.playFinishAnim(arg_11_0)
+	gohelper.setActive(arg_11_0._gofinish, true)
+	arg_11_0._animfinish:Play("in", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_EpisodeFinished)
 end
 
-function slot0.setCheckIconPosition(slot0)
-	if slot0._status ~= Act183Enum.EpisodeStatus.Finished then
+function var_0_0.setCheckIconPosition(arg_12_0)
+	if arg_12_0._status ~= Act183Enum.EpisodeStatus.Finished then
 		return
 	end
 
-	transformhelper.setLocalRotation(slot0._gocheck.transform, slot2 and slot2[3] or 0, slot2 and slot2[4] or 0, slot2 and slot2[5] or 0)
-	recthelper.setAnchor(slot0._gocheck.transform, slot0:_getCheckIconPosAndRotConfig(slot0:getConfigOrder()) and slot2[1] or 0, slot2 and slot2[2] or 0)
+	local var_12_0 = arg_12_0:getConfigOrder()
+	local var_12_1 = arg_12_0:_getCheckIconPosAndRotConfig(var_12_0)
+	local var_12_2 = var_12_1 and var_12_1[1] or 0
+	local var_12_3 = var_12_1 and var_12_1[2] or 0
+	local var_12_4 = var_12_1 and var_12_1[3] or 0
+	local var_12_5 = var_12_1 and var_12_1[4] or 0
+	local var_12_6 = var_12_1 and var_12_1[5] or 0
+
+	transformhelper.setLocalRotation(arg_12_0._gocheck.transform, var_12_4, var_12_5, var_12_6)
+	recthelper.setAnchor(arg_12_0._gocheck.transform, var_12_2, var_12_3)
 end
 
-function slot0._getCheckIconPosAndRotConfig(slot0, slot1)
+function var_0_0._getCheckIconPosAndRotConfig(arg_13_0, arg_13_1)
 	return {
 		0,
 		0,
@@ -90,7 +101,8 @@ function slot0._getCheckIconPosAndRotConfig(slot0, slot1)
 	}
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

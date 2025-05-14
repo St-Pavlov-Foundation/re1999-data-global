@@ -1,112 +1,121 @@
-module("modules.spine.roleeffect.CommonRoleEffect", package.seeall)
+﻿module("modules.spine.roleeffect.CommonRoleEffect", package.seeall)
 
-slot0 = class("CommonRoleEffect", BaseSpineRoleEffect)
+local var_0_0 = class("CommonRoleEffect", BaseSpineRoleEffect)
 
-function slot0.init(slot0, slot1)
-	slot0._roleEffectConfig = slot1
-	slot0._spineGo = slot0._spine._spineGo
-	slot0._motionList = string.split(slot1.motion, "|")
-	slot0._nodeList = GameUtil.splitString2(slot1.node, false, "|", "#")
-	slot0._firstShow = false
-	slot0._showEverEffect = false
-	slot0._effectVisible = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._roleEffectConfig = arg_1_1
+	arg_1_0._spineGo = arg_1_0._spine._spineGo
+	arg_1_0._motionList = string.split(arg_1_1.motion, "|")
+	arg_1_0._nodeList = GameUtil.splitString2(arg_1_1.node, false, "|", "#")
+	arg_1_0._firstShow = false
+	arg_1_0._showEverEffect = false
+	arg_1_0._effectVisible = false
 end
 
-function slot0.isShowEverEffect(slot0)
-	return slot0._showEverEffect
+function var_0_0.isShowEverEffect(arg_2_0)
+	return arg_2_0._showEverEffect
 end
 
-function slot0.showBodyEffect(slot0, slot1, slot2, slot3)
-	slot0._effectVisible = false
+function var_0_0.showBodyEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0._effectVisible = false
 
-	slot0:_setNodeVisible(slot0._index, false)
+	arg_3_0:_setNodeVisible(arg_3_0._index, false)
 
-	slot0._index = tabletool.indexOf(slot0._motionList, slot1)
+	arg_3_0._index = tabletool.indexOf(arg_3_0._motionList, arg_3_1)
 
-	slot0:_setNodeVisible(slot0._index, true)
+	arg_3_0:_setNodeVisible(arg_3_0._index, true)
 
-	if not slot0._firstShow then
-		slot0._firstShow = true
+	if not arg_3_0._firstShow then
+		arg_3_0._firstShow = true
 
-		slot0:showEverNodes(false)
-		TaskDispatcher.cancelTask(slot0._delayShowEverNodes, slot0)
-		TaskDispatcher.runDelay(slot0._delayShowEverNodes, slot0, 0.3)
+		arg_3_0:showEverNodes(false)
+		TaskDispatcher.cancelTask(arg_3_0._delayShowEverNodes, arg_3_0)
+		TaskDispatcher.runDelay(arg_3_0._delayShowEverNodes, arg_3_0, 0.3)
 	end
 
-	if slot2 and slot3 then
-		slot2(slot3, slot0._effectVisible or slot0._showEverEffect)
+	if arg_3_2 and arg_3_3 then
+		arg_3_2(arg_3_3, arg_3_0._effectVisible or arg_3_0._showEverEffect)
 	end
 end
 
-function slot0._delayShowEverNodes(slot0)
-	slot0:showEverNodes(true)
+function var_0_0._delayShowEverNodes(arg_4_0)
+	arg_4_0:showEverNodes(true)
 end
 
-function slot0.showEverNodes(slot0, slot1)
-	if string.nilorempty(slot0._roleEffectConfig.everNode) or not slot0._spineGo then
+function var_0_0.showEverNodes(arg_5_0, arg_5_1)
+	if string.nilorempty(arg_5_0._roleEffectConfig.everNode) or not arg_5_0._spineGo then
 		return
 	end
 
-	if slot0._spine._resPath and not string.find(slot2, slot0._roleEffectConfig.heroResName .. ".prefab") then
+	local var_5_0 = arg_5_0._spine._resPath
+
+	if var_5_0 and not string.find(var_5_0, arg_5_0._roleEffectConfig.heroResName .. ".prefab") then
 		return
 	end
 
-	for slot7, slot8 in ipairs(string.split(slot0._roleEffectConfig.everNode, "#")) do
-		slot9 = gohelper.findChild(slot0._spineGo, slot8)
+	local var_5_1 = string.split(arg_5_0._roleEffectConfig.everNode, "#")
 
-		gohelper.setActive(slot9, slot1)
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		local var_5_2 = gohelper.findChild(arg_5_0._spineGo, iter_5_1)
 
-		slot0._showEverEffect = true
+		gohelper.setActive(var_5_2, arg_5_1)
 
-		if not slot9 and SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("%s找不到特效节点：%s,请检查路径", slot2, slot8))
+		arg_5_0._showEverEffect = true
+
+		if not var_5_2 and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("%s找不到特效节点：%s,请检查路径", var_5_0, iter_5_1))
 		end
 	end
 end
 
-function slot0.showEverNodes(slot0, slot1)
-	if string.nilorempty(slot0._roleEffectConfig.everNode) then
+function var_0_0.showEverNodes(arg_6_0, arg_6_1)
+	if string.nilorempty(arg_6_0._roleEffectConfig.everNode) then
 		return
 	end
 
-	for slot6, slot7 in ipairs(string.split(slot0._roleEffectConfig.everNode, "#")) do
-		slot8 = gohelper.findChild(slot0._spineGo, slot7)
+	local var_6_0 = string.split(arg_6_0._roleEffectConfig.everNode, "#")
 
-		gohelper.setActive(slot8, slot1)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = gohelper.findChild(arg_6_0._spineGo, iter_6_1)
 
-		if not slot8 and SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("找不到特效节点：%s,请检查路径", slot7))
+		gohelper.setActive(var_6_1, arg_6_1)
+
+		if not var_6_1 and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("找不到特效节点：%s,请检查路径", iter_6_1))
 		end
 	end
 end
 
-function slot0._setNodeVisible(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._setNodeVisible(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot0._nodeList[slot1]) do
-		slot9 = gohelper.findChild(slot0._spineGo, slot8)
+	local var_7_0 = arg_7_0._nodeList[arg_7_1]
 
-		gohelper.setActive(slot9, slot2)
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = gohelper.findChild(arg_7_0._spineGo, iter_7_1)
 
-		if not slot9 and SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("%s找不到特效节点：%s,请检查路径", slot0._spine._resPath, slot8))
+		gohelper.setActive(var_7_1, arg_7_2)
+
+		if not var_7_1 and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("%s找不到特效节点：%s,请检查路径", arg_7_0._spine._resPath, iter_7_1))
 		end
 
-		if slot2 then
-			slot0._effectVisible = true
+		if arg_7_2 then
+			arg_7_0._effectVisible = true
 		end
 	end
 end
 
-function slot0.playBodyEffect(slot0, slot1, slot2, slot3)
+function var_0_0.playBodyEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	slot0._spineGo = nil
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0._spineGo = nil
 
-	TaskDispatcher.cancelTask(slot0._delayShowEverNodes, slot0)
+	TaskDispatcher.cancelTask(arg_9_0._delayShowEverNodes, arg_9_0)
 end
 
-return slot0
+return var_0_0

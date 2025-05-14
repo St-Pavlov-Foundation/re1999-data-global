@@ -1,13 +1,13 @@
-module("modules.logic.rouge.model.rpcmo.RougeBattleHeroMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeBattleHeroMO", package.seeall)
 
-slot0 = pureTable("RougeBattleHeroMO")
+local var_0_0 = pureTable("RougeBattleHeroMO")
 
-function slot0.init(slot0, slot1)
-	slot0.index = slot1.index
-	slot0.heroId = slot1.heroId
-	slot0.equipUid = slot1.equipUid
-	slot0.supportHeroId = slot1.supportHeroId
-	slot0.supportHeroSkill = slot1.supportHeroSkill
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.index = arg_1_1.index
+	arg_1_0.heroId = arg_1_1.heroId
+	arg_1_0.equipUid = arg_1_1.equipUid
+	arg_1_0.supportHeroId = arg_1_1.supportHeroId
+	arg_1_0.supportHeroSkill = arg_1_1.supportHeroSkill
 end
 
-return slot0
+return var_0_0

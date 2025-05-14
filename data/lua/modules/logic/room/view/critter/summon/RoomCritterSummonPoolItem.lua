@@ -1,18 +1,22 @@
-module("modules.logic.room.view.critter.summon.RoomCritterSummonPoolItem", package.seeall)
+﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonPoolItem", package.seeall)
 
-slot0 = class("RoomCritterSummonPoolItem", ListScrollCellExtend)
+local var_0_0 = class("RoomCritterSummonPoolItem", ListScrollCellExtend)
 
-function slot0.onUpdateMO(slot0, slot1)
-	if not slot0._iconItem and IconMgr.instance:_getIconInstance(IconMgrConfig.UrlCritterIcon, slot0.viewGO) then
-		slot0._iconItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot2, RoomCritterSummonPoolIcon)
+function var_0_0.onUpdateMO(arg_1_0, arg_1_1)
+	if not arg_1_0._iconItem then
+		local var_1_0 = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlCritterIcon, arg_1_0.viewGO)
+
+		if var_1_0 then
+			arg_1_0._iconItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, RoomCritterSummonPoolIcon)
+		end
 	end
 
-	slot0._iconItem:onUpdateMO(slot1)
-	slot0._iconItem:setCustomClick(slot0.onClicKCallback, slot0, slot1)
+	arg_1_0._iconItem:onUpdateMO(arg_1_1)
+	arg_1_0._iconItem:setCustomClick(arg_1_0.onClicKCallback, arg_1_0, arg_1_1)
 end
 
-function slot0.onClicKCallback(slot0, slot1)
-	CritterController.instance:openRoomCritterDetailView(true, slot1:getCritterMo(), true)
+function var_0_0.onClicKCallback(arg_2_0, arg_2_1)
+	CritterController.instance:openRoomCritterDetailView(true, arg_2_1:getCritterMo(), true)
 end
 
-return slot0
+return var_0_0

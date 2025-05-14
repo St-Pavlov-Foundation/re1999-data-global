@@ -1,203 +1,221 @@
-module("modules.logic.fight.view.assistboss.FightAssistBoss5", package.seeall)
+﻿module("modules.logic.fight.view.assistboss.FightAssistBoss5", package.seeall)
 
-slot0 = class("FightAssistBoss5", FightAssistBossBase)
+local var_0_0 = class("FightAssistBoss5", FightAssistBossBase)
 
-function slot0.setPrefabPath(slot0)
-	slot0.prefabPath = "ui/viewres/assistboss/boss5.prefab"
+function var_0_0.setPrefabPath(arg_1_0)
+	arg_1_0.prefabPath = "ui/viewres/assistboss/boss5.prefab"
 end
 
-slot0.State = {
+var_0_0.State = {
 	Clicked = 3,
 	CantClick = 1,
 	CanClick = 2,
 	SuZhen = 4
 }
-slot0.MaxPower = 5
+var_0_0.MaxPower = 5
 
-function slot0.initView(slot0)
-	uv0.super.initView(slot0)
+function var_0_0.initView(arg_2_0)
+	var_0_0.super.initView(arg_2_0)
 
-	slot0.pointList = {}
+	arg_2_0.pointList = {}
 
-	for slot4 = 1, uv0.MaxPower do
-		slot0:createPointItem(slot4)
+	for iter_2_0 = 1, var_0_0.MaxPower do
+		arg_2_0:createPointItem(iter_2_0)
 	end
 
-	slot0.goBgLevel1 = gohelper.findChild(slot0.viewGo, "head/bg/level1")
-	slot0.goBgLevel2 = gohelper.findChild(slot0.viewGo, "head/bg/level2")
-	slot0.goBgLevel3 = gohelper.findChild(slot0.viewGo, "head/bg/level3")
-	slot0.goEffectLevel2 = gohelper.findChild(slot0.viewGo, "head/level2_eff")
-	slot0.goEffectLevel3 = gohelper.findChild(slot0.viewGo, "head/level3_eff")
+	arg_2_0.goBgLevel1 = gohelper.findChild(arg_2_0.viewGo, "head/bg/level1")
+	arg_2_0.goBgLevel2 = gohelper.findChild(arg_2_0.viewGo, "head/bg/level2")
+	arg_2_0.goBgLevel3 = gohelper.findChild(arg_2_0.viewGo, "head/bg/level3")
+	arg_2_0.goEffectLevel2 = gohelper.findChild(arg_2_0.viewGo, "head/level2_eff")
+	arg_2_0.goEffectLevel3 = gohelper.findChild(arg_2_0.viewGo, "head/level3_eff")
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PowerMaxChange, slot0.onPowerMaxChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.AddMagicCircile, slot0.refreshPower, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.DeleteMagicCircile, slot0.refreshPower, slot0)
+function var_0_0.addEvents(arg_3_0)
+	var_0_0.super.addEvents(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.PowerMaxChange, arg_3_0.onPowerMaxChange, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.AddMagicCircile, arg_3_0.refreshPower, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.DeleteMagicCircile, arg_3_0.refreshPower, arg_3_0)
 end
 
-function slot0.onPowerMaxChange(slot0, slot1, slot2)
-	if not FightDataHelper.entityMgr:getAssistBoss() then
+function var_0_0.onPowerMaxChange(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = FightDataHelper.entityMgr:getAssistBoss()
+
+	if not var_4_0 then
 		return
 	end
 
-	if slot3.uid ~= slot1 then
+	if var_4_0.uid ~= arg_4_1 then
 		return
 	end
 
-	if slot2 ~= FightEnum.PowerType.AssistBoss then
+	if arg_4_2 ~= FightEnum.PowerType.AssistBoss then
 		return
 	end
 
-	slot0:refreshPower()
+	arg_4_0:refreshPower()
 end
 
-function slot0.createPointItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot3 = gohelper.findChild(slot0.viewGo, "head/point" .. slot1)
-	slot2.go = slot3
-	slot2.goEnergy1 = gohelper.findChild(slot3, "energy1")
-	slot2.goEnergy2 = gohelper.findChild(slot3, "energy2")
-	slot2.goEnergy1Full = gohelper.findChild(slot2.goEnergy1, "dark")
-	slot2.goEnergy1Light = gohelper.findChild(slot2.goEnergy1, "light")
-	slot2.goEnergy2Full = gohelper.findChild(slot2.goEnergy2, "light")
+function var_0_0.createPointItem(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getUserDataTb_()
+	local var_5_1 = gohelper.findChild(arg_5_0.viewGo, "head/point" .. arg_5_1)
 
-	table.insert(slot0.pointList, slot2)
+	var_5_0.go = var_5_1
+	var_5_0.goEnergy1 = gohelper.findChild(var_5_1, "energy1")
+	var_5_0.goEnergy2 = gohelper.findChild(var_5_1, "energy2")
+	var_5_0.goEnergy1Full = gohelper.findChild(var_5_0.goEnergy1, "dark")
+	var_5_0.goEnergy1Light = gohelper.findChild(var_5_0.goEnergy1, "light")
+	var_5_0.goEnergy2Full = gohelper.findChild(var_5_0.goEnergy2, "light")
 
-	return slot2
+	table.insert(arg_5_0.pointList, var_5_0)
+
+	return var_5_0
 end
 
-function slot0.refreshPower(slot0)
-	slot0:initRefreshFunc()
+function var_0_0.refreshPower(arg_6_0)
+	arg_6_0:initRefreshFunc()
 
-	slot1 = slot0:getCurState()
+	local var_6_0 = arg_6_0:getCurState()
 
-	slot0:refreshBg(slot1)
-	slot0:refreshEffect(slot1)
-	slot0:refreshPointActive()
+	arg_6_0:refreshBg(var_6_0)
+	arg_6_0:refreshEffect(var_6_0)
+	arg_6_0:refreshPointActive()
 
-	if slot0.refreshFuncDict[slot1] then
-		slot2(slot0)
+	local var_6_1 = arg_6_0.refreshFuncDict[var_6_0]
+
+	if var_6_1 then
+		var_6_1(arg_6_0)
 	end
 
-	slot0:refreshHeadImageColor()
+	arg_6_0:refreshHeadImageColor()
 end
 
-function slot0.initRefreshFunc(slot0)
-	if not slot0.refreshFuncDict then
-		slot0.refreshFuncDict = {
-			[uv0.State.CantClick] = slot0.refreshCantClickUI,
-			[uv0.State.CanClick] = slot0.refreshCanClickUI,
-			[uv0.State.Clicked] = slot0.refreshClickedUI,
-			[uv0.State.SuZhen] = slot0.refreshSuZhenUI
+function var_0_0.initRefreshFunc(arg_7_0)
+	if not arg_7_0.refreshFuncDict then
+		arg_7_0.refreshFuncDict = {
+			[var_0_0.State.CantClick] = arg_7_0.refreshCantClickUI,
+			[var_0_0.State.CanClick] = arg_7_0.refreshCanClickUI,
+			[var_0_0.State.Clicked] = arg_7_0.refreshClickedUI,
+			[var_0_0.State.SuZhen] = arg_7_0.refreshSuZhenUI
 		}
 	end
 end
 
-function slot0.getCurState(slot0)
-	if FightModel.instance:getMagicCircleInfo() and slot1.magicCircleId == 1251001 then
-		return uv0.State.SuZhen
+function var_0_0.getCurState(arg_8_0)
+	local var_8_0 = FightModel.instance:getMagicCircleInfo()
+
+	if var_8_0 and var_8_0.magicCircleId == 1251001 then
+		return var_0_0.State.SuZhen
 	end
 
-	if FightDataHelper.paTaMgr:getUseCardCount() and slot2 > 0 then
-		return uv0.State.Clicked
+	local var_8_1 = FightDataHelper.paTaMgr:getUseCardCount()
+
+	if var_8_1 and var_8_1 > 0 then
+		return var_0_0.State.Clicked
 	end
 
-	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
-		return uv0.State.CantClick
+	local var_8_2 = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+
+	if not var_8_2 then
+		return var_0_0.State.CantClick
 	end
 
-	if FightDataHelper.paTaMgr:getNeedPower(slot3) <= FightDataHelper.paTaMgr:getAssistBossPower() then
-		return uv0.State.CanClick
+	if FightDataHelper.paTaMgr:getNeedPower(var_8_2) <= FightDataHelper.paTaMgr:getAssistBossPower() then
+		return var_0_0.State.CanClick
 	end
 
-	return uv0.State.CantClick
+	return var_0_0.State.CantClick
 end
 
-function slot0.refreshBg(slot0, slot1)
-	gohelper.setActive(slot0.goBgLevel1, slot1 == uv0.State.CantClick)
-	gohelper.setActive(slot0.goBgLevel2, slot1 == uv0.State.CanClick or slot1 == uv0.State.Clicked)
-	gohelper.setActive(slot0.goBgLevel3, slot1 == uv0.State.SuZhen)
+function var_0_0.refreshBg(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0.goBgLevel1, arg_9_1 == var_0_0.State.CantClick)
+	gohelper.setActive(arg_9_0.goBgLevel2, arg_9_1 == var_0_0.State.CanClick or arg_9_1 == var_0_0.State.Clicked)
+	gohelper.setActive(arg_9_0.goBgLevel3, arg_9_1 == var_0_0.State.SuZhen)
 end
 
-function slot0.refreshEffect(slot0, slot1)
-	gohelper.setActive(slot0.goEffectLevel2, slot1 == uv0.State.CanClick or slot1 == uv0.State.Clicked)
-	gohelper.setActive(slot0.goEffectLevel3, slot1 == uv0.State.SuZhen)
+function var_0_0.refreshEffect(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0.goEffectLevel2, arg_10_1 == var_0_0.State.CanClick or arg_10_1 == var_0_0.State.Clicked)
+	gohelper.setActive(arg_10_0.goEffectLevel3, arg_10_1 == var_0_0.State.SuZhen)
 end
 
-function slot0.refreshPointActive(slot0)
-	slot1, slot2 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+function var_0_0.refreshPointActive(arg_11_0)
+	local var_11_0, var_11_1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local var_11_2 = math.min(var_0_0.MaxPower, var_11_1)
 
-	for slot6, slot7 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot7.go, slot6 <= math.min(uv0.MaxPower, slot2))
-	end
-end
-
-function slot0.refreshCantClickUI(slot0)
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot6.goEnergy1, true)
-		gohelper.setActive(slot6.goEnergy2, false)
-		gohelper.setActive(slot6.goEnergy1Light, false)
-		gohelper.setActive(slot6.goEnergy1Full, slot5 <= FightDataHelper.paTaMgr:getAssistBossServerPower())
-	end
-end
-
-function slot0.refreshCanClickUI(slot0)
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot6.goEnergy1, true)
-		gohelper.setActive(slot6.goEnergy2, false)
-		gohelper.setActive(slot6.goEnergy1Light, false)
-		gohelper.setActive(slot6.goEnergy1Full, slot5 <= FightDataHelper.paTaMgr:getAssistBossServerPower())
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.pointList) do
+		gohelper.setActive(iter_11_1.go, iter_11_0 <= var_11_2)
 	end
 end
 
-function slot0.refreshClickedUI(slot0)
-	slot1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+function var_0_0.refreshCantClickUI(arg_12_0)
+	local var_12_0 = FightDataHelper.paTaMgr:getAssistBossServerPower()
 
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot6.goEnergy1, true)
-		gohelper.setActive(slot6.goEnergy2, false)
-		gohelper.setActive(slot6.goEnergy1Light, slot5 <= slot1)
-		gohelper.setActive(slot6.goEnergy1Full, slot5 <= slot1)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.pointList) do
+		gohelper.setActive(iter_12_1.goEnergy1, true)
+		gohelper.setActive(iter_12_1.goEnergy2, false)
+		gohelper.setActive(iter_12_1.goEnergy1Light, false)
+		gohelper.setActive(iter_12_1.goEnergy1Full, iter_12_0 <= var_12_0)
 	end
 end
 
-function slot0.refreshSuZhenUI(slot0)
-	for slot5, slot6 in ipairs(slot0.pointList) do
-		gohelper.setActive(slot6.goEnergy1, false)
-		gohelper.setActive(slot6.goEnergy2, true)
-		gohelper.setActive(slot6.goEnergy2Full, slot5 <= FightDataHelper.paTaMgr:getAssistBossServerPower())
+function var_0_0.refreshCanClickUI(arg_13_0)
+	local var_13_0 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.pointList) do
+		gohelper.setActive(iter_13_1.goEnergy1, true)
+		gohelper.setActive(iter_13_1.goEnergy2, false)
+		gohelper.setActive(iter_13_1.goEnergy1Light, false)
+		gohelper.setActive(iter_13_1.goEnergy1Full, iter_13_0 <= var_13_0)
 	end
 end
 
-function slot0.refreshCD(slot0)
-	if slot0:getCurState() == uv0.State.SuZhen then
-		gohelper.setActive(slot0.goCD, false)
-		slot0:refreshHeadImageColor()
+function var_0_0.refreshClickedUI(arg_14_0)
+	local var_14_0 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.pointList) do
+		gohelper.setActive(iter_14_1.goEnergy1, true)
+		gohelper.setActive(iter_14_1.goEnergy2, false)
+		gohelper.setActive(iter_14_1.goEnergy1Light, iter_14_0 <= var_14_0)
+		gohelper.setActive(iter_14_1.goEnergy1Full, iter_14_0 <= var_14_0)
+	end
+end
+
+function var_0_0.refreshSuZhenUI(arg_15_0)
+	local var_15_0 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.pointList) do
+		gohelper.setActive(iter_15_1.goEnergy1, false)
+		gohelper.setActive(iter_15_1.goEnergy2, true)
+		gohelper.setActive(iter_15_1.goEnergy2Full, iter_15_0 <= var_15_0)
+	end
+end
+
+function var_0_0.refreshCD(arg_16_0)
+	if arg_16_0:getCurState() == var_0_0.State.SuZhen then
+		gohelper.setActive(arg_16_0.goCD, false)
+		arg_16_0:refreshHeadImageColor()
 
 		return
 	end
 
-	uv0.super.refreshCD(slot0)
+	var_0_0.super.refreshCD(arg_16_0)
 end
 
-function slot0.refreshHeadImageColor(slot0)
-	if slot0:getCurState() == uv0.State.SuZhen then
-		slot0.headImage.color = Color.white
+function var_0_0.refreshHeadImageColor(arg_17_0)
+	if arg_17_0:getCurState() == var_0_0.State.SuZhen then
+		arg_17_0.headImage.color = Color.white
 
 		return
 	end
 
-	uv0.super.refreshHeadImageColor(slot0)
+	var_0_0.super.refreshHeadImageColor(arg_17_0)
 end
 
-function slot0.refreshHeadImage(slot0)
-	slot0.headSImage:LoadImage(ResUrl.monsterHeadIcon(6304101), slot0.onImageLoaded, slot0)
+function var_0_0.refreshHeadImage(arg_18_0)
+	arg_18_0.headSImage:LoadImage(ResUrl.monsterHeadIcon(6304101), arg_18_0.onImageLoaded, arg_18_0)
 end
 
-function slot0.onImageLoaded(slot0)
-	slot0.headImage:SetNativeSize()
+function var_0_0.onImageLoaded(arg_19_0)
+	arg_19_0.headImage:SetNativeSize()
 end
 
-return slot0
+return var_0_0

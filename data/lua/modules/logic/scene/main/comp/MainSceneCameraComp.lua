@@ -1,37 +1,45 @@
-module("modules.logic.scene.main.comp.MainSceneCameraComp", package.seeall)
+﻿module("modules.logic.scene.main.comp.MainSceneCameraComp", package.seeall)
 
-slot0 = class("MainSceneCameraComp", CommonSceneCameraComp)
+local var_0_0 = class("MainSceneCameraComp", CommonSceneCameraComp)
 
-function slot0._calcFovInternal(slot0, slot1)
-	slot2 = 1.7777777777777777 * UnityEngine.Screen.height / UnityEngine.Screen.width
+function var_0_0._calcFovInternal(arg_1_0, arg_1_1)
+	local var_1_0 = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
 
 	if BootNativeUtil.isWindows() then
-		slot3, slot4 = SettingsModel.instance:getCurrentScreenSize()
-		slot2 = 16 * slot4 / 9 / slot3
+		local var_1_1, var_1_2 = SettingsModel.instance:getCurrentScreenSize()
+
+		var_1_0 = 16 * var_1_2 / 9 / var_1_1
 	end
 
-	if slot2 > 1 then
-		slot3 = slot1.fov * slot2 * 0.85
+	local var_1_3 = arg_1_1.fov * var_1_0
+
+	if var_1_0 > 1 then
+		var_1_3 = var_1_3 * 0.85
 	end
 
-	slot4, slot5 = slot0:_getMinMaxFov()
+	local var_1_4, var_1_5 = arg_1_0:_getMinMaxFov()
 
-	return Mathf.Clamp(slot3, slot4, slot5)
+	return (Mathf.Clamp(var_1_3, var_1_4, var_1_5))
 end
 
-function slot0._getMinMaxFov(slot0)
+function var_0_0._getMinMaxFov(arg_2_0)
 	return 35, 100
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_3_0)
+	var_0_0.super.onSceneClose(arg_3_0)
 
 	CameraMgr.instance:getCameraRootAnimator().runtimeAnimatorController = nil
 
-	transformhelper.setPos(CameraMgr.instance:getCameraRootGO().transform, 0, 0, 0)
-	transformhelper.setPos(CameraMgr.instance:getCameraTraceGO().transform, 0, 0, 0)
+	local var_3_0 = CameraMgr.instance:getCameraRootGO()
+
+	transformhelper.setPos(var_3_0.transform, 0, 0, 0)
+
+	local var_3_1 = CameraMgr.instance:getCameraTraceGO()
+
+	transformhelper.setPos(var_3_1.transform, 0, 0, 0)
 
 	CameraMgr.instance:getCameraTrace().enabled = true
 end
 
-return slot0
+return var_0_0

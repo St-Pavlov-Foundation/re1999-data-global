@@ -1,41 +1,45 @@
-module("modules.logic.reddot.model.RedDotGroupMo", package.seeall)
+﻿module("modules.logic.reddot.model.RedDotGroupMo", package.seeall)
 
-slot0 = pureTable("RedDotGroupMo")
+local var_0_0 = pureTable("RedDotGroupMo")
 
-function slot0.init(slot0, slot1)
-	slot0.id = tonumber(slot1.defineId)
-	slot0.infos = slot0:_buildDotInfo(slot1.infos)
-	slot0.replaceAll = slot1.replaceAll
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = tonumber(arg_1_1.defineId)
+	arg_1_0.infos = arg_1_0:_buildDotInfo(arg_1_1.infos)
+	arg_1_0.replaceAll = arg_1_1.replaceAll
 end
 
-function slot0._buildDotInfo(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
-		RedDotInfoMo.New():init(slot7)
+function var_0_0._buildDotInfo(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_1 = RedDotInfoMo.New()
+
+		var_2_1:init(iter_2_1)
+
+		var_2_0[tonumber(iter_2_1.id)] = var_2_1
 	end
 
-	return {
-		[tonumber(slot7.id)] = slot8
-	}
+	return var_2_0
 end
 
-function slot0._resetDotInfo(slot0, slot1)
-	if slot1.replaceAll then
-		slot0.infos = {}
+function var_0_0._resetDotInfo(arg_3_0, arg_3_1)
+	if arg_3_1.replaceAll then
+		arg_3_0.infos = {}
 	end
 
-	for slot5, slot6 in ipairs(slot1.infos) do
-		if slot0.infos[tonumber(slot6.id)] then
-			slot0.infos[tonumber(slot6.id)]:reset(slot6)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.infos) do
+		if arg_3_0.infos[tonumber(iter_3_1.id)] then
+			arg_3_0.infos[tonumber(iter_3_1.id)]:reset(iter_3_1)
 		else
-			slot7 = RedDotInfoMo.New()
+			local var_3_0 = RedDotInfoMo.New()
 
-			slot7:init(slot6)
+			var_3_0:init(iter_3_1)
 
-			slot0.infos[tonumber(slot6.id)] = slot7
+			arg_3_0.infos[tonumber(iter_3_1.id)] = var_3_0
 		end
 	end
 
-	slot0.replaceAll = slot1.replaceAll
+	arg_3_0.replaceAll = arg_3_1.replaceAll
 end
 
-return slot0
+return var_0_0

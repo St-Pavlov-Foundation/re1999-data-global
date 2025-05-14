@@ -1,159 +1,167 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeAccompanyView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeAccompanyView", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeAccompanyView", BaseView)
+local var_0_0 = class("VersionActivity2_4MusicFreeAccompanyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "root/#go_time")
-	slot0._inputvalue = gohelper.findChildTextMeshInputField(slot0.viewGO, "root/#go_time/valuebg/#input_value")
-	slot0._btnsub = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#go_time/#btn_sub")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#go_time/#btn_add")
-	slot0._godynamics = gohelper.findChild(slot0.viewGO, "root/centercir/#go_dynamics")
-	slot0._gocenter = gohelper.findChild(slot0.viewGO, "root/centercir/#go_center")
-	slot0._gostate = gohelper.findChild(slot0.viewGO, "root/centercir/#go_state")
-	slot0._gostate1 = gohelper.findChild(slot0.viewGO, "root/centercir/#go_state/#go_state1")
-	slot0._gostate2 = gohelper.findChild(slot0.viewGO, "root/centercir/#go_state/#go_state2")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/centercir/#btn_click")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "root/#go_time")
+	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "root/#go_time/valuebg/#input_value")
+	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_time/#btn_sub")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_time/#btn_add")
+	arg_1_0._godynamics = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_dynamics")
+	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_center")
+	arg_1_0._gostate = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_state")
+	arg_1_0._gostate1 = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_state/#go_state1")
+	arg_1_0._gostate2 = gohelper.findChild(arg_1_0.viewGO, "root/centercir/#go_state/#go_state2")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/centercir/#btn_click")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnsub:AddClickListener(slot0._btnsubOnClick, slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnsub:RemoveClickListener()
-	slot0._btnadd:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnsub:RemoveClickListener()
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if not slot0._audioStartScale then
+function var_0_0._btnclickOnClick(arg_4_0)
+	if not arg_4_0._audioStartScale then
 		return
 	end
 
-	slot0._curValue = math.ceil((slot0._audioStartScale - slot0._dynamicScale) * slot0._time * 1000)
+	local var_4_0 = (arg_4_0._audioStartScale - arg_4_0._dynamicScale) * arg_4_0._time * 1000
 
-	if slot0._curValue < 0 then
-		slot0._curValue = 0
+	arg_4_0._curValue = math.ceil(var_4_0)
+
+	if arg_4_0._curValue < 0 then
+		arg_4_0._curValue = 0
 	end
 
-	slot0._audioStartScale = nil
+	arg_4_0._audioStartScale = nil
 
-	slot0:_checkLimit()
+	arg_4_0:_checkLimit()
 end
 
-function slot0._btnsubOnClick(slot0)
-	slot0._curValue = slot0._curValue - slot0._stepValue
+function var_0_0._btnsubOnClick(arg_5_0)
+	arg_5_0._curValue = arg_5_0._curValue - arg_5_0._stepValue
 
-	slot0:_checkLimit()
+	arg_5_0:_checkLimit()
 end
 
-function slot0._btnaddOnClick(slot0)
-	slot0._curValue = slot0._curValue + slot0._stepValue
+function var_0_0._btnaddOnClick(arg_6_0)
+	arg_6_0._curValue = arg_6_0._curValue + arg_6_0._stepValue
 
-	slot0:_checkLimit()
+	arg_6_0:_checkLimit()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_9_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._minValue = 0
-	slot0._maxValue = 2000
-	slot0._stepValue = 1
-	slot0._curValue = Activity179Model.instance:getCalibration() * 1000
-	slot0._time = 2
-	slot0._audioId = 20240027
-	slot0._centerScale = 3
-	slot0._startScale = 1
-	slot0._endScale = 0
-	slot0._audioScale = 0.75
-	slot0._audioOffsetTime = (slot0._startScale - slot0._audioScale) * slot0._time * 1000
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0._minValue = 0
+	arg_11_0._maxValue = 2000
+	arg_11_0._stepValue = 1
+	arg_11_0._curValue = Activity179Model.instance:getCalibration() * 1000
+	arg_11_0._time = 2
+	arg_11_0._audioId = 20240027
+	arg_11_0._centerScale = 3
+	arg_11_0._startScale = 1
+	arg_11_0._endScale = 0
+	arg_11_0._audioScale = 0.75
+	arg_11_0._audioOffsetTime = (arg_11_0._startScale - arg_11_0._audioScale) * arg_11_0._time * 1000
 
-	slot0:_checkLimit()
-	slot0._inputvalue:AddOnEndEdit(slot0._onEndEdit, slot0)
-	slot0:_startCalibration()
+	arg_11_0:_checkLimit()
+	arg_11_0._inputvalue:AddOnEndEdit(arg_11_0._onEndEdit, arg_11_0)
+	arg_11_0:_startCalibration()
 end
 
-function slot0._updateInputValue(slot0)
-	slot0._inputvalue:SetText(slot0._curValue)
+function var_0_0._updateInputValue(arg_12_0)
+	arg_12_0._inputvalue:SetText(arg_12_0._curValue)
 end
 
-function slot0._onEndEdit(slot0)
-	slot0._curValue = tonumber(slot0._inputvalue:GetText()) or 0
+function var_0_0._onEndEdit(arg_13_0)
+	arg_13_0._curValue = tonumber(arg_13_0._inputvalue:GetText()) or 0
 
-	slot0:_checkLimit()
+	arg_13_0:_checkLimit()
 end
 
-function slot0._checkLimit(slot0)
-	slot0._curValue = math.max(slot0._minValue, math.min(slot0._maxValue, slot0._curValue))
+function var_0_0._checkLimit(arg_14_0)
+	arg_14_0._curValue = math.max(arg_14_0._minValue, math.min(arg_14_0._maxValue, arg_14_0._curValue))
 
-	Activity179Model.instance:setCalibration(slot0._curValue)
-	slot0:_updateInputValue()
+	Activity179Model.instance:setCalibration(arg_14_0._curValue)
 
-	slot2 = (slot0._maxValue - (slot0._curValue + slot0._audioOffsetTime)) / slot0._maxValue * slot0._centerScale
+	local var_14_0 = arg_14_0._curValue + arg_14_0._audioOffsetTime
 
-	transformhelper.setLocalScale(slot0._gocenter.transform, slot2, slot2, slot2)
+	arg_14_0:_updateInputValue()
+
+	local var_14_1 = (arg_14_0._maxValue - var_14_0) / arg_14_0._maxValue * arg_14_0._centerScale
+
+	transformhelper.setLocalScale(arg_14_0._gocenter.transform, var_14_1, var_14_1, var_14_1)
 end
 
-function slot0._startCalibration(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._startCalibration(arg_15_0)
+	if arg_15_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_15_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_15_0._tweenId = nil
 	end
 
-	slot0._audioStartScale = nil
-	slot0._dynamicScale = slot0._startScale
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot0._startScale, slot0._endScale, slot0._time, slot0._frameCallback, slot0._tweenFinish, slot0)
+	arg_15_0._audioStartScale = nil
+	arg_15_0._dynamicScale = arg_15_0._startScale
+	arg_15_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_15_0._startScale, arg_15_0._endScale, arg_15_0._time, arg_15_0._frameCallback, arg_15_0._tweenFinish, arg_15_0)
 end
 
-function slot0._frameCallback(slot0, slot1)
-	if slot0._audioScale <= slot0._dynamicScale and slot1 <= slot0._audioScale then
-		AudioMgr.instance:trigger(slot0._audioId)
+function var_0_0._frameCallback(arg_16_0, arg_16_1)
+	if arg_16_0._dynamicScale >= arg_16_0._audioScale and arg_16_1 <= arg_16_0._audioScale then
+		AudioMgr.instance:trigger(arg_16_0._audioId)
 
-		slot0._audioStartScale = slot1
+		arg_16_0._audioStartScale = arg_16_1
 	end
 
-	slot0._dynamicScale = slot1
+	arg_16_0._dynamicScale = arg_16_1
 
-	transformhelper.setLocalScale(slot0._godynamics.transform, slot1, slot1, slot1)
+	transformhelper.setLocalScale(arg_16_0._godynamics.transform, arg_16_1, arg_16_1, arg_16_1)
 end
 
-function slot0._tweenFinish(slot0)
-	slot0:_startCalibration()
+function var_0_0._tweenFinish(arg_17_0)
+	arg_17_0:_startCalibration()
 end
 
-function slot0.onClose(slot0)
-	slot0._inputvalue:RemoveOnEndEdit()
+function var_0_0.onClose(arg_18_0)
+	arg_18_0._inputvalue:RemoveOnEndEdit()
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_18_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_18_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_18_0._tweenId = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_19_0)
+	return
 end
 
-return slot0
+return var_0_0

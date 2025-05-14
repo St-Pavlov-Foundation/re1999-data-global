@@ -1,76 +1,89 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotLoadingView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotLoadingView", package.seeall)
 
-slot0 = class("V1a6_CachotLoadingView", BaseView)
+local var_0_0 = class("V1a6_CachotLoadingView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_icon/#simage_icon")
-	slot0._txten = gohelper.findChildText(slot0.viewGO, "#simage_icon/img_en2/#txt_en")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#simage_icon/#txt_name")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon/#simage_icon")
+	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#simage_icon/img_en2/#txt_en")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#simage_icon/#txt_name")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not slot0._rogueInfo then
+	if not arg_6_0._rogueInfo then
 		return
 	end
 
-	if not lua_rogue_room.configDict[slot0._rogueInfo.room] then
+	local var_6_0 = lua_rogue_room.configDict[arg_6_0._rogueInfo.room]
+
+	if not var_6_0 then
 		return
 	end
 
-	slot0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_img_level_1"))
+	arg_6_0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_img_level_1"))
 
-	slot0._txten.text = slot1.nameEn
+	arg_6_0._txten.text = var_6_0.nameEn
 
-	if GameUtil.utf8len(slot1.name) <= 1 then
-		slot0._txtname.text = string.format("<size=42>%s</size>", slot2)
+	local var_6_1 = var_6_0.name
+	local var_6_2 = GameUtil.utf8len(var_6_1)
+
+	if var_6_2 <= 1 then
+		arg_6_0._txtname.text = string.format("<size=42>%s</size>", var_6_1)
 	else
-		slot0._txtname.text = string.format("<size=42>%s</size>%s", GameUtil.utf8sub(slot2, 1, 1), GameUtil.utf8sub(slot2, 2, slot3 - 1))
+		local var_6_3 = GameUtil.utf8sub(var_6_1, 1, 1)
+		local var_6_4 = GameUtil.utf8sub(var_6_1, 2, var_6_2 - 1)
+
+		arg_6_0._txtname.text = string.format("<size=42>%s</size>%s", var_6_3, var_6_4)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_load_open)
-	TaskDispatcher.runDelay(slot0.checkViewIsOpenFinish, slot0, 2.5)
+	TaskDispatcher.runDelay(arg_6_0.checkViewIsOpenFinish, arg_6_0, 2.5)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.V1a6_CachotMainView or slot1 == ViewName.V1a6_CachotRoomView then
-		TaskDispatcher.runDelay(slot0.closeThis, slot0, 0.2)
+function var_0_0._onOpenView(arg_7_0, arg_7_1)
+	if arg_7_1 == ViewName.V1a6_CachotMainView or arg_7_1 == ViewName.V1a6_CachotRoomView then
+		TaskDispatcher.runDelay(arg_7_0.closeThis, arg_7_0, 0.2)
 	end
 end
 
-function slot0.checkViewIsOpenFinish(slot0)
+function var_0_0.checkViewIsOpenFinish(arg_8_0)
 	if ViewMgr.instance:isOpenFinish(ViewName.V1a6_CachotMainView) or ViewMgr.instance:isOpenFinish(ViewName.V1a6_CachotRoomView) then
-		slot0:closeThis()
+		arg_8_0:closeThis()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenView, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_8_0._onOpenView, arg_8_0)
 	end
 end
 
-function slot0.onClose(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenView, slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
-	TaskDispatcher.cancelTask(slot0.checkViewIsOpenFinish, slot0)
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onClose(arg_9_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_9_0._onOpenView, arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0.closeThis, arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0.checkViewIsOpenFinish, arg_9_0)
+	arg_9_0._simageicon:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

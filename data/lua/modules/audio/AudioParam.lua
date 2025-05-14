@@ -1,18 +1,18 @@
-module("modules.audio.AudioParam", package.seeall)
+﻿module("modules.audio.AudioParam", package.seeall)
 
-slot0 = class("AudioParam")
+local var_0_0 = class("AudioParam")
 
-function slot0.ctor(slot0)
-	slot0:clear()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0.loopNum = nil
-	slot0.fadeInTime = nil
-	slot0.fadeOutTime = nil
-	slot0.volume = nil
-	slot0.callback = nil
-	slot0.callbackTarget = nil
+function var_0_0.clear(arg_2_0)
+	arg_2_0.loopNum = nil
+	arg_2_0.fadeInTime = nil
+	arg_2_0.fadeOutTime = nil
+	arg_2_0.volume = nil
+	arg_2_0.callback = nil
+	arg_2_0.callbackTarget = nil
 end
 
-return slot0
+return var_0_0

@@ -1,101 +1,112 @@
-module("modules.logic.versionactivity.model.VersionActivity112TaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity.model.VersionActivity112TaskListModel", package.seeall)
 
-slot0 = class("VersionActivity112TaskListModel", ListScrollModel)
+local var_0_0 = class("VersionActivity112TaskListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0.taskDic = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.taskDic = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.getActTask(slot0, slot1)
-	if slot0.taskDic[slot1] == nil then
-		slot0.taskDic[slot1] = {}
+function var_0_0.getActTask(arg_3_0, arg_3_1)
+	if arg_3_0.taskDic[arg_3_1] == nil then
+		arg_3_0.taskDic[arg_3_1] = {}
 
-		for slot6, slot7 in ipairs(VersionActivityConfig.instance:getActTaskDicConfig(slot1)) do
-			if slot7.isOnline == 1 then
-				slot8 = VersionActivity112TaskMO.New()
+		local var_3_0 = VersionActivityConfig.instance:getActTaskDicConfig(arg_3_1)
 
-				slot8:init(slot7)
+		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+			if iter_3_1.isOnline == 1 then
+				local var_3_1 = VersionActivity112TaskMO.New()
 
-				slot0.taskDic[slot1][slot7.taskId] = slot8
+				var_3_1:init(iter_3_1)
+
+				arg_3_0.taskDic[arg_3_1][iter_3_1.taskId] = var_3_1
 			end
 		end
 	end
 
-	return slot0.taskDic[slot1]
+	return arg_3_0.taskDic[arg_3_1]
 end
 
-function slot0.getTask(slot0, slot1, slot2)
-	return slot0:getActTask(slot1)[slot2]
+function var_0_0.getTask(arg_4_0, arg_4_1, arg_4_2)
+	return arg_4_0:getActTask(arg_4_1)[arg_4_2]
 end
 
-function slot0.refreshAlllTaskInfo(slot0, slot1, slot2)
-	slot0.taskDic[slot1] = nil
+function var_0_0.refreshAlllTaskInfo(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.taskDic[arg_5_1] = nil
 
-	for slot6, slot7 in ipairs(slot2) do
-		if slot0:getTask(slot1, slot7.taskId) then
-			slot8:update(slot7)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
+		local var_5_0 = arg_5_0:getTask(arg_5_1, iter_5_1.taskId)
+
+		if var_5_0 then
+			var_5_0:update(iter_5_1)
 		end
 	end
 
-	slot0:sortTaksList()
+	arg_5_0:sortTaksList()
 end
 
-function slot0.updateTaskInfo(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if slot0:getTask(slot1, slot7.taskId) then
-			slot8:update(slot7)
+function var_0_0.updateTaskInfo(arg_6_0, arg_6_1, arg_6_2)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
+		local var_6_0 = arg_6_0:getTask(arg_6_1, iter_6_1.taskId)
+
+		if var_6_0 then
+			var_6_0:update(iter_6_1)
 		end
 	end
 
-	slot0:sortTaksList()
+	arg_6_0:sortTaksList()
 	VersionActivityController.instance:dispatchEvent(VersionActivityEvent.VersionActivity112TaskUpdate)
 end
 
-function slot0.setGetBonus(slot0, slot1, slot2)
-	if slot0:getTask(slot1, slot2) then
-		slot3.hasGetBonus = true
+function var_0_0.setGetBonus(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0:getTask(arg_7_1, arg_7_2)
+
+	if var_7_0 then
+		var_7_0.hasGetBonus = true
 	end
 
-	slot0:sortTaksList()
-	VersionActivityController.instance:dispatchEvent(VersionActivityEvent.VersionActivity112TaskGetBonus, slot2)
+	arg_7_0:sortTaksList()
+	VersionActivityController.instance:dispatchEvent(VersionActivityEvent.VersionActivity112TaskGetBonus, arg_7_2)
 end
 
-function slot0.sortTaksList(slot0)
-	slot1 = slot0:getList()
+function var_0_0.sortTaksList(arg_8_0)
+	local var_8_0 = arg_8_0:getList()
 
-	table.sort(slot1, uv0.sort)
-	slot0:setList(slot1)
+	table.sort(var_8_0, var_0_0.sort)
+	arg_8_0:setList(var_8_0)
 end
 
-function slot0.updateTaksList(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.updateTaksList(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:getActTask(arg_9_1)
+	local var_9_1 = {}
 
-	for slot8, slot9 in ipairs(slot0:getActTask(slot1)) do
-		if slot2 == (slot9.config.minTypeId == 1) then
-			table.insert(slot4, slot9)
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if arg_9_2 == (iter_9_1.config.minTypeId == 1) then
+			table.insert(var_9_1, iter_9_1)
 		end
 	end
 
-	table.sort(slot4, uv0.sort)
-	slot0:setList(slot4)
+	table.sort(var_9_1, var_0_0.sort)
+	arg_9_0:setList(var_9_1)
 end
 
-function slot0.sort(slot0, slot1)
-	if slot0.hasGetBonus ~= slot1.hasGetBonus then
-		return slot1.hasGetBonus
+function var_0_0.sort(arg_10_0, arg_10_1)
+	if arg_10_0.hasGetBonus ~= arg_10_1.hasGetBonus then
+		return arg_10_1.hasGetBonus
 	end
 
-	if slot0:canGetBonus() ~= slot1:canGetBonus() then
-		return slot2
+	local var_10_0 = arg_10_0:canGetBonus()
+
+	if var_10_0 ~= arg_10_1:canGetBonus() then
+		return var_10_0
 	end
 
-	return slot0.id < slot1.id
+	return arg_10_0.id < arg_10_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

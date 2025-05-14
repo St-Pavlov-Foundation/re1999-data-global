@@ -1,468 +1,500 @@
-module("modules.logic.room.view.RoomViewBuilding", package.seeall)
+﻿module("modules.logic.room.view.RoomViewBuilding", package.seeall)
 
-slot0 = class("RoomViewBuilding", BaseView)
+local var_0_0 = class("RoomViewBuilding", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goemptybuiling = gohelper.findChild(slot0.viewGO, "go_building/#go_emptybuilding")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goemptybuiling = gohelper.findChild(arg_1_0.viewGO, "go_building/#go_emptybuilding")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btnbackOnClick(slot0)
+function var_0_0._btnbackOnClick(arg_4_0)
 	RoomBuildingController.instance:setBuildingListShow(false)
 	RoomMapController.instance:switchBackBlock(true)
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_5_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.RoomForbidBtn) then
 		GameFacade.showToast(RoomEnum.GuideForbidEscapeToast)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomReset, MsgBoxEnum.BoxType.Yes_No, function ()
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomReset, MsgBoxEnum.BoxType.Yes_No, function()
 			RoomMapController.instance:resetRoom()
 		end)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gobuilding = gohelper.findChild(slot0.viewGO, "go_building")
-	slot0._gofilterswitch = gohelper.findChild(slot0.viewGO, "go_building/filterswitch")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_building/filterswitch/btn_filter")
-	slot0._scrollbuilding = gohelper.findChildScrollRect(slot0.viewGO, "go_building/scroll_building")
-	slot0._scrollView = gohelper.findChildComponent(slot0.viewGO, "go_building/scroll_building", gohelper.Type_ScrollRect)
-	slot0._rectMaskComp = gohelper.findChildComponent(slot0.viewGO, "go_building/scroll_building/viewport", typeof(UnityEngine.UI.RectMask2D))
-	slot0._goscrollContent = gohelper.findChild(slot0.viewGO, "go_building/scroll_building/viewport/content")
-	slot0._gorescontent = gohelper.findChild(slot0.viewGO, "go_building/filterswitch/rescontent")
-	slot0._gototalitem = gohelper.findChild(slot0.viewGO, "go_building/filterswitch/rescontent/totalitem")
-	slot0._goresitem = gohelper.findChild(slot0.viewGO, "go_building/filterswitch/rescontent/resitem")
-	slot0._btntheme = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_building/btn_theme")
-	slot0._gothemeSelect = gohelper.findChild(slot0.viewGO, "go_building/btn_theme/go_select")
-	slot0._gothemeUnSelect = gohelper.findChild(slot0.viewGO, "go_building/btn_theme/go_unselect")
-	slot0._gofilterSelect = gohelper.findChild(slot0.viewGO, "go_building/filterswitch/btn_filter/go_select")
-	slot0._gofilterUnSelect = gohelper.findChild(slot0.viewGO, "go_building/filterswitch/btn_filter/go_unselect")
-	slot0._gofilter = slot0._btnfilter.gameObject
-	slot0._scrollViewTransform = slot0._scrollView.transform
-	slot0._scrollContentTransform = slot0._goscrollContent.transform
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._gobuilding = gohelper.findChild(arg_7_0.viewGO, "go_building")
+	arg_7_0._gofilterswitch = gohelper.findChild(arg_7_0.viewGO, "go_building/filterswitch")
+	arg_7_0._btnfilter = gohelper.findChildButtonWithAudio(arg_7_0.viewGO, "go_building/filterswitch/btn_filter")
+	arg_7_0._scrollbuilding = gohelper.findChildScrollRect(arg_7_0.viewGO, "go_building/scroll_building")
+	arg_7_0._scrollView = gohelper.findChildComponent(arg_7_0.viewGO, "go_building/scroll_building", gohelper.Type_ScrollRect)
+	arg_7_0._rectMaskComp = gohelper.findChildComponent(arg_7_0.viewGO, "go_building/scroll_building/viewport", typeof(UnityEngine.UI.RectMask2D))
+	arg_7_0._goscrollContent = gohelper.findChild(arg_7_0.viewGO, "go_building/scroll_building/viewport/content")
+	arg_7_0._gorescontent = gohelper.findChild(arg_7_0.viewGO, "go_building/filterswitch/rescontent")
+	arg_7_0._gototalitem = gohelper.findChild(arg_7_0.viewGO, "go_building/filterswitch/rescontent/totalitem")
+	arg_7_0._goresitem = gohelper.findChild(arg_7_0.viewGO, "go_building/filterswitch/rescontent/resitem")
+	arg_7_0._btntheme = gohelper.findChildButtonWithAudio(arg_7_0.viewGO, "go_building/btn_theme")
+	arg_7_0._gothemeSelect = gohelper.findChild(arg_7_0.viewGO, "go_building/btn_theme/go_select")
+	arg_7_0._gothemeUnSelect = gohelper.findChild(arg_7_0.viewGO, "go_building/btn_theme/go_unselect")
+	arg_7_0._gofilterSelect = gohelper.findChild(arg_7_0.viewGO, "go_building/filterswitch/btn_filter/go_select")
+	arg_7_0._gofilterUnSelect = gohelper.findChild(arg_7_0.viewGO, "go_building/filterswitch/btn_filter/go_unselect")
+	arg_7_0._gofilter = arg_7_0._btnfilter.gameObject
+	arg_7_0._scrollViewTransform = arg_7_0._scrollView.transform
+	arg_7_0._scrollContentTransform = arg_7_0._goscrollContent.transform
 
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
-	slot0._btntheme:AddClickListener(slot0._btnthemeOnClick, slot0)
-	gohelper.setActive(slot0._goresitem, false)
-	gohelper.setActive(slot0._gototalitem, false)
+	arg_7_0._btnfilter:AddClickListener(arg_7_0._btnfilterOnClick, arg_7_0)
+	arg_7_0._btntheme:AddClickListener(arg_7_0._btnthemeOnClick, arg_7_0)
+	gohelper.setActive(arg_7_0._goresitem, false)
+	gohelper.setActive(arg_7_0._gototalitem, false)
 
-	slot1 = RoomBuildingEnum.BuildingListViewResTabType
-	slot2 = RoomBuildingEnum.BuildingType
-	slot0._resDataList = {
-		[slot1.All] = {
+	local var_7_0 = RoomBuildingEnum.BuildingListViewResTabType
+	local var_7_1 = RoomBuildingEnum.BuildingType
+
+	arg_7_0._resDataList = {
+		[var_7_0.All] = {
 			nameLanguage = "room_building_type_name_all_txt",
 			buildingTypes = {}
 		},
-		[slot1.Adornment] = {
+		[var_7_0.Adornment] = {
 			nameLanguage = "room_building_type_name_decoration_txt",
 			buildingTypes = {
-				slot2.Decoration
+				var_7_1.Decoration
 			}
 		},
-		[slot1.Produce] = {
+		[var_7_0.Produce] = {
 			nameLanguage = "room_building_type_name_manufacture_txt",
 			buildingTypes = {
-				slot2.Collect,
-				slot2.Process,
-				slot2.Manufacture,
-				slot2.Trade,
-				slot2.Rest
+				var_7_1.Collect,
+				var_7_1.Process,
+				var_7_1.Manufacture,
+				var_7_1.Trade,
+				var_7_1.Rest
 			}
 		},
-		[slot1.Play] = {
+		[var_7_0.Play] = {
 			nameLanguage = "room_building_type_name_interact_txt",
 			buildingTypes = {
-				slot2.Interact
+				var_7_1.Interact
 			}
 		}
 	}
 
-	slot0:_initResList()
+	arg_7_0:_initResList()
 
-	slot0._isShowBuilding = false
-	slot0._isHasBuilding = nil
+	arg_7_0._isShowBuilding = false
+	arg_7_0._isHasBuilding = nil
 
-	gohelper.setActive(slot0._gobuilding, false)
+	gohelper.setActive(arg_7_0._gobuilding, false)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._animator = slot0._gobuilding:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_7_0._animator = arg_7_0._gobuilding:GetComponent(typeof(UnityEngine.Animator))
 
-	if not slot0.viewParam or not slot0.viewParam.defaultBuildingResType or slot3 <= 0 or slot3 > #slot0._resDataList then
-		slot3 = slot1.All
+	local var_7_2 = arg_7_0.viewParam and arg_7_0.viewParam.defaultBuildingResType
+
+	if not var_7_2 or var_7_2 <= 0 or var_7_2 > #arg_7_0._resDataList then
+		var_7_2 = var_7_0.All
 	end
 
-	slot0:_setSelectResData(slot0._resDataList[slot3])
+	arg_7_0:_setSelectResData(arg_7_0._resDataList[var_7_2])
 end
 
-function slot0._btnstoreOnClick(slot0)
+function var_0_0._btnstoreOnClick(arg_8_0)
 	RoomInventorySelectView.tryConfirmAndToStore()
 end
 
-function slot0._initResList(slot0)
-	slot0._resItemList = slot0._resItemList or {}
+function var_0_0._initResList(arg_9_0)
+	arg_9_0._resItemList = arg_9_0._resItemList or {}
 
-	for slot4 = #slot0._resItemList + 1, #slot0._resDataList do
-		slot6 = gohelper.clone(slot0._gototalitem, slot0._gorescontent, "btn_resItem" .. slot4)
+	for iter_9_0 = #arg_9_0._resItemList + 1, #arg_9_0._resDataList do
+		local var_9_0 = arg_9_0._gototalitem
+		local var_9_1 = gohelper.clone(var_9_0, arg_9_0._gorescontent, "btn_resItem" .. iter_9_0)
 
-		gohelper.setActive(slot6, true)
-		gohelper.addUIClickAudio(slot6, AudioEnum.UI.play_ui_role_open)
+		gohelper.setActive(var_9_1, true)
+		gohelper.addUIClickAudio(var_9_1, AudioEnum.UI.play_ui_role_open)
 
-		slot7 = MonoHelper.addNoUpdateLuaComOnceToGo(slot6, RoomViewBuildingResItem, slot0)
+		local var_9_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, RoomViewBuildingResItem, arg_9_0)
 
-		slot7:setCallback(slot0._onResItemOnClick, slot0)
-		table.insert(slot0._resItemList, slot7)
+		var_9_2:setCallback(arg_9_0._onResItemOnClick, arg_9_0)
+		table.insert(arg_9_0._resItemList, var_9_2)
 	end
 
-	for slot4 = 1, #slot0._resDataList do
-		slot5 = slot0._resItemList[slot4]
+	for iter_9_1 = 1, #arg_9_0._resDataList do
+		local var_9_3 = arg_9_0._resItemList[iter_9_1]
 
-		gohelper.setActive(slot5:getGO(), true)
-		slot5:setData(slot0._resDataList[slot4])
-		slot5:setSelect(slot0._curSelectResData == slot0._resDataList[slot4])
-		slot5:setLineActive(slot4 > 1)
+		gohelper.setActive(var_9_3:getGO(), true)
+		var_9_3:setData(arg_9_0._resDataList[iter_9_1])
+		var_9_3:setSelect(arg_9_0._curSelectResData == arg_9_0._resDataList[iter_9_1])
+		var_9_3:setLineActive(iter_9_1 > 1)
 	end
 
-	for slot4 = #slot0._resDataList + 1, #slot0._resItemList do
-		gohelper.setActive(slot0._resItemList[slot4]:getGO(), false)
+	for iter_9_2 = #arg_9_0._resDataList + 1, #arg_9_0._resItemList do
+		gohelper.setActive(arg_9_0._resItemList[iter_9_2]:getGO(), false)
 	end
 end
 
-function slot0._getHasBuildingResIds(slot0)
-	slot1 = {}
+function var_0_0._getHasBuildingResIds(arg_10_0)
+	local var_10_0 = {}
+	local var_10_1 = lua_block_resource.configList
 
-	for slot6, slot7 in ipairs(lua_block_resource.configList) do
-		if slot7.buildingFilter == 1 then
-			table.insert(slot1, slot7.id)
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		if iter_10_1.buildingFilter == 1 then
+			table.insert(var_10_0, iter_10_1.id)
 		end
 	end
 
-	if #slot1 > 1 then
-		table.sort(slot1, function (slot0, slot1)
-			if slot0 ~= slot1 then
-				return slot0 < slot1
+	if #var_10_0 > 1 then
+		table.sort(var_10_0, function(arg_11_0, arg_11_1)
+			if arg_11_0 ~= arg_11_1 then
+				return arg_11_0 < arg_11_1
 			end
 		end)
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0._updateResList(slot0)
-	slot0:_initResList()
+function var_0_0._updateResList(arg_12_0)
+	arg_12_0:_initResList()
 
-	if not tabletool.indexOf(slot0._resDataList, slot0._curSelectResData) then
-		slot0:_setSelectResData(slot0._resDataList[RoomBuildingEnum.BuildingListViewResTabType.All])
+	if not tabletool.indexOf(arg_12_0._resDataList, arg_12_0._curSelectResData) then
+		arg_12_0:_setSelectResData(arg_12_0._resDataList[RoomBuildingEnum.BuildingListViewResTabType.All])
 	end
 end
 
-function slot0._refreshFilterUI(slot0)
-	if slot0._lastHasBuilding ~= (RoomModel.instance:getBuildingInfoList() and #slot1 > 0 or false) then
-		gohelper.setActive(slot0._gofilterswitch, slot2)
-		gohelper.setActive(slot0._gofilter, slot2)
-		gohelper.setActive(slot0._btntheme, slot2)
+function var_0_0._refreshFilterUI(arg_13_0)
+	local var_13_0 = RoomModel.instance:getBuildingInfoList()
+	local var_13_1 = var_13_0 and #var_13_0 > 0 or false
+
+	if arg_13_0._lastHasBuilding ~= var_13_1 then
+		gohelper.setActive(arg_13_0._gofilterswitch, var_13_1)
+		gohelper.setActive(arg_13_0._gofilter, var_13_1)
+		gohelper.setActive(arg_13_0._btntheme, var_13_1)
 	end
 
-	slot0:_refreshFilterState()
+	arg_13_0:_refreshFilterState()
 end
 
-function slot0._onResItemOnClick(slot0, slot1)
-	if slot0._curSelectResData == slot1 then
+function var_0_0._onResItemOnClick(arg_14_0, arg_14_1)
+	if arg_14_0._curSelectResData == arg_14_1 then
 		return
 	end
 
-	slot0:_setSelectResData(slot1)
+	arg_14_0:_setSelectResData(arg_14_1)
 end
 
-function slot0._setSelectResData(slot0, slot1)
-	slot0._curSelectResData = slot1
+function var_0_0._setSelectResData(arg_15_0, arg_15_1)
+	arg_15_0._curSelectResData = arg_15_1
 
-	for slot5 = 1, #slot0._resItemList do
-		slot6 = slot0._resItemList[slot5]
+	for iter_15_0 = 1, #arg_15_0._resItemList do
+		local var_15_0 = arg_15_0._resItemList[iter_15_0]
 
-		slot6:setSelect(slot1 == slot6:getData())
+		var_15_0:setSelect(arg_15_1 == var_15_0:getData())
 	end
 
-	if slot1 then
-		RoomShowBuildingListModel.instance:setFilterType(slot1.buildingTypes)
+	if arg_15_1 then
+		RoomShowBuildingListModel.instance:setFilterType(arg_15_1.buildingTypes)
 	else
 		RoomShowBuildingListModel.instance:setFilterType({})
 	end
 
 	RoomShowBuildingListModel.instance:setShowBuildingList()
 
-	slot0._scrollbuilding.horizontalNormalizedPosition = 0
+	arg_15_0._scrollbuilding.horizontalNormalizedPosition = 0
 end
 
-function slot0._btnfilterOnClick(slot0)
+function var_0_0._btnfilterOnClick(arg_16_0)
 	ViewMgr.instance:openView(ViewName.RoomBuildingFilterView)
 end
 
-function slot0._btnthemeOnClick(slot0)
+function var_0_0._btnthemeOnClick(arg_17_0)
 	RoomController.instance:openThemeFilterView(true)
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_18_0)
 	RoomBuildingController.instance:setBuildingListShow(false)
 end
 
-function slot0._btnconfirmOnClick(slot0)
+function var_0_0._btnconfirmOnClick(arg_19_0)
 	RoomInventorySelectView.confirmYesCallback()
 end
 
-function slot0._refreshUI(slot0)
+function var_0_0._refreshUI(arg_20_0)
 	if not RoomController.instance:isObMode() then
 		return
 	end
 end
 
-function slot0._buildingListViewShowChanged(slot0, slot1)
-	slot0._isShowBuilding = slot1
+function var_0_0._buildingListViewShowChanged(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0._isShowBuilding ~= arg_21_1
+
+	arg_21_0._isShowBuilding = arg_21_1
 
 	RoomShowBuildingListModel.instance:clearSelect()
 
-	if slot0._isShowBuilding ~= slot1 then
-		TaskDispatcher.cancelTask(slot0._delayOpenOrClose, slot0)
-		TaskDispatcher.runDelay(slot0._delayOpenOrClose, slot0, 0.13333333333333333)
+	if var_21_0 then
+		TaskDispatcher.cancelTask(arg_21_0._delayOpenOrClose, arg_21_0)
+		TaskDispatcher.runDelay(arg_21_0._delayOpenOrClose, arg_21_0, 0.13333333333333333)
 
-		if not slot1 then
-			slot0._animator:Play("close", 0, 0)
+		if not arg_21_1 then
+			arg_21_0._animator:Play("close", 0, 0)
 		end
 	end
 
-	if not slot1 then
+	if not arg_21_1 then
 		ViewMgr.instance:closeView(ViewName.RoomBuildingFilterView)
 	end
 
-	if slot1 then
+	if arg_21_1 then
 		RoomShowBuildingListModel.instance:setShowBuildingList()
 
-		slot0._scrollbuilding.horizontalNormalizedPosition = 0
+		arg_21_0._scrollbuilding.horizontalNormalizedPosition = 0
 
-		if slot2 and slot0._buildingScrollView then
-			slot0._buildingScrollView:playOpenAnimation()
+		if var_21_0 and arg_21_0._buildingScrollView then
+			arg_21_0._buildingScrollView:playOpenAnimation()
 		end
 	end
 end
 
-function slot0._delayOpenOrClose(slot0)
-	gohelper.setActive(slot0._gobuilding, slot0._isShowBuilding)
+function var_0_0._delayOpenOrClose(arg_22_0)
+	gohelper.setActive(arg_22_0._gobuilding, arg_22_0._isShowBuilding)
 
-	if slot0._isShowBuilding then
-		slot0._animator:Play(UIAnimationName.Open, 0, 0)
+	if arg_22_0._isShowBuilding then
+		arg_22_0._animator:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function slot0._newBuildingPush(slot0)
-	slot0:_updateResList()
-	slot0:_refreshFilterUI()
+function var_0_0._newBuildingPush(arg_23_0)
+	arg_23_0:_updateResList()
+	arg_23_0:_refreshFilterUI()
 	RoomShowBuildingListModel.instance:setShowBuildingList()
 end
 
-function slot0._buildingFilterChanged(slot0)
-	slot0._scrollbuilding.horizontalNormalizedPosition = 0
+function var_0_0._buildingFilterChanged(arg_24_0)
+	arg_24_0._scrollbuilding.horizontalNormalizedPosition = 0
 
-	slot0:_refreshFilterState()
+	arg_24_0:_refreshFilterState()
 end
 
-function slot0._themeFilterChanged(slot0)
+function var_0_0._themeFilterChanged(arg_25_0)
 	RoomShowBuildingListModel.instance:setShowBuildingList()
 
-	slot0._scrollbuilding.horizontalNormalizedPosition = 0
+	arg_25_0._scrollbuilding.horizontalNormalizedPosition = 0
 
-	slot0:_refreshFilterState()
+	arg_25_0:_refreshFilterState()
 end
 
-function slot0._onListDataChanged(slot0)
-	gohelper.setActive(slot0._goemptybuiling, RoomShowBuildingListModel.instance:getCount() - RoomShowBuildingListModel.instance:getEmptyCount() < 1)
+function var_0_0._onListDataChanged(arg_26_0)
+	local var_26_0 = RoomShowBuildingListModel.instance:getCount() - RoomShowBuildingListModel.instance:getEmptyCount()
 
-	slot3 = recthelper.getWidth(slot0._scrollContentTransform)
+	gohelper.setActive(arg_26_0._goemptybuiling, var_26_0 < 1)
+
+	local var_26_1 = recthelper.getWidth(arg_26_0._scrollViewTransform)
+	local var_26_2 = recthelper.getWidth(arg_26_0._scrollContentTransform)
 
 	RoomShowBuildingListModel.instance:setItemAnchorX(0)
 
-	if recthelper.getWidth(slot0._scrollViewTransform) and slot3 and slot3 < slot2 then
-		RoomShowBuildingListModel.instance:setItemAnchorX(slot2 - slot3)
+	if var_26_1 and var_26_2 and var_26_2 < var_26_1 then
+		RoomShowBuildingListModel.instance:setItemAnchorX(var_26_1 - var_26_2)
 	end
 
-	slot0._rectMaskComp.padding = slot2 - slot3 > 0 and Vector4.New(0, 0, -20, 0) or Vector4.New(0, 0, 0, 0)
+	arg_26_0._rectMaskComp.padding = var_26_1 - var_26_2 > 0 and Vector4.New(0, 0, -20, 0) or Vector4.New(0, 0, 0, 0)
 end
 
-function slot0._onListDragBeginListener(slot0, slot1)
-	slot0._scrollView:OnBeginDrag(slot1)
+function var_0_0._onListDragBeginListener(arg_27_0, arg_27_1)
+	arg_27_0._scrollView:OnBeginDrag(arg_27_1)
 
-	slot2 = recthelper.getWidth(slot0._scrollViewTransform)
-	slot0._dragMinX = -slot2 * 0.5 + 1
-	slot0._dragMaxX = slot2 * 0.5 - 1
+	local var_27_0 = recthelper.getWidth(arg_27_0._scrollViewTransform)
+
+	arg_27_0._dragMinX = -var_27_0 * 0.5 + 1
+	arg_27_0._dragMaxX = var_27_0 * 0.5 - 1
 end
 
-function slot0._onListDragListener(slot0, slot1)
-	if slot0._dragMinX < recthelper.screenPosToAnchorPos(slot1.position, slot0._scrollViewTransform).x and slot3 < slot0._dragMaxX then
-		slot0._scrollView:OnDrag(slot1)
-	end
-end
+function var_0_0._onListDragListener(arg_28_0, arg_28_1)
+	local var_28_0 = recthelper.screenPosToAnchorPos(arg_28_1.position, arg_28_0._scrollViewTransform).x
 
-function slot0._onListDragEndListener(slot0, slot1)
-	slot0._scrollView:OnEndDrag(slot1)
-end
-
-function slot0._addBtnAudio(slot0)
-	gohelper.addUIClickAudio(slot0._btnfilter.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
-end
-
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
-	slot0:_addBtnAudio()
-	slot0:_onListDataChanged()
-	slot0:_refreshFilterUI()
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, slot0._buildingListViewShowChanged, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.NewBuildingPush, slot0._newBuildingPush, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._newBuildingPush, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BuildingFilterChanged, slot0._buildingFilterChanged, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.ClientPlaceBuilding, slot0._tweenToBuildingUid, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDataChanged, slot0._onListDataChanged, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDragListener, slot0._onListDragListener, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDragBeginListener, slot0._onListDragBeginListener, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDragEndListener, slot0._onListDragEndListener, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, slot0._themeFilterChanged, slot0)
-
-	if slot0.viewParam and slot0.viewParam.defaultBuildingResType == RoomBuildingEnum.BuildingListViewResTabType.Produce then
-		slot0.viewContainer:switch2BuildingView(true)
+	if var_28_0 > arg_28_0._dragMinX and var_28_0 < arg_28_0._dragMaxX then
+		arg_28_0._scrollView:OnDrag(arg_28_1)
 	end
 end
 
-function slot0._refreshFilterState(slot0)
-	if slot0._isLastThemeOpen ~= (RoomThemeFilterListModel.instance:getSelectCount() > 0) then
-		slot0._isLastThemeOpen = slot1
+function var_0_0._onListDragEndListener(arg_29_0, arg_29_1)
+	arg_29_0._scrollView:OnEndDrag(arg_29_1)
+end
 
-		gohelper.setActive(slot0._gothemeUnSelect, not slot1)
-		gohelper.setActive(slot0._gothemeSelect, slot1)
-	end
+function var_0_0._addBtnAudio(arg_30_0)
+	gohelper.addUIClickAudio(arg_30_0._btnfilter.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+end
 
-	if slot0._isLastFilterOpen ~= slot0:_checkFilterOpen() then
-		slot0._isLastFilterOpen = slot1
+function var_0_0.onOpen(arg_31_0)
+	arg_31_0:_refreshUI()
+	arg_31_0:_addBtnAudio()
+	arg_31_0:_onListDataChanged()
+	arg_31_0:_refreshFilterUI()
+	arg_31_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, arg_31_0._buildingListViewShowChanged, arg_31_0)
+	arg_31_0:addEventCb(RoomMapController.instance, RoomEvent.NewBuildingPush, arg_31_0._newBuildingPush, arg_31_0)
+	arg_31_0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_31_0._newBuildingPush, arg_31_0)
+	arg_31_0:addEventCb(RoomMapController.instance, RoomEvent.BuildingFilterChanged, arg_31_0._buildingFilterChanged, arg_31_0)
+	arg_31_0:addEventCb(RoomBuildingController.instance, RoomEvent.ClientPlaceBuilding, arg_31_0._tweenToBuildingUid, arg_31_0)
+	arg_31_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDataChanged, arg_31_0._onListDataChanged, arg_31_0)
+	arg_31_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDragListener, arg_31_0._onListDragListener, arg_31_0)
+	arg_31_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDragBeginListener, arg_31_0._onListDragBeginListener, arg_31_0)
+	arg_31_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListOnDragEndListener, arg_31_0._onListDragEndListener, arg_31_0)
+	arg_31_0:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, arg_31_0._themeFilterChanged, arg_31_0)
 
-		gohelper.setActive(slot0._gofilterUnSelect, not slot1)
-		gohelper.setActive(slot0._gofilterSelect, slot1)
+	if arg_31_0.viewParam and arg_31_0.viewParam.defaultBuildingResType == RoomBuildingEnum.BuildingListViewResTabType.Produce then
+		arg_31_0.viewContainer:switch2BuildingView(true)
 	end
 end
 
-function slot0._checkFilterOpen(slot0)
-	if not RoomShowBuildingListModel.instance:isFilterOccupyIdEmpty() or not slot1:isFilterUseEmpty() then
+function var_0_0._refreshFilterState(arg_32_0)
+	local var_32_0 = RoomThemeFilterListModel.instance:getSelectCount() > 0
+
+	if arg_32_0._isLastThemeOpen ~= var_32_0 then
+		arg_32_0._isLastThemeOpen = var_32_0
+
+		gohelper.setActive(arg_32_0._gothemeUnSelect, not var_32_0)
+		gohelper.setActive(arg_32_0._gothemeSelect, var_32_0)
+	end
+
+	local var_32_1 = arg_32_0:_checkFilterOpen()
+
+	if arg_32_0._isLastFilterOpen ~= var_32_1 then
+		arg_32_0._isLastFilterOpen = var_32_1
+
+		gohelper.setActive(arg_32_0._gofilterUnSelect, not var_32_1)
+		gohelper.setActive(arg_32_0._gofilterSelect, var_32_1)
+	end
+end
+
+function var_0_0._checkFilterOpen(arg_33_0)
+	local var_33_0 = RoomShowBuildingListModel.instance
+
+	if not var_33_0:isFilterOccupyIdEmpty() or not var_33_0:isFilterUseEmpty() then
 		return true
 	end
 
 	return false
 end
 
-function slot0._tweenToBuildingUid(slot0, slot1)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0._tweenToBuildingUid(arg_34_0, arg_34_1)
+	if arg_34_0._tweenId then
+		arg_34_0._scene.tween:killById(arg_34_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_34_0._tweenId = nil
 	end
 
-	slot3 = 0
+	local var_34_0 = RoomShowBuildingListModel.instance:getList()
+	local var_34_1 = 0
 
-	for slot7, slot8 in ipairs(RoomShowBuildingListModel.instance:getList()) do
-		if slot8.id == slot1 then
-			slot3 = slot7
+	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+		if iter_34_1.id == arg_34_1 then
+			var_34_1 = iter_34_0
 
 			break
 		end
 	end
 
-	if slot3 == 0 then
+	if var_34_1 == 0 then
 		return
 	end
 
-	slot5 = recthelper.getWidth(slot0._scrollbuilding.gameObject.transform)
-	slot6 = math.floor(slot0:getBuildingItemWidth())
-	slot7 = math.floor(slot0:getBuildingItemSpaceH())
-	slot8 = recthelper.getWidth(slot0._scrollbuilding.content) - slot5
-	slot10 = ((slot3 - 0.5) * slot6 - 0.5 * slot5 + math.max(0, slot3 - 1) * slot7) / slot8
-	slot11 = 0.5 * (slot5 - slot6 - slot7) / slot8
+	local var_34_2 = recthelper.getWidth(arg_34_0._scrollbuilding.content)
+	local var_34_3 = recthelper.getWidth(arg_34_0._scrollbuilding.gameObject.transform)
+	local var_34_4 = math.floor(arg_34_0:getBuildingItemWidth())
+	local var_34_5 = math.floor(arg_34_0:getBuildingItemSpaceH())
+	local var_34_6 = var_34_2 - var_34_3
+	local var_34_7 = ((var_34_1 - 0.5) * var_34_4 - 0.5 * var_34_3 + math.max(0, var_34_1 - 1) * var_34_5) / var_34_6
+	local var_34_8 = 0.5 * (var_34_3 - var_34_4 - var_34_5) / var_34_6
+	local var_34_9 = var_34_7 - var_34_8
+	local var_34_10 = var_34_7 + var_34_8
+	local var_34_11 = arg_34_0._scrollbuilding.horizontalNormalizedPosition
 
-	if slot10 - slot11 <= slot0._scrollbuilding.horizontalNormalizedPosition and slot14 <= slot10 + slot11 then
+	if var_34_9 <= var_34_11 and var_34_11 <= var_34_10 then
 		return
-	elseif slot14 < slot12 then
-		slot10 = slot12
-	elseif slot13 < slot14 then
-		slot10 = slot13
+	elseif var_34_11 < var_34_9 then
+		var_34_7 = var_34_9
+	elseif var_34_10 < var_34_11 then
+		var_34_7 = var_34_10
 	end
 
-	slot10 = Mathf.Clamp(slot10, 0, 1)
-	slot0._tweenId = slot0._scene.tween:tweenFloat(slot14, slot10, 0.2, slot0._tweenFrameCallback, slot0._tweenFinishCallback, slot0, slot10)
+	local var_34_12 = Mathf.Clamp(var_34_7, 0, 1)
+
+	arg_34_0._tweenId = arg_34_0._scene.tween:tweenFloat(var_34_11, var_34_12, 0.2, arg_34_0._tweenFrameCallback, arg_34_0._tweenFinishCallback, arg_34_0, var_34_12)
 end
 
-function slot0._tweenFrameCallback(slot0, slot1, slot2)
-	slot0._scrollbuilding.horizontalNormalizedPosition = slot1
+function var_0_0._tweenFrameCallback(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_0._scrollbuilding.horizontalNormalizedPosition = arg_35_1
 end
 
-function slot0._tweenFinishCallback(slot0, slot1)
-	slot0._scrollbuilding.horizontalNormalizedPosition = slot1
+function var_0_0._tweenFinishCallback(arg_36_0, arg_36_1)
+	arg_36_0._scrollbuilding.horizontalNormalizedPosition = arg_36_1
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenOrClose, slot0)
+function var_0_0.onClose(arg_37_0)
+	TaskDispatcher.cancelTask(arg_37_0._delayOpenOrClose, arg_37_0)
 
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+	if arg_37_0._tweenId then
+		arg_37_0._scene.tween:killById(arg_37_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_37_0._tweenId = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._btnfilter:RemoveClickListener()
-	slot0._scrollbuilding:RemoveOnValueChanged()
-	slot0._btntheme:RemoveClickListener()
+function var_0_0.onDestroyView(arg_38_0)
+	arg_38_0._btnfilter:RemoveClickListener()
+	arg_38_0._scrollbuilding:RemoveOnValueChanged()
+	arg_38_0._btntheme:RemoveClickListener()
 end
 
-function slot0.getBuildingListView(slot0)
-	if slot0._buildingScrollView then
-		return slot0._buildingScrollView
+function var_0_0.getBuildingListView(arg_39_0)
+	if arg_39_0._buildingScrollView then
+		return arg_39_0._buildingScrollView
 	end
 
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "go_building/scroll_building"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "go_building/roombuildingitem"
-	slot1.cellClass = RoomBuildingItem
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = slot0:getBuildingItemWidth()
-	slot1.cellHeight = 234
-	slot1.cellSpaceH = slot0:getBuildingItemSpaceH()
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 0
+	local var_39_0 = ListScrollParam.New()
 
-	for slot6 = 1, 10 do
+	var_39_0.scrollGOPath = "go_building/scroll_building"
+	var_39_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_39_0.prefabUrl = "go_building/roombuildingitem"
+	var_39_0.cellClass = RoomBuildingItem
+	var_39_0.scrollDir = ScrollEnum.ScrollDirH
+	var_39_0.lineCount = 1
+	var_39_0.cellWidth = arg_39_0:getBuildingItemWidth()
+	var_39_0.cellHeight = 234
+	var_39_0.cellSpaceH = arg_39_0:getBuildingItemSpaceH()
+	var_39_0.cellSpaceV = 0
+	var_39_0.startSpace = 0
+
+	local var_39_1 = {}
+
+	for iter_39_0 = 1, 10 do
+		var_39_1[iter_39_0] = (iter_39_0 - 1) * 0.03
 	end
 
-	slot0._buildingScrollView = LuaListScrollViewWithAnimator.New(RoomShowBuildingListModel.instance, slot1, {
-		[slot6] = (slot6 - 1) * 0.03
-	})
+	arg_39_0._buildingScrollView = LuaListScrollViewWithAnimator.New(RoomShowBuildingListModel.instance, var_39_0, var_39_1)
 
-	return slot0._buildingScrollView
+	return arg_39_0._buildingScrollView
 end
 
-function slot0.getBuildingItemWidth(slot0)
+function var_0_0.getBuildingItemWidth(arg_40_0)
 	return 367.7297
 end
 
-function slot0.getBuildingItemSpaceH(slot0)
+function var_0_0.getBuildingItemSpaceH(arg_41_0)
 	return 22.5
 end
 
-slot0.prefabPath = "ui/viewres/room/roomviewbuilding.prefab"
+var_0_0.prefabPath = "ui/viewres/room/roomviewbuilding.prefab"
 
-return slot0
+return var_0_0

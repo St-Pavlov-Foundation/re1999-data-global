@@ -1,38 +1,41 @@
-module("modules.logic.fight.system.work.FightWorkWeekWalkRevive", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkWeekWalkRevive", package.seeall)
 
-slot0 = class("FightWorkWeekWalkRevive", BaseWork)
+local var_0_0 = class("FightWorkWeekWalkRevive", BaseWork)
 
-function slot0.onStart(slot0)
-	slot1 = DungeonModel.instance.curSendEpisodeId
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = DungeonModel.instance.curSendEpisodeId
+	local var_1_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	if not (DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and slot2.type == DungeonEnum.EpisodeType.WeekWalk) then
-		slot0:_done()
-
-		return
-	end
-
-	if not WeekWalkModel.instance:getCurMapInfo() or not slot4.isShowSelectCd then
-		slot0:_done()
+	if not (var_1_1 and var_1_1.type == DungeonEnum.EpisodeType.WeekWalk) then
+		arg_1_0:_done()
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+	local var_1_2 = WeekWalkModel.instance:getCurMapInfo()
+
+	if not var_1_2 or not var_1_2.isShowSelectCd then
+		arg_1_0:_done()
+
+		return
+	end
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
 	WeekWalkController.instance:openWeekWalkReviveView()
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.WeekWalkReviveView then
-		slot0:_done()
+function var_0_0._onCloseView(arg_2_0, arg_2_1)
+	if arg_2_1 == ViewName.WeekWalkReviveView then
+		arg_2_0:_done()
 	end
 end
 
-function slot0._done(slot0)
-	slot0:onDone(true)
+function var_0_0._done(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.clearWork(arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0)
 end
 
-return slot0
+return var_0_0

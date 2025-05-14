@@ -1,286 +1,296 @@
-module("modules.logic.explore.map.ExploreMapUnitRotateComp", package.seeall)
+﻿module("modules.logic.explore.map.ExploreMapUnitRotateComp", package.seeall)
 
-slot0 = class("ExploreMapUnitRotateComp", ExploreMapBaseComp)
+local var_0_0 = class("ExploreMapUnitRotateComp", ExploreMapBaseComp)
 
-function slot0.onInit(slot0)
-	slot0._curRotateUnit = nil
-	slot0._btnLeft = nil
-	slot0._btnRight = nil
-	slot0._anim = nil
-	slot0._containerGO = gohelper.create3d(slot0._mapGo, "RotateComp")
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._curRotateUnit = nil
+	arg_1_0._btnLeft = nil
+	arg_1_0._btnRight = nil
+	arg_1_0._anim = nil
+	arg_1_0._containerGO = gohelper.create3d(arg_1_0._mapGo, "RotateComp")
 
-	gohelper.setActive(slot0._containerGO, false)
+	gohelper.setActive(arg_1_0._containerGO, false)
 
-	slot0._loader = PrefabInstantiate.Create(slot0._containerGO)
+	arg_1_0._loader = PrefabInstantiate.Create(arg_1_0._containerGO)
 
-	slot0._loader:startLoad("explore/common/sprite/prefabs/msts_icon_xuanzhuan.prefab", slot0._onLoaded, slot0)
+	arg_1_0._loader:startLoad("explore/common/sprite/prefabs/msts_icon_xuanzhuan.prefab", arg_1_0._onLoaded, arg_1_0)
 end
 
-function slot0._onLoaded(slot0)
-	slot1 = slot0._loader:getInstGO()
-	slot0._anim = slot1:GetComponent(typeof(UnityEngine.Animator))
-	slot0._btnLeft = gohelper.findChild(slot1, "right").transform
-	slot0._btnRight = gohelper.findChild(slot1, "left").transform
+function var_0_0._onLoaded(arg_2_0)
+	local var_2_0 = arg_2_0._loader:getInstGO()
+
+	arg_2_0._anim = var_2_0:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._btnLeft = gohelper.findChild(var_2_0, "right").transform
+	arg_2_0._btnRight = gohelper.findChild(var_2_0, "left").transform
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, slot0.changeStatus, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, arg_3_0.changeStatus, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, slot0.changeStatus, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(ExploreController.instance, ExploreEvent.SetRotateUnit, arg_4_0.changeStatus, arg_4_0)
 end
 
-function slot0.changeStatus(slot0, slot1)
-	if not slot0:beginStatus() then
+function var_0_0.changeStatus(arg_5_0, arg_5_1)
+	if not arg_5_0:beginStatus() then
 		return
 	end
 
-	slot0:setRotateUnit(slot1)
+	arg_5_0:setRotateUnit(arg_5_1)
 end
 
-function slot0.setRotateUnit(slot0, slot1)
-	if slot0._curRotateUnit == slot1 then
+function var_0_0.setRotateUnit(arg_6_0, arg_6_1)
+	if arg_6_0._curRotateUnit == arg_6_1 then
 		return
 	end
 
-	if slot0._curRotateUnit then
-		slot0._curRotateUnit:endRotate()
+	if arg_6_0._curRotateUnit then
+		arg_6_0._curRotateUnit:endRotate()
 	end
 
-	slot0._curRotateUnit = slot1
+	arg_6_0._curRotateUnit = arg_6_1
 
-	if slot0._curRotateUnit then
-		slot0._curRotateUnit:beginRotate()
+	if arg_6_0._curRotateUnit then
+		arg_6_0._curRotateUnit:beginRotate()
 	end
 
-	if slot0._curRotateUnit then
-		slot0:roleMoveToUnit(slot0._curRotateUnit)
-		slot0:_setViewShow(true)
+	if arg_6_0._curRotateUnit then
+		arg_6_0:roleMoveToUnit(arg_6_0._curRotateUnit)
+		arg_6_0:_setViewShow(true)
 
-		slot0._containerGO.transform.position = slot0._curRotateUnit:getPos()
+		arg_6_0._containerGO.transform.position = arg_6_0._curRotateUnit:getPos()
 	else
-		slot0:_setViewShow(false)
+		arg_6_0:_setViewShow(false)
 	end
 end
 
-function slot0.onMapClick(slot0, slot1)
-	if slot0._isRoleMoving then
+function var_0_0.onMapClick(arg_7_0, arg_7_1)
+	if arg_7_0._isRoleMoving then
 		return
 	end
 
-	if slot0._isRotating then
+	if arg_7_0._isRotating then
 		return
 	end
 
-	if slot0._map:getHitTriggerTrans() then
-		if slot2:IsChildOf(slot0._btnLeft) then
-			return slot0:doRotate(false)
-		elseif slot2:IsChildOf(slot0._btnRight) then
-			return slot0:doRotate(true)
+	local var_7_0 = arg_7_0._map:getHitTriggerTrans()
+
+	if var_7_0 then
+		if var_7_0:IsChildOf(arg_7_0._btnLeft) then
+			return arg_7_0:doRotate(false)
+		elseif var_7_0:IsChildOf(arg_7_0._btnRight) then
+			return arg_7_0:doRotate(true)
 		end
 	end
 
-	slot0:roleMoveBack()
+	arg_7_0:roleMoveBack()
 end
 
-function slot0.roleMoveToUnit(slot0, slot1)
-	slot0._isRoleMoving = true
-	slot2 = slot0:getHero()
+function var_0_0.roleMoveToUnit(arg_8_0, arg_8_1)
+	arg_8_0._isRoleMoving = true
 
-	slot2:setTrOffset(ExploreHelper.xyToDir(slot1.nodePos.x - slot2.nodePos.x, slot1.nodePos.y - slot2.nodePos.y), (slot2:getPos() - slot1:getPos()):SetNormalize():Mul(0.6):Add(slot1:getPos()), nil, slot0.onRoleMoveToUnitEnd, slot0)
-	slot2:setMoveSpeed(0.3)
+	local var_8_0 = arg_8_0:getHero()
+	local var_8_1 = ExploreHelper.xyToDir(arg_8_1.nodePos.x - var_8_0.nodePos.x, arg_8_1.nodePos.y - var_8_0.nodePos.y)
+	local var_8_2 = (var_8_0:getPos() - arg_8_1:getPos()):SetNormalize():Mul(0.6):Add(arg_8_1:getPos())
+
+	var_8_0:setTrOffset(var_8_1, var_8_2, nil, arg_8_0.onRoleMoveToUnitEnd, arg_8_0)
+	var_8_0:setMoveSpeed(0.3)
 end
 
-function slot0.onRoleMoveToUnitEnd(slot0)
-	slot0._isRoleMoving = false
+function var_0_0.onRoleMoveToUnitEnd(arg_9_0)
+	arg_9_0._isRoleMoving = false
 
-	slot0:getHero():setMoveSpeed(0)
+	arg_9_0:getHero():setMoveSpeed(0)
 end
 
-function slot0.getHero(slot0)
+function var_0_0.getHero(arg_10_0)
 	return ExploreController.instance:getMap():getHero()
 end
 
-function slot0._setViewShow(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._onCloseAnimEnd, slot0)
+function var_0_0._setViewShow(arg_11_0, arg_11_1)
+	TaskDispatcher.cancelTask(arg_11_0._onCloseAnimEnd, arg_11_0)
 
-	if slot0._anim then
-		if slot1 then
-			slot0._anim:Play("open", 0, 0)
-			gohelper.setActive(slot0._containerGO, true)
+	if arg_11_0._anim then
+		if arg_11_1 then
+			arg_11_0._anim:Play("open", 0, 0)
+			gohelper.setActive(arg_11_0._containerGO, true)
 		else
-			slot0._anim:Play("close", 0, 0)
-			TaskDispatcher.runDelay(slot0._onCloseAnimEnd, slot0, 0.167)
+			arg_11_0._anim:Play("close", 0, 0)
+			TaskDispatcher.runDelay(arg_11_0._onCloseAnimEnd, arg_11_0, 0.167)
 		end
 	else
-		gohelper.setActive(slot0._containerGO, slot1)
+		gohelper.setActive(arg_11_0._containerGO, arg_11_1)
 	end
 end
 
-function slot0._onCloseAnimEnd(slot0)
-	gohelper.setActive(slot0._containerGO, false)
+function var_0_0._onCloseAnimEnd(arg_12_0)
+	gohelper.setActive(arg_12_0._containerGO, false)
 end
 
-function slot0.onRoleMoveBackEnd(slot0)
-	slot0:getHero():setMoveSpeed(0)
+function var_0_0.onRoleMoveBackEnd(arg_13_0)
+	arg_13_0:getHero():setMoveSpeed(0)
 
-	slot0._isRoleMoving = false
+	arg_13_0._isRoleMoving = false
 
-	slot0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
+	arg_13_0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
 end
 
-function slot0.roleMoveBack(slot0)
-	slot0._isRoleMoving = true
+function var_0_0.roleMoveBack(arg_14_0)
+	arg_14_0._isRoleMoving = true
 
-	slot0:setRotateUnit(nil)
+	arg_14_0:setRotateUnit(nil)
 
-	slot1 = slot0:getHero()
+	local var_14_0 = arg_14_0:getHero()
+	local var_14_1 = var_14_0:getPos()
 
-	slot1:setMoveSpeed(0.3)
-	slot1:setTrOffset(nil, slot1:getPos(), nil, slot0.onRoleMoveBackEnd, slot0)
+	var_14_0:setMoveSpeed(0.3)
+	var_14_0:setTrOffset(nil, var_14_1, nil, arg_14_0.onRoleMoveBackEnd, arg_14_0)
 end
 
-function slot0.canSwitchStatus(slot0, slot1)
-	if slot1 == ExploreEnum.MapStatus.UseItem then
+function var_0_0.canSwitchStatus(arg_15_0, arg_15_1)
+	if arg_15_1 == ExploreEnum.MapStatus.UseItem then
 		return false
 	end
 
-	if slot0._isRoleMoving or slot0._isRotating then
+	if arg_15_0._isRoleMoving or arg_15_0._isRotating then
 		return false
 	end
 
 	return true
 end
 
-slot1 = ExploreEnum.TriggerEvent.Rotate .. "#%d"
+local var_0_1 = ExploreEnum.TriggerEvent.Rotate .. "#%d"
 
-function slot0.doRotate(slot0, slot1)
-	slot2 = 0
-	slot3 = 0
+function var_0_0.doRotate(arg_16_0, arg_16_1)
+	local var_16_0 = 0
+	local var_16_1 = 0
 
-	for slot7, slot8 in pairs(slot0._curRotateUnit.mo.triggerEffects) do
-		if slot8[1] == ExploreEnum.TriggerEvent.Rotate then
-			slot2 = slot7
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._curRotateUnit.mo.triggerEffects) do
+		if iter_16_1[1] == ExploreEnum.TriggerEvent.Rotate then
+			var_16_0 = iter_16_0
+			var_16_1 = 1
 
-			if slot1 then
-				slot3 = -1
+			if arg_16_1 then
+				var_16_1 = -var_16_1
 			end
 
 			break
 		end
 	end
 
-	if slot2 <= 0 then
+	if var_16_0 <= 0 then
 		return
 	end
 
-	slot0._isRotating = true
-	slot0._isReverse = slot1
+	arg_16_0._isRotating = true
+	arg_16_0._isReverse = arg_16_1
 
-	slot0:_setViewShow(false)
-	ExploreRpc.instance:sendExploreInteractRequest(slot0._curRotateUnit.id, slot2, string.format(uv0, slot3), slot0.onRotateRecv, slot0)
+	arg_16_0:_setViewShow(false)
+	ExploreRpc.instance:sendExploreInteractRequest(arg_16_0._curRotateUnit.id, var_16_0, string.format(var_0_1, var_16_1), arg_16_0.onRotateRecv, arg_16_0)
 end
 
-function slot0.onRotateRecv(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
-		slot0._isRotating = false
+function var_0_0.onRotateRecv(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_2 ~= 0 then
+		arg_17_0._isRotating = false
 
-		slot0:_setViewShow(true)
+		arg_17_0:_setViewShow(true)
 	end
 end
 
-function slot0.rotateByServer(slot0, slot1, slot2, slot3, slot4)
-	slot5 = ExploreController.instance:getMap()
+function var_0_0.rotateByServer(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	local var_18_0 = ExploreController.instance:getMap()
 
-	if not slot0._curRotateUnit or slot0._curRotateUnit.id ~= slot1 then
-		if slot5:getUnit(slot1) then
-			slot6:_onFrameRotate(slot2)
+	if not arg_18_0._curRotateUnit or arg_18_0._curRotateUnit.id ~= arg_18_1 then
+		local var_18_1 = var_18_0:getUnit(arg_18_1)
+
+		if var_18_1 then
+			var_18_1:_onFrameRotate(arg_18_2)
 		end
 
-		if slot3 then
-			slot3(slot4)
+		if arg_18_3 then
+			arg_18_3(arg_18_4)
 		end
 
 		return
 	end
 
-	slot5:getHero():setHeroStatus(ExploreAnimEnum.RoleAnimStatus.RotateInteract, true, true)
+	var_18_0:getHero():setHeroStatus(ExploreAnimEnum.RoleAnimStatus.RotateInteract, true, true)
 
-	slot0._fromRotate = slot0._curRotateUnit.mo.unitDir
-	slot0._toRotate = slot2
+	arg_18_0._fromRotate = arg_18_0._curRotateUnit.mo.unitDir
+	arg_18_0._toRotate = arg_18_2
 
-	if slot0._isReverse then
-		while slot0._fromRotate < slot0._toRotate do
-			slot0._fromRotate = slot0._fromRotate + 360
+	if arg_18_0._isReverse then
+		while arg_18_0._fromRotate < arg_18_0._toRotate do
+			arg_18_0._fromRotate = arg_18_0._fromRotate + 360
 		end
 
-		while slot0._fromRotate > slot0._toRotate + 360 do
-			slot0._fromRotate = slot0._fromRotate - 360
+		while arg_18_0._fromRotate > arg_18_0._toRotate + 360 do
+			arg_18_0._fromRotate = arg_18_0._fromRotate - 360
 		end
 	else
-		while slot0._toRotate < slot0._fromRotate do
-			slot0._fromRotate = slot0._fromRotate - 360
+		while arg_18_0._fromRotate > arg_18_0._toRotate do
+			arg_18_0._fromRotate = arg_18_0._fromRotate - 360
 		end
 
-		while slot0._fromRotate < slot0._toRotate - 360 do
-			slot0._fromRotate = slot0._fromRotate + 360
+		while arg_18_0._fromRotate < arg_18_0._toRotate - 360 do
+			arg_18_0._fromRotate = arg_18_0._fromRotate + 360
 		end
 	end
 
-	slot0._curRotateUnit:_onFrameRotate(slot0._fromRotate)
+	arg_18_0._curRotateUnit:_onFrameRotate(arg_18_0._fromRotate)
 
-	slot0._rotateEndCallBack = slot3
-	slot0._rotateEndCallBackObj = slot4
+	arg_18_0._rotateEndCallBack = arg_18_3
+	arg_18_0._rotateEndCallBackObj = arg_18_4
 
-	slot0._curRotateUnit:setEmitLight(true)
-	TaskDispatcher.runDelay(slot0._rotateUnit, slot0, 0.2)
+	arg_18_0._curRotateUnit:setEmitLight(true)
+	TaskDispatcher.runDelay(arg_18_0._rotateUnit, arg_18_0, 0.2)
 end
 
-function slot0._rotateUnit(slot0)
+function var_0_0._rotateUnit(arg_19_0)
 	AudioMgr.instance:trigger(AudioEnum.Explore.UnitRotate)
-	slot0._curRotateUnit:doRotate(slot0._fromRotate, slot0._toRotate, 0.2, slot0._unitRotateEnd, slot0)
+	arg_19_0._curRotateUnit:doRotate(arg_19_0._fromRotate, arg_19_0._toRotate, 0.2, arg_19_0._unitRotateEnd, arg_19_0)
 end
 
-function slot0._unitRotateEnd(slot0)
-	if slot0._curRotateUnit then
-		slot0._curRotateUnit:setEmitLight(false)
+function var_0_0._unitRotateEnd(arg_20_0)
+	if arg_20_0._curRotateUnit then
+		arg_20_0._curRotateUnit:setEmitLight(false)
 	end
 
-	slot0:_setViewShow(true)
+	arg_20_0:_setViewShow(true)
 
-	slot0._isRotating = false
+	arg_20_0._isRotating = false
 
-	if slot0._rotateEndCallBack then
-		slot0._rotateEndCallBack(slot0._rotateEndCallBackObj)
+	if arg_20_0._rotateEndCallBack then
+		arg_20_0._rotateEndCallBack(arg_20_0._rotateEndCallBackObj)
 	end
 end
 
-function slot0.onStatusEnd(slot0)
-	slot0:setRotateUnit(nil)
+function var_0_0.onStatusEnd(arg_21_0)
+	arg_21_0:setRotateUnit(nil)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._onCloseAnimEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._rotateUnit, slot0)
+function var_0_0.onDestroy(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._onCloseAnimEnd, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._rotateUnit, arg_22_0)
 
-	slot0._rotateEndCallBack = nil
-	slot0._rotateEndCallBackObj = nil
-	slot0._curRotateUnit = nil
-	slot0._btnLeft = nil
-	slot0._btnRight = nil
+	arg_22_0._rotateEndCallBack = nil
+	arg_22_0._rotateEndCallBackObj = nil
+	arg_22_0._curRotateUnit = nil
+	arg_22_0._btnLeft = nil
+	arg_22_0._btnRight = nil
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_22_0._loader then
+		arg_22_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_22_0._loader = nil
 	end
 
-	gohelper.destroy(slot0._containerGO)
+	gohelper.destroy(arg_22_0._containerGO)
 
-	slot0._containerGO = nil
+	arg_22_0._containerGO = nil
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_22_0)
 end
 
-return slot0
+return var_0_0

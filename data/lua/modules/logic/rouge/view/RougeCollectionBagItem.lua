@@ -1,186 +1,200 @@
-module("modules.logic.rouge.view.RougeCollectionBagItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionBagItem", package.seeall)
 
-slot0 = class("RougeCollectionBagItem", UserDataDispose)
+local var_0_0 = class("RougeCollectionBagItem", UserDataDispose)
 
-function slot0.onInitView(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.onInitView(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.parentViewInst = slot1
-	slot0.viewGO = slot2
-	slot0._gopos = gohelper.findChild(slot0.viewGO, "go_pos")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "right/txt_name")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "right/Scroll View/Viewport/Content/txt_desc")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_detail")
-	slot0._btnequip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_equip")
-	slot0._goselectframe = gohelper.findChild(slot0.viewGO, "#go_selectframe")
+	arg_1_0.parentViewInst = arg_1_1
+	arg_1_0.viewGO = arg_1_2
+	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_pos")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "right/txt_name")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/Scroll View/Viewport/Content/txt_desc")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_detail")
+	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_equip")
+	arg_1_0._goselectframe = gohelper.findChild(arg_1_0.viewGO, "#go_selectframe")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0:AddDragListeners()
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
-	slot0._btnequip:AddClickListener(slot0._btnequipOnClick, slot0)
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0:AddDragListeners()
+	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
+	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
 
-	slot0._canvasgroup = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_CanvasGroup)
+	arg_2_0._canvasgroup = gohelper.onceAddComponent(arg_2_0.viewGO, gohelper.Type_CanvasGroup)
 
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, slot0.failed2PlaceSlotCollection, slot0)
-	slot0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, slot0._updateCollectionEnchant, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateCollectionAttr, slot0.updateCollectionAttr, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.SelectCollection, slot0._selectCollection, slot0)
+	arg_2_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, arg_2_0.failed2PlaceSlotCollection, arg_2_0)
+	arg_2_0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, arg_2_0._updateCollectionEnchant, arg_2_0)
+	arg_2_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateCollectionAttr, arg_2_0.updateCollectionAttr, arg_2_0)
+	arg_2_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_2_0._onSwitchCollectionInfoType, arg_2_0)
+	arg_2_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.SelectCollection, arg_2_0._selectCollection, arg_2_0)
 end
 
-function slot0.AddDragListeners(slot0)
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0.viewGO)
+function var_0_0.AddDragListeners(arg_3_0)
+	arg_3_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_3_0.viewGO)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_3_0._drag:AddDragBeginListener(arg_3_0._onDragBegin, arg_3_0)
+	arg_3_0._drag:AddDragListener(arg_3_0._onDrag, arg_3_0)
+	arg_3_0._drag:AddDragEndListener(arg_3_0._onDragEnd, arg_3_0)
 end
 
-function slot0.releaseDragListeners(slot0)
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragEndListener()
-		slot0._drag:RemoveDragListener()
+function var_0_0.releaseDragListeners(arg_4_0)
+	if arg_4_0._drag then
+		arg_4_0._drag:RemoveDragBeginListener()
+		arg_4_0._drag:RemoveDragEndListener()
+		arg_4_0._drag:RemoveDragListener()
 
-		slot0._drag = nil
+		arg_4_0._drag = nil
 	end
 end
 
-function slot0._btndetailOnClick(slot0)
-	RougeController.instance:openRougeCollectionTipView({
+function var_0_0._btndetailOnClick(arg_5_0)
+	local var_5_0 = {
 		useCloseBtn = false,
-		collectionId = slot0._mo.id,
+		collectionId = arg_5_0._mo.id,
 		viewPosition = RougeEnum.CollectionTipPos.Bag,
 		source = RougeEnum.OpenCollectionTipSource.BagArea
-	})
-	RougeCollectionChessController.instance:selectCollection(slot0._mo.id)
+	}
+
+	RougeController.instance:openRougeCollectionTipView(var_5_0)
+	RougeCollectionChessController.instance:selectCollection(arg_5_0._mo.id)
 end
 
-function slot0._btnequipOnClick(slot0)
-	RougeCollectionChessController.instance:autoPlaceCollection2SlotArea(slot0._mo.id)
+function var_0_0._btnequipOnClick(arg_6_0)
+	RougeCollectionChessController.instance:autoPlaceCollection2SlotArea(arg_6_0._mo.id)
 	ViewMgr.instance:closeView(ViewName.RougeCollectionTipView)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot3 = RougeCollectionHelper.isCanDragCollection()
-	slot0._isDraging = slot3
+function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = RougeCollectionHelper.isCanDragCollection()
 
-	if not slot3 then
+	arg_7_0._isDraging = var_7_0
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0:setCanvasGroupVisible(false)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnBeginDragCollection, slot0._mo, slot2)
+	arg_7_0:setCanvasGroupVisible(false)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnBeginDragCollection, arg_7_0._mo, arg_7_2)
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0._isDraging then
+function var_0_0._onDrag(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0._isDraging then
 		return
 	end
 
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnDragCollection, slot2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnDragCollection, arg_8_2)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if not slot0._isDraging then
+function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._isDraging then
 		return
 	end
 
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnEndDragCollection, slot2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnEndDragCollection, arg_9_2)
 end
 
-slot1 = 160
-slot2 = 160
+local var_0_1 = 160
+local var_0_2 = 160
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._mo = arg_10_1
 
-	if not slot0._itemIcon then
-		slot0._itemIcon = RougeCollectionEnchantIconItem.New(slot0.parentViewInst:getResInst(ViewMgr.instance:getSetting(ViewName.RougeCollectionChessView).otherRes[1], slot0._gopos, "itemicon"))
+	if not arg_10_0._itemIcon then
+		local var_10_0 = ViewMgr.instance:getSetting(ViewName.RougeCollectionChessView)
+		local var_10_1 = arg_10_0.parentViewInst:getResInst(var_10_0.otherRes[1], arg_10_0._gopos, "itemicon")
 
-		slot0._itemIcon:setCollectionIconSize(uv0, uv1)
+		arg_10_0._itemIcon = RougeCollectionEnchantIconItem.New(var_10_1)
+
+		arg_10_0._itemIcon:setCollectionIconSize(var_0_1, var_0_2)
 	end
 
-	slot0._itemIcon:onUpdateMO(slot0._mo)
+	arg_10_0._itemIcon:onUpdateMO(arg_10_0._mo)
 
-	slot0._txtname.text = RougeCollectionConfig.instance:getCollectionName(slot0._mo.cfgId, slot0._mo:getAllEnchantCfgId())
+	local var_10_2 = arg_10_0._mo:getAllEnchantCfgId()
 
-	slot0:refreshCollectionDesc()
-	gohelper.setActive(slot0._goselectframe, false)
-	slot0:setItemVisible(true)
+	arg_10_0._txtname.text = RougeCollectionConfig.instance:getCollectionName(arg_10_0._mo.cfgId, var_10_2)
+
+	arg_10_0:refreshCollectionDesc()
+	gohelper.setActive(arg_10_0._goselectframe, false)
+	arg_10_0:setItemVisible(true)
 end
 
-function slot0.refreshCollectionDesc(slot0)
-	if not slot0._mo then
+function var_0_0.refreshCollectionDesc(arg_11_0)
+	if not arg_11_0._mo then
 		return
 	end
 
-	RougeCollectionDescHelper.setCollectionDescInfos4(slot0._mo.id, slot0._txtdesc, RougeCollectionDescHelper.getShowDescTypesWithoutText(), RougeCollectionDescHelper.getExtraParams_KeepAllActive())
+	local var_11_0 = RougeCollectionDescHelper.getShowDescTypesWithoutText()
+	local var_11_1 = RougeCollectionDescHelper.getExtraParams_KeepAllActive()
+
+	RougeCollectionDescHelper.setCollectionDescInfos4(arg_11_0._mo.id, arg_11_0._txtdesc, var_11_0, var_11_1)
 end
 
-function slot0.setItemVisible(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
-	slot0:setCanvasGroupVisible(slot1)
+function var_0_0.setItemVisible(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0.viewGO, arg_12_1)
+	arg_12_0:setCanvasGroupVisible(arg_12_1)
 end
 
-function slot0.setCanvasGroupVisible(slot0, slot1)
-	slot0._canvasgroup.alpha = slot1 and 1 or 0
-	slot0._canvasgroup.interactable = slot1
-	slot0._canvasgroup.blocksRaycasts = slot1
+function var_0_0.setCanvasGroupVisible(arg_13_0, arg_13_1)
+	arg_13_0._canvasgroup.alpha = arg_13_1 and 1 or 0
+	arg_13_0._canvasgroup.interactable = arg_13_1
+	arg_13_0._canvasgroup.blocksRaycasts = arg_13_1
 end
 
-function slot0.failed2PlaceSlotCollection(slot0, slot1)
-	if slot0._mo and slot0._mo.id == slot1 then
-		slot0:setItemVisible(true)
+function var_0_0.failed2PlaceSlotCollection(arg_14_0, arg_14_1)
+	if arg_14_0._mo and arg_14_0._mo.id == arg_14_1 then
+		arg_14_0:setItemVisible(true)
 	end
 end
 
-function slot0._selectCollection(slot0)
-	gohelper.setActive(slot0._goselectframe, RougeCollectionBagListModel.instance:isCollectionSelect(slot0._mo and slot0._mo.id))
+function var_0_0._selectCollection(arg_15_0)
+	local var_15_0 = arg_15_0._mo and arg_15_0._mo.id
+	local var_15_1 = RougeCollectionBagListModel.instance:isCollectionSelect(var_15_0)
+
+	gohelper.setActive(arg_15_0._goselectframe, var_15_1)
 end
 
-function slot0.updateCollectionAttr(slot0, slot1)
-	if (slot0._mo and slot0._mo.id) == slot1 then
-		slot0:refreshCollectionDesc()
+function var_0_0.updateCollectionAttr(arg_16_0, arg_16_1)
+	if (arg_16_0._mo and arg_16_0._mo.id) == arg_16_1 then
+		arg_16_0:refreshCollectionDesc()
 	end
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
-	slot0:refreshCollectionDesc()
+function var_0_0._onSwitchCollectionInfoType(arg_17_0)
+	arg_17_0:refreshCollectionDesc()
 end
 
-function slot0._updateCollectionEnchant(slot0, slot1)
-	if not slot0._mo or slot0._mo.id ~= slot1 then
+function var_0_0._updateCollectionEnchant(arg_18_0, arg_18_1)
+	if not arg_18_0._mo or arg_18_0._mo.id ~= arg_18_1 then
 		return
 	end
 
-	slot0:refreshCollectionDesc()
+	arg_18_0:refreshCollectionDesc()
 end
 
-function slot0.reset(slot0)
-	slot0._mo = nil
-	slot0._isDraging = false
+function var_0_0.reset(arg_19_0)
+	arg_19_0._mo = nil
+	arg_19_0._isDraging = false
 
-	slot0:setItemVisible(false)
+	arg_19_0:setItemVisible(false)
 end
 
-function slot0.destroy(slot0)
-	slot0:releaseDragListeners()
+function var_0_0.destroy(arg_20_0)
+	arg_20_0:releaseDragListeners()
 
-	if slot0._itemIcon then
-		slot0._itemIcon:destroy()
+	if arg_20_0._itemIcon then
+		arg_20_0._itemIcon:destroy()
 
-		slot0._itemIcon = nil
+		arg_20_0._itemIcon = nil
 	end
 
-	slot0._btndetail:RemoveClickListener()
-	slot0._btnequip:RemoveClickListener()
-	slot0:__onDispose()
+	arg_20_0._btndetail:RemoveClickListener()
+	arg_20_0._btnequip:RemoveClickListener()
+	arg_20_0:__onDispose()
 end
 
-return slot0
+return var_0_0

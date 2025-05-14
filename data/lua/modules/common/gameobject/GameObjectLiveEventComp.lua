@@ -1,17 +1,17 @@
-module("modules.common.gameobject.GameObjectLiveEventComp", package.seeall)
+﻿module("modules.common.gameobject.GameObjectLiveEventComp", package.seeall)
 
-slot0 = class("GameObjectLiveEventComp", LuaCompBase)
+local var_0_0 = class("GameObjectLiveEventComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnStart, slot0.go)
+function var_0_0.onStart(arg_2_0)
+	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnStart, arg_2_0.go)
 end
 
-function slot0.onDestroy(slot0)
-	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnDestroy, slot0.go)
+function var_0_0.onDestroy(arg_3_0)
+	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnDestroy, arg_3_0.go)
 end
 
-return slot0
+return var_0_0

@@ -1,30 +1,32 @@
-module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorInteractItem", package.seeall)
+﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorInteractItem", package.seeall)
 
-slot0 = class("DungeonPuzzleChangeColorInteractItem", LuaCompBase)
+local var_0_0 = class("DungeonPuzzleChangeColorInteractItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.go = slot1
-	slot0.id = slot2
-	slot0._click = gohelper.getClickWithAudio(slot0.go)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.go = arg_1_1
+	arg_1_0.id = arg_1_2
+	arg_1_0._click = gohelper.getClickWithAudio(arg_1_0.go)
 
-	slot0._click:AddClickListener(slot0._onItemClick, slot0)
+	arg_1_0._click:AddClickListener(arg_1_0._onItemClick, arg_1_0)
 
-	slot0._txtDesc = gohelper.findChildText(slot0.go, "desc")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.go, "desc")
 
-	slot0:setItem()
+	arg_1_0:setItem()
 end
 
-function slot0.setItem(slot0)
-	slot0._txtDesc.text = DungeonConfig.instance:getDecryptChangeColorInteractCo(slot0.id).desc
+function var_0_0.setItem(arg_2_0)
+	local var_2_0 = DungeonConfig.instance:getDecryptChangeColorInteractCo(arg_2_0.id)
+
+	arg_2_0._txtDesc.text = var_2_0.desc
 end
 
-function slot0._onItemClick(slot0)
-	DungeonPuzzleChangeColorController.instance:dispatchEvent(DungeonPuzzleEvent.InteractClick, slot0.id)
+function var_0_0._onItemClick(arg_3_0)
+	DungeonPuzzleChangeColorController.instance:dispatchEvent(DungeonPuzzleEvent.InteractClick, arg_3_0.id)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._click:RemoveClickListener()
-	gohelper.destroy(slot0.go)
+function var_0_0.onDestroy(arg_4_0)
+	arg_4_0._click:RemoveClickListener()
+	gohelper.destroy(arg_4_0.go)
 end
 
-return slot0
+return var_0_0

@@ -1,71 +1,75 @@
-module("modules.logic.room.view.mgr.OrthCameraRTMgr", package.seeall)
+﻿module("modules.logic.room.view.mgr.OrthCameraRTMgr", package.seeall)
 
-slot0 = class("OrthCameraRTMgr")
+local var_0_0 = class("OrthCameraRTMgr")
 
-function slot0.ctor(slot0)
-	slot0._rtIndex = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._rtIndex = 0
 end
 
-function slot0.initRT(slot0)
-	if slot0._renderTexture then
+function var_0_0.initRT(arg_2_0)
+	if arg_2_0._renderTexture then
 		return
 	end
 
-	if not CameraMgr.instance:getOrthCamera() then
+	local var_2_0 = CameraMgr.instance:getOrthCamera()
+
+	if not var_2_0 then
 		return
 	end
 
-	slot0._orthCamera = slot1
-	slot5 = 0
-	slot0._renderTexture = UnityEngine.RenderTexture.GetTemporary(768, 512, slot5, UnityEngine.RenderTextureFormat.ARGB32)
-	slot0._originalTargetTexture = slot0._orthCamera.targetTexture
-	slot0._orthographicSize = slot0._orthCamera.orthographicSize
-	slot0._orthCamera.targetTexture = slot0._renderTexture
-	slot0._orthCamera.orthographicSize = 2
-	slot0._uvRects = {}
+	arg_2_0._orthCamera = var_2_0
+	arg_2_0._renderTexture = UnityEngine.RenderTexture.GetTemporary(768, 512, 0, UnityEngine.RenderTextureFormat.ARGB32)
+	arg_2_0._originalTargetTexture = arg_2_0._orthCamera.targetTexture
+	arg_2_0._orthographicSize = arg_2_0._orthCamera.orthographicSize
+	arg_2_0._orthCamera.targetTexture = arg_2_0._renderTexture
+	arg_2_0._orthCamera.orthographicSize = 2
+	arg_2_0._uvRects = {}
 
-	for slot5 = 1, 24 do
-		slot6 = slot5 - 1
+	for iter_2_0 = 1, 24 do
+		local var_2_1 = iter_2_0 - 1
+		local var_2_2 = math.floor(var_2_1 % 6)
+		local var_2_3 = math.floor(var_2_1 / 6)
+		local var_2_4 = UnityEngine.Rect.New(var_2_2 * 128 / 768, var_2_3 * 168 / 512, 0.16666666666666666, 0.328125)
 
-		table.insert(slot0._uvRects, UnityEngine.Rect.New(math.floor(slot6 % 6) * 128 / 768, math.floor(slot6 / 6) * 168 / 512, 0.16666666666666666, 0.328125))
+		table.insert(arg_2_0._uvRects, var_2_4)
 	end
 
-	slot0._rtIndex = slot0._rtIndex or 0
+	arg_2_0._rtIndex = arg_2_0._rtIndex or 0
 end
 
-function slot0.getNewIndex(slot0)
-	slot0._rtIndex = slot0._rtIndex + 1
+function var_0_0.getNewIndex(arg_3_0)
+	arg_3_0._rtIndex = arg_3_0._rtIndex + 1
 
-	return slot0._rtIndex
+	return arg_3_0._rtIndex
 end
 
-function slot0.setRawImageUvRect(slot0, slot1, slot2)
-	if not slot0._renderTexture then
+function var_0_0.setRawImageUvRect(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._renderTexture then
 		return nil
 	end
 
-	slot1.texture = slot0._renderTexture
-	slot1.uvRect = slot0._uvRects[slot2] or UnityEngine.Rect.New(0, 0, 1, 1)
+	arg_4_1.texture = arg_4_0._renderTexture
+	arg_4_1.uvRect = arg_4_0._uvRects[arg_4_2] or UnityEngine.Rect.New(0, 0, 1, 1)
 end
 
-function slot0.destroyRT(slot0)
-	if slot0._orthCamera then
-		slot0._orthCamera.targetTexture = slot0._originalTargetTexture
-		slot0._orthCamera.orthographicSize = slot0._orthographicSize
-		slot0._orthCamera = nil
-		slot0._originalTargetTexture = nil
+function var_0_0.destroyRT(arg_5_0)
+	if arg_5_0._orthCamera then
+		arg_5_0._orthCamera.targetTexture = arg_5_0._originalTargetTexture
+		arg_5_0._orthCamera.orthographicSize = arg_5_0._orthographicSize
+		arg_5_0._orthCamera = nil
+		arg_5_0._originalTargetTexture = nil
 	end
 
-	if slot0._renderTexture then
-		UnityEngine.RenderTexture.ReleaseTemporary(slot0._renderTexture)
+	if arg_5_0._renderTexture then
+		UnityEngine.RenderTexture.ReleaseTemporary(arg_5_0._renderTexture)
 
-		slot0._renderTexture = nil
-		slot0._moreSprite = nil
-		slot0._sprites = nil
-		slot0._rtIndex = 0
+		arg_5_0._renderTexture = nil
+		arg_5_0._moreSprite = nil
+		arg_5_0._sprites = nil
+		arg_5_0._rtIndex = 0
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

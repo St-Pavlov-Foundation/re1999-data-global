@@ -1,30 +1,30 @@
-module("modules.logic.fight.system.work.FightParallelPlaySameSkillStep", package.seeall)
+﻿module("modules.logic.fight.system.work.FightParallelPlaySameSkillStep", package.seeall)
 
-slot0 = class("FightParallelPlaySameSkillStep", BaseWork)
+local var_0_0 = class("FightParallelPlaySameSkillStep", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0.stepMO = slot1
-	slot0.prevStepMO = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.stepMO = arg_1_1
+	arg_1_0.prevStepMO = arg_1_2
 
-	FightController.instance:registerCallback(FightEvent.ParallelPlaySameSkillCheck, slot0._parallelPlaySameSkillCheck, slot0)
+	FightController.instance:registerCallback(FightEvent.ParallelPlaySameSkillCheck, arg_1_0._parallelPlaySameSkillCheck, arg_1_0)
 end
 
-function slot0.onStart(slot0)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0._parallelPlaySameSkillCheck(slot0, slot1)
-	if slot1 ~= slot0.prevStepMO then
+function var_0_0._parallelPlaySameSkillCheck(arg_3_0, arg_3_1)
+	if arg_3_1 ~= arg_3_0.prevStepMO then
 		return
 	end
 
-	if slot0.stepMO.fromId == slot0.prevStepMO.fromId and slot0.stepMO.actId == slot0.prevStepMO.actId and slot0.stepMO.toId == slot0.prevStepMO.toId then
-		FightController.instance:dispatchEvent(FightEvent.ParallelPlaySameSkillDoneThis, slot1)
+	if arg_3_0.stepMO.fromId == arg_3_0.prevStepMO.fromId and arg_3_0.stepMO.actId == arg_3_0.prevStepMO.actId and arg_3_0.stepMO.toId == arg_3_0.prevStepMO.toId then
+		FightController.instance:dispatchEvent(FightEvent.ParallelPlaySameSkillDoneThis, arg_3_1)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlaySameSkillCheck, slot0._parallelPlaySameSkillCheck, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlaySameSkillCheck, arg_4_0._parallelPlaySameSkillCheck, arg_4_0)
 end
 
-return slot0
+return var_0_0

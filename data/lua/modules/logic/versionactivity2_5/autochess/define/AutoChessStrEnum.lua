@@ -1,19 +1,20 @@
-module("modules.logic.versionactivity2_5.autochess.define.AutoChessStrEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.define.AutoChessStrEnum", package.seeall)
 
-slot0 = _M
-slot0.CostType = {
+local var_0_0 = _M
+
+var_0_0.CostType = {
 	Coin = "coin",
 	Hp = "hp"
 }
-slot0.SkillType = {
+var_0_0.SkillType = {
 	Passive = "passive",
 	Active = "active"
 }
-slot0.ChessType = {
+var_0_0.ChessType = {
 	Support = "Support",
 	Attack = "Attack"
 }
-slot0.Tag2EffectId = {
+var_0_0.Tag2EffectId = {
 	Die = 10002,
 	Ranged = 20002,
 	BattleFury = 2003,
@@ -21,11 +22,11 @@ slot0.Tag2EffectId = {
 	GrowUp = 10003,
 	Raw = 10001
 }
-slot0.SkillEffect = {
+var_0_0.SkillEffect = {
 	GrowUpNow2 = "GrowUpNow2",
 	RoundAddCoin = "RoundAddCoin",
 	AdditionalDamage = "AdditionalDamage",
 	DigTreasure = "DigTreasure"
 }
 
-return slot0
+return var_0_0

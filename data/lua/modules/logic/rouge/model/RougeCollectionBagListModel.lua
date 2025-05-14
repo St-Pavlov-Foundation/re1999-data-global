@@ -1,64 +1,71 @@
-module("modules.logic.rouge.model.RougeCollectionBagListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionBagListModel", package.seeall)
 
-slot0 = class("RougeCollectionBagListModel", ListScrollModel)
+local var_0_0 = class("RougeCollectionBagListModel", ListScrollModel)
 
-function slot0.onInitData(slot0, slot1, slot2)
-	slot0._baseTagFilterMap = slot1
-	slot0._extraTagFilterMap = slot2
+function var_0_0.onInitData(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._baseTagFilterMap = arg_1_1
+	arg_1_0._extraTagFilterMap = arg_1_2
 
-	slot0:filterCollection()
-	slot0:markCurSelectCollectionId()
+	arg_1_0:filterCollection()
+	arg_1_0:markCurSelectCollectionId()
 end
 
-function slot0.filterCollection(slot0)
-	slot1 = {}
+function var_0_0.filterCollection(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = RougeCollectionModel.instance:getBagAreaCollection()
 
-	if RougeCollectionModel.instance:getBagAreaCollection() then
-		for slot6, slot7 in ipairs(slot2) do
-			if RougeCollectionHelper.checkCollectionHasAnyOneTag(slot7.cfgId, slot7:getAllEnchantCfgId(), slot0._baseTagFilterMap, slot0._extraTagFilterMap) then
-				table.insert(slot1, slot7)
+	if var_2_1 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+			local var_2_2 = iter_2_1:getAllEnchantCfgId()
+
+			if RougeCollectionHelper.checkCollectionHasAnyOneTag(iter_2_1.cfgId, var_2_2, arg_2_0._baseTagFilterMap, arg_2_0._extraTagFilterMap) then
+				table.insert(var_2_0, iter_2_1)
 			end
 		end
 	end
 
-	table.sort(slot1, slot0.sortFunc)
-	slot0:setList(slot1)
+	table.sort(var_2_0, arg_2_0.sortFunc)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	slot3 = RougeCollectionConfig.instance:getCollectionCfg(slot1.cfgId)
+function var_0_0.sortFunc(arg_3_0, arg_3_1)
+	local var_3_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_0.cfgId)
+	local var_3_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_1.cfgId)
 
-	if RougeCollectionConfig.instance:getCollectionCfg(slot0.cfgId) and slot3 and slot2.showRare ~= slot3.showRare then
-		return slot3.showRare < slot2.showRare
+	if var_3_0 and var_3_1 and var_3_0.showRare ~= var_3_1.showRare then
+		return var_3_0.showRare > var_3_1.showRare
 	end
 
-	if RougeCollectionConfig.instance:getCollectionCellCount(slot0.cfgId, RougeEnum.CollectionEditorParamType.Shape) ~= RougeCollectionConfig.instance:getCollectionCellCount(slot1.cfgId, RougeEnum.CollectionEditorParamType.Shape) then
-		return slot5 < slot4
+	local var_3_2 = RougeCollectionConfig.instance:getCollectionCellCount(arg_3_0.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local var_3_3 = RougeCollectionConfig.instance:getCollectionCellCount(arg_3_1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+
+	if var_3_2 ~= var_3_3 then
+		return var_3_3 < var_3_2
 	end
 
-	return slot0.id < slot1.id
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.isBagEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBagEmpty(arg_4_0)
+	return arg_4_0:getCount() <= 0
 end
 
-function slot0.isFiltering(slot0)
-	return not GameUtil.tabletool_dictIsEmpty(slot0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(slot0._extraTagFilterMap)
+function var_0_0.isFiltering(arg_5_0)
+	return not GameUtil.tabletool_dictIsEmpty(arg_5_0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(arg_5_0._extraTagFilterMap)
 end
 
-function slot0.isCollectionSelect(slot0, slot1)
-	if not slot1 or not slot0._curSelectCollection then
+function var_0_0.isCollectionSelect(arg_6_0, arg_6_1)
+	if not arg_6_1 or not arg_6_0._curSelectCollection then
 		return
 	end
 
-	return slot0._curSelectCollection == slot1
+	return arg_6_0._curSelectCollection == arg_6_1
 end
 
-function slot0.markCurSelectCollectionId(slot0, slot1)
-	slot0._curSelectCollection = slot1
+function var_0_0.markCurSelectCollectionId(arg_7_0, arg_7_1)
+	arg_7_0._curSelectCollection = arg_7_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

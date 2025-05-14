@@ -1,47 +1,47 @@
-module("modules.logic.versionactivity1_5.act142.model.Activity142TaskMO", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.model.Activity142TaskMO", package.seeall)
 
-slot0 = pureTable("Activity142TaskMO")
+local var_0_0 = pureTable("Activity142TaskMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1.id
-	slot0.config = slot1
-	slot0.taskMO = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.config = arg_1_1
+	arg_1_0.taskMO = arg_1_2
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.taskMO = slot1
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.taskMO = arg_2_1
 end
 
-function slot0.isLock(slot0)
-	return slot0.taskMO == nil
+function var_0_0.isLock(arg_3_0)
+	return arg_3_0.taskMO == nil
 end
 
-function slot0.isFinished(slot0)
-	if slot0.taskMO then
-		return slot0.taskMO.hasFinished
+function var_0_0.isFinished(arg_4_0)
+	if arg_4_0.taskMO then
+		return arg_4_0.taskMO.hasFinished
 	end
 
 	return false
 end
 
-function slot0.getProgress(slot0)
-	return slot0.taskMO and slot0.taskMO.progress or 0
+function var_0_0.getProgress(arg_5_0)
+	return arg_5_0.taskMO and arg_5_0.taskMO.progress or 0
 end
 
-function slot0.getMaxProgress(slot0)
-	return slot0.config and slot0.config.maxProgress or 0
+function var_0_0.getMaxProgress(arg_6_0)
+	return arg_6_0.config and arg_6_0.config.maxProgress or 0
 end
 
-function slot0.getFinishProgress(slot0)
-	return slot0.taskMO and slot0.taskMO.finishCount or 0
+function var_0_0.getFinishProgress(arg_7_0)
+	return arg_7_0.taskMO and arg_7_0.taskMO.finishCount or 0
 end
 
-function slot0.alreadyGotReward(slot0)
-	return slot0:getFinishProgress() > 0
+function var_0_0.alreadyGotReward(arg_8_0)
+	return arg_8_0:getFinishProgress() > 0
 end
 
-function slot0.haveRewardToGet(slot0)
-	return slot0:getFinishProgress() == 0 and slot0:isFinished()
+function var_0_0.haveRewardToGet(arg_9_0)
+	return arg_9_0:getFinishProgress() == 0 and arg_9_0:isFinished()
 end
 
-return slot0
+return var_0_0

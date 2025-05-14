@@ -1,182 +1,184 @@
-module("modules.logic.room.model.layout.RoomLayoutMO", package.seeall)
+﻿module("modules.logic.room.model.layout.RoomLayoutMO", package.seeall)
 
-slot0 = pureTable("RoomLayoutMO")
+local var_0_0 = pureTable("RoomLayoutMO")
 
-function slot0.init(slot0, slot1)
-	if slot0.id ~= slot1 then
-		slot0:clear()
+function var_0_0.init(arg_1_0, arg_1_1)
+	if arg_1_0.id ~= arg_1_1 then
+		arg_1_0:clear()
 	end
 
-	slot0.id = slot1
+	arg_1_0.id = arg_1_1
 end
 
-function slot0.clear(slot0)
-	slot0.blockCount = 0
-	slot0.coverId = 1
-	slot0.name = nil
-	slot0.buildingDegree = 0
-	slot0.infos = nil
-	slot0.buildingInfo = nil
-	slot0._isEmpty = nil
-	slot0.shareCode = nil
-	slot0.useCount = 0
-	slot0.roomSkinInfo = {}
+function var_0_0.clear(arg_2_0)
+	arg_2_0.blockCount = 0
+	arg_2_0.coverId = 1
+	arg_2_0.name = nil
+	arg_2_0.buildingDegree = 0
+	arg_2_0.infos = nil
+	arg_2_0.buildingInfo = nil
+	arg_2_0._isEmpty = nil
+	arg_2_0.shareCode = nil
+	arg_2_0.useCount = 0
+	arg_2_0.roomSkinInfo = {}
 end
 
-function slot0.updateInfo(slot0, slot1)
-	if slot1.name then
-		slot0:setName(slot1.name)
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	if arg_3_1.name then
+		arg_3_0:setName(arg_3_1.name)
 	end
 
-	if slot1.coverId then
-		slot0:setCoverId(slot1.coverId)
+	if arg_3_1.coverId then
+		arg_3_0:setCoverId(arg_3_1.coverId)
 	end
 
-	if slot1.buildingDegree then
-		slot0:setBuildingDegree(slot1.buildingDegree)
+	if arg_3_1.buildingDegree then
+		arg_3_0:setBuildingDegree(arg_3_1.buildingDegree)
 	end
 
-	if slot1.blockCount then
-		slot0:setBlockCount(slot1.blockCount)
+	if arg_3_1.blockCount then
+		arg_3_0:setBlockCount(arg_3_1.blockCount)
 	end
 
-	if slot1.infos then
-		slot0:setBlockInfos(slot1.infos)
+	if arg_3_1.infos then
+		arg_3_0:setBlockInfos(arg_3_1.infos)
 	end
 
-	if slot1.buildingInfos then
-		slot0:setBuildingInfos(slot1.buildingInfos)
+	if arg_3_1.buildingInfos then
+		arg_3_0:setBuildingInfos(arg_3_1.buildingInfos)
 	end
 
-	if slot1.shareCode then
-		slot0:setShareCode(slot1.shareCode)
+	if arg_3_1.shareCode then
+		arg_3_0:setShareCode(arg_3_1.shareCode)
 	end
 
-	if slot1.useCount then
-		slot0:setUseCount(slot1.useCount)
+	if arg_3_1.useCount then
+		arg_3_0:setUseCount(arg_3_1.useCount)
 	end
 
-	if slot1.skins then
-		slot0:setSkinInfo(slot1.skins)
+	if arg_3_1.skins then
+		arg_3_0:setSkinInfo(arg_3_1.skins)
 	end
 
-	if string.nilorempty(slot0.name) then
-		slot0:setName(formatLuaLang("room_layoutplan_default_name", ""))
-	end
-end
-
-function slot0.setBlockCount(slot0, slot1)
-	slot0.blockCount = slot1 or 0
-end
-
-function slot0.setBuildingDegree(slot0, slot1)
-	slot0.buildingDegree = slot1 or 0
-end
-
-function slot0.setName(slot0, slot1)
-	slot0.name = slot1
-end
-
-function slot0.setCoverId(slot0, slot1)
-	slot0.coverId = slot1 or 1
-end
-
-function slot0.setBlockInfos(slot0, slot1)
-	slot0.infos = slot1 or {}
-end
-
-function slot0.setBuildingInfos(slot0, slot1)
-	slot0.buildingInfos = slot1 or {}
-end
-
-function slot0.setEmpty(slot0, slot1)
-	slot0._isEmpty = slot1
-end
-
-function slot0.setShareCode(slot0, slot1)
-	slot0.shareCode = slot1
-end
-
-function slot0.setUseCount(slot0, slot1)
-	slot0.useCount = slot1
-end
-
-function slot0.setSkinInfo(slot0, slot1)
-	slot0.skinInfo = {}
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.skinInfo[slot6.id] = slot6.skinId
+	if string.nilorempty(arg_3_0.name) then
+		arg_3_0:setName(formatLuaLang("room_layoutplan_default_name", ""))
 	end
 end
 
-function slot0.isSharing(slot0)
-	if string.nilorempty(slot0.shareCode) then
+function var_0_0.setBlockCount(arg_4_0, arg_4_1)
+	arg_4_0.blockCount = arg_4_1 or 0
+end
+
+function var_0_0.setBuildingDegree(arg_5_0, arg_5_1)
+	arg_5_0.buildingDegree = arg_5_1 or 0
+end
+
+function var_0_0.setName(arg_6_0, arg_6_1)
+	arg_6_0.name = arg_6_1
+end
+
+function var_0_0.setCoverId(arg_7_0, arg_7_1)
+	arg_7_0.coverId = arg_7_1 or 1
+end
+
+function var_0_0.setBlockInfos(arg_8_0, arg_8_1)
+	arg_8_0.infos = arg_8_1 or {}
+end
+
+function var_0_0.setBuildingInfos(arg_9_0, arg_9_1)
+	arg_9_0.buildingInfos = arg_9_1 or {}
+end
+
+function var_0_0.setEmpty(arg_10_0, arg_10_1)
+	arg_10_0._isEmpty = arg_10_1
+end
+
+function var_0_0.setShareCode(arg_11_0, arg_11_1)
+	arg_11_0.shareCode = arg_11_1
+end
+
+function var_0_0.setUseCount(arg_12_0, arg_12_1)
+	arg_12_0.useCount = arg_12_1
+end
+
+function var_0_0.setSkinInfo(arg_13_0, arg_13_1)
+	arg_13_0.skinInfo = {}
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		arg_13_0.skinInfo[iter_13_1.id] = iter_13_1.skinId
+	end
+end
+
+function var_0_0.isSharing(arg_14_0)
+	if string.nilorempty(arg_14_0.shareCode) then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getShareCode(slot0)
-	return slot0.shareCode
+function var_0_0.getShareCode(arg_15_0)
+	return arg_15_0.shareCode
 end
 
-function slot0.getUseCount(slot0)
-	return slot0.useCount or 0
+function var_0_0.getUseCount(arg_16_0)
+	return arg_16_0.useCount or 0
 end
 
-function slot0.isHasBlockBuildingInfo(slot0)
-	if slot0.infos == nil or slot0.buildingInfos == nil then
+function var_0_0.isHasBlockBuildingInfo(arg_17_0)
+	if arg_17_0.infos == nil or arg_17_0.buildingInfos == nil then
 		return false
 	end
 
-	if #slot0.infos ~= slot0.blockCount then
+	if #arg_17_0.infos ~= arg_17_0.blockCount then
 		return false
 	end
 
 	return true
 end
 
-function slot0.getName(slot0)
-	return slot0.name
+function var_0_0.getName(arg_18_0)
+	return arg_18_0.name
 end
 
-function slot0.getCoverResPath(slot0)
-	if RoomConfig.instance:getPlanCoverConfig(slot0.coverId) then
-		return slot1.coverResPath
+function var_0_0.getCoverResPath(arg_19_0)
+	local var_19_0 = RoomConfig.instance:getPlanCoverConfig(arg_19_0.coverId)
+
+	if var_19_0 then
+		return var_19_0.coverResPath
 	end
 
 	return nil
 end
 
-function slot0.getCoverId(slot0)
-	return slot0.coverId
+function var_0_0.getCoverId(arg_20_0)
+	return arg_20_0.coverId
 end
 
-function slot0.isUse(slot0)
-	return slot0.id == 0
+function var_0_0.isUse(arg_21_0)
+	return arg_21_0.id == 0
 end
 
-function slot0.isEmpty(slot0)
-	if slot0.id == 0 then
+function var_0_0.isEmpty(arg_22_0)
+	if arg_22_0.id == 0 then
 		return false
 	end
 
-	if slot0._isEmpty ~= nil then
-		return slot0._isEmpty
+	if arg_22_0._isEmpty ~= nil then
+		return arg_22_0._isEmpty
 	end
 
-	return slot0.blockCount <= 0
+	return arg_22_0.blockCount <= 0
 end
 
-function slot0.haveEdited(slot0)
-	slot1 = false
+function var_0_0.haveEdited(arg_23_0)
+	local var_23_0 = false
 
-	if slot0.blockCount then
-		slot1 = slot0.blockCount > 0
+	if arg_23_0.blockCount then
+		var_23_0 = arg_23_0.blockCount > 0
 	end
 
-	return slot1
+	return var_23_0
 end
 
-return slot0
+return var_0_0

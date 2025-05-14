@@ -1,60 +1,70 @@
-module("modules.logic.pcInput.activityAdapter.BaseActivityAdapter", package.seeall)
+﻿module("modules.logic.pcInput.activityAdapter.BaseActivityAdapter", package.seeall)
 
-slot0 = class("BaseActivityAdapter")
+local var_0_0 = class("BaseActivityAdapter")
 
-function slot0.ctor(slot0)
-	slot0.keytoFunction = {}
-	slot0.activitid = nil
-	slot0._registeredKey = {}
-	slot0._priorty = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.keytoFunction = {}
+	arg_1_0.activitid = nil
+	arg_1_0._registeredKey = {}
+	arg_1_0._priorty = 0
 end
 
-function slot0.getPriorty(slot0)
-	return slot0._priorty or 0
+function var_0_0.getPriorty(arg_2_0)
+	return arg_2_0._priorty or 0
 end
 
-function slot0.registerFunction(slot0)
-	if not PCInputModel.instance:getActivityKeys(slot0.activitid) then
+function var_0_0.registerFunction(arg_3_0)
+	local var_3_0 = PCInputModel.instance:getActivityKeys(arg_3_0.activitid)
+
+	if not var_3_0 then
 		return
 	end
 
-	slot0._registeredKey = slot1
+	arg_3_0._registeredKey = var_3_0
 
-	for slot5, slot6 in pairs(slot1) do
-		PCInputController.instance:registerKey(slot6[4], ZProj.PCInputManager.PCInputEvent.KeyUp)
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		PCInputController.instance:registerKey(iter_3_1[4], ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 end
 
-function slot0.unRegisterFunction(slot0)
-	for slot4, slot5 in pairs(slot0._registeredKey) do
-		PCInputController.instance:unregisterKey(slot5[4], ZProj.PCInputManager.PCInputEvent.KeyUp)
+function var_0_0.unRegisterFunction(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._registeredKey) do
+		PCInputController.instance:unregisterKey(iter_4_1[4], ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 
-	slot0._registeredKey = {}
+	arg_4_0._registeredKey = {}
 end
 
-function slot0.OnkeyUp(slot0, slot1)
-	if not PCInputModel.instance:getkeyidBykeyName(slot0.activitid, slot1) then
+function var_0_0.OnkeyUp(arg_5_0, arg_5_1)
+	local var_5_0 = PCInputModel.instance:getkeyidBykeyName(arg_5_0.activitid, arg_5_1)
+
+	if not var_5_0 then
 		return
 	end
 
-	if slot0.keytoFunction[slot2] then
-		slot3()
+	local var_5_1 = arg_5_0.keytoFunction[var_5_0]
+
+	if var_5_1 then
+		var_5_1()
 	end
 end
 
-function slot0.OnkeyDown(slot0, slot1)
-	if not PCInputModel.instance:getkeyidBykeyName(slot0.activitid, slot1) then
+function var_0_0.OnkeyDown(arg_6_0, arg_6_1)
+	local var_6_0 = PCInputModel.instance:getkeyidBykeyName(arg_6_0.activitid, arg_6_1)
+
+	if not var_6_0 then
 		return
 	end
 
-	if slot0.keytoFunction[slot2] then
-		slot3()
+	local var_6_1 = arg_6_0.keytoFunction[var_6_0]
+
+	if var_6_1 then
+		var_6_1()
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:unRegisterFunction()
+function var_0_0.destroy(arg_7_0)
+	arg_7_0:unRegisterFunction()
 end
 
-return slot0
+return var_0_0

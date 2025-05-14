@@ -1,102 +1,108 @@
-module("modules.logic.guide.view.GuideDialogueView", package.seeall)
+﻿module("modules.logic.guide.view.GuideDialogueView", package.seeall)
 
-slot0 = class("GuideDialogueView", BaseView)
+local var_0_0 = class("GuideDialogueView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotipsmask = gohelper.findChild(slot0.viewGO, "#go_tipsmask")
-	slot0._gotype4 = gohelper.findChild(slot0.viewGO, "#go_type4")
-	slot0._godialogue = gohelper.findChild(slot0.viewGO, "#go_dialogue")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "#go_dialogue/#txt_content")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_dialogue/#txt_name")
-	slot0._simageleft = gohelper.findChildSingleImage(slot0.viewGO, "#go_dialogue/left/#simage_left")
-	slot0._simageright = gohelper.findChildSingleImage(slot0.viewGO, "#go_dialogue/right/#simage_right")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotipsmask = gohelper.findChild(arg_1_0.viewGO, "#go_tipsmask")
+	arg_1_0._gotype4 = gohelper.findChild(arg_1_0.viewGO, "#go_type4")
+	arg_1_0._godialogue = gohelper.findChild(arg_1_0.viewGO, "#go_dialogue")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#go_dialogue/#txt_content")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_dialogue/#txt_name")
+	arg_1_0._simageleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_dialogue/left/#simage_left")
+	arg_1_0._simageright = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_dialogue/right/#simage_right")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._dialogueTr = slot0._godialogue.transform
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._dialogueTr = arg_4_0._godialogue.transform
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateUI()
-	slot0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, slot0._updateUI, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:_updateUI()
+	arg_6_0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_6_0._updateUI, arg_6_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_updateUI()
-	slot0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, slot0._updateUI, slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:_updateUI()
+	arg_7_0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_7_0._updateUI, arg_7_0)
 end
 
-function slot0._updateUI(slot0)
-	if not slot0.viewParam then
+function var_0_0._updateUI(arg_8_0)
+	if not arg_8_0.viewParam then
 		return
 	end
 
-	gohelper.setActive(slot0._godialogue, slot0.viewParam.hasDialogue)
+	gohelper.setActive(arg_8_0._godialogue, arg_8_0.viewParam.hasDialogue)
 
-	if not slot0.viewParam.hasDialogue then
+	if not arg_8_0.viewParam.hasDialogue then
 		return
 	end
 
 	if LangSettings.instance:getCurLang() == LangSettings.kr or LangSettings.instance:isEn() then
-		slot0._txtcontent.text = slot0.viewParam.tipsContent
+		arg_8_0._txtcontent.text = arg_8_0.viewParam.tipsContent
 	else
-		slot0._txtcontent.text = string.gsub(slot0.viewParam.tipsContent, " ", " ")
+		arg_8_0._txtcontent.text = string.gsub(arg_8_0.viewParam.tipsContent, " ", " ")
 	end
 
-	slot0._txtname.text = slot0.viewParam.tipsTalker
+	arg_8_0._txtname.text = arg_8_0.viewParam.tipsTalker
 
-	gohelper.setActive(slot0._simageleft.gameObject, false)
-	gohelper.setActive(slot0._simageright.gameObject, false)
+	gohelper.setActive(arg_8_0._simageleft.gameObject, false)
+	gohelper.setActive(arg_8_0._simageright.gameObject, false)
 
-	if string.nilorempty(slot0.viewParam.tipsHead) then
+	if string.nilorempty(arg_8_0.viewParam.tipsHead) then
 		return
 	end
 
-	if slot0.viewParam.portraitPos == 0 then
-		slot0._simageTemp = slot0._simageleft
+	if arg_8_0.viewParam.portraitPos == 0 then
+		arg_8_0._simageTemp = arg_8_0._simageleft
 	else
-		slot0._simageTemp = slot0._simageright
+		arg_8_0._simageTemp = arg_8_0._simageright
 	end
 
-	gohelper.setActive(slot0._simageTemp.gameObject, true)
-	slot0._simageTemp:LoadImage(ResUrl.getHeadIconImg(slot0.viewParam.tipsHead), slot0._loadFinish, slot0)
+	gohelper.setActive(arg_8_0._simageTemp.gameObject, true)
+	arg_8_0._simageTemp:LoadImage(ResUrl.getHeadIconImg(arg_8_0.viewParam.tipsHead), arg_8_0._loadFinish, arg_8_0)
 end
 
-function slot0._loadFinish(slot0)
-	ZProj.UGUIHelper.SetImageSize(slot0._simageTemp.gameObject)
-	slot0:_setPortraitOffset(slot0._simageTemp.gameObject)
+function var_0_0._loadFinish(arg_9_0)
+	ZProj.UGUIHelper.SetImageSize(arg_9_0._simageTemp.gameObject)
+	arg_9_0:_setPortraitOffset(arg_9_0._simageTemp.gameObject)
 end
 
-function slot0._setPortraitOffset(slot0, slot1)
-	if not SkinConfig.instance:getSkinCo(tonumber(slot0.viewParam.tipsHead)) then
-		logError("no skin skinId:" .. slot0.viewParam.tipsHead)
+function var_0_0._setPortraitOffset(arg_10_0, arg_10_1)
+	local var_10_0 = SkinConfig.instance:getSkinCo(tonumber(arg_10_0.viewParam.tipsHead))
+
+	if not var_10_0 then
+		logError("no skin skinId:" .. arg_10_0.viewParam.tipsHead)
 
 		return
 	end
 
-	slot4 = SkinConfig.instance:getSkinOffset(slot0.viewParam.portraitPos == 0 and slot2.guideLeftPortraitOffset or slot2.guideRightPortraitOffset)
-	slot5 = slot1.transform
+	local var_10_1 = arg_10_0.viewParam.portraitPos == 0
+	local var_10_2 = SkinConfig.instance:getSkinOffset(var_10_1 and var_10_0.guideLeftPortraitOffset or var_10_0.guideRightPortraitOffset)
+	local var_10_3 = arg_10_1.transform
 
-	recthelper.setAnchor(slot5, tonumber(slot4[1]), tonumber(slot4[2]))
-	transformhelper.setLocalScale(slot5, tonumber(slot4[3]), tonumber(slot4[3]), tonumber(slot4[3]))
+	recthelper.setAnchor(var_10_3, tonumber(var_10_2[1]), tonumber(var_10_2[2]))
+	transformhelper.setLocalScale(var_10_3, tonumber(var_10_2[3]), tonumber(var_10_2[3]), tonumber(var_10_2[3]))
 end
 
-function slot0.onClose(slot0)
-	slot0._simageright:UnLoadImage()
-	slot0._simageleft:UnLoadImage()
+function var_0_0.onClose(arg_11_0)
+	arg_11_0._simageright:UnLoadImage()
+	arg_11_0._simageleft:UnLoadImage()
 end
 
-return slot0
+return var_0_0

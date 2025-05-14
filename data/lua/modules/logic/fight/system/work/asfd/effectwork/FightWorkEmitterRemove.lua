@@ -1,25 +1,32 @@
-module("modules.logic.fight.system.work.asfd.effectwork.FightWorkEmitterRemove", package.seeall)
+﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkEmitterRemove", package.seeall)
 
-slot0 = class("FightWorkEmitterRemove", FightEffectBase)
+local var_0_0 = class("FightWorkEmitterRemove", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0.emitterMo = FightDataHelper.entityMgr:getASFDEntityMo(slot0._actEffectMO.effectNum)
+function var_0_0.beforePlayEffectData(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.effectNum
+
+	arg_1_0.emitterMo = FightDataHelper.entityMgr:getASFDEntityMo(var_1_0)
 end
 
-function slot0.onStart(slot0)
-	if not slot0.emitterMo then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if not arg_2_0.emitterMo then
+		return arg_2_0:onDone(true)
 	end
 
-	if not (GameSceneMgr.instance:getCurScene() and slot1.entityMgr) then
-		return slot0:onDone(true)
+	local var_2_0 = GameSceneMgr.instance:getCurScene()
+	local var_2_1 = var_2_0 and var_2_0.entityMgr
+
+	if not var_2_1 then
+		return arg_2_0:onDone(true)
 	end
 
-	if FightHelper.getEntity(slot0.emitterMo.id) then
-		slot2:removeUnit(slot3:getTag(), slot3.id)
+	local var_2_2 = FightHelper.getEntity(arg_2_0.emitterMo.id)
+
+	if var_2_2 then
+		var_2_1:removeUnit(var_2_2:getTag(), var_2_2.id)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

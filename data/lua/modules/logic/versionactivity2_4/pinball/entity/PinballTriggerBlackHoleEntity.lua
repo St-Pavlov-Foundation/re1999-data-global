@@ -1,55 +1,62 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerBlackHoleEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerBlackHoleEntity", package.seeall)
 
-slot0 = class("PinballTriggerBlackHoleEntity", PinballTriggerEntity)
+local var_0_0 = class("PinballTriggerBlackHoleEntity", PinballTriggerEntity)
 
-function slot0.onInitByCo(slot0)
-	slot0.groupId = tonumber(slot0.spData) or 0
+function var_0_0.onInitByCo(arg_1_0)
+	arg_1_0.groupId = tonumber(arg_1_0.spData) or 0
 end
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot1, "vx_blackhole"), true)
+function var_0_0.init(arg_2_0, arg_2_1)
+	var_0_0.super.init(arg_2_0, arg_2_1)
+
+	local var_2_0 = gohelper.findChild(arg_2_1, "vx_blackhole")
+
+	gohelper.setActive(var_2_0, true)
 end
 
-function slot0.isBounce(slot0)
+function var_0_0.isBounce(arg_3_0)
 	return false
 end
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	if not PinballEntityMgr.instance:getEntity(slot1) or slot5.inBlackHoleId then
+function var_0_0.onHitEnter(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local var_4_0 = PinballEntityMgr.instance:getEntity(arg_4_1)
+
+	if not var_4_0 or var_4_0.inBlackHoleId then
 		return
 	end
 
-	slot6 = nil
+	local var_4_1
 
-	for slot10, slot11 in pairs(PinballEntityMgr.instance:getAllEntity()) do
-		if slot11 ~= slot0 and slot11.unitType == slot0.unitType and slot11.groupId == slot0.groupId then
-			slot6 = slot11
+	for iter_4_0, iter_4_1 in pairs(PinballEntityMgr.instance:getAllEntity()) do
+		if iter_4_1 ~= arg_4_0 and iter_4_1.unitType == arg_4_0.unitType and iter_4_1.groupId == arg_4_0.groupId then
+			var_4_1 = iter_4_1
 
 			break
 		end
 	end
 
-	if slot6 then
-		slot5.x = slot6.x
-		slot5.y = slot6.y
+	if var_4_1 then
+		var_4_0.x = var_4_1.x
+		var_4_0.y = var_4_1.y
 
-		slot5:tick(0)
+		var_4_0:tick(0)
 
-		slot5.inBlackHoleId = slot0.id
+		var_4_0.inBlackHoleId = arg_4_0.id
 
-		slot5:onEnterHole()
+		var_4_0:onEnterHole()
 	end
 end
 
-function slot0.onHitExit(slot0, slot1)
-	if not PinballEntityMgr.instance:getEntity(slot1) or not slot2.inBlackHoleId or slot2.inBlackHoleId == slot0.id then
+function var_0_0.onHitExit(arg_5_0, arg_5_1)
+	local var_5_0 = PinballEntityMgr.instance:getEntity(arg_5_1)
+
+	if not var_5_0 or not var_5_0.inBlackHoleId or var_5_0.inBlackHoleId == arg_5_0.id then
 		return
 	end
 
-	slot2.inBlackHoleId = nil
+	var_5_0.inBlackHoleId = nil
 
-	slot2:onExitHole()
+	var_5_0:onExitHole()
 end
 
-return slot0
+return var_0_0

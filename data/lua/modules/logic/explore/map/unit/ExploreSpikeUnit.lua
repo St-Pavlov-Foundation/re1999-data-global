@@ -1,132 +1,135 @@
-module("modules.logic.explore.map.unit.ExploreSpikeUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreSpikeUnit", package.seeall)
 
-slot0 = class("ExploreSpikeUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreSpikeUnit", ExploreBaseDisplayUnit)
 
-function slot0.onResLoaded(slot0)
-	slot0:beginTriggerSpike()
-	gohelper.addAkGameObject(slot0.go)
+function var_0_0.onResLoaded(arg_1_0)
+	arg_1_0:beginTriggerSpike()
+	gohelper.addAkGameObject(arg_1_0.go)
 end
 
-function slot0.beginTriggerSpike(slot0)
-	slot0:setInteractActive(false)
-	slot0.animComp:playAnim(ExploreAnimEnum.AnimName.normal)
-	slot0:setSpikeActive(false)
-	TaskDispatcher.runDelay(slot0.activeSpike, slot0, slot0.mo.intervalTime)
+function var_0_0.beginTriggerSpike(arg_2_0)
+	arg_2_0:setInteractActive(false)
+	arg_2_0.animComp:playAnim(ExploreAnimEnum.AnimName.normal)
+	arg_2_0:setSpikeActive(false)
+	TaskDispatcher.runDelay(arg_2_0.activeSpike, arg_2_0, arg_2_0.mo.intervalTime)
 end
 
-function slot0.activeSpike(slot0)
-	slot0:beginAudio()
-	slot0:setSpikeActive(true)
-	slot0:setInteractActive(true)
+function var_0_0.activeSpike(arg_3_0)
+	arg_3_0:beginAudio()
+	arg_3_0:setSpikeActive(true)
+	arg_3_0:setInteractActive(true)
 end
 
-function slot0.inactiveSpike(slot0)
-	slot0:beginAudio()
-	slot0:setSpikeActive(true)
-	slot0:setInteractActive(false)
+function var_0_0.inactiveSpike(arg_4_0)
+	arg_4_0:beginAudio()
+	arg_4_0:setSpikeActive(true)
+	arg_4_0:setInteractActive(false)
 end
 
-function slot0.isInFOV(slot0)
+function var_0_0.isInFOV(arg_5_0)
 	return true
 end
 
-function slot0.setInFOV(slot0)
+function var_0_0.setInFOV(arg_6_0)
+	return
 end
 
-function slot0.onAnimEnd(slot0, slot1, slot2)
-	slot0:stopAudio()
+function var_0_0.onAnimEnd(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:stopAudio()
 
-	if slot2 == ExploreAnimEnum.AnimName.normal then
-		slot0:setSpikeActive(false)
-		TaskDispatcher.runDelay(slot0.activeSpike, slot0, slot0.mo.intervalTime)
-	elseif slot2 == ExploreAnimEnum.AnimName.active then
-		slot0:setSpikeActive(true)
-		TaskDispatcher.runDelay(slot0.inactiveSpike, slot0, slot0.mo.keepTime)
+	if arg_7_2 == ExploreAnimEnum.AnimName.normal then
+		arg_7_0:setSpikeActive(false)
+		TaskDispatcher.runDelay(arg_7_0.activeSpike, arg_7_0, arg_7_0.mo.intervalTime)
+	elseif arg_7_2 == ExploreAnimEnum.AnimName.active then
+		arg_7_0:setSpikeActive(true)
+		TaskDispatcher.runDelay(arg_7_0.inactiveSpike, arg_7_0, arg_7_0.mo.keepTime)
 	end
 end
 
-function slot0.setSpikeActive(slot0, slot1)
-	slot0._spikeAcitve = slot1
+function var_0_0.setSpikeActive(arg_8_0, arg_8_1)
+	arg_8_0._spikeAcitve = arg_8_1
 
-	if slot1 and slot0.roleStay then
-		TaskDispatcher.runDelay(slot0.delayCheckCanTrigger, slot0, 0.3)
+	if arg_8_1 and arg_8_0.roleStay then
+		TaskDispatcher.runDelay(arg_8_0.delayCheckCanTrigger, arg_8_0, 0.3)
 	end
 end
 
-function slot0.onRoleEnter(slot0, slot1, slot2, slot3)
-	if slot3:isRole() then
-		slot0.roleStay = true
+function var_0_0.onRoleEnter(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_3:isRole() then
+		arg_9_0.roleStay = true
 
-		if slot0._spikeAcitve then
-			TaskDispatcher.runDelay(slot0.delayCheckCanTrigger, slot0, 0.3)
+		if arg_9_0._spikeAcitve then
+			TaskDispatcher.runDelay(arg_9_0.delayCheckCanTrigger, arg_9_0, 0.3)
 		end
 	end
 end
 
-function slot0.onRoleLeave(slot0, slot1, slot2, slot3)
-	if slot3:isRole() then
-		slot0.roleStay = false
+function var_0_0.onRoleLeave(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if arg_10_3:isRole() then
+		arg_10_0.roleStay = false
 
-		TaskDispatcher.cancelTask(slot0.delayCheckCanTrigger, slot0)
+		TaskDispatcher.cancelTask(arg_10_0.delayCheckCanTrigger, arg_10_0)
 	end
 end
 
-function slot0.delayCheckCanTrigger(slot0)
-	if slot0._spikeAcitve and slot0.roleStay then
-		slot0:tryTrigger()
+function var_0_0.delayCheckCanTrigger(arg_11_0)
+	if arg_11_0._spikeAcitve and arg_11_0.roleStay then
+		arg_11_0:tryTrigger()
 	end
 end
 
-function slot0.tryTrigger(slot0, ...)
-	if not slot0._spikeAcitve then
+function var_0_0.tryTrigger(arg_12_0, ...)
+	if not arg_12_0._spikeAcitve then
 		return
 	end
 
 	ExploreController.instance:getMap():getHero():stopMoving(true)
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.Spike)
-	uv0.super.tryTrigger(slot0, ...)
+	var_0_0.super.tryTrigger(arg_12_0, ...)
 end
 
-function slot0.beginAudio(slot0)
-	if not slot0.mo.playAudio then
+function var_0_0.beginAudio(arg_13_0)
+	if not arg_13_0.mo.playAudio then
 		return
 	end
 
-	if ExploreConstValue.TrapAudioMaxDis < ExploreHelper.getDistance(ExploreController.instance:getMap():getHero().nodePos, slot0.nodePos) then
+	local var_13_0 = ExploreController.instance:getMap():getHero()
+
+	if ExploreHelper.getDistance(var_13_0.nodePos, arg_13_0.nodePos) > ExploreConstValue.TrapAudioMaxDis then
 		return
 	end
 
-	if not slot0._playingAudio then
-		AudioMgr.instance:trigger(AudioEnum.Explore.TrapStart, slot0.go)
+	if not arg_13_0._playingAudio then
+		AudioMgr.instance:trigger(AudioEnum.Explore.TrapStart, arg_13_0.go)
 
-		slot0._playingAudio = true
+		arg_13_0._playingAudio = true
 	end
 end
 
-function slot0.stopAudio(slot0)
-	if slot0._playingAudio then
-		AudioMgr.instance:trigger(AudioEnum.Explore.TrapEnd, slot0.go)
+function var_0_0.stopAudio(arg_14_0)
+	if arg_14_0._playingAudio then
+		AudioMgr.instance:trigger(AudioEnum.Explore.TrapEnd, arg_14_0.go)
 
-		slot0._playingAudio = false
+		arg_14_0._playingAudio = false
 	end
 end
 
-function slot0.pauseTriggerSpike(slot0)
-	slot0.roleStay = false
-	slot0._spikeAcitve = false
+function var_0_0.pauseTriggerSpike(arg_15_0)
+	arg_15_0.roleStay = false
+	arg_15_0._spikeAcitve = false
 
-	slot0.animComp:playAnim(ExploreAnimEnum.AnimName.active)
-	TaskDispatcher.cancelTask(slot0.activeSpike, slot0)
-	TaskDispatcher.cancelTask(slot0.inactiveSpike, slot0)
-	TaskDispatcher.cancelTask(slot0.delayCheckCanTrigger, slot0)
+	arg_15_0.animComp:playAnim(ExploreAnimEnum.AnimName.active)
+	TaskDispatcher.cancelTask(arg_15_0.activeSpike, arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.inactiveSpike, arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.delayCheckCanTrigger, arg_15_0)
 end
 
-function slot0.onDestroy(slot0)
-	slot0:stopAudio()
-	TaskDispatcher.cancelTask(slot0.activeSpike, slot0)
-	TaskDispatcher.cancelTask(slot0.inactiveSpike, slot0)
-	TaskDispatcher.cancelTask(slot0.delayCheckCanTrigger, slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_16_0)
+	arg_16_0:stopAudio()
+	TaskDispatcher.cancelTask(arg_16_0.activeSpike, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0.inactiveSpike, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0.delayCheckCanTrigger, arg_16_0)
+	var_0_0.super.onDestroy(arg_16_0)
 end
 
-return slot0
+return var_0_0

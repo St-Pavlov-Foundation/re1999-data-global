@@ -1,95 +1,112 @@
-module("modules.logic.permanent.view.enterview.Permanent1_1EnterView", package.seeall)
+﻿module("modules.logic.permanent.view.enterview.Permanent1_1EnterView", package.seeall)
 
-slot0 = class("Permanent1_1EnterView", BaseView)
+local var_0_0 = class("Permanent1_1EnterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
-	slot0._goReddot1 = gohelper.findChild(slot0.viewGO, "Left/EntranceRole1/#go_Reddot1")
-	slot0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
-	slot0._goReddot2 = gohelper.findChild(slot0.viewGO, "Left/EntranceRole2/#go_Reddot2")
-	slot0._btnPlay = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Play")
-	slot0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
-	slot0._goReddot3 = gohelper.findChild(slot0.viewGO, "Right/#go_Reddot3")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
+	arg_1_0._goReddot1 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole1/#go_Reddot1")
+	arg_1_0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
+	arg_1_0._goReddot2 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole2/#go_Reddot2")
+	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Play")
+	arg_1_0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
+	arg_1_0._goReddot3 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Reddot3")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnEntranceRole1:AddClickListener(slot0._btnEntranceRole1OnClick, slot0)
-	slot0._btnEntranceRole2:AddClickListener(slot0._btnEntranceRole2OnClick, slot0)
-	slot0._btnPlay:AddClickListener(slot0._btnPlayOnClick, slot0)
-	slot0._btnEntranceDungeon:AddClickListener(slot0._btnEntranceDungeonOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnEntranceRole1:AddClickListener(arg_2_0._btnEntranceRole1OnClick, arg_2_0)
+	arg_2_0._btnEntranceRole2:AddClickListener(arg_2_0._btnEntranceRole2OnClick, arg_2_0)
+	arg_2_0._btnPlay:AddClickListener(arg_2_0._btnPlayOnClick, arg_2_0)
+	arg_2_0._btnEntranceDungeon:AddClickListener(arg_2_0._btnEntranceDungeonOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnEntranceRole1:RemoveClickListener()
-	slot0._btnEntranceRole2:RemoveClickListener()
-	slot0._btnPlay:RemoveClickListener()
-	slot0._btnEntranceDungeon:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnEntranceRole1:RemoveClickListener()
+	arg_3_0._btnEntranceRole2:RemoveClickListener()
+	arg_3_0._btnPlay:RemoveClickListener()
+	arg_3_0._btnEntranceDungeon:RemoveClickListener()
 end
 
-function slot0._btnEntranceRole1OnClick(slot0)
-	if string.nilorempty(ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act108).confirmCondition) then
-		MeilanniController.instance:openMeilanniMainView({
-			checkStory = true
-		})
-	elseif OpenModel.instance:isFunctionUnlock(tonumber(string.split(slot2, "=")[2])) or PlayerPrefsHelper.getNumber(PlayerPrefsKey.EnterRoleActivity .. "#" .. tostring(VersionActivityEnum.ActivityId.Act108) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId), 0) == 1 then
+function var_0_0._btnEntranceRole1OnClick(arg_4_0)
+	local var_4_0 = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act108).confirmCondition
+
+	if string.nilorempty(var_4_0) then
 		MeilanniController.instance:openMeilanniMainView({
 			checkStory = true
 		})
 	else
-		slot8 = OpenConfig.instance:getOpenCo(slot4)
-		slot9 = DungeonConfig.instance:getEpisodeDisplay(slot8.episodeId)
-		slot10 = DungeonConfig.instance:getEpisodeCO(slot8.episodeId).name
-		slot11 = nil
+		local var_4_1 = string.split(var_4_0, "=")
+		local var_4_2 = tonumber(var_4_1[2])
+		local var_4_3 = PlayerModel.instance:getPlayinfo().userId
+		local var_4_4 = PlayerPrefsKey.EnterRoleActivity .. "#" .. tostring(VersionActivityEnum.ActivityId.Act108) .. "#" .. tostring(var_4_3)
+		local var_4_5 = PlayerPrefsHelper.getNumber(var_4_4, 0) == 1
 
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoleActivityOpenTip, MsgBoxEnum.BoxType.Yes_No, function ()
-			PlayerPrefsHelper.setNumber(uv0, 1)
+		if OpenModel.instance:isFunctionUnlock(var_4_2) or var_4_5 then
 			MeilanniController.instance:openMeilanniMainView({
 				checkStory = true
 			})
-		end, nil, , , , , LangSettings.instance:isEn() and slot9 .. " " .. slot10 or slot9 .. slot10)
+		else
+			local var_4_6 = OpenConfig.instance:getOpenCo(var_4_2)
+			local var_4_7 = DungeonConfig.instance:getEpisodeDisplay(var_4_6.episodeId)
+			local var_4_8 = DungeonConfig.instance:getEpisodeCO(var_4_6.episodeId).name
+			local var_4_9
+
+			if LangSettings.instance:isEn() then
+				var_4_9 = var_4_7 .. " " .. var_4_8
+			else
+				var_4_9 = var_4_7 .. var_4_8
+			end
+
+			GameFacade.showMessageBox(MessageBoxIdDefine.RoleActivityOpenTip, MsgBoxEnum.BoxType.Yes_No, function()
+				PlayerPrefsHelper.setNumber(var_4_4, 1)
+				MeilanniController.instance:openMeilanniMainView({
+					checkStory = true
+				})
+			end, nil, nil, nil, nil, nil, var_4_9)
+		end
 	end
 end
 
-function slot0._btnEntranceRole2OnClick(slot0)
+function var_0_0._btnEntranceRole2OnClick(arg_6_0)
 	Activity109ChessController.instance:openEntry(VersionActivityEnum.ActivityId.Act109)
 end
 
-function slot0._btnPlayOnClick(slot0)
-	StoryController.instance:playStory(slot0.actCfg.storyId)
+function var_0_0._btnPlayOnClick(arg_7_0)
+	StoryController.instance:playStory(arg_7_0.actCfg.storyId)
 end
 
-function slot0._btnEntranceDungeonOnClick(slot0)
+function var_0_0._btnEntranceDungeonOnClick(arg_8_0)
 	VersionActivityDungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act105)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act105)
 end
 
-function slot0.onOpen(slot0)
-	slot2 = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act109)
-	slot3 = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act113)
+function var_0_0.onOpen(arg_10_0)
+	local var_10_0 = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act108)
+	local var_10_1 = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act109)
+	local var_10_2 = ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act113)
 
-	if ActivityConfig.instance:getActivityCo(VersionActivityEnum.ActivityId.Act108).redDotId ~= 0 then
-		RedDotController.instance:addRedDot(slot0._goReddot1, slot1.redDotId)
+	if var_10_0.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(arg_10_0._goReddot1, var_10_0.redDotId)
 	end
 
-	if slot2.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(slot0._goReddot2, slot2.redDotId)
+	if var_10_1.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(arg_10_0._goReddot2, var_10_1.redDotId)
 	end
 
-	if slot3.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(slot0._goReddot3, slot3.redDotId)
+	if var_10_2.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(arg_10_0._goReddot3, var_10_2.redDotId)
 	end
 end
 
-function slot0.onClose(slot0)
-	PermanentModel.instance:undateActivityInfo(slot0.actCfg.id)
+function var_0_0.onClose(arg_11_0)
+	PermanentModel.instance:undateActivityInfo(arg_11_0.actCfg.id)
 end
 
-return slot0
+return var_0_0

@@ -1,68 +1,68 @@
-module("modules.logic.versionactivity2_2.lopera.view.LoperaMainViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaMainViewContainer", package.seeall)
 
-slot0 = class("LoperaMainViewContainer", BaseViewContainer)
-slot1 = 0.35
+local var_0_0 = class("LoperaMainViewContainer", BaseViewContainer)
+local var_0_1 = 0.35
 
-function slot0.buildViews(slot0)
-	slot0._mainView = LoperaMainView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0._mainView = LoperaMainView.New()
 
 	return {
-		slot0._mainView,
+		arg_1_0._mainView,
 		TabViewGroup.New(1, "#go_left")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot2:setOverrideClose(slot0._overrideCloseFunc, slot0)
+		var_2_0:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
 
 		return {
-			slot2
+			var_2_0
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_2Enum.ActivityId.Lopera)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_2Enum.ActivityId.Lopera
 	})
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_4_0, arg_4_1)
+	var_0_0.super.setVisibleInternal(arg_4_0, arg_4_1)
 
-	if not slot0.viewGO then
+	if not arg_4_0.viewGO then
 		return
 	end
 
-	if not slot0._anim then
-		slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	if not arg_4_0._anim then
+		arg_4_0._anim = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if slot1 then
-		slot0._anim:Play(UIAnimationName.Open, 0, 0)
-		slot0._mainView:tryShowFinishUnlockView()
+	if arg_4_1 then
+		arg_4_0._anim:Play(UIAnimationName.Open, 0, 0)
+		arg_4_0._mainView:tryShowFinishUnlockView()
 	end
 end
 
-function slot0._overrideCloseFunc(slot0)
-	if not slot0._anim then
-		slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._overrideCloseFunc(arg_5_0)
+	if not arg_5_0._anim then
+		arg_5_0._anim = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot0._anim:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, uv0)
+	arg_5_0._anim:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(arg_5_0.closeThis, arg_5_0, var_0_1)
 end
 
-function slot0.onContainerClose(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
+function var_0_0.onContainerClose(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.closeThis, arg_6_0)
 end
 
-return slot0
+return var_0_0

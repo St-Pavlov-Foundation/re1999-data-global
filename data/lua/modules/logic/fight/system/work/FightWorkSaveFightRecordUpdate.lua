@@ -1,30 +1,33 @@
-module("modules.logic.fight.system.work.FightWorkSaveFightRecordUpdate", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSaveFightRecordUpdate", package.seeall)
 
-slot0 = class("FightWorkSaveFightRecordUpdate", FightEffectBase)
+local var_0_0 = class("FightWorkSaveFightRecordUpdate", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot1 = slot0._actEffectMO.entityMO and slot0._actEffectMO.entityMO.uid
-	slot2 = slot1 and FightHelper.getEntity(slot1)
-	slot3 = slot2 and slot2:getMO()
-	slot0.beforeHp = slot3 and slot3.currentHp or 0
+function var_0_0.beforePlayEffectData(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO.entityMO and arg_1_0._actEffectMO.entityMO.uid
+	local var_1_1 = var_1_0 and FightHelper.getEntity(var_1_0)
+	local var_1_2 = var_1_1 and var_1_1:getMO()
+
+	arg_1_0.beforeHp = var_1_2 and var_1_2.currentHp or 0
 end
 
-function slot0.onStart(slot0)
-	slot1 = slot0._actEffectMO.entityMO and slot0._actEffectMO.entityMO.uid
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = arg_2_0._actEffectMO.entityMO and arg_2_0._actEffectMO.entityMO.uid
+	local var_2_1 = var_2_0 and FightHelper.getEntity(var_2_0)
 
-	if not (slot1 and FightHelper.getEntity(slot1)) then
+	if not var_2_1 then
 		return
 	end
 
-	if slot2.nameUI then
-		slot2.nameUI:resetHp()
+	if var_2_1.nameUI then
+		var_2_1.nameUI:resetHp()
 	end
 
-	slot3 = slot2 and slot2:getMO()
+	local var_2_2 = var_2_1 and var_2_1:getMO()
+	local var_2_3 = var_2_2 and var_2_2.currentHp or 0
 
-	FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot2, (slot3 and slot3.currentHp or 0) - slot0.beforeHp)
+	FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_2_1, var_2_3 - arg_2_0.beforeHp)
 
-	return slot0:onDone(true)
+	return arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

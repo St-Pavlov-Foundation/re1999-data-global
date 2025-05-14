@@ -1,91 +1,102 @@
-module("modules.logic.turnback.model.TurnbackRecommendModel", package.seeall)
+﻿module("modules.logic.turnback.model.TurnbackRecommendModel", package.seeall)
 
-slot0 = class("TurnbackRecommendModel", BaseModel)
+local var_0_0 = class("TurnbackRecommendModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.recommendOpenMap = {}
-	slot0.turnbackId = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.recommendOpenMap = {}
+	arg_1_0.turnbackId = 0
 end
 
-function slot0.reInit(slot0)
-	slot0.recommendOpenMap = {}
-	slot0.turnbackId = 0
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.recommendOpenMap = {}
+	arg_2_0.turnbackId = 0
 end
 
-function slot0.initReommendShowState(slot0, slot1)
-	slot0.turnbackId = slot1
+function var_0_0.initReommendShowState(arg_3_0, arg_3_1)
+	arg_3_0.turnbackId = arg_3_1
 
-	for slot6, slot7 in pairs(TurnbackConfig.instance:getAllRecommendCo(slot1) or {}) do
-		if not slot0.recommendOpenMap[slot1] then
-			slot0.recommendOpenMap[slot1] = {}
+	local var_3_0 = TurnbackConfig.instance:getAllRecommendCo(arg_3_1) or {}
+
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		if not arg_3_0.recommendOpenMap[arg_3_1] then
+			arg_3_0.recommendOpenMap[arg_3_1] = {}
 		end
 
-		slot0.recommendOpenMap[slot1][slot6] = slot0:checkReommendShowState(slot1, slot6)
+		arg_3_0.recommendOpenMap[arg_3_1][iter_3_0] = arg_3_0:checkReommendShowState(arg_3_1, iter_3_0)
 	end
 end
 
-function slot0.checkReommendShowState(slot0, slot1, slot2)
-	if not TurnbackConfig.instance:getRecommendCo(slot1, slot2) then
+function var_0_0.checkReommendShowState(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = TurnbackConfig.instance:getRecommendCo(arg_4_1, arg_4_2)
+
+	if not var_4_0 then
 		return false
 	end
 
-	slot4 = slot0:checkRecommendIsInTime(slot3)
-	slot5 = true
+	local var_4_1 = arg_4_0:checkRecommendIsInTime(var_4_0)
+	local var_4_2 = true
 
-	if string.nilorempty(slot3.relateActId) and slot3.openId > 0 then
-		slot5 = OpenModel.instance:isFunctionUnlock(slot3.openId)
+	if string.nilorempty(var_4_0.relateActId) and var_4_0.openId > 0 then
+		var_4_2 = OpenModel.instance:isFunctionUnlock(var_4_0.openId)
 	end
 
-	return slot4 and slot5
+	return var_4_1 and var_4_2
 end
 
-function slot0.checkRecommendIsInTime(slot0, slot1)
-	slot2 = TurnbackModel.instance:getLeaveTime()
-	slot3 = 0
-	slot4 = 0
-	slot5 = 0
+function var_0_0.checkRecommendIsInTime(arg_5_0, arg_5_1)
+	local var_5_0 = TurnbackModel.instance:getLeaveTime()
+	local var_5_1 = 0
+	local var_5_2 = 0
+	local var_5_3 = 0
+	local var_5_4 = not string.nilorempty(arg_5_1.onlineTime)
 
-	if not string.nilorempty(slot1.onlineTime) then
-		slot4 = TimeUtil.stringToTimestamp(slot1.onlineTime)
+	if var_5_4 then
+		var_5_2 = TimeUtil.stringToTimestamp(arg_5_1.onlineTime)
 	end
 
-	if not string.nilorempty(slot1.offlineTime) then
-		slot5 = TimeUtil.stringToTimestamp(slot1.offlineTime)
+	local var_5_5 = not string.nilorempty(arg_5_1.offlineTime)
+
+	if var_5_5 then
+		var_5_3 = TimeUtil.stringToTimestamp(arg_5_1.offlineTime)
 	end
 
-	if not string.nilorempty(slot1.constTime) then
-		slot3 = TimeUtil.stringToTimestamp(slot1.constTime)
+	local var_5_6 = not string.nilorempty(arg_5_1.constTime)
+
+	if var_5_6 then
+		var_5_1 = TimeUtil.stringToTimestamp(arg_5_1.constTime)
 	end
 
-	slot9 = slot6 and ServerTime.now() - slot4 >= 0
-	slot10 = slot7 and ServerTime.now() - slot5 > 0
-	slot11 = slot8 and slot3 - slot2 > 0 and slot2 > 0
-	slot12 = slot0:checkHasOpenRelateAct(slot1)
-	slot13 = not string.nilorempty(slot1.relateActId)
+	local var_5_7 = var_5_4 and ServerTime.now() - var_5_2 >= 0
+	local var_5_8 = var_5_5 and ServerTime.now() - var_5_3 > 0
+	local var_5_9 = var_5_6 and var_5_1 - var_5_0 > 0 and var_5_0 > 0
+	local var_5_10 = arg_5_0:checkHasOpenRelateAct(arg_5_1)
+	local var_5_11 = not string.nilorempty(arg_5_1.relateActId)
 
-	if slot2 <= 0 then
+	if var_5_0 <= 0 then
 		return false
 	end
 
-	if slot13 and slot12 and slot11 then
+	if var_5_11 and var_5_10 and var_5_9 then
 		return true
-	elseif slot13 and slot12 and not slot8 then
+	elseif var_5_11 and var_5_10 and not var_5_6 then
 		return true
-	elseif not slot13 and not slot8 then
+	elseif not var_5_11 and not var_5_6 then
 		return true
-	elseif not slot13 and slot9 and not slot10 and slot11 then
+	elseif not var_5_11 and var_5_7 and not var_5_8 and var_5_9 then
 		return true
 	else
 		return false
 	end
 end
 
-function slot0.checkHasOpenRelateAct(slot0, slot1)
-	slot2 = {}
+function var_0_0.checkHasOpenRelateAct(arg_6_0, arg_6_1)
+	local var_6_0 = {}
 
-	if not string.nilorempty(slot1.relateActId) then
-		for slot7, slot8 in ipairs(string.splitToNumber(slot1.relateActId, "#")) do
-			if ActivityHelper.getActivityStatusAndToast(slot8) == ActivityEnum.ActivityStatus.Normal then
+	if not string.nilorempty(arg_6_1.relateActId) then
+		local var_6_1 = string.splitToNumber(arg_6_1.relateActId, "#")
+
+		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+			if ActivityHelper.getActivityStatusAndToast(iter_6_1) == ActivityEnum.ActivityStatus.Normal then
 				return true
 			end
 		end
@@ -94,40 +105,45 @@ function slot0.checkHasOpenRelateAct(slot0, slot1)
 	return false
 end
 
-function slot0.checkRecommendCanShow(slot0, slot1)
-	if not string.nilorempty(slot1.prepose) then
-		for slot6, slot7 in pairs(string.splitToNumber(slot1.prepose, "#")) do
-			if not TurnbackConfig.instance:getRecommendCo(slot0.turnbackId, slot7) then
-				logError("推荐页或前置推荐页id不存在,请检查配置，id: " .. tostring(slot7))
+function var_0_0.checkRecommendCanShow(arg_7_0, arg_7_1)
+	if not string.nilorempty(arg_7_1.prepose) then
+		local var_7_0 = string.splitToNumber(arg_7_1.prepose, "#")
+
+		for iter_7_0, iter_7_1 in pairs(var_7_0) do
+			local var_7_1 = TurnbackConfig.instance:getRecommendCo(arg_7_0.turnbackId, iter_7_1)
+
+			if not var_7_1 then
+				logError("推荐页或前置推荐页id不存在,请检查配置，id: " .. tostring(iter_7_1))
 
 				return
 			end
 
-			if slot0:checkRecommendCanShow(slot8) then
+			if arg_7_0:checkRecommendCanShow(var_7_1) then
 				return false
 			end
 		end
 	end
 
-	return slot0.recommendOpenMap[slot0.turnbackId][slot1.id]
+	return arg_7_0.recommendOpenMap[arg_7_0.turnbackId][arg_7_1.id]
 end
 
-function slot0.getCanShowRecommendList(slot0)
-	slot1 = {}
+function var_0_0.getCanShowRecommendList(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = tabletool.copy(TurnbackConfig.instance:getAllRecommendCo(arg_8_0.turnbackId))
 
-	for slot6, slot7 in pairs(tabletool.copy(TurnbackConfig.instance:getAllRecommendCo(slot0.turnbackId))) do
-		if slot0:checkRecommendCanShow(slot7) then
-			table.insert(slot1, slot7)
+	for iter_8_0, iter_8_1 in pairs(var_8_1) do
+		if arg_8_0:checkRecommendCanShow(iter_8_1) then
+			table.insert(var_8_0, iter_8_1)
 		end
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0.getCanShowRecommendCount(slot0)
-	return #slot0:getCanShowRecommendList()
+function var_0_0.getCanShowRecommendCount(arg_9_0)
+	return #arg_9_0:getCanShowRecommendList()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

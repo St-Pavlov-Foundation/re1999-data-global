@@ -1,58 +1,63 @@
-module("modules.logic.store.view.PackageStoreGoodsViewItem", package.seeall)
+﻿module("modules.logic.store.view.PackageStoreGoodsViewItem", package.seeall)
 
-slot0 = class("PackageStoreGoodsViewItem", LuaCompBase)
+local var_0_0 = class("PackageStoreGoodsViewItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.viewGO = slot1
-	slot0._gogoods = gohelper.findChild(slot0.viewGO, "go_goods")
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "go_goods/#go_icon")
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._gogoods = gohelper.findChild(arg_1_0.viewGO, "go_goods")
+	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "go_goods/#go_icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot4 = slot1[3]
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(tonumber(slot1[1]), slot1[2], true)
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	local var_5_0 = tonumber(arg_5_1[1])
+	local var_5_1 = arg_5_1[2]
+	local var_5_2 = arg_5_1[3]
+	local var_5_3, var_5_4 = ItemModel.instance:getItemConfigAndIcon(var_5_0, var_5_1, true)
 
-	if not slot0._itemIcon then
-		slot0._itemIcon = IconMgr.instance:getCommonPropItemIcon(slot0._goicon)
+	if not arg_5_0._itemIcon then
+		arg_5_0._itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_5_0._goicon)
 	end
 
-	slot0._itemIcon:setMOValue(slot2, slot3, slot4, nil, true)
-	slot0._itemIcon:hideExpEquipState()
-	slot0._itemIcon:isShowName(false)
+	arg_5_0._itemIcon:setMOValue(var_5_0, var_5_1, var_5_2, nil, true)
+	arg_5_0._itemIcon:hideExpEquipState()
+	arg_5_0._itemIcon:isShowName(false)
 
-	if slot0._itemIcon:isEquipIcon() then
-		slot0._itemIcon:isShowEquipAndItemCount(true)
+	if arg_5_0._itemIcon:isEquipIcon() then
+		arg_5_0._itemIcon:isShowEquipAndItemCount(true)
 	end
 
-	slot0._itemIcon:setCountFontSize(36)
-	slot0._itemIcon:hideEquipLvAndBreak(true)
-	slot0._itemIcon:showEquipRefineContainer(false)
-	slot0._itemIcon:setScale(0.7)
-	slot0._itemIcon:SetCountLocalY(43.6)
-	slot0._itemIcon:SetCountBgHeight(25)
+	arg_5_0._itemIcon:setCountFontSize(36)
+	arg_5_0._itemIcon:hideEquipLvAndBreak(true)
+	arg_5_0._itemIcon:showEquipRefineContainer(false)
+	arg_5_0._itemIcon:setScale(0.7)
+	arg_5_0._itemIcon:SetCountLocalY(43.6)
+	arg_5_0._itemIcon:SetCountBgHeight(25)
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0.viewGO, arg_6_1)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0:__onDispose()
 end
 
-return slot0
+return var_0_0

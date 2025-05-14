@@ -1,15 +1,16 @@
-module("modules.logic.fight.system.work.FightWorkClearAfterRound", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkClearAfterRound", package.seeall)
 
-slot0 = class("FightWorkClearAfterRound", BaseWork)
+local var_0_0 = class("FightWorkClearAfterRound", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightRoundSequence.roundTempData = {}
 
 	FightPlayCardModel.instance:clearUsedCards()
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

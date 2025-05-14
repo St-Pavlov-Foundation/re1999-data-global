@@ -1,69 +1,84 @@
-module("modules.logic.room.entity.comp.RoomBuildingInteractComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomBuildingInteractComp", package.seeall)
 
-slot0 = class("RoomBuildingInteractComp", RoomBaseEffectKeyComp)
+local var_0_0 = class("RoomBuildingInteractComp", RoomBaseEffectKeyComp)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0.entity = slot1
+	arg_1_0.entity = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0:removeEventListeners()
 end
 
-function slot0.onRebuildEffectGO(slot0)
+function var_0_0.onRebuildEffectGO(arg_6_0)
+	return
 end
 
-function slot0.onReturnEffectGO(slot0)
+function var_0_0.onReturnEffectGO(arg_7_0)
+	return
 end
 
-function slot0.startInteract(slot0)
-	if not slot0.entity:getMO() then
+function var_0_0.startInteract(arg_8_0)
+	local var_8_0 = arg_8_0.entity:getMO()
+
+	if not var_8_0 then
 		return
 	end
 
-	if not slot1:getInteractMO() then
+	local var_8_1 = var_8_0:getInteractMO()
+
+	if not var_8_1 then
 		return
 	end
 
-	slot3 = slot2:getHeroIdList()
+	local var_8_2 = var_8_1:getHeroIdList()
+	local var_8_3 = RoomCameraController.instance:getRoomScene()
 
-	if not RoomCameraController.instance:getRoomScene() then
+	if not var_8_3 then
 		return
 	end
 
-	for slot8, slot9 in ipairs(slot3) do
-		if slot4.charactermgr:getCharacterEntity(slot9, SceneTag.RoomCharacter) and slot10.interactActionComp then
-			slot10.interactActionComp:startInteract(slot1.buildingUid, slot8, slot2.config.showTime * 0.001)
+	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
+		local var_8_4 = var_8_3.charactermgr:getCharacterEntity(iter_8_1, SceneTag.RoomCharacter)
+
+		if var_8_4 and var_8_4.interactActionComp then
+			var_8_4.interactActionComp:startInteract(var_8_0.buildingUid, iter_8_0, var_8_1.config.showTime * 0.001)
 		end
 	end
 
-	if slot2.config and not string.nilorempty(slot2.config.buildingAnim) then
-		slot0.entity:playAnimator(slot2.config.buildingAnim)
+	if var_8_1.config and not string.nilorempty(var_8_1.config.buildingAnim) then
+		arg_8_0.entity:playAnimator(var_8_1.config.buildingAnim)
 	end
 end
 
-function slot0.getPointGOByName(slot0, slot1)
-	if slot0.entity.effect:getGameObjectsByName(slot0._effectKey, slot1) and #slot2 > 0 then
-		return slot2[1]
+function var_0_0.getPointGOByName(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0.entity.effect:getGameObjectsByName(arg_9_0._effectKey, arg_9_1)
+
+	if var_9_0 and #var_9_0 > 0 then
+		return var_9_0[1]
 	end
 end
 
-function slot0.getPointGOTrsByName(slot0, slot1)
-	if slot0.entity.effect:getGameObjectsTrsByName(slot0._effectKey, slot1) and #slot2 > 0 then
-		return slot2[1]
+function var_0_0.getPointGOTrsByName(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.entity.effect:getGameObjectsTrsByName(arg_10_0._effectKey, arg_10_1)
+
+	if var_10_0 and #var_10_0 > 0 then
+		return var_10_0[1]
 	end
 end
 
-return slot0
+return var_0_0

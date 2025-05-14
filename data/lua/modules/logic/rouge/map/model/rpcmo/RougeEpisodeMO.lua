@@ -1,78 +1,86 @@
-module("modules.logic.rouge.map.model.rpcmo.RougeEpisodeMO", package.seeall)
+﻿module("modules.logic.rouge.map.model.rpcmo.RougeEpisodeMO", package.seeall)
 
-slot0 = pureTable("RougeEpisodeMO")
+local var_0_0 = pureTable("RougeEpisodeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.nodeMoList = {}
-	slot0.isEnd = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.nodeMoList = {}
+	arg_1_0.isEnd = false
 end
 
-function slot0.setIsEnd(slot0, slot1)
-	slot0.isEnd = slot1
+function var_0_0.setIsEnd(arg_2_0, arg_2_1)
+	arg_2_0.isEnd = arg_2_1
 end
 
-function slot0.addNode(slot0, slot1)
-	table.insert(slot0.nodeMoList, slot1)
+function var_0_0.addNode(arg_3_0, arg_3_1)
+	table.insert(arg_3_0.nodeMoList, arg_3_1)
 end
 
-function slot0.getNodeMoList(slot0)
-	return slot0.nodeMoList
+function var_0_0.getNodeMoList(arg_4_0)
+	return arg_4_0.nodeMoList
 end
 
-function slot0.updateNodeArriveStatus(slot0)
-	if slot0.id == 1 then
-		slot0.nodeMoList[1].arriveStatus = slot0.nodeMoList[1] ~= RougeMapModel.instance:getCurNode() and RougeMapEnum.Arrive.Arrived or RougeMapEnum.Arrive.ArrivingFinish
+function var_0_0.updateNodeArriveStatus(arg_5_0)
+	local var_5_0 = RougeMapModel.instance:getCurNode()
+
+	if arg_5_0.id == 1 then
+		local var_5_1 = arg_5_0.nodeMoList[1] ~= var_5_0
+
+		arg_5_0.nodeMoList[1].arriveStatus = var_5_1 and RougeMapEnum.Arrive.Arrived or RougeMapEnum.Arrive.ArrivingFinish
 
 		return
 	end
 
-	if slot0:getArrivedNode() then
-		for slot6, slot7 in ipairs(slot0.nodeMoList) do
-			if slot7 ~= slot2 then
-				slot7.arriveStatus = RougeMapEnum.Arrive.CantArrive
-			elseif slot1 ~= slot7 then
-				slot7.arriveStatus = RougeMapEnum.Arrive.Arrived
-			elseif slot7:getEventState() == RougeMapEnum.EventState.Finish then
-				slot7.arriveStatus = RougeMapEnum.Arrive.ArrivingFinish
+	local var_5_2 = arg_5_0:getArrivedNode()
+
+	if var_5_2 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0.nodeMoList) do
+			if iter_5_1 ~= var_5_2 then
+				iter_5_1.arriveStatus = RougeMapEnum.Arrive.CantArrive
+			elseif var_5_0 ~= iter_5_1 then
+				iter_5_1.arriveStatus = RougeMapEnum.Arrive.Arrived
+			elseif iter_5_1:getEventState() == RougeMapEnum.EventState.Finish then
+				iter_5_1.arriveStatus = RougeMapEnum.Arrive.ArrivingFinish
 			else
-				slot7.arriveStatus = RougeMapEnum.Arrive.ArrivingNotFinish
+				iter_5_1.arriveStatus = RougeMapEnum.Arrive.ArrivingNotFinish
 			end
 		end
 
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0.nodeMoList) do
-		if slot0:checkPreNodeHadStartOrArrivingFinish(slot7.preNodeList) then
-			slot7.arriveStatus = RougeMapEnum.Arrive.CanArrive
-		elseif slot0:checkPreNodeEveryIsCantArrive(slot8) then
-			slot7.arriveStatus = RougeMapEnum.Arrive.CantArrive
+	for iter_5_2, iter_5_3 in ipairs(arg_5_0.nodeMoList) do
+		local var_5_3 = iter_5_3.preNodeList
+
+		if arg_5_0:checkPreNodeHadStartOrArrivingFinish(var_5_3) then
+			iter_5_3.arriveStatus = RougeMapEnum.Arrive.CanArrive
+		elseif arg_5_0:checkPreNodeEveryIsCantArrive(var_5_3) then
+			iter_5_3.arriveStatus = RougeMapEnum.Arrive.CantArrive
 		else
-			slot7.arriveStatus = RougeMapEnum.Arrive.NotArrive
+			iter_5_3.arriveStatus = RougeMapEnum.Arrive.NotArrive
 		end
 	end
 end
 
-function slot0.checkPreNodeHadStartOrArrivingFinish(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkPreNodeHadStartOrArrivingFinish(arg_6_0, arg_6_1)
+	if not arg_6_1 then
 		return false
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if RougeMapModel.instance:getNode(slot6).arriveStatus == RougeMapEnum.Arrive.ArrivingFinish then
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		if RougeMapModel.instance:getNode(iter_6_1).arriveStatus == RougeMapEnum.Arrive.ArrivingFinish then
 			return true
 		end
 	end
 end
 
-function slot0.checkPreNodeEveryIsCantArrive(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkPreNodeEveryIsCantArrive(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return true
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if RougeMapModel.instance:getNode(slot6).arriveStatus ~= RougeMapEnum.Arrive.CantArrive then
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		if RougeMapModel.instance:getNode(iter_7_1).arriveStatus ~= RougeMapEnum.Arrive.CantArrive then
 			return false
 		end
 	end
@@ -80,28 +88,28 @@ function slot0.checkPreNodeEveryIsCantArrive(slot0, slot1)
 	return true
 end
 
-function slot0.getArrivedNode(slot0)
-	if RougeMapModel.instance:getCurEpisodeId() < slot0.id then
+function var_0_0.getArrivedNode(arg_8_0)
+	if arg_8_0.id > RougeMapModel.instance:getCurEpisodeId() then
 		return nil
 	end
 
-	for slot4, slot5 in ipairs(slot0.nodeMoList) do
-		if slot5.pathWay then
-			return slot5
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.nodeMoList) do
+		if iter_8_1.pathWay then
+			return iter_8_1
 		end
 	end
 end
 
-function slot0.sortNode(slot0)
-	table.sort(slot0.nodeMoList, uv0._sortFunc)
+function var_0_0.sortNode(arg_9_0)
+	table.sort(arg_9_0.nodeMoList, var_0_0._sortFunc)
 
-	for slot4, slot5 in ipairs(slot0.nodeMoList) do
-		slot5:setIndex(slot4)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.nodeMoList) do
+		iter_9_1:setIndex(iter_9_0)
 	end
 end
 
-function slot0._sortFunc(slot0, slot1)
-	return slot0.nodeId < slot1.nodeId
+function var_0_0._sortFunc(arg_10_0, arg_10_1)
+	return arg_10_0.nodeId < arg_10_1.nodeId
 end
 
-return slot0
+return var_0_0

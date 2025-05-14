@@ -1,33 +1,33 @@
-module("modules.logic.fight.model.mo.HeroSpAttributeMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.HeroSpAttributeMO", package.seeall)
 
-slot0 = pureTable("HeroSpAttributeMO")
+local var_0_0 = pureTable("HeroSpAttributeMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.uid = slot1
-	slot0.revive = slot2.revive
-	slot0.heal = slot2.heal
-	slot0.absorb = slot2.absorb
-	slot0.defenseIgnore = slot2.defenseIgnore
-	slot0.clutch = slot2.clutch
-	slot0.finalAddDmg = slot2.finalAddDmg
-	slot0.finalDropDmg = slot2.finalDropDmg
-	slot0.normalSkillRate = slot2.normalSkillRate
-	slot0.playAddRate = slot2.playAddRate
-	slot0.playDropRate = slot2.playDropRate
-	slot0.dizzyResistances = slot2.dizzyResistances
-	slot0.sleepResistances = slot2.sleepResistances
-	slot0.petrifiedResistances = slot2.petrifiedResistances
-	slot0.frozenResistances = slot2.frozenResistances
-	slot0.disarmResistances = slot2.disarmResistances
-	slot0.forbidResistances = slot2.forbidResistances
-	slot0.sealResistances = slot2.sealResistances
-	slot0.cantGetExskillResistances = slot2.cantGetExskillResistances
-	slot0.delExPointResistances = slot2.delExPointResistances
-	slot0.stressUpResistances = slot2.stressUpResistances
-	slot0.controlResilience = slot2.controlResilience
-	slot0.delExPointResilience = slot2.delExPointResilience
-	slot0.stressUpResilience = slot2.stressUpResilience
-	slot0.charmResistances = slot2.charmResistances
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.uid = arg_1_1
+	arg_1_0.revive = arg_1_2.revive
+	arg_1_0.heal = arg_1_2.heal
+	arg_1_0.absorb = arg_1_2.absorb
+	arg_1_0.defenseIgnore = arg_1_2.defenseIgnore
+	arg_1_0.clutch = arg_1_2.clutch
+	arg_1_0.finalAddDmg = arg_1_2.finalAddDmg
+	arg_1_0.finalDropDmg = arg_1_2.finalDropDmg
+	arg_1_0.normalSkillRate = arg_1_2.normalSkillRate
+	arg_1_0.playAddRate = arg_1_2.playAddRate
+	arg_1_0.playDropRate = arg_1_2.playDropRate
+	arg_1_0.dizzyResistances = arg_1_2.dizzyResistances
+	arg_1_0.sleepResistances = arg_1_2.sleepResistances
+	arg_1_0.petrifiedResistances = arg_1_2.petrifiedResistances
+	arg_1_0.frozenResistances = arg_1_2.frozenResistances
+	arg_1_0.disarmResistances = arg_1_2.disarmResistances
+	arg_1_0.forbidResistances = arg_1_2.forbidResistances
+	arg_1_0.sealResistances = arg_1_2.sealResistances
+	arg_1_0.cantGetExskillResistances = arg_1_2.cantGetExskillResistances
+	arg_1_0.delExPointResistances = arg_1_2.delExPointResistances
+	arg_1_0.stressUpResistances = arg_1_2.stressUpResistances
+	arg_1_0.controlResilience = arg_1_2.controlResilience
+	arg_1_0.delExPointResilience = arg_1_2.delExPointResilience
+	arg_1_0.stressUpResilience = arg_1_2.stressUpResilience
+	arg_1_0.charmResistances = arg_1_2.charmResistances
 end
 
-return slot0
+return var_0_0

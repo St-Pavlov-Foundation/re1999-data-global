@@ -1,176 +1,199 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeartView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeartView", package.seeall)
 
-slot0 = class("V1a6_CachotHeartView", BaseView)
+local var_0_0 = class("V1a6_CachotHeartView", BaseView)
 
-function slot0.ctor(slot0, slot1)
-	slot0._rootPath = slot1 or ""
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._rootPath = arg_1_1 or ""
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onInitView(slot0)
-	slot0._rootGo = gohelper.findChild(slot0.viewGO, slot0._rootPath)
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._rootGo = gohelper.findChild(arg_2_0.viewGO, arg_2_0._rootPath)
 
-	gohelper.setActive(slot0._rootGo, true)
+	gohelper.setActive(arg_2_0._rootGo, true)
 
-	slot0._gotipsbg = gohelper.findChild(slot0._rootGo, "#go_tipsbg")
-	slot0._txttitle = gohelper.findChildTextMesh(slot0._rootGo, "#go_tipsbg/title")
-	slot0._gotipsitem = gohelper.findChild(slot0._rootGo, "#go_tipsbg/nowDes/#go_tipsitem")
-	slot0._btnheartclick = gohelper.findChildButtonWithAudio(slot0._rootGo, "#btn_heartclick")
-	slot0._slider = gohelper.findChildSlider(slot0._rootGo, "#slider_heart")
-	slot0._txtnum = gohelper.findChildTextMesh(slot0._rootGo, "#slider_heart/Handle Slide Area/Handle/#txt_num")
-	slot0._imagelight = gohelper.findChildImage(slot0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light")
-	slot0._golighteffectyellow = gohelper.findChild(slot0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light/yellow")
-	slot0._golighteffectorange = gohelper.findChild(slot0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light/orange")
-	slot0._golighteffectblue = gohelper.findChild(slot0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light/blue")
-	slot0._gonexttitle = gohelper.findChild(slot0._rootGo, "#go_tipsbg/nextTitle")
-	slot0._txtnextNum = gohelper.findChildTextMesh(slot0._rootGo, "#go_tipsbg/nextTitle/nextNum")
-	slot0._gonextDes = gohelper.findChild(slot0._rootGo, "#go_tipsbg/nextDes")
-	slot0._gonextDesItem = gohelper.findChild(slot0._rootGo, "#go_tipsbg/nextDes/#go_tipsitem")
-	slot0._gopretitle = gohelper.findChild(slot0._rootGo, "#go_tipsbg/preTitle")
-	slot0._txtpreNum = gohelper.findChildTextMesh(slot0._rootGo, "#go_tipsbg/preTitle/preNum")
-	slot0._gopreDes = gohelper.findChild(slot0._rootGo, "#go_tipsbg/preDes")
-	slot0._gopreDesItem = gohelper.findChild(slot0._rootGo, "#go_tipsbg/preDes/#go_tipsitem")
+	arg_2_0._gotipsbg = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg")
+	arg_2_0._txttitle = gohelper.findChildTextMesh(arg_2_0._rootGo, "#go_tipsbg/title")
+	arg_2_0._gotipsitem = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/nowDes/#go_tipsitem")
+	arg_2_0._btnheartclick = gohelper.findChildButtonWithAudio(arg_2_0._rootGo, "#btn_heartclick")
+	arg_2_0._slider = gohelper.findChildSlider(arg_2_0._rootGo, "#slider_heart")
+	arg_2_0._txtnum = gohelper.findChildTextMesh(arg_2_0._rootGo, "#slider_heart/Handle Slide Area/Handle/#txt_num")
+	arg_2_0._imagelight = gohelper.findChildImage(arg_2_0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light")
+	arg_2_0._golighteffectyellow = gohelper.findChild(arg_2_0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light/yellow")
+	arg_2_0._golighteffectorange = gohelper.findChild(arg_2_0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light/orange")
+	arg_2_0._golighteffectblue = gohelper.findChild(arg_2_0._rootGo, "#slider_heart/Handle Slide Area/Handle/#image_light/blue")
+	arg_2_0._gonexttitle = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/nextTitle")
+	arg_2_0._txtnextNum = gohelper.findChildTextMesh(arg_2_0._rootGo, "#go_tipsbg/nextTitle/nextNum")
+	arg_2_0._gonextDes = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/nextDes")
+	arg_2_0._gonextDesItem = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/nextDes/#go_tipsitem")
+	arg_2_0._gopretitle = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/preTitle")
+	arg_2_0._txtpreNum = gohelper.findChildTextMesh(arg_2_0._rootGo, "#go_tipsbg/preTitle/preNum")
+	arg_2_0._gopreDes = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/preDes")
+	arg_2_0._gopreDesItem = gohelper.findChild(arg_2_0._rootGo, "#go_tipsbg/preDes/#go_tipsitem")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnheartclick:AddClickListener(slot0.showHideTips, slot0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, slot0._onTouchScreen, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, slot0._refreshInfo, slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateHeart, slot0._refreshInfo, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnheartclick:AddClickListener(arg_3_0.showHideTips, arg_3_0)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_3_0._onTouchScreen, arg_3_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_3_0._refreshInfo, arg_3_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateHeart, arg_3_0._refreshInfo, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnheartclick:RemoveClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, slot0._onTouchScreen, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateRogueInfo, slot0._refreshInfo, slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateHeart, slot0._refreshInfo, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnheartclick:RemoveClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_4_0._onTouchScreen, arg_4_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_4_0._refreshInfo, arg_4_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateHeart, arg_4_0._refreshInfo, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._golighteffectyellow, false)
-	gohelper.setActive(slot0._golighteffectorange, false)
-	gohelper.setActive(slot0._golighteffectblue, false)
-	slot0:_refreshInfo(true)
+function var_0_0.onOpen(arg_5_0)
+	gohelper.setActive(arg_5_0._golighteffectyellow, false)
+	gohelper.setActive(arg_5_0._golighteffectorange, false)
+	gohelper.setActive(arg_5_0._golighteffectblue, false)
+	arg_5_0:_refreshInfo(true)
 end
 
-function slot0._refreshInfo(slot0, slot1)
-	slot0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+function var_0_0._refreshInfo(arg_6_0, arg_6_1)
+	arg_6_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not slot0._rogueInfo then
+	if not arg_6_0._rogueInfo then
 		return
 	end
 
-	slot0._txttitle.text = V1a6_CachotConfig.instance:getHeartConfig(slot0._rogueInfo.heart).title
+	local var_6_0 = arg_6_0._rogueInfo.heart
+	local var_6_1 = V1a6_CachotConfig.instance:getHeartConfig(var_6_0)
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	arg_6_0._txttitle.text = var_6_1.title
 
-		slot0._tweenId = nil
+	if arg_6_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
+
+		arg_6_0._tweenId = nil
 	end
 
-	if slot1 or not slot0._nowHeart then
-		slot0:_setValue(slot2, true)
+	if arg_6_1 or not arg_6_0._nowHeart then
+		arg_6_0:_setValue(var_6_0, true)
 
-		slot0._nowHeart = slot2
-	elseif slot0._nowHeart ~= slot2 then
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot0._nowHeart, slot2, 0.5, slot0._setValue, slot0._onTweenHeartFinish, slot0)
+		arg_6_0._nowHeart = var_6_0
+	elseif arg_6_0._nowHeart ~= var_6_0 then
+		arg_6_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_6_0._nowHeart, var_6_0, 0.5, arg_6_0._setValue, arg_6_0._onTweenHeartFinish, arg_6_0)
 	end
 
-	gohelper.CreateObjList(slot0, slot0.onDesItemCreate, slot0:_getDesData(slot3.desc), slot0._gotipsitem.transform.parent.gameObject, slot0._gotipsitem)
+	local var_6_2 = arg_6_0:_getDesData(var_6_1.desc)
 
-	slot6 = lua_rogue_heartbeat.configDict[slot3.id + 1]
+	gohelper.CreateObjList(arg_6_0, arg_6_0.onDesItemCreate, var_6_2, arg_6_0._gotipsitem.transform.parent.gameObject, arg_6_0._gotipsitem)
 
-	if lua_rogue_heartbeat.configDict[slot3.id - 1] then
-		slot0._txtpreNum.text = formatLuaLang("v1a6_cachot_heart_lt", string.splitToNumber(slot5.range, "#")[2])
+	local var_6_3 = lua_rogue_heartbeat.configDict[var_6_1.id - 1]
+	local var_6_4 = lua_rogue_heartbeat.configDict[var_6_1.id + 1]
 
-		gohelper.setActive(slot0._gopretitle, true)
-		gohelper.setActive(slot0._gopreDes, true)
-		gohelper.CreateObjList(slot0, slot0.onDesItemCreate, slot0:_getDesData(slot5.desc), slot0._gopreDesItem.transform.parent.gameObject, slot0._gopreDesItem)
+	if var_6_3 then
+		local var_6_5 = string.splitToNumber(var_6_3.range, "#")
+
+		arg_6_0._txtpreNum.text = formatLuaLang("v1a6_cachot_heart_lt", var_6_5[2])
+
+		gohelper.setActive(arg_6_0._gopretitle, true)
+		gohelper.setActive(arg_6_0._gopreDes, true)
+
+		local var_6_6 = arg_6_0:_getDesData(var_6_3.desc)
+
+		gohelper.CreateObjList(arg_6_0, arg_6_0.onDesItemCreate, var_6_6, arg_6_0._gopreDesItem.transform.parent.gameObject, arg_6_0._gopreDesItem)
 	else
-		gohelper.setActive(slot0._gopretitle, false)
-		gohelper.setActive(slot0._gopreDes, false)
+		gohelper.setActive(arg_6_0._gopretitle, false)
+		gohelper.setActive(arg_6_0._gopreDes, false)
 	end
 
-	if slot6 then
-		slot0._txtnextNum.text = formatLuaLang("v1a6_cachot_heart_gt", string.splitToNumber(slot6.range, "#")[1])
+	if var_6_4 then
+		local var_6_7 = string.splitToNumber(var_6_4.range, "#")
 
-		gohelper.setActive(slot0._gonexttitle, true)
-		gohelper.setActive(slot0._gonextDes, true)
-		gohelper.CreateObjList(slot0, slot0.onDesItemCreate, slot0:_getDesData(slot6.desc), slot0._gonextDesItem.transform.parent.gameObject, slot0._gonextDesItem)
+		arg_6_0._txtnextNum.text = formatLuaLang("v1a6_cachot_heart_gt", var_6_7[1])
+
+		gohelper.setActive(arg_6_0._gonexttitle, true)
+		gohelper.setActive(arg_6_0._gonextDes, true)
+
+		local var_6_8 = arg_6_0:_getDesData(var_6_4.desc)
+
+		gohelper.CreateObjList(arg_6_0, arg_6_0.onDesItemCreate, var_6_8, arg_6_0._gonextDesItem.transform.parent.gameObject, arg_6_0._gonextDesItem)
 	else
-		gohelper.setActive(slot0._gonexttitle, false)
-		gohelper.setActive(slot0._gonextDes, false)
+		gohelper.setActive(arg_6_0._gonexttitle, false)
+		gohelper.setActive(arg_6_0._gonextDes, false)
 	end
 end
 
-function slot0._getDesData(slot0, slot1)
-	slot2 = {}
+function var_0_0._getDesData(arg_7_0, arg_7_1)
+	local var_7_0 = {}
 
-	if not string.nilorempty(slot1) then
-		slot2 = string.split(slot1, "\n")
+	if not string.nilorempty(arg_7_1) then
+		var_7_0 = string.split(arg_7_1, "\n")
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0._onTweenHeartFinish(slot0)
-	slot0._tweenId = nil
+function var_0_0._onTweenHeartFinish(arg_8_0)
+	arg_8_0._tweenId = nil
 end
 
-function slot0._setValue(slot0, slot1, slot2)
-	slot1 = math.floor(slot1)
-	slot5 = string.splitToNumber(lua_rogue_const.configDict[V1a6_CachotEnum.Const.HeartConst].value, "#")
-	slot0._txtnum.text = slot1
+function var_0_0._setValue(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_1 = math.floor(arg_9_1)
 
-	slot0._slider:SetValue((slot1 - slot5[1]) / (slot5[2] - slot5[1]))
+	local var_9_0 = V1a6_CachotConfig.instance:getHeartConfig(arg_9_1)
+	local var_9_1 = lua_rogue_const.configDict[V1a6_CachotEnum.Const.HeartConst].value
+	local var_9_2 = string.splitToNumber(var_9_1, "#")
 
-	slot6, slot7 = nil
+	arg_9_0._txtnum.text = arg_9_1
 
-	if V1a6_CachotConfig.instance:getHeartConfig(slot1).id < slot5[3] then
-		slot6 = "v1a6_cachot_img_heartblue"
-		slot7 = slot0._golighteffectblue
-	elseif slot5[3] == slot3.id then
-		slot6 = "v1a6_cachot_img_heartyellow"
-		slot7 = slot0._golighteffectyellow
-	elseif slot5[3] < slot3.id then
-		slot6 = "v1a6_cachot_img_heartorange"
-		slot7 = slot0._golighteffectorange
+	arg_9_0._slider:SetValue((arg_9_1 - var_9_2[1]) / (var_9_2[2] - var_9_2[1]))
+
+	local var_9_3
+	local var_9_4
+
+	if var_9_2[3] > var_9_0.id then
+		var_9_3 = "v1a6_cachot_img_heartblue"
+		var_9_4 = arg_9_0._golighteffectblue
+	elseif var_9_2[3] == var_9_0.id then
+		var_9_3 = "v1a6_cachot_img_heartyellow"
+		var_9_4 = arg_9_0._golighteffectyellow
+	elseif var_9_2[3] < var_9_0.id then
+		var_9_3 = "v1a6_cachot_img_heartorange"
+		var_9_4 = arg_9_0._golighteffectorange
 	end
 
-	if not slot2 and slot0._nowIcon ~= slot6 then
-		gohelper.setActive(slot7, false)
-		gohelper.setActive(slot7, true)
+	if not arg_9_2 and arg_9_0._nowIcon ~= var_9_3 then
+		gohelper.setActive(var_9_4, false)
+		gohelper.setActive(var_9_4, true)
 	end
 
-	slot0._nowIcon = slot6
-	slot0._nowHeart = slot1
+	arg_9_0._nowIcon = var_9_3
+	arg_9_0._nowHeart = arg_9_1
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imagelight, slot6)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_9_0._imagelight, var_9_3)
 end
 
-function slot0.onDesItemCreate(slot0, slot1, slot2, slot3)
-	gohelper.findChildTextMesh(slot1, "desc").text = slot2
+function var_0_0.onDesItemCreate(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	gohelper.findChildTextMesh(arg_10_1, "desc").text = arg_10_2
 end
 
-function slot0._onTouchScreen(slot0)
-	if gohelper.isMouseOverGo(slot0._btnheartclick) then
+function var_0_0._onTouchScreen(arg_11_0)
+	if gohelper.isMouseOverGo(arg_11_0._btnheartclick) then
 		return
 	end
 
-	gohelper.setActive(slot0._gotipsbg, false)
+	gohelper.setActive(arg_11_0._gotipsbg, false)
 end
 
-function slot0.showHideTips(slot0)
-	gohelper.setActive(slot0._gotipsbg, not slot0._gotipsbg.activeSelf)
+function var_0_0.showHideTips(arg_12_0)
+	local var_12_0 = not arg_12_0._gotipsbg.activeSelf
+
+	gohelper.setActive(arg_12_0._gotipsbg, var_12_0)
 end
 
-function slot0.onClose(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId, false)
+function var_0_0.onClose(arg_13_0)
+	if arg_13_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_13_0._tweenId, false)
 
-		slot0._tweenId = nil
+		arg_13_0._tweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,51 +1,51 @@
-module("modules.logic.battlepass.view.BpSPViewContainer", package.seeall)
+﻿module("modules.logic.battlepass.view.BpSPViewContainer", package.seeall)
 
-slot0 = class("BpSPViewContainer", BaseViewContainer)
-slot1 = 1
-slot2 = 2
+local var_0_0 = class("BpSPViewContainer", BaseViewContainer)
+local var_0_1 = 1
+local var_0_2 = 2
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		BpBuyBtn.New(),
-		TabViewGroup.New(uv0, "#go_btns"),
-		BPTabViewGroup.New(uv1, "#go_container"),
+		TabViewGroup.New(var_0_1, "#go_btns"),
+		BPTabViewGroup.New(var_0_2, "#go_container"),
 		BpSPView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == uv0 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == var_0_1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == uv1 then
+	elseif arg_2_1 == var_0_2 then
 		return {
 			BpSPBonusView.New()
 		}
 	end
 end
 
-function slot0.playOpenTransition(slot0)
-	slot1 = "open"
+function var_0_0.playOpenTransition(arg_3_0)
+	local var_3_0 = "open"
 
-	if slot0.viewParam and slot0.viewParam.isSwitch then
-		slot1 = "switch"
+	if arg_3_0.viewParam and arg_3_0.viewParam.isSwitch then
+		var_3_0 = "switch"
 	end
 
-	uv0.super.playOpenTransition(slot0, {
+	var_0_0.super.playOpenTransition(arg_3_0, {
 		duration = 1,
-		anim = slot1
+		anim = var_3_0
 	})
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:onPlayCloseTransitionFinish()
+function var_0_0.playCloseTransition(arg_4_0)
+	arg_4_0:onPlayCloseTransitionFinish()
 end
 
-return slot0
+return var_0_0

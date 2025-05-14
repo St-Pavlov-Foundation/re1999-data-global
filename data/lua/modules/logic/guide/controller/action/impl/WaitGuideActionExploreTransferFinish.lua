@@ -1,19 +1,19 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreTransferFinish", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreTransferFinish", package.seeall)
 
-slot0 = class("WaitGuideActionExploreTransferFinish", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionExploreTransferFinish", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroStatuEnd, slot0._onHeroStatuEnd, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroStatuEnd, arg_1_0._onHeroStatuEnd, arg_1_0)
 end
 
-function slot0._onHeroStatuEnd(slot0, slot1)
-	if slot1 == ExploreAnimEnum.RoleAnimStatus.Entry then
-		slot0:onDone(true)
+function var_0_0._onHeroStatuEnd(arg_2_0, arg_2_1)
+	if arg_2_1 == ExploreAnimEnum.RoleAnimStatus.Entry then
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroStatuEnd, slot0._onHeroStatuEnd, slot0)
+function var_0_0.clearWork(arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroStatuEnd, arg_3_0._onHeroStatuEnd, arg_3_0)
 end
 
-return slot0
+return var_0_0

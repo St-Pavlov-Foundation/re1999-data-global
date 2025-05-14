@@ -1,25 +1,25 @@
-module("modules.logic.activity.model.ActivityType172InfoMo", package.seeall)
+﻿module("modules.logic.activity.model.ActivityType172InfoMo", package.seeall)
 
-slot0 = pureTable("ActivityType172InfoMo")
+local var_0_0 = pureTable("ActivityType172InfoMo")
 
-function slot0.ctor(slot0)
-	slot0.useItemTaskIds = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.useItemTaskIds = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.useItemTaskIds = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.useItemTaskIds = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.useItemTaskIds, slot6)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		table.insert(arg_2_0.useItemTaskIds, iter_2_1)
 	end
 end
 
-function slot0.update(slot0, slot1)
-	slot0.useItemTaskIds = {}
+function var_0_0.update(arg_3_0, arg_3_1)
+	arg_3_0.useItemTaskIds = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.useItemTaskIds, slot6)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		table.insert(arg_3_0.useItemTaskIds, iter_3_1)
 	end
 end
 
-return slot0
+return var_0_0

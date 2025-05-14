@@ -1,261 +1,284 @@
-module("modules.logic.mainsceneswitch.controller.MainSceneSwitchDisplayController", package.seeall)
+﻿module("modules.logic.mainsceneswitch.controller.MainSceneSwitchDisplayController", package.seeall)
 
-slot0 = class("MainSceneSwitchDisplayController", BaseController)
+local var_0_0 = class("MainSceneSwitchDisplayController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.clear(slot0)
-	if slot0._loaderMap then
-		for slot4, slot5 in pairs(slot0._loaderMap) do
-			slot5:dispose()
+function var_0_0.clear(arg_5_0)
+	if arg_5_0._loaderMap then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._loaderMap) do
+			iter_5_1:dispose()
 		end
 
-		tabletool.clear(slot0._loaderMap)
+		tabletool.clear(arg_5_0._loaderMap)
 	end
 
-	if slot0._weatherCompMap then
-		for slot4, slot5 in pairs(slot0._weatherCompMap) do
-			for slot9, slot10 in ipairs(slot5) do
-				slot10:onSceneClose()
+	if arg_5_0._weatherCompMap then
+		for iter_5_2, iter_5_3 in pairs(arg_5_0._weatherCompMap) do
+			for iter_5_4, iter_5_5 in ipairs(iter_5_3) do
+				iter_5_5:onSceneClose()
 			end
 		end
 
-		tabletool.clear(slot0._weatherCompMap)
+		tabletool.clear(arg_5_0._weatherCompMap)
 	end
 
-	if slot0._sceneNameMap then
-		for slot4, slot5 in pairs(slot0._sceneNameMap) do
-			gohelper.destroy(slot5)
+	if arg_5_0._sceneNameMap then
+		for iter_5_6, iter_5_7 in pairs(arg_5_0._sceneNameMap) do
+			gohelper.destroy(iter_5_7)
 		end
 
-		tabletool.clear(slot0._sceneNameMap)
+		tabletool.clear(arg_5_0._sceneNameMap)
 	end
 
-	slot0._sceneRoot = nil
-	slot0._callback = nil
-	slot0._callbackTarget = nil
+	arg_5_0._sceneRoot = nil
+	arg_5_0._callback = nil
+	arg_5_0._callbackTarget = nil
 end
 
-function slot0.hasSceneRoot(slot0)
-	return slot0._sceneRoot ~= nil
+function var_0_0.hasSceneRoot(arg_6_0)
+	return arg_6_0._sceneRoot ~= nil
 end
 
-function slot0.removeScene(slot0, slot1, slot2)
-	slot3, slot4 = slot0:_getSceneConfig(slot1)
+function var_0_0.removeScene(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0, var_7_1 = arg_7_0:_getSceneConfig(arg_7_1)
 
-	if slot2 then
-		slot5 = slot0._sceneNameMap[slot4]
+	if arg_7_2 then
+		local var_7_2 = arg_7_0._sceneNameMap[var_7_1]
 
-		gohelper.destroy(slot5)
-		gohelper.setActive(slot5, false)
+		gohelper.destroy(var_7_2)
+		gohelper.setActive(var_7_2, false)
 
-		if slot0._loaderMap[slot4] then
-			slot6:dispose()
+		local var_7_3 = arg_7_0._loaderMap[var_7_1]
 
-			slot0._loaderMap[slot4] = nil
+		if var_7_3 then
+			var_7_3:dispose()
+
+			arg_7_0._loaderMap[var_7_1] = nil
 		end
 	end
 
-	slot0._sceneNameMap[slot4] = nil
+	arg_7_0._sceneNameMap[var_7_1] = nil
 
-	if slot0._weatherCompMap[slot4] then
-		for slot9, slot10 in ipairs(slot5) do
-			slot10:onSceneClose()
+	local var_7_4 = arg_7_0._weatherCompMap[var_7_1]
+
+	if var_7_4 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_4) do
+			iter_7_1:onSceneClose()
 		end
 
-		slot0._weatherCompMap[slot4] = nil
+		arg_7_0._weatherCompMap[var_7_1] = nil
 	end
 end
 
-function slot0.initMaps(slot0)
-	slot0._loaderMap = {}
-	slot0._sceneNameMap = {}
-	slot0._weatherCompMap = {}
+function var_0_0.initMaps(arg_8_0)
+	arg_8_0._loaderMap = {}
+	arg_8_0._sceneNameMap = {}
+	arg_8_0._weatherCompMap = {}
 end
 
-function slot0.setSceneRoot(slot0, slot1)
-	slot0._sceneRoot = slot1
+function var_0_0.setSceneRoot(arg_9_0, arg_9_1)
+	arg_9_0._sceneRoot = arg_9_1
 
-	for slot7 = slot0._sceneRoot.transform.childCount - 1, 0, -1 do
-		slot8 = slot2:GetChild(slot7)
-		slot0._sceneNameMap[slot8.name] = slot8.gameObject
+	local var_9_0 = arg_9_0._sceneRoot.transform
+
+	for iter_9_0 = var_9_0.childCount - 1, 0, -1 do
+		local var_9_1 = var_9_0:GetChild(iter_9_0)
+
+		arg_9_0._sceneNameMap[var_9_1.name] = var_9_1.gameObject
 	end
 end
 
-function slot0.hideScene(slot0)
-	slot0._isShowScene = false
+function var_0_0.hideScene(arg_10_0)
+	arg_10_0._isShowScene = false
 
-	if slot0._weatherCompMap then
-		for slot4, slot5 in pairs(slot0._weatherCompMap) do
-			for slot9, slot10 in pairs(slot5) do
-				if slot10.onSceneHide then
-					slot10:onSceneHide()
+	if arg_10_0._weatherCompMap then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0._weatherCompMap) do
+			for iter_10_2, iter_10_3 in pairs(iter_10_1) do
+				if iter_10_3.onSceneHide then
+					iter_10_3:onSceneHide()
 				end
 			end
 		end
 	end
 end
 
-function slot0.showCurScene(slot0)
-	if not slot0._curSceneId then
+function var_0_0.showCurScene(arg_11_0)
+	if not arg_11_0._curSceneId then
 		return
 	end
 
-	slot0:showScene(slot0._curSceneId, slot0._callback, slot0._calbackTarget)
+	arg_11_0:showScene(arg_11_0._curSceneId, arg_11_0._callback, arg_11_0._calbackTarget)
 end
 
-slot1 = "MainSceneSwitchDisplayController_showScene"
+local var_0_1 = "MainSceneSwitchDisplayController_showScene"
 
-function slot0.showScene(slot0, slot1, slot2, slot3)
-	slot0._curSceneId = slot1
-	slot0._isShowScene = true
-	slot0._callback = slot2
-	slot0._callbackTarget = slot3
-	slot4, slot5 = slot0:_getSceneConfig(slot1)
+function var_0_0.showScene(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_0._curSceneId = arg_12_1
+	arg_12_0._isShowScene = true
+	arg_12_0._callback = arg_12_2
+	arg_12_0._callbackTarget = arg_12_3
 
-	if slot0._sceneNameMap[slot5] then
-		slot0:_showScene(slot5)
+	local var_12_0, var_12_1 = arg_12_0:_getSceneConfig(arg_12_1)
+
+	if arg_12_0._sceneNameMap[var_12_1] then
+		arg_12_0:_showScene(var_12_1)
 
 		return
 	end
 
-	if not slot0._loaderMap[slot5] then
-		UIBlockHelper.instance:startBlock(uv0, 1)
+	if not arg_12_0._loaderMap[var_12_1] then
+		UIBlockHelper.instance:startBlock(var_0_1, 1)
 
-		slot6 = MultiAbLoader.New()
-		slot0._loaderMap[slot5] = slot6
-		slot6._sceneId = slot1
+		local var_12_2 = MultiAbLoader.New()
 
-		slot6:addPath(slot4)
-		slot6:startLoad(slot0._loadSceneFinish, slot0)
+		arg_12_0._loaderMap[var_12_1] = var_12_2
+		var_12_2._sceneId = arg_12_1
+
+		var_12_2:addPath(var_12_0)
+		var_12_2:startLoad(arg_12_0._loadSceneFinish, arg_12_0)
 	end
 end
 
-function slot0._loadSceneFinish(slot0, slot1)
-	UIBlockHelper.instance:endBlock(uv0)
+function var_0_0._loadSceneFinish(arg_13_0, arg_13_1)
+	UIBlockHelper.instance:endBlock(var_0_1)
 
-	slot2 = slot1._sceneId
-	slot3, slot4, slot5 = slot0:_getSceneConfig(slot2)
-	slot7 = gohelper.clone(slot1:getFirstAssetItem():GetResource(slot3), slot0._sceneRoot)
-	slot0._sceneNameMap[slot4] = slot7
+	local var_13_0 = arg_13_1._sceneId
+	local var_13_1, var_13_2, var_13_3 = arg_13_0:_getSceneConfig(var_13_0)
+	local var_13_4 = arg_13_1:getFirstAssetItem()
+	local var_13_5 = gohelper.clone(var_13_4:GetResource(var_13_1), arg_13_0._sceneRoot)
 
-	transformhelper.setLocalPosXY(slot7.transform, 10000, 0)
+	arg_13_0._sceneNameMap[var_13_2] = var_13_5
 
-	slot8 = WeatherYearAnimationComp.New()
-	slot9 = WeatherFrameComp.New()
-	slot10 = WeatherComp.New()
-	slot11 = WeatherSwitchComp.New()
-	slot12 = WeatherEggContainerComp.New()
-	slot13 = WeatherSceneEffectComp.New()
-	slot0._weatherCompMap[slot4] = {
-		slot10,
-		slot8,
-		slot9,
-		slot11,
-		slot12,
-		slot13
+	transformhelper.setLocalPosXY(var_13_5.transform, 10000, 0)
+
+	local var_13_6 = WeatherYearAnimationComp.New()
+	local var_13_7 = WeatherFrameComp.New()
+	local var_13_8 = WeatherComp.New()
+	local var_13_9 = WeatherSwitchComp.New()
+	local var_13_10 = WeatherEggContainerComp.New()
+	local var_13_11 = WeatherSceneEffectComp.New()
+
+	arg_13_0._weatherCompMap[var_13_2] = {
+		var_13_8,
+		var_13_6,
+		var_13_7,
+		var_13_9,
+		var_13_10,
+		var_13_11
 	}
 
-	slot11:onInit(slot2, slot10)
-	slot12:onInit(slot2)
-	slot12:initSceneGo(slot7)
-	slot13:onInit(slot2)
-	slot13:initSceneGo(slot7)
-	slot8:onInit()
-	slot8:initSceneGo(slot7)
-	slot9:onInit(slot2)
-	slot9:initSceneGo(slot7)
-	slot10:addRoleBlendCallback(slot0._onRoleBlendCallback, {
-		slot9,
-		slot13
+	var_13_9:onInit(var_13_0, var_13_8)
+	var_13_10:onInit(var_13_0)
+	var_13_10:initSceneGo(var_13_5)
+	var_13_11:onInit(var_13_0)
+	var_13_11:initSceneGo(var_13_5)
+	var_13_6:onInit()
+	var_13_6:initSceneGo(var_13_5)
+	var_13_7:onInit(var_13_0)
+	var_13_7:initSceneGo(var_13_5)
+	var_13_8:addRoleBlendCallback(arg_13_0._onRoleBlendCallback, {
+		var_13_7,
+		var_13_11
 	})
-	slot10:setSceneResName(slot5)
-	slot10:onInit()
-	slot10:setSceneId(slot2)
-	slot10:initSceneGo(slot7, function ()
-		uv0:_showScene(uv1)
-	end, slot10)
-	slot10:addChangeReportCallback(slot12.onReportChange, slot12, true)
+	var_13_8:setSceneResName(var_13_3)
+	var_13_8:onInit()
+	var_13_8:setSceneId(var_13_0)
+	var_13_8:initSceneGo(var_13_5, function()
+		arg_13_0:_showScene(var_13_2)
+	end, var_13_8)
+	var_13_8:addChangeReportCallback(var_13_10.onReportChange, var_13_10, true)
 end
 
-function slot0._onRoleBlendCallback(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot0) do
-		slot8:onRoleBlend(slot1, slot2, slot3)
+function var_0_0._onRoleBlendCallback(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0) do
+		iter_15_1:onRoleBlend(arg_15_1, arg_15_2, arg_15_3)
 	end
 end
 
-function slot0.setSwitchCompContinue(slot0, slot1, slot2)
-	if not slot0:getSwitchComp(slot1) then
+function var_0_0.setSwitchCompContinue(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0:getSwitchComp(arg_16_1)
+
+	if not var_16_0 then
 		return
 	end
 
-	if slot2 then
-		slot3:continue()
+	if arg_16_2 then
+		var_16_0:continue()
 	else
-		slot3:pause()
+		var_16_0:pause()
 	end
 end
 
-function slot0.getSwitchComp(slot0, slot1)
-	slot2, slot3, slot4 = slot0:_getSceneConfig(slot1)
+function var_0_0.getSwitchComp(arg_17_0, arg_17_1)
+	local var_17_0, var_17_1, var_17_2 = arg_17_0:_getSceneConfig(arg_17_1)
+	local var_17_3 = arg_17_0._weatherCompMap[var_17_1]
 
-	return slot0._weatherCompMap[slot3] and slot5[4]
+	return var_17_3 and var_17_3[4]
 end
 
-function slot0._getSceneConfig(slot0, slot1)
-	slot3 = lua_scene_switch.configDict[slot1].resName
+function var_0_0._getSceneConfig(arg_18_0, arg_18_1)
+	local var_18_0 = lua_scene_switch.configDict[arg_18_1].resName
+	local var_18_1 = ResUrl.getSceneRes(var_18_0)
+	local var_18_2 = var_18_0 .. "_p(Clone)"
 
-	return ResUrl.getSceneRes(slot3), slot3 .. "_p(Clone)", slot3
+	return var_18_1, var_18_2, var_18_0
 end
 
-function slot0._showScene(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._sceneNameMap) do
-		if slot5 == slot1 then
-			transformhelper.setLocalPosXY(slot6.transform, 0, 0)
+function var_0_0._showScene(arg_19_0, arg_19_1)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._sceneNameMap) do
+		if iter_19_0 == arg_19_1 then
+			transformhelper.setLocalPosXY(iter_19_1.transform, 0, 0)
 		end
 	end
 
-	slot2 = nil
+	local var_19_0
 
-	for slot6, slot7 in pairs(slot0._weatherCompMap) do
-		if slot6 == slot1 and slot0._isShowScene then
-			slot2 = slot7
+	for iter_19_2, iter_19_3 in pairs(arg_19_0._weatherCompMap) do
+		if iter_19_2 == arg_19_1 and arg_19_0._isShowScene then
+			var_19_0 = iter_19_3
 		else
-			for slot12, slot13 in pairs(slot7) do
-				if slot13.onSceneHide then
-					slot13:onSceneHide()
+			for iter_19_4, iter_19_5 in pairs(iter_19_3) do
+				if iter_19_5.onSceneHide then
+					iter_19_5:onSceneHide()
 				end
 			end
 		end
 	end
 
-	if slot2 then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.onSceneShow then
-				slot7:onSceneShow()
+	if var_19_0 then
+		for iter_19_6, iter_19_7 in pairs(var_19_0) do
+			if iter_19_7.onSceneShow then
+				iter_19_7:onSceneShow()
 			end
 		end
 	end
 
-	if slot0._callback then
-		slot3(slot0._callbackTarget)
+	local var_19_1 = arg_19_0._callback
+	local var_19_2 = arg_19_0._callbackTarget
+
+	if var_19_1 then
+		var_19_1(var_19_2)
 	end
 
-	slot0._callback = nil
-	slot0._callbackTarget = nil
+	arg_19_0._callback = nil
+	arg_19_0._callbackTarget = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

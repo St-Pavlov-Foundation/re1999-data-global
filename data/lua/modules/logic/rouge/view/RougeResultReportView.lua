@@ -1,46 +1,54 @@
-module("modules.logic.rouge.view.RougeResultReportView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeResultReportView", package.seeall)
 
-slot0 = class("RougeResultReportView", BaseView)
+local var_0_0 = class("RougeResultReportView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._scrollrecordlist = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_recordlist")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._scrollrecordlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_recordlist")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btndetailsOnClick(slot0)
+function var_0_0._btndetailsOnClick(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
 	RougeResultReportListModel.instance.startFrameCount = UnityEngine.Time.frameCount
 
 	RougeResultReportListModel.instance:init()
-	gohelper.setActive(slot0._goempty, #RougeResultReportListModel.instance:getList() == 0)
+
+	local var_5_0 = RougeResultReportListModel.instance:getList()
+
+	gohelper.setActive(arg_5_0._goempty, #var_5_0 == 0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio9)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
 	RougeResultReportListModel.instance:clear()
 end
 
-return slot0
+return var_0_0

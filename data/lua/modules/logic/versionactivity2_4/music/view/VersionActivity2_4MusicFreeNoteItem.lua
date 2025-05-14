@@ -1,65 +1,73 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeNoteItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeNoteItem", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeNoteItem", ListScrollCellExtend)
+local var_0_0 = class("VersionActivity2_4MusicFreeNoteItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagecir = gohelper.findChildImage(slot0.viewGO, "#image_cir")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#txt_num")
-	slot0._goclick = gohelper.findChild(slot0.viewGO, "#go_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagecir = gohelper.findChildImage(arg_1_0.viewGO, "#image_cir")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_num")
+	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._clickEffect = gohelper.findChild(slot0.viewGO, "#click")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._clickEffect = gohelper.findChild(arg_4_0.viewGO, "#click")
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goclick, VersionActivity2_4MusicTouchComp, {
-		callback = slot0._onClickDown,
-		callbackTarget = slot0
+	MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goclick, VersionActivity2_4MusicTouchComp, {
+		callback = arg_4_0._onClickDown,
+		callbackTarget = arg_4_0
 	})
 end
 
-function slot0._onClickDown(slot0)
-	if slot0._parentView:getNoteAudioId(slot0._index) == nil then
+function var_0_0._onClickDown(arg_5_0)
+	local var_5_0 = arg_5_0._parentView:getNoteAudioId(arg_5_0._index)
+
+	if var_5_0 == nil then
 		return
 	end
 
-	AudioMgr.instance:trigger(slot1)
-	gohelper.setActive(slot0._clickEffect, false)
-	gohelper.setActive(slot0._clickEffect, true)
+	AudioMgr.instance:trigger(var_5_0)
+	gohelper.setActive(arg_5_0._clickEffect, false)
+	gohelper.setActive(arg_5_0._clickEffect, true)
 
 	if not VersionActivity2_4MusicFreeModel.instance:isRecording() then
 		return
 	end
 
-	VersionActivity2_4MusicFreeModel.instance:addNote(slot1)
+	VersionActivity2_4MusicFreeModel.instance:addNote(var_5_0)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0._index = slot1
-	slot0._parentView = slot2
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._index = arg_8_1
+	arg_8_0._parentView = arg_8_2
 
-	UISpriteSetMgr.instance:setMusicSprite(slot0._imagecir, "v2a4_bakaluoer_freenote_" .. VersionActivity2_4MusicEnum.NoteIcon[slot0._index])
+	UISpriteSetMgr.instance:setMusicSprite(arg_8_0._imagecir, "v2a4_bakaluoer_freenote_" .. VersionActivity2_4MusicEnum.NoteIcon[arg_8_0._index])
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,164 +1,181 @@
-module("modules.logic.versionactivity1_5.act142.rpc.Activity142Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.rpc.Activity142Rpc", package.seeall)
 
-slot0 = class("Activity142Rpc", BaseRpc)
+local var_0_0 = class("Activity142Rpc", BaseRpc)
 
-function slot0.sendGetActInfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity142Module_pb.GetAct142InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetActInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity142Module_pb.GetAct142InfoRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct142InfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Activity142Model.instance:onReceiveGetAct142InfoReply(slot2)
+function var_0_0.onReceiveGetAct142InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		Activity142Model.instance:onReceiveGetAct142InfoReply(arg_2_2)
 	end
 end
 
-function slot0.sendActStartEpisodeRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity142Module_pb.Act142StartEpisodeRequest()
-	slot5.activityId = slot1
-	slot5.id = slot2
+function var_0_0.sendActStartEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = Activity142Module_pb.Act142StartEpisodeRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_3_0.activityId = arg_3_1
+	var_3_0.id = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
 end
 
-function slot0.onReceiveAct142StartEpisodeReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct142StartEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	if slot2.map and (not slot2.episodeId or slot2.episodeId == 0) then
-		Activity142Model.instance:onReceiveAct142StartEpisodeReply(slot2)
-		Va3ChessRpcController.instance:onReceiveActStartEpisodeReply(slot1, slot2)
+	if arg_4_2.map and (not arg_4_2.episodeId or arg_4_2.episodeId == 0) then
+		Activity142Model.instance:onReceiveAct142StartEpisodeReply(arg_4_2)
+		Va3ChessRpcController.instance:onReceiveActStartEpisodeReply(arg_4_1, arg_4_2)
 	end
 end
 
-function slot0.sendActAbortRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity142Module_pb.Act142AbortRequest()
-	slot4.activityId = slot1
+function var_0_0.sendActAbortRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = Activity142Module_pb.Act142AbortRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_5_0.activityId = arg_5_1
+
+	arg_5_0:sendMsg(var_5_0, arg_5_2, arg_5_3)
 end
 
-function slot0.onReceiveAct142AbortReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveAct142AbortReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
 		Va3ChessGameController.instance:gameOver()
 	end
 end
 
-function slot0.sendActEventEndRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity142Module_pb.Act142EventEndRequest()
-	slot4.activityId = slot1
+function var_0_0.sendActEventEndRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = Activity142Module_pb.Act142EventEndRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_7_0.activityId = arg_7_1
+
+	arg_7_0:sendMsg(var_7_0, arg_7_2, arg_7_3)
 end
 
-function slot0.onReceiveAct142EventEndReply(slot0, slot1, slot2)
+function var_0_0.onReceiveAct142EventEndReply(arg_8_0, arg_8_1, arg_8_2)
+	return
 end
 
-function slot0.sendActUseItemRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity142Module_pb.Act142UseItemRequest()
-	slot6.activityId = slot1
-	slot6.x = slot2
-	slot6.y = slot3
+function var_0_0.sendActUseItemRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+	local var_9_0 = Activity142Module_pb.Act142UseItemRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_9_0.activityId = arg_9_1
+	var_9_0.x = arg_9_2
+	var_9_0.y = arg_9_3
+
+	arg_9_0:sendMsg(var_9_0, arg_9_4, arg_9_5)
 end
 
-function slot0.onReceiveAct142UseItemReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		-- Nothing
+function var_0_0.onReceiveAct142UseItemReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
+		-- block empty
 	end
 end
 
-function slot0.sendAct142UseFireballRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	slot9 = Activity142Module_pb.Act142UseFireballRequest()
-	slot9.activityId = slot1
-	slot9.x = slot2
-	slot9.y = slot3
-	slot9.x2 = slot4
-	slot9.y2 = slot5
-	slot9.killedObjectId = slot6
+function var_0_0.sendAct142UseFireballRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7, arg_11_8)
+	local var_11_0 = Activity142Module_pb.Act142UseFireballRequest()
 
-	slot0:sendMsg(slot9, slot7, slot8)
+	var_11_0.activityId = arg_11_1
+	var_11_0.x = arg_11_2
+	var_11_0.y = arg_11_3
+	var_11_0.x2 = arg_11_4
+	var_11_0.y2 = arg_11_5
+	var_11_0.killedObjectId = arg_11_6
+
+	arg_11_0:sendMsg(var_11_0, arg_11_7, arg_11_8)
 end
 
-function slot0.onReceiveAct142UseFireballReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		Va3ChessGameModel.instance:setFireBallCount(slot2.fireballNum)
+function var_0_0.onReceiveAct142UseFireballReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == 0 then
+		Va3ChessGameModel.instance:setFireBallCount(arg_12_2.fireballNum)
 	end
 end
 
-function slot0.sendActBeginRoundRequest(slot0, slot1, slot2, slot3, slot4)
-	Activity142Module_pb.Act142BeginRoundRequest().activityId = slot1
+function var_0_0.sendActBeginRoundRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	local var_13_0 = Activity142Module_pb.Act142BeginRoundRequest()
 
-	for slot9, slot10 in ipairs(slot2) do
-		slot11 = slot5.operations:add()
-		slot11.id = slot10.id
-		slot11.moveDirection = slot10.dir
+	var_13_0.activityId = arg_13_1
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
+		local var_13_1 = var_13_0.operations:add()
+
+		var_13_1.id = iter_13_1.id
+		var_13_1.moveDirection = iter_13_1.dir
 	end
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	arg_13_0:sendMsg(var_13_0, arg_13_3, arg_13_4)
 end
 
-function slot0.onReceiveAct142BeginRoundReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		-- Nothing
+function var_0_0.onReceiveAct142BeginRoundReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == 0 then
+		-- block empty
 	end
 
 	Va3ChessGameModel.instance:cleanOptList()
 end
 
-function slot0.onReceiveAct142StepPush(slot0, slot1, slot2)
-	if slot1 == 0 and Va3ChessModel.instance:getActId() == slot2.activityId and Va3ChessGameController.instance.event then
-		slot3:insertStepList(slot2.steps)
+function var_0_0.onReceiveAct142StepPush(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 == 0 and Va3ChessModel.instance:getActId() == arg_15_2.activityId then
+		local var_15_0 = Va3ChessGameController.instance.event
+
+		if var_15_0 then
+			var_15_0:insertStepList(arg_15_2.steps)
+		end
 	end
 end
 
-function slot0.sendAct142CheckPointRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity142Module_pb.Act142CheckPointRequest()
-	slot5.activityId = slot1
-	slot5.lastCheckPoint = slot2
+function var_0_0.sendAct142CheckPointRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+	local var_16_0 = Activity142Module_pb.Act142CheckPointRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_16_0.activityId = arg_16_1
+	var_16_0.lastCheckPoint = arg_16_2
+
+	arg_16_0:sendMsg(var_16_0, arg_16_3, arg_16_4)
 end
 
-function slot0.onReceiveAct142CheckPointReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		slot3 = slot2.map
-		slot5 = slot2.activityId
+function var_0_0.onReceiveAct142CheckPointReply(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 == 0 then
+		local var_17_0 = arg_17_2.map
+		local var_17_1 = var_17_0.mapId
+		local var_17_2 = arg_17_2.activityId
 
-		Va3ChessController.instance:initMapData(slot5, slot3)
-		Va3ChessGameController.instance:enterChessGame(slot5, slot3.mapId, ViewName.Activity142GameView)
+		Va3ChessController.instance:initMapData(var_17_2, var_17_0)
+		Va3ChessGameController.instance:enterChessGame(var_17_2, var_17_1, ViewName.Activity142GameView)
 
-		if slot3.fragileTilebases then
-			Va3ChessGameModel.instance:updateFragileTilebases(slot5, slot3.fragileTilebases)
+		if var_17_0.fragileTilebases then
+			Va3ChessGameModel.instance:updateFragileTilebases(var_17_2, var_17_0.fragileTilebases)
 		end
 
-		if slot3.brokenTilebases then
-			Va3ChessGameModel.instance:updateBrokenTilebases(slot5, slot3.brokenTilebases)
+		if var_17_0.brokenTilebases then
+			Va3ChessGameModel.instance:updateBrokenTilebases(var_17_2, var_17_0.brokenTilebases)
 		end
 
 		Activity142Controller.instance:dispatchEvent(Activity142Event.Back2CheckPoint)
 	end
 end
 
-function slot0.sendGetAct142CollectionsRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity142Module_pb.GetAct142CollectionsRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct142CollectionsRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = Activity142Module_pb.GetAct142CollectionsRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_18_0.activityId = arg_18_1
+
+	arg_18_0:sendMsg(var_18_0, arg_18_2, arg_18_3)
 end
 
-function slot0.onReceiveGetAct142CollectionsReply(slot0, slot1, slot2)
-	if slot1 == 0 and Activity142Model.instance:getActivityId() == slot2.activityId then
-		for slot7, slot8 in ipairs(slot2.collectionIds) do
-			Activity142Model.instance:setHasCollection(slot8)
+function var_0_0.onReceiveGetAct142CollectionsReply(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 == 0 and Activity142Model.instance:getActivityId() == arg_19_2.activityId then
+		for iter_19_0, iter_19_1 in ipairs(arg_19_2.collectionIds) do
+			Activity142Model.instance:setHasCollection(iter_19_1)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

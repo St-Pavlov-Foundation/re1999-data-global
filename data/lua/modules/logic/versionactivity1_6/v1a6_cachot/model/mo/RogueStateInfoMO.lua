@@ -1,87 +1,93 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueStateInfoMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueStateInfoMO", package.seeall)
 
-slot0 = pureTable("RogueStateInfoMO")
+local var_0_0 = pureTable("RogueStateInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.start = slot1.start
-	slot0.weekScore = slot1.weekScore
-	slot0.totalScore = slot1.totalScore
-	slot0.scoreLimit = slot1.scoreLimit
-	slot0.stage = slot1.stage
-	slot0.nextStageSecond = slot1.nextStageSecond
-	slot0.difficulty = slot1.difficulty
-	slot0.layer = slot1.layer
-	slot0.hasCollections = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.start = arg_1_1.start
+	arg_1_0.weekScore = arg_1_1.weekScore
+	arg_1_0.totalScore = arg_1_1.totalScore
+	arg_1_0.scoreLimit = arg_1_1.scoreLimit
+	arg_1_0.stage = arg_1_1.stage
+	arg_1_0.nextStageSecond = arg_1_1.nextStageSecond
+	arg_1_0.difficulty = arg_1_1.difficulty
+	arg_1_0.layer = arg_1_1.layer
+	arg_1_0.hasCollections = {}
 
-	for slot5, slot6 in ipairs(slot1.hasCollections) do
-		table.insert(slot0.hasCollections, slot6)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.hasCollections) do
+		table.insert(arg_1_0.hasCollections, iter_1_1)
 	end
 
-	slot0.unlockCollections = {}
+	arg_1_0.unlockCollections = {}
 
-	for slot5, slot6 in ipairs(slot1.unlockCollections) do
-		table.insert(slot0.unlockCollections, slot6)
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1.unlockCollections) do
+		table.insert(arg_1_0.unlockCollections, iter_1_3)
 	end
 
-	slot0.getRewards = {}
+	arg_1_0.getRewards = {}
 
-	for slot5, slot6 in ipairs(slot1.getRewards) do
-		table.insert(slot0.getRewards, slot6)
+	for iter_1_4, iter_1_5 in ipairs(arg_1_1.getRewards) do
+		table.insert(arg_1_0.getRewards, iter_1_5)
 	end
 
-	slot0.passDifficulty = {}
+	arg_1_0.passDifficulty = {}
 
-	for slot5, slot6 in ipairs(slot1.passDifficulty) do
-		table.insert(slot0.passDifficulty, slot6)
+	for iter_1_6, iter_1_7 in ipairs(arg_1_1.passDifficulty) do
+		table.insert(arg_1_0.passDifficulty, iter_1_7)
 	end
 
-	slot0:updateUnlockCollectionsNew(slot1.unlockCollectionsNew)
+	arg_1_0:updateUnlockCollectionsNew(arg_1_1.unlockCollectionsNew)
 
-	slot0.lastGroup = RogueGroupInfoMO.New()
+	arg_1_0.lastGroup = RogueGroupInfoMO.New()
 
-	slot0.lastGroup:init(slot1.lastGroup)
+	arg_1_0.lastGroup:init(arg_1_1.lastGroup)
 
-	slot0.lastBackupGroup = RogueGroupInfoMO.New()
+	arg_1_0.lastBackupGroup = RogueGroupInfoMO.New()
 
-	slot0.lastBackupGroup:init(slot1.lastBackupGroup)
+	arg_1_0.lastBackupGroup:init(arg_1_1.lastBackupGroup)
 end
 
-function slot0.getLastGroupInfo(slot0, slot1)
-	tabletool.addValues({}, slot0.lastGroup.heroList)
-	tabletool.addValues({}, slot0.lastGroup.equips)
+function var_0_0.getLastGroupInfo(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+	local var_2_1 = {}
 
-	for slot7, slot8 in ipairs(slot0.lastBackupGroup.heroList) do
-		if slot7 <= (slot1 or 0) then
-			table.insert(slot2, slot8)
+	arg_2_1 = arg_2_1 or 0
+
+	tabletool.addValues(var_2_0, arg_2_0.lastGroup.heroList)
+	tabletool.addValues(var_2_1, arg_2_0.lastGroup.equips)
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.lastBackupGroup.heroList) do
+		if iter_2_0 <= arg_2_1 then
+			table.insert(var_2_0, iter_2_1)
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0.lastBackupGroup.equips) do
-		if slot7 <= slot1 then
-			table.insert(slot3, slot8)
+	for iter_2_2, iter_2_3 in ipairs(arg_2_0.lastBackupGroup.equips) do
+		if iter_2_2 <= arg_2_1 then
+			table.insert(var_2_1, iter_2_3)
 		end
 	end
 
-	for slot8, slot9 in ipairs(slot3) do
-		slot9.index = slot8 - 1
+	local var_2_2 = {}
+
+	for iter_2_4, iter_2_5 in ipairs(var_2_1) do
+		var_2_2[iter_2_4 - 1] = iter_2_5
+		iter_2_5.index = iter_2_4 - 1
 	end
 
-	return slot2, {
-		[slot8 - 1] = slot9
-	}
+	return var_2_0, var_2_2
 end
 
-function slot0.isStart(slot0)
-	return slot0.start
+function var_0_0.isStart(arg_3_0)
+	return arg_3_0.start
 end
 
-function slot0.updateUnlockCollectionsNew(slot0, slot1)
-	slot0.unlockCollectionsNew = {}
+function var_0_0.updateUnlockCollectionsNew(arg_4_0, arg_4_1)
+	arg_4_0.unlockCollectionsNew = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.unlockCollectionsNew[slot6] = true
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		arg_4_0.unlockCollectionsNew[iter_4_1] = true
 	end
 end
 
-return slot0
+return var_0_0

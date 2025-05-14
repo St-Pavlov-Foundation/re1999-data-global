@@ -1,18 +1,23 @@
-module("modules.logic.fight.system.work.FightWorkTowerScoreChangeWork", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkTowerScoreChangeWork", package.seeall)
 
-slot0 = class("FightWorkTowerScoreChangeWork", FightEffectBase)
+local var_0_0 = class("FightWorkTowerScoreChangeWork", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0.indicatorId = FightEnum.IndicatorId.PaTaScore
-	slot0._beforeScore = FightDataHelper.fieldMgr.indicatorDict[slot0.indicatorId] and slot1.num or 0
+function var_0_0.beforePlayEffectData(arg_1_0)
+	arg_1_0.indicatorId = FightEnum.IndicatorId.PaTaScore
+
+	local var_1_0 = FightDataHelper.fieldMgr.indicatorDict[arg_1_0.indicatorId]
+
+	arg_1_0._beforeScore = var_1_0 and var_1_0.num or 0
 end
 
-function slot0.onStart(slot0)
-	slot0._curScore = FightDataHelper.fieldMgr.indicatorDict[slot0.indicatorId] and slot1.num or 0
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = FightDataHelper.fieldMgr.indicatorDict[arg_2_0.indicatorId]
 
-	slot0:com_sendFightEvent(FightEvent.OnIndicatorChange, slot0.indicatorId)
-	slot0:com_sendFightEvent(FightEvent.OnAssistBossScoreChange, slot0._beforeScore, slot0._curScore)
-	slot0:onDone(true)
+	arg_2_0._curScore = var_2_0 and var_2_0.num or 0
+
+	arg_2_0:com_sendFightEvent(FightEvent.OnIndicatorChange, arg_2_0.indicatorId)
+	arg_2_0:com_sendFightEvent(FightEvent.OnAssistBossScoreChange, arg_2_0._beforeScore, arg_2_0._curScore)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

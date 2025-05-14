@@ -1,408 +1,455 @@
-module("modules.logic.turnback.model.TurnbackModel", package.seeall)
+﻿module("modules.logic.turnback.model.TurnbackModel", package.seeall)
 
-slot0 = class("TurnbackModel", BaseModel)
+local var_0_0 = class("TurnbackModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.turnbackSubModuleInfo = {}
-	slot0.unExitSubModules = {}
-	slot0.turnbackInfoMo = nil
-	slot0.targetCategoryId = 0
-	slot0.curTurnbackId = 0
-	slot0.lastGetSigninDay = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.turnbackSubModuleInfo = {}
+	arg_2_0.unExitSubModules = {}
+	arg_2_0.turnbackInfoMo = nil
+	arg_2_0.targetCategoryId = 0
+	arg_2_0.curTurnbackId = 0
+	arg_2_0.lastGetSigninDay = nil
 end
 
-function slot0.setTurnbackInfo(slot0, slot1)
-	if TurnbackConfig.instance:getTurnbackCo(slot1.id) then
-		slot0.turnbackInfoMo = TurnbackInfoMo.New()
+function var_0_0.setTurnbackInfo(arg_3_0, arg_3_1)
+	if TurnbackConfig.instance:getTurnbackCo(arg_3_1.id) then
+		arg_3_0.turnbackInfoMo = TurnbackInfoMo.New()
 
-		slot0.turnbackInfoMo:init(slot1)
-		slot0:setCurTurnbackId(slot1.id)
-		slot0:setTaskInfoList()
-		slot0:setSignInInfoList()
-		slot0:initRecommendData()
-		slot0:getBonusHeroConfigList()
-		slot0:_calcAllBonus()
-		slot0:setDropInfoList(slot1.dropInfos)
+		arg_3_0.turnbackInfoMo:init(arg_3_1)
+		arg_3_0:setCurTurnbackId(arg_3_1.id)
+		arg_3_0:setTaskInfoList()
+		arg_3_0:setSignInInfoList()
+		arg_3_0:initRecommendData()
+		arg_3_0:getBonusHeroConfigList()
+		arg_3_0:_calcAllBonus()
+		arg_3_0:setDropInfoList(arg_3_1.dropInfos)
 	end
 end
 
-function slot0.setCurTurnbackId(slot0, slot1)
-	slot0.curTurnbackId = slot1
+function var_0_0.setCurTurnbackId(arg_4_0, arg_4_1)
+	arg_4_0.curTurnbackId = arg_4_1
 end
 
-function slot0.getCurTurnbackId(slot0)
-	return slot0.curTurnbackId
+function var_0_0.getCurTurnbackId(arg_5_0)
+	return arg_5_0.curTurnbackId
 end
 
-function slot0.isNewType(slot0)
-	return slot0.turnbackInfoMo:isNewType()
+function var_0_0.isNewType(arg_6_0)
+	return arg_6_0.turnbackInfoMo:isNewType()
 end
 
-function slot0.getCurTurnbackMo(slot0)
-	return slot0.turnbackInfoMo
+function var_0_0.getCurTurnbackMo(arg_7_0)
+	return arg_7_0.turnbackInfoMo
 end
 
-function slot0.getLeaveTime(slot0)
-	return slot0.turnbackInfoMo.leaveTime
+function var_0_0.getLeaveTime(arg_8_0)
+	return arg_8_0.turnbackInfoMo.leaveTime
 end
 
-function slot0.getCurTurnbackMoWithNilError(slot0)
-	if not slot0:getCurTurnbackMo() then
+function var_0_0.getCurTurnbackMoWithNilError(arg_9_0)
+	local var_9_0 = arg_9_0:getCurTurnbackMo()
+
+	if not var_9_0 then
 		logError("TurnbackModel:getCurTurnbackMoWithNilError, can't find turnbackMo")
 	end
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.canShowTurnbackPop(slot0)
-	if not slot0.turnbackInfoMo then
+function var_0_0.canShowTurnbackPop(arg_10_0)
+	if not arg_10_0.turnbackInfoMo then
 		return false
-	elseif slot0.turnbackInfoMo.firstShow then
+	elseif arg_10_0.turnbackInfoMo.firstShow then
 		return false
 	end
 
 	return true
 end
 
-function slot0.initTurnbackSubModules(slot0, slot1)
-	for slot6, slot7 in ipairs(TurnbackConfig.instance:getAllTurnbackSubModules(slot1)) do
-		if not slot0.turnbackSubModuleInfo[slot7] then
-			slot0.turnbackSubModuleInfo[slot7] = {
-				id = slot7,
-				config = TurnbackConfig.instance:getTurnbackSubModuleCo(slot7),
-				order = slot6
+function var_0_0.initTurnbackSubModules(arg_11_0, arg_11_1)
+	local var_11_0 = TurnbackConfig.instance:getAllTurnbackSubModules(arg_11_1)
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if not arg_11_0.turnbackSubModuleInfo[iter_11_1] then
+			local var_11_1 = {
+				id = iter_11_1,
+				config = TurnbackConfig.instance:getTurnbackSubModuleCo(iter_11_1),
+				order = iter_11_0
 			}
+
+			arg_11_0.turnbackSubModuleInfo[iter_11_1] = var_11_1
 		end
 	end
 
-	slot0:removeUnExitSubModules(slot0.turnbackSubModuleInfo)
+	arg_11_0:removeUnExitSubModules(arg_11_0.turnbackSubModuleInfo)
 end
 
-function slot0.setTargetCategoryId(slot0, slot1)
-	slot0.targetCategoryId = slot1
+function var_0_0.setTargetCategoryId(arg_12_0, arg_12_1)
+	arg_12_0.targetCategoryId = arg_12_1
 end
 
-function slot0.getTargetCategoryId(slot0, slot1)
-	slot0:initTurnbackSubModules(slot1)
+function var_0_0.getTargetCategoryId(arg_13_0, arg_13_1)
+	arg_13_0:initTurnbackSubModules(arg_13_1)
 
-	if GameUtil.getTabLen(slot0.turnbackSubModuleInfo) == 0 then
-		slot0.targetCategoryId = 0
+	if GameUtil.getTabLen(arg_13_0.turnbackSubModuleInfo) == 0 then
+		arg_13_0.targetCategoryId = 0
 
 		return 0
 	end
 
-	for slot5, slot6 in pairs(slot0.turnbackSubModuleInfo) do
-		if slot6.config.id == slot0.targetCategoryId and slot6.config.turnbackId == slot1 then
-			return slot0.targetCategoryId
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.turnbackSubModuleInfo) do
+		if iter_13_1.config.id == arg_13_0.targetCategoryId and iter_13_1.config.turnbackId == arg_13_1 then
+			return arg_13_0.targetCategoryId
 		end
 	end
 
-	if not slot0:isNewType() then
-		slot0.targetCategoryId = slot0:getTargetSubModules()
+	if not arg_13_0:isNewType() then
+		arg_13_0.targetCategoryId = arg_13_0:getTargetSubModules()
 	else
-		slot0.targetCategoryId = slot0:getTargetNewSubModules()
+		arg_13_0.targetCategoryId = arg_13_0:getTargetNewSubModules()
 	end
 
-	return slot0.targetCategoryId
+	return arg_13_0.targetCategoryId
 end
 
-function slot0.getTargetSubModules(slot0)
-	if uv0.instance:haveOnceBonusReward() then
+function var_0_0.getTargetSubModules(arg_14_0)
+	if var_0_0.instance:haveOnceBonusReward() then
 		return TurnbackEnum.ActivityId.RewardShowView
-	elseif uv0.instance:haveSignInReward() then
+	elseif var_0_0.instance:haveSignInReward() then
 		return TurnbackEnum.ActivityId.SignIn
-	elseif uv0.instance:haveTaskReward() then
+	elseif var_0_0.instance:haveTaskReward() then
 		return TurnbackEnum.ActivityId.TaskView
 	end
 
 	return TurnbackEnum.ActivityId.TaskView
 end
 
-function slot0.getTargetNewSubModules(slot0)
-	if uv0.instance:haveSignInReward() then
+function var_0_0.getTargetNewSubModules(arg_15_0)
+	if var_0_0.instance:haveSignInReward() then
 		return TurnbackEnum.ActivityId.NewSignIn
-	elseif uv0.instance:haveTaskReward() then
+	elseif var_0_0.instance:haveTaskReward() then
 		return TurnbackEnum.ActivityId.NewTaskView
 	end
 
 	return TurnbackEnum.ActivityId.NewSignIn
 end
 
-function slot0.haveOnceBonusReward(slot0)
-	return not slot0.turnbackInfoMo.onceBonus
+function var_0_0.haveOnceBonusReward(arg_16_0)
+	return not arg_16_0.turnbackInfoMo.onceBonus
 end
 
-function slot0.haveSignInReward(slot0)
+function var_0_0.haveSignInReward(arg_17_0)
 	return TurnbackSignInModel.instance:getTheFirstCanGetIndex() ~= 0
 end
 
-function slot0.setLastGetSigninReward(slot0, slot1)
-	slot0.lastGetSigninDay = slot1
+function var_0_0.setLastGetSigninReward(arg_18_0, arg_18_1)
+	arg_18_0.lastGetSigninDay = arg_18_1
 end
 
-function slot0.getLastGetSigninReward(slot0)
-	return slot0.lastGetSigninDay
+function var_0_0.getLastGetSigninReward(arg_19_0)
+	return arg_19_0.lastGetSigninDay
 end
 
-function slot0.haveTaskReward(slot0)
-	slot1 = TurnbackTaskModel.instance:haveTaskItemReward()
-	slot2 = slot0:getCurHasGetTaskBonus()
-	slot4 = {}
+function var_0_0.haveTaskReward(arg_20_0)
+	local var_20_0 = TurnbackTaskModel.instance:haveTaskItemReward()
+	local var_20_1 = arg_20_0:getCurHasGetTaskBonus()
+	local var_20_2 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_20_0.curTurnbackId)
+	local var_20_3 = {}
 
-	for slot8, slot9 in ipairs(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-		for slot14, slot15 in ipairs(slot2) do
-			if slot9.id == slot15 then
+	for iter_20_0, iter_20_1 in ipairs(var_20_2) do
+		local var_20_4 = {
+			config = iter_20_1
+		}
+
+		var_20_4.hasGetState = false
+
+		for iter_20_2, iter_20_3 in ipairs(var_20_1) do
+			if iter_20_1.id == iter_20_3 then
+				var_20_4.hasGetState = true
+
 				break
 			end
 		end
 
-		slot4[slot8] = {
-			config = slot9,
-			hasGetState = false,
-			hasGetState = true
-		}
+		var_20_3[iter_20_0] = var_20_4
 	end
 
-	slot6 = false
+	local var_20_5 = arg_20_0.turnbackInfoMo.bonusPoint
+	local var_20_6 = false
 
-	for slot10, slot11 in ipairs(slot4) do
-		if slot11.config.needPoint <= slot0.turnbackInfoMo.bonusPoint and slot11.hasGetState == false then
-			slot6 = true
+	for iter_20_4, iter_20_5 in ipairs(var_20_3) do
+		if var_20_5 >= iter_20_5.config.needPoint and iter_20_5.hasGetState == false then
+			var_20_6 = true
 
 			break
 		end
 	end
 
-	return slot1 or slot6
+	return var_20_0 or var_20_6
 end
 
-function slot0.addUnExitSubModule(slot0, slot1)
-	slot0.unExitSubModules[slot1] = slot1
+function var_0_0.addUnExitSubModule(arg_21_0, arg_21_1)
+	arg_21_0.unExitSubModules[arg_21_1] = arg_21_1
 end
 
-function slot0.removeUnExitSubModules(slot0, slot1)
-	if GameUtil.getTabLen(slot1) == 0 then
+function var_0_0.removeUnExitSubModules(arg_22_0, arg_22_1)
+	if GameUtil.getTabLen(arg_22_1) == 0 then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0.unExitSubModules) do
-		for slot10, slot11 in ipairs(slot1) do
-			if slot11.id == slot6 then
-				table.remove(slot1, slot10)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0.unExitSubModules) do
+		for iter_22_2, iter_22_3 in ipairs(arg_22_1) do
+			if iter_22_3.id == iter_22_1 then
+				table.remove(arg_22_1, iter_22_2)
 			end
 		end
 	end
 
-	return slot1
+	return arg_22_1
 end
 
-function slot0.removeUnExitCategory(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6 == TurnbackEnum.ActivityId.DungeonShowView and not slot0.turnbackInfoMo:isAdditionInOpenTime() then
-			slot0:addUnExitSubModule(slot6)
-			table.remove(slot1, slot5)
+function var_0_0.removeUnExitCategory(arg_23_0, arg_23_1)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
+		if iter_23_1 == TurnbackEnum.ActivityId.DungeonShowView and not arg_23_0.turnbackInfoMo:isAdditionInOpenTime() then
+			arg_23_0:addUnExitSubModule(iter_23_1)
+			table.remove(arg_23_1, iter_23_0)
 		end
 
-		if slot6 == TurnbackEnum.ActivityId.RecommendView and (TurnbackRecommendModel.instance:getCanShowRecommendCount() == 0 or not slot0.turnbackInfoMo:isInReommendTime()) then
-			slot0:addUnExitSubModule(slot6)
-			table.remove(slot1, slot5)
+		if iter_23_1 == TurnbackEnum.ActivityId.RecommendView and (TurnbackRecommendModel.instance:getCanShowRecommendCount() == 0 or not arg_23_0.turnbackInfoMo:isInReommendTime()) then
+			arg_23_0:addUnExitSubModule(iter_23_1)
+			table.remove(arg_23_1, iter_23_0)
 		end
 	end
 
-	return slot1
+	return arg_23_1
 end
 
-function slot0.getRemainTime(slot0, slot1)
-	if slot0:getCurTurnbackMo() then
-		slot4 = (slot1 or slot2.endTime) - ServerTime.now()
-		slot6 = slot4 % TimeUtil.OneDaySecond
-		slot8 = slot6 % TimeUtil.OneHourSecond
+function var_0_0.getRemainTime(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:getCurTurnbackMo()
 
-		return Mathf.Floor(slot4 / TimeUtil.OneDaySecond), Mathf.Floor(slot6 / TimeUtil.OneHourSecond), Mathf.Floor(slot8 / TimeUtil.OneMinuteSecond), Mathf.Floor(slot8 % TimeUtil.OneMinuteSecond)
+	if var_24_0 then
+		local var_24_1 = (arg_24_1 or var_24_0.endTime) - ServerTime.now()
+		local var_24_2 = Mathf.Floor(var_24_1 / TimeUtil.OneDaySecond)
+		local var_24_3 = var_24_1 % TimeUtil.OneDaySecond
+		local var_24_4 = Mathf.Floor(var_24_3 / TimeUtil.OneHourSecond)
+		local var_24_5 = var_24_3 % TimeUtil.OneHourSecond
+		local var_24_6 = Mathf.Floor(var_24_5 / TimeUtil.OneMinuteSecond)
+		local var_24_7 = Mathf.Floor(var_24_5 % TimeUtil.OneMinuteSecond)
+
+		return var_24_2, var_24_4, var_24_6, var_24_7
 	else
 		return 0, 0, 0, 0
 	end
 end
 
-function slot0.isInOpenTime(slot0)
-	if slot0.turnbackInfoMo then
-		return slot0.turnbackInfoMo:isInOpenTime()
+function var_0_0.isInOpenTime(arg_25_0)
+	if arg_25_0.turnbackInfoMo then
+		return arg_25_0.turnbackInfoMo:isInOpenTime()
 	end
 end
 
-function slot0.setTaskInfoList(slot0)
-	TurnbackTaskModel.instance:setTaskInfoList(slot0.turnbackInfoMo.tasks)
+function var_0_0.setTaskInfoList(arg_26_0)
+	TurnbackTaskModel.instance:setTaskInfoList(arg_26_0.turnbackInfoMo.tasks)
 
-	if not slot0:isNewType() then
+	if not arg_26_0:isNewType() then
 		TurnbackTaskModel.instance:refreshList(TurnbackTaskModel.instance:getCurTaskLoopType())
 	else
 		TurnbackTaskModel.instance:refreshListNewTaskList()
 	end
 end
 
-function slot0.getBuyDoubleBonus(slot0)
-	return slot0.turnbackInfoMo:getBuyDoubleBonus()
+function var_0_0.getBuyDoubleBonus(arg_27_0)
+	return arg_27_0.turnbackInfoMo:getBuyDoubleBonus()
 end
 
-function slot0.updateHasGetTaskBonus(slot0, slot1)
-	slot0.turnbackInfoMo:updateHasGetTaskBonus(slot1.hasGetTaskBonus)
+function var_0_0.updateHasGetTaskBonus(arg_28_0, arg_28_1)
+	arg_28_0.turnbackInfoMo:updateHasGetTaskBonus(arg_28_1.hasGetTaskBonus)
 end
 
-function slot0.updateCurBonusPoint(slot0, slot1)
-	slot0.turnbackInfoMo.bonusPoint = slot1
+function var_0_0.updateCurBonusPoint(arg_29_0, arg_29_1)
+	arg_29_0.turnbackInfoMo.bonusPoint = arg_29_1
 end
 
-function slot0.getCurHasGetTaskBonus(slot0)
-	return slot0.turnbackInfoMo.hasGetTaskBonus
+function var_0_0.getCurHasGetTaskBonus(arg_30_0)
+	return arg_30_0.turnbackInfoMo.hasGetTaskBonus
 end
 
-function slot0.setOnceBonusGetState(slot0)
-	slot0.turnbackInfoMo.onceBonus = true
+function var_0_0.setOnceBonusGetState(arg_31_0)
+	arg_31_0.turnbackInfoMo.onceBonus = true
 end
 
-function slot0.getOnceBonusGetState(slot0)
-	return slot0.turnbackInfoMo.onceBonus
+function var_0_0.getOnceBonusGetState(arg_32_0)
+	return arg_32_0.turnbackInfoMo.onceBonus
 end
 
-function slot0.setSignInInfoList(slot0)
-	TurnbackSignInModel.instance:setSignInInfoList(slot0.turnbackInfoMo.signInInfos)
+function var_0_0.setSignInInfoList(arg_33_0)
+	TurnbackSignInModel.instance:setSignInInfoList(arg_33_0.turnbackInfoMo.signInInfos)
 end
 
-function slot0.getCurSignInDay(slot0)
-	return slot0.turnbackInfoMo.signInDay
+function var_0_0.getCurSignInDay(arg_34_0)
+	return arg_34_0.turnbackInfoMo.signInDay
 end
 
-function slot0.initRecommendData(slot0)
-	TurnbackRecommendModel.instance:initReommendShowState(slot0.curTurnbackId)
+function var_0_0.initRecommendData(arg_35_0)
+	TurnbackRecommendModel.instance:initReommendShowState(arg_35_0.curTurnbackId)
 end
 
-function slot0.isAdditionValid(slot0)
-	slot1 = false
+function var_0_0.isAdditionValid(arg_36_0)
+	local var_36_0 = false
+	local var_36_1 = arg_36_0:getCurTurnbackMo()
 
-	if slot0:getCurTurnbackMo() then
-		slot1 = slot2:isAdditionValid()
+	if var_36_1 then
+		var_36_0 = var_36_1:isAdditionValid()
 	end
 
-	return slot1
+	return var_36_0
 end
 
-function slot0.isShowTurnBackAddition(slot0, slot1)
-	return slot0:isAdditionValid() and TurnbackConfig.instance:isTurnBackAdditionToChapter(uv0.instance:getCurTurnbackId(), slot1)
+function var_0_0.isShowTurnBackAddition(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_0:isAdditionValid()
+	local var_37_1 = var_0_0.instance:getCurTurnbackId()
+	local var_37_2 = TurnbackConfig.instance:isTurnBackAdditionToChapter(var_37_1, arg_37_1)
+
+	return var_37_0 and var_37_2
 end
 
-function slot0.getAdditionCountInfo(slot0)
-	slot2 = TurnbackConfig.instance:getAdditionTotalCount(slot0:getCurTurnbackId())
-	slot3 = 0
+function var_0_0.getAdditionCountInfo(arg_38_0)
+	local var_38_0 = arg_38_0:getCurTurnbackId()
+	local var_38_1 = TurnbackConfig.instance:getAdditionTotalCount(var_38_0)
+	local var_38_2 = 0
+	local var_38_3 = arg_38_0:getCurTurnbackMoWithNilError()
 
-	if slot0:getCurTurnbackMoWithNilError() then
-		slot3 = slot4:getRemainAdditionCount()
+	if var_38_3 then
+		var_38_2 = var_38_3:getRemainAdditionCount()
 	end
 
-	return slot3, slot2
+	return var_38_2, var_38_1
 end
 
-function slot0.getAdditionRewardList(slot0, slot1)
-	if not slot1 then
-		return {}
+function var_0_0.getAdditionRewardList(arg_39_0, arg_39_1)
+	local var_39_0 = {}
+
+	if not arg_39_1 then
+		return var_39_0
 	end
 
-	if TurnbackConfig.instance:getAdditionRate(slot0:getCurTurnbackId()) and slot4 > 0 then
-		for slot8, slot9 in ipairs(slot1) do
-			table.insert(slot2, {
-				slot9[1],
-				slot9[2],
-				math.ceil(slot9[3] * slot4 / 1000),
+	local var_39_1 = arg_39_0:getCurTurnbackId()
+	local var_39_2 = TurnbackConfig.instance:getAdditionRate(var_39_1)
+
+	if var_39_2 and var_39_2 > 0 then
+		for iter_39_0, iter_39_1 in ipairs(arg_39_1) do
+			local var_39_3 = {
+				iter_39_1[1],
+				iter_39_1[2],
+				math.ceil(iter_39_1[3] * var_39_2 / 1000),
 				isAddition = true
-			})
+			}
+
+			table.insert(var_39_0, var_39_3)
 		end
 	end
 
-	return slot2
+	return var_39_0
 end
 
-function slot0.getMonthCardShowState(slot0)
-	if slot0:getCurTurnbackMo() == nil then
+function var_0_0.getMonthCardShowState(arg_40_0)
+	local var_40_0 = arg_40_0:getCurTurnbackMo()
+
+	if var_40_0 == nil then
 		return false
 	end
 
-	if slot1.config == nil then
+	local var_40_1 = var_40_0.config
+
+	if var_40_1 == nil then
 		return false
 	end
 
-	if slot2.monthCardAddedId == nil then
+	if var_40_1.monthCardAddedId == nil then
 		return false
 	end
 
-	if StoreConfig.instance:getMonthCardAddConfig(slot2.monthCardAddedId) == nil then
+	local var_40_2 = StoreConfig.instance:getMonthCardAddConfig(var_40_1.monthCardAddedId)
+
+	if var_40_2 == nil then
 		return false
 	end
 
-	return slot1.monthCardAddedBuyCount < slot3.limit
+	return var_40_0.monthCardAddedBuyCount < var_40_2.limit
 end
 
-function slot0.getCurrentTurnbackMonthCardId(slot0)
-	if slot0:getCurTurnbackMo() == nil then
+function var_0_0.getCurrentTurnbackMonthCardId(arg_41_0)
+	local var_41_0 = arg_41_0:getCurTurnbackMo()
+
+	if var_41_0 == nil then
 		return nil
 	end
 
-	return slot1.config.monthCardAddedId
+	return var_41_0.config.monthCardAddedId
 end
 
-function slot0.addCurrentMonthBuyCount(slot0)
-	if slot0:getCurTurnbackMo() == nil then
+function var_0_0.addCurrentMonthBuyCount(arg_42_0)
+	local var_42_0 = arg_42_0:getCurTurnbackMo()
+
+	if var_42_0 == nil then
 		return
 	end
 
-	slot1.monthCardAddedBuyCount = slot1.monthCardAddedBuyCount + 1
+	var_42_0.monthCardAddedBuyCount = var_42_0.monthCardAddedBuyCount + 1
 end
 
-function slot0.getCanGetRewardList(slot0)
-	slot1 = {}
+function var_0_0.getCanGetRewardList(arg_43_0)
+	local var_43_0 = {}
+	local var_43_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_43_0.curTurnbackId)
 
-	for slot6, slot7 in ipairs(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-		if slot0:checkBonusCanGetById(slot7.id) then
-			table.insert(slot1, slot7.id)
+	for iter_43_0, iter_43_1 in ipairs(var_43_1) do
+		if arg_43_0:checkBonusCanGetById(iter_43_1.id) then
+			table.insert(var_43_0, iter_43_1.id)
 		end
 	end
 
-	return slot1
+	return var_43_0
 end
 
-function slot0.getNextUnlockReward(slot0)
-	slot1 = slot0:getCurrentPointId()
+function var_0_0.getNextUnlockReward(arg_44_0)
+	local var_44_0 = arg_44_0:getCurrentPointId()
+	local var_44_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_44_0.curTurnbackId)
 
-	for slot6, slot7 in ipairs(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-		if slot1 < slot7.needPoint then
-			return slot7.id
+	for iter_44_0, iter_44_1 in ipairs(var_44_1) do
+		if var_44_0 < iter_44_1.needPoint then
+			return iter_44_1.id
 		end
 	end
 
-	if slot2[#slot2].needPoint <= slot1 then
-		return slot2[#slot2].id
+	if var_44_0 >= var_44_1[#var_44_1].needPoint then
+		return var_44_1[#var_44_1].id
 	end
 end
 
-function slot0.checkBonusCanGetById(slot0, slot1)
-	if TurnbackConfig.instance:getTurnbackTaskBonusCo(slot0.curTurnbackId, slot1).needPoint <= slot0:getCurrentPointId() and not slot0:checkBonusGetById(slot1) then
+function var_0_0.checkBonusCanGetById(arg_45_0, arg_45_1)
+	if arg_45_0:getCurrentPointId() >= TurnbackConfig.instance:getTurnbackTaskBonusCo(arg_45_0.curTurnbackId, arg_45_1).needPoint and not arg_45_0:checkBonusGetById(arg_45_1) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getCurrentPointId(slot0)
-	slot1, slot2 = TurnbackConfig.instance:getBonusPointCo(slot0.curTurnbackId)
+function var_0_0.getCurrentPointId(arg_46_0)
+	local var_46_0, var_46_1 = TurnbackConfig.instance:getBonusPointCo(arg_46_0.curTurnbackId)
+	local var_46_2 = CurrencyModel.instance:getCurrency(var_46_1)
 
-	return CurrencyModel.instance:getCurrency(slot2) and slot3.quantity or 0
+	return var_46_2 and var_46_2.quantity or 0
 end
 
-function slot0.checkBonusGetById(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getCurHasGetTaskBonus()) do
-		if slot1 == slot7 then
+function var_0_0.checkBonusGetById(arg_47_0, arg_47_1)
+	local var_47_0 = arg_47_0:getCurHasGetTaskBonus()
+
+	for iter_47_0, iter_47_1 in ipairs(var_47_0) do
+		if arg_47_1 == iter_47_1 then
 			return true
 		end
 	end
@@ -410,155 +457,179 @@ function slot0.checkBonusGetById(slot0, slot1)
 	return false
 end
 
-function slot0.checkHasGetAllTaskReward(slot0)
-	if #slot0:getCurHasGetTaskBonus() == #TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId) then
+function var_0_0.checkHasGetAllTaskReward(arg_48_0)
+	local var_48_0 = arg_48_0:getCurHasGetTaskBonus()
+	local var_48_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_48_0.curTurnbackId)
+
+	if #var_48_0 == #var_48_1 then
 		return true
 	end
 
 	return false
 end
 
-function slot0._calcAllBonus(slot0)
-	slot0.bounsdict = {}
-	slot0.allBonusList = {}
+function var_0_0._calcAllBonus(arg_49_0)
+	arg_49_0.bounsdict = {}
+	arg_49_0.allBonusList = {}
 
-	for slot5, slot6 in ipairs(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-		slot0:_calcBonus(slot0.bounsdict, slot0.allBonusList, slot6.bonus)
+	local var_49_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_49_0.curTurnbackId)
+
+	for iter_49_0, iter_49_1 in ipairs(var_49_0) do
+		arg_49_0:_calcBonus(arg_49_0.bounsdict, arg_49_0.allBonusList, iter_49_1.bonus)
 	end
 end
 
-function slot0.getAllBonus(slot0)
-	return slot0.allBonusList
+function var_0_0.getAllBonus(arg_50_0)
+	return arg_50_0.allBonusList
 end
 
-function slot0.getAllBonusCount(slot0)
-	return #slot0.allBonusList
+function var_0_0.getAllBonusCount(arg_51_0)
+	return #arg_51_0.allBonusList
 end
 
-function slot0._calcBonus(slot0, slot1, slot2, slot3)
-	slot7 = "|"
+function var_0_0._calcBonus(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
+	for iter_52_0, iter_52_1 in pairs(string.split(arg_52_3, "|")) do
+		local var_52_0 = string.splitToNumber(iter_52_1, "#")
+		local var_52_1 = var_52_0[2]
+		local var_52_2 = var_52_0[3]
 
-	for slot7, slot8 in pairs(string.split(slot3, slot7)) do
-		slot9 = string.splitToNumber(slot8, "#")
-		slot11 = slot9[3]
+		if not arg_52_1[var_52_1] then
+			arg_52_1[var_52_1] = var_52_0
 
-		if not slot1[slot9[2]] then
-			slot1[slot10] = slot9
-
-			table.insert(slot2, slot9)
+			table.insert(arg_52_2, var_52_0)
 		else
-			slot1[slot10][3] = slot1[slot10][3] + slot11
+			arg_52_1[var_52_1][3] = arg_52_1[var_52_1][3] + var_52_2
 		end
 	end
 end
 
-function slot0.getFirstBonusHeroConfig(slot0)
-	if not slot0.bonusHeroConfigList then
-		return slot0:getBonusHeroConfigList()[1]
+function var_0_0.getFirstBonusHeroConfig(arg_53_0)
+	if not arg_53_0.bonusHeroConfigList then
+		return arg_53_0:getBonusHeroConfigList()[1]
 	else
-		return slot0.bonusHeroConfigList[1]
+		return arg_53_0.bonusHeroConfigList[1]
 	end
 end
 
-function slot0.getBonusHeroConfigList(slot0)
-	if slot0.bonusHeroConfigList then
-		return slot0.bonusHeroConfigList
+function var_0_0.getBonusHeroConfigList(arg_54_0)
+	if arg_54_0.bonusHeroConfigList then
+		return arg_54_0.bonusHeroConfigList
 	else
-		slot0.bonusHeroConfigList = {}
-		slot0.unlockHeroList = {}
+		arg_54_0.bonusHeroConfigList = {}
+		arg_54_0.unlockHeroList = {}
 
-		for slot5, slot6 in ipairs(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-			if slot6 and not string.nilorempty(slot6.character) then
-				if not slot0.firstBonusHeroConfig then
-					slot0.firstBonusHeroConfig = slot6
+		local var_54_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_54_0.curTurnbackId)
+
+		for iter_54_0, iter_54_1 in ipairs(var_54_0) do
+			if iter_54_1 and not string.nilorempty(iter_54_1.character) then
+				if not arg_54_0.firstBonusHeroConfig then
+					arg_54_0.firstBonusHeroConfig = iter_54_1
 				end
 
-				if slot0:checkBonusGetById(slot6.id) then
-					table.insert(slot0.unlockHeroList, slot7)
+				local var_54_1 = iter_54_1.id
+
+				if arg_54_0:checkBonusGetById(var_54_1) then
+					table.insert(arg_54_0.unlockHeroList, var_54_1)
 				end
 
-				table.insert(slot0.bonusHeroConfigList, slot6)
+				table.insert(arg_54_0.bonusHeroConfigList, iter_54_1)
 			end
 		end
 	end
 end
 
-function slot0.getUnlockHeroList(slot0)
-	slot0.unlockHeroList = {}
+function var_0_0.getUnlockHeroList(arg_55_0)
+	arg_55_0.unlockHeroList = {}
 
-	for slot5, slot6 in ipairs(TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)) do
-		if slot6 and not string.nilorempty(slot6.character) then
-			if slot6.needPoint <= slot0:getCurrentPointId() then
-				table.insert(slot0.unlockHeroList, slot6)
+	local var_55_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_55_0.curTurnbackId)
+
+	for iter_55_0, iter_55_1 in ipairs(var_55_0) do
+		if iter_55_1 and not string.nilorempty(iter_55_1.character) then
+			if arg_55_0:getCurrentPointId() >= iter_55_1.needPoint then
+				table.insert(arg_55_0.unlockHeroList, iter_55_1)
 			else
-				table.insert(slot0.unlockHeroList, slot6)
+				table.insert(arg_55_0.unlockHeroList, iter_55_1)
 
-				return slot0.unlockHeroList
+				return arg_55_0.unlockHeroList
 			end
 		end
 	end
 
-	return slot0.unlockHeroList
+	return arg_55_0.unlockHeroList
 end
 
-function slot0.setDropInfoList(slot0, slot1)
-	slot0._dropInfoList = {}
-	slot2 = TurnbackConfig.instance:getDropCoList()
+function var_0_0.setDropInfoList(arg_56_0, arg_56_1)
+	arg_56_0._dropInfoList = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot2) do
-			slot8 = {
-				co = slot7
+	local var_56_0 = TurnbackConfig.instance:getDropCoList()
+
+	if arg_56_1 then
+		for iter_56_0, iter_56_1 in ipairs(var_56_0) do
+			local var_56_1 = {
+				co = iter_56_1
 			}
 
-			if #slot1 > 0 then
-				for slot12, slot13 in ipairs(slot1) do
-					if slot7.id == slot13.type then
-						slot8.progress = slot13.currentNum / slot13.totalNum
+			if #arg_56_1 > 0 then
+				for iter_56_2, iter_56_3 in ipairs(arg_56_1) do
+					if iter_56_1.id == iter_56_3.type then
+						var_56_1.progress = iter_56_3.currentNum / iter_56_3.totalNum
 					end
 				end
 			else
-				slot8.progress = 0
+				var_56_1.progress = 0
 			end
 
-			slot0._dropInfoList[slot7.id] = slot8
+			arg_56_0._dropInfoList[iter_56_1.id] = var_56_1
 		end
 	end
 end
 
-function slot0.getDropInfoByType(slot0, slot1)
-	return slot0._dropInfoList and slot0._dropInfoList[slot1]
+function var_0_0.getDropInfoByType(arg_57_0, arg_57_1)
+	return arg_57_0._dropInfoList and arg_57_0._dropInfoList[arg_57_1]
 end
 
-function slot0.getDropInfoList(slot0)
-	slot1 = {}
-	slot2 = {}
-	slot3 = {}
-	slot4 = TurnbackConfig.instance:getDropCoCount()
+function var_0_0.getDropInfoList(arg_58_0)
+	local var_58_0 = {}
+	local var_58_1 = {}
+	local var_58_2 = {}
+	local var_58_3 = TurnbackConfig.instance:getDropCoCount()
 
-	if slot0._dropInfoList and #slot0._dropInfoList > 0 then
-		while #slot3 < 4 do
-			if not tabletool.indexOf(slot3, math.random(1, slot4)) then
-				if TurnbackConfig.instance:getDropCoById(slot5).level == 2 and #slot1 < TurnbackEnum.Level2Count then
-					table.insert(slot1, slot0._dropInfoList[slot5])
-					table.insert(slot3, slot5)
-				elseif slot6.level == 3 and #slot2 < TurnbackEnum.Level3Count then
-					table.insert(slot2, slot0._dropInfoList[slot5])
-					table.insert(slot3, slot5)
+	if arg_58_0._dropInfoList and #arg_58_0._dropInfoList > 0 then
+		while #var_58_2 < 4 do
+			local var_58_4 = math.random(1, var_58_3)
+
+			if not tabletool.indexOf(var_58_2, var_58_4) then
+				local var_58_5 = TurnbackConfig.instance:getDropCoById(var_58_4)
+
+				if var_58_5.level == 2 and #var_58_0 < TurnbackEnum.Level2Count then
+					local var_58_6 = arg_58_0._dropInfoList[var_58_4]
+
+					table.insert(var_58_0, var_58_6)
+					table.insert(var_58_2, var_58_4)
+				elseif var_58_5.level == 3 and #var_58_1 < TurnbackEnum.Level3Count then
+					local var_58_7 = arg_58_0._dropInfoList[var_58_4]
+
+					table.insert(var_58_1, var_58_7)
+					table.insert(var_58_2, var_58_4)
 				end
 			end
 		end
 	end
 
-	return slot1, slot2
+	return var_58_0, var_58_1
 end
 
-function slot0.getContentWidth(slot0)
-	slot5 = #TurnbackConfig.instance:getAllTurnbackTaskBonusCo(slot0.curTurnbackId)
+function var_0_0.getContentWidth(arg_59_0)
+	local var_59_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_59_0.curTurnbackId)
+	local var_59_1 = 50
+	local var_59_2 = 50
+	local var_59_3 = 100
+	local var_59_4 = #var_59_0
+	local var_59_5 = 100
 
-	return 50 + 50 + 100 * slot5 + 100 * (slot5 - 1)
+	return var_59_1 + var_59_2 + var_59_5 * var_59_4 + var_59_3 * (var_59_4 - 1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

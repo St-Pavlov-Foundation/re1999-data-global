@@ -1,54 +1,61 @@
-module("modules.logic.dungeon.view.puzzle.PutCubeGameItemView", package.seeall)
+﻿module("modules.logic.dungeon.view.puzzle.PutCubeGameItemView", package.seeall)
 
-slot0 = class("PutCubeGameItemView", BaseView)
+local var_0_0 = class("PutCubeGameItemView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1, slot2)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_6_0, arg_6_1, arg_6_2)
+	var_0_0.super.ctor(arg_6_0)
 
-	slot0.ori_level = slot1
-	slot0.level = slot1
-	slot0.parent_view = slot2
+	arg_6_0.ori_level = arg_6_1
+	arg_6_0.level = arg_6_1
+	arg_6_0.parent_view = arg_6_2
 end
 
-function slot0.onOpen(slot0)
-	gohelper.findChild(slot0.viewGO, "Text"):GetComponent(gohelper.Type_Text).text = slot0.level
-	slot0.left_x = recthelper.getAnchorX(slot0.viewGO.transform) - slot0.parent_view.cell_length / 2
-	slot0.right_x = recthelper.getAnchorX(slot0.viewGO.transform) + slot0.parent_view.cell_length / 2
-	slot0.bottom_y = recthelper.getAnchorY(slot0.viewGO.transform) - slot0.parent_view.cell_length / 2
-	slot0.top_y = recthelper.getAnchorY(slot0.viewGO.transform) + slot0.parent_view.cell_length / 2
+function var_0_0.onOpen(arg_7_0)
+	gohelper.findChild(arg_7_0.viewGO, "Text"):GetComponent(gohelper.Type_Text).text = arg_7_0.level
+	arg_7_0.left_x = recthelper.getAnchorX(arg_7_0.viewGO.transform) - arg_7_0.parent_view.cell_length / 2
+	arg_7_0.right_x = recthelper.getAnchorX(arg_7_0.viewGO.transform) + arg_7_0.parent_view.cell_length / 2
+	arg_7_0.bottom_y = recthelper.getAnchorY(arg_7_0.viewGO.transform) - arg_7_0.parent_view.cell_length / 2
+	arg_7_0.top_y = recthelper.getAnchorY(arg_7_0.viewGO.transform) + arg_7_0.parent_view.cell_length / 2
 end
 
-function slot0.detectPosCover(slot0, slot1, slot2)
-	if slot0.left_x < slot1 and slot1 < slot0.right_x and slot0.bottom_y < slot2 and slot2 < slot0.top_y then
+function var_0_0.detectPosCover(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 > arg_8_0.left_x and arg_8_1 < arg_8_0.right_x and arg_8_2 > arg_8_0.bottom_y and arg_8_2 < arg_8_0.top_y then
 		return true
 	end
 end
 
-function slot0._onGameClear(slot0)
+function var_0_0._onGameClear(arg_9_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,28 +1,29 @@
-module("modules.logic.weekwalk.view.WeekWalkRespawnViewContainer", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkRespawnViewContainer", package.seeall)
 
-slot0 = class("WeekWalkRespawnViewContainer", BaseViewContainer)
+local var_0_0 = class("WeekWalkRespawnViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = HeroGroupEditItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 290
-	slot1.cellHeight = 550
-	slot1.cellSpaceH = 48
-	slot1.cellSpaceV = 30
-	slot1.startSpace = 25
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = HeroGroupEditItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 5
+	var_1_0.cellWidth = 290
+	var_1_0.cellHeight = 550
+	var_1_0.cellSpaceH = 48
+	var_1_0.cellSpaceV = 30
+	var_1_0.startSpace = 25
 
 	return {
-		LuaListScrollView.New(WeekWalkRespawnModel.instance, slot1),
+		LuaListScrollView.New(WeekWalkRespawnModel.instance, var_1_0),
 		WeekWalkRespawnView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -32,4 +33,4 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-return slot0
+return var_0_0

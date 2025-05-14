@@ -1,42 +1,45 @@
-module("modules.logic.fight.view.cardeffect.FightCardDissolveCardsAfterPlay", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardDissolveCardsAfterPlay", package.seeall)
 
-slot0 = class("FightCardDissolveCardsAfterPlay", BaseWork)
+local var_0_0 = class("FightCardDissolveCardsAfterPlay", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, true)
 
-	if slot1.dissolveCardIndexsAfterPlay and #slot2 > 0 then
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
+	local var_1_0 = arg_1_1.dissolveCardIndexsAfterPlay
 
-		slot3 = slot0.context.cards
+	if var_1_0 and #var_1_0 > 0 then
+		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 10)
+		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_1_0._onCombineDone, arg_1_0)
 
-		slot1.view:_updateHandCards(slot3)
+		local var_1_1 = arg_1_0.context.cards
+		local var_1_2 = FightCardDataHelper.calcRemoveCardTime2(var_1_1, var_1_0)
 
-		for slot8, slot9 in ipairs(slot2) do
+		arg_1_1.view:_updateHandCards(var_1_1)
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
 			FightController.instance:dispatchEvent(FightEvent.CardRemove, {
-				slot9
-			}, FightCardDataHelper.calcRemoveCardTime2(slot3, slot2), true)
-			table.remove(slot3, slot9)
+				iter_1_1
+			}, var_1_2, true)
+			table.remove(var_1_1, iter_1_1)
 		end
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0._onCombineDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onCombineDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_4_0._onCombineDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

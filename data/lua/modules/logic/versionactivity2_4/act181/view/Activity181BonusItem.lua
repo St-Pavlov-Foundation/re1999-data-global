@@ -1,66 +1,70 @@
-module("modules.logic.versionactivity2_4.act181.view.Activity181BonusItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.act181.view.Activity181BonusItem", package.seeall)
 
-slot0 = class("Activity181BonusItem", LuaCompBase)
-slot0.ANI_IDLE = "idle"
-slot0.ANI_CAN_GET = "get"
-slot0.ANI_COVER_OPEN = "coveropen"
+local var_0_0 = class("Activity181BonusItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._imgQuality = gohelper.findChildImage(slot1, "OptionalItem/#img_Quality")
-	slot0._simgItem = gohelper.findChildSingleImage(slot1, "OptionalItem/#simage_Item")
-	slot0._goOptionalItem = gohelper.findChild(slot1, "OptionalItem")
-	slot0._goImageBg = gohelper.findChild(slot1, "image_BG")
-	slot0._txtNum = gohelper.findChildTextMesh(slot1, "OptionalItem/image_NumBG/#txt_Num")
-	slot0._txtItemName = gohelper.findChildTextMesh(slot1, "OptionalItem/#txt_ItemName")
-	slot0._goCover = gohelper.findChild(slot1, "#go_Cover")
-	slot0._goGet = gohelper.findChild(slot1, "#go_Get")
-	slot0._goCoverClose = gohelper.findChild(slot1, "image_Cover")
-	slot0._goCoverOpen = gohelper.findChild(slot1, "image_CoverOpen")
-	slot0._btnClick = gohelper.findChildButton(slot1, "click")
-	slot0._goType1 = gohelper.findChild(slot1, "#go_Cover/#go_Type1")
-	slot0._goType2 = gohelper.findChild(slot1, "#go_Cover/#go_Type2")
-	slot0._goType3 = gohelper.findChild(slot1, "#go_Cover/#go_Type3")
-	slot0._goType4 = gohelper.findChild(slot1, "#go_Cover/#go_Type4")
+var_0_0.ANI_IDLE = "idle"
+var_0_0.ANI_CAN_GET = "get"
+var_0_0.ANI_COVER_OPEN = "coveropen"
 
-	slot0:initItem()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._imgQuality = gohelper.findChildImage(arg_1_1, "OptionalItem/#img_Quality")
+	arg_1_0._simgItem = gohelper.findChildSingleImage(arg_1_1, "OptionalItem/#simage_Item")
+	arg_1_0._goOptionalItem = gohelper.findChild(arg_1_1, "OptionalItem")
+	arg_1_0._goImageBg = gohelper.findChild(arg_1_1, "image_BG")
+	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "OptionalItem/image_NumBG/#txt_Num")
+	arg_1_0._txtItemName = gohelper.findChildTextMesh(arg_1_1, "OptionalItem/#txt_ItemName")
+	arg_1_0._goCover = gohelper.findChild(arg_1_1, "#go_Cover")
+	arg_1_0._goGet = gohelper.findChild(arg_1_1, "#go_Get")
+	arg_1_0._goCoverClose = gohelper.findChild(arg_1_1, "image_Cover")
+	arg_1_0._goCoverOpen = gohelper.findChild(arg_1_1, "image_CoverOpen")
+	arg_1_0._btnClick = gohelper.findChildButton(arg_1_1, "click")
+	arg_1_0._goType1 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type1")
+	arg_1_0._goType2 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type2")
+	arg_1_0._goType3 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type3")
+	arg_1_0._goType4 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type4")
+
+	arg_1_0:initItem()
 end
 
-function slot0.initItem(slot0)
-	slot0._typeList = {
-		slot0._goType1,
-		slot0._goType2,
-		slot0._goType3,
-		slot0._goType4
+function var_0_0.initItem(arg_2_0)
+	arg_2_0._typeList = {
+		arg_2_0._goType1,
+		arg_2_0._goType2,
+		arg_2_0._goType3,
+		arg_2_0._goType4
 	}
 
-	slot0._btnClick:AddClickListener(slot0.onClickItem, slot0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0.onClickItem, arg_2_0)
 
-	slot0._animator = gohelper.findChildComponent(slot0.go, "", gohelper.Type_Animator)
+	arg_2_0._animator = gohelper.findChildComponent(arg_2_0.go, "", gohelper.Type_Animator)
 
-	gohelper.setActive(slot0._txtItemName, false)
+	gohelper.setActive(arg_2_0._txtItemName, false)
 
-	slot0._animator.enabled = true
+	arg_2_0._animator.enabled = true
 end
 
-function slot0.onClickItem(slot0)
+function var_0_0.onClickItem(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
 
-	if not Activity181Model.instance:isActivityInTime(slot0._activityId) then
+	if not Activity181Model.instance:isActivityInTime(arg_3_0._activityId) then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	if Activity181Model.instance:getActivityInfo(slot0._activityId):getBonusState(slot0._pos) == Activity181Enum.BonusState.HaveGet then
-		slot3 = string.splitToNumber(Activity181Config.instance:getBoxListConfig(slot0._activityId, slot0._boxId).bonus, "#")
+	local var_3_0 = Activity181Model.instance:getActivityInfo(arg_3_0._activityId)
 
-		MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2], false)
+	if var_3_0:getBonusState(arg_3_0._pos) == Activity181Enum.BonusState.HaveGet then
+		local var_3_1 = Activity181Config.instance:getBoxListConfig(arg_3_0._activityId, arg_3_0._boxId)
+		local var_3_2 = string.splitToNumber(var_3_1.bonus, "#")
+
+		MaterialTipController.instance:showMaterialInfo(var_3_2[1], var_3_2[2], false)
 
 		return
 	end
 
-	if slot1.canGetTimes <= 0 then
+	if var_3_0.canGetTimes <= 0 then
 		GameFacade.showToast(ToastEnum.NorSign)
 
 		return
@@ -70,65 +74,79 @@ function slot0.onClickItem(slot0)
 		return
 	end
 
-	Activity181Controller.instance:getBonus(slot0._activityId, slot0._pos)
+	Activity181Controller.instance:getBonus(arg_3_0._activityId, arg_3_0._pos)
 end
 
-function slot0.setEnable(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0.setEnable(arg_4_0, arg_4_1)
+	gohelper.setActive(arg_4_0.go, arg_4_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2, slot3)
-	slot0._pos = slot1
-	slot0._activityId = slot2
-	slot5 = Activity181Model.instance:getActivityInfo(slot2):getBonusState(slot1) == Activity181Enum.BonusState.HaveGet
-	slot6 = slot4:getBonusTimes() > 0
-	slot7, slot8 = nil
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0._pos = arg_5_1
+	arg_5_0._activityId = arg_5_2
 
-	if slot3 then
-		slot7 = true
-		slot8 = slot0.ANI_COVER_OPEN
+	local var_5_0 = Activity181Model.instance:getActivityInfo(arg_5_2)
+	local var_5_1 = var_5_0:getBonusState(arg_5_1) == Activity181Enum.BonusState.HaveGet
+	local var_5_2 = var_5_0:getBonusTimes() > 0
+	local var_5_3
+	local var_5_4
+
+	if arg_5_3 then
+		var_5_3 = true
+		var_5_4 = arg_5_0.ANI_COVER_OPEN
 
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_clue_get)
 	else
-		slot7 = slot5
-		slot8 = slot6 and not slot5 and slot0.ANI_CAN_GET or slot0.ANI_IDLE
+		var_5_3 = var_5_1
+		var_5_4 = var_5_2 and not var_5_1 and arg_5_0.ANI_CAN_GET or arg_5_0.ANI_IDLE
 	end
 
-	gohelper.setActive(slot0._goImageBg, slot7)
-	gohelper.setActive(slot0._goOptionalItem, slot7)
-	gohelper.setActive(slot0._goCover, not slot5 or slot3)
-	gohelper.setActive(slot0._goCoverClose, not slot5)
-	gohelper.setActive(slot0._goCoverOpen, slot5)
-	gohelper.setActive(slot0._simgItem.gameObject, slot5)
-	slot0._animator:Play(slot8)
-	math.randomseed(tonumber(PlayerModel.instance:getMyUserId()) * slot1)
+	gohelper.setActive(arg_5_0._goImageBg, var_5_3)
+	gohelper.setActive(arg_5_0._goOptionalItem, var_5_3)
+	gohelper.setActive(arg_5_0._goCover, not var_5_1 or arg_5_3)
+	gohelper.setActive(arg_5_0._goCoverClose, not var_5_1)
+	gohelper.setActive(arg_5_0._goCoverOpen, var_5_1)
+	gohelper.setActive(arg_5_0._simgItem.gameObject, var_5_1)
+	arg_5_0._animator:Play(var_5_4)
 
-	for slot15, slot16 in ipairs(slot0._typeList) do
-		gohelper.setActive(slot16, slot15 == math.random(1, #slot0._typeList))
+	local var_5_5 = tonumber(PlayerModel.instance:getMyUserId()) * arg_5_1
+
+	math.randomseed(var_5_5)
+
+	local var_5_6 = #arg_5_0._typeList
+	local var_5_7 = math.random(1, var_5_6)
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._typeList) do
+		gohelper.setActive(iter_5_1, iter_5_0 == var_5_7)
 	end
 
-	if not slot5 then
+	if not var_5_1 then
 		return
 	end
 
-	slot0._boxId = slot4:getBonusIdByPos(slot1)
-	slot13 = string.splitToNumber(Activity181Config.instance:getBoxListConfig(slot0._activityId, slot0._boxId).bonus, "#")
-	slot14, slot15 = ItemModel.instance:getItemConfigAndIcon(slot13[1], slot13[2], true)
-	slot0._txtNum.text = tostring(slot13[3])
+	arg_5_0._boxId = var_5_0:getBonusIdByPos(arg_5_1)
 
-	slot0._simgItem:LoadImage(slot15)
-	UISpriteSetMgr.instance:setUiFBSprite(slot0._imgQuality, "bg_pinjidi_" .. tostring(slot14.rare))
+	local var_5_8 = Activity181Config.instance:getBoxListConfig(arg_5_0._activityId, arg_5_0._boxId)
+	local var_5_9 = string.splitToNumber(var_5_8.bonus, "#")
+	local var_5_10, var_5_11 = ItemModel.instance:getItemConfigAndIcon(var_5_9[1], var_5_9[2], true)
+
+	arg_5_0._txtNum.text = tostring(var_5_9[3])
+
+	arg_5_0._simgItem:LoadImage(var_5_11)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_5_0._imgQuality, "bg_pinjidi_" .. tostring(var_5_10.rare))
 end
 
-function slot0.setBonusFxState(slot0, slot1, slot2)
-	gohelper.setActive(slot0._goCover, not slot1)
-	slot0._animator:Play(not slot1 and slot2 and slot0.ANI_CAN_GET or slot0.ANI_IDLE)
+function var_0_0.setBonusFxState(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = not arg_6_1 and arg_6_2 and arg_6_0.ANI_CAN_GET or arg_6_0.ANI_IDLE
+
+	gohelper.setActive(arg_6_0._goCover, not arg_6_1)
+	arg_6_0._animator:Play(var_6_0)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._btnClick:RemoveClickListener()
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0._btnClick:RemoveClickListener()
 
-	slot0._typeList = nil
+	arg_7_0._typeList = nil
 end
 
-return slot0
+return var_0_0

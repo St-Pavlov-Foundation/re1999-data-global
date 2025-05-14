@@ -1,14 +1,16 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerOpenArchiveView", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerOpenArchiveView", package.seeall)
 
-slot0 = class("ExploreTriggerOpenArchiveView", ExploreTriggerBase)
+local var_0_0 = class("ExploreTriggerOpenArchiveView", ExploreTriggerBase)
 
-function slot0.handle(slot0, slot1, slot2)
-	ExploreStepController.instance:insertClientStep({
+function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = {
 		stepType = ExploreEnum.StepType.ArchiveClient,
-		archiveId = slot2.mo.archiveId
-	}, 1)
+		archiveId = arg_1_2.mo.archiveId
+	}
+
+	ExploreStepController.instance:insertClientStep(var_1_0, 1)
 	ExploreStepController.instance:startStep()
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

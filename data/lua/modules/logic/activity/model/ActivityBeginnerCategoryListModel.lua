@@ -1,44 +1,52 @@
-module("modules.logic.activity.model.ActivityBeginnerCategoryListModel", package.seeall)
+﻿module("modules.logic.activity.model.ActivityBeginnerCategoryListModel", package.seeall)
 
-slot0 = class("ActivityBeginnerCategoryListModel", ListScrollModel)
+local var_0_0 = class("ActivityBeginnerCategoryListModel", ListScrollModel)
 
-function slot0.setSortInfos(slot0, slot1)
-	slot0._sortInfos = {}
+function var_0_0.setSortInfos(arg_1_0, arg_1_1)
+	arg_1_0._sortInfos = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = slot6.co.id
-		slot0._sortInfos[slot7] = ActivityBeginnerController.instance:showRedDot(slot7)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		local var_1_0 = iter_1_1.co.id
+		local var_1_1 = ActivityBeginnerController.instance:showRedDot(var_1_0)
+
+		arg_1_0._sortInfos[var_1_0] = var_1_1
 	end
 end
 
-function slot0.checkTargetCategory(slot0, slot1)
-	if ActivityModel.instance:getCurTargetActivityCategoryId() > 0 or not slot1 or #slot1 <= 0 then
+function var_0_0.checkTargetCategory(arg_2_0, arg_2_1)
+	if ActivityModel.instance:getCurTargetActivityCategoryId() > 0 or not arg_2_1 or #arg_2_1 <= 0 then
 		return
 	end
 
-	table.sort(slot1, uv0._sort)
-	ActivityModel.instance:setTargetActivityCategoryId(slot1[1].co.id)
+	table.sort(arg_2_1, var_0_0._sort)
+	ActivityModel.instance:setTargetActivityCategoryId(arg_2_1[1].co.id)
 end
 
-function slot0.setCategoryList(slot0, slot1)
-	slot0._moList = slot1 and slot1 or {}
+function var_0_0.setCategoryList(arg_3_0, arg_3_1)
+	arg_3_0._moList = arg_3_1 and arg_3_1 or {}
 
-	table.sort(slot0._moList, uv0._sort)
-	slot0:setList(slot0._moList)
+	table.sort(arg_3_0._moList, var_0_0._sort)
+	arg_3_0:setList(arg_3_0._moList)
 end
 
-function slot0._sort(slot0, slot1)
-	if (uv0.instance._sortInfos[slot0.co.id] and slot0.co.hintPriority or slot0.co.defaultPriority) == (slot2[slot1.co.id] and slot1.co.hintPriority or slot1.co.defaultPriority) then
-		return slot4 < slot3
+function var_0_0._sort(arg_4_0, arg_4_1)
+	local var_4_0 = var_0_0.instance._sortInfos
+	local var_4_1 = arg_4_0.co.id
+	local var_4_2 = arg_4_1.co.id
+	local var_4_3 = var_4_0[var_4_1] and arg_4_0.co.hintPriority or arg_4_0.co.defaultPriority
+	local var_4_4 = var_4_0[var_4_2] and arg_4_1.co.hintPriority or arg_4_1.co.defaultPriority
+
+	if var_4_3 == var_4_4 then
+		return var_4_2 < var_4_1
 	end
 
-	return slot6 < slot5
+	return var_4_4 < var_4_3
 end
 
-function slot0.setOpenViewTime(slot0)
-	slot0.openViewTime = Time.realtimeSinceStartup
+function var_0_0.setOpenViewTime(arg_5_0)
+	arg_5_0.openViewTime = Time.realtimeSinceStartup
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

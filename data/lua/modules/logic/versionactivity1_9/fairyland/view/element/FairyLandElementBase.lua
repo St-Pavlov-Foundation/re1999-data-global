@@ -1,111 +1,124 @@
-module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementBase", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementBase", package.seeall)
 
-slot0 = class("FairyLandElementBase", LuaCompBase)
+local var_0_0 = class("FairyLandElementBase", LuaCompBase)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._config = slot2
-	slot0._elements = slot1
+	arg_1_0._config = arg_1_2
+	arg_1_0._elements = arg_1_1
 end
 
-function slot0.getElementId(slot0)
-	return slot0._config.id
+function var_0_0.getElementId(arg_2_0)
+	return arg_2_0._config.id
 end
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._transform = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0._go = arg_3_1
+	arg_3_0._transform = arg_3_1.transform
 
-	slot0:updatePos()
-	slot0:onInitView()
-	slot0:onRefresh()
+	arg_3_0:updatePos()
+	arg_3_0:onInitView()
+	arg_3_0:onRefresh()
 
-	if slot0:getClickGO() then
-		slot0.click = gohelper.getClickWithAudio(slot2)
+	local var_3_0 = arg_3_0:getClickGO()
 
-		if slot0.click then
-			slot0.click:AddClickListener(slot0.onClick, slot0)
+	if var_3_0 then
+		arg_3_0.click = gohelper.getClickWithAudio(var_3_0)
+
+		if arg_3_0.click then
+			arg_3_0.click:AddClickListener(arg_3_0.onClick, arg_3_0)
 		end
 	end
 end
 
-function slot0.refresh(slot0)
-	slot0:onRefresh()
+function var_0_0.refresh(arg_4_0)
+	arg_4_0:onRefresh()
 end
 
-function slot0.finish(slot0)
-	slot0:onFinish()
-	slot0:onDestroy()
+function var_0_0.finish(arg_5_0)
+	arg_5_0:onFinish()
+	arg_5_0:onDestroy()
 end
 
-function slot0.getPos(slot0)
-	return tonumber(slot0._config.pos)
+function var_0_0.getPos(arg_6_0)
+	return tonumber(arg_6_0._config.pos)
 end
 
-function slot0.updatePos(slot0)
-	slot3 = slot0:getPos()
+function var_0_0.updatePos(arg_7_0)
+	local var_7_0 = 244
+	local var_7_1 = 73
+	local var_7_2 = arg_7_0:getPos()
+	local var_7_3 = var_7_2 * var_7_0
+	local var_7_4 = -(var_7_2 * var_7_1)
 
-	recthelper.setAnchor(slot0._transform, slot3 * 244, -(slot3 * 73))
+	recthelper.setAnchor(arg_7_0._transform, var_7_3, var_7_4)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0._go, false)
+function var_0_0.hide(arg_8_0)
+	gohelper.setActive(arg_8_0._go, false)
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0._go, true)
+function var_0_0.show(arg_9_0)
+	gohelper.setActive(arg_9_0._go, true)
 end
 
-function slot0.getVisible(slot0)
-	return not gohelper.isNil(slot0._go) and slot0._go.activeSelf
+function var_0_0.getVisible(arg_10_0)
+	return not gohelper.isNil(arg_10_0._go) and arg_10_0._go.activeSelf
 end
 
-function slot0.isValid(slot0)
-	return not gohelper.isNil(slot0._go)
+function var_0_0.isValid(arg_11_0)
+	return not gohelper.isNil(arg_11_0._go)
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_12_0)
+	return
 end
 
-function slot0.getTransform(slot0)
-	return slot0._transform
+function var_0_0.getTransform(arg_13_0)
+	return arg_13_0._transform
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyElement()
+function var_0_0.onDestroy(arg_14_0)
+	arg_14_0:onDestroyElement()
 
-	if slot0.click then
-		slot0.click:RemoveClickListener()
+	if arg_14_0.click then
+		arg_14_0.click:RemoveClickListener()
 	end
 
-	if not gohelper.isNil(slot0._go) then
-		gohelper.destroy(slot0._go)
+	if not gohelper.isNil(arg_14_0._go) then
+		gohelper.destroy(arg_14_0._go)
 
-		slot0._go = nil
+		arg_14_0._go = nil
 	end
 
-	slot0:__onDispose()
+	arg_14_0:__onDispose()
 end
 
-function slot0.getClickGO(slot0)
-	return slot0._go
+function var_0_0.getClickGO(arg_15_0)
+	return arg_15_0._go
 end
 
-function slot0.setFinish(slot0)
-	FairyLandRpc.instance:sendRecordElementRequest(slot0:getElementId())
+function var_0_0.setFinish(arg_16_0)
+	local var_16_0 = arg_16_0:getElementId()
+
+	FairyLandRpc.instance:sendRecordElementRequest(var_16_0)
 end
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_17_0)
+	return
 end
 
-function slot0.onRefresh(slot0)
+function var_0_0.onRefresh(arg_18_0)
+	return
 end
 
-function slot0.onFinish(slot0)
+function var_0_0.onFinish(arg_19_0)
+	return
 end
 
-function slot0.onDestroyElement(slot0)
+function var_0_0.onDestroyElement(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

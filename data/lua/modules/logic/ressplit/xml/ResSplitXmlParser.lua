@@ -1,6 +1,26 @@
-module("modules.logic.ressplit.xml.ResSplitXmlParser", package.seeall)
+﻿module("modules.logic.ressplit.xml.ResSplitXmlParser", package.seeall)
 
-slot2 = {
+local function var_0_0(arg_1_0)
+	local var_1_0 = tonumber(arg_1_0)
+
+	if var_1_0 >= 0 and var_1_0 < 256 then
+		return string.char(var_1_0)
+	end
+
+	return "&#" .. arg_1_0 .. ";"
+end
+
+local function var_0_1(arg_2_0)
+	local var_2_0 = tonumber(arg_2_0, 16)
+
+	if var_2_0 >= 0 and var_2_0 < 256 then
+		return string.char(var_2_0)
+	end
+
+	return "&#x" .. arg_2_0 .. ";"
+end
+
+local var_0_2 = {
 	_TAG = "^(.-)%s.*",
 	_DTD2 = "<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+[\"'](.-)[\"']%s+[\"'](.-)[\"']%s*(%b[])%s*>",
 	_DTD4 = "<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+[\"'](.-)[\"']%s*>",
@@ -38,206 +58,172 @@ slot2 = {
 		["&lt;"] = "<",
 		["&amp;"] = "&",
 		["&quot;"] = "\"",
-		["&#(%d+);"] = function (slot0)
-			if tonumber(slot0) >= 0 and slot1 < 256 then
-				return string.char(slot1)
-			end
-
-			return "&#" .. slot0 .. ";"
-		end,
-		["&#x(%x+);"] = function (slot0)
-			if tonumber(slot0, 16) >= 0 and slot1 < 256 then
-				return string.char(slot1)
-			end
-
-			return "&#x" .. slot0 .. ";"
-		end
-	},
-	new = function (slot0, slot1)
-		slot2 = {
-			handler = slot0,
-			options = slot1,
-			_stack = {}
-		}
-
-		setmetatable(slot2, uv0)
-
-		slot2.__index = uv0
-
-		return slot2
-	end,
-	parse = function (slot0, slot1, slot2)
-		if type(slot0) ~= "table" or getmetatable(slot0) ~= uv0 then
-			error("You must call xmlparser:parse(parameters) instead of xmlparser.parse(parameters)")
-		end
-
-		if slot2 == nil then
-			slot2 = true
-		end
-
-		slot0.handler.parseAttributes = slot2
-		slot3 = {
-			match = 0,
-			pos = 1,
-			endMatch = 0
-		}
-
-		while slot3.match do
-			if not uv1(slot0, slot1, slot3) then
-				break
-			end
-
-			slot3.startText = slot3.match
-			slot3.endText = slot3.match + string.len(slot3.text) - 1
-			slot3.match = slot3.match + string.len(slot3.text)
-			slot3.text = uv2(slot0, uv3(slot0, slot3.text))
-
-			if slot3.text ~= "" and uv4(slot0.handler, "text") then
-				slot0.handler:text(slot3.text, nil, slot3.match, slot3.endText)
-			end
-
-			uv5(slot0, slot1, slot3)
-
-			slot3.pos = slot3.endMatch + 1
-		end
-	end
+		["&#(%d+);"] = var_0_0,
+		["&#x(%x+);"] = var_0_1
+	}
 }
 
-function slot3(slot0, slot1)
-	if slot0 == nil then
+function var_0_2.new(arg_3_0, arg_3_1)
+	local var_3_0 = {
+		handler = arg_3_0,
+		options = arg_3_1,
+		_stack = {}
+	}
+
+	setmetatable(var_3_0, var_0_2)
+
+	var_3_0.__index = var_0_2
+
+	return var_3_0
+end
+
+local function var_0_3(arg_4_0, arg_4_1)
+	if arg_4_0 == nil then
 		return false
 	end
 
-	if slot0[slot1] == nil then
-		return uv0(getmetatable(slot0), slot1)
+	if arg_4_0[arg_4_1] == nil then
+		return var_0_3(getmetatable(arg_4_0), arg_4_1)
 	else
 		return true
 	end
 end
 
-function slot4(slot0, slot1, slot2)
-	if slot0.options.errorHandler then
-		slot0.options.errorHandler(slot1, slot2)
+local function var_0_4(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0.options.errorHandler then
+		arg_5_0.options.errorHandler(arg_5_1, arg_5_2)
 	end
 end
 
-function slot5(slot0, slot1)
-	if slot0.options.stripWS then
-		slot1 = string.gsub(string.gsub(slot1, "^%s+", ""), "%s+$", "")
+local function var_0_5(arg_6_0, arg_6_1)
+	if arg_6_0.options.stripWS then
+		arg_6_1 = string.gsub(arg_6_1, "^%s+", "")
+		arg_6_1 = string.gsub(arg_6_1, "%s+$", "")
 	end
 
-	return slot1
+	return arg_6_1
 end
 
-function slot6(slot0, slot1)
-	if slot0.options.expandEntities then
-		for slot5, slot6 in pairs(slot0._ENTITIES) do
-			slot1 = string.gsub(slot1, slot5, slot6)
+local function var_0_6(arg_7_0, arg_7_1)
+	if arg_7_0.options.expandEntities then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._ENTITIES) do
+			arg_7_1 = string.gsub(arg_7_1, iter_7_0, iter_7_1)
 		end
 	end
 
-	return slot1
+	return arg_7_1
 end
 
-function slot7(slot0, slot1)
-	function slot3(slot0, slot1)
-		uv0.attrs[slot0] = uv1(uv2, slot1)
-		uv0.attrs._ = 1
-	end
-
-	string.gsub(slot1, slot0._ATTR1, slot3)
-	string.gsub(slot1, slot0._ATTR2, slot3)
-
-	if ({
-		name = string.gsub(slot1, slot0._TAG, "%1"),
+local function var_0_7(arg_8_0, arg_8_1)
+	local var_8_0 = {
+		name = string.gsub(arg_8_1, arg_8_0._TAG, "%1"),
 		attrs = {}
-	}).attrs._ then
-		slot2.attrs._ = nil
+	}
+
+	local function var_8_1(arg_9_0, arg_9_1)
+		var_8_0.attrs[arg_9_0] = var_0_6(arg_8_0, arg_9_1)
+		var_8_0.attrs._ = 1
+	end
+
+	string.gsub(arg_8_1, arg_8_0._ATTR1, var_8_1)
+	string.gsub(arg_8_1, arg_8_0._ATTR2, var_8_1)
+
+	if var_8_0.attrs._ then
+		var_8_0.attrs._ = nil
 	else
-		slot2.attrs = nil
+		var_8_0.attrs = nil
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot8(slot0, slot1, slot2)
-	slot2.match, slot2.endMatch, slot2.text = string.find(slot1, slot0._PI, slot2.pos)
+local function var_0_8(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_2.match, arg_10_2.endMatch, arg_10_2.text = string.find(arg_10_1, arg_10_0._PI, arg_10_2.pos)
 
-	if not slot2.match then
-		uv0(slot0, slot0._errstr.declErr, slot2.pos)
+	if not arg_10_2.match then
+		var_0_4(arg_10_0, arg_10_0._errstr.declErr, arg_10_2.pos)
 	end
 
-	if slot2.match ~= 1 then
-		uv0(slot0, slot0._errstr.declStartErr, slot2.pos)
+	if arg_10_2.match ~= 1 then
+		var_0_4(arg_10_0, arg_10_0._errstr.declStartErr, arg_10_2.pos)
 	end
 
-	if uv1(slot0, slot2.text).attrs and slot3.attrs.version == nil then
-		uv0(slot0, slot0._errstr.declAttrErr, slot2.pos)
+	local var_10_0 = var_0_7(arg_10_0, arg_10_2.text)
+
+	if var_10_0.attrs and var_10_0.attrs.version == nil then
+		var_0_4(arg_10_0, arg_10_0._errstr.declAttrErr, arg_10_2.pos)
 	end
 
-	if uv2(slot0.handler, "decl") then
-		slot0.handler:decl(slot3, slot2.match, slot2.endMatch)
+	if var_0_3(arg_10_0.handler, "decl") then
+		arg_10_0.handler:decl(var_10_0, arg_10_2.match, arg_10_2.endMatch)
 	end
 
-	return slot3
+	return var_10_0
 end
 
-function slot9(slot0, slot1, slot2)
-	slot3 = {}
-	slot2.match, slot2.endMatch, slot2.text = string.find(slot1, slot0._PI, slot2.pos)
+local function var_0_9(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = {}
 
-	if not slot2.match then
-		uv0(slot0, slot0._errstr.piErr, slot2.pos)
+	arg_11_2.match, arg_11_2.endMatch, arg_11_2.text = string.find(arg_11_1, arg_11_0._PI, arg_11_2.pos)
+
+	if not arg_11_2.match then
+		var_0_4(arg_11_0, arg_11_0._errstr.piErr, arg_11_2.pos)
 	end
 
-	if uv1(slot0.handler, "pi") then
-		if string.sub(slot2.text, string.len(uv2(slot0, slot2.text).name) + 1) ~= "" then
-			if slot3.attrs then
-				slot3.attrs._text = slot4
+	if var_0_3(arg_11_0.handler, "pi") then
+		var_11_0 = var_0_7(arg_11_0, arg_11_2.text)
+
+		local var_11_1 = string.sub(arg_11_2.text, string.len(var_11_0.name) + 1)
+
+		if var_11_1 ~= "" then
+			if var_11_0.attrs then
+				var_11_0.attrs._text = var_11_1
 			else
-				slot3.attrs = {
-					_text = slot4
+				var_11_0.attrs = {
+					_text = var_11_1
 				}
 			end
 		end
 
-		slot0.handler:pi(slot3, slot2.match, slot2.endMatch)
+		arg_11_0.handler:pi(var_11_0, arg_11_2.match, arg_11_2.endMatch)
 	end
 
-	return slot3
+	return var_11_0
 end
 
-function slot10(slot0, slot1, slot2)
-	slot2.match, slot2.endMatch, slot2.text = string.find(slot1, slot0._COMMENT, slot2.pos)
+local function var_0_10(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_2.match, arg_12_2.endMatch, arg_12_2.text = string.find(arg_12_1, arg_12_0._COMMENT, arg_12_2.pos)
 
-	if not slot2.match then
-		uv0(slot0, slot0._errstr.commentErr, slot2.pos)
+	if not arg_12_2.match then
+		var_0_4(arg_12_0, arg_12_0._errstr.commentErr, arg_12_2.pos)
 	end
 
-	if uv1(slot0.handler, "comment") then
-		slot2.text = uv2(slot0, uv3(slot0, slot2.text))
+	if var_0_3(arg_12_0.handler, "comment") then
+		arg_12_2.text = var_0_6(arg_12_0, var_0_5(arg_12_0, arg_12_2.text))
 
-		slot0.handler:comment(slot2.text, next, slot2.match, slot2.endMatch)
+		arg_12_0.handler:comment(arg_12_2.text, next, arg_12_2.match, arg_12_2.endMatch)
 	end
 end
 
-function slot11(slot0, slot1, slot2)
-	for slot7, slot8 in pairs({
-		slot0._DTD1,
-		slot0._DTD2,
-		slot0._DTD3,
-		slot0._DTD4,
-		slot0._DTD5
-	}) do
-		slot9, slot10, slot11, slot12, slot13, slot14, slot15 = string.find(slot1, slot8, slot2)
+local function var_0_11(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = {
+		arg_13_0._DTD1,
+		arg_13_0._DTD2,
+		arg_13_0._DTD3,
+		arg_13_0._DTD4,
+		arg_13_0._DTD5
+	}
 
-		if slot9 then
-			return slot9, slot10, {
-				_root = slot11,
-				_type = slot12,
-				_name = slot13,
-				_uri = slot14,
-				_internal = slot15
+	for iter_13_0, iter_13_1 in pairs(var_13_0) do
+		local var_13_1, var_13_2, var_13_3, var_13_4, var_13_5, var_13_6, var_13_7 = string.find(arg_13_1, iter_13_1, arg_13_2)
+
+		if var_13_1 then
+			return var_13_1, var_13_2, {
+				_root = var_13_3,
+				_type = var_13_4,
+				_name = var_13_5,
+				_uri = var_13_6,
+				_internal = var_13_7
 			}
 		end
 	end
@@ -245,126 +231,165 @@ function slot11(slot0, slot1, slot2)
 	return nil
 end
 
-function slot12(slot0, slot1, slot2)
-	slot2.match, slot2.endMatch, _ = uv0(slot0, slot1, slot2.pos)
+local function var_0_12(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_2.match, arg_14_2.endMatch, _ = var_0_11(arg_14_0, arg_14_1, arg_14_2.pos)
 
-	if not slot2.match then
-		uv1(slot0, slot0._errstr.dtdErr, slot2.pos)
+	if not arg_14_2.match then
+		var_0_4(arg_14_0, arg_14_0._errstr.dtdErr, arg_14_2.pos)
 	end
 
-	if uv2(slot0.handler, "dtd") then
-		slot0.handler:dtd({
+	if var_0_3(arg_14_0.handler, "dtd") then
+		local var_14_0 = {
 			name = "DOCTYPE",
-			value = string.sub(slot1, slot2.match + 10, slot2.endMatch - 1)
-		}, slot2.match, slot2.endMatch)
+			value = string.sub(arg_14_1, arg_14_2.match + 10, arg_14_2.endMatch - 1)
+		}
+
+		arg_14_0.handler:dtd(var_14_0, arg_14_2.match, arg_14_2.endMatch)
 	end
 end
 
-function slot13(slot0, slot1, slot2)
-	slot2.match, slot2.endMatch, slot2.text = string.find(slot1, slot0._CDATA, slot2.pos)
+local function var_0_13(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_2.match, arg_15_2.endMatch, arg_15_2.text = string.find(arg_15_1, arg_15_0._CDATA, arg_15_2.pos)
 
-	if not slot2.match then
-		uv0(slot0, slot0._errstr.cdataErr, slot2.pos)
+	if not arg_15_2.match then
+		var_0_4(arg_15_0, arg_15_0._errstr.cdataErr, arg_15_2.pos)
 	end
 
-	if uv1(slot0.handler, "cdata") then
-		slot0.handler:cdata(slot2.text, nil, slot2.match, slot2.endMatch)
+	if var_0_3(arg_15_0.handler, "cdata") then
+		arg_15_0.handler:cdata(arg_15_2.text, nil, arg_15_2.match, arg_15_2.endMatch)
 	end
 end
 
-function slot14(slot0, slot1, slot2)
+local function var_0_14(arg_16_0, arg_16_1, arg_16_2)
 	while true do
-		slot2.errStart, slot2.errEnd = string.find(slot2.tagstr, slot0._ATTRERR1)
+		arg_16_2.errStart, arg_16_2.errEnd = string.find(arg_16_2.tagstr, arg_16_0._ATTRERR1)
 
-		if slot2.errEnd == nil then
-			slot2.errStart, slot2.errEnd = string.find(slot2.tagstr, slot0._ATTRERR2)
+		if arg_16_2.errEnd == nil then
+			arg_16_2.errStart, arg_16_2.errEnd = string.find(arg_16_2.tagstr, arg_16_0._ATTRERR2)
 
-			if slot2.errEnd == nil then
+			if arg_16_2.errEnd == nil then
 				break
 			end
 		end
 
-		slot2.extStart, slot2.extEnd, slot2.endt2 = string.find(slot1, slot0._TAGEXT, slot2.endMatch + 1)
-		slot2.tagstr = slot2.tagstr .. string.sub(slot1, slot2.endMatch, slot2.extEnd - 1)
+		arg_16_2.extStart, arg_16_2.extEnd, arg_16_2.endt2 = string.find(arg_16_1, arg_16_0._TAGEXT, arg_16_2.endMatch + 1)
+		arg_16_2.tagstr = arg_16_2.tagstr .. string.sub(arg_16_1, arg_16_2.endMatch, arg_16_2.extEnd - 1)
 
-		if not slot2.match then
-			uv0(slot0, slot0._errstr.xmlErr, slot2.pos)
+		if not arg_16_2.match then
+			var_0_4(arg_16_0, arg_16_0._errstr.xmlErr, arg_16_2.pos)
 		end
 
-		slot2.endMatch = slot2.extEnd
+		arg_16_2.endMatch = arg_16_2.extEnd
 	end
 
-	slot3 = uv1(slot0, slot2.tagstr)
+	local var_16_0 = var_0_7(arg_16_0, arg_16_2.tagstr)
 
-	if slot2.endt1 == "/" then
-		if uv2(slot0.handler, "endtag") then
-			if slot3.attrs then
-				uv0(slot0, string.format("%s (/%s)", slot0._errstr.endTagErr, slot3.name), slot2.pos)
+	if arg_16_2.endt1 == "/" then
+		if var_0_3(arg_16_0.handler, "endtag") then
+			if var_16_0.attrs then
+				var_0_4(arg_16_0, string.format("%s (/%s)", arg_16_0._errstr.endTagErr, var_16_0.name), arg_16_2.pos)
 			end
 
-			if table.remove(slot0._stack) ~= slot3.name then
-				uv0(slot0, string.format("%s (/%s)", slot0._errstr.unmatchedTagErr, slot3.name), slot2.pos)
+			if table.remove(arg_16_0._stack) ~= var_16_0.name then
+				var_0_4(arg_16_0, string.format("%s (/%s)", arg_16_0._errstr.unmatchedTagErr, var_16_0.name), arg_16_2.pos)
 			end
 
-			slot0.handler:endtag(slot3, slot2.match, slot2.endMatch)
+			arg_16_0.handler:endtag(var_16_0, arg_16_2.match, arg_16_2.endMatch)
 		end
 	else
-		table.insert(slot0._stack, slot3.name)
+		table.insert(arg_16_0._stack, var_16_0.name)
 
-		if uv2(slot0.handler, "starttag") then
-			slot0.handler:starttag(slot3, slot2.match, slot2.endMatch)
+		if var_0_3(arg_16_0.handler, "starttag") then
+			arg_16_0.handler:starttag(var_16_0, arg_16_2.match, arg_16_2.endMatch)
 		end
 
-		if slot2.endt2 == "/" then
-			table.remove(slot0._stack)
+		if arg_16_2.endt2 == "/" then
+			table.remove(arg_16_0._stack)
 
-			if uv2(slot0.handler, "endtag") then
-				slot0.handler:endtag(slot3, slot2.match, slot2.endMatch)
+			if var_0_3(arg_16_0.handler, "endtag") then
+				arg_16_0.handler:endtag(var_16_0, arg_16_2.match, arg_16_2.endMatch)
 			end
 		end
 	end
 
-	return slot3
+	return var_16_0
 end
 
-function slot15(slot0, slot1, slot2)
-	if string.find(string.sub(slot2.tagstr, 1, 5), "?xml%s") then
-		uv0(slot0, slot1, slot2)
-	elseif string.sub(slot2.tagstr, 1, 1) == "?" then
-		uv1(slot0, slot1, slot2)
-	elseif string.sub(slot2.tagstr, 1, 3) == "!--" then
-		uv2(slot0, slot1, slot2)
-	elseif string.sub(slot2.tagstr, 1, 8) == "!DOCTYPE" then
-		uv3(slot0, slot1, slot2)
-	elseif string.sub(slot2.tagstr, 1, 8) == "![CDATA[" then
-		uv4(slot0, slot1, slot2)
+local function var_0_15(arg_17_0, arg_17_1, arg_17_2)
+	if string.find(string.sub(arg_17_2.tagstr, 1, 5), "?xml%s") then
+		var_0_8(arg_17_0, arg_17_1, arg_17_2)
+	elseif string.sub(arg_17_2.tagstr, 1, 1) == "?" then
+		var_0_9(arg_17_0, arg_17_1, arg_17_2)
+	elseif string.sub(arg_17_2.tagstr, 1, 3) == "!--" then
+		var_0_10(arg_17_0, arg_17_1, arg_17_2)
+	elseif string.sub(arg_17_2.tagstr, 1, 8) == "!DOCTYPE" then
+		var_0_12(arg_17_0, arg_17_1, arg_17_2)
+	elseif string.sub(arg_17_2.tagstr, 1, 8) == "![CDATA[" then
+		var_0_13(arg_17_0, arg_17_1, arg_17_2)
 	else
-		uv5(slot0, slot1, slot2)
+		var_0_14(arg_17_0, arg_17_1, arg_17_2)
 	end
 end
 
-function slot16(slot0, slot1, slot2)
-	slot2.match, slot2.endMatch, slot2.text, slot2.endt1, slot2.tagstr, slot2.endt2 = string.find(slot1, slot0._XML, slot2.pos)
+local function var_0_16(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_2.match, arg_18_2.endMatch, arg_18_2.text, arg_18_2.endt1, arg_18_2.tagstr, arg_18_2.endt2 = string.find(arg_18_1, arg_18_0._XML, arg_18_2.pos)
 
-	if not slot2.match then
-		if string.find(slot1, slot0._WS, slot2.pos) then
-			if #slot0._stack ~= 0 then
-				uv0(slot0, slot0._errstr.incompleteXmlErr, slot2.pos)
+	if not arg_18_2.match then
+		if string.find(arg_18_1, arg_18_0._WS, arg_18_2.pos) then
+			if #arg_18_0._stack ~= 0 then
+				var_0_4(arg_18_0, arg_18_0._errstr.incompleteXmlErr, arg_18_2.pos)
 			else
 				return false
 			end
 		else
-			uv0(slot0, slot0._errstr.xmlErr, slot2.pos)
+			var_0_4(arg_18_0, arg_18_0._errstr.xmlErr, arg_18_2.pos)
 		end
 	end
 
-	slot2.text = slot2.text or ""
-	slot2.tagstr = slot2.tagstr or ""
-	slot2.match = slot2.match or 0
+	arg_18_2.text = arg_18_2.text or ""
+	arg_18_2.tagstr = arg_18_2.tagstr or ""
+	arg_18_2.match = arg_18_2.match or 0
 
-	return slot2.endMatch ~= nil
+	return arg_18_2.endMatch ~= nil
 end
 
-slot2.__index = slot2
+function var_0_2.parse(arg_19_0, arg_19_1, arg_19_2)
+	if type(arg_19_0) ~= "table" or getmetatable(arg_19_0) ~= var_0_2 then
+		error("You must call xmlparser:parse(parameters) instead of xmlparser.parse(parameters)")
+	end
 
-return slot2
+	if arg_19_2 == nil then
+		arg_19_2 = true
+	end
+
+	arg_19_0.handler.parseAttributes = arg_19_2
+
+	local var_19_0 = {
+		match = 0,
+		pos = 1,
+		endMatch = 0
+	}
+
+	while var_19_0.match do
+		if not var_0_16(arg_19_0, arg_19_1, var_19_0) then
+			break
+		end
+
+		var_19_0.startText = var_19_0.match
+		var_19_0.endText = var_19_0.match + string.len(var_19_0.text) - 1
+		var_19_0.match = var_19_0.match + string.len(var_19_0.text)
+		var_19_0.text = var_0_6(arg_19_0, var_0_5(arg_19_0, var_19_0.text))
+
+		if var_19_0.text ~= "" and var_0_3(arg_19_0.handler, "text") then
+			arg_19_0.handler:text(var_19_0.text, nil, var_19_0.match, var_19_0.endText)
+		end
+
+		var_0_15(arg_19_0, arg_19_1, var_19_0)
+
+		var_19_0.pos = var_19_0.endMatch + 1
+	end
+end
+
+var_0_2.__index = var_0_2
+
+return var_0_2

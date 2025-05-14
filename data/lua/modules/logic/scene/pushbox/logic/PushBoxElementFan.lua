@@ -1,147 +1,153 @@
-module("modules.logic.scene.pushbox.logic.PushBoxElementFan", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxElementFan", package.seeall)
 
-slot0 = class("PushBoxElementFan", UserDataDispose)
+local var_0_0 = class("PushBoxElementFan", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	slot0._gameObject = slot1
-	slot0._transform = slot1.transform
-	slot0._cell = slot2
-	slot0._ani = gohelper.findChildComponent(slot1, "fengshan", typeof(UnityEngine.Animator))
+	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	arg_1_0._gameObject = arg_1_1
+	arg_1_0._transform = arg_1_1.transform
+	arg_1_0._cell = arg_1_2
+	arg_1_0._ani = gohelper.findChildComponent(arg_1_1, "fengshan", typeof(UnityEngine.Animator))
 
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, slot0._onRefreshElement, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, slot0._onStepFinished, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, slot0._onRevertStep, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, slot0._onStartElement, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshFanElement, slot0._onRefreshElement, slot0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshFanElement, arg_1_0._onRefreshElement, arg_1_0)
 end
 
-function slot0.setRendererIndex(slot0)
-	for slot6 = 0, slot0._transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer)).Length - 1 do
-		slot2[slot6].sortingOrder = slot0._cell:getRendererIndex()
+function var_0_0.setRendererIndex(arg_2_0)
+	local var_2_0 = arg_2_0._cell:getRendererIndex()
+	local var_2_1 = arg_2_0._transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+
+	for iter_2_0 = 0, var_2_1.Length - 1 do
+		var_2_1[iter_2_0].sortingOrder = var_2_0
 	end
 
-	slot0._smoke = gohelper.findChild(slot0._gameObject, "vx_smoke")
+	arg_2_0._smoke = gohelper.findChild(arg_2_0._gameObject, "vx_smoke")
 
-	for slot7 = 0, slot0._smoke.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem)).Length - 1 do
-		ZProj.ParticleSystemHelper.SetSortingOrder(slot3[slot7], 30000)
+	local var_2_2 = arg_2_0._smoke.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+
+	for iter_2_1 = 0, var_2_2.Length - 1 do
+		ZProj.ParticleSystemHelper.SetSortingOrder(var_2_2[iter_2_1], 30000)
 	end
 
-	gohelper.setActive(slot0._smoke, false)
+	gohelper.setActive(arg_2_0._smoke, false)
 end
 
-function slot0._onStartElement(slot0)
-	slot0._duration_time = slot0._game_mgr:getConfig().fan_duration
-	slot0._active = false
+function var_0_0._onStartElement(arg_3_0)
+	arg_3_0._duration_time = arg_3_0._game_mgr:getConfig().fan_duration
+	arg_3_0._active = false
 end
 
-function slot0._onRevertStep(slot0, slot1)
-	if slot1.fan_time then
-		for slot5, slot6 in ipairs(slot1.fan_time) do
-			if slot6.pos_x == slot0._cell:getPosX() and slot6.pos_y == slot0._cell:getPosY() then
-				slot0._active = slot6.active
+function var_0_0._onRevertStep(arg_4_0, arg_4_1)
+	if arg_4_1.fan_time then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1.fan_time) do
+			if iter_4_1.pos_x == arg_4_0._cell:getPosX() and iter_4_1.pos_y == arg_4_0._cell:getPosY() then
+				arg_4_0._active = iter_4_1.active
 
-				slot0:_releaseTimer()
+				arg_4_0:_releaseTimer()
 
-				if slot6.left_time and slot6.left_time > 0 then
-					slot0._timer = true
-					slot0._start_time = Time.realtimeSinceStartup - (slot0._duration_time - slot6.left_time)
+				if iter_4_1.left_time and iter_4_1.left_time > 0 then
+					arg_4_0._timer = true
+					arg_4_0._start_time = Time.realtimeSinceStartup - (arg_4_0._duration_time - iter_4_1.left_time)
 
-					TaskDispatcher.runDelay(slot0._onEffectDone, slot0, slot6.left_time)
+					TaskDispatcher.runDelay(arg_4_0._onEffectDone, arg_4_0, iter_4_1.left_time)
 
-					if slot0._active then
-						gohelper.setActive(slot0._smoke, true)
-						slot0._ani:Play("click")
+					if arg_4_0._active then
+						gohelper.setActive(arg_4_0._smoke, true)
+						arg_4_0._ani:Play("click")
 					end
 				end
 
-				if not slot0._active then
-					slot0:_onEffectDone()
+				if not arg_4_0._active then
+					arg_4_0:_onEffectDone()
 				end
 
-				slot0._game_mgr:setCellInvincible(slot0._active, slot0._cell:getPosX(), slot0._cell:getPosY())
+				arg_4_0._game_mgr:setCellInvincible(arg_4_0._active, arg_4_0._cell:getPosX(), arg_4_0._cell:getPosY())
 			end
 		end
 	end
 end
 
-function slot0._onRefreshElement(slot0)
-	if slot0:_characterInArea() then
-		if not slot0._active then
+function var_0_0._onRefreshElement(arg_5_0)
+	if arg_5_0:_characterInArea() then
+		if not arg_5_0._active then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_exhaust)
 		end
 
-		TaskDispatcher.cancelTask(slot0._onEffectDone, slot0)
+		TaskDispatcher.cancelTask(arg_5_0._onEffectDone, arg_5_0)
 
-		slot0._active = true
+		arg_5_0._active = true
 
-		gohelper.setActive(slot0._smoke, true)
-		slot0._ani:Play("click")
+		gohelper.setActive(arg_5_0._smoke, true)
+		arg_5_0._ani:Play("click")
 
-		slot0._timer = nil
+		arg_5_0._timer = nil
 
-		slot0._game_mgr:setCellInvincible(true, slot0._cell:getPosX(), slot0._cell:getPosY())
-	elseif slot0._active and not slot0._timer then
-		slot0._start_time = Time.realtimeSinceStartup
-		slot0._timer = true
+		arg_5_0._game_mgr:setCellInvincible(true, arg_5_0._cell:getPosX(), arg_5_0._cell:getPosY())
+	elseif arg_5_0._active and not arg_5_0._timer then
+		arg_5_0._start_time = Time.realtimeSinceStartup
+		arg_5_0._timer = true
 
-		TaskDispatcher.runDelay(slot0._onEffectDone, slot0, slot0._duration_time)
+		TaskDispatcher.runDelay(arg_5_0._onEffectDone, arg_5_0, arg_5_0._duration_time)
 	end
 end
 
-function slot0._onStepFinished(slot0)
+function var_0_0._onStepFinished(arg_6_0)
+	return
 end
 
-function slot0.getState(slot0)
-	return slot0._active
+function var_0_0.getState(arg_7_0)
+	return arg_7_0._active
 end
 
-function slot0._onEffectDone(slot0)
-	slot0._start_time = nil
-	slot0._active = false
+function var_0_0._onEffectDone(arg_8_0)
+	arg_8_0._start_time = nil
+	arg_8_0._active = false
 
-	gohelper.setActive(slot0._smoke, false)
-	slot0._ani:Play("loop")
-	slot0._game_mgr:setCellInvincible(false, slot0._cell:getPosX(), slot0._cell:getPosY())
+	gohelper.setActive(arg_8_0._smoke, false)
+	arg_8_0._ani:Play("loop")
+	arg_8_0._game_mgr:setCellInvincible(false, arg_8_0._cell:getPosX(), arg_8_0._cell:getPosY())
 end
 
-function slot0._characterInArea(slot0)
-	return slot0._game_mgr:characterInArea(slot0._cell:getPosX(), slot0._cell:getPosY())
+function var_0_0._characterInArea(arg_9_0)
+	return arg_9_0._game_mgr:characterInArea(arg_9_0._cell:getPosX(), arg_9_0._cell:getPosY())
 end
 
-function slot0.getIndex(slot0)
-	return slot0._index
+function var_0_0.getIndex(arg_10_0)
+	return arg_10_0._index
 end
 
-function slot0.getPosX(slot0)
-	return slot0._cell:getPosX()
+function var_0_0.getPosX(arg_11_0)
+	return arg_11_0._cell:getPosX()
 end
 
-function slot0.getPosY(slot0)
-	return slot0._cell:getPosY()
+function var_0_0.getPosY(arg_12_0)
+	return arg_12_0._cell:getPosY()
 end
 
-function slot0.getObj(slot0)
-	return slot0._gameObject
+function var_0_0.getObj(arg_13_0)
+	return arg_13_0._gameObject
 end
 
-function slot0.getCell(slot0)
-	return slot0._cell
+function var_0_0.getCell(arg_14_0)
+	return arg_14_0._cell
 end
 
-function slot0._releaseTimer(slot0)
-	slot0._start_time = nil
+function var_0_0._releaseTimer(arg_15_0)
+	arg_15_0._start_time = nil
 
-	TaskDispatcher.cancelTask(slot0._onEffectDone, slot0)
+	TaskDispatcher.cancelTask(arg_15_0._onEffectDone, arg_15_0)
 
-	slot0._timer = nil
+	arg_15_0._timer = nil
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:_releaseTimer()
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_16_0)
+	arg_16_0:_releaseTimer()
+	arg_16_0:__onDispose()
 end
 
-return slot0
+return var_0_0

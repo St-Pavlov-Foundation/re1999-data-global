@@ -1,68 +1,76 @@
-module("modules.logic.login.work.AutoOpenNoticeWork", package.seeall)
+﻿module("modules.logic.login.work.AutoOpenNoticeWork", package.seeall)
 
-slot0 = class("AutoOpenNoticeWork", BaseWork)
+local var_0_0 = class("AutoOpenNoticeWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if VersionValidator.instance:isInReviewing() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if GameFacade.isExternalTest() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	if SDKMgr.getShowNotice and not SDKMgr.instance:getShowNotice() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	NoticeController.instance:startRequest(slot0.onReceiveNotice, slot0)
+	NoticeController.instance:startRequest(arg_1_0.onReceiveNotice, arg_1_0)
 end
 
-function slot0.onReceiveNotice(slot0, slot1, slot2)
-	if not slot1 then
-		return slot0:onDone(true)
+function var_0_0.onReceiveNotice(arg_2_0, arg_2_1, arg_2_2)
+	if not arg_2_1 then
+		return arg_2_0:onDone(true)
 	end
 
 	if not NoticeModel.instance:canAutoOpen() then
-		return slot0:onDone(true)
+		return arg_2_0:onDone(true)
 	end
 
-	NoticeController.instance:getNoticeConfig(slot0.autoOpenNoticeView, slot0)
+	NoticeController.instance:getNoticeConfig(arg_2_0.autoOpenNoticeView, arg_2_0)
 end
 
-function slot0.autoOpenNoticeView(slot0)
-	slot0:saveCurrentTime()
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
+function var_0_0.autoOpenNoticeView(arg_3_0)
+	arg_3_0:saveCurrentTime()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0.onCloseViewFinish, arg_3_0)
 	NoticeController.instance:setAutoOpenNoticeView(true)
 	ViewMgr.instance:openView(ViewName.NoticeView)
 end
 
-function slot0.saveCurrentTime(slot0)
-	slot4 = os.date("*t", ServerTime.nowInLocal() - TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond)
+function var_0_0.saveCurrentTime(arg_4_0)
+	local var_4_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.NoticePatKey)
+	local var_4_1 = PlayerPrefsHelper.getString(var_4_0, "")
+	local var_4_2 = ServerTime.nowInLocal() - TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+	local var_4_3 = os.date("*t", var_4_2)
+	local var_4_4 = var_4_3.year
+	local var_4_5 = var_4_3.month
+	local var_4_6 = var_4_3.day
+	local var_4_7 = var_4_3.hour
+	local var_4_8 = string.format("%s%s%s%s%s%s%s", var_4_4, NoticeEnum.FirstSplitChar, var_4_5, NoticeEnum.FirstSplitChar, var_4_6, NoticeEnum.FirstSplitChar, var_4_7)
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.NoticePatKey), "")) then
-		slot9 = slot2 .. NoticeEnum.SecondSplitChar .. string.format("%s%s%s%s%s%s%s", slot4.year, NoticeEnum.FirstSplitChar, slot4.month, NoticeEnum.FirstSplitChar, slot4.day, NoticeEnum.FirstSplitChar, slot4.hour)
+	if not string.nilorempty(var_4_1) then
+		var_4_8 = var_4_1 .. NoticeEnum.SecondSplitChar .. var_4_8
 	end
 
-	PlayerPrefsHelper.setString(slot1, slot9)
+	PlayerPrefsHelper.setString(var_4_0, var_4_8)
 end
 
-function slot0.onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.NoticeView then
-		slot0:onDone(true)
+function var_0_0.onCloseViewFinish(arg_5_0, arg_5_1)
+	if arg_5_1 == ViewName.NoticeView then
+		arg_5_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_6_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinish, arg_6_0)
 	NoticeController.instance:stopRequest()
 	NoticeController.instance:stopGetConfigRequest()
 end
 
-return slot0
+return var_0_0

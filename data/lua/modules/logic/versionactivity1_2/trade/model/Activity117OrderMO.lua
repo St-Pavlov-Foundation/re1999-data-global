@@ -1,118 +1,123 @@
-module("modules.logic.versionactivity1_2.trade.model.Activity117OrderMO", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.model.Activity117OrderMO", package.seeall)
 
-slot0 = pureTable("Activity117OrderMO")
+local var_0_0 = pureTable("Activity117OrderMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.activityId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.activityId = arg_1_1
 
-	slot0:resetCo(Activity117Config.instance:getOrderConfig(slot1, slot2))
-	slot0:resetData()
+	local var_1_0 = Activity117Config.instance:getOrderConfig(arg_1_1, arg_1_2)
+
+	arg_1_0:resetCo(var_1_0)
+	arg_1_0:resetData()
 end
 
-function slot0.resetCo(slot0, slot1)
-	slot0.co = slot1
-	slot0.id = slot1.id
-	slot0.order = slot1.order
-	slot0.minScore = slot1.minDealScore
-	slot0.maxScore = slot1.maxDealScore
-	slot0.maxAcceptScore = slot1.maxAcceptScore
-	slot0.maxProgress = slot1.maxProgress
-	slot0.desc = slot1.name or ""
-	slot0.jumpId = slot1.jumpId
+function var_0_0.resetCo(arg_2_0, arg_2_1)
+	arg_2_0.co = arg_2_1
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.order = arg_2_1.order
+	arg_2_0.minScore = arg_2_1.minDealScore
+	arg_2_0.maxScore = arg_2_1.maxDealScore
+	arg_2_0.maxAcceptScore = arg_2_1.maxAcceptScore
+	arg_2_0.maxProgress = arg_2_1.maxProgress
+	arg_2_0.desc = arg_2_1.name or ""
+	arg_2_0.jumpId = arg_2_1.jumpId
 end
 
-function slot0.resetData(slot0)
-	slot0.hasGetBonus = false
-	slot0.userDealScores = {}
-	slot0.progress = 0
+function var_0_0.resetData(arg_3_0)
+	arg_3_0.hasGetBonus = false
+	arg_3_0.userDealScores = {}
+	arg_3_0.progress = 0
 end
 
-function slot0.updateServerData(slot0, slot1)
-	slot0.hasGetBonus = slot1.hasGetBonus
-	slot0.userDealScores = slot1.userDealScores
-	slot0.progress = slot1.progress
+function var_0_0.updateServerData(arg_4_0, arg_4_1)
+	arg_4_0.hasGetBonus = arg_4_1.hasGetBonus
+	arg_4_0.userDealScores = arg_4_1.userDealScores
+	arg_4_0.progress = arg_4_1.progress
 
-	slot0:updateStatus()
+	arg_4_0:updateStatus()
 end
 
-function slot0.getLastRound(slot0)
-	return slot0.userDealScores[#slot0.userDealScores]
+function var_0_0.getLastRound(arg_5_0)
+	return arg_5_0.userDealScores[#arg_5_0.userDealScores]
 end
 
-function slot0.sortOrderFunc(slot0, slot1)
-	if slot0.hasGetBonus and slot1.hasGetBonus then
-		return slot0.order < slot1.order
+function var_0_0.sortOrderFunc(arg_6_0, arg_6_1)
+	if arg_6_0.hasGetBonus and arg_6_1.hasGetBonus then
+		return arg_6_0.order < arg_6_1.order
 	end
 
-	if not slot0.hasGetBonus and not slot1.hasGetBonus then
-		if slot0:isProgressEnough() and not slot1:isProgressEnough() then
+	if not arg_6_0.hasGetBonus and not arg_6_1.hasGetBonus then
+		if arg_6_0:isProgressEnough() and not arg_6_1:isProgressEnough() then
 			return true
 		end
 
-		if not slot0:isProgressEnough() and slot1:isProgressEnough() then
+		if not arg_6_0:isProgressEnough() and arg_6_1:isProgressEnough() then
 			return false
 		end
 
-		return slot0.order < slot1.order
+		return arg_6_0.order < arg_6_1.order
 	end
 
-	return not slot0.hasGetBonus
+	return not arg_6_0.hasGetBonus
 end
 
-function slot0.getDesc(slot0)
-	return slot0.desc
+function var_0_0.getDesc(arg_7_0)
+	return arg_7_0.desc
 end
 
-function slot0.isProgressEnough(slot0)
-	return slot0.maxProgress <= slot0.progress
+function var_0_0.isProgressEnough(arg_8_0)
+	return arg_8_0.progress >= arg_8_0.maxProgress
 end
 
-function slot0.updateStatus(slot0)
-	if slot0.hasGetBonus then
-		slot0.status = Activity117Enum.Status.AlreadyGot
+function var_0_0.updateStatus(arg_9_0)
+	if arg_9_0.hasGetBonus then
+		arg_9_0.status = Activity117Enum.Status.AlreadyGot
 
 		return
 	end
 
-	if slot0:isProgressEnough() then
-		slot0.status = Activity117Enum.Status.CanGet
+	if arg_9_0:isProgressEnough() then
+		arg_9_0.status = Activity117Enum.Status.CanGet
 
 		return
 	end
 
-	slot0.status = Activity117Enum.Status.NotEnough
+	arg_9_0.status = Activity117Enum.Status.NotEnough
 end
 
-function slot0.getStatus(slot0)
-	return slot0.status
+function var_0_0.getStatus(arg_10_0)
+	return arg_10_0.status
 end
 
-function slot0.checkPrice(slot0, slot1)
-	slot2 = slot0.minScore
+function var_0_0.checkPrice(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0.minScore
+	local var_11_1 = arg_11_0.maxAcceptScore
 
-	if slot0.maxAcceptScore < slot1 then
+	if var_11_1 < arg_11_1 then
 		return Activity117Enum.PriceType.Bad
 	end
 
-	if slot1 <= slot2 + (slot3 - slot2) / 3 then
+	local var_11_2 = (var_11_1 - var_11_0) / 3
+
+	if arg_11_1 <= var_11_0 + var_11_2 then
 		return Activity117Enum.PriceType.Best
 	end
 
-	if slot1 <= slot2 + 2 * slot4 then
+	if arg_11_1 <= var_11_0 + 2 * var_11_2 then
 		return Activity117Enum.PriceType.Better
 	end
 
 	return Activity117Enum.PriceType.Common
 end
 
-function slot0.getMinPrice(slot0)
-	for slot4 = #slot0.userDealScores, 1, -1 do
-		if slot0:checkPrice(slot0.userDealScores[slot4]) ~= Activity117Enum.PriceType.Bad then
-			return slot0.userDealScores[slot4]
+function var_0_0.getMinPrice(arg_12_0)
+	for iter_12_0 = #arg_12_0.userDealScores, 1, -1 do
+		if arg_12_0:checkPrice(arg_12_0.userDealScores[iter_12_0]) ~= Activity117Enum.PriceType.Bad then
+			return arg_12_0.userDealScores[iter_12_0]
 		end
 	end
 
-	return slot0.minScore
+	return arg_12_0.minScore
 end
 
-return slot0
+return var_0_0

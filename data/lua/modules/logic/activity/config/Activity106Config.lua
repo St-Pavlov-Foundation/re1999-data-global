@@ -1,14 +1,14 @@
-module("modules.logic.activity.config.Activity106Config", package.seeall)
+﻿module("modules.logic.activity.config.Activity106Config", package.seeall)
 
-slot0 = class("Activity106Config", BaseConfig)
+local var_0_0 = class("Activity106Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._act106Task = nil
-	slot0._act106Order = nil
-	slot0._act106MiniGame = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._act106Task = nil
+	arg_1_0._act106Order = nil
+	arg_1_0._act106MiniGame = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity106_task",
 		"activity106_order",
@@ -16,44 +16,44 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity106_task" then
-		slot0._act106Task = slot2
-	elseif slot1 == "activity106_order" then
-		slot0._act106Order = slot2
-	elseif slot1 == "activity106_minigame" then
-		slot0._act106MiniGame = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity106_task" then
+		arg_3_0._act106Task = arg_3_2
+	elseif arg_3_1 == "activity106_order" then
+		arg_3_0._act106Order = arg_3_2
+	elseif arg_3_1 == "activity106_minigame" then
+		arg_3_0._act106MiniGame = arg_3_2
 	end
 end
 
-function slot0.getActivityWarmUpTaskCo(slot0, slot1)
-	return slot0._act106Task.configDict[slot1]
+function var_0_0.getActivityWarmUpTaskCo(arg_4_0, arg_4_1)
+	return arg_4_0._act106Task.configDict[arg_4_1]
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	slot2 = {}
+function var_0_0.getTaskByActId(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	for slot6, slot7 in ipairs(slot0._act106Task.configList) do
-		if slot7.activityId == slot1 then
-			table.insert(slot2, slot7)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._act106Task.configList) do
+		if iter_5_1.activityId == arg_5_1 then
+			table.insert(var_5_0, iter_5_1)
 		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getActivityWarmUpAllOrderCo(slot0, slot1)
-	return slot0._act106Order.configDict[slot1]
+function var_0_0.getActivityWarmUpAllOrderCo(arg_6_0, arg_6_1)
+	return arg_6_0._act106Order.configDict[arg_6_1]
 end
 
-function slot0.getActivityWarmUpOrderCo(slot0, slot1, slot2)
-	return slot0._act106Order.configDict[slot1][slot2]
+function var_0_0.getActivityWarmUpOrderCo(arg_7_0, arg_7_1, arg_7_2)
+	return arg_7_0._act106Order.configDict[arg_7_1][arg_7_2]
 end
 
-function slot0.getMiniGameSettings(slot0, slot1)
-	return slot0._act106MiniGame.configDict[slot1]
+function var_0_0.getMiniGameSettings(arg_8_0, arg_8_1)
+	return arg_8_0._act106MiniGame.configDict[arg_8_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

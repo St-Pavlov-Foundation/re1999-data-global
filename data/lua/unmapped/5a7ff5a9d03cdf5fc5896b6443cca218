@@ -1,5 +1,0 @@
-module("framework.network.socket.SocketId", package.seeall)
-
-return {
-	Main = 0
-}

@@ -1,153 +1,163 @@
-module("modules.logic.scene.room.comp.RoomSceneAmbientComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneAmbientComp", package.seeall)
 
-slot0 = class("RoomSceneAmbientComp", BaseSceneComp)
-slot1 = UnityEngine.Shader
-slot2 = {
-	LIGHTRANGE = slot1.PropertyToID("_LightRange"),
-	LIGHTOFFSET = slot1.PropertyToID("_LightOffset"),
-	LIGHTPOSITION = slot1.PropertyToID("_LightPosition"),
-	LIGHTMAX = slot1.PropertyToID("_LightMax"),
-	LIGHTMIN = slot1.PropertyToID("_LightMin"),
-	LIGHTCOLA = slot1.PropertyToID("_LightColA"),
-	_LightParamOptimize = slot1.PropertyToID("_LightParamOptimize"),
-	LIGHTPARAMS = slot1.PropertyToID("_LightParams"),
-	BENDING_AMOUNT = slot1.PropertyToID("_Curvature"),
-	BENDING_AMOUNT_SCALED = slot1.PropertyToID("_CurvatureScaled"),
-	AMBIENTSIZE = slot1.PropertyToID("_AmbientSize"),
-	HFLAMBERT = slot1.PropertyToID("_Hflambert"),
-	AMBIENTCOL = slot1.PropertyToID("_AmbientCol"),
-	_ShadowColor = slot1.PropertyToID("_ShadowColor"),
-	SHADOW_PARAMS = slot1.PropertyToID("_ShadowParams"),
-	SHADOW_PARAMS_OPT = slot1.PropertyToID("_ShadowParamsOpt"),
-	FOGCOLOR = slot1.PropertyToID("_FogColor"),
-	FOGCOLOR2 = slot1.PropertyToID("_FogColor2"),
-	FOGPARAMS = slot1.PropertyToID("_FogParams"),
-	FOGHEIGHT = slot1.PropertyToID("_FogHeight"),
-	HEIGHTFOGEDGE = slot1.PropertyToID("_HeightFogEdge"),
-	DISFOGSTART = slot1.PropertyToID("_DisFogStart"),
-	_DisFogDataAndFogParmasOpt = slot1.PropertyToID("_DisFogDataAndFogParmasOpt"),
-	DISFOGEDGE = slot1.PropertyToID("_DisFogEdge"),
-	FOGDENSITYMIN = slot1.PropertyToID("_FogDensityMin"),
-	FOGDENSITYMAX = slot1.PropertyToID("_FogDensityMax"),
-	FOGMAINCOL = slot1.PropertyToID("_MainCol"),
-	FOGOUTSIDECOL = slot1.PropertyToID("_OutSideCol"),
-	FOGPLANEOUTSIDECOLOR = slot1.PropertyToID("_OutSideColor"),
-	FOGPLANEMAINCOLOR = slot1.PropertyToID("_MainColor"),
-	FogDensityData = slot1.PropertyToID("_FogDensityData"),
-	ADD_RANGE = slot1.PropertyToID("_AddRange")
+local var_0_0 = class("RoomSceneAmbientComp", BaseSceneComp)
+local var_0_1 = UnityEngine.Shader
+local var_0_2 = {
+	LIGHTRANGE = var_0_1.PropertyToID("_LightRange"),
+	LIGHTOFFSET = var_0_1.PropertyToID("_LightOffset"),
+	LIGHTPOSITION = var_0_1.PropertyToID("_LightPosition"),
+	LIGHTMAX = var_0_1.PropertyToID("_LightMax"),
+	LIGHTMIN = var_0_1.PropertyToID("_LightMin"),
+	LIGHTCOLA = var_0_1.PropertyToID("_LightColA"),
+	_LightParamOptimize = var_0_1.PropertyToID("_LightParamOptimize"),
+	LIGHTPARAMS = var_0_1.PropertyToID("_LightParams"),
+	BENDING_AMOUNT = var_0_1.PropertyToID("_Curvature"),
+	BENDING_AMOUNT_SCALED = var_0_1.PropertyToID("_CurvatureScaled"),
+	AMBIENTSIZE = var_0_1.PropertyToID("_AmbientSize"),
+	HFLAMBERT = var_0_1.PropertyToID("_Hflambert"),
+	AMBIENTCOL = var_0_1.PropertyToID("_AmbientCol"),
+	_ShadowColor = var_0_1.PropertyToID("_ShadowColor"),
+	SHADOW_PARAMS = var_0_1.PropertyToID("_ShadowParams"),
+	SHADOW_PARAMS_OPT = var_0_1.PropertyToID("_ShadowParamsOpt"),
+	FOGCOLOR = var_0_1.PropertyToID("_FogColor"),
+	FOGCOLOR2 = var_0_1.PropertyToID("_FogColor2"),
+	FOGPARAMS = var_0_1.PropertyToID("_FogParams"),
+	FOGHEIGHT = var_0_1.PropertyToID("_FogHeight"),
+	HEIGHTFOGEDGE = var_0_1.PropertyToID("_HeightFogEdge"),
+	DISFOGSTART = var_0_1.PropertyToID("_DisFogStart"),
+	_DisFogDataAndFogParmasOpt = var_0_1.PropertyToID("_DisFogDataAndFogParmasOpt"),
+	DISFOGEDGE = var_0_1.PropertyToID("_DisFogEdge"),
+	FOGDENSITYMIN = var_0_1.PropertyToID("_FogDensityMin"),
+	FOGDENSITYMAX = var_0_1.PropertyToID("_FogDensityMax"),
+	FOGMAINCOL = var_0_1.PropertyToID("_MainCol"),
+	FOGOUTSIDECOL = var_0_1.PropertyToID("_OutSideCol"),
+	FOGPLANEOUTSIDECOLOR = var_0_1.PropertyToID("_OutSideColor"),
+	FOGPLANEMAINCOLOR = var_0_1.PropertyToID("_MainColor"),
+	FogDensityData = var_0_1.PropertyToID("_FogDensityData"),
+	ADD_RANGE = var_0_1.PropertyToID("_AddRange")
 }
-slot3 = {
+local var_0_3 = {
 	vector3 = 3,
 	vector4 = 4,
 	color = 5,
 	vector2 = 2,
 	number = 1
 }
-slot4 = {
-	ambientsize = slot3.number,
-	hflambert = slot3.number,
-	ambientcol = slot3.color,
-	outsideShadow = slot3.number,
-	insideShadow = slot3.number,
-	shadowColor = slot3.color,
-	fogColor = slot3.color,
-	fogColor2 = slot3.color,
-	fogParams = slot3.vector2,
-	fogHeight = slot3.number,
-	heightfogedge = slot3.number,
-	disfogstart = slot3.number,
-	disfogedge = slot3.number,
-	fogdensitymin = slot3.number,
-	fogdensitymax = slot3.number,
-	addRange = slot3.number,
-	dirLightColor = slot3.color,
-	dirLightIntensity = slot3.number,
-	lightDir = slot3.vector3,
-	fogPlaneMainCol = slot3.color,
-	fogPlaneOutSideCol = slot3.color,
-	fogMainCol = slot3.color,
-	fogOutSideCol = slot3.color,
-	rimcol = slot3.color,
-	lightRangeNear = slot3.number,
-	lightRangeFar = slot3.number,
-	lightOffsetNear = slot3.number,
-	lightOffsetFar = slot3.number,
-	cameraDistanceValue = slot3.number,
-	lightmin = slot3.number,
-	lightmax = slot3.number,
-	lightParams = slot3.vector2
+local var_0_4 = {
+	ambientsize = var_0_3.number,
+	hflambert = var_0_3.number,
+	ambientcol = var_0_3.color,
+	outsideShadow = var_0_3.number,
+	insideShadow = var_0_3.number,
+	shadowColor = var_0_3.color,
+	fogColor = var_0_3.color,
+	fogColor2 = var_0_3.color,
+	fogParams = var_0_3.vector2,
+	fogHeight = var_0_3.number,
+	heightfogedge = var_0_3.number,
+	disfogstart = var_0_3.number,
+	disfogedge = var_0_3.number,
+	fogdensitymin = var_0_3.number,
+	fogdensitymax = var_0_3.number,
+	addRange = var_0_3.number,
+	dirLightColor = var_0_3.color,
+	dirLightIntensity = var_0_3.number,
+	lightDir = var_0_3.vector3,
+	fogPlaneMainCol = var_0_3.color,
+	fogPlaneOutSideCol = var_0_3.color,
+	fogMainCol = var_0_3.color,
+	fogOutSideCol = var_0_3.color,
+	rimcol = var_0_3.color,
+	lightRangeNear = var_0_3.number,
+	lightRangeFar = var_0_3.number,
+	lightOffsetNear = var_0_3.number,
+	lightOffsetFar = var_0_3.number,
+	cameraDistanceValue = var_0_3.number,
+	lightmin = var_0_3.number,
+	lightmax = var_0_3.number,
+	lightParams = var_0_3.vector2
 }
-slot5 = "night_1"
-slot6 = {
+local var_0_5 = "night_1"
+local var_0_6 = {
 	"day_1",
 	"day_2",
 	"afternoon",
 	"night_1"
 }
-slot0.Update_Rate_Time = 10
-slot0.Switch_Tween_Time = 5
 
-function slot0.onInit(slot0)
+var_0_0.Update_Rate_Time = 10
+var_0_0.Switch_Tween_Time = 5
+
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot0._matFogPlane = slot0._scene.go.sceneAmbient.matFogPlane
-	slot0._matFogParticle = slot0._scene.go.sceneAmbient.matFogParticle
-	slot0._updateRateTime = uv0.Update_Rate_Time
-	slot0._swithchTweenTime = uv0.Switch_Tween_Time
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
+	arg_2_0._matFogPlane = arg_2_0._scene.go.sceneAmbient.matFogPlane
+	arg_2_0._matFogParticle = arg_2_0._scene.go.sceneAmbient.matFogParticle
+	arg_2_0._updateRateTime = var_0_0.Update_Rate_Time
+	arg_2_0._swithchTweenTime = var_0_0.Switch_Tween_Time
 
-	if not string.nilorempty(CommonConfig.instance:getConstStr(ConstEnum.RoomWeatherUpdateTime)) then
-		slot0._updateRateTime = string.splitToNumber(slot3, "#")[1] or uv0.Update_Rate_Time
-		slot0._swithchTweenTime = slot4[2] or 0
+	local var_2_0 = CommonConfig.instance:getConstStr(ConstEnum.RoomWeatherUpdateTime)
+
+	if not string.nilorempty(var_2_0) then
+		local var_2_1 = string.splitToNumber(var_2_0, "#")
+
+		arg_2_0._updateRateTime = var_2_1[1] or var_0_0.Update_Rate_Time
+		arg_2_0._swithchTweenTime = var_2_1[2] or 0
 	end
 
-	if slot0._lastAutoUpdateReport ~= slot0:_isCanUpdate() then
-		slot0._lastAutoUpdateReport = slot4
+	local var_2_2 = arg_2_0:_isCanUpdate()
 
-		slot0:reset()
+	if arg_2_0._lastAutoUpdateReport ~= var_2_2 then
+		arg_2_0._lastAutoUpdateReport = var_2_2
+
+		arg_2_0:reset()
 	end
 end
 
-function slot0.reset(slot0)
-	slot0._ambientId = nil
-	slot0._curDataParams = nil
-	slot0._data = nil
-	slot1 = slot0._curRoomMode
-	slot0._curRoomMode = RoomModel.instance:getGameMode()
-	slot0._ambientIds = {}
+function var_0_0.reset(arg_3_0)
+	arg_3_0._ambientId = nil
+	arg_3_0._curDataParams = nil
+	arg_3_0._data = nil
 
-	for slot5, slot6 in ipairs(uv0) do
-		if RoomConfig.instance:getSceneAmbientConfig(slot6) then
-			table.insert(slot0._ambientIds, slot6)
+	local var_3_0 = arg_3_0._curRoomMode
+
+	arg_3_0._curRoomMode = RoomModel.instance:getGameMode()
+	arg_3_0._ambientIds = {}
+
+	for iter_3_0, iter_3_1 in ipairs(var_0_6) do
+		if RoomConfig.instance:getSceneAmbientConfig(iter_3_1) then
+			table.insert(arg_3_0._ambientIds, iter_3_1)
 		end
 	end
 
-	TaskDispatcher.cancelTask(slot0.updateReport, slot0)
-	TaskDispatcher.cancelTask(slot0._initReport, slot0)
+	TaskDispatcher.cancelTask(arg_3_0.updateReport, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._initReport, arg_3_0)
 
-	if slot0:_isCanUpdate() then
-		TaskDispatcher.runRepeat(slot0.updateReport, slot0, slot0._updateRateTime)
+	if arg_3_0:_isCanUpdate() then
+		TaskDispatcher.runRepeat(arg_3_0.updateReport, arg_3_0, arg_3_0._updateRateTime)
 	end
 
-	TaskDispatcher.runDelay(slot0._initReport, slot0, 0.1)
+	TaskDispatcher.runDelay(arg_3_0._initReport, arg_3_0, 0.1)
 end
 
-function slot0._initReport(slot0)
-	slot1 = 1
+function var_0_0._initReport(arg_4_0)
+	local var_4_0 = 1
 
-	if slot0:_isCanUpdate() then
-		slot2, slot3 = WeatherModel.instance:getReport()
+	if arg_4_0:_isCanUpdate() then
+		local var_4_1, var_4_2 = WeatherModel.instance:getReport()
 
-		if slot2 then
-			slot1 = slot2.roomMode
+		if var_4_1 then
+			var_4_0 = var_4_1.roomMode
 		end
 	end
 
-	slot0:tweenToAmbientId(slot0._ambientIds[slot1] or slot0._ambientIds[1])
+	arg_4_0:tweenToAmbientId(arg_4_0._ambientIds[var_4_0] or arg_4_0._ambientIds[1])
 end
 
-function slot0._isCanUpdate(slot0)
+function var_0_0._isCanUpdate(arg_5_0)
 	if RoomController.instance:isObMode() or RoomController.instance:isVisitMode() then
 		return true
 	end
@@ -155,256 +165,286 @@ function slot0._isCanUpdate(slot0)
 	return false
 end
 
-function slot0.updateReport(slot0)
-	if not slot0._ambientIds then
+function var_0_0.updateReport(arg_6_0)
+	if not arg_6_0._ambientIds then
 		return
 	end
 
-	slot0._ambientIds = slot0._ambientIds
+	arg_6_0._ambientIds = arg_6_0._ambientIds
 
-	if (tabletool.indexOf(slot0._ambientIds, slot0._ambientId) or 0) + 1 > #slot0._ambientIds then
-		slot1 = 1
+	local var_6_0 = (tabletool.indexOf(arg_6_0._ambientIds, arg_6_0._ambientId) or 0) + 1
+
+	if var_6_0 > #arg_6_0._ambientIds then
+		var_6_0 = 1
 	end
 
-	slot0:tweenToAmbientId(slot0._ambientIds[slot1])
+	arg_6_0:tweenToAmbientId(arg_6_0._ambientIds[var_6_0])
 end
 
-function slot0._getKeyTypeFuncMap(slot0)
-	if not slot0._keyTypeFuncMap then
-		slot0._keyTypeFuncMap = {
-			[uv0.number] = slot0._paramToNumber,
-			[uv0.vector2] = slot0._paramToVector2,
-			[uv0.vector3] = slot0._paramToVector3,
-			[uv0.vector4] = slot0._paramToVector4,
-			[uv0.color] = slot0._paramToColor
+function var_0_0._getKeyTypeFuncMap(arg_7_0)
+	if not arg_7_0._keyTypeFuncMap then
+		arg_7_0._keyTypeFuncMap = {
+			[var_0_3.number] = arg_7_0._paramToNumber,
+			[var_0_3.vector2] = arg_7_0._paramToVector2,
+			[var_0_3.vector3] = arg_7_0._paramToVector3,
+			[var_0_3.vector4] = arg_7_0._paramToVector4,
+			[var_0_3.color] = arg_7_0._paramToColor
 		}
 	end
 
-	return slot0._keyTypeFuncMap
+	return arg_7_0._keyTypeFuncMap
 end
 
-function slot0.tweenToAmbientId(slot0, slot1)
-	if not RoomConfig.instance:getSceneAmbientConfig(slot1) then
-		logError(string.format("room_scene_ambient --> can not find ambientId:[%s]", slot1))
+function var_0_0.tweenToAmbientId(arg_8_0, arg_8_1)
+	local var_8_0 = RoomConfig.instance:getSceneAmbientConfig(arg_8_1)
+
+	if not var_8_0 then
+		logError(string.format("room_scene_ambient --> can not find ambientId:[%s]", arg_8_1))
 
 		return
 	end
 
-	slot0:_killTween()
+	arg_8_0:_killTween()
 
-	slot0._ambientId = slot1
+	arg_8_0._ambientId = arg_8_1
 
-	if not slot0._curDataParams then
-		slot0:_updateData(1, slot2, slot2)
-		slot0:_nightLight()
+	if not arg_8_0._curDataParams then
+		arg_8_0:_updateData(1, var_8_0, var_8_0)
+		arg_8_0:_nightLight()
 
 		return
 	end
 
-	slot0._tweenId = slot0._scene.tween:tweenFloat(0, 1, slot0._swithchTweenTime or uv0.Switch_Tween_Time, slot0._frameCallback, slot0._finishCallback, slot0, {
-		fromAmbientCfg = slot0:_copyAmbientParam(slot0._curDataParams or slot2),
-		toAmbientCfg = slot2
-	})
+	local var_8_1 = {
+		fromAmbientCfg = arg_8_0:_copyAmbientParam(arg_8_0._curDataParams or var_8_0),
+		toAmbientCfg = var_8_0
+	}
+	local var_8_2 = arg_8_0._swithchTweenTime or var_0_0.Switch_Tween_Time
 
-	slot0:_nightLight()
+	arg_8_0._tweenId = arg_8_0._scene.tween:tweenFloat(0, 1, var_8_2, arg_8_0._frameCallback, arg_8_0._finishCallback, arg_8_0, var_8_1)
+
+	arg_8_0:_nightLight()
 end
 
-function slot0._killTween(slot0)
-	if slot0._tweenId then
-		slot0._scene.tween:killById(slot0._tweenId)
+function var_0_0._killTween(arg_9_0)
+	if arg_9_0._tweenId then
+		arg_9_0._scene.tween:killById(arg_9_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_9_0._tweenId = nil
 	end
 end
 
-function slot0._frameCallback(slot0, slot1, slot2)
-	slot0:_updateData(slot1, slot2.fromAmbientCfg, slot2.toAmbientCfg)
+function var_0_0._frameCallback(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:_updateData(arg_10_1, arg_10_2.fromAmbientCfg, arg_10_2.toAmbientCfg)
 end
 
-function slot0._finishCallback(slot0, slot1, slot2)
-	slot0._tweenId = nil
+function var_0_0._finishCallback(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._tweenId = nil
 end
 
-function slot0._copyAmbientParam(slot0, slot1)
-	slot2 = {}
+function var_0_0._copyAmbientParam(arg_12_0, arg_12_1)
+	local var_12_0 = {}
 
-	slot0:_getZoomAmbientParam(1, slot2, slot1, slot1)
+	arg_12_0:_getZoomAmbientParam(1, var_12_0, arg_12_1, arg_12_1)
 
-	return slot2
+	return var_12_0
 end
 
-function slot0._getZoomAmbientParam(slot0, slot1, slot2, slot3, slot4)
-	for slot9, slot10 in pairs(uv0) do
-		if slot3[slot9] ~= nil and slot4[slot9] ~= nil then
-			if slot10 == uv1.number then
-				slot0:_zoomToKeyNumber(slot2, slot9, slot1, slot3[slot9], slot4[slot9])
+function var_0_0._getZoomAmbientParam(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	local var_13_0 = var_0_4
+
+	for iter_13_0, iter_13_1 in pairs(var_13_0) do
+		if arg_13_3[iter_13_0] ~= nil and arg_13_4[iter_13_0] ~= nil then
+			if iter_13_1 == var_0_3.number then
+				arg_13_0:_zoomToKeyNumber(arg_13_2, iter_13_0, arg_13_1, arg_13_3[iter_13_0], arg_13_4[iter_13_0])
 			else
-				slot0:_zoomToKeyTable(slot2, slot9, slot1, slot3[slot9], slot4[slot9])
+				arg_13_0:_zoomToKeyTable(arg_13_2, iter_13_0, arg_13_1, arg_13_3[iter_13_0], arg_13_4[iter_13_0])
 			end
 		end
 	end
 end
 
-function slot0._updateData(slot0, slot1, slot2, slot3)
-	if slot2 == nil and slot3 == nil then
+function var_0_0._updateData(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if arg_14_2 == nil and arg_14_3 == nil then
 		return
 	end
 
-	slot0._data = slot0._data or {}
-	slot0._curDataParams = slot0._curDataParams or {}
+	local var_14_0 = arg_14_2 or arg_14_3
+	local var_14_1 = arg_14_3 or arg_14_2
 
-	slot0:_getZoomAmbientParam(slot1, slot0._curDataParams, slot2 or slot3, slot3 or slot2)
+	arg_14_0._data = arg_14_0._data or {}
+	arg_14_0._curDataParams = arg_14_0._curDataParams or {}
 
-	for slot11, slot12 in pairs(uv0) do
-		if slot0._curDataParams[slot11] ~= nil then
-			if slot0:_getKeyTypeFuncMap()[slot12] then
-				slot0._data[slot11] = slot13(slot0, slot0._curDataParams[slot11])
+	arg_14_0:_getZoomAmbientParam(arg_14_1, arg_14_0._curDataParams, var_14_0, var_14_1)
+
+	local var_14_2 = var_0_4
+	local var_14_3 = arg_14_0:_getKeyTypeFuncMap()
+
+	for iter_14_0, iter_14_1 in pairs(var_14_2) do
+		if arg_14_0._curDataParams[iter_14_0] ~= nil then
+			local var_14_4 = var_14_3[iter_14_1]
+
+			if var_14_4 then
+				arg_14_0._data[iter_14_0] = var_14_4(arg_14_0, arg_14_0._curDataParams[iter_14_0])
 			else
-				logError(string.format("can not find keyTypeFuncMap[%s]", slot12))
+				logError(string.format("can not find keyTypeFuncMap[%s]", iter_14_1))
 			end
 		else
-			logError(string.format("can not find key[%s]", slot11))
+			logError(string.format("can not find key[%s]", iter_14_0))
 		end
 	end
 
-	slot0:applyInspectorParam()
+	arg_14_0:applyInspectorParam()
 end
 
-function slot0._zoomToKeyNumber(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot1[slot2] = slot0:_zoomToNumber(slot3, slot4, slot5)
+function var_0_0._zoomToKeyNumber(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	arg_15_1[arg_15_2] = arg_15_0:_zoomToNumber(arg_15_3, arg_15_4, arg_15_5)
 end
 
-function slot0._zoomToKeyTable(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot1[slot2] then
-		slot1[slot2] = {}
+function var_0_0._zoomToKeyTable(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
+	if not arg_16_1[arg_16_2] then
+		arg_16_1[arg_16_2] = {}
 	end
 
-	for slot10 = 1, #slot4 do
-		slot1[slot2][slot10] = slot0:_zoomToNumber(slot3, slot4[slot10], slot5[slot10])
+	local var_16_0 = arg_16_1[arg_16_2]
+
+	for iter_16_0 = 1, #arg_16_4 do
+		var_16_0[iter_16_0] = arg_16_0:_zoomToNumber(arg_16_3, arg_16_4[iter_16_0], arg_16_5[iter_16_0])
 	end
 end
 
-function slot0._zoomToNumber(slot0, slot1, slot2, slot3)
-	if slot1 >= 1 then
-		return slot3
-	elseif slot1 <= 0 then
-		return slot2
+function var_0_0._zoomToNumber(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_1 >= 1 then
+		return arg_17_3
+	elseif arg_17_1 <= 0 then
+		return arg_17_2
 	end
 
-	return slot2 + (slot3 - slot2) * slot1
+	return arg_17_2 + (arg_17_3 - arg_17_2) * arg_17_1
 end
 
-function slot0._paramToNumber(slot0, slot1)
-	return slot1
+function var_0_0._paramToNumber(arg_18_0, arg_18_1)
+	return arg_18_1
 end
 
-function slot0._paramToVector2(slot0, slot1)
-	return Vector4(slot1[1], slot1[2], 0, 0)
+function var_0_0._paramToVector2(arg_19_0, arg_19_1)
+	return Vector4(arg_19_1[1], arg_19_1[2], 0, 0)
 end
 
-function slot0._paramToVector3(slot0, slot1)
-	return Vector4(slot1[1], slot1[2], slot1[3], 0)
+function var_0_0._paramToVector3(arg_20_0, arg_20_1)
+	return Vector4(arg_20_1[1], arg_20_1[2], arg_20_1[3], 0)
 end
 
-function slot0._paramTooVector4(slot0, slot1)
-	return Vector4(slot1[1], slot1[2], slot1[3], slot1[4])
+function var_0_0._paramTooVector4(arg_21_0, arg_21_1)
+	return Vector4(arg_21_1[1], arg_21_1[2], arg_21_1[3], arg_21_1[4])
 end
 
-function slot0._paramToColor(slot0, slot1)
-	return Color(slot1[1], slot1[2], slot1[3], slot1[4])
+function var_0_0._paramToColor(arg_22_0, arg_22_1)
+	return Color(arg_22_1[1], arg_22_1[2], arg_22_1[3], arg_22_1[4])
 end
 
-function slot0.applyInspectorParam(slot0)
-	slot0:_applyShaher()
-	slot0:_applyAmbientData()
-	slot0:_applyLightComp()
-	slot0:_applyFog()
+function var_0_0.applyInspectorParam(arg_23_0)
+	arg_23_0:_applyShaher()
+	arg_23_0:_applyAmbientData()
+	arg_23_0:_applyLightComp()
+	arg_23_0:_applyFog()
 end
 
-function slot0._applyShaher(slot0)
-	if not slot0._data then
+function var_0_0._applyShaher(arg_24_0)
+	if not arg_24_0._data then
 		return
 	end
 
-	slot1 = slot0._data
+	local var_24_0 = arg_24_0._data
 
-	uv0.SetGlobalFloat(uv1.AMBIENTSIZE, slot1.ambientsize)
-	uv0.SetGlobalFloat(uv1.HFLAMBERT, slot1.hflambert)
-	uv0.SetGlobalColor(uv1.AMBIENTCOL, slot1.ambientcol)
-	uv0.SetGlobalVector(uv1.SHADOW_PARAMS, Vector4(slot1.outsideShadow, slot1.insideShadow))
-	uv0.SetGlobalVector(uv1.SHADOW_PARAMS_OPT, Vector4(slot1.insideShadow - slot1.outsideShadow, slot1.outsideShadow))
-	uv0.SetGlobalColor(uv1._ShadowColor, slot1.shadowColor)
-	uv0.SetGlobalColor(uv1.FOGCOLOR, slot1.fogColor)
-	uv0.SetGlobalColor(uv1.FOGCOLOR2, slot1.fogColor2)
-	uv0.SetGlobalVector(uv1.FOGPARAMS, slot1.fogParams)
-	uv0.SetGlobalFloat(uv1.FOGHEIGHT, slot1.fogHeight)
-	uv0.SetGlobalFloat(uv1.HEIGHTFOGEDGE, slot1.heightfogedge)
-	uv0.SetGlobalFloat(uv1.DISFOGSTART, slot1.disfogstart)
-	uv0.SetGlobalFloat(uv1.DISFOGEDGE, slot1.disfogedge)
-	uv0.SetGlobalFloat(uv1.ADD_RANGE, slot1.addRange)
+	var_0_1.SetGlobalFloat(var_0_2.AMBIENTSIZE, var_24_0.ambientsize)
+	var_0_1.SetGlobalFloat(var_0_2.HFLAMBERT, var_24_0.hflambert)
+	var_0_1.SetGlobalColor(var_0_2.AMBIENTCOL, var_24_0.ambientcol)
+	var_0_1.SetGlobalVector(var_0_2.SHADOW_PARAMS, Vector4(var_24_0.outsideShadow, var_24_0.insideShadow))
+	var_0_1.SetGlobalVector(var_0_2.SHADOW_PARAMS_OPT, Vector4(var_24_0.insideShadow - var_24_0.outsideShadow, var_24_0.outsideShadow))
+	var_0_1.SetGlobalColor(var_0_2._ShadowColor, var_24_0.shadowColor)
+	var_0_1.SetGlobalColor(var_0_2.FOGCOLOR, var_24_0.fogColor)
+	var_0_1.SetGlobalColor(var_0_2.FOGCOLOR2, var_24_0.fogColor2)
+	var_0_1.SetGlobalVector(var_0_2.FOGPARAMS, var_24_0.fogParams)
+	var_0_1.SetGlobalFloat(var_0_2.FOGHEIGHT, var_24_0.fogHeight)
+	var_0_1.SetGlobalFloat(var_0_2.HEIGHTFOGEDGE, var_24_0.heightfogedge)
+	var_0_1.SetGlobalFloat(var_0_2.DISFOGSTART, var_24_0.disfogstart)
+	var_0_1.SetGlobalFloat(var_0_2.DISFOGEDGE, var_24_0.disfogedge)
+	var_0_1.SetGlobalFloat(var_0_2.ADD_RANGE, var_24_0.addRange)
 
-	slot6 = slot1.fogParams.y - slot1.fogParams.x ~= 0 and 1 / slot5 or slot4
+	local var_24_1 = 1 / var_24_0.disfogedge
+	local var_24_2 = -var_24_0.disfogstart / var_24_0.disfogedge
+	local var_24_3 = var_24_0.fogParams.x
+	local var_24_4 = var_24_0.fogParams.y - var_24_3
+	local var_24_5 = var_24_4 ~= 0 and 1 / var_24_4 or var_24_3
+	local var_24_6 = -var_24_3 * var_24_5
 
-	uv0.SetGlobalVector(uv1._DisFogDataAndFogParmasOpt, Vector4(1 / slot1.disfogedge, -slot1.disfogstart / slot1.disfogedge, slot6, -slot4 * slot6))
+	var_0_1.SetGlobalVector(var_0_2._DisFogDataAndFogParmasOpt, Vector4(var_24_1, var_24_2, var_24_5, var_24_6))
 end
 
-function slot0._applyAmbientData(slot0)
-	slot1 = slot0._scene.go.sceneAmbientData
-	slot2 = slot0._scene.go.sceneAmbient
+function var_0_0._applyAmbientData(arg_25_0)
+	local var_25_0 = arg_25_0._scene.go.sceneAmbientData
+	local var_25_1 = arg_25_0._scene.go.sceneAmbient
+	local var_25_2 = arg_25_0._data
 
-	if slot0._data and slot2 and slot1 then
-		slot1.rimcol = slot3.rimcol
-		slot1.lightRangeNear = slot3.lightRangeNear
-		slot1.lightRangeFar = slot3.lightRangeFar
-		slot1.lightOffsetNear = slot3.lightOffsetNear
-		slot1.lightOffsetFar = slot3.lightOffsetFar
-		slot1.cameraDistanceValue = slot3.cameraDistanceValue
-		slot1.lightmin = slot3.lightmin
-		slot1.lightmax = slot3.lightmax
-		slot1.lightParams = slot3.lightParams
-		slot2.data = slot1
+	if var_25_2 and var_25_1 and var_25_0 then
+		var_25_0.rimcol = var_25_2.rimcol
+		var_25_0.lightRangeNear = var_25_2.lightRangeNear
+		var_25_0.lightRangeFar = var_25_2.lightRangeFar
+		var_25_0.lightOffsetNear = var_25_2.lightOffsetNear
+		var_25_0.lightOffsetFar = var_25_2.lightOffsetFar
+		var_25_0.cameraDistanceValue = var_25_2.cameraDistanceValue
+		var_25_0.lightmin = var_25_2.lightmin
+		var_25_0.lightmax = var_25_2.lightmax
+		var_25_0.lightParams = var_25_2.lightParams
+		var_25_1.data = var_25_0
 	end
 end
 
-function slot0._applyLightComp(slot0, slot1)
-	slot3 = slot0._data
+function var_0_0._applyLightComp(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0._scene.light
+	local var_26_1 = arg_26_0._data
 
-	if slot0._scene.light and slot3 then
-		slot2:setLightColor(slot3.dirLightColor)
-		slot2:setLightIntensity(slot3.dirLightIntensity)
-		slot2:setLocalRotation(slot3.lightDir.x, slot3.lightDir.y, slot3.lightDir.z)
+	if var_26_0 and var_26_1 then
+		var_26_0:setLightColor(var_26_1.dirLightColor)
+		var_26_0:setLightIntensity(var_26_1.dirLightIntensity)
+		var_26_0:setLocalRotation(var_26_1.lightDir.x, var_26_1.lightDir.y, var_26_1.lightDir.z)
 	end
 end
 
-function slot0._applyFog(slot0)
-	if slot0._data then
-		if slot0._matFogParticle then
-			slot0._matFogParticle:SetColor(uv0.FOGMAINCOL, slot1.fogMainCol)
-			slot0._matFogParticle:SetColor(uv0.FOGOUTSIDECOL, slot1.fogOutSideCol)
+function var_0_0._applyFog(arg_27_0)
+	local var_27_0 = arg_27_0._data
+
+	if var_27_0 then
+		if arg_27_0._matFogParticle then
+			arg_27_0._matFogParticle:SetColor(var_0_2.FOGMAINCOL, var_27_0.fogMainCol)
+			arg_27_0._matFogParticle:SetColor(var_0_2.FOGOUTSIDECOL, var_27_0.fogOutSideCol)
 		end
 
-		if slot0._matFogPlane then
-			slot0._matFogPlane:SetColor(uv0.FOGPLANEMAINCOLOR, slot1.fogPlaneMainCol)
-			slot0._matFogPlane:SetColor(uv0.FOGPLANEOUTSIDECOLOR, slot1.fogPlaneOutSideCol)
+		if arg_27_0._matFogPlane then
+			arg_27_0._matFogPlane:SetColor(var_0_2.FOGPLANEMAINCOLOR, var_27_0.fogPlaneMainCol)
+			arg_27_0._matFogPlane:SetColor(var_0_2.FOGPLANEOUTSIDECOLOR, var_27_0.fogPlaneOutSideCol)
 		end
 	end
 end
 
-function slot0._nightLight(slot0)
-	if RoomWeatherModel.instance:getIsNight() ~= (slot0._ambientId == uv0) then
-		RoomWeatherModel.instance:setIsNight(slot1)
-		RoomMapController.instance:dispatchEvent(RoomEvent.MapEntityNightLight, slot1)
+function var_0_0._nightLight(arg_28_0)
+	local var_28_0 = arg_28_0._ambientId == var_0_5
+
+	if RoomWeatherModel.instance:getIsNight() ~= var_28_0 then
+		RoomWeatherModel.instance:setIsNight(var_28_0)
+		RoomMapController.instance:dispatchEvent(RoomEvent.MapEntityNightLight, var_28_0)
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._matFogParticle = nil
-	slot0._matFogPlane = nil
-	slot0._curRoomMode = nil
+function var_0_0.onSceneClose(arg_29_0)
+	arg_29_0._matFogParticle = nil
+	arg_29_0._matFogPlane = nil
+	arg_29_0._curRoomMode = nil
 
-	TaskDispatcher.cancelTask(slot0.updateReport, slot0)
-	TaskDispatcher.cancelTask(slot0._initReport, slot0)
-	slot0:_killTween()
+	TaskDispatcher.cancelTask(arg_29_0.updateReport, arg_29_0)
+	TaskDispatcher.cancelTask(arg_29_0._initReport, arg_29_0)
+	arg_29_0:_killTween()
 end
 
-return slot0
+return var_0_0

@@ -1,4 +1,4 @@
-return {
+﻿return {
 	{
 		"scenes/v2a1_m_s12_lsp_jshd/scenes_prefab/v2a1_m_s12_lsp_jshd_a_p.prefab",
 		{

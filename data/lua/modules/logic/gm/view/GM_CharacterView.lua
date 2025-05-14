@@ -1,171 +1,188 @@
-module("modules.logic.gm.view.GM_CharacterView", package.seeall)
+﻿module("modules.logic.gm.view.GM_CharacterView", package.seeall)
 
-slot0 = class("GM_CharacterView", BaseView)
-slot1 = "#FFFF00"
-slot0.s_AutoCheckFaceOnOpen = false
-slot0.s_AutoCheckMouthOnOpen = false
-slot0.s_AutoCheckContentOnOpen = false
-slot0.s_AutoCheckMotionOnOpen = false
+local var_0_0 = class("GM_CharacterView", BaseView)
+local var_0_1 = "#FFFF00"
 
-function slot2(slot0, slot1)
-	slot2 = Checker_HeroVoiceFace.New(slot0)
+var_0_0.s_AutoCheckFaceOnOpen = false
+var_0_0.s_AutoCheckMouthOnOpen = false
+var_0_0.s_AutoCheckContentOnOpen = false
+var_0_0.s_AutoCheckMotionOnOpen = false
 
-	slot2:exec(slot1)
-	slot2:log()
+local function var_0_2(arg_1_0, arg_1_1)
+	local var_1_0 = Checker_HeroVoiceFace.New(arg_1_0)
+
+	var_1_0:exec(arg_1_1)
+	var_1_0:log()
 end
 
-function slot3(slot0, slot1)
-	slot2 = Checker_HeroVoiceMouth.New(slot0)
+local function var_0_3(arg_2_0, arg_2_1)
+	local var_2_0 = Checker_HeroVoiceMouth.New(arg_2_0)
 
-	slot2:exec(slot1)
-	slot2:log()
+	var_2_0:exec(arg_2_1)
+	var_2_0:log()
 end
 
-function slot4(slot0, slot1)
-	slot2 = Checker_HeroVoiceContent.New(slot0)
+local function var_0_4(arg_3_0, arg_3_1)
+	local var_3_0 = Checker_HeroVoiceContent.New(arg_3_0)
 
-	slot2:exec(slot1)
-	slot2:log()
+	var_3_0:exec(arg_3_1)
+	var_3_0:log()
 end
 
-function slot5(slot0, slot1)
-	slot2 = Checker_HeroVoiceMotion.New(slot0)
+local function var_0_5(arg_4_0, arg_4_1)
+	local var_4_0 = Checker_HeroVoiceMotion.New(arg_4_0)
 
-	slot2:exec(slot1)
-	slot2:log()
+	var_4_0:exec(arg_4_1)
+	var_4_0:log()
 end
 
-function slot0.register()
-	uv0.CharacterView_register(CharacterView)
+function var_0_0.register()
+	var_0_0.CharacterView_register(CharacterView)
 end
 
-function slot0.CharacterView_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "removeEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_refreshInfo")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_onSpineLoaded")
+function var_0_0.CharacterView_register(arg_6_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "removeEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "_refreshInfo")
+	GMMinusModel.instance:saveOriginalFunc(arg_6_0, "_onSpineLoaded")
 
-	function slot0._editableInitView(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(slot0)
+	function arg_6_0._editableInitView(arg_7_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_7_0, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(arg_7_0)
 	end
 
-	function slot0.addEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(slot0)
-		GM_CharacterViewContainer.addEvents(slot0)
+	function arg_6_0.addEvents(arg_8_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(arg_8_0)
+		GM_CharacterViewContainer.addEvents(arg_8_0)
 	end
 
-	function slot0.removeEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(slot0)
-		GM_CharacterViewContainer.removeEvents(slot0)
+	function arg_6_0.removeEvents(arg_9_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_9_0, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(arg_9_0)
+		GM_CharacterViewContainer.removeEvents(arg_9_0)
 	end
 
-	function slot0._onSpineLoaded(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_onSpineLoaded", ...)
+	function arg_6_0._onSpineLoaded(arg_10_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_10_0, "_onSpineLoaded", ...)
 
-		if uv0.s_AutoCheckFaceOnOpen then
-			uv1(slot0._heroMO.heroId, slot0._uiSpine)
+		local var_10_0 = arg_10_0._heroMO.heroId
+		local var_10_1 = arg_10_0._uiSpine
+
+		if var_0_0.s_AutoCheckFaceOnOpen then
+			var_0_2(var_10_0, var_10_1)
 		end
 
-		if uv0.s_AutoCheckMouthOnOpen then
-			uv2(slot2, slot3)
+		if var_0_0.s_AutoCheckMouthOnOpen then
+			var_0_3(var_10_0, var_10_1)
 		end
 
-		if uv0.s_AutoCheckContentOnOpen then
-			uv3(slot2, slot3)
+		if var_0_0.s_AutoCheckContentOnOpen then
+			var_0_4(var_10_0, var_10_1)
 		end
 
-		if uv0.s_AutoCheckMotionOnOpen then
-			uv4(slot2, slot3)
-		end
-	end
-
-	function slot0._refreshInfo(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_refreshInfo", ...)
-
-		if uv0.s_ShowAllTabId then
-			slot1 = slot0._heroMO
-			slot0._txtnamecn.text = gohelper.getRichColorText(slot1.heroId, uv1) .. slot1.config.name
+		if var_0_0.s_AutoCheckMotionOnOpen then
+			var_0_5(var_10_0, var_10_1)
 		end
 	end
 
-	function slot0._gm_showAllTabIdUpdate(slot0)
-		slot0:_refreshInfo()
+	function arg_6_0._refreshInfo(arg_11_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_11_0, "_refreshInfo", ...)
+
+		if var_0_0.s_ShowAllTabId then
+			local var_11_0 = arg_11_0._heroMO
+			local var_11_1 = var_11_0.heroId
+			local var_11_2 = var_11_0.config
+
+			arg_11_0._txtnamecn.text = gohelper.getRichColorText(var_11_1, var_0_1) .. var_11_2.name
+		end
 	end
 
-	function slot0._gm_onClickCheckFace(slot0)
-		uv0(slot0._heroMO.heroId, slot0._uiSpine)
+	function arg_6_0._gm_showAllTabIdUpdate(arg_12_0)
+		arg_12_0:_refreshInfo()
 	end
 
-	function slot0._gm_onClickCheckMouth(slot0)
-		uv0(slot0._heroMO.heroId, slot0._uiSpine)
+	function arg_6_0._gm_onClickCheckFace(arg_13_0)
+		local var_13_0 = arg_13_0._heroMO.heroId
+		local var_13_1 = arg_13_0._uiSpine
+
+		var_0_2(var_13_0, var_13_1)
+	end
+
+	function arg_6_0._gm_onClickCheckMouth(arg_14_0)
+		local var_14_0 = arg_14_0._heroMO.heroId
+		local var_14_1 = arg_14_0._uiSpine
+
+		var_0_3(var_14_0, var_14_1)
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._item1Toggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item1/Toggle")
-	slot0._item2Btn = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item2/Button")
-	slot0._item3Btn = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item3/Button")
-	slot0._item4Btn = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item4/Button")
-	slot0._item5Btn = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item5/Button")
+function var_0_0.onInitView(arg_15_0)
+	arg_15_0._btnClose = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "btnClose")
+	arg_15_0._item1Toggle = gohelper.findChildToggle(arg_15_0.viewGO, "viewport/content/item1/Toggle")
+	arg_15_0._item2Btn = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "viewport/content/item2/Button")
+	arg_15_0._item3Btn = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "viewport/content/item3/Button")
+	arg_15_0._item4Btn = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "viewport/content/item4/Button")
+	arg_15_0._item5Btn = gohelper.findChildButtonWithAudio(arg_15_0.viewGO, "viewport/content/item5/Button")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._item1Toggle:AddOnValueChanged(slot0._onItem1ToggleValueChanged, slot0)
-	slot0._item2Btn:AddClickListener(slot0._onItem2Click, slot0)
-	slot0._item3Btn:AddClickListener(slot0._onItem3Click, slot0)
-	slot0._item4Btn:AddClickListener(slot0._onItem4Click, slot0)
-	slot0._item5Btn:AddClickListener(slot0._onItem5Click, slot0)
+function var_0_0.addEvents(arg_16_0)
+	arg_16_0._btnClose:AddClickListener(arg_16_0.closeThis, arg_16_0)
+	arg_16_0._item1Toggle:AddOnValueChanged(arg_16_0._onItem1ToggleValueChanged, arg_16_0)
+	arg_16_0._item2Btn:AddClickListener(arg_16_0._onItem2Click, arg_16_0)
+	arg_16_0._item3Btn:AddClickListener(arg_16_0._onItem3Click, arg_16_0)
+	arg_16_0._item4Btn:AddClickListener(arg_16_0._onItem4Click, arg_16_0)
+	arg_16_0._item5Btn:AddClickListener(arg_16_0._onItem5Click, arg_16_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._item1Toggle:RemoveOnValueChanged()
-	slot0._item2Btn:RemoveClickListener()
-	slot0._item3Btn:RemoveClickListener()
-	slot0._item4Btn:RemoveClickListener()
-	slot0._item5Btn:RemoveClickListener()
+function var_0_0.removeEvents(arg_17_0)
+	arg_17_0._btnClose:RemoveClickListener()
+	arg_17_0._item1Toggle:RemoveOnValueChanged()
+	arg_17_0._item2Btn:RemoveClickListener()
+	arg_17_0._item3Btn:RemoveClickListener()
+	arg_17_0._item4Btn:RemoveClickListener()
+	arg_17_0._item5Btn:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshItem1()
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0:_refreshItem1()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_19_0)
+	return
 end
 
-slot0.s_ShowAllTabId = false
+var_0_0.s_ShowAllTabId = false
 
-function slot0._refreshItem1(slot0)
-	slot0._item1Toggle.isOn = uv0.s_ShowAllTabId
+function var_0_0._refreshItem1(arg_20_0)
+	local var_20_0 = var_0_0.s_ShowAllTabId
+
+	arg_20_0._item1Toggle.isOn = var_20_0
 end
 
-function slot0._onItem1ToggleValueChanged(slot0)
-	slot1 = slot0._item1Toggle.isOn
-	uv0.s_ShowAllTabId = slot1
+function var_0_0._onItem1ToggleValueChanged(arg_21_0)
+	local var_21_0 = arg_21_0._item1Toggle.isOn
 
-	GMController.instance:dispatchEvent(GMEvent.CharacterView_ShowAllTabIdUpdate, slot1)
+	var_0_0.s_ShowAllTabId = var_21_0
+
+	GMController.instance:dispatchEvent(GMEvent.CharacterView_ShowAllTabIdUpdate, var_21_0)
 end
 
-function slot0._onItem2Click(slot0)
+function var_0_0._onItem2Click(arg_22_0)
 	GMController.instance:dispatchEvent(GMEvent.CharacterView_OnClickCheckFace)
 end
 
-function slot0._onItem3Click(slot0)
+function var_0_0._onItem3Click(arg_23_0)
 	GMController.instance:dispatchEvent(GMEvent.CharacterView_OnClickCheckMouth)
 end
 
-function slot0._onItem4Click(slot0)
+function var_0_0._onItem4Click(arg_24_0)
 	GMController.instance:dispatchEvent(GMEvent.CharacterView_OnClickCheckContent)
 end
 
-function slot0._onItem5Click(slot0)
+function var_0_0._onItem5Click(arg_25_0)
 	GMController.instance:dispatchEvent(GMEvent.CharacterView_OnClickCheckMotion)
 end
 
-return slot0
+return var_0_0

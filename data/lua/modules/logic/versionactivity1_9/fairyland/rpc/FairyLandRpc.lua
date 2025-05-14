@@ -1,71 +1,76 @@
-module("modules.logic.versionactivity1_9.fairyland.rpc.FairyLandRpc", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.rpc.FairyLandRpc", package.seeall)
 
-slot0 = class("FairyLandRpc", BaseRpc)
+local var_0_0 = class("FairyLandRpc", BaseRpc)
 
-function slot0.sendGetFairylandInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(FairylandModule_pb.GetFairylandInfoRequest(), slot1, slot2)
+function var_0_0.sendGetFairylandInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = FairylandModule_pb.GetFairylandInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetFairylandInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetFairylandInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	FairyLandModel.instance:onGetFairylandInfoReply(slot2)
+	FairyLandModel.instance:onGetFairylandInfoReply(arg_2_2)
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.UpdateInfo)
 end
 
-function slot0.sendResolvePuzzleRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = FairylandModule_pb.ResolvePuzzleRequest()
-	slot5.passPuzzleId = slot1
-	slot5.answer = slot2
+function var_0_0.sendResolvePuzzleRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = FairylandModule_pb.ResolvePuzzleRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_3_0.passPuzzleId = arg_3_1
+	var_3_0.answer = arg_3_2
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
 end
 
-function slot0.onReceiveResolvePuzzleReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveResolvePuzzleReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	FairyLandModel.instance:onResolvePuzzleReply(slot2)
+	FairyLandModel.instance:onResolvePuzzleReply(arg_4_2)
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.ResolveSuccess)
 end
 
-function slot0.sendRecordDialogRequest(slot0, slot1, slot2, slot3)
-	slot4 = FairylandModule_pb.RecordDialogRequest()
-	slot4.dialogId = slot1
+function var_0_0.sendRecordDialogRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = FairylandModule_pb.RecordDialogRequest()
 
-	FairyLandModel.instance:setFinishDialog(slot1)
+	var_5_0.dialogId = arg_5_1
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	FairyLandModel.instance:setFinishDialog(arg_5_1)
+
+	return arg_5_0:sendMsg(var_5_0, arg_5_2, arg_5_3)
 end
 
-function slot0.onReceiveRecordDialogReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRecordDialogReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
-	FairyLandModel.instance:onRecordDialogReply(slot2)
+	FairyLandModel.instance:onRecordDialogReply(arg_6_2)
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.DialogFinish)
 end
 
-function slot0.sendRecordElementRequest(slot0, slot1, slot2, slot3)
-	slot4 = FairylandModule_pb.RecordElementRequest()
-	slot4.elementId = slot1
+function var_0_0.sendRecordElementRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = FairylandModule_pb.RecordElementRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_7_0.elementId = arg_7_1
+
+	return arg_7_0:sendMsg(var_7_0, arg_7_2, arg_7_3)
 end
 
-function slot0.onReceiveRecordElementReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRecordElementReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
-	FairyLandModel.instance:onRecordElementReply(slot2)
+	FairyLandModel.instance:onRecordElementReply(arg_8_2)
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.ElementFinish)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

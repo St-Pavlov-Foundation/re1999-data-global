@@ -1,48 +1,49 @@
-module("modules.logic.equip.view.EquipTeamViewContainer", package.seeall)
+﻿module("modules.logic.equip.view.EquipTeamViewContainer", package.seeall)
 
-slot0 = class("EquipTeamViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipTeamViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_equipcontainer/#scroll_equip"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = EquipTeamItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 3
-	slot1.cellWidth = 200
-	slot1.cellHeight = 210
-	slot1.cellSpaceH = 28
-	slot1.cellSpaceV = 10
-	slot1.startSpace = 13
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#go_equipcontainer/#scroll_equip"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = EquipTeamItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 3
+	var_1_0.cellWidth = 200
+	var_1_0.cellHeight = 210
+	var_1_0.cellSpaceH = 28
+	var_1_0.cellSpaceV = 10
+	var_1_0.startSpace = 13
 
 	return {
 		EquipTeamView.New(),
 		TabViewGroup.New(1, "#go_btns"),
-		LuaListScrollView.New(EquipTeamListModel.instance, slot1)
+		LuaListScrollView.New(EquipTeamListModel.instance, var_1_0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, slot0._overrideClose)
+		}, nil, arg_2_0._overrideClose)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-function slot0._overrideClose(slot0)
+function var_0_0._overrideClose(arg_3_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCloseEquipTeamShowView)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
 end
 
-return slot0
+return var_0_0

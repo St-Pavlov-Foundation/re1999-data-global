@@ -1,157 +1,167 @@
-module("modules.common.global.screen.GameScreenTouch", package.seeall)
+﻿module("modules.common.global.screen.GameScreenTouch", package.seeall)
 
-slot0 = class("GameScreenTouch")
-slot1 = 120
+local var_0_0 = class("GameScreenTouch")
+local var_0_1 = 120
 
-function slot0.ctor(slot0)
-	slot0._globalTouchGO = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.Top), "GlobalTouch")
-	slot0._globalTouch = TouchEventMgrHepler.getTouchEventMgr(slot0._globalTouchGO)
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._globalTouchGO = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.Top), "GlobalTouch")
+	arg_1_0._globalTouch = TouchEventMgrHepler.getTouchEventMgr(arg_1_0._globalTouchGO)
 
-	slot0._globalTouch:SetIgnoreUI(true)
-	slot0._globalTouch:SetOnlyTouch(true)
-	slot0._globalTouch:SetOnTouchDownCb(slot0._onTouchDownCb, slot0)
-	slot0._globalTouch:SetOnTouchUp(slot0._onTouchUpCb, slot0)
+	arg_1_0._globalTouch:SetIgnoreUI(true)
+	arg_1_0._globalTouch:SetOnlyTouch(true)
+	arg_1_0._globalTouch:SetOnTouchDownCb(arg_1_0._onTouchDownCb, arg_1_0)
+	arg_1_0._globalTouch:SetOnTouchUp(arg_1_0._onTouchUpCb, arg_1_0)
 
-	slot0._gamepadModel = SDKNativeUtil.isGamePad()
+	arg_1_0._gamepadModel = SDKNativeUtil.isGamePad()
 
-	slot0:_loadEffect()
-	TaskDispatcher.runRepeat(slot0._onTick, slot0, 5)
-	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, slot0._onApplicationPause, slot0)
+	arg_1_0:_loadEffect()
+	TaskDispatcher.runRepeat(arg_1_0._onTick, arg_1_0, 5)
+	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, arg_1_0._onApplicationPause, arg_1_0)
 end
 
-function slot0.playTouchEffect(slot0, slot1)
-	slot0:_playTouchEffect(slot1)
+function var_0_0.playTouchEffect(arg_2_0, arg_2_1)
+	arg_2_0:_playTouchEffect(arg_2_1)
 end
 
-function slot0._onTick(slot0)
-	slot1 = Time.realtimeSinceStartup
+function var_0_0._onTick(arg_3_0)
+	local var_3_0 = Time.realtimeSinceStartup
 
-	if slot0._lastTime and uv0 < slot1 - slot0._lastTime then
-		slot0._lastTime = slot1
+	if arg_3_0._lastTime and var_3_0 - arg_3_0._lastTime > var_0_1 then
+		arg_3_0._lastTime = var_3_0
 
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, slot0)
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_3_0)
 	end
 end
 
-function slot0._onApplicationPause(slot0, slot1)
-	if slot1 then
-		slot0._lastTime = Time.realtimeSinceStartup
+function var_0_0._onApplicationPause(arg_4_0, arg_4_1)
+	if arg_4_1 then
+		arg_4_0._lastTime = Time.realtimeSinceStartup
 	end
 end
 
-function slot0._onTouchDownCb(slot0)
+function var_0_0._onTouchDownCb(arg_5_0)
 	GameStateMgr.instance:dispatchEvent(GameStateEvent.OnTouchScreen)
 
-	if slot0._gamepadModel == false and GMFightShowState.screenTouchEffect then
-		slot0._lastTime = Time.realtimeSinceStartup
+	if arg_5_0._gamepadModel == false and GMFightShowState.screenTouchEffect then
+		arg_5_0._lastTime = Time.realtimeSinceStartup
 
-		slot0:_playTouchEffect()
+		arg_5_0:_playTouchEffect()
 	end
 end
 
-function slot0._onTouchUpCb(slot0)
+function var_0_0._onTouchUpCb(arg_6_0)
 	GameStateMgr.instance:dispatchEvent(GameStateEvent.OnTouchScreenUp)
 end
 
-function slot0._loadEffect(slot0)
-	slot0._maxNum = 7
-	slot0._effectNum = 4
-	slot0._effectIndex = slot0._maxNum
-	slot0._effectTabs = {}
-	slot0._effectUrl = "ui/viewres/common/common_click.prefab"
-	slot0._effectLoader = MultiAbLoader.New()
+function var_0_0._loadEffect(arg_7_0)
+	arg_7_0._maxNum = 7
+	arg_7_0._effectNum = 4
+	arg_7_0._effectIndex = arg_7_0._maxNum
+	arg_7_0._effectTabs = {}
+	arg_7_0._effectUrl = "ui/viewres/common/common_click.prefab"
+	arg_7_0._effectLoader = MultiAbLoader.New()
 
-	slot0._effectLoader:addPath(slot0._effectUrl)
-	slot0._effectLoader:startLoad(slot0._createEffect, slot0)
+	arg_7_0._effectLoader:addPath(arg_7_0._effectUrl)
+	arg_7_0._effectLoader:startLoad(arg_7_0._createEffect, arg_7_0)
 end
 
-function slot0._createEffect(slot0, slot1)
-	slot0._effectPrefab = slot1:getAssetItem(slot0._effectUrl):GetResource(slot0._effectUrl)
+function var_0_0._createEffect(arg_8_0, arg_8_1)
+	arg_8_0._effectPrefab = arg_8_1:getAssetItem(arg_8_0._effectUrl):GetResource(arg_8_0._effectUrl)
 
-	for slot6 = 1, slot0._effectNum do
-		slot0:_create(slot0._effectPrefab)
+	for iter_8_0 = 1, arg_8_0._effectNum do
+		arg_8_0:_create(arg_8_0._effectPrefab)
 	end
 end
 
-function slot0._create(slot0, slot1)
-	slot2 = {
-		go = slot3,
-		recycleFunc = function ()
-			uv0:_recycleEffect(uv1)
-		end
-	}
-	slot3 = gohelper.clone(slot1, slot0._globalTouchGO, "touchEffect")
-	slot4 = gohelper.findChildImage(slot3, "image")
-	slot4.material = UnityEngine.Object.Instantiate(slot4.material)
-	slot6 = slot3:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+function var_0_0._create(arg_9_0, arg_9_1)
+	local var_9_0 = {}
+	local var_9_1 = gohelper.clone(arg_9_1, arg_9_0._globalTouchGO, "touchEffect")
 
-	slot6.mas:Clear()
-	slot6.mas:Add(slot4.material)
-	gohelper.setActive(slot3, false)
-	table.insert(slot0._effectTabs, slot2)
+	var_9_0.go = var_9_1
 
-	return slot2
+	function var_9_0.recycleFunc()
+		arg_9_0:_recycleEffect(var_9_1)
+	end
+
+	local var_9_2 = gohelper.findChildImage(var_9_1, "image")
+	local var_9_3 = var_9_2.material
+
+	var_9_2.material = UnityEngine.Object.Instantiate(var_9_3)
+
+	local var_9_4 = var_9_1:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+
+	var_9_4.mas:Clear()
+	var_9_4.mas:Add(var_9_2.material)
+	gohelper.setActive(var_9_1, false)
+	table.insert(arg_9_0._effectTabs, var_9_0)
+
+	return var_9_0
 end
 
-function slot0._getEffect(slot0)
-	for slot4 = 1, #slot0._effectTabs do
-		if slot0._effectTabs[slot4].go.activeInHierarchy == false then
-			slot0._effectIndex = slot4
+function var_0_0._getEffect(arg_11_0)
+	for iter_11_0 = 1, #arg_11_0._effectTabs do
+		if arg_11_0._effectTabs[iter_11_0].go.activeInHierarchy == false then
+			arg_11_0._effectIndex = iter_11_0
 
-			return slot0._effectTabs[slot4]
+			return arg_11_0._effectTabs[iter_11_0]
 		end
 	end
 
-	if #slot0._effectTabs < slot0._maxNum then
-		if not slot0._effectPrefab then
+	if #arg_11_0._effectTabs < arg_11_0._maxNum then
+		if not arg_11_0._effectPrefab then
 			return
 		end
 
-		return slot0:_create(slot0._effectPrefab)
+		return arg_11_0:_create(arg_11_0._effectPrefab)
 	else
-		slot0._effectIndex = (slot0._effectIndex + 1) % slot0._maxNum
+		arg_11_0._effectIndex = (arg_11_0._effectIndex + 1) % arg_11_0._maxNum
 
-		if slot0._effectIndex <= 0 then
-			slot0._effectIndex = slot0._maxNum
+		if arg_11_0._effectIndex <= 0 then
+			arg_11_0._effectIndex = arg_11_0._maxNum
 		end
 
-		slot0:_recycleEffect(slot0._effectTabs[slot0._effectIndex].go)
+		arg_11_0:_recycleEffect(arg_11_0._effectTabs[arg_11_0._effectIndex].go)
 
-		return slot0._effectTabs[slot0._effectIndex]
+		return arg_11_0._effectTabs[arg_11_0._effectIndex]
 	end
 end
 
-function slot0._playTouchEffect(slot0, slot1)
-	if not slot0:_canShowEffect() then
+function var_0_0._playTouchEffect(arg_12_0, arg_12_1)
+	if not arg_12_0:_canShowEffect() then
 		return
 	end
 
-	if slot0:_getEffect() then
-		slot3 = slot2.go:GetComponent(typeof(UnityEngine.Animation))
-		slot4 = recthelper.screenPosToAnchorPos(slot1 or UnityEngine.Input.mousePosition, slot0._globalTouchGO.transform)
+	local var_12_0 = arg_12_0:_getEffect()
 
-		recthelper.setAnchor(slot2.go.transform, slot4.x, slot4.y)
-		slot3:Stop()
-		gohelper.setActive(slot2.go, true)
-		slot3:Play()
-		TaskDispatcher.runDelay(slot2.recycleFunc, slot0, 0.7)
+	if var_12_0 then
+		local var_12_1 = var_12_0.go:GetComponent(typeof(UnityEngine.Animation))
+		local var_12_2 = arg_12_1 or UnityEngine.Input.mousePosition
+		local var_12_3 = recthelper.screenPosToAnchorPos(var_12_2, arg_12_0._globalTouchGO.transform)
+
+		recthelper.setAnchor(var_12_0.go.transform, var_12_3.x, var_12_3.y)
+		var_12_1:Stop()
+		gohelper.setActive(var_12_0.go, true)
+		var_12_1:Play()
+		TaskDispatcher.runDelay(var_12_0.recycleFunc, arg_12_0, 0.7)
 	end
 end
 
-function slot0._recycleEffect(slot0, slot1)
-	gohelper.setActive(slot1, false)
-	slot1:GetComponent(typeof(UnityEngine.Animation)):Stop()
-	recthelper.setAnchor(slot1.transform, 0, 0)
+function var_0_0._recycleEffect(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1:GetComponent(typeof(UnityEngine.Animation))
+
+	gohelper.setActive(arg_13_1, false)
+	var_13_0:Stop()
+	recthelper.setAnchor(arg_13_1.transform, 0, 0)
 end
 
-function slot0._canShowEffect(slot0)
-	slot1 = ViewMgr.instance:getOpenViewNameList()
+function var_0_0._canShowEffect(arg_14_0)
+	local var_14_0 = ViewMgr.instance:getOpenViewNameList()
 
-	if slot1[#slot1] == ViewName.DungeonView and DungeonModel.instance:getDungeonStoryState() or slot1[#slot1] == ViewName.FightView and FightModel.instance:getClickEnemyState() then
+	if var_14_0[#var_14_0] == ViewName.DungeonView and DungeonModel.instance:getDungeonStoryState() or var_14_0[#var_14_0] == ViewName.FightView and FightModel.instance:getClickEnemyState() then
 		return false
 	end
 
 	return true
 end
 
-return slot0
+return var_0_0

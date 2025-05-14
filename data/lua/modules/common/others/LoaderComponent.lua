@@ -1,169 +1,173 @@
-module("modules.common.others.LoaderComponent", package.seeall)
+﻿module("modules.common.others.LoaderComponent", package.seeall)
 
-slot0 = class("LoaderComponent", UserDataDispose)
+local var_0_0 = class("LoaderComponent", UserDataDispose)
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:__onInit()
 
-	slot0._urlDic = {}
-	slot0._callback = {}
-	slot0._assetDic = slot0:getUserDataTb_()
-	slot0._failedDic = {}
-	slot0._listLoadCallback = {}
+	arg_1_0._urlDic = {}
+	arg_1_0._callback = {}
+	arg_1_0._assetDic = arg_1_0:getUserDataTb_()
+	arg_1_0._failedDic = {}
+	arg_1_0._listLoadCallback = {}
 end
 
-function slot0.getAssetItem(slot0, slot1)
-	return slot0._assetDic[slot1]
+function var_0_0.getAssetItem(arg_2_0, arg_2_1)
+	return arg_2_0._assetDic[arg_2_1]
 end
 
-function slot0.loadAsset(slot0, slot1, slot2, slot3, slot4)
-	if slot0.component_dead then
+function var_0_0.loadAsset(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	if arg_3_0.component_dead then
 		return
 	end
 
-	if slot0._failedDic[slot1] then
-		if slot4 then
-			slot4(slot3, slot1)
+	if arg_3_0._failedDic[arg_3_1] then
+		if arg_3_4 then
+			arg_3_4(arg_3_3, arg_3_1)
 		end
 
 		return
 	end
 
-	if slot0._assetDic[slot1] then
-		slot2(slot3, slot0._assetDic[slot1])
+	if arg_3_0._assetDic[arg_3_1] then
+		arg_3_2(arg_3_3, arg_3_0._assetDic[arg_3_1])
 
 		return
 	end
 
-	if not slot0._callback[slot1] then
-		slot0._callback[slot1] = {}
+	if not arg_3_0._callback[arg_3_1] then
+		arg_3_0._callback[arg_3_1] = {}
 	end
 
-	table.insert(slot0._callback[slot1], {
-		call_back = slot2,
-		handler = slot3,
-		failedCallback = slot4
+	table.insert(arg_3_0._callback[arg_3_1], {
+		call_back = arg_3_2,
+		handler = arg_3_3,
+		failedCallback = arg_3_4
 	})
 
-	if not slot0._urlDic[slot1] then
-		slot0._urlDic[slot1] = true
+	if not arg_3_0._urlDic[arg_3_1] then
+		arg_3_0._urlDic[arg_3_1] = true
 
-		loadAbAsset(slot1, false, slot0._onLoadCallback, slot0)
+		loadAbAsset(arg_3_1, false, arg_3_0._onLoadCallback, arg_3_0)
 	end
 end
 
-function slot0.loadListAsset(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if slot0.component_dead then
+function var_0_0.loadListAsset(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
+	if arg_4_0.component_dead then
 		return
 	end
 
-	if slot3 then
-		slot0._listLoadCallback[slot1] = {
-			finishCallback = slot3,
-			handler = slot4,
-			listFailedCallback = slot6
+	if arg_4_3 then
+		arg_4_0._listLoadCallback[arg_4_1] = {
+			finishCallback = arg_4_3,
+			handler = arg_4_4,
+			listFailedCallback = arg_4_6
 		}
 	end
 
-	for slot10, slot11 in ipairs(slot1) do
-		slot0:loadAsset(slot11, slot2, slot4, slot5)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		arg_4_0:loadAsset(iter_4_1, arg_4_2, arg_4_4, arg_4_5)
 	end
 
-	slot0:_invokeUrlListCallback()
+	arg_4_0:_invokeUrlListCallback()
 end
 
-function slot0._invokeUrlListCallback(slot0)
-	if not slot0._listLoadCallback then
+function var_0_0._invokeUrlListCallback(arg_5_0)
+	if not arg_5_0._listLoadCallback then
 		return
 	end
 
-	if slot0.component_dead then
+	if arg_5_0.component_dead then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0._listLoadCallback) do
-		slot7 = false
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._listLoadCallback) do
+		local var_5_0 = 0
+		local var_5_1 = false
 
-		for slot11, slot12 in ipairs(slot4) do
-			if slot0._assetDic[slot12] then
-				slot6 = 0 + 1
+		for iter_5_2, iter_5_3 in ipairs(iter_5_0) do
+			if arg_5_0._assetDic[iter_5_3] then
+				var_5_0 = var_5_0 + 1
 			end
 
-			if slot0._failedDic[slot12] then
-				slot6 = slot6 + 1
-				slot7 = true
+			if arg_5_0._failedDic[iter_5_3] then
+				var_5_0 = var_5_0 + 1
+				var_5_1 = true
 			end
 		end
 
-		if slot6 == #slot4 then
-			if slot7 then
-				if slot5.listFailedCallback then
-					slot5.listFailedCallback(slot5.handler)
+		if var_5_0 == #iter_5_0 then
+			if var_5_1 then
+				if iter_5_1.listFailedCallback then
+					iter_5_1.listFailedCallback(iter_5_1.handler)
 				end
 			else
-				slot5.finishCallback(slot5.handler)
+				iter_5_1.finishCallback(iter_5_1.handler)
 			end
 
-			slot0._listLoadCallback[slot4] = nil
+			arg_5_0._listLoadCallback[iter_5_0] = nil
 
-			if slot0.component_dead then
+			if arg_5_0.component_dead then
 				return
 			end
 		end
 	end
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	if slot0.component_dead then
+function var_0_0._onLoadCallback(arg_6_0, arg_6_1)
+	if arg_6_0.component_dead then
 		return
 	end
 
-	if slot1.IsLoadSuccess then
-		slot0._assetDic[slot1.ResPath] = slot1
+	local var_6_0 = arg_6_1.ResPath
+	local var_6_1 = arg_6_1.IsLoadSuccess
 
-		slot1:Retain()
+	if var_6_1 then
+		arg_6_0._assetDic[var_6_0] = arg_6_1
+
+		arg_6_1:Retain()
 	else
-		slot0._failedDic[slot2] = true
+		arg_6_0._failedDic[var_6_0] = true
 
-		logError("资源加载失败,URL:" .. slot2)
+		logError("资源加载失败,URL:" .. var_6_0)
 	end
 
-	if slot0._callback[slot2] then
-		for slot7, slot8 in ipairs(slot0._callback[slot2]) do
-			if slot3 then
-				slot8.call_back(slot8.handler, slot1)
-			elseif slot8.failedCallback then
-				slot8.failedCallback(slot8.handler, slot2)
+	if arg_6_0._callback[var_6_0] then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._callback[var_6_0]) do
+			if var_6_1 then
+				iter_6_1.call_back(iter_6_1.handler, arg_6_1)
+			elseif iter_6_1.failedCallback then
+				iter_6_1.failedCallback(iter_6_1.handler, var_6_0)
 			end
 
-			if slot0.component_dead then
+			if arg_6_0.component_dead then
 				return
 			end
 		end
 	end
 
-	slot0:_invokeUrlListCallback()
+	arg_6_0:_invokeUrlListCallback()
 
-	slot0._callback[slot2] = nil
+	arg_6_0._callback[var_6_0] = nil
 end
 
-function slot0.releaseSelf(slot0)
-	slot0.component_dead = true
+function var_0_0.releaseSelf(arg_7_0)
+	arg_7_0.component_dead = true
 
-	for slot4, slot5 in pairs(slot0._urlDic) do
-		removeAssetLoadCb(slot4, slot0._onLoadCallback, slot0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._urlDic) do
+		removeAssetLoadCb(iter_7_0, arg_7_0._onLoadCallback, arg_7_0)
 	end
 
-	for slot4, slot5 in pairs(slot0._assetDic) do
-		slot5:Release()
+	for iter_7_2, iter_7_3 in pairs(arg_7_0._assetDic) do
+		iter_7_3:Release()
 	end
 
-	slot0._urlDic = nil
-	slot0._callback = nil
-	slot0._listLoadCallback = nil
-	slot0._failedDic = nil
+	arg_7_0._urlDic = nil
+	arg_7_0._callback = nil
+	arg_7_0._listLoadCallback = nil
+	arg_7_0._failedDic = nil
 
-	slot0:__onDispose()
+	arg_7_0:__onDispose()
 end
 
-return slot0
+return var_0_0

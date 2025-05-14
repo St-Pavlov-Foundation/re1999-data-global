@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapChapterLayout", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapChapterLayout", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonMapChapterLayout", VersionActivity1_2DungeonMapChapterBaseLayout)
+local var_0_0 = class("VersionActivity1_2DungeonMapChapterLayout", VersionActivity1_2DungeonMapChapterBaseLayout)
 
-function slot0.getEpisodeItemClass(slot0)
+function var_0_0.getEpisodeItemClass(arg_1_0)
 	return VersionActivity1_2MapEpisodeItem.New()
 end
 
-function slot0.getDungeonMapLevelView(slot0)
+function var_0_0.getDungeonMapLevelView(arg_2_0)
 	return ViewName.VersionActivity1_2DungeonMapLevelView
 end
 
-return slot0
+return var_0_0

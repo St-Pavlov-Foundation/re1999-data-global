@@ -1,14 +1,16 @@
-module("modules.logic.versionactivity1_3.va3chess.model.Va3ChessModel", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.model.Va3ChessModel", package.seeall)
 
-slot0 = class("Va3ChessModel", BaseModel)
+local var_0_0 = class("Va3ChessModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0._registerModelIns(slot0)
+function var_0_0._registerModelIns(arg_3_0)
 	return {
 		[Va3ChessEnum.ActivityId.Act120] = Activity120Model.instance,
 		[Va3ChessEnum.ActivityId.Act122] = Activity122Model.instance,
@@ -16,73 +18,82 @@ function slot0._registerModelIns(slot0)
 	}
 end
 
-function slot0._getModelIns(slot0, slot1)
-	if not slot0._acModelInsMap then
-		slot0._acModelInsMap = slot0:_registerModelIns()
-		slot2 = {
+function var_0_0._getModelIns(arg_4_0, arg_4_1)
+	if not arg_4_0._acModelInsMap then
+		arg_4_0._acModelInsMap = arg_4_0:_registerModelIns()
+
+		local var_4_0 = {
 			"getEpisodeData"
 		}
 
-		for slot6, slot7 in pairs(slot0._acModelInsMap) do
-			for slot11, slot12 in ipairs(slot2) do
-				if not slot7[slot12] or type(slot7[slot12]) ~= "function" then
-					logError(string.format("[%s] can not find function [%s]", slot7.__cname, slot12))
+		for iter_4_0, iter_4_1 in pairs(arg_4_0._acModelInsMap) do
+			for iter_4_2, iter_4_3 in ipairs(var_4_0) do
+				if not iter_4_1[iter_4_3] or type(iter_4_1[iter_4_3]) ~= "function" then
+					logError(string.format("[%s] can not find function [%s]", iter_4_1.__cname, iter_4_3))
 				end
 			end
 		end
 	end
 
-	if not slot0._acModelInsMap[slot1] then
-		logError(string.format("棋盘小游戏Model没注册，activityId[%s]", slot1))
+	local var_4_1 = arg_4_0._acModelInsMap[arg_4_1]
+
+	if not var_4_1 then
+		logError(string.format("棋盘小游戏Model没注册，activityId[%s]", arg_4_1))
 	end
 
-	return slot2
+	return var_4_1
 end
 
-function slot0.setEpisodeId(slot0, slot1)
-	slot0._currentEpisodeId = slot1
+function var_0_0.setEpisodeId(arg_5_0, arg_5_1)
+	arg_5_0._currentEpisodeId = arg_5_1
 
-	if not slot1 then
-		slot0._currentMapId = nil
+	if not arg_5_1 then
+		arg_5_0._currentMapId = nil
 
 		return
 	end
 
-	if Va3ChessConfig.instance:getEpisodeCo(slot0._activityId, slot1) then
-		if slot2.mapId then
-			slot0._currentMapId = slot2.mapId
-		elseif slot2.mapIds then
-			slot0._currentMapId = tonumber(string.split(slot2.mapIds, "#")[1])
+	local var_5_0 = Va3ChessConfig.instance:getEpisodeCo(arg_5_0._activityId, arg_5_1)
+
+	if var_5_0 then
+		if var_5_0.mapId then
+			arg_5_0._currentMapId = var_5_0.mapId
+		elseif var_5_0.mapIds then
+			local var_5_1 = string.split(var_5_0.mapIds, "#")
+
+			arg_5_0._currentMapId = tonumber(var_5_1[1])
 		end
 	else
-		logError("activity109_episode not found! id = " .. tostring(slot1) .. ", in act = " .. tostring(slot0._activityId))
+		logError("activity109_episode not found! id = " .. tostring(arg_5_1) .. ", in act = " .. tostring(arg_5_0._activityId))
 
-		slot0._currentMapId = nil
+		arg_5_0._currentMapId = nil
 	end
 end
 
-function slot0.setActId(slot0, slot1)
-	slot0._activityId = slot1
+function var_0_0.setActId(arg_6_0, arg_6_1)
+	arg_6_0._activityId = arg_6_1
 end
 
-function slot0.getActId(slot0)
-	return slot0._activityId
+function var_0_0.getActId(arg_7_0)
+	return arg_7_0._activityId
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._currentEpisodeId
+function var_0_0.getEpisodeId(arg_8_0)
+	return arg_8_0._currentEpisodeId
 end
 
-function slot0.getMapId(slot0)
-	return slot0._currentMapId
+function var_0_0.getMapId(arg_9_0)
+	return arg_9_0._currentMapId
 end
 
-function slot0.getEpisodeData(slot0, slot1)
-	if slot0:_getModelIns(slot0._activityId) then
-		return slot2:getEpisodeData(slot1)
+function var_0_0.getEpisodeData(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:_getModelIns(arg_10_0._activityId)
+
+	if var_10_0 then
+		return var_10_0:getEpisodeData(arg_10_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

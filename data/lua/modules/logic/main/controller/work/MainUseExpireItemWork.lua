@@ -1,13 +1,14 @@
-module("modules.logic.main.controller.work.MainUseExpireItemWork", package.seeall)
+﻿module("modules.logic.main.controller.work.MainUseExpireItemWork", package.seeall)
 
-slot0 = class("MainUseExpireItemWork", BaseWork)
+local var_0_0 = class("MainUseExpireItemWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

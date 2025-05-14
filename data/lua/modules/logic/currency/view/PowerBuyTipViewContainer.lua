@@ -1,25 +1,26 @@
-module("modules.logic.currency.view.PowerBuyTipViewContainer", package.seeall)
+﻿module("modules.logic.currency.view.PowerBuyTipViewContainer", package.seeall)
 
-slot0 = class("PowerBuyTipViewContainer", BaseViewContainer)
+local var_0_0 = class("PowerBuyTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, PowerBuyTipView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_righttop"))
+	table.insert(var_1_0, PowerBuyTipView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot2 = CurrencyEnum.CurrencyType
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = CurrencyEnum.CurrencyType
+	local var_2_1 = {
+		var_2_0.Diamond,
+		var_2_0.FreeDiamondCoupon
+	}
 
 	return {
-		CurrencyView.New({
-			slot2.Diamond,
-			slot2.FreeDiamondCoupon
-		})
+		CurrencyView.New(var_2_1)
 	}
 end
 
-return slot0
+return var_0_0

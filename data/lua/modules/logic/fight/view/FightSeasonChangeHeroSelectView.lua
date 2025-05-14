@@ -1,57 +1,61 @@
-module("modules.logic.fight.view.FightSeasonChangeHeroSelectView", package.seeall)
+﻿module("modules.logic.fight.view.FightSeasonChangeHeroSelectView", package.seeall)
 
-slot0 = class("FightSeasonChangeHeroSelectView", BaseViewExtended)
+local var_0_0 = class("FightSeasonChangeHeroSelectView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._block = gohelper.findChildClick(slot0.viewGO, "block")
-	slot0._blockTransform = slot0._block:GetComponent(gohelper.Type_RectTransform)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._block = gohelper.findChildClick(arg_1_0.viewGO, "block")
+	arg_1_0._blockTransform = arg_1_0._block:GetComponent(gohelper.Type_RectTransform)
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._block, slot0._onBlock, slot0)
-	FightController.instance:registerCallback(FightEvent.ReceiveChangeSubHeroReply, slot0._onReceiveChangeSubHeroReply, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._block, arg_2_0._onBlock, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ReceiveChangeSubHeroReply, arg_2_0._onReceiveChangeSubHeroReply, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	FightController.instance:unregisterCallback(FightEvent.ReceiveChangeSubHeroReply, slot0._onReceiveChangeSubHeroReply, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.ReceiveChangeSubHeroReply, arg_3_0._onReceiveChangeSubHeroReply, arg_3_0)
 end
 
-function slot0._onReceiveChangeSubHeroReply(slot0)
-	slot0:closeThis()
+function var_0_0._onReceiveChangeSubHeroReply(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._onBlock(slot0, slot1, slot2)
-	if FightSkillSelectView.getClickEntity(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide), slot0._blockTransform, slot2) then
-		if not FightDataHelper.entityMgr:getById(slot4) then
+function var_0_0._onBlock(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+	local var_5_1 = FightSkillSelectView.getClickEntity(var_5_0, arg_5_0._blockTransform, arg_5_2)
+
+	if var_5_1 then
+		if not FightDataHelper.entityMgr:getById(var_5_1) then
 			return
 		end
 
-		if slot0._curSelectId == slot4 then
-			FightRpc.instance:sendChangeSubHeroRequest(slot0._changeId, slot4)
+		if arg_5_0._curSelectId == var_5_1 then
+			FightRpc.instance:sendChangeSubHeroRequest(arg_5_0._changeId, var_5_1)
 		else
-			slot0._curSelectId = slot4
+			arg_5_0._curSelectId = var_5_1
 
-			FightController.instance:dispatchEvent(FightEvent.SeasonSelectChangeHeroTarget, slot0._curSelectId)
+			FightController.instance:dispatchEvent(FightEvent.SeasonSelectChangeHeroTarget, arg_5_0._curSelectId)
 		end
 
 		return
 	end
 
-	slot0:closeThis()
+	arg_5_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	FightDataHelper.stageMgr:enterOperateState(FightStageMgr.OperateStateType.SeasonChangeHero)
 
-	slot0._curSelectId = nil
-	slot0._changeId = slot0.viewParam
+	arg_6_0._curSelectId = nil
+	arg_6_0._changeId = arg_6_0.viewParam
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
 	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.SeasonChangeHero)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

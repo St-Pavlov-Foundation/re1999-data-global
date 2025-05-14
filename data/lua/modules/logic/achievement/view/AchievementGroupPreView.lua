@@ -1,220 +1,258 @@
-module("modules.logic.achievement.view.AchievementGroupPreView", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementGroupPreView", package.seeall)
 
-slot0 = class("AchievementGroupPreView", BaseView)
+local var_0_0 = class("AchievementGroupPreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnview = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_view")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnclose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close2")
-	slot0._simagegroupbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_groupbg")
-	slot0._goherogroupcontainer = gohelper.findChild(slot0.viewGO, "#go_groupcontainer")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_view")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
+	arg_1_0._simagegroupbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_groupbg")
+	arg_1_0._goherogroupcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_groupcontainer")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnview:AddClickListener(slot0._btnviewOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclose2:AddClickListener(slot0._btnclose2OnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnview:AddClickListener(arg_2_0._btnviewOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclose2:AddClickListener(arg_2_0._btnclose2OnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnview:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnclose2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnview:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnclose2:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(AchievementController.instance, AchievementEvent.UpdateAchievements, slot0.refreshGroup, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(AchievementController.instance, AchievementEvent.UpdateAchievements, arg_4_0.refreshGroup, arg_4_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:disposeAchievementMainIcon()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0:disposeAchievementMainIcon()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achievementgrouppreview_open)
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._btncloseOnClick, slot0)
-	slot0:refreshGroup()
+	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0._btncloseOnClick, arg_6_0)
+	arg_6_0:refreshGroup()
 end
 
-slot0.LockedIconColor = "#808080"
-slot0.UnLockedIconColor = "#FFFFFF"
-slot0.LockedNameAlpha = 0.5
-slot0.UnLockedNameAlpha = 1
+var_0_0.LockedIconColor = "#808080"
+var_0_0.UnLockedIconColor = "#FFFFFF"
+var_0_0.LockedNameAlpha = 0.5
+var_0_0.UnLockedNameAlpha = 1
 
-function slot0.refreshGroup(slot0)
-	slot0:refreshGroupBg()
-	slot0:refreshAchievementInGroup()
+function var_0_0.refreshGroup(arg_7_0)
+	arg_7_0:refreshGroupBg()
+	arg_7_0:refreshAchievementInGroup()
 end
 
-function slot0.refreshGroupBg(slot0)
-	if AchievementConfig.instance:getGroup(slot0.viewParam.groupId) then
-		slot0._simagegroupbg:LoadImage(AchievementConfig.instance:getGroupBgUrl(slot0.viewParam.groupId, AchievementEnum.GroupParamType.List, AchievementModel.instance:isAchievementTaskFinished(slot1.unLockAchievement)))
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._groupBgImage, AchievementModel.instance:achievementGroupHasLocked(slot0.viewParam.groupId) and uv0.LockedGroupBgColor or uv0.UnLockedGroupBgColor)
+function var_0_0.refreshGroupBg(arg_8_0)
+	local var_8_0 = AchievementConfig.instance:getGroup(arg_8_0.viewParam.groupId)
+
+	if var_8_0 then
+		local var_8_1 = AchievementModel.instance:isAchievementTaskFinished(var_8_0.unLockAchievement)
+		local var_8_2 = AchievementConfig.instance:getGroupBgUrl(arg_8_0.viewParam.groupId, AchievementEnum.GroupParamType.List, var_8_1)
+
+		arg_8_0._simagegroupbg:LoadImage(var_8_2)
+
+		local var_8_3 = AchievementModel.instance:achievementGroupHasLocked(arg_8_0.viewParam.groupId)
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._groupBgImage, var_8_3 and var_0_0.LockedGroupBgColor or var_0_0.UnLockedGroupBgColor)
 	end
 end
 
-function slot0.refreshAchievementInGroup(slot0)
-	slot2 = AchievementConfig.instance:getAchievementsByGroupId(slot0.viewParam.groupId)
-	slot3 = {
-		[slot11] = true
-	}
+function var_0_0.refreshAchievementInGroup(arg_9_0)
+	local var_9_0 = AchievementConfig.instance:getGroupParamIdTab(arg_9_0.viewParam.groupId, AchievementEnum.GroupParamType.List)
+	local var_9_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_9_0.viewParam.groupId)
+	local var_9_2 = {}
+	local var_9_3 = false
 
-	for slot8 = 1, #AchievementConfig.instance:getGroupParamIdTab(slot0.viewParam.groupId, AchievementEnum.GroupParamType.List) do
-		slot11 = slot0:getOrCreateAchievementIcon(slot0.viewParam.groupId, slot9, slot8)
+	for iter_9_0 = 1, #var_9_0 do
+		local var_9_4 = var_9_0[iter_9_0]
+		local var_9_5 = var_9_1[var_9_4] and var_9_1[var_9_4].id
+		local var_9_6 = arg_9_0:getOrCreateAchievementIcon(arg_9_0.viewParam.groupId, var_9_4, iter_9_0)
 
-		gohelper.setActive(slot11.viewGO, AchievementController.instance:getMaxLevelFinishTask(slot2[slot1[slot8]] and slot2[slot9].id) ~= nil)
+		var_9_2[var_9_6] = true
 
-		if slot12 then
-			slot11:setData(slot12)
+		local var_9_7 = AchievementController.instance:getMaxLevelFinishTask(var_9_5)
 
-			slot13 = AchievementModel.instance:achievementHasLocked(slot10)
+		gohelper.setActive(var_9_6.viewGO, var_9_7 ~= nil)
 
-			slot11:setIsLocked(slot13)
-			slot11:setIconColor(slot13 and uv0.LockedIconColor or uv0.UnLockedIconColor)
-			slot11:setSelectIconVisible(false)
-			slot11:setNameTxtVisible(false)
-			slot11:setBgVisible(false)
+		if var_9_7 then
+			var_9_6:setData(var_9_7)
 
-			slot4 = false or slot0:playIconAnim(slot11, slot10)
+			local var_9_8 = AchievementModel.instance:achievementHasLocked(var_9_5)
+
+			var_9_6:setIsLocked(var_9_8)
+			var_9_6:setIconColor(var_9_8 and var_0_0.LockedIconColor or var_0_0.UnLockedIconColor)
+			var_9_6:setSelectIconVisible(false)
+			var_9_6:setNameTxtVisible(false)
+			var_9_6:setBgVisible(false)
+
+			local var_9_9 = arg_9_0:playIconAnim(var_9_6, var_9_5)
+
+			var_9_3 = var_9_3 or var_9_9
 		end
 	end
 
-	if slot4 then
+	if var_9_3 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_medal)
 	end
 
-	if slot0._iconItems then
-		for slot8, slot9 in pairs(slot0._iconItems) do
-			if not slot3[slot9] then
-				gohelper.setActive(slot9.viewGO, false)
+	if arg_9_0._iconItems then
+		for iter_9_1, iter_9_2 in pairs(arg_9_0._iconItems) do
+			if not var_9_2[iter_9_2] then
+				gohelper.setActive(iter_9_2.viewGO, false)
 			end
 		end
 	end
 end
 
-function slot0.playIconAnim(slot0, slot1, slot2)
-	slot6 = false
+function var_0_0.playIconAnim(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = AchievementModel.instance:achievementHasNew(arg_10_2)
+	local var_10_1 = arg_10_1:isPlaingAnimClip(AchievementMainIcon.AnimClip.New)
+	local var_10_2 = arg_10_1:isPlaingAnimClip(AchievementMainIcon.AnimClip.Loop)
+	local var_10_3 = false
 
-	if AchievementModel.instance:achievementHasNew(slot2) then
-		if not slot1:isPlaingAnimClip(AchievementMainIcon.AnimClip.New) and not slot1:isPlaingAnimClip(AchievementMainIcon.AnimClip.Loop) then
-			slot1:playAnim(AchievementMainIcon.AnimClip.New)
+	if var_10_0 then
+		if not var_10_1 and not var_10_2 then
+			arg_10_1:playAnim(AchievementMainIcon.AnimClip.New)
 
-			slot6 = true
+			var_10_3 = true
 		end
 	else
-		slot1:playAnim(AchievementMainIcon.AnimClip.Idle)
+		arg_10_1:playAnim(AchievementMainIcon.AnimClip.Idle)
 	end
 
-	return slot6
+	return var_10_3
 end
 
-function slot0.getOrCreateAchievementIcon(slot0, slot1, slot2, slot3)
-	slot0._iconItems = slot0._iconItems or {}
+function var_0_0.getOrCreateAchievementIcon(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	arg_11_0._iconItems = arg_11_0._iconItems or {}
 
-	if not slot0._iconItems[slot3] then
-		slot4 = AchievementMainIcon.New()
+	local var_11_0 = arg_11_0._iconItems[arg_11_3]
 
-		slot4:init(slot0:getResInst(AchievementEnum.MainIconPath, slot0._goherogroupcontainer, "icon" .. tostring(slot3)))
-		slot4:setClickCall(slot0.onClickAchievementIcon, slot0, slot2)
+	if not var_11_0 then
+		var_11_0 = AchievementMainIcon.New()
 
-		slot0._iconItems[slot3] = slot4
+		local var_11_1 = arg_11_0:getResInst(AchievementEnum.MainIconPath, arg_11_0._goherogroupcontainer, "icon" .. tostring(arg_11_3))
+
+		var_11_0:init(var_11_1)
+		var_11_0:setClickCall(arg_11_0.onClickAchievementIcon, arg_11_0, arg_11_2)
+
+		arg_11_0._iconItems[arg_11_3] = var_11_0
 	end
 
-	slot0:setGroupAchievementPosAndScale(slot4.viewGO, slot1, slot3)
+	arg_11_0:setGroupAchievementPosAndScale(var_11_0.viewGO, arg_11_1, arg_11_3)
 
-	return slot4
+	return var_11_0
 end
 
-function slot0.onClickAchievementIcon(slot0, slot1)
-	if AchievementConfig.instance:getAchievementsByGroupId(slot0.viewParam.groupId) and slot2[slot1] then
-		slot4 = {}
+function var_0_0.onClickAchievementIcon(arg_12_0, arg_12_1)
+	local var_12_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_12_0.viewParam.groupId)
+	local var_12_1 = var_12_0 and var_12_0[arg_12_1]
 
-		for slot8, slot9 in ipairs(slot2) do
-			table.insert(slot4, slot9.id)
+	if var_12_1 then
+		local var_12_2 = {}
+
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			table.insert(var_12_2, iter_12_1.id)
 		end
 
-		ViewMgr.instance:openView(ViewName.AchievementLevelView, {
-			achievementId = slot3.id,
-			achievementIds = slot4
-		})
+		local var_12_3 = {
+			achievementId = var_12_1.id,
+			achievementIds = var_12_2
+		}
+
+		ViewMgr.instance:openView(ViewName.AchievementLevelView, var_12_3)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_achieve_weiqicard_saga)
-		slot0:cleanAchievementNewFlag(slot3.id)
+		arg_12_0:cleanAchievementNewFlag(var_12_1.id)
 	end
 end
 
-function slot0.setGroupAchievementPosAndScale(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6, slot7 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(slot2, slot3, AchievementEnum.GroupParamType.List)
+function var_0_0.setGroupAchievementPosAndScale(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0, var_13_1, var_13_2, var_13_3 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(arg_13_2, arg_13_3, AchievementEnum.GroupParamType.List)
 
-	if slot1 then
-		recthelper.setAnchor(slot1.transform, slot4 or 0, slot5 or 0)
-		transformhelper.setLocalScale(slot1.transform, slot6 or 1, slot7 or 1, 1)
+	if arg_13_1 then
+		recthelper.setAnchor(arg_13_1.transform, var_13_0 or 0, var_13_1 or 0)
+		transformhelper.setLocalScale(arg_13_1.transform, var_13_2 or 1, var_13_3 or 1, 1)
 	end
 end
 
-function slot0.disposeAchievementMainIcon(slot0)
-	if slot0._iconItems then
-		for slot4, slot5 in pairs(slot0._iconItems) do
-			if slot5.dispose then
-				slot5:dispose()
+function var_0_0.disposeAchievementMainIcon(arg_14_0)
+	if arg_14_0._iconItems then
+		for iter_14_0, iter_14_1 in pairs(arg_14_0._iconItems) do
+			if iter_14_1.dispose then
+				iter_14_1:dispose()
 			end
 		end
 	end
 end
 
-function slot0.cleanGroupNewFlag(slot0)
-	slot2 = {}
+function var_0_0.cleanGroupNewFlag(arg_15_0)
+	local var_15_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_15_0.viewParam.groupId)
+	local var_15_1 = {}
 
-	if AchievementConfig.instance:getAchievementsByGroupId(slot0.viewParam.groupId) then
-		for slot6, slot7 in ipairs(slot1) do
-			if AchievementModel.instance:getAchievementTaskCoList(slot7.id) then
-				for slot12, slot13 in ipairs(slot8) do
-					if AchievementModel.instance:getById(slot13.id) and slot14.isNew then
-						table.insert(slot2, slot13.id)
+	if var_15_0 then
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			local var_15_2 = AchievementModel.instance:getAchievementTaskCoList(iter_15_1.id)
+
+			if var_15_2 then
+				for iter_15_2, iter_15_3 in ipairs(var_15_2) do
+					local var_15_3 = AchievementModel.instance:getById(iter_15_3.id)
+
+					if var_15_3 and var_15_3.isNew then
+						table.insert(var_15_1, iter_15_3.id)
 					end
 				end
 			end
 		end
 	end
 
-	if #slot2 > 0 then
-		AchievementRpc.instance:sendReadNewAchievementRequest(slot2)
+	if #var_15_1 > 0 then
+		AchievementRpc.instance:sendReadNewAchievementRequest(var_15_1)
 	end
 end
 
-function slot0.cleanAchievementNewFlag(slot0, slot1)
-	slot3 = {}
+function var_0_0.cleanAchievementNewFlag(arg_16_0, arg_16_1)
+	local var_16_0 = AchievementConfig.instance:getTasksByAchievementId(arg_16_1)
+	local var_16_1 = {}
 
-	if AchievementConfig.instance:getTasksByAchievementId(slot1) then
-		for slot7, slot8 in ipairs(slot2) do
-			if AchievementModel.instance:getById(slot8.id) and slot9.isNew then
-				table.insert(slot3, slot8.id)
+	if var_16_0 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			local var_16_2 = AchievementModel.instance:getById(iter_16_1.id)
+
+			if var_16_2 and var_16_2.isNew then
+				table.insert(var_16_1, iter_16_1.id)
 			end
 		end
 	end
 
-	if #slot3 > 0 then
-		AchievementRpc.instance:sendReadNewAchievementRequest(slot3)
+	if #var_16_1 > 0 then
+		AchievementRpc.instance:sendReadNewAchievementRequest(var_16_1)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:cleanGroupNewFlag()
+function var_0_0.onClose(arg_17_0)
+	arg_17_0:cleanGroupNewFlag()
 end
 
-function slot0._btnviewOnClick(slot0)
-	AchievementController.instance:openAchievementMainViewAndFocus(AchievementEnum.AchievementType.Group, slot0.viewParam and slot0.viewParam.groupId)
+function var_0_0._btnviewOnClick(arg_18_0)
+	local var_18_0 = arg_18_0.viewParam and arg_18_0.viewParam.groupId
+
+	AchievementController.instance:openAchievementMainViewAndFocus(AchievementEnum.AchievementType.Group, var_18_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_19_0)
+	arg_19_0:closeThis()
 end
 
-function slot0._btnclose2OnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnclose2OnClick(arg_20_0)
+	arg_20_0:closeThis()
 end
 
-return slot0
+return var_0_0

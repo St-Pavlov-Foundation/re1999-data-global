@@ -1,59 +1,60 @@
-module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionExchangeViewContainer", package.seeall)
+﻿module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionExchangeViewContainer", package.seeall)
 
-slot0 = class("RougeMapCollectionExchangeViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeMapCollectionExchangeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeMapCollectionExchangeView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_rougemapdetailcontainer"))
+	table.insert(var_1_0, RougeMapCollectionExchangeView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_rougemapdetailcontainer"))
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "Left/#scroll_view"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = RougeMapEnum.CollectionLeftItemRes
-	slot2.cellClass = RougeMapCollectionLossLeftItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 850
-	slot2.cellHeight = 180
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 8
-	slot2.startSpace = 0
-	slot0.scrollView = LuaListScrollView.New(RougeLossCollectionListModel.instance, slot2)
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, slot0.scrollView)
+	var_1_1.scrollGOPath = "Left/#scroll_view"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = RougeMapEnum.CollectionLeftItemRes
+	var_1_1.cellClass = RougeMapCollectionLossLeftItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 850
+	var_1_1.cellHeight = 180
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 8
+	var_1_1.startSpace = 0
+	arg_1_0.scrollView = LuaListScrollView.New(RougeLossCollectionListModel.instance, var_1_1)
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.scrollView)
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
-	slot0.listRemoveComp = ListScrollAnimRemoveItem.Get(slot0.scrollView)
+function var_0_0.onContainerInit(arg_3_0)
+	arg_3_0.listRemoveComp = ListScrollAnimRemoveItem.Get(arg_3_0.scrollView)
 
-	slot0.listRemoveComp:setMoveInterval(0)
+	arg_3_0.listRemoveComp:setMoveInterval(0)
 end
 
-function slot0.getListRemoveComp(slot0)
-	return slot0.listRemoveComp
+function var_0_0.getListRemoveComp(arg_4_0)
+	return arg_4_0.listRemoveComp
 end
 
-return slot0
+return var_0_0

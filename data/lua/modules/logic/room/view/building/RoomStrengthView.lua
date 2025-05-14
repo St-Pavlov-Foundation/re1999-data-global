@@ -1,183 +1,193 @@
-module("modules.logic.room.view.building.RoomStrengthView", package.seeall)
+﻿module("modules.logic.room.view.building.RoomStrengthView", package.seeall)
 
-slot0 = class("RoomStrengthView", BaseView)
+local var_0_0 = class("RoomStrengthView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageproducticon = gohelper.findChildSingleImage(slot0.viewGO, "productdetail/#simage_producticon")
-	slot0._txtnameEn = gohelper.findChildText(slot0.viewGO, "productdetail/#txt_nameEn")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "productdetail/#txt_name")
-	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "productdetail/#txt_name/#txt_lv")
-	slot0._txtnosetting = gohelper.findChildText(slot0.viewGO, "productdetail/#txt_name/#txt_nosetting")
-	slot0._goslotitem = gohelper.findChild(slot0.viewGO, "productdetail/scroll_productprop/viewport/content/#go_slotitem")
-	slot0._golevelitem = gohelper.findChild(slot0.viewGO, "scroll_level/viewport/content/#go_levelitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageproducticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "productdetail/#simage_producticon")
+	arg_1_0._txtnameEn = gohelper.findChildText(arg_1_0.viewGO, "productdetail/#txt_nameEn")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "productdetail/#txt_name")
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "productdetail/#txt_name/#txt_lv")
+	arg_1_0._txtnosetting = gohelper.findChildText(arg_1_0.viewGO, "productdetail/#txt_name/#txt_nosetting")
+	arg_1_0._goslotitem = gohelper.findChild(arg_1_0.viewGO, "productdetail/scroll_productprop/viewport/content/#go_slotitem")
+	arg_1_0._golevelitem = gohelper.findChild(arg_1_0.viewGO, "scroll_level/viewport/content/#go_levelitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnclickOnClick(slot0, slot1)
-	slot0._level = slot0._levelItemDict[slot1].level
+function var_0_0._btnclickOnClick(arg_5_0, arg_5_1)
+	arg_5_0._level = arg_5_0._levelItemDict[arg_5_1].level
 
-	slot0:_refreshLevel()
-	slot0:_refreshStrength()
+	arg_5_0:_refreshLevel()
+	arg_5_0:_refreshStrength()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._levelItemDict = {}
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._levelItemDict = {}
 
-	gohelper.setActive(slot0._golevelitem, false)
+	gohelper.setActive(arg_6_0._golevelitem, false)
 
-	slot0._slotItemList = {}
+	arg_6_0._slotItemList = {}
 
-	gohelper.setActive(slot0._goslotitem, false)
+	gohelper.setActive(arg_6_0._goslotitem, false)
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshLevel()
-	slot0:_refreshStrength()
+function var_0_0._refreshUI(arg_7_0)
+	arg_7_0:_refreshLevel()
+	arg_7_0:_refreshStrength()
 end
 
-function slot0._refreshLevel(slot0)
-	for slot5 = 0, RoomConfig.instance:getLevelGroupMaxLevel(slot0._levelGroup) do
-		slot6 = slot5
+function var_0_0._refreshLevel(arg_8_0)
+	local var_8_0 = RoomConfig.instance:getLevelGroupMaxLevel(arg_8_0._levelGroup)
 
-		if not slot0._levelItemDict[slot5] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.index = slot5
-			slot7.go = gohelper.cloneInPlace(slot0._golevelitem, "item" .. slot5)
-			slot7.goselect = gohelper.findChild(slot7.go, "go_beselect")
-			slot7.gounselect = gohelper.findChild(slot7.go, "go_unselect")
-			slot7.txtlvselect = gohelper.findChildText(slot7.go, "go_beselect/txt_lv")
-			slot7.txtlvunselect = gohelper.findChildText(slot7.go, "go_unselect/txt_lv")
-			slot7.btnclick = gohelper.findChildButtonWithAudio(slot7.go, "btn_click")
+	for iter_8_0 = 0, var_8_0 do
+		local var_8_1 = iter_8_0
+		local var_8_2 = arg_8_0._levelItemDict[iter_8_0]
 
-			slot7.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot7.index)
+		if not var_8_2 then
+			var_8_2 = arg_8_0:getUserDataTb_()
+			var_8_2.index = iter_8_0
+			var_8_2.go = gohelper.cloneInPlace(arg_8_0._golevelitem, "item" .. iter_8_0)
+			var_8_2.goselect = gohelper.findChild(var_8_2.go, "go_beselect")
+			var_8_2.gounselect = gohelper.findChild(var_8_2.go, "go_unselect")
+			var_8_2.txtlvselect = gohelper.findChildText(var_8_2.go, "go_beselect/txt_lv")
+			var_8_2.txtlvunselect = gohelper.findChildText(var_8_2.go, "go_unselect/txt_lv")
+			var_8_2.btnclick = gohelper.findChildButtonWithAudio(var_8_2.go, "btn_click")
 
-			slot0._levelItemDict[slot5] = slot7
+			var_8_2.btnclick:AddClickListener(arg_8_0._btnclickOnClick, arg_8_0, var_8_2.index)
+
+			arg_8_0._levelItemDict[iter_8_0] = var_8_2
 		end
 
-		slot7.level = slot6
+		var_8_2.level = var_8_1
 
-		if slot6 > 0 then
-			slot7.txtlvselect.text = string.format("Lv.%s", slot6)
-			slot7.txtlvunselect.text = string.format("Lv.%s", slot6)
+		if var_8_1 > 0 then
+			var_8_2.txtlvselect.text = string.format("Lv.%s", var_8_1)
+			var_8_2.txtlvunselect.text = string.format("Lv.%s", var_8_1)
 		else
-			slot7.txtlvselect.text = luaLang("roomtradeitemdetail_nosetting")
-			slot7.txtlvunselect.text = luaLang("roomtradeitemdetail_nosetting")
+			var_8_2.txtlvselect.text = luaLang("roomtradeitemdetail_nosetting")
+			var_8_2.txtlvunselect.text = luaLang("roomtradeitemdetail_nosetting")
 		end
 
-		gohelper.setActive(slot7.goselect, slot0._level == slot7.level)
-		gohelper.setActive(slot7.gounselect, slot0._level ~= slot7.level)
-		gohelper.setActive(slot7.go, true)
+		gohelper.setActive(var_8_2.goselect, arg_8_0._level == var_8_2.level)
+		gohelper.setActive(var_8_2.gounselect, arg_8_0._level ~= var_8_2.level)
+		gohelper.setActive(var_8_2.go, true)
 	end
 
-	for slot5, slot6 in pairs(slot0._levelItemDict) do
-		if slot1 < slot5 then
-			gohelper.setActive(slot6.go, false)
+	for iter_8_1, iter_8_2 in pairs(arg_8_0._levelItemDict) do
+		if var_8_0 < iter_8_1 then
+			gohelper.setActive(iter_8_2.go, false)
 		end
 	end
 end
 
-function slot0._refreshStrength(slot0)
-	slot1 = slot0._level or 0
-	slot2 = RoomConfig.instance:getLevelGroupInfo(slot0._levelGroup, slot1)
+function var_0_0._refreshStrength(arg_9_0)
+	local var_9_0 = arg_9_0._level or 0
+	local var_9_1 = RoomConfig.instance:getLevelGroupInfo(arg_9_0._levelGroup, var_9_0)
 
-	slot0._simageproducticon:LoadImage(ResUrl.getRoomImage("modulepart/" .. slot2.icon))
+	arg_9_0._simageproducticon:LoadImage(ResUrl.getRoomImage("modulepart/" .. var_9_1.icon))
 
-	slot0._txtname.text = slot2.name
-	slot0._txtnameEn.text = slot2.nameEn
+	arg_9_0._txtname.text = var_9_1.name
+	arg_9_0._txtnameEn.text = var_9_1.nameEn
 
-	gohelper.setActive(slot0._txtlv.gameObject, slot1 > 0)
-	gohelper.setActive(slot0._txtnosetting.gameObject, slot1 <= 0)
+	gohelper.setActive(arg_9_0._txtlv.gameObject, var_9_0 > 0)
+	gohelper.setActive(arg_9_0._txtnosetting.gameObject, var_9_0 <= 0)
 
-	if slot1 > 0 then
-		slot0._txtlv.text = string.format("Lv.%s", slot1)
+	if var_9_0 > 0 then
+		arg_9_0._txtlv.text = string.format("Lv.%s", var_9_0)
 	end
 
-	if slot1 == 0 then
-		if not string.nilorempty(slot2.desc) then
-			table.insert({}, {
-				desc = string.format("<color=#57503B>%s</color>", slot2.desc)
+	local var_9_2 = {}
+
+	if var_9_0 == 0 then
+		if not string.nilorempty(var_9_1.desc) then
+			table.insert(var_9_2, {
+				desc = string.format("<color=#57503B>%s</color>", var_9_1.desc)
 			})
 		end
 	else
-		slot4 = RoomConfig.instance:getLevelGroupConfig(slot0._levelGroup, slot1)
+		local var_9_3 = RoomConfig.instance:getLevelGroupConfig(arg_9_0._levelGroup, var_9_0)
 
-		table.insert(slot3, {
-			desc = string.format("<color=#608C54>%s</color>", slot4.desc)
+		table.insert(var_9_2, {
+			desc = string.format("<color=#608C54>%s</color>", var_9_3.desc)
 		})
 
-		if slot4.costResource > 0 then
-			table.insert(slot3, {
-				desc = string.format("<color=#943330>%s+%s</color>", luaLang("roomstrengthview_costresource"), slot4.costResource)
+		if var_9_3.costResource > 0 then
+			table.insert(var_9_2, {
+				desc = string.format("<color=#943330>%s+%s</color>", luaLang("roomstrengthview_costresource"), var_9_3.costResource)
 			})
-		elseif slot4.costResource < 0 then
-			table.insert(slot3, {
-				desc = string.format("<color=#608C54>%s-%s</color>", luaLang("roomstrengthview_costresource"), math.abs(slot4.costResource))
+		elseif var_9_3.costResource < 0 then
+			table.insert(var_9_2, {
+				desc = string.format("<color=#608C54>%s-%s</color>", luaLang("roomstrengthview_costresource"), math.abs(var_9_3.costResource))
 			})
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if not slot0._slotItemList[slot7] then
-			slot9 = slot0:getUserDataTb_()
-			slot9.go = gohelper.cloneInPlace(slot0._goslotitem, "item" .. slot7)
-			slot9.gopoint1 = gohelper.findChild(slot9.go, "go_point1")
-			slot9.gopoint2 = gohelper.findChild(slot9.go, "go_point2")
-			slot9.txtslotdesc = gohelper.findChildText(slot9.go, "")
+	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
+		local var_9_4 = arg_9_0._slotItemList[iter_9_0]
 
-			gohelper.setActive(slot9.gopoint1, slot7 % 2 == 1)
-			gohelper.setActive(slot9.gopoint2, slot7 % 2 == 0)
-			table.insert(slot0._slotItemList, slot9)
+		if not var_9_4 then
+			var_9_4 = arg_9_0:getUserDataTb_()
+			var_9_4.go = gohelper.cloneInPlace(arg_9_0._goslotitem, "item" .. iter_9_0)
+			var_9_4.gopoint1 = gohelper.findChild(var_9_4.go, "go_point1")
+			var_9_4.gopoint2 = gohelper.findChild(var_9_4.go, "go_point2")
+			var_9_4.txtslotdesc = gohelper.findChildText(var_9_4.go, "")
+
+			gohelper.setActive(var_9_4.gopoint1, iter_9_0 % 2 == 1)
+			gohelper.setActive(var_9_4.gopoint2, iter_9_0 % 2 == 0)
+			table.insert(arg_9_0._slotItemList, var_9_4)
 		end
 
-		slot9.txtslotdesc.text = slot8.desc
+		var_9_4.txtslotdesc.text = iter_9_1.desc
 
-		gohelper.setActive(slot9.go, true)
+		gohelper.setActive(var_9_4.go, true)
 	end
 
-	for slot7 = #slot3 + 1, #slot0._slotItemList do
-		gohelper.setActive(slot0._slotItemList[slot7].go, false)
-	end
-end
+	for iter_9_2 = #var_9_2 + 1, #arg_9_0._slotItemList do
+		local var_9_5 = arg_9_0._slotItemList[iter_9_2]
 
-function slot0.onOpen(slot0)
-	slot0._levelGroup = slot0.viewParam.levelGroup
-	slot0._level = slot0.viewParam.level
-
-	slot0:_refreshUI()
-end
-
-function slot0.onUpdateParam(slot0)
-	slot0._levelGroup = slot0.viewParam.levelGroup
-	slot0._level = slot0.viewParam.level
-
-	slot0:_refreshUI()
-end
-
-function slot0.onClose(slot0)
-end
-
-function slot0.onDestroyView(slot0)
-	slot0._simageproducticon:UnLoadImage()
-
-	for slot4, slot5 in pairs(slot0._levelItemDict) do
-		slot5.btnclick:RemoveClickListener()
+		gohelper.setActive(var_9_5.go, false)
 	end
 end
 
-return slot0
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._levelGroup = arg_10_0.viewParam.levelGroup
+	arg_10_0._level = arg_10_0.viewParam.level
+
+	arg_10_0:_refreshUI()
+end
+
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0._levelGroup = arg_11_0.viewParam.levelGroup
+	arg_11_0._level = arg_11_0.viewParam.level
+
+	arg_11_0:_refreshUI()
+end
+
+function var_0_0.onClose(arg_12_0)
+	return
+end
+
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0._simageproducticon:UnLoadImage()
+
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._levelItemDict) do
+		iter_13_1.btnclick:RemoveClickListener()
+	end
+end
+
+return var_0_0

@@ -1,40 +1,43 @@
-module("modules.ugui.uieffect.UIEffectUnit", package.seeall)
+﻿module("modules.ugui.uieffect.UIEffectUnit", package.seeall)
 
-slot0 = class("UIEffectUnit", LuaCompBase)
-slot1 = SLFramework.EffectPhotographerPool.Instance
+local var_0_0 = class("UIEffectUnit", LuaCompBase)
+local var_0_1 = SLFramework.EffectPhotographerPool.Instance
 
-function slot0.Refresh(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if slot0._rawImage == nil then
-		slot7 = gohelper.onceAddComponent(slot1, gohelper.Type_RawImage)
-		slot7.raycastTarget = false
-		slot0._rawImage = slot7
+function var_0_0.Refresh(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
+	if arg_1_0._rawImage == nil then
+		local var_1_0 = gohelper.onceAddComponent(arg_1_1, gohelper.Type_RawImage)
+
+		var_1_0.raycastTarget = false
+		arg_1_0._rawImage = var_1_0
 	end
 
-	recthelper.setSize(slot1.transform, slot5 or slot3, slot6 or slot4)
+	local var_1_1 = arg_1_1.transform
 
-	if slot0._effectPath and slot0._effectPath == slot2 and slot0._width == slot3 and slot0._height == slot4 then
+	recthelper.setSize(var_1_1, arg_1_5 or arg_1_3, arg_1_6 or arg_1_4)
+
+	if arg_1_0._effectPath and arg_1_0._effectPath == arg_1_2 and arg_1_0._width == arg_1_3 and arg_1_0._height == arg_1_4 then
 		return
 	end
 
-	slot0:_releaseEffect()
+	arg_1_0:_releaseEffect()
 
-	slot0._effectPath = slot2
-	slot0._width = slot3
-	slot0._height = slot4
+	arg_1_0._effectPath = arg_1_2
+	arg_1_0._width = arg_1_3
+	arg_1_0._height = arg_1_4
 
-	UIEffectManager.instance:_getEffect(slot2, slot3, slot4, slot0._rawImage)
+	UIEffectManager.instance:_getEffect(arg_1_2, arg_1_3, arg_1_4, arg_1_0._rawImage)
 end
 
-function slot0.onDestroy(slot0)
-	slot0:_releaseEffect()
+function var_0_0.onDestroy(arg_2_0)
+	arg_2_0:_releaseEffect()
 end
 
-function slot0._releaseEffect(slot0)
-	if slot0._effectPath then
-		UIEffectManager.instance:_putEffect(slot0._effectPath, slot0._width, slot0._height)
+function var_0_0._releaseEffect(arg_3_0)
+	if arg_3_0._effectPath then
+		UIEffectManager.instance:_putEffect(arg_3_0._effectPath, arg_3_0._width, arg_3_0._height)
 
-		slot0._effectPath = nil
+		arg_3_0._effectPath = nil
 	end
 end
 
-return slot0
+return var_0_0

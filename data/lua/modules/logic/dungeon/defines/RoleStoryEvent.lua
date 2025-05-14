@@ -1,25 +1,26 @@
-module("modules.logic.dungeon.defines.RoleStoryEvent", package.seeall)
+﻿module("modules.logic.dungeon.defines.RoleStoryEvent", package.seeall)
 
-slot0 = _M
-slot0.ActStoryChange = 1000
-slot0.ScoreUpdate = 1010
-slot0.UpdateInfo = 1020
-slot0.GetScoreBonus = 1030
-slot0.ExchangeTick = 1040
-slot0.GetChallengeBonus = 1050
-slot0.ResidentStoryChange = 1060
-slot0.OnClickRoleStoryReward = 1070
-slot0.ChangeMainViewShow = 1080
-slot0.PowerChange = 1090
-slot0.WeekTaskChange = 1100
-slot0.StoryNewChange = 1110
-slot0.ChangeSelectedHero = 1200
-slot0.ClickRightHero = 1201
-slot0.DispatchSuccess = 1202
-slot0.DispatchReset = 1203
-slot0.DispatchFinish = 1204
-slot0.ClickReviewItem = 1205
-slot0.StoryDispatchUnlock = 1206
-slot0.NormalDispatchRefresh = 1207
+local var_0_0 = _M
 
-return slot0
+var_0_0.ActStoryChange = 1000
+var_0_0.ScoreUpdate = 1010
+var_0_0.UpdateInfo = 1020
+var_0_0.GetScoreBonus = 1030
+var_0_0.ExchangeTick = 1040
+var_0_0.GetChallengeBonus = 1050
+var_0_0.ResidentStoryChange = 1060
+var_0_0.OnClickRoleStoryReward = 1070
+var_0_0.ChangeMainViewShow = 1080
+var_0_0.PowerChange = 1090
+var_0_0.WeekTaskChange = 1100
+var_0_0.StoryNewChange = 1110
+var_0_0.ChangeSelectedHero = 1200
+var_0_0.ClickRightHero = 1201
+var_0_0.DispatchSuccess = 1202
+var_0_0.DispatchReset = 1203
+var_0_0.DispatchFinish = 1204
+var_0_0.ClickReviewItem = 1205
+var_0_0.StoryDispatchUnlock = 1206
+var_0_0.NormalDispatchRefresh = 1207
+
+return var_0_0

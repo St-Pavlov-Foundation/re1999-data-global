@@ -1,74 +1,97 @@
-module("modules.logic.activity.model.warmup.ActivityWarmUpTaskListModel", package.seeall)
+﻿module("modules.logic.activity.model.warmup.ActivityWarmUpTaskListModel", package.seeall)
 
-slot0 = class("ActivityWarmUpTaskListModel", ListScrollModel)
+local var_0_0 = class("ActivityWarmUpTaskListModel", ListScrollModel)
 
-function slot0.init(slot0, slot1)
-	slot0._totalDict = slot0._totalDict or {}
-	slot3 = Activity106Config.instance:getTaskByActId(slot1)
-	slot4 = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._totalDict = arg_1_0._totalDict or {}
 
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity106) ~= nil then
-		for slot8, slot9 in ipairs(slot3) do
-			if slot2[slot9.id] ~= nil then
-				if not slot0._totalDict[slot10] then
-					slot0._totalDict[slot10] = ActivityWarmUpTaskMO.New()
+	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity106)
+	local var_1_1 = Activity106Config.instance:getTaskByActId(arg_1_1)
+	local var_1_2 = {}
+
+	if var_1_0 ~= nil then
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			local var_1_3 = iter_1_1.id
+			local var_1_4 = var_1_0[var_1_3]
+
+			if var_1_4 ~= nil then
+				local var_1_5 = arg_1_0._totalDict[var_1_3]
+
+				if not var_1_5 then
+					var_1_5 = ActivityWarmUpTaskMO.New()
+					arg_1_0._totalDict[var_1_3] = var_1_5
 				end
 
-				slot12:init(slot11, slot9)
-				table.insert(slot4, slot12)
+				var_1_5:init(var_1_4, iter_1_1)
+				table.insert(var_1_2, var_1_5)
 			end
 		end
 
-		table.sort(slot4, uv0.sortMO)
+		table.sort(var_1_2, var_0_0.sortMO)
 	end
 
-	slot0._totalDatas = slot4
+	arg_1_0._totalDatas = var_1_2
 
-	slot0:groupByDay()
+	arg_1_0:groupByDay()
 end
 
-function slot0.sortMO(slot0, slot1)
-	if slot0:alreadyGotReward() ~= slot1:alreadyGotReward() then
-		return slot3
-	elseif slot0:isFinished() ~= slot1:isFinished() then
-		return slot4
+function var_0_0.sortMO(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:alreadyGotReward()
+	local var_2_1 = arg_2_1:alreadyGotReward()
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_1
+	else
+		local var_2_2 = arg_2_0:isFinished()
+
+		if var_2_2 ~= arg_2_1:isFinished() then
+			return var_2_2
+		end
 	end
 
-	return slot0.id < slot1.id
+	return arg_2_0.id < arg_2_1.id
 end
 
-function slot0.setSelectedDay(slot0, slot1)
-	slot0._selectDay = slot1
+function var_0_0.setSelectedDay(arg_3_0, arg_3_1)
+	arg_3_0._selectDay = arg_3_1
 end
 
-function slot0.updateDayList(slot0)
-	if slot0._taskGroup[slot0:getSelectedDay()] then
-		slot0:setList(slot1)
+function var_0_0.updateDayList(arg_4_0)
+	local var_4_0 = arg_4_0._taskGroup[arg_4_0:getSelectedDay()]
+
+	if var_4_0 then
+		arg_4_0:setList(var_4_0)
 	end
 end
 
-function slot0.getSelectedDay(slot0)
-	return slot0._selectDay
+function var_0_0.getSelectedDay(arg_5_0)
+	return arg_5_0._selectDay
 end
 
-function slot0.groupByDay(slot0)
-	slot0._taskGroup = {}
+function var_0_0.groupByDay(arg_6_0)
+	arg_6_0._taskGroup = {}
 
-	if not slot0._totalDatas then
+	local var_6_0 = arg_6_0._totalDatas
+
+	if not var_6_0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._taskGroup[slot7] = slot0._taskGroup[slot6.config.openDay] or {}
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = iter_6_1.config.openDay
 
-		table.insert(slot0._taskGroup[slot7], slot6)
+		arg_6_0._taskGroup[var_6_1] = arg_6_0._taskGroup[var_6_1] or {}
+
+		table.insert(arg_6_0._taskGroup[var_6_1], iter_6_1)
 	end
 end
 
-function slot0.dayHasReward(slot0, slot1)
-	if slot0._taskGroup[slot1] then
-		for slot6, slot7 in ipairs(slot2) do
-			if not slot7:alreadyGotReward() and slot7:isFinished() then
+function var_0_0.dayHasReward(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._taskGroup[arg_7_1]
+
+	if var_7_0 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			if not iter_7_1:alreadyGotReward() and iter_7_1:isFinished() then
 				return true
 			end
 		end
@@ -77,12 +100,12 @@ function slot0.dayHasReward(slot0, slot1)
 	return false
 end
 
-function slot0.release(slot0)
-	slot0._totalDict = nil
-	slot0._totalDatas = nil
-	slot0._taskGroup = nil
+function var_0_0.release(arg_8_0)
+	arg_8_0._totalDict = nil
+	arg_8_0._totalDatas = nil
+	arg_8_0._taskGroup = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

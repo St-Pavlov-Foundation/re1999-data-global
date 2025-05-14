@@ -1,29 +1,33 @@
-module("modules.logic.fight.view.FightSuccActView", package.seeall)
+﻿module("modules.logic.fight.view.FightSuccActView", package.seeall)
 
-slot0 = class("FightSuccActView", BaseView)
+local var_0_0 = class("FightSuccActView", BaseView)
 
-function slot0.showReward(slot0)
-	slot0:_showAstrologyStarReward()
-	slot0:_showExchangeList()
+function var_0_0.showReward(arg_1_0)
+	arg_1_0:_showAstrologyStarReward()
+	arg_1_0:_showExchangeList()
 end
 
-function slot0._showAstrologyStarReward(slot0)
-	if VersionActivity1_3AstrologyModel.instance:getStarReward() then
+function var_0_0._showAstrologyStarReward(arg_2_0)
+	local var_2_0 = VersionActivity1_3AstrologyModel.instance:getStarReward()
+
+	if var_2_0 then
 		VersionActivity1_3AstrologyModel.instance:setStarReward(nil)
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot1)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_2_0)
 	end
 end
 
-function slot0._showExchangeList(slot0)
-	if VersionActivity1_3AstrologyModel.instance:getExchangeList() then
+function var_0_0._showExchangeList(arg_3_0)
+	local var_3_0 = VersionActivity1_3AstrologyModel.instance:getExchangeList()
+
+	if var_3_0 then
 		VersionActivity1_3AstrologyModel.instance:setExchangeList(nil)
-		VersionActivity1_3AstrologyController.instance:openVersionActivity1_3AstrologyPropView(slot1)
+		VersionActivity1_3AstrologyController.instance:openVersionActivity1_3AstrologyPropView(var_3_0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_4_0)
 	VersionActivity1_3AstrologyModel.instance:setStarReward(nil)
 	VersionActivity1_3AstrologyModel.instance:setExchangeList(nil)
 end
 
-return slot0
+return var_0_0

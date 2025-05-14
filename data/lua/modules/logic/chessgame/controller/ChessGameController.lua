@@ -1,319 +1,355 @@
-module("modules.logic.chessgame.controller.ChessGameController", package.seeall)
+﻿module("modules.logic.chessgame.controller.ChessGameController", package.seeall)
 
-slot0 = class("ChessGameController", BaseController)
+local var_0_0 = class("ChessGameController", BaseController)
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	return
 end
 
-function slot0.initServerMap(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.initServerMap(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0
 
-	if slot2.episodeId and slot2.currMapIndex then
-		slot4 = slot2.currMapIndex + 1
+	if arg_2_2.episodeId and arg_2_2.currMapIndex then
+		local var_2_1 = arg_2_2.currMapIndex + 1
 
 		ChessGameModel.instance:clear()
-		slot0:checkShowEffect()
+		arg_2_0:checkShowEffect()
 		ChessGameInteractModel.instance:clear()
-		ChessGameModel.instance:initData(slot1, slot2.episodeId, slot4)
-		ChessGameModel.instance:setNowMapIndex(slot4)
-		ChessGameModel.instance:setCompletedCount(slot2.completedCount)
+		ChessGameModel.instance:initData(arg_2_1, arg_2_2.episodeId, var_2_1)
+		ChessGameModel.instance:setNowMapIndex(var_2_1)
+		ChessGameModel.instance:setCompletedCount(arg_2_2.completedCount)
 
-		slot3 = ChessConfig.instance:getEpisodeCo(slot1, slot2.episodeId).mapIds
+		local var_2_2 = ChessConfig.instance:getEpisodeCo(arg_2_1, arg_2_2.episodeId).mapIds
 
-		ChessGameConfig.instance:setCurrentMapGroupId(slot3)
-		ChessGameNodeModel.instance:setNodeDatas(ChessGameConfig.instance:getMapCo(slot3)[slot4].nodes)
+		ChessGameConfig.instance:setCurrentMapGroupId(var_2_2)
 
-		if slot2.interact then
-			ChessGameInteractModel.instance:setInteractDatas(slot2.interact, slot4)
+		local var_2_3 = ChessGameConfig.instance:getMapCo(var_2_2)
+
+		ChessGameNodeModel.instance:setNodeDatas(var_2_3[var_2_1].nodes)
+
+		if arg_2_2.interact then
+			ChessGameInteractModel.instance:setInteractDatas(arg_2_2.interact, var_2_1)
 		end
 	end
 
-	slot0:setClickStatus(ChessGameEnum.SelectPosStatus.None)
+	arg_2_0:setClickStatus(ChessGameEnum.SelectPosStatus.None)
 
-	slot0._selectObj = nil
+	arg_2_0._selectObj = nil
 
-	slot0:setSelectObj(nil)
+	arg_2_0:setSelectObj(nil)
 
-	slot0.interactsMgr = slot0.interactsMgr or ChessInteractMgr.New()
+	arg_2_0.interactsMgr = arg_2_0.interactsMgr or ChessInteractMgr.New()
 
-	if not slot0:existGame() then
-		slot0.interactsMgr:removeAll()
+	if not arg_2_0:existGame() then
+		arg_2_0.interactsMgr:removeAll()
 	end
 
-	slot0:initObjects(slot2.currMapIndex + 1)
+	arg_2_0:initObjects(arg_2_2.currMapIndex + 1)
 
-	slot0.eventMgr = slot0.eventMgr or ChessEventMgr.New()
+	arg_2_0.eventMgr = arg_2_0.eventMgr or ChessEventMgr.New()
 
-	slot0.eventMgr:removeAll()
-	slot0.eventMgr:setCurEvent(nil)
+	arg_2_0.eventMgr:removeAll()
+	arg_2_0.eventMgr:setCurEvent(nil)
 
-	slot0._isPlaying = true
+	arg_2_0._isPlaying = true
 
-	uv0.instance:dispatchEvent(ChessGameEvent.CurrentConditionUpdate)
+	var_0_0.instance:dispatchEvent(ChessGameEvent.CurrentConditionUpdate)
 end
 
-function slot0.enterChessGame(slot0, slot1, slot2, slot3)
+function var_0_0.enterChessGame(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	logNormal("ChessGameController : enterChessGame!")
 
-	slot0._viewName = slot3 or slot0._viewName
+	arg_3_0._viewName = arg_3_3 or arg_3_0._viewName
 
-	ViewMgr.instance:openView(slot0._viewName, slot0:packViewParam())
+	ViewMgr.instance:openView(arg_3_0._viewName, arg_3_0:packViewParam())
 	ChessGameModel.instance:clearRollbackNum()
 	ChessStatController.instance:startStat()
 end
 
-function slot0.exitGame(slot0)
+function var_0_0.exitGame(arg_4_0)
 	ChessGameModel.instance:clear()
 	ChessGameInteractModel.instance:clear()
 	ChessGameNodeModel.instance:clear()
 	ChessGameModel.instance:clearRollbackNum()
-	slot0:abortGame()
-	ChessGameJumpHandler["jump" .. 0] or ChessGameJumpHandler.defaultJump()
+	arg_4_0:abortGame()
+
+	local var_4_0 = 0
+
+	;(ChessGameJumpHandler["jump" .. var_4_0] or ChessGameJumpHandler.defaultJump)()
 end
 
-function slot0.reInit(slot0)
-	slot0:release()
+function var_0_0.reInit(arg_5_0)
+	arg_5_0:release()
 end
 
-function slot0.release(slot0)
-	if slot0.interactsMgr then
-		slot0.interactsMgr:removeAll()
+function var_0_0.release(arg_6_0)
+	if arg_6_0.interactsMgr then
+		arg_6_0.interactsMgr:removeAll()
 	end
 
-	if slot0.eventMgr then
-		slot0.eventMgr:removeAll()
+	if arg_6_0.eventMgr then
+		arg_6_0.eventMgr:removeAll()
 	end
 
-	slot0._treeComp = nil
-	slot0.interactsMgr = nil
-	slot0.eventMgr = nil
-	slot0._isPlaying = false
+	arg_6_0._treeComp = nil
+	arg_6_0.interactsMgr = nil
+	arg_6_0.eventMgr = nil
+	arg_6_0._isPlaying = false
 end
 
-function slot0.setViewName(slot0, slot1)
-	if slot1 then
-		slot0._viewName = slot1
+function var_0_0.setViewName(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		arg_7_0._viewName = arg_7_1
 	end
 end
 
-function slot0.getViewName(slot0)
-	return slot0._viewName or ViewName.ChessGameScene
+function var_0_0.getViewName(arg_8_0)
+	return arg_8_0._viewName or ViewName.ChessGameScene
 end
 
-function slot0.packViewParam(slot0)
+function var_0_0.packViewParam(arg_9_0)
+	return
 end
 
-function slot0.deleteInteractObj(slot0, slot1)
-	if not ChessGameInteractModel.instance:getInteractById(slot1) then
+function var_0_0.deleteInteractObj(arg_10_0, arg_10_1)
+	if not ChessGameInteractModel.instance:getInteractById(arg_10_1) then
 		return
 	end
 
-	ChessGameInteractModel.instance:deleteInteractById(slot1)
-	slot0.interactsMgr:remove(slot1)
+	ChessGameInteractModel.instance:deleteInteractById(arg_10_1)
+	arg_10_0.interactsMgr:remove(arg_10_1)
 end
 
-function slot0.addInteractObj(slot0, slot1)
-	if uv0.instance.interactsMgr:get(slot1.id) and slot3:tryGetGameObject() then
+function var_0_0.addInteractObj(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.id
+	local var_11_1 = var_0_0.instance.interactsMgr:get(var_11_0)
+
+	if var_11_1 and var_11_1:tryGetGameObject() then
 		return
 	end
 
-	if ChessGameInteractModel.instance:addInteractMo(ChessGameConfig.instance:getInteractCoById(slot1.mapGroupId or ChessGameConfig.instance:getCurrentMapGroupId(), slot2), slot1):isShow() then
-		slot8 = ChessInteractComp.New()
+	local var_11_2 = arg_11_1.mapGroupId or ChessGameConfig.instance:getCurrentMapGroupId()
+	local var_11_3 = ChessGameModel.instance:getNowMapIndex()
+	local var_11_4 = ChessGameConfig.instance:getInteractCoById(var_11_2, var_11_0)
+	local var_11_5 = ChessGameInteractModel.instance:addInteractMo(var_11_4, arg_11_1)
 
-		slot8:init(ChessGameModel.instance:getNowMapIndex(), slot7)
+	if var_11_5:isShow() then
+		local var_11_6 = ChessInteractComp.New()
 
-		if slot8.config ~= nil then
-			slot0.interactsMgr:add(slot8)
+		var_11_6:init(var_11_3, var_11_5)
+
+		if var_11_6.config ~= nil then
+			arg_11_0.interactsMgr:add(var_11_6)
 		end
 
-		slot0:dispatchEvent(ChessGameEvent.AddInteractObj, slot8)
+		arg_11_0:dispatchEvent(ChessGameEvent.AddInteractObj, var_11_6)
 	end
 end
 
-function slot0.getSelectObj(slot0)
-	return slot0._selectObj
+function var_0_0.getSelectObj(arg_12_0)
+	return arg_12_0._selectObj
 end
 
-function slot0.isNeedBlock(slot0)
-	if slot0.eventMgr and slot0.eventMgr:isNeedBlock() then
+function var_0_0.isNeedBlock(arg_13_0)
+	if arg_13_0.eventMgr and arg_13_0.eventMgr:isNeedBlock() then
 		return true
 	end
 
 	return false
 end
 
-function slot0.initObjects(slot0, slot1)
-	slot2 = ChessGameInteractModel.instance:getInteractsByMapIndex(slot1)
+function var_0_0.initObjects(arg_14_0, arg_14_1)
+	local var_14_0 = ChessGameInteractModel.instance:getInteractsByMapIndex(arg_14_1)
+	local var_14_1 = arg_14_0.interactsMgr:getList()
 
-	if #slot0.interactsMgr:getList() > 0 then
-		for slot7, slot8 in pairs(slot2) do
-			if not slot0.interactsMgr:get(slot8.id) then
-				slot0:addInteractObj(slot8)
-			elseif slot9 and slot8:isShow() and not slot9:isShow() then
-				slot0.interactsMgr:remove(slot8.id)
-				slot0:addInteractObj(slot8)
+	if #var_14_1 > 0 then
+		for iter_14_0, iter_14_1 in pairs(var_14_0) do
+			local var_14_2 = arg_14_0.interactsMgr:get(iter_14_1.id)
+
+			if not var_14_2 then
+				arg_14_0:addInteractObj(iter_14_1)
+			elseif var_14_2 and iter_14_1:isShow() and not var_14_2:isShow() then
+				arg_14_0.interactsMgr:remove(iter_14_1.id)
+				arg_14_0:addInteractObj(iter_14_1)
 			else
-				slot9:updateComp(slot8)
+				var_14_2:updateComp(iter_14_1)
 			end
 		end
 
-		for slot7 = #slot3, 1, -1 do
-			if not ChessGameInteractModel.instance:getInteractById(slot3[slot7].mo.id) or not slot9:isShow() then
-				slot0.interactsMgr:hideCompById(slot8.mo.id)
-				slot0.interactsMgr:remove(slot8.mo.id)
+		for iter_14_2 = #var_14_1, 1, -1 do
+			local var_14_3 = var_14_1[iter_14_2]
+			local var_14_4 = ChessGameInteractModel.instance:getInteractById(var_14_3.mo.id)
+
+			if not var_14_4 or not var_14_4:isShow() then
+				arg_14_0.interactsMgr:hideCompById(var_14_3.mo.id)
+				arg_14_0.interactsMgr:remove(var_14_3.mo.id)
 			end
 		end
 	else
-		for slot7, slot8 in pairs(slot2) do
-			slot9 = ChessInteractComp.New()
+		for iter_14_3, iter_14_4 in pairs(var_14_0) do
+			local var_14_5 = ChessInteractComp.New()
 
-			slot9:init(slot1, slot8)
+			var_14_5:init(arg_14_1, iter_14_4)
 
-			if slot9.config ~= nil then
-				slot0.interactsMgr:add(slot9)
+			if var_14_5.config ~= nil then
+				arg_14_0.interactsMgr:add(var_14_5)
 			end
 		end
 
-		slot0:dispatchEvent(ChessGameEvent.AllObjectCreated)
+		arg_14_0:dispatchEvent(ChessGameEvent.AllObjectCreated)
 	end
 end
 
-function slot0.setClickStatus(slot0, slot1)
-	slot0._clickStatus = slot1
+function var_0_0.setClickStatus(arg_15_0, arg_15_1)
+	arg_15_0._clickStatus = arg_15_1
 end
 
-function slot0.getClickStatus(slot0)
-	return slot0._clickStatus
+function var_0_0.getClickStatus(arg_16_0)
+	return arg_16_0._clickStatus
 end
 
-function slot0.setSelectObj(slot0, slot1)
-	if slot0._selectObj == slot1 then
+function var_0_0.setSelectObj(arg_17_0, arg_17_1)
+	if arg_17_0._selectObj == arg_17_1 then
 		return
 	end
 
-	if slot0._selectObj ~= nil then
-		slot0._selectObj:onCancelSelect()
+	if arg_17_0._selectObj ~= nil then
+		arg_17_0._selectObj:onCancelSelect()
 	end
 
-	slot0._selectObj = slot1
+	arg_17_0._selectObj = arg_17_1
 
-	if slot1 ~= nil then
-		slot1:onSelected()
+	if arg_17_1 ~= nil then
+		arg_17_1:onSelected()
 	end
 end
 
-function slot0.filterSelectable(slot0)
-	return slot0.config and slot0.config.interactType == ChessGameEnum.InteractType.Role
+function var_0_0.filterSelectable(arg_18_0)
+	return arg_18_0.config and arg_18_0.config.interactType == ChessGameEnum.InteractType.Role
 end
 
-function slot0.searchInteractByPos(slot0, slot1, slot2, slot3)
-	slot5, slot6 = nil
-	slot7 = 0
+function var_0_0.searchInteractByPos(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	local var_19_0 = arg_19_0.interactsMgr:getList()
+	local var_19_1
+	local var_19_2
+	local var_19_3 = 0
 
-	for slot11, slot12 in ipairs(slot0.interactsMgr:getList()) do
-		if slot12.mo.posX == slot1 and slot12.mo.posY == slot2 and slot12:isShow() and (not slot3 or slot3(slot12)) then
-			if slot5 ~= nil then
-				table.insert(slot6 or {
-					slot5
-				}, slot12)
+	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+		if iter_19_1.mo.posX == arg_19_1 and iter_19_1.mo.posY == arg_19_2 and iter_19_1:isShow() and (not arg_19_3 or arg_19_3(iter_19_1)) then
+			if var_19_1 ~= nil then
+				var_19_2 = var_19_2 or {
+					var_19_1
+				}
+
+				table.insert(var_19_2, iter_19_1)
 			else
-				slot5 = slot12
+				var_19_1 = iter_19_1
 			end
 
-			slot7 = slot7 + 1
+			var_19_3 = var_19_3 + 1
 		end
 	end
 
-	return slot7, slot6 or slot5
+	return var_19_3, var_19_2 or var_19_1
 end
 
-function slot0.sortSelectObj(slot0, slot1)
-	return slot0:getSelectPriority() < slot1:getSelectPriority()
+function var_0_0.sortSelectObj(arg_20_0, arg_20_1)
+	return arg_20_0:getSelectPriority() < arg_20_1:getSelectPriority()
 end
 
-function slot0.autoSelectPlayer(slot0)
-	if not slot0.interactsMgr then
+function var_0_0.autoSelectPlayer(arg_21_0)
+	if not arg_21_0.interactsMgr then
 		return
 	end
 
-	if not slot0.interactsMgr:getList() then
+	local var_21_0 = arg_21_0.interactsMgr:getList()
+
+	if not var_21_0 then
 		return
 	end
 
-	slot2 = {}
+	local var_21_1 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		if (slot7.config and slot7.config.interactType or nil) == ChessGameEnum.InteractType.Role then
-			table.insert(slot2, slot7)
+	for iter_21_0, iter_21_1 in pairs(var_21_0) do
+		if (iter_21_1.config and iter_21_1.config.interactType or nil) == ChessGameEnum.InteractType.Role then
+			table.insert(var_21_1, iter_21_1)
 		end
 	end
 
-	table.sort(slot2, uv0.sortInteractObjById)
+	table.sort(var_21_1, var_0_0.sortInteractObjById)
 
-	if #slot2 > 0 then
-		slot0:setSelectObj(slot2[1])
+	if #var_21_1 > 0 then
+		arg_21_0:setSelectObj(var_21_1[1])
 	end
 end
 
-function slot0.sortInteractObjById(slot0, slot1)
-	if slot0.config.interactType ~= slot1.config.interactType then
-		return slot2 < slot3
+function var_0_0.sortInteractObjById(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0.config.interactType
+	local var_22_1 = arg_22_1.config.interactType
+
+	if var_22_0 ~= var_22_1 then
+		return var_22_0 < var_22_1
 	end
 
-	return slot0.id < slot1.id
+	return arg_22_0.id < arg_22_1.id
 end
 
-function slot0.posCanWalk(slot0, slot1, slot2)
-	slot3 = true
+function var_0_0.posCanWalk(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = true
+	local var_23_1 = ChessGameNodeModel.instance:getNode(arg_23_1, arg_23_2)
 
-	if not ChessGameNodeModel.instance:getNode(slot1, slot2) then
+	if not var_23_1 then
 		return false
 	end
 
-	if slot4.tileType == ChessGameEnum.TileBaseType.None then
+	if var_23_1.tileType == ChessGameEnum.TileBaseType.None then
 		return false
 	end
 
-	return slot0:checkInteractCanWalk(slot1, slot2)
+	return (arg_23_0:checkInteractCanWalk(arg_23_1, arg_23_2))
 end
 
-function slot0.checkInteractCanWalk(slot0, slot1, slot2)
-	slot3, slot4 = slot0:searchInteractByPos(slot1, slot2)
+function var_0_0.checkInteractCanWalk(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0, var_24_1 = arg_24_0:searchInteractByPos(arg_24_1, arg_24_2)
 
-	if not slot4 then
+	if not var_24_1 then
 		return true
 	end
 
-	slot5 = nil
-	slot6 = ChessGameModel.instance:getCatchObj()
+	local var_24_2
+	local var_24_3 = ChessGameModel.instance:getCatchObj()
 
-	if slot3 > 1 then
-		for slot10, slot11 in ipairs(slot4) do
-			if not slot11.mo.walkable then
+	if var_24_0 > 1 then
+		for iter_24_0, iter_24_1 in ipairs(var_24_1) do
+			local var_24_4 = iter_24_1.mo
+
+			if not var_24_4.walkable then
 				return false
 			end
 
-			if slot6 then
-				if slot5.interactType == ChessGameEnum.InteractType.Prey or slot5.interactType == ChessGameEnum.InteractType.Hunter then
+			if var_24_3 then
+				if var_24_4.interactType == ChessGameEnum.InteractType.Prey or var_24_4.interactType == ChessGameEnum.InteractType.Hunter then
 					return false
 				end
 
-				if slot11:checkShowAvatar() then
+				if iter_24_1:checkShowAvatar() then
 					return false
 				end
 			end
 		end
 	else
-		if not slot4.mo.walkable then
+		local var_24_5 = var_24_1.mo
+
+		if not var_24_5.walkable then
 			return false
 		end
 
-		if slot6 then
-			if slot5.interactType == ChessGameEnum.InteractType.Prey or slot5.interactType == ChessGameEnum.InteractType.Hunter then
+		if var_24_3 then
+			if var_24_5.interactType == ChessGameEnum.InteractType.Prey or var_24_5.interactType == ChessGameEnum.InteractType.Hunter then
 				return false
 			end
 
-			if slot4:checkShowAvatar() then
+			if var_24_1:checkShowAvatar() then
 				return false
 			end
 		end
@@ -322,57 +358,63 @@ function slot0.checkInteractCanWalk(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.saveTempSelectObj(slot0)
-	if slot0._selectObj then
-		slot0._tempSelectObjId = slot0._selectObj.id
+function var_0_0.saveTempSelectObj(arg_25_0)
+	if arg_25_0._selectObj then
+		arg_25_0._tempSelectObjId = arg_25_0._selectObj.id
 	end
 end
 
-function slot0.isTempSelectObj(slot0, slot1)
-	return slot0._tempSelectObjId == slot1
+function var_0_0.isTempSelectObj(arg_26_0, arg_26_1)
+	return arg_26_0._tempSelectObjId == arg_26_1
 end
 
-function slot0.tryResumeSelectObj(slot0)
-	if slot0.interactsMgr and slot0._tempSelectObjId and slot0.interactsMgr:get(slot0._tempSelectObjId) then
-		slot0:setSelectObj(slot1)
+function var_0_0.tryResumeSelectObj(arg_27_0)
+	if arg_27_0.interactsMgr and arg_27_0._tempSelectObjId then
+		local var_27_0 = arg_27_0.interactsMgr:get(arg_27_0._tempSelectObjId)
 
-		slot0._tempSelectObjId = nil
+		if var_27_0 then
+			arg_27_0:setSelectObj(var_27_0)
 
-		return true
+			arg_27_0._tempSelectObjId = nil
+
+			return true
+		end
 	end
 
-	slot0:autoSelectPlayer(true)
+	arg_27_0:autoSelectPlayer(true)
 
 	return false
 end
 
-function slot0.setCatchObj(slot0, slot1)
-	slot0._catchObj = slot1
+function var_0_0.setCatchObj(arg_28_0, arg_28_1)
+	arg_28_0._catchObj = arg_28_1
 end
 
-function slot0.getCatchObj(slot0)
-	return slot0._catchObj
+function var_0_0.getCatchObj(arg_29_0)
+	return arg_29_0._catchObj
 end
 
-function slot0.forceRefreshObjSelectedView(slot0)
-	if slot0._selectObj ~= nil then
-		slot0._selectObj:onSelected()
+function var_0_0.forceRefreshObjSelectedView(arg_30_0)
+	if arg_30_0._selectObj ~= nil then
+		arg_30_0._selectObj:onSelected()
 	end
 end
 
-function slot0.setLoadingScene(slot0, slot1)
-	slot0._isLoadingScene = slot1
+function var_0_0.setLoadingScene(arg_31_0, arg_31_1)
+	arg_31_0._isLoadingScene = arg_31_1
 end
 
-function slot0.isLoadingScene(slot0)
-	return slot0._isLoadingScene
+function var_0_0.isLoadingScene(arg_32_0)
+	return arg_32_0._isLoadingScene
 end
 
-function slot0.setSceneCamera(slot0, slot1)
-	if slot1 then
-		slot3 = CameraMgr.instance:getUnitCamera()
-		slot3.orthographic = true
-		slot3.orthographicSize = CameraMgr.instance:getMainCamera().orthographicSize
+function var_0_0.setSceneCamera(arg_33_0, arg_33_1)
+	if arg_33_1 then
+		local var_33_0 = CameraMgr.instance:getMainCamera()
+		local var_33_1 = CameraMgr.instance:getUnitCamera()
+
+		var_33_1.orthographic = true
+		var_33_1.orthographicSize = var_33_0.orthographicSize
 
 		gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), true)
 		gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, true)
@@ -390,95 +432,122 @@ function slot0.setSceneCamera(slot0, slot1)
 	end
 end
 
-function slot0.existGame(slot0)
-	return slot0._isPlaying
+function var_0_0.existGame(arg_34_0)
+	return arg_34_0._isPlaying
 end
 
-function slot0.abortGame(slot0)
-	slot0._isPlaying = false
+function var_0_0.abortGame(arg_35_0)
+	arg_35_0._isPlaying = false
 end
 
-function slot0.gameOver(slot0)
+function var_0_0.gameOver(arg_36_0)
 	ChessGameModel.instance:setGameState(ChessGameEnum.GameState.Fail)
 	ChessStatController.instance:statFail()
 
-	slot0._isPlaying = false
+	arg_36_0._isPlaying = false
 end
 
-function slot0.gameWin(slot0)
+function var_0_0.gameWin(arg_37_0)
 	ChessGameModel.instance:setGameState(ChessGameEnum.GameState.Win)
 	ChessStatController.instance:statSuccess()
 
-	slot0._isPlaying = false
+	arg_37_0._isPlaying = false
 end
 
-function slot0.checkInteractCanUse(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.checkInteractCanUse(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0
 
-	for slot7 = 1, #slot1 do
-		if slot0:getPosCanClickInteract(slot1[slot7], slot2[slot7]) then
-			if slot10.mo:getEffectType() and slot11 ~= ChessGameEnum.GameEffectType.None then
-				slot10.chessEffectObj:onAvatarFinish(slot11)
+	for iter_38_0 = 1, #arg_38_1 do
+		local var_38_1 = arg_38_1[iter_38_0]
+		local var_38_2 = arg_38_2[iter_38_0]
+		local var_38_3 = arg_38_0:getPosCanClickInteract(var_38_1, var_38_2)
+
+		if var_38_3 then
+			local var_38_4 = var_38_3.mo:getEffectType()
+
+			if var_38_4 and var_38_4 ~= ChessGameEnum.GameEffectType.None then
+				var_38_3.chessEffectObj:onAvatarFinish(var_38_4)
 			end
 
-			(slot3 or {})[slot10.mo.id] = slot10
+			var_38_0 = var_38_0 or {}
+			var_38_0[var_38_3.mo.id] = var_38_3
 		end
 	end
 
-	if not ChessGameInteractModel.instance:getShowEffects() then
+	local var_38_5 = ChessGameInteractModel.instance:getShowEffects()
+
+	if not var_38_5 then
 		return
 	end
 
-	slot5 = {}
+	local var_38_6 = {}
 
-	for slot9, slot10 in pairs(slot4) do
-		if slot3 then
-			if not slot3[slot9] and slot10 and slot0.interactsMgr:get(slot9) then
-				slot11.chessEffectObj:hideEffect()
+	for iter_38_1, iter_38_2 in pairs(var_38_5) do
+		if var_38_0 then
+			if not var_38_0[iter_38_1] and iter_38_2 then
+				local var_38_7 = arg_38_0.interactsMgr:get(iter_38_1)
+
+				if var_38_7 then
+					var_38_7.chessEffectObj:hideEffect()
+				end
 			end
-		elseif slot10 and slot0.interactsMgr:get(slot9) then
-			slot11.chessEffectObj:hideEffect()
+		elseif iter_38_2 then
+			local var_38_8 = arg_38_0.interactsMgr:get(iter_38_1)
+
+			if var_38_8 then
+				var_38_8.chessEffectObj:hideEffect()
+			end
 		end
 
-		if ChessGameInteractModel.instance:getInteractById(slot9) and ChessGameInteractModel.instance:checkInteractFinish(slot11.id) and slot0.interactsMgr:get(slot9) then
-			slot12.chessEffectObj:hideEffect()
+		local var_38_9 = ChessGameInteractModel.instance:getInteractById(iter_38_1)
+
+		if var_38_9 and ChessGameInteractModel.instance:checkInteractFinish(var_38_9.id) then
+			local var_38_10 = arg_38_0.interactsMgr:get(iter_38_1)
+
+			if var_38_10 then
+				var_38_10.chessEffectObj:hideEffect()
+			end
 		end
 	end
 end
 
-function slot0.getPosCanClickInteract(slot0, slot1, slot2)
-	slot3, slot4 = slot0:searchInteractByPos(slot1, slot2)
-	slot5 = nil
+function var_0_0.getPosCanClickInteract(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0, var_39_1 = arg_39_0:searchInteractByPos(arg_39_1, arg_39_2)
+	local var_39_2
 
-	if slot3 > 1 then
-		for slot9, slot10 in ipairs(slot4) do
-			if slot10:checkShowAvatar() and slot10.config.touchTrigger then
-				slot5 = slot10
+	if var_39_0 > 1 then
+		for iter_39_0, iter_39_1 in ipairs(var_39_1) do
+			if iter_39_1:checkShowAvatar() and iter_39_1.config.touchTrigger then
+				var_39_2 = iter_39_1
 
 				break
 			end
 		end
 	else
-		slot5 = slot4 and slot4:checkShowAvatar() and slot4.config.touchTrigger and slot4
+		var_39_2 = var_39_1 and var_39_1:checkShowAvatar() and var_39_1.config.touchTrigger and var_39_1
 	end
 
-	return slot5
+	return var_39_2
 end
 
-function slot0.checkShowEffect(slot0)
-	if not ChessGameInteractModel.instance:getShowEffects() or not slot0.interactsMgr then
+function var_0_0.checkShowEffect(arg_40_0)
+	local var_40_0 = ChessGameInteractModel.instance:getShowEffects()
+
+	if not var_40_0 or not arg_40_0.interactsMgr then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		if slot0.interactsMgr:get(slot5) then
-			slot7.chessEffectObj:hideEffect()
+	for iter_40_0, iter_40_1 in pairs(var_40_0) do
+		local var_40_1 = arg_40_0.interactsMgr:get(iter_40_0)
+
+		if var_40_1 then
+			var_40_1.chessEffectObj:hideEffect()
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

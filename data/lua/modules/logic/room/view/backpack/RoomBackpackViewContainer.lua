@@ -1,15 +1,16 @@
-module("modules.logic.room.view.backpack.RoomBackpackViewContainer", package.seeall)
+﻿module("modules.logic.room.view.backpack.RoomBackpackViewContainer", package.seeall)
 
-slot0 = class("RoomBackpackViewContainer", BaseViewContainer)
-slot1 = {
+local var_0_0 = class("RoomBackpackViewContainer", BaseViewContainer)
+local var_0_1 = {
 	Navigate = 1,
 	SubView = 2
 }
-slot0.SubViewTabId = {
+
+var_0_0.SubViewTabId = {
 	Critter = 1,
 	Prop = 2
 }
-slot0.TabSettingList = {
+var_0_0.TabSettingList = {
 	{
 		namecn = "room_critter_backpack_cn",
 		nameen = "room_critter_backpack_en"
@@ -20,113 +21,121 @@ slot0.TabSettingList = {
 	}
 }
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomBackpackView.New())
-	table.insert(slot1, TabViewGroup.New(uv0.Navigate, "#go_topleft"))
-	table.insert(slot1, TabViewGroup.New(uv0.SubView, "#go_container"))
+	table.insert(var_1_0, RoomBackpackView.New())
+	table.insert(var_1_0, TabViewGroup.New(var_0_1.Navigate, "#go_topleft"))
+	table.insert(var_1_0, TabViewGroup.New(var_0_1.SubView, "#go_container"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == uv0.Navigate then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == var_0_1.Navigate then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
-	elseif slot1 == uv0.SubView then
-		slot2 = ListScrollParam.New()
-		slot2.scrollGOPath = "#scroll_critter"
-		slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot2.prefabUrl = "#scroll_critter/viewport/content/#go_critterItem"
-		slot2.cellClass = RoomBackpackCritterItem
-		slot2.scrollDir = ScrollEnum.ScrollDirV
-		slot2.lineCount = 8
-		slot2.cellWidth = 152
-		slot2.cellHeight = 152
-		slot2.cellSpaceH = 30
-		slot2.cellSpaceV = 30
-		slot2.startSpace = 20
-		slot2.minUpdateCountInFrame = 100
-		slot4 = ListScrollParam.New()
-		slot4.scrollGOPath = "#scroll_prop"
-		slot4.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot4.prefabUrl = "#scroll_prop/viewport/content/#go_item"
-		slot4.cellClass = RoomBackpackPropItem
-		slot4.scrollDir = ScrollEnum.ScrollDirV
-		slot4.lineCount = 7
-		slot4.cellWidth = 220
-		slot4.cellHeight = 220
-		slot4.startSpace = 20
-		slot4.endSpace = 10
-		slot4.minUpdateCountInFrame = 100
+	elseif arg_2_1 == var_0_1.SubView then
+		local var_2_0 = ListScrollParam.New()
+
+		var_2_0.scrollGOPath = "#scroll_critter"
+		var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_0.prefabUrl = "#scroll_critter/viewport/content/#go_critterItem"
+		var_2_0.cellClass = RoomBackpackCritterItem
+		var_2_0.scrollDir = ScrollEnum.ScrollDirV
+		var_2_0.lineCount = 8
+		var_2_0.cellWidth = 152
+		var_2_0.cellHeight = 152
+		var_2_0.cellSpaceH = 30
+		var_2_0.cellSpaceV = 30
+		var_2_0.startSpace = 20
+		var_2_0.minUpdateCountInFrame = 100
+
+		local var_2_1 = MultiView.New({
+			RoomBackpackCritterView.New(),
+			LuaListScrollView.New(RoomBackpackCritterListModel.instance, var_2_0)
+		})
+		local var_2_2 = ListScrollParam.New()
+
+		var_2_2.scrollGOPath = "#scroll_prop"
+		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_2.prefabUrl = "#scroll_prop/viewport/content/#go_item"
+		var_2_2.cellClass = RoomBackpackPropItem
+		var_2_2.scrollDir = ScrollEnum.ScrollDirV
+		var_2_2.lineCount = 7
+		var_2_2.cellWidth = 220
+		var_2_2.cellHeight = 220
+		var_2_2.startSpace = 20
+		var_2_2.endSpace = 10
+		var_2_2.minUpdateCountInFrame = 100
+
+		local var_2_3 = MultiView.New({
+			RoomBackpackPropView.New(),
+			LuaListScrollViewWithAnimator.New(RoomBackpackPropListModel.instance, var_2_2)
+		})
 
 		return {
-			MultiView.New({
-				RoomBackpackCritterView.New(),
-				LuaListScrollView.New(RoomBackpackCritterListModel.instance, slot2)
-			}),
-			MultiView.New({
-				RoomBackpackPropView.New(),
-				LuaListScrollViewWithAnimator.New(RoomBackpackPropListModel.instance, slot4)
-			})
+			var_2_1,
+			var_2_3
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
-	if not slot0.viewParam then
+function var_0_0.onContainerInit(arg_3_0)
+	if not arg_3_0.viewParam then
 		return
 	end
 
-	slot0.viewParam.defaultTabIds = {
-		[uv0.SubView] = slot0:getDefaultSelectedTab()
-	}
+	local var_3_0 = arg_3_0:getDefaultSelectedTab()
+
+	arg_3_0.viewParam.defaultTabIds = {}
+	arg_3_0.viewParam.defaultTabIds[var_0_1.SubView] = var_3_0
 end
 
-function slot0.getDefaultSelectedTab(slot0)
-	slot1 = uv0.SubViewTabId.Critter
+function var_0_0.getDefaultSelectedTab(arg_4_0)
+	local var_4_0 = var_0_0.SubViewTabId.Critter
+	local var_4_1 = arg_4_0.viewParam and arg_4_0.viewParam.defaultTab
 
-	if slot0:checkTabId(slot0.viewParam and slot0.viewParam.defaultTab) then
-		slot1 = slot2
+	if arg_4_0:checkTabId(var_4_1) then
+		var_4_0 = var_4_1
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.checkTabId(slot0, slot1)
-	slot2 = false
+function var_0_0.checkTabId(arg_5_0, arg_5_1)
+	local var_5_0 = false
 
-	if slot1 then
-		for slot6, slot7 in pairs(uv0.SubViewTabId) do
-			if slot7 == slot1 then
-				slot2 = true
+	if arg_5_1 then
+		for iter_5_0, iter_5_1 in pairs(var_0_0.SubViewTabId) do
+			if iter_5_1 == arg_5_1 then
+				var_5_0 = true
 
 				break
 			end
 		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.switchTab(slot0, slot1)
-	if not slot0:checkTabId(slot1) then
+function var_0_0.switchTab(arg_6_0, arg_6_1)
+	if not arg_6_0:checkTabId(arg_6_1) then
 		return
 	end
 
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, uv0.SubView, slot1)
+	arg_6_0:dispatchEvent(ViewEvent.ToSwitchTab, var_0_1.SubView, arg_6_1)
 end
 
-function slot0.onContainerCloseFinish(slot0)
+function var_0_0.onContainerCloseFinish(arg_7_0)
 	RoomBackpackCritterListModel.instance:onInit()
 end
 
-return slot0
+return var_0_0

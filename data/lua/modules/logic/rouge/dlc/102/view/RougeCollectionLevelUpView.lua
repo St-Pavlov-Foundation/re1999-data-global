@@ -1,183 +1,196 @@
-module("modules.logic.rouge.dlc.102.view.RougeCollectionLevelUpView", package.seeall)
+﻿module("modules.logic.rouge.dlc.102.view.RougeCollectionLevelUpView", package.seeall)
 
-slot0 = class("RougeCollectionLevelUpView", BaseView)
+local var_0_0 = class("RougeCollectionLevelUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_fullbg")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_rightbg")
-	slot0._simagetopbg1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_topbg1")
-	slot0._simagetopbg2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_topbg2")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "Title/#txt_dec")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_filter")
-	slot0._gounselect = gohelper.findChild(slot0.viewGO, "Left/#btn_filter/#go_unselect")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "Left/#btn_filter/#go_select")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "Right/#txt_num")
-	slot0._gorightempty = gohelper.findChild(slot0.viewGO, "Right/#go_empty")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0._goCollectionContainer = gohelper.findChild(slot0.viewGO, "#go_collectioncontainer")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_rightbg")
+	arg_1_0._simagetopbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_topbg1")
+	arg_1_0._simagetopbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_topbg2")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_dec")
+	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_filter")
+	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_filter/#go_unselect")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_filter/#go_select")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_num")
+	arg_1_0._gorightempty = gohelper.findChild(arg_1_0.viewGO, "Right/#go_empty")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0._goCollectionContainer = gohelper.findChild(arg_1_0.viewGO, "#go_collectioncontainer")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfilter:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfilter:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
 end
 
-function slot0._btnfilterOnClick(slot0)
-	slot0.param = slot0.param or {
-		confirmCallback = slot0.onConfirmCallback,
-		confirmCallbackObj = slot0,
-		baseSelectMap = slot0.baseFilterTagDict,
-		extraSelectMap = slot0.extraFilterTagDict
+function var_0_0._btnfilterOnClick(arg_4_0)
+	arg_4_0.param = arg_4_0.param or {
+		confirmCallback = arg_4_0.onConfirmCallback,
+		confirmCallbackObj = arg_4_0,
+		baseSelectMap = arg_4_0.baseFilterTagDict,
+		extraSelectMap = arg_4_0.extraFilterTagDict
 	}
 
-	RougeController.instance:openRougeCollectionFilterView(slot0.param)
+	RougeController.instance:openRougeCollectionFilterView(arg_4_0.param)
 end
 
-function slot0.onConfirmCallback(slot0, slot1, slot2)
-	RougeCollectionHelper.removeInValidItem(slot1)
-	RougeCollectionHelper.removeInValidItem(slot2)
+function var_0_0.onConfirmCallback(arg_5_0, arg_5_1, arg_5_2)
+	RougeCollectionHelper.removeInValidItem(arg_5_1)
+	RougeCollectionHelper.removeInValidItem(arg_5_2)
 	RougeCollectionLevelUpListModel.instance:filterCollection()
-	slot0:refreshLeft()
+	arg_5_0:refreshLeft()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	if slot0.maxLevelUpNum < RougeCollectionLevelUpListModel.instance:getSelectCount() then
+function var_0_0._btnconfirmOnClick(arg_6_0)
+	if RougeCollectionLevelUpListModel.instance:getSelectCount() > arg_6_0.maxLevelUpNum then
 		return
 	end
 
-	slot2 = {}
+	local var_6_0 = RougeCollectionLevelUpListModel.instance:getSelectMoList()
+	local var_6_1 = {}
 
-	for slot6, slot7 in ipairs(RougeCollectionLevelUpListModel.instance:getSelectMoList()) do
-		table.insert(slot2, slot7.uid)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		table.insert(var_6_1, iter_6_1.uid)
 	end
 
-	slot0:sendSelectCollectionLevelUp(slot2)
+	arg_6_0:sendSelectCollectionLevelUp(var_6_1)
 end
 
-function slot0.sendSelectCollectionLevelUp(slot0, slot1)
-	slot0.callbackId = RougeRpc.instance:sendRougeSelectCollectionLevelUpRequest(RougeModel.instance:getSeason(), slot1 or {}, slot0.onReceiveMsg, slot0)
+function var_0_0.sendSelectCollectionLevelUp(arg_7_0, arg_7_1)
+	local var_7_0 = RougeModel.instance:getSeason()
+
+	arg_7_0.callbackId = RougeRpc.instance:sendRougeSelectCollectionLevelUpRequest(var_7_0, arg_7_1 or {}, arg_7_0.onReceiveMsg, arg_7_0)
 end
 
-function slot0.onReceiveMsg(slot0, slot1, slot2, slot3)
-	slot0.callbackId = nil
+function var_0_0.onReceiveMsg(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0.callbackId = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onRefreshPieceChoiceEvent)
-	slot0:closeThis()
+	arg_8_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goCollection = slot0.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, slot0._goCollectionContainer)
-	slot0.collectionComp = RougeCollectionComp.Get(slot0.goCollection)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0.goCollection = arg_9_0.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, arg_9_0._goCollectionContainer)
+	arg_9_0.collectionComp = RougeCollectionComp.Get(arg_9_0.goCollection)
 
-	slot0.collectionComp:_editableInitView()
-	slot0._simagefullbg:LoadImage("singlebg/rouge/collection/rouge_collection_fullbg.png")
-	slot0._simagerightbg:LoadImage("singlebg/rouge/collection/rouge_collection_storebg.png")
-	slot0._simagetopbg1:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_01.png")
-	slot0._simagetopbg2:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_02.png")
+	arg_9_0.collectionComp:_editableInitView()
+	arg_9_0._simagefullbg:LoadImage("singlebg/rouge/collection/rouge_collection_fullbg.png")
+	arg_9_0._simagerightbg:LoadImage("singlebg/rouge/collection/rouge_collection_storebg.png")
+	arg_9_0._simagetopbg1:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_01.png")
+	arg_9_0._simagetopbg2:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_02.png")
 
-	slot0.leftCollectionItemList = {}
-	slot0.rightCollectionItemList = {}
-	slot0.selectedUidList = {}
-	slot0.baseFilterTagDict = {}
-	slot0.extraFilterTagDict = {}
-	slot0.goRightItemContainer = gohelper.findChild(slot0.viewGO, "Right/#scroll_view/Viewport/Content")
-	slot0.rightItem = slot0.viewContainer:getResInst(RougeEnum.ResPath.CollectionLevelUpRightItem, slot0.goRightItemContainer)
+	arg_9_0.leftCollectionItemList = {}
+	arg_9_0.rightCollectionItemList = {}
+	arg_9_0.selectedUidList = {}
+	arg_9_0.baseFilterTagDict = {}
+	arg_9_0.extraFilterTagDict = {}
+	arg_9_0.goRightItemContainer = gohelper.findChild(arg_9_0.viewGO, "Right/#scroll_view/Viewport/Content")
+	arg_9_0.rightItem = arg_9_0.viewContainer:getResInst(RougeEnum.ResPath.CollectionLevelUpRightItem, arg_9_0.goRightItemContainer)
 
-	gohelper.setActive(slot0.rightItem, false)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLossCollectionChange, slot0.onSelectLossCollectionChange, slot0)
+	gohelper.setActive(arg_9_0.rightItem, false)
+	arg_9_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLossCollectionChange, arg_9_0.onSelectLossCollectionChange, arg_9_0)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.LossCollectionViewOpen)
-	slot0.collectionComp:onOpen()
+	arg_10_0.collectionComp:onOpen()
 
-	slot0.maxLevelUpNum = slot0.viewParam and slot0.viewParam.maxLevelUpNum
+	arg_10_0.maxLevelUpNum = arg_10_0.viewParam and arg_10_0.viewParam.maxLevelUpNum
 
-	RougeCollectionLevelUpListModel.instance:initList(slot0.maxLevelUpNum, slot0.baseFilterTagDict, slot0.extraFilterTagDict)
-	slot0:refreshTitle()
-	slot0:refreshLeft()
-	slot0:refreshRight()
-	slot0:refreshBtn()
-	slot0:checkCanLevelUpSpCollectionNum()
+	RougeCollectionLevelUpListModel.instance:initList(arg_10_0.maxLevelUpNum, arg_10_0.baseFilterTagDict, arg_10_0.extraFilterTagDict)
+	arg_10_0:refreshTitle()
+	arg_10_0:refreshLeft()
+	arg_10_0:refreshRight()
+	arg_10_0:refreshBtn()
+	arg_10_0:checkCanLevelUpSpCollectionNum()
 end
 
-function slot0.checkCanLevelUpSpCollectionNum(slot0)
-	if not RougeCollectionLevelUpListModel.instance:getAllMoCount() or slot1 <= 0 then
-		slot3 = slot0.viewContainer:getNavigateView()
+function var_0_0.checkCanLevelUpSpCollectionNum(arg_11_0)
+	local var_11_0 = RougeCollectionLevelUpListModel.instance:getAllMoCount()
 
-		slot3:setParam({
+	if not var_11_0 or var_11_0 <= 0 then
+		local var_11_1 = arg_11_0.viewContainer:getNavigateView()
+
+		var_11_1:setParam({
 			true,
 			false,
 			false
 		})
-		slot3:setOverrideClose(slot0.sendSelectCollectionLevelUp, slot0)
+		var_11_1:setOverrideClose(arg_11_0.sendSelectCollectionLevelUp, arg_11_0)
 	end
 end
 
-function slot0.refreshTitle(slot0)
-	slot0._txtdec.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rougecollectionlevelupview_desc"), slot0.maxLevelUpNum)
+function var_0_0.refreshTitle(arg_12_0)
+	arg_12_0._txtdec.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rougecollectionlevelupview_desc"), arg_12_0.maxLevelUpNum)
 end
 
-function slot0.refreshLeft(slot0)
+function var_0_0.refreshLeft(arg_13_0)
 	RougeCollectionLevelUpListModel.instance:refresh()
-	slot0:refreshFilterBtn()
+	arg_13_0:refreshFilterBtn()
 end
 
-function slot0.refreshFilterBtn(slot0)
-	slot1 = RougeCollectionLevelUpListModel.instance:isFiltering()
+function var_0_0.refreshFilterBtn(arg_14_0)
+	local var_14_0 = RougeCollectionLevelUpListModel.instance:isFiltering()
 
-	gohelper.setActive(slot0._gofilterselect, slot1)
-	gohelper.setActive(slot0._gofilterunselect, not slot1)
+	gohelper.setActive(arg_14_0._gofilterselect, var_14_0)
+	gohelper.setActive(arg_14_0._gofilterunselect, not var_14_0)
 end
 
-function slot0.refreshRight(slot0)
-	slot1 = RougeCollectionLevelUpListModel.instance:getSelectCount()
-	slot0._txtnum.text = string.format("（<#C69620>%s</color>/%s）", slot1, slot0.maxLevelUpNum)
+function var_0_0.refreshRight(arg_15_0)
+	local var_15_0 = RougeCollectionLevelUpListModel.instance:getSelectCount()
 
-	gohelper.setActive(slot0._gorightempty, slot1 < 1)
-	RougeMapHelper.loadItem(slot0.rightItem, RougeCollectionLevelUpRightItem, RougeCollectionLevelUpListModel.instance:getSelectMoList(), slot0.rightCollectionItemList)
+	arg_15_0._txtnum.text = string.format("（<#C69620>%s</color>/%s）", var_15_0, arg_15_0.maxLevelUpNum)
+
+	local var_15_1 = var_15_0 < 1
+
+	gohelper.setActive(arg_15_0._gorightempty, var_15_1)
+
+	local var_15_2 = RougeCollectionLevelUpListModel.instance:getSelectMoList()
+
+	RougeMapHelper.loadItem(arg_15_0.rightItem, RougeCollectionLevelUpRightItem, var_15_2, arg_15_0.rightCollectionItemList)
 end
 
-function slot0.onClickRightItem(slot0, slot1, slot2)
-	RougeCollectionLevelUpListModel.instance:deselectMo(slot2)
+function var_0_0.onClickRightItem(arg_16_0, arg_16_1, arg_16_2)
+	RougeCollectionLevelUpListModel.instance:deselectMo(arg_16_2)
 end
 
-function slot0.refreshBtn(slot0)
-	gohelper.setActive(slot0._btnconfirm.gameObject, RougeCollectionLevelUpListModel.instance:getSelectCount() > 0 and slot1 <= slot0.maxLevelUpNum)
+function var_0_0.refreshBtn(arg_17_0)
+	local var_17_0 = RougeCollectionLevelUpListModel.instance:getSelectCount()
+
+	gohelper.setActive(arg_17_0._btnconfirm.gameObject, var_17_0 > 0 and var_17_0 <= arg_17_0.maxLevelUpNum)
 end
 
-function slot0.onSelectLossCollectionChange(slot0)
-	slot0:refreshLeft()
-	slot0:refreshRight()
-	slot0:refreshBtn()
+function var_0_0.onSelectLossCollectionChange(arg_18_0)
+	arg_18_0:refreshLeft()
+	arg_18_0:refreshRight()
+	arg_18_0:refreshBtn()
 end
 
-function slot0.onClose(slot0)
-	slot0.collectionComp:onClose()
+function var_0_0.onClose(arg_19_0)
+	arg_19_0.collectionComp:onClose()
 	RougeCollectionLevelUpListModel.instance:clear()
 
-	if slot0.callbackId then
-		RougeRpc.instance:removeCallbackById(slot0.callbackId)
+	if arg_19_0.callbackId then
+		RougeRpc.instance:removeCallbackById(arg_19_0.callbackId)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.collectionComp:destroy()
-	RougeMapHelper.destroyItemList(slot0.leftCollectionItemList)
-	RougeMapHelper.destroyItemList(slot0.rightCollectionItemList)
-	slot0._simagefullbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
-	slot0._simagetopbg1:UnLoadImage()
-	slot0._simagetopbg2:UnLoadImage()
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0.collectionComp:destroy()
+	RougeMapHelper.destroyItemList(arg_20_0.leftCollectionItemList)
+	RougeMapHelper.destroyItemList(arg_20_0.rightCollectionItemList)
+	arg_20_0._simagefullbg:UnLoadImage()
+	arg_20_0._simagerightbg:UnLoadImage()
+	arg_20_0._simagetopbg1:UnLoadImage()
+	arg_20_0._simagetopbg2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

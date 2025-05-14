@@ -1,98 +1,101 @@
-module("modules.logic.explore.map.heroanimflow.ExploreHeroFallAnimFlow", package.seeall)
+﻿module("modules.logic.explore.map.heroanimflow.ExploreHeroFallAnimFlow", package.seeall)
 
-slot0 = class("ExploreHeroFallAnimFlow")
+local var_0_0 = class("ExploreHeroFallAnimFlow")
 
-function slot0.begin(slot0, slot1, slot2)
+function var_0_0.begin(arg_1_0, arg_1_1, arg_1_2)
 	UIBlockMgrExtend.instance.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("ExploreHeroFallAnimFlow")
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.HeroAnim)
 
-	slot0.toPos = slot1
-	slot0.sourceUnitId = slot2
-	slot3 = ExploreController.instance:getMap()
+	arg_1_0.toPos = arg_1_1
+	arg_1_0.sourceUnitId = arg_1_2
 
-	slot3:setMapStatus(ExploreEnum.MapStatus.Normal)
+	local var_1_0 = ExploreController.instance:getMap()
 
-	for slot7, slot8 in pairs(slot3:getAllUnit()) do
-		if slot8:getUnitType() == ExploreEnum.ItemType.Spike then
-			slot8:pauseTriggerSpike()
+	var_1_0:setMapStatus(ExploreEnum.MapStatus.Normal)
+
+	for iter_1_0, iter_1_1 in pairs(var_1_0:getAllUnit()) do
+		if iter_1_1:getUnitType() == ExploreEnum.ItemType.Spike then
+			iter_1_1:pauseTriggerSpike()
 		end
 	end
 
-	slot4 = slot3:getHero()
+	local var_1_1 = var_1_0:getHero()
 
-	slot4:stopMoving(true)
-	slot4:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fall)
-	slot4:setTrOffset(nil, slot4.trans.position + Vector3(0, -0.5, 0), nil, slot0.onHeroFallEnd, slot0)
+	var_1_1:stopMoving(true)
+	var_1_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Fall)
+	var_1_1:setTrOffset(nil, var_1_1.trans.position + Vector3(0, -0.5, 0), nil, arg_1_0.onHeroFallEnd, arg_1_0)
 end
 
-function slot0.onHeroFallEnd(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
+function var_0_0.onHeroFallEnd(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
 	ViewMgr.instance:openView(ViewName.ExploreBlackView)
 end
 
-function slot0.onOpenViewFinish(slot0, slot1)
-	if slot1 ~= ViewName.ExploreBlackView then
+function var_0_0.onOpenViewFinish(arg_3_0, arg_3_1)
+	if arg_3_1 ~= ViewName.ExploreBlackView then
 		return
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0.onOpenViewFinish, arg_3_0)
 
-	slot2 = ExploreController.instance:getMap()
-	slot3 = slot2:getHero()
+	local var_3_0 = ExploreController.instance:getMap()
+	local var_3_1 = var_3_0:getHero()
 
-	for slot7, slot8 in pairs(slot2:getAllUnit()) do
-		if slot8:getUnitType() == ExploreEnum.ItemType.Spike then
-			slot8:beginTriggerSpike()
+	for iter_3_0, iter_3_1 in pairs(var_3_0:getAllUnit()) do
+		if iter_3_1:getUnitType() == ExploreEnum.ItemType.Spike then
+			iter_3_1:beginTriggerSpike()
 		end
 	end
 
-	if slot2:getUnit(slot0.sourceUnitId) then
-		slot3.dir = slot4.mo.heroDir
+	local var_3_2 = var_3_0:getUnit(arg_3_0.sourceUnitId)
 
-		slot3:setRotate(0, slot4.mo.heroDir, 0)
+	if var_3_2 then
+		var_3_1.dir = var_3_2.mo.heroDir
+
+		var_3_1:setRotate(0, var_3_2.mo.heroDir, 0)
 	end
 
-	slot0.sourceUnitId = nil
-	slot3._displayTr.localPosition = Vector3.zero
+	arg_3_0.sourceUnitId = nil
+	var_3_1._displayTr.localPosition = Vector3.zero
 
-	slot3:setTilemapPos(slot0.toPos)
-	slot3:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+	var_3_1:setTilemapPos(arg_3_0.toPos)
+	var_3_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
 
-	slot0.toPos = nil
+	arg_3_0.toPos = nil
 
-	TaskDispatcher.runDelay(slot0._delayLoadObj, slot0, 0.1)
+	TaskDispatcher.runDelay(arg_3_0._delayLoadObj, arg_3_0, 0.1)
 end
 
-function slot0._delayLoadObj(slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.SceneObjAllLoadedDone, slot0.onBlackEnd, slot0)
+function var_0_0._delayLoadObj(arg_4_0)
+	ExploreController.instance:registerCallback(ExploreEvent.SceneObjAllLoadedDone, arg_4_0.onBlackEnd, arg_4_0)
 	ExploreController.instance:getMap():markWaitAllSceneObj()
 	ExploreController.instance:getMap():clearUnUseObj()
 end
 
-function slot0.onBlackEnd(slot0)
+function var_0_0.onBlackEnd(arg_5_0)
 	ViewMgr.instance:closeView(ViewName.ExploreBlackView)
 	ExploreController.instance:getMap():getHero():setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("ExploreHeroFallAnimFlow")
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, slot0.onBlackEnd, slot0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, arg_5_0.onBlackEnd, arg_5_0)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Spike)
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_6_0)
 	ViewMgr.instance:closeView(ViewName.ExploreBlackView)
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(slot0._delayLoadObj, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._delayLoadObj, arg_6_0)
 	UIBlockMgr.instance:endBlock("ExploreHeroFallAnimFlow")
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, slot0.onBlackEnd, slot0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjAllLoadedDone, arg_6_0.onBlackEnd, arg_6_0)
 
-	slot0.toPos = nil
-	slot0.sourceUnitId = nil
+	arg_6_0.toPos = nil
+	arg_6_0.sourceUnitId = nil
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_6_0.onOpenViewFinish, arg_6_0)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.Spike)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

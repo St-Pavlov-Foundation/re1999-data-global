@@ -1,8 +1,8 @@
-module("modules.logic.seasonver.act123.view2_0.Season123_2_0RetailViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0RetailViewContainer", package.seeall)
 
-slot0 = class("Season123_2_0RetailViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_2_0RetailViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123_2_0CheckCloseView.New(),
 		Season123_2_0RetailView.New(),
@@ -11,37 +11,40 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
-		return slot0:buildCurrency()
+	elseif arg_2_1 == 2 then
+		return arg_2_0:buildCurrency()
 	end
 end
 
-function slot0.buildCurrency(slot0)
-	slot0._currencyView = CurrencyView.New({}, nil, , , true)
-	slot0._currencyView.foreHideBtn = true
+function var_0_0.buildCurrency(arg_3_0)
+	arg_3_0._currencyView = CurrencyView.New({}, nil, nil, nil, true)
+	arg_3_0._currencyView.foreHideBtn = true
 
 	return {
-		slot0._currencyView
+		arg_3_0._currencyView
 	}
 end
 
-function slot0.refreshCurrencyType(slot0)
-	if slot0._currencyView then
-		slot0._currencyView:setCurrencyType({
-			Season123Config.instance:getEquipItemCoin(Season123RetailModel.instance.activityId, Activity123Enum.Const.UttuTicketsCoin)
+function var_0_0.refreshCurrencyType(arg_4_0)
+	if arg_4_0._currencyView then
+		local var_4_0 = Season123RetailModel.instance.activityId
+		local var_4_1 = Season123Config.instance:getEquipItemCoin(var_4_0, Activity123Enum.Const.UttuTicketsCoin)
+
+		arg_4_0._currencyView:setCurrencyType({
+			var_4_1
 		})
 	end
 end
 
-return slot0
+return var_0_0

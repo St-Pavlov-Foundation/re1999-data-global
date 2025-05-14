@@ -1,141 +1,149 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotHeroGroupEditListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotHeroGroupEditListModel", package.seeall)
 
-slot0 = class("V1a6_CachotHeroGroupEditListModel", ListScrollModel)
+local var_0_0 = class("V1a6_CachotHeroGroupEditListModel", ListScrollModel)
 
-function slot0.setMoveHeroId(slot0, slot1)
-	slot0._moveHeroId = slot1
+function var_0_0.setMoveHeroId(arg_1_0, arg_1_1)
+	arg_1_0._moveHeroId = arg_1_1
 end
 
-function slot0.getMoveHeroIndex(slot0)
-	return slot0._moveHeroIndex
+function var_0_0.getMoveHeroIndex(arg_2_0)
+	return arg_2_0._moveHeroIndex
 end
 
-function slot0.setHeroGroupEditType(slot0, slot1)
-	slot0._heroGroupEditType = slot1
+function var_0_0.setHeroGroupEditType(arg_3_0, arg_3_1)
+	arg_3_0._heroGroupEditType = arg_3_1
 end
 
-function slot0.getHeroGroupEditType(slot0)
-	return slot0._heroGroupEditType
+function var_0_0.getHeroGroupEditType(arg_4_0)
+	return arg_4_0._heroGroupEditType
 end
 
-function slot0.setSeatLevel(slot0, slot1)
-	slot0._seatLevel = slot1
+function var_0_0.setSeatLevel(arg_5_0, arg_5_1)
+	arg_5_0._seatLevel = arg_5_1
 end
 
-function slot0.getSeatLevel(slot0)
-	return slot0._seatLevel
+function var_0_0.getSeatLevel(arg_6_0)
+	return arg_6_0._seatLevel
 end
 
-function slot0.copyCharacterCardList(slot0, slot1)
-	slot2 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+function var_0_0.copyCharacterCardList(arg_7_0, arg_7_1)
+	local var_7_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
 
-	if slot0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight then
-		slot5 = {}
-		slot6 = {}
+	if arg_7_0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight then
+		local var_7_1 = V1a6_CachotModel.instance:getTeamInfo()
+		local var_7_2 = var_7_1:getAllHeroIdsMap()
+		local var_7_3 = {}
+		local var_7_4 = {}
 
-		for slot10, slot11 in ipairs(slot2) do
-			if V1a6_CachotModel.instance:getTeamInfo():getAllHeroIdsMap()[slot11.heroId] then
-				if slot3:getHeroHp(slot11.heroId).life > 0 then
-					table.insert(slot5, slot11)
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			if var_7_2[iter_7_1.heroId] then
+				if var_7_1:getHeroHp(iter_7_1.heroId).life > 0 then
+					table.insert(var_7_3, iter_7_1)
 				else
-					table.insert(slot6, slot11)
+					table.insert(var_7_4, iter_7_1)
 				end
 			end
 		end
 
-		tabletool.addValues(slot5, slot6)
+		tabletool.addValues(var_7_3, var_7_4)
 
-		slot2 = slot5
+		var_7_0 = var_7_3
 	end
 
-	slot3 = {}
-	slot4 = {}
-	slot0._inTeamHeroUids = {}
-	slot5 = 1
-	slot6 = 1
+	local var_7_5 = {}
+	local var_7_6 = {}
 
-	for slot11, slot12 in ipairs(V1a6_CachotHeroSingleGroupModel.instance:getList()) do
-		if slot12.trial or not slot12.aid and tonumber(slot12.heroUid) > 0 and not slot4[slot12.heroUid] then
-			if slot12.trial then
-				table.insert(slot3, HeroGroupTrialModel.instance:getById(slot12.heroUid))
+	arg_7_0._inTeamHeroUids = {}
+
+	local var_7_7 = 1
+	local var_7_8 = 1
+	local var_7_9 = V1a6_CachotHeroSingleGroupModel.instance:getList()
+
+	for iter_7_2, iter_7_3 in ipairs(var_7_9) do
+		if iter_7_3.trial or not iter_7_3.aid and tonumber(iter_7_3.heroUid) > 0 and not var_7_6[iter_7_3.heroUid] then
+			if iter_7_3.trial then
+				table.insert(var_7_5, HeroGroupTrialModel.instance:getById(iter_7_3.heroUid))
 			else
-				table.insert(slot3, HeroModel.instance:getById(slot12.heroUid))
+				table.insert(var_7_5, HeroModel.instance:getById(iter_7_3.heroUid))
 			end
 
-			if slot0.specialHero == slot12.heroUid then
-				slot0._inTeamHeroUids[slot12.heroUid] = 2
-				slot5 = slot6
+			if arg_7_0.specialHero == iter_7_3.heroUid then
+				arg_7_0._inTeamHeroUids[iter_7_3.heroUid] = 2
+				var_7_7 = var_7_8
 			else
-				slot0._inTeamHeroUids[slot12.heroUid] = 1
-				slot6 = slot6 + 1
+				arg_7_0._inTeamHeroUids[iter_7_3.heroUid] = 1
+				var_7_8 = var_7_8 + 1
 			end
 
-			slot4[slot12.heroUid] = true
+			var_7_6[iter_7_3.heroUid] = true
 		end
 	end
 
-	for slot11, slot12 in ipairs(slot3) do
-		if slot0._moveHeroId and slot12.heroId == slot0._moveHeroId then
-			slot0._moveHeroId = nil
-			slot0._moveHeroIndex = slot11
+	for iter_7_4, iter_7_5 in ipairs(var_7_5) do
+		if arg_7_0._moveHeroId and iter_7_5.heroId == arg_7_0._moveHeroId then
+			arg_7_0._moveHeroId = nil
+			arg_7_0._moveHeroIndex = iter_7_4
 
 			break
 		end
 	end
 
-	slot8 = #slot3
+	local var_7_10 = #var_7_5
+	local var_7_11 = {}
 
-	for slot13, slot14 in ipairs(slot2) do
-		if not slot4[slot14.uid] then
-			slot4[slot14.uid] = true
+	for iter_7_6, iter_7_7 in ipairs(var_7_0) do
+		if not var_7_6[iter_7_7.uid] then
+			var_7_6[iter_7_7.uid] = true
 
-			if slot0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(slot14.heroId) > 0 then
-					table.insert({}, slot14)
+			if arg_7_0.adventure then
+				if WeekWalkModel.instance:getCurMapHeroCd(iter_7_7.heroId) > 0 then
+					table.insert(var_7_11, iter_7_7)
 				else
-					table.insert(slot3, slot14)
+					table.insert(var_7_5, iter_7_7)
 				end
-			elseif slot0._moveHeroId and slot14.heroId == slot0._moveHeroId then
-				slot0._moveHeroId = nil
-				slot0._moveHeroIndex = slot8 + 1
+			elseif arg_7_0._moveHeroId and iter_7_7.heroId == arg_7_0._moveHeroId then
+				arg_7_0._moveHeroId = nil
+				arg_7_0._moveHeroIndex = var_7_10 + 1
 
-				table.insert(slot3, slot0._moveHeroIndex, slot14)
-			elseif slot0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
-				table.insert(slot3, #slot3 - slot8 + 1, slot14)
+				table.insert(var_7_5, arg_7_0._moveHeroIndex, iter_7_7)
+			elseif arg_7_0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+				table.insert(var_7_5, #var_7_5 - var_7_10 + 1, iter_7_7)
 			else
-				table.insert(slot3, slot14)
+				table.insert(var_7_5, iter_7_7)
 			end
 		end
 	end
 
-	if slot0.adventure then
-		tabletool.addValues(slot3, slot9)
+	if arg_7_0.adventure then
+		tabletool.addValues(var_7_5, var_7_11)
 	end
 
-	slot0:setList(slot3)
+	arg_7_0:setList(var_7_5)
 
-	if slot0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event and #V1a6_CachotModel.instance:getRogueInfo().teamInfo:getFightHeros() == #slot3 then
-		slot5 = 0
+	if arg_7_0._heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event and #V1a6_CachotModel.instance:getRogueInfo().teamInfo:getFightHeros() == #var_7_5 then
+		var_7_7 = 0
 	end
 
-	if slot1 and #slot3 > 0 and slot5 > 0 and #slot0._scrollViews > 0 then
-		for slot13, slot14 in ipairs(slot0._scrollViews) do
-			slot14:selectCell(slot5, true)
+	if arg_7_1 and #var_7_5 > 0 and var_7_7 > 0 and #arg_7_0._scrollViews > 0 then
+		for iter_7_8, iter_7_9 in ipairs(arg_7_0._scrollViews) do
+			iter_7_9:selectCell(var_7_7, true)
 		end
 
-		if slot3[slot5] then
-			return slot3[slot5]
+		if var_7_5[var_7_7] then
+			return var_7_5[var_7_7]
 		end
 	end
 end
 
-function slot0.isRepeatHero(slot0, slot1, slot2)
-	if not slot0._inTeamHeroUids then
+function var_0_0.isRepeatHero(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0._inTeamHeroUids then
 		return false
 	end
 
-	for slot6 in pairs(slot0._inTeamHeroUids) do
-		if slot0:getById(slot6).heroId == slot1 and slot2 ~= slot7.uid then
+	for iter_8_0 in pairs(arg_8_0._inTeamHeroUids) do
+		local var_8_0 = arg_8_0:getById(iter_8_0)
+
+		if var_8_0.heroId == arg_8_1 and arg_8_2 ~= var_8_0.uid then
 			return true
 		end
 	end
@@ -143,37 +151,42 @@ function slot0.isRepeatHero(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.isTrialLimit(slot0)
-	if not slot0._inTeamHeroUids then
+function var_0_0.isTrialLimit(arg_9_0)
+	if not arg_9_0._inTeamHeroUids then
 		return false
 	end
 
-	for slot5 in pairs(slot0._inTeamHeroUids) do
-		if slot0:getById(slot5):isTrial() then
-			slot1 = 0 + 1
+	local var_9_0 = 0
+
+	for iter_9_0 in pairs(arg_9_0._inTeamHeroUids) do
+		if arg_9_0:getById(iter_9_0):isTrial() then
+			var_9_0 = var_9_0 + 1
 		end
 	end
 
-	return HeroGroupTrialModel.instance:getLimitNum() <= slot1
+	return var_9_0 >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function slot0.cancelAllSelected(slot0)
-	if slot0._scrollViews then
-		for slot4, slot5 in ipairs(slot0._scrollViews) do
-			slot5:selectCell(slot0:getIndex(slot5:getFirstSelect()), false)
+function var_0_0.cancelAllSelected(arg_10_0)
+	if arg_10_0._scrollViews then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0._scrollViews) do
+			local var_10_0 = iter_10_1:getFirstSelect()
+			local var_10_1 = arg_10_0:getIndex(var_10_0)
+
+			iter_10_1:selectCell(var_10_1, false)
 		end
 	end
 end
 
-function slot0.isInTeamHero(slot0, slot1)
-	return slot0._inTeamHeroUids and slot0._inTeamHeroUids[slot1]
+function var_0_0.isInTeamHero(arg_11_0, arg_11_1)
+	return arg_11_0._inTeamHeroUids and arg_11_0._inTeamHeroUids[arg_11_1]
 end
 
-function slot0.setParam(slot0, slot1, slot2)
-	slot0.specialHero = slot1
-	slot0.adventure = slot2
+function var_0_0.setParam(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0.specialHero = arg_12_1
+	arg_12_0.adventure = arg_12_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

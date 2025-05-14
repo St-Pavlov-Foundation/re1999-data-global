@@ -1,23 +1,23 @@
-module("modules.logic.guide.controller.action.GuideActionFlow", package.seeall)
+﻿module("modules.logic.guide.controller.action.GuideActionFlow", package.seeall)
 
-slot0 = class("GuideActionFlow", FlowSequence)
+local var_0_0 = class("GuideActionFlow", FlowSequence)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0.guideId = slot1
-	slot0.stepId = slot2
-	slot0.againGuideId = slot3
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.guideId = arg_1_1
+	arg_1_0.stepId = arg_1_2
+	arg_1_0.againGuideId = arg_1_3
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot1)
-	GuideController.instance:startStep(slot0.guideId, slot0.stepId, slot0.againGuideId)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_1)
+	GuideController.instance:startStep(arg_2_0.guideId, arg_2_0.stepId, arg_2_0.againGuideId)
 end
 
-function slot0.onDone(slot0, slot1)
-	uv0.super.onDone(slot0, slot1)
-	GuideController.instance:finishStep(slot0.guideId, slot0.stepId, false, false, slot0.againGuideId)
+function var_0_0.onDone(arg_3_0, arg_3_1)
+	var_0_0.super.onDone(arg_3_0, arg_3_1)
+	GuideController.instance:finishStep(arg_3_0.guideId, arg_3_0.stepId, false, false, arg_3_0.againGuideId)
 end
 
-return slot0
+return var_0_0

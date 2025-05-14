@@ -1,167 +1,178 @@
-module("modules.logic.pickassist.model.PickAssistListModel", package.seeall)
+﻿module("modules.logic.pickassist.model.PickAssistListModel", package.seeall)
 
-slot0 = class("PickAssistListModel", ListScrollModel)
-slot1 = CharacterEnum.CareerType.Yan
-slot2 = {}
-slot3 = {
+local var_0_0 = class("PickAssistListModel", ListScrollModel)
+local var_0_1 = CharacterEnum.CareerType.Yan
+local var_0_2 = {}
+local var_0_3 = {
 	[PickAssistEnum.Type.Rouge] = "RougePickAssistView"
 }
 
-function slot4(slot0)
-	if not slot0 then
+local function var_0_4(arg_1_0)
+	if not arg_1_0 then
 		return
 	end
 
-	slot2 = PickAssistHeroMO.New()
+	local var_1_0 = arg_1_0:getHeroInfo()
+	local var_1_1 = PickAssistHeroMO.New()
 
-	slot2:init(slot0:getHeroInfo())
+	var_1_1:init(var_1_0)
 
-	return slot2
+	return var_1_1
 end
 
-function slot0.onInit(slot0)
-	slot0:clearData()
+function var_0_0.onInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:onInit()
 end
 
-function slot0.clearData(slot0)
-	slot0.activityId = nil
-	slot0.career = nil
-	slot0.selectMO = nil
+function var_0_0.clearData(arg_4_0)
+	arg_4_0.activityId = nil
+	arg_4_0.career = nil
+	arg_4_0.selectMO = nil
 end
 
-function slot0.onCloseView(slot0)
-	slot0:clear()
-	slot0:clearData()
+function var_0_0.onCloseView(arg_5_0)
+	arg_5_0:clear()
+	arg_5_0:clearData()
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.activityId = slot1
-	slot0._assistType = slot2
+function var_0_0.init(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0.activityId = arg_6_1
+	arg_6_0._assistType = arg_6_2
 
-	if not slot0.career then
-		slot0:setCareer(uv0)
+	if not arg_6_0.career then
+		arg_6_0:setCareer(var_0_1)
 	end
 
-	slot0:initSelectedMO(slot3)
-	slot0:updateDatas()
+	arg_6_0:initSelectedMO(arg_6_3)
+	arg_6_0:updateDatas()
 end
 
-function slot0.initSelectedMO(slot0, slot1)
-	slot0:setHeroSelect()
+function var_0_0.initSelectedMO(arg_7_0, arg_7_1)
+	arg_7_0:setHeroSelect()
 
-	if not DungeonAssistModel.instance:getAssistList(slot0:getAssistType()) then
+	local var_7_0 = arg_7_0:getAssistType()
+	local var_7_1 = DungeonAssistModel.instance:getAssistList(var_7_0)
+
+	if not var_7_1 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if slot8:getHeroUid() == slot1 then
-			slot0:setHeroSelect(uv0(slot8), true)
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		if iter_7_1:getHeroUid() == arg_7_1 then
+			local var_7_2 = var_0_4(iter_7_1)
+
+			arg_7_0:setHeroSelect(var_7_2, true)
 
 			break
 		end
 	end
 end
 
-function slot0.updateDatas(slot0)
-	if not slot0.activityId or not slot0.career then
+function var_0_0.updateDatas(arg_8_0)
+	if not arg_8_0.activityId or not arg_8_0.career then
 		return
 	end
 
-	slot0:setListByCareer()
+	arg_8_0:setListByCareer()
 end
 
-function slot0.setListByCareer(slot0)
-	slot1 = {}
-	slot2 = slot0:getSelectedMO()
+function var_0_0.setListByCareer(arg_9_0)
+	local var_9_0 = {}
+	local var_9_1 = arg_9_0:getSelectedMO()
 
-	slot0:setHeroSelect()
+	arg_9_0:setHeroSelect()
 
-	if DungeonAssistModel.instance:getAssistList(slot0:getAssistType(), slot0.career) then
-		for slot8, slot9 in ipairs(slot4) do
-			if slot10 and (uv0(slot9) and slot10:getCareer()) == slot0.career then
-				table.insert(slot1, slot10)
+	local var_9_2 = arg_9_0:getAssistType()
+	local var_9_3 = DungeonAssistModel.instance:getAssistList(var_9_2, arg_9_0.career)
 
-				if slot2 and slot2:isSameHero(slot10) then
-					slot0:setHeroSelect(slot10, true)
+	if var_9_3 then
+		for iter_9_0, iter_9_1 in ipairs(var_9_3) do
+			local var_9_4 = var_0_4(iter_9_1)
+			local var_9_5 = var_9_4 and var_9_4:getCareer()
+
+			if var_9_4 and var_9_5 == arg_9_0.career then
+				table.insert(var_9_0, var_9_4)
+
+				if var_9_1 and var_9_1:isSameHero(var_9_4) then
+					arg_9_0:setHeroSelect(var_9_4, true)
 				end
 			end
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_9_0:setList(var_9_0)
 	PickAssistController.instance:dispatchEvent(PickAssistEvent.SetCareer)
 end
 
-function slot0.getPickAssistViewName(slot0)
-	if slot0.activityId then
-		slot1 = uv0[slot0.activityId] or ViewName.PickAssistView
+function var_0_0.getPickAssistViewName(arg_10_0)
+	local var_10_0 = ViewName.PickAssistView
+
+	var_10_0 = arg_10_0.activityId and var_0_2[arg_10_0.activityId] or var_10_0
+	var_10_0 = arg_10_0._assistType and var_0_3[arg_10_0._assistType] or var_10_0
+
+	return var_10_0
+end
+
+function var_0_0.getCareer(arg_11_0)
+	return arg_11_0.career
+end
+
+function var_0_0.getSelectedMO(arg_12_0)
+	return arg_12_0.selectMO
+end
+
+function var_0_0.isHeroSelected(arg_13_0, arg_13_1)
+	local var_13_0 = false
+	local var_13_1 = arg_13_0:getSelectedMO()
+
+	if var_13_1 then
+		var_13_0 = var_13_1:isSameHero(arg_13_1)
 	end
 
-	if slot0._assistType then
-		slot1 = uv1[slot0._assistType] or slot1
+	return var_13_0
+end
+
+function var_0_0.isHasAssistList(arg_14_0)
+	local var_14_0 = false
+	local var_14_1 = arg_14_0:getList()
+
+	if var_14_1 then
+		var_14_0 = #var_14_1 > 0
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.getCareer(slot0)
-	return slot0.career
-end
-
-function slot0.getSelectedMO(slot0)
-	return slot0.selectMO
-end
-
-function slot0.isHeroSelected(slot0, slot1)
-	slot2 = false
-
-	if slot0:getSelectedMO() then
-		slot2 = slot3:isSameHero(slot1)
-	end
-
-	return slot2
-end
-
-function slot0.isHasAssistList(slot0)
-	slot1 = false
-
-	if slot0:getList() then
-		slot1 = #slot2 > 0
-	end
-
-	return slot1
-end
-
-function slot0.getAssistType(slot0)
-	if not slot0._assistType then
+function var_0_0.getAssistType(arg_15_0)
+	if not arg_15_0._assistType then
 		logError("PickAssistListModel:getAssistType error, not set assistType")
 	end
 
-	return slot0._assistType
+	return arg_15_0._assistType
 end
 
-function slot0.setCareer(slot0, slot1)
-	if slot0.career ~= slot1 then
-		slot0.career = slot1
+function var_0_0.setCareer(arg_16_0, arg_16_1)
+	if arg_16_0.career ~= arg_16_1 then
+		arg_16_0.career = arg_16_1
 
-		slot0:updateDatas()
+		arg_16_0:updateDatas()
 	end
 end
 
-function slot0.setHeroSelect(slot0, slot1, slot2)
-	if slot2 then
-		slot0.selectMO = slot1
+function var_0_0.setHeroSelect(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 then
+		arg_17_0.selectMO = arg_17_1
 	else
-		slot0.selectMO = nil
+		arg_17_0.selectMO = nil
 	end
 
 	PickAssistController.instance:dispatchEvent(PickAssistEvent.RefreshSelectAssistHero)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

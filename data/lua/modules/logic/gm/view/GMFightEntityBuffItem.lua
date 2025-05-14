@@ -1,105 +1,120 @@
-module("modules.logic.gm.view.GMFightEntityBuffItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntityBuffItem", package.seeall)
 
-slot0 = class("GMFightEntityBuffItem", ListScrollCell)
+local var_0_0 = class("GMFightEntityBuffItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._id = gohelper.findChildTextMeshInputField(slot1, "id")
-	slot0._name = gohelper.findChildText(slot1, "name")
-	slot0._type = gohelper.findChildText(slot1, "type")
-	slot0._set = gohelper.findChildText(slot1, "set")
-	slot0._duration = gohelper.findChildTextMeshInputField(slot1, "duration")
-	slot0._count = gohelper.findChildTextMeshInputField(slot1, "count")
-	slot0._layer = gohelper.findChildTextMeshInputField(slot1, "layer")
-	slot0._btnDel = gohelper.findChildButtonWithAudio(slot1, "btnDel")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._id = gohelper.findChildTextMeshInputField(arg_1_1, "id")
+	arg_1_0._name = gohelper.findChildText(arg_1_1, "name")
+	arg_1_0._type = gohelper.findChildText(arg_1_1, "type")
+	arg_1_0._set = gohelper.findChildText(arg_1_1, "set")
+	arg_1_0._duration = gohelper.findChildTextMeshInputField(arg_1_1, "duration")
+	arg_1_0._count = gohelper.findChildTextMeshInputField(arg_1_1, "count")
+	arg_1_0._layer = gohelper.findChildTextMeshInputField(arg_1_1, "layer")
+	arg_1_0._btnDel = gohelper.findChildButtonWithAudio(arg_1_1, "btnDel")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnDel:AddClickListener(slot0._onClickDel, slot0)
-	slot0._duration:AddOnEndEdit(slot0._onAddEditDuration, slot0)
-	slot0._count:AddOnEndEdit(slot0._onAddEditCount, slot0)
-	slot0._layer:AddOnEndEdit(slot0._onAddEditLayer, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnDel:AddClickListener(arg_2_0._onClickDel, arg_2_0)
+	arg_2_0._duration:AddOnEndEdit(arg_2_0._onAddEditDuration, arg_2_0)
+	arg_2_0._count:AddOnEndEdit(arg_2_0._onAddEditCount, arg_2_0)
+	arg_2_0._layer:AddOnEndEdit(arg_2_0._onAddEditLayer, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnDel:RemoveClickListener()
-	slot0._duration:RemoveOnEndEdit()
-	slot0._count:RemoveOnEndEdit()
-	slot0._layer:RemoveOnEndEdit()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnDel:RemoveClickListener()
+	arg_3_0._duration:RemoveOnEndEdit()
+	arg_3_0._count:RemoveOnEndEdit()
+	arg_3_0._layer:RemoveOnEndEdit()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot3 = lua_skill_buff.configDict[slot0._mo.buffId] and lua_skill_bufftype.configDict[slot2.typeId]
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0._id:SetText(tostring(slot0._mo.buffId))
+	local var_4_0 = lua_skill_buff.configDict[arg_4_0._mo.buffId]
+	local var_4_1 = var_4_0 and lua_skill_bufftype.configDict[var_4_0.typeId]
 
-	slot0._name.text = slot2 and slot2.name or ""
-	slot0._type.text = slot2 and tostring(slot2.typeId) or ""
-	slot0._set.text = slot3 and tostring(slot3.type) or ""
+	arg_4_0._id:SetText(tostring(arg_4_0._mo.buffId))
 
-	slot0._duration:SetText(tostring(slot0._mo.duration) or "")
-	slot0._count:SetText(tostring(slot0._mo.count) or "")
-	slot0._layer:SetText(tostring(slot0._mo.layer) or "")
+	arg_4_0._name.text = var_4_0 and var_4_0.name or ""
+	arg_4_0._type.text = var_4_0 and tostring(var_4_0.typeId) or ""
+	arg_4_0._set.text = var_4_1 and tostring(var_4_1.type) or ""
+
+	arg_4_0._duration:SetText(tostring(arg_4_0._mo.duration) or "")
+	arg_4_0._count:SetText(tostring(arg_4_0._mo.count) or "")
+	arg_4_0._layer:SetText(tostring(arg_4_0._mo.layer) or "")
 end
 
-function slot0._onClickDel(slot0)
-	if lua_skill_buff.configDict[slot0._mo.buffId] then
-		GameFacade.showToast(ToastEnum.IconId, "del buff " .. slot1.name)
+function var_0_0._onClickDel(arg_5_0)
+	local var_5_0 = lua_skill_buff.configDict[arg_5_0._mo.buffId]
+
+	if var_5_0 then
+		GameFacade.showToast(ToastEnum.IconId, "del buff " .. var_5_0.name)
 	else
 		GameFacade.showToast(ToastEnum.IconId, "buff config not exist")
 	end
 
-	slot2 = GMFightEntityModel.instance.entityMO
+	local var_5_1 = GMFightEntityModel.instance.entityMO
 
-	GMRpc.instance:sendGMRequest(string.format("fightDelBuff %s %s", tostring(slot2.id), tostring(slot0._mo.uid)))
-	slot2:delBuff(slot0._mo.uid)
+	GMRpc.instance:sendGMRequest(string.format("fightDelBuff %s %s", tostring(var_5_1.id), tostring(arg_5_0._mo.uid)))
+	var_5_1:delBuff(arg_5_0._mo.uid)
 
-	if FightHelper.getEntity(slot2.id) and slot3.buff then
-		slot3.buff:delBuff(slot0._mo.uid)
+	local var_5_2 = FightHelper.getEntity(var_5_1.id)
+
+	if var_5_2 and var_5_2.buff then
+		var_5_2.buff:delBuff(arg_5_0._mo.uid)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot2.id, FightEnum.EffectType.BUFFDEL, slot0._mo.buffId, slot0._mo.uid, 0)
-	FightRpc.instance:sendEntityInfoRequest(slot2.id)
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_5_1.id, FightEnum.EffectType.BUFFDEL, arg_5_0._mo.buffId, arg_5_0._mo.uid, 0)
+	FightRpc.instance:sendEntityInfoRequest(var_5_1.id)
 end
 
-function slot0._onAddEditDuration(slot0, slot1)
-	if tonumber(slot1) and (slot2 == -1 or slot2 > 0) then
-		slot3 = GMFightEntityModel.instance.entityMO
-		slot0._mo.duration = slot2
+function var_0_0._onAddEditDuration(arg_6_0, arg_6_1)
+	local var_6_0 = tonumber(arg_6_1)
 
-		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", slot3.id, slot0._mo.id, slot0._mo.count, slot2, slot0._mo.layer))
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot3.id, FightEnum.EffectType.BUFFUPDATE, slot0._mo.buffId, slot0._mo.uid, 0)
+	if var_6_0 and (var_6_0 == -1 or var_6_0 > 0) then
+		local var_6_1 = GMFightEntityModel.instance.entityMO
+
+		arg_6_0._mo.duration = var_6_0
+
+		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_6_1.id, arg_6_0._mo.id, arg_6_0._mo.count, var_6_0, arg_6_0._mo.layer))
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_6_1.id, FightEnum.EffectType.BUFFUPDATE, arg_6_0._mo.buffId, arg_6_0._mo.uid, 0)
 	else
-		slot0._duration:SetText(tostring(slot0._mo.duration) or "")
+		arg_6_0._duration:SetText(tostring(arg_6_0._mo.duration) or "")
 		GameFacade.showToast(ToastEnum.IconId, "修正数值错误")
 	end
 end
 
-function slot0._onAddEditCount(slot0, slot1)
-	if tonumber(slot1) and slot2 > 0 then
-		slot3 = GMFightEntityModel.instance.entityMO
-		slot0._mo.count = slot2
+function var_0_0._onAddEditCount(arg_7_0, arg_7_1)
+	local var_7_0 = tonumber(arg_7_1)
 
-		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", slot3.id, slot0._mo.id, slot2, slot0._mo.duration, slot0._mo.layer))
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot3.id, FightEnum.EffectType.BUFFUPDATE, slot0._mo.buffId, slot0._mo.uid, 0)
+	if var_7_0 and var_7_0 > 0 then
+		local var_7_1 = GMFightEntityModel.instance.entityMO
+
+		arg_7_0._mo.count = var_7_0
+
+		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_7_1.id, arg_7_0._mo.id, var_7_0, arg_7_0._mo.duration, arg_7_0._mo.layer))
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_1.id, FightEnum.EffectType.BUFFUPDATE, arg_7_0._mo.buffId, arg_7_0._mo.uid, 0)
 	else
-		slot0._count:SetText(tostring(slot0._mo.count) or "")
+		arg_7_0._count:SetText(tostring(arg_7_0._mo.count) or "")
 		GameFacade.showToast(ToastEnum.IconId, "修正数值错误")
 	end
 end
 
-function slot0._onAddEditLayer(slot0, slot1)
-	if tonumber(slot1) and slot2 > 0 then
-		slot3 = GMFightEntityModel.instance.entityMO
-		slot0._mo.layer = slot2
+function var_0_0._onAddEditLayer(arg_8_0, arg_8_1)
+	local var_8_0 = tonumber(arg_8_1)
 
-		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", slot3.id, slot0._mo.id, slot0._mo.count, slot0._mo.duration, slot2))
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, slot3.id, FightEnum.EffectType.BUFFUPDATE, slot0._mo.buffId, slot0._mo.uid, 0)
+	if var_8_0 and var_8_0 > 0 then
+		local var_8_1 = GMFightEntityModel.instance.entityMO
+
+		arg_8_0._mo.layer = var_8_0
+
+		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_8_1.id, arg_8_0._mo.id, arg_8_0._mo.count, arg_8_0._mo.duration, var_8_0))
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_8_1.id, FightEnum.EffectType.BUFFUPDATE, arg_8_0._mo.buffId, arg_8_0._mo.uid, 0)
 	else
-		slot0._layer:SetText(tostring(slot0._mo.layer) or "")
+		arg_8_0._layer:SetText(tostring(arg_8_0._mo.layer) or "")
 		GameFacade.showToast(ToastEnum.IconId, "修正数值错误")
 	end
 end
 
-return slot0
+return var_0_0

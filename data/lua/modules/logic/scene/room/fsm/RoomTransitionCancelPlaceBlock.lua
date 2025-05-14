@@ -1,59 +1,71 @@
-module("modules.logic.scene.room.fsm.RoomTransitionCancelPlaceBlock", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionCancelPlaceBlock", package.seeall)
 
-slot0 = class("RoomTransitionCancelPlaceBlock", JompFSMBaseTransition)
+local var_0_0 = class("RoomTransitionCancelPlaceBlock", JompFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	if not RoomMapBlockModel.instance:getTempBlockMO() then
-		slot0:onDone()
+	local var_3_0 = RoomMapBlockModel.instance:getTempBlockMO()
+
+	if not var_3_0 then
+		arg_3_0:onDone()
 
 		return
 	end
 
+	local var_3_1 = var_3_0.hexPoint
+
 	RoomMapBlockModel.instance:removeTempBlockMO()
 	RoomResourceModel.instance:clearLightResourcePoint()
-	RoomMapBlockModel.instance:refreshNearRiver(slot2.hexPoint, 1)
+	RoomMapBlockModel.instance:refreshNearRiver(var_3_1, 1)
 
-	if slot2 then
-		if slot0._scene.mapmgr:getBlockEntity(slot2.id, SceneTag.RoomMapBlock) then
-			slot5:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_donw")
-			slot4:removeUnitData(SceneTag.RoomMapBlock, slot2.id)
-			slot5:removeEvent()
-			TaskDispatcher.runDelay(function ()
-				uv0:destroyUnit(uv1)
-			end, slot0, 0.3333333333333333)
+	if var_3_0 then
+		local var_3_2 = arg_3_0._scene.mapmgr
+		local var_3_3 = var_3_2:getBlockEntity(var_3_0.id, SceneTag.RoomMapBlock)
+
+		if var_3_3 then
+			var_3_3:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_donw")
+			var_3_2:removeUnitData(SceneTag.RoomMapBlock, var_3_0.id)
+			var_3_3:removeEvent()
+			TaskDispatcher.runDelay(function()
+				var_3_2:destroyUnit(var_3_3)
+			end, arg_3_0, 0.3333333333333333)
 		end
 	end
 
-	slot0._scene.mapmgr:spawnMapBlock(RoomMapBlockModel.instance:getBlockMO(slot3.x, slot3.y))
-	RoomBlockController.instance:refreshNearLand(slot3, true)
+	local var_3_4 = RoomMapBlockModel.instance:getBlockMO(var_3_1.x, var_3_1.y)
+
+	arg_3_0._scene.mapmgr:spawnMapBlock(var_3_4)
+	RoomBlockController.instance:refreshNearLand(var_3_1, true)
 	RoomBlockController.instance:refreshResourceLight()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ClientCancelBlock)
 
-	slot5 = RoomMapModel.instance:getCameraParam()
-	slot6 = slot0._scene.camera:getCameraParam()
+	local var_3_5 = RoomMapModel.instance:getCameraParam()
+	local var_3_6 = arg_3_0._scene.camera:getCameraParam()
+	local var_3_7 = {}
 
-	if {} then
-		slot0._scene.camera:tweenCamera(slot7, nil, slot0.onDone, slot0)
+	if var_3_7 then
+		arg_3_0._scene.camera:tweenCamera(var_3_7, nil, arg_3_0.onDone, arg_3_0)
 		RoomMapModel.instance:clearCameraParam()
 	else
-		slot0:onDone()
+		arg_3_0:onDone()
 	end
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_5_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

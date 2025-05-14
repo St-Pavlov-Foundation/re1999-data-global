@@ -1,10 +1,11 @@
-module("modules.logic.voyage.config.VoyageEnum", package.seeall)
+﻿module("modules.logic.voyage.config.VoyageEnum", package.seeall)
 
-slot0 = _M
-slot0.State = {
+local var_0_0 = _M
+
+var_0_0.State = {
 	Got = 2,
 	Available = 1,
 	None = 0
 }
 
-return slot0
+return var_0_0

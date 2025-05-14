@@ -1,47 +1,53 @@
-module("modules.logic.fight.system.work.trigger.FightWorkTriggerDialog", package.seeall)
+﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerDialog", package.seeall)
 
-slot0 = class("FightWorkTriggerDialog", BaseWork)
+local var_0_0 = class("FightWorkTriggerDialog", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._fightStepMO = slot1
-	slot0._actEffectMO = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._actEffectMO = arg_1_2
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if FightReplayModel.instance:isReplay() then
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	slot0._config = lua_trigger_action.configDict[slot0._actEffectMO.effectNum]
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
 
-	if slot0._config and lua_battle_dialog.configDict[tonumber(slot0._config.param1)] and lua_battle_dialog.configDict[slot1][tonumber(slot0._config.param2)] then
-		FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.Trigger, slot3)
+	if arg_2_0._config then
+		local var_2_0 = tonumber(arg_2_0._config.param1)
+		local var_2_1 = tonumber(arg_2_0._config.param2)
+		local var_2_2 = lua_battle_dialog.configDict[var_2_0] and lua_battle_dialog.configDict[var_2_0][var_2_1]
 
-		slot0._dialogWork = FightWorkWaitDialog.New()
+		if var_2_2 then
+			FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.Trigger, var_2_2)
 
-		slot0._dialogWork:registerDoneListener(slot0._onFightDialogEnd, slot0)
-		slot0._dialogWork:onStart()
+			arg_2_0._dialogWork = FightWorkWaitDialog.New()
 
-		return
+			arg_2_0._dialogWork:registerDoneListener(arg_2_0._onFightDialogEnd, arg_2_0)
+			arg_2_0._dialogWork:onStart()
+
+			return
+		end
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onFightDialogEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onFightDialogEnd(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, slot0._onFightDialogEnd, slot0)
+function var_0_0.clearWork(arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_4_0._onFightDialogEnd, arg_4_0)
 
-	if slot0._dialogWork then
-		slot0._dialogWork:unregisterDoneListener(slot0._onFightDialogEnd, slot0)
+	if arg_4_0._dialogWork then
+		arg_4_0._dialogWork:unregisterDoneListener(arg_4_0._onFightDialogEnd, arg_4_0)
 
-		slot0._dialogWork = nil
+		arg_4_0._dialogWork = nil
 	end
 end
 
-return slot0
+return var_0_0

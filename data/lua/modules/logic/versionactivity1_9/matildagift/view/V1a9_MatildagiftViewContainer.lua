@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity1_9.matildagift.view.V1a9_MatildagiftViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_9.matildagift.view.V1a9_MatildagiftViewContainer", package.seeall)
 
-slot0 = class("V1a9_MatildagiftViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a9_MatildagiftViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, V1a9_MatildagiftView.New())
+	table.insert(var_1_0, V1a9_MatildagiftView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

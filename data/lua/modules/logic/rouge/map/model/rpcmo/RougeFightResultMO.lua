@@ -1,39 +1,39 @@
-module("modules.logic.rouge.map.model.rpcmo.RougeFightResultMO", package.seeall)
+﻿module("modules.logic.rouge.map.model.rpcmo.RougeFightResultMO", package.seeall)
 
-slot0 = pureTable("RougeFightResultMO")
+local var_0_0 = pureTable("RougeFightResultMO")
 
-function slot0.init(slot0, slot1)
-	slot0.addCoin = slot1.addCoin
-	slot0.dropCollectionNum = slot1.dropCollectionNum
-	slot0.dropSelectNum = slot1.dropSelectNum
-	slot0.addExp = slot1.addExp
-	slot0.isWin = slot1.isWin
-	slot0.retryNum = slot1.retryNum
-	slot0.season = slot1.season
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.addCoin = arg_1_1.addCoin
+	arg_1_0.dropCollectionNum = arg_1_1.dropCollectionNum
+	arg_1_0.dropSelectNum = arg_1_1.dropSelectNum
+	arg_1_0.addExp = arg_1_1.addExp
+	arg_1_0.isWin = arg_1_1.isWin
+	arg_1_0.retryNum = arg_1_1.retryNum
+	arg_1_0.season = arg_1_1.season
 
-	RougeModel.instance:updateRetryNum(slot0.retryNum)
+	RougeModel.instance:updateRetryNum(arg_1_0.retryNum)
 
-	slot0.battleHeroList = {}
+	arg_1_0.battleHeroList = {}
 
-	for slot5, slot6 in ipairs(slot1.teamInfo.battleHeroList) do
-		table.insert(slot0.battleHeroList, {
-			index = slot6.index,
-			heroId = slot6.heroId,
-			equipUid = slot6.equipUid,
-			supportHeroId = slot6.supportHeroId,
-			supportHeroSkill = slot6.supportHeroSkill
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.teamInfo.battleHeroList) do
+		table.insert(arg_1_0.battleHeroList, {
+			index = iter_1_1.index,
+			heroId = iter_1_1.heroId,
+			equipUid = iter_1_1.equipUid,
+			supportHeroId = iter_1_1.supportHeroId,
+			supportHeroSkill = iter_1_1.supportHeroSkill
 		})
 	end
 
-	slot0.heroLifeMap = {}
+	arg_1_0.heroLifeMap = {}
 
-	for slot5, slot6 in ipairs(slot1.teamInfo.heroLifeList) do
-		slot0.heroLifeMap[slot6.heroId] = slot6.life
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1.teamInfo.heroLifeList) do
+		arg_1_0.heroLifeMap[iter_1_3.heroId] = iter_1_3.life
 	end
 end
 
-function slot0.getLife(slot0, slot1)
-	return slot0.heroLifeMap[slot1]
+function var_0_0.getLife(arg_2_0, arg_2_1)
+	return arg_2_0.heroLifeMap[arg_2_1]
 end
 
-return slot0
+return var_0_0

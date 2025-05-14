@@ -1,50 +1,57 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameStateItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameStateItem", package.seeall)
 
-slot0 = class("AiZiLaGameStateItem", ListScrollCellExtend)
+local var_0_0 = class("AiZiLaGameStateItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goState = gohelper.findChild(slot0.viewGO, "#go_State")
-	slot0._goeffdown = gohelper.findChild(slot0.viewGO, "#go_State/#go_effdown")
-	slot0._goeffup = gohelper.findChild(slot0.viewGO, "#go_State/#go_effup")
-	slot0._txteffDesc = gohelper.findChildText(slot0.viewGO, "#go_State/#txt_effDesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goState = gohelper.findChild(arg_1_0.viewGO, "#go_State")
+	arg_1_0._goeffdown = gohelper.findChild(arg_1_0.viewGO, "#go_State/#go_effdown")
+	arg_1_0._goeffup = gohelper.findChild(arg_1_0.viewGO, "#go_State/#go_effup")
+	arg_1_0._txteffDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_State/#txt_effDesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0.setStateStr(slot0, slot1)
-	slot0._txteffDesc.text = slot1
+function var_0_0.setStateStr(arg_10_0, arg_10_1)
+	arg_10_0._txteffDesc.text = arg_10_1
 end
 
-function slot0.setShowUp(slot0, slot1)
-	gohelper.setActive(slot0._goeffdown, not slot1)
-	gohelper.setActive(slot0._goeffup, slot1)
+function var_0_0.setShowUp(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._goeffdown, not arg_11_1)
+	gohelper.setActive(arg_11_0._goeffup, arg_11_1)
 end
 
-return slot0
+return var_0_0

@@ -1,63 +1,67 @@
-module("modules.logic.roleactivity.config.RoleActivityConfig", package.seeall)
+﻿module("modules.logic.roleactivity.config.RoleActivityConfig", package.seeall)
 
-slot0 = class("RoleActivityConfig", BaseConfig)
+local var_0_0 = class("RoleActivityConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"roleactivity_enter",
 		"role_activity_task"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "roleactivity_enter" then
-		slot0._enterConfig = slot2
-	elseif slot1 == "role_activity_task" then
-		slot0._taskConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "roleactivity_enter" then
+		arg_3_0._enterConfig = arg_3_2
+	elseif arg_3_1 == "role_activity_task" then
+		arg_3_0._taskConfig = arg_3_2
 
-		slot0:_rebuildTaskConfig()
+		arg_3_0:_rebuildTaskConfig()
 	end
 end
 
-function slot0._rebuildTaskConfig(slot0)
-	slot0._taskDic = {}
+function var_0_0._rebuildTaskConfig(arg_4_0)
+	arg_4_0._taskDic = {}
 
-	for slot4, slot5 in pairs(slot0._taskConfig.configList) do
-		slot0._taskDic[slot5.id] = slot5
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._taskConfig.configList) do
+		arg_4_0._taskDic[iter_4_1.id] = iter_4_1
 	end
 end
 
-function slot0.getActivityEnterInfo(slot0, slot1)
-	return slot0._enterConfig.configDict[slot1]
+function var_0_0.getActivityEnterInfo(arg_5_0, arg_5_1)
+	return arg_5_0._enterConfig.configDict[arg_5_1]
 end
 
-function slot0.getTaskCo(slot0, slot1)
-	return slot0._taskDic[slot1]
+function var_0_0.getTaskCo(arg_6_0, arg_6_1)
+	return arg_6_0._taskDic[arg_6_1]
 end
 
-function slot0.getStoryLevelList(slot0, slot1)
-	return DungeonConfig.instance:getChapterEpisodeCOList(slot0._enterConfig.configDict[slot1].storyGroupId)
+function var_0_0.getStoryLevelList(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._enterConfig.configDict[arg_7_1].storyGroupId
+
+	return (DungeonConfig.instance:getChapterEpisodeCOList(var_7_0))
 end
 
-function slot0.getBattleLevelList(slot0, slot1)
-	slot3 = DungeonConfig.instance:getChapterEpisodeCOList(slot0._enterConfig.configDict[slot1].episodeGroupId) or {}
+function var_0_0.getBattleLevelList(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._enterConfig.configDict[arg_8_1].episodeGroupId
+	local var_8_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_8_0) or {}
 
-	table.sort(slot3, uv0.SortById)
+	table.sort(var_8_1, var_0_0.SortById)
 
-	return slot3
+	return var_8_1
 end
 
-function slot0.getActicityTaskList(slot0, slot1)
-	return slot0._taskConfig.configDict[slot1]
+function var_0_0.getActicityTaskList(arg_9_0, arg_9_1)
+	return arg_9_0._taskConfig.configDict[arg_9_1]
 end
 
-function slot0.SortById(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.SortById(arg_10_0, arg_10_1)
+	return arg_10_0.id < arg_10_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

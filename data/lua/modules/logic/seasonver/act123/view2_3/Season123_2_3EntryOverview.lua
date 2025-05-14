@@ -1,241 +1,266 @@
-module("modules.logic.seasonver.act123.view2_3.Season123_2_3EntryOverview", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3EntryOverview", package.seeall)
 
-slot0 = class("Season123_2_3EntryOverview", BaseView)
+local var_0_0 = class("Season123_2_3EntryOverview", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
-	slot0._viewAnimator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-slot0.UI_Item_Count = 6
+var_0_0.UI_Item_Count = 6
 
-function slot0._editableInitView(slot0)
-	slot0._entryList = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._entryList = {}
 
-	slot0:initItems()
+	arg_4_0:initItems()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._entryList then
-		for slot4, slot5 in ipairs(slot0._entryList) do
-			slot5.btnclick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_5_0)
+	if arg_5_0._entryList then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._entryList) do
+			iter_5_1.btnclick:RemoveClickListener()
 		end
 
-		slot0._entryList = nil
+		arg_5_0._entryList = nil
 	end
 
 	Season123EntryOverviewController.instance:onCloseView()
-	TaskDispatcher.cancelTask(slot0._closeCallback, slot0)
-	TaskDispatcher.cancelTask(slot0._playUnlockAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshUI, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._closeCallback, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._playUnlockAnim, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.refreshUI, arg_5_0)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.season123_overview_open)
 
-	if not ActivityModel.instance:getActMO(slot0.viewParam.actId) or not slot2:isOpen() or slot2:isExpired() then
+	local var_6_0 = arg_6_0.viewParam.actId
+	local var_6_1 = ActivityModel.instance:getActMO(var_6_0)
+
+	if not var_6_1 or not var_6_1:isOpen() or var_6_1:isExpired() then
 		return
 	end
 
-	slot0:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, slot0.handleGetActInfo, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, slot0.refreshUI, slot0)
-	Season123EntryOverviewController.instance:onOpenView(slot1)
-	slot0:refreshUI()
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0.closeThis, slot0)
-	TaskDispatcher.runDelay(slot0._playUnlockAnim, slot0, 0.83)
-	TaskDispatcher.runRepeat(slot0.refreshUI, slot0, 3)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, arg_6_0.handleGetActInfo, arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, arg_6_0.refreshUI, arg_6_0)
+	Season123EntryOverviewController.instance:onOpenView(var_6_0)
+	arg_6_0:refreshUI()
+	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0.closeThis, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._playUnlockAnim, arg_6_0, 0.83)
+	TaskDispatcher.runRepeat(arg_6_0.refreshUI, arg_6_0, 3)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshItems()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshItems()
 end
 
-function slot0.refreshItems(slot0)
-	if Season123Config.instance:getStageCos(Season123EntryOverviewModel.instance:getActId()) then
-		for slot6 = 1, uv0.UI_Item_Count do
-			slot7 = slot0._entryList[slot6]
+function var_0_0.refreshItems(arg_9_0)
+	local var_9_0 = Season123EntryOverviewModel.instance:getActId()
+	local var_9_1 = Season123Config.instance:getStageCos(var_9_0)
 
-			if slot2[slot6] then
-				gohelper.setActive(slot7.go, true)
-				slot0:refreshItem(slot7, slot8, Season123EntryOverviewModel.instance:getStageMO(slot8.stage))
+	if var_9_1 then
+		for iter_9_0 = 1, var_0_0.UI_Item_Count do
+			local var_9_2 = arg_9_0._entryList[iter_9_0]
+			local var_9_3 = var_9_1[iter_9_0]
+
+			if var_9_3 then
+				local var_9_4 = var_9_3.stage
+				local var_9_5 = Season123EntryOverviewModel.instance:getStageMO(var_9_4)
+
+				gohelper.setActive(var_9_2.go, true)
+				arg_9_0:refreshItem(var_9_2, var_9_3, var_9_5)
 			else
-				gohelper.setActive(slot7.go, false)
+				gohelper.setActive(var_9_2.go, false)
 			end
 		end
 	end
 end
 
-function slot0.refreshItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.gofighting, slot3 and Season123ProgressUtils.stageInChallenge(Season123EntryOverviewModel.instance:getActId(), slot3.stage))
-	gohelper.setActive(slot1.gofinish, slot3 and slot3:alreadyPass())
+function var_0_0.refreshItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = Season123EntryOverviewModel.instance:getActId()
 
-	if slot3 and slot3:alreadyPass() then
-		slot1.txtpassround.text = tostring(slot3.minRound or 0)
+	gohelper.setActive(arg_10_1.gofighting, arg_10_3 and Season123ProgressUtils.stageInChallenge(var_10_0, arg_10_3.stage))
+	gohelper.setActive(arg_10_1.gofinish, arg_10_3 and arg_10_3:alreadyPass())
+
+	if arg_10_3 and arg_10_3:alreadyPass() then
+		arg_10_1.txtpassround.text = tostring(arg_10_3.minRound or 0)
 	else
-		slot1.txtpassround.text = ""
+		arg_10_1.txtpassround.text = ""
 	end
 
-	slot1.txtname.text = slot2.name
+	arg_10_1.txtname.text = arg_10_2.name
 
-	slot0:refreshProgress(slot1, slot2, slot3)
-	slot0:refreshUnlockStatus(slot1, slot2)
+	arg_10_0:refreshProgress(arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0:refreshUnlockStatus(arg_10_1, arg_10_2)
 end
 
-function slot0.refreshProgress(slot0, slot1, slot2, slot3)
-	slot4, slot5 = nil
+function var_0_0.refreshProgress(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0
+	local var_11_1
 
-	if slot3 then
-		slot6 = Season123EntryOverviewModel.instance:stageIsPassed(slot3.stage)
+	if arg_11_3 then
+		local var_11_2 = Season123EntryOverviewModel.instance:stageIsPassed(arg_11_3.stage)
 
-		gohelper.setActive(slot1.goprogress, slot6)
+		gohelper.setActive(arg_11_1.goprogress, var_11_2)
 
-		if not slot6 then
+		if not var_11_2 then
 			return
 		end
 
-		slot4, slot5 = Season123ProgressUtils.getStageProgressStep(slot0.viewParam.actId, slot3.stage)
+		var_11_0, var_11_1 = Season123ProgressUtils.getStageProgressStep(arg_11_0.viewParam.actId, arg_11_3.stage)
 	else
-		gohelper.setActive(slot1.goprogress, false)
+		gohelper.setActive(arg_11_1.goprogress, false)
 
-		slot4 = 0
-		slot5 = 0
+		var_11_0 = 0
+		var_11_1 = 0
 	end
 
-	for slot9 = 1, Activity123Enum.SeasonStageStepCount do
-		slot10, slot11, slot12 = Season123ProgressUtils.isStageUnlock(slot0.viewParam.actId, slot2.stage)
+	for iter_11_0 = 1, Activity123Enum.SeasonStageStepCount do
+		local var_11_3, var_11_4, var_11_5 = Season123ProgressUtils.isStageUnlock(arg_11_0.viewParam.actId, arg_11_2.stage)
 
-		if slot10 then
-			slot13 = slot9 <= slot4
+		if var_11_3 then
+			local var_11_6 = iter_11_0 <= var_11_0
+			local var_11_7 = iter_11_0 <= var_11_1
 
-			gohelper.setActive(slot1.progressActives[slot9], slot13 and slot9 < slot5)
-			gohelper.setActive(slot1.progressDeactives[slot9], not slot13 and slot9 <= slot5)
-			gohelper.setActive(slot1.progressHard[slot9], slot9 == slot5 and slot4 == slot5)
+			gohelper.setActive(arg_11_1.progressActives[iter_11_0], var_11_6 and iter_11_0 < var_11_1)
+			gohelper.setActive(arg_11_1.progressDeactives[iter_11_0], not var_11_6 and var_11_7)
+			gohelper.setActive(arg_11_1.progressHard[iter_11_0], iter_11_0 == var_11_1 and var_11_0 == var_11_1)
 		else
-			gohelper.setActive(slot1.progressActives[slot9], false)
-			gohelper.setActive(slot1.progressDeactives[slot9], false)
-			gohelper.setActive(slot1.progressHard[slot9], false)
+			gohelper.setActive(arg_11_1.progressActives[iter_11_0], false)
+			gohelper.setActive(arg_11_1.progressDeactives[iter_11_0], false)
+			gohelper.setActive(arg_11_1.progressHard[iter_11_0], false)
 		end
 	end
 end
 
-function slot0.refreshUnlockStatus(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6 = Season123ProgressUtils.isStageUnlock(slot0.viewParam.actId, slot2.stage)
+function var_0_0.refreshUnlockStatus(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0, var_12_1, var_12_2 = Season123ProgressUtils.isStageUnlock(arg_12_0.viewParam.actId, arg_12_2.stage)
+	local var_12_3 = Season123EntryModel.instance:needPlayUnlockAnim1(arg_12_0.viewParam.actId, arg_12_2.stage)
 
-	if slot4 and not Season123EntryModel.instance:needPlayUnlockAnim1(slot0.viewParam.actId, slot2.stage) then
-		ZProj.UGUIHelper.SetGrayscale(slot1.imageicon.gameObject, false)
-		ZProj.UGUIHelper.SetGrayscale(slot1.imagechapter.gameObject, false)
-		gohelper.setActive(slot1.gounlocked, false)
-		gohelper.setActive(slot1.gounlockedtime, false)
+	if var_12_0 and not var_12_3 then
+		ZProj.UGUIHelper.SetGrayscale(arg_12_1.imageicon.gameObject, false)
+		ZProj.UGUIHelper.SetGrayscale(arg_12_1.imagechapter.gameObject, false)
+		gohelper.setActive(arg_12_1.gounlocked, false)
+		gohelper.setActive(arg_12_1.gounlockedtime, false)
 	else
-		ZProj.UGUIHelper.SetGrayscale(slot1.imageicon.gameObject, true)
-		ZProj.UGUIHelper.SetGrayscale(slot1.imagechapter.gameObject, true)
+		ZProj.UGUIHelper.SetGrayscale(arg_12_1.imageicon.gameObject, true)
+		ZProj.UGUIHelper.SetGrayscale(arg_12_1.imagechapter.gameObject, true)
 
-		if slot5 == Activity123Enum.PreCondition.OpenTime then
-			gohelper.setActive(slot1.gounlocked, false)
-			gohelper.setActive(slot1.gounlockedtime, true)
+		if var_12_1 == Activity123Enum.PreCondition.OpenTime then
+			gohelper.setActive(arg_12_1.gounlocked, false)
+			gohelper.setActive(arg_12_1.gounlockedtime, true)
 
-			if slot6.showSec then
-				slot1.txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime_custom"), string.format("%s%s", TimeUtil.secondToRoughTime2(slot6.remainTime)))
+			if var_12_2.showSec then
+				local var_12_4 = string.format("%s%s", TimeUtil.secondToRoughTime2(var_12_2.remainTime))
+
+				arg_12_1.txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime_custom"), var_12_4)
 			else
-				slot1.txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime"), slot6.day)
+				arg_12_1.txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime"), var_12_2.day)
 			end
 		else
-			gohelper.setActive(slot1.gounlocked, true)
-			gohelper.setActive(slot1.gounlockedtime, false)
+			gohelper.setActive(arg_12_1.gounlocked, true)
+			gohelper.setActive(arg_12_1.gounlockedtime, false)
 		end
 	end
 end
 
-function slot0.initItems(slot0)
-	for slot4 = 1, uv0.UI_Item_Count do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "go_center/go_item" .. tostring(slot4))
-		slot5.txtname = gohelper.findChildText(slot5.go, "#txt_name")
-		slot5.imageicon = gohelper.findChildImage(slot5.go, "#image_icon")
-		slot5.imagechapter = gohelper.findChildImage(slot5.go, "image_chapternum")
-		slot5.gofinish = gohelper.findChild(slot5.go, "#image_finish")
-		slot5.gofighting = gohelper.findChild(slot5.go, "#image_fighting")
-		slot5.goprogress = gohelper.findChild(slot5.go, "#go_progress")
-		slot5.txtpassround = gohelper.findChildText(slot5.go, "#image_finish/#txt_time")
-		slot5.btnclick = gohelper.findChildButton(slot5.go, "btn_click")
-		slot9 = slot0
+function var_0_0.initItems(arg_13_0)
+	for iter_13_0 = 1, var_0_0.UI_Item_Count do
+		local var_13_0 = arg_13_0:getUserDataTb_()
 
-		slot5.btnclick:AddClickListener(slot0.onClickIndex, slot9, slot4)
+		var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "go_center/go_item" .. tostring(iter_13_0))
+		var_13_0.txtname = gohelper.findChildText(var_13_0.go, "#txt_name")
+		var_13_0.imageicon = gohelper.findChildImage(var_13_0.go, "#image_icon")
+		var_13_0.imagechapter = gohelper.findChildImage(var_13_0.go, "image_chapternum")
+		var_13_0.gofinish = gohelper.findChild(var_13_0.go, "#image_finish")
+		var_13_0.gofighting = gohelper.findChild(var_13_0.go, "#image_fighting")
+		var_13_0.goprogress = gohelper.findChild(var_13_0.go, "#go_progress")
+		var_13_0.txtpassround = gohelper.findChildText(var_13_0.go, "#image_finish/#txt_time")
+		var_13_0.btnclick = gohelper.findChildButton(var_13_0.go, "btn_click")
 
-		slot5.progressActives = slot0:getUserDataTb_()
-		slot5.progressDeactives = slot0:getUserDataTb_()
-		slot5.progressHard = slot0:getUserDataTb_()
+		var_13_0.btnclick:AddClickListener(arg_13_0.onClickIndex, arg_13_0, iter_13_0)
 
-		for slot9 = 1, Activity123Enum.SeasonStageStepCount do
-			slot5.progressActives[slot9] = gohelper.findChild(slot5.go, string.format("#go_progress/#go_progress%s/light", slot9))
-			slot5.progressDeactives[slot9] = gohelper.findChild(slot5.go, string.format("#go_progress/#go_progress%s/dark", slot9))
-			slot5.progressHard[slot9] = gohelper.findChild(slot5.go, string.format("#go_progress/#go_progress%s/red", slot9))
+		var_13_0.progressActives = arg_13_0:getUserDataTb_()
+		var_13_0.progressDeactives = arg_13_0:getUserDataTb_()
+		var_13_0.progressHard = arg_13_0:getUserDataTb_()
+
+		for iter_13_1 = 1, Activity123Enum.SeasonStageStepCount do
+			var_13_0.progressActives[iter_13_1] = gohelper.findChild(var_13_0.go, string.format("#go_progress/#go_progress%s/light", iter_13_1))
+			var_13_0.progressDeactives[iter_13_1] = gohelper.findChild(var_13_0.go, string.format("#go_progress/#go_progress%s/dark", iter_13_1))
+			var_13_0.progressHard[iter_13_1] = gohelper.findChild(var_13_0.go, string.format("#go_progress/#go_progress%s/red", iter_13_1))
 		end
 
-		slot5.gounlocked = gohelper.findChild(slot5.go, "#image_locked")
-		slot5.gounlockedtime = gohelper.findChild(slot5.go, "#image_unlockedtime")
-		slot5.txtunlocktime = gohelper.findChildText(slot5.go, "#image_unlockedtime/#txt_time")
-		slot5.animtor = slot5.go:GetComponent(gohelper.Type_Animator)
-		slot0._entryList[slot4] = slot5
+		var_13_0.gounlocked = gohelper.findChild(var_13_0.go, "#image_locked")
+		var_13_0.gounlockedtime = gohelper.findChild(var_13_0.go, "#image_unlockedtime")
+		var_13_0.txtunlocktime = gohelper.findChildText(var_13_0.go, "#image_unlockedtime/#txt_time")
+		var_13_0.animtor = var_13_0.go:GetComponent(gohelper.Type_Animator)
+		arg_13_0._entryList[iter_13_0] = var_13_0
 	end
 end
 
-function slot0.handleGetActInfo(slot0, slot1)
-	if slot0.viewParam.actId == slot1 then
-		slot0:refreshUI()
+function var_0_0.handleGetActInfo(arg_14_0, arg_14_1)
+	if arg_14_0.viewParam.actId == arg_14_1 then
+		arg_14_0:refreshUI()
 	end
 end
 
-function slot0.onClickIndex(slot0, slot1)
+function var_0_0.onClickIndex(arg_15_0, arg_15_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.season123_stage_click)
 
-	slot5 = Season123Model.instance:getActInfo()
+	local var_15_0 = Season123EntryOverviewModel.instance:getActId()
+	local var_15_1 = Season123Config.instance:getStageCos(var_15_0)[arg_15_1]
+	local var_15_2 = Season123Model.instance:getActInfo()
 
-	if not Season123Config.instance:getStageCos(Season123EntryOverviewModel.instance:getActId())[slot1] then
+	if not var_15_1 then
 		return
 	end
 
 	Season123Controller.instance:dispatchEvent(Season123Event.LocateToStage, {
-		actId = slot2,
-		stageId = slot4.stage
+		actId = var_15_0,
+		stageId = var_15_1.stage
 	})
-	slot0:_btncloseOnClick()
+	arg_15_0:_btncloseOnClick()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0._viewAnimator:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(slot0._closeCallback, slot0, 0.17)
+function var_0_0._btncloseOnClick(arg_16_0)
+	arg_16_0._viewAnimator:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(arg_16_0._closeCallback, arg_16_0, 0.17)
 end
 
-function slot0._closeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._closeCallback(arg_17_0)
+	arg_17_0:closeThis()
 end
 
-function slot0._playUnlockAnim(slot0)
-	for slot6, slot7 in pairs(slot0._entryList) do
-		slot8 = Season123Config.instance:getStageCos(Season123EntryOverviewModel.instance:getActId())[slot6]
+function var_0_0._playUnlockAnim(arg_18_0)
+	local var_18_0 = Season123EntryOverviewModel.instance:getActId()
+	local var_18_1 = Season123Config.instance:getStageCos(var_18_0)
 
-		if Season123ProgressUtils.isStageUnlock(slot0.viewParam.actId, slot8.stage) and Season123EntryModel.instance:needPlayUnlockAnim1(slot0.viewParam.actId, slot8.stage) then
-			slot7.animtor:Play("unlock", 0, 0)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._entryList) do
+		local var_18_2 = var_18_1[iter_18_0]
+		local var_18_3 = Season123ProgressUtils.isStageUnlock(arg_18_0.viewParam.actId, var_18_2.stage)
+		local var_18_4 = Season123EntryModel.instance:needPlayUnlockAnim1(arg_18_0.viewParam.actId, var_18_2.stage)
+
+		if var_18_3 and var_18_4 then
+			iter_18_1.animtor:Play("unlock", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.season123_stage_unlock)
-			Season123EntryModel.instance:setAlreadyUnLock1(slot0.viewParam.actId, slot8.stage)
+			Season123EntryModel.instance:setAlreadyUnLock1(arg_18_0.viewParam.actId, var_18_2.stage)
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,745 +1,846 @@
-module("modules.logic.enemyinfo.view.EnemyInfoRightView", package.seeall)
+﻿module("modules.logic.enemyinfo.view.EnemyInfoRightView", package.seeall)
 
-slot0 = class("EnemyInfoRightView", BaseView)
+local var_0_0 = class("EnemyInfoRightView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_right_container/#go_header/head/#simage_icon")
-	slot0._imagecareer = gohelper.findChildImage(slot0.viewGO, "#go_right_container/#go_header/head/#image_career")
-	slot0._gobosstag = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_header/head/#go_bosstag")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_right_container/#go_header/#txt_name")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "#go_right_container/#go_header/#txt_level")
-	slot0._txthp = gohelper.findChildText(slot0.viewGO, "#go_right_container/#go_header/hp/hp_label/image_HPFrame/#txt_hp")
-	slot0._gomultihp = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_header/hp/hp_label/image_HPFrame/#go_multihp")
-	slot0._gomultihpitem = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_header/hp/hp_label/image_HPFrame/#go_multihp/#go_hpitem")
-	slot0._btnshowAttribute = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_right_container/#go_line1/#btn_showAttribute")
-	slot0._gonormalIcon = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_line1/#btn_showAttribute/#go_normalIcon")
-	slot0._goselectIcon = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_line1/#btn_showAttribute/#go_selectIcon")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#txt_desc")
-	slot0._goattribute = gohelper.findChild(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_attribute")
-	slot0._gobossspecialskill = gohelper.findChild(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_bossspecialskill")
-	slot0._goresistance = gohelper.findChild(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_resistance")
-	slot0._gopassiveskill = gohelper.findChild(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_passiveskill")
-	slot0._gopassiveskillitem = gohelper.findChild(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_passiveskill/#go_passiveskillitem")
-	slot0._gonoskill = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_skill_container/#go_noskill")
-	slot0._goskill = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_skill_container/#go_skill")
-	slot0._gosuperitem = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_skill_container/#go_skill/card/scrollview/viewport/content/supers/#go_superitem")
-	slot0._goskillitem = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_skill_container/#go_skill/card/scrollview/viewport/content/skills/#go_skillitem")
-	slot0._gopassivedescitempool = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_passivedescitem_pool")
-	slot0._gopassivedescitem = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_passivedescitem_pool/#go_descitem")
-	slot0._gobufftipitem = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_bufftip/#scroll_buff/viewport/content/#go_buffitem")
-	slot0._gomultistage = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_header/#go_multi_stage")
-	slot0._gostageitem = gohelper.findChild(slot0.viewGO, "#go_right_container/#go_header/#go_multi_stage/#go_stage_item")
-	slot0._btnstress = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_right_container/#go_header/#btn_stress")
-	slot0._gostress = slot0._btnstress.gameObject
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_right_container/#go_header/head/#simage_icon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_right_container/#go_header/head/#image_career")
+	arg_1_0._gobosstag = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_header/head/#go_bosstag")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_right_container/#go_header/#txt_name")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_right_container/#go_header/#txt_level")
+	arg_1_0._txthp = gohelper.findChildText(arg_1_0.viewGO, "#go_right_container/#go_header/hp/hp_label/image_HPFrame/#txt_hp")
+	arg_1_0._gomultihp = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_header/hp/hp_label/image_HPFrame/#go_multihp")
+	arg_1_0._gomultihpitem = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_header/hp/hp_label/image_HPFrame/#go_multihp/#go_hpitem")
+	arg_1_0._btnshowAttribute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_right_container/#go_line1/#btn_showAttribute")
+	arg_1_0._gonormalIcon = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_line1/#btn_showAttribute/#go_normalIcon")
+	arg_1_0._goselectIcon = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_line1/#btn_showAttribute/#go_selectIcon")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#txt_desc")
+	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_attribute")
+	arg_1_0._gobossspecialskill = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_bossspecialskill")
+	arg_1_0._goresistance = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_resistance")
+	arg_1_0._gopassiveskill = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_passiveskill")
+	arg_1_0._gopassiveskillitem = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_passiveskill/#go_passiveskillitem")
+	arg_1_0._gonoskill = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_skill_container/#go_noskill")
+	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_skill_container/#go_skill")
+	arg_1_0._gosuperitem = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_skill_container/#go_skill/card/scrollview/viewport/content/supers/#go_superitem")
+	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_skill_container/#go_skill/card/scrollview/viewport/content/skills/#go_skillitem")
+	arg_1_0._gopassivedescitempool = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_passivedescitem_pool")
+	arg_1_0._gopassivedescitem = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_passivedescitem_pool/#go_descitem")
+	arg_1_0._gobufftipitem = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container/#go_bufftip/#scroll_buff/viewport/content/#go_buffitem")
+	arg_1_0._gomultistage = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_header/#go_multi_stage")
+	arg_1_0._gostageitem = gohelper.findChild(arg_1_0.viewGO, "#go_right_container/#go_header/#go_multi_stage/#go_stage_item")
+	arg_1_0._btnstress = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_right_container/#go_header/#btn_stress")
+	arg_1_0._gostress = arg_1_0._btnstress.gameObject
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnshowAttribute:AddClickListener(slot0._btnshowAttributeOnClick, slot0)
-	slot0._btnstress:AddClickListener(slot0.onClickStress, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnshowAttribute:AddClickListener(arg_2_0._btnshowAttributeOnClick, arg_2_0)
+	arg_2_0._btnstress:AddClickListener(arg_2_0.onClickStress, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnshowAttribute:RemoveClickListener()
-	slot0._btnstress:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnshowAttribute:RemoveClickListener()
+	arg_3_0._btnstress:RemoveClickListener()
 end
 
-slot0.AttrIdList = {
+var_0_0.AttrIdList = {
 	CharacterEnum.AttrId.Attack,
 	CharacterEnum.AttrId.Technic,
 	CharacterEnum.AttrId.Defense,
 	CharacterEnum.AttrId.Mdefense
 }
 
-function slot0.onClickStress(slot0)
-	StressTipController.instance:openMonsterStressTip(slot0.monsterConfig)
+function var_0_0.onClickStress(arg_4_0)
+	StressTipController.instance:openMonsterStressTip(arg_4_0.monsterConfig)
 end
 
-function slot0._btnshowAttributeOnClick(slot0)
-	slot0.isShowAttributeInfo = not slot0.isShowAttributeInfo
+function var_0_0._btnshowAttributeOnClick(arg_5_0)
+	arg_5_0.isShowAttributeInfo = not arg_5_0.isShowAttributeInfo
 
-	slot0:refreshAttributeAndDescVisible()
+	arg_5_0:refreshAttributeAndDescVisible()
 end
 
-function slot0.onClickBossSpecialSkill(slot0)
-	if not slot0.isBoss then
+function var_0_0.onClickBossSpecialSkill(arg_6_0)
+	if not arg_6_0.isBoss then
 		return
 	end
 
-	slot3 = CameraMgr.instance:getUICamera()
-	slot4, slot5 = recthelper.worldPosToAnchorPos2(slot0.specialSkillItemList[slot0.useBossSpecialSkillCount].go:GetComponent(gohelper.Type_Transform).position, slot0.tipContainerRectTr, slot3, slot3)
+	local var_6_0 = arg_6_0.specialSkillItemList[arg_6_0.useBossSpecialSkillCount].go:GetComponent(gohelper.Type_Transform)
+	local var_6_1 = CameraMgr.instance:getUICamera()
+	local var_6_2, var_6_3 = recthelper.worldPosToAnchorPos2(var_6_0.position, arg_6_0.tipContainerRectTr, var_6_1, var_6_1)
 
-	recthelper.setAnchor(slot0.buffTipRectTr, slot4 + EnemyInfoEnum.BuffTipOffset.x, slot5 + EnemyInfoEnum.BuffTipOffset.y)
+	recthelper.setAnchor(arg_6_0.buffTipRectTr, var_6_2 + EnemyInfoEnum.BuffTipOffset.x, var_6_3 + EnemyInfoEnum.BuffTipOffset.y)
 	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.ShowTip, EnemyInfoEnum.Tip.BuffTip)
 end
 
-function slot0.onClickSkillItem(slot0, slot1)
-	slot0.tipViewParam = slot0.tipViewParam or {}
-	slot0.tipViewParam.super = slot1.super
-	slot0.tipViewParam.skillIdList = slot1.skillIdList
-	slot0.tipViewParam.monsterName = FightConfig.instance:getMonsterName(slot0.monsterConfig)
+function var_0_0.onClickSkillItem(arg_7_0, arg_7_1)
+	arg_7_0.tipViewParam = arg_7_0.tipViewParam or {}
+	arg_7_0.tipViewParam.super = arg_7_1.super
+	arg_7_0.tipViewParam.skillIdList = arg_7_1.skillIdList
+	arg_7_0.tipViewParam.monsterName = FightConfig.instance:getMonsterName(arg_7_0.monsterConfig)
 
-	ViewMgr.instance:openView(ViewName.SkillTipView3, slot0.tipViewParam)
+	ViewMgr.instance:openView(ViewName.SkillTipView3, arg_7_0.tipViewParam)
 end
 
-function slot0.onClickStageItem(slot0, slot1)
-	if slot0.monsterId == slot1.monsterId then
+function var_0_0.onClickStageItem(arg_8_0, arg_8_1)
+	if arg_8_0.monsterId == arg_8_1.monsterId then
 		return
 	end
 
-	slot0.monsterId = slot1.monsterId
-	slot0.monsterConfig = lua_monster.configDict[slot0.monsterId]
-	slot0.skinConfig = FightConfig.instance:getSkinCO(slot0.monsterConfig.skinId)
+	arg_8_0.monsterId = arg_8_1.monsterId
+	arg_8_0.monsterConfig = lua_monster.configDict[arg_8_0.monsterId]
+	arg_8_0.skinConfig = FightConfig.instance:getSkinCO(arg_8_0.monsterConfig.skinId)
 
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.initAttributeItemList(slot0)
-	slot0.attributeItemList = {}
+function var_0_0.initAttributeItemList(arg_9_0)
+	arg_9_0.attributeItemList = {}
 
-	for slot4 = 1, 4 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0._goattribute, "attribute" .. slot4)
-		slot5.icon = gohelper.findChildImage(slot5.go, "icon")
-		slot5.name = gohelper.findChildText(slot5.go, "name")
-		slot5.rate = gohelper.findChildImage(slot5.go, "rate")
+	for iter_9_0 = 1, 4 do
+		local var_9_0 = arg_9_0:getUserDataTb_()
 
-		table.insert(slot0.attributeItemList, slot5)
+		var_9_0.go = gohelper.findChild(arg_9_0._goattribute, "attribute" .. iter_9_0)
+		var_9_0.icon = gohelper.findChildImage(var_9_0.go, "icon")
+		var_9_0.name = gohelper.findChildText(var_9_0.go, "name")
+		var_9_0.rate = gohelper.findChildImage(var_9_0.go, "rate")
+
+		table.insert(arg_9_0.attributeItemList, var_9_0)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0.rectTrRight = gohelper.findChild(slot0.viewGO, "#go_right_container"):GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrViewGo = slot0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	slot0._gEnemyDesc = slot0._txtdesc.gameObject
-	slot0.isShowAttributeInfo = false
-	slot0.tipContainerRectTr = gohelper.findChildComponent(slot0.viewGO, "#go_tip_container", gohelper.Type_RectTransform)
-	slot0.buffTipRectTr = gohelper.findChildComponent(slot0.viewGO, "#go_tip_container/#go_bufftip", gohelper.Type_RectTransform)
-	slot0.specialSkillItemList = {}
-	slot0.goBossSpecialSkillItem = gohelper.findChild(slot0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_bossspecialskill/item")
-	slot0.scrollEnemyInfo = gohelper.findChildScrollRect(slot0.viewGO, "#go_right_container/#scroll_enemyinfo")
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0.rectTrRight = gohelper.findChild(arg_10_0.viewGO, "#go_right_container"):GetComponent(gohelper.Type_RectTransform)
+	arg_10_0.rectTrViewGo = arg_10_0.viewGO:GetComponent(gohelper.Type_RectTransform)
+	arg_10_0._gEnemyDesc = arg_10_0._txtdesc.gameObject
+	arg_10_0.isShowAttributeInfo = false
+	arg_10_0.tipContainerRectTr = gohelper.findChildComponent(arg_10_0.viewGO, "#go_tip_container", gohelper.Type_RectTransform)
+	arg_10_0.buffTipRectTr = gohelper.findChildComponent(arg_10_0.viewGO, "#go_tip_container/#go_bufftip", gohelper.Type_RectTransform)
+	arg_10_0.specialSkillItemList = {}
+	arg_10_0.goBossSpecialSkillItem = gohelper.findChild(arg_10_0.viewGO, "#go_right_container/#scroll_enemyinfo/Viewport/#go_enemyinfoconent/#go_bossspecialskill/item")
+	arg_10_0.scrollEnemyInfo = gohelper.findChildScrollRect(arg_10_0.viewGO, "#go_right_container/#scroll_enemyinfo")
 
-	gohelper.setActive(slot0.goBossSpecialSkillItem, false)
-	gohelper.setActive(slot0._gosuperitem, false)
-	gohelper.setActive(slot0._goskillitem, false)
-	gohelper.setActive(slot0._gopassiveskillitem, false)
-	gohelper.setActive(slot0._gobufftipitem, false)
-	gohelper.setActive(slot0._gostageitem, false)
+	gohelper.setActive(arg_10_0.goBossSpecialSkillItem, false)
+	gohelper.setActive(arg_10_0._gosuperitem, false)
+	gohelper.setActive(arg_10_0._goskillitem, false)
+	gohelper.setActive(arg_10_0._gopassiveskillitem, false)
+	gohelper.setActive(arg_10_0._gobufftipitem, false)
+	gohelper.setActive(arg_10_0._gostageitem, false)
 
-	slot0.bossSpecialClick = gohelper.getClickWithDefaultAudio(slot0._gobossspecialskill)
+	arg_10_0.bossSpecialClick = gohelper.getClickWithDefaultAudio(arg_10_0._gobossspecialskill)
 
-	slot0.bossSpecialClick:AddClickListener(slot0.onClickBossSpecialSkill, slot0)
+	arg_10_0.bossSpecialClick:AddClickListener(arg_10_0.onClickBossSpecialSkill, arg_10_0)
 
-	slot0.passiveSkillItemList = {}
-	slot0.passiveDescItemPool = {}
-	slot0.passiveDescItemList = {}
-	slot0.trPassiveDescItemPool = slot0._gopassivedescitempool:GetComponent(gohelper.Type_Transform)
+	arg_10_0.passiveSkillItemList = {}
+	arg_10_0.passiveDescItemPool = {}
+	arg_10_0.passiveDescItemList = {}
+	arg_10_0.trPassiveDescItemPool = arg_10_0._gopassivedescitempool:GetComponent(gohelper.Type_Transform)
 
-	gohelper.setActive(slot0._gopassivedescitempool, false)
+	gohelper.setActive(arg_10_0._gopassivedescitempool, false)
 
-	slot0.smallSkillItemList = {}
-	slot0.superSkillItemList = {}
-	slot0.buffTipItemList = {}
-	slot0.stageItemList = {}
-	slot0.multiHpGoList = slot0:getUserDataTb_()
+	arg_10_0.smallSkillItemList = {}
+	arg_10_0.superSkillItemList = {}
+	arg_10_0.buffTipItemList = {}
+	arg_10_0.stageItemList = {}
+	arg_10_0.multiHpGoList = arg_10_0:getUserDataTb_()
 
-	table.insert(slot0.multiHpGoList, slot0._gomultihpitem)
-	slot0:initAttributeItemList()
-	slot0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.SelectMonsterChange, slot0.onSelectMonsterChange, slot0)
+	table.insert(arg_10_0.multiHpGoList, arg_10_0._gomultihpitem)
+	arg_10_0:initAttributeItemList()
+	arg_10_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.SelectMonsterChange, arg_10_0.onSelectMonsterChange, arg_10_0)
 
-	if DungeonModel.instance.curSendChapterId then
-		slot0.isSimple = DungeonConfig.instance:getChapterCO(slot2) and slot3.type == DungeonEnum.ChapterType.Simple
+	local var_10_0 = DungeonModel.instance.curSendChapterId
+
+	if var_10_0 then
+		local var_10_1 = DungeonConfig.instance:getChapterCO(var_10_0)
+
+		arg_10_0.isSimple = var_10_1 and var_10_1.type == DungeonEnum.ChapterType.Simple
 	end
 
-	slot0.resistanceComp = FightEntityResistanceComp.New(slot0._goresistance, slot0.viewContainer)
+	arg_10_0.resistanceComp = FightEntityResistanceComp.New(arg_10_0._goresistance, arg_10_0.viewContainer)
 
-	slot0.resistanceComp:onInitView()
-	slot0.resistanceComp:setParent(slot0.scrollEnemyInfo.gameObject)
+	arg_10_0.resistanceComp:onInitView()
+	arg_10_0.resistanceComp:setParent(arg_10_0.scrollEnemyInfo.gameObject)
 end
 
-function slot0.onSelectMonsterChange(slot0, slot1)
-	if not slot1 then
+function var_0_0.onSelectMonsterChange(arg_11_0, arg_11_1)
+	if not arg_11_1 then
 		return
 	end
 
-	if slot0.monsterId == slot1.monsterId then
+	local var_11_0 = arg_11_1.monsterId
+
+	if arg_11_0.monsterId == var_11_0 then
 		return
 	end
 
-	slot0.monsterId = slot2
-	slot0.isBoss = slot1.isBoss
-	slot0.monsterConfig = lua_monster.configDict[slot0.monsterId]
-	slot0.skinConfig = FightConfig.instance:getSkinCO(slot0.monsterConfig.skinId)
+	arg_11_0.monsterId = var_11_0
+	arg_11_0.isBoss = arg_11_1.isBoss
+	arg_11_0.monsterConfig = lua_monster.configDict[arg_11_0.monsterId]
+	arg_11_0.skinConfig = FightConfig.instance:getSkinCO(arg_11_0.monsterConfig.skinId)
 
-	slot0:refreshUI()
+	arg_11_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshAttributeAndDescVisible()
-	slot0:refreshHeader()
-	slot0:refreshDesc()
-	slot0:refreshAttribute()
-	slot0:refreshBossSpecialSkill()
-	slot0:refreshResistance()
-	slot0:refreshPassiveSkill()
-	slot0:refreshSkill()
+function var_0_0.refreshUI(arg_12_0)
+	arg_12_0:refreshAttributeAndDescVisible()
+	arg_12_0:refreshHeader()
+	arg_12_0:refreshDesc()
+	arg_12_0:refreshAttribute()
+	arg_12_0:refreshBossSpecialSkill()
+	arg_12_0:refreshResistance()
+	arg_12_0:refreshPassiveSkill()
+	arg_12_0:refreshSkill()
 end
 
-function slot0.refreshAttributeAndDescVisible(slot0)
-	gohelper.setActive(slot0._gonormalIcon, not slot0.isShowAttributeInfo)
-	gohelper.setActive(slot0._gEnemyDesc, not slot0.isShowAttributeInfo)
-	gohelper.setActive(slot0._goselectIcon, slot0.isShowAttributeInfo)
-	gohelper.setActive(slot0._goattribute, slot0.isShowAttributeInfo)
+function var_0_0.refreshAttributeAndDescVisible(arg_13_0)
+	gohelper.setActive(arg_13_0._gonormalIcon, not arg_13_0.isShowAttributeInfo)
+	gohelper.setActive(arg_13_0._gEnemyDesc, not arg_13_0.isShowAttributeInfo)
+	gohelper.setActive(arg_13_0._goselectIcon, arg_13_0.isShowAttributeInfo)
+	gohelper.setActive(arg_13_0._goattribute, arg_13_0.isShowAttributeInfo)
 
-	slot0.scrollEnemyInfo.verticalNormalizedPosition = 1
+	arg_13_0.scrollEnemyInfo.verticalNormalizedPosition = 1
 end
 
-function slot0.refreshHeader(slot0)
-	slot1 = slot0.monsterConfig
+function var_0_0.refreshHeader(arg_14_0)
+	local var_14_0 = arg_14_0.monsterConfig
+	local var_14_1 = arg_14_0.skinConfig
 
-	gohelper.getSingleImage(slot0._imageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot0.skinConfig.headIcon))
-	IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(slot1.heartVariantId), slot0._imageicon)
-	gohelper.setActive(slot0._gobosstag, slot0.isBoss)
-	UISpriteSetMgr.instance:setEnemyInfoSprite(slot0._imagecareer, "sxy_" .. slot1.career)
+	gohelper.getSingleImage(arg_14_0._imageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_14_1.headIcon))
+	IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(var_14_0.heartVariantId), arg_14_0._imageicon)
+	gohelper.setActive(arg_14_0._gobosstag, arg_14_0.isBoss)
+	UISpriteSetMgr.instance:setEnemyInfoSprite(arg_14_0._imagecareer, "sxy_" .. var_14_0.career)
 
-	slot0._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(slot1[slot0.isSimple and "levelEasy" or "level"])
-	slot0._txtname.text = FightConfig.instance:getMonsterName(slot1)
+	local var_14_2 = arg_14_0.isSimple and "levelEasy" or "level"
 
-	if slot0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Rouge then
-		slot0._txthp.text = tonumber(CharacterDataConfig.instance:getMonsterHp(slot1.id, slot0.isSimple)) and math.floor(slot6 * slot0.viewParam.hpFixRate) or slot5
+	arg_14_0._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(var_14_0[var_14_2])
+	arg_14_0._txtname.text = FightConfig.instance:getMonsterName(var_14_0)
+
+	if arg_14_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Rouge then
+		local var_14_3 = arg_14_0.viewParam.hpFixRate
+		local var_14_4 = CharacterDataConfig.instance:getMonsterHp(var_14_0.id, arg_14_0.isSimple)
+		local var_14_5 = tonumber(var_14_4)
+
+		arg_14_0._txthp.text = var_14_5 and math.floor(var_14_5 * var_14_3) or var_14_4
 	else
-		slot0._txthp.text = CharacterDataConfig.instance:getMonsterHp(slot1.id, slot0.isSimple)
+		arg_14_0._txthp.text = CharacterDataConfig.instance:getMonsterHp(var_14_0.id, arg_14_0.isSimple)
 	end
 
-	slot0:refreshMultiHp()
-	slot0:refreshMultiStage()
-	slot0:refreshStress()
+	arg_14_0:refreshMultiHp()
+	arg_14_0:refreshMultiStage()
+	arg_14_0:refreshStress()
 end
 
-function slot0.refreshMultiHp(slot0)
-	if not FightConfig.instance:getMultiHpListByMonsterId(slot0.monsterConfig.id, slot0.isSimple) then
-		gohelper.setActive(slot0._gomultihp, false)
+function var_0_0.refreshMultiHp(arg_15_0)
+	local var_15_0 = FightConfig.instance:getMultiHpListByMonsterId(arg_15_0.monsterConfig.id, arg_15_0.isSimple)
+
+	if not var_15_0 then
+		gohelper.setActive(arg_15_0._gomultihp, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gomultihp, true)
+	gohelper.setActive(arg_15_0._gomultihp, true)
 
-	for slot6 = 1, #slot1 do
-		if not slot0.multiHpGoList[slot6] then
-			table.insert(slot0.multiHpGoList, gohelper.cloneInPlace(slot0._gomultihpitem))
+	local var_15_1 = #var_15_0
+
+	for iter_15_0 = 1, var_15_1 do
+		local var_15_2 = arg_15_0.multiHpGoList[iter_15_0]
+
+		if not var_15_2 then
+			var_15_2 = gohelper.cloneInPlace(arg_15_0._gomultihpitem)
+
+			table.insert(arg_15_0.multiHpGoList, var_15_2)
 		end
 
-		gohelper.setActive(slot7, true)
+		gohelper.setActive(var_15_2, true)
 	end
 
-	for slot6 = slot2 + 1, #slot0.multiHpGoList do
-		gohelper.setActive(slot0.multiHpGoList[slot6], false)
+	for iter_15_1 = var_15_1 + 1, #arg_15_0.multiHpGoList do
+		gohelper.setActive(arg_15_0.multiHpGoList[iter_15_1], false)
 	end
 end
 
-function slot0.refreshMultiStage(slot0)
-	if slot0.viewParam.tabEnum ~= EnemyInfoEnum.TabEnum.BossRush then
-		gohelper.setActive(slot0._gomultistage, false)
+function var_0_0.refreshMultiStage(arg_16_0)
+	if arg_16_0.viewParam.tabEnum ~= EnemyInfoEnum.TabEnum.BossRush then
+		gohelper.setActive(arg_16_0._gomultistage, false)
 
 		return
 	end
 
-	if not lua_activity128_countboss.configDict[slot0.enemyInfoMo.battleId] then
-		logError("activity128_countboss config not found battle id : " .. tostring(slot1))
-		gohelper.setActive(slot0._gomultistage, false)
+	local var_16_0 = arg_16_0.enemyInfoMo.battleId
+	local var_16_1 = lua_activity128_countboss.configDict[var_16_0]
+
+	if not var_16_1 then
+		logError("activity128_countboss config not found battle id : " .. tostring(var_16_0))
+		gohelper.setActive(arg_16_0._gomultistage, false)
 
 		return
 	end
 
-	if #string.splitToNumber(slot2.monsterId, "#") <= 1 then
-		gohelper.setActive(slot0._gomultistage, false)
+	local var_16_2 = string.splitToNumber(var_16_1.monsterId, "#")
+	local var_16_3 = #var_16_2
+
+	if var_16_3 <= 1 then
+		gohelper.setActive(arg_16_0._gomultistage, false)
 
 		return
 	end
 
-	if not tabletool.indexOf(slot3, slot0.monsterId) then
-		gohelper.setActive(slot0._gomultistage, false)
+	if not tabletool.indexOf(var_16_2, arg_16_0.monsterId) then
+		gohelper.setActive(arg_16_0._gomultistage, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gomultistage, true)
+	gohelper.setActive(arg_16_0._gomultistage, true)
 
-	for slot8, slot9 in ipairs(slot3) do
-		if not slot0.stageItemList[slot8] then
-			table.insert(slot0.stageItemList, slot0:getStageItem())
+	for iter_16_0, iter_16_1 in ipairs(var_16_2) do
+		local var_16_4 = arg_16_0.stageItemList[iter_16_0]
+
+		if not var_16_4 then
+			var_16_4 = arg_16_0:getStageItem()
+
+			table.insert(arg_16_0.stageItemList, var_16_4)
 		end
 
-		gohelper.setActive(slot10.go, true)
+		gohelper.setActive(var_16_4.go, true)
 
-		slot10.txt.text = GameUtil.getRomanNums(slot8)
-		slot10.monsterId = slot9
-		slot11 = slot9 == slot0.monsterId
-		slot10.txt.color = slot11 and EnemyInfoEnum.StageColor.Select or EnemyInfoEnum.StageColor.Normal
+		var_16_4.txt.text = GameUtil.getRomanNums(iter_16_0)
+		var_16_4.monsterId = iter_16_1
 
-		gohelper.setActive(slot10.goSelect, slot11)
+		local var_16_5 = iter_16_1 == arg_16_0.monsterId
 
-		if slot11 then
-			if slot8 == slot4 then
-				UISpriteSetMgr.instance:setEnemyInfoSprite(slot10.imageSelect, "fight_btn_grip2")
+		var_16_4.txt.color = var_16_5 and EnemyInfoEnum.StageColor.Select or EnemyInfoEnum.StageColor.Normal
+
+		gohelper.setActive(var_16_4.goSelect, var_16_5)
+
+		if var_16_5 then
+			if iter_16_0 == var_16_3 then
+				UISpriteSetMgr.instance:setEnemyInfoSprite(var_16_4.imageSelect, "fight_btn_grip2")
 			else
-				UISpriteSetMgr.instance:setEnemyInfoSprite(slot10.imageSelect, "fight_btn_grip1")
+				UISpriteSetMgr.instance:setEnemyInfoSprite(var_16_4.imageSelect, "fight_btn_grip1")
 			end
 		end
 	end
 
-	for slot8 = slot4 + 1, #slot0.stageItemList do
-		gohelper.setActive(slot0.stageItemList[slot8].go, false)
+	for iter_16_2 = var_16_3 + 1, #arg_16_0.stageItemList do
+		gohelper.setActive(arg_16_0.stageItemList[iter_16_2].go, false)
 	end
 end
 
-function slot0.refreshStress(slot0)
-	if slot0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Rouge and not (RougeModel.instance:getRougeInfo() and slot1:checkMountDlc()) then
-		gohelper.setActive(slot0._gostress, false)
+function var_0_0.refreshStress(arg_17_0)
+	if arg_17_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Rouge then
+		local var_17_0 = RougeModel.instance:getRougeInfo()
+
+		if not (var_17_0 and var_17_0:checkMountDlc()) then
+			gohelper.setActive(arg_17_0._gostress, false)
+
+			return
+		end
+	end
+
+	local var_17_1 = lua_monster_skill_template.configDict[arg_17_0.monsterConfig.skillTemplate]
+	local var_17_2 = var_17_1 and var_17_1.maxStress
+
+	gohelper.setActive(arg_17_0._gostress, var_17_2 and var_17_2 > 0)
+end
+
+function var_0_0.getStageItem(arg_18_0)
+	local var_18_0 = arg_18_0:getUserDataTb_()
+
+	var_18_0.go = gohelper.cloneInPlace(arg_18_0._gostageitem)
+	var_18_0.txt = gohelper.findChildText(var_18_0.go, "#txt_stage")
+	var_18_0.imageSelect = gohelper.findChildImage(var_18_0.go, "#image_select")
+	var_18_0.goSelect = gohelper.findChild(var_18_0.go, "#image_select")
+	var_18_0.click = gohelper.getClickWithDefaultAudio(var_18_0.go)
+
+	var_18_0.click:AddClickListener(arg_18_0.onClickStageItem, arg_18_0, var_18_0)
+
+	return var_18_0
+end
+
+function var_0_0.refreshDesc(arg_19_0)
+	local var_19_0 = FightConfig.instance:getNewMonsterConfig(arg_19_0.monsterConfig)
+
+	arg_19_0._txtdesc.text = var_19_0 and arg_19_0.monsterConfig.highPriorityDes or arg_19_0.monsterConfig.des
+end
+
+function var_0_0.refreshAttribute(arg_20_0)
+	local var_20_0 = lua_monster_skill_template.configDict[arg_20_0.monsterConfig.skillTemplate]
+	local var_20_1 = var_20_0.template
+
+	if string.nilorempty(var_20_1) then
+		logError(string.format("怪物模板表, id ： %s, 没有配置属性倾向。", var_20_0.id))
 
 		return
 	end
 
-	slot2 = lua_monster_skill_template.configDict[slot0.monsterConfig.skillTemplate] and slot1.maxStress
+	local var_20_2 = string.splitToNumber(var_20_1, "#")
 
-	gohelper.setActive(slot0._gostress, slot2 and slot2 > 0)
-end
+	table.insert(var_20_2, 2, table.remove(var_20_2, 4))
 
-function slot0.getStageItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gostageitem)
-	slot1.txt = gohelper.findChildText(slot1.go, "#txt_stage")
-	slot1.imageSelect = gohelper.findChildImage(slot1.go, "#image_select")
-	slot1.goSelect = gohelper.findChild(slot1.go, "#image_select")
-	slot1.click = gohelper.getClickWithDefaultAudio(slot1.go)
+	for iter_20_0, iter_20_1 in ipairs(var_0_0.AttrIdList) do
+		local var_20_3 = arg_20_0.attributeItemList[iter_20_0]
+		local var_20_4 = HeroConfig.instance:getHeroAttributeCO(iter_20_1)
 
-	slot1.click:AddClickListener(slot0.onClickStageItem, slot0, slot1)
+		var_20_3.name.text = var_20_4.name
 
-	return slot1
-end
-
-function slot0.refreshDesc(slot0)
-	slot0._txtdesc.text = FightConfig.instance:getNewMonsterConfig(slot0.monsterConfig) and slot0.monsterConfig.highPriorityDes or slot0.monsterConfig.des
-end
-
-function slot0.refreshAttribute(slot0)
-	if string.nilorempty(lua_monster_skill_template.configDict[slot0.monsterConfig.skillTemplate].template) then
-		logError(string.format("怪物模板表, id ： %s, 没有配置属性倾向。", slot1.id))
-
-		return
-	end
-
-	slot3 = string.splitToNumber(slot2, "#")
-	slot7 = table.remove
-	slot8 = slot3
-
-	table.insert(slot3, 2, slot7(slot8, 4))
-
-	for slot7, slot8 in ipairs(uv0.AttrIdList) do
-		slot9 = slot0.attributeItemList[slot7]
-		slot10 = HeroConfig.instance:getHeroAttributeCO(slot8)
-		slot9.name.text = slot10.name
-
-		UISpriteSetMgr.instance:setCommonSprite(slot9.icon, "icon_att_" .. slot10.id)
-		UISpriteSetMgr.instance:setCommonSprite(slot9.rate, "sx_" .. slot3[slot7], true)
+		UISpriteSetMgr.instance:setCommonSprite(var_20_3.icon, "icon_att_" .. var_20_4.id)
+		UISpriteSetMgr.instance:setCommonSprite(var_20_3.rate, "sx_" .. var_20_2[iter_20_0], true)
 	end
 end
 
-function slot0.recycleAllBossSpecialSkillItem(slot0)
-	for slot4, slot5 in ipairs(slot0.specialSkillItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.recycleAllBossSpecialSkillItem(arg_21_0)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.specialSkillItemList) do
+		gohelper.setActive(iter_21_1.go, false)
 	end
 
-	slot0.useBossSpecialSkillCount = 0
+	arg_21_0.useBossSpecialSkillCount = 0
 end
 
-function slot0.getBossSpecialSkillItem(slot0)
-	if slot0.useBossSpecialSkillCount < #slot0.specialSkillItemList then
-		slot0.useBossSpecialSkillCount = slot0.useBossSpecialSkillCount + 1
-		slot1 = slot0.specialSkillItemList[slot0.useBossSpecialSkillCount]
+function var_0_0.getBossSpecialSkillItem(arg_22_0)
+	if arg_22_0.useBossSpecialSkillCount < #arg_22_0.specialSkillItemList then
+		arg_22_0.useBossSpecialSkillCount = arg_22_0.useBossSpecialSkillCount + 1
 
-		gohelper.setActive(slot1.go, true)
+		local var_22_0 = arg_22_0.specialSkillItemList[arg_22_0.useBossSpecialSkillCount]
 
-		return slot1
+		gohelper.setActive(var_22_0.go, true)
+
+		return var_22_0
 	end
 
-	slot0.useBossSpecialSkillCount = slot0.useBossSpecialSkillCount + 1
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0.goBossSpecialSkillItem)
-	slot1.gotag = gohelper.findChild(slot1.go, "tag")
-	slot1.txttag = gohelper.findChildText(slot1.go, "tag/#txt_tag")
-	slot1.imageicon = gohelper.findChildImage(slot1.go, "icon")
+	arg_22_0.useBossSpecialSkillCount = arg_22_0.useBossSpecialSkillCount + 1
 
-	gohelper.setActive(slot1.go, true)
-	table.insert(slot0.specialSkillItemList, slot1)
+	local var_22_1 = arg_22_0:getUserDataTb_()
 
-	return slot1
+	var_22_1.go = gohelper.cloneInPlace(arg_22_0.goBossSpecialSkillItem)
+	var_22_1.gotag = gohelper.findChild(var_22_1.go, "tag")
+	var_22_1.txttag = gohelper.findChildText(var_22_1.go, "tag/#txt_tag")
+	var_22_1.imageicon = gohelper.findChildImage(var_22_1.go, "icon")
+
+	gohelper.setActive(var_22_1.go, true)
+	table.insert(arg_22_0.specialSkillItemList, var_22_1)
+
+	return var_22_1
 end
 
-function slot0.refreshBossSpecialSkill(slot0)
-	gohelper.setActive(slot0._gobossspecialskill, slot0.isBoss)
+function var_0_0.refreshBossSpecialSkill(arg_23_0)
+	gohelper.setActive(arg_23_0._gobossspecialskill, arg_23_0.isBoss)
 
-	if slot0.isBoss then
-		slot0:recycleAllBossSpecialSkillItem()
-		slot0:recycleBuffTipItem()
+	if arg_23_0.isBoss then
+		arg_23_0:recycleAllBossSpecialSkillItem()
+		arg_23_0:recycleBuffTipItem()
 
-		for slot5, slot6 in ipairs(FightConfig.instance:getPassiveSkillsAfterUIFilter(slot0.monsterConfig.id)) do
-			if lua_skill_specialbuff.configDict[slot6] and slot7.isSpecial == 1 then
-				if string.nilorempty(slot7.lv) then
-					gohelper.setActive(slot0:getBossSpecialSkillItem().gotag, false)
+		local var_23_0 = FightConfig.instance:getPassiveSkillsAfterUIFilter(arg_23_0.monsterConfig.id)
+
+		for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+			local var_23_1 = lua_skill_specialbuff.configDict[iter_23_1]
+
+			if var_23_1 and var_23_1.isSpecial == 1 then
+				local var_23_2 = arg_23_0:getBossSpecialSkillItem()
+
+				if string.nilorempty(var_23_1.lv) then
+					gohelper.setActive(var_23_2.gotag, false)
 				else
-					gohelper.setActive(slot8.gotag, true)
+					gohelper.setActive(var_23_2.gotag, true)
 
-					slot8.txttag.text = slot7.lv
+					var_23_2.txttag.text = var_23_1.lv
 				end
 
-				UISpriteSetMgr.instance:setFightPassiveSprite(slot8.imageicon, slot7.icon)
+				UISpriteSetMgr.instance:setFightPassiveSprite(var_23_2.imageicon, var_23_1.icon)
 
-				slot9 = slot0:getBuffTipItem()
-				slot10 = lua_skill.configDict[slot6]
-				slot9.name.text = slot10.name
-				slot9.desc.text = SkillHelper.getSkillDesc(FightConfig.instance:getMonsterName(slot0.monsterConfig), slot10, "#CC492F", "#485E92")
+				local var_23_3 = arg_23_0:getBuffTipItem()
+				local var_23_4 = lua_skill.configDict[iter_23_1]
 
-				gohelper.setActive(slot9.goline, true)
-				UISpriteSetMgr.instance:setFightPassiveSprite(slot9.bufficon, slot7.icon)
+				var_23_3.name.text = var_23_4.name
+
+				local var_23_5 = FightConfig.instance:getMonsterName(arg_23_0.monsterConfig)
+
+				var_23_3.desc.text = SkillHelper.getSkillDesc(var_23_5, var_23_4, "#CC492F", "#485E92")
+
+				gohelper.setActive(var_23_3.goline, true)
+				UISpriteSetMgr.instance:setFightPassiveSprite(var_23_3.bufficon, var_23_1.icon)
 			end
 		end
 
-		if slot0.useBuffTipCount > 0 then
-			gohelper.setActive(slot0.buffTipItemList[slot0.useBuffTipCount].goline, false)
+		if arg_23_0.useBuffTipCount > 0 then
+			local var_23_6 = arg_23_0.buffTipItemList[arg_23_0.useBuffTipCount]
+
+			gohelper.setActive(var_23_6.goline, false)
 		else
-			gohelper.setActive(slot0._gobossspecialskill, false)
+			gohelper.setActive(arg_23_0._gobossspecialskill, false)
 		end
 	end
 end
 
-function slot0.refreshResistance(slot0)
-	slot2 = slot0.monsterConfig.skillTemplate and lua_monster_skill_template.configDict[slot1]
-	slot3 = slot2 and slot2.resistance
+function var_0_0.refreshResistance(arg_24_0)
+	local var_24_0 = arg_24_0.monsterConfig.skillTemplate
+	local var_24_1 = var_24_0 and lua_monster_skill_template.configDict[var_24_0]
+	local var_24_2 = var_24_1 and var_24_1.resistance
+	local var_24_3 = var_24_2 and lua_resistances_attribute.configDict[var_24_2]
 
-	if slot3 and lua_resistances_attribute.configDict[slot3] then
-		slot0.resistanceDict = slot0.resistanceDict or {}
+	if var_24_3 then
+		arg_24_0.resistanceDict = arg_24_0.resistanceDict or {}
 
-		tabletool.clear(slot0.resistanceDict)
+		tabletool.clear(arg_24_0.resistanceDict)
 
-		for slot8, slot9 in pairs(FightEnum.Resistance) do
-			if slot4[slot8] > 0 then
-				slot0.resistanceDict[slot8] = slot10
+		for iter_24_0, iter_24_1 in pairs(FightEnum.Resistance) do
+			local var_24_4 = var_24_3[iter_24_0]
+
+			if var_24_4 > 0 then
+				arg_24_0.resistanceDict[iter_24_0] = var_24_4
 			end
 		end
 
-		slot0.resistanceComp:refresh(slot0.resistanceDict)
+		arg_24_0.resistanceComp:refresh(arg_24_0.resistanceDict)
 	else
-		slot0.resistanceComp:refresh(nil)
+		arg_24_0.resistanceComp:refresh(nil)
 	end
 end
 
-function slot0.refreshPassiveSkill(slot0)
-	slot0:recycleAllPassiveSkillItem()
-	slot0:recycleAllPassiveDescItem()
+function var_0_0.refreshPassiveSkill(arg_25_0)
+	arg_25_0:recycleAllPassiveSkillItem()
+	arg_25_0:recycleAllPassiveDescItem()
 
-	slot0.exitsTagNameDict = slot0.exitsTagNameDict or {}
+	arg_25_0.exitsTagNameDict = arg_25_0.exitsTagNameDict or {}
 
-	tabletool.clear(slot0.exitsTagNameDict)
+	tabletool.clear(arg_25_0.exitsTagNameDict)
 
-	for slot5, slot6 in ipairs(FightConfig.instance:getPassiveSkillsAfterUIFilter(slot0.monsterConfig.id)) do
-		if slot0.isBoss then
-			if not lua_skill_specialbuff.configDict[slot6] or slot7.isSpecial ~= 1 then
-				slot0:refreshOnePassiveSkill(slot6)
+	local var_25_0 = FightConfig.instance:getPassiveSkillsAfterUIFilter(arg_25_0.monsterConfig.id)
+
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		if arg_25_0.isBoss then
+			local var_25_1 = lua_skill_specialbuff.configDict[iter_25_1]
+
+			if not var_25_1 or var_25_1.isSpecial ~= 1 then
+				arg_25_0:refreshOnePassiveSkill(iter_25_1)
 			end
 		else
-			slot0:refreshOnePassiveSkill(slot6)
+			arg_25_0:refreshOnePassiveSkill(iter_25_1)
 		end
 	end
 end
 
-function slot0.refreshOnePassiveSkill(slot0, slot1)
-	slot2 = slot0:getPassiveSkillItem()
-	slot3 = lua_skill.configDict[slot1]
-	slot2.name.text = slot3.name
-	slot6 = slot0:getPassiveDescItem()
+function var_0_0.refreshOnePassiveSkill(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getPassiveSkillItem()
+	local var_26_1 = lua_skill.configDict[arg_26_1]
 
-	slot6.tr:SetParent(slot2.tr)
+	var_26_0.name.text = var_26_1.name
 
-	slot6.txt.text = SkillHelper.buildDesc(FightConfig.instance:getSkillEffectDesc(FightConfig.instance:getMonsterName(slot0.monsterConfig), slot3))
+	local var_26_2 = FightConfig.instance:getMonsterName(arg_26_0.monsterConfig)
+	local var_26_3 = FightConfig.instance:getSkillEffectDesc(var_26_2, var_26_1)
+	local var_26_4 = arg_26_0:getPassiveDescItem()
+
+	var_26_4.tr:SetParent(var_26_0.tr)
+
+	var_26_4.txt.text = SkillHelper.buildDesc(var_26_3)
 end
 
-function slot0.getPassiveSkillItem(slot0)
-	if slot0.usePassiveSkillItemCount < #slot0.passiveSkillItemList then
-		slot0.usePassiveSkillItemCount = slot0.usePassiveSkillItemCount + 1
-		slot1 = slot0.passiveSkillItemList[slot0.usePassiveSkillItemCount]
+function var_0_0.getPassiveSkillItem(arg_27_0)
+	if arg_27_0.usePassiveSkillItemCount < #arg_27_0.passiveSkillItemList then
+		arg_27_0.usePassiveSkillItemCount = arg_27_0.usePassiveSkillItemCount + 1
 
-		recthelper.setWidth(slot1.rectTr, slot0.layoutMo.enemyInfoWidth)
-		gohelper.setActive(slot1.go, true)
+		local var_27_0 = arg_27_0.passiveSkillItemList[arg_27_0.usePassiveSkillItemCount]
 
-		return slot1
+		recthelper.setWidth(var_27_0.rectTr, arg_27_0.layoutMo.enemyInfoWidth)
+		gohelper.setActive(var_27_0.go, true)
+
+		return var_27_0
 	end
 
-	slot0.usePassiveSkillItemCount = slot0.usePassiveSkillItemCount + 1
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gopassiveskillitem)
-	slot1.tr = slot1.go:GetComponent(gohelper.Type_Transform)
-	slot1.rectTr = slot1.go:GetComponent(gohelper.Type_RectTransform)
+	arg_27_0.usePassiveSkillItemCount = arg_27_0.usePassiveSkillItemCount + 1
 
-	recthelper.setWidth(slot1.rectTr, slot0.layoutMo.enemyInfoWidth)
+	local var_27_1 = arg_27_0:getUserDataTb_()
 
-	slot1.name = gohelper.findChildText(slot1.go, "bg/name")
+	var_27_1.go = gohelper.cloneInPlace(arg_27_0._gopassiveskillitem)
+	var_27_1.tr = var_27_1.go:GetComponent(gohelper.Type_Transform)
+	var_27_1.rectTr = var_27_1.go:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(slot1.go, true)
-	table.insert(slot0.passiveSkillItemList, slot1)
+	recthelper.setWidth(var_27_1.rectTr, arg_27_0.layoutMo.enemyInfoWidth)
 
-	return slot1
+	var_27_1.name = gohelper.findChildText(var_27_1.go, "bg/name")
+
+	gohelper.setActive(var_27_1.go, true)
+	table.insert(arg_27_0.passiveSkillItemList, var_27_1)
+
+	return var_27_1
 end
 
-function slot0.recycleAllPassiveSkillItem(slot0)
-	for slot4, slot5 in ipairs(slot0.passiveSkillItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.recycleAllPassiveSkillItem(arg_28_0)
+	for iter_28_0, iter_28_1 in ipairs(arg_28_0.passiveSkillItemList) do
+		gohelper.setActive(iter_28_1.go, false)
 	end
 
-	slot0.usePassiveSkillItemCount = 0
+	arg_28_0.usePassiveSkillItemCount = 0
 end
 
-function slot0.getPassiveDescItem(slot0)
-	if #slot0.passiveDescItemPool > 0 then
-		slot1 = table.remove(slot0.passiveDescItemPool)
+function var_0_0.getPassiveDescItem(arg_29_0)
+	if #arg_29_0.passiveDescItemPool > 0 then
+		local var_29_0 = table.remove(arg_29_0.passiveDescItemPool)
 
-		gohelper.setActive(slot1.go, true)
-		recthelper.setWidth(slot1.rectTrTxt, slot0.layoutMo.enemyInfoWidth - EnemyInfoEnum.SkillDescLeftMargin)
-		table.insert(slot0.passiveDescItemList, slot1)
+		gohelper.setActive(var_29_0.go, true)
+		recthelper.setWidth(var_29_0.rectTrTxt, arg_29_0.layoutMo.enemyInfoWidth - EnemyInfoEnum.SkillDescLeftMargin)
+		table.insert(arg_29_0.passiveDescItemList, var_29_0)
 
-		return slot1
+		return var_29_0
 	end
 
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gopassivedescitem)
-	slot1.tr = slot1.go:GetComponent(gohelper.Type_Transform)
-	slot1.txt = gohelper.findChildText(slot1.go, "#txt_desc")
-	slot1.rectTrTxt = slot1.txt:GetComponent(gohelper.Type_RectTransform)
+	local var_29_1 = arg_29_0:getUserDataTb_()
 
-	recthelper.setWidth(slot1.rectTrTxt, slot0.layoutMo.enemyInfoWidth - EnemyInfoEnum.SkillDescLeftMargin)
-	gohelper.setActive(slot1.go, true)
-	SkillHelper.addHyperLinkClick(slot1.txt, slot0.onClickPassiveHyper, slot0)
-	table.insert(slot0.passiveDescItemList, slot1)
+	var_29_1.go = gohelper.cloneInPlace(arg_29_0._gopassivedescitem)
+	var_29_1.tr = var_29_1.go:GetComponent(gohelper.Type_Transform)
+	var_29_1.txt = gohelper.findChildText(var_29_1.go, "#txt_desc")
+	var_29_1.rectTrTxt = var_29_1.txt:GetComponent(gohelper.Type_RectTransform)
 
-	return slot1
+	recthelper.setWidth(var_29_1.rectTrTxt, arg_29_0.layoutMo.enemyInfoWidth - EnemyInfoEnum.SkillDescLeftMargin)
+	gohelper.setActive(var_29_1.go, true)
+	SkillHelper.addHyperLinkClick(var_29_1.txt, arg_29_0.onClickPassiveHyper, arg_29_0)
+	table.insert(arg_29_0.passiveDescItemList, var_29_1)
+
+	return var_29_1
 end
 
-slot0.Interval = 80
+var_0_0.Interval = 80
 
-function slot0.onClickPassiveHyper(slot0, slot1, slot2)
-	slot0.commonBuffTipAnchorPos = slot0.commonBuffTipAnchorPos or Vector2()
+function var_0_0.onClickPassiveHyper(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = recthelper.getWidth(arg_30_0.rectTrViewGo) / 2
+	local var_30_1 = recthelper.getAnchorX(arg_30_0.rectTrRight)
 
-	slot0.commonBuffTipAnchorPos:Set(-(recthelper.getWidth(slot0.rectTrViewGo) / 2 - recthelper.getAnchorX(slot0.rectTrRight)) + uv0.Interval, 269.28)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(slot1), slot0.commonBuffTipAnchorPos, CommonBuffTipEnum.Pivot.Right)
+	arg_30_0.commonBuffTipAnchorPos = arg_30_0.commonBuffTipAnchorPos or Vector2()
+
+	arg_30_0.commonBuffTipAnchorPos:Set(-(var_30_0 - var_30_1) + var_0_0.Interval, 269.28)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_30_1), arg_30_0.commonBuffTipAnchorPos, CommonBuffTipEnum.Pivot.Right)
 end
 
-function slot0.recycleAllPassiveDescItem(slot0)
-	for slot4, slot5 in ipairs(slot0.passiveDescItemList) do
-		gohelper.setActive(slot5.go, false)
-		slot5.tr:SetParent(slot0.trPassiveDescItemPool)
-		table.insert(slot0.passiveDescItemPool, slot5)
+function var_0_0.recycleAllPassiveDescItem(arg_31_0)
+	for iter_31_0, iter_31_1 in ipairs(arg_31_0.passiveDescItemList) do
+		gohelper.setActive(iter_31_1.go, false)
+		iter_31_1.tr:SetParent(arg_31_0.trPassiveDescItemPool)
+		table.insert(arg_31_0.passiveDescItemPool, iter_31_1)
 	end
 
-	tabletool.clear(slot0.passiveDescItemList)
+	tabletool.clear(arg_31_0.passiveDescItemList)
 end
 
-function slot0.refreshSkill(slot0)
-	slot0:refreshSmallSkill()
-	slot0:refreshSuperSkill()
+function var_0_0.refreshSkill(arg_32_0)
+	arg_32_0:refreshSmallSkill()
+	arg_32_0:refreshSuperSkill()
 
-	slot1 = not string.nilorempty(slot0.monsterConfig.activeSkill) or #slot0.monsterConfig.uniqueSkill > 0
+	local var_32_0 = not string.nilorempty(arg_32_0.monsterConfig.activeSkill) or #arg_32_0.monsterConfig.uniqueSkill > 0
 
-	gohelper.setActive(slot0._gonoskill, not slot1)
-	gohelper.setActive(slot0._goskill, slot1)
+	gohelper.setActive(arg_32_0._gonoskill, not var_32_0)
+	gohelper.setActive(arg_32_0._goskill, var_32_0)
 end
 
-function slot0.refreshSmallSkill(slot0)
-	slot0:recycleAllSmallSkill()
+function var_0_0.refreshSmallSkill(arg_33_0)
+	arg_33_0:recycleAllSmallSkill()
 
-	if string.nilorempty(slot0.monsterConfig.activeSkill) then
+	if string.nilorempty(arg_33_0.monsterConfig.activeSkill) then
 		return
 	end
 
-	for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.monsterConfig.activeSkill, true)) do
-		table.remove(slot6, 1)
+	local var_33_0 = GameUtil.splitString2(arg_33_0.monsterConfig.activeSkill, true)
 
-		slot8 = lua_skill.configDict[slot6[1]]
-		slot9 = slot0:getSmallSkillItem()
+	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
+		table.remove(iter_33_1, 1)
 
-		slot9.icon:LoadImage(ResUrl.getSkillIcon(slot8.icon))
-		slot9.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot8.showTag))
+		local var_33_1 = iter_33_1[1]
+		local var_33_2 = lua_skill.configDict[var_33_1]
+		local var_33_3 = arg_33_0:getSmallSkillItem()
 
-		slot9.super = false
-		slot9.skillIdList = slot6
+		var_33_3.icon:LoadImage(ResUrl.getSkillIcon(var_33_2.icon))
+		var_33_3.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_33_2.showTag))
+
+		var_33_3.super = false
+		var_33_3.skillIdList = iter_33_1
 	end
 end
 
-function slot0.refreshSuperSkill(slot0)
-	slot0:recycleAllSuperSkill()
+function var_0_0.refreshSuperSkill(arg_34_0)
+	arg_34_0:recycleAllSuperSkill()
 
-	for slot5, slot6 in ipairs(slot0.monsterConfig.uniqueSkill) do
-		slot7 = slot0:getSuperSkillItem()
-		slot8 = lua_skill.configDict[slot6]
+	local var_34_0 = arg_34_0.monsterConfig.uniqueSkill
 
-		slot7.icon:LoadImage(ResUrl.getSkillIcon(slot8.icon))
-		slot7.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. slot8.showTag))
+	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+		local var_34_1 = arg_34_0:getSuperSkillItem()
+		local var_34_2 = lua_skill.configDict[iter_34_1]
 
-		slot7.super = true
+		var_34_1.icon:LoadImage(ResUrl.getSkillIcon(var_34_2.icon))
+		var_34_1.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_34_2.showTag))
 
-		table.insert(slot7.skillIdList, slot6)
+		var_34_1.super = true
+
+		table.insert(var_34_1.skillIdList, iter_34_1)
 	end
 end
 
-function slot0.recycleAllSmallSkill(slot0)
-	for slot4, slot5 in ipairs(slot0.smallSkillItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.recycleAllSmallSkill(arg_35_0)
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0.smallSkillItemList) do
+		gohelper.setActive(iter_35_1.go, false)
 	end
 
-	slot0.useSmallSkillItemCount = 0
+	arg_35_0.useSmallSkillItemCount = 0
 end
 
-function slot0.getSmallSkillItem(slot0)
-	if slot0.useSmallSkillItemCount < #slot0.smallSkillItemList then
-		slot0.useSmallSkillItemCount = slot0.useSmallSkillItemCount + 1
-		slot1 = slot0.smallSkillItemList[slot0.useSmallSkillItemCount]
+function var_0_0.getSmallSkillItem(arg_36_0)
+	if arg_36_0.useSmallSkillItemCount < #arg_36_0.smallSkillItemList then
+		arg_36_0.useSmallSkillItemCount = arg_36_0.useSmallSkillItemCount + 1
 
-		gohelper.setActive(slot1.go, true)
+		local var_36_0 = arg_36_0.smallSkillItemList[arg_36_0.useSmallSkillItemCount]
 
-		return slot1
+		gohelper.setActive(var_36_0.go, true)
+
+		return var_36_0
 	end
 
-	slot0.useSmallSkillItemCount = slot0.useSmallSkillItemCount + 1
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._goskillitem)
-	slot1.icon = gohelper.findChildSingleImage(slot1.go, "imgIcon")
-	slot1.tag = gohelper.findChildSingleImage(slot1.go, "tag/tagIcon")
-	slot1.btn = gohelper.findChildButtonWithAudio(slot1.go, "bg", AudioEnum.UI.Play_UI_Activity_tips)
+	arg_36_0.useSmallSkillItemCount = arg_36_0.useSmallSkillItemCount + 1
 
-	slot1.btn:AddClickListener(slot0.onClickSkillItem, slot0, slot1)
-	gohelper.setActive(slot1.go, true)
-	table.insert(slot0.smallSkillItemList, slot1)
+	local var_36_1 = arg_36_0:getUserDataTb_()
 
-	return slot1
+	var_36_1.go = gohelper.cloneInPlace(arg_36_0._goskillitem)
+	var_36_1.icon = gohelper.findChildSingleImage(var_36_1.go, "imgIcon")
+	var_36_1.tag = gohelper.findChildSingleImage(var_36_1.go, "tag/tagIcon")
+	var_36_1.btn = gohelper.findChildButtonWithAudio(var_36_1.go, "bg", AudioEnum.UI.Play_UI_Activity_tips)
+
+	var_36_1.btn:AddClickListener(arg_36_0.onClickSkillItem, arg_36_0, var_36_1)
+	gohelper.setActive(var_36_1.go, true)
+	table.insert(arg_36_0.smallSkillItemList, var_36_1)
+
+	return var_36_1
 end
 
-function slot0.recycleAllSuperSkill(slot0)
-	for slot4, slot5 in ipairs(slot0.superSkillItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.recycleAllSuperSkill(arg_37_0)
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0.superSkillItemList) do
+		gohelper.setActive(iter_37_1.go, false)
 
-		slot5.super = nil
+		iter_37_1.super = nil
 
-		tabletool.clear(slot5.skillIdList)
+		tabletool.clear(iter_37_1.skillIdList)
 	end
 
-	slot0.useSuperSkillItemCount = 0
+	arg_37_0.useSuperSkillItemCount = 0
 end
 
-function slot0.getSuperSkillItem(slot0)
-	if slot0.useSuperSkillItemCount < #slot0.superSkillItemList then
-		slot0.useSuperSkillItemCount = slot0.useSuperSkillItemCount + 1
-		slot1 = slot0.superSkillItemList[slot0.useSuperSkillItemCount]
+function var_0_0.getSuperSkillItem(arg_38_0)
+	if arg_38_0.useSuperSkillItemCount < #arg_38_0.superSkillItemList then
+		arg_38_0.useSuperSkillItemCount = arg_38_0.useSuperSkillItemCount + 1
 
-		gohelper.setActive(slot1.go, true)
+		local var_38_0 = arg_38_0.superSkillItemList[arg_38_0.useSuperSkillItemCount]
 
-		return slot1
+		gohelper.setActive(var_38_0.go, true)
+
+		return var_38_0
 	end
 
-	slot0.useSuperSkillItemCount = slot0.useSuperSkillItemCount + 1
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gosuperitem)
-	slot1.icon = gohelper.findChildSingleImage(slot1.go, "imgIcon")
-	slot1.tag = gohelper.findChildSingleImage(slot1.go, "tag/tagIcon")
-	slot1.btn = gohelper.findChildButtonWithAudio(slot1.go, "bg", AudioEnum.UI.Play_UI_Activity_tips)
+	arg_38_0.useSuperSkillItemCount = arg_38_0.useSuperSkillItemCount + 1
 
-	slot1.btn:AddClickListener(slot0.onClickSkillItem, slot0, slot1)
+	local var_38_1 = arg_38_0:getUserDataTb_()
 
-	slot1.skillIdList = {}
+	var_38_1.go = gohelper.cloneInPlace(arg_38_0._gosuperitem)
+	var_38_1.icon = gohelper.findChildSingleImage(var_38_1.go, "imgIcon")
+	var_38_1.tag = gohelper.findChildSingleImage(var_38_1.go, "tag/tagIcon")
+	var_38_1.btn = gohelper.findChildButtonWithAudio(var_38_1.go, "bg", AudioEnum.UI.Play_UI_Activity_tips)
 
-	gohelper.setActive(slot1.go, true)
-	table.insert(slot0.superSkillItemList, slot1)
+	var_38_1.btn:AddClickListener(arg_38_0.onClickSkillItem, arg_38_0, var_38_1)
 
-	return slot1
+	var_38_1.skillIdList = {}
+
+	gohelper.setActive(var_38_1.go, true)
+	table.insert(arg_38_0.superSkillItemList, var_38_1)
+
+	return var_38_1
 end
 
-function slot0.recycleBuffTipItem(slot0)
-	for slot4, slot5 in ipairs(slot0.buffTipItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.recycleBuffTipItem(arg_39_0)
+	for iter_39_0, iter_39_1 in ipairs(arg_39_0.buffTipItemList) do
+		gohelper.setActive(iter_39_1.go, false)
 	end
 
-	slot0.useBuffTipCount = 0
+	arg_39_0.useBuffTipCount = 0
 end
 
-function slot0.getBuffTipItem(slot0)
-	if slot0.useBuffTipCount < #slot0.buffTipItemList then
-		slot0.useBuffTipCount = slot0.useBuffTipCount + 1
-		slot1 = slot0.buffTipItemList[slot0.useBuffTipCount]
+function var_0_0.getBuffTipItem(arg_40_0)
+	if arg_40_0.useBuffTipCount < #arg_40_0.buffTipItemList then
+		arg_40_0.useBuffTipCount = arg_40_0.useBuffTipCount + 1
 
-		gohelper.setActive(slot1.go, true)
-		gohelper.setActive(slot1.goline, true)
+		local var_40_0 = arg_40_0.buffTipItemList[arg_40_0.useBuffTipCount]
 
-		return slot1
+		gohelper.setActive(var_40_0.go, true)
+		gohelper.setActive(var_40_0.goline, true)
+
+		return var_40_0
 	end
 
-	slot0.useBuffTipCount = slot0.useBuffTipCount + 1
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gobufftipitem)
-	slot1.bufficon = gohelper.findChildImage(slot1.go, "title/simage_icon")
-	slot1.goline = gohelper.findChild(slot1.go, "txt_desc/image_line")
-	slot1.name = gohelper.findChildText(slot1.go, "title/txt_name")
-	slot1.desc = gohelper.findChildText(slot1.go, "txt_desc")
+	arg_40_0.useBuffTipCount = arg_40_0.useBuffTipCount + 1
 
-	SkillHelper.addHyperLinkClick(slot1.desc, slot0.onClickHyperLink, slot0)
-	gohelper.setActive(slot1.go, true)
-	gohelper.setActive(slot1.goline, true)
-	table.insert(slot0.buffTipItemList, slot1)
+	local var_40_1 = arg_40_0:getUserDataTb_()
 
-	return slot1
+	var_40_1.go = gohelper.cloneInPlace(arg_40_0._gobufftipitem)
+	var_40_1.bufficon = gohelper.findChildImage(var_40_1.go, "title/simage_icon")
+	var_40_1.goline = gohelper.findChild(var_40_1.go, "txt_desc/image_line")
+	var_40_1.name = gohelper.findChildText(var_40_1.go, "title/txt_name")
+	var_40_1.desc = gohelper.findChildText(var_40_1.go, "txt_desc")
+
+	SkillHelper.addHyperLinkClick(var_40_1.desc, arg_40_0.onClickHyperLink, arg_40_0)
+	gohelper.setActive(var_40_1.go, true)
+	gohelper.setActive(var_40_1.goline, true)
+	table.insert(arg_40_0.buffTipItemList, var_40_1)
+
+	return var_40_1
 end
 
-function slot0.onClickHyperLink(slot0, slot1, slot2)
-	CommonBuffTipController:openCommonTipViewWithCustomPosCallback(tonumber(slot1), slot0.onSetScrollCallback, slot0)
+function var_0_0.onClickHyperLink(arg_41_0, arg_41_1, arg_41_2)
+	CommonBuffTipController:openCommonTipViewWithCustomPosCallback(tonumber(arg_41_1), arg_41_0.onSetScrollCallback, arg_41_0)
 end
 
-function slot0.onSetScrollCallback(slot0, slot1, slot2)
-	slot2.pivot = CommonBuffTipEnum.Pivot.Left
+function var_0_0.onSetScrollCallback(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = recthelper.getWidth(arg_42_2)
 
-	recthelper.setAnchor(slot2, recthelper.getAnchorX(slot0.buffTipRectTr) - recthelper.getWidth(slot2) - 10, recthelper.getAnchorY(slot0.buffTipRectTr))
+	arg_42_2.pivot = CommonBuffTipEnum.Pivot.Left
+
+	local var_42_1 = recthelper.getAnchorX(arg_42_0.buffTipRectTr)
+	local var_42_2 = recthelper.getAnchorY(arg_42_0.buffTipRectTr)
+	local var_42_3 = 10
+	local var_42_4 = var_42_1 - var_42_0 - var_42_3
+
+	recthelper.setAnchor(arg_42_2, var_42_4, var_42_2)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_43_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.bossSpecialClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_44_0)
+	arg_44_0.bossSpecialClick:RemoveClickListener()
 
-	for slot4, slot5 in ipairs(slot0.smallSkillItemList) do
-		slot5.btn:RemoveClickListener()
-		slot5.icon:UnLoadImage()
-		slot5.tag:UnLoadImage()
+	for iter_44_0, iter_44_1 in ipairs(arg_44_0.smallSkillItemList) do
+		iter_44_1.btn:RemoveClickListener()
+		iter_44_1.icon:UnLoadImage()
+		iter_44_1.tag:UnLoadImage()
 	end
 
-	slot0.smallSkillItemList = nil
+	arg_44_0.smallSkillItemList = nil
 
-	for slot4, slot5 in ipairs(slot0.superSkillItemList) do
-		slot5.btn:RemoveClickListener()
-		slot5.icon:UnLoadImage()
-		slot5.tag:UnLoadImage()
+	for iter_44_2, iter_44_3 in ipairs(arg_44_0.superSkillItemList) do
+		iter_44_3.btn:RemoveClickListener()
+		iter_44_3.icon:UnLoadImage()
+		iter_44_3.tag:UnLoadImage()
 	end
 
-	slot0.superSkillItemList = nil
+	arg_44_0.superSkillItemList = nil
 
-	for slot4, slot5 in ipairs(slot0.stageItemList) do
-		slot5.click:RemoveClickListener()
+	for iter_44_4, iter_44_5 in ipairs(arg_44_0.stageItemList) do
+		iter_44_5.click:RemoveClickListener()
 	end
 
-	slot0.resistanceComp:destroy()
+	arg_44_0.resistanceComp:destroy()
 
-	slot0.resistanceComp = nil
-	slot0.stageItemList = nil
+	arg_44_0.resistanceComp = nil
+	arg_44_0.stageItemList = nil
 end
 
-return slot0
+return var_0_0

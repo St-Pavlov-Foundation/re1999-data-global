@@ -1,53 +1,57 @@
-module("modules.logic.explore.controller.ExploreStepController", package.seeall)
+﻿module("modules.logic.explore.controller.ExploreStepController", package.seeall)
 
-slot0 = class("ExploreStepController", BaseController)
+local var_0_0 = class("ExploreStepController", BaseController)
 
-function slot0.initMap(slot0)
-	if slot0._map then
+function var_0_0.initMap(arg_1_0)
+	if arg_1_0._map then
 		return
 	end
 
-	slot0._map = ExploreController.instance:getMap()
-	slot0._hero = slot0._map:getHero()
-	slot0._mapId = ExploreModel.instance:getMapId()
-	slot1, slot2 = ExploreMapModel.instance:getHeroPos()
-	slot0._cachePos = {
-		x = slot1,
-		y = slot2
+	arg_1_0._map = ExploreController.instance:getMap()
+	arg_1_0._hero = arg_1_0._map:getHero()
+	arg_1_0._mapId = ExploreModel.instance:getMapId()
+
+	local var_1_0, var_1_1 = ExploreMapModel.instance:getHeroPos()
+
+	arg_1_0._cachePos = {
+		x = var_1_0,
+		y = var_1_1
 	}
-	slot0._stepList = {}
+	arg_1_0._stepList = {}
 end
 
-function slot0.onExploreStepPush(slot0, slot1)
+function var_0_0.onExploreStepPush(arg_2_0, arg_2_1)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Explore then
 		return
 	end
 
-	slot0:initMap()
+	arg_2_0:initMap()
 
-	for slot5, slot6 in ipairs(slot1.steps) do
-		slot7 = cjson.decode(slot6.param)
-		slot8 = #slot0._stepList
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.steps) do
+		local var_2_0 = cjson.decode(iter_2_1.param)
+		local var_2_1 = #arg_2_0._stepList
 
-		while slot0._stepList[slot8] do
-			if slot0._stepList[slot8].alwaysLast then
-				slot8 = slot8 - 1
+		while arg_2_0._stepList[var_2_1] do
+			if arg_2_0._stepList[var_2_1].alwaysLast then
+				var_2_1 = var_2_1 - 1
 			else
 				break
 			end
 		end
 
-		if slot7.stepType == ExploreEnum.StepType.UpdateUnit or slot7.stepType == ExploreEnum.StepType.DelUnit then
-			slot7.interact = cjson.decode(slot7.interact)
+		if var_2_0.stepType == ExploreEnum.StepType.UpdateUnit or var_2_0.stepType == ExploreEnum.StepType.DelUnit then
+			var_2_0.interact = cjson.decode(var_2_0.interact)
 		end
 
-		if slot7.stepType == ExploreEnum.StepType.UpdateUnit then
-			for slot12 = #slot0._stepList, 1, -1 do
-				if slot0._stepList[slot12].stepType == ExploreEnum.StepType.UpdateUnit then
-					if slot13.interact.id == slot7.interact.id then
-						table.remove(slot0._stepList, slot12)
+		if var_2_0.stepType == ExploreEnum.StepType.UpdateUnit then
+			for iter_2_2 = #arg_2_0._stepList, 1, -1 do
+				local var_2_2 = arg_2_0._stepList[iter_2_2]
 
-						slot8 = slot8 - 1
+				if var_2_2.stepType == ExploreEnum.StepType.UpdateUnit then
+					if var_2_2.interact.id == var_2_0.interact.id then
+						table.remove(arg_2_0._stepList, iter_2_2)
+
+						var_2_1 = var_2_1 - 1
 
 						break
 					end
@@ -57,39 +61,39 @@ function slot0.onExploreStepPush(slot0, slot1)
 			end
 		end
 
-		table.insert(slot0._stepList, slot8 + 1, slot7)
+		table.insert(arg_2_0._stepList, var_2_1 + 1, var_2_0)
 
-		if slot7.stepType == ExploreEnum.StepType.RoleMove then
-			ExploreMapModel.instance:updatHeroPos(slot7.x, slot7.y, slot7.direction)
+		if var_2_0.stepType == ExploreEnum.StepType.RoleMove then
+			ExploreMapModel.instance:updatHeroPos(var_2_0.x, var_2_0.y, var_2_0.direction)
 
-			slot0._cachePos = slot7
+			arg_2_0._cachePos = var_2_0
 		end
 	end
 
-	slot0:startStep()
+	arg_2_0:startStep()
 end
 
-function slot0.insertClientStep(slot0, slot1, slot2)
-	slot0:initMap()
+function var_0_0.insertClientStep(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0:initMap()
 
-	if slot2 then
-		table.insert(slot0._stepList, slot2, slot1)
+	if arg_3_2 then
+		table.insert(arg_3_0._stepList, arg_3_2, arg_3_1)
 	else
-		table.insert(slot0._stepList, slot1)
+		table.insert(arg_3_0._stepList, arg_3_1)
 	end
 end
 
-function slot0.forceAsyncPos(slot0)
-	slot0:initMap()
-	slot0._hero:stopMoving(true)
-	slot0._hero:setPosByNode(slot0._cachePos, true)
-	slot0._hero:setBool(ExploreAnimEnum.RoleAnimKey.IsIce, false)
-	slot0._hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+function var_0_0.forceAsyncPos(arg_4_0)
+	arg_4_0:initMap()
+	arg_4_0._hero:stopMoving(true)
+	arg_4_0._hero:setPosByNode(arg_4_0._cachePos, true)
+	arg_4_0._hero:setBool(ExploreAnimEnum.RoleAnimKey.IsIce, false)
+	arg_4_0._hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
 	ExploreModel.instance:setHeroControl(true)
 end
 
-function slot0.startStep(slot0)
-	if slot0._curRunStep then
+function var_0_0.startStep(arg_5_0)
+	if arg_5_0._curRunStep then
 		return
 	end
 
@@ -97,83 +101,93 @@ function slot0.startStep(slot0)
 		return
 	end
 
-	if not slot0._stepList then
+	if not arg_5_0._stepList then
 		return
 	end
 
-	if #slot0._stepList <= 0 then
-		slot0:onStepAllDone()
+	if #arg_5_0._stepList <= 0 then
+		arg_5_0:onStepAllDone()
 
 		return
 	end
 
-	if _G[string.format("Explore%sStep", ExploreEnum.StepTypeToName[table.remove(slot0._stepList, 1).stepType] or "")] then
-		slot0._curRunStep = slot4.New(slot1)
+	local var_5_0 = table.remove(arg_5_0._stepList, 1)
+	local var_5_1 = var_5_0.stepType
+	local var_5_2 = string.format("Explore%sStep", ExploreEnum.StepTypeToName[var_5_1] or "")
+	local var_5_3 = _G[var_5_2]
+
+	if var_5_3 then
+		arg_5_0._curRunStep = var_5_3.New(var_5_0)
 	else
-		logError("未处理步骤类型" .. tostring(slot2))
+		logError("未处理步骤类型" .. tostring(var_5_1))
 
-		slot0._curRunStep = ExploreStepBase.New(slot1)
+		arg_5_0._curRunStep = ExploreStepBase.New(var_5_0)
 	end
 
-	return slot0._curRunStep:onStart()
+	return arg_5_0._curRunStep:onStart()
 end
 
-function slot0.onStepEnd(slot0)
-	slot0._curRunStep = nil
+function var_0_0.onStepEnd(arg_6_0)
+	arg_6_0._curRunStep = nil
 
-	slot0:startStep()
+	arg_6_0:startStep()
 end
 
-function slot0.onStepAllDone(slot0)
+function var_0_0.onStepAllDone(arg_7_0)
+	return
 end
 
-function slot0.getCurStepType(slot0)
-	if not slot0._curRunStep then
+function var_0_0.getCurStepType(arg_8_0)
+	if not arg_8_0._curRunStep then
 		return
 	end
 
-	return slot0._curRunStep._data.stepType
+	return arg_8_0._curRunStep._data.stepType
 end
 
-function slot0.getStepIndex(slot0, slot1)
-	if slot0._curRunStep and slot0._curRunStep._data.stepType == slot1 then
+function var_0_0.getStepIndex(arg_9_0, arg_9_1)
+	if arg_9_0._curRunStep and arg_9_0._curRunStep._data.stepType == arg_9_1 then
 		return 0
 	end
 
-	if not slot0._stepList then
+	if not arg_9_0._stepList then
 		return -1
 	end
 
-	for slot5, slot6 in ipairs(slot0._stepList) do
-		if slot6.stepType == slot1 then
-			return slot5
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._stepList) do
+		if iter_9_1.stepType == arg_9_1 then
+			return iter_9_0
 		end
 	end
 
 	return -1
 end
 
-function slot0.clear(slot0)
-	slot0._map = nil
-	slot0._hero = nil
+function var_0_0.clear(arg_10_0)
+	arg_10_0._map = nil
+	arg_10_0._hero = nil
 
-	if slot0._curRunStep then
-		slot0._curRunStep:onDestory()
+	if arg_10_0._curRunStep then
+		arg_10_0._curRunStep:onDestory()
 
-		slot0._curRunStep = nil
+		arg_10_0._curRunStep = nil
 	end
 
-	slot0._stepList = {}
+	local var_10_0 = arg_10_0._stepList
 
-	if slot0._stepList then
-		for slot5, slot6 in pairs(slot1) do
-			if ExploreEnum.MustDoStep[slot6.stepType] then
-				_G[string.format("Explore%sStep", ExploreEnum.StepTypeToName[slot6.stepType] or "")].New(slot6):onStart()
+	arg_10_0._stepList = {}
+
+	if var_10_0 then
+		for iter_10_0, iter_10_1 in pairs(var_10_0) do
+			if ExploreEnum.MustDoStep[iter_10_1.stepType] then
+				local var_10_1 = string.format("Explore%sStep", ExploreEnum.StepTypeToName[iter_10_1.stepType] or "")
+
+				_G[var_10_1].New(iter_10_1):onStart()
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

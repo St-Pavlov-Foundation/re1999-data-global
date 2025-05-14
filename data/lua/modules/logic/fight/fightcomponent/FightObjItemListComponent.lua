@@ -1,19 +1,21 @@
-module("modules.logic.fight.fightcomponent.FightObjItemListComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightObjItemListComponent", package.seeall)
 
-slot0 = class("FightObjItemListComponent", FightBaseClass)
+local var_0_0 = class("FightObjItemListComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
+function var_0_0.onConstructor(arg_1_0)
+	return
 end
 
-function slot0.registObjItemList(slot0, slot1, slot2, slot3)
-	return slot0:newClass(FightObjItemListItem, slot1, slot2, slot3)
+function var_0_0.registObjItemList(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	return arg_2_0:newClass(FightObjItemListItem, arg_2_1, arg_2_2, arg_2_3)
 end
 
-function slot0.registViewItemList(slot0, slot1, slot2, slot3)
-	return slot0:newClass(FightViewItemListItem, slot1, slot2, slot3)
+function var_0_0.registViewItemList(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	return arg_3_0:newClass(FightViewItemListItem, arg_3_1, arg_3_2, arg_3_3)
 end
 
-function slot0.onDestructor(slot0)
+function var_0_0.onDestructor(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,101 +1,114 @@
-module("modules.logic.meilanni.controller.MeilanniAnimationController", package.seeall)
+﻿module("modules.logic.meilanni.controller.MeilanniAnimationController", package.seeall)
 
-slot0 = class("MeilanniAnimationController", BaseController)
-slot0.historyLayer = 1
-slot0.excludeRulesLayer = 2
-slot0.epilogueLayer = 3
-slot0.changeMapLayer = 4
-slot0.changeWeatherLayer = 5
-slot0.showElementsLayer = 6
-slot0.prefaceLayer = 7
-slot0.enemyLayer = 8
-slot0.endLayer = 9
-slot0.maxLayer = 9
+local var_0_0 = class("MeilanniAnimationController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._isPlaying = nil
-	slot0._isPlayingDialogItemList = nil
-	slot0._delayCallList = {}
+var_0_0.historyLayer = 1
+var_0_0.excludeRulesLayer = 2
+var_0_0.epilogueLayer = 3
+var_0_0.changeMapLayer = 4
+var_0_0.changeWeatherLayer = 5
+var_0_0.showElementsLayer = 6
+var_0_0.prefaceLayer = 7
+var_0_0.enemyLayer = 8
+var_0_0.endLayer = 9
+var_0_0.maxLayer = 9
+
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._isPlaying = nil
+	arg_1_0._isPlayingDialogItemList = nil
+	arg_1_0._delayCallList = {}
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._isPlaying = nil
-	slot0._isPlayingDialogItemList = nil
-	slot0._delayCallList = {}
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._isPlaying = nil
+	arg_4_0._isPlayingDialogItemList = nil
+	arg_4_0._delayCallList = {}
 end
 
-function slot0.startDialogListAnim(slot0)
-	slot0._isPlayingDialogItemList = true
+function var_0_0.startDialogListAnim(arg_5_0)
+	arg_5_0._isPlayingDialogItemList = true
 end
 
-function slot0.endDialogListAnim(slot0)
-	slot0._isPlayingDialogItemList = nil
+function var_0_0.endDialogListAnim(arg_6_0)
+	arg_6_0._isPlayingDialogItemList = nil
 end
 
-function slot0.isPlayingDialogListAnim(slot0)
-	return slot0._isPlayingDialogItemList
+function var_0_0.isPlayingDialogListAnim(arg_7_0)
+	return arg_7_0._isPlayingDialogItemList
 end
 
-function slot0.addDelayCall(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0._isPlaying then
-		slot1(slot2, slot3)
+function var_0_0.addDelayCall(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	if not arg_8_0._isPlaying then
+		arg_8_1(arg_8_2, arg_8_3)
 
 		return
 	end
 
-	slot7 = slot0._delayCallList[slot5] or {}
-	slot0._delayCallList[slot5] = slot7
+	local var_8_0 = {
+		arg_8_1,
+		arg_8_2,
+		arg_8_3,
+		arg_8_4
+	}
+	local var_8_1 = arg_8_0._delayCallList[arg_8_5] or {}
 
-	table.insert(slot7, {
-		slot1,
-		slot2,
-		slot3,
-		slot4
-	})
+	arg_8_0._delayCallList[arg_8_5] = var_8_1
+
+	table.insert(var_8_1, var_8_0)
 end
 
-function slot0.startAnimation(slot0)
-	slot0._isPlaying = true
+function var_0_0.startAnimation(arg_9_0)
+	arg_9_0._isPlaying = true
 
-	TaskDispatcher.runRepeat(slot0._frame, slot0, 0)
-	slot0:dispatchEvent(MeilanniEvent.dialogListAnimChange, slot0._isPlaying)
+	TaskDispatcher.runRepeat(arg_9_0._frame, arg_9_0, 0)
+	arg_9_0:dispatchEvent(MeilanniEvent.dialogListAnimChange, arg_9_0._isPlaying)
 end
 
-function slot0._frame(slot0)
-	if slot0._isPlayingDialogItemList or ViewMgr.instance:isOpen(ViewName.MeilanniBossInfoView) then
+function var_0_0._frame(arg_10_0)
+	if arg_10_0._isPlayingDialogItemList or ViewMgr.instance:isOpen(ViewName.MeilanniBossInfoView) then
 		return
 	end
 
-	if not slot0:_getFirstCall() then
+	local var_10_0 = arg_10_0:_getFirstCall()
+
+	if not var_10_0 then
 		return
 	end
 
-	if not slot1._startTime then
-		slot1._startTime = Time.realtimeSinceStartup
+	if not var_10_0._startTime then
+		var_10_0._startTime = Time.realtimeSinceStartup
 
 		return
 	end
 
-	if (slot1[4] or 0) <= Time.realtimeSinceStartup - slot1._startTime then
-		slot1 = slot0:_getFirstCall(true)
+	local var_10_1 = var_10_0[1]
+	local var_10_2 = var_10_0[2]
+	local var_10_3 = var_10_0[3]
 
-		slot1[1](slot1[2], slot1[3])
+	if (var_10_0[4] or 0) <= Time.realtimeSinceStartup - var_10_0._startTime then
+		local var_10_4 = arg_10_0:_getFirstCall(true)
+
+		var_10_1(var_10_2, var_10_3)
 	end
 end
 
-function slot0._getFirstCall(slot0, slot1)
-	for slot5 = 1, uv0.maxLayer do
-		if slot0._delayCallList[slot5] and #slot6 > 0 then
-			if slot1 then
-				return table.remove(slot6, 1)
+function var_0_0._getFirstCall(arg_11_0, arg_11_1)
+	for iter_11_0 = 1, var_0_0.maxLayer do
+		local var_11_0 = arg_11_0._delayCallList[iter_11_0]
+
+		if var_11_0 and #var_11_0 > 0 then
+			if arg_11_1 then
+				return table.remove(var_11_0, 1)
 			else
-				return slot6[1]
+				return var_11_0[1]
 			end
 		end
 	end
@@ -103,26 +116,26 @@ function slot0._getFirstCall(slot0, slot1)
 	return nil
 end
 
-function slot0.endAnimation(slot0, slot1)
-	slot0:addDelayCall(slot0._endAnimation, slot0, nil, , slot1)
+function var_0_0.endAnimation(arg_12_0, arg_12_1)
+	arg_12_0:addDelayCall(arg_12_0._endAnimation, arg_12_0, nil, nil, arg_12_1)
 end
 
-function slot0._endAnimation(slot0)
-	slot0._isPlaying = false
+function var_0_0._endAnimation(arg_13_0)
+	arg_13_0._isPlaying = false
 
-	TaskDispatcher.cancelTask(slot0._frame, slot0)
-	slot0:dispatchEvent(MeilanniEvent.dialogListAnimChange, slot0._isPlaying)
+	TaskDispatcher.cancelTask(arg_13_0._frame, arg_13_0)
+	arg_13_0:dispatchEvent(MeilanniEvent.dialogListAnimChange, arg_13_0._isPlaying)
 end
 
-function slot0.isPlaying(slot0)
-	return slot0._isPlaying
+function var_0_0.isPlaying(arg_14_0)
+	return arg_14_0._isPlaying
 end
 
-function slot0.close(slot0)
-	TaskDispatcher.cancelTask(slot0._frame, slot0)
-	slot0:reInit()
+function var_0_0.close(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._frame, arg_15_0)
+	arg_15_0:reInit()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

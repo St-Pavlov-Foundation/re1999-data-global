@@ -1,13 +1,14 @@
-module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEnum", package.seeall)
+﻿module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEnum", package.seeall)
 
-slot0 = _M
-slot0.ActLevel = {
+local var_0_0 = _M
+
+var_0_0.ActLevel = {
 	Second = 2,
 	First = 1
 }
-slot0.ActType = {
+var_0_0.ActType = {
 	Multi = 2,
 	Single = 1
 }
 
-return slot0
+return var_0_0

@@ -1,40 +1,49 @@
-module("modules.logic.fight.controller.FightConditionHelper", package.seeall)
+﻿module("modules.logic.fight.controller.FightConditionHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.initConditionHandle()
-	if not uv0.ConditionHandle then
-		uv0.ConditionHandle = {
-			[FightEnum.ConditionType.HasBuffId] = uv0.checkHasBuffId
+function var_0_0.initConditionHandle()
+	if not var_0_0.ConditionHandle then
+		var_0_0.ConditionHandle = {
+			[FightEnum.ConditionType.HasBuffId] = var_0_0.checkHasBuffId
 		}
 	end
 end
 
-function slot0.checkCondition(slot0, slot1, slot2, slot3)
-	uv0.initConditionHandle()
+function var_0_0.checkCondition(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	var_0_0.initConditionHandle()
 
-	if not lua_skill_behavior_condition.configDict[tonumber(FightStrUtil.splitToNumber(slot0, "#")[1])] then
+	local var_2_0 = FightStrUtil.splitToNumber(arg_2_0, "#")
+	local var_2_1 = lua_skill_behavior_condition.configDict[tonumber(var_2_0[1])]
+
+	if not var_2_1 then
 		return true
 	end
 
-	if uv0.ConditionHandle[slot5.type] then
-		return slot6(slot4, slot1, slot2, slot3)
+	local var_2_2 = var_0_0.ConditionHandle[var_2_1.type]
+
+	if var_2_2 then
+		return var_2_2(var_2_0, arg_2_1, arg_2_2, arg_2_3)
 	end
 
 	return true
 end
 
-function slot0.checkHasBuffId(slot0, slot1, slot2, slot3)
-	if not FightConditionTargetHelper.getTarget(slot1, slot2, slot3) then
+function var_0_0.checkHasBuffId(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_3 = FightConditionTargetHelper.getTarget(arg_3_1, arg_3_2, arg_3_3)
+
+	if not arg_3_3 then
 		return false
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot3) then
+	local var_3_0 = FightDataHelper.entityMgr:getById(arg_3_3)
+
+	if not var_3_0 then
 		return false
 	end
 
-	for slot8 = 2, #slot0 do
-		if slot4:hasBuffId(tonumber(slot0[slot8])) then
+	for iter_3_0 = 2, #arg_3_0 do
+		if var_3_0:hasBuffId(tonumber(arg_3_0[iter_3_0])) then
 			return true
 		end
 	end
@@ -42,4 +51,4 @@ function slot0.checkHasBuffId(slot0, slot1, slot2, slot3)
 	return false
 end
 
-return slot0
+return var_0_0

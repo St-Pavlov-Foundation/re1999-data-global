@@ -1,35 +1,38 @@
-module("modules.logic.scene.explore.comp.ExploreSceneDirector", package.seeall)
+﻿module("modules.logic.scene.explore.comp.ExploreSceneDirector", package.seeall)
 
-slot0 = class("ExploreSceneDirector", BaseSceneComp)
+local var_0_0 = class("ExploreSceneDirector", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot0._compInitSequence = FlowSequence.New()
-	slot3 = FlowParallel.New()
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
+	arg_2_0._compInitSequence = FlowSequence.New()
 
-	slot0._compInitSequence:addWork(slot3)
-	slot3:addWork(RoomSceneWaitEventCompWork.New(slot0._scene.map, ExploreEvent.InitMapDone))
-	slot3:addWork(RoomSceneWaitEventCompWork.New(slot0._scene.level, CommonSceneLevelComp.OnLevelLoaded))
-	slot3:addWork(RoomSceneWaitEventCompWork.New(slot0._scene.preloader, ExploreEvent.OnExplorePreloadFinish))
-	slot0._compInitSequence:registerDoneListener(slot0._compInitDone, slot0)
-	slot0._compInitSequence:start({
-		sceneId = slot1,
-		levelId = slot2
+	local var_2_0 = FlowParallel.New()
+
+	arg_2_0._compInitSequence:addWork(var_2_0)
+	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.map, ExploreEvent.InitMapDone))
+	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.level, CommonSceneLevelComp.OnLevelLoaded))
+	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.preloader, ExploreEvent.OnExplorePreloadFinish))
+	arg_2_0._compInitSequence:registerDoneListener(arg_2_0._compInitDone, arg_2_0)
+	arg_2_0._compInitSequence:start({
+		sceneId = arg_2_1,
+		levelId = arg_2_2
 	})
 end
 
-function slot0._compInitDone(slot0)
-	slot0._scene:onPrepared()
+function var_0_0._compInitDone(arg_3_0)
+	arg_3_0._scene:onPrepared()
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_4_0)
+	return
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
+function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,119 +1,123 @@
-module("modules.logic.scene.room.comp.RoomSceneTweenComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneTweenComp", package.seeall)
 
-slot0 = class("RoomSceneTweenComp", BaseSceneComp)
+local var_0_0 = class("RoomSceneTweenComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._initialized = false
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._initialized = false
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot0._tweenId = 0
-	slot0._tweenParamDict = {}
-	slot0._toDeleteTweenIdDict = {}
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
+	arg_2_0._tweenId = 0
+	arg_2_0._tweenParamDict = {}
+	arg_2_0._toDeleteTweenIdDict = {}
 
-	TaskDispatcher.runRepeat(slot0._onUpdate, slot0, 0)
+	TaskDispatcher.runRepeat(arg_2_0._onUpdate, arg_2_0, 0)
 
-	slot0._initialized = true
+	arg_2_0._initialized = true
 end
 
-function slot0.getTweenId(slot0)
-	slot0._tweenId = slot0._tweenId + 1
+function var_0_0.getTweenId(arg_3_0)
+	arg_3_0._tweenId = arg_3_0._tweenId + 1
 
-	return slot0._tweenId
+	return arg_3_0._tweenId
 end
 
-function slot0.tweenFloat(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	slot9 = slot0:getTweenId()
-	slot0._tweenParamDict[slot9] = {
+function var_0_0.tweenFloat(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7, arg_4_8)
+	local var_4_0 = arg_4_0:getTweenId()
+	local var_4_1 = {
 		time = 0,
-		from = slot1,
-		to = slot2,
-		duration = slot3,
-		frameCallback = slot4,
-		finishCallback = slot5,
-		target = slot6,
-		object = slot7,
-		ease = slot8
+		from = arg_4_1,
+		to = arg_4_2,
+		duration = arg_4_3,
+		frameCallback = arg_4_4,
+		finishCallback = arg_4_5,
+		target = arg_4_6,
+		object = arg_4_7,
+		ease = arg_4_8
 	}
 
-	return slot9
+	arg_4_0._tweenParamDict[var_4_0] = var_4_1
+
+	return var_4_0
 end
 
-function slot0.killById(slot0, slot1)
-	if not slot1 then
+function var_0_0.killById(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	slot0._toDeleteTweenIdDict[slot1] = true
+	arg_5_0._toDeleteTweenIdDict[arg_5_1] = true
 end
 
-function slot0._onUpdate(slot0)
-	if not slot0._tweenParamDict or not slot0._initialized then
+function var_0_0._onUpdate(arg_6_0)
+	if not arg_6_0._tweenParamDict or not arg_6_0._initialized then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0._tweenParamDict) do
-		if not slot0._toDeleteTweenIdDict[slot4] then
-			slot5.time = slot5.time + Time.deltaTime
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._tweenParamDict) do
+		if not arg_6_0._toDeleteTweenIdDict[iter_6_0] then
+			iter_6_1.time = iter_6_1.time + Time.deltaTime
 
-			if slot5.duration < slot5.time then
-				slot0._toDeleteTweenIdDict[slot4] = true
+			if iter_6_1.time > iter_6_1.duration then
+				arg_6_0._toDeleteTweenIdDict[iter_6_0] = true
 
-				if slot5.finishCallback then
-					if slot5.target then
-						slot5.finishCallback(slot5.target, slot5.object)
+				if iter_6_1.finishCallback then
+					if iter_6_1.target then
+						iter_6_1.finishCallback(iter_6_1.target, iter_6_1.object)
 					else
-						slot5.finishCallback(slot5.object)
+						iter_6_1.finishCallback(iter_6_1.object)
 					end
 				end
-			elseif slot5.frameCallback then
-				if slot5.target then
-					slot5.frameCallback(slot5.target, slot0:getFloat(slot5.from, slot5.to, slot5.duration, slot5.time, slot5.ease), slot5.object)
+			elseif iter_6_1.frameCallback then
+				local var_6_0 = arg_6_0:getFloat(iter_6_1.from, iter_6_1.to, iter_6_1.duration, iter_6_1.time, iter_6_1.ease)
+
+				if iter_6_1.target then
+					iter_6_1.frameCallback(iter_6_1.target, var_6_0, iter_6_1.object)
 				else
-					slot5.frameCallback(slot6, slot5.object)
+					iter_6_1.frameCallback(var_6_0, iter_6_1.object)
 				end
 			end
 		end
 	end
 
-	slot1 = false
+	local var_6_1 = false
 
-	for slot5, slot6 in pairs(slot0._toDeleteTweenIdDict) do
-		slot0._tweenParamDict[slot5] = nil
-		slot1 = true
+	for iter_6_2, iter_6_3 in pairs(arg_6_0._toDeleteTweenIdDict) do
+		arg_6_0._tweenParamDict[iter_6_2] = nil
+		var_6_1 = true
 	end
 
-	if slot1 then
-		slot0._toDeleteTweenIdDict = {}
+	if var_6_1 then
+		arg_6_0._toDeleteTweenIdDict = {}
 	end
 end
 
-function slot0.getFloat(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot4 < 0 then
-		return slot1
-	elseif slot3 < slot4 then
-		return slot2
+function var_0_0.getFloat(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
+	if arg_7_4 < 0 then
+		return arg_7_1
+	elseif arg_7_3 < arg_7_4 then
+		return arg_7_2
 	end
 
-	if slot5 then
-		return LuaTween.tween(slot4, slot1, slot2 - slot1, slot3, slot5)
+	if arg_7_5 then
+		return LuaTween.tween(arg_7_4, arg_7_1, arg_7_2 - arg_7_1, arg_7_3, arg_7_5)
 	else
-		slot6 = slot4 / slot3
+		local var_7_0 = arg_7_4 / arg_7_3
 
-		return slot1 * (1 - slot6) + slot2 * slot6
+		return arg_7_1 * (1 - var_7_0) + arg_7_2 * var_7_0
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._initialized = false
+function var_0_0.onSceneClose(arg_8_0)
+	arg_8_0._initialized = false
 
-	TaskDispatcher.cancelTask(slot0._onUpdate, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._onUpdate, arg_8_0)
 
-	slot0._tweenId = 0
-	slot0._tweenParamDict = {}
-	slot0._toDeleteTweenIdDict = {}
-	slot0._initialized = false
+	arg_8_0._tweenId = 0
+	arg_8_0._tweenParamDict = {}
+	arg_8_0._toDeleteTweenIdDict = {}
+	arg_8_0._initialized = false
 end
 
-return slot0
+return var_0_0

@@ -1,76 +1,88 @@
-module("modules.logic.rouge.view.RougeCollectionListRow", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionListRow", package.seeall)
 
-slot0 = class("RougeCollectionListRow", ListScrollCellExtend)
+local var_0_0 = class("RougeCollectionListRow", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gotitle = gohelper.findChild(slot0.viewGO, "#go_title")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "#go_title/#txt_Title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "#go_title/#txt_Title/#txt_TitleEn")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_title/#image_icon")
-	slot0._gocollectionitem = gohelper.findChild(slot0.viewGO, "#go_collectionitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_Title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_Title/#txt_TitleEn")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_title/#image_icon")
+	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "#go_collectionitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gocollectionitem, false)
-	gohelper.setActive(slot0._txtTitleEn, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._gocollectionitem, false)
+	gohelper.setActive(arg_4_0._txtTitleEn, false)
 
-	slot0._itemList = slot0:getUserDataTb_()
+	arg_4_0._itemList = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, RougeEnum.CollectionListRowNum do
-		table.insert(slot0._itemList, MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._gocollectionitem), RougeCollectionListItem))
+	for iter_4_0 = 1, RougeEnum.CollectionListRowNum do
+		local var_4_0 = gohelper.cloneInPlace(arg_4_0._gocollectionitem)
+		local var_4_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0, RougeCollectionListItem)
+
+		table.insert(arg_4_0._itemList, var_4_1)
 	end
 
-	slot0._gridLayout = slot0.viewGO:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
+	arg_4_0._gridLayout = arg_4_0.viewGO:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 
-	for slot5, slot6 in ipairs(slot0._itemList) do
-		slot6:onUpdateMO(slot1[slot5])
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._itemList) do
+		iter_7_1:onUpdateMO(arg_7_1[iter_7_0])
 	end
 
-	slot2 = slot1.type ~= nil
+	local var_7_0 = arg_7_1.type ~= nil
 
-	gohelper.setActive(slot0._gotitle, slot2)
+	gohelper.setActive(arg_7_0._gotitle, var_7_0)
 
-	slot3 = slot0._gridLayout.padding
-	slot3.top = slot2 and 61 or 0
-	slot0._gridLayout.padding = slot3
+	local var_7_1 = arg_7_0._gridLayout.padding
 
-	if not slot2 then
+	var_7_1.top = var_7_0 and 61 or 0
+	arg_7_0._gridLayout.padding = var_7_1
+
+	if not var_7_0 then
 		return
 	end
 
-	if not RougeCollectionConfig.instance:getTagConfig(slot1.type) then
+	local var_7_2 = RougeCollectionConfig.instance:getTagConfig(arg_7_1.type)
+
+	if not var_7_2 then
 		return
 	end
 
-	slot0._txtTitle.text = slot4.name
+	arg_7_0._txtTitle.text = var_7_2.name
 
-	UISpriteSetMgr.instance:setRougeSprite(slot0._imageicon, slot4.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(arg_7_0._imageicon, var_7_2.iconUrl)
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

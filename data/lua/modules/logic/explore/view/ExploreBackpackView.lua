@@ -1,83 +1,92 @@
-module("modules.logic.explore.view.ExploreBackpackView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBackpackView", package.seeall)
 
-slot0 = class("ExploreBackpackView", BaseView)
+local var_0_0 = class("ExploreBackpackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
-	slot0._gohasprop = gohelper.findChild(slot0.viewGO, "#go_hasprop")
-	slot0._scrollprop = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_prop")
-	slot0._propcontent = gohelper.findChild(slot0.viewGO, "mask/#scroll_prop/viewport/propcontent")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+	arg_1_0._gohasprop = gohelper.findChild(arg_1_0.viewGO, "#go_hasprop")
+	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
+	arg_1_0._propcontent = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_prop/viewport/propcontent")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(ExploreController.instance, ExploreEvent.OnItemChange, slot0._updateItem, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, slot0.OnItemKeyDown, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.OnItemChange, arg_2_0._updateItem, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, arg_2_0.OnItemKeyDown, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0:removeEventCb(ExploreController.instance, ExploreEvent.OnItemChange, slot0._updateItem, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, slot0.OnItemKeyDown, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.OnItemChange, arg_3_0._updateItem, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, arg_3_0.OnItemKeyDown, arg_3_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.itemList = {}
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.itemList = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateItem()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:_updateItem()
 end
 
-function slot0._updateItem(slot0)
-	for slot6, slot7 in ipairs(ExploreBackpackModel.instance:getList()) do
-		if slot0.itemList[slot6] == nil then
-			slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._propcontent, "item"), ExploreBackpackPropListItem)
+function var_0_0._updateItem(arg_7_0)
+	local var_7_0 = ExploreBackpackModel.instance:getList()
+	local var_7_1 = arg_7_0.viewContainer:getSetting().otherRes[1]
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_2 = arg_7_0.itemList[iter_7_0]
+
+		if var_7_2 == nil then
+			local var_7_3 = arg_7_0:getResInst(var_7_1, arg_7_0._propcontent, "item")
+
+			var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3, ExploreBackpackPropListItem)
 		end
 
-		gohelper.setActive(slot8.go, true)
-		slot8:onUpdateMO(slot7)
+		gohelper.setActive(var_7_2.go, true)
+		var_7_2:onUpdateMO(iter_7_1)
 
-		slot0.itemList[slot6] = slot8
+		arg_7_0.itemList[iter_7_0] = var_7_2
 
-		PCInputController.instance:showkeyTips(gohelper.findChild(slot8.go, "#go_pcbtn"), PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.Item1 + slot6 - 1)
+		local var_7_4 = gohelper.findChild(var_7_2.go, "#go_pcbtn")
+
+		PCInputController.instance:showkeyTips(var_7_4, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.Item1 + iter_7_0 - 1)
 	end
 
-	for slot6 = #slot1 + 1, #slot0.itemList do
-		gohelper.setActive(slot0.itemList[slot6].go, false)
+	for iter_7_2 = #var_7_0 + 1, #arg_7_0.itemList do
+		gohelper.setActive(arg_7_0.itemList[iter_7_2].go, false)
 	end
 
-	gohelper.setActive(slot0._goempty, #slot1 == 0)
-	gohelper.setActive(slot0._gohasprop, #slot1 > 0)
+	gohelper.setActive(arg_7_0._goempty, #var_7_0 == 0)
+	gohelper.setActive(arg_7_0._gohasprop, #var_7_0 > 0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.itemList) do
-		slot5:onDestroyView()
+function var_0_0.onDestroyView(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.itemList) do
+		iter_8_1:onDestroyView()
 	end
 
-	slot0.itemList = nil
+	arg_8_0.itemList = nil
 end
 
-function slot0.OnItemKeyDown(slot0, slot1)
+function var_0_0.OnItemKeyDown(arg_9_0, arg_9_1)
 	if PCInputController.instance:isPopUpViewOpen({
 		ViewName.ExploreBackpackView
 	}) then
 		return
 	end
 
-	if slot0.itemList[slot1] then
-		slot0.itemList[slot1]:_onItemClick()
+	if arg_9_0.itemList[arg_9_1] then
+		arg_9_0.itemList[arg_9_1]:_onItemClick()
 	end
 end
 
-return slot0
+return var_0_0

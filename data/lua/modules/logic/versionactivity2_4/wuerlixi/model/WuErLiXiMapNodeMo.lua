@@ -1,146 +1,146 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapNodeMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapNodeMo", package.seeall)
 
-slot0 = pureTable("WuErLiXiMapNodeMo")
+local var_0_0 = pureTable("WuErLiXiMapNodeMo")
 
-function slot0.init(slot0, slot1)
-	slot0.x = slot1[1]
-	slot0.y = slot1[2]
-	slot0.id = 100 * slot0.x + slot0.y
-	slot0.nodeType = slot1[3]
-	slot0.unit = nil
-	slot0.ray = nil
-	slot0.initUnit = 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.x = arg_1_1[1]
+	arg_1_0.y = arg_1_1[2]
+	arg_1_0.id = 100 * arg_1_0.x + arg_1_0.y
+	arg_1_0.nodeType = arg_1_1[3]
+	arg_1_0.unit = nil
+	arg_1_0.ray = nil
+	arg_1_0.initUnit = 0
 end
 
-function slot0.hasActUnit(slot0)
-	return slot0.initUnit == 0 and slot0.unit
+function var_0_0.hasActUnit(arg_2_0)
+	return arg_2_0.initUnit == 0 and arg_2_0.unit
 end
 
-function slot0.setUnit(slot0, slot1)
-	if not slot0.unit then
-		slot0.unit = WuErLiXiMapUnitMo.New()
+function var_0_0.setUnit(arg_3_0, arg_3_1)
+	if not arg_3_0.unit then
+		arg_3_0.unit = WuErLiXiMapUnitMo.New()
 	end
 
-	slot0.unit:init(slot1)
+	arg_3_0.unit:init(arg_3_1)
 
-	slot0.initUnit = slot0.unit.id
+	arg_3_0.initUnit = arg_3_0.unit.id
 end
 
-function slot0.setUnitByUnitMo(slot0, slot1, slot2, slot3)
-	if not slot0.unit then
-		slot0.unit = WuErLiXiMapUnitMo.New()
+function var_0_0.setUnitByUnitMo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if not arg_4_0.unit then
+		arg_4_0.unit = WuErLiXiMapUnitMo.New()
 	end
 
-	slot0.unit:initByUnitMo(slot1, slot2, slot3)
+	arg_4_0.unit:initByUnitMo(arg_4_1, arg_4_2, arg_4_3)
 end
 
-function slot0.getNodeUnit(slot0)
-	return slot0.unit
+function var_0_0.getNodeUnit(arg_5_0)
+	return arg_5_0.unit
 end
 
-function slot0.setUnitActive(slot0, slot1, slot2, slot3)
-	if not slot0.unit then
+function var_0_0.setUnitActive(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if not arg_6_0.unit then
 		return
 	end
 
-	slot0.unit:setUnitActive(slot1, slot2, slot3)
+	arg_6_0.unit:setUnitActive(arg_6_1, arg_6_2, arg_6_3)
 end
 
-function slot0.setDir(slot0, slot1, slot2)
-	if not slot0.unit then
+function var_0_0.setDir(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0.unit then
 		return
 	end
 
-	slot0.unit:setDir(slot1)
+	arg_7_0.unit:setDir(arg_7_1)
 
-	if not slot2 then
+	if not arg_7_2 then
 		return
 	end
 
-	slot0:setUnitOutDirByRayDir(slot2)
+	arg_7_0:setUnitOutDirByRayDir(arg_7_2)
 end
 
-function slot0.setUnitOutDirByRayDir(slot0, slot1)
-	if not slot0.unit or not slot1 then
+function var_0_0.setUnitOutDirByRayDir(arg_8_0, arg_8_1)
+	if not arg_8_0.unit or not arg_8_1 then
 		return
 	end
 
-	slot0.unit:setUnitOutDirByRayDir(slot1)
+	arg_8_0.unit:setUnitOutDirByRayDir(arg_8_1)
 end
 
-function slot0.isUnitActive(slot0, slot1)
-	if not slot0.unit then
+function var_0_0.isUnitActive(arg_9_0, arg_9_1)
+	if not arg_9_0.unit then
 		return false
 	end
 
-	return slot0.unit:isUnitActive(slot1)
+	return arg_9_0.unit:isUnitActive(arg_9_1)
 end
 
-function slot0.clearUnit(slot0)
-	slot0.unit = nil
+function var_0_0.clearUnit(arg_10_0)
+	arg_10_0.unit = nil
 end
 
-function slot0.isNodeShowActive(slot0)
-	if not slot0.unit then
+function var_0_0.isNodeShowActive(arg_11_0)
+	if not arg_11_0.unit then
 		return false
 	end
 
-	if slot0.unit.unitType == WuErLiXiEnum.UnitType.SignalEnd then
-		return slot0.ray
-	elseif slot0.unit.unitType == WuErLiXiEnum.UnitType.Obstacle then
-		return slot0.initUnit == 0
+	if arg_11_0.unit.unitType == WuErLiXiEnum.UnitType.SignalEnd then
+		return arg_11_0.ray
+	elseif arg_11_0.unit.unitType == WuErLiXiEnum.UnitType.Obstacle then
+		return arg_11_0.initUnit == 0
 	end
 
-	return slot0.unit:isUnitActive()
+	return arg_11_0.unit:isUnitActive()
 end
 
-function slot0.isRayEmitterNode(slot0)
-	if not slot0.unit then
+function var_0_0.isRayEmitterNode(arg_12_0)
+	if not arg_12_0.unit then
 		return false
 	end
 
-	return slot0.unit:isRayEmitterUnit()
+	return arg_12_0.unit:isRayEmitterUnit()
 end
 
-function slot0.setUnitByActUnitMo(slot0, slot1, slot2, slot3)
-	if not slot0.unit then
-		slot0.unit = WuErLiXiMapUnitMo.New()
+function var_0_0.setUnitByActUnitMo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if not arg_13_0.unit then
+		arg_13_0.unit = WuErLiXiMapUnitMo.New()
 	end
 
-	slot0.unit:initByActUnitMo(slot1, slot2, slot3)
+	arg_13_0.unit:initByActUnitMo(arg_13_1, arg_13_2, arg_13_3)
 end
 
-function slot0.getUnitSignalOutDir(slot0)
-	if not slot0.unit then
+function var_0_0.getUnitSignalOutDir(arg_14_0)
+	if not arg_14_0.unit then
 		return
 	end
 
-	return slot0.unit:getUnitSignalOutDir()
+	return arg_14_0.unit:getUnitSignalOutDir()
 end
 
-function slot0.setUnitOutDirByRayDir(slot0, slot1)
-	if not slot0.unit then
+function var_0_0.setUnitOutDirByRayDir(arg_15_0, arg_15_1)
+	if not arg_15_0.unit then
 		return
 	end
 
-	return slot0.unit:setUnitOutDirByRayDir(slot1)
+	return arg_15_0.unit:setUnitOutDirByRayDir(arg_15_1)
 end
 
-function slot0.isUnitFreeType(slot0)
-	if not slot0.unit then
+function var_0_0.isUnitFreeType(arg_16_0)
+	if not arg_16_0.unit then
 		return false
 	end
 
-	return slot0.initUnit ~= 0
+	return arg_16_0.initUnit ~= 0
 end
 
-function slot0.couldSetRay(slot0, slot1)
-	if slot0.unit then
-		if slot0.x ~= slot0.unit.x or slot0.y ~= slot0.unit.y then
+function var_0_0.couldSetRay(arg_17_0, arg_17_1)
+	if arg_17_0.unit then
+		if arg_17_0.x ~= arg_17_0.unit.x or arg_17_0.y ~= arg_17_0.unit.y then
 			return false
 		end
 
-		if not slot0.unit:couldSetRay(slot1) then
+		if not arg_17_0.unit:couldSetRay(arg_17_1) then
 			return false
 		end
 	end
@@ -148,32 +148,32 @@ function slot0.couldSetRay(slot0, slot1)
 	return true
 end
 
-function slot0.setNodeRay(slot0, slot1, slot2, slot3, slot4)
-	if slot0.unit and not slot0.unit:couldSetRay(slot2) then
-		slot0.ray = nil
+function var_0_0.setNodeRay(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	if arg_18_0.unit and not arg_18_0.unit:couldSetRay(arg_18_2) then
+		arg_18_0.ray = nil
 
 		return
 	end
 
-	if not slot0.ray then
-		slot0.ray = WuErLiXiMapRayMo.New()
+	if not arg_18_0.ray then
+		arg_18_0.ray = WuErLiXiMapRayMo.New()
 
-		slot0.ray:init(slot1, slot2, slot3, slot4)
+		arg_18_0.ray:init(arg_18_1, arg_18_2, arg_18_3, arg_18_4)
 	else
-		slot0.ray:reset(slot1, slot2, slot3, slot4)
+		arg_18_0.ray:reset(arg_18_1, arg_18_2, arg_18_3, arg_18_4)
 	end
 end
 
-function slot0.getNodeRay(slot0)
-	return slot0.ray
+function var_0_0.getNodeRay(arg_19_0)
+	return arg_19_0.ray
 end
 
-function slot0.clearNodeRay(slot0, slot1)
-	if not slot0.ray or slot0.ray.rayId ~= slot1 then
+function var_0_0.clearNodeRay(arg_20_0, arg_20_1)
+	if not arg_20_0.ray or arg_20_0.ray.rayId ~= arg_20_1 then
 		return
 	end
 
-	slot0.ray = nil
+	arg_20_0.ray = nil
 end
 
-return slot0
+return var_0_0

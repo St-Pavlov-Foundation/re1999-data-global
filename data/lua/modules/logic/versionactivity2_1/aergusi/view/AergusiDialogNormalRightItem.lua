@@ -1,111 +1,125 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogNormalRightItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogNormalRightItem", package.seeall)
 
-slot0 = class("AergusiDialogNormalRightItem", AergusiDialogItem)
+local var_0_0 = class("AergusiDialogNormalRightItem", AergusiDialogItem)
 
-function slot0.initView(slot0)
-	slot0._gorolebg = gohelper.findChild(slot0.go, "rolebg")
-	slot0._simageAvatar = gohelper.findChildSingleImage(slot0.go, "rolebg/image_avatar")
-	slot0._gorolebggrey = gohelper.findChild(slot0.go, "rolebg_grey")
-	slot0._simageAvatarGrey = gohelper.findChildSingleImage(slot0.go, "rolebg_grey/image_avatar")
-	slot0._txtName = gohelper.findChildText(slot0.go, "name")
-	slot0._txtNameGrey = gohelper.findChildText(slot0.go, "name_grey")
-	slot0._txtContent = gohelper.findChildText(slot0.go, "content_bg/txt_content")
-	slot0._goreference = gohelper.findChild(slot0.go, "content_bg/txt_content/#go_reference")
-	slot0._txtreference = gohelper.findChildText(slot0.go, "content_bg/txt_content/#go_reference/#txt_reference")
-	slot0._goiconobjection = gohelper.findChild(slot0.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_objection")
-	slot0._goiconask = gohelper.findChild(slot0.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_ask")
-	slot0._goreferencegrey = gohelper.findChild(slot0.go, "content_bg/txt_content/#go_reference_grey")
-	slot0._txtreferencegrey = gohelper.findChildText(slot0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference")
-	slot0._goiconobjectiongrey = gohelper.findChild(slot0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_objection")
-	slot0._goiconaskgrey = gohelper.findChild(slot0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_ask")
-	slot0._goselectframe = gohelper.findChild(slot0.go, "content_bg/selectframe")
-	slot0._gomaskgrey = gohelper.findChild(slot0.go, "content_bg/mask_grey")
-	slot0._contentBgRt = gohelper.findChildComponent(slot0.go, "content_bg", gohelper.Type_RectTransform)
-	slot0._contentRt = slot0._txtContent:GetComponent(gohelper.Type_RectTransform)
-	slot0.go.name = string.format("normalrightitem_%s_%s", slot0.stepCo.id, slot0.stepCo.stepId)
+function var_0_0.initView(arg_1_0)
+	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.go, "rolebg")
+	arg_1_0._simageAvatar = gohelper.findChildSingleImage(arg_1_0.go, "rolebg/image_avatar")
+	arg_1_0._gorolebggrey = gohelper.findChild(arg_1_0.go, "rolebg_grey")
+	arg_1_0._simageAvatarGrey = gohelper.findChildSingleImage(arg_1_0.go, "rolebg_grey/image_avatar")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_0.go, "name")
+	arg_1_0._txtNameGrey = gohelper.findChildText(arg_1_0.go, "name_grey")
+	arg_1_0._txtContent = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content")
+	arg_1_0._goreference = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference")
+	arg_1_0._txtreference = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content/#go_reference/#txt_reference")
+	arg_1_0._goiconobjection = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_objection")
+	arg_1_0._goiconask = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_ask")
+	arg_1_0._goreferencegrey = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference_grey")
+	arg_1_0._txtreferencegrey = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference")
+	arg_1_0._goiconobjectiongrey = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_objection")
+	arg_1_0._goiconaskgrey = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_ask")
+	arg_1_0._goselectframe = gohelper.findChild(arg_1_0.go, "content_bg/selectframe")
+	arg_1_0._gomaskgrey = gohelper.findChild(arg_1_0.go, "content_bg/mask_grey")
+	arg_1_0._contentBgRt = gohelper.findChildComponent(arg_1_0.go, "content_bg", gohelper.Type_RectTransform)
+	arg_1_0._contentRt = arg_1_0._txtContent:GetComponent(gohelper.Type_RectTransform)
+	arg_1_0.go.name = string.format("normalrightitem_%s_%s", arg_1_0.stepCo.id, arg_1_0.stepCo.stepId)
 
 	AudioMgr.instance:trigger(AudioEnum.Dialogue.play_ui_wulu_duihua)
 
-	slot0._isReference = false
-	slot0._txtContentMarkTopIndex = slot0:createMarktopCmp(slot0._txtContent)
+	arg_1_0._isReference = false
+	arg_1_0._txtContentMarkTopIndex = arg_1_0:createMarktopCmp(arg_1_0._txtContent)
 
-	slot0:setTopOffset(slot0._txtContentMarkTopIndex, 0, -6.151)
+	arg_1_0:setTopOffset(arg_1_0._txtContentMarkTopIndex, 0, -6.151)
 end
 
-function slot0.refresh(slot0)
-	gohelper.setActive(slot0._gorolebg, AergusiDialogModel.instance:getCurDialogGroup() == slot0.stepCo.id)
-	gohelper.setActive(slot0._gorolebggrey, slot1 ~= slot0.stepCo.id)
-	gohelper.setActive(slot0._txtName.gameObject, slot1 == slot0.stepCo.id)
-	gohelper.setActive(slot0._txtNameGrey.gameObject, slot1 ~= slot0.stepCo.id)
-	gohelper.setActive(slot0._gomaskgrey, slot1 ~= slot0.stepCo.id)
-	gohelper.setActive(slot0._goreference, slot1 == slot0.stepCo.id)
-	gohelper.setActive(slot0._goreferencegrey, slot1 ~= slot0.stepCo.id)
-	slot0:setTextWithMarktopByIndex(slot0._txtContentMarkTopIndex, slot0.stepCo.content)
-	slot0._simageAvatar:LoadImage(ResUrl.getHeadIconSmall(slot0.stepCo.speakerIcon))
-	slot0._simageAvatarGrey:LoadImage(ResUrl.getHeadIconSmall(slot0.stepCo.speakerIcon))
+function var_0_0.refresh(arg_2_0)
+	local var_2_0 = AergusiDialogModel.instance:getCurDialogGroup()
 
-	slot0._txtName.text = slot0.stepCo.speaker
-	slot0._txtNameGrey.text = slot0.stepCo.speaker
+	gohelper.setActive(arg_2_0._gorolebg, var_2_0 == arg_2_0.stepCo.id)
+	gohelper.setActive(arg_2_0._gorolebggrey, var_2_0 ~= arg_2_0.stepCo.id)
+	gohelper.setActive(arg_2_0._txtName.gameObject, var_2_0 == arg_2_0.stepCo.id)
+	gohelper.setActive(arg_2_0._txtNameGrey.gameObject, var_2_0 ~= arg_2_0.stepCo.id)
+	gohelper.setActive(arg_2_0._gomaskgrey, var_2_0 ~= arg_2_0.stepCo.id)
+	gohelper.setActive(arg_2_0._goreference, var_2_0 == arg_2_0.stepCo.id)
+	gohelper.setActive(arg_2_0._goreferencegrey, var_2_0 ~= arg_2_0.stepCo.id)
+	arg_2_0:setTextWithMarktopByIndex(arg_2_0._txtContentMarkTopIndex, arg_2_0.stepCo.content)
+	arg_2_0._simageAvatar:LoadImage(ResUrl.getHeadIconSmall(arg_2_0.stepCo.speakerIcon))
+	arg_2_0._simageAvatarGrey:LoadImage(ResUrl.getHeadIconSmall(arg_2_0.stepCo.speakerIcon))
 
-	gohelper.setActive(slot0._goreference, slot0._isReference)
-	gohelper.setActive(slot0._goreferencegrey, slot0._isReference)
-	gohelper.setActive(slot0._goselectframe, false)
+	arg_2_0._txtName.text = arg_2_0.stepCo.speaker
+	arg_2_0._txtNameGrey.text = arg_2_0.stepCo.speaker
+
+	gohelper.setActive(arg_2_0._goreference, arg_2_0._isReference)
+	gohelper.setActive(arg_2_0._goreferencegrey, arg_2_0._isReference)
+	gohelper.setActive(arg_2_0._goselectframe, false)
 end
 
-function slot0.setQutation(slot0, slot1)
-	if not slot1 then
-		gohelper.setActive(slot0._goreference, false)
+function var_0_0.setQutation(arg_3_0, arg_3_1)
+	if not arg_3_1 then
+		gohelper.setActive(arg_3_0._goreference, false)
 
 		return
 	end
 
-	slot0._isReference = true
+	local var_3_0 = string.splitToNumber(arg_3_1.condition, "#")[1]
 
-	gohelper.setActive(slot0._goreference, true)
+	arg_3_0._isReference = true
 
-	slot0._txtreference.text = slot1.content
-	slot0._txtreferencegrey.text = slot1.content
+	gohelper.setActive(arg_3_0._goreference, true)
 
-	gohelper.setActive(slot0._goiconask, string.splitToNumber(slot1.condition, "#")[1] == AergusiEnum.OperationType.Probe)
-	gohelper.setActive(slot0._goiconobjection, slot2 == AergusiEnum.OperationType.Refutation)
-	gohelper.setActive(slot0._goiconaskgrey, slot2 == AergusiEnum.OperationType.Probe)
-	gohelper.setActive(slot0._goiconobjectiongrey, slot2 == AergusiEnum.OperationType.Refutation)
-	slot0:refresh()
-	slot0:calculateHeight()
+	arg_3_0._txtreference.text = arg_3_1.content
+	arg_3_0._txtreferencegrey.text = arg_3_1.content
+
+	gohelper.setActive(arg_3_0._goiconask, var_3_0 == AergusiEnum.OperationType.Probe)
+	gohelper.setActive(arg_3_0._goiconobjection, var_3_0 == AergusiEnum.OperationType.Refutation)
+	gohelper.setActive(arg_3_0._goiconaskgrey, var_3_0 == AergusiEnum.OperationType.Probe)
+	gohelper.setActive(arg_3_0._goiconobjectiongrey, var_3_0 == AergusiEnum.OperationType.Refutation)
+	arg_3_0:refresh()
+	arg_3_0:calculateHeight()
 end
 
-function slot0.calculateHeight(slot0)
-	if slot0._txtContent.preferredWidth <= AergusiEnum.MessageTxtMaxWidth then
-		recthelper.setSize(slot0._contentBgRt, slot1 + AergusiEnum.MessageBgOffsetWidth, AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight)
-		recthelper.setSize(slot0._contentRt, slot1, AergusiEnum.MessageTxtOneLineHeight)
+function var_0_0.calculateHeight(arg_4_0)
+	local var_4_0 = arg_4_0._txtContent.preferredWidth
+
+	if var_4_0 <= AergusiEnum.MessageTxtMaxWidth then
+		local var_4_1 = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
+
+		recthelper.setSize(arg_4_0._contentBgRt, var_4_0 + AergusiEnum.MessageBgOffsetWidth, var_4_1)
+		recthelper.setSize(arg_4_0._contentRt, var_4_0, AergusiEnum.MessageTxtOneLineHeight)
 
 		return
 	end
 
-	slot2 = slot0._txtContent.preferredHeight
+	local var_4_2 = AergusiEnum.MessageTxtMaxWidth
+	local var_4_3 = arg_4_0._txtContent.preferredHeight
+	local var_4_4 = var_4_3 + AergusiEnum.MessageBgOffsetHeight
 
-	recthelper.setSize(slot0._contentBgRt, AergusiEnum.MessageTxtMaxWidth + AergusiEnum.MessageBgOffsetWidth, slot2 + AergusiEnum.MessageBgOffsetHeight)
-	recthelper.setSize(slot0._contentRt, AergusiEnum.MessageTxtMaxWidth, slot2)
+	recthelper.setSize(arg_4_0._contentBgRt, AergusiEnum.MessageTxtMaxWidth + AergusiEnum.MessageBgOffsetWidth, var_4_4)
+	recthelper.setSize(arg_4_0._contentRt, var_4_2, var_4_3)
 end
 
-function slot0.getHeight(slot0)
-	slot1 = slot0._isReference and AergusiEnum.DialogDoubtOffsetHeight or 0
+function var_0_0.getHeight(arg_5_0)
+	local var_5_0 = arg_5_0._isReference and AergusiEnum.DialogDoubtOffsetHeight or 0
 
-	if slot0._txtContent.preferredWidth <= AergusiEnum.MessageTxtMaxWidth then
-		slot0.height = Mathf.Max(AergusiEnum.MinHeight[slot0.type] + slot1 + AergusiEnum.DialogDoubtOffsetHeight, AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight + AergusiEnum.MessageNameHeight + slot1 + AergusiEnum.DialogDoubtOffsetHeight)
+	if arg_5_0._txtContent.preferredWidth <= AergusiEnum.MessageTxtMaxWidth then
+		local var_5_1 = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
 
-		return slot0.height
+		arg_5_0.height = Mathf.Max(AergusiEnum.MinHeight[arg_5_0.type] + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight, var_5_1 + AergusiEnum.MessageNameHeight + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight)
+
+		return arg_5_0.height
 	end
 
-	slot2 = AergusiEnum.MessageTxtMaxWidth
-	slot0.height = Mathf.Max(AergusiEnum.MinHeight[slot0.type] + slot1 + AergusiEnum.DialogDoubtOffsetHeight, AergusiEnum.MessageTxtOneLineHeight * slot0._txtContent:GetTextInfo(slot0._txtContent.text).lineCount + AergusiEnum.MessageBgOffsetHeight + AergusiEnum.MessageNameHeight + slot1 + AergusiEnum.DialogDoubtOffsetHeight)
+	local var_5_2 = AergusiEnum.MessageTxtMaxWidth
+	local var_5_3 = AergusiEnum.MessageTxtOneLineHeight * arg_5_0._txtContent:GetTextInfo(arg_5_0._txtContent.text).lineCount + AergusiEnum.MessageBgOffsetHeight
 
-	return slot0.height
+	arg_5_0.height = Mathf.Max(AergusiEnum.MinHeight[arg_5_0.type] + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight, var_5_3 + AergusiEnum.MessageNameHeight + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight)
+
+	return arg_5_0.height
 end
 
-function slot0.onDestroy(slot0)
-	slot0._simageAvatar:UnLoadImage()
-	slot0._simageAvatarGrey:UnLoadImage()
+function var_0_0.onDestroy(arg_6_0)
+	arg_6_0._simageAvatar:UnLoadImage()
+	arg_6_0._simageAvatarGrey:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,85 +1,95 @@
-module("modules.logic.story.view.StoryHeroView", package.seeall)
+﻿module("modules.logic.story.view.StoryHeroView", package.seeall)
 
-slot0 = class("StoryHeroView", BaseView)
+local var_0_0 = class("StoryHeroView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gorolebg = gohelper.findChild(slot0.viewGO, "#go_rolebg")
-	slot0._goroles = gohelper.findChild(slot0.viewGO, "#go_roles")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.viewGO, "#go_rolebg")
+	arg_1_0._goroles = gohelper.findChild(arg_1_0.viewGO, "#go_roles")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._addEvent(slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshHero, slot0._onUpdateHero, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshView, slot0._refreshView, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.AllStepFinished, slot0._storyFinished, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.Finish, slot0._clearItems, slot0)
+function var_0_0._addEvent(arg_4_0)
+	arg_4_0:addEventCb(StoryController.instance, StoryEvent.RefreshHero, arg_4_0._onUpdateHero, arg_4_0)
+	arg_4_0:addEventCb(StoryController.instance, StoryEvent.RefreshView, arg_4_0._refreshView, arg_4_0)
+	arg_4_0:addEventCb(StoryController.instance, StoryEvent.AllStepFinished, arg_4_0._storyFinished, arg_4_0)
+	arg_4_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_4_0._clearItems, arg_4_0)
 end
 
-function slot0._removeEvent(slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshHero, slot0._onUpdateHero, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshView, slot0._refreshView, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.AllStepFinished, slot0._storyFinished, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.Finish, slot0._clearItems, slot0)
+function var_0_0._removeEvent(arg_5_0)
+	arg_5_0:removeEventCb(StoryController.instance, StoryEvent.RefreshHero, arg_5_0._onUpdateHero, arg_5_0)
+	arg_5_0:removeEventCb(StoryController.instance, StoryEvent.RefreshView, arg_5_0._refreshView, arg_5_0)
+	arg_5_0:removeEventCb(StoryController.instance, StoryEvent.AllStepFinished, arg_5_0._storyFinished, arg_5_0)
+	arg_5_0:removeEventCb(StoryController.instance, StoryEvent.Finish, arg_5_0._clearItems, arg_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._blitEff = slot0._gorolebg:GetComponent(typeof(UrpCustom.UIBlitEffect))
-	slot0._heros = {}
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._blitEff = arg_6_0._gorolebg:GetComponent(typeof(UrpCustom.UIBlitEffect))
+	arg_6_0._heros = {}
 
-	slot0:_loadRes()
+	arg_6_0:_loadRes()
 end
 
-slot1 = "spine/spine_ui_default.mat"
-slot2 = "spine/spine_ui_dark.mat"
+local var_0_1 = "spine/spine_ui_default.mat"
+local var_0_2 = "spine/spine_ui_dark.mat"
 
-function slot0._loadRes(slot0)
-	slot0._matLoader = MultiAbLoader.New()
+function var_0_0._loadRes(arg_7_0)
+	arg_7_0._matLoader = MultiAbLoader.New()
 
-	slot0._matLoader:addPath(uv0)
-	slot0._matLoader:addPath(uv1)
-	slot0._matLoader:startLoad(slot0._onResLoaded, slot0)
+	arg_7_0._matLoader:addPath(var_0_1)
+	arg_7_0._matLoader:addPath(var_0_2)
+	arg_7_0._matLoader:startLoad(arg_7_0._onResLoaded, arg_7_0)
 end
 
-function slot0._onResLoaded(slot0)
-	if slot0._matLoader:getAssetItem(uv0) then
-		slot0._normalMat = slot1:GetResource(uv0)
+function var_0_0._onResLoaded(arg_8_0)
+	local var_8_0 = arg_8_0._matLoader:getAssetItem(var_0_1)
+
+	if var_8_0 then
+		arg_8_0._normalMat = var_8_0:GetResource(var_0_1)
 	else
-		logError("Resource is not found at path : " .. uv0)
+		logError("Resource is not found at path : " .. var_0_1)
 	end
 
-	if slot0._matLoader:getAssetItem(uv1) then
-		slot0._darkMat = slot2:GetResource(uv1)
+	local var_8_1 = arg_8_0._matLoader:getAssetItem(var_0_2)
+
+	if var_8_1 then
+		arg_8_0._darkMat = var_8_1:GetResource(var_0_2)
 	else
-		logError("Resource is not found at path : " .. uv1)
+		logError("Resource is not found at path : " .. var_0_2)
 	end
 
-	slot0:_resetHeroMat()
+	arg_8_0:_resetHeroMat()
 end
 
-function slot0._resetHeroMat(slot0)
-	if not slot0._heroCo then
+function var_0_0._resetHeroMat(arg_9_0)
+	if not arg_9_0._heroCo then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0._heroCo) do
-		if slot0._heros[slot5.heroIndex] then
-			slot0._heros[slot5.heroIndex]:setHeroMat(slot0:_isHeroDark(slot4) and slot0._darkMat or slot0._normalMat, StoryModel.instance:hasBottomEffect())
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._heroCo) do
+		local var_9_0 = arg_9_0:_isHeroDark(iter_9_0) and arg_9_0._darkMat or arg_9_0._normalMat
+
+		if arg_9_0._heros[iter_9_1.heroIndex] then
+			local var_9_1 = StoryModel.instance:hasBottomEffect()
+
+			arg_9_0._heros[iter_9_1.heroIndex]:setHeroMat(var_9_0, var_9_1)
 		end
 	end
 end
 
-function slot0._isHeroDark(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._stepCo.conversation.showList) do
-		if slot6 == slot1 - 1 then
+function var_0_0._isHeroDark(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._stepCo.conversation.showList) do
+		if iter_10_1 == arg_10_1 - 1 then
 			return false
 		end
 	end
@@ -87,180 +97,198 @@ function slot0._isHeroDark(slot0, slot1)
 	return true
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvent()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:_addEvent()
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeEvent()
+function var_0_0.onClose(arg_13_0)
+	arg_13_0:_removeEvent()
 end
 
-function slot0._onUpdateHero(slot0, slot1)
-	if #slot1.branches > 0 then
-		StoryController.instance:openStoryBranchView(slot1.branches)
+function var_0_0._onUpdateHero(arg_14_0, arg_14_1)
+	if #arg_14_1.branches > 0 then
+		StoryController.instance:openStoryBranchView(arg_14_1.branches)
 	end
 
-	if slot1.stepType ~= StoryEnum.StepType.Normal then
-		for slot5, slot6 in pairs(slot0._heros) do
-			slot6:stopVoice()
+	if arg_14_1.stepType ~= StoryEnum.StepType.Normal then
+		for iter_14_0, iter_14_1 in pairs(arg_14_0._heros) do
+			iter_14_1:stopVoice()
 		end
 
 		return
 	end
 
-	slot0._stepCo = StoryStepModel.instance:getStepListById(slot1.stepId)
+	arg_14_0._stepCo = StoryStepModel.instance:getStepListById(arg_14_1.stepId)
 
-	if slot0._stepCo.bg.transType ~= StoryEnum.BgTransType.DarkFade and slot0._stepCo.bg.transType ~= StoryEnum.BgTransType.WhiteFade then
-		slot0:_updateHeroList(slot0._stepCo.heroList)
+	if arg_14_0._stepCo.bg.transType ~= StoryEnum.BgTransType.DarkFade and arg_14_0._stepCo.bg.transType ~= StoryEnum.BgTransType.WhiteFade then
+		arg_14_0:_updateHeroList(arg_14_0._stepCo.heroList)
 	end
 end
 
-function slot0._refreshView(slot0)
-	TaskDispatcher.cancelTask(slot0._playShowHero, slot0)
-	slot0:_updateHeroList(slot0._stepCo.heroList)
+function var_0_0._refreshView(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._playShowHero, arg_15_0)
+	arg_15_0:_updateHeroList(arg_15_0._stepCo.heroList)
 end
 
-function slot0._storyFinished(slot0)
+function var_0_0._storyFinished(arg_16_0)
 	if not StoryController.instance._hideStartAndEndDark then
 		return
 	end
 
-	slot0:_updateHeroList({})
+	arg_16_0:_updateHeroList({})
 end
 
-function slot0._updateHeroList(slot0, slot1)
-	slot2 = false
-	slot3 = false
-	slot4 = false
+function var_0_0._updateHeroList(arg_17_0, arg_17_1)
+	local var_17_0 = false
+	local var_17_1 = false
+	local var_17_2 = false
 
-	slot0._blitEff:SetKeepCapture(true)
+	arg_17_0._blitEff:SetKeepCapture(true)
 
-	if slot0._heroCo then
-		if #slot0._heroCo == 0 and #slot1 == 0 then
-			slot3 = false
-			slot2 = false
+	if arg_17_0._heroCo then
+		if #arg_17_0._heroCo == 0 and #arg_17_1 == 0 then
+			var_17_1 = false
+			var_17_0 = false
 		else
-			slot5 = false
+			local var_17_3 = false
 
-			for slot9, slot10 in pairs(slot1) do
-				for slot14, slot15 in pairs(slot0._heroCo) do
-					if slot15.heroIndex == slot10.heroIndex then
-						slot5 = true
+			for iter_17_0, iter_17_1 in pairs(arg_17_1) do
+				for iter_17_2, iter_17_3 in pairs(arg_17_0._heroCo) do
+					if iter_17_3.heroIndex == iter_17_1.heroIndex then
+						var_17_3 = true
 
 						break
 					end
 				end
 			end
 
-			if slot5 then
-				slot3 = false
-				slot2 = false
+			if var_17_3 then
+				var_17_1 = false
+				var_17_0 = false
 			else
-				slot3 = true
-				slot2 = true
+				var_17_1 = true
+				var_17_0 = true
 			end
 		end
 	else
-		slot2 = false
-		slot3 = true
-		slot0._heroCo = {}
+		var_17_0 = false
+		var_17_1 = true
+		arg_17_0._heroCo = {}
 	end
 
-	if slot0._preStepTransBg then
-		slot0._preStepTransBg = false
-		slot2 = true
-		slot3 = true
-	elseif StoryModel.instance:getPreSteps(slot0._stepCo.id) and #slot5 > 0 then
-		slot8 = slot0._stepCo.bg
+	if arg_17_0._preStepTransBg then
+		arg_17_0._preStepTransBg = false
+		var_17_0 = true
+		var_17_1 = true
+	else
+		local var_17_4 = StoryModel.instance:getPreSteps(arg_17_0._stepCo.id)
 
-		if StoryStepModel.instance:getStepListById(slot5[1]) and slot6.bg and slot8 and (slot8.offset[1] ~= slot7.offset[1] or slot8.offset[2] ~= slot7.offset[2]) then
-			slot0._preStepTransBg = true
+		if var_17_4 and #var_17_4 > 0 then
+			local var_17_5 = StoryStepModel.instance:getStepListById(var_17_4[1])
+			local var_17_6 = var_17_5 and var_17_5.bg
+			local var_17_7 = arg_17_0._stepCo.bg
+
+			if var_17_6 and var_17_7 and (var_17_7.offset[1] ~= var_17_6.offset[1] or var_17_7.offset[2] ~= var_17_6.offset[2]) then
+				arg_17_0._preStepTransBg = true
+			end
 		end
 	end
 
-	for slot8, slot9 in pairs(slot0._heroCo) do
-		slot10 = true
+	for iter_17_4, iter_17_5 in pairs(arg_17_0._heroCo) do
+		local var_17_8 = true
 
-		for slot14, slot15 in pairs(slot1) do
-			if slot15.heroIndex == slot9.heroIndex then
-				slot10 = false
+		for iter_17_6, iter_17_7 in pairs(arg_17_1) do
+			if iter_17_7.heroIndex == iter_17_5.heroIndex then
+				var_17_8 = false
 
 				break
 			end
 		end
 
-		if slot10 then
-			slot4 = true
+		if var_17_8 then
+			var_17_2 = true
 		end
 	end
 
-	slot0._heroCo = slot1
-	slot5 = {}
+	arg_17_0._heroCo = arg_17_1
 
-	for slot9, slot10 in pairs(slot0._heros) do
-		slot11 = false
+	local var_17_9 = {}
 
-		for slot15, slot16 in pairs(slot0._heroCo) do
-			if slot16.heroIndex == slot9 then
-				slot11 = true
+	for iter_17_8, iter_17_9 in pairs(arg_17_0._heros) do
+		local var_17_10 = false
+
+		for iter_17_10, iter_17_11 in pairs(arg_17_0._heroCo) do
+			if iter_17_11.heroIndex == iter_17_8 then
+				var_17_10 = true
 			end
 		end
 
-		if not slot11 then
-			slot10:hideHero()
-			table.insert(slot5, slot9)
+		if not var_17_10 then
+			iter_17_9:hideHero()
+			table.insert(var_17_9, iter_17_8)
 		end
 	end
 
-	for slot9, slot10 in pairs(slot5) do
-		slot0._heros[slot10] = nil
+	for iter_17_12, iter_17_13 in pairs(var_17_9) do
+		arg_17_0._heros[iter_17_13] = nil
 	end
 
-	if slot2 then
+	if var_17_0 then
 		StoryModel.instance:enableClick(false)
 
-		if slot4 then
-			TaskDispatcher.runDelay(slot0._playShowHero, slot0, 1)
+		if var_17_2 then
+			TaskDispatcher.runDelay(arg_17_0._playShowHero, arg_17_0, 1)
 		else
-			TaskDispatcher.runDelay(slot0._playShowHero, slot0, 0.5)
+			TaskDispatcher.runDelay(arg_17_0._playShowHero, arg_17_0, 0.5)
 		end
-	elseif slot4 then
+	elseif var_17_2 then
 		StoryModel.instance:enableClick(false)
-		TaskDispatcher.runDelay(slot0._playShowHero, slot0, 0.5)
+		TaskDispatcher.runDelay(arg_17_0._playShowHero, arg_17_0, 0.5)
 	else
-		slot0:_playShowHero()
+		arg_17_0:_playShowHero()
 	end
 
-	StoryModel.instance:setNeedFadeIn(slot3)
-	StoryModel.instance:setNeedFadeOut(slot2)
+	StoryModel.instance:setNeedFadeIn(var_17_1)
+	StoryModel.instance:setNeedFadeOut(var_17_0)
 	StoryController.instance:dispatchEvent(StoryEvent.RefreshConversation)
 end
 
-function slot0._playShowHero(slot0)
-	slot1 = false
+function var_0_0._playShowHero(arg_18_0)
+	local var_18_0 = false
+	local var_18_1 = arg_18_0._stepCo.conversation.audios[1] or 0
 
-	for slot6, slot7 in pairs(slot0._heroCo) do
-		if not slot0._heros[slot7.heroIndex] then
-			slot1 = true
-			slot10 = StoryHeroItem.New()
-			slot0._heros[slot7.heroIndex] = slot10
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._heroCo) do
+		local var_18_2 = arg_18_0:_isHeroDark(iter_18_0) and arg_18_0._darkMat or arg_18_0._normalMat
+		local var_18_3 = StoryModel.instance:hasBottomEffect()
 
-			slot10:init(slot0._goroles, slot7)
-			slot10:buildHero(slot7, slot0:_isHeroDark(slot6) and slot0._darkMat or slot0._normalMat, StoryModel.instance:hasBottomEffect(), slot0._onEnableClick, slot0, slot0._stepCo.conversation.audios[1] or 0)
+		if not arg_18_0._heros[iter_18_1.heroIndex] then
+			var_18_0 = true
+
+			local var_18_4 = StoryHeroItem.New()
+
+			arg_18_0._heros[iter_18_1.heroIndex] = var_18_4
+
+			var_18_4:init(arg_18_0._goroles, iter_18_1)
+			var_18_4:buildHero(iter_18_1, var_18_2, var_18_3, arg_18_0._onEnableClick, arg_18_0, var_18_1)
 		else
-			slot0._heros[slot7.heroIndex]:resetHero(slot7, slot8, slot9, slot2)
+			arg_18_0._heros[iter_18_1.heroIndex]:resetHero(iter_18_1, var_18_2, var_18_3, var_18_1)
 		end
 	end
 
-	if not slot1 and StoryStepModel.instance:getStepListById(StoryController.instance._curStepId).conversation.type ~= StoryEnum.ConversationType.IrregularShake then
-		StoryModel.instance:enableClick(true)
+	if not var_18_0 then
+		local var_18_5 = StoryController.instance._curStepId
+
+		if StoryStepModel.instance:getStepListById(var_18_5).conversation.type ~= StoryEnum.ConversationType.IrregularShake then
+			StoryModel.instance:enableClick(true)
+		end
 	end
 end
 
-function slot0._onEnableClick(slot0)
+function var_0_0._onEnableClick(arg_19_0)
 	if StoryModel.instance:isTextShowing() then
 		return
 	end
@@ -268,26 +296,26 @@ function slot0._onEnableClick(slot0)
 	StoryModel.instance:enableClick(true)
 end
 
-function slot0._clearItems(slot0)
-	for slot4, slot5 in pairs(slot0._heros) do
-		slot5:onDestroy()
+function var_0_0._clearItems(arg_20_0)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._heros) do
+		iter_20_1:onDestroy()
 	end
 
-	slot0._heros = {}
+	arg_20_0._heros = {}
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._playShowHero, slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._playShowHero, arg_21_0)
 	ViewMgr.instance:closeView(ViewName.StoryView, true)
 	ViewMgr.instance:closeView(ViewName.StoryLeadRoleSpineView, true)
-	slot0:_clearItems()
-	slot0._blitEff:SetKeepCapture(false)
+	arg_21_0:_clearItems()
+	arg_21_0._blitEff:SetKeepCapture(false)
 
-	if slot0._matLoader then
-		slot0._matLoader:dispose()
+	if arg_21_0._matLoader then
+		arg_21_0._matLoader:dispose()
 
-		slot0._matLoader = nil
+		arg_21_0._matLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

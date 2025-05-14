@@ -1,109 +1,114 @@
-module("modules.logic.versionactivity1_3.act125.view.Activity125WarmUpViewBaseContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_3.act125.view.Activity125WarmUpViewBaseContainer", package.seeall)
 
-slot0 = class("Activity125WarmUpViewBaseContainer", Activity125ViewBaseContainer)
+local var_0_0 = class("Activity125WarmUpViewBaseContainer", Activity125ViewBaseContainer)
 
-function slot0.onContainerInit(slot0)
-	uv0.super.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_1_0)
+	var_0_0.super.onContainerInit(arg_1_0)
 end
 
-function slot0.onContainerOpen(slot0)
-	uv0.super.onContainerOpen(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, slot0._onUpdateActivity, slot0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, slot0._onDataUpdate, slot0)
-	Activity125Controller.instance:registerCallback(Activity125Event.SwitchEpisode, slot0._onSwitchEpisode, slot0)
+function var_0_0.onContainerOpen(arg_2_0)
+	var_0_0.super.onContainerOpen(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
+	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, arg_2_0._onUpdateActivity, arg_2_0)
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_2_0._onDataUpdate, arg_2_0)
+	Activity125Controller.instance:registerCallback(Activity125Event.SwitchEpisode, arg_2_0._onSwitchEpisode, arg_2_0)
 
-	if not slot0._isInited then
-		Activity125Controller.instance:getAct125InfoFromServer(slot0:actId())
+	if not arg_2_0._isInited then
+		Activity125Controller.instance:getAct125InfoFromServer(arg_2_0:actId())
 	end
 end
 
-function slot0.onContainerClose(slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.UpdateActivity, slot0._onUpdateActivity, slot0)
-	Activity125Controller.instance:unregisterCallback(Activity125Event.SwitchEpisode, slot0._onSwitchEpisode, slot0)
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, slot0._onDataUpdate, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	uv0.super.onContainerClose(slot0)
+function var_0_0.onContainerClose(arg_3_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.UpdateActivity, arg_3_0._onUpdateActivity, arg_3_0)
+	Activity125Controller.instance:unregisterCallback(Activity125Event.SwitchEpisode, arg_3_0._onSwitchEpisode, arg_3_0)
+	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_3_0._onDataUpdate, arg_3_0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+	var_0_0.super.onContainerClose(arg_3_0)
 end
 
-function slot0.onContainerDestroy(slot0)
-	slot0._isInited = false
+function var_0_0.onContainerDestroy(arg_4_0)
+	arg_4_0._isInited = false
 
-	uv0.super.onContainerDestroy(slot0)
+	var_0_0.super.onContainerDestroy(arg_4_0)
 end
 
-function slot0._onDataUpdate(slot0)
-	slot1 = slot0._isInited
+function var_0_0._onDataUpdate(arg_5_0)
+	local var_5_0 = arg_5_0._isInited
 
-	if not slot0._isInited then
-		slot0:onDataUpdateFirst()
+	if not arg_5_0._isInited then
+		arg_5_0:onDataUpdateFirst()
 
-		slot0._isInited = true
+		arg_5_0._isInited = true
 	end
 
-	slot0:onDataUpdate()
+	arg_5_0:onDataUpdate()
 
-	if slot1 ~= slot0._isInited then
-		slot0:onDataUpdateDoneFirst()
+	if var_5_0 ~= arg_5_0._isInited then
+		arg_5_0:onDataUpdateDoneFirst()
 	end
 end
 
-function slot0._onSwitchEpisode(slot0)
-	if not slot0._isInited then
+function var_0_0._onSwitchEpisode(arg_6_0)
+	if not arg_6_0._isInited then
 		return
 	end
 
-	slot0:onSwitchEpisode()
+	arg_6_0:onSwitchEpisode()
 end
 
-function slot0._onUpdateActivity(slot0)
-	if not slot0._isInited then
+function var_0_0._onUpdateActivity(arg_7_0)
+	if not arg_7_0._isInited then
 		return
 	end
 
-	slot0:onUpdateActivity()
+	arg_7_0:onUpdateActivity()
 end
 
-function slot0._onDailyRefresh(slot0)
-	Activity125Controller.instance:getAct125InfoFromServer(slot0:actId())
+function var_0_0._onDailyRefresh(arg_8_0)
+	Activity125Controller.instance:getAct125InfoFromServer(arg_8_0:actId())
 end
 
-function slot0._onCloseViewFinish(slot0, ...)
-	if not slot0._isInited then
+function var_0_0._onCloseViewFinish(arg_9_0, ...)
+	if not arg_9_0._isInited then
 		return
 	end
 
-	slot0:onCloseViewFinish(...)
+	arg_9_0:onCloseViewFinish(...)
 end
 
-function slot0.actId(slot0)
-	return slot0.viewParam.actId
+function var_0_0.actId(arg_10_0)
+	return arg_10_0.viewParam.actId
 end
 
-function slot0.dispatchRedEvent(slot0)
-	Activity125Model.instance:setHasCheckEpisode(slot0:actId(), slot0:getCurSelectedEpisode())
+function var_0_0.dispatchRedEvent(arg_11_0)
+	Activity125Model.instance:setHasCheckEpisode(arg_11_0:actId(), arg_11_0:getCurSelectedEpisode())
 	RedDotController.instance:dispatchEvent(RedDotEvent.RedDotEvent.UpdateActTag)
 end
 
-function slot0.onDataUpdateFirst(slot0)
+function var_0_0.onDataUpdateFirst(arg_12_0)
+	return
 end
 
-function slot0.onDataUpdate(slot0)
+function var_0_0.onDataUpdate(arg_13_0)
 	assert(false, "please override this function")
 end
 
-function slot0.onDataUpdateDoneFirst(slot0)
+function var_0_0.onDataUpdateDoneFirst(arg_14_0)
+	return
 end
 
-function slot0.onSwitchEpisode(slot0)
+function var_0_0.onSwitchEpisode(arg_15_0)
+	return
 end
 
-function slot0.onCloseViewFinish(slot0, ...)
+function var_0_0.onCloseViewFinish(arg_16_0, ...)
+	return
 end
 
-function slot0.onUpdateActivity(slot0)
+function var_0_0.onUpdateActivity(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

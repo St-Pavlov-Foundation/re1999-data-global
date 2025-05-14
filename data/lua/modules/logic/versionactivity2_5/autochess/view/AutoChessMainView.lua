@@ -1,240 +1,268 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessMainView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessMainView", package.seeall)
 
-slot0 = class("AutoChessMainView", BaseView)
+local var_0_0 = class("AutoChessMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goSpine = gohelper.findChild(slot0.viewGO, "simage_fullbg/#go_Spine")
-	slot0._txtLeftTime = gohelper.findChildText(slot0.viewGO, "#txt_LeftTime")
-	slot0._btnPVE = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_PVE")
-	slot0._btnGiveUpE = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_PVE/#btn_GiveUpE")
-	slot0._goRoundE = gohelper.findChild(slot0.viewGO, "#btn_PVE/#go_RoundE")
-	slot0._txtRoundE = gohelper.findChildText(slot0.viewGO, "#btn_PVE/#go_RoundE/#txt_RoundE")
-	slot0._goFinishPVE = gohelper.findChild(slot0.viewGO, "#btn_PVE/#go_FinishPVE")
-	slot0._btnPVP = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_PVP")
-	slot0._btnGiveUpP = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_PVP/#btn_GiveUpP")
-	slot0._goRoundP = gohelper.findChild(slot0.viewGO, "#btn_PVP/#go_RoundP")
-	slot0._txtRoundP = gohelper.findChildText(slot0.viewGO, "#btn_PVP/#go_RoundP/#txt_RoundP")
-	slot0._btnTask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Task")
-	slot0._btnCourse = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Course")
-	slot0._goBadgeContent = gohelper.findChild(slot0.viewGO, "#go_BadgeContent")
-	slot0._btnAchievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Achievement")
-	slot0._goTip = gohelper.findChild(slot0.viewGO, "#go_Tip")
-	slot0._txtTip = gohelper.findChildText(slot0.viewGO, "#go_Tip/#txt_Tip")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goSpine = gohelper.findChild(arg_1_0.viewGO, "simage_fullbg/#go_Spine")
+	arg_1_0._txtLeftTime = gohelper.findChildText(arg_1_0.viewGO, "#txt_LeftTime")
+	arg_1_0._btnPVE = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_PVE")
+	arg_1_0._btnGiveUpE = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_PVE/#btn_GiveUpE")
+	arg_1_0._goRoundE = gohelper.findChild(arg_1_0.viewGO, "#btn_PVE/#go_RoundE")
+	arg_1_0._txtRoundE = gohelper.findChildText(arg_1_0.viewGO, "#btn_PVE/#go_RoundE/#txt_RoundE")
+	arg_1_0._goFinishPVE = gohelper.findChild(arg_1_0.viewGO, "#btn_PVE/#go_FinishPVE")
+	arg_1_0._btnPVP = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_PVP")
+	arg_1_0._btnGiveUpP = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_PVP/#btn_GiveUpP")
+	arg_1_0._goRoundP = gohelper.findChild(arg_1_0.viewGO, "#btn_PVP/#go_RoundP")
+	arg_1_0._txtRoundP = gohelper.findChildText(arg_1_0.viewGO, "#btn_PVP/#go_RoundP/#txt_RoundP")
+	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
+	arg_1_0._btnCourse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Course")
+	arg_1_0._goBadgeContent = gohelper.findChild(arg_1_0.viewGO, "#go_BadgeContent")
+	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Achievement")
+	arg_1_0._goTip = gohelper.findChild(arg_1_0.viewGO, "#go_Tip")
+	arg_1_0._txtTip = gohelper.findChildText(arg_1_0.viewGO, "#go_Tip/#txt_Tip")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnPVE:AddClickListener(slot0._btnPVEOnClick, slot0)
-	slot0._btnGiveUpE:AddClickListener(slot0._btnGiveUpEOnClick, slot0)
-	slot0._btnPVP:AddClickListener(slot0._btnPVPOnClick, slot0)
-	slot0._btnGiveUpP:AddClickListener(slot0._btnGiveUpPOnClick, slot0)
-	slot0._btnTask:AddClickListener(slot0._btnTaskOnClick, slot0)
-	slot0._btnCourse:AddClickListener(slot0._btnCourseOnClick, slot0)
-	slot0._btnAchievement:AddClickListener(slot0._btnAchievementOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnPVE:AddClickListener(arg_2_0._btnPVEOnClick, arg_2_0)
+	arg_2_0._btnGiveUpE:AddClickListener(arg_2_0._btnGiveUpEOnClick, arg_2_0)
+	arg_2_0._btnPVP:AddClickListener(arg_2_0._btnPVPOnClick, arg_2_0)
+	arg_2_0._btnGiveUpP:AddClickListener(arg_2_0._btnGiveUpPOnClick, arg_2_0)
+	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
+	arg_2_0._btnCourse:AddClickListener(arg_2_0._btnCourseOnClick, arg_2_0)
+	arg_2_0._btnAchievement:AddClickListener(arg_2_0._btnAchievementOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnPVE:RemoveClickListener()
-	slot0._btnGiveUpE:RemoveClickListener()
-	slot0._btnPVP:RemoveClickListener()
-	slot0._btnGiveUpP:RemoveClickListener()
-	slot0._btnTask:RemoveClickListener()
-	slot0._btnCourse:RemoveClickListener()
-	slot0._btnAchievement:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnPVE:RemoveClickListener()
+	arg_3_0._btnGiveUpE:RemoveClickListener()
+	arg_3_0._btnPVP:RemoveClickListener()
+	arg_3_0._btnGiveUpP:RemoveClickListener()
+	arg_3_0._btnTask:RemoveClickListener()
+	arg_3_0._btnCourse:RemoveClickListener()
+	arg_3_0._btnAchievement:RemoveClickListener()
 end
 
-slot1 = "roles/v2a5_autochess_toycar/autochess_toycar_ui.prefab"
+local var_0_1 = "roles/v2a5_autochess_toycar/autochess_toycar_ui.prefab"
 
-function slot0._btnGiveUpEOnClick(slot0)
-	GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpGame, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function ()
+function var_0_0._btnGiveUpEOnClick(arg_4_0)
+	GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpGame, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function()
 		AutoChessRpc.instance:sendAutoChessGiveUpRequest(AutoChessEnum.ModuleId.PVE)
 	end)
 end
 
-function slot0._btnGiveUpPOnClick(slot0)
-	GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpGame, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function ()
+function var_0_0._btnGiveUpPOnClick(arg_6_0)
+	GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpGame, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function()
 		AutoChessRpc.instance:sendAutoChessGiveUpRequest(AutoChessEnum.ModuleId.PVP)
 	end)
 end
 
-function slot0._btnCourseOnClick(slot0)
+function var_0_0._btnCourseOnClick(arg_8_0)
 	ViewMgr.instance:openView(ViewName.AutoChessCourseView)
 end
 
-function slot0._btnAchievementOnClick(slot0)
-	JumpController.instance:jump(ActivityConfig.instance:getActivityCo(slot0.actId).achievementJumpId)
+function var_0_0._btnAchievementOnClick(arg_9_0)
+	local var_9_0 = ActivityConfig.instance:getActivityCo(arg_9_0.actId).achievementJumpId
+
+	JumpController.instance:jump(var_9_0)
 end
 
-function slot0._btnPVEOnClick(slot0)
+function var_0_0._btnPVEOnClick(arg_10_0)
 	ViewMgr.instance:openView(ViewName.AutoChessLevelView)
 end
 
-function slot0._btnPVPOnClick(slot0)
-	slot1 = AutoChessEnum.PvpEpisodeId
+function var_0_0._btnPVPOnClick(arg_11_0)
+	local var_11_0 = AutoChessEnum.PvpEpisodeId
+	local var_11_1 = lua_auto_chess_episode.configDict[var_11_0].preEpisode
+	local var_11_2 = lua_auto_chess_episode.configDict[var_11_1]
 
-	if not slot0.actMo:isEpisodeUnlock(slot1) then
-		GameFacade.showToast(ToastEnum.AutoChessPvpLock, lua_auto_chess_episode.configDict[lua_auto_chess_episode.configDict[slot1].preEpisode].name)
+	if not arg_11_0.actMo:isEpisodeUnlock(var_11_0) then
+		GameFacade.showToast(ToastEnum.AutoChessPvpLock, var_11_2.name)
 
 		return
 	end
 
-	slot0.tempEpisodeId = slot1
+	local var_11_3 = AutoChessEnum.ModuleId.PVP
 
-	AutoChessController.instance:startGame(AutoChessEnum.ModuleId.PVP, slot0.tempEpisodeId)
+	arg_11_0.tempEpisodeId = var_11_0
+
+	AutoChessController.instance:startGame(var_11_3, arg_11_0.tempEpisodeId)
 end
 
-function slot0._btnTaskOnClick(slot0)
+function var_0_0._btnTaskOnClick(arg_12_0)
 	ViewMgr.instance:openView(ViewName.AutoChessTaskView, {
-		actId = slot0.actId
+		actId = arg_12_0.actId
 	})
 end
 
-function slot0._editableInitView(slot0)
-	RedDotController.instance:addRedDot(gohelper.findChild(slot0._btnTask.gameObject, "go_reddot"), RedDotEnum.DotNode.V2a5_AutoChess)
+function var_0_0._editableInitView(arg_13_0)
+	local var_13_0 = gohelper.findChild(arg_13_0._btnTask.gameObject, "go_reddot")
 
-	slot0._uiSpine = GuiSpine.Create(slot0._goSpine, true)
+	RedDotController.instance:addRedDot(var_13_0, RedDotEnum.DotNode.V2a5_AutoChess)
 
-	slot0._uiSpine:setResPath(uv0, slot0._onSpineLoaded, slot0, true)
+	arg_13_0._uiSpine = GuiSpine.Create(arg_13_0._goSpine, true)
+
+	arg_13_0._uiSpine:setResPath(var_0_1, arg_13_0._onSpineLoaded, arg_13_0, true)
 end
 
-function slot0._onSpineLoaded(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:play(SpineAnimState.born)
+function var_0_0._onSpineLoaded(arg_14_0)
+	if arg_14_0._uiSpine then
+		arg_14_0._uiSpine:play(SpineAnimState.born)
 		AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_toycar_appear)
-		TaskDispatcher.runDelay(slot0._bornFinish, slot0, 1.83)
+		TaskDispatcher.runDelay(arg_14_0._bornFinish, arg_14_0, 1.83)
 	end
 end
 
-function slot0._bornFinish(slot0)
-	slot0:checkStartLoopSpine()
+function var_0_0._bornFinish(arg_15_0)
+	arg_15_0:checkStartLoopSpine()
 end
 
-function slot0.onRandomMasterReply(slot0)
-	if slot0.tempEpisodeId then
+function var_0_0.onRandomMasterReply(arg_16_0)
+	if arg_16_0.tempEpisodeId then
 		AutoChessController.instance:openLeaderView({
-			episodeId = slot0.tempEpisodeId
+			episodeId = arg_16_0.tempEpisodeId
 		})
-		slot0:refreshBtnStatus()
+		arg_16_0:refreshBtnStatus()
 
-		slot0.tempEpisodeId = nil
+		arg_16_0.tempEpisodeId = nil
 	end
 end
 
-function slot0.onSettlPush(slot0)
-	if not ViewMgr.instance:isOpen(ViewName.AutoChessGameView) and AutoChessModel.instance.settleData then
-		if slot1.moduleId == AutoChessEnum.ModuleId.PVP then
-			if slot1.episodeId == 0 then
-				slot0.badgeItem:playProgressAnim(slot1.score)
+function var_0_0.onSettlPush(arg_17_0)
+	if not ViewMgr.instance:isOpen(ViewName.AutoChessGameView) then
+		local var_17_0 = AutoChessModel.instance.settleData
 
-				AutoChessModel.instance.settleData = nil
+		if var_17_0 then
+			if var_17_0.moduleId == AutoChessEnum.ModuleId.PVP then
+				if var_17_0.episodeId == 0 then
+					arg_17_0.badgeItem:playProgressAnim(var_17_0.score)
+
+					AutoChessModel.instance.settleData = nil
+				else
+					ViewMgr.instance:openView(ViewName.AutoChessPvpSettleView)
+				end
 			else
-				ViewMgr.instance:openView(ViewName.AutoChessPvpSettleView)
+				AutoChessModel.instance.settleData = nil
 			end
-		else
-			AutoChessModel.instance.settleData = nil
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = Activity182Model.instance:getCurActId()
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0.actId = Activity182Model.instance:getCurActId()
 
-	slot0:addEventCb(Activity182Controller.instance, Activity182Event.UpdateInfo, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity182Controller.instance, Activity182Event.RandomMasterReply, slot0.onRandomMasterReply, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.SettlePush, slot0.onSettlPush, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.checkStopAudio, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.checkStartLoopSpine, slot0)
-	slot0:refreshUI()
+	arg_18_0:addEventCb(Activity182Controller.instance, Activity182Event.UpdateInfo, arg_18_0.refreshUI, arg_18_0)
+	arg_18_0:addEventCb(Activity182Controller.instance, Activity182Event.RandomMasterReply, arg_18_0.onRandomMasterReply, arg_18_0)
+	arg_18_0:addEventCb(AutoChessController.instance, AutoChessEvent.SettlePush, arg_18_0.onSettlPush, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_18_0.checkStopAudio, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_18_0.checkStartLoopSpine, arg_18_0)
+	arg_18_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:checkStopAudio()
-	TaskDispatcher.cancelTask(slot0._bornFinish, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshLeftTime, slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0:checkStopAudio()
+	TaskDispatcher.cancelTask(arg_20_0._bornFinish, arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0.refreshLeftTime, arg_20_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0.actMo = Activity182Model.instance:getActMo()
+function var_0_0.refreshUI(arg_21_0)
+	arg_21_0.actMo = Activity182Model.instance:getActMo()
 
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnPVP.gameObject, not slot0.actMo:isEpisodeUnlock(AutoChessEnum.PvpEpisodeId))
-	slot0:refreshLeftTime()
-	TaskDispatcher.runRepeat(slot0.refreshLeftTime, slot0, TimeUtil.OneSecond)
+	local var_21_0 = arg_21_0.actMo:isEpisodeUnlock(AutoChessEnum.PvpEpisodeId)
 
-	if not slot0.badgeItem then
-		slot0.badgeItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.BadgeItemPath, slot0._goBadgeContent), AutoChessBadgeItem)
+	ZProj.UGUIHelper.SetGrayscale(arg_21_0._btnPVP.gameObject, not var_21_0)
+	arg_21_0:refreshLeftTime()
+	TaskDispatcher.runRepeat(arg_21_0.refreshLeftTime, arg_21_0, TimeUtil.OneSecond)
+
+	if not arg_21_0.badgeItem then
+		local var_21_1 = arg_21_0:getResInst(AutoChessEnum.BadgeItemPath, arg_21_0._goBadgeContent)
+
+		arg_21_0.badgeItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_1, AutoChessBadgeItem)
 	end
 
-	slot0.badgeItem:setData(slot0.actMo.rank, slot0.actMo.score, AutoChessBadgeItem.ShowType.MainView)
-	slot0:refreshBtnStatus()
-	slot0:refreshDoubleRankTip()
+	arg_21_0.badgeItem:setData(arg_21_0.actMo.rank, arg_21_0.actMo.score, AutoChessBadgeItem.ShowType.MainView)
+	arg_21_0:refreshBtnStatus()
+	arg_21_0:refreshDoubleRankTip()
 end
 
-function slot0.refreshBtnStatus(slot0)
-	gohelper.setActive(slot0._goFinishPVE, slot0.actMo:isEpisodePass(11006))
+function var_0_0.refreshBtnStatus(arg_22_0)
+	local var_22_0 = arg_22_0.actMo:isEpisodePass(11006)
 
-	slot2 = slot0.actMo.gameMoDic[AutoChessEnum.ModuleId.PVE]
-	slot3 = slot2.episodeId
+	gohelper.setActive(arg_22_0._goFinishPVE, var_22_0)
 
-	gohelper.setActive(slot0._btnGiveUpE, slot2.start and GuideModel.instance:isGuideFinish(25406) and not slot1)
+	local var_22_1 = arg_22_0.actMo.gameMoDic[AutoChessEnum.ModuleId.PVE]
+	local var_22_2 = var_22_1.episodeId
 
-	if not slot1 and slot3 ~= 0 then
-		slot0._txtRoundE.text = string.format("%d/%d", slot2.currRound, lua_auto_chess_episode.configDict[slot3].maxRound)
+	gohelper.setActive(arg_22_0._btnGiveUpE, var_22_1.start and GuideModel.instance:isGuideFinish(25406) and not var_22_0)
 
-		gohelper.setActive(slot0._goRoundE, true)
+	if not var_22_0 and var_22_2 ~= 0 then
+		local var_22_3 = lua_auto_chess_episode.configDict[var_22_2]
+
+		arg_22_0._txtRoundE.text = string.format("%d/%d", var_22_1.currRound, var_22_3.maxRound)
+
+		gohelper.setActive(arg_22_0._goRoundE, true)
 	else
-		gohelper.setActive(slot0._goRoundE, false)
+		gohelper.setActive(arg_22_0._goRoundE, false)
 	end
 
-	slot2 = slot0.actMo.gameMoDic[AutoChessEnum.ModuleId.PVP]
+	local var_22_4 = arg_22_0.actMo.gameMoDic[AutoChessEnum.ModuleId.PVP]
+	local var_22_5 = var_22_4.episodeId
 
-	gohelper.setActive(slot0._btnGiveUpP, slot2.start)
+	gohelper.setActive(arg_22_0._btnGiveUpP, var_22_4.start)
 
-	if slot2.episodeId ~= 0 then
-		slot0._txtRoundP.text = string.format("%d/%d", slot2.currRound, lua_auto_chess_episode.configDict[slot3].maxRound)
+	if var_22_5 ~= 0 then
+		local var_22_6 = lua_auto_chess_episode.configDict[var_22_5]
 
-		gohelper.setActive(slot0._goRoundP, true)
+		arg_22_0._txtRoundP.text = string.format("%d/%d", var_22_4.currRound, var_22_6.maxRound)
+
+		gohelper.setActive(arg_22_0._goRoundP, true)
 	else
-		gohelper.setActive(slot0._goRoundP, false)
+		gohelper.setActive(arg_22_0._goRoundP, false)
 	end
 end
 
-function slot0.refreshLeftTime(slot0)
-	slot0._txtLeftTime.text = ActivityHelper.getActivityRemainTimeStr(slot0.actId)
+function var_0_0.refreshLeftTime(arg_23_0)
+	arg_23_0._txtLeftTime.text = ActivityHelper.getActivityRemainTimeStr(arg_23_0.actId)
 end
 
-function slot0.refreshDoubleRankTip(slot0)
-	slot1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreRank].value)
-	slot3 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreCnt].value)
+function var_0_0.refreshDoubleRankTip(arg_24_0)
+	local var_24_0 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreRank].value)
+	local var_24_1 = lua_auto_chess_rank.configDict[arg_24_0.actId][var_24_0].name
+	local var_24_2 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.DoubleScoreCnt].value)
 
-	if slot0.actMo.rank <= slot1 then
-		slot0._txtTip.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("autochess_mainview_tips1"), lua_auto_chess_rank.configDict[slot0.actId][slot1].name, slot3, string.format("（%d/%d）", slot0.actMo.doubleScoreTimes, slot3))
+	if var_24_0 >= arg_24_0.actMo.rank then
+		local var_24_3 = luaLang("autochess_mainview_tips1")
+		local var_24_4 = string.format("（%d/%d）", arg_24_0.actMo.doubleScoreTimes, var_24_2)
 
-		gohelper.setActive(slot0._goTip, true)
+		arg_24_0._txtTip.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_24_3, var_24_1, var_24_2, var_24_4)
+
+		gohelper.setActive(arg_24_0._goTip, true)
 	else
-		gohelper.setActive(slot0._goTip, false)
+		gohelper.setActive(arg_24_0._goTip, false)
 	end
 end
 
-function slot0.checkStopAudio(slot0, slot1)
-	if slot1 ~= slot0.viewName then
+function var_0_0.checkStopAudio(arg_25_0, arg_25_1)
+	if arg_25_1 ~= arg_25_0.viewName then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	end
 end
 
-function slot0.checkStartLoopSpine(slot0)
-	slot1 = ViewMgr.instance:getOpenViewNameList()
+function var_0_0.checkStartLoopSpine(arg_26_0)
+	local var_26_0 = ViewMgr.instance:getOpenViewNameList()
 
-	if slot1[#slot1] == slot0.viewName then
-		slot0._uiSpine:play(SpineAnimState.idle1, true)
+	if var_26_0[#var_26_0] == arg_26_0.viewName then
+		arg_26_0._uiSpine:play(SpineAnimState.idle1, true)
 		AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_toycar_standby_loop)
 	end
 end
 
-return slot0
+return var_0_0

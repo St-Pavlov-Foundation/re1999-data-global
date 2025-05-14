@@ -1,253 +1,255 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapUnitMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapUnitMo", package.seeall)
 
-slot0 = pureTable("WuErLiXiMapUnitMo")
+local var_0_0 = pureTable("WuErLiXiMapUnitMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.x = 0
-	slot0.y = 0
-	slot0.unitType = 0
-	slot0.dir = 0
-	slot0.isActive = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.x = 0
+	arg_1_0.y = 0
+	arg_1_0.unitType = 0
+	arg_1_0.dir = 0
+	arg_1_0.isActive = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1[1]
-	slot0.x = slot1[2]
-	slot0.y = slot1[3]
-	slot0.unitType = slot1[4]
-	slot0.dir = slot1[5]
-	slot0.outDir = slot0.dir
-	slot0.isActive = slot0.unitType == WuErLiXiEnum.UnitType.SignalStart or slot0.unitType == WuErLiXiEnum.UnitType.KeyStart
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1[1]
+	arg_2_0.x = arg_2_1[2]
+	arg_2_0.y = arg_2_1[3]
+	arg_2_0.unitType = arg_2_1[4]
+	arg_2_0.dir = arg_2_1[5]
+	arg_2_0.outDir = arg_2_0.dir
+	arg_2_0.isActive = arg_2_0.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_2_0.unitType == WuErLiXiEnum.UnitType.KeyStart
 end
 
-function slot0.initByActUnitMo(slot0, slot1, slot2, slot3)
-	slot0.id = slot1.id
-	slot0.x = slot2
-	slot0.y = slot3
-	slot0.unitType = slot1.type
-	slot0.dir = slot1.dir
-	slot0.outDir = slot0.dir
-	slot0.isActive = slot0.unitType == WuErLiXiEnum.UnitType.SignalStart or slot0.unitType == WuErLiXiEnum.UnitType.KeyStart
+function var_0_0.initByActUnitMo(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0.id = arg_3_1.id
+	arg_3_0.x = arg_3_2
+	arg_3_0.y = arg_3_3
+	arg_3_0.unitType = arg_3_1.type
+	arg_3_0.dir = arg_3_1.dir
+	arg_3_0.outDir = arg_3_0.dir
+	arg_3_0.isActive = arg_3_0.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_3_0.unitType == WuErLiXiEnum.UnitType.KeyStart
 end
 
-function slot0.initByUnitMo(slot0, slot1, slot2, slot3)
-	slot0.id = slot1.id
-	slot0.x = slot2
-	slot0.y = slot3
-	slot0.unitType = slot1.unitType
-	slot0.dir = slot1.dir
-	slot0.outDir = slot1.outDir
-	slot0.isActive = slot0.unitType == WuErLiXiEnum.UnitType.SignalStart or slot0.unitType == WuErLiXiEnum.UnitType.KeyStart
+function var_0_0.initByUnitMo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0.id = arg_4_1.id
+	arg_4_0.x = arg_4_2
+	arg_4_0.y = arg_4_3
+	arg_4_0.unitType = arg_4_1.unitType
+	arg_4_0.dir = arg_4_1.dir
+	arg_4_0.outDir = arg_4_1.outDir
+	arg_4_0.isActive = arg_4_0.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_4_0.unitType == WuErLiXiEnum.UnitType.KeyStart
 end
 
-function slot0.getId(slot0)
-	return slot0.id
+function var_0_0.getId(arg_5_0)
+	return arg_5_0.id
 end
 
-function slot0.isUnitActive(slot0, slot1)
-	if slot0.unitType == WuErLiXiEnum.UnitType.SignalStart then
-		slot0.isActive = true
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.KeyStart then
-		slot0.isActive = true
+function var_0_0.isUnitActive(arg_6_0, arg_6_1)
+	if arg_6_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
+		arg_6_0.isActive = true
+	elseif arg_6_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
+		arg_6_0.isActive = true
 	end
 
-	if slot1 and slot0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		return slot1 == WuErLiXiHelper.getOppositeDir(slot0.dir) or slot1 == WuErLiXiHelper.getNextDir(slot0.dir)
+	if arg_6_1 and arg_6_0.unitType == WuErLiXiEnum.UnitType.Reflection then
+		return arg_6_1 == WuErLiXiHelper.getOppositeDir(arg_6_0.dir) or arg_6_1 == WuErLiXiHelper.getNextDir(arg_6_0.dir)
 	end
 
-	if slot1 and slot0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		return slot1 == slot0.dir
+	if arg_6_1 and arg_6_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		return arg_6_1 == arg_6_0.dir
 	end
 
-	return slot0.isActive
+	return arg_6_0.isActive
 end
 
-function slot0.couldSetRay(slot0, slot1)
-	if slot0.unitType == WuErLiXiEnum.UnitType.SignalStart then
+function var_0_0.couldSetRay(arg_7_0, arg_7_1)
+	if arg_7_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
 		return false
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.KeyStart then
+	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
 		return false
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Obstacle then
+	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.Obstacle then
 		return false
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Key then
-		return slot1 == WuErLiXiEnum.RayType.SwitchSignal
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Switch then
-		return slot0.isActive
+	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.Key then
+		return arg_7_1 == WuErLiXiEnum.RayType.SwitchSignal
+	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.Switch then
+		return arg_7_0.isActive
 	end
 
 	return true
 end
 
-function slot0.setUnitActive(slot0, slot1, slot2, slot3)
-	if not slot1 then
-		slot0.isActive = false
+function var_0_0.setUnitActive(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_1 then
+		arg_8_0.isActive = false
 
 		return
 	end
 
-	if slot0.unitType == WuErLiXiEnum.UnitType.SignalEnd then
-		slot0.isActive = slot2 == WuErLiXiEnum.RayType.NormalSignal
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		if not slot3 then
-			slot0.isActive = false
+	if arg_8_0.unitType == WuErLiXiEnum.UnitType.SignalEnd then
+		arg_8_0.isActive = arg_8_2 == WuErLiXiEnum.RayType.NormalSignal
+	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.Reflection then
+		if not arg_8_3 then
+			arg_8_0.isActive = false
 
 			return
 		end
 
-		slot0.isActive = slot3 == WuErLiXiHelper.getOppositeDir(slot0.dir) or slot3 == WuErLiXiHelper.getNextDir(slot0.dir)
+		arg_8_0.isActive = arg_8_3 == WuErLiXiHelper.getOppositeDir(arg_8_0.dir) or arg_8_3 == WuErLiXiHelper.getNextDir(arg_8_0.dir)
 
-		if slot3 == WuErLiXiHelper.getNextDir(slot0.dir) then
-			slot0.outDir = slot0.dir
-		elseif slot3 == WuErLiXiHelper.getOppositeDir(slot0.dir) then
-			slot0.outDir = WuErLiXiHelper.getNextDir(slot3)
+		if arg_8_3 == WuErLiXiHelper.getNextDir(arg_8_0.dir) then
+			arg_8_0.outDir = arg_8_0.dir
+		elseif arg_8_3 == WuErLiXiHelper.getOppositeDir(arg_8_0.dir) then
+			arg_8_0.outDir = WuErLiXiHelper.getNextDir(arg_8_3)
 		else
-			slot0.outDir = nil
+			arg_8_0.outDir = nil
 		end
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		slot0.outDir = slot3 == slot0.dir and slot0.dir or nil
-		slot0.isActive = slot3 == slot0.dir
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Key then
-		slot0.isActive = slot2 == WuErLiXiEnum.RayType.SwitchSignal
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Switch then
-		slot0.isActive = true
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.SignalStart then
-		slot0.isActive = true
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.KeyStart then
-		slot0.isActive = true
+	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		arg_8_0.outDir = arg_8_3 == arg_8_0.dir and arg_8_0.dir or nil
+		arg_8_0.isActive = arg_8_3 == arg_8_0.dir
+	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.Key then
+		arg_8_0.isActive = arg_8_2 == WuErLiXiEnum.RayType.SwitchSignal
+	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.Switch then
+		arg_8_0.isActive = true
+	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
+		arg_8_0.isActive = true
+	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
+		arg_8_0.isActive = true
 	else
-		slot0.isActive = false
+		arg_8_0.isActive = false
 	end
 end
 
-function slot0.setDir(slot0, slot1)
-	slot0.dir = slot1
+function var_0_0.setDir(arg_9_0, arg_9_1)
+	arg_9_0.dir = arg_9_1
 
-	if not slot0.isActive then
-		slot0.ourDir = nil
+	if not arg_9_0.isActive then
+		arg_9_0.ourDir = nil
 
 		return
 	end
 
-	slot0.outDir = slot0.dir
+	arg_9_0.outDir = arg_9_0.dir
 end
 
-function slot0.setUnitOutDirByRayDir(slot0, slot1)
-	if not slot0.isActive then
-		slot0.outDir = nil
+function var_0_0.setUnitOutDirByRayDir(arg_10_0, arg_10_1)
+	if not arg_10_0.isActive then
+		arg_10_0.outDir = nil
 
 		return
 	end
 
-	if slot0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		if slot1 == WuErLiXiHelper.getNextDir(slot0.dir) then
-			slot0.outDir = slot0.dir
-		elseif slot1 == WuErLiXiHelper.getOppositeDir(slot0.dir) then
-			slot0.outDir = WuErLiXiHelper.getNextDir(slot1)
+	if arg_10_0.unitType == WuErLiXiEnum.UnitType.Reflection then
+		if arg_10_1 == WuErLiXiHelper.getNextDir(arg_10_0.dir) then
+			arg_10_0.outDir = arg_10_0.dir
+		elseif arg_10_1 == WuErLiXiHelper.getOppositeDir(arg_10_0.dir) then
+			arg_10_0.outDir = WuErLiXiHelper.getNextDir(arg_10_1)
 		else
-			slot0.outDir = nil
+			arg_10_0.outDir = nil
 		end
 
 		return
 	end
 
-	slot0.outDir = slot0.isActive and slot0.dir or nil
+	arg_10_0.outDir = arg_10_0.isActive and arg_10_0.dir or nil
 end
 
-function slot0.getUnitSignalOutDir(slot0)
-	if not slot0.isActive then
+function var_0_0.getUnitSignalOutDir(arg_11_0)
+	if not arg_11_0.isActive then
 		return
 	end
 
-	return slot0.outDir
+	return arg_11_0.outDir
 end
 
-function slot0.getUnitDir(slot0)
-	return slot0.dir
+function var_0_0.getUnitDir(arg_12_0)
+	return arg_12_0.dir
 end
 
-function slot0.isIgnoreSignal(slot0)
-	if slot0.isActive and slot0.unitType == WuErLiXiEnum.UnitType.Switch then
+function var_0_0.isIgnoreSignal(arg_13_0)
+	if arg_13_0.isActive and arg_13_0.unitType == WuErLiXiEnum.UnitType.Switch then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getUnitSignals(slot0, slot1)
-	if not slot0.isActive then
+function var_0_0.getUnitSignals(arg_14_0, arg_14_1)
+	if not arg_14_0.isActive then
 		return {}
 	end
 
-	if slot0.unitType == WuErLiXiEnum.UnitType.SignalStart then
-		table.insert({}, {
-			slot0.x,
-			slot0.y
+	local var_14_0 = {}
+
+	if arg_14_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
+		table.insert(var_14_0, {
+			arg_14_0.x,
+			arg_14_0.y
 		})
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.KeyStart then
-		table.insert(slot2, {
-			slot0.x,
-			slot0.y
+	elseif arg_14_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
+		table.insert(var_14_0, {
+			arg_14_0.x,
+			arg_14_0.y
 		})
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		if slot1 then
-			if slot1 == WuErLiXiHelper.getNextDir(slot0.dir) or slot1 == WuErLiXiHelper.getOppositeDir(slot0.dir) then
-				table.insert(slot2, {
-					slot0.x,
-					slot0.y
+	elseif arg_14_0.unitType == WuErLiXiEnum.UnitType.Reflection then
+		if arg_14_1 then
+			if arg_14_1 == WuErLiXiHelper.getNextDir(arg_14_0.dir) or arg_14_1 == WuErLiXiHelper.getOppositeDir(arg_14_0.dir) then
+				table.insert(var_14_0, {
+					arg_14_0.x,
+					arg_14_0.y
 				})
 			end
-		elseif slot0.outDir then
-			table.insert(slot2, {
-				slot0.x,
-				slot0.y
+		elseif arg_14_0.outDir then
+			table.insert(var_14_0, {
+				arg_14_0.x,
+				arg_14_0.y
 			})
 		end
-	elseif slot0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		if slot1 then
-			if slot1 == slot0.dir then
-				if slot0.dir == WuErLiXiEnum.Dir.Up or slot0.dir == WuErLiXiEnum.Dir.Down then
-					table.insert(slot2, {
-						slot0.x - 1,
-						slot0.y
+	elseif arg_14_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		if arg_14_1 then
+			if arg_14_1 == arg_14_0.dir then
+				if arg_14_0.dir == WuErLiXiEnum.Dir.Up or arg_14_0.dir == WuErLiXiEnum.Dir.Down then
+					table.insert(var_14_0, {
+						arg_14_0.x - 1,
+						arg_14_0.y
 					})
-					table.insert(slot2, {
-						slot0.x + 1,
-						slot0.y
+					table.insert(var_14_0, {
+						arg_14_0.x + 1,
+						arg_14_0.y
 					})
 				else
-					table.insert(slot2, {
-						slot0.x,
-						slot0.y - 1
+					table.insert(var_14_0, {
+						arg_14_0.x,
+						arg_14_0.y - 1
 					})
-					table.insert(slot2, {
-						slot0.x,
-						slot0.y + 1
+					table.insert(var_14_0, {
+						arg_14_0.x,
+						arg_14_0.y + 1
 					})
 				end
 			end
-		elseif slot0.dir == WuErLiXiEnum.Dir.Up or slot0.dir == WuErLiXiEnum.Dir.Down then
-			table.insert(slot2, {
-				slot0.x - 1,
-				slot0.y
+		elseif arg_14_0.dir == WuErLiXiEnum.Dir.Up or arg_14_0.dir == WuErLiXiEnum.Dir.Down then
+			table.insert(var_14_0, {
+				arg_14_0.x - 1,
+				arg_14_0.y
 			})
-			table.insert(slot2, {
-				slot0.x + 1,
-				slot0.y
+			table.insert(var_14_0, {
+				arg_14_0.x + 1,
+				arg_14_0.y
 			})
 		else
-			table.insert(slot2, {
-				slot0.x,
-				slot0.y - 1
+			table.insert(var_14_0, {
+				arg_14_0.x,
+				arg_14_0.y - 1
 			})
-			table.insert(slot2, {
-				slot0.x,
-				slot0.y + 1
+			table.insert(var_14_0, {
+				arg_14_0.x,
+				arg_14_0.y + 1
 			})
 		end
 	end
 
-	return slot2
+	return var_14_0
 end
 
-return slot0
+return var_0_0

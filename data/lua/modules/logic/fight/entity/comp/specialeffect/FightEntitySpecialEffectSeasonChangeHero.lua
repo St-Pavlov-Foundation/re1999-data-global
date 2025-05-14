@@ -1,86 +1,90 @@
-module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectSeasonChangeHero", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectSeasonChangeHero", package.seeall)
 
-slot0 = class("FightEntitySpecialEffectSeasonChangeHero", FightEntitySpecialEffectBase)
-slot1 = "_OutlineWidth"
+local var_0_0 = class("FightEntitySpecialEffectSeasonChangeHero", FightEntitySpecialEffectBase)
+local var_0_1 = "_OutlineWidth"
 
-function slot0.initClass(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.EnterOperateState, slot0._onEnterOperateState, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ExitOperateState, slot0._onExitOperateState, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, slot0._onSeasonSelectChangeHeroTarget, slot0)
+function var_0_0.initClass(arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.EnterOperateState, arg_1_0._onEnterOperateState, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.ExitOperateState, arg_1_0._onExitOperateState, arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_1_0._onSeasonSelectChangeHeroTarget, arg_1_0)
 
-	slot0._whiteLine = nil
-	slot0._orangeLine = nil
+	arg_1_0._whiteLine = nil
+	arg_1_0._orangeLine = nil
 end
 
-function slot0._onSeasonSelectChangeHeroTarget(slot0, slot1)
-	slot0:_releaseOrangeEffect()
+function var_0_0._onSeasonSelectChangeHeroTarget(arg_2_0, arg_2_1)
+	arg_2_0:_releaseOrangeEffect()
 
-	if slot1 == slot0._entity.id then
-		slot0._orangeLine = slot0._entity.effect:addHangEffect("buff/buff_outline_orange", ModuleEnum.SpineHangPointRoot)
+	if arg_2_1 == arg_2_0._entity.id then
+		arg_2_0._orangeLine = arg_2_0._entity.effect:addHangEffect("buff/buff_outline_orange", ModuleEnum.SpineHangPointRoot)
 
-		slot0._orangeLine:setLocalPos(0, 0, 0)
+		arg_2_0._orangeLine:setLocalPos(0, 0, 0)
 
-		if gohelper.isNil(slot0._orangeLine.effectGO) then
-			slot0._orangeLine:setCallback(slot0._setOrangeWidth, slot0)
+		if gohelper.isNil(arg_2_0._orangeLine.effectGO) then
+			arg_2_0._orangeLine:setCallback(arg_2_0._setOrangeWidth, arg_2_0)
 		else
-			slot0:_setOrangeWidth()
+			arg_2_0:_setOrangeWidth()
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot0._orangeLine)
-		slot0._whiteLine:setActive(false)
-	elseif slot0._whiteLine then
-		slot0._whiteLine:setActive(true)
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_2_0._entity.id, arg_2_0._orangeLine)
+		arg_2_0._whiteLine:setActive(false)
+	elseif arg_2_0._whiteLine then
+		arg_2_0._whiteLine:setActive(true)
 	end
 end
 
-function slot0._setOrangeWidth(slot0)
-	slot0:_setOutlineWidth(slot0._orangeLine)
+function var_0_0._setOrangeWidth(arg_3_0)
+	arg_3_0:_setOutlineWidth(arg_3_0._orangeLine)
 end
 
-function slot0._onExitOperateState(slot0, slot1)
-	if slot1 ~= FightStageMgr.OperateStateType.SeasonChangeHero then
+function var_0_0._onExitOperateState(arg_4_0, arg_4_1)
+	if arg_4_1 ~= FightStageMgr.OperateStateType.SeasonChangeHero then
 		return
 	end
 
-	slot0:releaseAllEffect()
+	arg_4_0:releaseAllEffect()
 end
 
-function slot0._onEnterOperateState(slot0, slot1)
-	if not slot0._entity:isMySide() then
+function var_0_0._onEnterOperateState(arg_5_0, arg_5_1)
+	if not arg_5_0._entity:isMySide() then
 		return
 	end
 
-	if slot1 == FightStageMgr.OperateStateType.SeasonChangeHero then
-		slot0._whiteLine = slot0._entity.effect:addHangEffect("buff/buff_outline_white", ModuleEnum.SpineHangPointRoot)
+	if arg_5_1 == FightStageMgr.OperateStateType.SeasonChangeHero then
+		arg_5_0._whiteLine = arg_5_0._entity.effect:addHangEffect("buff/buff_outline_white", ModuleEnum.SpineHangPointRoot)
 
-		slot0._whiteLine:setLocalPos(0, 0, 0)
+		arg_5_0._whiteLine:setLocalPos(0, 0, 0)
 
-		if gohelper.isNil(slot0._whiteLine.effectGO) then
-			slot0._whiteLine:setCallback(slot0._setWhileWidth, slot0)
+		if gohelper.isNil(arg_5_0._whiteLine.effectGO) then
+			arg_5_0._whiteLine:setCallback(arg_5_0._setWhileWidth, arg_5_0)
 		else
-			slot0:_setWhileWidth()
+			arg_5_0:_setWhileWidth()
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot0._whiteLine)
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_5_0._entity.id, arg_5_0._whiteLine)
 	end
 end
 
-function slot0._setWhileWidth(slot0)
-	slot0:_setOutlineWidth(slot0._whiteLine)
+function var_0_0._setWhileWidth(arg_6_0)
+	arg_6_0:_setOutlineWidth(arg_6_0._whiteLine)
 end
 
-function slot0._setOutlineWidth(slot0, slot1)
-	if not slot1 then
+function var_0_0._setOutlineWidth(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	slot2 = nil
+	local var_7_0
 
-	if slot1 and not gohelper.isNil(slot1.effectGO) then
-		if gohelper.findChildComponent(slot1.effectGO, "diamond/root/diamond", typeof(UnityEngine.Renderer)) then
-			if slot3.material then
-				if not slot0._defaultOutlineWidth then
-					slot0._defaultOutlineWidth = slot2:GetFloat(uv0)
+	if arg_7_1 and not gohelper.isNil(arg_7_1.effectGO) then
+		local var_7_1 = gohelper.findChildComponent(arg_7_1.effectGO, "diamond/root/diamond", typeof(UnityEngine.Renderer))
+
+		if var_7_1 then
+			var_7_0 = var_7_1.material
+
+			if var_7_0 then
+				if not arg_7_0._defaultOutlineWidth then
+					arg_7_0._defaultOutlineWidth = var_7_0:GetFloat(var_0_1)
 				end
 			else
 				logError("找不到描边材质")
@@ -90,42 +94,44 @@ function slot0._setOutlineWidth(slot0, slot1)
 		end
 	end
 
-	if slot2 then
-		slot4 = slot0._entity:getMO() and slot3.skin and lua_monster_skin.configDict[slot3.skin]
+	if var_7_0 then
+		local var_7_2 = arg_7_0._entity:getMO()
+		local var_7_3 = var_7_2 and var_7_2.skin and lua_monster_skin.configDict[var_7_2.skin]
+		local var_7_4 = var_7_3 and var_7_3.outlineWidth
 
-		if slot4 and slot4.outlineWidth and slot5 > 0 then
-			slot2:SetFloat(uv0, slot5)
+		if var_7_4 and var_7_4 > 0 then
+			var_7_0:SetFloat(var_0_1, var_7_4)
 		else
-			slot2:SetFloat(uv0, slot0._defaultOutlineWidth)
+			var_7_0:SetFloat(var_0_1, arg_7_0._defaultOutlineWidth)
 		end
 	end
 end
 
-function slot0.releaseAllEffect(slot0)
-	slot0:_releaseWhiteEffect()
-	slot0:_releaseOrangeEffect()
+function var_0_0.releaseAllEffect(arg_8_0)
+	arg_8_0:_releaseWhiteEffect()
+	arg_8_0:_releaseOrangeEffect()
 end
 
-function slot0._releaseWhiteEffect(slot0)
-	if slot0._whiteLine then
-		slot0._entity.effect:removeEffect(slot0._whiteLine)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._entity.id, slot0._whiteLine)
+function var_0_0._releaseWhiteEffect(arg_9_0)
+	if arg_9_0._whiteLine then
+		arg_9_0._entity.effect:removeEffect(arg_9_0._whiteLine)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_9_0._entity.id, arg_9_0._whiteLine)
 
-		slot0._whiteLine = nil
+		arg_9_0._whiteLine = nil
 	end
 end
 
-function slot0._releaseOrangeEffect(slot0)
-	if slot0._orangeLine then
-		slot0._entity.effect:removeEffect(slot0._orangeLine)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(slot0._entity.id, slot0._orangeLine)
+function var_0_0._releaseOrangeEffect(arg_10_0)
+	if arg_10_0._orangeLine then
+		arg_10_0._entity.effect:removeEffect(arg_10_0._orangeLine)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_10_0._entity.id, arg_10_0._orangeLine)
 
-		slot0._orangeLine = nil
+		arg_10_0._orangeLine = nil
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:releaseAllEffect()
+function var_0_0.releaseSelf(arg_11_0)
+	arg_11_0:releaseAllEffect()
 end
 
-return slot0
+return var_0_0

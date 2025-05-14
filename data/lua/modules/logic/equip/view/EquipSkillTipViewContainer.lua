@@ -1,25 +1,26 @@
-module("modules.logic.equip.view.EquipSkillTipViewContainer", package.seeall)
+﻿module("modules.logic.equip.view.EquipSkillTipViewContainer", package.seeall)
 
-slot0 = class("EquipSkillTipViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipSkillTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_character/#scroll_character"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = EquipSkillCharacterItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 3
-	slot1.cellWidth = 150
-	slot1.cellHeight = 190
-	slot1.cellSpaceH = 24.1
-	slot1.cellSpaceV = 19.5
-	slot1.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#go_character/#scroll_character"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = EquipSkillCharacterItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 3
+	var_1_0.cellWidth = 150
+	var_1_0.cellHeight = 190
+	var_1_0.cellSpaceH = 24.1
+	var_1_0.cellSpaceV = 19.5
+	var_1_0.startSpace = 0
 
 	return {
-		LuaListScrollView.New(EquipSkillCharacterListModel.instance, slot1),
+		LuaListScrollView.New(EquipSkillCharacterListModel.instance, var_1_0),
 		EquipSkillTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

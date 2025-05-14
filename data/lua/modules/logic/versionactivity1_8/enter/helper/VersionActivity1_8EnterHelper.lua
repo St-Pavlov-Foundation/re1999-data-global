@@ -1,53 +1,55 @@
-module("modules.logic.versionactivity1_8.enter.helper.VersionActivity1_8EnterHelper", package.seeall)
+﻿module("modules.logic.versionactivity1_8.enter.helper.VersionActivity1_8EnterHelper", package.seeall)
 
-slot0 = class("VersionActivity1_8EnterHelper")
+local var_0_0 = class("VersionActivity1_8EnterHelper")
 
-function slot0.GetIsShowReplayBtn(slot0)
-	slot1 = false
+function var_0_0.GetIsShowReplayBtn(arg_1_0)
+	local var_1_0 = false
 
-	if slot0 then
-		slot1 = ActivityConfig.instance:getActivityTabButtonState(slot0)
+	if arg_1_0 then
+		var_1_0 = ActivityConfig.instance:getActivityTabButtonState(arg_1_0)
 	end
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.GetIsShowTabRemainTime(slot0)
-	if not slot0 then
+function var_0_0.GetIsShowTabRemainTime(arg_2_0)
+	if not arg_2_0 then
 		return false
 	end
 
-	slot1, slot2, slot3 = ActivityConfig.instance:getActivityTabButtonState(slot0)
+	local var_2_0, var_2_1, var_2_2 = ActivityConfig.instance:getActivityTabButtonState(arg_2_0)
 
-	return slot3
+	return var_2_2
 end
 
-function slot0.GetIsShowAchievementBtn(slot0)
-	if not slot0 then
+function var_0_0.GetIsShowAchievementBtn(arg_3_0)
+	if not arg_3_0 then
 		return false
 	end
 
-	slot1, slot2 = ActivityConfig.instance:getActivityTabButtonState(slot0)
+	local var_3_0, var_3_1 = ActivityConfig.instance:getActivityTabButtonState(arg_3_0)
 
-	return slot2
+	return var_3_1
 end
 
-function slot0.getItemTypeIdQuantity(slot0)
-	if not slot0 then
+function var_0_0.getItemTypeIdQuantity(arg_4_0)
+	if not arg_4_0 then
 		return
 	end
 
-	slot1 = string.splitToNumber(slot0, "#")
+	local var_4_0 = string.splitToNumber(arg_4_0, "#")
 
-	return slot1[1], slot1[2], slot1[3]
+	return var_4_0[1], var_4_0[2], var_4_0[3]
 end
 
-function slot0.GetActivityPrefsKeyWithUser(slot0)
-	return PlayerModel.instance:getPlayerPrefsKey(uv0.GetActivityPrefsKey(slot0))
+function var_0_0.GetActivityPrefsKeyWithUser(arg_5_0)
+	local var_5_0 = var_0_0.GetActivityPrefsKey(arg_5_0)
+
+	return PlayerModel.instance:getPlayerPrefsKey(var_5_0)
 end
 
-function slot0.GetActivityPrefsKey(slot0)
-	return VersionActivity1_8Enum.ActivityId.EnterView .. slot0
+function var_0_0.GetActivityPrefsKey(arg_6_0)
+	return VersionActivity1_8Enum.ActivityId.EnterView .. arg_6_0
 end
 
-return slot0
+return var_0_0

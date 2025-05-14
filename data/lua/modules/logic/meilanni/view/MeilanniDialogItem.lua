@@ -1,473 +1,520 @@
-module("modules.logic.meilanni.view.MeilanniDialogItem", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniDialogItem", package.seeall)
 
-slot0 = class("MeilanniDialogItem", LuaCompBase)
+local var_0_0 = class("MeilanniDialogItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_next")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._txtremaintime = gohelper.findChildText(slot0.viewGO, "#go_content/#go_head/#txt_remaintime")
-	slot0._imageweather = gohelper.findChildImage(slot0.viewGO, "#go_content/#go_head/#txt_remaintime/#image_weather")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "#go_content/#go_desc/#txt_info")
-	slot0._txttemplate = gohelper.findChildText(slot0.viewGO, "#go_content/#txt_template")
-	slot0._txtnormalevent = gohelper.findChildText(slot0.viewGO, "#go_content/#go_normal/#txt_normalevent")
-	slot0._txtspecialevent = gohelper.findChildText(slot0.viewGO, "#go_content/#go_special/#txt_specialevent")
-	slot0._txtoverdueevent = gohelper.findChildText(slot0.viewGO, "#go_content/#go_overdue/#txt_overdueevent")
-	slot0._gooptions = gohelper.findChild(slot0.viewGO, "#go_content/#go_options")
-	slot0._gotalkitem = gohelper.findChild(slot0.viewGO, "#go_content/#go_options/#go_talkitem")
-	slot0._gohead = gohelper.findChild(slot0.viewGO, "#go_content/#go_head")
-	slot0._godesc = gohelper.findChild(slot0.viewGO, "#go_content/#go_desc")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_content/#go_normal")
-	slot0._gospecial = gohelper.findChild(slot0.viewGO, "#go_content/#go_special")
-	slot0._gooverdue = gohelper.findChild(slot0.viewGO, "#go_content/#go_overdue")
-	slot0._goenddaytip = gohelper.findChild(slot0.viewGO, "#go_content/#go_enddaytip")
-	slot0._txtenddaytip = gohelper.findChildText(slot0.viewGO, "#go_content/#go_enddaytip/#txt_enddaytip")
-	slot0._goend = gohelper.findChild(slot0.viewGO, "#go_content/#go_end")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_next")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_head/#txt_remaintime")
+	arg_1_0._imageweather = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#go_head/#txt_remaintime/#image_weather")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_desc/#txt_info")
+	arg_1_0._txttemplate = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#txt_template")
+	arg_1_0._txtnormalevent = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_normal/#txt_normalevent")
+	arg_1_0._txtspecialevent = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_special/#txt_specialevent")
+	arg_1_0._txtoverdueevent = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_overdue/#txt_overdueevent")
+	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_options")
+	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_options/#go_talkitem")
+	arg_1_0._gohead = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_head")
+	arg_1_0._godesc = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_desc")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_normal")
+	arg_1_0._gospecial = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_special")
+	arg_1_0._gooverdue = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_overdue")
+	arg_1_0._goenddaytip = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_enddaytip")
+	arg_1_0._txtenddaytip = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_enddaytip/#txt_enddaytip")
+	arg_1_0._goend = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_end")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnnext:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnnext:RemoveClickListener()
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_4_0, arg_4_1)
+	arg_4_0.viewGO = arg_4_1
 
-	slot0:onInitView()
-	slot0:addEvents()
-	slot0:onOpen()
+	arg_4_0:onInitView()
+	arg_4_0:addEvents()
+	arg_4_0:onOpen()
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onClose()
-	slot0:removeEvents()
-	slot0:onDestroyView()
+function var_0_0.onDestroy(arg_5_0)
+	arg_5_0:onClose()
+	arg_5_0:removeEvents()
+	arg_5_0:onDestroyView()
 end
 
-function slot0._btnnextOnClick(slot0)
-	if not slot0._btnnext.gameObject.activeInHierarchy or slot0._finishClose then
+function var_0_0._btnnextOnClick(arg_6_0)
+	if not arg_6_0._btnnext.gameObject.activeInHierarchy or arg_6_0._finishClose then
 		return
 	end
 
-	if not slot0:_checkClickCd() then
+	if not arg_6_0:_checkClickCd() then
 		return
 	end
 
-	slot0:_playNextSectionOrDialog()
+	arg_6_0:_playNextSectionOrDialog()
 end
 
-function slot0._checkClickCd(slot0)
-	if Time.time - slot0._time < 0.5 then
+function var_0_0._checkClickCd(arg_7_0)
+	if Time.time - arg_7_0._time < 0.5 then
 		return
 	end
 
-	slot0._time = Time.time
+	arg_7_0._time = Time.time
 
 	return true
 end
 
-function slot0._editableInitView(slot0)
-	slot0._time = Time.time
-	slot0._optionBtnList = slot0:getUserDataTb_()
-	slot0._dialogItemList = slot0:getUserDataTb_()
-	slot0._dialogItemCacheList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._time = Time.time
+	arg_8_0._optionBtnList = arg_8_0:getUserDataTb_()
+	arg_8_0._dialogItemList = arg_8_0:getUserDataTb_()
+	arg_8_0._dialogItemCacheList = arg_8_0:getUserDataTb_()
 
-	gohelper.addUIClickAudio(slot0._btnnext.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
+	gohelper.addUIClickAudio(arg_8_0._btnnext.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._canvasGroup = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_CanvasGroup)
-	slot0._txtList = slot0:getUserDataTb_()
+	arg_8_0._animator = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_8_0._canvasGroup = gohelper.onceAddComponent(arg_8_0.viewGO, gohelper.Type_CanvasGroup)
+	arg_8_0._txtList = arg_8_0:getUserDataTb_()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
+	return
 end
 
-function slot0._playNextSectionOrDialog(slot0)
-	if slot0._dialogIndex <= #slot0._sectionList then
-		slot0:_playNextDialog()
+function var_0_0._playNextSectionOrDialog(arg_10_0)
+	if #arg_10_0._sectionList >= arg_10_0._dialogIndex then
+		arg_10_0:_playNextDialog()
 
 		return
 	end
 
-	if table.remove(slot0._sectionStack) then
-		slot0:_playSection(slot1[1], slot1[2])
+	local var_10_0 = table.remove(arg_10_0._sectionStack)
+
+	if var_10_0 then
+		arg_10_0:_playSection(var_10_0[1], var_10_0[2])
 	else
-		slot0:_refreshDialogBtnState()
+		arg_10_0:_refreshDialogBtnState()
 	end
 end
 
-function slot0.setEpisodeInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.setEpisodeInfo(arg_11_0, arg_11_1)
+	if not arg_11_1 then
 		logError("MeilanniDialogItem setEpisodeInfo info is nil")
 
 		return
 	end
 
-	slot0._episodeInfo = slot1
+	arg_11_0._episodeInfo = arg_11_1
 end
 
-function slot0.getEpisodeInfo(slot0)
-	return slot0._episodeInfo
+function var_0_0.getEpisodeInfo(arg_12_0)
+	return arg_12_0._episodeInfo
 end
 
-function slot0._startFadeIn(slot0)
-	slot0._delayFadeTime = nil
+function var_0_0._startFadeIn(arg_13_0)
+	arg_13_0._delayFadeTime = nil
 
-	if not MeilanniModel.instance:getDialogItemFadeIndex() then
+	local var_13_0 = MeilanniModel.instance:getDialogItemFadeIndex()
+
+	if not var_13_0 then
 		return
 	end
 
-	slot0._openFadeIn = true
+	arg_13_0._openFadeIn = true
 
-	if slot1 <= 0 then
+	if var_13_0 <= 0 then
 		return
 	end
 
-	slot0._animator.enabled = false
-	slot0._canvasGroup.alpha = 0
+	arg_13_0._animator.enabled = false
+	arg_13_0._canvasGroup.alpha = 0
 
-	TaskDispatcher.cancelTask(slot0._delayFadeIn, slot0)
+	TaskDispatcher.cancelTask(arg_13_0._delayFadeIn, arg_13_0)
 
-	slot0._delayFadeTime = slot1 * 0.4
+	arg_13_0._delayFadeTime = var_13_0 * 0.4
 
-	TaskDispatcher.runDelay(slot0._delayFadeIn, slot0, slot0._delayFadeTime)
+	TaskDispatcher.runDelay(arg_13_0._delayFadeIn, arg_13_0, arg_13_0._delayFadeTime)
 end
 
-function slot0._delayFadeIn(slot0)
-	slot0._animator.enabled = true
+function var_0_0._delayFadeIn(arg_14_0)
+	arg_14_0._animator.enabled = true
 
-	slot0._animator:Play("open", 0, 0)
+	arg_14_0._animator:Play("open", 0, 0)
 
-	slot0._canvasGroup.alpha = 1
+	arg_14_0._canvasGroup.alpha = 1
 end
 
-function slot0.playDesc(slot0, slot1)
-	slot0:_startFadeIn()
-	gohelper.setActive(slot0._godesc.gameObject, true)
+function var_0_0.playDesc(arg_15_0, arg_15_1)
+	arg_15_0:_startFadeIn()
+	gohelper.setActive(arg_15_0._godesc.gameObject, true)
 
-	slot0._txtinfo.text = slot1
+	arg_15_0._txtinfo.text = arg_15_1
 
-	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, slot0)
+	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, arg_15_0)
 end
 
-function slot0.showEpilogue(slot0, slot1)
-	slot0:_startFadeIn()
-	gohelper.setActive(slot0._goenddaytip, true)
+function var_0_0.showEpilogue(arg_16_0, arg_16_1)
+	arg_16_0:_startFadeIn()
+	gohelper.setActive(arg_16_0._goenddaytip, true)
 
-	slot0._txtenddaytip.text = slot1
+	arg_16_0._txtenddaytip.text = arg_16_1
 
-	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, slot0)
+	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, arg_16_0)
 end
 
-function slot0.showEndDialog(slot0, slot1, slot2, slot3)
-	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, slot0)
-	slot0:_startFadeIn()
-	gohelper.setActive(slot0._goend, true)
+function var_0_0.showEndDialog(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, arg_17_0)
+	arg_17_0:_startFadeIn()
+	gohelper.setActive(arg_17_0._goend, true)
 
-	slot0._endBtn = gohelper.findChildButtonWithAudio(slot0._goend, "#btn_end", AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
+	arg_17_0._endBtn = gohelper.findChildButtonWithAudio(arg_17_0._goend, "#btn_end", AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
 
-	slot0._endBtn:AddClickListener(slot0._clickEndHandler, slot0)
-	gohelper.setActive(slot0._endBtn, false)
+	arg_17_0._endBtn:AddClickListener(arg_17_0._clickEndHandler, arg_17_0)
+	gohelper.setActive(arg_17_0._endBtn, false)
 
-	slot5 = gohelper.findChildText(slot0._goend, "#btn_end/#txt_endbtndesc")
-	slot0._mapId = MeilanniModel.instance:getCurMapId()
-	slot0._mapInfo = MeilanniModel.instance:getMapInfo(slot0._mapId)
+	local var_17_0 = gohelper.findChildText(arg_17_0._goend, "#txt_enddesc")
+	local var_17_1 = gohelper.findChildText(arg_17_0._goend, "#btn_end/#txt_endbtndesc")
+	local var_17_2 = gohelper.findChildText(arg_17_0._goend, "tag/#txt_endtitle")
+	local var_17_3 = gohelper.findChildImage(arg_17_0._goend, "#btn_end/icon")
 
-	if slot0._mapInfo.score <= 0 then
-		gohelper.findChildText(slot0._goend, "#txt_enddesc").text = luaLang("p_meilannidialogitem_enddesc4")
-		slot5.text = luaLang("p_meilannidialogitem_endbtn4")
-		gohelper.findChildText(slot0._goend, "tag/#txt_endtitle").text = luaLang("p_meilannidialogitem_endtitle4")
+	arg_17_0._mapId = MeilanniModel.instance:getCurMapId()
+	arg_17_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_17_0._mapId)
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot5, "#EB9A58")
-		UISpriteSetMgr.instance:setMeilanniSprite(gohelper.findChildImage(slot0._goend, "#btn_end/icon"), "bg_xuanzhe1")
+	if arg_17_0._mapInfo.score <= 0 then
+		var_17_0.text = luaLang("p_meilannidialogitem_enddesc4")
+		var_17_1.text = luaLang("p_meilannidialogitem_endbtn4")
+		var_17_2.text = luaLang("p_meilannidialogitem_endtitle4")
 
-		slot0._isFail = true
+		SLFramework.UGUI.GuiHelper.SetColor(var_17_1, "#EB9A58")
+		UISpriteSetMgr.instance:setMeilanniSprite(var_17_3, "bg_xuanzhe1")
+
+		arg_17_0._isFail = true
 
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.showDialogEndBtn, {
-			slot5.text,
-			slot0,
-			slot0._clickEndHandler,
-			slot0._delayFadeTime
+			var_17_1.text,
+			arg_17_0,
+			arg_17_0._clickEndHandler,
+			arg_17_0._delayFadeTime
 		})
 
 		return
 	end
 
-	if slot0._episodeInfo.episodeConfig.day == MeilanniConfig.instance:getLastEpisode(slot0._mapId).day then
-		slot4.text = slot0._mapInfo.mapConfig.endContent
-		slot5.text = luaLang("p_meilannidialogitem_endbtn3")
-		slot6.text = luaLang("p_meilannidialogitem_endtitle3")
+	local var_17_4 = MeilanniConfig.instance:getLastEpisode(arg_17_0._mapId)
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot5, "#EB9A58")
-		UISpriteSetMgr.instance:setMeilanniSprite(slot7, "bg_xuanzhe1")
+	if arg_17_0._episodeInfo.episodeConfig.day == var_17_4.day then
+		var_17_0.text = arg_17_0._mapInfo.mapConfig.endContent
+		var_17_1.text = luaLang("p_meilannidialogitem_endbtn3")
+		var_17_2.text = luaLang("p_meilannidialogitem_endtitle3")
 
-		slot0._isSuccess = true
+		SLFramework.UGUI.GuiHelper.SetColor(var_17_1, "#EB9A58")
+		UISpriteSetMgr.instance:setMeilanniSprite(var_17_3, "bg_xuanzhe1")
+
+		arg_17_0._isSuccess = true
 
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.showDialogEndBtn, {
-			slot5.text,
-			slot0,
-			slot0._clickEndHandler,
-			slot0._delayFadeTime
+			var_17_1.text,
+			arg_17_0,
+			arg_17_0._clickEndHandler,
+			arg_17_0._delayFadeTime
 		})
 
 		return
 	end
 
-	if slot0._mapId < MeilanniEnum.unlockMapId then
-		slot4.text = luaLang("p_meilannidialogitem_enddesc1")
-		slot5.text = luaLang("p_meilannidialogitem_endbtn1")
-		slot6.text = luaLang("p_meilannidialogitem_endtitle1")
+	if arg_17_0._mapId < MeilanniEnum.unlockMapId then
+		var_17_0.text = luaLang("p_meilannidialogitem_enddesc1")
+		var_17_1.text = luaLang("p_meilannidialogitem_endbtn1")
+		var_17_2.text = luaLang("p_meilannidialogitem_endtitle1")
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot5, "#D9CEBD")
-		UISpriteSetMgr.instance:setMeilanniSprite(slot7, "bg_xuanzhe")
+		SLFramework.UGUI.GuiHelper.SetColor(var_17_1, "#D9CEBD")
+		UISpriteSetMgr.instance:setMeilanniSprite(var_17_3, "bg_xuanzhe")
 	else
-		slot4.text = luaLang("p_meilannidialogitem_enddesc2")
-		slot5.text = luaLang("p_meilannidialogitem_endbtn2")
-		slot6.text = luaLang("p_meilannidialogitem_endtitle2")
+		var_17_0.text = luaLang("p_meilannidialogitem_enddesc2")
+		var_17_1.text = luaLang("p_meilannidialogitem_endbtn2")
+		var_17_2.text = luaLang("p_meilannidialogitem_endtitle2")
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot5, "#D9CEBD")
-		UISpriteSetMgr.instance:setMeilanniSprite(slot7, "bg_xuanzhe")
+		SLFramework.UGUI.GuiHelper.SetColor(var_17_1, "#D9CEBD")
+		UISpriteSetMgr.instance:setMeilanniSprite(var_17_3, "bg_xuanzhe")
 	end
 
 	MeilanniController.instance:dispatchEvent(MeilanniEvent.showDialogEndBtn, {
-		slot5.text,
-		slot0,
-		slot0._clickEndHandler,
-		slot0._delayFadeTime
+		var_17_1.text,
+		arg_17_0,
+		arg_17_0._clickEndHandler,
+		arg_17_0._delayFadeTime
 	})
 end
 
-function slot0._clickEndHandler(slot0)
+function var_0_0._clickEndHandler(arg_18_0)
 	MeilanniAnimationController.instance:startAnimation()
-	Activity108Rpc.instance:sendEpisodeConfirmRequest(MeilanniEnum.activityId, slot0._episodeInfo.episodeId, slot0._endCallback, slot0)
+	Activity108Rpc.instance:sendEpisodeConfirmRequest(MeilanniEnum.activityId, arg_18_0._episodeInfo.episodeId, arg_18_0._endCallback, arg_18_0)
 end
 
-function slot0._endCallback(slot0)
-	gohelper.destroy(slot0.viewGO)
-	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogClose, slot0)
+function var_0_0._endCallback(arg_19_0)
+	gohelper.destroy(arg_19_0.viewGO)
+	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogClose, arg_19_0)
 
-	if slot0._isFail then
+	if arg_19_0._isFail then
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.mapFail)
-	elseif slot0._isSuccess then
+	elseif arg_19_0._isSuccess then
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.mapSuccess)
 	end
 end
 
-function slot0.showSkipDialog(slot0, slot1, slot2, slot3)
-	slot0:_startFadeIn()
+function var_0_0.showSkipDialog(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	arg_20_0:_startFadeIn()
 
 	if MeilanniAnimationController.instance:isPlaying() then
-		slot0:_setDelayShowDialog()
+		arg_20_0:_setDelayShowDialog()
 
-		slot0._topDialog = true
+		arg_20_0._topDialog = true
 	end
 
-	slot0._config = slot1.config
-	slot0._curText = slot0._txtoverdueevent
-	slot0._curText.text = ""
+	arg_20_0._config = arg_20_1.config
+	arg_20_0._curText = arg_20_0._txtoverdueevent
+	arg_20_0._curText.text = ""
 
-	gohelper.setActive(slot0._gooverdue, true)
+	gohelper.setActive(arg_20_0._gooverdue, true)
 
-	slot0._maskline = gohelper.findChild(slot0._gooverdue, "maskline")
+	arg_20_0._maskline = gohelper.findChild(arg_20_0._gooverdue, "maskline")
 
-	gohelper.setActive(slot0._maskline, false)
+	gohelper.setActive(arg_20_0._maskline, false)
 
-	slot4 = slot1:getSkipDialog()
+	local var_20_0 = arg_20_1:getSkipDialog()
 
-	slot0:_showDialog(MeilanniEnum.ResultString.dialog, slot4.content, slot4.speaker)
+	arg_20_0:_showDialog(MeilanniEnum.ResultString.dialog, var_20_0.content, var_20_0.speaker)
 
-	slot5, slot0._scoreResult, slot7 = uv0.getResult(nil, slot4, "")
+	local var_20_1, var_20_2, var_20_3 = var_0_0.getResult(nil, var_20_0, "")
 
-	if not string.nilorempty(slot5) then
-		slot0._customDialogTime = MeilanniEnum.selectedTime
+	if not string.nilorempty(var_20_1) then
+		arg_20_0._scoreResult = var_20_2
+		arg_20_0._customDialogTime = MeilanniEnum.selectedTime
 
-		slot0:_showDialog(MeilanniEnum.ResultString.result, slot5)
+		arg_20_0:_showDialog(MeilanniEnum.ResultString.result, var_20_1)
 	end
 end
 
-function slot0.clearConfig(slot0)
-	slot0._config = nil
-	slot0._content = nil
+function var_0_0.clearConfig(arg_21_0)
+	arg_21_0._config = nil
+	arg_21_0._content = nil
 end
 
-function slot0.showHistory(slot0, slot1, slot2, slot3)
-	slot0:_startFadeIn()
+function var_0_0.showHistory(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	arg_22_0:_startFadeIn()
 
 	if MeilanniAnimationController.instance:isPlaying() then
-		slot0:_setDelayShowDialog()
+		arg_22_0:_setDelayShowDialog()
 	end
 
-	if not slot0._config then
-		slot0._config = slot1.config
+	if not arg_22_0._config then
+		arg_22_0._config = arg_22_1.config
 
-		slot0:_setText(slot0._config)
+		arg_22_0:_setText(arg_22_0._config)
 	end
 
-	slot6 = slot1.interactParam[slot2 + 1][2]
+	local var_22_0 = arg_22_2 + 1
+	local var_22_1 = arg_22_1.interactParam[var_22_0][2]
+	local var_22_2 = arg_22_1.historylist[arg_22_2]
 
-	if not slot1.historylist[slot2] then
-		logError(string.format("MeilanniDialogItem no eventHistory id:%s,index:%s", slot0._config.id, slot2))
+	if not var_22_2 then
+		logError(string.format("MeilanniDialogItem no eventHistory id:%s,index:%s", arg_22_0._config.id, arg_22_2))
 
 		return
 	end
 
-	slot9 = slot1._historyResult or ""
-	slot10, slot11 = nil
+	local var_22_3 = var_22_2.history
+	local var_22_4 = arg_22_1._historyResult or ""
+	local var_22_5
+	local var_22_6
 
-	for slot15, slot16 in ipairs(slot7.history) do
-		slot17 = string.splitToNumber(slot16, "#")
-		slot19 = slot17[2]
+	for iter_22_0, iter_22_1 in ipairs(var_22_3) do
+		local var_22_7 = string.splitToNumber(iter_22_1, "#")
+		local var_22_8 = var_22_7[1]
+		local var_22_9 = var_22_7[2]
+		local var_22_10 = lua_activity108_dialog.configDict[var_22_1][var_22_8]
 
-		if not lua_activity108_dialog.configDict[slot6][slot17[1]] then
-			logError(string.format("MeilanniDialogItem showHistory no stepConfig dialogId:%s,stepId:%s", slot6, slot18))
+		if not var_22_10 then
+			logError(string.format("MeilanniDialogItem showHistory no stepConfig dialogId:%s,stepId:%s", var_22_1, var_22_8))
 		end
 
-		if slot20 and slot20.type == MeilanniEnum.ResultString.dialog then
-			slot0:_showDialog(MeilanniEnum.ResultString.dialog, slot20.content, slot20.speaker)
-		elseif slot20 and slot20.type == MeilanniEnum.ResultString.options then
-			if string.split(slot20.content, "#")[slot19] then
-				slot0:_showDialog(MeilanniEnum.ResultString.options, string.format("<color=#B95F0F>\"%s\"</color>", slot23))
+		if var_22_10 and var_22_10.type == MeilanniEnum.ResultString.dialog then
+			arg_22_0:_showDialog(MeilanniEnum.ResultString.dialog, var_22_10.content, var_22_10.speaker)
+		elseif var_22_10 and var_22_10.type == MeilanniEnum.ResultString.options then
+			local var_22_11 = string.split(var_22_10.content, "#")
+			local var_22_12 = string.split(var_22_10.param, "#")
+			local var_22_13 = var_22_11[var_22_9]
+			local var_22_14 = var_22_12[var_22_9]
 
-				if string.len(slot9) <= 0 then
-					slot9, slot0._scoreResult, slot0._featureResult = uv0.getResult(slot1, MeilanniConfig.instance:getDialog(slot6, string.split(slot20.param, "#")[slot19]), slot9, true)
+			if var_22_13 then
+				local var_22_15 = string.format("<color=#B95F0F>\"%s\"</color>", var_22_13)
+
+				arg_22_0:_showDialog(MeilanniEnum.ResultString.options, var_22_15)
+
+				if string.len(var_22_4) <= 0 then
+					local var_22_16 = MeilanniConfig.instance:getDialog(var_22_1, var_22_14)
+					local var_22_17, var_22_18, var_22_19 = var_0_0.getResult(arg_22_1, var_22_16, var_22_4, true)
+
+					arg_22_0._featureResult, arg_22_0._scoreResult, var_22_4 = var_22_19, var_22_18, var_22_17
 				end
 			end
 		end
 	end
 
-	if string.len(slot9) > 0 then
-		slot1._historyResult = slot9
+	if string.len(var_22_4) > 0 then
+		arg_22_1._historyResult = var_22_4
 
-		if slot4 == #slot1.interactParam then
-			slot0:_showDialog(MeilanniEnum.ResultString.result, slot9)
+		if var_22_0 == #arg_22_1.interactParam then
+			arg_22_0:_showDialog(MeilanniEnum.ResultString.result, var_22_4)
 		end
 	end
 end
 
-function slot0.isTopDialog(slot0)
-	return slot0._topDialog
+function var_0_0.isTopDialog(arg_23_0)
+	return arg_23_0._topDialog
 end
 
-function slot0.playDialog(slot0, slot1)
-	slot0._topDialog = true
-	slot0._mapElement = slot1
-	slot0._elementInfo = slot0._mapElement._info
-	slot0._mapId = MeilanniModel.instance:getCurMapId()
-	slot0._mapInfo = MeilanniModel.instance:getMapInfo(slot0._mapId)
-	slot2 = slot0._mapInfo:getCurEpisodeInfo()
+function var_0_0.playDialog(arg_24_0, arg_24_1)
+	arg_24_0._topDialog = true
+	arg_24_0._mapElement = arg_24_1
+	arg_24_0._elementInfo = arg_24_0._mapElement._info
+	arg_24_0._mapId = MeilanniModel.instance:getCurMapId()
+	arg_24_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_24_0._mapId)
 
-	if not slot0._config then
-		slot0._config = slot0._mapElement._config
+	local var_24_0 = arg_24_0._mapInfo:getCurEpisodeInfo()
 
-		slot0:_setText(slot0._config)
+	if not arg_24_0._config then
+		arg_24_0._config = arg_24_0._mapElement._config
+
+		arg_24_0:_setText(arg_24_0._config)
 	end
 
-	slot0:_playStory()
+	arg_24_0:_playStory()
 end
 
-function slot0._setText(slot0, slot1)
-	if slot1.type == 0 then
-		slot0._curText = slot0._txtnormalevent
+function var_0_0._setText(arg_25_0, arg_25_1)
+	if arg_25_1.type == 0 then
+		arg_25_0._curText = arg_25_0._txtnormalevent
 	else
-		slot0._curText = slot0._txtspecialevent
+		arg_25_0._curText = arg_25_0._txtspecialevent
 	end
 
-	slot0._curText.text = ""
-	slot2 = slot1.type == 0
+	arg_25_0._curText.text = ""
 
-	gohelper.setActive(slot0._gonormal, slot2)
-	gohelper.setActive(slot0._gospecial, not slot2)
-	slot0:_hideMaskline(slot1)
+	local var_25_0 = arg_25_1.type == 0
+
+	gohelper.setActive(arg_25_0._gonormal, var_25_0)
+	gohelper.setActive(arg_25_0._gospecial, not var_25_0)
+	arg_25_0:_hideMaskline(arg_25_1)
 end
 
-function slot0._hideMaskline(slot0, slot1)
-	slot0._maskline = gohelper.findChild(slot1.type == 0 and slot0._gonormal or slot0._gospecial, "maskline")
+function var_0_0._hideMaskline(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_1.type == 0
 
-	gohelper.setActive(slot0._maskline, false)
+	arg_26_0._maskline = gohelper.findChild(var_26_0 and arg_26_0._gonormal or arg_26_0._gospecial, "maskline")
+
+	gohelper.setActive(arg_26_0._maskline, false)
 end
 
-function slot0._playStory(slot0)
-	slot0._sectionStack = {}
-	slot0._optionId = 0
-	slot0._mainSectionId = "0"
-	slot0._sectionId = slot0._mainSectionId
-	slot0._dialogIndex = nil
-	slot0._historyList = {}
-	slot0._dialogId = tonumber(slot0._elementInfo:getParam())
-	slot0._historyList.id = slot0._dialogId
-	slot0._dialogHistoryList = {}
+function var_0_0._playStory(arg_27_0)
+	arg_27_0._sectionStack = {}
+	arg_27_0._optionId = 0
+	arg_27_0._mainSectionId = "0"
+	arg_27_0._sectionId = arg_27_0._mainSectionId
+	arg_27_0._dialogIndex = nil
+	arg_27_0._historyList = {}
+	arg_27_0._dialogId = tonumber(arg_27_0._elementInfo:getParam())
+	arg_27_0._historyList.id = arg_27_0._dialogId
+	arg_27_0._dialogHistoryList = {}
 
-	slot0:_playSection(slot0._sectionId, slot0._dialogIndex)
+	arg_27_0:_playSection(arg_27_0._sectionId, arg_27_0._dialogIndex)
 end
 
-function slot0._initHistoryItem(slot0)
-	if not slot0._elementInfo or not slot0._elementInfo.historylist or #slot1 == 0 then
+function var_0_0._initHistoryItem(arg_28_0)
+	local var_28_0 = arg_28_0._elementInfo and arg_28_0._elementInfo.historylist
+
+	if not var_28_0 or #var_28_0 == 0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = string.split(slot6, "#")
-		slot0._historyList[slot7[1]] = tonumber(slot7[2])
+	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+		local var_28_1 = string.split(iter_28_1, "#")
+
+		arg_28_0._historyList[var_28_1[1]] = tonumber(var_28_1[2])
 	end
 
-	if not slot0._historyList.id or slot2 ~= slot0._dialogId then
-		slot0._historyList = {}
+	local var_28_2 = arg_28_0._historyList.id
+
+	if not var_28_2 or var_28_2 ~= arg_28_0._dialogId then
+		arg_28_0._historyList = {}
 
 		return
 	end
 
-	slot0._option_param = slot0._historyList.option
-	slot3 = slot0._mainSectionId
+	arg_28_0._option_param = arg_28_0._historyList.option
 
-	slot0:_addSectionHistory(slot3, slot0._historyList[slot3])
+	local var_28_3 = arg_28_0._mainSectionId
+	local var_28_4 = arg_28_0._historyList[var_28_3]
 
-	if not slot0._dialogIndex then
-		slot0._dialogIndex = slot4
-		slot0._sectionId = slot3
+	arg_28_0:_addSectionHistory(var_28_3, var_28_4)
+
+	if not arg_28_0._dialogIndex then
+		arg_28_0._dialogIndex = var_28_4
+		arg_28_0._sectionId = var_28_3
 	end
 end
 
-function slot0._addSectionHistory(slot0, slot1, slot2)
-	slot3 = MeilanniConfig.instance:getDialog(slot0._dialogId, slot1)
-	slot4 = nil
-	slot4 = slot1 == slot0._mainSectionId and slot2 > #slot3 or slot2 >= #slot3
+function var_0_0._addSectionHistory(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = MeilanniConfig.instance:getDialog(arg_29_0._dialogId, arg_29_1)
+	local var_29_1
 
-	for slot8, slot9 in ipairs(slot3) do
-		if slot8 < slot2 or slot4 then
-			if slot9.type == MeilanniEnum.ResultString.dialog then
-				-- Nothing
-			end
+	if arg_29_1 == arg_29_0._mainSectionId then
+		var_29_1 = arg_29_2 > #var_29_0
+	else
+		var_29_1 = arg_29_2 >= #var_29_0
+	end
 
-			if slot9.type == MeilanniEnum.ResultString.options then
-				slot10 = string.split(slot9.content, "#")
-				slot12 = {}
-				slot13 = {}
+	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+		if (iter_29_0 < arg_29_2 or var_29_1) and (iter_29_1.type ~= MeilanniEnum.ResultString.dialog or true) then
+			if iter_29_1.type == MeilanniEnum.ResultString.options then
+				local var_29_2 = string.split(iter_29_1.content, "#")
+				local var_29_3 = string.split(iter_29_1.param, "#")
+				local var_29_4 = {}
+				local var_29_5 = {}
 
-				for slot17, slot18 in ipairs(string.split(slot9.param, "#")) do
-					if MeilanniConfig.instance:getDialog(slot0._dialogId, slot18) and slot19.type == "random" then
-						for slot23, slot24 in ipairs(slot19) do
-							slot25 = string.split(slot24.option_param, "#")
+				for iter_29_2, iter_29_3 in ipairs(var_29_3) do
+					local var_29_6 = MeilanniConfig.instance:getDialog(arg_29_0._dialogId, iter_29_3)
 
-							table.insert(slot12, slot10[slot17])
-							table.insert(slot13, slot25[2])
-							table.insert(slot12, slot10[slot17])
-							table.insert(slot13, slot25[3])
+					if var_29_6 and var_29_6.type == "random" then
+						for iter_29_4, iter_29_5 in ipairs(var_29_6) do
+							local var_29_7 = string.split(iter_29_5.option_param, "#")
+							local var_29_8 = var_29_7[2]
+							local var_29_9 = var_29_7[3]
+
+							table.insert(var_29_4, var_29_2[iter_29_2])
+							table.insert(var_29_5, var_29_8)
+							table.insert(var_29_4, var_29_2[iter_29_2])
+							table.insert(var_29_5, var_29_9)
 						end
-					elseif slot19 then
-						table.insert(slot12, slot10[slot17])
-						table.insert(slot13, slot18)
+					elseif var_29_6 then
+						table.insert(var_29_4, var_29_2[iter_29_2])
+						table.insert(var_29_5, iter_29_3)
 					end
 				end
 
-				for slot17, slot18 in ipairs(slot13) do
-					if slot0._historyList[slot18] then
-						slot0:_addSectionHistory(slot18, slot19)
+				for iter_29_6, iter_29_7 in ipairs(var_29_5) do
+					local var_29_10 = arg_29_0._historyList[iter_29_7]
+
+					if var_29_10 then
+						arg_29_0:_addSectionHistory(iter_29_7, var_29_10)
 					end
 				end
 			end
@@ -476,426 +523,508 @@ function slot0._addSectionHistory(slot0, slot1, slot2)
 		end
 	end
 
-	if not slot4 then
-		if not slot0._dialogIndex then
-			slot0._dialogIndex = slot2
-			slot0._sectionId = slot1
+	if not var_29_1 then
+		if not arg_29_0._dialogIndex then
+			arg_29_0._dialogIndex = arg_29_2
+			arg_29_0._sectionId = arg_29_1
 
 			return
 		end
 
-		table.insert(slot0._sectionStack, 1, {
-			slot1,
-			slot2
+		table.insert(arg_29_0._sectionStack, 1, {
+			arg_29_1,
+			arg_29_2
 		})
 	end
 end
 
-function slot0._playSection(slot0, slot1, slot2)
-	slot0:_setSectionData(slot1, slot2)
-	slot0:_playNextDialog()
+function var_0_0._playSection(arg_30_0, arg_30_1, arg_30_2)
+	arg_30_0:_setSectionData(arg_30_1, arg_30_2)
+	arg_30_0:_playNextDialog()
 end
 
-function slot0._setSectionData(slot0, slot1, slot2)
-	slot0._sectionList = MeilanniConfig.instance:getDialog(slot0._dialogId, slot1)
+function var_0_0._setSectionData(arg_31_0, arg_31_1, arg_31_2)
+	arg_31_0._sectionList = MeilanniConfig.instance:getDialog(arg_31_0._dialogId, arg_31_1)
 
-	if slot0._sectionList and not string.nilorempty(slot0._sectionList.option_param) then
-		slot0._option_param = slot0._sectionList.option_param
+	if arg_31_0._sectionList and not string.nilorempty(arg_31_0._sectionList.option_param) then
+		arg_31_0._option_param = arg_31_0._sectionList.option_param
 	end
 
-	if not string.nilorempty(slot0._option_param) then
-		slot0._historyList.option = slot0._option_param
+	if not string.nilorempty(arg_31_0._option_param) then
+		arg_31_0._historyList.option = arg_31_0._option_param
 	end
 
-	slot0._dialogIndex = slot2 or 1
-	slot0._sectionId = slot1
+	arg_31_0._dialogIndex = arg_31_2 or 1
+	arg_31_0._sectionId = arg_31_1
 end
 
-function slot0._autoPlay(slot0)
-	slot0:_playNextSectionOrDialog()
+function var_0_0._autoPlay(arg_32_0)
+	arg_32_0:_playNextSectionOrDialog()
 end
 
-function slot0._playNextDialog(slot0)
-	if slot0._sectionList[slot0._dialogIndex] and slot1.type == MeilanniEnum.ResultString.dialog then
-		slot0:_addDialogHistory(slot1.stepId)
-		slot0:_showDialog(MeilanniEnum.ResultString.dialog, slot1.content, slot1.speaker)
+function var_0_0._playNextDialog(arg_33_0)
+	local var_33_0 = arg_33_0._sectionList[arg_33_0._dialogIndex]
 
-		slot0._dialogIndex = slot0._dialogIndex + 1
+	if var_33_0 and var_33_0.type == MeilanniEnum.ResultString.dialog then
+		arg_33_0:_addDialogHistory(var_33_0.stepId)
+		arg_33_0:_showDialog(MeilanniEnum.ResultString.dialog, var_33_0.content, var_33_0.speaker)
 
-		if #slot0._sectionStack > 0 and #slot0._sectionList < slot0._dialogIndex then
-			slot2 = table.remove(slot0._sectionStack)
+		arg_33_0._dialogIndex = arg_33_0._dialogIndex + 1
 
-			slot0:_setSectionData(slot2[1], slot2[2])
+		if #arg_33_0._sectionStack > 0 and #arg_33_0._sectionList < arg_33_0._dialogIndex then
+			local var_33_1 = table.remove(arg_33_0._sectionStack)
+
+			arg_33_0:_setSectionData(var_33_1[1], var_33_1[2])
 		end
 
-		slot0:_refreshDialogBtnState()
-		slot0:_autoPlay()
-	elseif slot1 and slot1.type == MeilanniEnum.ResultString.options then
-		slot0:_showOptionByConfig(slot1)
+		arg_33_0:_refreshDialogBtnState()
+		arg_33_0:_autoPlay()
+	elseif var_33_0 and var_33_0.type == MeilanniEnum.ResultString.options then
+		arg_33_0:_showOptionByConfig(var_33_0)
 	end
 end
 
-function slot0._showOptionByConfig(slot0, slot1)
-	slot2 = false
+function var_0_0._showOptionByConfig(arg_34_0, arg_34_1)
+	local var_34_0 = false
 
-	if slot1 and slot1.type == MeilanniEnum.ResultString.options then
-		slot0._dialogIndex = slot0._dialogIndex + 1
-		slot0._isSingle = slot1.single == 1
+	if arg_34_1 and arg_34_1.type == MeilanniEnum.ResultString.options then
+		arg_34_0._dialogIndex = arg_34_0._dialogIndex + 1
 
-		if slot0._isSkip then
-			slot0:_refreshDialogBtnState(true)
-			slot0:_onOptionClick({
-				string.split(slot1.param, "#")[1],
-				string.split(slot1.content, "#")[1],
-				1
+		local var_34_1 = string.split(arg_34_1.content, "#")
+		local var_34_2 = string.split(arg_34_1.param, "#")
+
+		arg_34_0._isSingle = arg_34_1.single == 1
+
+		if arg_34_0._isSkip then
+			var_34_0 = true
+
+			arg_34_0:_refreshDialogBtnState(var_34_0)
+
+			local var_34_3 = 1
+			local var_34_4 = var_34_2[1]
+			local var_34_5 = var_34_1[1]
+
+			arg_34_0:_onOptionClick({
+				var_34_4,
+				var_34_5,
+				var_34_3
 			})
 
 			return
 		else
 			MeilanniController.instance:dispatchEvent(MeilanniEvent.startShowDialogOptionBtn)
 
-			for slot8, slot9 in pairs(slot0._optionBtnList) do
-				gohelper.setActive(slot9[1], false)
+			for iter_34_0, iter_34_1 in pairs(arg_34_0._optionBtnList) do
+				gohelper.setActive(iter_34_1[1], false)
 			end
 
-			slot5 = #slot3 + 1
+			local var_34_6 = #var_34_1 + 1
 
-			for slot9 = 1, #slot3 do
-				slot0:_addDialogOption(slot5, slot9, slot4[slot9], slot3[slot9], slot1.stepId)
+			for iter_34_2 = 1, #var_34_1 do
+				arg_34_0:_addDialogOption(var_34_6, iter_34_2, var_34_2[iter_34_2], var_34_1[iter_34_2], arg_34_1.stepId)
 			end
 
-			slot0:_addDialogOption(slot5, slot5, -1, luaLang("p_meilannidialogitem_shelve"), slot1.stepId, "bg_xuanzhe")
-			TaskDispatcher.runDelay(slot0._setOptionBtnEnabled, slot0, slot5 * MeilanniEnum.optionTime + 1.2)
-			MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, slot0)
+			arg_34_0:_addDialogOption(var_34_6, var_34_6, -1, luaLang("p_meilannidialogitem_shelve"), arg_34_1.stepId, "bg_xuanzhe")
+
+			local var_34_7 = var_34_6 * MeilanniEnum.optionTime + 1.2
+
+			TaskDispatcher.runDelay(arg_34_0._setOptionBtnEnabled, arg_34_0, var_34_7)
+			MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, arg_34_0)
 		end
 
-		slot2 = true
+		var_34_0 = true
 	end
 
-	slot0:_refreshDialogBtnState(slot2)
+	arg_34_0:_refreshDialogBtnState(var_34_0)
 end
 
-function slot0._setOptionBtnEnabled(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[2].button.enabled = true
+function var_0_0._setOptionBtnEnabled(arg_35_0)
+	for iter_35_0, iter_35_1 in pairs(arg_35_0._optionBtnList) do
+		iter_35_1[2].button.enabled = true
 	end
 end
 
-function slot0._refreshDialogBtnState(slot0, slot1)
-	MeilanniController.instance:dispatchEvent(MeilanniEvent.refreshDialogBtnState, slot1)
-	gohelper.setActive(slot0._gooptions, slot1)
+function var_0_0._refreshDialogBtnState(arg_36_0, arg_36_1)
+	MeilanniController.instance:dispatchEvent(MeilanniEvent.refreshDialogBtnState, arg_36_1)
+	gohelper.setActive(arg_36_0._gooptions, arg_36_1)
 
-	if slot1 then
+	if arg_36_1 then
 		return
 	end
 
-	slot3 = not (#slot0._sectionStack > 0 or slot0._dialogIndex <= #slot0._sectionList)
+	local var_36_0 = not (#arg_36_0._sectionStack > 0 or #arg_36_0._sectionList >= arg_36_0._dialogIndex)
 
-	if slot0._isFinish then
-		slot0:_fadeOutDone()
+	if arg_36_0._isFinish then
+		arg_36_0:_fadeOutDone()
 
-		slot0._finishClose = true
+		arg_36_0._finishClose = true
 	end
 
-	slot0._isFinish = slot3
+	arg_36_0._isFinish = var_36_0
 end
 
-function slot0._fadeOutDone(slot0)
-	if slot0._config.skipFinish ~= 1 then
-		slot0:_sendFinishDialog()
+function var_0_0._fadeOutDone(arg_37_0)
+	if arg_37_0._config.skipFinish ~= 1 then
+		arg_37_0:_sendFinishDialog()
 	end
 
-	TaskDispatcher.runDelay(slot0._startBattle, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_37_0._startBattle, arg_37_0, 1.5)
 end
 
-function slot0._startBattle(slot0)
-	if slot0._elementInfo:getNextType() == MeilanniEnum.ElementType.Battle then
-		MeilanniController.instance:startBattle(slot0._config.id)
+function var_0_0._startBattle(arg_38_0)
+	if arg_38_0._elementInfo:getNextType() == MeilanniEnum.ElementType.Battle then
+		MeilanniController.instance:startBattle(arg_38_0._config.id)
 	end
 end
 
-function slot0._playCloseTalkItemEffect(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[1]:GetComponent(typeof(UnityEngine.Animator)):Play("weekwalk_options_out")
+function var_0_0._playCloseTalkItemEffect(arg_39_0)
+	for iter_39_0, iter_39_1 in pairs(arg_39_0._optionBtnList) do
+		iter_39_1[1]:GetComponent(typeof(UnityEngine.Animator)):Play("weekwalk_options_out")
 	end
 
-	TaskDispatcher.runDelay(slot0._hideOption, slot0, 0.133)
+	TaskDispatcher.runDelay(arg_39_0._hideOption, arg_39_0, 0.133)
 end
 
-function slot0._hideOption(slot0)
-	gohelper.setActive(slot0._gooptions, false)
+function var_0_0._hideOption(arg_40_0)
+	gohelper.setActive(arg_40_0._gooptions, false)
 end
 
-function slot0.startBattle(slot0)
+function var_0_0.startBattle(arg_41_0)
+	return
 end
 
-function slot0._sendFinishDialog(slot0)
+function var_0_0._sendFinishDialog(arg_42_0)
 	MeilanniAnimationController.instance:startAnimation()
-	slot0:_setDelayShowDialog()
+	arg_42_0:_setDelayShowDialog()
 	MeilanniController.instance:dispatchEvent(MeilanniEvent.setElementsVisible, true)
-	Activity108Rpc.instance:sendDialogEventSelectRequest(MeilanniEnum.activityId, slot0._config.id, slot0._dialogHistoryList, tonumber(slot0._option_param) or 0)
+	Activity108Rpc.instance:sendDialogEventSelectRequest(MeilanniEnum.activityId, arg_42_0._config.id, arg_42_0._dialogHistoryList, tonumber(arg_42_0._option_param) or 0)
 end
 
-slot1 = "#225D23"
+local var_0_1 = "#225D23"
 
-function slot0.getResult(slot0, slot1, slot2, slot3, slot4)
-	slot6, slot7 = nil
+function var_0_0.getResult(arg_43_0, arg_43_1, arg_43_2, arg_43_3, arg_43_4)
+	local var_43_0 = string.splitToNumber(arg_43_1.result, "#")
+	local var_43_1
+	local var_43_2
 
-	if string.splitToNumber(slot1.result, "#")[1] == MeilanniEnum.ResultType.score then
-		slot2 = (slot5[2] ~= 0 or formatLuaLang("meilannidialogitem_noscore", slot2)) and string.format("%s  %s", formatLuaLang("meilannidialogitem_noscore", slot2), MeilanniController.getScoreDesc(slot8))
-		slot6 = slot8
-	elseif slot5[1] == MeilanniEnum.ResultType.feature then
-		slot2 = GameUtil.getSubPlaceholderLuaLang(luaLang("meilannidialogitem_eliminat"), {
-			slot2,
-			slot4 and slot4.featureTxtColor or uv0,
-			lua_rule.configDict[tonumber(lua_activity108_rule.configDict[slot5[2]].rules)].name
-		})
-		slot7 = true
-	elseif slot0 and slot0:getConfigBattleId() then
-		slot2 = (not slot3 or formatLuaLang("meilannidialogitem_fightsuccess", slot2)) and formatLuaLang("meilannidialogitem_fight", formatLuaLang("meilannidialogitem_fightsuccess", slot2))
+	if var_43_0[1] == MeilanniEnum.ResultType.score then
+		local var_43_3 = var_43_0[2]
+
+		if var_43_3 == 0 then
+			arg_43_2 = formatLuaLang("meilannidialogitem_noscore", arg_43_2)
+		else
+			local var_43_4 = MeilanniController.getScoreDesc(var_43_3)
+
+			arg_43_2 = string.format("%s  %s", arg_43_2, var_43_4)
+		end
+
+		var_43_1 = var_43_3
+	elseif var_43_0[1] == MeilanniEnum.ResultType.feature then
+		local var_43_5 = lua_activity108_rule.configDict[var_43_0[2]]
+		local var_43_6 = tonumber(var_43_5.rules)
+		local var_43_7 = lua_rule.configDict[var_43_6]
+		local var_43_8 = arg_43_4 and arg_43_4.featureTxtColor or var_0_1
+		local var_43_9 = {
+			arg_43_2,
+			var_43_8,
+			var_43_7.name
+		}
+
+		arg_43_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("meilannidialogitem_eliminat"), var_43_9)
+		var_43_2 = true
+	elseif arg_43_0 and arg_43_0:getConfigBattleId() then
+		if arg_43_3 then
+			arg_43_2 = formatLuaLang("meilannidialogitem_fightsuccess", arg_43_2)
+		else
+			arg_43_2 = formatLuaLang("meilannidialogitem_fight", arg_43_2)
+		end
 	end
 
-	return slot2, slot6, slot7
+	return arg_43_2, var_43_1, var_43_2
 end
 
-function slot0._setAnimatorEnabled(slot0)
-	slot0.enabled = true
+function var_0_0._setAnimatorEnabled(arg_44_0)
+	arg_44_0.enabled = true
 end
 
-function slot0._addDialogOption(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+function var_0_0._addDialogOption(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4, arg_45_5, arg_45_6)
+	local var_45_0 = {
+		arg_45_3,
+		arg_45_4,
+		arg_45_2,
+		arg_45_5,
+		arg_45_1,
+		arg_45_6
+	}
+
 	MeilanniController.instance:dispatchEvent(MeilanniEvent.showDialogOptionBtn, {
-		{
-			slot3,
-			slot4,
-			slot2,
-			slot5,
-			slot1,
-			slot6
-		},
-		slot0,
-		slot0._onOptionClick
+		var_45_0,
+		arg_45_0,
+		arg_45_0._onOptionClick
 	})
 end
 
-function slot0._setDelayShowDialog(slot0)
-	slot0._delayStartTime = slot0._delayStartTime or Time.realtimeSinceStartup
-	slot0._delayShowDialogList = slot0._delayShowDialogList or {}
+function var_0_0._setDelayShowDialog(arg_46_0)
+	arg_46_0._delayStartTime = arg_46_0._delayStartTime or Time.realtimeSinceStartup
+	arg_46_0._delayShowDialogList = arg_46_0._delayShowDialogList or {}
 end
 
-function slot0._getDelayShowDialogList(slot0)
-	return slot0._delayShowDialogList
+function var_0_0._getDelayShowDialogList(arg_47_0)
+	return arg_47_0._delayShowDialogList
 end
 
-function slot0._onOptionClick(slot0, slot1)
-	if not slot0:_checkClickCd() then
+function var_0_0._onOptionClick(arg_48_0, arg_48_1)
+	if not arg_48_0:_checkClickCd() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_fight_choosecard)
 
-	if slot1[1] == -1 then
-		gohelper.destroy(slot0.viewGO)
+	local var_48_0 = arg_48_1[1]
+
+	if var_48_0 == -1 then
+		gohelper.destroy(arg_48_0.viewGO)
 		MeilanniController.instance:dispatchEvent(MeilanniEvent.setElementsVisible, true)
-		MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogClose, slot0)
+		MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogClose, arg_48_0)
 
 		return
 	end
 
 	MeilanniAnimationController.instance:startAnimation()
-	slot0:_setDelayShowDialog()
-	slot0:_addDialogHistory(slot1[4], slot1[3])
-	slot0:_showDialog(MeilanniEnum.ResultString.options, string.format("<color=#B95F0F>\"%s\"</color>", slot1[2]))
+	arg_48_0:_setDelayShowDialog()
 
-	slot0._showOption = true
-	slot0._optionId = slot1[3]
+	local var_48_1 = string.format("<color=#B95F0F>\"%s\"</color>", arg_48_1[2])
 
-	slot0:_checkOption(slot2)
+	arg_48_0:_addDialogHistory(arg_48_1[4], arg_48_1[3])
+	arg_48_0:_showDialog(MeilanniEnum.ResultString.options, var_48_1)
+
+	arg_48_0._showOption = true
+	arg_48_0._optionId = arg_48_1[3]
+
+	arg_48_0:_checkOption(var_48_0)
 end
 
-function slot0._addDialogHistory(slot0, slot1, slot2)
-	if slot2 then
-		table.insert(slot0._dialogHistoryList, string.format("%s#%s", slot1, slot2))
+function var_0_0._addDialogHistory(arg_49_0, arg_49_1, arg_49_2)
+	if arg_49_2 then
+		table.insert(arg_49_0._dialogHistoryList, string.format("%s#%s", arg_49_1, arg_49_2))
 	else
-		table.insert(slot0._dialogHistoryList, tostring(slot1))
+		table.insert(arg_49_0._dialogHistoryList, tostring(arg_49_1))
 	end
 end
 
-function slot0._checkOption(slot0, slot1)
-	if not MeilanniConfig.instance:getDialog(slot0._dialogId, slot1) then
-		slot0:_playNextSectionOrDialog()
+function var_0_0._checkOption(arg_50_0, arg_50_1)
+	local var_50_0 = MeilanniConfig.instance:getDialog(arg_50_0._dialogId, arg_50_1)
+
+	if not var_50_0 then
+		arg_50_0:_playNextSectionOrDialog()
 
 		return
 	end
 
-	if slot0._dialogIndex <= #slot0._sectionList then
-		table.insert(slot0._sectionStack, {
-			slot0._sectionId,
-			slot0._dialogIndex
+	if #arg_50_0._sectionList >= arg_50_0._dialogIndex then
+		table.insert(arg_50_0._sectionStack, {
+			arg_50_0._sectionId,
+			arg_50_0._dialogIndex
 		})
 	end
 
-	if slot2.type == "random" then
-		for slot6, slot7 in ipairs(slot2) do
-			slot8 = string.split(slot7.option_param, "#")
-			slot13 = nil
+	if var_50_0.type == "random" then
+		for iter_50_0, iter_50_1 in ipairs(var_50_0) do
+			local var_50_1 = string.split(iter_50_1.option_param, "#")
+			local var_50_2 = tonumber(var_50_1[1])
+			local var_50_3 = var_50_1[2]
+			local var_50_4 = var_50_1[3]
+			local var_50_5 = math.random(100)
+			local var_50_6
 
-			slot0:_playSection(math.random(100) <= tonumber(slot8[1]) and slot8[2] or slot8[3])
+			if var_50_5 <= var_50_2 then
+				var_50_6 = var_50_3
+			else
+				var_50_6 = var_50_4
+			end
+
+			arg_50_0:_playSection(var_50_6)
 
 			break
 		end
 	else
-		slot0:_playSection(slot1)
+		arg_50_0:_playSection(arg_50_1)
 	end
 end
 
-function slot0._showDialog(slot0, slot1, slot2, slot3)
-	if slot0._isSkip then
+function var_0_0._showDialog(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
+	if arg_51_0._isSkip then
 		return
 	end
 
-	if string.nilorempty(slot2) or slot0._txtList[slot2] then
+	if string.nilorempty(arg_51_2) or arg_51_0._txtList[arg_51_2] then
 		return
 	end
 
-	if not slot0:_getDelayShowDialogList() then
-		slot0:_addDialogItem(slot1, slot2, slot3)
+	local var_51_0 = arg_51_0:_getDelayShowDialogList()
+
+	if not var_51_0 then
+		arg_51_0:_addDialogItem(arg_51_1, arg_51_2, arg_51_3)
 
 		return
 	end
 
 	MeilanniAnimationController.instance:startDialogListAnim()
-	table.insert(slot4, {
-		slot1,
-		slot2,
-		slot3,
-		slot1 == MeilanniEnum.ResultString.result
+	table.insert(var_51_0, {
+		arg_51_1,
+		arg_51_2,
+		arg_51_3,
+		arg_51_1 == MeilanniEnum.ResultString.result
 	})
-	TaskDispatcher.runRepeat(slot0._showDelayDialog, slot0, 0)
+	TaskDispatcher.runRepeat(arg_51_0._showDelayDialog, arg_51_0, 0)
 end
 
-function slot0._showDelayDialog(slot0)
-	if slot0:_getDelayShowDialogList() and #slot1 ~= 0 and slot1[1][4] then
-		slot2 = (slot0._customDialogTime or MeilanniEnum.dialogTime) + MeilanniEnum.resultTime
+function var_0_0._showDelayDialog(arg_52_0)
+	local var_52_0 = arg_52_0:_getDelayShowDialogList()
+	local var_52_1 = arg_52_0._customDialogTime or MeilanniEnum.dialogTime
+
+	if var_52_0 and #var_52_0 ~= 0 and var_52_0[1][4] then
+		var_52_1 = var_52_1 + MeilanniEnum.resultTime
 	end
 
-	if slot1 and slot2 <= Time.realtimeSinceStartup - slot0._delayStartTime then
-		slot0._delayStartTime = Time.realtimeSinceStartup
+	if var_52_0 and var_52_1 <= Time.realtimeSinceStartup - arg_52_0._delayStartTime then
+		arg_52_0._delayStartTime = Time.realtimeSinceStartup
 
-		if #slot1 <= 0 then
-			TaskDispatcher.cancelTask(slot0._showDelayDialog, slot0)
+		if #var_52_0 <= 0 then
+			TaskDispatcher.cancelTask(arg_52_0._showDelayDialog, arg_52_0)
 			MeilanniAnimationController.instance:endDialogListAnim()
 
 			return
 		end
 
-		if table.remove(slot1, 1) then
-			slot0:_addDialogItem(slot3[1], slot3[2], slot3[3])
+		local var_52_2 = table.remove(var_52_0, 1)
+
+		if var_52_2 then
+			local var_52_3 = var_52_2[1]
+			local var_52_4 = var_52_2[2]
+			local var_52_5 = var_52_2[3]
+
+			arg_52_0:_addDialogItem(var_52_3, var_52_4, var_52_5)
 		end
 	end
 end
 
-function slot0._updateHistory(slot0)
-	if slot0._isSkip then
+function var_0_0._updateHistory(arg_53_0)
+	if arg_53_0._isSkip then
 		return
 	end
 
-	if slot0._config.skipFinish == 1 then
+	if arg_53_0._config.skipFinish == 1 then
 		return
 	end
 
-	slot0._historyList[slot0._sectionId] = slot0._dialogIndex
+	arg_53_0._historyList[arg_53_0._sectionId] = arg_53_0._dialogIndex
 
-	for slot5, slot6 in pairs(slot0._historyList) do
-		table.insert({}, string.format("%s#%s", slot5, slot6))
+	local var_53_0 = {}
+
+	for iter_53_0, iter_53_1 in pairs(arg_53_0._historyList) do
+		table.insert(var_53_0, string.format("%s#%s", iter_53_0, iter_53_1))
 	end
 end
 
-function slot0._addDialogItem(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot2) then
+function var_0_0._addDialogItem(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
+	if string.nilorempty(arg_54_2) then
 		return
 	end
 
-	if string.nilorempty(slot0._content) then
-		slot0._content = slot2
-		slot0._eventIndexDesc = nil
+	if string.nilorempty(arg_54_0._content) then
+		arg_54_0._content = arg_54_2
+		arg_54_0._eventIndexDesc = nil
 	else
-		slot0._content = string.format("%s\n%s", slot0._content, slot2)
+		arg_54_0._content = string.format("%s\n%s", arg_54_0._content, arg_54_2)
 	end
 
-	if not slot0._txtList[slot2] then
-		slot4 = gohelper.clone(slot0._txttemplate.gameObject, slot0._curText.transform.parent.gameObject)
+	if not arg_54_0._txtList[arg_54_2] then
+		local var_54_0 = gohelper.clone(arg_54_0._txttemplate.gameObject, arg_54_0._curText.transform.parent.gameObject)
 
-		gohelper.setActive(slot4, true)
+		gohelper.setActive(var_54_0, true)
 
-		slot4:GetComponent(gohelper.Type_TextMesh).text = slot2
-		slot6 = slot4:GetComponent(typeof(UnityEngine.Animator))
-		slot7 = "fade"
+		local var_54_1 = var_54_0:GetComponent(gohelper.Type_TextMesh)
 
-		if slot1 == MeilanniEnum.ResultString.dialog then
-			slot9 = slot4:GetComponent(typeof(ZProj.MaterialPropsTMPCtrl)).TMPList
+		var_54_1.text = arg_54_2
 
-			slot9:Clear()
-			slot9:Add(slot5)
+		local var_54_2 = var_54_0:GetComponent(typeof(UnityEngine.Animator))
+		local var_54_3 = "fade"
 
-			slot7 = "open"
-		elseif slot1 == MeilanniEnum.ResultString.result then
+		if arg_54_1 == MeilanniEnum.ResultString.dialog then
+			local var_54_4 = var_54_0:GetComponent(typeof(ZProj.MaterialPropsTMPCtrl)).TMPList
+
+			var_54_4:Clear()
+			var_54_4:Add(var_54_1)
+
+			var_54_3 = "open"
+		elseif arg_54_1 == MeilanniEnum.ResultString.result then
 			if MeilanniAnimationController.instance:isPlayingDialogListAnim() then
-				if slot0._scoreResult and slot0._scoreResult > 0 then
-					gohelper.setActive(gohelper.findChild(slot4, "vx/1"), true)
+				if arg_54_0._scoreResult and arg_54_0._scoreResult > 0 then
+					local var_54_5 = gohelper.findChild(var_54_0, "vx/1")
+
+					gohelper.setActive(var_54_5, true)
 					AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_decrypt_correct)
-				elseif slot0._scoreResult and slot0._scoreResult < 0 then
-					gohelper.setActive(gohelper.findChild(slot4, "vx/2"), true)
+				elseif arg_54_0._scoreResult and arg_54_0._scoreResult < 0 then
+					local var_54_6 = gohelper.findChild(var_54_0, "vx/2")
+
+					gohelper.setActive(var_54_6, true)
 					AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_decrypt_incorrect)
-				elseif slot0._scoreResult and slot0._scoreResult == 0 then
-					gohelper.setActive(gohelper.findChild(slot4, "vx/4"), true)
+				elseif arg_54_0._scoreResult and arg_54_0._scoreResult == 0 then
+					local var_54_7 = gohelper.findChild(var_54_0, "vx/4")
+
+					gohelper.setActive(var_54_7, true)
 					AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_no_effect)
-				elseif slot0._featureResult then
-					gohelper.setActive(gohelper.findChild(slot4, "vx/3"), true)
+				elseif arg_54_0._featureResult then
+					local var_54_8 = gohelper.findChild(var_54_0, "vx/3")
+
+					gohelper.setActive(var_54_8, true)
 					AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_remove_effect)
 				end
 
-				slot0._scoreResult = nil
-				slot0._featureResult = nil
-				slot0._topDialog = false
+				arg_54_0._scoreResult = nil
+				arg_54_0._featureResult = nil
+				arg_54_0._topDialog = false
 			end
 
-			if slot0._maskline then
-				gohelper.setActive(slot0._maskline, true)
+			if arg_54_0._maskline then
+				gohelper.setActive(arg_54_0._maskline, true)
 			end
 		end
 
-		if slot0._openFadeIn then
-			slot7 = "idle"
+		if arg_54_0._openFadeIn then
+			var_54_3 = "idle"
 		end
 
-		slot6:Play(slot7)
+		var_54_2:Play(var_54_3)
 
-		slot0._txtList[slot2] = true
+		arg_54_0._txtList[arg_54_2] = true
 	end
 
-	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, slot0)
+	MeilanniController.instance:dispatchEvent(MeilanniEvent.dialogChange, arg_54_0)
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[2]:RemoveClickListener()
-		TaskDispatcher.cancelTask(uv0._setAnimatorEnabled, slot5[3])
+function var_0_0.onClose(arg_55_0)
+	for iter_55_0, iter_55_1 in pairs(arg_55_0._optionBtnList) do
+		iter_55_1[2]:RemoveClickListener()
+		TaskDispatcher.cancelTask(var_0_0._setAnimatorEnabled, iter_55_1[3])
 	end
 
-	if slot0._endBtn then
-		slot0._endBtn:RemoveClickListener()
+	if arg_55_0._endBtn then
+		arg_55_0._endBtn:RemoveClickListener()
 
-		slot0._endBtn = nil
+		arg_55_0._endBtn = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._hideOption, slot0)
-	TaskDispatcher.cancelTask(slot0._delayFadeIn, slot0)
-	TaskDispatcher.cancelTask(slot0._showDelayDialog, slot0)
-	TaskDispatcher.cancelTask(slot0._startBattle, slot0)
-	TaskDispatcher.cancelTask(slot0._setOptionBtnEnable, slot0)
+	TaskDispatcher.cancelTask(arg_55_0._hideOption, arg_55_0)
+	TaskDispatcher.cancelTask(arg_55_0._delayFadeIn, arg_55_0)
+	TaskDispatcher.cancelTask(arg_55_0._showDelayDialog, arg_55_0)
+	TaskDispatcher.cancelTask(arg_55_0._startBattle, arg_55_0)
+	TaskDispatcher.cancelTask(arg_55_0._setOptionBtnEnable, arg_55_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_56_0)
+	return
 end
 
-return slot0
+return var_0_0

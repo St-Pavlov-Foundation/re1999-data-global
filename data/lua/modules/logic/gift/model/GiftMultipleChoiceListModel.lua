@@ -1,37 +1,41 @@
-module("modules.logic.gift.model.GiftMultipleChoiceListModel", package.seeall)
+﻿module("modules.logic.gift.model.GiftMultipleChoiceListModel", package.seeall)
 
-slot0 = class("GiftMultipleChoiceListModel", ListScrollModel)
+local var_0_0 = class("GiftMultipleChoiceListModel", ListScrollModel)
 
-function slot0.setPropList(slot0, slot1)
-	slot0._moList = slot1 and slot1 or {}
+function var_0_0.setPropList(arg_1_0, arg_1_1)
+	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-function slot0.getOptionalGiftIdList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getOptionalGiftIdList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+	local var_2_1 = ItemModel.instance:getOptionalGiftMaterialSubTypeList(arg_2_1)
 
-	for slot7, slot8 in pairs(ItemModel.instance:getOptionalGiftMaterialSubTypeList(slot1)) do
-		table.insert(slot2, slot8)
+	for iter_2_0, iter_2_1 in pairs(var_2_1) do
+		table.insert(var_2_0, iter_2_1)
 	end
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.getOptionalGiftInfo(slot0, slot1)
-	slot3 = {}
+function var_0_0.getOptionalGiftInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getOptionalGiftIdList(arg_3_1)
+	local var_3_1 = {}
 
-	for slot7, slot8 in pairs(slot0:getOptionalGiftIdList(slot1)) do
-		table.insert(slot3, {
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		local var_3_2 = {
 			1,
-			slot8,
+			iter_3_1,
 			1
-		})
+		}
+
+		table.insert(var_3_1, var_3_2)
 	end
 
-	return slot3
+	return var_3_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

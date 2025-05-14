@@ -1,335 +1,371 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183MainView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183MainView", package.seeall)
 
-slot0 = class("Act183MainView", BaseView)
-slot1 = 7
-slot2 = 30
-slot3 = 1
+local var_0_0 = class("Act183MainView", BaseView)
+local var_0_1 = 7
+local var_0_2 = 30
+local var_0_3 = 1
 
-function slot0.onInitView(slot0)
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "root/#go_topleft")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "root/left/#txt_time")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/left/#btn_reward")
-	slot0._gotaskreddot = gohelper.findChild(slot0.viewGO, "root/left/#btn_reward/#go_taskreddot")
-	slot0._btnrecord = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/left/#btn_record")
-	slot0._btnmedal = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/left/#btn_medal")
-	slot0._gomedalreddot = gohelper.findChild(slot0.viewGO, "root/left/#btn_medal/#go_medalreddot")
-	slot0._gomain = gohelper.findChild(slot0.viewGO, "root/middle/#go_main")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "root/middle/#go_main/#go_normal")
-	slot0._gohard = gohelper.findChild(slot0.viewGO, "root/middle/#go_main/#go_hard")
-	slot0._btnentermain = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/middle/#btn_entermain")
-	slot0._scrolldaily = gohelper.findChildScrollRect(slot0.viewGO, "root/right/#scroll_daily")
-	slot0._godailyitem = gohelper.findChild(slot0.viewGO, "root/right/#scroll_daily/Viewport/Content/#go_dailyitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/left/#txt_time")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_reward")
+	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "root/left/#btn_reward/#go_taskreddot")
+	arg_1_0._btnrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_record")
+	arg_1_0._btnmedal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/#btn_medal")
+	arg_1_0._gomedalreddot = gohelper.findChild(arg_1_0.viewGO, "root/left/#btn_medal/#go_medalreddot")
+	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_main")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_main/#go_normal")
+	arg_1_0._gohard = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_main/#go_hard")
+	arg_1_0._btnentermain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/middle/#btn_entermain")
+	arg_1_0._scrolldaily = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#scroll_daily")
+	arg_1_0._godailyitem = gohelper.findChild(arg_1_0.viewGO, "root/right/#scroll_daily/Viewport/Content/#go_dailyitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0._btnrecord:AddClickListener(slot0._btnrecordOnClick, slot0)
-	slot0._btnmedal:AddClickListener(slot0._btnmedalOnClick, slot0)
-	slot0._btnentermain:AddClickListener(slot0._btnentermainOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0._btnrecord:AddClickListener(arg_2_0._btnrecordOnClick, arg_2_0)
+	arg_2_0._btnmedal:AddClickListener(arg_2_0._btnmedalOnClick, arg_2_0)
+	arg_2_0._btnentermain:AddClickListener(arg_2_0._btnentermainOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreward:RemoveClickListener()
-	slot0._btnrecord:RemoveClickListener()
-	slot0._btnmedal:RemoveClickListener()
-	slot0._btnentermain:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0._btnrecord:RemoveClickListener()
+	arg_3_0._btnmedal:RemoveClickListener()
+	arg_3_0._btnentermain:RemoveClickListener()
 end
 
-function slot0._btnrewardOnClick(slot0)
+function var_0_0._btnrewardOnClick(arg_4_0)
 	Act183Controller.instance:openAct183TaskView()
 end
 
-function slot0._btnrecordOnClick(slot0)
+function var_0_0._btnrecordOnClick(arg_5_0)
 	Act183Controller.instance:openAct183ReportView()
 end
 
-function slot0._btnmedalOnClick(slot0)
+function var_0_0._btnmedalOnClick(arg_6_0)
 	Act183Controller.instance:openAct183BadgeView()
 end
 
-function slot0._btnentermainOnClick(slot0)
-	if not slot0._mainGroupEpisodeTab[Act183Helper.getLastEnterMainGroupTypeInLocal(slot0._actId, Act183Enum.GroupType.NormalMain)] then
+function var_0_0._btnentermainOnClick(arg_7_0)
+	local var_7_0 = Act183Helper.getLastEnterMainGroupTypeInLocal(arg_7_0._actId, Act183Enum.GroupType.NormalMain)
+	local var_7_1 = arg_7_0._mainGroupEpisodeTab[var_7_0]
+
+	if not var_7_1 then
 		return
 	end
 
-	if slot2:getStatus() == Act183Enum.GroupStatus.Locked and slot1 ~= Act183Enum.GroupType.NormalMain then
-		logError(string.format("本地标记的上一次进入关卡组未解锁!!!, 保底进入普通日常关卡。lastEnterGroupType = %s, status = %s", slot1, slot3))
+	local var_7_2 = var_7_1:getStatus()
 
-		slot2 = slot0._mainGroupEpisodeTab[Act183Enum.GroupType.NormalMain]
+	if var_7_2 == Act183Enum.GroupStatus.Locked and var_7_0 ~= Act183Enum.GroupType.NormalMain then
+		logError(string.format("本地标记的上一次进入关卡组未解锁!!!, 保底进入普通日常关卡。lastEnterGroupType = %s, status = %s", var_7_0, var_7_2))
+
+		local var_7_3 = Act183Enum.GroupType.NormalMain
+
+		var_7_1 = arg_7_0._mainGroupEpisodeTab[var_7_3]
 	end
 
-	Act183Controller.instance:openAct183DungeonView(Act183Helper.generateDungeonViewParams(slot2 and slot2:getGroupType(), slot2 and slot2:getGroupId()))
+	local var_7_4 = var_7_1 and var_7_1:getGroupId()
+	local var_7_5 = var_7_1 and var_7_1:getGroupType()
+	local var_7_6 = Act183Helper.generateDungeonViewParams(var_7_5, var_7_4)
+
+	Act183Controller.instance:openAct183DungeonView(var_7_6)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._mainItemTab = slot0:getUserDataTb_()
-	slot0._dailyItemTab = slot0:getUserDataTb_()
-	slot0._actId = Act183Model.instance:getActivityId()
-	slot0._info = Act183Model.instance:getActInfo()
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._mainItemTab = arg_8_0:getUserDataTb_()
+	arg_8_0._dailyItemTab = arg_8_0:getUserDataTb_()
+	arg_8_0._actId = Act183Model.instance:getActivityId()
+	arg_8_0._info = Act183Model.instance:getActInfo()
 
 	Act183Model.instance:initTaskStatusMap()
 
-	slot0._rewardReddotAnim = gohelper.findChildComponent(slot0._btnreward.gameObject, "ani", gohelper.Type_Animator)
+	arg_8_0._rewardReddotAnim = gohelper.findChildComponent(arg_8_0._btnreward.gameObject, "ani", gohelper.Type_Animator)
 
-	RedDotController.instance:addRedDot(slot0._gotaskreddot, RedDotEnum.DotNode.V2a5_Act183Task, nil, slot0._taskReddotFunc, slot0)
-	slot0:addEventCb(Act183Controller.instance, Act183Event.RefreshMedalReddot, slot0.initOrRefreshMedalReddot, slot0)
+	RedDotController.instance:addRedDot(arg_8_0._gotaskreddot, RedDotEnum.DotNode.V2a5_Act183Task, nil, arg_8_0._taskReddotFunc, arg_8_0)
+	arg_8_0:addEventCb(Act183Controller.instance, Act183Event.RefreshMedalReddot, arg_8_0.initOrRefreshMedalReddot, arg_8_0)
 
-	slot0._hasPlayUnlockAnimGroupIds = Act183Helper.getUnlockGroupIdsInLocal(slot0._actId)
-	slot0._hasPlayUnlockAnimGroupIdMap = Act183Helper.listToMap(slot0._hasPlayUnlockAnimGroupIds)
+	arg_8_0._hasPlayUnlockAnimGroupIds = Act183Helper.getUnlockGroupIdsInLocal(arg_8_0._actId)
+	arg_8_0._hasPlayUnlockAnimGroupIdMap = Act183Helper.listToMap(arg_8_0._hasPlayUnlockAnimGroupIds)
 end
 
-function slot0._taskReddotFunc(slot0, slot1)
-	slot1:defaultRefreshDot()
-	slot0._rewardReddotAnim:Play(slot1.show and "loop" or "idle", 0, 0)
+function var_0_0._taskReddotFunc(arg_9_0, arg_9_1)
+	arg_9_1:defaultRefreshDot()
+	arg_9_0._rewardReddotAnim:Play(arg_9_1.show and "loop" or "idle", 0, 0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:initRemainTime()
-	slot0:initMainChapters()
-	slot0:initDailyChapters()
-	slot0:startCheckDailyGroupUnlock()
-	slot0:initOrRefreshMedalReddot()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:initRemainTime()
+	arg_10_0:initMainChapters()
+	arg_10_0:initDailyChapters()
+	arg_10_0:startCheckDailyGroupUnlock()
+	arg_10_0:initOrRefreshMedalReddot()
 end
 
-function slot0.startCheckDailyGroupUnlock(slot0)
-	TaskDispatcher.cancelTask(slot0.checkDailyGroupUnlock, slot0)
-	TaskDispatcher.runRepeat(slot0.checkDailyGroupUnlock, slot0, uv0)
+function var_0_0.startCheckDailyGroupUnlock(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0.checkDailyGroupUnlock, arg_11_0)
+	TaskDispatcher.runRepeat(arg_11_0.checkDailyGroupUnlock, arg_11_0, var_0_2)
 end
 
-function slot0.checkDailyGroupUnlock(slot0)
-	if slot0._dailyGroupEpisodeCount <= slot0._unlockGroupEpisodeCount then
-		TaskDispatcher.cancelTask(slot0.checkDailyGroupUnlock, slot0)
+function var_0_0.checkDailyGroupUnlock(arg_12_0)
+	if arg_12_0._dailyGroupEpisodeCount <= arg_12_0._unlockGroupEpisodeCount then
+		TaskDispatcher.cancelTask(arg_12_0.checkDailyGroupUnlock, arg_12_0)
 
 		return
 	end
 
-	slot0:initDailyChapters()
+	arg_12_0:initDailyChapters()
 end
 
-function slot0.initRemainTime(slot0)
-	slot0:showLeftTime()
-	TaskDispatcher.runRepeat(slot0.showLeftTime, slot0, uv0)
+function var_0_0.initRemainTime(arg_13_0)
+	arg_13_0:showLeftTime()
+	TaskDispatcher.runRepeat(arg_13_0.showLeftTime, arg_13_0, var_0_3)
 end
 
-function slot0.showLeftTime(slot0)
-	slot0._txttime.text = ActivityHelper.getActivityRemainTimeStr(slot0._actId)
+function var_0_0.showLeftTime(arg_14_0)
+	arg_14_0._txttime.text = ActivityHelper.getActivityRemainTimeStr(arg_14_0._actId)
 end
 
-function slot0.initMainChapters(slot0)
-	slot2 = slot0._info:getGroupEpisodeMos(Act183Enum.GroupType.HardMain)
-	slot4 = slot2 and slot2[1]
+function var_0_0.initMainChapters(arg_15_0)
+	local var_15_0 = arg_15_0._info:getGroupEpisodeMos(Act183Enum.GroupType.NormalMain)
+	local var_15_1 = arg_15_0._info:getGroupEpisodeMos(Act183Enum.GroupType.HardMain)
+	local var_15_2 = var_15_0 and var_15_0[1]
+	local var_15_3 = var_15_1 and var_15_1[1]
 
-	if not slot0._info:getGroupEpisodeMos(Act183Enum.GroupType.NormalMain) or not slot1[1] or not slot4 then
+	if not var_15_2 or not var_15_3 then
 		return
 	end
 
-	slot0._mainGroupEpisodeTab = {
-		[Act183Enum.GroupType.NormalMain] = slot3,
-		[Act183Enum.GroupType.HardMain] = slot4
+	arg_15_0._mainGroupEpisodeTab = {
+		[Act183Enum.GroupType.NormalMain] = var_15_2,
+		[Act183Enum.GroupType.HardMain] = var_15_3
 	}
 
-	for slot8, slot9 in pairs(slot0._mainGroupEpisodeTab) do
-		slot0:_refreshMainGroupEpisodeItem(slot0:_getMainGroupEpisodeItem(slot8), slot9)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._mainGroupEpisodeTab) do
+		local var_15_4 = arg_15_0:_getMainGroupEpisodeItem(iter_15_0)
+
+		arg_15_0:_refreshMainGroupEpisodeItem(var_15_4, iter_15_1)
 	end
 end
 
-function slot0._getMainGroupEpisodeItem(slot0, slot1)
-	if not slot0._mainItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = slot0[slot1 == Act183Enum.GroupType.NormalMain and "_gonormal" or "_gohard"]
-		slot2.goresult = gohelper.findChild(slot2.viewGO, "go_result")
-		slot2.txttitle = gohelper.findChildText(slot2.viewGO, "txt_title")
-		slot2.txttotalprogress = gohelper.findChildText(slot2.viewGO, "go_result/txt_totalprogress")
-		slot2.golock = gohelper.findChild(slot2.viewGO, "go_lock")
-		slot2.animlock = gohelper.onceAddComponent(slot2.golock, gohelper.Type_Animator)
-		slot0._mainItemTab[slot1] = slot2
+function var_0_0._getMainGroupEpisodeItem(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0._mainItemTab[arg_16_1]
+
+	if not var_16_0 then
+		var_16_0 = arg_16_0:getUserDataTb_()
+		var_16_0.viewGO = arg_16_0[arg_16_1 == Act183Enum.GroupType.NormalMain and "_gonormal" or "_gohard"]
+		var_16_0.goresult = gohelper.findChild(var_16_0.viewGO, "go_result")
+		var_16_0.txttitle = gohelper.findChildText(var_16_0.viewGO, "txt_title")
+		var_16_0.txttotalprogress = gohelper.findChildText(var_16_0.viewGO, "go_result/txt_totalprogress")
+		var_16_0.golock = gohelper.findChild(var_16_0.viewGO, "go_lock")
+		var_16_0.animlock = gohelper.onceAddComponent(var_16_0.golock, gohelper.Type_Animator)
+		arg_16_0._mainItemTab[arg_16_1] = var_16_0
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0._refreshMainGroupEpisodeItem(slot0, slot1, slot2)
-	slot4 = slot2:getStatus() ~= Act183Enum.GroupStatus.Locked
+function var_0_0._refreshMainGroupEpisodeItem(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_2:getStatus()
+	local var_17_1 = var_17_0 ~= Act183Enum.GroupStatus.Locked
+	local var_17_2 = var_17_0 == Act183Enum.GroupStatus.Finished
 
-	gohelper.setActive(slot1.golock, not slot4)
-	gohelper.setActive(slot1.goresult, slot4)
+	gohelper.setActive(arg_17_1.golock, not var_17_1)
+	gohelper.setActive(arg_17_1.goresult, var_17_1)
 
-	if slot4 then
-		slot8, slot9 = Act183Helper.getGroupEpisodeTaskProgress(slot2:getGroupId())
-		slot1.txttotalprogress.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("v2a5_challenge_mainview_finished"), slot9, slot8)
+	if var_17_1 then
+		local var_17_3 = arg_17_2:getGroupId()
+		local var_17_4 = arg_17_2:getGroupType()
+		local var_17_5, var_17_6 = Act183Helper.getGroupEpisodeTaskProgress(var_17_3)
 
-		if slot2:getGroupType() ~= Act183Enum.GroupType.NormalMain then
-			slot0:checkPlayUnlockAnim(slot6, slot4, slot3 == Act183Enum.GroupStatus.Finished, slot1.golock, slot1.animlock)
+		arg_17_1.txttotalprogress.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("v2a5_challenge_mainview_finished"), var_17_6, var_17_5)
+
+		if var_17_4 ~= Act183Enum.GroupType.NormalMain then
+			arg_17_0:checkPlayUnlockAnim(var_17_3, var_17_1, var_17_2, arg_17_1.golock, arg_17_1.animlock)
 		end
 	end
 end
 
-function slot0.initDailyChapters(slot0)
-	slot0._dailyGroupEpisodeMos = slot0._info:getGroupEpisodeMos(Act183Enum.GroupType.Daily)
-	slot0._dailyGroupEpisodeCount = slot0._dailyGroupEpisodeMos and #slot0._dailyGroupEpisodeMos or 0
-	slot0._unlockGroupEpisodeCount = 0
+function var_0_0.initDailyChapters(arg_18_0)
+	arg_18_0._dailyGroupEpisodeMos = arg_18_0._info:getGroupEpisodeMos(Act183Enum.GroupType.Daily)
+	arg_18_0._dailyGroupEpisodeCount = arg_18_0._dailyGroupEpisodeMos and #arg_18_0._dailyGroupEpisodeMos or 0
+	arg_18_0._unlockGroupEpisodeCount = 0
 
-	if not slot0._dailyGroupEpisodeMos then
+	if not arg_18_0._dailyGroupEpisodeMos then
 		return
 	end
 
-	slot1 = {
-		[slot8] = true
-	}
+	local var_18_0 = {}
+	local var_18_1 = 0
 
-	for slot6, slot7 in ipairs(slot0._dailyGroupEpisodeMos) do
-		slot2 = 0 + 1
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0._dailyGroupEpisodeMos) do
+		local var_18_2 = arg_18_0:_getOrCreateDailyGroupItem(iter_18_0)
+		local var_18_3 = arg_18_0:_refreshDailyGroupItem(iter_18_0, var_18_2, iter_18_1)
 
-		if slot0:_refreshDailyGroupItem(slot6, slot0:_getOrCreateDailyGroupItem(slot6), slot7) then
-			slot0._unlockGroupEpisodeCount = slot0._unlockGroupEpisodeCount + 1
+		var_18_0[var_18_2] = true
+		var_18_1 = var_18_1 + 1
+
+		if var_18_3 then
+			arg_18_0._unlockGroupEpisodeCount = arg_18_0._unlockGroupEpisodeCount + 1
 		else
 			break
 		end
 	end
 
-	if slot2 < uv0 then
-		for slot6 = slot2 + 1, uv0 do
-			slot7 = slot0:_getOrCreateDailyGroupItem(slot6)
+	if var_18_1 < var_0_1 then
+		for iter_18_2 = var_18_1 + 1, var_0_1 do
+			local var_18_4 = arg_18_0:_getOrCreateDailyGroupItem(iter_18_2)
 
-			slot0:_refreshDailyGroupItem(slot6, slot7)
+			arg_18_0:_refreshDailyGroupItem(iter_18_2, var_18_4)
 
-			slot1[slot7] = true
+			var_18_0[var_18_4] = true
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._dailyItemTab) do
-		if not slot1[slot7] then
-			gohelper.setActive(slot7.viewGO, false)
+	for iter_18_3, iter_18_4 in pairs(arg_18_0._dailyItemTab) do
+		if not var_18_0[iter_18_4] then
+			gohelper.setActive(iter_18_4.viewGO, false)
 		end
 	end
 end
 
-function slot0._getOrCreateDailyGroupItem(slot0, slot1)
-	if not slot0._dailyItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._godailyitem, "daily_" .. slot1)
-		slot2.golock = gohelper.findChild(slot2.viewGO, "go_lock")
-		slot2.gounlock = gohelper.findChild(slot2.viewGO, "go_unlock")
-		slot2.goempty = gohelper.findChild(slot2.viewGO, "go_Empty")
-		slot2.gofinish = gohelper.findChild(slot2.viewGO, "go_unlock/go_Finished")
-		slot2.txtunlocktime = gohelper.findChildText(slot2.viewGO, "go_lock/txt_unlocktime")
-		slot2.txtindex = gohelper.findChildText(slot2.viewGO, "go_unlock/txt_index")
-		slot2.txtprogress = gohelper.findChildText(slot2.viewGO, "go_unlock/txt_progress")
-		slot2.btnclick = gohelper.findChildButtonWithAudio(slot2.viewGO, "btn_click")
+function var_0_0._getOrCreateDailyGroupItem(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0._dailyItemTab[arg_19_1]
 
-		slot2.btnclick:AddClickListener(slot0._onClickDailyGroupItem, slot0, slot1)
+	if not var_19_0 then
+		var_19_0 = arg_19_0:getUserDataTb_()
+		var_19_0.viewGO = gohelper.cloneInPlace(arg_19_0._godailyitem, "daily_" .. arg_19_1)
+		var_19_0.golock = gohelper.findChild(var_19_0.viewGO, "go_lock")
+		var_19_0.gounlock = gohelper.findChild(var_19_0.viewGO, "go_unlock")
+		var_19_0.goempty = gohelper.findChild(var_19_0.viewGO, "go_Empty")
+		var_19_0.gofinish = gohelper.findChild(var_19_0.viewGO, "go_unlock/go_Finished")
+		var_19_0.txtunlocktime = gohelper.findChildText(var_19_0.viewGO, "go_lock/txt_unlocktime")
+		var_19_0.txtindex = gohelper.findChildText(var_19_0.viewGO, "go_unlock/txt_index")
+		var_19_0.txtprogress = gohelper.findChildText(var_19_0.viewGO, "go_unlock/txt_progress")
+		var_19_0.btnclick = gohelper.findChildButtonWithAudio(var_19_0.viewGO, "btn_click")
 
-		slot2.animlock = gohelper.onceAddComponent(slot2.golock, gohelper.Type_Animator)
-		slot2.animfinish = gohelper.onceAddComponent(slot2.gofinish, gohelper.Type_Animator)
-		slot0._dailyItemTab[slot1] = slot2
+		var_19_0.btnclick:AddClickListener(arg_19_0._onClickDailyGroupItem, arg_19_0, arg_19_1)
+
+		var_19_0.animlock = gohelper.onceAddComponent(var_19_0.golock, gohelper.Type_Animator)
+		var_19_0.animfinish = gohelper.onceAddComponent(var_19_0.gofinish, gohelper.Type_Animator)
+		arg_19_0._dailyItemTab[arg_19_1] = var_19_0
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0._onClickDailyGroupItem(slot0, slot1)
-	if not slot0._dailyGroupEpisodeMos[slot1] then
+function var_0_0._onClickDailyGroupItem(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0._dailyGroupEpisodeMos[arg_20_1]
+
+	if not var_20_0 then
 		return
 	end
 
-	if slot2:getStatus() == Act183Enum.GroupStatus.Locked then
+	if var_20_0:getStatus() == Act183Enum.GroupStatus.Locked then
 		GameFacade.showToast(ToastEnum.Act183GroupNotOpen)
 
 		return
 	end
 
-	Act183Controller.instance:openAct183DungeonView(Act183Helper.generateDungeonViewParams(Act183Enum.GroupType.Daily, slot2:getGroupId()))
+	local var_20_1 = var_20_0:getGroupId()
+	local var_20_2 = Act183Helper.generateDungeonViewParams(Act183Enum.GroupType.Daily, var_20_1)
+
+	Act183Controller.instance:openAct183DungeonView(var_20_2)
 end
 
-function slot0._refreshDailyGroupItem(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot2.viewGO, true)
-	gohelper.setActive(slot2.goempty, slot3 == nil)
+function var_0_0._refreshDailyGroupItem(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	gohelper.setActive(arg_21_2.viewGO, true)
+	gohelper.setActive(arg_21_2.goempty, arg_21_3 == nil)
 
-	if not slot3 then
-		gohelper.setActive(slot2.golock, false)
-		gohelper.setActive(slot2.gounlock, false)
+	if not arg_21_3 then
+		gohelper.setActive(arg_21_2.golock, false)
+		gohelper.setActive(arg_21_2.gounlock, false)
 
 		return
 	end
 
-	slot4 = slot3:getGroupId()
-	slot6 = slot3:getStatus() == Act183Enum.GroupStatus.Locked
+	local var_21_0 = arg_21_3:getGroupId()
+	local var_21_1 = arg_21_3:getStatus() == Act183Enum.GroupStatus.Locked
 
-	gohelper.setActive(slot2.golock, slot6)
-	gohelper.setActive(slot2.gounlock, not slot6)
+	gohelper.setActive(arg_21_2.golock, var_21_1)
+	gohelper.setActive(arg_21_2.gounlock, not var_21_1)
 
-	slot7 = false
+	local var_21_2 = false
 
-	if slot6 then
-		slot8, slot9 = TimeUtil.secondToRoughTime(slot3:getUnlockRemainTime())
-		slot2.txtunlocktime.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("v2a5_challenge_mainview_unlock"), slot8, slot9)
+	if var_21_1 then
+		local var_21_3, var_21_4 = TimeUtil.secondToRoughTime(arg_21_3:getUnlockRemainTime())
+
+		arg_21_2.txtunlocktime.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("v2a5_challenge_mainview_unlock"), var_21_3, var_21_4)
 	else
-		slot8, slot9 = Act183Helper.getGroupEpisodeTaskProgress(slot4)
-		slot7 = slot8 <= slot9
-		slot2.txtindex.text = string.format("<color=#E1E1E14D>RT</color><color=#E1E1E180><size=77>%s</size></color>", slot1)
-		slot2.txtprogress.text = string.format("%s/%s", slot9, slot8)
+		local var_21_5, var_21_6 = Act183Helper.getGroupEpisodeTaskProgress(var_21_0)
+		local var_21_7 = var_21_5 <= var_21_6
 
-		gohelper.setActive(slot2.gofinish, slot7)
-		slot0:checkPlayUnlockAnim(slot4, true, slot7, slot2.golock, slot2.animlock)
+		arg_21_2.txtindex.text = string.format("<color=#E1E1E14D>RT</color><color=#E1E1E180><size=77>%s</size></color>", arg_21_1)
+		arg_21_2.txtprogress.text = string.format("%s/%s", var_21_6, var_21_5)
+
+		gohelper.setActive(arg_21_2.gofinish, var_21_7)
+		arg_21_0:checkPlayUnlockAnim(var_21_0, true, var_21_7, arg_21_2.golock, arg_21_2.animlock)
 	end
 
-	return not slot6
+	return not var_21_1
 end
 
-function slot0.checkPlayUnlockAnim(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot1 or not slot4 or not slot5 or not slot2 or slot3 then
+function var_0_0.checkPlayUnlockAnim(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5)
+	if not arg_22_1 or not arg_22_4 or not arg_22_5 or not arg_22_2 or arg_22_3 then
 		return
 	end
 
-	if not slot0._hasPlayUnlockAnimGroupIdMap[slot1] then
-		gohelper.setActive(slot4, true)
-		slot5:Play("unlock", 0, 0)
-		table.insert(slot0._hasPlayUnlockAnimGroupIds, slot1)
+	if not arg_22_0._hasPlayUnlockAnimGroupIdMap[arg_22_1] then
+		gohelper.setActive(arg_22_4, true)
+		arg_22_5:Play("unlock", 0, 0)
+		table.insert(arg_22_0._hasPlayUnlockAnimGroupIds, arg_22_1)
 
-		slot0._hasPlayUnlockAnimGroupIdMap[slot1] = true
+		arg_22_0._hasPlayUnlockAnimGroupIdMap[arg_22_1] = true
 	end
 end
 
-function slot0.releaseDailyGroupItems(slot0)
-	if slot0._dailyItemTab then
-		for slot4, slot5 in pairs(slot0._dailyItemTab) do
-			slot5.btnclick:RemoveClickListener()
+function var_0_0.releaseDailyGroupItems(arg_23_0)
+	if arg_23_0._dailyItemTab then
+		for iter_23_0, iter_23_1 in pairs(arg_23_0._dailyItemTab) do
+			iter_23_1.btnclick:RemoveClickListener()
 		end
 	end
 end
 
-function slot0.initOrRefreshMedalReddot(slot0)
-	if not slot0._medatReddot then
-		slot0._medatReddot = RedDotController.instance:addNotEventRedDot(slot0._gomedalreddot, slot0._checkMedalReddot, slot0, RedDotEnum.Style.Normal)
+function var_0_0.initOrRefreshMedalReddot(arg_24_0)
+	if not arg_24_0._medatReddot then
+		arg_24_0._medatReddot = RedDotController.instance:addNotEventRedDot(arg_24_0._gomedalreddot, arg_24_0._checkMedalReddot, arg_24_0, RedDotEnum.Style.Normal)
 	end
 
-	slot0._medatReddot:refreshRedDot()
+	arg_24_0._medatReddot:refreshRedDot()
 end
 
-function slot0._checkMedalReddot(slot0)
-	slot2 = Act183Helper.listToMap(Act183Helper.getHasReadUnlockSupportHeroIdsInLocal(slot0._actId))
+function var_0_0._checkMedalReddot(arg_25_0)
+	local var_25_0 = Act183Helper.getHasReadUnlockSupportHeroIdsInLocal(arg_25_0._actId)
+	local var_25_1 = Act183Helper.listToMap(var_25_0)
+	local var_25_2 = arg_25_0._info:getUnlockSupportHeroIds()
 
-	if slot0._info:getUnlockSupportHeroIds() then
-		for slot7, slot8 in ipairs(slot3) do
-			if not slot2[slot8] then
+	if var_25_2 then
+		for iter_25_0, iter_25_1 in ipairs(var_25_2) do
+			if not var_25_1[iter_25_1] then
 				return true
 			end
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	Act183Helper.saveUnlockGroupIdsInLocal(slot0._actId, slot0._hasPlayUnlockAnimGroupIds)
-	TaskDispatcher.cancelTask(slot0.showLeftTime, slot0)
-	TaskDispatcher.cancelTask(slot0.checkDailyGroupUnlock, slot0)
+function var_0_0.onClose(arg_26_0)
+	Act183Helper.saveUnlockGroupIdsInLocal(arg_26_0._actId, arg_26_0._hasPlayUnlockAnimGroupIds)
+	TaskDispatcher.cancelTask(arg_26_0.showLeftTime, arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0.checkDailyGroupUnlock, arg_26_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:releaseDailyGroupItems()
+function var_0_0.onDestroyView(arg_27_0)
+	arg_27_0:releaseDailyGroupItems()
 end
 
-return slot0
+return var_0_0

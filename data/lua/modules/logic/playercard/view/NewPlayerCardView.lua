@@ -1,539 +1,602 @@
-module("modules.logic.playercard.view.NewPlayerCardView", package.seeall)
+﻿module("modules.logic.playercard.view.NewPlayerCardView", package.seeall)
 
-slot0 = class("NewPlayerCardView", BaseView)
+local var_0_0 = class("NewPlayerCardView", BaseView)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
 
-	slot0:onInitView()
+	arg_1_0:onInitView()
 end
 
-function slot0.canOpen(slot0, slot1)
-	slot0:onOpen(slot1)
-	slot0:addEvents()
+function var_0_0.canOpen(arg_2_0, arg_2_1)
+	arg_2_0:onOpen(arg_2_1)
+	arg_2_0:addEvents()
 end
 
-function slot0.onInitView(slot0)
-	slot0._root = gohelper.findChild(slot0.viewGO, "root")
-	slot0._simagerole = gohelper.findChildSingleImage(slot0.viewGO, "root/main/top/role/skinnode/#simage_role")
-	slot0._imageIcon = gohelper.findChildImage(slot0.viewGO, "root/main/top/role/skinnode/#simage_role")
-	slot0._btnrole = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/main/top/role/skinnode/#simage_role/#btn_role")
-	slot0._btnleftcontent = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/main/top/leftcontent/#btn_leftcontent")
-	slot0._btnrightcontent = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/main/top/rightcontent/#btn_rightcontent")
-	slot0._txtdungeon = gohelper.findChildText(slot0.viewGO, "root/main/top/rightcontent/#txt_dungeon")
-	slot0._gocritter = gohelper.findChild(slot0.viewGO, "root/main/critter/go_critter")
-	slot0._gocritterlight = gohelper.findChild(slot0.viewGO, "root/main/critter/light")
-	slot0._btncritter = gohelper.findChildButton(slot0.viewGO, "root/main/critter/#btn_critter")
-	slot0._goBgEffect = gohelper.findChild(slot0.viewGO, "#bg_effect")
-	slot0._goTopEffect = gohelper.findChild(slot0.viewGO, "#top_effect")
-	slot0._openswitchskin = false
-	slot0._progressItemList = {}
-	slot0._baseInfoItemList = {}
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._has_onInitView = true
+function var_0_0.onInitView(arg_3_0)
+	arg_3_0._root = gohelper.findChild(arg_3_0.viewGO, "root")
+	arg_3_0._simagerole = gohelper.findChildSingleImage(arg_3_0.viewGO, "root/main/top/role/skinnode/#simage_role")
+	arg_3_0._imageIcon = gohelper.findChildImage(arg_3_0.viewGO, "root/main/top/role/skinnode/#simage_role")
+	arg_3_0._btnrole = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "root/main/top/role/skinnode/#simage_role/#btn_role")
+	arg_3_0._btnleftcontent = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "root/main/top/leftcontent/#btn_leftcontent")
+	arg_3_0._btnrightcontent = gohelper.findChildButtonWithAudio(arg_3_0.viewGO, "root/main/top/rightcontent/#btn_rightcontent")
+	arg_3_0._txtdungeon = gohelper.findChildText(arg_3_0.viewGO, "root/main/top/rightcontent/#txt_dungeon")
+	arg_3_0._gocritter = gohelper.findChild(arg_3_0.viewGO, "root/main/critter/go_critter")
+	arg_3_0._gocritterlight = gohelper.findChild(arg_3_0.viewGO, "root/main/critter/light")
+	arg_3_0._btncritter = gohelper.findChildButton(arg_3_0.viewGO, "root/main/critter/#btn_critter")
+	arg_3_0._goBgEffect = gohelper.findChild(arg_3_0.viewGO, "#bg_effect")
+	arg_3_0._goTopEffect = gohelper.findChild(arg_3_0.viewGO, "#top_effect")
+	arg_3_0._openswitchskin = false
+	arg_3_0._progressItemList = {}
+	arg_3_0._baseInfoItemList = {}
+	arg_3_0._animator = arg_3_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_3_0._has_onInitView = true
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_3_0._editableInitView then
+		arg_3_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrole:AddClickListener(slot0._btnroleOnClick, slot0)
-	slot0._btnleftcontent:AddClickListener(slot0._btnleftcontentOnClick, slot0)
-	slot0._btnrightcontent:AddClickListener(slot0._btnrightcontentOnClick, slot0)
-	slot0._btncritter:AddClickListener(slot0._btncritterOnClick, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, slot0._onRefreshSwitchView, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshProgressView, slot0._refreshProgress, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshBaseInfoView, slot0._refreshBaseInfo, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectCritter, slot0._onRefreshCritter, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseHeroView, slot0._onCloseHeroView, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseProgressView, slot0._onCloseProgressView, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseBaseInfoView, slot0._onCloseBaseInfoView, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseCritterView, slot0._onCloseCritterView, slot0)
+function var_0_0.addEvents(arg_4_0)
+	arg_4_0._btnrole:AddClickListener(arg_4_0._btnroleOnClick, arg_4_0)
+	arg_4_0._btnleftcontent:AddClickListener(arg_4_0._btnleftcontentOnClick, arg_4_0)
+	arg_4_0._btnrightcontent:AddClickListener(arg_4_0._btnrightcontentOnClick, arg_4_0)
+	arg_4_0._btncritter:AddClickListener(arg_4_0._btncritterOnClick, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, arg_4_0._onRefreshSwitchView, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshProgressView, arg_4_0._refreshProgress, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshBaseInfoView, arg_4_0._refreshBaseInfo, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SelectCritter, arg_4_0._onRefreshCritter, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseHeroView, arg_4_0._onCloseHeroView, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseProgressView, arg_4_0._onCloseProgressView, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseBaseInfoView, arg_4_0._onCloseBaseInfoView, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseCritterView, arg_4_0._onCloseCritterView, arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrole:RemoveClickListener()
-	slot0._btnleftcontent:RemoveClickListener()
-	slot0._btnrightcontent:RemoveClickListener()
-	slot0._btncritter:RemoveClickListener()
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0._btnrole:RemoveClickListener()
+	arg_5_0._btnleftcontent:RemoveClickListener()
+	arg_5_0._btnrightcontent:RemoveClickListener()
+	arg_5_0._btncritter:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_initProgress()
-	slot0:_initBaseInfo()
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:_initProgress()
+	arg_6_0:_initBaseInfo()
 end
 
-function slot0._creatBgEffect(slot0)
-	slot2 = PlayerCardConfig.instance:getTopEffectPath()
+function var_0_0._creatBgEffect(arg_7_0)
+	local var_7_0 = PlayerCardConfig.instance:getBgPath(arg_7_0.themeId)
+	local var_7_1 = PlayerCardConfig.instance:getTopEffectPath()
 
-	if PlayerCardConfig.instance:getBgPath(slot0.themeId) or slot2 then
-		slot0._bgLoder = MultiAbLoader.New()
+	if var_7_0 or var_7_1 then
+		arg_7_0._bgLoder = MultiAbLoader.New()
 
-		if slot1 then
-			slot0._bgLoder:addPath(slot1)
+		if var_7_0 then
+			arg_7_0._bgLoder:addPath(var_7_0)
 		end
 
-		if slot2 then
-			slot0._bgLoder:addPath(slot2)
+		if var_7_1 then
+			arg_7_0._bgLoder:addPath(var_7_1)
 		end
 
-		slot0._bgLoder:startLoad(slot0._loadBgDone, slot0)
+		arg_7_0._bgLoder:startLoad(arg_7_0._loadBgDone, arg_7_0)
 	end
 end
 
-function slot0._loadBgDone(slot0)
-	slot2 = slot0._bgLoder:getAssetItem(PlayerCardConfig.instance:getTopEffectPath())
+function var_0_0._loadBgDone(arg_8_0)
+	local var_8_0 = arg_8_0._bgLoder:getAssetItem(PlayerCardConfig.instance:getBgPath(arg_8_0.themeId))
+	local var_8_1 = arg_8_0._bgLoder:getAssetItem(PlayerCardConfig.instance:getTopEffectPath())
 
-	if slot0._bgLoder:getAssetItem(PlayerCardConfig.instance:getBgPath(slot0.themeId)) then
-		slot0._bgGo = gohelper.clone(slot1:GetResource(), slot0._goBgEffect, "bg")
+	if var_8_0 then
+		arg_8_0._bgGo = gohelper.clone(var_8_0:GetResource(), arg_8_0._goBgEffect, "bg")
 	end
 
-	if slot2 then
-		slot0._effectGo = gohelper.clone(slot2:GetResource(), slot0._goTopEffect, "topeffect")
-	end
-end
-
-function slot0._initProgress(slot0)
-	for slot4 = 1, 5 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.pos = slot4
-		slot5.go = gohelper.findChild(slot0.viewGO, "root/main/top/leftcontent/node" .. slot4)
-		slot5.gofull = gohelper.findChild(slot5.go, "fill")
-		slot5.goempty = gohelper.findChild(slot5.go, "empty")
-		slot5.imgpic = gohelper.findChildImage(slot5.gofull, "#image_pic")
-		slot5.imgicon = gohelper.findChildImage(slot5.gofull, "#image_icon")
-		slot5.txtname = gohelper.findChildText(slot5.gofull, "#txt_name")
-		slot5.anim = slot5.gofull:GetComponent(typeof(UnityEngine.Animator))
-
-		gohelper.setActive(slot5.gofull, false)
-		gohelper.setActive(slot5.goempty, true)
-		table.insert(slot0._progressItemList, slot5)
+	if var_8_1 then
+		arg_8_0._effectGo = gohelper.clone(var_8_1:GetResource(), arg_8_0._goTopEffect, "topeffect")
 	end
 end
 
-function slot0._initBaseInfo(slot0)
-	for slot4 = 1, 4 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.pos = slot4
-		slot5.go = gohelper.findChild(slot0.viewGO, "root/main/top/rightcontent/node" .. slot4)
-		slot5.imgBg = gohelper.findChildImage(slot5.go, "#image_bg")
-		slot5.gofull = gohelper.findChild(slot5.go, "fill")
-		slot5.goempty = gohelper.findChild(slot5.go, "empty")
-		slot5.anim = slot5.gofull:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initProgress(arg_9_0)
+	for iter_9_0 = 1, 5 do
+		local var_9_0 = arg_9_0:getUserDataTb_()
 
-		table.insert(slot0._baseInfoItemList, slot5)
+		var_9_0.pos = iter_9_0
+		var_9_0.go = gohelper.findChild(arg_9_0.viewGO, "root/main/top/leftcontent/node" .. iter_9_0)
+		var_9_0.gofull = gohelper.findChild(var_9_0.go, "fill")
+		var_9_0.goempty = gohelper.findChild(var_9_0.go, "empty")
+		var_9_0.imgpic = gohelper.findChildImage(var_9_0.gofull, "#image_pic")
+		var_9_0.imgicon = gohelper.findChildImage(var_9_0.gofull, "#image_icon")
+		var_9_0.txtname = gohelper.findChildText(var_9_0.gofull, "#txt_name")
+		var_9_0.anim = var_9_0.gofull:GetComponent(typeof(UnityEngine.Animator))
+
+		gohelper.setActive(var_9_0.gofull, false)
+		gohelper.setActive(var_9_0.goempty, true)
+		table.insert(arg_9_0._progressItemList, var_9_0)
 	end
 end
 
-function slot0.onOpen(slot0, slot1)
-	slot0._animator.enabled = true
+function var_0_0._initBaseInfo(arg_10_0)
+	for iter_10_0 = 1, 4 do
+		local var_10_0 = arg_10_0:getUserDataTb_()
 
-	if slot0.viewParam and slot0.viewParam.userId then
-		slot0.userId = slot0.viewParam.userId
+		var_10_0.pos = iter_10_0
+		var_10_0.go = gohelper.findChild(arg_10_0.viewGO, "root/main/top/rightcontent/node" .. iter_10_0)
+		var_10_0.imgBg = gohelper.findChildImage(var_10_0.go, "#image_bg")
+		var_10_0.gofull = gohelper.findChild(var_10_0.go, "fill")
+		var_10_0.goempty = gohelper.findChild(var_10_0.go, "empty")
+		var_10_0.anim = var_10_0.gofull:GetComponent(typeof(UnityEngine.Animator))
+
+		table.insert(arg_10_0._baseInfoItemList, var_10_0)
+	end
+end
+
+function var_0_0.onOpen(arg_11_0, arg_11_1)
+	arg_11_0._animator.enabled = true
+
+	if arg_11_0.viewParam and arg_11_0.viewParam.userId then
+		arg_11_0.userId = arg_11_0.viewParam.userId
 	end
 
-	slot0.playercardinfo = PlayerCardModel.instance:getCardInfo(slot0.userId)
+	arg_11_0.playercardinfo = PlayerCardModel.instance:getCardInfo(arg_11_0.userId)
 
-	if slot0.playercardinfo:isSelf() then
+	if arg_11_0.playercardinfo:isSelf() then
 		PlayerCardController.instance:statStart()
 	end
 
-	if (slot1 or slot0.playercardinfo:getThemeId()) == 0 or string.nilorempty(slot2) then
-		slot2 = nil
+	local var_11_0 = arg_11_1 or arg_11_0.playercardinfo:getThemeId()
+
+	if var_11_0 == 0 or string.nilorempty(var_11_0) then
+		var_11_0 = nil
 	end
 
-	slot0.themeId = slot2
+	arg_11_0.themeId = var_11_0
 
-	slot0:_creatBgEffect()
+	arg_11_0:_creatBgEffect()
 
-	slot3, slot4, slot5, slot6 = slot0.playercardinfo:getMainHero()
+	local var_11_1, var_11_2, var_11_3, var_11_4 = arg_11_0.playercardinfo:getMainHero()
 
-	slot0:_updateHero(slot3, slot4)
-	slot0:_refreshProgress()
-	slot0:_refreshBaseInfo()
-	slot0:_initCritter()
+	arg_11_0:_updateHero(var_11_1, var_11_2)
+	arg_11_0:_refreshProgress()
+	arg_11_0:_refreshBaseInfo()
+	arg_11_0:_initCritter()
 	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_1)
 
-	slot0.progressopen = false
-	slot0.baseinfoopen = false
+	arg_11_0.progressopen = false
+	arg_11_0.baseinfoopen = false
 end
 
-function slot0.onClose(slot0)
-	slot0:resetSpine()
+function var_0_0.onClose(arg_12_0)
+	arg_12_0:resetSpine()
 
-	if slot0.playercardinfo and slot0.playercardinfo:isSelf() then
+	if arg_12_0.playercardinfo and arg_12_0.playercardinfo:isSelf() then
 		PlayerCardController.instance:statEnd()
 	end
 
-	slot0:removeEvents()
+	arg_12_0:removeEvents()
 
-	slot0._has_onInitView = false
+	arg_12_0._has_onInitView = false
 
-	if slot0._scrollView then
-		slot0._scrollView:onDestroyViewInternal()
-		slot0._scrollView:__onDispose()
+	if arg_12_0._scrollView then
+		arg_12_0._scrollView:onDestroyViewInternal()
+		arg_12_0._scrollView:__onDispose()
 	end
 
-	gohelper.destroy(slot0.goskinpreview)
+	gohelper.destroy(arg_12_0.goskinpreview)
 
-	slot0._scrollView = nil
+	arg_12_0._scrollView = nil
 end
 
-function slot0._btnroleOnClick(slot0)
-	if slot0.playercardinfo:isSelf() then
+function var_0_0._btnroleOnClick(arg_13_0)
+	if arg_13_0.playercardinfo:isSelf() then
 		ViewMgr.instance:openView(ViewName.PlayerCardCharacterSwitchView)
-		slot0._animator:Update(0)
-		slot0._animator:Play("to_role")
+		arg_13_0._animator:Update(0)
+		arg_13_0._animator:Play("to_role")
 	end
 end
 
-function slot0._btnleftcontentOnClick(slot0)
-	if slot0.playercardinfo:isSelf() then
-		ViewMgr.instance:openView(ViewName.PlayerCardProgressView, slot0.playercardinfo)
+function var_0_0._btnleftcontentOnClick(arg_14_0)
+	if arg_14_0.playercardinfo:isSelf() then
+		ViewMgr.instance:openView(ViewName.PlayerCardProgressView, arg_14_0.playercardinfo)
 
-		slot0.progressopen = true
+		arg_14_0.progressopen = true
 
-		slot0._animator:Update(0)
-		slot0._animator:Play("to_left")
+		arg_14_0._animator:Update(0)
+		arg_14_0._animator:Play("to_left")
 	end
 end
 
-function slot0._btnrightcontentOnClick(slot0)
-	if slot0.playercardinfo:isSelf() then
-		ViewMgr.instance:openView(ViewName.PlayerCardBaseInfoView, slot0.playercardinfo)
+function var_0_0._btnrightcontentOnClick(arg_15_0)
+	if arg_15_0.playercardinfo:isSelf() then
+		ViewMgr.instance:openView(ViewName.PlayerCardBaseInfoView, arg_15_0.playercardinfo)
 
-		slot0.baseinfoopen = true
+		arg_15_0.baseinfoopen = true
 
-		slot0._animator:Update(0)
-		slot0._animator:Play("to_right")
+		arg_15_0._animator:Update(0)
+		arg_15_0._animator:Play("to_right")
 	end
 end
 
-function slot0._btncritterOnClick(slot0)
-	if slot0.playercardinfo:isSelf() then
+function var_0_0._btncritterOnClick(arg_16_0)
+	if arg_16_0.playercardinfo:isSelf() then
 		if not PlayerCardModel.instance:getCritterOpen() then
 			return
 		end
 
-		slot0._animator:Update(0)
-		slot0._animator:Play("to_critter")
+		arg_16_0._animator:Update(0)
+		arg_16_0._animator:Play("to_critter")
 		ViewMgr.instance:openView(ViewName.PlayerCardCritterPlaceView)
 	end
 end
 
-function slot0._onCloseHeroView(slot0)
-	slot0._animator:Update(0)
-	slot0._animator:Play("back_role")
+function var_0_0._onCloseHeroView(arg_17_0)
+	arg_17_0._animator:Update(0)
+	arg_17_0._animator:Play("back_role")
 	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_2)
 end
 
-function slot0._onCloseProgressView(slot0)
-	slot0._animator:Update(0)
-	slot0._animator:Play("back_left")
+function var_0_0._onCloseProgressView(arg_18_0)
+	arg_18_0._animator:Update(0)
+	arg_18_0._animator:Play("back_left")
 	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_2)
 end
 
-function slot0._onCloseBaseInfoView(slot0)
-	slot0._animator:Update(0)
-	slot0._animator:Play("back_right")
+function var_0_0._onCloseBaseInfoView(arg_19_0)
+	arg_19_0._animator:Update(0)
+	arg_19_0._animator:Play("back_right")
 	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_2)
 end
 
-function slot0._onCloseCritterView(slot0)
-	slot0._animator:Update(0)
-	slot0._animator:Play("back_critter")
+function var_0_0._onCloseCritterView(arg_20_0)
+	arg_20_0._animator:Update(0)
+	arg_20_0._animator:Play("back_critter")
 	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_2)
 end
 
-function slot0.backBottomView(slot0)
-	slot0._animator:Play("back_bottom")
+function var_0_0.backBottomView(arg_21_0)
+	arg_21_0._animator:Play("back_bottom")
 end
 
-function slot0.toBottomView(slot0)
-	slot0._animator:Play("to_bottom")
+function var_0_0.toBottomView(arg_22_0)
+	arg_22_0._animator:Play("to_bottom")
 end
 
-function slot0._onRefreshSwitchView(slot0, slot1)
-	slot0:_updateHero(slot1.heroId, slot1.skinId, slot1.isL2d)
+function var_0_0._onRefreshSwitchView(arg_23_0, arg_23_1)
+	arg_23_0:_updateHero(arg_23_1.heroId, arg_23_1.skinId, arg_23_1.isL2d)
 end
 
-function slot0._refreshProgress(slot0, slot1)
-	if (slot1 or slot0.playercardinfo:getProgressSetting()) and #slot2 > 0 then
-		for slot6, slot7 in ipairs(slot2) do
-			slot8 = slot7[2]
+function var_0_0._refreshProgress(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_1 or arg_24_0.playercardinfo:getProgressSetting()
 
-			if slot0._progressItemList[slot7[1]] then
-				if not slot10.isload then
-					slot10.anim:Update(0)
-					slot10.anim:Play("open")
+	if var_24_0 and #var_24_0 > 0 then
+		for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+			local var_24_1 = iter_24_1[2]
+			local var_24_2 = iter_24_1[1]
+			local var_24_3 = arg_24_0._progressItemList[var_24_2]
 
-					slot10.isload = true
+			if var_24_3 then
+				if not var_24_3.isload then
+					var_24_3.anim:Update(0)
+					var_24_3.anim:Play("open")
+
+					var_24_3.isload = true
 				end
 
-				slot11 = PlayerCardConfig.instance:getCardProgressById(slot8)
+				local var_24_4 = PlayerCardConfig.instance:getCardProgressById(var_24_1)
 
-				gohelper.setActive(slot10.gofull, true)
-				gohelper.setActive(slot10.goempty, false)
+				gohelper.setActive(var_24_3.gofull, true)
+				gohelper.setActive(var_24_3.goempty, false)
 
-				for slot15, slot16 in pairs(PlayerCardEnum.ProgressShowType) do
-					gohelper.setActive(gohelper.findChild(slot10.gofull, "type" .. slot16), false)
+				for iter_24_2, iter_24_3 in pairs(PlayerCardEnum.ProgressShowType) do
+					local var_24_5 = gohelper.findChild(var_24_3.gofull, "type" .. iter_24_3)
+
+					gohelper.setActive(var_24_5, false)
 				end
 
-				slot12 = slot11.type
-				slot10.txtname.text = slot11.name
-				slot10.gotype = gohelper.findChild(slot10.gofull, "type" .. slot12)
+				local var_24_6 = var_24_4.type
 
-				gohelper.setActive(slot10.gotype, true)
-				slot0:setProgressType(slot10.gotype, slot12, slot8)
-				UISpriteSetMgr.instance:setPlayerCardSprite(slot10.imgpic, "playercard_main_img_" .. slot8)
-				UISpriteSetMgr.instance:setPlayerCardSprite(slot10.imgicon, "playercard_main_icon_" .. slot8)
+				var_24_3.txtname.text = var_24_4.name
+				var_24_3.gotype = gohelper.findChild(var_24_3.gofull, "type" .. var_24_6)
+
+				gohelper.setActive(var_24_3.gotype, true)
+				arg_24_0:setProgressType(var_24_3.gotype, var_24_6, var_24_1)
+				UISpriteSetMgr.instance:setPlayerCardSprite(var_24_3.imgpic, "playercard_main_img_" .. var_24_1)
+				UISpriteSetMgr.instance:setPlayerCardSprite(var_24_3.imgicon, "playercard_main_icon_" .. var_24_1)
 			end
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0.progressopen and PlayerCardProgressModel.instance:getEmptyPosList() or slot0.playercardinfo:getEmptyPosList()) do
-		if slot8 then
-			slot9 = slot0._progressItemList[slot7]
+	local var_24_7 = arg_24_0.progressopen and PlayerCardProgressModel.instance:getEmptyPosList() or arg_24_0.playercardinfo:getEmptyPosList()
 
-			gohelper.setActive(slot9.gofull, false)
-			gohelper.setActive(slot9.goempty, true)
+	for iter_24_4, iter_24_5 in ipairs(var_24_7) do
+		if iter_24_5 then
+			local var_24_8 = arg_24_0._progressItemList[iter_24_4]
 
-			slot9.isload = false
+			gohelper.setActive(var_24_8.gofull, false)
+			gohelper.setActive(var_24_8.goempty, true)
+
+			var_24_8.isload = false
 		end
 	end
 end
 
-function slot0.setProgressType(slot0, slot1, slot2, slot3)
-	if slot2 == PlayerCardEnum.ProgressShowType.Normal then
-		slot4 = gohelper.findChildText(slot1, "#txt_progress")
-		slot7 = slot0.playercardinfo:getProgressByIndex(slot3) ~= -1
+function var_0_0.setProgressType(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	if arg_25_2 == PlayerCardEnum.ProgressShowType.Normal then
+		local var_25_0 = gohelper.findChildText(arg_25_1, "#txt_progress")
+		local var_25_1 = gohelper.findChild(arg_25_1, "none")
+		local var_25_2 = arg_25_0.playercardinfo:getProgressByIndex(arg_25_3)
+		local var_25_3 = var_25_2 ~= -1
 
-		gohelper.setActive(gohelper.findChild(slot1, "none"), not slot7)
-		gohelper.setActive(slot4.gameObject, slot7)
+		gohelper.setActive(var_25_1, not var_25_3)
+		gohelper.setActive(var_25_0.gameObject, var_25_3)
 
-		slot4.text = slot6
-	elseif slot2 == PlayerCardEnum.ProgressShowType.Explore then
-		if not string.nilorempty(slot0.playercardinfo.exploreCollection) then
-			slot8 = GameUtil.splitString2(slot4, true) or {}
-			gohelper.findChildText(slot1, "#txt_num1").text = slot8[3][1] or 0
-			gohelper.findChildText(slot1, "#txt_num2").text = slot8[1][1] or 0
-			gohelper.findChildText(slot1, "#txt_num3").text = slot8[2][1] or 0
+		var_25_0.text = var_25_2
+	elseif arg_25_2 == PlayerCardEnum.ProgressShowType.Explore then
+		local var_25_4 = arg_25_0.playercardinfo.exploreCollection
+		local var_25_5 = gohelper.findChildText(arg_25_1, "#txt_num1")
+		local var_25_6 = gohelper.findChildText(arg_25_1, "#txt_num2")
+		local var_25_7 = gohelper.findChildText(arg_25_1, "#txt_num3")
+
+		if not string.nilorempty(var_25_4) then
+			local var_25_8 = GameUtil.splitString2(var_25_4, true) or {}
+
+			var_25_5.text = var_25_8[3][1] or 0
+			var_25_6.text = var_25_8[1][1] or 0
+			var_25_7.text = var_25_8[2][1] or 0
 		else
-			slot5.text = 0
-			slot6.text = 0
-			slot7.text = 0
+			var_25_5.text = 0
+			var_25_6.text = 0
+			var_25_7.text = 0
 		end
-	elseif slot2 == PlayerCardEnum.ProgressShowType.Room then
-		slot5 = gohelper.findChildText(slot1, "#txt_num2")
+	elseif arg_25_2 == PlayerCardEnum.ProgressShowType.Room then
+		local var_25_9 = gohelper.findChildText(arg_25_1, "#txt_num1")
+		local var_25_10 = gohelper.findChildText(arg_25_1, "#txt_num2")
+		local var_25_11 = arg_25_0.playercardinfo.roomCollection
+		local var_25_12 = string.splitToNumber(var_25_11, "#")
+		local var_25_13 = var_25_12 and var_25_12[1]
 
-		if string.splitToNumber(slot0.playercardinfo.roomCollection, "#") and slot7[1] then
-			gohelper.findChildText(slot1, "#txt_num1").text = slot8
+		if var_25_13 then
+			var_25_9.text = var_25_13
 		else
-			slot4.text = 0
+			var_25_9.text = 0
 		end
 
-		if slot7 and slot7[2] then
-			slot5.text = slot9
+		local var_25_14 = var_25_12 and var_25_12[2]
+
+		if var_25_14 then
+			var_25_10.text = var_25_14
 		else
-			slot5.text = 0
+			var_25_10.text = 0
 		end
 	end
 end
 
-function slot0._refreshBaseInfo(slot0, slot1)
-	slot0:initfirstnode()
+function var_0_0._refreshBaseInfo(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_1 or arg_26_0.playercardinfo:getBaseInfoSetting()
 
-	if (slot1 or slot0.playercardinfo:getBaseInfoSetting()) and #slot2 > 0 then
-		for slot6, slot7 in ipairs(slot2) do
-			slot8 = slot7[1]
-			slot9 = slot7[2]
-			slot10 = slot0._baseInfoItemList[slot8]
+	arg_26_0:initfirstnode()
 
-			if slot8 ~= 1 and slot10 then
-				if not slot10.isload then
-					slot10.anim:Update(0)
-					slot10.anim:Play("open")
+	if var_26_0 and #var_26_0 > 0 then
+		for iter_26_0, iter_26_1 in ipairs(var_26_0) do
+			local var_26_1 = iter_26_1[1]
+			local var_26_2 = iter_26_1[2]
+			local var_26_3 = arg_26_0._baseInfoItemList[var_26_1]
 
-					slot10.isload = true
+			if var_26_1 ~= 1 and var_26_3 then
+				if not var_26_3.isload then
+					var_26_3.anim:Update(0)
+					var_26_3.anim:Play("open")
+
+					var_26_3.isload = true
 				end
 
-				slot11 = PlayerCardConfig.instance:getCardBaseInfoById(slot9)
+				local var_26_4 = PlayerCardConfig.instance:getCardBaseInfoById(var_26_2)
 
-				gohelper.setActive(slot10.gofull, true)
-				gohelper.setActive(slot10.goempty, false)
+				gohelper.setActive(var_26_3.gofull, true)
+				gohelper.setActive(var_26_3.goempty, false)
 
-				for slot15, slot16 in pairs(PlayerCardEnum.BaseInfoType) do
-					gohelper.setActive(gohelper.findChild(slot10.gofull, "type" .. slot16), false)
+				for iter_26_2, iter_26_3 in pairs(PlayerCardEnum.BaseInfoType) do
+					local var_26_5 = gohelper.findChild(var_26_3.gofull, "type" .. iter_26_3)
+
+					gohelper.setActive(var_26_5, false)
 				end
 
-				slot12 = slot11.type
-				slot10.gotype = gohelper.findChild(slot10.gofull, "type" .. slot12)
+				local var_26_6 = var_26_4.type
 
-				gohelper.setActive(slot10.gotype, true)
+				var_26_3.gotype = gohelper.findChild(var_26_3.gofull, "type" .. var_26_6)
 
-				slot13 = gohelper.findChildText(slot10.gotype, "txt_title")
-				slot14 = nil
+				gohelper.setActive(var_26_3.gotype, true)
 
-				if slot12 == 2 then
-					gohelper.findChildText(slot10.gotype, "layout/#txt_num").text, gohelper.findChildText(slot10.gotype, "layout/#txt_dec").text = slot0.playercardinfo:getBaseInfoByIndex(slot9, true)
+				local var_26_7 = gohelper.findChildText(var_26_3.gotype, "txt_title")
+				local var_26_8
+
+				if var_26_6 == 2 then
+					local var_26_9 = gohelper.findChildText(var_26_3.gotype, "layout/#txt_num")
+					local var_26_10 = gohelper.findChildText(var_26_3.gotype, "layout/#txt_dec")
+					local var_26_11, var_26_12 = arg_26_0.playercardinfo:getBaseInfoByIndex(var_26_2, true)
+
+					var_26_9.text = var_26_11
+					var_26_10.text = var_26_12
 				else
-					gohelper.findChildText(slot10.gotype, "#txt_num").text = slot0.playercardinfo:getBaseInfoByIndex(slot9, true)
+					gohelper.findChildText(var_26_3.gotype, "#txt_num").text = arg_26_0.playercardinfo:getBaseInfoByIndex(var_26_2, true)
 				end
 
-				slot13.text = slot11.name
+				var_26_7.text = var_26_4.name
 			end
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0.baseinfoopen and PlayerCardBaseInfoModel.instance:getEmptyPosList() or slot0.playercardinfo:getEmptyBaseInfoPosList()) do
-		if slot8 then
-			slot9 = slot0._baseInfoItemList[slot7]
+	local var_26_13 = arg_26_0.baseinfoopen and PlayerCardBaseInfoModel.instance:getEmptyPosList() or arg_26_0.playercardinfo:getEmptyBaseInfoPosList()
 
-			gohelper.setActive(slot9.gofull, false)
-			gohelper.setActive(slot9.goempty, true)
+	for iter_26_4, iter_26_5 in ipairs(var_26_13) do
+		if iter_26_5 then
+			local var_26_14 = arg_26_0._baseInfoItemList[iter_26_4]
 
-			slot9.isload = false
+			gohelper.setActive(var_26_14.gofull, false)
+			gohelper.setActive(var_26_14.goempty, true)
+
+			var_26_14.isload = false
 		end
 	end
 end
 
-function slot0.initfirstnode(slot0)
-	slot1 = slot0._baseInfoItemList[1]
-	slot2 = gohelper.findChildText(slot1.gofull, "type1/txt_role/#txt_num")
-	slot3 = gohelper.findChildText(slot1.gofull, "type1/txt_role")
-	slot1.chesslist = slot1.chesslist or {}
+function var_0_0.initfirstnode(arg_27_0)
+	local var_27_0 = arg_27_0._baseInfoItemList[1]
+	local var_27_1 = gohelper.findChildText(var_27_0.gofull, "type1/txt_role/#txt_num")
+	local var_27_2 = gohelper.findChildText(var_27_0.gofull, "type1/txt_role")
 
-	if #slot1.chesslist <= 0 then
-		for slot7 = 1, 5 do
-			slot1.chesslist[slot7] = gohelper.findChildImage(slot1.gofull, "type1/collection/collection" .. slot7 .. "/#image_full")
+	var_27_0.chesslist = var_27_0.chesslist or {}
+
+	if not (#var_27_0.chesslist > 0) then
+		for iter_27_0 = 1, 5 do
+			var_27_0.chesslist[iter_27_0] = gohelper.findChildImage(var_27_0.gofull, "type1/collection/collection" .. iter_27_0 .. "/#image_full")
 		end
 	end
 
-	slot4, slot5, slot6, slot7, slot8 = slot0.playercardinfo:getHeroRarePercent()
-	slot1.chesslist[1].fillAmount = slot4 or 100
-	slot1.chesslist[2].fillAmount = slot5 or 100
-	slot1.chesslist[3].fillAmount = slot6 or 100
-	slot1.chesslist[4].fillAmount = slot7 or 100
-	slot1.chesslist[5].fillAmount = slot8 or 100
-	slot2.text = slot0.playercardinfo:getHeroCount()
-	slot3.text = PlayerCardConfig.instance:getCardBaseInfoById(1).name
+	local var_27_3, var_27_4, var_27_5, var_27_6, var_27_7 = arg_27_0.playercardinfo:getHeroRarePercent()
+
+	var_27_0.chesslist[1].fillAmount = var_27_3 or 100
+	var_27_0.chesslist[2].fillAmount = var_27_4 or 100
+	var_27_0.chesslist[3].fillAmount = var_27_5 or 100
+	var_27_0.chesslist[4].fillAmount = var_27_6 or 100
+	var_27_0.chesslist[5].fillAmount = var_27_7 or 100
+
+	local var_27_8 = PlayerCardConfig.instance:getCardBaseInfoById(1)
+
+	var_27_1.text = arg_27_0.playercardinfo:getHeroCount()
+	var_27_2.text = var_27_8.name
 end
 
-function slot0._initCritter(slot0)
-	if slot0.playercardinfo:isSelf() then
-		slot1 = PlayerCardModel.instance:getCritterOpen()
+function var_0_0._initCritter(arg_28_0)
+	if arg_28_0.playercardinfo:isSelf() then
+		local var_28_0 = PlayerCardModel.instance:getCritterOpen()
 
-		gohelper.setActive(slot0._gocritterlight, slot1)
+		gohelper.setActive(arg_28_0._gocritterlight, var_28_0)
 
-		if slot1 then
-			slot2, slot3 = slot0.playercardinfo:getCritter()
+		if var_28_0 then
+			local var_28_1, var_28_2 = arg_28_0.playercardinfo:getCritter()
 
-			if not slot2 then
-				gohelper.setActive(slot0._gocritterlight, false)
+			if not var_28_1 then
+				gohelper.setActive(arg_28_0._gocritterlight, false)
 
 				return
 			end
 
-			slot0:setResPath(slot2, slot3)
+			arg_28_0:setResPath(var_28_1, var_28_2)
 		end
 	else
-		slot1, slot2 = slot0.playercardinfo:getCritter()
+		local var_28_3, var_28_4 = arg_28_0.playercardinfo:getCritter()
 
-		if not slot1 then
+		if not var_28_3 then
 			return
 		end
 
-		slot0:setResPath(slot1, slot2)
+		arg_28_0:setResPath(var_28_3, var_28_4)
 	end
 end
 
-function slot0._onRefreshCritter(slot0, slot1)
-	if not CritterModel.instance:getCritterMOByUid(tostring(slot1.uid)) then
+function var_0_0._onRefreshCritter(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_1.uid
+	local var_29_1 = CritterModel.instance:getCritterMOByUid(tostring(var_29_0))
+
+	if not var_29_1 then
 		return
 	end
 
-	slot0:setResPath(slot3:getDefineId(), slot3:getSkinId())
+	local var_29_2 = var_29_1:getDefineId()
+	local var_29_3 = var_29_1:getSkinId()
+
+	arg_29_0:setResPath(var_29_2, var_29_3)
 end
 
-function slot0.resetSpine(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:onDestroy()
+function var_0_0.resetSpine(arg_30_0)
+	if arg_30_0._uiSpine then
+		arg_30_0._uiSpine:onDestroy()
 
-		slot0._uiSpine = nil
+		arg_30_0._uiSpine = nil
 	end
 end
 
-function slot0._getSpine(slot0)
-	if not slot0._spine then
-		slot0._spine = GuiSpine.Create(slot0._gocritter)
+function var_0_0._getSpine(arg_31_0)
+	if not arg_31_0._spine then
+		arg_31_0._spine = GuiSpine.Create(arg_31_0._gocritter)
 	end
 
-	return slot0._spine
+	return arg_31_0._spine
 end
 
-function slot0.resetTransform(slot0)
-	if not slot0._spine then
+function var_0_0.resetTransform(arg_32_0)
+	if not arg_32_0._spine then
 		return
 	end
 
-	if gohelper.isNil(slot0._spine._spineGo) then
+	local var_32_0 = arg_32_0._spine._spineGo
+
+	if gohelper.isNil(var_32_0) then
 		return
 	end
 
-	recthelper.setAnchor(slot1.transform, 0, 0)
-	transformhelper.setLocalScale(slot1.transform, 1, 1, 1)
+	recthelper.setAnchor(var_32_0.transform, 0, 0)
+	transformhelper.setLocalScale(var_32_0.transform, 1, 1, 1)
 end
 
-function slot0.setResPath(slot0, slot1, slot2)
-	if not string.nilorempty(slot2 or CritterConfig.instance:getCritterNormalSkin(slot1)) then
-		slot0._curModel = slot0:_getSpine()
+function var_0_0.setResPath(arg_33_0, arg_33_1, arg_33_2)
+	arg_33_2 = arg_33_2 or CritterConfig.instance:getCritterNormalSkin(arg_33_1)
 
-		slot0._curModel:setHeroId(slot1)
-		slot0._curModel:showModel()
-		slot0._curModel:setResPath(RoomResHelper.getCritterUIPath(slot2), function ()
-			uv0:resetTransform()
-		end, slot0, true)
+	if not string.nilorempty(arg_33_2) then
+		local var_33_0 = RoomResHelper.getCritterUIPath(arg_33_2)
+
+		arg_33_0._curModel = arg_33_0:_getSpine()
+
+		arg_33_0._curModel:setHeroId(arg_33_1)
+		arg_33_0._curModel:showModel()
+		arg_33_0._curModel:setResPath(var_33_0, function()
+			arg_33_0:resetTransform()
+		end, arg_33_0, true)
 	end
 end
 
-function slot0._updateHero(slot0, slot1, slot2)
-	slot3 = HeroModel.instance:getByHeroId(slot1)
+function var_0_0._updateHero(arg_35_0, arg_35_1, arg_35_2)
+	local var_35_0 = HeroModel.instance:getByHeroId(arg_35_1)
+	local var_35_1 = SkinConfig.instance:getSkinCo(arg_35_2 or var_35_0 and var_35_0.skin)
 
-	if not SkinConfig.instance:getSkinCo(slot2 or slot3 and slot3.skin) then
+	if not var_35_1 then
 		return
 	end
 
-	slot0.skinCo = slot4
-	slot0.heroCo = HeroConfig.instance:getHeroCO(slot0.skinCo.characterId)
+	arg_35_0.skinCo = var_35_1
+	arg_35_0.heroCo = HeroConfig.instance:getHeroCO(arg_35_0.skinCo.characterId)
 
-	slot0:resetRes()
-	slot0._simagerole:LoadImage(ResUrl.getHeadIconImg(slot0.skinCo.id), slot0._loadedImage, slot0)
+	arg_35_0:resetRes()
+	arg_35_0._simagerole:LoadImage(ResUrl.getHeadIconImg(arg_35_0.skinCo.id), arg_35_0._loadedImage, arg_35_0)
 end
 
-function slot0.SetNativeSize(slot0)
+function var_0_0.SetNativeSize(arg_36_0)
+	return
 end
 
-function slot0.resetRes(slot0)
-	slot0._simagerole:UnLoadImage()
+function var_0_0.resetRes(arg_37_0)
+	arg_37_0._simagerole:UnLoadImage()
 end
 
-function slot0._loadedImage(slot0)
-	ZProj.UGUIHelper.SetImageSize(slot0._simagerole.gameObject)
+function var_0_0._loadedImage(arg_38_0)
+	ZProj.UGUIHelper.SetImageSize(arg_38_0._simagerole.gameObject)
 
-	if string.nilorempty(slot0.skinCo.playercardViewImgOffset) then
-		slot1 = slot0.skinCo.characterViewImgOffset
+	local var_38_0 = arg_38_0.skinCo.playercardViewImgOffset
+
+	if string.nilorempty(var_38_0) then
+		var_38_0 = arg_38_0.skinCo.characterViewImgOffset
 	end
 
-	if not string.nilorempty(slot1) then
-		slot2 = string.splitToNumber(slot1, "#")
+	if not string.nilorempty(var_38_0) then
+		local var_38_1 = string.splitToNumber(var_38_0, "#")
 
-		recthelper.setAnchor(slot0._simagerole.transform, tonumber(slot2[1]), tonumber(slot2[2]))
-		transformhelper.setLocalScale(slot0._simagerole.transform, tonumber(slot2[3]), tonumber(slot2[3]), tonumber(slot2[3]))
+		recthelper.setAnchor(arg_38_0._simagerole.transform, tonumber(var_38_1[1]), tonumber(var_38_1[2]))
+		transformhelper.setLocalScale(arg_38_0._simagerole.transform, tonumber(var_38_1[3]), tonumber(var_38_1[3]), tonumber(var_38_1[3]))
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_39_0)
+	return
 end
 
-return slot0
+return var_0_0

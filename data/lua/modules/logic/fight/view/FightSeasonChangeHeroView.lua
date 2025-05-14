@@ -1,229 +1,256 @@
-module("modules.logic.fight.view.FightSeasonChangeHeroView", package.seeall)
+﻿module("modules.logic.fight.view.FightSeasonChangeHeroView", package.seeall)
 
-slot0 = class("FightSeasonChangeHeroView", FightBaseView)
+local var_0_0 = class("FightSeasonChangeHeroView", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._block = gohelper.findChildClick(slot0.viewGO, "block")
-	slot0._blockTransform = slot0._block:GetComponent(gohelper.Type_RectTransform)
-	slot0._confirmPart = gohelper.findChild(slot0.viewGO, "#go_SeasonConfirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._block = gohelper.findChildClick(arg_1_0.viewGO, "block")
+	arg_1_0._blockTransform = arg_1_0._block:GetComponent(gohelper.Type_RectTransform)
+	arg_1_0._confirmPart = gohelper.findChild(arg_1_0.viewGO, "#go_SeasonConfirm")
 
-	gohelper.setActive(slot0._confirmPart, false)
+	gohelper.setActive(arg_1_0._confirmPart, false)
 
-	slot0._txt_Tips = gohelper.findChildText(slot0.viewGO, "#go_SeasonConfirm/image_TipsBG/txt_Tips")
-	slot0._selectIcon = gohelper.findChild(slot0.viewGO, "#go_SeasonConfirm/#go_Selected").transform
-	slot0._skillRoot = gohelper.findChild(slot0.viewGO, "#go_SeasonConfirm/skillPart/skillRoot")
-	slot0._restrainGO = gohelper.findChild(slot0.viewGO, "#go_SeasonConfirm/skillPart/restrain/restrain")
-	slot0._beRestrainGO = gohelper.findChild(slot0.viewGO, "#go_SeasonConfirm/skillPart/restrain/beRestrain")
-	slot0._restrainAnimator = slot0._restrainGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._beRestrainAnimator = slot0._beRestrainGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goHeroListRoot = gohelper.findChild(slot0.viewGO, "#go_fightseasonsubherolist")
+	arg_1_0._txt_Tips = gohelper.findChildText(arg_1_0.viewGO, "#go_SeasonConfirm/image_TipsBG/txt_Tips")
+	arg_1_0._selectIcon = gohelper.findChild(arg_1_0.viewGO, "#go_SeasonConfirm/#go_Selected").transform
+	arg_1_0._skillRoot = gohelper.findChild(arg_1_0.viewGO, "#go_SeasonConfirm/skillPart/skillRoot")
+	arg_1_0._restrainGO = gohelper.findChild(arg_1_0.viewGO, "#go_SeasonConfirm/skillPart/restrain/restrain")
+	arg_1_0._beRestrainGO = gohelper.findChild(arg_1_0.viewGO, "#go_SeasonConfirm/skillPart/restrain/beRestrain")
+	arg_1_0._restrainAnimator = arg_1_0._restrainGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._beRestrainAnimator = arg_1_0._beRestrainGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goHeroListRoot = gohelper.findChild(arg_1_0.viewGO, "#go_fightseasonsubherolist")
 end
 
-function slot0.addEvents(slot0)
-	slot0:com_registClick(slot0._block, slot0._onBlock)
-	slot0:com_registFightEvent(FightEvent.ReceiveChangeSubHeroReply, slot0._onReceiveChangeSubHeroReply)
-	slot0:com_registFightEvent(FightEvent.GuideSeasonChangeHeroClickEntity, slot0._onGuideSeasonChangeHeroClickEntity)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:com_registClick(arg_2_0._block, arg_2_0._onBlock)
+	arg_2_0:com_registFightEvent(FightEvent.ReceiveChangeSubHeroReply, arg_2_0._onReceiveChangeSubHeroReply)
+	arg_2_0:com_registFightEvent(FightEvent.GuideSeasonChangeHeroClickEntity, arg_2_0._onGuideSeasonChangeHeroClickEntity)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onReceiveChangeSubHeroReply(slot0)
-	slot0:_exitOperate(true)
+function var_0_0._onReceiveChangeSubHeroReply(arg_4_0)
+	arg_4_0:_exitOperate(true)
 end
 
-function slot0._getEntityList(slot0)
+function var_0_0._getEntityList(arg_5_0)
 	return FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 end
 
-function slot0._onGuideSeasonChangeHeroClickEntity(slot0, slot1)
-	slot2 = nil
+function var_0_0._onGuideSeasonChangeHeroClickEntity(arg_6_0, arg_6_1)
+	arg_6_1 = tonumber(arg_6_1)
 
-	for slot7, slot8 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
-		if slot8.skin == tonumber(slot1) then
-			slot9 = FightHelper.getEntity(slot8.id)
-			slot10, slot11, slot12, slot13 = FightHelper.calcRect(slot9, slot0._blockTransform)
-			slot15, slot16 = nil
+	local var_6_0
+	local var_6_1 = FightDataHelper.entityMgr:getMyNormalList()
 
-			if slot9:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle) then
-				slot17, slot18, slot19 = transformhelper.getPos(slot14.transform)
-				slot15, slot16 = recthelper.worldPosToAnchorPosXYZ(slot17, slot18, slot19, slot0._blockTransform)
+	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+		if iter_6_1.skin == arg_6_1 then
+			local var_6_2 = iter_6_1.id
+			local var_6_3 = FightHelper.getEntity(var_6_2)
+			local var_6_4, var_6_5, var_6_6, var_6_7 = FightHelper.calcRect(var_6_3, arg_6_0._blockTransform)
+			local var_6_8 = var_6_3:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle)
+			local var_6_9
+			local var_6_10
+
+			if var_6_8 then
+				local var_6_11, var_6_12, var_6_13 = transformhelper.getPos(var_6_8.transform)
+
+				var_6_9, var_6_10 = recthelper.worldPosToAnchorPosXYZ(var_6_11, var_6_12, var_6_13, arg_6_0._blockTransform)
 			else
-				slot15 = (slot10 + slot12) / 2
-				slot16 = (slot11 + slot13) / 2
+				var_6_9 = (var_6_4 + var_6_6) / 2
+				var_6_10 = (var_6_5 + var_6_7) / 2
 			end
 
-			slot0:_clickEntity(slot2, slot15, slot16)
+			arg_6_0:_clickEntity(var_6_2, var_6_9, var_6_10)
 
 			break
 		end
 	end
 end
 
-function slot0._onBlock(slot0, slot1, slot2)
-	if not slot0._selectItem then
-		slot0:_exitOperate()
+function var_0_0._onBlock(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0._selectItem then
+		arg_7_0:_exitOperate()
 
 		return
 	end
 
-	slot4, slot5, slot6 = FightHelper.getClickEntity(slot0:_getEntityList(), slot0._blockTransform, slot2)
+	local var_7_0 = arg_7_0:_getEntityList()
+	local var_7_1, var_7_2, var_7_3 = FightHelper.getClickEntity(var_7_0, arg_7_0._blockTransform, arg_7_2)
 
-	if slot4 then
-		if not FightDataHelper.entityMgr:getById(slot4) then
+	if var_7_1 then
+		if not FightDataHelper.entityMgr:getById(var_7_1) then
 			return
 		end
 
-		slot0:_clickEntity(slot4, slot5, slot6)
+		arg_7_0:_clickEntity(var_7_1, var_7_2, var_7_3)
 
 		return
 	end
 
-	slot0:_exitOperate()
+	arg_7_0:_exitOperate()
 end
 
-function slot0._clickEntity(slot0, slot1, slot2, slot3)
-	if slot0._curSelectEntityId == slot1 then
-		FightRpc.instance:sendChangeSubHeroRequest(slot0._selectItem._entityId, slot1)
+function var_0_0._clickEntity(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if arg_8_0._curSelectEntityId == arg_8_1 then
+		FightRpc.instance:sendChangeSubHeroRequest(arg_8_0._selectItem._entityId, arg_8_1)
 	else
-		slot0._txt_Tips.text = luaLang("fight_season_change_hero_confirm")
-		slot0._curSelectEntityId = slot1
+		arg_8_0._txt_Tips.text = luaLang("fight_season_change_hero_confirm")
+		arg_8_0._curSelectEntityId = arg_8_1
 
-		gohelper.setActive(slot0._selectIcon, false)
-		gohelper.setActive(slot0._selectIcon, true)
-		recthelper.setAnchor(slot0._selectIcon, slot2, slot3)
-		slot0:com_sendFightEvent(FightEvent.SeasonSelectChangeHeroTarget, slot0._curSelectEntityId)
+		gohelper.setActive(arg_8_0._selectIcon, false)
+		gohelper.setActive(arg_8_0._selectIcon, true)
+		recthelper.setAnchor(arg_8_0._selectIcon, arg_8_2, arg_8_3)
+		arg_8_0:com_sendFightEvent(FightEvent.SeasonSelectChangeHeroTarget, arg_8_0._curSelectEntityId)
 	end
 end
 
-function slot0._onLoadFinish(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._onLoadFinish(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_1 then
 		return
 	end
 
-	slot0._skillItem = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot2:GetResource(), slot0._skillRoot), FightViewCardItem)
+	local var_9_0 = arg_9_2:GetResource()
+	local var_9_1 = gohelper.clone(var_9_0, arg_9_0._skillRoot)
 
-	slot0:_refreshSkill()
+	arg_9_0._skillItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, FightViewCardItem)
+
+	arg_9_0:_refreshSkill()
 end
 
-function slot0._refreshSkill(slot0)
-	if not slot0._skillItem then
+function var_0_0._refreshSkill(arg_10_0)
+	if not arg_10_0._skillItem then
 		return
 	end
 
-	if slot0._selectItem then
-		slot1 = FightDataHelper.entityMgr:getById(slot0._selectItem._entityId)
+	if arg_10_0._selectItem then
+		local var_10_0 = FightDataHelper.entityMgr:getById(arg_10_0._selectItem._entityId)
 
-		slot0._skillItem:updateItem(slot1.id, slot1.exSkill)
+		arg_10_0._skillItem:updateItem(var_10_0.id, var_10_0.exSkill)
 
-		slot3 = GMFightShowState.handCardRestrain
+		local var_10_1 = FightViewHandCardItemRestrain.getNewRestrainStatus(var_10_0.id, var_10_0.exSkill)
+		local var_10_2 = GMFightShowState.handCardRestrain
 
-		gohelper.setActive(slot0._restrainGO, FightViewHandCardItemRestrain.getNewRestrainStatus(slot1.id, slot1.exSkill) == FightViewHandCardItemRestrain.RestrainMvStatus.Restrain and slot3)
-		gohelper.setActive(slot0._beRestrainGO, slot2 == FightViewHandCardItemRestrain.RestrainMvStatus.BeRestrain and slot3)
+		gohelper.setActive(arg_10_0._restrainGO, var_10_1 == FightViewHandCardItemRestrain.RestrainMvStatus.Restrain and var_10_2)
+		gohelper.setActive(arg_10_0._beRestrainGO, var_10_1 == FightViewHandCardItemRestrain.RestrainMvStatus.BeRestrain and var_10_2)
 
-		if slot2 == FightViewHandCardItemRestrain.RestrainMvStatus.Restrain then
-			slot0._restrainAnimator:Play("fight_restrain_all_not", 0, 0)
-			slot0._restrainAnimator:Update(0)
-		elseif slot2 == FightViewHandCardItemRestrain.RestrainMvStatus.BeRestrain then
-			slot0._beRestrainAnimator:Play("fight_restrain_all_not", 0, 0)
-			slot0._beRestrainAnimator:Update(0)
+		if var_10_1 == FightViewHandCardItemRestrain.RestrainMvStatus.Restrain then
+			arg_10_0._restrainAnimator:Play("fight_restrain_all_not", 0, 0)
+			arg_10_0._restrainAnimator:Update(0)
+		elseif var_10_1 == FightViewHandCardItemRestrain.RestrainMvStatus.BeRestrain then
+			arg_10_0._beRestrainAnimator:Play("fight_restrain_all_not", 0, 0)
+			arg_10_0._beRestrainAnimator:Update(0)
 		end
 	end
 end
 
-function slot0.selectItem(slot0, slot1)
-	slot0._selectItem = slot1
+function var_0_0.selectItem(arg_11_0, arg_11_1)
+	arg_11_0._selectItem = arg_11_1
 
-	if not slot0._loadedSkill then
-		slot0._loadedSkill = true
+	if not arg_11_0._loadedSkill then
+		arg_11_0._loadedSkill = true
 
-		slot0:com_loadAsset("ui/viewres/fight/fightcarditem.prefab", slot0._onLoadFinish)
+		local var_11_0 = "ui/viewres/fight/fightcarditem.prefab"
+
+		arg_11_0:com_loadAsset(var_11_0, arg_11_0._onLoadFinish)
 	else
-		slot0:_refreshSkill()
+		arg_11_0:_refreshSkill()
 	end
 end
 
-function slot0._exitOperate(slot0, slot1)
-	gohelper.setActive(slot0._block, false)
-	gohelper.setActive(slot0._confirmPart, false)
-	gohelper.setActive(slot0._selectIcon, false)
+function var_0_0._exitOperate(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0._block, false)
+	gohelper.setActive(arg_12_0._confirmPart, false)
+	gohelper.setActive(arg_12_0._selectIcon, false)
 
-	if slot0._fightdardObj then
-		gohelper.setActive(slot0._fightdardObj, false)
+	if arg_12_0._fightdardObj then
+		gohelper.setActive(arg_12_0._fightdardObj, false)
 	end
 
-	for slot6, slot7 in ipairs(slot0:_getEntityList()) do
-		if slot7.spine then
-			slot7:setRenderOrder(FightRenderOrderMgr.instance:getOrder(slot7.id))
-			FightRenderOrderMgr.instance:register(slot7.id)
+	local var_12_0 = arg_12_0:_getEntityList()
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		if iter_12_1.spine then
+			iter_12_1:setRenderOrder(FightRenderOrderMgr.instance:getOrder(iter_12_1.id))
+			FightRenderOrderMgr.instance:register(iter_12_1.id)
 		end
 	end
 
-	slot0._curSelectEntityId = nil
-	slot0._selectItem = nil
+	arg_12_0._curSelectEntityId = nil
+	arg_12_0._selectItem = nil
 
-	slot0._heroListView:_exitOperate(slot1)
+	arg_12_0._heroListView:_exitOperate(arg_12_1)
 	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.SeasonChangeHero)
-	NavigateMgr.instance:removeEscape(slot0.viewContainer.viewName)
+	NavigateMgr.instance:removeEscape(arg_12_0.viewContainer.viewName)
 end
 
-function slot0._enterOperate(slot0)
-	slot0._txt_Tips.text = luaLang("fight_season_change_hero_select")
+function var_0_0._enterOperate(arg_13_0)
+	arg_13_0._txt_Tips.text = luaLang("fight_season_change_hero_select")
 
-	if not slot0._loadedFightDard then
-		slot0._loadedFightDard = true
+	if not arg_13_0._loadedFightDard then
+		arg_13_0._loadedFightDard = true
 
-		slot0:com_loadAsset("effects/prefabs/buff/fightdark.prefab", slot0._onFightdardLoadFinish)
-	elseif slot0._fightdardObj then
-		gohelper.setActive(slot0._fightdardObj, true)
+		local var_13_0 = "effects/prefabs/buff/fightdark.prefab"
+
+		arg_13_0:com_loadAsset(var_13_0, arg_13_0._onFightdardLoadFinish)
+	elseif arg_13_0._fightdardObj then
+		gohelper.setActive(arg_13_0._fightdardObj, true)
 	end
 
-	for slot5, slot6 in ipairs(slot0:_getEntityList()) do
-		if slot6.spine then
-			slot6:setRenderOrder(20000 + (slot6.spine._renderOrder or 0))
-			FightRenderOrderMgr.instance:unregister(slot6.id)
+	local var_13_1 = arg_13_0:_getEntityList()
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		if iter_13_1.spine then
+			local var_13_2 = iter_13_1.spine._renderOrder or 0
+
+			iter_13_1:setRenderOrder(20000 + var_13_2)
+			FightRenderOrderMgr.instance:unregister(iter_13_1.id)
 		end
 	end
 
-	gohelper.setActive(slot0._block, true)
-	gohelper.setActive(slot0._confirmPart, true)
+	gohelper.setActive(arg_13_0._block, true)
+	gohelper.setActive(arg_13_0._confirmPart, true)
 	FightDataHelper.stageMgr:enterOperateState(FightStageMgr.OperateStateType.SeasonChangeHero)
-	NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onBtnEsc, slot0)
+	NavigateMgr.instance:addEscape(arg_13_0.viewContainer.viewName, arg_13_0._onBtnEsc, arg_13_0)
 end
 
-function slot0._onFightdardLoadFinish(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._onFightdardLoadFinish(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_1 then
 		return
 	end
 
-	slot0._fightdardObj = gohelper.clone(slot2:GetResource())
-	gohelper.findChild(slot0._fightdardObj, "fightdark"):GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = 20000
+	local var_14_0 = 20000
+	local var_14_1 = arg_14_2:GetResource()
+
+	arg_14_0._fightdardObj = gohelper.clone(var_14_1)
+	gohelper.findChild(arg_14_0._fightdardObj, "fightdark"):GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = var_14_0
 
 	if FightDataHelper.stageMgr:getCurOperateState() ~= FightStageMgr.OperateStateType.SeasonChangeHero then
-		gohelper.setActive(slot0._fightdardObj, false)
+		gohelper.setActive(arg_14_0._fightdardObj, false)
 	end
 end
 
-function slot0._onBtnEsc(slot0)
+function var_0_0._onBtnEsc(arg_15_0)
 	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.SeasonChangeHero then
-		slot0:_exitOperate()
+		arg_15_0:_exitOperate()
 	end
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._block, false)
-	gohelper.setActive(slot0._selectIcon, false)
+function var_0_0.onOpen(arg_16_0)
+	gohelper.setActive(arg_16_0._block, false)
+	gohelper.setActive(arg_16_0._selectIcon, false)
 
-	slot0._heroListView = slot0:com_openSubView(FightSeasonSubHeroList, "ui/viewres/fight/fightseasonsubherolist.prefab", slot0._goHeroListRoot)
+	arg_16_0._heroListView = arg_16_0:com_openSubView(FightSeasonSubHeroList, "ui/viewres/fight/fightseasonsubherolist.prefab", arg_16_0._goHeroListRoot)
 end
 
-function slot0.onClose(slot0)
-	if slot0._fightdardObj then
-		gohelper.destroy(slot0._fightdardObj)
+function var_0_0.onClose(arg_17_0)
+	if arg_17_0._fightdardObj then
+		gohelper.destroy(arg_17_0._fightdardObj)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	return
 end
 
-return slot0
+return var_0_0

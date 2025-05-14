@@ -1,91 +1,99 @@
-module("modules.logic.reactivity.model.ReactivityTaskModel", package.seeall)
+﻿module("modules.logic.reactivity.model.ReactivityTaskModel", package.seeall)
 
-slot0 = class("ReactivityTaskModel", ListScrollModel)
+local var_0_0 = class("ReactivityTaskModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.sortTaskMoList(slot0)
-	slot1 = {}
-	slot2 = {}
-	slot3 = {}
+function var_0_0.sortTaskMoList(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = {}
+	local var_3_2 = {}
 
-	for slot7, slot8 in ipairs(slot0.taskMoList) do
-		if slot8.config.maxFinishCount <= slot8.finishCount then
-			table.insert(slot3, slot8)
-		elseif slot8.hasFinished then
-			table.insert(slot1, slot8)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.taskMoList) do
+		if iter_3_1.finishCount >= iter_3_1.config.maxFinishCount then
+			table.insert(var_3_2, iter_3_1)
+		elseif iter_3_1.hasFinished then
+			table.insert(var_3_0, iter_3_1)
 		else
-			table.insert(slot2, slot8)
+			table.insert(var_3_1, iter_3_1)
 		end
 	end
 
-	table.sort(slot1, uv0._sortFunc)
-	table.sort(slot2, uv0._sortFunc)
-	table.sort(slot3, uv0._sortFunc)
+	table.sort(var_3_0, var_0_0._sortFunc)
+	table.sort(var_3_1, var_0_0._sortFunc)
+	table.sort(var_3_2, var_0_0._sortFunc)
 
-	slot0.taskMoList = {}
+	arg_3_0.taskMoList = {}
 
-	tabletool.addValues(slot0.taskMoList, slot1)
-	tabletool.addValues(slot0.taskMoList, slot2)
-	tabletool.addValues(slot0.taskMoList, slot3)
+	tabletool.addValues(arg_3_0.taskMoList, var_3_0)
+	tabletool.addValues(arg_3_0.taskMoList, var_3_1)
+	tabletool.addValues(arg_3_0.taskMoList, var_3_2)
 end
 
-function slot0._sortFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0._sortFunc(arg_4_0, arg_4_1)
+	return arg_4_0.id < arg_4_1.id
 end
 
-function slot0.refreshList(slot0, slot1)
-	slot0.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, slot1)
+function var_0_0.refreshList(arg_5_0, arg_5_1)
+	arg_5_0.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, arg_5_1)
 
-	slot0:sortTaskMoList()
+	arg_5_0:sortTaskMoList()
 
-	if slot0:getFinishTaskCount() > 1 then
-		slot3 = tabletool.copy(slot0.taskMoList)
+	if arg_5_0:getFinishTaskCount() > 1 then
+		local var_5_0 = tabletool.copy(arg_5_0.taskMoList)
 
-		table.insert(slot3, 1, {
+		table.insert(var_5_0, 1, {
 			getAll = true,
-			activityId = slot1
+			activityId = arg_5_1
 		})
-		slot0:setList(slot3)
+		arg_5_0:setList(var_5_0)
 	else
-		slot0:setList(slot0.taskMoList)
+		arg_5_0:setList(arg_5_0.taskMoList)
 	end
 end
 
-function slot0.getFinishTaskCount(slot0)
-	for slot5, slot6 in ipairs(slot0.taskMoList) do
-		if slot6.hasFinished and slot6.finishCount < slot6.config.maxFinishCount then
-			slot1 = 0 + 1
+function var_0_0.getFinishTaskCount(arg_6_0)
+	local var_6_0 = 0
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.taskMoList) do
+		if iter_6_1.hasFinished and iter_6_1.finishCount < iter_6_1.config.maxFinishCount then
+			var_6_0 = var_6_0 + 1
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.getFinishTaskActivityCount(slot0)
-	for slot5, slot6 in ipairs(slot0.taskMoList) do
-		if slot6.hasFinished and slot6.finishCount < slot6.config.maxFinishCount then
-			slot1 = 0 + slot6.config.activity
+function var_0_0.getFinishTaskActivityCount(arg_7_0)
+	local var_7_0 = 0
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.taskMoList) do
+		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1.config.maxFinishCount then
+			var_7_0 = var_7_0 + iter_7_1.config.activity
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.getGetRewardTaskCount(slot0)
-	for slot5, slot6 in ipairs(slot0.taskMoList) do
-		if slot6.config.maxFinishCount <= slot6.finishCount then
-			slot1 = 0 + 1
+function var_0_0.getGetRewardTaskCount(arg_8_0)
+	local var_8_0 = 0
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.taskMoList) do
+		if iter_8_1.finishCount >= iter_8_1.config.maxFinishCount then
+			var_8_0 = var_8_0 + 1
 		end
 	end
 
-	return slot1
+	return var_8_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

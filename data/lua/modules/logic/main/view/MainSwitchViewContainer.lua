@@ -1,90 +1,92 @@
-module("modules.logic.main.view.MainSwitchViewContainer", package.seeall)
+﻿module("modules.logic.main.view.MainSwitchViewContainer", package.seeall)
 
-slot0 = class("MainSwitchViewContainer", BaseViewContainer)
+local var_0_0 = class("MainSwitchViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, MainSwitchView.New())
-	table.insert(slot1, TabViewGroupFit.New(1, "#go_container"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_btns"))
+	table.insert(var_1_0, MainSwitchView.New())
+	table.insert(var_1_0, TabViewGroupFit.New(1, "#go_container"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_btns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 2 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 2 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 
-	if slot1 == 1 then
-		slot2 = {}
+	if arg_2_1 == 1 then
+		local var_2_0 = {}
 
-		slot0:_addCharacterSwitch(slot2)
-		slot0:_addSceneSwitch(slot2)
+		arg_2_0:_addCharacterSwitch(var_2_0)
+		arg_2_0:_addSceneSwitch(var_2_0)
 
-		return slot2
+		return var_2_0
 	end
 end
 
-function slot0._addCharacterSwitch(slot0, slot1)
-	slot2 = {}
+function var_0_0._addCharacterSwitch(arg_3_0, arg_3_1)
+	local var_3_0 = {}
 
-	table.insert(slot2, CharacterSwitchView.New())
+	table.insert(var_3_0, CharacterSwitchView.New())
 
-	slot3 = ListScrollParam.New()
-	slot3.scrollGOPath = "right/mask/#scroll_card"
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot3.prefabUrl = slot0._viewSetting.tabRes[1][1][2]
-	slot3.cellClass = CharacterSwitchItem
-	slot3.scrollDir = ScrollEnum.ScrollDirV
-	slot3.lineCount = 3
-	slot3.cellWidth = 170
-	slot3.cellHeight = 208
-	slot3.cellSpaceH = 5
-	slot3.cellSpaceV = 0
-	slot3.startSpace = 5
-	slot3.endSpace = 0
-	slot0._characterScrollView = LuaListScrollView.New(CharacterSwitchListModel.instance, slot3)
+	local var_3_1 = ListScrollParam.New()
 
-	table.insert(slot2, slot0._characterScrollView)
+	var_3_1.scrollGOPath = "right/mask/#scroll_card"
+	var_3_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_1.prefabUrl = arg_3_0._viewSetting.tabRes[1][1][2]
+	var_3_1.cellClass = CharacterSwitchItem
+	var_3_1.scrollDir = ScrollEnum.ScrollDirV
+	var_3_1.lineCount = 3
+	var_3_1.cellWidth = 170
+	var_3_1.cellHeight = 208
+	var_3_1.cellSpaceH = 5
+	var_3_1.cellSpaceV = 0
+	var_3_1.startSpace = 5
+	var_3_1.endSpace = 0
+	arg_3_0._characterScrollView = LuaListScrollView.New(CharacterSwitchListModel.instance, var_3_1)
 
-	slot1[MainEnum.SwitchType.Character] = MultiView.New(slot2)
+	table.insert(var_3_0, arg_3_0._characterScrollView)
+
+	arg_3_1[MainEnum.SwitchType.Character] = MultiView.New(var_3_0)
 end
 
-function slot0.getCharacterScrollView(slot0)
-	return slot0._characterScrollView
+function var_0_0.getCharacterScrollView(arg_4_0)
+	return arg_4_0._characterScrollView
 end
 
-function slot0._addSceneSwitch(slot0, slot1)
-	slot2 = {}
+function var_0_0._addSceneSwitch(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	table.insert(slot2, MainSceneSwitchDisplayView.New())
-	table.insert(slot2, MainSceneSwitchView.New())
+	table.insert(var_5_0, MainSceneSwitchDisplayView.New())
+	table.insert(var_5_0, MainSceneSwitchView.New())
 
-	slot3 = MixScrollParam.New()
-	slot3.scrollGOPath = "right/mask/#scroll_card"
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot3.prefabUrl = slot0._viewSetting.tabRes[1][2][2]
-	slot3.cellClass = MainSceneSwitchItem
-	slot3.scrollDir = ScrollEnum.ScrollDirV
-	slot3.lineCount = 1
+	local var_5_1 = MixScrollParam.New()
 
-	table.insert(slot2, LuaMixScrollView.New(MainSceneSwitchListModel.instance, slot3))
+	var_5_1.scrollGOPath = "right/mask/#scroll_card"
+	var_5_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_5_1.prefabUrl = arg_5_0._viewSetting.tabRes[1][2][2]
+	var_5_1.cellClass = MainSceneSwitchItem
+	var_5_1.scrollDir = ScrollEnum.ScrollDirV
+	var_5_1.lineCount = 1
 
-	slot1[MainEnum.SwitchType.Scene] = MultiView.New(slot2)
+	table.insert(var_5_0, LuaMixScrollView.New(MainSceneSwitchListModel.instance, var_5_1))
+
+	arg_5_1[MainEnum.SwitchType.Scene] = MultiView.New(var_5_0)
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 1, slot1)
+function var_0_0.switchTab(arg_6_0, arg_6_1)
+	arg_6_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_6_1)
 end
 
-return slot0
+return var_0_0

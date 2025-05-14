@@ -1,197 +1,218 @@
-module("modules.logic.room.view.manufacture.RoomManufactureBuildingDetailBanner", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureBuildingDetailBanner", package.seeall)
 
-slot0 = class("RoomManufactureBuildingDetailBanner", BaseView)
+local var_0_0 = class("RoomManufactureBuildingDetailBanner", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_content/#btn_detail")
-	slot0._scrollbase = gohelper.findChildScrollRect(slot0.viewGO, "#go_content/#scroll_base")
-	slot0._gobaseLayer = gohelper.findChild(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer")
-	slot0._gobaseitem = gohelper.findChild(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name/#image_icon")
-	slot0._txtratio = gohelper.findChildText(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_ratio")
-	slot0._goitemLayer = gohelper.findChild(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer")
-	slot0._txtadd = gohelper.findChildText(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#txt_add")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#go_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_detail")
+	arg_1_0._scrollbase = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_base")
+	arg_1_0._gobaseLayer = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer")
+	arg_1_0._gobaseitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name/#image_icon")
+	arg_1_0._txtratio = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_ratio")
+	arg_1_0._goitemLayer = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer")
+	arg_1_0._txtadd = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#txt_add")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#go_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btndetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btndetail:RemoveClickListener()
 end
 
-function slot0._btndetailOnClick(slot0)
-	slot0:_setDetailSelect(ManufactureController.instance:openRoomManufactureBuildingDetailView(slot0._buildingUid))
+function var_0_0._btndetailOnClick(arg_4_0)
+	local var_4_0 = ManufactureController.instance:openRoomManufactureBuildingDetailView(arg_4_0._buildingUid)
+
+	arg_4_0:_setDetailSelect(var_4_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gounselectdetail = gohelper.findChild(slot0.viewGO, "#go_content/#btn_detail/unselect")
-	slot0._goselectdetail = gohelper.findChild(slot0.viewGO, "#go_content/#btn_detail/select")
-	slot0._baseAttrTypeList = {
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._gounselectdetail = gohelper.findChild(arg_5_0.viewGO, "#go_content/#btn_detail/unselect")
+	arg_5_0._goselectdetail = gohelper.findChild(arg_5_0.viewGO, "#go_content/#btn_detail/select")
+	arg_5_0._baseAttrTypeList = {
 		CritterEnum.AttributeType.Efficiency,
 		CritterEnum.AttributeType.Lucky
 	}
-	slot0._attrItemCompList = {}
-	slot0._itemTbList = {}
+	arg_5_0._attrItemCompList = {}
+	arg_5_0._itemTbList = {}
 
-	gohelper.setActive(slot0._gobaseitem, false)
-	gohelper.setActive(slot0._goitem, false)
-	slot0:_setDetailSelect(false)
+	gohelper.setActive(arg_5_0._gobaseitem, false)
+	gohelper.setActive(arg_5_0._goitem, false)
+	arg_5_0:_setDetailSelect(false)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_startRefreshTask()
-	slot0:_refreshUI()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:_startRefreshTask()
+	arg_6_0:_refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.ManufactureGuideTweenFinish, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureReadNewFormula, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, slot0._startRefreshTask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, slot0._onCloseDetatilView, slot0)
-	slot0:_startRefreshTask()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addEventCb(RoomController.instance, RoomEvent.ManufactureGuideTweenFinish, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureReadNewFormula, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_7_0._startRefreshTask, arg_7_0)
+	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, arg_7_0._onCloseDetatilView, arg_7_0)
+	arg_7_0:_startRefreshTask()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_stopRefreshTask()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0:_stopRefreshTask()
 end
 
-function slot0._startRefreshTask(slot0)
-	if not slot0._hasWaitRefreshTask then
-		slot0._hasWaitRefreshTask = true
+function var_0_0._startRefreshTask(arg_10_0)
+	if not arg_10_0._hasWaitRefreshTask then
+		arg_10_0._hasWaitRefreshTask = true
 
-		TaskDispatcher.runDelay(slot0._onRunRefreshTask, slot0, 0.1)
+		TaskDispatcher.runDelay(arg_10_0._onRunRefreshTask, arg_10_0, 0.1)
 	end
 end
 
-function slot0._stopRefreshTask(slot0)
-	slot0._hasWaitRefreshTask = false
+function var_0_0._stopRefreshTask(arg_11_0)
+	arg_11_0._hasWaitRefreshTask = false
 
-	TaskDispatcher.cancelTask(slot0._onRunRefreshTask, slot0)
+	TaskDispatcher.cancelTask(arg_11_0._onRunRefreshTask, arg_11_0)
 end
 
-function slot0._onRunRefreshTask(slot0)
-	slot0:_updateParam()
-	slot0:_refreshAttr()
-	slot0:_refreshItem()
+function var_0_0._onRunRefreshTask(arg_12_0)
+	arg_12_0:_updateParam()
+	arg_12_0:_refreshAttr()
+	arg_12_0:_refreshItem()
 
-	if not slot0._isSendCritterRequest and slot0._buildingType then
-		slot0._isSendCritterRequest = true
+	if not arg_12_0._isSendCritterRequest and arg_12_0._buildingType then
+		arg_12_0._isSendCritterRequest = true
 
-		CritterController.instance:sendBuildManufacturAttrByBtype(slot0._buildingType)
+		CritterController.instance:sendBuildManufacturAttrByBtype(arg_12_0._buildingType)
 	end
 
-	slot0._hasWaitRefreshTask = false
+	arg_12_0._hasWaitRefreshTask = false
 end
 
-function slot0._onCloseDetatilView(slot0)
-	slot0:_setDetailSelect(false)
+function var_0_0._onCloseDetatilView(arg_13_0)
+	arg_13_0:_setDetailSelect(false)
 end
 
-function slot0.getViewBuilding(slot0)
-	slot1, slot2 = slot0.viewContainer:getContainerViewBuilding()
+function var_0_0.getViewBuilding(arg_14_0)
+	local var_14_0, var_14_1 = arg_14_0.viewContainer:getContainerViewBuilding()
 
-	return slot1, slot2
+	return var_14_0, var_14_1
 end
 
-function slot0._updateParam(slot0)
-	slot0._buildingUid, slot0._buildingMO = slot0:getViewBuilding()
-	slot0._buildingType = slot0.viewParam.buildingType
-	slot0._builidngCfg = slot0._buildingMO and slot0._buildingMO.config
-	slot0._buildingType = slot0._builidngCfg and slot0._builidngCfg.buildingType
-	slot0._buildingId = slot0._builidngCfg and slot0._builidngCfg.buildingId
-	slot0._attrInfoMOList = {}
-	slot0._critterMOList = CritterHelper.getWorkCritterMOListByBuid(slot0._buildingUid)
-	slot0._critterUidList = {}
+function var_0_0._updateParam(arg_15_0)
+	arg_15_0._buildingUid, arg_15_0._buildingMO = arg_15_0:getViewBuilding()
+	arg_15_0._buildingType = arg_15_0.viewParam.buildingType
+	arg_15_0._builidngCfg = arg_15_0._buildingMO and arg_15_0._buildingMO.config
+	arg_15_0._buildingType = arg_15_0._builidngCfg and arg_15_0._builidngCfg.buildingType
+	arg_15_0._buildingId = arg_15_0._builidngCfg and arg_15_0._builidngCfg.buildingId
+	arg_15_0._attrInfoMOList = {}
+	arg_15_0._critterMOList = CritterHelper.getWorkCritterMOListByBuid(arg_15_0._buildingUid)
+	arg_15_0._critterUidList = {}
 
-	for slot4, slot5 in ipairs(slot0._critterMOList) do
-		table.insert(slot0._critterUidList, slot5.id)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._critterMOList) do
+		table.insert(arg_15_0._critterUidList, iter_15_1.id)
 	end
 
-	for slot4, slot5 in ipairs(slot0._baseAttrTypeList) do
-		table.insert(slot0._attrInfoMOList, CritterHelper.sumArrtInfoMOByAttrId(slot5, slot0._critterMOList))
+	for iter_15_2, iter_15_3 in ipairs(arg_15_0._baseAttrTypeList) do
+		table.insert(arg_15_0._attrInfoMOList, CritterHelper.sumArrtInfoMOByAttrId(iter_15_3, arg_15_0._critterMOList))
 	end
 
-	slot0._manufactureItemIdList = ManufactureHelper.findLuckyItemIdListByBUid(slot0._buildingUid)
+	arg_15_0._manufactureItemIdList = ManufactureHelper.findLuckyItemIdListByBUid(arg_15_0._buildingUid)
 
-	gohelper.setActive(slot0._btndetail, #slot0._critterUidList > 0)
+	gohelper.setActive(arg_15_0._btndetail, #arg_15_0._critterUidList > 0)
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshAttr()
-	slot0:_refreshItem()
+function var_0_0._refreshUI(arg_16_0)
+	arg_16_0:_refreshAttr()
+	arg_16_0:_refreshItem()
 end
 
-function slot0._setDetailSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselectdetail, slot1)
-	gohelper.setActive(slot0._gounselectdetail, not slot1)
+function var_0_0._setDetailSelect(arg_17_0, arg_17_1)
+	gohelper.setActive(arg_17_0._goselectdetail, arg_17_1)
+	gohelper.setActive(arg_17_0._gounselectdetail, not arg_17_1)
 end
 
-function slot0._refreshAttr(slot0)
-	for slot5, slot6 in ipairs(slot0._attrInfoMOList) do
-		if not slot0._attrItemCompList[slot5] then
-			table.insert(slot0._attrItemCompList, MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gobaseitem, slot0._gobaseLayer), RoomCritterDetailAttrItem))
+function var_0_0._refreshAttr(arg_18_0)
+	local var_18_0 = arg_18_0._attrInfoMOList
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		local var_18_1 = arg_18_0._attrItemCompList[iter_18_0]
+
+		if not var_18_1 then
+			local var_18_2 = gohelper.clone(arg_18_0._gobaseitem, arg_18_0._gobaseLayer)
+
+			var_18_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_2, RoomCritterDetailAttrItem)
+
+			table.insert(arg_18_0._attrItemCompList, var_18_1)
 		end
 
-		slot9 = CritterHelper.formatAttrValue(slot6.attributeId, CritterHelper.sumPreViewAttrValue(slot6.attributeId, slot0._critterUidList, slot0._buildingId, false))
+		local var_18_3 = CritterHelper.sumPreViewAttrValue(iter_18_1.attributeId, arg_18_0._critterUidList, arg_18_0._buildingId, false)
+		local var_18_4 = CritterHelper.formatAttrValue(iter_18_1.attributeId, var_18_3)
 
-		slot7:onRefreshMo(slot6, slot5, slot9, slot9, slot6:getName())
+		var_18_1:onRefreshMo(iter_18_1, iter_18_0, var_18_4, var_18_4, iter_18_1:getName())
 	end
 
-	for slot6 = 1, #slot0._attrItemCompList do
-		gohelper.setActive(slot0._attrItemCompList[slot6].viewGO, slot6 <= #slot1)
+	local var_18_5 = #var_18_0
+
+	for iter_18_2 = 1, #arg_18_0._attrItemCompList do
+		gohelper.setActive(arg_18_0._attrItemCompList[iter_18_2].viewGO, iter_18_2 <= var_18_5)
 	end
 end
 
-function slot0._refreshItem(slot0)
-	slot2 = CritterHelper.sumPreViewAttrValue(CritterEnum.AttributeType.Efficiency, slot0._critterUidList, slot0._buildingId, false) > 100
+function var_0_0._refreshItem(arg_19_0)
+	local var_19_0 = CritterHelper.sumPreViewAttrValue(CritterEnum.AttributeType.Efficiency, arg_19_0._critterUidList, arg_19_0._buildingId, false) > 100
 
-	for slot6, slot7 in ipairs(slot0._manufactureItemIdList) do
-		if not slot0._itemTbList[slot6] then
-			slot8 = slot0:getUserDataTb_()
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._manufactureItemIdList) do
+		local var_19_1 = arg_19_0._itemTbList[iter_19_0]
 
-			table.insert(slot0._itemTbList, slot8)
+		if not var_19_1 then
+			var_19_1 = arg_19_0:getUserDataTb_()
 
-			slot9 = gohelper.cloneInPlace(slot0._goitem)
-			slot8.go = slot9
-			slot8.image_quality = gohelper.findChildImage(slot9, "image_quality")
-			slot8.go_icon = gohelper.findChild(slot9, "go_icon")
-			slot8.go_up = gohelper.findChild(slot9, "go_up")
-			slot8.itemIcon = IconMgr.instance:getCommonItemIcon(slot8.go_icon)
+			table.insert(arg_19_0._itemTbList, var_19_1)
 
-			slot8.itemIcon:isShowQuality(false)
+			local var_19_2 = gohelper.cloneInPlace(arg_19_0._goitem)
+
+			var_19_1.go = var_19_2
+			var_19_1.image_quality = gohelper.findChildImage(var_19_2, "image_quality")
+			var_19_1.go_icon = gohelper.findChild(var_19_2, "go_icon")
+			var_19_1.go_up = gohelper.findChild(var_19_2, "go_up")
+			var_19_1.itemIcon = IconMgr.instance:getCommonItemIcon(var_19_1.go_icon)
+
+			var_19_1.itemIcon:isShowQuality(false)
 		end
 
-		slot8.itemIcon:setMOValue(MaterialEnum.MaterialType.Item, slot7, nil, , )
-		UISpriteSetMgr.instance:setCritterSprite(slot8.image_quality, RoomManufactureEnum.RareImageMap[slot8.itemIcon:getRare()])
-		gohelper.setActive(slot8.go_up, slot2)
+		var_19_1.itemIcon:setMOValue(MaterialEnum.MaterialType.Item, iter_19_1, nil, nil, nil)
+
+		local var_19_3 = var_19_1.itemIcon:getRare()
+		local var_19_4 = RoomManufactureEnum.RareImageMap[var_19_3]
+
+		UISpriteSetMgr.instance:setCritterSprite(var_19_1.image_quality, var_19_4)
+		gohelper.setActive(var_19_1.go_up, var_19_0)
 	end
 
-	slot3 = #slot0._manufactureItemIdList
+	local var_19_5 = #arg_19_0._manufactureItemIdList
 
-	for slot7 = 1, #slot0._itemTbList do
-		gohelper.setActive(slot0._itemTbList[slot7].go, slot7 <= slot3)
+	for iter_19_2 = 1, #arg_19_0._itemTbList do
+		gohelper.setActive(arg_19_0._itemTbList[iter_19_2].go, iter_19_2 <= var_19_5)
 	end
 
-	slot0._txtadd.text = luaLang(slot3 < 1 and "room_manufacture_detail_no_item" or "room_manufacture_detail_item_title")
+	arg_19_0._txtadd.text = luaLang(var_19_5 < 1 and "room_manufacture_detail_no_item" or "room_manufacture_detail_item_title")
 end
 
-slot0.prefabPath = "ui/viewres/room/manufacture/roommanufacturebuildingdetailbanner.prefab"
+var_0_0.prefabPath = "ui/viewres/room/manufacture/roommanufacturebuildingdetailbanner.prefab"
 
-return slot0
+return var_0_0

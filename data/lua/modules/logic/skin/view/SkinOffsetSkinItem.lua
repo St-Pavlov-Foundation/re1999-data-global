@@ -1,60 +1,62 @@
-module("modules.logic.skin.view.SkinOffsetSkinItem", package.seeall)
+﻿module("modules.logic.skin.view.SkinOffsetSkinItem", package.seeall)
 
-slot0 = class("SkinOffsetSkinItem", ListScrollCellExtend)
+local var_0_0 = class("SkinOffsetSkinItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0.goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0.txtskinname = gohelper.findChildText(slot0.viewGO, "#txt_skinname")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0.txtskinname = gohelper.findChildText(arg_1_0.viewGO, "#txt_skinname")
 
-	slot0:addEventCb(SkinOffsetController.instance, SkinOffsetController.Event.OnSelectSkinChange, slot0.refreshSelect, slot0)
+	arg_1_0:addEventCb(SkinOffsetController.instance, SkinOffsetController.Event.OnSelectSkinChange, arg_1_0.refreshSelect, arg_1_0)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClick(slot0)
-	if slot0.isSelect then
+function var_0_0.onClick(arg_4_0)
+	if arg_4_0.isSelect then
 		return
 	end
 
-	SkinOffsetSkinListModel.instance:setSelectSkin(slot0.mo.skinId)
+	SkinOffsetSkinListModel.instance:setSelectSkin(arg_4_0.mo.skinId)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.click = gohelper.getClick(slot0.viewGO)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.click = gohelper.getClick(arg_5_0.viewGO)
 
-	slot0.click:AddClickListener(slot0.onClick, slot0)
+	arg_5_0.click:AddClickListener(arg_5_0.onClick, arg_5_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	gohelper.setActive(slot0.goselect, false)
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0.goselect, false)
 
-	slot0.txtskinname.text = slot1.skinId .. "#" .. slot1.skinName
-	slot0.mo = slot1
+	arg_6_0.txtskinname.text = arg_6_1.skinId .. "#" .. arg_6_1.skinName
+	arg_6_0.mo = arg_6_1
 
-	slot0:refreshSelect()
+	arg_6_0:refreshSelect()
 end
 
-function slot0.getMo(slot0)
-	return slot0.mo
+function var_0_0.getMo(arg_7_0)
+	return arg_7_0.mo
 end
 
-function slot0.refreshSelect(slot0)
-	slot0.isSelect = SkinOffsetSkinListModel.instance:isSelect(slot0.mo.skinId)
+function var_0_0.refreshSelect(arg_8_0)
+	arg_8_0.isSelect = SkinOffsetSkinListModel.instance:isSelect(arg_8_0.mo.skinId)
 
-	gohelper.setActive(slot0.goselect, slot0.isSelect)
+	gohelper.setActive(arg_8_0.goselect, arg_8_0.isSelect)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0.click:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

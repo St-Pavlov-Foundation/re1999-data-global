@@ -1,248 +1,265 @@
-module("modules.logic.summonsimulationpick.view.SummonSimulationPickView", package.seeall)
+﻿module("modules.logic.summonsimulationpick.view.SummonSimulationPickView", package.seeall)
 
-slot0 = class("SummonSimulationPickView", BaseView)
-slot0.SELECT_BG_OFFSET_X = -29.8
-slot0.SELECT_BG_OFFSET_Y = 22.9
-slot0.SAVE_ANIMATION = "save"
-slot0.NORMAL_ANIMATION = "open"
+local var_0_0 = class("SummonSimulationPickView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._simagedec = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg/#simage_dec")
-	slot0._simagecurrent = gohelper.findChildSingleImage(slot0.viewGO, "go_saveresult/unsave/#simage_current")
-	slot0._simagesaved = gohelper.findChildSingleImage(slot0.viewGO, "go_saveresult/unsave/#simage_saved")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_saveresult/unsave/Btn/#btn_cancel")
-	slot0._btnconfirmsave = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_saveresult/unsave/Btn/#btn_confirmsave")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._txtresttime = gohelper.findChildText(slot0.viewGO, "go_confirmresult/select/rest/#txt_resttime")
-	slot0._simageselectframe = gohelper.findChildSingleImage(slot0.viewGO, "go_confirmresult/select/#simage_selectframe")
-	slot0._btnconfirmselect = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_confirmresult/select/#btn_confirmselect")
+var_0_0.SELECT_BG_OFFSET_X = -29.8
+var_0_0.SELECT_BG_OFFSET_Y = 22.9
+var_0_0.SAVE_ANIMATION = "save"
+var_0_0.NORMAL_ANIMATION = "open"
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._simagedec = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#simage_dec")
+	arg_1_0._simagecurrent = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_saveresult/unsave/#simage_current")
+	arg_1_0._simagesaved = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_saveresult/unsave/#simage_saved")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_saveresult/unsave/Btn/#btn_cancel")
+	arg_1_0._btnconfirmsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_saveresult/unsave/Btn/#btn_confirmsave")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._txtresttime = gohelper.findChildText(arg_1_0.viewGO, "go_confirmresult/select/rest/#txt_resttime")
+	arg_1_0._simageselectframe = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_confirmresult/select/#simage_selectframe")
+	arg_1_0._btnconfirmselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_confirmresult/select/#btn_confirmselect")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
-	slot0._btnconfirmsave:AddClickListener(slot0._btnconfirmsaveOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclosepage:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnconfirmselect:AddClickListener(slot0._btnconfirmselectOnClick, slot0)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSaveResult, slot0.onSaveResult, slot0)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSelectResult, slot0.closeThis, slot0)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSelectItem, slot0._btnSelectOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+	arg_2_0._btnconfirmsave:AddClickListener(arg_2_0._btnconfirmsaveOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclosepage:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnconfirmselect:AddClickListener(arg_2_0._btnconfirmselectOnClick, arg_2_0)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSaveResult, arg_2_0.onSaveResult, arg_2_0)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSelectResult, arg_2_0.closeThis, arg_2_0)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSelectItem, arg_2_0._btnSelectOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnconfirmsave:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnclosepage:RemoveClickListener()
-	slot0._btnconfirmselect:RemoveClickListener()
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSaveResult, slot0.onSaveResult, slot0)
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSelectResult, slot0.closeThis, slot0)
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSelectItem, slot0._btnSelectOnClick, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnconfirmsave:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnclosepage:RemoveClickListener()
+	arg_3_0._btnconfirmselect:RemoveClickListener()
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSaveResult, arg_3_0.onSaveResult, arg_3_0)
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSelectResult, arg_3_0.closeThis, arg_3_0)
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSelectItem, arg_3_0._btnSelectOnClick, arg_3_0)
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnconfirmsaveOnClick(slot0)
-	SummonSimulationPickController.instance:saveResult(slot0._activityId)
+function var_0_0._btnconfirmsaveOnClick(arg_5_0)
+	SummonSimulationPickController.instance:saveResult(arg_5_0._activityId)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._btnconfirmselectOnClick(slot0)
-	SummonSimulationPickController.instance:selectResult(slot0._activityId, slot0.selectType)
+function var_0_0._btnconfirmselectOnClick(arg_7_0)
+	SummonSimulationPickController.instance:selectResult(arg_7_0._activityId, arg_7_0.selectType)
 end
 
-function slot0._btnSelectOnClick(slot0, slot1)
-	if slot0.pickType == SummonSimulationEnum.PickType.SaveResult then
+function var_0_0._btnSelectOnClick(arg_8_0, arg_8_1)
+	if arg_8_0.pickType == SummonSimulationEnum.PickType.SaveResult then
 		return
 	end
 
-	slot2 = SummonSimulationPickModel.instance:getActInfo(slot0._activityId)
+	local var_8_0 = SummonSimulationPickModel.instance:getActInfo(arg_8_0._activityId)
 
-	if slot2.leftTimes == slot2.maxCount - 1 or slot2.currentHeroIds == nil or #slot2.currentHeroIds <= 0 then
+	if var_8_0.leftTimes == var_8_0.maxCount - 1 or var_8_0.currentHeroIds == nil or #var_8_0.currentHeroIds <= 0 then
 		return
 	end
 
-	slot3 = slot0._goSelectBg
+	local var_8_1 = arg_8_0._goSelectBg
 
-	if slot0.selectType and slot0.selectType == slot1 then
-		gohelper.setActive(slot3, false)
+	if arg_8_0.selectType and arg_8_0.selectType == arg_8_1 then
+		gohelper.setActive(var_8_1, false)
 
-		slot0.selectType = slot0:_getDefaultState()
+		arg_8_0.selectType = arg_8_0:_getDefaultState()
 
-		slot0:_refreshConfirmBtnState()
+		arg_8_0:_refreshConfirmBtnState()
 
 		return
 	end
 
-	slot0.selectType = slot1
-	slot3.transform.parent = slot1 == SummonSimulationEnum.SaveType.Current and slot0._summonCurrentResultComp:getTransform() or slot0._summonPreviousResultComp:getTransform()
+	arg_8_0.selectType = arg_8_1
 
-	transformhelper.setLocalPosXY(slot3.transform, slot0.SELECT_BG_OFFSET_X, slot0.SELECT_BG_OFFSET_Y)
-	gohelper.setActive(slot3, true)
-	slot0:_refreshConfirmBtnState()
+	local var_8_2 = arg_8_1 == SummonSimulationEnum.SaveType.Current and arg_8_0._summonCurrentResultComp:getTransform() or arg_8_0._summonPreviousResultComp:getTransform()
+
+	var_8_1.transform.parent = var_8_2
+
+	transformhelper.setLocalPosXY(var_8_1.transform, arg_8_0.SELECT_BG_OFFSET_X, arg_8_0.SELECT_BG_OFFSET_Y)
+	gohelper.setActive(var_8_1, true)
+	arg_8_0:_refreshConfirmBtnState()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goSaveCurrentResult = gohelper.findChild(slot0.viewGO, "go_saveresult/unsave/go_current/#go_summonpickitem")
-	slot0._goSavePreviousResult = gohelper.findChild(slot0.viewGO, "go_saveresult/unsave/go_saved/#go_summonpickitem")
-	slot0._goSaveSavedResult = gohelper.findChild(slot0.viewGO, "go_saveresult/go_single/#go_summonpickitem")
-	slot0._goConfirmCurrentResult = gohelper.findChild(slot0.viewGO, "go_confirmresult/go_current/#go_summonpickitem")
-	slot0._goConfirmPreviousResult = gohelper.findChild(slot0.viewGO, "go_confirmresult/go_saved/#go_summonpickitem")
-	slot0._goConfirmSavedResult = gohelper.findChild(slot0.viewGO, "go_confirmresult/go_single/#go_summonpickitem")
-	slot0._goSaveRoot = gohelper.findChild(slot0.viewGO, "go_saveresult")
-	slot0._goConfirmRoot = gohelper.findChild(slot0.viewGO, "go_confirmresult")
-	slot0._goSaveSelectRoot = gohelper.findChild(slot0.viewGO, "go_saveresult/saved")
-	slot0._goSaveUnSelectRoot = gohelper.findChild(slot0.viewGO, "go_saveresult/unsave")
-	slot0._goConfirmSelectRoot = gohelper.findChild(slot0.viewGO, "go_confirmresult/select")
-	slot0._goConfirmUnSelectRoot = gohelper.findChild(slot0.viewGO, "go_confirmresult/unselect")
-	slot0._goSelectBg = gohelper.findChild(slot0.viewGO, "go_confirmresult/#simage_selectframe")
-	slot0._btnclosepage = gohelper.findChildButton(slot0.viewGO, "#simage_fullbg")
-	slot0._animator = gohelper.findChildComponent(slot0.viewGO, "", gohelper.Type_Animator)
-	slot1 = slot0.viewContainer
-	slot2 = slot1._viewSetting.otherRes[1]
-	slot0._summonPreviousResultComp = SummonSimulationPickItem.New()
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._goSaveCurrentResult = gohelper.findChild(arg_9_0.viewGO, "go_saveresult/unsave/go_current/#go_summonpickitem")
+	arg_9_0._goSavePreviousResult = gohelper.findChild(arg_9_0.viewGO, "go_saveresult/unsave/go_saved/#go_summonpickitem")
+	arg_9_0._goSaveSavedResult = gohelper.findChild(arg_9_0.viewGO, "go_saveresult/go_single/#go_summonpickitem")
+	arg_9_0._goConfirmCurrentResult = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult/go_current/#go_summonpickitem")
+	arg_9_0._goConfirmPreviousResult = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult/go_saved/#go_summonpickitem")
+	arg_9_0._goConfirmSavedResult = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult/go_single/#go_summonpickitem")
+	arg_9_0._goSaveRoot = gohelper.findChild(arg_9_0.viewGO, "go_saveresult")
+	arg_9_0._goConfirmRoot = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult")
+	arg_9_0._goSaveSelectRoot = gohelper.findChild(arg_9_0.viewGO, "go_saveresult/saved")
+	arg_9_0._goSaveUnSelectRoot = gohelper.findChild(arg_9_0.viewGO, "go_saveresult/unsave")
+	arg_9_0._goConfirmSelectRoot = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult/select")
+	arg_9_0._goConfirmUnSelectRoot = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult/unselect")
+	arg_9_0._goSelectBg = gohelper.findChild(arg_9_0.viewGO, "go_confirmresult/#simage_selectframe")
+	arg_9_0._btnclosepage = gohelper.findChildButton(arg_9_0.viewGO, "#simage_fullbg")
+	arg_9_0._animator = gohelper.findChildComponent(arg_9_0.viewGO, "", gohelper.Type_Animator)
 
-	slot0._summonPreviousResultComp:init(slot1:getResInst(slot2, slot0.viewGO))
+	local var_9_0 = arg_9_0.viewContainer
+	local var_9_1 = var_9_0._viewSetting.otherRes[1]
+	local var_9_2 = var_9_0:getResInst(var_9_1, arg_9_0.viewGO)
+	local var_9_3 = var_9_0:getResInst(var_9_1, arg_9_0.viewGO)
+	local var_9_4 = var_9_0:getResInst(var_9_1, arg_9_0.viewGO)
 
-	slot0._summonCurrentResultComp = SummonSimulationPickItem.New()
+	arg_9_0._summonPreviousResultComp = SummonSimulationPickItem.New()
 
-	slot0._summonCurrentResultComp:init(slot1:getResInst(slot2, slot0.viewGO))
+	arg_9_0._summonPreviousResultComp:init(var_9_2)
 
-	slot0._summonSavedResultComp = SummonSimulationPickItem.New()
+	arg_9_0._summonCurrentResultComp = SummonSimulationPickItem.New()
 
-	slot0._summonSavedResultComp:init(slot1:getResInst(slot2, slot0.viewGO))
+	arg_9_0._summonCurrentResultComp:init(var_9_3)
+
+	arg_9_0._summonSavedResultComp = SummonSimulationPickItem.New()
+
+	arg_9_0._summonSavedResultComp:init(var_9_4)
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot0._animator:Play(slot0.NORMAL_ANIMATION, 0, 0)
-	slot0:_refreshState()
+function var_0_0._refreshUI(arg_11_0)
+	arg_11_0._animator:Play(arg_11_0.NORMAL_ANIMATION, 0, 0)
+	arg_11_0:_refreshState()
 end
 
-function slot0._resetSelectState(slot0, slot1, slot2)
-	slot3 = slot0._goSelectBg
+function var_0_0._resetSelectState(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._goSelectBg
 
-	if slot1 then
-		slot3.transform.parent = slot2:getTransform()
+	if arg_12_1 then
+		var_12_0.transform.parent = arg_12_2:getTransform()
 
-		transformhelper.setLocalPosXY(slot3.transform, slot0.SELECT_BG_OFFSET_X, slot0.SELECT_BG_OFFSET_Y)
-		gohelper.setActive(slot3, true)
+		transformhelper.setLocalPosXY(var_12_0.transform, arg_12_0.SELECT_BG_OFFSET_X, arg_12_0.SELECT_BG_OFFSET_Y)
+		gohelper.setActive(var_12_0, true)
 	else
-		gohelper.setActive(slot0._goSelectBg, false)
+		gohelper.setActive(arg_12_0._goSelectBg, false)
 	end
 
-	slot0.selectType = slot0:_getDefaultState()
+	arg_12_0.selectType = arg_12_0:_getDefaultState()
 
-	slot0:_refreshConfirmBtnState()
+	arg_12_0:_refreshConfirmBtnState()
 end
 
-function slot0.onSaveResult(slot0, slot1)
-	if slot1 ~= slot0._activityId then
+function var_0_0.onSaveResult(arg_13_0, arg_13_1)
+	if arg_13_1 ~= arg_13_0._activityId then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2SummonSimulation.play_ui_mln_day_night)
 
-	slot2 = slot0._summonSavedResultComp
-	slot3 = SummonSimulationPickModel.instance:getActInfo(slot1)
+	local var_13_0 = arg_13_0._summonSavedResultComp
+	local var_13_1 = SummonSimulationPickModel.instance:getActInfo(arg_13_1)
 
-	if slot3.leftTimes < slot3.maxCount - 1 then
+	if var_13_1.leftTimes < var_13_1.maxCount - 1 then
 		GameFacade.showToast(ToastEnum.SummonSimulationSaveResult)
 	end
 
-	slot2:setActive(true)
-	slot2:setParent(slot0._goSaveSavedResult)
-	gohelper.setActive(slot0._goSaveSelectRoot, true)
-	gohelper.setActive(slot0._goSaveSavedResult.transform.parent, true)
-	slot2:refreshData(slot3.saveHeroIds)
-	slot0:_resetSelectState(false, slot2)
-	slot0._animator:Play(slot0.SAVE_ANIMATION, 0, 0)
+	var_13_0:setActive(true)
+	var_13_0:setParent(arg_13_0._goSaveSavedResult)
+	gohelper.setActive(arg_13_0._goSaveSelectRoot, true)
+	gohelper.setActive(arg_13_0._goSaveSavedResult.transform.parent, true)
+	var_13_0:refreshData(var_13_1.saveHeroIds)
+	arg_13_0:_resetSelectState(false, var_13_0)
+	arg_13_0._animator:Play(arg_13_0.SAVE_ANIMATION, 0, 0)
 end
 
-function slot0._getDefaultState(slot0)
-	slot1 = SummonSimulationPickModel.instance:getActInfo(slot0._activityId)
+function var_0_0._getDefaultState(arg_14_0)
+	local var_14_0 = SummonSimulationPickModel.instance:getActInfo(arg_14_0._activityId)
 
-	if slot0.pickType == SummonSimulationEnum.PickType.SaveResult and slot1:haveSaveCurrent() or slot1:haveSelect() then
+	if arg_14_0.pickType == SummonSimulationEnum.PickType.SaveResult and var_14_0:haveSaveCurrent() or var_14_0:haveSelect() then
 		return SummonSimulationEnum.SaveType.Saved
 	end
 
 	return nil
 end
 
-function slot0._refreshConfirmBtnState(slot0)
-	if slot0.pickType == SummonSimulationEnum.PickType.SaveResult then
-		slot3 = SummonSimulationPickModel.instance:getActInfo(slot0._activityId):haveSaveCurrent()
+function var_0_0._refreshConfirmBtnState(arg_15_0)
+	if arg_15_0.pickType == SummonSimulationEnum.PickType.SaveResult then
+		local var_15_0 = SummonSimulationPickModel.instance:getActInfo(arg_15_0._activityId):haveSaveCurrent()
 
-		gohelper.setActive(slot0._goSaveUnSelectRoot, not slot3)
-		gohelper.setActive(slot0._goSaveSelectRoot, slot3)
+		gohelper.setActive(arg_15_0._goSaveUnSelectRoot, not var_15_0)
+		gohelper.setActive(arg_15_0._goSaveSelectRoot, var_15_0)
 	else
-		slot2 = slot0.selectType ~= nil
+		local var_15_1 = arg_15_0.selectType ~= nil
 
-		gohelper.setActive(slot0._goConfirmUnSelectRoot, not slot2)
-		gohelper.setActive(slot0._goConfirmSelectRoot, slot2)
+		gohelper.setActive(arg_15_0._goConfirmUnSelectRoot, not var_15_1)
+		gohelper.setActive(arg_15_0._goConfirmSelectRoot, var_15_1)
 	end
 end
 
-function slot0._refreshState(slot0)
-	slot1 = slot0.viewParam
-	slot2 = slot1.pickType
-	slot0.pickType = slot2
-	slot3 = slot1.activityId
-	slot0._activityId = slot3
-	slot4 = SummonSimulationPickModel.instance:getActInfo(slot3)
-	slot5 = slot2 == SummonSimulationEnum.PickType.SaveResult
+function var_0_0._refreshState(arg_16_0)
+	local var_16_0 = arg_16_0.viewParam
+	local var_16_1 = var_16_0.pickType
 
-	gohelper.setActive(slot0._goSaveRoot, slot5)
-	gohelper.setActive(slot0._goConfirmRoot, not slot5)
+	arg_16_0.pickType = var_16_1
 
-	slot9 = slot5 and slot4:haveSaveCurrent() or slot4:haveSelect()
+	local var_16_2 = var_16_0.activityId
 
-	gohelper.setActive((slot5 and slot0._goSaveSavedResult or slot0._goConfirmSavedResult).transform.parent, slot9)
-	gohelper.setActive((slot5 and slot0._goSaveCurrentResult or slot0._goConfirmCurrentResult).transform.parent, not slot9)
-	gohelper.setActive((slot5 and slot0._goSavePreviousResult or slot0._goConfirmPreviousResult).transform.parent, not slot9)
-	slot0._summonCurrentResultComp:setActive(not slot9)
-	slot0._summonPreviousResultComp:setActive(not slot9)
-	slot0._summonSavedResultComp:setActive(slot9)
+	arg_16_0._activityId = var_16_2
 
-	if not slot9 then
-		slot12:setParent(slot7)
-		slot12:refreshData(slot4.currentHeroIds, SummonSimulationEnum.SaveType.Current)
-		slot13:setParent(slot8)
-		slot13:refreshData(slot4.saveHeroIds, SummonSimulationEnum.SaveType.Saved)
+	local var_16_3 = SummonSimulationPickModel.instance:getActInfo(var_16_2)
+	local var_16_4 = var_16_1 == SummonSimulationEnum.PickType.SaveResult
+
+	gohelper.setActive(arg_16_0._goSaveRoot, var_16_4)
+	gohelper.setActive(arg_16_0._goConfirmRoot, not var_16_4)
+
+	local var_16_5 = var_16_4 and arg_16_0._goSaveSavedResult or arg_16_0._goConfirmSavedResult
+	local var_16_6 = var_16_4 and arg_16_0._goSaveCurrentResult or arg_16_0._goConfirmCurrentResult
+	local var_16_7 = var_16_4 and arg_16_0._goSavePreviousResult or arg_16_0._goConfirmPreviousResult
+	local var_16_8 = var_16_4 and var_16_3:haveSaveCurrent() or var_16_3:haveSelect()
+	local var_16_9 = var_16_3.currentHeroIds
+	local var_16_10 = var_16_3.saveHeroIds
+	local var_16_11 = arg_16_0._summonCurrentResultComp
+	local var_16_12 = arg_16_0._summonPreviousResultComp
+	local var_16_13 = arg_16_0._summonSavedResultComp
+
+	gohelper.setActive(var_16_5.transform.parent, var_16_8)
+	gohelper.setActive(var_16_6.transform.parent, not var_16_8)
+	gohelper.setActive(var_16_7.transform.parent, not var_16_8)
+	var_16_11:setActive(not var_16_8)
+	var_16_12:setActive(not var_16_8)
+	var_16_13:setActive(var_16_8)
+
+	if not var_16_8 then
+		var_16_11:setParent(var_16_6)
+		var_16_11:refreshData(var_16_9, SummonSimulationEnum.SaveType.Current)
+		var_16_12:setParent(var_16_7)
+		var_16_12:refreshData(var_16_10, SummonSimulationEnum.SaveType.Saved)
 	else
-		slot14:setParent(slot6)
-		slot14:refreshData(slot11, SummonSimulationEnum.SaveType.Saved)
+		var_16_13:setParent(var_16_5)
+		var_16_13:refreshData(var_16_10, SummonSimulationEnum.SaveType.Saved)
 	end
 
-	if not slot5 then
-		if not slot4:haveSelect() then
-			-- Nothing
-		end
-
-		slot0.selectType = SummonSimulationEnum.SaveType.Saved
-		slot0._txtresttime.text = string.format("<#E99B56>%s</color></size>/%s", slot4.leftTimes, slot4.maxCount)
+	if not var_16_4 and (var_16_3:haveSelect() or true) then
+		arg_16_0.selectType = SummonSimulationEnum.SaveType.Saved
+		arg_16_0._txtresttime.text = string.format("<#E99B56>%s</color></size>/%s", var_16_3.leftTimes, var_16_3.maxCount)
 	end
 
-	slot0:_resetSelectState(slot9 and not slot5, slot14)
+	arg_16_0:_resetSelectState(var_16_8 and not var_16_4, var_16_13)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._summonCurrentResultComp:onDestroy()
-	slot0._summonPreviousResultComp:onDestroy()
-	slot0._summonSavedResultComp:onDestroy()
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0._summonCurrentResultComp:onDestroy()
+	arg_17_0._summonPreviousResultComp:onDestroy()
+	arg_17_0._summonSavedResultComp:onDestroy()
 end
 
-return slot0
+return var_0_0

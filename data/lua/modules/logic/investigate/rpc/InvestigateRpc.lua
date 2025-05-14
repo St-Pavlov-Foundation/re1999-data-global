@@ -1,47 +1,54 @@
-module("modules.logic.investigate.rpc.InvestigateRpc", package.seeall)
+﻿module("modules.logic.investigate.rpc.InvestigateRpc", package.seeall)
 
-slot0 = class("InvestigateRpc", BaseRpc)
+local var_0_0 = class("InvestigateRpc", BaseRpc)
 
-function slot0.sendGetInvestigateRequest(slot0)
-	slot0:sendMsg(InvestigateModule_pb.GetInvestigateRequest())
+function var_0_0.sendGetInvestigateRequest(arg_1_0)
+	local var_1_0 = InvestigateModule_pb.GetInvestigateRequest()
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGetInvestigateReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetInvestigateReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	InvestigateOpinionModel.instance:initOpinionInfo(slot2.info)
+	local var_2_0 = arg_2_2.info
+
+	InvestigateOpinionModel.instance:initOpinionInfo(var_2_0)
 end
 
-function slot0.sendPutClueRequest(slot0, slot1, slot2)
-	slot3 = InvestigateModule_pb.PutClueRequest()
-	slot3.id = slot1
-	slot3.clueId = slot2
+function var_0_0.sendPutClueRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = InvestigateModule_pb.PutClueRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.id = arg_3_1
+	var_3_0.clueId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceivePutClueReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceivePutClueReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.id
-	slot4 = slot2.clueId
+	local var_4_0 = arg_4_2.id
+	local var_4_1 = arg_4_2.clueId
 
-	InvestigateOpinionModel.instance:setLinkedStatus(slot4, true)
-	InvestigateController.instance:dispatchEvent(InvestigateEvent.LinkedOpinionSuccess, slot4)
+	InvestigateOpinionModel.instance:setLinkedStatus(var_4_1, true)
+	InvestigateController.instance:dispatchEvent(InvestigateEvent.LinkedOpinionSuccess, var_4_1)
 end
 
-function slot0.onReceiveInvestigateInfoPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveInvestigateInfoPush(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	InvestigateOpinionModel.instance:initOpinionInfo(slot2.info)
+	local var_5_0 = arg_5_2.info
+
+	InvestigateOpinionModel.instance:initOpinionInfo(var_5_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

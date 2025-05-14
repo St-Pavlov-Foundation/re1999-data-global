@@ -1,38 +1,44 @@
-module("modules.logic.versionactivity2_2.eliminate.model.soldierSkillMo.SoliderSkillMOBase", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.soldierSkillMo.SoliderSkillMOBase", package.seeall)
 
-slot0 = class("SoliderSkillMOBase")
+local var_0_0 = class("SoliderSkillMOBase")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0._soldierId = slot1
-	slot0._uid = slot2
-	slot0._strongholdId = slot3
-	slot0._selectSoliderIds = {}
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._soldierId = arg_1_1
+	arg_1_0._uid = arg_1_2
+	arg_1_0._strongholdId = arg_1_3
+	arg_1_0._selectSoliderIds = {}
 
-	slot0:initSkill()
+	arg_1_0:initSkill()
 end
 
-function slot0.initSkill(slot0)
-	slot1, slot0._needSelectSoliderCount, slot3 = EliminateTeamChessModel.instance:getSoliderIdEffectParam(slot0._soldierId)
+function var_0_0.initSkill(arg_2_0)
+	local var_2_0, var_2_1, var_2_2 = EliminateTeamChessModel.instance:getSoliderIdEffectParam(arg_2_0._soldierId)
 
-	if slot1 ~= nil then
-		slot0._needSelectSoliderType = slot1
-		slot0._needSelectSoliderCount = EliminateTeamChessModel.instance:haveSoliderByTeamTypeAndStrongholdId(slot0._needSelectSoliderType, slot3 and slot0._strongholdId or nil) and slot0._needSelectSoliderCount or 0
+	if var_2_0 ~= nil then
+		arg_2_0._needSelectSoliderCount = var_2_1
+		arg_2_0._needSelectSoliderType = var_2_0
+		arg_2_0._needSelectSoliderCount = EliminateTeamChessModel.instance:haveSoliderByTeamTypeAndStrongholdId(arg_2_0._needSelectSoliderType, var_2_2 and arg_2_0._strongholdId or nil) and arg_2_0._needSelectSoliderCount or 0
 	else
-		slot0._needSelectSoliderCount = 0
+		arg_2_0._needSelectSoliderCount = 0
 	end
 end
 
-function slot0.setSelectSoliderId(slot0, slot1)
-	if slot0:canRelease() then
+function var_0_0.setSelectSoliderId(arg_3_0, arg_3_1)
+	if arg_3_0:canRelease() then
 		return true
 	end
 
-	if tonumber(slot1) == EliminateTeamChessEnum.tempPieceUid then
+	local var_3_0 = tonumber(arg_3_1)
+
+	if var_3_0 == EliminateTeamChessEnum.tempPieceUid then
 		return false
 	end
 
-	if slot2 > 0 and slot0._needSelectSoliderType == EliminateTeamChessEnum.TeamChessTeamType.player or slot2 < 0 and slot0._needSelectSoliderType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		table.insert(slot0._selectSoliderIds, slot1)
+	local var_3_1 = EliminateTeamChessEnum.TeamChessTeamType.player
+	local var_3_2 = EliminateTeamChessEnum.TeamChessTeamType.enemy
+
+	if var_3_0 > 0 and arg_3_0._needSelectSoliderType == var_3_1 or var_3_0 < 0 and arg_3_0._needSelectSoliderType == var_3_2 then
+		table.insert(arg_3_0._selectSoliderIds, arg_3_1)
 
 		return true
 	end
@@ -40,36 +46,38 @@ function slot0.setSelectSoliderId(slot0, slot1)
 	return false
 end
 
-function slot0.getNeedSelectSoliderType(slot0)
-	return slot0._needSelectSoliderType
+function var_0_0.getNeedSelectSoliderType(arg_4_0)
+	return arg_4_0._needSelectSoliderType
 end
 
-function slot0.canRelease(slot0)
-	if slot0._needSelectSoliderCount then
-		return slot0._needSelectSoliderCount <= #slot0._selectSoliderIds
+function var_0_0.canRelease(arg_5_0)
+	if arg_5_0._needSelectSoliderCount then
+		return #arg_5_0._selectSoliderIds >= arg_5_0._needSelectSoliderCount
 	end
 
 	return true
 end
 
-function slot0._getReleaseExParam(slot0)
-	if slot0._selectSoliderIds and #slot0._selectSoliderIds > 0 then
-		return slot0._selectSoliderIds[1]
+function var_0_0._getReleaseExParam(arg_6_0)
+	if arg_6_0._selectSoliderIds and #arg_6_0._selectSoliderIds > 0 then
+		return arg_6_0._selectSoliderIds[1]
 	end
 
 	return ""
 end
 
-function slot0.needClearTemp(slot0)
-	return slot0._needSelectSoliderCount > 0
+function var_0_0.needClearTemp(arg_7_0)
+	return arg_7_0._needSelectSoliderCount > 0
 end
 
-function slot0.releaseSkill(slot0, slot1, slot2)
-	if slot0:canRelease() then
-		EliminateTeamChessController.instance:sendWarChessPiecePlaceRequest(slot0._soldierId, slot0._uid, slot0._strongholdId, slot0:_getReleaseExParam(), slot1, slot2)
+function var_0_0.releaseSkill(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0:canRelease() then
+		local var_8_0 = arg_8_0:_getReleaseExParam()
+
+		EliminateTeamChessController.instance:sendWarChessPiecePlaceRequest(arg_8_0._soldierId, arg_8_0._uid, arg_8_0._strongholdId, var_8_0, arg_8_1, arg_8_2)
 	end
 
-	return slot0:canRelease()
+	return arg_8_0:canRelease()
 end
 
-return slot0
+return var_0_0

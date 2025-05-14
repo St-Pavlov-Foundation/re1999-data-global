@@ -1,134 +1,140 @@
-module("modules.logic.versionactivity1_4.dungeon.view.VersionActivity1_4DungeonItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.dungeon.view.VersionActivity1_4DungeonItem", package.seeall)
 
-slot0 = class("VersionActivity1_4DungeonItem", LuaCompBase)
+local var_0_0 = class("VersionActivity1_4DungeonItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._imagepoint = gohelper.findChildImage(slot0.viewGO, "#image_point")
-	slot0._imageline = gohelper.findChildImage(slot0.viewGO, "#image_line")
-	slot0._goUnlock = gohelper.findChild(slot0.viewGO, "unlock")
-	slot0._imagestagefinish = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stagefinish")
-	slot0._txtstagename = gohelper.findChildText(slot0.viewGO, "unlock/info/#txt_stagename")
-	slot0._txtstagenum = gohelper.findChildText(slot0.viewGO, "unlock/info/#txt_stageNum")
-	slot0._stars = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_point")
+	arg_1_0._imageline = gohelper.findChildImage(arg_1_0.viewGO, "#image_line")
+	arg_1_0._goUnlock = gohelper.findChild(arg_1_0.viewGO, "unlock")
+	arg_1_0._imagestagefinish = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stagefinish")
+	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stagename")
+	arg_1_0._txtstagenum = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stageNum")
+	arg_1_0._stars = {}
 
-	for slot5 = 1, 1 do
-		slot6 = slot0:getUserDataTb_()
-		slot6.index = slot5
-		slot6.go = gohelper.findChild(slot0.viewGO, "unlock/info/#go_star" .. slot5)
-		slot6.has = gohelper.findChild(slot6.go, "has")
-		slot6.no = gohelper.findChild(slot6.go, "no")
+	for iter_1_0 = 1, 1 do
+		local var_1_0 = arg_1_0:getUserDataTb_()
 
-		table.insert(slot0._stars, slot6)
+		var_1_0.index = iter_1_0
+		var_1_0.go = gohelper.findChild(arg_1_0.viewGO, "unlock/info/#go_star" .. iter_1_0)
+		var_1_0.has = gohelper.findChild(var_1_0.go, "has")
+		var_1_0.no = gohelper.findChild(var_1_0.go, "no")
+
+		table.insert(arg_1_0._stars, var_1_0)
 	end
 
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "unlock/#btn_click")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if not slot0._config then
+function var_0_0._btnclickOnClick(arg_4_0)
+	if not arg_4_0._config then
 		return
 	end
 
-	if DungeonModel.instance:isCanChallenge(slot0._config) then
-		VersionActivity1_4DungeonModel.instance:setSelectEpisodeId(slot0._config.id)
+	if DungeonModel.instance:isCanChallenge(arg_4_0._config) then
+		VersionActivity1_4DungeonModel.instance:setSelectEpisodeId(arg_4_0._config.id)
 		ViewMgr.instance:openView(ViewName.VersionActivity1_4DungeonEpisodeView, {
-			episodeId = slot0._config.id
+			episodeId = arg_4_0._config.id
 		})
 	else
 		GameFacade.showToast(ToastEnum.V1a4_act130EpisodeNotUnlock)
 	end
 end
 
-function slot0.refreshItem(slot0, slot1, slot2)
-	slot0._config = slot1
+function var_0_0.refreshItem(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._config = arg_5_1
 
-	if not slot1 then
-		gohelper.setActive(slot0.viewGO, false)
+	if not arg_5_1 then
+		gohelper.setActive(arg_5_0.viewGO, false)
 
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0.playAnim, slot0)
-	gohelper.setActive(slot0.viewGO, true)
+	TaskDispatcher.cancelTask(arg_5_0.playAnim, arg_5_0)
+	gohelper.setActive(arg_5_0.viewGO, true)
 
-	slot3 = DungeonModel.instance:isCanChallenge(slot1)
+	local var_5_0 = DungeonModel.instance:isCanChallenge(arg_5_1)
 
-	gohelper.setActive(slot0._goUnlock, slot3)
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(slot0._imagepoint, slot3 and "v1a4_dungeon_stagebase2" or "v1a4_dungeon_stagebase1")
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(slot0._imageline, "v1a4_dungeon_stagebaseline2")
-	gohelper.setActive(slot0._imageline, slot3)
+	gohelper.setActive(arg_5_0._goUnlock, var_5_0)
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_5_0._imagepoint, var_5_0 and "v1a4_dungeon_stagebase2" or "v1a4_dungeon_stagebase1")
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_5_0._imageline, "v1a4_dungeon_stagebaseline2")
+	gohelper.setActive(arg_5_0._imageline, var_5_0)
 
-	slot4 = false
+	local var_5_1 = false
 
-	if slot3 then
-		slot0._txtstagename.text = slot1.name
-		slot0._txtstagenum.text = GameUtil.fillZeroInLeft(slot2, 2)
-		slot6 = DungeonModel.instance:getEpisodeInfo(slot1.id) and slot5.star or 0
+	if var_5_0 then
+		arg_5_0._txtstagename.text = arg_5_1.name
+		arg_5_0._txtstagenum.text = GameUtil.fillZeroInLeft(arg_5_2, 2)
 
-		for slot10, slot11 in pairs(slot0._stars) do
-			gohelper.setActive(slot11.has, slot11.index <= slot6)
-			gohelper.setActive(slot11.no, slot6 < slot11.index)
+		local var_5_2 = DungeonModel.instance:getEpisodeInfo(arg_5_1.id)
+		local var_5_3 = var_5_2 and var_5_2.star or 0
+
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._stars) do
+			gohelper.setActive(iter_5_1.has, var_5_3 >= iter_5_1.index)
+			gohelper.setActive(iter_5_1.no, var_5_3 < iter_5_1.index)
 		end
 
-		slot7 = DungeonModel.instance:hasPassLevel(slot1.id)
-		slot8 = "v1a4_dungeon_stagebg1"
+		local var_5_4 = DungeonModel.instance:hasPassLevel(arg_5_1.id)
+		local var_5_5 = "v1a4_dungeon_stagebg1"
+		local var_5_6 = arg_5_2 == 5 and (var_5_4 and "v1a4_dungeon_stagebg3" or "v1a4_dungeon_stagebg4") or var_5_4 and "v1a4_dungeon_stagebg1" or "v1a4_dungeon_stagebg2"
 
-		UISpriteSetMgr.instance:setV1a4Role37Sprite(slot0._imagestagefinish, slot2 == 5 and (slot7 and "v1a4_dungeon_stagebg3" or "v1a4_dungeon_stagebg4") or slot7 and "v1a4_dungeon_stagebg1" or "v1a4_dungeon_stagebg2")
+		UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_5_0._imagestagefinish, var_5_6)
 
-		if slot7 then
-			if VersionActivity1_4DungeonModel.instance:getEpisodeState(slot1.id) < 2 then
-				slot0.animName = "finish"
+		local var_5_7 = VersionActivity1_4DungeonModel.instance:getEpisodeState(arg_5_1.id)
 
-				slot0:playAnim()
+		if var_5_4 then
+			if var_5_7 < 2 then
+				arg_5_0.animName = "finish"
+
+				arg_5_0:playAnim()
 			else
-				slot0.animName = "open"
+				arg_5_0.animName = "open"
 
-				slot0:playAnim()
+				arg_5_0:playAnim()
 			end
-		elseif slot9 < 1 then
-			gohelper.setActive(slot0.viewGO, false)
+		elseif var_5_7 < 1 then
+			gohelper.setActive(arg_5_0.viewGO, false)
 
-			slot0.animName = "unlock"
+			arg_5_0.animName = "unlock"
 
-			TaskDispatcher.runDelay(slot0.playAnim, slot0, 1.67)
+			TaskDispatcher.runDelay(arg_5_0.playAnim, arg_5_0, 1.67)
 
-			slot4 = true
+			var_5_1 = true
 		else
-			slot0.animName = "open"
+			arg_5_0.animName = "open"
 
-			slot0:playAnim()
+			arg_5_0:playAnim()
 		end
 	end
 
-	return slot4, slot3
+	return var_5_1, var_5_0
 end
 
-function slot0.playAnim(slot0)
-	gohelper.setActive(slot0.viewGO, true)
-	slot0._animator:Play(slot0.animName)
+function var_0_0.playAnim(arg_6_0)
+	gohelper.setActive(arg_6_0.viewGO, true)
+	arg_6_0._animator:Play(arg_6_0.animName)
 
-	if slot0.animName == "unlock" then
+	if arg_6_0.animName == "unlock" then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_deblockingmap)
-		VersionActivity1_4DungeonModel.instance:setEpisodeState(slot0._config.id, 1)
-	elseif slot0.animName == "finish" then
-		VersionActivity1_4DungeonModel.instance:setEpisodeState(slot0._config.id, 2)
+		VersionActivity1_4DungeonModel.instance:setEpisodeState(arg_6_0._config.id, 1)
+	elseif arg_6_0.animName == "finish" then
+		VersionActivity1_4DungeonModel.instance:setEpisodeState(arg_6_0._config.id, 2)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.playAnim, slot0)
-	slot0:removeEventListeners()
-	slot0:__onDispose()
+function var_0_0.onDestroy(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.playAnim, arg_7_0)
+	arg_7_0:removeEventListeners()
+	arg_7_0:__onDispose()
 end
 
-return slot0
+return var_0_0

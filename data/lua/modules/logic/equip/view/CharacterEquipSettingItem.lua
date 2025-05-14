@@ -1,37 +1,39 @@
-module("modules.logic.equip.view.CharacterEquipSettingItem", package.seeall)
+﻿module("modules.logic.equip.view.CharacterEquipSettingItem", package.seeall)
 
-slot0 = class("CharacterEquipSettingItem", ListScrollCellExtend)
+local var_0_0 = class("CharacterEquipSettingItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goequip = gohelper.findChild(slot0.viewGO, "#go_equip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_equip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.click = gohelper.getClick(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.click = gohelper.getClick(arg_4_0.viewGO)
 
-	slot0.click:AddClickListener(slot0.onClickEquip, slot0)
+	arg_4_0.click:AddClickListener(arg_4_0.onClickEquip, arg_4_0)
 
-	slot0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(slot0._goequip, 0.85)
+	arg_4_0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(arg_4_0._goequip, 0.85)
 
-	EquipController.instance:registerCallback(EquipEvent.ChangeSelectedEquip, slot0.refreshSelect, slot0)
+	EquipController.instance:registerCallback(EquipEvent.ChangeSelectedEquip, arg_4_0.refreshSelect, arg_4_0)
 end
 
-function slot0.onClickEquip(slot0)
-	slot0.isSelect = not slot0.isSelect
+function var_0_0.onClickEquip(arg_5_0)
+	arg_5_0.isSelect = not arg_5_0.isSelect
 
-	if slot0.isSelect then
+	if arg_5_0.isSelect then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-		CharacterEquipSettingListModel.instance:setCurrentSelectEquipMo(slot0.equipMo)
+		CharacterEquipSettingListModel.instance:setCurrentSelectEquipMo(arg_5_0.equipMo)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Forget)
 		CharacterEquipSettingListModel.instance:setCurrentSelectEquipMo(nil)
@@ -40,29 +42,29 @@ function slot0.onClickEquip(slot0)
 	EquipController.instance:dispatchEvent(EquipEvent.ChangeSelectedEquip)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.equipMo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0.equipMo = arg_6_1
 
-	slot0._commonEquipIcon:setSelectUIVisible(true)
-	slot0._commonEquipIcon:hideLockIcon()
-	slot0._commonEquipIcon:setEquipMO(slot0.equipMo)
-	slot0._commonEquipIcon:isShowRefineLv(true)
-	slot0._commonEquipIcon:setCountFontSize(33)
-	slot0._commonEquipIcon:setLevelPos(24, -2)
-	slot0._commonEquipIcon:setLevelFontColor("#ffffff")
-	slot0._commonEquipIcon:checkRecommend()
-	slot0:refreshSelect()
+	arg_6_0._commonEquipIcon:setSelectUIVisible(true)
+	arg_6_0._commonEquipIcon:hideLockIcon()
+	arg_6_0._commonEquipIcon:setEquipMO(arg_6_0.equipMo)
+	arg_6_0._commonEquipIcon:isShowRefineLv(true)
+	arg_6_0._commonEquipIcon:setCountFontSize(33)
+	arg_6_0._commonEquipIcon:setLevelPos(24, -2)
+	arg_6_0._commonEquipIcon:setLevelFontColor("#ffffff")
+	arg_6_0._commonEquipIcon:checkRecommend()
+	arg_6_0:refreshSelect()
 end
 
-function slot0.refreshSelect(slot0)
-	slot0.isSelect = CharacterEquipSettingListModel.instance:isSelectedEquip(slot0.equipMo.uid)
+function var_0_0.refreshSelect(arg_7_0)
+	arg_7_0.isSelect = CharacterEquipSettingListModel.instance:isSelectedEquip(arg_7_0.equipMo.uid)
 
-	slot0._commonEquipIcon:onSelect(slot0.isSelect)
+	arg_7_0._commonEquipIcon:onSelect(arg_7_0.isSelect)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.click:RemoveClickListener()
-	EquipController.instance:unregisterCallback(EquipEvent.ChangeSelectedEquip, slot0.refreshSelect, slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0.click:RemoveClickListener()
+	EquipController.instance:unregisterCallback(EquipEvent.ChangeSelectedEquip, arg_8_0.refreshSelect, arg_8_0)
 end
 
-return slot0
+return var_0_0

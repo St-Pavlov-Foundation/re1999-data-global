@@ -1,62 +1,71 @@
-module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3079_Buff", package.seeall)
+﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3079_Buff", package.seeall)
 
-slot0 = class("FightEntitySpecialEffect3079_Buff", FightEntitySpecialEffectBase)
+local var_0_0 = class("FightEntitySpecialEffect3079_Buff", FightEntitySpecialEffectBase)
 
-function slot0.initClass(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
+function var_0_0.initClass(arg_1_0)
+	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
 
-	slot0._showBuffIdList = {}
+	arg_1_0._showBuffIdList = {}
 end
 
-slot1 = 1.5
-slot2 = 0.9
+local var_0_1 = 1.5
+local var_0_2 = 0.9
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if slot1 ~= slot0._entity.id then
+function var_0_0._onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
+	if arg_2_1 ~= arg_2_0._entity.id then
 		return
 	end
 
-	if not slot6 then
+	if not arg_2_6 then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot6.fromUid) then
+	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_6.fromUid)
+
+	if not var_2_0 then
 		return
 	end
 
-	slot8 = lua_fight_6_buff_effect.configDict[slot7.skin] or lua_fight_6_buff_effect.configDict[0]
+	local var_2_1 = lua_fight_6_buff_effect.configDict[var_2_0.skin] or lua_fight_6_buff_effect.configDict[0]
 
-	if slot8 and slot8[slot3] and slot2 == FightEnum.EffectType.BUFFADD then
-		table.insert(slot0._showBuffIdList, {
-			buffId = slot3,
-			config = slot8
+	var_2_1 = var_2_1 and var_2_1[arg_2_3]
+
+	if var_2_1 and arg_2_2 == FightEnum.EffectType.BUFFADD then
+		table.insert(arg_2_0._showBuffIdList, {
+			buffId = arg_2_3,
+			config = var_2_1
 		})
 
-		if not slot0._playing then
-			slot0:_showBuffEffect()
+		if not arg_2_0._playing then
+			arg_2_0:_showBuffEffect()
 		end
 	end
 end
 
-function slot0._showBuffEffect(slot0)
-	if table.remove(slot0._showBuffIdList, 1) then
-		slot0._playing = true
-		slot4 = slot0._entity.effect:addHangEffect(slot2.effect, string.nilorempty(slot1.config.effectHang) and ModuleEnum.SpineHangPointRoot or slot2.effectHang, nil, uv0)
+function var_0_0._showBuffEffect(arg_3_0)
+	local var_3_0 = table.remove(arg_3_0._showBuffIdList, 1)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(slot0._entity.id, slot4)
-		slot4:setLocalPos(0, 0, 0)
-		TaskDispatcher.runDelay(slot0._showBuffEffect, slot0, uv1)
+	if var_3_0 then
+		arg_3_0._playing = true
 
-		if slot2.audioId ~= 0 then
-			AudioMgr.instance:trigger(slot2.audioId)
+		local var_3_1 = var_3_0.config
+		local var_3_2 = string.nilorempty(var_3_1.effectHang) and ModuleEnum.SpineHangPointRoot or var_3_1.effectHang
+		local var_3_3 = arg_3_0._entity.effect:addHangEffect(var_3_1.effect, var_3_2, nil, var_0_1)
+
+		FightRenderOrderMgr.instance:onAddEffectWrap(arg_3_0._entity.id, var_3_3)
+		var_3_3:setLocalPos(0, 0, 0)
+		TaskDispatcher.runDelay(arg_3_0._showBuffEffect, arg_3_0, var_0_2)
+
+		if var_3_1.audioId ~= 0 then
+			AudioMgr.instance:trigger(var_3_1.audioId)
 		end
 	else
-		slot0._playing = false
+		arg_3_0._playing = false
 	end
 end
 
-function slot0.releaseSelf(slot0)
-	TaskDispatcher.cancelTask(slot0._showBuffEffect, slot0)
+function var_0_0.releaseSelf(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._showBuffEffect, arg_4_0)
 end
 
-return slot0
+return var_0_0

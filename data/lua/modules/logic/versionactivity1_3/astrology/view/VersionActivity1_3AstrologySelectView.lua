@@ -1,284 +1,308 @@
-module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologySelectView", package.seeall)
+﻿module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologySelectView", package.seeall)
 
-slot0 = class("VersionActivity1_3AstrologySelectView", BaseView)
+local var_0_0 = class("VersionActivity1_3AstrologySelectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageDec1 = gohelper.findChildSingleImage(slot0.viewGO, "SelectStar/#simage_Dec1")
-	slot0._simageDec2 = gohelper.findChildSingleImage(slot0.viewGO, "SelectStar/#simage_Dec2")
-	slot0._scrollPlanetList = gohelper.findChildScrollRect(slot0.viewGO, "SelectStar/#scroll_PlanetList")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "SelectStar/#scroll_PlanetList/Viewport/#go_content")
-	slot0._txtStarName = gohelper.findChildText(slot0.viewGO, "SelectStar/#txt_StarName")
-	slot0._txtAdjustTimes = gohelper.findChildText(slot0.viewGO, "SelectStar/AdjustTimes/image_AdjustTimesBG/#txt_AdjustTimes")
-	slot0._txtCurrentAngle = gohelper.findChildText(slot0.viewGO, "CurrentAngle/image_CurrentAngleBG/#txt_CurrentAngle")
-	slot0._goBtns = gohelper.findChild(slot0.viewGO, "#go_Btns")
-	slot0._goToGet = gohelper.findChild(slot0.viewGO, "#go_Btns/#go_ToGet")
-	slot0._btnToGet = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Btns/#go_ToGet/#btn_ToGet")
-	slot0._txtToGetTips = gohelper.findChildText(slot0.viewGO, "#go_Btns/#go_ToGet/#txt_ToGetTips")
-	slot0._goConfirm = gohelper.findChild(slot0.viewGO, "#go_Btns/#go_Confirm")
-	slot0._btnConfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Btns/#go_Confirm/#btn_Confirm")
-	slot0._txtConfirmTips = gohelper.findChildText(slot0.viewGO, "#go_Btns/#go_Confirm/#txt_ConfirmTips")
-	slot0._goTips = gohelper.findChild(slot0.viewGO, "#go_Btns/#go_Tips")
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "#go_Btns/#go_Tips/#txt_Tips")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageDec1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "SelectStar/#simage_Dec1")
+	arg_1_0._simageDec2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "SelectStar/#simage_Dec2")
+	arg_1_0._scrollPlanetList = gohelper.findChildScrollRect(arg_1_0.viewGO, "SelectStar/#scroll_PlanetList")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "SelectStar/#scroll_PlanetList/Viewport/#go_content")
+	arg_1_0._txtStarName = gohelper.findChildText(arg_1_0.viewGO, "SelectStar/#txt_StarName")
+	arg_1_0._txtAdjustTimes = gohelper.findChildText(arg_1_0.viewGO, "SelectStar/AdjustTimes/image_AdjustTimesBG/#txt_AdjustTimes")
+	arg_1_0._txtCurrentAngle = gohelper.findChildText(arg_1_0.viewGO, "CurrentAngle/image_CurrentAngleBG/#txt_CurrentAngle")
+	arg_1_0._goBtns = gohelper.findChild(arg_1_0.viewGO, "#go_Btns")
+	arg_1_0._goToGet = gohelper.findChild(arg_1_0.viewGO, "#go_Btns/#go_ToGet")
+	arg_1_0._btnToGet = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Btns/#go_ToGet/#btn_ToGet")
+	arg_1_0._txtToGetTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Btns/#go_ToGet/#txt_ToGetTips")
+	arg_1_0._goConfirm = gohelper.findChild(arg_1_0.viewGO, "#go_Btns/#go_Confirm")
+	arg_1_0._btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Btns/#go_Confirm/#btn_Confirm")
+	arg_1_0._txtConfirmTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Btns/#go_Confirm/#txt_ConfirmTips")
+	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "#go_Btns/#go_Tips")
+	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_Btns/#go_Tips/#txt_Tips")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnToGet:AddClickListener(slot0._btnToGetOnClick, slot0)
-	slot0._btnConfirm:AddClickListener(slot0._btnConfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnToGet:AddClickListener(arg_2_0._btnToGetOnClick, arg_2_0)
+	arg_2_0._btnConfirm:AddClickListener(arg_2_0._btnConfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnToGet:RemoveClickListener()
-	slot0._btnConfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnToGet:RemoveClickListener()
+	arg_3_0._btnConfirm:RemoveClickListener()
 end
 
-function slot0._btnToGetOnClick(slot0)
+function var_0_0._btnToGetOnClick(arg_4_0)
 	JumpController.instance:jump(VersionActivity1_3DungeonEnum.JumpDaily)
 end
 
-function slot0._btnConfirmOnClick(slot0)
-	slot0.viewContainer:sendUpdateProgressRequest()
+function var_0_0._btnConfirmOnClick(arg_5_0)
+	arg_5_0.viewContainer:sendUpdateProgressRequest()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewPortTrans = slot0._gocontent.transform.parent
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._viewPortTrans = arg_6_0._gocontent.transform.parent
 
-	slot0:_addItems()
-	slot0:addEventCb(VersionActivity1_3AstrologyController.instance, VersionActivity1_3AstrologyEvent.adjustPreviewAngle, slot0._adjustPreviewAngle, slot0)
-	slot0:addEventCb(Activity126Controller.instance, Activity126Event.onUpdateProgressReply, slot0._onUpdateProgressReply, slot0)
-	slot0:addEventCb(Activity126Controller.instance, Activity126Event.onGetHoroscopeReply, slot0._onGetHoroscopeReply, slot0)
+	arg_6_0:_addItems()
+	arg_6_0:addEventCb(VersionActivity1_3AstrologyController.instance, VersionActivity1_3AstrologyEvent.adjustPreviewAngle, arg_6_0._adjustPreviewAngle, arg_6_0)
+	arg_6_0:addEventCb(Activity126Controller.instance, Activity126Event.onUpdateProgressReply, arg_6_0._onUpdateProgressReply, arg_6_0)
+	arg_6_0:addEventCb(Activity126Controller.instance, Activity126Event.onGetHoroscopeReply, arg_6_0._onGetHoroscopeReply, arg_6_0)
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._viewPortTrans.gameObject)
+	arg_6_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_6_0._viewPortTrans.gameObject)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBeginHandler, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEndHandler, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
+	arg_6_0._drag:AddDragBeginListener(arg_6_0._onDragBeginHandler, arg_6_0)
+	arg_6_0._drag:AddDragEndListener(arg_6_0._onDragEndHandler, arg_6_0)
+	arg_6_0._drag:AddDragListener(arg_6_0._onDrag, arg_6_0)
 end
 
-function slot0._onDragBeginHandler(slot0, slot1, slot2)
-	slot0._startDragPos = recthelper.screenPosToAnchorPos(slot2.position, slot0._viewPortTrans)
-	slot0._selectedIndex = tabletool.indexOf(slot0._planetMoList, slot0._selectedItem:getPlanetMo())
+function var_0_0._onDragBeginHandler(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._startDragPos = recthelper.screenPosToAnchorPos(arg_7_2.position, arg_7_0._viewPortTrans)
+	arg_7_0._selectedIndex = tabletool.indexOf(arg_7_0._planetMoList, arg_7_0._selectedItem:getPlanetMo())
 end
 
-function slot0._onDragEndHandler(slot0, slot1, slot2)
+function var_0_0._onDragEndHandler(arg_8_0, arg_8_1, arg_8_2)
+	return
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0._startDragPos then
+function var_0_0._onDrag(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._startDragPos then
 		return
 	end
 
-	slot4 = recthelper.screenPosToAnchorPos(slot2.position, slot0._viewPortTrans) - slot0._startDragPos
-	slot5 = math.floor(math.abs(slot4.x) / 120)
+	local var_9_0 = recthelper.screenPosToAnchorPos(arg_9_2.position, arg_9_0._viewPortTrans) - arg_9_0._startDragPos
+	local var_9_1 = math.floor(math.abs(var_9_0.x) / 120)
+	local var_9_2 = arg_9_0._selectedIndex + (var_9_0.x > 0 and -var_9_1 or var_9_1)
+	local var_9_3 = arg_9_0._planetMoList[var_9_2]
 
-	if slot0._planetMoList[slot0._selectedIndex + (slot4.x > 0 and -slot5 or slot5)] then
-		slot0:setSelected(slot0._itemList[slot7.id])
+	if var_9_3 then
+		local var_9_4 = arg_9_0._itemList[var_9_3.id]
+
+		arg_9_0:setSelected(var_9_4)
 	end
 end
 
-function slot0._onGetHoroscopeReply(slot0)
+function var_0_0._onGetHoroscopeReply(arg_10_0)
+	return
 end
 
-function slot0._onUpdateProgressReply(slot0, slot1)
-	if slot1 and slot1.fromReset then
-		slot0:_sortAndSelectFirst()
-		slot0:_refresh()
+function var_0_0._onUpdateProgressReply(arg_11_0, arg_11_1)
+	if arg_11_1 and arg_11_1.fromReset then
+		arg_11_0:_sortAndSelectFirst()
+		arg_11_0:_refresh()
 	else
 		if not VersionActivity1_3AstrologyModel.instance:getStarReward() then
-			slot0:_refresh()
+			arg_11_0:_refresh()
 
 			return
 		end
 
-		TaskDispatcher.cancelTask(slot0._refresh, slot0)
-		TaskDispatcher.runDelay(slot0._refresh, slot0, 2.5)
+		TaskDispatcher.cancelTask(arg_11_0._refresh, arg_11_0)
+		TaskDispatcher.runDelay(arg_11_0._refresh, arg_11_0, 2.5)
 	end
 end
 
-function slot0._refresh(slot0)
-	slot0:updateItemNum()
-	slot0:_updatePlanetItemInfo()
+function var_0_0._refresh(arg_12_0)
+	arg_12_0:updateItemNum()
+	arg_12_0:_updatePlanetItemInfo()
 end
 
-function slot0._adjustPreviewAngle(slot0)
-	slot0:_updatePlanetItemInfo()
+function var_0_0._adjustPreviewAngle(arg_13_0)
+	arg_13_0:_updatePlanetItemInfo()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_14_0)
+	return
 end
 
-function slot0._sortItems(slot0)
-	table.sort(slot0._planetMoList, uv0._sort)
+function var_0_0._sortItems(arg_15_0)
+	table.sort(arg_15_0._planetMoList, var_0_0._sort)
 
-	for slot4, slot5 in ipairs(slot0._planetMoList) do
-		gohelper.setAsLastSibling(slot0._itemList[slot5.id].viewGO)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._planetMoList) do
+		local var_15_0 = arg_15_0._itemList[iter_15_1.id]
+
+		gohelper.setAsLastSibling(var_15_0.viewGO)
 	end
 end
 
-function slot0._sort(slot0, slot1)
-	if slot0.num > 0 and slot1.num > 0 then
-		return slot0.id < slot1.id
-	elseif slot2 then
+function var_0_0._sort(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.num > 0
+	local var_16_1 = arg_16_1.num > 0
+
+	if var_16_0 and var_16_1 then
+		return arg_16_0.id < arg_16_1.id
+	elseif var_16_0 then
 		return true
-	elseif slot3 then
+	elseif var_16_1 then
 		return false
 	end
 
-	return slot0.id < slot1.id
+	return arg_16_0.id < arg_16_1.id
 end
 
-function slot0._addItems(slot0)
-	slot0._itemList = slot0:getUserDataTb_()
-	slot0._planetMoList = {}
+function var_0_0._addItems(arg_17_0)
+	arg_17_0._itemList = arg_17_0:getUserDataTb_()
+	arg_17_0._planetMoList = {}
 
-	for slot5 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		slot7 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocontent), VersionActivity1_3AstrologyPlanetItem, {
-			slot5,
-			slot0
+	local var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[1]
+
+	for iter_17_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local var_17_1 = arg_17_0:getResInst(var_17_0, arg_17_0._gocontent)
+		local var_17_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, VersionActivity1_3AstrologyPlanetItem, {
+			iter_17_0,
+			arg_17_0
 		})
-		slot0._itemList[slot5] = slot7
 
-		table.insert(slot0._planetMoList, slot7:getPlanetMo())
+		arg_17_0._itemList[iter_17_0] = var_17_2
+
+		table.insert(arg_17_0._planetMoList, var_17_2:getPlanetMo())
 	end
 
-	slot0:_sortAndSelectFirst()
+	arg_17_0:_sortAndSelectFirst()
 end
 
-function slot0._sortAndSelectFirst(slot0)
-	slot0:_sortItems()
-	slot0:setSelected(slot0._itemList[slot0._planetMoList[1].id])
+function var_0_0._sortAndSelectFirst(arg_18_0)
+	arg_18_0:_sortItems()
+	arg_18_0:setSelected(arg_18_0._itemList[arg_18_0._planetMoList[1].id])
 end
 
-function slot0.setSelected(slot0, slot1)
-	if slot0._selectedItem == slot1 then
+function var_0_0.setSelected(arg_19_0, arg_19_1)
+	if arg_19_0._selectedItem == arg_19_1 then
 		return
 	end
 
-	slot0._selectedItem = slot1
-	slot0._planetMo = slot0._selectedItem:getPlanetMo()
-	slot0._txtStarName.text = slot0._planetMo:getItemName()
+	arg_19_0._selectedItem = arg_19_1
+	arg_19_0._planetMo = arg_19_0._selectedItem:getPlanetMo()
+	arg_19_0._txtStarName.text = arg_19_0._planetMo:getItemName()
 
-	for slot5, slot6 in pairs(slot0._itemList) do
-		slot6:setSelected(slot6 == slot1)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._itemList) do
+		iter_19_1:setSelected(iter_19_1 == arg_19_1)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._gocontent.transform)
-	TaskDispatcher.cancelTask(slot0._focusItem, slot0)
-	TaskDispatcher.runDelay(slot0._focusItem, slot0, 0)
-	VersionActivity1_3AstrologyController.instance:dispatchEvent(VersionActivity1_3AstrologyEvent.selectPlanetItem, slot1)
-	slot0:_updatePlanetItemInfo()
+	ZProj.UGUIHelper.RebuildLayout(arg_19_0._gocontent.transform)
+	TaskDispatcher.cancelTask(arg_19_0._focusItem, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0._focusItem, arg_19_0, 0)
+	VersionActivity1_3AstrologyController.instance:dispatchEvent(VersionActivity1_3AstrologyEvent.selectPlanetItem, arg_19_1)
+	arg_19_0:_updatePlanetItemInfo()
 end
 
-function slot0._focusItem(slot0)
-	slot0:_clearTween()
+function var_0_0._focusItem(arg_20_0)
+	local var_20_0 = -(recthelper.getAnchorX(arg_20_0._selectedItem.viewGO.transform) - 470) - 42
 
-	slot0._contentTweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._gocontent.transform, -(recthelper.getAnchorX(slot0._selectedItem.viewGO.transform) - 470) - 42, 0.2)
+	arg_20_0:_clearTween()
+
+	arg_20_0._contentTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_20_0._gocontent.transform, var_20_0, 0.2)
 end
 
-function slot0._clearTween(slot0)
-	if slot0._contentTweenId then
-		ZProj.TweenHelper.KillById(slot0._contentTweenId)
+function var_0_0._clearTween(arg_21_0)
+	if arg_21_0._contentTweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._contentTweenId)
 
-		slot0._contentTweenId = nil
-	end
-end
-
-function slot0.updateItemNum(slot0)
-	for slot4, slot5 in pairs(slot0._itemList) do
-		slot5:updateNum()
+		arg_21_0._contentTweenId = nil
 	end
 end
 
-function slot0._updatePlanetItemInfo(slot0)
-	slot0:_updateNum(slot0._planetMo.num, slot0._planetMo:getRemainNum())
-	slot0:_updateAngle(slot0._planetMo.previewAngle)
+function var_0_0.updateItemNum(arg_22_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._itemList) do
+		iter_22_1:updateNum()
+	end
+end
 
-	slot6 = slot1 <= 0
+function var_0_0._updatePlanetItemInfo(arg_23_0)
+	local var_23_0 = arg_23_0._planetMo.num
+	local var_23_1 = arg_23_0._planetMo:getRemainNum()
 
-	gohelper.setActive(slot0._goConfirm, false)
-	gohelper.setActive(slot0._goTips, false)
-	gohelper.setActive(slot0._goToGet, false)
+	arg_23_0:_updateNum(var_23_0, var_23_1)
+	arg_23_0:_updateAngle(arg_23_0._planetMo.previewAngle)
 
-	if Activity126Model.instance:getStarNum() >= 10 then
-		if VersionActivity1_3AstrologyModel.instance:hasAdjust() then
-			gohelper.setActive(slot0._goConfirm, true)
+	local var_23_2 = Activity126Model.instance:getStarNum() >= 10
+	local var_23_3 = VersionActivity1_3AstrologyModel.instance:hasAdjust()
+	local var_23_4 = var_23_0 <= 0
 
-			slot0._txtConfirmTips.text = luaLang("astrology_tip6")
+	gohelper.setActive(arg_23_0._goConfirm, false)
+	gohelper.setActive(arg_23_0._goTips, false)
+	gohelper.setActive(arg_23_0._goToGet, false)
+
+	if var_23_2 then
+		if var_23_3 then
+			gohelper.setActive(arg_23_0._goConfirm, true)
+
+			arg_23_0._txtConfirmTips.text = luaLang("astrology_tip6")
 
 			return
 		end
 
-		if slot6 then
-			gohelper.setActive(slot0._goToGet, true)
+		if var_23_4 then
+			gohelper.setActive(arg_23_0._goToGet, true)
 
-			slot0._txtToGetTips.text = luaLang("astrology_tip4")
+			arg_23_0._txtToGetTips.text = luaLang("astrology_tip4")
 
 			return
 		end
 
-		gohelper.setActive(slot0._goTips, true)
+		gohelper.setActive(arg_23_0._goTips, true)
 
-		slot0._txtTips.text = luaLang("astrology_tip5")
+		arg_23_0._txtTips.text = luaLang("astrology_tip5")
 	else
-		if slot5 then
-			gohelper.setActive(slot0._goConfirm, true)
+		if var_23_3 then
+			gohelper.setActive(arg_23_0._goConfirm, true)
 
-			slot0._txtConfirmTips.text = luaLang("astrology_tip3")
-
-			return
-		end
-
-		if slot6 then
-			gohelper.setActive(slot0._goToGet, true)
-
-			slot0._txtToGetTips.text = luaLang("astrology_tip1")
+			arg_23_0._txtConfirmTips.text = luaLang("astrology_tip3")
 
 			return
 		end
 
-		gohelper.setActive(slot0._goTips, true)
+		if var_23_4 then
+			gohelper.setActive(arg_23_0._goToGet, true)
 
-		slot0._txtTips.text = luaLang("astrology_tip2")
+			arg_23_0._txtToGetTips.text = luaLang("astrology_tip1")
+
+			return
+		end
+
+		gohelper.setActive(arg_23_0._goTips, true)
+
+		arg_23_0._txtTips.text = luaLang("astrology_tip2")
 	end
 end
 
-function slot0._updateNum(slot0, slot1, slot2)
-	if slot1 > 0 then
-		if slot1 ~= slot2 then
-			slot0._txtAdjustTimes.text = string.format("%s%s<color=#b73850>-%s</color>", luaLang("adjustNum"), slot1, slot1 - slot2)
+function var_0_0._updateNum(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_1 > 0 then
+		if arg_24_1 ~= arg_24_2 then
+			arg_24_0._txtAdjustTimes.text = string.format("%s%s<color=#b73850>-%s</color>", luaLang("adjustNum"), arg_24_1, arg_24_1 - arg_24_2)
 		else
-			slot0._txtAdjustTimes.text = string.format("%s%s", luaLang("adjustNum"), slot1)
+			arg_24_0._txtAdjustTimes.text = string.format("%s%s", luaLang("adjustNum"), arg_24_1)
 		end
 	else
-		slot0._txtAdjustTimes.text = string.format("%s<color=#b73850>%s</color>", luaLang("adjustNum"), 0)
+		arg_24_0._txtAdjustTimes.text = string.format("%s<color=#b73850>%s</color>", luaLang("adjustNum"), 0)
 	end
 end
 
-function slot0._updateAngle(slot0, slot1)
-	slot0._txtCurrentAngle.text = string.format("%s°", slot1 % 360)
+function var_0_0._updateAngle(arg_25_0, arg_25_1)
+	arg_25_0._txtCurrentAngle.text = string.format("%s°", arg_25_1 % 360)
 end
 
-function slot0.getSelectedPlanetId(slot0)
-	for slot4, slot5 in pairs(slot0._itemList) do
-		if slot5:isSelected() then
-			return slot4
+function var_0_0.getSelectedPlanetId(arg_26_0)
+	for iter_26_0, iter_26_1 in pairs(arg_26_0._itemList) do
+		if iter_26_1:isSelected() then
+			return iter_26_0
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_27_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._focusItem, slot0)
-	slot0:_clearTween()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragEndListener()
-	TaskDispatcher.cancelTask(slot0._refresh, slot0)
+function var_0_0.onDestroyView(arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0._focusItem, arg_28_0)
+	arg_28_0:_clearTween()
+	arg_28_0._drag:RemoveDragBeginListener()
+	arg_28_0._drag:RemoveDragListener()
+	arg_28_0._drag:RemoveDragEndListener()
+	TaskDispatcher.cancelTask(arg_28_0._refresh, arg_28_0)
 end
 
-return slot0
+return var_0_0

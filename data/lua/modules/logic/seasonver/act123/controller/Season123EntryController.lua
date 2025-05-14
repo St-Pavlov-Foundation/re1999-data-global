@@ -1,148 +1,174 @@
-module("modules.logic.seasonver.act123.controller.Season123EntryController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EntryController", package.seeall)
 
-slot0 = class("Season123EntryController", BaseController)
+local var_0_0 = class("Season123EntryController", BaseController)
 
-function slot0.onOpenView(slot0, slot1)
-	Season123EntryModel.instance:init(slot1)
-	Activity123Rpc.instance:sendGet123InfosRequest(slot1)
+function var_0_0.onOpenView(arg_1_0, arg_1_1)
+	Season123EntryModel.instance:init(arg_1_1)
+	Activity123Rpc.instance:sendGet123InfosRequest(arg_1_1)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Season123
 	})
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
 	Season123EntryModel.instance:release()
 end
 
-function slot0.openStage(slot0, slot1)
-	if not Season123Model.instance:getActInfo(Season123EntryModel.instance.activityId) then
+function var_0_0.openStage(arg_3_0, arg_3_1)
+	local var_3_0 = Season123EntryModel.instance.activityId
+	local var_3_1 = Season123Model.instance:getActInfo(var_3_0)
+
+	if not var_3_1 then
 		return
 	end
 
-	if not slot3:getStageMO(slot1) then
+	local var_3_2 = var_3_1:getStageMO(arg_3_1)
+
+	if not var_3_2 then
 		return
 	end
 
-	slot5, slot6, slot7 = Season123ProgressUtils.isStageUnlock(slot2, slot1)
+	local var_3_3, var_3_4, var_3_5 = Season123ProgressUtils.isStageUnlock(var_3_0, arg_3_1)
 
-	if not slot5 then
-		GameFacade.showToast(ToastEnum.SeasonStageLockTip, Season123Config.instance:getStageCo(slot2, slot1).name)
+	if not var_3_3 then
+		local var_3_6 = Season123Config.instance:getStageCo(var_3_0, arg_3_1)
+
+		GameFacade.showToast(ToastEnum.SeasonStageLockTip, var_3_6.name)
 
 		return
 	end
 
-	if slot4.episodeMap[1] and not slot4.episodeMap[1]:isFinished() and slot1 ~= slot3.stage then
-		if slot3.stage ~= 0 and slot1 ~= slot3.stage and not Season123ProgressUtils.checkStageIsFinish(slot2, slot3.stage) then
-			GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, slot0.cleanAndStartPickHero, nil, , slot0)
+	if var_3_2.episodeMap[1] and not var_3_2.episodeMap[1]:isFinished() and arg_3_1 ~= var_3_1.stage then
+		if var_3_1.stage ~= 0 and arg_3_1 ~= var_3_1.stage and not Season123ProgressUtils.checkStageIsFinish(var_3_0, var_3_1.stage) then
+			GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, arg_3_0.cleanAndStartPickHero, nil, nil, arg_3_0)
 		else
-			slot0:startPickHero()
+			arg_3_0:startPickHero()
 		end
 	else
 		return true
 	end
 end
 
-function slot0.startPickHero(slot0)
+function var_0_0.startPickHero(arg_4_0)
 	ViewMgr.instance:openView(Season123Controller.instance:getPickHeroEntryViewName(), {
 		actId = Season123EntryModel.instance.activityId,
 		stage = Season123EntryModel.instance:getCurrentStage(),
-		finishCall = slot0.handlePickHeroSuccess,
-		finishCallObj = slot0
+		finishCall = arg_4_0.handlePickHeroSuccess,
+		finishCallObj = arg_4_0
 	})
 end
 
-function slot0.cleanAndStartPickHero(slot0)
-	if Season123Model.instance:getActInfo(Season123EntryModel.instance.activityId) then
-		Activity123Rpc.instance:sendAct123EndStageRequest(Season123EntryModel.instance.activityId, slot1.stage, slot0.onReceiveReset, slot0)
+function var_0_0.cleanAndStartPickHero(arg_5_0)
+	local var_5_0 = Season123Model.instance:getActInfo(Season123EntryModel.instance.activityId)
+
+	if var_5_0 then
+		Activity123Rpc.instance:sendAct123EndStageRequest(Season123EntryModel.instance.activityId, var_5_0.stage, arg_5_0.onReceiveReset, arg_5_0)
 	end
 end
 
-function slot0.onReceiveReset(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0.onReceiveReset(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_2 == 0 then
 		GameFacade.showToast(ToastEnum.WeekwalkResetLayer)
 	end
 
-	Activity123Rpc.instance:sendGet123InfosRequest(Season123EntryModel.instance.activityId, slot0.startPickHero, slot0)
+	Activity123Rpc.instance:sendGet123InfosRequest(Season123EntryModel.instance.activityId, arg_6_0.startPickHero, arg_6_0)
 end
 
-function slot0.openStageRecords(slot0, slot1)
-	slot2 = Season123EntryModel.instance.activityId
+function var_0_0.openStageRecords(arg_7_0, arg_7_1)
+	local var_7_0 = Season123EntryModel.instance.activityId
 
-	Season123RecordModel.instance:setServerDataVerifiableId(slot2, slot1)
-	Activity123Rpc.instance:sendGetAct123StageRecordRequest(slot2, slot1, slot0._realOpenStageRecords, slot0)
+	Season123RecordModel.instance:setServerDataVerifiableId(var_7_0, arg_7_1)
+	Activity123Rpc.instance:sendGetAct123StageRecordRequest(var_7_0, arg_7_1, arg_7_0._realOpenStageRecords, arg_7_0)
 end
 
-function slot0.processJumpParam(slot0, slot1)
-	if slot1.jumpId == Activity123Enum.JumpId.Market or slot1.jumpId == Activity123Enum.JumpId.MarketNoResult then
+function var_0_0.processJumpParam(arg_8_0, arg_8_1)
+	if arg_8_1.jumpId == Activity123Enum.JumpId.Market or arg_8_1.jumpId == Activity123Enum.JumpId.MarketNoResult then
+		local var_8_0 = Season123Model.instance:getBattleContext()
+
 		Season123Controller.instance:dispatchEvent(Season123Event.OtherViewAutoOpened)
 		ViewMgr.instance:openView(Season123Controller.instance:getEpisodeListViewName(), {
 			actId = Season123EntryModel.instance.activityId,
-			stage = Season123Model.instance:getBattleContext().stage,
-			jumpId = slot1.jumpId,
-			jumpParam = slot1.jumpParam
+			stage = var_8_0.stage,
+			jumpId = arg_8_1.jumpId,
+			jumpParam = arg_8_1.jumpParam
 		})
-	elseif slot1.jumpId == Activity123Enum.JumpId.Retail then
+	elseif arg_8_1.jumpId == Activity123Enum.JumpId.Retail then
 		Season123Controller.instance:dispatchEvent(Season123Event.OtherViewAutoOpened)
 		Season123Controller.instance:openSeasonRetail({
 			actId = Season123EntryModel.instance.activityId
 		})
-	elseif slot1.jumpId == Activity123Enum.JumpId.ForStage then
-		slot0:goToStage(slot1.jumpParam.stage)
-	elseif slot1.jumpId == Activity123Enum.JumpId.MarketStageFinish then
-		slot0:goToStage(slot1.jumpParam.stage)
+	elseif arg_8_1.jumpId == Activity123Enum.JumpId.ForStage then
+		arg_8_0:goToStage(arg_8_1.jumpParam.stage)
+	elseif arg_8_1.jumpId == Activity123Enum.JumpId.MarketStageFinish then
+		arg_8_0:goToStage(arg_8_1.jumpParam.stage)
 		Season123Controller.instance:dispatchEvent(Season123Event.OtherViewAutoOpened)
 		ViewMgr.instance:openView(Season123Controller.instance:getStageFinishViewName(), {
 			actId = Season123EntryModel.instance.activityId,
-			stage = slot1.jumpParam.stage
+			stage = arg_8_1.jumpParam.stage
 		})
 	end
 end
 
-function slot0._realOpenStageRecords(slot0)
-	ViewMgr.instance:openView(Season123Controller.instance:getRecordWindowViewName())
+function var_0_0._realOpenStageRecords(arg_9_0)
+	local var_9_0 = Season123Controller.instance:getRecordWindowViewName()
+
+	ViewMgr.instance:openView(var_9_0)
 end
 
-function slot0.switchStage(slot0, slot1)
-	slot2 = nil
+function var_0_0.switchStage(arg_10_0, arg_10_1)
+	local var_10_0
 
-	if (not slot1 or Season123EntryModel.instance:getNextStage()) and Season123EntryModel.instance:getPrevStage() then
+	if arg_10_1 then
+		var_10_0 = Season123EntryModel.instance:getNextStage()
+	else
+		var_10_0 = Season123EntryModel.instance:getPrevStage()
+	end
+
+	if var_10_0 then
 		Season123Controller.instance:dispatchEvent(Season123Event.LocateToStage, {
 			actId = Season123EntryModel.instance.activityId,
-			stageId = slot2
+			stageId = var_10_0
 		})
 	end
 end
 
-function slot0.goToStage(slot0, slot1)
-	Season123EntryModel.instance:setCurrentStage(slot1)
-	uv0.instance:dispatchEvent(Season123Event.EntryStageChanged)
+function var_0_0.goToStage(arg_11_0, arg_11_1)
+	Season123EntryModel.instance:setCurrentStage(arg_11_1)
+	var_0_0.instance:dispatchEvent(Season123Event.EntryStageChanged)
 end
 
-function slot0.handlePickHeroSuccess(slot0)
-	Activity123Rpc.instance:sendGet123InfosRequest(Season123EntryModel.instance.activityId, slot0.handleEnterStage, slot0)
+function var_0_0.handlePickHeroSuccess(arg_12_0)
+	local var_12_0 = Season123EntryModel.instance.activityId
+
+	Activity123Rpc.instance:sendGet123InfosRequest(var_12_0, arg_12_0.handleEnterStage, arg_12_0)
 end
 
-function slot0.handleEnterStage(slot0)
+function var_0_0.handleEnterStage(arg_13_0)
 	ViewMgr.instance:openView(Season123Controller.instance:getStageLoadingViewName(), {
 		actId = Season123EntryModel.instance.activityId,
 		stage = Season123EntryModel.instance:getCurrentStage()
 	})
 end
 
-function slot0.enterTrailFightScene(slot0)
-	if Season123EntryModel.instance:getTrialCO() then
-		slot0:startBattle(Season123EntryModel.instance.activityId, slot1.episodeId)
+function var_0_0.enterTrailFightScene(arg_14_0)
+	local var_14_0 = Season123EntryModel.instance:getTrialCO()
+
+	if var_14_0 then
+		arg_14_0:startBattle(Season123EntryModel.instance.activityId, var_14_0.episodeId)
 	end
 end
 
-function slot0.startBattle(slot0, slot1, slot2)
-	logNormal(string.format("startBattle with actId = %s, episodeId = %s", slot1, slot2))
-	Season123Model.instance:setBattleContext(slot1, nil, , slot2)
-	DungeonFightController.instance:enterSeasonFight(DungeonConfig.instance:getEpisodeCO(slot2).chapterId, slot2)
+function var_0_0.startBattle(arg_15_0, arg_15_1, arg_15_2)
+	logNormal(string.format("startBattle with actId = %s, episodeId = %s", arg_15_1, arg_15_2))
+
+	local var_15_0 = DungeonConfig.instance:getEpisodeCO(arg_15_2)
+
+	Season123Model.instance:setBattleContext(arg_15_1, nil, nil, arg_15_2)
+	DungeonFightController.instance:enterSeasonFight(var_15_0.chapterId, arg_15_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

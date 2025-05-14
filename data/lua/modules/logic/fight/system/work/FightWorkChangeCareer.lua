@@ -1,7 +1,7 @@
-module("modules.logic.fight.system.work.FightWorkChangeCareer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeCareer", package.seeall)
 
-slot0 = class("FightWorkChangeCareer", FightEffectBase)
-slot1 = {
+local var_0_0 = class("FightWorkChangeCareer", FightEffectBase)
+local var_0_1 = {
 	"buff/buff_lg_yan",
 	"buff/buff_lg_xing",
 	"buff/buff_lg_mu",
@@ -10,35 +10,41 @@ slot1 = {
 	"buff/buff_lg_zhi"
 }
 
-function slot0.onStart(slot0)
-	slot1 = slot0:com_registWorkDoneFlowSequence()
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
+	local var_1_1 = FightDataHelper.entityMgr:getById(arg_1_0._actEffectMO.targetId)
 
-	if FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) and slot2.career ~= slot0._actEffectMO.effectNum then
-		slot1:registWork(FightWorkFunction, slot0._playCareerChange, slot0)
-		slot1:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.ChangeCareer))
+	if var_1_1 and var_1_1.career ~= arg_1_0._actEffectMO.effectNum then
+		var_1_0:registWork(FightWorkFunction, arg_1_0._playCareerChange, arg_1_0)
+		var_1_0:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.ChangeCareer))
 	end
 
-	slot1:start()
+	var_1_0:start()
 end
 
-function slot0._playCareerChange(slot0)
-	if FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) then
-		FightController.instance:dispatchEvent(FightEvent.ChangeCareer, slot1.id)
+function var_0_0._playCareerChange(arg_2_0)
+	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0._actEffectMO.targetId)
 
-		if FightHelper.getEntity(slot1.id) and slot2.effect then
-			slot3 = slot2.effect:addHangEffect(uv0[slot1.career], "mounttop", nil, 2)
+	if var_2_0 then
+		FightController.instance:dispatchEvent(FightEvent.ChangeCareer, var_2_0.id)
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot2.id, slot3)
-			slot3:setLocalPos(0, 0, 0)
+		local var_2_1 = FightHelper.getEntity(var_2_0.id)
+
+		if var_2_1 and var_2_1.effect then
+			local var_2_2 = var_2_1.effect:addHangEffect(var_0_1[var_2_0.career], "mounttop", nil, 2)
+
+			FightRenderOrderMgr.instance:onAddEffectWrap(var_2_1.id, var_2_2)
+			var_2_2:setLocalPos(0, 0, 0)
 		end
 	end
 end
 
-function slot0._onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,104 +1,121 @@
-module("modules.logic.versionactivity2_4.act181.view.Activity181RewardView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.act181.view.Activity181RewardView", package.seeall)
 
-slot0 = class("Activity181RewardView", BaseView)
-slot0.DISPLAY_TYPE = {
+local var_0_0 = class("Activity181RewardView", BaseView)
+
+var_0_0.DISPLAY_TYPE = {
 	Reward = 2,
 	Effect = 1
 }
 
-function slot0.onInitView(slot0)
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "reward/#scroll_reward")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/#scroll_reward")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
+	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rewardItemList = {}
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._rewardItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._actId = arg_7_0.viewParam.actId
 
-	slot0:refreshUI()
+	arg_7_0:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:_refreshReward()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:_refreshReward()
 end
 
-function slot0._refreshReward(slot0)
-	if not Activity181Config.instance:getBoxListByActivityId(slot0._actId) then
+function var_0_0._refreshReward(arg_9_0)
+	local var_9_0 = arg_9_0._actId
+	local var_9_1 = Activity181Config.instance:getBoxListByActivityId(var_9_0)
+
+	if not var_9_1 then
 		return
 	end
 
-	slot3 = {}
-	slot4 = {
-		[slot10] = Activity181Model.instance:getActivityInfo(slot1):getBonusStateById(slot10) == Activity181Enum.BonusState.HaveGet
-	}
+	local var_9_2 = {}
+	local var_9_3 = {}
+	local var_9_4 = Activity181Model.instance:getActivityInfo(var_9_0)
 
-	for slot9, slot10 in ipairs(slot2) do
-		table.insert(slot3, slot10)
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		table.insert(var_9_2, iter_9_1)
+
+		var_9_3[iter_9_1] = var_9_4:getBonusStateById(iter_9_1) == Activity181Enum.BonusState.HaveGet
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		if uv0[slot0] == uv0[slot1] then
-			return slot0 < slot1
+	table.sort(var_9_2, function(arg_10_0, arg_10_1)
+		if var_9_3[arg_10_0] == var_9_3[arg_10_1] then
+			return arg_10_0 < arg_10_1
 		end
 
-		return uv0[slot1]
+		return var_9_3[arg_10_1]
 	end)
 
-	slot7 = #slot0._rewardItemList
+	local var_9_5 = #var_9_2
+	local var_9_6 = #arg_9_0._rewardItemList
 
-	for slot11 = 1, #slot3 do
-		slot12 = nil
+	for iter_9_2 = 1, var_9_5 do
+		local var_9_7
 
-		if slot11 <= slot7 then
-			slot12 = slot0._rewardItemList[slot11]
+		if iter_9_2 <= var_9_6 then
+			var_9_7 = arg_9_0._rewardItemList[iter_9_2]
 		else
-			table.insert(slot0._rewardItemList, MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gorewarditem, slot0._gocontent), Activity181RewardItem))
+			local var_9_8 = gohelper.clone(arg_9_0._gorewarditem, arg_9_0._gocontent)
+
+			var_9_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_8, Activity181RewardItem)
+
+			table.insert(arg_9_0._rewardItemList, var_9_7)
 		end
 
-		slot13 = slot3[slot11]
-		slot15 = string.splitToNumber(Activity181Config.instance:getBoxListConfig(slot1, slot13).bonus, "#")
+		local var_9_9 = var_9_2[iter_9_2]
+		local var_9_10 = Activity181Config.instance:getBoxListConfig(var_9_0, var_9_9)
+		local var_9_11 = string.splitToNumber(var_9_10.bonus, "#")
 
-		slot12:setEnable(true)
-		slot12:onUpdateMO(slot15[1], slot15[2], slot15[3], slot4[slot13])
+		var_9_7:setEnable(true)
+
+		local var_9_12 = var_9_3[var_9_9]
+
+		var_9_7:onUpdateMO(var_9_11[1], var_9_11[2], var_9_11[3], var_9_12)
 	end
 
-	if slot6 < slot7 then
-		for slot11 = slot6 + 1, slot7 do
-			slot0._rewardItemList[slot11]:setEnable(true)
+	if var_9_5 < var_9_6 then
+		for iter_9_3 = var_9_5 + 1, var_9_6 do
+			arg_9_0._rewardItemList[iter_9_3]:setEnable(true)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

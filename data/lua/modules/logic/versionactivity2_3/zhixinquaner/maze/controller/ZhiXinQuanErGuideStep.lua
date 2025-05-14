@@ -1,40 +1,40 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErGuideStep", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.ZhiXinQuanErGuideStep", package.seeall)
 
-slot0 = class("ZhiXinQuanErGuideStep", BaseWork)
+local var_0_0 = class("ZhiXinQuanErGuideStep", BaseWork)
 
-function slot0.initData(slot0, slot1)
-	slot0.effectData = slot1
-	slot0._guideId = tonumber(slot0.effectData.param)
+function var_0_0.initData(arg_1_0, arg_1_1)
+	arg_1_0.effectData = arg_1_1
+	arg_1_0._guideId = tonumber(arg_1_0.effectData.param)
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_2_0)
 	if GuideController.instance:isForbidGuides() then
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if GuideModel.instance:isGuideFinish(slot0._guideId) then
-		slot0:onDone(true)
+	if GuideModel.instance:isGuideFinish(arg_2_0._guideId) then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
-	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.GuideStart, tostring(slot0._guideId))
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_2_0._onGuideFinish, arg_2_0)
+	PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.GuideStart, tostring(arg_2_0._guideId))
 end
 
-function slot0._onGuideFinish(slot0, slot1)
-	if slot0._guideId ~= slot1 then
+function var_0_0._onGuideFinish(arg_3_0, arg_3_1)
+	if arg_3_0._guideId ~= arg_3_1 then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
-	slot0:onDone(true)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_3_0._onGuideFinish, arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
+function var_0_0.clearWork(arg_4_0)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_4_0._onGuideFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

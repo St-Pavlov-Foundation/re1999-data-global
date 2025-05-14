@@ -1,10 +1,11 @@
-module("modules.logic.notice.controller.NoticeEvent", package.seeall)
+﻿module("modules.logic.notice.controller.NoticeEvent", package.seeall)
 
-slot0 = _M
-slot0.OnGetNoticeInfo = 1001
-slot0.OnGetNoticeInfoFail = 1002
-slot0.OnSelectNoticeItem = 1003
-slot0.OnRefreshRedDot = 1004
-slot0.StartEdit = 2001
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnGetNoticeInfo = 1001
+var_0_0.OnGetNoticeInfoFail = 1002
+var_0_0.OnSelectNoticeItem = 1003
+var_0_0.OnRefreshRedDot = 1004
+var_0_0.StartEdit = 2001
+
+return var_0_0

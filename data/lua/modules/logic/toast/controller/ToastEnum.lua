@@ -1,4 +1,4 @@
-module("modules.logic.toast.controller.ToastEnum", package.seeall)
+﻿module("modules.logic.toast.controller.ToastEnum", package.seeall)
 
 return {
 	GraffitiElementUnFinish2 = 200003,

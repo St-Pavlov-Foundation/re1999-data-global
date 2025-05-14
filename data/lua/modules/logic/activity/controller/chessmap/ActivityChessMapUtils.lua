@@ -1,77 +1,85 @@
-module("modules.logic.activity.controller.chessmap.ActivityChessMapUtils", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.ActivityChessMapUtils", package.seeall)
 
-slot0 = class("ActivityChessMapUtils")
+local var_0_0 = class("ActivityChessMapUtils")
 
-function slot0.ToDirection(slot0, slot1, slot2, slot3)
-	if slot2 < slot0 then
-		if slot3 < slot1 then
+function var_0_0.ToDirection(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if arg_1_2 < arg_1_0 then
+		if arg_1_3 < arg_1_1 then
 			return 1
-		elseif slot1 < slot3 then
+		elseif arg_1_1 < arg_1_3 then
 			return 7
 		else
 			return 4
 		end
-	elseif slot0 < slot2 then
-		if slot3 < slot1 then
+	elseif arg_1_0 < arg_1_2 then
+		if arg_1_3 < arg_1_1 then
 			return 3
-		elseif slot1 < slot3 then
+		elseif arg_1_1 < arg_1_3 then
 			return 9
 		else
 			return 6
 		end
-	elseif slot3 < slot1 then
+	elseif arg_1_3 < arg_1_1 then
 		return 2
-	elseif slot1 < slot3 then
+	elseif arg_1_1 < arg_1_3 then
 		return 8
 	else
 		return 5
 	end
 end
 
-function slot0.getClearConditionDesc(slot0, slot1)
-	return uv0.conditionDescFuncMap[slot0[1]] and slot3(slot0, slot1) or ""
+function var_0_0.getClearConditionDesc(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0[1]
+	local var_2_1 = var_0_0.conditionDescFuncMap[var_2_0]
+
+	return var_2_1 and var_2_1(arg_2_0, arg_2_1) or ""
 end
 
-function slot0.isClearConditionFinish(slot0, slot1)
-	if uv0.conditionCheckMap[slot0[1]] then
-		return slot3(slot0, slot1)
+function var_0_0.isClearConditionFinish(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0[1]
+	local var_3_1 = var_0_0.conditionCheckMap[var_3_0]
+
+	if var_3_1 then
+		return var_3_1(arg_3_0, arg_3_1)
 	end
 
 	return false
 end
 
-function slot0.getConditionDescRoundLimit(slot0, slot1)
-	return string.format(luaLang("chessgame_clear_round_limit"), slot0[2])
+function var_0_0.getConditionDescRoundLimit(arg_4_0, arg_4_1)
+	return string.format(luaLang("chessgame_clear_round_limit"), arg_4_0[2])
 end
 
-function slot0.getConditionDescInteractFinish(slot0, slot1)
-	return Activity109Config.instance:getInteractObjectCo(slot1, slot0[2]) and string.format(luaLang("chessgame_clear_interact_finish"), slot2.name) or string.format(luaLang("chessgame_clear_interact_finish"), slot0[2])
+function var_0_0.getConditionDescInteractFinish(arg_5_0, arg_5_1)
+	local var_5_0 = Activity109Config.instance:getInteractObjectCo(arg_5_1, arg_5_0[2])
+
+	return var_5_0 and string.format(luaLang("chessgame_clear_interact_finish"), var_5_0.name) or string.format(luaLang("chessgame_clear_interact_finish"), arg_5_0[2])
 end
 
-slot0.conditionDescFuncMap = {
-	[ActivityChessEnum.ChessClearCondition.RoundLimit] = slot0.getConditionDescRoundLimit,
-	[ActivityChessEnum.ChessClearCondition.InteractFinish] = slot0.getConditionDescInteractFinish
+var_0_0.conditionDescFuncMap = {
+	[ActivityChessEnum.ChessClearCondition.RoundLimit] = var_0_0.getConditionDescRoundLimit,
+	[ActivityChessEnum.ChessClearCondition.InteractFinish] = var_0_0.getConditionDescInteractFinish
 }
 
-function slot0.checkRoundLimit(slot0, slot1)
+function var_0_0.checkRoundLimit(arg_6_0, arg_6_1)
 	if not ActivityChessGameModel.instance:getResult() then
 		return false
 	else
-		return ActivityChessGameModel.instance:getRound() <= slot0[2]
+		return ActivityChessGameModel.instance:getRound() <= arg_6_0[2]
 	end
 end
 
-function slot0.checkInteractFinish(slot0, slot1)
+function var_0_0.checkInteractFinish(arg_7_0, arg_7_1)
 	if ActivityChessGameModel.instance:getResult() == false then
 		return false
 	end
 
-	return ActivityChessGameModel.instance:isInteractFinish(slot0[2])
+	return ActivityChessGameModel.instance:isInteractFinish(arg_7_0[2])
 end
 
-slot0.conditionCheckMap = {
-	[ActivityChessEnum.ChessClearCondition.RoundLimit] = slot0.checkRoundLimit,
-	[ActivityChessEnum.ChessClearCondition.InteractFinish] = slot0.checkInteractFinish
+var_0_0.conditionCheckMap = {
+	[ActivityChessEnum.ChessClearCondition.RoundLimit] = var_0_0.checkRoundLimit,
+	[ActivityChessEnum.ChessClearCondition.InteractFinish] = var_0_0.checkInteractFinish
 }
 
-return slot0
+return var_0_0

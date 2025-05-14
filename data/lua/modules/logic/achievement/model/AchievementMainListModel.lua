@@ -1,230 +1,269 @@
-module("modules.logic.achievement.model.AchievementMainListModel", package.seeall)
+﻿module("modules.logic.achievement.model.AchievementMainListModel", package.seeall)
 
-slot0 = class("AchievementMainListModel", MixScrollModel)
+local var_0_0 = class("AchievementMainListModel", MixScrollModel)
 
-function slot0.initDatas(slot0)
-	slot0._moCacheMap = {}
-	slot0._moGroupMap = {}
-	slot0._infoDict = AchievementConfig.instance:getCategoryAchievementMap()
-	slot0._fitAchievementCfgTab = {}
-	slot0._isCurTaskNeedPlayIdleAnim = false
+function var_0_0.initDatas(arg_1_0)
+	arg_1_0._moCacheMap = {}
+	arg_1_0._moGroupMap = {}
+	arg_1_0._infoDict = AchievementConfig.instance:getCategoryAchievementMap()
+	arg_1_0._fitAchievementCfgTab = {}
+	arg_1_0._isCurTaskNeedPlayIdleAnim = false
 end
 
-function slot0.refreshTabData(slot0, slot1, slot2, slot3, slot4)
-	if not slot0:getAchievementMOList(slot1, slot2, slot3) then
-		slot6 = slot0:getFitCategoryAchievementCfgs(slot1, slot3, slot4)
+function var_0_0.refreshTabData(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = arg_2_0:getAchievementMOList(arg_2_1, arg_2_2, arg_2_3)
 
-		table.sort(slot6, slot0:getSortFunction(slot2))
+	if not var_2_0 then
+		local var_2_1 = arg_2_0:getFitCategoryAchievementCfgs(arg_2_1, arg_2_3, arg_2_4)
+		local var_2_2 = arg_2_0:getSortFunction(arg_2_2)
 
-		slot0._moCacheMap[slot1][slot2][slot3] = slot0:buildAchievementMOList(slot3, slot2, slot6)
+		table.sort(var_2_1, var_2_2)
+
+		var_2_0 = arg_2_0:buildAchievementMOList(arg_2_3, arg_2_2, var_2_1)
+		arg_2_0._moCacheMap[arg_2_1][arg_2_2][arg_2_3] = var_2_0
 	end
 
-	slot0:setList(slot0:filterFolderAchievement(slot5))
+	local var_2_3 = arg_2_0:filterFolderAchievement(var_2_0)
+
+	arg_2_0:setList(var_2_3)
 end
 
-function slot0.getAchievementMOList(slot0, slot1, slot2, slot3)
-	slot0._moCacheMap[slot1] = slot0._moCacheMap[slot1] or {}
-	slot0._moCacheMap[slot1][slot2] = slot0._moCacheMap[slot1][slot2] or {}
+function var_0_0.getAchievementMOList(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0._moCacheMap[arg_3_1] = arg_3_0._moCacheMap[arg_3_1] or {}
+	arg_3_0._moCacheMap[arg_3_1][arg_3_2] = arg_3_0._moCacheMap[arg_3_1][arg_3_2] or {}
 
-	return slot0._moCacheMap[slot1][slot2][slot3]
+	return arg_3_0._moCacheMap[arg_3_1][arg_3_2][arg_3_3]
 end
 
-function slot0.getFitCategoryAchievementCfgs(slot0, slot1, slot2, slot3)
-	slot0._fitAchievementCfgTab = slot0._fitAchievementCfgTab or {}
+function var_0_0.getFitCategoryAchievementCfgs(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0._fitAchievementCfgTab = arg_4_0._fitAchievementCfgTab or {}
 
-	if slot3 and not (slot0._fitAchievementCfgTab and slot0._fitAchievementCfgTab[slot1]) then
-		slot4 = {}
+	local var_4_0 = arg_4_0._fitAchievementCfgTab and arg_4_0._fitAchievementCfgTab[arg_4_1]
 
-		for slot8, slot9 in ipairs(slot3) do
-			for slot13, slot14 in pairs(AchievementEnum.SearchFilterType) do
-				slot4[slot14] = slot4[slot14] or {}
+	if arg_4_3 and not var_4_0 then
+		local var_4_1 = {}
 
-				if slot0:getSearchFilterFunction(slot14) and slot15(slot0, slot9) then
-					table.insert(slot4[slot14], slot9)
+		for iter_4_0, iter_4_1 in ipairs(arg_4_3) do
+			for iter_4_2, iter_4_3 in pairs(AchievementEnum.SearchFilterType) do
+				local var_4_2 = arg_4_0:getSearchFilterFunction(iter_4_3)
+
+				var_4_1[iter_4_3] = var_4_1[iter_4_3] or {}
+
+				if var_4_2 and var_4_2(arg_4_0, iter_4_1) then
+					table.insert(var_4_1[iter_4_3], iter_4_1)
 				end
 			end
 		end
 
-		slot0._fitAchievementCfgTab[slot1] = slot4
+		arg_4_0._fitAchievementCfgTab[arg_4_1] = var_4_1
 	end
 
-	return slot0._fitAchievementCfgTab[slot1][slot2]
+	return arg_4_0._fitAchievementCfgTab[arg_4_1][arg_4_2]
 end
 
-function slot0.getSearchFilterFunction(slot0, slot1)
-	if not slot0._searchFilterFuncMap then
-		slot0._searchFilterFuncMap = {
-			[AchievementEnum.SearchFilterType.Unlocked] = slot0.filterAchievementByUnlocked,
-			[AchievementEnum.SearchFilterType.Locked] = slot0.filterAchievementByLocked,
-			[AchievementEnum.SearchFilterType.All] = slot0.filterAchievementByAll
+function var_0_0.getSearchFilterFunction(arg_5_0, arg_5_1)
+	if not arg_5_0._searchFilterFuncMap then
+		arg_5_0._searchFilterFuncMap = {
+			[AchievementEnum.SearchFilterType.Unlocked] = arg_5_0.filterAchievementByUnlocked,
+			[AchievementEnum.SearchFilterType.Locked] = arg_5_0.filterAchievementByLocked,
+			[AchievementEnum.SearchFilterType.All] = arg_5_0.filterAchievementByAll
 		}
 	end
 
-	return slot0._searchFilterFuncMap[slot1]
+	return arg_5_0._searchFilterFuncMap[arg_5_1]
 end
 
-function slot0.filterAchievementByAll(slot0, slot1)
+function var_0_0.filterAchievementByAll(arg_6_0, arg_6_1)
 	return true
 end
 
-function slot0.filterAchievementByUnlocked(slot0, slot1)
-	return not AchievementModel.instance:achievementHasLocked(slot1.id)
+function var_0_0.filterAchievementByUnlocked(arg_7_0, arg_7_1)
+	return not AchievementModel.instance:achievementHasLocked(arg_7_1.id)
 end
 
-function slot0.filterAchievementByLocked(slot0, slot1)
-	return not AchievementModel.instance:isAchievementTaskFinished(AchievementConfig.instance:getAchievementMaxLevelTask(slot1.id) and slot2.id)
+function var_0_0.filterAchievementByLocked(arg_8_0, arg_8_1)
+	local var_8_0 = AchievementConfig.instance:getAchievementMaxLevelTask(arg_8_1.id)
+	local var_8_1 = var_8_0 and var_8_0.id
+
+	return not AchievementModel.instance:isAchievementTaskFinished(var_8_1)
 end
 
-function slot0.buildAchievementMOList(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0.buildAchievementMOList(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = {}
 
-	if slot3 then
-		for slot8, slot9 in ipairs(slot3) do
-			slot11 = false
-			slot12 = AchievementListMO.New()
+	if arg_9_3 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_3) do
+			local var_9_1 = iter_9_1.groupId
+			local var_9_2 = false
+			local var_9_3 = AchievementListMO.New()
 
-			if slot9.groupId and slot10 ~= 0 then
-				slot0._moGroupMap[slot1] = slot0._moGroupMap[slot1] or {}
-				slot0._moGroupMap[slot1][slot2] = slot0._moGroupMap[slot1][slot2] or {}
+			if var_9_1 and var_9_1 ~= 0 then
+				arg_9_0._moGroupMap[arg_9_1] = arg_9_0._moGroupMap[arg_9_1] or {}
+				arg_9_0._moGroupMap[arg_9_1][arg_9_2] = arg_9_0._moGroupMap[arg_9_1][arg_9_2] or {}
 
-				if not slot0._moGroupMap[slot1][slot2][slot10] then
-					slot0._moGroupMap[slot1][slot2][slot10] = {}
-					slot11 = true
+				if not arg_9_0._moGroupMap[arg_9_1][arg_9_2][var_9_1] then
+					arg_9_0._moGroupMap[arg_9_1][arg_9_2][var_9_1] = {}
+					var_9_2 = true
 				end
 
-				table.insert(slot0._moGroupMap[slot1][slot2][slot10], slot12)
+				table.insert(arg_9_0._moGroupMap[arg_9_1][arg_9_2][var_9_1], var_9_3)
 			end
 
-			slot12:init(slot9.id, slot11)
-			table.insert(slot4, slot12)
+			var_9_3:init(iter_9_1.id, var_9_2)
+			table.insert(var_9_0, var_9_3)
 		end
 	end
 
-	return slot4
+	return var_9_0
 end
 
-function slot0.filterFolderAchievement(slot0, slot1)
-	slot2 = {}
+function var_0_0.filterFolderAchievement(arg_10_0, arg_10_1)
+	local var_10_0 = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			if slot7.isGroupTop or not slot7:getIsFold() then
-				table.insert(slot2, slot7)
+	if arg_10_1 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+			local var_10_1 = iter_10_1:getIsFold()
+
+			if iter_10_1.isGroupTop or not var_10_1 then
+				table.insert(var_10_0, iter_10_1)
 			end
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getSortFunction(slot0, slot1)
-	if not slot0._sortFuncMap then
-		slot0._sortFuncMap = {
-			[AchievementEnum.SortType.RareDown] = slot0.sortAchievementByRareDown,
-			[AchievementEnum.SortType.RareUp] = slot0.sortAchievementByRareUp
+function var_0_0.getSortFunction(arg_11_0, arg_11_1)
+	if not arg_11_0._sortFuncMap then
+		arg_11_0._sortFuncMap = {
+			[AchievementEnum.SortType.RareDown] = arg_11_0.sortAchievementByRareDown,
+			[AchievementEnum.SortType.RareUp] = arg_11_0.sortAchievementByRareUp
 		}
 	end
 
-	return slot0._sortFuncMap[slot1]
+	return arg_11_0._sortFuncMap[arg_11_1]
 end
 
-function slot0.sortAchievementByRareDown(slot0, slot1)
-	slot2 = slot0 and slot0.id
-	slot3 = slot1 and slot1.id
+function var_0_0.sortAchievementByRareDown(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0 and arg_12_0.id
+	local var_12_1 = arg_12_1 and arg_12_1.id
 
-	if slot0.groupId ~= 0 and slot1.groupId ~= 0 then
-		slot5 = AchievementConfig.instance:getGroup(slot1.groupId)
+	if arg_12_0.groupId ~= 0 and arg_12_1.groupId ~= 0 then
+		local var_12_2 = AchievementConfig.instance:getGroup(arg_12_0.groupId)
+		local var_12_3 = AchievementConfig.instance:getGroup(arg_12_1.groupId)
+		local var_12_4 = var_12_2 and var_12_2.order or 0
+		local var_12_5 = var_12_3 and var_12_3.order or 0
 
-		if (AchievementConfig.instance:getGroup(slot0.groupId) and slot4.order or 0) ~= (slot5 and slot5.order or 0) then
-			return slot6 < slot7
+		if var_12_4 ~= var_12_5 then
+			return var_12_4 < var_12_5
 		end
 
-		if slot0.groupId ~= slot1.groupId then
-			return slot1.groupId < slot0.groupId
+		if arg_12_0.groupId ~= arg_12_1.groupId then
+			return arg_12_0.groupId > arg_12_1.groupId
 		end
 	end
 
-	if AchievementModel.instance:achievementHasLocked(slot2) ~= AchievementModel.instance:achievementHasLocked(slot3) then
-		return not slot4
+	local var_12_6 = AchievementModel.instance:achievementHasLocked(var_12_0)
+
+	if var_12_6 ~= AchievementModel.instance:achievementHasLocked(var_12_1) then
+		return not var_12_6
 	end
 
-	return slot2 < slot3
+	return var_12_0 < var_12_1
 end
 
-function slot0.sortAchievementByRareUp(slot0, slot1)
-	slot2 = slot0 and slot0.id
-	slot3 = slot1 and slot1.id
+function var_0_0.sortAchievementByRareUp(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0 and arg_13_0.id
+	local var_13_1 = arg_13_1 and arg_13_1.id
 
-	if slot0.groupId ~= 0 and slot1.groupId ~= 0 then
-		if AchievementModel.instance:getGroupLevel(slot0.groupId) ~= AchievementModel.instance:getGroupLevel(slot1.groupId) then
-			if slot4 * slot5 == 0 then
-				return slot4 ~= 0
+	if arg_13_0.groupId ~= 0 and arg_13_1.groupId ~= 0 then
+		local var_13_2 = AchievementModel.instance:getGroupLevel(arg_13_0.groupId)
+		local var_13_3 = AchievementModel.instance:getGroupLevel(arg_13_1.groupId)
+
+		if var_13_2 ~= var_13_3 then
+			if var_13_2 * var_13_3 == 0 then
+				return var_13_2 ~= 0
 			end
 
-			return slot4 < slot5
+			return var_13_2 < var_13_3
 		end
 
-		if slot0.groupId ~= slot1.groupId then
-			return slot0.groupId < slot1.groupId
+		if arg_13_0.groupId ~= arg_13_1.groupId then
+			return arg_13_0.groupId < arg_13_1.groupId
 		end
 	end
 
-	if AchievementModel.instance:getAchievementLevel(slot2) ~= AchievementModel.instance:getAchievementLevel(slot3) then
-		if slot4 * slot5 == 0 then
-			return slot4 ~= 0
+	local var_13_4 = AchievementModel.instance:getAchievementLevel(var_13_0)
+	local var_13_5 = AchievementModel.instance:getAchievementLevel(var_13_1)
+
+	if var_13_4 ~= var_13_5 then
+		if var_13_4 * var_13_5 == 0 then
+			return var_13_4 ~= 0
 		end
 
-		return slot4 < slot5
+		return var_13_4 < var_13_5
 	end
 
-	return slot2 < slot3
+	return var_13_0 < var_13_1
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot3 = {}
+function var_0_0.getInfoList(arg_14_0, arg_14_1)
+	local var_14_0 = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local var_14_1 = {}
+	local var_14_2 = arg_14_0:getList()
 
-	for slot8, slot9 in ipairs(slot0:getList()) do
-		table.insert(slot3, SLFramework.UGUI.MixCellInfo.New(slot9:getAchievementType(), slot9:getLineHeight(AchievementMainCommonModel.instance:getCurrentFilterType(), slot9:getIsFold()), slot8))
+	for iter_14_0, iter_14_1 in ipairs(var_14_2) do
+		local var_14_3 = iter_14_1:getIsFold()
+		local var_14_4 = iter_14_1:getLineHeight(var_14_0, var_14_3)
+		local var_14_5 = iter_14_1:getAchievementType()
+		local var_14_6 = SLFramework.UGUI.MixCellInfo.New(var_14_5, var_14_4, iter_14_0)
+
+		table.insert(var_14_1, var_14_6)
 	end
 
-	return slot3
+	return var_14_1
 end
 
-function slot0.getAchievementIndexAndScrollPixel(slot0, slot1, slot2)
-	slot3 = false
-	slot4 = 0
-	slot5 = 0
+function var_0_0.getAchievementIndexAndScrollPixel(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = false
+	local var_15_1 = 0
+	local var_15_2 = 0
+	local var_15_3 = arg_15_0:getList()
 
-	if slot0:getList() then
-		for slot11, slot12 in ipairs(slot6) do
-			if not slot12:isAchievementMatch(slot1, slot2) then
-				slot5 = slot5 + slot12:getLineHeight(AchievementMainCommonModel.instance:getCurrentFilterType(), slot12:getIsFold())
+	if var_15_3 then
+		local var_15_4 = AchievementMainCommonModel.instance:getCurrentFilterType()
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_3) do
+			if not iter_15_1:isAchievementMatch(arg_15_1, arg_15_2) then
+				var_15_2 = var_15_2 + iter_15_1:getLineHeight(var_15_4, iter_15_1:getIsFold())
 			else
-				slot4 = slot11
-				slot3 = true
+				var_15_1 = iter_15_0
+				var_15_0 = true
 
 				break
 			end
 		end
 	end
 
-	return slot3, slot4, slot5
+	return var_15_0, var_15_1, var_15_2
 end
 
-function slot0.getGroupMOList(slot0, slot1)
-	slot4 = slot0._moGroupMap[AchievementMainCommonModel.instance:getCurrentFilterType()] and slot0._moGroupMap[slot2][AchievementMainCommonModel.instance:getCurrentSortType()]
+function var_0_0.getGroupMOList(arg_16_0, arg_16_1)
+	local var_16_0 = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local var_16_1 = AchievementMainCommonModel.instance:getCurrentSortType()
+	local var_16_2 = arg_16_0._moGroupMap[var_16_0] and arg_16_0._moGroupMap[var_16_0][var_16_1]
 
-	return slot4 and slot4[slot1]
+	return var_16_2 and var_16_2[arg_16_1]
 end
 
-function slot0.isCurTaskNeedPlayIdleAnim(slot0)
-	return slot0._isCurTaskNeedPlayIdleAnim
+function var_0_0.isCurTaskNeedPlayIdleAnim(arg_17_0)
+	return arg_17_0._isCurTaskNeedPlayIdleAnim
 end
 
-function slot0.setIsCurTaskNeedPlayIdleAnim(slot0, slot1)
-	slot0._isCurTaskNeedPlayIdleAnim = slot1
+function var_0_0.setIsCurTaskNeedPlayIdleAnim(arg_18_0, arg_18_1)
+	arg_18_0._isCurTaskNeedPlayIdleAnim = arg_18_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

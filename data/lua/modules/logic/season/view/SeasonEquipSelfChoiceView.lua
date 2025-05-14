@@ -1,83 +1,87 @@
-module("modules.logic.season.view.SeasonEquipSelfChoiceView", package.seeall)
+﻿module("modules.logic.season.view.SeasonEquipSelfChoiceView", package.seeall)
 
-slot0 = class("SeasonEquipSelfChoiceView", BaseView)
+local var_0_0 = class("SeasonEquipSelfChoiceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bg2")
-	slot0._scrollitem = gohelper.findChildScrollRect(slot0.viewGO, "root/mask/#scroll_item")
-	slot0._gocarditem = gohelper.findChild(slot0.viewGO, "root/mask/#scroll_item/viewport/itemcontent/#go_carditem")
-	slot0._btnok = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_ok")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg2")
+	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/mask/#scroll_item")
+	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "root/mask/#scroll_item/viewport/itemcontent/#go_carditem")
+	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_ok")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose1:AddClickListener(slot0._btnclose1OnClick, slot0)
-	slot0._btnok:AddClickListener(slot0._btnokOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
+	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose1:RemoveClickListener()
-	slot0._btnok:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose1:RemoveClickListener()
+	arg_3_0._btnok:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btnclose1OnClick(slot0)
+function var_0_0._btnclose1OnClick(arg_4_0)
+	return
 end
 
-function slot0._btnokOnClick(slot0)
-	Activity104EquipSelfChoiceController.instance:sendSelectCard(slot0.handleSendChoice, slot0)
+function var_0_0._btnokOnClick(arg_5_0)
+	Activity104EquipSelfChoiceController.instance:sendSelectCard(arg_5_0.handleSendChoice, arg_5_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	slot0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	arg_7_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0._simagebg1:UnLoadImage()
+	arg_8_0._simagebg2:UnLoadImage()
 	Activity104EquipSelfChoiceController.instance:onCloseView()
 end
 
-function slot0.onOpen(slot0)
-	if not Activity104EquipSelfChoiceController:checkOpenParam(slot0.viewParam.actId, slot0.viewParam.costItemUid) then
-		slot0:delayClose()
+function var_0_0.onOpen(arg_9_0)
+	local var_9_0 = arg_9_0.viewParam.actId
+	local var_9_1 = arg_9_0.viewParam.costItemUid
+
+	if not Activity104EquipSelfChoiceController:checkOpenParam(var_9_0, var_9_1) then
+		arg_9_0:delayClose()
 
 		return
 	end
 
-	Activity104EquipSelfChoiceController.instance:onOpenView(slot1, slot2)
+	Activity104EquipSelfChoiceController.instance:onOpenView(var_9_0, var_9_1)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.closeThis, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.closeThis, arg_10_0)
 end
 
-function slot0.delayClose(slot0)
-	TaskDispatcher.runDelay(slot0.closeThis, slot0, 0.001)
+function var_0_0.delayClose(arg_11_0)
+	TaskDispatcher.runDelay(arg_11_0.closeThis, arg_11_0, 0.001)
 end
 
-function slot0.handleSendChoice(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0.handleSendChoice(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if arg_12_2 ~= 0 then
 		return
 	end
 
-	slot0:closeThis()
+	arg_12_0:closeThis()
 
-	if slot0.viewParam.successCall then
-		slot0.viewParam.successCall(slot0.viewParam.successCallObj)
+	if arg_12_0.viewParam.successCall then
+		arg_12_0.viewParam.successCall(arg_12_0.viewParam.successCallObj)
 	end
 end
 
-return slot0
+return var_0_0

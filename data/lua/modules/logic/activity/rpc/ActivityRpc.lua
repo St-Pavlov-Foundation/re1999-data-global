@@ -1,108 +1,115 @@
-module("modules.logic.activity.rpc.ActivityRpc", package.seeall)
+﻿module("modules.logic.activity.rpc.ActivityRpc", package.seeall)
 
-slot0 = class("ActivityRpc", BaseRpc)
+local var_0_0 = class("ActivityRpc", BaseRpc)
 
-function slot0.sendGetActivityInfosRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(ActivityModule_pb.GetActivityInfosRequest(), slot1, slot2)
+function var_0_0.sendGetActivityInfosRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = ActivityModule_pb.GetActivityInfosRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetActivityInfosReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ActivityModel.instance:setActivityInfo(slot2)
+function var_0_0.onReceiveGetActivityInfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		ActivityModel.instance:setActivityInfo(arg_2_2)
 		ActivityController.instance:checkGetActivityInfo()
 		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState)
 	end
 end
 
-function slot0.onReceiveUpdateActivityPush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ServerTime.update(slot2.time)
-		ActivityModel.instance:updateActivityInfo(slot2.activityInfo)
-		ActivityController.instance:updateAct101Infos(slot2.activityInfo.id)
-		ActivityController.instance:dispatchEvent(ActivityEvent.UpdateActivity, slot2.activityInfo.id)
-		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, slot2.activityInfo.id)
+function var_0_0.onReceiveUpdateActivityPush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == 0 then
+		ServerTime.update(arg_3_2.time)
+		ActivityModel.instance:updateActivityInfo(arg_3_2.activityInfo)
+		ActivityController.instance:updateAct101Infos(arg_3_2.activityInfo.id)
+		ActivityController.instance:dispatchEvent(ActivityEvent.UpdateActivity, arg_3_2.activityInfo.id)
+		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, arg_3_2.activityInfo.id)
 	end
 end
 
-function slot0.onReceiveEndActivityPush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ActivityModel.instance:endActivity(slot2.id)
-		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, slot2.id)
+function var_0_0.onReceiveEndActivityPush(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		ActivityModel.instance:endActivity(arg_4_2.id)
+		ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, arg_4_2.id)
 	end
 end
 
-function slot0.sendActivityNewStageReadRequest(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0.sendActivityNewStageReadRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if not arg_5_1 then
 		return
 	end
 
-	slot4 = {}
+	local var_5_0 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		if ActivityModel.instance:getActivityInfo()[slot9] and slot10:isNewStageOpen() then
-			table.insert(slot4, slot9)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_1 = ActivityModel.instance:getActivityInfo()[iter_5_1]
+
+		if var_5_1 and var_5_1:isNewStageOpen() then
+			table.insert(var_5_0, iter_5_1)
 		end
 	end
 
-	if #slot4 < 1 then
-		if slot2 then
-			slot2(slot3)
+	if #var_5_0 < 1 then
+		if arg_5_2 then
+			arg_5_2(arg_5_3)
 		end
 
 		return
 	end
 
-	slot5 = ActivityModule_pb.ActivityNewStageReadRequest()
+	local var_5_2 = ActivityModule_pb.ActivityNewStageReadRequest()
 
-	for slot9, slot10 in pairs(slot4) do
-		if slot10 ~= ActivityEnum.PlaceholderActivityId then
-			table.insert(slot5.id, slot10)
+	for iter_5_2, iter_5_3 in pairs(var_5_0) do
+		if iter_5_3 ~= ActivityEnum.PlaceholderActivityId then
+			table.insert(var_5_2.id, iter_5_3)
 		end
 	end
 
-	return slot0:sendMsg(slot5, slot2, slot3)
+	return arg_5_0:sendMsg(var_5_2, arg_5_2, arg_5_3)
 end
 
-function slot0.onReceiveActivityNewStageReadReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveActivityNewStageReadReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
 		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateActTag)
 	end
 end
 
-function slot0.sendUnlockPermanentRequest(slot0, slot1, slot2, slot3)
-	slot4 = ActivityModule_pb.UnlockPermanentRequest()
-	slot4.id = slot1
+function var_0_0.sendUnlockPermanentRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = ActivityModule_pb.UnlockPermanentRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_7_0.id = arg_7_1
+
+	arg_7_0:sendMsg(var_7_0, arg_7_2, arg_7_3)
 end
 
-function slot0.onReceiveUnlockPermanentReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ActivityModel.instance:setPermanentUnlock(slot2.id)
-		ActivityController.instance:dispatchEvent(ActivityEvent.UnlockPermanent, slot2.id)
+function var_0_0.onReceiveUnlockPermanentReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 == 0 then
+		ActivityModel.instance:setPermanentUnlock(arg_8_2.id)
+		ActivityController.instance:dispatchEvent(ActivityEvent.UnlockPermanent, arg_8_2.id)
 	end
 end
 
-function slot0.sendGetActivityInfosWithParamRequest(slot0, slot1)
-	slot2 = ActivityModule_pb.GetActivityInfosWithParamRequest()
+function var_0_0.sendGetActivityInfosWithParamRequest(arg_9_0, arg_9_1)
+	arg_9_1 = arg_9_1 or {}
 
-	for slot6, slot7 in ipairs(slot1 or {}) do
-		table.insert(slot2.activityIds, slot7)
+	local var_9_0 = ActivityModule_pb.GetActivityInfosWithParamRequest()
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		table.insert(var_9_0.activityIds, iter_9_1)
 	end
 
-	return slot0:sendMsg(slot2)
+	return arg_9_0:sendMsg(var_9_0)
 end
 
-function slot0.onReceiveGetActivityInfosWithParamReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		for slot6, slot7 in ipairs(slot2.activityInfos) do
-			ActivityModel.instance:updateInfoNoRepleace(slot7)
+function var_0_0.onReceiveGetActivityInfosWithParamReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_2.activityInfos) do
+			ActivityModel.instance:updateInfoNoRepleace(iter_10_1)
 		end
 
 		ActivityController.instance:dispatchEvent(ActivityEvent.GetActivityInfoWithParamSuccess)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

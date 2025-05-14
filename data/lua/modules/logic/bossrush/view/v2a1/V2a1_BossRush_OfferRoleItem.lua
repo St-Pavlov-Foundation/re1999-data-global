@@ -1,68 +1,75 @@
-module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_OfferRoleItem", package.seeall)
+﻿module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_OfferRoleItem", package.seeall)
 
-slot0 = class("V2a1_BossRush_OfferRoleItem", ListScrollCellExtend)
+local var_0_0 = class("V2a1_BossRush_OfferRoleItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "role/#image_rare")
-	slot0._simageheroicon = gohelper.findChildSingleImage(slot0.viewGO, "role/#simage_heroicon")
-	slot0._imagecareer = gohelper.findChildImage(slot0.viewGO, "role/#image_career")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "role/#txt_name")
-	slot0._txtnameEn = gohelper.findChildText(slot0.viewGO, "role/#txt_name/#txt_nameEn")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0._goclick = gohelper.findChild(slot0.viewGO, "#go_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "role/#image_rare")
+	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/#simage_heroicon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "role/#image_career")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "role/#txt_name")
+	arg_1_0._txtnameEn = gohelper.findChildText(arg_1_0.viewGO, "role/#txt_name/#txt_nameEn")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._uiclick = SLFramework.UGUI.UIClickListener.Get(slot0._goclick)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._uiclick = SLFramework.UGUI.UIClickListener.Get(arg_4_0._goclick)
 
-	slot0._uiclick:AddClickListener(slot0._btnclickOnClick, slot0)
+	arg_4_0._uiclick:AddClickListener(arg_4_0._btnclickOnClick, arg_4_0)
 end
 
-function slot0._btnclickOnClick(slot0)
-	BossRushEnhanceRoleViewListModel.instance:setSelect(slot0._mo.characterId)
+function var_0_0._btnclickOnClick(arg_5_0)
+	BossRushEnhanceRoleViewListModel.instance:setSelect(arg_5_0._mo.characterId)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0:_refreshItem()
+	arg_8_0:_refreshItem()
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0._goselect, arg_9_1)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageheroicon:UnLoadImage()
-	slot0._uiclick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simageheroicon:UnLoadImage()
+	arg_10_0._uiclick:RemoveClickListener()
 end
 
-function slot0._refreshItem(slot0)
-	slot2 = HeroConfig.instance:getHeroCO(slot0._mo.characterId)
+function var_0_0._refreshItem(arg_11_0)
+	local var_11_0 = arg_11_0._mo.characterId
+	local var_11_1 = HeroConfig.instance:getHeroCO(var_11_0)
+	local var_11_2 = var_11_1.skinId
+	local var_11_3 = SkinConfig.instance:getSkinCo(var_11_2)
 
-	slot0._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(SkinConfig.instance:getSkinCo(slot2.skinId).headIcon))
+	arg_11_0._simageheroicon:LoadImage(ResUrl.getRoomHeadIcon(var_11_3.headIcon))
 
-	slot0._txtname.text = slot2.name
-	slot0._txtnameEn.text = slot2.nameEng
+	arg_11_0._txtname.text = var_11_1.name
+	arg_11_0._txtnameEn.text = var_11_1.nameEng
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. slot2.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. CharacterEnum.Color[slot2.rare])
+	UISpriteSetMgr.instance:setCommonSprite(arg_11_0._imagecareer, "lssx_" .. var_11_1.career)
+	UISpriteSetMgr.instance:setCommonSprite(arg_11_0._imagerare, "bgequip" .. CharacterEnum.Color[var_11_1.rare])
 end
 
-return slot0
+return var_0_0

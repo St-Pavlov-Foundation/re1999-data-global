@@ -1,83 +1,88 @@
-module("modules.logic.versionactivity2_4.wuerlixi.rpc.Activity180Rpc", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.rpc.Activity180Rpc", package.seeall)
 
-slot0 = class("Activity180Rpc", BaseRpc)
+local var_0_0 = class("Activity180Rpc", BaseRpc)
 
-function slot0.sendGet180InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity180Module_pb.Get180InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet180InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity180Module_pb.Get180InfosRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet180InfosReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		WuErLiXiModel.instance:initInfos(slot2.act180EpisodeNO)
+function var_0_0.onReceiveGet180InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		WuErLiXiModel.instance:initInfos(arg_2_2.act180EpisodeNO)
 	end
 end
 
-function slot0.sendAct180EnterEpisodeRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity180Module_pb.Act180EnterEpisodeRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
+function var_0_0.sendAct180EnterEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = Activity180Module_pb.Act180EnterEpisodeRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_3_0.activityId = arg_3_1
+	var_3_0.episodeId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
 end
 
-function slot0.onReceiveAct180EnterEpisodeReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		WuErLiXiModel.instance:updateEpisodeInfo(slot2.episode)
+function var_0_0.onReceiveAct180EnterEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		WuErLiXiModel.instance:updateEpisodeInfo(arg_4_2.episode)
 	end
 end
 
-function slot0.sendAct180StoryRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity180Module_pb.Act180StoryRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
+function var_0_0.sendAct180StoryRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = Activity180Module_pb.Act180StoryRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_5_0.activityId = arg_5_1
+	var_5_0.episodeId = arg_5_2
+
+	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
 end
 
-function slot0.onReceiveAct180StoryReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		WuErLiXiModel.instance:updateEpisodeInfo(slot2.episode)
+function var_0_0.onReceiveAct180StoryReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
+		WuErLiXiModel.instance:updateEpisodeInfo(arg_6_2.episode)
 	end
 end
 
-function slot0.sendAct180GameFinishRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity180Module_pb.Act180GameFinishRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
+function var_0_0.sendAct180GameFinishRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	local var_7_0 = Activity180Module_pb.Act180GameFinishRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_7_0.activityId = arg_7_1
+	var_7_0.episodeId = arg_7_2
+
+	arg_7_0:sendMsg(var_7_0, arg_7_3, arg_7_4)
 end
 
-function slot0.onReceiveAct180GameFinishReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		WuErLiXiModel.instance:updateEpisodeInfo(slot2.episode)
+function var_0_0.onReceiveAct180GameFinishReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 == 0 then
+		WuErLiXiModel.instance:updateEpisodeInfo(arg_8_2.episode)
 	end
 end
 
-function slot0.sendAct180SaveGameRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity180Module_pb.Act180SaveGameRequest()
-	slot6.activityId = slot1
-	slot6.episodeId = slot2
-	slot6.gameData = slot3
+function var_0_0.sendAct180SaveGameRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+	local var_9_0 = Activity180Module_pb.Act180SaveGameRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_9_0.activityId = arg_9_1
+	var_9_0.episodeId = arg_9_2
+	var_9_0.gameData = arg_9_3
+
+	arg_9_0:sendMsg(var_9_0, arg_9_4, arg_9_5)
 end
 
-function slot0.onReceiveAct180SaveGameReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		WuErLiXiModel.instance:updateEpisodeGameString(slot2.episodeId, slot2.gameData)
+function var_0_0.onReceiveAct180SaveGameReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
+		WuErLiXiModel.instance:updateEpisodeGameString(arg_10_2.episodeId, arg_10_2.gameData)
 	end
 end
 
-function slot0.onReceiveAct180EpisodePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		WuErLiXiModel.instance:updateInfos(slot2.act180Episodes)
+function var_0_0.onReceiveAct180EpisodePush(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 == 0 then
+		WuErLiXiModel.instance:updateInfos(arg_11_2.act180Episodes)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,60 +1,60 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseLine", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseLine", package.seeall)
 
-slot0 = class("PuzzleMazeBaseLine", UserDataDispose)
+local var_0_0 = class("PuzzleMazeBaseLine", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.onInit(slot0, slot1, slot2, slot3, slot4)
-	slot0.y2 = slot4
-	slot0.x2 = slot3
-	slot0.y1 = slot2
-	slot0.x1 = slot1
+function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0.x1, arg_2_0.y1, arg_2_0.x2, arg_2_0.y2 = arg_2_1, arg_2_2, arg_2_3, arg_2_4
 
-	slot0:setDir(PuzzleMazeHelper.getFromToDir(slot1, slot2, slot3, slot4))
+	local var_2_0 = PuzzleMazeHelper.getFromToDir(arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+
+	arg_2_0:setDir(var_2_0)
 end
 
-function slot0.onCrossFull(slot0, slot1)
-	slot0:setDir(slot1)
-	slot0:setProgress(1)
+function var_0_0.onCrossFull(arg_3_0, arg_3_1)
+	arg_3_0:setDir(arg_3_1)
+	arg_3_0:setProgress(1)
 end
 
-function slot0.onCrossHalf(slot0, slot1, slot2)
-	slot0:setDir(slot1)
-	slot0:setProgress(slot2)
+function var_0_0.onCrossHalf(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:setDir(arg_4_1)
+	arg_4_0:setProgress(arg_4_2)
 end
 
-function slot0.onAlert(slot0, slot1)
+function var_0_0.onAlert(arg_5_0, arg_5_1)
+	return
 end
 
-function slot0.setProgress(slot0, slot1)
-	slot0.progress = slot1 or 0
+function var_0_0.setProgress(arg_6_0, arg_6_1)
+	arg_6_0.progress = arg_6_1 or 0
 end
 
-function slot0.getProgress(slot0)
-	return slot0.progress or 0
+function var_0_0.getProgress(arg_7_0)
+	return arg_7_0.progress or 0
 end
 
-function slot0.setDir(slot0, slot1)
-	slot0.dir = slot1
+function var_0_0.setDir(arg_8_0, arg_8_1)
+	arg_8_0.dir = arg_8_1
 end
 
-function slot0.getDir(slot0)
-	return slot0.dir
+function var_0_0.getDir(arg_9_0)
+	return arg_9_0.dir
 end
 
-function slot0.clear(slot0)
-	slot0:setProgress(0)
+function var_0_0.clear(arg_10_0)
+	arg_10_0:setProgress(0)
 
-	slot0.dir = nil
+	arg_10_0.dir = nil
 end
 
-function slot0.destroy(slot0)
-	gohelper.destroy(slot0.go)
-	slot0:__onDispose()
+function var_0_0.destroy(arg_11_0)
+	gohelper.destroy(arg_11_0.go)
+	arg_11_0:__onDispose()
 end
 
-return slot0
+return var_0_0

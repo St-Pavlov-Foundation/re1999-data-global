@@ -1,7 +1,8 @@
-module("modules.logic.activitywelfare.define.Activity160Event", package.seeall)
+﻿module("modules.logic.activitywelfare.define.Activity160Event", package.seeall)
 
-slot0 = _M
-slot0.HasReadMail = 1
-slot0.InfoUpdate = 2
+local var_0_0 = _M
 
-return slot0
+var_0_0.HasReadMail = 1
+var_0_0.InfoUpdate = 2
+
+return var_0_0

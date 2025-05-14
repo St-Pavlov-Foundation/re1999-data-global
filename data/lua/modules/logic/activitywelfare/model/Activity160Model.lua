@@ -1,62 +1,71 @@
-module("modules.logic.activitywelfare.model.Activity160Model", package.seeall)
+﻿module("modules.logic.activitywelfare.model.Activity160Model", package.seeall)
 
-slot0 = class("Activity160Model", BaseModel)
+local var_0_0 = class("Activity160Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.infoDic = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.infoDic = {}
 end
 
-function slot0.setInfo(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1.act160Infos) do
-		slot0:getActInfo(slot1.activityId)[slot8.id] = slot8
+function var_0_0.setInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.activityId
+	local var_3_1 = arg_3_0:getActInfo(var_3_0)
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.act160Infos) do
+		var_3_1[iter_3_1.id] = iter_3_1
 	end
 
-	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, slot2)
+	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, var_3_0)
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot2 = slot1.activityId
-	slot0:getActInfo(slot2)[slot1.act160Info.id] = slot1.act160Info
+function var_0_0.updateInfo(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.activityId
 
-	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, slot2)
+	arg_4_0:getActInfo(var_4_0)[arg_4_1.act160Info.id] = arg_4_1.act160Info
+
+	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, var_4_0)
 end
 
-function slot0.finishMissionReply(slot0, slot1)
-	slot2 = slot1.activityId
-	slot0:getActInfo(slot2)[slot1.act160Info.id] = slot1.act160Info
+function var_0_0.finishMissionReply(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.activityId
 
-	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, slot2)
+	arg_5_0:getActInfo(var_5_0)[arg_5_1.act160Info.id] = arg_5_1.act160Info
 
-	if slot1.isReadMail then
-		Activity160Controller.instance:dispatchEvent(Activity160Event.HasReadMail, slot2, slot1.act160Info.id)
+	Activity160Controller.instance:dispatchEvent(Activity160Event.InfoUpdate, var_5_0)
+
+	if arg_5_1.isReadMail then
+		Activity160Controller.instance:dispatchEvent(Activity160Event.HasReadMail, var_5_0, arg_5_1.act160Info.id)
 	end
 end
 
-function slot0.getActInfo(slot0, slot1)
-	if not slot0.infoDic[slot1] then
-		slot0.infoDic[slot1] = {}
+function var_0_0.getActInfo(arg_6_0, arg_6_1)
+	if not arg_6_0.infoDic[arg_6_1] then
+		arg_6_0.infoDic[arg_6_1] = {}
 	end
 
-	return slot0.infoDic[slot1]
+	return arg_6_0.infoDic[arg_6_1]
 end
 
-function slot0.getCurMission(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getActInfo(slot1)) do
-		if slot7.state ~= 2 then
-			return slot6
+function var_0_0.getCurMission(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getActInfo(arg_7_1)
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.state ~= 2 then
+			return iter_7_0
 		end
 	end
 
-	return slot2[#slot2].id
+	return var_7_0[#var_7_0].id
 end
 
-function slot0.hasRewardClaim(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getActInfo(slot1)) do
-		if slot7.state == 1 then
+function var_0_0.hasRewardClaim(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getActInfo(arg_8_1)
+
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		if iter_8_1.state == 1 then
 			return true
 		end
 	end
@@ -64,9 +73,11 @@ function slot0.hasRewardClaim(slot0, slot1)
 	return false
 end
 
-function slot0.hasRewardCanGet(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getActInfo(slot1)) do
-		if slot7.state ~= 2 then
+function var_0_0.hasRewardCanGet(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getActInfo(arg_9_1)
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		if iter_9_1.state ~= 2 then
 			return true
 		end
 	end
@@ -74,14 +85,18 @@ function slot0.hasRewardCanGet(slot0, slot1)
 	return false
 end
 
-function slot0.isMissionCanGet(slot0, slot1, slot2)
-	return slot0:getActInfo(slot1)[slot2] and slot3[slot2].state == 1
+function var_0_0.isMissionCanGet(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:getActInfo(arg_10_1)
+
+	return var_10_0[arg_10_2] and var_10_0[arg_10_2].state == 1
 end
 
-function slot0.isMissionFinish(slot0, slot1, slot2)
-	return slot0:getActInfo(slot1)[slot2] and slot3[slot2].state == 2
+function var_0_0.isMissionFinish(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0:getActInfo(arg_11_1)
+
+	return var_11_0[arg_11_2] and var_11_0[arg_11_2].state == 2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,62 +1,71 @@
-module("modules.logic.scene.pushbox.logic.PushBoxElementDoor", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxElementDoor", package.seeall)
 
-slot0 = class("PushBoxElementDoor", UserDataDispose)
+local var_0_0 = class("PushBoxElementDoor", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	slot0._gameObject = slot1
-	slot0._transform = slot1.transform
-	slot0._cell = slot2
+	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	arg_1_0._gameObject = arg_1_1
+	arg_1_0._transform = arg_1_1.transform
+	arg_1_0._cell = arg_1_2
 
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, slot0._onRefreshElement, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, slot0._onStepFinished, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, slot0._onRevertStep, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, slot0._onStartElement, slot0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
 end
 
-function slot0.setRendererIndex(slot0)
-	for slot5 = 0, slot0._transform.childCount - 1 do
-		slot0._transform:GetChild(slot5):GetChild(0):GetComponent("MeshRenderer").sortingOrder = slot0._cell:getRendererIndex() + 1 - 10000
+function var_0_0.setRendererIndex(arg_2_0)
+	local var_2_0 = arg_2_0._cell:getRendererIndex() + 1 - 10000
+
+	for iter_2_0 = 0, arg_2_0._transform.childCount - 1 do
+		arg_2_0._transform:GetChild(iter_2_0):GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_2_0
 	end
 end
 
-function slot0.refreshDoorState(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot0._gameObject, "Open"), slot1)
-	gohelper.setActive(gohelper.findChild(slot0._gameObject, "Close"), not slot1)
+function var_0_0.refreshDoorState(arg_3_0, arg_3_1)
+	local var_3_0 = gohelper.findChild(arg_3_0._gameObject, "Close")
+	local var_3_1 = gohelper.findChild(arg_3_0._gameObject, "Open")
+
+	gohelper.setActive(var_3_1, arg_3_1)
+	gohelper.setActive(var_3_0, not arg_3_1)
 end
 
-function slot0._onStartElement(slot0)
+function var_0_0._onStartElement(arg_4_0)
+	return
 end
 
-function slot0._onRevertStep(slot0)
+function var_0_0._onRevertStep(arg_5_0)
+	return
 end
 
-function slot0._onRefreshElement(slot0)
+function var_0_0._onRefreshElement(arg_6_0)
+	return
 end
 
-function slot0._onStepFinished(slot0)
+function var_0_0._onStepFinished(arg_7_0)
+	return
 end
 
-function slot0.getPosX(slot0)
-	return slot0._cell:getPosX()
+function var_0_0.getPosX(arg_8_0)
+	return arg_8_0._cell:getPosX()
 end
 
-function slot0.getPosY(slot0)
-	return slot0._cell:getPosY()
+function var_0_0.getPosY(arg_9_0)
+	return arg_9_0._cell:getPosY()
 end
 
-function slot0.getObj(slot0)
-	return slot0._gameObject
+function var_0_0.getObj(arg_10_0)
+	return arg_10_0._gameObject
 end
 
-function slot0.getCell(slot0)
-	return slot0._cell
+function var_0_0.getCell(arg_11_0)
+	return arg_11_0._cell
 end
 
-function slot0.releaseSelf(slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_12_0)
+	arg_12_0:__onDispose()
 end
 
-return slot0
+return var_0_0

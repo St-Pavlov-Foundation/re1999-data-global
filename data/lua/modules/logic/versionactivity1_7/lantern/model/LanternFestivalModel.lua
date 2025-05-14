@@ -1,65 +1,65 @@
-module("modules.logic.versionactivity1_7.lantern.model.LanternFestivalModel", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.model.LanternFestivalModel", package.seeall)
 
-slot0 = class("LanternFestivalModel", BaseModel)
+local var_0_0 = class("LanternFestivalModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._loginCount = 0
-	slot0._puzzleInfos = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._loginCount = 0
+	arg_2_0._puzzleInfos = {}
 end
 
-function slot0.setActivity154Infos(slot0, slot1)
-	slot0._loginCount = slot1.loginCount
-	slot0._puzzleInfos = {}
+function var_0_0.setActivity154Infos(arg_3_0, arg_3_1)
+	arg_3_0._loginCount = arg_3_1.loginCount
+	arg_3_0._puzzleInfos = {}
 
-	for slot5, slot6 in ipairs(slot1.infos) do
-		slot7 = LanternFestivalPuzzleMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.infos) do
+		local var_3_0 = LanternFestivalPuzzleMo.New()
 
-		slot7:init(slot6)
+		var_3_0:init(iter_3_1)
 
-		slot0._puzzleInfos[slot6.puzzleId] = slot7
+		arg_3_0._puzzleInfos[iter_3_1.puzzleId] = var_3_0
 	end
 end
 
-function slot0.getLoginCount(slot0)
-	return slot0._loginCount
+function var_0_0.getLoginCount(arg_4_0)
+	return arg_4_0._loginCount
 end
 
-function slot0.getPuzzleInfo(slot0, slot1)
-	return slot0._puzzleInfos[slot1]
+function var_0_0.getPuzzleInfo(arg_5_0, arg_5_1)
+	return arg_5_0._puzzleInfos[arg_5_1]
 end
 
-function slot0.updatePuzzleInfo(slot0, slot1)
-	if slot0._puzzleInfos[slot1.puzzleId] then
-		slot0._puzzleInfos[slot1.puzzleId]:reset(slot1)
+function var_0_0.updatePuzzleInfo(arg_6_0, arg_6_1)
+	if arg_6_0._puzzleInfos[arg_6_1.puzzleId] then
+		arg_6_0._puzzleInfos[arg_6_1.puzzleId]:reset(arg_6_1)
 	else
-		slot2 = LanternFestivalPuzzleMo.New()
+		local var_6_0 = LanternFestivalPuzzleMo.New()
 
-		slot2:init(slot1)
+		var_6_0:init(arg_6_1)
 
-		slot0._puzzleInfos[slot1.puzzleId] = slot2
+		arg_6_0._puzzleInfos[arg_6_1.puzzleId] = var_6_0
 	end
 end
 
-function slot0.isPuzzleUnlock(slot0, slot1)
-	return slot0._puzzleInfos[slot1].state ~= LanternFestivalEnum.PuzzleState.Lock
+function var_0_0.isPuzzleUnlock(arg_7_0, arg_7_1)
+	return arg_7_0._puzzleInfos[arg_7_1].state ~= LanternFestivalEnum.PuzzleState.Lock
 end
 
-function slot0.isPuzzleGiftGet(slot0, slot1)
-	return slot0._puzzleInfos[slot1].state == LanternFestivalEnum.PuzzleState.RewardGet
+function var_0_0.isPuzzleGiftGet(arg_8_0, arg_8_1)
+	return arg_8_0._puzzleInfos[arg_8_1].state == LanternFestivalEnum.PuzzleState.RewardGet
 end
 
-function slot0.getPuzzleState(slot0, slot1)
-	return slot0._puzzleInfos[slot1].state
+function var_0_0.getPuzzleState(arg_9_0, arg_9_1)
+	return arg_9_0._puzzleInfos[arg_9_1].state
 end
 
-function slot0.getPuzzleOptionState(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._puzzleInfos[slot1].answerRecords) do
-		if slot7 == slot2 then
-			if LanternFestivalConfig.instance:getPuzzleCo(slot1).answerId == slot2 then
+function var_0_0.getPuzzleOptionState(arg_10_0, arg_10_1, arg_10_2)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._puzzleInfos[arg_10_1].answerRecords) do
+		if iter_10_1 == arg_10_2 then
+			if LanternFestivalConfig.instance:getPuzzleCo(arg_10_1).answerId == arg_10_2 then
 				return LanternFestivalEnum.OptionState.Right
 			else
 				return LanternFestivalEnum.OptionState.Wrong
@@ -70,32 +70,35 @@ function slot0.getPuzzleOptionState(slot0, slot1, slot2)
 	return LanternFestivalEnum.OptionState.UnAnswer
 end
 
-function slot0.getCurPuzzleId(slot0)
-	if not slot0._curPuzzleId or slot0._curPuzzleId == 0 then
-		slot0._curPuzzleId = LanternFestivalConfig.instance:getAct154Co(nil, slot0._loginCount > 5 and 5 or slot0._loginCount).puzzleId
-		slot2 = 0
+function var_0_0.getCurPuzzleId(arg_11_0)
+	if not arg_11_0._curPuzzleId or arg_11_0._curPuzzleId == 0 then
+		local var_11_0 = arg_11_0._loginCount > 5 and 5 or arg_11_0._loginCount
 
-		for slot6, slot7 in pairs(slot0._puzzleInfos) do
-			if slot7.state == LanternFestivalEnum.PuzzleState.Solved or slot7.state == LanternFestivalEnum.PuzzleState.RewardGet then
-				slot2 = slot7.puzzleId < slot2 and slot2 or slot7.puzzleId
+		arg_11_0._curPuzzleId = LanternFestivalConfig.instance:getAct154Co(nil, var_11_0).puzzleId
+
+		local var_11_1 = 0
+
+		for iter_11_0, iter_11_1 in pairs(arg_11_0._puzzleInfos) do
+			if iter_11_1.state == LanternFestivalEnum.PuzzleState.Solved or iter_11_1.state == LanternFestivalEnum.PuzzleState.RewardGet then
+				var_11_1 = var_11_1 > iter_11_1.puzzleId and var_11_1 or iter_11_1.puzzleId
 			end
 		end
 
-		if slot2 > 0 then
-			slot0._curPuzzleId = slot2
+		if var_11_1 > 0 then
+			arg_11_0._curPuzzleId = var_11_1
 		end
 	end
 
-	return slot0._curPuzzleId
+	return arg_11_0._curPuzzleId
 end
 
-function slot0.setCurPuzzleId(slot0, slot1)
-	slot0._curPuzzleId = slot1
+function var_0_0.setCurPuzzleId(arg_12_0, arg_12_1)
+	arg_12_0._curPuzzleId = arg_12_1
 end
 
-function slot0.hasPuzzleCouldGetReward(slot0)
-	for slot4, slot5 in pairs(slot0._puzzleInfos) do
-		if slot5.state ~= LanternFestivalEnum.PuzzleState.Lock and slot5.state ~= LanternFestivalEnum.PuzzleState.RewardGet then
+function var_0_0.hasPuzzleCouldGetReward(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._puzzleInfos) do
+		if iter_13_1.state ~= LanternFestivalEnum.PuzzleState.Lock and iter_13_1.state ~= LanternFestivalEnum.PuzzleState.RewardGet then
 			return true
 		end
 	end
@@ -103,9 +106,11 @@ function slot0.hasPuzzleCouldGetReward(slot0)
 	return false
 end
 
-function slot0.isAllPuzzleFinished(slot0)
-	for slot5, slot6 in pairs(LanternFestivalConfig.instance:getAct154Cos()) do
-		if not slot0:isPuzzleGiftGet(slot6.puzzleId) then
+function var_0_0.isAllPuzzleFinished(arg_14_0)
+	local var_14_0 = LanternFestivalConfig.instance:getAct154Cos()
+
+	for iter_14_0, iter_14_1 in pairs(var_14_0) do
+		if not arg_14_0:isPuzzleGiftGet(iter_14_1.puzzleId) then
 			return false
 		end
 	end
@@ -113,9 +118,9 @@ function slot0.isAllPuzzleFinished(slot0)
 	return true
 end
 
-function slot0.isAllPuzzleUnSolved(slot0)
-	for slot4, slot5 in pairs(slot0._puzzleInfos) do
-		if slot5.state == LanternFestivalEnum.PuzzleState.Solved or slot5.state == LanternFestivalEnum.PuzzleState.RewardGet then
+function var_0_0.isAllPuzzleUnSolved(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._puzzleInfos) do
+		if iter_15_1.state == LanternFestivalEnum.PuzzleState.Solved or iter_15_1.state == LanternFestivalEnum.PuzzleState.RewardGet then
 			return false
 		end
 	end
@@ -123,6 +128,6 @@ function slot0.isAllPuzzleUnSolved(slot0)
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,25 +1,27 @@
-module("modules.logic.fight.system.work.asfd.FightWorkASFDEffectFlow", package.seeall)
+﻿module("modules.logic.fight.system.work.asfd.FightWorkASFDEffectFlow", package.seeall)
 
-slot0 = class("FightWorkASFDEffectFlow", BaseWork)
+local var_0_0 = class("FightWorkASFDEffectFlow", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0.stepMo = slot1
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.stepMo = arg_1_1
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot0.stepWork = FightStepBuilder._buildEffectWorks(slot0.stepMo) and slot1[1]
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = FightStepBuilder._buildEffectWorks(arg_2_0.stepMo)
 
-	if not slot0.stepWork then
-		return slot0:onDone(true)
+	arg_2_0.stepWork = var_2_0 and var_2_0[1]
+
+	if not arg_2_0.stepWork then
+		return arg_2_0:onDone(true)
 	end
 
-	slot0.stepWork:registerDoneListener(slot0.onEffectWorkDone, slot0)
-	slot0.stepWork:onStartInternal()
+	arg_2_0.stepWork:registerDoneListener(arg_2_0.onEffectWorkDone, arg_2_0)
+	arg_2_0.stepWork:onStartInternal()
 end
 
-function slot0.onEffectWorkDone(slot0)
-	return slot0:onDone(true)
+function var_0_0.onEffectWorkDone(arg_3_0)
+	return arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

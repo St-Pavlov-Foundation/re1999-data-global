@@ -1,95 +1,100 @@
-module("modules.logic.optionpackage.model.OptionPackageMO", package.seeall)
+﻿module("modules.logic.optionpackage.model.OptionPackageMO", package.seeall)
 
-slot0 = pureTable("OptionPackageMO")
+local var_0_0 = pureTable("OptionPackageMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.packeName = slot1 or ""
-	slot0.lang = slot2 or ""
-	slot0.id = OptionPackageHelper.formatLangPackName(slot0.lang, slot0.packeName)
-	slot0.langPack = OptionPackageHelper.formatLangPackName(slot0.lang, slot0.packeName)
-	slot0.nameLangId = "langtype_" .. slot0.lang
-	slot0.size = 0
-	slot0.localSize = 0
-	slot0.localVersion = 0
-	slot0.latestVersion = 0
-	slot0.download_url = ""
-	slot0.download_url_bak = ""
-	slot0.download_res = {}
-	slot0.downloadResList = {
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.packeName = arg_1_1 or ""
+	arg_1_0.lang = arg_1_2 or ""
+	arg_1_0.id = OptionPackageHelper.formatLangPackName(arg_1_0.lang, arg_1_0.packeName)
+	arg_1_0.langPack = OptionPackageHelper.formatLangPackName(arg_1_0.lang, arg_1_0.packeName)
+	arg_1_0.nameLangId = "langtype_" .. arg_1_0.lang
+	arg_1_0.size = 0
+	arg_1_0.localSize = 0
+	arg_1_0.localVersion = 0
+	arg_1_0.latestVersion = 0
+	arg_1_0.download_url = ""
+	arg_1_0.download_url_bak = ""
+	arg_1_0.download_res = {}
+	arg_1_0.downloadResList = {
 		names = {},
 		hashs = {},
 		orders = {},
 		lengths = {}
 	}
-	slot0._landPackInfo = nil
+	arg_1_0._landPackInfo = nil
 end
 
-function slot0.setLocalVersion(slot0, slot1)
-	slot0.localVersion = slot1
+function var_0_0.setLocalVersion(arg_2_0, arg_2_1)
+	arg_2_0.localVersion = arg_2_1
 end
 
-function slot0.setPackInfo(slot0, slot1)
-	slot0._landPackInfo = slot1
-	slot0.latestVersion = slot1.latest_ver and (string.splitToNumber(slot2, ".")[2] or 0) or 0
-	slot0.download_url = slot1.download_url
-	slot0.download_url_bak = slot1.download_url_bak
-	slot0.download_res = {}
+function var_0_0.setPackInfo(arg_3_0, arg_3_1)
+	arg_3_0._landPackInfo = arg_3_1
 
-	tabletool.addValues(slot0.download_res, slot1.res)
+	local var_3_0 = arg_3_1.latest_ver
 
-	if slot1.res then
-		slot4 = {}
-		slot5 = {}
-		slot6 = {}
-		slot7 = {}
+	var_3_0 = var_3_0 and (string.splitToNumber(var_3_0, ".")[2] or 0)
+	arg_3_0.latestVersion = var_3_0 or 0
+	arg_3_0.download_url = arg_3_1.download_url
+	arg_3_0.download_url_bak = arg_3_1.download_url_bak
+	arg_3_0.download_res = {}
 
-		for slot11, slot12 in ipairs(slot1.res) do
-			table.insert(slot4, slot12.name)
-			table.insert(slot5, slot12.hash)
-			table.insert(slot6, slot12.order)
-			table.insert(slot7, slot12.length)
+	tabletool.addValues(arg_3_0.download_res, arg_3_1.res)
 
-			slot3 = 0 + slot12.length
+	if arg_3_1.res then
+		local var_3_1 = 0
+		local var_3_2 = {}
+		local var_3_3 = {}
+		local var_3_4 = {}
+		local var_3_5 = {}
+
+		for iter_3_0, iter_3_1 in ipairs(arg_3_1.res) do
+			table.insert(var_3_2, iter_3_1.name)
+			table.insert(var_3_3, iter_3_1.hash)
+			table.insert(var_3_4, iter_3_1.order)
+			table.insert(var_3_5, iter_3_1.length)
+
+			var_3_1 = var_3_1 + iter_3_1.length
 		end
 
-		slot0.downloadResList.names = slot4
-		slot0.downloadResList.hashs = slot5
-		slot0.downloadResList.orders = slot6
-		slot0.downloadResList.lengths = slot7
-		slot0.size = slot3
+		arg_3_0.downloadResList.names = var_3_2
+		arg_3_0.downloadResList.hashs = var_3_3
+		arg_3_0.downloadResList.orders = var_3_4
+		arg_3_0.downloadResList.lengths = var_3_5
+		arg_3_0.size = var_3_1
 	end
 end
 
-function slot0.getPackInfo(slot0)
-	return slot0._landPackInfo
+function var_0_0.getPackInfo(arg_4_0)
+	return arg_4_0._landPackInfo
 end
 
-function slot0.setLocalSize(slot0, slot1)
-	slot0.localSize = slot1
+function var_0_0.setLocalSize(arg_5_0, arg_5_1)
+	arg_5_0.localSize = arg_5_1
 end
 
-function slot0.isNeedDownload(slot0)
-	return slot0:getStatus() ~= OptionPackageEnum.UpdateState.AlreadyLatest
+function var_0_0.isNeedDownload(arg_6_0)
+	return arg_6_0:getStatus() ~= OptionPackageEnum.UpdateState.AlreadyLatest
 end
 
-function slot0.getStatus(slot0)
-	if slot0.latestVersion <= 0 then
+function var_0_0.getStatus(arg_7_0)
+	if arg_7_0.latestVersion <= 0 then
 		return OptionPackageEnum.UpdateState.NotDownload
 	end
 
-	if slot0.latestVersion <= slot0.localVersion or not slot0.download_res or #slot0.download_res < 1 then
+	if arg_7_0.localVersion >= arg_7_0.latestVersion or not arg_7_0.download_res or #arg_7_0.download_res < 1 then
 		return OptionPackageEnum.UpdateState.AlreadyLatest
 	end
 
-	return OptionPackageController.instance:getPackItemState(slot0.id, slot0.latestVersion)
+	return OptionPackageController.instance:getPackItemState(arg_7_0.id, arg_7_0.latestVersion)
 end
 
-function slot0.hasLocalVersion(slot0)
-	if slot0.localVersion and slot0.localVersion > 0 then
+function var_0_0.hasLocalVersion(arg_8_0)
+	if arg_8_0.localVersion and arg_8_0.localVersion > 0 then
 		return true
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

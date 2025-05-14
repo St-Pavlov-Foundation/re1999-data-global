@@ -1,29 +1,29 @@
-module("modules.logic.guide.controller.action.impl.GuideActionPlayAudio", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionPlayAudio", package.seeall)
 
-slot0 = class("GuideActionPlayAudio", BaseGuideAction)
+local var_0_0 = class("GuideActionPlayAudio", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._audioId = tonumber(slot3) or nil
+	arg_1_0._audioId = tonumber(arg_1_3) or nil
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	if slot0._audioId then
-		GuideAudioMgr.instance:playAudio(slot0._audioId)
+	if arg_2_0._audioId then
+		GuideAudioMgr.instance:playAudio(arg_2_0._audioId)
 	else
-		logError("Guide audio id nil, guide_" .. slot0.guideId .. "_" .. slot0.stepId)
+		logError("Guide audio id nil, guide_" .. arg_2_0.guideId .. "_" .. arg_2_0.stepId)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0.onDestroy(slot0, slot1)
-	if slot0._audioId then
+function var_0_0.onDestroy(arg_3_0, arg_3_1)
+	if arg_3_0._audioId then
 		GuideAudioMgr.instance:stopAudio()
 	end
 end
 
-return slot0
+return var_0_0

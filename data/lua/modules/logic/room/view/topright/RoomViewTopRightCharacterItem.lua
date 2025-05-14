@@ -1,41 +1,47 @@
-module("modules.logic.room.view.topright.RoomViewTopRightCharacterItem", package.seeall)
+﻿module("modules.logic.room.view.topright.RoomViewTopRightCharacterItem", package.seeall)
 
-slot0 = class("RoomViewTopRightCharacterItem", RoomViewTopRightBaseItem)
+local var_0_0 = class("RoomViewTopRightCharacterItem", RoomViewTopRightBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 end
 
-function slot0._customOnInit(slot0)
-	slot0._resourceItem.simageicon = gohelper.findChildImage(slot0._resourceItem.go, "icon")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._resourceItem.simageicon = gohelper.findChildImage(arg_2_0._resourceItem.go, "icon")
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._resourceItem.simageicon, "img_juese")
-	slot0:_setShow(true)
+	UISpriteSetMgr.instance:setRoomSprite(arg_2_0._resourceItem.simageicon, "img_juese")
+	arg_2_0:_setShow(true)
 end
 
-function slot0._onClick(slot0)
-	slot1 = RoomCharacterModel.instance:getMaxCharacterCount()
-	slot3 = RoomConfig.instance:getCharacterLimitAddByBuildDegree(RoomMapModel.instance:getAllBuildDegree())
+function var_0_0._onClick(arg_3_0)
+	local var_3_0 = RoomCharacterModel.instance:getMaxCharacterCount()
+	local var_3_1 = RoomMapModel.instance:getAllBuildDegree()
+	local var_3_2 = RoomConfig.instance:getCharacterLimitAddByBuildDegree(var_3_1)
 
 	ViewMgr.instance:openView(ViewName.RoomTipsView, {
 		type = RoomTipsView.ViewType.Character
 	})
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmCharacter, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UnUseCharacter, slot0._refreshUI, slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmCharacter, arg_4_0._refreshUI, arg_4_0)
+	arg_4_0:addEventCb(RoomMapController.instance, RoomEvent.UnUseCharacter, arg_4_0._refreshUI, arg_4_0)
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	slot0._resourceItem.txtquantity.text = string.format("%d/%d", RoomCharacterModel.instance:getConfirmCharacterCount(), RoomCharacterModel.instance:getMaxCharacterCount())
+function var_0_0._refreshUI(arg_6_0)
+	local var_6_0 = RoomCharacterModel.instance:getMaxCharacterCount()
+	local var_6_1 = RoomCharacterModel.instance:getConfirmCharacterCount()
+
+	arg_6_0._resourceItem.txtquantity.text = string.format("%d/%d", var_6_1, var_6_0)
 end
 
-function slot0._customOnDestory(slot0)
+function var_0_0._customOnDestory(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

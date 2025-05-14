@@ -1,34 +1,36 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueCollectionMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueCollectionMO", package.seeall)
 
-slot0 = pureTable("RogueCollectionMO")
+local var_0_0 = pureTable("RogueCollectionMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.uid
-	slot0.cfgId = slot1.id
-	slot0.leftUid = slot1.leftUid
-	slot0.rightUid = slot1.rightUid
-	slot0.baseId = slot1.baseId
-	slot0.enchantUid = slot1.enchantUid
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.uid
+	arg_1_0.cfgId = arg_1_1.id
+	arg_1_0.leftUid = arg_1_1.leftUid
+	arg_1_0.rightUid = arg_1_1.rightUid
+	arg_1_0.baseId = arg_1_1.baseId
+	arg_1_0.enchantUid = arg_1_1.enchantUid
 end
 
-function slot0.getEnchantId(slot0, slot1)
-	return slot1 == V1a6_CachotEnum.CollectionHole.Left and slot0.leftUid or slot0.rightUid
+function var_0_0.getEnchantId(arg_2_0, arg_2_1)
+	return arg_2_1 == V1a6_CachotEnum.CollectionHole.Left and arg_2_0.leftUid or arg_2_0.rightUid
 end
 
-function slot0.isEnchant(slot0)
-	return slot0.enchantUid and slot0.enchantUid ~= 0
+function var_0_0.isEnchant(arg_3_0)
+	return arg_3_0.enchantUid and arg_3_0.enchantUid ~= 0
 end
 
-function slot0.getEnchantCount(slot0)
-	if slot0.leftUid and slot0.leftUid ~= V1a6_CachotEnum.EmptyEnchantId then
-		slot1 = 0 + 1
+function var_0_0.getEnchantCount(arg_4_0)
+	local var_4_0 = 0
+
+	if arg_4_0.leftUid and arg_4_0.leftUid ~= V1a6_CachotEnum.EmptyEnchantId then
+		var_4_0 = var_4_0 + 1
 	end
 
-	if slot0.rightUid and slot0.rightUid ~= V1a6_CachotEnum.EmptyEnchantId then
-		slot1 = slot1 + 1
+	if arg_4_0.rightUid and arg_4_0.rightUid ~= V1a6_CachotEnum.EmptyEnchantId then
+		var_4_0 = var_4_0 + 1
 	end
 
-	return slot1
+	return var_4_0
 end
 
-return slot0
+return var_0_0

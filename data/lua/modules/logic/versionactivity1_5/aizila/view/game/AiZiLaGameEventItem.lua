@@ -1,72 +1,81 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventItem", package.seeall)
 
-slot0 = class("AiZiLaGameEventItem", ListScrollCellExtend)
+local var_0_0 = class("AiZiLaGameEventItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goEnable = gohelper.findChild(slot0.viewGO, "#go_Enable")
-	slot0._goDisable = gohelper.findChild(slot0.viewGO, "#go_Disable")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#txt_desc")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goEnable = gohelper.findChild(arg_1_0.viewGO, "#go_Enable")
+	arg_1_0._goDisable = gohelper.findChild(arg_1_0.viewGO, "#go_Disable")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._mo then
-		AiZiLaGameController.instance:selectOption(slot0._mo.optionId)
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._mo then
+		AiZiLaGameController.instance:selectOption(arg_4_0._mo.optionId)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0._mo then
+function var_0_0.refreshUI(arg_9_0)
+	if not arg_9_0._mo then
 		return
 	end
 
-	slot2 = slot0._mo.optionId
-	slot5 = AiZiLaModel.instance:isSelectOptionId(slot2)
+	local var_9_0 = arg_9_0._mo.actId
+	local var_9_1 = arg_9_0._mo.optionId
+	local var_9_2 = arg_9_0._mo.eventType == AiZiLaEnum.EventType.BranchLine
+	local var_9_3 = AiZiLaConfig.instance:getOptionCo(var_9_0, var_9_1)
+	local var_9_4 = AiZiLaModel.instance:isSelectOptionId(var_9_1)
+	local var_9_5 = var_9_3 and var_9_3.name or var_9_1
 
-	if not (slot0._mo.eventType == AiZiLaEnum.EventType.BranchLine) and slot5 then
-		slot6 = string.format("%s\n<color=#85541b>%s</color>", AiZiLaConfig.instance:getOptionCo(slot0._mo.actId, slot2) and slot4.name or slot2, slot4 and slot4.optionDesc or slot2)
+	if not var_9_2 and var_9_4 then
+		var_9_5 = string.format("%s\n<color=#85541b>%s</color>", var_9_5, var_9_3 and var_9_3.optionDesc or var_9_1)
 	end
 
-	slot0._txtname.text = slot6
+	arg_9_0._txtname.text = var_9_5
 
-	gohelper.setActive(slot0._goEnable, not slot5)
-	gohelper.setActive(slot0._goEnable, not slot5)
-	gohelper.setActive(slot0._goDisable, slot5)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtname, slot5 and "#7c684f" or "#442a0d")
+	gohelper.setActive(arg_9_0._goEnable, not var_9_4)
+	gohelper.setActive(arg_9_0._goEnable, not var_9_4)
+	gohelper.setActive(arg_9_0._goDisable, var_9_4)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._txtname, var_9_4 and "#7c684f" or "#442a0d")
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

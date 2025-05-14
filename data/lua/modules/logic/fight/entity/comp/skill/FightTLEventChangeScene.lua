@@ -1,23 +1,27 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventChangeScene", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventChangeScene", package.seeall)
 
-slot0 = class("FightTLEventChangeScene")
+local var_0_0 = class("FightTLEventChangeScene")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if not string.nilorempty(slot3[1]) then
-		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevelNoEffect(tonumber(slot3[1]))
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if not string.nilorempty(arg_1_3[1]) then
+		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevelNoEffect(tonumber(arg_1_3[1]))
 	end
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_2_0)
+	return
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_4_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

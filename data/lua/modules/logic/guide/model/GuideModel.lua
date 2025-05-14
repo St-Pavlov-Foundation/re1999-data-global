@@ -1,7 +1,8 @@
-module("modules.logic.guide.model.GuideModel", package.seeall)
+﻿module("modules.logic.guide.model.GuideModel", package.seeall)
 
-slot0 = class("GuideModel", BaseModel)
-slot0.GuideFlag = {
+local var_0_0 = class("GuideModel", BaseModel)
+
+var_0_0.GuideFlag = {
 	FightForbidRoundView = 3,
 	SeasonDiscount = 28,
 	FightForbidCloseSkilltip = 25,
@@ -48,175 +49,215 @@ slot0.GuideFlag = {
 	FightLeadRoleSkillGuide = 11
 }
 
-function slot0.onInit(slot0)
-	slot0._stepExecList = {}
-	slot0._guideHasSetFlag = {}
-	slot0._guideFlagDict = {}
-	slot0._firstOpenMainViewTime = nil
-	slot0._gmStartGuideId = nil
-	slot0._fixNextStepGOPathDict = {}
-	slot0._lockGuideId = nil
-	slot0._guideParam = {
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._stepExecList = {}
+	arg_1_0._guideHasSetFlag = {}
+	arg_1_0._guideFlagDict = {}
+	arg_1_0._firstOpenMainViewTime = nil
+	arg_1_0._gmStartGuideId = nil
+	arg_1_0._fixNextStepGOPathDict = {}
+	arg_1_0._lockGuideId = nil
+	arg_1_0._guideParam = {
 		OnPushBoxWinPause = false
 	}
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.execStep(slot0, slot1, slot2)
-	slot0:addStepLog(string.format("%d_%d", slot1, slot2))
+function var_0_0.execStep(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0:addStepLog(string.format("%d_%d", arg_3_1, arg_3_2))
 end
 
-function slot0.onClickJumpGuides(slot0)
-	slot0:addStepLog("click jump all guides")
+function var_0_0.onClickJumpGuides(arg_4_0)
+	arg_4_0:addStepLog("click jump all guides")
 end
 
-function slot0.addStepLog(slot0, slot1)
-	if #slot0._stepExecList >= 10 then
-		table.remove(slot0._stepExecList, 1)
+function var_0_0.addStepLog(arg_5_0, arg_5_1)
+	if #arg_5_0._stepExecList >= 10 then
+		table.remove(arg_5_0._stepExecList, 1)
 	end
 
-	table.insert(slot0._stepExecList, slot1)
+	table.insert(arg_5_0._stepExecList, arg_5_1)
 end
 
-function slot0.getStepExecStr(slot0)
-	return table.concat(slot0._stepExecList, ",")
+function var_0_0.getStepExecStr(arg_6_0)
+	return table.concat(arg_6_0._stepExecList, ",")
 end
 
-function slot0.onOpenMainView(slot0)
-	if slot0._firstOpenMainViewTime == nil then
-		slot0._firstOpenMainViewTime = Time.time
+function var_0_0.onOpenMainView(arg_7_0)
+	if arg_7_0._firstOpenMainViewTime == nil then
+		arg_7_0._firstOpenMainViewTime = Time.time
 	end
 end
 
-function slot0.setFlag(slot0, slot1, slot2, slot3)
-	if slot3 then
-		slot0._guideHasSetFlag[slot3] = slot0._guideHasSetFlag[slot3] or {}
-		slot0._guideHasSetFlag[slot3][slot1] = slot2
+function var_0_0.setFlag(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if arg_8_3 then
+		arg_8_0._guideHasSetFlag[arg_8_3] = arg_8_0._guideHasSetFlag[arg_8_3] or {}
+		arg_8_0._guideHasSetFlag[arg_8_3][arg_8_1] = arg_8_2
 	end
 
-	slot0._guideFlagDict[slot1] = slot2
+	arg_8_0._guideFlagDict[arg_8_1] = arg_8_2
 end
 
-function slot0.isFlagEnable(slot0, slot1)
-	if slot0._guideFlagDict[slot1] ~= nil then
+function var_0_0.isFlagEnable(arg_9_0, arg_9_1)
+	if arg_9_0._guideFlagDict[arg_9_1] ~= nil then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getFlagValue(slot0, slot1)
-	return slot0._guideFlagDict[slot1]
+function var_0_0.getFlagValue(arg_10_0, arg_10_1)
+	return arg_10_0._guideFlagDict[arg_10_1]
 end
 
-function slot0.clearFlagByGuideId(slot0, slot1)
-	slot0._guideHasSetFlag[slot1] = nil
+function var_0_0.clearFlagByGuideId(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0._guideHasSetFlag[arg_11_1]
 
-	if slot0._guideHasSetFlag[slot1] then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7 then
-				slot0._guideFlagDict[slot6] = nil
+	arg_11_0._guideHasSetFlag[arg_11_1] = nil
+
+	if var_11_0 then
+		for iter_11_0, iter_11_1 in pairs(var_11_0) do
+			if iter_11_1 then
+				arg_11_0._guideFlagDict[iter_11_0] = nil
 			end
 		end
 	end
 end
 
-function slot0.setGuideList(slot0, slot1)
-	slot2 = {}
+function var_0_0.setGuideList(arg_12_0, arg_12_1)
+	local var_12_0 = {}
 
-	for slot6 = 1, #slot1 do
-		if GuideConfig.instance:getGuideCO(slot1[slot6].guideId) then
-			if GuideConfig.instance:getStepList(slot7.guideId) then
-				slot10 = GuideMO.New()
+	for iter_12_0 = 1, #arg_12_1 do
+		local var_12_1 = arg_12_1[iter_12_0]
 
-				slot10:init(slot7)
-				table.insert(slot2, slot10)
+		if GuideConfig.instance:getGuideCO(var_12_1.guideId) then
+			if GuideConfig.instance:getStepList(var_12_1.guideId) then
+				local var_12_2 = GuideMO.New()
+
+				var_12_2:init(var_12_1)
+				table.insert(var_12_0, var_12_2)
 			else
-				logError("guide step config not exist: " .. slot7.guideId)
+				logError("guide step config not exist: " .. var_12_1.guideId)
 			end
 		else
-			logError("guide config not exist: " .. slot7.guideId)
+			logError("guide config not exist: " .. var_12_1.guideId)
 		end
 	end
 
-	slot0:addList(slot2)
+	arg_12_0:addList(var_12_0)
 end
 
-function slot0.updateGuideList(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
+function var_0_0.updateGuideList(arg_13_0, arg_13_1)
+	for iter_13_0 = 1, #arg_13_1 do
+		local var_13_0 = arg_13_1[iter_13_0]
 
-		slot0:setGMGuideStep(slot6)
+		arg_13_0:setGMGuideStep(var_13_0)
 
-		if slot0:getById(slot6.guideId) == nil then
-			if slot0._firstOpenMainViewTime and Time.time - slot0._firstOpenMainViewTime < 6 then
-				logNormal(string.format("<color=#FFA500>login trigger guide_%d</color>", slot6.guideId))
-				GuideMO.New():init(slot6)
+		local var_13_1 = arg_13_0:getById(var_13_0.guideId)
+
+		if var_13_1 == nil then
+			var_13_1 = GuideMO.New()
+
+			if arg_13_0._firstOpenMainViewTime and Time.time - arg_13_0._firstOpenMainViewTime < 6 then
+				logNormal(string.format("<color=#FFA500>login trigger guide_%d</color>", var_13_0.guideId))
+				var_13_1:init(var_13_0)
 			else
-				slot7:updateGuide(slot6)
+				var_13_1:updateGuide(var_13_0)
 			end
 
-			slot0:addAtLast(slot7)
-		elseif slot7.isFinish then
-			logNormal(string.format("<color=#FFA500>restart guide_%d</color>", slot6.guideId))
-			slot7:init(slot6)
+			arg_13_0:addAtLast(var_13_1)
+		elseif var_13_1.isFinish then
+			logNormal(string.format("<color=#FFA500>restart guide_%d</color>", var_13_0.guideId))
+			var_13_1:init(var_13_0)
 		else
-			slot7:updateGuide(slot6)
+			var_13_1:updateGuide(var_13_0)
 		end
 	end
 end
 
-function slot0.addEmptyGuide(slot0, slot1)
-	if slot0:getById(slot1) == nil then
-		slot2 = GuideMO.New()
-		slot2.id = slot1
+function var_0_0.addEmptyGuide(arg_14_0, arg_14_1)
+	if arg_14_0:getById(arg_14_1) == nil then
+		local var_14_0 = GuideMO.New()
 
-		slot0:addAtLast(slot2)
+		var_14_0.id = arg_14_1
+
+		arg_14_0:addAtLast(var_14_0)
 	end
 end
 
-function slot0.clientFinishStep(slot0, slot1, slot2)
-	slot0:getById(slot1):setClientStep(slot2)
+function var_0_0.clientFinishStep(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0:getById(arg_15_1):setClientStep(arg_15_2)
 end
 
-function slot0.isDoingFirstGuide(slot0)
-	return slot0:getDoingGuideId() == 101
+function var_0_0.isDoingFirstGuide(arg_16_0)
+	return arg_16_0:getDoingGuideId() == 101
 end
 
-function slot0.lastForceGuideId(slot0)
+function var_0_0.lastForceGuideId(arg_17_0)
 	return 108
 end
 
-function slot0.getDoingGuideId(slot0)
-	if slot0:getDoingGuideIdList() then
-		for slot5 = #slot1, 1, -1 do
-			if GuideConfig.instance:getGuideCO(slot1[slot5]).parallel == 1 or GuideInvalidController.instance:isInvalid(slot6.id) then
-				table.remove(slot1, slot5)
+function var_0_0.getDoingGuideId(arg_18_0)
+	local var_18_0 = arg_18_0:getDoingGuideIdList()
+
+	if var_18_0 then
+		for iter_18_0 = #var_18_0, 1, -1 do
+			local var_18_1 = GuideConfig.instance:getGuideCO(var_18_0[iter_18_0])
+
+			if var_18_1.parallel == 1 or GuideInvalidController.instance:isInvalid(var_18_1.id) then
+				table.remove(var_18_0, iter_18_0)
 			end
 		end
 
-		return GuideConfig.instance:getHighestPriorityGuideId(slot1)
+		return GuideConfig.instance:getHighestPriorityGuideId(var_18_0)
 	end
 end
 
-function slot0.getDoingGuideIdList(slot0)
-	slot1 = nil
+function var_0_0.getDoingGuideIdList(arg_19_0)
+	local var_19_0
+	local var_19_1 = arg_19_0:getList()
 
-	for slot6 = 1, #slot0:getList() do
-		if not slot2[slot6].isFinish or slot7.currStepId > 0 then
-			table.insert(slot1 or {}, slot2[slot6].id)
+	for iter_19_0 = 1, #var_19_1 do
+		local var_19_2 = var_19_1[iter_19_0]
+
+		if not var_19_2.isFinish or var_19_2.currStepId > 0 then
+			var_19_0 = var_19_0 or {}
+
+			table.insert(var_19_0, var_19_1[iter_19_0].id)
 		end
 	end
 
-	return slot1
+	return var_19_0
 end
 
-function slot0.isDoingClickGuide(slot0)
-	for slot5 = 1, #slot0:getList() do
-		if (not slot1[slot5].isFinish or slot6.currStepId > 0) and not string.nilorempty(uv0.instance:getStepGOPath(slot6.id, slot6.currStepId)) then
+function var_0_0.isDoingClickGuide(arg_20_0)
+	local var_20_0 = arg_20_0:getList()
+
+	for iter_20_0 = 1, #var_20_0 do
+		local var_20_1 = var_20_0[iter_20_0]
+
+		if not var_20_1.isFinish or var_20_1.currStepId > 0 then
+			local var_20_2 = var_0_0.instance:getStepGOPath(var_20_1.id, var_20_1.currStepId)
+
+			if not string.nilorempty(var_20_2) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function var_0_0.isAnyGuideRunning(arg_21_0)
+	local var_21_0 = arg_21_0:getList()
+
+	for iter_21_0 = 1, #var_21_0 do
+		local var_21_1 = var_21_0[iter_21_0]
+
+		if not var_21_1.isFinish or var_21_1.currStepId > 0 then
 			return true
 		end
 	end
@@ -224,103 +265,107 @@ function slot0.isDoingClickGuide(slot0)
 	return false
 end
 
-function slot0.isAnyGuideRunning(slot0)
-	for slot5 = 1, #slot0:getList() do
-		if not slot1[slot5].isFinish or slot6.currStepId > 0 then
-			return true
+function var_0_0.isGuideRunning(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getById(arg_22_1)
+
+	if var_22_0 and not var_22_0.isFinish then
+		return true
+	end
+
+	return false
+end
+
+function var_0_0.isGuideFinish(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getById(arg_23_1)
+
+	if var_23_0 and var_23_0.isFinish then
+		return true
+	end
+
+	return false
+end
+
+function var_0_0.isStepFinish(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_0:isGuideFinish(arg_24_1) then
+		return true
+	end
+
+	local var_24_0 = arg_24_0:getById(arg_24_1)
+
+	if var_24_0 and arg_24_2 < var_24_0.currStepId then
+		return true
+	end
+
+	return false
+end
+
+function var_0_0.setLockGuide(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_0._lockGuideId and not arg_25_0:isGuideFinish(arg_25_0._lockGuideId) and not arg_25_2 then
+		logNormal(string.format("<color=#FFA500>setLockGuide old:%s new:%s</color>", arg_25_0._lockGuideId, arg_25_1))
+
+		return
+	end
+
+	arg_25_0._lockGuideId = arg_25_1
+
+	logNormal(string.format("<color=#FFA500>setLockGuide guideId:%s</color>", arg_25_0._lockGuideId))
+end
+
+function var_0_0.getLockGuideId(arg_26_0)
+	if arg_26_0._lockGuideId and arg_26_0:isGuideFinish(arg_26_0._lockGuideId) then
+		arg_26_0._lockGuideId = nil
+	end
+
+	return arg_26_0._lockGuideId
+end
+
+function var_0_0.gmStartGuide(arg_27_0, arg_27_1, arg_27_2)
+	arg_27_0._gmStartGuideId = arg_27_1
+	arg_27_0._gmStartGuideStep = arg_27_2
+end
+
+function var_0_0.setGMGuideStep(arg_28_0, arg_28_1)
+	if not arg_28_1 or arg_28_1.guideId ~= arg_28_0._gmStartGuideId or not arg_28_0._gmStartGuideStep then
+		return
+	end
+
+	arg_28_1.stepId = arg_28_0._gmStartGuideStep
+	arg_28_0._gmStartGuideStep = nil
+
+	logNormal(string.format("<color=#FF0000>setGMGuideStep guideId:%d step:%d</color>", arg_28_1.guideId, arg_28_1.stepId))
+end
+
+function var_0_0.isGMStartGuide(arg_29_0, arg_29_1)
+	return arg_29_1 == arg_29_0._gmStartGuideId
+end
+
+function var_0_0.setNextStepGOPath(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	local var_30_0 = GuideConfig.instance:getNextStepId(arg_30_1, arg_30_2)
+
+	if var_30_0 then
+		arg_30_0._fixNextStepGOPathDict[arg_30_1] = arg_30_0._fixNextStepGOPathDict[arg_30_1] or {}
+		arg_30_0._fixNextStepGOPathDict[arg_30_1][var_30_0] = arg_30_3
+	end
+end
+
+function var_0_0.getStepGOPath(arg_31_0, arg_31_1, arg_31_2)
+	if arg_31_0._fixNextStepGOPathDict[arg_31_1] then
+		local var_31_0 = arg_31_0._fixNextStepGOPathDict[arg_31_1][arg_31_2]
+
+		if var_31_0 then
+			return var_31_0
 		end
 	end
 
-	return false
+	local var_31_1 = GuideConfig.instance:getStepCO(arg_31_1, arg_31_2)
+
+	return var_31_1 and var_31_1.goPath
 end
 
-function slot0.isGuideRunning(slot0, slot1)
-	if slot0:getById(slot1) and not slot2.isFinish then
-		return true
-	end
-
-	return false
+function var_0_0.getGuideParam(arg_32_0)
+	return arg_32_0._guideParam
 end
 
-function slot0.isGuideFinish(slot0, slot1)
-	if slot0:getById(slot1) and slot2.isFinish then
-		return true
-	end
+var_0_0.instance = var_0_0.New()
 
-	return false
-end
-
-function slot0.isStepFinish(slot0, slot1, slot2)
-	if slot0:isGuideFinish(slot1) then
-		return true
-	end
-
-	if slot0:getById(slot1) and slot2 < slot3.currStepId then
-		return true
-	end
-
-	return false
-end
-
-function slot0.setLockGuide(slot0, slot1, slot2)
-	if slot0._lockGuideId and not slot0:isGuideFinish(slot0._lockGuideId) and not slot2 then
-		logNormal(string.format("<color=#FFA500>setLockGuide old:%s new:%s</color>", slot0._lockGuideId, slot1))
-
-		return
-	end
-
-	slot0._lockGuideId = slot1
-
-	logNormal(string.format("<color=#FFA500>setLockGuide guideId:%s</color>", slot0._lockGuideId))
-end
-
-function slot0.getLockGuideId(slot0)
-	if slot0._lockGuideId and slot0:isGuideFinish(slot0._lockGuideId) then
-		slot0._lockGuideId = nil
-	end
-
-	return slot0._lockGuideId
-end
-
-function slot0.gmStartGuide(slot0, slot1, slot2)
-	slot0._gmStartGuideId = slot1
-	slot0._gmStartGuideStep = slot2
-end
-
-function slot0.setGMGuideStep(slot0, slot1)
-	if not slot1 or slot1.guideId ~= slot0._gmStartGuideId or not slot0._gmStartGuideStep then
-		return
-	end
-
-	slot1.stepId = slot0._gmStartGuideStep
-	slot0._gmStartGuideStep = nil
-
-	logNormal(string.format("<color=#FF0000>setGMGuideStep guideId:%d step:%d</color>", slot1.guideId, slot1.stepId))
-end
-
-function slot0.isGMStartGuide(slot0, slot1)
-	return slot1 == slot0._gmStartGuideId
-end
-
-function slot0.setNextStepGOPath(slot0, slot1, slot2, slot3)
-	if GuideConfig.instance:getNextStepId(slot1, slot2) then
-		slot0._fixNextStepGOPathDict[slot1] = slot0._fixNextStepGOPathDict[slot1] or {}
-		slot0._fixNextStepGOPathDict[slot1][slot4] = slot3
-	end
-end
-
-function slot0.getStepGOPath(slot0, slot1, slot2)
-	if slot0._fixNextStepGOPathDict[slot1] and slot0._fixNextStepGOPathDict[slot1][slot2] then
-		return slot3
-	end
-
-	return GuideConfig.instance:getStepCO(slot1, slot2) and slot3.goPath
-end
-
-function slot0.getGuideParam(slot0)
-	return slot0._guideParam
-end
-
-slot0.instance = slot0.New()
-
-return slot0
+return var_0_0

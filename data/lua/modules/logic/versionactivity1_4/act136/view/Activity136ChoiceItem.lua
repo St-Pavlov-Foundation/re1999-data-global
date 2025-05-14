@@ -1,31 +1,34 @@
-module("modules.logic.versionactivity1_4.act136.view.Activity136ChoiceItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.view.Activity136ChoiceItem", package.seeall)
 
-slot0 = class("Activity136ChoiceItem", ListScrollCell)
+local var_0_0 = class("Activity136ChoiceItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._txtnum = gohelper.findChildText(slot0._go, "num/#txt_num")
-	slot0._btnClick = gohelper.getClickWithAudio(gohelper.findChild(slot0._go, "go_click"), AudioEnum.UI.UI_vertical_first_tabs_click)
-	slot0._goSelected = gohelper.findChild(slot0._go, "select")
-	slot0._imagerare = gohelper.findChildImage(slot0._go, "role/rare")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0._go, "role/heroicon")
-	slot0._imagecareer = gohelper.findChildImage(slot0._go, "role/career")
-	slot0._txtname = gohelper.findChildText(slot0._go, "role/name")
-	slot0._txtnameen = gohelper.findChildText(slot0._go, "role/name/nameEn")
-	slot0._isSelected = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0._go, "num/#txt_num")
 
-	slot0:addEvents()
+	local var_1_0 = gohelper.findChild(arg_1_0._go, "go_click")
+
+	arg_1_0._btnClick = gohelper.getClickWithAudio(var_1_0, AudioEnum.UI.UI_vertical_first_tabs_click)
+	arg_1_0._goSelected = gohelper.findChild(arg_1_0._go, "select")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0._go, "role/rare")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0._go, "role/heroicon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0._go, "role/career")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0._go, "role/name")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0._go, "role/name/nameEn")
+	arg_1_0._isSelected = false
+
+	arg_1_0:addEvents()
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClick:AddClickListener(slot0._onClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0._onClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClick:RemoveClickListener()
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_4_0)
 	if not Activity136Model.instance:isActivity136InOpen(true) then
 		return
 	end
@@ -36,59 +39,81 @@ function slot0._onClick(slot0)
 		return
 	end
 
-	slot4 = nil
+	local var_4_0 = not arg_4_0._isSelected
+	local var_4_1
 
-	if not slot0._isSelected then
-		slot4 = slot0._mo and slot0._mo.id
+	if var_4_0 then
+		var_4_1 = arg_4_0._mo and arg_4_0._mo.id
 	end
 
-	slot0._view:selectCell(slot0._index, slot3)
-	Activity136Controller.instance:dispatchEvent(Activity136Event.SelectCharacter, slot4)
+	arg_4_0._view:selectCell(arg_4_0._index, var_4_0)
+	Activity136Controller.instance:dispatchEvent(Activity136Event.SelectCharacter, var_4_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	if not HeroConfig.instance:getHeroCO(slot0._mo.id) then
-		logError("Activity136CharacterItem.onUpdateMO error, characterCfg is nil, id:" .. tostring(slot0._mo.id))
+	local var_5_0 = HeroConfig.instance:getHeroCO(arg_5_0._mo.id)
+
+	if not var_5_0 then
+		logError("Activity136CharacterItem.onUpdateMO error, characterCfg is nil, id:" .. tostring(arg_5_0._mo.id))
 
 		return
 	end
 
-	if not SkinConfig.instance:getSkinCo(slot2.skinId) then
-		logError("Activity136CharacterItem.onUpdateMO error, skinCfg is nil, id:" .. tostring(slot2.skinId))
+	local var_5_1 = SkinConfig.instance:getSkinCo(var_5_0.skinId)
+
+	if not var_5_1 then
+		logError("Activity136CharacterItem.onUpdateMO error, skinCfg is nil, id:" .. tostring(var_5_0.skinId))
 
 		return
 	end
 
-	slot0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(slot3.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. slot2.career)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bgequip" .. CharacterEnum.Color[slot2.rare])
+	arg_5_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(var_5_1.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(arg_5_0._imagecareer, "lssx_" .. var_5_0.career)
+	UISpriteSetMgr.instance:setCommonSprite(arg_5_0._imagerare, "bgequip" .. CharacterEnum.Color[var_5_0.rare])
 
-	slot0._txtname.text = slot2.name
-	slot0._txtnameen.text = slot2.nameEng
-	slot4 = 0
+	arg_5_0._txtname.text = var_5_0.name
+	arg_5_0._txtnameen.text = var_5_0.nameEng
 
-	if not string.nilorempty(slot2.duplicateItem) and string.split(slot5, "|")[1] then
-		slot8 = string.splitToNumber(slot7, "#")
-		slot4 = ItemModel.instance:getItemQuantity(slot8[1], slot8[2])
+	local var_5_2 = 0
+	local var_5_3 = var_5_0.duplicateItem
+
+	if not string.nilorempty(var_5_3) then
+		local var_5_4 = string.split(var_5_3, "|")[1]
+
+		if var_5_4 then
+			local var_5_5 = string.splitToNumber(var_5_4, "#")
+
+			var_5_2 = ItemModel.instance:getItemQuantity(var_5_5[1], var_5_5[2])
+		end
 	end
 
-	slot6 = nil
-	slot0._txtnum.text = (not HeroModel.instance:getByHeroId(slot0._mo.id) or formatLuaLang("has_num", slot7.exSkillLevel + 1 + slot4)) and luaLang("not_has")
+	local var_5_6
+	local var_5_7 = HeroModel.instance:getByHeroId(arg_5_0._mo.id)
+
+	if var_5_7 then
+		local var_5_8 = var_5_7.exSkillLevel
+
+		var_5_6 = formatLuaLang("has_num", var_5_8 + 1 + var_5_2)
+	else
+		var_5_6 = luaLang("not_has")
+	end
+
+	arg_5_0._txtnum.text = var_5_6
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelected = slot1
+function var_0_0.onSelect(arg_6_0, arg_6_1)
+	arg_6_0._isSelected = arg_6_1
 
-	gohelper.setActive(slot0._goSelected, slot0._isSelected)
+	gohelper.setActive(arg_6_0._goSelected, arg_6_0._isSelected)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._isSelected = false
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0._isSelected = false
 
-	slot0._simageicon:UnLoadImage()
-	slot0:removeEvents()
+	arg_7_0._simageicon:UnLoadImage()
+	arg_7_0:removeEvents()
 end
 
-return slot0
+return var_0_0

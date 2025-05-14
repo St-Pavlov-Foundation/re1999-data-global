@@ -1,67 +1,70 @@
-module("modules.logic.meilanni.model.EpisodeInfoMO", package.seeall)
+﻿module("modules.logic.meilanni.model.EpisodeInfoMO", package.seeall)
 
-slot0 = pureTable("EpisodeInfoMO")
+local var_0_0 = pureTable("EpisodeInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.mapId = slot1.mapId
-	slot0.isFinish = slot1.isFinish
-	slot0.leftActPoint = slot1.leftActPoint
-	slot0.confirm = slot1.confirm
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.episodeId = arg_1_1.episodeId
+	arg_1_0.mapId = arg_1_1.mapId
+	arg_1_0.isFinish = arg_1_1.isFinish
+	arg_1_0.leftActPoint = arg_1_1.leftActPoint
+	arg_1_0.confirm = arg_1_1.confirm
 
-	slot0:_initEvents(slot1)
-	slot0:_initHistorylist(slot1)
+	arg_1_0:_initEvents(arg_1_1)
+	arg_1_0:_initHistorylist(arg_1_1)
 
-	slot0.episodeConfig = lua_activity108_episode.configDict[slot0.episodeId]
+	arg_1_0.episodeConfig = lua_activity108_episode.configDict[arg_1_0.episodeId]
 end
 
-function slot0._initEvents(slot0, slot1)
-	slot0.events = {}
-	slot0.eventMap = {}
-	slot0.specialEventNum = 0
+function var_0_0._initEvents(arg_2_0, arg_2_1)
+	arg_2_0.events = {}
+	arg_2_0.eventMap = {}
+	arg_2_0.specialEventNum = 0
 
-	for slot5, slot6 in ipairs(slot1.events) do
-		slot7 = EpisodeEventMO.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.events) do
+		local var_2_0 = EpisodeEventMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.events, slot7)
+		var_2_0:init(iter_2_1)
+		table.insert(arg_2_0.events, var_2_0)
 
-		slot0.eventMap[slot7.eventId] = slot7
+		arg_2_0.eventMap[var_2_0.eventId] = var_2_0
 
-		if not slot7.isFinish and slot7.config.type == 1 then
-			slot0.specialEventNum = slot0.specialEventNum + 1
+		if not var_2_0.isFinish and var_2_0.config.type == 1 then
+			arg_2_0.specialEventNum = arg_2_0.specialEventNum + 1
 		end
 	end
 end
 
-function slot0._initHistorylist(slot0, slot1)
-	slot0.historylist = {}
+function var_0_0._initHistorylist(arg_3_0, arg_3_1)
+	arg_3_0.historylist = {}
 
-	for slot7, slot8 in ipairs(slot1.historylist) do
-		slot9 = EpisodeHistoryMO.New()
+	local var_3_0
+	local var_3_1 = 0
 
-		slot9:init(slot8)
-		table.insert(slot0.historylist, slot9)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.historylist) do
+		local var_3_2 = EpisodeHistoryMO.New()
 
-		if slot8.eventId ~= nil then
-			slot2 = slot8.eventId
-			slot3 = 0 + 1
+		var_3_2:init(iter_3_1)
+		table.insert(arg_3_0.historylist, var_3_2)
+
+		if iter_3_1.eventId ~= var_3_0 then
+			var_3_0 = iter_3_1.eventId
+			var_3_1 = var_3_1 + 1
 		end
 	end
 
-	slot0.historyLen = slot3
+	arg_3_0.historyLen = var_3_1
 end
 
-function slot0.getEventInfo(slot0, slot1)
-	return slot0.eventMap[slot1]
+function var_0_0.getEventInfo(arg_4_0, arg_4_1)
+	return arg_4_0.eventMap[arg_4_1]
 end
 
-function slot0.getEventByBattleId(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.events) do
-		if slot6:getConfigBattleId() == slot1 then
-			return slot6
+function var_0_0.getEventByBattleId(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.events) do
+		if iter_5_1:getConfigBattleId() == arg_5_1 then
+			return iter_5_1
 		end
 	end
 end
 
-return slot0
+return var_0_0

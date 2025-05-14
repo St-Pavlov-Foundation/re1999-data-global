@@ -1,12 +1,13 @@
-module("modules.logic.versionactivity2_1.activity165.controller.Activity165Enum", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.controller.Activity165Enum", package.seeall)
 
-slot0 = _M
-slot0.StoryStage = {
+local var_0_0 = _M
+
+var_0_0.StoryStage = {
 	Filling = 0,
 	isEndFill = 1,
 	Ending = 2
 }
-slot0.StepOffsetObj = {
+var_0_0.StepOffsetObj = {
 	{
 		goleft = {
 			PosX = -118.32,
@@ -44,17 +45,17 @@ slot0.StepOffsetObj = {
 		}
 	}
 }
-slot0.EndingAssessment = {
+var_0_0.EndingAssessment = {
 	A = "a",
 	S = "s",
 	C = "c",
 	B = "b"
 }
-slot0.StoryItemAnim = {
+var_0_0.StoryItemAnim = {
 	Idle = "idle",
 	Unlock = "unlock"
 }
-slot0.EditViewAnim = {
+var_0_0.EditViewAnim = {
 	Idle = "idle",
 	Play = "play",
 	Close = "close",
@@ -63,10 +64,10 @@ slot0.EditViewAnim = {
 	Unlock = "unlock",
 	Open = "open"
 }
-slot0.ReviewViewAnim = {
+var_0_0.ReviewViewAnim = {
 	Switch = "switch"
 }
-slot0.EditStepMoveAnim = {
+var_0_0.EditStepMoveAnim = {
 	{
 		Back = "1_back",
 		Move = "1_move"
@@ -93,4 +94,4 @@ slot0.EditStepMoveAnim = {
 	}
 }
 
-return slot0
+return var_0_0

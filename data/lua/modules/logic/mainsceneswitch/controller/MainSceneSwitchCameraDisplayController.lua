@@ -1,38 +1,39 @@
-module("modules.logic.mainsceneswitch.controller.MainSceneSwitchCameraDisplayController", package.seeall)
+﻿module("modules.logic.mainsceneswitch.controller.MainSceneSwitchCameraDisplayController", package.seeall)
 
-slot0 = class("MainSceneSwitchCameraDisplayController", MainSceneSwitchDisplayController)
-slot0.instance = slot0.New()
+local var_0_0 = class("MainSceneSwitchCameraDisplayController", MainSceneSwitchDisplayController)
 
-function slot0.clear(slot0)
-	if slot0._loaderMap then
-		for slot4, slot5 in pairs(slot0._loaderMap) do
-			slot5:dispose()
+var_0_0.instance = var_0_0.New()
+
+function var_0_0.clear(arg_1_0)
+	if arg_1_0._loaderMap then
+		for iter_1_0, iter_1_1 in pairs(arg_1_0._loaderMap) do
+			iter_1_1:dispose()
 		end
 
-		tabletool.clear(slot0._loaderMap)
+		tabletool.clear(arg_1_0._loaderMap)
 	end
 
-	if slot0._weatherCompMap then
-		for slot4, slot5 in pairs(slot0._weatherCompMap) do
-			for slot9, slot10 in ipairs(slot5) do
-				slot10:onSceneClose()
+	if arg_1_0._weatherCompMap then
+		for iter_1_2, iter_1_3 in pairs(arg_1_0._weatherCompMap) do
+			for iter_1_4, iter_1_5 in ipairs(iter_1_3) do
+				iter_1_5:onSceneClose()
 			end
 		end
 
-		tabletool.clear(slot0._weatherCompMap)
+		tabletool.clear(arg_1_0._weatherCompMap)
 	end
 
-	if slot0._sceneNameMap then
-		for slot4, slot5 in pairs(slot0._sceneNameMap) do
-			gohelper.destroy(slot5)
+	if arg_1_0._sceneNameMap then
+		for iter_1_6, iter_1_7 in pairs(arg_1_0._sceneNameMap) do
+			gohelper.destroy(iter_1_7)
 		end
 
-		tabletool.clear(slot0._sceneNameMap)
+		tabletool.clear(arg_1_0._sceneNameMap)
 	end
 
-	slot0._sceneRoot = nil
-	slot0._callback = nil
-	slot0._callbackTarget = nil
+	arg_1_0._sceneRoot = nil
+	arg_1_0._callback = nil
+	arg_1_0._callbackTarget = nil
 end
 
-return slot0
+return var_0_0

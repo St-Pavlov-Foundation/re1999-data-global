@@ -1,100 +1,122 @@
-module("modules.logic.backpack.model.BackpackPropListModel", package.seeall)
+﻿module("modules.logic.backpack.model.BackpackPropListModel", package.seeall)
 
-slot0 = class("BackpackPropListModel", ListScrollModel)
+local var_0_0 = class("BackpackPropListModel", ListScrollModel)
 
-function slot0.setCategoryPropItemList(slot0, slot1)
-	slot3 = 1
+function var_0_0.setCategoryPropItemList(arg_1_0, arg_1_1)
+	local var_1_0 = {}
+	local var_1_1 = 1
 
-	if not slot1 then
-		slot0:setList({})
+	if not arg_1_1 then
+		arg_1_0:setList(var_1_0)
 	end
 
-	table.sort(slot1, uv0._sortProp)
+	table.sort(arg_1_1, var_0_0._sortProp)
 
-	for slot8, slot9 in pairs(slot1) do
-		if slot9.isShow == 1 and slot9.isStackable == 1 then
-			function (slot0)
-				uv0 = uv0 + 1
+	local function var_1_2(arg_2_0)
+		local var_2_0 = {
+			id = var_1_1,
+			config = arg_2_0
+		}
 
-				table.insert(uv1, {
-					id = uv0,
-					config = slot0
-				})
-			end(slot9)
+		var_1_1 = var_1_1 + 1
+
+		table.insert(var_1_0, var_2_0)
+	end
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_1) do
+		if iter_1_1.isShow == 1 and iter_1_1.isStackable == 1 then
+			var_1_2(iter_1_1)
 		end
 
-		if slot9.isShow == 1 and slot9.isStackable == 0 then
-			for slot13 = 1, slot9.quantity do
-				slot4(slot9)
+		if iter_1_1.isShow == 1 and iter_1_1.isStackable == 0 then
+			for iter_1_2 = 1, iter_1_1.quantity do
+				var_1_2(iter_1_1)
 			end
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.clearList(slot0)
-	slot0:clear()
+function var_0_0.clearList(arg_3_0)
+	arg_3_0:clear()
 end
 
-function slot0._sortProp(slot0, slot1)
-	if slot0.type == MaterialEnum.MaterialType.Currency then
-		slot2 = -3
-	elseif slot2 == MaterialEnum.MaterialType.NewInsight then
-		slot2 = -2
-	elseif slot2 == MaterialEnum.MaterialType.PowerPotion then
-		slot2 = -1
+function var_0_0._sortProp(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.type
+
+	if var_4_0 == MaterialEnum.MaterialType.Currency then
+		var_4_0 = -3
+	elseif var_4_0 == MaterialEnum.MaterialType.NewInsight then
+		var_4_0 = -2
+	elseif var_4_0 == MaterialEnum.MaterialType.PowerPotion then
+		var_4_0 = -1
 	end
 
-	if slot1.type == MaterialEnum.MaterialType.Currency then
-		slot3 = -3
-	elseif slot3 == MaterialEnum.MaterialType.NewInsight then
-		slot3 = -2
-	elseif slot3 == MaterialEnum.MaterialType.PowerPotion then
-		slot3 = -1
+	local var_4_1 = arg_4_1.type
+
+	if var_4_1 == MaterialEnum.MaterialType.Currency then
+		var_4_1 = -3
+	elseif var_4_1 == MaterialEnum.MaterialType.NewInsight then
+		var_4_1 = -2
+	elseif var_4_1 == MaterialEnum.MaterialType.PowerPotion then
+		var_4_1 = -1
 	end
 
-	if slot2 ~= slot3 then
-		return slot2 < slot3
+	if var_4_0 ~= var_4_1 then
+		return var_4_0 < var_4_1
 	end
 
-	if slot0:itemExpireTime() ~= slot1:itemExpireTime() then
-		if slot5 == -1 or slot4 == -1 then
-			return slot5 < slot4
+	local var_4_2 = arg_4_0:itemExpireTime()
+	local var_4_3 = arg_4_1:itemExpireTime()
+
+	if var_4_2 ~= var_4_3 then
+		if var_4_3 == -1 or var_4_2 == -1 then
+			return var_4_3 < var_4_2
 		else
-			return slot4 < slot5
+			return var_4_2 < var_4_3
 		end
 	end
 
-	if uv0._getSubTypeUseType(slot0.subType) ~= uv0._getSubTypeUseType(slot1.subType) then
-		return slot7 < slot6
+	local var_4_4 = var_0_0._getSubTypeUseType(arg_4_0.subType)
+	local var_4_5 = var_0_0._getSubTypeUseType(arg_4_1.subType)
+
+	if var_4_4 ~= var_4_5 then
+		return var_4_5 < var_4_4
 	end
 
-	if ItemModel.instance:getItemConfig(slot0.type, slot0.id).subType ~= ItemModel.instance:getItemConfig(slot1.type, slot1.id).subType then
-		return uv0._getSubclassPriority(slot8.subType) < uv0._getSubclassPriority(slot9.subType)
-	elseif slot8.rare ~= slot9.rare then
-		return slot9.rare < slot8.rare
-	elseif slot0.id ~= slot1.id then
-		return slot1.id < slot0.id
+	local var_4_6 = ItemModel.instance:getItemConfig(arg_4_0.type, arg_4_0.id)
+	local var_4_7 = ItemModel.instance:getItemConfig(arg_4_1.type, arg_4_1.id)
+
+	if var_4_6.subType ~= var_4_7.subType then
+		return var_0_0._getSubclassPriority(var_4_6.subType) < var_0_0._getSubclassPriority(var_4_7.subType)
+	elseif var_4_6.rare ~= var_4_7.rare then
+		return var_4_6.rare > var_4_7.rare
+	elseif arg_4_0.id ~= arg_4_1.id then
+		return arg_4_0.id > arg_4_1.id
 	end
 end
 
-function slot0._getSubclassPriority(slot0)
-	if not BackpackConfig.instance:getSubclassCo()[slot0] then
+function var_0_0._getSubclassPriority(arg_5_0)
+	local var_5_0 = BackpackConfig.instance:getSubclassCo()
+
+	if not var_5_0[arg_5_0] then
 		return 0
 	end
 
-	return slot1[slot0].priority
+	return var_5_0[arg_5_0].priority
 end
 
-function slot0._getSubTypeUseType(slot0)
-	if not lua_item_use.configDict[slot0] then
+function var_0_0._getSubTypeUseType(arg_6_0)
+	local var_6_0 = lua_item_use.configDict[arg_6_0]
+
+	if not var_6_0 then
 		return 0
 	end
 
-	return slot1.useType or 0
+	return var_6_0.useType or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

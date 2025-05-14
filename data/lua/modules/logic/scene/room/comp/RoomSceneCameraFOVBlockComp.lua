@@ -1,246 +1,298 @@
-module("modules.logic.scene.room.comp.RoomSceneCameraFOVBlockComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneCameraFOVBlockComp", package.seeall)
 
-slot0 = class("RoomSceneCameraFOVBlockComp", BaseSceneComp)
-slot1 = {
+local var_0_0 = class("RoomSceneCameraFOVBlockComp", BaseSceneComp)
+local var_0_1 = {
 	Building = 2,
 	Hero = 1,
 	Vehicle = 3
 }
-slot2 = {
+local var_0_2 = {
 	_SCREENCOORD = "_SCREENCOORD"
 }
-slot4 = {
-	alphaThreshold = UnityEngine.Shader.PropertyToID("_AlphaThreshold")
+local var_0_3 = UnityEngine.Shader
+local var_0_4 = {
+	alphaThreshold = var_0_3.PropertyToID("_AlphaThreshold")
 }
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
-	TaskDispatcher.runRepeat(slot0._onUpdate, slot0, 0.1)
+	TaskDispatcher.runRepeat(arg_2_0._onUpdate, arg_2_0, 0.1)
 
-	slot0._buildingPosListMap = nil
+	arg_2_0._buildingPosListMap = nil
 end
 
-function slot0._onUpdate(slot0)
+function var_0_0._onUpdate(arg_3_0)
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	slot0:_updateEntityFovBlock()
+	arg_3_0:_updateEntityFovBlock()
 end
 
-function slot0._checkIsNeedUpdateBlock(slot0)
-	if slot0:_getPlayingInteractionParam() then
-		if slot0._isCameraChange then
+function var_0_0._checkIsNeedUpdateBlock(arg_4_0)
+	if arg_4_0:_getPlayingInteractionParam() then
+		if arg_4_0._isCameraChange then
 			return true
 		end
-	elseif not slot0._lastOpenNum or slot0._lastOpenNum == 0 then
+	elseif not arg_4_0._lastOpenNum or arg_4_0._lastOpenNum == 0 then
 		return true
 	end
 
 	return false
 end
 
-function slot0._updateEntityFovBlock(slot0)
-	if not slot0:_getPlayingInteractionParam() and (not slot0._lastOpenNum or slot0._lastOpenNum == 0) then
+function var_0_0._updateEntityFovBlock(arg_5_0)
+	if not arg_5_0:_getPlayingInteractionParam() and (not arg_5_0._lastOpenNum or arg_5_0._lastOpenNum == 0) then
 		return
 	end
 
-	slot0._lastOpenNum = 0
-	slot2 = GameSceneMgr.instance:getCurScene()
-	slot4 = {}
+	arg_5_0._lastOpenNum = 0
 
-	for slot8, slot9 in ipairs(RoomCharacterHelper.getAllBlockMeshRendererList()) do
-		table.insert(slot4, slot9:GetInstanceID())
+	local var_5_0 = GameSceneMgr.instance:getCurScene()
+	local var_5_1 = RoomCharacterHelper.getAllBlockMeshRendererList()
+	local var_5_2 = {}
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		table.insert(var_5_2, iter_5_1:GetInstanceID())
 	end
 
-	slot0._lastMeshReaderDic = {}
-	slot9 = uv0._SCREENCOORD
+	local var_5_3 = arg_5_0:_getBlockMeshRendererDict(var_5_1, var_5_2)
+	local var_5_4
+	local var_5_5 = arg_5_0._lastMeshReaderDic or {}
+	local var_5_6 = {}
 
-	for slot14, slot15 in ipairs(slot3) do
-		if slot0:_getBlockMeshRendererDict(slot3, slot4)[slot4[slot14]] and slot17 > 0 then
-			slot0._lastOpenNum = slot0._lastOpenNum + 1
+	arg_5_0._lastMeshReaderDic = var_5_6
 
-			if (slot0._lastMeshReaderDic or {})[slot16] ~= slot17 then
-				if not nil then
-					slot6 = slot2.mapmgr:getPropertyBlock()
+	local var_5_7 = var_0_2._SCREENCOORD
+	local var_5_8 = var_0_4.alphaThreshold
 
-					slot6:Clear()
-					slot6:SetFloat(uv1.alphaThreshold, slot17)
+	for iter_5_2, iter_5_3 in ipairs(var_5_1) do
+		local var_5_9 = var_5_2[iter_5_2]
+		local var_5_10 = var_5_3[var_5_9]
+
+		if var_5_10 and var_5_10 > 0 then
+			arg_5_0._lastOpenNum = arg_5_0._lastOpenNum + 1
+
+			if var_5_5[var_5_9] ~= var_5_10 then
+				if not var_5_4 then
+					var_5_4 = var_5_0.mapmgr:getPropertyBlock()
+
+					var_5_4:Clear()
+					var_5_4:SetFloat(var_5_8, var_5_10)
 				end
 
-				MaterialReplaceHelper.SetRendererKeyworld(slot15, slot9, true)
-				slot15:SetPropertyBlock(slot6)
+				MaterialReplaceHelper.SetRendererKeyworld(iter_5_3, var_5_7, true)
+				iter_5_3:SetPropertyBlock(var_5_4)
 			end
 
-			slot8[slot16] = slot17
-		elseif slot7[slot16] then
-			MaterialReplaceHelper.SetRendererKeyworld(slot15, slot9, false)
-			slot15:SetPropertyBlock(nil)
+			var_5_6[var_5_9] = var_5_10
+		elseif var_5_5[var_5_9] then
+			MaterialReplaceHelper.SetRendererKeyworld(iter_5_3, var_5_7, false)
+			iter_5_3:SetPropertyBlock(nil)
 		end
 	end
 end
 
-function slot0._getBlockMeshRendererDict(slot0, slot1, slot2)
+function var_0_0._getBlockMeshRendererDict(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = {}
+
 	if not RoomController.instance:isObMode() then
-		return {}
+		return var_6_0
 	end
 
-	slot4, slot5 = slot0:_getPlayingInteractionParam()
+	local var_6_1, var_6_2 = arg_6_0:_getPlayingInteractionParam()
 
-	if not slot4 then
-		return slot3
+	if not var_6_1 then
+		return var_6_0
 	end
 
-	slot0:_addBlockPositionById(slot5, slot4, {})
+	local var_6_3 = {}
 
-	if #slot1 <= 0 or #slot6 <= 0 then
-		return slot3
+	arg_6_0:_addBlockPositionById(var_6_2, var_6_1, var_6_3)
+
+	if #arg_6_1 <= 0 or #var_6_3 <= 0 then
+		return var_6_0
 	end
 
-	slot7 = slot0._scene.camera:getCameraPosition()
+	local var_6_4 = arg_6_0._scene.camera:getCameraPosition()
+	local var_6_5 = {}
+	local var_6_6 = {}
 
-	for slot13, slot14 in pairs(slot6) do
-		slot15 = RoomBendingHelper.worldToBendingSimple(slot14)
+	for iter_6_0, iter_6_1 in pairs(var_6_3) do
+		local var_6_7 = RoomBendingHelper.worldToBendingSimple(iter_6_1)
+		local var_6_8 = Vector3.Distance(var_6_4, var_6_7)
+		local var_6_9 = Vector3.Normalize(var_6_7 - var_6_4)
+		local var_6_10 = Ray(var_6_9, var_6_4)
 
-		table.insert({}, Ray(Vector3.Normalize(slot15 - slot7), slot7))
-		table.insert({}, Vector3.Distance(slot7, slot15))
+		table.insert(var_6_5, var_6_10)
+		table.insert(var_6_6, var_6_8)
 	end
 
-	slot10 = nil
+	local var_6_11
 
-	if uv0.Hero == slot5 then
-		slot10 = slot4.buildingUid
-	elseif uv0.Building == slot5 then
-		slot10 = slot4
+	if var_0_1.Hero == var_6_2 then
+		var_6_11 = var_6_1.buildingUid
+	elseif var_0_1.Building == var_6_2 then
+		var_6_11 = var_6_1
 	end
 
-	if #slot8 > 0 then
-		slot15 = {}
+	if #var_6_5 > 0 then
+		local var_6_12 = {}
 
-		slot0:_addBuildingMeshRendererIdDict(slot10, slot15)
+		arg_6_0:_addBuildingMeshRendererIdDict(var_6_11, var_6_12)
 
-		for slot15, slot16 in ipairs(slot1) do
-			if not slot11[slot2[slot15]] and RoomCharacterHelper.isBlockCharacter(slot8, slot9, slot16) then
-				slot3[slot17] = 0.6
+		for iter_6_2, iter_6_3 in ipairs(arg_6_1) do
+			local var_6_13 = arg_6_2[iter_6_2]
+
+			if not var_6_12[var_6_13] and RoomCharacterHelper.isBlockCharacter(var_6_5, var_6_6, iter_6_3) then
+				var_6_0[var_6_13] = 0.6
 			end
 		end
 	end
 
-	return slot3
+	return var_6_0
 end
 
-function slot0._addBlockPositionById(slot0, slot1, slot2, slot3)
-	if not slot0._blockTypeFuncMap then
-		slot0._blockTypeFuncMap = {
-			[uv0.Hero] = slot0._addHeroPosFunc,
-			[uv0.Building] = slot0._addBuildingPosFunc,
-			[uv0.Vehicle] = slot0._addVehiclePosFunc
+function var_0_0._addBlockPositionById(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if not arg_7_0._blockTypeFuncMap then
+		arg_7_0._blockTypeFuncMap = {
+			[var_0_1.Hero] = arg_7_0._addHeroPosFunc,
+			[var_0_1.Building] = arg_7_0._addBuildingPosFunc,
+			[var_0_1.Vehicle] = arg_7_0._addVehiclePosFunc
 		}
 	end
 
-	if slot0._blockTypeFuncMap[slot1] then
-		slot4(slot0, slot2, slot3)
+	local var_7_0 = arg_7_0._blockTypeFuncMap[arg_7_1]
+
+	if var_7_0 then
+		var_7_0(arg_7_0, arg_7_2, arg_7_3)
 	end
 end
 
-function slot0._addVehiclePosFunc(slot0, slot1, slot2)
-	if slot0._scene.vehiclemgr:getVehicleEntity(slot1) then
-		slot4, slot5, slot6 = transformhelper.getPos(slot3.goTrs)
+function var_0_0._addVehiclePosFunc(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._scene.vehiclemgr:getVehicleEntity(arg_8_1)
 
-		table.insert(slot2, Vector3(slot4, slot5, slot6))
+	if var_8_0 then
+		local var_8_1, var_8_2, var_8_3 = transformhelper.getPos(var_8_0.goTrs)
 
-		slot7, slot8, slot9 = slot3.cameraFollowTargetComp:getPositionXYZ()
+		table.insert(arg_8_2, Vector3(var_8_1, var_8_2, var_8_3))
 
-		table.insert(slot2, Vector3(slot7, slot8, slot9))
+		local var_8_4, var_8_5, var_8_6 = var_8_0.cameraFollowTargetComp:getPositionXYZ()
+
+		table.insert(arg_8_2, Vector3(var_8_4, var_8_5, var_8_6))
 	end
 end
 
-function slot0._addBuildingPosFunc(slot0, slot1, slot2)
-	slot0._buildingPosListMap = slot0._buildingPosListMap or {}
+function var_0_0._addBuildingPosFunc(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._buildingPosListMap = arg_9_0._buildingPosListMap or {}
 
-	if not slot0._buildingPosListMap[slot1] then
-		slot0._buildingPosListMap[slot1] = {}
+	local var_9_0 = arg_9_0._buildingPosListMap[arg_9_1]
 
-		if slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) and slot4:getBodyGO() then
-			slot6, slot7, slot8 = transformhelper.getPos(slot5.transform)
+	if not var_9_0 then
+		var_9_0 = {}
+		arg_9_0._buildingPosListMap[arg_9_1] = var_9_0
 
-			table.insert(slot3, Vector3(slot6, slot7, slot8))
+		local var_9_1 = arg_9_0._scene.buildingmgr:getBuildingEntity(arg_9_1, SceneTag.RoomBuilding)
+
+		if var_9_1 then
+			local var_9_2 = var_9_1:getBodyGO()
+
+			if var_9_2 then
+				local var_9_3, var_9_4, var_9_5 = transformhelper.getPos(var_9_2.transform)
+
+				table.insert(var_9_0, Vector3(var_9_3, var_9_4, var_9_5))
+			end
 		end
 
-		if RoomMapBuildingModel.instance:getBuildingMOById(slot1) and RoomMapModel.instance:getBuildingPointList(slot5.buildingId, slot5.rotate) and slot5 then
-			for slot10, slot11 in ipairs(slot6) do
-				slot12, slot13 = HexMath.hexXYToPosXY(slot11.x + slot5.hexPoint.x, slot11.y + slot5.hexPoint.y, RoomBlockEnum.BlockSize)
+		local var_9_6 = RoomMapBuildingModel.instance:getBuildingMOById(arg_9_1)
+		local var_9_7 = var_9_6 and RoomMapModel.instance:getBuildingPointList(var_9_6.buildingId, var_9_6.rotate)
 
-				table.insert(slot3, Vector3(slot12, 0.11, slot13))
+		if var_9_7 and var_9_6 then
+			for iter_9_0, iter_9_1 in ipairs(var_9_7) do
+				local var_9_8, var_9_9 = HexMath.hexXYToPosXY(iter_9_1.x + var_9_6.hexPoint.x, iter_9_1.y + var_9_6.hexPoint.y, RoomBlockEnum.BlockSize)
+
+				table.insert(var_9_0, Vector3(var_9_8, 0.11, var_9_9))
 			end
 		end
 	end
 
-	tabletool.addValues(slot2, slot3)
+	tabletool.addValues(arg_9_2, var_9_0)
 end
 
-function slot0._addHeroPosFunc(slot0, slot1, slot2)
-	slot0:_addCharacterPosById(slot1.heroId, slot2)
-	slot0:_addCharacterPosById(slot1.relateHeroId, slot2)
+function var_0_0._addHeroPosFunc(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:_addCharacterPosById(arg_10_1.heroId, arg_10_2)
+	arg_10_0:_addCharacterPosById(arg_10_1.relateHeroId, arg_10_2)
 end
 
-function slot0._addCharacterPosById(slot0, slot1, slot2)
-	if slot0._scene.charactermgr:getCharacterEntity(slot1, SceneTag.RoomCharacter) then
-		slot4, slot5, slot6 = transformhelper.getPos(slot3.goTrs)
+function var_0_0._addCharacterPosById(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_0._scene.charactermgr:getCharacterEntity(arg_11_1, SceneTag.RoomCharacter)
 
-		table.insert(slot2, Vector3(slot4, slot5, slot6))
+	if var_11_0 then
+		local var_11_1, var_11_2, var_11_3 = transformhelper.getPos(var_11_0.goTrs)
+
+		table.insert(arg_11_2, Vector3(var_11_1, var_11_2, var_11_3))
 	end
 end
 
-function slot0._addBuildingMeshRendererIdDict(slot0, slot1, slot2)
-	if slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) and slot3:getCharacterMeshRendererList() then
-		for slot8, slot9 in ipairs(slot4) do
-			slot2[slot9:GetInstanceID()] = true
+function var_0_0._addBuildingMeshRendererIdDict(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._scene.buildingmgr:getBuildingEntity(arg_12_1, SceneTag.RoomBuilding)
+	local var_12_1 = var_12_0 and var_12_0:getCharacterMeshRendererList()
+
+	if var_12_1 then
+		for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+			arg_12_2[iter_12_1:GetInstanceID()] = true
 		end
 	end
 end
 
-function slot0._getPlayingInteractionParam(slot0)
-	if RoomCharacterController.instance:getPlayingInteractionParam() == nil then
-		slot1 = RoomCritterController.instance:getPlayingInteractionParam()
+function var_0_0._getPlayingInteractionParam(arg_13_0)
+	local var_13_0 = RoomCharacterController.instance:getPlayingInteractionParam()
+
+	if var_13_0 == nil then
+		var_13_0 = RoomCritterController.instance:getPlayingInteractionParam()
 	end
 
-	if slot1 == nil and slot0._lookCaneraState == slot0._scene.camera:getCameraState() then
-		return slot0._lookEntityUid, slot0._lookLockType
+	if var_13_0 == nil then
+		local var_13_1 = arg_13_0._scene.camera:getCameraState()
+
+		if arg_13_0._lookCaneraState == var_13_1 then
+			return arg_13_0._lookEntityUid, arg_13_0._lookLockType
+		end
 	end
 
-	return slot1, uv0.Hero
+	return var_13_0, var_0_1.Hero
 end
 
-function slot0.setLookBuildingUid(slot0, slot1, slot2)
-	if slot0._buildingPosListMap and slot2 then
-		slot0._buildingPosListMap[slot2] = nil
+function var_0_0.setLookBuildingUid(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0._buildingPosListMap and arg_14_2 then
+		arg_14_0._buildingPosListMap[arg_14_2] = nil
 	end
 
-	slot0:_setLookEntityUid(slot1, slot2, uv0.Building)
+	arg_14_0:_setLookEntityUid(arg_14_1, arg_14_2, var_0_1.Building)
 end
 
-function slot0.setLookVehicleUid(slot0, slot1, slot2)
-	slot0:_setLookEntityUid(slot1, slot2, uv0.Vehicle)
+function var_0_0.setLookVehicleUid(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0:_setLookEntityUid(arg_15_1, arg_15_2, var_0_1.Vehicle)
 end
 
-function slot0.clearLookParam(slot0)
-	slot0:_setLookEntityUid(nil, , )
+function var_0_0.clearLookParam(arg_16_0)
+	arg_16_0:_setLookEntityUid(nil, nil, nil)
 end
 
-function slot0._setLookEntityUid(slot0, slot1, slot2, slot3)
-	slot0._lookCaneraState = slot1
-	slot0._lookEntityUid = slot2
-	slot0._lookLockType = slot3
+function var_0_0._setLookEntityUid(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_0._lookCaneraState = arg_17_1
+	arg_17_0._lookEntityUid = arg_17_2
+	arg_17_0._lookLockType = arg_17_3
 end
 
-function slot0.onSceneClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onUpdate, slot0)
-	slot0:_setLookEntityUid(nil, , )
+function var_0_0.onSceneClose(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._onUpdate, arg_18_0)
+	arg_18_0:_setLookEntityUid(nil, nil, nil)
 end
 
-return slot0
+return var_0_0

@@ -1,81 +1,88 @@
-module("modules.logic.tower.model.TowerAssistBossListModel", package.seeall)
+﻿module("modules.logic.tower.model.TowerAssistBossListModel", package.seeall)
 
-slot0 = class("TowerAssistBossListModel", ListScrollModel)
+local var_0_0 = class("TowerAssistBossListModel", ListScrollModel)
 
-function slot0.initList(slot0)
-	slot0.isFirstRefresh = true
+function var_0_0.initList(arg_1_0)
+	arg_1_0.isFirstRefresh = true
 end
 
-function slot0.refreshList(slot0, slot1)
-	slot0.isFromHeroGroup = slot1 and slot1.isFromHeroGroup
-	slot0.bossId = slot1 and slot1.bossId
-	slot0.towerType = slot1 and slot1.towerType
-	slot0.towerId = slot1 and slot1.towerId
+function var_0_0.refreshList(arg_2_0, arg_2_1)
+	arg_2_0.isFromHeroGroup = arg_2_1 and arg_2_1.isFromHeroGroup
+	arg_2_0.bossId = arg_2_1 and arg_2_1.bossId
+	arg_2_0.towerType = arg_2_1 and arg_2_1.towerType
+	arg_2_0.towerId = arg_2_1 and arg_2_1.towerId
 
-	if slot0.isFromHeroGroup then
-		slot0.bossId = HeroGroupModel.instance:getCurGroupMO():getAssistBossId()
+	if arg_2_0.isFromHeroGroup then
+		arg_2_0.bossId = HeroGroupModel.instance:getCurGroupMO():getAssistBossId()
 
-		if TowerModel.instance:isBossBan(slot0.bossId) or TowerModel.instance:isLimitTowerBossBan(slot0.towerType, slot0.towerId, slot0.bossId) then
-			slot0.bossId = 0
+		if TowerModel.instance:isBossBan(arg_2_0.bossId) or TowerModel.instance:isLimitTowerBossBan(arg_2_0.towerType, arg_2_0.towerId, arg_2_0.bossId) then
+			arg_2_0.bossId = 0
 		end
 	end
 
-	if slot0.isFirstRefresh then
-		slot3 = {}
+	if arg_2_0.isFirstRefresh then
+		local var_2_0 = TowerConfig.instance:getAssistBossList()
+		local var_2_1 = {}
 
-		if TowerConfig.instance:getAssistBossList() then
-			for slot7, slot8 in ipairs(slot2) do
-				if slot0:checkBossCanShow(slot8.bossId) then
-					table.insert(slot3, slot0:buildBossData(slot8))
+		if var_2_0 then
+			for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+				if arg_2_0:checkBossCanShow(iter_2_1.bossId) then
+					table.insert(var_2_1, arg_2_0:buildBossData(iter_2_1))
 				end
 			end
 		end
 
-		if #slot3 > 1 then
-			if slot0.isFromHeroGroup then
-				table.sort(slot3, SortUtil.tableKeyLower({
+		if #var_2_1 > 1 then
+			if arg_2_0.isFromHeroGroup then
+				table.sort(var_2_1, SortUtil.tableKeyLower({
 					"isBanOrder",
 					"isSelectOrder",
 					"isLock",
 					"bossId"
 				}))
 			else
-				table.sort(slot3, SortUtil.tableKeyLower({
+				table.sort(var_2_1, SortUtil.tableKeyLower({
 					"isLock",
 					"bossId"
 				}))
 			end
 		end
 
-		slot0:setList(slot3)
+		arg_2_0:setList(var_2_1)
 	else
-		for slot6, slot7 in ipairs(slot0:getList()) do
-			slot0:buildBossData(slot7.config, slot7)
+		local var_2_2 = arg_2_0:getList()
+
+		for iter_2_2, iter_2_3 in ipairs(var_2_2) do
+			arg_2_0:buildBossData(iter_2_3.config, iter_2_3)
 		end
 
-		slot3 = {}
+		local var_2_3 = {}
 
-		for slot7, slot8 in ipairs(slot2) do
-			if slot0:checkBossCanShow(slot8.bossId) then
-				table.insert(slot3, slot8)
+		for iter_2_4, iter_2_5 in ipairs(var_2_2) do
+			if arg_2_0:checkBossCanShow(iter_2_5.bossId) then
+				table.insert(var_2_3, iter_2_5)
 			end
 		end
 
-		slot0:setList(slot3)
+		arg_2_0:setList(var_2_3)
 	end
 
-	slot0.isFirstRefresh = false
+	arg_2_0.isFirstRefresh = false
 end
 
-function slot0.checkBossCanShow(slot0, slot1)
-	if not TowerModel.instance:isBossOpen(slot1) then
+function var_0_0.checkBossCanShow(arg_3_0, arg_3_1)
+	if not TowerModel.instance:isBossOpen(arg_3_1) then
 		return false
 	end
 
-	if slot0.towerType and slot0.towerType == TowerEnum.TowerType.Limited then
-		if TowerConfig.instance:getTowerLimitedTimeCo(slot0.towerId) then
-			for slot7, slot8 in ipairs(string.splitToNumber(slot2.bossPool, "#")) do
-				if slot8 == slot1 then
+	if arg_3_0.towerType and arg_3_0.towerType == TowerEnum.TowerType.Limited then
+		local var_3_0 = TowerConfig.instance:getTowerLimitedTimeCo(arg_3_0.towerId)
+
+		if var_3_0 then
+			local var_3_1 = string.splitToNumber(var_3_0.bossPool, "#")
+
+			for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+				if iter_3_1 == arg_3_1 then
 					return true
 				end
 			end
@@ -87,30 +94,30 @@ function slot0.checkBossCanShow(slot0, slot1)
 	return true
 end
 
-function slot0.buildBossData(slot0, slot1, slot2)
-	slot2 = slot2 or {}
-	slot2.id = slot1.bossId
-	slot2.config = slot1
-	slot2.bossId = slot1.bossId
-	slot2.bossInfo = TowerAssistBossModel.instance:getById(slot1.bossId)
-	slot2.isLock = slot2.bossInfo == nil and 1 or 0
-	slot2.isFromHeroGroup = slot0.isFromHeroGroup
+function var_0_0.buildBossData(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_2 = arg_4_2 or {}
+	arg_4_2.id = arg_4_1.bossId
+	arg_4_2.config = arg_4_1
+	arg_4_2.bossId = arg_4_1.bossId
+	arg_4_2.bossInfo = TowerAssistBossModel.instance:getById(arg_4_1.bossId)
+	arg_4_2.isLock = arg_4_2.bossInfo == nil and 1 or 0
+	arg_4_2.isFromHeroGroup = arg_4_0.isFromHeroGroup
 
-	if slot0.isFromHeroGroup then
-		slot2.isSelect = slot0.bossId == slot1.bossId
+	if arg_4_0.isFromHeroGroup then
+		arg_4_2.isSelect = arg_4_0.bossId == arg_4_1.bossId
 
-		if slot0.isFirstRefresh then
-			slot2.isSelectOrder = slot2.isSelect and 0 or 1
+		if arg_4_0.isFirstRefresh then
+			arg_4_2.isSelectOrder = arg_4_2.isSelect and 0 or 1
 		end
 
-		slot2.isBanOrder = TowerModel.instance:isBossBan(slot1.bossId) and 1 or 0
+		arg_4_2.isBanOrder = TowerModel.instance:isBossBan(arg_4_1.bossId) and 1 or 0
 	end
 
-	slot2.isTowerOpen = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Boss, slot1.towerId, TowerEnum.TowerStatus.Open) ~= nil
+	arg_4_2.isTowerOpen = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Boss, arg_4_1.towerId, TowerEnum.TowerStatus.Open) ~= nil
 
-	return slot2
+	return arg_4_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

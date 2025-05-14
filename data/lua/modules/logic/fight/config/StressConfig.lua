@@ -1,11 +1,12 @@
-module("modules.logic.fight.config.StressConfig", package.seeall)
+﻿module("modules.logic.fight.config.StressConfig", package.seeall)
 
-slot0 = class("StressConfig", BaseConfig)
+local var_0_0 = class("StressConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"stress_const",
 		"stress",
@@ -14,49 +15,63 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "stress" then
-		slot0:buildStressConfig(slot2)
-	elseif slot1 == "stress_identity" then
-		slot0:buildStressIdentityConfig(slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "stress" then
+		arg_3_0:buildStressConfig(arg_3_2)
+	elseif arg_3_1 == "stress_identity" then
+		arg_3_0:buildStressIdentityConfig(arg_3_2)
 	end
 end
 
-function slot0.buildStressConfig(slot0, slot1)
-	slot0.identity2Stress = {}
+function var_0_0.buildStressConfig(arg_4_0, arg_4_1)
+	arg_4_0.identity2Stress = {}
 
-	for slot5, slot6 in ipairs(slot1.configList) do
-		if not slot0.identity2Stress[slot6.identity] then
-			slot0.identity2Stress[slot7] = {}
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.configList) do
+		local var_4_0 = iter_4_1.identity
+		local var_4_1 = arg_4_0.identity2Stress[var_4_0]
+
+		if not var_4_1 then
+			var_4_1 = {}
+			arg_4_0.identity2Stress[var_4_0] = var_4_1
 		end
 
-		if not slot8[slot6.type] then
-			slot8[slot9] = {}
+		local var_4_2 = iter_4_1.type
+		local var_4_3 = var_4_1[var_4_2]
+
+		if not var_4_3 then
+			var_4_3 = {}
+			var_4_1[var_4_2] = var_4_3
 		end
 
-		table.insert(slot10, slot6)
+		table.insert(var_4_3, iter_4_1)
 	end
 end
 
-function slot0.buildStressIdentityConfig(slot0, slot1)
-	slot0.identityType2List = {}
+function var_0_0.buildStressIdentityConfig(arg_5_0, arg_5_1)
+	arg_5_0.identityType2List = {}
 
-	for slot5, slot6 in ipairs(slot1.configList) do
-		if not slot0.identityType2List[slot6.identity] then
-			slot0.identityType2List[slot7] = {}
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1.configList) do
+		local var_5_0 = iter_5_1.identity
+		local var_5_1 = arg_5_0.identityType2List[var_5_0]
+
+		if not var_5_1 then
+			var_5_1 = {}
+			arg_5_0.identityType2List[var_5_0] = var_5_1
 		end
 
-		table.insert(slot8, slot6)
+		table.insert(var_5_1, iter_5_1)
 	end
 end
 
-function slot0.getStressDict(slot0, slot1)
-	return tonumber(slot1) and slot0.identity2Stress[slot1]
+function var_0_0.getStressDict(arg_6_0, arg_6_1)
+	arg_6_1 = tonumber(arg_6_1)
+
+	return arg_6_1 and arg_6_0.identity2Stress[arg_6_1]
 end
 
-function slot0.getStressBehaviourName(slot0, slot1)
-	if not slot0.behaviour2ConstId then
-		slot0.behaviour2ConstId = {
+function var_0_0.getStressBehaviourName(arg_7_0, arg_7_1)
+	if not arg_7_0.behaviour2ConstId then
+		arg_7_0.behaviour2ConstId = {
 			[FightEnum.StressBehaviour.Positive] = 12,
 			[FightEnum.StressBehaviour.Negative] = 13,
 			[FightEnum.StressBehaviour.Meltdown] = 14,
@@ -68,67 +83,84 @@ function slot0.getStressBehaviourName(slot0, slot1)
 		}
 	end
 
-	if not slot0.behaviour2ConstId[slot1] then
-		logError("不支持的压力行为:" .. tostring(slot1))
+	local var_7_0 = arg_7_0.behaviour2ConstId[arg_7_1]
+
+	if not var_7_0 then
+		logError("不支持的压力行为:" .. tostring(arg_7_1))
 
 		return ""
 	end
 
-	return lua_stress_const.configDict[slot2] and slot3.value2
+	local var_7_1 = lua_stress_const.configDict[var_7_0]
+
+	return var_7_1 and var_7_1.value2
 end
 
-function slot0.getHeroIdentityList(slot0, slot1)
-	slot0.tempIdentityList = slot0.tempIdentityList or {}
+function var_0_0.getHeroIdentityList(arg_8_0, arg_8_1)
+	arg_8_0.tempIdentityList = arg_8_0.tempIdentityList or {}
 
-	tabletool.clear(slot0.tempIdentityList)
+	tabletool.clear(arg_8_0.tempIdentityList)
 
-	for slot7, slot8 in ipairs(slot0.identityType2List[FightEnum.IdentityType.Career]) do
-		if tonumber(slot8.typeParam) == slot1.career then
-			table.insert(slot0.tempIdentityList, slot8)
+	local var_8_0 = arg_8_1.career
+	local var_8_1 = arg_8_0.identityType2List[FightEnum.IdentityType.Career]
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		if tonumber(iter_8_1.typeParam) == var_8_0 then
+			table.insert(arg_8_0.tempIdentityList, iter_8_1)
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot0.identityType2List[FightEnum.IdentityType.HeroType]) do
-		if tonumber(slot10.typeParam) == slot1.heroType then
-			table.insert(slot0.tempIdentityList, slot10)
+	local var_8_2 = arg_8_1.heroType
+	local var_8_3 = arg_8_0.identityType2List[FightEnum.IdentityType.HeroType]
+
+	for iter_8_2, iter_8_3 in ipairs(var_8_3) do
+		if tonumber(iter_8_3.typeParam) == var_8_2 then
+			table.insert(arg_8_0.tempIdentityList, iter_8_3)
 		end
 	end
 
-	slot7 = slot0.identityType2List[FightEnum.IdentityType.BattleTag]
+	local var_8_4 = string.split(arg_8_1.battleTag, "#")
+	local var_8_5 = arg_8_0.identityType2List[FightEnum.IdentityType.BattleTag]
 
-	for slot11, slot12 in ipairs(string.split(slot1.battleTag, "#")) do
-		for slot16, slot17 in ipairs(slot7) do
-			if slot17.typeParam == slot12 then
-				table.insert(slot0.tempIdentityList, slot17)
+	for iter_8_4, iter_8_5 in ipairs(var_8_4) do
+		for iter_8_6, iter_8_7 in ipairs(var_8_5) do
+			if iter_8_7.typeParam == iter_8_5 then
+				table.insert(arg_8_0.tempIdentityList, iter_8_7)
 
 				break
 			end
 		end
 	end
 
-	for slot13, slot14 in ipairs(slot0.identityType2List[FightEnum.IdentityType.HeroId]) do
-		if tonumber(slot14.typeParam) == slot1.id then
-			table.insert(slot0.tempIdentityList, slot14)
+	local var_8_6 = arg_8_1.id
+	local var_8_7 = arg_8_0.identityType2List[FightEnum.IdentityType.HeroId]
+
+	for iter_8_8, iter_8_9 in ipairs(var_8_7) do
+		if tonumber(iter_8_9.typeParam) == var_8_6 then
+			table.insert(arg_8_0.tempIdentityList, iter_8_9)
 		end
 	end
 
-	return slot0.tempIdentityList
+	return arg_8_0.tempIdentityList
 end
 
-function slot0.getHeroIdentityText(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0:getHeroIdentityList(slot1)) do
-		if slot8.isNoShow ~= 1 then
-			slot3 = "" .. string.format("<color=#d2c197><link=%s><u><%s></u></link></color>", slot8.id, slot8.name)
+function var_0_0.getHeroIdentityText(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getHeroIdentityList(arg_9_1)
+	local var_9_1 = ""
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1.isNoShow ~= 1 then
+			var_9_1 = var_9_1 .. string.format("<color=#d2c197><link=%s><u><%s></u></link></color>", iter_9_1.id, iter_9_1.name)
 		end
 	end
 
-	return slot3
+	return var_9_1
 end
 
-function slot0.getHeroTip(slot0)
+function var_0_0.getHeroTip(arg_10_0)
 	return lua_stress_const.configDict[16].value2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

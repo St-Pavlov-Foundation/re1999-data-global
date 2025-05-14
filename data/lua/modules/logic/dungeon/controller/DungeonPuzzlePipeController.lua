@@ -1,108 +1,123 @@
-module("modules.logic.dungeon.controller.DungeonPuzzlePipeController", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonPuzzlePipeController", package.seeall)
 
-slot0 = class("DungeonPuzzlePipeController", BaseController)
+local var_0_0 = class("DungeonPuzzlePipeController", BaseController)
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_1_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-slot1 = DungeonPuzzleEnum.dir.left
-slot2 = DungeonPuzzleEnum.dir.right
-slot3 = DungeonPuzzleEnum.dir.down
-slot4 = DungeonPuzzleEnum.dir.up
+local var_0_1 = DungeonPuzzleEnum.dir.left
+local var_0_2 = DungeonPuzzleEnum.dir.right
+local var_0_3 = DungeonPuzzleEnum.dir.down
+local var_0_4 = DungeonPuzzleEnum.dir.up
 
-function slot0.release(slot0)
-	slot0._rule = nil
+function var_0_0.release(arg_4_0)
+	arg_4_0._rule = nil
 end
 
-function slot0.checkInit(slot0)
-	slot0._rule = slot0._rule or DungeonPuzzlePipeRule.New()
-	slot1, slot2 = DungeonPuzzlePipeModel.instance:getGameSize()
+function var_0_0.checkInit(arg_5_0)
+	arg_5_0._rule = arg_5_0._rule or DungeonPuzzlePipeRule.New()
 
-	slot0._rule:setGameSize(slot1, slot2)
+	local var_5_0, var_5_1 = DungeonPuzzlePipeModel.instance:getGameSize()
+
+	arg_5_0._rule:setGameSize(var_5_0, var_5_1)
 end
 
-function slot0.openGame(slot0, slot1)
-	DungeonPuzzlePipeModel.instance:initByElementCo(slot1)
-	slot0:checkInit()
-	slot0:randomPuzzle()
+function var_0_0.openGame(arg_6_0, arg_6_1)
+	DungeonPuzzlePipeModel.instance:initByElementCo(arg_6_1)
+	arg_6_0:checkInit()
+	arg_6_0:randomPuzzle()
 	ViewMgr.instance:openView(ViewName.DungeonPuzzlePipeView)
 end
 
-function slot0.resetGame(slot0)
-	DungeonPuzzlePipeModel.instance:initByElementCo(DungeonPuzzlePipeModel.instance:getElementCo())
-	slot0:randomPuzzle()
+function var_0_0.resetGame(arg_7_0)
+	local var_7_0 = DungeonPuzzlePipeModel.instance:getElementCo()
+
+	DungeonPuzzlePipeModel.instance:initByElementCo(var_7_0)
+	arg_7_0:randomPuzzle()
 end
 
-function slot0.changeDirection(slot0, slot1, slot2, slot3)
-	if slot3 then
-		slot0:refreshConnection(slot0._rule:changeDirection(slot1, slot2))
+function var_0_0.changeDirection(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_0._rule:changeDirection(arg_8_1, arg_8_2)
+
+	if arg_8_3 then
+		arg_8_0:refreshConnection(var_8_0)
 	end
 end
 
-function slot0.randomPuzzle(slot0)
-	slot1 = slot0._rule:getRandomSkipSet()
-	slot2, slot3 = DungeonPuzzlePipeModel.instance:getGameSize()
+function var_0_0.randomPuzzle(arg_9_0)
+	local var_9_0 = arg_9_0._rule:getRandomSkipSet()
+	local var_9_1, var_9_2 = DungeonPuzzlePipeModel.instance:getGameSize()
 
-	for slot7 = 1, slot2 do
-		for slot11 = 1, slot3 do
-			if not slot1[DungeonPuzzlePipeModel.instance:getData(slot7, slot11)] then
-				for slot17 = 1, math.random(0, 3) do
-					slot0._rule:changeDirection(slot7, slot11)
+	for iter_9_0 = 1, var_9_1 do
+		for iter_9_1 = 1, var_9_2 do
+			if not var_9_0[DungeonPuzzlePipeModel.instance:getData(iter_9_0, iter_9_1)] then
+				local var_9_3 = math.random(0, 3)
+
+				for iter_9_2 = 1, var_9_3 do
+					arg_9_0._rule:changeDirection(iter_9_0, iter_9_1)
 				end
 			end
 		end
 	end
 
-	slot0:refreshAllConnection()
-	slot0:updateConnection()
+	arg_9_0:refreshAllConnection()
+	arg_9_0:updateConnection()
 end
 
-function slot0.refreshAllConnection(slot0)
-	slot1, slot2 = DungeonPuzzlePipeModel.instance:getGameSize()
+function var_0_0.refreshAllConnection(arg_10_0)
+	local var_10_0, var_10_1 = DungeonPuzzlePipeModel.instance:getGameSize()
 
-	for slot6 = 1, slot1 do
-		for slot10 = 1, slot2 do
-			slot0:refreshConnection(DungeonPuzzlePipeModel.instance:getData(slot6, slot10))
+	for iter_10_0 = 1, var_10_0 do
+		for iter_10_1 = 1, var_10_1 do
+			local var_10_2 = DungeonPuzzlePipeModel.instance:getData(iter_10_0, iter_10_1)
+
+			arg_10_0:refreshConnection(var_10_2)
 		end
 	end
 end
 
-function slot0.refreshConnection(slot0, slot1)
-	slot2 = slot1.x
-	slot3 = slot1.y
+function var_0_0.refreshConnection(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.x
+	local var_11_1 = arg_11_1.y
 
-	slot0._rule:setSingleConnection(slot2 - 1, slot3, uv0, uv1, slot1)
-	slot0._rule:setSingleConnection(slot2 + 1, slot3, uv1, uv0, slot1)
-	slot0._rule:setSingleConnection(slot2, slot3 + 1, uv2, uv3, slot1)
-	slot0._rule:setSingleConnection(slot2, slot3 - 1, uv3, uv2, slot1)
+	arg_11_0._rule:setSingleConnection(var_11_0 - 1, var_11_1, var_0_2, var_0_1, arg_11_1)
+	arg_11_0._rule:setSingleConnection(var_11_0 + 1, var_11_1, var_0_1, var_0_2, arg_11_1)
+	arg_11_0._rule:setSingleConnection(var_11_0, var_11_1 + 1, var_0_3, var_0_4, arg_11_1)
+	arg_11_0._rule:setSingleConnection(var_11_0, var_11_1 - 1, var_0_4, var_0_3, arg_11_1)
 end
 
-function slot0.updateConnection(slot0)
+function var_0_0.updateConnection(arg_12_0)
 	DungeonPuzzlePipeModel.instance:resetEntryConnect()
 
-	slot1, slot2 = slot0._rule:getReachTable()
+	local var_12_0, var_12_1 = arg_12_0._rule:getReachTable()
 
-	slot0._rule:_mergeReachDir(slot1)
-	slot0._rule:_unmarkBranch()
-	DungeonPuzzlePipeModel.instance:setGameClear(slot0._rule:isGameClear(slot2))
+	arg_12_0._rule:_mergeReachDir(var_12_0)
+	arg_12_0._rule:_unmarkBranch()
+
+	local var_12_2 = arg_12_0._rule:isGameClear(var_12_1)
+
+	DungeonPuzzlePipeModel.instance:setGameClear(var_12_2)
 end
 
-function slot0.checkDispatchClear(slot0)
+function var_0_0.checkDispatchClear(arg_13_0)
 	if DungeonPuzzlePipeModel.instance:getGameClear() then
-		slot0:dispatchEvent(DungeonPuzzleEvent.PipeGameClear)
+		arg_13_0:dispatchEvent(DungeonPuzzleEvent.PipeGameClear)
 	end
 end
 
-function slot0.getIsEntryClear(slot0, slot1)
-	return slot0._rule:getIsEntryClear(slot1)
+function var_0_0.getIsEntryClear(arg_14_0, arg_14_1)
+	return arg_14_0._rule:getIsEntryClear(arg_14_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

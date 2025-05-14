@@ -1,21 +1,21 @@
-module("projbooter.sdk.SDKDataTrackMgr", package.seeall)
+﻿module("projbooter.sdk.SDKDataTrackMgr", package.seeall)
 
-slot0 = class("SDKDataTrackMgr")
+local var_0_0 = class("SDKDataTrackMgr")
 
-function slot0.trackNoticeLoad(slot0, slot1)
-	uv0.instance:track(uv0.EventName.notice_load, {
-		[uv0.EventProperties.notice_id] = slot1.notice_id or -1
+function var_0_0.trackNoticeLoad(arg_1_0, arg_1_1)
+	var_0_0.instance:track(var_0_0.EventName.notice_load, {
+		[var_0_0.EventProperties.notice_id] = arg_1_1.notice_id or -1
 	})
 end
 
-function slot0.trackNoticeJump(slot0, slot1)
-	uv0.instance:track(uv0.EventName.notice_jump, {
-		[uv0.EventProperties.notice_id] = slot1.notice_id or -1,
-		[uv0.EventProperties.notice_jump_id] = slot1.notice_jump_id or -1
+function var_0_0.trackNoticeJump(arg_2_0, arg_2_1)
+	var_0_0.instance:track(var_0_0.EventName.notice_jump, {
+		[var_0_0.EventProperties.notice_id] = arg_2_1.notice_id or -1,
+		[var_0_0.EventProperties.notice_jump_id] = arg_2_1.notice_jump_id or -1
 	})
 end
 
-slot0.EventName = {
+var_0_0.EventName = {
 	resources_downloading = "resources_downloading",
 	hotupdate_41_60 = "hotupdate_41_60",
 	resource_load = "resource_load",
@@ -51,7 +51,7 @@ slot0.EventName = {
 	resource_load_fail = "resource_load_fail",
 	unzip_finish_fail = "unzip_finish_fail"
 }
-slot0.EventProperties = {
+var_0_0.EventProperties = {
 	data_length = "data_length",
 	UpdateAmount = "update_amount",
 	host_ip = "host_ip",
@@ -83,57 +83,57 @@ slot0.EventProperties = {
 	current_voice_pack_list = "current_voice_pack_list",
 	step = "step"
 }
-slot0.RequestResult = {
+var_0_0.RequestResult = {
 	success = "success",
 	fail = "fail"
 }
-slot0.Result = {
+var_0_0.Result = {
 	success = "success",
 	fail = "fail"
 }
-slot0.UserProperties = {
+var_0_0.UserProperties = {
 	FirstStartTime = "frist_star_time",
 	DownloadChannel = "DownloadChannel",
 	AppChannelId = "app_channelid",
 	AppSubChannelId = "app_subchannelid"
 }
-slot0.PropertyTypes = {
-	[slot0.EventProperties.notice_id] = "number",
-	[slot0.EventProperties.notice_jump_id] = "number",
-	[slot0.EventProperties.UpdateAmount] = "number",
-	[slot0.EventProperties.UpdatePercentage] = "string",
-	[slot0.UserProperties.DownloadChannel] = "string",
-	[slot0.UserProperties.AppChannelId] = "string",
-	[slot0.UserProperties.AppSubChannelId] = "string",
-	[slot0.UserProperties.AppSubChannelId] = "string",
-	[slot0.EventProperties.request_result] = "string",
-	[slot0.EventProperties.request_url] = "string",
-	[slot0.EventProperties.result_code] = "string",
-	[slot0.EventProperties.result_message] = "string",
-	[slot0.EventProperties.start_timestamp] = "datetime",
-	[slot0.EventProperties.spend_time] = "number",
-	[slot0.EventProperties.data_length] = "number",
-	[slot0.EventProperties.host_ip] = "string",
-	[slot0.EventProperties.result] = "string",
-	[slot0.EventProperties.result_msg] = "string",
-	[slot0.EventProperties.current_language] = "string",
-	[slot0.EventProperties.entrance] = "string",
-	[slot0.EventProperties.current_voice_pack_list] = "list",
-	[slot0.EventProperties.current_voice_pack_used] = "string",
-	[slot0.EventProperties.download_voice_pack_list] = "list",
-	[slot0.EventProperties.update_amount] = "number",
-	[slot0.EventProperties.step] = "string",
-	[slot0.EventProperties.voice_pack_before] = "string",
-	[slot0.EventProperties.voice_pack_delete] = "string",
-	[slot0.EventProperties.gamescene] = "string",
-	[slot0.EventProperties.currenthost] = "string",
-	[slot0.EventProperties.switchcount] = "number",
-	[slot0.EventProperties.resource_type] = "list",
-	[slot0.EventProperties.main_hero_interaction_skin_id] = "number",
-	[slot0.EventProperties.main_hero_interaction_area_id] = "number",
-	[slot0.EventProperties.main_hero_interaction_voice_id] = "string"
+var_0_0.PropertyTypes = {
+	[var_0_0.EventProperties.notice_id] = "number",
+	[var_0_0.EventProperties.notice_jump_id] = "number",
+	[var_0_0.EventProperties.UpdateAmount] = "number",
+	[var_0_0.EventProperties.UpdatePercentage] = "string",
+	[var_0_0.UserProperties.DownloadChannel] = "string",
+	[var_0_0.UserProperties.AppChannelId] = "string",
+	[var_0_0.UserProperties.AppSubChannelId] = "string",
+	[var_0_0.UserProperties.AppSubChannelId] = "string",
+	[var_0_0.EventProperties.request_result] = "string",
+	[var_0_0.EventProperties.request_url] = "string",
+	[var_0_0.EventProperties.result_code] = "string",
+	[var_0_0.EventProperties.result_message] = "string",
+	[var_0_0.EventProperties.start_timestamp] = "datetime",
+	[var_0_0.EventProperties.spend_time] = "number",
+	[var_0_0.EventProperties.data_length] = "number",
+	[var_0_0.EventProperties.host_ip] = "string",
+	[var_0_0.EventProperties.result] = "string",
+	[var_0_0.EventProperties.result_msg] = "string",
+	[var_0_0.EventProperties.current_language] = "string",
+	[var_0_0.EventProperties.entrance] = "string",
+	[var_0_0.EventProperties.current_voice_pack_list] = "list",
+	[var_0_0.EventProperties.current_voice_pack_used] = "string",
+	[var_0_0.EventProperties.download_voice_pack_list] = "list",
+	[var_0_0.EventProperties.update_amount] = "number",
+	[var_0_0.EventProperties.step] = "string",
+	[var_0_0.EventProperties.voice_pack_before] = "string",
+	[var_0_0.EventProperties.voice_pack_delete] = "string",
+	[var_0_0.EventProperties.gamescene] = "string",
+	[var_0_0.EventProperties.currenthost] = "string",
+	[var_0_0.EventProperties.switchcount] = "number",
+	[var_0_0.EventProperties.resource_type] = "list",
+	[var_0_0.EventProperties.main_hero_interaction_skin_id] = "number",
+	[var_0_0.EventProperties.main_hero_interaction_area_id] = "number",
+	[var_0_0.EventProperties.main_hero_interaction_voice_id] = "string"
 }
-slot0.DefinedTypeToLuaType = {
+var_0_0.DefinedTypeToLuaType = {
 	string = "string",
 	array = "table",
 	datetime = "number",
@@ -141,8 +141,8 @@ slot0.DefinedTypeToLuaType = {
 	list = "table",
 	number = "number"
 }
-slot0.FirstStartTimePrefsKey = "DataTrackFirstStartTime"
-slot0.MediaEvent = {
+var_0_0.FirstStartTimePrefsKey = "DataTrackFirstStartTime"
+var_0_0.MediaEvent = {
 	purchase_firstGachaPack = "purchase_firstGacha20Pack",
 	chapter_progress_3 = "chapter_progress_3",
 	plot_progress_3_15 = "plot_progress_3_15",
@@ -170,7 +170,7 @@ slot0.MediaEvent = {
 	roleLevel_5_achieve = "roleLevel_5_achieve",
 	purchase_monthlyGachaPack = "purchase_monthlyGachaPack"
 }
-slot0.ChannelEvent = {
+var_0_0.ChannelEvent = {
 	stdhour1 = "stdhour1",
 	stdrecharge = "stdrecharge",
 	stdmonthly = "stdmonthly",
@@ -182,69 +182,77 @@ slot0.ChannelEvent = {
 	stdlackofdiamonds = "stdlackofdiamonds"
 }
 
-function slot0.ctor(slot0)
-	slot0.csharpInst = ZProj.SDKDataTrackManager.Instance
+function var_0_0.ctor(arg_3_0)
+	arg_3_0.csharpInst = ZProj.SDKDataTrackManager.Instance
 end
 
-function slot0.initSDKDataTrack(slot0)
-	slot0.csharpInst:InitSDKDataTrack()
-	slot0:_setFirstStartTimeProperty()
+function var_0_0.initSDKDataTrack(arg_4_0)
+	arg_4_0.csharpInst:InitSDKDataTrack()
+	arg_4_0:_setFirstStartTimeProperty()
 end
 
-function slot0.getDataTrackProperties(slot0)
-	if not slot0:isEnableDataTrack() then
+function var_0_0.getDataTrackProperties(arg_5_0)
+	if not arg_5_0:isEnableDataTrack() then
 		return ""
 	end
 
-	return slot0.csharpInst:CallGetStrFunc("getDataTrackProperties")
+	return arg_5_0.csharpInst:CallGetStrFunc("getDataTrackProperties")
 end
 
-function slot0.roleLogin(slot0, slot1)
-	if not slot0:isEnableDataTrack() then
+function var_0_0.roleLogin(arg_6_0, arg_6_1)
+	if not arg_6_0:isEnableDataTrack() then
 		return
 	end
 
-	slot0.csharpInst:CallVoidFuncWithParams("roleLogin", tostring(slot1))
-	slot0:profileSet({
-		[uv0.UserProperties.AppChannelId] = tostring(SDKMgr.instance:getChannelId()),
-		[uv0.UserProperties.AppSubChannelId] = tostring(SDKMgr.instance:getSubChannelId())
+	arg_6_0.csharpInst:CallVoidFuncWithParams("roleLogin", tostring(arg_6_1))
+
+	local var_6_0 = tostring(SDKMgr.instance:getChannelId())
+	local var_6_1 = tostring(SDKMgr.instance:getSubChannelId())
+
+	arg_6_0:profileSet({
+		[var_0_0.UserProperties.AppChannelId] = var_6_0,
+		[var_0_0.UserProperties.AppSubChannelId] = var_6_1
 	})
 end
 
-function slot0.track(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.track(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = {}
 
-	for slot7, slot8 in pairs(slot2 or {}) do
-		if not string.nilorempty(uv0.PropertyTypes[slot7]) and type(slot8) ~= uv0.DefinedTypeToLuaType[slot9] then
-			logError(string.format("埋点 属性类型不一致, propertyName: %s, param: %s, currentType: %s, definedType: %s", tostring(slot7), tostring(slot8), type(slot8), uv0.DefinedTypeToLuaType[slot9]))
+	arg_7_2 = arg_7_2 or {}
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_2) do
+		local var_7_1 = var_0_0.PropertyTypes[iter_7_0]
+
+		if not string.nilorempty(var_7_1) and type(iter_7_1) ~= var_0_0.DefinedTypeToLuaType[var_7_1] then
+			logError(string.format("埋点 属性类型不一致, propertyName: %s, param: %s, currentType: %s, definedType: %s", tostring(iter_7_0), tostring(iter_7_1), type(iter_7_1), var_0_0.DefinedTypeToLuaType[var_7_1]))
 		end
 
-		if slot9 == "array" or slot9 == "list" and JsonUtil then
-			JsonUtil.markAsArray(slot8)
+		if var_7_1 == "array" or var_7_1 == "list" and JsonUtil then
+			JsonUtil.markAsArray(iter_7_1)
 		end
 
-		if slot9 == "array" and #slot8 <= 0 then
-			table.insert(slot3, slot7)
+		if var_7_1 == "array" and #iter_7_1 <= 0 then
+			table.insert(var_7_0, iter_7_0)
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot2[slot8] = nil
+	for iter_7_2, iter_7_3 in ipairs(var_7_0) do
+		arg_7_2[iter_7_3] = nil
 	end
 
 	if isDebugBuild then
-		logNormal("track event : eventName : " .. slot1 .. ", properties : " .. cjson.encode(slot2))
+		logNormal("track event : eventName : " .. arg_7_1 .. ", properties : " .. cjson.encode(arg_7_2))
 	end
 
-	if not slot0:isEnableDataTrack() then
+	if not arg_7_0:isEnableDataTrack() then
 		return
 	end
 
-	return slot0.csharpInst:CallVoidFuncWithParams("track", slot1, slot0:_tableToDictionary(slot2))
+	return arg_7_0.csharpInst:CallVoidFuncWithParams("track", arg_7_1, arg_7_0:_tableToDictionary(arg_7_2))
 end
 
-function slot0.trackMediaEvent(slot0, slot1)
-	if not slot0:isEnableDataTrack() then
+function var_0_0.trackMediaEvent(arg_8_0, arg_8_1)
+	if not arg_8_0:isEnableDataTrack() then
 		return
 	end
 
@@ -252,13 +260,16 @@ function slot0.trackMediaEvent(slot0, slot1)
 		return
 	end
 
-	return slot0.csharpInst:CallVoidFuncWithParams("trackMediaEvent", cjson.encode({
-		eventName = slot1
-	}))
+	local var_8_0 = {
+		eventName = arg_8_1
+	}
+	local var_8_1 = cjson.encode(var_8_0)
+
+	return arg_8_0.csharpInst:CallVoidFuncWithParams("trackMediaEvent", var_8_1)
 end
 
-function slot0.trackMediaPayEvent(slot0, slot1, slot2)
-	if not slot0:isEnableDataTrack() then
+function var_0_0.trackMediaPayEvent(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0:isEnableDataTrack() then
 		return
 	end
 
@@ -266,198 +277,217 @@ function slot0.trackMediaPayEvent(slot0, slot1, slot2)
 		return
 	end
 
-	return slot0.csharpInst:CallVoidFuncWithParams("trackMediaPayEvent", cjson.encode({
-		eventName = slot1,
-		amount = slot2.amount,
-		currency = slot2.currency,
-		productId = slot2.productId,
-		goodsName = slot2.goodsName,
-		goodsId = slot2.goodsId
-	}))
+	local var_9_0 = {
+		eventName = arg_9_1,
+		amount = arg_9_2.amount,
+		currency = arg_9_2.currency,
+		productId = arg_9_2.productId,
+		goodsName = arg_9_2.goodsName,
+		goodsId = arg_9_2.goodsId
+	}
+	local var_9_1 = cjson.encode(var_9_0)
+
+	return arg_9_0.csharpInst:CallVoidFuncWithParams("trackMediaPayEvent", var_9_1)
 end
 
-function slot0.trackChannelEvent(slot0, slot1)
-	if not slot0:isEnableDataTrack() then
+function var_0_0.trackChannelEvent(arg_10_0, arg_10_1)
+	if not arg_10_0:isEnableDataTrack() then
 		return
 	end
 
-	return slot0.csharpInst:CallVoidFuncWithParams("trackChannelEvent", cjson.encode({
-		eventName = slot1
-	}))
+	local var_10_0 = {
+		eventName = arg_10_1
+	}
+	local var_10_1 = cjson.encode(var_10_0)
+
+	return arg_10_0.csharpInst:CallVoidFuncWithParams("trackChannelEvent", var_10_1)
 end
 
-function slot0.profileSet(slot0, slot1)
-	if not slot0:isEnableDataTrack() then
+function var_0_0.profileSet(arg_11_0, arg_11_1)
+	if not arg_11_0:isEnableDataTrack() then
 		return
 	end
 
-	return slot0.csharpInst:CallVoidFuncWithParams("profileSet", slot0:_tableToDictionary(slot1))
+	return arg_11_0.csharpInst:CallVoidFuncWithParams("profileSet", arg_11_0:_tableToDictionary(arg_11_1))
 end
 
-function slot0.isEnableDataTrack(slot0)
+function var_0_0.isEnableDataTrack(arg_12_0)
 	return not SLFramework.FrameworkSettings.IsEditor and not GameChannelConfig.isSlsdk()
 end
 
-function slot0._setFirstStartTimeProperty(slot0)
-	if UnityEngine.PlayerPrefs.GetInt(uv0.FirstStartTimePrefsKey, 0) == 0 then
-		slot1 = os.time()
+function var_0_0._setFirstStartTimeProperty(arg_13_0)
+	local var_13_0 = UnityEngine.PlayerPrefs.GetInt(var_0_0.FirstStartTimePrefsKey, 0)
+	local var_13_1 = tostring(SDKMgr.instance:getSubChannelId())
 
-		UnityEngine.PlayerPrefs.SetInt(uv0.FirstStartTimePrefsKey, slot1)
+	if var_13_0 == 0 then
+		local var_13_2 = os.time()
 
-		slot3 = os.date("%Y-%m-%d %H:%M:%S", slot1)
+		UnityEngine.PlayerPrefs.SetInt(var_0_0.FirstStartTimePrefsKey, var_13_2)
 
-		slot0:profileSet({
-			[uv0.UserProperties.DownloadChannel] = tostring(SDKMgr.instance:getSubChannelId())
+		local var_13_3 = os.date("%Y-%m-%d %H:%M:%S", var_13_2)
+
+		arg_13_0:profileSet({
+			[var_0_0.UserProperties.DownloadChannel] = var_13_1
 		})
 	end
 end
 
-function slot0.trackChooseServerEvent(slot0)
-	uv0.instance:track(uv0.EventName.ChooseServer, {})
+function var_0_0.trackChooseServerEvent(arg_14_0)
+	var_0_0.instance:track(var_0_0.EventName.ChooseServer, {})
 end
 
-function slot0.trackHotupdateFilesCheckEvent(slot0, slot1, slot2)
-	if slot1 == uv0.Result.fail then
-		uv0.instance:track(uv0.EventName.hotupdate_files_check_fail, {
-			[uv0.EventProperties.result_msg] = slot2 or ""
-		})
-	else
-		uv0.instance:track(uv0.EventName.hotupdate_files_check, {})
-	end
-end
-
-function slot0.trackUnzipFinishEvent(slot0, slot1, slot2)
-	if slot1 == uv0.Result.fail then
-		uv0.instance:track(uv0.EventName.unzip_finish_fail, {
-			[uv0.EventProperties.result_msg] = slot2 or ""
+function var_0_0.trackHotupdateFilesCheckEvent(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 == var_0_0.Result.fail then
+		var_0_0.instance:track(var_0_0.EventName.hotupdate_files_check_fail, {
+			[var_0_0.EventProperties.result_msg] = arg_15_2 or ""
 		})
 	else
-		uv0.instance:track(uv0.EventName.unzip_finish, {})
+		var_0_0.instance:track(var_0_0.EventName.hotupdate_files_check, {})
 	end
 end
 
-function slot0.trackResourceLoadFinishEvent(slot0, slot1, slot2)
-	if slot1 == uv0.Result.fail then
-		uv0.instance:track(uv0.EventName.resource_load_fail, {
-			[uv0.EventProperties.result_msg] = slot2 or ""
+function var_0_0.trackUnzipFinishEvent(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 == var_0_0.Result.fail then
+		var_0_0.instance:track(var_0_0.EventName.unzip_finish_fail, {
+			[var_0_0.EventProperties.result_msg] = arg_16_2 or ""
 		})
 	else
-		uv0.instance:track(uv0.EventName.resource_load_finish, {})
+		var_0_0.instance:track(var_0_0.EventName.unzip_finish, {})
 	end
 end
 
-function slot0.trackGetRemoteVersionEvent(slot0, slot1, slot2, slot3, slot4)
-	uv0.instance:track(uv0.EventName.hotupdate_request, {
-		[uv0.EventProperties.request_result] = slot1,
-		[uv0.EventProperties.request_url] = slot2,
-		[uv0.EventProperties.result_code] = slot3 and tostring(slot3) or "",
-		[uv0.EventProperties.result_message] = slot4 or ""
+function var_0_0.trackResourceLoadFinishEvent(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 == var_0_0.Result.fail then
+		var_0_0.instance:track(var_0_0.EventName.resource_load_fail, {
+			[var_0_0.EventProperties.result_msg] = arg_17_2 or ""
+		})
+	else
+		var_0_0.instance:track(var_0_0.EventName.resource_load_finish, {})
+	end
+end
+
+function var_0_0.trackGetRemoteVersionEvent(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	arg_18_3 = arg_18_3 and tostring(arg_18_3)
+
+	var_0_0.instance:track(var_0_0.EventName.hotupdate_request, {
+		[var_0_0.EventProperties.request_result] = arg_18_1,
+		[var_0_0.EventProperties.request_url] = arg_18_2,
+		[var_0_0.EventProperties.result_code] = arg_18_3 or "",
+		[var_0_0.EventProperties.result_message] = arg_18_4 or ""
 	})
 end
 
-function slot0.trackHotUpdateResourceEvent(slot0, slot1, slot2, slot3, slot4)
-	uv0.instance:track(uv0.EventName.hotupdate_request_resource, {
-		[uv0.EventProperties.request_result] = slot1,
-		[uv0.EventProperties.request_url] = slot2,
-		[uv0.EventProperties.result_code] = slot3 and tostring(slot3) or "",
-		[uv0.EventProperties.result_message] = slot4 or ""
+function var_0_0.trackHotUpdateResourceEvent(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	arg_19_3 = arg_19_3 and tostring(arg_19_3)
+
+	var_0_0.instance:track(var_0_0.EventName.hotupdate_request_resource, {
+		[var_0_0.EventProperties.request_result] = arg_19_1,
+		[var_0_0.EventProperties.request_url] = arg_19_2,
+		[var_0_0.EventProperties.result_code] = arg_19_3 or "",
+		[var_0_0.EventProperties.result_message] = arg_19_4 or ""
 	})
 end
 
-function slot0.trackSocketConnectEvent(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1 == uv0.RequestResult.success then
-		uv0.instance:track(uv0.EventName.first_socket_connect)
+function var_0_0.trackSocketConnectEvent(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
+	if arg_20_1 == var_0_0.RequestResult.success then
+		var_0_0.instance:track(var_0_0.EventName.first_socket_connect)
 	end
 
-	uv0.instance:track(uv0.EventName.socket_connect, {
-		[uv0.EventProperties.request_result] = slot1,
-		[uv0.EventProperties.start_timestamp] = slot2,
-		[uv0.EventProperties.spend_time] = slot3,
-		[uv0.EventProperties.data_length] = slot4,
-		[uv0.EventProperties.host_ip] = slot5
+	var_0_0.instance:track(var_0_0.EventName.socket_connect, {
+		[var_0_0.EventProperties.request_result] = arg_20_1,
+		[var_0_0.EventProperties.start_timestamp] = arg_20_2,
+		[var_0_0.EventProperties.spend_time] = arg_20_3,
+		[var_0_0.EventProperties.data_length] = arg_20_4,
+		[var_0_0.EventProperties.host_ip] = arg_20_5
 	})
 end
 
-function slot0.trackVoicePackDownloadConfirm(slot0, slot1)
-	uv0.instance:track(uv0.EventName.voice_pack_download_confirm, {
-		[uv0.EventProperties.current_language] = GameConfig:GetCurLangShortcut(),
-		[uv0.EventProperties.current_voice_pack_used] = GameConfig:GetCurVoiceShortcut(),
-		[uv0.EventProperties.current_voice_pack_list] = slot1.current_voice_pack_list or {},
-		[uv0.EventProperties.download_voice_pack_list] = slot1.download_voice_pack_list or {},
-		[uv0.EventProperties.entrance] = slot1.entrance,
-		[uv0.EventProperties.update_amount] = slot1.update_amount or 0
+function var_0_0.trackVoicePackDownloadConfirm(arg_21_0, arg_21_1)
+	var_0_0.instance:track(var_0_0.EventName.voice_pack_download_confirm, {
+		[var_0_0.EventProperties.current_language] = GameConfig:GetCurLangShortcut(),
+		[var_0_0.EventProperties.current_voice_pack_used] = GameConfig:GetCurVoiceShortcut(),
+		[var_0_0.EventProperties.current_voice_pack_list] = arg_21_1.current_voice_pack_list or {},
+		[var_0_0.EventProperties.download_voice_pack_list] = arg_21_1.download_voice_pack_list or {},
+		[var_0_0.EventProperties.entrance] = arg_21_1.entrance,
+		[var_0_0.EventProperties.update_amount] = arg_21_1.update_amount or 0
 	})
 end
 
-function slot0.trackVoicePackDownloading(slot0, slot1)
-	uv0.instance:track(uv0.EventName.voice_pack_downloading, {
-		[uv0.EventProperties.step] = slot1.step,
-		[uv0.EventProperties.download_voice_pack_list] = slot1.download_voice_pack_list or {},
-		[uv0.EventProperties.update_amount] = slot1.update_amount or 0,
-		[uv0.EventProperties.spend_time] = slot1.spend_time or 0,
-		[uv0.EventProperties.result_msg] = slot1.result_msg or ""
+function var_0_0.trackVoicePackDownloading(arg_22_0, arg_22_1)
+	var_0_0.instance:track(var_0_0.EventName.voice_pack_downloading, {
+		[var_0_0.EventProperties.step] = arg_22_1.step,
+		[var_0_0.EventProperties.download_voice_pack_list] = arg_22_1.download_voice_pack_list or {},
+		[var_0_0.EventProperties.update_amount] = arg_22_1.update_amount or 0,
+		[var_0_0.EventProperties.spend_time] = arg_22_1.spend_time or 0,
+		[var_0_0.EventProperties.result_msg] = arg_22_1.result_msg or ""
 	})
 end
 
-function slot0.trackOptionPackDownloading(slot0, slot1)
-	uv0.instance:track(uv0.EventName.resources_downloading, {
-		[uv0.EventProperties.step] = slot1.step,
-		[uv0.EventProperties.resource_type] = slot1.resource_type or "",
-		[uv0.EventProperties.update_amount] = slot1.update_amount or 0,
-		[uv0.EventProperties.spend_time] = slot1.spend_time or 0,
-		[uv0.EventProperties.result_msg] = slot1.result_msg or ""
+function var_0_0.trackOptionPackDownloading(arg_23_0, arg_23_1)
+	var_0_0.instance:track(var_0_0.EventName.resources_downloading, {
+		[var_0_0.EventProperties.step] = arg_23_1.step,
+		[var_0_0.EventProperties.resource_type] = arg_23_1.resource_type or "",
+		[var_0_0.EventProperties.update_amount] = arg_23_1.update_amount or 0,
+		[var_0_0.EventProperties.spend_time] = arg_23_1.spend_time or 0,
+		[var_0_0.EventProperties.result_msg] = arg_23_1.result_msg or ""
 	})
 end
 
-function slot0.trackOptionPackConfirmDownload(slot0, slot1)
-	uv0.instance:track(uv0.EventName.confirm_download_resources, {
-		[uv0.EventProperties.resource_type] = slot1.resource_type or {}
+function var_0_0.trackOptionPackConfirmDownload(arg_24_0, arg_24_1)
+	var_0_0.instance:track(var_0_0.EventName.confirm_download_resources, {
+		[var_0_0.EventProperties.resource_type] = arg_24_1.resource_type or {}
 	})
 end
 
-function slot0.trackVoicePackSwitch(slot0, slot1)
-	uv0.instance:track(uv0.EventName.voice_pack_switch, {
-		[uv0.EventProperties.current_language] = slot1.current_language,
-		[uv0.EventProperties.entrance] = slot1.entrance or "",
-		[uv0.EventProperties.current_voice_pack_list] = slot1.current_voice_pack_list or {},
-		[uv0.EventProperties.current_voice_pack_used] = slot1.current_voice_pack_used or "",
-		[uv0.EventProperties.voice_pack_before] = slot1.voice_pack_before or ""
+function var_0_0.trackVoicePackSwitch(arg_25_0, arg_25_1)
+	var_0_0.instance:track(var_0_0.EventName.voice_pack_switch, {
+		[var_0_0.EventProperties.current_language] = arg_25_1.current_language,
+		[var_0_0.EventProperties.entrance] = arg_25_1.entrance or "",
+		[var_0_0.EventProperties.current_voice_pack_list] = arg_25_1.current_voice_pack_list or {},
+		[var_0_0.EventProperties.current_voice_pack_used] = arg_25_1.current_voice_pack_used or "",
+		[var_0_0.EventProperties.voice_pack_before] = arg_25_1.voice_pack_before or ""
 	})
 end
 
-function slot0.trackVoicePackDelete(slot0, slot1)
-	uv0.instance:track(uv0.EventName.voice_pack_delete, {
-		[uv0.EventProperties.current_language] = slot1.current_language,
-		[uv0.EventProperties.current_voice_pack_list] = slot1.current_voice_pack_list or {},
-		[uv0.EventProperties.current_voice_pack_used] = slot1.current_voice_pack_used or "",
-		[uv0.EventProperties.voice_pack_delete] = slot1.voice_pack_delete or ""
+function var_0_0.trackVoicePackDelete(arg_26_0, arg_26_1)
+	var_0_0.instance:track(var_0_0.EventName.voice_pack_delete, {
+		[var_0_0.EventProperties.current_language] = arg_26_1.current_language,
+		[var_0_0.EventProperties.current_voice_pack_list] = arg_26_1.current_voice_pack_list or {},
+		[var_0_0.EventProperties.current_voice_pack_used] = arg_26_1.current_voice_pack_used or "",
+		[var_0_0.EventProperties.voice_pack_delete] = arg_26_1.voice_pack_delete or ""
 	})
 end
 
-function slot0.trackDomainFailCount(slot0, slot1, slot2, slot3)
-	if slot3 > 0 then
-		uv0.instance:track(uv0.EventName.event_hostswitch, {
-			[uv0.EventProperties.gamescene] = slot1,
-			[uv0.EventProperties.currenthost] = slot2,
-			[uv0.EventProperties.switchcount] = slot3
+function var_0_0.trackDomainFailCount(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	if arg_27_3 > 0 then
+		var_0_0.instance:track(var_0_0.EventName.event_hostswitch, {
+			[var_0_0.EventProperties.gamescene] = arg_27_1,
+			[var_0_0.EventProperties.currenthost] = arg_27_2,
+			[var_0_0.EventProperties.switchcount] = arg_27_3
 		})
 	end
 end
 
-function slot0.trackMainHeroInteraction(slot0, slot1)
-	uv0.instance:track(uv0.EventName.main_hero_interaction, {
-		[uv0.EventProperties.main_hero_interaction_skin_id] = slot1.main_hero_interaction_skin_id or -1,
-		[uv0.EventProperties.main_hero_interaction_area_id] = slot1.main_hero_interaction_area_id or -1,
-		[uv0.EventProperties.main_hero_interaction_voice_id] = slot1.main_hero_interaction_voice_id or ""
+function var_0_0.trackMainHeroInteraction(arg_28_0, arg_28_1)
+	var_0_0.instance:track(var_0_0.EventName.main_hero_interaction, {
+		[var_0_0.EventProperties.main_hero_interaction_skin_id] = arg_28_1.main_hero_interaction_skin_id or -1,
+		[var_0_0.EventProperties.main_hero_interaction_area_id] = arg_28_1.main_hero_interaction_area_id or -1,
+		[var_0_0.EventProperties.main_hero_interaction_voice_id] = arg_28_1.main_hero_interaction_voice_id or ""
 	})
 end
 
-function slot0._tableToDictionary(slot0, slot1)
-	slot2 = nil
+function var_0_0._tableToDictionary(arg_29_0, arg_29_1)
+	local var_29_0
 
-	return slot0.csharpInst:ConvertDictionary((not JsonUtil or JsonUtil.encode(slot1)) and cjson.encode(slot1))
+	if JsonUtil then
+		var_29_0 = JsonUtil.encode(arg_29_1)
+	else
+		var_29_0 = cjson.encode(arg_29_1)
+	end
+
+	return arg_29_0.csharpInst:ConvertDictionary(var_29_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,77 +1,82 @@
-module("projbooter.screen.GameAdaptionBgMgr", package.seeall)
+﻿module("projbooter.screen.GameAdaptionBgMgr", package.seeall)
 
-slot0 = class("GameAdaptionBgMgr")
+local var_0_0 = class("GameAdaptionBgMgr")
 
-function slot0.ctor(slot0)
-	slot0.standRate = 1.7777777777777777
-	slot0.imageRate = 2.4
-	slot0.loaded = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.standRate = 1.7777777777777777
+	arg_1_0.imageRate = 2.4
+	arg_1_0.loaded = false
 end
 
-function slot0.onAssetResLoaded(slot0, slot1)
-	slot0.assetItem = slot1
+function var_0_0.onAssetResLoaded(arg_2_0, arg_2_1)
+	arg_2_0.assetItem = arg_2_1
 
-	slot0.assetItem:Retain()
+	arg_2_0.assetItem:Retain()
 
-	slot0.prefab = slot1:GetResource()
+	arg_2_0.prefab = arg_2_1:GetResource()
 end
 
-function slot0.checkNeedLoadAdaptionBg(slot0)
-	return UnityEngine.Screen.width / UnityEngine.Screen.height < slot0.standRate
+function var_0_0.checkNeedLoadAdaptionBg(arg_3_0)
+	return UnityEngine.Screen.width / UnityEngine.Screen.height < arg_3_0.standRate
 end
 
-function slot0.loadAdaptionBg(slot0)
-	if slot0.loaded then
+function var_0_0.loadAdaptionBg(arg_4_0)
+	if arg_4_0.loaded then
 		return
 	end
 
-	if not slot0:checkNeedLoadAdaptionBg() then
+	if not arg_4_0:checkNeedLoadAdaptionBg() then
 		return
 	end
 
-	slot2 = SLFramework.GameObjectHelper.Clone(slot0.prefab, UnityEngine.GameObject.Find("UIRoot/Adaption"), nil)
-	slot0.loaded = true
-	slot3 = UnityEngine.GameObject.Find("UIRoot/Adaption")
-	slot4 = SLFramework.GameObjectHelper.FindChild(slot3, "Up")
-	slot5 = SLFramework.GameObjectHelper.FindChild(slot3, "Bottom")
-	slot6 = 1920 / slot0.imageRate
+	local var_4_0 = UnityEngine.GameObject.Find("UIRoot/Adaption")
+	local var_4_1 = SLFramework.GameObjectHelper.Clone(arg_4_0.prefab, var_4_0, nil)
 
-	SLFramework.UGUI.RectTrHelper.SetHeight(slot4.transform, slot6)
-	SLFramework.UGUI.RectTrHelper.SetHeight(slot5.transform, slot6)
+	arg_4_0.loaded = true
 
-	slot7 = typeof(UnityEngine.UI.Image)
-	slot8 = slot2:GetComponent(slot7)
-	slot9 = slot4:GetComponent(slot7)
-	slot10 = slot5:GetComponent(slot7)
-	slot9.sprite = slot8.sprite
-	slot10.sprite = slot8.sprite
-	slot9.color = Color.white
-	slot10.color = Color.white
-	slot11 = slot5.transform
+	local var_4_2 = UnityEngine.GameObject.Find("UIRoot/Adaption")
+	local var_4_3 = SLFramework.GameObjectHelper.FindChild(var_4_2, "Up")
+	local var_4_4 = SLFramework.GameObjectHelper.FindChild(var_4_2, "Bottom")
+	local var_4_5 = 1920 / arg_4_0.imageRate
 
-	SLFramework.TransformHelper.SetLocalScale(slot11, 1, 1, 1)
+	SLFramework.UGUI.RectTrHelper.SetHeight(var_4_3.transform, var_4_5)
+	SLFramework.UGUI.RectTrHelper.SetHeight(var_4_4.transform, var_4_5)
 
-	slot11.pivot = Vector2(0.5, 1)
+	local var_4_6 = typeof(UnityEngine.UI.Image)
+	local var_4_7 = var_4_1:GetComponent(var_4_6)
+	local var_4_8 = var_4_3:GetComponent(var_4_6)
+	local var_4_9 = var_4_4:GetComponent(var_4_6)
 
-	UnityEngine.GameObject.Destroy(slot2)
+	var_4_8.sprite = var_4_7.sprite
+	var_4_9.sprite = var_4_7.sprite
+	var_4_8.color = Color.white
+	var_4_9.color = Color.white
+
+	local var_4_10 = var_4_4.transform
+
+	SLFramework.TransformHelper.SetLocalScale(var_4_10, 1, 1, 1)
+
+	var_4_10.pivot = Vector2(0.5, 1)
+
+	UnityEngine.GameObject.Destroy(var_4_1)
 end
 
-function slot0.tryAddEvents(slot0)
-	if slot0.loaded then
+function var_0_0.tryAddEvents(arg_5_0)
+	if arg_5_0.loaded then
 		return
 	end
 
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0.onScreenSizeChanged, slot0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_5_0.onScreenSizeChanged, arg_5_0)
 end
 
-function slot0.onScreenSizeChanged(slot0, slot1, slot2)
-	slot0:loadAdaptionBg()
+function var_0_0.onScreenSizeChanged(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0:loadAdaptionBg()
 
-	if slot0.loaded then
-		GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0.onScreenSizeChanged, slot0)
+	if arg_6_0.loaded then
+		GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_6_0.onScreenSizeChanged, arg_6_0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

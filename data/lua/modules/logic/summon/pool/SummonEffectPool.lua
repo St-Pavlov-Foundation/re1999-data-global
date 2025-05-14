@@ -1,128 +1,143 @@
-module("modules.logic.summon.pool.SummonEffectPool", package.seeall)
+﻿module("modules.logic.summon.pool.SummonEffectPool", package.seeall)
 
-slot0 = _M
-slot1 = 1
-slot2 = {}
-slot3 = {}
-slot4 = {}
-slot5, slot6 = nil
+local var_0_0 = _M
+local var_0_1 = 1
+local var_0_2 = {}
+local var_0_3 = {}
+local var_0_4 = {}
+local var_0_5
+local var_0_6
 
-function slot0.onEffectPreload(slot0)
-	slot0:Retain()
+function var_0_0.onEffectPreload(arg_1_0)
+	arg_1_0:Retain()
 
-	uv0[slot0.ResPath] = slot0
+	var_0_2[arg_1_0.ResPath] = arg_1_0
 
-	uv1.returnEffect(uv1.getEffect(slot0.ResPath))
+	var_0_0.returnEffect(var_0_0.getEffect(arg_1_0.ResPath))
 end
 
-function slot0.dispose()
-	for slot3, slot4 in pairs(uv0) do
-		slot4:Release()
+function var_0_0.dispose()
+	for iter_2_0, iter_2_1 in pairs(var_0_2) do
+		iter_2_1:Release()
 	end
 
-	for slot3, slot4 in pairs(uv1) do
-		for slot8, slot9 in ipairs(slot4) do
-			slot9:markCanDestroy()
-			gohelper.destroy(slot9.containerGO)
+	for iter_2_2, iter_2_3 in pairs(var_0_3) do
+		for iter_2_4, iter_2_5 in ipairs(iter_2_3) do
+			iter_2_5:markCanDestroy()
+			gohelper.destroy(iter_2_5.containerGO)
 		end
 	end
 
-	for slot3, slot4 in pairs(uv2) do
-		slot4:markCanDestroy()
-		gohelper.destroy(slot4.containerGO)
+	for iter_2_6, iter_2_7 in pairs(var_0_4) do
+		iter_2_7:markCanDestroy()
+		gohelper.destroy(iter_2_7.containerGO)
 	end
 
-	uv0 = {}
-	uv1 = {}
-	uv2 = {}
+	var_0_2 = {}
+	var_0_3 = {}
+	var_0_4 = {}
 
-	gohelper.destroy(uv3)
+	gohelper.destroy(var_0_5)
 
-	uv3 = nil
-	uv4 = nil
-	uv5 = 1
+	var_0_5 = nil
+	var_0_6 = nil
+	var_0_1 = 1
 end
 
-function slot0.getEffect(slot0, slot1)
-	slot3 = uv1.getPoolContainerGO()
-	slot4 = nil
+function var_0_0.getEffect(arg_3_0, arg_3_1)
+	local var_3_0 = var_0_2[arg_3_0]
+	local var_3_1 = var_0_0.getPoolContainerGO()
+	local var_3_2
 
-	if uv0[slot0] then
-		if uv2[slot0] and #slot5 > 0 then
-			slot6 = #slot5
+	if var_3_0 then
+		local var_3_3 = var_0_3[arg_3_0]
 
-			for slot10, slot11 in ipairs(slot5) do
-				if slot1 == nil and slot11.hangPointGO == slot3 or slot1 ~= nil and slot11.hangPointGO == slot1 then
-					slot6 = slot10
+		if var_3_3 and #var_3_3 > 0 then
+			local var_3_4 = #var_3_3
+
+			for iter_3_0, iter_3_1 in ipairs(var_3_3) do
+				if arg_3_1 == nil and iter_3_1.hangPointGO == var_3_1 or arg_3_1 ~= nil and iter_3_1.hangPointGO == arg_3_1 then
+					var_3_4 = iter_3_0
 
 					break
 				end
 			end
 
-			slot4 = table.remove(slot5, slot6)
+			var_3_2 = table.remove(var_3_3, var_3_4)
 		else
-			uv1._instantiateEffectGO(slot2, uv1._createWrap(slot0))
+			var_3_2 = var_0_0._createWrap(arg_3_0)
+
+			var_0_0._instantiateEffectGO(var_3_0, var_3_2)
 		end
 
-		slot4:setHangPointGO(slot1 or slot3)
+		var_3_2:setHangPointGO(arg_3_1 or var_3_1)
 	else
-		logError("Summon Effect need preload: " .. slot0)
+		logError("Summon Effect need preload: " .. arg_3_0)
 
 		return nil
 	end
 
-	uv3[slot4.uniqueId] = slot4
+	var_0_4[var_3_2.uniqueId] = var_3_2
 
-	slot4:setActive(true)
+	var_3_2:setActive(true)
 
-	return slot4
+	return var_3_2
 end
 
-function slot0.returnEffect(slot0)
-	if gohelper.isNil(slot0.containerGO) then
+function var_0_0.returnEffect(arg_4_0)
+	if gohelper.isNil(arg_4_0.containerGO) then
 		return
 	end
 
-	slot0:stop()
-	slot0:unloadIcon()
-	slot0:setActive(false)
+	arg_4_0:stop()
+	arg_4_0:unloadIcon()
+	arg_4_0:setActive(false)
 
-	uv0[slot0.uniqueId] = nil
+	var_0_4[arg_4_0.uniqueId] = nil
 
-	if not uv1[slot0.path] then
-		uv1[slot0.path] = {}
+	local var_4_0 = var_0_3[arg_4_0.path]
+
+	if not var_4_0 then
+		var_4_0 = {}
+		var_0_3[arg_4_0.path] = var_4_0
 	end
 
-	table.insert(slot1, slot0)
+	table.insert(var_4_0, arg_4_0)
 end
 
-function slot0.returnEffectToPoolContainer(slot0)
-	slot0:setHangPointGO(uv0.getPoolContainerGO())
+function var_0_0.returnEffectToPoolContainer(arg_5_0)
+	arg_5_0:setHangPointGO(var_0_0.getPoolContainerGO())
 end
 
-function slot0.getPoolContainerGO()
-	if not uv0 then
-		uv0 = gohelper.create3d(VirtualSummonScene.instance:getRootGO(), "EffectPool")
-		uv1 = uv0.transform
+function var_0_0.getPoolContainerGO()
+	if not var_0_5 then
+		local var_6_0 = VirtualSummonScene.instance:getRootGO()
+
+		var_0_5 = gohelper.create3d(var_6_0, "EffectPool")
+		var_0_6 = var_0_5.transform
 	end
 
-	return uv0
+	return var_0_5
 end
 
-function slot0._instantiateEffectGO(slot0, slot1)
-	slot1:setEffectGO(gohelper.clone(slot0:GetResource(), slot1.containerGO))
+function var_0_0._instantiateEffectGO(arg_7_0, arg_7_1)
+	local var_7_0 = gohelper.clone(arg_7_0:GetResource(), arg_7_1.containerGO)
+
+	arg_7_1:setEffectGO(var_7_0)
 end
 
-function slot0._createWrap(slot0)
-	slot1 = string.split(slot0, "/")
-	slot4 = MonoHelper.addLuaComOnceToGo(gohelper.create3d(uv0.getPoolContainerGO(), slot1[#slot1]), SummonEffectWrap)
+function var_0_0._createWrap(arg_8_0)
+	local var_8_0 = string.split(arg_8_0, "/")
+	local var_8_1 = var_8_0[#var_8_0]
+	local var_8_2 = gohelper.create3d(var_0_0.getPoolContainerGO(), var_8_1)
+	local var_8_3 = MonoHelper.addLuaComOnceToGo(var_8_2, SummonEffectWrap)
 
-	slot4:setUniqueId(uv1)
-	slot4:setPath(slot0)
+	var_8_3:setUniqueId(var_0_1)
+	var_8_3:setPath(arg_8_0)
 
-	uv1 = uv1 + 1
+	var_0_1 = var_0_1 + 1
 
-	return slot4
+	return var_8_3
 end
 
-return slot0
+return var_0_0

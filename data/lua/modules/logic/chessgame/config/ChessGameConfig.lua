@@ -1,99 +1,101 @@
-module("modules.logic.chessgame.config.ChessGameConfig", package.seeall)
+﻿module("modules.logic.chessgame.config.ChessGameConfig", package.seeall)
 
-slot0 = class("ChessGameConfig", BaseConfig)
+local var_0_0 = class("ChessGameConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._mapCos = {}
-	slot0._interactList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._mapCos = {}
+	arg_1_0._interactList = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
+	return
 end
 
-function slot0.getMapCo(slot0, slot1)
-	if not slot0._mapCos[slot1] then
-		slot2 = {
-			[slot7] = {}
-		}
-		slot7 = slot1
+function var_0_0.getMapCo(arg_3_0, arg_3_1)
+	if not arg_3_0._mapCos[arg_3_1] then
+		local var_3_0 = {}
+		local var_3_1 = addGlobalModule("modules.configs.chessgame.lua_chessgame_group_" .. tostring(arg_3_1), "lua_chessgame_group_" .. tostring(arg_3_1))
 
-		for slot7 = 1, #addGlobalModule("modules.configs.chessgame.lua_chessgame_group_" .. tostring(slot1), "lua_chessgame_group_" .. tostring(slot7)) do
-			slot2[slot7].path = slot3[slot7][1]
-			slot2[slot7].interacts = {}
+		for iter_3_0 = 1, #var_3_1 do
+			var_3_0[iter_3_0] = {}
+			var_3_0[iter_3_0].path = var_3_1[iter_3_0][1]
+			var_3_0[iter_3_0].interacts = {}
 
-			for slot11, slot12 in ipairs(slot3[slot7][2]) do
-				slot2[slot7].interacts[slot11] = {}
+			for iter_3_1, iter_3_2 in ipairs(var_3_1[iter_3_0][2]) do
+				var_3_0[iter_3_0].interacts[iter_3_1] = {}
 
-				for slot16, slot17 in pairs(ChessGameInteractField) do
-					slot2[slot7].interacts[slot11][slot16] = slot12[slot17]
+				for iter_3_3, iter_3_4 in pairs(ChessGameInteractField) do
+					var_3_0[iter_3_0].interacts[iter_3_1][iter_3_3] = iter_3_2[iter_3_4]
 				end
 
-				slot2[slot7].interacts[slot11].offset = {
-					x = slot12[8][1],
-					y = slot12[8][2],
-					z = slot12[8][3]
+				var_3_0[iter_3_0].interacts[iter_3_1].offset = {
+					x = iter_3_2[8][1],
+					y = iter_3_2[8][2],
+					z = iter_3_2[8][3]
 				}
-				slot2[slot7].interacts[slot11].effects = {}
+				var_3_0[iter_3_0].interacts[iter_3_1].effects = {}
 
-				for slot16, slot17 in ipairs(slot12[15]) do
-					slot2[slot7].interacts[slot11].effects[slot16] = {
-						type = slot17[1],
-						param = slot17[2]
+				for iter_3_5, iter_3_6 in ipairs(iter_3_2[15]) do
+					var_3_0[iter_3_0].interacts[iter_3_1].effects[iter_3_5] = {
+						type = iter_3_6[1],
+						param = iter_3_6[2]
 					}
 				end
 
-				slot0._interactList[slot1] = slot0._interactList[slot1] or {}
-				slot0._interactList[slot1][slot12[1]] = slot2[slot7].interacts[slot11]
+				arg_3_0._interactList[arg_3_1] = arg_3_0._interactList[arg_3_1] or {}
+				arg_3_0._interactList[arg_3_1][iter_3_2[1]] = var_3_0[iter_3_0].interacts[iter_3_1]
 			end
 
-			slot2[slot7].nodes = {}
+			var_3_0[iter_3_0].nodes = {}
 
-			for slot11, slot12 in ipairs(slot3[slot7][3]) do
-				slot2[slot7].nodes[slot11] = {
-					x = slot12[1],
-					y = slot12[2]
+			for iter_3_7, iter_3_8 in ipairs(var_3_1[iter_3_0][3]) do
+				var_3_0[iter_3_0].nodes[iter_3_7] = {
+					x = iter_3_8[1],
+					y = iter_3_8[2]
 				}
 			end
 		end
 
-		slot0._mapCos[slot1] = slot2
+		arg_3_0._mapCos[arg_3_1] = var_3_0
 	end
 
-	return slot0._mapCos[slot1]
+	return arg_3_0._mapCos[arg_3_1]
 end
 
-function slot0.getInteractCoById(slot0, slot1, slot2)
-	return slot0._interactList[slot1][slot2]
+function var_0_0.getInteractCoById(arg_4_0, arg_4_1, arg_4_2)
+	return arg_4_0._interactList[arg_4_1][arg_4_2]
 end
 
-function slot0.setCurrentMapGroupId(slot0, slot1)
-	slot0._currentMapGroupId = slot1
+function var_0_0.setCurrentMapGroupId(arg_5_0, arg_5_1)
+	arg_5_0._currentMapGroupId = arg_5_1
 end
 
-function slot0.getCurrentMapGroupId(slot0)
-	return slot0._currentMapGroupId
+function var_0_0.getCurrentMapGroupId(arg_6_0)
+	return arg_6_0._currentMapGroupId
 end
 
-function slot0.getCurrentMapCo(slot0, slot1)
-	if not slot0._currentMapGroupId then
+function var_0_0.getCurrentMapCo(arg_7_0, arg_7_1)
+	if not arg_7_0._currentMapGroupId then
 		return
 	end
 
-	if not slot0._mapCos[slot0._currentMapGroupId] then
+	local var_7_0 = arg_7_0._mapCos[arg_7_0._currentMapGroupId]
+
+	if not var_7_0 then
 		return
 	end
 
-	if not slot1 then
-		return slot2[1]
+	if not arg_7_1 then
+		return var_7_0[1]
 	else
-		return slot2[slot1]
+		return var_7_0[arg_7_1]
 	end
 end
 
-function slot0.getCurrentMapCoList(slot0)
-	return slot0._mapCos[slot0._currentMapGroupId]
+function var_0_0.getCurrentMapCoList(arg_8_0)
+	return arg_8_0._mapCos[arg_8_0._currentMapGroupId]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

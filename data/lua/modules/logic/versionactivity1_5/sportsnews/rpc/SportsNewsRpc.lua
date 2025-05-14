@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_5.sportsnews.rpc.SportsNewsRpc", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.rpc.SportsNewsRpc", package.seeall)
 
-slot0 = class("SportsNewsRpc", BaseRpc)
+local var_0_0 = class("SportsNewsRpc", BaseRpc)
 
-function slot0.sendFinishReadTaskRequest(slot0, slot1, slot2)
-	return TaskRpc.instance:sendFinishReadTaskRequest(slot2)
+function var_0_0.sendFinishReadTaskRequest(arg_1_0, arg_1_1, arg_1_2)
+	return TaskRpc.instance:sendFinishReadTaskRequest(arg_1_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

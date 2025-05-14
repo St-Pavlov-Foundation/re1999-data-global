@@ -1,20 +1,21 @@
-module("modules.logic.pushbox.event.PushBoxEvent", package.seeall)
+﻿module("modules.logic.pushbox.event.PushBoxEvent", package.seeall)
 
-slot0 = _M
-slot0.Move = 1
-slot0.StepFinished = 2
-slot0.RevertStep = 3
-slot0.StartElement = 4
-slot0.RefreshElement = 5
-slot0.RefreshWarningNum = 6
-slot0.GameWin = 7
-slot0.GameOver = 8
-slot0.RefreshFanElement = 9
-slot0.PlayTaskFinishTween = 10
-slot0.DataEvent = {
+local var_0_0 = _M
+
+var_0_0.Move = 1
+var_0_0.StepFinished = 2
+var_0_0.RevertStep = 3
+var_0_0.StartElement = 4
+var_0_0.RefreshElement = 5
+var_0_0.RefreshWarningNum = 6
+var_0_0.GameWin = 7
+var_0_0.GameOver = 8
+var_0_0.RefreshFanElement = 9
+var_0_0.PlayTaskFinishTween = 10
+var_0_0.DataEvent = {
 	FinishEpisodeReply = 101,
 	RefreshActivityData = 100,
 	ReceiveTaskRewardReply = 102
 }
 
-return slot0
+return var_0_0

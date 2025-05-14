@@ -1,745 +1,873 @@
-module("modules.logic.seasonver.act166.model.Season166HeroGroupModel", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166HeroGroupModel", package.seeall)
 
-slot0 = class("Season166HeroGroupModel", BaseModel)
+local var_0_0 = class("Season166HeroGroupModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.heroGroupType = ModuleEnum.HeroGroupType.Default
-	slot0._curGroupId = 1
-	slot0._lastHeroGroupSnapshotList = {}
-	slot0._lastHeroGroupList = {}
-	slot0._herogroupItemPos = {}
-	slot0._commonGroups = {}
-	slot0._groupTypeSelect = {}
-	slot0._groupTypeCustom = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.heroGroupType = ModuleEnum.HeroGroupType.Default
+	arg_1_0._curGroupId = 1
+	arg_1_0._lastHeroGroupSnapshotList = {}
+	arg_1_0._lastHeroGroupList = {}
+	arg_1_0._herogroupItemPos = {}
+	arg_1_0._commonGroups = {}
+	arg_1_0._groupTypeSelect = {}
+	arg_1_0._groupTypeCustom = {}
 end
 
-function slot0.reInit(slot0)
-	slot0.heroGroupType = ModuleEnum.HeroGroupType.Default
-	slot0._curGroupId = 1
-	slot0._lastHeroGroupSnapshotList = {}
-	slot0._lastHeroGroupList = {}
-	slot0._herogroupItemPos = {}
-	slot0._commonGroups = {}
-	slot0._groupTypeSelect = {}
-	slot0._groupTypeCustom = {}
-	slot0.battleId = nil
-	slot0.episodeId = nil
-	slot0.adventure = nil
-	slot0.battleConfig = nil
-	slot0.heroGroupTypeCo = nil
-	slot0.episodeType = nil
-	slot0.weekwalk = nil
-	slot0.curGroupSelectIndex = 1
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.heroGroupType = ModuleEnum.HeroGroupType.Default
+	arg_2_0._curGroupId = 1
+	arg_2_0._lastHeroGroupSnapshotList = {}
+	arg_2_0._lastHeroGroupList = {}
+	arg_2_0._herogroupItemPos = {}
+	arg_2_0._commonGroups = {}
+	arg_2_0._groupTypeSelect = {}
+	arg_2_0._groupTypeCustom = {}
+	arg_2_0.battleId = nil
+	arg_2_0.episodeId = nil
+	arg_2_0.adventure = nil
+	arg_2_0.battleConfig = nil
+	arg_2_0.heroGroupTypeCo = nil
+	arg_2_0.episodeType = nil
+	arg_2_0.weekwalk = nil
+	arg_2_0.curGroupSelectIndex = 1
 end
 
-function slot0.onGetHeroGroupList(slot0, slot1)
-	slot2 = {}
-	slot3 = nil
+function var_0_0.onGetHeroGroupList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+	local var_3_1
 
-	for slot7 = 1, #slot1 do
-		slot3 = Season166HeroGroupMO.New()
+	for iter_3_0 = 1, #arg_3_1 do
+		local var_3_2 = Season166HeroGroupMO.New()
 
-		slot3:init(slot1[slot7])
-		table.insert(slot2, slot3)
+		var_3_2:init(arg_3_1[iter_3_0])
+		table.insert(var_3_0, var_3_2)
 	end
 
-	slot0:setList(slot2)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0.onGetCommonGroupList(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.heroGroupCommons) do
-		slot0._commonGroups[slot6.groupId] = Season166HeroGroupMO.New()
+function var_0_0.onGetCommonGroupList(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.heroGroupCommons) do
+		arg_4_0._commonGroups[iter_4_1.groupId] = Season166HeroGroupMO.New()
 
-		slot0._commonGroups[slot6.groupId]:init(slot6)
+		arg_4_0._commonGroups[iter_4_1.groupId]:init(iter_4_1)
 	end
 
-	for slot5 = 1, slot0:getMaxHeroCountInGroup() do
-		if not slot0._commonGroups[slot5] then
-			slot0._commonGroups[slot5] = Season166HeroGroupMO.New()
+	for iter_4_2 = 1, arg_4_0:getMaxHeroCountInGroup() do
+		if not arg_4_0._commonGroups[iter_4_2] then
+			arg_4_0._commonGroups[iter_4_2] = Season166HeroGroupMO.New()
 
-			slot0._commonGroups[slot5]:init(Season166HeroGroupMO.New())
+			arg_4_0._commonGroups[iter_4_2]:init(Season166HeroGroupMO.New())
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot1.heroGourpTypes) do
-		slot0._groupTypeSelect[slot6.id] = slot6.currentSelect
+	for iter_4_3, iter_4_4 in ipairs(arg_4_1.heroGourpTypes) do
+		arg_4_0._groupTypeSelect[iter_4_4.id] = iter_4_4.currentSelect
 
-		if slot6.id ~= ModuleEnum.HeroGroupServerType.Main and slot6:HasField("groupInfo") then
-			slot0._groupTypeCustom[slot6.id] = Season166HeroGroupMO.New()
+		if iter_4_4.id ~= ModuleEnum.HeroGroupServerType.Main and iter_4_4:HasField("groupInfo") then
+			arg_4_0._groupTypeCustom[iter_4_4.id] = Season166HeroGroupMO.New()
 
-			slot0._groupTypeCustom[slot6.id]:init(slot6.groupInfo)
+			arg_4_0._groupTypeCustom[iter_4_4.id]:init(iter_4_4.groupInfo)
 		end
 	end
 end
 
-function slot0.getCustomHeroGroupMo(slot0, slot1, slot2)
-	if not slot0._groupTypeCustom[slot1] then
-		if slot2 then
-			return slot0:getMainGroupMo()
+function var_0_0.getCustomHeroGroupMo(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_0._groupTypeCustom[arg_5_1] then
+		if arg_5_2 then
+			return arg_5_0:getMainGroupMo()
 		end
 
-		slot3 = Season166HeroGroupMO.New()
+		local var_5_0 = Season166HeroGroupMO.New()
 
-		slot3:init(slot0:getMainGroupMo())
+		var_5_0:init(arg_5_0:getMainGroupMo())
 
-		slot0._groupTypeCustom[slot1] = slot3
+		arg_5_0._groupTypeCustom[arg_5_1] = var_5_0
 	end
 
-	return slot0._groupTypeCustom[slot1]
+	return arg_5_0._groupTypeCustom[arg_5_1]
 end
 
-function slot0.onModifyHeroGroup(slot0, slot1)
-	slot2 = {}
+function var_0_0.onModifyHeroGroup(arg_6_0, arg_6_1)
+	local var_6_0 = {}
+	local var_6_1 = arg_6_0:getById(arg_6_1.groupId)
 
-	if slot0:getById(slot1.groupId) then
-		slot2:init(slot1)
+	if var_6_1 then
+		var_6_1:init(arg_6_1)
 	else
-		slot2 = Season166HeroGroupMO.New()
+		local var_6_2 = Season166HeroGroupMO.New()
 
-		slot2:init(slot1)
-		slot0:addAtLast(slot2)
+		var_6_2:init(arg_6_1)
+		arg_6_0:addAtLast(var_6_2)
 	end
 
-	slot0:_updateScroll()
+	arg_6_0:_updateScroll()
 end
 
-function slot0._updateScroll(slot0)
-	slot0:onModelUpdate()
-	slot0:_setSingleGroup()
+function var_0_0._updateScroll(arg_7_0)
+	arg_7_0:onModelUpdate()
+	arg_7_0:_setSingleGroup()
 end
 
-function slot0.isAdventureOrWeekWalk(slot0)
-	return slot0.adventure or slot0.weekwalk
+function var_0_0.isAdventureOrWeekWalk(arg_8_0)
+	return arg_8_0.adventure or arg_8_0.weekwalk
 end
 
-function slot0.setParam(slot0, slot1, slot2, slot3, slot4)
-	slot5 = {
-		battleId = slot1,
-		episodeId = slot2,
-		adventure = slot3,
-		isReConnect = slot4
+function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = {
+		battleId = arg_9_1,
+		episodeId = arg_9_2,
+		adventure = arg_9_3,
+		isReConnect = arg_9_4
 	}
-	slot0.battleId = slot1
-	slot0.episodeId = slot2
-	slot0.adventure = slot3
-	slot0.actId = Season166Model.instance:getCurSeasonId()
-	slot6 = slot1 and lua_battle.configDict[slot1]
-	slot7 = slot2 and lua_episode.configDict[slot2]
-	slot8 = slot7 and lua_chapter.configDict[slot7.chapterId]
-	slot0.episodeConfig = slot7
-	slot0.battleConfig = slot6
-	slot0.heroGroupTypeCo = slot7 and HeroConfig.instance:getHeroGroupTypeCo(slot7.chapterId)
-	slot0.episodeType = slot7 and slot7.type or 0
-	slot9 = slot0:getAmountLimit(slot6)
-	slot0.weekwalk = slot8 and slot8.type == DungeonEnum.ChapterType.WeekWalk
-	slot10 = false
 
-	if slot8 and (slot8.type == DungeonEnum.ChapterType.Normal or slot8.type == DungeonEnum.ChapterType.Hard or slot8.type == DungeonEnum.ChapterType.Simple) then
-		slot0.heroGroupTypeCo = lua_hero_group_type.configDict[ModuleEnum.HeroGroupServerType.Main]
+	arg_9_0.battleId = arg_9_1
+	arg_9_0.episodeId = arg_9_2
+	arg_9_0.adventure = arg_9_3
+	arg_9_0.actId = Season166Model.instance:getCurSeasonId()
+
+	local var_9_1 = arg_9_1 and lua_battle.configDict[arg_9_1]
+	local var_9_2 = arg_9_2 and lua_episode.configDict[arg_9_2]
+	local var_9_3 = var_9_2 and lua_chapter.configDict[var_9_2.chapterId]
+
+	arg_9_0.episodeConfig = var_9_2
+	arg_9_0.battleConfig = var_9_1
+	arg_9_0.heroGroupTypeCo = var_9_2 and HeroConfig.instance:getHeroGroupTypeCo(var_9_2.chapterId)
+	arg_9_0.episodeType = var_9_2 and var_9_2.type or 0
+
+	local var_9_4 = arg_9_0:getAmountLimit(var_9_1)
+
+	arg_9_0.weekwalk = var_9_3 and var_9_3.type == DungeonEnum.ChapterType.WeekWalk
+
+	local var_9_5 = false
+	local var_9_6 = var_9_3 and (var_9_3.type == DungeonEnum.ChapterType.Normal or var_9_3.type == DungeonEnum.ChapterType.Hard or var_9_3.type == DungeonEnum.ChapterType.Simple)
+
+	if var_9_6 then
+		arg_9_0.heroGroupTypeCo = lua_hero_group_type.configDict[ModuleEnum.HeroGroupServerType.Main]
 	end
 
-	if slot0.heroGroupTypeCo then
-		slot12 = slot0.heroGroupTypeCo.id
+	if arg_9_0.heroGroupTypeCo then
+		local var_9_7 = arg_9_0.heroGroupTypeCo.id
 
-		if slot0.episodeType > 100 then
-			slot12 = slot0.episodeType
+		if arg_9_0.episodeType > 100 then
+			var_9_7 = arg_9_0.episodeType
 		end
 
-		slot0.curGroupSelectIndex = slot0._groupTypeSelect[slot12]
+		arg_9_0.curGroupSelectIndex = arg_9_0._groupTypeSelect[var_9_7]
 
-		if not slot0.curGroupSelectIndex then
-			slot0.curGroupSelectIndex = slot0.heroGroupTypeCo.saveGroup == 1 and 0 or 1
+		if not arg_9_0.curGroupSelectIndex then
+			arg_9_0.curGroupSelectIndex = arg_9_0.heroGroupTypeCo.saveGroup == 1 and 0 or 1
 		end
 	else
-		slot0.curGroupSelectIndex = 1
+		arg_9_0.curGroupSelectIndex = 1
 	end
 
-	slot12 = {}
+	local var_9_8 = {}
 
-	if slot6 and not string.nilorempty(slot6.aid) then
-		slot12 = string.splitToNumber(slot6.aid, "#")
+	if var_9_1 and not string.nilorempty(var_9_1.aid) then
+		var_9_8 = string.splitToNumber(var_9_1.aid, "#")
 	end
 
-	if slot6 and (slot6.trialLimit > 0 or not string.nilorempty(slot6.trialEquips)) or ToughBattleModel.instance:getAddTrialHeros() then
-		slot14 = nil
-		slot14 = (not Activity104Model.instance:isSeasonChapter() or PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")) and PlayerPrefsHelper.getString(slot0.actId .. "#" .. PlayerPrefsKey.Season166HeroGroupTrial .. "#" .. tostring(PlayerModel.instance:getMyUserId()) .. "#" .. slot6.id, "")
-		slot0.heroGroupType = ModuleEnum.HeroGroupType.Season166Base
-		slot0._curGroupId = 1
-		slot15 = nil
+	if var_9_1 and (var_9_1.trialLimit > 0 or not string.nilorempty(var_9_1.trialEquips)) or ToughBattleModel.instance:getAddTrialHeros() then
+		local var_9_9 = Activity104Model.instance:isSeasonChapter()
+		local var_9_10
 
-		if slot6.trialLimit > 0 and slot6.onlyTrial == 1 then
-			slot15 = slot0:generateTempGroup(nil, , true)
-		elseif string.nilorempty(slot14) then
-			if slot0.curGroupSelectIndex > 0 then
-				slot15 = slot0:generateTempGroup(slot0._commonGroups[slot0.curGroupSelectIndex], slot9, slot6 and slot6.useTemp == 2)
+		if var_9_9 then
+			var_9_10 = PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")
+		else
+			var_9_10 = PlayerPrefsHelper.getString(arg_9_0.actId .. "#" .. PlayerPrefsKey.Season166HeroGroupTrial .. "#" .. tostring(PlayerModel.instance:getMyUserId()) .. "#" .. var_9_1.id, "")
+		end
+
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Season166Base
+		arg_9_0._curGroupId = 1
+
+		local var_9_11
+
+		if var_9_1.trialLimit > 0 and var_9_1.onlyTrial == 1 then
+			var_9_11 = arg_9_0:generateTempGroup(nil, nil, true)
+		elseif string.nilorempty(var_9_10) then
+			if arg_9_0.curGroupSelectIndex > 0 then
+				var_9_11 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_4, var_9_1 and var_9_1.useTemp == 2)
 			else
-				slot15 = slot0.heroGroupTypeCo and slot0:getCustomHeroGroupMo(slot0.heroGroupTypeCo.id, true) or slot0:generateTempGroup(nil, slot9, slot6 and slot6.useTemp == 2)
+				var_9_11 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_4, var_9_1 and var_9_1.useTemp == 2)
 			end
 		else
-			slot16 = cjson.decode(slot14)
+			local var_9_12 = cjson.decode(var_9_10)
 
-			GameUtil.removeJsonNull(slot16)
-			slot0:generateTempGroup(nil, , true):initByLocalData(slot16)
+			GameUtil.removeJsonNull(var_9_12)
+
+			var_9_11 = arg_9_0:generateTempGroup(nil, nil, true)
+
+			var_9_11:initByLocalData(var_9_12)
 		end
 
-		slot15:setTrials(slot4)
+		var_9_11:setTrials(arg_9_4)
 
-		slot0._heroGroupList = {
-			slot15
+		arg_9_0._heroGroupList = {
+			var_9_11
 		}
-	elseif slot8 and SeasonHeroGroupHandler.checkIsSeasonEpisodeType(slot0.episodeType) then
-		slot0._heroGroupList = {}
+	elseif var_9_3 and SeasonHeroGroupHandler.checkIsSeasonEpisodeType(arg_9_0.episodeType) then
+		arg_9_0._heroGroupList = {}
 
-		if SeasonHeroGroupHandler.buildSeasonHandleFunc[slot0.episodeType] then
-			slot0.heroGroupType = slot13(slot5)
+		local var_9_13 = SeasonHeroGroupHandler.buildSeasonHandleFunc[arg_9_0.episodeType]
+
+		if var_9_13 then
+			arg_9_0.heroGroupType = var_9_13(var_9_0)
 		end
-	elseif slot8 and slot6 and slot6.useTemp ~= 0 or slot9 or #slot12 > 0 or slot6 and ToughBattleModel.instance:getEpisodeId() then
-		slot0.heroGroupType = ModuleEnum.HeroGroupType.Temp
-		slot0._heroGroupList = {}
-		slot13 = nil
+	elseif var_9_3 and var_9_1 and var_9_1.useTemp ~= 0 or var_9_4 or #var_9_8 > 0 or var_9_1 and ToughBattleModel.instance:getEpisodeId() then
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Temp
+		arg_9_0._heroGroupList = {}
 
-		if slot8 and slot8.saveHeroGroup and (not slot6 or slot6.useTemp ~= 2) then
-			slot13 = (slot0.curGroupSelectIndex <= 0 or slot0:generateTempGroup(slot0._commonGroups[slot0.curGroupSelectIndex], slot9, slot6 and slot6.useTemp == 2)) and (slot0.heroGroupTypeCo and slot0:getCustomHeroGroupMo(slot0.heroGroupTypeCo.id, true) or slot0:generateTempGroup(nil, slot9, slot6 and slot6.useTemp == 2))
-		end
+		local var_9_14
 
-		table.insert(slot0._heroGroupList, slot0:generateTempGroup(slot13, slot9, slot6 and slot6.useTemp == 2))
-
-		slot0._curGroupId = 1
-	elseif not slot11 and slot8 then
-		slot0.heroGroupType = ModuleEnum.HeroGroupType.Resources
-		slot0._heroGroupList = {}
-		slot0._curGroupId = 1
-
-		if not slot0._groupTypeCustom[slot0.heroGroupTypeCo.id] then
-			slot10 = true
+		if var_9_3 and var_9_3.saveHeroGroup and (not var_9_1 or var_9_1.useTemp ~= 2) then
+			if arg_9_0.curGroupSelectIndex > 0 then
+				var_9_14 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_4, var_9_1 and var_9_1.useTemp == 2)
+			else
+				var_9_14 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_4, var_9_1 and var_9_1.useTemp == 2)
+			end
 		end
 
-		slot13 = slot0.heroGroupTypeCo and slot0:getCustomHeroGroupMo(slot0.heroGroupTypeCo.id) or slot0._commonGroups[1]
+		local var_9_15 = arg_9_0:generateTempGroup(var_9_14, var_9_4, var_9_1 and var_9_1.useTemp == 2)
 
-		slot13:setTempName(GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-			slot8.name,
+		table.insert(arg_9_0._heroGroupList, var_9_15)
+
+		arg_9_0._curGroupId = 1
+	elseif not var_9_6 and var_9_3 then
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Resources
+		arg_9_0._heroGroupList = {}
+		arg_9_0._curGroupId = 1
+
+		if not arg_9_0._groupTypeCustom[arg_9_0.heroGroupTypeCo.id] then
+			var_9_5 = true
+		end
+
+		local var_9_16 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id) or arg_9_0._commonGroups[1]
+		local var_9_17 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
+			var_9_3.name,
 			luaLang("hero_group")
-		}))
-		table.insert(slot0._heroGroupList, slot13)
-	elseif slot11 then
-		slot0.heroGroupType = ModuleEnum.HeroGroupType.NormalFb
-		slot0._heroGroupList = {}
-		slot0._curGroupId = 1
+		})
 
-		if slot0:getCurGroupMO() and slot13.aidDict then
-			slot13.aidDict = nil
+		var_9_16:setTempName(var_9_17)
+		table.insert(arg_9_0._heroGroupList, var_9_16)
+	elseif var_9_6 then
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.NormalFb
+		arg_9_0._heroGroupList = {}
+		arg_9_0._curGroupId = 1
+
+		local var_9_18 = arg_9_0:getCurGroupMO()
+
+		if var_9_18 and var_9_18.aidDict then
+			var_9_18.aidDict = nil
 		end
 	else
-		slot0.heroGroupType = ModuleEnum.HeroGroupType.Default
-		slot0._heroGroupList = {}
-		slot0._curGroupId = 1
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Default
+		arg_9_0._heroGroupList = {}
+		arg_9_0._curGroupId = 1
 	end
 
-	slot0:fixHeroGroupList()
+	arg_9_0:fixHeroGroupList()
 
-	if slot10 then
-		slot0:saveCurGroupData()
+	if var_9_5 then
+		arg_9_0:saveCurGroupData()
 	end
 end
 
-function slot0.getAmountLimit(slot0, slot1)
-	if not slot1 then
+function var_0_0.getAmountLimit(arg_10_0, arg_10_1)
+	if not arg_10_1 then
 		return
 	end
 
-	if slot0:_getAmountLimit(slot1.additionRule) then
-		return slot2
+	local var_10_0 = arg_10_0:_getAmountLimit(arg_10_1.additionRule)
+
+	if var_10_0 then
+		return var_10_0
 	end
 
-	return slot0:_getAmountLimit(slot1.hiddenRule)
+	return (arg_10_0:_getAmountLimit(arg_10_1.hiddenRule))
 end
 
-function slot0._getAmountLimit(slot0, slot1)
-	if LuaUtil.isEmptyStr(slot1) == false then
-		slot6 = "#"
+function var_0_0._getAmountLimit(arg_11_0, arg_11_1)
+	if LuaUtil.isEmptyStr(arg_11_1) == false then
+		local var_11_0 = GameUtil.splitString2(arg_11_1, true, "|", "#")
 
-		for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true, "|", slot6)) do
-			if slot7[1] == FightEnum.EntitySide.MySide and lua_rule.configDict[slot7[2]] and slot10.type == DungeonEnum.AdditionRuleType.AmountLimit then
-				return tonumber(slot10.effect)
+		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+			if iter_11_1[1] == FightEnum.EntitySide.MySide then
+				local var_11_1 = iter_11_1[2]
+				local var_11_2 = lua_rule.configDict[var_11_1]
+
+				if var_11_2 and var_11_2.type == DungeonEnum.AdditionRuleType.AmountLimit then
+					return tonumber(var_11_2.effect)
+				end
 			end
 		end
 	end
 end
 
-function slot0.getBattleRoleNum(slot0)
-	slot2 = slot0.episodeId and lua_episode.configDict[slot1]
-	slot4 = slot0.battleId and lua_battle.configDict[slot3]
+function var_0_0.getBattleRoleNum(arg_12_0)
+	local var_12_0 = arg_12_0.episodeId
+	local var_12_1
 
-	return slot0:getAmountLimit(slot4) or slot4 and slot4.roleNum
+	var_12_1 = var_12_0 and lua_episode.configDict[var_12_0]
+
+	local var_12_2 = arg_12_0.battleId
+	local var_12_3 = var_12_2 and lua_battle.configDict[var_12_2]
+
+	return arg_12_0:getAmountLimit(var_12_3) or var_12_3 and var_12_3.roleNum
 end
 
-function slot0.generateTempGroup(slot0, slot1, slot2, slot3)
-	slot4 = Season166HeroGroupMO.New()
+function var_0_0.generateTempGroup(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = Season166HeroGroupMO.New()
 
-	if not slot1 and not slot3 then
-		slot1 = slot0:getById(slot0._curGroupId)
+	if not arg_13_1 and not arg_13_3 then
+		arg_13_1 = arg_13_0:getById(arg_13_0._curGroupId)
 	end
 
-	if slot1 then
-		slot4:setSeasonCardLimit(slot1:getSeasonCardLimit())
+	if arg_13_1 then
+		var_13_0:setSeasonCardLimit(arg_13_1:getSeasonCardLimit())
 	end
 
-	if slot0.battleId and lua_battle.configDict[slot0.battleId] then
-		slot6 = {}
+	local var_13_1 = arg_13_0.battleId and lua_battle.configDict[arg_13_0.battleId]
 
-		if not string.nilorempty(slot5.aid) then
-			slot6 = string.splitToNumber(slot5.aid, "#")
+	if var_13_1 then
+		local var_13_2 = {}
+
+		if not string.nilorempty(var_13_1.aid) then
+			var_13_2 = string.splitToNumber(var_13_1.aid, "#")
 		end
 
-		slot7 = {}
+		local var_13_3 = {}
 
-		if not string.nilorempty(slot5.trialHeros) then
-			slot7 = GameUtil.splitString2(slot5.trialHeros, true)
+		if not string.nilorempty(var_13_1.trialHeros) then
+			var_13_3 = GameUtil.splitString2(var_13_1.trialHeros, true)
 		end
 
-		slot4:initWithBattle(slot1 or Season166HeroGroupMO.New(), slot6, slot2 or slot5.roleNum, slot5.playerMax, nil, slot7)
+		arg_13_2 = arg_13_2 or var_13_1.roleNum
 
-		if slot0.adventure and slot0.episodeId and lua_episode.configDict[slot0.episodeId] then
-			slot4:setTempName(GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-				slot9.name,
-				luaLang("hero_group")
-			}))
+		local var_13_4 = var_13_1.playerMax
+
+		var_13_0:initWithBattle(arg_13_1 or Season166HeroGroupMO.New(), var_13_2, arg_13_2, var_13_4, nil, var_13_3)
+
+		if arg_13_0.adventure then
+			local var_13_5 = arg_13_0.episodeId and lua_episode.configDict[arg_13_0.episodeId]
+
+			if var_13_5 then
+				local var_13_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
+					var_13_5.name,
+					luaLang("hero_group")
+				})
+
+				var_13_0:setTempName(var_13_6)
+			end
 		end
 	else
 		logError("临时编队没有战斗配置，永远不该发生")
-		slot4:init(slot1)
+		var_13_0:init(arg_13_1)
 	end
 
-	slot4:setTemp(true)
+	var_13_0:setTemp(true)
 
-	return slot4
+	return var_13_0
 end
 
-function slot0.setCurGroupId(slot0, slot1)
-	slot0._curGroupId = slot1
+function var_0_0.setCurGroupId(arg_14_0, arg_14_1)
+	arg_14_0._curGroupId = arg_14_1
 
-	slot0:_setSingleGroup()
+	arg_14_0:_setSingleGroup()
 end
 
-function slot0._setSingleGroup(slot0)
-	if not slot0:getCurGroupMO() then
-		slot1 = Season166HeroGroupMO.New()
+function var_0_0._setSingleGroup(arg_15_0)
+	local var_15_0 = arg_15_0:getCurGroupMO()
 
-		if slot0.heroGroupType == ModuleEnum.HeroGroupType.Resources then
-			slot2 = slot0._curGroupId - 1
+	if not var_15_0 then
+		var_15_0 = Season166HeroGroupMO.New()
+
+		local var_15_1 = arg_15_0._curGroupId
+
+		if arg_15_0.heroGroupType == ModuleEnum.HeroGroupType.Resources then
+			var_15_1 = var_15_1 - 1
 		end
 
-		slot1:init({
-			groupId = slot2,
-			name = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-				luaLang("hero_group"),
-				slot2
-			})
+		local var_15_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
+			luaLang("hero_group"),
+			var_15_1
 		})
-		slot0:addAtLast(slot1)
+
+		var_15_0:init({
+			groupId = var_15_1,
+			name = var_15_2
+		})
+		arg_15_0:addAtLast(var_15_0)
 	end
 
-	slot1:clearAidHero()
-	Season166HeroSingleGroupModel.instance:setSingleGroup(slot1, true)
+	var_15_0:clearAidHero()
+	Season166HeroSingleGroupModel.instance:setSingleGroup(var_15_0, true)
 end
 
-function slot0.getCommonGroupName(slot0, slot1)
-	if string.nilorempty(slot0._commonGroups[slot1 or slot0.curGroupSelectIndex].name) then
-		return formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(slot1))
+function var_0_0.getCommonGroupName(arg_16_0, arg_16_1)
+	arg_16_1 = arg_16_1 or arg_16_0.curGroupSelectIndex
+
+	local var_16_0 = arg_16_0._commonGroups[arg_16_1].name
+
+	if string.nilorempty(var_16_0) then
+		return formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(arg_16_1))
 	else
-		return slot2
+		return var_16_0
 	end
 end
 
-function slot0.setCommonGroupName(slot0, slot1, slot2)
-	if slot2 == slot0:getCommonGroupName(slot1 or slot0.curGroupSelectIndex) then
+function var_0_0.setCommonGroupName(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_1 = arg_17_1 or arg_17_0.curGroupSelectIndex
+
+	if arg_17_2 == arg_17_0:getCommonGroupName(arg_17_1) then
 		return
 	end
 
-	slot0._commonGroups[slot1].name = slot2
+	arg_17_0._commonGroups[arg_17_1].name = arg_17_2
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupName)
 end
 
-function slot0.getCurGroupMO(slot0)
-	if SeasonHeroGroupHandler.checkIsSeasonHeroGroupType(slot0.heroGroupType) then
-		if SeasonHeroGroupHandler.getSeasonCurrentHeroGroupMO[slot0.heroGroupType] then
-			return slot1()
+function var_0_0.getCurGroupMO(arg_18_0)
+	if SeasonHeroGroupHandler.checkIsSeasonHeroGroupType(arg_18_0.heroGroupType) then
+		local var_18_0 = SeasonHeroGroupHandler.getSeasonCurrentHeroGroupMO[arg_18_0.heroGroupType]
+
+		if var_18_0 then
+			return var_18_0()
 		end
-	elseif slot0.heroGroupType == ModuleEnum.HeroGroupType.Resources then
-		if slot0.curGroupSelectIndex == 0 then
-			return slot0._heroGroupList[1]
+	elseif arg_18_0.heroGroupType == ModuleEnum.HeroGroupType.Resources then
+		if arg_18_0.curGroupSelectIndex == 0 then
+			return arg_18_0._heroGroupList[1]
 		else
-			return slot0._commonGroups[slot0.curGroupSelectIndex]
+			return arg_18_0._commonGroups[arg_18_0.curGroupSelectIndex]
 		end
-	elseif slot0.heroGroupType == ModuleEnum.HeroGroupType.NormalFb then
-		if slot0.curGroupSelectIndex == 0 then
-			return slot0:getMainGroupMo()
+	elseif arg_18_0.heroGroupType == ModuleEnum.HeroGroupType.NormalFb then
+		if arg_18_0.curGroupSelectIndex == 0 then
+			return arg_18_0:getMainGroupMo()
 		else
-			return slot0._commonGroups[slot0.curGroupSelectIndex]
+			return arg_18_0._commonGroups[arg_18_0.curGroupSelectIndex]
 		end
 	else
-		return slot0:getById(slot0._curGroupId)
+		return arg_18_0:getById(arg_18_0._curGroupId)
 	end
 end
 
-function slot0.setHeroGroupSelectIndex(slot0, slot1)
-	if not slot0.heroGroupTypeCo then
+function var_0_0.setHeroGroupSelectIndex(arg_19_0, arg_19_1)
+	if not arg_19_0.heroGroupTypeCo then
 		logError("没有配置。。")
 
 		return
 	end
 
-	if slot1 == 0 and slot0.heroGroupTypeCo.saveGroup == 0 then
+	if arg_19_1 == 0 and arg_19_0.heroGroupTypeCo.saveGroup == 0 then
 		logError("无法切到玩法编队")
 
 		return
 	end
 
-	if slot0.curGroupSelectIndex == slot1 then
+	if arg_19_0.curGroupSelectIndex == arg_19_1 then
 		return
 	end
 
-	slot0.curGroupSelectIndex = slot1
-	slot2 = slot0.heroGroupTypeCo.id
+	arg_19_0.curGroupSelectIndex = arg_19_1
 
-	if slot0.episodeType > 100 then
-		slot2 = slot0.episodeType
+	local var_19_0 = arg_19_0.heroGroupTypeCo.id
+
+	if arg_19_0.episodeType > 100 then
+		var_19_0 = arg_19_0.episodeType
 	end
 
-	slot0._groupTypeSelect[slot2] = slot1
+	arg_19_0._groupTypeSelect[var_19_0] = arg_19_1
 
-	slot0:_setSingleGroup()
-	HeroGroupRpc.instance:sendChangeHeroGroupSelectRequest(slot2, slot1)
+	arg_19_0:_setSingleGroup()
+	HeroGroupRpc.instance:sendChangeHeroGroupSelectRequest(var_19_0, arg_19_1)
 
 	return true
 end
 
-function slot0.getGroupTypeName(slot0)
-	if not slot0.heroGroupTypeCo or slot0.heroGroupTypeCo.saveGroup == 0 then
+function var_0_0.getGroupTypeName(arg_20_0)
+	if not arg_20_0.heroGroupTypeCo or arg_20_0.heroGroupTypeCo.saveGroup == 0 then
 		return
 	end
 
-	return slot0.heroGroupTypeCo.name
+	return arg_20_0.heroGroupTypeCo.name
 end
 
-function slot0.getMainGroupMo(slot0)
-	return slot0:getById(1)
+function var_0_0.getMainGroupMo(arg_21_0)
+	return arg_21_0:getById(1)
 end
 
-function slot0.saveCurGroupData(slot0, slot1, slot2, slot3)
-	if not lua_episode.configDict[slot0.episodeId] then
+function var_0_0.saveCurGroupData(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if not lua_episode.configDict[arg_22_0.episodeId] then
 		return
 	end
 
-	if not (slot3 or slot0:getCurGroupMO()) then
+	arg_22_3 = arg_22_3 or arg_22_0:getCurGroupMO()
+
+	if not arg_22_3 then
 		return
 	end
 
-	slot3:checkAndPutOffEquip()
+	arg_22_3:checkAndPutOffEquip()
 
-	if slot0.heroGroupType == ModuleEnum.HeroGroupType.Season166Base then
-		slot3:saveData()
+	if arg_22_0.heroGroupType == ModuleEnum.HeroGroupType.Season166Base then
+		arg_22_3:saveData()
 
-		if slot1 then
-			slot1(slot2)
+		if arg_22_1 then
+			arg_22_1(arg_22_2)
 		end
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnSnapshotSaveSucc, slot0.heroGroupType, 1)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnSnapshotSaveSucc, arg_22_0.heroGroupType, 1)
 
-		if slot3.isHaveTrial then
+		if arg_22_3.isHaveTrial then
 			return
 		end
 	end
 
-	if slot0.heroGroupType == ModuleEnum.HeroGroupType.Temp or slot0.heroGroupType == ModuleEnum.HeroGroupType.Default then
-		if slot1 then
-			slot1(slot2)
+	if arg_22_0.heroGroupType == ModuleEnum.HeroGroupType.Temp or arg_22_0.heroGroupType == ModuleEnum.HeroGroupType.Default then
+		if arg_22_1 then
+			arg_22_1(arg_22_2)
 		end
 
 		return
 	end
 
-	SeasonHeroGroupHandler.setHeroGroupSnapshot(slot3, slot0.heroGroupType, slot0.episodeId, slot1, slot2)
+	SeasonHeroGroupHandler.setHeroGroupSnapshot(arg_22_3, arg_22_0.heroGroupType, arg_22_0.episodeId, arg_22_1, arg_22_2)
 end
 
-function slot0.setHeroGroupSnapshot(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = {
-		heroGroupType = slot1,
-		episodeId = slot2,
-		upload = slot3,
-		extendData = slot4
+function var_0_0.setHeroGroupSnapshot(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6)
+	local var_23_0 = {
+		heroGroupType = arg_23_1,
+		episodeId = arg_23_2,
+		upload = arg_23_3,
+		extendData = arg_23_4
 	}
 
-	if not (slot2 and lua_episode.configDict[slot2]) then
+	if not (arg_23_2 and lua_episode.configDict[arg_23_2]) then
 		return
 	end
 
-	slot9 = 0
-	slot10 = 0
-	slot11, slot12 = nil
+	local var_23_1 = 0
+	local var_23_2 = 0
+	local var_23_3
+	local var_23_4
 
-	if SeasonHeroGroupHandler.checkIsSeasonHeroGroupType(slot1) then
-		if SeasonHeroGroupHandler.setSeasonSnapShotHandleFunc[slot1] then
-			slot9, slot10, slot11, slot12 = slot13(slot7)
+	if SeasonHeroGroupHandler.checkIsSeasonHeroGroupType(arg_23_1) then
+		local var_23_5 = SeasonHeroGroupHandler.setSeasonSnapShotHandleFunc[arg_23_1]
+
+		if var_23_5 then
+			var_23_1, var_23_2, var_23_3, var_23_4 = var_23_5(var_23_0)
 		end
 	else
-		logError("暂不支持此类编队快照 : " .. tostring(slot1))
+		logError("暂不支持此类编队快照 : " .. tostring(arg_23_1))
 
 		return
 	end
 
-	if slot11 and slot3 then
-		FightParam.initFightGroup(HeroGroupModule_pb.SetHeroGroupSnapshotRequest().fightGroup, slot11.clothId, slot11:getMainList(), slot11:getSubList(), slot11:getAllHeroEquips(), slot12 or slot11:getAllHeroActivity104Equips())
-		Season166HeroGroupUtils.buildFightGroupAssistHero(slot1, slot13.fightGroup)
-		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(slot9, slot10, slot13, slot5, slot6)
-	elseif slot5 then
-		slot5(slot6)
+	if var_23_3 and arg_23_3 then
+		local var_23_6 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+
+		FightParam.initFightGroup(var_23_6.fightGroup, var_23_3.clothId, var_23_3:getMainList(), var_23_3:getSubList(), var_23_3:getAllHeroEquips(), var_23_4 or var_23_3:getAllHeroActivity104Equips())
+		Season166HeroGroupUtils.buildFightGroupAssistHero(arg_23_1, var_23_6.fightGroup)
+		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(var_23_1, var_23_2, var_23_6, arg_23_5, arg_23_6)
+	elseif arg_23_5 then
+		arg_23_5(arg_23_6)
 	end
 end
 
-function slot0.replaceSingleGroup(slot0)
-	if slot0:getCurGroupMO() then
-		slot1:replaceHeroList(Season166HeroSingleGroupModel.instance:getList())
+function var_0_0.replaceSingleGroup(arg_24_0)
+	local var_24_0 = arg_24_0:getCurGroupMO()
+
+	if var_24_0 then
+		local var_24_1 = Season166HeroSingleGroupModel.instance:getList()
+
+		var_24_0:replaceHeroList(var_24_1)
 	end
 end
 
-function slot0.replaceSingleGroupEquips(slot0)
-	slot3, slot4 = nil
+function var_0_0.replaceSingleGroupEquips(arg_25_0)
+	local var_25_0 = arg_25_0:getCurGroupMO()
+	local var_25_1 = Season166HeroSingleGroupModel.instance:getList()
+	local var_25_2
+	local var_25_3
 
-	for slot8, slot9 in ipairs(Season166HeroSingleGroupModel.instance:getList()) do
-		if HeroModel.instance:getById(slot9.heroUid) and slot3:hasDefaultEquip() then
-			slot0:getCurGroupMO():updatePosEquips({
-				index = slot8 - 1,
+	for iter_25_0, iter_25_1 in ipairs(var_25_1) do
+		local var_25_4 = HeroModel.instance:getById(iter_25_1.heroUid)
+
+		if var_25_4 and var_25_4:hasDefaultEquip() then
+			local var_25_5 = {
+				index = iter_25_0 - 1,
 				equipUid = {
-					slot3.defaultEquipUid
+					var_25_4.defaultEquipUid
 				}
-			})
+			}
+
+			var_25_0:updatePosEquips(var_25_5)
 		end
 	end
 end
 
-function slot0.replaceCloth(slot0, slot1)
-	if slot0:getCurGroupMO() then
-		slot2:replaceClothId(slot1)
+function var_0_0.replaceCloth(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getCurGroupMO()
+
+	if var_26_0 then
+		var_26_0:replaceClothId(arg_26_1)
 	end
 end
 
-function slot0.replaceEquips(slot0, slot1, slot2)
-	if slot2 or slot0:getCurGroupMO() then
-		slot3:updatePosEquips(slot1)
+function var_0_0.replaceEquips(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = arg_27_2 or arg_27_0:getCurGroupMO()
+
+	if var_27_0 then
+		var_27_0:updatePosEquips(arg_27_1)
 	end
 end
 
-function slot0.getCurGroupId(slot0)
-	return slot0._curGroupId
+function var_0_0.getCurGroupId(arg_28_0)
+	return arg_28_0._curGroupId
 end
 
-function slot0.isPositionOpen(slot0, slot1)
-	return slot1 <= slot0:getMaxHeroCountInGroup()
+function var_0_0.isPositionOpen(arg_29_0, arg_29_1)
+	return arg_29_1 <= arg_29_0:getMaxHeroCountInGroup()
 end
 
-function slot0.positionOpenCount(slot0)
-	return slot0:getMaxHeroCountInGroup()
+function var_0_0.positionOpenCount(arg_30_0)
+	return arg_30_0:getMaxHeroCountInGroup()
 end
 
-function slot0.getHighestLevel(slot0)
-	if not Season166HeroSingleGroupModel.instance:getList() then
+function var_0_0.getHighestLevel(arg_31_0)
+	local var_31_0 = Season166HeroSingleGroupModel.instance:getList()
+
+	if not var_31_0 then
 		return 0
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.aid and slot7.aid ~= -1 then
-			if lua_monster.configDict[tonumber(slot7.aid)] and 0 < slot8.level then
-				slot2 = slot8.level
+	local var_31_1 = 0
+
+	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
+		if iter_31_1.aid and iter_31_1.aid ~= -1 then
+			local var_31_2 = lua_monster.configDict[tonumber(iter_31_1.aid)]
+
+			if var_31_2 and var_31_1 < var_31_2.level then
+				var_31_1 = var_31_2.level
 			end
-		elseif slot7.heroUid and HeroModel.instance:getById(slot7.heroUid) and slot2 < slot8.level then
-			slot2 = slot8.level
+		elseif iter_31_1.heroUid then
+			local var_31_3 = HeroModel.instance:getById(iter_31_1.heroUid)
+
+			if var_31_3 and var_31_1 < var_31_3.level then
+				var_31_1 = var_31_3.level
+			end
 		end
 	end
 
-	return slot2
+	return var_31_1
 end
 
-function slot0.setHeroGroupItemPos(slot0, slot1)
-	slot0._herogroupItemPos = slot1
+function var_0_0.setHeroGroupItemPos(arg_32_0, arg_32_1)
+	arg_32_0._herogroupItemPos = arg_32_1
 end
 
-function slot0.getHeroGroupItemPos(slot0)
-	return slot0._herogroupItemPos
+function var_0_0.getHeroGroupItemPos(arg_33_0)
+	return arg_33_0._herogroupItemPos
 end
 
-slot0.RestrictType = {
+var_0_0.RestrictType = {
 	Rare = 3,
 	HeroId = 1,
 	Career = 2
 }
 
-function slot0.initRestrictHeroData(slot0, slot1)
-	slot0.restrictHeroIdList = nil
-	slot0.restrictCareerList = nil
-	slot0.restrictRareList = nil
+function var_0_0.initRestrictHeroData(arg_34_0, arg_34_1)
+	arg_34_0.restrictHeroIdList = nil
+	arg_34_0.restrictCareerList = nil
+	arg_34_0.restrictRareList = nil
 
-	if string.nilorempty(slot1 and slot1.restrictRoles) then
+	local var_34_0 = arg_34_1 and arg_34_1.restrictRoles
+
+	if string.nilorempty(var_34_0) then
 		return
 	end
 
-	slot4, slot5 = nil
+	local var_34_1 = string.split(var_34_0, "|")
+	local var_34_2
+	local var_34_3
 
-	for slot9 = 1, #string.split(slot2, "|") do
-		slot0.restrictHeroIdList, slot11 = GameUtil.tabletool_fastRemoveValueByPos(string.splitToNumber(slot3[slot9], "#"), 1)
+	for iter_34_0 = 1, #var_34_1 do
+		local var_34_4 = string.splitToNumber(var_34_1[iter_34_0], "#")
+		local var_34_5, var_34_6 = GameUtil.tabletool_fastRemoveValueByPos(var_34_4, 1)
 
-		if slot11 == uv0.RestrictType.HeroId then
-			-- Nothing
-		elseif slot5 == uv0.RestrictType.Career then
-			slot0.restrictCareerList = slot4
-		elseif slot5 == uv0.RestrictType.Rare then
-			slot0.restrictRareList = slot4
+		if var_34_6 == var_0_0.RestrictType.HeroId then
+			arg_34_0.restrictHeroIdList = var_34_5
+		elseif var_34_6 == var_0_0.RestrictType.Career then
+			arg_34_0.restrictCareerList = var_34_5
+		elseif var_34_6 == var_0_0.RestrictType.Rare then
+			arg_34_0.restrictRareList = var_34_5
 		else
-			logError("un support restrict type : " .. tostring(slot5))
+			logError("un support restrict type : " .. tostring(var_34_6))
 		end
 	end
 end
 
-function slot0.isRestrict(slot0, slot1)
-	if not (slot1 and HeroModel.instance:getById(slot1)) then
+function var_0_0.isRestrict(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_1 and HeroModel.instance:getById(arg_35_1)
+
+	if not var_35_0 then
 		return false
 	end
 
-	return slot0.restrictHeroIdList and tabletool.indexOf(slot0.restrictHeroIdList, slot2.heroId) or slot0.restrictCareerList and tabletool.indexOf(slot0.restrictCareerList, slot2.config.career) or slot0.restrictRareList and tabletool.indexOf(slot0.restrictRareList, slot2.config.rare)
+	return arg_35_0.restrictHeroIdList and tabletool.indexOf(arg_35_0.restrictHeroIdList, var_35_0.heroId) or arg_35_0.restrictCareerList and tabletool.indexOf(arg_35_0.restrictCareerList, var_35_0.config.career) or arg_35_0.restrictRareList and tabletool.indexOf(arg_35_0.restrictRareList, var_35_0.config.rare)
 end
 
-function slot0.getCurrentBattleConfig(slot0)
-	return slot0.battleConfig
+function var_0_0.getCurrentBattleConfig(arg_36_0)
+	return arg_36_0.battleConfig
 end
 
-function slot0.buildAidHeroGroup(slot0)
-	if Season166Model.instance:getBattleContext() then
-		if not Season166Model.instance:getActInfo(slot1.actId) then
+function var_0_0.buildAidHeroGroup(arg_37_0)
+	local var_37_0 = Season166Model.instance:getBattleContext()
+
+	if var_37_0 then
+		local var_37_1 = var_37_0.actId
+
+		if not Season166Model.instance:getActInfo(var_37_1) then
 			return
 		end
 
-		if not slot0.battleConfig or string.nilorempty(slot0.battleConfig.aid) then
+		if not arg_37_0.battleConfig or string.nilorempty(arg_37_0.battleConfig.aid) then
 			return
 		end
 
-		if #string.splitToNumber(slot0.battleConfig.aid, "#") > 0 or slot0.battleConfig.trialLimit > 0 then
-			slot0.aidHeroGroupMO = uv0.instance:generateTempGroup(nil, , true)
+		if #string.splitToNumber(arg_37_0.battleConfig.aid, "#") > 0 or arg_37_0.battleConfig.trialLimit > 0 then
+			arg_37_0.aidHeroGroupMO = var_0_0.instance:generateTempGroup(nil, nil, true)
 
-			slot0.aidHeroGroupMO:setTemp(false)
+			arg_37_0.aidHeroGroupMO:setTemp(false)
 		end
 	end
 end
 
-function slot0.getCurrentHeroGroup(slot0)
-	if not Season166Model.instance:getBattleContext() then
+function var_0_0.getCurrentHeroGroup(arg_38_0)
+	local var_38_0 = Season166Model.instance:getBattleContext()
+
+	if not var_38_0 then
 		return
 	end
 
-	if not Season166Model.instance:getActInfo(slot1.actId) then
+	local var_38_1 = Season166Model.instance:getActInfo(var_38_0.actId)
+
+	if not var_38_1 then
 		return
 	end
 
-	if slot0.battleConfig and not string.nilorempty(slot0.battleConfig.aid) then
-		return slot0.aidHeroGroupMO
+	if arg_38_0.battleConfig and not string.nilorempty(arg_38_0.battleConfig.aid) then
+		return arg_38_0.aidHeroGroupMO
 	end
 
-	if slot0:isSeason166BaseSpotEpisode(slot1.episodeId) then
-		return slot2.spotHeroGroupSnapshot[slot1.baseId]
-	elseif slot0:isSeason166TrainEpisode(slot1.episodeId) then
-		return slot2.trainHeroGroupSnapshot[1]
+	if arg_38_0:isSeason166BaseSpotEpisode(var_38_0.episodeId) then
+		local var_38_2 = var_38_0.baseId
+
+		return var_38_1.spotHeroGroupSnapshot[var_38_2]
+	elseif arg_38_0:isSeason166TrainEpisode(var_38_0.episodeId) then
+		return var_38_1.trainHeroGroupSnapshot[1]
 	else
-		logError("关卡类型异常或教学关卡trial或trialLimit试用角色为空，请检查关卡id： " .. slot1.episodeId)
+		logError("关卡类型异常或教学关卡trial或trialLimit试用角色为空，请检查关卡id： " .. var_38_0.episodeId)
 
-		return slot2.trainHeroGroupSnapshot[1]
+		return var_38_1.trainHeroGroupSnapshot[1]
 	end
 end
 
-function slot0.isSeason166BaseSpotEpisode(slot0, slot1)
-	return slot0:getEpisodeType(slot1) == DungeonEnum.EpisodeType.Season166Base
+function var_0_0.isSeason166BaseSpotEpisode(arg_39_0, arg_39_1)
+	return arg_39_0:getEpisodeType(arg_39_1) == DungeonEnum.EpisodeType.Season166Base
 end
 
-function slot0.isSeason166TrainEpisode(slot0, slot1)
-	return slot0:getEpisodeType(slot1) == DungeonEnum.EpisodeType.Season166Train
+function var_0_0.isSeason166TrainEpisode(arg_40_0, arg_40_1)
+	return arg_40_0:getEpisodeType(arg_40_1) == DungeonEnum.EpisodeType.Season166Train
 end
 
-function slot0.isSeason166TeachEpisode(slot0, slot1)
-	return slot0:getEpisodeType(slot1) == DungeonEnum.EpisodeType.Season166Teach
+function var_0_0.isSeason166TeachEpisode(arg_41_0, arg_41_1)
+	return arg_41_0:getEpisodeType(arg_41_1) == DungeonEnum.EpisodeType.Season166Teach
 end
 
-function slot0.getEpisodeType(slot0, slot1)
-	return DungeonConfig.instance:getEpisodeCO(slot1 or slot0.episodeId) and slot2.type
+function var_0_0.getEpisodeType(arg_42_0, arg_42_1)
+	local var_42_0 = DungeonConfig.instance:getEpisodeCO(arg_42_1 or arg_42_0.episodeId)
+
+	return var_42_0 and var_42_0.type
 end
 
-function slot0.isSeason166Episode(slot0, slot1)
-	return slot0:isSeason166BaseSpotEpisode(slot1) or slot0:isSeason166TrainEpisode(slot1) or slot0:isSeason166TeachEpisode(slot1)
+function var_0_0.isSeason166Episode(arg_43_0, arg_43_1)
+	return arg_43_0:isSeason166BaseSpotEpisode(arg_43_1) or arg_43_0:isSeason166TrainEpisode(arg_43_1) or arg_43_0:isSeason166TeachEpisode(arg_43_1)
 end
 
-function slot0.getMaxHeroCountInGroup(slot0)
+function var_0_0.getMaxHeroCountInGroup(arg_44_0)
 	if not Season166Model.instance:getBattleContext(true) then
 		return ModuleEnum.MaxHeroCountInGroup
 	end
 
-	if not (slot0.episodeId and lua_episode.configDict[slot0.episodeId]) then
+	if not (arg_44_0.episodeId and lua_episode.configDict[arg_44_0.episodeId]) then
 		logError("episodeId or config in lua_episode is null")
 
 		return ModuleEnum.MaxHeroCountInGroup
 	end
 
-	if ({
+	local var_44_0 = ({
 		[DungeonEnum.ChapterType.Season166Base] = Season166Controller.getMaxHeroGroupCount,
 		[DungeonEnum.ChapterType.Season166Train] = Season166Controller.getMaxHeroGroupCount,
 		[DungeonEnum.ChapterType.Season166Teach] = Season166Controller.getMaxHeroGroupCount
-	})[DungeonEnum.ChapterType.Season166Base] then
-		return slot4()
+	})[DungeonEnum.ChapterType.Season166Base]
+
+	if var_44_0 then
+		return var_44_0()
 	else
 		return ModuleEnum.MaxHeroCountInGroup
 	end
 end
 
-function slot0.getEpisodeConfigId(slot0, slot1)
-	if not Season166Model.instance:getBattleContext(true) then
+function var_0_0.getEpisodeConfigId(arg_45_0, arg_45_1)
+	local var_45_0 = Season166Model.instance:getBattleContext(true)
+
+	if not var_45_0 then
 		return 0
 	end
 
-	if slot0:isSeason166BaseSpotEpisode(slot1) then
-		return slot2.baseId
-	elseif slot0:isSeason166TrainEpisode(slot1) then
-		return slot2.trainId
-	elseif slot0:isSeason166TeachEpisode(slot1) then
-		return slot2.teachId
+	if arg_45_0:isSeason166BaseSpotEpisode(arg_45_1) then
+		return var_45_0.baseId
+	elseif arg_45_0:isSeason166TrainEpisode(arg_45_1) then
+		return var_45_0.trainId
+	elseif arg_45_0:isSeason166TeachEpisode(arg_45_1) then
+		return var_45_0.teachId
 	end
 
 	return 0
 end
 
-function slot0.getTrailHeroGroupList(slot0)
-	return slot0._heroGroupList[slot0._curGroupId]
+function var_0_0.getTrailHeroGroupList(arg_46_0)
+	return arg_46_0._heroGroupList[arg_46_0._curGroupId]
 end
 
-function slot0.isHaveTrialCo(slot0)
-	return slot0.battleConfig and slot0.battleConfig.trialLimit > 0
+function var_0_0.isHaveTrialCo(arg_47_0)
+	return arg_47_0.battleConfig and arg_47_0.battleConfig.trialLimit > 0
 end
 
-function slot0.fixHeroGroupList(slot0)
-	slot1 = slot0:getMaxHeroCountInGroup()
+function var_0_0.fixHeroGroupList(arg_48_0)
+	local var_48_0 = arg_48_0:getMaxHeroCountInGroup()
+	local var_48_1 = arg_48_0:getCurGroupMO()
 
-	if not slot0:getCurGroupMO().heroList then
+	if not var_48_1.heroList then
 		return
 	end
 
-	for slot6 = 1, slot1 do
-		if not slot2.heroList[slot6] then
-			slot2.heroList[slot6] = "0"
+	for iter_48_0 = 1, var_48_0 do
+		if not var_48_1.heroList[iter_48_0] then
+			var_48_1.heroList[iter_48_0] = "0"
 		end
 	end
 end
 
-function slot0.cleanAssistData(slot0)
-	if slot0:getCurGroupMO() then
-		for slot5, slot6 in ipairs(slot1.heroList) do
-			if tonumber(slot6) > 0 and not slot0:checkAndGetSelfHero(slot6) then
-				slot1.heroList[slot5] = "0"
+function var_0_0.cleanAssistData(arg_49_0)
+	local var_49_0 = arg_49_0:getCurGroupMO()
+
+	if var_49_0 then
+		for iter_49_0, iter_49_1 in ipairs(var_49_0.heroList) do
+			if tonumber(iter_49_1) > 0 and not arg_49_0:checkAndGetSelfHero(iter_49_1) then
+				var_49_0.heroList[iter_49_0] = "0"
 			end
 		end
 	end
@@ -749,14 +877,14 @@ function slot0.cleanAssistData(slot0)
 	Season166Controller.instance:dispatchEvent(Season166Event.CleanAssistData)
 end
 
-function slot0.checkAndGetSelfHero(slot0, slot1)
-	return HeroModel.instance:getById(slot1)
+function var_0_0.checkAndGetSelfHero(arg_50_0, arg_50_1)
+	return HeroModel.instance:getById(arg_50_1)
 end
 
-function slot0.setCurGroupMaxPlayerCount(slot0, slot1)
-	slot0:getCurGroupMO():setMaxHeroCount(slot1)
+function var_0_0.setCurGroupMaxPlayerCount(arg_51_0, arg_51_1)
+	arg_51_0:getCurGroupMO():setMaxHeroCount(arg_51_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

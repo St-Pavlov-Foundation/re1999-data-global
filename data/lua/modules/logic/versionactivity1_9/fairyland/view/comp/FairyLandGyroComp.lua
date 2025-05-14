@@ -1,98 +1,113 @@
-module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandGyroComp", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandGyroComp", package.seeall)
 
-slot0 = class("FairyLandGyroComp")
-slot1 = UnityEngine.Input
-slot2 = UnityEngine.Time
+local var_0_0 = class("FairyLandGyroComp")
+local var_0_1 = UnityEngine.Input
+local var_0_2 = UnityEngine.Time
 
-function slot0.init(slot0, slot1)
-	slot0.shakeCallback = slot1.callback
-	slot0.shakeCallbackObj = slot1.callbackObj
-	slot0.shakeGO = slot1.go
-	slot0.isMobilePlayer = GameUtil.isMobilePlayerAndNotEmulator()
-	slot0._aniGoList = {}
-	slot4 = slot0.shakeGO.transform
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.shakeCallback = arg_1_1.callback
+	arg_1_0.shakeCallbackObj = arg_1_1.callbackObj
+	arg_1_0.shakeGO = arg_1_1.go
+	arg_1_0.isMobilePlayer = GameUtil.isMobilePlayerAndNotEmulator()
+	arg_1_0._aniGoList = {}
 
-	table.insert(slot0._aniGoList, {
-		transform = slot4,
-		config = {
-			posLimit = slot1.posLimit,
-			deltaPos = 5,
-			lerpPos = 10
-		},
-		initPos = slot4.localPosition
-	})
+	local var_1_0 = arg_1_1.posLimit
+	local var_1_1 = {}
+	local var_1_2 = arg_1_0.shakeGO.transform
+	local var_1_3 = var_1_2.localPosition
 
-	slot7, slot8, slot9 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
-	slot0._acceleration = Vector3.New(slot7, slot8, slot9)
-	slot0._curAcceleration = Vector3.New(slot7, slot8, slot9)
-	slot0._offsetPos = Vector3.zero
-	slot0._tempPos = Vector3.zero
+	var_1_1.posLimit = var_1_0
+	var_1_1.deltaPos = 5
+	var_1_1.lerpPos = 10
 
-	if not slot0._isRunning then
-		slot0._isRunning = true
+	local var_1_4 = {
+		transform = var_1_2,
+		config = var_1_1,
+		initPos = var_1_3
+	}
 
-		LateUpdateBeat:Add(slot0._tick, slot0)
+	table.insert(arg_1_0._aniGoList, var_1_4)
+
+	local var_1_5, var_1_6, var_1_7 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+
+	arg_1_0._acceleration = Vector3.New(var_1_5, var_1_6, var_1_7)
+	arg_1_0._curAcceleration = Vector3.New(var_1_5, var_1_6, var_1_7)
+	arg_1_0._offsetPos = Vector3.zero
+	arg_1_0._tempPos = Vector3.zero
+
+	if not arg_1_0._isRunning then
+		arg_1_0._isRunning = true
+
+		LateUpdateBeat:Add(arg_1_0._tick, arg_1_0)
 	end
 end
 
-function slot0.checkInDrag(slot0)
-	return slot0.shakeCallbackObj.inDrag
+function var_0_0.checkInDrag(arg_2_0)
+	return arg_2_0.shakeCallbackObj.inDrag
 end
 
-function slot0._tick(slot0)
-	if slot0.isMobilePlayer and not slot0:checkInDrag() then
-		slot1, slot2, slot3 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+function var_0_0._tick(arg_3_0)
+	if arg_3_0.isMobilePlayer and not arg_3_0:checkInDrag() then
+		local var_3_0, var_3_1, var_3_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-		slot0._curAcceleration:Set(slot1, slot2, slot3)
+		arg_3_0._curAcceleration:Set(var_3_0, var_3_1, var_3_2)
 
-		slot4 = slot0._offsetPos
-		slot5, slot6, slot7, slot8, slot9 = nil
+		local var_3_3 = arg_3_0._offsetPos
+		local var_3_4
+		local var_3_5
+		local var_3_6
+		local var_3_7
+		local var_3_8
 
-		if slot0._aniGoList then
-			for slot13, slot14 in ipairs(slot0._aniGoList) do
-				slot5 = slot14.transform
-				slot6 = slot14.config
-				slot4.x = slot0._curAcceleration.x - slot0._acceleration.x
-				slot4.y = slot0._curAcceleration.y - slot0._acceleration.y
-				slot8, slot9 = transformhelper.getLocalPos(slot5)
-				slot7 = slot0:clampPos(slot0:calcPos(slot14.initPos, slot4, slot6.deltaPos), slot14.initPos, slot6.posLimit)
+		if arg_3_0._aniGoList then
+			for iter_3_0, iter_3_1 in ipairs(arg_3_0._aniGoList) do
+				local var_3_9 = iter_3_1.transform
+				local var_3_10 = iter_3_1.config
 
-				transformhelper.setLocalLerp(slot5, slot7.x, slot7.y, slot7.z, uv0.deltaTime * slot6.lerpPos)
+				var_3_3.x = arg_3_0._curAcceleration.x - arg_3_0._acceleration.x
+				var_3_3.y = arg_3_0._curAcceleration.y - arg_3_0._acceleration.y
+
+				local var_3_11, var_3_12 = transformhelper.getLocalPos(var_3_9)
+				local var_3_13 = arg_3_0:calcPos(iter_3_1.initPos, var_3_3, var_3_10.deltaPos)
+				local var_3_14 = arg_3_0:clampPos(var_3_13, iter_3_1.initPos, var_3_10.posLimit)
+
+				transformhelper.setLocalLerp(var_3_9, var_3_14.x, var_3_14.y, var_3_14.z, var_0_2.deltaTime * var_3_10.lerpPos)
 			end
 		end
 	end
 
-	slot0:doShake()
+	arg_3_0:doShake()
 end
 
-function slot0.clampPos(slot0, slot1, slot2, slot3)
-	if Vector3.Distance(slot2, slot1) < slot3 then
-		return slot1
+function var_0_0.clampPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_3 > Vector3.Distance(arg_4_2, arg_4_1) then
+		return arg_4_1
 	end
 
-	return slot2 + (slot1 - slot2).normalized * slot3
+	return arg_4_2 + (arg_4_1 - arg_4_2).normalized * arg_4_3
 end
 
-function slot0.calcPos(slot0, slot1, slot2, slot3)
-	slot4 = slot0._tempPos
-	slot4.x = slot1.x + slot2.x * slot3
-	slot4.y = slot1.y + slot2.y * slot3
+function var_0_0.calcPos(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_0._tempPos
 
-	return slot4
+	var_5_0.x = arg_5_1.x + arg_5_2.x * arg_5_3
+	var_5_0.y = arg_5_1.y + arg_5_2.y * arg_5_3
+
+	return var_5_0
 end
 
-function slot0.doShake(slot0)
-	if slot0.shakeCallback then
-		slot0.shakeCallback(slot0.shakeCallbackObj)
-	end
-end
-
-function slot0.closeGyro(slot0)
-	if slot0._isRunning then
-		slot0._isRunning = false
-
-		LateUpdateBeat:Remove(slot0._tick, slot0)
+function var_0_0.doShake(arg_6_0)
+	if arg_6_0.shakeCallback then
+		arg_6_0.shakeCallback(arg_6_0.shakeCallbackObj)
 	end
 end
 
-return slot0
+function var_0_0.closeGyro(arg_7_0)
+	if arg_7_0._isRunning then
+		arg_7_0._isRunning = false
+
+		LateUpdateBeat:Remove(arg_7_0._tick, arg_7_0)
+	end
+end
+
+return var_0_0

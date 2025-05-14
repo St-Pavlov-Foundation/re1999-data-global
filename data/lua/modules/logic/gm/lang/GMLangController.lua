@@ -1,99 +1,109 @@
-module("modules.logic.gm.lang.GMLangController", package.seeall)
+﻿module("modules.logic.gm.lang.GMLangController", package.seeall)
 
-slot0 = class("GMLangController", BaseController)
+local var_0_0 = class("GMLangController", BaseController)
 
 GameUtil.getEventId()
 
-slot1 = GameUtil.getSubPlaceholderLuaLang
+local var_0_1 = GameUtil.getSubPlaceholderLuaLang
 
-function slot0.getSubPlaceholderLuaLang(slot0, slot1)
-	slot2 = uv0.instance:cur2AllLang(slot0)
+function var_0_0.getSubPlaceholderLuaLang(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_0.instance:cur2AllLang(arg_1_0)
 
-	if slot1 and #slot1 > 0 and uv0.instance:checkHasCache(uv1(slot0, slot1)) == false then
-		uv0.instance._inUseDic[slot0] = {}
+	if arg_1_1 and #arg_1_1 > 0 then
+		arg_1_0 = var_0_1(arg_1_0, arg_1_1)
 
-		for slot6, slot7 in pairs(slot2) do
-			uv0.instance._inUseDic[slot0][slot6] = uv1(slot7, slot1)
+		if var_0_0.instance:checkHasCache(arg_1_0) == false then
+			var_0_0.instance._inUseDic[arg_1_0] = {}
+
+			for iter_1_0, iter_1_1 in pairs(var_1_0) do
+				var_0_0.instance._inUseDic[arg_1_0][iter_1_0] = var_0_1(iter_1_1, arg_1_1)
+			end
+
+			var_0_0.instance:dispatchInUseUpdate(arg_1_0)
 		end
-
-		uv0.instance:dispatchInUseUpdate(slot0)
 	end
 
-	return slot0
+	return arg_1_0
 end
 
-function slot0.lang(slot0)
-	slot1 = LangSettings.instance:_lang(slot0)
+function var_0_0.lang(arg_2_0)
+	local var_2_0 = LangSettings.instance:_lang(arg_2_0)
 
-	uv0.instance:updateInUseId(slot1, slot0)
+	var_0_0.instance:updateInUseId(var_2_0, arg_2_0)
 
-	return slot1
+	return var_2_0
 end
 
-function slot0.luaLang(slot0)
-	slot1 = LangSettings.instance:_luaLang(slot0)
+function var_0_0.luaLang(arg_3_0)
+	local var_3_0 = LangSettings.instance:_luaLang(arg_3_0)
 
-	uv0.instance:updateInUse(slot1, slot0)
+	var_0_0.instance:updateInUse(var_3_0, arg_3_0)
 
-	return slot1
+	return var_3_0
 end
 
-function slot0.formatLuaLang(...)
-	slot0 = LangSettings.instance:_formatLuaLang(...)
+function var_0_0.formatLuaLang(...)
+	local var_4_0 = LangSettings.instance:_formatLuaLang(...)
 
-	uv0.instance:updateFormatInUse(slot0, ...)
+	var_0_0.instance:updateFormatInUse(var_4_0, ...)
 
-	return slot0
+	return var_4_0
 end
 
-function slot0.updateInUseId(slot0, slot1, slot2)
-	if slot0:checkHasCache(slot1) then
+function var_0_0.updateInUseId(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0:checkHasCache(arg_5_1) then
 		return
 	end
 
-	slot0._inUseDic[slot1] = {}
+	arg_5_0._inUseDic[arg_5_1] = {}
 
-	for slot6, slot7 in pairs(slot0._langDic) do
-		slot0._inUseDic[slot1][slot6] = slot0:getLangTxt(slot6, slot2)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._langDic) do
+		local var_5_0 = arg_5_0:getLangTxt(iter_5_0, arg_5_2)
+
+		arg_5_0._inUseDic[arg_5_1][iter_5_0] = var_5_0
 	end
 
-	uv0.instance:dispatchInUseUpdate(slot1)
+	var_0_0.instance:dispatchInUseUpdate(arg_5_1)
 end
 
-function slot0.updateInUse(slot0, slot1, slot2)
-	if slot0:checkHasCache(slot1) then
+function var_0_0.updateInUse(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0:checkHasCache(arg_6_1) then
 		return
 	end
 
-	slot0._inUseDic[slot1] = {}
+	arg_6_0._inUseDic[arg_6_1] = {}
 
-	for slot6, slot7 in pairs(slot0._langDic) do
-		slot0._inUseDic[slot1][slot6] = slot0:getLangTxtFromeKey(slot6, slot2)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._langDic) do
+		local var_6_0 = arg_6_0:getLangTxtFromeKey(iter_6_0, arg_6_2)
+
+		arg_6_0._inUseDic[arg_6_1][iter_6_0] = var_6_0
 	end
 
-	uv0.instance:dispatchInUseUpdate(slot1)
+	var_0_0.instance:dispatchInUseUpdate(arg_6_1)
 end
 
-function slot0.updateFormatInUse(slot0, slot1, ...)
-	if slot0:checkHasCache(slot1) then
+function var_0_0.updateFormatInUse(arg_7_0, arg_7_1, ...)
+	if arg_7_0:checkHasCache(arg_7_1) then
 		return
 	end
 
-	slot0._inUseDic[slot1] = {}
+	arg_7_0._inUseDic[arg_7_1] = {}
 
-	for slot5, slot6 in pairs(slot0._langDic) do
-		slot0._inUseDic[slot1][slot5] = slot0:_formatLuaLang(slot5, ...)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._langDic) do
+		local var_7_0 = arg_7_0:_formatLuaLang(iter_7_0, ...)
+
+		arg_7_0._inUseDic[arg_7_1][iter_7_0] = var_7_0
 	end
 
-	uv0.instance:dispatchInUseUpdate(slot1)
+	var_0_0.instance:dispatchInUseUpdate(arg_7_1)
 end
 
-function slot0.checkHasCache(slot0, slot1)
-	return slot0._inUseDic[slot1] ~= nil
+function var_0_0.checkHasCache(arg_8_0, arg_8_1)
+	return arg_8_0._inUseDic[arg_8_1] ~= nil
 end
 
-function slot0.cur2AllLang(slot0, slot1)
-	return slot0._inUseDic[slot1]
+function var_0_0.cur2AllLang(arg_9_0, arg_9_1)
+	return arg_9_0._inUseDic[arg_9_1]
 end
 
 if GameResMgr.IsFromEditorDir then
@@ -102,151 +112,192 @@ if GameResMgr.IsFromEditorDir then
 	tolua.loadassembly("Assembly-CSharp-Editor")
 	tolua.loadassembly("System.Core")
 
-	slot0.AddMsg = tolua.getmethod(tolua.findtype("ZProjEditor.LangTextSearchWindows"), "AddMsg", tolua.findtype("System.String"))
+	local var_0_2 = tolua.findtype("System.String")
+	local var_0_3 = tolua.findtype("ZProjEditor.LangTextSearchWindows")
+
+	var_0_0.AddMsg = tolua.getmethod(var_0_3, "AddMsg", var_0_2)
 end
 
-function slot0.dispatchInUseUpdate(slot0, slot1)
+function var_0_0.dispatchInUseUpdate(arg_10_0, arg_10_1)
 	if GameResMgr.IsFromEditorDir then
-		uv0.AddMsg:Call(slot1)
+		var_0_0.AddMsg:Call(arg_10_1)
 	end
 
-	GMLangTxtModel.instance:addLangTxt(slot1)
+	GMLangTxtModel.instance:addLangTxt(arg_10_1)
 end
 
-function slot0.print(slot0)
-	for slot4, slot5 in pairs(slot0._inUseDic) do
-		logNormal(slot4, "===================================")
+function var_0_0.print(arg_11_0)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._inUseDic) do
+		logNormal(iter_11_0, "===================================")
 
-		for slot9, slot10 in pairs(slot5) do
-			logNormal(slot9, ":", slot10)
+		for iter_11_2, iter_11_3 in pairs(iter_11_1) do
+			logNormal(iter_11_2, ":", iter_11_3)
 		end
 	end
 end
 
-function slot0.getInUseDic(slot0)
-	return slot0._inUseDic
+function var_0_0.getInUseDic(arg_12_0)
+	return arg_12_0._inUseDic
 end
 
-function slot0.clearInUse(slot0)
-	tabletool.clear(slot0._inUseDic)
+function var_0_0.clearInUse(arg_13_0)
+	tabletool.clear(arg_13_0._inUseDic)
 	GMLangTxtModel.instance:clearAll()
 end
 
-function slot0.hasInit(slot0)
-	return slot0._hasInit
+function var_0_0.hasInit(arg_14_0)
+	return arg_14_0._hasInit
 end
 
-function slot0.init(slot0)
-	if slot0._hasInit then
-		return slot0._hasInit
+function var_0_0.init(arg_15_0)
+	if arg_15_0._hasInit then
+		return arg_15_0._hasInit
 	end
 
-	slot1 = LangSettings.zh
-	slot0._hasInit = true
+	local var_15_0 = LangSettings.zh
 
-	setGlobal("lang", uv0.lang)
-	setGlobal("luaLang", uv0.luaLang)
-	setGlobal("formatLuaLang", uv0.formatLuaLang)
+	arg_15_0._hasInit = true
 
-	GameUtil.getSubPlaceholderLuaLang = uv0.getSubPlaceholderLuaLang
-	slot0._langDic = {}
-	slot0._inUseDic = {}
-	slot2 = GameConfig:GetCurLangShortcut()
-	slot0._supportedLangCount = GameConfig:GetSupportedLangShortcuts().Length
+	setGlobal("lang", var_0_0.lang)
+	setGlobal("luaLang", var_0_0.luaLang)
+	setGlobal("formatLuaLang", var_0_0.formatLuaLang)
 
-	for slot7 = 0, slot0._supportedLangCount - 1 do
+	GameUtil.getSubPlaceholderLuaLang = var_0_0.getSubPlaceholderLuaLang
+	arg_15_0._langDic = {}
+	arg_15_0._inUseDic = {}
+
+	local var_15_1 = GameConfig:GetCurLangShortcut()
+	local var_15_2 = GameConfig:GetSupportedLangShortcuts()
+
+	arg_15_0._supportedLangCount = var_15_2.Length
+
+	for iter_15_0 = 0, arg_15_0._supportedLangCount - 1 do
+		local var_15_3 = var_15_2[iter_15_0]
+
 		if GameResMgr.IsFromEditorDir then
-			loadNonAbAsset("configs/language/json_language_" .. slot3[slot7] .. ".json", SLFramework.AssetType.TEXT, slot0._onConfigAbCallback, slot0)
+			local var_15_4 = "configs/language/json_language_" .. var_15_3 .. ".json"
+
+			loadNonAbAsset(var_15_4, SLFramework.AssetType.TEXT, arg_15_0._onConfigAbCallback, arg_15_0)
 		else
-			loadNonAbAsset("configs/language/json_language_" .. slot8 .. ".json.dat", SLFramework.AssetType.DATA, slot0._onConfigAbCallback, slot0)
+			local var_15_5 = "configs/language/json_language_" .. var_15_3 .. ".json.dat"
+
+			loadNonAbAsset(var_15_5, SLFramework.AssetType.DATA, arg_15_0._onConfigAbCallback, arg_15_0)
 		end
 	end
 
-	return slot0._hasInit
+	return arg_15_0._hasInit
 end
 
-function slot0.changeLang(slot0, slot1)
-	slot6 = slot0
-
-	LangSettings.instance:SetCurLangType(slot1, slot0._onChangeLangTxtType2, slot6)
+function var_0_0.changeLang(arg_16_0, arg_16_1)
+	LangSettings.instance:SetCurLangType(arg_16_1, arg_16_0._onChangeLangTxtType2, arg_16_0)
 	GameGlobalMgr.instance:getLangFont():changeFontAsset()
 	GameGlobalMgr.instance:getLangFont():ControlDoubleEn()
 
-	for slot6, slot7 in pairs(slot0._inUseDic) do
-		-- Nothing
+	local var_16_0 = {}
+
+	for iter_16_0, iter_16_1 in pairs(arg_16_0._inUseDic) do
+		var_16_0[iter_16_1[arg_16_1]] = iter_16_1
 	end
 
-	slot0._inUseDic = {
-		[slot7[slot1]] = slot7
-	}
+	arg_16_0._inUseDic = var_16_0
 end
 
-function slot0._onChangeLangTxtType2(slot0)
-	slot2 = GameLanguageMgr.instance:getStoryIndexByShortCut(GameConfig:GetCurLangShortcut())
+function var_0_0._onChangeLangTxtType2(arg_17_0)
+	local var_17_0 = GameConfig:GetCurLangShortcut()
+	local var_17_1 = GameLanguageMgr.instance:getStoryIndexByShortCut(var_17_0)
 
-	GameLanguageMgr.instance:setLanguageTypeByStoryIndex(slot2)
-	PlayerPrefsHelper.setNumber("StoryTxtLanType", slot2 - 1)
+	GameLanguageMgr.instance:setLanguageTypeByStoryIndex(var_17_1)
+	PlayerPrefsHelper.setNumber("StoryTxtLanType", var_17_1 - 1)
 end
 
-function slot0._onConfigAbCallback(slot0, slot1)
-	slot2 = ""
-	slot3 = cjson.decode((not GameResMgr.IsFromEditorDir or slot1.TextAsset) and slot1:GetNonAbTextAsset(true))
-	slot11, slot12 = JsonToLuaParser.parse(slot3[2], {
+function var_0_0._onConfigAbCallback(arg_18_0, arg_18_1)
+	local var_18_0 = ""
+
+	if GameResMgr.IsFromEditorDir then
+		var_18_0 = arg_18_1.TextAsset
+	else
+		var_18_0 = arg_18_1:GetNonAbTextAsset(true)
+	end
+
+	local var_18_1 = cjson.decode(var_18_0)
+	local var_18_2 = var_18_1[1]
+	local var_18_3 = var_18_1[2]
+	local var_18_4 = {}
+	local var_18_5 = {
 		content = 2,
 		key = 1
-	}, {
-		"key"
-	}, {})
-	slot0._langDic[slot3[1]:gsub("language_", "")] = {
-		configDict = slot12,
-		configList = slot11
 	}
+	local var_18_6 = {
+		"key"
+	}
+	local var_18_7 = {}
+	local var_18_8 = var_18_2.gsub(var_18_2, "language_", "")
+
+	var_18_4.configList, var_18_4.configDict = JsonToLuaParser.parse(var_18_3, var_18_5, var_18_6, var_18_7)
+	arg_18_0._langDic[var_18_8] = var_18_4
 end
 
-function slot0.getLangTxtFromeKey(slot0, slot1, slot2)
-	if not (lua_language_coder.configDict[slot2] or lua_language_prefab.configDict[slot2]) then
-		logError("语言表key[language_coder.xlsx/language_prefab.xlsx]中找不到key = " .. slot2 .. " 请检查！")
+function var_0_0.getLangTxtFromeKey(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = lua_language_coder.configDict[arg_19_2] or lua_language_prefab.configDict[arg_19_2]
 
-		return slot2
+	if not var_19_0 then
+		logError("语言表key[language_coder.xlsx/language_prefab.xlsx]中找不到key = " .. arg_19_2 .. " 请检查！")
+
+		return arg_19_2
 	end
 
-	if LuaUtil.isEmptyStr(slot0:getLangTxt(slot1, rawget(slot3, 2))) then
-		return slot3.lang
+	local var_19_1 = rawget(var_19_0, 2)
+	local var_19_2 = arg_19_0:getLangTxt(arg_19_1, var_19_1)
+
+	if LuaUtil.isEmptyStr(var_19_2) then
+		return var_19_0.lang
 	end
 
-	return slot5
+	return var_19_2
 end
 
-function slot0.getLangTxt(slot0, slot1, slot2)
-	if not string.nilorempty(slot0._langDic[slot1].configDict[slot2] and slot4.content) then
-		return slot5
+function var_0_0.getLangTxt(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0._langDic[arg_20_1].configDict[arg_20_2]
+	local var_20_1 = var_20_0 and var_20_0.content
+
+	if not string.nilorempty(var_20_1) then
+		return var_20_1
 	end
 
-	if string.find(slot2, "language_") and string.getLastNum(slot2) then
-		return tostring(slot2)
+	if string.find(arg_20_2, "language_") then
+		arg_20_2 = string.getLastNum(arg_20_2)
+
+		if arg_20_2 then
+			return tostring(arg_20_2)
+		end
 	end
 
 	return ""
 end
 
-function slot0._formatLuaLang(slot0, slot1, ...)
+function var_0_0._formatLuaLang(arg_21_0, arg_21_1, ...)
 	if ... == nil then
 		logError("LangSettings._formatLuaLang args can not be nil!")
 
 		return LangSettings.empty
 	end
 
-	if ({
+	local var_21_0 = {
 		...
-	})[1] == nil then
+	}
+	local var_21_1 = var_21_0[1]
+
+	if var_21_1 == nil then
 		logError("LangSettings._formatLuaLang key can not be nil!")
 
 		return LangSettings.empty
 	end
 
-	return string.format(slot0:getLangTxtFromeKey(slot1, slot3), unpack(slot2, 2))
+	local var_21_2 = arg_21_0:getLangTxtFromeKey(arg_21_1, var_21_1)
+
+	return string.format(var_21_2, unpack(var_21_0, 2))
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

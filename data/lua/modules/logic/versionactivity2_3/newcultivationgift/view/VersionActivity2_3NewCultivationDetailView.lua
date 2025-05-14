@@ -1,215 +1,249 @@
-module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationDetailView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationDetailView", package.seeall)
 
-slot0 = class("VersionActivity2_3NewCultivationDetailView", BaseView)
-slot0.DISPLAY_TYPE = {
+local var_0_0 = class("VersionActivity2_3NewCultivationDetailView", BaseView)
+
+var_0_0.DISPLAY_TYPE = {
 	Reward = 2,
 	Effect = 1
 }
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "effect/#simage_mask")
-	slot0._goroleitemcontent = gohelper.findChild(slot0.viewGO, "effect/#go_roleitemcontent")
-	slot0._goroleitem = gohelper.findChild(slot0.viewGO, "effect/#go_roleitemcontent/#go_roleitem")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "effect/#go_roleitemcontent/#go_roleitem/#go_select")
-	slot0._scrolleffect = gohelper.findChildScrollRect(slot0.viewGO, "effect/#scroll_effect")
-	slot0._godestinycontent = gohelper.findChild(slot0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent")
-	slot0._goeffectitem = gohelper.findChild(slot0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem")
-	slot0._imagestone = gohelper.findChildImage(slot0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/#image_stone")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/title/#txt_title")
-	slot0._godecitem = gohelper.findChild(slot0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/#go_decitem")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/#go_decitem/#txt_dec")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "reward/#scroll_reward")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "effect/#simage_mask")
+	arg_1_0._goroleitemcontent = gohelper.findChild(arg_1_0.viewGO, "effect/#go_roleitemcontent")
+	arg_1_0._goroleitem = gohelper.findChild(arg_1_0.viewGO, "effect/#go_roleitemcontent/#go_roleitem")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "effect/#go_roleitemcontent/#go_roleitem/#go_select")
+	arg_1_0._scrolleffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "effect/#scroll_effect")
+	arg_1_0._godestinycontent = gohelper.findChild(arg_1_0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent")
+	arg_1_0._goeffectitem = gohelper.findChild(arg_1_0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem")
+	arg_1_0._imagestone = gohelper.findChildImage(arg_1_0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/#image_stone")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/title/#txt_title")
+	arg_1_0._godecitem = gohelper.findChild(arg_1_0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/#go_decitem")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "effect/#scroll_effect/Viewport/#go_destinycontent/#go_effectitem/#go_decitem/#txt_dec")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/#scroll_reward")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
+	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goeffect = gohelper.findChild(slot0.viewGO, "effect")
-	slot0._goreward = gohelper.findChild(slot0.viewGO, "reward")
-	slot0._destinyEffectItemList = {}
-	slot0._rewardItemList = {}
-	slot0._roleItemList = {}
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goeffect = gohelper.findChild(arg_5_0.viewGO, "effect")
+	arg_5_0._goreward = gohelper.findChild(arg_5_0.viewGO, "reward")
+	arg_5_0._destinyEffectItemList = {}
+	arg_5_0._rewardItemList = {}
+	arg_5_0._roleItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._showType = slot0.viewParam.showType
-	slot0._needShowHeroIds = slot0.viewParam.heroId or nil
-	slot0._actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0
 
-	slot0:refreshUI()
+	arg_7_0._showType, var_7_0 = arg_7_0.viewParam.showType, arg_7_0.viewParam.actId
+	arg_7_0._needShowHeroIds = arg_7_0.viewParam.heroId or nil
+	arg_7_0._actId = var_7_0
+
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = slot0._showType == slot0.DISPLAY_TYPE.Reward
+function var_0_0.refreshUI(arg_8_0)
+	local var_8_0 = arg_8_0._showType == arg_8_0.DISPLAY_TYPE.Effect
+	local var_8_1 = arg_8_0._showType == arg_8_0.DISPLAY_TYPE.Reward
 
-	if slot0._showType == slot0.DISPLAY_TYPE.Effect then
-		slot0:_refreshDestinyInfo()
-	elseif slot2 then
-		slot0:_refreshReward()
+	if var_8_0 then
+		arg_8_0:_refreshDestinyInfo()
+	elseif var_8_1 then
+		arg_8_0:_refreshReward()
 	end
 
-	gohelper.setActive(slot0._goeffect, slot1)
-	gohelper.setActive(slot0._goreward, slot2)
+	gohelper.setActive(arg_8_0._goeffect, var_8_0)
+	gohelper.setActive(arg_8_0._goreward, var_8_1)
 end
 
-function slot0._refreshReward(slot0)
-	if Activity125Model.instance:getById(slot0._actId) == nil then
+function var_0_0._refreshReward(arg_9_0)
+	local var_9_0 = Activity125Model.instance:getById(arg_9_0._actId)
+
+	if var_9_0 == nil then
 		return
 	end
 
-	if slot1:getEpisodeList() == nil or #slot2 <= 0 then
+	local var_9_1 = var_9_0:getEpisodeList()
+
+	if var_9_1 == nil or #var_9_1 <= 0 then
 		return
 	end
 
-	if not string.nilorempty(slot1.config[slot2[1].id].bonus) then
-		slot8 = #slot0._rewardItemList
+	local var_9_2 = var_9_1[1].id
+	local var_9_3 = var_9_0.config[var_9_2].bonus
 
-		for slot12 = 1, #string.split(slot5, "|") do
-			slot13 = nil
+	if not string.nilorempty(var_9_3) then
+		local var_9_4 = string.split(var_9_3, "|")
+		local var_9_5 = #var_9_4
+		local var_9_6 = #arg_9_0._rewardItemList
 
-			if slot12 <= slot8 then
-				slot13 = slot0._rewardItemList[slot12]
+		for iter_9_0 = 1, var_9_5 do
+			local var_9_7
+
+			if iter_9_0 <= var_9_6 then
+				var_9_7 = arg_9_0._rewardItemList[iter_9_0]
 			else
-				table.insert(slot0._rewardItemList, MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gorewarditem, slot0._gocontent), VersionActivity2_3NewCultivationRewardItem))
+				local var_9_8 = gohelper.clone(arg_9_0._gorewarditem, arg_9_0._gocontent)
+
+				var_9_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_8, VersionActivity2_3NewCultivationRewardItem)
+
+				table.insert(arg_9_0._rewardItemList, var_9_7)
 			end
 
-			slot15 = string.splitToNumber(slot6[slot12], "#")
+			local var_9_9 = var_9_4[iter_9_0]
+			local var_9_10 = string.splitToNumber(var_9_9, "#")
 
-			slot13:setEnable(true)
-			slot13:onUpdateMO(slot15[1], slot15[2], slot15[3])
+			var_9_7:setEnable(true)
+			var_9_7:onUpdateMO(var_9_10[1], var_9_10[2], var_9_10[3])
 		end
 
-		if slot7 < slot8 then
-			for slot12 = slot7 + 1, slot8 do
-				slot0._rewardItemList[slot12]:setEnable(true)
+		if var_9_5 < var_9_6 then
+			for iter_9_1 = var_9_5 + 1, var_9_6 do
+				arg_9_0._rewardItemList[iter_9_1]:setEnable(true)
 			end
 		end
 	end
 end
 
-function slot0._refreshDestinyInfo(slot0)
-	slot0:_refreshRoleInfo()
+function var_0_0._refreshDestinyInfo(arg_10_0)
+	arg_10_0:_refreshRoleInfo()
 end
 
-function slot0.onSelectRoleItem(slot0, slot1)
-	if slot0._roleId and slot0._roleId == slot1 then
+function var_0_0.onSelectRoleItem(arg_11_0, arg_11_1)
+	if arg_11_0._roleId and arg_11_0._roleId == arg_11_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._roleItemList) do
-		slot6:refreshSelect(slot1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._roleItemList) do
+		iter_11_1:refreshSelect(arg_11_1)
 	end
 
-	slot0._roleId = slot1
+	arg_11_0._roleId = arg_11_1
 
-	slot0:_refreshEffectInfo(slot1)
+	arg_11_0:_refreshEffectInfo(arg_11_1)
 end
 
-function slot0._refreshRoleInfo(slot0)
-	slot1 = CharacterDestinyConfig.instance:getAllDestinyConfigList()
+function var_0_0._refreshRoleInfo(arg_12_0)
+	local var_12_0 = CharacterDestinyConfig.instance:getAllDestinyConfigList()
 
-	if slot0._needShowHeroIds ~= nil then
-		slot2 = {}
+	if arg_12_0._needShowHeroIds ~= nil then
+		local var_12_1 = {}
 
-		for slot6, slot7 in ipairs(slot1) do
-			for slot11, slot12 in ipairs(slot0._needShowHeroIds) do
-				if slot7.heroId == slot12 then
-					table.insert(slot2, slot7)
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			for iter_12_2, iter_12_3 in ipairs(arg_12_0._needShowHeroIds) do
+				if iter_12_1.heroId == iter_12_3 then
+					table.insert(var_12_1, iter_12_1)
 				end
 			end
 		end
 
-		slot1 = slot2
+		var_12_0 = var_12_1
 	end
 
-	if #slot1 <= 0 then
+	local var_12_2 = #var_12_0
+
+	if var_12_2 <= 0 then
 		return
 	end
 
-	for slot7 = 1, slot2 do
-		slot8 = nil
+	local var_12_3 = #arg_12_0._roleItemList
 
-		if #slot0._roleItemList < slot7 then
-			slot9 = gohelper.clone(slot0._goroleitem, slot0._goroleitemcontent)
+	for iter_12_4 = 1, var_12_2 do
+		local var_12_4
 
-			gohelper.setActive(slot9, true)
+		if var_12_3 < iter_12_4 then
+			local var_12_5 = gohelper.clone(arg_12_0._goroleitem, arg_12_0._goroleitemcontent)
 
-			slot8 = MonoHelper.addNoUpdateLuaComOnceToGo(slot9, VersionActivity2_3NewCultivationRoleItem)
+			gohelper.setActive(var_12_5, true)
 
-			slot8:init(slot9)
-			table.insert(slot0._roleItemList, slot8)
+			var_12_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_5, VersionActivity2_3NewCultivationRoleItem)
+
+			var_12_4:init(var_12_5)
+			table.insert(arg_12_0._roleItemList, var_12_4)
 		else
-			slot8 = slot0._roleItemList[slot7]
+			var_12_4 = arg_12_0._roleItemList[iter_12_4]
 		end
 
-		slot8:setData(slot1[slot7])
-		slot8:setClickCallBack(slot0.onSelectRoleItem, slot0)
+		local var_12_6 = var_12_0[iter_12_4]
+
+		var_12_4:setData(var_12_6)
+		var_12_4:setClickCallBack(arg_12_0.onSelectRoleItem, arg_12_0)
 	end
 
-	slot0:onSelectRoleItem(slot1[1].heroId)
+	local var_12_7 = var_12_0[1]
+
+	arg_12_0:onSelectRoleItem(var_12_7.heroId)
 end
 
-function slot0._refreshEffectInfo(slot0, slot1)
-	if CharacterDestinyConfig.instance:getHeroDestiny(slot1) == nil then
+function var_0_0._refreshEffectInfo(arg_13_0, arg_13_1)
+	local var_13_0 = CharacterDestinyConfig.instance:getHeroDestiny(arg_13_1)
+
+	if var_13_0 == nil then
 		return
 	end
 
-	if string.splitToNumber(slot2.facetsId, "#") == nil then
+	local var_13_1 = string.splitToNumber(var_13_0.facetsId, "#")
+
+	if var_13_1 == nil then
 		return
 	end
 
-	slot4 = #slot3
-	slot5 = #slot0._destinyEffectItemList
+	local var_13_2 = #var_13_1
+	local var_13_3 = #arg_13_0._destinyEffectItemList
 
-	for slot9, slot10 in ipairs(slot3) do
-		slot11 = nil
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		local var_13_4
 
-		if slot5 < slot9 then
-			slot12 = gohelper.clone(slot0._goeffectitem, slot0._godestinycontent)
-			slot11 = MonoHelper.addNoUpdateLuaComOnceToGo(slot12, VersionActivity2_3NewCultivationDestinyItem)
+		if var_13_3 < iter_13_0 then
+			local var_13_5 = gohelper.clone(arg_13_0._goeffectitem, arg_13_0._godestinycontent)
 
-			table.insert(slot0._destinyEffectItemList, slot11)
-			slot11:init(slot12)
+			var_13_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_5, VersionActivity2_3NewCultivationDestinyItem)
+
+			table.insert(arg_13_0._destinyEffectItemList, var_13_4)
+			var_13_4:init(var_13_5)
 		else
-			slot11 = slot0._destinyEffectItemList[slot9]
+			var_13_4 = arg_13_0._destinyEffectItemList[iter_13_0]
 		end
 
-		slot11:SetActive(true)
-		slot11:setData(slot1, slot10)
+		var_13_4:SetActive(true)
+		var_13_4:setData(arg_13_1, iter_13_1)
 	end
 
-	if slot4 < slot5 then
-		for slot9 = slot4 + 1, slot5 do
-			slot0._destinyEffectItemList[slot9]:SetActive(false)
+	if var_13_2 < var_13_3 then
+		for iter_13_2 = var_13_2 + 1, var_13_3 do
+			arg_13_0._destinyEffectItemList[iter_13_2]:SetActive(false)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

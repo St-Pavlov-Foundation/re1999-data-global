@@ -1,79 +1,86 @@
-module("modules.logic.rouge.view.RougeCollectionEnchantIconItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionEnchantIconItem", package.seeall)
 
-slot0 = class("RougeCollectionEnchantIconItem", RougeCollectionIconItem)
+local var_0_0 = class("RougeCollectionEnchantIconItem", RougeCollectionIconItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._holeImageTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._holeImageTab = arg_4_0:getUserDataTb_()
 
-	slot0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, slot0.updateEnchantInfo, slot0)
+	arg_4_0:addEventCb(RougeCollectionEnchantController.instance, RougeEvent.UpdateCollectionEnchant, arg_4_0.updateEnchantInfo, arg_4_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1.cfgId)
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	var_0_0.super.onUpdateMO(arg_5_0, arg_5_1.cfgId)
 
-	slot0._mo = slot1
+	arg_5_0._mo = arg_5_1
 
-	slot0:refreshAllHoles()
+	arg_5_0:refreshAllHoles()
 end
 
-function slot0.refreshAllHoles(slot0)
-	slot1 = slot0._collectionCfg and slot0._collectionCfg.holeNum or 0
+function var_0_0.refreshAllHoles(arg_6_0)
+	local var_6_0 = arg_6_0._collectionCfg and arg_6_0._collectionCfg.holeNum or 0
 
-	gohelper.setActive(slot0._goholetool, slot1 > 0)
+	gohelper.setActive(arg_6_0._goholetool, var_6_0 > 0)
 
-	if slot1 > 0 then
-		gohelper.CreateObjList(slot0, slot0.refrehHole, slot0._mo:getAllEnchantId() or {}, slot0._goholetool, slot0._goholeitem)
+	if var_6_0 > 0 then
+		local var_6_1 = arg_6_0._mo:getAllEnchantId() or {}
+
+		gohelper.CreateObjList(arg_6_0, arg_6_0.refrehHole, var_6_1, arg_6_0._goholetool, arg_6_0._goholeitem)
 	end
 end
 
-function slot0.refrehHole(slot0, slot1, slot2, slot3)
-	slot6 = slot2 and slot2 > 0
+function var_0_0.refrehHole(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = gohelper.findChild(arg_7_1, "go_none")
+	local var_7_1 = gohelper.findChild(arg_7_1, "go_get")
+	local var_7_2 = arg_7_2 and arg_7_2 > 0
 
-	gohelper.setActive(gohelper.findChild(slot1, "go_get"), slot6)
-	gohelper.setActive(gohelper.findChild(slot1, "go_none"), not slot6)
+	gohelper.setActive(var_7_1, var_7_2)
+	gohelper.setActive(var_7_0, not var_7_2)
 
-	if not slot6 then
+	if not var_7_2 then
 		return
 	end
 
-	slot7 = gohelper.findChildSingleImage(slot1, "go_get/image_enchanticon")
-	slot8, slot9 = slot0._mo:getEnchantIdAndCfgId(slot3)
+	local var_7_3 = gohelper.findChildSingleImage(arg_7_1, "go_get/image_enchanticon")
+	local var_7_4, var_7_5 = arg_7_0._mo:getEnchantIdAndCfgId(arg_7_3)
+	local var_7_6 = RougeCollectionHelper.getCollectionIconUrl(var_7_5)
 
-	slot7:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot9))
+	var_7_3:LoadImage(var_7_6)
 
-	slot0._holeImageTab[slot7] = true
+	arg_7_0._holeImageTab[var_7_3] = true
 end
 
-function slot0.updateEnchantInfo(slot0, slot1)
-	if not slot0._mo or slot0._mo.id ~= slot1 then
+function var_0_0.updateEnchantInfo(arg_8_0, arg_8_1)
+	if not arg_8_0._mo or arg_8_0._mo.id ~= arg_8_1 then
 		return
 	end
 
-	slot0:refreshAllHoles()
+	arg_8_0:refreshAllHoles()
 end
 
-function slot0.destroy(slot0)
-	if slot0._holeImageTab then
-		for slot4, slot5 in pairs(slot0._holeImageTab) do
-			slot4:UnLoadImage()
+function var_0_0.destroy(arg_9_0)
+	if arg_9_0._holeImageTab then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._holeImageTab) do
+			iter_9_0:UnLoadImage()
 		end
 	end
 
-	uv0.super.destroy(slot0)
+	var_0_0.super.destroy(arg_9_0)
 end
 
-return slot0
+return var_0_0

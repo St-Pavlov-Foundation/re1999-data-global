@@ -1,105 +1,112 @@
-module("modules.logic.room.entity.RoomEmptyBlockEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomEmptyBlockEntity", package.seeall)
 
-slot0 = class("RoomEmptyBlockEntity", RoomBaseBlockEntity)
+local var_0_0 = class("RoomEmptyBlockEntity", RoomBaseBlockEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0._nearWaveList = {}
-	slot0._nearRiverList = {}
+	arg_1_0._nearWaveList = {}
+	arg_1_0._nearRiverList = {}
 
-	for slot5 = 1, 6 do
-		table.insert(slot0._nearWaveList, false)
-		table.insert(slot0._nearRiverList, false)
+	for iter_1_0 = 1, 6 do
+		table.insert(arg_1_0._nearWaveList, false)
+		table.insert(arg_1_0._nearRiverList, false)
 	end
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.RoomEmptyBlock
 end
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_3_0, arg_3_1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 end
 
-function slot0.initComponents(slot0)
-	uv0.super.initComponents(slot0)
+function var_0_0.initComponents(arg_4_0)
+	var_0_0.super.initComponents(arg_4_0)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
 end
 
-function slot0.refreshLand(slot0)
-	slot0:refreshWater()
-	slot0:refreshWaveEffect()
+function var_0_0.refreshLand(arg_6_0)
+	arg_6_0:refreshWater()
+	arg_6_0:refreshWaveEffect()
 end
 
-function slot0.refreshWater(slot0)
+function var_0_0.refreshWater(arg_7_0)
+	return
 end
 
-function slot0.refreshBlock(slot0)
-	uv0.super.refreshBlock(slot0)
+function var_0_0.refreshBlock(arg_8_0)
+	var_0_0.super.refreshBlock(arg_8_0)
 end
 
-function slot0.refreshWaveEffect(slot0)
-	slot2 = slot0:getMO().hexPoint
-	slot3 = slot0._nearWaveList
-	slot4 = slot0._nearRiverList
+function var_0_0.refreshWaveEffect(arg_9_0)
+	local var_9_0 = arg_9_0:getMO().hexPoint
+	local var_9_1 = arg_9_0._nearWaveList
+	local var_9_2 = arg_9_0._nearRiverList
+	local var_9_3 = RoomMapBlockModel.instance
 
-	for slot9 = 1, 6 do
-		slot10 = HexPoint.directions[slot9]
-		slot11 = false
-		slot12 = false
+	for iter_9_0 = 1, 6 do
+		local var_9_4 = HexPoint.directions[iter_9_0]
+		local var_9_5 = false
+		local var_9_6 = false
+		local var_9_7 = var_9_3:getBlockMO(var_9_0.x + var_9_4.x, var_9_0.y + var_9_4.y)
 
-		if RoomMapBlockModel.instance:getBlockMO(slot2.x + slot10.x, slot2.y + slot10.y) and slot13:isInMapBlock() then
-			slot11 = true
-			slot12 = slot13:hasRiver(true)
+		if var_9_7 and var_9_7:isInMapBlock() then
+			var_9_5 = true
+			var_9_6 = var_9_7:hasRiver(true)
 		end
 
-		slot3[slot9] = slot11
-		slot4[slot9] = slot12
+		var_9_1[iter_9_0] = var_9_5
+		var_9_2[iter_9_0] = var_9_6
 	end
 
-	slot6, slot7, slot8 = RoomWaveHelper.getWaveList(slot3, slot4)
-	slot9 = false
-	slot10 = RoomEnum.EffectKey.BlockWaveEffectKeys
+	local var_9_8, var_9_9, var_9_10 = RoomWaveHelper.getWaveList(var_9_1, var_9_2)
+	local var_9_11 = false
+	local var_9_12 = RoomEnum.EffectKey.BlockWaveEffectKeys
 
-	for slot14 = 1, #slot6 do
-		if not slot0.effect:isSameResByKey(slot10[slot14], slot6[slot14]) then
-			slot0.effect:addParams({
-				[slot10[slot14]] = {
-					res = slot15,
-					ab = slot8[slot14],
-					localRotation = Vector3(0, (slot7[slot14] - 1) * 60, 0)
+	for iter_9_1 = 1, #var_9_8 do
+		local var_9_13 = var_9_8[iter_9_1]
+		local var_9_14 = var_9_10[iter_9_1]
+		local var_9_15 = var_9_9[iter_9_1]
+
+		if not arg_9_0.effect:isSameResByKey(var_9_12[iter_9_1], var_9_13) then
+			arg_9_0.effect:addParams({
+				[var_9_12[iter_9_1]] = {
+					res = var_9_13,
+					ab = var_9_14,
+					localRotation = Vector3(0, (var_9_15 - 1) * 60, 0)
 				}
 			})
 
-			slot9 = true
+			var_9_11 = true
 		end
 	end
 
-	for slot14 = #slot6 + 1, 6 do
-		if slot0.effect:getEffectRes(slot10[slot14]) then
-			slot0.effect:removeParams({
-				slot10[slot14]
+	for iter_9_2 = #var_9_8 + 1, 6 do
+		if arg_9_0.effect:getEffectRes(var_9_12[iter_9_2]) then
+			arg_9_0.effect:removeParams({
+				var_9_12[iter_9_2]
 			})
 
-			slot9 = true
+			var_9_11 = true
 		end
 	end
 
-	if slot9 then
-		slot0.effect:refreshEffect()
+	if var_9_11 then
+		arg_9_0.effect:refreshEffect()
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	uv0.super.beforeDestroy(slot0)
+function var_0_0.beforeDestroy(arg_10_0)
+	var_0_0.super.beforeDestroy(arg_10_0)
 end
 
-function slot0.getMO(slot0)
-	return RoomMapBlockModel.instance:getEmptyBlockMOById(slot0.id)
+function var_0_0.getMO(arg_11_0)
+	return RoomMapBlockModel.instance:getEmptyBlockMOById(arg_11_0.id)
 end
 
-return slot0
+return var_0_0

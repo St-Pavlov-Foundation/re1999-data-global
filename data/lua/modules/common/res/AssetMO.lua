@@ -1,79 +1,82 @@
-module("modules.common.res.AssetMO", package.seeall)
+﻿module("modules.common.res.AssetMO", package.seeall)
 
-slot0 = class("AssetMO")
+local var_0_0 = class("AssetMO")
 
-function slot0.ctor(slot0, slot1)
-	slot0:setAssetItem(slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:setAssetItem(arg_1_1)
 end
 
-function slot0.setAssetItem(slot0, slot1)
-	slot0._refCount = 0
-	slot0.IsLoadSuccess = slot1.IsLoadSuccess
-	slot0._url = slot1.AssetUrl
-	slot0._assetItem = slot1
+function var_0_0.setAssetItem(arg_2_0, arg_2_1)
+	arg_2_0._refCount = 0
+	arg_2_0.IsLoadSuccess = arg_2_1.IsLoadSuccess
+	arg_2_0._url = arg_2_1.AssetUrl
+	arg_2_0._assetItem = arg_2_1
 
-	slot0._assetItem:Retain()
+	arg_2_0._assetItem:Retain()
 end
 
-function slot0.getUrl(slot0)
-	return slot0._url
+function var_0_0.getUrl(arg_3_0)
+	return arg_3_0._url
 end
 
-function slot0.getResource(slot0, slot1, slot2)
-	if slot0.IsLoadSuccess then
-		slot0:_addRef()
+function var_0_0.getResource(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0.IsLoadSuccess then
+		arg_4_0:_addRef()
 
-		return slot0._assetItem:GetResource(slot1, slot2)
+		return arg_4_0._assetItem:GetResource(arg_4_1, arg_4_2)
 	end
 end
 
-function slot0.getInstance(slot0, slot1, slot2, slot3, slot4)
-	if slot0.IsLoadSuccess then
-		slot6 = gohelper.clone(slot0._assetItem:GetResource(slot1, slot2), slot3, slot4)
-		slot6:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function var_0_0.getInstance(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	if arg_5_0.IsLoadSuccess then
+		local var_5_0 = arg_5_0._assetItem:GetResource(arg_5_1, arg_5_2)
+		local var_5_1 = gohelper.clone(var_5_0, arg_5_3, arg_5_4)
+		local var_5_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, AssetInstanceComp)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(slot6, AssetInstanceComp):setAsset(slot0)
-		slot0:_addRef()
+		var_5_1:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 
-		return slot6
+		var_5_2:setAsset(arg_5_0)
+		arg_5_0:_addRef()
+
+		return var_5_1
 	end
 end
 
-function slot0.canRelease(slot0)
-	return slot0._refCount <= 0
+function var_0_0.canRelease(arg_6_0)
+	return arg_6_0._refCount <= 0
 end
 
-function slot0.release(slot0)
-	slot0:_subRef()
+function var_0_0.release(arg_7_0)
+	arg_7_0:_subRef()
 end
 
-function slot0.tryDispose(slot0)
-	slot0:_dispose()
+function var_0_0.tryDispose(arg_8_0)
+	arg_8_0:_dispose()
 end
 
-function slot0._dispose(slot0)
-	ResMgr.removeAsset(slot0)
-	slot0._assetItem:Release()
-	slot0:_clearItem(slot0._assetItem)
+function var_0_0._dispose(arg_9_0)
+	ResMgr.removeAsset(arg_9_0)
+	arg_9_0._assetItem:Release()
+	arg_9_0:_clearItem(arg_9_0._assetItem)
 
-	slot0._assetItem = nil
-	slot0._refCount = 0
+	arg_9_0._assetItem = nil
+	arg_9_0._refCount = 0
 
-	logWarn(string.format("lua释放资源给C#——→%s", slot0._url))
+	logWarn(string.format("lua释放资源给C#——→%s", arg_9_0._url))
 end
 
-function slot0._clearItem(slot0, slot1)
-	if slot1.ReferenceCount == 1 then
-		SLFramework.ResMgr.Instance:ClearItem(slot1)
+function var_0_0._clearItem(arg_10_0, arg_10_1)
+	if arg_10_1.ReferenceCount == 1 then
+		SLFramework.ResMgr.Instance:ClearItem(arg_10_1)
 	end
 end
 
-function slot0._addRef(slot0)
-	slot0._refCount = slot0._refCount + 1
+function var_0_0._addRef(arg_11_0)
+	arg_11_0._refCount = arg_11_0._refCount + 1
 end
 
-function slot0._subRef(slot0)
-	slot0._refCount = slot0._refCount - 1
+function var_0_0._subRef(arg_12_0)
+	arg_12_0._refCount = arg_12_0._refCount - 1
 end
 
-return slot0
+return var_0_0

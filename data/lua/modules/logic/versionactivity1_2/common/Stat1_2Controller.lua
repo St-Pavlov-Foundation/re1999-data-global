@@ -1,45 +1,48 @@
-module("modules.logic.versionactivity1_2.common.Stat1_2Controller", package.seeall)
+﻿module("modules.logic.versionactivity1_2.common.Stat1_2Controller", package.seeall)
 
-slot0 = class("Stat1_2Controller")
+local var_0_0 = class("Stat1_2Controller")
 
-function slot0.yaXianStatStart(slot0)
-	slot0.yaXianStartTime = ServerTime.now()
+function var_0_0.yaXianStatStart(arg_1_0)
+	arg_1_0.yaXianStartTime = ServerTime.now()
 end
 
-function slot0.yaXianStatEnd(slot0, slot1)
-	if not slot0.yaXianStartTime then
+function var_0_0.yaXianStatEnd(arg_2_0, arg_2_1)
+	if not arg_2_0.yaXianStartTime then
 		return
 	end
 
-	if slot0.waitingRpc then
+	if arg_2_0.waitingRpc then
 		return
 	end
 
-	slot0.useTime = ServerTime.now() - slot0.yaXianStartTime
-	slot0.mapId = YaXianGameModel.instance:getMapId()
-	slot0.round = YaXianGameModel.instance:getRound()
-	slot0.goalNum = YaXianGameModel.instance:getFinishConditionCount()
-	slot0.episodeId = YaXianGameModel.instance:getEpisodeId()
-	slot0.result = slot1
-	slot0.waitingRpc = true
+	arg_2_0.useTime = ServerTime.now() - arg_2_0.yaXianStartTime
+	arg_2_0.mapId = YaXianGameModel.instance:getMapId()
+	arg_2_0.round = YaXianGameModel.instance:getRound()
+	arg_2_0.goalNum = YaXianGameModel.instance:getFinishConditionCount()
+	arg_2_0.episodeId = YaXianGameModel.instance:getEpisodeId()
+	arg_2_0.result = arg_2_1
+	arg_2_0.waitingRpc = true
 
-	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianEnum.ActivityId, slot0._onReceiveMsg, slot0)
+	Activity115Rpc.instance:sendGetAct115InfoRequest(YaXianEnum.ActivityId, arg_2_0._onReceiveMsg, arg_2_0)
 end
 
-function slot0._onReceiveMsg(slot0)
-	slot0.yaXianStartTime = nil
-	slot0.waitingRpc = false
+function var_0_0._onReceiveMsg(arg_3_0)
+	local var_3_0 = YaXianModel.instance:getEpisodeMo(arg_3_0.episodeId)
+	local var_3_1 = var_3_0 and var_3_0.totalCount or 0
+
+	arg_3_0.yaXianStartTime = nil
+	arg_3_0.waitingRpc = false
 
 	StatController.instance:track(StatEnum.EventName.ExitYaXian, {
-		[StatEnum.EventProperties.UseTime] = slot0.useTime,
-		[StatEnum.EventProperties.MapId] = tostring(slot0.mapId),
-		[StatEnum.EventProperties.ChallengesNum] = YaXianModel.instance:getEpisodeMo(slot0.episodeId) and slot1.totalCount or 0,
-		[StatEnum.EventProperties.RoundNum] = slot0.round,
-		[StatEnum.EventProperties.GoalNum] = slot0.goalNum,
-		[StatEnum.EventProperties.Result] = slot0.result
+		[StatEnum.EventProperties.UseTime] = arg_3_0.useTime,
+		[StatEnum.EventProperties.MapId] = tostring(arg_3_0.mapId),
+		[StatEnum.EventProperties.ChallengesNum] = var_3_1,
+		[StatEnum.EventProperties.RoundNum] = arg_3_0.round,
+		[StatEnum.EventProperties.GoalNum] = arg_3_0.goalNum,
+		[StatEnum.EventProperties.Result] = arg_3_0.result
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,35 +1,37 @@
-module("modules.logic.fight.system.work.FightWork1_2ClueTips", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWork1_2ClueTips", package.seeall)
 
-slot0 = class("FightWork1_2ClueTips", BaseWork)
+local var_0_0 = class("FightWork1_2ClueTips", BaseWork)
 
-function slot0.onStart(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.onStart(arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
 
-	slot0._data = VersionActivity1_2NoteModel.instance:getClueData()
+	arg_1_0._data = VersionActivity1_2NoteModel.instance:getClueData()
 
-	slot0:_showView()
+	arg_1_0:_showView()
 end
 
-function slot0._showView(slot0)
-	if slot0._data and #slot0._data > 0 then
-		if table.remove(slot0._data, 1).id ~= 101 and slot1.id ~= 204 then
-			ViewMgr.instance:openView(ViewName.VersionActivity_1_2_DungeonMapNoteView, slot1)
+function var_0_0._showView(arg_2_0)
+	if arg_2_0._data and #arg_2_0._data > 0 then
+		local var_2_0 = table.remove(arg_2_0._data, 1)
+
+		if var_2_0.id ~= 101 and var_2_0.id ~= 204 then
+			ViewMgr.instance:openView(ViewName.VersionActivity_1_2_DungeonMapNoteView, var_2_0)
 		else
-			slot0:_showView()
+			arg_2_0:_showView()
 		end
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.VersionActivity_1_2_DungeonMapNoteView then
-		slot0:_showView()
+function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
+	if arg_3_1 == ViewName.VersionActivity_1_2_DungeonMapNoteView then
+		arg_3_0:_showView()
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.clearWork(arg_4_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

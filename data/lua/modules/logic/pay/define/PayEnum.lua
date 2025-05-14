@@ -1,7 +1,8 @@
-module("modules.logic.pay.define.PayEnum", package.seeall)
+﻿module("modules.logic.pay.define.PayEnum", package.seeall)
 
-slot0 = _M
-slot0.PayResultCode = {
+local var_0_0 = _M
+
+var_0_0.PayResultCode = {
 	PayCancel = 901,
 	PayOrderCancel = 904,
 	PayError = 903,
@@ -9,7 +10,7 @@ slot0.PayResultCode = {
 	PayFinish = 200,
 	PayChannelFail = 905
 }
-slot0.CurrencyCode = {
+var_0_0.CurrencyCode = {
 	DKK = "DKK",
 	CNY = "CNY",
 	GBP = "GBP",
@@ -55,17 +56,17 @@ slot0.CurrencyCode = {
 	CAD = "CAD",
 	PLN = "PLN"
 }
-slot0.CurrencySymbol = {
-	[slot0.CurrencyCode.USD] = "US$",
-	[slot0.CurrencyCode.KRW] = "₩",
-	[slot0.CurrencyCode.JPY] = "¥",
-	[slot0.CurrencyCode.EUR] = "€"
+var_0_0.CurrencySymbol = {
+	[var_0_0.CurrencyCode.USD] = "US$",
+	[var_0_0.CurrencyCode.KRW] = "₩",
+	[var_0_0.CurrencyCode.JPY] = "¥",
+	[var_0_0.CurrencyCode.EUR] = "€"
 }
-slot0.NoDecimalsCurrency = {
-	[slot0.CurrencyCode.JPY] = true,
-	[slot0.CurrencyCode.HKD] = true,
-	[slot0.CurrencyCode.TWD] = true,
-	[slot0.CurrencyCode.KRW] = true
+var_0_0.NoDecimalsCurrency = {
+	[var_0_0.CurrencyCode.JPY] = true,
+	[var_0_0.CurrencyCode.HKD] = true,
+	[var_0_0.CurrencyCode.TWD] = true,
+	[var_0_0.CurrencyCode.KRW] = true
 }
 
-return slot0
+return var_0_0

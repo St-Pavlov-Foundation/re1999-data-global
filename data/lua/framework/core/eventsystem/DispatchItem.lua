@@ -1,42 +1,42 @@
-module("framework.core.eventsystem.DispatchItem", package.seeall)
+﻿module("framework.core.eventsystem.DispatchItem", package.seeall)
 
-slot0 = class("DispatchItem")
+local var_0_0 = class("DispatchItem")
 
-function slot0.createPool()
-	uv0._pool = LuaObjPool.New(32, uv0._poolNew, uv0._poolRelease, uv0._poolReset)
+function var_0_0.createPool()
+	var_0_0._pool = LuaObjPool.New(32, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
 end
 
-function slot0.getPool()
-	if uv0._pool == nil then
-		uv0.createPool()
+function var_0_0.getPool()
+	if var_0_0._pool == nil then
+		var_0_0.createPool()
 	end
 
-	return uv0._pool
+	return var_0_0._pool
 end
 
-function slot0._poolNew()
-	return uv0.New()
+function var_0_0._poolNew()
+	return var_0_0.New()
 end
 
-function slot0._poolRelease(slot0)
-	slot0:release()
+function var_0_0._poolRelease(arg_4_0)
+	arg_4_0:release()
 end
 
-function slot0._poolReset(slot0)
-	slot0:reset()
+function var_0_0._poolReset(arg_5_0)
+	arg_5_0:reset()
 end
 
-function slot0.ctor(slot0)
-	slot0:reset()
+function var_0_0.ctor(arg_6_0)
+	arg_6_0:reset()
 end
 
-function slot0.release(slot0)
-	slot0:reset()
+function var_0_0.release(arg_7_0)
+	arg_7_0:reset()
 end
 
-function slot0.reset(slot0)
-	slot0.eventName = nil
-	slot0.eventArgs = nil
+function var_0_0.reset(arg_8_0)
+	arg_8_0.eventName = nil
+	arg_8_0.eventArgs = nil
 end
 
-return slot0
+return var_0_0

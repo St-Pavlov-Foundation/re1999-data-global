@@ -1,53 +1,61 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGamePackListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGamePackListModel", package.seeall)
 
-slot0 = class("AiZiLaGamePackListModel", ListScrollModel)
+local var_0_0 = class("AiZiLaGamePackListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	slot1 = {}
+function var_0_0.init(arg_1_0)
+	local var_1_0 = {}
 
-	tabletool.addValues(slot1, AiZiLaGameModel.instance:getItemList())
+	tabletool.addValues(var_1_0, AiZiLaGameModel.instance:getItemList())
 
-	if #slot1 > 1 then
-		table.sort(slot1, uv0.sortFunc)
+	if #var_1_0 > 1 then
+		table.sort(var_1_0, var_0_0.sortFunc)
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	if slot0:getConfig().rare ~= slot1:getConfig().rare then
-		return slot3.rare < slot2.rare
+function var_0_0.sortFunc(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getConfig()
+	local var_2_1 = arg_2_1:getConfig()
+
+	if var_2_0.rare ~= var_2_1.rare then
+		return var_2_0.rare > var_2_1.rare
 	end
 
-	if slot0:getQuantity() ~= slot1:getQuantity() then
-		return slot5 < slot4
+	local var_2_2 = arg_2_0:getQuantity()
+	local var_2_3 = arg_2_1:getQuantity()
+
+	if var_2_2 ~= var_2_3 then
+		return var_2_3 < var_2_2
 	end
 
-	if slot0.itemId ~= slot1.itemId then
-		return slot0.itemId < slot1.itemId
-	end
-end
-
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._scrollViews) do
-		slot6:setSelect(slot0:getById(slot0._selectItemId))
+	if arg_2_0.itemId ~= arg_2_1.itemId then
+		return arg_2_0.itemId < arg_2_1.itemId
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectItemId = slot1
+function var_0_0._refreshSelect(arg_3_0)
+	local var_3_0 = arg_3_0:getById(arg_3_0._selectItemId)
 
-	slot0:_refreshSelect()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._scrollViews) do
+		iter_3_1:setSelect(var_3_0)
+	end
 end
 
-function slot0.getSelect(slot0)
-	return slot0._selectItemId
+function var_0_0.setSelect(arg_4_0, arg_4_1)
+	arg_4_0._selectItemId = arg_4_1
+
+	arg_4_0:_refreshSelect()
 end
 
-function slot0.getSelectMO(slot0)
-	return slot0:getById(slot0._selectItemId)
+function var_0_0.getSelect(arg_5_0)
+	return arg_5_0._selectItemId
 end
 
-slot0.instance = slot0.New()
+function var_0_0.getSelectMO(arg_6_0)
+	return arg_6_0:getById(arg_6_0._selectItemId)
+end
 
-return slot0
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

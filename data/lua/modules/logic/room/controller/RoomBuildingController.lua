@@ -1,263 +1,299 @@
-module("modules.logic.room.controller.RoomBuildingController", package.seeall)
+﻿module("modules.logic.room.controller.RoomBuildingController", package.seeall)
 
-slot0 = class("RoomBuildingController", BaseController)
+local var_0_0 = class("RoomBuildingController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0._isBuildingListShow = false
-	slot0._pressBuildingUid = nil
-	slot0._pressBuildingHexPoint = nil
+function var_0_0.clear(arg_3_0)
+	arg_3_0._isBuildingListShow = false
+	arg_3_0._pressBuildingUid = nil
+	arg_3_0._pressBuildingHexPoint = nil
 end
 
-function slot0.addConstEvents(slot0)
-	uv0.instance:registerCallback(RoomEvent.GuideFocusBuilding, slot0._onGuideFocusBuilding, slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	var_0_0.instance:registerCallback(RoomEvent.GuideFocusBuilding, arg_4_0._onGuideFocusBuilding, arg_4_0)
 end
 
-function slot0._onGuideFocusBuilding(slot0, slot1)
-	slot0:focusBuilding(tonumber(slot1))
+function var_0_0._onGuideFocusBuilding(arg_5_0, arg_5_1)
+	arg_5_0:focusBuilding(tonumber(arg_5_1))
 end
 
-function slot0.pressBuildingUp(slot0, slot1, slot2)
-	if slot2 then
-		slot0._pressBuildingUid = slot2
+function var_0_0.pressBuildingUp(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_2 then
+		arg_6_0._pressBuildingUid = arg_6_2
 	end
 
-	if not slot0._pressBuildingUid then
+	if not arg_6_0._pressBuildingUid then
 		return
 	end
 
-	if not GameSceneMgr.instance:getCurScene().buildingmgr:getBuildingEntity(slot0._pressBuildingUid, SceneTag.RoomBuilding) then
+	local var_6_0 = GameSceneMgr.instance:getCurScene()
+	local var_6_1 = var_6_0.buildingmgr:getBuildingEntity(arg_6_0._pressBuildingUid, SceneTag.RoomBuilding)
+
+	if not var_6_1 then
 		return
 	end
 
-	if slot2 then
-		if not RoomMapBuildingModel.instance:getTempBuildingMO() or slot5.id ~= slot2 then
-			slot6 = RoomMapBuildingModel.instance:getBuildingMOById(slot2)
+	if arg_6_2 then
+		local var_6_2 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-			slot3.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
+		if not var_6_2 or var_6_2.id ~= arg_6_2 then
+			local var_6_3 = RoomMapBuildingModel.instance:getBuildingMOById(arg_6_2)
+
+			var_6_0.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
 				press = true,
-				buildingUid = slot2,
-				hexPoint = slot6.hexPoint,
-				rotate = slot6.rotate
+				buildingUid = arg_6_2,
+				hexPoint = var_6_3.hexPoint,
+				rotate = var_6_3.rotate
 			})
-		elseif slot5 then
-			slot0:addWaitRefreshBuildingNearBlock(slot5.buildingId, slot5.hexPoint, slot5.rotate)
+		elseif var_6_2 then
+			arg_6_0:addWaitRefreshBuildingNearBlock(var_6_2.buildingId, var_6_2.hexPoint, var_6_2.rotate)
 		end
 
-		slot4:tweenUp()
-		slot4:refreshBuilding()
-		RoomShowBuildingListModel.instance:setSelect(slot2)
+		var_6_1:tweenUp()
+		var_6_1:refreshBuilding()
+		RoomShowBuildingListModel.instance:setSelect(arg_6_2)
 	end
 
-	if not slot0._pressBuildingHexPoint then
-		slot0._pressBuildingHexPoint = RoomMapBuildingModel.instance:getTempBuildingMO().hexPoint
+	local var_6_4 = RoomMapBuildingModel.instance:getTempBuildingMO()
+
+	if not arg_6_0._pressBuildingHexPoint then
+		arg_6_0._pressBuildingHexPoint = var_6_4.hexPoint
 	end
 
-	slot6 = slot0._pressBuildingHexPoint
+	local var_6_5 = arg_6_0._pressBuildingHexPoint
+	local var_6_6 = RoomBendingHelper.screenPosToHex(arg_6_1)
 
-	if not RoomBendingHelper.screenPosToHex(slot1) then
+	if not var_6_6 then
 		return
 	end
 
-	slot0._pressBuildingHexPoint = slot7
+	arg_6_0._pressBuildingHexPoint = var_6_6
 
-	if slot6 ~= slot7 or slot2 then
+	if var_6_5 ~= var_6_6 or arg_6_2 then
 		RoomMapBuildingModel.instance:clearLightResourcePoint()
 		RoomMapBuildingModel.instance:clearTempOccupyDict()
-		RoomMapBuildingModel.instance:changeTempBuildingMO(slot7, slot5.rotate)
+		RoomMapBuildingModel.instance:changeTempBuildingMO(var_6_6, var_6_4.rotate)
 		RoomResourceModel.instance:clearLightResourcePoint()
-		slot0:refreshBuildingOccupy()
+		arg_6_0:refreshBuildingOccupy()
 	end
 
-	if RoomBendingHelper.screenToWorld(slot1) then
-		slot4:setLocalPos(slot8.x, 0, slot8.y)
+	local var_6_7 = RoomBendingHelper.screenToWorld(arg_6_1)
+
+	if var_6_7 then
+		var_6_1:setLocalPos(var_6_7.x, 0, var_6_7.y)
 	end
 
-	slot0:dispatchEvent(RoomEvent.PressBuildingUp)
-	slot0:_cancelDelayBuildingDown()
+	arg_6_0:dispatchEvent(RoomEvent.PressBuildingUp)
+	arg_6_0:_cancelDelayBuildingDown()
 end
 
-function slot0.refreshBuildingOccupy(slot0)
-	for slot6 = 1, RoomBuildingEnum.MaxBuildingOccupyNum do
-		if GameSceneMgr.instance:getCurScene().buildingmgr:spawnMapBuildingOccupy(slot6) then
-			slot7:refreshTempOccupy()
+function var_0_0.refreshBuildingOccupy(arg_7_0)
+	local var_7_0 = GameSceneMgr.instance:getCurScene()
+	local var_7_1 = RoomBuildingEnum.MaxBuildingOccupyNum
+
+	for iter_7_0 = 1, var_7_1 do
+		local var_7_2 = var_7_0.buildingmgr:spawnMapBuildingOccupy(iter_7_0)
+
+		if var_7_2 then
+			var_7_2:refreshTempOccupy()
 		end
 	end
 end
 
-function slot0.addWaitRefreshBuildingNearBlock(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0.addWaitRefreshBuildingNearBlock(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_2 then
 		return
 	end
 
-	slot0._waitMapBlockMOList, slot0._waitMapBlockMODict = RoomBlockHelper.getBlockMOListByPlaceBuilding(slot1, slot2, slot3, slot0._waitMapBlockMOList, slot0._waitMapBlockMODict)
+	local var_8_0 = arg_8_0._waitMapBlockMOList and #arg_8_0._waitMapBlockMOList or 0
 
-	if (slot0._waitMapBlockMOList and #slot0._waitMapBlockMOList or 0) <= 0 and slot0._waitMapBlockMOList and #slot0._waitMapBlockMOList > 0 then
-		TaskDispatcher.runDelay(slot0._runWaitRefreshBuildingNearBlock, slot0, 0.017)
+	arg_8_0._waitMapBlockMOList, arg_8_0._waitMapBlockMODict = RoomBlockHelper.getBlockMOListByPlaceBuilding(arg_8_1, arg_8_2, arg_8_3, arg_8_0._waitMapBlockMOList, arg_8_0._waitMapBlockMODict)
+
+	if var_8_0 <= 0 and arg_8_0._waitMapBlockMOList and #arg_8_0._waitMapBlockMOList > 0 then
+		TaskDispatcher.runDelay(arg_8_0._runWaitRefreshBuildingNearBlock, arg_8_0, 0.017)
 	end
 end
 
-function slot0._runWaitRefreshBuildingNearBlock(slot0)
-	if slot0._waitMapBlockMOList and #slot1 > 0 then
-		slot0._waitMapBlockMOList = nil
-		slot0._waitMapBlockMODict = nil
+function var_0_0._runWaitRefreshBuildingNearBlock(arg_9_0)
+	local var_9_0 = arg_9_0._waitMapBlockMOList
 
-		RoomMapController.instance:updateBlockReplaceDefineId(slot1)
+	if var_9_0 and #var_9_0 > 0 then
+		arg_9_0._waitMapBlockMOList = nil
+		arg_9_0._waitMapBlockMODict = nil
 
-		for slot5, slot6 in ipairs(slot1) do
-			slot6:refreshRiver()
+		RoomMapController.instance:updateBlockReplaceDefineId(var_9_0)
+
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			iter_9_1:refreshRiver()
 		end
 
-		if GameSceneMgr.instance:getCurScene().mapmgr then
-			for slot7, slot8 in ipairs(slot1) do
-				if slot3:getBlockEntity(slot8.id, SceneTag.RoomMapBlock) then
-					slot9:refreshLand()
-					slot9:refreshRotation()
+		local var_9_1 = GameSceneMgr.instance:getCurScene().mapmgr
+
+		if var_9_1 then
+			for iter_9_2, iter_9_3 in ipairs(var_9_0) do
+				local var_9_2 = var_9_1:getBlockEntity(iter_9_3.id, SceneTag.RoomMapBlock)
+
+				if var_9_2 then
+					var_9_2:refreshLand()
+					var_9_2:refreshRotation()
 				end
 			end
 		end
 	end
 end
 
-function slot0.getPressBuildingHexPoint(slot0)
-	return slot0._pressBuildingHexPoint
+function var_0_0.getPressBuildingHexPoint(arg_10_0)
+	return arg_10_0._pressBuildingHexPoint
 end
 
-function slot0.dropBuildingDown(slot0, slot1)
-	if not slot0._pressBuildingUid then
+function var_0_0.dropBuildingDown(arg_11_0, arg_11_1)
+	if not arg_11_0._pressBuildingUid then
 		return
 	end
 
-	if not RoomMapBuildingModel.instance:getBuildingMOById(slot0._pressBuildingUid) then
+	local var_11_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_11_0._pressBuildingUid)
+
+	if not var_11_0 then
 		return
 	end
 
-	slot3, slot4 = nil
+	local var_11_1
+	local var_11_2
+	local var_11_3 = arg_11_1 and RoomBendingHelper.screenPosToHex(arg_11_1)
 
-	if slot1 and RoomBendingHelper.screenPosToHex(slot1) then
-		slot3, slot4 = RoomBuildingHelper.getNearCanPlaceHexPoint(slot0._pressBuildingUid, slot5)
+	if var_11_3 then
+		var_11_1, var_11_2 = RoomBuildingHelper.getNearCanPlaceHexPoint(arg_11_0._pressBuildingUid, var_11_3)
 	end
 
-	slot3 = slot3 or slot2.hexPoint
-	slot4 = slot4 or slot2.rotate
+	var_11_1 = var_11_1 or var_11_0.hexPoint
+	var_11_2 = var_11_2 or var_11_0.rotate
 
-	slot0:cancelPressBuilding(slot3, slot4)
-	GameSceneMgr.instance:getCurScene().fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, {
+	local var_11_4 = GameSceneMgr.instance:getCurScene()
+	local var_11_5 = {
 		press = false,
-		hexPoint = slot3,
-		rotate = slot4
-	})
+		hexPoint = var_11_1,
+		rotate = var_11_2
+	}
+
+	arg_11_0:cancelPressBuilding(var_11_1, var_11_2)
+	var_11_4.fsm:triggerEvent(RoomSceneEvent.TryPlaceBuilding, var_11_5)
 end
 
-function slot0.cancelPressBuilding(slot0, slot1, slot2)
-	if not slot0._pressBuildingUid then
+function var_0_0.cancelPressBuilding(arg_12_0, arg_12_1, arg_12_2)
+	if not arg_12_0._pressBuildingUid then
 		return
 	end
 
-	slot4 = RoomMapBuildingModel.instance:getTempBuildingMO() and slot3.buildingId
+	local var_12_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local var_12_1 = var_12_0 and var_12_0.buildingId
+	local var_12_2 = GameSceneMgr.instance:getCurScene().buildingmgr:getBuildingEntity(arg_12_0._pressBuildingUid, SceneTag.RoomBuilding)
 
-	if not GameSceneMgr.instance:getCurScene().buildingmgr:getBuildingEntity(slot0._pressBuildingUid, SceneTag.RoomBuilding) then
+	if not var_12_2 then
 		return
 	end
 
-	slot0._pressBuildingUid = nil
-	slot0._pressBuildingHexPoint = nil
+	arg_12_0._pressBuildingUid = nil
+	arg_12_0._pressBuildingHexPoint = nil
 
-	if slot4 and slot1 and slot2 then
+	if var_12_1 and arg_12_1 and arg_12_2 then
 		RoomMapBuildingModel.instance:clearTempOccupyDict()
-		slot0:addWaitRefreshBuildingNearBlock(slot4, slot1, slot2)
+		arg_12_0:addWaitRefreshBuildingNearBlock(var_12_1, arg_12_1, arg_12_2)
 	end
 
-	if slot1 then
-		slot7 = HexMath.hexToPosition(slot1, RoomBlockEnum.BlockSize)
+	if arg_12_1 then
+		local var_12_3 = HexMath.hexToPosition(arg_12_1, RoomBlockEnum.BlockSize)
 
-		slot6:setLocalPos(slot7.x, 0, slot7.y)
+		var_12_2:setLocalPos(var_12_3.x, 0, var_12_3.y)
 	end
 
-	slot6:tweenDown()
-	slot6:refreshBuilding()
-	slot0:_addDelayBuildingDown()
+	var_12_2:tweenDown()
+	var_12_2:refreshBuilding()
+	arg_12_0:_addDelayBuildingDown()
 end
 
-function slot0._addDelayBuildingDown(slot0)
-	slot0:_cancelDelayBuildingDown()
+function var_0_0._addDelayBuildingDown(arg_13_0)
+	arg_13_0:_cancelDelayBuildingDown()
 
-	slot0._hasWaitingRunBuildingDown = false
+	arg_13_0._hasWaitingRunBuildingDown = false
 
-	TaskDispatcher.runDelay(slot0._runDelayBuildingDown, slot0, 0.21)
+	TaskDispatcher.runDelay(arg_13_0._runDelayBuildingDown, arg_13_0, 0.21)
 end
 
-function slot0._cancelDelayBuildingDown(slot0)
-	if slot0._hasWaitingRunBuildingDown then
-		slot0._hasWaitingRunBuildingDown = false
+function var_0_0._cancelDelayBuildingDown(arg_14_0)
+	if arg_14_0._hasWaitingRunBuildingDown then
+		arg_14_0._hasWaitingRunBuildingDown = false
 
-		TaskDispatcher.cancelTask(slot0._runDelayBuildingDown, slot0)
+		TaskDispatcher.cancelTask(arg_14_0._runDelayBuildingDown, arg_14_0)
 	end
 end
 
-function slot0._runDelayBuildingDown(slot0)
-	slot0._hasWaitingRunBuildingDown = false
+function var_0_0._runDelayBuildingDown(arg_15_0)
+	arg_15_0._hasWaitingRunBuildingDown = false
 
-	slot0:dispatchEvent(RoomEvent.DropBuildingDown)
+	arg_15_0:dispatchEvent(RoomEvent.DropBuildingDown)
 end
 
-function slot0.isPressBuilding(slot0)
-	return slot0._pressBuildingUid
+function var_0_0.isPressBuilding(arg_16_0)
+	return arg_16_0._pressBuildingUid
 end
 
-function slot0.setBuildingListShow(slot0, slot1, slot2)
-	slot0._isBuildingListShow = slot1
-	slot3 = GameSceneMgr.instance:getCurScene()
+function var_0_0.setBuildingListShow(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._isBuildingListShow = arg_17_1
 
-	if slot1 and slot3.camera:getCameraState() == RoomEnum.CameraState.Normal then
-		slot3.camera:switchCameraState(RoomEnum.CameraState.Overlook, {})
+	local var_17_0 = GameSceneMgr.instance:getCurScene()
+
+	if arg_17_1 and var_17_0.camera:getCameraState() == RoomEnum.CameraState.Normal then
+		var_17_0.camera:switchCameraState(RoomEnum.CameraState.Overlook, {})
 	end
 
-	slot0:dispatchEvent(RoomEvent.BuildingListShowChanged, slot1)
+	arg_17_0:dispatchEvent(RoomEvent.BuildingListShowChanged, arg_17_1)
 
 	if RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceBuildingConfirm) or RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceBuildingConfirm) then
-		slot3.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBuilding)
+		var_17_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBuilding)
 	end
 
 	if RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceConfirm) or RoomHelper.isFSMState(RoomEnum.FSMEditState.BackConfirm) then
-		slot3.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
-		slot3.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
+		var_17_0.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+		var_17_0.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
 	end
 
-	if slot2 ~= true then
+	if arg_17_2 ~= true then
 		RoomMapController.instance:dispatchEvent(RoomEvent.SelectBlock)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingCanConfirm)
 end
 
-function slot0.isBuildingListShow(slot0)
-	return slot0._isBuildingListShow
+function var_0_0.isBuildingListShow(arg_18_0)
+	return arg_18_0._isBuildingListShow
 end
 
-slot0.SEND_BUY_BUILDING_RPC = "RoomBuildingController.SEND_BUY_BUILDING_RPC"
+var_0_0.SEND_BUY_BUILDING_RPC = "RoomBuildingController.SEND_BUY_BUILDING_RPC"
 
-function slot0.sendBuyManufactureBuildingRpc(slot0, slot1)
-	UIBlockMgr.instance:startBlock(uv0.SEND_BUY_BUILDING_RPC)
-	RoomRpc.instance:sendBuyManufactureBuildingRequest(slot1, slot0._onBuyManufactureBuildingRpcReply, slot0)
+function var_0_0.sendBuyManufactureBuildingRpc(arg_19_0, arg_19_1)
+	UIBlockMgr.instance:startBlock(var_0_0.SEND_BUY_BUILDING_RPC)
+	RoomRpc.instance:sendBuyManufactureBuildingRequest(arg_19_1, arg_19_0._onBuyManufactureBuildingRpcReply, arg_19_0)
 end
 
-function slot0._onBuyManufactureBuildingRpcReply(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:endBlock(uv0.SEND_BUY_BUILDING_RPC)
+function var_0_0._onBuyManufactureBuildingRpcReply(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	UIBlockMgr.instance:endBlock(var_0_0.SEND_BUY_BUILDING_RPC)
 
-	if slot2 == 0 then
-		if RoomMapBuildingModel.instance:getTempBuildingMO() and slot4.buildingId == slot3.buildingId then
-			slot6, slot7 = RoomBuildingHelper.canConfirmPlace(slot4.buildingId, slot4.hexPoint, slot4.rotate, nil, , false, slot4.levels, true)
+	if arg_20_2 == 0 then
+		local var_20_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-			if slot6 then
-				RoomMapController.instance:useBuildingRequest(slot3.buildingUid, slot4.rotate, slot5.x, slot5.y)
+		if var_20_0 and var_20_0.buildingId == arg_20_3.buildingId then
+			local var_20_1 = var_20_0.hexPoint
+			local var_20_2, var_20_3 = RoomBuildingHelper.canConfirmPlace(var_20_0.buildingId, var_20_1, var_20_0.rotate, nil, nil, false, var_20_0.levels, true)
+
+			if var_20_2 then
+				RoomMapController.instance:useBuildingRequest(arg_20_3.buildingUid, var_20_0.rotate, var_20_1.x, var_20_1.y)
 			end
 		end
 
@@ -265,89 +301,110 @@ function slot0._onBuyManufactureBuildingRpcReply(slot0, slot1, slot2, slot3)
 	end
 end
 
-function slot0.buyManufactureBuildingInfoReply(slot0, slot1)
-	slot2 = {
+function var_0_0.buyManufactureBuildingInfoReply(arg_21_0, arg_21_1)
+	local var_21_0 = {
 		{
 			use = false,
 			rotate = 0,
 			level = 0,
-			uid = slot1.buildingUid,
-			defineId = slot1.buildingId
+			uid = arg_21_1.buildingUid,
+			defineId = arg_21_1.buildingId
 		}
 	}
 
-	RoomModel.instance:updateBuildingInfos(slot2)
-	RoomModel.instance:updateBuildingInfos(slot2)
-	RoomInventoryBuildingModel.instance:addBuilding(slot2)
+	RoomModel.instance:updateBuildingInfos(var_21_0)
+	RoomModel.instance:updateBuildingInfos(var_21_0)
+	RoomInventoryBuildingModel.instance:addBuilding(var_21_0)
 
-	slot3, slot4 = RoomMapBuildingModel.instance:changeTempBuildingMOUid(slot1.buildingUid, slot1.buildingId)
+	local var_21_1, var_21_2 = RoomMapBuildingModel.instance:changeTempBuildingMOUid(arg_21_1.buildingUid, arg_21_1.buildingId)
 
-	if slot3 and GameSceneMgr.instance:getCurScene() and slot5.buildingmgr then
-		slot5.buildingmgr:changeBuildingEntityId(slot4, slot1.buildingUid)
+	if var_21_1 then
+		local var_21_3 = GameSceneMgr.instance:getCurScene()
+
+		if var_21_3 and var_21_3.buildingmgr then
+			var_21_3.buildingmgr:changeBuildingEntityId(var_21_2, arg_21_1.buildingUid)
+		end
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.NewBuildingPush)
 end
 
-function slot0.focusBuilding(slot0, slot1)
-	for slot6, slot7 in ipairs(RoomMapBuildingModel.instance:getBuildingMOList()) do
-		if slot7.buildingId == slot1 then
-			slot0:tweenCameraFocusBuilding(slot7.buildingUid)
+function var_0_0.focusBuilding(arg_22_0, arg_22_1)
+	local var_22_0 = RoomMapBuildingModel.instance:getBuildingMOList()
+
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		if iter_22_1.buildingId == arg_22_1 then
+			arg_22_0:tweenCameraFocusBuilding(iter_22_1.buildingUid)
 
 			return
 		end
 	end
 end
 
-function slot0.tweenCameraFocusBuilding(slot0, slot1)
-	if not RoomMapBuildingModel.instance:getBuildingMOById(slot1) then
+function var_0_0.tweenCameraFocusBuilding(arg_23_0, arg_23_1)
+	local var_23_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_23_1)
+
+	if not var_23_0 then
 		return
 	end
 
-	slot5 = RoomMapModel.instance:getBuildingConfigParam(slot2.buildingId).offset
-	slot6 = slot2.rotate
-	slot9 = HexMath.hexToPosition(slot2.hexPoint, RoomBlockEnum.BlockSize)
+	local var_23_1 = GameSceneMgr.instance:getCurScene()
+	local var_23_2 = RoomMapModel.instance:getBuildingConfigParam(var_23_0.buildingId).offset
+	local var_23_3 = var_23_0.rotate
+	local var_23_4 = var_23_2.x * math.cos(var_23_3) + var_23_2.y * math.sin(var_23_3)
+	local var_23_5 = var_23_2.y * math.cos(var_23_3) - var_23_2.x * math.sin(var_23_3)
+	local var_23_6 = HexMath.hexToPosition(var_23_0.hexPoint, RoomBlockEnum.BlockSize)
 
-	GameSceneMgr.instance:getCurScene().camera:switchCameraState(RoomEnum.CameraState.Overlook, {
-		focusX = slot9.x + slot5.x * math.cos(slot6) + slot5.y * math.sin(slot6),
-		focusY = slot9.y + slot5.y * math.cos(slot6) - slot5.x * math.sin(slot6)
+	var_23_1.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
+		focusX = var_23_6.x + var_23_4,
+		focusY = var_23_6.y + var_23_5
 	})
 end
 
-function slot0.tweenCameraFocusPart(slot0, slot1, slot2, slot3)
-	slot1 = slot1 or 0
-	slot2 = slot2 or RoomEnum.CameraState.Overlook
-	slot4 = GameSceneMgr.instance:getCurScene()
-	slot5 = nil
+function var_0_0.tweenCameraFocusPart(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	arg_24_1 = arg_24_1 or 0
+	arg_24_2 = arg_24_2 or RoomEnum.CameraState.Overlook
 
-	if not ((slot1 ~= 0 or slot4.buildingmgr:getInitBuildingGO()) and slot4.buildingmgr:getPartBuildingGO(slot1)) then
+	local var_24_0 = GameSceneMgr.instance:getCurScene()
+	local var_24_1
+
+	if arg_24_1 == 0 then
+		var_24_1 = var_24_0.buildingmgr:getInitBuildingGO()
+	else
+		var_24_1 = var_24_0.buildingmgr:getPartBuildingGO(arg_24_1)
+	end
+
+	if not var_24_1 then
 		return
 	end
 
-	slot6 = RoomBuildingHelper.getCenterPosition(slot5)
-	slot7 = LuaUtil.deepCopy(slot4.camera:getCameraParam())
-	slot7.focusX = slot6.x
-	slot7.focusY = slot6.z
-	slot7.zoom = slot3
+	local var_24_2 = RoomBuildingHelper.getCenterPosition(var_24_1)
+	local var_24_3 = LuaUtil.deepCopy(var_24_0.camera:getCameraParam())
 
-	if slot2 == RoomEnum.CameraState.Normal then
-		slot7.isPart = true
-		slot8 = slot4.camera:cameraParamToRealCameraParam(slot7, RoomEnum.CameraState.Normal)
+	var_24_3.focusX = var_24_2.x
+	var_24_3.focusY = var_24_2.z
+	var_24_3.zoom = arg_24_3
 
-		if RoomInitBuildingHelper.getPartRealCameraParam(slot1) then
-			for slot13, slot14 in pairs(slot8) do
-				if slot9[slot13] then
-					slot8[slot13] = slot9[slot13]
+	if arg_24_2 == RoomEnum.CameraState.Normal then
+		var_24_3.isPart = true
+
+		local var_24_4 = var_24_0.camera:cameraParamToRealCameraParam(var_24_3, RoomEnum.CameraState.Normal)
+		local var_24_5 = RoomInitBuildingHelper.getPartRealCameraParam(arg_24_1)
+
+		if var_24_5 then
+			for iter_24_0, iter_24_1 in pairs(var_24_4) do
+				if var_24_5[iter_24_0] then
+					var_24_4[iter_24_0] = var_24_5[iter_24_0]
 				end
 			end
 		end
 
-		slot4.camera:switchCameraStateWithRealCameraParam(slot2, slot8)
+		var_24_0.camera:switchCameraStateWithRealCameraParam(arg_24_2, var_24_4)
 	else
-		slot4.camera:switchCameraState(slot2, slot7)
+		var_24_0.camera:switchCameraState(arg_24_2, var_24_3)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

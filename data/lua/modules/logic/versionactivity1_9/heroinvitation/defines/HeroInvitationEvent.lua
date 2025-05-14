@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity1_9.heroinvitation.defines.HeroInvitationEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.defines.HeroInvitationEvent", package.seeall)
 
-slot0 = _M
-slot0.UpdateInfo = 1000
-slot0.StateChange = 1010
+local var_0_0 = _M
 
-return slot0
+var_0_0.UpdateInfo = 1000
+var_0_0.StateChange = 1010
+
+return var_0_0

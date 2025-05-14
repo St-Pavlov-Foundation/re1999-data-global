@@ -1,4 +1,4 @@
-setNeedLoadModule("modules.ProjModuleStart", "ProjModuleStart")
+﻿setNeedLoadModule("modules.ProjModuleStart", "ProjModuleStart")
 setNeedLoadModule("modules.audio.AkCallbackEnum", "AkCallbackEnum")
 setNeedLoadModule("modules.audio.AudioEffectMgr", "AudioEffectMgr")
 setNeedLoadModule("modules.audio.AudioEnum", "AudioEnum")

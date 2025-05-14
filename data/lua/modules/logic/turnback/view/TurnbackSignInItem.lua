@@ -1,116 +1,131 @@
-module("modules.logic.turnback.view.TurnbackSignInItem", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackSignInItem", package.seeall)
 
-slot0 = class("TurnbackSignInItem", ListScrollCell)
+local var_0_0 = class("TurnbackSignInItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gonormalBG = gohelper.findChild(slot0.go, "Root/#go_normalBG")
-	slot0._gocangetBG = gohelper.findChild(slot0.go, "Root/#go_cangetBG")
-	slot0._btncanget = gohelper.findChildButtonWithAudio(slot0.go, "Root/#go_getclick")
-	slot0._txtday = gohelper.findChildText(slot0.go, "Root/#txt_day")
-	slot0._txtdayEn = gohelper.findChildText(slot0.go, "Root/#txt_dayEn")
-	slot0._gotomorrowTag = gohelper.findChild(slot0.go, "Root/#go_tomorrowTag")
-	slot0._goitemContent = gohelper.findChild(slot0.go, "Root/#go_itemContent")
-	slot0._gohasget = gohelper.findChild(slot0.go, "Root/#go_hasget")
-	slot0._gogetIconContent = gohelper.findChild(slot0.go, "Root/#go_hasget/#go_getIconContent")
-	slot0._gogeticon = gohelper.findChild(slot0.go, "Root/#go_hasget/#go_getIconContent/#go_geticon")
-	slot0._animator = slot0.go:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goEffectCube = gohelper.findChild(slot0.go, "Root/#go_cangetBG/kelinqu")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gonormalBG = gohelper.findChild(arg_1_0.go, "Root/#go_normalBG")
+	arg_1_0._gocangetBG = gohelper.findChild(arg_1_0.go, "Root/#go_cangetBG")
+	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_0.go, "Root/#go_getclick")
+	arg_1_0._txtday = gohelper.findChildText(arg_1_0.go, "Root/#txt_day")
+	arg_1_0._txtdayEn = gohelper.findChildText(arg_1_0.go, "Root/#txt_dayEn")
+	arg_1_0._gotomorrowTag = gohelper.findChild(arg_1_0.go, "Root/#go_tomorrowTag")
+	arg_1_0._goitemContent = gohelper.findChild(arg_1_0.go, "Root/#go_itemContent")
+	arg_1_0._gohasget = gohelper.findChild(arg_1_0.go, "Root/#go_hasget")
+	arg_1_0._gogetIconContent = gohelper.findChild(arg_1_0.go, "Root/#go_hasget/#go_getIconContent")
+	arg_1_0._gogeticon = gohelper.findChild(arg_1_0.go, "Root/#go_hasget/#go_getIconContent/#go_geticon")
+	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goEffectCube = gohelper.findChild(arg_1_0.go, "Root/#go_cangetBG/kelinqu")
 
-	gohelper.setActive(slot0.go, false)
-	gohelper.setActive(slot0._gogeticon, false)
+	gohelper.setActive(arg_1_0.go, false)
+	gohelper.setActive(arg_1_0._gogeticon, false)
 
-	slot0._itemsTab = {}
-	slot0._firstEnter = true
-	slot0._openAnimTime = 0.97
+	arg_1_0._itemsTab = {}
+	arg_1_0._firstEnter = true
+	arg_1_0._openAnimTime = 0.97
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btncanget:AddClickListener(slot0._btncangetOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btncanget:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btncanget:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	if arg_4_1 == nil then
 		return
 	end
 
-	slot0.mo = slot1
+	arg_4_0.mo = arg_4_1
 
-	slot0:_refreshUI()
+	arg_4_0:_refreshUI()
 
-	slot0._delayTime = slot0._index * 0.03
+	arg_4_0._delayTime = arg_4_0._index * 0.03
 
-	if slot0._firstEnter then
-		TaskDispatcher.runDelay(slot0._playOpenAnim, slot0, slot0._delayTime)
+	if arg_4_0._firstEnter then
+		TaskDispatcher.runDelay(arg_4_0._playOpenAnim, arg_4_0, arg_4_0._delayTime)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	slot0:_refreshBonus()
+function var_0_0._refreshUI(arg_5_0)
+	arg_5_0:_refreshBonus()
 
-	slot0._txtday.text = string.format("%02d", slot0.mo.id)
-	slot0._txtdayEn.text = string.format("DAY\n%s", GameUtil.getEnglishNumber(slot0.mo.id))
+	arg_5_0._txtday.text = string.format("%02d", arg_5_0.mo.id)
+	arg_5_0._txtdayEn.text = string.format("DAY\n%s", GameUtil.getEnglishNumber(arg_5_0.mo.id))
 
-	gohelper.setActive(slot0._gocangetBG, slot0.mo.state == TurnbackEnum.SignInState.CanGet)
-	gohelper.setActive(slot0._btncanget.gameObject, slot0.mo.state == TurnbackEnum.SignInState.CanGet)
-	gohelper.setActive(slot0._gohasget, slot0.mo.state == TurnbackEnum.SignInState.HasGet)
-	gohelper.setActive(slot0._gotomorrowTag, TurnbackModel.instance:getCurSignInDay() + 1 == slot0.mo.id and slot2 ~= GameUtil.getTabLen(TurnbackSignInModel.instance:getSignInInfoMoList()))
+	gohelper.setActive(arg_5_0._gocangetBG, arg_5_0.mo.state == TurnbackEnum.SignInState.CanGet)
+	gohelper.setActive(arg_5_0._btncanget.gameObject, arg_5_0.mo.state == TurnbackEnum.SignInState.CanGet)
+	gohelper.setActive(arg_5_0._gohasget, arg_5_0.mo.state == TurnbackEnum.SignInState.HasGet)
+
+	local var_5_0 = GameUtil.getTabLen(TurnbackSignInModel.instance:getSignInInfoMoList())
+	local var_5_1 = TurnbackModel.instance:getCurSignInDay()
+
+	gohelper.setActive(arg_5_0._gotomorrowTag, var_5_1 + 1 == arg_5_0.mo.id and var_5_1 ~= var_5_0)
 end
 
-function slot0._refreshBonus(slot0)
-	slot0.config = slot0.mo.config
+function var_0_0._refreshBonus(arg_6_0)
+	arg_6_0.config = arg_6_0.mo.config
 
-	gohelper.setActive(slot0._goEffectCube, #string.split(slot0.config.bonus, "|") < 2)
+	local var_6_0 = string.split(arg_6_0.config.bonus, "|")
 
-	for slot5 = 1, #slot1 do
-		if not slot0._itemsTab[slot5] then
-			table.insert(slot0._itemsTab, {
-				item = IconMgr.instance:getCommonPropItemIcon(slot0._goitemContent),
-				getIcon = gohelper.clone(slot0._gogeticon, slot0._gogetIconContent)
-			})
+	gohelper.setActive(arg_6_0._goEffectCube, #var_6_0 < 2)
+
+	for iter_6_0 = 1, #var_6_0 do
+		local var_6_1 = arg_6_0._itemsTab[iter_6_0]
+
+		if not var_6_1 then
+			var_6_1 = {
+				item = IconMgr.instance:getCommonPropItemIcon(arg_6_0._goitemContent),
+				getIcon = gohelper.clone(arg_6_0._gogeticon, arg_6_0._gogetIconContent)
+			}
+
+			table.insert(arg_6_0._itemsTab, var_6_1)
 		end
 
-		slot7 = string.split(slot1[slot5], "#")
+		local var_6_2 = string.split(var_6_0[iter_6_0], "#")
 
-		slot6.item:setMOValue(slot7[1], slot7[2], slot7[3])
-		slot6.item:setHideLvAndBreakFlag(true)
-		slot6.item:hideEquipLvAndBreak(true)
-		slot6.item:setCountFontSize(40)
-		slot6.item:setPropItemScale(0.76)
-		gohelper.setActive(slot0._itemsTab[slot5].item.go, true)
-		gohelper.setActive(slot6.getIcon, true)
+		var_6_1.item:setMOValue(var_6_2[1], var_6_2[2], var_6_2[3])
+		var_6_1.item:setHideLvAndBreakFlag(true)
+		var_6_1.item:hideEquipLvAndBreak(true)
+		var_6_1.item:setCountFontSize(40)
+		var_6_1.item:setPropItemScale(0.76)
+		gohelper.setActive(arg_6_0._itemsTab[iter_6_0].item.go, true)
+		gohelper.setActive(var_6_1.getIcon, true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._itemsTab do
-		gohelper.setActive(slot0._itemsTab[slot5].item.go, false)
-		gohelper.setActive(slot0._itemsTab[slot5].getIcon, false)
+	for iter_6_1 = #var_6_0 + 1, #arg_6_0._itemsTab do
+		gohelper.setActive(arg_6_0._itemsTab[iter_6_1].item.go, false)
+		gohelper.setActive(arg_6_0._itemsTab[iter_6_1].getIcon, false)
 	end
 end
 
-function slot0._btncangetOnClick(slot0)
-	if slot0.mo.state == TurnbackEnum.SignInState.CanGet then
-		TurnbackRpc.instance:sendTurnbackSignInRequest(slot0.mo.turnbackId, slot0.mo.id)
+function var_0_0._btncangetOnClick(arg_7_0)
+	if arg_7_0.mo.state == TurnbackEnum.SignInState.CanGet then
+		local var_7_0 = arg_7_0.mo.turnbackId
+
+		TurnbackRpc.instance:sendTurnbackSignInRequest(var_7_0, arg_7_0.mo.id)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_OK)
 	end
 end
 
-function slot0._playOpenAnim(slot0)
-	gohelper.setActive(slot0.go, true)
-	slot0._animator:Play(UIAnimationName.Open, 0, slot0:_getOpenAnimPlayProgress())
+function var_0_0._playOpenAnim(arg_8_0)
+	gohelper.setActive(arg_8_0.go, true)
+	arg_8_0._animator:Play(UIAnimationName.Open, 0, arg_8_0:_getOpenAnimPlayProgress())
 
-	slot0._firstEnter = false
+	arg_8_0._firstEnter = false
 end
 
-function slot0._getOpenAnimPlayProgress(slot0)
-	return Mathf.Clamp01((UnityEngine.Time.realtimeSinceStartup - TurnbackSignInModel.instance:getOpenTimeStamp() - slot0._delayTime) / slot0._openAnimTime)
+function var_0_0._getOpenAnimPlayProgress(arg_9_0)
+	local var_9_0 = UnityEngine.Time.realtimeSinceStartup
+	local var_9_1 = TurnbackSignInModel.instance:getOpenTimeStamp()
+
+	return (Mathf.Clamp01((var_9_0 - var_9_1 - arg_9_0._delayTime) / arg_9_0._openAnimTime))
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._playOpenAnim, slot0)
+function var_0_0.onDestroy(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._playOpenAnim, arg_10_0)
 end
 
-return slot0
+return var_0_0

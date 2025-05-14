@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightEditorStateViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightEditorStateViewContainer", package.seeall)
 
-slot0 = class("FightEditorStateViewContainer", BaseViewContainer)
+local var_0_0 = class("FightEditorStateViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightEditorStateView.New()
 	}
 end
 
-return slot0
+return var_0_0

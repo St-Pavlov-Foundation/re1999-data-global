@@ -1,17 +1,17 @@
-module("modules.logic.explore.model.mo.unit.ExploreObstacleMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreObstacleMO", package.seeall)
 
-slot0 = pureTable("ExploreObstacleMO", ExploreBaseUnitMO)
+local var_0_0 = pureTable("ExploreObstacleMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.triggerByClick = false
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.triggerByClick = false
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_2_0)
 	return ExploreBaseDisplayUnit
 end
 
-function slot0.isWalkable(slot0)
+function var_0_0.isWalkable(arg_3_0)
 	return false
 end
 
-return slot0
+return var_0_0

@@ -1,51 +1,54 @@
-module("modules.logic.season.view1_2.Season1_2SpecialMarketShowLevelItem", package.seeall)
+﻿module("modules.logic.season.view1_2.Season1_2SpecialMarketShowLevelItem", package.seeall)
 
-slot0 = class("Season1_2SpecialMarketShowLevelItem", LuaCompBase)
+local var_0_0 = class("Season1_2SpecialMarketShowLevelItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._goline = gohelper.findChild(slot1, "#go_line")
-	slot0._goselectedpass = gohelper.findChild(slot1, "#go_selectedpass")
-	slot0._txtselectpassindex = gohelper.findChildText(slot1, "#go_selectedpass/#txt_selectpassindex")
-	slot0._goselectedunpass = gohelper.findChild(slot1, "#go_selectedunpass")
-	slot0._txtselectunpassindex = gohelper.findChildText(slot1, "#go_selectedunpass/#txt_selectunpassindex")
-	slot0._gopass = gohelper.findChild(slot1, "#go_pass")
-	slot0._txtpassindex = gohelper.findChildText(slot1, "#go_pass/#txt_passindex")
-	slot0._gounpass = gohelper.findChild(slot1, "#go_unpass")
-	slot0._txtunpassindex = gohelper.findChildText(slot1, "#go_unpass/#txt_unpassindex")
-	slot0._btnClick = gohelper.findChildButtonWithAudio(slot1, "#btn_click")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._goline = gohelper.findChild(arg_1_1, "#go_line")
+	arg_1_0._goselectedpass = gohelper.findChild(arg_1_1, "#go_selectedpass")
+	arg_1_0._txtselectpassindex = gohelper.findChildText(arg_1_1, "#go_selectedpass/#txt_selectpassindex")
+	arg_1_0._goselectedunpass = gohelper.findChild(arg_1_1, "#go_selectedunpass")
+	arg_1_0._txtselectunpassindex = gohelper.findChildText(arg_1_1, "#go_selectedunpass/#txt_selectunpassindex")
+	arg_1_0._gopass = gohelper.findChild(arg_1_1, "#go_pass")
+	arg_1_0._txtpassindex = gohelper.findChildText(arg_1_1, "#go_pass/#txt_passindex")
+	arg_1_0._gounpass = gohelper.findChild(arg_1_1, "#go_unpass")
+	arg_1_0._txtunpassindex = gohelper.findChildText(arg_1_1, "#go_unpass/#txt_unpassindex")
+	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_click")
 
-	slot0._btnClick:AddClickListener(slot0._btnOnClick, slot0)
+	arg_1_0._btnClick:AddClickListener(arg_1_0._btnOnClick, arg_1_0)
 end
 
-function slot0._btnOnClick(slot0)
-	Activity104Controller.instance:dispatchEvent(Activity104Event.SwitchSpecialEpisode, slot0.index)
+function var_0_0._btnOnClick(arg_2_0)
+	Activity104Controller.instance:dispatchEvent(Activity104Event.SwitchSpecialEpisode, arg_2_0.index)
 end
 
-function slot0.reset(slot0, slot1, slot2, slot3)
-	slot0.index = slot1
-	slot0.targetIndex = slot2
-	slot0.maxSpecialLayer = slot3
+function var_0_0.reset(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0.index = arg_3_1
+	arg_3_0.targetIndex = arg_3_2
+	arg_3_0.maxSpecialLayer = arg_3_3
 
-	slot0:_refreshItem()
+	arg_3_0:_refreshItem()
 end
 
-function slot0._refreshItem(slot0)
-	gohelper.setActive(slot0.go, true)
-	gohelper.setActive(slot0._gopass, Activity104Model.instance:isSpecialLayerPassed(slot0.index) and slot0.targetIndex ~= slot0.index)
-	gohelper.setActive(slot0._gounpass, not slot1 and slot0.targetIndex ~= slot0.index)
-	gohelper.setActive(slot0._goselectedpass, slot1 and slot0.targetIndex == slot0.index)
-	gohelper.setActive(slot0._goselectedunpass, not slot1 and slot0.targetIndex == slot0.index)
-	gohelper.setActive(slot0._goline, slot0.index < slot0.maxSpecialLayer)
+function var_0_0._refreshItem(arg_4_0)
+	gohelper.setActive(arg_4_0.go, true)
 
-	slot0._txtselectpassindex.text = string.format("%02d", slot0.index)
-	slot0._txtselectunpassindex.text = string.format("%02d", slot0.index)
-	slot0._txtpassindex.text = string.format("%02d", slot0.index)
-	slot0._txtunpassindex.text = string.format("%02d", slot0.index)
+	local var_4_0 = Activity104Model.instance:isSpecialLayerPassed(arg_4_0.index)
+
+	gohelper.setActive(arg_4_0._gopass, var_4_0 and arg_4_0.targetIndex ~= arg_4_0.index)
+	gohelper.setActive(arg_4_0._gounpass, not var_4_0 and arg_4_0.targetIndex ~= arg_4_0.index)
+	gohelper.setActive(arg_4_0._goselectedpass, var_4_0 and arg_4_0.targetIndex == arg_4_0.index)
+	gohelper.setActive(arg_4_0._goselectedunpass, not var_4_0 and arg_4_0.targetIndex == arg_4_0.index)
+	gohelper.setActive(arg_4_0._goline, arg_4_0.index < arg_4_0.maxSpecialLayer)
+
+	arg_4_0._txtselectpassindex.text = string.format("%02d", arg_4_0.index)
+	arg_4_0._txtselectunpassindex.text = string.format("%02d", arg_4_0.index)
+	arg_4_0._txtpassindex.text = string.format("%02d", arg_4_0.index)
+	arg_4_0._txtunpassindex.text = string.format("%02d", arg_4_0.index)
 end
 
-function slot0.destroy(slot0)
-	slot0._btnClick:RemoveClickListener()
+function var_0_0.destroy(arg_5_0)
+	arg_5_0._btnClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

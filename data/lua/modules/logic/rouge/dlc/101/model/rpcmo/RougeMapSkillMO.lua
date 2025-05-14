@@ -1,19 +1,19 @@
-module("modules.logic.rouge.dlc.101.model.rpcmo.RougeMapSkillMO", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeMapSkillMO", package.seeall)
 
-slot0 = pureTable("RougeMapSkillMO")
+local var_0_0 = pureTable("RougeMapSkillMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.useCount = slot1.useCount
-	slot0.stepRecord = slot1.stepRecord
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.useCount = arg_1_1.useCount
+	arg_1_0.stepRecord = arg_1_1.stepRecord
 end
 
-function slot0.getUseCount(slot0)
-	return slot0.useCount
+function var_0_0.getUseCount(arg_2_0)
+	return arg_2_0.useCount
 end
 
-function slot0.getStepRecord(slot0)
-	return slot0.stepRecord
+function var_0_0.getStepRecord(arg_3_0)
+	return arg_3_0.stepRecord
 end
 
-return slot0
+return var_0_0

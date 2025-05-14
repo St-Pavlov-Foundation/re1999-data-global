@@ -1,60 +1,61 @@
-module("modules.logic.gm.view.GMCommandView", package.seeall)
+﻿module("modules.logic.gm.view.GMCommandView", package.seeall)
 require("modules/logic/gm/view/GMToolCommands")
 
-slot0 = class("GMCommandView", BaseView)
-slot0.OpenCommand = 1910
-slot0.ClickItem = 1911
-slot0.ClickItemAgain = 1912
+local var_0_0 = class("GMCommandView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._maskGO = gohelper.findChild(slot0.viewGO, "gmcommand")
-	slot0._inpCommand = gohelper.findChildInputField(slot0.viewGO, "viewport/content/item1/inpText")
-	slot0._txtCommandStr = gohelper.findChildText(slot0.viewGO, "gmcommand/txtCommandStr")
-	slot0._txtCommandName = gohelper.findChildText(slot0.viewGO, "gmcommand/txtCommandName")
-	slot0._txtCommandDesc = gohelper.findChildText(slot0.viewGO, "gmcommand/txtCommandDesc")
+var_0_0.OpenCommand = 1910
+var_0_0.ClickItem = 1911
+var_0_0.ClickItemAgain = 1912
 
-	slot0:_hideScroll()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._maskGO = gohelper.findChild(arg_1_0.viewGO, "gmcommand")
+	arg_1_0._inpCommand = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/item1/inpText")
+	arg_1_0._txtCommandStr = gohelper.findChildText(arg_1_0.viewGO, "gmcommand/txtCommandStr")
+	arg_1_0._txtCommandName = gohelper.findChildText(arg_1_0.viewGO, "gmcommand/txtCommandName")
+	arg_1_0._txtCommandDesc = gohelper.findChildText(arg_1_0.viewGO, "gmcommand/txtCommandDesc")
+
+	arg_1_0:_hideScroll()
 end
 
-function slot0.addEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._maskGO):AddClickListener(slot0._onClickMask, slot0, nil)
+function var_0_0.addEvents(arg_2_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_2_0._maskGO):AddClickListener(arg_2_0._onClickMask, arg_2_0, nil)
 end
 
-function slot0.removeEvents(slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._maskGO):RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_3_0._maskGO):RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	GMController.instance:registerCallback(uv0.OpenCommand, slot0._showScroll, slot0)
-	GMController.instance:registerCallback(uv0.ClickItem, slot0._onClickItem, slot0)
-	GMController.instance:registerCallback(uv0.ClickItemAgain, slot0._hideScroll, slot0)
+function var_0_0.onOpen(arg_4_0)
+	GMController.instance:registerCallback(var_0_0.OpenCommand, arg_4_0._showScroll, arg_4_0)
+	GMController.instance:registerCallback(var_0_0.ClickItem, arg_4_0._onClickItem, arg_4_0)
+	GMController.instance:registerCallback(var_0_0.ClickItemAgain, arg_4_0._hideScroll, arg_4_0)
 end
 
-function slot0.onClose(slot0)
-	GMController.instance:unregisterCallback(uv0.OpenCommand, slot0._showScroll, slot0)
-	GMController.instance:unregisterCallback(uv0.ClickItem, slot0._onClickItem, slot0)
-	GMController.instance:unregisterCallback(uv0.ClickItemAgain, slot0._hideScroll, slot0)
+function var_0_0.onClose(arg_5_0)
+	GMController.instance:unregisterCallback(var_0_0.OpenCommand, arg_5_0._showScroll, arg_5_0)
+	GMController.instance:unregisterCallback(var_0_0.ClickItem, arg_5_0._onClickItem, arg_5_0)
+	GMController.instance:unregisterCallback(var_0_0.ClickItemAgain, arg_5_0._hideScroll, arg_5_0)
 end
 
-function slot0._onClickMask(slot0)
-	slot0:_hideScroll()
+function var_0_0._onClickMask(arg_6_0)
+	arg_6_0:_hideScroll()
 end
 
-function slot0._onClickItem(slot0, slot1)
-	slot0._txtCommandStr.text = slot1.command
-	slot0._txtCommandName.text = slot1.name
-	slot0._txtCommandDesc.text = slot1.desc
+function var_0_0._onClickItem(arg_7_0, arg_7_1)
+	arg_7_0._txtCommandStr.text = arg_7_1.command
+	arg_7_0._txtCommandName.text = arg_7_1.name
+	arg_7_0._txtCommandDesc.text = arg_7_1.desc
 
-	slot0._inpCommand:SetText(slot1.command)
+	arg_7_0._inpCommand:SetText(arg_7_1.command)
 end
 
-function slot0._showScroll(slot0)
-	gohelper.setActive(slot0._maskGO, true)
+function var_0_0._showScroll(arg_8_0)
+	gohelper.setActive(arg_8_0._maskGO, true)
 	GMCommandModel.instance:checkInitList()
 end
 
-function slot0._hideScroll(slot0)
-	gohelper.setActive(slot0._maskGO, false)
+function var_0_0._hideScroll(arg_9_0)
+	gohelper.setActive(arg_9_0._maskGO, false)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114FinishEventViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114FinishEventViewContainer", package.seeall)
 
-slot0 = class("Activity114FinishEventViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity114FinishEventViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Activity114FinishEventView.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,66 +1,73 @@
-module("modules.logic.investigate.view.InvestigateClueView", package.seeall)
+﻿module("modules.logic.investigate.view.InvestigateClueView", package.seeall)
 
-slot0 = class("InvestigateClueView", BaseView)
+local var_0_0 = class("InvestigateClueView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._simagerole = gohelper.findChildSingleImage(slot0.viewGO, "#simage_role")
-	slot0._gorole1 = gohelper.findChild(slot0.viewGO, "#go_role1")
-	slot0._simagerole1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_role1/#simage_role1")
-	slot0._simagerole2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_role1/#simage_role2")
-	slot0._simagerole3 = gohelper.findChildSingleImage(slot0.viewGO, "#go_role1/#simage_role3")
-	slot0._txtrole = gohelper.findChildText(slot0.viewGO, "#txt_role")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_role")
+	arg_1_0._gorole1 = gohelper.findChild(arg_1_0.viewGO, "#go_role1")
+	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_role1/#simage_role1")
+	arg_1_0._simagerole2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_role1/#simage_role2")
+	arg_1_0._simagerole3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_role1/#simage_role3")
+	arg_1_0._txtrole = gohelper.findChildText(arg_1_0.viewGO, "#txt_role")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	if not lua_investigate_info.configDict[slot0.viewParam.id] then
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = lua_investigate_info.configDict[arg_5_0.viewParam.id]
+
+	if not var_5_0 then
 		return
 	end
 
-	slot0._txtrole.text = slot1.unlockDesc
-	slot2 = slot1.entrance == 1
+	arg_5_0._txtrole.text = var_5_0.unlockDesc
 
-	gohelper.setActive(slot0._simagerole, not slot2)
-	gohelper.setActive(slot0._gorole1, slot2)
+	local var_5_1 = var_5_0.entrance == 1
 
-	if slot2 then
-		for slot6, slot7 in ipairs(lua_investigate_info.configList) do
-			if slot7.group == slot1.group and slot0["_simagerole" .. slot6] then
-				slot8:LoadImage(slot7.icon)
+	gohelper.setActive(arg_5_0._simagerole, not var_5_1)
+	gohelper.setActive(arg_5_0._gorole1, var_5_1)
+
+	if var_5_1 then
+		for iter_5_0, iter_5_1 in ipairs(lua_investigate_info.configList) do
+			if iter_5_1.group == var_5_0.group then
+				local var_5_2 = arg_5_0["_simagerole" .. iter_5_0]
+
+				if var_5_2 then
+					var_5_2:LoadImage(iter_5_1.icon)
+				end
 			end
 		end
 	else
-		slot0._simagerole:LoadImage(slot1.icon)
+		arg_5_0._simagerole:LoadImage(var_5_0.icon)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Investigate.play_ui_leimi_celebrity_get)
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewParam.isGet then
+function var_0_0.onClose(arg_6_0)
+	if arg_6_0.viewParam.isGet then
 		InvestigateController.instance:dispatchEvent(InvestigateEvent.ShowGetEffect)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagerole:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0._simagerole:UnLoadImage()
 end
 
-return slot0
+return var_0_0

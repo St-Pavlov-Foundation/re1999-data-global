@@ -1,9 +1,10 @@
-module("modules.logic.balanceumbrella.controller.BalanceUmbrellaEvent", package.seeall)
+﻿module("modules.logic.balanceumbrella.controller.BalanceUmbrellaEvent", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.ClueUpdate = slot1()
-slot0.GuideClueViewClose = slot1()
-slot0.ShowGetEffect = slot1()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return slot0
+var_0_0.ClueUpdate = var_0_1()
+var_0_0.GuideClueViewClose = var_0_1()
+var_0_0.ShowGetEffect = var_0_1()
+
+return var_0_0

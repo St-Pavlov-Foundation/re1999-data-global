@@ -1,18 +1,18 @@
-module("modules.logic.fight.model.mo.FightHeroSpAttributeInfoMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightHeroSpAttributeInfoMO", package.seeall)
 
-slot0 = pureTable("FightHeroSpAttributeInfoMO")
+local var_0_0 = pureTable("FightHeroSpAttributeInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.uid = slot1.uid
-	slot0.attribute = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.uid = arg_1_1.uid
+	arg_1_0.attribute = {}
 
-	for slot5, slot6 in ipairs(slot1.attribute) do
-		slot7 = HeroSpAttributeMO.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.attribute) do
+		local var_1_0 = HeroSpAttributeMO.New()
 
-		slot7:init(slot6)
+		var_1_0:init(iter_1_1)
 
-		slot0.attribute[slot5] = slot7
+		arg_1_0.attribute[iter_1_0] = var_1_0
 	end
 end
 
-return slot0
+return var_0_0

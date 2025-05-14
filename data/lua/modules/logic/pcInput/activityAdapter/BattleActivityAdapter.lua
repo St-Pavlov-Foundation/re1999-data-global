@@ -1,90 +1,91 @@
-module("modules.logic.pcInput.activityAdapter.BattleActivityAdapter", package.seeall)
+﻿module("modules.logic.pcInput.activityAdapter.BattleActivityAdapter", package.seeall)
 
-slot0 = class("BattleActivityAdapter", BaseActivityAdapter)
-slot0.skillSelectKey = {
+local var_0_0 = class("BattleActivityAdapter", BaseActivityAdapter)
+
+var_0_0.skillSelectKey = {
 	21,
 	22
 }
-slot0.keytoFunction = {
-	function ()
+var_0_0.keytoFunction = {
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleOpenEnemyInfo)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleOpentips)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSpeedUp)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleAutoFight)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelect, 1)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelect, 2)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectLeft)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectRight)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 1)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 2)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 3)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 4)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 5)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 6)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 7)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 8)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSelectCard, 9)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleMoveCardEnd)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleBackPack)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSkillOpen)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSkillIndex, 1)
 	end,
-	function ()
+	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleSkillIndex, 2)
 	end
 }
 
-function slot0.ctor(slot0)
-	BaseActivityAdapter.ctor(slot0)
+function var_0_0.ctor(arg_23_0)
+	BaseActivityAdapter.ctor(arg_23_0)
 
-	slot0.keytoFunction = uv0.keytoFunction
-	slot0.activitid = PCInputModel.Activity.battle
+	arg_23_0.keytoFunction = var_0_0.keytoFunction
+	arg_23_0.activitid = PCInputModel.Activity.battle
 
-	slot0:registerFunction()
+	arg_23_0:registerFunction()
 end
 
-function slot0.OnkeyUp(slot0, slot1)
-	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, slot1) then
+function var_0_0.OnkeyUp(arg_24_0, arg_24_1)
+	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, arg_24_1) then
 		return
 	end
 
@@ -96,11 +97,11 @@ function slot0.OnkeyUp(slot0, slot1)
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+	BaseActivityAdapter.OnkeyUp(arg_24_0, arg_24_1)
 end
 
-function slot0.OnkeyDown(slot0, slot1)
-	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, slot1) then
+function var_0_0.OnkeyDown(arg_25_0, arg_25_1)
+	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, arg_25_1) then
 		return
 	end
 
@@ -112,7 +113,7 @@ function slot0.OnkeyDown(slot0, slot1)
 		return
 	end
 
-	BaseActivityAdapter.OnkeyDown(slot0, slot1)
+	BaseActivityAdapter.OnkeyDown(arg_25_0, arg_25_1)
 end
 
-return slot0
+return var_0_0

@@ -1,65 +1,73 @@
-module("modules.logic.rouge.model.RougeDLCSelectListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeDLCSelectListModel", package.seeall)
 
-slot0 = class("RougeDLCSelectListModel", MixScrollModel)
-slot1 = 1
+local var_0_0 = class("RougeDLCSelectListModel", MixScrollModel)
+local var_0_1 = 1
 
-function slot0.onInit(slot0)
-	slot0:_initList()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_initList()
 end
 
-function slot0._initList(slot0)
-	slot2 = {}
-	slot0._recordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+function var_0_0._initList(arg_2_0)
+	local var_2_0 = RougeOutsideModel.instance:season()
+	local var_2_1 = {}
 
-	for slot6, slot7 in ipairs(lua_rouge_season.configList) do
-		if slot7.season == RougeOutsideModel.instance:season() then
-			table.insert(slot2, slot7)
+	arg_2_0._recordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+
+	for iter_2_0, iter_2_1 in ipairs(lua_rouge_season.configList) do
+		if iter_2_1.season == var_2_0 then
+			table.insert(var_2_1, iter_2_1)
 		end
 	end
 
-	slot0:setList(slot2)
-	slot0:selectCell(uv0, true)
+	arg_2_0:setList(var_2_1)
+	arg_2_0:selectCell(var_0_1, true)
 end
 
-function slot0.updateVersions(slot0)
-	slot0:onModelUpdate()
+function var_0_0.updateVersions(arg_3_0)
+	arg_3_0:onModelUpdate()
 end
 
-function slot0.getCurSelectVersions(slot0)
-	return slot0._recordInfo and slot0._recordInfo:getVersionIds()
+function var_0_0.getCurSelectVersions(arg_4_0)
+	return arg_4_0._recordInfo and arg_4_0._recordInfo:getVersionIds()
 end
 
-function slot0.isAddDLC(slot0, slot1)
-	return slot0._recordInfo and slot0._recordInfo:isSelectDLC(slot1)
+function var_0_0.isAddDLC(arg_5_0, arg_5_1)
+	return arg_5_0._recordInfo and arg_5_0._recordInfo:isSelectDLC(arg_5_1)
 end
 
-slot2 = 220
-slot3 = 310
+local var_0_2 = 220
+local var_0_3 = 310
 
-function slot0.getInfoList(slot0)
-	slot1 = {}
+function var_0_0.getInfoList(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = arg_6_0:getCount()
 
-	for slot6 = 1, slot0:getCount() do
-		table.insert(slot1, SLFramework.UGUI.MixCellInfo.New(1, slot2 <= slot6 and uv0 or uv1, nil))
+	for iter_6_0 = 1, var_6_1 do
+		local var_6_2 = var_6_1 <= iter_6_0 and var_0_3 or var_0_2
+		local var_6_3 = SLFramework.UGUI.MixCellInfo.New(1, var_6_2, nil)
+
+		table.insert(var_6_0, var_6_3)
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.selectCell(slot0, slot1)
-	if not slot0:getByIndex(slot1) then
+function var_0_0.selectCell(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getByIndex(arg_7_1)
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0._selectIndex = slot1
+	arg_7_0._selectIndex = arg_7_1
 
-	RougeDLCController.instance:dispatchEvent(RougeEvent.OnSelectDLC, slot2.id)
+	RougeDLCController.instance:dispatchEvent(RougeEvent.OnSelectDLC, var_7_0.id)
 end
 
-function slot0.getCurSelectIndex(slot0)
-	return slot0._selectIndex or 0
+function var_0_0.getCurSelectIndex(arg_8_0)
+	return arg_8_0._selectIndex or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

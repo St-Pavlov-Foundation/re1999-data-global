@@ -1,10 +1,10 @@
-module("modules.logic.handbook.model.HandbookStoryMO", package.seeall)
+﻿module("modules.logic.handbook.model.HandbookStoryMO", package.seeall)
 
-slot0 = pureTable("HandbookStoryMO")
+local var_0_0 = pureTable("HandbookStoryMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.storyGroupId = slot1
-	slot0.index = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.storyGroupId = arg_1_1
+	arg_1_0.index = arg_1_2
 end
 
-return slot0
+return var_0_0

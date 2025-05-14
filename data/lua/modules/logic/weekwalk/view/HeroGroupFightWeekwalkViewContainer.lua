@@ -1,15 +1,15 @@
-module("modules.logic.weekwalk.view.HeroGroupFightWeekwalkViewContainer", package.seeall)
+﻿module("modules.logic.weekwalk.view.HeroGroupFightWeekwalkViewContainer", package.seeall)
 
-slot0 = class("HeroGroupFightWeekwalkViewContainer", HeroGroupFightViewContainer)
+local var_0_0 = class("HeroGroupFightWeekwalkViewContainer", HeroGroupFightViewContainer)
 
-function slot0.defineFightView(slot0)
-	uv0.super.defineFightView(slot0)
+function var_0_0.defineFightView(arg_1_0)
+	var_0_0.super.defineFightView(arg_1_0)
 
-	slot0._heroGroupFightListView = WeekWalkHeroGroupListView.New()
+	arg_1_0._heroGroupFightListView = WeekWalkHeroGroupListView.New()
 end
 
-function slot0.addLastViews(slot0, slot1)
-	table.insert(slot1, HeroGroupFightWeekWalkView.New())
+function var_0_0.addLastViews(arg_2_0, arg_2_1)
+	table.insert(arg_2_1, HeroGroupFightWeekWalkView.New())
 end
 
-return slot0
+return var_0_0

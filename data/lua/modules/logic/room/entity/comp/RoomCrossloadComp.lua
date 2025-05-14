@@ -1,152 +1,162 @@
-module("modules.logic.room.entity.comp.RoomCrossloadComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCrossloadComp", package.seeall)
 
-slot0 = class("RoomCrossloadComp", LuaCompBase)
+local var_0_0 = class("RoomCrossloadComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._mo = slot0.entity:getMO()
-	slot0._crossload = RoomBuildingEnum.Crossload[slot0._mo.buildingId]
-	slot0._nextTime = 0
-	slot0._durtion = 5
-	slot0._isCanMove = true
-	slot0._defaultAnimTime = 2.1
-	slot0._animTime = 2.1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._mo = arg_2_0.entity:getMO()
+	arg_2_0._crossload = RoomBuildingEnum.Crossload[arg_2_0._mo.buildingId]
+	arg_2_0._nextTime = 0
+	arg_2_0._durtion = 5
+	arg_2_0._isCanMove = true
+	arg_2_0._defaultAnimTime = 2.1
+	arg_2_0._animTime = 2.1
 
-	slot0:reset()
+	arg_2_0:reset()
 end
 
-function slot0.getCurResId(slot0)
-	return slot0._curResId
+function var_0_0.getCurResId(arg_3_0)
+	return arg_3_0._curResId
 end
 
-function slot0.getCanMove(slot0)
-	return slot0._isCanMove
+function var_0_0.getCanMove(arg_4_0)
+	return arg_4_0._isCanMove
 end
 
-function slot0.reset(slot0)
-	slot0._curResId = nil
+function var_0_0.reset(arg_5_0)
+	arg_5_0._curResId = nil
 
-	if slot0:_canWork() then
-		slot0:_runDelayInitAnim(3)
+	if arg_5_0:_canWork() then
+		arg_5_0:_runDelayInitAnim(3)
 	end
 end
 
-function slot0._canWork(slot0)
+function var_0_0._canWork(arg_6_0)
 	return RoomController.instance:isObMode() or RoomController.instance:isVisitMode()
 end
 
-function slot0.playAnim(slot0, slot1)
-	if not slot0:_canWork() then
+function var_0_0.playAnim(arg_7_0, arg_7_1)
+	if not arg_7_0:_canWork() then
 		return
 	end
 
-	if slot1 == slot0._curResId then
-		if slot0._nextTime < Time.time + slot0._durtion then
-			slot0._nextTime = slot2
+	if arg_7_1 == arg_7_0._curResId then
+		local var_7_0 = Time.time + arg_7_0._durtion
+
+		if var_7_0 > arg_7_0._nextTime then
+			arg_7_0._nextTime = var_7_0
 		end
 
 		return
 	end
 
-	if Time.time < slot0._nextTime then
+	if Time.time < arg_7_0._nextTime then
 		return
 	end
 
-	slot0:_playAnim(slot1)
-	slot0:_runDelayInitAnim(slot0._animTime + slot0._durtion)
+	arg_7_0:_playAnim(arg_7_1)
+	arg_7_0:_runDelayInitAnim(arg_7_0._animTime + arg_7_0._durtion)
 end
 
-function slot0._runDelayInitAnim(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._playInitAnim, slot0)
-	TaskDispatcher.runDelay(slot0._playInitAnim, slot0, slot1)
+function var_0_0._runDelayInitAnim(arg_8_0, arg_8_1)
+	TaskDispatcher.cancelTask(arg_8_0._playInitAnim, arg_8_0)
+	TaskDispatcher.runDelay(arg_8_0._playInitAnim, arg_8_0, arg_8_1)
 end
 
-function slot0._playInitAnim(slot0)
-	if slot0:_getInitResId() ~= slot0._curResId then
-		slot0:_playAnim(slot1, slot0._curResId == nil)
+function var_0_0._playInitAnim(arg_9_0)
+	local var_9_0 = arg_9_0:_getInitResId()
+
+	if var_9_0 ~= arg_9_0._curResId then
+		arg_9_0:_playAnim(var_9_0, arg_9_0._curResId == nil)
 	end
 end
 
-function slot0._playAnim(slot0, slot1, slot2)
-	slot3, slot4, slot5 = slot0:_findAninNameByResId(slot1)
+function var_0_0._playAnim(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0, var_10_1, var_10_2 = arg_10_0:_findAninNameByResId(arg_10_1)
 
-	if not slot3 then
+	if not var_10_0 then
 		return
 	end
 
-	if slot0:_getAnimator() then
-		slot0._isCanMove = slot0._curResId == slot1
-		slot0._curResId = slot1
-		slot0._animTime = slot4 or slot0._defineAnimTime
+	if arg_10_0:_getAnimator() then
+		arg_10_0._isCanMove = arg_10_0._curResId == arg_10_1
+		arg_10_0._curResId = arg_10_1
+		arg_10_0._animTime = var_10_1 or arg_10_0._defineAnimTime
 
-		slot0._animator:Play(slot3, 0, slot2 and 1 or 0)
-		TaskDispatcher.cancelTask(slot0._delayOpenOrClose, slot0)
-		TaskDispatcher.runDelay(slot0._delayOpenOrClose, slot0, slot0._animTime)
+		arg_10_0._animator:Play(var_10_0, 0, arg_10_2 and 1 or 0)
+		TaskDispatcher.cancelTask(arg_10_0._delayOpenOrClose, arg_10_0)
+		TaskDispatcher.runDelay(arg_10_0._delayOpenOrClose, arg_10_0, arg_10_0._animTime)
 
-		slot0._nextTime = Time.time + slot0._durtion
+		arg_10_0._nextTime = Time.time + arg_10_0._durtion
 
-		if not slot2 and slot5 and slot5 ~= 0 then
-			slot0.entity:playAudio(slot5, slot0.go)
+		if not arg_10_2 and var_10_2 and var_10_2 ~= 0 then
+			arg_10_0.entity:playAudio(var_10_2, arg_10_0.go)
 		end
 	end
 end
 
-function slot0._delayOpenOrClose(slot0)
+function var_0_0._delayOpenOrClose(arg_11_0)
 	if not RoomCrossLoadController.instance:isLock() then
-		RoomCrossLoadController.instance:updatePathGraphic(slot0._mo.id)
+		RoomCrossLoadController.instance:updatePathGraphic(arg_11_0._mo.id)
 
-		slot0._isCanMove = true
+		arg_11_0._isCanMove = true
 	else
-		slot0._curResId = nil
+		arg_11_0._curResId = nil
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, slot0._onSwitchModel, slot0)
+function var_0_0.addEventListeners(arg_12_0)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_12_0._onSwitchModel, arg_12_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, slot0._onSwitchModel, slot0)
-	TaskDispatcher.cancelTask(slot0._playInitAnim, slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenOrClose, slot0)
+function var_0_0.removeEventListeners(arg_13_0)
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_13_0._onSwitchModel, arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._playInitAnim, arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._delayOpenOrClose, arg_13_0)
 end
 
-function slot0._onSwitchModel(slot0)
-	slot0:reset()
+function var_0_0._onSwitchModel(arg_14_0)
+	arg_14_0:reset()
 end
 
-function slot0._findAninNameByResId(slot0, slot1)
-	if slot0._crossload and slot0._crossload.AnimStatus then
-		for slot6, slot7 in ipairs(slot0._crossload.AnimStatus) do
-			if slot7.resId == slot1 then
-				return slot7.animName, slot7.animTime, slot7.audioId
+function var_0_0._findAninNameByResId(arg_15_0, arg_15_1)
+	if arg_15_0._crossload and arg_15_0._crossload.AnimStatus then
+		local var_15_0 = arg_15_0._crossload.AnimStatus
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			if iter_15_1.resId == arg_15_1 then
+				return iter_15_1.animName, iter_15_1.animTime, iter_15_1.audioId
 			end
 		end
 	end
 end
 
-function slot0._getInitResId(slot0)
-	if slot0._crossload and slot0._crossload.AnimStatus then
-		return slot0._crossload.AnimStatus[1].resId
+function var_0_0._getInitResId(arg_16_0)
+	if arg_16_0._crossload and arg_16_0._crossload.AnimStatus then
+		return arg_16_0._crossload.AnimStatus[1].resId
 	end
 end
 
-function slot0._getAnimator(slot0)
-	if not slot0._animator and slot0.entity:getBuildingGO() then
-		slot0._animator = slot1:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._getAnimator(arg_17_0)
+	if not arg_17_0._animator then
+		local var_17_0 = arg_17_0.entity:getBuildingGO()
+
+		if var_17_0 then
+			arg_17_0._animator = var_17_0:GetComponent(typeof(UnityEngine.Animator))
+		end
 	end
 
-	return slot0._animator
+	return arg_17_0._animator
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0._animator = nil
+function var_0_0.beforeDestroy(arg_18_0)
+	arg_18_0._animator = nil
 
-	slot0:removeEventListeners()
+	arg_18_0:removeEventListeners()
 end
 
-return slot0
+return var_0_0

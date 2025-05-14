@@ -1,120 +1,129 @@
-module("modules.logic.versionactivity.view.VersionActivityStoreItem", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityStoreItem", package.seeall)
 
-slot0 = class("VersionActivityStoreItem", UserDataDispose)
+local var_0_0 = class("VersionActivityStoreItem", UserDataDispose)
 
-function slot0.onInitView(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.onInitView(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.gotag = gohelper.findChild(slot0.go, "tag")
-	slot0.canvasGroup = slot0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0.imageTagType = gohelper.findChildImage(slot0.go, "tag/image_tagType")
-	slot0.txtTagFirstName = gohelper.findChildText(slot0.go, "tag/image_tagType/txt_tagNameFirst")
-	slot0.txtTagRemainName = gohelper.findChildText(slot0.go, "tag/image_tagType/txt_tagNameRemain")
-	slot0.goStoreGoodsItem = gohelper.findChild(slot0.go, "#go_storegoodsitem")
+	arg_1_0.go = arg_1_1
+	arg_1_0.gotag = gohelper.findChild(arg_1_0.go, "tag")
+	arg_1_0.canvasGroup = arg_1_0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0.imageTagType = gohelper.findChildImage(arg_1_0.go, "tag/image_tagType")
+	arg_1_0.txtTagFirstName = gohelper.findChildText(arg_1_0.go, "tag/image_tagType/txt_tagNameFirst")
+	arg_1_0.txtTagRemainName = gohelper.findChildText(arg_1_0.go, "tag/image_tagType/txt_tagNameRemain")
+	arg_1_0.goStoreGoodsItem = gohelper.findChild(arg_1_0.go, "#go_storegoodsitem")
 
-	gohelper.setActive(slot0.goStoreGoodsItem, false)
+	gohelper.setActive(arg_1_0.goStoreGoodsItem, false)
 
-	slot0.goodsItemList = slot0:getUserDataTb_()
-	slot0.tagMaskList = slot0:getUserDataTb_()
+	arg_1_0.goodsItemList = arg_1_0:getUserDataTb_()
+	arg_1_0.tagMaskList = arg_1_0:getUserDataTb_()
 
-	table.insert(slot0.tagMaskList, slot0.imageTagType)
-	table.insert(slot0.tagMaskList, slot0.txtTagFirstName)
-	table.insert(slot0.tagMaskList, slot0.txtTagRemainName)
+	table.insert(arg_1_0.tagMaskList, arg_1_0.imageTagType)
+	table.insert(arg_1_0.tagMaskList, arg_1_0.txtTagFirstName)
+	table.insert(arg_1_0.tagMaskList, arg_1_0.txtTagRemainName)
 
-	slot0._clipPosY = 424
-	slot0._startFadePosY = 382.32
-	slot0._showTagPosY = 300
+	arg_1_0._clipPosY = 424
+	arg_1_0._startFadePosY = 382.32
+	arg_1_0._showTagPosY = 300
 
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0.onBuyGoodsSuccess, slot0)
+	arg_1_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_1_0.onBuyGoodsSuccess, arg_1_0)
 
-	slot0._contentHorizontal = slot0.imageTagType.gameObject:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	slot0._adjustcontent = gohelper.findChild(slot0.go, "tag/langadjust")
-	slot0._contentHorizontal.padding.left = slot0._adjustcontent.transform.localPosition.x
-	slot0._contentHorizontal.padding.top = slot0._adjustcontent.transform.localPosition.y
+	arg_1_0._contentHorizontal = arg_1_0.imageTagType.gameObject:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	arg_1_0._adjustcontent = gohelper.findChild(arg_1_0.go, "tag/langadjust")
+	arg_1_0._contentHorizontal.padding.left = arg_1_0._adjustcontent.transform.localPosition.x
+	arg_1_0._contentHorizontal.padding.top = arg_1_0._adjustcontent.transform.localPosition.y
 end
 
-function slot0.onBuyGoodsSuccess(slot0)
-	slot0:sortGoodsCoList()
-	slot0:refreshGoods()
+function var_0_0.onBuyGoodsSuccess(arg_2_0)
+	arg_2_0:sortGoodsCoList()
+	arg_2_0:refreshGoods()
 end
 
-function slot0.sortGoodsCoList(slot0)
-	table.sort(slot0.groupGoodsCoList, uv0.sortGoods)
+function var_0_0.sortGoodsCoList(arg_3_0)
+	table.sort(arg_3_0.groupGoodsCoList, var_0_0.sortGoods)
 end
 
-function slot0.updateInfo(slot0, slot1, slot2)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.updateInfo(arg_4_0, arg_4_1, arg_4_2)
+	gohelper.setActive(arg_4_0.go, true)
 
-	slot0.groupGoodsCoList = slot2
-	slot0.groupId = slot1
+	arg_4_0.groupGoodsCoList = arg_4_2
+	arg_4_0.groupId = arg_4_1
 
-	slot0:sortGoodsCoList()
-	slot0:refreshTag()
-	slot0:refreshGoods()
+	arg_4_0:sortGoodsCoList()
+	arg_4_0:refreshTag()
+	arg_4_0:refreshGoods()
 end
 
-function slot0.refreshTag(slot0)
-	slot0.tagName = luaLang("versionactivity_store_tag_" .. slot0.groupId)
+function var_0_0.refreshTag(arg_5_0)
+	arg_5_0.tagName = luaLang("versionactivity_store_tag_" .. arg_5_0.groupId)
 
-	UISpriteSetMgr.instance:setVersionActivitySprite(slot0.imageTagType, "img_title_label_" .. slot0.groupId)
+	UISpriteSetMgr.instance:setVersionActivitySprite(arg_5_0.imageTagType, "img_title_label_" .. arg_5_0.groupId)
 
-	slot0.firstName = GameUtil.utf8sub(slot0.tagName, 1, 1)
-	slot0.remainName = ""
+	arg_5_0.firstName = GameUtil.utf8sub(arg_5_0.tagName, 1, 1)
+	arg_5_0.remainName = ""
 
-	if GameUtil.utf8len(slot0.tagName) > 1 then
-		slot0.remainName = GameUtil.utf8sub(slot0.tagName, 2, slot1 - 1)
+	local var_5_0 = GameUtil.utf8len(arg_5_0.tagName)
+
+	if var_5_0 > 1 then
+		arg_5_0.remainName = GameUtil.utf8sub(arg_5_0.tagName, 2, var_5_0 - 1)
 	end
 
-	slot0.txtTagFirstName.text = slot0.firstName
-	slot0.txtTagRemainName.text = slot0.remainName
+	arg_5_0.txtTagFirstName.text = arg_5_0.firstName
+	arg_5_0.txtTagRemainName.text = arg_5_0.remainName
 end
 
-function slot0.refreshGoods(slot0)
-	slot1 = nil
+function var_0_0.refreshGoods(arg_6_0)
+	local var_6_0
 
-	for slot5, slot6 in ipairs(slot0.groupGoodsCoList) do
-		if not slot0.goodsItemList[slot5] then
-			slot1 = VersionActivityStoreGoodsItem.New()
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.groupGoodsCoList) do
+		local var_6_1 = arg_6_0.goodsItemList[iter_6_0]
 
-			slot1:onInitView(gohelper.cloneInPlace(slot0.goStoreGoodsItem))
-			table.insert(slot0.goodsItemList, slot1)
+		if not var_6_1 then
+			var_6_1 = VersionActivityStoreGoodsItem.New()
+
+			var_6_1:onInitView(gohelper.cloneInPlace(arg_6_0.goStoreGoodsItem))
+			table.insert(arg_6_0.goodsItemList, var_6_1)
 		end
 
-		slot1:updateInfo(slot6)
+		var_6_1:updateInfo(iter_6_1)
 	end
 
-	for slot5 = #slot0.groupGoodsCoList + 1, #slot0.goodsItemList do
-		slot0.goodsItemList[slot5]:hide()
-	end
-end
-
-function slot0.refreshTagClip(slot0, slot1)
-	slot0.canvasGroup.alpha = Mathf.Clamp((slot0._clipPosY - recthelper.rectToRelativeAnchorPos(slot0.gotag.transform.position, slot1.transform).y) / (slot0._clipPosY - slot0._startFadePosY), 0, 1)
-
-	for slot7, slot8 in ipairs(slot0.tagMaskList) do
-		slot8.maskable = slot2.y <= slot0._showTagPosY
+	for iter_6_2 = #arg_6_0.groupGoodsCoList + 1, #arg_6_0.goodsItemList do
+		arg_6_0.goodsItemList[iter_6_2]:hide()
 	end
 end
 
-function slot0.sortGoods(slot0, slot1)
-	if (slot0.maxBuyCount ~= 0 and slot0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, slot0.id) <= 0) ~= (slot1.maxBuyCount ~= 0 and slot1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, slot1.id) <= 0) then
-		if slot2 then
+function var_0_0.refreshTagClip(arg_7_0, arg_7_1)
+	local var_7_0 = recthelper.rectToRelativeAnchorPos(arg_7_0.gotag.transform.position, arg_7_1.transform)
+	local var_7_1 = Mathf.Clamp((arg_7_0._clipPosY - var_7_0.y) / (arg_7_0._clipPosY - arg_7_0._startFadePosY), 0, 1)
+
+	arg_7_0.canvasGroup.alpha = var_7_1
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.tagMaskList) do
+		iter_7_1.maskable = var_7_0.y <= arg_7_0._showTagPosY
+	end
+end
+
+function var_0_0.sortGoods(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.maxBuyCount ~= 0 and arg_8_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, arg_8_0.id) <= 0
+
+	if var_8_0 ~= (arg_8_1.maxBuyCount ~= 0 and arg_8_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, arg_8_1.id) <= 0) then
+		if var_8_0 then
 			return false
 		end
 
 		return true
 	end
 
-	return slot0.id < slot1.id
+	return arg_8_0.id < arg_8_1.id
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in ipairs(slot0.goodsItemList) do
-		slot5:onDestroy()
+function var_0_0.onDestroy(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.goodsItemList) do
+		iter_9_1:onDestroy()
 	end
 
-	slot0:__onDispose()
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

@@ -1,171 +1,194 @@
-module("modules.logic.room.entity.pool.RoomGOPool", package.seeall)
+﻿module("modules.logic.room.entity.pool.RoomGOPool", package.seeall)
 
-slot0 = _M
-slot1 = false
-slot2, slot3 = nil
-slot4 = {}
-slot5 = {}
-slot6 = {}
-slot7 = nil
+local var_0_0 = _M
+local var_0_1 = false
+local var_0_2
+local var_0_3
+local var_0_4 = {}
+local var_0_5 = {}
+local var_0_6 = {}
+local var_0_7
 
-function slot0.init(slot0, slot1)
-	uv0._reset()
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0._reset()
 
-	uv1 = slot0
-	uv2 = slot1
-	uv3 = true
+	var_0_2 = arg_1_0
+	var_0_7 = arg_1_1
+	var_0_1 = true
 end
 
-function slot0.addPrefab(slot0, slot1, slot2)
-	if uv0 then
-		uv0[slot0] = slot1
-		uv1[slot0] = slot2
+function var_0_0.addPrefab(arg_2_0, arg_2_1, arg_2_2)
+	if var_0_2 then
+		var_0_2[arg_2_0] = arg_2_1
+		var_0_7[arg_2_0] = arg_2_2
 	end
 end
 
-function slot0.getInstance(slot0, slot1, slot2, slot3)
-	if not uv0 then
+function var_0_0.getInstance(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if not var_0_1 then
 		return
 	end
 
-	if not (uv1[slot0] or GameSceneMgr.instance:getCurScene().preloader:getResource(slot0, slot3)) then
-		logError(string.format("找不到资源: %s", slot0))
+	local var_3_0 = var_0_2[arg_3_0] or GameSceneMgr.instance:getCurScene().preloader:getResource(arg_3_0, arg_3_3)
+
+	if not var_3_0 then
+		logError(string.format("找不到资源: %s", arg_3_0))
 
 		return
 	end
 
-	if not uv2[slot0] then
-		uv2[slot0] = slot3 or slot0
+	if not var_0_6[arg_3_0] then
+		var_0_6[arg_3_0] = arg_3_3 or arg_3_0
 	end
 
-	if not uv3[slot0] then
-		uv3[slot0] = {}
+	local var_3_1 = var_0_4[arg_3_0]
+
+	if not var_3_1 then
+		var_3_1 = {}
+		var_0_4[arg_3_0] = var_3_1
 	end
 
-	if not uv4[slot0] then
-		uv4[slot0] = {}
+	local var_3_2 = var_0_5[arg_3_0]
+
+	if not var_3_2 then
+		var_3_2 = {}
+		var_0_5[arg_3_0] = var_3_2
 	end
 
-	slot7 = nil
+	local var_3_3
 
-	if #slot5 > 0 then
-		gohelper.addChild(slot1, slot5[#slot5])
+	if #var_3_1 > 0 then
+		var_3_3 = var_3_1[#var_3_1]
 
-		slot7.name = slot2 or "instance"
+		gohelper.addChild(arg_3_1, var_3_3)
 
-		table.remove(slot5, #slot5)
+		var_3_3.name = arg_3_2 or "instance"
+
+		table.remove(var_3_1, #var_3_1)
 	else
-		slot7 = gohelper.clone(slot4, slot1, slot2 or "instance")
+		var_3_3 = gohelper.clone(var_3_0, arg_3_1, arg_3_2 or "instance")
 	end
 
-	table.insert(slot6, slot7)
+	table.insert(var_3_2, var_3_3)
 
-	return slot7
+	return var_3_3
 end
 
-function slot0.returnInstance(slot0, slot1)
-	if not uv0 then
+function var_0_0.returnInstance(arg_4_0, arg_4_1)
+	if not var_0_1 then
 		return
 	end
 
-	if not uv1[slot0] then
-		uv1[slot0] = {}
+	local var_4_0 = var_0_4[arg_4_0]
+
+	if not var_4_0 then
+		var_4_0 = {}
+		var_0_4[arg_4_0] = var_4_0
 	end
 
-	if not uv2[slot0] then
-		uv2[slot0] = {}
+	local var_4_1 = var_0_5[arg_4_0]
+
+	if not var_4_1 then
+		var_4_1 = {}
+		var_0_5[arg_4_0] = var_4_1
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if slot8 == slot1 then
-			table.remove(slot3, slot7)
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		if iter_4_1 == arg_4_1 then
+			table.remove(var_4_1, iter_4_0)
 
 			break
 		end
 	end
 
-	if uv3[slot0] and uv3[slot0] >= 0 and uv3[slot0] <= #slot2 then
-		gohelper.addChild(uv4.getPoolContainerGO(), slot1)
-		gohelper.destroy(slot1)
+	if var_0_7[arg_4_0] and var_0_7[arg_4_0] >= 0 and var_0_7[arg_4_0] <= #var_4_0 then
+		gohelper.addChild(var_0_0.getPoolContainerGO(), arg_4_1)
+		gohelper.destroy(arg_4_1)
 	else
-		gohelper.addChild(uv4.getPoolContainerGO(), slot1)
-		table.insert(slot2, slot1)
+		gohelper.addChild(var_0_0.getPoolContainerGO(), arg_4_1)
+		table.insert(var_4_0, arg_4_1)
 	end
 end
 
-function slot0.clearPool()
-	uv0 = {}
+function var_0_0.clearPool()
+	local var_5_0 = var_0_4
 
-	for slot4, slot5 in pairs(uv0) do
-		for slot9, slot10 in ipairs(slot5) do
-			gohelper.destroy(slot10)
+	var_0_4 = {}
+
+	for iter_5_0, iter_5_1 in pairs(var_5_0) do
+		for iter_5_2, iter_5_3 in ipairs(iter_5_1) do
+			gohelper.destroy(iter_5_3)
 		end
 	end
 end
 
-function slot0.existABPath(slot0)
-	slot1 = nil
+function var_0_0.existABPath(arg_6_0)
+	local var_6_0
 
-	for slot5, slot6 in pairs(uv0) do
-		if slot6 == slot0 then
-			slot1 = false
+	for iter_6_0, iter_6_1 in pairs(var_0_6) do
+		if iter_6_1 == arg_6_0 then
+			var_6_0 = false
 
-			if uv1.existResPath(slot5) == true then
+			if var_0_0.existResPath(iter_6_0) == true then
 				return true
 			end
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.existResPath(slot0)
-	if uv0[slot0] and #slot1 > 0 then
+function var_0_0.existResPath(arg_7_0)
+	local var_7_0 = var_0_4[arg_7_0]
+
+	if var_7_0 and #var_7_0 > 0 then
 		return true
 	end
 
-	if uv1[slot0] and #slot2 > 0 then
+	local var_7_1 = var_0_5[arg_7_0]
+
+	if var_7_1 and #var_7_1 > 0 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.dispose()
-	uv0 = false
+function var_0_0.dispose()
+	var_0_1 = false
 
-	for slot3, slot4 in pairs(uv1) do
-		for slot8, slot9 in ipairs(slot4) do
-			gohelper.destroy(slot9)
+	for iter_8_0, iter_8_1 in pairs(var_0_5) do
+		for iter_8_2, iter_8_3 in ipairs(iter_8_1) do
+			gohelper.destroy(iter_8_3)
 		end
 	end
 
-	for slot3, slot4 in pairs(uv2) do
-		for slot8, slot9 in ipairs(slot4) do
-			gohelper.destroy(slot9)
+	for iter_8_4, iter_8_5 in pairs(var_0_4) do
+		for iter_8_6, iter_8_7 in ipairs(iter_8_5) do
+			gohelper.destroy(iter_8_7)
 		end
 	end
 
-	uv3._reset()
+	var_0_0._reset()
 end
 
-function slot0._reset()
-	uv0 = false
-	uv1 = nil
-	uv2 = nil
-	uv3 = {}
-	uv4 = {}
-	uv5 = {}
+function var_0_0._reset()
+	var_0_1 = false
+	var_0_2 = nil
+	var_0_3 = nil
+	var_0_4 = {}
+	var_0_5 = {}
+	var_0_6 = {}
 end
 
-function slot0.getPoolContainerGO()
-	if not uv0 then
-		uv0 = GameSceneMgr.instance:getCurScene().go.poolContainerGO
+function var_0_0.getPoolContainerGO()
+	if not var_0_3 then
+		var_0_3 = GameSceneMgr.instance:getCurScene().go.poolContainerGO
 
-		gohelper.setActive(uv0, false)
+		gohelper.setActive(var_0_3, false)
 	end
 
-	return uv0
+	return var_0_3
 end
 
-return slot0
+return var_0_0

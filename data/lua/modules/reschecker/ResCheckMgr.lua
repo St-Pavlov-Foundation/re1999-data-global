@@ -1,128 +1,152 @@
-module("modules.reschecker.ResCheckMgr", package.seeall)
+﻿module("modules.reschecker.ResCheckMgr", package.seeall)
 
-slot0 = class("ResCheckMgr")
+local var_0_0 = class("ResCheckMgr")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.startCheck(slot0, slot1, slot2)
-	slot0.cb = slot1
-	slot0.cbObj = slot2
+function var_0_0.startCheck(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.cb = arg_2_1
+	arg_2_0.cbObj = arg_2_2
 
-	if tostring(tonumber(BootNativeUtil.getAppVersion())) == SLFramework.FileHelper.ReadText(SLFramework.ResChecker.OutVersionPath) then
+	local var_2_0 = tonumber(BootNativeUtil.getAppVersion())
+	local var_2_1 = SLFramework.FileHelper.ReadText(SLFramework.ResChecker.OutVersionPath)
+
+	if tostring(var_2_0) == var_2_1 then
 		logNormal("ResCheckMgr pass, is not first init")
-		slot0:doCallBack(true)
+		arg_2_0:doCallBack(true)
 
 		return
 	end
 
 	SLFramework.TimeWatch.Instance:Start()
 
-	slot0.eventDispatcher = SLFramework.GameLuaEventDispatcher.Instance
+	arg_2_0.eventDispatcher = SLFramework.GameLuaEventDispatcher.Instance
 
-	slot0.eventDispatcher:AddListener(slot0.eventDispatcher.ResChecker_Finish, slot0.onCheckFinish, slot0)
-	slot0.eventDispatcher:AddListener(slot0.eventDispatcher.ResChecker_Progress, slot0.onCheckProgress, slot0)
+	arg_2_0.eventDispatcher:AddListener(arg_2_0.eventDispatcher.ResChecker_Finish, arg_2_0.onCheckFinish, arg_2_0)
+	arg_2_0.eventDispatcher:AddListener(arg_2_0.eventDispatcher.ResChecker_Progress, arg_2_0.onCheckProgress, arg_2_0)
 
-	slot6, slot7 = slot0:_getDLCInfo(slot0:_getAllLocalLang())
+	local var_2_2 = arg_2_0:_getAllLocalLang()
+	local var_2_3, var_2_4 = arg_2_0:_getDLCInfo(var_2_2)
+	local var_2_5 = SLFramework.GameUpdate.OptionalUpdate.Instance:GetLocalVersion("res-HD")
 
-	if not string.nilorempty(SLFramework.GameUpdate.OptionalUpdate.Instance:GetLocalVersion("res-HD")) or not BootVoiceView.instance:isFirstDownloadDone() then
-		slot6 = true
+	if not string.nilorempty(var_2_5) or not BootVoiceView.instance:isFirstDownloadDone() then
+		var_2_3 = true
 
-		table.insert(slot7, "res-HD")
+		table.insert(var_2_4, "res-HD")
 	end
 
-	logNormal("ResCheckMgr:startCheck, allLocalLang = " .. table.concat(slot5, ",") .. " useDLC = " .. tostring(slot6) .. " allDLCLocalLang = " .. table.concat(slot7, ","))
-	SLFramework.ResChecker.Instance:CheckAllRes(slot5, slot6, slot7)
+	logNormal("ResCheckMgr:startCheck, allLocalLang = " .. table.concat(var_2_2, ",") .. " useDLC = " .. tostring(var_2_3) .. " allDLCLocalLang = " .. table.concat(var_2_4, ","))
+	SLFramework.ResChecker.Instance:CheckAllRes(var_2_2, var_2_3, var_2_4)
 end
 
-function slot0.onCheckProgress(slot0, slot1, slot2)
-	logNormal("ResCheckMgr:onCheckProgress, 检查进度 doneFileNum = " .. slot1 .. " allFileNum = " .. slot2)
-	BootLoadingView.instance:show(slot1 / slot2, string.format(booterLang("rescheker"), slot1, slot2))
+function var_0_0.onCheckProgress(arg_3_0, arg_3_1, arg_3_2)
+	logNormal("ResCheckMgr:onCheckProgress, 检查进度 doneFileNum = " .. arg_3_1 .. " allFileNum = " .. arg_3_2)
+
+	local var_3_0 = arg_3_1 / arg_3_2
+	local var_3_1 = string.format(booterLang("rescheker"), arg_3_1, arg_3_2)
+
+	BootLoadingView.instance:show(var_3_0, var_3_1)
 end
 
-function slot0.onCheckFinish(slot0, slot1, slot2)
-	logNormal("ResCheckMgr:onCheckFinish:allPass = " .. tostring(slot1) .. " #allSize = " .. tonumber(tostring(slot2)) .. " #cost time: " .. SLFramework.TimeWatch.Instance:Watch() .. " s")
+function var_0_0.onCheckFinish(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_2 = tonumber(tostring(arg_4_2))
 
-	if slot1 then
-		slot0:doCallBack(true)
+	logNormal("ResCheckMgr:onCheckFinish:allPass = " .. tostring(arg_4_1) .. " #allSize = " .. arg_4_2 .. " #cost time: " .. SLFramework.TimeWatch.Instance:Watch() .. " s")
+
+	if arg_4_1 then
+		arg_4_0:doCallBack(true)
 	elseif UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
-		slot0:doCallBack()
+		arg_4_0:doCallBack()
 	else
-		BootMsgBox.instance:show({
-			title = booterLang("hotupdate"),
-			content = string.format(booterLang("hotupdate_info"), HotUpdateMgr.instance:_fixSizeStr(slot2)),
-			leftMsg = booterLang("exit"),
-			leftCb = slot0._quitGame,
-			leftCbObj = slot0,
-			rightMsg = booterLang("download"),
-			rightCb = slot0.doCallBack,
-			rightCbObj = slot0
-		})
+		local var_4_0 = {
+			title = booterLang("hotupdate")
+		}
+		local var_4_1 = booterLang("hotupdate_info")
+
+		var_4_0.content = string.format(var_4_1, HotUpdateMgr.instance:_fixSizeStr(arg_4_2))
+		var_4_0.leftMsg = booterLang("exit")
+		var_4_0.leftCb = arg_4_0._quitGame
+		var_4_0.leftCbObj = arg_4_0
+		var_4_0.rightMsg = booterLang("download")
+		var_4_0.rightCb = arg_4_0.doCallBack
+		var_4_0.rightCbObj = arg_4_0
+
+		BootMsgBox.instance:show(var_4_0)
 	end
 end
 
-function slot0.doCallBack(slot0, slot1)
-	if slot0.eventDispatcher then
-		slot0.eventDispatcher:RemoveListener(slot0.eventDispatcher.ResChecker_Finish)
-		slot0.eventDispatcher:RemoveListener(slot0.eventDispatcher.ResChecker_Progress)
+function var_0_0.doCallBack(arg_5_0, arg_5_1)
+	if arg_5_0.eventDispatcher then
+		arg_5_0.eventDispatcher:RemoveListener(arg_5_0.eventDispatcher.ResChecker_Finish)
+		arg_5_0.eventDispatcher:RemoveListener(arg_5_0.eventDispatcher.ResChecker_Progress)
 	end
 
-	if slot1 then
-		slot0:markLastCheckAppVersion()
+	if arg_5_1 then
+		arg_5_0:markLastCheckAppVersion()
 	end
 
-	if slot0.cb then
-		slot0.cb(slot0.cbObj, slot1)
+	if arg_5_0.cb then
+		arg_5_0.cb(arg_5_0.cbObj, arg_5_1)
 	end
 end
 
-function slot0.markLastCheckAppVersion(slot0)
+function var_0_0.markLastCheckAppVersion(arg_6_0)
 	logNormal("ResCheckMgr:markLastCheckAppVersion")
-	SLFramework.FileHelper.WriteTextToPath(SLFramework.ResChecker.OutVersionPath, BootNativeUtil.getAppVersion())
+
+	local var_6_0 = BootNativeUtil.getAppVersion()
+
+	SLFramework.FileHelper.WriteTextToPath(SLFramework.ResChecker.OutVersionPath, var_6_0)
 end
 
-function slot0._quitGame(slot0)
+function var_0_0._quitGame(arg_7_0)
 	logNormal("ResCheckMgr:_quitGame, 退出游戏！")
 	ProjBooter.instance:quitGame()
 end
 
-function slot0._getAllLocalLang(slot0)
-	SLFramework.GameUpdate.OptionalUpdate.Instance:Init()
+function var_0_0._getAllLocalLang(arg_8_0)
+	local var_8_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
 
-	slot2 = {}
-	slot3 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	var_8_0:Init()
 
-	table.insert(slot3, "HD")
+	local var_8_1 = {}
+	local var_8_2 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_8_3 = GameConfig:GetDefaultVoiceShortcut()
 
-	for slot8 = 1, #slot3 do
-		if slot3[slot8] == GameConfig:GetDefaultVoiceShortcut() or not string.nilorempty(slot1:GetLocalVersion(slot9)) or not BootVoiceView.instance:isFirstDownloadDone() then
-			table.insert(slot2, slot9)
+	table.insert(var_8_2, "HD")
+
+	for iter_8_0 = 1, #var_8_2 do
+		local var_8_4 = var_8_2[iter_8_0]
+		local var_8_5 = var_8_4 == var_8_3
+		local var_8_6 = var_8_0:GetLocalVersion(var_8_4)
+		local var_8_7 = not string.nilorempty(var_8_6)
+		local var_8_8 = not BootVoiceView.instance:isFirstDownloadDone()
+
+		if var_8_5 or var_8_7 or var_8_8 then
+			table.insert(var_8_1, var_8_4)
 		end
 	end
 
-	return slot2
+	return var_8_1
 end
 
-function slot0._getDLCInfo(slot0, slot1)
-	slot3 = {}
+function var_0_0._getDLCInfo(arg_9_0, arg_9_1)
+	local var_9_0 = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+	local var_9_1 = {}
 
-	for slot7, slot8 in ipairs(HotUpdateOptionPackageMgr.instance:getPackageNameList()) do
-		table.insert(slot3, HotUpdateOptionPackageMgr.instance:formatLangPackName("res", slot8))
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		table.insert(var_9_1, HotUpdateOptionPackageMgr.instance:formatLangPackName("res", iter_9_1))
+		table.insert(var_9_1, HotUpdateOptionPackageMgr.instance:formatLangPackName("media", iter_9_1))
 
-		slot11 = HotUpdateOptionPackageMgr.instance
-		slot12 = slot11
-		slot13 = "media"
-
-		table.insert(slot3, slot11.formatLangPackName(slot12, slot13, slot8))
-
-		for slot12, slot13 in ipairs(slot1) do
-			table.insert(slot3, HotUpdateOptionPackageMgr.instance:formatLangPackName(slot13, slot8))
+		for iter_9_2, iter_9_3 in ipairs(arg_9_1) do
+			table.insert(var_9_1, HotUpdateOptionPackageMgr.instance:formatLangPackName(iter_9_3, iter_9_1))
 		end
 	end
 
-	return #slot3 > 0, slot3
+	return #var_9_1 > 0, var_9_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

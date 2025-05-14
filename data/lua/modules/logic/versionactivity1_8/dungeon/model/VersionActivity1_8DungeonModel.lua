@@ -1,86 +1,97 @@
-module("modules.logic.versionactivity1_8.dungeon.model.VersionActivity1_8DungeonModel", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.model.VersionActivity1_8DungeonModel", package.seeall)
 
-slot0 = class("VersionActivity1_8DungeonModel", BaseModel)
+local var_0_0 = class("VersionActivity1_8DungeonModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0:init()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:init()
 end
 
-function slot0.init(slot0)
-	slot0:setLastEpisodeId()
-	slot0:setShowInteractView()
+function var_0_0.init(arg_3_0)
+	arg_3_0:setLastEpisodeId()
+	arg_3_0:setShowInteractView()
 end
 
-function slot0.setLastEpisodeId(slot0, slot1)
-	slot0.lastEpisodeId = slot1
+function var_0_0.setLastEpisodeId(arg_4_0, arg_4_1)
+	arg_4_0.lastEpisodeId = arg_4_1
 end
 
-function slot0.setShowInteractView(slot0, slot1)
-	slot0.isShowInteractView = slot1
+function var_0_0.setShowInteractView(arg_5_0, arg_5_1)
+	arg_5_0.isShowInteractView = arg_5_1
 end
 
-function slot0.setIsNotShowNewElement(slot0, slot1)
-	slot0.notShowNewElement = slot1
+function var_0_0.setIsNotShowNewElement(arg_6_0, arg_6_1)
+	arg_6_0.notShowNewElement = arg_6_1
 end
 
-function slot0.isNotShowNewElement(slot0)
-	return slot0.notShowNewElement
+function var_0_0.isNotShowNewElement(arg_7_0)
+	return arg_7_0.notShowNewElement
 end
 
-function slot0.getLastEpisodeId(slot0)
-	return slot0.lastEpisodeId
+function var_0_0.getLastEpisodeId(arg_8_0)
+	return arg_8_0.lastEpisodeId
 end
 
-function slot0.checkIsShowInteractView(slot0)
-	return slot0.isShowInteractView
+function var_0_0.checkIsShowInteractView(arg_9_0)
+	return arg_9_0.isShowInteractView
 end
 
-function slot0.getElementCoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getElementCoList(arg_10_0, arg_10_1)
+	local var_10_0 = {}
+	local var_10_1 = DungeonMapModel.instance:getAllElements()
 
-	for slot7, slot8 in pairs(DungeonMapModel.instance:getAllElements()) do
-		if lua_chapter_map.configDict[DungeonConfig.instance:getChapterMapElement(slot8).mapId] and slot10.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story and slot1 == slot9.mapId then
-			table.insert(slot2, slot9)
+	for iter_10_0, iter_10_1 in pairs(var_10_1) do
+		local var_10_2 = DungeonConfig.instance:getChapterMapElement(iter_10_1)
+		local var_10_3 = lua_chapter_map.configDict[var_10_2.mapId]
+
+		if var_10_3 and var_10_3.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story and arg_10_1 == var_10_2.mapId then
+			table.insert(var_10_0, var_10_2)
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getElementCoListWithFinish(slot0, slot1, slot2)
-	if not DungeonConfig.instance:getMapElements(slot1) or #slot4 < 0 then
-		return {}
+function var_0_0.getElementCoListWithFinish(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = {}
+	local var_11_1 = DungeonConfig.instance:getMapElements(arg_11_1)
+
+	if not var_11_1 or #var_11_1 < 0 then
+		return var_11_0
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		slot10 = slot9.id
+	for iter_11_0, iter_11_1 in pairs(var_11_1) do
+		local var_11_2 = iter_11_1.id
+		local var_11_3 = lua_chapter_map.configDict[iter_11_1.mapId]
 
-		if lua_chapter_map.configDict[slot9.mapId] and slot11.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story then
-			slot12 = DungeonMapModel.instance:elementIsFinished(slot10)
-			slot13 = DungeonMapModel.instance:getElementById(slot10)
-			slot14 = true
-			slot17 = false
+		if var_11_3 and var_11_3.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story then
+			local var_11_4 = DungeonMapModel.instance:elementIsFinished(var_11_2)
+			local var_11_5 = DungeonMapModel.instance:getElementById(var_11_2)
+			local var_11_6 = true
+			local var_11_7 = Activity157Model.instance:getActId()
+			local var_11_8 = Activity157Config.instance:getMissionIdByElementId(var_11_7, var_11_2)
+			local var_11_9 = false
 
-			if Activity157Config.instance:getMissionIdByElementId(Activity157Model.instance:getActId(), slot10) then
-				slot17 = Activity157Config.instance:isSideMission(slot15, slot16)
+			if var_11_8 then
+				var_11_9 = Activity157Config.instance:isSideMission(var_11_7, var_11_8)
 			end
 
-			if slot17 and slot2 then
-				slot14 = not Activity157Model.instance:isInProgressOtherMissionGroupByElementId(slot10)
+			if var_11_9 and arg_11_2 then
+				var_11_6 = not Activity157Model.instance:isInProgressOtherMissionGroupByElementId(var_11_2)
 			end
 
-			if slot1 == slot9.mapId and slot14 and (slot12 or slot13) then
-				table.insert(slot3, slot9)
+			if arg_11_1 == iter_11_1.mapId and var_11_6 and (var_11_4 or var_11_5) then
+				table.insert(var_11_0, iter_11_1)
 			end
 		end
 	end
 
-	return slot3
+	return var_11_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

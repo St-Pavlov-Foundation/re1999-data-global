@@ -1,53 +1,61 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterRoomOrOpenView", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterRoomOrOpenView", package.seeall)
 
-slot0 = class("WaitGuideActionEnterRoomOrOpenView", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionEnterRoomOrOpenView", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot0._modeRequire = tonumber(slot2[1])
-	slot0._needEnterToTrigger = slot2[2] == "1"
-	slot0._viewName = slot2[3]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._checkDone, slot0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, slot0._checkDone, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenView, slot0)
+	arg_1_0._modeRequire = tonumber(var_1_0[1])
+	arg_1_0._needEnterToTrigger = var_1_0[2] == "1"
+	arg_1_0._viewName = var_1_0[3]
 
-	if not slot0._needEnterToTrigger then
-		slot0:_checkDone()
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._checkDone, arg_1_0)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_1_0._checkDone, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenView, arg_1_0)
+
+	if not arg_1_0._needEnterToTrigger then
+		arg_1_0:_checkDone()
 	end
 end
 
-function slot0.clearWork(slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, slot0._checkDone, slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, slot0._checkDone, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenView, slot0)
-	GuidePriorityController.instance:remove(slot0.guideId)
+function var_0_0.clearWork(arg_2_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_2_0._checkDone, arg_2_0)
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_2_0._checkDone, arg_2_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenView, arg_2_0)
+	GuidePriorityController.instance:remove(arg_2_0.guideId)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == slot0._viewName then
-		slot0:_checkDone()
+function var_0_0._onOpenView(arg_3_0, arg_3_1)
+	if arg_3_1 == arg_3_0._viewName then
+		arg_3_0:_checkDone()
 	end
 end
 
-function slot0._checkDone(slot0)
-	if slot0:checkGuideLock() then
+function var_0_0._checkDone(arg_4_0)
+	if arg_4_0:checkGuideLock() then
 		return
 	end
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		slot3 = false
+		local var_4_0 = RoomModel.instance:getGameMode()
+		local var_4_1 = false
 
-		if slot0._modeRequire and RoomModel.instance:getGameMode() == slot0._modeRequire or RoomController.instance:isEditMode() then
-			GuidePriorityController.instance:add(slot0.guideId, slot0._satisfyPriority, slot0, 0.01)
+		if arg_4_0._modeRequire then
+			var_4_1 = var_4_0 == arg_4_0._modeRequire
+		else
+			var_4_1 = RoomController.instance:isEditMode()
+		end
+
+		if var_4_1 then
+			GuidePriorityController.instance:add(arg_4_0.guideId, arg_4_0._satisfyPriority, arg_4_0, 0.01)
 		end
 	end
 end
 
-function slot0._satisfyPriority(slot0)
-	slot0:onDone(true)
+function var_0_0._satisfyPriority(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-return slot0
+return var_0_0

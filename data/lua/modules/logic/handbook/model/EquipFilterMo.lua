@@ -1,30 +1,32 @@
-module("modules.logic.handbook.model.EquipFilterMo", package.seeall)
+﻿module("modules.logic.handbook.model.EquipFilterMo", package.seeall)
 
-slot0 = pureTable("EquipFilterMo")
+local var_0_0 = pureTable("EquipFilterMo")
 
-function slot0.init(slot0, slot1)
-	slot0.viewName = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewName = arg_1_1
 
-	slot0:reset()
+	arg_1_0:reset()
 end
 
-function slot0.reset(slot0)
-	slot0.obtainShowType = EquipFilterModel.ObtainEnum.All
-	slot0.selectTagList = {}
-	slot0.filtering = false
+function var_0_0.reset(arg_2_0)
+	arg_2_0.obtainShowType = EquipFilterModel.ObtainEnum.All
+	arg_2_0.selectTagList = {}
+	arg_2_0.filtering = false
 end
 
-function slot0.getObtainType(slot0)
-	return slot0.obtainShowType
+function var_0_0.getObtainType(arg_3_0)
+	return arg_3_0.obtainShowType
 end
 
-function slot0.checkIsIncludeTag(slot0, slot1)
-	if slot0.selectTagList and not next(slot0.selectTagList) then
+function var_0_0.checkIsIncludeTag(arg_4_0, arg_4_1)
+	if arg_4_0.selectTagList and not next(arg_4_0.selectTagList) then
 		return true
 	end
 
-	for slot6, slot7 in ipairs(EquipConfig.instance:getTagList(slot1)) do
-		if tabletool.indexOf(slot0.selectTagList, slot7) then
+	local var_4_0 = EquipConfig.instance:getTagList(arg_4_1)
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if tabletool.indexOf(arg_4_0.selectTagList, iter_4_1) then
 			return true
 		end
 	end
@@ -32,31 +34,31 @@ function slot0.checkIsIncludeTag(slot0, slot1)
 	return false
 end
 
-function slot0.updateIsFiltering(slot0)
-	slot0.filtering = slot0.obtainShowType ~= EquipFilterModel.ObtainEnum.All or slot0.selectTagList and next(slot0.selectTagList)
+function var_0_0.updateIsFiltering(arg_5_0)
+	arg_5_0.filtering = arg_5_0.obtainShowType ~= EquipFilterModel.ObtainEnum.All or arg_5_0.selectTagList and next(arg_5_0.selectTagList)
 end
 
-function slot0.updateMo(slot0, slot1)
-	slot0.obtainShowType = slot1.obtainShowType
-	slot0.selectTagList = slot1.selectTagList
+function var_0_0.updateMo(arg_6_0, arg_6_1)
+	arg_6_0.obtainShowType = arg_6_1.obtainShowType
+	arg_6_0.selectTagList = arg_6_1.selectTagList
 
-	slot0:updateIsFiltering()
+	arg_6_0:updateIsFiltering()
 end
 
-function slot0.isFiltering(slot0)
-	return slot0.filtering
+function var_0_0.isFiltering(arg_7_0)
+	return arg_7_0.filtering
 end
 
-function slot0.clone(slot0)
-	slot1 = uv0.New()
+function var_0_0.clone(arg_8_0)
+	local var_8_0 = var_0_0.New()
 
-	slot1:init(slot0.viewName)
+	var_8_0:init(arg_8_0.viewName)
 
-	slot1.obtainShowType = slot0.obtainShowType
-	slot1.selectTagList = tabletool.copy(slot0.selectTagList)
-	slot1.filtering = slot0.filtering
+	var_8_0.obtainShowType = arg_8_0.obtainShowType
+	var_8_0.selectTagList = tabletool.copy(arg_8_0.selectTagList)
+	var_8_0.filtering = arg_8_0.filtering
 
-	return slot1
+	return var_8_0
 end
 
-return slot0
+return var_0_0

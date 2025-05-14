@@ -1,119 +1,124 @@
-module("modules.common.global.screen.GameFullViewState", package.seeall)
+﻿module("modules.common.global.screen.GameFullViewState", package.seeall)
 
-slot0 = class("GameFullViewState")
+local var_0_0 = class("GameFullViewState")
 
-function slot0.ctor(slot0)
-	slot0:addConstEvents()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:addConstEvents()
 
-	slot0._sceneRootGO = nil
-	slot0._ignoreViewNames = {
-		[ViewName.SettingsView] = true,
-		[ViewName.GMPostProcessView] = true,
-		[ViewName.StoryBackgroundView] = true,
-		[ViewName.V1a6_CachotCollectionSelectView] = true
-	}
-	slot0._ignoreSceneTypes = {
-		[SceneType.Summon] = true,
-		[SceneType.Explore] = true
-	}
-	slot0._callGCViews = {}
+	arg_1_0._sceneRootGO = nil
+	arg_1_0._ignoreViewNames = {}
+	arg_1_0._ignoreViewNames[ViewName.SettingsView] = true
+	arg_1_0._ignoreViewNames[ViewName.GMPostProcessView] = true
+	arg_1_0._ignoreViewNames[ViewName.StoryBackgroundView] = true
+	arg_1_0._ignoreViewNames[ViewName.V1a6_CachotCollectionSelectView] = true
+	arg_1_0._ignoreSceneTypes = {}
+	arg_1_0._ignoreSceneTypes[SceneType.Summon] = true
+	arg_1_0._ignoreSceneTypes[SceneType.Explore] = true
+	arg_1_0._callGCViews = {}
 end
 
-function slot0.addConstEvents(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, slot0._reOpenWhileOpen, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.DestroyFullViewFinish, slot0._onFullViewDestroy, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0._onPlayViewAnim, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onPlayViewAnim, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onPlayViewAnimFinish, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onPlayViewAnimFinish, slot0)
-	GameGCMgr.instance:registerCallback(GameGCEvent.OnFullGC, slot0._onFullGC, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenFullViewFinish, arg_2_0._onOpenFullView, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseFullView, arg_2_0._onCloseFullView, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, arg_2_0._reOpenWhileOpen, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.DestroyFullViewFinish, arg_2_0._onFullViewDestroy, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onPlayViewAnim, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onPlayViewAnim, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onPlayViewAnimFinish, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onPlayViewAnimFinish, arg_2_0)
+	GameGCMgr.instance:registerCallback(GameGCEvent.OnFullGC, arg_2_0._onFullGC, arg_2_0)
 end
 
-function slot0._onFullViewDestroy(slot0, slot1)
-	slot0._callGCViews[slot1] = true
+function var_0_0._onFullViewDestroy(arg_3_0, arg_3_1)
+	arg_3_0._callGCViews[arg_3_1] = true
 
-	slot0:_delayGC()
+	arg_3_0:_delayGC()
 end
 
-function slot0._onPlayViewAnim(slot0, slot1)
-	slot0._callGCViews[slot1] = nil
+function var_0_0._onPlayViewAnim(arg_4_0, arg_4_1)
+	arg_4_0._callGCViews[arg_4_1] = nil
 
-	slot0:_cancelGCTask()
+	arg_4_0:_cancelGCTask()
 end
 
-function slot0._onPlayViewAnimFinish(slot0)
-	if slot0:_needGC() then
-		slot0:_delayGC()
+function var_0_0._onPlayViewAnimFinish(arg_5_0)
+	if arg_5_0:_needGC() then
+		arg_5_0:_delayGC()
 	end
 end
 
-function slot0._onFullGC(slot0)
-	tabletool.clear(slot0._callGCViews)
-	slot0:_cancelGCTask()
+function var_0_0._onFullGC(arg_6_0)
+	tabletool.clear(arg_6_0._callGCViews)
+	arg_6_0:_cancelGCTask()
 end
 
-function slot0._delayGC(slot0)
-	slot0:_cancelGCTask()
-	TaskDispatcher.runDelay(slot0._gc, slot0, 1.5)
+function var_0_0._delayGC(arg_7_0)
+	arg_7_0:_cancelGCTask()
+	TaskDispatcher.runDelay(arg_7_0._gc, arg_7_0, 1.5)
 end
 
-function slot0._cancelGCTask(slot0)
-	TaskDispatcher.cancelTask(slot0._gc, slot0)
+function var_0_0._cancelGCTask(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._gc, arg_8_0)
 end
 
-function slot0._gc(slot0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, slot0)
+function var_0_0._gc(arg_9_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_9_0)
 end
 
-function slot0._needGC(slot0)
-	for slot4, slot5 in pairs(slot0._callGCViews) do
+function var_0_0._needGC(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._callGCViews) do
 		return true
 	end
 end
 
-function slot0._onOpenFullView(slot0, slot1)
-	if slot0._ignoreViewNames[slot1] then
+function var_0_0._onOpenFullView(arg_11_0, arg_11_1)
+	if arg_11_0._ignoreViewNames[arg_11_1] then
 		return
 	end
 
-	if not GameSceneMgr.instance:getCurScene() then
+	local var_11_0 = GameSceneMgr.instance:getCurScene()
+
+	if not var_11_0 then
 		return
 	end
 
-	if not GameSceneMgr.instance:getCurSceneType() or slot0._ignoreSceneTypes[slot3] then
+	local var_11_1 = GameSceneMgr.instance:getCurSceneType()
+
+	if not var_11_1 or arg_11_0._ignoreSceneTypes[var_11_1] then
 		return
 	end
 
-	slot4 = slot2:getSceneContainerGO()
+	local var_11_2 = var_11_0:getSceneContainerGO()
 
-	if slot0._sceneRootGO and slot4 ~= slot0._sceneRootGO then
-		gohelper.setActive(slot0._sceneRootGO, true)
+	if arg_11_0._sceneRootGO and var_11_2 ~= arg_11_0._sceneRootGO then
+		gohelper.setActive(arg_11_0._sceneRootGO, true)
 	end
 
-	slot0._sceneRootGO = slot4
+	arg_11_0._sceneRootGO = var_11_2
 
-	gohelper.setActive(slot0._sceneRootGO, false)
+	gohelper.setActive(arg_11_0._sceneRootGO, false)
 	CameraMgr.instance:setSceneCameraActive(false, "fullviewstate")
 
-	if slot3 == SceneType.Fight then
+	if var_11_1 == SceneType.Fight then
 		CameraMgr.instance:setVirtualCameraChildActive(false, "light")
 	end
 end
 
-function slot0.forceSceneCameraActive(slot0, slot1)
-	gohelper.setActive(GameSceneMgr.instance:getCurScene() and slot2:getSceneContainerGO(), slot1)
-	CameraMgr.instance:setSceneCameraActive(slot1, "fullviewstate")
+function var_0_0.forceSceneCameraActive(arg_12_0, arg_12_1)
+	local var_12_0 = GameSceneMgr.instance:getCurScene()
+	local var_12_1 = var_12_0 and var_12_0:getSceneContainerGO()
+
+	gohelper.setActive(var_12_1, arg_12_1)
+	CameraMgr.instance:setSceneCameraActive(arg_12_1, "fullviewstate")
 end
 
-function slot0._onCloseFullView(slot0, slot1)
-	if slot0._ignoreViewNames[slot1] then
+function var_0_0._onCloseFullView(arg_13_0, arg_13_1)
+	if arg_13_0._ignoreViewNames[arg_13_1] then
 		return
 	end
 
-	if not slot0:_hasOpenFullView() then
-		gohelper.setActive(slot0._sceneRootGO, true)
+	if not arg_13_0:_hasOpenFullView() then
+		gohelper.setActive(arg_13_0._sceneRootGO, true)
 		CameraMgr.instance:setSceneCameraActive(true, "fullviewstate")
 
 		if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
@@ -122,30 +127,39 @@ function slot0._onCloseFullView(slot0, slot1)
 	end
 end
 
-function slot0._hasOpenFullView(slot0)
-	for slot5, slot6 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if ViewMgr.instance:isFull(slot6) and not slot0._ignoreViewNames[slot6] and ViewMgr.instance:getContainer(slot6) and slot7:isOpenFinish() then
-			return true
+function var_0_0._hasOpenFullView(arg_14_0)
+	local var_14_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		if ViewMgr.instance:isFull(iter_14_1) and not arg_14_0._ignoreViewNames[iter_14_1] then
+			local var_14_1 = ViewMgr.instance:getContainer(iter_14_1)
+
+			if var_14_1 and var_14_1:isOpenFinish() then
+				return true
+			end
 		end
 	end
 
 	return false
 end
 
-function slot0.getOpenFullViewNames(slot0)
-	for slot6, slot7 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if ViewMgr.instance:isFull(slot7) and not slot0._ignoreViewNames[slot7] then
-			slot1 = "" .. slot7 .. ","
+function var_0_0.getOpenFullViewNames(arg_15_0)
+	local var_15_0 = ""
+	local var_15_1 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
+		if ViewMgr.instance:isFull(iter_15_1) and not arg_15_0._ignoreViewNames[iter_15_1] then
+			var_15_0 = var_15_0 .. iter_15_1 .. ","
 		end
 	end
 
-	return slot1
+	return var_15_0
 end
 
-function slot0._reOpenWhileOpen(slot0, slot1)
-	if ViewMgr.instance:isFull(slot1) then
-		slot0:_onOpenFullView(slot1)
+function var_0_0._reOpenWhileOpen(arg_16_0, arg_16_1)
+	if ViewMgr.instance:isFull(arg_16_1) then
+		arg_16_0:_onOpenFullView(arg_16_1)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,126 +1,161 @@
-module("modules.logic.act201.model.Activity201Model", package.seeall)
+﻿module("modules.logic.act201.model.Activity201Model", package.seeall)
 
-slot0 = class("Activity201Model", BaseModel)
+local var_0_0 = class("Activity201Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._dict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._dict = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._dict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._dict = {}
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	if slot0:getInvitationInfo(slot1.activityId) == nil then
-		slot0._dict[slot2] = Activity201Mo.New()
+function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.activityId
+	local var_3_1 = arg_3_0:getInvitationInfo(var_3_0)
+
+	if var_3_1 == nil then
+		var_3_1 = Activity201Mo.New()
+		arg_3_0._dict[var_3_0] = var_3_1
 	end
 
-	slot3:init(slot1)
+	var_3_1:init(arg_3_1)
 end
 
-function slot0.getInvitationInfo(slot0, slot1)
-	return slot0._dict[slot1]
+function var_0_0.getInvitationInfo(arg_4_0, arg_4_1)
+	return arg_4_0._dict[arg_4_1]
 end
 
-function slot0.getHelpId(slot0)
-	return slot0.HELP_ID
+function var_0_0.getHelpId(arg_5_0)
+	return arg_5_0.HELP_ID
 end
 
-function slot0.getSelfBindId(slot0, slot1)
-	if slot0:getInvitationInfo(slot1) == nil or slot2.inviteCode == nil then
+function var_0_0.getSelfBindId(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getInvitationInfo(arg_6_1)
+
+	if var_6_0 == nil or var_6_0.inviteCode == nil then
 		return nil
 	end
 
-	return slot2.inviteCode
+	return var_6_0.inviteCode
 end
 
-function slot0.haveBind(slot0, slot1)
-	if slot0:getInvitationInfo(slot1) == nil or slot2.isTurnBack == nil then
+function var_0_0.haveBind(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getInvitationInfo(arg_7_1)
+
+	if var_7_0 == nil or var_7_0.isTurnBack == nil then
 		return false
 	end
 
-	return slot2.isTurnBack
+	return var_7_0.isTurnBack
 end
 
-function slot0.setBindState(slot0, slot1, slot2)
-	if slot0:haveBind(slot1) then
+function var_0_0.setBindState(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0:haveBind(arg_8_1) then
 		logError("Have bind friend ID")
 
 		return
 	end
 
-	slot0:getInvitationInfo(slot1).isTurnBack = slot2
+	arg_8_0:getInvitationInfo(arg_8_1).isTurnBack = arg_8_2
 end
 
-function slot0.isActOpen(slot0, slot1)
-	if ActivityModel.instance:isActOnLine(slot1) == false then
-		return slot2
+function var_0_0.isActOpen(arg_9_0, arg_9_1)
+	local var_9_0 = ActivityModel.instance:isActOnLine(arg_9_1)
+
+	if var_9_0 == false then
+		return var_9_0
 	end
 
-	return ActivityModel.instance:getActStartTime(slot1) <= ServerTime.now() * 1000 and slot5 < ActivityModel.instance:getActEndTime(slot1)
+	local var_9_1 = ActivityModel.instance:getActStartTime(arg_9_1)
+	local var_9_2 = ActivityModel.instance:getActEndTime(arg_9_1)
+	local var_9_3 = ServerTime.now() * 1000
+
+	return var_9_1 <= var_9_3 and var_9_3 < var_9_2
 end
 
-function slot0.getLoginUrl(slot0)
-	if Activity201Config.instance:getUrlByChannelId(slot0:getCurChannel()) == nil then
+function var_0_0.getLoginUrl(arg_10_0)
+	local var_10_0 = arg_10_0:getCurChannel()
+	local var_10_1 = Activity201Config.instance:getUrlByChannelId(var_10_0)
+
+	if var_10_1 == nil then
 		return nil
 	end
 
-	if slot1 == TurnbackEnum.ChannelType.eFun then
-		return slot0:getEFunLoginUrl(slot2)
-	elseif slot1 == TurnbackEnum.ChannelType.KO then
-		return slot0:getKOLoginUrl(slot2)
+	if var_10_0 == TurnbackEnum.ChannelType.eFun then
+		return arg_10_0:getEFunLoginUrl(var_10_1)
+	elseif var_10_0 == TurnbackEnum.ChannelType.KO then
+		return arg_10_0:getKOLoginUrl(var_10_1)
 	else
-		return slot0:getGlobalLoginUrl(slot2)
+		return arg_10_0:getGlobalLoginUrl(var_10_1)
 	end
 end
 
-function slot0.getGlobalLoginUrl(slot0, slot1)
-	slot2 = {
-		slot1 .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
+function var_0_0.getGlobalLoginUrl(arg_11_0, arg_11_1)
+	local var_11_0 = {
+		arg_11_1 .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
 	}
 
-	table.insert(slot2, string.format("gameId=%s", SDKMgr.instance:getGameId()))
-	table.insert(slot2, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(slot2, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
-	table.insert(slot2, string.format("deviceModel=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.deviceModel)))
-	table.insert(slot2, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-	table.insert(slot2, string.format("os=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
-	table.insert(slot2, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
-	table.insert(slot2, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
-	table.insert(slot2, string.format("isEmulator=%s", slot0:getCurrentDeviceType()))
-	table.insert(slot2, string.format("language=%s", WebViewController.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut())))
+	table.insert(var_11_0, string.format("gameId=%s", SDKMgr.instance:getGameId()))
+	table.insert(var_11_0, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(var_11_0, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
 
-	return table.concat(slot2, "&")
+	local var_11_1 = string.format("deviceModel=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.deviceModel))
+
+	table.insert(var_11_0, var_11_1)
+	table.insert(var_11_0, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+
+	local var_11_2 = string.format("os=%s", WebViewController.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem))
+
+	table.insert(var_11_0, var_11_2)
+	table.insert(var_11_0, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
+	table.insert(var_11_0, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
+	table.insert(var_11_0, string.format("isEmulator=%s", arg_11_0:getCurrentDeviceType()))
+
+	local var_11_3 = WebViewController.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut())
+
+	table.insert(var_11_0, string.format("language=%s", var_11_3))
+
+	return table.concat(var_11_0, "&")
 end
 
-function slot0.getEFunLoginUrl(slot0, slot1)
-	slot2 = SDKMgr.instance:getUserInfoExtraParams()
-	slot3 = {
-		slot1 .. "&" .. string.format("userId=%s", slot2.userId)
+function var_0_0.getEFunLoginUrl(arg_12_0, arg_12_1)
+	local var_12_0 = SDKMgr.instance:getUserInfoExtraParams()
+	local var_12_1 = {
+		arg_12_1 .. "&" .. string.format("userId=%s", var_12_0.userId)
 	}
 
-	table.insert(slot3, string.format("sign=%s", slot2.sign))
-	table.insert(slot3, string.format("timestamp=%s", slot2.timestamp))
-	table.insert(slot3, string.format("gameCode=twcfwl"))
+	table.insert(var_12_1, string.format("sign=%s", var_12_0.sign))
+	table.insert(var_12_1, string.format("timestamp=%s", var_12_0.timestamp))
+	table.insert(var_12_1, string.format("gameCode=twcfwl"))
 
-	slot4 = PayModel.instance:getGameRoleInfo()
+	local var_12_2 = PayModel.instance:getGameRoleInfo()
 
-	table.insert(slot3, string.format("serverCode=%s", slot4.serverId))
-	table.insert(slot3, string.format("roleId=%s", slot4.roleId))
-	table.insert(slot3, string.format("serverName=%s", WebViewController.instance:urlEncode(slot4.serverName)))
-	table.insert(slot3, string.format("roleName=%s", WebViewController.instance:urlEncode(slot4.roleName)))
-	table.insert(slot3, string.format("language=zh-TW"))
+	table.insert(var_12_1, string.format("serverCode=%s", var_12_2.serverId))
+	table.insert(var_12_1, string.format("roleId=%s", var_12_2.roleId))
 
-	return table.concat(slot3, "&")
+	local var_12_3 = string.format("serverName=%s", WebViewController.instance:urlEncode(var_12_2.serverName))
+
+	table.insert(var_12_1, var_12_3)
+
+	local var_12_4 = string.format("roleName=%s", WebViewController.instance:urlEncode(var_12_2.roleName))
+
+	table.insert(var_12_1, var_12_4)
+	table.insert(var_12_1, string.format("language=zh-TW"))
+
+	return table.concat(var_12_1, "&")
 end
 
-function slot0.getKOLoginUrl(slot0, slot1)
-	return table.concat({
-		slot1 .. "?" .. string.format("jwt=%s", SDKMgr.instance:getUserInfoExtraParams().ko_jwt)
-	}, "&")
+function var_0_0.getKOLoginUrl(arg_13_0, arg_13_1)
+	local var_13_0 = SDKMgr.instance:getUserInfoExtraParams()
+	local var_13_1 = {
+		arg_13_1 .. "?" .. string.format("jwt=%s", var_13_0.ko_jwt)
+	}
+
+	return table.concat(var_13_1, "&")
 end
 
-function slot0.getCurrentDeviceType(slot0)
+function var_0_0.getCurrentDeviceType(arg_14_0)
 	if SDKMgr.instance:isEmulator() then
 		return WebViewEnum.DeviceType.Emulator
 	elseif SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
@@ -130,7 +165,7 @@ function slot0.getCurrentDeviceType(slot0)
 	end
 end
 
-function slot0.getCurChannel(slot0)
+function var_0_0.getCurChannel(arg_15_0)
 	if GameChannelConfig.isEfun() then
 		return TurnbackEnum.ChannelType.eFun
 	elseif GameChannelConfig.isLongCheng() then
@@ -140,6 +175,6 @@ function slot0.getCurChannel(slot0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

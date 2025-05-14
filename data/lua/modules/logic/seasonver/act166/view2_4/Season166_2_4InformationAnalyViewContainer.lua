@@ -1,30 +1,30 @@
-module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationAnalyViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act166.view2_4.Season166_2_4InformationAnalyViewContainer", package.seeall)
 
-slot0 = class("Season166_2_4InformationAnalyViewContainer", BaseViewContainer)
+local var_0_0 = class("Season166_2_4InformationAnalyViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Season166_2_4InformationAnalyView.New())
-	table.insert(slot1, Season166InformationCurrencyView.New())
-	table.insert(slot1, Season166_2_4InformationAnalyRewardView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, Season166_2_4InformationAnalyView.New())
+	table.insert(var_1_0, Season166InformationCurrencyView.New())
+	table.insert(var_1_0, Season166_2_4InformationAnalyRewardView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Season166InformationHelp)
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-return slot0
+return var_0_0

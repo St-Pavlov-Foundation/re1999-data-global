@@ -1,45 +1,45 @@
-module("modules.logic.turnback.invitation.config.TurnBackInvitationConfig", package.seeall)
+﻿module("modules.logic.turnback.invitation.config.TurnBackInvitationConfig", package.seeall)
 
-slot0 = class("TurnBackInvitationConfig", BaseConfig)
+local var_0_0 = class("TurnBackInvitationConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._turnBackH5ChannelConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._turnBackH5ChannelConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"turnback_h5_channel"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "turnback_h5_channel" then
-		slot0._turnBackH5ChannelConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "turnback_h5_channel" then
+		arg_3_0._turnBackH5ChannelConfig = arg_3_2
 
-		slot0:_initTurnBackH5Config()
+		arg_3_0:_initTurnBackH5Config()
 	end
 end
 
-function slot0._initTurnBackH5Config(slot0)
-	slot1 = {}
+function var_0_0._initTurnBackH5Config(arg_4_0)
+	local var_4_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._turnBackH5ChannelConfig.configList) do
-		if slot1[slot6.channelId] == nil then
-			slot1[slot6.channelId] = slot6.url
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._turnBackH5ChannelConfig.configList) do
+		if var_4_0[iter_4_1.channelId] == nil then
+			var_4_0[iter_4_1.channelId] = iter_4_1.url
 		end
 	end
 
-	slot0._channelUrlDic = slot1
+	arg_4_0._channelUrlDic = var_4_0
 end
 
-function slot0.getChannelConfig(slot0, slot1)
-	return slot0._turnBackH5ChannelConfig.configDict[slot1]
+function var_0_0.getChannelConfig(arg_5_0, arg_5_1)
+	return arg_5_0._turnBackH5ChannelConfig.configDict[arg_5_1]
 end
 
-function slot0.getUrlByChannelId(slot0, slot1)
-	return slot0._channelUrlDic[slot1]
+function var_0_0.getUrlByChannelId(arg_6_0, arg_6_1)
+	return arg_6_0._channelUrlDic[arg_6_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

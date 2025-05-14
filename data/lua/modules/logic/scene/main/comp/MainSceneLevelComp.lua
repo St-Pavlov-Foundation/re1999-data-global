@@ -1,37 +1,39 @@
-module("modules.logic.scene.main.comp.MainSceneLevelComp", package.seeall)
+﻿module("modules.logic.scene.main.comp.MainSceneLevelComp", package.seeall)
 
-slot0 = class("MainSceneLevelComp", CommonSceneLevelComp)
+local var_0_0 = class("MainSceneLevelComp", CommonSceneLevelComp)
 
-function slot0.loadLevel(slot0, slot1)
-	if slot0._isLoadingRes then
-		logError("is loading scene level res, cur id = " .. (slot0._levelId or "nil") .. ", try to load id = " .. (slot1 or "nil"))
+function var_0_0.loadLevel(arg_1_0, arg_1_1)
+	if arg_1_0._isLoadingRes then
+		logError("is loading scene level res, cur id = " .. (arg_1_0._levelId or "nil") .. ", try to load id = " .. (arg_1_1 or "nil"))
 
 		return
 	end
 
-	if slot0._assetItem then
-		gohelper.destroy(slot0._instGO)
-		slot0._assetItem:Release()
+	if arg_1_0._assetItem then
+		gohelper.destroy(arg_1_0._instGO)
+		arg_1_0._assetItem:Release()
 
-		slot0._assetItem = nil
-		slot0._instGO = nil
+		arg_1_0._assetItem = nil
+		arg_1_0._instGO = nil
 
-		slot0:releaseSceneEffectsLoader()
+		arg_1_0:releaseSceneEffectsLoader()
 	end
 
-	slot0._isLoadingRes = true
-	slot0._levelId = slot1
+	arg_1_0._isLoadingRes = true
+	arg_1_0._levelId = arg_1_1
 
-	slot0:getCurScene():setCurLevelId(slot0._levelId)
+	arg_1_0:getCurScene():setCurLevelId(arg_1_0._levelId)
 	MainSceneSwitchModel.instance:initSceneId()
 
-	slot0._resPath = ResUrl.getSceneRes(MainSceneSwitchModel.instance:getCurSceneResName())
+	local var_1_0 = MainSceneSwitchModel.instance:getCurSceneResName()
 
-	loadAbAsset(slot0._resPath, false, slot0._onLoadCallback, slot0)
+	arg_1_0._resPath = ResUrl.getSceneRes(var_1_0)
+
+	loadAbAsset(arg_1_0._resPath, false, arg_1_0._onLoadCallback, arg_1_0)
 end
 
-function slot0.switchLevel(slot0)
-	slot0:loadLevel(slot0._levelId)
+function var_0_0.switchLevel(arg_2_0)
+	arg_2_0:loadLevel(arg_2_0._levelId)
 end
 
-return slot0
+return var_0_0

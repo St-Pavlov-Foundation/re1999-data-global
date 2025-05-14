@@ -1,155 +1,164 @@
-module("modules.logic.versionactivity2_3.act174.model.Act174MO", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.model.Act174MO", package.seeall)
 
-slot0 = pureTable("Act174MO")
+local var_0_0 = pureTable("Act174MO")
 
-function slot0.initBadgeInfo(slot0, slot1)
-	slot0.badgeMoDic = {}
-	slot0.badgeScoreChangeDic = {}
+function var_0_0.initBadgeInfo(arg_1_0, arg_1_1)
+	arg_1_0.badgeMoDic = {}
+	arg_1_0.badgeScoreChangeDic = {}
 
-	for slot6, slot7 in pairs(lua_activity174_badge.configDict[slot1]) do
-		slot8 = Act174BadgeMO.New()
+	local var_1_0 = lua_activity174_badge.configDict[arg_1_1]
 
-		slot8:init(slot7)
+	for iter_1_0, iter_1_1 in pairs(var_1_0) do
+		local var_1_1 = Act174BadgeMO.New()
 
-		slot0.badgeMoDic[slot6] = slot8
+		var_1_1:init(iter_1_1)
+
+		arg_1_0.badgeMoDic[iter_1_0] = var_1_1
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot0.triggerList = {}
-	slot0.season = slot1.season
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.triggerList = {}
+	arg_2_0.season = arg_2_1.season
 
-	for slot5, slot6 in ipairs(slot1.badgeInfoList) do
-		slot0.badgeMoDic[slot6.id]:update(slot6)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.badgeInfoList) do
+		arg_2_0.badgeMoDic[iter_2_1.id]:update(iter_2_1)
 	end
 
-	slot0:updateGameInfo(slot1.gameInfo)
+	arg_2_0:updateGameInfo(arg_2_1.gameInfo)
 	Activity174Controller.instance:dispatchEvent(Activity174Event.UpdateBadgeMo)
 end
 
-function slot0.updateGameInfo(slot0, slot1, slot2)
-	if not slot0.gameInfo then
-		slot0.gameInfo = Act174GameMO.New()
+function var_0_0.updateGameInfo(arg_3_0, arg_3_1, arg_3_2)
+	if not arg_3_0.gameInfo then
+		arg_3_0.gameInfo = Act174GameMO.New()
 	end
 
-	slot0.gameInfo:init(slot1, slot2)
+	arg_3_0.gameInfo:init(arg_3_1, arg_3_2)
 end
 
-function slot0.updateShopInfo(slot0, slot1)
-	slot0.gameInfo:updateShopInfo(slot1)
+function var_0_0.updateShopInfo(arg_4_0, arg_4_1)
+	arg_4_0.gameInfo:updateShopInfo(arg_4_1)
 end
 
-function slot0.updateTeamInfo(slot0, slot1)
-	slot0.gameInfo:updateTeamMo(slot1)
+function var_0_0.updateTeamInfo(arg_5_0, arg_5_1)
+	arg_5_0.gameInfo:updateTeamMo(arg_5_1)
 end
 
-function slot0.updateIsBet(slot0, slot1)
-	slot0.gameInfo:updateIsBet(slot1)
+function var_0_0.updateIsBet(arg_6_0, arg_6_1)
+	arg_6_0.gameInfo:updateIsBet(arg_6_1)
 end
 
-function slot0.triggerEffectPush(slot0, slot1, slot2)
-	slot0.triggerList[#slot0.triggerList + 1] = {
-		effectId = slot1,
-		param = slot2
+function var_0_0.triggerEffectPush(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.triggerList[#arg_7_0.triggerList + 1] = {
+		effectId = arg_7_1,
+		param = arg_7_2
 	}
 end
 
-function slot0.getTriggerList(slot0)
-	return slot0.triggerList
+function var_0_0.getTriggerList(arg_8_0)
+	return arg_8_0.triggerList
 end
 
-function slot0.cleanTriggerEffect(slot0)
-	tabletool.clear(slot0.triggerList)
+function var_0_0.cleanTriggerEffect(arg_9_0)
+	tabletool.clear(arg_9_0.triggerList)
 end
 
-function slot0.setEndInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.badgeInfoList) do
-		slot7 = slot6.id
-		slot0.badgeScoreChangeDic[slot7] = slot6.count - slot0.badgeMoDic[slot7].count
+function var_0_0.setEndInfo(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1.badgeInfoList) do
+		local var_10_0 = iter_10_1.id
+		local var_10_1 = arg_10_0.badgeMoDic[var_10_0]
 
-		slot0.badgeMoDic[slot7]:update(slot6)
+		arg_10_0.badgeScoreChangeDic[var_10_0] = iter_10_1.count - var_10_1.count
+
+		arg_10_0.badgeMoDic[var_10_0]:update(iter_10_1)
 	end
 
-	slot0.gameEndInfo = slot1
+	arg_10_0.gameEndInfo = arg_10_1
 
 	Activity174Controller.instance:dispatchEvent(Activity174Event.UpdateBadgeMo)
 end
 
-function slot0.getBadgeScoreChangeDic(slot0)
-	return slot0.badgeScoreChangeDic
+function var_0_0.getBadgeScoreChangeDic(arg_11_0)
+	return arg_11_0.badgeScoreChangeDic
 end
 
-function slot0.clearEndInfo(slot0)
-	slot0.gameEndInfo = nil
+function var_0_0.clearEndInfo(arg_12_0)
+	arg_12_0.gameEndInfo = nil
 
-	tabletool.clear(slot0.badgeScoreChangeDic)
-	slot0:cleanTriggerEffect()
+	tabletool.clear(arg_12_0.badgeScoreChangeDic)
+	arg_12_0:cleanTriggerEffect()
 end
 
-function slot0.getGameInfo(slot0)
-	return slot0.gameInfo
+function var_0_0.getGameInfo(arg_13_0)
+	return arg_13_0.gameInfo
 end
 
-function slot0.getGameEndInfo(slot0)
-	return slot0.gameEndInfo
+function var_0_0.getGameEndInfo(arg_14_0)
+	return arg_14_0.gameEndInfo
 end
 
-function slot0.getBadgeMo(slot0, slot1)
-	if not slot0.badgeMoDic[slot1] then
-		logError("dont exist badgeMo" .. slot1)
+function var_0_0.getBadgeMo(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0.badgeMoDic[arg_15_1]
+
+	if not var_15_0 then
+		logError("dont exist badgeMo" .. arg_15_1)
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.getBadgeMoList(slot0)
-	slot1 = {}
+function var_0_0.getBadgeMoList(arg_16_0)
+	local var_16_0 = {}
 
-	for slot5, slot6 in pairs(slot0.badgeMoDic) do
-		slot1[#slot1 + 1] = slot6
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.badgeMoDic) do
+		var_16_0[#var_16_0 + 1] = iter_16_1
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(var_16_0, function(arg_17_0, arg_17_1)
+		return arg_17_0.id < arg_17_1.id
 	end)
 
-	return slot1
+	return var_16_0
 end
 
-function slot0.getRuleHeroCoList(slot0)
-	slot1 = {}
+function var_0_0.getRuleHeroCoList(arg_18_0)
+	local var_18_0 = {}
+	local var_18_1 = lua_activity174_role.configList
 
-	for slot6, slot7 in ipairs(lua_activity174_role.configList) do
-		if string.find(slot7.season, tostring(slot0.season)) then
-			slot1[#slot1 + 1] = slot7
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		if string.find(iter_18_1.season, tostring(arg_18_0.season)) then
+			var_18_0[#var_18_0 + 1] = iter_18_1
 		end
 	end
 
-	return slot1
+	return var_18_0
 end
 
-function slot0.getRuleCollectionCoList(slot0)
-	slot1 = {}
+function var_0_0.getRuleCollectionCoList(arg_19_0)
+	local var_19_0 = {}
+	local var_19_1 = lua_activity174_collection.configList
 
-	for slot6, slot7 in ipairs(lua_activity174_collection.configList) do
-		if string.find(slot7.season, tostring(slot0.season)) then
-			slot1[#slot1 + 1] = slot7
+	for iter_19_0, iter_19_1 in ipairs(var_19_1) do
+		if string.find(iter_19_1.season, tostring(arg_19_0.season)) then
+			var_19_0[#var_19_0 + 1] = iter_19_1
 		end
 	end
 
-	return slot1
+	return var_19_0
 end
 
-function slot0.getRuleBuffCoList(slot0)
-	slot1 = {}
+function var_0_0.getRuleBuffCoList(arg_20_0)
+	local var_20_0 = {}
+	local var_20_1 = lua_activity174_enhance.configList
 
-	for slot6, slot7 in ipairs(lua_activity174_enhance.configList) do
-		if string.find(slot7.season, tostring(slot0.season)) then
-			slot1[#slot1 + 1] = slot7
+	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
+		if string.find(iter_20_1.season, tostring(arg_20_0.season)) then
+			var_20_0[#var_20_0 + 1] = iter_20_1
 		end
 	end
 
-	return slot1
+	return var_20_0
 end
 
-return slot0
+return var_0_0

@@ -1,44 +1,48 @@
-module("modules.logic.pay.rpc.ChargeRpc", package.seeall)
+﻿module("modules.logic.pay.rpc.ChargeRpc", package.seeall)
 
-slot0 = class("ChargeRpc", BaseRpc)
+local var_0_0 = class("ChargeRpc", BaseRpc)
 
-function slot0.sendGetChargeInfoRequest(slot0, slot1, slot2)
+function var_0_0.sendGetChargeInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = ChargeModule_pb.GetChargeInfoRequest()
+
 	PayController.instance:getAllQueryProductDetails()
 
-	return slot0:sendMsg(ChargeModule_pb.GetChargeInfoRequest(), slot1, slot2)
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetChargeInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		PayModel.instance:setSandboxInfo(slot2.sandboxEnable, slot2.sandboxBalance)
-		PayModel.instance:setChargeInfo(slot2.infos)
-		StoreModel.instance:initChargeInfo(slot2.infos)
+function var_0_0.onReceiveGetChargeInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		PayModel.instance:setSandboxInfo(arg_2_2.sandboxEnable, arg_2_2.sandboxBalance)
+		PayModel.instance:setChargeInfo(arg_2_2.infos)
+		StoreModel.instance:initChargeInfo(arg_2_2.infos)
 		PayController.instance:dispatchEvent(PayEvent.PayInfoChanged)
 	end
 end
 
-function slot0.sendNewOrderRequest(slot0, slot1, slot2)
-	slot3 = ChargeModule_pb.NewOrderRequest()
-	slot3.id = slot1
-	slot3.originCurrency = PayModel.instance:getProductOriginCurrency(slot1)
-	slot3.originAmount = PayModel.instance:getProductOriginAmount(slot1)
+function var_0_0.sendNewOrderRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = ChargeModule_pb.NewOrderRequest()
 
-	if slot2 then
-		for slot7, slot8 in ipairs(slot2) do
-			slot9 = ChargeModule_pb.SelectionInfo()
-			slot9.regionId = slot7
-			slot9.selectionPos = slot8 - 1
+	var_3_0.id = arg_3_1
+	var_3_0.originCurrency = PayModel.instance:getProductOriginCurrency(arg_3_1)
+	var_3_0.originAmount = PayModel.instance:getProductOriginAmount(arg_3_1)
 
-			table.insert(slot3.selectionInfos, slot9)
+	if arg_3_2 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
+			local var_3_1 = ChargeModule_pb.SelectionInfo()
+
+			var_3_1.regionId = iter_3_0
+			var_3_1.selectionPos = iter_3_1 - 1
+
+			table.insert(var_3_0.selectionInfos, var_3_1)
 		end
 	end
 
-	slot0:sendMsg(slot3)
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveNewOrderReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		PayModel.instance:setOrderInfo(slot2)
+function var_0_0.onReceiveNewOrderReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		PayModel.instance:setOrderInfo(arg_4_2)
 		PayController.instance:dispatchEvent(PayEvent.GetSignSuccess)
 
 		return
@@ -47,89 +51,97 @@ function slot0.onReceiveNewOrderReply(slot0, slot1, slot2)
 	PayController.instance:dispatchEvent(PayEvent.GetSignFailed)
 end
 
-function slot0.onReceiveOrderCompletePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		slot3 = slot2.id
+function var_0_0.onReceiveOrderCompletePush(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		local var_5_0 = arg_5_2.id
 
-		StoreModel.instance:chargeOrderComplete(slot3)
-		slot0:_tryUpdateMonthCard(slot2)
+		StoreModel.instance:chargeOrderComplete(var_5_0)
+		arg_5_0:_tryUpdateMonthCard(arg_5_2)
 
-		if StoreConfig.instance:getChargeGoodsConfig(slot3) then
-			uv0.instance:sendGetChargeInfoRequest()
+		if StoreConfig.instance:getChargeGoodsConfig(var_5_0) then
+			var_0_0.instance:sendGetChargeInfoRequest()
 		end
 
-		PayController.instance:dispatchEvent(PayEvent.PayFinished, slot2.id)
+		PayController.instance:dispatchEvent(PayEvent.PayFinished, arg_5_2.id)
 	else
 		PayController.instance:dispatchEvent(PayEvent.PayFailed)
 	end
 end
 
-function slot0.sendGetMonthCardInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(ChargeModule_pb.GetMonthCardInfoRequest(), slot1, slot2)
+function var_0_0.sendGetMonthCardInfoRequest(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = ChargeModule_pb.GetMonthCardInfoRequest()
+
+	return arg_6_0:sendMsg(var_6_0, arg_6_1, arg_6_2)
 end
 
-function slot0.onReceiveGetMonthCardInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetMonthCardInfoReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	StoreModel.instance:updateMonthCardInfo(slot2.infos[1])
+	StoreModel.instance:updateMonthCardInfo(arg_7_2.infos[1])
 	StoreController.instance:dispatchEvent(StoreEvent.MonthCardInfoChanged)
 end
 
-function slot0.sendGetMonthCardBonusRequest(slot0, slot1)
-	slot2 = ChargeModule_pb.GetMonthCardBonusRequest()
-	slot2.id = slot1
+function var_0_0.sendGetMonthCardBonusRequest(arg_8_0, arg_8_1)
+	local var_8_0 = ChargeModule_pb.GetMonthCardBonusRequest()
 
-	return slot0:sendMsg(slot2)
+	var_8_0.id = arg_8_1
+
+	return arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceiveGetMonthCardBonusReply(slot0, slot1, slot2)
+function var_0_0.onReceiveGetMonthCardBonusReply(arg_9_0, arg_9_1, arg_9_2)
+	return
 end
 
-function slot0.sendSandboxChargeRequset(slot0, slot1)
-	slot2 = ChargeModule_pb.SandboxChargeRequset()
-	slot2.gameOrderId = slot1
+function var_0_0.sendSandboxChargeRequset(arg_10_0, arg_10_1)
+	local var_10_0 = ChargeModule_pb.SandboxChargeRequset()
 
-	return slot0:sendMsg(slot2)
+	var_10_0.gameOrderId = arg_10_1
+
+	return arg_10_0:sendMsg(var_10_0)
 end
 
-function slot0.onReceiveSandboxChargeReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSandboxChargeReply(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	PayModel.instance:updateSandboxBalance(slot2.sandboxBalance)
+	PayModel.instance:updateSandboxBalance(arg_11_2.sandboxBalance)
 end
 
-function slot0.sendReadChargeNewRequest(slot0, slot1)
-	slot2 = ChargeModule_pb.ReadChargeNewRequest()
+function var_0_0.sendReadChargeNewRequest(arg_12_0, arg_12_1)
+	local var_12_0 = ChargeModule_pb.ReadChargeNewRequest()
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot2.goodsIds, slot7)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+		table.insert(var_12_0.goodsIds, iter_12_1)
 	end
 
-	return slot0:sendMsg(slot2)
+	return arg_12_0:sendMsg(var_12_0)
 end
 
-function slot0.onReceiveReadChargeNewReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		-- Nothing
+function var_0_0.onReceiveReadChargeNewReply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 == 0 then
+		-- block empty
 	end
 end
 
-function slot0._tryUpdateMonthCard(slot0, slot1)
-	if not (StoreConfig.instance:getMonthCardConfig(slot1.id) and true or false) and StoreConfig.instance:getChargeGoodsConfig(slot2) then
-		slot4 = slot2 == StoreEnum.SeasonCardGoodsId
+function var_0_0._tryUpdateMonthCard(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.id
+	local var_14_1 = StoreConfig.instance:getMonthCardConfig(var_14_0) and true or false
+
+	if not var_14_1 and StoreConfig.instance:getChargeGoodsConfig(var_14_0) then
+		var_14_1 = var_14_0 == StoreEnum.SeasonCardGoodsId
 	end
 
-	if not slot4 then
+	if not var_14_1 then
 		return
 	end
 
 	SignInController.instance:sendGetSignInInfoRequestIfUnlock()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

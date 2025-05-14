@@ -1,57 +1,59 @@
-module("modules.logic.tower.view.permanenttower.TowerPermanentViewContainer", package.seeall)
+﻿module("modules.logic.tower.view.permanenttower.TowerPermanentViewContainer", package.seeall)
 
-slot0 = class("TowerPermanentViewContainer", BaseViewContainer)
+local var_0_0 = class("TowerPermanentViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._scrollListView = LuaMixScrollView.New(TowerPermanentModel.instance, slot0:getListContentParam())
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(slot1, slot0._scrollListView)
+	arg_1_0._scrollListView = LuaMixScrollView.New(TowerPermanentModel.instance, arg_1_0:getListContentParam())
 
-	slot0.TowerPermanentPoolView = TowerPermanentPoolView.New()
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, arg_1_0._scrollListView)
 
-	table.insert(slot1, TowerPermanentView.New())
+	arg_1_0.TowerPermanentPoolView = TowerPermanentPoolView.New()
 
-	slot0.TowerPermanentInfoView = TowerPermanentInfoView.New()
+	table.insert(var_1_0, TowerPermanentView.New())
 
-	table.insert(slot1, slot0.TowerPermanentPoolView)
-	table.insert(slot1, slot0.TowerPermanentInfoView)
+	arg_1_0.TowerPermanentInfoView = TowerPermanentInfoView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.TowerPermanentPoolView)
+	table.insert(var_1_0, arg_1_0.TowerPermanentInfoView)
+
+	return var_1_0
 end
 
-function slot0.getListContentParam(slot0)
-	slot1 = MixScrollParam.New()
-	slot1.scrollGOPath = "Left/#scroll_category"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "Left/#scroll_category/Viewport/#go_Content/#go_item"
-	slot1.cellClass = TowerPermanentItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.getListContentParam(arg_2_0)
+	local var_2_0 = MixScrollParam.New()
 
-	return slot1
+	var_2_0.scrollGOPath = "Left/#scroll_category"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_2_0.prefabUrl = "Left/#scroll_category/Viewport/#go_Content/#go_item"
+	var_2_0.cellClass = TowerPermanentItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+
+	return var_2_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.TowerPermanent)
 
 		return {
-			slot0.navigateView
+			arg_3_0.navigateView
 		}
 	end
 end
 
-function slot0.getTowerPermanentPoolView(slot0)
-	return slot0.TowerPermanentPoolView
+function var_0_0.getTowerPermanentPoolView(arg_4_0)
+	return arg_4_0.TowerPermanentPoolView
 end
 
-function slot0.getTowerPermanentInfoView(slot0)
-	return slot0.TowerPermanentInfoView
+function var_0_0.getTowerPermanentInfoView(arg_5_0)
+	return arg_5_0.TowerPermanentInfoView
 end
 
-return slot0
+return var_0_0

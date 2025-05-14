@@ -1,65 +1,67 @@
-module("modules.logic.versionactivity1_9.fairyland.view.FairyLandOptionView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandOptionView", package.seeall)
 
-slot0 = class("FairyLandOptionView", BaseView)
+local var_0_0 = class("FairyLandOptionView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.dialogGO = gohelper.findChild(slot0.viewGO, "dialog")
-	slot0.option = FairyLandOption.New()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.dialogGO = gohelper.findChild(arg_1_0.viewGO, "dialog")
+	arg_1_0.option = FairyLandOption.New()
 
-	slot0.option:init(slot0)
+	arg_1_0.option:init(arg_1_0)
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshView(slot0.viewParam)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:_refreshView(arg_4_0.viewParam)
 end
 
-function slot0._refreshView(slot0, slot1)
-	if slot0.dialogId then
-		slot0:finished()
+function var_0_0._refreshView(arg_5_0, arg_5_1)
+	if arg_5_0.dialogId then
+		arg_5_0:finished()
 	end
 
-	slot0.dialogId = slot1.dialogId
-	slot0.dialogType = slot1.dialogType
-	slot0.callback = slot1.callback
-	slot0.callbackObj = slot1.callbackObj
+	arg_5_0.dialogId = arg_5_1.dialogId
+	arg_5_0.dialogType = arg_5_1.dialogType
+	arg_5_0.callback = arg_5_1.callback
+	arg_5_0.callbackObj = arg_5_1.callbackObj
 
-	slot0.option:startDialog(slot1)
+	arg_5_0.option:startDialog(arg_5_1)
 end
 
-function slot0.finished(slot0)
-	if slot0.dialogId then
-		if slot0.dialogId == 22 and not FairyLandModel.instance:isFinishDialog(8) then
+function var_0_0.finished(arg_6_0)
+	if arg_6_0.dialogId then
+		if arg_6_0.dialogId == 22 and not FairyLandModel.instance:isFinishDialog(8) then
 			FairyLandRpc.instance:sendRecordDialogRequest(8)
 		end
 
-		if not FairyLandModel.instance:isFinishDialog(slot0.dialogId) then
-			FairyLandRpc.instance:sendRecordDialogRequest(slot0.dialogId)
+		if not FairyLandModel.instance:isFinishDialog(arg_6_0.dialogId) then
+			FairyLandRpc.instance:sendRecordDialogRequest(arg_6_0.dialogId)
 		end
 	end
 
-	if slot0.callback then
-		slot0.callback(slot0.callbackObj)
+	if arg_6_0.callback then
+		arg_6_0.callback(arg_6_0.callbackObj)
 	end
 
-	if slot0.option then
-		slot0.option:hide()
+	if arg_6_0.option then
+		arg_6_0.option:hide()
 	end
 
-	slot0.dialogId = nil
+	arg_6_0.dialogId = nil
 
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.option then
-		slot0.option:dispose()
+function var_0_0.onDestroyView(arg_7_0)
+	if arg_7_0.option then
+		arg_7_0.option:dispose()
 	end
 end
 
-return slot0
+return var_0_0

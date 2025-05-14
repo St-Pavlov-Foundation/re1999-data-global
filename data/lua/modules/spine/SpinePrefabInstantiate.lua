@@ -1,83 +1,85 @@
-module("modules.spine.SpinePrefabInstantiate", package.seeall)
+﻿module("modules.spine.SpinePrefabInstantiate", package.seeall)
 
-slot0 = class("SpinePrefabInstantiate", LuaCompBase)
+local var_0_0 = class("SpinePrefabInstantiate", LuaCompBase)
 
-function slot0.Create(slot0)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
+function var_0_0.Create(arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
 end
 
-function slot0.init(slot0, slot1)
-	slot0._containerGO = slot1
-	slot0._path = nil
-	slot0._assetPath = nil
-	slot0._assetItem = nil
-	slot0._instGO = nil
-	slot0._finishCallback = nil
-	slot0._callbackTarget = nil
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._containerGO = arg_2_1
+	arg_2_0._path = nil
+	arg_2_0._assetPath = nil
+	arg_2_0._assetItem = nil
+	arg_2_0._instGO = nil
+	arg_2_0._finishCallback = nil
+	arg_2_0._callbackTarget = nil
 end
 
-function slot0.startLoad(slot0, slot1, slot2, slot3, slot4)
-	slot0._path = slot1
-	slot0._assetPath = slot2
-	slot0._finishCallback = slot3
-	slot0._callbackTarget = slot4
+function var_0_0.startLoad(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	arg_3_0._path = arg_3_1
+	arg_3_0._assetPath = arg_3_2
+	arg_3_0._finishCallback = arg_3_3
+	arg_3_0._callbackTarget = arg_3_4
 
-	loadAbAsset(slot0._path, false, slot0._onLoadCallback, slot0)
+	loadAbAsset(arg_3_0._path, false, arg_3_0._onLoadCallback, arg_3_0)
 end
 
-function slot0.getPath(slot0)
-	return slot0._path
+function var_0_0.getPath(arg_4_0)
+	return arg_4_0._path
 end
 
-function slot0.getAssetItem(slot0)
-	return slot0._assetItem
+function var_0_0.getAssetItem(arg_5_0)
+	return arg_5_0._assetItem
 end
 
-function slot0.getInstGO(slot0)
-	return slot0._instGO
+function var_0_0.getInstGO(arg_6_0)
+	return arg_6_0._instGO
 end
 
-function slot0.dispose(slot0)
-	if slot0._path then
-		removeAssetLoadCb(slot0._path, slot0._onLoadCallback, slot0)
+function var_0_0.dispose(arg_7_0)
+	if arg_7_0._path then
+		removeAssetLoadCb(arg_7_0._path, arg_7_0._onLoadCallback, arg_7_0)
 	end
 
-	if slot0._assetItem then
-		slot0._assetItem:Release()
+	if arg_7_0._assetItem then
+		arg_7_0._assetItem:Release()
 	end
 
-	gohelper.destroy(slot0._instGO)
+	gohelper.destroy(arg_7_0._instGO)
 
-	slot0._path = nil
-	slot0._assetPath = nil
-	slot0._assetItem = nil
-	slot0._instGO = nil
-	slot0._finishCallback = nil
-	slot0._callbackTarget = nil
+	arg_7_0._path = nil
+	arg_7_0._assetPath = nil
+	arg_7_0._assetItem = nil
+	arg_7_0._instGO = nil
+	arg_7_0._finishCallback = nil
+	arg_7_0._callbackTarget = nil
 end
 
-function slot0.onDestroy(slot0)
-	slot0:dispose()
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0:dispose()
 
-	slot0._containerGO = nil
+	arg_8_0._containerGO = nil
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot0._assetItem = slot1
+function var_0_0._onLoadCallback(arg_9_0, arg_9_1)
+	if arg_9_1.IsLoadSuccess then
+		arg_9_0._assetItem = arg_9_1
 
-		slot0._assetItem:Retain()
+		arg_9_0._assetItem:Retain()
 
-		slot0._instGO = gohelper.clone(slot0._assetItem:GetResource(slot0._assetPath), slot0._containerGO)
+		local var_9_0 = arg_9_0._assetItem:GetResource(arg_9_0._assetPath)
 
-		if slot0._finishCallback then
-			if slot0._callbackTarget then
-				slot0._finishCallback(slot0._callbackTarget, slot0)
+		arg_9_0._instGO = gohelper.clone(var_9_0, arg_9_0._containerGO)
+
+		if arg_9_0._finishCallback then
+			if arg_9_0._callbackTarget then
+				arg_9_0._finishCallback(arg_9_0._callbackTarget, arg_9_0)
 			else
-				slot0:_finishCallback()
+				arg_9_0._finishCallback(arg_9_0)
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

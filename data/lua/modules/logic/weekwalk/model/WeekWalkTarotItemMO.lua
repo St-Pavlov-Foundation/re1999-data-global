@@ -1,11 +1,11 @@
-module("modules.logic.weekwalk.model.WeekWalkTarotItemMO", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekWalkTarotItemMO", package.seeall)
 
-slot0 = pureTable("WeekWalkTarotItemMO")
+local var_0_0 = pureTable("WeekWalkTarotItemMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.tarotId = slot1
-	slot0.type = slot2
-	slot0.heroId = slot3
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.tarotId = arg_1_1
+	arg_1_0.type = arg_1_2
+	arg_1_0.heroId = arg_1_3
 end
 
-return slot0
+return var_0_0

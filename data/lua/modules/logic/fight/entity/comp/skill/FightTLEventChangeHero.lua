@@ -1,24 +1,25 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventChangeHero", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventChangeHero", package.seeall)
 
-slot0 = class("FightTLEventChangeHero")
+local var_0_0 = class("FightTLEventChangeHero")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._fightStepMO = slot1
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.reset(slot0)
-	slot0:dispose()
+function var_0_0.reset(arg_2_0)
+	arg_2_0:dispose()
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_3_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnChangeHeroEnd, slot0._fightStepMO.fromId, slot0._fightStepMO.toId)
+function var_0_0.onSkillEnd(arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.OnChangeHeroEnd, arg_4_0._fightStepMO.fromId, arg_4_0._fightStepMO.toId)
 end
 
-function slot0.endChangeHero(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnChangeHeroEnd, slot0._fightStepMO.fromId, slot0._fightStepMO.toId)
+function var_0_0.endChangeHero(arg_5_0)
+	FightController.instance:dispatchEvent(FightEvent.OnChangeHeroEnd, arg_5_0._fightStepMO.fromId, arg_5_0._fightStepMO.toId)
 end
 
-return slot0
+return var_0_0

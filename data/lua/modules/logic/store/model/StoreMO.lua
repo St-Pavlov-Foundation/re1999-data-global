@@ -1,34 +1,34 @@
-module("modules.logic.store.model.StoreMO", package.seeall)
+﻿module("modules.logic.store.model.StoreMO", package.seeall)
 
-slot0 = pureTable("StoreMO")
+local var_0_0 = pureTable("StoreMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.nextRefreshTime = slot1.nextRefreshTime
-	slot0.goodsInfos = slot1.goodsInfos
-	slot0.offlineTime = slot1.offlineTime
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.nextRefreshTime = arg_1_1.nextRefreshTime
+	arg_1_0.goodsInfos = arg_1_1.goodsInfos
+	arg_1_0.offlineTime = arg_1_1.offlineTime
 
-	slot0:_initstoreGoodsMOList()
+	arg_1_0:_initstoreGoodsMOList()
 end
 
-function slot0._initstoreGoodsMOList(slot0)
-	slot0._storeGoodsMOList = {}
+function var_0_0._initstoreGoodsMOList(arg_2_0)
+	arg_2_0._storeGoodsMOList = {}
 
-	if slot0.goodsInfos and #slot0.goodsInfos > 0 then
-		for slot4, slot5 in ipairs(slot0.goodsInfos) do
-			slot6 = StoreGoodsMO.New()
+	if arg_2_0.goodsInfos and #arg_2_0.goodsInfos > 0 then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0.goodsInfos) do
+			local var_2_0 = StoreGoodsMO.New()
 
-			slot6:init(slot0.id, slot5)
-			table.insert(slot0._storeGoodsMOList, slot6)
+			var_2_0:init(arg_2_0.id, iter_2_1)
+			table.insert(arg_2_0._storeGoodsMOList, var_2_0)
 		end
 	end
 end
 
-function slot0.buyGoodsReply(slot0, slot1, slot2)
-	if slot0._storeGoodsMOList and #slot0._storeGoodsMOList > 0 then
-		for slot6, slot7 in ipairs(slot0._storeGoodsMOList) do
-			if slot7.goodsId == slot1 then
-				slot7:buyGoodsReply(slot2)
+function var_0_0.buyGoodsReply(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_0._storeGoodsMOList and #arg_3_0._storeGoodsMOList > 0 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0._storeGoodsMOList) do
+			if iter_3_1.goodsId == arg_3_1 then
+				iter_3_1:buyGoodsReply(arg_3_2)
 
 				return
 			end
@@ -36,11 +36,11 @@ function slot0.buyGoodsReply(slot0, slot1, slot2)
 	end
 end
 
-function slot0.getBuyCount(slot0, slot1)
-	if slot0._storeGoodsMOList and #slot0._storeGoodsMOList > 0 then
-		for slot5, slot6 in ipairs(slot0._storeGoodsMOList) do
-			if slot6.goodsId == slot1 then
-				return slot6.buyCount or 0
+function var_0_0.getBuyCount(arg_4_0, arg_4_1)
+	if arg_4_0._storeGoodsMOList and #arg_4_0._storeGoodsMOList > 0 then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._storeGoodsMOList) do
+			if iter_4_1.goodsId == arg_4_1 then
+				return iter_4_1.buyCount or 0
 			end
 		end
 	end
@@ -48,53 +48,58 @@ function slot0.getBuyCount(slot0, slot1)
 	return 0
 end
 
-function slot0.getGoodsList(slot0, slot1)
-	slot2 = slot0._storeGoodsMOList
+function var_0_0.getGoodsList(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._storeGoodsMOList
 
-	if slot1 and #slot2 > 0 then
-		table.sort(slot2, slot0._goodsSortFunction)
+	if arg_5_1 and #var_5_0 > 0 then
+		table.sort(var_5_0, arg_5_0._goodsSortFunction)
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getGoodsCount(slot0)
-	return slot0._storeGoodsMOList and #slot0._storeGoodsMOList or 0
+function var_0_0.getGoodsCount(arg_6_0)
+	return arg_6_0._storeGoodsMOList and #arg_6_0._storeGoodsMOList or 0
 end
 
-function slot0.getGoodsMO(slot0, slot1)
-	if slot0._storeGoodsMOList and #slot0._storeGoodsMOList > 0 then
-		for slot5, slot6 in ipairs(slot0._storeGoodsMOList) do
-			if slot6.goodsId == slot1 then
-				return slot6
+function var_0_0.getGoodsMO(arg_7_0, arg_7_1)
+	if arg_7_0._storeGoodsMOList and #arg_7_0._storeGoodsMOList > 0 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._storeGoodsMOList) do
+			if iter_7_1.goodsId == arg_7_1 then
+				return iter_7_1
 			end
 		end
 	end
 end
 
-function slot0._goodsSortFunction(slot0, slot1)
-	slot2 = slot0:isSoldOut()
-	slot3 = slot1:isSoldOut()
+function var_0_0._goodsSortFunction(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:isSoldOut()
+	local var_8_1 = arg_8_1:isSoldOut()
+	local var_8_2 = arg_8_0:alreadyHas()
+	local var_8_3 = arg_8_1:alreadyHas()
 
-	if slot0:alreadyHas() and not slot1:alreadyHas() then
+	if var_8_2 and not var_8_3 then
 		return false
-	elseif slot5 and not slot4 then
+	elseif var_8_3 and not var_8_2 then
 		return true
 	end
 
-	if slot2 and not slot3 then
+	if var_8_0 and not var_8_1 then
 		return false
-	elseif slot3 and not slot2 then
+	elseif var_8_1 and not var_8_0 then
 		return true
 	end
 
-	if StoreConfig.instance:getGoodsConfig(slot1.goodsId).order < StoreConfig.instance:getGoodsConfig(slot0.goodsId).order then
+	local var_8_4 = StoreConfig.instance:getGoodsConfig(arg_8_0.goodsId)
+	local var_8_5 = StoreConfig.instance:getGoodsConfig(arg_8_1.goodsId)
+
+	if var_8_4.order > var_8_5.order then
 		return true
-	elseif slot6.order < slot7.order then
+	elseif var_8_4.order < var_8_5.order then
 		return false
 	end
 
-	return slot6.id < slot7.id
+	return var_8_4.id < var_8_5.id
 end
 
-return slot0
+return var_0_0

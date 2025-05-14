@@ -1,44 +1,47 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapEpisodeView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapEpisodeView", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonMapEpisodeView", VersionActivity1_2DungeonMapEpisodeBaseView)
+local var_0_0 = class("VersionActivity1_2DungeonMapEpisodeView", VersionActivity1_2DungeonMapEpisodeBaseView)
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, slot0._onSetEpisodeListVisible, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.enterFight, slot0._onEnterFight, slot0)
+function var_0_0.addEvents(arg_1_0)
+	var_0_0.super.addEvents(arg_1_0)
+	arg_1_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_1_0._onSetEpisodeListVisible, arg_1_0)
+	arg_1_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.enterFight, arg_1_0._onEnterFight, arg_1_0)
 end
 
-function slot0._onSetEpisodeListVisible(slot0, slot1)
+function var_0_0._onSetEpisodeListVisible(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.getLayoutClass(slot0)
+function var_0_0.getLayoutClass(arg_3_0)
 	return VersionActivity1_2DungeonMapChapterLayout.New()
 end
 
-function slot0.btnHardModeClick(slot0)
-	slot1, slot2 = slot0:hardModelIsOpen()
+function var_0_0.btnHardModeClick(arg_4_0)
+	local var_4_0, var_4_1 = arg_4_0:hardModelIsOpen()
 
-	if not slot1 then
-		GameFacade.showToast(slot2)
+	if not var_4_0 then
+		GameFacade.showToast(var_4_1)
 
 		return
 	end
 
-	slot0:changeEpisodeMode(VersionActivity1_2DungeonEnum.DungeonMode.Hard)
+	arg_4_0:changeEpisodeMode(VersionActivity1_2DungeonEnum.DungeonMode.Hard)
 end
 
-function slot0.hardModelIsOpen(slot0)
-	slot1, slot2 = VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)
+function var_0_0.hardModelIsOpen(arg_5_0)
+	local var_5_0, var_5_1 = VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)
 
-	if not slot1 then
+	if not var_5_0 then
 		return false, 10301, 1
 	end
 
-	if not DungeonModel.instance:hasPassLevelAndStory(DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)[1].preEpisode) then
+	local var_5_2 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard)
+
+	if not DungeonModel.instance:hasPassLevelAndStory(var_5_2[1].preEpisode) then
 		return false, 10302, 2
 	end
 
 	return true
 end
 
-return slot0
+return var_0_0

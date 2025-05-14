@@ -1,42 +1,44 @@
-module("modules.logic.fight.system.flow.FightReconnectSequence", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightReconnectSequence", package.seeall)
 
-slot0 = class("FightReconnectSequence", BaseFightSequence)
+local var_0_0 = class("FightReconnectSequence", BaseFightSequence)
 
-function slot0.buildFlow(slot0, slot1)
-	uv0.super.buildFlow(slot0)
-	slot0:addWork(FunctionWork.New(function ()
+function var_0_0.buildFlow(arg_1_0, arg_1_1)
+	var_0_0.super.buildFlow(arg_1_0)
+	arg_1_0:addWork(FunctionWork.New(function()
 		FightRpc.instance:dealCardInfoPushData()
 	end))
-	slot0:addWork(FightWorkDetectReplayEnterSceneActive.New())
-	slot0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
-	slot0:addWork(WorkWaitSeconds.New(0.5))
-	slot0:addWork(FightWorkFocusMonster.New())
-	slot0:addWork(FunctionWork.New(function ()
-		for slot3, slot4 in ipairs(FightHelper.getAllEntitys()) do
-			if slot4.buff then
-				slot4.buff:dealStartBuff()
+	arg_1_0:addWork(FightWorkDetectReplayEnterSceneActive.New())
+	arg_1_0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
+	arg_1_0:addWork(WorkWaitSeconds.New(0.5))
+	arg_1_0:addWork(FightWorkFocusMonster.New())
+	arg_1_0:addWork(FunctionWork.New(function()
+		for iter_3_0, iter_3_1 in ipairs(FightHelper.getAllEntitys()) do
+			if iter_3_1.buff then
+				iter_3_1.buff:dealStartBuff()
 			end
 		end
 	end))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_1_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	if FightStepBuilder.buildStepWorkList(slot1.fightStepMOs) then
-		for slot6, slot7 in ipairs(slot2) do
-			slot0:addWork(slot7)
+	local var_1_0 = FightStepBuilder.buildStepWorkList(arg_1_1.fightStepMOs)
+
+	if var_1_0 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			arg_1_0:addWork(iter_1_1)
 		end
 	end
 
-	slot0:addWork(FunctionWork.New(function ()
+	arg_1_0:addWork(FunctionWork.New(function()
 		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
 	end))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_1_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.AfterEnterStepBehaviour)
 	end))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_1_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.OnFightReconnectLastWork)
 	end))
 end
 
-return slot0
+return var_0_0

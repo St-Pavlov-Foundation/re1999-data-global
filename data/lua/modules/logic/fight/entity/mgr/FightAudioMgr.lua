@@ -1,306 +1,388 @@
-module("modules.logic.fight.entity.mgr.FightAudioMgr", package.seeall)
+﻿module("modules.logic.fight.entity.mgr.FightAudioMgr", package.seeall)
 
-slot0 = class("FightAudioMgr")
-slot1 = {
-	[100102.0] = 3025,
-	[100101.0] = 3023,
-	[100109.0] = 3023
+local var_0_0 = class("FightAudioMgr")
+local var_0_1 = {
+	[100102] = 3025,
+	[100101] = 3023,
+	[100109] = 3023
 }
 
-function slot0.init(slot0)
-	slot0._str2Id = {}
-	slot0._cardAudio = {}
-	slot0._fightAudio = {}
-	slot0._fightAudioStartTime = {}
-	slot0._fightAudio2LangDict = {}
-	slot0._playingBnk2Lang = {}
-	slot0._playingBnk2AudioIds = {}
+function var_0_0.init(arg_1_0)
+	arg_1_0._str2Id = {}
+	arg_1_0._cardAudio = {}
+	arg_1_0._fightAudio = {}
+	arg_1_0._fightAudioStartTime = {}
+	arg_1_0._fightAudio2LangDict = {}
+	arg_1_0._playingBnk2Lang = {}
+	arg_1_0._playingBnk2AudioIds = {}
 end
 
-function slot0.dispose(slot0)
-	slot0:clearCardAudio()
-	slot0:stopAllFightAudio()
+function var_0_0.dispose(arg_2_0)
+	arg_2_0:clearCardAudio()
+	arg_2_0:stopAllFightAudio()
 end
 
-function slot0.onDirectPlayAudio(slot0, slot1)
-	if slot1 then
-		slot0._fightAudioStartTime[slot1] = Time.time
+function var_0_0.onDirectPlayAudio(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		local var_3_0 = Time.time
+
+		arg_3_0._fightAudioStartTime[arg_3_1] = var_3_0
 	end
 end
 
-function slot0.playAudio(slot0, slot1)
-	if not slot1 or slot1 <= 0 then
+function var_0_0.playAudio(arg_4_0, arg_4_1)
+	if not arg_4_1 or arg_4_1 <= 0 then
 		return
 	end
 
-	slot3 = slot0._fightAudioStartTime[slot1]
-	slot0._fightAudioStartTime[slot1] = Time.time
+	local var_4_0 = Time.time
+	local var_4_1 = arg_4_0._fightAudioStartTime[arg_4_1]
 
-	if AudioEffectMgr.instance:isPlaying(slot1) and slot3 and slot2 - slot3 < 0.01 then
+	arg_4_0._fightAudioStartTime[arg_4_1] = var_4_0
+
+	local var_4_2 = AudioEffectMgr.instance:isPlaying(arg_4_1)
+
+	if var_4_2 and var_4_1 and var_4_0 - var_4_1 < 0.01 then
 		return
 	end
 
-	if AudioConfig.instance:getAudioCOById(slot1) then
-		slot7 = GameConfig:GetCurVoiceShortcut()
+	local var_4_3 = AudioConfig.instance:getAudioCOById(arg_4_1)
 
-		if slot0._playingBnk2Lang[slot5.bankName] and slot0._playingBnk2Lang[slot6] ~= slot7 and slot0._playingBnk2AudioIds[slot6] then
-			for slot12, slot13 in ipairs(slot8) do
-				AudioEffectMgr.instance:stopAudio(slot13)
-			end
+	if var_4_3 then
+		local var_4_4 = var_4_3.bankName
+		local var_4_5 = GameConfig:GetCurVoiceShortcut()
 
-			slot0._playingBnk2AudioIds[slot6] = {}
-		end
+		if arg_4_0._playingBnk2Lang[var_4_4] and arg_4_0._playingBnk2Lang[var_4_4] ~= var_4_5 then
+			local var_4_6 = arg_4_0._playingBnk2AudioIds[var_4_4]
 
-		slot0._playingBnk2Lang[slot6] = slot7
-		slot0._playingBnk2AudioIds[slot6] = slot0._playingBnk2AudioIds[slot6] or {}
+			if var_4_6 then
+				for iter_4_0, iter_4_1 in ipairs(var_4_6) do
+					AudioEffectMgr.instance:stopAudio(iter_4_1)
+				end
 
-		table.insert(slot0._playingBnk2AudioIds[slot6], slot1)
-	end
-
-	if slot4 then
-		AudioEffectMgr.instance:stopAudio(slot1)
-	end
-
-	AudioEffectMgr.instance:playAudio(slot1)
-
-	if not tabletool.indexOf(slot0._fightAudio, slot1) then
-		table.insert(slot0._fightAudio, slot1)
-	end
-end
-
-function slot0.playAudioWithLang(slot0, slot1, slot2)
-	if not slot2 then
-		slot0:playAudio(slot1)
-
-		return
-	end
-
-	if not slot1 or slot1 <= 0 then
-		return
-	end
-
-	slot4 = slot0._fightAudioStartTime[slot1]
-	slot0._fightAudioStartTime[slot1] = Time.time
-
-	if AudioEffectMgr.instance:isPlaying(slot1) and slot4 and slot3 - slot4 < 0.01 then
-		return
-	end
-
-	if AudioConfig.instance:getAudioCOById(slot1) then
-		if slot0._playingBnk2Lang[slot6.bankName] and slot0._playingBnk2Lang[slot7] ~= slot2 and slot0._playingBnk2AudioIds[slot7] then
-			for slot13, slot14 in ipairs(slot9) do
-				AudioEffectMgr.instance:stopAudio(slot14)
-			end
-
-			slot0._playingBnk2AudioIds[slot7] = {}
-		end
-
-		slot0._playingBnk2Lang[slot7] = slot2
-		slot0._playingBnk2AudioIds[slot7] = slot0._playingBnk2AudioIds[slot7] or {}
-
-		table.insert(slot0._playingBnk2AudioIds[slot7], slot1)
-
-		if slot5 and slot0._fightAudio2LangDict[slot1] and slot0._fightAudio2LangDict[slot1] ~= slot2 then
-			AudioEffectMgr.instance:stopAudio(slot1)
-		end
-
-		slot0._fightAudio2LangDict[slot1] = slot2
-	end
-
-	if slot5 then
-		AudioEffectMgr.instance:stopAudio(slot1)
-	end
-
-	AudioEffectMgr.instance:playAudio(slot1, nil, slot2)
-
-	if not tabletool.indexOf(slot0._fightAudio, slot1) then
-		table.insert(slot0._fightAudio, slot1)
-	end
-end
-
-function slot0.stopAudio(slot0, slot1)
-	if slot1 and slot1 > 0 then
-		tabletool.removeValue(slot0._fightAudio, slot1)
-		AudioEffectMgr.instance:stopAudio(slot1, 0)
-	end
-end
-
-function slot0.playCardAudio(slot0, slot1, slot2, slot3)
-	slot0:stopCardAudio(slot1)
-
-	slot0._cardAudio[slot1] = slot2
-	slot4 = nil
-
-	if slot3 then
-		slot5, slot6, slot7 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot3)
-
-		if not string.nilorempty(LangSettings.shortcutTab[slot5]) and not slot7 then
-			slot4 = slot8
-		end
-	end
-
-	AudioEffectMgr.instance:playAudio(slot2, nil, slot4)
-	AudioEffectMgr.instance:setSwitch(slot2, AudioMgr.instance:getIdFromString("card_voc"), AudioMgr.instance:getIdFromString("fightingvoc"))
-end
-
-function slot0.stopAllFightAudio(slot0)
-	if not slot0._fightAudio then
-		return
-	end
-
-	for slot4, slot5 in ipairs(slot0._fightAudio) do
-		AudioEffectMgr.instance:stopAudio(slot5)
-	end
-
-	slot0._fightAudio = {}
-end
-
-function slot0.stopAllCardAudio(slot0)
-	if not slot0._cardAudio then
-		return
-	end
-
-	for slot4, slot5 in pairs(slot0._cardAudio) do
-		AudioEffectMgr.instance:stopAudio(slot5)
-	end
-end
-
-function slot0.clearCardAudio(slot0)
-	slot0._cardAudio = {}
-end
-
-function slot0.stopCardAudio(slot0, slot1)
-	if slot0._cardAudio[slot1] then
-		AudioEffectMgr.instance:stopAudio(slot2)
-	end
-end
-
-function slot0.playHeroVoiceRandom(slot0, slot1, slot2)
-	if slot0:getHeroVoiceRandom(slot1, slot2) then
-		slot4 = nil
-
-		if slot1 then
-			slot5, slot6, slot7 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot1)
-
-			if not string.nilorempty(LangSettings.shortcutTab[slot5]) and not slot7 then
-				slot4 = slot8
+				arg_4_0._playingBnk2AudioIds[var_4_4] = {}
 			end
 		end
 
-		slot0:playAudioWithLang(slot3, slot4)
+		arg_4_0._playingBnk2Lang[var_4_4] = var_4_5
+		arg_4_0._playingBnk2AudioIds[var_4_4] = arg_4_0._playingBnk2AudioIds[var_4_4] or {}
+
+		table.insert(arg_4_0._playingBnk2AudioIds[var_4_4], arg_4_1)
+	end
+
+	if var_4_2 then
+		AudioEffectMgr.instance:stopAudio(arg_4_1)
+	end
+
+	AudioEffectMgr.instance:playAudio(arg_4_1)
+
+	if not tabletool.indexOf(arg_4_0._fightAudio, arg_4_1) then
+		table.insert(arg_4_0._fightAudio, arg_4_1)
 	end
 end
 
-function slot0.getHeroVoiceRandom(slot0, slot1, slot2, slot3)
-	if not slot0:_getHeroVoiceCOs(slot1, slot2, FightDataHelper.entityMgr:getById(slot3) and slot4.skin) or #slot5 == 0 then
+function var_0_0.playAudioWithLang(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_2 then
+		arg_5_0:playAudio(arg_5_1)
+
 		return
 	end
 
-	if #slot5 == 1 then
-		return slot5[slot6].audio
+	if not arg_5_1 or arg_5_1 <= 0 then
+		return
+	end
+
+	local var_5_0 = Time.time
+	local var_5_1 = arg_5_0._fightAudioStartTime[arg_5_1]
+
+	arg_5_0._fightAudioStartTime[arg_5_1] = var_5_0
+
+	local var_5_2 = AudioEffectMgr.instance:isPlaying(arg_5_1)
+
+	if var_5_2 and var_5_1 and var_5_0 - var_5_1 < 0.01 then
+		return
+	end
+
+	local var_5_3 = AudioConfig.instance:getAudioCOById(arg_5_1)
+
+	if var_5_3 then
+		local var_5_4 = var_5_3.bankName
+
+		if arg_5_0._playingBnk2Lang[var_5_4] and arg_5_0._playingBnk2Lang[var_5_4] ~= arg_5_2 then
+			local var_5_5 = arg_5_0._playingBnk2AudioIds[var_5_4]
+
+			if var_5_5 then
+				for iter_5_0, iter_5_1 in ipairs(var_5_5) do
+					AudioEffectMgr.instance:stopAudio(iter_5_1)
+				end
+
+				arg_5_0._playingBnk2AudioIds[var_5_4] = {}
+			end
+		end
+
+		arg_5_0._playingBnk2Lang[var_5_4] = arg_5_2
+		arg_5_0._playingBnk2AudioIds[var_5_4] = arg_5_0._playingBnk2AudioIds[var_5_4] or {}
+
+		table.insert(arg_5_0._playingBnk2AudioIds[var_5_4], arg_5_1)
+
+		if var_5_2 and arg_5_0._fightAudio2LangDict[arg_5_1] and arg_5_0._fightAudio2LangDict[arg_5_1] ~= arg_5_2 then
+			AudioEffectMgr.instance:stopAudio(arg_5_1)
+		end
+
+		arg_5_0._fightAudio2LangDict[arg_5_1] = arg_5_2
+	end
+
+	if var_5_2 then
+		AudioEffectMgr.instance:stopAudio(arg_5_1)
+	end
+
+	AudioEffectMgr.instance:playAudio(arg_5_1, nil, arg_5_2)
+
+	if not tabletool.indexOf(arg_5_0._fightAudio, arg_5_1) then
+		table.insert(arg_5_0._fightAudio, arg_5_1)
+	end
+end
+
+function var_0_0.stopAudio(arg_6_0, arg_6_1)
+	if arg_6_1 and arg_6_1 > 0 then
+		tabletool.removeValue(arg_6_0._fightAudio, arg_6_1)
+		AudioEffectMgr.instance:stopAudio(arg_6_1, 0)
+	end
+end
+
+function var_0_0.playCardAudio(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0:stopCardAudio(arg_7_1)
+
+	arg_7_0._cardAudio[arg_7_1] = arg_7_2
+
+	local var_7_0
+
+	if arg_7_3 then
+		local var_7_1, var_7_2, var_7_3 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_7_3)
+		local var_7_4 = LangSettings.shortcutTab[var_7_1]
+
+		if not string.nilorempty(var_7_4) and not var_7_3 then
+			var_7_0 = var_7_4
+		end
+	end
+
+	AudioEffectMgr.instance:playAudio(arg_7_2, nil, var_7_0)
+
+	local var_7_5 = AudioMgr.instance:getIdFromString("card_voc")
+	local var_7_6 = AudioMgr.instance:getIdFromString("fightingvoc")
+
+	AudioEffectMgr.instance:setSwitch(arg_7_2, var_7_5, var_7_6)
+end
+
+function var_0_0.stopAllFightAudio(arg_8_0)
+	if not arg_8_0._fightAudio then
+		return
+	end
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._fightAudio) do
+		AudioEffectMgr.instance:stopAudio(iter_8_1)
+	end
+
+	arg_8_0._fightAudio = {}
+end
+
+function var_0_0.stopAllCardAudio(arg_9_0)
+	if not arg_9_0._cardAudio then
+		return
+	end
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._cardAudio) do
+		AudioEffectMgr.instance:stopAudio(iter_9_1)
+	end
+end
+
+function var_0_0.clearCardAudio(arg_10_0)
+	arg_10_0._cardAudio = {}
+end
+
+function var_0_0.stopCardAudio(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0._cardAudio[arg_11_1]
+
+	if var_11_0 then
+		AudioEffectMgr.instance:stopAudio(var_11_0)
+	end
+end
+
+function var_0_0.playHeroVoiceRandom(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getHeroVoiceRandom(arg_12_1, arg_12_2)
+
+	if var_12_0 then
+		local var_12_1
+
+		if arg_12_1 then
+			local var_12_2, var_12_3, var_12_4 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_12_1)
+			local var_12_5 = LangSettings.shortcutTab[var_12_2]
+
+			if not string.nilorempty(var_12_5) and not var_12_4 then
+				var_12_1 = var_12_5
+			end
+		end
+
+		arg_12_0:playAudioWithLang(var_12_0, var_12_1)
+	end
+end
+
+function var_0_0.getHeroVoiceRandom(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = FightDataHelper.entityMgr:getById(arg_13_3)
+	local var_13_1 = arg_13_0:_getHeroVoiceCOs(arg_13_1, arg_13_2, var_13_0 and var_13_0.skin)
+
+	if not var_13_1 or #var_13_1 == 0 then
+		return
+	end
+
+	local var_13_2 = #var_13_1
+
+	if var_13_2 == 1 then
+		return var_13_1[var_13_2].audio
 	end
 
 	while true do
-		slot7 = slot5[math.random(slot6)]
+		local var_13_3 = var_13_1[math.random(var_13_2)]
 
-		if not slot3 or slot7.audio ~= slot0._cardAudio[slot3] then
-			return slot7.audio
+		if not arg_13_3 or var_13_3.audio ~= arg_13_0._cardAudio[arg_13_3] then
+			return var_13_3.audio
 		end
 	end
 end
 
-function slot0.playHitVoice(slot0, slot1, slot2)
-	if slot0:getHeroVoiceWithWeight(slot1, CharacterEnum.VoiceType.FightBehit) then
-		slot0:playAudioWithLang(slot4, slot2)
-		AudioEffectMgr.instance:setSwitch(slot4, AudioMgr.instance:getIdFromString("Hitvoc"), AudioMgr.instance:getIdFromString("commbatuihitvoc"))
+function var_0_0.playHitVoice(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = CharacterEnum.VoiceType.FightBehit
+	local var_14_1 = arg_14_0:getHeroVoiceWithWeight(arg_14_1, var_14_0)
+
+	if var_14_1 then
+		arg_14_0:playAudioWithLang(var_14_1, arg_14_2)
+
+		local var_14_2 = AudioMgr.instance:getIdFromString("Hitvoc")
+		local var_14_3 = AudioMgr.instance:getIdFromString("commbatuihitvoc")
+
+		AudioEffectMgr.instance:setSwitch(var_14_1, var_14_2, var_14_3)
 	end
 end
 
-function slot0.getHeroVoiceWithWeight(slot0, slot1, slot2)
-	if slot0:_getHeroVoiceCOs(slot1, slot2) and #slot3 > 0 then
-		for slot8, slot9 in ipairs(slot3) do
-			slot4 = 0 + (tonumber(slot9.param) or 0)
+function var_0_0.getHeroVoiceWithWeight(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:_getHeroVoiceCOs(arg_15_1, arg_15_2)
+
+	if var_15_0 and #var_15_0 > 0 then
+		local var_15_1 = 0
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			var_15_1 = var_15_1 + (tonumber(iter_15_1.param) or 0)
 		end
 
-		for slot10, slot11 in ipairs(slot3) do
-			if math.random() <= (0 + (tonumber(slot11.param) or 0)) / slot4 then
-				return slot11.audio
+		local var_15_2 = math.random()
+		local var_15_3 = 0
+
+		for iter_15_2, iter_15_3 in ipairs(var_15_0) do
+			var_15_3 = var_15_3 + (tonumber(iter_15_3.param) or 0)
+
+			if var_15_2 <= var_15_3 / var_15_1 then
+				return iter_15_3.audio
 			end
 		end
 	end
 end
 
-function slot0._getHeroVoiceCOs(slot0, slot1, slot2, slot3)
-	if CharacterDataConfig.instance:getCharacterVoicesCo(slot1) then
-		if HeroModel.instance:getByHeroId(slot1) then
-			return HeroModel.instance:getVoiceConfig(slot1, slot2, nil, slot3)
+function var_0_0._getHeroVoiceCOs(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	if CharacterDataConfig.instance:getCharacterVoicesCo(arg_16_1) then
+		if HeroModel.instance:getByHeroId(arg_16_1) then
+			return HeroModel.instance:getVoiceConfig(arg_16_1, arg_16_2, nil, arg_16_3)
 		else
-			return CharacterDataConfig.instance:getCharacterTypeVoicesCO(slot1, slot2, slot3)
+			return CharacterDataConfig.instance:getCharacterTypeVoicesCO(arg_16_1, arg_16_2, arg_16_3)
 		end
-	elseif lua_monster.configDict[slot1] and FightConfig.instance:getSkinCO(slot4.skinId) then
-		return CharacterDataConfig.instance:getCharacterTypeVoicesCO(slot5.characterId, slot2, slot4.skinId)
+	else
+		local var_16_0 = lua_monster.configDict[arg_16_1]
+
+		if var_16_0 then
+			local var_16_1 = FightConfig.instance:getSkinCO(var_16_0.skinId)
+
+			if var_16_1 then
+				return CharacterDataConfig.instance:getCharacterTypeVoicesCO(var_16_1.characterId, arg_16_2, var_16_0.skinId)
+			end
+		end
 	end
 end
 
-function slot0.playHit(slot0, slot1, slot2, slot3)
-	if FightConfig.instance:getSkinCO(slot2) then
-		AudioMgr.instance:setSwitch(slot0:getId(FightEnum.HitStatusGroupName), slot0:getId(FightEnum.HitStatusArr[slot3 and 2 or 1]))
-		AudioMgr.instance:setSwitch(slot0:getId(FightEnum.HitMaterialGroupName), slot0:getId(FightEnum.HitMaterialArr[slot4.matId]))
-		AudioMgr.instance:trigger(slot1)
+function var_0_0.playHit(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = FightConfig.instance:getSkinCO(arg_17_2)
+
+	if var_17_0 then
+		local var_17_1 = arg_17_3 and 2 or 1
+		local var_17_2 = var_17_0.matId
+
+		AudioMgr.instance:setSwitch(arg_17_0:getId(FightEnum.HitStatusGroupName), arg_17_0:getId(FightEnum.HitStatusArr[var_17_1]))
+		AudioMgr.instance:setSwitch(arg_17_0:getId(FightEnum.HitMaterialGroupName), arg_17_0:getId(FightEnum.HitMaterialArr[var_17_2]))
+		AudioMgr.instance:trigger(arg_17_1)
 	end
 end
 
-function slot0.playHitByAtkAudioId(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0.playHitByAtkAudioId(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if not arg_18_1 then
 		return
 	end
 
-	slot5 = FightConfig.instance:getSkinCO(slot2)
+	local var_18_0 = lua_fight_audio.configDict[arg_18_1]
+	local var_18_1 = FightConfig.instance:getSkinCO(arg_18_2)
 
-	if lua_fight_audio.configDict[slot1] and slot5 then
-		if (tonumber(slot4.weapon) or 0) == 99 then
+	if var_18_0 and var_18_1 then
+		local var_18_2 = tonumber(var_18_0.weapon) or 0
+
+		if var_18_2 == 99 then
 			return
 		end
 
-		AudioMgr.instance:setSwitch(slot0:getId(FightEnum.HitStatusGroupName), slot0:getId(FightEnum.HitStatusArr[slot3 and 2 or 1]))
-		AudioMgr.instance:setSwitch(slot0:getId(FightEnum.HitMaterialGroupName), slot0:getId(FightEnum.HitMaterialArr[slot5.matId]))
-		AudioMgr.instance:setSwitch(slot0:getId(FightEnum.WeaponHitSwitchGroup), slot0:getId(FightEnum.WeaponHitSwitchNames[slot6] or ""))
+		local var_18_3 = FightEnum.WeaponHitSwitchNames[var_18_2] or ""
+		local var_18_4 = arg_18_3 and 2 or 1
+		local var_18_5 = var_18_1.matId
+
+		AudioMgr.instance:setSwitch(arg_18_0:getId(FightEnum.HitStatusGroupName), arg_18_0:getId(FightEnum.HitStatusArr[var_18_4]))
+		AudioMgr.instance:setSwitch(arg_18_0:getId(FightEnum.HitMaterialGroupName), arg_18_0:getId(FightEnum.HitMaterialArr[var_18_5]))
+		AudioMgr.instance:setSwitch(arg_18_0:getId(FightEnum.WeaponHitSwitchGroup), arg_18_0:getId(var_18_3))
 		AudioMgr.instance:trigger(FightEnum.UniformDefAudioId)
 	end
 end
 
-function slot0.setSwitch(slot0, slot1)
-	AudioMgr.instance:setSwitch(slot0:getId(FightEnum.AudioSwitchGroup), slot0:getId(slot1))
+function var_0_0.setSwitch(arg_19_0, arg_19_1)
+	AudioMgr.instance:setSwitch(arg_19_0:getId(FightEnum.AudioSwitchGroup), arg_19_0:getId(arg_19_1))
 end
 
-function slot0.getId(slot0, slot1)
-	if not slot0._str2Id[slot1] then
-		slot0._str2Id[slot1] = AudioMgr.instance:getIdFromString(slot1)
+function var_0_0.getId(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0._str2Id[arg_20_1]
+
+	if not var_20_0 then
+		var_20_0 = AudioMgr.instance:getIdFromString(arg_20_1)
+		arg_20_0._str2Id[arg_20_1] = var_20_0
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.obscureBgm(slot0, slot1)
-	if not slot0.mainObscureCount then
-		slot0.mainObscureCount = 0
+function var_0_0.obscureBgm(arg_21_0, arg_21_1)
+	if not arg_21_0.mainObscureCount then
+		arg_21_0.mainObscureCount = 0
 	end
 
-	slot0.mainObscureCount = slot0.mainObscureCount + (slot1 and 1 or -1)
+	local var_21_0 = arg_21_1 and 1 or -1
 
-	if not slot1 and slot0.mainObscureCount ~= 0 then
+	arg_21_0.mainObscureCount = arg_21_0.mainObscureCount + var_21_0
+
+	if not arg_21_1 and arg_21_0.mainObscureCount ~= 0 then
 		return
 	end
 
-	if slot1 and slot0.mainObscureCount ~= 1 then
+	if arg_21_1 and arg_21_0.mainObscureCount ~= 1 then
 		return
 	end
 
 	if GameSceneMgr.instance:isFightScene() then
-		AudioMgr.instance:setState(AudioMgr.instance:getIdFromString("main_obscure"), AudioMgr.instance:getIdFromString(slot1 and "yes" or "no"))
+		AudioMgr.instance:setState(AudioMgr.instance:getIdFromString("main_obscure"), AudioMgr.instance:getIdFromString(arg_21_1 and "yes" or "no"))
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

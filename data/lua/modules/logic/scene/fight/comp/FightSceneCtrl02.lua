@@ -1,103 +1,112 @@
-module("modules.logic.scene.fight.comp.FightSceneCtrl02", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneCtrl02", package.seeall)
 
-slot0 = class("FightSceneCtrl02", BaseSceneComp)
+local var_0_0 = class("FightSceneCtrl02", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_1_0._onLevelLoaded, arg_1_0)
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	slot0._sceneCtrl02Comp = nil
+function var_0_0._onLevelLoaded(arg_2_0, arg_2_1)
+	arg_2_0._sceneCtrl02Comp = nil
 
-	if slot0:getCurScene():getSceneContainerGO():GetComponentsInChildren(typeof(ZProj.SceneCtrl02)).Length > 0 then
-		slot0._sceneCtrl02Comp = slot3[0]
-		slot0._deadIdDict = {}
+	local var_2_0 = arg_2_0:getCurScene():getSceneContainerGO():GetComponentsInChildren(typeof(ZProj.SceneCtrl02))
 
-		FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, slot0._beforePlayUniqueSkill, slot0)
-		FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, slot0._afterPlayUniqueSkill, slot0)
-		FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, slot0._beforeDeadEffect, slot0)
-		FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, slot0._onSpineMaterialChange, slot0)
-		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-		FightController.instance:registerCallback(FightEvent.BeforeEntityDestroy, slot0._beforeEntityDestroy, slot0)
-		FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._onEndFight, slot0)
-		slot0:_setAllSpineMat()
+	if var_2_0.Length > 0 then
+		arg_2_0._sceneCtrl02Comp = var_2_0[0]
+		arg_2_0._deadIdDict = {}
+
+		FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, arg_2_0._beforePlayUniqueSkill, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, arg_2_0._afterPlayUniqueSkill, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_2_0._beforeDeadEffect, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, arg_2_0._onSpineMaterialChange, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_2_0._onSpineLoaded, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.BeforeEntityDestroy, arg_2_0._beforeEntityDestroy, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.PushEndFight, arg_2_0._onEndFight, arg_2_0)
+		arg_2_0:_setAllSpineMat()
 	else
-		FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, slot0._beforePlayUniqueSkill, slot0)
-		FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, slot0._afterPlayUniqueSkill, slot0)
-		FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, slot0._beforeDeadEffect, slot0)
-		FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, slot0._onSpineMaterialChange, slot0)
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-		FightController.instance:unregisterCallback(FightEvent.BeforeEntityDestroy, slot0._beforeEntityDestroy, slot0)
-		FightController.instance:unregisterCallback(FightEvent.PushEndFight, slot0._onEndFight, slot0)
+		FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, arg_2_0._beforePlayUniqueSkill, arg_2_0)
+		FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, arg_2_0._afterPlayUniqueSkill, arg_2_0)
+		FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_2_0._beforeDeadEffect, arg_2_0)
+		FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_2_0._onSpineMaterialChange, arg_2_0)
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_2_0._onSpineLoaded, arg_2_0)
+		FightController.instance:unregisterCallback(FightEvent.BeforeEntityDestroy, arg_2_0._beforeEntityDestroy, arg_2_0)
+		FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_2_0._onEndFight, arg_2_0)
 	end
 end
 
-function slot0._setAllSpineMat(slot0)
-	if slot0._sceneCtrl02Comp then
-		for slot5, slot6 in ipairs(FightHelper.getAllEntitysContainUnitNpc()) do
-			if slot6.spineRenderer then
-				slot0._sceneCtrl02Comp:SetSpineMat(tostring(slot6.id), slot6.spineRenderer:getReplaceMat())
+function var_0_0._setAllSpineMat(arg_3_0)
+	if arg_3_0._sceneCtrl02Comp then
+		local var_3_0 = FightHelper.getAllEntitysContainUnitNpc()
+
+		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+			if iter_3_1.spineRenderer then
+				local var_3_1 = iter_3_1.spineRenderer:getReplaceMat()
+
+				arg_3_0._sceneCtrl02Comp:SetSpineMat(tostring(iter_3_1.id), var_3_1)
 			end
 		end
 	end
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if slot0._sceneCtrl02Comp then
-		slot2 = slot1.unitSpawn
+function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
+	if arg_4_0._sceneCtrl02Comp then
+		local var_4_0 = arg_4_1.unitSpawn
+		local var_4_1 = var_4_0.id
 
-		if slot2.spineRenderer then
-			slot0._sceneCtrl02Comp:SetSpineMat(tostring(slot2.id), slot2.spineRenderer:getReplaceMat())
+		if var_4_0.spineRenderer then
+			local var_4_2 = var_4_0.spineRenderer:getReplaceMat()
+
+			arg_4_0._sceneCtrl02Comp:SetSpineMat(tostring(var_4_1), var_4_2)
 		end
 	end
 end
 
-function slot0._beforeEntityDestroy(slot0, slot1)
-	if slot0._sceneCtrl02Comp and slot1 and slot1.spineRenderer then
-		slot0._sceneCtrl02Comp:SetSpineMat(tostring(slot1.id), nil)
+function var_0_0._beforeEntityDestroy(arg_5_0, arg_5_1)
+	if arg_5_0._sceneCtrl02Comp and arg_5_1 and arg_5_1.spineRenderer then
+		arg_5_0._sceneCtrl02Comp:SetSpineMat(tostring(arg_5_1.id), nil)
 	end
 end
 
-function slot0._onSpineMaterialChange(slot0, slot1, slot2)
-	if slot0._sceneCtrl02Comp and not slot0._deadIdDict[slot1] then
-		slot0._sceneCtrl02Comp:SetSpineMat(tostring(slot1), slot2)
+function var_0_0._onSpineMaterialChange(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0._sceneCtrl02Comp and not arg_6_0._deadIdDict[arg_6_1] then
+		arg_6_0._sceneCtrl02Comp:SetSpineMat(tostring(arg_6_1), arg_6_2)
 	end
 end
 
-function slot0._beforeDeadEffect(slot0, slot1)
-	slot0._deadIdDict[slot1] = true
+function var_0_0._beforeDeadEffect(arg_7_0, arg_7_1)
+	arg_7_0._deadIdDict[arg_7_1] = true
 
-	slot0._sceneCtrl02Comp:SetSpineMat(tostring(slot1), nil)
+	arg_7_0._sceneCtrl02Comp:SetSpineMat(tostring(arg_7_1), nil)
 end
 
-function slot0._beforePlayUniqueSkill(slot0, slot1)
-	if slot0._sceneCtrl02Comp then
-		slot0._sceneCtrl02Comp.enabled = false
+function var_0_0._beforePlayUniqueSkill(arg_8_0, arg_8_1)
+	if arg_8_0._sceneCtrl02Comp then
+		arg_8_0._sceneCtrl02Comp.enabled = false
 	end
 end
 
-function slot0._afterPlayUniqueSkill(slot0, slot1)
-	if slot0._sceneCtrl02Comp then
-		slot0._sceneCtrl02Comp.enabled = true
+function var_0_0._afterPlayUniqueSkill(arg_9_0, arg_9_1)
+	if arg_9_0._sceneCtrl02Comp then
+		arg_9_0._sceneCtrl02Comp.enabled = true
 	end
 end
 
-function slot0._onEndFight(slot0)
-	if slot0._sceneCtrl02Comp then
-		slot0._sceneCtrl02Comp.enabled = false
+function var_0_0._onEndFight(arg_10_0)
+	if arg_10_0._sceneCtrl02Comp then
+		arg_10_0._sceneCtrl02Comp.enabled = false
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._sceneCtrl02Comp = nil
+function var_0_0.onSceneClose(arg_11_0)
+	arg_11_0._sceneCtrl02Comp = nil
 
-	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, slot0._beforePlayUniqueSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, slot0._afterPlayUniqueSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, slot0._beforeDeadEffect, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, slot0._onSpineMaterialChange, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeEntityDestroy, slot0._beforeEntityDestroy, slot0)
-	FightController.instance:unregisterCallback(FightEvent.PushEndFight, slot0._onEndFight, slot0)
+	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, arg_11_0._beforePlayUniqueSkill, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, arg_11_0._afterPlayUniqueSkill, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_11_0._beforeDeadEffect, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_11_0._onSpineMaterialChange, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_11_0._onSpineLoaded, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforeEntityDestroy, arg_11_0._beforeEntityDestroy, arg_11_0)
+	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_11_0._onEndFight, arg_11_0)
 end
 
-return slot0
+return var_0_0

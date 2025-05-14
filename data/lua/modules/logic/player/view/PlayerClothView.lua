@@ -1,7 +1,7 @@
-module("modules.logic.player.view.PlayerClothView", package.seeall)
+﻿module("modules.logic.player.view.PlayerClothView", package.seeall)
 
-slot0 = class("PlayerClothView", BaseView)
-slot1 = {
+local var_0_0 = class("PlayerClothView", BaseView)
+local var_0_1 = {
 	"use",
 	"move",
 	"compose",
@@ -11,201 +11,223 @@ slot1 = {
 	"death"
 }
 
-function slot0.onInitView(slot0)
-	slot0._imgBg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._skillGO = gohelper.findChild(slot0.viewGO, "#scroll_skills")
-	slot0._txtcn = gohelper.findChildText(slot0.viewGO, "right/info/skill/#txt_skillname")
-	slot0._txten = gohelper.findChildText(slot0.viewGO, "right/info/skill/#txt_skillname/#txt_skillnameen")
-	slot0._txtDesc = gohelper.findChildText(slot0.viewGO, "right/#scroll_info/Viewport/Content/#txt_skilldesc")
-	slot0._furiousGO = gohelper.findChild(slot0.viewGO, "right/#scroll_info/Viewport/Content/furious")
-	slot0._aspellGO = gohelper.findChild(slot0.viewGO, "right/#scroll_info/Viewport/Content/aspell")
-	slot0._useBtnGO = gohelper.findChild(slot0.viewGO, "right/#btn_use")
-	slot0._inUsingGO = gohelper.findChild(slot0.viewGO, "right/#go_inuse")
-	slot0._clickUseThis = gohelper.getClick(slot0._useBtnGO)
-	slot0._txtFuriousPropList = slot0:getUserDataTb_()
-	slot0._furiousPropGOList = slot0:getUserDataTb_()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imgBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._skillGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_skills")
+	arg_1_0._txtcn = gohelper.findChildText(arg_1_0.viewGO, "right/info/skill/#txt_skillname")
+	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "right/info/skill/#txt_skillname/#txt_skillnameen")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_info/Viewport/Content/#txt_skilldesc")
+	arg_1_0._furiousGO = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_info/Viewport/Content/furious")
+	arg_1_0._aspellGO = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_info/Viewport/Content/aspell")
+	arg_1_0._useBtnGO = gohelper.findChild(arg_1_0.viewGO, "right/#btn_use")
+	arg_1_0._inUsingGO = gohelper.findChild(arg_1_0.viewGO, "right/#go_inuse")
+	arg_1_0._clickUseThis = gohelper.getClick(arg_1_0._useBtnGO)
+	arg_1_0._txtFuriousPropList = arg_1_0:getUserDataTb_()
+	arg_1_0._furiousPropGOList = arg_1_0:getUserDataTb_()
 
-	for slot4 = 1, #uv0 do
-		table.insert(slot0._txtFuriousPropList, gohelper.findChildText(slot0.viewGO, string.format("right/#scroll_info/Viewport/Content/furious/furiouslist/#furiousitem%d/#txt_furious", slot4)))
-		table.insert(slot0._furiousPropGOList, gohelper.findChild(slot0.viewGO, string.format("right/#scroll_info/Viewport/Content/furious/furiouslist/#furiousitem%d", slot4)))
+	for iter_1_0 = 1, #var_0_1 do
+		local var_1_0 = string.format("right/#scroll_info/Viewport/Content/furious/furiouslist/#furiousitem%d/#txt_furious", iter_1_0)
+
+		table.insert(arg_1_0._txtFuriousPropList, gohelper.findChildText(arg_1_0.viewGO, var_1_0))
+
+		local var_1_1 = string.format("right/#scroll_info/Viewport/Content/furious/furiouslist/#furiousitem%d", iter_1_0)
+
+		table.insert(arg_1_0._furiousPropGOList, gohelper.findChild(arg_1_0.viewGO, var_1_1))
 	end
 
-	slot0._txtFuriousDesc = gohelper.findChildText(slot0.viewGO, "right/#scroll_info/Viewport/Content/furious/#txt_furiousdesc")
-	slot0._txtAspellList = {}
+	arg_1_0._txtFuriousDesc = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_info/Viewport/Content/furious/#txt_furiousdesc")
+	arg_1_0._txtAspellList = {}
 
-	for slot4 = 1, 3 do
-		table.insert(slot0._txtAspellList, gohelper.findChildText(slot0.viewGO, string.format("right/#scroll_info/Viewport/Content/aspell/aspells/#go_aspellitem%d/aspelldesc", slot4)))
+	for iter_1_1 = 1, 3 do
+		local var_1_2 = string.format("right/#scroll_info/Viewport/Content/aspell/aspells/#go_aspellitem%d/aspelldesc", iter_1_1)
+
+		table.insert(arg_1_0._txtAspellList, gohelper.findChildText(arg_1_0.viewGO, var_1_2))
 	end
 
-	slot0._modelList = {}
+	arg_1_0._modelList = {}
 
-	for slot4, slot5 in ipairs(lua_cloth.configList) do
-		slot0._modelList[slot5.id] = gohelper.findChild(slot0.viewGO, "model/" .. slot5.id)
+	for iter_1_2, iter_1_3 in ipairs(lua_cloth.configList) do
+		local var_1_3 = gohelper.findChild(arg_1_0.viewGO, "model/" .. iter_1_3.id)
+
+		arg_1_0._modelList[iter_1_3.id] = var_1_3
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._clickUseThis:AddClickListener(slot0._onClickUse, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._clickUseThis:AddClickListener(arg_2_0._onClickUse, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._clickUseThis:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._clickUseThis:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	slot0._curGroupModel = slot0.viewParam and slot0.viewParam.groupModel or HeroGroupModel.instance
-	slot0._useCallback = slot0.viewParam and slot0.viewParam.useCallback or nil
-	slot0._useCallbackObj = slot0.viewParam and slot0.viewParam.useCallbackObj or nil
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0._curGroupModel = arg_4_0.viewParam and arg_4_0.viewParam.groupModel or HeroGroupModel.instance
+	arg_4_0._useCallback = arg_4_0.viewParam and arg_4_0.viewParam.useCallback or nil
+	arg_4_0._useCallbackObj = arg_4_0.viewParam and arg_4_0.viewParam.useCallbackObj or nil
 
-	PlayerClothListViewModel.instance:setGroupModel(slot0._curGroupModel)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnModifyHeroGroup, slot0._onModifyHeroGroup, slot0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, slot0._onSnapshotSaveSucc, slot0)
-	PlayerController.instance:registerCallback(PlayerEvent.SelectCloth, slot0._onSelectCloth, slot0)
-	slot0._imgBg:LoadImage(ResUrl.getPlayerClothIcon("full/zhujuejineng_guangyun_manual"))
-	slot0:_initGroupInfo()
+	PlayerClothListViewModel.instance:setGroupModel(arg_4_0._curGroupModel)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnModifyHeroGroup, arg_4_0._onModifyHeroGroup, arg_4_0)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, arg_4_0._onSnapshotSaveSucc, arg_4_0)
+	PlayerController.instance:registerCallback(PlayerEvent.SelectCloth, arg_4_0._onSelectCloth, arg_4_0)
+	arg_4_0._imgBg:LoadImage(ResUrl.getPlayerClothIcon("full/zhujuejineng_guangyun_manual"))
+	arg_4_0:_initGroupInfo()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_formation_scale)
 end
 
-function slot0._initGroupInfo(slot0)
-	slot1 = 0
+function var_0_0._initGroupInfo(arg_5_0)
+	local var_5_0 = 0
 
-	if slot0.viewParam and slot0.viewParam.isTip then
-		slot1 = slot0.viewParam.id
+	if arg_5_0.viewParam and arg_5_0.viewParam.isTip then
+		var_5_0 = arg_5_0.viewParam.id
 	else
-		slot3 = lua_cloth.configList[1].id
+		local var_5_1 = arg_5_0._curGroupModel:getCurGroupMO()
+		local var_5_2 = lua_cloth.configList[1].id
 
-		if slot0._curGroupModel:getCurGroupMO() and slot2.clothId and slot2 and slot2.clothId > 0 then
-			slot3 = slot2.clothId
+		if var_5_1 and var_5_1.clothId and var_5_1 and var_5_1.clothId > 0 then
+			var_5_2 = var_5_1.clothId
 		end
 
-		slot1 = PlayerClothModel.instance:getSpEpisodeClothID() or slot3
+		var_5_0 = PlayerClothModel.instance:getSpEpisodeClothID() or var_5_2
 	end
 
-	PlayerController.instance:dispatchEvent(PlayerEvent.SelectCloth, slot1)
+	PlayerController.instance:dispatchEvent(PlayerEvent.SelectCloth, var_5_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_initGroupInfo()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:_initGroupInfo()
 end
 
-function slot0.onCloseFinish(slot0)
-	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnModifyHeroGroup, slot0._onModifyHeroGroup, slot0)
-	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnSnapshotSaveSucc, slot0._onSnapshotSaveSucc, slot0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.SelectCloth, slot0._onSelectCloth, slot0)
-	slot0._imgBg:UnLoadImage()
+function var_0_0.onCloseFinish(arg_7_0)
+	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnModifyHeroGroup, arg_7_0._onModifyHeroGroup, arg_7_0)
+	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnSnapshotSaveSucc, arg_7_0._onSnapshotSaveSucc, arg_7_0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.SelectCloth, arg_7_0._onSelectCloth, arg_7_0)
+	arg_7_0._imgBg:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._scrollRectWrap = nil
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0._scrollRectWrap = nil
 end
 
-function slot0._onSelectCloth(slot0, slot1)
-	slot0._clothId = slot1
-	slot0._clothMO = PlayerClothModel.instance:getById(slot1)
-	slot0._clothCO = lua_cloth.configDict[slot1]
+function var_0_0._onSelectCloth(arg_9_0, arg_9_1)
+	arg_9_0._clothId = arg_9_1
+	arg_9_0._clothMO = PlayerClothModel.instance:getById(arg_9_1)
+	arg_9_0._clothCO = lua_cloth.configDict[arg_9_1]
 
-	slot0:_refreshView()
+	arg_9_0:_refreshView()
 end
 
-function slot0._refreshView(slot0)
-	slot0:_updateInfo()
+function var_0_0._refreshView(arg_10_0)
+	arg_10_0:_updateInfo()
 
-	slot1 = slot0._clothMO and slot0._clothMO.level or 1
-	slot2 = slot0.viewParam and slot0.viewParam.isTip
+	local var_10_0 = arg_10_0._clothMO and arg_10_0._clothMO.level or 1
+	local var_10_1 = arg_10_0.viewParam and arg_10_0.viewParam.isTip
 
-	if PlayerClothModel.instance:getSpEpisodeClothID() or slot2 then
-		slot1 = 1
+	if PlayerClothModel.instance:getSpEpisodeClothID() or var_10_1 then
+		var_10_0 = 1
 	end
 
-	slot0._levelCO = lua_cloth_level.configDict[slot0._clothId] and slot3[slot1]
+	local var_10_2 = lua_cloth_level.configDict[arg_10_0._clothId]
 
-	gohelper.setActive(slot0._furiousGO, slot0._levelCO ~= nil)
-	gohelper.setActive(slot0._aspellGO, slot0._levelCO ~= nil)
-	gohelper.setActive(slot0._skillGO, not slot2)
+	arg_10_0._levelCO = var_10_2 and var_10_2[var_10_0]
 
-	slot5 = slot0._curGroupModel:getCurGroupMO() and slot4.clothId == slot0._clothId
+	gohelper.setActive(arg_10_0._furiousGO, arg_10_0._levelCO ~= nil)
+	gohelper.setActive(arg_10_0._aspellGO, arg_10_0._levelCO ~= nil)
+	gohelper.setActive(arg_10_0._skillGO, not var_10_1)
 
-	gohelper.setActive(slot0._useBtnGO, slot0._levelCO ~= nil and not slot2 and not slot5)
-	gohelper.setActive(slot0._inUsingGO, slot0._levelCO ~= nil and not slot2 and slot5)
+	local var_10_3 = arg_10_0._curGroupModel:getCurGroupMO()
+	local var_10_4 = var_10_3 and var_10_3.clothId == arg_10_0._clothId
 
-	if slot0._levelCO then
-		slot0:_updateLevelInfo()
+	gohelper.setActive(arg_10_0._useBtnGO, arg_10_0._levelCO ~= nil and not var_10_1 and not var_10_4)
+	gohelper.setActive(arg_10_0._inUsingGO, arg_10_0._levelCO ~= nil and not var_10_1 and var_10_4)
+
+	if arg_10_0._levelCO then
+		arg_10_0:_updateLevelInfo()
 	else
-		logError("clothId = " .. slot0._clothId .. " level " .. slot1 .. "配置不存在")
+		logError("clothId = " .. arg_10_0._clothId .. " level " .. var_10_0 .. "配置不存在")
 	end
 end
 
-function slot0._updateInfo(slot0)
-	slot1 = GameUtil.utf8sub(slot0._clothCO.name, 1, 1)
-	slot2 = ""
+function var_0_0._updateInfo(arg_11_0)
+	local var_11_0 = GameUtil.utf8sub(arg_11_0._clothCO.name, 1, 1)
+	local var_11_1 = ""
 
-	if GameUtil.utf8len(slot0._clothCO.name) >= 2 then
-		slot2 = string.format("<size=55>%s</size>", GameUtil.utf8sub(slot0._clothCO.name, 2, GameUtil.utf8len(slot0._clothCO.name) - 1))
+	if GameUtil.utf8len(arg_11_0._clothCO.name) >= 2 then
+		var_11_1 = string.format("<size=55>%s</size>", GameUtil.utf8sub(arg_11_0._clothCO.name, 2, GameUtil.utf8len(arg_11_0._clothCO.name) - 1))
 	end
 
-	slot0._txtcn.text = slot1 .. slot2
-	slot0._txten.text = slot0._clothCO.enname
-	slot0._txtDesc.text = slot0._clothCO.desc
+	arg_11_0._txtcn.text = var_11_0 .. var_11_1
+	arg_11_0._txten.text = arg_11_0._clothCO.enname
+	arg_11_0._txtDesc.text = arg_11_0._clothCO.desc
 
-	for slot6, slot7 in ipairs(lua_cloth.configList) do
-		gohelper.setActive(slot0._modelList[slot7.id], slot7.id == slot0._clothCO.id)
+	for iter_11_0, iter_11_1 in ipairs(lua_cloth.configList) do
+		local var_11_2 = arg_11_0._modelList[iter_11_1.id]
+
+		gohelper.setActive(var_11_2, iter_11_1.id == arg_11_0._clothCO.id)
 	end
 end
 
-function slot0._updateLevelInfo(slot0)
-	for slot4, slot5 in ipairs(uv0) do
-		slot7 = false
+function var_0_0._updateLevelInfo(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(var_0_1) do
+		local var_12_0 = arg_12_0._levelCO[iter_12_1]
+		local var_12_1 = false
+		local var_12_2 = type(var_12_0)
 
-		if type(slot0._levelCO[slot5]) == "string" then
-			slot7 = not string.nilorempty(slot6)
-		elseif slot8 == "number" then
-			slot7 = slot6 > 0
+		if var_12_2 == "string" then
+			var_12_1 = not string.nilorempty(var_12_0)
+		elseif var_12_2 == "number" then
+			var_12_1 = var_12_0 > 0
 		end
 
-		gohelper.setActive(slot0._furiousPropGOList[slot4], slot7)
+		gohelper.setActive(arg_12_0._furiousPropGOList[iter_12_0], var_12_1)
 
-		if slot7 then
-			if slot5 == "recover" then
-				slot6 = GameUtil.splitString2(slot0._levelCO.recover) and slot9[1] and slot9[1][2] or slot0._levelCO.recover
+		if var_12_1 then
+			if iter_12_1 == "recover" then
+				local var_12_3 = GameUtil.splitString2(arg_12_0._levelCO.recover)
+
+				var_12_0 = var_12_3 and var_12_3[1] and var_12_3[1][2] or arg_12_0._levelCO.recover
 			end
 
-			slot0._txtFuriousPropList[slot4].text = "+" .. slot6
+			arg_12_0._txtFuriousPropList[iter_12_0].text = "+" .. var_12_0
 		end
 	end
 
-	slot0._txtFuriousDesc.text = slot0._levelCO.desc
+	arg_12_0._txtFuriousDesc.text = arg_12_0._levelCO.desc
 
-	for slot4 = 1, 3 do
-		gohelper.setActive(slot0._txtAspellList[slot4].transform.parent.gameObject, lua_skill.configDict[slot0._levelCO["skill" .. slot4]] ~= nil)
+	for iter_12_2 = 1, 3 do
+		local var_12_4 = arg_12_0._levelCO["skill" .. iter_12_2]
+		local var_12_5 = lua_skill.configDict[var_12_4]
 
-		if slot6 then
-			slot0._txtAspellList[slot4].text = FightConfig.instance:getSkillEffectDesc(nil, slot6)
-		elseif slot5 > 0 then
-			slot0._txtAspellList[slot4].text = ""
+		gohelper.setActive(arg_12_0._txtAspellList[iter_12_2].transform.parent.gameObject, var_12_5 ~= nil)
 
-			logError("技能不存在：" .. slot5)
+		if var_12_5 then
+			arg_12_0._txtAspellList[iter_12_2].text = FightConfig.instance:getSkillEffectDesc(nil, var_12_5)
+		elseif var_12_4 > 0 then
+			arg_12_0._txtAspellList[iter_12_2].text = ""
+
+			logError("技能不存在：" .. var_12_4)
 		end
 	end
 end
 
-function slot0._onModifyHeroGroup(slot0)
+function var_0_0._onModifyHeroGroup(arg_13_0)
 	GameFacade.showToast(ToastEnum.PlayerCloth)
 end
 
-function slot0._onSnapshotSaveSucc(slot0)
-	slot0:_refreshView()
+function var_0_0._onSnapshotSaveSucc(arg_14_0)
+	arg_14_0:_refreshView()
 	GameFacade.showToast(ToastEnum.PlayerCloth)
 end
 
-function slot0._onClickUse(slot0)
-	slot0._curGroupModel:replaceCloth(slot0._clothId)
+function var_0_0._onClickUse(arg_15_0)
+	arg_15_0._curGroupModel:replaceCloth(arg_15_0._clothId)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-	slot0:_refreshView()
-	slot0._curGroupModel:saveCurGroupData()
+	arg_15_0:_refreshView()
+	arg_15_0._curGroupModel:saveCurGroupData()
 
-	if slot0._useCallback then
-		slot0._useCallback(slot0._useCallbackObj)
+	if arg_15_0._useCallback then
+		arg_15_0._useCallback(arg_15_0._useCallbackObj)
 	end
 end
 
-return slot0
+return var_0_0

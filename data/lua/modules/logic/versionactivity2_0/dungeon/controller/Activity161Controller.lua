@@ -1,149 +1,166 @@
-module("modules.logic.versionactivity2_0.dungeon.controller.Activity161Controller", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.controller.Activity161Controller", package.seeall)
 
-slot0 = class("Activity161Controller", BaseController)
+local var_0_0 = class("Activity161Controller", BaseController)
 
-function slot0.onInit(slot0)
-	slot0.actId = Activity161Model.instance:getActId()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.actId = Activity161Model.instance:getActId()
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshGraffitiCdInfo, slot0)
+function var_0_0.reInit(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.refreshGraffitiCdInfo, arg_4_0)
 
-	slot0.isRunCdTask = false
+	arg_4_0.isRunCdTask = false
 end
 
-function slot0.initAct161Info(slot0, slot1, slot2, slot3, slot4)
-	if ActivityModel.instance:isActOnLine(Activity161Model.instance:getActId()) then
-		Activity161Rpc.instance:sendAct161RefreshElementsRequest(slot0.actId)
-		Activity161Rpc.instance:sendAct161GetInfoRequest(slot5, slot3, slot4)
+function var_0_0.initAct161Info(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = Activity161Model.instance:getActId()
+
+	if ActivityModel.instance:isActOnLine(var_5_0) then
+		Activity161Rpc.instance:sendAct161RefreshElementsRequest(arg_5_0.actId)
+		Activity161Rpc.instance:sendAct161GetInfoRequest(var_5_0, arg_5_3, arg_5_4)
 	else
-		if slot1 then
+		if arg_5_1 then
 			GameFacade.showToast(ToastEnum.ActivityNotOpen)
 		end
 
-		if slot2 and slot3 then
-			slot3(slot4)
+		if arg_5_2 and arg_5_3 then
+			arg_5_3(arg_5_4)
 		end
 	end
 end
 
-function slot0.openGraffitiEnterView(slot0)
-	Activity161Config.instance:initGraffitiPicMap(slot0.actId)
+function var_0_0.openGraffitiEnterView(arg_6_0)
+	Activity161Config.instance:initGraffitiPicMap(arg_6_0.actId)
 	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonMapGraffitiEnterView)
 end
 
-function slot0.openGraffitiView(slot0, slot1)
-	Activity161Config.instance:initGraffitiPicMap(slot0.actId)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonGraffitiView, slot1 or {
+function var_0_0.openGraffitiView(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1 or {
 		actId = Activity161Model.instance:getActId()
-	})
+	}
+
+	Activity161Config.instance:initGraffitiPicMap(arg_7_0.actId)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonGraffitiView, var_7_0)
 end
 
-function slot0.openGraffitiDrawView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonGraffitiDrawView, slot1)
+function var_0_0.openGraffitiDrawView(arg_8_0, arg_8_1)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonGraffitiDrawView, arg_8_1)
 end
 
-function slot0.checkGraffitiCdInfo(slot0)
-	slot0.inCdMoList = Activity161Model.instance:getInCdGraffiti()
-	slot0.isRunCdTask = slot0.isRunCdTask or false
+function var_0_0.checkGraffitiCdInfo(arg_9_0)
+	arg_9_0.inCdMoList = Activity161Model.instance:getInCdGraffiti()
+	arg_9_0.isRunCdTask = arg_9_0.isRunCdTask or false
 
-	if #slot0.inCdMoList > 0 and not slot0.isRunCdTask then
-		TaskDispatcher.cancelTask(slot0.refreshGraffitiCdInfo, slot0)
-		TaskDispatcher.runRepeat(slot0.refreshGraffitiCdInfo, slot0, 1)
+	if #arg_9_0.inCdMoList > 0 and not arg_9_0.isRunCdTask then
+		TaskDispatcher.cancelTask(arg_9_0.refreshGraffitiCdInfo, arg_9_0)
+		TaskDispatcher.runRepeat(arg_9_0.refreshGraffitiCdInfo, arg_9_0, 1)
 
-		slot0.isRunCdTask = true
-	elseif #slot0.inCdMoList == 0 and slot0.isRunCdTask then
-		TaskDispatcher.cancelTask(slot0.refreshGraffitiCdInfo, slot0)
+		arg_9_0.isRunCdTask = true
+	elseif #arg_9_0.inCdMoList == 0 and arg_9_0.isRunCdTask then
+		TaskDispatcher.cancelTask(arg_9_0.refreshGraffitiCdInfo, arg_9_0)
 
-		slot0.isRunCdTask = false
+		arg_9_0.isRunCdTask = false
 	end
 end
 
-function slot0.refreshGraffitiCdInfo(slot0)
-	slot1 = Activity161Model.instance:getInCdGraffiti()
-	slot0.inCdMoList = slot1
+function var_0_0.refreshGraffitiCdInfo(arg_10_0)
+	local var_10_0 = Activity161Model.instance:getInCdGraffiti()
+	local var_10_1 = Activity161Model.instance:getArriveCdGraffitiList(arg_10_0.inCdMoList, var_10_0)
 
-	if #Activity161Model.instance:getArriveCdGraffitiList(slot0.inCdMoList, slot1) > 0 then
-		for slot6, slot7 in pairs(slot2) do
-			Activity161Model.instance:setGraffitiState(slot7.id, Activity161Enum.graffitiState.ToUnlock)
-			uv0.instance:dispatchEvent(Activity161Event.ToUnlockGraffiti, slot7)
+	arg_10_0.inCdMoList = var_10_0
+
+	if #var_10_1 > 0 then
+		for iter_10_0, iter_10_1 in pairs(var_10_1) do
+			Activity161Model.instance:setGraffitiState(iter_10_1.id, Activity161Enum.graffitiState.ToUnlock)
+			var_0_0.instance:dispatchEvent(Activity161Event.ToUnlockGraffiti, iter_10_1)
 		end
 
 		Activity161Model.instance:setNeedRefreshNewElementsState(true)
-		Activity161Rpc.instance:sendAct161RefreshElementsRequest(slot0.actId)
-	elseif #slot1 == 0 then
-		TaskDispatcher.cancelTask(slot0.refreshGraffitiCdInfo, slot0)
+		Activity161Rpc.instance:sendAct161RefreshElementsRequest(arg_10_0.actId)
+	elseif #var_10_0 == 0 then
+		TaskDispatcher.cancelTask(arg_10_0.refreshGraffitiCdInfo, arg_10_0)
 
-		slot0.isRunCdTask = false
-		slot0.inCdMoList = {}
+		arg_10_0.isRunCdTask = false
+		arg_10_0.inCdMoList = {}
 
 		Activity161Model.instance:setNeedRefreshNewElementsState(false)
-	elseif #slot1 > 0 then
-		uv0.instance:dispatchEvent(Activity161Event.GraffitiCdRefresh, slot1)
+	elseif #var_10_0 > 0 then
+		var_0_0.instance:dispatchEvent(Activity161Event.GraffitiCdRefresh, var_10_0)
 	end
 end
 
-function slot0.jumpToElement(slot0, slot1)
+function var_0_0.jumpToElement(arg_11_0, arg_11_1)
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_0DungeonGraffitiView) then
 		ViewMgr.instance:closeView(ViewName.VersionActivity2_0DungeonGraffitiView)
 		ViewMgr.instance:closeView(ViewName.VersionActivity2_0DungeonMapGraffitiEnterView)
-		slot0:dispatchEvent(Activity161Event.CloseGraffitiEnterView)
-		VersionActivity2_0DungeonController.instance:dispatchEvent(VersionActivity2_0DungeonEvent.FocusElement, slot1.config.mainElementId)
+		arg_11_0:dispatchEvent(Activity161Event.CloseGraffitiEnterView)
+
+		local var_11_0 = arg_11_1.config.mainElementId
+
+		VersionActivity2_0DungeonController.instance:dispatchEvent(VersionActivity2_0DungeonEvent.FocusElement, var_11_0)
 	end
 end
 
-function slot0.getRecentFinishGraffiti(slot0)
-	slot2 = {}
+function var_0_0.getRecentFinishGraffiti(arg_12_0)
+	local var_12_0 = Activity161Model.instance.graffitiInfoMap
+	local var_12_1 = {}
 
-	for slot6, slot7 in pairs(Activity161Model.instance.graffitiInfoMap) do
-		if slot7.config.dialogGroupId > 0 and slot7.state == Activity161Enum.graffitiState.IsFinished then
-			table.insert(slot2, slot7)
+	for iter_12_0, iter_12_1 in pairs(var_12_0) do
+		if iter_12_1.config.dialogGroupId > 0 and iter_12_1.state == Activity161Enum.graffitiState.IsFinished then
+			table.insert(var_12_1, iter_12_1)
 		end
 	end
 
-	if #slot2 > 0 then
-		return slot2[#slot2]
+	if #var_12_1 > 0 then
+		return var_12_1[#var_12_1]
 	end
 end
 
-function slot0.getLocalKey(slot0)
-	return "GraffitiFinishDialog" .. "#" .. tostring(slot0.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getLocalKey(arg_13_0)
+	return "GraffitiFinishDialog" .. "#" .. tostring(arg_13_0.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-function slot0.checkRencentGraffitiHasDialog(slot0)
-	slot1 = PlayerPrefsHelper.getNumber(slot0:getLocalKey(), 0)
+function var_0_0.checkRencentGraffitiHasDialog(arg_14_0)
+	local var_14_0 = PlayerPrefsHelper.getNumber(arg_14_0:getLocalKey(), 0)
+	local var_14_1 = arg_14_0:getRecentFinishGraffiti()
 
-	if slot0:getRecentFinishGraffiti() and slot1 ~= 0 and slot1 == slot2.config.id then
+	if var_14_1 and var_14_0 ~= 0 and var_14_0 == var_14_1.config.id then
 		return true
 	end
 
-	return false, slot2
+	return false, var_14_1
 end
 
-function slot0.saveRecentGraffitiDialog(slot0)
-	slot1, slot2 = slot0:checkRencentGraffitiHasDialog()
+function var_0_0.saveRecentGraffitiDialog(arg_15_0)
+	local var_15_0, var_15_1 = arg_15_0:checkRencentGraffitiHasDialog()
 
-	if not slot1 and slot2 then
-		PlayerPrefsHelper.setNumber(slot0:getLocalKey(), slot2.config.id)
+	if not var_15_0 and var_15_1 then
+		PlayerPrefsHelper.setNumber(arg_15_0:getLocalKey(), var_15_1.config.id)
 	end
 end
 
-function slot0.checkHasUnDoElement(slot0)
-	RedDotRpc.instance:clientAddRedDotGroupList({
+function var_0_0.checkHasUnDoElement(arg_16_0)
+	local var_16_0 = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement()
+	local var_16_1 = var_16_0 and var_16_0 > 0 and 1 or 0
+	local var_16_2 = {
 		{
 			uid = 0,
 			id = RedDotEnum.DotNode.V2a0DungeonHasUnDoElement,
-			value = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement() and slot1 > 0 and 1 or 0
+			value = var_16_1
 		}
-	}, true)
+	}
+
+	RedDotRpc.instance:clientAddRedDotGroupList(var_16_2, true)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

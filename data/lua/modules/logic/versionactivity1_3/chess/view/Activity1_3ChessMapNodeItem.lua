@@ -1,269 +1,299 @@
-module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapNodeItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapNodeItem", package.seeall)
 
-slot0 = class("Activity1_3ChessMapNodeItem", LuaCompBase)
-slot0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_role2/v1a3_role2_mapviewstageitem.prefab"
-slot1 = {
+local var_0_0 = class("Activity1_3ChessMapNodeItem", LuaCompBase)
+
+var_0_0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_role2/v1a3_role2_mapviewstageitem.prefab"
+
+local var_0_1 = {
 	open = 2,
 	passIncompletly = 3,
 	lock = 1,
 	pass = 4
 }
-slot2 = "#E3C479"
-slot3 = "#FFFFFF"
+local var_0_2 = "#E3C479"
+local var_0_3 = "#FFFFFF"
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._goRoot = gohelper.findChild(slot1, "Root")
-	slot0._imagePoint = gohelper.findChildImage(slot1, "Root/#image_Point")
-	slot0._imageStageFinishedBG = gohelper.findChildImage(slot1, "Root/unlock/#image_StageFinishedBG")
-	slot0._txtStageName = gohelper.findChildText(slot1, "Root/unlock/Info/#txt_StageName")
-	slot0._txtStageNum = gohelper.findChildText(slot1, "Root/unlock/Info/#txt_StageName/#txt_StageNum")
-	slot0._imageNoStar = gohelper.findChildImage(slot1, "Root/unlock/Info/#txt_StageName/#image_NoStar")
-	slot0._imageHasStar = gohelper.findChildImage(slot1, "Root/unlock/Info/#txt_StageName/#image_Star")
-	slot0._btnClick = gohelper.findChildClick(slot1, "Root/unlock/#btn_Click")
-	slot0._btnReview = gohelper.findChildButtonWithAudio(slot1, "Root/unlock/Info/#txt_StageName/#btn_Review")
-	slot0._goUnLock = gohelper.findChild(slot1, "Root/unlock")
-	slot0._goChess = gohelper.findChild(slot1, "Root/unlock/image_chess")
-	slot3 = typeof(UnityEngine.Animator)
-	slot0._nodeItemAnimator = slot1:GetComponent(slot3)
-	slot0._chessAnimator = gohelper.findChild(slot1, "Root/unlock/image_chess/ani"):GetComponent(slot3)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._goRoot = gohelper.findChild(arg_1_1, "Root")
+	arg_1_0._imagePoint = gohelper.findChildImage(arg_1_1, "Root/#image_Point")
+	arg_1_0._imageStageFinishedBG = gohelper.findChildImage(arg_1_1, "Root/unlock/#image_StageFinishedBG")
+	arg_1_0._txtStageName = gohelper.findChildText(arg_1_1, "Root/unlock/Info/#txt_StageName")
+	arg_1_0._txtStageNum = gohelper.findChildText(arg_1_1, "Root/unlock/Info/#txt_StageName/#txt_StageNum")
+	arg_1_0._imageNoStar = gohelper.findChildImage(arg_1_1, "Root/unlock/Info/#txt_StageName/#image_NoStar")
+	arg_1_0._imageHasStar = gohelper.findChildImage(arg_1_1, "Root/unlock/Info/#txt_StageName/#image_Star")
+	arg_1_0._btnClick = gohelper.findChildClick(arg_1_1, "Root/unlock/#btn_Click")
+	arg_1_0._btnReview = gohelper.findChildButtonWithAudio(arg_1_1, "Root/unlock/Info/#txt_StageName/#btn_Review")
+	arg_1_0._goUnLock = gohelper.findChild(arg_1_1, "Root/unlock")
+	arg_1_0._goChess = gohelper.findChild(arg_1_1, "Root/unlock/image_chess")
+
+	local var_1_0 = gohelper.findChild(arg_1_1, "Root/unlock/image_chess/ani")
+	local var_1_1 = typeof(UnityEngine.Animator)
+
+	arg_1_0._nodeItemAnimator = arg_1_1:GetComponent(var_1_1)
+	arg_1_0._chessAnimator = var_1_0:GetComponent(var_1_1)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnClick:AddClickListener(slot0._btnClickOnClick, slot0)
-	slot0._btnReview:AddClickListener(slot0._btnReviewOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
+	arg_2_0._btnReview:AddClickListener(arg_2_0._btnReviewOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	if slot0._btnClick then
-		slot0._btnClick:RemoveClickListener()
-		slot0._btnReview:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	if arg_3_0._btnClick then
+		arg_3_0._btnClick:RemoveClickListener()
+		arg_3_0._btnReview:RemoveClickListener()
 	end
 end
 
-function slot0._btnClickOnClick(slot0)
-	if not slot0._config then
+function var_0_0._btnClickOnClick(arg_4_0)
+	if not arg_4_0._config then
 		return
 	end
 
-	if not slot0._clickCallback then
+	if not arg_4_0._clickCallback then
 		return
 	end
 
-	slot0._clickCallback(slot0._clickCbObj, slot0._config.id)
+	arg_4_0._clickCallback(arg_4_0._clickCbObj, arg_4_0._config.id)
 end
 
-function slot0._btnReviewOnClick(slot0)
-	if slot0._config then
-		Activity1_3ChessController.instance:openStoryView(slot0._config.id)
+function var_0_0._btnReviewOnClick(arg_5_0)
+	if arg_5_0._config then
+		Activity1_3ChessController.instance:openStoryView(arg_5_0._config.id)
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	return
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_7_0, arg_7_1)
+	return
 end
 
-function slot0.setCfg(slot0, slot1)
-	slot0._config = slot1
-	slot0._isLock = true
+function var_0_0.setCfg(arg_8_0, arg_8_1)
+	arg_8_0._config = arg_8_1
+	arg_8_0._isLock = true
 end
 
-function slot0.setClickCallback(slot0, slot1, slot2)
-	slot0._clickCallback = slot1
-	slot0._clickCbObj = slot2
+function var_0_0.setClickCallback(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._clickCallback = arg_9_1
+	arg_9_0._clickCbObj = arg_9_2
 end
 
-function slot0._checkNodeItemState(slot0)
-	if Activity122Model.instance:getEpisodeData(slot0._config.id) then
-		if slot1.star == 2 then
-			return uv0.pass
-		elseif slot1.star == 1 then
-			return uv0.passIncompletly
+function var_0_0._checkNodeItemState(arg_10_0)
+	local var_10_0 = Activity122Model.instance:getEpisodeData(arg_10_0._config.id)
+
+	if var_10_0 then
+		if var_10_0.star == 2 then
+			return var_0_1.pass
+		elseif var_10_0.star == 1 then
+			return var_0_1.passIncompletly
 		else
-			return uv0.open
+			return var_0_1.open
 		end
 	end
 
-	if slot0._config.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(slot0._config.preEpisode) and Activity1_3ChessController.isOpenDay(slot0._config.id) then
-		return uv0.open
+	if arg_10_0._config.preEpisode == 0 or Activity122Model.instance:isEpisodeClear(arg_10_0._config.preEpisode) and Activity1_3ChessController.isOpenDay(arg_10_0._config.id) then
+		return var_0_1.open
 	else
-		return uv0.lock
+		return var_0_1.lock
 	end
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0._config then
-		gohelper.setActive(slot0._goRoot, false)
+function var_0_0.refreshUI(arg_11_0)
+	if not arg_11_0._config then
+		gohelper.setActive(arg_11_0._goRoot, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goRoot, true)
-	slot0:_refreshNodeStateView(slot0:_checkNodeItemState())
+	gohelper.setActive(arg_11_0._goRoot, true)
 
-	slot0._txtStageName.text = slot0._config.name
-	slot0._txtStageNum.text = slot0._config.orderId
+	local var_11_0 = arg_11_0:_checkNodeItemState()
 
-	slot0:_refreshChess()
+	arg_11_0:_refreshNodeStateView(var_11_0)
+
+	arg_11_0._txtStageName.text = arg_11_0._config.name
+	arg_11_0._txtStageNum.text = arg_11_0._config.orderId
+
+	arg_11_0:_refreshChess()
 end
 
-function slot0._refreshNodeStateView(slot0, slot1)
-	if slot0._nodeStateViewAction == nil then
-		slot0._nodeStateViewAction = {
-			[uv0.lock] = slot0._lockUI,
-			[uv0.open] = slot0._unLockUI,
-			[uv0.passIncompletly] = slot0._refreshPassIncompletlyView,
-			[uv0.pass] = slot0._refreshPassView
+function var_0_0._refreshNodeStateView(arg_12_0, arg_12_1)
+	if arg_12_0._nodeStateViewAction == nil then
+		arg_12_0._nodeStateViewAction = {
+			[var_0_1.lock] = arg_12_0._lockUI,
+			[var_0_1.open] = arg_12_0._unLockUI,
+			[var_0_1.passIncompletly] = arg_12_0._refreshPassIncompletlyView,
+			[var_0_1.pass] = arg_12_0._refreshPassView
 		}
 	end
 
-	slot0._nodeStateViewAction[slot1](slot0)
-	UISpriteSetMgr.instance:setActivity1_3ChessSprite(slot0._imagePoint, slot0:_getNodePointSprite(slot1))
+	arg_12_0._nodeStateViewAction[arg_12_1](arg_12_0)
+	UISpriteSetMgr.instance:setActivity1_3ChessSprite(arg_12_0._imagePoint, arg_12_0:_getNodePointSprite(arg_12_1))
 
-	if slot1 == uv0.lock then
+	if arg_12_1 == var_0_1.lock then
 		return
 	end
 
-	slot2 = Activity122Model.instance:getPlayerCacheData()
-	slot3 = slot1 == uv0.open and not slot2["isEpisodeUnlock_" .. slot0._config.id]
+	local var_12_0 = Activity122Model.instance:getPlayerCacheData()
+	local var_12_1 = arg_12_1 == var_0_1.open and not var_12_0["isEpisodeUnlock_" .. arg_12_0._config.id]
 
-	if (slot1 == uv0.pass or slot1 == uv0.passIncompletly) and not slot2["isEpisodePass_" .. slot0._config.id] then
+	if (arg_12_1 == var_0_1.pass or arg_12_1 == var_0_1.passIncompletly) and not var_12_0["isEpisodePass_" .. arg_12_0._config.id] then
 		Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.SetNodePathEffectToPassNode)
-		slot0:delayPlayNodePassAni(0.8)
+		arg_12_0:delayPlayNodePassAni(0.8)
 	end
 
-	if slot3 then
-		gohelper.setActive(slot0._goRoot, false)
-		slot0:delayPlayNodeUnlockAni(1.5)
+	if var_12_1 then
+		gohelper.setActive(arg_12_0._goRoot, false)
+		arg_12_0:delayPlayNodeUnlockAni(1.5)
 	end
 end
 
-function slot0._getNodePointSprite(slot0, slot1, slot2)
-	if slot0._nodeState2SpriteMap == nil then
-		slot0._nodeState2SpriteMap = {
-			[uv0.lock] = JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished,
-			[uv0.open] = Activity1_3ChessEnum.SpriteName.NodeUnFinished,
-			[uv0.passIncompletly] = Activity1_3ChessEnum.SpriteName.NodeFinished,
-			[uv0.pass] = Activity1_3ChessEnum.SpriteName.NodeFinished
+function var_0_0._getNodePointSprite(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_0._nodeState2SpriteMap == nil then
+		arg_13_0._nodeState2SpriteMap = {
+			[var_0_1.lock] = JiaLaBoNaEnum.StatgePiontSpriteName.UnFinished,
+			[var_0_1.open] = Activity1_3ChessEnum.SpriteName.NodeUnFinished,
+			[var_0_1.passIncompletly] = Activity1_3ChessEnum.SpriteName.NodeFinished,
+			[var_0_1.pass] = Activity1_3ChessEnum.SpriteName.NodeFinished
 		}
 	end
 
-	slot3 = slot0._nodeState2SpriteMap[slot1]
-	slot5 = slot0._config.id == Activity122Model.instance:getCurEpisodeId() or slot2
+	local var_13_0 = arg_13_0._nodeState2SpriteMap[arg_13_1]
+	local var_13_1 = Activity122Model.instance:getCurEpisodeId()
+	local var_13_2 = arg_13_0._config.id == var_13_1 or arg_13_2
 
-	if slot2 ~= nil then
-		slot5 = slot2
+	if arg_13_2 ~= nil then
+		var_13_2 = arg_13_2
 	end
 
-	if slot5 then
-		slot3 = Activity1_3ChessEnum.SpriteName.NodeCurrent or slot3
-	end
+	var_13_0 = var_13_2 and Activity1_3ChessEnum.SpriteName.NodeCurrent or var_13_0
 
-	return slot3
+	return var_13_0
 end
 
-function slot0._refreshPassView(slot0)
-	gohelper.setActive(slot0._goUnLock, true)
-	gohelper.setActive(slot0._btnReview.gameObject, true)
-	gohelper.setActive(slot0._imageStageFinishedBG, true)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagePoint, uv0)
-	slot0:_refreshStarState(true)
+function var_0_0._refreshPassView(arg_14_0)
+	gohelper.setActive(arg_14_0._goUnLock, true)
+	gohelper.setActive(arg_14_0._btnReview.gameObject, true)
+	gohelper.setActive(arg_14_0._imageStageFinishedBG, true)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._imagePoint, var_0_2)
+	arg_14_0:_refreshStarState(true)
 end
 
-function slot0._refreshPassIncompletlyView(slot0)
-	gohelper.setActive(slot0._goUnLock, true)
-	gohelper.setActive(slot0._imageStageFinishedBG, true)
-	gohelper.setActive(slot0._btnReview.gameObject, true)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagePoint, uv0)
-	slot0:_refreshStarState(false)
+function var_0_0._refreshPassIncompletlyView(arg_15_0)
+	gohelper.setActive(arg_15_0._goUnLock, true)
+	gohelper.setActive(arg_15_0._imageStageFinishedBG, true)
+	gohelper.setActive(arg_15_0._btnReview.gameObject, true)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0._imagePoint, var_0_2)
+	arg_15_0:_refreshStarState(false)
 end
 
-function slot0._lockUI(slot0)
-	gohelper.setActive(slot0._goUnLock, false)
-	gohelper.setActive(slot0._btnReview.gameObject, false)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagePoint, uv0)
+function var_0_0._lockUI(arg_16_0)
+	gohelper.setActive(arg_16_0._goUnLock, false)
+	gohelper.setActive(arg_16_0._btnReview.gameObject, false)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._imagePoint, var_0_3)
 end
 
-function slot0._unLockUI(slot0)
-	gohelper.setActive(slot0._goUnLock, true)
-	gohelper.setActive(slot0._imageStageFinishedBG, false)
-	gohelper.setActive(slot0._btnReview.gameObject, false)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagePoint, uv0)
-	slot0:_refreshStarState(false)
+function var_0_0._unLockUI(arg_17_0)
+	gohelper.setActive(arg_17_0._goUnLock, true)
+	gohelper.setActive(arg_17_0._imageStageFinishedBG, false)
+	gohelper.setActive(arg_17_0._btnReview.gameObject, false)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._imagePoint, var_0_2)
+	arg_17_0:_refreshStarState(false)
 end
 
-function slot0._refreshStarState(slot0, slot1)
-	gohelper.setActive(slot0._imageNoStar.gameObject, not slot1)
-	gohelper.setActive(slot0._imageHasStar.gameObject, slot1)
+function var_0_0._refreshStarState(arg_18_0, arg_18_1)
+	gohelper.setActive(arg_18_0._imageNoStar.gameObject, not arg_18_1)
+	gohelper.setActive(arg_18_0._imageHasStar.gameObject, arg_18_1)
 end
 
-function slot0._refreshChess(slot0)
-	if Activity122Model.instance:getCurEpisodeId() == 0 then
-		gohelper.setActive(slot0._goChess, slot0._config.id == 1)
+function var_0_0._refreshChess(arg_19_0)
+	local var_19_0 = Activity122Model.instance:getCurEpisodeId()
+
+	if var_19_0 == 0 then
+		gohelper.setActive(arg_19_0._goChess, arg_19_0._config.id == 1)
 	else
-		gohelper.setActive(slot0._goChess, slot0._config.id == slot1)
+		gohelper.setActive(arg_19_0._goChess, arg_19_0._config.id == var_19_0)
 	end
 end
 
-function slot0.delayPlayNodePassAni(slot0, slot1)
-	slot0._nodeStateViewAction[uv0.open](slot0)
-	TaskDispatcher.runDelay(slot0.playNodePassAni, slot0, slot1 or 0.5)
+function var_0_0.delayPlayNodePassAni(arg_20_0, arg_20_1)
+	arg_20_0._nodeStateViewAction[var_0_1.open](arg_20_0)
+
+	arg_20_1 = arg_20_1 or 0.5
+
+	TaskDispatcher.runDelay(arg_20_0.playNodePassAni, arg_20_0, arg_20_1)
 end
 
-function slot0.delayPlayNodeUnlockAni(slot0, slot1)
-	gohelper.setActive(slot0._goRoot, false)
-	TaskDispatcher.runDelay(slot0.playNodeUnlockAni, slot0, slot1 or 0.5)
+function var_0_0.delayPlayNodeUnlockAni(arg_21_0, arg_21_1)
+	gohelper.setActive(arg_21_0._goRoot, false)
+
+	arg_21_1 = arg_21_1 or 0.5
+
+	TaskDispatcher.runDelay(arg_21_0.playNodeUnlockAni, arg_21_0, arg_21_1)
 end
 
-function slot0.playNodePassAni(slot0)
-	Activity122Model.instance:getPlayerCacheData()["isEpisodePass_" .. slot0._config.id] = true
+function var_0_0.playNodePassAni(arg_22_0)
+	Activity122Model.instance:getPlayerCacheData()["isEpisodePass_" .. arg_22_0._config.id] = true
 
 	Activity122Model.instance:saveCacheData()
-	gohelper.setActive(slot0._imageStageFinishedBG.gameObject, true)
-	slot0:_refreshStarState(slot0:_checkNodeItemState() == uv0.pass)
-	slot0._nodeItemAnimator:Play("finish")
+	gohelper.setActive(arg_22_0._imageStageFinishedBG.gameObject, true)
+
+	local var_22_0 = arg_22_0:_checkNodeItemState()
+
+	arg_22_0:_refreshStarState(var_22_0 == var_0_1.pass)
+	arg_22_0._nodeItemAnimator:Play("finish")
 	Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.ShowPassEpisodeEffect)
-	TaskDispatcher.runDelay(slot0.refreshUI, slot0, 0.8)
+	TaskDispatcher.runDelay(arg_22_0.refreshUI, arg_22_0, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_jlbn_level_pass)
 end
 
-function slot0.playNodeUnlockAni(slot0)
-	Activity122Model.instance:getPlayerCacheData()["isEpisodeUnlock_" .. slot0._config.id] = true
+function var_0_0.playNodeUnlockAni(arg_23_0)
+	Activity122Model.instance:getPlayerCacheData()["isEpisodeUnlock_" .. arg_23_0._config.id] = true
 
 	Activity122Model.instance:saveCacheData()
-	gohelper.setActive(slot0._goRoot, true)
-	slot0._nodeItemAnimator:Play("unlock")
+	gohelper.setActive(arg_23_0._goRoot, true)
+	arg_23_0._nodeItemAnimator:Play("unlock")
 	AudioMgr.instance:trigger(AudioEnum.RoleChessGame1_3Common.NewEpisodeUnlock)
 end
 
-function slot0.playAppearAni(slot0, slot1)
-	gohelper.setActive(slot0._goChess, true)
+function var_0_0.playAppearAni(arg_24_0, arg_24_1)
+	gohelper.setActive(arg_24_0._goChess, true)
 
-	slot2 = Activity122Model.instance:getCurEpisodeId()
+	local var_24_0 = Activity122Model.instance:getCurEpisodeId()
+	local var_24_1 = arg_24_1 < arg_24_0._config.id and "open_right" or "open_left"
 
-	slot0._chessAnimator:Play(slot1 < slot0._config.id and "open_right" or "open_left")
-	UISpriteSetMgr.instance:setActivity1_3ChessSprite(slot0._imagePoint, slot0:_getNodePointSprite(slot0:_checkNodeItemState(), true))
+	arg_24_0._chessAnimator:Play(var_24_1)
+
+	local var_24_2 = arg_24_0:_checkNodeItemState()
+
+	UISpriteSetMgr.instance:setActivity1_3ChessSprite(arg_24_0._imagePoint, arg_24_0:_getNodePointSprite(var_24_2, true))
 end
 
-function slot0.playDisAppearAni(slot0, slot1)
-	gohelper.setActive(slot0._goChess, true)
+function var_0_0.playDisAppearAni(arg_25_0, arg_25_1)
+	gohelper.setActive(arg_25_0._goChess, true)
 
-	slot2 = Activity122Model.instance:getCurEpisodeId()
+	local var_25_0 = Activity122Model.instance:getCurEpisodeId()
+	local var_25_1 = arg_25_1 > arg_25_0._config.id and "close_right" or "close_left"
 
-	slot0._chessAnimator:Play(slot0._config.id < slot1 and "close_right" or "close_left")
-	UISpriteSetMgr.instance:setActivity1_3ChessSprite(slot0._imagePoint, slot0:_getNodePointSprite(slot0:_checkNodeItemState(), false))
+	arg_25_0._chessAnimator:Play(var_25_1)
+
+	local var_25_2 = arg_25_0:_checkNodeItemState()
+
+	UISpriteSetMgr.instance:setActivity1_3ChessSprite(arg_25_0._imagePoint, arg_25_0:_getNodePointSprite(var_25_2, false))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._clickCallback = nil
-	slot0._clickCbObj = nil
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0._clickCallback = nil
+	arg_26_0._clickCbObj = nil
 
-	slot0:removeEventListeners()
-	TaskDispatcher.cancelTask(slot0.playNodePassAni, slot0)
-	TaskDispatcher.cancelTask(slot0.playNodeUnlockAni, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshUI, slot0)
+	arg_26_0:removeEventListeners()
+	TaskDispatcher.cancelTask(arg_26_0.playNodePassAni, arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0.playNodeUnlockAni, arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0.refreshUI, arg_26_0)
 end
 
-return slot0
+return var_0_0

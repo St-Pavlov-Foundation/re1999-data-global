@@ -1,92 +1,99 @@
-module("modules.logic.bossrush.view.BossRushFightNameUI", package.seeall)
+﻿module("modules.logic.bossrush.view.BossRushFightNameUI", package.seeall)
 
-slot0 = class("BossRushFightNameUI", FightNameUI)
+local var_0_0 = class("BossRushFightNameUI", FightNameUI)
 
-function slot0._onLoaded(slot0)
-	uv0.super._onLoaded(slot0)
+function var_0_0._onLoaded(arg_1_0)
+	var_0_0.super._onLoaded(arg_1_0)
 
-	slot0._topHp = gohelper.findChildImage(slot0._uiGO, "layout/top/hp/container/#img_unlimitedtophp")
-	slot0._botHp = gohelper.findChildImage(slot0._uiGO, "layout/top/hp/container/#img_unlimitedbothp")
+	arg_1_0._topHp = gohelper.findChildImage(arg_1_0._uiGO, "layout/top/hp/container/#img_unlimitedtophp")
+	arg_1_0._botHp = gohelper.findChildImage(arg_1_0._uiGO, "layout/top/hp/container/#img_unlimitedbothp")
 
-	slot0:_checkBoss()
+	arg_1_0:_checkBoss()
 
-	if slot0.isBoss then
-		if slot0._imgHp then
-			gohelper.setActive(slot0._imgHp.gameObject, false)
+	if arg_1_0.isBoss then
+		if arg_1_0._imgHp then
+			gohelper.setActive(arg_1_0._imgHp.gameObject, false)
 		end
 
-		slot0._imgHp = slot0._topHp
-		slot0._imgHp.fillAmount = slot0:_getFillAmount()
-		slot0._unlimitHp = BossRushModel.instance._unlimitHp
+		local var_1_0 = arg_1_0:_getFillAmount()
+		local var_1_1 = 0.5 / FightModel.instance:getUISpeed()
 
-		if slot0._unlimitHp then
-			slot0:_onChangeUnlimitedHpColor(slot0._unlimitHp.index)
-			ZProj.TweenHelper.KillByObj(slot0._imgHp)
+		arg_1_0._imgHp = arg_1_0._topHp
+		arg_1_0._imgHp.fillAmount = var_1_0
+		arg_1_0._unlimitHp = BossRushModel.instance._unlimitHp
 
-			if slot0._unlimitHp.fillAmount < slot1 then
-				ZProj.TweenHelper.DOFillAmount(slot0._imgHp, slot0._unlimitHp.fillAmount, 0.5 / FightModel.instance:getUISpeed())
+		if arg_1_0._unlimitHp then
+			arg_1_0:_onChangeUnlimitedHpColor(arg_1_0._unlimitHp.index)
+			ZProj.TweenHelper.KillByObj(arg_1_0._imgHp)
+
+			if var_1_0 > arg_1_0._unlimitHp.fillAmount then
+				ZProj.TweenHelper.DOFillAmount(arg_1_0._imgHp, arg_1_0._unlimitHp.fillAmount, var_1_1)
 			else
-				slot0._imgHp.fillAmount = slot0._unlimitHp.fillAmount
+				arg_1_0._imgHp.fillAmount = arg_1_0._unlimitHp.fillAmount
 			end
 
-			gohelper.setActive(slot0._botHp.gameObject, true)
+			gohelper.setActive(arg_1_0._botHp.gameObject, true)
 		else
-			gohelper.setActive(slot0._botHp.gameObject, false)
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._topHp, "#9C4F30")
+			gohelper.setActive(arg_1_0._botHp.gameObject, false)
+			SLFramework.UGUI.GuiHelper.SetColor(arg_1_0._topHp, "#9C4F30")
 		end
 
-		gohelper.setActive(slot0._topHp.gameObject, true)
+		gohelper.setActive(arg_1_0._topHp.gameObject, true)
 	else
-		gohelper.setActive(slot0._topHp.gameObject, false)
-		gohelper.setActive(slot0._botHp.gameObject, false)
+		gohelper.setActive(arg_1_0._topHp.gameObject, false)
+		gohelper.setActive(arg_1_0._botHp.gameObject, false)
 	end
 
-	BossRushController.instance:registerCallback(BossRushEvent.OnUnlimitedHp, slot0._onUnlimitedHp, slot0)
+	BossRushController.instance:registerCallback(BossRushEvent.OnUnlimitedHp, arg_1_0._onUnlimitedHp, arg_1_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	uv0.super.beforeDestroy(slot0)
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnUnlimitedHp, slot0._onUnlimitedHp, slot0)
+function var_0_0.beforeDestroy(arg_2_0)
+	var_0_0.super.beforeDestroy(arg_2_0)
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnUnlimitedHp, arg_2_0._onUnlimitedHp, arg_2_0)
 end
 
-function slot0._checkBoss(slot0)
-	slot2 = FightModel.instance:getCurMonsterGroupId() and lua_monster_group.configDict[slot1]
-	slot0.isBoss = FightHelper.isBossId(slot2 and not string.nilorempty(slot2.bossId) and slot2.bossId or nil, slot0.entity:getMO():getCO().id)
+function var_0_0._checkBoss(arg_3_0)
+	local var_3_0 = FightModel.instance:getCurMonsterGroupId()
+	local var_3_1 = var_3_0 and lua_monster_group.configDict[var_3_0]
+	local var_3_2 = var_3_1 and not string.nilorempty(var_3_1.bossId) and var_3_1.bossId or nil
+	local var_3_3 = arg_3_0.entity:getMO():getCO().id
+
+	arg_3_0.isBoss = FightHelper.isBossId(var_3_2, var_3_3)
 end
 
-function slot0._onChangeUnlimitedHpColor(slot0, slot1)
-	if not slot0.isBoss then
+function var_0_0._onChangeUnlimitedHpColor(arg_4_0, arg_4_1)
+	if not arg_4_0.isBoss then
 		return
 	end
 
-	slot2, slot3 = BossRushModel.instance:getUnlimitedTopAndBotHpColor(slot1)
+	local var_4_0, var_4_1 = BossRushModel.instance:getUnlimitedTopAndBotHpColor(arg_4_1)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._topHp, slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._botHp, slot3)
-	gohelper.setActive(slot0._botHp.gameObject, true)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._topHp, var_4_0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._botHp, var_4_1)
+	gohelper.setActive(arg_4_0._botHp.gameObject, true)
 end
 
-function slot0._onUnlimitedHp(slot0, slot1, slot2)
-	if slot0.isBoss then
-		slot0._unlimitHp = BossRushModel.instance._unlimitHp
+function var_0_0._onUnlimitedHp(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0.isBoss then
+		arg_5_0._unlimitHp = BossRushModel.instance._unlimitHp
 
-		ZProj.TweenHelper.KillByObj(slot0._imgHp)
+		ZProj.TweenHelper.KillByObj(arg_5_0._imgHp)
 
-		if slot0._unlimitHp then
-			slot3 = slot0._topHp.fillAmount
-			slot4 = 0.5 / FightModel.instance:getUISpeed()
+		if arg_5_0._unlimitHp then
+			local var_5_0 = arg_5_0._topHp.fillAmount
+			local var_5_1 = 0.5 / FightModel.instance:getUISpeed()
 
-			if slot3 < slot3 then
-				slot0._topHp.fillAmount = 1
+			if var_5_0 < var_5_0 then
+				arg_5_0._topHp.fillAmount = 1
 			end
 
-			ZProj.TweenHelper.DOFillAmount(slot0._imgHp, slot2, slot4)
-			slot0:_onChangeUnlimitedHpColor(slot1)
-			gohelper.setActive(slot0._botHp.gameObject, true)
+			ZProj.TweenHelper.DOFillAmount(arg_5_0._imgHp, arg_5_2, var_5_1)
+			arg_5_0:_onChangeUnlimitedHpColor(arg_5_1)
+			gohelper.setActive(arg_5_0._botHp.gameObject, true)
 		else
-			gohelper.setActive(slot0._botHp.gameObject, false)
+			gohelper.setActive(arg_5_0._botHp.gameObject, false)
 		end
 	end
 end
 
-return slot0
+return var_0_0

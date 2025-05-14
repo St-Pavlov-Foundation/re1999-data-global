@@ -1,54 +1,54 @@
-module("modules.logic.prototest.view.ProtoTestView", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoTestView", package.seeall)
 
-slot0 = class("ProtoTestView", BaseView)
+local var_0_0 = class("ProtoTestView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._testCaseGO = gohelper.findChild(slot0.viewGO, "Panel_testcase")
-	slot0._storageGO = gohelper.findChild(slot0.viewGO, "Panel_storage")
-	slot0._testCasePosX, _ = recthelper.getAnchorX(slot0._testCaseGO.transform)
-	slot0._testCaseRepoBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_testcase/Panel_oprator/Btn_TestcaseRepo")
-	slot0._closeStorageBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_storage/Panel_oprator/Btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._testCaseGO = gohelper.findChild(arg_1_0.viewGO, "Panel_testcase")
+	arg_1_0._storageGO = gohelper.findChild(arg_1_0.viewGO, "Panel_storage")
+	arg_1_0._testCasePosX, _ = recthelper.getAnchorX(arg_1_0._testCaseGO.transform)
+	arg_1_0._testCaseRepoBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_TestcaseRepo")
+	arg_1_0._closeStorageBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_storage/Panel_oprator/Btn_close")
 end
 
-function slot0.addEvents(slot0)
-	slot0._testCaseRepoBtn:AddClickListener(slot0._onClickTestCaseRepoBtn, slot0)
-	slot0._closeStorageBtn:AddClickListener(slot0._onClickCloseStorageBtn, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._testCaseRepoBtn:AddClickListener(arg_2_0._onClickTestCaseRepoBtn, arg_2_0)
+	arg_2_0._closeStorageBtn:AddClickListener(arg_2_0._onClickCloseStorageBtn, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._testCaseRepoBtn:RemoveClickListener()
-	slot0._closeStorageBtn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._testCaseRepoBtn:RemoveClickListener()
+	arg_3_0._closeStorageBtn:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._testCaseGO, true)
+function var_0_0.onOpen(arg_4_0)
+	gohelper.setActive(arg_4_0._testCaseGO, true)
 
-	slot1 = ProtoTestMgr.instance.isShowFiles
+	local var_4_0 = ProtoTestMgr.instance.isShowFiles
 
-	gohelper.setActive(slot0._testCaseRepoBtn.gameObject, not slot1)
-	gohelper.setActive(slot0._storageGO, slot1)
-	recthelper.setAnchorX(slot0._testCaseGO.transform, slot1 and slot0._testCasePosX or 0)
+	gohelper.setActive(arg_4_0._testCaseRepoBtn.gameObject, not var_4_0)
+	gohelper.setActive(arg_4_0._storageGO, var_4_0)
+	recthelper.setAnchorX(arg_4_0._testCaseGO.transform, var_4_0 and arg_4_0._testCasePosX or 0)
 end
 
-function slot0._onClickTestCaseRepoBtn(slot0)
+function var_0_0._onClickTestCaseRepoBtn(arg_5_0)
 	ProtoTestMgr.instance.isShowFiles = true
 
 	ProtoTestFileModel.instance:refreshFileList()
-	gohelper.setActive(slot0._testCaseRepoBtn.gameObject, false)
-	ZProj.TweenHelper.DOAnchorPosX(slot0._testCaseGO.transform, slot0._testCasePosX, 0.1, function ()
-		gohelper.setActive(uv0._storageGO, true)
-		ZProj.TweenHelper.DOFadeCanvasGroup(uv0._storageGO, 0, 1, 0.1)
+	gohelper.setActive(arg_5_0._testCaseRepoBtn.gameObject, false)
+	ZProj.TweenHelper.DOAnchorPosX(arg_5_0._testCaseGO.transform, arg_5_0._testCasePosX, 0.1, function()
+		gohelper.setActive(arg_5_0._storageGO, true)
+		ZProj.TweenHelper.DOFadeCanvasGroup(arg_5_0._storageGO, 0, 1, 0.1)
 	end)
 end
 
-function slot0._onClickCloseStorageBtn(slot0)
+function var_0_0._onClickCloseStorageBtn(arg_7_0)
 	ProtoTestMgr.instance.isShowFiles = false
 
-	ZProj.TweenHelper.DOFadeCanvasGroup(slot0._storageGO, 1, 0, 0.1, function ()
-		gohelper.setActive(uv0._storageGO, false)
-		gohelper.setActive(uv0._testCaseRepoBtn.gameObject, true)
-		ZProj.TweenHelper.DOAnchorPosX(uv0._testCaseGO.transform, 0, 0.1)
+	ZProj.TweenHelper.DOFadeCanvasGroup(arg_7_0._storageGO, 1, 0, 0.1, function()
+		gohelper.setActive(arg_7_0._storageGO, false)
+		gohelper.setActive(arg_7_0._testCaseRepoBtn.gameObject, true)
+		ZProj.TweenHelper.DOAnchorPosX(arg_7_0._testCaseGO.transform, 0, 0.1)
 	end)
 end
 
-return slot0
+return var_0_0

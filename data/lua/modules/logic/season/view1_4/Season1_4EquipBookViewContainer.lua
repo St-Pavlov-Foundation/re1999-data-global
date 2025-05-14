@@ -1,64 +1,66 @@
-module("modules.logic.season.view1_4.Season1_4EquipBookViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_4.Season1_4EquipBookViewContainer", package.seeall)
 
-slot0 = class("Season1_4EquipBookViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_4EquipBookViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot2 = Season1_4EquipFloatTouch.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = arg_1_0:createEquipItemsParam()
+	local var_1_1 = Season1_4EquipFloatTouch.New()
 
-	slot2:init("left/#go_target/#go_ctrl", "left/#go_target/#go_touch")
+	var_1_1:init("left/#go_target/#go_ctrl", "left/#go_target/#go_touch")
 
-	slot3 = Season1_4EquipTagSelect.New()
+	local var_1_2 = Season1_4EquipTagSelect.New()
 
-	slot3:init(Activity104EquipBookController.instance, "right/#drop_filter")
+	var_1_2:init(Activity104EquipBookController.instance, "right/#drop_filter")
 
 	return {
 		Season1_4EquipBookView.New(),
-		slot2,
-		slot3,
-		LuaListScrollView.New(Activity104EquipItemBookModel.instance, slot0:createEquipItemsParam()),
+		var_1_1,
+		var_1_2,
+		LuaListScrollView.New(Activity104EquipItemBookModel.instance, var_1_0),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.createEquipItemsParam(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "right/mask/#scroll_cardlist"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = Season1_4EquipBookItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = Season1_4EquipBookItem.ColumnCount
-	slot1.cellWidth = 170
-	slot1.cellHeight = 235
-	slot1.cellSpaceH = 8.2
-	slot1.cellSpaceV = 1.74
-	slot1.frameUpdateMs = 100
-	slot1.minUpdateCountInFrame = Season1_4EquipBookItem.ColumnCount
+function var_0_0.createEquipItemsParam(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	return slot1
+	var_2_0.scrollGOPath = "right/mask/#scroll_cardlist"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+	var_2_0.cellClass = Season1_4EquipBookItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+	var_2_0.lineCount = Season1_4EquipBookItem.ColumnCount
+	var_2_0.cellWidth = 170
+	var_2_0.cellHeight = 235
+	var_2_0.cellSpaceH = 8.2
+	var_2_0.cellSpaceV = 1.74
+	var_2_0.frameUpdateMs = 100
+	var_2_0.minUpdateCountInFrame = Season1_4EquipBookItem.ColumnCount
+
+	return var_2_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_3_0._navigateButtonView
 		}
 	end
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("close", 0, 0)
-	TaskDispatcher.runDelay(slot0.delayOnPlayCloseAnim, slot0, 0.2)
+function var_0_0.playCloseTransition(arg_4_0)
+	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("close", 0, 0)
+	TaskDispatcher.runDelay(arg_4_0.delayOnPlayCloseAnim, arg_4_0, 0.2)
 end
 
-function slot0.delayOnPlayCloseAnim(slot0)
-	slot0:onPlayCloseTransitionFinish()
+function var_0_0.delayOnPlayCloseAnim(arg_5_0)
+	arg_5_0:onPlayCloseTransitionFinish()
 end
 
-return slot0
+return var_0_0

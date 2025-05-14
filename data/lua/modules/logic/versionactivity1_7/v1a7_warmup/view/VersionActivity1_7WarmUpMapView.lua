@@ -1,162 +1,197 @@
-module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpMapView", package.seeall)
+﻿module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpMapView", package.seeall)
 
-slot0 = class("VersionActivity1_7WarmUpMapView", BaseView)
+local var_0_0 = class("VersionActivity1_7WarmUpMapView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "#go_map")
-	slot0._gomapcontent = gohelper.findChild(slot0.viewGO, "#go_map/Viewport/Content")
-	slot0._gomaproot = slot0.viewContainer:getResInst(slot0.viewContainer:getSetting().otherRes.mapRes, slot0._gomapcontent, "mapRoot")
-	slot0.lineAnimator = gohelper.findChildComponent(slot0._gomaproot, "Line", typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
+	arg_1_0._gomapcontent = gohelper.findChild(arg_1_0.viewGO, "#go_map/Viewport/Content")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	local var_1_0 = arg_1_0.viewContainer:getSetting().otherRes.mapRes
+
+	arg_1_0._gomaproot = arg_1_0.viewContainer:getResInst(var_1_0, arg_1_0._gomapcontent, "mapRoot")
+	arg_1_0.lineAnimator = gohelper.findChildComponent(arg_1_0._gomaproot, "Line", typeof(UnityEngine.Animator))
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, slot0.unlockLine, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, arg_2_0.unlockLine, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, slot0.unlockLine, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.EpisodeUnlock, arg_3_0.unlockLine, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._actId = ActivityEnum.Activity.Activity1_7WarmUp
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0._actId = ActivityEnum.Activity.Activity1_7WarmUp
 
-	if Activity125Model.instance:getById(slot0._actId) then
-		slot0:refreshUI()
+	if Activity125Model.instance:getById(arg_5_0._actId) then
+		arg_5_0:refreshUI()
 	end
 end
 
-function slot0.refreshUI(slot0)
-	TaskDispatcher.cancelTask(slot0.unlockLineCallback, slot0)
-	slot0:initItemList()
-	slot0:updateEpisodes()
-	slot0:updateMapPos(slot0.notFirst)
+function var_0_0.refreshUI(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.unlockLineCallback, arg_6_0)
+	arg_6_0:initItemList()
+	arg_6_0:updateEpisodes()
+	arg_6_0:updateMapPos(arg_6_0.notFirst)
 end
 
-function slot0.unlockLine(slot0, slot1)
-	slot2 = Activity125Model.instance:getLastEpisode(slot0._actId)
+function var_0_0.unlockLine(arg_7_0, arg_7_1)
+	local var_7_0 = Activity125Model.instance:getLastEpisode(arg_7_0._actId)
+	local var_7_1 = Activity125Model.instance:checkLocalIsPlay(arg_7_0._actId, var_7_0)
 
-	if slot2 == 1 and not Activity125Model.instance:checkLocalIsPlay(slot0._actId, slot2) then
-		gohelper.setActive(slot0.lineAnimator, false)
+	if var_7_0 == 1 and not var_7_1 then
+		gohelper.setActive(arg_7_0.lineAnimator, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.lineAnimator, true)
+	gohelper.setActive(arg_7_0.lineAnimator, true)
 
-	if slot1 then
-		slot0.lineAnimator:Play(string.format("go%s", slot2 - 1), 0, 1)
+	if arg_7_1 then
+		arg_7_0.lineAnimator:Play(string.format("go%s", var_7_0 - 1), 0, 1)
 	else
-		slot0.unlockEpisode = slot2
+		arg_7_0.unlockEpisode = var_7_0
 
-		slot0.lineAnimator:Play(string.format("go%s", slot2 - 1))
-		TaskDispatcher.runDelay(slot0.unlockLineCallback, slot0, 0.84)
+		arg_7_0.lineAnimator:Play(string.format("go%s", var_7_0 - 1))
+		TaskDispatcher.runDelay(arg_7_0.unlockLineCallback, arg_7_0, 0.84)
 	end
 end
 
-function slot0.unlockLineCallback(slot0)
-	slot0.unlockEpisode = nil
+function var_0_0.unlockLineCallback(arg_8_0)
+	local var_8_0 = arg_8_0.unlockEpisode
 
-	if slot0.itemList[slot0.unlockEpisode] then
-		slot2:refreshItem()
+	arg_8_0.unlockEpisode = nil
+
+	local var_8_1 = arg_8_0.itemList[var_8_0]
+
+	if var_8_1 then
+		var_8_1:refreshItem()
 	end
 end
 
-function slot0.updateMapPos(slot0, slot1)
-	if slot0._movetweenId then
-		ZProj.TweenHelper.KillById(slot0._movetweenId)
+function var_0_0.updateMapPos(arg_9_0, arg_9_1)
+	if arg_9_0._movetweenId then
+		ZProj.TweenHelper.KillById(arg_9_0._movetweenId)
 
-		slot0._movetweenId = nil
+		arg_9_0._movetweenId = nil
 	end
 
-	slot2 = math.max(recthelper.getWidth(slot0._gomapcontent.transform) - recthelper.getWidth(slot0._gomap.transform), 0)
+	local var_9_0 = math.max(recthelper.getWidth(arg_9_0._gomapcontent.transform) - recthelper.getWidth(arg_9_0._gomap.transform), 0)
+	local var_9_1 = Activity125Model.instance:getSelectEpisodeId(arg_9_0._actId)
 
-	if slot0.selectId == Activity125Model.instance:getSelectEpisodeId(slot0._actId) then
+	if arg_9_0.selectId == var_9_1 then
 		return
 	end
 
-	slot0.selectId = slot3
-	slot5 = -math.min(slot0:getItemPos(slot3), slot2)
+	arg_9_0.selectId = var_9_1
 
-	if slot1 then
-		if math.abs(slot5 - recthelper.getAnchorX(slot0._gomapcontent.transform)) > 1 then
-			slot0._movetweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._gomapcontent.transform, slot5, slot7 / 1000)
+	local var_9_2 = arg_9_0:getItemPos(var_9_1)
+	local var_9_3 = -math.min(var_9_2, var_9_0)
+
+	if arg_9_1 then
+		local var_9_4 = recthelper.getAnchorX(arg_9_0._gomapcontent.transform)
+		local var_9_5 = math.abs(var_9_3 - var_9_4)
+
+		if var_9_5 > 1 then
+			local var_9_6 = var_9_5 / 1000
+
+			arg_9_0._movetweenId = ZProj.TweenHelper.DOAnchorPosX(arg_9_0._gomapcontent.transform, var_9_3, var_9_6)
 		end
 	else
-		recthelper.setAnchorX(slot0._gomapcontent.transform, slot5)
+		recthelper.setAnchorX(arg_9_0._gomapcontent.transform, var_9_3)
 	end
 
-	slot0.notFirst = true
+	arg_9_0.notFirst = true
 end
 
-function slot0.getItemPos(slot0, slot1)
-	if not slot0.itemList[slot1] then
+function var_0_0.getItemPos(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.itemList[arg_10_1]
+
+	if not var_10_0 then
 		return 0
 	end
 
-	return math.max(recthelper.getWidth(slot0._gomapcontent.transform) * 0.5 + slot2:getPos() - (recthelper.getWidth(slot0._gomap.transform) * 0.5 - 200), 0)
+	local var_10_1 = recthelper.getWidth(arg_10_0._gomapcontent.transform)
+	local var_10_2 = recthelper.getWidth(arg_10_0._gomap.transform) * 0.5
+	local var_10_3 = var_10_1 * 0.5
+	local var_10_4 = var_10_2 - 200
+	local var_10_5 = var_10_3 + var_10_0:getPos() - var_10_4
+
+	return math.max(var_10_5, 0)
 end
 
-function slot0.initItemList(slot0)
-	if slot0.itemList then
+function var_0_0.initItemList(arg_11_0)
+	if arg_11_0.itemList then
 		return
 	end
 
-	slot0.itemList = slot0:getUserDataTb_()
+	local var_11_0 = Activity125Model.instance:getEpisodeCount(arg_11_0._actId)
 
-	for slot5 = 1, Activity125Model.instance:getEpisodeCount(slot0._actId) do
-		slot0.itemList[slot5] = slot0:createEpisodeItem(gohelper.findChild(slot0._gomaproot, string.format("mapitem%s", slot5)))
+	arg_11_0.itemList = arg_11_0:getUserDataTb_()
+
+	for iter_11_0 = 1, var_11_0 do
+		local var_11_1 = gohelper.findChild(arg_11_0._gomaproot, string.format("mapitem%s", iter_11_0))
+
+		arg_11_0.itemList[iter_11_0] = arg_11_0:createEpisodeItem(var_11_1)
 	end
 end
 
-function slot0.createEpisodeItem(slot0, slot1)
-	slot2 = VersionActivity1_7WarmUpEpisodeItem.New()
-	slot2.viewContainer = slot0.viewContainer
+function var_0_0.createEpisodeItem(arg_12_0, arg_12_1)
+	local var_12_0 = VersionActivity1_7WarmUpEpisodeItem.New()
 
-	slot2:onInit(slot1)
+	var_12_0.viewContainer = arg_12_0.viewContainer
 
-	return slot2
+	var_12_0:onInit(arg_12_1)
+
+	return var_12_0
 end
 
-function slot0.updateEpisodes(slot0)
-	if Activity125Model.instance:getEpisodeList(slot0._actId) then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot0.itemList[slot5] then
-				slot7:updateData(slot6)
+function var_0_0.updateEpisodes(arg_13_0)
+	local var_13_0 = Activity125Model.instance:getEpisodeList(arg_13_0._actId)
+
+	if var_13_0 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+			local var_13_1 = arg_13_0.itemList[iter_13_0]
+
+			if var_13_1 then
+				var_13_1:updateData(iter_13_1)
 			end
 		end
 	end
 
-	if not slot0.unlockEpisode then
-		slot0:unlockLine(true)
+	if not arg_13_0.unlockEpisode then
+		arg_13_0:unlockLine(true)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.unlockLineCallback, slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.unlockLineCallback, arg_15_0)
 
-	if slot0.itemList then
-		for slot4, slot5 in ipairs(slot0.itemList) do
-			slot5:onDestroy()
+	if arg_15_0.itemList then
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0.itemList) do
+			iter_15_1:onDestroy()
 		end
 	end
 
-	if slot0._movetweenId then
-		ZProj.TweenHelper.KillById(slot0._movetweenId)
+	if arg_15_0._movetweenId then
+		ZProj.TweenHelper.KillById(arg_15_0._movetweenId)
 
-		slot0._movetweenId = nil
+		arg_15_0._movetweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

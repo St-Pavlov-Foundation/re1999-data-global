@@ -1,16 +1,16 @@
-module("modules.logic.versionactivity2_0.dungeon.config.Activity161Config", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.config.Activity161Config", package.seeall)
 
-slot0 = class("Activity161Config", BaseConfig)
+local var_0_0 = class("Activity161Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._activity161GraffitiConfig = nil
-	slot0._activity161RewardConfig = nil
-	slot0._activity161DialogConfig = nil
-	slot0._activity161ChessConfig = nil
-	slot0.graffitiPicList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._activity161GraffitiConfig = nil
+	arg_1_0._activity161RewardConfig = nil
+	arg_1_0._activity161DialogConfig = nil
+	arg_1_0._activity161ChessConfig = nil
+	arg_1_0.graffitiPicList = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity161_graffiti",
 		"activity161_reward",
@@ -20,123 +20,139 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity161_graffiti" then
-		slot0._activity161GraffitiConfig = slot2
-	elseif slot1 == "activity161_reward" then
-		slot0._activity161RewardConfig = slot2
-	elseif slot1 == "activity161_graffiti_dialog" then
-		slot0._activity161DialogConfig = slot2
-	elseif slot1 == "activity161_graffiti_chess" then
-		slot0._activity161ChessConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity161_graffiti" then
+		arg_3_0._activity161GraffitiConfig = arg_3_2
+	elseif arg_3_1 == "activity161_reward" then
+		arg_3_0._activity161RewardConfig = arg_3_2
+	elseif arg_3_1 == "activity161_graffiti_dialog" then
+		arg_3_0._activity161DialogConfig = arg_3_2
+	elseif arg_3_1 == "activity161_graffiti_chess" then
+		arg_3_0._activity161ChessConfig = arg_3_2
 	end
 end
 
-function slot0.getAllGraffitiCo(slot0, slot1)
-	return slot0._activity161GraffitiConfig.configDict[slot1]
+function var_0_0.getAllGraffitiCo(arg_4_0, arg_4_1)
+	return arg_4_0._activity161GraffitiConfig.configDict[arg_4_1]
 end
 
-function slot0.getGraffitiCo(slot0, slot1, slot2)
-	return slot0._activity161GraffitiConfig.configDict[slot1][slot2]
+function var_0_0.getGraffitiCo(arg_5_0, arg_5_1, arg_5_2)
+	return arg_5_0._activity161GraffitiConfig.configDict[arg_5_1][arg_5_2]
 end
 
-function slot0.getGraffitiCount(slot0, slot1)
-	return GameUtil.getTabLen(slot0:getAllGraffitiCo(slot1))
+function var_0_0.getGraffitiCount(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getAllGraffitiCo(arg_6_1)
+
+	return GameUtil.getTabLen(var_6_0)
 end
 
-function slot0.getAllRewardCos(slot0, slot1)
-	slot2 = {}
+function var_0_0.getAllRewardCos(arg_7_0, arg_7_1)
+	local var_7_0 = {}
+	local var_7_1 = arg_7_0._activity161RewardConfig.configDict[arg_7_1]
 
-	for slot7, slot8 in pairs(slot0._activity161RewardConfig.configDict[slot1]) do
-		table.insert(slot2, slot8)
+	for iter_7_0, iter_7_1 in pairs(var_7_1) do
+		table.insert(var_7_0, iter_7_1)
 	end
 
-	table.sort(slot2, uv0.sortReward)
+	table.sort(var_7_0, var_0_0.sortReward)
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.sortReward(slot0, slot1)
-	return slot0.rewardId < slot1.rewardId
+function var_0_0.sortReward(arg_8_0, arg_8_1)
+	return arg_8_0.rewardId < arg_8_1.rewardId
 end
 
-function slot0.getRewardCo(slot0, slot1, slot2)
-	return slot0._activity161RewardConfig.configDict[slot1][slot2]
+function var_0_0.getRewardCo(arg_9_0, arg_9_1, arg_9_2)
+	return arg_9_0._activity161RewardConfig.configDict[arg_9_1][arg_9_2]
 end
 
-function slot0.getFinalReward(slot0, slot1)
-	slot2 = tabletool.copy(slot0:getAllRewardCos(slot1))
-	slot4 = GameUtil.splitString2(slot2[#slot2].bonus, true)
+function var_0_0.getFinalReward(arg_10_0, arg_10_1)
+	local var_10_0 = tabletool.copy(arg_10_0:getAllRewardCos(arg_10_1))
+	local var_10_1 = var_10_0[#var_10_0]
+	local var_10_2 = GameUtil.splitString2(var_10_1.bonus, true)
+	local var_10_3 = table.remove(var_10_2, #var_10_2)
 
-	return slot4, table.remove(slot4, #slot4)
+	return var_10_2, var_10_3
 end
 
-function slot0.getUnlockCondition(slot0, slot1)
-	slot3, slot4, slot5 = nil
+function var_0_0.getUnlockCondition(arg_11_0, arg_11_1)
+	local var_11_0 = DungeonConfig.instance:getChapterMapElement(arg_11_1)
+	local var_11_1
+	local var_11_2
+	local var_11_3
 
-	if not string.nilorempty(DungeonConfig.instance:getChapterMapElement(slot1).condition) then
-		slot3 = slot0:extractConditionValue(slot2.condition, "EpisodeFinish")
-		slot4 = slot0:extractConditionValue(slot2.condition, "ChapterMapElement")
-		slot5 = slot0:extractConditionValue(slot2.condition, "Act161CdFinish")
+	if not string.nilorempty(var_11_0.condition) then
+		var_11_1 = arg_11_0:extractConditionValue(var_11_0.condition, "EpisodeFinish")
+		var_11_2 = arg_11_0:extractConditionValue(var_11_0.condition, "ChapterMapElement")
+		var_11_3 = arg_11_0:extractConditionValue(var_11_0.condition, "Act161CdFinish")
 	end
 
-	return slot3, slot4, slot5
+	return var_11_1, var_11_2, var_11_3
 end
 
-function slot0.extractConditionValue(slot0, slot1, slot2)
-	return string.match(slot1, slot2 .. "=(%d+)") or nil
+function var_0_0.extractConditionValue(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_2 .. "=(%d+)"
+
+	return string.match(arg_12_1, var_12_0) or nil
 end
 
-function slot0.getAllDialogMapCoByGraoupId(slot0, slot1)
-	return slot0._activity161DialogConfig.configDict[slot1]
+function var_0_0.getAllDialogMapCoByGraoupId(arg_13_0, arg_13_1)
+	return arg_13_0._activity161DialogConfig.configDict[arg_13_1]
 end
 
-function slot0.getDialogConfig(slot0, slot1, slot2)
-	return slot0._activity161DialogConfig.configDict[slot1][slot2]
+function var_0_0.getDialogConfig(arg_14_0, arg_14_1, arg_14_2)
+	return arg_14_0._activity161DialogConfig.configDict[arg_14_1][arg_14_2]
 end
 
-function slot0.getChessConfig(slot0, slot1)
-	return slot0._activity161ChessConfig.configDict[slot1]
+function var_0_0.getChessConfig(arg_15_0, arg_15_1)
+	return arg_15_0._activity161ChessConfig.configDict[arg_15_1]
 end
 
-function slot0.getGraffitiRelevantElementMap(slot0, slot1)
-	slot3 = {}
-	slot4 = {}
+function var_0_0.getGraffitiRelevantElementMap(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getAllGraffitiCo(arg_16_1)
+	local var_16_1 = {}
+	local var_16_2 = {}
 
-	for slot8, slot9 in pairs(slot0:getAllGraffitiCo(slot1)) do
-		slot10 = {}
+	for iter_16_0, iter_16_1 in pairs(var_16_0) do
+		local var_16_3 = {}
 
-		if not string.nilorempty(slot9.subElementIds) then
-			for slot14, slot15 in pairs(string.splitToNumber(slot9.subElementIds, "#")) do
-				slot3[slot15] = slot9
+		if not string.nilorempty(iter_16_1.subElementIds) then
+			local var_16_4 = string.splitToNumber(iter_16_1.subElementIds, "#")
+
+			for iter_16_2, iter_16_3 in pairs(var_16_4) do
+				var_16_1[iter_16_3] = iter_16_1
 			end
 		end
 
-		if not string.nilorempty(slot9.mainElementId) then
-			slot4[slot9.mainElementId] = slot9
+		if not string.nilorempty(iter_16_1.mainElementId) then
+			var_16_2[iter_16_1.mainElementId] = iter_16_1
 		end
 	end
 
-	return slot3, slot4
+	return var_16_1, var_16_2
 end
 
-function slot0.getGraffitiRelevantElement(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.getGraffitiRelevantElement(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0:getGraffitiCo(arg_17_1, arg_17_2)
+	local var_17_1 = {}
 
-	if not string.nilorempty(slot0:getGraffitiCo(slot1, slot2).subElementIds) then
-		slot4 = string.splitToNumber(slot3.subElementIds, "#")
+	if not string.nilorempty(var_17_0.subElementIds) then
+		var_17_1 = string.splitToNumber(var_17_0.subElementIds, "#")
 	end
 
-	return slot4
+	return var_17_1
 end
 
-function slot0.isPreMainElementFinish(slot0, slot1)
-	if #(string.splitToNumber(slot1.preMainElementIds, "#") or {}) == 0 then
+function var_0_0.isPreMainElementFinish(arg_18_0, arg_18_1)
+	local var_18_0 = string.splitToNumber(arg_18_1.preMainElementIds, "#") or {}
+
+	if #var_18_0 == 0 then
 		return true
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		if not DungeonMapModel.instance:elementIsFinished(slot7) then
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_18_1) then
 			return false
 		end
 	end
@@ -144,30 +160,34 @@ function slot0.isPreMainElementFinish(slot0, slot1)
 	return true
 end
 
-function slot0.initGraffitiPicMap(slot0, slot1)
-	if #slot0.graffitiPicList == 0 then
-		for slot6, slot7 in pairs(slot0:getAllGraffitiCo(slot1)) do
-			table.insert(slot0.graffitiPicList, slot7)
+function var_0_0.initGraffitiPicMap(arg_19_0, arg_19_1)
+	if #arg_19_0.graffitiPicList == 0 then
+		local var_19_0 = arg_19_0:getAllGraffitiCo(arg_19_1)
+
+		for iter_19_0, iter_19_1 in pairs(var_19_0) do
+			table.insert(arg_19_0.graffitiPicList, iter_19_1)
 		end
 
-		table.sort(slot0.graffitiPicList, slot0.sortGraffitiPic)
+		table.sort(arg_19_0.graffitiPicList, arg_19_0.sortGraffitiPic)
 	end
 end
 
-function slot0.sortGraffitiPic(slot0, slot1)
-	return slot0.sort < slot1.sort
+function var_0_0.sortGraffitiPic(arg_20_0, arg_20_1)
+	return arg_20_0.sort < arg_20_1.sort
 end
 
-function slot0.checkIsGraffitiMainElement(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot0:getAllGraffitiCo(slot1)) do
-		if slot8.mainElementId == slot2 then
-			return true, slot8
+function var_0_0.checkIsGraffitiMainElement(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0:getAllGraffitiCo(arg_21_1)
+
+	for iter_21_0, iter_21_1 in pairs(var_21_0) do
+		if iter_21_1.mainElementId == arg_21_2 then
+			return true, iter_21_1
 		end
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

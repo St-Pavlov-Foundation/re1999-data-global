@@ -1,52 +1,57 @@
-module("modules.logic.versionactivity1_2.yaxian.view.YaXianMapAudioView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianMapAudioView", package.seeall)
 
-slot0 = class("YaXianMapAudioView", BaseView)
+local var_0_0 = class("YaXianMapAudioView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(YaXianController.instance, YaXianEvent.OnSelectChapterChange, slot0.onSelectChapterChange, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+	arg_4_0:addEventCb(YaXianController.instance, YaXianEvent.OnSelectChapterChange, arg_4_0.onSelectChapterChange, arg_4_0)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.YaXianGameView then
-		slot0:playAmbientAudio()
+function var_0_0._onCloseView(arg_5_0, arg_5_1)
+	if arg_5_1 == ViewName.YaXianGameView then
+		arg_5_0:playAmbientAudio()
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.YaXianGameView then
+function var_0_0._onOpenView(arg_6_0, arg_6_1)
+	if arg_6_1 == ViewName.YaXianGameView then
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:playAmbientAudio()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:playAmbientAudio()
 end
 
-function slot0.playAmbientAudio(slot0)
+function var_0_0.playAmbientAudio(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
-	AudioMgr.instance:trigger(YaXianConfig.instance:getChapterConfig(slot0.viewContainer.chapterId).ambientAudio)
+
+	local var_8_0 = YaXianConfig.instance:getChapterConfig(arg_8_0.viewContainer.chapterId)
+
+	AudioMgr.instance:trigger(var_8_0.ambientAudio)
 end
 
-function slot0.onSelectChapterChange(slot0)
-	slot0:playAmbientAudio()
+function var_0_0.onSelectChapterChange(arg_9_0)
+	arg_9_0:playAmbientAudio()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 end
 
-return slot0
+return var_0_0

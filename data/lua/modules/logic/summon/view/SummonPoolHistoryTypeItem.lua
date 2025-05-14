@@ -1,59 +1,62 @@
-module("modules.logic.summon.view.SummonPoolHistoryTypeItem", package.seeall)
+﻿module("modules.logic.summon.view.SummonPoolHistoryTypeItem", package.seeall)
 
-slot0 = class("SummonPoolHistoryTypeItem", ListScrollCellExtend)
+local var_0_0 = class("SummonPoolHistoryTypeItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gounselect = gohelper.findChild(slot0.viewGO, "go_unselect")
-	slot0._txtunname = gohelper.findChildText(slot0.viewGO, "go_unselect/txt_name")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "go_select/txt_name")
-	slot0._btnitem = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_item")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._gounselect = gohelper.findChild(arg_4_0.viewGO, "go_unselect")
+	arg_4_0._txtunname = gohelper.findChildText(arg_4_0.viewGO, "go_unselect/txt_name")
+	arg_4_0._goselect = gohelper.findChild(arg_4_0.viewGO, "go_select")
+	arg_4_0._txtname = gohelper.findChildText(arg_4_0.viewGO, "go_select/txt_name")
+	arg_4_0._btnitem = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "btn_item")
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._btnitem:AddClickListener(slot0._onClick, slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	arg_5_0._btnitem:AddClickListener(arg_5_0._onClick, arg_5_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._btnitem:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_6_0)
+	arg_6_0._btnitem:RemoveClickListener()
 end
 
-function slot0._onClick(slot0)
-	if slot0._isSelect then
+function var_0_0._onClick(arg_7_0)
+	if arg_7_0._isSelect then
 		return
 	end
 
-	SummonPoolHistoryTypeListModel.instance:setSelectId(slot0._mo.id)
-	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolHistorySelect, slot0._mo.id)
+	SummonPoolHistoryTypeListModel.instance:setSelectId(arg_7_0._mo.id)
+	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolHistorySelect, arg_7_0._mo.id)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Pool_History_Type_Switch)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txtunname.text = slot1.config.name
-	slot0._txtname.text = slot1.config.name
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
+	arg_8_0._txtunname.text = arg_8_1.config.name
+	arg_8_0._txtname.text = arg_8_1.config.name
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	arg_9_0._isSelect = arg_9_1
 
-	slot0._gounselect:SetActive(not slot0._isSelect)
-	slot0._goselect:SetActive(slot0._isSelect)
+	arg_9_0._gounselect:SetActive(not arg_9_0._isSelect)
+	arg_9_0._goselect:SetActive(arg_9_0._isSelect)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,55 +1,58 @@
-module("modules.logic.fight.system.work.FightWorkRemoveUnivesalCards", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRemoveUnivesalCards", package.seeall)
 
-slot0 = class("FightWorkRemoveUnivesalCards", FightEffectBase)
+local var_0_0 = class("FightWorkRemoveUnivesalCards", FightEffectBase)
 
-function slot0.onStart(slot0, slot1)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._revertVisible = true
+	arg_1_0._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	slot2 = {}
-	slot3 = FightCardModel.instance:getHandCards()
-	slot4 = #slot3
+	local var_1_0 = {}
+	local var_1_1 = FightCardModel.instance:getHandCards()
+	local var_1_2 = #var_1_1
 
-	for slot8 = #slot3, 1, -1 do
-		if FightEnum.UniversalCard[slot3[slot8].skillId] then
-			table.insert(slot2, slot8)
-			table.remove(slot3, slot8)
+	for iter_1_0 = #var_1_1, 1, -1 do
+		local var_1_3 = var_1_1[iter_1_0]
+
+		if FightEnum.UniversalCard[var_1_3.skillId] then
+			table.insert(var_1_0, iter_1_0)
+			table.remove(var_1_1, iter_1_0)
 		end
 	end
 
-	if #slot2 > 0 then
-		FightCardModel.instance:coverCard(slot3)
+	if #var_1_0 > 0 then
+		FightCardModel.instance:coverCard(var_1_1)
 
-		slot5 = 0.033
+		local var_1_4 = 0.033
+		local var_1_5 = 1.2 + var_1_4 * 7 + 3 * var_1_4 * (var_1_2 - #var_1_0)
 
 		if FightModel.instance:getVersion() >= 4 then
-			slot0:com_registTimer(slot0._delayAfterPerformance, (1.2 + slot5 * 7 + 3 * slot5 * (slot4 - #slot2)) / FightModel.instance:getUISpeed())
-			FightController.instance:dispatchEvent(FightEvent.CardRemove, slot2)
+			arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_5 / FightModel.instance:getUISpeed())
+			FightController.instance:dispatchEvent(FightEvent.CardRemove, var_1_0)
 		else
-			FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(slot3))
+			FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(var_1_1))
 			FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		end
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._delayAfterPerformance(slot0)
-	slot0:onDone(true)
+function var_0_0._delayAfterPerformance(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._revertVisible then
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,62 +1,70 @@
-module("modules.logic.room.model.mainview.bubble.RoomNavigateBubbleCategoryMO", package.seeall)
+﻿module("modules.logic.room.model.mainview.bubble.RoomNavigateBubbleCategoryMO", package.seeall)
 
-slot0 = pureTable("RoomNavigateBubbleCategoryMO")
+local var_0_0 = pureTable("RoomNavigateBubbleCategoryMO")
 
-function slot0.init(slot0, slot1)
-	slot0.showType = slot1
-	slot0._buildingBubblesDict = {}
-	slot0._buildingBubblesList = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.showType = arg_1_1
+	arg_1_0._buildingBubblesDict = {}
+	arg_1_0._buildingBubblesList = {}
 end
 
-slot1 = {}
+local var_0_1 = {}
 
-function slot0.getOrCreateBubbleMO(slot0, slot1)
-	if not slot0._buildingBubblesDict[slot1] then
-		slot2 = (uv0[slot1] or RoomNavigateBaseBubble).New()
+function var_0_0.getOrCreateBubbleMO(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._buildingBubblesDict[arg_2_1]
 
-		slot2:init(slot1)
+	if not var_2_0 then
+		var_2_0 = (var_0_1[arg_2_1] or RoomNavigateBaseBubble).New()
 
-		slot0._buildingBubblesDict[slot1] = slot2
-		slot0._buildingBubblesList[#slot0._buildingBubblesList + 1] = slot2
+		var_2_0:init(arg_2_1)
+
+		arg_2_0._buildingBubblesDict[arg_2_1] = var_2_0
+		arg_2_0._buildingBubblesList[#arg_2_0._buildingBubblesList + 1] = var_2_0
 	end
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.cleanBubble(slot0, slot1)
-	if slot0._buildingBubblesDict[slot1] then
-		slot2:clear()
+function var_0_0.cleanBubble(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0._buildingBubblesDict[arg_3_1]
+
+	if var_3_0 then
+		var_3_0:clear()
 	end
 end
 
-function slot0.getBubbles(slot0)
-	return slot0._buildingBubblesList
+function var_0_0.getBubbles(arg_4_0)
+	return arg_4_0._buildingBubblesList
 end
 
-function slot0.getBubbleByType(slot0, slot1)
-	slot2 = nil
+function var_0_0.getBubbleByType(arg_5_0, arg_5_1)
+	local var_5_0
 
-	if slot0._buildingBubblesDict and slot1 then
-		slot2 = slot0._buildingBubblesDict[slot1]
+	if arg_5_0._buildingBubblesDict and arg_5_1 then
+		var_5_0 = arg_5_0._buildingBubblesDict[arg_5_1]
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getBubblesCount(slot0)
-	for slot5, slot6 in pairs(slot0._buildingBubblesDict) do
-		slot1 = 0 + slot6:getBubbleCount()
+function var_0_0.getBubblesCount(arg_6_0)
+	local var_6_0 = 0
+
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._buildingBubblesDict) do
+		var_6_0 = var_6_0 + iter_6_1:getBubbleCount()
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.sort(slot0)
-	for slot4, slot5 in pairs(slot0._buildingBubblesDict) do
-		if RoomNavigateBubbleController.sortFunc[slot0.showType][slot5.showType] then
-			slot5:sort(slot6)
+function var_0_0.sort(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._buildingBubblesDict) do
+		local var_7_0 = RoomNavigateBubbleController.sortFunc[arg_7_0.showType][iter_7_1.showType]
+
+		if var_7_0 then
+			iter_7_1:sort(var_7_0)
 		end
 	end
 end
 
-return slot0
+return var_0_0

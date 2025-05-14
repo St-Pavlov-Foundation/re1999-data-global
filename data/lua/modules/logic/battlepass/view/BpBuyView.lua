@@ -1,176 +1,201 @@
-module("modules.logic.battlepass.view.BpBuyView", package.seeall)
+﻿module("modules.logic.battlepass.view.BpBuyView", package.seeall)
 
-slot0 = class("BpBuyView", BaseView)
+local var_0_0 = class("BpBuyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnBuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btnBuy")
-	slot0._btnMin = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btnMin", AudioEnum.UI.play_ui_set_volume_button)
-	slot0._btnMax = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btnMax", AudioEnum.UI.play_ui_set_volume_button)
-	slot0._btnMinus = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btnMinus", AudioEnum.UI.play_ui_set_volume_button)
-	slot0._btnAdd = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btnAdd", AudioEnum.UI.play_ui_set_volume_button)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "bg/#btnClose")
-	slot0._btnClose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1")
-	slot0._sliderBuy = gohelper.findChildSlider(slot0.viewGO, "bg/#slider_buy")
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "bg/#txtTips")
-	slot0._txtCost = gohelper.findChildText(slot0.viewGO, "bg/cost/#txtCost")
-	slot0._imgCost = gohelper.findChildImage(slot0.viewGO, "bg/cost/#imgCost")
-	slot0._txtbuy = gohelper.findChildTextMesh(slot0.viewGO, "bg/txtbuy/#txt_buyNum")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnBuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btnBuy")
+	arg_1_0._btnMin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btnMin", AudioEnum.UI.play_ui_set_volume_button)
+	arg_1_0._btnMax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btnMax", AudioEnum.UI.play_ui_set_volume_button)
+	arg_1_0._btnMinus = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btnMinus", AudioEnum.UI.play_ui_set_volume_button)
+	arg_1_0._btnAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btnAdd", AudioEnum.UI.play_ui_set_volume_button)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btnClose")
+	arg_1_0._btnClose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+	arg_1_0._sliderBuy = gohelper.findChildSlider(arg_1_0.viewGO, "bg/#slider_buy")
+	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "bg/#txtTips")
+	arg_1_0._txtCost = gohelper.findChildText(arg_1_0.viewGO, "bg/cost/#txtCost")
+	arg_1_0._imgCost = gohelper.findChildImage(arg_1_0.viewGO, "bg/cost/#imgCost")
+	arg_1_0._txtbuy = gohelper.findChildTextMesh(arg_1_0.viewGO, "bg/txtbuy/#txt_buyNum")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnBuy:AddClickListener(slot0._onClickbtnBuy, slot0)
-	slot0._btnMin:AddClickListener(slot0._onClickbtnMin, slot0)
-	slot0._btnMax:AddClickListener(slot0._onClickbtnMax, slot0)
-	slot0._btnMinus:AddClickListener(slot0._onClickbtnMinus, slot0)
-	slot0._btnAdd:AddClickListener(slot0._onClickbtnAdd, slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnClose1:AddClickListener(slot0.closeThis, slot0)
-	slot0._sliderBuy:AddOnValueChanged(slot0._onInpEndEdit, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnBuy:AddClickListener(arg_2_0._onClickbtnBuy, arg_2_0)
+	arg_2_0._btnMin:AddClickListener(arg_2_0._onClickbtnMin, arg_2_0)
+	arg_2_0._btnMax:AddClickListener(arg_2_0._onClickbtnMax, arg_2_0)
+	arg_2_0._btnMinus:AddClickListener(arg_2_0._onClickbtnMinus, arg_2_0)
+	arg_2_0._btnAdd:AddClickListener(arg_2_0._onClickbtnAdd, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnClose1:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._sliderBuy:AddOnValueChanged(arg_2_0._onInpEndEdit, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnBuy:RemoveClickListener()
-	slot0._btnMin:RemoveClickListener()
-	slot0._btnMax:RemoveClickListener()
-	slot0._btnMinus:RemoveClickListener()
-	slot0._btnAdd:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnClose1:RemoveClickListener()
-	slot0._sliderBuy:RemoveOnValueChanged()
-	slot0:removeEventCb(BpController.instance, BpEvent.OnBuyLevel, slot0._onBuyLevel, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnBuy:RemoveClickListener()
+	arg_3_0._btnMin:RemoveClickListener()
+	arg_3_0._btnMax:RemoveClickListener()
+	arg_3_0._btnMinus:RemoveClickListener()
+	arg_3_0._btnAdd:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnClose1:RemoveClickListener()
+	arg_3_0._sliderBuy:RemoveOnValueChanged()
+	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnBuyLevel, arg_3_0._onBuyLevel, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._maxNum = #BpConfig.instance:getBonusCOList(BpModel.instance.id)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._maxNum = #BpConfig.instance:getBonusCOList(BpModel.instance.id)
 end
 
-function slot0.onOpen(slot0)
-	slot0._buyCost = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.BpBuyLevelCost), "#")
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = CommonConfig.instance:getConstStr(ConstEnum.BpBuyLevelCost)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imgCost, CurrencyConfig.instance:getCurrencyCo(slot0._buyCost[2]).icon .. "_1")
+	arg_5_0._buyCost = string.splitToNumber(var_5_0, "#")
 
-	slot0._num = 1
+	local var_5_1 = CurrencyConfig.instance:getCurrencyCo(arg_5_0._buyCost[2]).icon
 
-	slot0:_updateView()
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_5_0._imgCost, var_5_1 .. "_1")
+
+	arg_5_0._num = 1
+
+	arg_5_0:_updateView()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_6_0)
+	return
 end
 
-function slot0._onClickbtnBuy(slot0)
-	if CurrencyController.instance:checkFreeDiamondEnough(slot0._buyCost[3] * slot0._num, CurrencyEnum.PayDiamondExchangeSource.HUD, nil, slot0.buyLevel, slot0) then
-		slot0:buyLevel()
+function var_0_0._onClickbtnBuy(arg_7_0)
+	if CurrencyController.instance:checkFreeDiamondEnough(arg_7_0._buyCost[3] * arg_7_0._num, CurrencyEnum.PayDiamondExchangeSource.HUD, nil, arg_7_0.buyLevel, arg_7_0) then
+		arg_7_0:buyLevel()
 	end
 end
 
-function slot0.buyLevel(slot0)
-	slot0:addEventCb(BpController.instance, BpEvent.OnBuyLevel, slot0._onBuyLevel, slot0)
-	BpRpc.instance:sendBpBuyLevelRequset(slot0._num)
+function var_0_0.buyLevel(arg_8_0)
+	arg_8_0:addEventCb(BpController.instance, BpEvent.OnBuyLevel, arg_8_0._onBuyLevel, arg_8_0)
+	BpRpc.instance:sendBpBuyLevelRequset(arg_8_0._num)
 end
 
-function slot0._onYes(slot0)
-	slot0:closeThis()
+function var_0_0._onYes(arg_9_0)
+	arg_9_0:closeThis()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
 end
 
-function slot0._onClickbtnMin(slot0)
-	slot0._num = 1
+function var_0_0._onClickbtnMin(arg_10_0)
+	arg_10_0._num = 1
 
-	slot0:_updateView()
+	arg_10_0:_updateView()
 end
 
-function slot0._onClickbtnMax(slot0)
-	slot0._num = slot0:_getMax()
+function var_0_0._onClickbtnMax(arg_11_0)
+	arg_11_0._num = arg_11_0:_getMax()
 
-	slot0:_updateView()
+	arg_11_0:_updateView()
 end
 
-function slot0._onClickbtnMinus(slot0)
-	if slot0._num > 1 then
-		slot0._num = slot0._num - 1
+function var_0_0._onClickbtnMinus(arg_12_0)
+	if arg_12_0._num > 1 then
+		arg_12_0._num = arg_12_0._num - 1
 
-		slot0:_updateView()
+		arg_12_0:_updateView()
 	end
 end
 
-function slot0._onClickbtnAdd(slot0)
-	if slot0._num < slot0:_getMax() then
-		slot0._num = slot0._num + 1
+function var_0_0._onClickbtnAdd(arg_13_0)
+	if arg_13_0._num < arg_13_0:_getMax() then
+		arg_13_0._num = arg_13_0._num + 1
 
-		slot0:_updateView()
+		arg_13_0:_updateView()
 	end
 end
 
-function slot0._onInpEndEdit(slot0)
-	if Mathf.Round(slot0._sliderBuy:GetValue() * (slot0._maxNum - math.floor(BpModel.instance.score / BpConfig.instance:getLevelScore(BpModel.instance.id)) - 1)) + 1 then
-		if slot0:_getMax() < slot4 then
-			slot0._num = slot5
-		elseif slot4 < 1 then
-			slot0._num = 1
+function var_0_0._onInpEndEdit(arg_14_0)
+	local var_14_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local var_14_1 = math.floor(BpModel.instance.score / var_14_0)
+	local var_14_2 = arg_14_0._sliderBuy:GetValue()
+	local var_14_3 = Mathf.Round(var_14_2 * (arg_14_0._maxNum - var_14_1 - 1)) + 1
+
+	if var_14_3 then
+		local var_14_4 = arg_14_0:_getMax()
+
+		if var_14_4 < var_14_3 then
+			arg_14_0._num = var_14_4
+		elseif var_14_3 < 1 then
+			arg_14_0._num = 1
 		else
-			slot0._num = slot4
+			arg_14_0._num = var_14_3
 		end
 	end
 
-	slot0:_updateView()
+	arg_14_0:_updateView()
 end
 
-function slot0._updateView(slot0)
-	slot2 = math.floor(BpModel.instance.score / BpConfig.instance:getLevelScore(BpModel.instance.id))
+function var_0_0._updateView(arg_15_0)
+	local var_15_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local var_15_1 = math.floor(BpModel.instance.score / var_15_0)
+	local var_15_2 = arg_15_0._num + var_15_1
+	local var_15_3 = (arg_15_0._num - 1) / (arg_15_0._maxNum - var_15_1 - 1)
 
-	slot0._sliderBuy.slider:SetValueWithoutNotify((slot0._num - 1) / (slot0._maxNum - slot2 - 1))
+	arg_15_0._sliderBuy.slider:SetValueWithoutNotify(var_15_3)
 
-	slot0._txtbuy.text = slot0._num
-	slot0._txtTips.text = formatLuaLang("bp_buy_reward_tip", slot0._num + slot2)
-	slot0._txtCost.text = tostring(slot0._buyCost[3] * slot0._num)
+	arg_15_0._txtbuy.text = arg_15_0._num
+	arg_15_0._txtTips.text = formatLuaLang("bp_buy_reward_tip", var_15_2)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtCost, slot5 <= (CurrencyModel.instance:getCurrency(slot0._buyCost[2]) and slot6.quantity or 0) and "#292523" or "#ff0000")
+	local var_15_4 = arg_15_0._buyCost[3] * arg_15_0._num
 
-	slot8 = {}
-	slot9 = {}
+	arg_15_0._txtCost.text = tostring(var_15_4)
 
-	for slot13 = slot2 + 1, slot3 do
-		slot0:_calcBonus(slot8, slot9, BpConfig.instance:getBonusCO(BpModel.instance.id, slot13).freeBonus)
+	local var_15_5 = CurrencyModel.instance:getCurrency(arg_15_0._buyCost[2])
+	local var_15_6 = var_15_5 and var_15_5.quantity or 0
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0._txtCost, var_15_4 <= var_15_6 and "#292523" or "#ff0000")
+
+	local var_15_7 = {}
+	local var_15_8 = {}
+
+	for iter_15_0 = var_15_1 + 1, var_15_2 do
+		local var_15_9 = BpConfig.instance:getBonusCO(BpModel.instance.id, iter_15_0)
+
+		arg_15_0:_calcBonus(var_15_7, var_15_8, var_15_9.freeBonus)
 
 		if BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay then
-			slot0:_calcBonus(slot8, slot9, slot14.payBonus)
+			arg_15_0:_calcBonus(var_15_7, var_15_8, var_15_9.payBonus)
 		end
 	end
 
-	BpBuyViewModel.instance:setList(slot9)
+	BpBuyViewModel.instance:setList(var_15_8)
 end
 
-function slot0._calcBonus(slot0, slot1, slot2, slot3)
-	slot7 = "|"
+function var_0_0._calcBonus(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	for iter_16_0, iter_16_1 in pairs(string.split(arg_16_3, "|")) do
+		local var_16_0 = string.splitToNumber(iter_16_1, "#")
+		local var_16_1 = var_16_0[2]
+		local var_16_2 = var_16_0[3]
 
-	for slot7, slot8 in pairs(string.split(slot3, slot7)) do
-		slot9 = string.splitToNumber(slot8, "#")
-		slot11 = slot9[3]
+		if not arg_16_1[var_16_1] then
+			arg_16_1[var_16_1] = var_16_0
 
-		if not slot1[slot9[2]] then
-			slot1[slot10] = slot9
-
-			table.insert(slot2, slot9)
+			table.insert(arg_16_2, var_16_0)
 		else
-			slot1[slot10][3] = slot1[slot10][3] + slot11
+			arg_16_1[var_16_1][3] = arg_16_1[var_16_1][3] + var_16_2
 		end
 	end
 end
 
-function slot0._getMax(slot0)
-	return slot0._maxNum - math.floor(BpModel.instance.score / BpConfig.instance:getLevelScore(BpModel.instance.id))
+function var_0_0._getMax(arg_17_0)
+	local var_17_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local var_17_1 = math.floor(BpModel.instance.score / var_17_0)
+
+	return arg_17_0._maxNum - var_17_1
 end
 
-function slot0._onBuyLevel(slot0)
-	slot0:closeThis()
+function var_0_0._onBuyLevel(arg_18_0)
+	arg_18_0:closeThis()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_19_0)
+	arg_19_0:closeThis()
 end
 
-return slot0
+return var_0_0

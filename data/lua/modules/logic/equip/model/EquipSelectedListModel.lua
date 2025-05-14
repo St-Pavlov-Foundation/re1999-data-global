@@ -1,25 +1,25 @@
-module("modules.logic.equip.model.EquipSelectedListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipSelectedListModel", package.seeall)
 
-slot0 = class("EquipSelectedListModel", ListScrollModel)
+local var_0_0 = class("EquipSelectedListModel", ListScrollModel)
 
-function slot0.initList(slot0)
-	slot0:updateList()
+function var_0_0.initList(arg_1_0)
+	arg_1_0:updateList()
 end
 
-function slot0.updateList(slot0, slot1)
-	slot2 = {}
+function var_0_0.updateList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	for slot6 = 1, EquipEnum.StrengthenMaxCount do
-		table.insert(slot2, slot1 and slot1[slot6] or {})
+	for iter_2_0 = 1, EquipEnum.StrengthenMaxCount do
+		table.insert(var_2_0, arg_2_1 and arg_2_1[iter_2_0] or {})
 	end
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.clearList(slot0)
-	slot0:clear()
+function var_0_0.clearList(arg_3_0)
+	arg_3_0:clear()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,23 +1,26 @@
-module("modules.logic.turnback.controller.TurnbackController", package.seeall)
+﻿module("modules.logic.turnback.controller.TurnbackController", package.seeall)
 
-slot0 = class("TurnbackController", BaseController)
+local var_0_0 = class("TurnbackController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0._onUpdateTaskList, slot0)
-	slot0:registerCallback(TurnbackEvent.AdditionCountChange, slot0._onAdditionCountChange, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._dailyRefresh, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
+	arg_3_0:registerCallback(TurnbackEvent.AdditionCountChange, arg_3_0._onAdditionCountChange, arg_3_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._dailyRefresh, arg_3_0)
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0._dailyRefresh(slot0)
+function var_0_0._dailyRefresh(arg_5_0)
 	if TurnbackModel.instance:isInOpenTime() then
 		TurnbackRpc.instance:sendGetTurnbackInfoRequest()
 	else
@@ -26,140 +29,173 @@ function slot0._dailyRefresh(slot0)
 	end
 end
 
-function slot0.hasPlayedStoryVideo(slot0, slot1)
-	if not TurnbackConfig.instance:getTurnbackCo(slot1) then
+function var_0_0.hasPlayedStoryVideo(arg_6_0, arg_6_1)
+	local var_6_0 = TurnbackConfig.instance:getTurnbackCo(arg_6_1)
+
+	if not var_6_0 then
 		return true
 	end
 
-	if slot2.startStory == 0 then
+	if var_6_0.startStory == 0 then
 		return true
 	end
 
-	return StoryModel.instance:isStoryFinished(slot2.startStory)
+	return StoryModel.instance:isStoryFinished(var_6_0.startStory)
 end
 
-function slot0.checkFirstOpenLatter(slot0, slot1)
-	if string.nilorempty(PlayerPrefsHelper.getString(string.format("%s#%s#%s", PlayerPrefsKey.TurnbackSigninLatterFirstOpen, slot1, PlayerModel.instance:getPlayinfo().userId), "")) then
+function var_0_0.checkFirstOpenLatter(arg_7_0, arg_7_1)
+	local var_7_0 = string.format("%s#%s#%s", PlayerPrefsKey.TurnbackSigninLatterFirstOpen, arg_7_1, PlayerModel.instance:getPlayinfo().userId)
+	local var_7_1 = PlayerPrefsHelper.getString(var_7_0, "")
+
+	if string.nilorempty(var_7_1) then
 		ViewMgr.instance:openView(ViewName.TurnbackNewLatterView, {
 			isNormal = true,
-			day = slot1
+			day = arg_7_1
 		})
-		PlayerPrefsHelper.setString(slot2, "opened")
+		PlayerPrefsHelper.setString(var_7_0, "opened")
 	end
 end
 
-function slot0.openTurnbackBeginnerView(slot0, slot1)
-	if GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackSubModules(slot1.turnbackId)) > 0 then
-		if TurnbackModel.instance:getCurTurnbackMo():isNewType() then
-			ViewMgr.instance:openView(ViewName.TurnbackNewBeginnerView, slot1)
+function var_0_0.openTurnbackBeginnerView(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.turnbackId
+	local var_8_1 = TurnbackModel.instance:getCurTurnbackMo():isNewType()
+
+	if GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackSubModules(var_8_0)) > 0 then
+		if var_8_1 then
+			ViewMgr.instance:openView(ViewName.TurnbackNewBeginnerView, arg_8_1)
 		else
-			ViewMgr.instance:openView(ViewName.TurnbackBeginnerView, slot1)
+			ViewMgr.instance:openView(ViewName.TurnbackBeginnerView, arg_8_1)
 		end
 	else
 		GameFacade.showToast(ToastEnum.ActivityNormalView)
 	end
 end
 
-function slot0._onUpdateTaskList(slot0, slot1)
+function var_0_0._onUpdateTaskList(arg_9_0, arg_9_1)
 	if not TurnbackModel.instance:getCurTurnbackMo() then
 		return
 	end
 
-	if TurnbackTaskModel.instance:updateInfo(slot1.taskInfo) then
+	if TurnbackTaskModel.instance:updateInfo(arg_9_1.taskInfo) then
 		if not TurnbackModel.instance:isNewType() then
 			TurnbackTaskModel.instance:refreshList(TurnbackTaskModel.instance.curTaskLoopType)
 		else
 			TurnbackTaskModel.instance:refreshListNewTaskList()
 		end
 
-		uv0.instance:dispatchEvent(TurnbackEvent.RefreshTaskRedDot)
+		var_0_0.instance:dispatchEvent(TurnbackEvent.RefreshTaskRedDot)
 	end
 end
 
-function slot0.setSignInList(slot0)
+function var_0_0.setSignInList(arg_10_0)
 	TurnbackSignInModel.instance:setSignInList()
 end
 
-function slot0._onAdditionCountChange(slot0)
-	slot1, slot2 = TurnbackModel.instance:getAdditionCountInfo()
+function var_0_0._onAdditionCountChange(arg_11_0)
+	local var_11_0, var_11_1 = TurnbackModel.instance:getAdditionCountInfo()
+	local var_11_2 = string.format("%s/%s", var_11_0, var_11_1)
 
-	GameFacade.showToast(ToastEnum.TurnBackAdditionTimesChange, string.format("%s/%s", slot1, slot2))
+	GameFacade.showToast(ToastEnum.TurnBackAdditionTimesChange, var_11_2)
 end
 
-function slot0._checkCustomShowRedDotData(slot0, slot1, slot2)
-	slot1:defaultRefreshDot()
+function var_0_0._checkCustomShowRedDotData(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_1:defaultRefreshDot()
 
-	if not slot1.show then
-		if not RedDotConfig.instance:getRedDotCO(TurnbackConfig.instance:getTurnbackSubModuleCo(slot2).reddotId) then
+	if not arg_12_1.show then
+		local var_12_0 = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_12_2).reddotId
+		local var_12_1 = RedDotConfig.instance:getRedDotCO(var_12_0)
+
+		if not var_12_1 then
 			return
 		end
 
-		slot1.show = slot0:checkIsShowCustomRedDot(slot2)
+		arg_12_1.show = arg_12_0:checkIsShowCustomRedDot(arg_12_2)
 
-		slot1:showRedDot(slot3 ~= 0 and slot4.style or RedDotEnum.Style.Normal)
+		local var_12_2 = var_12_0 ~= 0 and var_12_1.style or RedDotEnum.Style.Normal
+
+		arg_12_1:showRedDot(var_12_2)
 	end
 end
 
-function slot0.checkIsShowCustomRedDot(slot0, slot1)
-	if not RedDotConfig.instance:getRedDotCO(TurnbackConfig.instance:getTurnbackSubModuleCo(slot1).reddotId) then
+function var_0_0.checkIsShowCustomRedDot(arg_13_0, arg_13_1)
+	local var_13_0 = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_13_1).reddotId
+	local var_13_1 = RedDotConfig.instance:getRedDotCO(var_13_0)
+
+	if not var_13_1 then
 		return
 	end
 
-	if slot3.canLoad == 0 then
-		return TimeUtil.getDayFirstLoginRed(TurnbackModel.instance:getCurTurnbackId() .. "_" .. slot1)
+	local var_13_2 = TurnbackModel.instance:getCurTurnbackId()
+
+	if var_13_1.canLoad == 0 then
+		local var_13_3 = var_13_2 .. "_" .. arg_13_1
+
+		return TimeUtil.getDayFirstLoginRed(var_13_3)
 	end
 
 	return false
 end
 
-function slot0.refreshRemainTime(slot0, slot1)
-	slot2, slot3, slot4 = TurnbackModel.instance:getRemainTime(slot1)
-	slot7 = string.format("%02d", slot4)
-	slot8 = ""
+function var_0_0.refreshRemainTime(arg_14_0, arg_14_1)
+	local var_14_0, var_14_1, var_14_2 = TurnbackModel.instance:getRemainTime(arg_14_1)
+	local var_14_3 = string.format("%02d", var_14_0)
+	local var_14_4 = string.format("%02d", var_14_1)
+	local var_14_5 = string.format("%02d", var_14_2)
+	local var_14_6 = ""
 
-	if slot2 >= 1 then
-		slot8 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_day_hour"), {
-			string.format("%02d", slot2),
-			string.format("%02d", slot3)
+	if var_14_0 >= 1 then
+		var_14_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_day_hour"), {
+			var_14_3,
+			var_14_4
 		})
-	elseif slot2 == 0 and slot3 >= 1 then
-		slot8 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_hour_minute"), {
-			slot6,
-			slot7
+	elseif var_14_0 == 0 and var_14_1 >= 1 then
+		var_14_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_hour_minute"), {
+			var_14_4,
+			var_14_5
 		})
-	elseif slot2 == 0 and slot3 < 1 and slot4 >= 1 then
-		slot8 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_minute"), {
-			slot7
+	elseif var_14_0 == 0 and var_14_1 < 1 and var_14_2 >= 1 then
+		var_14_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_minute"), {
+			var_14_5
 		})
-	elseif slot2 == 0 and slot3 < 1 and slot4 < 1 then
-		slot8 = luaLang("lessOneMinute")
-	elseif slot2 < 0 or not TurnbackModel.instance:isInOpenTime() then
-		slot8 = luaLang("turnback_end")
+	elseif var_14_0 == 0 and var_14_1 < 1 and var_14_2 < 1 then
+		var_14_6 = luaLang("lessOneMinute")
+	elseif var_14_0 < 0 or not TurnbackModel.instance:isInOpenTime() then
+		var_14_6 = luaLang("turnback_end")
 	end
 
-	return slot8
+	return var_14_6
 end
 
-function slot0.showPopupView(slot0, slot1)
-	if slot1 ~= nil and MaterialRpc.receiveMaterial({
-		dataList = slot1
-	}) and #slot3 > 0 then
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, slot3)
+function var_0_0.showPopupView(arg_15_0, arg_15_1)
+	if arg_15_1 ~= nil then
+		local var_15_0 = {
+			dataList = arg_15_1
+		}
+		local var_15_1 = MaterialRpc.receiveMaterial(var_15_0)
+
+		if var_15_1 and #var_15_1 > 0 then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_15_1)
+		end
 	end
 end
 
-slot1 = PlayerPrefsKey.PlayerPrefsKey.TurnbackOnlineTaskUnlock .. "#"
+local var_0_1 = PlayerPrefsKey.PlayerPrefsKey.TurnbackOnlineTaskUnlock .. "#"
 
-function slot0.isPlayFirstUnlockToday(slot0, slot1)
-	slot4 = os.date("*t", ServerTime.nowInLocal())
+function var_0_0.isPlayFirstUnlockToday(arg_16_0, arg_16_1)
+	local var_16_0 = var_0_1 .. tostring(PlayerModel.instance:getPlayinfo().userId) .. arg_16_1
+	local var_16_1 = ServerTime.nowInLocal()
+	local var_16_2 = os.date("*t", var_16_1)
 
-	if PlayerPrefsHelper.hasKey(uv0 .. tostring(PlayerModel.instance:getPlayinfo().userId) .. slot1) then
-		slot4.hour = 5
-		slot4.min = 0
-		slot4.sec = 0
-		slot6 = os.time(slot4)
+	if PlayerPrefsHelper.hasKey(var_16_0) then
+		local var_16_3 = tonumber(PlayerPrefsHelper.getString(var_16_0, var_16_1))
 
-		if tonumber(PlayerPrefsHelper.getString(slot2, slot3)) and TimeUtil.getDiffDay(slot3, slot5) < 1 and (slot3 - slot6) * (slot5 - slot6) > 0 then
+		var_16_2.hour = 5
+		var_16_2.min = 0
+		var_16_2.sec = 0
+
+		local var_16_4 = os.time(var_16_2)
+
+		if var_16_3 and TimeUtil.getDiffDay(var_16_1, var_16_3) < 1 and (var_16_1 - var_16_4) * (var_16_3 - var_16_4) > 0 then
 			return false
 		end
 	end
@@ -167,10 +203,13 @@ function slot0.isPlayFirstUnlockToday(slot0, slot1)
 	return true
 end
 
-function slot0.savePlayUnlockAnim(slot0, slot1)
-	PlayerPrefsHelper.setString(uv0 .. tostring(PlayerModel.instance:getPlayinfo().userId) .. slot1, tostring(ServerTime.nowInLocal()))
+function var_0_0.savePlayUnlockAnim(arg_17_0, arg_17_1)
+	local var_17_0 = var_0_1 .. tostring(PlayerModel.instance:getPlayinfo().userId) .. arg_17_1
+	local var_17_1 = ServerTime.nowInLocal()
+
+	PlayerPrefsHelper.setString(var_17_0, tostring(var_17_1))
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

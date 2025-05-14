@@ -1,89 +1,100 @@
-module("modules.logic.stresstip.view.StressTipView", package.seeall)
+﻿module("modules.logic.stresstip.view.StressTipView", package.seeall)
 
-slot0 = class("StressTipView", BaseView)
+local var_0_0 = class("StressTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._scrollenemystress = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_enemystress")
-	slot0._goenemystressitem = gohelper.findChild(slot0.viewGO, "#scroll_enemystress/viewport/content/#go_enemystressitem")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#scroll_enemystress/viewport/content/#go_enemystressitem/layout/#txt_title")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "#scroll_enemystress/viewport/content/#go_enemystressitem/#txt_dec")
-	slot0._gorolestressitem = gohelper.findChild(slot0.viewGO, "#scroll_enemystress/viewport/content/#go_rolestressitem")
-	slot0._herotiptxt = gohelper.findChildText(slot0.viewGO, "#scroll_enemystress/viewport/content/#go_rolestressitem/#txt_title")
-	slot0._goroletip = gohelper.findChild(slot0.viewGO, "#go_rolestresstip")
-	slot0._goroletiptxt = gohelper.findChildText(slot0.viewGO, "#go_rolestresstip/#txt_roletip")
-	slot0._btnclosedetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closetip")
-	slot0._goclosetip = slot0._btnclosedetail.gameObject
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._scrollenemystress = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_enemystress")
+	arg_1_0._goenemystressitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_enemystress/viewport/content/#go_enemystressitem")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#scroll_enemystress/viewport/content/#go_enemystressitem/layout/#txt_title")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#scroll_enemystress/viewport/content/#go_enemystressitem/#txt_dec")
+	arg_1_0._gorolestressitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_enemystress/viewport/content/#go_rolestressitem")
+	arg_1_0._herotiptxt = gohelper.findChildText(arg_1_0.viewGO, "#scroll_enemystress/viewport/content/#go_rolestressitem/#txt_title")
+	arg_1_0._goroletip = gohelper.findChild(arg_1_0.viewGO, "#go_rolestresstip")
+	arg_1_0._goroletiptxt = gohelper.findChildText(arg_1_0.viewGO, "#go_rolestresstip/#txt_roletip")
+	arg_1_0._btnclosedetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closetip")
+	arg_1_0._goclosetip = arg_1_0._btnclosedetail.gameObject
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclosedetail:AddClickListener(slot0._btnclosedetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclosedetail:AddClickListener(arg_2_0._btnclosedetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnclosedetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnclosedetail:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnclosedetailOnClick(slot0)
-	gohelper.setActive(slot0._goclosetip, false)
-	gohelper.setActive(slot0._goroletip, false)
+function var_0_0._btnclosedetailOnClick(arg_5_0)
+	gohelper.setActive(arg_5_0._goclosetip, false)
+	gohelper.setActive(arg_5_0._goroletip, false)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gorolestressitem, false)
-	gohelper.setActive(slot0._goenemystressitem, false)
-	gohelper.setActive(slot0._goclosetip, false)
-	gohelper.setActive(slot0._goroletip, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._gorolestressitem, false)
+	gohelper.setActive(arg_6_0._goenemystressitem, false)
+	gohelper.setActive(arg_6_0._goclosetip, false)
+	gohelper.setActive(arg_6_0._goroletip, false)
 
-	slot0.heroTipHyperLinkClick = gohelper.onceAddComponent(slot0._herotiptxt, typeof(ZProj.TMPHyperLinkClick))
+	arg_6_0.heroTipHyperLinkClick = gohelper.onceAddComponent(arg_6_0._herotiptxt, typeof(ZProj.TMPHyperLinkClick))
 
-	slot0.heroTipHyperLinkClick:SetClickListener(slot0.onClickHeroTip, slot0)
+	arg_6_0.heroTipHyperLinkClick:SetClickListener(arg_6_0.onClickHeroTip, arg_6_0)
 
-	slot0.enemyStressItemList = {}
-	slot0.rectTrEnemy = slot0._scrollenemystress:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrViewGo = slot0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectRoleTip = slot0._goroletip:GetComponent(gohelper.Type_RectTransform)
-	slot0.enemyScrollWidth = recthelper.getWidth(slot0.rectTrEnemy)
+	arg_6_0.enemyStressItemList = {}
+	arg_6_0.rectTrEnemy = arg_6_0._scrollenemystress:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectTrViewGo = arg_6_0.viewGO:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectRoleTip = arg_6_0._goroletip:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.enemyScrollWidth = recthelper.getWidth(arg_6_0.rectTrEnemy)
 end
 
-function slot0.onClickHeroTip(slot0, slot1)
-	if not lua_stress_identity.configDict[tonumber(slot1)] then
+function var_0_0.onClickHeroTip(arg_7_0, arg_7_1)
+	local var_7_0 = lua_stress_identity.configDict[tonumber(arg_7_1)]
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0._goroletiptxt.text = string.format("<color=#d2c197>%s</color>", slot2.name) .. "\n" .. slot2.desc
+	local var_7_1 = string.format("<color=#d2c197>%s</color>", var_7_0.name)
 
-	gohelper.setActive(slot0._goclosetip, true)
-	gohelper.setActive(slot0._goroletip, true)
-	ZProj.UGUIHelper.RebuildLayout(slot0.rectRoleTip)
-	recthelper.setAnchor(slot0.rectRoleTip, recthelper.getAnchorX(slot0.rectTrEnemy), recthelper.getAnchorY(slot0.rectTrEnemy) + recthelper.getHeight(slot0.rectRoleTip) + 10)
+	arg_7_0._goroletiptxt.text = var_7_1 .. "\n" .. var_7_0.desc
+
+	gohelper.setActive(arg_7_0._goclosetip, true)
+	gohelper.setActive(arg_7_0._goroletip, true)
+	ZProj.UGUIHelper.RebuildLayout(arg_7_0.rectRoleTip)
+
+	local var_7_2 = recthelper.getHeight(arg_7_0.rectRoleTip)
+	local var_7_3 = recthelper.getAnchorX(arg_7_0.rectTrEnemy)
+	local var_7_4 = recthelper.getAnchorY(arg_7_0.rectTrEnemy)
+	local var_7_5 = 10
+	local var_7_6 = var_7_4 + var_7_2 + var_7_5
+
+	recthelper.setAnchor(arg_7_0.rectRoleTip, var_7_3, var_7_6)
 end
 
-slot0.OpenEnum = {
+var_0_0.OpenEnum = {
 	Monster = 1,
 	Hero = 2
 }
 
-function slot0.onOpen(slot0)
-	slot0.openEnum = slot0.viewParam.openEnum
-	slot0.co = slot0.viewParam.co
-	slot0.clickPosition = slot0.viewParam.clickPosition
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0.openEnum = arg_8_0.viewParam.openEnum
+	arg_8_0.co = arg_8_0.viewParam.co
+	arg_8_0.clickPosition = arg_8_0.viewParam.clickPosition
 
-	slot0:refreshHero()
-	slot0:refreshEnemy()
+	arg_8_0:refreshHero()
+	arg_8_0:refreshEnemy()
 end
 
-slot0.StressBehaviourList = {
+var_0_0.StressBehaviourList = {
 	FightEnum.StressBehaviour.Positive,
 	FightEnum.StressBehaviour.Negative,
 	FightEnum.StressBehaviour.Meltdown,
@@ -94,130 +105,191 @@ slot0.StressBehaviourList = {
 	FightEnum.StressBehaviour.BaseMeltdown
 }
 
-function slot0.refreshEnemy(slot0)
-	for slot4, slot5 in ipairs(slot0.enemyStressItemList) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.refreshEnemy(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.enemyStressItemList) do
+		gohelper.setActive(iter_9_1.go, false)
 	end
 
-	if not StressConfig.instance:getStressDict(slot0.openEnum == uv0.OpenEnum.Monster and lua_monster_skill_template.configDict[slot0.co.skillTemplate] and slot2.identity or 1001) then
-		logError(string.format("压力表，身份类型 ： %s 不存在", nil))
+	local var_9_0
 
-		return
-	end
+	if arg_9_0.openEnum == var_0_0.OpenEnum.Monster then
+		local var_9_1 = lua_monster_skill_template.configDict[arg_9_0.co.skillTemplate]
 
-	for slot7, slot8 in ipairs(slot0.StressBehaviourList) do
-		if slot2[FightEnum.StressBehaviourString[slot8]] then
-			slot11 = slot0:getEnemyStressItem(0 + 1)
-
-			gohelper.setActive(slot11.go, true)
-
-			slot11.txtTitle.text = StressConfig.instance:getStressBehaviourName(slot8)
-
-			slot0:refreshEnemyDesc(slot11, slot10)
-		end
-	end
-
-	slot0:setRectTrLayout(slot0.rectTrEnemy)
-end
-
-function slot0.refreshEnemyDesc(slot0, slot1, slot2)
-	slot3 = 0
-
-	for slot7, slot8 in ipairs(slot2) do
-		if lua_stress_rule.configDict[tonumber(slot8.rule)] and slot9.isNoShow ~= 1 then
-			slot10 = slot0:getEnemyStressDescItem(slot1, slot3 + 1)
-
-			gohelper.setActive(slot10.goDesc, true)
-
-			slot10.txtDesc.text = "<nobr>" .. SkillHelper.buildDesc(slot9.desc)
-		end
-	end
-
-	if slot3 < 1 then
-		gohelper.setActive(slot1.go, false)
+		var_9_0 = var_9_1 and var_9_1.identity
 	else
-		for slot8 = slot3 + 1, #slot1.descItemList do
-			gohelper.setActive(slot4[slot8].goDesc, false)
+		var_9_0 = 1001
+	end
+
+	local var_9_2 = StressConfig.instance:getStressDict(var_9_0)
+
+	if not var_9_2 then
+		logError(string.format("压力表，身份类型 ： %s 不存在", var_9_0))
+
+		return
+	end
+
+	local var_9_3 = 0
+
+	for iter_9_2, iter_9_3 in ipairs(arg_9_0.StressBehaviourList) do
+		local var_9_4 = var_9_2[FightEnum.StressBehaviourString[iter_9_3]]
+
+		if var_9_4 then
+			var_9_3 = var_9_3 + 1
+
+			local var_9_5 = arg_9_0:getEnemyStressItem(var_9_3)
+
+			gohelper.setActive(var_9_5.go, true)
+
+			var_9_5.txtTitle.text = StressConfig.instance:getStressBehaviourName(iter_9_3)
+
+			arg_9_0:refreshEnemyDesc(var_9_5, var_9_4)
+		end
+	end
+
+	arg_9_0:setRectTrLayout(arg_9_0.rectTrEnemy)
+end
+
+function var_0_0.refreshEnemyDesc(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = 0
+
+	for iter_10_0, iter_10_1 in ipairs(arg_10_2) do
+		local var_10_1 = lua_stress_rule.configDict[tonumber(iter_10_1.rule)]
+
+		if var_10_1 and var_10_1.isNoShow ~= 1 then
+			var_10_0 = var_10_0 + 1
+
+			local var_10_2 = arg_10_0:getEnemyStressDescItem(arg_10_1, var_10_0)
+
+			gohelper.setActive(var_10_2.goDesc, true)
+
+			var_10_2.txtDesc.text = "<nobr>" .. SkillHelper.buildDesc(var_10_1.desc)
+		end
+	end
+
+	if var_10_0 < 1 then
+		gohelper.setActive(arg_10_1.go, false)
+	else
+		local var_10_3 = arg_10_1.descItemList
+
+		for iter_10_2 = var_10_0 + 1, #var_10_3 do
+			gohelper.setActive(var_10_3[iter_10_2].goDesc, false)
 		end
 	end
 end
 
-function slot0.refreshHero(slot0)
-	gohelper.setActive(slot0._gorolestressitem, slot0.openEnum == uv0.OpenEnum.Hero)
+function var_0_0.refreshHero(arg_11_0)
+	gohelper.setActive(arg_11_0._gorolestressitem, arg_11_0.openEnum == var_0_0.OpenEnum.Hero)
 
-	if slot0.openEnum ~= uv0.OpenEnum.Hero then
+	if arg_11_0.openEnum ~= var_0_0.OpenEnum.Hero then
 		return
 	end
 
-	slot0._herotiptxt.text = GameUtil.getSubPlaceholderLuaLangOneParam(StressConfig.instance:getHeroTip(), StressConfig.instance:getHeroIdentityText(slot0.co))
+	local var_11_0 = StressConfig.instance:getHeroTip()
+	local var_11_1 = StressConfig.instance:getHeroIdentityText(arg_11_0.co)
+	local var_11_2 = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_0, var_11_1)
+
+	arg_11_0._herotiptxt.text = var_11_2
 end
 
-function slot0.getEnemyStressItem(slot0, slot1)
-	if slot1 <= #slot0.enemyStressItemList then
-		return slot0.enemyStressItemList[slot1]
+function var_0_0.getEnemyStressItem(arg_12_0, arg_12_1)
+	if arg_12_1 <= #arg_12_0.enemyStressItemList then
+		return arg_12_0.enemyStressItemList[arg_12_1]
 	end
 
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0._goenemystressitem)
-	slot2.txtTitle = gohelper.findChildText(slot2.go, "layout/#txt_title")
-	slot2.descItemList = {}
+	local var_12_0 = arg_12_0:getUserDataTb_()
 
-	table.insert(slot0.enemyStressItemList, slot2)
+	var_12_0.go = gohelper.cloneInPlace(arg_12_0._goenemystressitem)
+	var_12_0.txtTitle = gohelper.findChildText(var_12_0.go, "layout/#txt_title")
+	var_12_0.descItemList = {}
 
-	slot3 = slot0:getUserDataTb_()
-	slot3.txtDesc = gohelper.findChildText(slot2.go, "#txt_dec")
-	slot3.goDesc = slot3.txtDesc.gameObject
+	table.insert(arg_12_0.enemyStressItemList, var_12_0)
 
-	SkillHelper.addHyperLinkClick(slot3.txtDesc, slot0.onClickDescHyperLink, slot0)
-	table.insert(slot2.descItemList, slot3)
+	local var_12_1 = arg_12_0:getUserDataTb_()
 
-	return slot2
+	var_12_1.txtDesc = gohelper.findChildText(var_12_0.go, "#txt_dec")
+	var_12_1.goDesc = var_12_1.txtDesc.gameObject
+
+	SkillHelper.addHyperLinkClick(var_12_1.txtDesc, arg_12_0.onClickDescHyperLink, arg_12_0)
+	table.insert(var_12_0.descItemList, var_12_1)
+
+	return var_12_0
 end
 
-function slot0.getEnemyStressDescItem(slot0, slot1, slot2)
-	if slot2 <= #slot1.descItemList then
-		return slot3[slot2]
+function var_0_0.getEnemyStressDescItem(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_1.descItemList
+
+	if arg_13_2 <= #var_13_0 then
+		return var_13_0[arg_13_2]
 	end
 
-	slot5 = slot0:getUserDataTb_()
-	slot5.goDesc = gohelper.cloneInPlace(slot1.descItemList[1].goDesc)
-	slot5.txtDesc = slot5.goDesc:GetComponent(gohelper.Type_TextMesh)
+	local var_13_1 = arg_13_1.descItemList[1].goDesc
+	local var_13_2 = arg_13_0:getUserDataTb_()
 
-	SkillHelper.addHyperLinkClick(slot5.txtDesc, slot0.onClickDescHyperLink, slot0)
-	table.insert(slot3, slot5)
+	var_13_2.goDesc = gohelper.cloneInPlace(var_13_1)
+	var_13_2.txtDesc = var_13_2.goDesc:GetComponent(gohelper.Type_TextMesh)
 
-	return slot5
+	SkillHelper.addHyperLinkClick(var_13_2.txtDesc, arg_13_0.onClickDescHyperLink, arg_13_0)
+	table.insert(var_13_0, var_13_2)
+
+	return var_13_2
 end
 
-slot0.DefaultIntervalX = 10
-slot0.MaxScrollHeight = 535
+var_0_0.DefaultIntervalX = 10
+var_0_0.MaxScrollHeight = 535
 
-function slot0.setRectTrLayout(slot0, slot1)
-	slot2, slot3 = GameUtil.getViewSize()
-	slot5, slot6 = recthelper.screenPosToAnchorPos2(slot0.clickPosition, slot0.rectTrViewGo)
+function var_0_0.setRectTrLayout(arg_14_0, arg_14_1)
+	local var_14_0, var_14_1 = GameUtil.getViewSize()
+	local var_14_2 = GameUtil.checkClickPositionInRight(arg_14_0.clickPosition)
+	local var_14_3, var_14_4 = recthelper.screenPosToAnchorPos2(arg_14_0.clickPosition, arg_14_0.rectTrViewGo)
 
-	recthelper.setAnchor(slot1, GameUtil.checkClickPositionInRight(slot0.clickPosition) and slot5 - uv0.DefaultIntervalX or slot5 + recthelper.getWidth(slot1) + uv0.DefaultIntervalX, slot6)
-	recthelper.setHeight(slot1, math.min(uv0.MaxScrollHeight, slot3 - math.abs(slot6)))
+	if var_14_2 then
+		var_14_3 = var_14_3 - var_0_0.DefaultIntervalX
+	else
+		var_14_3 = var_14_3 + recthelper.getWidth(arg_14_1) + var_0_0.DefaultIntervalX
+	end
+
+	recthelper.setAnchor(arg_14_1, var_14_3, var_14_4)
+
+	local var_14_5 = var_14_1 - math.abs(var_14_4)
+	local var_14_6 = math.min(var_0_0.MaxScrollHeight, var_14_5)
+
+	recthelper.setHeight(arg_14_1, var_14_6)
 end
 
-function slot0.onClickDescHyperLink(slot0, slot1, slot2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(slot1, slot0.setScrollPosCallback, slot0)
+function var_0_0.onClickDescHyperLink(arg_15_0, arg_15_1, arg_15_2)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(arg_15_1, arg_15_0.setScrollPosCallback, arg_15_0)
 end
 
-slot0.ScrollTipIntervalX = 10
+var_0_0.ScrollTipIntervalX = 10
 
-function slot0.setScrollPosCallback(slot0, slot1, slot2)
-	slot3, slot4 = GameUtil.getViewSize()
-	slot5 = slot3 / 2
-	slot2.pivot = CommonBuffTipEnum.Pivot.Right
+function var_0_0.setScrollPosCallback(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0, var_16_1 = GameUtil.getViewSize()
+	local var_16_2 = var_16_0 / 2
+	local var_16_3 = var_16_1 / 2
+	local var_16_4 = recthelper.getAnchorX(arg_16_0.rectTrEnemy)
+	local var_16_5 = recthelper.getAnchorY(arg_16_0.rectTrEnemy)
+	local var_16_6 = var_16_0 - math.abs(var_16_4) - arg_16_0.enemyScrollWidth - arg_16_0.ScrollTipIntervalX
+	local var_16_7 = var_16_6 >= recthelper.getWidth(arg_16_2)
 
-	recthelper.setAnchor(slot2, recthelper.getWidth(slot2) <= slot3 - math.abs(recthelper.getAnchorX(slot0.rectTrEnemy)) - slot0.enemyScrollWidth - slot0.ScrollTipIntervalX and slot9 - slot5 or slot5 - math.abs(slot7) + slot0.enemyScrollWidth + slot0.ScrollTipIntervalX, recthelper.getAnchorY(slot0.rectTrEnemy) + slot4 / 2)
+	arg_16_2.pivot = CommonBuffTipEnum.Pivot.Right
+
+	if var_16_7 then
+		var_16_4 = var_16_6 - var_16_2
+	else
+		var_16_4 = var_16_2 - math.abs(var_16_4) + arg_16_0.enemyScrollWidth + arg_16_0.ScrollTipIntervalX
+	end
+
+	local var_16_8 = var_16_5 + var_16_3
+
+	recthelper.setAnchor(arg_16_2, var_16_4, var_16_8)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	return
 end
 
-return slot0
+return var_0_0

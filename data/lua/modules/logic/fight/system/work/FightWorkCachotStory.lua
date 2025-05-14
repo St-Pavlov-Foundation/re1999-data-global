@@ -1,43 +1,47 @@
-module("modules.logic.fight.system.work.FightWorkCachotStory", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCachotStory", package.seeall)
 
-slot0 = class("FightWorkCachotStory", BaseWork)
+local var_0_0 = class("FightWorkCachotStory", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = FightModel.instance:getRecordMO()
-	slot3 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = FightModel.instance:getRecordMO()
+	local var_1_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local var_1_2 = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not V1a6_CachotModel.instance:getRogueInfo() then
-		slot0:onDone(true)
+	if not var_1_2 then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if slot2 and slot2.fightResult == FightEnum.FightResult.Succ and slot3 and slot3.type == DungeonEnum.EpisodeType.Cachot then
-		if slot4.room == V1a6_CachotEnum.SecondLayerFirstRoom then
-			if V1a6_CachotConfig.instance:getConstConfig(V1a6_CachotEnum.Const.StoryNode3).value and slot5 ~= 0 and not StoryModel.instance:isStoryFinished(tonumber(slot5)) then
-				StoryController.instance:registerCallback(StoryEvent.AllStepFinished, slot0._onStoryFinish, slot0)
-				StoryController.instance:playStory(tonumber(slot5), {
-					mark = true,
-					isReplay = false
-				}, nil, slot0)
+	if var_1_0 and var_1_0.fightResult == FightEnum.FightResult.Succ and var_1_1 and var_1_1.type == DungeonEnum.EpisodeType.Cachot then
+		if var_1_2.room == V1a6_CachotEnum.SecondLayerFirstRoom then
+			local var_1_3 = V1a6_CachotConfig.instance:getConstConfig(V1a6_CachotEnum.Const.StoryNode3).value
+			local var_1_4 = {}
+
+			var_1_4.mark = true
+			var_1_4.isReplay = false
+
+			if var_1_3 and var_1_3 ~= 0 and not StoryModel.instance:isStoryFinished(tonumber(var_1_3)) then
+				StoryController.instance:registerCallback(StoryEvent.AllStepFinished, arg_1_0._onStoryFinish, arg_1_0)
+				StoryController.instance:playStory(tonumber(var_1_3), var_1_4, nil, arg_1_0)
 			else
-				slot0:onDone(true)
+				arg_1_0:onDone(true)
 			end
 		else
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		end
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onStoryFinish(slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, slot0._onStoryFinish, slot0)
-	slot0:onDone(true)
+function var_0_0._onStoryFinish(arg_2_0)
+	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, arg_2_0._onStoryFinish, arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, slot0._onStoryFinish, slot0)
+function var_0_0.clearWork(arg_3_0)
+	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, arg_3_0._onStoryFinish, arg_3_0)
 end
 
-return slot0
+return var_0_0

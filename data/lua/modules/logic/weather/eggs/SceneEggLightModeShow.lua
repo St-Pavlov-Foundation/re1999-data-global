@@ -1,21 +1,21 @@
-module("modules.logic.weather.eggs.SceneEggLightModeShow", package.seeall)
+﻿module("modules.logic.weather.eggs.SceneEggLightModeShow", package.seeall)
 
-slot0 = class("SceneEggLightModeShow", SceneBaseEgg)
+local var_0_0 = class("SceneEggLightModeShow", SceneBaseEgg)
 
-function slot0._onInit(slot0)
-	slot0._lightMode = tonumber(slot0._eggConfig.actionParams)
+function var_0_0._onInit(arg_1_0)
+	arg_1_0._lightMode = tonumber(arg_1_0._eggConfig.actionParams)
 
-	slot0:setGoListVisible(false)
+	arg_1_0:setGoListVisible(false)
 end
 
-function slot0._onReportChange(slot0, slot1)
-	if not slot1 then
-		slot0:setGoListVisible(false)
+function var_0_0._onReportChange(arg_2_0, arg_2_1)
+	if not arg_2_1 then
+		arg_2_0:setGoListVisible(false)
 
 		return
 	end
 
-	slot0:setGoListVisible(slot0._lightMode == slot1.lightMode)
+	arg_2_0:setGoListVisible(arg_2_0._lightMode == arg_2_1.lightMode)
 end
 
-return slot0
+return var_0_0

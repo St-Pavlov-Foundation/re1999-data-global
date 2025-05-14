@@ -1,58 +1,64 @@
-module("modules.logic.fight.system.work.FightWorkAssistBossChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkAssistBossChange", package.seeall)
 
-slot0 = class("FightWorkAssistBossChange", FightEffectBase)
+local var_0_0 = class("FightWorkAssistBossChange", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0._entityId = slot0._actEffectMO.entityMO.id
-	slot0._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(slot0._entityId)
+function var_0_0.beforePlayEffectData(arg_1_0)
+	arg_1_0._entityId = arg_1_0._actEffectMO.entityMO.id
+	arg_1_0._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(arg_1_0._entityId)
 end
 
-function slot0.onStart(slot0)
-	slot0._newEntityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._newEntityMO = FightDataHelper.entityMgr:getById(arg_2_0._entityId)
 
-	if not slot0._newEntityMO then
-		slot0:onDone(true)
+	if not arg_2_0._newEntityMO then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if not FightHelper.getEntity(slot0._actEffectMO.targetId) then
-		slot0:_buildNewEntity()
-		slot0:_dispatchChangeEvent()
+	local var_2_0 = FightHelper.getEntity(arg_2_0._actEffectMO.targetId)
 
-		return slot0:onDone(true)
+	if not var_2_0 then
+		arg_2_0:_buildNewEntity()
+		arg_2_0:_dispatchChangeEvent()
+
+		return arg_2_0:onDone(true)
 	end
 
-	slot2 = slot0:com_registWorkDoneFlowSequence()
+	local var_2_1 = arg_2_0:com_registWorkDoneFlowSequence()
+	local var_2_2 = lua_fight_boss_evolution_client.configDict[arg_2_0._oldEntityMO.skin]
 
-	if lua_fight_boss_evolution_client.configDict[slot0._oldEntityMO.skin] then
-		slot1.beforeMonsterChangeSkin = slot0._oldEntityMO.skin
+	if var_2_2 then
+		var_2_0.beforeMonsterChangeSkin = arg_2_0._oldEntityMO.skin
 
-		slot2:addWork(Work2FightWork.New(FightWorkPlayTimeline, slot1, slot3.timeline))
-		slot2:registWork(FightWorkFunction, slot0._removeOldEntity, slot0, slot1)
-		slot2:addWork(FightWorkFunction.New(slot0._buildNewEntity, slot0))
-		slot2:registWork(FightWorkDelayTimer, 0.01)
+		var_2_1:addWork(Work2FightWork.New(FightWorkPlayTimeline, var_2_0, var_2_2.timeline))
+		var_2_1:registWork(FightWorkFunction, arg_2_0._removeOldEntity, arg_2_0, var_2_0)
+		var_2_1:addWork(FightWorkFunction.New(arg_2_0._buildNewEntity, arg_2_0))
+		var_2_1:registWork(FightWorkDelayTimer, 0.01)
 	else
-		slot2:registWork(FightWorkFunction, slot0._removeOldEntity, slot0, slot1)
-		slot2:addWork(FightWorkFunction.New(slot0._buildNewEntity, slot0))
+		var_2_1:registWork(FightWorkFunction, arg_2_0._removeOldEntity, arg_2_0, var_2_0)
+		var_2_1:addWork(FightWorkFunction.New(arg_2_0._buildNewEntity, arg_2_0))
 	end
 
-	slot2:addWork(FightWorkFunction.New(slot0._dispatchChangeEvent, slot0))
-	slot2:start()
+	var_2_1:addWork(FightWorkFunction.New(arg_2_0._dispatchChangeEvent, arg_2_0))
+	var_2_1:start()
 end
 
-function slot0._removeOldEntity(slot0, slot1)
-	GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(slot1:getTag(), slot1.id)
+function var_0_0._removeOldEntity(arg_3_0, arg_3_1)
+	GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(arg_3_1:getTag(), arg_3_1.id)
 end
 
-function slot0._buildNewEntity(slot0)
-	if GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(slot0._newEntityMO) and slot2.buff then
-		xpcall(slot3.dealStartBuff, __G__TRACKBACK__, slot3)
+function var_0_0._buildNewEntity(arg_4_0)
+	local var_4_0 = GameSceneMgr.instance:getCurScene().entityMgr:buildSpine(arg_4_0._newEntityMO)
+	local var_4_1 = var_4_0 and var_4_0.buff
+
+	if var_4_1 then
+		xpcall(var_4_1.dealStartBuff, __G__TRACKBACK__, var_4_1)
 	end
 end
 
-function slot0._dispatchChangeEvent(slot0)
-	slot0:com_sendFightEvent(FightEvent.OnSwitchAssistBossSpine)
+function var_0_0._dispatchChangeEvent(arg_5_0)
+	arg_5_0:com_sendFightEvent(FightEvent.OnSwitchAssistBossSpine)
 end
 
-return slot0
+return var_0_0

@@ -1,57 +1,63 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogItem", package.seeall)
 
-slot0 = class("AergusiDialogItem", AergusiDialogRoleItemBase)
+local var_0_0 = class("AergusiDialogItem", AergusiDialogRoleItemBase)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 end
 
-function slot0.CreateItem(slot0, slot1, slot2, slot3)
-	if not AergusiEnum.DialogItemCls[slot3] then
-		logError("un support type dialogue type : " .. tostring(slot3))
+function var_0_0.CreateItem(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = AergusiEnum.DialogItemCls[arg_2_3]
+
+	if not var_2_0 then
+		logError("un support type dialogue type : " .. tostring(arg_2_3))
 
 		return nil
 	end
 
-	slot5 = slot4.New()
+	local var_2_1 = var_2_0.New()
 
-	slot5:init(slot0, slot1, slot2, slot3)
+	var_2_1:init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 
-	return slot5
+	return var_2_1
 end
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.stepCo = slot1
-	slot0.go = slot2
-	slot0.type = slot4
-	slot0.transform = slot0.go.transform
+function var_0_0.init(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	arg_3_0.stepCo = arg_3_1
+	arg_3_0.go = arg_3_2
+	arg_3_0.type = arg_3_4
+	arg_3_0.transform = arg_3_0.go.transform
 
-	recthelper.setAnchorY(slot0.transform, -slot3)
-	gohelper.setActive(slot2, true)
-	slot0:initView()
-	slot0:refresh()
-	slot0:calculateHeight()
+	recthelper.setAnchorY(arg_3_0.transform, -arg_3_3)
+	gohelper.setActive(arg_3_2, true)
+	arg_3_0:initView()
+	arg_3_0:refresh()
+	arg_3_0:calculateHeight()
 end
 
-function slot0.initView(slot0)
+function var_0_0.initView(arg_4_0)
+	return
 end
 
-function slot0.refresh(slot0)
+function var_0_0.refresh(arg_5_0)
+	return
 end
 
-function slot0.calculateHeight(slot0)
+function var_0_0.calculateHeight(arg_6_0)
+	return
 end
 
-function slot0.getHeight(slot0)
-	return slot0.height
+function var_0_0.getHeight(arg_7_0)
+	return arg_7_0.height
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_8_0)
+	return
 end
 
-function slot0.destroy(slot0)
-	slot0:onDestroy()
-	uv0.super.destroy(slot0)
+function var_0_0.destroy(arg_9_0)
+	arg_9_0:onDestroy()
+	var_0_0.super.destroy(arg_9_0)
 end
 
-return slot0
+return var_0_0

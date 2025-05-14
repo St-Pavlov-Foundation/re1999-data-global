@@ -1,39 +1,39 @@
-module("modules.logic.explore.model.mo.ExploreMapSimpleMo", package.seeall)
+﻿module("modules.logic.explore.model.mo.ExploreMapSimpleMo", package.seeall)
 
-slot0 = pureTable("ExploreMapSimpleMo")
+local var_0_0 = pureTable("ExploreMapSimpleMo")
 
-function slot0.ctor(slot0)
-	slot0.bonusNum = 0
-	slot0.goldCoin = 0
-	slot0.purpleCoin = 0
-	slot0.bonusNumTotal = 0
-	slot0.goldCoinTotal = 0
-	slot0.purpleCoinTotal = 0
-	slot0.bonusIds = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.bonusNum = 0
+	arg_1_0.goldCoin = 0
+	arg_1_0.purpleCoin = 0
+	arg_1_0.bonusNumTotal = 0
+	arg_1_0.goldCoinTotal = 0
+	arg_1_0.purpleCoinTotal = 0
+	arg_1_0.bonusIds = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.bonusNum = slot1.bonusNum
-	slot0.goldCoin = slot1.goldCoin
-	slot0.purpleCoin = slot1.purpleCoin
-	slot0.bonusNumTotal = slot1.bonusNumTotal
-	slot0.goldCoinTotal = slot1.goldCoinTotal
-	slot0.purpleCoinTotal = slot1.purpleCoinTotal
-	slot0.bonusIds = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.bonusNum = arg_2_1.bonusNum
+	arg_2_0.goldCoin = arg_2_1.goldCoin
+	arg_2_0.purpleCoin = arg_2_1.purpleCoin
+	arg_2_0.bonusNumTotal = arg_2_1.bonusNumTotal
+	arg_2_0.goldCoinTotal = arg_2_1.goldCoinTotal
+	arg_2_0.purpleCoinTotal = arg_2_1.purpleCoinTotal
+	arg_2_0.bonusIds = {}
 
-	for slot5, slot6 in pairs(slot1.bonusIds) do
-		slot0.bonusIds[slot6] = true
+	for iter_2_0, iter_2_1 in pairs(arg_2_1.bonusIds) do
+		arg_2_0.bonusIds[iter_2_1] = true
 	end
 end
 
-function slot0.onGetCoin(slot0, slot1, slot2)
-	if slot1 == ExploreEnum.CoinType.Bonus then
-		slot0.bonusNum = slot2
-	elseif slot1 == ExploreEnum.CoinType.GoldCoin then
-		slot0.goldCoin = slot2
-	elseif slot1 == ExploreEnum.CoinType.PurpleCoin then
-		slot0.purpleCoin = slot2
+function var_0_0.onGetCoin(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == ExploreEnum.CoinType.Bonus then
+		arg_3_0.bonusNum = arg_3_2
+	elseif arg_3_1 == ExploreEnum.CoinType.GoldCoin then
+		arg_3_0.goldCoin = arg_3_2
+	elseif arg_3_1 == ExploreEnum.CoinType.PurpleCoin then
+		arg_3_0.purpleCoin = arg_3_2
 	end
 end
 
-return slot0
+return var_0_0

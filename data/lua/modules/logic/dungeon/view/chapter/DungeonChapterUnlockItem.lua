@@ -1,119 +1,150 @@
-module("modules.logic.dungeon.view.chapter.DungeonChapterUnlockItem", package.seeall)
+﻿module("modules.logic.dungeon.view.chapter.DungeonChapterUnlockItem", package.seeall)
 
-slot0 = class("DungeonChapterUnlockItem", ListScrollCellExtend)
+local var_0_0 = class("DungeonChapterUnlockItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
-	slot0._gotemplate = gohelper.findChild(slot0.viewGO, "#go_item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_item")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0._config = slot1
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	arg_4_0._config = arg_4_1
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_showUnlockContent()
-	slot0:_showBeUnlockEpisode()
-	gohelper.setActive(slot0.viewGO, false)
-	TaskDispatcher.runDelay(slot0._delayShow, slot0, 0.7)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0:_showUnlockContent()
+	arg_5_0:_showBeUnlockEpisode()
+	gohelper.setActive(arg_5_0.viewGO, false)
+	TaskDispatcher.runDelay(arg_5_0._delayShow, arg_5_0, 0.7)
 end
 
-function slot0._delayShow(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0._delayShow(arg_6_0)
+	gohelper.setActive(arg_6_0.viewGO, true)
 end
 
-function slot0._showUnlockContent(slot0)
-	for slot5, slot6 in ipairs(uv0.getUnlockContentList(slot0._config.id)) do
-		slot7 = gohelper.clone(slot0._gotemplate, slot0._gocontainer)
+function var_0_0._showUnlockContent(arg_7_0)
+	local var_7_0 = var_0_0.getUnlockContentList(arg_7_0._config.id)
 
-		gohelper.setActive(slot7, true)
-		UISpriteSetMgr.instance:setUiFBSprite(gohelper.findChildImage(slot7, "#image_icon"), "jiesuo", true)
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = gohelper.clone(arg_7_0._gotemplate, arg_7_0._gocontainer)
 
-		gohelper.findChildTextMesh(slot7, "#txt_condition").text = slot6
+		gohelper.setActive(var_7_1, true)
+
+		local var_7_2 = gohelper.findChildTextMesh(var_7_1, "#txt_condition")
+		local var_7_3 = gohelper.findChildImage(var_7_1, "#image_icon")
+
+		UISpriteSetMgr.instance:setUiFBSprite(var_7_3, "jiesuo", true)
+
+		var_7_2.text = iter_7_1
 	end
 end
 
-function slot0.getUnlockContentList(slot0, slot1)
-	if DungeonModel.instance:isReactivityEpisode(slot0) then
-		return {}
+function var_0_0.getUnlockContentList(arg_8_0, arg_8_1)
+	local var_8_0 = {}
+
+	if DungeonModel.instance:isReactivityEpisode(arg_8_0) then
+		return var_8_0
 	end
 
-	if OpenConfig.instance:getOpenShowInEpisode(slot0) then
-		for slot7, slot8 in ipairs(slot3) do
-			slot9 = lua_open.configDict[slot8]
-			slot10 = nil
+	local var_8_1 = OpenConfig.instance:getOpenShowInEpisode(arg_8_0)
 
-			if slot1 and slot9 and slot9.bindActivityId ~= 0 then
-				if ActivityHelper.getActivityStatus(slot9.bindActivityId) == ActivityEnum.ActivityStatus.Normal then
-					slot10 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.ActivityOpen, slot8)
+	if var_8_1 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+			local var_8_2 = lua_open.configDict[iter_8_1]
+			local var_8_3
+
+			if arg_8_1 and var_8_2 and var_8_2.bindActivityId ~= 0 then
+				local var_8_4 = var_8_2.bindActivityId
+
+				if ActivityHelper.getActivityStatus(var_8_4) == ActivityEnum.ActivityStatus.Normal then
+					var_8_3 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.ActivityOpen, iter_8_1)
 				end
 			else
-				slot10 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Open, slot8)
+				var_8_3 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Open, iter_8_1)
 			end
 
-			if slot10 then
-				table.insert(slot2, slot10)
-			end
-		end
-	end
-
-	if DungeonConfig.instance:getUnlockEpisodeList(slot0) then
-		for slot8, slot9 in ipairs(slot4) do
-			if DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Episode, slot9) then
-				table.insert(slot2, slot10)
+			if var_8_3 then
+				table.insert(var_8_0, var_8_3)
 			end
 		end
 	end
 
-	if OpenConfig.instance:getOpenGroupShowInEpisode(slot0) then
-		for slot9, slot10 in ipairs(slot5) do
-			if DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.OpenGroup, slot10) then
-				table.insert(slot2, slot11)
+	local var_8_5 = DungeonConfig.instance:getUnlockEpisodeList(arg_8_0)
+
+	if var_8_5 then
+		for iter_8_2, iter_8_3 in ipairs(var_8_5) do
+			local var_8_6 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.Episode, iter_8_3)
+
+			if var_8_6 then
+				table.insert(var_8_0, var_8_6)
 			end
 		end
 	end
 
-	return slot2
+	local var_8_7 = OpenConfig.instance:getOpenGroupShowInEpisode(arg_8_0)
+
+	if var_8_7 then
+		for iter_8_4, iter_8_5 in ipairs(var_8_7) do
+			local var_8_8 = DungeonModel.instance:getUnlockContent(DungeonEnum.UnlockContentType.OpenGroup, iter_8_5)
+
+			if var_8_8 then
+				table.insert(var_8_0, var_8_8)
+			end
+		end
+	end
+
+	return var_8_0
 end
 
-function slot0._showBeUnlockEpisode(slot0)
-	if slot0._config.unlockEpisode <= 0 or DungeonModel.instance:hasPassLevelAndStory(slot0._config.id) then
+function var_0_0._showBeUnlockEpisode(arg_9_0)
+	if arg_9_0._config.unlockEpisode <= 0 or DungeonModel.instance:hasPassLevelAndStory(arg_9_0._config.id) then
 		return
 	end
 
-	slot1 = gohelper.clone(slot0._gotemplate, slot0._gocontainer)
+	local var_9_0 = gohelper.clone(arg_9_0._gotemplate, arg_9_0._gocontainer)
 
-	gohelper.setActive(slot1, true)
-	UISpriteSetMgr.instance:setUiFBSprite(gohelper.findChildImage(slot1, "#image_icon"), "suo1", true)
+	gohelper.setActive(var_9_0, true)
 
-	slot4 = DungeonConfig.instance:getEpisodeCO(slot0._config.unlockEpisode)
-	gohelper.findChildTextMesh(slot1, "#txt_condition").text = formatLuaLang("dungeon_unlock_episode", string.format("%s %s", DungeonController.getEpisodeName(slot4), slot4.name))
+	local var_9_1 = gohelper.findChildTextMesh(var_9_0, "#txt_condition")
+	local var_9_2 = gohelper.findChildImage(var_9_0, "#image_icon")
+
+	UISpriteSetMgr.instance:setUiFBSprite(var_9_2, "suo1", true)
+
+	local var_9_3 = DungeonConfig.instance:getEpisodeCO(arg_9_0._config.unlockEpisode)
+
+	var_9_1.text = formatLuaLang("dungeon_unlock_episode", string.format("%s %s", DungeonController.getEpisodeName(var_9_3), var_9_3.name))
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_10_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_11_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+	return
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_13_0, arg_13_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._delayShow, slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._delayShow, arg_14_0)
 end
 
-return slot0
+return var_0_0

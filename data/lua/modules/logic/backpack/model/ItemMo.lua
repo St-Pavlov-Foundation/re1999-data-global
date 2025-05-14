@@ -1,25 +1,25 @@
-module("modules.logic.backpack.model.ItemMo", package.seeall)
+﻿module("modules.logic.backpack.model.ItemMo", package.seeall)
 
-slot0 = pureTable("ItemMo")
+local var_0_0 = pureTable("ItemMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.quantity = 0
-	slot0.lastUseTime = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.quantity = 0
+	arg_1_0.lastUseTime = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.itemId
-	slot0.quantity = slot1.quantity
-	slot0.lastUseTime = slot1.lastUseTime
-	slot0.lastUpdateTime = slot1.lastUpdateTime
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.itemId
+	arg_2_0.quantity = arg_2_1.quantity
+	arg_2_0.lastUseTime = arg_2_1.lastUseTime
+	arg_2_0.lastUpdateTime = arg_2_1.lastUpdateTime
 end
 
-function slot0.initFromMaterialData(slot0, slot1)
-	slot0.id = slot1.materilId
-	slot0.quantity = slot1.quantity
-	slot0.lastUseTime = nil
-	slot0.lastUpdateTime = nil
+function var_0_0.initFromMaterialData(arg_3_0, arg_3_1)
+	arg_3_0.id = arg_3_1.materilId
+	arg_3_0.quantity = arg_3_1.quantity
+	arg_3_0.lastUseTime = nil
+	arg_3_0.lastUpdateTime = nil
 end
 
-return slot0
+return var_0_0

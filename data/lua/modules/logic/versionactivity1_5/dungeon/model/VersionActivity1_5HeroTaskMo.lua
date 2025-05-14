@@ -1,61 +1,61 @@
-module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5HeroTaskMo", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5HeroTaskMo", package.seeall)
 
-slot0 = pureTable("DispatchMo")
+local var_0_0 = pureTable("DispatchMo")
 
-function slot0.initById(slot0, slot1)
-	slot0.id = slot1
-	slot0.config = VersionActivity1_5DungeonConfig.instance:getHeroTaskCo(slot0.id)
-	slot0.subTaskCoList = VersionActivity1_5DungeonConfig.instance:getSubHeroTaskList(slot0.id)
-	slot0.gainedReward = false
-	slot0.subTaskGainedRewardList = nil
+function var_0_0.initById(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.config = VersionActivity1_5DungeonConfig.instance:getHeroTaskCo(arg_1_0.id)
+	arg_1_0.subTaskCoList = VersionActivity1_5DungeonConfig.instance:getSubHeroTaskList(arg_1_0.id)
+	arg_1_0.gainedReward = false
+	arg_1_0.subTaskGainedRewardList = nil
 end
 
-function slot0.initByCo(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.config = slot1
-	slot0.gainedReward = false
-	slot0.subTaskGainedRewardList = nil
+function var_0_0.initByCo(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.config = arg_2_1
+	arg_2_0.gainedReward = false
+	arg_2_0.subTaskGainedRewardList = nil
 end
 
-function slot0.updateGainedReward(slot0, slot1)
-	slot0.gainedReward = slot1
+function var_0_0.updateGainedReward(arg_3_0, arg_3_1)
+	arg_3_0.gainedReward = arg_3_1
 end
 
-function slot0.updateSubHeroTaskGainedReward(slot0, slot1)
-	if slot0:isExploreTask() then
+function var_0_0.updateSubHeroTaskGainedReward(arg_4_0, arg_4_1)
+	if arg_4_0:isExploreTask() then
 		return
 	end
 
-	slot0.subTaskGainedRewardList = {}
+	arg_4_0.subTaskGainedRewardList = {}
 
-	if not slot1 then
+	if not arg_4_1 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.subTaskGainedRewardList, slot6)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		table.insert(arg_4_0.subTaskGainedRewardList, iter_4_1)
 	end
 end
 
-function slot0.gainedSubHeroTaskId(slot0, slot1)
-	table.insert(slot0.subTaskGainedRewardList, slot1)
+function var_0_0.gainedSubHeroTaskId(arg_5_0, arg_5_1)
+	table.insert(arg_5_0.subTaskGainedRewardList, arg_5_1)
 end
 
-function slot0.isExploreTask(slot0)
-	return slot0.id == VersionActivity1_5DungeonEnum.ExploreTaskId
+function var_0_0.isExploreTask(arg_6_0)
+	return arg_6_0.id == VersionActivity1_5DungeonEnum.ExploreTaskId
 end
 
-function slot0.isUnlock(slot0)
-	return DungeonModel.instance:hasPassLevelAndStory(slot0.config.preEpisodeId)
+function var_0_0.isUnlock(arg_7_0)
+	return DungeonModel.instance:hasPassLevelAndStory(arg_7_0.config.preEpisodeId)
 end
 
-function slot0.isFinish(slot0)
-	if slot0:isExploreTask() then
+function var_0_0.isFinish(arg_8_0)
+	if arg_8_0:isExploreTask() then
 		return false
 	end
 
-	for slot4, slot5 in ipairs(slot0.subTaskCoList) do
-		if not VersionActivity1_5RevivalTaskModel.instance:checkSubHeroTaskIsFinish(slot5) then
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.subTaskCoList) do
+		if not VersionActivity1_5RevivalTaskModel.instance:checkSubHeroTaskIsFinish(iter_8_1) then
 			return false
 		end
 	end
@@ -63,34 +63,36 @@ function slot0.isFinish(slot0)
 	return true
 end
 
-function slot0.getSpriteName(slot0)
-	if slot0.id == VersionActivity1_5DungeonEnum.ExploreTaskId then
-		return slot0.isSelect and VersionActivity1_5DungeonEnum.ExploreTabImageSelect or VersionActivity1_5DungeonEnum.ExploreTabImageNotSelect
+function var_0_0.getSpriteName(arg_9_0)
+	if arg_9_0.id == VersionActivity1_5DungeonEnum.ExploreTaskId then
+		return arg_9_0.isSelect and VersionActivity1_5DungeonEnum.ExploreTabImageSelect or VersionActivity1_5DungeonEnum.ExploreTabImageNotSelect
 	end
 
-	return slot0.isSelect and slot0.config.heroTabIcon .. 1 or slot0.config.heroTabIcon .. 2
+	return arg_9_0.isSelect and arg_9_0.config.heroTabIcon .. 1 or arg_9_0.config.heroTabIcon .. 2
 end
 
-function slot0.subTaskIsGainedReward(slot0, slot1)
-	return slot0.subTaskGainedRewardList and tabletool.indexOf(slot0.subTaskGainedRewardList, slot1)
+function var_0_0.subTaskIsGainedReward(arg_10_0, arg_10_1)
+	return arg_10_0.subTaskGainedRewardList and tabletool.indexOf(arg_10_0.subTaskGainedRewardList, arg_10_1)
 end
 
-function slot0.getSubTaskFinishCount(slot0)
-	for slot5, slot6 in ipairs(slot0.subTaskCoList) do
-		if VersionActivity1_5RevivalTaskModel.instance:checkSubHeroTaskIsFinish(slot6) then
-			slot1 = 0 + 1
+function var_0_0.getSubTaskFinishCount(arg_11_0)
+	local var_11_0 = 0
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.subTaskCoList) do
+		if VersionActivity1_5RevivalTaskModel.instance:checkSubHeroTaskIsFinish(iter_11_1) then
+			var_11_0 = var_11_0 + 1
 		end
 	end
 
-	return slot1
+	return var_11_0
 end
 
-function slot0.getSubTaskCount(slot0)
-	return slot0.subTaskCoList and #slot0.subTaskCoList or 0
+function var_0_0.getSubTaskCount(arg_12_0)
+	return arg_12_0.subTaskCoList and #arg_12_0.subTaskCoList or 0
 end
 
-function slot0.getSubTaskCoList(slot0)
-	return slot0.subTaskCoList
+function var_0_0.getSubTaskCoList(arg_13_0)
+	return arg_13_0.subTaskCoList
 end
 
-return slot0
+return var_0_0

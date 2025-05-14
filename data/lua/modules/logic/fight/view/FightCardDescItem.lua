@@ -1,77 +1,83 @@
-module("modules.logic.fight.view.FightCardDescItem", package.seeall)
+﻿module("modules.logic.fight.view.FightCardDescItem", package.seeall)
 
-slot0 = class("FightCardDescItem", ListScrollCellExtend)
+local var_0_0 = class("FightCardDescItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gonormalcard = gohelper.findChild(slot0.viewGO, "#go_normalcard")
-	slot0._gosupercard = gohelper.findChild(slot0.viewGO, "#go_supercard")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonormalcard = gohelper.findChild(arg_1_0.viewGO, "#go_normalcard")
+	arg_1_0._gosupercard = gohelper.findChild(arg_1_0.viewGO, "#go_supercard")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simageList = arg_4_0:getUserDataTb_()
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0._mo = slot1
-	slot0._isSuperCard = slot2
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._mo = arg_7_1
+	arg_7_0._isSuperCard = arg_7_2
 
-	if slot0._isSuperCard then
-		slot0:onRefreshUI(slot0._gosupercard)
+	if arg_7_0._isSuperCard then
+		arg_7_0:onRefreshUI(arg_7_0._gosupercard)
 	else
-		slot0:onRefreshUI(slot0._gonormalcard)
+		arg_7_0:onRefreshUI(arg_7_0._gonormalcard)
 	end
 
-	gohelper.setActive(slot0._gonormalcard, not slot0._isSuperCard)
-	gohelper.setActive(slot0._gosupercard, slot0._isSuperCard)
+	gohelper.setActive(arg_7_0._gonormalcard, not arg_7_0._isSuperCard)
+	gohelper.setActive(arg_7_0._gosupercard, arg_7_0._isSuperCard)
 end
 
-function slot0.onRefreshUI(slot0, slot1)
-	slot3 = gohelper.findChildSingleImage(slot1, "attribute")
-	slot4 = gohelper.findChildText(slot1, "nameen")
-	slot5 = gohelper.findChildText(slot1, "nameen/name")
-	slot6 = gohelper.findChildText(slot1, "desc")
-	slot7 = gohelper.findChildImage(slot1, "tagIcon")
+function var_0_0.onRefreshUI(arg_8_0, arg_8_1)
+	local var_8_0 = gohelper.findChildSingleImage(arg_8_1, "card")
+	local var_8_1 = gohelper.findChildSingleImage(arg_8_1, "attribute")
+	local var_8_2 = gohelper.findChildText(arg_8_1, "nameen")
+	local var_8_3 = gohelper.findChildText(arg_8_1, "nameen/name")
+	local var_8_4 = gohelper.findChildText(arg_8_1, "desc")
+	local var_8_5 = gohelper.findChildImage(arg_8_1, "tagIcon")
 
-	gohelper.findChildSingleImage(slot1, "card"):LoadImage(ResUrl.getFightCardDescIcon(slot0._mo.card1))
+	var_8_0:LoadImage(ResUrl.getFightCardDescIcon(arg_8_0._mo.card1))
 
-	if not string.nilorempty(slot0._mo.attribute) then
-		slot3:LoadImage(ResUrl.getAttributeIcon(slot0._mo.attribute))
+	if not string.nilorempty(arg_8_0._mo.attribute) then
+		var_8_1:LoadImage(ResUrl.getAttributeIcon(arg_8_0._mo.attribute))
 	end
 
-	slot4.text = slot0._mo.cardname_en
-	slot5.text = slot0._mo.cardname
-	slot6.text = slot0._mo.carddescription2
+	var_8_2.text = arg_8_0._mo.cardname_en
+	var_8_3.text = arg_8_0._mo.cardname
+	var_8_4.text = arg_8_0._mo.carddescription2
 
-	UISpriteSetMgr.instance:setFightSprite(slot7, slot0._mo.card2)
-	gohelper.setActive(slot3.gameObject, not slot0._isSuperCard)
-	gohelper.setActive(slot7.gameObject, not slot0._isSuperCard)
-	table.insert(slot0._simageList, slot2)
-	table.insert(slot0._simageList, slot3)
+	UISpriteSetMgr.instance:setFightSprite(var_8_5, arg_8_0._mo.card2)
+	gohelper.setActive(var_8_1.gameObject, not arg_8_0._isSuperCard)
+	gohelper.setActive(var_8_5.gameObject, not arg_8_0._isSuperCard)
+	table.insert(arg_8_0._simageList, var_8_0)
+	table.insert(arg_8_0._simageList, var_8_1)
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._simageList) do
-		slot5:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._simageList) do
+		iter_10_1:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

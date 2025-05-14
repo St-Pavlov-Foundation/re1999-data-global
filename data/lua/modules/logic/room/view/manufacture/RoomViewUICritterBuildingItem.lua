@@ -1,76 +1,86 @@
-module("modules.logic.room.view.manufacture.RoomViewUICritterBuildingItem", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomViewUICritterBuildingItem", package.seeall)
 
-slot0 = class("RoomViewUICritterBuildingItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUICritterBuildingItem", RoomViewUIBaseItem)
 
-function slot0._customOnInit(slot0)
-	slot0._gomain = gohelper.findChild(slot0._gocontainer, "bubblebg/#go_main")
-	slot0._imagebuildingicon = gohelper.findChildImage(slot0._gocontainer, "#image_buildingicon")
-	slot0._txtnamecn = gohelper.findChildText(slot0._gocontainer, "bottom/txt_buildingName")
-	slot0._goreddot = gohelper.findChild(slot0._gocontainer, "bottom/#go_reddot")
-	slot0._txtnamecn.text = luaLang("critter_restroom_name")
+function var_0_0._customOnInit(arg_1_0)
+	arg_1_0._gomain = gohelper.findChild(arg_1_0._gocontainer, "bubblebg/#go_main")
+	arg_1_0._imagebuildingicon = gohelper.findChildImage(arg_1_0._gocontainer, "#image_buildingicon")
+	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0._gocontainer, "bottom/txt_buildingName")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0._gocontainer, "bottom/#go_reddot")
+	arg_1_0._txtnamecn.text = luaLang("critter_restroom_name")
 
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imagebuildingicon, "critter_buildingicon_1")
-	gohelper.setActive(slot0._gomain, true)
+	UISpriteSetMgr.instance:setCritterSprite(arg_1_0._imagebuildingicon, "critter_buildingicon_1")
+	gohelper.setActive(arg_1_0._gomain, true)
 end
 
-function slot0._customAddEventListeners(slot0)
-	slot0:refreshUI(true)
+function var_0_0._customAddEventListeners(arg_2_0)
+	arg_2_0:refreshUI(true)
 end
 
-function slot0._customRemoveEventListeners(slot0)
+function var_0_0._customRemoveEventListeners(arg_3_0)
+	return
 end
 
-function slot0._onClick(slot0, slot1, slot2)
+function var_0_0._onClick(arg_4_0, arg_4_1, arg_4_2)
 	ManufactureController.instance:openCritterBuildingView()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:_refreshShow(slot1)
-	slot0:_refreshPosition()
+function var_0_0.refreshUI(arg_5_0, arg_5_1)
+	arg_5_0:_refreshShow(arg_5_1)
+	arg_5_0:_refreshPosition()
 end
 
-function slot0._refreshShow(slot0, slot1)
+function var_0_0._refreshShow(arg_6_0, arg_6_1)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_6_0:_setShow(false, arg_6_1)
 
 		return
 	end
 
-	if slot0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook and slot2 ~= RoomEnum.CameraState.OverlookAll then
-		slot0:_setShow(false, slot1)
+	local var_6_0 = arg_6_0._scene.camera:getCameraState()
+
+	if var_6_0 ~= RoomEnum.CameraState.Overlook and var_6_0 ~= RoomEnum.CameraState.OverlookAll then
+		arg_6_0:_setShow(false, arg_6_1)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		slot0:_setShow(false, slot1)
+		arg_6_0:_setShow(false, arg_6_1)
 
 		return
 	end
 
-	slot0:_setShow(true, slot1)
+	arg_6_0:_setShow(true, arg_6_1)
 end
 
-function slot0.getUI3DPos(slot0)
-	slot1 = nil
+function var_0_0.getUI3DPos(arg_7_0)
+	local var_7_0
+	local var_7_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if ManufactureModel.instance:getCritterBuildingListInOrder() then
-		slot1 = slot2[1].buildingUid
+	if var_7_1 then
+		var_7_0 = var_7_1[1].buildingUid
 	end
 
-	if not slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding) then
-		slot0:_setShow(false, true)
+	local var_7_2 = arg_7_0._scene.buildingmgr:getBuildingEntity(var_7_0, SceneTag.RoomBuilding)
+
+	if not var_7_2 then
+		arg_7_0:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	slot6 = slot3:getHeadGO() and slot4.transform.position or slot3.containerGO.transform.position
+	local var_7_3 = var_7_2:getHeadGO()
+	local var_7_4 = var_7_2.containerGO
+	local var_7_5 = var_7_3 and var_7_3.transform.position or var_7_4.transform.position
+	local var_7_6 = Vector3(var_7_5.x, var_7_5.y, var_7_5.z)
 
-	return RoomBendingHelper.worldToBendingSimple(Vector3(slot6.x, slot6.y, slot6.z))
+	return (RoomBendingHelper.worldToBendingSimple(var_7_6))
 end
 
-function slot0._customOnDestory(slot0)
+function var_0_0._customOnDestory(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

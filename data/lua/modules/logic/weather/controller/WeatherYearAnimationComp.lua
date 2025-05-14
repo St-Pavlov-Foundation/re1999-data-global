@@ -1,8 +1,9 @@
-module("modules.logic.weather.controller.WeatherYearAnimationComp", package.seeall)
+﻿module("modules.logic.weather.controller.WeatherYearAnimationComp", package.seeall)
 
-slot0 = class("WeatherYearAnimationComp", BaseSceneComp)
-slot0.CurveAssetPath = "scenes/dynamic/m_s01_zjm_a/anim/year_curve.asset"
-slot0.ConstVarId = {
+local var_0_0 = class("WeatherYearAnimationComp", BaseSceneComp)
+
+var_0_0.CurveAssetPath = "scenes/dynamic/m_s01_zjm_a/anim/year_curve.asset"
+var_0_0.ConstVarId = {
 	RotateDurationId = 602,
 	IntervalId = 600,
 	CirculationIntervalId = 603,
@@ -10,207 +11,231 @@ slot0.ConstVarId = {
 	StartYearId = 604
 }
 
-function slot0.onInit(slot0)
-	slot0.animationEndTime = 0
-	slot0.materials = {}
-	slot0.yearTable = {}
-	slot0.node = nil
-	slot0.node1 = nil
-	slot0.aniCurveConfig = nil
-	slot0.circulationNums = {}
-	slot0.circulationIndex = 0
-	slot0.interval = CommonConfig.instance:getConstNum(uv0.ConstVarId.IntervalId)
-	slot0.rotateCircle = CommonConfig.instance:getConstNum(uv0.ConstVarId.RotateCircleId)
-	slot0.rotateDuration = CommonConfig.instance:getConstNum(uv0.ConstVarId.RotateDurationId)
-	slot0.circulationInterval = CommonConfig.instance:getConstNum(uv0.ConstVarId.CirculationIntervalId)
-	slot0.startYear = CommonConfig.instance:getConstNum(uv0.ConstVarId.StartYearId)
-	slot0.setNumYearTable = slot0:_numberConvertToTable(slot0.startYear)
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.animationEndTime = 0
+	arg_1_0.materials = {}
+	arg_1_0.yearTable = {}
+	arg_1_0.node = nil
+	arg_1_0.node1 = nil
+	arg_1_0.aniCurveConfig = nil
+	arg_1_0.circulationNums = {}
+	arg_1_0.circulationIndex = 0
+	arg_1_0.interval = CommonConfig.instance:getConstNum(var_0_0.ConstVarId.IntervalId)
+	arg_1_0.rotateCircle = CommonConfig.instance:getConstNum(var_0_0.ConstVarId.RotateCircleId)
+	arg_1_0.rotateDuration = CommonConfig.instance:getConstNum(var_0_0.ConstVarId.RotateDurationId)
+	arg_1_0.circulationInterval = CommonConfig.instance:getConstNum(var_0_0.ConstVarId.CirculationIntervalId)
+	arg_1_0.startYear = CommonConfig.instance:getConstNum(var_0_0.ConstVarId.StartYearId)
+	arg_1_0.setNumYearTable = arg_1_0:_numberConvertToTable(arg_1_0.startYear)
 end
 
-function slot0.initSceneGo(slot0, slot1)
-	slot0._sceneGo = slot1
+function var_0_0.initSceneGo(arg_2_0, arg_2_1)
+	arg_2_0._sceneGo = arg_2_1
 
-	slot0:initSceneNodeStatus()
-	slot0:initAnimationCurve(slot0._onCloseViewFinish, slot0)
+	arg_2_0:initSceneNodeStatus()
+	arg_2_0:initAnimationCurve(arg_2_0._onCloseViewFinish, arg_2_0)
 end
 
-function slot0.initSceneNodeStatus(slot0)
-	slot0.node = slot0:getSceneNode("s01_obj_a/Anim/Obj/s01_C_Obj_a/year")
-	slot0.node1 = slot0:getSceneNode("s01_obj_a/Anim/Obj/s01_C_Obj_a/year (1)")
+function var_0_0.initSceneNodeStatus(arg_3_0)
+	arg_3_0.node = arg_3_0:getSceneNode("s01_obj_a/Anim/Obj/s01_C_Obj_a/year")
+	arg_3_0.node1 = arg_3_0:getSceneNode("s01_obj_a/Anim/Obj/s01_C_Obj_a/year (1)")
 
-	if not slot0.node then
+	if not arg_3_0.node then
 		logError("initSceneNodeStatus no node")
 
 		return
 	end
 
-	slot0.materials = {}
+	arg_3_0.materials = {}
 
-	table.insert(slot0.materials, slot0.node:GetComponent(typeof(UnityEngine.Renderer)).material)
+	local var_3_0 = arg_3_0.node:GetComponent(typeof(UnityEngine.Renderer)).material
 
-	if slot0.node1 then
-		table.insert(slot0.materials, slot0.node1:GetComponent(typeof(UnityEngine.Renderer)).material)
+	table.insert(arg_3_0.materials, var_3_0)
+
+	if arg_3_0.node1 then
+		local var_3_1 = arg_3_0.node1:GetComponent(typeof(UnityEngine.Renderer)).material
+
+		table.insert(arg_3_0.materials, var_3_1)
 	end
 
-	slot0:setMaterialsParam()
+	arg_3_0:setMaterialsParam()
 end
 
-function slot0.initAnimationCurve(slot0, slot1, slot2)
-	slot0.loadAnimationCurveCallback = slot1
-	slot0.loadAnimationCurveCallbackObj = slot2
+function var_0_0.initAnimationCurve(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.loadAnimationCurveCallback = arg_4_1
+	arg_4_0.loadAnimationCurveCallbackObj = arg_4_2
 
-	loadAbAsset(uv0.CurveAssetPath, false, slot0.loadCallback, slot0)
+	loadAbAsset(var_0_0.CurveAssetPath, false, arg_4_0.loadCallback, arg_4_0)
 end
 
-function slot0.loadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot0.assetItem = slot1
+function var_0_0.loadCallback(arg_5_0, arg_5_1)
+	if arg_5_1.IsLoadSuccess then
+		arg_5_0.assetItem = arg_5_1
 
-		slot0.assetItem:Retain()
+		arg_5_0.assetItem:Retain()
 
-		slot0.aniCurveConfig = slot0.assetItem:GetResource(uv0.CurveAssetPath)
+		arg_5_0.aniCurveConfig = arg_5_0.assetItem:GetResource(var_0_0.CurveAssetPath)
 	else
-		slot0.aniCurveConfig = nil
+		arg_5_0.aniCurveConfig = nil
 
-		logError("%s scene load '%s' failed", GameSceneMgr.instance:getCurScene()._gameObj.name, uv0.CurveAssetPath)
+		logError("%s scene load '%s' failed", GameSceneMgr.instance:getCurScene()._gameObj.name, var_0_0.CurveAssetPath)
 	end
 
-	slot0.loadAnimationCurveCallback(slot0.loadAnimationCurveCallbackObj)
+	arg_5_0.loadAnimationCurveCallback(arg_5_0.loadAnimationCurveCallbackObj)
 end
 
-function slot0._onCloseViewFinish(slot0)
-	if not slot0.node then
+function var_0_0._onCloseViewFinish(arg_6_0)
+	if not arg_6_0.node then
 		logNormal("node not found, direct return, not play animation")
 
 		return
 	end
 
-	slot1 = (DungeonModel.instance:getLastEpisodeConfigAndInfo().preEpisode ~= 0 or DungeonConfig.instance:getEpisodeCO(10003)) and DungeonConfig.instance:getEpisodeCO(slot1.preEpisode)
+	local var_6_0 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
 
-	if not slot0.lastEpisodeCo or slot1.id ~= slot0.lastEpisodeCo.id then
-		slot0.lastEpisodeCo = slot1
-
-		slot0:reCirculateCirculationNums()
+	if var_6_0.preEpisode == 0 then
+		var_6_0 = DungeonConfig.instance:getEpisodeCO(10003)
+	else
+		var_6_0 = DungeonConfig.instance:getEpisodeCO(var_6_0.preEpisode)
 	end
 
-	slot0:cancelRepeatTask()
+	if not arg_6_0.lastEpisodeCo or var_6_0.id ~= arg_6_0.lastEpisodeCo.id then
+		arg_6_0.lastEpisodeCo = var_6_0
 
-	if slot0.circulationNums and #slot0.circulationNums ~= 0 then
-		slot0.circulationIndex = 0
+		arg_6_0:reCirculateCirculationNums()
+	end
 
-		slot0:addRepeatTask()
-		slot0:_playNodeAnimation()
+	arg_6_0:cancelRepeatTask()
+
+	if arg_6_0.circulationNums and #arg_6_0.circulationNums ~= 0 then
+		arg_6_0.circulationIndex = 0
+
+		arg_6_0:addRepeatTask()
+		arg_6_0:_playNodeAnimation()
 	end
 end
 
-function slot0.reCirculateCirculationNums(slot0)
-	slot0.circulationNums = {}
+function var_0_0.reCirculateCirculationNums(arg_7_0)
+	arg_7_0.circulationNums = {}
 
-	if slot0.lastEpisodeCo.year == 0 then
-		logNormal(string.format("[WeatherYearAnimationComp] episode config not have year, id : %s, name : %s, year : %s", slot0.lastEpisodeCo.id, slot0.lastEpisodeCo.name, slot0.lastEpisodeCo.year))
-		slot0:hideNode()
+	if arg_7_0.lastEpisodeCo.year == 0 then
+		logNormal(string.format("[WeatherYearAnimationComp] episode config not have year, id : %s, name : %s, year : %s", arg_7_0.lastEpisodeCo.id, arg_7_0.lastEpisodeCo.name, arg_7_0.lastEpisodeCo.year))
+		arg_7_0:hideNode()
 
 		return
 	end
 
-	table.insert(slot0.circulationNums, slot0.lastEpisodeCo.year)
+	table.insert(arg_7_0.circulationNums, arg_7_0.lastEpisodeCo.year)
 
-	if not string.nilorempty(slot0.lastEpisodeCo.time) then
-		slot2, slot3, slot4, slot5, slot6, slot7 = string.find(slot1, "(%d+)/(%d+)%s+(%d+):(%d+)")
+	local var_7_0 = arg_7_0.lastEpisodeCo.time
 
-		if not string.nilorempty(slot4) and not string.nilorempty(slot5) then
-			table.insert(slot0.circulationNums, string.format("%02d%02d", slot4, slot5))
+	if not string.nilorempty(var_7_0) then
+		local var_7_1, var_7_2, var_7_3, var_7_4, var_7_5, var_7_6 = string.find(var_7_0, "(%d+)/(%d+)%s+(%d+):(%d+)")
+
+		if not string.nilorempty(var_7_3) and not string.nilorempty(var_7_4) then
+			table.insert(arg_7_0.circulationNums, string.format("%02d%02d", var_7_3, var_7_4))
 		end
 
-		if not string.nilorempty(slot6) and not string.nilorempty(slot7) then
-			table.insert(slot0.circulationNums, string.format("%02d%02d", slot6, slot7))
+		if not string.nilorempty(var_7_5) and not string.nilorempty(var_7_6) then
+			table.insert(arg_7_0.circulationNums, string.format("%02d%02d", var_7_5, var_7_6))
 		end
 	end
 end
 
-function slot0.getSceneNode(slot0, slot1)
-	if slot0._sceneGo then
-		return gohelper.findChild(slot2, slot1)
+function var_0_0.getSceneNode(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._sceneGo
+
+	if var_8_0 then
+		return gohelper.findChild(var_8_0, arg_8_1)
 	end
 end
 
-function slot0._playNodeAnimation(slot0)
-	slot0:showNode()
+function var_0_0._playNodeAnimation(arg_9_0)
+	arg_9_0:showNode()
 
-	slot0.circulationIndex = slot0.circulationIndex + 1
+	arg_9_0.circulationIndex = arg_9_0.circulationIndex + 1
 
-	if slot0.circulationIndex > #slot0.circulationNums then
-		slot0.circulationIndex = 1
+	if arg_9_0.circulationIndex > #arg_9_0.circulationNums then
+		arg_9_0.circulationIndex = 1
 	end
 
-	for slot4 = 1, #slot0.setNumYearTable do
-		slot0.setNumYearTable[slot4] = math.floor(slot0.setNumYearTable[slot4] % 10)
+	for iter_9_0 = 1, #arg_9_0.setNumYearTable do
+		arg_9_0.setNumYearTable[iter_9_0] = math.floor(arg_9_0.setNumYearTable[iter_9_0] % 10)
 	end
 
-	slot0.yearTable = {}
+	arg_9_0.yearTable = {}
 
-	for slot5 = 1, #slot0:_numberConvertToTable(slot0.circulationNums[slot0.circulationIndex]) do
-		slot7 = slot0:_getTotalIncrement(slot0.setNumYearTable[slot5], slot1[slot5])
+	local var_9_0 = arg_9_0:_numberConvertToTable(arg_9_0.circulationNums[arg_9_0.circulationIndex])
 
-		table.insert(slot0.yearTable, {
-			totalIncrement = slot7,
-			everySecondIncrement = slot7 / slot0.rotateDuration,
-			startNum = slot0.setNumYearTable[slot5],
-			targetNum = slot0.setNumYearTable[slot5] + slot7
-		})
+	for iter_9_1 = 1, #var_9_0 do
+		local var_9_1 = {}
+		local var_9_2 = arg_9_0:_getTotalIncrement(arg_9_0.setNumYearTable[iter_9_1], var_9_0[iter_9_1])
+
+		var_9_1.totalIncrement = var_9_2
+		var_9_1.everySecondIncrement = var_9_2 / arg_9_0.rotateDuration
+		var_9_1.startNum = arg_9_0.setNumYearTable[iter_9_1]
+		var_9_1.targetNum = arg_9_0.setNumYearTable[iter_9_1] + var_9_2
+
+		table.insert(arg_9_0.yearTable, var_9_1)
 	end
 
-	if #slot0.yearTable ~= 4 then
-		logError(string.format("episode config error, id : %s, name : %s, year : %s, time : %s ", slot0.lastEpisodeCo.id, slot0.lastEpisodeCo.name, slot0.lastEpisodeCo.year, slot0.lastEpisodeCo.time))
+	if #arg_9_0.yearTable ~= 4 then
+		logError(string.format("episode config error, id : %s, name : %s, year : %s, time : %s ", arg_9_0.lastEpisodeCo.id, arg_9_0.lastEpisodeCo.name, arg_9_0.lastEpisodeCo.year, arg_9_0.lastEpisodeCo.time))
 
 		return
 	end
 
-	for slot6 = 1, 4 do
-		slot0.yearTable[slot6].startTime = Time.time + (slot6 - 1) * slot0.interval
+	local var_9_3 = Time.time
+
+	for iter_9_2 = 1, 4 do
+		arg_9_0.yearTable[iter_9_2].startTime = var_9_3 + (iter_9_2 - 1) * arg_9_0.interval
 	end
 
-	slot0.animationEndTime = slot0.yearTable[4].startTime + slot0.rotateDuration
+	arg_9_0.animationEndTime = arg_9_0.yearTable[4].startTime + arg_9_0.rotateDuration
 
-	TaskDispatcher.runRepeat(slot0._onFrame, slot0, 0.001)
+	TaskDispatcher.runRepeat(arg_9_0._onFrame, arg_9_0, 0.001)
 end
 
-function slot0._onFrame(slot0)
-	slot1 = Time.time
+function var_0_0._onFrame(arg_10_0)
+	local var_10_0 = Time.time
 
-	if slot0:canStopAnimation() then
-		slot0:cancelAnimationTask()
+	if arg_10_0:canStopAnimation() then
+		arg_10_0:cancelAnimationTask()
 
 		return
 	end
 
-	for slot5 = 1, 4 do
-		if slot0.yearTable[slot5].startTime <= slot1 then
-			if slot0.rotateDuration <= slot1 - slot0.yearTable[slot5].startTime then
-				slot0.setNumYearTable[slot5] = slot0.yearTable[slot5].targetNum
+	for iter_10_0 = 1, 4 do
+		if var_10_0 >= arg_10_0.yearTable[iter_10_0].startTime then
+			local var_10_1 = var_10_0 - arg_10_0.yearTable[iter_10_0].startTime
+
+			if var_10_1 >= arg_10_0.rotateDuration then
+				arg_10_0.setNumYearTable[iter_10_0] = arg_10_0.yearTable[iter_10_0].targetNum
 			else
-				slot0.setNumYearTable[slot5] = slot0.yearTable[slot5].startNum + slot0.yearTable[slot5].totalIncrement * slot0.aniCurveConfig:GetY(slot6 / slot0.rotateDuration)
+				local var_10_2 = var_10_1 / arg_10_0.rotateDuration
+				local var_10_3 = arg_10_0.aniCurveConfig:GetY(var_10_2)
+
+				arg_10_0.setNumYearTable[iter_10_0] = arg_10_0.yearTable[iter_10_0].startNum + arg_10_0.yearTable[iter_10_0].totalIncrement * var_10_3
 			end
 		end
 	end
 
-	slot0:setMaterialsParam()
+	arg_10_0:setMaterialsParam()
 end
 
-function slot0.hideNode(slot0)
-	gohelper.setActive(slot0.node, false)
-	gohelper.setActive(slot0.node1, false)
+function var_0_0.hideNode(arg_11_0)
+	gohelper.setActive(arg_11_0.node, false)
+	gohelper.setActive(arg_11_0.node1, false)
 end
 
-function slot0.showNode(slot0)
-	gohelper.setActive(slot0.node, true)
-	gohelper.setActive(slot0.node1, true)
+function var_0_0.showNode(arg_12_0)
+	gohelper.setActive(arg_12_0.node, true)
+	gohelper.setActive(arg_12_0.node1, true)
 end
 
-function slot0.canStopAnimation(slot0)
-	if slot0.animationEndTime < Time.time then
-		for slot4 = 1, 4 do
-			if slot0.setNumYearTable[slot4] < slot0.yearTable[slot4].targetNum then
+function var_0_0.canStopAnimation(arg_13_0)
+	if arg_13_0.animationEndTime < Time.time then
+		for iter_13_0 = 1, 4 do
+			if arg_13_0.setNumYearTable[iter_13_0] < arg_13_0.yearTable[iter_13_0].targetNum then
 				return false
 			end
 		end
@@ -221,66 +246,68 @@ function slot0.canStopAnimation(slot0)
 	return false
 end
 
-function slot0.setMaterialsParam(slot0)
-	for slot4, slot5 in ipairs(slot0.materials) do
-		slot5:SetVector("_Year", Vector4.New(slot0.setNumYearTable[1], slot0.setNumYearTable[2], slot0.setNumYearTable[3], slot0.setNumYearTable[4]))
+function var_0_0.setMaterialsParam(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.materials) do
+		iter_14_1:SetVector("_Year", Vector4.New(arg_14_0.setNumYearTable[1], arg_14_0.setNumYearTable[2], arg_14_0.setNumYearTable[3], arg_14_0.setNumYearTable[4]))
 	end
 end
 
-function slot0._getTotalIncrement(slot0, slot1, slot2)
-	slot3 = 10 * slot0.rotateCircle
+function var_0_0._getTotalIncrement(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = 10 * arg_15_0.rotateCircle
+	local var_15_1 = arg_15_2 - arg_15_1
 
-	if slot2 - slot1 < 0 then
-		slot4 = slot4 + 10
+	if var_15_1 < 0 then
+		var_15_1 = var_15_1 + 10
 	end
 
-	return slot3 + slot4
+	return var_15_0 + var_15_1
 end
 
-function slot0._numberConvertToTable(slot0, slot1)
-	slot3 = {}
+function var_0_0._numberConvertToTable(arg_16_0, arg_16_1)
+	local var_16_0 = tostring(arg_16_1)
+	local var_16_1 = {}
 
-	for slot7 in string.gmatch(tostring(slot1), ".") do
-		table.insert(slot3, tonumber(slot7))
+	for iter_16_0 in string.gmatch(var_16_0, ".") do
+		table.insert(var_16_1, tonumber(iter_16_0))
 	end
 
-	return slot3
+	return var_16_1
 end
 
-function slot0.addRepeatTask(slot0)
-	TaskDispatcher.runRepeat(slot0._playNodeAnimation, slot0, slot0.rotateDuration + slot0.circulationInterval)
+function var_0_0.addRepeatTask(arg_17_0)
+	TaskDispatcher.runRepeat(arg_17_0._playNodeAnimation, arg_17_0, arg_17_0.rotateDuration + arg_17_0.circulationInterval)
 end
 
-function slot0.cancelRepeatTask(slot0)
-	TaskDispatcher.cancelTask(slot0._playNodeAnimation, slot0)
-	slot0:cancelAnimationTask()
+function var_0_0.cancelRepeatTask(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._playNodeAnimation, arg_18_0)
+	arg_18_0:cancelAnimationTask()
 end
 
-function slot0.cancelAnimationTask(slot0)
-	TaskDispatcher.cancelTask(slot0._onFrame, slot0)
+function var_0_0.cancelAnimationTask(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._onFrame, arg_19_0)
 
-	slot0.yearTable = {}
+	arg_19_0.yearTable = {}
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:cancelRepeatTask()
+function var_0_0.onSceneClose(arg_20_0)
+	arg_20_0:cancelRepeatTask()
 
-	slot0.materials = {}
-	slot0.setNumYearTable = {}
-	slot0.yearTable = {}
-	slot0.circulationNums = {}
-	slot0.node = nil
-	slot0.node1 = nil
-	slot0.circulationIndex = 0
-	slot0.lastEpisodeCo = nil
+	arg_20_0.materials = {}
+	arg_20_0.setNumYearTable = {}
+	arg_20_0.yearTable = {}
+	arg_20_0.circulationNums = {}
+	arg_20_0.node = nil
+	arg_20_0.node1 = nil
+	arg_20_0.circulationIndex = 0
+	arg_20_0.lastEpisodeCo = nil
 
-	if slot0.assetItem then
-		slot0.assetItem:Release()
+	if arg_20_0.assetItem then
+		arg_20_0.assetItem:Release()
 
-		slot0.aniCurveConfig = nil
+		arg_20_0.aniCurveConfig = nil
 	else
-		removeAssetLoadCb(uv0.CurveAssetPath, slot0.loadCallback, slot0)
+		removeAssetLoadCb(var_0_0.CurveAssetPath, arg_20_0.loadCallback, arg_20_0)
 	end
 end
 
-return slot0
+return var_0_0

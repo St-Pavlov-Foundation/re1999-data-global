@@ -1,46 +1,46 @@
-module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapElement", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapElement", package.seeall)
 
-slot0 = class("HeroInvitationDungeonMapElement", DungeonMapElement)
+local var_0_0 = class("HeroInvitationDungeonMapElement", DungeonMapElement)
 
-function slot0.setFinishAndDotDestroy(slot0)
-	if not slot0._wenhaoGo then
-		slot0._waitFinishAndDotDestroy = true
+function var_0_0.setFinishAndDotDestroy(arg_1_0)
+	if not arg_1_0._wenhaoGo then
+		arg_1_0._waitFinishAndDotDestroy = true
 
 		return
 	end
 
 	UIBlockHelper.instance:startBlock("DungeonMapSceneTweenPos", 1.6, ViewName.HeroInvitationDungeonMapView)
-	slot0:setWenHaoAnim("finish")
+	arg_1_0:setWenHaoAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
 end
 
-function slot0._wenHaoAnimDone(slot0)
-	if slot0._wenhaoAnimName == "finish" then
-		slot0._sceneElements:onRemoveElementFinish()
+function var_0_0._wenHaoAnimDone(arg_2_0)
+	if arg_2_0._wenhaoAnimName == "finish" then
+		arg_2_0._sceneElements:onRemoveElementFinish()
 
-		if slot0:getElementId() == 311114 then
-			TaskDispatcher.runDelay(slot0.delayFinish, slot0, 1)
+		if arg_2_0:getElementId() == 311114 then
+			TaskDispatcher.runDelay(arg_2_0.delayFinish, arg_2_0, 1)
 		end
 	end
 end
 
-function slot0.delayFinish(slot0)
+function var_0_0.delayFinish(arg_3_0)
 	ViewMgr.instance:openView(ViewName.HeroInvitationView)
 end
 
-function slot0._onResLoaded(slot0)
-	uv0.super._onResLoaded(slot0)
+function var_0_0._onResLoaded(arg_4_0)
+	var_0_0.super._onResLoaded(arg_4_0)
 
-	if slot0._waitFinishAndDotDestroy then
-		slot0._waitFinishAndDotDestroy = false
+	if arg_4_0._waitFinishAndDotDestroy then
+		arg_4_0._waitFinishAndDotDestroy = false
 
-		slot0:setFinishAndDotDestroy()
+		arg_4_0:setFinishAndDotDestroy()
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.delayFinish, slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.delayFinish, arg_5_0)
+	var_0_0.super.onDestroy(arg_5_0)
 end
 
-return slot0
+return var_0_0

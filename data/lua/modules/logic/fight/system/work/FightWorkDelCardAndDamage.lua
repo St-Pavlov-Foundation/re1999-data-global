@@ -1,20 +1,32 @@
-module("modules.logic.fight.system.work.FightWorkDelCardAndDamage", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDelCardAndDamage", package.seeall)
 
-slot0 = class("FightWorkDelCardAndDamage", FightEffectBase)
+local var_0_0 = class("FightWorkDelCardAndDamage", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot1 = nil
+function var_0_0.onStart(arg_1_0)
+	local var_1_0
 
-	if (slot0._actEffectMO.teamType ~= FightEnum.TeamType.EnemySide or FightHelper.getEntity(FightEntityScene.EnemySideId)) and FightHelper.getEntity(FightEntityScene.MySideId) then
-		slot1.effect:addGlobalEffect("v2a2_znps/znps_unique_03_hit", nil, 1):setRenderOrder(20000)
-		slot2:setLocalPos(slot0._actEffectMO.teamType == FightEnum.TeamType.EnemySide and -6.14 or 6.14, 1.65, -1.74)
+	if arg_1_0._actEffectMO.teamType == FightEnum.TeamType.EnemySide then
+		var_1_0 = FightHelper.getEntity(FightEntityScene.EnemySideId)
+	else
+		var_1_0 = FightHelper.getEntity(FightEntityScene.MySideId)
+	end
+
+	if var_1_0 then
+		local var_1_1 = var_1_0.effect:addGlobalEffect("v2a2_znps/znps_unique_03_hit", nil, 1)
+
+		var_1_1:setRenderOrder(20000)
+
+		local var_1_2 = arg_1_0._actEffectMO.teamType == FightEnum.TeamType.EnemySide and -6.14 or 6.14
+
+		var_1_1:setLocalPos(var_1_2, 1.65, -1.74)
 		AudioMgr.instance:trigger(410000104)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

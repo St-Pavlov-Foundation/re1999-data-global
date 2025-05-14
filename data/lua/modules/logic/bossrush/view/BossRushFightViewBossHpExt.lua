@@ -1,56 +1,59 @@
-module("modules.logic.bossrush.view.BossRushFightViewBossHpExt", package.seeall)
+﻿module("modules.logic.bossrush.view.BossRushFightViewBossHpExt", package.seeall)
 
-slot0 = class("BossRushFightViewBossHpExt", BaseViewExtended)
+local var_0_0 = class("BossRushFightViewBossHpExt", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._txtmyblood = gohelper.findChildText(slot0.viewGO, "#txt_myblood")
-	slot0._txtbloodnum = gohelper.findChildText(slot0.viewGO, "#txt_bloodnum")
-	slot0._txtbloodnum.text = ""
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtmyblood = gohelper.findChildText(arg_1_0.viewGO, "#txt_myblood")
+	arg_1_0._txtbloodnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_bloodnum")
+	arg_1_0._txtbloodnum.text = ""
 end
 
-function slot0.onRefreshViewParam(slot0, slot1)
-	slot0._parentGo = slot1
+function var_0_0.onRefreshViewParam(arg_2_0, arg_2_1)
+	arg_2_0._parentGo = arg_2_1
 end
 
-function slot0.onOpen(slot0)
-	slot0._isInitedInfinitBlood = false
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0._isInitedInfinitBlood = false
 
-	gohelper.setSiblingAfter(slot0.viewGO, slot0._parentGo)
-	slot0:_setMyBossBlood(BossRushModel.instance:getBossCurHP(), BossRushModel.instance:getBossCurMaxHP())
-	BossRushController.instance:registerCallback(BossRushEvent.OnBossDeadSumChange, slot0._onBossDeadSumChange, slot0)
-	BossRushController.instance:registerCallback(BossRushEvent.OnHpChange, slot0._onHpChange, slot0)
+	gohelper.setSiblingAfter(arg_3_0.viewGO, arg_3_0._parentGo)
+	arg_3_0:_setMyBossBlood(BossRushModel.instance:getBossCurHP(), BossRushModel.instance:getBossCurMaxHP())
+	BossRushController.instance:registerCallback(BossRushEvent.OnBossDeadSumChange, arg_3_0._onBossDeadSumChange, arg_3_0)
+	BossRushController.instance:registerCallback(BossRushEvent.OnHpChange, arg_3_0._onHpChange, arg_3_0)
 end
 
-function slot0.onClose(slot0)
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnHpChange, slot0._onHpChange, slot0)
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnBossDeadSumChange, slot0._onBossDeadSumChange, slot0)
+function var_0_0.onClose(arg_4_0)
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnHpChange, arg_4_0._onHpChange, arg_4_0)
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnBossDeadSumChange, arg_4_0._onBossDeadSumChange, arg_4_0)
 
-	slot0._isInitedInfinitBlood = false
+	arg_4_0._isInitedInfinitBlood = false
 end
 
-function slot0._onBossDeadSumChange(slot0, slot1, slot2)
-	slot0:_setBossDeadNum(slot2)
+function var_0_0._onBossDeadSumChange(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0:_setBossDeadNum(arg_5_2)
 end
 
-function slot0._onHpChange(slot0, slot1, slot2)
-	slot0:_setMyBossBlood(slot2, BossRushModel.instance:getBossCurMaxHP())
+function var_0_0._onHpChange(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = BossRushModel.instance:getBossCurMaxHP()
+
+	arg_6_0:_setMyBossBlood(arg_6_2, var_6_0)
 end
 
-function slot0._setMyBossBlood(slot0, slot1, slot2)
-	slot4 = BossRushModel.instance:getBossBloodMaxCount()
-	slot5 = string.format("%.2f%%", slot1 / slot2 * 100)
+function var_0_0._setMyBossBlood(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = BossRushModel.instance:getBossBloodCount()
+	local var_7_1 = BossRushModel.instance:getBossBloodMaxCount()
+	local var_7_2 = string.format("%.2f%%", arg_7_1 / arg_7_2 * 100)
 
-	if BossRushModel.instance:getBossBloodCount() == 1 and slot1 == 0 and not slot0._isInitedInfinitBlood then
-		slot0:_setBossDeadNum(0)
+	if var_7_0 == 1 and arg_7_1 == 0 and not arg_7_0._isInitedInfinitBlood then
+		arg_7_0:_setBossDeadNum(0)
 
-		slot0._isInitedInfinitBlood = true
+		arg_7_0._isInitedInfinitBlood = true
 	end
 
-	slot0._txtmyblood.text = string.format("%s/%s (%s) %s/%s", slot1, slot2, slot5, math.max(0, slot3 - 1), math.max(0, slot4 - 1))
+	arg_7_0._txtmyblood.text = string.format("%s/%s (%s) %s/%s", arg_7_1, arg_7_2, var_7_2, math.max(0, var_7_0 - 1), math.max(0, var_7_1 - 1))
 end
 
-function slot0._setBossDeadNum(slot0, slot1)
-	slot0._txtbloodnum.text = string.format("<color=#FFFF00>(x%s)</color>", slot1)
+function var_0_0._setBossDeadNum(arg_8_0, arg_8_1)
+	arg_8_0._txtbloodnum.text = string.format("<color=#FFFF00>(x%s)</color>", arg_8_1)
 end
 
-return slot0
+return var_0_0

@@ -1,65 +1,67 @@
-module("modules.logic.versionactivity1_4.act130.model.Activity130LevelInfoMo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.model.Activity130LevelInfoMo", package.seeall)
 
-slot0 = pureTable("Activity130LevelInfoMo")
+local var_0_0 = pureTable("Activity130LevelInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.episodeId = 0
-	slot0.state = 0
-	slot0.progress = 0
-	slot0.act130Elements = {}
-	slot0.tipsElementId = 0
-	slot0.challengeNum = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.episodeId = 0
+	arg_1_0.state = 0
+	arg_1_0.progress = 0
+	arg_1_0.act130Elements = {}
+	arg_1_0.tipsElementId = 0
+	arg_1_0.challengeNum = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.state = slot1.state
-	slot0.progress = slot1.progress
-	slot0.act130Elements = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.episodeId = arg_2_1.episodeId
+	arg_2_0.state = arg_2_1.state
+	arg_2_0.progress = arg_2_1.progress
+	arg_2_0.act130Elements = {}
 
-	for slot5, slot6 in ipairs(slot1.act130Elements) do
-		slot7 = Activity130ElementMo.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.act130Elements) do
+		local var_2_0 = Activity130ElementMo.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.act130Elements, slot7)
+		var_2_0:init(iter_2_1)
+		table.insert(arg_2_0.act130Elements, var_2_0)
 	end
 
-	slot0.tipsElementId = slot1.tipsElementId
-	slot0.challengeNum = slot1.startGameTimes
+	arg_2_0.tipsElementId = arg_2_1.tipsElementId
+	arg_2_0.challengeNum = arg_2_1.startGameTimes
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.state = slot1.state
-	slot0.progress = slot1.progress
-	slot0.act130Elements = {}
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0.state = arg_3_1.state
+	arg_3_0.progress = arg_3_1.progress
+	arg_3_0.act130Elements = {}
 
-	for slot5, slot6 in ipairs(slot1.act130Elements) do
-		slot7 = Activity130ElementMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.act130Elements) do
+		local var_3_0 = Activity130ElementMo.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.act130Elements, slot7)
+		var_3_0:init(iter_3_1)
+		table.insert(arg_3_0.act130Elements, var_3_0)
 	end
 
-	slot0.tipsElementId = slot1.tipsElementId
-	slot0.challengeNum = slot1.startGameTimes
+	arg_3_0.tipsElementId = arg_3_1.tipsElementId
+	arg_3_0.challengeNum = arg_3_1.startGameTimes
 end
 
-function slot0.getFinishElementCount(slot0)
-	if not 0 then
-		return slot1
+function var_0_0.getFinishElementCount(arg_4_0)
+	local var_4_0 = 0
+
+	if not var_4_0 then
+		return var_4_0
 	end
 
-	for slot5, slot6 in ipairs(slot0.act130Elements) do
-		if slot6.isFinish then
-			slot1 = slot1 + 1
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.act130Elements) do
+		if iter_4_1.isFinish then
+			var_4_0 = var_4_0 + 1
 		end
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.updateChallengeNum(slot0, slot1)
-	slot0.challengeNum = slot1
+function var_0_0.updateChallengeNum(arg_5_0, arg_5_1)
+	arg_5_0.challengeNum = arg_5_1
 end
 
-return slot0
+return var_0_0

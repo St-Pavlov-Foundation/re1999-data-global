@@ -1,50 +1,54 @@
-module("modules.logic.versionactivity1_2.jiexika.model.Activity114TaskModel", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114TaskModel", package.seeall)
 
-slot0 = class("Activity114TaskModel", ListScrollModel)
+local var_0_0 = class("Activity114TaskModel", ListScrollModel)
 
-function slot0.onGetTaskList(slot0, slot1)
-	slot2 = {}
+function var_0_0.onGetTaskList(arg_1_0, arg_1_1)
+	local var_1_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = Activity114TaskMo.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		local var_1_1 = Activity114TaskMo.New()
 
-		slot8:update(slot7)
-		table.insert(slot2, slot8)
+		var_1_1:update(iter_1_1)
+		table.insert(var_1_0, var_1_1)
 	end
 
-	table.sort(slot2, slot0.sortFunc)
-	slot0:setList(slot2)
+	table.sort(var_1_0, arg_1_0.sortFunc)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	if slot0.finishStatus == slot1.finishStatus then
-		return slot0.config.taskId < slot1.config.taskId
+function var_0_0.sortFunc(arg_2_0, arg_2_1)
+	if arg_2_0.finishStatus == arg_2_1.finishStatus then
+		return arg_2_0.config.taskId < arg_2_1.config.taskId
 	else
-		return slot0.finishStatus < slot1.finishStatus
+		return arg_2_0.finishStatus < arg_2_1.finishStatus
 	end
 end
 
-function slot0.onTaskListUpdate(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0:getById(slot7.taskId) then
-			slot8:update(slot7)
+function var_0_0.onTaskListUpdate(arg_3_0, arg_3_1, arg_3_2)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = arg_3_0:getById(iter_3_1.taskId)
+
+		if var_3_0 then
+			var_3_0:update(iter_3_1)
 		else
-			slot9 = Activity114TaskMo.New()
+			local var_3_1 = Activity114TaskMo.New()
 
-			slot9:update(slot7)
-			slot0:addAtLast(slot9)
+			var_3_1:update(iter_3_1)
+			arg_3_0:addAtLast(var_3_1)
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		if slot0:getById(slot7.taskId) then
-			slot0:remove(slot8)
+	for iter_3_2, iter_3_3 in ipairs(arg_3_2) do
+		local var_3_2 = arg_3_0:getById(iter_3_3.taskId)
+
+		if var_3_2 then
+			arg_3_0:remove(var_3_2)
 		end
 	end
 
-	slot0:sort(slot0.sortFunc)
+	arg_3_0:sort(arg_3_0.sortFunc)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

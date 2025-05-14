@@ -1,51 +1,59 @@
-module("modules.logic.prototest.view.ProtoTestFileItem", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoTestFileItem", package.seeall)
 
-slot0 = class("ProtoTestFileItem", ListScrollCell)
+local var_0_0 = class("ProtoTestFileItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._txtFileName = gohelper.findChildText(slot1, "Txt_casefile")
-	slot0._btnRecover = gohelper.findChildButtonWithAudio(slot1, "Btn_recover")
-	slot0._btnLoad = gohelper.findChildButtonWithAudio(slot1, "Btn_load")
-	slot0._btnAppend = gohelper.findChildButtonWithAudio(slot1, "Btn_append")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._txtFileName = gohelper.findChildText(arg_1_1, "Txt_casefile")
+	arg_1_0._btnRecover = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_recover")
+	arg_1_0._btnLoad = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_load")
+	arg_1_0._btnAppend = gohelper.findChildButtonWithAudio(arg_1_1, "Btn_append")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnRecover:AddClickListener(slot0._onClickBtnRecover, slot0)
-	slot0._btnLoad:AddClickListener(slot0._onClickBtnLoad, slot0)
-	slot0._btnAppend:AddClickListener(slot0._onClickBtnAppend, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnRecover:AddClickListener(arg_2_0._onClickBtnRecover, arg_2_0)
+	arg_2_0._btnLoad:AddClickListener(arg_2_0._onClickBtnLoad, arg_2_0)
+	arg_2_0._btnAppend:AddClickListener(arg_2_0._onClickBtnAppend, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnRecover:RemoveClickListener()
-	slot0._btnLoad:RemoveClickListener()
-	slot0._btnAppend:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnRecover:RemoveClickListener()
+	arg_3_0._btnLoad:RemoveClickListener()
+	arg_3_0._btnAppend:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txtFileName.text = slot1.id .. ". " .. slot1.fileName
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
+	arg_4_0._txtFileName.text = arg_4_1.id .. ". " .. arg_4_1.fileName
 end
 
-function slot0._onClickBtnRecover(slot0)
-	ProtoTestMgr.instance:saveToFile(slot0._mo.fileName, ProtoTestCaseModel.instance:getList())
+function var_0_0._onClickBtnRecover(arg_5_0)
+	local var_5_0 = ProtoTestCaseModel.instance:getList()
+
+	ProtoTestMgr.instance:saveToFile(arg_5_0._mo.fileName, var_5_0)
 end
 
-function slot0._onClickBtnLoad(slot0)
-	for slot5, slot6 in ipairs(ProtoTestMgr.instance:readFromFile(slot0._mo.fileName)) do
-		slot6.id = slot5
+function var_0_0._onClickBtnLoad(arg_6_0)
+	local var_6_0 = ProtoTestMgr.instance:readFromFile(arg_6_0._mo.fileName)
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		iter_6_1.id = iter_6_0
 	end
 
-	ProtoTestCaseModel.instance:setList(slot1)
+	ProtoTestCaseModel.instance:setList(var_6_0)
 end
 
-function slot0._onClickBtnAppend(slot0)
-	for slot7, slot8 in ipairs(ProtoTestMgr.instance:readFromFile(slot0._mo.fileName)) do
-		slot8.id = slot7 + #ProtoTestCaseModel.instance:getList()
+function var_0_0._onClickBtnAppend(arg_7_0)
+	local var_7_0 = ProtoTestMgr.instance:readFromFile(arg_7_0._mo.fileName)
+	local var_7_1 = ProtoTestCaseModel.instance:getList()
+	local var_7_2 = #var_7_1
 
-		table.insert(slot2, slot8)
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		iter_7_1.id = iter_7_0 + var_7_2
+
+		table.insert(var_7_1, iter_7_1)
 	end
 
-	ProtoTestCaseModel.instance:setList(slot2)
+	ProtoTestCaseModel.instance:setList(var_7_1)
 end
 
-return slot0
+return var_0_0

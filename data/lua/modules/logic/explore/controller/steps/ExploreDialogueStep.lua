@@ -1,10 +1,10 @@
-module("modules.logic.explore.controller.steps.ExploreDialogueStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreDialogueStep", package.seeall)
 
-slot0 = class("ExploreDialogueStep", ExploreStepBase)
+local var_0_0 = class("ExploreDialogueStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	ViewMgr.instance:openView(ViewName.ExploreInteractView, slot0._data)
-	slot0:onDone()
+function var_0_0.onStart(arg_1_0)
+	ViewMgr.instance:openView(ViewName.ExploreInteractView, arg_1_0._data)
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

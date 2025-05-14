@@ -1,38 +1,40 @@
-module("modules.logic.activity.controller.chessmap.event.ActivityChessStateBattle", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateBattle", package.seeall)
 
-slot0 = class("ActivityChessStateBattle", ActivityChessStateBase)
+local var_0_0 = class("ActivityChessStateBattle", ActivityChessStateBase)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
 	logNormal("ActivityChessStateBattle start")
 
-	slot1 = slot0.originData.battleId
-	slot2 = slot0.originData.activityId
-	slot3 = slot0.originData.interactId
+	local var_1_0 = arg_1_0.originData.battleId
+	local var_1_1 = arg_1_0.originData.activityId
+	local var_1_2 = arg_1_0.originData.interactId
 
 	if ViewMgr.instance:isOpenFinish(ViewName.ActivityChessGame) then
-		slot0:startBattle()
+		arg_1_0:startBattle()
 	else
-		ActivityChessGameController.instance:registerCallback(ActivityChessEvent.GameViewOpened, slot0.onOpenViewFinish, slot0)
+		ActivityChessGameController.instance:registerCallback(ActivityChessEvent.GameViewOpened, arg_1_0.onOpenViewFinish, arg_1_0)
 	end
 end
 
-function slot0.onOpenViewFinish(slot0, slot1)
-	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, slot0.onOpenViewFinish, slot0)
+function var_0_0.onOpenViewFinish(arg_2_0, arg_2_1)
+	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, arg_2_0.onOpenViewFinish, arg_2_0)
 
-	if slot1 and slot1.fromRefuseBattle then
-		Activity109Rpc.instance:sendAct109AbortRequest(slot0.originData.activityId, slot0.onReceiveAboveGame, slot0)
+	if arg_2_1 and arg_2_1.fromRefuseBattle then
+		local var_2_0 = arg_2_0.originData.activityId
+
+		Activity109Rpc.instance:sendAct109AbortRequest(var_2_0, arg_2_0.onReceiveAboveGame, arg_2_0)
 	else
-		slot0:startBattle()
+		arg_2_0:startBattle()
 	end
 end
 
-function slot0.startBattle(slot0)
-	Activity109ChessController.instance:enterActivityFight(slot0.originData.battleId)
+function var_0_0.startBattle(arg_3_0)
+	Activity109ChessController.instance:enterActivityFight(arg_3_0.originData.battleId)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.EventFinishPlay)
 end
 
-function slot0.onReceiveAboveGame(slot0, slot1, slot2)
-	if slot2 ~= 0 then
+function var_0_0.onReceiveAboveGame(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_2 ~= 0 then
 		return
 	end
 
@@ -40,8 +42,8 @@ function slot0.onReceiveAboveGame(slot0, slot1, slot2)
 	ActivityChessGameController.instance:gameOver()
 end
 
-function slot0.dispose(slot0)
-	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, slot0.onOpenViewFinish, slot0)
+function var_0_0.dispose(arg_5_0)
+	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, arg_5_0.onOpenViewFinish, arg_5_0)
 end
 
-return slot0
+return var_0_0

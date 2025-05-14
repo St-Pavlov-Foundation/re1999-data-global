@@ -1,93 +1,102 @@
-module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeView", package.seeall)
+﻿module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeView", package.seeall)
 
-slot0 = class("TurnbackDoubleRewardChargeView", BaseView)
+local var_0_0 = class("TurnbackDoubleRewardChargeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnbgclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "close")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "content/#btn_buy")
-	slot0._txtcost = gohelper.findChildText(slot0.viewGO, "content/#btn_buy/#txt_cost")
-	slot0._golockreward = gohelper.findChild(slot0.viewGO, "content/lockreward/reward")
-	slot0._gounlockreward1 = gohelper.findChild(slot0.viewGO, "content/unlockreward/reward1")
-	slot0._gounlockreward2 = gohelper.findChild(slot0.viewGO, "content/unlockreward/reward2")
-	slot0._contentanim = gohelper.findChild(slot0.viewGO, "content"):GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnbgclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "close")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/#btn_buy")
+	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "content/#btn_buy/#txt_cost")
+	arg_1_0._golockreward = gohelper.findChild(arg_1_0.viewGO, "content/lockreward/reward")
+	arg_1_0._gounlockreward1 = gohelper.findChild(arg_1_0.viewGO, "content/unlockreward/reward1")
+	arg_1_0._gounlockreward2 = gohelper.findChild(arg_1_0.viewGO, "content/unlockreward/reward2")
+	arg_1_0._contentanim = gohelper.findChild(arg_1_0.viewGO, "content"):GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btnclsoeOnClick, slot0)
-	slot0._btnbgclose:AddClickListener(slot0._btnclsoeOnClick, slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, slot0.succbuydoublereward, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btnclsoeOnClick, arg_2_0)
+	arg_2_0._btnbgclose:AddClickListener(arg_2_0._btnclsoeOnClick, arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_2_0.succbuydoublereward, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnbgclose:RemoveClickListener()
-	slot0._btnbuy:RemoveClickListener()
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, slot0.succbuydoublereward, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnbgclose:RemoveClickListener()
+	arg_3_0._btnbuy:RemoveClickListener()
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_3_0.succbuydoublereward, arg_3_0)
 end
 
-function slot0._btnbuyOnClick(slot0)
-	TurnbackRpc.instance:sendBuyDoubleBonusRequest(TurnbackModel.instance:getCurTurnbackId())
+function var_0_0._btnbuyOnClick(arg_4_0)
+	local var_4_0 = TurnbackModel.instance:getCurTurnbackId()
+
+	TurnbackRpc.instance:sendBuyDoubleBonusRequest(var_4_0)
 end
 
-function slot0.succbuydoublereward(slot0)
-	slot0._contentanim:Play("unlock")
-	TaskDispatcher.runDelay(slot0.afterAnim, slot0, 0.8)
+function var_0_0.succbuydoublereward(arg_5_0)
+	arg_5_0._contentanim:Play("unlock")
+	TaskDispatcher.runDelay(arg_5_0.afterAnim, arg_5_0, 0.8)
 end
 
-function slot0.afterAnim(slot0)
-	slot0:closeThis()
+function var_0_0.afterAnim(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._btnclsoeOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnclsoeOnClick(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.rewardList = {}
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.rewardList = {}
 
-	slot0:getRewardIcon(slot0._golockreward)
-	slot0:getRewardIcon(slot0._gounlockreward1)
-	slot0:getRewardIcon(slot0._gounlockreward2)
+	arg_8_0:getRewardIcon(arg_8_0._golockreward)
+	arg_8_0:getRewardIcon(arg_8_0._gounlockreward1)
+	arg_8_0:getRewardIcon(arg_8_0._gounlockreward2)
 end
 
-function slot0.getRewardIcon(slot0, slot1)
-	slot2 = {}
+function var_0_0.getRewardIcon(arg_9_0, arg_9_1)
+	local var_9_0 = {}
 
-	for slot6 = 1, 4 do
-		table.insert(slot2, gohelper.findChild(slot1, "icon" .. slot6))
+	for iter_9_0 = 1, 4 do
+		local var_9_1 = gohelper.findChild(arg_9_1, "icon" .. iter_9_0)
+
+		table.insert(var_9_0, var_9_1)
 	end
 
-	table.insert(slot0.rewardList, slot2)
+	table.insert(arg_9_0.rewardList, var_9_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = TurnbackModel.instance:getAllBonus()
+function var_0_0.onOpen(arg_11_0)
+	local var_11_0 = TurnbackModel.instance:getAllBonus()
 
-	for slot5, slot6 in ipairs(slot0.rewardList) do
-		for slot10, slot11 in ipairs(slot1) do
-			if not slot0:getUserDataTb_().itemIcon then
-				slot12.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot6[slot10])
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.rewardList) do
+		for iter_11_2, iter_11_3 in ipairs(var_11_0) do
+			local var_11_1 = arg_11_0:getUserDataTb_()
+
+			if not var_11_1.itemIcon then
+				var_11_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(iter_11_1[iter_11_2])
 			end
 
-			slot12.itemIcon:setMOValue(slot11[1], slot11[2], slot11[3], nil, true)
-			slot12.itemIcon:setCountFontSize(30)
+			var_11_1.itemIcon:setMOValue(iter_11_3[1], iter_11_3[2], iter_11_3[3], nil, true)
+			var_11_1.itemIcon:setCountFontSize(30)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

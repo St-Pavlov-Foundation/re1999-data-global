@@ -1,20 +1,23 @@
-module("modules.logic.room.model.critter.RoomSummonPoolCritterListModel", package.seeall)
+﻿module("modules.logic.room.model.critter.RoomSummonPoolCritterListModel", package.seeall)
 
-slot0 = class("RoomSummonPoolCritterListModel", ListScrollModel)
+local var_0_0 = class("RoomSummonPoolCritterListModel", ListScrollModel)
 
-function slot0.setDataList(slot0, slot1)
-	table.sort(slot1, slot0._sortFunction)
-	slot0:setList(slot1)
+function var_0_0.setDataList(arg_1_0, arg_1_1)
+	table.sort(arg_1_1, arg_1_0._sortFunction)
+	arg_1_0:setList(arg_1_1)
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if slot0:getPoolCount() <= 0 ~= (slot1:getPoolCount() <= 0) then
-		return slot3
+function var_0_0._sortFunction(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getPoolCount() <= 0
+	local var_2_1 = arg_2_1:getPoolCount() <= 0
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_1
 	end
 
-	return slot1.rare < slot0.rare
+	return arg_2_0.rare > arg_2_1.rare
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

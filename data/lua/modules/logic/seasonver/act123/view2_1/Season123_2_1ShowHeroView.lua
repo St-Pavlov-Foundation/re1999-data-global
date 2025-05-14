@@ -1,126 +1,133 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1ShowHeroView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1ShowHeroView", package.seeall)
 
-slot0 = class("Season123_2_1ShowHeroView", BaseView)
+local var_0_0 = class("Season123_2_1ShowHeroView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "Right/#go_list/#go_item")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_reset")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnmaincard1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#go_supercard1/#btn_supercardclick")
-	slot0._btnmaincard2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#go_supercard2/#btn_supercardclick")
-	slot0._btndetails = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_details")
-	slot0._gorecomment = gohelper.findChild(slot0.viewGO, "Right/#go_recommend")
-	slot0._gorecommentnone = gohelper.findChild(slot0.viewGO, "Right/#go_recommend/txt_recommend/txt_none")
-	slot0._gorecommentexist = gohelper.findChild(slot0.viewGO, "Right/#go_recommend/txt_recommend/recommends")
-	slot0._gocareeritem = gohelper.findChild(slot0.viewGO, "Right/#go_recommend/txt_recommend/recommends/career")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/#go_item")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_reset")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnmaincard1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_supercard1/#btn_supercardclick")
+	arg_1_0._btnmaincard2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_supercard2/#btn_supercardclick")
+	arg_1_0._btndetails = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_details")
+	arg_1_0._gorecomment = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend")
+	arg_1_0._gorecommentnone = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend/txt_recommend/txt_none")
+	arg_1_0._gorecommentexist = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend/txt_recommend/recommends")
+	arg_1_0._gocareeritem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend/txt_recommend/recommends/career")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btndetails:AddClickListener(slot0._btndetailsOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnmaincard1:AddClickListener(slot0._btnmaincardOnClick, slot0, 1)
-	slot0._btnmaincard2:AddClickListener(slot0._btnmaincardOnClick, slot0, 2)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btndetails:AddClickListener(arg_2_0._btndetailsOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnmaincard1:AddClickListener(arg_2_0._btnmaincardOnClick, arg_2_0, 1)
+	arg_2_0._btnmaincard2:AddClickListener(arg_2_0._btnmaincardOnClick, arg_2_0, 2)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btndetails:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnmaincard1:RemoveClickListener()
-	slot0._btnmaincard2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btndetails:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnmaincard1:RemoveClickListener()
+	arg_3_0._btnmaincard2:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._heroItems = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._heroItems = {}
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._heroItems then
-		for slot4, slot5 in pairs(slot0._heroItems) do
-			slot5.component:dispose()
+function var_0_0.onDestroyView(arg_5_0)
+	if arg_5_0._heroItems then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._heroItems) do
+			iter_5_1.component:dispose()
 		end
 
-		slot0._heroItems = nil
+		arg_5_0._heroItems = nil
 	end
 
 	Season123ShowHeroController.instance:onCloseView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.OnResetSucc, slot0.closeThis, slot0)
-	Season123ShowHeroController.instance:onOpenView(slot0.viewParam.actId, slot0.viewParam.stage, slot0.viewParam.layer)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.OnResetSucc, arg_6_0.closeThis, arg_6_0)
+	Season123ShowHeroController.instance:onOpenView(arg_6_0.viewParam.actId, arg_6_0.viewParam.stage, arg_6_0.viewParam.layer)
 
-	if not ActivityModel.instance:getActMO(slot0.viewParam.actId) or not slot1:isOpen() or slot1:isExpired() then
+	local var_6_0 = ActivityModel.instance:getActMO(arg_6_0.viewParam.actId)
+
+	if not var_6_0 or not var_6_0:isOpen() or var_6_0:isExpired() then
 		return
 	end
 
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, slot0.refreshUI, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, slot0.refreshUI, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, slot0.refreshUI, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, slot0.refreshUI, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
-	if slot0._heroItems then
-		for slot4, slot5 in pairs(slot0._heroItems) do
-			slot5.component:onClose()
+function var_0_0.onClose(arg_7_0)
+	if arg_7_0._heroItems then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._heroItems) do
+			iter_7_1.component:onClose()
 		end
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshItems()
-	gohelper.setActive(slot0._gorecommentnone, false)
-	gohelper.setActive(slot0._gorecommentexist, false)
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshItems()
+	gohelper.setActive(arg_8_0._gorecommentnone, false)
+	gohelper.setActive(arg_8_0._gorecommentexist, false)
 end
 
-function slot0.refreshItems(slot0)
-	for slot4 = 1, Activity123Enum.PickHeroCount do
-		slot0:getOrCreateItem(slot4).component:refreshUI()
+function var_0_0.refreshItems(arg_9_0)
+	for iter_9_0 = 1, Activity123Enum.PickHeroCount do
+		arg_9_0:getOrCreateItem(iter_9_0).component:refreshUI()
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1)
-	if not slot0._heroItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goitem, "item_" .. tostring(slot1))
-		slot2.component = Season123_2_1ShowHeroItem.New()
+function var_0_0.getOrCreateItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._heroItems[arg_10_1]
 
-		slot2.component:init(slot2.go)
-		slot2.component:initData(slot1)
-		gohelper.setActive(slot2.go, true)
+	if not var_10_0 then
+		var_10_0 = arg_10_0:getUserDataTb_()
+		var_10_0.go = gohelper.cloneInPlace(arg_10_0._goitem, "item_" .. tostring(arg_10_1))
+		var_10_0.component = Season123_2_1ShowHeroItem.New()
 
-		slot0._heroItems[slot1] = slot2
+		var_10_0.component:init(var_10_0.go)
+		var_10_0.component:initData(arg_10_1)
+		gohelper.setActive(var_10_0.go, true)
+
+		arg_10_0._heroItems[arg_10_1] = var_10_0
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0._btndetailsOnClick(slot0)
+function var_0_0._btndetailsOnClick(arg_11_0)
 	EnemyInfoController.instance:openSeason123EnemyInfoView(Season123ShowHeroModel.instance.activityId, Season123ShowHeroModel.instance.stage, Season123ShowHeroModel.instance.layer)
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_12_0)
 	Season123ShowHeroController.instance:openReset()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_13_0)
+	arg_13_0:closeThis()
 end
 
-function slot0.handleEnterStageSuccess(slot0)
-	slot0:closeThis()
+function var_0_0.handleEnterStageSuccess(arg_14_0)
+	local var_14_0 = arg_14_0.viewParam.finishCall
+	local var_14_1 = arg_14_0.viewParam.finishCallObj
 
-	if slot0.viewParam.finishCall then
-		slot1(slot0.viewParam.finishCallObj)
+	arg_14_0:closeThis()
+
+	if var_14_0 then
+		var_14_0(var_14_1)
 	end
 end
 
-return slot0
+return var_0_0

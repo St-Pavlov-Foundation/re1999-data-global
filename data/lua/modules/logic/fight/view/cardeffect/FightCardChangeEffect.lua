@@ -1,153 +1,192 @@
-module("modules.logic.fight.view.cardeffect.FightCardChangeEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardChangeEffect", package.seeall)
 
-slot0 = class("FightCardChangeEffect", BaseWork)
+local var_0_0 = class("FightCardChangeEffect", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._paramDict = {}
+	arg_1_0._paramDict = {}
 
-	slot0:_playEffects()
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+	arg_1_0:_playEffects()
+	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 end
 
-function slot0._playEffects(slot0)
-	slot0._effectGOList = {}
-	slot0._effectLoaderList = {}
-	slot0._entityId = slot0.context.entityId
-	slot0._skillId = slot0.context.skillId
-	slot0._changeFailType = slot0.context.failType
-	slot0._paramDict[PrefabInstantiate.Create(gohelper.create2d(slot0.context.cardItem.go, "lvChangeEffect"))] = {
-		newCardLevel = slot0.context.newCardLevel,
-		oldCardLv = slot0.context.oldCardLevel
+function var_0_0._playEffects(arg_2_0)
+	arg_2_0._effectGOList = {}
+	arg_2_0._effectLoaderList = {}
+
+	local var_2_0 = arg_2_0.context.cardItem
+
+	arg_2_0._entityId = arg_2_0.context.entityId
+	arg_2_0._skillId = arg_2_0.context.skillId
+	arg_2_0._changeFailType = arg_2_0.context.failType
+
+	local var_2_1 = arg_2_0.context.oldCardLevel
+	local var_2_2 = arg_2_0.context.newCardLevel
+	local var_2_3 = var_2_0.go
+	local var_2_4 = gohelper.create2d(var_2_3, "lvChangeEffect")
+	local var_2_5 = PrefabInstantiate.Create(var_2_4)
+
+	arg_2_0._paramDict[var_2_5] = {
+		newCardLevel = var_2_2,
+		oldCardLv = var_2_1
 	}
-	slot7 = nil
 
-	slot6:startLoad(slot0._changeFailType and (slot0._changeFailType == FightEnum.CardRankChangeFail.UpFail and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath) or slot2 < slot3 and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath, slot0._onLvEffectLoaded, slot0)
+	local var_2_6
 
-	slot8 = nil
-	slot9 = MultiAbLoader.New()
-	slot0._paramDict[slot9] = {
-		newCardLevel = slot3,
-		oldCardLv = slot2,
-		cardItem = slot1
-	}
-
-	slot9:addPath(slot0._changeFailType and (slot0._changeFailType == FightEnum.CardRankChangeFail.UpFail and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath) or slot2 < slot3 and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath)
-	slot9:startLoad(slot0._onLvAnimLoaded, slot0)
-
-	slot0._animLoaderList = slot0._animLoaderList or {}
-
-	table.insert(slot0._animLoaderList, slot9)
-	table.insert(slot0._effectGOList, slot5)
-	table.insert(slot0._effectLoaderList, slot6)
-end
-
-function slot0._onLvEffectLoaded(slot0, slot1)
-	gohelper.onceAddComponent(slot1:getInstGO(), typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
-
-	slot2 = slot0._paramDict[slot1]
-	slot5 = FightCardModel.instance:isUniqueSkill(slot0._entityId, slot0._skillId)
-	slot6 = slot1:getInstGO()
-
-	gohelper.setActive(gohelper.findChild(slot6, "#card/normal_effect"), not slot5)
-	gohelper.setActive(gohelper.findChild(slot6, "#card/ultimate_effect"), slot5)
-
-	for slot15 = 0, gohelper.findChild(slot6, "#star").transform.childCount - 1 do
-		if slot9:GetChild(slot15) then
-			gohelper.setActive(slot16.gameObject, slot16.name == slot2.oldCardLv .. "_" .. slot2.newCardLevel)
-		end
-	end
-end
-
-function slot0._onLvAnimLoaded(slot0, slot1)
-	slot2 = slot0._paramDict[slot1]
-	slot4 = slot2.oldCardLv
-
-	gohelper.setActive(gohelper.findChild(slot2.cardItem.go, "star/star1"), slot2.newCardLevel == 1 or slot4 == 1)
-	gohelper.setActive(gohelper.findChild(slot6, "star/star2"), slot3 == 2 or slot4 == 2)
-	gohelper.setActive(gohelper.findChild(slot6, "star/star3"), slot3 == 3 or slot4 == 3)
-
-	for slot10, slot11 in ipairs(slot5._lvGOs) do
-		gohelper.setActiveCanvasGroup(slot11, slot3 == slot10 or slot4 == slot10)
-	end
-
-	slot7 = nil
-
-	if slot0._changeFailType then
-		-- Nothing
-	elseif slot4 < slot3 then
-		slot7 = "fightcard_rising" .. slot4 .. "_" .. slot3
+	if arg_2_0._changeFailType then
+		var_2_6 = arg_2_0._changeFailType == FightEnum.CardRankChangeFail.UpFail and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
 	else
-		slot7 = "fightcard_escending" .. slot4 .. "_" .. slot3
+		var_2_6 = var_2_1 < var_2_2 and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
 	end
 
-	if slot7 then
-		slot8 = gohelper.onceAddComponent(slot6, typeof(UnityEngine.Animator))
-		slot8.runtimeAnimatorController = nil
-		slot8.runtimeAnimatorController = slot1:getFirstAssetItem():GetResource()
-		slot8.speed = FightModel.instance:getUISpeed()
-		slot8.enabled = true
+	var_2_5:startLoad(var_2_6, arg_2_0._onLvEffectLoaded, arg_2_0)
 
-		slot8:Play(slot7, 0, 0)
-		slot8:Update(0)
+	local var_2_7
 
-		slot0._animCompList = slot0._animCompList or {}
+	if arg_2_0._changeFailType then
+		var_2_7 = arg_2_0._changeFailType == FightEnum.CardRankChangeFail.UpFail and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath
+	else
+		var_2_7 = var_2_1 < var_2_2 and ViewAnim.LvUpAnimPath or ViewAnim.LvDownAnimPath
+	end
 
-		table.insert(slot0._animCompList, slot8)
+	local var_2_8 = MultiAbLoader.New()
+
+	arg_2_0._paramDict[var_2_8] = {
+		newCardLevel = var_2_2,
+		oldCardLv = var_2_1,
+		cardItem = var_2_0
+	}
+
+	var_2_8:addPath(var_2_7)
+	var_2_8:startLoad(arg_2_0._onLvAnimLoaded, arg_2_0)
+
+	arg_2_0._animLoaderList = arg_2_0._animLoaderList or {}
+
+	table.insert(arg_2_0._animLoaderList, var_2_8)
+	table.insert(arg_2_0._effectGOList, var_2_4)
+	table.insert(arg_2_0._effectLoaderList, var_2_5)
+end
+
+function var_0_0._onLvEffectLoaded(arg_3_0, arg_3_1)
+	gohelper.onceAddComponent(arg_3_1:getInstGO(), typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
+
+	local var_3_0 = arg_3_0._paramDict[arg_3_1]
+	local var_3_1 = var_3_0.newCardLevel
+	local var_3_2 = var_3_0.oldCardLv
+	local var_3_3 = FightCardModel.instance:isUniqueSkill(arg_3_0._entityId, arg_3_0._skillId)
+	local var_3_4 = arg_3_1:getInstGO()
+	local var_3_5 = gohelper.findChild(var_3_4, "#card/normal_effect")
+	local var_3_6 = gohelper.findChild(var_3_4, "#card/ultimate_effect")
+
+	gohelper.setActive(var_3_5, not var_3_3)
+	gohelper.setActive(var_3_6, var_3_3)
+
+	local var_3_7 = gohelper.findChild(var_3_4, "#star").transform
+	local var_3_8 = var_3_7.childCount
+	local var_3_9 = var_3_2 .. "_" .. var_3_1
+
+	for iter_3_0 = 0, var_3_8 - 1 do
+		local var_3_10 = var_3_7:GetChild(iter_3_0)
+
+		if var_3_10 then
+			gohelper.setActive(var_3_10.gameObject, var_3_10.name == var_3_9)
+		end
 	end
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onLvAnimLoaded(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._paramDict[arg_4_1]
+	local var_4_1 = var_4_0.newCardLevel
+	local var_4_2 = var_4_0.oldCardLv
+	local var_4_3 = var_4_0.cardItem
+	local var_4_4 = var_4_3.go
+
+	gohelper.setActive(gohelper.findChild(var_4_4, "star/star1"), var_4_1 == 1 or var_4_2 == 1)
+	gohelper.setActive(gohelper.findChild(var_4_4, "star/star2"), var_4_1 == 2 or var_4_2 == 2)
+	gohelper.setActive(gohelper.findChild(var_4_4, "star/star3"), var_4_1 == 3 or var_4_2 == 3)
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_3._lvGOs) do
+		gohelper.setActiveCanvasGroup(iter_4_1, var_4_1 == iter_4_0 or var_4_2 == iter_4_0)
+	end
+
+	local var_4_5
+
+	if arg_4_0._changeFailType then
+		-- block empty
+	elseif var_4_2 < var_4_1 then
+		var_4_5 = "fightcard_rising" .. var_4_2 .. "_" .. var_4_1
+	else
+		var_4_5 = "fightcard_escending" .. var_4_2 .. "_" .. var_4_1
+	end
+
+	if var_4_5 then
+		local var_4_6 = gohelper.onceAddComponent(var_4_4, typeof(UnityEngine.Animator))
+
+		var_4_6.runtimeAnimatorController = nil
+		var_4_6.runtimeAnimatorController = arg_4_1:getFirstAssetItem():GetResource()
+		var_4_6.speed = FightModel.instance:getUISpeed()
+		var_4_6.enabled = true
+
+		var_4_6:Play(var_4_5, 0, 0)
+		var_4_6:Update(0)
+
+		arg_4_0._animCompList = arg_4_0._animCompList or {}
+
+		table.insert(arg_4_0._animCompList, var_4_6)
+	end
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._removeDownEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	slot0:_removeDownEffect()
-	slot0:_removeLvAnim()
-
-	slot0._imgMaskMatDict = nil
-	slot0._imgList = nil
-	slot0._paramDict = nil
+function var_0_0._delayDone(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-function slot0._removeDownEffect(slot0)
-	if slot0._effectLoaderList then
-		for slot4, slot5 in ipairs(slot0._effectLoaderList) do
-			slot5:dispose()
+function var_0_0.clearWork(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._removeDownEffect, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
+	arg_6_0:_removeDownEffect()
+	arg_6_0:_removeLvAnim()
+
+	arg_6_0._imgMaskMatDict = nil
+	arg_6_0._imgList = nil
+	arg_6_0._paramDict = nil
+end
+
+function var_0_0._removeDownEffect(arg_7_0)
+	if arg_7_0._effectLoaderList then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._effectLoaderList) do
+			iter_7_1:dispose()
 		end
 	end
 
-	if slot0._effectGOList then
-		for slot4, slot5 in ipairs(slot0._effectGOList) do
-			gohelper.destroy(slot5)
+	if arg_7_0._effectGOList then
+		for iter_7_2, iter_7_3 in ipairs(arg_7_0._effectGOList) do
+			gohelper.destroy(iter_7_3)
 		end
 	end
 
-	slot0._effectGOList = nil
-	slot0._effectLoaderList = nil
+	arg_7_0._effectGOList = nil
+	arg_7_0._effectLoaderList = nil
 end
 
-function slot0._removeLvAnim(slot0)
-	if slot0._animLoaderList then
-		for slot4, slot5 in ipairs(slot0._animLoaderList) do
-			slot5:dispose()
+function var_0_0._removeLvAnim(arg_8_0)
+	if arg_8_0._animLoaderList then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._animLoaderList) do
+			iter_8_1:dispose()
 		end
 	end
 
-	slot0._animLoaderList = nil
+	arg_8_0._animLoaderList = nil
 
-	if slot0._animCompList then
-		for slot4, slot5 in ipairs(slot0._animCompList) do
-			if not gohelper.isNil(slot5) then
-				slot5.runtimeAnimatorController = nil
+	if arg_8_0._animCompList then
+		for iter_8_2, iter_8_3 in ipairs(arg_8_0._animCompList) do
+			if not gohelper.isNil(iter_8_3) then
+				iter_8_3.runtimeAnimatorController = nil
 			end
 		end
 	end
 
-	slot0._animCompList = nil
+	arg_8_0._animCompList = nil
 end
 
-return slot0
+return var_0_0

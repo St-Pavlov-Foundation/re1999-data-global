@@ -1,36 +1,36 @@
-module("modules.logic.versionactivity2_1.aergusi.model.AergusiEvidenceMo", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.model.AergusiEvidenceMo", package.seeall)
 
-slot0 = class("AergusiEvidenceMo")
+local var_0_0 = class("AergusiEvidenceMo")
 
-function slot0.ctor(slot0)
-	slot0.clueInfos = {}
-	slot0.hp = 0
-	slot0.tipCount = 0
-	slot0.success = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.clueInfos = {}
+	arg_1_0.hp = 0
+	arg_1_0.tipCount = 0
+	arg_1_0.success = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0.clueInfos = slot0:_buildClues(slot1.cluesInfo)
-	slot0.hp = slot1.hp
-	slot0.tipCount = slot1.tipCount
-	slot0.success = slot1.success
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.clueInfos = arg_2_0:_buildClues(arg_2_1.cluesInfo)
+	arg_2_0.hp = arg_2_1.hp
+	arg_2_0.tipCount = arg_2_1.tipCount
+	arg_2_0.success = arg_2_1.success
 end
 
-function slot0.update(slot0, slot1)
-	slot0:init(slot1)
+function var_0_0.update(arg_3_0, arg_3_1)
+	arg_3_0:init(arg_3_1)
 end
 
-function slot0._buildClues(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildClues(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = AergusiClueMo.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = AergusiClueMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_4_1:init(iter_4_1)
+		table.insert(var_4_0, var_4_1)
 	end
 
-	return slot2
+	return var_4_0
 end
 
-return slot0
+return var_0_0

@@ -1,25 +1,25 @@
-module("modules.logic.gm.view.GMFightSimulateView", package.seeall)
+﻿module("modules.logic.gm.view.GMFightSimulateView", package.seeall)
 
-slot0 = class("GMFightSimulateView", BaseView)
+local var_0_0 = class("GMFightSimulateView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
 	GMFightSimulateLeftModel.instance:onOpen()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
 	ViewMgr.instance:openView(ViewName.GMToolView)
 end
 
-return slot0
+return var_0_0

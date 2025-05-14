@@ -1,2 +1,0 @@
-module("booter.base.cjson", package.seeall)
-setGlobal("cjson", require("cjson"))

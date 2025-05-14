@@ -1,206 +1,225 @@
-module("modules.logic.rouge.map.map.itemcomp.RougeMapPieceItem", package.seeall)
+﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapPieceItem", package.seeall)
 
-slot0 = class("RougeMapPieceItem", RougeMapBaseItem)
+local var_0_0 = class("RougeMapPieceItem", RougeMapBaseItem)
 
-function slot0.init(slot0, slot1, slot2)
-	uv0.super.init(slot0)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.init(arg_1_0)
 
-	slot0.pieceMo = slot1
-	slot0.pieceCo = slot0.pieceMo:getPieceCo()
-	slot0.map = slot2
+	arg_1_0.pieceMo = arg_1_1
+	arg_1_0.pieceCo = arg_1_0.pieceMo:getPieceCo()
+	arg_1_0.map = arg_1_2
 
-	slot0:setId(slot0.pieceMo.id)
-	slot0:createPiece()
-	slot0:createIcon()
-	slot0:createEffect()
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, slot0.onUpdateMapInfo, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onMiddleActorBeforeMove, slot0.onMiddleActorBeforeMove, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onExitPieceChoiceEvent, slot0.onExitPieceChoiceEvent, slot0)
+	arg_1_0:setId(arg_1_0.pieceMo.id)
+	arg_1_0:createPiece()
+	arg_1_0:createIcon()
+	arg_1_0:createEffect()
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, arg_1_0.onUpdateMapInfo, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onMiddleActorBeforeMove, arg_1_0.onMiddleActorBeforeMove, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onExitPieceChoiceEvent, arg_1_0.onExitPieceChoiceEvent, arg_1_0)
 end
 
-function slot0.createPiece(slot0)
-	slot2 = RougeMapModel.instance:getMiddleLayerCo().dayOrNight
+function var_0_0.createPiece(arg_2_0)
+	local var_2_0 = RougeMapModel.instance:getMiddleLayerCo().dayOrNight
+	local var_2_1 = arg_2_0.pieceCo.pieceRes
 
-	if string.nilorempty(slot0.pieceCo.pieceRes) then
-		slot0.isEmpty = true
-		slot0.pieceGo = gohelper.create3d(slot0.map.goLayerPiecesContainer, slot0.pieceCo.id)
+	if string.nilorempty(var_2_1) then
+		arg_2_0.isEmpty = true
+		arg_2_0.pieceGo = gohelper.create3d(arg_2_0.map.goLayerPiecesContainer, arg_2_0.pieceCo.id)
 	else
-		slot0.isEmpty = false
-		slot0.pieceGo = gohelper.clone(slot0.map.piecePrefabDict[RougeMapHelper.getPieceResPath(slot3, slot2)], slot0.map.goLayerPiecesContainer, slot0.pieceCo.id)
+		arg_2_0.isEmpty = false
+
+		local var_2_2 = RougeMapHelper.getPieceResPath(var_2_1, var_2_0)
+
+		arg_2_0.pieceGo = gohelper.clone(arg_2_0.map.piecePrefabDict[var_2_2], arg_2_0.map.goLayerPiecesContainer, arg_2_0.pieceCo.id)
 	end
 
-	slot0.pieceTr = slot0.pieceGo.transform
+	arg_2_0.pieceTr = arg_2_0.pieceGo.transform
 
-	transformhelper.setLocalPos(slot0.pieceTr, slot0:getMapPos())
-	slot0:refreshDirection()
+	transformhelper.setLocalPos(arg_2_0.pieceTr, arg_2_0:getMapPos())
+	arg_2_0:refreshDirection()
 end
 
-function slot0.createIcon(slot0)
-	if slot0.pieceCo.entrustType == 0 then
-		logError(string.format("棋子id : %s, 没有配置委托类型", slot0.pieceCo.id))
+function var_0_0.createIcon(arg_3_0)
+	local var_3_0 = arg_3_0.pieceCo.entrustType
+
+	if var_3_0 == 0 then
+		logError(string.format("棋子id : %s, 没有配置委托类型", arg_3_0.pieceCo.id))
 
 		return
 	end
 
-	if slot1 == RougeMapEnum.PieceEntrustType.Boss then
+	if var_3_0 == RougeMapEnum.PieceEntrustType.Boss then
 		return
 	end
 
-	if not slot0:canShowIcon() then
+	if not arg_3_0:canShowIcon() then
 		return
 	end
 
-	slot0.bgGo = gohelper.clone(slot0.map.iconBgPrefabDict[RougeMapEnum.PieceIconBg[slot0.pieceCo.entrustType]], slot0.map.goPieceIconContainer, slot0.pieceCo.id)
-	slot0.bgTr = slot0.bgGo.transform
-	slot5, slot6, slot7 = slot0:getMapPos()
+	local var_3_1 = RougeMapEnum.PieceIconBg[arg_3_0.pieceCo.entrustType]
+	local var_3_2 = arg_3_0.map.iconBgPrefabDict[var_3_1]
+	local var_3_3 = arg_3_0.map.goPieceIconContainer
 
-	transformhelper.setLocalPos(slot0.bgTr, slot5 + RougeMapEnum.PieceIconOffset.x, slot6 + RougeMapEnum.PieceIconOffset.y, slot7)
+	arg_3_0.bgGo = gohelper.clone(var_3_2, var_3_3, arg_3_0.pieceCo.id)
+	arg_3_0.bgTr = arg_3_0.bgGo.transform
 
-	slot0.iconGo = gohelper.clone(slot0.map.iconPrefabDict[slot1], slot0.bgGo, "icon")
-	slot0.iconTr = slot0.iconGo.transform
+	local var_3_4, var_3_5, var_3_6 = arg_3_0:getMapPos()
 
-	transformhelper.setLocalPos(slot0.iconTr, 0, 0, 0)
+	transformhelper.setLocalPos(arg_3_0.bgTr, var_3_4 + RougeMapEnum.PieceIconOffset.x, var_3_5 + RougeMapEnum.PieceIconOffset.y, var_3_6)
+
+	local var_3_7 = arg_3_0.map.iconPrefabDict[var_3_0]
+
+	arg_3_0.iconGo = gohelper.clone(var_3_7, arg_3_0.bgGo, "icon")
+	arg_3_0.iconTr = arg_3_0.iconGo.transform
+
+	transformhelper.setLocalPos(arg_3_0.iconTr, 0, 0, 0)
 end
 
-function slot0.createEffect(slot0)
-	if slot0.pieceCo.bossEffect == 0 then
+function var_0_0.createEffect(arg_4_0)
+	if arg_4_0.pieceCo.bossEffect == 0 then
 		return
 	end
 
-	slot0.effectGo = gohelper.clone(slot0.map.luoLeiLaiEffectPrefab, slot0.pieceGo, "effect")
+	arg_4_0.effectGo = gohelper.clone(arg_4_0.map.luoLeiLaiEffectPrefab, arg_4_0.pieceGo, "effect")
 
-	slot0:refreshEffect()
+	arg_4_0:refreshEffect()
 end
 
-function slot0.refreshDirection(slot0)
-	if slot0.isEmpty then
+function var_0_0.refreshDirection(arg_5_0)
+	if arg_5_0.isEmpty then
 		return
 	end
 
-	slot0:initDirectionMap()
+	arg_5_0:initDirectionMap()
 
-	slot1 = RougeMapModel.instance:getMiddleLayerPathPos(slot0.pieceMo.index + 1)
-	slot2, slot3 = slot0:getMapPos()
+	local var_5_0 = RougeMapModel.instance:getMiddleLayerPathPos(arg_5_0.pieceMo.index + 1)
+	local var_5_1, var_5_2 = arg_5_0:getMapPos()
+	local var_5_3 = RougeMapHelper.getAngle(var_5_1, var_5_2, var_5_0.x, var_5_0.y)
+	local var_5_4 = RougeMapHelper.getPieceDir(var_5_3)
 
-	for slot9, slot10 in pairs(slot0.directionGoMap) do
-		gohelper.setActive(slot10, slot9 == RougeMapHelper.getPieceDir(RougeMapHelper.getAngle(slot2, slot3, slot1.x, slot1.y)))
-	end
-end
-
-function slot0.initDirectionMap(slot0)
-	if slot0.isEmpty then
-		return
-	end
-
-	if slot0.directionGoMap then
-		return
-	end
-
-	slot0.directionGoMap = slot0:getUserDataTb_()
-
-	for slot4, slot5 in pairs(RougeMapEnum.PieceDir) do
-		slot0.directionGoMap[slot5] = gohelper.findChild(slot0.pieceGo, slot5)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0.directionGoMap) do
+		gohelper.setActive(iter_5_1, iter_5_0 == var_5_4)
 	end
 end
 
-function slot0.getScenePos(slot0)
-	return slot0.pieceTr.position
+function var_0_0.initDirectionMap(arg_6_0)
+	if arg_6_0.isEmpty then
+		return
+	end
+
+	if arg_6_0.directionGoMap then
+		return
+	end
+
+	arg_6_0.directionGoMap = arg_6_0:getUserDataTb_()
+
+	for iter_6_0, iter_6_1 in pairs(RougeMapEnum.PieceDir) do
+		arg_6_0.directionGoMap[iter_6_1] = gohelper.findChild(arg_6_0.pieceGo, iter_6_1)
+	end
 end
 
-function slot0.getMapPos(slot0)
-	if not RougeMapModel.instance:getMiddleLayerPosByIndex(slot0.pieceMo.index + 1) then
+function var_0_0.getScenePos(arg_7_0)
+	return arg_7_0.pieceTr.position
+end
+
+function var_0_0.getMapPos(arg_8_0)
+	local var_8_0 = RougeMapModel.instance:getMiddleLayerPosByIndex(arg_8_0.pieceMo.index + 1)
+
+	if not var_8_0 then
 		return 0, 0, 0
 	end
 
-	return slot1.x, slot1.y, RougeMapHelper.getOffsetZ(slot1.y)
+	return var_8_0.x, var_8_0.y, RougeMapHelper.getOffsetZ(var_8_0.y)
 end
 
-function slot0.getClickArea(slot0)
+function var_0_0.getClickArea(arg_9_0)
 	return RougeMapEnum.PieceClickArea
 end
 
-function slot0.onClick(slot0)
-	logNormal("点击棋子了... " .. slot0.pieceCo.id)
+function var_0_0.onClick(arg_10_0)
+	logNormal("点击棋子了... " .. arg_10_0.pieceCo.id)
 
-	if slot0.pieceMo.finish then
+	if arg_10_0.pieceMo.finish then
 		return
 	end
 
-	if not slot0:canShowIcon() then
+	if not arg_10_0:canShowIcon() then
 		return
 	end
 
-	RougeMapController.instance:moveToPieceItem(slot0.pieceMo, slot0.onMoveDone, slot0)
+	RougeMapController.instance:moveToPieceItem(arg_10_0.pieceMo, arg_10_0.onMoveDone, arg_10_0)
 end
 
-function slot0.onMoveDone(slot0)
-	slot0.callbackId = RougeRpc.instance:sendRougePieceMoveRequest(slot0.pieceMo.index, slot0.onReceiveMsg, slot0)
+function var_0_0.onMoveDone(arg_11_0)
+	arg_11_0.callbackId = RougeRpc.instance:sendRougePieceMoveRequest(arg_11_0.pieceMo.index, arg_11_0.onReceiveMsg, arg_11_0)
 end
 
-function slot0.onReceiveMsg(slot0)
-	slot0.callbackId = nil
+function var_0_0.onReceiveMsg(arg_12_0)
+	arg_12_0.callbackId = nil
 
-	ViewMgr.instance:openView(ViewName.RougeMapPieceChoiceView, slot0.pieceMo)
+	ViewMgr.instance:openView(ViewName.RougeMapPieceChoiceView, arg_12_0.pieceMo)
 end
 
-function slot0.onUpdateMapInfo(slot0)
-	slot0:refreshIcon()
-	slot0:refreshEffect()
+function var_0_0.onUpdateMapInfo(arg_13_0)
+	arg_13_0:refreshIcon()
+	arg_13_0:refreshEffect()
 end
 
-function slot0.canShowIcon(slot0)
-	if slot0.onPieceView then
+function var_0_0.canShowIcon(arg_14_0)
+	if arg_14_0.onPieceView then
 		return false
 	end
 
-	if slot0.pieceMo.finish then
+	if arg_14_0.pieceMo.finish then
 		return false
 	end
 
-	if not RougeMapHelper.isEntrustPiece(slot0.pieceCo.entrustType) then
+	if not RougeMapHelper.isEntrustPiece(arg_14_0.pieceCo.entrustType) then
 		return true
 	end
 
 	return RougeMapModel.instance:getEntrustId() == nil
 end
 
-function slot0.refreshIcon(slot0)
-	slot1 = slot0:canShowIcon()
+function var_0_0.refreshIcon(arg_15_0)
+	local var_15_0 = arg_15_0:canShowIcon()
 
-	gohelper.setActive(slot0.bgGo, slot1)
-	gohelper.setActive(slot0.iconGo, slot1)
+	gohelper.setActive(arg_15_0.bgGo, var_15_0)
+	gohelper.setActive(arg_15_0.iconGo, var_15_0)
 end
 
-function slot0.refreshEffect(slot0)
-	if not slot0.effectGo then
+function var_0_0.refreshEffect(arg_16_0)
+	if not arg_16_0.effectGo then
 		return
 	end
 
-	gohelper.setActive(slot0.effectGo, not slot0.pieceMo.finish)
+	local var_16_0 = arg_16_0.pieceMo.finish
+
+	gohelper.setActive(arg_16_0.effectGo, not var_16_0)
 end
 
-function slot0.onMiddleActorBeforeMove(slot0, slot1)
-	if slot1.pieceId == RougeMapEnum.LeaveId then
+function var_0_0.onMiddleActorBeforeMove(arg_17_0, arg_17_1)
+	if arg_17_1.pieceId == RougeMapEnum.LeaveId then
 		return
 	end
 
-	slot0.onPieceView = true
+	arg_17_0.onPieceView = true
 
-	slot0:refreshIcon()
+	arg_17_0:refreshIcon()
 end
 
-function slot0.onExitPieceChoiceEvent(slot0)
-	slot0.onPieceView = false
+function var_0_0.onExitPieceChoiceEvent(arg_18_0)
+	arg_18_0.onPieceView = false
 
-	slot0:refreshIcon()
+	arg_18_0:refreshIcon()
 end
 
-function slot0.destroy(slot0)
-	if slot0.callbackId then
-		RougeRpc.instance:removeCallbackById(slot0.callbackId)
+function var_0_0.destroy(arg_19_0)
+	if arg_19_0.callbackId then
+		RougeRpc.instance:removeCallbackById(arg_19_0.callbackId)
 	end
 
-	uv0.super.destroy(slot0)
+	var_0_0.super.destroy(arg_19_0)
 end
 
-return slot0
+return var_0_0

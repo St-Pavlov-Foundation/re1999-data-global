@@ -1,30 +1,31 @@
-module("modules.logic.summon.view.custompick.SummonCustomPickDetailViewContainer", package.seeall)
+﻿module("modules.logic.summon.view.custompick.SummonCustomPickDetailViewContainer", package.seeall)
 
-slot0 = class("SummonCustomPickDetailViewContainer", BaseViewContainer)
+local var_0_0 = class("SummonCustomPickDetailViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "category/#scroll_category"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = SummonPoolDetailCategoryItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 380
-	slot2.cellHeight = 116
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 4
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(SummonPoolDetailCategoryListModel.instance, slot2))
-	table.insert(slot1, SummonPoolDetailView.New())
-	table.insert(slot1, TabViewGroup.New(1, "info"))
+	var_1_1.scrollGOPath = "category/#scroll_category"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = SummonPoolDetailCategoryItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 380
+	var_1_1.cellHeight = 116
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 4
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(SummonPoolDetailCategoryListModel.instance, var_1_1))
+	table.insert(var_1_0, SummonPoolDetailView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "info"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			MultiView.New({
 				SummonCustomPickDescView.New(),
@@ -35,8 +36,8 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-return slot0
+return var_0_0

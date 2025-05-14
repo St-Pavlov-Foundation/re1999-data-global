@@ -1,155 +1,181 @@
-module("projbooter.hotupdate.optionpackage.OptionPackageHttpGetter", package.seeall)
+﻿module("projbooter.hotupdate.optionpackage.OptionPackageHttpGetter", package.seeall)
 
-slot0 = class("OptionPackageHttpGetter")
-slot1 = 5
-slot2 = 3
-slot3 = 0
-slot4 = {}
+local var_0_0 = class("OptionPackageHttpGetter")
+local var_0_1 = 5
+local var_0_2 = 3
+local var_0_3 = 0
+local var_0_4 = {}
 
-function slot0.ctor(slot0, slot1, slot2)
-	uv0 = uv0 + 1
-	slot0._httpId = uv0
-	slot0._sourceType = slot1 or 2
-	slot0._langPackList = {}
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	var_0_3 = var_0_3 + 1
+	arg_1_0._httpId = var_0_3
+	arg_1_0._sourceType = arg_1_1 or 2
+	arg_1_0._langPackList = {}
 
-	tabletool.addValues(slot0._langPackList, slot2)
+	tabletool.addValues(arg_1_0._langPackList, arg_1_2)
 end
 
-function slot0.getHttpId(slot0)
-	return slot0._httpId
+function var_0_0.getHttpId(arg_2_0)
+	return arg_2_0._httpId
 end
 
-function slot0.getSourceType(slot0)
-	return slot0._sourceType
+function var_0_0.getSourceType(arg_3_0)
+	return arg_3_0._sourceType
 end
 
-function slot0.getLangPackList(slot0)
-	return slot0._langPackList
+function var_0_0.getLangPackList(arg_4_0)
+	return arg_4_0._langPackList
 end
 
-function slot0.start(slot0, slot1, slot2)
-	slot0._langShortcuts, slot0._langVersions = slot0:_getLangVersions()
-	slot0._onGetFinish = slot1
-	slot0._onGetFinishObj = slot2
-	slot0._retryCount = 0
-	slot0._useBackupUrl = false
+function var_0_0.start(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._langShortcuts, arg_5_0._langVersions = arg_5_0:_getLangVersions()
+	arg_5_0._onGetFinish = arg_5_1
+	arg_5_0._onGetFinishObj = arg_5_2
+	arg_5_0._retryCount = 0
+	arg_5_0._useBackupUrl = false
 
-	slot0:_httpGet()
+	arg_5_0:_httpGet()
 end
 
-function slot0.stop(slot0)
-	if slot0._requestId then
-		SLFramework.SLWebRequest.Instance:Stop(slot0._requestId)
+function var_0_0.stop(arg_6_0)
+	if arg_6_0._requestId then
+		SLFramework.SLWebRequest.Instance:Stop(arg_6_0._requestId)
 
-		slot0._requestId = nil
+		arg_6_0._requestId = nil
 	end
 end
 
-function slot0._httpGet(slot0)
-	logNormal("OptionPackageHttpGetter url: " .. slot0:_getUrl())
+function var_0_0._httpGet(arg_7_0)
+	local var_7_0 = arg_7_0:_getUrl()
 
-	if uv0 and uv0[slot0._sourceType] then
-		logNormal("OptionPackageHttpGetter url: " .. uv0[slot0._sourceType])
+	logNormal("OptionPackageHttpGetter url: " .. var_7_0)
+
+	if var_0_4 and var_0_4[arg_7_0._sourceType] then
+		var_7_0 = var_0_4[arg_7_0._sourceType]
+
+		logNormal("OptionPackageHttpGetter url: " .. var_7_0)
 	end
 
-	slot0._requestId = SLFramework.SLWebRequest.Instance:Get(slot1, slot0._onWebResponse, slot0, uv1)
+	arg_7_0._requestId = SLFramework.SLWebRequest.Instance:Get(var_7_0, arg_7_0._onWebResponse, arg_7_0, var_0_1)
 end
 
-function slot0._onWebResponse(slot0, slot1, slot2, slot3)
-	if slot1 then
-		if slot2 and slot2 ~= "" then
-			logNormal("获取可选资源返回:" .. slot2)
+function var_0_0._onWebResponse(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if arg_8_1 then
+		if arg_8_2 and arg_8_2 ~= "" then
+			logNormal("获取可选资源返回:" .. arg_8_2)
 
-			slot0._result = cjson.decode(slot2)
+			arg_8_0._result = cjson.decode(arg_8_2)
 		else
 			logNormal("获取可选资源返回空串")
 		end
 
-		slot0:_runCallblck(true)
-	elseif uv0 <= slot0._retryCount then
-		slot0._useBackupUrl = not slot0._useBackupUrl
-		slot0._retryCount = 0
+		arg_8_0:_runCallblck(true)
+	elseif arg_8_0._retryCount >= var_0_2 then
+		arg_8_0._useBackupUrl = not arg_8_0._useBackupUrl
+		arg_8_0._retryCount = 0
 
-		slot0:_runCallblck(false)
+		arg_8_0:_runCallblck(false)
 	else
-		slot0._retryCount = slot0._retryCount + 1
+		arg_8_0._retryCount = arg_8_0._retryCount + 1
 
-		slot0:_httpGet()
+		arg_8_0:_httpGet()
 	end
 end
 
-function slot0._runCallblck(slot0, slot1)
-	if slot0._onGetFinish == nil then
+function var_0_0._runCallblck(arg_9_0, arg_9_1)
+	if arg_9_0._onGetFinish == nil then
 		return
 	end
 
-	slot0._onGetFinish = nil
-	slot0._onGetFinishObj = nil
+	local var_9_0 = arg_9_0._onGetFinish
+	local var_9_1 = arg_9_0._onGetFinishObj
 
-	slot0._onGetFinish(slot0._onGetFinishObj, slot1, slot0)
+	arg_9_0._onGetFinish = nil
+	arg_9_0._onGetFinishObj = nil
+
+	var_9_0(var_9_1, arg_9_1, arg_9_0)
 end
 
-function slot0.getHttpResult(slot0)
-	return slot0._result
+function var_0_0.getHttpResult(arg_10_0)
+	return arg_10_0._result
 end
 
-function slot0.getLangSize(slot0, slot1)
-	if not slot0._result then
+function var_0_0.getLangSize(arg_11_0, arg_11_1)
+	if not arg_11_0._result then
 		return 0
 	end
 
-	if not slot0._result[slot1] or not slot2.res then
+	local var_11_0 = arg_11_0._result[arg_11_1]
+
+	if not var_11_0 or not var_11_0.res then
 		return 0
 	end
 
-	for slot7, slot8 in ipairs(slot2.res) do
-		slot3 = 0 + slot8.length
+	local var_11_1 = 0
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0.res) do
+		var_11_1 = var_11_1 + iter_11_1.length
 	end
 
-	return slot3
+	return var_11_1
 end
 
-function slot0._getUrl(slot0)
-	slot1 = table.concat(slot0._langShortcuts, ",")
-	slot2 = table.concat(slot0._langVersions, ",")
-	slot3 = {}
-	slot4, slot5 = GameUrlConfig.getOptionalUpdateUrl()
-	slot6 = slot0._useBackupUrl and slot5 or slot4
-	slot7 = SLFramework.FrameworkSettings.CurPlatform
+function var_0_0._getUrl(arg_12_0)
+	local var_12_0 = table.concat(arg_12_0._langShortcuts, ",")
+	local var_12_1 = table.concat(arg_12_0._langVersions, ",")
+	local var_12_2 = {}
+	local var_12_3, var_12_4 = GameUrlConfig.getOptionalUpdateUrl()
+	local var_12_5 = arg_12_0._useBackupUrl and var_12_4 or var_12_3
+	local var_12_6 = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot7 = 0
+		var_12_6 = 0
 	end
 
-	table.insert(slot3, string.format("os_type=%s", slot7))
-	table.insert(slot3, string.format("lang=%s", slot1))
-	table.insert(slot3, string.format("version=%s", slot2))
-	table.insert(slot3, string.format("env_type=%s", GameChannelConfig.getServerType()))
-	table.insert(slot3, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
+	local var_12_7 = GameChannelConfig.getServerType()
 
-	return slot6 .. string.format("/resource/%d/check", SDKMgr.instance:getGameId()) .. "?" .. table.concat(slot3, "&")
+	table.insert(var_12_2, string.format("os_type=%s", var_12_6))
+	table.insert(var_12_2, string.format("lang=%s", var_12_0))
+	table.insert(var_12_2, string.format("version=%s", var_12_1))
+	table.insert(var_12_2, string.format("env_type=%s", var_12_7))
+	table.insert(var_12_2, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
+
+	local var_12_8 = SDKMgr.instance:getGameId()
+	local var_12_9 = string.format("/resource/%d/check", var_12_8)
+
+	return var_12_5 .. var_12_9 .. "?" .. table.concat(var_12_2, "&")
 end
 
-function slot0._getLangVersions(slot0)
-	slot2 = {}
-	slot3 = {}
+function var_0_0._getLangVersions(arg_13_0)
+	local var_13_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local var_13_1 = {}
+	local var_13_2 = {}
+	local var_13_3 = arg_13_0._langPackList
+	local var_13_4 = arg_13_0:_getBranchVersion()
 
-	for slot9 = 1, #slot0._langPackList do
-		table.insert(slot2, slot10)
-		table.insert(slot3, slot0:_getBranchVersion() .. "." .. (string.nilorempty(SLFramework.GameUpdate.OptionalUpdate.Instance:GetLocalVersion(slot4[slot9])) and "0" or slot11))
+	for iter_13_0 = 1, #var_13_3 do
+		local var_13_5 = var_13_3[iter_13_0]
+		local var_13_6 = var_13_0:GetLocalVersion(var_13_5)
+		local var_13_7 = var_13_4 .. "." .. (string.nilorempty(var_13_6) and "0" or var_13_6)
+
+		table.insert(var_13_1, var_13_5)
+		table.insert(var_13_2, var_13_7)
 	end
 
-	return slot2, slot3
+	return var_13_1, var_13_2
 end
 
-function slot0._getBranchVersion(slot0)
-	if string.nilorempty(SLFramework.GameUpdate.OptionalUpdate.Instance.VoiceBranch) or not tonumber(slot2) then
-		slot2 = 1
+function var_0_0._getBranchVersion(arg_14_0)
+	local var_14_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local var_14_1 = var_14_0.VoiceBranch
 
-		logError("随包的语音分支错误：" .. slot1.VoiceBranch)
+	if string.nilorempty(var_14_1) or not tonumber(var_14_1) then
+		var_14_1 = 1
+
+		logError("随包的语音分支错误：" .. var_14_0.VoiceBranch)
 	end
 
-	return slot2
+	return var_14_1
 end
 
-return slot0
+return var_0_0

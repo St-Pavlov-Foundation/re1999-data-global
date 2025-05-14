@@ -1,45 +1,54 @@
-module("modules.common.utils.WindowsUtil", package.seeall)
+﻿module("modules.common.utils.WindowsUtil", package.seeall)
 
 return {
-	getSelectFileContent = function (slot0, slot1)
+	getSelectFileContent = function(arg_1_0, arg_1_1)
 		require("tolua.reflection")
 		tolua.loadassembly("UnityEditor")
 
-		slot2 = System.Array.CreateInstance(typeof("System.Type"), 3)
-		slot2[0] = typeof(System.String)
-		slot2[1] = typeof(System.String)
-		slot2[2] = typeof(System.String)
-		slot4 = SLFramework.FrameworkSettings.PersistentResRootDir
+		local var_1_0 = System.Array.CreateInstance(typeof("System.Type"), 3)
 
-		SLFramework.FileHelper.EnsureDir(slot4)
+		var_1_0[0] = typeof(System.String)
+		var_1_0[1] = typeof(System.String)
+		var_1_0[2] = typeof(System.String)
 
-		slot6 = nil
+		local var_1_1 = tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "OpenFilePanel", var_1_0)
+		local var_1_2 = SLFramework.FrameworkSettings.PersistentResRootDir
 
-		if not string.nilorempty(tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "OpenFilePanel", slot2):Call(slot0, slot4, slot1)) then
-			slot6 = SLFramework.FileHelper.ReadText(slot5)
+		SLFramework.FileHelper.EnsureDir(var_1_2)
+
+		local var_1_3 = var_1_1:Call(arg_1_0, var_1_2, arg_1_1)
+		local var_1_4
+
+		if not string.nilorempty(var_1_3) then
+			var_1_4 = SLFramework.FileHelper.ReadText(var_1_3)
 		end
 
-		slot3:Destroy()
+		var_1_1:Destroy()
 
-		return slot6
+		return var_1_4
 	end,
-	saveContentToFile = function (slot0, slot1, slot2, slot3)
+	saveContentToFile = function(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 		require("tolua.reflection")
 		tolua.loadassembly("UnityEditor")
 
-		slot4 = System.Array.CreateInstance(typeof("System.Type"), 4)
-		slot4[0] = typeof(System.String)
-		slot4[1] = typeof(System.String)
-		slot4[2] = typeof(System.String)
-		slot4[3] = typeof(System.String)
-		slot6 = SLFramework.FrameworkSettings.PersistentResRootDir
+		local var_2_0 = System.Array.CreateInstance(typeof("System.Type"), 4)
 
-		SLFramework.FileHelper.EnsureDir(slot6)
+		var_2_0[0] = typeof(System.String)
+		var_2_0[1] = typeof(System.String)
+		var_2_0[2] = typeof(System.String)
+		var_2_0[3] = typeof(System.String)
 
-		if not string.nilorempty(tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "SaveFilePanel", slot4):Call(slot0, slot6, slot2, slot3)) then
-			SLFramework.FileHelper.WriteTextToPath(slot7, slot1)
+		local var_2_1 = tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "SaveFilePanel", var_2_0)
+		local var_2_2 = SLFramework.FrameworkSettings.PersistentResRootDir
+
+		SLFramework.FileHelper.EnsureDir(var_2_2)
+
+		local var_2_3 = var_2_1:Call(arg_2_0, var_2_2, arg_2_2, arg_2_3)
+
+		if not string.nilorempty(var_2_3) then
+			SLFramework.FileHelper.WriteTextToPath(var_2_3, arg_2_1)
 		end
 
-		slot5:Destroy()
+		var_2_1:Destroy()
 	end
 }

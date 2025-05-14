@@ -1,29 +1,29 @@
-module("modules.logic.versionactivity1_2.jiexika.model.Activity114TaskMo", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114TaskMo", package.seeall)
 
-slot0 = pureTable("Activity114TaskMo")
+local var_0_0 = pureTable("Activity114TaskMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.config = nil
-	slot0.progress = 0
-	slot0.finishStatus = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.config = nil
+	arg_1_0.progress = 0
+	arg_1_0.finishStatus = 0
 end
 
-function slot0.update(slot0, slot1)
-	if slot0.id ~= slot1.taskId or not slot0.config then
-		slot0.config = Activity114Config.instance:getTaskCoById(Activity114Model.instance.id, slot1.taskId)
-		slot0.id = slot1.taskId
+function var_0_0.update(arg_2_0, arg_2_1)
+	if arg_2_0.id ~= arg_2_1.taskId or not arg_2_0.config then
+		arg_2_0.config = Activity114Config.instance:getTaskCoById(Activity114Model.instance.id, arg_2_1.taskId)
+		arg_2_0.id = arg_2_1.taskId
 	end
 
-	slot0.progress = slot1.progress
+	arg_2_0.progress = arg_2_1.progress
 
-	if slot1.progress < slot0.config.maxProgress then
-		slot0.finishStatus = Activity114Enum.TaskStatu.NoFinish
-	elseif slot1.hasGetBonus then
-		slot0.finishStatus = Activity114Enum.TaskStatu.GetBonus
+	if arg_2_1.progress < arg_2_0.config.maxProgress then
+		arg_2_0.finishStatus = Activity114Enum.TaskStatu.NoFinish
+	elseif arg_2_1.hasGetBonus then
+		arg_2_0.finishStatus = Activity114Enum.TaskStatu.GetBonus
 	else
-		slot0.finishStatus = Activity114Enum.TaskStatu.Finish
+		arg_2_0.finishStatus = Activity114Enum.TaskStatu.Finish
 	end
 end
 
-return slot0
+return var_0_0

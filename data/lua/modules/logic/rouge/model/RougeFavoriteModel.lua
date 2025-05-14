@@ -1,79 +1,81 @@
-module("modules.logic.rouge.model.RougeFavoriteModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeFavoriteModel", package.seeall)
 
-slot0 = class("RougeFavoriteModel", BaseModel)
+local var_0_0 = class("RougeFavoriteModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._reddots = {}
-	slot0._reviewInfoList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._reddots = {}
+	arg_2_0._reviewInfoList = {}
 end
 
-function slot0.initReddots(slot0, slot1)
-	slot0._reddots = {}
+function var_0_0.initReddots(arg_3_0, arg_3_1)
+	arg_3_0._reddots = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RougeNewReddotNOMO.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = RougeNewReddotNOMO.New()
 
-		slot7:init(slot6)
+		var_3_0:init(iter_3_1)
 
-		slot0._reddots[slot6.type] = slot7
+		arg_3_0._reddots[iter_3_1.type] = var_3_0
 	end
 end
 
-function slot0.getReddotNum(slot0, slot1)
-	return slot0._reddots[slot1].idNum
+function var_0_0.getReddotNum(arg_4_0, arg_4_1)
+	return arg_4_0._reddots[arg_4_1].idNum
 end
 
-function slot0.getReddotMap(slot0, slot1)
-	return slot0._reddots[slot1].idMap
+function var_0_0.getReddotMap(arg_5_0, arg_5_1)
+	return arg_5_0._reddots[arg_5_1].idMap
 end
 
-function slot0.getReddot(slot0, slot1, slot2)
-	return slot0._reddots[slot1].idMap[slot2]
+function var_0_0.getReddot(arg_6_0, arg_6_1, arg_6_2)
+	return arg_6_0._reddots[arg_6_1].idMap[arg_6_2]
 end
 
-function slot0.deleteReddotId(slot0, slot1, slot2)
-	slot0._reddots[slot1]:removeId(slot2)
+function var_0_0.deleteReddotId(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._reddots[arg_7_1]:removeId(arg_7_2)
 end
 
-function slot0.getAllReddotNum(slot0)
-	for slot5, slot6 in pairs(slot0._reddots) do
-		slot1 = 0 + slot6.idNum
+function var_0_0.getAllReddotNum(arg_8_0)
+	local var_8_0 = 0
+
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._reddots) do
+		var_8_0 = var_8_0 + iter_8_1.idNum
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0.initReviews(slot0, slot1)
-	slot0._reviewInfoList = {}
+function var_0_0.initReviews(arg_9_0, arg_9_1)
+	arg_9_0._reviewInfoList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RougeReviewMO.New()
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_0 = RougeReviewMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0._reviewInfoList, slot7)
-	end
-end
-
-function slot0.getReviewInfoList(slot0)
-	return slot0._reviewInfoList
-end
-
-function slot0.initUnlockCollectionIds(slot0, slot1)
-	slot0._collectionMap = {}
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._collectionMap[slot6] = slot6
+		var_9_0:init(iter_9_1)
+		table.insert(arg_9_0._reviewInfoList, var_9_0)
 	end
 end
 
-function slot0.collectionIsUnlock(slot0, slot1)
-	return slot0._collectionMap and slot0._collectionMap[slot1] ~= nil
+function var_0_0.getReviewInfoList(arg_10_0)
+	return arg_10_0._reviewInfoList
 end
 
-slot0.instance = slot0.New()
+function var_0_0.initUnlockCollectionIds(arg_11_0, arg_11_1)
+	arg_11_0._collectionMap = {}
 
-return slot0
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		arg_11_0._collectionMap[iter_11_1] = iter_11_1
+	end
+end
+
+function var_0_0.collectionIsUnlock(arg_12_0, arg_12_1)
+	return arg_12_0._collectionMap and arg_12_0._collectionMap[arg_12_1] ~= nil
+end
+
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

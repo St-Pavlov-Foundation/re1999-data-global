@@ -1,56 +1,60 @@
-module("modules.logic.room.model.record.RoomHandBookBackListModel", package.seeall)
+﻿module("modules.logic.room.model.record.RoomHandBookBackListModel", package.seeall)
 
-slot0 = class("RoomHandBookBackListModel", ListScrollModel)
+local var_0_0 = class("RoomHandBookBackListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	slot1 = {}
+function var_0_0.init(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.UtmStickers)
 
-	for slot6, slot7 in ipairs(ItemModel.instance:getItemsBySubType(ItemEnum.SubType.UtmStickers)) do
-		slot8 = RoomHandBookBackMo.New()
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_2 = RoomHandBookBackMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot1, slot8)
+		var_1_2:init(iter_1_1)
+		table.insert(var_1_0, var_1_2)
 	end
 
-	slot3 = RoomHandBookBackMo.New()
+	local var_1_3 = RoomHandBookBackMo.New()
 
-	slot3:setEmpty()
-	table.insert(slot1, slot3)
-	table.sort(slot1, uv0.sort)
+	var_1_3:setEmpty()
+	table.insert(var_1_0, var_1_3)
+	table.sort(var_1_0, var_0_0.sort)
 
-	slot4 = RoomHandBookModel.instance:getSelectMoBackGroundId()
+	local var_1_4 = RoomHandBookModel.instance:getSelectMoBackGroundId()
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot4 and slot4 == slot9.id then
-			slot0._selectIndex = slot8
+	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
+		if var_1_4 and var_1_4 == iter_1_3.id then
+			arg_1_0._selectIndex = iter_1_2
 
-			RoomHandBookBackModel.instance:setSelectMo(slot9)
+			RoomHandBookBackModel.instance:setSelectMo(iter_1_3)
 
 			break
-		elseif slot9:isEmpty() then
-			slot0._selectIndex = slot8
+		elseif iter_1_3:isEmpty() then
+			arg_1_0._selectIndex = iter_1_2
 
-			RoomHandBookBackModel.instance:setSelectMo(slot9)
+			RoomHandBookBackModel.instance:setSelectMo(iter_1_3)
 
 			break
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.sort(slot0, slot1)
-	if (slot0:checkIsUse() and 3 or slot0:isEmpty() and 2 or 1) ~= (slot1:checkIsUse() and 3 or slot1:isEmpty() and 2 or 1) then
-		return slot3 < slot2
+function var_0_0.sort(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:checkIsUse() and 3 or arg_2_0:isEmpty() and 2 or 1
+	local var_2_1 = arg_2_1:checkIsUse() and 3 or arg_2_1:isEmpty() and 2 or 1
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_1 < var_2_0
 	else
-		return slot0.id < slot1.id
+		return arg_2_0.id < arg_2_1.id
 	end
 end
 
-function slot0.getSelectIndex(slot0)
-	return slot0._selectIndex or 1
+function var_0_0.getSelectIndex(arg_3_0)
+	return arg_3_0._selectIndex or 1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

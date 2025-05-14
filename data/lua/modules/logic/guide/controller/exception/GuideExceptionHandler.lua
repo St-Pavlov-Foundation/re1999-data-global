@@ -1,53 +1,59 @@
-module("modules.logic.guide.controller.exception.GuideExceptionHandler", package.seeall)
+﻿module("modules.logic.guide.controller.exception.GuideExceptionHandler", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.finishStep(slot0, slot1)
-	GuideController.instance:finishStep(slot0, slot1, true)
+function var_0_0.finishStep(arg_1_0, arg_1_1)
+	GuideController.instance:finishStep(arg_1_0, arg_1_1, true)
 end
 
-function slot0.finishGuide(slot0, slot1, slot2)
-	GuideController.instance:oneKeyFinishGuide(slot0, true)
+function var_0_0.finishGuide(arg_2_0, arg_2_1, arg_2_2)
+	GuideController.instance:oneKeyFinishGuide(arg_2_0, true)
 end
 
-function slot0.gotoStep(slot0, slot1, slot2)
-	slot4 = tonumber(slot2)
-	slot5, slot6 = nil
+function var_0_0.gotoStep(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = GuideModel.instance:getById(arg_3_0)
+	local var_3_1 = tonumber(arg_3_2)
+	local var_3_2
+	local var_3_3
+	local var_3_4 = GuideConfig.instance:getStepList(arg_3_0)
 
-	for slot11 = #GuideConfig.instance:getStepList(slot0), 1, -1 do
-		if slot7[slot11].stepId == GuideModel.instance:getById(slot0).currStepId then
-			if slot12.keyStep == 1 then
-				slot6 = slot13
+	for iter_3_0 = #var_3_4, 1, -1 do
+		local var_3_5 = var_3_4[iter_3_0]
+		local var_3_6 = var_3_5.stepId
+
+		if var_3_6 == var_3_0.currStepId then
+			if var_3_5.keyStep == 1 then
+				var_3_3 = var_3_6
 			end
 
 			break
-		elseif slot5 then
-			if slot12.keyStep == 1 then
-				slot6 = slot13
+		elseif var_3_2 then
+			if var_3_5.keyStep == 1 then
+				var_3_3 = var_3_6
 
 				break
 			end
-		elseif slot13 == slot4 then
-			slot5 = true
+		elseif var_3_6 == var_3_1 then
+			var_3_2 = true
 		end
 	end
 
-	if slot6 then
-		slot3:toGotoStep(slot4)
-		GuideRpc.instance:sendFinishGuideRequest(slot0, slot6)
+	if var_3_3 then
+		var_3_0:toGotoStep(var_3_1)
+		GuideRpc.instance:sendFinishGuideRequest(arg_3_0, var_3_3)
 	else
-		slot3:gotoStep(slot4)
-		GuideStepController.instance:clearFlow(slot0)
-		GuideController.instance:execNextStep(slot0)
+		var_3_0:gotoStep(var_3_1)
+		GuideStepController.instance:clearFlow(arg_3_0)
+		GuideController.instance:execNextStep(arg_3_0)
 	end
 end
 
-function slot0.openView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(slot2)
+function var_0_0.openView(arg_4_0, arg_4_1, arg_4_2)
+	ViewMgr.instance:openView(arg_4_2)
 end
 
-function slot0.closeView(slot0, slot1, slot2)
-	ViewMgr.instance:closeView(slot2, true)
+function var_0_0.closeView(arg_5_0, arg_5_1, arg_5_2)
+	ViewMgr.instance:closeView(arg_5_2, true)
 end
 
-return slot0
+return var_0_0

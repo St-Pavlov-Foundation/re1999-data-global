@@ -1,113 +1,126 @@
-module("modules.logic.room.model.backpack.RoomBackpackCritterListModel", package.seeall)
+﻿module("modules.logic.room.model.backpack.RoomBackpackCritterListModel", package.seeall)
 
-slot0 = class("RoomBackpackCritterListModel", ListScrollModel)
+local var_0_0 = class("RoomBackpackCritterListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.clearData(slot0)
-	slot0:setIsSortByRareAscend(false)
-	slot0:setMatureFilterType(CritterEnum.MatureFilterType.All)
+function var_0_0.clearData(arg_3_0)
+	arg_3_0:setIsSortByRareAscend(false)
+	arg_3_0:setMatureFilterType(CritterEnum.MatureFilterType.All)
 end
 
-function slot1(slot0, slot1)
-	slot2 = slot0:getId()
-	slot3 = slot1:getId()
+local function var_0_1(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getId()
+	local var_4_1 = arg_4_1:getId()
+	local var_4_2 = arg_4_0:getDefineId()
+	local var_4_3 = arg_4_1:getDefineId()
+	local var_4_4 = CritterConfig.instance:getCritterRare(var_4_2)
+	local var_4_5 = CritterConfig.instance:getCritterRare(var_4_3)
 
-	if CritterConfig.instance:getCritterRare(slot0:getDefineId()) ~= CritterConfig.instance:getCritterRare(slot1:getDefineId()) then
-		if uv0.instance:getIsSortByRareAscend() then
-			return slot6 < slot7
+	if var_4_4 ~= var_4_5 then
+		if var_0_0.instance:getIsSortByRareAscend() then
+			return var_4_4 < var_4_5
 		else
-			return slot7 < slot6
+			return var_4_5 < var_4_4
 		end
 	end
 
-	slot8 = false
+	local var_4_6 = false
+	local var_4_7 = ManufactureModel.instance:getCritterWorkingBuilding(var_4_0)
+	local var_4_8 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_4_0)
 
-	if ManufactureModel.instance:getCritterWorkingBuilding(slot2) or RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(slot2) then
-		slot8 = true
+	if var_4_7 or var_4_8 then
+		var_4_6 = true
 	end
 
-	slot11 = false
+	local var_4_9 = false
+	local var_4_10 = ManufactureModel.instance:getCritterWorkingBuilding(var_4_1)
+	local var_4_11 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_4_1)
 
-	if ManufactureModel.instance:getCritterWorkingBuilding(slot3) or RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(slot3) then
-		slot11 = true
+	if var_4_10 or var_4_11 then
+		var_4_9 = true
 	end
 
-	if slot8 ~= slot11 then
-		return slot8
+	if var_4_6 ~= var_4_9 then
+		return var_4_6
 	end
 
-	if slot0:isMaturity() ~= slot1:isMaturity() then
-		return slot14
+	local var_4_12 = arg_4_0:isMaturity()
+
+	if var_4_12 ~= arg_4_1:isMaturity() then
+		return var_4_12
 	end
 
-	if slot0:isCultivating() ~= slot1:isCultivating() then
-		return slot16
+	local var_4_13 = arg_4_0:isCultivating()
+
+	if var_4_13 ~= arg_4_1:isCultivating() then
+		return var_4_13
 	end
 
-	if slot4 ~= slot5 then
-		return slot4 < slot5
+	if var_4_2 ~= var_4_3 then
+		return var_4_2 < var_4_3
 	end
 
-	return slot2 < slot3
+	return var_4_0 < var_4_1
 end
 
-function slot0.setBackpackCritterList(slot0, slot1)
-	slot3 = {}
-	slot4 = not slot0.matureFilterType or slot0.matureFilterType == CritterEnum.MatureFilterType.All
-	slot5 = slot0.matureFilterType == CritterEnum.MatureFilterType.Mature
+function var_0_0.setBackpackCritterList(arg_5_0, arg_5_1)
+	local var_5_0 = CritterModel.instance:getAllCritters()
+	local var_5_1 = {}
+	local var_5_2 = not arg_5_0.matureFilterType or arg_5_0.matureFilterType == CritterEnum.MatureFilterType.All
+	local var_5_3 = arg_5_0.matureFilterType == CritterEnum.MatureFilterType.Mature
 
-	for slot9, slot10 in ipairs(CritterModel.instance:getAllCritters()) do
-		slot11 = true
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		local var_5_4 = true
 
-		if slot1 then
-			slot11 = slot1:isPassedFilter(slot10)
+		if arg_5_1 then
+			var_5_4 = arg_5_1:isPassedFilter(iter_5_1)
 		end
 
-		if slot11 then
-			if slot4 then
-				slot3[#slot3 + 1] = slot10
+		if var_5_4 then
+			if var_5_2 then
+				var_5_1[#var_5_1 + 1] = iter_5_1
 			else
-				slot12 = slot10:isMaturity()
+				local var_5_5 = iter_5_1:isMaturity()
 
-				if slot5 and slot12 or not slot5 and not slot12 then
-					slot3[#slot3 + 1] = slot10
+				if var_5_3 and var_5_5 or not var_5_3 and not var_5_5 then
+					var_5_1[#var_5_1 + 1] = iter_5_1
 				end
 			end
 		end
 	end
 
-	table.sort(slot3, uv0)
-	slot0:setList(slot3)
+	table.sort(var_5_1, var_0_1)
+	arg_5_0:setList(var_5_1)
 end
 
-function slot0.setIsSortByRareAscend(slot0, slot1)
-	slot0._rareAscend = slot1
+function var_0_0.setIsSortByRareAscend(arg_6_0, arg_6_1)
+	arg_6_0._rareAscend = arg_6_1
 end
 
-function slot0.setMatureFilterType(slot0, slot1)
-	slot0.matureFilterType = slot1
+function var_0_0.setMatureFilterType(arg_7_0, arg_7_1)
+	arg_7_0.matureFilterType = arg_7_1
 end
 
-function slot0.getIsSortByRareAscend(slot0)
-	return slot0._rareAscend
+function var_0_0.getIsSortByRareAscend(arg_8_0)
+	return arg_8_0._rareAscend
 end
 
-function slot0.getMatureFilterType(slot0)
-	return slot0.matureFilterType
+function var_0_0.getMatureFilterType(arg_9_0)
+	return arg_9_0.matureFilterType
 end
 
-function slot0.isBackpackEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBackpackEmpty(arg_10_0)
+	return arg_10_0:getCount() <= 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

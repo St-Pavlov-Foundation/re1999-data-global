@@ -1,228 +1,262 @@
-module("modules.logic.activity.view.chessmap.Activity109ChessTaskView", package.seeall)
+﻿module("modules.logic.activity.view.chessmap.Activity109ChessTaskView", package.seeall)
 
-slot0 = class("Activity109ChessTaskView", BaseViewExtended)
+local var_0_0 = class("Activity109ChessTaskView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simagedog = gohelper.findChildSingleImage(slot0.viewGO, "#simage_dog")
-	slot0._txtremaintime = gohelper.findChildTextMesh(slot0.viewGO, "remaintime/#txt_remaintime")
-	slot0._scrolltask = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_task")
-	slot0._gotaskitemcontent = gohelper.findChild(slot0.viewGO, "#scroll_task/viewport/#go_taskitemcontent")
-	slot0._gotaskitem = gohelper.findChild(slot0.viewGO, "#go_task_item")
-	slot0._gogetall = gohelper.findChild(slot0.viewGO, "#scroll_task/viewport/#go_taskitemcontent/#go_getall")
-	slot0._simagegetallbg = gohelper.findChildSingleImage(slot0.viewGO, "#scroll_task/viewport/#go_taskitemcontent/#go_getall/#simage_getallbg")
-	slot0._btngetallreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#scroll_task/viewport/#go_taskitemcontent/#go_getall/#btn_getallreward")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simagedog = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_dog")
+	arg_1_0._txtremaintime = gohelper.findChildTextMesh(arg_1_0.viewGO, "remaintime/#txt_remaintime")
+	arg_1_0._scrolltask = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_task")
+	arg_1_0._gotaskitemcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_task/viewport/#go_taskitemcontent")
+	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "#go_task_item")
+	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#scroll_task/viewport/#go_taskitemcontent/#go_getall")
+	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_task/viewport/#go_taskitemcontent/#go_getall/#simage_getallbg")
+	arg_1_0._btngetallreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scroll_task/viewport/#go_taskitemcontent/#go_getall/#btn_getallreward")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._onFinishTask, slot0)
-	slot0._btngetallreward:AddClickListener(slot0._btngetallrewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0._onFinishTask, arg_2_0)
+	arg_2_0._btngetallreward:AddClickListener(arg_2_0._btngetallrewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0._onFinishTask, slot0)
-	slot0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0._onFinishTask, slot0)
-	slot0._btngetallreward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_3_0._onFinishTask, arg_3_0)
+	arg_3_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_3_0._onFinishTask, arg_3_0)
+	arg_3_0._btngetallreward:RemoveClickListener()
 end
 
-function slot0._btngetallrewardOnClick(slot0)
+function var_0_0._btngetallrewardOnClick(arg_4_0)
 	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity109)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getVersionactivitychessIcon("full/bg"))
-	slot0._simagedog:LoadImage(ResUrl.getVersionactivitychessIcon("img_gou"))
-	slot0._simagegetallbg:LoadImage(ResUrl.getVersionactivitychessIcon("img_quanbulingqu"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getVersionactivitychessIcon("full/bg"))
+	arg_5_0._simagedog:LoadImage(ResUrl.getVersionactivitychessIcon("img_gou"))
+	arg_5_0._simagegetallbg:LoadImage(ResUrl.getVersionactivitychessIcon("img_quanbulingqu"))
 end
 
-function slot0.onOpen(slot0)
-	slot0._activity_data = ActivityModel.instance:getActivityInfo()[Activity109Model.instance:getCurActivityID()]
-	slot0._task_list = Activity109Config.instance:getTaskList()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._activity_data = ActivityModel.instance:getActivityInfo()[Activity109Model.instance:getCurActivityID()]
+	arg_6_0._task_list = Activity109Config.instance:getTaskList()
 
-	slot0:_showLeftTime()
-	TaskDispatcher.runRepeat(slot0._showLeftTime, slot0, 60)
-	slot0:_showTaskList()
+	arg_6_0:_showLeftTime()
+	TaskDispatcher.runRepeat(arg_6_0._showLeftTime, arg_6_0, 60)
+	arg_6_0:_showTaskList()
 end
 
-function slot0._showLeftTime(slot0)
-	slot0._txtremaintime.text = string.format(luaLang("activity_warmup_remain_time"), slot0._activity_data:getRemainTimeStr())
+function var_0_0._showLeftTime(arg_7_0)
+	arg_7_0._txtremaintime.text = string.format(luaLang("activity_warmup_remain_time"), arg_7_0._activity_data:getRemainTimeStr())
 end
 
-function slot0._onFinishTask(slot0)
-	slot0:_showTaskList()
+function var_0_0._onFinishTask(arg_8_0)
+	arg_8_0:_showTaskList()
 end
 
-function slot0._showTaskList(slot0)
-	table.sort(slot0._task_list, uv0.sortTaskList)
+function var_0_0._showTaskList(arg_9_0)
+	table.sort(arg_9_0._task_list, var_0_0.sortTaskList)
 
-	if not slot0._obj_list then
-		slot0._obj_list = slot0:getUserDataTb_()
+	if not arg_9_0._obj_list then
+		arg_9_0._obj_list = arg_9_0:getUserDataTb_()
 	end
 
-	TaskDispatcher.runDelay(slot0._showTaskItem, slot0, 0.2)
+	TaskDispatcher.runDelay(arg_9_0._showTaskItem, arg_9_0, 0.2)
 end
 
-function slot0._showTaskItem(slot0)
-	slot1 = {}
+function var_0_0._showTaskItem(arg_10_0)
+	local var_10_0 = {}
+	local var_10_1 = 0
 
-	for slot6, slot7 in pairs(slot0._task_list) do
-		table.insert(slot1, slot7)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._task_list) do
+		table.insert(var_10_0, iter_10_1)
 
-		if Activity109Model.instance:getTaskData(slot7.id).hasFinished then
-			slot2 = 0 + 1
+		if Activity109Model.instance:getTaskData(iter_10_1.id).hasFinished then
+			var_10_1 = var_10_1 + 1
 		end
 	end
 
-	table.insert(slot1, 1, {
+	table.insert(var_10_0, 1, {
 		isGetAllTaskUI = true,
-		isNeedShowGetAllUI = slot2 >= 2
+		isNeedShowGetAllUI = var_10_1 >= 2
 	})
-	slot0:com_createObjList(slot0._onItemShow, slot1, slot0._gotaskitemcontent, slot0._gotaskitem, nil, 0.06)
+	arg_10_0:com_createObjList(arg_10_0._onItemShow, var_10_0, arg_10_0._gotaskitemcontent, arg_10_0._gotaskitem, nil, 0.06)
 end
 
-function slot0.sortTaskList(slot0, slot1)
-	slot3 = Activity109Model.instance:getTaskData(slot1.id)
+function var_0_0.sortTaskList(arg_11_0, arg_11_1)
+	local var_11_0 = Activity109Model.instance:getTaskData(arg_11_0.id)
+	local var_11_1 = Activity109Model.instance:getTaskData(arg_11_1.id)
 
-	if not Activity109Model.instance:getTaskData(slot0.id) or not slot3 then
+	if not var_11_0 or not var_11_1 then
 		return false
 	end
 
-	if slot2.finishCount > 0 and not (slot3.finishCount > 0) then
+	local var_11_2 = var_11_0.finishCount > 0
+	local var_11_3 = var_11_1.finishCount > 0
+
+	if var_11_2 and not var_11_3 then
 		return false
-	elseif not slot4 and slot5 then
+	elseif not var_11_2 and var_11_3 then
 		return true
-	elseif slot2.hasFinished and not slot3.hasFinished then
-		return true
-	elseif not slot6 and slot7 then
-		return false
 	else
-		if slot0.sortId ~= slot1.sortId then
-			return slot0.sortId < slot1.sortId
+		local var_11_4 = var_11_0.hasFinished
+		local var_11_5 = var_11_1.hasFinished
+
+		if var_11_4 and not var_11_5 then
+			return true
+		elseif not var_11_4 and var_11_5 then
+			return false
+		else
+			if arg_11_0.sortId ~= arg_11_1.sortId then
+				return arg_11_0.sortId < arg_11_1.sortId
+			end
+
+			return arg_11_0.id < arg_11_1.id
 		end
-
-		return slot0.id < slot1.id
 	end
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	if slot2.isGetAllTaskUI then
-		gohelper.setActive(slot1, slot2.isNeedShowGetAllUI)
+function var_0_0._onItemShow(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if arg_12_2.isGetAllTaskUI then
+		gohelper.setActive(arg_12_1, arg_12_2.isNeedShowGetAllUI)
 
 		return
 	end
 
-	if not Activity109Model.instance:getTaskData(slot2.id) then
-		gohelper.setActive(slot1, false)
+	local var_12_0 = Activity109Model.instance:getTaskData(arg_12_2.id)
+
+	if not var_12_0 then
+		gohelper.setActive(arg_12_1, false)
 
 		return
 	end
 
-	slot3 = slot3 - 1
+	arg_12_3 = arg_12_3 - 1
 
-	slot1:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Idle, 0, 0)
+	arg_12_1:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Idle, 0, 0)
 
-	slot1.name = slot3
-	slot14 = gohelper.findChild(slot1, "scroll_reward/Viewport/#go_rewards")
-	gohelper.findChildTextMesh(slot1, "#txt_progress").text = slot4.progress
-	gohelper.findChildTextMesh(slot1, "#txt_maxprogress").text = slot2.maxProgress
-	gohelper.findChildTextMesh(slot1, "#txt_taskdes").text = slot2.desc
+	arg_12_1.name = arg_12_3
 
-	slot0:addClickCb(gohelper.findChildClickWithAudio(slot1, "#go_notget/#btn_notfinishbg"), slot0._onClickTaskJump, slot0, slot3)
-	slot0:addClickCb(gohelper.findChildClickWithAudio(slot1, "#go_notget/#btn_finishbg"), slot0._onClickTaskReward, slot0, slot3)
-	gohelper.setActive(gohelper.findChild(slot1, "#go_notget"), slot4.finishCount == 0)
-	gohelper.setActive(gohelper.findChild(slot1, "#go_get"), slot4.finishCount > 0)
-	gohelper.setActive(gohelper.findChild(slot1, "#go_blackmask"), true)
+	local var_12_1 = gohelper.findChildTextMesh(arg_12_1, "#txt_progress")
+	local var_12_2 = gohelper.findChildTextMesh(arg_12_1, "#txt_maxprogress")
+	local var_12_3 = gohelper.findChildTextMesh(arg_12_1, "#txt_taskdes")
+	local var_12_4 = gohelper.findChildClickWithAudio(arg_12_1, "#go_notget/#btn_notfinishbg")
+	local var_12_5 = gohelper.findChildClickWithAudio(arg_12_1, "#go_notget/#btn_finishbg")
+	local var_12_6 = gohelper.findChild(arg_12_1, "#go_notget")
+	local var_12_7 = gohelper.findChild(arg_12_1, "#go_get")
+	local var_12_8 = gohelper.findChild(arg_12_1, "#go_blackmask")
+	local var_12_9 = gohelper.findChild(arg_12_1, "scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	local var_12_10 = gohelper.findChild(arg_12_1, "scroll_reward/Viewport/#go_rewards")
+	local var_12_11 = gohelper.findChildSingleImage(arg_12_1, "#simage_bg")
+	local var_12_12 = gohelper.findChildSingleImage(arg_12_1, "#go_blackmask")
 
-	gohelper.findChildImage(slot1, "#go_blackmask").raycastTarget = false
+	var_12_1.text = var_12_0.progress
+	var_12_2.text = arg_12_2.maxProgress
+	var_12_3.text = arg_12_2.desc
 
-	ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(slot1, "#go_blackmask"), slot4.finishCount > 0 and 1 or 0)
-	gohelper.setActive(slot8.gameObject, slot4.progress < slot2.maxProgress)
-	gohelper.setActive(slot9.gameObject, slot4.hasFinished)
-	IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onRewardItemShow, ItemModel.instance:getItemDataListByConfigStr(slot2.bonus), slot14)
+	arg_12_0:addClickCb(var_12_4, arg_12_0._onClickTaskJump, arg_12_0, arg_12_3)
+	arg_12_0:addClickCb(var_12_5, arg_12_0._onClickTaskReward, arg_12_0, arg_12_3)
+	gohelper.setActive(var_12_6, var_12_0.finishCount == 0)
+	gohelper.setActive(var_12_7, var_12_0.finishCount > 0)
+	gohelper.setActive(var_12_8, true)
 
-	slot14:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #string.split(slot2.bonus, "|") > 1
-	gohelper.findChild(slot1, "scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect)).parentGameObject = slot0._scrolltask.gameObject
+	gohelper.findChildImage(arg_12_1, "#go_blackmask").raycastTarget = false
 
-	gohelper.findChildSingleImage(slot1, "#simage_bg"):LoadImage(ResUrl.getVersionactivitychessIcon("img_changgui"))
-	gohelper.findChildSingleImage(slot1, "#go_blackmask"):LoadImage(ResUrl.getVersionactivitychessIcon("img_mengban"))
+	ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(arg_12_1, "#go_blackmask"), var_12_0.finishCount > 0 and 1 or 0)
+	gohelper.setActive(var_12_4.gameObject, var_12_0.progress < arg_12_2.maxProgress)
+	gohelper.setActive(var_12_5.gameObject, var_12_0.hasFinished)
 
-	if not slot0._image_list then
-		slot0._image_list = {}
+	local var_12_13 = ItemModel.instance:getItemDataListByConfigStr(arg_12_2.bonus)
+
+	IconMgr.instance:getCommonPropItemIconList(arg_12_0, arg_12_0._onRewardItemShow, var_12_13, var_12_10)
+
+	local var_12_14 = string.split(arg_12_2.bonus, "|")
+
+	var_12_10:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #var_12_14 > 1
+	var_12_9.parentGameObject = arg_12_0._scrolltask.gameObject
+
+	var_12_11:LoadImage(ResUrl.getVersionactivitychessIcon("img_changgui"))
+	var_12_12:LoadImage(ResUrl.getVersionactivitychessIcon("img_mengban"))
+
+	if not arg_12_0._image_list then
+		arg_12_0._image_list = {}
 	end
 
-	if not slot0._image_list[slot3] then
-		slot0._image_list[slot3] = slot0:getUserDataTb_()
+	if not arg_12_0._image_list[arg_12_3] then
+		arg_12_0._image_list[arg_12_3] = arg_12_0:getUserDataTb_()
 
-		table.insert(slot0._image_list[slot3], slot15)
-		table.insert(slot0._image_list[slot3], slot16)
-		slot1:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
+		table.insert(arg_12_0._image_list[arg_12_3], var_12_11)
+		table.insert(arg_12_0._image_list[arg_12_3], var_12_12)
+		arg_12_1:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
 	end
 
-	table.insert(slot0._obj_list, slot1)
+	table.insert(arg_12_0._obj_list, arg_12_1)
 end
 
-function slot0._releaseTaskItemImage(slot0)
-	if slot0._image_list then
-		for slot4, slot5 in ipairs(slot0._image_list) do
-			for slot9, slot10 in ipairs(slot5) do
-				slot10:UnLoadImage()
+function var_0_0._releaseTaskItemImage(arg_13_0)
+	if arg_13_0._image_list then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_0._image_list) do
+			for iter_13_2, iter_13_3 in ipairs(iter_13_1) do
+				iter_13_3:UnLoadImage()
 			end
 		end
 	end
 
-	slot0._image_list = {}
+	arg_13_0._image_list = {}
 end
 
-function slot0._onRewardItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:setConsume(true)
-	slot1:showStackableNum2()
-	slot1:isShowEffect(true)
-	slot1:setAutoPlay(true)
-	slot1:setCountFontSize(48)
-	slot1:setScale(0.6)
+function var_0_0._onRewardItemShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	arg_14_1:onUpdateMO(arg_14_2)
+	arg_14_1:setConsume(true)
+	arg_14_1:showStackableNum2()
+	arg_14_1:isShowEffect(true)
+	arg_14_1:setAutoPlay(true)
+	arg_14_1:setCountFontSize(48)
+	arg_14_1:setScale(0.6)
 end
 
-function slot0._onClickTaskJump(slot0, slot1)
+function var_0_0._onClickTaskJump(arg_15_0, arg_15_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	Activity109ChessController.instance:dispatchEvent(ActivityChessEvent.TaskJump, slot0._task_list[slot1])
-	slot0:closeThis()
+
+	local var_15_0 = arg_15_0._task_list[arg_15_1]
+
+	Activity109ChessController.instance:dispatchEvent(ActivityChessEvent.TaskJump, var_15_0)
+	arg_15_0:closeThis()
 end
 
-function slot0._onClickTaskReward(slot0, slot1)
+function var_0_0._onClickTaskReward(arg_16_0, arg_16_1)
 	UIBlockMgr.instance:startBlock("Activity109ChessTaskView")
 	AudioMgr.instance:trigger(AudioEnum.UI.Task_UI_TaskItem_moveTop)
 
-	slot0._reward_task_id = slot0._task_list[slot1].id
-	slot2 = slot0._obj_list[slot1]
+	arg_16_0._reward_task_id = arg_16_0._task_list[arg_16_1].id
 
-	ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(slot2, "#go_blackmask"), 1)
-	slot2:GetComponent(typeof(UnityEngine.Animator)):Play("finsh", 0, 0)
-	TaskDispatcher.runDelay(slot0._getTaskReward, slot0, 0.6)
+	local var_16_0 = arg_16_0._obj_list[arg_16_1]
+
+	ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(var_16_0, "#go_blackmask"), 1)
+	var_16_0:GetComponent(typeof(UnityEngine.Animator)):Play("finsh", 0, 0)
+	TaskDispatcher.runDelay(arg_16_0._getTaskReward, arg_16_0, 0.6)
 end
 
-function slot0._getTaskReward(slot0)
+function var_0_0._getTaskReward(arg_17_0)
 	UIBlockMgr.instance:endBlock("Activity109ChessTaskView")
-	TaskRpc.instance:sendFinishTaskRequest(slot0._reward_task_id)
+	TaskRpc.instance:sendFinishTaskRequest(arg_17_0._reward_task_id)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_18_0)
 	UIBlockMgr.instance:endBlock("Activity109ChessTaskView")
-	TaskDispatcher.cancelTask(slot0._getTaskReward, slot0)
-	TaskDispatcher.cancelTask(slot0._showTaskItem, slot0)
-	TaskDispatcher.cancelTask(slot0._showLeftTime, slot0)
+	TaskDispatcher.cancelTask(arg_18_0._getTaskReward, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._showTaskItem, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._showLeftTime, arg_18_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_releaseTaskItemImage()
-	slot0._simagebg:UnLoadImage()
-	slot0._simagedog:UnLoadImage()
-	slot0._simagegetallbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0:_releaseTaskItemImage()
+	arg_19_0._simagebg:UnLoadImage()
+	arg_19_0._simagedog:UnLoadImage()
+	arg_19_0._simagegetallbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_5.autochess.config.AutoChessConfig", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.config.AutoChessConfig", package.seeall)
 
-slot0 = class("AutoChessConfig", BaseConfig)
+local var_0_0 = class("AutoChessConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"auto_chess_enemy",
 		"auto_chess_enemy_formation",
@@ -26,83 +26,94 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "auto_chess_skill_eff_desc" then
-		slot0.skillEffectDescConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "auto_chess_skill_eff_desc" then
+		arg_3_0.skillEffectDescConfig = arg_3_2
 	end
 end
 
-function slot0.getItemBuyCost(slot0, slot1)
-	if string.nilorempty(slot0:getChessCoByItemId(slot1).specialShopCost) then
-		return AutoChessStrEnum.CostType.Coin, lua_auto_chess_mall_item.configDict[slot1].cost
+function var_0_0.getItemBuyCost(arg_4_0, arg_4_1)
+	local var_4_0 = lua_auto_chess_mall_item.configDict[arg_4_1]
+	local var_4_1 = arg_4_0:getChessCoByItemId(arg_4_1)
+
+	if string.nilorempty(var_4_1.specialShopCost) then
+		return AutoChessStrEnum.CostType.Coin, var_4_0.cost
 	else
-		slot4 = string.split(slot3.specialShopCost, "#")
+		local var_4_2 = string.split(var_4_1.specialShopCost, "#")
 
-		return slot4[1], tonumber(slot4[2])
+		return var_4_2[1], tonumber(var_4_2[2])
 	end
 end
 
-function slot0.getChessCoByItemId(slot0, slot1)
-	if lua_auto_chess_mall_item.configDict[slot1] then
-		slot3 = string.splitToNumber(slot2.context, "#")
+function var_0_0.getChessCoByItemId(arg_5_0, arg_5_1)
+	local var_5_0 = lua_auto_chess_mall_item.configDict[arg_5_1]
 
-		if lua_auto_chess.configDict[slot3[1]][slot3[2]] then
-			return slot4
+	if var_5_0 then
+		local var_5_1 = string.splitToNumber(var_5_0.context, "#")
+		local var_5_2 = lua_auto_chess.configDict[var_5_1[1]][var_5_1[2]]
+
+		if var_5_2 then
+			return var_5_2
 		else
-			logError(string.format("异常:不存在棋子配置ID%s星级%s", slot3[1], slot3[2]))
+			logError(string.format("异常:不存在棋子配置ID%s星级%s", var_5_1[1], var_5_1[2]))
 		end
 	else
-		logError(string.format("异常:不存在商品ID%s", slot1))
+		logError(string.format("异常:不存在商品ID%s", arg_5_1))
 	end
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	slot2 = {}
+function var_0_0.getTaskByActId(arg_6_0, arg_6_1)
+	local var_6_0 = {}
 
-	for slot6, slot7 in ipairs(lua_autochess_task.configList) do
-		if slot7.activityId == slot1 then
-			slot2[#slot2 + 1] = slot7
+	for iter_6_0, iter_6_1 in ipairs(lua_autochess_task.configList) do
+		if iter_6_1.activityId == arg_6_1 then
+			var_6_0[#var_6_0 + 1] = iter_6_1
 		end
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.getSkillEffectDesc(slot0, slot1)
-	if not slot0.skillEffectDescConfig.configDict[slot1] then
-		logError(string.format("异常:技能概要ID '%s' 不存在!!!", slot1))
+function var_0_0.getSkillEffectDesc(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.skillEffectDescConfig.configDict[arg_7_1]
+
+	if not var_7_0 then
+		logError(string.format("异常:技能概要ID '%s' 不存在!!!", arg_7_1))
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getSkillEffectDescCoByName(slot0, slot1)
-	slot2 = LangSettings.instance:getCurLang() or -1
+function var_0_0.getSkillEffectDescCoByName(arg_8_0, arg_8_1)
+	local var_8_0 = LangSettings.instance:getCurLang() or -1
 
-	if not slot0.skillBuffDescConfigByName then
-		slot0.skillBuffDescConfigByName = {}
+	if not arg_8_0.skillBuffDescConfigByName then
+		arg_8_0.skillBuffDescConfigByName = {}
 	end
 
-	if not slot0.skillBuffDescConfigByName[slot2] then
-		for slot7, slot8 in ipairs(slot0.skillEffectDescConfig.configList) do
-			-- Nothing
+	if not arg_8_0.skillBuffDescConfigByName[var_8_0] then
+		local var_8_1 = {}
+
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0.skillEffectDescConfig.configList) do
+			var_8_1[iter_8_1.name] = iter_8_1
 		end
 
-		slot0.skillBuffDescConfigByName[slot2] = {
-			[slot8.name] = slot8
-		}
+		arg_8_0.skillBuffDescConfigByName[var_8_0] = var_8_1
 	end
 
-	if not slot0.skillBuffDescConfigByName[slot2][slot1] then
-		logError(string.format("异常:技能概要名称 '%s' 不存在!!!", tostring(slot1)))
+	local var_8_2 = arg_8_0.skillBuffDescConfigByName[var_8_0][arg_8_1]
+
+	if not var_8_2 then
+		logError(string.format("异常:技能概要名称 '%s' 不存在!!!", tostring(arg_8_1)))
 	end
 
-	return slot3
+	return var_8_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

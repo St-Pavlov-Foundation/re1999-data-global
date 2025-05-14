@@ -1,102 +1,112 @@
-module("modules.logic.pushbox.model.PushBoxModel", package.seeall)
+﻿module("modules.logic.pushbox.model.PushBoxModel", package.seeall)
 
-slot0 = class("PushBoxModel", BaseModel)
+local var_0_0 = class("PushBoxModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getCurActivityID(slot0)
-	return slot0._activity_id
+function var_0_0.getCurActivityID(arg_3_0)
+	return arg_3_0._activity_id
 end
 
-function slot0.onReceiveGet111InfosReply(slot0, slot1)
-	slot0._activity_id = slot1.activityId
-	slot0._pass_data = {}
+function var_0_0.onReceiveGet111InfosReply(arg_4_0, arg_4_1)
+	arg_4_0._activity_id = arg_4_1.activityId
+	arg_4_0._pass_data = {}
 
-	for slot5, slot6 in ipairs(slot1.infos) do
-		slot0._pass_data[slot6.id] = {
-			id = slot6.id,
-			state = slot6.state,
-			unlock = slot6.unlock
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.infos) do
+		local var_4_0 = {
+			id = iter_4_1.id,
+			state = iter_4_1.state,
+			unlock = iter_4_1.unlock
 		}
+
+		arg_4_0._pass_data[iter_4_1.id] = var_4_0
 	end
 
-	slot0._stage_ids = {}
+	arg_4_0._stage_ids = {}
 
-	for slot5, slot6 in ipairs(slot1.stageIds) do
-		slot0._stage_ids[slot6] = true
+	for iter_4_2, iter_4_3 in ipairs(arg_4_1.stageIds) do
+		arg_4_0._stage_ids[iter_4_3] = true
 	end
 
-	slot0:refreshTaskData(slot1.pushBoxTasks)
+	arg_4_0:refreshTaskData(arg_4_1.pushBoxTasks)
 	PushBoxController.instance:dispatchEvent(PushBoxEvent.DataEvent.RefreshActivityData)
 end
 
-function slot0.onReceiveAct111InfoPush(slot0, slot1)
-	slot0._activity_id = slot1.activityId
+function var_0_0.onReceiveAct111InfoPush(arg_5_0, arg_5_1)
+	arg_5_0._activity_id = arg_5_1.activityId
 
-	for slot5, slot6 in ipairs(slot1.act111Info) do
-		slot0._pass_data[slot6.id] = {
-			id = slot6.id,
-			state = slot6.state,
-			unlock = slot6.unlock
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1.act111Info) do
+		local var_5_0 = {
+			id = iter_5_1.id,
+			state = iter_5_1.state,
+			unlock = iter_5_1.unlock
 		}
+
+		arg_5_0._pass_data[iter_5_1.id] = var_5_0
 	end
 end
 
-function slot0.getPassData(slot0, slot1)
-	return slot0._pass_data and slot0._pass_data[slot1]
+function var_0_0.getPassData(arg_6_0, arg_6_1)
+	return arg_6_0._pass_data and arg_6_0._pass_data[arg_6_1]
 end
 
-function slot0.getStageOpened(slot0, slot1)
-	return slot0._stage_ids[PushBoxEpisodeConfig.instance:getStageIDByEpisodeID(slot1)]
+function var_0_0.getStageOpened(arg_7_0, arg_7_1)
+	return arg_7_0._stage_ids[PushBoxEpisodeConfig.instance:getStageIDByEpisodeID(arg_7_1)]
 end
 
-function slot0.getEpisodeOpenTime(slot0, slot1)
-	return ActivityModel.instance:getActivityInfo()[uv0.instance:getCurActivityID()]:getRealStartTimeStamp() + (PushBoxEpisodeConfig.instance:getStageConfig(PushBoxEpisodeConfig.instance:getStageIDByEpisodeID(slot1)).openDay - 1) * 24 * 60 * 60
+function var_0_0.getEpisodeOpenTime(arg_8_0, arg_8_1)
+	local var_8_0 = PushBoxEpisodeConfig.instance:getStageConfig(PushBoxEpisodeConfig.instance:getStageIDByEpisodeID(arg_8_1))
+
+	return ActivityModel.instance:getActivityInfo()[var_0_0.instance:getCurActivityID()]:getRealStartTimeStamp() + (var_8_0.openDay - 1) * 24 * 60 * 60
 end
 
-function slot0.refreshTaskData(slot0, slot1)
-	slot0._task_data = {}
+function var_0_0.refreshTaskData(arg_9_0, arg_9_1)
+	arg_9_0._task_data = {}
 
-	slot0:setTaskData(slot1)
+	arg_9_0:setTaskData(arg_9_1)
 end
 
-function slot0.setTaskData(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._task_data[slot6.taskId] = {
-			taskId = slot6.taskId,
-			progress = slot6.progress,
-			hasGetBonus = slot6.hasGetBonus
+function var_0_0.setTaskData(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+		local var_10_0 = {
+			taskId = iter_10_1.taskId,
+			progress = iter_10_1.progress,
+			hasGetBonus = iter_10_1.hasGetBonus
 		}
+
+		arg_10_0._task_data[iter_10_1.taskId] = var_10_0
 	end
 end
 
-function slot0.delTaskData(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0._task_data[slot6.taskId] = nil
+function var_0_0.delTaskData(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		arg_11_0._task_data[iter_11_1.taskId] = nil
 	end
 end
 
-function slot0.getTaskData(slot0, slot1)
-	return slot0._task_data and slot0._task_data[slot1]
+function var_0_0.getTaskData(arg_12_0, arg_12_1)
+	return arg_12_0._task_data and arg_12_0._task_data[arg_12_1]
 end
 
-function slot0.onReceiveFinishEpisodeReply(slot0, slot1, slot2)
-	PushBoxController.instance:dispatchEvent(PushBoxEvent.DataEvent.FinishEpisodeReply, slot1, slot2.episodeId)
+function var_0_0.onReceiveFinishEpisodeReply(arg_13_0, arg_13_1, arg_13_2)
+	PushBoxController.instance:dispatchEvent(PushBoxEvent.DataEvent.FinishEpisodeReply, arg_13_1, arg_13_2.episodeId)
 end
 
-function slot0.onReceivePushBoxTaskPush(slot0, slot1)
-	slot0:setTaskData(slot1.pushBoxTasks)
-	slot0:delTaskData(slot1.deleteTasks)
+function var_0_0.onReceivePushBoxTaskPush(arg_14_0, arg_14_1)
+	arg_14_0:setTaskData(arg_14_1.pushBoxTasks)
+	arg_14_0:delTaskData(arg_14_1.deleteTasks)
 end
 
-function slot0.onReceiveReceiveTaskRewardReply(slot0, slot1)
-	PushBoxController.instance:dispatchEvent(PushBoxEvent.DataEvent.ReceiveTaskRewardReply, slot1.taskId)
+function var_0_0.onReceiveReceiveTaskRewardReply(arg_15_0, arg_15_1)
+	PushBoxController.instance:dispatchEvent(PushBoxEvent.DataEvent.ReceiveTaskRewardReply, arg_15_1.taskId)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

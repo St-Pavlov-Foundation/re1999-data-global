@@ -1,12 +1,12 @@
-module("modules.logic.explore.controller.steps.ExploreBattleStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreBattleStep", package.seeall)
 
-slot0 = class("ExploreBattleStep", ExploreStepBase)
+local var_0_0 = class("ExploreBattleStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId())
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId())
 
-	DungeonFightController.instance:enterFightByBattleId(slot1.chapterId, slot1.episodeId, slot0._data.battleId)
-	slot0:onDone()
+	DungeonFightController.instance:enterFightByBattleId(var_1_0.chapterId, var_1_0.episodeId, arg_1_0._data.battleId)
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

@@ -1,6 +1,7 @@
-module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureEvent", package.seeall)
 
-slot0 = _M
-slot0.onFurnaceTreasureGoodsUpdate = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.onFurnaceTreasureGoodsUpdate = 1
+
+return var_0_0

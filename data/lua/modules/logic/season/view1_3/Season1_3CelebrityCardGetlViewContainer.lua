@@ -1,17 +1,17 @@
-module("modules.logic.season.view1_3.Season1_3CelebrityCardGetlViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_3.Season1_3CelebrityCardGetlViewContainer", package.seeall)
 
-slot0 = class("Season1_3CelebrityCardGetlViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_3CelebrityCardGetlViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season1_3CelebrityCardGetlView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		-- Nothing
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		-- block empty
 	end
 end
 
-return slot0
+return var_0_0

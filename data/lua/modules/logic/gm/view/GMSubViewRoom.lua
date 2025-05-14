@@ -1,124 +1,139 @@
-module("modules.logic.gm.view.GMSubViewRoom", package.seeall)
+﻿module("modules.logic.gm.view.GMSubViewRoom", package.seeall)
 
-slot0 = class("GMSubViewRoom", GMSubViewBase)
+local var_0_0 = class("GMSubViewRoom", GMSubViewBase)
 
-function slot0.ctor(slot0)
-	slot0.tabName = "荒原"
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.tabName = "荒原"
 end
 
-function slot0.initViewContent(slot0)
-	if slot0._isInit then
+function var_0_0.initViewContent(arg_2_0)
+	if arg_2_0._isInit then
 		return
 	end
 
-	slot0._isInit = true
-	slot1 = "L1"
-	slot2 = {
+	arg_2_0._isInit = true
+
+	local var_2_0 = "L1"
+	local var_2_1 = {
 		"选择时间"
 	}
 
-	for slot6 = 1, 24 do
-		table.insert(slot2, slot6 .. "时")
+	for iter_2_0 = 1, 24 do
+		table.insert(var_2_1, iter_2_0 .. "时")
 	end
 
-	slot0._dropRoomClock = slot0:addDropDown(slot1, "小屋时\n钟触发", slot2, slot0._onRoomClockSelectChanged, slot0)
-	slot3, slot0._vehicleIdList = slot0:_findInitFollowTargetParams()
-	slot0._dropFollowTarget = slot0:addDropDown(slot1, "乘坐交通", slot3, slot0._onFollowTargetSelectChanged, slot0)
-	slot5, slot0._characterIdList = slot0:_findInitFollowCharacterParams()
-	slot0._dropFollowCharacter = slot0:addDropDown(slot1, "角色镜\n头跟随", slot5, slot0._onFollowCharacterSelectChanged, slot0)
+	arg_2_0._dropRoomClock = arg_2_0:addDropDown(var_2_0, "小屋时\n钟触发", var_2_1, arg_2_0._onRoomClockSelectChanged, arg_2_0)
 
-	slot0:addDropDown("L2", "地块用途", {
+	local var_2_2, var_2_3 = arg_2_0:_findInitFollowTargetParams()
+
+	arg_2_0._dropFollowTarget = arg_2_0:addDropDown(var_2_0, "乘坐交通", var_2_2, arg_2_0._onFollowTargetSelectChanged, arg_2_0)
+	arg_2_0._vehicleIdList = var_2_3
+
+	local var_2_4, var_2_5 = arg_2_0:_findInitFollowCharacterParams()
+
+	arg_2_0._dropFollowCharacter = arg_2_0:addDropDown(var_2_0, "角色镜\n头跟随", var_2_4, arg_2_0._onFollowCharacterSelectChanged, arg_2_0)
+	arg_2_0._characterIdList = var_2_5
+
+	local var_2_6 = "L2"
+
+	arg_2_0:addDropDown(var_2_6, "地块用途", {
 		"地块用途选择",
 		"正常",
 		"货运"
-	}, slot0._onBlockUseStateSelectChanged, slot0)
+	}, arg_2_0._onBlockUseStateSelectChanged, arg_2_0)
 
-	slot1 = "L3"
+	local var_2_7 = "L3"
 
-	slot0:addButton(slot1, "mini地图", slot0._onOpenMiniMapView, slot0)
-	slot0:addButton(slot1, "货运编辑", slot0._onOpenEditPathView, slot0)
+	arg_2_0:addButton(var_2_7, "mini地图", arg_2_0._onOpenMiniMapView, arg_2_0)
+	arg_2_0:addButton(var_2_7, "货运编辑", arg_2_0._onOpenEditPathView, arg_2_0)
 
-	slot0._transporQuickLinkToggle = slot0:addToggle(slot1, "调试运输路线【快速绘制】", slot0._ontransporQuickLinkChange, slot0)
-	slot0._transporQuickLinkToggle.isOn = RoomTransportPathQuickLinkViewUI._IsShow_ == true
+	arg_2_0._transporQuickLinkToggle = arg_2_0:addToggle(var_2_7, "调试运输路线【快速绘制】", arg_2_0._ontransporQuickLinkChange, arg_2_0)
+	arg_2_0._transporQuickLinkToggle.isOn = RoomTransportPathQuickLinkViewUI._IsShow_ == true
 
 	if RoomController.instance:isEditMode() and GameResMgr.IsFromEditorDir then
-		RoomDebugController.instance:getDebugPackageInfo(slot0._onInitDebugMapPackageInfo, slot0)
+		RoomDebugController.instance:getDebugPackageInfo(arg_2_0._onInitDebugMapPackageInfo, arg_2_0)
 	end
 end
 
-function slot0._findInitFollowTargetParams(slot0)
-	return slot0:_findObMOList("选择交通", RoomMapVehicleModel.instance:getList(), "config")
+function var_0_0._findInitFollowTargetParams(arg_3_0)
+	return arg_3_0:_findObMOList("选择交通", RoomMapVehicleModel.instance:getList(), "config")
 end
 
-function slot0._findInitFollowCharacterParams(slot0)
-	return slot0:_findObMOList("选择角色", RoomCharacterModel.instance:getList(), "skinConfig")
+function var_0_0._findInitFollowCharacterParams(arg_4_0)
+	return arg_4_0:_findObMOList("选择角色", RoomCharacterModel.instance:getList(), "skinConfig")
 end
 
-function slot0._findObMOList(slot0, slot1, slot2, slot3)
-	if not slot0:_checkObMode() then
-		slot2 = nil
+function var_0_0._findObMOList(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if not arg_5_0:_checkObMode() then
+		arg_5_2 = nil
 	end
 
-	return slot0:_findMOList(slot1, slot2, slot3)
+	return arg_5_0:_findMOList(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0._findMOList(slot0, slot1, slot2, slot3)
-	slot4 = {
-		slot1 .. "#id-选择"
+function var_0_0._findMOList(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = {
+		arg_6_1 .. "#id-选择"
 	}
-	slot5 = {}
+	local var_6_1 = {}
 
-	if slot2 then
-		for slot9, slot10 in ipairs(slot2) do
-			if slot10 and slot10[slot3] then
-				table.insert(slot4, string.format("%s#%s", slot10[slot3].name, slot10.id))
-				table.insert(slot5, slot10.id)
+	if arg_6_2 then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
+			if iter_6_1 and iter_6_1[arg_6_3] then
+				table.insert(var_6_0, string.format("%s#%s", iter_6_1[arg_6_3].name, iter_6_1.id))
+				table.insert(var_6_1, iter_6_1.id)
 			end
 		end
 	end
 
-	return slot4, slot5
+	return var_6_0, var_6_1
 end
 
-function slot0._sortCharacterInteractionFunc(slot0, slot1)
-	if slot0.behaviour ~= slot1.behaviour then
-		return slot0.behaviour < slot1.behaviour
+function var_0_0._sortCharacterInteractionFunc(arg_7_0, arg_7_1)
+	if arg_7_0.behaviour ~= arg_7_1.behaviour then
+		return arg_7_0.behaviour < arg_7_1.behaviour
 	end
 end
 
-function slot0._finInitCharacterInteractParams(slot0)
-	slot1 = {}
+function var_0_0._finInitCharacterInteractParams(arg_8_0)
+	local var_8_0 = {}
 
-	for slot5, slot6 in ipairs(lua_room_character_interaction.configList) do
-		if RoomCharacterModel.instance:getCharacterMOById(slot6.heroId) and slot7.characterState == RoomCharacterEnum.CharacterState.Map then
-			table.insert(slot1, slot6)
+	for iter_8_0, iter_8_1 in ipairs(lua_room_character_interaction.configList) do
+		local var_8_1 = RoomCharacterModel.instance:getCharacterMOById(iter_8_1.heroId)
+
+		if var_8_1 and var_8_1.characterState == RoomCharacterEnum.CharacterState.Map then
+			table.insert(var_8_0, iter_8_1)
 		end
 	end
 
-	table.sort(slot1, GMToolView._sortCharacterInteractionFunc)
+	table.sort(var_8_0, GMToolView._sortCharacterInteractionFunc)
 
-	slot3 = {
+	local var_8_2 = {}
+	local var_8_3 = {
 		[RoomCharacterEnum.InteractionType.Dialog] = "对话",
 		[RoomCharacterEnum.InteractionType.Building] = "建筑"
 	}
 
-	table.insert({}, "英雄-交互#id选择")
+	table.insert(var_8_2, "英雄-交互#id选择")
 
-	for slot7, slot8 in ipairs(slot1) do
-		if slot3[slot8.behaviour] then
-			table.insert(slot2, string.format("%s-%s#%s", HeroConfig.instance:getHeroCO(slot8.heroId).name or slot8.heroId, slot3[slot8.behaviour], slot8.id))
+	for iter_8_2, iter_8_3 in ipairs(var_8_0) do
+		if var_8_3[iter_8_3.behaviour] then
+			local var_8_4 = HeroConfig.instance:getHeroCO(iter_8_3.heroId)
+			local var_8_5 = string.format("%s-%s#%s", var_8_4.name or iter_8_3.heroId, var_8_3[iter_8_3.behaviour], iter_8_3.id)
+
+			table.insert(var_8_2, var_8_5)
 		end
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0._onFollowTargetSelectChanged(slot0, slot1)
-	if not slot0._vehicleIdList or slot1 == 0 then
+function var_0_0._onFollowTargetSelectChanged(arg_9_0, arg_9_1)
+	if not arg_9_0._vehicleIdList or arg_9_1 == 0 then
 		return
 	end
 
-	if not slot0:_checkObMode() then
+	if not arg_9_0:_checkObMode() then
 		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后观察模式下使用。")
 
 		return
@@ -126,32 +141,42 @@ function slot0._onFollowTargetSelectChanged(slot0, slot1)
 
 	GameFacade.showToast(ToastEnum.IconId, "乘坐交通工具")
 
-	if GameSceneMgr.instance:getCurScene().vehiclemgr:getUnit(RoomMapVehicleEntity:getTag(), slot0._vehicleIdList[slot1]) then
-		slot4.cameraFollow:setFollowTarget(slot5.cameraFollowTargetComp, true)
+	local var_9_0 = arg_9_0._vehicleIdList[arg_9_1]
+	local var_9_1 = RoomMapVehicleEntity:getTag()
+	local var_9_2 = GameSceneMgr.instance:getCurScene()
+	local var_9_3 = var_9_2.vehiclemgr:getUnit(var_9_1, var_9_0)
+
+	if var_9_3 then
+		var_9_2.cameraFollow:setFollowTarget(var_9_3.cameraFollowTargetComp, true)
 	end
 end
 
-function slot0._onFollowCharacterSelectChanged(slot0, slot1)
-	if not slot0._characterIdList or slot1 == 0 then
+function var_0_0._onFollowCharacterSelectChanged(arg_10_0, arg_10_1)
+	if not arg_10_0._characterIdList or arg_10_1 == 0 then
 		return
 	end
 
-	if not slot0:_checkObMode() then
+	if not arg_10_0:_checkObMode() then
 		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后观察模式下使用。")
 
 		return
 	end
 
-	if GameSceneMgr.instance:getCurScene().charactermgr:getUnit(RoomCharacterEntity:getTag(), slot0._characterIdList[slot1]) then
-		slot4.cameraFollow:setFollowTarget(slot5.cameraFollowTargetComp, false)
+	local var_10_0 = RoomCharacterEntity:getTag()
+	local var_10_1 = arg_10_0._characterIdList[arg_10_1]
+	local var_10_2 = GameSceneMgr.instance:getCurScene()
+	local var_10_3 = var_10_2.charactermgr:getUnit(var_10_0, var_10_1)
+
+	if var_10_3 then
+		var_10_2.cameraFollow:setFollowTarget(var_10_3.cameraFollowTargetComp, false)
 	end
 end
 
-function slot0._ontransporQuickLinkChange(slot0)
+function var_0_0._ontransporQuickLinkChange(arg_11_0)
 	RoomTransportPathQuickLinkViewUI._IsShow_ = RoomTransportPathQuickLinkViewUI._IsShow_ ~= true
 end
 
-function slot0._checkScene(slot0)
+function var_0_0._checkScene(arg_12_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and GameSceneMgr.instance:getCurScene() ~= nil then
 		return true
 	end
@@ -159,105 +184,111 @@ function slot0._checkScene(slot0)
 	return false
 end
 
-function slot0._checkObMode(slot0, slot1)
-	return slot0:_checkScene() and RoomController.instance:isObMode()
+function var_0_0._checkObMode(arg_13_0, arg_13_1)
+	return arg_13_0:_checkScene() and RoomController.instance:isObMode()
 end
 
-function slot0._checkEditMode(slot0, slot1)
-	return slot0:_checkScene() and RoomController.instance:isEditMode()
+function var_0_0._checkEditMode(arg_14_0, arg_14_1)
+	return arg_14_0:_checkScene() and RoomController.instance:isEditMode()
 end
 
-function slot0._onBlockUseStateSelectChanged(slot0, slot1)
-	if slot1 == 0 then
+function var_0_0._onBlockUseStateSelectChanged(arg_15_0, arg_15_1)
+	if arg_15_1 == 0 then
 		return
 	end
 
-	if not slot0:_checkEditMode() then
+	if not arg_15_0:_checkEditMode() then
 		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后编辑模式下使用。")
 
 		return
 	end
 
-	slot4 = {}
+	local var_15_0 = GameSceneMgr.instance:getCurScene().mapmgr
+	local var_15_1 = {}
+	local var_15_2 = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	for slot9, slot10 in ipairs(RoomMapBlockModel.instance:getFullBlockMOList()) do
-		slot10:setUseState(slot1)
+	for iter_15_0, iter_15_1 in ipairs(var_15_2) do
+		iter_15_1:setUseState(arg_15_1)
 
-		if GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(slot10.id, SceneTag.RoomMapBlock) then
-			table.insert(slot4, slot11)
+		local var_15_3 = var_15_0:getBlockEntity(iter_15_1.id, SceneTag.RoomMapBlock)
+
+		if var_15_3 then
+			table.insert(var_15_1, var_15_3)
 		end
 	end
 
-	RoomBlockHelper.refreshBlockEntity(slot4, "refreshLand")
-	GameFacade.showToast(ToastEnum.IconId, string.format("GM index:%s, entityCount:%s blockCount:%s", slot1, #slot4, #slot5))
+	RoomBlockHelper.refreshBlockEntity(var_15_1, "refreshLand")
+	GameFacade.showToast(ToastEnum.IconId, string.format("GM index:%s, entityCount:%s blockCount:%s", arg_15_1, #var_15_1, #var_15_2))
 end
 
-function slot0._onRoomClockSelectChanged(slot0, slot1)
-	if slot1 >= 1 or slot1 <= 24 then
-		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, slot1)
+function var_0_0._onRoomClockSelectChanged(arg_16_0, arg_16_1)
+	if arg_16_1 >= 1 or arg_16_1 <= 24 then
+		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, arg_16_1)
 	end
 end
 
-function slot0._onInitDebugMapPackageInfo(slot0, slot1)
-	slot2 = {
+function var_0_0._onInitDebugMapPackageInfo(arg_17_0, arg_17_1)
+	local var_17_0 = {
 		"选择需要复制的地图"
 	}
-	slot0._blockInfosList = {}
-	slot3 = RoomConfig.instance
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = {}
+	arg_17_0._blockInfosList = {}
 
-		for slot13, slot14 in ipairs(slot8.infos) do
-			if slot3:getBlock(slot14.blockId) and not slot3:getInitBlock(slot14.blockId) then
-				table.insert(slot9, slot14)
+	local var_17_1 = RoomConfig.instance
+
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		local var_17_2 = {}
+
+		for iter_17_2, iter_17_3 in ipairs(iter_17_1.infos) do
+			if var_17_1:getBlock(iter_17_3.blockId) and not var_17_1:getInitBlock(iter_17_3.blockId) then
+				table.insert(var_17_2, iter_17_3)
 			end
 		end
 
-		if #slot9 > 1 then
-			table.insert(slot2, slot8.packageName)
-			table.insert(slot0._blockInfosList, slot9)
+		if #var_17_2 > 1 then
+			table.insert(var_17_0, iter_17_1.packageName)
+			table.insert(arg_17_0._blockInfosList, var_17_2)
 		end
 	end
 
-	slot0:addDropDown("L2", "一键复制\n地图地块", slot2, slot0._onDropDownMapPackageChanged, slot0)
+	arg_17_0:addDropDown("L2", "一键复制\n地图地块", var_17_0, arg_17_0._onDropDownMapPackageChanged, arg_17_0)
 end
 
-slot0.Drop_Down_Map_Package_Changed = "GMSubViewRoom.Drop_Down_Map_Package_Changed"
+var_0_0.Drop_Down_Map_Package_Changed = "GMSubViewRoom.Drop_Down_Map_Package_Changed"
 
-function slot0._onDropDownMapPackageChanged(slot0, slot1)
-	if slot1 >= 1 or slot1 <= #slot0._blockInfosList then
+function var_0_0._onDropDownMapPackageChanged(arg_18_0, arg_18_1)
+	if arg_18_1 >= 1 or arg_18_1 <= #arg_18_0._blockInfosList then
 		if RoomMapBlockModel.instance:getConfirmBlockCount() > 0 then
 			GameFacade.showToast(ToastEnum.IconId, "需要先重置下荒原")
 
 			return
 		end
 
-		slot0._waitUseBlockList = {}
+		arg_18_0._waitUseBlockList = {}
 
-		tabletool.addValues(slot0._waitUseBlockList, slot0._blockInfosList[slot1])
-		TaskDispatcher.cancelTask(slot0._onWaitUseBlockList, slot0)
+		tabletool.addValues(arg_18_0._waitUseBlockList, arg_18_0._blockInfosList[arg_18_1])
+		TaskDispatcher.cancelTask(arg_18_0._onWaitUseBlockList, arg_18_0)
 
-		if #slot0._waitUseBlockList > 0 then
-			UIBlockMgr.instance:startBlock(uv0.Drop_Down_Map_Package_Changed)
-			TaskDispatcher.runRepeat(slot0._onWaitUseBlockList, slot0, 0.001, #slot0._waitUseBlockList + 1)
+		if #arg_18_0._waitUseBlockList > 0 then
+			UIBlockMgr.instance:startBlock(var_0_0.Drop_Down_Map_Package_Changed)
+			TaskDispatcher.runRepeat(arg_18_0._onWaitUseBlockList, arg_18_0, 0.001, #arg_18_0._waitUseBlockList + 1)
 		end
 	end
 end
 
-function slot0._onWaitUseBlockList(slot0)
-	if slot0._waitUseBlockList and #slot0._waitUseBlockList > 0 then
-		slot1 = slot0._waitUseBlockList[#slot0._waitUseBlockList]
+function var_0_0._onWaitUseBlockList(arg_19_0)
+	if arg_19_0._waitUseBlockList and #arg_19_0._waitUseBlockList > 0 then
+		local var_19_0 = arg_19_0._waitUseBlockList[#arg_19_0._waitUseBlockList]
 
-		table.remove(slot0._waitUseBlockList, #slot0._waitUseBlockList)
-		RoomMapController.instance:useBlockRequest(slot1.blockId, slot1.rotate, slot1.x, slot1.y)
+		table.remove(arg_19_0._waitUseBlockList, #arg_19_0._waitUseBlockList)
+		RoomMapController.instance:useBlockRequest(var_19_0.blockId, var_19_0.rotate, var_19_0.x, var_19_0.y)
 	else
-		UIBlockMgr.instance:endBlock(uv0.Drop_Down_Map_Package_Changed)
+		UIBlockMgr.instance:endBlock(var_0_0.Drop_Down_Map_Package_Changed)
 		RoomController.instance:exitRoom(true)
 	end
 end
 
-function slot0._onOpenMiniMapView(slot0)
+function var_0_0._onOpenMiniMapView(arg_20_0)
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.RoomBlockPackageGetView, ViewName.RoomBlockPackageGetView, {
 		itemList = {
 			{
@@ -268,31 +299,39 @@ function slot0._onOpenMiniMapView(slot0)
 	})
 end
 
-function slot0._onOpenEditPathView(slot0)
-	if slot0:_checkScene() then
+function var_0_0._onOpenEditPathView(arg_21_0)
+	if arg_21_0:_checkScene() then
 		ViewMgr.instance:openView(ViewName.RoomTransportPathView)
-		slot0:closeThis()
+		arg_21_0:closeThis()
 	else
 		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后编辑模式下使用。")
 	end
 end
 
-function slot0._findCharacterShadow(slot0)
-	for slot7, slot8 in ipairs(lua_room_character.configList or {}) do
-		if not string.nilorempty(slot8.shadow) and not ({
-			shadow = true
-		})[slot8.shadow] and SkinConfig.instance:getSkinCo(slot8.skinId) and not string.nilorempty(slot9.spine) then
-			slot10 = string.split(slot9.spine, "/")
+function var_0_0._findCharacterShadow(arg_22_0)
+	local var_22_0 = lua_room_character.configList or {}
+	local var_22_1 = {}
+	local var_22_2 = {
+		shadow = true
+	}
+
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		if not string.nilorempty(iter_22_1.shadow) and not var_22_2[iter_22_1.shadow] then
+			local var_22_3 = SkinConfig.instance:getSkinCo(iter_22_1.skinId)
+
+			if var_22_3 and not string.nilorempty(var_22_3.spine) then
+				local var_22_4 = string.split(var_22_3.spine, "/")
+
+				var_22_1[string.format("%s_room", var_22_4[#var_22_4])] = iter_22_1.shadow
+			end
 		end
 	end
 
-	logError(JsonUtil.encode({
-		[string.format("%s_room", slot10[#slot10])] = slot8.shadow
-	}))
+	logError(JsonUtil.encode(var_22_1))
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onWaitUseBlockList, slot0)
+function var_0_0.onDestroyView(arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._onWaitUseBlockList, arg_23_0)
 end
 
-return slot0
+return var_0_0

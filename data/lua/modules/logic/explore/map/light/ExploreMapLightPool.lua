@@ -1,24 +1,24 @@
-module("modules.logic.explore.map.light.ExploreMapLightPool", package.seeall)
+﻿module("modules.logic.explore.map.light.ExploreMapLightPool", package.seeall)
 
-slot0 = class("ExploreMapLightPool")
+local var_0_0 = class("ExploreMapLightPool")
 
-function slot0.getInst(slot0, slot1, slot2)
-	if not slot0._pool then
-		slot0._pool = ExploreMapLightItem.getPool()
+function var_0_0.getInst(arg_1_0, arg_1_1, arg_1_2)
+	if not arg_1_0._pool then
+		arg_1_0._pool = ExploreMapLightItem.getPool()
 	end
 
-	if not slot0._lightGo then
-		slot0._lightGo = slot0:getLightGo()
+	if not arg_1_0._lightGo then
+		arg_1_0._lightGo = arg_1_0:getLightGo()
 	end
 
-	slot3 = slot0._pool:getObject()
+	local var_1_0 = arg_1_0._pool:getObject()
 
-	slot3:init(slot1, slot2, slot0._lightGo)
+	var_1_0:init(arg_1_1, arg_1_2, arg_1_0._lightGo)
 
-	return slot3
+	return var_1_0
 end
 
-function slot0.getLightGo(slot0)
+function var_0_0.getLightGo(arg_2_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Explore then
 		return
 	end
@@ -26,26 +26,26 @@ function slot0.getLightGo(slot0)
 	return GameSceneMgr.instance:getCurScene().preloader:getResByPath(ResUrl.getExploreEffectPath(ExploreConstValue.MapLightEffect))
 end
 
-function slot0.inPool(slot0, slot1)
-	if not slot0._pool then
-		slot1:release()
+function var_0_0.inPool(arg_3_0, arg_3_1)
+	if not arg_3_0._pool then
+		arg_3_1:release()
 
 		return
 	end
 
-	slot0._pool:putObject(slot1)
+	arg_3_0._pool:putObject(arg_3_1)
 end
 
-function slot0.clear(slot0)
-	if slot0._pool then
-		slot0._pool:dispose()
+function var_0_0.clear(arg_4_0)
+	if arg_4_0._pool then
+		arg_4_0._pool:dispose()
 
-		slot0._pool = nil
+		arg_4_0._pool = nil
 	end
 
-	slot0._lightGo = nil
+	arg_4_0._lightGo = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

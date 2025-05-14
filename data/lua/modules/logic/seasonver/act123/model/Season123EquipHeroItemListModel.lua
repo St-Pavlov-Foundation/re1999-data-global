@@ -1,256 +1,282 @@
-module("modules.logic.seasonver.act123.model.Season123EquipHeroItemListModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EquipHeroItemListModel", package.seeall)
 
-slot0 = class("Season123EquipHeroItemListModel", ListScrollModel)
-slot0.MainCharPos = ModuleEnum.MaxHeroCountInGroup
-slot0.TotalEquipPos = 5
-slot0.MaxPos = 1
-slot0.HeroMaxPos = 2
-slot0.EmptyUid = "0"
+local var_0_0 = class("Season123EquipHeroItemListModel", ListScrollModel)
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+var_0_0.MainCharPos = ModuleEnum.MaxHeroCountInGroup
+var_0_0.TotalEquipPos = 5
+var_0_0.MaxPos = 1
+var_0_0.HeroMaxPos = 2
+var_0_0.EmptyUid = "0"
 
-	slot0.activityId = nil
-	slot0.curPos = nil
-	slot0.equipUid2Pos = nil
-	slot0.equipUid2Group = nil
-	slot0.equipUid2Slot = nil
-	slot0.curEquipMap = nil
-	slot0.curSelectSlot = nil
-	slot0._itemMap = nil
-	slot0.recordNew = nil
-	slot0._itemStartAnimTime = nil
-	slot0._deckUidMap = nil
-	slot0._itemIdDeckCountMap = nil
-	slot0.tagModel = nil
+function var_0_0.clear(arg_1_0)
+	var_0_0.super.clear(arg_1_0)
+
+	arg_1_0.activityId = nil
+	arg_1_0.curPos = nil
+	arg_1_0.equipUid2Pos = nil
+	arg_1_0.equipUid2Group = nil
+	arg_1_0.equipUid2Slot = nil
+	arg_1_0.curEquipMap = nil
+	arg_1_0.curSelectSlot = nil
+	arg_1_0._itemMap = nil
+	arg_1_0.recordNew = nil
+	arg_1_0._itemStartAnimTime = nil
+	arg_1_0._deckUidMap = nil
+	arg_1_0._itemIdDeckCountMap = nil
+	arg_1_0.tagModel = nil
 end
 
-function slot0.initDatas(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.initDatas(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 	logNormal("Season123EquipHeroItemListModel initDatas")
-	slot0:clear()
+	arg_2_0:clear()
 
-	slot0.activityId = slot1
-	slot0.stage = slot2
-	slot0.curPos = uv0.MainCharPos
-	slot0.equipUid2Pos = {}
-	slot0.equipUid2Slot = {}
-	slot0.curEquipMap = {}
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.stage = arg_2_2
+	arg_2_0.curPos = var_0_0.MainCharPos
+	arg_2_0.equipUid2Pos = {}
+	arg_2_0.equipUid2Slot = {}
 
-	for slot9 = 1, slot0:getEquipMaxCount(slot0.curPos) do
-		slot0.curEquipMap[slot9] = uv0.EmptyUid
+	local var_2_0 = arg_2_0:getEquipMaxCount(arg_2_0.curPos)
+
+	arg_2_0.curEquipMap = {}
+
+	for iter_2_0 = 1, var_2_0 do
+		arg_2_0.curEquipMap[iter_2_0] = var_0_0.EmptyUid
 	end
 
-	slot0.curSelectSlot = slot3 or 1
-	slot0.equipUid2Group = {}
+	arg_2_0.curSelectSlot = arg_2_3 or 1
+	arg_2_0.equipUid2Group = {}
 
-	slot0:initSubModel()
-	slot0:initUnlockIndex()
-	slot0:initItemMap()
-	slot0:initPlayerPrefs()
-	slot0:initPosData(slot4)
-	slot0:initList()
+	arg_2_0:initSubModel()
+	arg_2_0:initUnlockIndex()
+	arg_2_0:initItemMap()
+	arg_2_0:initPlayerPrefs()
+	arg_2_0:initPosData(arg_2_4)
+	arg_2_0:initList()
 end
 
-function slot0.initSubModel(slot0)
-	slot0.tagModel = Season123EquipTagModel.New()
+function var_0_0.initSubModel(arg_3_0)
+	arg_3_0.tagModel = Season123EquipTagModel.New()
 
-	slot0.tagModel:init(slot0.activityId)
+	arg_3_0.tagModel:init(arg_3_0.activityId)
 end
 
-function slot0.initUnlockIndex(slot0)
-	slot0.curUnlockIndexSet = Season123HeroGroupUtils.getUnlockSlotSet(slot0.activityId)
+function var_0_0.initUnlockIndex(arg_4_0)
+	arg_4_0.curUnlockIndexSet = Season123HeroGroupUtils.getUnlockSlotSet(arg_4_0.activityId)
 end
 
-function slot0.initItemMap(slot0)
-	slot0._itemMap = Season123Model.instance:getAllItemMo(slot0.activityId) or {}
+function var_0_0.initItemMap(arg_5_0)
+	arg_5_0._itemMap = Season123Model.instance:getAllItemMo(arg_5_0.activityId) or {}
 end
 
-function slot0.initPlayerPrefs(slot0)
-	slot0.recordNew = Season123EquipLocalRecord.New()
+function var_0_0.initPlayerPrefs(arg_6_0)
+	arg_6_0.recordNew = Season123EquipLocalRecord.New()
 
-	slot0.recordNew:init(slot0.activityId, Activity123Enum.PlayerPrefsKeyItemUid)
+	arg_6_0.recordNew:init(arg_6_0.activityId, Activity123Enum.PlayerPrefsKeyItemUid)
 end
 
-function slot0.initPosData(slot0, slot1)
-	if not slot1 then
+function var_0_0.initPosData(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		slot0:setCardPosData(slot6, slot0.curPos, slot5)
+	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
+		arg_7_0:setCardPosData(iter_7_1, arg_7_0.curPos, iter_7_0)
 	end
 end
 
-function slot0.setCardPosData(slot0, slot1, slot2, slot3)
-	slot0.equipUid2Pos[slot1] = slot2
-	slot0.equipUid2Slot[slot1] = slot3
+function var_0_0.setCardPosData(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0.equipUid2Pos[arg_8_1] = arg_8_2
+	arg_8_0.equipUid2Slot[arg_8_1] = arg_8_3
 
-	if slot2 == slot0.curPos then
-		slot0.curEquipMap[slot3] = slot1
+	if arg_8_2 == arg_8_0.curPos then
+		arg_8_0.curEquipMap[arg_8_3] = arg_8_1
 	end
 end
 
-function slot0.initList(slot0)
-	for slot5, slot6 in pairs(slot0._itemMap) do
-		slot0:setListData(slot6.itemId, slot5, slot6, {})
+function var_0_0.initList(arg_9_0)
+	local var_9_0 = {}
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._itemMap) do
+		arg_9_0:setListData(iter_9_1.itemId, iter_9_0, iter_9_1, var_9_0)
 	end
 
-	if HeroGroupModel.instance.battleConfig and slot2.trialMainAct104EuqipId > 0 then
-		slot0:setListData(slot2.trialMainAct104EuqipId, uv0.getTrialEquipUID(slot2.trialMainAct104EuqipId, 1), nil, slot1)
+	local var_9_1 = HeroGroupModel.instance.battleConfig
+
+	if var_9_1 and var_9_1.trialMainAct104EuqipId > 0 then
+		local var_9_2 = 1
+		local var_9_3 = var_0_0.getTrialEquipUID(var_9_1.trialMainAct104EuqipId, var_9_2)
+
+		arg_9_0:setListData(var_9_1.trialMainAct104EuqipId, var_9_3, nil, var_9_0)
 	end
 
-	table.sort(slot1, uv0.sortItemMOList)
+	table.sort(var_9_0, var_0_0.sortItemMOList)
 
-	slot0._originList = slot1
+	arg_9_0._originList = var_9_0
 
-	slot0:refreshMergeList()
+	arg_9_0:refreshMergeList()
 end
 
-function slot0.setListData(slot0, slot1, slot2, slot3, slot4)
-	if not SeasonConfig.instance:getEquipIsOptional(slot1) and Season123Config.instance:getSeasonEquipCo(slot1) and slot0:isCardFitRole(slot5) and slot0:isCardCanShowByTag(slot2, slot5.tag) and slot5.isCardBag ~= "1" then
-		slot0.equipUid2Group[slot2] = slot5.group
+function var_0_0.setListData(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if not SeasonConfig.instance:getEquipIsOptional(arg_10_1) then
+		local var_10_0 = Season123Config.instance:getSeasonEquipCo(arg_10_1)
 
-		if not slot3 then
-			Season123ItemMO.New():init({
-				quantity = 1,
-				itemId = slot1,
-				uid = slot2
-			})
+		if var_10_0 and arg_10_0:isCardFitRole(var_10_0) and arg_10_0:isCardCanShowByTag(arg_10_2, var_10_0.tag) and var_10_0.isCardBag ~= "1" then
+			arg_10_0.equipUid2Group[arg_10_2] = var_10_0.group
+
+			if not arg_10_3 then
+				arg_10_3 = Season123ItemMO.New()
+
+				arg_10_3:init({
+					quantity = 1,
+					itemId = arg_10_1,
+					uid = arg_10_2
+				})
+			end
+
+			local var_10_1 = Season123EquipListMo.New()
+
+			var_10_1:init(arg_10_3)
+			table.insert(arg_10_4, var_10_1)
 		end
-
-		slot6 = Season123EquipListMo.New()
-
-		slot6:init(slot3)
-		table.insert(slot4, slot6)
 	end
 end
 
-function slot0.isCardFitRole(slot0, slot1)
-	if slot0.curPos == uv0.MainCharPos then
-		return Season123EquipMetaUtils.isMainRoleCard(slot1)
+function var_0_0.isCardFitRole(arg_11_0, arg_11_1)
+	if arg_11_0.curPos == var_0_0.MainCharPos then
+		return Season123EquipMetaUtils.isMainRoleCard(arg_11_1)
 	else
-		return not Season123EquipMetaUtils.isMainRoleCard(slot1)
+		return not Season123EquipMetaUtils.isMainRoleCard(arg_11_1)
 	end
 end
 
-function slot0.isCardCanShowByTag(slot0, slot1, slot2)
-	if slot0.tagModel then
-		return slot0.tagModel:isCardNeedShow(slot2)
+function var_0_0.isCardCanShowByTag(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_0.tagModel then
+		return arg_12_0.tagModel:isCardNeedShow(arg_12_2)
 	end
 
 	return true
 end
 
-function slot0.refreshMergeList(slot0)
-	slot1 = {}
-	slot2 = {
-		[slot9] = true
-	}
-	slot3 = {}
-	slot4 = {}
+function var_0_0.refreshMergeList(arg_13_0)
+	local var_13_0 = {}
+	local var_13_1 = {}
+	local var_13_2 = {}
+	local var_13_3 = {}
 
-	for slot8, slot9 in pairs(slot0.curEquipMap) do
-		if slot9 ~= uv0.EmptyUid then
-			-- Nothing
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.curEquipMap) do
+		if iter_13_1 ~= var_0_0.EmptyUid then
+			var_13_1[iter_13_1] = true
 		end
 	end
 
-	for slot8 = 1, #slot0._originList do
-		slot10 = slot0._originList[slot8].itemId
+	for iter_13_2 = 1, #arg_13_0._originList do
+		local var_13_4 = arg_13_0._originList[iter_13_2].id
+		local var_13_5 = arg_13_0._originList[iter_13_2].itemId
 
-		if slot2[slot0._originList[slot8].id] or slot0.equipUid2Pos[slot9] then
-			table.insert(slot1, slot0._originList[slot8])
-		elseif slot3[slot10] == nil then
-			table.insert(slot1, slot0._originList[slot8])
-
-			slot3[slot10] = 1
-			slot4[slot9] = slot10
+		if var_13_1[var_13_4] or arg_13_0.equipUid2Pos[var_13_4] then
+			table.insert(var_13_0, arg_13_0._originList[iter_13_2])
 		else
-			slot3[slot10] = slot11 + 1
+			local var_13_6 = var_13_2[var_13_5]
+
+			if var_13_6 == nil then
+				table.insert(var_13_0, arg_13_0._originList[iter_13_2])
+
+				var_13_2[var_13_5] = 1
+				var_13_3[var_13_4] = var_13_5
+			else
+				var_13_2[var_13_5] = var_13_6 + 1
+			end
 		end
 	end
 
-	slot0._deckUidMap = slot4
-	slot0._itemIdDeckCountMap = slot3
+	arg_13_0._deckUidMap = var_13_3
+	arg_13_0._itemIdDeckCountMap = var_13_2
 
-	slot0:setList(slot1)
+	arg_13_0:setList(var_13_0)
 end
 
-function slot0.changeSelectSlot(slot0, slot1)
-	if slot1 <= slot0:getEquipMaxCount(slot0.curPos) and slot1 > 0 then
-		slot0.curSelectSlot = slot1
+function var_0_0.changeSelectSlot(arg_14_0, arg_14_1)
+	if arg_14_1 <= arg_14_0:getEquipMaxCount(arg_14_0.curPos) and arg_14_1 > 0 then
+		arg_14_0.curSelectSlot = arg_14_1
 	end
 end
 
-function slot0.getEquipMO(slot0, slot1)
-	return slot0._itemMap[slot1]
+function var_0_0.getEquipMO(arg_15_0, arg_15_1)
+	return arg_15_0._itemMap[arg_15_1]
 end
 
-function slot0.equipShowItem(slot0, slot1)
-	slot0.curEquipMap[slot0.curSelectSlot] = slot1
+function var_0_0.equipShowItem(arg_16_0, arg_16_1)
+	arg_16_0.curEquipMap[arg_16_0.curSelectSlot] = arg_16_1
 end
 
-function slot0.equipItem(slot0, slot1, slot2)
-	slot0.curEquipMap[slot2] = slot1
-	slot0.equipUid2Pos[slot1] = slot0.curPos
-	slot0.equipUid2Slot[slot1] = slot2
+function var_0_0.equipItem(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0.curEquipMap[arg_17_2] = arg_17_1
+	arg_17_0.equipUid2Pos[arg_17_1] = arg_17_0.curPos
+	arg_17_0.equipUid2Slot[arg_17_1] = arg_17_2
 end
 
-function slot0.unloadShowSlot(slot0, slot1)
-	slot0.curEquipMap[slot1] = uv0.EmptyUid
+function var_0_0.unloadShowSlot(arg_18_0, arg_18_1)
+	arg_18_0.curEquipMap[arg_18_1] = var_0_0.EmptyUid
 end
 
-function slot0.unloadItem(slot0, slot1)
-	slot0.equipUid2Pos[slot1] = nil
-	slot0.equipUid2Slot[slot1] = nil
+function var_0_0.unloadItem(arg_19_0, arg_19_1)
+	arg_19_0.equipUid2Pos[arg_19_1] = nil
+	arg_19_0.equipUid2Slot[arg_19_1] = nil
 
-	for slot6 = 1, slot0:getEquipMaxCount(slot0.curPos) do
-		if slot0.curEquipMap[slot6] == slot1 then
-			slot0.curEquipMap[slot6] = uv0.EmptyUid
+	local var_19_0 = arg_19_0:getEquipMaxCount(arg_19_0.curPos)
+
+	for iter_19_0 = 1, var_19_0 do
+		if arg_19_0.curEquipMap[iter_19_0] == arg_19_1 then
+			arg_19_0.curEquipMap[iter_19_0] = var_0_0.EmptyUid
 		end
 	end
 end
 
-function slot0.unloadItemByPos(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0.equipUid2Pos) do
-		if slot7 == slot1 and slot0.equipUid2Slot[slot6] == slot2 then
-			slot0:unloadItem(slot6)
+function var_0_0.unloadItemByPos(arg_20_0, arg_20_1, arg_20_2)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0.equipUid2Pos) do
+		if iter_20_1 == arg_20_1 and arg_20_0.equipUid2Slot[iter_20_0] == arg_20_2 then
+			arg_20_0:unloadItem(iter_20_0)
 
 			return
 		end
 	end
 end
 
-function slot0.getItemUidByPos(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0.equipUid2Pos) do
-		if slot7 == slot1 and slot0.equipUid2Slot[slot6] == slot2 then
-			return slot6
+function var_0_0.getItemUidByPos(arg_21_0, arg_21_1, arg_21_2)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0.equipUid2Pos) do
+		if iter_21_1 == arg_21_1 and arg_21_0.equipUid2Slot[iter_21_0] == arg_21_2 then
+			return iter_21_0
 		end
 	end
 
-	return uv0.EmptyUid
+	return var_0_0.EmptyUid
 end
 
-function slot0.getItemEquipedPos(slot0, slot1)
-	return slot0.equipUid2Pos[slot1], slot0.equipUid2Slot[slot1]
+function var_0_0.getItemEquipedPos(arg_22_0, arg_22_1)
+	return arg_22_0.equipUid2Pos[arg_22_1], arg_22_0.equipUid2Slot[arg_22_1]
 end
 
-function slot0.getEquipMaxCount(slot0, slot1)
-	return slot1 == uv0.MainCharPos and uv0.HeroMaxPos or uv0.MaxPos
+function var_0_0.getEquipMaxCount(arg_23_0, arg_23_1)
+	return arg_23_1 == var_0_0.MainCharPos and var_0_0.HeroMaxPos or var_0_0.MaxPos
 end
 
-function slot0.getPosHeroUid(slot0, slot1)
+function var_0_0.getPosHeroUid(arg_24_0, arg_24_1)
 	return nil
 end
 
-function slot0.slotIsLock(slot0, slot1)
-	return not Season123Model.instance:isSeasonStagePosUnlock(slot0.activityId, slot0.stage, slot1, slot0.curPos)
+function var_0_0.slotIsLock(arg_25_0, arg_25_1)
+	return not Season123Model.instance:isSeasonStagePosUnlock(arg_25_0.activityId, arg_25_0.stage, arg_25_1, arg_25_0.curPos)
 end
 
-function slot0.disableBecauseSameCard(slot0, slot1)
-	if slot0.equipUid2Group[slot1] then
-		for slot6, slot7 in pairs(slot0.curEquipMap) do
-			if slot0.equipUid2Group[slot7] and slot6 ~= slot0.curSelectSlot and slot8 == slot2 then
+function var_0_0.disableBecauseSameCard(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0.equipUid2Group[arg_26_1]
+
+	if var_26_0 then
+		for iter_26_0, iter_26_1 in pairs(arg_26_0.curEquipMap) do
+			local var_26_1 = arg_26_0.equipUid2Group[iter_26_1]
+
+			if var_26_1 and iter_26_0 ~= arg_26_0.curSelectSlot and var_26_1 == var_26_0 then
 				return true
 			end
 		end
@@ -259,29 +285,35 @@ function slot0.disableBecauseSameCard(slot0, slot1)
 	return false
 end
 
-function slot0.disableBecauseRole(slot0, slot1)
-	if not SeasonConfig.instance:getSeasonEquipCo(slot1) then
+function var_0_0.disableBecauseRole(arg_27_0, arg_27_1)
+	local var_27_0 = SeasonConfig.instance:getSeasonEquipCo(arg_27_1)
+
+	if not var_27_0 then
 		return false
 	end
 
-	if slot0.curPos == uv0.MainCharPos then
-		if Season123EquipMetaUtils.isMainRoleCard(slot2) then
+	local var_27_1 = Season123EquipMetaUtils.isMainRoleCard(var_27_0)
+
+	if arg_27_0.curPos == var_0_0.MainCharPos then
+		if var_27_1 then
 			return false
 		end
-	elseif not slot3 then
+	elseif not var_27_1 then
 		return false
 	end
 
 	return true
 end
 
-function slot0.isItemUidInShowSlot(slot0, slot1)
-	return slot0.curEquipMap[slot0.curSelectSlot] == slot1
+function var_0_0.isItemUidInShowSlot(arg_28_0, arg_28_1)
+	return arg_28_0.curEquipMap[arg_28_0.curSelectSlot] == arg_28_1
 end
 
-function slot0.isAllSlotEmpty(slot0)
-	for slot5 = 1, slot0:getEquipMaxCount(slot0.curPos) do
-		if slot0.curEquipMap[slot5] ~= uv0.EmptyUid then
+function var_0_0.isAllSlotEmpty(arg_29_0)
+	local var_29_0 = arg_29_0:getEquipMaxCount(arg_29_0.curPos)
+
+	for iter_29_0 = 1, var_29_0 do
+		if arg_29_0.curEquipMap[iter_29_0] ~= var_0_0.EmptyUid then
 			return false
 		end
 	end
@@ -289,136 +321,171 @@ function slot0.isAllSlotEmpty(slot0)
 	return true
 end
 
-function slot0.sortItemMOList(slot0, slot1)
-	slot3 = Season123Config.instance:getSeasonEquipCo(slot1.itemId)
+function var_0_0.sortItemMOList(arg_30_0, arg_30_1)
+	local var_30_0 = Season123Config.instance:getSeasonEquipCo(arg_30_0.itemId)
+	local var_30_1 = Season123Config.instance:getSeasonEquipCo(arg_30_1.itemId)
 
-	if Season123Config.instance:getSeasonEquipCo(slot0.itemId) ~= nil and slot3 ~= nil then
-		if uv0.instance:disableBecauseRole(slot1.itemId) ~= uv0.instance:disableBecauseRole(slot0.itemId) then
-			return slot5
+	if var_30_0 ~= nil and var_30_1 ~= nil then
+		local var_30_2 = var_0_0.instance:disableBecauseRole(arg_30_0.itemId)
+		local var_30_3 = var_0_0.instance:disableBecauseRole(arg_30_1.itemId)
+
+		if var_30_3 ~= var_30_2 then
+			return var_30_3
 		end
 
-		if slot2.rare ~= slot3.rare then
-			return slot3.rare < slot2.rare
+		if var_30_0.rare ~= var_30_1.rare then
+			return var_30_0.rare > var_30_1.rare
 		else
-			return slot3.equipId < slot2.equipId
+			return var_30_0.equipId > var_30_1.equipId
 		end
 	else
-		return slot0.id < slot1.id
+		return arg_30_0.id < arg_30_1.id
 	end
 end
 
-function slot0.flushSlot(slot0, slot1)
-	slot0:unloadItemByPos(slot0.curPos, slot1)
+function var_0_0.flushSlot(arg_31_0, arg_31_1)
+	local var_31_0 = arg_31_0.curEquipMap[arg_31_1]
 
-	if slot0.curEquipMap[slot1] ~= uv0.EmptyUid then
-		slot0:unloadTeamLimitCard(slot2)
-		slot0:unloadItem(slot2)
-		slot0:equipItem(slot2, slot1)
+	arg_31_0:unloadItemByPos(arg_31_0.curPos, arg_31_1)
+
+	if var_31_0 ~= var_0_0.EmptyUid then
+		arg_31_0:unloadTeamLimitCard(var_31_0)
+		arg_31_0:unloadItem(var_31_0)
+		arg_31_0:equipItem(var_31_0, arg_31_1)
 	end
 end
 
-function slot0.unloadTeamLimitCard(slot0, slot1)
-	if not slot0:getById(slot1) then
+function var_0_0.unloadTeamLimitCard(arg_32_0, arg_32_1)
+	local var_32_0 = arg_32_0:getById(arg_32_1)
+
+	if not var_32_0 then
 		return
 	end
 
-	slot3 = slot0:getList()
-	slot5 = false
+	local var_32_1 = arg_32_0:getList()
+	local var_32_2 = Season123Config.instance:getSeasonEquipCo(var_32_0.itemId)
+	local var_32_3 = false
 
-	if Season123Config.instance:getSeasonEquipCo(slot2.itemId) and slot4.teamLimit == 0 then
+	if var_32_2 and var_32_2.teamLimit == 0 then
 		return false
 	end
 
-	for slot9, slot10 in pairs(slot0.equipUid2Pos) do
-		if slot9 ~= slot1 and slot0._itemMap[slot9] and Season123Config.instance:getSeasonEquipCo(slot0._itemMap[slot9].itemId) and slot11.teamLimit ~= 0 and slot11.teamLimit == slot4.teamLimit then
-			slot0:unloadItem(slot9)
+	for iter_32_0, iter_32_1 in pairs(arg_32_0.equipUid2Pos) do
+		if iter_32_0 ~= arg_32_1 and arg_32_0._itemMap[iter_32_0] then
+			local var_32_4 = Season123Config.instance:getSeasonEquipCo(arg_32_0._itemMap[iter_32_0].itemId)
 
-			slot5 = true
+			if var_32_4 and var_32_4.teamLimit ~= 0 and var_32_4.teamLimit == var_32_2.teamLimit then
+				arg_32_0:unloadItem(iter_32_0)
+
+				var_32_3 = true
+			end
 		end
 	end
 
-	return slot5
+	return var_32_3
 end
 
-function slot0.resumeSlotData(slot0)
-	for slot5 = 1, slot0:getEquipMaxCount(slot0.curPos) do
-		slot0.curEquipMap[slot5] = slot0:getItemUidByPos(slot0.curPos, slot5)
+function var_0_0.resumeSlotData(arg_33_0)
+	local var_33_0 = arg_33_0:getEquipMaxCount(arg_33_0.curPos)
+
+	for iter_33_0 = 1, var_33_0 do
+		local var_33_1 = arg_33_0:getItemUidByPos(arg_33_0.curPos, iter_33_0)
+
+		arg_33_0.curEquipMap[iter_33_0] = var_33_1
 	end
 end
 
-function slot0.getEquipedCards(slot0)
-	return slot0:packUpdateEquips()
+function var_0_0.getEquipedCards(arg_34_0)
+	return (arg_34_0:packUpdateEquips())
 end
 
-function slot0.packUpdateEquips(slot0)
-	for slot5 = 1, uv0.HeroMaxPos do
+function var_0_0.packUpdateEquips(arg_35_0)
+	local var_35_0 = {}
+
+	for iter_35_0 = 1, var_0_0.HeroMaxPos do
+		var_35_0[iter_35_0] = arg_35_0.curEquipMap[iter_35_0] or var_0_0.EmptyUid
 	end
 
-	return {
-		[slot5] = slot0.curEquipMap[slot5] or uv0.EmptyUid
-	}
+	return var_35_0
 end
 
-function slot0.checkResetCurSelected(slot0)
-	for slot5 = 1, slot0:getEquipMaxCount(slot0.curPos) do
-		if slot0.curEquipMap[slot5] ~= uv0.EmptyUid and not slot0._itemMap[slot0.curEquipMap[slot5]] then
-			slot0.curEquipMap[slot5] = uv0.EmptyUid
+function var_0_0.checkResetCurSelected(arg_36_0)
+	local var_36_0 = arg_36_0:getEquipMaxCount(arg_36_0.curPos)
+
+	for iter_36_0 = 1, var_36_0 do
+		if arg_36_0.curEquipMap[iter_36_0] ~= var_0_0.EmptyUid and not arg_36_0._itemMap[arg_36_0.curEquipMap[iter_36_0]] then
+			arg_36_0.curEquipMap[iter_36_0] = var_0_0.EmptyUid
 		end
 	end
 end
 
-function slot0.getShowUnlockSlotCount(slot0)
-	slot1 = 0
+function var_0_0.getShowUnlockSlotCount(arg_37_0)
+	local var_37_0 = 0
+	local var_37_1 = arg_37_0.curPos
 
-	for slot7 = slot0:getEquipMaxCount(slot0.curPos), 1, -1 do
-		if slot0:isEquipCardPosUnlock(slot7, slot2) then
-			return math.max(slot1, slot7)
+	for iter_37_0 = arg_37_0:getEquipMaxCount(var_37_1), 1, -1 do
+		if arg_37_0:isEquipCardPosUnlock(iter_37_0, var_37_1) then
+			var_37_0 = math.max(var_37_0, iter_37_0)
+
+			return var_37_0
 		end
 	end
 
-	return slot1
+	return var_37_0
 end
 
-function slot0.isEquipCardPosUnlock(slot0, slot1, slot2)
-	return slot0.curUnlockIndexSet[Season123Model.instance:getUnlockCardIndex(slot2, slot1)] == true
+function var_0_0.isEquipCardPosUnlock(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = Season123Model.instance:getUnlockCardIndex(arg_38_2, arg_38_1)
+
+	return arg_38_0.curUnlockIndexSet[var_38_0] == true
 end
 
-function slot0.getNeedShowDeckCount(slot0, slot1)
-	if slot0._deckUidMap[slot1] == nil then
+function var_0_0.getNeedShowDeckCount(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0._deckUidMap[arg_39_1]
+
+	if var_39_0 == nil then
 		return false
 	end
 
-	return slot0._itemIdDeckCountMap[slot2] > 1, slot3
+	local var_39_1 = arg_39_0._itemIdDeckCountMap[var_39_0]
+
+	return var_39_1 > 1, var_39_1
 end
 
-function slot0.getDelayPlayTime(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.getDelayPlayTime(arg_40_0, arg_40_1)
+	if arg_40_1 == nil then
 		return -1
 	end
 
-	slot2 = slot0.curPos == uv0.MainCharPos and SeasonEquipHeroViewContainer.ColumnCount or SeasonEquipItem.ColumnCount
+	local var_40_0 = arg_40_0.curPos == var_0_0.MainCharPos and SeasonEquipHeroViewContainer.ColumnCount or SeasonEquipItem.ColumnCount
+	local var_40_1 = Time.time
 
-	if slot0._itemStartAnimTime == nil then
-		slot0._itemStartAnimTime = Time.time + SeasonEquipItem.OpenAnimStartTime
+	if arg_40_0._itemStartAnimTime == nil then
+		arg_40_0._itemStartAnimTime = var_40_1 + SeasonEquipItem.OpenAnimStartTime
 	end
 
-	if not slot0:getIndex(slot1) or slot4 > SeasonEquipItem.AnimRowCount * slot2 then
+	local var_40_2 = arg_40_0:getIndex(arg_40_1)
+
+	if not var_40_2 or var_40_2 > SeasonEquipItem.AnimRowCount * var_40_0 then
 		return -1
 	end
 
-	if math.floor((slot4 - 1) / slot2) * SeasonEquipItem.OpenAnimTime + SeasonEquipItem.OpenAnimStartTime < slot3 - slot0._itemStartAnimTime then
+	local var_40_3 = math.floor((var_40_2 - 1) / var_40_0) * SeasonEquipItem.OpenAnimTime + SeasonEquipItem.OpenAnimStartTime
+	local var_40_4 = var_40_1 - arg_40_0._itemStartAnimTime
+
+	if var_40_3 < var_40_4 then
 		return -1
 	else
-		return slot5 - slot6
+		return var_40_3 - var_40_4
 	end
 end
 
-function slot0.flushRecord(slot0)
-	if slot0.recordNew then
-		slot0.recordNew:recordAllItem()
+function var_0_0.flushRecord(arg_41_0)
+	if arg_41_0.recordNew then
+		arg_41_0.recordNew:recordAllItem()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

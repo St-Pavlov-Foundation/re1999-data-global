@@ -1,25 +1,23 @@
-module("modules.logic.notice.model.NoticeContentType", package.seeall)
+﻿module("modules.logic.notice.model.NoticeContentType", package.seeall)
 
-slot0 = _M
-slot0.TxtTopTitle = 1
-slot0.TxtContent = 3
-slot0.ImgInner = 4
-slot0.ImgTitle = 5
-slot0.Align = {
-	Left = 1,
-	Center = 2,
-	Right = 3
-}
-slot0.LinkType = {
-	InnerLink = 1,
-	OutLink = 2,
-	DeepLink = 3,
-	Time = 4
-}
-slot0.Anchor = {
-	LeftAnchor = Vector2.New(0, 0),
-	CenterAnchor = Vector2.New(0.5, 0),
-	RightAnchor = Vector2.New(1, 0)
-}
+local var_0_0 = _M
 
-return slot0
+var_0_0.TxtTopTitle = 1
+var_0_0.TxtContent = 3
+var_0_0.ImgInner = 4
+var_0_0.ImgTitle = 5
+var_0_0.Align = {}
+var_0_0.Align.Left = 1
+var_0_0.Align.Center = 2
+var_0_0.Align.Right = 3
+var_0_0.LinkType = {}
+var_0_0.LinkType.InnerLink = 1
+var_0_0.LinkType.OutLink = 2
+var_0_0.LinkType.DeepLink = 3
+var_0_0.LinkType.Time = 4
+var_0_0.Anchor = {}
+var_0_0.Anchor.LeftAnchor = Vector2.New(0, 0)
+var_0_0.Anchor.CenterAnchor = Vector2.New(0.5, 0)
+var_0_0.Anchor.RightAnchor = Vector2.New(1, 0)
+
+return var_0_0

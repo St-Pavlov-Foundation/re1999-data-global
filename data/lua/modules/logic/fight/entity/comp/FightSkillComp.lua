@@ -1,7 +1,8 @@
-module("modules.logic.fight.entity.comp.FightSkillComp", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightSkillComp", package.seeall)
 
-slot0 = class("FightSkillComp", LuaCompBase)
-slot0.FrameEventHandlerCls = {
+local var_0_0 = class("FightSkillComp", LuaCompBase)
+
+var_0_0.FrameEventHandlerCls = {
 	[0] = FightTLEventMove,
 	FightTLEventTargetEffect,
 	FightTLEventAtkSpineLookDir,
@@ -61,417 +62,442 @@ slot0.FrameEventHandlerCls = {
 	[1004] = FightTLEventSubEntityEnter
 }
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._timeScale = 1
-	slot0._tlEventContext = nil
-	slot0._fightStepMO = nil
-	slot0._curSkillId = nil
-	slot0._loader2SkillId = {}
-	slot0._skillId2Loader = {}
-	slot0._skillId2TimelineUrl = {}
-	slot0._frameEventHandlerPlaying = {}
-	slot0._tlAssetItem = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._timeScale = 1
+	arg_1_0._tlEventContext = nil
+	arg_1_0._fightStepMO = nil
+	arg_1_0._curSkillId = nil
+	arg_1_0._loader2SkillId = {}
+	arg_1_0._skillId2Loader = {}
+	arg_1_0._skillId2TimelineUrl = {}
+	arg_1_0._frameEventHandlerPlaying = {}
+	arg_1_0._tlAssetItem = nil
 end
 
-function slot0.getCurTimelineDuration(slot0)
-	if slot0._timeline_list then
-		return slot0._last_timeline_item:GetDuration()
+function var_0_0.getCurTimelineDuration(arg_2_0)
+	if arg_2_0._timeline_list then
+		return arg_2_0._last_timeline_item:GetDuration()
 	end
 
 	return 0
 end
 
-function slot0.playTimeline(slot0, slot1, slot2)
-	slot0._fightStepMO = slot2
-	slot0._curSkillId = slot0._fightStepMO.actId
-	slot0._onceloader = MultiAbLoader.New()
-	slot0._timelineName = slot1
-	slot0._skillId2TimelineUrl[slot0._curSkillId] = ResUrl.getSkillTimeline(slot1)
+function var_0_0.playTimeline(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._fightStepMO = arg_3_2
+	arg_3_0._curSkillId = arg_3_0._fightStepMO.actId
+	arg_3_0._onceloader = MultiAbLoader.New()
+	arg_3_0._timelineName = arg_3_1
+	arg_3_0._skillId2TimelineUrl[arg_3_0._curSkillId] = ResUrl.getSkillTimeline(arg_3_1)
 
-	slot0._onceloader:addPath(FightHelper.getRolesTimelinePath(slot1))
-	slot0._onceloader:startLoad(slot0._onLoadOnceTimeline, slot0)
+	local var_3_0 = FightHelper.getRolesTimelinePath(arg_3_1)
+
+	arg_3_0._onceloader:addPath(var_3_0)
+	arg_3_0._onceloader:startLoad(arg_3_0._onLoadOnceTimeline, arg_3_0)
 end
 
-function slot0._onLoadOnceTimeline(slot0, slot1)
-	slot0._tlAssetItem = slot0._onceloader:getFirstAssetItem()
+function var_0_0._onLoadOnceTimeline(arg_4_0, arg_4_1)
+	arg_4_0._tlAssetItem = arg_4_0._onceloader:getFirstAssetItem()
 
-	if slot0._tlAssetItem then
-		slot0._timelineName = SLFramework.FileHelper.GetFileName(slot0._skillId2TimelineUrl[slot0._curSkillId], false)
+	if arg_4_0._tlAssetItem then
+		arg_4_0._timelineName = SLFramework.FileHelper.GetFileName(arg_4_0._skillId2TimelineUrl[arg_4_0._curSkillId], false)
 
-		FightHelper.logForPCSkillEditor("play Timeline " .. slot0._timelineName)
-		slot0:_playTimeline()
+		FightHelper.logForPCSkillEditor("play Timeline " .. arg_4_0._timelineName)
+		arg_4_0:_playTimeline()
 	else
-		slot0._timelineName = nil
+		arg_4_0._timelineName = nil
 
-		logError("skillId timeline asset not loaded " .. slot0._curSkillId)
+		logError("skillId timeline asset not loaded " .. arg_4_0._curSkillId)
 	end
 
-	slot0._onceloader:dispose()
+	arg_4_0._onceloader:dispose()
 
-	slot0._onceloader = nil
+	arg_4_0._onceloader = nil
 end
 
-function slot0.playSkill(slot0, slot1, slot2)
-	FightHelper.logForPCSkillEditor("++++++++++++++++ entityId_ " .. slot0.entity.id .. " play skill_" .. slot1)
+function var_0_0.playSkill(arg_5_0, arg_5_1, arg_5_2)
+	FightHelper.logForPCSkillEditor("++++++++++++++++ entityId_ " .. arg_5_0.entity.id .. " play skill_" .. arg_5_1)
 
-	if slot2 == nil then
-		logError("fightStepMO is nil, skillId = " .. slot1)
+	if arg_5_2 == nil then
+		logError("fightStepMO is nil, skillId = " .. arg_5_1)
 
 		return
 	end
 
-	if not lua_skill.configDict[slot1] then
-		logError("skill config not exist，id = " .. slot1)
+	if not lua_skill.configDict[arg_5_1] then
+		logError("skill config not exist，id = " .. arg_5_1)
 
 		return
 	end
 
-	slot0._tlEventContext = {}
-	slot0._curSkillId = slot1
-	slot0._fightStepMO = slot2
+	arg_5_0._tlEventContext = {}
+	arg_5_0._curSkillId = arg_5_1
+	arg_5_0._fightStepMO = arg_5_2
 
-	if slot0._skillId2Loader[slot1] then
-		slot4:dispose()
+	local var_5_0 = arg_5_0._skillId2Loader[arg_5_1]
 
-		slot0._skillId2Loader[slot1] = nil
+	if var_5_0 then
+		var_5_0:dispose()
+
+		arg_5_0._skillId2Loader[arg_5_1] = nil
 	end
 
-	slot0:_loadSkillAsset(slot1, slot2)
+	arg_5_0:_loadSkillAsset(arg_5_1, arg_5_2)
 end
 
-function slot0.skipSkill(slot0)
-	if slot0._timeline_list and slot0._timeline_list[1] then
-		slot1:skipSkill()
-		slot1:onTimelineEnd()
+function var_0_0.skipSkill(arg_6_0)
+	local var_6_0 = arg_6_0._timeline_list and arg_6_0._timeline_list[1]
+
+	if var_6_0 then
+		var_6_0:skipSkill()
+		var_6_0:onTimelineEnd()
 	end
 end
 
-function slot0.stopSkill(slot0)
-	if slot0._timeline_list then
-		for slot4, slot5 in ipairs(slot0._timeline_list) do
-			slot5:stopSkill()
+function var_0_0.stopSkill(arg_7_0)
+	if arg_7_0._timeline_list then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._timeline_list) do
+			iter_7_1:stopSkill()
 		end
 
-		slot0._timeline_list = nil
+		arg_7_0._timeline_list = nil
 
-		if slot0._tlAssetItem then
-			slot0._tlAssetItem = nil
+		if arg_7_0._tlAssetItem then
+			arg_7_0._tlAssetItem = nil
 		end
 	end
 
-	slot0._curSkillId = nil
+	arg_7_0._curSkillId = nil
 end
 
-function slot0.getCurTimelineItem(slot0)
-	return slot0._last_timeline_item
+function var_0_0.getCurTimelineItem(arg_8_0)
+	return arg_8_0._last_timeline_item
 end
 
-function slot0.getBinder(slot0)
-	return slot0._last_timeline_item and slot0._last_timeline_item._binder
+function var_0_0.getBinder(arg_9_0)
+	return arg_9_0._last_timeline_item and arg_9_0._last_timeline_item._binder
 end
 
-function slot0.getCurFrame(slot0)
-	return slot0._last_timeline_item._binder.CurFrame
+function var_0_0.getCurFrame(arg_10_0)
+	return arg_10_0._last_timeline_item._binder.CurFrame
 end
 
-function slot0.getCurFrameFloat(slot0)
-	return slot0._last_timeline_item._binder.CurFrameFloat
+function var_0_0.getCurFrameFloat(arg_11_0)
+	return arg_11_0._last_timeline_item._binder.CurFrameFloat
 end
 
-function slot0.getFrameFloatByTime(slot0, slot1)
-	return slot0._last_timeline_item._binder:GetFrameFloatByTime(slot1)
+function var_0_0.getFrameFloatByTime(arg_12_0, arg_12_1)
+	return arg_12_0._last_timeline_item._binder:GetFrameFloatByTime(arg_12_1)
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	slot0._timeScale = slot1
+function var_0_0.setTimeScale(arg_13_0, arg_13_1)
+	arg_13_0._timeScale = arg_13_1
 
-	if slot0._timeline_list then
-		for slot5, slot6 in ipairs(slot0._timeline_list) do
-			slot6:setTimeScale(slot1)
+	if arg_13_0._timeline_list then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_0._timeline_list) do
+			iter_13_1:setTimeScale(arg_13_1)
 		end
 	end
 end
 
-function slot0._reallyPlayCurSkill(slot0)
-	if slot0._curSkillId then
-		slot0._tlAssetItem = slot0._skillId2Loader[slot0._curSkillId]:getFirstAssetItem()
+function var_0_0._reallyPlayCurSkill(arg_14_0)
+	if arg_14_0._curSkillId then
+		arg_14_0._tlAssetItem = arg_14_0._skillId2Loader[arg_14_0._curSkillId]:getFirstAssetItem()
 
-		if slot0._tlAssetItem then
-			slot0._timelineName = SLFramework.FileHelper.GetFileName(slot0._skillId2TimelineUrl[slot0._curSkillId], false)
+		if arg_14_0._tlAssetItem then
+			arg_14_0._timelineName = SLFramework.FileHelper.GetFileName(arg_14_0._skillId2TimelineUrl[arg_14_0._curSkillId], false)
 
-			FightHelper.logForPCSkillEditor("play Timeline " .. slot0._timelineName)
-			slot0:_playTimeline()
+			FightHelper.logForPCSkillEditor("play Timeline " .. arg_14_0._timelineName)
+			arg_14_0:_playTimeline()
 		else
-			slot0._timelineName = nil
+			arg_14_0._timelineName = nil
 
-			slot0._skillId2Loader[slot0._curSkillId]:dispose()
+			arg_14_0._skillId2Loader[arg_14_0._curSkillId]:dispose()
 
-			slot0._skillId2Loader[slot0._curSkillId] = nil
+			arg_14_0._skillId2Loader[arg_14_0._curSkillId] = nil
 
-			logError("skillId timeline asset not loaded " .. slot0._curSkillId)
+			logError("skillId timeline asset not loaded " .. arg_14_0._curSkillId)
 		end
 	else
-		slot0._timelineName = nil
+		arg_14_0._timelineName = nil
 
 		FightHelper.logForPCSkillEditor("_reallyPlayCurSkill fail, self._curSkillId == nil")
 	end
 end
 
-function slot0.clearSkillRes(slot0)
-	for slot4, slot5 in pairs(slot0._skillId2Loader) do
-		slot5:dispose()
+function var_0_0.clearSkillRes(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._skillId2Loader) do
+		iter_15_1:dispose()
 	end
 
-	if slot0._onceloader then
-		slot0._onceloader:dispose()
+	if arg_15_0._onceloader then
+		arg_15_0._onceloader:dispose()
 
-		slot0._onceloader = nil
+		arg_15_0._onceloader = nil
 	end
 
-	slot0._skillId2Loader = {}
-	slot0._loader2SkillId = {}
+	arg_15_0._skillId2Loader = {}
+	arg_15_0._loader2SkillId = {}
 end
 
-function slot0.onUpdate(slot0)
-	if slot0._tlAssetItem and slot0._timeline_list then
-		for slot4, slot5 in ipairs(slot0._timeline_list) do
-			slot5:onUpdate()
+function var_0_0.onUpdate(arg_16_0)
+	if arg_16_0._tlAssetItem and arg_16_0._timeline_list then
+		for iter_16_0, iter_16_1 in ipairs(arg_16_0._timeline_list) do
+			iter_16_1:onUpdate()
 		end
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:stopSkill()
+function var_0_0.beforeDestroy(arg_17_0)
+	arg_17_0:stopSkill()
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clearSkillRes()
+function var_0_0.onDestroy(arg_18_0)
+	arg_18_0:clearSkillRes()
 
-	slot0._skillId2Loader = nil
-	slot0._loader2SkillId = nil
+	arg_18_0._skillId2Loader = nil
+	arg_18_0._loader2SkillId = nil
 end
 
-function slot0._playTimeline(slot0)
-	FightHelper.setBossSkillSpeed(slot0.entity.id)
-	FightHelper.setTimelineExclusiveSpeed(slot0._timelineName)
+function var_0_0._playTimeline(arg_19_0)
+	FightHelper.setBossSkillSpeed(arg_19_0.entity.id)
+	FightHelper.setTimelineExclusiveSpeed(arg_19_0._timelineName)
 	FightModel.instance:updateRTPCSpeed()
 
-	slot0._startTime = Time.time
+	arg_19_0._startTime = Time.time
 
-	slot0:_beforePlayTimeline()
+	arg_19_0:_beforePlayTimeline()
 
-	if not slot0._timeline_list then
-		slot0._timeline_list = {}
+	if not arg_19_0._timeline_list then
+		arg_19_0._timeline_list = {}
 	end
 
-	slot1 = FightSkillTimelineItem.New()
-	slot1._timelineName = slot0._timelineName
-	slot1._timelineUrl = slot0._skillId2TimelineUrl[slot0._curSkillId]
-	slot0._last_timeline_item = slot1
+	local var_19_0 = FightSkillTimelineItem.New()
 
-	slot1:initLogic(ZProj.PlayableAssetBinder.Get(gohelper.create3d(slot0.entity.go, "_skill_playable")), slot0.entity, slot0._fightStepMO)
-	table.insert(slot0._timeline_list, slot1)
+	var_19_0._timelineName = arg_19_0._timelineName
+	var_19_0._timelineUrl = arg_19_0._skillId2TimelineUrl[arg_19_0._curSkillId]
+	arg_19_0._last_timeline_item = var_19_0
 
-	if slot0:sameSkillPlaying() then
-		slot1:setParam(slot0._timeline_start_time, slot0._audio_start_time, slot0._spine_start_time, slot0._spine_delay_time, slot0._curAnimState, slot0._audio_id)
+	local var_19_1 = gohelper.create3d(arg_19_0.entity.go, "_skill_playable")
+	local var_19_2 = ZProj.PlayableAssetBinder.Get(var_19_1)
+
+	var_19_0:initLogic(var_19_2, arg_19_0.entity, arg_19_0._fightStepMO)
+	table.insert(arg_19_0._timeline_list, var_19_0)
+
+	if arg_19_0:sameSkillPlaying() then
+		var_19_0:setParam(arg_19_0._timeline_start_time, arg_19_0._audio_start_time, arg_19_0._spine_start_time, arg_19_0._spine_delay_time, arg_19_0._curAnimState, arg_19_0._audio_id)
 	end
 
-	slot1:play(slot0._tlAssetItem)
-	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkill, slot0.entity, slot0._curSkillId, slot0._fightStepMO, slot0._timelineName)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayStart, slot0.entity, slot0._curSkillId, slot0._fightStepMO, slot0._timelineName)
+	var_19_0:play(arg_19_0._tlAssetItem)
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkill, arg_19_0.entity, arg_19_0._curSkillId, arg_19_0._fightStepMO, arg_19_0._timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayStart, arg_19_0.entity, arg_19_0._curSkillId, arg_19_0._fightStepMO, arg_19_0._timelineName)
 end
 
-function slot0.recordSameSkillStartParam(slot0, slot1)
-	slot0._timeline_start_time = tonumber(slot1[1])
-	slot0._audio_start_time = tonumber(slot1[2])
-	slot0._spine_start_time = tonumber(slot1[3])
-	slot0._spine_delay_time = tonumber(slot1[4])
-	slot0._timeline_start_time = slot0._timeline_start_time ~= 0 and slot0._timeline_start_time or nil
-	slot0._audio_start_time = slot0._audio_start_time ~= 0 and slot0._audio_start_time or nil
-	slot0._spine_start_time = slot0._spine_start_time ~= 0 and slot0._spine_start_time or nil
-	slot0._spine_delay_time = slot0._spine_delay_time ~= 0 and slot0._spine_delay_time or nil
+function var_0_0.recordSameSkillStartParam(arg_20_0, arg_20_1)
+	arg_20_0._timeline_start_time = tonumber(arg_20_1[1])
+	arg_20_0._audio_start_time = tonumber(arg_20_1[2])
+	arg_20_0._spine_start_time = tonumber(arg_20_1[3])
+	arg_20_0._spine_delay_time = tonumber(arg_20_1[4])
+	arg_20_0._timeline_start_time = arg_20_0._timeline_start_time ~= 0 and arg_20_0._timeline_start_time or nil
+	arg_20_0._audio_start_time = arg_20_0._audio_start_time ~= 0 and arg_20_0._audio_start_time or nil
+	arg_20_0._spine_start_time = arg_20_0._spine_start_time ~= 0 and arg_20_0._spine_start_time or nil
+	arg_20_0._spine_delay_time = arg_20_0._spine_delay_time ~= 0 and arg_20_0._spine_delay_time or nil
 end
 
-function slot0.recordFilterAtkEffect(slot0, slot1)
-	if not slot0.filter_atk_effects then
-		slot0.filter_atk_effects = {}
+function var_0_0.recordFilterAtkEffect(arg_21_0, arg_21_1)
+	if not arg_21_0.filter_atk_effects then
+		arg_21_0.filter_atk_effects = {}
 	end
 
-	for slot6, slot7 in ipairs(string.split(slot1, "#")) do
-		slot0.filter_atk_effects[slot7] = true
+	local var_21_0 = string.split(arg_21_1, "#")
+
+	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+		arg_21_0.filter_atk_effects[iter_21_1] = true
 	end
 end
 
-function slot0.atkEffectNeedFilter(slot0, slot1)
-	if slot0.filter_atk_effects and slot0.filter_atk_effects[slot1] then
+function var_0_0.atkEffectNeedFilter(arg_22_0, arg_22_1)
+	if arg_22_0.filter_atk_effects and arg_22_0.filter_atk_effects[arg_22_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.recordFilterFlyEffect(slot0, slot1)
-	if not slot0.filter_fly_effects then
-		slot0.filter_fly_effects = {}
+function var_0_0.recordFilterFlyEffect(arg_23_0, arg_23_1)
+	if not arg_23_0.filter_fly_effects then
+		arg_23_0.filter_fly_effects = {}
 	end
 
-	for slot6, slot7 in ipairs(string.split(slot1, "#")) do
-		slot0.filter_fly_effects[slot7] = true
+	local var_23_0 = string.split(arg_23_1, "#")
+
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		arg_23_0.filter_fly_effects[iter_23_1] = true
 	end
 end
 
-function slot0.flyEffectNeedFilter(slot0, slot1)
-	if slot0.filter_fly_effects and slot0.filter_fly_effects[slot1] then
+function var_0_0.flyEffectNeedFilter(arg_24_0, arg_24_1)
+	if arg_24_0.filter_fly_effects and arg_24_0.filter_fly_effects[arg_24_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.clearSameSkillStartParam(slot0)
-	slot0._timeline_start_time = nil
-	slot0._audio_start_time = nil
-	slot0._spine_start_time = nil
-	slot0._spine_delay_time = nil
-	slot0._curAnimState = nil
-	slot0._audio_id = nil
-	slot0.filter_atk_effects = nil
-	slot0.filter_fly_effects = nil
+function var_0_0.clearSameSkillStartParam(arg_25_0)
+	arg_25_0._timeline_start_time = nil
+	arg_25_0._audio_start_time = nil
+	arg_25_0._spine_start_time = nil
+	arg_25_0._spine_delay_time = nil
+	arg_25_0._curAnimState = nil
+	arg_25_0._audio_id = nil
+	arg_25_0.filter_atk_effects = nil
+	arg_25_0.filter_fly_effects = nil
 end
 
-function slot0.stopCurTimelineWaitPlaySameSkill(slot0, slot1, slot2, slot3)
-	slot0._sign_playing_same_skill = true
-	slot0._curAnimState = slot2
-	slot0._audio_id = slot3
+function var_0_0.stopCurTimelineWaitPlaySameSkill(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	arg_26_0._sign_playing_same_skill = true
+	arg_26_0._curAnimState = arg_26_2
+	arg_26_0._audio_id = arg_26_3
 
-	slot0._last_timeline_item:stopCurTimelineWaitPlaySameSkill(slot1, slot2)
+	arg_26_0._last_timeline_item:stopCurTimelineWaitPlaySameSkill(arg_26_1, arg_26_2)
 end
 
-function slot0.sameSkillPlaying(slot0)
-	return slot0._sign_playing_same_skill
+function var_0_0.sameSkillPlaying(arg_27_0)
+	return arg_27_0._sign_playing_same_skill
 end
 
-function slot0._delayEndSkill(slot0)
+function var_0_0._delayEndSkill(arg_28_0)
 	CameraMgr.instance:getCameraShake():StopShake()
 	FightHelper.cancelBossSkillSpeed()
 	FightHelper.cancelExclusiveSpeed()
 	FightModel.instance:updateRTPCSpeed()
 
-	slot0._sign_playing_same_skill = nil
+	arg_28_0._sign_playing_same_skill = nil
 
-	if slot0._timeline_list then
-		for slot4, slot5 in ipairs(slot0._timeline_list) do
-			slot5:releaseSelf()
+	if arg_28_0._timeline_list then
+		for iter_28_0, iter_28_1 in ipairs(arg_28_0._timeline_list) do
+			iter_28_1:releaseSelf()
 		end
 
-		slot0._timeline_list = nil
+		arg_28_0._timeline_list = nil
 	end
 
-	slot1 = slot0._curSkillId
-	slot2 = slot0._fightStepMO
-	slot0._curSkillId = nil
-	slot0._fightStepMO = nil
+	local var_28_0 = arg_28_0._curSkillId
+	local var_28_1 = arg_28_0._fightStepMO
 
-	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, slot0.entity, slot1, slot2, slot0._timelineName)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, slot0.entity, slot1, slot2, slot0._timelineName)
+	arg_28_0._curSkillId = nil
+	arg_28_0._fightStepMO = nil
+
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, arg_28_0.entity, var_28_0, var_28_1, arg_28_0._timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, arg_28_0.entity, var_28_0, var_28_1, arg_28_0._timelineName)
 end
 
-function slot0._loadSkillAsset(slot0, slot1, slot2)
-	if lua_skill.configDict[slot1] then
-		slot5 = slot0.entity:getMO() and slot4.skin
+function var_0_0._loadSkillAsset(arg_29_0, arg_29_1, arg_29_2)
+	if lua_skill.configDict[arg_29_1] then
+		local var_29_0 = arg_29_0.entity:getMO()
+		local var_29_1 = var_29_0 and var_29_0.skin
 
-		if slot2 and slot4 and slot2.fromId == slot4.id then
-			slot5 = FightHelper.processSkinByStepMO(slot2, slot4)
+		if arg_29_2 and var_29_0 and arg_29_2.fromId == var_29_0.id then
+			var_29_1 = FightHelper.processSkinByStepMO(arg_29_2, var_29_0)
 		end
 
-		slot6 = FightHelper.detectReplaceTimeline(FightConfig.instance:getSkinSkillTimeline(slot5, slot1), slot0._fightStepMO)
-		slot7 = MultiAbLoader.New()
-		slot0._skillId2Loader[slot1] = slot7
-		slot0._loader2SkillId[slot7] = slot1
-		slot0._skillId2TimelineUrl[slot1] = ResUrl.getSkillTimeline(slot6)
+		local var_29_2 = FightHelper.detectReplaceTimeline(FightConfig.instance:getSkinSkillTimeline(var_29_1, arg_29_1), arg_29_0._fightStepMO)
+		local var_29_3 = MultiAbLoader.New()
 
-		slot7:addPath(FightHelper.getRolesTimelinePath(slot6))
-		slot7:setLoadFailCallback(slot0._delayEndSkill, slot0)
-		slot7:startLoad(slot0._onLoadSkillTimelineFinish, slot0)
+		arg_29_0._skillId2Loader[arg_29_1] = var_29_3
+		arg_29_0._loader2SkillId[var_29_3] = arg_29_1
+		arg_29_0._skillId2TimelineUrl[arg_29_1] = ResUrl.getSkillTimeline(var_29_2)
+
+		local var_29_4 = FightHelper.getRolesTimelinePath(var_29_2)
+
+		var_29_3:addPath(var_29_4)
+		var_29_3:setLoadFailCallback(arg_29_0._delayEndSkill, arg_29_0)
+		var_29_3:startLoad(arg_29_0._onLoadSkillTimelineFinish, arg_29_0)
 	else
-		logError("skill not exist: " .. slot1)
+		logError("skill not exist: " .. arg_29_1)
 	end
 end
 
-function slot0._onLoadSkillTimelineFinish(slot0, slot1)
-	slot2 = slot0._loader2SkillId[slot1]
+function var_0_0._onLoadSkillTimelineFinish(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0._loader2SkillId[arg_30_1]
 
-	if slot0._curSkillId and slot2 and slot0._curSkillId == slot2 then
-		slot0:_reallyPlayCurSkill()
+	if arg_30_0._curSkillId and var_30_0 and arg_30_0._curSkillId == var_30_0 then
+		arg_30_0:_reallyPlayCurSkill()
 	else
 		FightHelper.logForPCSkillEditor("skill loaded, but skill has stop")
 	end
 end
 
-function slot0._beforePlayTimeline(slot0)
-	slot0:_setSideRenderOrder()
+function var_0_0._beforePlayTimeline(arg_31_0)
+	arg_31_0:_setSideRenderOrder()
 
-	if slot0.entity.buff then
-		slot0.entity.buff:hideLoopEffects("before_skill_timeline")
+	if arg_31_0.entity.buff then
+		arg_31_0.entity.buff:hideLoopEffects("before_skill_timeline")
 	end
 
-	slot4 = "before_skill_timeline"
+	for iter_31_0, iter_31_1 in pairs(FightHelper.hideDefenderBuffEffect(arg_31_0._fightStepMO, "before_skill_timeline")) do
+		arg_31_0._hide_defenders_buff_effect = arg_31_0._hide_defenders_buff_effect or {}
 
-	for slot4, slot5 in pairs(FightHelper.hideDefenderBuffEffect(slot0._fightStepMO, slot4)) do
-		slot0._hide_defenders_buff_effect = slot0._hide_defenders_buff_effect or {}
-
-		table.insert(slot0._hide_defenders_buff_effect, slot5)
+		table.insert(arg_31_0._hide_defenders_buff_effect, iter_31_1)
 	end
 
 	if not FightSkillMgr.instance:isPlayingAnyTimeline() then
-		if not slot0._sign_playing_same_skill then
+		if not arg_31_0._sign_playing_same_skill then
 			FightFloatMgr.instance:removeInterval()
 		end
 
-		if not slot0.entity:getMO() or not slot1:isPassiveSkill(slot0._curSkillId) then
+		local var_31_0 = arg_31_0.entity:getMO()
+
+		if var_31_0 and var_31_0:isPassiveSkill(arg_31_0._curSkillId) then
+			-- block empty
+		else
 			GameSceneMgr.instance:getCurScene().level:setFrontVisible(false)
 		end
 	end
 
-	FightSkillMgr.instance:beforeTimeline(slot0.entity, slot0._fightStepMO)
+	FightSkillMgr.instance:beforeTimeline(arg_31_0.entity, arg_31_0._fightStepMO)
 end
 
-function slot0._afterPlayTimeline(slot0)
-	slot0._sign_playing_same_skill = nil
+function var_0_0._afterPlayTimeline(arg_32_0)
+	arg_32_0._sign_playing_same_skill = nil
 
-	FightSkillMgr.instance:afterTimeline(slot0.entity, slot0._fightStepMO)
-	slot0:_resetTargetHp()
+	FightSkillMgr.instance:afterTimeline(arg_32_0.entity, arg_32_0._fightStepMO)
+	arg_32_0:_resetTargetHp()
 
-	if slot0._timeline_list then
-		for slot4, slot5 in ipairs(slot0._timeline_list) do
-			slot0:_checkFloatTable(slot5._tlEventContext.floatNum, "伤害")
-			slot0:_checkFloatTable(slot5._tlEventContext.healFloatNum, "回血")
+	if arg_32_0._timeline_list then
+		for iter_32_0, iter_32_1 in ipairs(arg_32_0._timeline_list) do
+			arg_32_0:_checkFloatTable(iter_32_1._tlEventContext.floatNum, "伤害")
+			arg_32_0:_checkFloatTable(iter_32_1._tlEventContext.healFloatNum, "回血")
 		end
 	end
 
-	if slot0.entity.buff then
-		slot0.entity.buff:showBuffEffects("before_skill_timeline")
+	if arg_32_0.entity.buff then
+		arg_32_0.entity.buff:showBuffEffects("before_skill_timeline")
 	end
 
-	if slot0._hide_defenders_buff_effect then
-		FightHelper.revertDefenderBuffEffect(slot0._hide_defenders_buff_effect, "before_skill_timeline")
+	if arg_32_0._hide_defenders_buff_effect then
+		FightHelper.revertDefenderBuffEffect(arg_32_0._hide_defenders_buff_effect, "before_skill_timeline")
 
-		slot0._hide_defenders_buff_effect = nil
+		arg_32_0._hide_defenders_buff_effect = nil
 	end
 
 	if not FightSkillMgr.instance:isPlayingAnyTimeline() then
 		FightFloatMgr.instance:resetInterval()
-		slot0:_cancelSideRenderOrder()
+		arg_32_0:_cancelSideRenderOrder()
 		GameSceneMgr.instance:getCurScene().camera:enablePostProcessSmooth(false)
 
-		if slot0._fightStepMO.hasPlayTimelineCamera then
+		if arg_32_0._fightStepMO.hasPlayTimelineCamera then
 			GameSceneMgr.instance:getCurScene().camera:resetParam()
 		end
 
 		GameSceneMgr.instance:getCurScene().entityMgr.enableSpineRotate = true
 
-		if not slot0.entity:getMO() or not slot1:isPassiveSkill(slot0._curSkillId) then
+		local var_32_0 = arg_32_0.entity:getMO()
+
+		if var_32_0 and var_32_0:isPassiveSkill(arg_32_0._curSkillId) then
+			-- block empty
+		else
 			GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
 		end
 
@@ -481,51 +507,65 @@ function slot0._afterPlayTimeline(slot0)
 	end
 end
 
-function slot0._setSideRenderOrder(slot0)
-	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(slot0.entity:getSide(), true)) do
-		slot8 = nil
+function var_0_0._setSideRenderOrder(arg_33_0)
+	local var_33_0 = FightHelper.getSideEntitys(arg_33_0.entity:getSide(), true)
+	local var_33_1 = FightModel.instance:getFightParam().battleId
 
-		if FightEnum.AtkRenderOrderIgnore[FightModel.instance:getFightParam().battleId] and slot9[slot7:getSide()] and tabletool.indexOf(slot10, slot7:getMO().position) then
-			slot8 = true
+	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
+		local var_33_2
+		local var_33_3 = FightEnum.AtkRenderOrderIgnore[var_33_1]
+
+		if var_33_3 then
+			local var_33_4 = var_33_3[iter_33_1:getSide()]
+
+			if var_33_4 and tabletool.indexOf(var_33_4, iter_33_1:getMO().position) then
+				var_33_2 = true
+			end
 		end
 
-		if not slot8 then
-			slot1[slot6] = slot7.id
+		if not var_33_2 then
+			var_33_0[iter_33_0] = iter_33_1.id
 		end
 	end
 
-	for slot7, slot8 in pairs(FightRenderOrderMgr.sortOrder(FightEnum.RenderOrderType.StandPos, slot1)) do
-		FightRenderOrderMgr.instance:setOrder(slot7, FightEnum.TopOrderFactor + slot8 - 1)
+	local var_33_5 = FightRenderOrderMgr.sortOrder(FightEnum.RenderOrderType.StandPos, var_33_0)
+
+	for iter_33_2, iter_33_3 in pairs(var_33_5) do
+		FightRenderOrderMgr.instance:setOrder(iter_33_2, FightEnum.TopOrderFactor + iter_33_3 - 1)
 	end
 end
 
-function slot0._cancelSideRenderOrder(slot0)
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitys(slot0.entity:getSide())) do
-		FightRenderOrderMgr.instance:cancelOrder(slot6.id)
+function var_0_0._cancelSideRenderOrder(arg_34_0)
+	local var_34_0 = FightHelper.getAllEntitys(arg_34_0.entity:getSide())
+
+	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+		FightRenderOrderMgr.instance:cancelOrder(iter_34_1.id)
 	end
 
 	FightRenderOrderMgr.instance:setSortType(FightEnum.RenderOrderType.StandPos)
 end
 
-function slot0._resetTargetHp(slot0)
-	for slot4, slot5 in ipairs(slot0._fightStepMO.actEffectMOs) do
-		if FightHelper.getEntity(slot5.targetId) and slot6.nameUI then
-			slot6.nameUI:resetHp()
+function var_0_0._resetTargetHp(arg_35_0)
+	for iter_35_0, iter_35_1 in ipairs(arg_35_0._fightStepMO.actEffectMOs) do
+		local var_35_0 = FightHelper.getEntity(iter_35_1.targetId)
+
+		if var_35_0 and var_35_0.nameUI then
+			var_35_0.nameUI:resetHp()
 		end
 	end
 end
 
-function slot0._checkFloatRatio1(slot0)
-	if not slot0._tlEventContext then
+function var_0_0._checkFloatRatio1(arg_36_0)
+	if not arg_36_0._tlEventContext then
 		return
 	end
 
-	slot0:_checkFloatTable(slot0._tlEventContext.floatNum, "伤害")
-	slot0:_checkFloatTable(slot0._tlEventContext.healFloatNum, "回血")
+	arg_36_0:_checkFloatTable(arg_36_0._tlEventContext.floatNum, "伤害")
+	arg_36_0:_checkFloatTable(arg_36_0._tlEventContext.healFloatNum, "回血")
 end
 
-function slot0._checkFloatTable(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._checkFloatTable(arg_37_0, arg_37_1, arg_37_2)
+	if not arg_37_1 then
 		return
 	end
 
@@ -541,12 +581,14 @@ function slot0._checkFloatTable(slot0, slot1, slot2)
 		return
 	end
 
-	for slot6, slot7 in pairs(slot1) do
-		for slot11, slot12 in pairs(slot7) do
-			if math.abs(slot12.ratio - 1) > 0.0001 then
-				slot14 = slot0._skillId2Loader[slot0._curSkillId] and slot13:getFirstAssetItem()
+	for iter_37_0, iter_37_1 in pairs(arg_37_1) do
+		for iter_37_2, iter_37_3 in pairs(iter_37_1) do
+			if math.abs(iter_37_3.ratio - 1) > 0.0001 then
+				local var_37_0 = arg_37_0._skillId2Loader[arg_37_0._curSkillId]
+				local var_37_1 = var_37_0 and var_37_0:getFirstAssetItem()
+				local var_37_2 = var_37_1 and var_37_1.ResPath or " url = nil"
 
-				logError("技能" .. slot2 .. "系数之和为" .. slot12.ratio .. " " .. (slot14 and slot14.ResPath or " url = nil"))
+				logError("技能" .. arg_37_2 .. "系数之和为" .. iter_37_3.ratio .. " " .. var_37_2)
 			end
 
 			return
@@ -554,4 +596,4 @@ function slot0._checkFloatTable(slot0, slot1, slot2)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,10 +1,10 @@
-module("modules.logic.story.model.StoryStepEffectMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepEffectMo", package.seeall)
 
-slot0 = pureTable("StoryStepEffectMo")
+local var_0_0 = pureTable("StoryStepEffectMo")
 
-function slot0.ctor(slot0)
-	slot0.effect = ""
-	slot0.delayTimes = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.effect = ""
+	arg_1_0.delayTimes = {
 		0,
 		0,
 		0,
@@ -14,9 +14,9 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.orderType = 0
-	slot0.inType = 0
-	slot0.inTimes = {
+	arg_1_0.orderType = 0
+	arg_1_0.inType = 0
+	arg_1_0.inTimes = {
 		0,
 		0,
 		0,
@@ -26,8 +26,8 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.outType = 0
-	slot0.outTimes = {
+	arg_1_0.outType = 0
+	arg_1_0.outTimes = {
 		0,
 		0,
 		0,
@@ -37,23 +37,23 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.pos = {}
-	slot0.layer = 9
+	arg_1_0.pos = {}
+	arg_1_0.layer = 9
 end
 
-function slot0.init(slot0, slot1)
-	slot0.effect = slot1[1]
-	slot0.delayTimes = slot1[2]
-	slot0.orderType = slot1[3]
-	slot0.inType = slot1[4]
-	slot0.inTimes = slot1[5]
-	slot0.outType = slot1[6]
-	slot0.outTimes = slot1[7]
-	slot0.pos = {
-		slot1[8],
-		slot1[9]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.effect = arg_2_1[1]
+	arg_2_0.delayTimes = arg_2_1[2]
+	arg_2_0.orderType = arg_2_1[3]
+	arg_2_0.inType = arg_2_1[4]
+	arg_2_0.inTimes = arg_2_1[5]
+	arg_2_0.outType = arg_2_1[6]
+	arg_2_0.outTimes = arg_2_1[7]
+	arg_2_0.pos = {
+		arg_2_1[8],
+		arg_2_1[9]
 	}
-	slot0.layer = slot1[10]
+	arg_2_0.layer = arg_2_1[10]
 end
 
-return slot0
+return var_0_0

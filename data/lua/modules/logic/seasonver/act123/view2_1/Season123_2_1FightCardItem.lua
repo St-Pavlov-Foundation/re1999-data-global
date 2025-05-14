@@ -1,27 +1,27 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1FightCardItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1FightCardItem", package.seeall)
 
-slot0 = class("Season123_2_1FightCardItem", UserDataDispose)
+local var_0_0 = class("Season123_2_1FightCardItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.goTop = gohelper.findChild(slot1, "go_top")
-	slot0.imageHead = gohelper.findChildImage(slot1, "go_top/headiconbg/image_headicon")
-	slot0.txtName = gohelper.findChildTextMesh(slot1, "go_top/headiconbg/txt_owner")
-	slot0.goSpecialCardBg = gohelper.findChild(slot1, "bottom/left/go_specialcardbg")
-	slot0.goCardPos = gohelper.findChild(slot1, "bottom/left/go_cardpos")
-	slot0.goSpecialCardName = gohelper.findChild(slot1, "bottom/right/righttop/go_special")
-	slot0.txtSpecialCardName = gohelper.findChildTextMesh(slot0.goSpecialCardName, "txt_specialcardname")
-	slot0.goNormalName = gohelper.findChild(slot1, "bottom/right/righttop/go_normal")
-	slot0.txtNormalCardName = gohelper.findChildTextMesh(slot0.goNormalName, "txt_normalcardname")
-	slot0._goDesc = gohelper.findChild(slot1, "bottom/right/desclist/txt_descitem")
-	slot0.layoutElement = gohelper.findChild(slot1, "bottom"):GetComponent(typeof(UnityEngine.UI.LayoutElement))
+	arg_1_0.go = arg_1_1
+	arg_1_0.goTop = gohelper.findChild(arg_1_1, "go_top")
+	arg_1_0.imageHead = gohelper.findChildImage(arg_1_1, "go_top/headiconbg/image_headicon")
+	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_1, "go_top/headiconbg/txt_owner")
+	arg_1_0.goSpecialCardBg = gohelper.findChild(arg_1_1, "bottom/left/go_specialcardbg")
+	arg_1_0.goCardPos = gohelper.findChild(arg_1_1, "bottom/left/go_cardpos")
+	arg_1_0.goSpecialCardName = gohelper.findChild(arg_1_1, "bottom/right/righttop/go_special")
+	arg_1_0.txtSpecialCardName = gohelper.findChildTextMesh(arg_1_0.goSpecialCardName, "txt_specialcardname")
+	arg_1_0.goNormalName = gohelper.findChild(arg_1_1, "bottom/right/righttop/go_normal")
+	arg_1_0.txtNormalCardName = gohelper.findChildTextMesh(arg_1_0.goNormalName, "txt_normalcardname")
+	arg_1_0._goDesc = gohelper.findChild(arg_1_1, "bottom/right/desclist/txt_descitem")
+	arg_1_0.layoutElement = gohelper.findChild(arg_1_1, "bottom"):GetComponent(typeof(UnityEngine.UI.LayoutElement))
 end
 
-slot0.MainRoleItemMinHeight = 390
-slot0.NormalRoleItemMinHeight = 315
-slot0.RoleCardPos = {
+var_0_0.MainRoleItemMinHeight = 390
+var_0_0.NormalRoleItemMinHeight = 315
+var_0_0.RoleCardPos = {
 	Vector2(-16.5, 0.5),
 	Vector2(-16.5, 0.5),
 	Vector2(-16.5, -6.5),
@@ -29,148 +29,166 @@ slot0.RoleCardPos = {
 	Vector2(-16.5, -1)
 }
 
-function slot0.setData(slot0, slot1)
-	if not slot1 then
-		gohelper.setActive(slot0.go, false)
+function var_0_0.setData(arg_2_0, arg_2_1)
+	if not arg_2_1 then
+		gohelper.setActive(arg_2_0.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_2_0.go, true)
 
-	slot0.equipId = slot1.equipId
-	slot0.heroUid = slot1.heroUid
-	slot0.isMainRole = not slot0.heroUid
+	arg_2_0.equipId = arg_2_1.equipId
+	arg_2_0.heroUid = arg_2_1.heroUid
+	arg_2_0.isMainRole = not arg_2_0.heroUid
 
-	gohelper.setActive(slot0.goSpecialCardBg, slot0.isMainRole)
+	gohelper.setActive(arg_2_0.goSpecialCardBg, arg_2_0.isMainRole)
 
-	slot0.layoutElement.minHeight = slot0.isMainRole and uv0.MainRoleItemMinHeight or uv0.NormalRoleItemMinHeight
+	arg_2_0.layoutElement.minHeight = arg_2_0.isMainRole and var_0_0.MainRoleItemMinHeight or var_0_0.NormalRoleItemMinHeight
 
-	gohelper.setActive(slot0.goTop, slot1.count == 1)
-	slot0:_setName()
-	slot0:_setHead()
-	slot0:_setCard(slot0.equipId)
-	slot0:_setDesc(slot0.equipId)
+	gohelper.setActive(arg_2_0.goTop, arg_2_1.count == 1)
+	arg_2_0:_setName()
+	arg_2_0:_setHead()
+	arg_2_0:_setCard(arg_2_0.equipId)
+	arg_2_0:_setDesc(arg_2_0.equipId)
 end
 
-function slot0._setName(slot0)
-	if slot0.isMainRole then
-		slot0.txtName.text = luaLang("seasonmainrolecardname")
+function var_0_0._setName(arg_3_0)
+	if arg_3_0.isMainRole then
+		arg_3_0.txtName.text = luaLang("seasonmainrolecardname")
 	else
-		slot0.txtName.text = formatLuaLang("seasoncardnames", slot0:getHeroMO() and slot1.config and slot1.config.name or "")
+		local var_3_0 = arg_3_0:getHeroMO()
+		local var_3_1 = var_3_0 and var_3_0.config and var_3_0.config.name or ""
+
+		arg_3_0.txtName.text = formatLuaLang("seasoncardnames", var_3_1)
 	end
 end
 
-function slot0._setHead(slot0)
-	slot1 = Activity123Enum.MainRoleHeadIconID
+function var_0_0._setHead(arg_4_0)
+	local var_4_0 = Activity123Enum.MainRoleHeadIconID
 
-	if not slot0.isMainRole and slot0:getHeroMO() and slot2.skin then
-		slot1 = SkinConfig.instance:getSkinCo(slot2.skin) and slot3.headIcon
+	if not arg_4_0.isMainRole then
+		local var_4_1 = arg_4_0:getHeroMO()
+
+		if var_4_1 and var_4_1.skin then
+			local var_4_2 = SkinConfig.instance:getSkinCo(var_4_1.skin)
+
+			var_4_0 = var_4_2 and var_4_2.headIcon
+		end
 	end
 
-	gohelper.getSingleImage(slot0.imageHead.gameObject):LoadImage(ResUrl.roomHeadIcon(slot1))
+	gohelper.getSingleImage(arg_4_0.imageHead.gameObject):LoadImage(ResUrl.roomHeadIcon(var_4_0))
 end
 
-function slot0.getHeroMO(slot0)
-	if Season123Model.instance:getBattleContext() and slot1.stage ~= nil and slot1.actId ~= nil then
-		return Season123HeroUtils.getHeroMO(slot1.actId, slot0.heroUid, slot1.stage)
+function var_0_0.getHeroMO(arg_5_0)
+	local var_5_0 = Season123Model.instance:getBattleContext()
+
+	if var_5_0 and var_5_0.stage ~= nil and var_5_0.actId ~= nil then
+		return Season123HeroUtils.getHeroMO(var_5_0.actId, arg_5_0.heroUid, var_5_0.stage)
 	else
-		return HeroModel.instance:getById(slot0.heroUid)
+		return HeroModel.instance:getById(arg_5_0.heroUid)
 	end
 end
 
-function slot0._setCard(slot0, slot1)
-	if not slot0.cardItem then
-		slot0.cardItem = Season123_2_1CelebrityCardItem.New()
+function var_0_0._setCard(arg_6_0, arg_6_1)
+	if not arg_6_0.cardItem then
+		arg_6_0.cardItem = Season123_2_1CelebrityCardItem.New()
 
-		slot0.cardItem:init(slot0.goCardPos, slot1, {
+		arg_6_0.cardItem:init(arg_6_0.goCardPos, arg_6_1, {
 			noClick = true
 		})
 	else
-		slot0.cardItem:reset(slot1)
+		arg_6_0.cardItem:reset(arg_6_1)
 	end
 
-	slot3 = uv0.RoleCardPos[tonumber(Season123Config.instance:getSeasonEquipCo(slot1).rare)] or Vector2(0, 0)
+	local var_6_0 = Season123Config.instance:getSeasonEquipCo(arg_6_1).rare
+	local var_6_1 = var_0_0.RoleCardPos[tonumber(var_6_0)] or Vector2(0, 0)
 
-	recthelper.setAnchor(slot0.goCardPos.transform, slot3.x, slot3.y)
+	recthelper.setAnchor(arg_6_0.goCardPos.transform, var_6_1.x, var_6_1.y)
 end
 
-function slot0._setDesc(slot0, slot1)
-	if slot0.isMainRole then
-		gohelper.setActive(slot0.goSpecialCardName, true)
-		gohelper.setActive(slot0.goNormalName, false)
+function var_0_0._setDesc(arg_7_0, arg_7_1)
+	local var_7_0 = Season123Config.instance:getSeasonEquipCo(arg_7_1)
 
-		slot0.txtSpecialCardName.text = Season123Config.instance:getSeasonEquipCo(slot1).name
+	if arg_7_0.isMainRole then
+		gohelper.setActive(arg_7_0.goSpecialCardName, true)
+		gohelper.setActive(arg_7_0.goNormalName, false)
+
+		arg_7_0.txtSpecialCardName.text = var_7_0.name
 	else
-		gohelper.setActive(slot0.goNormalName, true)
-		gohelper.setActive(slot0.goSpecialCardName, false)
+		gohelper.setActive(arg_7_0.goNormalName, true)
+		gohelper.setActive(arg_7_0.goSpecialCardName, false)
 
-		slot0.txtNormalCardName.text = slot2.name
+		arg_7_0.txtNormalCardName.text = var_7_0.name
 	end
 
-	slot3 = Season123EquipMetaUtils.getSkillEffectStrList(slot2)
+	local var_7_1 = Season123EquipMetaUtils.getSkillEffectStrList(var_7_0)
+	local var_7_2 = Season123EquipMetaUtils.getEquipPropsStrList(var_7_0.attrId)
+	local var_7_3 = {}
 
-	for slot9, slot10 in ipairs(Season123EquipMetaUtils.getEquipPropsStrList(slot2.attrId)) do
-		table.insert({}, slot10)
+	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+		table.insert(var_7_3, iter_7_1)
 	end
 
-	for slot9, slot10 in ipairs(slot3) do
-		table.insert(slot5, slot10)
+	for iter_7_2, iter_7_3 in ipairs(var_7_1) do
+		table.insert(var_7_3, iter_7_3)
 	end
 
-	if not slot0.itemList then
-		slot0.itemList = slot0:getUserDataTb_()
+	if not arg_7_0.itemList then
+		arg_7_0.itemList = arg_7_0:getUserDataTb_()
 	end
 
-	slot9 = #slot5
+	for iter_7_4 = 1, math.max(#arg_7_0.itemList, #var_7_3) do
+		local var_7_4 = var_7_3[iter_7_4]
+		local var_7_5 = arg_7_0.itemList[iter_7_4] or arg_7_0:createDescItem(iter_7_4)
 
-	for slot9 = 1, math.max(#slot0.itemList, slot9) do
-		slot0:updateDescItem(slot0.itemList[slot9] or slot0:createDescItem(slot9), slot5[slot9])
+		arg_7_0:updateDescItem(var_7_5, var_7_4)
 	end
 end
 
-function slot0.createDescItem(slot0, slot1)
-	slot2 = {
-		go = slot3,
-		txtDesc = slot3:GetComponent(typeof(TMPro.TMP_Text))
-	}
-	slot3 = gohelper.cloneInPlace(slot0._goDesc, string.format("desc%s", slot1))
-	slot0.itemList[slot1] = slot2
+function var_0_0.createDescItem(arg_8_0, arg_8_1)
+	local var_8_0 = {}
+	local var_8_1 = gohelper.cloneInPlace(arg_8_0._goDesc, string.format("desc%s", arg_8_1))
 
-	return slot2
+	var_8_0.go = var_8_1
+	var_8_0.txtDesc = var_8_1:GetComponent(typeof(TMPro.TMP_Text))
+	arg_8_0.itemList[arg_8_1] = var_8_0
+
+	return var_8_0
 end
 
-function slot0.updateDescItem(slot0, slot1, slot2)
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.updateDescItem(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_2 then
+		gohelper.setActive(arg_9_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
+	gohelper.setActive(arg_9_1.go, true)
 
-	slot1.txtDesc.text = slot2 or ""
+	arg_9_1.txtDesc.text = arg_9_2 or ""
 end
 
-function slot0.destroyDescItem(slot0, slot1)
+function var_0_0.destroyDescItem(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.destroy(slot0)
-	if slot0.itemList then
-		for slot4, slot5 in ipairs(slot0.itemList) do
-			slot0:destroyDescItem(slot5)
+function var_0_0.destroy(arg_11_0)
+	if arg_11_0.itemList then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0.itemList) do
+			arg_11_0:destroyDescItem(iter_11_1)
 		end
 
-		slot0.itemList = nil
+		arg_11_0.itemList = nil
 	end
 
-	if slot0.cardItem then
-		slot0.cardItem:destroy()
+	if arg_11_0.cardItem then
+		arg_11_0.cardItem:destroy()
 
-		slot0.cardItem = nil
+		arg_11_0.cardItem = nil
 	end
 
-	slot0:__onDispose()
+	arg_11_0:__onDispose()
 end
 
-return slot0
+return var_0_0

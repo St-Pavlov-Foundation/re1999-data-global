@@ -1,151 +1,179 @@
-module("modules.logic.gm.model.GMMinusModel", package.seeall)
+﻿module("modules.logic.gm.model.GMMinusModel", package.seeall)
 
-slot0 = class("GMMinusModel", BaseModel)
+local var_0_0 = class("GMMinusModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._firstLoginDataDict = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._firstLoginDataDict = {}
 end
 
-function slot0.setFirstLogin(slot0, slot1, slot2)
-	slot0._firstLoginDataDict[slot1] = slot2
+function var_0_0.setFirstLogin(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._firstLoginDataDict[arg_3_1] = arg_3_2
 end
 
-function slot0.getFirstLogin(slot0, slot1, slot2)
-	return slot0._firstLoginDataDict[slot1] == nil and slot2 or slot3
+function var_0_0.getFirstLogin(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0._firstLoginDataDict[arg_4_1]
+
+	return var_4_0 == nil and arg_4_2 or var_4_0
 end
 
-slot1 = {}
-slot2 = {}
+local var_0_1 = {}
+local var_0_2 = {}
 
-function slot0.setConst(slot0, slot1, slot2)
-	if uv0[slot1] then
+function var_0_0.setConst(arg_5_0, arg_5_1, arg_5_2)
+	if var_0_1[arg_5_1] then
 		return
 	end
 
-	uv0[slot1] = true
-	uv1[slot1] = slot2
+	var_0_1[arg_5_1] = true
+	var_0_2[arg_5_1] = arg_5_2
 end
 
-function slot0.getConst(slot0, slot1, slot2)
-	if not uv0[slot1] then
-		return slot2
+function var_0_0.getConst(arg_6_0, arg_6_1, arg_6_2)
+	if not var_0_1[arg_6_1] then
+		return arg_6_2
 	end
 
-	return uv1[slot1]
+	return var_0_2[arg_6_1]
 end
 
-function slot0.setToPlayer(slot0, slot1, slot2)
-	if not PlayerModel.instance:getMyUserId() or slot3 == 0 then
+function var_0_0.setToPlayer(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_7_0 or var_7_0 == 0 then
 		return
 	end
 
-	slot0:setToUnity(slot1 .. "#" .. tostring(slot3), slot2)
+	local var_7_1 = arg_7_1 .. "#" .. tostring(var_7_0)
+
+	arg_7_0:setToUnity(var_7_1, arg_7_2)
 end
 
-function slot0.getFromPlayer(slot0, slot1, slot2)
-	if not PlayerModel.instance:getMyUserId() or slot3 == 0 then
-		return slot2
+function var_0_0.getFromPlayer(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_8_0 or var_8_0 == 0 then
+		return arg_8_2
 	end
 
-	return slot0:getFromUnity(slot1 .. "#" .. tostring(slot3), slot2)
+	local var_8_1 = arg_8_1 .. "#" .. tostring(var_8_0)
+
+	return arg_8_0:getFromUnity(var_8_1, arg_8_2)
 end
 
-function slot0.setToUnity(slot0, slot1, slot2)
-	PlayerPrefsHelper._set(slot1, slot2)
+function var_0_0.setToUnity(arg_9_0, arg_9_1, arg_9_2)
+	PlayerPrefsHelper._set(arg_9_1, arg_9_2)
 end
 
-function slot0.getFromUnity(slot0, slot1, slot2)
-	assert(slot2 ~= nil)
+function var_0_0.getFromUnity(arg_10_0, arg_10_1, arg_10_2)
+	assert(arg_10_2 ~= nil)
 
-	return PlayerPrefsHelper._get(slot1, slot2, type(slot2) == "number")
+	local var_10_0 = type(arg_10_2) == "number"
+
+	return PlayerPrefsHelper._get(arg_10_1, arg_10_2, var_10_0)
 end
 
-function slot0.addBtnGM(slot0, slot1)
-	slot1._btngm11235 = gohelper.findChildButtonWithAudio(GMController.instance:getGMNode("mainview", slot1.viewGO), "#btn_gm")
+function var_0_0.addBtnGM(arg_11_0, arg_11_1)
+	local var_11_0 = GMController.instance:getGMNode("mainview", arg_11_1.viewGO)
 
-	return slot1._btngm11235
+	arg_11_1._btngm11235 = gohelper.findChildButtonWithAudio(var_11_0, "#btn_gm")
+
+	return arg_11_1._btngm11235
 end
 
-function slot3(slot0)
-	slot3 = "GM_" .. slot0.class.__cname
+local function var_0_3(arg_12_0)
+	local var_12_0 = arg_12_0.class.__cname
+	local var_12_1 = "GM_" .. var_12_0
 
-	assert(ViewName[slot3], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. slot3)
-	ViewMgr.instance:openView(slot3)
+	assert(ViewName[var_12_1], "please add customFunc when call btnGM_AddClickListener!!viewName not found: " .. var_12_1)
+	ViewMgr.instance:openView(var_12_1)
 end
 
-function slot0.btnGM_AddClickListener(slot0, slot1, slot2)
-	slot1._btngm11235:AddClickListener(slot2 or uv0, slot1)
+function var_0_0.btnGM_AddClickListener(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_1._btngm11235:AddClickListener(arg_13_2 or var_0_3, arg_13_1)
 end
 
-function slot0.btnGM_RemoveClickListener(slot0, slot1)
-	slot1._btngm11235:RemoveClickListener()
+function var_0_0.btnGM_RemoveClickListener(arg_14_0, arg_14_1)
+	arg_14_1._btngm11235:RemoveClickListener()
 end
 
-slot4 = 20
+local var_0_4 = 20
 
-function slot5(slot0, slot1)
-	return string.format("GM_%s_%s", slot0.__cname, slot1)
+local function var_0_5(arg_15_0, arg_15_1)
+	return string.format("GM_%s_%s", arg_15_0.__cname, arg_15_1)
 end
 
-function slot0.saveOriginalFunc(slot0, slot1, slot2)
-	assert(type(slot2) == "string")
+function var_0_0.saveOriginalFunc(arg_16_0, arg_16_1, arg_16_2)
+	assert(type(arg_16_2) == "string")
 
-	if slot1[slot2] == nil then
-		slot4 = slot1
-		slot5 = uv0
+	local var_16_0 = arg_16_1[arg_16_2]
 
-		while slot4.super and slot3 == nil do
-			if slot5 <= 0 then
-				logError("stack overflow >= " .. tostring(uv0))
+	if var_16_0 == nil then
+		local var_16_1 = arg_16_1
+		local var_16_2 = var_0_4
+
+		while var_16_1.super and var_16_0 == nil do
+			if var_16_2 <= 0 then
+				logError("stack overflow >= " .. tostring(var_0_4))
 
 				break
 			end
 
-			slot3 = slot4[slot2]
-			slot4 = slot4.super
-			slot5 = slot5 - 1
+			var_16_0 = var_16_1[arg_16_2]
+			var_16_1 = var_16_1.super
+			var_16_2 = var_16_2 - 1
 		end
 	end
 
-	assert(type(slot3) == "function", "type(func)=" .. type(slot3) .. " funcName=" .. slot2)
-	slot0:setConst(uv1(slot1, slot2), slot3)
+	assert(type(var_16_0) == "function", "type(func)=" .. type(var_16_0) .. " funcName=" .. arg_16_2)
+
+	local var_16_3 = var_0_5(arg_16_1, arg_16_2)
+
+	arg_16_0:setConst(var_16_3, var_16_0)
 end
 
-function slot0.loadOriginalFunc(slot0, slot1, slot2)
-	if not slot0:getConst(uv0(slot1, slot2), nil) then
-		slot5 = slot1.super
-		slot6 = uv1
+function var_0_0.loadOriginalFunc(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = var_0_5(arg_17_1, arg_17_2)
+	local var_17_1 = arg_17_0:getConst(var_17_0, nil)
 
-		while slot5 and slot4 == nil do
-			if slot6 <= 0 then
-				logError("stack overflow >= " .. tostring(uv1))
+	if not var_17_1 then
+		local var_17_2 = arg_17_1.super
+		local var_17_3 = var_0_4
+
+		while var_17_2 and var_17_1 == nil do
+			if var_17_3 <= 0 then
+				logError("stack overflow >= " .. tostring(var_0_4))
 
 				break
 			end
 
-			slot4 = slot0:getConst(uv0(slot5, slot2), nil) or slot5[slot2]
-			slot5 = slot5.super
-			slot6 = slot6 - 1
+			local var_17_4 = var_0_5(var_17_2, arg_17_2)
+
+			var_17_1 = arg_17_0:getConst(var_17_4, nil)
+			var_17_1 = var_17_1 or var_17_2[arg_17_2]
+			var_17_2 = var_17_2.super
+			var_17_3 = var_17_3 - 1
 		end
 	end
 
-	return slot4 or function ()
-		assert(false, string.format("undefine behaviour: '%s:%s'", uv0.__cname, uv1))
+	return var_17_1 or function()
+		assert(false, string.format("undefine behaviour: '%s:%s'", arg_17_1.__cname, arg_17_2))
 	end
 end
 
-function slot0.callOriginalSelfFunc(slot0, slot1, slot2, ...)
-	return slot0:loadOriginalFunc(slot1.class, slot2)(slot1, ...)
+function var_0_0.callOriginalSelfFunc(arg_19_0, arg_19_1, arg_19_2, ...)
+	local var_19_0 = arg_19_1.class
+
+	return arg_19_0:loadOriginalFunc(var_19_0, arg_19_2)(arg_19_1, ...)
 end
 
-function slot0.callOriginalStaticFunc(slot0, slot1, slot2, ...)
-	return slot0:loadOriginalFunc(slot1, slot2)(...)
+function var_0_0.callOriginalStaticFunc(arg_20_0, arg_20_1, arg_20_2, ...)
+	return arg_20_0:loadOriginalFunc(arg_20_1, arg_20_2)(...)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,37 +1,39 @@
-module("modules.logic.store.rpc.Activity107Rpc", package.seeall)
+﻿module("modules.logic.store.rpc.Activity107Rpc", package.seeall)
 
-slot0 = class("Activity107Rpc", BaseRpc)
+local var_0_0 = class("Activity107Rpc", BaseRpc)
 
-function slot0.sendGet107GoodsInfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity107Module_pb.Get107GoodsInfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet107GoodsInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity107Module_pb.Get107GoodsInfoRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet107GoodsInfoReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ActivityStoreModel.instance:initActivityGoodsInfos(slot2.activityId, slot2.goodsInfos)
-		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnGet107GoodsInfo, slot2.activityId)
+function var_0_0.onReceiveGet107GoodsInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == 0 then
+		ActivityStoreModel.instance:initActivityGoodsInfos(arg_2_2.activityId, arg_2_2.goodsInfos)
+		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnGet107GoodsInfo, arg_2_2.activityId)
 	end
 end
 
-function slot0.sendBuy107GoodsRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity107Module_pb.Buy107GoodsRequest()
-	slot4.activityId = slot1
-	slot4.id = slot2
-	slot4.num = slot3
+function var_0_0.sendBuy107GoodsRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = Activity107Module_pb.Buy107GoodsRequest()
 
-	return slot0:sendMsg(slot4)
+	var_3_0.activityId = arg_3_1
+	var_3_0.id = arg_3_2
+	var_3_0.num = arg_3_3
+
+	return arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveBuy107GoodsReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ActivityStoreModel.instance:updateActivityGoodsInfos(slot2.activityId, slot2.goodsInfo)
-		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnBuy107GoodsSuccess, slot2.activityId, slot2.goodsInfo.id)
+function var_0_0.onReceiveBuy107GoodsReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		ActivityStoreModel.instance:updateActivityGoodsInfos(arg_4_2.activityId, arg_4_2.goodsInfo)
+		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnBuy107GoodsSuccess, arg_4_2.activityId, arg_4_2.goodsInfo.id)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

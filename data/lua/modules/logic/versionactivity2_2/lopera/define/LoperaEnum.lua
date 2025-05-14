@@ -1,13 +1,14 @@
-module("modules.logic.versionactivity2_2.lopera.define.LoperaEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.define.LoperaEnum", package.seeall)
 
-slot0 = _M
-slot0.EpisodeType = {
+local var_0_0 = _M
+
+var_0_0.EpisodeType = {
 	Explore = 3,
 	Story = 1,
 	ExploreEndless = 4,
 	Battle = 2
 }
-slot0.MapCfgIdx = {
+var_0_0.MapCfgIdx = {
 	dir = 4,
 	start = 6,
 	destination = 7,
@@ -18,39 +19,39 @@ slot0.MapCfgIdx = {
 	id = 1,
 	storyEvent = 9
 }
-slot0.DirEnum = {
+var_0_0.DirEnum = {
 	South = 2,
 	West = 3,
 	East = 4,
 	North = 1
 }
-slot0.ResultEnum = {
+var_0_0.ResultEnum = {
 	Completed = 1,
 	PowerUseup = 2,
 	Quit = 3
 }
-slot0.EndlessEpisodeId = 1220409
-slot0.OriStepCostId = 11
-slot0.PlayedCellStory = "PlayedCellStory"
-slot0.EpisodeStatus = {
+var_0_0.EndlessEpisodeId = 1220409
+var_0_0.OriStepCostId = 11
+var_0_0.PlayedCellStory = "PlayedCellStory"
+var_0_0.EpisodeStatus = {
 	PlayEndStory = 2,
 	Unlock = 0,
 	PlayStartStory = 1
 }
-slot0.EffectType = {
+var_0_0.EffectType = {
 	ActionPointChange = 1,
 	ActionPointCost = 2
 }
-slot0.ItemType = {
+var_0_0.ItemType = {
 	Product = 1,
 	Material = 2
 }
-slot0.resultStatUse = {
+var_0_0.resultStatUse = {
 	"成功",
 	"失败",
 	"主动中断",
 	"成功"
 }
-slot0.TaskMOAllFinishId = -100
+var_0_0.TaskMOAllFinishId = -100
 
-return slot0
+return var_0_0

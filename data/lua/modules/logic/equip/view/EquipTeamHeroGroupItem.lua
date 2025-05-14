@@ -1,40 +1,40 @@
-module("modules.logic.equip.view.EquipTeamHeroGroupItem", package.seeall)
+﻿module("modules.logic.equip.view.EquipTeamHeroGroupItem", package.seeall)
 
-slot0 = class("EquipTeamHeroGroupItem", BaseChildView)
+local var_0_0 = class("EquipTeamHeroGroupItem", BaseChildView)
 
-function slot0.onInitView(slot0)
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_info/#simage_icon")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "#go_info/#rare")
-	slot0._txtequipnamecn = gohelper.findChildText(slot0.viewGO, "#go_info/#txt_equipnamecn")
-	slot0._txtequipnameen = gohelper.findChildText(slot0.viewGO, "#go_info/#txt_equipnameen")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_info/#simage_bg")
-	slot0._goinfo = gohelper.findChild(slot0.viewGO, "#go_info")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/#simage_icon")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_info/#rare")
+	arg_1_0._txtequipnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#txt_equipnamecn")
+	arg_1_0._txtequipnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#txt_equipnameen")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/#simage_bg")
+	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_info")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._equipMO then
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._equipMO then
 		EquipController.instance:openEquipTeamShowView({
-			slot0._equipMO.uid,
+			arg_4_0._equipMO.uid,
 			true
 		})
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rareLineColor = {
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._rareLineColor = {
 		"#DCF5D5",
 		"#9EB7D7",
 		"#7D5B7E",
@@ -43,43 +43,47 @@ function slot0._editableInitView(slot0)
 	}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._equipMO = EquipModel.instance:getEquip(EquipTeamListModel.instance:getTeamEquip()[1])
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = EquipTeamListModel.instance:getTeamEquip()[1]
 
-	slot0:showEquip()
+	arg_7_0._equipMO = EquipModel.instance:getEquip(var_7_0)
+
+	arg_7_0:showEquip()
 end
 
-function slot0.setHeroGroupType(slot0)
-	slot0._heroGroupType = true
+function var_0_0.setHeroGroupType(arg_8_0)
+	arg_8_0._heroGroupType = true
 end
 
-function slot0.showEquip(slot0)
-	slot1 = slot0._equipMO ~= nil
+function var_0_0.showEquip(arg_9_0)
+	local var_9_0 = arg_9_0._equipMO ~= nil
 
-	gohelper.setActive(slot0._simageicon.gameObject, slot1)
+	gohelper.setActive(arg_9_0._simageicon.gameObject, var_9_0)
 
-	if slot1 then
-		slot0._simageicon:LoadImage(ResUrl.getEquipSuit(slot0._equipMO.config.icon))
-		slot0._simagebg:LoadImage(ResUrl.getEquipBg("bg_xinxiangzhezhao.png"))
+	if var_9_0 then
+		arg_9_0._simageicon:LoadImage(ResUrl.getEquipSuit(arg_9_0._equipMO.config.icon))
+		arg_9_0._simagebg:LoadImage(ResUrl.getEquipBg("bg_xinxiangzhezhao.png"))
 
-		slot0._txtequipnamecn.text = slot0._equipMO.config.name
-		slot0._txtequipnameen.text = slot0._equipMO.config.name_en
+		arg_9_0._txtequipnamecn.text = arg_9_0._equipMO.config.name
+		arg_9_0._txtequipnameen.text = arg_9_0._equipMO.config.name_en
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare, slot0._rareLineColor[slot0._equipMO.config.rare])
+		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._imagerare, arg_9_0._rareLineColor[arg_9_0._equipMO.config.rare])
 	end
 
-	gohelper.setActive(slot0._goinfo, slot1)
+	gohelper.setActive(arg_9_0._goinfo, var_9_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simageicon:UnLoadImage()
+	arg_11_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

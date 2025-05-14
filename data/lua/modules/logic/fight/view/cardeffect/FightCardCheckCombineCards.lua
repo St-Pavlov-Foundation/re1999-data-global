@@ -1,20 +1,20 @@
-module("modules.logic.fight.view.cardeffect.FightCardCheckCombineCards", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardCheckCombineCards", package.seeall)
 
-slot0 = class("FightCardCheckCombineCards", BaseWork)
+local var_0_0 = class("FightCardCheckCombineCards", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, true)
-	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
-	FightController.instance:dispatchEvent(FightEvent.PlayCombineCards, slot0.context.cards)
+	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_1_0._onCombineDone, arg_1_0)
+	FightController.instance:dispatchEvent(FightEvent.PlayCombineCards, arg_1_0.context.cards)
 end
 
-function slot0._onCombineDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onCombineDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, slot0._onCombineDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.PlayDiscardEffect, slot0._onPlayDiscardEffect, slot0)
+function var_0_0.clearWork(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_3_0._onCombineDone, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.PlayDiscardEffect, arg_3_0._onPlayDiscardEffect, arg_3_0)
 end
 
-return slot0
+return var_0_0

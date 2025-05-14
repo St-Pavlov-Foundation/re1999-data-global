@@ -1,65 +1,76 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityTexture", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityTexture", package.seeall)
 
-slot0 = class("FightTLEventEntityTexture")
+local var_0_0 = class("FightTLEventEntityTexture")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._targetEntitys = nil
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_3[1]
 
-	if slot3[1] == "1" then
-		slot0._targetEntitys = {}
+	arg_1_0._targetEntitys = nil
 
-		table.insert(slot0._targetEntitys, FightHelper.getEntity(slot1.fromId))
-	elseif slot4 == "2" then
-		slot0._targetEntitys = FightHelper.getSkillTargetEntitys(slot1)
-	elseif not string.nilorempty(slot4) then
-		if GameSceneMgr.instance:getCurScene().entityMgr:getUnit(SceneTag.UnitNpc, slot1.stepUid .. "_" .. slot4) then
-			slot0._targetEntitys = {}
+	if var_1_0 == "1" then
+		arg_1_0._targetEntitys = {}
 
-			table.insert(slot0._targetEntitys, slot7)
+		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
+	elseif var_1_0 == "2" then
+		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
+	elseif not string.nilorempty(var_1_0) then
+		local var_1_1 = GameSceneMgr.instance:getCurScene().entityMgr
+		local var_1_2 = arg_1_1.stepUid .. "_" .. var_1_0
+		local var_1_3 = var_1_1:getUnit(SceneTag.UnitNpc, var_1_2)
+
+		if var_1_3 then
+			arg_1_0._targetEntitys = {}
+
+			table.insert(arg_1_0._targetEntitys, var_1_3)
 		else
-			logError("找不到实体, id: " .. tostring(slot4))
+			logError("找不到实体, id: " .. tostring(var_1_0))
 
 			return
 		end
 	end
 
-	slot0._texVariable = slot3[3]
+	arg_1_0._texVariable = arg_1_3[3]
 
-	if not string.nilorempty(slot3[2]) then
-		slot0._texturePath = ResUrl.getRoleSpineMatTex(slot5)
-		slot0._loader = MultiAbLoader.New()
+	local var_1_4 = arg_1_3[2]
 
-		slot0._loader:addPath(slot0._texturePath)
-		slot0._loader:startLoad(slot0._onLoaded, slot0)
+	if not string.nilorempty(var_1_4) then
+		arg_1_0._texturePath = ResUrl.getRoleSpineMatTex(var_1_4)
+		arg_1_0._loader = MultiAbLoader.New()
+
+		arg_1_0._loader:addPath(arg_1_0._texturePath)
+		arg_1_0._loader:startLoad(arg_1_0._onLoaded, arg_1_0)
 	end
 end
 
-function slot0._onLoaded(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0._targetEntitys) do
-		slot8.spineRenderer:getReplaceMat():SetTexture(slot0._texVariable, slot1:getFirstAssetItem() and slot2:GetResource(slot0._texturePath))
+function var_0_0._onLoaded(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1:getFirstAssetItem()
+	local var_2_1 = var_2_0 and var_2_0:GetResource(arg_2_0._texturePath)
+
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._targetEntitys) do
+		iter_2_1.spineRenderer:getReplaceMat():SetTexture(arg_2_0._texVariable, var_2_1)
 	end
 end
 
-function slot0._clear(slot0)
-	if not slot0._loader then
+function var_0_0._clear(arg_3_0)
+	if not arg_3_0._loader then
 		return
 	end
 
-	slot0._loader:dispose()
+	arg_3_0._loader:dispose()
 
-	slot0._loader = nil
+	arg_3_0._loader = nil
 
-	for slot4, slot5 in ipairs(slot0._targetEntitys) do
-		slot5.spineRenderer:getReplaceMat():SetTexture(slot0._texVariable, nil)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._targetEntitys) do
+		iter_3_1.spineRenderer:getReplaceMat():SetTexture(arg_3_0._texVariable, nil)
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:_clear()
+function var_0_0.reset(arg_4_0)
+	arg_4_0:_clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:_clear()
+function var_0_0.dispose(arg_5_0)
+	arg_5_0:_clear()
 end
 
-return slot0
+return var_0_0

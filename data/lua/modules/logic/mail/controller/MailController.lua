@@ -1,83 +1,91 @@
-module("modules.logic.mail.controller.MailController", package.seeall)
+﻿module("modules.logic.mail.controller.MailController", package.seeall)
 
-slot0 = class("MailController", BaseController)
+local var_0_0 = class("MailController", BaseController)
 
-function slot0.open(slot0)
+function var_0_0.open(arg_1_0)
 	ViewMgr.instance:openView(ViewName.MailView)
 end
 
-function slot0.enterMailView(slot0, slot1)
+function var_0_0.enterMailView(arg_2_0, arg_2_1)
 	ViewMgr.instance:openView(ViewName.MailView)
 end
 
-function slot0.onInit(slot0)
-	slot0.showTitles = {}
-	slot0.maxCacheMailToast = 3
-	slot0.delayShowViews = nil
-	slot0.recordedMailIdKey = "recordedMailIdKey"
-	slot0.recordedIdDelimiter = ";"
-	slot0.showedMailIds = {}
+function var_0_0.onInit(arg_3_0)
+	arg_3_0.showTitles = {}
+	arg_3_0.maxCacheMailToast = 3
+	arg_3_0.delayShowViews = nil
+	arg_3_0.recordedMailIdKey = "recordedMailIdKey"
+	arg_3_0.recordedIdDelimiter = ";"
+	arg_3_0.showedMailIds = {}
 end
 
-function slot0.onInitFinish(slot0)
-	slot0:initShowedMailIds()
+function var_0_0.onInitFinish(arg_4_0)
+	arg_4_0:initShowedMailIds()
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_5_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_6_0)
+	return
 end
 
-function slot0.initInfo(slot0)
-	slot0.showTitles = {}
+function var_0_0.initInfo(arg_7_0)
+	arg_7_0.showTitles = {}
 
-	for slot5, slot6 in ipairs(MailModel.instance:getMailList()) do
-		if slot6.state == MailEnum.ReadStatus.Unread and slot6.needShowToast == 1 and not slot0:isShowedMail(slot6.id) then
-			if slot0.maxCacheMailToast <= #slot0.showTitles then
-				slot0:recordShowedMailId(slot6.id)
+	local var_7_0 = MailModel.instance:getMailList()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.state == MailEnum.ReadStatus.Unread and iter_7_1.needShowToast == 1 and not arg_7_0:isShowedMail(iter_7_1.id) then
+			if #arg_7_0.showTitles >= arg_7_0.maxCacheMailToast then
+				arg_7_0:recordShowedMailId(iter_7_1.id)
 			else
-				table.insert(slot0.showTitles, 1, {
-					id = slot6.id,
-					title = slot6.title
+				table.insert(arg_7_0.showTitles, 1, {
+					id = iter_7_1.id,
+					title = iter_7_1.title
 				})
 			end
 		end
 	end
 
-	slot0:logNormal("init info, show mail length is " .. tostring(#slot0.showTitles))
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
+	arg_7_0:logNormal("init info, show mail length is " .. tostring(#arg_7_0.showTitles))
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_7_0._onCheckFuncUnlock, arg_7_0)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_7_0._onFinishGuide, arg_7_0)
 end
 
-function slot0.addShowToastMail(slot0, slot1, slot2)
-	table.insert(slot0.showTitles, {
-		id = slot1,
-		title = slot2
+function var_0_0.addShowToastMail(arg_8_0, arg_8_1, arg_8_2)
+	table.insert(arg_8_0.showTitles, {
+		id = arg_8_1,
+		title = arg_8_2
 	})
 
-	if slot0.maxCacheMailToast < #slot0.showTitles then
-		slot0:recordShowedMailId(table.remove(slot0.showTitles, 1).id)
+	if #arg_8_0.showTitles > arg_8_0.maxCacheMailToast then
+		local var_8_0 = table.remove(arg_8_0.showTitles, 1)
+
+		arg_8_0:recordShowedMailId(var_8_0.id)
 	end
 end
 
-function slot0.initShowedMailIds(slot0)
-	slot0.showedMailIds = {}
+function var_0_0.initShowedMailIds(arg_9_0)
+	local var_9_0 = PlayerPrefsHelper.getString(arg_9_0.recordedMailIdKey, "")
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(slot0.recordedMailIdKey, "")) then
-		slot5 = slot0.recordedIdDelimiter
+	arg_9_0.showedMailIds = {}
 
-		for slot5, slot6 in ipairs(string.split(slot1, slot5)) do
-			if tonumber(slot6) then
-				table.insert(slot0.showedMailIds, slot7)
+	if not string.nilorempty(var_9_0) then
+		for iter_9_0, iter_9_1 in ipairs(string.split(var_9_0, arg_9_0.recordedIdDelimiter)) do
+			local var_9_1 = tonumber(iter_9_1)
+
+			if var_9_1 then
+				table.insert(arg_9_0.showedMailIds, var_9_1)
 			end
 		end
 	end
 end
 
-function slot0.isShowedMail(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.showedMailIds) do
-		if slot6 == slot1 then
+function var_0_0.isShowedMail(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.showedMailIds) do
+		if iter_10_1 == arg_10_1 then
 			return true
 		end
 	end
@@ -85,9 +93,9 @@ function slot0.isShowedMail(slot0, slot1)
 	return false
 end
 
-function slot0.isDelayShow(slot0)
-	if not slot0.delayShowViews then
-		slot0.delayShowViews = {
+function var_0_0.isDelayShow(arg_11_0)
+	if not arg_11_0.delayShowViews then
+		arg_11_0.delayShowViews = {
 			ViewName.LoadingView,
 			ViewName.FightView,
 			ViewName.FightSuccView,
@@ -99,146 +107,148 @@ function slot0.isDelayShow(slot0)
 		}
 	end
 
-	for slot4, slot5 in ipairs(slot0.delayShowViews) do
-		if ViewMgr.instance:isOpen(slot5) then
-			slot0:logNormal("current view is " .. slot5)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.delayShowViews) do
+		if ViewMgr.instance:isOpen(iter_11_1) then
+			arg_11_0:logNormal("current view is " .. iter_11_1)
 
 			return true
 		end
 	end
 
 	if not GuideController.instance:isForbidGuides() then
-		slot0:logNormal("not forbid guide , check guide")
+		arg_11_0:logNormal("not forbid guide , check guide")
 
-		if GuideModel.instance:getDoingGuideId() then
-			slot0:logNormal("get doing guide Id is " .. tostring(slot2))
+		local var_11_0 = GuideModel.instance:getDoingGuideId()
 
-			return true
-		end
-
-		if not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
-			slot0:logNormal("last force guide Id not finish")
+		if var_11_0 then
+			arg_11_0:logNormal("get doing guide Id is " .. tostring(var_11_0))
 
 			return true
 		end
 
 		if not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
-			slot0:logNormal("last force guide Id not finish")
+			arg_11_0:logNormal("last force guide Id not finish")
+
+			return true
+		end
+
+		if not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
+			arg_11_0:logNormal("last force guide Id not finish")
 
 			return true
 		end
 	else
-		slot0:logNormal("forbid guide, skip check guide, check next")
+		arg_11_0:logNormal("forbid guide, skip check guide, check next")
 	end
 
 	return false
 end
 
-function slot0.showGetMailToast(slot0, slot1, slot2)
-	slot0:addShowToastMail(slot1, slot2)
+function var_0_0.showGetMailToast(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:addShowToastMail(arg_12_1, arg_12_2)
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		slot0:logNormal("receive new mail, but not unlock MailModel , register OnFuncUnlockRefresh event ")
-		OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, slot0._onCheckFuncUnlock, slot0)
-		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot0)
+		arg_12_0:logNormal("receive new mail, but not unlock MailModel , register OnFuncUnlockRefresh event ")
+		OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_12_0._onCheckFuncUnlock, arg_12_0)
+		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_12_0._onCheckFuncUnlock, arg_12_0)
 
 		return
 	end
 
-	slot0:showOrRegisterEvent()
+	arg_12_0:showOrRegisterEvent()
 end
 
-function slot0.tryShowMailToast(slot0)
+function var_0_0.tryShowMailToast(arg_13_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot0)
+		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_13_0._onCheckFuncUnlock, arg_13_0)
 	else
-		slot0:showOrRegisterEvent()
+		arg_13_0:showOrRegisterEvent()
 	end
 end
 
-function slot0.showOrRegisterEvent(slot0)
-	if slot0:isDelayShow() then
-		slot0:logNormal("cat not show mail Toast, register event ...")
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.showOrRegisterEvent(arg_14_0)
+	if arg_14_0:isDelayShow() then
+		arg_14_0:logNormal("cat not show mail Toast, register event ...")
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_14_0._onOpenViewFinish, arg_14_0)
 	else
-		slot0:logNormal("can show mail Toast ...")
-		slot0:reallyShowToast()
+		arg_14_0:logNormal("can show mail Toast ...")
+		arg_14_0:reallyShowToast()
 	end
 end
 
-function slot0._onCheckFuncUnlock(slot0)
+function var_0_0._onCheckFuncUnlock(arg_15_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		MainController.instance:unregisterCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot0)
-		OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, slot0._onCheckFuncUnlock, slot0)
-		slot0:logNormal("unlock mail model callback, check show mail ...")
-		slot0:showOrRegisterEvent()
+		MainController.instance:unregisterCallback(MainEvent.OnFuncUnlockRefresh, arg_15_0._onCheckFuncUnlock, arg_15_0)
+		OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, arg_15_0._onCheckFuncUnlock, arg_15_0)
+		arg_15_0:logNormal("unlock mail model callback, check show mail ...")
+		arg_15_0:showOrRegisterEvent()
 	end
 end
 
-function slot0._onOpenViewFinish(slot0)
-	slot0:logNormal("close finish event ")
+function var_0_0._onOpenViewFinish(arg_16_0)
+	arg_16_0:logNormal("close finish event ")
 
-	if slot0:isDelayShow() then
-		slot0:logNormal("cat not show mail Toast")
+	if arg_16_0:isDelayShow() then
+		arg_16_0:logNormal("cat not show mail Toast")
 
 		return
 	else
-		slot0:logNormal("can show mail Toast")
-		slot0:reallyShowToast()
+		arg_16_0:logNormal("can show mail Toast")
+		arg_16_0:reallyShowToast()
 	end
 end
 
-function slot0._onFinishGuide(slot0, slot1)
-	slot0:logNormal("receive finish guide push ...")
+function var_0_0._onFinishGuide(arg_17_0, arg_17_1)
+	arg_17_0:logNormal("receive finish guide push ...")
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		slot0:logNormal("receive finish guide push, but mail model not open , do nothing and return ...")
+		arg_17_0:logNormal("receive finish guide push, but mail model not open , do nothing and return ...")
 
 		return
 	end
 
-	slot0:showOrRegisterEvent()
+	arg_17_0:showOrRegisterEvent()
 end
 
-function slot0.reallyShowToast(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.reallyShowToast(arg_18_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_18_0._onOpenViewFinish, arg_18_0)
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_18_0._onCheckFuncUnlock, arg_18_0)
 
-	slot5 = slot0
+	local var_18_0 = MailModel.instance:getReadedMailIds()
 
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, slot0._onCheckFuncUnlock, slot5)
-	slot0:logNormal("start show ...")
+	arg_18_0:logNormal("start show ...")
 
-	for slot5, slot6 in ipairs(slot0.showTitles) do
-		if MailModel.instance:getReadedMailIds()[slot6.id] then
-			slot0:logNormal(string.format("need show mail {id:%s, title:%s}, but it`s been read", slot6.id, slot6.title))
-			slot0:recordShowedMailId(slot6.id)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.showTitles) do
+		if var_18_0[iter_18_1.id] then
+			arg_18_0:logNormal(string.format("need show mail {id:%s, title:%s}, but it`s been read", iter_18_1.id, iter_18_1.title))
+			arg_18_0:recordShowedMailId(iter_18_1.id)
 		else
-			slot0:logNormal(string.format("need show mail {id:%s, title:%s}, can show", slot6.id, slot6.title))
-			slot0:showToast(slot6)
+			arg_18_0:logNormal(string.format("need show mail {id:%s, title:%s}, can show", iter_18_1.id, iter_18_1.title))
+			arg_18_0:showToast(iter_18_1)
 		end
 	end
 
-	slot0.showTitles = {}
+	arg_18_0.showTitles = {}
 end
 
-function slot0.showToast(slot0, slot1)
-	GameFacade.showToast(ToastEnum.MailToast, slot1.title, slot1.id)
-	slot0:recordShowedMailId(slot1.id)
+function var_0_0.showToast(arg_19_0, arg_19_1)
+	GameFacade.showToast(ToastEnum.MailToast, arg_19_1.title, arg_19_1.id)
+	arg_19_0:recordShowedMailId(arg_19_1.id)
 end
 
-function slot0.recordShowedMailId(slot0, slot1)
-	if slot0:isShowedMail(slot1) then
+function var_0_0.recordShowedMailId(arg_20_0, arg_20_1)
+	if arg_20_0:isShowedMail(arg_20_1) then
 		return
 	end
 
-	table.insert(slot0.showedMailIds, slot1)
-	PlayerPrefsHelper.setString(slot0.recordedMailIdKey, table.concat(slot0.showedMailIds, slot0.recordedIdDelimiter))
+	table.insert(arg_20_0.showedMailIds, arg_20_1)
+	PlayerPrefsHelper.setString(arg_20_0.recordedMailIdKey, table.concat(arg_20_0.showedMailIds, arg_20_0.recordedIdDelimiter))
 end
 
-function slot0.logNormal(slot0, slot1)
-	logNormal("【mail toast】" .. slot1)
+function var_0_0.logNormal(arg_21_0, arg_21_1)
+	logNormal("【mail toast】" .. arg_21_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

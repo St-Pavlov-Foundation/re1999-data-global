@@ -1,3 +1,3 @@
-module("modules.logic.room.view.manufacture.RoomManufactureBuildingLevelUpTipsView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureBuildingLevelUpTipsView", package.seeall)
 
-return class("RoomManufactureBuildingLevelUpTipsView", RoomLevelUpTipsView)
+return (class("RoomManufactureBuildingLevelUpTipsView", RoomLevelUpTipsView))

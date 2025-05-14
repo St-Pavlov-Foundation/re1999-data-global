@@ -1,32 +1,38 @@
-module("modules.logic.guide.controller.action.impl.GuideActionTriggerGuide", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionTriggerGuide", package.seeall)
 
-slot0 = class("GuideActionTriggerGuide", BaseGuideAction)
+local var_0_0 = class("GuideActionTriggerGuide", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._triggerGuideId = not string.nilorempty(slot3) and tonumber(slot3)
+	arg_1_0._triggerGuideId = not string.nilorempty(arg_1_3) and tonumber(arg_1_3)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
+	arg_2_0:onDone(true)
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_3_0)
+	var_0_0.super.onDestroy(arg_3_0)
 
-	if slot0._triggerGuideId then
-		if GuideModel.instance:getById(slot0._triggerGuideId) and not slot1.isFinish then
-			GuideController.instance:execNextStep(slot0._triggerGuideId)
+	if arg_3_0._triggerGuideId then
+		local var_3_0 = GuideModel.instance:getById(arg_3_0._triggerGuideId)
+
+		if var_3_0 and not var_3_0.isFinish then
+			GuideController.instance:execNextStep(arg_3_0._triggerGuideId)
 		else
-			GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide, slot0._triggerGuideId)
+			GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide, arg_3_0._triggerGuideId)
 		end
-	elseif GuideModel.instance:getDoingGuideId() then
-		GuideController.instance:execNextStep(slot1)
 	else
-		GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide)
+		local var_3_1 = GuideModel.instance:getDoingGuideId()
+
+		if var_3_1 then
+			GuideController.instance:execNextStep(var_3_1)
+		else
+			GuideController.instance:dispatchEvent(GuideEvent.TriggerGuide)
+		end
 	end
 end
 
-return slot0
+return var_0_0

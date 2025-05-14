@@ -1,251 +1,274 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1EquipBookView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1EquipBookView", package.seeall)
 
-slot0 = class("Season123_2_1EquipBookView", BaseView)
+local var_0_0 = class("Season123_2_1EquipBookView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg1")
-	slot0._gotarget = gohelper.findChild(slot0.viewGO, "left/#go_target")
-	slot0._goctrl = gohelper.findChild(slot0.viewGO, "left/#go_target/#go_ctrl")
-	slot0._gotargetcardpos = gohelper.findChild(slot0.viewGO, "left/#go_target/#go_ctrl/#go_targetcardpos")
-	slot0._gocarditem = gohelper.findChild(slot0.viewGO, "left/#go_target/#go_ctrl/#go_targetcardpos/#go_carditem")
-	slot0._gotouch = gohelper.findChild(slot0.viewGO, "left/#go_target/#go_touch")
-	slot0._txtcardname = gohelper.findChildText(slot0.viewGO, "left/#go_target/#txt_cardname")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "left/#go_target/#scroll_desc")
-	slot0._godescContent = gohelper.findChild(slot0.viewGO, "left/#go_target/#scroll_desc/Viewport/#go_descContent")
-	slot0._godescitem = gohelper.findChild(slot0.viewGO, "left/#go_target/#scroll_desc/Viewport/#go_descContent/#go_descitem")
-	slot0._btncompose = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_compose")
-	slot0._gonormalcomposebg = gohelper.findChild(slot0.viewGO, "left/#btn_compose/#go_normalComposebg")
-	slot0._golockcomposebg = gohelper.findChildImage(slot0.viewGO, "left/#btn_compose/#go_lockComposeBg")
-	slot0._imagecomposeCoin = gohelper.findChildImage(slot0.viewGO, "left/#btn_compose/#image_composeCoin")
-	slot0._txtcomposeNum = gohelper.findChildText(slot0.viewGO, "left/#btn_compose/#txt_composeNum")
-	slot0._btndecompose = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_decompose")
-	slot0._gonormaldecomposebg = gohelper.findChild(slot0.viewGO, "left/#btn_decompose/#go_normalDecomposebg")
-	slot0._golockdecomposebg = gohelper.findChildImage(slot0.viewGO, "left/#btn_decompose/#go_lockDecomposeBg")
-	slot0._imagedecomposeCoin = gohelper.findChildImage(slot0.viewGO, "left/#btn_decompose/#image_decomposeCoin")
-	slot0._txtdecomposeNum = gohelper.findChildText(slot0.viewGO, "left/#btn_decompose/#txt_decomposeNum")
-	slot0._scrollcardlist = gohelper.findChildScrollRect(slot0.viewGO, "right/mask/#scroll_cardlist")
-	slot0._btnbatchDecompose = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_batchDecompose")
-	slot0._gorighttop = gohelper.findChild(slot0.viewGO, "right/#go_righttop")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._godecomposeEffect = gohelper.findChild(slot0.viewGO, "left/#go_target/#fengjie")
-	slot0._gocomposeEffect = gohelper.findChild(slot0.viewGO, "left/#go_target/#hecheng")
-	slot0._btnskipEffect = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_skipEffect")
-	slot0._gotipPos = gohelper.findChild(slot0.viewGO, "#go_tippos")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
+	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "left/#go_target")
+	arg_1_0._goctrl = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#go_ctrl")
+	arg_1_0._gotargetcardpos = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#go_ctrl/#go_targetcardpos")
+	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#go_ctrl/#go_targetcardpos/#go_carditem")
+	arg_1_0._gotouch = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#go_touch")
+	arg_1_0._txtcardname = gohelper.findChildText(arg_1_0.viewGO, "left/#go_target/#txt_cardname")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#go_target/#scroll_desc")
+	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#scroll_desc/Viewport/#go_descContent")
+	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#scroll_desc/Viewport/#go_descContent/#go_descitem")
+	arg_1_0._btncompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_compose")
+	arg_1_0._gonormalcomposebg = gohelper.findChild(arg_1_0.viewGO, "left/#btn_compose/#go_normalComposebg")
+	arg_1_0._golockcomposebg = gohelper.findChildImage(arg_1_0.viewGO, "left/#btn_compose/#go_lockComposeBg")
+	arg_1_0._imagecomposeCoin = gohelper.findChildImage(arg_1_0.viewGO, "left/#btn_compose/#image_composeCoin")
+	arg_1_0._txtcomposeNum = gohelper.findChildText(arg_1_0.viewGO, "left/#btn_compose/#txt_composeNum")
+	arg_1_0._btndecompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_decompose")
+	arg_1_0._gonormaldecomposebg = gohelper.findChild(arg_1_0.viewGO, "left/#btn_decompose/#go_normalDecomposebg")
+	arg_1_0._golockdecomposebg = gohelper.findChildImage(arg_1_0.viewGO, "left/#btn_decompose/#go_lockDecomposeBg")
+	arg_1_0._imagedecomposeCoin = gohelper.findChildImage(arg_1_0.viewGO, "left/#btn_decompose/#image_decomposeCoin")
+	arg_1_0._txtdecomposeNum = gohelper.findChildText(arg_1_0.viewGO, "left/#btn_decompose/#txt_decomposeNum")
+	arg_1_0._scrollcardlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/mask/#scroll_cardlist")
+	arg_1_0._btnbatchDecompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_batchDecompose")
+	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "right/#go_righttop")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._godecomposeEffect = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#fengjie")
+	arg_1_0._gocomposeEffect = gohelper.findChild(arg_1_0.viewGO, "left/#go_target/#hecheng")
+	arg_1_0._btnskipEffect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skipEffect")
+	arg_1_0._gotipPos = gohelper.findChild(arg_1_0.viewGO, "#go_tippos")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncompose:AddClickListener(slot0._btncomposeOnClick, slot0)
-	slot0._btndecompose:AddClickListener(slot0._btndecomposeOnClick, slot0)
-	slot0._btnbatchDecompose:AddClickListener(slot0._btnbatchDecomposeOnClick, slot0)
-	slot0._btnskipEffect:AddClickListener(slot0._btnskipEffectOnClick, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnEquipBookItemChangeSelect, slot0.onChangeSelectCard, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshEquipBookView, slot0.refreshEquipBook, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, slot0.refreshUI, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshUI, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeEffectPlay, slot0.doDecompose, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncompose:AddClickListener(arg_2_0._btncomposeOnClick, arg_2_0)
+	arg_2_0._btndecompose:AddClickListener(arg_2_0._btndecomposeOnClick, arg_2_0)
+	arg_2_0._btnbatchDecompose:AddClickListener(arg_2_0._btnbatchDecomposeOnClick, arg_2_0)
+	arg_2_0._btnskipEffect:AddClickListener(arg_2_0._btnskipEffectOnClick, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnEquipBookItemChangeSelect, arg_2_0.onChangeSelectCard, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshEquipBookView, arg_2_0.refreshEquipBook, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeEffectPlay, arg_2_0.doDecompose, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncompose:RemoveClickListener()
-	slot0._btndecompose:RemoveClickListener()
-	slot0._btnbatchDecompose:RemoveClickListener()
-	slot0._btnskipEffect:RemoveClickListener()
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnEquipBookItemChangeSelect, slot0.onChangeSelectCard, slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshEquipBookView, slot0.refreshEquipBook, slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, slot0.refreshUI, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeEffectPlay, slot0.doDecompose, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncompose:RemoveClickListener()
+	arg_3_0._btndecompose:RemoveClickListener()
+	arg_3_0._btnbatchDecompose:RemoveClickListener()
+	arg_3_0._btnskipEffect:RemoveClickListener()
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnEquipBookItemChangeSelect, arg_3_0.onChangeSelectCard, arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshEquipBookView, arg_3_0.refreshEquipBook, arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeEffectPlay, arg_3_0.doDecompose, arg_3_0)
 end
 
-slot0.defaultDescColor = "#cac8c5"
+var_0_0.defaultDescColor = "#cac8c5"
 
-function slot0._btncomposeOnClick(slot0)
-	if slot0:isMainCardOverCount() then
+function var_0_0._btncomposeOnClick(arg_4_0)
+	if arg_4_0:isMainCardOverCount() then
 		GameFacade.showToast(ToastEnum.SeasonMainCardOverCount)
-	elseif slot0:canCompose() then
-		slot0.isCompose = true
+	elseif arg_4_0:canCompose() then
+		arg_4_0.isCompose = true
 
-		gohelper.setActive(slot0._btnskipEffect.gameObject, true)
-		slot0:showComposeEffect()
-		TaskDispatcher.runDelay(slot0.sendComposeRequest, slot0, 2)
+		gohelper.setActive(arg_4_0._btnskipEffect.gameObject, true)
+		arg_4_0:showComposeEffect()
+		TaskDispatcher.runDelay(arg_4_0.sendComposeRequest, arg_4_0, 2)
 	else
-		GameFacade.showToast(ToastEnum.DiamondBuy, CurrencyConfig.instance:getCurrencyCo(Season123Config.instance:getEquipItemCoin(slot0.actId, Activity123Enum.Const.EquipItemCoin)).name)
+		local var_4_0 = CurrencyConfig.instance:getCurrencyCo(Season123Config.instance:getEquipItemCoin(arg_4_0.actId, Activity123Enum.Const.EquipItemCoin))
+
+		GameFacade.showToast(ToastEnum.DiamondBuy, var_4_0.name)
 	end
 end
 
-function slot0.sendComposeRequest(slot0)
-	Activity123Rpc.instance:sendComposeAct123EquipRequest(slot0.actId, slot0.itemId)
-	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(slot0.actId)
+function var_0_0.sendComposeRequest(arg_5_0)
+	Activity123Rpc.instance:sendComposeAct123EquipRequest(arg_5_0.actId, arg_5_0.itemId)
+	Activity123Rpc.instance:sendGetUnlockAct123EquipIdsRequest(arg_5_0.actId)
 
-	slot0.isCompose = false
+	arg_5_0.isCompose = false
 
-	gohelper.setActive(slot0._btnskipEffect.gameObject, false)
+	gohelper.setActive(arg_5_0._btnskipEffect.gameObject, false)
 end
 
-function slot0._btndecomposeOnClick(slot0)
-	if (slot0.itemId and Season123EquipBookModel.instance:getEquipBookItemCount(slot0.itemId) or 0) == 0 then
+function var_0_0._btndecomposeOnClick(arg_6_0)
+	if (arg_6_0.itemId and Season123EquipBookModel.instance:getEquipBookItemCount(arg_6_0.itemId) or 0) == 0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.Season123_2_1DecomposeView, {
-		actId = slot0.actId,
-		itemId = slot0.itemId
-	})
+	local var_6_0 = {
+		actId = arg_6_0.actId,
+		itemId = arg_6_0.itemId
+	}
+
+	ViewMgr.instance:openView(ViewName.Season123_2_1DecomposeView, var_6_0)
 end
 
-function slot0._btnbatchDecomposeOnClick(slot0)
-	if slot0:getItemCount() == 0 then
+function var_0_0._btnbatchDecomposeOnClick(arg_7_0)
+	if arg_7_0:getItemCount() == 0 then
 		return
 	end
 
-	Season123EquipBookController.instance:openBatchDecomposeView(slot0.actId)
+	Season123EquipBookController.instance:openBatchDecomposeView(arg_7_0.actId)
 end
 
-function slot0._btnskipEffectOnClick(slot0)
-	if slot0.isCompose then
-		TaskDispatcher.cancelTask(slot0.sendComposeRequest, slot0)
-		slot0:sendComposeRequest()
+function var_0_0._btnskipEffectOnClick(arg_8_0)
+	if arg_8_0.isCompose then
+		TaskDispatcher.cancelTask(arg_8_0.sendComposeRequest, arg_8_0)
+		arg_8_0:sendComposeRequest()
 	end
 
-	if slot0.isDecompose then
-		TaskDispatcher.cancelTask(slot0.sendDecomposeEquipRequest, slot0)
-		slot0:sendDecomposeEquipRequest()
+	if arg_8_0.isDecompose then
+		TaskDispatcher.cancelTask(arg_8_0.sendDecomposeEquipRequest, arg_8_0)
+		arg_8_0:sendDecomposeEquipRequest()
 	end
 
-	gohelper.setActive(slot0._btnskipEffect.gameObject, false)
+	gohelper.setActive(arg_8_0._btnskipEffect.gameObject, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animatorCard = slot0._gotargetcardpos:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animCardEventWrap = slot0._animatorCard:GetComponent(typeof(ZProj.AnimationEventWrap))
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._animatorCard = arg_9_0._gotargetcardpos:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._animCardEventWrap = arg_9_0._animatorCard:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	slot0._animCardEventWrap:AddEventListener("switch", slot0.onSwitchCardAnim, slot0)
+	arg_9_0._animCardEventWrap:AddEventListener("switch", arg_9_0.onSwitchCardAnim, arg_9_0)
 
-	slot0.colorStr = uv0.defaultDescColor
+	arg_9_0.colorStr = var_0_0.defaultDescColor
 
-	slot0:hideEffect()
-	gohelper.setActive(slot0._btnskipEffect.gameObject, false)
+	arg_9_0:hideEffect()
+	gohelper.setActive(arg_9_0._btnskipEffect.gameObject, false)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_leimi_unlock)
 
-	slot0.actId = Season123Model.instance:getCurSeasonId()
-	slot0.coinId = Season123Config.instance:getEquipItemCoin(slot0.actId, Activity123Enum.Const.EquipItemCoin)
+	arg_10_0.actId = Season123Model.instance:getCurSeasonId()
+	arg_10_0.coinId = Season123Config.instance:getEquipItemCoin(arg_10_0.actId, Activity123Enum.Const.EquipItemCoin)
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.onSwitchCardAnim(slot0)
-	slot0:refreshUI()
+function var_0_0.onSwitchCardAnim(arg_11_0)
+	arg_11_0:refreshUI()
 end
 
-function slot0.refreshEquipBook(slot0)
-	slot0._scrollcardlist.verticalNormalizedPosition = 1
+function var_0_0.refreshEquipBook(arg_12_0)
+	arg_12_0._scrollcardlist.verticalNormalizedPosition = 1
 
-	slot0:refreshUI()
+	arg_12_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0.itemId = Season123EquipBookModel.instance.curSelectItemId
+function var_0_0.refreshUI(arg_13_0)
+	arg_13_0.itemId = Season123EquipBookModel.instance.curSelectItemId
 
-	slot0:refreshCardDesc()
-	slot0:refreshIcon()
-	slot0:refreshBtn()
+	arg_13_0:refreshCardDesc()
+	arg_13_0:refreshIcon()
+	arg_13_0:refreshBtn()
 end
 
-function slot0.refreshCardDesc(slot0)
-	if not slot0.itemId then
-		slot0._txtcardname.text = ""
+function var_0_0.refreshCardDesc(arg_14_0)
+	if not arg_14_0.itemId then
+		arg_14_0._txtcardname.text = ""
 
-		gohelper.setActive(slot0._scrolldesc.gameObject, false)
+		gohelper.setActive(arg_14_0._scrolldesc.gameObject, false)
 	else
-		slot0._txtcardname.text = Season123Config.instance:getSeasonEquipCo(slot0.itemId) ~= nil and string.format("[%s]", slot1.name) or ""
+		local var_14_0 = Season123Config.instance:getSeasonEquipCo(arg_14_0.itemId)
 
-		gohelper.setActive(slot0._scrolldesc.gameObject, slot1 ~= nil)
-		slot0:refreshCardItem(slot1)
+		arg_14_0._txtcardname.text = var_14_0 ~= nil and string.format("[%s]", var_14_0.name) or ""
+
+		gohelper.setActive(arg_14_0._scrolldesc.gameObject, var_14_0 ~= nil)
+		arg_14_0:refreshCardItem(var_14_0)
 	end
 end
 
-function slot0.refreshCardItem(slot0, slot1)
-	slot0._cardDescInfos = slot0:getUserDataTb_()
+function var_0_0.refreshCardItem(arg_15_0, arg_15_1)
+	arg_15_0._cardDescInfos = arg_15_0:getUserDataTb_()
 
-	if slot1 then
-		slot2 = Season123EquipMetaUtils.getSkillEffectStrList(slot1)
-		slot0.colorStr = Season123EquipMetaUtils.getCareerColorDarkBg(slot1.equipId)
+	if arg_15_1 then
+		local var_15_0 = Season123EquipMetaUtils.getSkillEffectStrList(arg_15_1)
 
-		if slot1.attrId ~= 0 and GameUtil.getTabLen(Season123EquipMetaUtils.getEquipPropsStrList(slot1.attrId)) > 0 then
-			tabletool.addValues(slot0._cardDescInfos, slot3)
+		arg_15_0.colorStr = Season123EquipMetaUtils.getCareerColorDarkBg(arg_15_1.equipId)
+
+		if arg_15_1.attrId ~= 0 then
+			local var_15_1 = Season123EquipMetaUtils.getEquipPropsStrList(arg_15_1.attrId)
+
+			if GameUtil.getTabLen(var_15_1) > 0 then
+				tabletool.addValues(arg_15_0._cardDescInfos, var_15_1)
+			end
 		end
 
-		tabletool.addValues(slot0._cardDescInfos, slot2)
-		gohelper.CreateObjList(slot0, slot0.cardDescItemShow, slot0._cardDescInfos, slot0._godescContent, slot0._godescitem)
+		tabletool.addValues(arg_15_0._cardDescInfos, var_15_0)
+		gohelper.CreateObjList(arg_15_0, arg_15_0.cardDescItemShow, arg_15_0._cardDescInfos, arg_15_0._godescContent, arg_15_0._godescitem)
 	end
 end
 
-function slot0.cardDescItemShow(slot0, slot1, slot2, slot3)
-	slot1.name = "desc" .. slot3
-	slot4 = gohelper.findChildText(slot1, "txt_desc")
-	slot4.text = SkillHelper.addLink(HeroSkillModel.instance:skillDesToSpot(slot2))
+function var_0_0.cardDescItemShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	arg_16_1.name = "desc" .. arg_16_3
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot4.gameObject, FixTmpBreakLine):refreshTmpContent(slot4)
-	SLFramework.UGUI.GuiHelper.SetColor(slot4, slot0.colorStr)
-	SkillHelper.addHyperLinkClick(slot4, slot0.setSkillClickCallBack, slot0)
+	local var_16_0 = gohelper.findChildText(arg_16_1, "txt_desc")
+	local var_16_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_0.gameObject, FixTmpBreakLine)
+
+	arg_16_2 = HeroSkillModel.instance:skillDesToSpot(arg_16_2)
+	var_16_0.text = SkillHelper.addLink(arg_16_2)
+
+	var_16_1:refreshTmpContent(var_16_0)
+	SLFramework.UGUI.GuiHelper.SetColor(var_16_0, arg_16_0.colorStr)
+	SkillHelper.addHyperLinkClick(var_16_0, arg_16_0.setSkillClickCallBack, arg_16_0)
 end
 
-function slot0.setSkillClickCallBack(slot0, slot1, slot2)
-	slot3, slot4 = recthelper.getAnchor(slot0._gotipPos.transform)
+function var_0_0.setSkillClickCallBack(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0, var_17_1 = recthelper.getAnchor(arg_17_0._gotipPos.transform)
+	local var_17_2 = Vector2.New(var_17_0, var_17_1)
 
-	CommonBuffTipController:openCommonTipViewWithCustomPos(slot1, Vector2.New(slot3, slot4), CommonBuffTipEnum.Pivot.Left)
+	CommonBuffTipController:openCommonTipViewWithCustomPos(arg_17_1, var_17_2, CommonBuffTipEnum.Pivot.Left)
 end
 
-function slot0.refreshIcon(slot0)
-	if not slot0._icon then
-		slot0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gocarditem, Season123_2_1CelebrityCardEquip)
+function var_0_0.refreshIcon(arg_18_0)
+	if not arg_18_0._icon then
+		local var_18_0 = arg_18_0._gocarditem
+
+		arg_18_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_0, Season123_2_1CelebrityCardEquip)
 	end
 
-	if slot0.itemId then
-		slot0._icon:updateData(slot0.itemId)
-		slot0._icon:setIndexLimitShowState(true)
+	if arg_18_0.itemId then
+		arg_18_0._icon:updateData(arg_18_0.itemId)
+		arg_18_0._icon:setIndexLimitShowState(true)
 	end
 end
 
-function slot0.refreshBtn(slot0)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnbatchDecompose.gameObject, slot0:getItemCount() == 0)
+function var_0_0.refreshBtn(arg_19_0)
+	local var_19_0 = arg_19_0:getItemCount()
 
-	slot2 = nil
+	ZProj.UGUIHelper.SetGrayscale(arg_19_0._btnbatchDecompose.gameObject, var_19_0 == 0)
 
-	if slot0.itemId then
-		slot2 = Season123Config.instance:getSeasonEquipCo(slot0.itemId)
-		slot3 = CurrencyConfig.instance:getCurrencyCo(slot0.coinId)
-		slot0._txtdecomposeNum.text = string.format("+%s", slot2.decomposeGet)
-		slot0._txtcomposeNum.text = string.format("-%s", slot2.composeCost)
+	local var_19_1
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecomposeCoin, slot3.icon .. "_1")
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagedecomposeCoin, slot3.icon .. "_1")
+	if arg_19_0.itemId then
+		local var_19_2 = Season123Config.instance:getSeasonEquipCo(arg_19_0.itemId)
+		local var_19_3 = CurrencyConfig.instance:getCurrencyCo(arg_19_0.coinId)
+
+		arg_19_0._txtdecomposeNum.text = string.format("+%s", var_19_2.decomposeGet)
+		arg_19_0._txtcomposeNum.text = string.format("-%s", var_19_2.composeCost)
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_19_0._imagecomposeCoin, var_19_3.icon .. "_1")
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_19_0._imagedecomposeCoin, var_19_3.icon .. "_1")
 	end
 
-	gohelper.setActive(slot0._txtdecomposeNum.gameObject, slot0.itemId)
-	gohelper.setActive(slot0._txtcomposeNum.gameObject, slot0.itemId)
-	gohelper.setActive(slot0._imagecomposeCoin.gameObject, slot0.itemId)
-	gohelper.setActive(slot0._imagedecomposeCoin.gameObject, slot0.itemId)
+	gohelper.setActive(arg_19_0._txtdecomposeNum.gameObject, arg_19_0.itemId)
+	gohelper.setActive(arg_19_0._txtcomposeNum.gameObject, arg_19_0.itemId)
+	gohelper.setActive(arg_19_0._imagecomposeCoin.gameObject, arg_19_0.itemId)
+	gohelper.setActive(arg_19_0._imagedecomposeCoin.gameObject, arg_19_0.itemId)
 
-	slot3 = slot0.itemId and Season123EquipBookModel.instance:getEquipBookItemCount(slot0.itemId) or 0
+	local var_19_4 = arg_19_0.itemId and Season123EquipBookModel.instance:getEquipBookItemCount(arg_19_0.itemId) or 0
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcomposeNum, slot0:canCompose() and "#070706" or "#800015")
-	gohelper.setActive(slot0._gonormaldecomposebg, slot3 > 0)
-	gohelper.setActive(slot0._golockdecomposebg, slot3 == 0)
-	gohelper.setActive(slot0._gonormalcomposebg, not slot0:isMainCardOverCount())
-	gohelper.setActive(slot0._golockcomposebg, slot0:isMainCardOverCount())
+	SLFramework.UGUI.GuiHelper.SetColor(arg_19_0._txtcomposeNum, arg_19_0:canCompose() and "#070706" or "#800015")
+	gohelper.setActive(arg_19_0._gonormaldecomposebg, var_19_4 > 0)
+	gohelper.setActive(arg_19_0._golockdecomposebg, var_19_4 == 0)
+	gohelper.setActive(arg_19_0._gonormalcomposebg, not arg_19_0:isMainCardOverCount())
+	gohelper.setActive(arg_19_0._golockcomposebg, arg_19_0:isMainCardOverCount())
 end
 
-function slot0.isMainCardOverCount(slot0)
-	if slot0.itemId then
-		if Season123Config.instance:getSeasonEquipCo(slot0.itemId).isMain == 1 and Season123EquipBookModel.instance:getEquipBookItemCount(slot0.itemId) >= 1 then
+function var_0_0.isMainCardOverCount(arg_20_0)
+	if arg_20_0.itemId then
+		local var_20_0 = Season123EquipBookModel.instance:getEquipBookItemCount(arg_20_0.itemId)
+
+		if Season123Config.instance:getSeasonEquipCo(arg_20_0.itemId).isMain == 1 and var_20_0 >= 1 then
 			return true
 		end
 	end
@@ -253,82 +276,86 @@ function slot0.isMainCardOverCount(slot0)
 	return false
 end
 
-function slot0.canCompose(slot0)
-	if not slot0.itemId then
+function var_0_0.canCompose(arg_21_0)
+	if not arg_21_0.itemId then
 		return false
 	end
 
-	slot1 = Season123Config.instance:getSeasonEquipCo(slot0.itemId)
+	local var_21_0 = Season123Config.instance:getSeasonEquipCo(arg_21_0.itemId)
+	local var_21_1 = CurrencyModel.instance:getCurrency(arg_21_0.coinId)
+	local var_21_2 = var_21_1 and var_21_1.quantity or 0
 
-	return slot1 and slot1.composeCost <= (CurrencyModel.instance:getCurrency(slot0.coinId) and slot2.quantity or 0)
+	return var_21_0 and var_21_2 >= var_21_0.composeCost
 end
 
-function slot0.getItemCount(slot0)
-	return GameUtil.getTabLen(Season123Model.instance:getAllItemMo(slot0.actId))
+function var_0_0.getItemCount(arg_22_0)
+	local var_22_0 = Season123Model.instance:getAllItemMo(arg_22_0.actId)
+
+	return GameUtil.getTabLen(var_22_0)
 end
 
-function slot0.onChangeSelectCard(slot0)
-	slot0._animatorCard:Play("switch", 0, 0)
-	slot0:hideEffect()
+function var_0_0.onChangeSelectCard(arg_23_0)
+	arg_23_0._animatorCard:Play("switch", 0, 0)
+	arg_23_0:hideEffect()
 end
 
-function slot0.doDecompose(slot0, slot1)
-	slot0.decomposeList = slot1
+function var_0_0.doDecompose(arg_24_0, arg_24_1)
+	arg_24_0.decomposeList = arg_24_1
 
-	gohelper.setActive(slot0._btnskipEffect.gameObject, true)
-	slot0:showDecomposeEffect()
+	gohelper.setActive(arg_24_0._btnskipEffect.gameObject, true)
+	arg_24_0:showDecomposeEffect()
 
-	slot0.isDecompose = true
+	arg_24_0.isDecompose = true
 
-	TaskDispatcher.runDelay(slot0.sendDecomposeEquipRequest, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_24_0.sendDecomposeEquipRequest, arg_24_0, 1.5)
 end
 
-function slot0.sendDecomposeEquipRequest(slot0)
-	Activity123Rpc.instance:sendDecomposeAct123EquipRequest(slot0.actId, slot0.decomposeList)
+function var_0_0.sendDecomposeEquipRequest(arg_25_0)
+	Activity123Rpc.instance:sendDecomposeAct123EquipRequest(arg_25_0.actId, arg_25_0.decomposeList)
 
-	slot0.isDecompose = false
+	arg_25_0.isDecompose = false
 
-	gohelper.setActive(slot0._btnskipEffect.gameObject, false)
+	gohelper.setActive(arg_25_0._btnskipEffect.gameObject, false)
 end
 
-function slot0.showDecomposeEffect(slot0)
-	gohelper.setActive(slot0._godecomposeEffect, false)
-	gohelper.setActive(slot0._godecomposeEffect, true)
+function var_0_0.showDecomposeEffect(arg_26_0)
+	gohelper.setActive(arg_26_0._godecomposeEffect, false)
+	gohelper.setActive(arg_26_0._godecomposeEffect, true)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_qiutu_list_maintain)
 end
 
-function slot0.showComposeEffect(slot0)
-	gohelper.setActive(slot0._gocomposeEffect, false)
-	gohelper.setActive(slot0._gocomposeEffect, true)
+function var_0_0.showComposeEffect(arg_27_0)
+	gohelper.setActive(arg_27_0._gocomposeEffect, false)
+	gohelper.setActive(arg_27_0._gocomposeEffect, true)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_leimi_celebrity_synthesis)
 end
 
-function slot0.hideEffect(slot0)
-	gohelper.setActive(slot0._godecomposeEffect, false)
-	gohelper.setActive(slot0._gocomposeEffect, false)
+function var_0_0.hideEffect(arg_28_0)
+	gohelper.setActive(arg_28_0._godecomposeEffect, false)
+	gohelper.setActive(arg_28_0._gocomposeEffect, false)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.sendComposeRequest, slot0)
-	TaskDispatcher.cancelTask(slot0.sendDecomposeEquipRequest, slot0)
+function var_0_0.onClose(arg_29_0)
+	TaskDispatcher.cancelTask(arg_29_0.sendComposeRequest, arg_29_0)
+	TaskDispatcher.cancelTask(arg_29_0.sendDecomposeEquipRequest, arg_29_0)
 
 	Season123EquipBookModel.instance._itemStartAnimTime = nil
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._animCardEventWrap then
-		slot0._animCardEventWrap:RemoveAllEventListener()
+function var_0_0.onDestroyView(arg_30_0)
+	if arg_30_0._animCardEventWrap then
+		arg_30_0._animCardEventWrap:RemoveAllEventListener()
 
-		slot0._animCardEventWrap = nil
+		arg_30_0._animCardEventWrap = nil
 	end
 
-	if slot0._icon ~= nil then
-		slot0._icon:disposeUI()
+	if arg_30_0._icon ~= nil then
+		arg_30_0._icon:disposeUI()
 
-		slot0._icon = nil
+		arg_30_0._icon = nil
 	end
 
 	Season123EquipBookController.instance:onCloseView()
 end
 
-return slot0
+return var_0_0

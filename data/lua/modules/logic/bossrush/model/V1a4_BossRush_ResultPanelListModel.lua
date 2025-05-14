@@ -1,6 +1,7 @@
-module("modules.logic.bossrush.model.V1a4_BossRush_ResultPanelListModel", package.seeall)
+﻿module("modules.logic.bossrush.model.V1a4_BossRush_ResultPanelListModel", package.seeall)
 
-slot0 = class("V1a4_BossRush_ResultPanelListModel", ListScrollModel)
-slot0.instance = slot0.New()
+local var_0_0 = class("V1a4_BossRush_ResultPanelListModel", ListScrollModel)
 
-return slot0
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

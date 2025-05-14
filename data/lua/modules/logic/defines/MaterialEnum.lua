@@ -1,7 +1,8 @@
-module("modules.logic.defines.MaterialEnum", package.seeall)
+﻿module("modules.logic.defines.MaterialEnum", package.seeall)
 
-slot0 = _M
-slot0.MaterialType = {
+local var_0_0 = _M
+
+var_0_0.MaterialType = {
 	Bp = 25,
 	PlayerCloth = 7,
 	HeroSkin = 5,
@@ -28,7 +29,7 @@ slot0.MaterialType = {
 	V1a5AiZiLa = 1002,
 	None = 0
 }
-slot0.JumpProbability = {
+var_0_0.JumpProbability = {
 	Small = 3,
 	Little = 5,
 	Large = 2,
@@ -36,7 +37,7 @@ slot0.JumpProbability = {
 	VerySmall = 4,
 	Normal = 0
 }
-slot0.GetApproach = {
+var_0_0.GetApproach = {
 	RoomGainFaith = 46,
 	RoomProductLine = 34,
 	v2a2Act169SummonNewPick = 119,
@@ -59,42 +60,42 @@ slot0.GetApproach = {
 	LifeCircleSign = 133,
 	NoviceStageReward = 54
 }
-slot0.SubTypePackages = {
-	[48.0] = true,
-	[50.0] = true,
-	[52.0] = true,
-	[53.0] = true
+var_0_0.SubTypePackages = {
+	[48] = true,
+	[50] = true,
+	[52] = true,
+	[53] = true
 }
-slot0.JumpProbabilityDisplay = {
-	[slot0.JumpProbability.Normal] = "material_jump_probability_normal",
-	[slot0.JumpProbability.Must] = "material_jump_probability_must",
-	[slot0.JumpProbability.Large] = "material_jump_probability_large",
-	[slot0.JumpProbability.Small] = "material_jump_probability_small",
-	[slot0.JumpProbability.VerySmall] = "material_jump_probability_verysmall",
-	[slot0.JumpProbability.Little] = "material_jump_probability_little"
+var_0_0.JumpProbabilityDisplay = {
+	[var_0_0.JumpProbability.Normal] = "material_jump_probability_normal",
+	[var_0_0.JumpProbability.Must] = "material_jump_probability_must",
+	[var_0_0.JumpProbability.Large] = "material_jump_probability_large",
+	[var_0_0.JumpProbability.Small] = "material_jump_probability_small",
+	[var_0_0.JumpProbability.VerySmall] = "material_jump_probability_verysmall",
+	[var_0_0.JumpProbability.Little] = "material_jump_probability_little"
 }
-slot0.ItemSubType16 = 16
-slot0.ItemRareN = 2
-slot0.ItemRareR = 3
-slot0.ItemRareSR = 4
-slot0.ItemRareSSR = 5
-slot0.PowerId = {
+var_0_0.ItemSubType16 = 16
+var_0_0.ItemRareN = 2
+var_0_0.ItemRareR = 3
+var_0_0.ItemRareSR = 4
+var_0_0.ItemRareSSR = 5
+var_0_0.PowerId = {
 	BigPower_Expire = 11,
 	SmallPower = 20,
 	ActPowerId = 30,
 	SmallPower_Expire = 10,
 	BigPower = 21
 }
-slot0.PowerType = {
+var_0_0.PowerType = {
 	Big = 2,
 	Act = 3,
 	Small = 1
 }
-slot0.ItemSubType = {
+var_0_0.ItemSubType = {
 	MainScene = 24,
 	Icon = 17,
 	SelfCard = 21
 }
-slot0.ActPowerBindActId = 11904
+var_0_0.ActPowerBindActId = 11904
 
-return slot0
+return var_0_0

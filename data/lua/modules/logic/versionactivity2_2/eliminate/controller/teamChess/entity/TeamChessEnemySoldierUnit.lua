@@ -1,45 +1,45 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessEnemySoldierUnit", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessEnemySoldierUnit", package.seeall)
 
-slot0 = class("TeamChessEnemySoldierUnit", TeamChessSoldierUnit)
+local var_0_0 = class("TeamChessEnemySoldierUnit", TeamChessSoldierUnit)
 
-function slot0._onResLoaded(slot0)
-	uv0.super._onResLoaded(slot0)
+function var_0_0._onResLoaded(arg_1_0)
+	var_0_0.super._onResLoaded(arg_1_0)
 
-	if gohelper.isNil(slot0._frontGo) then
+	if gohelper.isNil(arg_1_0._frontGo) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_put)
-	slot0:refreshMeshOrder()
-	slot0:playAnimator("in")
-	slot0:setActive(true)
+	arg_1_0:refreshMeshOrder()
+	arg_1_0:playAnimator("in")
+	arg_1_0:setActive(true)
 end
 
-function slot0.setOutlineActive(slot0, slot1)
-	if gohelper.isNil(slot0._frontOutLineGo) then
+function var_0_0.setOutlineActive(arg_2_0, arg_2_1)
+	if gohelper.isNil(arg_2_0._frontOutLineGo) then
 		return
 	end
 
-	gohelper.setActive(slot0._frontOutLineGo.gameObject, slot1)
-	uv0.super.setOutlineActive(slot0, slot1)
+	gohelper.setActive(arg_2_0._frontOutLineGo.gameObject, arg_2_1)
+	var_0_0.super.setOutlineActive(arg_2_0, arg_2_1)
 end
 
-function slot0.setNormalActive(slot0, slot1)
-	if gohelper.isNil(slot0._frontGo) then
+function var_0_0.setNormalActive(arg_3_0, arg_3_1)
+	if gohelper.isNil(arg_3_0._frontGo) then
 		return
 	end
 
-	gohelper.setActive(slot0._frontGo.gameObject, slot1)
-	uv0.super.setNormalActive(slot0, slot1)
+	gohelper.setActive(arg_3_0._frontGo.gameObject, arg_3_1)
+	var_0_0.super.setNormalActive(arg_3_0, arg_3_1)
 end
 
-function slot0.setGrayActive(slot0, slot1)
-	if gohelper.isNil(slot0._frontGrayGo) then
+function var_0_0.setGrayActive(arg_4_0, arg_4_1)
+	if gohelper.isNil(arg_4_0._frontGrayGo) then
 		return
 	end
 
-	gohelper.setActive(slot0._frontGrayGo.gameObject, slot1)
-	uv0.super.setGrayActive(slot0, slot1)
+	gohelper.setActive(arg_4_0._frontGrayGo.gameObject, arg_4_1)
+	var_0_0.super.setGrayActive(arg_4_0, arg_4_1)
 end
 
-return slot0
+return var_0_0

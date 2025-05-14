@@ -1,148 +1,168 @@
-module("modules.logic.weekwalk.view.WeekWalkEnemyInfoView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkEnemyInfoView", package.seeall)
 
-slot0 = class("WeekWalkEnemyInfoView", BaseView)
+local var_0_0 = class("WeekWalkEnemyInfoView", BaseView)
 
-function slot0.onOpen(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simagebattlelistbg = gohelper.findChildSingleImage(slot0.viewGO, "go_battlelist/#simage_battlelistbg")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_battlelist/#btn_reset", AudioEnum.WeekWalk.play_artificial_ui_resetmap)
-	slot0._mapId = slot0.viewParam.mapId
+function var_0_0.onOpen(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simagebattlelistbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_battlelist/#simage_battlelistbg")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_battlelist/#btn_reset", AudioEnum.WeekWalk.play_artificial_ui_resetmap)
+	arg_1_0._mapId = arg_1_0.viewParam.mapId
 
-	slot0._simagebattlelistbg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
+	arg_1_0._simagebattlelistbg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
 
-	slot3 = WeekWalkModel.instance:getInfo():getMapInfo(slot0._mapId).battleIds
+	local var_1_0 = WeekWalkModel.instance:getInfo():getMapInfo(arg_1_0._mapId)
+	local var_1_1 = var_1_0.battleIds
 
-	if not slot0.viewParam.battleId then
-		slot0.viewParam.battleId = slot3[1]
+	if not arg_1_0.viewParam.battleId then
+		arg_1_0.viewParam.battleId = var_1_1[1]
 	end
 
-	slot0._battleIds = slot3
-	slot0._mapConfig = WeekWalkConfig.instance:getMapConfig(slot0._mapId)
+	arg_1_0._battleIds = var_1_1
+	arg_1_0._mapConfig = WeekWalkConfig.instance:getMapConfig(arg_1_0._mapId)
 
-	if lua_weekwalk_type.configDict[slot0._mapConfig.type].showDetail <= 0 and slot2.isFinish <= 0 then
-		gohelper.setActive(slot0._btnreset.gameObject, false)
-		gohelper.setActive(gohelper.findChild(slot0.viewGO, "go_battlelist"), false)
-		slot0:_doUpdateSelectIcon(slot0.viewParam.battleId)
+	if lua_weekwalk_type.configDict[arg_1_0._mapConfig.type].showDetail <= 0 and var_1_0.isFinish <= 0 then
+		gohelper.setActive(arg_1_0._btnreset.gameObject, false)
+		gohelper.setActive(gohelper.findChild(arg_1_0.viewGO, "go_battlelist"), false)
+		arg_1_0:_doUpdateSelectIcon(arg_1_0.viewParam.battleId)
 
 		return
 	end
 
-	slot0._gobattlebtntemplate = gohelper.findChild(slot0.viewGO, "go_battlelist/scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
-	slot0._btnList = slot0:getUserDataTb_()
-	slot0._statusList = slot0:getUserDataTb_()
+	arg_1_0._gobattlebtntemplate = gohelper.findChild(arg_1_0.viewGO, "go_battlelist/scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
+	arg_1_0._btnList = arg_1_0:getUserDataTb_()
+	arg_1_0._statusList = arg_1_0:getUserDataTb_()
 
-	for slot11 = 1, math.min(5, #slot2.battleInfos) do
-		slot13 = gohelper.cloneInPlace(slot0._gobattlebtntemplate).gameObject
-		slot14 = gohelper.findChildButton(slot13, "btn")
-		gohelper.findChildText(slot13, "txt").text = "0" .. slot11
-		slot19 = gohelper.findChild(slot13, "star2")
-		slot20 = gohelper.findChild(slot13, "star3")
+	local var_1_2 = 5
+	local var_1_3 = math.min(var_1_2, #var_1_0.battleInfos)
+	local var_1_4 = var_1_0:getStarNumConfig()
 
-		gohelper.setActive(slot19, false)
-		gohelper.setActive(slot20, false)
-		gohelper.setActive(slot2:getStarNumConfig() <= 2 and slot19 or slot20, true)
+	for iter_1_0 = 1, var_1_3 do
+		local var_1_5 = gohelper.cloneInPlace(arg_1_0._gobattlebtntemplate).gameObject
+		local var_1_6 = gohelper.findChildButton(var_1_5, "btn")
+		local var_1_7 = gohelper.findChildText(var_1_5, "txt")
+		local var_1_8 = gohelper.findChild(var_1_5, "selectIcon")
 
-		slot24 = {
-			gohelper.findChild(slot13, "selectIcon"),
-			slot15
+		var_1_7.text = "0" .. iter_1_0
+
+		local var_1_9 = var_1_1[iter_1_0]
+		local var_1_10 = var_1_0:getBattleInfo(var_1_9)
+		local var_1_11 = gohelper.findChild(var_1_5, "star2")
+		local var_1_12 = gohelper.findChild(var_1_5, "star3")
+		local var_1_13 = var_1_4 <= 2 and var_1_11 or var_1_12
+
+		gohelper.setActive(var_1_11, false)
+		gohelper.setActive(var_1_12, false)
+		gohelper.setActive(var_1_13, true)
+
+		local var_1_14 = var_1_13.transform
+		local var_1_15 = var_1_14.childCount
+		local var_1_16 = {
+			var_1_8,
+			var_1_7
 		}
-		slot25 = 0
+		local var_1_17 = 0
 
-		for slot29 = 1, slot21.transform.childCount do
-			UISpriteSetMgr.instance:setWeekWalkSprite(slot22:GetChild(slot29 - 1):GetComponentInChildren(gohelper.Type_Image), slot29 <= slot2:getBattleInfo(slot3[slot11]).star and "star_highlight4" or "star_null4", true)
-			table.insert(slot24, slot31)
+		for iter_1_1 = 1, var_1_15 do
+			local var_1_18 = var_1_14:GetChild(iter_1_1 - 1):GetComponentInChildren(gohelper.Type_Image)
+
+			UISpriteSetMgr.instance:setWeekWalkSprite(var_1_18, iter_1_1 <= var_1_10.star and "star_highlight4" or "star_null4", true)
+			table.insert(var_1_16, var_1_18)
 		end
 
-		slot14:AddClickListener(slot0._changeBattleId, slot0, slot17)
-		gohelper.addUIClickAudio(slot14.gameObject, AudioEnum.WeekWalk.play_artificial_ui_checkpointswitch)
-		gohelper.setActive(slot13, true)
-		table.insert(slot0._statusList, slot24)
-		table.insert(slot0._btnList, slot14)
+		var_1_6:AddClickListener(arg_1_0._changeBattleId, arg_1_0, var_1_9)
+		gohelper.addUIClickAudio(var_1_6.gameObject, AudioEnum.WeekWalk.play_artificial_ui_checkpointswitch)
+		gohelper.setActive(var_1_5, true)
+		table.insert(arg_1_0._statusList, var_1_16)
+		table.insert(arg_1_0._btnList, var_1_6)
 	end
 
-	slot0._btnreset:AddClickListener(slot0._reset, slot0)
+	arg_1_0._btnreset:AddClickListener(arg_1_0._reset, arg_1_0)
 
-	slot9 = WeekWalkConfig.instance:getMapTypeConfig(slot0._mapId).canResetLayer > 0 and ViewMgr.instance:isOpen(ViewName.WeekWalkView)
+	local var_1_19 = WeekWalkConfig.instance:getMapTypeConfig(arg_1_0._mapId).canResetLayer > 0 and ViewMgr.instance:isOpen(ViewName.WeekWalkView)
 
-	if slot0.viewParam.hideResetBtn then
-		slot9 = false
+	if arg_1_0.viewParam.hideResetBtn then
+		var_1_19 = false
 	end
 
-	gohelper.setActive(slot0._btnreset.gameObject, slot9 and false)
+	gohelper.setActive(arg_1_0._btnreset.gameObject, var_1_19 and false)
 
-	if slot9 then
+	if var_1_19 then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideShowResetBtn)
 	end
 
-	slot0:_doUpdateSelectIcon(slot0.viewParam.battleId)
+	arg_1_0:_doUpdateSelectIcon(arg_1_0.viewParam.battleId)
 end
 
-function slot0._reset(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkResetLayer, MsgBoxEnum.BoxType.Yes_No, function ()
-		WeekwalkRpc.instance:sendResetLayerRequest(uv0._mapId)
-		uv0:closeThis()
+function var_0_0._reset(arg_2_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkResetLayer, MsgBoxEnum.BoxType.Yes_No, function()
+		WeekwalkRpc.instance:sendResetLayerRequest(arg_2_0._mapId)
+		arg_2_0:closeThis()
 	end)
 end
 
-function slot0._changeBattleId(slot0, slot1)
-	if not slot1 then
+function var_0_0._changeBattleId(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot2 = slot0.viewContainer:getEnemyInfoView()
-	slot2._battleId = slot1
+	local var_4_0 = arg_4_0.viewContainer:getEnemyInfoView()
 
-	slot2:_refreshUI()
-	slot0:_updateSelectIcon()
+	var_4_0._battleId = arg_4_1
+
+	var_4_0:_refreshUI()
+	arg_4_0:_updateSelectIcon()
 end
 
-function slot0._updateSelectIcon(slot0)
-	slot0:_doUpdateSelectIcon(slot0.viewContainer:getEnemyInfoView()._battleId)
+function var_0_0._updateSelectIcon(arg_5_0)
+	local var_5_0 = arg_5_0.viewContainer:getEnemyInfoView()
+
+	arg_5_0:_doUpdateSelectIcon(var_5_0._battleId)
 end
 
-function slot0._doUpdateSelectIcon(slot0, slot1)
-	slot0.viewContainer:getWeekWalkEnemyInfoViewRule():refreshUI(slot1)
+function var_0_0._doUpdateSelectIcon(arg_6_0, arg_6_1)
+	arg_6_0.viewContainer:getWeekWalkEnemyInfoViewRule():refreshUI(arg_6_1)
 
-	if not slot0._statusList then
+	if not arg_6_0._statusList then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._battleIds) do
-		slot8 = slot7 == slot1
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._battleIds) do
+		local var_6_0 = iter_6_1 == arg_6_1
+		local var_6_1 = arg_6_0._statusList[iter_6_0]
 
-		if not slot0._statusList[slot6] then
+		if not var_6_1 then
 			break
 		end
 
-		gohelper.setActive(slot9[1], slot8)
+		gohelper.setActive(var_6_1[1], var_6_0)
 
-		if slot8 then
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[2], "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[3], "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[4], "#FFFFFF")
+		if var_6_0 then
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[2], "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[3], "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[4], "#FFFFFF")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[2], "#6c6f64")
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[3], "#C1C5B6")
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[4], "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[2], "#6c6f64")
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[3], "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[4], "#C1C5B6")
 		end
 
-		if slot9[5] then
-			SLFramework.UGUI.GuiHelper.SetColor(slot9[5], slot8 and "#FFFFFF" or "#C1C5B6")
+		if var_6_1[5] then
+			SLFramework.UGUI.GuiHelper.SetColor(var_6_1[5], var_6_0 and "#FFFFFF" or "#C1C5B6")
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_7_0)
+	var_0_0.super.onDestroyView(arg_7_0)
 
-	if slot0._btnList then
-		for slot4, slot5 in ipairs(slot0._btnList) do
-			slot5:RemoveClickListener()
+	if arg_7_0._btnList then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._btnList) do
+			iter_7_1:RemoveClickListener()
 		end
 	end
 
-	slot0._btnreset:RemoveClickListener()
-	slot0._simagebattlelistbg:UnLoadImage()
+	arg_7_0._btnreset:RemoveClickListener()
+	arg_7_0._simagebattlelistbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

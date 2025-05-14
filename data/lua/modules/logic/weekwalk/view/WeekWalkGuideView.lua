@@ -1,50 +1,52 @@
-module("modules.logic.weekwalk.view.WeekWalkGuideView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkGuideView", package.seeall)
 
-slot0 = class("WeekWalkGuideView", BaseView)
+local var_0_0 = class("WeekWalkGuideView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "commen/#simage_bg")
-	slot0._simagedecorate1 = gohelper.findChildSingleImage(slot0.viewGO, "commen/#simage_decorate1")
-	slot0._simagedecorate3 = gohelper.findChildSingleImage(slot0.viewGO, "commen/#simage_decorate3")
-	slot0._btnlook = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_look")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_bg")
+	arg_1_0._simagedecorate1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate1")
+	arg_1_0._simagedecorate3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate3")
+	arg_1_0._btnlook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_look")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlook:AddClickListener(slot0._btnlookOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlook:AddClickListener(arg_2_0._btnlookOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlook:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlook:RemoveClickListener()
 end
 
-function slot0._btnlookOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnlookOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("yd_yindaodi_1.png"))
-	slot0._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
-	slot0._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("yd_yindaodi_1.png"))
+	arg_5_0._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
+	arg_5_0._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_artificial_ui_openfunction)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagedecorate1:UnLoadImage()
-	slot0._simagedecorate3:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0._simagedecorate1:UnLoadImage()
+	arg_9_0._simagedecorate3:UnLoadImage()
 end
 
-return slot0
+return var_0_0

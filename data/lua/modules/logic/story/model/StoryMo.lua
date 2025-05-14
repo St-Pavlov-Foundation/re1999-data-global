@@ -1,63 +1,66 @@
-module("modules.logic.story.model.StoryMo", package.seeall)
+﻿module("modules.logic.story.model.StoryMo", package.seeall)
 
-slot0 = pureTable("StoryMo")
+local var_0_0 = pureTable("StoryMo")
 
-function slot0.ctor(slot0)
-	slot0.finishList = nil
-	slot0.processList = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.finishList = nil
+	arg_1_0.processList = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.finishList = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.finishList = {}
 
-	if slot1.finishList then
-		for slot5, slot6 in ipairs(slot1.finishList) do
-			slot0.finishList[slot6] = true
+	if arg_2_1.finishList then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_1.finishList) do
+			arg_2_0.finishList[iter_2_1] = true
 		end
 	end
 
-	slot0.processList = slot1.processingList and slot0:_getListInfo(slot1.processingList, StoryProcessInfoMo) or {}
+	arg_2_0.processList = arg_2_1.processingList and arg_2_0:_getListInfo(arg_2_1.processingList, StoryProcessInfoMo) or {}
 end
 
-function slot0.update(slot0, slot1)
-	slot2 = false
+function var_0_0.update(arg_3_0, arg_3_1)
+	local var_3_0 = false
 
-	for slot6, slot7 in pairs(slot0.processList) do
-		if slot7.storyId == slot1.storyId then
-			slot7.stepId = slot1.stepId
-			slot7.favor = slot1.favor
-			slot2 = true
+	for iter_3_0, iter_3_1 in pairs(arg_3_0.processList) do
+		if iter_3_1.storyId == arg_3_1.storyId then
+			iter_3_1.stepId = arg_3_1.stepId
+			iter_3_1.favor = arg_3_1.favor
+			var_3_0 = true
 		end
 	end
 
-	if not slot2 then
-		slot3 = StoryProcessInfoMo.New()
-		slot3.storyId = slot1.storyId
-		slot3.stepId = slot1.stepId
-		slot3.favor = slot1.favor
+	if not var_3_0 then
+		local var_3_1 = StoryProcessInfoMo.New()
 
-		table.insert(slot0.processList, slot3)
+		var_3_1.storyId = arg_3_1.storyId
+		var_3_1.stepId = arg_3_1.stepId
+		var_3_1.favor = arg_3_1.favor
+
+		table.insert(arg_3_0.processList, var_3_1)
 	end
 end
 
-function slot0._getListInfo(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0._getListInfo(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_1 then
 		return {}
 	end
 
-	slot3 = {}
+	local var_4_0 = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = slot8
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = iter_4_1
 
-		if slot2 then
-			slot2.New():init(slot8)
+		if arg_4_2 then
+			var_4_1 = arg_4_2.New()
+
+			var_4_1:init(iter_4_1)
 		end
 
-		table.insert(slot3, slot9)
+		table.insert(var_4_0, var_4_1)
 	end
 
-	return slot3
+	return var_4_0
 end
 
-return slot0
+return var_0_0

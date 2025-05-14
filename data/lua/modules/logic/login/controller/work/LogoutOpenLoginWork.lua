@@ -1,16 +1,17 @@
-module("modules.logic.login.controller.work.LogoutOpenLoginWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LogoutOpenLoginWork", package.seeall)
 
-slot0 = class("LogoutOpenLoginWork", BaseWork)
+local var_0_0 = class("LogoutOpenLoginWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
 	LoginController.instance:login({
 		isModuleLogout = true,
-		isSdkLogout = slot1.isSdkLogout
+		isSdkLogout = arg_2_1.isSdkLogout
 	})
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,26 +1,28 @@
-module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryMapViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryMapViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_8FactoryMapViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_8FactoryMapViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_8FactoryMapView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = NavigateButtonsView.New({
+		true,
+		true,
+		false
+	})
+
 	return {
-		NavigateButtonsView.New({
-			true,
-			true,
-			false
-		})
+		var_2_0
 	}
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_day_night)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballCurrencyTipViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballCurrencyTipViewContainer", package.seeall)
 
-slot0 = class("PinballCurrencyTipViewContainer", BaseViewContainer)
+local var_0_0 = class("PinballCurrencyTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		PinballCurrencyTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

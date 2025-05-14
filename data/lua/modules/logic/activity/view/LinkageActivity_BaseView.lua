@@ -1,81 +1,85 @@
-module("modules.logic.activity.view.LinkageActivity_BaseView", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_BaseView", package.seeall)
 
-slot0 = class("LinkageActivity_BaseView", Activity101SignViewBase)
+local var_0_0 = class("LinkageActivity_BaseView", Activity101SignViewBase)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 
-	slot0._pageItemList = {}
-	slot0._curPageIndex = false
+	arg_1_0._pageItemList = {}
+	arg_1_0._curPageIndex = false
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_pageItemList")
-	Activity101SignViewBase._internal_onDestroy(slot0)
+function var_0_0.onDestroyView(arg_2_0)
+	GameUtil.onDestroyViewMemberList(arg_2_0, "_pageItemList")
+	Activity101SignViewBase._internal_onDestroy(arg_2_0)
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
+function var_0_0.addEvents(arg_3_0)
+	var_0_0.super.addEvents(arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
+function var_0_0.removeEvents(arg_4_0)
+	var_0_0.super.removeEvents(arg_4_0)
 end
 
-function slot0.selectedPage(slot0, slot1)
-	if slot0._curPageIndex == slot1 then
+function var_0_0.selectedPage(arg_5_0, arg_5_1)
+	if arg_5_0._curPageIndex == arg_5_1 then
 		return
 	end
 
-	slot0._curPageIndex = slot1
+	local var_5_0 = arg_5_0._curPageIndex
 
-	slot0:onSelectedPage(slot1, slot0._curPageIndex)
+	arg_5_0._curPageIndex = arg_5_1
+
+	arg_5_0:onSelectedPage(arg_5_1, var_5_0)
 end
 
-function slot0.getPage(slot0, slot1)
-	return slot0._pageItemList[slot1]
+function var_0_0.getPage(arg_6_0, arg_6_1)
+	return arg_6_0._pageItemList[arg_6_1]
 end
 
-function slot0.addPage(slot0, slot1, slot2, slot3)
-	slot4 = slot3.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+function var_0_0.addPage(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_3.New({
+		parent = arg_7_0,
+		baseViewContainer = arg_7_0.viewContainer
 	})
 
-	slot4:setIndex(slot1)
-	slot4:init(slot2)
-	table.insert(slot0._pageItemList, slot4)
+	var_7_0:setIndex(arg_7_1)
+	var_7_0:init(arg_7_2)
+	table.insert(arg_7_0._pageItemList, var_7_0)
 
-	return slot4
+	return var_7_0
 end
 
-function slot0.getLinkageActivityCO(slot0)
-	return ActivityType101Config.instance:getLinkageActivityCO(slot0:actId())
+function var_0_0.getLinkageActivityCO(arg_8_0)
+	return ActivityType101Config.instance:getLinkageActivityCO(arg_8_0:actId())
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_9_0)
 	assert(false, "please override this function")
 end
 
-function slot0.onSelectedPage(slot0, slot1, slot2)
-	slot3 = slot0:getPage(slot1)
-	slot4 = nil
+function var_0_0.onSelectedPage(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:getPage(arg_10_1)
+	local var_10_1
 
-	if slot2 then
-		slot0:getPage(slot2):setActive(false)
+	if arg_10_2 then
+		var_10_1 = arg_10_0:getPage(arg_10_2)
+
+		var_10_1:setActive(false)
 	end
 
-	slot3:setActive(true)
+	var_10_0:setActive(true)
 
-	for slot8, slot9 in ipairs(slot0._pageItemList) do
-		slot9:onPostSelectedPage(slot3, slot4)
-	end
-end
-
-function slot0.onRefresh(slot0)
-	for slot4, slot5 in ipairs(slot0._pageItemList) do
-		slot5:onUpdateMO()
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._pageItemList) do
+		iter_10_1:onPostSelectedPage(var_10_0, var_10_1)
 	end
 end
 
-return slot0
+function var_0_0.onRefresh(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._pageItemList) do
+		iter_11_1:onUpdateMO()
+	end
+end
+
+return var_0_0

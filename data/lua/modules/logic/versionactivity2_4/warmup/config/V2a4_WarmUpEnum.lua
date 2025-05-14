@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity2_4.warmup.config.V2a4_WarmUpEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.config.V2a4_WarmUpEnum", package.seeall)
 
-slot0 = _M
-slot0.DialogType = {
+local var_0_0 = _M
+
+var_0_0.DialogType = {
 	ReplyAnsRight = 6,
 	Preface = 0,
 	AnsTrue = 9,
@@ -9,11 +10,11 @@ slot0.DialogType = {
 	ReplyAnsWrong = 5,
 	Wait = 3
 }
-slot0.AskType = {
+var_0_0.AskType = {
 	Text = 1,
 	Photo = 2
 }
-slot0.RoundState = {
+var_0_0.RoundState = {
 	ReplyResult = 5,
 	Ansed = 4,
 	Ask = 2,
@@ -23,4 +24,4 @@ slot0.RoundState = {
 	None = 0
 }
 
-return slot0
+return var_0_0

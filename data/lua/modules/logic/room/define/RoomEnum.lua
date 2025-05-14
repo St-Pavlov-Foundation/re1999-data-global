@@ -1,21 +1,22 @@
-module("modules.logic.room.define.RoomEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomEnum", package.seeall)
 
-slot0 = _M
-slot0.RoomSceneId = 601
-slot0.FSMEditState = {
+local var_0_0 = _M
+
+var_0_0.RoomSceneId = 601
+var_0_0.FSMEditState = {
 	PlaceConfirm = "EditPlaceConfirm",
 	BackConfirm = "EditBackConfirm",
 	Idle = "EditIdle",
 	WaterReform = "EditWaterReform",
 	PlaceBuildingConfirm = "EditPlaceBuildingConfirm"
 }
-slot0.FSMObState = {
+var_0_0.FSMObState = {
 	CharacterBuildingShowTime = "ObCharacterBuildingShowTime",
 	PlaceCharacterConfirm = "ObPlaceCharacterConfirm",
 	PlaceBuildingConfirm = "ObPlaceBuildingConfirm",
 	Idle = "ObIdle"
 }
-slot0.TouchTab = {
+var_0_0.TouchTab = {
 	RoomPartBuilding = 2,
 	RoomCritter = 5,
 	RoomTransportSite = 6,
@@ -23,7 +24,7 @@ slot0.TouchTab = {
 	RoomInitBuilding = 1,
 	RoomCharacter = 4
 }
-slot0.GameMode = {
+var_0_0.GameMode = {
 	Ob = 1,
 	DebugInit = 5,
 	DebugPackage = 6,
@@ -32,7 +33,7 @@ slot0.GameMode = {
 	VisitShare = 7,
 	Visit = 3
 }
-slot0.CameraState = {
+var_0_0.CameraState = {
 	Character = 3,
 	FirstPerson = 6,
 	InteractionCharacterBuilding = 4,
@@ -43,44 +44,44 @@ slot0.CameraState = {
 	Overlook = 1,
 	Normal = 2
 }
-slot0.ChangeCameraParamDict = {
-	[slot0.CameraState.InteractionCharacterBuilding] = true,
-	[slot0.CameraState.FirstPerson] = true,
-	[slot0.CameraState.ThirdPerson] = true,
-	[slot0.CameraState.Manufacture] = true,
-	[slot0.CameraState.InteractBuilding] = true
+var_0_0.ChangeCameraParamDict = {
+	[var_0_0.CameraState.InteractionCharacterBuilding] = true,
+	[var_0_0.CameraState.FirstPerson] = true,
+	[var_0_0.CameraState.ThirdPerson] = true,
+	[var_0_0.CameraState.Manufacture] = true,
+	[var_0_0.CameraState.InteractBuilding] = true
 }
-slot0.CameraOverlooks = {
-	slot0.CameraState.Overlook,
-	slot0.CameraState.OverlookAll
+var_0_0.CameraOverlooks = {
+	var_0_0.CameraState.Overlook,
+	var_0_0.CameraState.OverlookAll
 }
-slot0.CameraCanScaleMap = {
-	[slot0.CameraState.Normal] = true,
-	[slot0.CameraState.Overlook] = true,
-	[slot0.CameraState.OverlookAll] = true
+var_0_0.CameraCanScaleMap = {
+	[var_0_0.CameraState.Normal] = true,
+	[var_0_0.CameraState.Overlook] = true,
+	[var_0_0.CameraState.OverlookAll] = true
 }
-slot0.CameraShowSpineMap = {
-	[slot0.CameraState.Overlook] = true,
-	[slot0.CameraState.Normal] = true,
-	[slot0.CameraState.Character] = true,
-	[slot0.CameraState.InteractionCharacterBuilding] = true,
-	[slot0.CameraState.FirstPerson] = true,
-	[slot0.CameraState.ThirdPerson] = true,
-	[slot0.CameraState.Manufacture] = true,
-	[slot0.CameraState.InteractBuilding] = true
+var_0_0.CameraShowSpineMap = {
+	[var_0_0.CameraState.Overlook] = true,
+	[var_0_0.CameraState.Normal] = true,
+	[var_0_0.CameraState.Character] = true,
+	[var_0_0.CameraState.InteractionCharacterBuilding] = true,
+	[var_0_0.CameraState.FirstPerson] = true,
+	[var_0_0.CameraState.ThirdPerson] = true,
+	[var_0_0.CameraState.Manufacture] = true,
+	[var_0_0.CameraState.InteractBuilding] = true
 }
-slot0.CameraFollowType = {
+var_0_0.CameraFollowType = {
 	FirstPerson = 2,
 	Normal = 1
 }
-slot0.IsShowUICharacterInteraction = false
-slot0.BlockPathEditor = "room/configs/json_block.json"
-slot0.InitMapConfigPathEditor = "room/configs/json_block_init.json"
-slot0.BlockPath = "configs/excel2json/json_block.json"
-slot0.InitMapConfigPath = "configs/excel2json/json_block_init.json"
-slot0.BlockPackageMapPath = "room/configs/json_block_package_map.json"
-slot0.BlockPackageDataPath = "configs/excel2json/json_block_package_data.json"
-slot0.DefaultCameraParam = {
+var_0_0.IsShowUICharacterInteraction = false
+var_0_0.BlockPathEditor = "room/configs/json_block.json"
+var_0_0.InitMapConfigPathEditor = "room/configs/json_block_init.json"
+var_0_0.BlockPath = "configs/excel2json/json_block.json"
+var_0_0.InitMapConfigPath = "configs/excel2json/json_block_init.json"
+var_0_0.BlockPackageMapPath = "room/configs/json_block_package_map.json"
+var_0_0.BlockPackageDataPath = "configs/excel2json/json_block_package_data.json"
+var_0_0.DefaultCameraParam = {
 	Angle = 25,
 	Height = 0,
 	Distance = 2.72,
@@ -91,8 +92,8 @@ slot0.DefaultCameraParam = {
 	Blur = 2,
 	OffsetY = 0
 }
-slot0.GuideForbidEscapeToast = 2634
-slot0.Toast = {
+var_0_0.GuideForbidEscapeToast = 2634
+var_0_0.Toast = {
 	LayoutPlanNotDelete = 2695,
 	InventoryBlockUnBack = 2651,
 	InventBlockMapPositionMax = 2644,
@@ -139,11 +140,11 @@ slot0.Toast = {
 	LayoutPlanUse = 2698,
 	InventoryBlockOneBackMax = 2653
 }
-slot0.ConstNum = {
+var_0_0.ConstNum = {
 	InventoryBlockOneBackMax = 20
 }
-slot0.UseAStarPath = true
-slot0.AStarLayerTag = {
+var_0_0.UseAStarPath = true
+var_0_0.AStarLayerTag = {
 	Default = 0,
 	Water = 2,
 	AirVehicle = 11,
@@ -155,12 +156,12 @@ slot0.AStarLayerTag = {
 	Coast = 8,
 	NoWalkRoad = 1
 }
-slot0.ObtainReadState = {
+var_0_0.ObtainReadState = {
 	FristObtain = 1,
 	ClickToView = 2,
 	None = 0
 }
-slot0.ComponentName = {
+var_0_0.ComponentName = {
 	BatchRendererEntity = "BatchRendererEntity",
 	Renderer = "Renderer",
 	BoxCollider = "BoxCollider",
@@ -168,7 +169,7 @@ slot0.ComponentName = {
 	MeshRenderer = "MeshRenderer",
 	AnimationEventWrap = "AnimationEventWrap"
 }
-slot0.ComponentType = {
+var_0_0.ComponentType = {
 	MeshRenderer = typeof(UnityEngine.MeshRenderer),
 	Transform = typeof(UnityEngine.Transform),
 	BatchRendererEntity = typeof(UrpCustom.BatchRendererEntity),
@@ -178,7 +179,7 @@ slot0.ComponentType = {
 	Animator = typeof(UnityEngine.Animator),
 	AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
 }
-slot0.EffectKey = {
+var_0_0.EffectKey = {
 	BuildingOccupyCanJudgeKey = "canJudgeOccupyEffect",
 	CharacterFootPrintGOKey = "footprintGO",
 	CharacterChatKey = "characterChatKey",
@@ -263,7 +264,7 @@ slot0.EffectKey = {
 		"occupyNotSide_6"
 	}
 }
-slot0.EffectPath = {
+var_0_0.EffectPath = {
 	PartWorkingPath = "anim/#job",
 	LightMeshPath = "mesh/light",
 	BuildingLevelPath = "1/#level_%s",
@@ -277,7 +278,7 @@ slot0.EffectPath = {
 		"6/light"
 	}
 }
-slot0.EntityChildKey = {
+var_0_0.EntityChildKey = {
 	ProduceGOKey = "produce",
 	BuildingLinkBlockGOKey = "#linkblock",
 	BodyGOKey = "body",
@@ -314,8 +315,8 @@ slot0.EntityChildKey = {
 		"interact_start_6"
 	}
 }
-slot0.InteractSpineAnimName = "interact"
-slot0.EffectRebuildCompNames = {
+var_0_0.InteractSpineAnimName = "interact"
+var_0_0.EffectRebuildCompNames = {
 	"vehiclefollow",
 	"nightlight",
 	"buildingLinkBlockComp",
@@ -330,27 +331,27 @@ slot0.EffectRebuildCompNames = {
 	"vehickleTransport",
 	"atmosphere"
 }
-slot0.AtmosphereCacheKey = "RoomAtmosphereCacheKey_v2a5"
-slot0.AtmosphereTriggerType = {
+var_0_0.AtmosphereCacheKey = "RoomAtmosphereCacheKey_v2a5"
+var_0_0.AtmosphereTriggerType = {
 	IntegralPoint = 2,
 	CDTime = 3,
 	Disposable = 1,
 	None = 0
 }
-slot0.AtmosphereAudioFadeView = {
+var_0_0.AtmosphereAudioFadeView = {
 	RoomProductLineLevelUpView = true,
 	RoomLevelUpTipsView = true,
 	RoomLevelUpView = true
 }
-slot0.RoomViewBlockOpMode = {
+var_0_0.RoomViewBlockOpMode = {
 	WaterReform = 2,
 	BackBlock = 1
 }
-slot0.DialogSpeakerType = {
+var_0_0.DialogSpeakerType = {
 	Critter = 2,
 	Hero = 1
 }
-slot0.LayoutPlanDefaultNames = {
+var_0_0.LayoutPlanDefaultNames = {
 	"A",
 	"B",
 	"C",
@@ -378,21 +379,21 @@ slot0.LayoutPlanDefaultNames = {
 	"Y",
 	"Z"
 }
-slot0.LayoutCopyShowNameMaxCount = 5
-slot0.LayoutUsedPlanId = 0
-slot0.IsCloseLayouCopy = true
-slot0.IsBlockNeedConnInit = false
-slot0.LayoutPlanShareCodeLimit = 12
-slot0.MeshUseOptimize = true
-slot0.AStarMeshMaxWidthOrDepth = 500
-slot0.WorldPosToAStarMeshWidth = 20
-slot0.WorldPosToAStarMeshDepth = 19.5
-slot0.CameraParamId = {
+var_0_0.LayoutCopyShowNameMaxCount = 5
+var_0_0.LayoutUsedPlanId = 0
+var_0_0.IsCloseLayouCopy = true
+var_0_0.IsBlockNeedConnInit = false
+var_0_0.LayoutPlanShareCodeLimit = 12
+var_0_0.MeshUseOptimize = true
+var_0_0.AStarMeshMaxWidthOrDepth = 500
+var_0_0.WorldPosToAStarMeshWidth = 20
+var_0_0.WorldPosToAStarMeshDepth = 19.5
+var_0_0.CameraParamId = {
 	CritterTrainHeroFollow = 2251
 }
-slot0.SourcesShowType = {
+var_0_0.SourcesShowType = {
 	Cobrand = 1,
 	Normal = 0
 }
 
-return slot0
+return var_0_0

@@ -1,44 +1,53 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionListModel", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionListModel", MixScrollModel)
-slot0.instance = slot0.New()
+local var_0_0 = class("V1a6_CachotCollectionListModel", MixScrollModel)
 
-function slot0.release(slot0)
-	slot0._curCategory = nil
-	slot0._newCollectionAndClickList = nil
-	slot0._unlockCollectionsNew = nil
-	slot0._curPlayAnimCellIndex = nil
+var_0_0.instance = var_0_0.New()
+
+function var_0_0.release(arg_1_0)
+	arg_1_0._curCategory = nil
+	arg_1_0._newCollectionAndClickList = nil
+	arg_1_0._unlockCollectionsNew = nil
+	arg_1_0._curPlayAnimCellIndex = nil
 end
 
-function slot0.onInitData(slot0, slot1, slot2)
-	slot0._curCategory = slot1 or V1a6_CachotEnum.CollectionCategoryType.All
-	slot0._maxCollectionNumSingleLine = slot2
+function var_0_0.onInitData(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._curCategory = arg_2_1 or V1a6_CachotEnum.CollectionCategoryType.All
+	arg_2_0._maxCollectionNumSingleLine = arg_2_2
 
-	slot0:buildUnLockCollectionsNew()
-	slot0:buildAllConfigData()
-	slot0:switchCategory(slot0._curCategory)
+	arg_2_0:buildUnLockCollectionsNew()
+	arg_2_0:buildAllConfigData()
+	arg_2_0:switchCategory(arg_2_0._curCategory)
 end
 
-function slot0.buildUnLockCollectionsNew(slot0)
-	if V1a6_CachotModel.instance:getRogueStateInfo() then
-		slot0._unlockCollectionsNew = slot1.unlockCollectionsNew
+function var_0_0.buildUnLockCollectionsNew(arg_3_0)
+	local var_3_0 = V1a6_CachotModel.instance:getRogueStateInfo()
+
+	if var_3_0 then
+		arg_3_0._unlockCollectionsNew = var_3_0.unlockCollectionsNew
 	end
 end
 
-function slot0.buildAllConfigData(slot0)
-	slot0:intCategoryDataTab()
-	slot0:initCollectionStateMap()
+function var_0_0.buildAllConfigData(arg_4_0)
+	arg_4_0:intCategoryDataTab()
+	arg_4_0:initCollectionStateMap()
 
-	if V1a6_CachotCollectionConfig.instance:getAllConfig() then
-		table.sort(slot1, slot0.configSortFunc)
+	local var_4_0 = V1a6_CachotCollectionConfig.instance:getAllConfig()
 
-		for slot8, slot9 in ipairs(slot1) do
-			if slot9.inHandBook == V1a6_CachotEnum.CollectionInHandBook then
-				slot0:buildCollectionListMO(slot9, slot0._collectionDic[V1a6_CachotEnum.CollectionCategoryType.All])
-				slot0:buildCollectionListMO(slot9, slot0._collectionDic[V1a6_CachotEnum.CollectionCategoryType.HasGet], {
+	if var_4_0 then
+		table.sort(var_4_0, arg_4_0.configSortFunc)
+
+		local var_4_1 = arg_4_0._collectionDic[V1a6_CachotEnum.CollectionCategoryType.All]
+		local var_4_2 = arg_4_0._collectionDic[V1a6_CachotEnum.CollectionCategoryType.HasGet]
+		local var_4_3 = arg_4_0._collectionDic[V1a6_CachotEnum.CollectionCategoryType.UnGet]
+
+		for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+			if iter_4_1.inHandBook == V1a6_CachotEnum.CollectionInHandBook then
+				arg_4_0:buildCollectionListMO(iter_4_1, var_4_1)
+				arg_4_0:buildCollectionListMO(iter_4_1, var_4_2, {
 					V1a6_CachotEnum.CollectionState.HasGet
 				})
-				slot0:buildCollectionListMO(slot9, slot0._collectionDic[V1a6_CachotEnum.CollectionCategoryType.UnGet], {
+				arg_4_0:buildCollectionListMO(iter_4_1, var_4_3, {
 					V1a6_CachotEnum.CollectionState.UnLocked,
 					V1a6_CachotEnum.CollectionState.Locked
 				})
@@ -47,146 +56,159 @@ function slot0.buildAllConfigData(slot0)
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	ListFull = 2,
 	MisMatchState = 1,
 	Success = 3
 }
 
-function slot0.buildCollectionListMO(slot0, slot1, slot2, slot3)
-	slot5 = slot2 and slot2[#slot2]
+function var_0_0.buildCollectionListMO(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_0:collectionCheckFunc(arg_5_1, arg_5_2, arg_5_3)
+	local var_5_1 = arg_5_2 and arg_5_2[#arg_5_2]
 
-	if slot0:collectionCheckFunc(slot1, slot2, slot3) == uv0.MisMatchState then
+	if var_5_0 == var_0_1.MisMatchState then
 		return
-	elseif slot4 == uv0.ListFull then
-		slot6 = V1a6_CachotCollectionListMO.New()
+	elseif var_5_0 == var_0_1.ListFull then
+		local var_5_2 = V1a6_CachotCollectionListMO.New()
+		local var_5_3 = not var_5_1 or var_5_1.collectionType ~= arg_5_1.type
 
-		slot6:init(slot1.type, not slot5 or slot5.collectionType ~= slot1.type, slot0._maxCollectionNumSingleLine)
-		slot6:addCollection(slot1)
-		table.insert(slot2, slot6)
-	elseif slot4 == uv0.Success then
-		slot2[#slot2]:addCollection(slot1)
+		var_5_2:init(arg_5_1.type, var_5_3, arg_5_0._maxCollectionNumSingleLine)
+		var_5_2:addCollection(arg_5_1)
+		table.insert(arg_5_2, var_5_2)
+	elseif var_5_0 == var_0_1.Success then
+		arg_5_2[#arg_5_2]:addCollection(arg_5_1)
 	end
 end
 
-function slot0.collectionCheckFunc(slot0, slot1, slot2, slot3)
-	slot4 = slot2 and slot2[#slot2]
+function var_0_0.collectionCheckFunc(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_2 and arg_6_2[#arg_6_2]
+	local var_6_1 = arg_6_0:getCollectionState(arg_6_1.id)
 
-	if slot3 and not tabletool.indexOf(slot3, slot0:getCollectionState(slot1.id)) then
-		return uv0.MisMatchState
-	elseif not slot4 or slot4:isFull() or slot4.collectionType ~= slot1.type then
-		return uv0.ListFull
+	if arg_6_3 and not tabletool.indexOf(arg_6_3, var_6_1) then
+		return var_0_1.MisMatchState
+	elseif not var_6_0 or var_6_0:isFull() or var_6_0.collectionType ~= arg_6_1.type then
+		return var_0_1.ListFull
 	else
-		return uv0.Success
+		return var_0_1.Success
 	end
 end
 
-function slot0.configSortFunc(slot0, slot1)
-	if slot0.type ~= slot1.type then
-		return slot0.type < slot1.type
+function var_0_0.configSortFunc(arg_7_0, arg_7_1)
+	if arg_7_0.type ~= arg_7_1.type then
+		return arg_7_0.type < arg_7_1.type
 	end
 
-	return slot0.id < slot1.id
+	return arg_7_0.id < arg_7_1.id
 end
 
-slot2 = {
+local var_0_2 = {
 	Top = 1,
 	Others = 2
 }
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getInfoList(arg_8_0, arg_8_1)
+	local var_8_0 = {}
+	local var_8_1 = arg_8_0:getList()
 
-	for slot7, slot8 in ipairs(slot0:getList()) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot8._isTop and uv0.Top or uv0.Others, slot8:getLineHeight(), slot7))
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		local var_8_2 = iter_8_1._isTop and var_0_2.Top or var_0_2.Others
+		local var_8_3 = SLFramework.UGUI.MixCellInfo.New(var_8_2, iter_8_1:getLineHeight(), iter_8_0)
+
+		table.insert(var_8_0, var_8_3)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.intCategoryDataTab(slot0)
-	slot0._collectionDic = {}
+function var_0_0.intCategoryDataTab(arg_9_0)
+	arg_9_0._collectionDic = {}
 
-	for slot4, slot5 in pairs(V1a6_CachotEnum.CollectionCategoryType) do
-		slot0._collectionDic[slot5] = {}
-	end
-end
-
-function slot0.initCollectionStateMap(slot0)
-	slot0._collectionStateMap = {}
-
-	if V1a6_CachotModel.instance:getRogueStateInfo() then
-		slot0:buildCollectionMap(slot0._collectionStateMap, slot1.unlockCollections, V1a6_CachotEnum.CollectionState.UnLocked)
-		slot0:buildCollectionMap(slot0._collectionStateMap, slot1.hasCollections, V1a6_CachotEnum.CollectionState.HasGet)
+	for iter_9_0, iter_9_1 in pairs(V1a6_CachotEnum.CollectionCategoryType) do
+		arg_9_0._collectionDic[iter_9_1] = {}
 	end
 end
 
-function slot0.buildCollectionMap(slot0, slot1, slot2, slot3)
-	if slot2 and slot1 and slot3 then
-		for slot7, slot8 in ipairs(slot2) do
-			slot1[slot8] = slot3
+function var_0_0.initCollectionStateMap(arg_10_0)
+	arg_10_0._collectionStateMap = {}
+
+	local var_10_0 = V1a6_CachotModel.instance:getRogueStateInfo()
+
+	if var_10_0 then
+		arg_10_0:buildCollectionMap(arg_10_0._collectionStateMap, var_10_0.unlockCollections, V1a6_CachotEnum.CollectionState.UnLocked)
+		arg_10_0:buildCollectionMap(arg_10_0._collectionStateMap, var_10_0.hasCollections, V1a6_CachotEnum.CollectionState.HasGet)
+	end
+end
+
+function var_0_0.buildCollectionMap(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_2 and arg_11_1 and arg_11_3 then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
+			arg_11_1[iter_11_1] = arg_11_3
 		end
 	end
 end
 
-function slot0.getCollectionState(slot0, slot1)
-	if slot0._collectionStateMap then
-		return slot0._collectionStateMap[slot1] or V1a6_CachotEnum.CollectionState.Locked
+function var_0_0.getCollectionState(arg_12_0, arg_12_1)
+	if arg_12_0._collectionStateMap then
+		return arg_12_0._collectionStateMap[arg_12_1] or V1a6_CachotEnum.CollectionState.Locked
 	end
 end
 
-function slot0.switchCategory(slot0, slot1)
-	if slot0._collectionDic and slot0._collectionDic[slot1] then
-		slot0:setList(slot2)
+function var_0_0.switchCategory(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._collectionDic and arg_13_0._collectionDic[arg_13_1]
 
-		slot0._curCategory = slot1
+	if var_13_0 then
+		arg_13_0:setList(var_13_0)
+
+		arg_13_0._curCategory = arg_13_1
 	end
 end
 
-function slot0.getCurCategory(slot0)
-	return slot0._curCategory
+function var_0_0.getCurCategory(arg_14_0)
+	return arg_14_0._curCategory
 end
 
-function slot0.getCurCategoryFirstCollection(slot0)
-	if slot0:getByIndex(1) and slot1.collectionList and slot1.collectionList[1] then
-		return slot1.collectionList[1].id
+function var_0_0.getCurCategoryFirstCollection(arg_15_0)
+	local var_15_0 = arg_15_0:getByIndex(1)
+
+	if var_15_0 and var_15_0.collectionList and var_15_0.collectionList[1] then
+		return var_15_0.collectionList[1].id
 	end
 end
 
-function slot0.markSelectCollecionId(slot0, slot1)
-	slot0._curSelectCollectionId = slot1
+function var_0_0.markSelectCollecionId(arg_16_0, arg_16_1)
+	arg_16_0._curSelectCollectionId = arg_16_1
 
-	if slot0:isCollectionNew(slot1) then
-		slot0._newCollectionAndClickList = slot0._newCollectionAndClickList or {}
+	if arg_16_0:isCollectionNew(arg_16_1) then
+		arg_16_0._newCollectionAndClickList = arg_16_0._newCollectionAndClickList or {}
 
-		table.insert(slot0._newCollectionAndClickList, slot1)
+		table.insert(arg_16_0._newCollectionAndClickList, arg_16_1)
 
-		slot0._unlockCollectionsNew[slot1] = nil
+		arg_16_0._unlockCollectionsNew[arg_16_1] = nil
 	end
 end
 
-function slot0.isCollectionNew(slot0, slot1)
-	return slot0._unlockCollectionsNew and slot0._unlockCollectionsNew[slot1]
+function var_0_0.isCollectionNew(arg_17_0, arg_17_1)
+	return arg_17_0._unlockCollectionsNew and arg_17_0._unlockCollectionsNew[arg_17_1]
 end
 
-function slot0.getNewCollectionAndClickList(slot0)
-	return slot0._newCollectionAndClickList
+function var_0_0.getNewCollectionAndClickList(arg_18_0)
+	return arg_18_0._newCollectionAndClickList
 end
 
-function slot0.getCurSelectCollectionId(slot0)
-	return slot0._curSelectCollectionId
+function var_0_0.getCurSelectCollectionId(arg_19_0)
+	return arg_19_0._curSelectCollectionId
 end
 
-function slot0.markCurPlayAnimCellIndex(slot0, slot1)
-	slot0._curPlayAnimCellIndex = slot1
+function var_0_0.markCurPlayAnimCellIndex(arg_20_0, arg_20_1)
+	arg_20_0._curPlayAnimCellIndex = arg_20_1
 end
 
-function slot0.getCurPlayAnimCellIndex(slot0)
-	return slot0._curPlayAnimCellIndex
+function var_0_0.getCurPlayAnimCellIndex(arg_21_0)
+	return arg_21_0._curPlayAnimCellIndex
 end
 
-function slot0.resetCurPlayAnimCellIndex(slot0)
-	slot0._curPlayAnimCellIndex = nil
+function var_0_0.resetCurPlayAnimCellIndex(arg_22_0)
+	arg_22_0._curPlayAnimCellIndex = nil
 end
 
-return slot0
+return var_0_0

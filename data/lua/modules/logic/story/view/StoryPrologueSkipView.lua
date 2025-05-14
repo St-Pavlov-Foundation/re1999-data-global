@@ -1,75 +1,84 @@
-module("modules.logic.story.view.StoryPrologueSkipView", package.seeall)
+﻿module("modules.logic.story.view.StoryPrologueSkipView", package.seeall)
 
-slot0 = class("StoryPrologueSkipView", BaseView)
+local var_0_0 = class("StoryPrologueSkipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_fg")
-	slot0._simagefg2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/simage_fg")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "ani/simage_1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "ani/simage_2")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#btn_close")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "#txt_content")
-	slot0._bgClick = gohelper.getClickWithAudio(slot0._simagefg.gameObject)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fg")
+	arg_1_0._simagefg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/simage_fg")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "ani/simage_1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "ani/simage_2")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_close")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#txt_content")
+	arg_1_0._bgClick = gohelper.getClickWithAudio(arg_1_0._simagefg.gameObject)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._bgClick:AddClickListener(slot0._onBgClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._bgClick:AddClickListener(arg_2_0._onBgClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._bgClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._bgClick:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:_hideStoryViewContent(false)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:_hideStoryViewContent(false)
+	arg_4_0:closeThis()
 	StoryController.instance:dispatchEvent(StoryEvent.OnSkipClick)
 end
 
-function slot0._onBgClick(slot0)
-	slot0:_hideStoryViewContent(false)
-	slot0:closeThis()
+function var_0_0._onBgClick(arg_5_0)
+	arg_5_0:_hideStoryViewContent(false)
+	arg_5_0:closeThis()
 	StoryController.instance:dispatchEvent(StoryEvent.OnSkipClick)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._btncloseOnClick, slot0)
+function var_0_0.onOpen(arg_8_0)
+	NavigateMgr.instance:addEscape(arg_8_0.viewName, arg_8_0._btncloseOnClick, arg_8_0)
 
-	slot0._txtcontent.text = slot0.viewParam.content
+	arg_8_0._txtcontent.text = arg_8_0.viewParam.content
 
-	slot0._simagefg:LoadImage(ResUrl.getStoryPrologueSkip("prologueskip_fullbg2"))
-	slot0._simagefg2:LoadImage(ResUrl.getStoryPrologueSkip("bg1"))
-	slot0._simagebg1:LoadImage(ResUrl.getStoryPrologueSkip("bg2"))
-	slot0._simagebg2:LoadImage(ResUrl.getStoryPrologueSkip("bg3"))
-	slot0:_hideStoryViewContent(true)
+	arg_8_0._simagefg:LoadImage(ResUrl.getStoryPrologueSkip("prologueskip_fullbg2"))
+	arg_8_0._simagefg2:LoadImage(ResUrl.getStoryPrologueSkip("bg1"))
+	arg_8_0._simagebg1:LoadImage(ResUrl.getStoryPrologueSkip("bg2"))
+	arg_8_0._simagebg2:LoadImage(ResUrl.getStoryPrologueSkip("bg3"))
+	arg_8_0:_hideStoryViewContent(true)
 end
 
-function slot0._hideStoryViewContent(slot0, slot1)
-	gohelper.setActive(ViewMgr.instance:getContainer(ViewName.StoryHeroView).viewGO, not slot1)
-	gohelper.setActive(gohelper.findChild(ViewMgr.instance:getContainer(ViewName.StoryView).viewGO, "#go_contentroot"), not slot1)
+function var_0_0._hideStoryViewContent(arg_9_0, arg_9_1)
+	local var_9_0 = ViewMgr.instance:getContainer(ViewName.StoryHeroView)
+
+	gohelper.setActive(var_9_0.viewGO, not arg_9_1)
+
+	local var_9_1 = ViewMgr.instance:getContainer(ViewName.StoryView)
+	local var_9_2 = gohelper.findChild(var_9_1.viewGO, "#go_contentroot")
+
+	gohelper.setActive(var_9_2, not arg_9_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagefg:UnLoadImage()
-	slot0._simagefg2:UnLoadImage()
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simagefg:UnLoadImage()
+	arg_11_0._simagefg2:UnLoadImage()
+	arg_11_0._simagebg1:UnLoadImage()
+	arg_11_0._simagebg2:UnLoadImage()
 end
 
-return slot0
+return var_0_0

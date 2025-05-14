@@ -1,29 +1,29 @@
-module("modules.logic.currency.view.CurrencyExchangeViewContainer", package.seeall)
+﻿module("modules.logic.currency.view.CurrencyExchangeViewContainer", package.seeall)
 
-slot0 = class("CurrencyExchangeViewContainer", BaseViewContainer)
+local var_0_0 = class("CurrencyExchangeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		CurrencyExchangeView.New(),
 		TabViewGroup.New(1, "#go_righttop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		return slot0:_buildCurrency()
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		return arg_2_0:_buildCurrency()
 	end
 end
 
-function slot0._buildCurrency(slot0)
-	slot0._currencyView = CurrencyView.New({
+function var_0_0._buildCurrency(arg_3_0)
+	arg_3_0._currencyView = CurrencyView.New({
 		CurrencyEnum.CurrencyType.Diamond,
 		CurrencyEnum.CurrencyType.FreeDiamondCoupon
-	}, nil, , , true)
+	}, nil, nil, nil, true)
 
 	return {
-		slot0._currencyView
+		arg_3_0._currencyView
 	}
 end
 
-return slot0
+return var_0_0

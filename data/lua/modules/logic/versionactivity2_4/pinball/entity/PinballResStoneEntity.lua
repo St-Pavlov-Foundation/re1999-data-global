@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballResStoneEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResStoneEntity", package.seeall)
 
-slot0 = class("PinballResStoneEntity", PinballResEntity)
+local var_0_0 = class("PinballResStoneEntity", PinballResEntity)
 
-function slot0.onHitCount(slot0)
-	PinballModel.instance:addGameRes(slot0.resType, slot0.resNum)
-	PinballEntityMgr.instance:addNumShow(slot0.resNum, slot0.x + slot0.width, slot0.y + slot0.height)
-	PinballEntityMgr.instance:removeEntity(slot0.id)
+function var_0_0.onHitCount(arg_1_0)
+	PinballModel.instance:addGameRes(arg_1_0.resType, arg_1_0.resNum)
+	PinballEntityMgr.instance:addNumShow(arg_1_0.resNum, arg_1_0.x + arg_1_0.width, arg_1_0.y + arg_1_0.height)
+	PinballEntityMgr.instance:removeEntity(arg_1_0.id)
 end
 
-function slot0.onInitByCo(slot0)
-	slot0.resNum = tonumber(slot0.spData) or 0
+function var_0_0.onInitByCo(arg_2_0)
+	arg_2_0.resNum = tonumber(arg_2_0.spData) or 0
 end
 
-return slot0
+return var_0_0

@@ -1,24 +1,24 @@
-module("modules.logic.signin.model.SignInHeroBirthdayInfoMo", package.seeall)
+﻿module("modules.logic.signin.model.SignInHeroBirthdayInfoMo", package.seeall)
 
-slot0 = pureTable("SignInHeroBirthdayInfoMo")
+local var_0_0 = pureTable("SignInHeroBirthdayInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.heroId = 0
-	slot0.birthdayCount = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.heroId = 0
+	arg_1_0.birthdayCount = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.birthdayCount = slot1.birthdayCount
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.heroId = arg_2_1.heroId
+	arg_2_0.birthdayCount = arg_2_1.birthdayCount
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.birthdayCount = slot1.birthdayCount
+function var_0_0.reset(arg_3_0, arg_3_1)
+	arg_3_0.heroId = arg_3_1.heroId
+	arg_3_0.birthdayCount = arg_3_1.birthdayCount
 end
 
-function slot0.addBirthdayCount(slot0)
-	slot0.birthdayCount = slot0.birthdayCount + 1
+function var_0_0.addBirthdayCount(arg_4_0)
+	arg_4_0.birthdayCount = arg_4_0.birthdayCount + 1
 end
 
-return slot0
+return var_0_0

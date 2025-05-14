@@ -1,66 +1,66 @@
-module("modules.logic.versionactivity1_7.enter.view.subview.VersionActivitySubAnimatorComp", package.seeall)
+﻿module("modules.logic.versionactivity1_7.enter.view.subview.VersionActivitySubAnimatorComp", package.seeall)
 
-slot0 = class("VersionActivitySubAnimatorComp", UserDataDispose)
+local var_0_0 = class("VersionActivitySubAnimatorComp", UserDataDispose)
 
-function slot0.get(slot0, slot1)
-	slot2 = uv0.New()
+function var_0_0.get(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_0.New()
 
-	slot2:init(slot0, slot1)
+	var_1_0:init(arg_1_0, arg_1_1)
 
-	return slot2
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:__onInit()
 
-	slot0.animatorGo = slot1
-	slot0.animator = slot0.animatorGo:GetComponent(typeof(UnityEngine.Animator))
-	slot0.view = slot2
-	slot0.viewContainer = slot2.viewContainer
+	arg_2_0.animatorGo = arg_2_1
+	arg_2_0.animator = arg_2_0.animatorGo:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0.view = arg_2_2
+	arg_2_0.viewContainer = arg_2_2.viewContainer
 end
 
-function slot0.playOpenAnim(slot0)
-	if slot0.view.viewParam.skipOpenAnim then
-		slot0.animator:Play(UIAnimationName.Open, 0, 1)
+function var_0_0.playOpenAnim(arg_3_0)
+	if arg_3_0.view.viewParam.skipOpenAnim then
+		arg_3_0.animator:Play(UIAnimationName.Open, 0, 1)
 
-		slot0.view.viewParam.skipOpenAnim = false
+		arg_3_0.view.viewParam.skipOpenAnim = false
 
-		slot0.viewContainer:markPlayedSubViewAnim()
+		arg_3_0.viewContainer:markPlayedSubViewAnim()
 
 		return
 	end
 
-	if slot0.viewContainer:getIsFirstPlaySubViewAnim() then
-		if slot0.view.viewParam.playVideo then
-			slot0.viewContainer:markPlayedSubViewAnim()
-			slot0.animator:Play(UIAnimationName.Open, 0, 0)
+	if arg_3_0.viewContainer:getIsFirstPlaySubViewAnim() then
+		if arg_3_0.view.viewParam.playVideo then
+			arg_3_0.viewContainer:markPlayedSubViewAnim()
+			arg_3_0.animator:Play(UIAnimationName.Open, 0, 0)
 
-			slot0.animator.speed = 0
+			arg_3_0.animator.speed = 0
 
-			slot0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, slot0.onPlayVideoDone, slot0)
-			slot0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, slot0.onPlayVideoDone, slot0)
+			arg_3_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, arg_3_0.onPlayVideoDone, arg_3_0)
+			arg_3_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, arg_3_0.onPlayVideoDone, arg_3_0)
 		else
-			slot0.animator:Play(UIAnimationName.Open, 0, 0)
+			arg_3_0.animator:Play(UIAnimationName.Open, 0, 0)
 
-			slot0.animator.speed = 1
+			arg_3_0.animator.speed = 1
 		end
 	else
-		slot0.animator:Play(UIAnimationName.Open, 0, 0)
+		arg_3_0.animator:Play(UIAnimationName.Open, 0, 0)
 
-		slot0.animator.speed = 1
+		arg_3_0.animator.speed = 1
 	end
 end
 
-function slot0.onPlayVideoDone(slot0)
-	slot0.animator.speed = 1
+function var_0_0.onPlayVideoDone(arg_4_0)
+	arg_4_0.animator.speed = 1
 
-	slot0.animator:Play(UIAnimationName.Open, 0, 0)
-	slot0:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, slot0.onPlayVideoDone, slot0)
-	slot0:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, slot0.onPlayVideoDone, slot0)
+	arg_4_0.animator:Play(UIAnimationName.Open, 0, 0)
+	arg_4_0:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, arg_4_0.onPlayVideoDone, arg_4_0)
+	arg_4_0:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, arg_4_0.onPlayVideoDone, arg_4_0)
 end
 
-function slot0.destroy(slot0)
-	slot0:__onDispose()
+function var_0_0.destroy(arg_5_0)
+	arg_5_0:__onDispose()
 end
 
-return slot0
+return var_0_0

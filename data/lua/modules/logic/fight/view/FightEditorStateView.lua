@@ -1,65 +1,74 @@
-module("modules.logic.fight.view.FightEditorStateView", package.seeall)
+﻿module("modules.logic.fight.view.FightEditorStateView", package.seeall)
 
-slot0 = class("FightEditorStateView", BaseViewExtended)
+local var_0_0 = class("FightEditorStateView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._btnListRoot = gohelper.findChild(slot0.viewGO, "root/topLeft/ScrollView/Viewport/Content")
-	slot0._btnModel = gohelper.findChild(slot0._btnListRoot, "btnModel")
-	slot0._center = gohelper.findChild(slot0.viewGO, "root/center")
-	slot0._closeBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/topRight/Button")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnListRoot = gohelper.findChild(arg_1_0.viewGO, "root/topLeft/ScrollView/Viewport/Content")
+	arg_1_0._btnModel = gohelper.findChild(arg_1_0._btnListRoot, "btnModel")
+	arg_1_0._center = gohelper.findChild(arg_1_0.viewGO, "root/center")
+	arg_1_0._closeBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/topRight/Button")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._closeBtn, slot0._onBtnClose, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._closeBtn, arg_2_0._onBtnClose, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_5_0)
+	return
 end
 
-function slot0._onBtnClose(slot0)
-	slot0:closeThis()
+function var_0_0._onBtnClose(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0:com_createObjList(slot0._onBtnItemShow, {
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = {
 		{
 			name = "最后一回合"
 		},
 		{
 			name = "战场日志"
 		}
-	}, slot0._btnListRoot, slot0._btnModel)
-	slot0:_onBtnClick1()
+	}
+
+	arg_7_0:com_createObjList(arg_7_0._onBtnItemShow, var_7_0, arg_7_0._btnListRoot, arg_7_0._btnModel)
+	arg_7_0:_onBtnClick1()
 end
 
-function slot0._onBtnItemShow(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "text").text = slot2.name
+function var_0_0._onBtnItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	gohelper.findChildText(arg_8_1, "text").text = arg_8_2.name
 
-	slot0:addClickCb(gohelper.findChildClick(slot1, "btn"), slot0["_onBtnClick" .. slot3], slot0)
+	local var_8_0 = gohelper.findChildClick(arg_8_1, "btn")
+
+	arg_8_0:addClickCb(var_8_0, arg_8_0["_onBtnClick" .. arg_8_3], arg_8_0)
 end
 
-function slot0._onBtnClick1(slot0)
-	slot0:openExclusiveView(nil, 1, FightEditorStateLastRoundLogView, "ui/viewres/fight/fighteditorstatelogview.prefab", slot0._center)
+function var_0_0._onBtnClick1(arg_9_0)
+	arg_9_0:openExclusiveView(nil, 1, FightEditorStateLastRoundLogView, "ui/viewres/fight/fighteditorstatelogview.prefab", arg_9_0._center)
 end
 
-function slot0._onBtnClick2(slot0)
-	slot0:openExclusiveView(nil, 2, FightEditorStateLogView, "ui/viewres/fight/fighteditorstatelogview.prefab", slot0._center)
+function var_0_0._onBtnClick2(arg_10_0)
+	arg_10_0:openExclusiveView(nil, 2, FightEditorStateLogView, "ui/viewres/fight/fighteditorstatelogview.prefab", arg_10_0._center)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

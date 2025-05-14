@@ -1,188 +1,221 @@
-module("modules.logic.rouge.model.RougeHeroGroupQuickEditListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeHeroGroupQuickEditListModel", package.seeall)
 
-slot0 = class("RougeHeroGroupQuickEditListModel", ListScrollModel)
+local var_0_0 = class("RougeHeroGroupQuickEditListModel", ListScrollModel)
 
-function slot0.calcTotalCapacity(slot0)
-	for slot5, slot6 in pairs(slot0._inTeamHeroUidList) do
-		if HeroModel.instance:getById(slot6) then
-			slot1 = 0 + RougeController.instance:getRoleStyleCapacity(slot7, RougeEnum.FightTeamNormalHeroNum < slot5 and not slot0._skipAssitType)
+function var_0_0.calcTotalCapacity(arg_1_0)
+	local var_1_0 = 0
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_0._inTeamHeroUidList) do
+		local var_1_1 = HeroModel.instance:getById(iter_1_1)
+
+		if var_1_1 then
+			var_1_0 = var_1_0 + RougeController.instance:getRoleStyleCapacity(var_1_1, iter_1_0 > RougeEnum.FightTeamNormalHeroNum and not arg_1_0._skipAssitType)
 		end
 	end
 
-	return slot1 + slot0:_getAssitCapacity() + RougeHeroGroupEditListModel.instance:getAssistCapacity()
+	return var_1_0 + arg_1_0:_getAssitCapacity() + RougeHeroGroupEditListModel.instance:getAssistCapacity()
 end
 
-function slot0._isTeamCapacityEnough(slot0, slot1, slot2)
-	slot3 = 0
-	slot4 = false
+function var_0_0._isTeamCapacityEnough(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = 0
+	local var_2_1 = false
 
-	for slot8, slot9 in pairs(slot0._inTeamHeroUidList) do
-		slot10 = HeroModel.instance:getById(slot9)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._inTeamHeroUidList) do
+		local var_2_2 = HeroModel.instance:getById(iter_2_1)
 
-		if slot9 == slot2 then
-			slot4 = true
+		if iter_2_1 == arg_2_2 then
+			var_2_1 = true
 		end
 
-		if slot10 then
-			slot3 = slot3 + RougeController.instance:getRoleStyleCapacity(slot10, RougeEnum.FightTeamNormalHeroNum < slot8 and not slot0._skipAssitType)
+		if var_2_2 then
+			var_2_0 = var_2_0 + RougeController.instance:getRoleStyleCapacity(var_2_2, iter_2_0 > RougeEnum.FightTeamNormalHeroNum and not arg_2_0._skipAssitType)
 		end
 	end
 
-	if not slot4 and HeroModel.instance:getById(slot2) then
-		slot3 = slot3 + RougeController.instance:getRoleStyleCapacity(slot5, RougeEnum.FightTeamNormalHeroNum < slot1 and not slot0._skipAssitType)
+	if not var_2_1 then
+		local var_2_3 = HeroModel.instance:getById(arg_2_2)
+
+		if var_2_3 then
+			var_2_0 = var_2_0 + RougeController.instance:getRoleStyleCapacity(var_2_3, arg_2_1 > RougeEnum.FightTeamNormalHeroNum and not arg_2_0._skipAssitType)
+		end
 	end
 
-	return slot3 + slot0:_getAssitCapacity(slot1, slot2) + RougeHeroGroupEditListModel.instance:getAssistCapacity() <= RougeHeroGroupEditListModel.instance:getTotalCapacity()
+	return var_2_0 + arg_2_0:_getAssitCapacity(arg_2_1, arg_2_2) + RougeHeroGroupEditListModel.instance:getAssistCapacity() <= RougeHeroGroupEditListModel.instance:getTotalCapacity()
 end
 
-function slot0._getAssitCapacity(slot0, slot1, slot2)
-	if slot0._edityType ~= RougeEnum.HeroGroupEditType.Fight then
+function var_0_0._getAssitCapacity(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_0._edityType ~= RougeEnum.HeroGroupEditType.Fight then
 		return 0
 	end
 
-	slot3 = nil
+	local var_3_0
 
-	if slot1 and slot2 then
-		slot3 = {
-			[slot7] = slot8
-		}
+	if arg_3_1 and arg_3_2 then
+		var_3_0 = {}
 
-		for slot7, slot8 in pairs(slot0._inTeamHeroUidList) do
-			if HeroModel.instance:getById(slot8) then
-				-- Nothing
-			elseif slot2 then
-				slot3[slot7] = slot2
-				slot2 = nil
+		for iter_3_0, iter_3_1 in pairs(arg_3_0._inTeamHeroUidList) do
+			if HeroModel.instance:getById(iter_3_1) then
+				var_3_0[iter_3_0] = iter_3_1
+			elseif arg_3_2 then
+				var_3_0[iter_3_0] = arg_3_2
+				arg_3_2 = nil
 			end
 		end
 	end
 
-	slot4 = 0
-	slot7 = {
-		[slot14.heroId] = slot14
-	}
+	var_3_0 = var_3_0 or arg_3_0._inTeamHeroUidList
 
-	for slot11, slot12 in ipairs(RougeHeroSingleGroupModel.instance:getList()) do
-		if slot11 <= RougeEnum.FightTeamNormalHeroNum then
-			if HeroModel.instance:getById((slot3 or slot0._inTeamHeroUidList)[slot11]) then
-				-- Nothing
+	local var_3_1 = 0
+	local var_3_2 = RougeHeroSingleGroupModel.instance:getList()
+	local var_3_3 = {}
+	local var_3_4 = {}
+
+	for iter_3_2, iter_3_3 in ipairs(var_3_2) do
+		var_3_3[iter_3_2] = nil
+
+		if iter_3_2 <= RougeEnum.FightTeamNormalHeroNum then
+			local var_3_5 = var_3_0[iter_3_2]
+			local var_3_6 = HeroModel.instance:getById(var_3_5)
+
+			var_3_3[iter_3_2] = var_3_6
+
+			if var_3_6 then
+				var_3_4[var_3_6.heroId] = var_3_6
 			end
-		elseif slot12:getHeroMO() and not slot7[slot13.heroId] and slot6[slot11 - RougeEnum.FightTeamNormalHeroNum] then
-			slot6[slot11] = slot13
+		else
+			local var_3_7 = iter_3_3:getHeroMO()
+
+			if var_3_7 and not var_3_4[var_3_7.heroId] and var_3_3[iter_3_2 - RougeEnum.FightTeamNormalHeroNum] then
+				var_3_3[iter_3_2] = var_3_7
+			end
 		end
 	end
 
-	for slot11, slot12 in pairs({
-		[slot11] = nil,
-		[slot11] = slot14
-	}) do
-		if RougeEnum.FightTeamNormalHeroNum < slot11 then
-			slot4 = slot4 + RougeController.instance:getRoleStyleCapacity(slot12, RougeEnum.FightTeamNormalHeroNum < slot11 and not slot0._skipAssitType)
+	for iter_3_4, iter_3_5 in pairs(var_3_3) do
+		if iter_3_4 > RougeEnum.FightTeamNormalHeroNum then
+			var_3_1 = var_3_1 + RougeController.instance:getRoleStyleCapacity(iter_3_5, iter_3_4 > RougeEnum.FightTeamNormalHeroNum and not arg_3_0._skipAssitType)
 		end
 	end
 
-	return slot4
+	return var_3_1
 end
 
-function slot0.copyQuickEditCardList(slot0)
-	slot0._edityType = RougeHeroGroupEditListModel.instance:getHeroGroupEditType()
-	slot0._isSelectHeroType = slot0._edityType == RougeEnum.HeroGroupEditType.SelectHero
-	slot0._isInitType = slot0._edityType == RougeEnum.HeroGroupEditType.Init
-	slot0._skipAssitType = not slot0._isSelectHeroType and not slot0._isInitType
+function var_0_0.copyQuickEditCardList(arg_4_0)
+	arg_4_0._edityType = RougeHeroGroupEditListModel.instance:getHeroGroupEditType()
+	arg_4_0._isSelectHeroType = arg_4_0._edityType == RougeEnum.HeroGroupEditType.SelectHero
+	arg_4_0._isInitType = arg_4_0._edityType == RougeEnum.HeroGroupEditType.Init
+	arg_4_0._skipAssitType = not arg_4_0._isSelectHeroType and not arg_4_0._isInitType
 
-	if slot0._isInitType then
-		slot0._battleRoleNum = RougeEnum.InitTeamHeroNum
+	if arg_4_0._isInitType then
+		arg_4_0._battleRoleNum = RougeEnum.InitTeamHeroNum
 	else
-		slot0._battleRoleNum = RougeEnum.DefaultTeamHeroNum
+		arg_4_0._battleRoleNum = RougeEnum.DefaultTeamHeroNum
 	end
 
-	slot1 = nil
-	slot1 = (not slot0._isSelectHeroType or RougeHeroGroupEditListModel.instance:getSelectHeroList(CharacterBackpackCardListModel.instance:getCharacterCardList())) and (slot0._edityType ~= RougeEnum.HeroGroupEditType.Init or CharacterBackpackCardListModel.instance:getCharacterCardList()) and RougeHeroGroupEditListModel.instance:getTeamList(CharacterBackpackCardListModel.instance:getCharacterCardList())
-	slot3 = {}
-	slot0._inTeamHeroUidMap = {}
-	slot0._inTeamHeroUidList = {}
-	slot0._originalHeroUidList = {}
-	slot0._assitPosIndex = {}
-	slot0._selectUid = nil
+	local var_4_0
 
-	for slot8, slot9 in ipairs(RougeHeroSingleGroupModel.instance:getList()) do
-		if tonumber(slot9.heroUid) > 0 and not slot3[slot11] then
-			table.insert({}, HeroModel.instance:getById(slot11))
+	if arg_4_0._isSelectHeroType then
+		var_4_0 = RougeHeroGroupEditListModel.instance:getSelectHeroList(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	elseif arg_4_0._edityType == RougeEnum.HeroGroupEditType.Init then
+		var_4_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+	else
+		var_4_0 = RougeHeroGroupEditListModel.instance:getTeamList(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	end
 
-			if slot0:isPositionOpen(slot8) then
-				slot0._inTeamHeroUidMap[slot11] = 1
+	local var_4_1 = {}
+	local var_4_2 = {}
+
+	arg_4_0._inTeamHeroUidMap = {}
+	arg_4_0._inTeamHeroUidList = {}
+	arg_4_0._originalHeroUidList = {}
+	arg_4_0._assitPosIndex = {}
+	arg_4_0._selectUid = nil
+
+	local var_4_3 = RougeHeroSingleGroupModel.instance:getList()
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_3) do
+		local var_4_4 = arg_4_0:isPositionOpen(iter_4_0)
+		local var_4_5 = iter_4_1.heroUid
+
+		if tonumber(var_4_5) > 0 and not var_4_2[var_4_5] then
+			table.insert(var_4_1, HeroModel.instance:getById(var_4_5))
+
+			if var_4_4 then
+				arg_4_0._inTeamHeroUidMap[var_4_5] = 1
 			end
 
-			slot3[slot11] = true
-		elseif RougeHeroSingleGroupModel.instance:getByIndex(slot8).trial then
-			table.insert(slot2, HeroGroupTrialModel.instance:getById(slot11))
+			var_4_2[var_4_5] = true
+		elseif RougeHeroSingleGroupModel.instance:getByIndex(iter_4_0).trial then
+			table.insert(var_4_1, HeroGroupTrialModel.instance:getById(var_4_5))
 
-			if slot10 then
-				slot0._inTeamHeroUidMap[slot11] = 1
+			if var_4_4 then
+				arg_4_0._inTeamHeroUidMap[var_4_5] = 1
 			end
 
-			slot3[slot11] = true
+			var_4_2[var_4_5] = true
 		end
 
-		if slot10 then
-			table.insert(slot0._inTeamHeroUidList, slot11)
-			table.insert(slot0._originalHeroUidList, slot11)
+		if var_4_4 then
+			table.insert(arg_4_0._inTeamHeroUidList, var_4_5)
+			table.insert(arg_4_0._originalHeroUidList, var_4_5)
 		end
 
-		if RougeEnum.FightTeamNormalHeroNum < slot8 then
-			slot0._assitPosIndex[slot11] = slot8
+		if iter_4_0 > RougeEnum.FightTeamNormalHeroNum then
+			arg_4_0._assitPosIndex[var_4_5] = iter_4_0
 		end
 	end
 
-	slot5 = RougeHeroGroupEditListModel.instance:getAssistHeroId()
+	local var_4_6 = RougeHeroGroupEditListModel.instance:getAssistHeroId()
+	local var_4_7 = {}
 
-	for slot10, slot11 in ipairs(slot1) do
-		if not slot3[slot11.uid] then
-			slot3[slot11.uid] = true
+	for iter_4_2, iter_4_3 in ipairs(var_4_0) do
+		if not var_4_2[iter_4_3.uid] then
+			var_4_2[iter_4_3.uid] = true
 
-			if slot0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(slot11.heroId) > 0 then
-					table.insert({}, slot11)
+			if arg_4_0.adventure then
+				if WeekWalkModel.instance:getCurMapHeroCd(iter_4_3.heroId) > 0 then
+					table.insert(var_4_7, iter_4_3)
 				else
-					table.insert(slot2, slot11)
+					table.insert(var_4_1, iter_4_3)
 				end
-			elseif slot11.heroId ~= slot5 then
-				table.insert(slot2, slot11)
+			elseif iter_4_3.heroId ~= var_4_6 then
+				table.insert(var_4_1, iter_4_3)
 			end
 		end
 	end
 
-	if slot0.adventure then
-		tabletool.addValues(slot2, slot6)
+	if arg_4_0.adventure then
+		tabletool.addValues(var_4_1, var_4_7)
 	end
 
-	slot0:setList(slot2)
+	arg_4_0:setList(var_4_1)
 end
 
-function slot0.keepSelect(slot0, slot1)
-	slot0._selectIndex = slot1
-	slot2 = slot0:getList()
+function var_0_0.keepSelect(arg_5_0, arg_5_1)
+	arg_5_0._selectIndex = arg_5_1
 
-	if #slot0._scrollViews > 0 then
-		for slot6, slot7 in ipairs(slot0._scrollViews) do
-			slot7:selectCell(slot1, true)
+	local var_5_0 = arg_5_0:getList()
+
+	if #arg_5_0._scrollViews > 0 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._scrollViews) do
+			iter_5_1:selectCell(arg_5_1, true)
 		end
 
-		if slot2[slot1] then
-			return slot2[slot1]
+		if var_5_0[arg_5_1] then
+			return var_5_0[arg_5_1]
 		end
 	end
 end
 
-function slot0.isInTeamHero(slot0, slot1)
-	return slot0._inTeamHeroUidMap and slot0._inTeamHeroUidMap[slot1]
+function var_0_0.isInTeamHero(arg_6_0, arg_6_1)
+	return arg_6_0._inTeamHeroUidMap and arg_6_0._inTeamHeroUidMap[arg_6_1]
 end
 
-function slot0.getHeroTeamPos(slot0, slot1)
-	if slot0._inTeamHeroUidList then
-		for slot5, slot6 in pairs(slot0._inTeamHeroUidList) do
-			if slot6 == slot1 then
-				return slot5
+function var_0_0.getHeroTeamPos(arg_7_0, arg_7_1)
+	if arg_7_0._inTeamHeroUidList then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._inTeamHeroUidList) do
+			if iter_7_1 == arg_7_1 then
+				return iter_7_0
 			end
 		end
 	end
@@ -190,67 +223,73 @@ function slot0.getHeroTeamPos(slot0, slot1)
 	return 0
 end
 
-function slot0.selectHero(slot0, slot1)
-	if slot0:getHeroTeamPos(slot1) ~= 0 then
-		slot0._inTeamHeroUidList[slot2] = "0"
-		slot0._inTeamHeroUidMap[slot1] = nil
+function var_0_0.selectHero(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getHeroTeamPos(arg_8_1)
 
-		slot0:onModelUpdate()
+	if var_8_0 ~= 0 then
+		arg_8_0._inTeamHeroUidList[var_8_0] = "0"
+		arg_8_0._inTeamHeroUidMap[arg_8_1] = nil
 
-		slot0._selectUid = nil
+		arg_8_0:onModelUpdate()
+
+		arg_8_0._selectUid = nil
 
 		return true
 	else
-		if slot0._isInitType and not slot0:_isTeamCapacityEnough(slot2, slot1) then
+		if arg_8_0._isInitType and not arg_8_0:_isTeamCapacityEnough(var_8_0, arg_8_1) then
 			GameFacade.showToast(ToastEnum.RougeTeamCapacityFull)
 
 			return false
 		end
 
-		if slot0._isSelectHeroType and not slot0:_isTeamCapacityEnough(slot2, slot1) then
+		if arg_8_0._isSelectHeroType and not arg_8_0:_isTeamCapacityEnough(var_8_0, arg_8_1) then
 			GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 			return false
 		end
 
-		if slot0._edityType == RougeEnum.HeroGroupEditType.Fight and not slot0:_isTeamCapacityEnough(slot2, slot1) then
+		if arg_8_0._edityType == RougeEnum.HeroGroupEditType.Fight and not arg_8_0:_isTeamCapacityEnough(var_8_0, arg_8_1) then
 			GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 			return false
 		end
 
-		if slot0:isTeamFull() then
+		if arg_8_0:isTeamFull() then
 			GameFacade.showToast(ToastEnum.RougeTeamFull)
 
 			return false
 		end
 
-		slot3 = 0
+		local var_8_1 = 0
 
-		for slot7 = 1, #slot0._inTeamHeroUidList do
-			if slot0._inTeamHeroUidList[slot7] == 0 or slot8 == "0" and not slot0:_skipAssistPos(slot7) then
-				slot0._inTeamHeroUidList[slot7] = slot1
-				slot0._inTeamHeroUidMap[slot1] = 1
+		for iter_8_0 = 1, #arg_8_0._inTeamHeroUidList do
+			local var_8_2 = arg_8_0._inTeamHeroUidList[iter_8_0]
 
-				slot0:onModelUpdate()
+			if var_8_2 == 0 or var_8_2 == "0" and not arg_8_0:_skipAssistPos(iter_8_0) then
+				arg_8_0._inTeamHeroUidList[iter_8_0] = arg_8_1
+				arg_8_0._inTeamHeroUidMap[arg_8_1] = 1
+
+				arg_8_0:onModelUpdate()
 
 				return true
 			end
 		end
 
-		slot0._selectUid = slot1
+		arg_8_0._selectUid = arg_8_1
 	end
 
 	return false
 end
 
-function slot0.isRepeatHero(slot0, slot1, slot2)
-	if not slot0._inTeamHeroUidMap then
+function var_0_0.isRepeatHero(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._inTeamHeroUidMap then
 		return false
 	end
 
-	for slot6 in pairs(slot0._inTeamHeroUidMap) do
-		if slot0:getById(slot6).heroId == slot1 and slot2 ~= slot7.uid then
+	for iter_9_0 in pairs(arg_9_0._inTeamHeroUidMap) do
+		local var_9_0 = arg_9_0:getById(iter_9_0)
+
+		if var_9_0.heroId == arg_9_1 and arg_9_2 ~= var_9_0.uid then
 			return true
 		end
 	end
@@ -258,43 +297,45 @@ function slot0.isRepeatHero(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.isTrialLimit(slot0)
-	if not slot0._inTeamHeroUidMap then
+function var_0_0.isTrialLimit(arg_10_0)
+	if not arg_10_0._inTeamHeroUidMap then
 		return false
 	end
 
-	for slot5 in pairs(slot0._inTeamHeroUidMap) do
-		if slot0:getById(slot5):isTrial() then
-			slot1 = 0 + 1
+	local var_10_0 = 0
+
+	for iter_10_0 in pairs(arg_10_0._inTeamHeroUidMap) do
+		if arg_10_0:getById(iter_10_0):isTrial() then
+			var_10_0 = var_10_0 + 1
 		end
 	end
 
-	return HeroGroupTrialModel.instance:getLimitNum() <= slot1
+	return var_10_0 >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function slot0.inInTeam(slot0, slot1)
-	if not slot0._inTeamHeroUidMap then
+function var_0_0.inInTeam(arg_11_0, arg_11_1)
+	if not arg_11_0._inTeamHeroUidMap then
 		return false
 	end
 
-	return slot0._inTeamHeroUidMap[slot1] and true or false
+	return arg_11_0._inTeamHeroUidMap[arg_11_1] and true or false
 end
 
-function slot0.getHeroUids(slot0)
-	return slot0._inTeamHeroUidList
+function var_0_0.getHeroUids(arg_12_0)
+	return arg_12_0._inTeamHeroUidList
 end
 
-function slot0.getHeroUidByPos(slot0, slot1)
-	return slot0._inTeamHeroUidList[slot1]
+function var_0_0.getHeroUidByPos(arg_13_0, arg_13_1)
+	return arg_13_0._inTeamHeroUidList[arg_13_1]
 end
 
-function slot0.getAssitPosIndex(slot0, slot1)
-	return slot0._assitPosIndex[slot1]
+function var_0_0.getAssitPosIndex(arg_14_0, arg_14_1)
+	return arg_14_0._assitPosIndex[arg_14_1]
 end
 
-function slot0.getIsDirty(slot0)
-	for slot4 = 1, #slot0._inTeamHeroUidList do
-		if slot0._inTeamHeroUidList[slot4] ~= slot0._originalHeroUidList[slot4] then
+function var_0_0.getIsDirty(arg_15_0)
+	for iter_15_0 = 1, #arg_15_0._inTeamHeroUidList do
+		if arg_15_0._inTeamHeroUidList[iter_15_0] ~= arg_15_0._originalHeroUidList[iter_15_0] then
 			return true
 		end
 	end
@@ -302,31 +343,36 @@ function slot0.getIsDirty(slot0)
 	return false
 end
 
-function slot0.cancelAllSelected(slot0)
-	if slot0._scrollViews then
-		for slot4, slot5 in ipairs(slot0._scrollViews) do
-			slot5:selectCell(slot0:getIndex(slot5:getFirstSelect()), false)
+function var_0_0.cancelAllSelected(arg_16_0)
+	if arg_16_0._scrollViews then
+		for iter_16_0, iter_16_1 in ipairs(arg_16_0._scrollViews) do
+			local var_16_0 = iter_16_1:getFirstSelect()
+			local var_16_1 = arg_16_0:getIndex(var_16_0)
+
+			iter_16_1:selectCell(var_16_1, false)
 		end
 	end
 end
 
-function slot0.isPositionOpen(slot0, slot1)
-	if slot0._isSelectHeroType or slot0._isInitType then
+function var_0_0.isPositionOpen(arg_17_0, arg_17_1)
+	if arg_17_0._isSelectHeroType or arg_17_0._isInitType then
 		return true
 	end
 
-	return RougeHeroGroupModel.instance:isPositionOpen(slot1)
+	return RougeHeroGroupModel.instance:isPositionOpen(arg_17_1)
 end
 
-function slot0.isTeamFull(slot0)
-	if slot0._isSelectHeroType then
+function var_0_0.isTeamFull(arg_18_0)
+	if arg_18_0._isSelectHeroType then
 		return false
 	end
 
-	slot5 = #slot0._inTeamHeroUidList
+	local var_18_0 = arg_18_0._battleRoleNum
 
-	for slot5 = 1, math.min(slot0._battleRoleNum, slot5) do
-		if slot0._inTeamHeroUidList[slot5] == "0" and slot0:isPositionOpen(slot5) and not slot0:_skipAssistPos(slot5) then
+	for iter_18_0 = 1, math.min(var_18_0, #arg_18_0._inTeamHeroUidList) do
+		local var_18_1 = arg_18_0:isPositionOpen(iter_18_0)
+
+		if arg_18_0._inTeamHeroUidList[iter_18_0] == "0" and var_18_1 and not arg_18_0:_skipAssistPos(iter_18_0) then
 			return false
 		end
 	end
@@ -334,24 +380,24 @@ function slot0.isTeamFull(slot0)
 	return true
 end
 
-function slot0._skipAssistPos(slot0, slot1)
-	return RougeHeroGroupEditListModel.instance:getAssistPos() == slot1
+function var_0_0._skipAssistPos(arg_19_0, arg_19_1)
+	return RougeHeroGroupEditListModel.instance:getAssistPos() == arg_19_1
 end
 
-function slot0.setParam(slot0, slot1)
-	slot0.adventure = slot1
+function var_0_0.setParam(arg_20_0, arg_20_1)
+	arg_20_0.adventure = arg_20_1
 end
 
-function slot0.clear(slot0)
-	slot0._inTeamHeroUidMap = nil
-	slot0._inTeamHeroUidList = nil
-	slot0._originalHeroUidList = nil
-	slot0._selectIndex = nil
-	slot0._selectUid = nil
+function var_0_0.clear(arg_21_0)
+	arg_21_0._inTeamHeroUidMap = nil
+	arg_21_0._inTeamHeroUidList = nil
+	arg_21_0._originalHeroUidList = nil
+	arg_21_0._selectIndex = nil
+	arg_21_0._selectUid = nil
 
-	uv0.super.clear(slot0)
+	var_0_0.super.clear(arg_21_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

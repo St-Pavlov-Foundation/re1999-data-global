@@ -1,73 +1,74 @@
-module("modules.logic.ressplit.config.ResSplitConfig", package.seeall)
+﻿module("modules.logic.ressplit.config.ResSplitConfig", package.seeall)
 
-slot0 = class("ResSplitConfig", BaseConfig)
+local var_0_0 = class("ResSplitConfig", BaseConfig)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"app_include",
 		"version_res_split"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "app_include" then
-		slot0._appIncludeConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "app_include" then
+		arg_3_0._appIncludeConfig = arg_3_2
 	end
 end
 
-function slot0.getAppIncludeConfig(slot0)
-	return slot0._appIncludeConfig.configDict
+function var_0_0.getAppIncludeConfig(arg_4_0)
+	return arg_4_0._appIncludeConfig.configDict
 end
 
-function slot0.getMaxWeekWalkLayer(slot0)
-	if slot0._maxLayer == nil then
-		slot0._maxLayer = 0
+function var_0_0.getMaxWeekWalkLayer(arg_5_0)
+	if arg_5_0._maxLayer == nil then
+		arg_5_0._maxLayer = 0
 
-		for slot4, slot5 in pairs(slot0._appIncludeConfig.configDict) do
-			slot0._maxLayer = math.max(slot0._maxLayer, slot5.maxWeekWalk)
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._appIncludeConfig.configDict) do
+			arg_5_0._maxLayer = math.max(arg_5_0._maxLayer, iter_5_1.maxWeekWalk)
 		end
 	end
 
-	return slot0._maxLayer
+	return arg_5_0._maxLayer
 end
 
-function slot0.getAllChapterIds(slot0)
-	if slot0._allChapterIds == nil then
-		slot0._allChapterIds = {}
+function var_0_0.getAllChapterIds(arg_6_0)
+	if arg_6_0._allChapterIds == nil then
+		arg_6_0._allChapterIds = {}
 
-		for slot4, slot5 in pairs(slot0._appIncludeConfig.configDict) do
-			for slot9, slot10 in pairs(slot5.chapter) do
-				slot0._allChapterIds[slot10] = true
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._appIncludeConfig.configDict) do
+			for iter_6_2, iter_6_3 in pairs(iter_6_1.chapter) do
+				arg_6_0._allChapterIds[iter_6_3] = true
 			end
 		end
 	end
 
-	return slot0._allChapterIds
+	return arg_6_0._allChapterIds
 end
 
-function slot0.isSaveChapter(slot0, slot1)
-	slot0:getAllChapterIds()
+function var_0_0.isSaveChapter(arg_7_0, arg_7_1)
+	arg_7_0:getAllChapterIds()
 
-	return slot0._allChapterIds[slot1]
+	return arg_7_0._allChapterIds[arg_7_1]
 end
 
-function slot0.getAllCharacterIds(slot0)
-	if slot0._allCharacterIds == nil then
-		slot0._allCharacterIds = {}
+function var_0_0.getAllCharacterIds(arg_8_0)
+	if arg_8_0._allCharacterIds == nil then
+		arg_8_0._allCharacterIds = {}
 
-		for slot4, slot5 in pairs(slot0._appIncludeConfig.configDict) do
-			for slot9, slot10 in pairs(slot5.character) do
-				slot0._allCharacterIds[slot10] = true
+		for iter_8_0, iter_8_1 in pairs(arg_8_0._appIncludeConfig.configDict) do
+			for iter_8_2, iter_8_3 in pairs(iter_8_1.character) do
+				arg_8_0._allCharacterIds[iter_8_3] = true
 			end
 		end
 	end
 
-	return slot0._allCharacterIds
+	return arg_8_0._allCharacterIds
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

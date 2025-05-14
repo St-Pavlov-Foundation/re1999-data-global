@@ -1,235 +1,274 @@
-module("modules.logic.room.model.transport.quicklink.RoomTransportQuickLinkMO", package.seeall)
+﻿module("modules.logic.room.model.transport.quicklink.RoomTransportQuickLinkMO", package.seeall)
 
-slot0 = pureTable("RoomTransportQuickLinkMO")
+local var_0_0 = pureTable("RoomTransportQuickLinkMO")
 
-function slot0.init(slot0)
-	slot0._nodeMap = {}
-	slot0._nodeList = {}
-	slot0._nodePoolList = {}
-	slot0._maxSearchIndex = 200
+function var_0_0.init(arg_1_0)
+	arg_1_0._nodeMap = {}
+	arg_1_0._nodeList = {}
+	arg_1_0._nodePoolList = {}
+	arg_1_0._maxSearchIndex = 200
 
-	for slot5, slot6 in ipairs(RoomMapBlockModel.instance:getFullBlockMOList()) do
-		if RoomTransportHelper.canPathByBlockMO(slot6, true) then
-			slot7 = slot0:_popNode()
-			slot8 = slot6.hexPoint
+	local var_1_0 = RoomMapBlockModel.instance:getFullBlockMOList()
 
-			slot7:init(slot8)
-			RoomHelper.add2KeyValue(slot0._nodeMap, slot8.x, slot8.y, slot7)
-			table.insert(slot0._nodeList, slot7)
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		if RoomTransportHelper.canPathByBlockMO(iter_1_1, true) then
+			local var_1_1 = arg_1_0:_popNode()
+			local var_1_2 = iter_1_1.hexPoint
+
+			var_1_1:init(var_1_2)
+			RoomHelper.add2KeyValue(arg_1_0._nodeMap, var_1_2.x, var_1_2.y, var_1_1)
+			table.insert(arg_1_0._nodeList, var_1_1)
 		end
 	end
 
-	slot0._maxSearchIndex = #slot0._nodeList
+	arg_1_0._maxSearchIndex = #arg_1_0._nodeList
 end
 
-function slot0.findPath(slot0, slot1, slot2, slot3)
-	slot0:_resetNodeParam(slot3)
+function var_0_0.findPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0:_resetNodeParam(arg_2_3)
 
-	for slot8, slot9 in ipairs(RoomMapTransportPathModel.instance:getTransportPathMOList()) do
-		if slot9:isLinkFinish() then
-			for slot14, slot15 in ipairs(slot9:getHexPointList()) do
-				if RoomHelper.get2KeyValue(slot0._nodeMap, slot15.x, slot15.y) then
-					slot16.isBlock = true
+	local var_2_0 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		if iter_2_1:isLinkFinish() then
+			local var_2_1 = iter_2_1:getHexPointList()
+
+			for iter_2_2, iter_2_3 in ipairs(var_2_1) do
+				local var_2_2 = RoomHelper.get2KeyValue(arg_2_0._nodeMap, iter_2_3.x, iter_2_3.y)
+
+				if var_2_2 then
+					var_2_2.isBlock = true
 				end
 			end
 		end
 	end
 
-	for slot9, slot10 in ipairs({
-		slot1,
-		slot2
-	}) do
-		if RoomMapTransportPathModel.instance:getSiteHexPointByType(slot10) and RoomHelper.get2KeyValue(slot0._nodeMap, slot11.x, slot11.y) then
-			slot12.isBlock = false
+	local var_2_3 = {
+		arg_2_1,
+		arg_2_2
+	}
+
+	for iter_2_4, iter_2_5 in ipairs(var_2_3) do
+		local var_2_4 = RoomMapTransportPathModel.instance:getSiteHexPointByType(iter_2_5)
+
+		if var_2_4 then
+			local var_2_5 = RoomHelper.get2KeyValue(arg_2_0._nodeMap, var_2_4.x, var_2_4.y)
+
+			if var_2_5 then
+				var_2_5.isBlock = false
+			end
 		end
 	end
 
-	slot0._fromNodeList = {}
-	slot0._toNodeList = {}
+	arg_2_0._fromNodeList = {}
+	arg_2_0._toNodeList = {}
 
-	slot0:_addNodeList(slot0._fromNodeList, slot1)
-	slot0:_addNodeList(slot0._toNodeList, slot2)
-	slot0:_searchNode(slot0._toNodeList, 0)
-	table.sort(slot0._fromNodeList, uv0._sortFunction)
-	slot0:_clearSelectPathFlag()
+	arg_2_0:_addNodeList(arg_2_0._fromNodeList, arg_2_1)
+	arg_2_0:_addNodeList(arg_2_0._toNodeList, arg_2_2)
+	arg_2_0:_searchNode(arg_2_0._toNodeList, 0)
+	table.sort(arg_2_0._fromNodeList, var_0_0._sortFunction)
+	arg_2_0:_clearSelectPathFlag()
 
-	return slot0:_findNodePathList(slot0._fromNodeList[1])
+	return (arg_2_0:_findNodePathList(arg_2_0._fromNodeList[1]))
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if uv0._getLinkIdx(slot0) ~= uv0._getLinkIdx(slot1) then
-		return slot2 < slot3
+function var_0_0._sortFunction(arg_3_0, arg_3_1)
+	local var_3_0 = var_0_0._getLinkIdx(arg_3_0)
+	local var_3_1 = var_0_0._getLinkIdx(arg_3_1)
+
+	if var_3_0 ~= var_3_1 then
+		return var_3_0 < var_3_1
 	end
 
-	if slot0.searchIndex ~= slot1.searchIndex then
-		return slot0.searchIndex < slot1.searchIndex
+	if arg_3_0.searchIndex ~= arg_3_1.searchIndex then
+		return arg_3_0.searchIndex < arg_3_1.searchIndex
 	end
 end
 
-function slot0._getLinkIdx(slot0)
-	if slot0.isBlock or slot0.searchIndex == -1 then
+function var_0_0._getLinkIdx(arg_4_0)
+	if arg_4_0.isBlock or arg_4_0.searchIndex == -1 then
 		return 10000
 	end
 
-	if slot0.linkNum > 1 then
-		if slot0.searchIndex == 0 then
+	if arg_4_0.linkNum > 1 then
+		if arg_4_0.searchIndex == 0 then
 			return 2
 		end
 
 		return 1
 	end
 
-	if slot0.searchIndex == 0 then
+	if arg_4_0.searchIndex == 0 then
 		return 100
 	end
 
 	return 10
 end
 
-function slot0._addNodeList(slot0, slot1, slot2)
-	if RoomMapTransportPathModel.instance:getSiteHexPointByType(slot2) and RoomHelper.get2KeyValue(slot0._nodeMap, slot3.x, slot3.y) then
-		table.insert(slot1, slot4)
+function var_0_0._addNodeList(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = RoomMapTransportPathModel.instance:getSiteHexPointByType(arg_5_2)
 
-		return
+	if var_5_0 then
+		local var_5_1 = RoomHelper.get2KeyValue(arg_5_0._nodeMap, var_5_0.x, var_5_0.y)
+
+		if var_5_1 then
+			table.insert(arg_5_1, var_5_1)
+
+			return
+		end
 	end
 
-	if RoomMapBuildingAreaModel.instance:getAreaMOByBType(slot2) then
-		for slot9, slot10 in ipairs(slot4:getRangesHexPointList()) do
-			if RoomHelper.get2KeyValue(slot0._nodeMap, slot10.x, slot10.y) then
-				table.insert(slot1, slot11)
+	local var_5_2 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(arg_5_2)
+
+	if var_5_2 then
+		local var_5_3 = var_5_2:getRangesHexPointList()
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_3) do
+			local var_5_4 = RoomHelper.get2KeyValue(arg_5_0._nodeMap, iter_5_1.x, iter_5_1.y)
+
+			if var_5_4 then
+				table.insert(arg_5_1, var_5_4)
 			end
 		end
 	end
 end
 
-function slot0._updateNodeListLinkNum(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot6.linkNum = 0
+function var_0_0._updateNodeListLinkNum(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		iter_6_1.linkNum = 0
 
-		for slot10 = 1, 6 do
-			slot11 = HexPoint.directions[slot10]
+		for iter_6_2 = 1, 6 do
+			local var_6_0 = HexPoint.directions[iter_6_2]
+			local var_6_1 = RoomHelper.get2KeyValue(arg_6_0._nodeMap, var_6_0.x + iter_6_1.hexPoint.x, var_6_0.y + iter_6_1.hexPoint.y)
 
-			if RoomHelper.get2KeyValue(slot0._nodeMap, slot11.x + slot6.hexPoint.x, slot11.y + slot6.hexPoint.y) and not slot12.isBlock and slot12.searchIndex ~= -1 then
-				slot6.linkNum = slot6.linkNum + 1
+			if var_6_1 and not var_6_1.isBlock and var_6_1.searchIndex ~= -1 then
+				iter_6_1.linkNum = iter_6_1.linkNum + 1
 			end
 		end
 	end
 end
 
-function slot0._resetNodeParam(slot0, slot1)
-	for slot6 = 1, #slot0._nodeList do
-		slot7 = slot0._nodeList[slot6]
+function var_0_0._resetNodeParam(arg_7_0, arg_7_1)
+	local var_7_0 = RoomMapBuildingModel.instance
 
-		slot7:resetParam()
+	for iter_7_0 = 1, #arg_7_0._nodeList do
+		local var_7_1 = arg_7_0._nodeList[iter_7_0]
 
-		slot7.isBuilding = RoomMapBuildingModel.instance:isHasBuilding(slot7.hexPoint.x, slot7.hexPoint.y)
+		var_7_1:resetParam()
 
-		if slot1 then
-			slot7.isBlock = false
+		var_7_1.isBuilding = var_7_0:isHasBuilding(var_7_1.hexPoint.x, var_7_1.hexPoint.y)
+
+		if arg_7_1 then
+			var_7_1.isBlock = false
 		else
-			slot7.isBlock = slot7.isBuilding
+			var_7_1.isBlock = var_7_1.isBuilding
 		end
 	end
 end
 
-function slot0._findNodePathList(slot0, slot1, slot2)
-	if not slot1 or slot1.isBlock or slot1.searchIndex == -1 then
+function var_0_0._findNodePathList(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_1 or arg_8_1.isBlock or arg_8_1.searchIndex == -1 then
 		return nil
 	end
 
-	if slot1.searchIndex == 0 and slot2 and #slot2 > 1 then
-		return slot2
+	if arg_8_1.searchIndex == 0 and arg_8_2 and #arg_8_2 > 1 then
+		return arg_8_2
 	end
 
-	slot3 = nil
+	local var_8_0
+	local var_8_1 = arg_8_1.searchIndex - 1
 
-	if slot1.searchIndex - 1 < 0 then
-		slot4 = 0
+	if var_8_1 < 0 then
+		var_8_1 = 0
 	end
 
-	for slot8 = 1, 6 do
-		slot9 = HexPoint.directions[slot8]
+	for iter_8_0 = 1, 6 do
+		local var_8_2 = HexPoint.directions[iter_8_0]
+		local var_8_3 = RoomHelper.get2KeyValue(arg_8_0._nodeMap, var_8_2.x + arg_8_1.hexPoint.x, var_8_2.y + arg_8_1.hexPoint.y)
 
-		if RoomHelper.get2KeyValue(slot0._nodeMap, slot9.x + slot1.hexPoint.x, slot9.y + slot1.hexPoint.y) and slot10.searchIndex == slot4 and slot10.isSelectPath ~= true then
-			slot10.isSelectPath = true
+		if var_8_3 and var_8_3.searchIndex == var_8_1 and var_8_3.isSelectPath ~= true then
+			var_8_3.isSelectPath = true
 
-			if not slot2 then
-				slot1.isSelectPath = true
-				slot2 = {
-					slot1
+			if not arg_8_2 then
+				arg_8_1.isSelectPath = true
+				arg_8_2 = {
+					arg_8_1
 				}
 			end
 
-			slot3 = slot10
+			var_8_0 = var_8_3
 
-			table.insert(slot2, slot10)
+			table.insert(arg_8_2, var_8_3)
 
 			break
 		end
 	end
 
-	return slot0:_findNodePathList(slot3, slot2)
+	return arg_8_0:_findNodePathList(var_8_0, arg_8_2)
 end
 
-function slot0._clearSelectPathFlag(slot0)
-	for slot4, slot5 in ipairs(slot0._nodeList) do
-		slot5.isSelectPath = false
+function var_0_0._clearSelectPathFlag(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._nodeList) do
+		iter_9_1.isSelectPath = false
 	end
 end
 
-function slot0._searchNode(slot0, slot1, slot2)
-	if not slot1 or #slot1 < 1 or slot0._maxSearchIndex < slot2 then
+function var_0_0._searchNode(arg_10_0, arg_10_1, arg_10_2)
+	if not arg_10_1 or #arg_10_1 < 1 or arg_10_2 > arg_10_0._maxSearchIndex then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if not slot7.isBlock and (slot7.searchIndex == -1 or slot2 < slot7.searchIndex) then
-			slot7.searchIndex = slot2
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+		if not iter_10_1.isBlock and (iter_10_1.searchIndex == -1 or arg_10_2 < iter_10_1.searchIndex) then
+			iter_10_1.searchIndex = arg_10_2
 		end
 	end
 
-	slot3 = nil
-	slot4 = slot2 + 1
+	local var_10_0
+	local var_10_1 = arg_10_2 + 1
 
-	for slot8, slot9 in ipairs(slot1) do
-		if not slot9.isBlock and slot9.searchIndex == slot2 then
-			for slot13 = 1, 6 do
-				slot14 = HexPoint.directions[slot13]
+	for iter_10_2, iter_10_3 in ipairs(arg_10_1) do
+		if not iter_10_3.isBlock and iter_10_3.searchIndex == arg_10_2 then
+			for iter_10_4 = 1, 6 do
+				local var_10_2 = HexPoint.directions[iter_10_4]
+				local var_10_3 = RoomHelper.get2KeyValue(arg_10_0._nodeMap, var_10_2.x + iter_10_3.hexPoint.x, var_10_2.y + iter_10_3.hexPoint.y)
 
-				if RoomHelper.get2KeyValue(slot0._nodeMap, slot14.x + slot9.hexPoint.x, slot14.y + slot9.hexPoint.y) and not slot15.isBlock and (slot15.searchIndex == -1 or slot4 < slot15.searchIndex) then
-					slot15.searchIndex = slot4
+				if var_10_3 and not var_10_3.isBlock and (var_10_3.searchIndex == -1 or var_10_1 < var_10_3.searchIndex) then
+					var_10_3.searchIndex = var_10_1
+					var_10_0 = var_10_0 or {}
 
-					table.insert(slot3 or {}, slot15)
+					table.insert(var_10_0, var_10_3)
 				end
 			end
 		end
 	end
 
-	slot0:_searchNode(slot3, slot4)
+	arg_10_0:_searchNode(var_10_0, var_10_1)
 end
 
-function slot0._popNode(slot0)
-	slot1 = nil
+function var_0_0._popNode(arg_11_0)
+	local var_11_0
+	local var_11_1 = #arg_11_0._nodePoolList
 
-	if #slot0._nodePoolList > 0 then
-		slot1 = slot0._nodePoolList[slot2]
+	if var_11_1 > 0 then
+		var_11_0 = arg_11_0._nodePoolList[var_11_1]
 
-		table.remove(slot0._nodePoolList, slot2)
+		table.remove(arg_11_0._nodePoolList, var_11_1)
 	else
-		slot1 = RoomTransportNodeMO.New()
+		var_11_0 = RoomTransportNodeMO.New()
 	end
 
-	return slot1
+	return var_11_0
 end
 
-function slot0._pushNode(slot0, slot1)
-	if slot1 then
-		table.insert(slot0._nodePoolList, slot1)
+function var_0_0._pushNode(arg_12_0, arg_12_1)
+	if arg_12_1 then
+		table.insert(arg_12_0._nodePoolList, arg_12_1)
 	end
 end
 
-function slot0.getNodeList(slot0)
-	return slot0._nodeList
+function var_0_0.getNodeList(arg_13_0)
+	return arg_13_0._nodeList
 end
 
-return slot0
+return var_0_0

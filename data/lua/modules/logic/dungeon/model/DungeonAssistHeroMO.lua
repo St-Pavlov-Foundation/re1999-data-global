@@ -1,172 +1,168 @@
-module("modules.logic.dungeon.model.DungeonAssistHeroMO", package.seeall)
+﻿module("modules.logic.dungeon.model.DungeonAssistHeroMO", package.seeall)
 
-slot0 = pureTable("DungeonAssistHeroMO")
+local var_0_0 = pureTable("DungeonAssistHeroMO")
 
-function slot0.init(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	if not arg_1_1 or not arg_1_2 then
 		return false
 	end
 
-	slot0.assistType = slot1
-	slot0.heroUid = slot2.heroUid
-	slot0.userId = slot2.userId
-	slot0.name = slot2.name
-	slot0.userLevel = slot2.userLevel
-	slot0.portrait = slot2.portrait
-	slot0.bg = slot2.bg
-	slot0.isFriend = slot2.isFriend
-	slot0.heroId = slot2.heroId
-	slot0.level = slot2.level
-	slot0.rank = slot2.rank
-	slot0.skin = slot2.skin
-	slot0.passiveSkillLevel = slot2.passiveSkillLevel
-	slot0.exSkillLevel = slot2.exSkillLevel
-	slot0.talent = slot2.talent
-	slot0.balanceLevel = slot2.balanceLevel
-	slot0.isOpenTalent = slot2.isOpenTalent
-	slot0.style = slot2.style
-	slot0.originalTalentCubeInfos = nil
+	arg_1_0.assistType = arg_1_1
+	arg_1_0.heroUid = arg_1_2.heroUid
+	arg_1_0.userId = arg_1_2.userId
+	arg_1_0.name = arg_1_2.name
+	arg_1_0.userLevel = arg_1_2.userLevel
+	arg_1_0.portrait = arg_1_2.portrait
+	arg_1_0.bg = arg_1_2.bg
+	arg_1_0.isFriend = arg_1_2.isFriend
+	arg_1_0.heroId = arg_1_2.heroId
+	arg_1_0.level = arg_1_2.level
+	arg_1_0.rank = arg_1_2.rank
+	arg_1_0.skin = arg_1_2.skin
+	arg_1_0.passiveSkillLevel = arg_1_2.passiveSkillLevel
+	arg_1_0.exSkillLevel = arg_1_2.exSkillLevel
+	arg_1_0.talent = arg_1_2.talent
+	arg_1_0.balanceLevel = arg_1_2.balanceLevel
+	arg_1_0.isOpenTalent = arg_1_2.isOpenTalent
+	arg_1_0.style = arg_1_2.style
+	arg_1_0.originalTalentCubeInfos = nil
 
-	if slot2.talentCubeInfos then
-		slot0.talentCubeInfos = HeroTalentCubeInfosMO.New()
+	if arg_1_2.talentCubeInfos then
+		arg_1_0.talentCubeInfos = HeroTalentCubeInfosMO.New()
 
-		slot0.talentCubeInfos:init(slot2.talentCubeInfos)
+		arg_1_0.talentCubeInfos:init(arg_1_2.talentCubeInfos)
+		arg_1_0.talentCubeInfos:setOwnData(arg_1_0.heroId, arg_1_0.talent)
 
-		slot6 = slot0.talent
+		arg_1_0.originalTalentCubeInfos = {}
 
-		slot0.talentCubeInfos:setOwnData(slot0.heroId, slot6)
-
-		slot0.originalTalentCubeInfos = {}
-
-		for slot6, slot7 in ipairs(slot2.talentCubeInfos) do
-			slot0.originalTalentCubeInfos[slot6] = {
-				cubeId = slot7.cubeId,
-				direction = slot7.direction,
-				posX = slot7.posX,
-				posY = slot7.posY
-			}
+		for iter_1_0, iter_1_1 in ipairs(arg_1_2.talentCubeInfos) do
+			arg_1_0.originalTalentCubeInfos[iter_1_0] = {}
+			arg_1_0.originalTalentCubeInfos[iter_1_0].cubeId = iter_1_1.cubeId
+			arg_1_0.originalTalentCubeInfos[iter_1_0].direction = iter_1_1.direction
+			arg_1_0.originalTalentCubeInfos[iter_1_0].posX = iter_1_1.posX
+			arg_1_0.originalTalentCubeInfos[iter_1_0].posY = iter_1_1.posY
 		end
 	end
 
-	slot0.destinyRank = slot2.destinyRank
-	slot0.destinyLevel = slot2.destinyLevel
-	slot0.destinyStone = slot2.destinyStone
+	arg_1_0.destinyRank = arg_1_2.destinyRank
+	arg_1_0.destinyLevel = arg_1_2.destinyLevel
+	arg_1_0.destinyStone = arg_1_2.destinyStone
 
 	return true
 end
 
-function slot0.getHeroInfo(slot0)
+function var_0_0.getHeroInfo(arg_2_0)
 	return {
-		heroUid = slot0:getHeroUid(),
-		userId = slot0:getUserId(),
-		name = slot0:getName(),
-		userLevel = slot0:getUserLevel(),
-		portrait = slot0:getPortrait(),
-		bg = slot0:getBg(),
-		isFriend = slot0:getIsFriend(),
-		heroId = slot0:getHeroId(),
-		level = slot0:getLevel(),
-		rank = slot0:getRank(),
-		skin = slot0:getSkin(),
-		passiveSkillLevel = slot0:getPassiveSkillLevel(),
-		exSkillLevel = slot0:getExSkillLevel(),
-		talent = slot0:getTalent(),
-		talentCubeInfos = slot0:getOriginalTalentCubeInfos(),
-		balanceLevel = slot0:getBalanceLevel(),
-		isOpenTalent = slot0:getIsOpenTalent(),
-		style = slot0:getTalentStyle(),
-		destinyRank = slot0:getDestinyRank(),
-		destinyLevel = slot0:getDestinyLevel(),
-		destinyStone = slot0:getDestinyStone()
+		heroUid = arg_2_0:getHeroUid(),
+		userId = arg_2_0:getUserId(),
+		name = arg_2_0:getName(),
+		userLevel = arg_2_0:getUserLevel(),
+		portrait = arg_2_0:getPortrait(),
+		bg = arg_2_0:getBg(),
+		isFriend = arg_2_0:getIsFriend(),
+		heroId = arg_2_0:getHeroId(),
+		level = arg_2_0:getLevel(),
+		rank = arg_2_0:getRank(),
+		skin = arg_2_0:getSkin(),
+		passiveSkillLevel = arg_2_0:getPassiveSkillLevel(),
+		exSkillLevel = arg_2_0:getExSkillLevel(),
+		talent = arg_2_0:getTalent(),
+		talentCubeInfos = arg_2_0:getOriginalTalentCubeInfos(),
+		balanceLevel = arg_2_0:getBalanceLevel(),
+		isOpenTalent = arg_2_0:getIsOpenTalent(),
+		style = arg_2_0:getTalentStyle(),
+		destinyRank = arg_2_0:getDestinyRank(),
+		destinyLevel = arg_2_0:getDestinyLevel(),
+		destinyStone = arg_2_0:getDestinyStone()
 	}
 end
 
-function slot0.getHeroUid(slot0)
-	return slot0.heroUid
+function var_0_0.getHeroUid(arg_3_0)
+	return arg_3_0.heroUid
 end
 
-function slot0.getUserId(slot0)
-	return slot0.userId
+function var_0_0.getUserId(arg_4_0)
+	return arg_4_0.userId
 end
 
-function slot0.getName(slot0)
-	return slot0.name
+function var_0_0.getName(arg_5_0)
+	return arg_5_0.name
 end
 
-function slot0.getUserLevel(slot0)
-	return slot0.userLevel or 0
+function var_0_0.getUserLevel(arg_6_0)
+	return arg_6_0.userLevel or 0
 end
 
-function slot0.getPortrait(slot0)
-	return slot0.portrait
+function var_0_0.getPortrait(arg_7_0)
+	return arg_7_0.portrait
 end
 
-function slot0.getBg(slot0)
-	return slot0.bg
+function var_0_0.getBg(arg_8_0)
+	return arg_8_0.bg
 end
 
-function slot0.getIsFriend(slot0)
-	return slot0.isFriend
+function var_0_0.getIsFriend(arg_9_0)
+	return arg_9_0.isFriend
 end
 
-function slot0.getHeroId(slot0)
-	return slot0.heroId
+function var_0_0.getHeroId(arg_10_0)
+	return arg_10_0.heroId
 end
 
-function slot0.getLevel(slot0)
-	return slot0.level or 0
+function var_0_0.getLevel(arg_11_0)
+	return arg_11_0.level or 0
 end
 
-function slot0.getRank(slot0)
-	return slot0.rank
+function var_0_0.getRank(arg_12_0)
+	return arg_12_0.rank
 end
 
-function slot0.getSkin(slot0)
-	return slot0.skin
+function var_0_0.getSkin(arg_13_0)
+	return arg_13_0.skin
 end
 
-function slot0.getPassiveSkillLevel(slot0)
-	return slot0.passiveSkillLevel
+function var_0_0.getPassiveSkillLevel(arg_14_0)
+	return arg_14_0.passiveSkillLevel
 end
 
-function slot0.getExSkillLevel(slot0)
-	return slot0.exSkillLevel
+function var_0_0.getExSkillLevel(arg_15_0)
+	return arg_15_0.exSkillLevel
 end
 
-function slot0.getTalent(slot0)
-	return slot0.talent
+function var_0_0.getTalent(arg_16_0)
+	return arg_16_0.talent
 end
 
-function slot0.getOriginalTalentCubeInfos(slot0)
-	return slot0.originalTalentCubeInfos
+function var_0_0.getOriginalTalentCubeInfos(arg_17_0)
+	return arg_17_0.originalTalentCubeInfos
 end
 
-function slot0.getTalentCubeInfos(slot0)
-	return slot0.talentCubeInfos
+function var_0_0.getTalentCubeInfos(arg_18_0)
+	return arg_18_0.talentCubeInfos
 end
 
-function slot0.getBalanceLevel(slot0)
-	return slot0.balanceLevel or 0
+function var_0_0.getBalanceLevel(arg_19_0)
+	return arg_19_0.balanceLevel or 0
 end
 
-function slot0.getIsOpenTalent(slot0)
-	return slot0.isOpenTalent
+function var_0_0.getIsOpenTalent(arg_20_0)
+	return arg_20_0.isOpenTalent
 end
 
-function slot0.getTalentStyle(slot0)
-	return slot0.style
+function var_0_0.getTalentStyle(arg_21_0)
+	return arg_21_0.style
 end
 
-function slot0.getDestinyRank(slot0)
-	return slot0.destinyRank
+function var_0_0.getDestinyRank(arg_22_0)
+	return arg_22_0.destinyRank
 end
 
-function slot0.getDestinyLevel(slot0)
-	return slot0.destinyLevel
+function var_0_0.getDestinyLevel(arg_23_0)
+	return arg_23_0.destinyLevel
 end
 
-function slot0.getDestinyStone(slot0)
-	return slot0.destinyStone
+function var_0_0.getDestinyStone(arg_24_0)
+	return arg_24_0.destinyStone
 end
 
-return slot0
+return var_0_0

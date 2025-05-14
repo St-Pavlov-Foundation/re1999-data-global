@@ -1,115 +1,141 @@
-module("modules.logic.fight.FightMsgMgr", package.seeall)
+﻿module("modules.logic.fight.FightMsgMgr", package.seeall)
 
-slot0 = class("FightMsgMgr")
-slot1 = {}
-slot2 = false
-slot3 = {}
-slot4 = {}
-slot5 = {}
+local var_0_0 = class("FightMsgMgr")
+local var_0_1 = {}
+local var_0_2 = false
+local var_0_3 = {}
+local var_0_4 = {}
+local var_0_5 = {}
 
-function slot0.registMsg(slot0, slot1, slot2)
-	if not uv0[slot0] then
-		uv0[slot0] = {}
+function var_0_0.registMsg(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = var_0_1[arg_1_0]
+
+	if not var_1_0 then
+		var_1_0 = {}
+		var_0_1[arg_1_0] = var_1_0
 	end
 
-	slot4 = FightMsgItem.New(slot0, slot1, slot2)
+	local var_1_1 = FightMsgItem.New(arg_1_0, arg_1_1, arg_1_2)
 
-	table.insert(slot3, slot4)
+	table.insert(var_1_0, var_1_1)
 
-	return slot4
+	return var_1_1
 end
 
-function slot0.sendMsg(slot0, ...)
-	if not uv0[slot0] then
+function var_0_0.sendMsg(arg_2_0, ...)
+	local var_2_0 = var_0_1[arg_2_0]
+
+	if not var_2_0 then
 		return
 	end
 
-	uv1[slot0] = (uv1[slot0] or 0) + 1
+	local var_2_1 = (var_0_3[arg_2_0] or 0) + 1
 
-	for slot7 = 1, #slot1 do
-		if not slot1[slot7].isDone and not slot8.isLock then
-			slot8:sendMsg(...)
+	var_0_3[arg_2_0] = var_2_1
+
+	local var_2_2 = #var_2_0
+
+	for iter_2_0 = 1, var_2_2 do
+		local var_2_3 = var_2_0[iter_2_0]
+
+		if not var_2_3.isDone and not var_2_3.isLock then
+			var_2_3:sendMsg(...)
 		end
 	end
 
-	uv1[slot0] = slot2 - 1
+	var_0_3[arg_2_0] = var_2_1 - 1
 
-	if uv2[slot0] and slot4.list[slot2] then
-		slot4.list[slot2] = nil
+	local var_2_4 = var_0_4[arg_2_0]
 
-		return slot5[1], slot5
+	if var_2_4 then
+		local var_2_5 = var_2_4.list[var_2_1]
+
+		if var_2_5 then
+			var_2_4.list[var_2_1] = nil
+
+			return var_2_5[1], var_2_5
+		end
 	end
 end
 
-function slot0.replyMsg(slot0, slot1)
-	if (uv0[slot0] or 0) == 0 then
+function var_0_0.replyMsg(arg_3_0, arg_3_1)
+	local var_3_0 = var_0_3[arg_3_0] or 0
+
+	if var_3_0 == 0 then
 		return
 	end
 
-	if not uv1[slot0] then
-		slot3 = {}
-		uv1[slot0] = slot3
-		slot3.list = {}
+	local var_3_1 = var_0_4[arg_3_0]
+
+	if not var_3_1 then
+		var_3_1 = {}
+		var_0_4[arg_3_0] = var_3_1
+		var_3_1.list = {}
 	end
 
-	if not slot3.list[slot2] then
-		slot3.list[slot2] = {}
+	local var_3_2 = var_3_1.list[var_3_0]
+
+	if not var_3_2 then
+		var_3_2 = {}
+		var_3_1.list[var_3_0] = var_3_2
 	end
 
-	table.insert(slot4, slot1)
+	table.insert(var_3_2, arg_3_1)
 end
 
-function slot0.removeMsg(slot0)
-	if not slot0 then
+function var_0_0.removeMsg(arg_4_0)
+	if not arg_4_0 then
 		return
 	end
 
-	slot0.isDone = true
-	uv0[slot0.msgId] = true
-	uv1 = true
+	arg_4_0.isDone = true
+	var_0_5[arg_4_0.msgId] = true
+	var_0_2 = true
 end
 
-function slot0.lockItem(slot0)
-	if not slot0 then
+function var_0_0.lockItem(arg_5_0)
+	if not arg_5_0 then
 		return
 	end
 
-	slot0.isLock = true
+	arg_5_0.isLock = true
 end
 
-function slot0.unlockItem(slot0)
-	if not slot0 then
+function var_0_0.unlockItem(arg_6_0)
+	if not arg_6_0 then
 		return
 	end
 
-	slot0.isLock = false
+	arg_6_0.isLock = false
 end
 
-function slot0.clearMsg()
-	if not uv0 then
+function var_0_0.clearMsg()
+	if not var_0_2 then
 		return
 	end
 
-	for slot3, slot4 in pairs(uv1) do
-		if uv2[slot3] then
-			for slot9 = #slot5, 1, -1 do
-				if slot5[slot9].isDone then
-					table.remove(slot5, slot9)
+	for iter_7_0, iter_7_1 in pairs(var_0_5) do
+		local var_7_0 = var_0_1[iter_7_0]
+
+		if var_7_0 then
+			for iter_7_2 = #var_7_0, 1, -1 do
+				if var_7_0[iter_7_2].isDone then
+					table.remove(var_7_0, iter_7_2)
 				end
 			end
 
-			if #slot5 == 0 then
-				uv2[slot3] = nil
-				uv3[slot3] = nil
+			if #var_7_0 == 0 then
+				var_0_1[iter_7_0] = nil
+				var_0_4[iter_7_0] = nil
 			end
 		end
 
-		uv1[slot3] = nil
+		var_0_5[iter_7_0] = nil
 	end
 
-	uv0 = false
+	var_0_2 = false
 end
 
-FightTimer.registRepeatTimer(slot0.clearMsg, slot0, 10, -1)
+FightTimer.registRepeatTimer(var_0_0.clearMsg, var_0_0, 10, -1)
 
-return slot0
+return var_0_0

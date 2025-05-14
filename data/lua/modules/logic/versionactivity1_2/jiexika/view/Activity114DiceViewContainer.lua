@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114DiceViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114DiceViewContainer", package.seeall)
 
-slot0 = class("Activity114DiceViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity114DiceViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.view = Activity114DiceView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.view = Activity114DiceView.New()
 
 	return {
-		slot0.view
+		arg_1_0.view
 	}
 end
 
-return slot0
+return var_0_0

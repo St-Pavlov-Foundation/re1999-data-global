@@ -1,31 +1,33 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreHeroStopMove", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreHeroStopMove", package.seeall)
 
-slot0 = class("WaitGuideActionExploreHeroStopMove", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionExploreHeroStopMove", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	if not ExploreController.instance:getMap() then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = ExploreController.instance:getMap()
+
+	if not var_1_0 then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	if not slot2:getHero():isMoving() then
-		slot0:onDone(true)
+	if not var_1_0:getHero():isMoving() then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	GuideBlockMgr.instance:startBlock(99999999)
-	ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, slot0.onMoveEnd, slot0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, arg_1_0.onMoveEnd, arg_1_0)
 end
 
-function slot0.onMoveEnd(slot0)
-	slot0:onDone(true)
+function var_0_0.onMoveEnd(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
 	GuideBlockMgr.instance:removeBlock()
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, slot0.onMoveEnd, slot0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_3_0.onMoveEnd, arg_3_0)
 end
 
-return slot0
+return var_0_0

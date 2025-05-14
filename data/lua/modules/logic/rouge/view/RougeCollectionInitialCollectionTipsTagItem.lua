@@ -1,35 +1,38 @@
-module("modules.logic.rouge.view.RougeCollectionInitialCollectionTipsTagItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionInitialCollectionTipsTagItem", package.seeall)
 
-slot0 = class("RougeCollectionInitialCollectionTipsTagItem", RougeSimpleItemBase)
+local var_0_0 = class("RougeCollectionInitialCollectionTipsTagItem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1)
-	RougeSimpleItemBase.ctor(slot0, slot1)
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	RougeSimpleItemBase.ctor(arg_4_0, arg_4_1)
 end
 
-function slot0._editableInitView(slot0)
-	RougeSimpleItemBase._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	RougeSimpleItemBase._editableInitView(arg_5_0)
 
-	slot0._txt = gohelper.findChildText(slot0.viewGO, "")
-	slot0._img = gohelper.findChildImage(slot0.viewGO, "image_tagicon")
+	arg_5_0._txt = gohelper.findChildText(arg_5_0.viewGO, "")
+	arg_5_0._img = gohelper.findChildImage(arg_5_0.viewGO, "image_tagicon")
 end
 
-function slot0.setData(slot0, slot1)
-	slot2 = lua_rouge_tag.configDict[slot1]
-	slot0._txt.text = slot2.name
+function var_0_0.setData(arg_6_0, arg_6_1)
+	local var_6_0 = lua_rouge_tag.configDict[arg_6_1]
 
-	UISpriteSetMgr.instance:setRougeSprite(slot0._img, slot2.iconUrl)
+	arg_6_0._txt.text = var_6_0.name
+
+	UISpriteSetMgr.instance:setRougeSprite(arg_6_0._img, var_6_0.iconUrl)
 end
 
-return slot0
+return var_0_0

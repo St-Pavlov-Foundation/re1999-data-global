@@ -1,125 +1,133 @@
-module("modules.logic.gamepad.GamepadController", package.seeall)
+﻿module("modules.logic.gamepad.GamepadController", package.seeall)
 
-slot0 = class("GamepadController", BaseController)
+local var_0_0 = class("GamepadController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
 	if GamepadBooter ~= nil then
-		slot0:setUp()
+		arg_1_0:setUp()
 	end
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.isOpen(slot0)
-	return slot0._isOpen
+function var_0_0.isOpen(arg_5_0)
+	return arg_5_0._isOpen
 end
 
-function slot0.isDownA(slot0)
-	return slot0._down
+function var_0_0.isDownA(arg_6_0)
+	return arg_6_0._down
 end
 
-function slot0.getMousePosition(slot0)
-	if slot0:isOpen() then
-		return slot0:getScreenPos()
+function var_0_0.getMousePosition(arg_7_0)
+	if arg_7_0:isOpen() then
+		return arg_7_0:getScreenPos()
 	else
 		return UnityEngine.Input.mousePosition
 	end
 end
 
-function slot0.getScreenPos(slot0)
-	slot0:_updateScreenPos()
+function var_0_0.getScreenPos(arg_8_0)
+	arg_8_0:_updateScreenPos()
 
-	return Vector2.New(slot0._screenPosV2.x, slot0._screenPosV2.y)
+	return Vector2.New(arg_8_0._screenPosV2.x, arg_8_0._screenPosV2.y)
 end
 
-function slot0.setPointerAnchor(slot0, slot1, slot2)
-	slot0._pointer:setAnchor(slot1, slot2)
-	slot0:_updateScreenPos()
+function var_0_0.setPointerAnchor(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._pointer:setAnchor(arg_9_1, arg_9_2)
+	arg_9_0:_updateScreenPos()
 end
 
-function slot0.setUp(slot0)
-	slot0:_checkGamepadModel()
+function var_0_0.setUp(arg_10_0)
+	arg_10_0:_checkGamepadModel()
 
-	if slot0._isOpen == false then
+	if arg_10_0._isOpen == false then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0._useKeyType.JoystickKeys) do
-		table.insert({}, slot5)
+	local var_10_0 = {}
+
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._useKeyType.JoystickKeys) do
+		table.insert(var_10_0, iter_10_0)
 	end
 
-	slot2 = {}
+	local var_10_1 = {}
 
-	for slot6, slot7 in pairs(slot0._useKeyType.AxisKeys) do
-		table.insert(slot2, slot6)
+	for iter_10_2, iter_10_3 in pairs(arg_10_0._useKeyType.AxisKeys) do
+		table.insert(var_10_1, iter_10_2)
 	end
 
-	slot0._mgrInst = ZProj.GamepadManager.Instance
-	slot0._eventMgrInst = ZProj.GamepadEvent.Instance
-	slot0._eventMgr = ZProj.GamepadEvent
+	arg_10_0._mgrInst = ZProj.GamepadManager.Instance
+	arg_10_0._eventMgrInst = ZProj.GamepadEvent.Instance
+	arg_10_0._eventMgr = ZProj.GamepadEvent
 
-	slot0._eventMgrInst:ClearLuaListener()
-	slot0._mgrInst:SetKeyListLua(slot1, slot2)
+	arg_10_0._eventMgrInst:ClearLuaListener()
+	arg_10_0._mgrInst:SetKeyListLua(var_10_0, var_10_1)
 
-	slot0._pointer = GamepadPointer.New()
-	slot0._screenPosV2 = Vector2.New()
+	arg_10_0._pointer = GamepadPointer.New()
+	arg_10_0._screenPosV2 = Vector2.New()
 
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.DownKey, slot0._onDownKey, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.UpKey, slot0._onUpKey, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.ClickKey, slot0._onClickKey, slot0)
-	slot0._eventMgrInst:AddLuaLisenter(slot0._eventMgr.AxisChange, slot0._onAxisChange, slot0)
+	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.DownKey, arg_10_0._onDownKey, arg_10_0)
+	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.UpKey, arg_10_0._onUpKey, arg_10_0)
+	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.ClickKey, arg_10_0._onClickKey, arg_10_0)
+	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.AxisChange, arg_10_0._onAxisChange, arg_10_0)
 
-	slot0._axisHandleFunc = {
-		[GamepadEnum.KeyCode.LeftStickHorizontal] = slot0._onLeftStickHorizontal,
-		[GamepadEnum.KeyCode.LeftStickVertical] = slot0._onLeftStickVertical,
-		[GamepadEnum.KeyCode.RightStickHorizontal] = slot0._onRightStickHorizontal,
-		[GamepadEnum.KeyCode.RightStickVertical] = slot0._onRightStickVertical
+	arg_10_0._axisHandleFunc = {
+		[GamepadEnum.KeyCode.LeftStickHorizontal] = arg_10_0._onLeftStickHorizontal,
+		[GamepadEnum.KeyCode.LeftStickVertical] = arg_10_0._onLeftStickVertical,
+		[GamepadEnum.KeyCode.RightStickHorizontal] = arg_10_0._onRightStickHorizontal,
+		[GamepadEnum.KeyCode.RightStickVertical] = arg_10_0._onRightStickVertical
 	}
-	slot0._buttonHandleFunc = {
+	arg_10_0._buttonHandleFunc = {
 		[GamepadEnum.KeyCode.A] = {
-			slot0._onDownA,
-			slot0._onUpA
+			arg_10_0._onDownA,
+			arg_10_0._onUpA
 		},
 		[GamepadEnum.KeyCode.B] = {
-			slot0._onDownB,
-			slot0._onUpB
+			arg_10_0._onDownB,
+			arg_10_0._onUpB
 		},
 		[GamepadEnum.KeyCode.LB] = {},
 		[GamepadEnum.KeyCode.RB] = {}
 	}
 end
 
-function slot0._checkGamepadModel(slot0)
-	slot0._isOpen = SDKNativeUtil.isGamePad()
+function var_0_0._checkGamepadModel(arg_11_0)
+	arg_11_0._isOpen = SDKNativeUtil.isGamePad()
 
-	if slot0._isOpen then
-		slot2 = false
+	if arg_11_0._isOpen then
+		local var_11_0 = UnityEngine.Input.GetJoystickNames()
+		local var_11_1 = false
 
-		if UnityEngine.Input.GetJoystickNames() and slot1.Length > 0 then
-			for slot6 = 0, slot1.Length - 1 do
-				if slot2 then
+		if var_11_0 and var_11_0.Length > 0 then
+			for iter_11_0 = 0, var_11_0.Length - 1 do
+				if var_11_1 then
 					break
 				end
 
-				for slot11, slot12 in pairs(GamepadKeyMapEnum.KeyMap) do
-					if string.find(slot1[slot6], slot11) then
-						slot2 = true
+				local var_11_2 = var_11_0[iter_11_0]
+
+				for iter_11_1, iter_11_2 in pairs(GamepadKeyMapEnum.KeyMap) do
+					if string.find(var_11_2, iter_11_1) then
+						var_11_1 = true
 
 						if BootNativeUtil.isAndroid() then
-							slot0._useKeyType = slot12[2]
+							arg_11_0._useKeyType = iter_11_2[2]
 
 							break
 						end
 
 						if BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-							slot0._useKeyType = slot12[1]
+							arg_11_0._useKeyType = iter_11_2[1]
 						end
 
 						break
@@ -128,139 +136,161 @@ function slot0._checkGamepadModel(slot0)
 			end
 		end
 
-		if slot2 == false then
+		if var_11_1 == false then
 			if BootNativeUtil.isAndroid() then
-				slot0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
+				arg_11_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
 			elseif BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-				slot0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
+				arg_11_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
 			end
 		end
 	end
 end
 
-function slot0._onDownKey(slot0, slot1)
-	if slot0._buttonHandleFunc[slot0._useKeyType.JoystickKeys[slot1]][1] then
-		slot3(slot0)
+function var_0_0._onDownKey(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._useKeyType.JoystickKeys[arg_12_1]
+	local var_12_1 = arg_12_0._buttonHandleFunc[var_12_0][1]
+
+	if var_12_1 then
+		var_12_1(arg_12_0)
 	end
 
-	slot0:dispatchEvent(GamepadEvent.KeyDown, slot2)
+	arg_12_0:dispatchEvent(GamepadEvent.KeyDown, var_12_0)
 end
 
-function slot0._onUpKey(slot0, slot1)
-	if slot0._buttonHandleFunc[slot0._useKeyType.JoystickKeys[slot1]][2] then
-		slot3(slot0)
+function var_0_0._onUpKey(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._useKeyType.JoystickKeys[arg_13_1]
+	local var_13_1 = arg_13_0._buttonHandleFunc[var_13_0][2]
+
+	if var_13_1 then
+		var_13_1(arg_13_0)
 	end
 
-	slot0:dispatchEvent(GamepadEvent.KeyUp, slot2)
+	arg_13_0:dispatchEvent(GamepadEvent.KeyUp, var_13_0)
 end
 
-function slot0._updateScreenPos(slot0)
-	slot1, slot2 = slot0._pointer:getScreenPos()
+function var_0_0._updateScreenPos(arg_14_0)
+	local var_14_0, var_14_1 = arg_14_0._pointer:getScreenPos()
 
-	if slot1 and slot2 then
-		slot0._screenPosV2.x = slot1
-		slot0._screenPosV2.y = slot2
+	if var_14_0 and var_14_1 then
+		arg_14_0._screenPosV2.x = var_14_0
+		arg_14_0._screenPosV2.y = var_14_1
 	end
 end
 
-function slot0._setUIClick(slot0, slot1)
-	slot0._mgrInst:SendClickEvent(slot0._screenPosV2, slot1)
+function var_0_0._setUIClick(arg_15_0, arg_15_1)
+	arg_15_0._mgrInst:SendClickEvent(arg_15_0._screenPosV2, arg_15_1)
 end
 
-function slot0._sendDragEvent(slot0)
-	slot0:_updateScreenPos()
-	slot0._mgrInst:SendDragEvent(slot0._screenPosV2)
+function var_0_0._sendDragEvent(arg_16_0)
+	arg_16_0:_updateScreenPos()
+	arg_16_0._mgrInst:SendDragEvent(arg_16_0._screenPosV2)
 end
 
-function slot0._onClickKey(slot0, slot1)
+function var_0_0._onClickKey(arg_17_0, arg_17_1)
+	return
 end
 
-function slot0._onAxisChange(slot0, slot1, slot2)
-	if slot0._axisHandleFunc[slot0._useKeyType.AxisKeys[slot1]] then
-		slot4(slot0, slot2)
+function var_0_0._onAxisChange(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0._useKeyType.AxisKeys[arg_18_1]
+	local var_18_1 = arg_18_0._axisHandleFunc[var_18_0]
+
+	if var_18_1 then
+		var_18_1(arg_18_0, arg_18_2)
 	end
 
-	slot0:dispatchEvent(GamepadEvent.AxisChange, slot3, slot2)
+	arg_18_0:dispatchEvent(GamepadEvent.AxisChange, var_18_0, arg_18_2)
 end
 
-function slot0._onDownA(slot0)
-	slot0._down = true
+function var_0_0._onDownA(arg_19_0)
+	arg_19_0._down = true
 
-	slot0:_updateScreenPos()
-	slot0:_setUIClick(true)
-	GameGlobalMgr.instance:playTouchEffect(slot0._screenPosV2)
-	slot0:_clearDownActiveTouchMgrDic()
+	arg_19_0:_updateScreenPos()
+	arg_19_0:_setUIClick(true)
+	GameGlobalMgr.instance:playTouchEffect(arg_19_0._screenPosV2)
 
-	slot0._downActiveTouchMgrDic = {}
+	local var_19_0 = TouchEventMgrHepler.getAllMgrs()
 
-	for slot5, slot6 in ipairs(TouchEventMgrHepler.getAllMgrs()) do
-		if not gohelper.isNil(slot6) and slot6.isActiveAndEnabled then
-			slot6:TriggerOnTouchDown(slot0._screenPosV2)
+	arg_19_0:_clearDownActiveTouchMgrDic()
 
-			slot0._downActiveTouchMgrDic[slot6] = true
+	arg_19_0._downActiveTouchMgrDic = {}
+
+	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+		if not gohelper.isNil(iter_19_1) and iter_19_1.isActiveAndEnabled then
+			iter_19_1:TriggerOnTouchDown(arg_19_0._screenPosV2)
+
+			arg_19_0._downActiveTouchMgrDic[iter_19_1] = true
 		end
 	end
 end
 
-function slot0._onUpA(slot0)
-	slot0._down = false
+function var_0_0._onUpA(arg_20_0)
+	arg_20_0._down = false
 
-	slot0:_updateScreenPos()
-	slot0:_setUIClick(false)
+	arg_20_0:_updateScreenPos()
+	arg_20_0:_setUIClick(false)
 
-	if slot0._downActiveTouchMgrDic then
-		for slot5, slot6 in ipairs(TouchEventMgrHepler.getAllMgrs()) do
-			if not gohelper.isNil(slot6) and slot6.isActiveAndEnabled and slot0._downActiveTouchMgrDic[slot6] then
-				slot6:TriggerOnClick(slot0._screenPosV2)
-				slot6:TriggerOnTouchUp(slot0._screenPosV2)
+	if arg_20_0._downActiveTouchMgrDic then
+		local var_20_0 = TouchEventMgrHepler.getAllMgrs()
+
+		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+			if not gohelper.isNil(iter_20_1) and iter_20_1.isActiveAndEnabled and arg_20_0._downActiveTouchMgrDic[iter_20_1] then
+				iter_20_1:TriggerOnClick(arg_20_0._screenPosV2)
+				iter_20_1:TriggerOnTouchUp(arg_20_0._screenPosV2)
 			end
 		end
 	end
 
-	slot0:_clearDownActiveTouchMgrDic()
+	arg_20_0:_clearDownActiveTouchMgrDic()
 end
 
-function slot0._clearDownActiveTouchMgrDic(slot0)
-	if slot0._downActiveTouchMgrDic then
-		for slot4, slot5 in pairs(slot0._downActiveTouchMgrDic) do
-			slot0._downActiveTouchMgrDic[slot4] = nil
+function var_0_0._clearDownActiveTouchMgrDic(arg_21_0)
+	if arg_21_0._downActiveTouchMgrDic then
+		for iter_21_0, iter_21_1 in pairs(arg_21_0._downActiveTouchMgrDic) do
+			arg_21_0._downActiveTouchMgrDic[iter_21_0] = nil
 		end
 
-		slot0._downActiveTouchMgrDic = nil
+		arg_21_0._downActiveTouchMgrDic = nil
 	end
 end
 
-function slot0._onDownB(slot0)
+function var_0_0._onDownB(arg_22_0)
+	return
 end
 
-function slot0._onUpB(slot0)
-	if not slot0._down then
+function var_0_0._onUpB(arg_23_0)
+	if not arg_23_0._down then
 		NavigateMgr.instance:onEscapeBtnClick()
 	end
 end
 
-function slot0._onLeftStickHorizontal(slot0, slot1)
-	slot0._pointer:updateX(Time.deltaTime / 0.016 * slot1)
+function var_0_0._onLeftStickHorizontal(arg_24_0, arg_24_1)
+	local var_24_0 = Time.deltaTime / 0.016
 
-	if slot0._down then
-		slot0:_sendDragEvent()
+	arg_24_0._pointer:updateX(var_24_0 * arg_24_1)
+
+	if arg_24_0._down then
+		arg_24_0:_sendDragEvent()
 	end
 end
 
-function slot0._onLeftStickVertical(slot0, slot1)
-	slot0._pointer:updateY(-1 * Time.deltaTime / 0.016 * slot1)
+function var_0_0._onLeftStickVertical(arg_25_0, arg_25_1)
+	local var_25_0 = Time.deltaTime / 0.016
 
-	if slot0._down then
-		slot0:_sendDragEvent()
+	arg_25_0._pointer:updateY(-1 * var_25_0 * arg_25_1)
+
+	if arg_25_0._down then
+		arg_25_0:_sendDragEvent()
 	end
 end
 
-function slot0._onRightStickHorizontal(slot0, slot1)
+function var_0_0._onRightStickHorizontal(arg_26_0, arg_26_1)
+	return
 end
 
-function slot0._onRightStickVertical(slot0, slot1)
+function var_0_0._onRightStickVertical(arg_27_0, arg_27_1)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

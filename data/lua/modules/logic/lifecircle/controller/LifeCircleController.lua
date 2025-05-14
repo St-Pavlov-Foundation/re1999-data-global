@@ -1,224 +1,248 @@
-module("modules.logic.lifecircle.controller.LifeCircleController", package.seeall)
+﻿module("modules.logic.lifecircle.controller.LifeCircleController", package.seeall)
 
-slot0 = class("LifeCircleController", BaseController)
-slot1 = table.insert
+local var_0_0 = class("LifeCircleController", BaseController)
+local var_0_1 = table.insert
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._stageid = nil
-	slot0._materialDataMOList = nil
-	slot0._onReceiveHeroGainPushMsg = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._stageid = nil
+	arg_2_0._materialDataMOList = nil
+	arg_2_0._onReceiveHeroGainPushMsg = nil
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	SignInController.instance:registerCallback(SignInEvent.OnSignInTotalRewardReply, slot0._onSignInTotalRewardReply, slot0)
-	SignInController.instance:registerCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, slot0._onReceiveSignInTotalRewardAllReply, slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	SignInController.instance:registerCallback(SignInEvent.OnSignInTotalRewardReply, arg_4_0._onSignInTotalRewardReply, arg_4_0)
+	SignInController.instance:registerCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, arg_4_0._onReceiveSignInTotalRewardAllReply, arg_4_0)
 end
 
-function slot0.sendSignInTotalRewardRequest(slot0, slot1, slot2, slot3)
-	SignInRpc.instance:sendSignInTotalRewardRequest(slot1, slot2, slot3)
+function var_0_0.sendSignInTotalRewardRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	SignInRpc.instance:sendSignInTotalRewardRequest(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0.sendSignInTotalRewardAllRequest(slot0, slot1, slot2)
-	return SignInRpc.instance:sendSignInTotalRewardAllRequest(slot1, slot2)
+function var_0_0.sendSignInTotalRewardAllRequest(arg_6_0, arg_6_1, arg_6_2)
+	return SignInRpc.instance:sendSignInTotalRewardAllRequest(arg_6_1, arg_6_2)
 end
 
-function slot0.sendSignInTotalRewardAllRequestIfClaimable(slot0, slot1, slot2)
-	if not slot0:isClaimableAccumulateReward() then
-		if slot1 then
-			slot1(slot2)
+function var_0_0.sendSignInTotalRewardAllRequestIfClaimable(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0:isClaimableAccumulateReward() then
+		if arg_7_1 then
+			arg_7_1(arg_7_2)
 		end
 
 		return
 	end
 
-	slot0:sendSignInTotalRewardAllRequest(slot1, slot2)
+	arg_7_0:sendSignInTotalRewardAllRequest(arg_7_1, arg_7_2)
 end
 
-function slot0.sendSignInRequest(slot0)
-	slot0:sendSignInTotalRewardAllRequestIfClaimable(SignInRpc.sendSignInRequest, SignInRpc.instance)
+function var_0_0.sendSignInRequest(arg_8_0)
+	arg_8_0:sendSignInTotalRewardAllRequestIfClaimable(SignInRpc.sendSignInRequest, SignInRpc.instance)
 end
 
-function slot0.isClaimedAccumulateReward(slot0, slot1)
-	return SignInModel.instance:isClaimedAccumulateReward(slot1)
+function var_0_0.isClaimedAccumulateReward(arg_9_0, arg_9_1)
+	return SignInModel.instance:isClaimedAccumulateReward(arg_9_1)
 end
 
-function slot0.isClaimableAccumulateReward(slot0, slot1)
-	return SignInModel.instance:isClaimableAccumulateReward(slot1)
+function var_0_0.isClaimableAccumulateReward(arg_10_0, arg_10_1)
+	return SignInModel.instance:isClaimableAccumulateReward(arg_10_1)
 end
 
-slot2 = -11235
+local var_0_2 = -11235
 
-function slot0._onReceiveSignInTotalRewardAllReply(slot0)
-	slot0:dispatchRedDotEventUpdateRelateDotInfo()
+function var_0_0._onReceiveSignInTotalRewardAllReply(arg_11_0)
+	arg_11_0:dispatchRedDotEventUpdateRelateDotInfo()
 
-	slot0._stageid = uv0
+	arg_11_0._stageid = var_0_2
 
-	if not slot0._materialDataMOList then
+	if not arg_11_0._materialDataMOList then
 		return
 	end
 
-	slot0:_openLifeCircleRewardView()
+	arg_11_0:_openLifeCircleRewardView()
 end
 
-function slot0._onSignInTotalRewardReply(slot0, slot1)
-	slot0:dispatchRedDotEventUpdateRelateDotInfo()
+function var_0_0._onSignInTotalRewardReply(arg_12_0, arg_12_1)
+	arg_12_0:dispatchRedDotEventUpdateRelateDotInfo()
 
-	slot0._stageid = slot1
+	arg_12_0._stageid = arg_12_1
 
-	if not slot0._materialDataMOList then
+	if not arg_12_0._materialDataMOList then
 		return
 	end
 
-	slot0:_openLifeCircleRewardView()
+	arg_12_0:_openLifeCircleRewardView()
 end
 
-function slot0.openLifeCircleRewardView(slot0, slot1)
-	if not slot1 or #slot1 == 0 then
+function var_0_0.openLifeCircleRewardView(arg_13_0, arg_13_1)
+	if not arg_13_1 or #arg_13_1 == 0 then
 		return
 	end
 
-	slot0._materialDataMOList = slot1
+	arg_13_0._materialDataMOList = arg_13_1
 
-	if not slot0._stageid then
+	if not arg_13_0._stageid then
 		return
 	end
 
-	slot0:_openLifeCircleRewardView()
+	arg_13_0:_openLifeCircleRewardView()
 end
 
-function slot0._openLifeCircleRewardView(slot0)
-	if not slot0._stageid then
+function var_0_0._openLifeCircleRewardView(arg_14_0)
+	if not arg_14_0._stageid then
 		return
 	end
 
-	if not slot0._materialDataMOList then
+	if not arg_14_0._materialDataMOList then
 		return
 	end
 
-	slot1 = slot0._materialDataMOList
-	slot3 = 0
-	slot0._materialDataMOList = nil
-	slot0._stageid = nil
+	local var_14_0 = arg_14_0._materialDataMOList
+	local var_14_1 = arg_14_0._stageid
+	local var_14_2 = 0
 
-	RoomController.instance:popUpRoomBlockPackageView(slot1)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.LifeCircleRewardView, {
-		materialDataMOList = slot1,
-		loginDayCount = uv0 == slot0._stageid and (PlayerModel.instance:getPlayinfo().totalLoginDays or 0) or SignInConfig.instance:getSignInLifeTimeBonusCO(slot2).logindaysid
-	})
-end
-
-function slot0.onReceiveHeroGainPush(slot0, slot1)
-	slot0._onReceiveHeroGainPushMsg = slot1
-end
-
-function slot0.onReceiveMaterialChangePush(slot0, slot1)
-	slot2, slot3, slot4, slot5 = MaterialRpc.receiveMaterial(slot1)
-
-	if not slot2 or #slot2 == 0 then
-		slot0._onReceiveHeroGainPushMsg = nil
-
-		return
-	end
-
-	slot6 = {}
-	slot7 = {}
-
-	for slot11, slot12 in ipairs(slot2) do
-		if slot12.materilType == MaterialEnum.MaterialType.Hero then
-			uv0(slot6, slot12.materilId)
-		else
-			uv0(slot7, slot12)
-		end
-	end
-
-	if #slot6 == 0 then
-		if slot0._onReceiveHeroGainPushMsg then
-			HeroRpc.instance:_onReceiveHeroGainPush(slot0._onReceiveHeroGainPushMsg)
-		end
-
-		MaterialRpc.instance:_onReceiveMaterialChangePush_default(slot1, slot2, slot3, slot4, slot5)
+	if var_0_2 == var_14_1 then
+		var_14_2 = PlayerModel.instance:getPlayinfo().totalLoginDays or 0
 	else
-		slot0._onReceiveHeroGainPushMsg = nil
+		var_14_2 = SignInConfig.instance:getSignInLifeTimeBonusCO(var_14_1).logindaysid
+	end
 
-		slot0:_doVirtualSummonBehavior(slot6, slot7)
+	arg_14_0._materialDataMOList = nil
+	arg_14_0._stageid = nil
+
+	RoomController.instance:popUpRoomBlockPackageView(var_14_0)
+
+	local var_14_3 = {
+		materialDataMOList = var_14_0,
+		loginDayCount = var_14_2
+	}
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.LifeCircleRewardView, var_14_3)
+end
+
+function var_0_0.onReceiveHeroGainPush(arg_15_0, arg_15_1)
+	arg_15_0._onReceiveHeroGainPushMsg = arg_15_1
+end
+
+function var_0_0.onReceiveMaterialChangePush(arg_16_0, arg_16_1)
+	local var_16_0, var_16_1, var_16_2, var_16_3 = MaterialRpc.receiveMaterial(arg_16_1)
+
+	if not var_16_0 or #var_16_0 == 0 then
+		arg_16_0._onReceiveHeroGainPushMsg = nil
+
+		return
+	end
+
+	local var_16_4 = {}
+	local var_16_5 = {}
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_6 = iter_16_1.materilType
+		local var_16_7 = iter_16_1.materilId
+
+		if var_16_6 == MaterialEnum.MaterialType.Hero then
+			var_0_1(var_16_4, var_16_7)
+		else
+			var_0_1(var_16_5, iter_16_1)
+		end
+	end
+
+	if #var_16_4 == 0 then
+		if arg_16_0._onReceiveHeroGainPushMsg then
+			HeroRpc.instance:_onReceiveHeroGainPush(arg_16_0._onReceiveHeroGainPushMsg)
+		end
+
+		MaterialRpc.instance:_onReceiveMaterialChangePush_default(arg_16_1, var_16_0, var_16_1, var_16_2, var_16_3)
+	else
+		arg_16_0._onReceiveHeroGainPushMsg = nil
+
+		arg_16_0:_doVirtualSummonBehavior(var_16_4, var_16_5)
 	end
 end
 
-function slot0._doVirtualSummonBehavior(slot0, slot1, slot2)
+function var_0_0._doVirtualSummonBehavior(arg_17_0, arg_17_1, arg_17_2)
 	ViewMgr.instance:closeView(ViewName.BackpackView)
-	SummonController.instance:simpleEnterSummonScene(slot1, function ()
+	SummonController.instance:simpleEnterSummonScene(arg_17_1, function()
 		if ViewMgr.instance:isOpen(ViewName.BackpackView) then
 			return
 		end
 
 		BackpackController.instance:enterItemBackpack(ItemEnum.CategoryType.UseType)
-		MaterialRpc.instance:simpleShowView(uv0)
+		MaterialRpc.instance:simpleShowView(arg_17_2)
 	end)
 end
 
-function slot0.isShowRed(slot0)
-	if slot0:isExistsNewConfig() then
+function var_0_0.isShowRed(arg_19_0)
+	if arg_19_0:isExistsNewConfig() then
 		return true
 	end
 
-	if slot0:isClaimableAccumulateReward() then
+	if arg_19_0:isClaimableAccumulateReward() then
 		return true
 	end
 
 	return false
 end
 
-slot3 = "LifeCircleController|"
+local var_0_3 = "LifeCircleController|"
 
-function slot0.getPrefsKeyPrefix(slot0)
-	return uv0
+function var_0_0.getPrefsKeyPrefix(arg_20_0)
+	return var_0_3
 end
 
-function slot0.saveInt(slot0, slot1, slot2)
-	GameUtil.playerPrefsSetNumberByUserId(slot1, slot2)
+function var_0_0.saveInt(arg_21_0, arg_21_1, arg_21_2)
+	GameUtil.playerPrefsSetNumberByUserId(arg_21_1, arg_21_2)
 end
 
-function slot0.getInt(slot0, slot1, slot2)
-	return GameUtil.playerPrefsGetNumberByUserId(slot1, slot2)
+function var_0_0.getInt(arg_22_0, arg_22_1, arg_22_2)
+	return GameUtil.playerPrefsGetNumberByUserId(arg_22_1, arg_22_2)
 end
 
-slot4 = "NewConfig"
+local var_0_4 = "NewConfig"
 
-function slot0.setLatestConfigCount(slot0, slot1)
-	slot0:saveInt(slot0:getPrefsKeyPrefix() .. uv0, slot1)
+function var_0_0.setLatestConfigCount(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getPrefsKeyPrefix() .. var_0_4
+
+	arg_23_0:saveInt(var_23_0, arg_23_1)
 end
 
-function slot0.getLatestConfigCount(slot0)
-	return slot0:getInt(slot0:getPrefsKeyPrefix() .. uv0, 0)
+function var_0_0.getLatestConfigCount(arg_24_0)
+	local var_24_0 = arg_24_0:getPrefsKeyPrefix() .. var_0_4
+
+	return arg_24_0:getInt(var_24_0, 0)
 end
 
-function slot0.isExistsNewConfig(slot0)
-	return slot0:getLatestConfigCount() ~= SignInConfig.instance:getSignInLifeTimeBonusCount()
+function var_0_0.isExistsNewConfig(arg_25_0)
+	local var_25_0 = SignInConfig.instance:getSignInLifeTimeBonusCount()
+
+	return arg_25_0:getLatestConfigCount() ~= var_25_0
 end
 
-function slot0.markLatestConfigCount(slot0)
-	if slot0:getLatestConfigCount() ~= SignInConfig.instance:getSignInLifeTimeBonusCount() then
-		slot0:setLatestConfigCount(slot1)
-		slot0:dispatchRedDotEventUpdateRelateDotInfo()
+function var_0_0.markLatestConfigCount(arg_26_0)
+	local var_26_0 = SignInConfig.instance:getSignInLifeTimeBonusCount()
+
+	if arg_26_0:getLatestConfigCount() ~= var_26_0 then
+		arg_26_0:setLatestConfigCount(var_26_0)
+		arg_26_0:dispatchRedDotEventUpdateRelateDotInfo()
 	end
 end
 
-function slot0.dispatchRedDotEventUpdateRelateDotInfo(slot0)
-	slot1 = RedDotEnum.DotNode.LifeCircleNewConfig
+function var_0_0.dispatchRedDotEventUpdateRelateDotInfo(arg_27_0)
+	local var_27_0 = RedDotEnum.DotNode.LifeCircleNewConfig
+	local var_27_1 = RedDotConfig.instance:getParentRedDotId(var_27_0)
 
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-		[tonumber(RedDotConfig.instance:getParentRedDotId(slot1))] = true,
-		[slot1] = true
+		[tonumber(var_27_1)] = true,
+		[var_27_0] = true
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

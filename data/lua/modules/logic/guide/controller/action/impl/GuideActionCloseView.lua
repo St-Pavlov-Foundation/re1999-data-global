@@ -1,19 +1,21 @@
-module("modules.logic.guide.controller.action.impl.GuideActionCloseView", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionCloseView", package.seeall)
 
-slot0 = class("GuideActionCloseView", BaseGuideAction)
+local var_0_0 = class("GuideActionCloseView", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	if string.nilorempty(slot0.actionParam) then
+	if string.nilorempty(arg_1_0.actionParam) then
 		ViewMgr.instance:closeAllModalViews()
 	else
-		for slot6, slot7 in ipairs(string.split(slot0.actionParam, "#")) do
-			ViewMgr.instance:closeView(slot7, true)
+		local var_1_0 = string.split(arg_1_0.actionParam, "#")
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			ViewMgr.instance:closeView(iter_1_1, true)
 		end
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,26 +1,31 @@
-module("modules.logic.explore.model.mo.unit.ExploreElevatorUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreElevatorUnitMO", package.seeall)
 
-slot0 = pureTable("ExploreElevatorUnitMO", ExploreBaseUnitMO)
+local var_0_0 = pureTable("ExploreElevatorUnitMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot1 = string.splitToNumber(slot0.specialDatas[1], "#")
-	slot0.height1 = slot1[1]
-	slot0.height2 = slot1[2]
-	slot2 = string.splitToNumber(slot0.specialDatas[2], "#")
-	slot0.intervalTime = slot2[1]
-	slot0.keepTime = slot2[2]
+function var_0_0.initTypeData(arg_1_0)
+	local var_1_0 = string.splitToNumber(arg_1_0.specialDatas[1], "#")
+
+	arg_1_0.height1 = var_1_0[1]
+	arg_1_0.height2 = var_1_0[2]
+
+	local var_1_1 = string.splitToNumber(arg_1_0.specialDatas[2], "#")
+
+	arg_1_0.intervalTime = var_1_1[1]
+	arg_1_0.keepTime = var_1_1[2]
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_2_0)
 	return ExploreElevatorUnit
 end
 
-function slot0.updateNodeHeight(slot0, slot1)
-	for slot5 = slot0.offsetSize[1], slot0.offsetSize[3] do
-		for slot9 = slot0.offsetSize[2], slot0.offsetSize[4] do
-			ExploreMapModel.instance:updateNodeHeight(ExploreHelper.getKeyXY(slot0.nodePos.x + slot5, slot0.nodePos.y + slot9), slot1)
+function var_0_0.updateNodeHeight(arg_3_0, arg_3_1)
+	for iter_3_0 = arg_3_0.offsetSize[1], arg_3_0.offsetSize[3] do
+		for iter_3_1 = arg_3_0.offsetSize[2], arg_3_0.offsetSize[4] do
+			local var_3_0 = ExploreHelper.getKeyXY(arg_3_0.nodePos.x + iter_3_0, arg_3_0.nodePos.y + iter_3_1)
+
+			ExploreMapModel.instance:updateNodeHeight(var_3_0, arg_3_1)
 		end
 	end
 end
 
-return slot0
+return var_0_0

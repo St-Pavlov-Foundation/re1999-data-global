@@ -1,15 +1,15 @@
-module("modules.logic.seasonver.act123.model.Season123ShowHeroMO", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123ShowHeroMO", package.seeall)
 
-slot0 = pureTable("Season123ShowHeroMO")
+local var_0_0 = pureTable("Season123ShowHeroMO")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.id = slot2
-	slot0.uid = slot2
-	slot0.heroId = slot3
-	slot0.hpRate = slot5
-	slot0.heroMO = slot1
-	slot0.skin = slot4
-	slot0.isAssist = slot6
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
+	arg_1_0.id = arg_1_2
+	arg_1_0.uid = arg_1_2
+	arg_1_0.heroId = arg_1_3
+	arg_1_0.hpRate = arg_1_5
+	arg_1_0.heroMO = arg_1_1
+	arg_1_0.skin = arg_1_4
+	arg_1_0.isAssist = arg_1_6
 end
 
-return slot0
+return var_0_0

@@ -1,43 +1,50 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_MapElementItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_MapElementItem", package.seeall)
 
-slot0 = class("VersionActivity_1_2_MapElementItem", BaseViewExtended)
+local var_0_0 = class("VersionActivity_1_2_MapElementItem", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._icon1 = gohelper.findChild(slot0.viewGO, "ani/icon1/anim")
-	slot0._icon2 = gohelper.findChild(slot0.viewGO, "ani/icon2/anim")
-	slot0._icon3 = gohelper.findChild(slot0.viewGO, "ani/icon3/anim")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._icon1 = gohelper.findChild(arg_1_0.viewGO, "ani/icon1/anim")
+	arg_1_0._icon2 = gohelper.findChild(arg_1_0.viewGO, "ani/icon2/anim")
+	arg_1_0._icon3 = gohelper.findChild(arg_1_0.viewGO, "ani/icon3/anim")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onClick(slot0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, slot0._elementId)
+function var_0_0._onClick(arg_4_0)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, arg_4_0._elementId)
 end
 
-function slot0.onRefreshViewParam(slot0, slot1)
-	slot0._elementId = slot1
-	slot0._elementConfig = lua_chapter_map_element.configDict[slot1]
-	slot0._episodeConfig = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(slot0._elementId) or DungeonConfig.instance:getEpisodeCO(tonumber(slot0._elementConfig.param))
+function var_0_0.onRefreshViewParam(arg_5_0, arg_5_1)
+	arg_5_0._elementId = arg_5_1
+	arg_5_0._elementConfig = lua_chapter_map_element.configDict[arg_5_1]
+
+	local var_5_0 = tonumber(arg_5_0._elementConfig.param)
+
+	arg_5_0._episodeConfig = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(arg_5_0._elementId) or DungeonConfig.instance:getEpisodeCO(var_5_0)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._icon2, true)
+function var_0_0.onOpen(arg_6_0)
+	gohelper.setActive(arg_6_0._icon2, true)
 
-	gohelper.findChild(slot0._icon2, "num"):GetComponent(typeof(TMPro.TextMeshPro)).text = ""
+	gohelper.findChild(arg_6_0._icon2, "num"):GetComponent(typeof(TMPro.TextMeshPro)).text = ""
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

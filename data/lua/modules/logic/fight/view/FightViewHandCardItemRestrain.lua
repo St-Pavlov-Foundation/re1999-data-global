@@ -1,136 +1,150 @@
-module("modules.logic.fight.view.FightViewHandCardItemRestrain", package.seeall)
+﻿module("modules.logic.fight.view.FightViewHandCardItemRestrain", package.seeall)
 
-slot0 = class("FightViewHandCardItemRestrain", LuaCompBase)
-slot0.RestrainMvStatus = {
+local var_0_0 = class("FightViewHandCardItemRestrain", LuaCompBase)
+
+var_0_0.RestrainMvStatus = {
 	Restrain = 2,
 	BeRestrain = 3,
 	None = 1
 }
 
-function slot0.ctor(slot0, slot1)
-	slot0._subViewInst = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._subViewInst = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.tr = slot1.transform
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.tr = arg_2_1.transform
 
-	gohelper.setActive(gohelper.findChild(slot0.go, "foranim/restrain"), true)
+	gohelper.setActive(gohelper.findChild(arg_2_0.go, "foranim/restrain"), true)
 
-	slot0._restrainGO = gohelper.findChild(slot0.go, "foranim/restrain/restrain")
-	slot0._beRestrainGO = gohelper.findChild(slot0.go, "foranim/restrain/beRestrain")
-	slot0._restrainAnimator = slot0._restrainGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._beRestrainAnimator = slot0._beRestrainGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._restrainGO = gohelper.findChild(arg_2_0.go, "foranim/restrain/restrain")
+	arg_2_0._beRestrainGO = gohelper.findChild(arg_2_0.go, "foranim/restrain/beRestrain")
+	arg_2_0._restrainAnimator = arg_2_0._restrainGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._beRestrainAnimator = arg_2_0._beRestrainGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, slot0._onSelectSkillTarget, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._updateRestrain, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_3_0._onSelectSkillTarget, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_3_0._onStageChange, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._updateRestrain, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, slot0._onSelectSkillTarget, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnStageChange, slot0._onStageChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._updateRestrain, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_4_0._onSelectSkillTarget, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnStageChange, arg_4_0._onStageChange, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_4_0._updateRestrain, arg_4_0)
 end
 
-function slot0.updateItem(slot0, slot1)
-	slot0.cardInfoMO = slot1 or slot0.cardInfoMO
+function var_0_0.updateItem(arg_5_0, arg_5_1)
+	arg_5_0.cardInfoMO = arg_5_1 or arg_5_0.cardInfoMO
 
-	if not lua_skill.configDict[slot1.skillId] then
-		logError("skill not exist: " .. slot1.skillId)
+	if not lua_skill.configDict[arg_5_1.skillId] then
+		logError("skill not exist: " .. arg_5_1.skillId)
 
 		return
 	end
 
-	slot0:_updateRestrain()
-	slot0:_playNonAnimation()
+	arg_5_0:_updateRestrain()
+	arg_5_0:_playNonAnimation()
 end
 
-function slot0._onSelectSkillTarget(slot0, slot1)
-	slot0:_updateRestrain()
-	slot0:_playAnimation()
+function var_0_0._onSelectSkillTarget(arg_6_0, arg_6_1)
+	arg_6_0:_updateRestrain()
+	arg_6_0:_playAnimation()
 end
 
-function slot0._onStageChange(slot0, slot1)
-	slot0:_updateRestrain()
-	slot0:_playAnimation()
+function var_0_0._onStageChange(arg_7_0, arg_7_1)
+	arg_7_0:_updateRestrain()
+	arg_7_0:_playAnimation()
 end
 
-function slot0._updateRestrain(slot0)
+function var_0_0._updateRestrain(arg_8_0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.Card then
-		slot3 = GMFightShowState.handCardRestrain
+		local var_8_0 = arg_8_0:_getNewRestrainStatus()
+		local var_8_1 = GMFightShowState.handCardRestrain
 
-		gohelper.setActive(slot0._restrainGO, slot0:_getNewRestrainStatus() == uv0.RestrainMvStatus.Restrain and slot3)
-		gohelper.setActive(slot0._beRestrainGO, slot2 == uv0.RestrainMvStatus.BeRestrain and slot3)
+		gohelper.setActive(arg_8_0._restrainGO, var_8_0 == var_0_0.RestrainMvStatus.Restrain and var_8_1)
+		gohelper.setActive(arg_8_0._beRestrainGO, var_8_0 == var_0_0.RestrainMvStatus.BeRestrain and var_8_1)
 	else
-		gohelper.setActive(slot0._restrainGO, false)
-		gohelper.setActive(slot0._beRestrainGO, false)
+		gohelper.setActive(arg_8_0._restrainGO, false)
+		gohelper.setActive(arg_8_0._beRestrainGO, false)
 	end
 end
 
-function slot0._playAnimation(slot0)
-	if slot0:_getNewRestrainStatus() == uv0.RestrainMvStatus.Restrain then
-		if slot0._restrainAnimator.gameObject.activeInHierarchy then
-			slot0._restrainAnimator:Play("fight_restrain_all_in", 0, 0)
-			slot0._restrainAnimator:Update(0)
+function var_0_0._playAnimation(arg_9_0)
+	local var_9_0 = arg_9_0:_getNewRestrainStatus()
+
+	if var_9_0 == var_0_0.RestrainMvStatus.Restrain then
+		if arg_9_0._restrainAnimator.gameObject.activeInHierarchy then
+			arg_9_0._restrainAnimator:Play("fight_restrain_all_in", 0, 0)
+			arg_9_0._restrainAnimator:Update(0)
 		end
-	elseif slot1 == uv0.RestrainMvStatus.BeRestrain and slot0._beRestrainAnimator.gameObject.activeInHierarchy then
-		slot0._beRestrainAnimator:Play("fight_restrain_all_in", 0, 0)
-		slot0._beRestrainAnimator:Update(0)
+	elseif var_9_0 == var_0_0.RestrainMvStatus.BeRestrain and arg_9_0._beRestrainAnimator.gameObject.activeInHierarchy then
+		arg_9_0._beRestrainAnimator:Play("fight_restrain_all_in", 0, 0)
+		arg_9_0._beRestrainAnimator:Update(0)
 	end
 end
 
-function slot0._playNonAnimation(slot0)
-	if slot0:_getNewRestrainStatus() == uv0.RestrainMvStatus.Restrain then
-		if slot0._restrainAnimator.gameObject.activeInHierarchy then
-			slot0._restrainAnimator:Play("fight_restrain_all_not", 0, 0)
-			slot0._restrainAnimator:Update(0)
+function var_0_0._playNonAnimation(arg_10_0)
+	local var_10_0 = arg_10_0:_getNewRestrainStatus()
+
+	if var_10_0 == var_0_0.RestrainMvStatus.Restrain then
+		if arg_10_0._restrainAnimator.gameObject.activeInHierarchy then
+			arg_10_0._restrainAnimator:Play("fight_restrain_all_not", 0, 0)
+			arg_10_0._restrainAnimator:Update(0)
 		end
-	elseif slot1 == uv0.RestrainMvStatus.BeRestrain and slot0._beRestrainAnimator.gameObject.activeInHierarchy then
-		slot0._beRestrainAnimator:Play("fight_restrain_all_not", 0, 0)
-		slot0._beRestrainAnimator:Update(0)
+	elseif var_10_0 == var_0_0.RestrainMvStatus.BeRestrain and arg_10_0._beRestrainAnimator.gameObject.activeInHierarchy then
+		arg_10_0._beRestrainAnimator:Play("fight_restrain_all_not", 0, 0)
+		arg_10_0._beRestrainAnimator:Update(0)
 	end
 end
 
-function slot0.getNewRestrainStatus(slot0, slot1)
-	slot4 = FightHelper.getEntity(FightCardModel.instance.curSelectEntityId)
-	slot6 = lua_skill.configDict[slot1] and slot5.showTag
+function var_0_0.getNewRestrainStatus(arg_11_0, arg_11_1)
+	local var_11_0 = FightModel.instance:getCurStage()
+	local var_11_1 = var_11_0 == FightEnum.Stage.Distribute or var_11_0 == FightEnum.Stage.Card
+	local var_11_2 = FightHelper.getEntity(FightCardModel.instance.curSelectEntityId)
+	local var_11_3 = lua_skill.configDict[arg_11_1]
+	local var_11_4 = var_11_3 and var_11_3.showTag
+	local var_11_5 = var_11_4 and FightEnum.NeedShowRestrainTag[var_11_4]
+	local var_11_6 = not FightModel.instance:isAuto()
+	local var_11_7 = FightCardModel.instance.curSelectEntityId ~= 0
+	local var_11_8 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightRestrainTag)
+	local var_11_9 = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRestrainTag)
 
-	if (FightModel.instance:getCurStage() == FightEnum.Stage.Distribute or slot2 == FightEnum.Stage.Card) and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightRestrainTag) and not FightModel.instance:isAuto() and FightCardModel.instance.curSelectEntityId ~= 0 and slot4 and (slot6 and FightEnum.NeedShowRestrainTag[slot6]) and not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRestrainTag) then
-		if FightBuffHelper.restrainAll(slot0) then
-			return uv0.RestrainMvStatus.Restrain
+	if var_11_1 and var_11_8 and var_11_6 and var_11_7 and var_11_2 and var_11_5 and not var_11_9 then
+		if FightBuffHelper.restrainAll(arg_11_0) then
+			return var_0_0.RestrainMvStatus.Restrain
 		end
 
-		slot13 = FightDataHelper.entityMgr:getById(slot0) and slot12:getCO()
-		slot16 = slot4:getMO() and slot15:getCO()
-		slot17 = slot16 and slot16.career or 0
+		local var_11_10 = FightDataHelper.entityMgr:getById(arg_11_0)
+		local var_11_11 = var_11_10 and var_11_10:getCO()
+		local var_11_12 = var_11_11 and var_11_11.career or 0
+		local var_11_13 = var_11_2:getMO()
+		local var_11_14 = var_11_13 and var_11_13:getCO()
+		local var_11_15 = var_11_14 and var_11_14.career or 0
 
 		if FightModel.instance:getVersion() >= 2 then
-			if slot12 then
-				slot14 = slot12.career or (slot13 and slot13.career or 0)
-			end
-
-			if slot15 then
-				slot17 = slot15.career or slot17
-			end
+			var_11_12 = var_11_10 and var_11_10.career or var_11_12
+			var_11_15 = var_11_13 and var_11_13.career or var_11_15
 		end
 
-		if (FightConfig.instance:getRestrain(slot14, slot17) or 1000) > 1000 then
-			return uv0.RestrainMvStatus.Restrain
-		elseif slot19 < 1000 then
-			return uv0.RestrainMvStatus.BeRestrain
+		local var_11_16 = FightConfig.instance:getRestrain(var_11_12, var_11_15) or 1000
+
+		if var_11_16 > 1000 then
+			return var_0_0.RestrainMvStatus.Restrain
+		elseif var_11_16 < 1000 then
+			return var_0_0.RestrainMvStatus.BeRestrain
 		else
-			return uv0.RestrainMvStatus.None
+			return var_0_0.RestrainMvStatus.None
 		end
 	else
-		return uv0.RestrainMvStatus.None
+		return var_0_0.RestrainMvStatus.None
 	end
 end
 
-function slot0._getNewRestrainStatus(slot0)
-	return uv0.getNewRestrainStatus(slot0.cardInfoMO.uid, slot0.cardInfoMO.skillId)
+function var_0_0._getNewRestrainStatus(arg_12_0)
+	return var_0_0.getNewRestrainStatus(arg_12_0.cardInfoMO.uid, arg_12_0.cardInfoMO.skillId)
 end
 
-return slot0
+return var_0_0

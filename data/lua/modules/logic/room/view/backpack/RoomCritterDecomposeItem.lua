@@ -1,91 +1,100 @@
-module("modules.logic.room.view.backpack.RoomCritterDecomposeItem", package.seeall)
+﻿module("modules.logic.room.view.backpack.RoomCritterDecomposeItem", package.seeall)
 
-slot0 = class("RoomCritterDecomposeItem", ListScrollCellExtend)
+local var_0_0 = class("RoomCritterDecomposeItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gocritterIcon = gohelper.findChild(slot0.viewGO, "#go_critterIcon")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_selected")
-	slot0._goAni = gohelper.findChild(slot0.viewGO, "vx_compose")
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0.viewGO)
-	slot0.animator = slot0.viewGO:GetComponent(gohelper.Type_Animator)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocritterIcon = gohelper.findChild(arg_1_0.viewGO, "#go_critterIcon")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+	arg_1_0._goAni = gohelper.findChild(arg_1_0.viewGO, "vx_compose")
+	arg_1_0.click = gohelper.getClickWithDefaultAudio(arg_1_0.viewGO)
+	arg_1_0.animator = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0.click:AddClickListener(slot0.onClick, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, slot0.refreshSelected, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.BeforeDecomposeCritter, slot0.beforeDecompose, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, slot0._onCritterLockStatusChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0.click:AddClickListener(arg_2_0.onClick, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, arg_2_0.refreshSelected, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.BeforeDecomposeCritter, arg_2_0.beforeDecompose, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, arg_2_0._onCritterLockStatusChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.click:RemoveClickListener()
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, slot0.refreshSelected, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.BeforeDecomposeCritter, slot0.beforeDecompose, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, slot0._onCritterLockStatusChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0.click:RemoveClickListener()
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, arg_3_0.refreshSelected, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.BeforeDecomposeCritter, arg_3_0.beforeDecompose, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeLockStatus, arg_3_0._onCritterLockStatusChange, arg_3_0)
 end
 
-function slot0.onClick(slot0)
-	if slot0._mo:isLock() then
+function var_0_0.onClick(arg_4_0)
+	if arg_4_0._mo:isLock() then
 		GameFacade.showToast(ToastEnum.RoomCritterIsLock)
 
 		return
 	end
 
-	if RoomCritterDecomposeListModel.instance:isSelect(slot0._mo:getId()) then
-		RoomCritterDecomposeListModel.instance:unselectDecomposeCritter(slot0._mo)
+	local var_4_0 = arg_4_0._mo:getId()
+
+	if RoomCritterDecomposeListModel.instance:isSelect(var_4_0) then
+		RoomCritterDecomposeListModel.instance:unselectDecomposeCritter(arg_4_0._mo)
 	else
-		RoomCritterDecomposeListModel.instance:selectDecomposeCritter(slot0._mo)
+		RoomCritterDecomposeListModel.instance:selectDecomposeCritter(arg_4_0._mo)
 	end
 end
 
-function slot0.beforeDecompose(slot0)
-	if RoomCritterDecomposeListModel.instance:isSelect(slot0._mo:getId()) then
-		gohelper.setActive(slot0._goAni, true)
+function var_0_0.beforeDecompose(arg_5_0)
+	local var_5_0 = arg_5_0._mo:getId()
+
+	if RoomCritterDecomposeListModel.instance:isSelect(var_5_0) then
+		gohelper.setActive(arg_5_0._goAni, true)
 	end
 end
 
-function slot0._onCritterLockStatusChange(slot0, slot1)
-	slot2 = slot0._mo and slot0._mo:getId()
+function var_0_0._onCritterLockStatusChange(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._mo and arg_6_0._mo:getId()
 
-	if not slot0._critterIcon or not slot2 or slot2 ~= slot1 then
+	if not arg_6_0._critterIcon or not var_6_0 or var_6_0 ~= arg_6_1 then
 		return
 	end
 
-	slot0._critterIcon:refreshLockIcon()
+	arg_6_0._critterIcon:refreshLockIcon()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
 
-	if not slot0._critterIcon then
-		slot0._critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocritterIcon)
+	if not arg_8_0._critterIcon then
+		arg_8_0._critterIcon = IconMgr.instance:getCommonCritterIcon(arg_8_0._gocritterIcon)
 
-		slot0._critterIcon:setCanClick(false)
-		slot0._critterIcon:setLockIconShow(true)
-		slot0._critterIcon:setMaturityIconShow(true)
+		arg_8_0._critterIcon:setCanClick(false)
+		arg_8_0._critterIcon:setLockIconShow(true)
+		arg_8_0._critterIcon:setMaturityIconShow(true)
 	end
 
-	slot0._critterIcon:onUpdateMO(slot0._mo)
-	slot0:refreshSelected()
-	gohelper.setActive(slot0._goAni, false)
+	arg_8_0._critterIcon:onUpdateMO(arg_8_0._mo)
+	arg_8_0:refreshSelected()
+	gohelper.setActive(arg_8_0._goAni, false)
 end
 
-function slot0.refreshSelected(slot0)
-	gohelper.setActive(slot0._goselect, RoomCritterDecomposeListModel.instance:isSelect(slot0._mo:getId()))
+function var_0_0.refreshSelected(arg_9_0)
+	local var_9_0 = arg_9_0._mo:getId()
+	local var_9_1 = RoomCritterDecomposeListModel.instance:isSelect(var_9_0)
+
+	gohelper.setActive(arg_9_0._goselect, var_9_1)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0.animator
+function var_0_0.getAnimator(arg_10_0)
+	return arg_10_0.animator
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

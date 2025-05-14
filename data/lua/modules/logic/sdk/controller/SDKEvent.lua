@@ -1,8 +1,9 @@
-module("modules.logic.sdk.controller.SDKEvent", package.seeall)
+﻿module("modules.logic.sdk.controller.SDKEvent", package.seeall)
 
-slot0 = _M
-slot0.BasePropertiesChange = 1
-slot0.GuestBindSucc = 2
-slot0.UpdateAccountBindBonus = 3
+local var_0_0 = _M
 
-return slot0
+var_0_0.BasePropertiesChange = 1
+var_0_0.GuestBindSucc = 2
+var_0_0.UpdateAccountBindBonus = 3
+
+return var_0_0

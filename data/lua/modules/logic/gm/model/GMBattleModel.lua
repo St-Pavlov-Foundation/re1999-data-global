@@ -1,23 +1,23 @@
-module("modules.logic.gm.model.GMBattleModel", package.seeall)
+﻿module("modules.logic.gm.model.GMBattleModel", package.seeall)
 
-slot0 = class("GMBattleModel")
+local var_0_0 = class("GMBattleModel")
 
-function slot0.setBattleParam(slot0, slot1)
-	slot0._battleParam = slot1
+function var_0_0.setBattleParam(arg_1_0, arg_1_1)
+	arg_1_0._battleParam = arg_1_1
 end
 
-function slot0.getBattleParam(slot0)
-	return slot0._battleParam
+function var_0_0.getBattleParam(arg_2_0)
+	return arg_2_0._battleParam
 end
 
-function slot0.setGMFightRecordEnable(slot0)
-	slot0.enableGMFightRecord = true
+function var_0_0.setGMFightRecordEnable(arg_3_0)
+	arg_3_0.enableGMFightRecord = true
 end
 
-function slot0.setGMFightRecord(slot0, slot1)
-	slot0.fightRecordMsg = slot1
+function var_0_0.setGMFightRecord(arg_4_0, arg_4_1)
+	arg_4_0.fightRecordMsg = arg_4_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

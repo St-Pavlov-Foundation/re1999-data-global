@@ -1,72 +1,90 @@
-module("modules.logic.versionactivity1_4.act132.model.Activity132Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.model.Activity132Model", package.seeall)
 
-slot0 = class("Activity132Model", BaseModel)
+local var_0_0 = class("Activity132Model", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	if slot0:getActMoById(slot1.activityId) then
-		slot2:init(slot1)
+function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getActMoById(arg_3_1.activityId)
+
+	if var_3_0 then
+		var_3_0:init(arg_3_1)
 	end
 end
 
-function slot0.getActMoById(slot0, slot1)
-	if not slot1 then
+function var_0_0.getActMoById(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	if not slot0:getById(slot1) then
-		slot0:addAtLast(Activity132Mo.New(slot1))
+	local var_4_0 = arg_4_0:getById(arg_4_1)
+
+	if not var_4_0 then
+		var_4_0 = Activity132Mo.New(arg_4_1)
+
+		arg_4_0:addAtLast(var_4_0)
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.getContentState(slot0, slot1, slot2)
-	if not slot0:getActMoById(slot1) then
+function var_0_0.getContentState(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getActMoById(arg_5_1)
+
+	if not var_5_0 then
 		return
 	end
 
-	return slot3:getContentState(slot2)
+	return var_5_0:getContentState(arg_5_2)
 end
 
-function slot0.setSelectCollectId(slot0, slot1, slot2)
-	if not slot0:getActMoById(slot1) then
+function var_0_0.setSelectCollectId(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:getActMoById(arg_6_1)
+
+	if not var_6_0 then
 		return
 	end
 
-	slot3:setSelectCollectId(slot2)
+	var_6_0:setSelectCollectId(arg_6_2)
 	Activity132Controller.instance:dispatchEvent(Activity132Event.OnChangeCollect)
 end
 
-function slot0.getSelectCollectId(slot0, slot1)
-	if not slot0:getActMoById(slot1) then
+function var_0_0.getSelectCollectId(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getActMoById(arg_7_1)
+
+	if not var_7_0 then
 		return
 	end
 
-	return slot2:getSelectCollectId()
+	return var_7_0:getSelectCollectId()
 end
 
-function slot0.setContentUnlock(slot0, slot1)
-	if not slot0:getActMoById(slot1.activityId) then
+function var_0_0.setContentUnlock(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getActMoById(arg_8_1.activityId)
+
+	if not var_8_0 then
 		return
 	end
 
-	return slot2:setContentUnlock(slot1.contentId)
+	return var_8_0:setContentUnlock(arg_8_1.contentId)
 end
 
-function slot0.checkClueRed(slot0, slot1, slot2)
-	if not slot0:getActMoById(slot1) then
+function var_0_0.checkClueRed(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:getActMoById(arg_9_1)
+
+	if not var_9_0 then
 		return
 	end
 
-	return slot3:checkClueRed(slot2)
+	return var_9_0:checkClueRed(arg_9_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

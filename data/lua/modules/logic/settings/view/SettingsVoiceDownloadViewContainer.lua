@@ -1,13 +1,13 @@
-module("modules.logic.settings.view.SettingsVoiceDownloadViewContainer", package.seeall)
+﻿module("modules.logic.settings.view.SettingsVoiceDownloadViewContainer", package.seeall)
 
-slot0 = class("SettingsVoiceDownloadViewContainer", BaseViewContainer)
+local var_0_0 = class("SettingsVoiceDownloadViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, SettingsVoiceDownloadView.New())
+	table.insert(var_1_0, SettingsVoiceDownloadView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

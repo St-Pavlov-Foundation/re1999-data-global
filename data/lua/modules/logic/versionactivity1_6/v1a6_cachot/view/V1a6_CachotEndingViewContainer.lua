@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEndingViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEndingViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotEndingViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotEndingViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		V1a6_CachotEndingView.New()
 	}
 end
 
-return slot0
+return var_0_0

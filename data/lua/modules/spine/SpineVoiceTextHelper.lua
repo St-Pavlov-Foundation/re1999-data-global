@@ -1,64 +1,72 @@
-module("modules.spine.SpineVoiceTextHelper", package.seeall)
+﻿module("modules.spine.SpineVoiceTextHelper", package.seeall)
 
-slot0 = class("SpineVoiceTextHelper")
+local var_0_0 = class("SpineVoiceTextHelper")
 
-function slot0.getSeparateContent(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getSeparateContent(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = {}
 
-	table.insert(slot3, uv0.getSeparateMarks(slot0.content))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.twcontent))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.encontent))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.kocontent))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.jpcontent))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.decontent))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.frcontent))
-	table.insert(slot3, uv0.getSeparateMarks(slot0.thaicontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.content))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.twcontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.encontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.kocontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.jpcontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.decontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.frcontent))
+	table.insert(var_1_0, var_0_0.getSeparateMarks(arg_1_0.thaicontent))
 
-	slot4 = ""
+	local var_1_1 = ""
 
-	if slot1 == LanguageEnum.LanguageStoryType.CN then
-		slot4 = slot0.content
-	elseif slot1 == LanguageEnum.LanguageStoryType.TW then
-		slot4 = slot0.twcontent
-	elseif slot1 == LanguageEnum.LanguageStoryType.EN then
-		slot4 = slot0.encontent
-	elseif slot1 == LanguageEnum.LanguageStoryType.KR then
-		slot4 = slot0.kocontent
-	elseif slot1 == LanguageEnum.LanguageStoryType.JP then
-		slot4 = slot0.jpcontent
-	elseif slot1 == LanguageEnum.LanguageStoryType.DE then
-		slot4 = slot0.decontent
-	elseif slot1 == LanguageEnum.LanguageStoryType.FR then
-		slot4 = slot0.frcontent
-	elseif slot1 == LanguageEnum.LanguageStoryType.THAI then
-		slot4 = slot0.thaicontent
+	if arg_1_1 == LanguageEnum.LanguageStoryType.CN then
+		var_1_1 = arg_1_0.content
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.TW then
+		var_1_1 = arg_1_0.twcontent
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.EN then
+		var_1_1 = arg_1_0.encontent
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.KR then
+		var_1_1 = arg_1_0.kocontent
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.JP then
+		var_1_1 = arg_1_0.jpcontent
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.DE then
+		var_1_1 = arg_1_0.decontent
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.FR then
+		var_1_1 = arg_1_0.frcontent
+	elseif arg_1_1 == LanguageEnum.LanguageStoryType.THAI then
+		var_1_1 = arg_1_0.thaicontent
 	end
 
-	for slot9, slot10 in ipairs(slot3[slot1]) do
-		slot4 = string.gsub(slot4, "(#%d+%.?%d?%d?)", "<sep>" .. slot9 .. "</sep>", 1)
+	local var_1_2 = "(#%d+%.?%d?%d?)"
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_0[arg_1_1]) do
+		var_1_1 = string.gsub(var_1_1, var_1_2, "<sep>" .. iter_1_0 .. "</sep>", 1)
 	end
 
-	slot6 = 0
+	local var_1_3 = 0
+	local var_1_4 = var_1_0[arg_1_2]
 
-	if (slot0.audio == nil or slot0.audio == 0) and #slot3[slot2] == 0 then
-		slot7 = slot3[slot1]
+	if (arg_1_0.audio == nil or arg_1_0.audio == 0) and #var_1_4 == 0 then
+		var_1_4 = var_1_0[arg_1_1]
 	end
 
-	for slot11 in string.gmatch(slot4, "<sep>%d+</sep>") do
-		slot4 = string.gsub(slot4, "<sep>" .. slot6 .. "</sep>", slot7[slot6 + 1] or "#0")
+	for iter_1_2 in string.gmatch(var_1_1, "<sep>%d+</sep>") do
+		var_1_3 = var_1_3 + 1
+
+		local var_1_5 = var_1_4[var_1_3] or "#0"
+
+		var_1_1 = string.gsub(var_1_1, "<sep>" .. var_1_3 .. "</sep>", var_1_5)
 	end
 
-	return StoryModel.instance:getStoryTxtByVoiceType(slot4, slot0.audio)
+	return (StoryModel.instance:getStoryTxtByVoiceType(var_1_1, arg_1_0.audio))
 end
 
-function slot0.getSeparateMarks(slot0)
-	slot1 = {}
+function var_0_0.getSeparateMarks(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = "(#%d+%.?%d?)"
 
-	for slot6 in string.gmatch(slot0, "(#%d+%.?%d?)") do
-		table.insert(slot1, slot6)
+	for iter_2_0 in string.gmatch(arg_2_0, var_2_1) do
+		table.insert(var_2_0, iter_2_0)
 	end
 
-	return slot1
+	return var_2_0
 end
 
-return slot0
+return var_0_0

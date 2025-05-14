@@ -1,82 +1,91 @@
-module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsMainReadItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsMainReadItem", package.seeall)
 
-slot0 = class("SportsNewsMainReadItem", LuaCompBase)
+local var_0_0 = class("SportsNewsMainReadItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._imageItemBG = gohelper.findChildImage(slot0.viewGO, "#image_ItemBG")
-	slot0._btnInfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Info/Click")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#txt_title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "txt_TitleEn")
-	slot0._scrolldesc = gohelper.findChild(slot0.viewGO, "Scroll View")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Scroll View/Viewport/#txt_Descr")
-	slot0._goredpoint = gohelper.findChild(slot0.viewGO, "#go_redpoint")
-	slot0._imagepic = gohelper.findChildSingleImage(slot0.viewGO, "image_Pic")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageItemBG = gohelper.findChildImage(arg_1_0.viewGO, "#image_ItemBG")
+	arg_1_0._btnInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Info/Click")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "txt_TitleEn")
+	arg_1_0._scrolldesc = gohelper.findChild(arg_1_0.viewGO, "Scroll View")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Scroll View/Viewport/#txt_Descr")
+	arg_1_0._goredpoint = gohelper.findChild(arg_1_0.viewGO, "#go_redpoint")
+	arg_1_0._imagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_Pic")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnInfo:AddClickListener(slot0._btnInfoOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnInfo:AddClickListener(arg_2_0._btnInfoOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnInfo:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnInfo:RemoveClickListener()
 end
 
-function slot0._btnInfoOnClick(slot0)
-	if slot0.orderMO.status ~= ActivityWarmUpEnum.OrderStatus.Finished then
-		SportsNewsModel.instance:onReadEnd(VersionActivity1_5Enum.ActivityId.SportsNews, slot0.orderMO.id)
+function var_0_0._btnInfoOnClick(arg_4_0)
+	if arg_4_0.orderMO.status ~= ActivityWarmUpEnum.OrderStatus.Finished then
+		local var_4_0 = VersionActivity1_5Enum.ActivityId.SportsNews
+
+		SportsNewsModel.instance:onReadEnd(var_4_0, arg_4_0.orderMO.id)
 	end
 
 	ViewMgr.instance:openView(ViewName.SportsNewsReadView, {
-		orderMO = slot0.orderMO
+		orderMO = arg_4_0.orderMO
 	})
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtDescr.overflowMode = TMPro.TextOverflowModes.Ellipsis
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._txtDescr.overflowMode = TMPro.TextOverflowModes.Ellipsis
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:removeEvents()
-	slot0._imagepic:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0:removeEvents()
+	arg_9_0._imagepic:UnLoadImage()
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot0.viewGO = slot1
-	slot0.index = slot2
+function var_0_0.initData(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0.viewGO = arg_10_1
+	arg_10_0.index = arg_10_2
 
-	slot0:onInitView()
-	slot0:addEvents()
+	arg_10_0:onInitView()
+	arg_10_0:addEvents()
 end
 
-function slot0.onRefresh(slot0, slot1)
-	slot0.orderMO = slot1
-	slot0._txttitle.text = tostring(slot1.cfg.name)
-	slot0._txtTitleEn.text = tostring(slot1.cfg.titledesc)
-	slot0._txtDescr.text = slot0.orderMO.cfg.desc
+function var_0_0.onRefresh(arg_11_0, arg_11_1)
+	arg_11_0.orderMO = arg_11_1
+	arg_11_0._txttitle.text = tostring(arg_11_1.cfg.name)
+	arg_11_0._txtTitleEn.text = tostring(arg_11_1.cfg.titledesc)
+	arg_11_0._txtDescr.text = arg_11_0.orderMO.cfg.desc
 
-	slot0._imagepic:LoadImage(ResUrl.getV1a5News(slot1.cfg.bossPic))
-	RedDotController.instance:addRedDot(slot0._goredpoint, RedDotEnum.DotNode.v1a5NewsOrder, slot1.id)
+	local var_11_0 = arg_11_1.cfg.bossPic
 
-	slot0._scrolldesc:GetComponent(gohelper.Type_LimitedScrollRect).verticalNormalizedPosition = 1
+	arg_11_0._imagepic:LoadImage(ResUrl.getV1a5News(var_11_0))
+	RedDotController.instance:addRedDot(arg_11_0._goredpoint, RedDotEnum.DotNode.v1a5NewsOrder, arg_11_1.id)
+
+	arg_11_0._scrolldesc:GetComponent(gohelper.Type_LimitedScrollRect).verticalNormalizedPosition = 1
 end
 
-function slot0.onFinish(slot0)
+function var_0_0.onFinish(arg_12_0)
+	return
 end
 
-function slot0.StopAnim(slot0)
+function var_0_0.StopAnim(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,222 +1,237 @@
-module("modules.logic.fight.view.cardeffect.FightCardRedealEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardRedealEffect", package.seeall)
 
-slot0 = class("FightCardRedealEffect", BaseWork)
-slot1 = "UNITY_UI_DISSOLVE"
-slot2 = "ui/materials/dynamic/kapairongjie.mat"
+local var_0_0 = class("FightCardRedealEffect", BaseWork)
+local var_0_1 = "UNITY_UI_DISSOLVE"
+local var_0_2 = "ui/materials/dynamic/kapairongjie.mat"
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	if slot0.context.newCards and #slot0.context.newCards > 0 then
-		slot0._paramDict = {}
-		slot0._loadingDissolveMat = true
+	if arg_1_0.context.newCards and #arg_1_0.context.newCards > 0 then
+		arg_1_0._paramDict = {}
+		arg_1_0._loadingDissolveMat = true
 
-		loadAbAsset(uv1, false, slot0._onLoadDissolveMat, slot0)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 1.3 / FightModel.instance:getUISpeed())
+		loadAbAsset(var_0_2, false, arg_1_0._onLoadDissolveMat, arg_1_0)
+		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 1.3 / FightModel.instance:getUISpeed())
 	else
 		logError("手牌变更失败，没有数据")
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.5 / FightModel.instance:getUISpeed())
+		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 0.5 / FightModel.instance:getUISpeed())
 	end
 end
 
-function slot0._onLoadDissolveMat(slot0, slot1)
-	slot0._loadingDissolveMat = nil
+function var_0_0._onLoadDissolveMat(arg_2_0, arg_2_1)
+	arg_2_0._loadingDissolveMat = nil
 
-	if slot1.IsLoadSuccess then
-		slot0._dissolveMat = UnityEngine.GameObject.Instantiate(slot1:GetResource())
+	if arg_2_1.IsLoadSuccess then
+		arg_2_0._dissolveMat = UnityEngine.GameObject.Instantiate(arg_2_1:GetResource())
 
-		slot0:_setupDissolveMat()
-		slot0:_playDissolveMat()
+		arg_2_0:_setupDissolveMat()
+		arg_2_0:_playDissolveMat()
 	end
 
-	slot0:_playEffects()
+	arg_2_0:_playEffects()
 end
 
-function slot0._playEffects(slot0)
-	slot0._effectGOList = {}
-	slot0._effectLoaderList = {}
-	slot1 = slot0.context.oldCards
+function var_0_0._playEffects(arg_3_0)
+	arg_3_0._effectGOList = {}
+	arg_3_0._effectLoaderList = {}
 
-	for slot5, slot6 in ipairs(slot0.context.newCards) do
-		if not slot0.context.handCardItemList[slot5].go.activeInHierarchy then
-			slot0:onDone(true)
+	local var_3_0 = arg_3_0.context.oldCards
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.context.newCards) do
+		if not arg_3_0.context.handCardItemList[iter_3_0].go.activeInHierarchy then
+			arg_3_0:onDone(true)
 
 			return
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0.context.newCards) do
-		slot8 = slot1[slot5]
-		slot10 = gohelper.findChild(slot0.context.handCardItemList[slot5].go, "changeEffect") or gohelper.create2d(slot7.go, "changeEffect")
-		slot11 = PrefabInstantiate.Create(slot10)
-		slot0._paramDict[slot11] = {
-			oldCardLv = FightCardModel.instance:getSkillLv(slot8.uid, slot8.skillId)
+	for iter_3_2, iter_3_3 in ipairs(arg_3_0.context.newCards) do
+		local var_3_1 = arg_3_0.context.handCardItemList[iter_3_2]
+		local var_3_2 = var_3_0[iter_3_2]
+		local var_3_3 = FightCardModel.instance:getSkillLv(var_3_2.uid, var_3_2.skillId)
+		local var_3_4 = gohelper.findChild(var_3_1.go, "changeEffect") or gohelper.create2d(var_3_1.go, "changeEffect")
+		local var_3_5 = PrefabInstantiate.Create(var_3_4)
+
+		arg_3_0._paramDict[var_3_5] = {
+			oldCardLv = var_3_3
 		}
 
-		slot11:startLoad(FightPreloadOthersWork.ClothSkillEffectPath, slot0._onClothSkillEffectLoaded, slot0)
-		table.insert(slot0._effectGOList, slot10)
-		table.insert(slot0._effectLoaderList, slot11)
+		var_3_5:startLoad(FightPreloadOthersWork.ClothSkillEffectPath, arg_3_0._onClothSkillEffectLoaded, arg_3_0)
+		table.insert(arg_3_0._effectGOList, var_3_4)
+		table.insert(arg_3_0._effectLoaderList, var_3_5)
 	end
 end
 
-function slot0._onClothSkillEffectLoaded(slot0, slot1)
-	slot4 = gohelper.findChild(slot1:getInstGO(), tostring(slot0._paramDict[slot1].oldCardLv))
+function var_0_0._onClothSkillEffectLoaded(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._paramDict[arg_4_1].oldCardLv
+	local var_4_1 = gohelper.findChild(arg_4_1:getInstGO(), tostring(var_4_0))
 
-	gohelper.onceAddComponent(slot4, typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
-	gohelper.setActive(slot4, true)
+	gohelper.onceAddComponent(var_4_1, typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
+	gohelper.setActive(var_4_1, true)
 end
 
-function slot0._setupDissolveMat(slot0)
-	slot0._imgMaskMatDict = {}
-	slot0._imgMaskCloneDict = {}
+function var_0_0._setupDissolveMat(arg_5_0)
+	arg_5_0._imgMaskMatDict = {}
+	arg_5_0._imgMaskCloneDict = {}
 
-	for slot4, slot5 in ipairs(slot0.context.newCards) do
-		slot8 = {}
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.context.newCards) do
+		local var_5_0 = arg_5_0.context.handCardItemList[iter_5_0]
+		local var_5_1 = gohelper.findChild(var_5_0.go, "foranim")
+		local var_5_2 = {}
 
-		uv0._getChildActiveImage(gohelper.findChild(slot0.context.handCardItemList[slot4].go, "foranim"), slot8)
+		var_0_0._getChildActiveImage(var_5_1, var_5_2)
 
-		for slot12, slot13 in ipairs(slot8) do
-			if slot13.material == slot13.defaultMaterial then
-				slot0._needSetMatNilDict = slot0._needSetMatNilDict or {}
-				slot0._needSetMatNilDict[slot13] = true
-				slot13.material = slot0._dissolveMat
+		for iter_5_2, iter_5_3 in ipairs(var_5_2) do
+			if iter_5_3.material == iter_5_3.defaultMaterial then
+				arg_5_0._needSetMatNilDict = arg_5_0._needSetMatNilDict or {}
+				arg_5_0._needSetMatNilDict[iter_5_3] = true
+				iter_5_3.material = arg_5_0._dissolveMat
 			else
-				slot0._imgMaskMatDict[slot13] = slot13.material
-				slot13.material = UnityEngine.GameObject.Instantiate(slot13.material)
+				arg_5_0._imgMaskMatDict[iter_5_3] = iter_5_3.material
+				iter_5_3.material = UnityEngine.GameObject.Instantiate(iter_5_3.material)
 
-				slot13.material:EnableKeyword(uv1)
-				slot13.material:SetVector("_OutSideColor", Vector4.New(0, 0, 0, 1))
-				slot13.material:SetVector("_InSideColor", Vector4.New(0, 0, 0, 1))
+				iter_5_3.material:EnableKeyword(var_0_1)
+				iter_5_3.material:SetVector("_OutSideColor", Vector4.New(0, 0, 0, 1))
+				iter_5_3.material:SetVector("_InSideColor", Vector4.New(0, 0, 0, 1))
 
-				slot0._imgMaskCloneDict[slot13] = slot13.material
+				arg_5_0._imgMaskCloneDict[iter_5_3] = iter_5_3.material
 			end
 		end
 	end
 end
 
-function slot0._getChildActiveImage(slot0, slot1)
-	if slot0.activeInHierarchy and slot0:GetComponent(typeof(UnityEngine.RectTransform)) then
-		if slot0:GetComponent(gohelper.Type_Image) then
-			table.insert(slot1, slot2)
+function var_0_0._getChildActiveImage(arg_6_0, arg_6_1)
+	if arg_6_0.activeInHierarchy and arg_6_0:GetComponent(typeof(UnityEngine.RectTransform)) then
+		local var_6_0 = arg_6_0:GetComponent(gohelper.Type_Image)
+
+		if var_6_0 then
+			table.insert(arg_6_1, var_6_0)
 		end
 
-		for slot8 = 0, slot0.transform.childCount - 1 do
-			uv0._getChildActiveImage(slot3:GetChild(slot8).gameObject, slot1)
+		local var_6_1 = arg_6_0.transform
+		local var_6_2 = var_6_1.childCount
+
+		for iter_6_0 = 0, var_6_2 - 1 do
+			local var_6_3 = var_6_1:GetChild(iter_6_0)
+
+			var_0_0._getChildActiveImage(var_6_3.gameObject, arg_6_1)
 		end
 	end
 end
 
-function slot0._playDissolveMat(slot0)
-	slot1 = MaterialUtil.getPropValueFromMat(slot0._dissolveMat, "_DissolveOffset", "Vector4")
+function var_0_0._playDissolveMat(arg_7_0)
+	local var_7_0 = MaterialUtil.getPropValueFromMat(arg_7_0._dissolveMat, "_DissolveOffset", "Vector4")
+	local var_7_1 = Vector4.New(0.07, var_7_0.y, var_7_0.z, var_7_0.w)
 
-	MaterialUtil.setPropValue(slot0._dissolveMat, "_DissolveOffset", "Vector4", Vector4.New(0.07, slot1.y, slot1.z, slot1.w))
+	MaterialUtil.setPropValue(arg_7_0._dissolveMat, "_DissolveOffset", "Vector4", var_7_1)
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0.07, 1.7526, 0.6, function (slot0)
-		uv0.x = slot0
+	arg_7_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0.07, 1.7526, 0.6, function(arg_8_0)
+		var_7_1.x = arg_8_0
 
-		MaterialUtil.setPropValue(uv1._dissolveMat, "_DissolveOffset", "Vector4", uv0)
+		MaterialUtil.setPropValue(arg_7_0._dissolveMat, "_DissolveOffset", "Vector4", var_7_1)
 
-		if uv1._imgMaskCloneDict then
-			for slot4, slot5 in pairs(uv1._imgMaskCloneDict) do
-				MaterialUtil.setPropValue(slot5, "_DissolveOffset", "Vector4", uv0)
+		if arg_7_0._imgMaskCloneDict then
+			for iter_8_0, iter_8_1 in pairs(arg_7_0._imgMaskCloneDict) do
+				MaterialUtil.setPropValue(iter_8_1, "_DissolveOffset", "Vector4", var_7_1)
 			end
 		end
-	end, function ()
-		for slot3, slot4 in ipairs(uv0.context.newCards) do
-			uv0.context.handCardItemList[slot3]:updateItem(slot3, slot4)
+	end, function()
+		for iter_9_0, iter_9_1 in ipairs(arg_7_0.context.newCards) do
+			arg_7_0.context.handCardItemList[iter_9_0]:updateItem(iter_9_0, iter_9_1)
 		end
 
-		uv0._tweenId = ZProj.TweenHelper.DOTweenFloat(1.7526, 0.07, 0.6, function (slot0)
-			uv0.x = slot0
+		arg_7_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1.7526, 0.07, 0.6, function(arg_10_0)
+			var_7_1.x = arg_10_0
 
-			MaterialUtil.setPropValue(uv1._dissolveMat, "_DissolveOffset", "Vector4", uv0)
+			MaterialUtil.setPropValue(arg_7_0._dissolveMat, "_DissolveOffset", "Vector4", var_7_1)
 
-			if uv1._imgMaskCloneDict then
-				for slot4, slot5 in pairs(uv1._imgMaskCloneDict) do
-					MaterialUtil.setPropValue(slot5, "_DissolveOffset", "Vector4", uv0)
+			if arg_7_0._imgMaskCloneDict then
+				for iter_10_0, iter_10_1 in pairs(arg_7_0._imgMaskCloneDict) do
+					MaterialUtil.setPropValue(iter_10_1, "_DissolveOffset", "Vector4", var_7_1)
 				end
 			end
 		end)
 	end)
 end
 
-function slot0._delayDone(slot0)
-	if slot0._lockGO then
-		gohelper.setActive(slot0._lockGO, true)
+function var_0_0._delayDone(arg_11_0)
+	if arg_11_0._lockGO then
+		gohelper.setActive(arg_11_0._lockGO, true)
 
-		slot0._lockGO = nil
+		arg_11_0._lockGO = nil
 	end
 
-	slot0:onDone(true)
+	arg_11_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loadingDissolveMat then
-		removeAssetLoadCb(uv0, slot0._onLoadDissolveMat, slot0)
+function var_0_0.clearWork(arg_12_0)
+	if arg_12_0._loadingDissolveMat then
+		removeAssetLoadCb(var_0_2, arg_12_0._onLoadDissolveMat, arg_12_0)
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	slot0:_removeEffect()
-	slot0:_removeDissolveMat()
+	TaskDispatcher.cancelTask(arg_12_0._delayDone, arg_12_0)
+	arg_12_0:_removeEffect()
+	arg_12_0:_removeDissolveMat()
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_12_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_12_0._tweenId)
 	end
 
-	if slot0._dissolveMat then
-		gohelper.destroy(slot0._dissolveMat)
+	if arg_12_0._dissolveMat then
+		gohelper.destroy(arg_12_0._dissolveMat)
 	end
 
-	slot0._imgMaskMatDict = nil
-	slot0._dissolveMat = nil
-	slot0._tweenId = nil
-	slot0._lockGO = nil
-	slot0._paramDict = nil
+	arg_12_0._imgMaskMatDict = nil
+	arg_12_0._dissolveMat = nil
+	arg_12_0._tweenId = nil
+	arg_12_0._lockGO = nil
+	arg_12_0._paramDict = nil
 end
 
-function slot0._removeDissolveMat(slot0)
-	if slot0._imgMaskMatDict then
-		for slot4, slot5 in pairs(slot0._imgMaskMatDict) do
-			slot4.material = slot5
-			slot0._imgMaskMatDict[slot4] = nil
+function var_0_0._removeDissolveMat(arg_13_0)
+	if arg_13_0._imgMaskMatDict then
+		for iter_13_0, iter_13_1 in pairs(arg_13_0._imgMaskMatDict) do
+			iter_13_0.material = iter_13_1
+			arg_13_0._imgMaskMatDict[iter_13_0] = nil
 		end
 	end
 
-	if slot0._imgMaskCloneDict then
-		for slot4, slot5 in pairs(slot0._imgMaskCloneDict) do
-			gohelper.destroy(slot5)
+	if arg_13_0._imgMaskCloneDict then
+		for iter_13_2, iter_13_3 in pairs(arg_13_0._imgMaskCloneDict) do
+			gohelper.destroy(iter_13_3)
 
-			slot0._imgMaskCloneDict[slot4] = nil
+			arg_13_0._imgMaskCloneDict[iter_13_2] = nil
 		end
 	end
 
-	if slot0._needSetMatNilDict then
-		for slot4, slot5 in pairs(slot0._needSetMatNilDict) do
-			slot4.material = nil
-			slot0._needSetMatNilDict[slot4] = nil
+	if arg_13_0._needSetMatNilDict then
+		for iter_13_4, iter_13_5 in pairs(arg_13_0._needSetMatNilDict) do
+			iter_13_4.material = nil
+			arg_13_0._needSetMatNilDict[iter_13_4] = nil
 		end
 	end
 
-	slot0._needSetMatNilDict = nil
-	slot0._imgMaskCloneDict = nil
-	slot0._imgMaskMatDict = nil
+	arg_13_0._needSetMatNilDict = nil
+	arg_13_0._imgMaskCloneDict = nil
+	arg_13_0._imgMaskMatDict = nil
 end
 
-function slot0._removeEffect(slot0)
-	if slot0._effectLoaderList then
-		for slot4, slot5 in ipairs(slot0._effectLoaderList) do
-			slot5:dispose()
+function var_0_0._removeEffect(arg_14_0)
+	if arg_14_0._effectLoaderList then
+		for iter_14_0, iter_14_1 in ipairs(arg_14_0._effectLoaderList) do
+			iter_14_1:dispose()
 		end
 	end
 
-	if slot0._effectGOList then
-		for slot4, slot5 in ipairs(slot0._effectGOList) do
-			gohelper.destroy(slot5)
+	if arg_14_0._effectGOList then
+		for iter_14_2, iter_14_3 in ipairs(arg_14_0._effectGOList) do
+			gohelper.destroy(iter_14_3)
 		end
 	end
 
-	slot0._effectGOList = nil
-	slot0._effectLoaderList = nil
+	arg_14_0._effectGOList = nil
+	arg_14_0._effectLoaderList = nil
 end
 
-return slot0
+return var_0_0

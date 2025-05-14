@@ -1,78 +1,87 @@
-module("modules.logic.activity.view.LinkageActivity_PageBase", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_PageBase", package.seeall)
 
-slot0 = class("LinkageActivity_PageBase", RougeSimpleItemBase)
+local var_0_0 = class("LinkageActivity_PageBase", RougeSimpleItemBase)
 
-function slot0.ctor(slot0, ...)
-	slot0:__onInit()
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	arg_1_0:__onInit()
+	var_0_0.super.ctor(arg_1_0, ...)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_2_0)
+	var_0_0.super.onDestroyView(arg_2_0)
+	arg_2_0:__onDispose()
 end
 
-function slot0.actId(slot0)
-	return slot0:_assetGetParent():actId()
+function var_0_0.actId(arg_3_0)
+	return arg_3_0:_assetGetParent():actId()
 end
 
-function slot0.actCO(slot0)
-	return slot0:_assetGetParent():actCO()
+function var_0_0.actCO(arg_4_0)
+	return arg_4_0:_assetGetParent():actCO()
 end
 
-function slot0.getLinkageActivityCO(slot0)
-	return slot0:_assetGetParent():getLinkageActivityCO()
+function var_0_0.getLinkageActivityCO(arg_5_0)
+	return arg_5_0:_assetGetParent():getLinkageActivityCO()
 end
 
-function slot0.getDataList(slot0)
-	return slot0:_assetGetParent():getDataList()
+function var_0_0.getDataList(arg_6_0)
+	return arg_6_0:_assetGetParent():getDataList()
 end
 
-function slot0.getTempDataList(slot0)
-	return slot0:_assetGetParent():getTempDataList()
+function var_0_0.getTempDataList(arg_7_0)
+	return arg_7_0:_assetGetParent():getTempDataList()
 end
 
-function slot0.selectedPage(slot0, slot1)
-	return slot0:_assetGetParent():selectedPage(slot1)
+function var_0_0.selectedPage(arg_8_0, arg_8_1)
+	return arg_8_0:_assetGetParent():selectedPage(arg_8_1)
 end
 
-function slot0.getDurationTimeStr(slot0)
-	return StoreController.instance:getRecommendStoreTime(slot0:getLinkageActivityCO())
+function var_0_0.getDurationTimeStr(arg_9_0)
+	local var_9_0 = arg_9_0:getLinkageActivityCO()
+
+	return StoreController.instance:getRecommendStoreTime(var_9_0)
 end
 
-function slot0.jump(slot0)
-	GameFacade.jumpByAdditionParam(slot0:getLinkageActivityCO().systemJumpCode or "10173")
+function var_0_0.jump(arg_10_0)
+	local var_10_0 = arg_10_0:getLinkageActivityCO()
+
+	GameFacade.jumpByAdditionParam(var_10_0.systemJumpCode or "10173")
 end
 
-function slot0.getLinkageActivityCO_item(slot0, slot1)
-	return slot0:getLinkageActivityCO()["item" .. slot1]
+function var_0_0.getLinkageActivityCO_item(arg_11_0, arg_11_1)
+	return arg_11_0:getLinkageActivityCO()["item" .. arg_11_1]
 end
 
-function slot0.getLinkageActivityCO_res_video(slot0, slot1)
-	return slot0:getLinkageActivityCO()["res_video" .. slot1]
+function var_0_0.getLinkageActivityCO_res_video(arg_12_0, arg_12_1)
+	return arg_12_0:getLinkageActivityCO()["res_video" .. arg_12_1]
 end
 
-function slot0.getLinkageActivityCO_desc(slot0, slot1)
-	return slot0:getLinkageActivityCO()["desc" .. slot1]
+function var_0_0.getLinkageActivityCO_desc(arg_13_0, arg_13_1)
+	return arg_13_0:getLinkageActivityCO()["desc" .. arg_13_1]
 end
 
-function slot0.getItemIconResUrl(slot0, slot1)
-	slot3 = slot0:_assetGetViewContainer()
+function var_0_0.getItemIconResUrl(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getLinkageActivityCO_item(arg_14_1)
+	local var_14_1 = arg_14_0:_assetGetViewContainer()
 
-	return slot3:getItemIconResUrl(slot3:itemCo2TIQ(slot0:getLinkageActivityCO_item(slot1)))
+	return var_14_1:getItemIconResUrl(var_14_1:itemCo2TIQ(var_14_0))
 end
 
-function slot0.getItemConfig(slot0, slot1)
-	slot3 = slot0:_assetGetViewContainer()
+function var_0_0.getItemConfig(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getLinkageActivityCO_item(arg_15_1)
+	local var_15_1 = arg_15_0:_assetGetViewContainer()
 
-	return slot3:getItemConfig(slot3:itemCo2TIQ(slot0:getLinkageActivityCO_item(slot1)))
+	return var_15_1:getItemConfig(var_15_1:itemCo2TIQ(var_15_0))
 end
 
-function slot0.itemCo2TIQ(slot0, slot1)
-	return slot0:_assetGetViewContainer():itemCo2TIQ(slot0:getLinkageActivityCO_item(slot1))
+function var_0_0.itemCo2TIQ(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getLinkageActivityCO_item(arg_16_1)
+
+	return arg_16_0:_assetGetViewContainer():itemCo2TIQ(var_16_0)
 end
 
-function slot0.onPostSelectedPage(slot0, slot1, slot2)
+function var_0_0.onPostSelectedPage(arg_17_0, arg_17_1, arg_17_2)
+	return
 end
 
-return slot0
+return var_0_0

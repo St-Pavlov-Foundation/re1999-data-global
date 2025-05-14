@@ -1,112 +1,119 @@
-module("modules.logic.reactivity.view.ReactivityStoreItem", package.seeall)
+﻿module("modules.logic.reactivity.view.ReactivityStoreItem", package.seeall)
 
-slot0 = class("ReactivityStoreItem", UserDataDispose)
+local var_0_0 = class("ReactivityStoreItem", UserDataDispose)
 
-function slot0.onInitView(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.onInitView(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.goStoreGoodsItem = gohelper.findChild(slot0.go, "#go_storegoodsitem")
+	arg_1_0.go = arg_1_1
+	arg_1_0.goStoreGoodsItem = gohelper.findChild(arg_1_0.go, "#go_storegoodsitem")
 
-	gohelper.setActive(slot0.goStoreGoodsItem, false)
+	gohelper.setActive(arg_1_0.goStoreGoodsItem, false)
 
-	slot0.goodsItemList = slot0:getUserDataTb_()
-	slot0._clipPosY = 400
-	slot0._startFadePosY = 360.32
-	slot0._showTagPosY = 300
+	arg_1_0.goodsItemList = arg_1_0:getUserDataTb_()
+	arg_1_0._clipPosY = 400
+	arg_1_0._startFadePosY = 360.32
+	arg_1_0._showTagPosY = 300
 
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0.onBuyGoodsSuccess, slot0)
+	arg_1_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_1_0.onBuyGoodsSuccess, arg_1_0)
 end
 
-function slot0.onBuyGoodsSuccess(slot0)
-	slot0:sortGoodsCoList()
-	slot0:refreshGoods()
+function var_0_0.onBuyGoodsSuccess(arg_2_0)
+	arg_2_0:sortGoodsCoList()
+	arg_2_0:refreshGoods()
 end
 
-function slot0.sortGoodsCoList(slot0)
-	table.sort(slot0.groupGoodsCoList, uv0.sortGoods)
+function var_0_0.sortGoodsCoList(arg_3_0)
+	table.sort(arg_3_0.groupGoodsCoList, var_0_0.sortGoods)
 end
 
-function slot0.updateInfo(slot0, slot1, slot2)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.updateInfo(arg_4_0, arg_4_1, arg_4_2)
+	gohelper.setActive(arg_4_0.go, true)
 
-	slot0.groupGoodsCoList = slot2
-	slot0.groupId = slot1
+	arg_4_0.groupGoodsCoList = arg_4_2
+	arg_4_0.groupId = arg_4_1
 
-	slot0:sortGoodsCoList()
-	slot0:refreshTag()
-	slot0:refreshGoods()
+	arg_4_0:sortGoodsCoList()
+	arg_4_0:refreshTag()
+	arg_4_0:refreshGoods()
 end
 
-function slot0.refreshTag(slot0)
-	if slot0.gotag then
+function var_0_0.refreshTag(arg_5_0)
+	if arg_5_0.gotag then
 		return
 	end
 
-	slot0.gotag = gohelper.findChild(slot0.go, "tag" .. slot0.groupId)
-	slot0.canvasGroup = slot0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0.imageTagType = gohelper.findChildImage(slot0.gotag, "image_tagType")
+	arg_5_0.gotag = gohelper.findChild(arg_5_0.go, "tag" .. arg_5_0.groupId)
+	arg_5_0.canvasGroup = arg_5_0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_5_0.imageTagType = gohelper.findChildImage(arg_5_0.gotag, "image_tagType")
 
-	gohelper.setActive(slot0.gotag, true)
+	gohelper.setActive(arg_5_0.gotag, true)
 
-	slot0.tagMaskList = slot0:getUserDataTb_()
+	arg_5_0.tagMaskList = arg_5_0:getUserDataTb_()
 
-	table.insert(slot0.tagMaskList, slot0.imageTagType)
+	table.insert(arg_5_0.tagMaskList, arg_5_0.imageTagType)
 end
 
-function slot0.refreshGoods(slot0)
-	slot1 = nil
+function var_0_0.refreshGoods(arg_6_0)
+	local var_6_0
 
-	for slot5, slot6 in ipairs(slot0.groupGoodsCoList) do
-		if not slot0.goodsItemList[slot5] then
-			slot1 = ReactivityStoreGoodsItem.New()
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.groupGoodsCoList) do
+		local var_6_1 = arg_6_0.goodsItemList[iter_6_0]
 
-			slot1:onInitView(gohelper.cloneInPlace(slot0.goStoreGoodsItem))
-			table.insert(slot0.goodsItemList, slot1)
+		if not var_6_1 then
+			var_6_1 = ReactivityStoreGoodsItem.New()
+
+			var_6_1:onInitView(gohelper.cloneInPlace(arg_6_0.goStoreGoodsItem))
+			table.insert(arg_6_0.goodsItemList, var_6_1)
 		end
 
-		slot1:updateInfo(slot6)
+		var_6_1:updateInfo(iter_6_1)
 	end
 
-	for slot5 = #slot0.groupGoodsCoList + 1, #slot0.goodsItemList do
-		slot0.goodsItemList[slot5]:hide()
+	for iter_6_2 = #arg_6_0.groupGoodsCoList + 1, #arg_6_0.goodsItemList do
+		arg_6_0.goodsItemList[iter_6_2]:hide()
 	end
 end
 
-function slot0.refreshTagClip(slot0, slot1)
-	if not slot0.canvasGroup then
+function var_0_0.refreshTagClip(arg_7_0, arg_7_1)
+	if not arg_7_0.canvasGroup then
 		return
 	end
 
-	slot0.canvasGroup.alpha = Mathf.Clamp((slot0._clipPosY - recthelper.rectToRelativeAnchorPos(slot0.gotag.transform.position, slot1.transform).y) / (slot0._clipPosY - slot0._startFadePosY), 0, 1)
+	local var_7_0 = recthelper.rectToRelativeAnchorPos(arg_7_0.gotag.transform.position, arg_7_1.transform)
+	local var_7_1 = Mathf.Clamp((arg_7_0._clipPosY - var_7_0.y) / (arg_7_0._clipPosY - arg_7_0._startFadePosY), 0, 1)
 
-	for slot7, slot8 in ipairs(slot0.tagMaskList) do
-		slot8.maskable = slot2.y <= slot0._showTagPosY
+	arg_7_0.canvasGroup.alpha = var_7_1
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.tagMaskList) do
+		iter_7_1.maskable = var_7_0.y <= arg_7_0._showTagPosY
 	end
 end
 
-function slot0.sortGoods(slot0, slot1)
-	if (slot0.maxBuyCount ~= 0 and slot0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.activityId, slot0.id) <= 0) ~= (slot1.maxBuyCount ~= 0 and slot1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot1.activityId, slot1.id) <= 0) then
-		if slot2 then
+function var_0_0.sortGoods(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.maxBuyCount ~= 0 and arg_8_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_8_0.activityId, arg_8_0.id) <= 0
+
+	if var_8_0 ~= (arg_8_1.maxBuyCount ~= 0 and arg_8_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_8_1.activityId, arg_8_1.id) <= 0) then
+		if var_8_0 then
 			return false
 		end
 
 		return true
 	end
 
-	return slot0.id < slot1.id
+	return arg_8_0.id < arg_8_1.id
 end
 
-function slot0.getHeight(slot0)
-	return recthelper.getHeight(slot0.go.transform)
+function var_0_0.getHeight(arg_9_0)
+	return recthelper.getHeight(arg_9_0.go.transform)
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in ipairs(slot0.goodsItemList) do
-		slot5:onDestroy()
+function var_0_0.onDestroy(arg_10_0)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.goodsItemList) do
+		iter_10_1:onDestroy()
 	end
 
-	slot0:__onDispose()
+	arg_10_0:__onDispose()
 end
 
-return slot0
+return var_0_0

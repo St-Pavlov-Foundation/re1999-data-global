@@ -1,39 +1,44 @@
-module("modules.logic.fight.system.work.asfd.FightWorkMissileASFD", package.seeall)
+﻿module("modules.logic.fight.system.work.asfd.FightWorkMissileASFD", package.seeall)
 
-slot0 = class("FightWorkMissileASFD", BaseWork)
+local var_0_0 = class("FightWorkMissileASFD", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0.stepMo = slot1
-	slot0._fightStepMO = slot1
-	slot0.curIndex = slot2
+	arg_1_0.stepMo = arg_1_1
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.curIndex = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0.delayDone, slot0, 1)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0.delayDone, arg_2_0, 1)
 
-	if not FightHelper.getASFDMgr() then
-		return slot0:onDone(true)
+	local var_2_0 = FightHelper.getASFDMgr()
+
+	if not var_2_0 then
+		return arg_2_0:onDone(true)
 	end
 
-	slot1:emitMissile(slot0.stepMo, slot0.curIndex)
-	TaskDispatcher.runDelay(slot0.waitDone, slot0, FightASFDConfig.instance:getMissileInterval(slot0.curIndex) / FightModel.instance:getUISpeed())
+	var_2_0:emitMissile(arg_2_0.stepMo, arg_2_0.curIndex)
+
+	local var_2_1 = FightASFDConfig.instance:getMissileInterval(arg_2_0.curIndex) / FightModel.instance:getUISpeed()
+
+	TaskDispatcher.runDelay(arg_2_0.waitDone, arg_2_0, var_2_1)
 end
 
-function slot0.delayDone(slot0)
+function var_0_0.delayDone(arg_3_0)
 	logError("发射奥术飞弹 超时了")
 
-	return slot0:onDone(true)
+	return arg_3_0:onDone(true)
 end
 
-function slot0.waitDone(slot0)
-	return slot0:onDone(true)
+function var_0_0.waitDone(arg_4_0)
+	return arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0.delayDone, slot0)
-	TaskDispatcher.cancelTask(slot0.waitDone, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.delayDone, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.waitDone, arg_5_0)
 end
 
-return slot0
+return var_0_0

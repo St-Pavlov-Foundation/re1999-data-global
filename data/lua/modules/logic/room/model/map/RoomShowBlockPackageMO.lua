@@ -1,12 +1,12 @@
-module("modules.logic.room.model.map.RoomShowBlockPackageMO", package.seeall)
+﻿module("modules.logic.room.model.map.RoomShowBlockPackageMO", package.seeall)
 
-slot0 = pureTable("RoomShowBlockPackageMO")
+local var_0_0 = pureTable("RoomShowBlockPackageMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.id = slot1
-	slot0.packageId = slot1
-	slot0.num = slot2 or 0
-	slot0.rare = slot3 or 0
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.id = arg_1_1
+	arg_1_0.packageId = arg_1_1
+	arg_1_0.num = arg_1_2 or 0
+	arg_1_0.rare = arg_1_3 or 0
 end
 
-return slot0
+return var_0_0

@@ -1,49 +1,51 @@
-module("modules.logic.versionactivity1_4.act130.model.Activity130TaskMO", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.model.Activity130TaskMO", package.seeall)
 
-slot0 = pureTable("Activity130TaskMO")
+local var_0_0 = pureTable("Activity130TaskMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1.id
-	slot0.activityId = slot1.activityId
-	slot0.config = slot1
-	slot0.taskMO = slot2
-	slot0.preFinish = false
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.config = arg_1_1
+	arg_1_0.taskMO = arg_1_2
+	arg_1_0.preFinish = false
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.taskMO = slot1
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.taskMO = arg_2_1
 end
 
-function slot0.isLock(slot0)
-	return slot0.taskMO == nil
+function var_0_0.isLock(arg_3_0)
+	return arg_3_0.taskMO == nil
 end
 
-function slot0.isFinished(slot0)
-	if slot0.preFinish then
+function var_0_0.isFinished(arg_4_0)
+	if arg_4_0.preFinish then
 		return true
 	end
 
-	if slot0.taskMO then
-		return slot0.taskMO.finishCount > 0
+	if arg_4_0.taskMO then
+		return arg_4_0.taskMO.finishCount > 0
 	end
 
 	return false
 end
 
-function slot0.getMaxProgress(slot0)
-	return slot0.config and slot0.config.maxProgress or 0
+function var_0_0.getMaxProgress(arg_5_0)
+	return arg_5_0.config and arg_5_0.config.maxProgress or 0
 end
 
-function slot0.getFinishProgress(slot0)
-	return slot0.taskMO and slot0.taskMO.progress or 0
+function var_0_0.getFinishProgress(arg_6_0)
+	return arg_6_0.taskMO and arg_6_0.taskMO.progress or 0
 end
 
-function slot0.alreadyGotReward(slot0)
-	if slot0:getMaxProgress() > 0 and slot0.taskMO then
-		return slot1 <= slot0.taskMO.progress and slot0.taskMO.finishCount == 0
+function var_0_0.alreadyGotReward(arg_7_0)
+	local var_7_0 = arg_7_0:getMaxProgress()
+
+	if var_7_0 > 0 and arg_7_0.taskMO then
+		return var_7_0 <= arg_7_0.taskMO.progress and arg_7_0.taskMO.finishCount == 0
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

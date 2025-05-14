@@ -1,136 +1,158 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotRoomConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotRoomConfig", package.seeall)
 
-slot0 = class("V1a6_CachotRoomConfig")
+local var_0_0 = class("V1a6_CachotRoomConfig")
 
-function slot0.init(slot0, slot1)
-	slot0._roomConfigTable = slot1
-	slot0._roomConfigDict = slot1.configDict
-	slot0._roomConfigList = slot1.configList
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._roomConfigTable = arg_1_1
+	arg_1_0._roomConfigDict = arg_1_1.configDict
+	arg_1_0._roomConfigList = arg_1_1.configList
 end
 
-function slot0.getRoomConfigList(slot0)
-	return slot0._roomConfigList
+function var_0_0.getRoomConfigList(arg_2_0)
+	return arg_2_0._roomConfigList
 end
 
-function slot0.getRoomConfigDict(slot0)
-	return slot0._roomConfigDict
+function var_0_0.getRoomConfigDict(arg_3_0)
+	return arg_3_0._roomConfigDict
 end
 
-function slot0.getCoByRoomId(slot0, slot1)
-	return slot0:getRoomConfigDict()[slot1]
+function var_0_0.getCoByRoomId(arg_4_0, arg_4_1)
+	return arg_4_0:getRoomConfigDict()[arg_4_1]
 end
 
-function slot0._initRoomInfo(slot0)
-	if not slot0._layerRoomCount then
-		slot0._layerRoomCount = {}
+function var_0_0._initRoomInfo(arg_5_0)
+	if not arg_5_0._layerRoomCount then
+		arg_5_0._layerRoomCount = {}
 
-		for slot4, slot5 in pairs(lua_rogue_difficulty.configDict) do
-			slot6 = slot5.initRoom
+		for iter_5_0, iter_5_1 in pairs(lua_rogue_difficulty.configDict) do
+			local var_5_0 = iter_5_1.initRoom
 
-			if not slot0._layerRoomCount[slot4] then
-				slot0._layerRoomCount[slot4] = {}
+			if not arg_5_0._layerRoomCount[iter_5_0] then
+				arg_5_0._layerRoomCount[iter_5_0] = {}
 			end
 
-			slot7 = nil
+			local var_5_1
+			local var_5_2 = 1
+			local var_5_3 = lua_rogue_room.configDict[var_5_0]
 
-			if lua_rogue_room.configDict[slot6] then
-				slot7 = slot9.layer
-				slot0._layerRoomCount[slot4][slot7] = {
-					count = 1,
-					[slot6] = 1
+			if var_5_3 then
+				local var_5_4 = var_5_3.layer
+
+				arg_5_0._layerRoomCount[iter_5_0][var_5_4] = {
+					count = 1
 				}
-				slot10 = lua_rogue_room.configDict[slot9.nextRoom]
-				slot11 = nil
+				arg_5_0._layerRoomCount[iter_5_0][var_5_4][var_5_0] = var_5_2
+
+				local var_5_5 = lua_rogue_room.configDict[var_5_3.nextRoom]
+				local var_5_6
 
 				if isDebugBuild then
-					slot11 = {}
+					var_5_6 = {}
 				end
 
-				while slot10 do
-					if slot10.layer == slot7 then
-						slot0._layerRoomCount[slot4][slot7][slot10.id] = slot8 + 1
-						slot0._layerRoomCount[slot4][slot7].count = slot0._layerRoomCount[slot4][slot7].count + 1
+				while var_5_5 do
+					if var_5_5.layer == var_5_4 then
+						var_5_2 = var_5_2 + 1
+						arg_5_0._layerRoomCount[iter_5_0][var_5_4][var_5_5.id] = var_5_2
+						arg_5_0._layerRoomCount[iter_5_0][var_5_4].count = arg_5_0._layerRoomCount[iter_5_0][var_5_4].count + 1
 					else
-						slot7 = slot10.layer
-						slot0._layerRoomCount[slot4][slot7] = {
-							count = 1,
-							[slot10.id] = 1
+						var_5_2 = 1
+						var_5_4 = var_5_5.layer
+						arg_5_0._layerRoomCount[iter_5_0][var_5_4] = {
+							count = 1
 						}
+						arg_5_0._layerRoomCount[iter_5_0][var_5_4][var_5_5.id] = var_5_2
 					end
 
-					if slot11 then
-						if slot11[slot10.nextRoom] then
+					if var_5_6 then
+						if var_5_6[var_5_5.nextRoom] then
 							logError("房间配置死循环了！！！！！！请检查配置")
 
 							return
 						else
-							slot11[slot10.nextRoom] = true
+							var_5_6[var_5_5.nextRoom] = true
 						end
 					end
 
-					slot10 = lua_rogue_room.configDict[slot10.nextRoom]
+					var_5_5 = lua_rogue_room.configDict[var_5_5.nextRoom]
 				end
 			end
 		end
 	end
 end
 
-function slot0.getRoomIndexAndTotal(slot0, slot1)
-	slot0:_initRoomInfo()
+function var_0_0.getRoomIndexAndTotal(arg_6_0, arg_6_1)
+	arg_6_0:_initRoomInfo()
 
-	if not lua_rogue_room.configDict[slot1] then
+	local var_6_0 = lua_rogue_room.configDict[arg_6_1]
+
+	if not var_6_0 then
 		return 0, 0
 	end
 
-	if slot2.type == 0 then
-		return slot0:getRoomIndexAndTotal(lua_rogue_difficulty.configDict[slot2.difficulty].initRoom)
+	if var_6_0.type == 0 then
+		return arg_6_0:getRoomIndexAndTotal(lua_rogue_difficulty.configDict[var_6_0.difficulty].initRoom)
 	end
 
-	if not slot0._layerRoomCount[slot2.difficulty][slot2.layer] then
+	local var_6_1 = arg_6_0._layerRoomCount[var_6_0.difficulty][var_6_0.layer]
+
+	if not var_6_1 then
 		return 0, 0
 	end
 
-	return slot3[slot2.id], slot3.count
+	return var_6_1[var_6_0.id], var_6_1.count
 end
 
-function slot0.getLayerIndexAndTotal(slot0, slot1)
-	slot0:_initRoomInfo()
+function var_0_0.getLayerIndexAndTotal(arg_7_0, arg_7_1)
+	arg_7_0:_initRoomInfo()
 
-	if not lua_rogue_room.configDict[slot1] then
+	local var_7_0 = lua_rogue_room.configDict[arg_7_1]
+
+	if not var_7_0 then
 		return 0, 0
 	end
 
-	if slot2.type == 0 then
-		return slot0:getLayerIndexAndTotal(lua_rogue_difficulty.configDict[slot2.difficulty].initRoom)
+	if var_7_0.type == 0 then
+		return arg_7_0:getLayerIndexAndTotal(lua_rogue_difficulty.configDict[var_7_0.difficulty].initRoom)
 	end
 
-	if not slot0._layerRoomCount[slot2.difficulty] then
+	local var_7_1 = arg_7_0._layerRoomCount[var_7_0.difficulty]
+
+	if not var_7_1 then
 		return 0, 0
 	end
 
-	return slot2.layer, #slot3
+	return var_7_0.layer, #var_7_1
 end
 
-function slot0.getLayerName(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0._roomConfigDict) do
-		if slot7.layer == slot1 and slot7.difficulty == slot2 then
-			return slot7.name
+function var_0_0.getLayerName(arg_8_0, arg_8_1, arg_8_2)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._roomConfigDict) do
+		if iter_8_1.layer == arg_8_1 and iter_8_1.difficulty == arg_8_2 then
+			return iter_8_1.name
 		end
 	end
 end
 
-function slot0.checkNextRoomIsLastRoom(slot0, slot1)
-	if slot0._roomConfigDict[slot1] then
-		if not slot2.nextRoom then
+function var_0_0.checkNextRoomIsLastRoom(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._roomConfigDict[arg_9_1]
+
+	if var_9_0 then
+		local var_9_1 = var_9_0.nextRoom
+
+		if not var_9_1 then
 			return true
-		elseif slot0._roomConfigDict[slot3] and slot4.layer ~= slot2.layer then
-			return true
+		else
+			local var_9_2 = arg_9_0._roomConfigDict[var_9_1]
+
+			if var_9_2 and var_9_2.layer ~= var_9_0.layer then
+				return true
+			end
 		end
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

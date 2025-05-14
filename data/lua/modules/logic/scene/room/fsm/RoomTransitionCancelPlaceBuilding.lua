@@ -1,50 +1,55 @@
-module("modules.logic.scene.room.fsm.RoomTransitionCancelPlaceBuilding", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionCancelPlaceBuilding", package.seeall)
 
-slot0 = class("RoomTransitionCancelPlaceBuilding", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionCancelPlaceBuilding", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	if RoomMapBuildingModel.instance:getTempBuildingMO() then
-		RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(slot2.buildingId, slot2.hexPoint, slot2.rotate)
+	local var_3_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-		slot3 = slot0._scene.buildingmgr:getBuildingEntity(slot2.id, SceneTag.RoomBuilding)
+	if var_3_0 then
+		RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(var_3_0.buildingId, var_3_0.hexPoint, var_3_0.rotate)
+
+		local var_3_1 = arg_3_0._scene.buildingmgr:getBuildingEntity(var_3_0.id, SceneTag.RoomBuilding)
 
 		RoomResourceModel.instance:clearLightResourcePoint()
 
-		if slot2.buildingState == RoomBuildingEnum.BuildingState.Temp then
+		if var_3_0.buildingState == RoomBuildingEnum.BuildingState.Temp then
 			RoomMapBuildingModel.instance:removeTempBuildingMO()
 
-			if slot3 then
-				slot7 = 0.16666666666666666
+			if var_3_1 then
+				local var_3_2 = var_3_1
+				local var_3_3 = arg_3_0._scene.buildingmgr
+				local var_3_4 = var_3_2:getAlphaThresholdValue() or 0
+				local var_3_5 = 0.16666666666666666
 
-				slot4:playAnimator("close")
-				slot4:tweenAlphaThreshold(slot3:getAlphaThresholdValue() or 0, 1, slot7)
-				slot0._scene.buildingmgr:removeUnitData(SceneTag.RoomBuilding, slot2.id)
-				slot4:removeEvent()
-				TaskDispatcher.runDelay(function ()
-					uv0:destroyUnit(uv1)
-				end, slot0, slot7 + 0.01)
+				var_3_2:playAnimator("close")
+				var_3_2:tweenAlphaThreshold(var_3_4, 1, var_3_5)
+				var_3_3:removeUnitData(SceneTag.RoomBuilding, var_3_0.id)
+				var_3_2:removeEvent()
+				TaskDispatcher.runDelay(function()
+					var_3_3:destroyUnit(var_3_2)
+				end, arg_3_0, var_3_5 + 0.01)
 			end
-		elseif slot2.buildingState == RoomBuildingEnum.BuildingState.Revert then
-			slot4, slot5, slot6 = RoomMapBuildingModel.instance:removeRevertBuildingMO()
+		elseif var_3_0.buildingState == RoomBuildingEnum.BuildingState.Revert then
+			local var_3_6, var_3_7, var_3_8 = RoomMapBuildingModel.instance:removeRevertBuildingMO()
 
-			if slot3 then
-				slot0._scene.buildingmgr:moveTo(slot3, slot5)
-				slot3:refreshRotation()
-				slot3:refreshBuilding()
+			if var_3_1 then
+				arg_3_0._scene.buildingmgr:moveTo(var_3_1, var_3_7)
+				var_3_1:refreshRotation()
+				var_3_1:refreshBuilding()
 			end
 
-			RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, slot2.id)
-			RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(slot4, slot5, slot6)
+			RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_3_0.id)
+			RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(var_3_6, var_3_7, var_3_8)
 		end
 
 		RoomBuildingController.instance:cancelPressBuilding()
@@ -52,16 +57,18 @@ function slot0.onStart(slot0, slot1)
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshResourceUIShow)
 	RoomShowBuildingListModel.instance:clearSelect()
-	slot0:onDone()
+	arg_3_0:onDone()
 	RoomBuildingController.instance:dispatchEvent(RoomEvent.ClientCancelBuilding)
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingCanConfirm)
 	RoomBuildingController.instance:refreshBuildingOccupy()
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_5_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

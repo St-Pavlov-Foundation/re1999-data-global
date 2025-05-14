@@ -1,65 +1,73 @@
-module("modules.logic.dungeon.view.puzzle.DungeonPuzzleMazeDrawView", package.seeall)
+﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleMazeDrawView", package.seeall)
 
-slot0 = class("DungeonPuzzleMazeDrawView", BaseView)
+local var_0_0 = class("DungeonPuzzleMazeDrawView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._simagemap = gohelper.findChildSingleImage(slot0.viewGO, "#simage_map")
-	slot0._simagedecorate = gohelper.findChildSingleImage(slot0.viewGO, "forbidentips/#simage_decorate")
-	slot0._simagetipsbg = gohelper.findChildSingleImage(slot0.viewGO, "tips/#simage_tipsbg")
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "#go_map")
-	slot0._goconnect = gohelper.findChild(slot0.viewGO, "#go_connect")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "#go_finish")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._simagemap = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_map")
+	arg_1_0._simagedecorate = gohelper.findChildSingleImage(arg_1_0.viewGO, "forbidentips/#simage_decorate")
+	arg_1_0._simagetipsbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "tips/#simage_tipsbg")
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
+	arg_1_0._goconnect = gohelper.findChild(arg_1_0.viewGO, "#go_connect")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getDungeonPuzzleBg("full/bg_jiemi_beijigntu"))
-	slot0._simagemap:LoadImage(ResUrl.getDungeonPuzzleBg("bg_ditubeijing"))
-	slot0._simagedecorate:LoadImage(ResUrl.getDungeonPuzzleBg("bg_tishiyemian"))
-	slot0._simagetipsbg:LoadImage(ResUrl.getDungeonPuzzleBg("bg_tishiyemian_1"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getDungeonPuzzleBg("full/bg_jiemi_beijigntu"))
+	arg_4_0._simagemap:LoadImage(ResUrl.getDungeonPuzzleBg("bg_ditubeijing"))
+	arg_4_0._simagedecorate:LoadImage(ResUrl.getDungeonPuzzleBg("bg_tishiyemian"))
+	arg_4_0._simagetipsbg:LoadImage(ResUrl.getDungeonPuzzleBg("bg_tishiyemian_1"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(DungeonPuzzleMazeDrawController.instance, DungeonPuzzleEvent.MazeDrawGameClear, slot0.onGameClear, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(DungeonPuzzleMazeDrawController.instance, DungeonPuzzleEvent.MazeDrawGameClear, arg_6_0.onGameClear, arg_6_0)
 end
 
-function slot0.onGameClear(slot0)
+function var_0_0.onGameClear(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_character)
-	gohelper.setActive(slot0._gofinish, true)
+	gohelper.setActive(arg_7_0._gofinish, true)
 	GameFacade.showToast(ToastEnum.DungeonPuzzle2)
-	DungeonRpc.instance:sendPuzzleFinishRequest(DungeonPuzzleMazeDrawModel.instance:getElementCo().id)
+
+	local var_7_0 = DungeonPuzzleMazeDrawModel.instance:getElementCo()
+
+	DungeonRpc.instance:sendPuzzleFinishRequest(var_7_0.id)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if DungeonPuzzleMazeDrawModel.instance:getElementCo() and DungeonMapModel.instance:hasMapPuzzleStatus(slot1.id) then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, slot1.id)
+	local var_8_0 = DungeonPuzzleMazeDrawModel.instance:getElementCo()
+
+	if var_8_0 and DungeonMapModel.instance:hasMapPuzzleStatus(var_8_0.id) then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, var_8_0.id)
 	end
 
 	DungeonPuzzleMazeDrawController.instance:release()
 	DungeonPuzzleMazeDrawModel.instance:release()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagemap:UnLoadImage()
-	slot0._simagedecorate:UnLoadImage()
-	slot0._simagetipsbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0._simagemap:UnLoadImage()
+	arg_9_0._simagedecorate:UnLoadImage()
+	arg_9_0._simagetipsbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,25 +1,30 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEvent", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEvent", package.seeall)
 
-slot0 = class("FightTLEvent")
+local var_0_0 = class("FightTLEvent")
 
-function slot0.ctor(slot0)
-	slot0.type = nil
-	slot0.id = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.type = nil
+	arg_1_0.id = nil
 end
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
+function var_0_0.handleSkillEvent(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	return
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_4_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_5_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

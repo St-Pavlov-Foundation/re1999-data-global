@@ -1,264 +1,314 @@
-module("modules.logic.scene.pushbox.logic.PushBoxCellMgr", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxCellMgr", package.seeall)
 
-slot0 = class("PushBoxCellMgr", UserDataDispose)
+local var_0_0 = class("PushBoxCellMgr", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0._game_mgr = slot1
-	slot0._scene = slot1._scene
-	slot0._scene_root = slot1._scene_root
+	arg_1_0._game_mgr = arg_1_1
+	arg_1_0._scene = arg_1_1._scene
+	arg_1_0._scene_root = arg_1_1._scene_root
 end
 
-function slot0.getCell(slot0, slot1, slot2)
-	return slot0._cell_data[slot2] and slot0._cell_data[slot2][slot1]
+function var_0_0.getCell(arg_2_0, arg_2_1, arg_2_2)
+	return arg_2_0._cell_data[arg_2_2] and arg_2_0._cell_data[arg_2_2][arg_2_1]
 end
 
-function slot0.getElement(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot0._element_logic[slot1]) do
-		if slot8:getPosX() == slot2 and slot8:getPosY() == slot3 then
-			return slot8
+function var_0_0.getElement(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._element_logic[arg_3_1]) do
+		if iter_3_1:getPosX() == arg_3_2 and iter_3_1:getPosY() == arg_3_3 then
+			return iter_3_1
 		end
 	end
 end
 
-function slot0._refreshBoxRender(slot0)
-	slot0._cur_push_box.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = slot0._box_final_render_index + 3
+function var_0_0._refreshBoxRender(arg_4_0)
+	arg_4_0._cur_push_box.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = arg_4_0._box_final_render_index + 3
 
-	slot0:refreshBoxLight()
+	arg_4_0:refreshBoxLight()
 end
 
-function slot0.refreshBoxLight(slot0)
-	if slot0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box) then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot6:getObj() == slot0._cur_push_box then
-				slot6:refreshLightRenderer(slot0._box_final_render_index)
+function var_0_0.refreshBoxLight(arg_5_0)
+	local var_5_0 = arg_5_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box)
+
+	if var_5_0 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+			if iter_5_1:getObj() == arg_5_0._cur_push_box then
+				iter_5_1:refreshLightRenderer(arg_5_0._box_final_render_index)
 			end
 		end
 	end
 end
 
-function slot0.pushBox(slot0, slot1, slot2, slot3, slot4)
-	slot0:_releaseBoxTween()
+function var_0_0.pushBox(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	arg_6_0:_releaseBoxTween()
 
-	slot7 = slot0:getCell(slot3, slot4)
-	slot8 = slot7:getTransform().position
-	slot10 = slot7:getRendererIndex()
-	slot0._box_final_render_index = slot10
-	slot0._cur_push_box = gohelper.findChild(slot0._scene_root, "Root/ElementRoot/Box" .. slot2 .. "_" .. slot1)
-	slot5.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = (slot10 <= slot0:getCell(slot1, slot2):getRendererIndex() and slot9 or slot10) + 3
-	slot0._box_tween = ZProj.TweenHelper.DOMove(slot5.transform, slot8.x, slot8.y, slot8.z, 0.2)
+	local var_6_0 = gohelper.findChild(arg_6_0._scene_root, "Root/ElementRoot/Box" .. arg_6_2 .. "_" .. arg_6_1)
+	local var_6_1 = arg_6_0:getCell(arg_6_1, arg_6_2)
+	local var_6_2 = arg_6_0:getCell(arg_6_3, arg_6_4)
+	local var_6_3 = var_6_2:getTransform().position
+	local var_6_4 = var_6_1:getRendererIndex()
+	local var_6_5 = var_6_2:getRendererIndex()
 
-	TaskDispatcher.runDelay(slot0._refreshBoxRender, slot0, 0.2)
-	slot7:setBox(true)
-	slot6:setBox(false)
+	arg_6_0._box_final_render_index = var_6_5
+	arg_6_0._cur_push_box = var_6_0
 
-	slot5.name = "Box" .. slot4 .. "_" .. slot3
+	local var_6_6 = (var_6_5 <= var_6_4 and var_6_4 or var_6_5) + 3
 
-	slot0:detectCellData()
+	var_6_0.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_6_6
+	arg_6_0._box_tween = ZProj.TweenHelper.DOMove(var_6_0.transform, var_6_3.x, var_6_3.y, var_6_3.z, 0.2)
 
-	slot12 = nil
+	TaskDispatcher.runDelay(arg_6_0._refreshBoxRender, arg_6_0, 0.2)
+	var_6_2:setBox(true)
+	var_6_1:setBox(false)
 
-	if slot1 < slot3 then
-		slot12 = gohelper.findChild(slot5, "#smoke_box_right")
-	elseif slot3 < slot1 then
-		slot12 = gohelper.findChild(slot5, "#smoke_box_left")
+	var_6_0.name = "Box" .. arg_6_4 .. "_" .. arg_6_3
+
+	arg_6_0:detectCellData()
+
+	local var_6_7
+
+	if arg_6_1 < arg_6_3 then
+		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_right")
+	elseif arg_6_3 < arg_6_1 then
+		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_left")
 	end
 
-	if slot2 < slot4 then
-		slot12 = gohelper.findChild(slot5, "#smoke_box_top")
-	elseif slot4 < slot2 then
-		slot12 = gohelper.findChild(slot5, "#smoke_box_down")
+	if arg_6_2 < arg_6_4 then
+		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_top")
+	elseif arg_6_4 < arg_6_2 then
+		var_6_7 = gohelper.findChild(var_6_0, "#smoke_box_down")
 	end
 
-	slot0:_hideBoxSmoke()
+	arg_6_0:_hideBoxSmoke()
 
-	for slot17 = 0, slot12:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem)).Length - 1 do
-		ZProj.ParticleSystemHelper.SetSortingOrder(slot13[slot17], slot11)
+	local var_6_8 = var_6_7:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+
+	for iter_6_0 = 0, var_6_8.Length - 1 do
+		ZProj.ParticleSystemHelper.SetSortingOrder(var_6_8[iter_6_0], var_6_6)
 	end
 
-	gohelper.setActive(slot12, true)
-	TaskDispatcher.cancelTask(slot0._hideBoxSmoke, slot0)
-	TaskDispatcher.runDelay(slot0._hideBoxSmoke, slot0, 0.8)
+	gohelper.setActive(var_6_7, true)
+	TaskDispatcher.cancelTask(arg_6_0._hideBoxSmoke, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._hideBoxSmoke, arg_6_0, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_box_push)
 end
 
-function slot0._hideBoxSmoke(slot0)
-	if slot0._cur_push_box then
-		gohelper.setActive(gohelper.findChild(slot0._cur_push_box, "#smoke_box_left"), false)
-		gohelper.setActive(gohelper.findChild(slot0._cur_push_box, "#smoke_box_right"), false)
-		gohelper.setActive(gohelper.findChild(slot0._cur_push_box, "#smoke_box_top"), false)
-		gohelper.setActive(gohelper.findChild(slot0._cur_push_box, "#smoke_box_down"), false)
+function var_0_0._hideBoxSmoke(arg_7_0)
+	if arg_7_0._cur_push_box then
+		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_left"), false)
+		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_right"), false)
+		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_top"), false)
+		gohelper.setActive(gohelper.findChild(arg_7_0._cur_push_box, "#smoke_box_down"), false)
 	end
 end
 
-function slot0.detectCellData(slot0)
-	if slot0._element_cell_dic and slot0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics] then
-		for slot5, slot6 in ipairs(slot0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]) do
-			slot7 = false
+function var_0_0.detectCellData(arg_8_0)
+	if arg_8_0._element_cell_dic and arg_8_0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics] then
+		local var_8_0 = 0
 
-			if slot6:getBox() then
-				slot1 = 0 + 1
-				slot7 = true
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]) do
+			local var_8_1 = false
+
+			if iter_8_1:getBox() then
+				var_8_0 = var_8_0 + 1
+				var_8_1 = true or var_8_1
 			end
 
-			slot6:getElementLogic():refreshMechanicsState(slot7)
+			iter_8_1:getElementLogic():refreshMechanicsState(var_8_1)
 		end
 
-		slot2 = slot1 == #slot0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]
+		local var_8_2 = var_8_0 == #arg_8_0._element_cell_dic[PushBoxGameMgr.ElementType.Mechanics]
 
-		for slot6, slot7 in ipairs(slot0._cell_list) do
-			if slot0._game_mgr:typeIsDoor(slot7:getCellType()) then
-				if slot2 and slot7.door_is_opened ~= slot2 then
+		for iter_8_2, iter_8_3 in ipairs(arg_8_0._cell_list) do
+			if arg_8_0._game_mgr:typeIsDoor(iter_8_3:getCellType()) then
+				if var_8_2 and iter_8_3.door_is_opened ~= var_8_2 then
 					AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_door_open)
 				end
 
-				slot7.door_is_opened = slot2
+				iter_8_3.door_is_opened = var_8_2
 
-				slot7:getElementLogic():refreshDoorState(slot2)
+				iter_8_3:getElementLogic():refreshDoorState(var_8_2)
 			end
 		end
 	end
 end
 
-function slot0._releaseBoxTween(slot0)
-	if slot0._box_tween then
-		ZProj.TweenHelper.KillById(slot0._box_tween)
+function var_0_0._releaseBoxTween(arg_9_0)
+	if arg_9_0._box_tween then
+		ZProj.TweenHelper.KillById(arg_9_0._box_tween)
 	end
 
-	slot0._box_tween = nil
+	arg_9_0._box_tween = nil
 end
 
-function slot0.init(slot0)
-	slot0._floor_root = gohelper.findChild(slot0._scene_root, "Root/FloorRoot")
-	slot1 = slot0._game_mgr:getConfig()
-	slot4 = GameUtil.splitString2(slot1.wall)
-	slot0._cell_data = {}
-	slot0._cell_list = {}
-	slot0._element_cell_dic = {}
-	slot0._element_logic = {}
-	slot5 = 0
+function var_0_0.init(arg_10_0)
+	arg_10_0._floor_root = gohelper.findChild(arg_10_0._scene_root, "Root/FloorRoot")
 
-	for slot9 = 1, #GameUtil.splitString2(slot1.layout, true) do
-		for slot13 = 1, #slot3[slot9] do
-			slot0._cell_data[slot9] = slot0._cell_data[slot9] or {}
-			slot0:_cloneCellObj(slot13, slot9).name = slot9 .. "_" .. slot13
+	local var_10_0 = arg_10_0._game_mgr:getConfig()
+	local var_10_1 = var_10_0.wall
+	local var_10_2 = GameUtil.splitString2(var_10_0.layout, true)
+	local var_10_3 = GameUtil.splitString2(var_10_1)
 
-			if slot3[slot9][slot13] == PushBoxGameMgr.ElementType.Empty then
-				gohelper.setActive(slot15, false)
+	arg_10_0._cell_data = {}
+	arg_10_0._cell_list = {}
+	arg_10_0._element_cell_dic = {}
+	arg_10_0._element_logic = {}
+
+	local var_10_4 = 0
+
+	for iter_10_0 = 1, #var_10_2 do
+		for iter_10_1 = 1, #var_10_2[iter_10_0] do
+			local var_10_5 = var_10_2[iter_10_0][iter_10_1]
+
+			arg_10_0._cell_data[iter_10_0] = arg_10_0._cell_data[iter_10_0] or {}
+
+			local var_10_6 = arg_10_0:_cloneCellObj(iter_10_1, iter_10_0)
+
+			var_10_6.name = iter_10_0 .. "_" .. iter_10_1
+
+			if var_10_5 == PushBoxGameMgr.ElementType.Empty then
+				gohelper.setActive(var_10_6, false)
 			end
 
-			transformhelper.setLocalPos(slot15.transform, (slot13 - 4.5) * 2.5, (2.5 - slot9) * 1.54, 0)
+			local var_10_7 = iter_10_1 - 4.5
+			local var_10_8 = 2.5 - iter_10_0
 
-			slot15.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = slot5
-			slot19 = PushBoxCellItem.New(slot0, slot0._scene:getSceneContainerGO(), slot15)
-			slot0._cell_data[slot9][slot13] = slot19
+			transformhelper.setLocalPos(var_10_6.transform, var_10_7 * 2.5, var_10_8 * 1.54, 0)
 
-			slot19:initData(slot14, slot13, slot9)
+			var_10_6.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_10_4
 
-			slot0._element_logic[slot20] = slot0._element_logic[slot19:getCellType()] or {}
+			local var_10_9 = PushBoxCellItem.New(arg_10_0, arg_10_0._scene:getSceneContainerGO(), var_10_6)
 
-			if slot19:initElement(slot14) then
-				table.insert(slot0._element_logic[slot20], slot21)
+			arg_10_0._cell_data[iter_10_0][iter_10_1] = var_10_9
 
-				if slot19:getBox() then
-					slot0._element_logic[slot14] = slot0._element_logic[slot14] or {}
+			var_10_9:initData(var_10_5, iter_10_1, iter_10_0)
 
-					table.insert(slot0._element_logic[slot14], slot21)
+			local var_10_10 = var_10_9:getCellType()
+			local var_10_11 = var_10_9:initElement(var_10_5)
+
+			arg_10_0._element_logic[var_10_10] = arg_10_0._element_logic[var_10_10] or {}
+
+			if var_10_11 then
+				table.insert(arg_10_0._element_logic[var_10_10], var_10_11)
+
+				if var_10_9:getBox() then
+					arg_10_0._element_logic[var_10_5] = arg_10_0._element_logic[var_10_5] or {}
+
+					table.insert(arg_10_0._element_logic[var_10_5], var_10_11)
 				end
 			end
 
-			slot0._element_cell_dic[slot20] = slot0._element_cell_dic[slot20] or {}
+			arg_10_0._element_cell_dic[var_10_10] = arg_10_0._element_cell_dic[var_10_10] or {}
 
-			table.insert(slot0._element_cell_dic[slot20], slot19)
-			table.insert(slot0._cell_list, slot19)
+			table.insert(arg_10_0._element_cell_dic[var_10_10], var_10_9)
+			table.insert(arg_10_0._cell_list, var_10_9)
 
-			if slot14 == PushBoxGameMgr.ElementType.Character then
-				slot0._game_mgr:setCharacterPos(slot13, slot9, PushBoxGameMgr.Direction.Down)
+			if var_10_5 == PushBoxGameMgr.ElementType.Character then
+				arg_10_0._game_mgr:setCharacterPos(iter_10_1, iter_10_0, PushBoxGameMgr.Direction.Down)
 			end
 
-			for slot28, slot29 in ipairs(string.splitToNumber(slot4[slot9][slot13], "_")) do
-				if slot29 ~= 0 then
-					slot0:_setWallRenderer(slot29, slot15, slot5, slot14 == PushBoxGameMgr.ElementType.Goal)
+			local var_10_12 = var_10_3[iter_10_0][iter_10_1]
+			local var_10_13 = string.splitToNumber(var_10_12, "_")
+			local var_10_14 = var_10_5 == PushBoxGameMgr.ElementType.Goal
+
+			for iter_10_2, iter_10_3 in ipairs(var_10_13) do
+				if iter_10_3 ~= 0 then
+					arg_10_0:_setWallRenderer(iter_10_3, var_10_6, var_10_4, var_10_14)
 				end
 			end
 
-			slot5 = slot5 + 100
+			var_10_4 = var_10_4 + 100
 		end
 	end
 end
 
-function slot0._cloneCellObj(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0._cloneCellObj(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0
 
-	return (slot1 % 2 == 0 or (slot2 % 2 == 0 or gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Road), slot0._floor_root)) and gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/diban_b"), slot0._floor_root)) and (slot2 % 2 == 0 or gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/diban_c"), slot0._floor_root)) and gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/diban_d"), slot0._floor_root)
-end
-
-function slot0._setWallRenderer(slot0, slot1, slot2, slot3, slot4)
-	slot5 = gohelper.clone(gohelper.findChild(slot0._scene_root, "Root/OriginElement/" .. slot1), slot0._floor_root, "Wall")
-	slot6 = slot2.transform.position
-
-	transformhelper.setPos(slot5.transform, slot6.x, slot6.y, slot6.z)
-
-	slot8 = slot5.transform:GetChild(0):GetComponent("MeshRenderer")
-	slot9 = slot3 + 10000
-
-	if slot4 then
-		slot9 = slot7 + 2
+	if arg_11_1 % 2 ~= 0 then
+		if arg_11_2 % 2 ~= 0 then
+			var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Road), arg_11_0._floor_root)
+		else
+			var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/diban_b"), arg_11_0._floor_root)
+		end
+	elseif arg_11_2 % 2 ~= 0 then
+		var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/diban_c"), arg_11_0._floor_root)
+	else
+		var_11_0 = gohelper.clone(gohelper.findChild(arg_11_0._scene_root, "Root/OriginElement/diban_d"), arg_11_0._floor_root)
 	end
 
-	if slot1 == PushBoxGameMgr.ElementType.WallLeft then
-		slot9 = slot7 + 2
-	elseif slot1 == PushBoxGameMgr.ElementType.WallCornerTopLeft then
-		slot9 = slot7 + 5 + 10000
-	elseif slot1 == PushBoxGameMgr.ElementType.WallCornerTopRight then
-		slot9 = slot7 + 5 + 10000
-	elseif slot1 == PushBoxGameMgr.ElementType.WallCornerBottomLeft then
-		slot9 = slot7 + 5 + 10000
-	elseif slot1 == PushBoxGameMgr.ElementType.WallCornerBottomRight then
-		slot9 = slot7 + 5 + 10000
-	end
-
-	slot8.sortingOrder = slot9
+	return var_11_0
 end
 
-function slot0.releaseBoxLight(slot0)
-	if slot0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box) then
-		for slot5, slot6 in ipairs(slot1) do
-			slot6:hideLight()
+function var_0_0._setWallRenderer(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	local var_12_0 = gohelper.clone(gohelper.findChild(arg_12_0._scene_root, "Root/OriginElement/" .. arg_12_1), arg_12_0._floor_root, "Wall")
+	local var_12_1 = arg_12_2.transform.position
+
+	transformhelper.setPos(var_12_0.transform, var_12_1.x, var_12_1.y, var_12_1.z)
+
+	local var_12_2 = arg_12_3 + 10000
+	local var_12_3 = var_12_0.transform:GetChild(0):GetComponent("MeshRenderer")
+	local var_12_4 = var_12_2
+
+	if arg_12_4 then
+		var_12_4 = var_12_2 + 2
+	end
+
+	if arg_12_1 == PushBoxGameMgr.ElementType.WallLeft then
+		var_12_4 = var_12_2 + 2
+	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerTopLeft then
+		var_12_4 = var_12_2 + 5 + 10000
+	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerTopRight then
+		var_12_4 = var_12_2 + 5 + 10000
+	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerBottomLeft then
+		var_12_4 = var_12_2 + 5 + 10000
+	elseif arg_12_1 == PushBoxGameMgr.ElementType.WallCornerBottomRight then
+		var_12_4 = var_12_2 + 5 + 10000
+	end
+
+	var_12_3.sortingOrder = var_12_4
+end
+
+function var_0_0.releaseBoxLight(arg_13_0)
+	local var_13_0 = arg_13_0._game_mgr:getElementLogicList(PushBoxGameMgr.ElementType.Box)
+
+	if var_13_0 then
+		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+			iter_13_1:hideLight()
 		end
 	end
 end
 
-function slot0._releaseCell(slot0)
-	if slot0._cell_list then
-		for slot4, slot5 in ipairs(slot0._cell_list) do
-			slot5:releaseSelf()
+function var_0_0._releaseCell(arg_14_0)
+	if arg_14_0._cell_list then
+		for iter_14_0, iter_14_1 in ipairs(arg_14_0._cell_list) do
+			iter_14_1:releaseSelf()
 		end
 
-		slot0._cell_list = nil
+		arg_14_0._cell_list = nil
 	end
 
-	if slot0._element_logic then
-		for slot4, slot5 in pairs(slot0._element_logic) do
-			for slot9, slot10 in ipairs(slot5) do
-				slot10:releaseSelf()
+	if arg_14_0._element_logic then
+		for iter_14_2, iter_14_3 in pairs(arg_14_0._element_logic) do
+			for iter_14_4, iter_14_5 in ipairs(iter_14_3) do
+				iter_14_5:releaseSelf()
 			end
 		end
 
-		slot0._element_logic = nil
+		arg_14_0._element_logic = nil
 	end
 
-	gohelper.destroyAllChildren(slot0._floor_root)
-	gohelper.destroyAllChildren(gohelper.findChild(slot0._scene_root, "Root/ElementRoot"))
+	gohelper.destroyAllChildren(arg_14_0._floor_root)
+	gohelper.destroyAllChildren(gohelper.findChild(arg_14_0._scene_root, "Root/ElementRoot"))
 end
 
-function slot0.releaseSelf(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshBoxRender, slot0)
-	TaskDispatcher.cancelTask(slot0._hideBoxSmoke, slot0)
-	slot0:_releaseCell()
-	slot0:_releaseBoxTween()
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._refreshBoxRender, arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._hideBoxSmoke, arg_15_0)
+	arg_15_0:_releaseCell()
+	arg_15_0:_releaseBoxTween()
+	arg_15_0:__onDispose()
 end
 
-return slot0
+return var_0_0

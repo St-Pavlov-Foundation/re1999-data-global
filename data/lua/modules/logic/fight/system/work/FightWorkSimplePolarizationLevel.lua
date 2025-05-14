@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.FightWorkSimplePolarizationLevel", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSimplePolarizationLevel", package.seeall)
 
-slot0 = class("FightWorkSimplePolarizationLevel", FightEffectBase)
+local var_0_0 = class("FightWorkSimplePolarizationLevel", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:com_sendMsg(FightMsgId.RefreshSimplePolarizationLevel)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:com_sendMsg(FightMsgId.RefreshSimplePolarizationLevel)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,119 +1,138 @@
-module("modules.logic.pickassist.view.PickAssistItem", package.seeall)
+﻿module("modules.logic.pickassist.view.PickAssistItem", package.seeall)
 
-slot0 = class("PickAssistItem", ListScrollCellExtend)
+local var_0_0 = class("PickAssistItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._heroGOParent = gohelper.findChild(slot0.viewGO, "heroInfo/hero")
-	slot0._btnHeroDetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "heroInfo/tag/btn_detail")
-	slot0._goplayericon = gohelper.findChild(slot0.viewGO, "playerInfo/#go_playericon")
-	slot0._txtplayerName = gohelper.findChildText(slot0.viewGO, "playerInfo/#txt_playerName")
-	slot0._goFriend = gohelper.findChild(slot0.viewGO, "playerInfo/#go_friends")
-	slot0.goSelected = gohelper.findChild(slot0.viewGO, "#go_selected")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_0.viewGO, "heroInfo/hero")
+	arg_1_0._btnHeroDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "heroInfo/tag/btn_detail")
+	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "playerInfo/#go_playericon")
+	arg_1_0._txtplayerName = gohelper.findChildText(arg_1_0.viewGO, "playerInfo/#txt_playerName")
+	arg_1_0._goFriend = gohelper.findChild(arg_1_0.viewGO, "playerInfo/#go_friends")
+	arg_1_0.goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnHeroDetail:AddClickListener(slot0._onHeroDetailClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnHeroDetail:AddClickListener(arg_2_0._onHeroDetailClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnHeroDetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnHeroDetail:RemoveClickListener()
 end
 
-function slot0._onHeroItemClick(slot0)
+function var_0_0._onHeroItemClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if not slot0:_checkClick() then
+	if not arg_4_0:_checkClick() then
 		return
 	end
 
-	PickAssistController.instance:setHeroSelect(slot0._mo, not PickAssistListModel.instance:isHeroSelected(slot0._mo))
+	local var_4_0 = PickAssistListModel.instance:isHeroSelected(arg_4_0._mo)
+
+	PickAssistController.instance:setHeroSelect(arg_4_0._mo, not var_4_0)
 end
 
-function slot0._checkClick(slot0)
+function var_0_0._checkClick(arg_5_0)
 	return true
 end
 
-function slot0._onHeroDetailClick(slot0)
+function var_0_0._onHeroDetailClick(arg_6_0)
 	CharacterBackpackCardListModel.instance:clearCardList()
-	CharacterController.instance:openCharacterView(slot0._mo.heroMO)
+	CharacterController.instance:openCharacterView(arg_6_0._mo.heroMO)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._playericon = IconMgr.instance:getCommonPlayerIcon(slot0._goplayericon)
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_7_0._goplayericon)
 
-	slot0._playericon:setEnableClick(false)
-	slot0._playericon:setShowLevel(true)
-	slot0._playericon:setPos("_golevel", 0, -36)
-	slot0._playericon:setPos("_txtlevel", -25, -4)
-	UISpriteSetMgr.instance:setSeason123Sprite(slot0._playericon:getLevelBg(), "v1a7_season_img_namebg", true)
+	arg_7_0._playericon:setEnableClick(false)
+	arg_7_0._playericon:setShowLevel(true)
+	arg_7_0._playericon:setPos("_golevel", 0, -36)
+	arg_7_0._playericon:setPos("_txtlevel", -25, -4)
 
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(slot0._heroGOParent)
+	local var_7_0 = arg_7_0._playericon:getLevelBg()
 
-	slot0._heroItem:addClickListener(slot0._onHeroItemClick, slot0)
-	slot0:initHeroItem()
+	UISpriteSetMgr.instance:setSeason123Sprite(var_7_0, "v1a7_season_img_namebg", true)
+
+	arg_7_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_7_0._heroGOParent)
+
+	arg_7_0._heroItem:addClickListener(arg_7_0._onHeroItemClick, arg_7_0)
+	arg_7_0:initHeroItem()
 end
 
-function slot0.initHeroItem(slot0)
-	if slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator)) then
-		slot1.enabled = false
+function var_0_0.initHeroItem(arg_8_0)
+	local var_8_0 = arg_8_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+
+	if var_8_0 then
+		var_8_0.enabled = false
 	end
 
-	slot0._heroItem:_setTxtPos("_rankObj", 2, -37)
-	slot0._heroItem:_setTxtPos("_lvObj", 1.7, 165)
-	slot0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 153.4)
-	slot0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 124.3)
-	slot0._heroItem:_setTxtPos("_goexskill", 1.7, -170)
-	slot0._heroItem:_setTranScale("_rankObj", 0.2, 0.2)
-	slot0._heroItem:setSelect(false)
-	slot0._heroItem:isShowSeasonMask(true)
+	arg_8_0._heroItem:_setTxtPos("_rankObj", 2, -37)
+	arg_8_0._heroItem:_setTxtPos("_lvObj", 1.7, 165)
+	arg_8_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 153.4)
+	arg_8_0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 124.3)
+	arg_8_0._heroItem:_setTxtPos("_goexskill", 1.7, -170)
+	arg_8_0._heroItem:_setTranScale("_rankObj", 0.2, 0.2)
+	arg_8_0._heroItem:setSelect(false)
+	arg_8_0._heroItem:isShowSeasonMask(true)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot0._mo:getPlayerInfo()
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._mo = arg_9_1
 
-	slot0._playericon:onUpdateMO(slot2)
+	local var_9_0 = arg_9_0._mo:getPlayerInfo()
 
-	slot0._txtplayerName.text = slot2.name
+	arg_9_0._playericon:onUpdateMO(var_9_0)
 
-	gohelper.setActive(slot0._goFriend, SocialModel.instance:isMyFriendByUserId(slot2.userId))
-	slot0._heroItem:onUpdateMO(slot0._mo.heroMO)
-	slot0._heroItem:setNewShow(false)
+	arg_9_0._txtplayerName.text = var_9_0.name
 
-	slot5 = nil
+	local var_9_1 = SocialModel.instance:isMyFriendByUserId(var_9_0.userId)
 
-	if slot0._mo.assistMO then
-		if slot6.balanceLevel and slot6.level ~= slot8 then
-			slot5 = slot8
+	gohelper.setActive(arg_9_0._goFriend, var_9_1)
+
+	local var_9_2 = arg_9_0._mo.heroMO
+
+	arg_9_0._heroItem:onUpdateMO(var_9_2)
+	arg_9_0._heroItem:setNewShow(false)
+
+	local var_9_3
+	local var_9_4 = arg_9_0._mo.assistMO
+
+	if var_9_4 then
+		local var_9_5 = var_9_4.level
+		local var_9_6 = var_9_4.balanceLevel
+
+		if var_9_6 and var_9_5 ~= var_9_6 then
+			var_9_3 = var_9_6
 		end
 	end
 
-	if slot5 then
-		slot0._heroItem:setBalanceLv(slot5)
+	if var_9_3 then
+		arg_9_0._heroItem:setBalanceLv(var_9_3)
 	end
 
-	slot0:setSelected(PickAssistListModel.instance:isHeroSelected(slot0._mo))
+	local var_9_7 = PickAssistListModel.instance:isHeroSelected(arg_9_0._mo)
+
+	arg_9_0:setSelected(var_9_7)
 end
 
-function slot0.setSelected(slot0, slot1)
-	gohelper.setActive(slot0.goSelected, slot1)
+function var_0_0.setSelected(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0.goSelected, arg_10_1)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._heroItem then
-		slot0._heroItem:onDestroy()
+function var_0_0.onDestroy(arg_11_0)
+	if arg_11_0._heroItem then
+		arg_11_0._heroItem:onDestroy()
 
-		slot0._heroItem = nil
+		arg_11_0._heroItem = nil
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_12_0)
+	return arg_12_0._animator
 end
 
-return slot0
+return var_0_0

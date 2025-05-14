@@ -1,16 +1,16 @@
-module("modules.logic.versionactivity1_5.aizila.config.AiZiLaConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.config.AiZiLaConfig", package.seeall)
 
-slot0 = class("AiZiLaConfig", BaseConfig)
+local var_0_0 = class("AiZiLaConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._actMap = nil
-	slot0._episodeConfig = nil
-	slot0._episodeListDict = {}
-	slot0._storyConfig = nil
-	slot0._storyListDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._actMap = nil
+	arg_1_0._episodeConfig = nil
+	arg_1_0._episodeListDict = {}
+	arg_1_0._storyConfig = nil
+	arg_1_0._storyListDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity144_episode",
 		"activity144_story",
@@ -27,219 +27,231 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity144_episode" then
-		slot0._episodeConfig = slot2
-	elseif slot1 == "activity144_story" then
-		slot0._storyConfig = slot2
-	elseif slot1 == "activity144_task" then
-		slot0._taskConfig = slot2
-	elseif slot1 == "activity144_equip" then
-		slot0._equipConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity144_episode" then
+		arg_3_0._episodeConfig = arg_3_2
+	elseif arg_3_1 == "activity144_story" then
+		arg_3_0._storyConfig = arg_3_2
+	elseif arg_3_1 == "activity144_task" then
+		arg_3_0._taskConfig = arg_3_2
+	elseif arg_3_1 == "activity144_equip" then
+		arg_3_0._equipConfig = arg_3_2
 
-		slot0:_initEquipCfg()
-	elseif slot1 == "activity144_round" then
-		slot0._roundConfig = slot2
-	elseif slot1 == "activity144_event" then
-		slot0._eventConfig = slot2
-	elseif slot1 == "activity144_item" then
-		slot0._itemConfig = slot2
-	elseif slot1 == "activity144_episode_showtarget" then
-		slot0._eqisodeShowTargetConfig = slot2
-	elseif slot1 == "activity144_option" then
-		slot0._optionConfig = slot2
-	elseif slot1 == "activity144_option_result" then
-		slot0._optionResultConfig = slot2
-	elseif slot1 == "activity144_buff" then
-		slot0._buffConfig = slot2
-	elseif slot1 == "activity144_record_event" then
-		slot0._recordEventConfig = slot2
+		arg_3_0:_initEquipCfg()
+	elseif arg_3_1 == "activity144_round" then
+		arg_3_0._roundConfig = arg_3_2
+	elseif arg_3_1 == "activity144_event" then
+		arg_3_0._eventConfig = arg_3_2
+	elseif arg_3_1 == "activity144_item" then
+		arg_3_0._itemConfig = arg_3_2
+	elseif arg_3_1 == "activity144_episode_showtarget" then
+		arg_3_0._eqisodeShowTargetConfig = arg_3_2
+	elseif arg_3_1 == "activity144_option" then
+		arg_3_0._optionConfig = arg_3_2
+	elseif arg_3_1 == "activity144_option_result" then
+		arg_3_0._optionResultConfig = arg_3_2
+	elseif arg_3_1 == "activity144_buff" then
+		arg_3_0._buffConfig = arg_3_2
+	elseif arg_3_1 == "activity144_record_event" then
+		arg_3_0._recordEventConfig = arg_3_2
 	end
 end
 
-function slot0._get2PrimarykeyCo(slot0, slot1, slot2, slot3)
-	if slot1 and slot1.configDict then
-		return slot1.configDict[slot2] and slot4[slot3]
-	end
+function var_0_0._get2PrimarykeyCo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_1 and arg_4_1.configDict then
+		local var_4_0 = arg_4_1.configDict[arg_4_2]
 
-	return nil
-end
-
-function slot0._findListByActId(slot0, slot1, slot2)
-	if slot1 and slot1.configList then
-		slot3 = {}
-
-		for slot7, slot8 in ipairs(slot1.configList) do
-			if slot8.activityId == slot2 then
-				table.insert(slot3, slot8)
-			end
-		end
-
-		return slot3
+		return var_4_0 and var_4_0[arg_4_3]
 	end
 
 	return nil
 end
 
-function slot0.getTaskList(slot0, slot1)
-	return slot0:_findListByActId(slot0._taskConfig, slot1)
+function var_0_0._findListByActId(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 and arg_5_1.configList then
+		local var_5_0 = {}
+
+		for iter_5_0, iter_5_1 in ipairs(arg_5_1.configList) do
+			if iter_5_1.activityId == arg_5_2 then
+				table.insert(var_5_0, iter_5_1)
+			end
+		end
+
+		return var_5_0
+	end
+
+	return nil
 end
 
-function slot0.getItemList(slot0)
-	return slot0._itemConfig and slot0._itemConfig.configList
+function var_0_0.getTaskList(arg_6_0, arg_6_1)
+	return arg_6_0:_findListByActId(arg_6_0._taskConfig, arg_6_1)
 end
 
-function slot0._initEquipCfg(slot0)
-	slot0._equipUpLevelDict = {}
-	slot0._equipTypeListDict = {}
+function var_0_0.getItemList(arg_7_0)
+	return arg_7_0._itemConfig and arg_7_0._itemConfig.configList
+end
 
-	for slot4, slot5 in ipairs(slot0._equipConfig.configList) do
-		if slot5.preEquipId == 0 then
-			if not slot0._equipTypeListDict[slot5.activityId] then
-				slot0._equipTypeListDict[slot6] = {}
+function var_0_0._initEquipCfg(arg_8_0)
+	arg_8_0._equipUpLevelDict = {}
+	arg_8_0._equipTypeListDict = {}
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._equipConfig.configList) do
+		if iter_8_1.preEquipId == 0 then
+			local var_8_0 = iter_8_1.activityId
+
+			if not arg_8_0._equipTypeListDict[var_8_0] then
+				arg_8_0._equipTypeListDict[var_8_0] = {}
 			end
 
-			table.insert(slot0._equipTypeListDict[slot6], slot5)
+			table.insert(arg_8_0._equipTypeListDict[var_8_0], iter_8_1)
 		end
 	end
 end
 
-function slot0.getEquipCo(slot0, slot1, slot2)
-	return slot0:_get2PrimarykeyCo(slot0._equipConfig, slot1, slot2)
+function var_0_0.getEquipCo(arg_9_0, arg_9_1, arg_9_2)
+	return arg_9_0:_get2PrimarykeyCo(arg_9_0._equipConfig, arg_9_1, arg_9_2)
 end
 
-function slot0.getEquipCoByPreId(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot0._equipConfig.configList) do
-		if slot8.activityId == slot1 and slot8.preEquipId == slot2 and (slot3 == nil or slot3 == slot8.typeId) then
-			return slot8
+function var_0_0.getEquipCoByPreId(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._equipConfig.configList) do
+		if iter_10_1.activityId == arg_10_1 and iter_10_1.preEquipId == arg_10_2 and (arg_10_3 == nil or arg_10_3 == iter_10_1.typeId) then
+			return iter_10_1
 		end
 	end
 end
 
-function slot0.getEquipCoTypeList(slot0, slot1)
-	return slot0._equipTypeListDict and slot0._equipTypeListDict[slot1]
+function var_0_0.getEquipCoTypeList(arg_11_0, arg_11_1)
+	return arg_11_0._equipTypeListDict and arg_11_0._equipTypeListDict[arg_11_1]
 end
 
-function slot0.getItemCo(slot0, slot1)
-	return slot0._itemConfig and slot0._itemConfig.configDict[slot1]
+function var_0_0.getItemCo(arg_12_0, arg_12_1)
+	return arg_12_0._itemConfig and arg_12_0._itemConfig.configDict[arg_12_1]
 end
 
-function slot0.getEpisodeShowTargetCo(slot0, slot1)
-	return slot0._eqisodeShowTargetConfig and slot0._eqisodeShowTargetConfig.configDict[slot1]
+function var_0_0.getEpisodeShowTargetCo(arg_13_0, arg_13_1)
+	return arg_13_0._eqisodeShowTargetConfig and arg_13_0._eqisodeShowTargetConfig.configDict[arg_13_1]
 end
 
-function slot0.getEpisodeCo(slot0, slot1, slot2)
-	return slot0:_get2PrimarykeyCo(slot0._episodeConfig, slot1, slot2)
+function var_0_0.getEpisodeCo(arg_14_0, arg_14_1, arg_14_2)
+	return arg_14_0:_get2PrimarykeyCo(arg_14_0._episodeConfig, arg_14_1, arg_14_2)
 end
 
-function slot0.getRoundCo(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in ipairs(slot0._roundConfig.configList) do
-		if slot9.activityId == slot1 and slot9.episodeId == slot2 and slot9.round == slot3 then
-			return slot9
+function var_0_0.getRoundCo(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = arg_15_0._roundConfig.configList
+
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		if iter_15_1.activityId == arg_15_1 and iter_15_1.episodeId == arg_15_2 and iter_15_1.round == arg_15_3 then
+			return iter_15_1
 		end
 	end
 end
 
-function slot0.getPassRoundCo(slot0, slot1, slot2)
-	slot4 = nil
+function var_0_0.getPassRoundCo(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0._roundConfig.configList
+	local var_16_1
 
-	for slot8, slot9 in ipairs(slot0._roundConfig.configList) do
-		if slot9.activityId == slot1 and slot9.episodeId == slot2 and slot9.isPass == 1 and (not slot4 or slot4.round < slot9.round) then
-			slot4 = slot9
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		if iter_16_1.activityId == arg_16_1 and iter_16_1.episodeId == arg_16_2 and iter_16_1.isPass == 1 and (not var_16_1 or var_16_1.round < iter_16_1.round) then
+			var_16_1 = iter_16_1
 		end
 	end
 
-	return slot4
+	return var_16_1
 end
 
-function slot0.getRoundList(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.getRoundList(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0._roundConfig.configList
+	local var_17_1 = {}
 
-	for slot8, slot9 in ipairs(slot0._roundConfig.configList) do
-		if slot9.activityId == slot1 and slot9.episodeId == slot2 then
-			table.insert(slot4, slot9)
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		if iter_17_1.activityId == arg_17_1 and iter_17_1.episodeId == arg_17_2 then
+			table.insert(var_17_1, iter_17_1)
 		end
 	end
 
-	return slot4
+	return var_17_1
 end
 
-function slot0.getBuffCo(slot0, slot1, slot2)
-	if not slot0._buffConfig then
+function var_0_0.getBuffCo(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_0._buffConfig then
 		logError("AiZiLaConfig:getBuffCo(actId, buffId)")
 	end
 
-	return slot0:_get2PrimarykeyCo(slot0._buffConfig, slot1, slot2)
+	return arg_18_0:_get2PrimarykeyCo(arg_18_0._buffConfig, arg_18_1, arg_18_2)
 end
 
-function slot0.getRecordEventCo(slot0, slot1, slot2)
-	return slot0:_get2PrimarykeyCo(slot0._recordEventConfig, slot1, slot2)
+function var_0_0.getRecordEventCo(arg_19_0, arg_19_1, arg_19_2)
+	return arg_19_0:_get2PrimarykeyCo(arg_19_0._recordEventConfig, arg_19_1, arg_19_2)
 end
 
-function slot0.getRecordEventList(slot0, slot1)
-	return slot0:_findListByActId(slot0._recordEventConfig, slot1)
+function var_0_0.getRecordEventList(arg_20_0, arg_20_1)
+	return arg_20_0:_findListByActId(arg_20_0._recordEventConfig, arg_20_1)
 end
 
-function slot0.getEventCo(slot0, slot1, slot2)
-	return slot0:_get2PrimarykeyCo(slot0._eventConfig, slot1, slot2)
+function var_0_0.getEventCo(arg_21_0, arg_21_1, arg_21_2)
+	return arg_21_0:_get2PrimarykeyCo(arg_21_0._eventConfig, arg_21_1, arg_21_2)
 end
 
-function slot0.getOptionCo(slot0, slot1, slot2)
-	return slot0:_get2PrimarykeyCo(slot0._optionConfig, slot1, slot2)
+function var_0_0.getOptionCo(arg_22_0, arg_22_1, arg_22_2)
+	return arg_22_0:_get2PrimarykeyCo(arg_22_0._optionConfig, arg_22_1, arg_22_2)
 end
 
-function slot0.getOptionResultCo(slot0, slot1, slot2)
-	return slot0:_get2PrimarykeyCo(slot0._optionResultConfig, slot1, slot2)
+function var_0_0.getOptionResultCo(arg_23_0, arg_23_1, arg_23_2)
+	return arg_23_0:_get2PrimarykeyCo(arg_23_0._optionResultConfig, arg_23_1, arg_23_2)
 end
 
-function slot0.getEpisodeList(slot0, slot1)
-	if slot0._episodeListDict[slot1] then
-		return slot0._episodeListDict[slot1]
+function var_0_0.getEpisodeList(arg_24_0, arg_24_1)
+	if arg_24_0._episodeListDict[arg_24_1] then
+		return arg_24_0._episodeListDict[arg_24_1]
 	end
 
-	slot0._episodeListDict[slot1] = {}
+	local var_24_0 = {}
 
-	if slot0._episodeConfig and slot0._episodeConfig.configDict[slot1] then
-		for slot6, slot7 in pairs(slot0._episodeConfig.configDict[slot1]) do
-			table.insert(slot2, slot7)
+	arg_24_0._episodeListDict[arg_24_1] = var_24_0
+
+	if arg_24_0._episodeConfig and arg_24_0._episodeConfig.configDict[arg_24_1] then
+		for iter_24_0, iter_24_1 in pairs(arg_24_0._episodeConfig.configDict[arg_24_1]) do
+			table.insert(var_24_0, iter_24_1)
 		end
 
-		table.sort(slot2, uv0.sortEpisode)
+		table.sort(var_24_0, var_0_0.sortEpisode)
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0.sortEpisode(slot0, slot1)
-	if slot0.episodeId ~= slot1.episodeId then
-		return slot0.episodeId < slot1.episodeId
+function var_0_0.sortEpisode(arg_25_0, arg_25_1)
+	if arg_25_0.episodeId ~= arg_25_1.episodeId then
+		return arg_25_0.episodeId < arg_25_1.episodeId
 	end
 end
 
-function slot0.getStoryList(slot0, slot1)
-	if slot0._storyListDict[slot1] then
-		return slot0._storyListDict[slot1]
+function var_0_0.getStoryList(arg_26_0, arg_26_1)
+	if arg_26_0._storyListDict[arg_26_1] then
+		return arg_26_0._storyListDict[arg_26_1]
 	end
 
-	slot0._storyListDict[slot1] = {}
+	local var_26_0 = {}
 
-	if slot0._storyConfig and slot0._storyConfig.configDict[slot1] then
-		for slot6, slot7 in pairs(slot0._storyConfig.configDict[slot1]) do
-			table.insert(slot2, slot7)
+	arg_26_0._storyListDict[arg_26_1] = var_26_0
+
+	if arg_26_0._storyConfig and arg_26_0._storyConfig.configDict[arg_26_1] then
+		for iter_26_0, iter_26_1 in pairs(arg_26_0._storyConfig.configDict[arg_26_1]) do
+			table.insert(var_26_0, iter_26_1)
 		end
 
-		table.sort(slot2, uv0.sortStory)
+		table.sort(var_26_0, var_0_0.sortStory)
 	end
 
-	return slot2
+	return var_26_0
 end
 
-function slot0.sortStory(slot0, slot1)
-	if slot0.order ~= slot1.order then
-		return slot0.order < slot1.order
+function var_0_0.sortStory(arg_27_0, arg_27_1)
+	if arg_27_0.order ~= arg_27_1.order then
+		return arg_27_0.order < arg_27_1.order
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

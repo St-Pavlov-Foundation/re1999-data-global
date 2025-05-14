@@ -1,11 +1,12 @@
-module("modules.audio.AudioEnum", package.seeall)
+﻿module("modules.audio.AudioEnum", package.seeall)
 
-slot0 = _M
-slot0.Default_UI_Bgm = 3000001
-slot0.Default_UI_Bgm_Stop = 3100203
-slot0.Default_Fight_Bgm = 3200039
-slot0.Default_Fight_Bgm_Stop = 3000022
-slot0.Bgm = {
+local var_0_0 = _M
+
+var_0_0.Default_UI_Bgm = 3000001
+var_0_0.Default_UI_Bgm_Stop = 3100203
+var_0_0.Default_Fight_Bgm = 3200039
+var_0_0.Default_Fight_Bgm_Stop = 3000022
+var_0_0.Bgm = {
 	VersionActivity1_3DungeonAmbientSound1 = 3300039,
 	LeiMiTeBeiBgm = 3300003,
 	Season1_2Bgm = 3300008,
@@ -47,7 +48,7 @@ slot0.Bgm = {
 	Activity130LevelViewBgm = 3200062,
 	play_plot_music_comfortable = 3200066
 }
-slot0.Story = {
+var_0_0.Story = {
 	Activity1_2_Part_Start = 520045,
 	Play_Lowpass = 1111111,
 	play_activitysfx_wulu_chapter_open = 520066,
@@ -93,7 +94,7 @@ slot0.Story = {
 	play_activitysfx_wangshi_subsection_open = 520114,
 	play_ui_feichi_open_plot = 520105
 }
-slot0.Summon = {
+var_0_0.Summon = {
 	play_ui_callfor_inscription_draw_card = 20001524,
 	play_ui_callfor_spray = 20001528,
 	CallFor_Spin_Speed = "callfor_spin_speed",
@@ -121,11 +122,11 @@ slot0.Summon = {
 	play_ui_callfor_begin = 20001525,
 	Play_UI_CallFor_Close = 20001509
 }
-slot0.CriWare = {
+var_0_0.CriWare = {
 	Play_Name_Start = 20001602,
 	Play_Name_Complete = 20001601
 }
-slot0.UI = {
+var_0_0.UI = {
 	stop_ui_permit_slide = 25000065,
 	play_ui_role_culture_open = 20002024,
 	Play_UI_Rolesgo = 2000029,
@@ -521,7 +522,7 @@ slot0.UI = {
 	Play_UI_Tipsclose = 2000015,
 	Play_ui_mould_open = 20004011
 }
-slot0.HeroGroupUI = {
+var_0_0.HeroGroupUI = {
 	Play_UI_Inking_Lock = 20002401,
 	Play_UI_Inking_Addall = 20002406,
 	Play_UI_Inking_Remember = 20002403,
@@ -544,7 +545,7 @@ slot0.HeroGroupUI = {
 	Play_UI_Inking_Finish = 20002407,
 	stop_artificial_ui_slipmap = 20002538
 }
-slot0.Meilanni = {
+var_0_0.Meilanni = {
 	play_ui_mln_receive = 25001015,
 	play_ui_mln_stamp = 25001028,
 	play_ui_mln_day_night = 25001019,
@@ -557,7 +558,7 @@ slot0.Meilanni = {
 	play_ui_mln_progress_grow = 25001029,
 	play_ui_mln_page_turn = 25001027
 }
-slot0.WeekWalk = {
+var_0_0.WeekWalk = {
 	play_artificial_ui_unlockdream = 20002536,
 	play_ui_home_music_master = 20002506,
 	play_artificial_ui_checkpointswitch = 20002533,
@@ -593,7 +594,7 @@ slot0.WeekWalk = {
 	play_artificial_layer_type_2 = 20002530,
 	stop_artificial_ui_slipmap = 20002538
 }
-slot0.TeachNote = {
+var_0_0.TeachNote = {
 	play_ui_no_requirement = 20010006,
 	play_ui_mail_open = 20010001,
 	play_ui_activity_act = 20010005,
@@ -604,40 +605,40 @@ slot0.TeachNote = {
 	play_ui_activity_switch = 20010002,
 	play_ui_level_unlock = 20010009
 }
-slot0.Volume = {
+var_0_0.Volume = {
 	Music_Volume = "Music_Volume",
 	Global_Volume = "Global_Volume",
 	SFX_Volume = "SFX_Volume",
 	Voc_Volume = "Voc_Volume"
 }
-slot0.AkCallbackType = {
+var_0_0.AkCallbackType = {
 	AK_Duration = 8,
 	AK_EndOfEvent = 1
 }
-slot0.AkCurveInterpolation = {
+var_0_0.AkCurveInterpolation = {
 	AkCurveInterpolation_Linear = 4
 }
-slot0.Rolesopen_Group_Ui_Rolesrank = nil
-slot0.Rolesopen_State_Roleslist = nil
-slot0.Rolesopen_State_Rolesdetails = nil
-slot0.SwitchGroup = {
+var_0_0.Rolesopen_Group_Ui_Rolesrank = nil
+var_0_0.Rolesopen_State_Roleslist = nil
+var_0_0.Rolesopen_State_Rolesdetails = nil
+var_0_0.SwitchGroup = {
 	SummonResult = "callfor_chestsopen",
 	Summon = "Callingsystem",
 	SummonTab = "ui_callfor_type"
 }
-slot0.SwitchState = {
+var_0_0.SwitchState = {
 	SummonAward = "Award",
 	SummonChar = "lake",
 	SummonEquip = "laboratory",
 	SummonNormal = "normal"
 }
-slot0.SummonSwitchState = {
+var_0_0.SummonSwitchState = {
 	"chestsopen01",
 	"chestsopen02",
 	"chestsopen03",
 	"chestsopen04"
 }
-slot0.Talent = {
+var_0_0.Talent = {
 	play_ui_resonate_level_open = 20007004,
 	play_ui_resonate_open = 20007001,
 	play_ui_resonate_success_close = 20007006,
@@ -649,7 +650,7 @@ slot0.Talent = {
 	play_ui_resonate_close = 20007010,
 	play_ui_resonate_property_open = 20007002
 }
-slot0.Room = {
+var_0_0.Room = {
 	stop_home_activity_firework = 20009068,
 	play_ui_home_shouhuo_2_2 = 20220108,
 	play_ui_home_state_lower = 20220137,
@@ -717,32 +718,32 @@ slot0.Room = {
 	play_ui_home_board_recovery = 20009020,
 	play_ui_home_board_remove = 20009001
 }
-slot0.Puzzle = {
+var_0_0.Puzzle = {
 	play_ui_main_puzzles_achievement = 20001081,
 	play_ui_main_puzzles_unlock = 20001083,
 	play_ui_main_puzzles_warn = 20001084,
 	play_ui_main_puzzles_character = 20001080,
 	play_ui_main_puzzles_move = 20001082
 }
-slot0.PuzzleCircuit = {
+var_0_0.PuzzleCircuit = {
 	play_ui_circuit_shortcircuit = 20001091,
 	play_ui_capacitors_connection = 20001092,
 	play_ui_circuit_click = 20001090,
 	play_ui_powersupply_connection = 20001093
 }
-slot0.RewardPoint = {
+var_0_0.RewardPoint = {
 	play_ui_track_achievement_single = 20001088,
 	play_ui_track_achievement_flip = 20001089,
 	play_ui_track_achievement_multiple = 20001087,
 	play_ui_track_main_eject = 20001086
 }
-slot0.PuzzleOuija = {
+var_0_0.PuzzleOuija = {
 	play_ui_checkpoint_boat_click = 20001105,
 	play_ui_checkpoint_boat_open = 20001103,
 	play_ui_checkpoint_boat_connection = 20001102,
 	play_ui_checkpoint_boat_tips = 20001104
 }
-slot0.WarmUpGame = {
+var_0_0.WarmUpGame = {
 	start_pot_boiling = 25000002,
 	trigger_click_nice = 25000004,
 	game_count_down = 25000001,
@@ -750,12 +751,12 @@ slot0.WarmUpGame = {
 	play_game_victory = 25000005,
 	play_game_fail = 25000006
 }
-slot0.RoomRTPC = {
+var_0_0.RoomRTPC = {
 	MainCamera = "home_camera_distance",
 	HomePivotRank = "home_pivot_rank"
 }
-slot0.EarRTPC = "Speaker_Headphone"
-slot0.ChessGame = {
+var_0_0.EarRTPC = "Speaker_Headphone"
+var_0_0.ChessGame = {
 	PickUpItem = 25001206,
 	PlayerDisappear = 25001211,
 	PlayerMove = 25001207,
@@ -774,7 +775,7 @@ slot0.ChessGame = {
 	ChallengeFailed = 25001205,
 	StarLight = 25001203
 }
-slot0.YaXian = {
+var_0_0.YaXian = {
 	Fight = 25001308,
 	InVisible = 25001307,
 	Assassinate = 25001305,
@@ -784,12 +785,12 @@ slot0.YaXian = {
 	EnterYaXianMap = 25001301,
 	Die = 700003
 }
-slot0.VersionActivity1_2 = {
+var_0_0.VersionActivity1_2 = {
 	play_ui_lvhu_goldcup_open = 25001312,
 	play_ui_lvhu_open = 25001311,
 	play_ui_lvhu_level_unlock = 25001313
 }
-slot0.VersionActivity1_3 = {
+var_0_0.VersionActivity1_3 = {
 	play_ui_molu_sky_unlock_special = 25002107,
 	play_ui_molu_sky_open = 25002104,
 	play_ui_molu_astrology_success = 25002111,
@@ -802,7 +803,7 @@ slot0.VersionActivity1_3 = {
 	play_ui_molu_daytime_switch = 25002103,
 	play_ui_molu_seek_open = 25002105
 }
-slot0.Va3Armpipe = {
+var_0_0.Va3Armpipe = {
 	play_ui_molu_repair_complete = 25002403,
 	play_ui_molu_arm_repair = 25002406,
 	play_ui_activity_lyrics_wrongs = 25002407,
@@ -812,7 +813,7 @@ slot0.Va3Armpipe = {
 	play_ui_activity_mark_finish = 25002408,
 	play_ui_molu_lefthand_open = 25002401
 }
-slot0.Va3Aact120 = {
+var_0_0.Va3Aact120 = {
 	play_amb_activity_molu1_3_ganapona = 3300045,
 	play_ui_molu_level_title_appear = 25002516,
 	play_ui_molu_target_flushed = 25002514,
@@ -824,7 +825,7 @@ slot0.Va3Aact120 = {
 	play_ui_molu_role_move = 25002519,
 	play_ui_molu_ilbn_open = 25002518
 }
-slot0.RoleChessGame1_3Common = {
+var_0_0.RoleChessGame1_3Common = {
 	MainTargetRefresh = 25002514,
 	NewEpisodeUnlock = 25002515,
 	EnterChessMap = 25002518,
@@ -832,7 +833,7 @@ slot0.RoleChessGame1_3Common = {
 	GameTitleAppear = 25002516,
 	NextStage = 25002517
 }
-slot0.Role2ChessGame1_3 = {
+var_0_0.Role2ChessGame1_3 = {
 	BreakBoughs = 25002503,
 	PushStone = 25002501,
 	FireSpread = 25002505,
@@ -842,7 +843,7 @@ slot0.Role2ChessGame1_3 = {
 	VatPushDown = 25002506,
 	DrumHit = 25002508
 }
-slot0.Explore = {
+var_0_0.Explore = {
 	BubbleHide = 20165015,
 	HeroGlideStop = 25004122,
 	ExploreGuideUnlock4 = 20002535,
@@ -864,10 +865,10 @@ slot0.Explore = {
 	TrapStart = 25004101,
 	HeroWalkStop = 25004127
 }
-slot0.main_ui = {
+var_0_0.main_ui = {
 	play_ui_task_page = 25006104
 }
-slot0.ui_activity = {
+var_0_0.ui_activity = {
 	play_ui_pkls_endpoint_arrival = 25050221,
 	play_ui_feedback_open = 25005512,
 	play_ui_pkls_challenge_fail = 25050224,
@@ -878,35 +879,35 @@ slot0.ui_activity = {
 	play_ui_activity_open = 25006101,
 	play_ui_activity_switch = 25006102
 }
-slot0.ui_task = {
+var_0_0.ui_task = {
 	play_ui_task_slide = 25006106,
 	play_ui_task_page = 25006105
 }
-slot0.ui_action = {
+var_0_0.ui_action = {
 	play_ui_action_mainstart = 25006107
 }
-slot0.ui_formation = {
+var_0_0.ui_formation = {
 	play_ui_formation_action = 25006108
 }
-slot0.ui_settleaccounts = {
+var_0_0.ui_settleaccounts = {
 	play_ui_settleaccounts_resources = 25006111,
 	ui_settleaccounts_win = 25050225,
 	play_ui_settleaccounts_resources_rare = 25006111,
 	ui_settleaccounts_lose = 25050226,
 	play_ui_settleaccounts_win = 25006110
 }
-slot0.ui_role = {
+var_0_0.ui_role = {
 	play_ui_role_cover_open_1 = 25006112
 }
-slot0.ui_activity_1_4_qiutu = {
+var_0_0.ui_activity_1_4_qiutu = {
 	play_ui_qiutu_progress_loop = 25006113,
 	play_ui_qiutu_list_maintain = 25006115,
 	stop_ui_qiutu_progress_loop = 25006114
 }
-slot0.ui_checkpoint = {
+var_0_0.ui_checkpoint = {
 	play_ui_checkpoint_light_up = 25006116
 }
-slot0.V1a5AiZiLa = {
+var_0_0.V1a5AiZiLa = {
 	play_ui_wulu_aizila_open = 20151001,
 	play_ui_wulu_aizila_forward_paper4 = 20151009,
 	ui_wulu_aizila_level_open = 20151003,
@@ -922,7 +923,7 @@ slot0.V1a5AiZiLa = {
 	play_ui_wulu_aizila_level_transition = 20151004,
 	play_ui_mission_open = 20151014
 }
-slot0.ui_andamtte1_6_music = {
+var_0_0.ui_andamtte1_6_music = {
 	play_ui_andamtte1_6_musicday3_42bpm4_4 = 20161008,
 	play_ui_andamtte1_6_musicday5_103bpm2_4 = 20161009,
 	play_ui_andamtte1_6_musicday2_50bpm4_4 = 20161006,
@@ -930,7 +931,7 @@ slot0.ui_andamtte1_6_music = {
 	stop_ui_andamtte1_6_music = 20161010,
 	play_ui_andamtte1_6_musicday4_135bpm3_4 = 20161007
 }
-slot0.LanternFestival = {
+var_0_0.LanternFestival = {
 	play_ui_common_click = 20170007,
 	play_ui_task_page = 20170002,
 	play_ui_checkpoint_continueappear = 20170006,
@@ -938,25 +939,25 @@ slot0.LanternFestival = {
 	play_ui_taskinterface = 20170004,
 	play_ui_jinye_answer_correct = 20170005
 }
-slot0.NewYearEve = {
+var_0_0.NewYearEve = {
 	play_ui_shuori_evegift_open = 20161065,
 	play_ui_shuori_evegift_popup = 20161067,
 	play_ui_shuori_evegift_click = 20161066
 }
-slot0.DragonBoatFestival = {
+var_0_0.DragonBoatFestival = {
 	play_ui_jinye_spools_open = 20190002,
 	play_ui_mln_details_open = 20190001
 }
-slot0.MainSceneSkin = {
+var_0_0.MainSceneSkin = {
 	play_ui_main_fit_scene = 20220001,
 	play_ui_main_switch_scene = 20220003,
 	play_ui_main_get_scene = 20220004,
 	play_ui_main_glitter = 20220002
 }
-slot0.SummonNewCustomSkin = {
+var_0_0.SummonNewCustomSkin = {
 	play_ui_youyu_liuxing_give = 20220101
 }
-slot0.Tower = {
+var_0_0.Tower = {
 	play_ui_leimi_theft_open = 20247001,
 	play_ui_fight_ripple = 20232006,
 	play_ui_fight_talent_light = 20232017,
@@ -975,14 +976,14 @@ slot0.Tower = {
 	play_ui_fight_ripple_entry = 20232007,
 	play_ui_fight_ui_appear = 20232014
 }
-slot0.TowerBgm = {
+var_0_0.TowerBgm = {
 	play_replay_music_towermain_2_3 = 20230009
 }
-slot0.None = -1
-slot0.Dialogue = {
+var_0_0.None = -1
+var_0_0.Dialogue = {
 	play_ui_wulu_duihua = 20150007
 }
-slot0.Season123 = {
+var_0_0.Season123 = {
 	play_ui_activity_reward_ending = 20170046,
 	play_ui_leimi_map_upgrade = 20170024,
 	play_ui_mln_day_night = 20170044,
@@ -1000,4 +1001,4 @@ slot0.Season123 = {
 	play_ui_checkpoint_light_up = 20170030
 }
 
-return slot0
+return var_0_0

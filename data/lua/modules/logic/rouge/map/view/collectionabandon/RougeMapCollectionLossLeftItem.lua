@@ -1,72 +1,76 @@
-module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionLossLeftItem", package.seeall)
+﻿module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionLossLeftItem", package.seeall)
 
-slot0 = class("RougeMapCollectionLossLeftItem", ListScrollCell)
+local var_0_0 = class("RougeMapCollectionLossLeftItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0.go)
-	slot0.goGrid = gohelper.findChild(slot0.go, "#go_grid")
-	slot0.goGridItem = gohelper.findChild(slot0.go, "#go_grid/#go_griditem")
-	slot0.simageIcon = gohelper.findChildSingleImage(slot0.go, "#simage_icon")
-	slot0.txtName = gohelper.findChildText(slot0.go, "right/#txt_name")
-	slot0.txtDesc = gohelper.findChildText(slot0.go, "right/Scroll View/Viewport/Content/#txt_desc")
-	slot0.click = gohelper.findChildClickWithDefaultAudio(slot0.go, "#btn_click")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.click = gohelper.getClickWithDefaultAudio(arg_1_0.go)
+	arg_1_0.goGrid = gohelper.findChild(arg_1_0.go, "#go_grid")
+	arg_1_0.goGridItem = gohelper.findChild(arg_1_0.go, "#go_grid/#go_griditem")
+	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.go, "#simage_icon")
+	arg_1_0.txtName = gohelper.findChildText(arg_1_0.go, "right/#txt_name")
+	arg_1_0.txtDesc = gohelper.findChildText(arg_1_0.go, "right/Scroll View/Viewport/Content/#txt_desc")
+	arg_1_0.click = gohelper.findChildClickWithDefaultAudio(arg_1_0.go, "#btn_click")
 
-	slot0.click:AddClickListener(slot0.onClickSelf, slot0)
+	arg_1_0.click:AddClickListener(arg_1_0.onClickSelf, arg_1_0)
 
-	slot0.goIconAbandon = gohelper.findChild(slot0.go, "right/right_icon/#go_icon_abandon")
-	slot0.goIconExchange = gohelper.findChild(slot0.go, "right/right_icon/#go_icon_exchange")
-	slot0.goIconStorage = gohelper.findChild(slot0.go, "right/right_icon/#go_icon_storage")
-	slot0.gridItemList = slot0:getUserDataTb_()
+	arg_1_0.goIconAbandon = gohelper.findChild(arg_1_0.go, "right/right_icon/#go_icon_abandon")
+	arg_1_0.goIconExchange = gohelper.findChild(arg_1_0.go, "right/right_icon/#go_icon_exchange")
+	arg_1_0.goIconStorage = gohelper.findChild(arg_1_0.go, "right/right_icon/#go_icon_storage")
+	arg_1_0.gridItemList = arg_1_0:getUserDataTb_()
 
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
+	arg_1_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_1_0._onSwitchCollectionInfoType, arg_1_0)
 end
 
-function slot0.onClickSelf(slot0)
+function var_0_0.onClickSelf(arg_2_0)
 	if not RougeLossCollectionListModel.instance:checkCanSelect() then
 		return
 	end
 
-	gohelper.setActive(slot0.go, false)
-	slot0._view.viewContainer:getListRemoveComp():removeByIndex(slot0._index, slot0.onRemoveAnimDone, slot0)
+	gohelper.setActive(arg_2_0.go, false)
+	arg_2_0._view.viewContainer:getListRemoveComp():removeByIndex(arg_2_0._index, arg_2_0.onRemoveAnimDone, arg_2_0)
 end
 
-function slot0.onRemoveAnimDone(slot0)
-	RougeLossCollectionListModel.instance:selectMo(slot0.mo)
+function var_0_0.onRemoveAnimDone(arg_3_0)
+	RougeLossCollectionListModel.instance:selectMo(arg_3_0.mo)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
-	slot0.collectionId = slot0.mo.collectionId
-	slot0.uid = slot0.mo.uid
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0.mo = arg_4_1
+	arg_4_0.collectionId = arg_4_0.mo.collectionId
+	arg_4_0.uid = arg_4_0.mo.uid
 
-	gohelper.setActive(slot0.go, true)
-	RougeCollectionHelper.loadShapeGrid(slot0.collectionId, slot0.goGrid, slot0.goGridItem, slot0.gridItemList)
-	slot0.simageIcon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot0.collectionId))
+	gohelper.setActive(arg_4_0.go, true)
+	RougeCollectionHelper.loadShapeGrid(arg_4_0.collectionId, arg_4_0.goGrid, arg_4_0.goGridItem, arg_4_0.gridItemList)
+	arg_4_0.simageIcon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_4_0.collectionId))
 
-	slot0.txtName.text = RougeCollectionConfig.instance:getCollectionName(slot0.collectionId)
+	arg_4_0.txtName.text = RougeCollectionConfig.instance:getCollectionName(arg_4_0.collectionId)
 
-	slot0:refreshIcon()
-	slot0:refreshDesc()
+	arg_4_0:refreshIcon()
+	arg_4_0:refreshDesc()
 end
 
-function slot0.refreshIcon(slot0)
-	gohelper.setActive(slot0.goIconAbandon, RougeLossCollectionListModel.instance:getLossType() == RougeMapEnum.LossType.Abandon or slot1 == RougeMapEnum.LossType.Copy)
-	gohelper.setActive(slot0.goIconExchange, slot1 == RougeMapEnum.LossType.Exchange)
-	gohelper.setActive(slot0.goIconStorage, slot1 == RougeMapEnum.LossType.Storage)
+function var_0_0.refreshIcon(arg_5_0)
+	local var_5_0 = RougeLossCollectionListModel.instance:getLossType()
+
+	gohelper.setActive(arg_5_0.goIconAbandon, var_5_0 == RougeMapEnum.LossType.Abandon or var_5_0 == RougeMapEnum.LossType.Copy)
+	gohelper.setActive(arg_5_0.goIconExchange, var_5_0 == RougeMapEnum.LossType.Exchange)
+	gohelper.setActive(arg_5_0.goIconStorage, var_5_0 == RougeMapEnum.LossType.Storage)
 end
 
-function slot0.refreshDesc(slot0)
-	RougeCollectionDescHelper.setCollectionDescInfos3(slot0.collectionId, nil, slot0.txtDesc, RougeCollectionDescHelper.getShowDescTypesWithoutText())
+function var_0_0.refreshDesc(arg_6_0)
+	local var_6_0 = RougeCollectionDescHelper.getShowDescTypesWithoutText()
+
+	RougeCollectionDescHelper.setCollectionDescInfos3(arg_6_0.collectionId, nil, arg_6_0.txtDesc, var_6_0)
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
-	slot0:refreshDesc()
+function var_0_0._onSwitchCollectionInfoType(arg_7_0)
+	arg_7_0:refreshDesc()
 end
 
-function slot0.onDestroy(slot0)
-	slot0.click:RemoveClickListener()
-	slot0.simageIcon:UnLoadImage()
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0.click:RemoveClickListener()
+	arg_8_0.simageIcon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

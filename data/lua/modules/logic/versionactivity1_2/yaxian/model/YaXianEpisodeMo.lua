@@ -1,23 +1,23 @@
-module("modules.logic.versionactivity1_2.yaxian.model.YaXianEpisodeMo", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.model.YaXianEpisodeMo", package.seeall)
 
-slot0 = pureTable("YaXianEpisodeMo")
+local var_0_0 = pureTable("YaXianEpisodeMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.actId = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.actId = arg_1_1
 
-	slot0:updateMO(slot2)
+	arg_1_0:updateMO(arg_1_2)
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.star = slot1.star
-	slot0.totalCount = slot1.totalCount
-	slot0.config = YaXianConfig.instance:getEpisodeConfig(YaXianEnum.ActivityId, slot0.id)
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.star = arg_2_1.star
+	arg_2_0.totalCount = arg_2_1.totalCount
+	arg_2_0.config = YaXianConfig.instance:getEpisodeConfig(YaXianEnum.ActivityId, arg_2_0.id)
 end
 
-function slot0.updateData(slot0, slot1)
-	slot0.star = slot1.star
-	slot0.totalCount = slot1.totalCount
+function var_0_0.updateData(arg_3_0, arg_3_1)
+	arg_3_0.star = arg_3_1.star
+	arg_3_0.totalCount = arg_3_1.totalCount
 end
 
-return slot0
+return var_0_0

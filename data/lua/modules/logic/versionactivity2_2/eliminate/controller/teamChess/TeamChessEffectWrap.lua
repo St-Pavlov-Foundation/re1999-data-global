@@ -1,202 +1,210 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.TeamChessEffectWrap", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.TeamChessEffectWrap", package.seeall)
 
-slot0 = class("TeamChessEffectWrap", LuaCompBase)
+local var_0_0 = class("TeamChessEffectWrap", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0._uniqueId = 0
-	slot0.effectType = nil
-	slot0.path = nil
-	slot0.containerGO = nil
-	slot0.containerTr = nil
-	slot0.effectGO = nil
-	slot0._scaleX = 1
-	slot0._scaleY = 1
-	slot0._scaleZ = 1
-	slot0.callback = nil
-	slot0.callbackObj = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._uniqueId = 0
+	arg_1_0.effectType = nil
+	arg_1_0.path = nil
+	arg_1_0.containerGO = nil
+	arg_1_0.containerTr = nil
+	arg_1_0.effectGO = nil
+	arg_1_0._scaleX = 1
+	arg_1_0._scaleY = 1
+	arg_1_0._scaleZ = 1
+	arg_1_0.callback = nil
+	arg_1_0.callbackObj = nil
 end
 
-function slot0.setUniqueId(slot0, slot1)
-	slot0._uniqueId = slot1
+function var_0_0.setUniqueId(arg_2_0, arg_2_1)
+	arg_2_0._uniqueId = arg_2_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = slot1
-	slot0.containerTr = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = arg_3_1
+	arg_3_0.containerTr = arg_3_1.transform
 end
 
-function slot0.play(slot0, slot1)
-	if slot0.effectGO then
-		slot0:_setWorldScale()
-		slot0:setActive(true)
+function var_0_0.play(arg_4_0, arg_4_1)
+	if arg_4_0.effectGO then
+		arg_4_0:_setWorldScale()
+		arg_4_0:setActive(true)
 
-		if slot0.effectType == EliminateTeamChessEnum.VxEffectType.ZhanHou then
+		if arg_4_0.effectType == EliminateTeamChessEnum.VxEffectType.ZhanHou then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_warcry)
 		end
 
-		if slot0.effectType == EliminateTeamChessEnum.VxEffectType.WangYu then
+		if arg_4_0.effectType == EliminateTeamChessEnum.VxEffectType.WangYu then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_deadwords)
 		end
 
-		if slot0.effectType == EliminateTeamChessEnum.VxEffectType.PowerDown then
+		if arg_4_0.effectType == EliminateTeamChessEnum.VxEffectType.PowerDown then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_adverse_buff)
 		end
 
-		if slot0.effectType == EliminateTeamChessEnum.VxEffectType.PowerUp then
+		if arg_4_0.effectType == EliminateTeamChessEnum.VxEffectType.PowerUp then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_front_buff)
 		end
 
-		if slot0.effectType == EliminateTeamChessEnum.VxEffectType.StrongHoldBattle then
+		if arg_4_0.effectType == EliminateTeamChessEnum.VxEffectType.StrongHoldBattle then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_clearing_fight)
 		end
 
-		if slot0.effectType == EliminateTeamChessEnum.VxEffectType.Move then
+		if arg_4_0.effectType == EliminateTeamChessEnum.VxEffectType.Move then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_shift)
 		end
 
-		slot2 = slot1
+		local var_4_0 = arg_4_1
 
-		if slot1 == nil then
-			slot2 = slot0.effectType ~= nil and EliminateTeamChessEnum.VxEffectTypePlayTime[slot0.effectType] or 0.5
+		if arg_4_1 == nil then
+			var_4_0 = arg_4_0.effectType ~= nil and EliminateTeamChessEnum.VxEffectTypePlayTime[arg_4_0.effectType] or 0.5
 		end
 
-		TaskDispatcher.runDelay(slot0.returnPool, slot0, slot2)
+		TaskDispatcher.runDelay(arg_4_0.returnPool, arg_4_0, var_4_0)
 	end
 end
 
-function slot0.returnPool(slot0)
-	TaskDispatcher.cancelTask(slot0.returnPool, slot0)
-	TeamChessEffectPool.returnEffect(slot0)
+function var_0_0.returnPool(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.returnPool, arg_5_0)
+	TeamChessEffectPool.returnEffect(arg_5_0)
 end
 
-function slot0.setEffectType(slot0, slot1)
-	slot0.effectType = slot1
+function var_0_0.setEffectType(arg_6_0, arg_6_1)
+	arg_6_0.effectType = arg_6_1
 
-	slot0:setPath(EliminateTeamChessEnum.VxEffectTypeToPath[slot1])
+	local var_6_0 = EliminateTeamChessEnum.VxEffectTypeToPath[arg_6_1]
+
+	arg_6_0:setPath(var_6_0)
 end
 
-function slot0.setPath(slot0, slot1)
-	slot0.path = slot1
+function var_0_0.setPath(arg_7_0, arg_7_1)
+	arg_7_0.path = arg_7_1
 
-	slot0:loadAsset(slot0.path)
+	arg_7_0:loadAsset(arg_7_0.path)
 end
 
-function slot0.loadAsset(slot0, slot1)
-	if not string.nilorempty(slot1) and not slot0._loader then
-		slot0._loader = PrefabInstantiate.Create(slot0.containerGO)
+function var_0_0.loadAsset(arg_8_0, arg_8_1)
+	if not string.nilorempty(arg_8_1) and not arg_8_0._loader then
+		arg_8_0._loader = PrefabInstantiate.Create(arg_8_0.containerGO)
 
-		slot0._loader:startLoad(slot1, slot0._onResLoaded, slot0)
+		arg_8_0._loader:startLoad(arg_8_1, arg_8_0._onResLoaded, arg_8_0)
 	end
 end
 
-function slot0._onResLoaded(slot0)
-	slot0.effectGO = slot0._loader:getInstGO()
+function var_0_0._onResLoaded(arg_9_0)
+	arg_9_0.effectGO = arg_9_0._loader:getInstGO()
 
-	slot0:setLayer(UnityLayer.Scene)
-	slot0:_setWorldScale()
+	arg_9_0:setLayer(UnityLayer.Scene)
+	arg_9_0:_setWorldScale()
 
-	if slot0.callback then
-		slot0.callback(slot0.callbackObj)
+	if arg_9_0.callback then
+		arg_9_0.callback(arg_9_0.callbackObj)
 	end
 end
 
-function slot0.setEffectGO(slot0, slot1)
-	slot0.effectGO = slot1
+function var_0_0.setEffectGO(arg_10_0, arg_10_1)
+	arg_10_0.effectGO = arg_10_1
 
-	if slot0._effectScale then
-		transformhelper.setLocalScale(slot0.effectGO.transform, slot0._effectScale, slot0._effectScale, slot0._effectScale)
+	if arg_10_0._effectScale then
+		transformhelper.setLocalScale(arg_10_0.effectGO.transform, arg_10_0._effectScale, arg_10_0._effectScale, arg_10_0._effectScale)
 	end
 
-	if slot0._renderOrder then
-		slot0:setRenderOrder(slot0._renderOrder, true)
-	end
-end
-
-function slot0.setLayer(slot0, slot1)
-	slot0._layer = slot1
-
-	gohelper.setLayer(slot0.effectGO, slot0._layer, true)
-end
-
-function slot0.setWorldPos(slot0, slot1, slot2, slot3)
-	if slot0.containerTr then
-		transformhelper.setPos(slot0.containerTr, slot1, slot2, slot3)
-		slot0:clearTrail()
+	if arg_10_0._renderOrder then
+		arg_10_0:setRenderOrder(arg_10_0._renderOrder, true)
 	end
 end
 
-function slot0.setWorldScale(slot0, slot1, slot2, slot3)
-	slot0._scaleX = slot1
-	slot0._scaleY = slot2
-	slot0._scaleZ = slot3
+function var_0_0.setLayer(arg_11_0, arg_11_1)
+	arg_11_0._layer = arg_11_1
+
+	gohelper.setLayer(arg_11_0.effectGO, arg_11_0._layer, true)
 end
 
-function slot0._setWorldScale(slot0)
-	if slot0.effectGO then
-		transformhelper.setLocalScale(slot0.effectGO.transform, slot0._scaleX, slot0._scaleY, slot0._scaleZ)
+function var_0_0.setWorldPos(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if arg_12_0.containerTr then
+		transformhelper.setPos(arg_12_0.containerTr, arg_12_1, arg_12_2, arg_12_3)
+		arg_12_0:clearTrail()
 	end
 end
 
-function slot0.clearTrail(slot0)
-	if slot0.effectGO then
-		gohelper.onceAddComponent(slot0.effectGO, typeof(ZProj.EffectTimeScale)):ClearTrail()
+function var_0_0.setWorldScale(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_0._scaleX = arg_13_1
+	arg_13_0._scaleY = arg_13_2
+	arg_13_0._scaleZ = arg_13_3
+end
+
+function var_0_0._setWorldScale(arg_14_0)
+	if arg_14_0.effectGO then
+		transformhelper.setLocalScale(arg_14_0.effectGO.transform, arg_14_0._scaleX, arg_14_0._scaleY, arg_14_0._scaleZ)
 	end
 end
 
-function slot0.setCallback(slot0, slot1, slot2)
-	slot0.callback = slot1
-	slot0.callbackObj = slot2
+function var_0_0.clearTrail(arg_15_0)
+	if arg_15_0.effectGO then
+		gohelper.onceAddComponent(arg_15_0.effectGO, typeof(ZProj.EffectTimeScale)):ClearTrail()
+	end
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.containerGO, slot1)
+function var_0_0.setCallback(arg_16_0, arg_16_1, arg_16_2)
+	arg_16_0.callback = arg_16_1
+	arg_16_0.callbackObj = arg_16_2
 end
 
-function slot0.setRenderOrder(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.setActive(arg_17_0, arg_17_1)
+	gohelper.setActive(arg_17_0.containerGO, arg_17_1)
+end
+
+function var_0_0.setRenderOrder(arg_18_0, arg_18_1, arg_18_2)
+	if not arg_18_1 then
 		return
 	end
 
-	slot0._renderOrder = slot1
+	local var_18_0 = arg_18_0._renderOrder
 
-	if not slot2 and slot1 == slot0._renderOrder then
+	arg_18_0._renderOrder = arg_18_1
+
+	if not arg_18_2 and arg_18_1 == var_18_0 then
 		return
 	end
 
-	if not gohelper.isNil(slot0.effectGO) and slot0.effectGO:GetComponent(typeof(ZProj.EffectOrderContainer)) then
-		slot4:SetBaseOrder(slot1)
+	if not gohelper.isNil(arg_18_0.effectGO) then
+		local var_18_1 = arg_18_0.effectGO:GetComponent(typeof(ZProj.EffectOrderContainer))
+
+		if var_18_1 then
+			var_18_1:SetBaseOrder(arg_18_1)
+		end
 	end
 end
 
-function slot0.setEffectScale(slot0, slot1)
-	slot0._effectScale = slot1
+function var_0_0.setEffectScale(arg_19_0, arg_19_1)
+	arg_19_0._effectScale = arg_19_1
 
-	if slot0.effectGO then
-		transformhelper.setLocalScale(slot0.effectGO.transform, slot0._effectScale, slot0._effectScale, slot0._effectScale)
+	if arg_19_0.effectGO then
+		transformhelper.setLocalScale(arg_19_0.effectGO.transform, arg_19_0._effectScale, arg_19_0._effectScale, arg_19_0._effectScale)
 	end
 end
 
-function slot0.clear(slot0)
-	slot0.callback = nil
-	slot0.callbackObj = nil
+function var_0_0.clear(arg_20_0)
+	arg_20_0.callback = nil
+	arg_20_0.callbackObj = nil
 
-	slot0:setActive(false)
+	arg_20_0:setActive(false)
 end
 
-function slot0.onDestroy(slot0)
-	slot0.containerGO = nil
-	slot0.effectGO = nil
-	slot0.callback = nil
-	slot0.callbackObj = nil
-	slot0.effectType = nil
+function var_0_0.onDestroy(arg_21_0)
+	arg_21_0.containerGO = nil
+	arg_21_0.effectGO = nil
+	arg_21_0.callback = nil
+	arg_21_0.callbackObj = nil
+	arg_21_0.effectType = nil
 
-	TaskDispatcher.cancelTask(slot0.returnPool, slot0)
+	TaskDispatcher.cancelTask(arg_21_0.returnPool, arg_21_0)
 
-	if slot0._loader then
-		slot0._loader:onDestroy()
+	if arg_21_0._loader then
+		arg_21_0._loader:onDestroy()
 
-		slot0._loader = nil
+		arg_21_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

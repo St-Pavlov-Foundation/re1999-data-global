@@ -1,46 +1,46 @@
-module("modules.logic.help.view.HelpShowView", package.seeall)
+﻿module("modules.logic.help.view.HelpShowView", package.seeall)
 
-slot0 = class("HelpShowView", BaseView)
+local var_0_0 = class("HelpShowView", BaseView)
 
-function slot0.setHelpId(slot0, slot1)
-	slot0._helpId = slot1
+function var_0_0.setHelpId(arg_1_0, arg_1_1)
+	arg_1_0._helpId = arg_1_1
 end
 
-function slot0.setDelayTime(slot0, slot1)
-	slot0._time = slot1
+function var_0_0.setDelayTime(arg_2_0, arg_2_1)
+	arg_2_0._time = arg_2_1
 end
 
-function slot0.setDelayTimeFromConst(slot0, slot1)
-	slot0._time = CommonConfig.instance:getConstNum(slot1)
+function var_0_0.setDelayTimeFromConst(arg_3_0, arg_3_1)
+	arg_3_0._time = CommonConfig.instance:getConstNum(arg_3_1)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0:tryShowHelp()
+function var_0_0.onOpenFinish(arg_4_0)
+	arg_4_0:tryShowHelp()
 end
 
-function slot0.tryShowHelp(slot0)
-	if HelpController.instance:canShowFirstHelp(slot0._helpId) then
-		slot0:_showHelp()
+function var_0_0.tryShowHelp(arg_5_0)
+	if HelpController.instance:canShowFirstHelp(arg_5_0._helpId) then
+		arg_5_0:_showHelp()
 	end
 end
 
-function slot0._showHelp(slot0)
-	if not slot0._helpId then
+function var_0_0._showHelp(arg_6_0)
+	if not arg_6_0._helpId then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("HelpShowView tryShowFirstHelp")
-	TaskDispatcher.runDelay(slot0._tryShowFirstHelp, slot0, slot0._time or 0)
+	TaskDispatcher.runDelay(arg_6_0._tryShowFirstHelp, arg_6_0, arg_6_0._time or 0)
 end
 
-function slot0._tryShowFirstHelp(slot0)
+function var_0_0._tryShowFirstHelp(arg_7_0)
 	UIBlockMgr.instance:endBlock("HelpShowView tryShowFirstHelp")
-	HelpController.instance:tryShowFirstHelp(slot0._helpId)
+	HelpController.instance:tryShowFirstHelp(arg_7_0._helpId)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
 	UIBlockMgr.instance:endBlock("HelpShowView tryShowFirstHelp")
-	TaskDispatcher.cancelTask(slot0._tryShowFirstHelp, slot0)
+	TaskDispatcher.cancelTask(arg_8_0._tryShowFirstHelp, arg_8_0)
 end
 
-return slot0
+return var_0_0

@@ -1,31 +1,37 @@
-module("modules.logic.versionactivity2_2.act173.controller.Activity173Controller", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act173.controller.Activity173Controller", package.seeall)
 
-slot0 = class("Activity173Controller", BaseController)
+local var_0_0 = class("Activity173Controller", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	return
 end
 
-function slot0.openActivity173FullView(slot0)
+function var_0_0.openActivity173FullView(arg_5_0)
 	ViewMgr.instance:openView(ViewName.Activity173FullView)
 end
 
-function slot0.numberDisplay(slot0)
-	if tonumber(slot0) <= 9999 then
-		return slot1
+function var_0_0.numberDisplay(arg_6_0)
+	local var_6_0 = tonumber(arg_6_0)
+
+	if var_6_0 <= 9999 then
+		return var_6_0
 	else
-		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("activity173panelview_tenThousand"), math.floor(slot1 / 10000))
+		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("activity173panelview_tenThousand"), math.floor(var_6_0 / 10000))
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

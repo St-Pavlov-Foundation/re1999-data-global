@@ -1,198 +1,228 @@
-module("modules.logic.bgmswitch.view.BGMSwitchMusicView", package.seeall)
+﻿module("modules.logic.bgmswitch.view.BGMSwitchMusicView", package.seeall)
 
-slot0 = class("BGMSwitchMusicView", BaseView)
+local var_0_0 = class("BGMSwitchMusicView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomusics = gohelper.findChild(slot0.viewGO, "#go_musics")
-	slot0._musicAni = slot0._gomusics:GetComponent(typeof(UnityEngine.Animator))
-	slot0._simageRightBG = gohelper.findChildSingleImage(slot0.viewGO, "#go_musics/#simage_RightBG")
-	slot0._gomusictop = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop")
-	slot0._btnmusicfilter = gohelper.findChildButton(slot0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter")
-	slot0._gofilterbtn1 = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter/btn1")
-	slot0._gofilterbtn2 = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter/btn2")
-	slot0._gotab = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab")
-	slot0._btntaball = gohelper.findChildButton(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball")
-	slot0._goallreddot = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball/#go_allreddot")
-	slot0._gotaballselected = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball/#go_taballselected")
-	slot0._btntablike = gohelper.findChildButton(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_tablike")
-	slot0._gotablikeselected = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_tablike/#go_tablikeselected")
-	slot0._scrollSongList = gohelper.findChildScrollRect(slot0.viewGO, "#go_musics/#scroll_SongList")
-	slot0._scrollTransition = LuaScrollRectTransition.getByScrollRectGO(slot0._scrollSongList.gameObject, ScrollEnum.ScrollDirV, 2)
-	slot0._gosongitem = gohelper.findChild(slot0.viewGO, "#go_musics/#scroll_SongList/Viewport/Content/#go_songitem")
-	slot0._gomusicbottom = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musicbottom")
-	slot0._gocurrent = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musicbottom/#go_current")
-	slot0._txtcurrent = gohelper.findChildText(slot0.viewGO, "#go_musics/#go_musicbottom/#go_current/txt_Current")
-	slot0._txtcurrentEn = gohelper.findChildText(slot0.viewGO, "#go_musics/#go_musicbottom/#go_current/txt_Current/txt_CurrentEn")
-	slot0._goset = gohelper.findChild(slot0.viewGO, "#go_musics/#go_musicbottom/#go_set")
-	slot0._btnset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_musics/#go_musicbottom/#go_set/#btn_set")
-	slot0._tabClick = gohelper.findChildClick(slot0.viewGO, "#go_musics/#go_musictop/#go_tab/#tab_click")
-	slot0._selectedItem = nil
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomusics = gohelper.findChild(arg_1_0.viewGO, "#go_musics")
+	arg_1_0._musicAni = arg_1_0._gomusics:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._simageRightBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_musics/#simage_RightBG")
+	arg_1_0._gomusictop = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop")
+	arg_1_0._btnmusicfilter = gohelper.findChildButton(arg_1_0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter")
+	arg_1_0._gofilterbtn1 = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter/btn1")
+	arg_1_0._gofilterbtn2 = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop/#btn_musicfilter/btn2")
+	arg_1_0._gotab = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab")
+	arg_1_0._btntaball = gohelper.findChildButton(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball")
+	arg_1_0._goallreddot = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball/#go_allreddot")
+	arg_1_0._gotaballselected = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_taball/#go_taballselected")
+	arg_1_0._btntablike = gohelper.findChildButton(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_tablike")
+	arg_1_0._gotablikeselected = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab/#btn_tablike/#go_tablikeselected")
+	arg_1_0._scrollSongList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_musics/#scroll_SongList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	local var_1_0 = arg_1_0._scrollSongList.gameObject
+
+	arg_1_0._scrollTransition = LuaScrollRectTransition.getByScrollRectGO(var_1_0, ScrollEnum.ScrollDirV, 2)
+	arg_1_0._gosongitem = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#scroll_SongList/Viewport/Content/#go_songitem")
+	arg_1_0._gomusicbottom = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musicbottom")
+	arg_1_0._gocurrent = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musicbottom/#go_current")
+	arg_1_0._txtcurrent = gohelper.findChildText(arg_1_0.viewGO, "#go_musics/#go_musicbottom/#go_current/txt_Current")
+	arg_1_0._txtcurrentEn = gohelper.findChildText(arg_1_0.viewGO, "#go_musics/#go_musicbottom/#go_current/txt_Current/txt_CurrentEn")
+	arg_1_0._goset = gohelper.findChild(arg_1_0.viewGO, "#go_musics/#go_musicbottom/#go_set")
+	arg_1_0._btnset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_musics/#go_musicbottom/#go_set/#btn_set")
+	arg_1_0._tabClick = gohelper.findChildClick(arg_1_0.viewGO, "#go_musics/#go_musictop/#go_tab/#tab_click")
+	arg_1_0._selectedItem = nil
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmusicfilter:AddClickListener(slot0._btnmusicfilterOnClick, slot0)
-	slot0._btntaball:AddClickListener(slot0._btntaballOnClick, slot0)
-	slot0._btntablike:AddClickListener(slot0._btntablikeOnClick, slot0)
-	slot0._tabClick:AddClickListener(slot0._btntabOnClick, slot0)
-	slot0._btnset:AddClickListener(slot0._btnsetOnClick, slot0)
-	slot0._scrollSongList:AddOnValueChanged(slot0._onScrollRectValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmusicfilter:AddClickListener(arg_2_0._btnmusicfilterOnClick, arg_2_0)
+	arg_2_0._btntaball:AddClickListener(arg_2_0._btntaballOnClick, arg_2_0)
+	arg_2_0._btntablike:AddClickListener(arg_2_0._btntablikeOnClick, arg_2_0)
+	arg_2_0._tabClick:AddClickListener(arg_2_0._btntabOnClick, arg_2_0)
+	arg_2_0._btnset:AddClickListener(arg_2_0._btnsetOnClick, arg_2_0)
+	arg_2_0._scrollSongList:AddOnValueChanged(arg_2_0._onScrollRectValueChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmusicfilter:RemoveClickListener()
-	slot0._btntaball:RemoveClickListener()
-	slot0._btntablike:RemoveClickListener()
-	slot0._tabClick:RemoveClickListener()
-	slot0._btnset:RemoveClickListener()
-	slot0._scrollSongList:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmusicfilter:RemoveClickListener()
+	arg_3_0._btntaball:RemoveClickListener()
+	arg_3_0._btntablike:RemoveClickListener()
+	arg_3_0._tabClick:RemoveClickListener()
+	arg_3_0._btnset:RemoveClickListener()
+	arg_3_0._scrollSongList:RemoveOnValueChanged()
 end
 
-function slot0._onScrollRectValueChanged(slot0, slot1, slot2)
-	if slot0._clickTabBlock then
+function var_0_0._onScrollRectValueChanged(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._clickTabBlock then
 		return
 	end
 
-	if not slot0._scrollY or slot2 < 0 or slot2 > 1 then
-		slot0._scrollY = slot2
+	if not arg_4_0._scrollY or arg_4_2 < 0 or arg_4_2 > 1 then
+		arg_4_0._scrollY = arg_4_2
 
 		return
 	end
 
-	slot0._scrollTime = slot0._scrollTime or 0
-	slot0._scrollTime = slot0._scrollTime + UnityEngine.Time.deltaTime
+	arg_4_0._scrollTime = arg_4_0._scrollTime or 0
+	arg_4_0._scrollTime = arg_4_0._scrollTime + UnityEngine.Time.deltaTime
 
-	if slot0._scrollTime > 0.1 and (Mathf.Ceil((slot0._showItemCount or 0) * 0.5) - 5 > 0 and slot3 or 0) * math.abs(slot0._scrollY - slot2) > 0.2 then
-		slot0._scrollTime = 0
-		slot0._scrollY = slot2
+	local var_4_0 = Mathf.Ceil((arg_4_0._showItemCount or 0) * 0.5) - 5
+
+	var_4_0 = var_4_0 > 0 and var_4_0 or 0
+
+	local var_4_1 = var_4_0 * math.abs(arg_4_0._scrollY - arg_4_2)
+
+	if arg_4_0._scrollTime > 0.1 and var_4_1 > 0.2 then
+		arg_4_0._scrollTime = 0
+		arg_4_0._scrollY = arg_4_2
 
 		BGMSwitchAudioTrigger.play_ui_checkpoint_resources_cardpass()
 	end
 end
 
-function slot0._btnmusicfilterOnClick(slot0)
+function var_0_0._btnmusicfilterOnClick(arg_5_0)
 	BGMSwitchController.instance:openBGMSwitchMusicFilterView()
 	BGMSwitchAudioTrigger.play_ui_achieve_weiqicard_switch()
 end
 
-function slot0._btntaballOnClick(slot0)
+function var_0_0._btntaballOnClick(arg_6_0)
 	if BGMSwitchModel.instance:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
 		return
 	end
 
-	slot0._musicAni:Play("switch", 0, 0)
+	arg_6_0._musicAni:Play("switch", 0, 0)
 	BGMSwitchModel.instance:clearFilterTypes()
 	BGMSwitchModel.instance:setBGMSelectType(BGMSwitchEnum.SelectType.All)
-	TaskDispatcher.runDelay(slot0._switchRefresh, slot0, 0.16)
+	TaskDispatcher.runDelay(arg_6_0._switchRefresh, arg_6_0, 0.16)
 	BGMSwitchAudioTrigger.play_ui_rolesgo()
 end
 
-function slot0._btntablikeOnClick(slot0)
+function var_0_0._btntablikeOnClick(arg_7_0)
 	if BGMSwitchModel.instance:getBGMSelectType() == BGMSwitchEnum.SelectType.Loved then
 		return
 	end
 
-	if not BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted() or not next(slot2) then
+	local var_7_0 = BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted()
+
+	if not var_7_0 or not next(var_7_0) then
 		GameFacade.showToast(ToastEnum.NoSetLoveSongs)
 
 		return
 	end
 
-	slot0._musicAni:Play("switch", 0, 0)
+	arg_7_0._musicAni:Play("switch", 0, 0)
 	BGMSwitchModel.instance:clearFilterTypes()
 	BGMSwitchModel.instance:setBGMSelectType(BGMSwitchEnum.SelectType.Loved)
-	TaskDispatcher.runDelay(slot0._switchRefresh, slot0, 0.16)
+	TaskDispatcher.runDelay(arg_7_0._switchRefresh, arg_7_0, 0.16)
 	BGMSwitchAudioTrigger.play_ui_rolesgo()
 end
 
-function slot0._btntabOnClick(slot0)
-	if slot0._clickTabBlock then
+function var_0_0._btntabOnClick(arg_8_0)
+	if arg_8_0._clickTabBlock then
 		return
 	end
 
-	slot0._clickTabBlock = true
+	arg_8_0._clickTabBlock = true
 
-	TaskDispatcher.runDelay(slot0._cancelTabBlock, slot0, 0.2)
+	TaskDispatcher.runDelay(arg_8_0._cancelTabBlock, arg_8_0, 0.2)
 
-	if BGMSwitchModel.instance:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
-		slot0:_btntablikeOnClick()
-		slot0:_delayFocus()
-	elseif slot1 == BGMSwitchEnum.SelectType.Loved then
-		slot0:_btntaballOnClick()
-		slot0:_delayFocus()
+	local var_8_0 = BGMSwitchModel.instance:getBGMSelectType()
+
+	if var_8_0 == BGMSwitchEnum.SelectType.All then
+		arg_8_0:_btntablikeOnClick()
+		arg_8_0:_delayFocus()
+	elseif var_8_0 == BGMSwitchEnum.SelectType.Loved then
+		arg_8_0:_btntaballOnClick()
+		arg_8_0:_delayFocus()
 	end
 end
 
-function slot0._cancelTabBlock(slot0)
-	slot0._clickTabBlock = nil
+function var_0_0._cancelTabBlock(arg_9_0)
+	arg_9_0._clickTabBlock = nil
 end
 
-function slot0._switchRefresh(slot0)
-	slot0:_refreshView()
+function var_0_0._switchRefresh(arg_10_0)
+	arg_10_0:_refreshView()
 end
 
-function slot0._btnsetOnClick(slot0)
+function var_0_0._btnsetOnClick(arg_11_0)
 	if BGMSwitchModel.instance:getMechineGear() ~= BGMSwitchEnum.Gear.On1 then
 		ToastController.instance:showToast(ToastEnum.OnlyChannelOneCouldSwitch)
 
 		return
 	end
 
-	slot2 = BGMSwitchModel.instance:getCurBgm()
+	local var_11_0 = BGMSwitchModel.instance:getCurBgm()
 
 	if BGMSwitchModel.instance:isRandomMode() then
-		slot2 = BGMSwitchModel.RandomBgmId
+		var_11_0 = BGMSwitchModel.RandomBgmId
 	end
 
-	BgmRpc.instance:sendSetUseBgmRequest(slot2)
+	BgmRpc.instance:sendSetUseBgmRequest(var_11_0)
+
+	local var_11_1 = BGMSwitchConfig.instance:getBGMSwitchCO(var_11_0)
+	local var_11_2 = var_11_1 and var_11_1.audioName or ""
+	local var_11_3 = BGMSwitchModel.instance:getUsedBgmIdFromServer()
+	local var_11_4 = BGMSwitchConfig.instance:getBGMSwitchCO(var_11_3)
+	local var_11_5 = var_11_4 and var_11_4.audioName or ""
+	local var_11_6 = BGMSwitchModel.instance:getCurrentUsingBgmList()
+
 	StatController.instance:track(StatEnum.EventName.SetBackgroundBGM, {
-		[StatEnum.EventProperties.AudioId] = tostring(slot2),
-		[StatEnum.EventProperties.AudioName] = BGMSwitchConfig.instance:getBGMSwitchCO(slot2) and slot4.audioName or "",
-		[StatEnum.EventProperties.BeforeSwitchAudio] = BGMSwitchConfig.instance:getBGMSwitchCO(BGMSwitchModel.instance:getUsedBgmIdFromServer()) and slot7.audioName or "",
-		[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(BGMSwitchModel.instance:getCurrentUsingBgmList())
+		[StatEnum.EventProperties.AudioId] = tostring(var_11_0),
+		[StatEnum.EventProperties.AudioName] = var_11_2,
+		[StatEnum.EventProperties.BeforeSwitchAudio] = var_11_5,
+		[StatEnum.EventProperties.AudioSheet] = BGMSwitchConfig.instance:getBgmNames(var_11_6)
 	})
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_addSelfEvents()
+function var_0_0._editableInitView(arg_12_0)
+	arg_12_0:_addSelfEvents()
 
-	slot0._items = {}
-	slot1 = BGMSwitchMusicItem.New()
+	arg_12_0._items = {}
 
-	slot1:init(slot0._gosongitem)
-	slot1:hide(false)
-	slot1:setRandom(true)
-	slot1:setItem()
+	local var_12_0 = BGMSwitchMusicItem.New()
 
-	slot0._items[0] = slot1
+	var_12_0:init(arg_12_0._gosongitem)
+	var_12_0:hide(false)
+	var_12_0:setRandom(true)
+	var_12_0:setItem()
+
+	arg_12_0._items[0] = var_12_0
 end
 
-function slot0._addSelfEvents(slot0)
-	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.SetPlayingBgm, slot0._refreshView, slot0)
-	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.ItemSelected, slot0._refreshView, slot0)
-	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.FilterClassSelect, slot0._refreshView, slot0)
-	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.BgmSwitched, slot0._onBgmSwitched, slot0)
+function var_0_0._addSelfEvents(arg_13_0)
+	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.SetPlayingBgm, arg_13_0._refreshView, arg_13_0)
+	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.ItemSelected, arg_13_0._refreshView, arg_13_0)
+	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.FilterClassSelect, arg_13_0._refreshView, arg_13_0)
+	BGMSwitchController.instance:registerCallback(BGMSwitchEvent.BgmSwitched, arg_13_0._onBgmSwitched, arg_13_0)
 end
 
-function slot0._onBgmSwitched(slot0)
-	slot0:_refreshView()
+function var_0_0._onBgmSwitched(arg_14_0)
+	arg_14_0:_refreshView()
 
-	if slot0._items[BGMSwitchModel.instance:getCurBgm()] then
-		slot0._items[slot1]:showSwitchEffect()
+	local var_14_0 = BGMSwitchModel.instance:getCurBgm()
+
+	if arg_14_0._items[var_14_0] then
+		arg_14_0._items[var_14_0]:showSwitchEffect()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_15_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if BGMSwitchModel.instance:isRandomBgmId(BGMSwitchModel.instance:getUsedBgmIdFromServer()) then
-		BGMSwitchModel.instance:setBGMSelectType(BGMSwitchModel.instance:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType))
-	elseif slot1 == BGMSwitchEnum.SelectType.Loved then
-		if LuaUtil.tableContains(BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted(), slot2) then
+function var_0_0.onOpen(arg_16_0)
+	local var_16_0 = BGMSwitchModel.instance:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+	local var_16_1 = BGMSwitchModel.instance:getUsedBgmIdFromServer()
+
+	if BGMSwitchModel.instance:isRandomBgmId(var_16_1) then
+		BGMSwitchModel.instance:setBGMSelectType(var_16_0)
+	elseif var_16_0 == BGMSwitchEnum.SelectType.Loved then
+		local var_16_2 = BGMSwitchModel.instance:getUnfilteredFavoriteBgmsSorted()
+
+		if LuaUtil.tableContains(var_16_2, var_16_1) then
 			BGMSwitchModel.instance:setBGMSelectType(BGMSwitchEnum.SelectType.Loved)
 		else
 			BGMSwitchModel.instance:setBGMSelectType(BGMSwitchEnum.SelectType.All)
@@ -201,138 +231,150 @@ function slot0.onOpen(slot0)
 		BGMSwitchModel.instance:setBGMSelectType(BGMSwitchEnum.SelectType.All)
 	end
 
-	BGMSwitchModel.instance:setCurBgm(slot2)
-	slot0:_refreshView()
-	slot0:_delayFocus()
+	BGMSwitchModel.instance:setCurBgm(var_16_1)
+	arg_16_0:_refreshView()
+	arg_16_0:_delayFocus()
 end
 
-function slot0._delayFocus(slot0)
-	slot0:_cancelDelayFocus()
-	TaskDispatcher.runDelay(slot0._focusItem, slot0, 0.5)
+function var_0_0._delayFocus(arg_17_0)
+	arg_17_0:_cancelDelayFocus()
+	TaskDispatcher.runDelay(arg_17_0._focusItem, arg_17_0, 0.5)
 end
 
-function slot0._cancelDelayFocus(slot0)
-	TaskDispatcher.cancelTask(slot0._focusItem, slot0)
+function var_0_0._cancelDelayFocus(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._focusItem, arg_18_0)
 end
 
-function slot0._focusItem(slot0)
-	if slot0._selectIdx then
-		slot0._scrollTransition:focusCellInViewPort(slot0._selectIdx, true)
+function var_0_0._focusItem(arg_19_0)
+	if arg_19_0._selectIdx then
+		arg_19_0._scrollTransition:focusCellInViewPort(arg_19_0._selectIdx, true)
 	end
 end
 
-function slot0._refreshView(slot0, slot1, slot2)
-	slot0:_refreshTop()
-	slot0:_refreshMusicItems()
-	slot0:_refreshBottom()
+function var_0_0._refreshView(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0:_refreshTop()
+	arg_20_0:_refreshMusicItems()
+	arg_20_0:_refreshBottom()
 
-	if slot2 then
-		slot0:_delayFocus()
+	if arg_20_2 then
+		arg_20_0:_delayFocus()
 	end
 end
 
-function slot0._refreshTop(slot0)
-	gohelper.setActive(slot0._gotaballselected, BGMSwitchModel.instance:getBGMSelectType() == BGMSwitchEnum.SelectType.All)
-	gohelper.setActive(slot0._gotablikeselected, slot1 == BGMSwitchEnum.SelectType.Loved)
+function var_0_0._refreshTop(arg_21_0)
+	local var_21_0 = BGMSwitchModel.instance:getBGMSelectType()
 
-	slot2 = BGMSwitchModel.instance:isFilterMode()
+	gohelper.setActive(arg_21_0._gotaballselected, var_21_0 == BGMSwitchEnum.SelectType.All)
+	gohelper.setActive(arg_21_0._gotablikeselected, var_21_0 == BGMSwitchEnum.SelectType.Loved)
 
-	gohelper.setActive(slot0._gofilterbtn1, not slot2)
-	gohelper.setActive(slot0._gofilterbtn2, slot2)
-	gohelper.setActive(slot0._goallreddot, BGMSwitchModel.instance:hasUnreadBgm())
+	local var_21_1 = BGMSwitchModel.instance:isFilterMode()
+
+	gohelper.setActive(arg_21_0._gofilterbtn1, not var_21_1)
+	gohelper.setActive(arg_21_0._gofilterbtn2, var_21_1)
+
+	local var_21_2 = BGMSwitchModel.instance:hasUnreadBgm()
+
+	gohelper.setActive(arg_21_0._goallreddot, var_21_2)
 end
 
-function slot0._refreshBottom(slot0)
+function var_0_0._refreshBottom(arg_22_0)
 	if BGMSwitchModel.instance:isLocalRemoteListTypeMatched() and BGMSwitchModel.instance:isLocalRemoteBgmIdMatched() then
-		slot0._txtcurrent.text = luaLang("bgmswitchview_current")
-		slot0._txtcurrentEn.text = luaLang("p_bgmswitchview_current_en")
+		arg_22_0._txtcurrent.text = luaLang("bgmswitchview_current")
+		arg_22_0._txtcurrentEn.text = luaLang("p_bgmswitchview_current_en")
 
-		gohelper.setActive(slot0._gocurrent, true)
-		gohelper.setActive(slot0._goset, false)
-	elseif slot0._selectedItem ~= nil then
-		gohelper.setActive(slot0._gocurrent, false)
-		gohelper.setActive(slot0._goset, true)
+		gohelper.setActive(arg_22_0._gocurrent, true)
+		gohelper.setActive(arg_22_0._goset, false)
+	elseif arg_22_0._selectedItem ~= nil then
+		gohelper.setActive(arg_22_0._gocurrent, false)
+		gohelper.setActive(arg_22_0._goset, true)
 	else
-		slot0._txtcurrent.text = luaLang("bgmswitchview_selectlisten")
-		slot0._txtcurrentEn.text = luaLang("p_bgmswitchview_selectlisten_en")
+		arg_22_0._txtcurrent.text = luaLang("bgmswitchview_selectlisten")
+		arg_22_0._txtcurrentEn.text = luaLang("p_bgmswitchview_selectlisten_en")
 
-		gohelper.setActive(slot0._gocurrent, true)
-		gohelper.setActive(slot0._goset, false)
+		gohelper.setActive(arg_22_0._gocurrent, true)
+		gohelper.setActive(arg_22_0._goset, false)
 	end
 end
 
-function slot0._refreshMusicItems(slot0)
-	slot1 = {}
+function var_0_0._refreshMusicItems(arg_23_0)
+	local var_23_0 = {}
+	local var_23_1 = BGMSwitchModel.instance:getBGMSelectType()
 
-	if BGMSwitchModel.instance:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
-		slot1 = BGMSwitchModel.instance:getFilteredAllBgmsSorted()
-	elseif slot2 == BGMSwitchEnum.SelectType.Loved then
-		slot1 = BGMSwitchModel.instance:getFilteredFavoriteBgmsSorted()
+	if var_23_1 == BGMSwitchEnum.SelectType.All then
+		var_23_0 = BGMSwitchModel.instance:getFilteredAllBgmsSorted()
+	elseif var_23_1 == BGMSwitchEnum.SelectType.Loved then
+		var_23_0 = BGMSwitchModel.instance:getFilteredFavoriteBgmsSorted()
 	end
 
-	for slot6, slot7 in pairs(slot0._items) do
-		if slot6 ~= 0 then
-			slot7:hide(true)
+	for iter_23_0, iter_23_1 in pairs(arg_23_0._items) do
+		if iter_23_0 ~= 0 then
+			iter_23_1:hide(true)
 		else
-			slot7:setItem()
+			iter_23_1:setItem()
 		end
 	end
 
-	slot0._selectedItem = nil
-	slot0._selectIdx = nil
+	local var_23_2 = 1
 
-	if slot0._items[0]:isSelected() then
-		slot0._selectedItem = slot0._items[0]
-		slot0._selectIdx = 1
+	arg_23_0._selectedItem = nil
+	arg_23_0._selectIdx = nil
+
+	if arg_23_0._items[0]:isSelected() then
+		arg_23_0._selectedItem = arg_23_0._items[0]
+		arg_23_0._selectIdx = var_23_2
 	end
 
-	for slot7, slot8 in ipairs(slot1) do
-		if not slot0._items[slot8] then
-			slot9 = BGMSwitchMusicItem.New()
+	for iter_23_2, iter_23_3 in ipairs(var_23_0) do
+		if not arg_23_0._items[iter_23_3] then
+			local var_23_3 = BGMSwitchMusicItem.New()
+			local var_23_4 = gohelper.cloneInPlace(arg_23_0._gosongitem, iter_23_3)
 
-			slot9:init(gohelper.cloneInPlace(slot0._gosongitem, slot8))
-			slot9:setRandom(false)
+			var_23_3:init(var_23_4)
+			var_23_3:setRandom(false)
 
-			slot0._items[slot8] = slot9
+			arg_23_0._items[iter_23_3] = var_23_3
 		end
 
-		slot0._items[slot8]:hide(false)
-		gohelper.setSibling(slot0._items[slot8].go, slot3)
-		slot0._items[slot8]:setItem(BGMSwitchModel.instance:getBgmInfo(slot8))
+		arg_23_0._items[iter_23_3]:hide(false)
+		gohelper.setSibling(arg_23_0._items[iter_23_3].go, var_23_2)
 
-		if slot0._items[slot8]:isSelected() then
-			slot0._selectedItem = slot0._items[slot8]
-			slot0._selectIdx = slot3 + 1
+		local var_23_5 = BGMSwitchModel.instance:getBgmInfo(iter_23_3)
+
+		arg_23_0._items[iter_23_3]:setItem(var_23_5)
+
+		if arg_23_0._items[iter_23_3]:isSelected() then
+			arg_23_0._selectedItem = arg_23_0._items[iter_23_3]
+			arg_23_0._selectIdx = var_23_2 + 1
 		end
 
-		slot3 = slot3 + 1
+		var_23_2 = var_23_2 + 1
 	end
 
-	slot0._showItemCount = #slot1 + 1
+	arg_23_0._showItemCount = #var_23_0 + 1
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_24_0)
 	BGMSwitchModel.instance:clearFilterTypes()
 end
 
-function slot0._removeSelfEvents(slot0)
-	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.SetPlayingBgm, slot0._refreshView, slot0)
-	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.ItemSelected, slot0._refreshView, slot0)
-	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.FilterClassSelect, slot0._refreshView, slot0)
-	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.BgmSwitched, slot0._onBgmSwitched, slot0)
+function var_0_0._removeSelfEvents(arg_25_0)
+	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.SetPlayingBgm, arg_25_0._refreshView, arg_25_0)
+	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.ItemSelected, arg_25_0._refreshView, arg_25_0)
+	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.FilterClassSelect, arg_25_0._refreshView, arg_25_0)
+	BGMSwitchController.instance:unregisterCallback(BGMSwitchEvent.BgmSwitched, arg_25_0._onBgmSwitched, arg_25_0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._switchRefresh, slot0)
-	TaskDispatcher.cancelTask(slot0._cancelTabBlock, slot0)
-	slot0:_cancelDelayFocus()
-	slot0:_removeSelfEvents()
+function var_0_0.onDestroyView(arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0._switchRefresh, arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0._cancelTabBlock, arg_26_0)
+	arg_26_0:_cancelDelayFocus()
+	arg_26_0:_removeSelfEvents()
 
-	if slot0._items then
-		for slot4, slot5 in pairs(slot0._items) do
-			slot5:destroy()
+	if arg_26_0._items then
+		for iter_26_0, iter_26_1 in pairs(arg_26_0._items) do
+			iter_26_1:destroy()
 		end
 	end
 end
 
-return slot0
+return var_0_0

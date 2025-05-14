@@ -1,39 +1,39 @@
-module("modules.logic.fight.controller.log.FightLogFilterHelper", package.seeall)
+﻿module("modules.logic.fight.controller.log.FightLogFilterHelper", package.seeall)
 
-slot0 = _M
-slot1 = {
+local var_0_0 = _M
+local var_0_1 = {
 	FightEnum.EffectType.FIGHTSTEP
 }
-slot2 = false
+local var_0_2 = false
 
-function slot0.setFilterEffectList(slot0)
-	if string.nilorempty(slot0) then
-		uv0 = false
+function var_0_0.setFilterEffectList(arg_1_0)
+	if string.nilorempty(arg_1_0) then
+		var_0_2 = false
 
 		return
 	end
 
-	uv1.resetEffectFilter()
-	tabletool.addValues(uv2, string.splitToNumber(slot0, ";"))
+	var_0_0.resetEffectFilter()
+	tabletool.addValues(var_0_1, string.splitToNumber(arg_1_0, ";"))
 
-	uv0 = true
+	var_0_2 = true
 end
 
-function slot0.resetEffectFilter()
-	tabletool.clear(uv0)
-	table.insert(uv0, FightEnum.EffectType.FIGHTSTEP)
+function var_0_0.resetEffectFilter()
+	tabletool.clear(var_0_1)
+	table.insert(var_0_1, FightEnum.EffectType.FIGHTSTEP)
 end
 
-function slot0.checkEffectMoIsFilter(slot0)
-	if not uv0 then
+function var_0_0.checkEffectMoIsFilter(arg_3_0)
+	if not var_0_2 then
 		return false
 	end
 
-	if tabletool.indexOf(uv1, slot0.effectType) then
+	if tabletool.indexOf(var_0_1, arg_3_0.effectType) then
 		return false
 	end
 
 	return true
 end
 
-return slot0
+return var_0_0

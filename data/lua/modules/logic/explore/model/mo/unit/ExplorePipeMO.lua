@@ -1,146 +1,146 @@
-module("modules.logic.explore.model.mo.unit.ExplorePipeMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExplorePipeMO", package.seeall)
 
-slot0 = class("ExplorePipeMO", ExplorePipeBaseMO)
+local var_0_0 = class("ExplorePipeMO", ExplorePipeBaseMO)
 
-function slot0.initTypeData(slot0)
-	slot0._pipeShape = tonumber(slot0.specialDatas[1])
-	slot0._outDir = tonumber(slot0.specialDatas[2])
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0._pipeShape = tonumber(arg_1_0.specialDatas[1])
+	arg_1_0._outDir = tonumber(arg_1_0.specialDatas[2])
 end
 
-function slot0.isDivisive(slot0)
-	return slot0._pipeShape == ExploreEnum.PipeShape.Shape3 or slot0._pipeShape == ExploreEnum.PipeShape.Shape4
+function var_0_0.isDivisive(arg_2_0)
+	return arg_2_0._pipeShape == ExploreEnum.PipeShape.Shape3 or arg_2_0._pipeShape == ExploreEnum.PipeShape.Shape4
 end
 
-function slot0.getPipeOutDir(slot0, slot1)
-	if not slot1 then
+function var_0_0.getPipeOutDir(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	slot2 = ExploreHelper.getDir(slot1 - slot0.unitDir)
+	local var_3_0 = ExploreHelper.getDir(arg_3_1 - arg_3_0.unitDir)
 
-	if slot0._pipeShape == ExploreEnum.PipeShape.Shape1 then
-		if slot2 == 0 or slot2 == 180 then
-			return ExploreHelper.getDir(slot1 - 180)
+	if arg_3_0._pipeShape == ExploreEnum.PipeShape.Shape1 then
+		if var_3_0 == 0 or var_3_0 == 180 then
+			return ExploreHelper.getDir(arg_3_1 - 180)
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape2 then
-		if slot2 == 0 then
-			return ExploreHelper.getDir(slot1 + 90)
-		elseif slot2 == 90 then
-			return ExploreHelper.getDir(slot1 - 90)
+	elseif arg_3_0._pipeShape == ExploreEnum.PipeShape.Shape2 then
+		if var_3_0 == 0 then
+			return ExploreHelper.getDir(arg_3_1 + 90)
+		elseif var_3_0 == 90 then
+			return ExploreHelper.getDir(arg_3_1 - 90)
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape3 then
-		if (slot2 == 0 or slot2 == 90 or slot2 == 180) and slot0._outDir then
-			if slot0._outDir == slot2 then
+	elseif arg_3_0._pipeShape == ExploreEnum.PipeShape.Shape3 then
+		if (var_3_0 == 0 or var_3_0 == 90 or var_3_0 == 180) and arg_3_0._outDir then
+			if arg_3_0._outDir == var_3_0 then
 				return
 			end
 
-			return ExploreHelper.getDir(slot0._outDir + slot0.unitDir)
+			return ExploreHelper.getDir(arg_3_0._outDir + arg_3_0.unitDir)
 		end
 
-		if slot2 == 0 then
-			return ExploreHelper.getDir(slot1 + 90), ExploreHelper.getDir(slot1 + 180)
-		elseif slot2 == 90 then
-			return ExploreHelper.getDir(slot1 - 90), ExploreHelper.getDir(slot1 + 90)
-		elseif slot2 == 180 then
-			return ExploreHelper.getDir(slot1 - 90), ExploreHelper.getDir(slot1 - 180)
+		if var_3_0 == 0 then
+			return ExploreHelper.getDir(arg_3_1 + 90), ExploreHelper.getDir(arg_3_1 + 180)
+		elseif var_3_0 == 90 then
+			return ExploreHelper.getDir(arg_3_1 - 90), ExploreHelper.getDir(arg_3_1 + 90)
+		elseif var_3_0 == 180 then
+			return ExploreHelper.getDir(arg_3_1 - 90), ExploreHelper.getDir(arg_3_1 - 180)
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape4 then
-		if (slot2 == 0 or slot2 == 90 or slot2 == 180 or slot2 == 270) and slot0._outDir then
-			if slot0._outDir == slot2 then
+	elseif arg_3_0._pipeShape == ExploreEnum.PipeShape.Shape4 then
+		if (var_3_0 == 0 or var_3_0 == 90 or var_3_0 == 180 or var_3_0 == 270) and arg_3_0._outDir then
+			if arg_3_0._outDir == var_3_0 then
 				return
 			end
 
-			return ExploreHelper.getDir(slot0._outDir + slot0.unitDir)
+			return ExploreHelper.getDir(arg_3_0._outDir + arg_3_0.unitDir)
 		end
 
-		return ExploreHelper.getDir(slot1 + 90), ExploreHelper.getDir(slot1 + 180), ExploreHelper.getDir(slot1 + 270)
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape5 then
-		if slot2 == 0 then
-			return ExploreHelper.getDir(slot1 + 90)
-		elseif slot2 == 90 then
-			return ExploreHelper.getDir(slot1 - 90)
-		elseif slot2 == 180 then
-			return ExploreHelper.getDir(slot1 + 90)
-		elseif slot2 == 270 then
-			return ExploreHelper.getDir(slot1 - 90)
+		return ExploreHelper.getDir(arg_3_1 + 90), ExploreHelper.getDir(arg_3_1 + 180), ExploreHelper.getDir(arg_3_1 + 270)
+	elseif arg_3_0._pipeShape == ExploreEnum.PipeShape.Shape5 then
+		if var_3_0 == 0 then
+			return ExploreHelper.getDir(arg_3_1 + 90)
+		elseif var_3_0 == 90 then
+			return ExploreHelper.getDir(arg_3_1 - 90)
+		elseif var_3_0 == 180 then
+			return ExploreHelper.getDir(arg_3_1 + 90)
+		elseif var_3_0 == 270 then
+			return ExploreHelper.getDir(arg_3_1 - 90)
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape6 and (slot2 == 0 or slot2 == 180 or slot2 == 90 or slot2 == 270) then
-		return ExploreHelper.getDir(slot1 - 180)
+	elseif arg_3_0._pipeShape == ExploreEnum.PipeShape.Shape6 and (var_3_0 == 0 or var_3_0 == 180 or var_3_0 == 90 or var_3_0 == 270) then
+		return ExploreHelper.getDir(arg_3_1 - 180)
 	end
 end
 
-function slot0.isOutDir(slot0, slot1)
-	slot2 = ExploreHelper.getDir(slot1 - slot0.unitDir)
+function var_0_0.isOutDir(arg_4_0, arg_4_1)
+	local var_4_0 = ExploreHelper.getDir(arg_4_1 - arg_4_0.unitDir)
 
-	if slot0._pipeShape == ExploreEnum.PipeShape.Shape3 then
-		if slot0._outDir then
-			return slot0._outDir == slot2
+	if arg_4_0._pipeShape == ExploreEnum.PipeShape.Shape3 then
+		if arg_4_0._outDir then
+			return arg_4_0._outDir == var_4_0
 		end
 
-		return slot2 == 0 or slot2 == 90 or slot2 == 180
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape4 then
-		if slot0._outDir then
-			return slot0._outDir == slot2
+		return var_4_0 == 0 or var_4_0 == 90 or var_4_0 == 180
+	elseif arg_4_0._pipeShape == ExploreEnum.PipeShape.Shape4 then
+		if arg_4_0._outDir then
+			return arg_4_0._outDir == var_4_0
 		end
 
-		return slot2 == 0 or slot2 == 90 or slot2 == 180 or slot2 == 270
+		return var_4_0 == 0 or var_4_0 == 90 or var_4_0 == 180 or var_4_0 == 270
 	end
 
 	return false
 end
 
-function slot0.haveOutDir(slot0)
-	return slot0._outDir and true or false
+function var_0_0.haveOutDir(arg_5_0)
+	return arg_5_0._outDir and true or false
 end
 
-function slot0.getDirType(slot0, slot1)
-	if slot0._pipeShape == ExploreEnum.PipeShape.Shape1 then
-		if slot1 == 0 then
+function var_0_0.getDirType(arg_6_0, arg_6_1)
+	if arg_6_0._pipeShape == ExploreEnum.PipeShape.Shape1 then
+		if arg_6_1 == 0 then
 			return ExploreEnum.PipeGoNode.Pipe1
-		elseif slot1 == 180 and slot0:canRotate() then
+		elseif arg_6_1 == 180 and arg_6_0:canRotate() then
 			return ExploreEnum.PipeGoNode.Pipe2
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape2 then
-		if slot1 == 0 then
+	elseif arg_6_0._pipeShape == ExploreEnum.PipeShape.Shape2 then
+		if arg_6_1 == 0 then
 			return ExploreEnum.PipeGoNode.Pipe1
-		elseif slot1 == 90 and slot0:canRotate() then
+		elseif arg_6_1 == 90 and arg_6_0:canRotate() then
 			return ExploreEnum.PipeGoNode.Pipe2
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape3 then
-		if slot1 == 0 then
+	elseif arg_6_0._pipeShape == ExploreEnum.PipeShape.Shape3 then
+		if arg_6_1 == 0 then
 			return ExploreEnum.PipeGoNode.Pipe1
-		elseif slot1 == 90 then
+		elseif arg_6_1 == 90 then
 			return ExploreEnum.PipeGoNode.Pipe2
-		elseif slot1 == 180 then
+		elseif arg_6_1 == 180 then
 			return ExploreEnum.PipeGoNode.Pipe3
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape4 then
-		if slot1 == 0 then
+	elseif arg_6_0._pipeShape == ExploreEnum.PipeShape.Shape4 then
+		if arg_6_1 == 0 then
 			return ExploreEnum.PipeGoNode.Pipe1
-		elseif slot1 == 90 then
+		elseif arg_6_1 == 90 then
 			return ExploreEnum.PipeGoNode.Pipe2
-		elseif slot1 == 180 then
+		elseif arg_6_1 == 180 then
 			return ExploreEnum.PipeGoNode.Pipe3
-		elseif slot1 == 270 then
+		elseif arg_6_1 == 270 then
 			return ExploreEnum.PipeGoNode.Pipe4
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape5 then
-		if slot1 == 0 then
+	elseif arg_6_0._pipeShape == ExploreEnum.PipeShape.Shape5 then
+		if arg_6_1 == 0 then
 			return ExploreEnum.PipeGoNode.Pipe1
-		elseif slot1 == 180 then
+		elseif arg_6_1 == 180 then
 			return ExploreEnum.PipeGoNode.Pipe2
 		end
-	elseif slot0._pipeShape == ExploreEnum.PipeShape.Shape6 then
-		if slot1 == 0 then
+	elseif arg_6_0._pipeShape == ExploreEnum.PipeShape.Shape6 then
+		if arg_6_1 == 0 then
 			return ExploreEnum.PipeGoNode.Pipe1
-		elseif slot1 == 90 then
+		elseif arg_6_1 == 90 then
 			return ExploreEnum.PipeGoNode.Pipe2
 		end
 	end
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_7_0)
 	return ExplorePipeUnit
 end
 
-return slot0
+return var_0_0

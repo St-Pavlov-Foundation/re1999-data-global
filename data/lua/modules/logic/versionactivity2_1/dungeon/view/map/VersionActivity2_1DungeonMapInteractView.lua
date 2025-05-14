@@ -1,503 +1,544 @@
-module("modules.logic.versionactivity2_1.dungeon.view.map.VersionActivity2_1DungeonMapInteractView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.dungeon.view.map.VersionActivity2_1DungeonMapInteractView", package.seeall)
 
-slot0 = class("VersionActivity2_1DungeonMapInteractView", BaseView)
+local var_0_0 = class("VersionActivity2_1DungeonMapInteractView", BaseView)
 
-function slot0.onInitView(slot0, slot1)
-	slot0._gointeractroot = gohelper.findChild(slot0.viewGO, "#go_interactive_root")
-	slot0._gointeractitem = gohelper.findChild(slot0.viewGO, "#go_interactive_root/#go_interactitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0._gointeractitem, "#btn_close")
-	slot0._txttitle = gohelper.findChildText(slot0._gointeractitem, "rotate/#go_title/#txt_title")
-	slot0._simagedescbg = gohelper.findChildSingleImage(slot0._gointeractitem, "rotate/desc_container/#simage_descbg")
-	slot0._txtdesc = gohelper.findChildText(slot0._gointeractitem, "rotate/desc_container/#txt_desc")
-	slot0._godesc = slot0._txtdesc.gameObject
-	slot0._gochat = gohelper.findChild(slot0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat")
-	slot0._gochatusericon = gohelper.findChild(slot0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/usericon")
-	slot0._txtchatname = gohelper.findChildText(slot0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/name")
-	slot0._txtchatdesc = gohelper.findChildText(slot0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/info")
-	slot0.goRewardContainer = gohelper.findChild(slot0._gointeractitem, "rotate/reward_container")
-	slot0.goRewardContent = gohelper.findChild(slot0._gointeractitem, "rotate/reward_container/#go_rewardContent")
-	slot0.goRewardItem = gohelper.findChild(slot0._gointeractitem, "rotate/reward_container/#go_rewardContent/#go_activityrewarditem")
+function var_0_0.onInitView(arg_1_0, arg_1_1)
+	arg_1_0._gointeractroot = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root")
+	arg_1_0._gointeractitem = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0._gointeractitem, "#btn_close")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0._gointeractitem, "rotate/#go_title/#txt_title")
+	arg_1_0._simagedescbg = gohelper.findChildSingleImage(arg_1_0._gointeractitem, "rotate/desc_container/#simage_descbg")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0._gointeractitem, "rotate/desc_container/#txt_desc")
+	arg_1_0._godesc = arg_1_0._txtdesc.gameObject
+	arg_1_0._gochat = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat")
+	arg_1_0._gochatusericon = gohelper.findChild(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/usericon")
+	arg_1_0._txtchatname = gohelper.findChildText(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/name")
+	arg_1_0._txtchatdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_interactive_root/#go_interactitem/rotate/desc_container/#go_chat/info")
+	arg_1_0.goRewardContainer = gohelper.findChild(arg_1_0._gointeractitem, "rotate/reward_container")
+	arg_1_0.goRewardContent = gohelper.findChild(arg_1_0._gointeractitem, "rotate/reward_container/#go_rewardContent")
+	arg_1_0.goRewardItem = gohelper.findChild(arg_1_0._gointeractitem, "rotate/reward_container/#go_rewardContent/#go_activityrewarditem")
 
-	slot0:initNoneContainer()
-	slot0:initFightContainer()
-	slot0:initDialogueContainer()
-	slot0:initTalkContainer()
+	arg_1_0:initNoneContainer()
+	arg_1_0:initFightContainer()
+	arg_1_0:initDialogueContainer()
+	arg_1_0:initTalkContainer()
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.initNoneContainer(slot0)
-	slot0.goNone = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_none")
-	slot0.txtNone = gohelper.findChildText(slot0._gointeractitem, "rotate/option_container/#go_none/#txt_none")
-	slot0.noneBtn = gohelper.findButtonWithAudio(slot0.goNone)
+function var_0_0.initNoneContainer(arg_2_0)
+	arg_2_0.goNone = gohelper.findChild(arg_2_0._gointeractitem, "rotate/option_container/#go_none")
+	arg_2_0.txtNone = gohelper.findChildText(arg_2_0._gointeractitem, "rotate/option_container/#go_none/#txt_none")
+	arg_2_0.noneBtn = gohelper.findButtonWithAudio(arg_2_0.goNone)
 end
 
-function slot0.initFightContainer(slot0)
-	slot0.goFight = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_fight")
-	slot0.goFightTip = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip")
-	slot0.txtRemainFightNumber = gohelper.findChildText(slot0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/#txt_remainfightnumber")
-	slot0.fightTipClickArea = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/clickarea")
-	slot0.txtFight = gohelper.findChildText(slot0._gointeractitem, "rotate/option_container/#go_fight/#txt_fight")
-	slot0.goFightCost = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_fight/#go_cost")
-	slot0.txtFightCost = gohelper.findChildText(slot0._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#txt_cost")
-	slot0.simageCostIcon = gohelper.findChildSingleImage(slot0._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#simage_costicon")
-	slot0.fightBtn = gohelper.findButtonWithAudio(slot0.goFight)
+function var_0_0.initFightContainer(arg_3_0)
+	arg_3_0.goFight = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight")
+	arg_3_0.goFightTip = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip")
+	arg_3_0.txtRemainFightNumber = gohelper.findChildText(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/#txt_remainfightnumber")
+	arg_3_0.fightTipClickArea = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_fighttip/clickarea")
+	arg_3_0.txtFight = gohelper.findChildText(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#txt_fight")
+	arg_3_0.goFightCost = gohelper.findChild(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_cost")
+	arg_3_0.txtFightCost = gohelper.findChildText(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#txt_cost")
+	arg_3_0.simageCostIcon = gohelper.findChildSingleImage(arg_3_0._gointeractitem, "rotate/option_container/#go_fight/#go_cost/#simage_costicon")
+	arg_3_0.fightBtn = gohelper.findButtonWithAudio(arg_3_0.goFight)
 end
 
-function slot0.initDialogueContainer(slot0)
-	slot0.goDialogue = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_dialogue")
-	slot0.txtDialogue = gohelper.findChildText(slot0._gointeractitem, "rotate/option_container/#go_dialogue/#txt_dialogue")
-	slot0.enterDialogueBtn = gohelper.findButtonWithAudio(slot0.goDialogue)
+function var_0_0.initDialogueContainer(arg_4_0)
+	arg_4_0.goDialogue = gohelper.findChild(arg_4_0._gointeractitem, "rotate/option_container/#go_dialogue")
+	arg_4_0.txtDialogue = gohelper.findChildText(arg_4_0._gointeractitem, "rotate/option_container/#go_dialogue/#txt_dialogue")
+	arg_4_0.enterDialogueBtn = gohelper.findButtonWithAudio(arg_4_0.goDialogue)
 end
 
-function slot0.initTalkContainer(slot0)
-	slot0.goTalk = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_talk")
-	slot0._gonext = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_talk/#go_next")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0._gointeractitem, "rotate/option_container/#go_talk/#go_next/#btn_next")
-	slot0._gooptions = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_talk/#go_options")
-	slot0._gotalkitem = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_talk/#go_options/#go_talkitem")
+function var_0_0.initTalkContainer(arg_5_0)
+	arg_5_0.goTalk = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk")
+	arg_5_0._gonext = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_next")
+	arg_5_0._btnnext = gohelper.findChildButtonWithAudio(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_next/#btn_next")
+	arg_5_0._gooptions = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_options")
+	arg_5_0._gotalkitem = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_options/#go_talkitem")
 
-	gohelper.setActive(slot0._gotalkitem, false)
+	gohelper.setActive(arg_5_0._gotalkitem, false)
 
-	slot0._gofinishtalk = gohelper.findChild(slot0._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk")
-	slot0._btnfinishtalk = gohelper.findChildButtonWithAudio(slot0._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk/#btn_finishtalk")
+	arg_5_0._gofinishtalk = gohelper.findChild(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk")
+	arg_5_0._btnfinishtalk = gohelper.findChildButtonWithAudio(arg_5_0._gointeractitem, "rotate/option_container/#go_talk/#go_finishtalk/#btn_finishtalk")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0.noneBtn:AddClickListener(slot0._onClickNoneBtn, slot0)
-	slot0.fightBtn:AddClickListener(slot0._onClickFightBtn, slot0)
-	slot0.enterDialogueBtn:AddClickListener(slot0._onClickEnterDialogueBtn, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnfinishtalk:AddClickListener(slot0._btnfinishtalkOnClick, slot0)
-	slot0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, slot0.showInteractUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinishCall, slot0)
-	slot0:addEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, slot0.onDialogueInfoChange, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.beforeJump, slot0)
+function var_0_0.addEvents(arg_6_0)
+	arg_6_0._btnclose:AddClickListener(arg_6_0._btncloseOnClick, arg_6_0)
+	arg_6_0.noneBtn:AddClickListener(arg_6_0._onClickNoneBtn, arg_6_0)
+	arg_6_0.fightBtn:AddClickListener(arg_6_0._onClickFightBtn, arg_6_0)
+	arg_6_0.enterDialogueBtn:AddClickListener(arg_6_0._onClickEnterDialogueBtn, arg_6_0)
+	arg_6_0._btnnext:AddClickListener(arg_6_0._btnnextOnClick, arg_6_0)
+	arg_6_0._btnfinishtalk:AddClickListener(arg_6_0._btnfinishtalkOnClick, arg_6_0)
+	arg_6_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, arg_6_0.showInteractUI, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinishCall, arg_6_0)
+	arg_6_0:addEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, arg_6_0.onDialogueInfoChange, arg_6_0)
+	arg_6_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_6_0.beforeJump, arg_6_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0.noneBtn:RemoveClickListener()
-	slot0.fightBtn:RemoveClickListener()
-	slot0.enterDialogueBtn:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
-	slot0._btnfinishtalk:RemoveClickListener()
-	slot0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, slot0.showInteractUI, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinishCall, slot0)
-	slot0:removeEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, slot0.onDialogueInfoChange, slot0)
-	slot0:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.beforeJump, slot0)
+function var_0_0.removeEvents(arg_7_0)
+	arg_7_0._btnclose:RemoveClickListener()
+	arg_7_0.noneBtn:RemoveClickListener()
+	arg_7_0.fightBtn:RemoveClickListener()
+	arg_7_0.enterDialogueBtn:RemoveClickListener()
+	arg_7_0._btnnext:RemoveClickListener()
+	arg_7_0._btnfinishtalk:RemoveClickListener()
+	arg_7_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnClickElement, arg_7_0.showInteractUI, arg_7_0)
+	arg_7_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_7_0.onCloseViewFinishCall, arg_7_0)
+	arg_7_0:removeEventCb(DialogueController.instance, DialogueEvent.OnDialogueInfoChange, arg_7_0.onDialogueInfoChange, arg_7_0)
+	arg_7_0:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_7_0.beforeJump, arg_7_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._handleTypeMap = {
-		[DungeonEnum.ElementType.None] = slot0.refreshNoneUI,
-		[DungeonEnum.ElementType.Fight] = slot0.refreshFightUI,
-		[DungeonEnum.ElementType.EnterDialogue] = slot0.refreshDialogueUI,
-		[DungeonEnum.ElementType.Story] = slot0.refreshTalkUI
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._handleTypeMap = {
+		[DungeonEnum.ElementType.None] = arg_8_0.refreshNoneUI,
+		[DungeonEnum.ElementType.Fight] = arg_8_0.refreshFightUI,
+		[DungeonEnum.ElementType.EnterDialogue] = arg_8_0.refreshDialogueUI,
+		[DungeonEnum.ElementType.Story] = arg_8_0.refreshTalkUI
 	}
-	slot0.type2goDict = {
-		[DungeonEnum.ElementType.None] = slot0.goNone,
-		[DungeonEnum.ElementType.Fight] = slot0.goFight,
-		[DungeonEnum.ElementType.EnterDialogue] = slot0.goDialogue,
-		[DungeonEnum.ElementType.Story] = slot0.goTalk
+	arg_8_0.type2goDict = {
+		[DungeonEnum.ElementType.None] = arg_8_0.goNone,
+		[DungeonEnum.ElementType.Fight] = arg_8_0.goFight,
+		[DungeonEnum.ElementType.EnterDialogue] = arg_8_0.goDialogue,
+		[DungeonEnum.ElementType.Story] = arg_8_0.goTalk
 	}
-	slot0.rewardItemList = {}
-	slot0._optionBtnList = slot0:getUserDataTb_()
-	slot0.mapSceneElementsView = slot0.viewContainer.mapSceneElements
-	slot0.rootClick = gohelper.findChildClickWithDefaultAudio(slot0._gointeractroot, "close_block")
+	arg_8_0.rewardItemList = {}
+	arg_8_0._optionBtnList = arg_8_0:getUserDataTb_()
+	arg_8_0.mapSceneElementsView = arg_8_0.viewContainer.mapSceneElements
+	arg_8_0.rootClick = gohelper.findChildClickWithDefaultAudio(arg_8_0._gointeractroot, "close_block")
 
-	slot0.rootClick:AddClickListener(slot0.onClickRoot, slot0)
-	gohelper.setActive(slot0._gointeractitem, false)
-	gohelper.setActive(slot0._gointeractroot, false)
-	gohelper.setActive(slot0.goRewardItem, false)
+	arg_8_0.rootClick:AddClickListener(arg_8_0.onClickRoot, arg_8_0)
+	gohelper.setActive(arg_8_0._gointeractitem, false)
+	gohelper.setActive(arg_8_0._gointeractroot, false)
+	gohelper.setActive(arg_8_0.goRewardItem, false)
 end
 
-function slot0.showInteractUI(slot0, slot1)
-	if slot0._show then
+function var_0_0.showInteractUI(arg_9_0, arg_9_1)
+	if arg_9_0._show then
 		return
 	end
 
 	VersionActivity2_1DungeonModel.instance:setShowInteractView(true)
 
-	slot0._mapElement = slot1
-	slot0._config = slot0._mapElement._config
-	slot0._elementGo = slot0._mapElement._go
-	slot0.isFinish = false
+	arg_9_0._mapElement = arg_9_1
+	arg_9_0._config = arg_9_0._mapElement._config
+	arg_9_0._elementGo = arg_9_0._mapElement._go
+	arg_9_0.isFinish = false
 
-	slot0:show()
-	slot0:refreshUI()
+	arg_9_0:show()
+	arg_9_0:refreshUI()
 end
 
-function slot0.show(slot0)
-	if slot0._show then
+function var_0_0.show(arg_10_0)
+	if arg_10_0._show then
 		return
 	end
 
-	slot0._show = true
+	arg_10_0._show = true
 
-	gohelper.setActive(slot0._gointeractitem, true)
-	gohelper.setActive(slot0._gointeractroot, true)
+	gohelper.setActive(arg_10_0._gointeractitem, true)
+	gohelper.setActive(arg_10_0._gointeractroot, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
 end
 
-function slot0.hide(slot0)
-	if not slot0._show then
+function var_0_0.hide(arg_11_0)
+	if not arg_11_0._show then
 		return
 	end
 
 	VersionActivity2_1DungeonModel.instance:setShowInteractView(nil)
 
-	slot0._show = false
-	slot0.dispatchMo = nil
+	arg_11_0._show = false
+	arg_11_0.dispatchMo = nil
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
-	gohelper.setActive(slot0._gointeractitem, false)
-	gohelper.setActive(slot0._gointeractroot, false)
-	TaskDispatcher.cancelTask(slot0.everySecondCall, slot0)
+	gohelper.setActive(arg_11_0._gointeractitem, false)
+	gohelper.setActive(arg_11_0._gointeractroot, false)
+	TaskDispatcher.cancelTask(arg_11_0.everySecondCall, arg_11_0)
 	VersionActivity2_1DungeonController.instance:dispatchEvent(VersionActivity2_1DungeonEvent.OnHideInteractUI)
 end
 
-function slot0.refreshUI(slot0)
-	for slot4, slot5 in pairs(slot0.type2goDict) do
-		gohelper.setActive(slot5, slot4 == slot0._config.type)
+function var_0_0.refreshUI(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.type2goDict) do
+		gohelper.setActive(iter_12_1, iter_12_0 == arg_12_0._config.type)
 	end
 
-	slot0._txttitle.text = slot0._config.title
+	arg_12_0._txttitle.text = arg_12_0._config.title
 
-	if slot0._handleTypeMap[slot0._config.type] then
-		slot1(slot0)
+	local var_12_0 = arg_12_0._handleTypeMap[arg_12_0._config.type]
+
+	if var_12_0 then
+		var_12_0(arg_12_0)
 	else
 		logError("element type undefined!")
 	end
 
-	slot0:refreshRewards()
+	arg_12_0:refreshRewards()
 end
 
-function slot0.refreshRewards(slot0)
-	if string.nilorempty(slot0._config.reward) then
-		gohelper.setActive(slot0.goRewardContainer, false)
+function var_0_0.refreshRewards(arg_13_0)
+	local var_13_0 = arg_13_0._config.reward
+
+	if string.nilorempty(var_13_0) then
+		gohelper.setActive(arg_13_0.goRewardContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goRewardContainer, true)
+	gohelper.setActive(arg_13_0.goRewardContainer, true)
 
-	for slot6, slot7 in ipairs(GameUtil.splitString2(slot1, true)) do
-		if not slot0.rewardItemList[slot6] then
-			table.insert(slot0.rewardItemList, slot0:createRewardItem())
+	local var_13_1 = GameUtil.splitString2(var_13_0, true)
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		local var_13_2 = arg_13_0.rewardItemList[iter_13_0]
+
+		if not var_13_2 then
+			var_13_2 = arg_13_0:createRewardItem()
+
+			table.insert(arg_13_0.rewardItemList, var_13_2)
 		end
 
-		gohelper.setActive(slot8.go, true)
-		slot8.icon:isShowCount(false)
-		slot8.icon:setMOValue(slot7[1], slot7[2], slot7[3])
+		gohelper.setActive(var_13_2.go, true)
+		var_13_2.icon:isShowCount(false)
+		var_13_2.icon:setMOValue(iter_13_1[1], iter_13_1[2], iter_13_1[3])
 
-		slot8.txtCount.text = slot7[3]
+		var_13_2.txtCount.text = iter_13_1[3]
 	end
 
-	for slot6 = #slot2 + 1, #slot0.rewardItemList do
-		gohelper.setActive(slot0.rewardItemList[slot6].go, false)
+	for iter_13_2 = #var_13_1 + 1, #arg_13_0.rewardItemList do
+		gohelper.setActive(arg_13_0.rewardItemList[iter_13_2].go, false)
 	end
 end
 
-function slot0.createRewardItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0.goRewardItem)
-	slot1.goIcon = gohelper.findChild(slot1.go, "itemicon")
-	slot1.goCount = gohelper.findChild(slot1.go, "countbg")
-	slot1.txtCount = gohelper.findChildText(slot1.go, "countbg/count")
-	slot1.goRare = gohelper.findChild(slot1.go, "rare")
-	slot1.icon = IconMgr.instance:getCommonPropItemIcon(slot1.goIcon)
+function var_0_0.createRewardItem(arg_14_0)
+	local var_14_0 = arg_14_0:getUserDataTb_()
 
-	gohelper.setActive(slot1.goRare, false)
+	var_14_0.go = gohelper.cloneInPlace(arg_14_0.goRewardItem)
+	var_14_0.goIcon = gohelper.findChild(var_14_0.go, "itemicon")
+	var_14_0.goCount = gohelper.findChild(var_14_0.go, "countbg")
+	var_14_0.txtCount = gohelper.findChildText(var_14_0.go, "countbg/count")
+	var_14_0.goRare = gohelper.findChild(var_14_0.go, "rare")
+	var_14_0.icon = IconMgr.instance:getCommonPropItemIcon(var_14_0.goIcon)
 
-	return slot1
+	gohelper.setActive(var_14_0.goRare, false)
+
+	return var_14_0
 end
 
-function slot0.refreshNoneUI(slot0)
-	slot0.txtNone.text = slot0._config.acceptText
-	slot0._txtdesc.text = slot0._config.desc
+function var_0_0.refreshNoneUI(arg_15_0)
+	arg_15_0.txtNone.text = arg_15_0._config.acceptText
+	arg_15_0._txtdesc.text = arg_15_0._config.desc
 
-	slot0:setIsChat(false)
+	arg_15_0:setIsChat(false)
 end
 
-function slot0.setFinishText(slot0)
-	if string.nilorempty(slot0._config.finishText) then
-		slot0._txtdesc.text = slot0._config.desc
+function var_0_0.setFinishText(arg_16_0)
+	local var_16_0 = arg_16_0._config.finishText
+
+	if string.nilorempty(var_16_0) then
+		arg_16_0._txtdesc.text = arg_16_0._config.desc
 	else
-		slot0._txtdesc.text = slot1
+		arg_16_0._txtdesc.text = var_16_0
 	end
 end
 
-function slot0.refreshFightUI(slot0)
-	slot0.isFinish = DungeonModel.instance:hasPassLevel(tonumber(slot0._config.param))
+function var_0_0.refreshFightUI(arg_17_0)
+	local var_17_0 = tonumber(arg_17_0._config.param)
 
-	if slot0.isFinish then
-		slot0.txtFight.text = luaLang("p_v1a5_news_order_finish")
+	arg_17_0.isFinish = DungeonModel.instance:hasPassLevel(var_17_0)
 
-		slot0:setFinishText()
+	if arg_17_0.isFinish then
+		arg_17_0.txtFight.text = luaLang("p_v1a5_news_order_finish")
+
+		arg_17_0:setFinishText()
 	else
-		slot0.txtFight.text = slot0._config.acceptText
-		slot0._txtdesc.text = slot0._config.desc
+		arg_17_0.txtFight.text = arg_17_0._config.acceptText
+		arg_17_0._txtdesc.text = arg_17_0._config.desc
 	end
 
-	slot0:setIsChat(false)
+	arg_17_0:setIsChat(false)
 end
 
-function slot0.refreshDialogueUI(slot0)
-	slot0.dialogueId = tonumber(slot0._config.param)
-	slot0.isFinish = DialogueModel.instance:isFinishDialogue(slot0.dialogueId)
+function var_0_0.refreshDialogueUI(arg_18_0)
+	arg_18_0.dialogueId = tonumber(arg_18_0._config.param)
+	arg_18_0.isFinish = DialogueModel.instance:isFinishDialogue(arg_18_0.dialogueId)
 
-	if slot0.isFinish then
-		slot0.txtDialogue.text = luaLang("p_v1a5_news_order_finish")
+	if arg_18_0.isFinish then
+		arg_18_0.txtDialogue.text = luaLang("p_v1a5_news_order_finish")
 
-		slot0:setFinishText()
+		arg_18_0:setFinishText()
 	else
-		slot0.txtDialogue.text = slot0._config.acceptText
-		slot0._txtdesc.text = slot0._config.desc
+		arg_18_0.txtDialogue.text = arg_18_0._config.acceptText
+		arg_18_0._txtdesc.text = arg_18_0._config.desc
 	end
 
-	slot0:setIsChat(false)
+	arg_18_0:setIsChat(false)
 end
 
-function slot0.refreshTalkUI(slot0)
-	slot0._sectionStack = {}
-	slot0._dialogId = tonumber(slot0._config.param)
+function var_0_0.refreshTalkUI(arg_19_0)
+	arg_19_0._sectionStack = {}
+	arg_19_0._dialogId = tonumber(arg_19_0._config.param)
 
-	slot0:_playSection(0)
+	arg_19_0:_playSection(0)
 end
 
-function slot0._playSection(slot0, slot1, slot2)
-	slot0:_setSectionData(slot1, slot2)
-	slot0:_playNextDialog()
+function var_0_0._playSection(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0:_setSectionData(arg_20_1, arg_20_2)
+	arg_20_0:_playNextDialog()
 end
 
-function slot0._setSectionData(slot0, slot1, slot2)
-	slot0._sectionList = DungeonConfig.instance:getDialog(slot0._dialogId, slot1)
-	slot0._dialogIndex = slot2 or 1
-	slot0._sectionId = slot1
+function var_0_0._setSectionData(arg_21_0, arg_21_1, arg_21_2)
+	arg_21_0._sectionList = DungeonConfig.instance:getDialog(arg_21_0._dialogId, arg_21_1)
+	arg_21_0._dialogIndex = arg_21_2 or 1
+	arg_21_0._sectionId = arg_21_1
 end
 
-function slot0._playNextDialog(slot0)
-	slot0._dialogIndex = slot0._dialogIndex + 1
+function var_0_0._playNextDialog(arg_22_0)
+	local var_22_0 = arg_22_0._sectionList[arg_22_0._dialogIndex]
 
-	if slot0._sectionList[slot0._dialogIndex].type == "dialog" then
-		slot0:_showDialog("dialog", slot1.content, slot1.speaker, slot1.audio)
+	arg_22_0._dialogIndex = arg_22_0._dialogIndex + 1
+
+	if var_22_0.type == "dialog" then
+		arg_22_0:_showDialog("dialog", var_22_0.content, var_22_0.speaker, var_22_0.audio)
 	end
 
-	if #slot0._sectionStack > 0 and #slot0._sectionList < slot0._dialogIndex then
-		slot2 = table.remove(slot0._sectionStack)
+	if #arg_22_0._sectionStack > 0 and #arg_22_0._sectionList < arg_22_0._dialogIndex then
+		local var_22_1 = table.remove(arg_22_0._sectionStack)
 
-		slot0:_setSectionData(slot2[1], slot2[2])
+		arg_22_0:_setSectionData(var_22_1[1], var_22_1[2])
 	end
 
-	slot2 = false
+	local var_22_2 = false
+	local var_22_3 = arg_22_0._sectionList[arg_22_0._dialogIndex]
 
-	if slot0._sectionList[slot0._dialogIndex] and slot3.type == "options" then
-		slot0._dialogIndex = slot0._dialogIndex + 1
+	if var_22_3 and var_22_3.type == "options" then
+		arg_22_0._dialogIndex = arg_22_0._dialogIndex + 1
 
-		for slot7, slot8 in pairs(slot0._optionBtnList) do
-			gohelper.setActive(slot8[1], false)
+		for iter_22_0, iter_22_1 in pairs(arg_22_0._optionBtnList) do
+			gohelper.setActive(iter_22_1[1], false)
 		end
 
-		for slot9, slot10 in ipairs(string.split(slot3.content, "#")) do
-			slot0:_addDialogOption(slot9, string.split(slot3.param, "#")[slot9], slot10)
+		local var_22_4 = string.split(var_22_3.content, "#")
+		local var_22_5 = string.split(var_22_3.param, "#")
+
+		for iter_22_2, iter_22_3 in ipairs(var_22_4) do
+			arg_22_0:_addDialogOption(iter_22_2, var_22_5[iter_22_2], iter_22_3)
 		end
 
-		slot2 = true
+		var_22_2 = true
 	end
 
-	slot0:_refreshDialogBtnState(slot2, not slot3 or slot3.type ~= "dialogend")
+	local var_22_6 = not var_22_3 or var_22_3.type ~= "dialogend"
+
+	arg_22_0:_refreshDialogBtnState(var_22_2, var_22_6)
 end
 
-function slot0._showDialog(slot0, slot1, slot2, slot3, slot4)
-	DungeonMapModel.instance:addDialog(slot1, slot2, slot3, slot4)
-	gohelper.setActive(slot0._gochatusericon, not slot3)
+function var_0_0._showDialog(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+	DungeonMapModel.instance:addDialog(arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+	gohelper.setActive(arg_23_0._gochatusericon, not arg_23_3)
 
-	slot0._txtchatname.text = not string.nilorempty(slot3) and slot3 .. ":" or ""
-	slot0._txtchatdesc.text = slot2
+	local var_23_0 = not string.nilorempty(arg_23_3)
 
-	slot0:setIsChat(true)
+	arg_23_0._txtchatname.text = var_23_0 and arg_23_3 .. ":" or ""
+	arg_23_0._txtchatdesc.text = arg_23_2
+
+	arg_23_0:setIsChat(true)
 end
 
-function slot0.setIsChat(slot0, slot1)
-	gohelper.setActive(slot0._godesc, not slot1)
-	gohelper.setActive(slot0._gochat, slot1)
+function var_0_0.setIsChat(arg_24_0, arg_24_1)
+	gohelper.setActive(arg_24_0._godesc, not arg_24_1)
+	gohelper.setActive(arg_24_0._gochat, arg_24_1)
 end
 
-function slot0._addDialogOption(slot0, slot1, slot2, slot3)
-	slot4 = slot0._optionBtnList[slot1] and slot0._optionBtnList[slot1][1] or gohelper.cloneInPlace(slot0._gotalkitem)
+function var_0_0._addDialogOption(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	local var_25_0 = arg_25_0._optionBtnList[arg_25_1] and arg_25_0._optionBtnList[arg_25_1][1] or gohelper.cloneInPlace(arg_25_0._gotalkitem)
 
-	gohelper.setActive(slot4, true)
+	gohelper.setActive(var_25_0, true)
 
-	gohelper.findChildText(slot4, "txt_talkitem").text = slot3
+	gohelper.findChildText(var_25_0, "txt_talkitem").text = arg_25_3
 
-	gohelper.findChildButtonWithAudio(slot4, "btn_talkitem"):AddClickListener(slot0._onOptionClick, slot0, {
-		slot2,
-		slot3
+	local var_25_1 = gohelper.findChildButtonWithAudio(var_25_0, "btn_talkitem")
+
+	var_25_1:AddClickListener(arg_25_0._onOptionClick, arg_25_0, {
+		arg_25_2,
+		arg_25_3
 	})
 
-	if not slot0._optionBtnList[slot1] then
-		slot7 = slot0:getUserDataTb_()
-		slot7[1] = slot4
-		slot7[2] = slot6
-		slot0._optionBtnList[slot1] = slot7
+	if not arg_25_0._optionBtnList[arg_25_1] then
+		local var_25_2 = arg_25_0:getUserDataTb_()
+
+		var_25_2[1] = var_25_0
+		var_25_2[2] = var_25_1
+		arg_25_0._optionBtnList[arg_25_1] = var_25_2
 	end
 end
 
-function slot0._onOptionClick(slot0, slot1)
-	slot2 = slot1[1]
+function var_0_0._onOptionClick(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_1[1]
+	local var_26_1 = string.format("<color=#c95318>\"%s\"</color>", arg_26_1[2])
 
-	slot0:_showDialog("option", string.format("<color=#c95318>\"%s\"</color>", slot1[2]))
+	arg_26_0:_showDialog("option", var_26_1)
 
-	if slot0._dialogIndex <= #slot0._sectionList then
-		table.insert(slot0._sectionStack, {
-			slot0._sectionId,
-			slot0._dialogIndex
+	if #arg_26_0._sectionList >= arg_26_0._dialogIndex then
+		table.insert(arg_26_0._sectionStack, {
+			arg_26_0._sectionId,
+			arg_26_0._dialogIndex
 		})
 	end
 
-	DungeonMapModel.instance:addDialogId(slot2)
-	slot0:_playSection(slot2)
+	DungeonMapModel.instance:addDialogId(var_26_0)
+	arg_26_0:_playSection(var_26_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._refreshDialogBtnState(slot0, slot1, slot2)
-	gohelper.setActive(slot0._gooptions, slot1)
+function var_0_0._refreshDialogBtnState(arg_27_0, arg_27_1, arg_27_2)
+	gohelper.setActive(arg_27_0._gooptions, arg_27_1)
 
-	if slot1 then
+	if arg_27_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
-		gohelper.setActive(slot0._gonext, false)
-		gohelper.setActive(slot0._gofinishtalk, false)
+		gohelper.setActive(arg_27_0._gonext, false)
+		gohelper.setActive(arg_27_0._gofinishtalk, false)
 
-		slot0._curBtnGo = slot0._gooptions
+		arg_27_0._curBtnGo = arg_27_0._gooptions
 
 		return
 	end
 
-	if slot2 and (#slot0._sectionStack > 0 or slot0._dialogIndex <= #slot0._sectionList) then
-		slot0._curBtnGo = slot0._gonext
+	arg_27_2 = arg_27_2 and (#arg_27_0._sectionStack > 0 or #arg_27_0._sectionList >= arg_27_0._dialogIndex)
 
-		gohelper.setActive(slot0._gonext, slot2)
+	if arg_27_2 then
+		arg_27_0._curBtnGo = arg_27_0._gonext
+
+		gohelper.setActive(arg_27_0._gonext, arg_27_2)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continueappear)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-		slot0._curBtnGo = slot0._gofinishtalk
+		arg_27_0._curBtnGo = arg_27_0._gofinishtalk
 	end
 
-	gohelper.setActive(slot0._gonext, slot2)
-	gohelper.setActive(slot0._gofinishtalk, not slot2)
+	gohelper.setActive(arg_27_0._gonext, arg_27_2)
+	gohelper.setActive(arg_27_0._gofinishtalk, not arg_27_2)
 end
 
-function slot0.onClickRoot(slot0)
-	slot0:hide()
+function var_0_0.onClickRoot(arg_28_0)
+	arg_28_0:hide()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:hide()
+function var_0_0._btncloseOnClick(arg_29_0)
+	arg_29_0:hide()
 end
 
-function slot0._onClickNoneBtn(slot0)
-	slot0:hide()
+function var_0_0._onClickNoneBtn(arg_30_0)
+	arg_30_0:hide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
-	slot0:finishElement()
+	arg_30_0:finishElement()
 end
 
-function slot0._onClickFightBtn(slot0)
-	slot0:hide()
+function var_0_0._onClickFightBtn(arg_31_0)
+	arg_31_0:hide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 
-	if slot0.isFinish then
-		slot0:finishElement()
+	if arg_31_0.isFinish then
+		arg_31_0:finishElement()
 
 		return
 	end
 
-	slot1 = tonumber(slot0._config.param)
-	DungeonModel.instance.curLookEpisodeId = slot1
+	local var_31_0 = tonumber(arg_31_0._config.param)
 
-	if not DungeonConfig.instance:getEpisodeCO(slot1) then
-		logError("episode config not exist , episodeId : " .. tostring(slot1))
+	DungeonModel.instance.curLookEpisodeId = var_31_0
 
-		return
-	end
+	local var_31_1 = DungeonConfig.instance:getEpisodeCO(var_31_0)
 
-	VersionActivity2_1DungeonModel.instance:setLastEpisodeId(slot0.activityDungeonMo.episodeId)
-	DungeonFightController.instance:enterFight(slot2.chapterId, slot1)
-end
-
-function slot0._onClickEnterDialogueBtn(slot0)
-	if slot0.isFinish then
-		slot0:hide()
-		slot0:finishElement()
+	if not var_31_1 then
+		logError("episode config not exist , episodeId : " .. tostring(var_31_0))
 
 		return
 	end
 
-	DialogueController.instance:enterDialogue(slot0.dialogueId)
+	VersionActivity2_1DungeonModel.instance:setLastEpisodeId(arg_31_0.activityDungeonMo.episodeId)
+	DungeonFightController.instance:enterFight(var_31_1.chapterId, var_31_0)
 end
 
-function slot0.finishElement(slot0, slot1)
-	slot2 = slot0._config.id
+function var_0_0._onClickEnterDialogueBtn(arg_32_0)
+	if arg_32_0.isFinish then
+		arg_32_0:hide()
+		arg_32_0:finishElement()
 
-	DungeonMapModel.instance:addFinishedElement(slot2)
-	DungeonMapModel.instance:removeElement(slot2)
-	DungeonRpc.instance:sendMapElementRequest(slot2, slot1, slot0.refreshElement, slot0)
+		return
+	end
+
+	DialogueController.instance:enterDialogue(arg_32_0.dialogueId)
 end
 
-function slot0.refreshElement(slot0)
+function var_0_0.finishElement(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0._config.id
+
+	DungeonMapModel.instance:addFinishedElement(var_33_0)
+	DungeonMapModel.instance:removeElement(var_33_0)
+	DungeonRpc.instance:sendMapElementRequest(var_33_0, arg_33_1, arg_33_0.refreshElement, arg_33_0)
 end
 
-function slot0._btnnextOnClick(slot0)
-	slot0:_playNextSectionOrDialog()
+function var_0_0.refreshElement(arg_34_0)
+	return
+end
+
+function var_0_0._btnnextOnClick(arg_35_0)
+	arg_35_0:_playNextSectionOrDialog()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._playNextSectionOrDialog(slot0)
-	if slot0._dialogIndex <= #slot0._sectionList then
-		slot0:_playNextDialog()
+function var_0_0._playNextSectionOrDialog(arg_36_0)
+	if #arg_36_0._sectionList >= arg_36_0._dialogIndex then
+		arg_36_0:_playNextDialog()
 
 		return
 	end
 
-	if not table.remove(slot0._sectionStack) then
+	local var_36_0 = table.remove(arg_36_0._sectionStack)
+
+	if not var_36_0 then
 		return
 	end
 
-	slot0:_playSection(slot1[1], slot1[2])
+	arg_36_0:_playSection(var_36_0[1], var_36_0[2])
 end
 
-function slot0._btnfinishtalkOnClick(slot0)
-	slot0:hide()
-	slot0:finishElement(DungeonMapModel.instance:getDialogId())
+function var_0_0._btnfinishtalkOnClick(arg_37_0)
+	arg_37_0:hide()
+
+	local var_37_0 = DungeonMapModel.instance:getDialogId()
+
+	arg_37_0:finishElement(var_37_0)
 	DungeonMapModel.instance:clearDialogId()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0.onDialogueInfoChange(slot0, slot1)
-	if slot1 == slot0.dialogueId then
-		slot0:refreshDialogueUI()
+function var_0_0.onDialogueInfoChange(arg_38_0, arg_38_1)
+	if arg_38_1 == arg_38_0.dialogueId then
+		arg_38_0:refreshDialogueUI()
 	end
 end
 
-function slot0.onCloseViewFinishCall(slot0, slot1)
-	if slot1 == ViewName.DialogueView and slot0.isFinish then
-		slot0:refreshUI()
+function var_0_0.onCloseViewFinishCall(arg_39_0, arg_39_1)
+	if arg_39_1 == ViewName.DialogueView and arg_39_0.isFinish then
+		arg_39_0:refreshUI()
 	end
 end
 
-function slot0.beforeJump(slot0)
-	slot0:hide()
+function var_0_0.beforeJump(arg_40_0)
+	arg_40_0:hide()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_41_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.rootClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_42_0)
+	arg_42_0.rootClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

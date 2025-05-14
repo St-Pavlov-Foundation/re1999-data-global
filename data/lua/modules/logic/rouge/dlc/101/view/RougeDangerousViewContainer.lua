@@ -1,20 +1,20 @@
-module("modules.logic.rouge.dlc.101.view.RougeDangerousViewContainer", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeDangerousViewContainer", package.seeall)
 
-slot0 = class("RougeDangerousViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeDangerousViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeDangerousView.New())
+	table.insert(var_1_0, RougeDangerousView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.playOpenTransition(slot0)
-	uv0.super.playOpenTransition(slot0, {
+function var_0_0.playOpenTransition(arg_2_0)
+	var_0_0.super.playOpenTransition(arg_2_0, {
 		noBlock = true,
 		duration = RougeDangerousView.OpenViewDuration
 	})
 end
 
-return slot0
+return var_0_0

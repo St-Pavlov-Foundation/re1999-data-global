@@ -1,79 +1,86 @@
-module("modules.logic.store.view.recommend.StoreRoleSkinView", package.seeall)
+﻿module("modules.logic.store.view.recommend.StoreRoleSkinView", package.seeall)
 
-slot0 = class("StoreRoleSkinView", StoreRecommendBaseSubView)
+local var_0_0 = class("StoreRoleSkinView", StoreRecommendBaseSubView)
 
-function slot0._getCostSymbolAndPrice(slot0, slot1)
-	if not slot1 or slot1 == "" then
+function var_0_0._getCostSymbolAndPrice(arg_1_0, arg_1_1)
+	if not arg_1_1 or arg_1_1 == "" then
 		return
 	end
 
-	if type(string.splitToNumber(slot1, "#")) ~= "table" and #slot2 < 2 then
+	local var_1_0 = string.splitToNumber(arg_1_1, "#")
+
+	if type(var_1_0) ~= "table" and #var_1_0 < 2 then
 		return
 	end
 
-	return PayModel.instance:getProductPrice(slot2[2]), ""
+	local var_1_1 = var_1_0[2]
+
+	return PayModel.instance:getProductPrice(var_1_1), ""
 end
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "view/#simage_bg")
-	slot0._simagesignature1 = gohelper.findChildSingleImage(slot0.viewGO, "view/left/role1/#simage_signature1")
-	slot0._simagesignature2 = gohelper.findChildSingleImage(slot0.viewGO, "view/left/role2/#simage_signature2")
-	slot0._txtdurationTime = gohelper.findChildText(slot0.viewGO, "view/right/time/#txt_durationTime")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/right/#btn_buy")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "view/#simage_bg")
+	arg_2_0._simagesignature1 = gohelper.findChildSingleImage(arg_2_0.viewGO, "view/left/role1/#simage_signature1")
+	arg_2_0._simagesignature2 = gohelper.findChildSingleImage(arg_2_0.viewGO, "view/left/role2/#simage_signature2")
+	arg_2_0._txtdurationTime = gohelper.findChildText(arg_2_0.viewGO, "view/right/time/#txt_durationTime")
+	arg_2_0._btnbuy = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "view/right/#btn_buy")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnbuy:AddClickListener(arg_3_0._btnbuyOnClick, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbuy:RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnbuy:RemoveClickListener()
 end
 
-function slot0._btnbuyOnClick(slot0)
+function var_0_0._btnbuyOnClick(arg_5_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(slot0.config and slot0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = slot0.config and slot0.config.name or "StoreRoleSkinView"
+		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_5_0.config and arg_5_0.config.id or ""),
+		[StatEnum.EventProperties.RecommendPageName] = arg_5_0.config and arg_5_0.config.name or "StoreRoleSkinView"
 	})
-	GameFacade.jumpByAdditionParam(slot0.config.systemJumpCode)
+	GameFacade.jumpByAdditionParam(arg_5_0.config.systemJumpCode)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtprice = gohelper.findChildText(slot0.viewGO, "view/left/#txt_price")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._txtprice = gohelper.findChildText(arg_6_0.viewGO, "view/left/#txt_price")
+	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_8_0)
+	var_0_0.super.onOpen(arg_8_0)
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0.config = slot0.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreRoleSkinView)
-	slot0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(slot0.config)
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0.config = arg_9_0.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreRoleSkinView)
+	arg_9_0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(arg_9_0.config)
 
-	if slot0._txtprice then
-		slot1, slot2 = slot0:_getCostSymbolAndPrice(slot0.config.systemJumpCode)
+	if arg_9_0._txtprice then
+		local var_9_0, var_9_1 = arg_9_0:_getCostSymbolAndPrice(arg_9_0.config.systemJumpCode)
 
-		if slot1 then
-			slot0._txtprice.text = string.format("%s%s", slot1, slot2)
+		if var_9_0 then
+			arg_9_0._txtprice.text = string.format("%s%s", var_9_0, var_9_1)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

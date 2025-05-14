@@ -1,194 +1,194 @@
-module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelView", package.seeall)
 
-slot0 = class("EliminateLevelView", BaseView)
+local var_0_0 = class("EliminateLevelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
-	slot0._gocameraMain = gohelper.findChild(slot0.viewGO, "#go_cameraMain")
-	slot0._simageteamchessMaskBG2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_cameraMain/#simage_teamchessMaskBG2")
-	slot0._simageeliminatechessMaskBG = gohelper.findChildSingleImage(slot0.viewGO, "#go_cameraMain/#simage_eliminatechessMaskBG")
-	slot0._simageeliminatechessMaskBG2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_cameraMain/#simage_eliminatechessMaskBG2")
-	slot0._simageteamchessMaskBG = gohelper.findChildSingleImage(slot0.viewGO, "#go_cameraMain/#simage_teamchessMaskBG")
-	slot0._goModeBGDec = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/Title/#go_ModeBGDec")
-	slot0._txtTurns = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Middle/Title/#txt_Turns")
-	slot0._goPoint = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/Title/Point/#go_Point")
-	slot0._goPointLight = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/Title/Point/#go_PointLight")
-	slot0._goEliminate = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/Title/Eliminate/#go_Eliminate")
-	slot0._goEliminateLight = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/Title/Eliminate/#go_EliminateLight")
-	slot0._goteamchess = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/#go_teamchess")
-	slot0._goPointViewList = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/#go_eliminatechess/Right/#go_PointViewList")
-	slot0._goeliminatechess = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Middle/#go_eliminatechess")
-	slot0._btnTaskcancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cameraMain/Left/Task/#btn_Task_cancel")
-	slot0._goTaskPanel = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel")
-	slot0._imageTaskBG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel/#image_TaskBG")
-	slot0._goItem = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel/#image_TaskBG/#go_Item")
-	slot0._txtTaskTarget = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel/#image_TaskBG/#go_Item/#txt_TaskTarget")
-	slot0._btnTask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cameraMain/Left/Task/#btn_Task")
-	slot0._imageRoleBG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/#image_RoleBG")
-	slot0._imageRoleBG2 = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/#image_RoleBG2")
-	slot0._imageRoleHPFG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/Role/#image_RoleHPFG")
-	slot0._imageRolehpfgeff1 = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/Role/#image_RoleHPFG/#image_Rolehpfg_eff1")
-	slot0._simageRole = gohelper.findChildSingleImage(slot0.viewGO, "#go_cameraMain/Left/Role/Role/image/#simage_Role")
-	slot0._txtRoleHP = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Left/Role/Role/image_RoleHPNumBG/#txt_RoleHP")
-	slot0._gorolePointDamage = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/Role/#go_rolePointDamage")
-	slot0._goRoleSkillPoint1 = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1")
-	slot0._goRoleSkill = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill")
-	slot0._goRoleSkillBG = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillBG")
-	slot0._goRoleSkillBGDisable = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillBGDisable")
-	slot0._imageRoleSkill = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/image/#image_RoleSkill")
-	slot0._goRolevxbreak = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/image/#go_Role_vx_break")
-	slot0._imageRoleSkillFG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#image_RoleSkillFG")
-	slot0._imageRoleSkillfgeff1 = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#image_RoleSkillFG/#image_RoleSkillfg_eff1")
-	slot0._goRoleSkillFull = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillFull")
-	slot0._goRoleSkillLoop = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillFull/#go_RoleSkill_Loop")
-	slot0._goRoleSkillClickEffect = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillClick_Effect")
-	slot0._txtRoleCostNum = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/image_SkillEnergyBG/#txt_RoleCostNum")
-	slot0._goRoleSkillClick = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillClick")
-	slot0._goRoleSkillPoint2 = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint2")
-	slot0._goRolevxdamage = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_Role_vx_damage")
-	slot0._imageEnemyBG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/#image_EnemyBG")
-	slot0._imageEnemyBG2 = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/#image_EnemyBG2")
-	slot0._goenemyPointDamage = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/#go_enemyPointDamage")
-	slot0._imageEnemyHPFG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/#image_EnemyHPFG")
-	slot0._imageEnemyhpfgeff2 = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/#image_EnemyHPFG/#image_Enemyhpfg_eff2")
-	slot0._simageEnemy = gohelper.findChildSingleImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image/#simage_Enemy")
-	slot0._goenemyvxbreak = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image/#go_enemy_vx_break")
-	slot0._txtEnemyHP = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image_EnemyHPNumBG/#txt_EnemyHP")
-	slot0._goEnemySkillPoint1 = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1")
-	slot0._goEnemySkill = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill")
-	slot0._goEnemySkillBG = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillBG")
-	slot0._goEnemySkillBGDisable = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillBGDisable")
-	slot0._imageEnemySkill = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/image/#image_EnemySkill")
-	slot0._imageenemySkillFG = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#image_enemySkillFG")
-	slot0._imageEnemyskillfgeff2 = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#image_enemySkillFG/#image_Enemyskillfg_eff2")
-	slot0._goEnemySkillFull = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillFull")
-	slot0._txtEnemyCostNum = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/image_SkillEnergyBG/#txt_EnemyCostNum")
-	slot0._goEnemySkillPoint2 = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint2")
-	slot0._goEnemyvxdamage = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/#go_Enemy_vx_damage")
-	slot0._btnPointViewBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cameraMain/Right/#btn_PointViewBtn")
-	slot0._txtPointView = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/Right/#btn_PointViewBtn/#txt_PointView")
-	slot0._goskillViewPoint = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_skillViewPoint")
-	slot0._goRolePoint = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_skillViewPoint/#go_Role_Point")
-	slot0._goEnemyPoint = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_skillViewPoint/#go_Enemy_Point")
-	slot0._goenemyInfo = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_enemyInfo")
-	slot0._goEnemyChessPoint = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_enemyInfo/#go_EnemyChessPoint")
-	slot0._goSkillRelease = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_SkillRelease")
-	slot0._gorectMask = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#go_SkillRelease/#go_rectMask")
-	slot0._txtskillTipDesc = gohelper.findChildText(slot0.viewGO, "#go_cameraMain/#go_SkillRelease/#txt_skillTipDesc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+	arg_1_0._gocameraMain = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain")
+	arg_1_0._simageteamchessMaskBG2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/#simage_teamchessMaskBG2")
+	arg_1_0._simageeliminatechessMaskBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/#simage_eliminatechessMaskBG")
+	arg_1_0._simageeliminatechessMaskBG2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/#simage_eliminatechessMaskBG2")
+	arg_1_0._simageteamchessMaskBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/#simage_teamchessMaskBG")
+	arg_1_0._goModeBGDec = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Title/#go_ModeBGDec")
+	arg_1_0._txtTurns = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Middle/Title/#txt_Turns")
+	arg_1_0._goPoint = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Title/Point/#go_Point")
+	arg_1_0._goPointLight = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Title/Point/#go_PointLight")
+	arg_1_0._goEliminate = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Title/Eliminate/#go_Eliminate")
+	arg_1_0._goEliminateLight = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/Title/Eliminate/#go_EliminateLight")
+	arg_1_0._goteamchess = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_teamchess")
+	arg_1_0._goPointViewList = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_eliminatechess/Right/#go_PointViewList")
+	arg_1_0._goeliminatechess = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Middle/#go_eliminatechess")
+	arg_1_0._btnTaskcancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Left/Task/#btn_Task_cancel")
+	arg_1_0._goTaskPanel = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel")
+	arg_1_0._imageTaskBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel/#image_TaskBG")
+	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel/#image_TaskBG/#go_Item")
+	arg_1_0._txtTaskTarget = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/Task/#go_TaskPanel/#image_TaskBG/#go_Item/#txt_TaskTarget")
+	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Left/Task/#btn_Task")
+	arg_1_0._imageRoleBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#image_RoleBG")
+	arg_1_0._imageRoleBG2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#image_RoleBG2")
+	arg_1_0._imageRoleHPFG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/Role/#image_RoleHPFG")
+	arg_1_0._imageRolehpfgeff1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/Role/#image_RoleHPFG/#image_Rolehpfg_eff1")
+	arg_1_0._simageRole = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/Role/image/#simage_Role")
+	arg_1_0._txtRoleHP = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/Role/Role/image_RoleHPNumBG/#txt_RoleHP")
+	arg_1_0._gorolePointDamage = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/Role/#go_rolePointDamage")
+	arg_1_0._goRoleSkillPoint1 = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1")
+	arg_1_0._goRoleSkill = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill")
+	arg_1_0._goRoleSkillBG = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillBG")
+	arg_1_0._goRoleSkillBGDisable = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillBGDisable")
+	arg_1_0._imageRoleSkill = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/image/#image_RoleSkill")
+	arg_1_0._goRolevxbreak = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/image/#go_Role_vx_break")
+	arg_1_0._imageRoleSkillFG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#image_RoleSkillFG")
+	arg_1_0._imageRoleSkillfgeff1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#image_RoleSkillFG/#image_RoleSkillfg_eff1")
+	arg_1_0._goRoleSkillFull = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillFull")
+	arg_1_0._goRoleSkillLoop = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillFull/#go_RoleSkill_Loop")
+	arg_1_0._goRoleSkillClickEffect = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillClick_Effect")
+	arg_1_0._txtRoleCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/image_SkillEnergyBG/#txt_RoleCostNum")
+	arg_1_0._goRoleSkillClick = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillClick")
+	arg_1_0._goRoleSkillPoint2 = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint2")
+	arg_1_0._goRolevxdamage = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role/#go_Role_vx_damage")
+	arg_1_0._imageEnemyBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#image_EnemyBG")
+	arg_1_0._imageEnemyBG2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#image_EnemyBG2")
+	arg_1_0._goenemyPointDamage = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/#go_enemyPointDamage")
+	arg_1_0._imageEnemyHPFG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/#image_EnemyHPFG")
+	arg_1_0._imageEnemyhpfgeff2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/#image_EnemyHPFG/#image_Enemyhpfg_eff2")
+	arg_1_0._simageEnemy = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image/#simage_Enemy")
+	arg_1_0._goenemyvxbreak = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image/#go_enemy_vx_break")
+	arg_1_0._txtEnemyHP = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image_EnemyHPNumBG/#txt_EnemyHP")
+	arg_1_0._goEnemySkillPoint1 = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1")
+	arg_1_0._goEnemySkill = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill")
+	arg_1_0._goEnemySkillBG = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillBG")
+	arg_1_0._goEnemySkillBGDisable = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillBGDisable")
+	arg_1_0._imageEnemySkill = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/image/#image_EnemySkill")
+	arg_1_0._imageenemySkillFG = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#image_enemySkillFG")
+	arg_1_0._imageEnemyskillfgeff2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#image_enemySkillFG/#image_Enemyskillfg_eff2")
+	arg_1_0._goEnemySkillFull = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/#go_EnemySkillFull")
+	arg_1_0._txtEnemyCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint1/#go_EnemySkill/image_SkillEnergyBG/#txt_EnemyCostNum")
+	arg_1_0._goEnemySkillPoint2 = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_EnemySkillPoint2")
+	arg_1_0._goEnemyvxdamage = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Right/Enemy/#go_Enemy_vx_damage")
+	arg_1_0._btnPointViewBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cameraMain/Right/#btn_PointViewBtn")
+	arg_1_0._txtPointView = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/Right/#btn_PointViewBtn/#txt_PointView")
+	arg_1_0._goskillViewPoint = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_skillViewPoint")
+	arg_1_0._goRolePoint = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_skillViewPoint/#go_Role_Point")
+	arg_1_0._goEnemyPoint = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_skillViewPoint/#go_Enemy_Point")
+	arg_1_0._goenemyInfo = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_enemyInfo")
+	arg_1_0._goEnemyChessPoint = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_enemyInfo/#go_EnemyChessPoint")
+	arg_1_0._goSkillRelease = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_SkillRelease")
+	arg_1_0._gorectMask = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/#go_SkillRelease/#go_rectMask")
+	arg_1_0._txtskillTipDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_cameraMain/#go_SkillRelease/#txt_skillTipDesc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnTaskcancel:AddClickListener(slot0._btnTaskcancelOnClick, slot0)
-	slot0._btnTask:AddClickListener(slot0._btnTaskOnClick, slot0)
-	slot0._btnPointViewBtn:AddClickListener(slot0._btnPointViewBtnOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnTaskcancel:AddClickListener(arg_2_0._btnTaskcancelOnClick, arg_2_0)
+	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
+	arg_2_0._btnPointViewBtn:AddClickListener(arg_2_0._btnPointViewBtnOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnTaskcancel:RemoveClickListener()
-	slot0._btnTask:RemoveClickListener()
-	slot0._btnPointViewBtn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnTaskcancel:RemoveClickListener()
+	arg_3_0._btnTask:RemoveClickListener()
+	arg_3_0._btnPointViewBtn:RemoveClickListener()
 end
 
-slot1 = SLFramework.UGUI.UILongPressListener
-slot2 = SLFramework.UGUI.UIClickListener
-slot3 = ZProj.TweenHelper
-slot4 = ZProj.UIEffectsCollection
+local var_0_1 = SLFramework.UGUI.UILongPressListener
+local var_0_2 = SLFramework.UGUI.UIClickListener
+local var_0_3 = ZProj.TweenHelper
+local var_0_4 = ZProj.UIEffectsCollection
 
-function slot0._btnTaskcancelOnClick(slot0)
-	slot0:changeShowTaskPanelState(true)
+function var_0_0._btnTaskcancelOnClick(arg_4_0)
+	arg_4_0:changeShowTaskPanelState(true)
 end
 
-function slot0._btnTaskOnClick(slot0)
+function var_0_0._btnTaskOnClick(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_switch)
-	slot0:changeShowTaskPanelState(true)
+	arg_5_0:changeShowTaskPanelState(true)
 end
 
-function slot0.changeShowTaskPanelState(slot0, slot1)
-	slot0._isShowTaskPanel = not slot0._isShowTaskPanel
+function var_0_0.changeShowTaskPanelState(arg_6_0, arg_6_1)
+	arg_6_0._isShowTaskPanel = not arg_6_0._isShowTaskPanel
 
-	if not slot0._isShowTaskPanel then
-		slot0._taskAni:Play("close")
-		TaskDispatcher.runDelay(slot0.setTaskViewActive, slot0, 0.27)
+	if not arg_6_0._isShowTaskPanel then
+		arg_6_0._taskAni:Play("close")
+		TaskDispatcher.runDelay(arg_6_0.setTaskViewActive, arg_6_0, 0.27)
 	else
-		slot0:setTaskViewActive()
+		arg_6_0:setTaskViewActive()
 	end
 
-	if slot1 then
-		gohelper.setActive(slot0._btnTaskcancel, slot0._isShowTaskPanel)
+	if arg_6_1 then
+		gohelper.setActive(arg_6_0._btnTaskcancel, arg_6_0._isShowTaskPanel)
 	end
 end
 
-function slot0.setTaskViewActive(slot0)
-	gohelper.setActive(slot0._goTaskPanel, slot0._isShowTaskPanel)
+function var_0_0.setTaskViewActive(arg_7_0)
+	gohelper.setActive(arg_7_0._goTaskPanel, arg_7_0._isShowTaskPanel)
 end
 
-function slot0._btnPointViewBtnOnClick(slot0)
+function var_0_0._btnPointViewBtnOnClick(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
-	slot0:setTeamChessViewWatchState()
+	arg_8_0:setTeamChessViewWatchState()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.roleGo = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/Role")
-	slot0.enemyGo = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy")
-	slot0._goRoleSkillClickEffect = gohelper.findChild(slot0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillClick_Effect")
-	slot0._imageRole = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Left/Role/Role/image/#simage_Role")
-	slot0._imageEnemy = gohelper.findChildImage(slot0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image/#simage_Enemy")
-	slot0._effectAck = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#eff_attack")
-	slot0._effectToPlayer = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#eff_attack/1")
-	slot0._effectToEnemy = gohelper.findChild(slot0.viewGO, "#go_cameraMain/#eff_attack/2")
-	slot0.roleSkillLongPress = uv0.Get(slot0._goRoleSkillClick)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0.roleGo = gohelper.findChild(arg_9_0.viewGO, "#go_cameraMain/Left/Role/Role")
+	arg_9_0.enemyGo = gohelper.findChild(arg_9_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy")
+	arg_9_0._goRoleSkillClickEffect = gohelper.findChild(arg_9_0.viewGO, "#go_cameraMain/Left/Role/#go_RoleSkillPoint1/#go_RoleSkill/#go_RoleSkillClick_Effect")
+	arg_9_0._imageRole = gohelper.findChildImage(arg_9_0.viewGO, "#go_cameraMain/Left/Role/Role/image/#simage_Role")
+	arg_9_0._imageEnemy = gohelper.findChildImage(arg_9_0.viewGO, "#go_cameraMain/Right/Enemy/Enemy/image/#simage_Enemy")
+	arg_9_0._effectAck = gohelper.findChild(arg_9_0.viewGO, "#go_cameraMain/#eff_attack")
+	arg_9_0._effectToPlayer = gohelper.findChild(arg_9_0.viewGO, "#go_cameraMain/#eff_attack/1")
+	arg_9_0._effectToEnemy = gohelper.findChild(arg_9_0.viewGO, "#go_cameraMain/#eff_attack/2")
+	arg_9_0.roleSkillLongPress = var_0_1.Get(arg_9_0._goRoleSkillClick)
 
-	slot0.roleSkillLongPress:AddClickListener(slot0._roleSkillLongPressClick, slot0)
-	slot0.roleSkillLongPress:AddLongPressListener(slot0._roleSkillLongPress, slot0)
-	slot0.roleSkillLongPress:SetLongPressTime({
+	arg_9_0.roleSkillLongPress:AddClickListener(arg_9_0._roleSkillLongPressClick, arg_9_0)
+	arg_9_0.roleSkillLongPress:AddLongPressListener(arg_9_0._roleSkillLongPress, arg_9_0)
+	arg_9_0.roleSkillLongPress:SetLongPressTime({
 		0.5,
 		9999
 	})
 
-	slot0.enemyInfoMaskClick = uv1.Get(slot0._goenemyInfo)
+	arg_9_0.enemyInfoMaskClick = var_0_2.Get(arg_9_0._goenemyInfo)
 
-	slot0.enemyInfoMaskClick:AddClickListener(slot0.hideEnemyInfoView, slot0)
+	arg_9_0.enemyInfoMaskClick:AddClickListener(arg_9_0.hideEnemyInfoView, arg_9_0)
 
-	slot0.pointViewListClick = uv1.Get(slot0._goPointViewList)
+	arg_9_0.pointViewListClick = var_0_2.Get(arg_9_0._goPointViewList)
 
-	slot0.pointViewListClick:AddClickListener(slot0._pointViewListClick, slot0)
+	arg_9_0.pointViewListClick:AddClickListener(arg_9_0._pointViewListClick, arg_9_0)
 
-	slot0.roleClick = uv1.Get(slot0._simageRole.gameObject)
+	arg_9_0.roleClick = var_0_2.Get(arg_9_0._simageRole.gameObject)
 
-	slot0.roleClick:AddClickListener(slot0.onRoleClick, slot0)
+	arg_9_0.roleClick:AddClickListener(arg_9_0.onRoleClick, arg_9_0)
 
-	slot0.enemySkillClick = uv0.Get(slot0._goEnemySkill)
+	arg_9_0.enemySkillClick = var_0_1.Get(arg_9_0._goEnemySkill)
 
-	slot0.enemySkillClick:AddLongPressListener(slot0.showEnemySkillView, slot0)
-	slot0.enemySkillClick:SetLongPressTime({
+	arg_9_0.enemySkillClick:AddLongPressListener(arg_9_0.showEnemySkillView, arg_9_0)
+	arg_9_0.enemySkillClick:SetLongPressTime({
 		0.5,
 		9999
 	})
 
-	slot0._ani = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._taskAni = slot0._goTaskPanel:GetComponent(typeof(UnityEngine.Animator))
-	slot0._teamChessViewAni = slot0._goteamchess:GetComponent(typeof(UnityEngine.Animator))
-	slot0._eliminateChessViewAni = slot0._goeliminatechess:GetComponent(typeof(UnityEngine.Animator))
-	slot0._eliminateLightAni = slot0._goEliminateLight:GetComponent(typeof(UnityEngine.Animator))
-	slot0._pointLightAni = slot0._goPointLight:GetComponent(typeof(UnityEngine.Animator))
-	slot0._roleSkillUIEffect = uv2.Get(slot0._goRoleSkill)
-	slot0._roleGoUIEffect = uv2.Get(slot0.roleGo)
-	slot0._enemyGoUIEffect = uv2.Get(slot0.enemyGo)
-	slot0._eliminatechessMaskCanvasGroup = slot0._simageeliminatechessMaskBG.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._eliminatechessMaskCanvasGroup2 = slot0._simageeliminatechessMaskBG2.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._teamchessMaskCanvasGroup = slot0._simageteamchessMaskBG.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._teamchessMaskCanvasGroup2 = slot0._simageteamchessMaskBG2.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_9_0._ani = arg_9_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._taskAni = arg_9_0._goTaskPanel:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._teamChessViewAni = arg_9_0._goteamchess:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._eliminateChessViewAni = arg_9_0._goeliminatechess:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._eliminateLightAni = arg_9_0._goEliminateLight:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._pointLightAni = arg_9_0._goPointLight:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._roleSkillUIEffect = var_0_4.Get(arg_9_0._goRoleSkill)
+	arg_9_0._roleGoUIEffect = var_0_4.Get(arg_9_0.roleGo)
+	arg_9_0._enemyGoUIEffect = var_0_4.Get(arg_9_0.enemyGo)
+	arg_9_0._eliminatechessMaskCanvasGroup = arg_9_0._simageeliminatechessMaskBG.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_9_0._eliminatechessMaskCanvasGroup2 = arg_9_0._simageeliminatechessMaskBG2.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_9_0._teamchessMaskCanvasGroup = arg_9_0._simageteamchessMaskBG.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_9_0._teamchessMaskCanvasGroup2 = arg_9_0._simageteamchessMaskBG2.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.setActive(slot0._goRoleSkillClickEffect, false)
-	gohelper.setActive(slot0._effectAck, false)
+	gohelper.setActive(arg_9_0._goRoleSkillClickEffect, false)
+	gohelper.setActive(arg_9_0._effectAck, false)
 	EliminateLevelController.instance:BgSwitch(EliminateEnum.AudioFightStep.FightNormal)
 end
 
-function slot0._roleSkillLongPressClick(slot0)
+function var_0_0._roleSkillLongPressClick(arg_10_0)
 	if not EliminateLevelModel.instance:mainCharacterSkillIsUnLock() then
 		GameFacade.showToast(ToastEnum.EliminateMainSkillLocked)
 
@@ -201,474 +201,545 @@ function slot0._roleSkillLongPressClick(slot0)
 		return
 	end
 
-	slot0:skillRelease()
+	arg_10_0:skillRelease()
 end
 
-function slot0.hideRoleSkillClickEffect(slot0)
-	gohelper.setActive(slot0._goRoleSkillClickEffect, false)
+function var_0_0.hideRoleSkillClickEffect(arg_11_0)
+	gohelper.setActive(arg_11_0._goRoleSkillClickEffect, false)
 end
 
-function slot0._roleSkillLongPress(slot0)
-	slot0:showSkillView()
+function var_0_0._roleSkillLongPress(arg_12_0)
+	arg_12_0:showSkillView()
 end
 
-function slot0.onRoleClick(slot0)
+function var_0_0.onRoleClick(arg_13_0)
 	EliminateLevelController.instance:clickMainCharacter()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_14_0)
+	return
 end
 
-function slot0.setParent(slot0, slot1, slot2)
-	slot0._gocameraMain.transform:SetParent(slot1.transform)
-	EliminateTeamChessModel.instance:setViewCanvas(slot2)
+function var_0_0.setParent(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0._gocameraMain.transform:SetParent(arg_15_1.transform)
+	EliminateTeamChessModel.instance:setViewCanvas(arg_15_2)
 
-	slot3 = slot0._gocameraMain.transform
+	local var_15_0 = arg_15_0._gocameraMain.transform
 
-	transformhelper.setLocalScale(slot3, 0.009259259, 0.009259259, 0.009259259)
-	transformhelper.setLocalPos(slot3, 0, 0, 0)
+	transformhelper.setLocalScale(var_15_0, 0.009259259, 0.009259259, 0.009259259)
+	transformhelper.setLocalPos(var_15_0, 0, 0, 0)
 	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.EliminateRoundStateChangeGoActive)
 end
 
-function slot0.onOpen(slot0)
-	slot0.showWatchView = false
-	slot0._canUseSkill = true
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0.showWatchView = false
+	arg_16_0._canUseSkill = true
 
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessWarInfoUpdate, slot0.updateInfo, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, slot0.updateViewState, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.MainCharacterHpChange, slot0.mainCharacterHpChange, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.LevelConditionChange, slot0.updateTaskInfo, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.MainCharacterPowerChange, slot0.mainCharacterPowerChange, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillSuccess, slot0.onSkillRelease, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.CharacterHpDamageFlyEffectPlayFinish, slot0.mainCharacterHpChangeFlyFinish, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectBegin, slot0.initTeamChessSkill, slot0)
-	slot0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectEnd, slot0.onTeamChessSkillRelease, slot0)
-	slot0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowStart, slot0.teamChessOnFlowStart, slot0)
-	slot0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowEnd, slot0.teamChessOnFlowEnd, slot0)
-	slot0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.EnemyForecastChessIdUpdate, slot0.updateEnemyForecastChess, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformBegin, slot0.eliminateOnPerformBegin, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformEnd, slot0.eliminateOnPerformEnd, slot0)
-	slot0:addEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessBeginViewClose, slot0.match3ChessBeginViewClose, slot0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessWarInfoUpdate, arg_16_0.updateInfo, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, arg_16_0.updateViewState, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.MainCharacterHpChange, arg_16_0.mainCharacterHpChange, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.LevelConditionChange, arg_16_0.updateTaskInfo, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.MainCharacterPowerChange, arg_16_0.mainCharacterPowerChange, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.WarChessCharacterSkillSuccess, arg_16_0.onSkillRelease, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.CharacterHpDamageFlyEffectPlayFinish, arg_16_0.mainCharacterHpChangeFlyFinish, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectBegin, arg_16_0.initTeamChessSkill, arg_16_0)
+	arg_16_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessSelectEffectEnd, arg_16_0.onTeamChessSkillRelease, arg_16_0)
+	arg_16_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowStart, arg_16_0.teamChessOnFlowStart, arg_16_0)
+	arg_16_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessOnFlowEnd, arg_16_0.teamChessOnFlowEnd, arg_16_0)
+	arg_16_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.EnemyForecastChessIdUpdate, arg_16_0.updateEnemyForecastChess, arg_16_0)
+	arg_16_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformBegin, arg_16_0.eliminateOnPerformBegin, arg_16_0)
+	arg_16_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.PerformEnd, arg_16_0.eliminateOnPerformEnd, arg_16_0)
+	arg_16_0:addEventCb(EliminateChessController.instance, EliminateChessEvent.Match3ChessBeginViewClose, arg_16_0.match3ChessBeginViewClose, arg_16_0)
 	EliminateLevelController.instance:changeRoundType(EliminateEnum.RoundType.TeamChess)
-	slot0:hideEnemyInfoView()
-	slot0:initInfo()
-	slot0:initTask()
-	slot0:refreshInfo()
-	slot0:loadAndSetMaskSprite()
+	arg_16_0:hideEnemyInfoView()
+	arg_16_0:initInfo()
+	arg_16_0:initTask()
+	arg_16_0:refreshInfo()
+	arg_16_0:loadAndSetMaskSprite()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.updateInfo(slot0)
+function var_0_0.updateInfo(arg_18_0)
+	return
 end
 
-slot5 = ZProj.UIEffectsCollection
+local var_0_5 = ZProj.UIEffectsCollection
 
-function slot0.initTask(slot0)
-	slot0._isShowTaskPanel = false
+function var_0_0.initTask(arg_19_0)
+	arg_19_0._isShowTaskPanel = false
 
-	gohelper.setActive(slot0._goTaskPanel, slot0._isShowTaskPanel)
-	gohelper.setActive(slot0._btnTaskcancel, slot0._isShowTaskPanel)
+	gohelper.setActive(arg_19_0._goTaskPanel, arg_19_0._isShowTaskPanel)
+	gohelper.setActive(arg_19_0._btnTaskcancel, arg_19_0._isShowTaskPanel)
 
-	slot0._taskItem = slot0:getUserDataTb_()
+	local var_19_0 = EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig()
 
-	if not string.nilorempty(EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig().winCondition) then
-		slot3 = gohelper.clone(slot0._goItem, slot0._imageTaskBG.gameObject, "taskItem")
-		slot4 = uv0.Get(slot3)
-		gohelper.findChildText(slot3, "#txt_TaskTarget").text = EliminateLevelModel.instance.formatString(slot1.winConditionDesc)
+	arg_19_0._taskItem = arg_19_0:getUserDataTb_()
 
-		slot4:SetGray(not EliminateTeamChessModel.instance:getCurTeamChessWar():winConditionIsFinish())
-		gohelper.setActive(slot3, true)
+	local var_19_1 = EliminateTeamChessModel.instance:getCurTeamChessWar()
 
-		slot0._taskItem[1] = slot4
+	if not string.nilorempty(var_19_0.winCondition) then
+		local var_19_2 = gohelper.clone(arg_19_0._goItem, arg_19_0._imageTaskBG.gameObject, "taskItem")
+		local var_19_3 = var_0_5.Get(var_19_2)
+
+		gohelper.findChildText(var_19_2, "#txt_TaskTarget").text = EliminateLevelModel.instance.formatString(var_19_0.winConditionDesc)
+
+		var_19_3:SetGray(not var_19_1:winConditionIsFinish())
+		gohelper.setActive(var_19_2, true)
+
+		arg_19_0._taskItem[1] = var_19_3
 	end
 
-	if not string.nilorempty(slot1.extraWinCondition) then
-		slot3 = gohelper.clone(slot0._goItem, slot0._imageTaskBG.gameObject, "taskItem")
-		slot4 = uv0.Get(slot3)
-		gohelper.findChildText(slot3, "#txt_TaskTarget").text = EliminateLevelModel.instance.formatString(slot1.extraWinConditionDesc)
+	if not string.nilorempty(var_19_0.extraWinCondition) then
+		local var_19_4 = gohelper.clone(arg_19_0._goItem, arg_19_0._imageTaskBG.gameObject, "taskItem")
+		local var_19_5 = var_0_5.Get(var_19_4)
 
-		slot4:SetGray(not slot2:extraWinConditionIsFinish())
-		gohelper.setActive(slot3, true)
+		gohelper.findChildText(var_19_4, "#txt_TaskTarget").text = EliminateLevelModel.instance.formatString(var_19_0.extraWinConditionDesc)
 
-		slot0._taskItem[2] = slot4
+		var_19_5:SetGray(not var_19_1:extraWinConditionIsFinish())
+		gohelper.setActive(var_19_4, true)
+
+		arg_19_0._taskItem[2] = var_19_5
 	end
 end
 
-function slot0.initInfo(slot0)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() then
-		if EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).resPic then
-			slot0._simageRole:LoadImage(ResUrl.getHeadIconSmall(slot2.resPic))
+function var_0_0.initInfo(arg_20_0)
+	local var_20_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+
+	if var_20_0 then
+		local var_20_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_20_0.id)
+
+		if var_20_1.resPic then
+			arg_20_0._simageRole:LoadImage(ResUrl.getHeadIconSmall(var_20_1.resPic))
 		end
 
-		if not string.nilorempty(EliminateConfig.instance:getMainCharacterSkillConfig(slot2.activeSkillIds) and slot3.icon or "") then
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(slot0._imageRoleSkill, slot4, false)
+		local var_20_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_20_1.activeSkillIds)
+		local var_20_3 = var_20_2 and var_20_2.icon or ""
+
+		if not string.nilorempty(var_20_3) then
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_20_0._imageRoleSkill, var_20_3, false)
 		end
 	end
 
-	if EliminateTeamChessModel.instance:getCurTeamEnemyInfo() and EliminateConfig.instance:getTeamChessEnemyConfig(slot2.id).headImg then
-		slot0._simageEnemy:LoadImage(ResUrl.getHeadIconSmall(slot3.headImg))
+	local var_20_4 = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
+
+	if var_20_4 then
+		local var_20_5 = EliminateConfig.instance:getTeamChessEnemyConfig(var_20_4.id)
+
+		if var_20_5.headImg then
+			arg_20_0._simageEnemy:LoadImage(ResUrl.getHeadIconSmall(var_20_5.headImg))
+		end
 	end
 end
 
-function slot0.refreshInfo(slot0)
-	slot0:refreshHpInfo()
-	slot0:refreshSkillPowerInfo()
-	slot0:updateEnemyForecastChess()
-	gohelper.setActive(slot0._goRoleSkill, EliminateLevelModel.instance:mainCharacterSkillIsUnLock())
+function var_0_0.refreshInfo(arg_21_0)
+	arg_21_0:refreshHpInfo()
+	arg_21_0:refreshSkillPowerInfo()
+	arg_21_0:updateEnemyForecastChess()
+	gohelper.setActive(arg_21_0._goRoleSkill, EliminateLevelModel.instance:mainCharacterSkillIsUnLock())
 end
 
-function slot0.refreshHpInfo(slot0, slot1, slot2)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() then
-		slot4 = EliminateConfig.instance:getTeamChessCharacterConfig(slot3.id)
-		slot0._txtRoleHP.text = slot3.hp
+function var_0_0.refreshHpInfo(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
 
-		uv0.DOFillAmount(slot0._imageRoleHPFG, slot3.hp / slot4.hp, EliminateTeamChessEnum.hpChangeTime, nil, , , EaseType.OutQuart)
-		uv0.DOFillAmount(slot0._imageRolehpfgeff1, slot3.hp / slot4.hp, EliminateTeamChessEnum.hpChangeTime, nil, , , EaseType.OutQuart)
-		slot0._roleGoUIEffect:SetGray(slot3.hp <= 0)
-		slot0:setImageGray(slot0._imageRole, slot3.hp <= 0)
+	if var_22_0 then
+		local var_22_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_22_0.id)
+
+		arg_22_0._txtRoleHP.text = var_22_0.hp
+
+		var_0_3.DOFillAmount(arg_22_0._imageRoleHPFG, var_22_0.hp / var_22_1.hp, EliminateTeamChessEnum.hpChangeTime, nil, nil, nil, EaseType.OutQuart)
+		var_0_3.DOFillAmount(arg_22_0._imageRolehpfgeff1, var_22_0.hp / var_22_1.hp, EliminateTeamChessEnum.hpChangeTime, nil, nil, nil, EaseType.OutQuart)
+		arg_22_0._roleGoUIEffect:SetGray(var_22_0.hp <= 0)
+		arg_22_0:setImageGray(arg_22_0._imageRole, var_22_0.hp <= 0)
 	end
 
-	if EliminateTeamChessModel.instance:getCurTeamEnemyInfo() then
-		slot0._txtEnemyHP.text = slot4.hp
-		slot6 = EliminateConfig.instance:getTeamChessEnemyConfig(slot4.id) and slot5.hp or 1
+	local var_22_2 = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
 
-		uv0.DOFillAmount(slot0._imageEnemyHPFG, slot4.hp / slot6, EliminateTeamChessEnum.hpChangeTime, nil, , , EaseType.OutQuart)
-		uv0.DOFillAmount(slot0._imageEnemyhpfgeff2, slot4.hp / slot6, EliminateTeamChessEnum.hpChangeTime, nil, , , EaseType.OutQuart)
-		slot0._enemyGoUIEffect:SetGray(slot4.hp <= 0)
-		slot0:setImageGray(slot0._imageEnemy, slot4.hp <= 0)
+	if var_22_2 then
+		local var_22_3 = EliminateConfig.instance:getTeamChessEnemyConfig(var_22_2.id)
+
+		arg_22_0._txtEnemyHP.text = var_22_2.hp
+
+		local var_22_4 = var_22_3 and var_22_3.hp or 1
+
+		var_0_3.DOFillAmount(arg_22_0._imageEnemyHPFG, var_22_2.hp / var_22_4, EliminateTeamChessEnum.hpChangeTime, nil, nil, nil, EaseType.OutQuart)
+		var_0_3.DOFillAmount(arg_22_0._imageEnemyhpfgeff2, var_22_2.hp / var_22_4, EliminateTeamChessEnum.hpChangeTime, nil, nil, nil, EaseType.OutQuart)
+		arg_22_0._enemyGoUIEffect:SetGray(var_22_2.hp <= 0)
+		arg_22_0:setImageGray(arg_22_0._imageEnemy, var_22_2.hp <= 0)
 	end
 
-	if slot1 ~= nil then
-		gohelper.setActive(slot0._goenemyvxbreak, false)
-		gohelper.setActive(slot0._goEnemyvxdamage, false)
-		gohelper.setActive(slot0._goRolevxbreak, false)
-		gohelper.setActive(slot0._goRolevxdamage, false)
+	if arg_22_1 ~= nil then
+		gohelper.setActive(arg_22_0._goenemyvxbreak, false)
+		gohelper.setActive(arg_22_0._goEnemyvxdamage, false)
+		gohelper.setActive(arg_22_0._goRolevxbreak, false)
+		gohelper.setActive(arg_22_0._goRolevxdamage, false)
 
-		if slot1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-			gohelper.setActive(slot0._goRolevxdamage, true)
-			gohelper.setActive(slot0._goRolevxbreak, not (slot3.hp > 0))
+		if arg_22_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
+			local var_22_5 = var_22_0.hp > 0
+
+			gohelper.setActive(arg_22_0._goRolevxdamage, true)
+			gohelper.setActive(arg_22_0._goRolevxbreak, not var_22_5)
 		end
 
-		if slot1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-			gohelper.setActive(slot0._goEnemyvxdamage, true)
-			gohelper.setActive(slot0._goenemyvxbreak, not (slot4.hp > 0))
+		if arg_22_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+			local var_22_6 = var_22_2.hp > 0
+
+			gohelper.setActive(arg_22_0._goEnemyvxdamage, true)
+			gohelper.setActive(arg_22_0._goenemyvxbreak, not var_22_6)
 		end
 
-		if slot4.hp <= 0 or slot3.hp <= 0 then
+		if var_22_2.hp <= 0 or var_22_0.hp <= 0 then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_zhuzhanzhe_death)
 		else
-			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess["play_ui_youyu_attack_" .. (slot2 or 1)])
+			arg_22_2 = arg_22_2 or 1
+
+			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess["play_ui_youyu_attack_" .. arg_22_2])
 		end
 	end
 end
 
-function slot0.refreshSkillPowerInfo(slot0)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() then
-		if EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).activeSkillIds).cost <= slot1.power then
-			slot0._txtRoleCostNum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("eliminate_skill_power_content1"), slot1.power, slot4)
+function var_0_0.refreshSkillPowerInfo(arg_23_0)
+	local var_23_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+
+	if var_23_0 then
+		local var_23_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_23_0.id)
+		local var_23_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_23_1.activeSkillIds).cost
+
+		if var_23_2 <= var_23_0.power then
+			arg_23_0._txtRoleCostNum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("eliminate_skill_power_content1"), var_23_0.power, var_23_2)
 		else
-			slot0._txtRoleCostNum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("eliminate_skill_power_content2"), slot1.power, slot4)
+			arg_23_0._txtRoleCostNum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("eliminate_skill_power_content2"), var_23_0.power, var_23_2)
 		end
 
-		uv0.DOFillAmount(slot0._imageRoleSkillFG, slot1.power / slot4, EliminateTeamChessEnum.powerChangeTime, nil, , , EaseType.OutQuart)
-		uv0.DOFillAmount(slot0._imageRoleSkillfgeff1, slot1.power / slot4, EliminateTeamChessEnum.powerChangeTime, nil, , , EaseType.OutQuart)
-		slot0:updateRoleSkillGray(true)
+		var_0_3.DOFillAmount(arg_23_0._imageRoleSkillFG, var_23_0.power / var_23_2, EliminateTeamChessEnum.powerChangeTime, nil, nil, nil, EaseType.OutQuart)
+		var_0_3.DOFillAmount(arg_23_0._imageRoleSkillfgeff1, var_23_0.power / var_23_2, EliminateTeamChessEnum.powerChangeTime, nil, nil, nil, EaseType.OutQuart)
+		arg_23_0:updateRoleSkillGray(true)
 	end
 end
 
-function slot0.updateTaskInfo(slot0)
-	if slot0._taskItem[1] then
-		slot0._taskItem[1]:SetGray(not EliminateTeamChessModel.instance:getCurTeamChessWar():winConditionIsFinish())
+function var_0_0.updateTaskInfo(arg_24_0)
+	local var_24_0 = EliminateTeamChessModel.instance:getCurTeamChessWar()
+
+	if arg_24_0._taskItem[1] then
+		arg_24_0._taskItem[1]:SetGray(not var_24_0:winConditionIsFinish())
 	end
 
-	if slot0._taskItem[2] then
-		slot0._taskItem[2]:SetGray(not slot1:extraWinConditionIsFinish())
+	if arg_24_0._taskItem[2] then
+		arg_24_0._taskItem[2]:SetGray(not var_24_0:extraWinConditionIsFinish())
 	end
 
-	slot0:match3ChessBeginViewClose(true)
+	arg_24_0:match3ChessBeginViewClose(true)
 end
 
-function slot0.mainCharacterHpChange(slot0, slot1, slot2)
-	if slot2 < 0 and math.abs(slot2) > 0 then
-		slot3, slot4, slot5 = transformhelper.getPos(slot0._simageRole.transform)
-		slot6, slot7, slot8 = transformhelper.getPos(slot0._simageEnemy.transform)
+function var_0_0.mainCharacterHpChange(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_2 < 0 and math.abs(arg_25_2) > 0 then
+		local var_25_0, var_25_1, var_25_2 = transformhelper.getPos(arg_25_0._simageRole.transform)
+		local var_25_3, var_25_4, var_25_5 = transformhelper.getPos(arg_25_0._simageEnemy.transform)
 
-		if slot1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayCharacterDamageFlyEffect, slot1, slot2, slot6, slot7, slot3, slot4)
+		if arg_25_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
+			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayCharacterDamageFlyEffect, arg_25_1, arg_25_2, var_25_3, var_25_4, var_25_0, var_25_1)
 		end
 
-		if slot1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayCharacterDamageFlyEffect, slot1, slot2, slot3, slot4, slot6, slot7)
+		if arg_25_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayCharacterDamageFlyEffect, arg_25_1, arg_25_2, var_25_0, var_25_1, var_25_3, var_25_4)
 		end
 	else
-		slot0:refreshHpInfo()
+		arg_25_0:refreshHpInfo()
 	end
 end
 
-function slot0.mainCharacterHpChangeFlyFinish(slot0, slot1, slot2, slot3)
-	if slot1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		slot4, slot5, slot6 = transformhelper.getPos(slot0._gorolePointDamage.transform)
+function var_0_0.mainCharacterHpChangeFlyFinish(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	if arg_26_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
+		local var_26_0, var_26_1, var_26_2 = transformhelper.getPos(arg_26_0._gorolePointDamage.transform)
 
-		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, slot2, slot4, slot5, EliminateTeamChessEnum.HpDamageType.Character)
+		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, arg_26_2, var_26_0, var_26_1, EliminateTeamChessEnum.HpDamageType.Character)
 	end
 
-	if slot1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		slot4, slot5, slot6 = transformhelper.getPos(slot0._goenemyPointDamage.transform)
+	if arg_26_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		local var_26_3, var_26_4, var_26_5 = transformhelper.getPos(arg_26_0._goenemyPointDamage.transform)
 
-		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, slot2, slot4, slot5, EliminateTeamChessEnum.HpDamageType.Character)
+		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, arg_26_2, var_26_3, var_26_4, EliminateTeamChessEnum.HpDamageType.Character)
 	end
 
-	gohelper.setActive(slot0._effectToEnemy, slot1 == EliminateTeamChessEnum.TeamChessTeamType.enemy)
-	gohelper.setActive(slot0._effectToPlayer, slot1 == EliminateTeamChessEnum.TeamChessTeamType.player)
-	gohelper.setActive(slot0._effectAck, false)
-	gohelper.setActive(slot0._effectAck, true)
-	slot0:refreshHpInfo(slot1, slot3)
+	gohelper.setActive(arg_26_0._effectToEnemy, arg_26_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy)
+	gohelper.setActive(arg_26_0._effectToPlayer, arg_26_1 == EliminateTeamChessEnum.TeamChessTeamType.player)
+	gohelper.setActive(arg_26_0._effectAck, false)
+	gohelper.setActive(arg_26_0._effectAck, true)
+	arg_26_0:refreshHpInfo(arg_26_1, arg_26_3)
 end
 
-function slot0.updateEnemyForecastChess(slot0)
-	gohelper.setActive(slot0._goEnemySkill, false)
+function var_0_0.updateEnemyForecastChess(arg_27_0)
+	gohelper.setActive(arg_27_0._goEnemySkill, false)
 
-	if EliminateTeamChessModel.instance:getEnemyForecastChess() then
-		slot2 = slot1[1]
-		slot4 = slot2.round
-		slot5 = EliminateLevelModel.instance:getRoundNumber()
+	local var_27_0 = EliminateTeamChessModel.instance:getEnemyForecastChess()
 
-		if not string.nilorempty(EliminateConfig.instance:getSoldierChessConfig(slot2.chessId) and slot3.resPic or "") then
-			UISpriteSetMgr.instance:setV2a2ChessSprite(slot0._imageEnemySkill, slot6, false)
-			gohelper.setActive(slot0._goEnemySkill, true)
+	if var_27_0 then
+		local var_27_1 = var_27_0[1]
+		local var_27_2 = EliminateConfig.instance:getSoldierChessConfig(var_27_1.chessId)
+		local var_27_3 = var_27_1.round
+		local var_27_4 = EliminateLevelModel.instance:getRoundNumber()
+		local var_27_5 = var_27_2 and var_27_2.resPic or ""
+
+		if not string.nilorempty(var_27_5) then
+			UISpriteSetMgr.instance:setV2a2ChessSprite(arg_27_0._imageEnemySkill, var_27_5, false)
+			gohelper.setActive(arg_27_0._goEnemySkill, true)
 		end
 
-		slot7 = slot4 - slot5
-		slot0._txtEnemyCostNum.text = slot7
-		slot8 = 1
+		local var_27_6 = var_27_3 - var_27_4
 
-		if slot7 > 0 then
-			slot8 = 1 / (slot7 + 1)
+		arg_27_0._txtEnemyCostNum.text = var_27_6
+
+		local var_27_7 = 1
+
+		if var_27_6 > 0 then
+			var_27_7 = 1 / (var_27_6 + 1)
 		else
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_skill_release)
 		end
 
-		uv0.DOFillAmount(slot0._imageenemySkillFG, slot8, EliminateTeamChessEnum.teamChessForecastUpdateStep, nil, , , EaseType.OutQuart)
-		uv0.DOFillAmount(slot0._imageEnemyskillfgeff2, slot8, EliminateTeamChessEnum.teamChessForecastUpdateStep, slot0.hpChangeEnd, slot0, nil, EaseType.OutQuart)
-		gohelper.setActive(slot0._goEnemySkillFull, slot7 == 0)
+		var_0_3.DOFillAmount(arg_27_0._imageenemySkillFG, var_27_7, EliminateTeamChessEnum.teamChessForecastUpdateStep, nil, nil, nil, EaseType.OutQuart)
+		var_0_3.DOFillAmount(arg_27_0._imageEnemyskillfgeff2, var_27_7, EliminateTeamChessEnum.teamChessForecastUpdateStep, arg_27_0.hpChangeEnd, arg_27_0, nil, EaseType.OutQuart)
+		gohelper.setActive(arg_27_0._goEnemySkillFull, var_27_6 == 0)
 	end
 end
 
-function slot0.hpChangeEnd(slot0)
-	gohelper.setActive(slot0._effectAck, false)
+function var_0_0.hpChangeEnd(arg_28_0)
+	gohelper.setActive(arg_28_0._effectAck, false)
 end
 
-function slot0.mainCharacterPowerChange(slot0, slot1, slot2)
-	slot0:refreshSkillPowerInfo()
+function var_0_0.mainCharacterPowerChange(arg_29_0, arg_29_1, arg_29_2)
+	arg_29_0:refreshSkillPowerInfo()
 end
 
-function slot0.updateViewState(slot0, slot1)
-	if slot0.showWatchView then
-		slot0:setTeamChessViewWatchState()
+function var_0_0.updateViewState(arg_30_0, arg_30_1)
+	if arg_30_0.showWatchView then
+		arg_30_0:setTeamChessViewWatchState()
 	end
 
-	slot0._isTeamChess = EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess
-	slot0._isMatch3Chess = slot2 == EliminateEnum.RoundType.Match3Chess
-	slot0._isSwitch = slot1
+	local var_30_0 = EliminateLevelModel.instance:getCurRoundType()
 
-	if slot1 then
-		if slot0._isTeamChess and slot0._eliminateChessViewAni then
-			slot0._eliminateChessViewAni:Play("close")
+	arg_30_0._isTeamChess = var_30_0 == EliminateEnum.RoundType.TeamChess
+	arg_30_0._isMatch3Chess = var_30_0 == EliminateEnum.RoundType.Match3Chess
+	arg_30_0._isSwitch = arg_30_1
+
+	if arg_30_1 then
+		if arg_30_0._isTeamChess and arg_30_0._eliminateChessViewAni then
+			arg_30_0._eliminateChessViewAni:Play("close")
 		end
 
-		if slot0._isMatch3Chess and slot0._teamChessViewAni then
-			slot0._teamChessViewAni:Play("close")
+		if arg_30_0._isMatch3Chess and arg_30_0._teamChessViewAni then
+			arg_30_0._teamChessViewAni:Play("close")
 		end
 
-		slot0._ani:Play("fightin")
-		TaskDispatcher.runDelay(slot0.refreshViewActive, slot0, 0.67)
+		arg_30_0._ani:Play("fightin")
+		TaskDispatcher.runDelay(arg_30_0.refreshViewActive, arg_30_0, 0.67)
 	else
-		slot0:refreshViewActive()
+		arg_30_0:refreshViewActive()
 	end
 
-	slot4 = EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig() and slot3.chessScene == "scenes/v2a2_m_s12_xdwf/scenes_prefab/v2a2_m_s12_xdwf_jd_p.prefab"
-	slot0._teamchessMaskCanvasGroup2.alpha = slot0._isTeamChess and slot4 and 1 or 0
-	slot0._eliminatechessMaskCanvasGroup2.alpha = slot0._isMatch3Chess and slot4 and 1 or 0
-	slot0._eliminatechessMaskCanvasGroup.alpha = slot0._isMatch3Chess and 1 or 0
-	slot0._teamchessMaskCanvasGroup.alpha = slot0._isTeamChess and 1 or 0
+	local var_30_1 = EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig()
+	local var_30_2 = var_30_1 and var_30_1.chessScene == "scenes/v2a2_m_s12_xdwf/scenes_prefab/v2a2_m_s12_xdwf_jd_p.prefab"
 
-	slot0._goEnemySkill.transform:SetParent(slot0._isMatch3Chess and slot0._goEnemySkillPoint1.transform or slot0._goEnemySkillPoint2.transform)
-	slot0._goRoleSkill.transform:SetParent(slot0._isMatch3Chess and slot0._goRoleSkillPoint1.transform or slot0._goRoleSkillPoint2.transform)
-	transformhelper.setLocalPos(slot0._goEnemySkill.transform, 0, 0, 0)
-	transformhelper.setLocalPos(slot0._goRoleSkill.transform, 0, 0, 0)
-	gohelper.setActive(slot0._imageEnemyBG2.gameObject, slot0._isTeamChess)
-	gohelper.setActive(slot0._imageRoleBG2.gameObject, slot0._isTeamChess)
-	gohelper.setActive(slot0._imageEnemyBG.gameObject, slot0._isMatch3Chess)
-	gohelper.setActive(slot0._imageRoleBG.gameObject, slot0._isMatch3Chess)
+	arg_30_0._teamchessMaskCanvasGroup2.alpha = arg_30_0._isTeamChess and var_30_2 and 1 or 0
+	arg_30_0._eliminatechessMaskCanvasGroup2.alpha = arg_30_0._isMatch3Chess and var_30_2 and 1 or 0
+	arg_30_0._eliminatechessMaskCanvasGroup.alpha = arg_30_0._isMatch3Chess and 1 or 0
+	arg_30_0._teamchessMaskCanvasGroup.alpha = arg_30_0._isTeamChess and 1 or 0
 
-	slot0._txtTurns.text = EliminateLevelModel.instance:getRoundNumber()
-	slot0._txtPointView.text = luaLang("eliminate_watch_teamchess")
+	arg_30_0._goEnemySkill.transform:SetParent(arg_30_0._isMatch3Chess and arg_30_0._goEnemySkillPoint1.transform or arg_30_0._goEnemySkillPoint2.transform)
+	arg_30_0._goRoleSkill.transform:SetParent(arg_30_0._isMatch3Chess and arg_30_0._goRoleSkillPoint1.transform or arg_30_0._goRoleSkillPoint2.transform)
+	transformhelper.setLocalPos(arg_30_0._goEnemySkill.transform, 0, 0, 0)
+	transformhelper.setLocalPos(arg_30_0._goRoleSkill.transform, 0, 0, 0)
+	gohelper.setActive(arg_30_0._imageEnemyBG2.gameObject, arg_30_0._isTeamChess)
+	gohelper.setActive(arg_30_0._imageRoleBG2.gameObject, arg_30_0._isTeamChess)
+	gohelper.setActive(arg_30_0._imageEnemyBG.gameObject, arg_30_0._isMatch3Chess)
+	gohelper.setActive(arg_30_0._imageRoleBG.gameObject, arg_30_0._isMatch3Chess)
 
-	slot0:refreshInfo()
-	slot0:onSkillReleaseCancel(true)
+	arg_30_0._txtTurns.text = EliminateLevelModel.instance:getRoundNumber()
+	arg_30_0._txtPointView.text = luaLang("eliminate_watch_teamchess")
 
-	slot0._canUseSkill = slot0._isMatch3Chess
+	arg_30_0:refreshInfo()
+	arg_30_0:onSkillReleaseCancel(true)
+
+	arg_30_0._canUseSkill = arg_30_0._isMatch3Chess
 end
 
-function slot0.refreshViewActive(slot0)
-	slot0:setTeamChessViewActive(slot0._isTeamChess)
-	slot0:setEliminateViewActive(slot0._isMatch3Chess)
+function var_0_0.refreshViewActive(arg_31_0)
+	arg_31_0:setTeamChessViewActive(arg_31_0._isTeamChess)
+	arg_31_0:setEliminateViewActive(arg_31_0._isMatch3Chess)
 
-	if slot0._isSwitch then
-		slot0._ani:Play("fightout")
+	if arg_31_0._isSwitch then
+		arg_31_0._ani:Play("fightout")
 	end
 
-	TaskDispatcher.runDelay(slot0.refreshLightAni, slot0, 0.33)
+	TaskDispatcher.runDelay(arg_31_0.refreshLightAni, arg_31_0, 0.33)
 
-	slot0._isShowTaskPanel = slot0._isTeamChess
+	arg_31_0._isShowTaskPanel = arg_31_0._isTeamChess
 
-	slot0:setTaskViewActive()
+	arg_31_0:setTaskViewActive()
 	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.EliminateRoundStateChangeEnd)
-	slot0:updateRoleSkillGray(false)
+	arg_31_0:updateRoleSkillGray(false)
 end
 
-function slot0.refreshLightAni(slot0)
-	if slot0._isTeamChess and slot0._eliminateLightAni then
-		slot0._eliminateLightAni:Play("open")
+function var_0_0.refreshLightAni(arg_32_0)
+	if arg_32_0._isTeamChess and arg_32_0._eliminateLightAni then
+		arg_32_0._eliminateLightAni:Play("open")
 	end
 
-	if slot0._isMatch3Chess and slot0._pointLightAni then
-		slot0._pointLightAni:Play("open")
+	if arg_32_0._isMatch3Chess and arg_32_0._pointLightAni then
+		arg_32_0._pointLightAni:Play("open")
 	end
 end
 
-function slot0.setTeamChessViewActive(slot0, slot1)
-	gohelper.setActive(slot0._goteamchess, slot1)
-	gohelper.setActiveCanvasGroup(slot0._goEliminateLight, slot1)
-	gohelper.setActiveCanvasGroup(slot0._goPoint, slot1)
+function var_0_0.setTeamChessViewActive(arg_33_0, arg_33_1)
+	gohelper.setActive(arg_33_0._goteamchess, arg_33_1)
+	gohelper.setActiveCanvasGroup(arg_33_0._goEliminateLight, arg_33_1)
+	gohelper.setActiveCanvasGroup(arg_33_0._goPoint, arg_33_1)
 end
 
-function slot0.setEliminateViewActive(slot0, slot1)
-	gohelper.setActive(slot0._goeliminatechess, slot1)
-	gohelper.setActiveCanvasGroup(slot0._goEliminate, slot1)
-	gohelper.setActiveCanvasGroup(slot0._goPointLight, slot1)
-	gohelper.setActive(slot0._btnPointViewBtn, slot1)
+function var_0_0.setEliminateViewActive(arg_34_0, arg_34_1)
+	gohelper.setActive(arg_34_0._goeliminatechess, arg_34_1)
+	gohelper.setActiveCanvasGroup(arg_34_0._goEliminate, arg_34_1)
+	gohelper.setActiveCanvasGroup(arg_34_0._goPointLight, arg_34_1)
+	gohelper.setActive(arg_34_0._btnPointViewBtn, arg_34_1)
 end
 
-function slot0.setTeamChessViewWatchState(slot0)
-	slot0.showWatchView = not slot0.showWatchView
+function var_0_0.setTeamChessViewWatchState(arg_35_0)
+	arg_35_0.showWatchView = not arg_35_0.showWatchView
 
-	gohelper.setActive(slot0._goRoleSkill, not slot0.showWatchView)
-	slot0:updateTeamChessViewWatchState(slot0.showWatchView)
-	EliminateLevelModel.instance:setIsWatchTeamChess(slot0.showWatchView)
-	slot0:updateRoleSkillGray(false)
-	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessViewWatchView, slot0.showWatchView)
+	gohelper.setActive(arg_35_0._goRoleSkill, not arg_35_0.showWatchView)
+	arg_35_0:updateTeamChessViewWatchState(arg_35_0.showWatchView)
+	EliminateLevelModel.instance:setIsWatchTeamChess(arg_35_0.showWatchView)
+	arg_35_0:updateRoleSkillGray(false)
+	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessViewWatchView, arg_35_0.showWatchView)
 end
 
-function slot0.updateTeamChessViewWatchState(slot0, slot1)
-	gohelper.setActive(slot0._goteamchess, slot1)
-	gohelper.setActive(slot0._goeliminatechess, not slot1)
+function var_0_0.updateTeamChessViewWatchState(arg_36_0, arg_36_1)
+	gohelper.setActive(arg_36_0._goteamchess, arg_36_1)
+	gohelper.setActive(arg_36_0._goeliminatechess, not arg_36_1)
 
-	slot0._txtPointView.text = slot1 and luaLang("eliminate_return_match3") or luaLang("eliminate_watch_teamchess")
+	arg_36_0._txtPointView.text = arg_36_1 and luaLang("eliminate_return_match3") or luaLang("eliminate_watch_teamchess")
 end
 
-function slot0.showSkillView(slot0)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() == nil then
+function var_0_0.showSkillView(arg_37_0)
+	local var_37_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+
+	if var_37_0 == nil then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.EliminateCharacterSkillTipView, {
-		point = slot0._goRolePoint,
+	local var_37_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_37_0.id)
+	local var_37_2 = {
+		point = arg_37_0._goRolePoint,
 		showType = EliminateLevelEnum.skillShowType.skill,
-		skillId = EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).activeSkillIds
-	})
+		skillId = var_37_1.activeSkillIds
+	}
+
+	ViewMgr.instance:openView(ViewName.EliminateCharacterSkillTipView, var_37_2)
 end
 
-function slot0.showEnemySkillView(slot0)
-	if EliminateTeamChessModel.instance:getEnemyForecastChess() == nil then
+function var_0_0.showEnemySkillView(arg_38_0)
+	local var_38_0 = EliminateTeamChessModel.instance:getEnemyForecastChess()
+
+	if var_38_0 == nil then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.EliminateCharacterSkillTipView, {
-		forecastChess = slot1,
-		point = slot0._goEnemyPoint,
+	local var_38_1 = {
+		forecastChess = var_38_0,
+		point = arg_38_0._goEnemyPoint,
 		showType = EliminateLevelEnum.skillShowType.forecast
-	})
+	}
+
+	ViewMgr.instance:openView(ViewName.EliminateCharacterSkillTipView, var_38_1)
 end
 
-function slot0._pointViewListClick(slot0)
+function var_0_0._pointViewListClick(arg_39_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
-	slot0:setTeamChessViewWatchState()
+	arg_39_0:setTeamChessViewWatchState()
 end
 
-function slot0.match3ChessBeginViewClose(slot0, slot1)
-	slot3 = EliminateLevelModel.instance:getRoundNumber()
-	slot4 = EliminateEnum.levelTargetTipShowTime
+function var_0_0.match3ChessBeginViewClose(arg_40_0, arg_40_1)
+	local var_40_0 = EliminateLevelModel.instance:getCurRoundType()
+	local var_40_1 = EliminateLevelModel.instance:getRoundNumber()
+	local var_40_2 = EliminateEnum.levelTargetTipShowTime
 
-	if EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess then
-		slot4 = EliminateEnum.levelTargetTipShowTimeInTeamChess
-		slot1 = true
-	elseif slot3 == 1 then
-		slot4 = EliminateEnum.levelTargetTipShowTime
-		slot1 = true
+	if var_40_0 == EliminateEnum.RoundType.TeamChess then
+		var_40_2 = EliminateEnum.levelTargetTipShowTimeInTeamChess
+		arg_40_1 = true
+	elseif var_40_1 == 1 then
+		var_40_2 = EliminateEnum.levelTargetTipShowTime
+		arg_40_1 = true
 	else
-		slot4 = EliminateEnum.levelTargetTipShowTimeInTeamChess
+		var_40_2 = EliminateEnum.levelTargetTipShowTimeInTeamChess
 	end
 
-	if slot1 ~= nil and slot1 then
-		slot0:changeShowTaskPanelState()
-		TaskDispatcher.runDelay(slot0.changeShowTaskPanelState, slot0, slot4)
+	if arg_40_1 ~= nil and arg_40_1 then
+		arg_40_0:changeShowTaskPanelState()
+		TaskDispatcher.runDelay(arg_40_0.changeShowTaskPanelState, arg_40_0, var_40_2)
 	end
 end
 
-function slot0.initCharacterSkill(slot0)
-	if slot0._skillReleaseView == nil then
-		slot0._skillReleaseView = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goSkillRelease, EliminateMainCharacterSkill)
+function var_0_0.initCharacterSkill(arg_41_0)
+	if arg_41_0._skillReleaseView == nil then
+		arg_41_0._skillReleaseView = MonoHelper.addNoUpdateLuaComOnceToGo(arg_41_0._goSkillRelease, EliminateMainCharacterSkill)
 
-		slot0._skillReleaseView:setCanvas(EliminateTeamChessModel.instance:getViewCanvas())
+		arg_41_0._skillReleaseView:setCanvas(EliminateTeamChessModel.instance:getViewCanvas())
 	end
 
-	slot1, slot2 = EliminateChessItemController.instance:getMaxWidthAndHeight()
+	local var_41_0, var_41_1 = EliminateChessItemController.instance:getMaxWidthAndHeight()
 
-	slot0._skillReleaseView:setTargetTrAndHoleSize(slot0._goeliminatechess.transform, slot1, slot2, -30, 15)
-	slot0._skillReleaseView:setCanvas(EliminateTeamChessModel.instance:getViewCanvas())
-	slot0._skillReleaseView:setClickCb(slot0.onSkillReleaseCancel, slot0)
+	arg_41_0._skillReleaseView:setTargetTrAndHoleSize(arg_41_0._goeliminatechess.transform, var_41_0, var_41_1, -30, 15)
+	arg_41_0._skillReleaseView:setCanvas(EliminateTeamChessModel.instance:getViewCanvas())
+	arg_41_0._skillReleaseView:setClickCb(arg_41_0.onSkillReleaseCancel, arg_41_0)
 end
 
-function slot0.onSkillRelease(slot0)
-	if EliminateLevelModel.instance:getCurRoundType() == EliminateLevelController.instance:getCurSelectSkill():getEffectRound() and slot1 == EliminateEnum.RoundType.Match3Chess then
-		EliminateTeamChessModel.instance:updateMainCharacterPower(EliminateTeamChessEnum.TeamChessTeamType.player, -slot2:getCost())
+function var_0_0.onSkillRelease(arg_42_0)
+	local var_42_0 = EliminateLevelModel.instance:getCurRoundType()
+	local var_42_1 = EliminateLevelController.instance:getCurSelectSkill()
+
+	if var_42_0 == var_42_1:getEffectRound() and var_42_0 == EliminateEnum.RoundType.Match3Chess then
+		EliminateTeamChessModel.instance:updateMainCharacterPower(EliminateTeamChessEnum.TeamChessTeamType.player, -var_42_1:getCost())
 	end
 
-	if isTypeOf(slot2, CharacterSkillAddDiamondMO) then
+	if isTypeOf(var_42_1, CharacterSkillAddDiamondMO) then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_skill_release)
 	end
 
 	EliminateLevelController.instance:cancelSkillRelease()
-	slot0:hideSkillRelease()
-	slot0:refreshSkillPowerInfo()
+	arg_42_0:hideSkillRelease()
+	arg_42_0:refreshSkillPowerInfo()
 end
 
-function slot0.onSkillReleaseCancel(slot0, slot1)
+function var_0_0.onSkillReleaseCancel(arg_43_0, arg_43_1)
 	EliminateLevelController.instance:cancelSkillRelease()
-	slot0:hideSkillRelease()
+	arg_43_0:hideSkillRelease()
 
-	if slot1 == nil then
+	if arg_43_1 == nil then
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.WarChessCharacterSkillCancel, true)
 	end
 end
 
-function slot0.skillRelease(slot0)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() == nil then
+function var_0_0.skillRelease(arg_44_0)
+	local var_44_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+
+	if var_44_0 == nil then
 		return
 	end
 
-	if EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).activeSkillIds) == nil then
+	local var_44_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_44_0.id)
+	local var_44_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_44_1.activeSkillIds)
+
+	if var_44_2 == nil then
 		return
 	end
 
-	if EliminateLevelController.instance:setCurSelectSkill(slot3.id, slot3.effect):getEffectRound() == EliminateEnum.RoundType.TeamChess then
+	if EliminateLevelController.instance:setCurSelectSkill(var_44_2.id, var_44_2.effect):getEffectRound() == EliminateEnum.RoundType.TeamChess then
 		if EliminateTeamChessModel.instance:getCurTeamRoundStepState() == EliminateTeamChessEnum.TeamChessRoundType.settlement then
 			return
 		end
-	elseif not slot0._canUseSkill then
+	elseif not arg_44_0._canUseSkill then
 		return
 	end
 
@@ -679,181 +750,198 @@ function slot0.skillRelease(slot0)
 	end
 
 	if EliminateLevelController.instance:canRelease() then
-		gohelper.setActive(slot0._goRoleSkillClickEffect, true)
-		TaskDispatcher.runDelay(slot0.hideRoleSkillClickEffect, slot0, 2)
+		gohelper.setActive(arg_44_0._goRoleSkillClickEffect, true)
+		TaskDispatcher.runDelay(arg_44_0.hideRoleSkillClickEffect, arg_44_0, 2)
 		EliminateLevelController.instance:releaseSkill()
 
 		return
 	end
 
-	gohelper.setActive(slot0._goSkillRelease, true)
-	slot0:initCharacterSkill()
-	slot0._skillReleaseView:refreshSkillData()
+	gohelper.setActive(arg_44_0._goSkillRelease, true)
+	arg_44_0:initCharacterSkill()
+	arg_44_0._skillReleaseView:refreshSkillData()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_skill_release)
 	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.WarChessCharacterSkillViewOpen)
 end
 
-function slot0.hideSkillRelease(slot0)
-	gohelper.setActive(slot0._goSkillRelease, false)
+function var_0_0.hideSkillRelease(arg_45_0)
+	gohelper.setActive(arg_45_0._goSkillRelease, false)
 end
 
-function slot0.initTeamChessSkill(slot0, slot1, slot2)
-	if slot0._skillReleaseView == nil then
-		slot0._skillReleaseView = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goSkillRelease, EliminateMainCharacterSkill)
+function var_0_0.initTeamChessSkill(arg_46_0, arg_46_1, arg_46_2)
+	if arg_46_0._skillReleaseView == nil then
+		arg_46_0._skillReleaseView = MonoHelper.addNoUpdateLuaComOnceToGo(arg_46_0._goSkillRelease, EliminateMainCharacterSkill)
 
-		slot0._skillReleaseView:setCanvas(EliminateTeamChessModel.instance:getViewCanvas())
+		arg_46_0._skillReleaseView:setCanvas(EliminateTeamChessModel.instance:getViewCanvas())
 	end
 
-	slot0._skillReleaseView:setTargetTrAndHoleSize(slot0._goteamchess.transform, slot1 + 200, slot2, 20)
-	slot0._skillReleaseView:setClickCb(slot0.onTeamChessSkillReleaseCancel, slot0)
-	slot0._skillReleaseView:refreshTeamChessSkillData()
-	gohelper.setActive(slot0._goSkillRelease, true)
+	arg_46_0._skillReleaseView:setTargetTrAndHoleSize(arg_46_0._goteamchess.transform, arg_46_1 + 200, arg_46_2, 20)
+	arg_46_0._skillReleaseView:setClickCb(arg_46_0.onTeamChessSkillReleaseCancel, arg_46_0)
+	arg_46_0._skillReleaseView:refreshTeamChessSkillData()
+	gohelper.setActive(arg_46_0._goSkillRelease, true)
 	EliminateTeamChessModel.instance:setTeamChessSkillState(true)
 end
 
-function slot0.onTeamChessSkillRelease(slot0)
-	slot0:hideSkillRelease()
+function var_0_0.onTeamChessSkillRelease(arg_47_0)
+	arg_47_0:hideSkillRelease()
 	EliminateTeamChessModel.instance:setTeamChessSkillState(false)
 end
 
-function slot0.onTeamChessSkillReleaseCancel(slot0)
-	slot0:hideSkillRelease()
+function var_0_0.onTeamChessSkillReleaseCancel(arg_48_0)
+	arg_48_0:hideSkillRelease()
 	EliminateTeamChessModel.instance:setTeamChessSkillState(false)
 	EliminateTeamChessController.instance:clearReleasePlaceSkill()
 end
 
-function slot0.teamChessOnFlowEnd(slot0)
+function var_0_0.teamChessOnFlowEnd(arg_49_0)
 	EliminateLevelController.instance:checkMainSkill()
 	EliminateLevelController.instance:checkPlayerSoliderCount()
 end
 
-function slot0.eliminateOnPerformBegin(slot0)
-	slot0._canUseSkill = false
+function var_0_0.eliminateOnPerformBegin(arg_50_0)
+	arg_50_0._canUseSkill = false
 end
 
-function slot0.eliminateOnPerformEnd(slot0)
-	slot0:refreshSkillPowerInfo()
+function var_0_0.eliminateOnPerformEnd(arg_51_0)
+	arg_51_0:refreshSkillPowerInfo()
 
-	slot0._canUseSkill = true
+	arg_51_0._canUseSkill = true
 end
 
-function slot0.teamChessOnFlowStart(slot0)
-	slot0:updateRoleSkillGray(false)
+function var_0_0.teamChessOnFlowStart(arg_52_0)
+	arg_52_0:updateRoleSkillGray(false)
 end
 
-function slot0.updateRoleSkillGray(slot0, slot1)
+function var_0_0.updateRoleSkillGray(arg_53_0, arg_53_1)
 	if not EliminateLevelModel.instance:mainCharacterSkillIsUnLock() then
 		return
 	end
 
-	slot3 = false
-	slot4 = nil
+	local var_53_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+	local var_53_1 = false
+	local var_53_2
 
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() then
-		slot6 = EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot2.id).activeSkillIds)
+	if var_53_0 then
+		local var_53_3 = EliminateConfig.instance:getTeamChessCharacterConfig(var_53_0.id)
+		local var_53_4 = EliminateConfig.instance:getMainCharacterSkillConfig(var_53_3.activeSkillIds)
+		local var_53_5 = EliminateLevelController.instance:getTempSkillMo(var_53_4.id, var_53_4.effect)
+		local var_53_6 = not EliminateLevelController.instance:canReleaseByRound(var_53_5) or arg_53_0.showWatchView
+		local var_53_7 = EliminateLevelModel.instance:getCurRoundType()
 
-		if slot4:getEffectRound() == EliminateEnum.RoundType.TeamChess and EliminateLevelModel.instance:getCurRoundType() == EliminateEnum.RoundType.TeamChess then
-			slot3 = not EliminateLevelController.instance:canReleaseByRound(EliminateLevelController.instance:getTempSkillMo(slot6.id, slot6.effect)) or slot0.showWatchView or EliminateTeamChessModel.instance:getCurTeamRoundStepState() == EliminateTeamChessEnum.TeamChessRoundType.settlement
+		if var_53_5:getEffectRound() == EliminateEnum.RoundType.TeamChess and var_53_7 == EliminateEnum.RoundType.TeamChess then
+			local var_53_8 = EliminateTeamChessModel.instance:getCurTeamRoundStepState() == EliminateTeamChessEnum.TeamChessRoundType.settlement
+
+			var_53_6 = var_53_6 or var_53_8
 		end
 
-		if not slot3 and slot6.cost <= slot2.power and slot1 and not gohelper.isNil(slot0._goRoleSkillFull) and not slot0._goRoleSkillFull.activeInHierarchy then
+		local var_53_9 = not var_53_6 and var_53_0.power >= var_53_4.cost
+
+		if var_53_9 and arg_53_1 and not gohelper.isNil(arg_53_0._goRoleSkillFull) and not arg_53_0._goRoleSkillFull.activeInHierarchy then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_skill_release)
 		end
 
-		gohelper.setActive(slot0._goRoleSkillFull, slot8)
-		slot0._roleSkillUIEffect:SetGray(slot3)
-		slot0:setImageGray(slot0._imageRoleSkill, slot3)
+		gohelper.setActive(arg_53_0._goRoleSkillFull, var_53_9)
+		arg_53_0._roleSkillUIEffect:SetGray(var_53_6)
+		arg_53_0:setImageGray(arg_53_0._imageRoleSkill, var_53_6)
 	end
 end
 
-function slot0.setImageGray(slot0, slot1, slot2)
-	if slot0.grayMat == nil then
-		slot0.grayMat = slot0.viewContainer._abLoader:getAssetItem(slot0.viewContainer:getSetting().otherRes[9]):GetResource()
+function var_0_0.setImageGray(arg_54_0, arg_54_1, arg_54_2)
+	if arg_54_0.grayMat == nil then
+		local var_54_0 = arg_54_0.viewContainer:getSetting().otherRes[9]
+
+		arg_54_0.grayMat = arg_54_0.viewContainer._abLoader:getAssetItem(var_54_0):GetResource()
 	end
 
-	if slot0.normalMat == nil then
-		slot0.normalMat = slot0.viewContainer._abLoader:getAssetItem(slot0.viewContainer:getSetting().otherRes[10]):GetResource()
+	if arg_54_0.normalMat == nil then
+		local var_54_1 = arg_54_0.viewContainer:getSetting().otherRes[10]
+
+		arg_54_0.normalMat = arg_54_0.viewContainer._abLoader:getAssetItem(var_54_1):GetResource()
 	end
 
-	if slot2 then
-		slot1.material = slot0.grayMat
+	if arg_54_2 then
+		arg_54_1.material = arg_54_0.grayMat
 	else
-		slot1.material = slot0.normalMat
+		arg_54_1.material = arg_54_0.normalMat
 	end
 end
 
-function slot0.loadAndSetMaskSprite(slot0)
-	slot1 = slot0._gorectMask:GetComponent(typeof(ZProj.RectMaskHole))
+function var_0_0.loadAndSetMaskSprite(arg_55_0)
+	local var_55_0 = arg_55_0._gorectMask:GetComponent(typeof(ZProj.RectMaskHole))
+	local var_55_1 = arg_55_0.viewContainer:getSetting().otherRes[11]
+	local var_55_2 = arg_55_0.viewContainer._abLoader:getAssetItem(var_55_1):GetResource()
 
-	if not gohelper.isNil(slot0.viewContainer._abLoader:getAssetItem(slot0.viewContainer:getSetting().otherRes[11]):GetResource()) and not gohelper.isNil(slot1) then
-		slot1.sprite = UnityEngine.Sprite.Create(slot3, UnityEngine.Rect.New(0, 0, slot3.width, slot3.height), Vector2.zero)
+	if not gohelper.isNil(var_55_2) and not gohelper.isNil(var_55_0) then
+		var_55_0.sprite = UnityEngine.Sprite.Create(var_55_2, UnityEngine.Rect.New(0, 0, var_55_2.width, var_55_2.height), Vector2.zero)
 	end
 end
 
-function slot0.hideEnemyInfoView(slot0)
+function var_0_0.hideEnemyInfoView(arg_56_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.roleSkillLongPress then
-		slot0.roleSkillLongPress:RemoveClickListener()
-		slot0.roleSkillLongPress:RemoveLongPressListener()
+function var_0_0.onDestroyView(arg_57_0)
+	if arg_57_0.roleSkillLongPress then
+		arg_57_0.roleSkillLongPress:RemoveClickListener()
+		arg_57_0.roleSkillLongPress:RemoveLongPressListener()
 
-		slot0.roleSkillLongPress = nil
+		arg_57_0.roleSkillLongPress = nil
 	end
 
-	if slot0.enemyInfoMaskClick then
-		slot0.enemyInfoMaskClick:RemoveClickListener()
+	if arg_57_0.enemyInfoMaskClick then
+		arg_57_0.enemyInfoMaskClick:RemoveClickListener()
 
-		slot0.enemyInfoMaskClick = nil
+		arg_57_0.enemyInfoMaskClick = nil
 	end
 
-	if slot0.pointViewListClick then
-		slot0.pointViewListClick:RemoveClickListener()
+	if arg_57_0.pointViewListClick then
+		arg_57_0.pointViewListClick:RemoveClickListener()
 
-		slot0.pointViewListClick = nil
+		arg_57_0.pointViewListClick = nil
 	end
 
-	if slot0.roleClick then
-		slot0.roleClick:RemoveClickListener()
+	if arg_57_0.roleClick then
+		arg_57_0.roleClick:RemoveClickListener()
 
-		slot0.roleClick = nil
+		arg_57_0.roleClick = nil
 	end
 
-	if slot0.enemySkillClick then
-		slot0.enemySkillClick:RemoveLongPressListener()
+	if arg_57_0.enemySkillClick then
+		arg_57_0.enemySkillClick:RemoveLongPressListener()
 
-		slot0.enemySkillClick = nil
+		arg_57_0.enemySkillClick = nil
 	end
 
-	if slot0._skillDetailsView then
-		slot0._skillDetailsView:onDestroy()
+	if arg_57_0._skillDetailsView then
+		arg_57_0._skillDetailsView:onDestroy()
 
-		slot0._skillDetailsView = nil
+		arg_57_0._skillDetailsView = nil
 	end
 
-	if slot0._skillReleaseView then
-		slot0._skillReleaseView:onDestroy()
+	if arg_57_0._skillReleaseView then
+		arg_57_0._skillReleaseView:onDestroy()
 
-		slot0._skillReleaseView = nil
+		arg_57_0._skillReleaseView = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.setTaskViewActive, slot0)
-	TaskDispatcher.cancelTask(slot0.changeShowTaskPanelState, slot0)
-	TaskDispatcher.cancelTask(slot0.hideRoleSkillClickEffect, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshLightAni, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshViewActive, slot0)
+	TaskDispatcher.cancelTask(arg_57_0.setTaskViewActive, arg_57_0)
+	TaskDispatcher.cancelTask(arg_57_0.changeShowTaskPanelState, arg_57_0)
+	TaskDispatcher.cancelTask(arg_57_0.hideRoleSkillClickEffect, arg_57_0)
+	TaskDispatcher.cancelTask(arg_57_0.refreshLightAni, arg_57_0)
+	TaskDispatcher.cancelTask(arg_57_0.refreshViewActive, arg_57_0)
 
-	slot0._ani = nil
-	slot0._taskAni = nil
-	slot0._teamChessViewAni = nil
-	slot0._eliminateChessViewAni = nil
-	slot0._eliminateLightAni = nil
-	slot0._pointLightAni = nil
-	slot0.grayMat = nil
-	slot0.normalMat = nil
+	arg_57_0._ani = nil
+	arg_57_0._taskAni = nil
+	arg_57_0._teamChessViewAni = nil
+	arg_57_0._eliminateChessViewAni = nil
+	arg_57_0._eliminateLightAni = nil
+	arg_57_0._pointLightAni = nil
+	arg_57_0.grayMat = nil
+	arg_57_0.normalMat = nil
 end
 
-function slot0.setOverrideClose(slot0)
+function var_0_0.setOverrideClose(arg_58_0)
+	return
 end
 
-return slot0
+return var_0_0

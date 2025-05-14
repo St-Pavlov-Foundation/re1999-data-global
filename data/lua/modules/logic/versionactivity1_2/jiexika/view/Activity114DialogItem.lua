@@ -1,7 +1,7 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114DialogItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114DialogItem", package.seeall)
 
-slot0 = class("Activity114DialogItem", Activity114DialogBaseItem)
-slot1 = {
+local var_0_0 = class("Activity114DialogItem", Activity114DialogBaseItem)
+local var_0_1 = {
 	1,
 	"",
 	{
@@ -192,37 +192,37 @@ slot1 = {
 		}
 	}
 }
-slot2 = StoryStepMo.New()
+local var_0_2 = StoryStepMo.New()
 
-function slot0.showTxt(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot0._conGo, true)
+function var_0_0.showTxt(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	gohelper.setActive(arg_1_0._conGo, true)
 
-	uv0[3][15][1] = slot1
+	var_0_1[3][15][1] = arg_1_1
 
-	uv1:init(uv0)
+	var_0_2:init(var_0_1)
 
-	slot0._endCallBack = slot2
-	slot0._endCallObj = slot3
+	arg_1_0._endCallBack = arg_1_2
+	arg_1_0._endCallObj = arg_1_3
 
-	slot0:playDialog(slot1, uv1)
+	arg_1_0:playDialog(arg_1_1, var_0_2)
 end
 
-function slot0.skipDialog(slot0)
-	if slot0._conTweenId then
-		ZProj.TweenHelper.KillById(slot0._conTweenId)
+function var_0_0.skipDialog(arg_2_0)
+	if arg_2_0._conTweenId then
+		ZProj.TweenHelper.KillById(arg_2_0._conTweenId)
 
-		slot0._conTweenId = nil
+		arg_2_0._conTweenId = nil
 	end
 
-	slot0:conFinished()
+	arg_2_0:conFinished()
 end
 
-function slot0.conFinished(slot0, ...)
-	if slot0._endCallBack then
-		slot0._endCallBack(slot0._endCallObj)
+function var_0_0.conFinished(arg_3_0, ...)
+	if arg_3_0._endCallBack then
+		arg_3_0._endCallBack(arg_3_0._endCallObj)
 	end
 
-	uv0.super.conFinished(slot0, ...)
+	var_0_0.super.conFinished(arg_3_0, ...)
 end
 
-return slot0
+return var_0_0

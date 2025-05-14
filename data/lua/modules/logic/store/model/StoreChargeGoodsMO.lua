@@ -1,13 +1,13 @@
-module("modules.logic.store.model.StoreChargeGoodsMO", package.seeall)
+﻿module("modules.logic.store.model.StoreChargeGoodsMO", package.seeall)
 
-slot0 = pureTable("StoreChargeGoodsMO")
+local var_0_0 = pureTable("StoreChargeGoodsMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.belongStoreId = slot1
-	slot0.id = slot2.id
-	slot0.buyCount = slot2.buyCount
-	slot0.firstCharge = slot2.firstCharge
-	slot0.config = StoreConfig.instance:getChargeGoodsConfig(slot0.id)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.belongStoreId = arg_1_1
+	arg_1_0.id = arg_1_2.id
+	arg_1_0.buyCount = arg_1_2.buyCount
+	arg_1_0.firstCharge = arg_1_2.firstCharge
+	arg_1_0.config = StoreConfig.instance:getChargeGoodsConfig(arg_1_0.id)
 end
 
-return slot0
+return var_0_0

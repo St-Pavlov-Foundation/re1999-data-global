@@ -1,38 +1,42 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadCompareSpineWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadCompareSpineWork", package.seeall)
 
-slot0 = class("FightPreloadCompareSpineWork", BaseWork)
+local var_0_0 = class("FightPreloadCompareSpineWork", BaseWork)
 
-function slot0.onStart(slot0)
-	if FightPreloadController.instance.cachePreloadSpine then
-		slot2 = {
-			[ResUrl.getSpineFightPrefabBySkin(FightConfig.instance:getSkinCO(slot7.skin))] = true
-		}
-		slot6 = FightEnum.EntitySide.MySide
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightPreloadController.instance.cachePreloadSpine
 
-		for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getNormalList(slot6)) do
-			-- Nothing
+	if var_1_0 then
+		local var_1_1 = {}
+
+		for iter_1_0, iter_1_1 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)) do
+			local var_1_2 = FightConfig.instance:getSkinCO(iter_1_1.skin)
+
+			var_1_1[ResUrl.getSpineFightPrefabBySkin(var_1_2)] = true
 		end
 
-		for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getMySubList()) do
-			slot2[ResUrl.getSpineFightPrefabBySkin(FightConfig.instance:getSkinCO(slot7.skin))] = true
+		for iter_1_2, iter_1_3 in ipairs(FightDataHelper.entityMgr:getMySubList()) do
+			local var_1_3 = FightConfig.instance:getSkinCO(iter_1_3.skin)
+
+			var_1_1[ResUrl.getSpineFightPrefabBySkin(var_1_3)] = true
 		end
 
-		for slot6, slot7 in pairs(slot1) do
-			if not slot2[slot6] then
-				FightSpinePool.releaseUrl(slot6)
-				FightPreloadController.instance:releaseAsset(slot6)
+		for iter_1_4, iter_1_5 in pairs(var_1_0) do
+			if not var_1_1[iter_1_4] then
+				FightSpinePool.releaseUrl(iter_1_4)
+				FightPreloadController.instance:releaseAsset(iter_1_4)
 
-				slot1[slot6] = nil
+				var_1_0[iter_1_4] = nil
 			end
 		end
 
 		FightPreloadController.instance:cacheFirstPreloadSpine()
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

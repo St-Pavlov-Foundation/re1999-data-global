@@ -1,51 +1,55 @@
-module("modules.logic.versionactivity.view.VersionActivityTaskViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityTaskViewContainer", package.seeall)
 
-slot0 = class("VersionActivityTaskViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivityTaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_right"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = VersionActivityTaskItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 1070
-	slot1.cellHeight = 163
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = -6
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_left"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "#scroll_left/Viewport/Content/#go_item"
-	slot2.cellClass = VersionActivityTaskBonusItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 610
-	slot2.cellHeight = 165
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot3 = {
-		[slot7] = (slot7 - 1) * 0.04
-	}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	for slot7 = 1, 8 do
+	var_1_0.scrollGOPath = "#scroll_right"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = VersionActivityTaskItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 1070
+	var_1_0.cellHeight = 163
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = -6
+
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.scrollGOPath = "#scroll_left"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "#scroll_left/Viewport/Content/#go_item"
+	var_1_1.cellClass = VersionActivityTaskBonusItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 610
+	var_1_1.cellHeight = 165
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 8 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.04
 	end
 
-	slot4 = LuaListScrollViewWithAnimator.New(VersionActivityTaskListModel.instance, slot1, slot3)
-	slot4.dontPlayCloseAnimation = true
-	slot0._taskScrollView = slot4
-	slot0._taskBonusScrollView = LuaListScrollViewWithAnimator.New(VersionActivityTaskBonusListModel.instance, slot2, slot3)
+	local var_1_3 = LuaListScrollViewWithAnimator.New(VersionActivityTaskListModel.instance, var_1_0, var_1_2)
+
+	var_1_3.dontPlayCloseAnimation = true
+	arg_1_0._taskScrollView = var_1_3
+	arg_1_0._taskBonusScrollView = LuaListScrollViewWithAnimator.New(VersionActivityTaskBonusListModel.instance, var_1_1, var_1_2)
 
 	return {
-		slot4,
-		slot0._taskBonusScrollView,
+		var_1_3,
+		arg_1_0._taskBonusScrollView,
 		VersionActivityTaskView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -55,14 +59,14 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-function slot0.onContainerInit(slot0)
-	slot0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0._taskScrollView)
+function var_0_0.onContainerInit(arg_3_0)
+	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._taskScrollView)
 
-	slot0.taskAnimRemoveItem:setMoveInterval(0)
+	arg_3_0.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function slot0.setTaskBonusScrollViewIndexOffset(slot0, slot1)
-	slot0._taskBonusScrollView.indexOffset = slot1
+function var_0_0.setTaskBonusScrollViewIndexOffset(arg_4_0, arg_4_1)
+	arg_4_0._taskBonusScrollView.indexOffset = arg_4_1
 end
 
-return slot0
+return var_0_0

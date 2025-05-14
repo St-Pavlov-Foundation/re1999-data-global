@@ -1,108 +1,125 @@
-module("modules.logic.tower.view.assistboss.TowerAssistBossView", package.seeall)
+﻿module("modules.logic.tower.view.assistboss.TowerAssistBossView", package.seeall)
 
-slot0 = class("TowerAssistBossView", BaseView)
+local var_0_0 = class("TowerAssistBossView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.txtTitle = gohelper.findChildTextMesh(slot0.viewGO, "bg/txtTitle")
-	slot0.content = gohelper.findChild(slot0.viewGO, "root/bosscontainer/Scroll/Viewport/Content")
-	slot0.items = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "bg/txtTitle")
+	arg_1_0.content = gohelper.findChild(arg_1_0.viewGO, "root/bosscontainer/Scroll/Viewport/Content")
+	arg_1_0.items = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0.onTowerUpdate, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_2_0.onTowerUpdate, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0.onTowerUpdate, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_3_0.onTowerUpdate, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onBtnStartClick(slot0)
+function var_0_0._onBtnStartClick(arg_5_0)
+	return
 end
 
-function slot0.onTowerUpdate(slot0)
+function var_0_0.onTowerUpdate(arg_6_0)
 	TowerAssistBossListModel.instance:initList()
-	slot0:refreshView()
+	arg_6_0:refreshView()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:refreshParam()
+	arg_7_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mln_day_night)
-	slot0:refreshParam()
-	slot0:refreshView()
+	arg_8_0:refreshParam()
+	arg_8_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	if slot0.viewParam then
-		slot0.isFromHeroGroup = slot0.viewParam.isFromHeroGroup
-		slot0.bossId = slot0.viewParam.bossId
+function var_0_0.refreshParam(arg_9_0)
+	if arg_9_0.viewParam then
+		arg_9_0.isFromHeroGroup = arg_9_0.viewParam.isFromHeroGroup
+		arg_9_0.bossId = arg_9_0.viewParam.bossId
 	end
 
 	TowerAssistBossListModel.instance:initList()
 
-	if slot0.isFromHeroGroup then
-		slot0:addHeroGroupEvent()
+	if arg_9_0.isFromHeroGroup then
+		arg_9_0:addHeroGroupEvent()
 	else
-		slot0:removeHeroGroupEvent()
+		arg_9_0:removeHeroGroupEvent()
 	end
 end
 
-function slot0.refreshView(slot0)
-	TowerAssistBossListModel.instance:refreshList(slot0.viewParam)
+function var_0_0.refreshView(arg_10_0)
+	TowerAssistBossListModel.instance:refreshList(arg_10_0.viewParam)
 
-	for slot8 = 1, math.max(#TowerAssistBossListModel.instance:getList(), #slot0.items) do
-		if not slot0.items[slot8] then
-			slot0.items[slot8] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(slot0.viewContainer:getSetting().otherRes.itemRes, slot0.content, tostring(slot8)), TowerAssistBossItem)
+	local var_10_0 = TowerAssistBossListModel.instance:getList()
+	local var_10_1 = #var_10_0
+	local var_10_2 = #arg_10_0.items
+	local var_10_3 = math.max(var_10_1, var_10_2)
+
+	for iter_10_0 = 1, var_10_3 do
+		local var_10_4 = arg_10_0.items[iter_10_0]
+
+		if not var_10_4 then
+			local var_10_5 = arg_10_0.viewContainer:getSetting().otherRes.itemRes
+			local var_10_6 = arg_10_0.viewContainer:getResInst(var_10_5, arg_10_0.content, tostring(iter_10_0))
+
+			var_10_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_6, TowerAssistBossItem)
+			arg_10_0.items[iter_10_0] = var_10_4
 		end
 
-		gohelper.setActive(slot9.viewGO, slot1[slot8] ~= nil)
+		local var_10_7 = var_10_0[iter_10_0]
 
-		if slot10 then
-			slot9:onUpdateMO(slot10)
+		gohelper.setActive(var_10_4.viewGO, var_10_7 ~= nil)
+
+		if var_10_7 then
+			var_10_4:onUpdateMO(var_10_7)
 		end
 	end
 end
 
-function slot0.addHeroGroupEvent(slot0)
-	if slot0.hasAdd then
+function var_0_0.addHeroGroupEvent(arg_11_0)
+	if arg_11_0.hasAdd then
 		return
 	end
 
-	slot0.hasAdd = true
+	arg_11_0.hasAdd = true
 
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0.refreshView, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0.refreshView, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0.refreshView, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, slot0.refreshView, slot0)
+	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_11_0.refreshView, arg_11_0)
+	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_11_0.refreshView, arg_11_0)
+	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_11_0.refreshView, arg_11_0)
+	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_11_0.refreshView, arg_11_0)
 end
 
-function slot0.removeHeroGroupEvent(slot0)
-	if not slot0.hasAdd then
+function var_0_0.removeHeroGroupEvent(arg_12_0)
+	if not arg_12_0.hasAdd then
 		return
 	end
 
-	slot0.hasAdd = false
+	arg_12_0.hasAdd = false
 
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0.refreshView, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0.refreshView, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0.refreshView, slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, slot0.refreshView, slot0)
+	arg_12_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_12_0.refreshView, arg_12_0)
+	arg_12_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_12_0.refreshView, arg_12_0)
+	arg_12_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_12_0.refreshView, arg_12_0)
+	arg_12_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_12_0.refreshView, arg_12_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

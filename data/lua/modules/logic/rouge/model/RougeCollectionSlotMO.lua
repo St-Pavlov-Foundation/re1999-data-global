@@ -1,102 +1,113 @@
-module("modules.logic.rouge.model.RougeCollectionSlotMO", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionSlotMO", package.seeall)
 
-slot0 = pureTable("RougeCollectionSlotMO", RougeCollectionMO)
-slot1 = class("RougeCollectionSlotMO", RougeCollectionMO)
+local var_0_0 = pureTable("RougeCollectionSlotMO", RougeCollectionMO)
+local var_0_1 = class("RougeCollectionSlotMO", RougeCollectionMO)
 
-function slot1.init(slot0, slot1)
-	uv0.super.init(slot0, slot1.item)
-	slot0:updateRotation(slot1.rotation)
-	slot0:updateBaseEffects(slot1.baseEffects)
-	slot0:updateEffectRelations(slot1.relations)
-	slot0:updateLeftTopPos(slot1.pos and Vector2(tonumber(slot1.pos.col), tonumber(slot1.pos.row)) or Vector2(0, 0))
-	slot0:updateAttrValues(slot1.attr)
+function var_0_1.init(arg_1_0, arg_1_1)
+	var_0_1.super.init(arg_1_0, arg_1_1.item)
+	arg_1_0:updateRotation(arg_1_1.rotation)
+	arg_1_0:updateBaseEffects(arg_1_1.baseEffects)
+	arg_1_0:updateEffectRelations(arg_1_1.relations)
+
+	local var_1_0 = arg_1_1.pos and Vector2(tonumber(arg_1_1.pos.col), tonumber(arg_1_1.pos.row)) or Vector2(0, 0)
+
+	arg_1_0:updateLeftTopPos(var_1_0)
+	arg_1_0:updateAttrValues(arg_1_1.attr)
 end
 
-function slot1.updateInfo(slot0, slot1)
-	slot0:initBaseInfo(slot1)
+function var_0_1.updateInfo(arg_2_0, arg_2_1)
+	arg_2_0:initBaseInfo(arg_2_1)
 end
 
-function slot1.getCenterSlotPos(slot0)
-	return slot0.centerSlotPos
+function var_0_1.getCenterSlotPos(arg_3_0)
+	return arg_3_0.centerSlotPos
 end
 
-function slot1.getLeftTopPos(slot0)
-	return slot0.pos or Vector2(0, 0)
+function var_0_1.getLeftTopPos(arg_4_0)
+	return arg_4_0.pos or Vector2(0, 0)
 end
 
-function slot1.getRotation(slot0)
-	return slot0.rotation or RougeEnum.CollectionRotation.Rotation_0
+function var_0_1.getRotation(arg_5_0)
+	return arg_5_0.rotation or RougeEnum.CollectionRotation.Rotation_0
 end
 
-function slot1.updateLeftTopPos(slot0, slot1)
-	slot0.pos = slot1 or Vector2.zero
-	slot0.centerSlotPos = RougeCollectionHelper.getCollectionCenterSlotPos(slot0.cfgId, slot0.rotation, slot0.pos)
+function var_0_1.updateLeftTopPos(arg_6_0, arg_6_1)
+	arg_6_0.pos = arg_6_1 or Vector2.zero
+	arg_6_0.centerSlotPos = RougeCollectionHelper.getCollectionCenterSlotPos(arg_6_0.cfgId, arg_6_0.rotation, arg_6_0.pos)
 end
 
-function slot1.updateRotation(slot0, slot1)
-	slot0.rotation = slot1 or RougeEnum.CollectionRotation.Rotation_0
+function var_0_1.updateRotation(arg_7_0, arg_7_1)
+	arg_7_0.rotation = arg_7_1 or RougeEnum.CollectionRotation.Rotation_0
 
-	if slot0.centerSlotPos then
-		slot0:updateLeftTopPos(RougeCollectionHelper.getCollectionTopLeftSlotPos(slot0.cfgId, slot0.centerSlotPos, slot0.rotation))
+	if arg_7_0.centerSlotPos then
+		local var_7_0 = RougeCollectionHelper.getCollectionTopLeftSlotPos(arg_7_0.cfgId, arg_7_0.centerSlotPos, arg_7_0.rotation)
+
+		arg_7_0:updateLeftTopPos(var_7_0)
 	end
 end
 
-function slot1.copyOtherMO(slot0, slot1)
-	if not slot1 then
+function var_0_1.copyOtherMO(arg_8_0, arg_8_1)
+	if not arg_8_1 then
 		return
 	end
 
-	slot0:copyOtherCollectionMO(slot1)
+	arg_8_0:copyOtherCollectionMO(arg_8_1)
 
-	slot0.centerSlotPos = slot1.getCenterSlotPos and slot1:getCenterSlotPos() or Vector2.zero
-	slot0.pos = slot1.getLeftTopPos and slot1:getLeftTopPos() or Vector2.zero
-	slot0.rotation = slot1:getRotation()
+	arg_8_0.centerSlotPos = arg_8_1.getCenterSlotPos and arg_8_1:getCenterSlotPos() or Vector2.zero
+	arg_8_0.pos = arg_8_1.getLeftTopPos and arg_8_1:getLeftTopPos() or Vector2.zero
+	arg_8_0.rotation = arg_8_1:getRotation()
 end
 
-function slot1.updateBaseEffects(slot0, slot1)
-	slot0.baseEffects = {}
+function var_0_1.updateBaseEffects(arg_9_0, arg_9_1)
+	arg_9_0.baseEffects = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			table.insert(slot0.baseEffects, slot6)
+	if arg_9_1 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+			table.insert(arg_9_0.baseEffects, iter_9_1)
 		end
 	end
 end
 
-function slot1.getBaseEffects(slot0)
-	return slot0.baseEffects
+function var_0_1.getBaseEffects(arg_10_0)
+	return arg_10_0.baseEffects
 end
 
-function slot1.getBaseEffectCount(slot0)
-	return slot0.baseEffects and #slot0.baseEffects
+function var_0_1.getBaseEffectCount(arg_11_0)
+	return arg_11_0.baseEffects and #arg_11_0.baseEffects
 end
 
-function slot1.updateEffectRelations(slot0, slot1)
-	slot0.effectRelations = {}
-	slot0.effectRelationMap = {}
+function var_0_1.updateEffectRelations(arg_12_0, arg_12_1)
+	arg_12_0.effectRelations = {}
+	arg_12_0.effectRelationMap = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = RougeCollectionRelationMO.New()
+	if arg_12_1 then
+		for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
+			local var_12_0 = RougeCollectionRelationMO.New()
 
-			slot7:init(slot6)
-			table.insert(slot0.effectRelations, slot7)
+			var_12_0:init(iter_12_1)
+			table.insert(arg_12_0.effectRelations, var_12_0)
 
-			slot0.effectRelationMap[slot8] = slot0.effectRelationMap[slot7.showType] or {}
+			local var_12_1 = var_12_0.showType
 
-			table.insert(slot0.effectRelationMap[slot8], slot7)
+			arg_12_0.effectRelationMap[var_12_1] = arg_12_0.effectRelationMap[var_12_1] or {}
+
+			table.insert(arg_12_0.effectRelationMap[var_12_1], var_12_0)
 		end
 	end
 end
 
-function slot1.getEffectShowTypeRelations(slot0, slot1)
-	return slot0.effectRelationMap and slot0.effectRelationMap[slot1]
+function var_0_1.getEffectShowTypeRelations(arg_13_0, arg_13_1)
+	return arg_13_0.effectRelationMap and arg_13_0.effectRelationMap[arg_13_1]
 end
 
-function slot1.isEffectActive(slot0, slot1)
-	if slot0:getEffectShowTypeRelations(slot1) then
-		for slot6, slot7 in ipairs(slot2) do
-			if tabletool.indexOf(slot0.baseEffects, slot7.effectIndex) and slot8 > 0 then
+function var_0_1.isEffectActive(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getEffectShowTypeRelations(arg_14_1)
+
+	if var_14_0 then
+		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+			local var_14_1 = tabletool.indexOf(arg_14_0.baseEffects, iter_14_1.effectIndex)
+
+			if var_14_1 and var_14_1 > 0 then
 				return true
 			end
 		end
@@ -105,9 +116,9 @@ function slot1.isEffectActive(slot0, slot1)
 	return false
 end
 
-function slot1.reset(slot0)
-	slot0.id = 0
-	slot0.rotation = RougeEnum.CollectionRotation.Rotation_0
+function var_0_1.reset(arg_15_0)
+	arg_15_0.id = 0
+	arg_15_0.rotation = RougeEnum.CollectionRotation.Rotation_0
 end
 
-return slot1
+return var_0_1

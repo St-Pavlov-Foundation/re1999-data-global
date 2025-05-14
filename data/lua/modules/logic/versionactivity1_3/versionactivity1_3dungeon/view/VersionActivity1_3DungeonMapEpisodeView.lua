@@ -1,56 +1,66 @@
-module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapEpisodeView", package.seeall)
+﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapEpisodeView", package.seeall)
 
-slot0 = class("VersionActivity1_3DungeonMapEpisodeView", VersionActivity1_3DungeonBaseEpisodeView)
+local var_0_0 = class("VersionActivity1_3DungeonMapEpisodeView", VersionActivity1_3DungeonBaseEpisodeView)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0._txtunlocktime = gohelper.findChildText(slot0.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock/#txt_unlockTime")
-	slot0.goScrollRect = gohelper.findChild(slot0.viewGO, "#scroll_content")
+	arg_1_0._txtunlocktime = gohelper.findChildText(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity/#go_hardmode/#go_hardModeLock/#txt_unlockTime")
+	arg_1_0.goScrollRect = gohelper.findChild(arg_1_0.viewGO, "#scroll_content")
 
-	recthelper.setAnchorY(slot0.goScrollRect.transform, -240)
+	recthelper.setAnchorY(arg_1_0.goScrollRect.transform, -240)
 end
 
-function slot0.refreshModeNode(slot0)
-	uv0.super.refreshModeNode(slot0)
-	slot0:refreshModeLockText()
+function var_0_0.refreshModeNode(arg_2_0)
+	var_0_0.super.refreshModeNode(arg_2_0)
+	arg_2_0:refreshModeLockText()
 end
 
-function slot0.refreshModeLockText(slot0)
-	if ServerTime.now() < VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBeiHard) then
-		slot3 = slot1 - slot2
-		slot6 = Mathf.Floor(slot3 % TimeUtil.OneDaySecond / TimeUtil.OneHourSecond)
+function var_0_0.refreshModeLockText(arg_3_0)
+	local var_3_0 = VersionActivityConfig.instance:getAct113DungeonChapterOpenTimeStamp(VersionActivity1_3DungeonEnum.DungeonChapterId.LeiMiTeBeiHard)
+	local var_3_1 = ServerTime.now()
 
-		if Mathf.Floor(slot3 / TimeUtil.OneDaySecond) > 0 then
-			if slot6 > 0 then
-				slot8 = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]:getRemainTimeStr2(slot3) .. slot6 .. luaLang("time_hour2")
+	if var_3_1 < var_3_0 then
+		local var_3_2 = var_3_0 - var_3_1
+		local var_3_3 = Mathf.Floor(var_3_2 / TimeUtil.OneDaySecond)
+		local var_3_4 = var_3_2 % TimeUtil.OneDaySecond
+		local var_3_5 = Mathf.Floor(var_3_4 / TimeUtil.OneHourSecond)
+		local var_3_6 = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]
+
+		if var_3_3 > 0 then
+			local var_3_7 = var_3_6:getRemainTimeStr2(var_3_2)
+
+			if var_3_5 > 0 then
+				var_3_7 = var_3_7 .. var_3_5 .. luaLang("time_hour2")
 			end
 
-			slot0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), slot8)
+			arg_3_0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), var_3_7)
 		else
-			slot0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), slot7:getRemainTimeStr2(slot3))
+			arg_3_0._txtunlocktime.text = string.format(luaLang("seasonmainview_timeopencondition"), var_3_6:getRemainTimeStr2(var_3_2))
 		end
 
-		gohelper.setActive(slot0._gohardmodelock, true)
-		gohelper.setActive(slot0._gohardmodeNormal, true)
-		gohelper.setActive(slot0._gohardmodeSelect, false)
+		gohelper.setActive(arg_3_0._gohardmodelock, true)
+		gohelper.setActive(arg_3_0._gohardmodeNormal, true)
+		gohelper.setActive(arg_3_0._gohardmodeSelect, false)
 
 		return
 	end
 
-	slot3, slot4 = DungeonModel.instance:chapterIsUnLock(slot0.activityDungeonMo.activityDungeonConfig.hardChapterId)
+	local var_3_8, var_3_9 = DungeonModel.instance:chapterIsUnLock(arg_3_0.activityDungeonMo.activityDungeonConfig.hardChapterId)
 
-	if not slot3 then
-		slot0._txtunlocktime.text = string.format(luaLang("versionactivity1_3_hardlocktip"), "JMP-" .. DungeonConfig.instance:getChapterEpisodeIndexWithSP(DungeonConfig.instance:getEpisodeCO(slot4).chapterId, slot4))
+	if not var_3_8 then
+		local var_3_10 = DungeonConfig.instance:getEpisodeCO(var_3_9)
 
-		gohelper.setActive(slot0._gohardmodelock, true)
-		gohelper.setActive(slot0._gohardmodeNormal, true)
-		gohelper.setActive(slot0._gohardmodeSelect, false)
+		arg_3_0._txtunlocktime.text = string.format(luaLang("versionactivity1_3_hardlocktip"), "JMP-" .. DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_3_10.chapterId, var_3_9))
+
+		gohelper.setActive(arg_3_0._gohardmodelock, true)
+		gohelper.setActive(arg_3_0._gohardmodeNormal, true)
+		gohelper.setActive(arg_3_0._gohardmodeSelect, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gohardmodelock, false)
+	gohelper.setActive(arg_3_0._gohardmodelock, false)
 end
 
-return slot0
+return var_0_0

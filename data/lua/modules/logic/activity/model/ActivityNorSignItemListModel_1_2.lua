@@ -1,6 +1,7 @@
-module("modules.logic.activity.model.ActivityNorSignItemListModel_1_2", package.seeall)
+﻿module("modules.logic.activity.model.ActivityNorSignItemListModel_1_2", package.seeall)
 
-slot0 = class("ActivityNorSignItemListModel_1_2", ListScrollModel)
-slot0.instance = slot0.New()
+local var_0_0 = class("ActivityNorSignItemListModel_1_2", ListScrollModel)
 
-return slot0
+var_0_0.instance = var_0_0.New()
+
+return var_0_0

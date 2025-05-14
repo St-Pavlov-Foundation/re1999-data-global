@@ -1,56 +1,58 @@
-module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenItem", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenItem", package.seeall)
 
-slot0 = class("EliminateSelectChessMenItem", ListScrollCellExtend)
+local var_0_0 = class("EliminateSelectChessMenItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goChessSelected = gohelper.findChild(slot0.viewGO, "#go_ChessSelected")
-	slot0._goLocked = gohelper.findChild(slot0.viewGO, "#go_Locked")
-	slot0._goUnLocked = gohelper.findChild(slot0.viewGO, "#go_UnLocked")
-	slot0._imageChessQuality = gohelper.findChildImage(slot0.viewGO, "#go_UnLocked/#image_ChessQuality")
-	slot0._imageChess = gohelper.findChildImage(slot0.viewGO, "#go_UnLocked/#image_Chess")
-	slot0._goResource = gohelper.findChild(slot0.viewGO, "#go_UnLocked/#go_Resource")
-	slot0._goResourceItem = gohelper.findChild(slot0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem")
-	slot0._imageResourceQuality = gohelper.findChildImage(slot0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
-	slot0._txtResourceNum = gohelper.findChildText(slot0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
-	slot0._txtFireNum = gohelper.findChildText(slot0.viewGO, "#go_UnLocked/image_Fire/#txt_FireNum")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goChessSelected = gohelper.findChild(arg_1_0.viewGO, "#go_ChessSelected")
+	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
+	arg_1_0._goUnLocked = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked")
+	arg_1_0._imageChessQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_UnLocked/#image_ChessQuality")
+	arg_1_0._imageChess = gohelper.findChildImage(arg_1_0.viewGO, "#go_UnLocked/#image_Chess")
+	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Resource")
+	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem")
+	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
+	arg_1_0._txtResourceNum = gohelper.findChildText(arg_1_0.viewGO, "#go_UnLocked/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
+	arg_1_0._txtFireNum = gohelper.findChildText(arg_1_0.viewGO, "#go_UnLocked/image_Fire/#txt_FireNum")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0.viewGO)
-	slot0._animator = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0.viewGO)
+	arg_4_0._animator = SLFramework.AnimatorPlayer.Get(arg_4_0.viewGO)
 
-	slot0:addEventCb(EliminateMapController.instance, EliminateMapEvent.SelectChessMen, slot0._onSelectChessMen, slot0)
+	arg_4_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.SelectChessMen, arg_4_0._onSelectChessMen, arg_4_0)
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._click:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	arg_5_0._click:AddClickListener(arg_5_0._onItemClick, arg_5_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_6_0)
+	arg_6_0._click:RemoveClickListener()
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if not slot0._isUnlocked then
+	if not arg_7_0._isUnlocked then
 		GameFacade.showToast(ToastEnum.EliminateChessMenLocked)
 
 		return
 	end
 
-	if not slot0._isSelected then
-		EliminateSelectChessMenListModel.instance:setSelectedChessMen(slot0._mo)
+	if not arg_7_0._isSelected then
+		EliminateSelectChessMenListModel.instance:setSelectedChessMen(arg_7_0._mo)
 	end
 
 	if EliminateSelectChessMenListModel.instance:getQuickEdit() then
@@ -58,58 +60,67 @@ function slot0._onItemClick(slot0)
 	end
 end
 
-function slot0._onSelectChessMen(slot0)
-	slot0._isSelected = slot0._mo == EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+function var_0_0._onSelectChessMen(arg_8_0)
+	arg_8_0._isSelected = arg_8_0._mo == EliminateSelectChessMenListModel.instance:getSelectedChessMen()
 
-	gohelper.setActive(slot0._goChessSelected, slot0._isSelected)
+	gohelper.setActive(arg_8_0._goChessSelected, arg_8_0._isSelected)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._config = slot1.config
-	slot0._isUnlocked = EliminateTeamSelectionModel.instance:hasChessPieceOrPreset(slot0._config.id)
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._mo = arg_9_1
+	arg_9_0._config = arg_9_1.config
+	arg_9_0._isUnlocked = EliminateTeamSelectionModel.instance:hasChessPieceOrPreset(arg_9_0._config.id)
 
-	gohelper.setActive(slot0._goLocked, not slot0._isUnlocked)
-	gohelper.setActive(slot0._goUnLocked, slot0._isUnlocked)
-	slot0:_onSelectChessMen()
+	gohelper.setActive(arg_9_0._goLocked, not arg_9_0._isUnlocked)
+	gohelper.setActive(arg_9_0._goUnLocked, arg_9_0._isUnlocked)
+	arg_9_0:_onSelectChessMen()
 
-	if not slot0._isUnlocked then
-		slot0._animator:Play("idle", slot0._idleDone, slot0)
+	if not arg_9_0._isUnlocked then
+		arg_9_0._animator:Play("idle", arg_9_0._idleDone, arg_9_0)
 
 		return
 	end
 
-	slot0._txtFireNum.text = tostring(slot0._config.defaultPower)
+	arg_9_0._txtFireNum.text = tostring(arg_9_0._config.defaultPower)
 
-	gohelper.CreateObjList(slot0, slot0._onItemShow, slot0._mo.costList, slot0._goResource, slot0._goResourceItem)
-	UISpriteSetMgr.instance:setV2a2ChessSprite(slot0._imageChess, slot0._config.resPic, false)
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(slot0._imageChessQuality, "v2a2_eliminate_chessqualitybg_0" .. slot0._config.level, false)
+	local var_9_0 = arg_9_0._mo.costList
 
-	if not EliminateMapController.hasOnceActionKey(EliminateMapEnum.PrefsKey.ChessUnlock, slot0._config.id) then
-		EliminateMapController.setOnceActionKey(EliminateMapEnum.PrefsKey.ChessUnlock, slot0._config.id)
-		gohelper.setActive(slot0._goLocked, true)
-		slot0._animator:Play("unlock", slot0._unlockDone, slot0)
+	gohelper.CreateObjList(arg_9_0, arg_9_0._onItemShow, var_9_0, arg_9_0._goResource, arg_9_0._goResourceItem)
+	UISpriteSetMgr.instance:setV2a2ChessSprite(arg_9_0._imageChess, arg_9_0._config.resPic, false)
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_9_0._imageChessQuality, "v2a2_eliminate_chessqualitybg_0" .. arg_9_0._config.level, false)
+
+	if not EliminateMapController.hasOnceActionKey(EliminateMapEnum.PrefsKey.ChessUnlock, arg_9_0._config.id) then
+		EliminateMapController.setOnceActionKey(EliminateMapEnum.PrefsKey.ChessUnlock, arg_9_0._config.id)
+		gohelper.setActive(arg_9_0._goLocked, true)
+		arg_9_0._animator:Play("unlock", arg_9_0._unlockDone, arg_9_0)
 	end
 end
 
-function slot0._unlockDone(slot0)
-	slot0._animator:Play("idle", slot0._idleDone, slot0)
-	gohelper.setActive(slot0._goLocked, false)
+function var_0_0._unlockDone(arg_10_0)
+	arg_10_0._animator:Play("idle", arg_10_0._idleDone, arg_10_0)
+	gohelper.setActive(arg_10_0._goLocked, false)
 end
 
-function slot0._idleDone(slot0)
+function var_0_0._idleDone(arg_11_0)
+	return
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(gohelper.findChildImage(slot1, "#image_ResourceQuality"), EliminateTeamChessEnum.ResourceTypeToImagePath[slot2[1]], false)
+function var_0_0._onItemShow(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = gohelper.findChildImage(arg_12_1, "#image_ResourceQuality")
+	local var_12_1 = gohelper.findChildText(arg_12_1, "#image_ResourceQuality/#txt_ResourceNum")
+	local var_12_2 = arg_12_2[1]
 
-	gohelper.findChildText(slot1, "#image_ResourceQuality/#txt_ResourceNum").text = slot2[2]
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(var_12_0, EliminateTeamChessEnum.ResourceTypeToImagePath[var_12_2], false)
+
+	var_12_1.text = arg_12_2[2]
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_13_0, arg_13_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.explore.view.ExploreInteractOptionViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreInteractOptionViewContainer", package.seeall)
 
-slot0 = class("ExploreInteractOptionViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreInteractOptionViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreInteractOptionView.New()
 	}
 end
 
-return slot0
+return var_0_0

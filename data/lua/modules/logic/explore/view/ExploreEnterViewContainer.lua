@@ -1,11 +1,11 @@
-module("modules.logic.explore.view.ExploreEnterViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreEnterViewContainer", package.seeall)
 
-slot0 = class("ExploreEnterViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreEnterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreEnterView.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,14 +1,17 @@
-module("modules.logic.fight.model.data.FightTempDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightTempDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightTempDataMgr")
+local var_0_0 = FightDataClass("FightTempDataMgr")
 
-function slot0.onConstructor(slot0)
+function var_0_0.onConstructor(arg_1_0)
+	return
 end
 
-function slot0.onCancelOperation(slot0)
+function var_0_0.onCancelOperation(arg_2_0)
+	return
 end
 
-function slot0.onStageChanged(slot0)
+function var_0_0.onStageChanged(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

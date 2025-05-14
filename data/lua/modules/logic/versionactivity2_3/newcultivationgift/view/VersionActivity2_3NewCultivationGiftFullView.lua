@@ -1,139 +1,171 @@
-module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftFullView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftFullView", package.seeall)
 
-slot0 = class("VersionActivity2_3NewCultivationGiftFullView", BaseView)
-slot0.REMAIN_TIME_REFRESH_INTERVAL = 10
+local var_0_0 = class("VersionActivity2_3NewCultivationGiftFullView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/#btn_close")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_bg")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._simagedec = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_dec")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/reward/#btn_reward")
-	slot0._simageTitle2 = gohelper.findChildSingleImage(slot0.viewGO, "Root/reward/#simage_Title2")
-	slot0._btnstone = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/stone/txt_dec/#btn_stone")
-	slot0._btnget = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/Btn/#btn_get")
-	slot0._gohasget = gohelper.findChild(slot0.viewGO, "Root/Btn/hasget")
+var_0_0.REMAIN_TIME_REFRESH_INTERVAL = 10
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_close")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_bg")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._simagedec = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_dec")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/reward/#btn_reward")
+	arg_1_0._simageTitle2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/reward/#simage_Title2")
+	arg_1_0._btnstone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/stone/txt_dec/#btn_stone")
+	arg_1_0._btnget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Btn/#btn_get")
+	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "Root/Btn/hasget")
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0._btnstone:AddClickListener(slot0._btnstoneOnClick, slot0)
-	slot0._btnget:AddClickListener(slot0._btngetOnClick, slot0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, slot0.onEpisodeFinished, slot0)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, slot0.REMAIN_TIME_REFRESH_INTERVAL)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0._btnstone:AddClickListener(arg_2_0._btnstoneOnClick, arg_2_0)
+	arg_2_0._btnget:AddClickListener(arg_2_0._btngetOnClick, arg_2_0)
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_2_0.onEpisodeFinished, arg_2_0)
+	TaskDispatcher.runRepeat(arg_2_0.refreshRemainTime, arg_2_0, arg_2_0.REMAIN_TIME_REFRESH_INTERVAL)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnreward:RemoveClickListener()
-	slot0._btnstone:RemoveClickListener()
-	slot0._btnget:RemoveClickListener()
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, slot0.onEpisodeFinished, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0._btnstone:RemoveClickListener()
+	arg_3_0._btnget:RemoveClickListener()
+	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_3_0.onEpisodeFinished, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0.refreshRemainTime, arg_3_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnstoneOnClick(slot0)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, {
-		actId = slot0._actId,
+function var_0_0._btnstoneOnClick(arg_5_0)
+	local var_5_0 = {
+		actId = arg_5_0._actId,
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect
-	})
+	}
+
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_5_0)
 end
 
-function slot0._btnrewardOnClick(slot0)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, {
-		actId = slot0._actId,
+function var_0_0._btnrewardOnClick(arg_6_0)
+	local var_6_0 = {
+		actId = arg_6_0._actId,
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Reward
-	})
+	}
+
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_6_0)
 end
 
-function slot0._btngetOnClick(slot0)
-	if not Activity125Model.instance:isActivityOpen(slot0._actId) then
+function var_0_0._btngetOnClick(arg_7_0)
+	if not Activity125Model.instance:isActivityOpen(arg_7_0._actId) then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	if Activity125Model.instance:getById(slot0._actId) == nil then
+	local var_7_0 = Activity125Model.instance:getById(arg_7_0._actId)
+
+	if var_7_0 == nil then
 		return
 	end
 
-	if slot1:getEpisodeList() == nil or #slot2 <= 0 then
+	local var_7_1 = var_7_0:getEpisodeList()
+
+	if var_7_1 == nil or #var_7_1 <= 0 then
 		return
 	end
 
-	if slot1:isEpisodeFinished(slot2[1].id) then
+	local var_7_2 = var_7_1[1].id
+
+	if var_7_0:isEpisodeFinished(var_7_2) then
 		return
 	end
 
-	logNormal(string.format("_btninviteOnClick actId: %s episodeId: %s", tostring(slot0._actId), tostring(slot3)))
-	Activity125Controller.instance:onFinishActEpisode(slot0._actId, slot3, Activity125Config.instance:getEpisodeConfig(slot0._actId, slot3).targetFrequency)
+	logNormal(string.format("_btninviteOnClick actId: %s episodeId: %s", tostring(arg_7_0._actId), tostring(var_7_2)))
+
+	local var_7_3 = Activity125Config.instance:getEpisodeConfig(arg_7_0._actId, var_7_2)
+
+	Activity125Controller.instance:onFinishActEpisode(arg_7_0._actId, var_7_2, var_7_3.targetFrequency)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._actId = arg_10_0.viewParam.actId
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	if Activity125Model.instance:getById(slot0._actId) == nil then
+function var_0_0._refreshUI(arg_11_0)
+	local var_11_0 = Activity125Model.instance:getById(arg_11_0._actId)
+
+	if var_11_0 == nil then
 		return
 	end
 
-	if slot1:getEpisodeList() == nil or #slot2 <= 0 then
+	local var_11_1 = var_11_0:getEpisodeList()
+
+	if var_11_1 == nil or #var_11_1 <= 0 then
 		return
 	end
 
-	slot4 = slot1:isEpisodeFinished(slot2[1].id)
+	local var_11_2 = var_11_1[1].id
+	local var_11_3 = var_11_0:isEpisodeFinished(var_11_2)
 
-	gohelper.setActive(slot0._btnget, not slot4)
-	gohelper.setActive(slot0._gohasget, slot4)
-	slot0:refreshRemainTime()
+	gohelper.setActive(arg_11_0._btnget, not var_11_3)
+	gohelper.setActive(arg_11_0._gohasget, var_11_3)
+	arg_11_0:refreshRemainTime()
 end
 
-function slot0.onEpisodeFinished(slot0)
-	if Activity125Model.instance:getById(slot0._actId) == nil then
+function var_0_0.onEpisodeFinished(arg_12_0)
+	local var_12_0 = Activity125Model.instance:getById(arg_12_0._actId)
+
+	if var_12_0 == nil then
 		return
 	end
 
-	if slot1:getEpisodeList() == nil or #slot2 <= 0 then
+	local var_12_1 = var_12_0:getEpisodeList()
+
+	if var_12_1 == nil or #var_12_1 <= 0 then
 		return
 	end
 
-	logNormal(string.format("onEpisodeFinished actId: %s", tostring(slot0._actId)))
-	slot0:_refreshUI()
+	logNormal(string.format("onEpisodeFinished actId: %s", tostring(arg_12_0._actId)))
+	arg_12_0:_refreshUI()
 end
 
-function slot0.refreshRemainTime(slot0)
-	if ActivityModel.instance:getActMO(slot0._actId):getRealEndTimeStamp() <= ServerTime.now() then
-		slot0._txtLimitTime.text = luaLang("ended")
+function var_0_0.refreshRemainTime(arg_13_0)
+	local var_13_0 = ActivityModel.instance:getActMO(arg_13_0._actId):getRealEndTimeStamp()
+	local var_13_1 = ServerTime.now()
+
+	if var_13_0 <= var_13_1 then
+		arg_13_0._txtLimitTime.text = luaLang("ended")
 
 		return
 	end
 
-	slot0._txtLimitTime.text = TimeUtil.SecondToActivityTimeFormat(slot2 - slot3)
+	local var_13_2 = TimeUtil.SecondToActivityTimeFormat(var_13_0 - var_13_1)
+
+	arg_13_0._txtLimitTime.text = var_13_2
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

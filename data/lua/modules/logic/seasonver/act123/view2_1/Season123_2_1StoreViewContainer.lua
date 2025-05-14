@@ -1,22 +1,22 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoreViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1StoreViewContainer", package.seeall)
 
-slot0 = class("Season123_2_1StoreViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123_2_1StoreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0:buildScrollViews()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0:buildScrollViews()
 
-	slot1 = {}
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.scrollView)
-	table.insert(slot1, Season123_2_1StoreView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_righttop"))
+	table.insert(var_1_0, arg_1_0.scrollView)
+	table.insert(var_1_0, Season123_2_1StoreView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_righttop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -26,33 +26,37 @@ function slot0.buildTabViews(slot0, slot1)
 		}
 	end
 
-	if slot1 == 2 then
-		slot4 = CurrencyView.New({
-			Season123Config.instance:getSeasonConstNum(Season123Model.instance:getCurSeasonId() or VersionActivity2_1Enum.ActivityId.Season, Activity123Enum.Const.StoreCoinId)
+	if arg_2_1 == 2 then
+		local var_2_0 = Season123Model.instance:getCurSeasonId() or VersionActivity2_1Enum.ActivityId.Season
+		local var_2_1 = Season123Config.instance:getSeasonConstNum(var_2_0, Activity123Enum.Const.StoreCoinId)
+		local var_2_2 = CurrencyView.New({
+			var_2_1
 		})
-		slot4.foreHideBtn = true
+
+		var_2_2.foreHideBtn = true
 
 		return {
-			slot4
+			var_2_2
 		}
 	end
 end
 
-function slot0.buildScrollViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "mask/#scroll_store"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = Season123_2_1StoreItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 356
-	slot1.cellHeight = 376
-	slot1.cellSpaceH = 4.26
-	slot1.cellSpaceV = 15.73
-	slot1.startSpace = 39
-	slot1.frameUpdateMs = 100
-	slot0.scrollView = LuaListScrollView.New(Season123StoreModel.instance, slot1)
+function var_0_0.buildScrollViews(arg_3_0)
+	local var_3_0 = ListScrollParam.New()
+
+	var_3_0.scrollGOPath = "mask/#scroll_store"
+	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+	var_3_0.cellClass = Season123_2_1StoreItem
+	var_3_0.scrollDir = ScrollEnum.ScrollDirV
+	var_3_0.lineCount = 5
+	var_3_0.cellWidth = 356
+	var_3_0.cellHeight = 376
+	var_3_0.cellSpaceH = 4.26
+	var_3_0.cellSpaceV = 15.73
+	var_3_0.startSpace = 39
+	var_3_0.frameUpdateMs = 100
+	arg_3_0.scrollView = LuaListScrollView.New(Season123StoreModel.instance, var_3_0)
 end
 
-return slot0
+return var_0_0

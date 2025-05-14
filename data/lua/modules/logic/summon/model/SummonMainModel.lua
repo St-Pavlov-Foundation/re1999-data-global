@@ -1,66 +1,66 @@
-module("modules.logic.summon.model.SummonMainModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonMainModel", package.seeall)
 
-slot0 = class("SummonMainModel", BaseModel)
+local var_0_0 = class("SummonMainModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:releaseViewData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:releaseViewData()
 
-	slot0.flagModel = SummonFlagSubModel.New()
+	arg_1_0.flagModel = SummonFlagSubModel.New()
 end
 
-function slot0.reInit(slot0)
-	slot0:releaseViewData()
-	slot0:releaseServerData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:releaseViewData()
+	arg_2_0:releaseServerData()
 
-	slot0.flagModel = SummonFlagSubModel.New()
+	arg_2_0.flagModel = SummonFlagSubModel.New()
 end
 
-function slot0.releaseServerData(slot0)
-	slot0._hasNewbiePool = nil
-	slot0._newbieProgress = nil
-	slot0._curPoolIndex = nil
-	slot0._curPoolId = nil
-	slot0._curPool = nil
-	slot0._validServerPoolMap = nil
+function var_0_0.releaseServerData(arg_3_0)
+	arg_3_0._hasNewbiePool = nil
+	arg_3_0._newbieProgress = nil
+	arg_3_0._curPoolIndex = nil
+	arg_3_0._curPoolId = nil
+	arg_3_0._curPool = nil
+	arg_3_0._validServerPoolMap = nil
 end
 
-function slot0.releaseViewData(slot0)
-	slot0:clear()
+function var_0_0.releaseViewData(arg_4_0)
+	arg_4_0:clear()
 
-	slot0._poolList = nil
-	slot0._isFirstTimeOpen = true
+	arg_4_0._poolList = nil
+	arg_4_0._isFirstTimeOpen = true
 end
 
-function slot0.initCategory(slot0, slot1)
-	slot0:releaseViewData()
+function var_0_0.initCategory(arg_5_0, arg_5_1)
+	arg_5_0:releaseViewData()
 
-	slot0._poolList = uv0.getValidPools()
+	arg_5_0._poolList = var_0_0.getValidPools()
 
-	slot0:setList(slot0._poolList)
+	arg_5_0:setList(arg_5_0._poolList)
 
-	if slot0:getCount() > 0 then
-		slot0._curPoolIndex = 1
-		slot0._curPool = slot0:getByIndex(1)
-		slot0._curPoolId = slot0._curPool.id
+	if arg_5_0:getCount() > 0 then
+		arg_5_0._curPoolIndex = 1
+		arg_5_0._curPool = arg_5_0:getByIndex(1)
+		arg_5_0._curPoolId = arg_5_0._curPool.id
 	else
 		logError("summon pool config is empty!")
 	end
 
-	slot0:_updateSummonDiamondStatus()
+	arg_5_0:_updateSummonDiamondStatus()
 end
 
-function slot0.updateByServerData(slot0)
-	slot0:releaseViewData()
+function var_0_0.updateByServerData(arg_6_0)
+	arg_6_0:releaseViewData()
 
-	slot0._poolList = uv0.getValidPools()
+	arg_6_0._poolList = var_0_0.getValidPools()
 
-	slot0:setList(slot0._poolList)
+	arg_6_0:setList(arg_6_0._poolList)
 
-	if slot0:getCount() > 0 then
-		if slot0._curPoolId == nil or not slot0:trySetSelectPoolId(slot0._curPoolId) then
-			slot0._curPoolIndex = 1
-			slot0._curPool = slot0:getByIndex(1)
-			slot0._curPoolId = slot0._curPool.id
+	if arg_6_0:getCount() > 0 then
+		if arg_6_0._curPoolId == nil or not arg_6_0:trySetSelectPoolId(arg_6_0._curPoolId) then
+			arg_6_0._curPoolIndex = 1
+			arg_6_0._curPool = arg_6_0:getByIndex(1)
+			arg_6_0._curPoolId = arg_6_0._curPool.id
 		end
 	else
 		logError("no summon pool available!")
@@ -69,65 +69,75 @@ function slot0.updateByServerData(slot0)
 	SummonMainCategoryListModel.instance:initCategory()
 end
 
-function slot0.updateLastPoolId(slot0)
-	if slot0._curPoolId then
-		SummonController.instance:setLastPoolId(slot0._curPoolId)
+function var_0_0.updateLastPoolId(arg_7_0)
+	if arg_7_0._curPoolId then
+		SummonController.instance:setLastPoolId(arg_7_0._curPoolId)
 	end
 end
 
-function slot0.getPoolsWithServer(slot0, slot1, slot2)
-	SummonRpc.instance:sendGetSummonInfoRequest(uv0.onGetPoolsWithServer, {
-		callback = slot1,
-		callbackObj = slot2
-	})
+function var_0_0.getPoolsWithServer(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = {
+		callback = arg_8_1,
+		callbackObj = arg_8_2
+	}
+
+	SummonRpc.instance:sendGetSummonInfoRequest(var_0_0.onGetPoolsWithServer, var_8_0)
 end
 
-function slot0.onGetPoolsWithServer(slot0)
-	slot2 = slot0.callbackObj
+function var_0_0.onGetPoolsWithServer(arg_9_0)
+	local var_9_0 = arg_9_0.callback
+	local var_9_1 = arg_9_0.callbackObj
 
-	if slot0.callback then
-		if slot2 then
-			slot1(slot2, uv0.getValidPools())
+	if var_9_0 then
+		local var_9_2 = var_0_0.getValidPools()
+
+		if var_9_1 then
+			var_9_0(var_9_1, var_9_2)
 		else
-			slot1(slot3)
+			var_9_0(var_9_2)
 		end
 	end
 end
 
-function slot0.equipPoolIsValid()
-	for slot4, slot5 in ipairs(SummonConfig.instance:getValidPoolList()) do
-		if uv0.getResultType(slot5) == SummonEnum.ResultType.Equip and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
+function var_0_0.equipPoolIsValid()
+	local var_10_0 = SummonConfig.instance:getValidPoolList()
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		if var_0_0.getResultType(iter_10_1) == SummonEnum.ResultType.Equip and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
 			return true
 		end
 	end
 end
 
-function slot0.getValidPools()
-	slot1 = {}
-	slot2 = false
+function var_0_0.getValidPools()
+	local var_11_0 = SummonConfig.instance:getValidPoolList()
+	local var_11_1 = {}
+	local var_11_2 = false
 
-	for slot6, slot7 in pairs(SummonConfig.instance:getValidPoolList()) do
-		if uv0.instance:getPoolServerMO(slot7.id) and slot8:isOpening() then
-			slot2 = true
+	for iter_11_0, iter_11_1 in pairs(var_11_0) do
+		local var_11_3 = var_0_0.instance:getPoolServerMO(iter_11_1.id)
 
-			if uv0.getResultType(slot7) == SummonEnum.ResultType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
-				slot2 = false
-			elseif uv0.getADPageTabIndex(slot7) == SummonEnum.TabContentIndex.CharNewbie and not uv0.instance:getNewbiePoolExist() then
-				slot2 = false
+		if var_11_3 and var_11_3:isOpening() then
+			local var_11_4 = true
+
+			if var_0_0.getResultType(iter_11_1) == SummonEnum.ResultType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.SummonEquip) then
+				var_11_4 = false
+			elseif var_0_0.getADPageTabIndex(iter_11_1) == SummonEnum.TabContentIndex.CharNewbie and not var_0_0.instance:getNewbiePoolExist() then
+				var_11_4 = false
 			end
 
-			if slot2 then
-				table.insert(slot1, slot7)
+			if var_11_4 then
+				table.insert(var_11_1, iter_11_1)
 			end
 		end
 	end
 
-	table.sort(slot1, uv0.sortSummonCategory)
+	table.sort(var_11_1, var_0_0.sortSummonCategory)
 
-	return slot1
+	return var_11_1
 end
 
-slot0.defaultSettings = {
+var_0_0.defaultSettings = {
 	{
 		"ui/viewres/summon/summonmaincharacterview.prefab"
 	},
@@ -144,7 +154,7 @@ slot0.defaultSettings = {
 		"ui/viewres/summon/summonmainequipprobup.prefab"
 	}
 }
-slot0.defaultUIClzMap = {
+var_0_0.defaultUIClzMap = {
 	SummonMainCharacterView,
 	SummonMainEquipView,
 	SummonMainCharacterNewbie,
@@ -152,120 +162,132 @@ slot0.defaultUIClzMap = {
 	SummonMainEquipProbUp
 }
 
-function slot0.resetTabResSettings(slot0)
-	slot1 = tabletool.copy(uv0.defaultSettings)
-	slot2 = tabletool.copy(uv0.defaultUIClzMap)
-	slot4 = {}
-	slot5 = {}
-	slot0._poolIDTabMap = {}
+function var_0_0.resetTabResSettings(arg_12_0)
+	local var_12_0 = tabletool.copy(var_0_0.defaultSettings)
+	local var_12_1 = tabletool.copy(var_0_0.defaultUIClzMap)
+	local var_12_2 = SummonConfig.instance:getValidPoolList()
+	local var_12_3 = {}
+	local var_12_4 = {}
 
-	for slot9, slot10 in ipairs(SummonConfig.instance:getValidPoolList()) do
-		slot12 = uv0.defaultUIClzMap[uv0.getADPageTabIndex(slot10)]
-		slot13 = nil
+	arg_12_0._poolIDTabMap = {}
 
-		if not string.nilorempty(slot10.customClz) then
-			slot13 = _G[slot10.customClz]
+	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
+		local var_12_5 = var_0_0.getADPageTabIndex(iter_12_1)
+		local var_12_6 = var_0_0.defaultUIClzMap[var_12_5]
+		local var_12_7
+
+		if not string.nilorempty(iter_12_1.customClz) then
+			var_12_7 = _G[iter_12_1.customClz]
 		end
 
-		slot13 = slot13 or slot12
-		slot14 = uv0.defaultSettings[slot11][1]
-		slot15 = nil
+		var_12_7 = var_12_7 or var_12_6
 
-		if not string.nilorempty(slot10.prefabPath) then
-			slot15 = string.format("ui/viewres/summon/%s.prefab", slot10.prefabPath)
+		local var_12_8 = var_0_0.defaultSettings[var_12_5][1]
+		local var_12_9
+
+		if not string.nilorempty(iter_12_1.prefabPath) then
+			var_12_9 = string.format("ui/viewres/summon/%s.prefab", iter_12_1.prefabPath)
 		end
 
-		slot15 = slot15 or slot14
+		var_12_9 = var_12_9 or var_12_8
 
-		if slot13 ~= slot12 or slot15 ~= slot14 then
-			table.insert(slot1, {
-				slot15
+		if var_12_7 ~= var_12_6 or var_12_9 ~= var_12_8 then
+			table.insert(var_12_0, {
+				var_12_9
 			})
-			table.insert(slot2, slot13)
+			table.insert(var_12_1, var_12_7)
 
-			slot0._poolIDTabMap[slot10.id] = #slot1
+			arg_12_0._poolIDTabMap[iter_12_1.id] = #var_12_0
 		end
 	end
 
-	module_views.SummonADView.tabRes[3] = slot1
-	slot0._tab2UIClassDef = slot2
+	module_views.SummonADView.tabRes[3] = var_12_0
+	arg_12_0._tab2UIClassDef = var_12_1
 end
 
-function slot0.sortSummonCategory(slot0, slot1)
-	if slot0.priority ~= slot1.priority then
-		return slot1.priority < slot0.priority
+function var_0_0.sortSummonCategory(arg_13_0, arg_13_1)
+	if arg_13_0.priority ~= arg_13_1.priority then
+		return arg_13_0.priority > arg_13_1.priority
 	else
-		return slot0.id < slot1.id
+		return arg_13_0.id < arg_13_1.id
 	end
 end
 
-function slot0.setFirstTimeSwitch(slot0, slot1)
-	slot0._isFirstTimeSwitch = slot1
+function var_0_0.setFirstTimeSwitch(arg_14_0, arg_14_1)
+	arg_14_0._isFirstTimeSwitch = arg_14_1
 end
 
-function slot0.getFirstTimeSwitch(slot0)
-	return slot0._isFirstTimeSwitch
+function var_0_0.getFirstTimeSwitch(arg_15_0)
+	return arg_15_0._isFirstTimeSwitch
 end
 
-function slot0.getCurPool(slot0)
-	return slot0:getById(slot0._curPoolId)
+function var_0_0.getCurPool(arg_16_0)
+	return arg_16_0:getById(arg_16_0._curPoolId)
 end
 
-function slot0.createUIClassTab(slot0)
-	for slot5, slot6 in ipairs(slot0._tab2UIClassDef) do
-		-- Nothing
+function var_0_0.createUIClassTab(arg_17_0)
+	local var_17_0 = {}
+
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._tab2UIClassDef) do
+		var_17_0[iter_17_0] = iter_17_1.New()
 	end
 
-	return {
-		[slot5] = slot6.New()
-	}
+	return var_17_0
 end
 
-function slot0.getUIClassDef(slot0, slot1)
-	return slot0._tab2UIClassDef[slot1]
+function var_0_0.getUIClassDef(arg_18_0, arg_18_1)
+	return arg_18_0._tab2UIClassDef[arg_18_1]
 end
 
-function slot0.getCurADPageIndex(slot0)
-	if slot0:getCurPool() == nil then
+function var_0_0.getCurADPageIndex(arg_19_0)
+	local var_19_0 = arg_19_0:getCurPool()
+
+	if var_19_0 == nil then
 		return nil
 	end
 
-	if slot0._poolIDTabMap[slot1.id] then
-		return slot2
+	local var_19_1 = arg_19_0._poolIDTabMap[var_19_0.id]
+
+	if var_19_1 then
+		return var_19_1
 	else
-		return uv0.getADPageTabIndex(slot1)
+		return var_0_0.getADPageTabIndex(var_19_0)
 	end
 end
 
-function slot0.getADPageTabIndexForUI(slot0, slot1)
-	if slot1 == nil or slot0._poolIDTabMap == nil then
+function var_0_0.getADPageTabIndexForUI(arg_20_0, arg_20_1)
+	if arg_20_1 == nil or arg_20_0._poolIDTabMap == nil then
 		return nil
 	end
 
-	if slot0._poolIDTabMap[slot1.id] then
-		return slot2
+	local var_20_0 = arg_20_0._poolIDTabMap[arg_20_1.id]
+
+	if var_20_0 then
+		return var_20_0
 	else
-		return uv0.getADPageTabIndex(slot1)
+		return var_0_0.getADPageTabIndex(arg_20_1)
 	end
 end
 
-function slot0.getADPageTabIndex(slot0)
-	return SummonEnum.Type2PageIndex[slot0.type] or SummonEnum.TabContentIndex.CharNormal
+function var_0_0.getADPageTabIndex(arg_21_0)
+	return SummonEnum.Type2PageIndex[arg_21_0.type] or SummonEnum.TabContentIndex.CharNormal
 end
 
-function slot0.hasPoolAvailable(slot0, slot1)
-	if slot1 == nil then
-		return slot0:getCount() > 0
+function var_0_0.hasPoolAvailable(arg_22_0, arg_22_1)
+	if arg_22_1 == nil then
+		return arg_22_0:getCount() > 0
 	else
-		return slot0:getById(slot1) ~= nil
+		return arg_22_0:getById(arg_22_1) ~= nil
 	end
 end
 
-function slot0.hasPoolGroupAvailable(slot0, slot1)
-	if slot0:getList() and #slot2 > 0 then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.jumpGroupId == slot1 then
-				return slot7
+function var_0_0.hasPoolGroupAvailable(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getList()
+
+	if var_23_0 and #var_23_0 > 0 then
+		for iter_23_0, iter_23_1 in pairs(var_23_0) do
+			if iter_23_1.jumpGroupId == arg_23_1 then
+				return iter_23_1
 			end
 		end
 	end
@@ -273,44 +295,49 @@ function slot0.hasPoolGroupAvailable(slot0, slot1)
 	return nil
 end
 
-function slot0.getPoolServerMO(slot0, slot1)
-	if slot0._validServerPoolMap then
-		return slot0._validServerPoolMap[slot1]
+function var_0_0.getPoolServerMO(arg_24_0, arg_24_1)
+	if arg_24_0._validServerPoolMap then
+		return arg_24_0._validServerPoolMap[arg_24_1]
 	end
 end
 
-function slot0.getServerMOMap(slot0)
-	return slot0._validServerPoolMap
+function var_0_0.getServerMOMap(arg_25_0)
+	return arg_25_0._validServerPoolMap
 end
 
-function slot0.trySetSelectPoolIndex(slot0, slot1)
-	if slot0:getCount() == 0 then
+function var_0_0.trySetSelectPoolIndex(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0:getCount()
+
+	if var_26_0 == 0 then
 		return false
-	elseif slot1 < 1 then
-		slot1 = slot2
-	elseif slot2 < slot1 then
-		slot1 = 1
+	elseif arg_26_1 < 1 then
+		arg_26_1 = var_26_0
+	elseif var_26_0 < arg_26_1 then
+		arg_26_1 = 1
 	end
 
-	slot3 = slot0:getByIndex(slot1)
-	slot0._curPoolIndex = slot1
-	slot0._curPoolId = slot3.id
-	slot0._curPool = slot3
+	local var_26_1 = arg_26_0:getByIndex(arg_26_1)
 
-	SummonController.instance:setLastPoolId(slot0._curPoolId)
-	slot0:_updateSummonDiamondStatus()
+	arg_26_0._curPoolIndex = arg_26_1
+	arg_26_0._curPoolId = var_26_1.id
+	arg_26_0._curPool = var_26_1
+
+	SummonController.instance:setLastPoolId(arg_26_0._curPoolId)
+	arg_26_0:_updateSummonDiamondStatus()
 
 	return true
 end
 
-function slot0.trySetSelectPoolId(slot0, slot1)
-	if slot0:getById(slot1) then
-		slot0._curPoolIndex = slot0:getIndex(slot2)
-		slot0._curPoolId = slot1
-		slot0._curPool = slot2
+function var_0_0.trySetSelectPoolId(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:getById(arg_27_1)
 
-		SummonController.instance:setLastPoolId(slot0._curPoolId)
-		slot0:_updateSummonDiamondStatus()
+	if var_27_0 then
+		arg_27_0._curPoolIndex = arg_27_0:getIndex(var_27_0)
+		arg_27_0._curPoolId = arg_27_1
+		arg_27_0._curPool = var_27_0
+
+		SummonController.instance:setLastPoolId(arg_27_0._curPoolId)
+		arg_27_0:_updateSummonDiamondStatus()
 
 		return true
 	end
@@ -318,110 +345,121 @@ function slot0.trySetSelectPoolId(slot0, slot1)
 	return false
 end
 
-function slot0._updateSummonDiamondStatus(slot0)
-	slot1 = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.SingleSummonPer), "#")
-	slot0.everyCostCount = slot1[3]
-	slot0.costCurrencyType = slot1[1]
-	slot0.costCurrencyId = slot1[2]
+function var_0_0._updateSummonDiamondStatus(arg_28_0)
+	local var_28_0 = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.SingleSummonPer), "#")
+	local var_28_1 = var_28_0[1]
+	local var_28_2 = var_28_0[2]
+
+	arg_28_0.everyCostCount = var_28_0[3]
+	arg_28_0.costCurrencyType = var_28_1
+	arg_28_0.costCurrencyId = var_28_2
 end
 
-function slot0.getOwnCostCurrencyNum(slot0)
-	return ItemModel.instance:getItemQuantity(slot0.costCurrencyType, slot0.costCurrencyId)
+function var_0_0.getOwnCostCurrencyNum(arg_29_0)
+	return ItemModel.instance:getItemQuantity(arg_29_0.costCurrencyType, arg_29_0.costCurrencyId)
 end
 
-slot0.EmptyDetailDict = {}
+var_0_0.EmptyDetailDict = {}
 
-function slot0.getEquipDetailListByPool(slot0, slot1)
-	if slot1 then
-		return SummonConfig.instance:getEquipDetailByPoolId(slot1.id) or uv0.EmptyDetailDict
+function var_0_0.getEquipDetailListByPool(arg_30_0, arg_30_1)
+	if arg_30_1 then
+		return SummonConfig.instance:getEquipDetailByPoolId(arg_30_1.id) or var_0_0.EmptyDetailDict
 	else
-		return uv0.EmptyDetailDict
+		return var_0_0.EmptyDetailDict
 	end
 end
 
-function slot0.sortDetailByLocation(slot0, slot1)
-	if slot0.detailCo.location ~= slot1.detailCo.location then
-		return slot0.detailCo.location < slot1.detailCo.location
+function var_0_0.sortDetailByLocation(arg_31_0, arg_31_1)
+	if arg_31_0.detailCo.location ~= arg_31_1.detailCo.location then
+		return arg_31_0.detailCo.location < arg_31_1.detailCo.location
 	else
-		return slot0.detailCo.id < slot1.detailCo.id
+		return arg_31_0.detailCo.id < arg_31_1.detailCo.id
 	end
 end
 
-function slot0.getCurIndex(slot0)
-	return slot0._curPoolIndex
+function var_0_0.getCurIndex(arg_32_0)
+	return arg_32_0._curPoolIndex
 end
 
-function slot0.getCurId(slot0)
-	return slot0._curPoolId
+function var_0_0.getCurId(arg_33_0)
+	return arg_33_0._curPoolId
 end
 
-function slot0.setNewbiePoolExist(slot0, slot1)
-	slot0._hasNewbiePool = slot1
+function var_0_0.setNewbiePoolExist(arg_34_0, arg_34_1)
+	arg_34_0._hasNewbiePool = arg_34_1
 end
 
-function slot0.getNewbiePoolExist(slot0)
-	return slot0._hasNewbiePool
+function var_0_0.getNewbiePoolExist(arg_35_0)
+	return arg_35_0._hasNewbiePool
 end
 
-function slot0.setNewbieProgress(slot0, slot1)
-	slot0._newbieProgress = slot1
+function var_0_0.setNewbieProgress(arg_36_0, arg_36_1)
+	arg_36_0._newbieProgress = arg_36_1
 end
 
-function slot0.getNewbieProgress(slot0)
-	return slot0._newbieProgress
+function var_0_0.getNewbieProgress(arg_37_0)
+	return arg_37_0._newbieProgress
 end
 
-function slot0.setServerPoolInfos(slot0, slot1)
-	slot0._validServerPoolMap = slot0._validServerPoolMap or {}
-	slot2 = {
-		[slot7.poolId] = slot7
-	}
+function var_0_0.setServerPoolInfos(arg_38_0, arg_38_1)
+	arg_38_0._validServerPoolMap = arg_38_0._validServerPoolMap or {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if not slot0._validServerPoolMap[slot7.poolId] then
-			slot8 = SummonMainPoolMO.New()
+	local var_38_0 = {}
 
-			slot8:init(slot7)
+	for iter_38_0, iter_38_1 in ipairs(arg_38_1) do
+		var_38_0[iter_38_1.poolId] = iter_38_1
 
-			slot0._validServerPoolMap[slot7.poolId] = slot8
+		local var_38_1 = arg_38_0._validServerPoolMap[iter_38_1.poolId]
+
+		if not var_38_1 then
+			var_38_1 = SummonMainPoolMO.New()
+
+			var_38_1:init(iter_38_1)
+
+			arg_38_0._validServerPoolMap[iter_38_1.poolId] = var_38_1
 		else
-			slot8:update(slot7)
+			var_38_1:update(iter_38_1)
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._validServerPoolMap) do
-		if not slot2[slot7.id] then
-			slot0._validServerPoolMap[slot6] = nil
+	for iter_38_2, iter_38_3 in pairs(arg_38_0._validServerPoolMap) do
+		if not var_38_0[iter_38_3.id] then
+			arg_38_0._validServerPoolMap[iter_38_2] = nil
 		end
 	end
 
-	slot0:refreshRecord()
+	arg_38_0:refreshRecord()
 end
 
-function slot0.getFirstValidPool(slot0)
-	if slot0._poolList then
-		return slot0._poolList[1]
+function var_0_0.getFirstValidPool(arg_39_0)
+	if arg_39_0._poolList then
+		return arg_39_0._poolList[1]
 	end
 end
 
-function slot0.refreshRecord(slot0)
-	slot0.flagModel:init()
-	slot0.flagModel:compareRecord(uv0.getValidPools())
+function var_0_0.refreshRecord(arg_40_0)
+	local var_40_0 = var_0_0.getValidPools()
+
+	arg_40_0.flagModel:init()
+	arg_40_0.flagModel:compareRecord(var_40_0)
 end
 
-function slot0.categoryHasNew(slot0, slot1)
-	slot2 = false
+function var_0_0.categoryHasNew(arg_41_0, arg_41_1)
+	local var_41_0 = false
 
-	if slot0.flagModel then
-		slot2 = slot0.flagModel:isNew(slot1)
+	if arg_41_0.flagModel then
+		var_41_0 = arg_41_0.flagModel:isNew(arg_41_1)
 	end
 
-	return slot2
+	return var_41_0
 end
 
-function slot0.hasNextDayFree(slot0, slot1)
-	if SummonConfig.instance:canShowSingleFree(slot1) then
-		if slot0:getPoolServerMO(slot1) and slot4.usedFreeCount < SummonConfig.instance:getSummonPool(slot1).totalFreeCount then
+function var_0_0.hasNextDayFree(arg_42_0, arg_42_1)
+	if SummonConfig.instance:canShowSingleFree(arg_42_1) then
+		local var_42_0 = SummonConfig.instance:getSummonPool(arg_42_1)
+		local var_42_1 = arg_42_0:getPoolServerMO(arg_42_1)
+
+		if var_42_1 and var_42_1.usedFreeCount < var_42_0.totalFreeCount then
 			return true
 		end
 	end
@@ -429,17 +467,21 @@ function slot0.hasNextDayFree(slot0, slot1)
 	return false
 end
 
-function slot0.entryHasNew(slot0)
-	if slot0.flagModel then
-		return slot0.flagModel:hasNew()
+function var_0_0.entryHasNew(arg_43_0)
+	if arg_43_0.flagModel then
+		return arg_43_0.flagModel:hasNew()
 	end
 
 	return false
 end
 
-function slot0.entryHasFree(slot0)
-	for slot5, slot6 in ipairs(uv0.getValidPools()) do
-		if slot0:getPoolServerMO(slot6.id) and slot7.haveFree then
+function var_0_0.entryHasFree(arg_44_0)
+	local var_44_0 = var_0_0.getValidPools()
+
+	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
+		local var_44_1 = arg_44_0:getPoolServerMO(iter_44_1.id)
+
+		if var_44_1 and var_44_1.haveFree then
 			return true
 		end
 	end
@@ -447,20 +489,24 @@ function slot0.entryHasFree(slot0)
 	return false
 end
 
-function slot0.getCustomPickProbability(slot0, slot1)
-	if SummonConfig.instance:getSummonPool(slot1) and slot2.type == SummonEnum.Type.CustomPick then
-		slot3 = string.split(slot2.param, "|")
-		slot4 = tonumber(slot3[1])
+function var_0_0.getCustomPickProbability(arg_45_0, arg_45_1)
+	local var_45_0 = SummonConfig.instance:getSummonPool(arg_45_1)
 
-		for slot10 = 1, #string.splitToNumber(slot3[2], "#") do
-			slot6 = 0 + slot5[slot10]
+	if var_45_0 and var_45_0.type == SummonEnum.Type.CustomPick then
+		local var_45_1 = string.split(var_45_0.param, "|")
+		local var_45_2 = tonumber(var_45_1[1])
+		local var_45_3 = string.splitToNumber(var_45_1[2], "#")
+		local var_45_4 = 0
+
+		for iter_45_0 = 1, #var_45_3 do
+			var_45_4 = var_45_4 + var_45_3[iter_45_0]
 		end
 
-		return slot6 * 0.001 / slot4 * 100, slot2.totalPosibility, false
+		return var_45_4 * 0.001 / var_45_2 * 100, var_45_0.totalPosibility, false
 	end
 
-	if slot2 and slot2.type == SummonEnum.Type.StrongCustomOnePick then
-		if SummonCustomPickModel.instance:isHaveFirstSSR(slot1) then
+	if var_45_0 and var_45_0.type == SummonEnum.Type.StrongCustomOnePick then
+		if SummonCustomPickModel.instance:isHaveFirstSSR(arg_45_1) then
 			return 50, 0, false
 		else
 			return 100, 0, true
@@ -470,19 +516,28 @@ function slot0.getCustomPickProbability(slot0, slot1)
 	return 0, 0, false
 end
 
-function slot0.getDiscountTime10Server(slot0, slot1)
-	if slot0:getPoolServerMO(slot1) then
-		return slot2.discountTime
+function var_0_0.getDiscountTime10Server(arg_46_0, arg_46_1)
+	local var_46_0 = arg_46_0:getPoolServerMO(arg_46_1)
+
+	if var_46_0 then
+		return var_46_0.discountTime
 	end
 
 	return 0
 end
 
-function slot0.getDiscountCostId(slot0, slot1)
-	if SummonConfig.instance:getSummonPool(slot1) then
-		for slot8, slot9 in ipairs(string.split(slot2.discountCost10, "|")) do
-			if string.splitToNumber(slot9, "#") then
-				return slot10[2]
+function var_0_0.getDiscountCostId(arg_47_0, arg_47_1)
+	local var_47_0 = SummonConfig.instance:getSummonPool(arg_47_1)
+
+	if var_47_0 then
+		local var_47_1 = var_47_0.discountCost10
+		local var_47_2 = string.split(var_47_1, "|")
+
+		for iter_47_0, iter_47_1 in ipairs(var_47_2) do
+			local var_47_3 = string.splitToNumber(iter_47_1, "#")
+
+			if var_47_3 then
+				return var_47_3[2]
 			end
 		end
 	end
@@ -490,21 +545,34 @@ function slot0.getDiscountCostId(slot0, slot1)
 	return 0
 end
 
-function slot0.getDiscountTime10(slot0, slot1)
-	if SummonConfig.instance:getSummonPool(slot1) then
-		return slot2.discountTime10
+function var_0_0.getDiscountTime10(arg_48_0, arg_48_1)
+	local var_48_0 = SummonConfig.instance:getSummonPool(arg_48_1)
+
+	if var_48_0 then
+		return var_48_0.discountTime10
 	end
 
 	return 0
 end
 
-function slot0.getDiscountCost10(slot0, slot1, slot2)
-	slot3 = slot0:getDiscountTime10(slot1)
+function var_0_0.getDiscountCost10(arg_49_0, arg_49_1, arg_49_2)
+	local var_49_0 = arg_49_0:getDiscountTime10(arg_49_1)
+	local var_49_1 = arg_49_0:getDiscountTime10Server(arg_49_1)
+	local var_49_2 = arg_49_2 or var_49_0 - var_49_1 + 1
 
-	if slot3 >= (slot2 or slot3 - slot0:getDiscountTime10Server(slot1) + 1) and SummonConfig.instance:getSummonPool(slot1) then
-		for slot12, slot13 in ipairs(string.split(slot6.discountCost10, "|")) do
-			if string.splitToNumber(slot13, "#") and slot14[1] == slot5 then
-				return slot14[3]
+	if var_49_2 <= var_49_0 then
+		local var_49_3 = SummonConfig.instance:getSummonPool(arg_49_1)
+
+		if var_49_3 then
+			local var_49_4 = var_49_3.discountCost10
+			local var_49_5 = string.split(var_49_4, "|")
+
+			for iter_49_0, iter_49_1 in ipairs(var_49_5) do
+				local var_49_6 = string.splitToNumber(iter_49_1, "#")
+
+				if var_49_6 and var_49_6[1] == var_49_2 then
+					return var_49_6[3]
+				end
 			end
 		end
 	end
@@ -512,126 +580,158 @@ function slot0.getDiscountCost10(slot0, slot1, slot2)
 	return -1
 end
 
-function slot0.getCostByConfig(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.getCostByConfig(arg_50_0)
+	if string.nilorempty(arg_50_0) then
 		logError("no summon cost config")
 
 		return
 	end
 
-	for slot5, slot6 in ipairs(string.split(slot0, "|")) do
-		slot7 = string.splitToNumber(slot6, "#")
-		slot8 = slot7[1]
-		slot9 = slot7[2]
-		slot10 = slot7[3]
+	local var_50_0 = string.split(arg_50_0, "|")
 
-		if slot5 >= #slot1 then
-			return slot8, slot9, slot10
+	for iter_50_0, iter_50_1 in ipairs(var_50_0) do
+		local var_50_1 = string.splitToNumber(iter_50_1, "#")
+		local var_50_2 = var_50_1[1]
+		local var_50_3 = var_50_1[2]
+		local var_50_4 = var_50_1[3]
+
+		if iter_50_0 >= #var_50_0 then
+			return var_50_2, var_50_3, var_50_4
 		end
 
-		if slot10 <= ItemModel.instance:getItemQuantity(slot8, slot9) then
-			return slot8, slot9, slot10
+		if var_50_4 <= ItemModel.instance:getItemQuantity(var_50_2, var_50_3) then
+			return var_50_2, var_50_3, var_50_4
 		end
 	end
 end
 
-function slot0.getLastCostByConfig(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.getLastCostByConfig(arg_51_0)
+	if string.nilorempty(arg_51_0) then
 		logError("no summon cost config")
 
 		return
 	end
 
-	slot1 = string.split(slot0, "|")
-	slot2 = string.splitToNumber(slot1[#slot1], "#")
+	local var_51_0 = string.split(arg_51_0, "|")
+	local var_51_1 = string.splitToNumber(var_51_0[#var_51_0], "#")
+	local var_51_2 = var_51_1[1]
+	local var_51_3 = var_51_1[2]
+	local var_51_4 = var_51_1[3]
 
-	return slot2[1], slot2[2], slot2[3]
+	return var_51_2, var_51_3, var_51_4
 end
 
-function slot0.getSummonItemIcon(slot0, slot1)
-	if not ItemModel.instance:getItemConfig(tonumber(slot0), tonumber(slot1)) then
-		logError(string.format("getSummonItemIcon no config itemType:%s,id:%s", slot0, slot1))
+function var_0_0.getSummonItemIcon(arg_52_0, arg_52_1)
+	arg_52_0 = tonumber(arg_52_0)
+	arg_52_1 = tonumber(arg_52_1)
+
+	local var_52_0 = ItemModel.instance:getItemConfig(arg_52_0, arg_52_1)
+
+	if not var_52_0 then
+		logError(string.format("getSummonItemIcon no config itemType:%s,id:%s", arg_52_0, arg_52_1))
 
 		return
 	end
 
-	slot3 = nil
+	local var_52_1
 
-	return (slot0 ~= MaterialEnum.MaterialType.Item or ItemModel.instance:getItemSmallIcon(slot1)) and (slot0 ~= MaterialEnum.MaterialType.Currency or ResUrl.getCurrencyItemIcon(slot2.icon)) and ResUrl.getSpecialPropItemIcon(slot2.icon)
+	if arg_52_0 == MaterialEnum.MaterialType.Item then
+		var_52_1 = ItemModel.instance:getItemSmallIcon(arg_52_1)
+	elseif arg_52_0 == MaterialEnum.MaterialType.Currency then
+		var_52_1 = ResUrl.getCurrencyItemIcon(var_52_0.icon)
+	else
+		var_52_1 = ResUrl.getSpecialPropItemIcon(var_52_0.icon)
+	end
+
+	return var_52_1
 end
 
-function slot0.getResultType(slot0)
-	return SummonEnum.Type2Result[slot0.type] or SummonEnum.ResultType.Char
+function var_0_0.getResultType(arg_53_0)
+	return SummonEnum.Type2Result[arg_53_0.type] or SummonEnum.ResultType.Char
 end
 
-function slot0.getResultTypeById(slot0)
-	if slot0 then
-		if SummonConfig.instance:getSummonPool(slot0) then
-			return uv0.getResultType(slot1)
+function var_0_0.getResultTypeById(arg_54_0)
+	if arg_54_0 then
+		local var_54_0 = SummonConfig.instance:getSummonPool(arg_54_0)
+
+		if var_54_0 then
+			return (var_0_0.getResultType(var_54_0))
 		else
-			logError("can't find summon pool config : [" .. tostring(slot0) .. "]")
+			logError("can't find summon pool config : [" .. tostring(arg_54_0) .. "]")
 		end
 	end
 
 	return SummonEnum.ResultType.Char
 end
 
-function slot0.isProbUp(slot0)
-	return uv0.getADPageTabIndex(slot0) == SummonEnum.TabContentIndex.CharProbUp or slot1 == SummonEnum.TabContentIndex.EquipProbUp
+function var_0_0.isProbUp(arg_55_0)
+	local var_55_0 = var_0_0.getADPageTabIndex(arg_55_0)
+
+	return var_55_0 == SummonEnum.TabContentIndex.CharProbUp or var_55_0 == SummonEnum.TabContentIndex.EquipProbUp
 end
 
-function slot0.getCostCurrencyParam(slot0)
-	if slot0 then
-		uv0.addCurrencyByCostStr({}, slot0.cost1, {})
+function var_0_0.getCostCurrencyParam(arg_56_0)
+	local var_56_0 = {}
+
+	if arg_56_0 then
+		local var_56_1 = {}
+
+		var_0_0.addCurrencyByCostStr(var_56_0, arg_56_0.cost1, var_56_1)
 	else
-		table.insert(slot1, {
+		table.insert(var_56_0, {
 			id = 140001,
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
-			jumpFunc = uv0.jumpToSummonCostShop
+			jumpFunc = var_0_0.jumpToSummonCostShop
 		})
-		table.insert(slot1, {
+		table.insert(var_56_0, {
 			id = 140002,
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
-			jumpFunc = uv0.jumpToSummonCostShop
+			jumpFunc = var_0_0.jumpToSummonCostShop
 		})
 	end
 
-	table.insert(slot1, CurrencyEnum.CurrencyType.Diamond)
-	table.insert(slot1, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+	table.insert(var_56_0, CurrencyEnum.CurrencyType.Diamond)
+	table.insert(var_56_0, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
 
-	return slot1
+	return var_56_0
 end
 
-function slot0.jumpToSummonCostShop()
+function var_0_0.jumpToSummonCostShop()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.SummonCost)
 end
 
-function slot0.addCurrencyByCostStr(slot0, slot1, slot2)
-	if not string.nilorempty(slot1) then
-		for slot7, slot8 in ipairs(string.split(slot1, "|")) do
-			slot9 = string.splitToNumber(slot8, "#")
-			slot12 = slot9[3]
+function var_0_0.addCurrencyByCostStr(arg_58_0, arg_58_1, arg_58_2)
+	if not string.nilorempty(arg_58_1) then
+		local var_58_0 = string.split(arg_58_1, "|")
 
-			if not slot2[slot9[2]] then
-				table.insert(slot0, {
+		for iter_58_0, iter_58_1 in ipairs(var_58_0) do
+			local var_58_1 = string.splitToNumber(iter_58_1, "#")
+			local var_58_2 = var_58_1[1]
+			local var_58_3 = var_58_1[2]
+			local var_58_4 = var_58_1[3]
+
+			if not arg_58_2[var_58_3] then
+				table.insert(arg_58_0, {
 					isIcon = true,
-					id = slot11,
-					type = slot9[1],
-					jumpFunc = uv0.jumpToSummonCostShop
+					id = var_58_3,
+					type = var_58_2,
+					jumpFunc = var_0_0.jumpToSummonCostShop
 				})
 
-				slot2[slot11] = true
+				arg_58_2[var_58_3] = true
 			end
 		end
 	end
 end
 
-function slot0.entryNeedReddot(slot0)
-	if slot0:getServerMOMap() then
-		for slot5, slot6 in pairs(slot1) do
-			if uv0.needShowReddot(slot6) then
+function var_0_0.entryNeedReddot(arg_59_0)
+	local var_59_0 = arg_59_0:getServerMOMap()
+
+	if var_59_0 then
+		for iter_59_0, iter_59_1 in pairs(var_59_0) do
+			if var_0_0.needShowReddot(iter_59_1) then
 				return true
 			end
 		end
@@ -640,22 +740,22 @@ function slot0.entryNeedReddot(slot0)
 	return false
 end
 
-function slot0.needShowReddot(slot0)
-	if not slot0:isOpening() then
+function var_0_0.needShowReddot(arg_60_0)
+	if not arg_60_0:isOpening() then
 		return false
 	end
 
-	if slot0.luckyBagMO and slot0.luckyBagMO:isGot() and not slot0.luckyBagMO:isOpened() then
+	if arg_60_0.luckyBagMO and arg_60_0.luckyBagMO:isGot() and not arg_60_0.luckyBagMO:isOpened() then
 		return true
 	end
 
-	if slot0.haveFree then
+	if arg_60_0.haveFree then
 		return true
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

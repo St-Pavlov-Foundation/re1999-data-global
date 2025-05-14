@@ -1,23 +1,23 @@
-module("modules.logic.guide.controller.action.impl.GuideActionShowToast", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionShowToast", package.seeall)
 
-slot0 = class("GuideActionShowToast", BaseGuideAction)
+local var_0_0 = class("GuideActionShowToast", BaseGuideAction)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	uv0.super.ctor(slot0, slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
-	slot0._toastId = tonumber(slot3)
+	arg_1_0._toastId = tonumber(arg_1_3)
 end
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	var_0_0.super.onStart(arg_2_0, arg_2_1)
 
-	if slot0._toastId then
-		GameFacade.showToast(slot0._toastId)
+	if arg_2_0._toastId then
+		GameFacade.showToast(arg_2_0._toastId)
 	else
 		logError("指引飘字失败，没配飘字id")
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

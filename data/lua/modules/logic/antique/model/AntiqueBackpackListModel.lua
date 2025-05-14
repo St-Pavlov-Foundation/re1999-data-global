@@ -1,42 +1,42 @@
-module("modules.logic.antique.model.AntiqueBackpackListModel", package.seeall)
+﻿module("modules.logic.antique.model.AntiqueBackpackListModel", package.seeall)
 
-slot0 = class("AntiqueBackpackListModel", ListScrollModel)
+local var_0_0 = class("AntiqueBackpackListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	slot0:reInit()
+function var_0_0.init(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._antiqueList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._antiqueList = {}
 end
 
-function slot0.updateModel(slot0)
-	slot0:setList(slot0._antiqueList)
+function var_0_0.updateModel(arg_3_0)
+	arg_3_0:setList(arg_3_0._antiqueList)
 end
 
-function slot0.getCount(slot0)
-	return slot0._antiqueList and #slot0._antiqueList or 0
+function var_0_0.getCount(arg_4_0)
+	return arg_4_0._antiqueList and #arg_4_0._antiqueList or 0
 end
 
-function slot0.setAntiqueList(slot0, slot1)
-	slot0._antiqueList = slot1
+function var_0_0.setAntiqueList(arg_5_0, arg_5_1)
+	arg_5_0._antiqueList = arg_5_1
 
-	table.sort(slot0._antiqueList, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(arg_5_0._antiqueList, function(arg_6_0, arg_6_1)
+		return arg_6_0.id < arg_6_1.id
 	end)
-	slot0:setList(slot0._antiqueList)
+	arg_5_0:setList(arg_5_0._antiqueList)
 end
 
-function slot0._getAntiqueList(slot0)
-	return slot0._antiqueList
+function var_0_0._getAntiqueList(arg_7_0)
+	return arg_7_0._antiqueList
 end
 
-function slot0.clearAntiqueList(slot0)
-	slot0._antiqueList = nil
+function var_0_0.clearAntiqueList(arg_8_0)
+	arg_8_0._antiqueList = nil
 
-	slot0:clear()
+	arg_8_0:clear()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

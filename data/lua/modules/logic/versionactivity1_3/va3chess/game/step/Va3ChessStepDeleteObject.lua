@@ -1,35 +1,42 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepDeleteObject", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepDeleteObject", package.seeall)
 
-slot0 = class("Va3ChessStepDeleteObject", Va3ChessStepBase)
-slot1 = 0.1
-slot2 = 1
-slot3 = 0.7
+local var_0_0 = class("Va3ChessStepDeleteObject", Va3ChessStepBase)
+local var_0_1 = 0.1
+local var_0_2 = 1
+local var_0_3 = 0.7
 
-function slot0.start(slot0)
-	if (Va3ChessGameController.instance.interacts and slot2:get(slot0.originData.id) or nil) and slot3.config then
-		if slot3.config.interactType == Va3ChessEnum.InteractType.Player or slot4 == Va3ChessEnum.InteractType.AssistPlayer then
-			if slot0:checkPlayDisappearAnim(slot3, slot0.originData.reason) then
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+	local var_1_1 = Va3ChessGameController.instance.interacts
+	local var_1_2 = var_1_1 and var_1_1:get(var_1_0) or nil
+
+	if var_1_2 and var_1_2.config then
+		local var_1_3 = var_1_2.config.interactType
+		local var_1_4 = arg_1_0.originData.reason
+
+		if var_1_3 == Va3ChessEnum.InteractType.Player or var_1_3 == Va3ChessEnum.InteractType.AssistPlayer then
+			if arg_1_0:checkPlayDisappearAnim(var_1_2, var_1_4) then
 				return
 			end
-		elseif slot3:getHandler().playDeleteObjView then
-			slot3:getHandler():playDeleteObjView(slot5)
+		elseif var_1_2:getHandler().playDeleteObjView then
+			var_1_2:getHandler():playDeleteObjView(var_1_4)
 
-			slot6 = uv0
+			local var_1_5 = var_0_1
 
-			if slot5 == Va3ChessEnum.DeleteReason.Arrow or slot5 == Va3ChessEnum.DeleteReason.FireBall or slot5 == Va3ChessEnum.DeleteReason.MoveKill then
-				slot6 = uv1
+			if var_1_4 == Va3ChessEnum.DeleteReason.Arrow or var_1_4 == Va3ChessEnum.DeleteReason.FireBall or var_1_4 == Va3ChessEnum.DeleteReason.MoveKill then
+				var_1_5 = var_0_2
 			end
 
-			TaskDispatcher.runDelay(slot0.removeFinish, slot0, slot6)
+			TaskDispatcher.runDelay(arg_1_0.removeFinish, arg_1_0, var_1_5)
 
 			return
 		end
 	end
 
-	slot0:removeFinish()
+	arg_1_0:removeFinish()
 end
 
-slot4 = {
+local var_0_4 = {
 	[Va3ChessEnum.DeleteReason.Falling] = {
 		anim = "down"
 	},
@@ -42,33 +49,55 @@ slot4 = {
 	}
 }
 
-function slot0.checkPlayDisappearAnim(slot0, slot1, slot2)
-	if slot1.avatar and slot1.avatar.goSelected and slot1.avatar.goSelected:GetComponent(typeof(UnityEngine.Animator)) then
-		slot3:Play("close", 0, 0)
-	end
+function var_0_0.checkPlayDisappearAnim(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1.avatar and arg_2_1.avatar.goSelected then
+		local var_2_0 = arg_2_1.avatar.goSelected:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot2 == Va3ChessEnum.DeleteReason.Change then
-		Activity142Controller.instance:dispatchEvent(Activity142Event.PlaySwitchPlayerEff, slot1.originData.posX, slot1.originData.posY)
-	end
-
-	if not gohelper.isNil(slot1:tryGetGameObject()) then
-		gohelper.setActive(gohelper.findChild(slot3, "vx_disappear"), true)
-
-		if not gohelper.isNil(gohelper.findChild(slot3, "piecea/vx_tracked")) and slot5:GetComponent(typeof(UnityEngine.Animator)) then
-			slot6:Play("close", 0, 0)
+		if var_2_0 then
+			var_2_0:Play("close", 0, 0)
 		end
+	end
 
-		if slot3:GetComponent(typeof(UnityEngine.Animator)) then
-			slot7 = uv0[slot2] or {}
+	if arg_2_2 == Va3ChessEnum.DeleteReason.Change then
+		local var_2_1 = arg_2_1.originData.posX
+		local var_2_2 = arg_2_1.originData.posY
 
-			slot6:Play(slot7.anim or "close", 0, 0)
+		Activity142Controller.instance:dispatchEvent(Activity142Event.PlaySwitchPlayerEff, var_2_1, var_2_2)
+	end
 
-			if slot7.audio then
-				AudioMgr.instance:trigger(slot9)
+	local var_2_3 = arg_2_1:tryGetGameObject()
+
+	if not gohelper.isNil(var_2_3) then
+		local var_2_4 = gohelper.findChild(var_2_3, "vx_disappear")
+
+		gohelper.setActive(var_2_4, true)
+
+		local var_2_5 = gohelper.findChild(var_2_3, "piecea/vx_tracked")
+
+		if not gohelper.isNil(var_2_5) then
+			local var_2_6 = var_2_5:GetComponent(typeof(UnityEngine.Animator))
+
+			if var_2_6 then
+				var_2_6:Play("close", 0, 0)
 			end
 		end
 
-		TaskDispatcher.runDelay(slot0.removeFinish, slot0, uv1)
+		local var_2_7 = var_2_3:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_2_7 then
+			local var_2_8 = var_0_4[arg_2_2] or {}
+			local var_2_9 = var_2_8.anim or "close"
+
+			var_2_7:Play(var_2_9, 0, 0)
+
+			local var_2_10 = var_2_8.audio
+
+			if var_2_10 then
+				AudioMgr.instance:trigger(var_2_10)
+			end
+		end
+
+		TaskDispatcher.runDelay(arg_2_0.removeFinish, arg_2_0, var_0_3)
 
 		return true
 	end
@@ -76,22 +105,22 @@ function slot0.checkPlayDisappearAnim(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.removeFinish(slot0)
-	slot1 = slot0.originData.id
+function var_0_0.removeFinish(arg_3_0)
+	local var_3_0 = arg_3_0.originData.id
 
-	Va3ChessGameModel.instance:removeObjectById(slot1)
-	Va3ChessGameController.instance:deleteInteractObj(slot1)
+	Va3ChessGameModel.instance:removeObjectById(var_3_0)
+	Va3ChessGameController.instance:deleteInteractObj(var_3_0)
 
-	if slot0.originData and slot0.originData.refreshAllKillEff then
+	if arg_3_0.originData and arg_3_0.originData.refreshAllKillEff then
 		Va3ChessGameController.instance:refreshAllInteractKillEff()
 	end
 
-	slot0:finish()
+	arg_3_0:finish()
 end
 
-function slot0.dispose(slot0)
-	uv0.super.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0.removeFinish, slot0)
+function var_0_0.dispose(arg_4_0)
+	var_0_0.super.dispose(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.removeFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

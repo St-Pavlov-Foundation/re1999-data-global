@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_skin", package.seeall)
+﻿module("modules.configs.excel2json.lua_skin", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	characterTitleViewStaticOffset = 54,
 	weatherParam = 37,
 	mainThumbnailViewOffset = 47,
@@ -89,18 +90,18 @@ slot1 = {
 	characterId = 6,
 	skinGainViewImgOffset = 75
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	characterSkin = 3,
 	name = 1,
 	skinDescription = 4,
 	des = 2
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

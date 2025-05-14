@@ -1,57 +1,60 @@
-module("modules.logic.critter.model.CritterIncubateListModel", package.seeall)
+﻿module("modules.logic.critter.model.CritterIncubateListModel", package.seeall)
 
-slot0 = class("CritterIncubateListModel", ListScrollModel)
+local var_0_0 = class("CritterIncubateListModel", ListScrollModel)
 
-function slot0.setMoList(slot0, slot1)
-	slot0.moList = slot0:getMoList(slot1)
+function var_0_0.setMoList(arg_1_0, arg_1_1)
+	arg_1_0.moList = arg_1_0:getMoList(arg_1_1)
 
-	slot0:sortMoList(slot1)
+	arg_1_0:sortMoList(arg_1_1)
 
-	return #slot0.moList
+	return #arg_1_0.moList
 end
 
-function slot0.sortMoList(slot0, slot1)
-	if not slot0.moList then
-		slot0.moList = slot0:getMoList(slot1)
+function var_0_0.sortMoList(arg_2_0, arg_2_1)
+	if not arg_2_0.moList then
+		arg_2_0.moList = arg_2_0:getMoList(arg_2_1)
 	end
 
-	slot4 = nil
+	local var_2_0 = CritterIncubateModel.instance:getSortType()
+	local var_2_1 = CritterIncubateModel.instance:getSortWay()
+	local var_2_2
 
-	if CritterIncubateModel.instance:getSortType() == CritterEnum.AttributeType.Efficiency then
-		slot4 = CritterIncubateModel.instance:getSortWay() and CritterHelper.sortByEfficiencyDescend or CritterHelper.sortByEfficiencyAscend
-	elseif slot2 == CritterEnum.AttributeType.Patience then
-		slot4 = slot3 and CritterHelper.sortByPatienceDescend or CritterHelper.sortByPatienceAscend
-	elseif slot2 == CritterEnum.AttributeType.Lucky then
-		slot4 = slot3 and CritterHelper.sortByLuckyDescend or CritterHelper.sortByLuckyAscend
+	if var_2_0 == CritterEnum.AttributeType.Efficiency then
+		var_2_2 = var_2_1 and CritterHelper.sortByEfficiencyDescend or CritterHelper.sortByEfficiencyAscend
+	elseif var_2_0 == CritterEnum.AttributeType.Patience then
+		var_2_2 = var_2_1 and CritterHelper.sortByPatienceDescend or CritterHelper.sortByPatienceAscend
+	elseif var_2_0 == CritterEnum.AttributeType.Lucky then
+		var_2_2 = var_2_1 and CritterHelper.sortByLuckyDescend or CritterHelper.sortByLuckyAscend
 	end
 
-	if slot4 then
-		table.sort(slot0.moList, slot4)
+	if var_2_2 then
+		table.sort(arg_2_0.moList, var_2_2)
 	end
 
-	slot0:setList(slot0.moList)
+	arg_2_0:setList(arg_2_0.moList)
 end
 
-function slot0.getMoList(slot0, slot1)
-	slot3 = {}
+function var_0_0.getMoList(arg_3_0, arg_3_1)
+	local var_3_0 = CritterModel.instance:getCanIncubateCritters()
+	local var_3_1 = {}
 
-	for slot7, slot8 in ipairs(CritterModel.instance:getCanIncubateCritters()) do
-		slot9 = true
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		local var_3_2 = true
 
-		if slot1 and slot1:isPassedFilter(slot8) then
-			table.insert(slot3, slot8)
+		if arg_3_1 and arg_3_1:isPassedFilter(iter_3_1) then
+			table.insert(var_3_1, iter_3_1)
 		end
 	end
 
-	return slot3
+	return var_3_1
 end
 
-function slot0.getMoIndex(slot0, slot1)
-	slot2 = slot0:getList()
+function var_0_0.getMoIndex(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getList()
 
-	return tabletool.indexOf(slot2, slot1), #slot2
+	return tabletool.indexOf(var_4_0, arg_4_1), #var_4_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

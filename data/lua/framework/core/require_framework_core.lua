@@ -1,4 +1,4 @@
-addGlobalModule("framework.core.userdata.UserDataDispose", "UserDataDispose")
+﻿addGlobalModule("framework.core.userdata.UserDataDispose", "UserDataDispose")
 addGlobalModule("framework.core.callback.LuaGeneralCallback", "LuaGeneralCallback")
 addGlobalModule("framework.core.datastruct.PriorityQueue", "PriorityQueue")
 addGlobalModule("framework.core.eventsystem.DispatchItem", "DispatchItem")

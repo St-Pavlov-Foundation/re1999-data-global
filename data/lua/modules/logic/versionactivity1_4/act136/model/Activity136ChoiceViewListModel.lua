@@ -1,40 +1,52 @@
-module("modules.logic.versionactivity1_4.act136.model.Activity136ChoiceViewListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.model.Activity136ChoiceViewListModel", package.seeall)
 
-slot0 = class("Activity136ChoiceViewListModel", ListScrollModel)
+local var_0_0 = class("Activity136ChoiceViewListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot1(slot0, slot1)
-	if (HeroModel.instance:getByHeroId(slot0.id) and true or false) ~= (HeroModel.instance:getByHeroId(slot1.id) and true or false) then
-		return slot5
+local function var_0_1(arg_3_0, arg_3_1)
+	local var_3_0 = HeroModel.instance:getByHeroId(arg_3_0.id)
+	local var_3_1 = HeroModel.instance:getByHeroId(arg_3_1.id)
+	local var_3_2 = var_3_0 and true or false
+	local var_3_3 = var_3_1 and true or false
+
+	if var_3_2 ~= var_3_3 then
+		return var_3_3
 	end
 
-	if (slot2 and slot2.exSkillLevel or -1) ~= (slot3 and slot3.exSkillLevel or -1) then
-		return slot6 < slot7
+	local var_3_4 = var_3_0 and var_3_0.exSkillLevel or -1
+	local var_3_5 = var_3_1 and var_3_1.exSkillLevel or -1
+
+	if var_3_4 ~= var_3_5 then
+		return var_3_4 < var_3_5
 	end
 
-	return slot0.id < slot1.id
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.setSelfSelectedCharacterList(slot0)
-	slot3 = {}
+function var_0_0.setSelfSelectedCharacterList(arg_4_0)
+	local var_4_0 = Activity136Model.instance:getCurActivity136Id()
+	local var_4_1 = Activity136Config.instance:getSelfSelectCharacterIdList(var_4_0)
+	local var_4_2 = {}
 
-	for slot7, slot8 in ipairs(Activity136Config.instance:getSelfSelectCharacterIdList(Activity136Model.instance:getCurActivity136Id())) do
-		table.insert(slot3, {
-			id = slot8
-		})
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		local var_4_3 = {
+			id = iter_4_1
+		}
+
+		table.insert(var_4_2, var_4_3)
 	end
 
-	table.sort(slot3, uv0)
-	slot0:setList(slot3)
+	table.sort(var_4_2, var_0_1)
+	arg_4_0:setList(var_4_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

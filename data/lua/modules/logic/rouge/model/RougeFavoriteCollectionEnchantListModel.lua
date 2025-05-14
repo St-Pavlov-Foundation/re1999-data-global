@@ -1,19 +1,20 @@
-module("modules.logic.rouge.model.RougeFavoriteCollectionEnchantListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeFavoriteCollectionEnchantListModel", package.seeall)
 
-slot0 = class("RougeFavoriteCollectionEnchantListModel", ListScrollModel)
+local var_0_0 = class("RougeFavoriteCollectionEnchantListModel", ListScrollModel)
 
-function slot0.initData(slot0, slot1)
-	slot3 = {}
+function var_0_0.initData(arg_1_0, arg_1_1)
+	local var_1_0 = RougeCollectionListModel.instance:getEnchantList()
+	local var_1_1 = {}
 
-	for slot7, slot8 in ipairs(RougeCollectionListModel.instance:getEnchantList()) do
-		if slot8 ~= slot1 then
-			table.insert(slot3, slot8)
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		if iter_1_1 ~= arg_1_1 then
+			table.insert(var_1_1, iter_1_1)
 		end
 	end
 
-	slot0:setList(slot3)
+	arg_1_0:setList(var_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

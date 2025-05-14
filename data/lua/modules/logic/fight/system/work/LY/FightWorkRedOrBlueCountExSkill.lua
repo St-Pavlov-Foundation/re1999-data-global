@@ -1,18 +1,21 @@
-module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueCountExSkill", package.seeall)
+﻿module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueCountExSkill", package.seeall)
 
-slot0 = class("FightWorkRedOrBlueCountExSkill", FightEffectBase)
+local var_0_0 = class("FightWorkRedOrBlueCountExSkill", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightStrUtil.instance:getSplitToNumberCache(slot0._actEffectMO.reserveStr, "#") then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightStrUtil.instance:getSplitToNumberCache(arg_1_0._actEffectMO.reserveStr, "#")
+
+	if not var_1_0 then
+		return arg_1_0:onDone(true)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.LY_TriggerCountSkill, slot1[1], slot1[2], tonumber(slot0._actEffectMO.reserveId))
+	FightController.instance:dispatchEvent(FightEvent.LY_TriggerCountSkill, var_1_0[1], var_1_0[2], tonumber(arg_1_0._actEffectMO.reserveId))
 
-	return slot0:onDone(true)
+	return arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

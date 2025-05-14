@@ -1,64 +1,73 @@
-module("modules.logic.explore.map.light.ExploreMapLight", package.seeall)
+﻿module("modules.logic.explore.map.light.ExploreMapLight", package.seeall)
 
-slot0 = class("ExploreMapLight")
+local var_0_0 = class("ExploreMapLight")
 
-function slot0.initLight(slot0)
-	slot0._checkCount = 0
-	slot0._unitStatus = {}
-	slot0._initDone = false
-	slot0._lights = {}
+function var_0_0.initLight(arg_1_0)
+	arg_1_0._checkCount = 0
+	arg_1_0._unitStatus = {}
+	arg_1_0._initDone = false
+	arg_1_0._lights = {}
 
-	slot0:beginCheckStatusChange()
+	local var_1_0 = ExploreController.instance:getMap()
 
-	for slot5, slot6 in pairs(ExploreController.instance:getMap()._unitDic) do
-		if slot6:getLightRecvType() == ExploreEnum.LightRecvType.Custom then
-			slot6:checkLight()
+	arg_1_0:beginCheckStatusChange()
+
+	for iter_1_0, iter_1_1 in pairs(var_1_0._unitDic) do
+		if iter_1_1:getLightRecvType() == ExploreEnum.LightRecvType.Custom then
+			iter_1_1:checkLight()
 		end
 	end
 
-	slot0:endCheckStatus()
+	arg_1_0:endCheckStatus()
 
-	slot0._initDone = true
+	arg_1_0._initDone = true
 end
 
-function slot0.isInitDone(slot0)
-	return slot0._initDone
+function var_0_0.isInitDone(arg_2_0)
+	return arg_2_0._initDone
 end
 
-function slot0.addLight(slot0, slot1, slot2)
-	slot3 = ExploreLightMO.New()
+function var_0_0.addLight(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = ExploreLightMO.New()
 
-	table.insert(slot0._lights, slot3)
-	slot3:init(slot1, slot2)
+	table.insert(arg_3_0._lights, var_3_0)
+	var_3_0:init(arg_3_1, arg_3_2)
 
-	return slot3
+	return var_3_0
 end
 
-function slot0.removeLight(slot0, slot1)
-	tabletool.removeValue(slot0._lights, slot1)
+function var_0_0.removeLight(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.endEmitUnit
 
-	if slot1.endEmitUnit then
-		slot0:removeUnitLight(slot2, slot1)
+	tabletool.removeValue(arg_4_0._lights, arg_4_1)
+
+	if var_4_0 then
+		arg_4_0:removeUnitLight(var_4_0, arg_4_1)
 	end
 end
 
-function slot0.haveLight(slot0, slot1, slot2)
-	slot3 = slot1:getLightRecvDirs()
-	slot4 = ExploreEnum.PrismTypes[slot1:getUnitType()]
+function var_0_0.haveLight(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_1:getLightRecvDirs()
+	local var_5_1 = ExploreEnum.PrismTypes[arg_5_1:getUnitType()]
 
-	for slot8, slot9 in ipairs(slot0._lights) do
-		if slot9 ~= slot2 and slot9.endEmitUnit == slot1 and (not slot3 or slot3[ExploreHelper.getDir(slot9.dir - 180)]) then
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._lights) do
+		if iter_5_1 ~= arg_5_2 and iter_5_1.endEmitUnit == arg_5_1 and (not var_5_0 or var_5_0[ExploreHelper.getDir(iter_5_1.dir - 180)]) then
 			return true
 		end
 	end
 
-	if slot4 then
-		if ExploreController.instance:getMap():getUnitByType(ExploreEnum.ItemType.LightBall) and ExploreHelper.getDistance(slot6.nodePos, slot1.nodePos) <= 1 then
+	if var_5_1 then
+		local var_5_2 = ExploreController.instance:getMap()
+		local var_5_3 = var_5_2:getUnitByType(ExploreEnum.ItemType.LightBall)
+
+		if var_5_3 and ExploreHelper.getDistance(var_5_3.nodePos, arg_5_1.nodePos) <= 1 then
 			return true
 		end
 
-		for slot11, slot12 in pairs(slot5:getUnitsByType(ExploreEnum.ItemType.Illuminant)) do
-			if ExploreHelper.isPosEqual(slot12.nodePos, slot1.nodePos) then
+		local var_5_4 = var_5_2:getUnitsByType(ExploreEnum.ItemType.Illuminant)
+
+		for iter_5_2, iter_5_3 in pairs(var_5_4) do
+			if ExploreHelper.isPosEqual(iter_5_3.nodePos, arg_5_1.nodePos) then
 				return true
 			end
 		end
@@ -67,38 +76,47 @@ function slot0.haveLight(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.haveLightDepth(slot0, slot1, slot2)
-	if not slot1 or not slot1:isEnter() then
+function var_0_0.haveLightDepth(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_1 or not arg_6_1:isEnter() then
 		return false
 	end
 
-	slot3 = ExploreController.instance:getMap()
+	local var_6_0 = ExploreController.instance:getMap()
+	local var_6_1 = var_6_0:getUnitByType(ExploreEnum.ItemType.LightBall)
+	local var_6_2 = var_6_0:getUnitsByType(ExploreEnum.ItemType.Illuminant)
 
-	if slot0:haveIlluminant(slot1, slot3:getUnitByType(ExploreEnum.ItemType.LightBall), slot3:getUnitsByType(ExploreEnum.ItemType.Illuminant)) then
+	if arg_6_0:haveIlluminant(arg_6_1, var_6_1, var_6_2) then
 		return true
 	end
 
-	slot7 = {}
+	local var_6_3 = {
+		[arg_6_1.id] = true
+	}
+	local var_6_4 = {}
 
-	while next({
-		[slot1.id] = true
-	}) do
-		slot6 = {}
+	while next(var_6_3) do
+		local var_6_5 = var_6_3
 
-		for slot12 in pairs(slot6) do
-			slot7[slot12] = true
-			slot14 = slot3:getUnit(slot12):getLightRecvDirs()
+		var_6_3 = {}
 
-			for slot18, slot19 in ipairs(slot0._lights) do
-				if slot2 ~= slot19 and slot19.endEmitUnit == slot13 and (not slot14 or slot14[ExploreHelper.getDir(slot19.dir - 180)]) and not slot7[slot19.curEmitUnit.id] then
-					slot6[slot19.curEmitUnit.id] = true
+		for iter_6_0 in pairs(var_6_5) do
+			var_6_4[iter_6_0] = true
+
+			local var_6_6 = var_6_0:getUnit(iter_6_0)
+			local var_6_7 = var_6_6:getLightRecvDirs()
+
+			for iter_6_1, iter_6_2 in ipairs(arg_6_0._lights) do
+				if arg_6_2 ~= iter_6_2 and iter_6_2.endEmitUnit == var_6_6 and (not var_6_7 or var_6_7[ExploreHelper.getDir(iter_6_2.dir - 180)]) and not var_6_4[iter_6_2.curEmitUnit.id] then
+					var_6_3[iter_6_2.curEmitUnit.id] = true
 				end
 			end
 		end
 	end
 
-	for slot11 in pairs(slot7) do
-		if slot0:haveIlluminant(slot3:getUnit(slot11), slot4, slot5) then
+	for iter_6_3 in pairs(var_6_4) do
+		local var_6_8 = var_6_0:getUnit(iter_6_3)
+
+		if arg_6_0:haveIlluminant(var_6_8, var_6_1, var_6_2) then
 			return true
 		end
 	end
@@ -106,112 +124,124 @@ function slot0.haveLightDepth(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.haveIlluminant(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0.haveIlluminant(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if not arg_7_1 then
 		return false
 	end
 
-	if slot1:getIsNoEmitLight() then
+	if arg_7_1:getIsNoEmitLight() then
 		return false
 	end
 
-	if not ExploreEnum.PrismTypes[slot1:getUnitType()] then
+	if not ExploreEnum.PrismTypes[arg_7_1:getUnitType()] then
 		return false
 	end
 
-	if slot2 and ExploreHelper.getDistance(slot2.nodePos, slot1.nodePos) <= 1 then
+	if arg_7_2 and ExploreHelper.getDistance(arg_7_2.nodePos, arg_7_1.nodePos) <= 1 then
 		return true
 	end
 
-	for slot8, slot9 in pairs(slot3) do
-		if ExploreHelper.isPosEqual(slot9.nodePos, slot1.nodePos) then
+	for iter_7_0, iter_7_1 in pairs(arg_7_3) do
+		if ExploreHelper.isPosEqual(iter_7_1.nodePos, arg_7_1.nodePos) then
 			return true
 		end
 	end
 end
 
-function slot0.removeUnitEmitLight(slot0, slot1)
-	slot2 = nil
+function var_0_0.removeUnitEmitLight(arg_8_0, arg_8_1)
+	local var_8_0
 
-	for slot6, slot7 in ipairs(slot0._lights) do
-		if slot7.curEmitUnit == slot1 then
-			table.insert(slot2 or {}, slot7)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._lights) do
+		if iter_8_1.curEmitUnit == arg_8_1 then
+			var_8_0 = var_8_0 or {}
+
+			table.insert(var_8_0, iter_8_1)
 		end
 	end
 
-	if slot2 then
-		for slot6, slot7 in pairs(slot2) do
-			slot0:removeLight(slot7)
+	if var_8_0 then
+		for iter_8_2, iter_8_3 in pairs(var_8_0) do
+			arg_8_0:removeLight(iter_8_3)
 		end
 	end
 end
 
-function slot0.removeUnitLight(slot0, slot1, slot2)
-	slot1:onLightChange(slot2, false)
+function var_0_0.removeUnitLight(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_1:onLightChange(arg_9_2, false)
 
-	if not slot0:haveLightDepth(slot1, slot2) then
-		slot1:onLightExit(slot2)
+	if not arg_9_0:haveLightDepth(arg_9_1, arg_9_2) then
+		arg_9_1:onLightExit(arg_9_2)
 
-		slot3 = nil
+		local var_9_0
 
-		for slot7, slot8 in ipairs(slot0._lights) do
-			if slot8.curEmitUnit == slot1 then
-				table.insert(slot3 or {}, slot8)
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0._lights) do
+			if iter_9_1.curEmitUnit == arg_9_1 then
+				var_9_0 = var_9_0 or {}
+
+				table.insert(var_9_0, iter_9_1)
 			end
 		end
 
-		if slot3 then
-			for slot7, slot8 in pairs(slot3) do
-				slot0:removeLight(slot8)
+		if var_9_0 then
+			for iter_9_2, iter_9_3 in pairs(var_9_0) do
+				arg_9_0:removeLight(iter_9_3)
 			end
 		end
 	end
 end
 
-function slot0.updateLightsByUnit(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._lights) do
-		if slot6:isInLight(slot1.nodePos) or slot6.endEmitUnit == slot1 then
-			slot6:updateData()
+function var_0_0.updateLightsByUnit(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._lights) do
+		if iter_10_1:isInLight(arg_10_1.nodePos) or iter_10_1.endEmitUnit == arg_10_1 then
+			iter_10_1:updateData()
 		end
 	end
 end
 
-function slot0.getAllLightMos(slot0)
-	return slot0._lights
+function var_0_0.getAllLightMos(arg_11_0)
+	return arg_11_0._lights
 end
 
-function slot0.beginCheckStatusChange(slot0, slot1, slot2)
-	slot0._checkCount = slot0._checkCount + 1
+function var_0_0.beginCheckStatusChange(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._checkCount = arg_12_0._checkCount + 1
 
-	if not slot1 then
+	if not arg_12_1 then
 		return
 	end
 
-	if not slot0._unitStatus[slot1] then
-		slot0._unitStatus[slot1] = slot2
+	if not arg_12_0._unitStatus[arg_12_1] then
+		arg_12_0._unitStatus[arg_12_1] = arg_12_2
 	end
 end
 
-function slot0.endCheckStatus(slot0)
-	slot0._checkCount = slot0._checkCount - 1
+function var_0_0.endCheckStatus(arg_13_0)
+	arg_13_0._checkCount = arg_13_0._checkCount - 1
 
-	if slot0._checkCount == 0 then
-		for slot5, slot6 in pairs(slot0._unitStatus) do
-			if ExploreController.instance:getMap():getUnit(slot5) and slot7.setActiveAnim and slot7:haveLight() ~= slot6 then
-				slot7:setActiveAnim(slot8)
+	if arg_13_0._checkCount == 0 then
+		local var_13_0 = ExploreController.instance:getMap()
+
+		for iter_13_0, iter_13_1 in pairs(arg_13_0._unitStatus) do
+			local var_13_1 = var_13_0:getUnit(iter_13_0)
+
+			if var_13_1 and var_13_1.setActiveAnim then
+				local var_13_2 = var_13_1:haveLight()
+
+				if var_13_2 ~= iter_13_1 then
+					var_13_1:setActiveAnim(var_13_2)
+				end
 			end
 		end
 
-		slot0._unitStatus = {}
+		arg_13_0._unitStatus = {}
 	end
 end
 
-function slot0.unloadMap(slot0)
-	slot0:destroy()
+function var_0_0.unloadMap(arg_14_0)
+	arg_14_0:destroy()
 end
 
-function slot0.destroy(slot0)
-	slot0._lights = {}
+function var_0_0.destroy(arg_15_0)
+	arg_15_0._lights = {}
 end
 
-return slot0
+return var_0_0

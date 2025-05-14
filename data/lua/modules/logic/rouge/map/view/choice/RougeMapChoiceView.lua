@@ -1,31 +1,31 @@
-module("modules.logic.rouge.map.view.choice.RougeMapChoiceView", package.seeall)
+﻿module("modules.logic.rouge.map.view.choice.RougeMapChoiceView", package.seeall)
 
-slot0 = class("RougeMapChoiceView", RougeMapChoiceBaseView)
+local var_0_0 = class("RougeMapChoiceView", RougeMapChoiceBaseView)
 
-function slot0._editableInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "all_bg/#simage_FullBG")
-	slot0._simageEpisodeBG = gohelper.findChildSingleImage(slot0.viewGO, "all_bg/#simage_EpisodeBG")
-	slot0._simageFrameBG = gohelper.findChildSingleImage(slot0.viewGO, "all_bg/#simage_FrameBG")
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "all_bg/#simage_FullBG")
+	arg_1_0._simageEpisodeBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "all_bg/#simage_EpisodeBG")
+	arg_1_0._simageFrameBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "all_bg/#simage_FrameBG")
 
-	slot0._simageFullBG:LoadImage("singlebg/rouge/episode/rouge_episode_fullbg.png")
-	slot0._simageFrameBG:LoadImage("singlebg/rouge/rouge_illustration_framebg.png")
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceEventChange, slot0.onChoiceEventChange, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onClearInteract, slot0.onClearInteract, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onPopViewDone, slot0.onPopViewDone, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onReceiveChoiceEvent, slot0.onReceiveChoiceEvent, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onBeforeActorMoveToEnd, slot0.onBeforeActorMoveToEnd, slot0)
-	uv0.super._editableInitView(slot0)
+	arg_1_0._simageFullBG:LoadImage("singlebg/rouge/episode/rouge_episode_fullbg.png")
+	arg_1_0._simageFrameBG:LoadImage("singlebg/rouge/rouge_illustration_framebg.png")
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceEventChange, arg_1_0.onChoiceEventChange, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onClearInteract, arg_1_0.onClearInteract, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onPopViewDone, arg_1_0.onPopViewDone, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onReceiveChoiceEvent, arg_1_0.onReceiveChoiceEvent, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onBeforeActorMoveToEnd, arg_1_0.onBeforeActorMoveToEnd, arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.onBeforeActorMoveToEnd(slot0)
-	slot0.beforeChangeMap = true
+function var_0_0.onBeforeActorMoveToEnd(arg_2_0)
+	arg_2_0.beforeChangeMap = true
 end
 
-function slot0.onReceiveChoiceEvent(slot0)
+function var_0_0.onReceiveChoiceEvent(arg_3_0)
 	if RougeMapModel.instance:isInteractiving() then
 		logNormal("wait interact")
 
-		slot0.waitInteract = true
+		arg_3_0.waitInteract = true
 
 		return
 	end
@@ -33,135 +33,151 @@ function slot0.onReceiveChoiceEvent(slot0)
 	if RougePopController.instance:hadPopView() then
 		logNormal("wait pop view")
 
-		slot0.waitInteract = true
+		arg_3_0.waitInteract = true
 	end
 
-	slot0.waitInteract = nil
+	arg_3_0.waitInteract = nil
 
-	slot0:playSelectedDialogue()
+	arg_3_0:playSelectedDialogue()
 end
 
-function slot0.onClearInteract(slot0)
-	if not slot0.waitInteract then
+function var_0_0.onClearInteract(arg_4_0)
+	if not arg_4_0.waitInteract then
 		return
 	end
 
-	slot0:playSelectedDialogue()
+	arg_4_0:playSelectedDialogue()
 end
 
-function slot0.onPopViewDone(slot0)
-	if not slot0.waitInteract then
+function var_0_0.onPopViewDone(arg_5_0)
+	if not arg_5_0.waitInteract then
 		return
 	end
 
-	slot0:playSelectedDialogue()
+	arg_5_0:playSelectedDialogue()
 end
 
-function slot0.playSelectedDialogue(slot0)
-	slot0:playChoiceHideAnim()
+function var_0_0.playSelectedDialogue(arg_6_0)
+	arg_6_0:playChoiceHideAnim()
 
-	slot2 = RougeMapModel.instance:getCurChoiceId() and lua_rouge_choice.configDict[slot1]
+	local var_6_0 = RougeMapModel.instance:getCurChoiceId()
+	local var_6_1 = var_6_0 and lua_rouge_choice.configDict[var_6_0]
+	local var_6_2 = var_6_1 and var_6_1.selectedDesc
 
-	if string.nilorempty(slot2 and slot2.selectedDesc) then
-		slot0:triggerEventHandle()
+	if string.nilorempty(var_6_2) then
+		arg_6_0:triggerEventHandle()
 	else
-		slot0:startPlayDialogue(slot3, slot0.onSelectedDescPlayDone, slot0)
+		arg_6_0:startPlayDialogue(var_6_2, arg_6_0.onSelectedDescPlayDone, arg_6_0)
 	end
 end
 
-function slot0.onSelectedDescPlayDone(slot0)
-	slot0:changeState(RougeMapEnum.ChoiceViewState.Finish)
+function var_0_0.onSelectedDescPlayDone(arg_7_0)
+	arg_7_0:changeState(RougeMapEnum.ChoiceViewState.Finish)
 end
 
-function slot0.triggerEventHandle(slot0)
-	RougeMapChoiceEventHelper.triggerEventHandleOnChoiceView(RougeMapModel.instance:getCurNode())
+function var_0_0.triggerEventHandle(arg_8_0)
+	local var_8_0 = RougeMapModel.instance:getCurNode()
+
+	RougeMapChoiceEventHelper.triggerEventHandleOnChoiceView(var_8_0)
 end
 
-function slot0.onClickBlockOnFinishState(slot0)
-	slot0:triggerEventHandle()
+function var_0_0.onClickBlockOnFinishState(arg_9_0)
+	arg_9_0:triggerEventHandle()
 end
 
-function slot0.onChoiceEventChange(slot0, slot1)
-	if slot0.beforeChangeMap then
-		slot0:closeThis()
+function var_0_0.onChoiceEventChange(arg_10_0, arg_10_1)
+	if arg_10_0.beforeChangeMap then
+		arg_10_0:closeThis()
 
 		return
 	end
 
-	if slot1.nodeId ~= slot0.nodeMo.nodeId then
+	if arg_10_1.nodeId ~= arg_10_0.nodeMo.nodeId then
 		return
 	end
 
-	if slot1.eventId == slot0.curEventId then
+	local var_10_0 = arg_10_1.eventId
+
+	if var_10_0 == arg_10_0.curEventId then
 		return
 	end
 
-	slot0.curEventId = slot2
-	slot0.eventCo = RougeMapConfig.instance:getRougeEvent(slot0.curEventId)
-	slot0.choiceEventCo = lua_rouge_choice_event.configDict[slot0.curEventId]
+	arg_10_0.curEventId = var_10_0
+	arg_10_0.eventCo = RougeMapConfig.instance:getRougeEvent(arg_10_0.curEventId)
+	arg_10_0.choiceEventCo = lua_rouge_choice_event.configDict[arg_10_0.curEventId]
 
-	slot0:refreshUI()
-	slot0:startPlayDialogue(slot0.choiceEventCo.desc, slot0.onChangeDialogueDone, slot0)
+	arg_10_0:refreshUI()
+
+	local var_10_1 = arg_10_0.choiceEventCo.desc
+
+	arg_10_0:startPlayDialogue(var_10_1, arg_10_0.onChangeDialogueDone, arg_10_0)
 end
 
-function slot0.onChangeDialogueDone(slot0)
-	slot0:changeState(RougeMapEnum.ChoiceViewState.WaitSelect)
-	slot0:refreshChoice()
-	slot0:playChoiceShowAnim()
+function var_0_0.onChangeDialogueDone(arg_11_0)
+	arg_11_0:changeState(RougeMapEnum.ChoiceViewState.WaitSelect)
+	arg_11_0:refreshChoice()
+	arg_11_0:playChoiceShowAnim()
 end
 
-function slot0.initViewData(slot0)
-	slot0.nodeMo = slot0.viewParam
-	slot0.curEventId = slot0.nodeMo.eventId
-	slot0.eventCo = RougeMapConfig.instance:getRougeEvent(slot0.curEventId)
-	slot0.choiceEventCo = lua_rouge_choice_event.configDict[slot0.curEventId]
+function var_0_0.initViewData(arg_12_0)
+	arg_12_0.nodeMo = arg_12_0.viewParam
+	arg_12_0.curEventId = arg_12_0.nodeMo.eventId
+	arg_12_0.eventCo = RougeMapConfig.instance:getRougeEvent(arg_12_0.curEventId)
+	arg_12_0.choiceEventCo = lua_rouge_choice_event.configDict[arg_12_0.curEventId]
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	slot0:initViewData()
-	slot0:refreshUI()
-	slot0:startPlayDialogue(slot0.choiceEventCo.desc, slot0.onEnterDialogueDone, slot0)
+function var_0_0.onOpen(arg_13_0)
+	var_0_0.super.onOpen(arg_13_0)
+	arg_13_0:initViewData()
+	arg_13_0:refreshUI()
+
+	local var_13_0 = arg_13_0.choiceEventCo.desc
+
+	arg_13_0:startPlayDialogue(var_13_0, arg_13_0.onEnterDialogueDone, arg_13_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0._simageEpisodeBG:LoadImage(string.format("singlebg/rouge/episode/%s.png", slot0.choiceEventCo.image))
+function var_0_0.refreshUI(arg_14_0)
+	arg_14_0._simageEpisodeBG:LoadImage(string.format("singlebg/rouge/episode/%s.png", arg_14_0.choiceEventCo.image))
 
-	slot0._txtName.text = slot0.choiceEventCo.title
-	slot0._txtNameEn.text = ""
+	arg_14_0._txtName.text = arg_14_0.choiceEventCo.title
+	arg_14_0._txtNameEn.text = ""
 end
 
-function slot0.onEnterDialogueDone(slot0)
-	slot0:changeState(RougeMapEnum.ChoiceViewState.WaitSelect)
-	slot0:refreshChoice()
-	slot0:playChoiceShowAnim()
+function var_0_0.onEnterDialogueDone(arg_15_0)
+	arg_15_0:changeState(RougeMapEnum.ChoiceViewState.WaitSelect)
+	arg_15_0:refreshChoice()
+	arg_15_0:playChoiceShowAnim()
 end
 
-function slot0.refreshChoice(slot0)
+function var_0_0.refreshChoice(arg_16_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.ChoiceViewChoiceOpen)
-	gohelper.setActive(slot0.goRight, true)
-	gohelper.setActive(slot0.goLeft, true)
+	gohelper.setActive(arg_16_0.goRight, true)
+	gohelper.setActive(arg_16_0.goLeft, true)
 
-	if not slot0.nodeMo.eventMo:getChoiceIdList() then
-		logError("choiceIdList is nil, curNode : " .. tostring(slot0.nodeMo))
+	local var_16_0 = arg_16_0.nodeMo.eventMo:getChoiceIdList()
+
+	if not var_16_0 then
+		logError("choiceIdList is nil, curNode : " .. tostring(arg_16_0.nodeMo))
 
 		return
 	end
 
-	slot0.posList = RougeMapEnum.ChoiceItemPos[#slot1]
+	local var_16_1 = #var_16_0
 
-	RougeMapHelper.loadItemWithCustomUpdateFunc(slot0.goChoiceItem, RougeMapNodeChoiceItem, slot1, slot0.choiceItemList, slot0.updateItem, slot0)
+	arg_16_0.posList = RougeMapEnum.ChoiceItemPos[var_16_1]
+
+	RougeMapHelper.loadItemWithCustomUpdateFunc(arg_16_0.goChoiceItem, RougeMapNodeChoiceItem, var_16_0, arg_16_0.choiceItemList, arg_16_0.updateItem, arg_16_0)
 end
 
-function slot0.updateItem(slot0, slot1, slot2, slot3)
-	slot1:update(slot3, slot0.posList[slot2], slot0.nodeMo)
+function var_0_0.updateItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	arg_17_1:update(arg_17_3, arg_17_0.posList[arg_17_2], arg_17_0.nodeMo)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageFullBG:UnLoadImage()
-	slot0._simageEpisodeBG:UnLoadImage()
-	slot0._simageFrameBG:UnLoadImage()
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0._simageFullBG:UnLoadImage()
+	arg_18_0._simageEpisodeBG:UnLoadImage()
+	arg_18_0._simageFrameBG:UnLoadImage()
+	var_0_0.super.onDestroyView(arg_18_0)
 end
 
-return slot0
+return var_0_0

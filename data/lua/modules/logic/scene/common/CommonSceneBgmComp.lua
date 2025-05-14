@@ -1,19 +1,21 @@
-module("modules.logic.scene.common.CommonSceneBgmComp", package.seeall)
+﻿module("modules.logic.scene.common.CommonSceneBgmComp", package.seeall)
 
-slot0 = class("CommonSceneBgmComp", BaseSceneComp)
+local var_0_0 = class("CommonSceneBgmComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0._sceneLevelCO = lua_scene_level.configDict[slot2]
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._sceneLevelCO = lua_scene_level.configDict[arg_2_2]
 
-	if slot0._sceneLevelCO and slot0._sceneLevelCO.bgmId and slot0._sceneLevelCO.bgmId > 0 then
-		AudioMgr.instance:trigger(slot0._sceneLevelCO.bgmId)
+	if arg_2_0._sceneLevelCO and arg_2_0._sceneLevelCO.bgmId and arg_2_0._sceneLevelCO.bgmId > 0 then
+		AudioMgr.instance:trigger(arg_2_0._sceneLevelCO.bgmId)
 	end
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

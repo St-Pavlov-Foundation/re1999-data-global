@@ -1,35 +1,36 @@
-module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillEliminationCrossMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillEliminationCrossMO", package.seeall)
 
-slot0 = class("CharacterSkillEliminationCrossMO", CharacterSkillMOBase)
+local var_0_0 = class("CharacterSkillEliminationCrossMO", CharacterSkillMOBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._x = -1
-	slot0._y = -1
+	arg_1_0._x = -1
+	arg_1_0._y = -1
 end
 
-function slot0.getReleaseParam(slot0)
-	slot0._releaseParam = string.format("%d_%d", slot0._x - 1, slot0._y - 1)
+function var_0_0.getReleaseParam(arg_2_0)
+	arg_2_0._releaseParam = string.format("%d_%d", arg_2_0._x - 1, arg_2_0._y - 1)
 
-	return slot0._releaseParam
+	return arg_2_0._releaseParam
 end
 
-function slot0.canRelease(slot0)
-	return slot0._x ~= -1 and slot0._y ~= -1
+function var_0_0.canRelease(arg_3_0)
+	return arg_3_0._x ~= -1 and arg_3_0._y ~= -1
 end
 
-function slot0.playAction(slot0, slot1, slot2)
-	EliminateChessModel.instance:setRecordCurNeedShowEffectAndXY(slot0._x, slot0._y, EliminateEnum.EffectType.crossEliminate)
-	uv0.super.playAction(slot0, slot1, slot2)
+function var_0_0.playAction(arg_4_0, arg_4_1, arg_4_2)
+	EliminateChessModel.instance:setRecordCurNeedShowEffectAndXY(arg_4_0._x, arg_4_0._y, EliminateEnum.EffectType.crossEliminate)
+	var_0_0.super.playAction(arg_4_0, arg_4_1, arg_4_2)
 end
 
-function slot0.setSkillParam(slot0, ...)
-	slot1 = {
+function var_0_0.setSkillParam(arg_5_0, ...)
+	local var_5_0 = {
 		...
 	}
-	slot0._x = slot1[1]
-	slot0._y = slot1[2]
+
+	arg_5_0._x = var_5_0[1]
+	arg_5_0._y = var_5_0[2]
 end
 
-return slot0
+return var_0_0

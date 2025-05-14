@@ -1,257 +1,277 @@
-module("modules.logic.fight.model.FightResultModel", package.seeall)
+﻿module("modules.logic.fight.model.FightResultModel", package.seeall)
 
-slot0 = class("FightResultModel", ListScrollModel)
+local var_0_0 = class("FightResultModel", ListScrollModel)
 
-function slot0.onEndDungeonPush(slot0, slot1)
-	slot0.chapterId = slot1.chapterId
-	slot0.episodeId = slot1.episodeId
-	slot0.playerExp = slot1.playerExp
-	slot0.star = slot1.star
-	slot0.firstPass = slot1.firstPass
-	slot0._materialDataList = {}
+function var_0_0.onEndDungeonPush(arg_1_0, arg_1_1)
+	arg_1_0.chapterId = arg_1_1.chapterId
+	arg_1_0.episodeId = arg_1_1.episodeId
+	arg_1_0.playerExp = arg_1_1.playerExp
+	arg_1_0.star = arg_1_1.star
+	arg_1_0.firstPass = arg_1_1.firstPass
+	arg_1_0._materialDataList = {}
 
-	slot0:_initFirstBonus(slot1)
-	slot0:_initNormalBonus(slot1)
-	uv0._addMaterialDatasToList(slot1.advencedBonus, slot0._materialDataList, FightEnum.FightBonusTag.AdvencedBonus)
-	slot0:_initAdditionBonus(slot1)
-	slot0:_initTimeFirstBonus(slot1)
-	slot0:_initCommonDropBonus(slot1)
-	slot0:_addExp(slot1.firstBonus)
-	slot0:_addExp(slot1.normalBonus)
-	slot0:_addExp(slot1.advencedBonus)
-	slot0:_addExp(slot1.additionBonus)
-	slot0:_addExp(slot1.timeFirstBonus)
-	table.sort(slot0._materialDataList, uv0._sortMaterial)
-	slot0:_setLastEpisodePass()
+	arg_1_0:_initFirstBonus(arg_1_1)
+	arg_1_0:_initNormalBonus(arg_1_1)
+	var_0_0._addMaterialDatasToList(arg_1_1.advencedBonus, arg_1_0._materialDataList, FightEnum.FightBonusTag.AdvencedBonus)
+	arg_1_0:_initAdditionBonus(arg_1_1)
+	arg_1_0:_initTimeFirstBonus(arg_1_1)
+	arg_1_0:_initCommonDropBonus(arg_1_1)
+	arg_1_0:_addExp(arg_1_1.firstBonus)
+	arg_1_0:_addExp(arg_1_1.normalBonus)
+	arg_1_0:_addExp(arg_1_1.advencedBonus)
+	arg_1_0:_addExp(arg_1_1.additionBonus)
+	arg_1_0:_addExp(arg_1_1.timeFirstBonus)
+	table.sort(arg_1_0._materialDataList, var_0_0._sortMaterial)
+	arg_1_0:_setLastEpisodePass()
 
-	slot0.updateDungeonRecord = slot1.updateDungeonRecord
-	slot0.canUpdateDungeonRecord = slot1.canUpdateDungeonRecord
-	slot0.oldRecordRound = slot1.oldRecordRound
-	slot0.newRecordRound = slot1.newRecordRound
-	slot0.assistUserId = slot1.assistUserId
-	slot0.assistNickname = slot1.assistNickname
-	slot0.totalRound = slot1.totalRound
+	arg_1_0.updateDungeonRecord = arg_1_1.updateDungeonRecord
+	arg_1_0.canUpdateDungeonRecord = arg_1_1.canUpdateDungeonRecord
+	arg_1_0.oldRecordRound = arg_1_1.oldRecordRound
+	arg_1_0.newRecordRound = arg_1_1.newRecordRound
+	arg_1_0.assistUserId = arg_1_1.assistUserId
+	arg_1_0.assistNickname = arg_1_1.assistNickname
+	arg_1_0.totalRound = arg_1_1.totalRound
 
 	if BossRushController.instance:isInBossRushFight(true) then
-		BossRushModel.instance:onEndDungeonExtraStr(slot1.extraStr)
+		BossRushModel.instance:onEndDungeonExtraStr(arg_1_1.extraStr)
 	end
 end
 
-function slot0._initCommonDropBonus(slot0, slot1)
-	slot0.act155BonusList = {}
-	slot0.act153BonusList = {}
-	slot0.normal2SimpleList = {}
+function var_0_0._initCommonDropBonus(arg_2_0, arg_2_1)
+	arg_2_0.act155BonusList = {}
+	arg_2_0.act153BonusList = {}
+	arg_2_0.normal2SimpleList = {}
 
-	for slot5, slot6 in ipairs(slot1.dropBonus) do
-		if slot6.type == FightEnum.DropType.Act155 or slot7 == FightEnum.DropType.Act158 then
-			for slot11, slot12 in ipairs(slot6.bonus) do
-				if slot12.materilType ~= MaterialEnum.MaterialType.Faith and slot12.materilType ~= MaterialEnum.MaterialType.Exp then
-					slot13 = MaterialDataMO.New()
-					slot13.bonusTag = FightEnum.FightBonusTag.ActBonus
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.dropBonus) do
+		local var_2_0 = iter_2_1.type
 
-					slot13:init(slot12)
-					table.insert(slot0.act155BonusList, slot13)
+		if var_2_0 == FightEnum.DropType.Act155 or var_2_0 == FightEnum.DropType.Act158 then
+			for iter_2_2, iter_2_3 in ipairs(iter_2_1.bonus) do
+				if iter_2_3.materilType ~= MaterialEnum.MaterialType.Faith and iter_2_3.materilType ~= MaterialEnum.MaterialType.Exp then
+					local var_2_1 = MaterialDataMO.New()
+
+					var_2_1.bonusTag = FightEnum.FightBonusTag.ActBonus
+
+					var_2_1:init(iter_2_3)
+					table.insert(arg_2_0.act155BonusList, var_2_1)
 				end
 			end
-		elseif slot7 == FightEnum.DropType.Act153 then
-			for slot11, slot12 in ipairs(slot6.bonus) do
-				if slot12.materilType ~= MaterialEnum.MaterialType.Faith and slot12.materilType ~= MaterialEnum.MaterialType.Exp then
-					slot13 = MaterialDataMO.New()
-					slot13.bonusTag = FightEnum.FightBonusTag.AdditionBonus
+		elseif var_2_0 == FightEnum.DropType.Act153 then
+			for iter_2_4, iter_2_5 in ipairs(iter_2_1.bonus) do
+				if iter_2_5.materilType ~= MaterialEnum.MaterialType.Faith and iter_2_5.materilType ~= MaterialEnum.MaterialType.Exp then
+					local var_2_2 = MaterialDataMO.New()
 
-					slot13:init(slot12)
-					table.insert(slot0.act153BonusList, slot13)
+					var_2_2.bonusTag = FightEnum.FightBonusTag.AdditionBonus
+
+					var_2_2:init(iter_2_5)
+					table.insert(arg_2_0.act153BonusList, var_2_2)
 				end
 			end
 
-			table.sort(slot0.act153BonusList, uv0._sortMaterial)
-		elseif slot7 == FightEnum.DropType.Normal2Simple then
-			for slot11, slot12 in ipairs(slot6.bonus) do
-				if slot12.materilType ~= MaterialEnum.MaterialType.Faith and slot12.materilType ~= MaterialEnum.MaterialType.Exp then
-					slot13 = MaterialDataMO.New()
-					slot13.bonusTag = FightEnum.FightBonusTag.SimpleBouns
+			table.sort(arg_2_0.act153BonusList, var_0_0._sortMaterial)
+		elseif var_2_0 == FightEnum.DropType.Normal2Simple then
+			for iter_2_6, iter_2_7 in ipairs(iter_2_1.bonus) do
+				if iter_2_7.materilType ~= MaterialEnum.MaterialType.Faith and iter_2_7.materilType ~= MaterialEnum.MaterialType.Exp then
+					local var_2_3 = MaterialDataMO.New()
 
-					slot13:init(slot12)
-					table.insert(slot0.normal2SimpleList, slot13)
+					var_2_3.bonusTag = FightEnum.FightBonusTag.SimpleBouns
+
+					var_2_3:init(iter_2_7)
+					table.insert(arg_2_0.normal2SimpleList, var_2_3)
 				end
 			end
 		end
 	end
 end
 
-function slot0._initFirstBonus(slot0, slot1)
-	slot0._firstList = {}
+function var_0_0._initFirstBonus(arg_3_0, arg_3_1)
+	arg_3_0._firstList = {}
 
-	uv0._addMaterialDatasToList(slot1.firstBonus, slot0._firstList, FightEnum.FightBonusTag.FirstBonus)
-	table.sort(slot0._firstList, uv0._sortMaterial)
+	var_0_0._addMaterialDatasToList(arg_3_1.firstBonus, arg_3_0._firstList, FightEnum.FightBonusTag.FirstBonus)
+	table.sort(arg_3_0._firstList, var_0_0._sortMaterial)
 end
 
-function slot0._initAdditionBonus(slot0, slot1)
-	slot0._additionList = {}
+function var_0_0._initAdditionBonus(arg_4_0, arg_4_1)
+	arg_4_0._additionList = {}
 
-	uv0._addMaterialDatasToList(slot1.additionBonus, slot0._additionList, FightEnum.FightBonusTag.AdditionBonus)
-	table.sort(slot0._additionList, uv0._sortMaterial)
+	var_0_0._addMaterialDatasToList(arg_4_1.additionBonus, arg_4_0._additionList, FightEnum.FightBonusTag.AdditionBonus)
+	table.sort(arg_4_0._additionList, var_0_0._sortMaterial)
 end
 
-function slot0._initTimeFirstBonus(slot0, slot1)
-	slot0._timeFirstList = {}
+function var_0_0._initTimeFirstBonus(arg_5_0, arg_5_1)
+	arg_5_0._timeFirstList = {}
 
-	uv0._addMaterialDatasToList(slot1.timeFirstBonus, slot0._timeFirstList, FightEnum.FightBonusTag.TimeFirstBonus)
-	table.sort(slot0._timeFirstList, uv0._sortMaterial)
+	var_0_0._addMaterialDatasToList(arg_5_1.timeFirstBonus, arg_5_0._timeFirstList, FightEnum.FightBonusTag.TimeFirstBonus)
+	table.sort(arg_5_0._timeFirstList, var_0_0._sortMaterial)
 end
 
-function slot0._initNormalBonus(slot0, slot1)
-	slot0._extraList = nil
+function var_0_0._initNormalBonus(arg_6_0, arg_6_1)
+	arg_6_0._extraList = nil
 
 	if not FightModel.instance:isEnterUseFreeLimit() then
-		uv0._addMaterialDatasToList(slot1.normalBonus, slot0._materialDataList, FightEnum.FightBonusTag.NormalBonus)
+		var_0_0._addMaterialDatasToList(arg_6_1.normalBonus, arg_6_0._materialDataList, FightEnum.FightBonusTag.NormalBonus)
 
 		return
 	end
 
-	slot2 = {}
+	local var_6_0 = {}
 
-	uv0._addMaterialDatasToList(slot1.normalBonus, slot2, FightEnum.FightBonusTag.NormalBonus)
+	var_0_0._addMaterialDatasToList(arg_6_1.normalBonus, var_6_0, FightEnum.FightBonusTag.NormalBonus)
 
-	slot3 = {}
+	local var_6_1 = {}
 
-	table.sort(slot2, uv0._sortMaterial)
+	table.sort(var_6_0, var_0_0._sortMaterial)
 
-	for slot7, slot8 in pairs(slot2) do
-		if #slot3 < 3 and (slot8.materilType == MaterialEnum.MaterialType.Currency or slot8.materilType == MaterialEnum.MaterialType.Equip) then
-			table.insert(slot3, slot8)
+	for iter_6_0, iter_6_1 in pairs(var_6_0) do
+		if #var_6_1 < 3 and (iter_6_1.materilType == MaterialEnum.MaterialType.Currency or iter_6_1.materilType == MaterialEnum.MaterialType.Equip) then
+			table.insert(var_6_1, iter_6_1)
 		else
-			table.insert(slot0._materialDataList, slot8)
+			table.insert(arg_6_0._materialDataList, iter_6_1)
 		end
 	end
 
-	slot0._extraList = slot3
+	arg_6_0._extraList = var_6_1
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_7_0)
+	var_0_0.super.clear(arg_7_0)
 
-	slot0.chapterId = nil
-	slot0.episodeId = nil
-	slot0.playerExp = nil
-	slot0.star = nil
-	slot0._firstList = nil
-	slot0._extraList = nil
-	slot0._materialDataList = nil
-	slot0._additionList = nil
-	slot0._timeFirstList = nil
-	slot0.updateDungeonRecord = nil
-	slot0.curSendEpisodePass = nil
+	arg_7_0.chapterId = nil
+	arg_7_0.episodeId = nil
+	arg_7_0.playerExp = nil
+	arg_7_0.star = nil
+	arg_7_0._firstList = nil
+	arg_7_0._extraList = nil
+	arg_7_0._materialDataList = nil
+	arg_7_0._additionList = nil
+	arg_7_0._timeFirstList = nil
+	arg_7_0.updateDungeonRecord = nil
+	arg_7_0.curSendEpisodePass = nil
 end
 
-function slot0.getChapterId(slot0)
-	return slot0.chapterId or DungeonModel.instance.curSendChapterId
+function var_0_0.getChapterId(arg_8_0)
+	return arg_8_0.chapterId or DungeonModel.instance.curSendChapterId
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0.episodeId or DungeonModel.instance.curSendEpisodeId
+function var_0_0.getEpisodeId(arg_9_0)
+	return arg_9_0.episodeId or DungeonModel.instance.curSendEpisodeId
 end
 
-function slot0.getPlayerExp(slot0)
-	return slot0.playerExp or 0
+function var_0_0.getPlayerExp(arg_10_0)
+	return arg_10_0.playerExp or 0
 end
 
-function slot0.getMaterialDataList(slot0)
-	return slot0._materialDataList
+function var_0_0.getMaterialDataList(arg_11_0)
+	return arg_11_0._materialDataList
 end
 
-function slot0.getExtraMaterialDataList(slot0)
-	return slot0._extraList
+function var_0_0.getExtraMaterialDataList(arg_12_0)
+	return arg_12_0._extraList
 end
 
-function slot0.getFirstMaterialDataList(slot0)
-	return slot0._firstList
+function var_0_0.getFirstMaterialDataList(arg_13_0)
+	return arg_13_0._firstList
 end
 
-function slot0.getAdditionMaterialDataList(slot0)
-	return slot0._additionList
+function var_0_0.getAdditionMaterialDataList(arg_14_0)
+	return arg_14_0._additionList
 end
 
-function slot0.getTimeFirstMaterialDataList(slot0)
-	return slot0._timeFirstList
+function var_0_0.getTimeFirstMaterialDataList(arg_15_0)
+	return arg_15_0._timeFirstList
 end
 
-function slot0.getAct155MaterialDataList(slot0)
-	return slot0.act155BonusList
+function var_0_0.getAct155MaterialDataList(arg_16_0)
+	return arg_16_0.act155BonusList
 end
 
-function slot0.getAct153MaterialDataList(slot0)
-	return slot0.act153BonusList
+function var_0_0.getAct153MaterialDataList(arg_17_0)
+	return arg_17_0.act153BonusList
 end
 
-function slot0._addExp(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6.materilType == MaterialEnum.MaterialType.Exp then
-			slot0.playerExp = slot0.playerExp + slot6.quantity
+function var_0_0._addExp(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		if iter_18_1.materilType == MaterialEnum.MaterialType.Exp then
+			arg_18_0.playerExp = arg_18_0.playerExp + iter_18_1.quantity
 		end
 	end
 end
 
-function slot0._setLastEpisodePass(slot0)
-	if DungeonModel.instance.curSendEpisodeId then
-		slot2 = DungeonConfig.instance:getEpisodeCO(slot1)
+function var_0_0._setLastEpisodePass(arg_19_0)
+	local var_19_0 = DungeonModel.instance.curSendEpisodeId
 
-		if slot0.episodeId == slot1 or slot2 and slot0.episodeId == slot2.chainEpisode then
-			DungeonModel.instance.curSendEpisodePass = not DungeonModel.instance.curSendEpisodePrePass and slot0.star > 0
+	if var_19_0 then
+		local var_19_1 = DungeonConfig.instance:getEpisodeCO(var_19_0)
+
+		if arg_19_0.episodeId == var_19_0 or var_19_1 and arg_19_0.episodeId == var_19_1.chainEpisode then
+			local var_19_2 = not DungeonModel.instance.curSendEpisodePrePass and arg_19_0.star > 0
+
+			DungeonModel.instance.curSendEpisodePass = var_19_2
 
 			return
 		end
 	end
 
-	slot0.curSendEpisodePass = false
+	arg_19_0.curSendEpisodePass = false
 end
 
-function slot0._addMaterialDatasToList(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0) do
-		if slot7.materilType ~= MaterialEnum.MaterialType.Faith and slot7.materilType ~= MaterialEnum.MaterialType.Exp then
-			slot8 = MaterialDataMO.New()
-			slot8.bonusTag = slot2
+function var_0_0._addMaterialDatasToList(arg_20_0, arg_20_1, arg_20_2)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0) do
+		if iter_20_1.materilType ~= MaterialEnum.MaterialType.Faith and iter_20_1.materilType ~= MaterialEnum.MaterialType.Exp then
+			local var_20_0 = MaterialDataMO.New()
 
-			slot8:init(slot7)
-			table.insert(slot1, slot8)
+			var_20_0.bonusTag = arg_20_2
+
+			var_20_0:init(iter_20_1)
+			table.insert(arg_20_1, var_20_0)
 		end
 	end
 end
 
-function slot0._sortMaterial(slot0, slot1)
-	if uv0._sortMaterialByBonusTag(slot0, slot1) == nil then
-		slot4 = uv0._sortMaterialByRare(ItemModel.instance:getItemConfig(slot0.materilType, slot0.materilId), ItemModel.instance:getItemConfig(slot1.materilType, slot1.materilId))
+function var_0_0._sortMaterial(arg_21_0, arg_21_1)
+	local var_21_0 = ItemModel.instance:getItemConfig(arg_21_0.materilType, arg_21_0.materilId)
+	local var_21_1 = ItemModel.instance:getItemConfig(arg_21_1.materilType, arg_21_1.materilId)
+	local var_21_2 = var_0_0._sortMaterialByBonusTag(arg_21_0, arg_21_1)
+
+	if var_21_2 == nil then
+		var_21_2 = var_0_0._sortMaterialByRare(var_21_0, var_21_1)
 	end
 
-	if slot4 == nil then
-		slot4 = uv0._sortMaterialByType(slot0, slot1)
+	if var_21_2 == nil then
+		var_21_2 = var_0_0._sortMaterialByType(arg_21_0, arg_21_1)
 	end
 
-	if slot4 == nil then
-		slot4 = slot0.materilId < slot1.materilId
+	if var_21_2 == nil then
+		var_21_2 = arg_21_0.materilId < arg_21_1.materilId
 	end
 
-	return slot4
+	return var_21_2
 end
 
-function slot0._sortMaterialByBonusTag(slot0, slot1)
-	if (FightEnum.FightBonusTagPriority[slot0.bonusTag] or 0) == (FightEnum.FightBonusTagPriority[slot1.bonusTag] or 0) then
+function var_0_0._sortMaterialByBonusTag(arg_22_0, arg_22_1)
+	local var_22_0 = FightEnum.FightBonusTagPriority[arg_22_0.bonusTag] or 0
+	local var_22_1 = FightEnum.FightBonusTagPriority[arg_22_1.bonusTag] or 0
+
+	if var_22_0 == var_22_1 then
 		return nil
 	end
 
-	return slot3 < slot2
+	return var_22_1 < var_22_0
 end
 
-function slot0._sortMaterialByRare(slot0, slot1)
-	if (slot0 and slot0.rare or 0) == (slot1 and slot1.rare or 0) then
+function var_0_0._sortMaterialByRare(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0 and arg_23_0.rare or 0
+	local var_23_1 = arg_23_1 and arg_23_1.rare or 0
+
+	if var_23_0 == var_23_1 then
 		return nil
 	end
 
-	return slot3 < slot2
+	return var_23_1 < var_23_0
 end
 
-function slot0._sortMaterialByType(slot0, slot1)
-	uv0.MaterialTypePriority = uv0.MaterialTypePriority or {
+function var_0_0._sortMaterialByType(arg_24_0, arg_24_1)
+	var_0_0.MaterialTypePriority = var_0_0.MaterialTypePriority or {
 		[MaterialEnum.MaterialType.Item] = 1,
 		[MaterialEnum.MaterialType.Currency] = 5,
 		[MaterialEnum.MaterialType.Hero] = 4,
@@ -259,17 +279,20 @@ function slot0._sortMaterialByType(slot0, slot1)
 		[MaterialEnum.MaterialType.PowerPotion] = 2
 	}
 
-	if (uv0.MaterialTypePriority[slot0.materilType] or 0) == (uv0.MaterialTypePriority[slot1.materilType] or 0) then
+	local var_24_0 = var_0_0.MaterialTypePriority[arg_24_0.materilType] or 0
+	local var_24_1 = var_0_0.MaterialTypePriority[arg_24_1.materilType] or 0
+
+	if var_24_0 == var_24_1 then
 		return nil
 	end
 
-	return slot3 < slot2
+	return var_24_1 < var_24_0
 end
 
-function slot0.getNormal2SimpleMaterialDataList(slot0)
-	return slot0.normal2SimpleList
+function var_0_0.getNormal2SimpleMaterialDataList(arg_25_0)
+	return arg_25_0.normal2SimpleList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

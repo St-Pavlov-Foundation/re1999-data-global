@@ -1,12 +1,13 @@
-module("modules.logic.room.define.RoomSummonEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomSummonEnum", package.seeall)
 
-slot0 = _M
-slot0.SummonType = {
+local var_0_0 = _M
+
+var_0_0.SummonType = {
 	ItemGet = 3,
 	Summon = 1,
 	Incubate = 2
 }
-slot0.SummonMode = {
+var_0_0.SummonMode = {
 	{
 		CameraId = 2229,
 		EggRoot = "1/v2a2_bxhy_simulate_kafeiguan_01/v2a2_bxhy_simulate_niudanji_01/mesh/scale",
@@ -51,4 +52,4 @@ slot0.SummonMode = {
 	}
 }
 
-return slot0
+return var_0_0

@@ -1,21 +1,23 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.EliminateLevelController", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.EliminateLevelController", package.seeall)
 
-slot0 = class("EliminateLevelController", BaseController)
+local var_0_0 = class("EliminateLevelController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._canClickCharacter = true
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._canClickCharacter = true
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.enterLevel(slot0, slot1, slot2, slot3)
-	slot1 = slot1 or 222101
-	slot2 = slot2 or 222002
-	slot3 = slot3 or {
+function var_0_0.enterLevel(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_1 = arg_4_1 or 222101
+	arg_4_2 = arg_4_2 or 222002
+	arg_4_3 = arg_4_3 or {
 		222001,
 		222002,
 		222003,
@@ -24,268 +26,299 @@ function slot0.enterLevel(slot0, slot1, slot2, slot3)
 		22102
 	}
 
-	EliminateLevelModel.instance:initLevel(slot1, slot2, slot3)
-	EliminateRpc.instance:sendStartMatch3WarChessInfoRequest(slot1, slot2, slot3, slot0.openEliminateView, slot0)
+	EliminateLevelModel.instance:initLevel(arg_4_1, arg_4_2, arg_4_3)
+	EliminateRpc.instance:sendStartMatch3WarChessInfoRequest(arg_4_1, arg_4_2, arg_4_3, arg_4_0.openEliminateView, arg_4_0)
 end
 
-function slot0.closeLevel(slot0)
-	uv0.instance:clear()
+function var_0_0.closeLevel(arg_5_0)
+	var_0_0.instance:clear()
 	ViewMgr.instance:closeView(ViewName.EliminateLevelRewardView)
 	ViewMgr.instance:closeView(ViewName.EliminateLevelResultView)
 	ViewMgr.instance:closeView(ViewName.EliminateEffectView)
 	ViewMgr.instance:closeView(ViewName.EliminateLevelView)
-	slot0:_gc()
+	arg_5_0:_gc()
 end
 
-function slot0._gc(slot0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, slot0)
+function var_0_0._gc(arg_6_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_6_0)
 end
 
-function slot0.openEliminateResultView(slot0, slot1, slot2)
+function var_0_0.openEliminateResultView(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = EliminateTeamChessModel.instance:getWarFightResult()
+
 	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(false)
 	TeamChessUnitEntityMgr.instance:setAllEntityCanDrag(false)
 
-	if EliminateTeamChessModel.instance:getWarFightResult() and slot3:haveReward() then
-		ViewMgr.instance:openView(ViewName.EliminateLevelRewardView, slot1, slot2)
+	if var_7_0 and var_7_0:haveReward() then
+		ViewMgr.instance:openView(ViewName.EliminateLevelRewardView, arg_7_1, arg_7_2)
 	else
-		ViewMgr.instance:openView(ViewName.EliminateLevelResultView, slot1, slot2)
+		ViewMgr.instance:openView(ViewName.EliminateLevelResultView, arg_7_1, arg_7_2)
 	end
 end
 
-function slot0.openEliminateView(slot0, slot1, slot2)
+function var_0_0.openEliminateView(arg_8_0, arg_8_1, arg_8_2)
 	if EliminateTeamChessModel.instance:getCurTeamChessWar() == nil then
 		return
 	end
 
-	slot0._dialogData = EliminateConfig.instance:getEliminateDialogConfig(EliminateLevelModel.instance:getLevelId())
+	arg_8_0._dialogData = EliminateConfig.instance:getEliminateDialogConfig(EliminateLevelModel.instance:getLevelId())
 
-	slot0:clearTrigger()
-	slot0:registerCallback(EliminateChessEvent.Match3RoundBegin, slot0.checkLevelDialogMatchRound, slot0)
-	slot0:registerCallback(EliminateChessEvent.TeamChessRoundBegin, slot0.checkLevelDialogTeamChessRound, slot0)
-	slot0:registerCallback(EliminateChessEvent.TeamChessEnemyPlaceBefore, slot0.checkLevelDialogTeamChessEnemyPlaceBefore, slot0)
-	slot0:registerCallback(EliminateChessEvent.SettleAndToHaveDamage, slot0.checkLevelSettleAndHaveDamage, slot0)
-	ViewMgr.instance:openView(ViewName.EliminateLevelView, slot1, slot2)
+	arg_8_0:clearTrigger()
+	arg_8_0:registerCallback(EliminateChessEvent.Match3RoundBegin, arg_8_0.checkLevelDialogMatchRound, arg_8_0)
+	arg_8_0:registerCallback(EliminateChessEvent.TeamChessRoundBegin, arg_8_0.checkLevelDialogTeamChessRound, arg_8_0)
+	arg_8_0:registerCallback(EliminateChessEvent.TeamChessEnemyPlaceBefore, arg_8_0.checkLevelDialogTeamChessEnemyPlaceBefore, arg_8_0)
+	arg_8_0:registerCallback(EliminateChessEvent.SettleAndToHaveDamage, arg_8_0.checkLevelSettleAndHaveDamage, arg_8_0)
+	ViewMgr.instance:openView(ViewName.EliminateLevelView, arg_8_1, arg_8_2)
 	ViewMgr.instance:openView(ViewName.EliminateEffectView)
 end
 
-function slot0.changeRoundType(slot0, slot1)
-	slot2 = EliminateLevelModel.instance:getCurRoundType()
+function var_0_0.changeRoundType(arg_9_0, arg_9_1)
+	local var_9_0 = EliminateLevelModel.instance:getCurRoundType()
 
-	if slot1 and slot2 and slot1 == slot2 then
-		slot0:dispatchEvent(EliminateChessEvent.EliminateRoundStateChange, false)
+	if arg_9_1 and var_9_0 and arg_9_1 == var_9_0 then
+		arg_9_0:dispatchEvent(EliminateChessEvent.EliminateRoundStateChange, false)
 
 		return
 	end
 
-	if slot1 == EliminateEnum.RoundType.Match3Chess then
+	if arg_9_1 == EliminateEnum.RoundType.Match3Chess then
 		EliminateLevelModel.instance:setNeedChangeTeamToEliminate(false)
 	elseif EliminateTeamChessModel.instance:getCurTeamRoundStepState() ~= EliminateTeamChessEnum.TeamChessRoundType.enemy then
 		EliminateTeamChessModel.instance:setCurTeamRoundStepState(EliminateTeamChessEnum.TeamChessRoundType.player)
 	end
 
-	EliminateLevelModel.instance:setCurRoundType(slot1)
-	slot0:dispatchEvent(EliminateChessEvent.EliminateRoundStateChange, true)
+	EliminateLevelModel.instance:setCurRoundType(arg_9_1)
+	arg_9_0:dispatchEvent(EliminateChessEvent.EliminateRoundStateChange, true)
 end
 
-function slot0.checkState(slot0)
-	slot3 = false
-	slot4 = false
+function var_0_0.checkState(arg_10_0)
+	local var_10_0 = EliminateTeamChessModel.instance:getCurTeamRoundStepState()
+	local var_10_1 = EliminateLevelModel.instance:getRoundNumber()
+	local var_10_2 = false
+	local var_10_3 = false
 
-	if EliminateTeamChessModel.instance:getCurTeamRoundStepState() and slot1 ~= EliminateTeamChessEnum.TeamChessRoundType.settlement then
-		if slot1 == EliminateTeamChessEnum.TeamChessRoundType.enemy then
+	if var_10_0 and var_10_0 ~= EliminateTeamChessEnum.TeamChessRoundType.settlement then
+		if var_10_0 == EliminateTeamChessEnum.TeamChessRoundType.enemy then
 			EliminateTeamChessModel.instance:setCurTeamRoundStepState(EliminateTeamChessEnum.TeamChessRoundType.player)
 
-			if EliminateLevelModel.instance:getRoundNumber() == 1 then
-				slot3 = true
+			if var_10_1 == 1 then
+				var_10_2 = true
 			end
 		end
 	else
-		slot3 = EliminateLevelModel.instance:getNeedChangeTeamToEliminate()
+		var_10_3 = EliminateLevelModel.instance:getNeedChangeTeamToEliminate()
+		var_10_2 = var_10_3
 	end
 
-	if slot3 then
-		if slot4 then
-			EliminateChessController.instance:sendGetMatch3WarChessInfoRequest(EliminateEnum.GetInfoType.OnlyMovePint, function ()
-				uv0:changeRoundType(EliminateEnum.RoundType.Match3Chess)
+	if var_10_2 then
+		if var_10_3 then
+			EliminateChessController.instance:sendGetMatch3WarChessInfoRequest(EliminateEnum.GetInfoType.OnlyMovePint, function()
+				arg_10_0:changeRoundType(EliminateEnum.RoundType.Match3Chess)
 			end)
 		else
-			slot0:changeRoundType(EliminateEnum.RoundType.Match3Chess)
+			arg_10_0:changeRoundType(EliminateEnum.RoundType.Match3Chess)
 		end
 	end
 end
 
-function slot0.changeRoundToTeamChess(slot0)
-	WarChessRpc.instance:sendWarChessMyRoundStartRequest(slot0.changeRoundToTeamChessBegin, slot0)
+function var_0_0.changeRoundToTeamChess(arg_12_0)
+	WarChessRpc.instance:sendWarChessMyRoundStartRequest(arg_12_0.changeRoundToTeamChessBegin, arg_12_0)
 end
 
-function slot0.changeRoundToTeamChessBegin(slot0)
-	slot0:changeRoundType(EliminateEnum.RoundType.TeamChess)
+function var_0_0.changeRoundToTeamChessBegin(arg_13_0)
+	arg_13_0:changeRoundType(EliminateEnum.RoundType.TeamChess)
 end
 
-function slot0.cancelSkillRelease(slot0)
-	if slot0._selectSkillMo ~= nil then
-		slot0._selectSkillMo:cancelRelease()
+function var_0_0.cancelSkillRelease(arg_14_0)
+	if arg_14_0._selectSkillMo ~= nil then
+		arg_14_0._selectSkillMo:cancelRelease()
 	end
 
-	slot0._selectSkillMo = nil
-	slot0._releaseSkillCb = nil
-	slot0._releaseSkillCbTarget = nil
+	arg_14_0._selectSkillMo = nil
+	arg_14_0._releaseSkillCb = nil
+	arg_14_0._releaseSkillCbTarget = nil
 end
 
-function slot0.canRelease(slot0)
-	if slot0._selectSkillMo ~= nil then
-		return slot0._selectSkillMo:canRelease()
+function var_0_0.canRelease(arg_15_0)
+	if arg_15_0._selectSkillMo ~= nil then
+		return arg_15_0._selectSkillMo:canRelease()
 	end
 
 	return false
 end
 
-function slot0.canReleaseByRound(slot0, slot1)
-	if (slot1 or slot0._selectSkillMo) == nil then
+function var_0_0.canReleaseByRound(arg_16_0, arg_16_1)
+	arg_16_1 = arg_16_1 or arg_16_0._selectSkillMo
+
+	if arg_16_1 == nil then
 		return false
 	end
 
-	return EliminateLevelModel.instance:getCurRoundType() == slot1:getEffectRound()
+	return EliminateLevelModel.instance:getCurRoundType() == arg_16_1:getEffectRound()
 end
 
-function slot0.setSkillDataParams(slot0, ...)
-	if slot0._selectSkillMo ~= nil then
-		slot0._selectSkillMo:setSkillParam(...)
+function var_0_0.setSkillDataParams(arg_17_0, ...)
+	if arg_17_0._selectSkillMo ~= nil then
+		arg_17_0._selectSkillMo:setSkillParam(...)
 	end
 end
 
-function slot0.setCurSelectSkill(slot0, slot1, slot2)
-	if slot0._selectSkillMo == nil then
-		slot0._selectSkillMo = CharacterSkillMoUtil.createMO(string.split(slot2, "#")[1])
+function var_0_0.setCurSelectSkill(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_0._selectSkillMo == nil then
+		local var_18_0 = string.split(arg_18_2, "#")[1]
 
-		slot0._selectSkillMo:init(slot1)
+		arg_18_0._selectSkillMo = CharacterSkillMoUtil.createMO(var_18_0)
+
+		arg_18_0._selectSkillMo:init(arg_18_1)
 	end
 
-	return slot0._selectSkillMo
+	return arg_18_0._selectSkillMo
 end
 
-function slot0.getTempSkillMo(slot0, slot1, slot2)
-	if slot0._tempSkillMo == nil then
-		slot0._tempSkillMo = CharacterSkillMoUtil.createMO(string.split(slot2, "#")[1])
+function var_0_0.getTempSkillMo(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_0._tempSkillMo == nil then
+		local var_19_0 = string.split(arg_19_2, "#")[1]
 
-		slot0._tempSkillMo:init(slot1)
+		arg_19_0._tempSkillMo = CharacterSkillMoUtil.createMO(var_19_0)
+
+		arg_19_0._tempSkillMo:init(arg_19_1)
 	end
 
-	return slot0._tempSkillMo
+	return arg_19_0._tempSkillMo
 end
 
-function slot0.getCurSelectSkill(slot0)
-	return slot0._selectSkillMo
+function var_0_0.getCurSelectSkill(arg_20_0)
+	return arg_20_0._selectSkillMo
 end
 
-function slot0.releaseSkill(slot0, slot1, slot2)
-	if slot0._selectSkillMo ~= nil then
-		slot0._selectSkillMo:playAction(slot0._releaseSkill, slot0)
+function var_0_0.releaseSkill(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_0._selectSkillMo ~= nil then
+		arg_21_0._selectSkillMo:playAction(arg_21_0._releaseSkill, arg_21_0)
 
-		slot0._releaseSkillCb = slot1
-		slot0._releaseSkillCbTarget = slot2
+		arg_21_0._releaseSkillCb = arg_21_1
+		arg_21_0._releaseSkillCbTarget = arg_21_2
 	end
 end
 
-function slot0._releaseSkill(slot0)
-	if slot0._selectSkillMo == nil then
+function var_0_0._releaseSkill(arg_22_0)
+	if arg_22_0._selectSkillMo == nil then
 		return
 	end
 
-	if slot0._selectSkillMo:getEffectRound() == EliminateEnum.RoundType.Match3Chess then
+	if arg_22_0._selectSkillMo:getEffectRound() == EliminateEnum.RoundType.Match3Chess then
 		EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PerformBegin)
 		EliminateChessController.instance:setFlowEndState(false)
 	end
 
 	EliminateLevelModel.instance:addMainUseSkillNum()
-	WarChessRpc.instance:sendWarChessCharacterSkillRequest(slot0._selectSkillMo._skillId, slot0._selectSkillMo:getReleaseParam(), EliminateEnum.RoundType.Match3Chess, slot0.onReceiveWarChessCharacterSkillSuccess, slot0)
+	WarChessRpc.instance:sendWarChessCharacterSkillRequest(arg_22_0._selectSkillMo._skillId, arg_22_0._selectSkillMo:getReleaseParam(), EliminateEnum.RoundType.Match3Chess, arg_22_0.onReceiveWarChessCharacterSkillSuccess, arg_22_0)
 end
 
-function slot0.onReceiveWarChessCharacterSkillSuccess(slot0)
-	slot1 = slot0._selectSkillMo:getEffectRound() == EliminateEnum.RoundType.Match3Chess
+function var_0_0.onReceiveWarChessCharacterSkillSuccess(arg_23_0)
+	local var_23_0 = arg_23_0._selectSkillMo:getEffectRound() == EliminateEnum.RoundType.Match3Chess
 
-	if slot0._releaseSkillCbTarget and slot0._releaseSkillCb then
-		slot0._releaseSkillCb(slot0._releaseSkillCbTarget)
+	if arg_23_0._releaseSkillCbTarget and arg_23_0._releaseSkillCb then
+		arg_23_0._releaseSkillCb(arg_23_0._releaseSkillCbTarget)
 	end
 
-	slot0:dispatchEvent(EliminateChessEvent.WarChessCharacterSkillSuccess)
+	arg_23_0:dispatchEvent(EliminateChessEvent.WarChessCharacterSkillSuccess)
 
-	if slot1 then
+	if var_23_0 then
 		EliminateChessController.instance:setFlowEndState(true)
 	end
 end
 
-function slot0.getCurLevelNeedPreloadRes(slot0)
-	slot1 = {}
+function var_0_0.getCurLevelNeedPreloadRes(arg_24_0)
+	local var_24_0 = {}
+	local var_24_1 = EliminateLevelModel.instance:getCurLevelPieceIds()
 
-	if EliminateLevelModel.instance:getCurLevelPieceIds() then
-		for slot6 = 1, #slot2 do
-			if EliminateConfig.instance:getSoldierChessModelPath(slot2[slot6]) then
-				table.insert(slot1, slot8)
+	if var_24_1 then
+		for iter_24_0 = 1, #var_24_1 do
+			local var_24_2 = var_24_1[iter_24_0]
+			local var_24_3 = EliminateConfig.instance:getSoldierChessModelPath(var_24_2)
+
+			if var_24_3 then
+				table.insert(var_24_0, var_24_3)
 			end
 		end
 	end
 
-	for slot6, slot7 in pairs(EliminateTeamChessEnum.VxEffectTypeToPath) do
-		table.insert(slot1, slot7)
+	for iter_24_1, iter_24_2 in pairs(EliminateTeamChessEnum.VxEffectTypeToPath) do
+		table.insert(var_24_0, iter_24_2)
 	end
 
-	return slot1
+	return var_24_0
 end
 
-function slot0.checkLevelDialogMatchRound(slot0, slot1)
-	slot0:_checkLevelDialog(EliminateEnum.ConditionType.MatchRoundBegin, slot1)
+function var_0_0.checkLevelDialogMatchRound(arg_25_0, arg_25_1)
+	arg_25_0:_checkLevelDialog(EliminateEnum.ConditionType.MatchRoundBegin, arg_25_1)
 end
 
-function slot0.checkLevelDialogTeamChessRound(slot0, slot1)
-	slot0:_checkLevelDialog(EliminateEnum.ConditionType.TeamChessRoundBegin, slot1)
+function var_0_0.checkLevelDialogTeamChessRound(arg_26_0, arg_26_1)
+	arg_26_0:_checkLevelDialog(EliminateEnum.ConditionType.TeamChessRoundBegin, arg_26_1)
 end
 
-function slot0.checkLevelDialogTeamChessEnemyPlaceBefore(slot0, slot1)
-	slot0:_checkLevelDialog(EliminateEnum.ConditionType.TeamChessEnemyPlaceBefore, slot1)
+function var_0_0.checkLevelDialogTeamChessEnemyPlaceBefore(arg_27_0, arg_27_1)
+	arg_27_0:_checkLevelDialog(EliminateEnum.ConditionType.TeamChessEnemyPlaceBefore, arg_27_1)
 end
 
-function slot0.checkLevelSettleAndHaveDamage(slot0, slot1)
-	slot0:_checkLevelDialog(EliminateEnum.ConditionType.SettleAndToHaveDamage, slot1)
+function var_0_0.checkLevelSettleAndHaveDamage(arg_28_0, arg_28_1)
+	arg_28_0:_checkLevelDialog(EliminateEnum.ConditionType.SettleAndToHaveDamage, arg_28_1)
 end
 
-function slot0.clickMainCharacter(slot0)
-	if not slot0._canClickCharacter then
+function var_0_0.clickMainCharacter(arg_29_0)
+	if not arg_29_0._canClickCharacter then
 		return
 	end
 
-	slot0:_checkLevelDialog(EliminateEnum.ConditionType.ClickMainCharacter)
+	arg_29_0:_checkLevelDialog(EliminateEnum.ConditionType.ClickMainCharacter)
 end
 
-function slot0._checkLevelDialog(slot0, slot1, slot2)
-	slot3 = nil
-	slot4 = false
-	slot5 = ""
-	slot0._lastConditionType = slot1
-	slot6 = ""
-	slot6 = (slot1 == EliminateEnum.ConditionType.MatchRoundBegin or slot1 == EliminateEnum.ConditionType.TeamChessRoundBegin) and (#string.split(slot2, "_") >= 2 and slot7[2] or nil) or slot2
+function var_0_0._checkLevelDialog(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0
+	local var_30_1 = false
+	local var_30_2 = ""
 
-	if slot0._dialogData ~= nil and tabletool.len(slot0._dialogData) > 0 then
-		slot7 = EliminateLevelModel.instance:getWarChessCharacterId()
+	arg_30_0._lastConditionType = arg_30_1
 
-		for slot11, slot12 in ipairs(slot0._dialogData) do
-			if slot1 == string.split(slot12.trigger, "#")[1] then
-				slot15, slot16 = nil
+	local var_30_3 = ""
 
-				if slot1 == EliminateEnum.ConditionType.MatchRoundBegin or slot1 == EliminateEnum.ConditionType.TeamChessRoundBegin or slot1 == EliminateEnum.ConditionType.SettleAndToHaveDamage then
-					slot15 = tonumber(slot13[3])
-					slot16 = slot13[2]
+	if arg_30_1 == EliminateEnum.ConditionType.MatchRoundBegin or arg_30_1 == EliminateEnum.ConditionType.TeamChessRoundBegin then
+		local var_30_4 = string.split(arg_30_2, "_")
+
+		var_30_3 = #var_30_4 >= 2 and var_30_4[2] or nil
+	else
+		var_30_3 = arg_30_2
+	end
+
+	if arg_30_0._dialogData ~= nil and tabletool.len(arg_30_0._dialogData) > 0 then
+		local var_30_5 = EliminateLevelModel.instance:getWarChessCharacterId()
+
+		for iter_30_0, iter_30_1 in ipairs(arg_30_0._dialogData) do
+			var_30_2 = iter_30_1.trigger
+
+			local var_30_6 = string.split(var_30_2, "#")
+
+			if arg_30_1 == var_30_6[1] then
+				local var_30_7
+				local var_30_8
+
+				if arg_30_1 == EliminateEnum.ConditionType.MatchRoundBegin or arg_30_1 == EliminateEnum.ConditionType.TeamChessRoundBegin or arg_30_1 == EliminateEnum.ConditionType.SettleAndToHaveDamage then
+					var_30_7 = tonumber(var_30_6[3])
+					var_30_8 = var_30_6[2]
 				else
-					slot15 = tonumber(slot13[2])
+					var_30_7 = tonumber(var_30_6[2])
 				end
 
-				if slot15 == -1 and slot16 == nil or slot15 == slot7 and slot16 == slot6 then
-					slot18 = #slot12.dialogId
-					slot4 = slot12.auto == 1
-					slot3 = slot17[slot18]
+				if var_30_7 == -1 and var_30_8 == nil or var_30_7 == var_30_5 and var_30_8 == var_30_3 then
+					local var_30_9 = iter_30_1.dialogId
+					local var_30_10 = #var_30_9
 
-					if slot18 > 1 then
-						slot3 = slot17[math.random(1, slot18)]
+					var_30_1 = iter_30_1.auto == 1
+					var_30_0 = var_30_9[var_30_10]
+
+					if var_30_10 > 1 then
+						var_30_0 = var_30_9[math.random(1, var_30_10)]
 					end
 
 					break
@@ -294,51 +327,55 @@ function slot0._checkLevelDialog(slot0, slot1, slot2)
 		end
 	end
 
-	if slot3 ~= nil and slot1 ~= EliminateEnum.ConditionType.ClickMainCharacter and slot0:isTrigger(slot5) then
-		slot3 = nil
+	if var_30_0 ~= nil and arg_30_1 ~= EliminateEnum.ConditionType.ClickMainCharacter and arg_30_0:isTrigger(var_30_2) then
+		var_30_0 = nil
 	end
 
-	if slot3 ~= nil then
-		TipDialogController.instance:openTipDialogView(slot3, slot0._levelDialogClose, slot0, slot4, slot4 and EliminateConfig.instance:getConstValue(35) / 1000 or nil, slot4 and EliminateConfig.instance:getConstValue(34) / 100 or nil)
-		slot0:setTrigger(slot5)
+	if var_30_0 ~= nil then
+		TipDialogController.instance:openTipDialogView(var_30_0, arg_30_0._levelDialogClose, arg_30_0, var_30_1, var_30_1 and EliminateConfig.instance:getConstValue(35) / 1000 or nil, var_30_1 and EliminateConfig.instance:getConstValue(34) / 100 or nil)
+		arg_30_0:setTrigger(var_30_2)
 	else
-		slot0:_levelDialogClose()
+		arg_30_0:_levelDialogClose()
 	end
 end
 
-function slot0.setTrigger(slot0, slot1)
-	if slot0.trigger == nil then
-		slot0.trigger = {}
+function var_0_0.setTrigger(arg_31_0, arg_31_1)
+	if arg_31_0.trigger == nil then
+		arg_31_0.trigger = {}
 	end
 
-	slot0.trigger[slot1] = slot1
+	arg_31_0.trigger[arg_31_1] = arg_31_1
 end
 
-function slot0.clearTrigger(slot0)
-	slot0.trigger = nil
+function var_0_0.clearTrigger(arg_32_0)
+	arg_32_0.trigger = nil
 end
 
-function slot0.isTrigger(slot0, slot1)
-	return slot0.trigger ~= nil and slot0.trigger[slot1] ~= nil
+function var_0_0.isTrigger(arg_33_0, arg_33_1)
+	return arg_33_0.trigger ~= nil and arg_33_0.trigger[arg_33_1] ~= nil
 end
 
-function slot0._levelDialogClose(slot0)
-	if slot0._lastConditionType and slot0._lastConditionType == EliminateEnum.ConditionType.TeamChessEnemyPlaceBefore then
-		slot0:dispatchEvent(EliminateChessEvent.LevelDialogClosed)
+function var_0_0._levelDialogClose(arg_34_0)
+	if arg_34_0._lastConditionType and arg_34_0._lastConditionType == EliminateEnum.ConditionType.TeamChessEnemyPlaceBefore then
+		arg_34_0:dispatchEvent(EliminateChessEvent.LevelDialogClosed)
 	end
 
-	if slot0._lastConditionType and slot0._lastConditionType == EliminateEnum.ConditionType.ClickMainCharacter then
-		slot0._canClickCharacter = true
+	if arg_34_0._lastConditionType and arg_34_0._lastConditionType == EliminateEnum.ConditionType.ClickMainCharacter then
+		arg_34_0._canClickCharacter = true
 	end
 end
 
-function slot0.queryBgm()
-	if EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == nil then
-		slot0 = EliminateLevelModel.instance:getLevelId()
+function var_0_0.queryBgm()
+	local var_35_0 = EliminateTeamSelectionModel.instance:getSelectedEpisodeId()
+
+	if var_35_0 == nil then
+		var_35_0 = EliminateLevelModel.instance:getLevelId()
 	end
 
-	if EliminateConfig.instance:getEliminateEpisodeConfig(slot0) then
-		if slot1.levelPosition == EliminateLevelEnum.levelType.normal then
+	local var_35_1 = EliminateConfig.instance:getEliminateEpisodeConfig(var_35_0)
+
+	if var_35_1 then
+		if var_35_1.levelPosition == EliminateLevelEnum.levelType.normal then
 			return AudioBgmEnum.Layer.NormalBattleV2_2
 		else
 			return AudioBgmEnum.Layer.BossBattleV2_2
@@ -348,69 +385,82 @@ function slot0.queryBgm()
 	end
 end
 
-function slot0.BgSwitch(slot0, slot1)
-	if slot0.switchGroupId == nil then
-		slot0.switchGroupId = AudioMgr.instance:getIdFromString("Checkpointstate")
-		slot0.fightNormal = AudioMgr.instance:getIdFromString("Fightnormal")
-		slot0.victory = AudioMgr.instance:getIdFromString("Victory")
-		slot0.comeShow = AudioMgr.instance:getIdFromString("Comeshow")
+function var_0_0.BgSwitch(arg_36_0, arg_36_1)
+	if arg_36_0.switchGroupId == nil then
+		arg_36_0.switchGroupId = AudioMgr.instance:getIdFromString("Checkpointstate")
+		arg_36_0.fightNormal = AudioMgr.instance:getIdFromString("Fightnormal")
+		arg_36_0.victory = AudioMgr.instance:getIdFromString("Victory")
+		arg_36_0.comeShow = AudioMgr.instance:getIdFromString("Comeshow")
 	end
 
-	if slot1 == EliminateEnum.AudioFightStep.ComeShow then
-		AudioMgr.instance:setSwitch(slot0.switchGroupId, slot0.comeShow)
+	if arg_36_1 == EliminateEnum.AudioFightStep.ComeShow then
+		AudioMgr.instance:setSwitch(arg_36_0.switchGroupId, arg_36_0.comeShow)
 	end
 
-	if slot1 == EliminateEnum.AudioFightStep.FightNormal then
-		AudioMgr.instance:setSwitch(slot0.switchGroupId, slot0.fightNormal)
+	if arg_36_1 == EliminateEnum.AudioFightStep.FightNormal then
+		AudioMgr.instance:setSwitch(arg_36_0.switchGroupId, arg_36_0.fightNormal)
 	end
 
-	if slot1 == EliminateEnum.AudioFightStep.Victory then
-		AudioMgr.instance:setSwitch(slot0.switchGroupId, slot0.victory)
-	end
-end
-
-function slot0.checkMainSkill(slot0)
-	if EliminateTeamChessModel.instance:getCurTeamMyInfo() and EliminateConfig.instance:getMainCharacterSkillConfig(EliminateConfig.instance:getTeamChessCharacterConfig(slot1.id).activeSkillIds).cost <= slot1.power then
-		slot0:dispatchEvent(EliminateChessEvent.TeamChessRoundBeginAndMainCharacterSkillCanUse, string.format("%s_%s", EliminateLevelModel.instance:getLevelId(), slot1.id))
+	if arg_36_1 == EliminateEnum.AudioFightStep.Victory then
+		AudioMgr.instance:setSwitch(arg_36_0.switchGroupId, arg_36_0.victory)
 	end
 end
 
-function slot0.checkPlayerSoliderCount(slot0)
-	for slot6, slot7 in pairs(EliminateTeamChessModel.instance:getStrongholds()) do
-		slot2 = 0 + slot7:getPlayerSoliderCount()
-	end
+function var_0_0.checkMainSkill(arg_37_0)
+	local var_37_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
 
-	if slot2 > 0 then
-		slot0:dispatchEvent(EliminateChessEvent.TeamChessRoundBeginAndMainCharacterSkillCanUse, string.format("%s_%s", EliminateLevelModel.instance:getLevelId(), slot2))
-	end
-end
+	if var_37_0 then
+		local var_37_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_37_0.id)
 
-function slot0.updatePlayerExtraWinCondition(slot0, slot1)
-	slot2 = EliminateTeamChessModel.instance:getCurTeamChessWar()
-	slot3 = EliminateTeamChessModel.instance:getServerTeamChessWar()
+		if EliminateConfig.instance:getMainCharacterSkillConfig(var_37_1.activeSkillIds).cost <= var_37_0.power then
+			local var_37_2 = EliminateLevelModel.instance:getLevelId()
 
-	slot3:updateCondition(slot3.winCondition, slot1)
-
-	if slot2:updateCondition(slot2.winCondition, slot1) then
-		slot0:dispatchEvent(EliminateChessEvent.LevelConditionChange)
+			arg_37_0:dispatchEvent(EliminateChessEvent.TeamChessRoundBeginAndMainCharacterSkillCanUse, string.format("%s_%s", var_37_2, var_37_0.id))
+		end
 	end
 end
 
-function slot0.clear(slot0)
-	slot0:unregisterCallback(EliminateChessEvent.Match3RoundBegin, slot0.checkLevelDialogMatchRound, slot0)
-	slot0:unregisterCallback(EliminateChessEvent.TeamChessRoundBegin, slot0.checkLevelDialogTeamChessRound, slot0)
-	slot0:unregisterCallback(EliminateChessEvent.TeamChessEnemyPlaceBefore, slot0.checkLevelDialogTeamChessEnemyPlaceBefore, slot0)
-	slot0:unregisterCallback(EliminateChessEvent.SettleAndToHaveDamage, slot0.checkLevelSettleAndHaveDamage, slot0)
+function var_0_0.checkPlayerSoliderCount(arg_38_0)
+	local var_38_0 = EliminateTeamChessModel.instance:getStrongholds()
+	local var_38_1 = 0
+
+	for iter_38_0, iter_38_1 in pairs(var_38_0) do
+		var_38_1 = var_38_1 + iter_38_1:getPlayerSoliderCount()
+	end
+
+	if var_38_1 > 0 then
+		local var_38_2 = EliminateLevelModel.instance:getLevelId()
+
+		arg_38_0:dispatchEvent(EliminateChessEvent.TeamChessRoundBeginAndMainCharacterSkillCanUse, string.format("%s_%s", var_38_2, var_38_1))
+	end
+end
+
+function var_0_0.updatePlayerExtraWinCondition(arg_39_0, arg_39_1)
+	local var_39_0 = EliminateTeamChessModel.instance:getCurTeamChessWar()
+	local var_39_1 = EliminateTeamChessModel.instance:getServerTeamChessWar()
+
+	var_39_1:updateCondition(var_39_1.winCondition, arg_39_1)
+
+	if var_39_0:updateCondition(var_39_0.winCondition, arg_39_1) then
+		arg_39_0:dispatchEvent(EliminateChessEvent.LevelConditionChange)
+	end
+end
+
+function var_0_0.clear(arg_40_0)
+	arg_40_0:unregisterCallback(EliminateChessEvent.Match3RoundBegin, arg_40_0.checkLevelDialogMatchRound, arg_40_0)
+	arg_40_0:unregisterCallback(EliminateChessEvent.TeamChessRoundBegin, arg_40_0.checkLevelDialogTeamChessRound, arg_40_0)
+	arg_40_0:unregisterCallback(EliminateChessEvent.TeamChessEnemyPlaceBefore, arg_40_0.checkLevelDialogTeamChessEnemyPlaceBefore, arg_40_0)
+	arg_40_0:unregisterCallback(EliminateChessEvent.SettleAndToHaveDamage, arg_40_0.checkLevelSettleAndHaveDamage, arg_40_0)
 	EliminateTeamChessController.instance:clear()
 	EliminateChessController.instance:clear()
-	slot0:cancelSkillRelease()
+	arg_40_0:cancelSkillRelease()
 
-	slot0._tempSkillMo = nil
+	arg_40_0._tempSkillMo = nil
 
 	EliminateLevelModel.instance:clear()
 	TeamChessEffectPool.dispose()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

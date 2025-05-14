@@ -1,26 +1,27 @@
-module("modules.logic.activity.view.SummerSignPart1ViewContainer_1_2", package.seeall)
+﻿module("modules.logic.activity.view.SummerSignPart1ViewContainer_1_2", package.seeall)
 
-slot0 = class("SummerSignPart1ViewContainer_1_2", BaseViewContainer)
+local var_0_0 = class("SummerSignPart1ViewContainer_1_2", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_daylist/#scroll_item"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = ActivityNorSignItem_1_2
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 7
-	slot2.cellWidth = 200
-	slot2.cellHeight = 590
-	slot2.cellSpaceH = 4.1
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(ActivityNorSignItemListModel_1_2.instance, slot2))
-	table.insert(slot1, SummerSignPart1View_1_2.New())
+	var_1_1.scrollGOPath = "#go_daylist/#scroll_item"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = ActivityNorSignItem_1_2
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 7
+	var_1_1.cellWidth = 200
+	var_1_1.cellHeight = 590
+	var_1_1.cellSpaceH = 4.1
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(ActivityNorSignItemListModel_1_2.instance, var_1_1))
+	table.insert(var_1_0, SummerSignPart1View_1_2.New())
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

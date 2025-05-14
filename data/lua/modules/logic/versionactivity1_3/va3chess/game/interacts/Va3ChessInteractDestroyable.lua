@@ -1,45 +1,49 @@
-module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractDestroyable", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractDestroyable", package.seeall)
 
-slot0 = class("Va3ChessInteractDestroyable", Va3ChessInteractBase)
+local var_0_0 = class("Va3ChessInteractDestroyable", Va3ChessInteractBase)
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_1_0)
+	var_0_0.super.onAvatarLoaded(arg_1_0)
 
-	if not slot0._target.avatar.loader then
+	local var_1_0 = arg_1_0._target.avatar.loader
+
+	if not var_1_0 then
 		return
 	end
 
-	if not gohelper.isNil(slot1:getInstGO()) then
-		slot0._animSelf = slot2:GetComponent(typeof(UnityEngine.Animator))
+	local var_1_1 = var_1_0:getInstGO()
+
+	if not gohelper.isNil(var_1_1) then
+		arg_1_0._animSelf = var_1_1:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot0._target.interoperableFlag = gohelper.findChild(slot2, "icon")
+	arg_1_0._target.interoperableFlag = gohelper.findChild(var_1_1, "icon")
 end
 
-slot1 = "switch"
+local var_0_1 = "switch"
 
-function slot0.playDeleteObjView(slot0)
+function var_0_0.playDeleteObjView(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.BreakBoughs)
 
-	if slot0._animSelf then
-		slot0._animSelf:Play(uv0)
+	if arg_2_0._animSelf then
+		arg_2_0._animSelf:Play(var_0_1)
 	end
 end
 
-function slot0.showStateView(slot0, slot1, slot2)
-	if slot1 == Va3ChessEnum.ObjState.Idle then
-		slot0:showIdleStateView()
-	elseif slot1 == Va3ChessEnum.ObjState.Interoperable then
-		slot0:showInteroperableStateView(slot2)
+function var_0_0.showStateView(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == Va3ChessEnum.ObjState.Idle then
+		arg_3_0:showIdleStateView()
+	elseif arg_3_1 == Va3ChessEnum.ObjState.Interoperable then
+		arg_3_0:showInteroperableStateView(arg_3_2)
 	end
 end
 
-function slot0.showIdleStateView(slot0)
-	gohelper.setActive(slot0._target.interoperableFlag, false)
+function var_0_0.showIdleStateView(arg_4_0)
+	gohelper.setActive(arg_4_0._target.interoperableFlag, false)
 end
 
-function slot0.showInteroperableStateView(slot0, slot1)
-	gohelper.setActive(slot0._target.interoperableFlag, true)
+function var_0_0.showInteroperableStateView(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._target.interoperableFlag, true)
 end
 
-return slot0
+return var_0_0

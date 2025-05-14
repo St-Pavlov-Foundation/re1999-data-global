@@ -1,262 +1,264 @@
-module("modules.logic.dungeon.view.DungeonView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonView", package.seeall)
 
-slot0 = class("DungeonView", BaseView)
+local var_0_0 = class("DungeonView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gostory = gohelper.findChild(slot0.viewGO, "#go_story")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_story/#simage_bg")
-	slot0._scrollchapter = gohelper.findChildScrollRect(slot0.viewGO, "#go_story/chapterlist/#scroll_chapter")
-	slot0._goresource = gohelper.findChild(slot0.viewGO, "#go_resource")
-	slot0._simageresourcebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_resource/#simage_resourcebg")
-	slot0._simagedrawbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_resource/#simage_drawbg")
-	slot0._scrollchapterresource = gohelper.findChildScrollRect(slot0.viewGO, "#go_resource/chapterlist/#scroll_chapter_resource")
-	slot0._gorescontent = gohelper.findChild(slot0.viewGO, "#go_resource/chapterlist/#scroll_chapter_resource/#go_rescontent")
-	slot0._goweekwalk = gohelper.findChild(slot0.viewGO, "#go_weekwalk")
-	slot0._goexplore = gohelper.findChild(slot0.viewGO, "#go_explore")
-	slot0._btnstory = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_story")
-	slot0._gostoryUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText")
-	slot0._gostorySelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_story/#go_storySelectText")
-	slot0._btnexplore = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_secretroom")
-	slot0._goexploreUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_secretroom/#go_secretroomUnselectText")
-	slot0._goexploreSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_secretroom/#go_secretroomSelectText")
-	slot0._gogoldUnselectIcon = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_gold/#go_goldUnselectText/icon")
-	slot0._gogoldRedPoint = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_gold/#go_goldUnselectText/icon_redpoint")
-	slot0._btngold = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_gold")
-	slot0._gogoldUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_gold/#go_goldUnselectText")
-	slot0._gogoldSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_gold/#go_goldSelectText")
-	slot0._btnresource = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_resource")
-	slot0._goresUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_resource/#go_resUnselectText")
-	slot0._goresSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_resource/#go_resSelectText")
-	slot0._btnweekwalk = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_weekwalk")
-	slot0._goweekwalkUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText")
-	slot0._goweekwalkSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkSelectText")
-	slot0._goweekwalkicon = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText/#go_weekwalk_icon")
-	slot0._goweekwalkreward1 = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText/#go_weekwalk_reward1")
-	slot0._goweekwalkreward2 = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText/#go_weekwalk_reward2")
-	slot0._btnrouge = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_rouge")
-	slot0._gorougeUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeUnselectText")
-	slot0._gorougeSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeSelectText")
-	slot0._goRoleStory = gohelper.findChild(slot0.viewGO, "#go_RoleStory")
-	slot0._btnanecdote = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_anecdote")
-	slot0._goanecdoteUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText")
-	slot0._goanecdoteSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteSelectText")
-	slot0._goanecdoteUnRed = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText/icon")
-	slot0._goanecdoteRed = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText/icon1")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gostory = gohelper.findChild(arg_1_0.viewGO, "#go_story")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_story/#simage_bg")
+	arg_1_0._scrollchapter = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter")
+	arg_1_0._goresource = gohelper.findChild(arg_1_0.viewGO, "#go_resource")
+	arg_1_0._simageresourcebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_resource/#simage_resourcebg")
+	arg_1_0._simagedrawbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_resource/#simage_drawbg")
+	arg_1_0._scrollchapterresource = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_resource/chapterlist/#scroll_chapter_resource")
+	arg_1_0._gorescontent = gohelper.findChild(arg_1_0.viewGO, "#go_resource/chapterlist/#scroll_chapter_resource/#go_rescontent")
+	arg_1_0._goweekwalk = gohelper.findChild(arg_1_0.viewGO, "#go_weekwalk")
+	arg_1_0._goexplore = gohelper.findChild(arg_1_0.viewGO, "#go_explore")
+	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_story")
+	arg_1_0._gostoryUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText")
+	arg_1_0._gostorySelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_story/#go_storySelectText")
+	arg_1_0._btnexplore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_secretroom")
+	arg_1_0._goexploreUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_secretroom/#go_secretroomUnselectText")
+	arg_1_0._goexploreSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_secretroom/#go_secretroomSelectText")
+	arg_1_0._gogoldUnselectIcon = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_gold/#go_goldUnselectText/icon")
+	arg_1_0._gogoldRedPoint = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_gold/#go_goldUnselectText/icon_redpoint")
+	arg_1_0._btngold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_gold")
+	arg_1_0._gogoldUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_gold/#go_goldUnselectText")
+	arg_1_0._gogoldSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_gold/#go_goldSelectText")
+	arg_1_0._btnresource = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_resource")
+	arg_1_0._goresUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_resource/#go_resUnselectText")
+	arg_1_0._goresSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_resource/#go_resSelectText")
+	arg_1_0._btnweekwalk = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_weekwalk")
+	arg_1_0._goweekwalkUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText")
+	arg_1_0._goweekwalkSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkSelectText")
+	arg_1_0._goweekwalkicon = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText/#go_weekwalk_icon")
+	arg_1_0._goweekwalkreward1 = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText/#go_weekwalk_reward1")
+	arg_1_0._goweekwalkreward2 = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_weekwalk/#go_weekwalkUnselectText/#go_weekwalk_reward2")
+	arg_1_0._btnrouge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_rouge")
+	arg_1_0._gorougeUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeUnselectText")
+	arg_1_0._gorougeSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeSelectText")
+	arg_1_0._goRoleStory = gohelper.findChild(arg_1_0.viewGO, "#go_RoleStory")
+	arg_1_0._btnanecdote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_anecdote")
+	arg_1_0._goanecdoteUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText")
+	arg_1_0._goanecdoteSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteSelectText")
+	arg_1_0._goanecdoteUnRed = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText/icon")
+	arg_1_0._goanecdoteRed = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText/icon1")
 
-	RedDotController.instance:addRedDotTag(slot0._goanecdoteUnRed, RedDotEnum.DotNode.RoleStory, true)
-	RedDotController.instance:addRedDotTag(slot0._goanecdoteRed, RedDotEnum.DotNode.RoleStory)
+	RedDotController.instance:addRedDotTag(arg_1_0._goanecdoteUnRed, RedDotEnum.DotNode.RoleStory, true)
+	RedDotController.instance:addRedDotTag(arg_1_0._goanecdoteRed, RedDotEnum.DotNode.RoleStory)
 
-	slot0._gopermanent = gohelper.findChild(slot0.viewGO, "#go_permanent")
-	slot0._btnpermanent = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_permanent")
-	slot0._goperUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText")
-	slot0._goperUnselectIcon = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText/icon")
-	slot0._goperSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_permanent/#go_perSelectText")
-	slot0._goreddotpermanent = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText/redpoint")
+	arg_1_0._gopermanent = gohelper.findChild(arg_1_0.viewGO, "#go_permanent")
+	arg_1_0._btnpermanent = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent")
+	arg_1_0._goperUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText")
+	arg_1_0._goperUnselectIcon = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText/icon")
+	arg_1_0._goperSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perSelectText")
+	arg_1_0._goreddotpermanent = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText/redpoint")
 
-	RedDotController.instance:addRedDotTag(slot0._goreddotpermanent, RedDotEnum.DotNode.Dungeon_Permanent, false, slot0._checkPermanentReddot, slot0)
+	RedDotController.instance:addRedDotTag(arg_1_0._goreddotpermanent, RedDotEnum.DotNode.Dungeon_Permanent, false, arg_1_0._checkPermanentReddot, arg_1_0)
 
-	slot0._btnDramaReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_story/#btn_story")
-	slot0._gostoryUnselectTextIcon = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/icon")
-	slot0._goreddotstory = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/redpoint")
-	slot0.storyUnSelectIconTag = RedDotController.instance:addRedDotTag(slot0._gostoryUnselectTextIcon, RedDotEnum.DotNode.HeroInvitationReward, true, slot0.refreshStoryIcon, slot0)
-	slot0.storySelectIconTag = RedDotController.instance:addRedDotTag(slot0._goreddotstory, RedDotEnum.DotNode.HeroInvitationReward, nil, slot0.refreshStoryIcon, slot0)
-	slot0._btntower = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottom/categorylist/#btn_tower")
-	slot0._gotowerUnselectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText")
-	slot0._gotowerSelectText = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_tower/#go_towerSelectText")
-	slot0._gotowerReddotEffect = gohelper.findChild(slot0.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText/redpoint")
+	arg_1_0._btnDramaReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#btn_story")
+	arg_1_0._gostoryUnselectTextIcon = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/icon")
+	arg_1_0._goreddotstory = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/redpoint")
+	arg_1_0.storyUnSelectIconTag = RedDotController.instance:addRedDotTag(arg_1_0._gostoryUnselectTextIcon, RedDotEnum.DotNode.HeroInvitationReward, true, arg_1_0.refreshStoryIcon, arg_1_0)
+	arg_1_0.storySelectIconTag = RedDotController.instance:addRedDotTag(arg_1_0._goreddotstory, RedDotEnum.DotNode.HeroInvitationReward, nil, arg_1_0.refreshStoryIcon, arg_1_0)
+	arg_1_0._btntower = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/categorylist/#btn_tower")
+	arg_1_0._gotowerUnselectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText")
+	arg_1_0._gotowerSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_tower/#go_towerSelectText")
+	arg_1_0._gotowerReddotEffect = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText/redpoint")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnpermanent:AddClickListener(slot0._btnpermanentOnClick, slot0)
-	slot0._btnrouge:AddClickListener(slot0._btnrougeOnClick, slot0)
-	slot0._btnexplore:AddClickListener(slot0._btnexploreOnClick, slot0)
-	slot0._btnstory:AddClickListener(slot0._btnstoryOnClick, slot0)
-	slot0._btngold:AddClickListener(slot0._btngoldOnClick, slot0)
-	slot0._btnresource:AddClickListener(slot0._btnresourceOnClick, slot0)
-	slot0._btnweekwalk:AddClickListener(slot0._btnweekwalkOnClick, slot0)
-	slot0._btnanecdote:AddClickListener(slot0._btnanecdoteOnClick, slot0)
-	slot0._btnDramaReward:AddClickListener(slot0._btnDramaRewardOnClick, slot0)
-	slot0._btntower:AddClickListener(slot0._btnTowerOnClick, slot0)
-	slot0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, slot0._onResidentStoryChange, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, slot0._showTowerEffect, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnpermanent:AddClickListener(arg_2_0._btnpermanentOnClick, arg_2_0)
+	arg_2_0._btnrouge:AddClickListener(arg_2_0._btnrougeOnClick, arg_2_0)
+	arg_2_0._btnexplore:AddClickListener(arg_2_0._btnexploreOnClick, arg_2_0)
+	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
+	arg_2_0._btngold:AddClickListener(arg_2_0._btngoldOnClick, arg_2_0)
+	arg_2_0._btnresource:AddClickListener(arg_2_0._btnresourceOnClick, arg_2_0)
+	arg_2_0._btnweekwalk:AddClickListener(arg_2_0._btnweekwalkOnClick, arg_2_0)
+	arg_2_0._btnanecdote:AddClickListener(arg_2_0._btnanecdoteOnClick, arg_2_0)
+	arg_2_0._btnDramaReward:AddClickListener(arg_2_0._btnDramaRewardOnClick, arg_2_0)
+	arg_2_0._btntower:AddClickListener(arg_2_0._btnTowerOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, arg_2_0._onResidentStoryChange, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, arg_2_0._showTowerEffect, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnpermanent:RemoveClickListener()
-	slot0._btnrouge:RemoveClickListener()
-	slot0._btnexplore:RemoveClickListener()
-	slot0._btnstory:RemoveClickListener()
-	slot0._btngold:RemoveClickListener()
-	slot0._btnresource:RemoveClickListener()
-	slot0._btnweekwalk:RemoveClickListener()
-	slot0._btnanecdote:RemoveClickListener()
-	slot0._btnDramaReward:RemoveClickListener()
-	slot0._btntower:RemoveClickListener()
-	slot0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, slot0._onResidentStoryChange, slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, slot0._showTowerEffect, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnpermanent:RemoveClickListener()
+	arg_3_0._btnrouge:RemoveClickListener()
+	arg_3_0._btnexplore:RemoveClickListener()
+	arg_3_0._btnstory:RemoveClickListener()
+	arg_3_0._btngold:RemoveClickListener()
+	arg_3_0._btnresource:RemoveClickListener()
+	arg_3_0._btnweekwalk:RemoveClickListener()
+	arg_3_0._btnanecdote:RemoveClickListener()
+	arg_3_0._btnDramaReward:RemoveClickListener()
+	arg_3_0._btntower:RemoveClickListener()
+	arg_3_0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, arg_3_0._onResidentStoryChange, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, arg_3_0._showTowerEffect, arg_3_0)
 end
 
-function slot0._btnTowerOnClick(slot0)
+function var_0_0._btnTowerOnClick(arg_4_0)
 	TowerController.instance:openMainView()
 end
 
-function slot0._btnpermanentOnClick(slot0)
+function var_0_0._btnpermanentOnClick(arg_5_0)
 	if DungeonModel.instance:chapterListIsPermanent() then
 		return
 	end
 
-	slot0:changeCategory(DungeonEnum.ChapterType.PermanentActivity)
-	slot0:setBtnStatus()
+	arg_5_0:changeCategory(DungeonEnum.ChapterType.PermanentActivity)
+	arg_5_0:setBtnStatus()
 end
 
-function slot0._btnanecdoteOnClick(slot0)
+function var_0_0._btnanecdoteOnClick(arg_6_0)
 	if DungeonModel.instance:chapterListIsRoleStory() then
 		return
 	end
 
-	slot0:changeCategory(DungeonEnum.ChapterType.RoleStory)
-	slot0:setBtnStatus()
+	arg_6_0:changeCategory(DungeonEnum.ChapterType.RoleStory)
+	arg_6_0:setBtnStatus()
 end
 
-function slot0._btnweekwalkOnClick(slot0)
-	slot0:changeCategory(DungeonEnum.ChapterType.WeekWalk, false)
-	module_views_preloader.DungeonViewWeekWalk(function ()
-		uv0:setBtnStatus()
+function var_0_0._btnweekwalkOnClick(arg_7_0)
+	arg_7_0:changeCategory(DungeonEnum.ChapterType.WeekWalk, false)
+	module_views_preloader.DungeonViewWeekWalk(function()
+		arg_7_0:setBtnStatus()
 	end)
 end
 
-function slot0._btnexploreOnClick(slot0)
-	slot0:changeCategory(DungeonEnum.ChapterType.Explore, false)
-	module_views_preloader.DungeonViewExplore(function ()
-		uv0:setBtnStatus()
+function var_0_0._btnexploreOnClick(arg_9_0)
+	arg_9_0:changeCategory(DungeonEnum.ChapterType.Explore, false)
+	module_views_preloader.DungeonViewExplore(function()
+		arg_9_0:setBtnStatus()
 	end)
 end
 
-function slot0._btnrougeOnClick(slot0)
+function var_0_0._btnrougeOnClick(arg_11_0)
 	RougeController.instance:openRougeMainView()
 end
 
-function slot0._btnDramaRewardOnClick(slot0)
+function var_0_0._btnDramaRewardOnClick(arg_12_0)
 	DungeonRpc.instance:sendGetMainDramaRewardRequest()
 end
 
-function slot0._onNavigateCloseCallback(slot0)
-	slot0.viewContainer:setOverrideClose(nil, )
-	gohelper.setActive(slot0._gocategory, true)
-	slot0:_btnstoryOnClick()
+function var_0_0._onNavigateCloseCallback(arg_13_0)
+	arg_13_0.viewContainer:setOverrideClose(nil, nil)
+	gohelper.setActive(arg_13_0._gocategory, true)
+	arg_13_0:_btnstoryOnClick()
 end
 
-function slot0._onExploreClose(slot0)
-	if slot0.viewContainer:getExploreView() then
-		slot1:onHide(slot0._realCloseSubView, slot0)
+function var_0_0._onExploreClose(arg_14_0)
+	local var_14_0 = arg_14_0.viewContainer:getExploreView()
+
+	if var_14_0 then
+		var_14_0:onHide(arg_14_0._realCloseSubView, arg_14_0)
 	end
 end
 
-function slot0._realCloseSubView(slot0)
-	slot0.viewContainer:setOverrideClose(nil, )
-	gohelper.setActive(slot0._gocategory, true)
-	slot0:_btnstoryOnClick()
+function var_0_0._realCloseSubView(arg_15_0)
+	arg_15_0.viewContainer:setOverrideClose(nil, nil)
+	gohelper.setActive(arg_15_0._gocategory, true)
+	arg_15_0:_btnstoryOnClick()
 end
 
-function slot0._btnstoryOnClick(slot0)
+function var_0_0._btnstoryOnClick(arg_16_0)
 	if DungeonModel.instance:chapterListIsNormalType() then
 		return
 	end
 
-	slot0:changeCategory(DungeonEnum.ChapterType.Normal)
-	slot0:setBtnStatus()
-	slot0:_delayOnShowStoryView()
-	TaskDispatcher.cancelTask(slot0._delayOnShowStoryView, slot0)
-	TaskDispatcher.runDelay(slot0._delayOnShowStoryView, slot0, 0)
+	arg_16_0:changeCategory(DungeonEnum.ChapterType.Normal)
+	arg_16_0:setBtnStatus()
+	arg_16_0:_delayOnShowStoryView()
+	TaskDispatcher.cancelTask(arg_16_0._delayOnShowStoryView, arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0._delayOnShowStoryView, arg_16_0, 0)
 end
 
-function slot0._delayOnShowStoryView(slot0)
+function var_0_0._delayOnShowStoryView(arg_17_0)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnShowStoryView)
 end
 
-function slot0._btnmainOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnmainOnClick(arg_18_0)
+	arg_18_0:closeThis()
 end
 
-function slot0._btngoldOnClick(slot0)
+function var_0_0._btngoldOnClick(arg_19_0)
 	if DungeonModel.instance:chapterListIsResType() then
 		return
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.GainDungeon) then
-		slot0:changeCategory(DungeonEnum.ChapterType.Gold)
+		arg_19_0:changeCategory(DungeonEnum.ChapterType.Gold)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickDungeonCategory)
-		module_views_preloader.DungeonViewGold(function ()
-			uv0:setBtnStatus()
+		module_views_preloader.DungeonViewGold(function()
+			arg_19_0:setBtnStatus()
 		end)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.GainDungeon))
 	end
 end
 
-function slot0._btnresourceOnClick(slot0)
+function var_0_0._btnresourceOnClick(arg_21_0)
 	if DungeonModel.instance:chapterListIsBreakType() then
 		return
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.ResDungeon) then
-		slot0:changeCategory(DungeonEnum.ChapterType.Break)
+		arg_21_0:changeCategory(DungeonEnum.ChapterType.Break)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickDungeonCategory)
-		module_views_preloader.DungeonViewBreak(function ()
-			uv0:setBtnStatus()
+		module_views_preloader.DungeonViewBreak(function()
+			arg_21_0:setBtnStatus()
 		end)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.ResDungeon))
 	end
 end
 
-function slot0.changeCategory(slot0, slot1, slot2)
-	if DungeonModel.instance.curChapterType == slot1 then
+function var_0_0.changeCategory(arg_23_0, arg_23_1, arg_23_2)
+	if DungeonModel.instance.curChapterType == arg_23_1 then
 		return
 	end
 
-	if slot1 == DungeonEnum.ChapterType.Normal then
-		slot0._scrollchapter.horizontalNormalizedPosition = 0
+	if arg_23_1 == DungeonEnum.ChapterType.Normal then
+		arg_23_0._scrollchapter.horizontalNormalizedPosition = 0
 	else
-		slot0._scrollchapterresource.horizontalNormalizedPosition = 0
+		arg_23_0._scrollchapterresource.horizontalNormalizedPosition = 0
 
 		if DungeonModel.instance.resScrollPosX then
-			recthelper.setAnchorX(slot0._scrollchapterresource.transform, DungeonModel.instance.resScrollPosX)
+			recthelper.setAnchorX(arg_23_0._scrollchapterresource.transform, DungeonModel.instance.resScrollPosX)
 
 			DungeonModel.instance.resScrollPosX = nil
 		end
 	end
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeChapterList, slot1)
-	DungeonModel.instance:changeCategory(slot1, slot2)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeChapterList, arg_23_1)
+	DungeonModel.instance:changeCategory(arg_23_1, arg_23_2)
 end
 
-function slot0._btnbackOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnbackOnClick(arg_24_0)
+	arg_24_0:closeThis()
 end
 
-function slot0.playCategoryAnimation(slot0)
-	gohelper.setActive(slot0._btnstory.gameObject, true)
-	gohelper.setActive(slot0._btnresource.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ResDungeon))
-	gohelper.setActive(slot0._btngold.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GainDungeon))
+function var_0_0.playCategoryAnimation(arg_25_0)
+	gohelper.setActive(arg_25_0._btnstory.gameObject, true)
+	gohelper.setActive(arg_25_0._btnresource.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ResDungeon))
+	gohelper.setActive(arg_25_0._btngold.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GainDungeon))
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getDungeonIcon("full/bg1"))
+function var_0_0._editableInitView(arg_26_0)
+	arg_26_0._simagebg:LoadImage(ResUrl.getDungeonIcon("full/bg1"))
 
-	slot0._gocategory = gohelper.findChild(slot0.viewGO, "bottom/categorylist")
+	arg_26_0._gocategory = gohelper.findChild(arg_26_0.viewGO, "bottom/categorylist")
 
-	gohelper.addUIClickAudio(slot0._btnstory.gameObject, AudioEnum.UI.UI_checkpoint_story_Click)
-	gohelper.addUIClickAudio(slot0._btngold.gameObject, AudioEnum.UI.UI_checkpoint_resources_Click)
-	gohelper.addUIClickAudio(slot0._btnresource.gameObject, AudioEnum.UI.UI_checkpoint_Insight_Click)
-	gohelper.addUIClickAudio(slot0._btnweekwalk.gameObject, AudioEnum.UI.UI_checkpoint_story_Click)
+	gohelper.addUIClickAudio(arg_26_0._btnstory.gameObject, AudioEnum.UI.UI_checkpoint_story_Click)
+	gohelper.addUIClickAudio(arg_26_0._btngold.gameObject, AudioEnum.UI.UI_checkpoint_resources_Click)
+	gohelper.addUIClickAudio(arg_26_0._btnresource.gameObject, AudioEnum.UI.UI_checkpoint_Insight_Click)
+	gohelper.addUIClickAudio(arg_26_0._btnweekwalk.gameObject, AudioEnum.UI.UI_checkpoint_story_Click)
 end
 
-function slot0._isShowWeekWalk(slot0)
+function var_0_0._isShowWeekWalk(arg_27_0)
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.WeekWalk) then
 		return false
 	end
@@ -269,18 +271,20 @@ function slot0._isShowWeekWalk(slot0)
 		return true
 	end
 
-	if not GuideModel.instance:getById(501) then
+	local var_27_0 = GuideModel.instance:getById(501)
+
+	if not var_27_0 then
 		return false
 	end
 
-	if slot3.isFinish then
+	if var_27_0.isFinish then
 		return true
 	end
 
-	return slot3.currStepId > 1
+	return var_27_0.currStepId > 1
 end
 
-function slot0._isShowExplore(slot0)
+function var_0_0._isShowExplore(arg_28_0)
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Explore) then
 		return false
 	end
@@ -296,266 +300,300 @@ function slot0._isShowExplore(slot0)
 	return true
 end
 
-function slot0._refreshBtnUnlock(slot0)
-	gohelper.setActive(slot0._btngold.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GainDungeon))
-	gohelper.setActive(slot0._btnweekwalk.gameObject, slot0:_isShowWeekWalk())
-	gohelper.setActive(slot0._btnexplore.gameObject, slot0:_isShowExplore())
-	gohelper.setActive(slot0._btnresource.gameObject, DungeonModel.instance:getChapterListOpenTimeValid(DungeonEnum.ChapterType.Break) and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ResDungeon))
-	gohelper.setActive(slot0._btnanecdote, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.RoleStory) and RoleStoryModel.instance:isInResident() and (VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS()) == false)
-	gohelper.setActive(slot0._btnpermanent, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Permanent) and PermanentModel.instance:hasActivityOnline())
-	gohelper.setActive(slot0._btnrouge, RougeOutsideController.instance:isOpen())
-	gohelper.setActive(slot0._btntower, TowerController.instance:isOpen())
+function var_0_0._refreshBtnUnlock(arg_29_0)
+	gohelper.setActive(arg_29_0._btngold.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GainDungeon))
+	gohelper.setActive(arg_29_0._btnweekwalk.gameObject, arg_29_0:_isShowWeekWalk())
+	gohelper.setActive(arg_29_0._btnexplore.gameObject, arg_29_0:_isShowExplore())
+
+	local var_29_0 = DungeonModel.instance:getChapterListOpenTimeValid(DungeonEnum.ChapterType.Break)
+
+	gohelper.setActive(arg_29_0._btnresource.gameObject, var_29_0 and OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ResDungeon))
+
+	local var_29_1 = RoleStoryModel.instance:isInResident()
+	local var_29_2 = VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS()
+
+	gohelper.setActive(arg_29_0._btnanecdote, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.RoleStory) and var_29_1 and var_29_2 == false)
+
+	local var_29_3 = PermanentModel.instance:hasActivityOnline()
+
+	gohelper.setActive(arg_29_0._btnpermanent, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Permanent) and var_29_3)
+	gohelper.setActive(arg_29_0._btnrouge, RougeOutsideController.instance:isOpen())
+	gohelper.setActive(arg_29_0._btntower, TowerController.instance:isOpen())
 end
 
-function slot0.setBtnStatus(slot0)
-	slot1, slot2, slot3, slot4, slot5, slot6 = DungeonModel.instance:getChapterListTypes()
-	slot7 = DungeonModel.instance:chapterListIsRoleStory()
-	slot8 = DungeonModel.instance:chapterListIsPermanent()
-	slot9 = false
-	slot10 = false
-	slot1 = slot1 or slot5
+function var_0_0.setBtnStatus(arg_30_0)
+	local var_30_0, var_30_1, var_30_2, var_30_3, var_30_4, var_30_5 = DungeonModel.instance:getChapterListTypes()
+	local var_30_6 = DungeonModel.instance:chapterListIsRoleStory()
+	local var_30_7 = DungeonModel.instance:chapterListIsPermanent()
+	local var_30_8 = false
+	local var_30_9 = false
 
-	gohelper.setActive(slot0._gostorySelectText, slot1)
-	gohelper.setActive(slot0._gostoryUnselectText, not slot1)
-	gohelper.setActive(slot0._goexploreSelectText, slot6)
-	gohelper.setActive(slot0._goexploreUnselectText, not slot6)
-	gohelper.setActive(slot0._gogoldSelectText, slot2)
-	gohelper.setActive(slot0._gogoldUnselectText, not slot2)
-	gohelper.setActive(slot0._goresSelectText, slot3)
-	gohelper.setActive(slot0._goresUnselectText, not slot3)
-	gohelper.setActive(slot0._goweekwalkSelectText, slot4)
-	gohelper.setActive(slot0._goweekwalkUnselectText, not slot4)
-	gohelper.setActive(slot0._gorougeSelectText, slot9)
-	gohelper.setActive(slot0._gorougeUnselectText, not slot9)
-	gohelper.setActive(slot0._gocategory, not slot4 and not slot6)
-	gohelper.setActive(slot0._goanecdoteUnselectText, not slot7)
-	gohelper.setActive(slot0._goanecdoteSelectText, slot7)
-	gohelper.setActive(slot0._goperUnselectText, not slot8)
-	gohelper.setActive(slot0._goperSelectText, slot8)
-	gohelper.setActive(slot0._gotowerSelectText, slot10)
-	gohelper.setActive(slot0._gotowerUnselectText, not slot10)
+	var_30_0 = var_30_0 or var_30_4
 
-	if slot6 then
-		slot0.viewContainer:setOverrideClose(slot0._onExploreClose, slot0)
-	elseif slot4 then
-		slot0.viewContainer:setOverrideClose(slot0._onNavigateCloseCallback, slot0)
+	gohelper.setActive(arg_30_0._gostorySelectText, var_30_0)
+	gohelper.setActive(arg_30_0._gostoryUnselectText, not var_30_0)
+	gohelper.setActive(arg_30_0._goexploreSelectText, var_30_5)
+	gohelper.setActive(arg_30_0._goexploreUnselectText, not var_30_5)
+	gohelper.setActive(arg_30_0._gogoldSelectText, var_30_1)
+	gohelper.setActive(arg_30_0._gogoldUnselectText, not var_30_1)
+	gohelper.setActive(arg_30_0._goresSelectText, var_30_2)
+	gohelper.setActive(arg_30_0._goresUnselectText, not var_30_2)
+	gohelper.setActive(arg_30_0._goweekwalkSelectText, var_30_3)
+	gohelper.setActive(arg_30_0._goweekwalkUnselectText, not var_30_3)
+	gohelper.setActive(arg_30_0._gorougeSelectText, var_30_8)
+	gohelper.setActive(arg_30_0._gorougeUnselectText, not var_30_8)
+	gohelper.setActive(arg_30_0._gocategory, not var_30_3 and not var_30_5)
+	gohelper.setActive(arg_30_0._goanecdoteUnselectText, not var_30_6)
+	gohelper.setActive(arg_30_0._goanecdoteSelectText, var_30_6)
+	gohelper.setActive(arg_30_0._goperUnselectText, not var_30_7)
+	gohelper.setActive(arg_30_0._goperSelectText, var_30_7)
+	gohelper.setActive(arg_30_0._gotowerSelectText, var_30_9)
+	gohelper.setActive(arg_30_0._gotowerUnselectText, not var_30_9)
+
+	if var_30_5 then
+		arg_30_0.viewContainer:setOverrideClose(arg_30_0._onExploreClose, arg_30_0)
+	elseif var_30_3 then
+		arg_30_0.viewContainer:setOverrideClose(arg_30_0._onNavigateCloseCallback, arg_30_0)
 	else
-		slot0.viewContainer:setOverrideClose(nil, )
+		arg_30_0.viewContainer:setOverrideClose(nil, nil)
 	end
 
-	if slot1 then
-		gohelper.setActive(slot0._gostory, false)
+	if var_30_0 then
+		gohelper.setActive(arg_30_0._gostory, false)
 
-		if not slot0._firstShowNormal then
-			slot0._firstShowNormal = true
+		if not arg_30_0._firstShowNormal then
+			arg_30_0._firstShowNormal = true
 			DungeonChapterListModel.instance.firstShowNormalTime = Time.time
 		end
 
-		if slot0._moveChapterId then
-			slot0:_focusNormalChapter(slot0._moveChapterId)
+		if arg_30_0._moveChapterId then
+			arg_30_0:_focusNormalChapter(arg_30_0._moveChapterId)
 		end
 	end
 
-	gohelper.setActive(slot0._gostory, slot1)
-	gohelper.setActive(slot0._goresource, slot2 or slot3)
-	gohelper.setActive(slot0._goweekwalk, slot4)
-	gohelper.setActive(slot0._goexplore, slot6)
-	gohelper.setActive(slot0._gopermanent, slot8)
-	DungeonModel.instance:setDungeonStoryviewState(slot1)
-	slot0:refreshRoleStoryStatus()
+	gohelper.setActive(arg_30_0._gostory, var_30_0)
+	gohelper.setActive(arg_30_0._goresource, var_30_1 or var_30_2)
+	gohelper.setActive(arg_30_0._goweekwalk, var_30_3)
+	gohelper.setActive(arg_30_0._goexplore, var_30_5)
+	gohelper.setActive(arg_30_0._gopermanent, var_30_7)
+	DungeonModel.instance:setDungeonStoryviewState(var_30_0)
+	arg_30_0:refreshRoleStoryStatus()
 
-	if slot2 or slot3 then
+	if var_30_1 or var_30_2 then
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnShowResourceView)
 	end
 
-	if slot4 then
-		slot0.viewContainer:switchTab(1)
-	elseif slot6 then
-		slot0.viewContainer:switchTab(2)
-	elseif slot8 then
-		slot0.viewContainer:switchTab(3)
+	if var_30_3 then
+		arg_30_0.viewContainer:switchTab(1)
+	elseif var_30_5 then
+		arg_30_0.viewContainer:switchTab(2)
+	elseif var_30_7 then
+		arg_30_0.viewContainer:switchTab(3)
 	else
-		slot0.viewContainer:switchTab()
+		arg_30_0.viewContainer:switchTab()
 	end
 
 	if DungeonModel.instance.resScrollPosX then
-		recthelper.setAnchorX(slot0._scrollchapterresource.transform, DungeonModel.instance.resScrollPosX)
+		recthelper.setAnchorX(arg_30_0._scrollchapterresource.transform, DungeonModel.instance.resScrollPosX)
 
 		DungeonModel.instance.resScrollPosX = nil
 	end
 
-	slot0:_showWeekWalkEffect()
-	slot0:_showGoldEffect()
-	slot0:_showTowerEffect()
+	arg_30_0:_showWeekWalkEffect()
+	arg_30_0:_showGoldEffect()
+	arg_30_0:_showTowerEffect()
 	AudioBgmManager.instance:checkBgm()
 end
 
-function slot0._showWeekWalkEffect(slot0)
-	slot2 = WeekWalkModel.instance:getInfo()
-	slot3 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week) or slot2 and slot2.isPopShallowSettle
-	slot4 = slot2 and slot2.isPopDeepSettle
+function var_0_0._showWeekWalkEffect(arg_31_0)
+	local var_31_0 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
+	local var_31_1 = WeekWalkModel.instance:getInfo()
+	local var_31_2 = var_31_0 or var_31_1 and var_31_1.isPopShallowSettle
+	local var_31_3 = var_31_1 and var_31_1.isPopDeepSettle
 
-	gohelper.setActive(slot0._goweekwalkreward1, slot3)
-	gohelper.setActive(slot0._goweekwalkreward2, not slot3 and slot4)
-	gohelper.setActive(slot0._goweekwalkicon, not slot3 and not slot4)
+	gohelper.setActive(arg_31_0._goweekwalkreward1, var_31_2)
+	gohelper.setActive(arg_31_0._goweekwalkreward2, not var_31_2 and var_31_3)
+	gohelper.setActive(arg_31_0._goweekwalkicon, not var_31_2 and not var_31_3)
 end
 
-function slot0._showGoldEffect(slot0)
-	slot1 = DungeonModel.instance:getEquipRemainingNum() > 0
+function var_0_0._showGoldEffect(arg_32_0)
+	local var_32_0 = DungeonModel.instance:getEquipRemainingNum() > 0
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.EquipDungeon) then
-		gohelper.setActive(slot0._gogoldUnselectIcon, not slot1)
-		gohelper.setActive(slot0._gogoldRedPoint, slot1)
+		gohelper.setActive(arg_32_0._gogoldUnselectIcon, not var_32_0)
+		gohelper.setActive(arg_32_0._gogoldRedPoint, var_32_0)
 	else
-		gohelper.setActive(slot0._gogoldUnselectIcon, true)
-		gohelper.setActive(slot0._gogoldRedPoint, false)
+		gohelper.setActive(arg_32_0._gogoldUnselectIcon, true)
+		gohelper.setActive(arg_32_0._gogoldRedPoint, false)
 	end
 end
 
-function slot0._showTowerEffect(slot0)
+function var_0_0._showTowerEffect(arg_33_0)
 	if not TowerController.instance:isOpen() then
 		return
 	end
 
-	gohelper.setActive(slot0._gotowerReddotEffect, TowerTaskModel.instance:getTaskItemCanGetCount(TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}) > 0 or TowerPermanentModel.instance:checkCanShowMopUpReddot() or TowerController.instance:checkReddotHasNewUpdateTower())
+	local var_33_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}
+	local var_33_1 = TowerTaskModel.instance:getTaskItemCanGetCount(var_33_0)
+	local var_33_2 = TowerPermanentModel.instance:checkCanShowMopUpReddot()
+	local var_33_3 = TowerController.instance:checkReddotHasNewUpdateTower()
+
+	gohelper.setActive(arg_33_0._gotowerReddotEffect, var_33_1 > 0 or var_33_2 or var_33_3)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:setBtnStatus()
+function var_0_0.onUpdateParam(arg_34_0)
+	arg_34_0:setBtnStatus()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_35_0)
 	if ViewMgr.instance:isOpen(ViewName.MainView) then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Main_enterance)
 	end
 
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, slot0._onChangeChapter, slot0)
-	slot0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, slot0._refreshBtnUnlock, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, slot0._onDestroyViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnDramaRewardStatusChange, slot0._refreshDramaBtnStatus, slot0)
-	slot0:_refreshDramaBtnStatus()
-	slot0:_moveChapter()
-	slot0:_refreshBtnUnlock()
-	slot0:playCategoryAnimation()
+	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, arg_35_0._onChangeChapter, arg_35_0)
+	arg_35_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_35_0._refreshBtnUnlock, arg_35_0)
+	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, arg_35_0._onDestroyViewFinish, arg_35_0)
+	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_35_0._onCloseView, arg_35_0)
+	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnDramaRewardStatusChange, arg_35_0._refreshDramaBtnStatus, arg_35_0)
+	arg_35_0:_refreshDramaBtnStatus()
+	arg_35_0:_moveChapter()
+	arg_35_0:_refreshBtnUnlock()
+	arg_35_0:playCategoryAnimation()
 end
 
-function slot0._moveChapter(slot0, slot1)
-	if not slot1 then
-		slot2, slot3 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
-		slot1 = slot2.chapterId
+function var_0_0._moveChapter(arg_36_0, arg_36_1)
+	if not arg_36_1 then
+		local var_36_0, var_36_1 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
+
+		arg_36_1 = var_36_0.chapterId
 	end
 
-	slot0._moveChapterId = slot1
+	arg_36_0._moveChapterId = arg_36_1
 
-	slot0:setBtnStatus()
+	arg_36_0:setBtnStatus()
 
-	slot0._moveChapter = nil
+	arg_36_0._moveChapter = nil
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnEnterDungeonChatperView, slot0._moveChapterId)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnEnterDungeonChatperView, arg_36_0._moveChapterId)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.DungeonMapView and DungeonModel.instance.chapterTriggerNewChapter then
-		slot0:_focusNormalChapter(DungeonModel.instance.unlockNewChapterId)
+function var_0_0._onCloseView(arg_37_0, arg_37_1)
+	if arg_37_1 == ViewName.DungeonMapView and DungeonModel.instance.chapterTriggerNewChapter then
+		local var_37_0 = DungeonModel.instance.unlockNewChapterId
+
+		arg_37_0:_focusNormalChapter(var_37_0)
 	end
 end
 
-function slot0._focusNormalChapter(slot0, slot1)
-	slot0._scrollchapter.movementType = 2
+function var_0_0._focusNormalChapter(arg_38_0, arg_38_1)
+	local var_38_0 = DungeonChapterListModel.instance:getMixCellPos(arg_38_1)
+	local var_38_1 = arg_38_0.viewContainer:getScrollParam().startSpace + var_38_0 - recthelper.getWidth(arg_38_0._scrollchapter.transform) / 2
+	local var_38_2 = gohelper.findChild(arg_38_0._scrollchapter.gameObject, "content")
 
-	recthelper.setAnchorX(gohelper.findChild(slot0._scrollchapter.gameObject, "content").transform, -(slot0.viewContainer:getScrollParam().startSpace + DungeonChapterListModel.instance:getMixCellPos(slot1) - recthelper.getWidth(slot0._scrollchapter.transform) / 2))
-	TaskDispatcher.cancelTask(slot0._resetMovementType, slot0)
-	TaskDispatcher.runDelay(slot0._resetMovementType, slot0, 0)
-	slot0.viewContainer:getScrollView():refreshScroll()
+	arg_38_0._scrollchapter.movementType = 2
+
+	recthelper.setAnchorX(var_38_2.transform, -var_38_1)
+	TaskDispatcher.cancelTask(arg_38_0._resetMovementType, arg_38_0)
+	TaskDispatcher.runDelay(arg_38_0._resetMovementType, arg_38_0, 0)
+	arg_38_0.viewContainer:getScrollView():refreshScroll()
 end
 
-function slot0._resetMovementType(slot0)
-	slot0._scrollchapter.movementType = 1
+function var_0_0._resetMovementType(arg_39_0)
+	arg_39_0._scrollchapter.movementType = 1
 end
 
-function slot0._onDestroyViewFinish(slot0, slot1)
+function var_0_0._onDestroyViewFinish(arg_40_0, arg_40_1)
+	return
 end
 
-function slot0._onChangeChapter(slot0, slot1)
+function var_0_0._onChangeChapter(arg_41_0, arg_41_1)
 	if not DungeonModel.instance:chapterListIsNormalType() then
 		return
 	end
 
-	slot0:_moveChapter(slot1)
+	arg_41_0:_moveChapter(arg_41_1)
 end
 
-function slot0.refreshRoleStoryStatus(slot0)
-	slot1 = DungeonModel.instance:chapterListIsRoleStory()
+function var_0_0.refreshRoleStoryStatus(arg_42_0)
+	local var_42_0 = DungeonModel.instance:chapterListIsRoleStory()
+	local var_42_1 = RoleStoryModel.instance:isInResident()
+	local var_42_2 = RoleStoryModel.instance:checkActStoryOpen()
 
-	slot0:setRoleStoryStatus((RoleStoryModel.instance:isInResident() or RoleStoryModel.instance:checkActStoryOpen()) and slot1)
+	arg_42_0:setRoleStoryStatus((var_42_1 or var_42_2) and var_42_0)
 
-	if slot1 and not slot2 and not slot3 then
-		slot0:_btnstoryOnClick()
-		slot0:_refreshBtnUnlock()
+	if var_42_0 and not var_42_1 and not var_42_2 then
+		arg_42_0:_btnstoryOnClick()
+		arg_42_0:_refreshBtnUnlock()
 	end
 end
 
-function slot0.setRoleStoryStatus(slot0, slot1)
-	if slot1 then
-		if not slot0._roleStoryView then
-			slot0._roleStoryView = RoleStoryView.New(slot0._goRoleStory)
+function var_0_0.setRoleStoryStatus(arg_43_0, arg_43_1)
+	if arg_43_1 then
+		if not arg_43_0._roleStoryView then
+			arg_43_0._roleStoryView = RoleStoryView.New(arg_43_0._goRoleStory)
 		end
 
-		slot0._roleStoryView:show()
-	elseif slot0._roleStoryView then
-		slot0._roleStoryView:hide()
+		arg_43_0._roleStoryView:show()
+	elseif arg_43_0._roleStoryView then
+		arg_43_0._roleStoryView:hide()
 	end
 end
 
-function slot0._onResidentStoryChange(slot0)
-	slot0:refreshRoleStoryStatus()
+function var_0_0._onResidentStoryChange(arg_44_0)
+	arg_44_0:refreshRoleStoryStatus()
 end
 
-function slot0.destoryRoleStory(slot0)
-	if slot0._roleStoryView then
-		slot0._roleStoryView:destory()
+function var_0_0.destoryRoleStory(arg_45_0)
+	if arg_45_0._roleStoryView then
+		arg_45_0._roleStoryView:destory()
 
-		slot0._roleStoryView = nil
+		arg_45_0._roleStoryView = nil
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_46_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._resetMovementType, slot0)
-	TaskDispatcher.cancelTask(slot0._delayOnShowStoryView, slot0)
-	slot0:destoryRoleStory()
+function var_0_0.onDestroyView(arg_47_0)
+	arg_47_0._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_47_0._resetMovementType, arg_47_0)
+	TaskDispatcher.cancelTask(arg_47_0._delayOnShowStoryView, arg_47_0)
+	arg_47_0:destoryRoleStory()
 end
 
-function slot0._refreshDramaBtnStatus(slot0)
-	slot0.storyUnSelectIconTag:refreshDot()
-	slot0.storySelectIconTag:refreshDot()
+function var_0_0._refreshDramaBtnStatus(arg_48_0)
+	arg_48_0.storyUnSelectIconTag:refreshDot()
+	arg_48_0.storySelectIconTag:refreshDot()
 
-	slot1 = DungeonModel.instance:isCanGetDramaReward()
+	local var_48_0 = DungeonModel.instance:isCanGetDramaReward()
 
-	gohelper.setActive(slot0._btnDramaReward, slot1)
+	gohelper.setActive(arg_48_0._btnDramaReward, var_48_0)
 
-	if slot1 and slot0.viewParam and slot2.fromMainView then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnShowDramaRewardGuide)
+	if var_48_0 then
+		local var_48_1 = arg_48_0.viewParam
+
+		if var_48_1 and var_48_1.fromMainView then
+			DungeonController.instance:dispatchEvent(DungeonEvent.OnShowDramaRewardGuide)
+		end
 	end
 end
 
-function slot0.refreshStoryIcon(slot0, slot1)
-	if slot1.reverse then
-		slot2 = not (RedDotModel.instance:isDotShow(slot1.dotId, 0) or DungeonModel.instance:isCanGetDramaReward())
+function var_0_0.refreshStoryIcon(arg_49_0, arg_49_1)
+	local var_49_0 = RedDotModel.instance:isDotShow(arg_49_1.dotId, 0) or DungeonModel.instance:isCanGetDramaReward()
+
+	if arg_49_1.reverse then
+		var_49_0 = not var_49_0
 	end
 
-	gohelper.setActive(slot1.go, slot2)
+	gohelper.setActive(arg_49_1.go, var_49_0)
 end
 
-function slot0._checkPermanentReddot(slot0, slot1)
-	slot2 = RedDotModel.instance:isDotShow(slot1.dotId, 0) or not PermanentModel.instance:isActivityLocalRead()
+function var_0_0._checkPermanentReddot(arg_50_0, arg_50_1)
+	local var_50_0 = RedDotModel.instance:isDotShow(arg_50_1.dotId, 0) or not PermanentModel.instance:isActivityLocalRead()
 
-	gohelper.setActive(slot0._goperUnselectIcon, not slot2)
-	gohelper.setActive(slot0._goreddotpermanent, slot2)
+	gohelper.setActive(arg_50_0._goperUnselectIcon, not var_50_0)
+	gohelper.setActive(arg_50_0._goreddotpermanent, var_50_0)
 end
 
-return slot0
+return var_0_0

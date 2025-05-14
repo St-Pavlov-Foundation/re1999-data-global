@@ -1,57 +1,63 @@
-module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessHeroEffect", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessHeroEffect", package.seeall)
 
-slot0 = class("Va3ChessHeroEffect", Va3ChessEffectBase)
+local var_0_0 = class("Va3ChessHeroEffect", Va3ChessEffectBase)
 
-function slot0.refreshEffect(slot0)
+function var_0_0.refreshEffect(arg_1_0)
+	return
 end
 
-function slot0.onDispose(slot0)
+function var_0_0.onDispose(arg_2_0)
+	return
 end
 
-function slot0.onSelected(slot0)
-	slot0._isSelected = true
+function var_0_0.onSelected(arg_3_0)
+	arg_3_0._isSelected = true
 
-	slot0:refreshPlayerSelected()
+	arg_3_0:refreshPlayerSelected()
 end
 
-function slot0.onCancelSelect(slot0)
-	slot0._isSelected = false
+function var_0_0.onCancelSelect(arg_4_0)
+	arg_4_0._isSelected = false
 
-	slot0:refreshPlayerSelected()
+	arg_4_0:refreshPlayerSelected()
 end
 
-function slot0.refreshPlayerSelected(slot0)
-	if Va3ChessGameController.instance:isTempSelectObj(slot0._target.id) then
+function var_0_0.refreshPlayerSelected(arg_5_0)
+	if Va3ChessGameController.instance:isTempSelectObj(arg_5_0._target.id) then
 		return
 	end
 
-	gohelper.setActive(slot0._target.avatar.goSelectable, not slot0._isSelected)
+	local var_5_0 = not arg_5_0._isSelected
+
+	gohelper.setActive(arg_5_0._target.avatar.goSelectable, var_5_0)
 end
 
-function slot0.onAvatarLoaded(slot0)
-	slot1 = slot0._loader
+function var_0_0.onAvatarLoaded(arg_6_0)
+	local var_6_0 = arg_6_0._loader
 
-	if not slot0._loader then
+	if not arg_6_0._loader then
 		return
 	end
 
-	if not gohelper.isNil(slot1:getInstGO()) then
-		slot3 = gohelper.findChild(slot2, "vx_tracked")
-		slot4 = gohelper.findChild(slot2, "select")
-		slot5 = gohelper.findChild(slot2, "vx_daoju")
+	local var_6_1 = var_6_0:getInstGO()
 
-		gohelper.setActive(slot0._target.avatar.goTracked, false)
-		gohelper.setActive(slot0._target.avatar.goInteractEff, false)
-		gohelper.setActive(slot3, false)
-		gohelper.setActive(slot4, false)
-		gohelper.setActive(slot5, false)
+	if not gohelper.isNil(var_6_1) then
+		local var_6_2 = gohelper.findChild(var_6_1, "vx_tracked")
+		local var_6_3 = gohelper.findChild(var_6_1, "select")
+		local var_6_4 = gohelper.findChild(var_6_1, "vx_daoju")
 
-		slot0._target.avatar.goTracked = slot3
-		slot0._target.avatar.goSelectable = slot4
-		slot0._target.avatar.goInteractEff = slot5
+		gohelper.setActive(arg_6_0._target.avatar.goTracked, false)
+		gohelper.setActive(arg_6_0._target.avatar.goInteractEff, false)
+		gohelper.setActive(var_6_2, false)
+		gohelper.setActive(var_6_3, false)
+		gohelper.setActive(var_6_4, false)
+
+		arg_6_0._target.avatar.goTracked = var_6_2
+		arg_6_0._target.avatar.goSelectable = var_6_3
+		arg_6_0._target.avatar.goInteractEff = var_6_4
 	end
 
-	slot0:refreshPlayerSelected()
+	arg_6_0:refreshPlayerSelected()
 end
 
-return slot0
+return var_0_0

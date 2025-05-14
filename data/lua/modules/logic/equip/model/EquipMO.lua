@@ -1,100 +1,101 @@
-module("modules.logic.equip.model.EquipMO", package.seeall)
+﻿module("modules.logic.equip.model.EquipMO", package.seeall)
 
-slot0 = pureTable("EquipMO")
+local var_0_0 = pureTable("EquipMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = tonumber(slot1.uid)
-	slot0.config = EquipConfig.instance:getEquipCo(slot1.equipId)
-	slot0._canBreak = nil
-	slot0.equipId = slot1.equipId
-	slot0.uid = slot1.uid
-	slot0.level = slot1.level
-	slot0.exp = slot1.exp
-	slot0.breakLv = slot1.breakLv
-	slot0.count = slot1.count
-	slot0.isLock = slot1.isLock
-	slot0.refineLv = slot1.refineLv
-	slot0.equipType = EquipEnum.ClientEquipType.Normal
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = tonumber(arg_1_1.uid)
+	arg_1_0.config = EquipConfig.instance:getEquipCo(arg_1_1.equipId)
+	arg_1_0._canBreak = nil
+	arg_1_0.equipId = arg_1_1.equipId
+	arg_1_0.uid = arg_1_1.uid
+	arg_1_0.level = arg_1_1.level
+	arg_1_0.exp = arg_1_1.exp
+	arg_1_0.breakLv = arg_1_1.breakLv
+	arg_1_0.count = arg_1_1.count
+	arg_1_0.isLock = arg_1_1.isLock
+	arg_1_0.refineLv = arg_1_1.refineLv
+	arg_1_0.equipType = EquipEnum.ClientEquipType.Normal
 
-	slot0:clearRecommend()
+	arg_1_0:clearRecommend()
 end
 
-function slot0.getBreakLvByLevel(slot0, slot1)
-	slot2 = math.huge
+function var_0_0.getBreakLvByLevel(arg_2_0, arg_2_1)
+	local var_2_0 = math.huge
 
-	if slot0.config then
-		for slot6, slot7 in pairs(lua_equip_break_cost.configDict[slot0.config.rare]) do
-			if slot6 < slot2 and slot1 <= slot7.level then
-				slot2 = slot6
+	if arg_2_0.config then
+		for iter_2_0, iter_2_1 in pairs(lua_equip_break_cost.configDict[arg_2_0.config.rare]) do
+			if iter_2_0 < var_2_0 and arg_2_1 <= iter_2_1.level then
+				var_2_0 = iter_2_0
 			end
 		end
 	else
-		slot2 = 0
+		var_2_0 = 0
 	end
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.initByConfig(slot0, slot1, slot2, slot3, slot4)
-	slot1 = slot1 or "-9999999999"
-	slot0.id = tonumber(slot1)
-	slot0.uid = slot1
-	slot0.equipId = slot2
-	slot0.level = slot3
-	slot0.refineLv = math.max(1, slot4)
-	slot0.config = EquipConfig.instance:getEquipCo(slot2)
-	slot0.exp = 0
-	slot5 = math.huge
+function var_0_0.initByConfig(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	arg_3_1 = arg_3_1 or "-9999999999"
+	arg_3_0.id = tonumber(arg_3_1)
+	arg_3_0.uid = arg_3_1
+	arg_3_0.equipId = arg_3_2
+	arg_3_0.level = arg_3_3
+	arg_3_0.refineLv = math.max(1, arg_3_4)
+	arg_3_0.config = EquipConfig.instance:getEquipCo(arg_3_2)
+	arg_3_0.exp = 0
 
-	if slot0.config then
-		for slot9, slot10 in pairs(lua_equip_break_cost.configDict[slot0.config.rare]) do
-			if slot9 < slot5 and slot0.level <= slot10.level then
-				slot5 = slot9
+	local var_3_0 = math.huge
+
+	if arg_3_0.config then
+		for iter_3_0, iter_3_1 in pairs(lua_equip_break_cost.configDict[arg_3_0.config.rare]) do
+			if iter_3_0 < var_3_0 and iter_3_1.level >= arg_3_0.level then
+				var_3_0 = iter_3_0
 			end
 		end
 	else
-		slot5 = 1
+		var_3_0 = 1
 
-		logError("试用角色心相不存在   >>>  " .. tostring(slot0.equipId))
+		logError("试用角色心相不存在   >>>  " .. tostring(arg_3_0.equipId))
 	end
 
-	slot0.breakLv = slot5
-	slot0.count = 1
-	slot0.isLock = true
-	slot0.equipType = EquipEnum.ClientEquipType.Config
+	arg_3_0.breakLv = var_3_0
+	arg_3_0.count = 1
+	arg_3_0.isLock = true
+	arg_3_0.equipType = EquipEnum.ClientEquipType.Config
 end
 
-function slot0.initByTrialCO(slot0, slot1)
-	slot0:initByConfig(tostring(-slot1.equipId - 1099511627776.0), slot1.equipId, slot1.equipLv, slot1.equipRefine)
+function var_0_0.initByTrialCO(arg_4_0, arg_4_1)
+	arg_4_0:initByConfig(tostring(-arg_4_1.equipId - 1099511627776), arg_4_1.equipId, arg_4_1.equipLv, arg_4_1.equipRefine)
 
-	slot0.equipType = EquipEnum.ClientEquipType.TrialHero
+	arg_4_0.equipType = EquipEnum.ClientEquipType.TrialHero
 end
 
-function slot0.initByTrialEquipCO(slot0, slot1)
-	slot0:initByConfig(tostring(-slot1.id), slot1.equipId, slot1.equipLv, slot1.equipRefine)
+function var_0_0.initByTrialEquipCO(arg_5_0, arg_5_1)
+	arg_5_0:initByConfig(tostring(-arg_5_1.id), arg_5_1.equipId, arg_5_1.equipLv, arg_5_1.equipRefine)
 
-	slot0.equipType = EquipEnum.ClientEquipType.TrialEquip
+	arg_5_0.equipType = EquipEnum.ClientEquipType.TrialEquip
 end
 
-function slot0.initOtherPlayerEquip(slot0, slot1)
-	slot0:init(slot1)
+function var_0_0.initOtherPlayerEquip(arg_6_0, arg_6_1)
+	arg_6_0:init(arg_6_1)
 
-	slot0.equipType = EquipEnum.ClientEquipType.OtherPlayer
+	arg_6_0.equipType = EquipEnum.ClientEquipType.OtherPlayer
 end
 
-function slot0.clone(slot0, slot1)
-	slot2 = uv0.New()
+function var_0_0.clone(arg_7_0, arg_7_1)
+	local var_7_0 = var_0_0.New()
 
-	slot2:init(slot0)
+	var_7_0:init(arg_7_0)
 
-	slot2.count = 1
-	slot2.id = slot1
+	var_7_0.count = 1
+	var_7_0.id = arg_7_1
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.clearRecommend(slot0)
-	slot0.recommondIndex = -1
+function var_0_0.clearRecommend(arg_8_0)
+	arg_8_0.recommondIndex = -1
 end
 
-return slot0
+return var_0_0

@@ -1,254 +1,278 @@
-module("modules.logic.explore.map.heroanimflow.ExploreHeroCatchUnitFlow", package.seeall)
+﻿module("modules.logic.explore.map.heroanimflow.ExploreHeroCatchUnitFlow", package.seeall)
 
-slot0 = class("ExploreHeroCatchUnitFlow")
+local var_0_0 = class("ExploreHeroCatchUnitFlow")
 
-function slot0.catchUnit(slot0, slot1)
+function var_0_0.catchUnit(arg_1_0, arg_1_1)
 	if ExploreHeroResetFlow.instance:isReseting() then
 		return
 	end
 
-	slot0._catchUnit = slot1
+	arg_1_0._catchUnit = arg_1_1
 
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.CatchUnit)
 
-	slot2 = slot0:getHero()
+	local var_1_0 = arg_1_0:getHero()
+	local var_1_1 = ExploreHelper.xyToDir(arg_1_1.mo.nodePos.x - var_1_0.nodePos.x, arg_1_1.mo.nodePos.y - var_1_0.nodePos.y)
+	local var_1_2 = (var_1_0:getPos() - arg_1_1:getPos()):SetNormalize():Mul(0.3):Add(arg_1_1:getPos())
 
-	slot2:setTrOffset(ExploreHelper.xyToDir(slot1.mo.nodePos.x - slot2.nodePos.x, slot1.mo.nodePos.y - slot2.nodePos.y), (slot2:getPos() - slot1:getPos()):SetNormalize():Mul(0.3):Add(slot1:getPos()), 0.39, slot0.onRoleMoveToUnitEnd, slot0)
-	slot2:setMoveSpeed(0.3)
+	var_1_0:setTrOffset(var_1_1, var_1_2, 0.39, arg_1_0.onRoleMoveToUnitEnd, arg_1_0)
+	var_1_0:setMoveSpeed(0.3)
 end
 
-function slot0.onRoleMoveToUnitEnd(slot0)
-	slot0:getHero():setMoveSpeed(0)
+function var_0_0.onRoleMoveToUnitEnd(arg_2_0)
+	local var_2_0 = arg_2_0:getHero()
 
-	if slot0._catchUnit then
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPick)
+	var_2_0:setMoveSpeed(0)
+
+	if arg_2_0._catchUnit then
+		var_2_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPick)
 	else
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPut)
+		var_2_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPut)
 	end
 
-	TaskDispatcher.runDelay(slot0._delayCatchUnit, slot0, 0.4)
+	TaskDispatcher.runDelay(arg_2_0._delayCatchUnit, arg_2_0, 0.4)
 end
 
-function slot0._delayCatchUnit(slot0)
-	if slot0._catchUnit then
-		if slot0:getHero():getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right) then
-			slot0._catchUnit:setParent(slot2, ExploreEnum.ExplorePipePotHangType.Carry)
+function var_0_0._delayCatchUnit(arg_3_0)
+	if arg_3_0._catchUnit then
+		local var_3_0 = arg_3_0:getHero():getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right)
+
+		if var_3_0 then
+			arg_3_0._catchUnit:setParent(var_3_0, ExploreEnum.ExplorePipePotHangType.Carry)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.Explore.Pick_Pot)
 	else
-		slot0._uncatchUnit:setParent(ExploreController.instance:getMap():getUnitRoot().transform, ExploreEnum.ExplorePipePotHangType.UnCarry)
+		arg_3_0._uncatchUnit:setParent(ExploreController.instance:getMap():getUnitRoot().transform, ExploreEnum.ExplorePipePotHangType.UnCarry)
 		AudioMgr.instance:trigger(AudioEnum.Explore.Put_Pot)
 	end
 
-	TaskDispatcher.runDelay(slot0._onCatchEnd, slot0, 0.4)
+	TaskDispatcher.runDelay(arg_3_0._onCatchEnd, arg_3_0, 0.4)
 end
 
-function slot0._onCatchEnd(slot0)
-	slot0:getHero():setMoveSpeed(0)
+function var_0_0._onCatchEnd(arg_4_0)
+	local var_4_0 = arg_4_0:getHero()
 
-	if slot0._catchUnit then
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
+	var_4_0:setMoveSpeed(0)
 
-		slot2 = ExploreHelper.tileToPos(ExploreHelper.posToTile(slot1:getPos() + slot1._displayTr.localPosition))
-		slot2.y = slot1:getPos().y
+	if arg_4_0._catchUnit then
+		var_4_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
 
-		slot1:setTrOffset(nil, slot2, 0.21, slot0.onRoleMoveToCenterEnd, slot0)
-		slot1:setMoveSpeed(0.3)
+		local var_4_1 = ExploreHelper.tileToPos(ExploreHelper.posToTile(var_4_0:getPos() + var_4_0._displayTr.localPosition))
+
+		var_4_1.y = var_4_0:getPos().y
+
+		var_4_0:setTrOffset(nil, var_4_1, 0.21, arg_4_0.onRoleMoveToCenterEnd, arg_4_0)
+		var_4_0:setMoveSpeed(0.3)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryChange)
 	else
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.MoveBack)
+		var_4_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+		var_4_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.MoveBack)
 
-		slot2 = slot1:getPos():Clone()
-		slot3 = ExploreHelper.dirToXY(slot1.dir)
-		slot4 = slot2:Clone()
-		slot4.x = slot4.x - slot3.x * 1
-		slot4.z = slot4.z - slot3.y * 1
-		slot2.x = slot2.x - slot3.x * 0.3
-		slot2.z = slot2.z - slot3.y * 0.3
-		slot1._displayTr.localPosition = slot2 - slot4
+		local var_4_2 = var_4_0:getPos():Clone()
+		local var_4_3 = ExploreHelper.dirToXY(var_4_0.dir)
+		local var_4_4 = var_4_2:Clone()
 
-		slot1:setPos(slot4, nil, true)
-		slot1:setTrOffset(slot1.dir, slot4, 0.6, slot0.onRoleMoveBackEnd, slot0)
+		var_4_4.x = var_4_4.x - var_4_3.x * 1
+		var_4_4.z = var_4_4.z - var_4_3.y * 1
+		var_4_2.x = var_4_2.x - var_4_3.x * 0.3
+		var_4_2.z = var_4_2.z - var_4_3.y * 0.3
+		var_4_0._displayTr.localPosition = var_4_2 - var_4_4
+
+		var_4_0:setPos(var_4_4, nil, true)
+		var_4_0:setTrOffset(var_4_0.dir, var_4_4, 0.6, arg_4_0.onRoleMoveBackEnd, arg_4_0)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryChange)
 	end
 end
 
-function slot0.onRoleMoveToCenterEnd(slot0)
-	slot1 = slot0:getHero()
+function var_0_0.onRoleMoveToCenterEnd(arg_5_0)
+	local var_5_0 = arg_5_0:getHero()
+	local var_5_1 = var_5_0:getPos() + var_5_0._displayTr.localPosition
 
-	slot1:setPos(slot1:getPos() + slot1._displayTr.localPosition)
+	var_5_0:setPos(var_5_1)
 
-	slot1._displayTr.localPosition = Vector3.zero
+	var_5_0._displayTr.localPosition = Vector3.zero
 
-	slot1:setMoveSpeed(0)
+	var_5_0:setMoveSpeed(0)
 
-	slot0._catchUnit = nil
+	arg_5_0._catchUnit = nil
 
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.CatchUnit)
 end
 
-function slot0.onRoleMoveBackEnd(slot0)
-	if slot0._catchUnit and slot0._fromUnit then
-		slot0:getHero():setMoveSpeed(0)
+function var_0_0.onRoleMoveBackEnd(arg_6_0)
+	local var_6_0 = arg_6_0:getHero()
+
+	if arg_6_0._catchUnit and arg_6_0._fromUnit then
+		var_6_0:setMoveSpeed(0)
 	else
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+		var_6_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
 	end
 
-	if slot0._endCallBack and slot0._fromUnit then
-		slot0._endCallBack(slot0._fromUnit)
+	if arg_6_0._endCallBack and arg_6_0._fromUnit then
+		arg_6_0._endCallBack(arg_6_0._fromUnit)
 	end
 
-	slot0._catchUnit = nil
-	slot0._uncatchUnit = nil
-	slot0._fromUnit = nil
-	slot0._endCallBack = nil
+	arg_6_0._catchUnit = nil
+	arg_6_0._uncatchUnit = nil
+	arg_6_0._fromUnit = nil
+	arg_6_0._endCallBack = nil
 
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.CatchUnit)
 	ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryEnd)
 end
 
-function slot0.uncatchUnit(slot0, slot1)
-	slot2 = slot0:getHero()
+function var_0_0.uncatchUnit(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:getHero()
 
 	if ExploreHeroResetFlow.instance:isReseting() then
-		slot1:setParent(ExploreController.instance:getMap():getUnitRoot().transform, ExploreEnum.ExplorePipePotHangType.UnCarry)
-		slot2:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+		local var_7_1 = ExploreController.instance:getMap()
+
+		arg_7_1:setParent(var_7_1:getUnitRoot().transform, ExploreEnum.ExplorePipePotHangType.UnCarry)
+		var_7_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
 
 		return
 	end
 
-	transformhelper.setLocalPos(slot1.trans, 0, 0, 0)
+	transformhelper.setLocalPos(arg_7_1.trans, 0, 0, 0)
 
-	slot0._uncatchUnit = slot1
+	arg_7_0._uncatchUnit = arg_7_1
 
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.CatchUnit)
 
-	slot3 = ExploreHelper.dirToXY(slot2.dir)
-	slot4 = slot2:getPos():Clone()
-	slot4.x = slot4.x - slot3.x * 0.3
-	slot4.z = slot4.z - slot3.y * 0.3
+	local var_7_2 = ExploreHelper.dirToXY(var_7_0.dir)
+	local var_7_3 = var_7_0:getPos():Clone()
 
-	slot2:setTrOffset(slot2.dir, slot4, 0.39, slot0.onRoleMoveToUnitEnd, slot0)
-	slot2:setMoveSpeed(0.3)
+	var_7_3.x = var_7_3.x - var_7_2.x * 0.3
+	var_7_3.z = var_7_3.z - var_7_2.y * 0.3
+
+	var_7_0:setTrOffset(var_7_0.dir, var_7_3, 0.39, arg_7_0.onRoleMoveToUnitEnd, arg_7_0)
+	var_7_0:setMoveSpeed(0.3)
 end
 
-function slot0.getHero(slot0)
+function var_0_0.getHero(arg_8_0)
 	return ExploreController.instance:getMap():getHero()
 end
 
-function slot0.isInFlow(slot0, slot1)
-	if not slot1 then
-		return slot0._catchUnit or slot0._uncatchUnit
+function var_0_0.isInFlow(arg_9_0, arg_9_1)
+	if not arg_9_1 then
+		return arg_9_0._catchUnit or arg_9_0._uncatchUnit
 	end
 
-	return slot1 == slot0._catchUnit or slot1 == slot0._uncatchUnit
+	return arg_9_1 == arg_9_0._catchUnit or arg_9_1 == arg_9_0._uncatchUnit
 end
 
-function slot0.catchUnitFrom(slot0, slot1, slot2, slot3)
+function var_0_0.catchUnitFrom(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	if ExploreHeroResetFlow.instance:isReseting() then
-		slot3(slot2)
+		arg_10_3(arg_10_2)
 
 		return
 	end
 
-	slot0._catchUnit = slot1
-	slot0._fromUnit = slot2
-	slot0._endCallBack = slot3
+	arg_10_0._catchUnit = arg_10_1
+	arg_10_0._fromUnit = arg_10_2
+	arg_10_0._endCallBack = arg_10_3
 
-	slot0:moveToFromUnit(slot2)
+	arg_10_0:moveToFromUnit(arg_10_2)
 end
 
-function slot0.uncatchUnitFrom(slot0, slot1, slot2, slot3)
+function var_0_0.uncatchUnitFrom(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
 	if ExploreHeroResetFlow.instance:isReseting() then
-		slot3(slot2)
+		arg_11_3(arg_11_2)
 
 		return
 	end
 
-	slot0._uncatchUnit = slot1
-	slot0._fromUnit = slot2
-	slot0._endCallBack = slot3
+	arg_11_0._uncatchUnit = arg_11_1
+	arg_11_0._fromUnit = arg_11_2
+	arg_11_0._endCallBack = arg_11_3
 
-	transformhelper.setLocalPos(slot0._uncatchUnit.trans, 0, 0, 0)
-	slot0:moveToFromUnit(slot2)
+	transformhelper.setLocalPos(arg_11_0._uncatchUnit.trans, 0, 0, 0)
+	arg_11_0:moveToFromUnit(arg_11_2)
 end
 
-function slot0.moveToFromUnit(slot0, slot1)
+function var_0_0.moveToFromUnit(arg_12_0, arg_12_1)
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.CatchUnit)
 
-	slot2 = slot0:getHero()
+	local var_12_0 = arg_12_0:getHero()
+	local var_12_1 = ExploreHelper.xyToDir(arg_12_1.mo.nodePos.x - var_12_0.nodePos.x, arg_12_1.mo.nodePos.y - var_12_0.nodePos.y)
+	local var_12_2 = (var_12_0:getPos() - arg_12_1:getPos()):SetNormalize():Mul(0.3):Add(arg_12_1:getPos())
 
-	slot2:setTrOffset(ExploreHelper.xyToDir(slot1.mo.nodePos.x - slot2.nodePos.x, slot1.mo.nodePos.y - slot2.nodePos.y), (slot2:getPos() - slot1:getPos()):SetNormalize():Mul(0.3):Add(slot1:getPos()), 0.39, slot0.onRoleMoveToFromUnitEnd, slot0)
-	slot2:setMoveSpeed(0.3)
+	var_12_0:setTrOffset(var_12_1, var_12_2, 0.39, arg_12_0.onRoleMoveToFromUnitEnd, arg_12_0)
+	var_12_0:setMoveSpeed(0.3)
 end
 
-function slot0.onRoleMoveToFromUnitEnd(slot0)
-	slot0:getHero():setMoveSpeed(0)
+function var_0_0.onRoleMoveToFromUnitEnd(arg_13_0)
+	local var_13_0 = arg_13_0:getHero()
 
-	slot2 = 0.4
+	var_13_0:setMoveSpeed(0)
 
-	if slot0._catchUnit then
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPick)
+	local var_13_1 = 0.4
+
+	if arg_13_0._catchUnit then
+		var_13_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPick)
 	else
-		slot1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPut)
+		var_13_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.CarryPut)
 
-		slot2 = 0.2
+		var_13_1 = 0.2
 	end
 
-	TaskDispatcher.runDelay(slot0._delayCatchUnitFromUnit, slot0, slot2)
+	TaskDispatcher.runDelay(arg_13_0._delayCatchUnitFromUnit, arg_13_0, var_13_1)
 end
 
-function slot0._delayCatchUnitFromUnit(slot0)
-	slot1 = 0.4
+function var_0_0._delayCatchUnitFromUnit(arg_14_0)
+	local var_14_0 = 0.4
 
-	if slot0._catchUnit then
-		if slot0:getHero():getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right) then
-			slot0._catchUnit:setParent(slot3, ExploreEnum.ExplorePipePotHangType.Carry)
+	if arg_14_0._catchUnit then
+		local var_14_1 = arg_14_0:getHero():getHangTrans(ExploreAnimEnum.RoleHangPointType.Hand_Right)
+
+		if var_14_1 then
+			arg_14_0._catchUnit:setParent(var_14_1, ExploreEnum.ExplorePipePotHangType.Carry)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.Explore.Take_On_Pot)
 	else
-		slot0._uncatchUnit:setParent(slot0._fromUnit.trans, ExploreEnum.ExplorePipePotHangType.Put)
+		arg_14_0._uncatchUnit:setParent(arg_14_0._fromUnit.trans, ExploreEnum.ExplorePipePotHangType.Put)
 
-		slot1 = 0.6
+		var_14_0 = 0.6
 
 		AudioMgr.instance:trigger(AudioEnum.Explore.Take_Off_Pot)
 	end
 
-	TaskDispatcher.runDelay(slot0._onCatchFromUnitEnd, slot0, slot1)
+	TaskDispatcher.runDelay(arg_14_0._onCatchFromUnitEnd, arg_14_0, var_14_0)
 end
 
-function slot0._onCatchFromUnitEnd(slot0)
-	slot1 = slot0._fromUnit
-	slot2 = slot0:getHero()
+function var_0_0._onCatchFromUnitEnd(arg_15_0)
+	local var_15_0 = arg_15_0._fromUnit
+	local var_15_1 = arg_15_0:getHero()
+	local var_15_2 = ExploreHelper.xyToDir(var_15_0.nodePos.x - var_15_1.nodePos.x, var_15_0.mo.nodePos.y - var_15_1.nodePos.y)
+	local var_15_3 = ExploreHelper.tileToPos(var_15_1.nodePos)
 
-	slot2:setTrOffset(ExploreHelper.xyToDir(slot1.nodePos.x - slot2.nodePos.x, slot1.mo.nodePos.y - slot2.nodePos.y), ExploreHelper.tileToPos(slot2.nodePos), 0.39, slot0.onRoleMoveBackEnd, slot0)
+	var_15_1:setTrOffset(var_15_2, var_15_3, 0.39, arg_15_0.onRoleMoveBackEnd, arg_15_0)
 
-	if slot0._catchUnit then
-		slot2:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
-		slot2:setMoveSpeed(0.3)
+	if arg_15_0._catchUnit then
+		var_15_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Carry)
+		var_15_1:setMoveSpeed(0.3)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryChange)
 	else
-		slot2:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
-		slot2:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.MoveBack)
+		var_15_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.None)
+		var_15_1:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.MoveBack)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroCarryChange)
 	end
 end
 
-function slot0.clear(slot0)
-	slot0._catchUnit = nil
-	slot0._uncatchUnit = nil
-	slot0._fromUnit = nil
-	slot0._endCallBack = nil
+function var_0_0.clear(arg_16_0)
+	arg_16_0._catchUnit = nil
+	arg_16_0._uncatchUnit = nil
+	arg_16_0._fromUnit = nil
+	arg_16_0._endCallBack = nil
 
-	TaskDispatcher.cancelTask(slot0._delayCatchUnitFromUnit, slot0)
-	TaskDispatcher.cancelTask(slot0._delayCatchUnit, slot0)
-	TaskDispatcher.cancelTask(slot0._onCatchEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._onCatchFromUnitEnd, slot0)
+	TaskDispatcher.cancelTask(arg_16_0._delayCatchUnitFromUnit, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._delayCatchUnit, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._onCatchEnd, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._onCatchFromUnitEnd, arg_16_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

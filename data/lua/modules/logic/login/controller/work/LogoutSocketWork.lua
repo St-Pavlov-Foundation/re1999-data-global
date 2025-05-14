@@ -1,17 +1,18 @@
-module("modules.logic.login.controller.work.LogoutSocketWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LogoutSocketWork", package.seeall)
 
-slot0 = class("LogoutSocketWork", BaseWork)
+local var_0_0 = class("LogoutSocketWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
-	if slot1.isConnected then
-		-- Nothing
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if arg_2_1.isConnected then
+		-- block empty
 	end
 
 	ConnectAliveMgr.instance:logout()
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,73 +1,77 @@
-module("modules.logic.versionactivity1_4.enter.controller.VersionActivity1_4EnterController", package.seeall)
+﻿module("modules.logic.versionactivity1_4.enter.controller.VersionActivity1_4EnterController", package.seeall)
 
-slot0 = class("VersionActivity1_4EnterController", BaseController)
+local var_0_0 = class("VersionActivity1_4EnterController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0.actId = VersionActivity1_4Enum.ActivityId.EnterView
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.actId = VersionActivity1_4Enum.ActivityId.EnterView
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.openVersionActivityEnterViewIfNotOpened(slot0, slot1, slot2)
+function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_3_0, arg_3_1, arg_3_2)
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity1_4EnterView) then
-		if slot1 then
-			slot1(slot2)
+		if arg_3_1 then
+			arg_3_1(arg_3_2)
 		end
 
 		return
 	end
 
-	slot0:openVersionActivityEnterView(slot1, slot2)
+	arg_3_0:openVersionActivityEnterView(arg_3_1, arg_3_2)
 end
 
-function slot0.openVersionActivityEnterView(slot0, slot1, slot2)
-	slot0.openedCallback = slot1
-	slot0.openedCallbackObj = slot2
+function var_0_0.openVersionActivityEnterView(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.openedCallback = arg_4_1
+	arg_4_0.openedCallbackObj = arg_4_2
 
-	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, slot0.actId, slot0._openVersionActivityEnterView, slot0)
+	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, arg_4_0.actId, arg_4_0._openVersionActivityEnterView, arg_4_0)
 end
 
-function slot0._onFinishStory(slot0)
-	if ActivityHelper.getActivityStatus(slot0.actId) ~= ActivityEnum.ActivityStatus.Normal then
+function var_0_0._onFinishStory(arg_5_0)
+	if ActivityHelper.getActivityStatus(arg_5_0.actId) ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	slot0:_openVersionActivityEnterView()
+	arg_5_0:_openVersionActivityEnterView()
 end
 
-function slot0._openVersionActivityEnterView(slot0)
-	if ActivityConfig.instance:getActivityCo(slot0.actId) and slot1.storyId and slot2 > 0 and not StoryModel.instance:isStoryFinished(slot1.storyId) then
-		StoryController.instance:playStory(slot2, {
+function var_0_0._openVersionActivityEnterView(arg_6_0)
+	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
+	local var_6_1 = var_6_0 and var_6_0.storyId
+
+	if var_6_1 and var_6_1 > 0 and not StoryModel.instance:isStoryFinished(var_6_0.storyId) then
+		StoryController.instance:playStory(var_6_1, {
 			isVersionActivityPV = true
-		}, slot0._onFinishStory, slot0)
+		}, arg_6_0._onFinishStory, arg_6_0)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.VersionActivity1_4EnterView, {
-		actId = slot0.actId,
+		actId = arg_6_0.actId,
 		activityIdList = VersionActivity1_4Enum.EnterViewActIdList
 	})
 
-	if slot0.openedCallback then
-		slot0.openedCallback(slot0.openedCallbackObj)
+	if arg_6_0.openedCallback then
+		arg_6_0.openedCallback(arg_6_0.openedCallbackObj)
 
-		slot0.openedCallback = nil
-		slot0.openedCallbackObj = nil
+		arg_6_0.openedCallback = nil
+		arg_6_0.openedCallbackObj = nil
 	end
 end
 
-function slot0.directOpenVersionActivityEnterView(slot0)
-	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, slot0.actId, function ()
+function var_0_0.directOpenVersionActivityEnterView(arg_7_0)
+	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, arg_7_0.actId, function()
 		ViewMgr.instance:openView(ViewName.VersionActivity1_4EnterView, {
 			skipOpenAnim = true,
-			actId = uv0.actId,
+			actId = arg_7_0.actId,
 			activityIdList = VersionActivity1_4Enum.EnterViewActIdList
 		})
-	end, slot0)
+	end, arg_7_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

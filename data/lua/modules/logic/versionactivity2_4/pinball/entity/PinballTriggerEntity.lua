@@ -1,17 +1,17 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerEntity", package.seeall)
 
-slot0 = class("PinballTriggerEntity", PinballColliderEntity)
+local var_0_0 = class("PinballTriggerEntity", PinballColliderEntity)
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	slot5 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
+function var_0_0.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	local var_1_0 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
 
-	slot5:setDelayDispose(2)
+	var_1_0:setDelayDispose(2)
 
-	slot5.x = slot2
-	slot5.y = slot3
+	var_1_0.x = arg_1_2
+	var_1_0.y = arg_1_3
 
-	slot5:tick(0)
-	slot5:playAnim("hit")
+	var_1_0:tick(0)
+	var_1_0:playAnim("hit")
 end
 
-return slot0
+return var_0_0

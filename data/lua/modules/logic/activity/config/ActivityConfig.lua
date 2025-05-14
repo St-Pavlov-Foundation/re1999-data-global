@@ -1,17 +1,17 @@
-module("modules.logic.activity.config.ActivityConfig", package.seeall)
+﻿module("modules.logic.activity.config.ActivityConfig", package.seeall)
 
-slot0 = class("ActivityConfig", BaseConfig)
+local var_0_0 = class("ActivityConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._activityConfig = nil
-	slot0._activityCenterConfig = nil
-	slot0._norSignConfig = nil
-	slot0._activityDungeonConfig = nil
-	slot0._activityShowConfig = nil
-	slot0.chapterId2ActId = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._activityConfig = nil
+	arg_1_0._activityCenterConfig = nil
+	arg_1_0._norSignConfig = nil
+	arg_1_0._activityDungeonConfig = nil
+	arg_1_0._activityShowConfig = nil
+	arg_1_0.chapterId2ActId = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity",
 		"activity_center",
@@ -23,226 +23,255 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity" then
-		slot0._activityConfig = slot2
-	elseif slot1 == "activity_center" then
-		slot0._activityCenterConfig = slot2
-	elseif slot1 == "activity101" then
-		slot0._norSignConfig = slot2
-	elseif slot1 == "activity_dungeon" then
-		slot0._activityDungeonConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity" then
+		arg_3_0._activityConfig = arg_3_2
+	elseif arg_3_1 == "activity_center" then
+		arg_3_0._activityCenterConfig = arg_3_2
+	elseif arg_3_1 == "activity101" then
+		arg_3_0._norSignConfig = arg_3_2
+	elseif arg_3_1 == "activity_dungeon" then
+		arg_3_0._activityDungeonConfig = arg_3_2
 
-		slot0:initActivityDungeon()
-	elseif slot1 == "activity_show" then
-		slot0._activityShowConfig = slot2
-	elseif slot1 == "main_act_extra_display" then
-		slot0:_initMainActExtraDisplay()
-	elseif slot1 == "main_act_atmosphere" then
-		slot0:_initMainActAtmosphere()
+		arg_3_0:initActivityDungeon()
+	elseif arg_3_1 == "activity_show" then
+		arg_3_0._activityShowConfig = arg_3_2
+	elseif arg_3_1 == "main_act_extra_display" then
+		arg_3_0:_initMainActExtraDisplay()
+	elseif arg_3_1 == "main_act_atmosphere" then
+		arg_3_0:_initMainActAtmosphere()
 	end
 end
 
-function slot0._initMainActAtmosphere(slot0)
-	slot0._mainActAtmosphereConfig = lua_main_act_atmosphere.configList[#lua_main_act_atmosphere.configList]
+function var_0_0._initMainActAtmosphere(arg_4_0)
+	local var_4_0 = #lua_main_act_atmosphere.configList
+
+	arg_4_0._mainActAtmosphereConfig = lua_main_act_atmosphere.configList[var_4_0]
 end
 
-function slot0.getMainActAtmosphereConfig(slot0)
-	return slot0._mainActAtmosphereConfig
+function var_0_0.getMainActAtmosphereConfig(arg_5_0)
+	return arg_5_0._mainActAtmosphereConfig
 end
 
-function slot0._initMainActExtraDisplay(slot0)
-	slot0._mainActExtraDisplayList = {}
+function var_0_0._initMainActExtraDisplay(arg_6_0)
+	arg_6_0._mainActExtraDisplayList = {}
 
-	for slot4, slot5 in ipairs(lua_main_act_extra_display.configList) do
-		if slot5.show == 1 then
-			table.insert(slot0._mainActExtraDisplayList, slot5)
+	for iter_6_0, iter_6_1 in ipairs(lua_main_act_extra_display.configList) do
+		if iter_6_1.show == 1 then
+			table.insert(arg_6_0._mainActExtraDisplayList, iter_6_1)
 		end
 	end
 
-	table.sort(slot0._mainActExtraDisplayList, function (slot0, slot1)
-		if slot0.sortId == slot1.sortId then
-			return slot0.id < slot1.id
+	table.sort(arg_6_0._mainActExtraDisplayList, function(arg_7_0, arg_7_1)
+		if arg_7_0.sortId == arg_7_1.sortId then
+			return arg_7_0.id < arg_7_1.id
 		end
 
-		return slot0.sortId < slot1.sortId
+		return arg_7_0.sortId < arg_7_1.sortId
 	end)
 
-	if not slot0._activityConfig then
+	if not arg_6_0._activityConfig then
 		logError("ActivityConfig:_initMainActExtraDisplay activityConfig is nil")
 
 		return
 	end
 
-	slot0._seasonActivityConfig = nil
-	slot0._rougeActivityConfig = nil
+	arg_6_0._seasonActivityConfig = nil
+	arg_6_0._rougeActivityConfig = nil
 
-	for slot4 = #lua_activity.configList, 1, -1 do
-		if lua_activity.configList[slot4].extraDisplayId == ActivityEnum.MainViewActivityState.SeasonActivity and not slot0._seasonActivityConfig then
-			slot0._seasonActivityConfig = slot5
-		elseif slot5.extraDisplayId == ActivityEnum.MainViewActivityState.Rouge and not slot0._rougeActivityConfig then
-			slot0._rougeActivityConfig = slot5
+	for iter_6_2 = #lua_activity.configList, 1, -1 do
+		local var_6_0 = lua_activity.configList[iter_6_2]
+
+		if var_6_0.extraDisplayId == ActivityEnum.MainViewActivityState.SeasonActivity and not arg_6_0._seasonActivityConfig then
+			arg_6_0._seasonActivityConfig = var_6_0
+		elseif var_6_0.extraDisplayId == ActivityEnum.MainViewActivityState.Rouge and not arg_6_0._rougeActivityConfig then
+			arg_6_0._rougeActivityConfig = var_6_0
 		end
 
-		if slot0._seasonActivityConfig and slot0._rougeActivityConfig then
+		if arg_6_0._seasonActivityConfig and arg_6_0._rougeActivityConfig then
 			break
 		end
 	end
 
-	if not slot0._seasonActivityConfig then
+	if not arg_6_0._seasonActivityConfig then
 		logError("ActivityConfig:_initMainActExtraDisplay seasonActivityConfig is nil")
 
 		return
 	end
 
-	if not slot0._rougeActivityConfig then
+	if not arg_6_0._rougeActivityConfig then
 		logError("ActivityConfig:_initMainActExtraDisplay rougeActivityConfig is nil")
 
 		return
 	end
 end
 
-function slot0.getSesonActivityConfig(slot0)
-	return slot0._seasonActivityConfig
+function var_0_0.getSesonActivityConfig(arg_8_0)
+	return arg_8_0._seasonActivityConfig
 end
 
-function slot0.getRougeActivityConfig(slot0)
-	return slot0._rougeActivityConfig
+function var_0_0.getRougeActivityConfig(arg_9_0)
+	return arg_9_0._rougeActivityConfig
 end
 
-function slot0.getMainActExtraDisplayList(slot0)
-	return slot0._mainActExtraDisplayList
+function var_0_0.getMainActExtraDisplayList(arg_10_0)
+	return arg_10_0._mainActExtraDisplayList
 end
 
-function slot0.getActivityCo(slot0, slot1)
-	if not slot0._activityConfig.configDict[slot1] then
-		logError("前端活动配置表不存在活动:" .. tostring(slot1))
+function var_0_0.getActivityCo(arg_11_0, arg_11_1)
+	if not arg_11_0._activityConfig.configDict[arg_11_1] then
+		logError("前端活动配置表不存在活动:" .. tostring(arg_11_1))
 	end
 
-	return slot0._activityConfig.configDict[slot1]
+	return arg_11_0._activityConfig.configDict[arg_11_1]
 end
 
-function slot0.getActivityCenterCo(slot0, slot1)
-	if not slot0._activityCenterConfig.configDict[slot1] then
-		logError("前端活动配置表不存在活动中心:" .. tostring(slot1))
+function var_0_0.getActivityCenterCo(arg_12_0, arg_12_1)
+	if not arg_12_0._activityCenterConfig.configDict[arg_12_1] then
+		logError("前端活动配置表不存在活动中心:" .. tostring(arg_12_1))
 	end
 
-	return slot0._activityCenterConfig.configDict[slot1]
+	return arg_12_0._activityCenterConfig.configDict[arg_12_1]
 end
 
-function slot0.getNorSignActivityCo(slot0, slot1, slot2)
-	return slot0._norSignConfig.configDict[slot1][slot2]
+function var_0_0.getNorSignActivityCo(arg_13_0, arg_13_1, arg_13_2)
+	return arg_13_0._norSignConfig.configDict[arg_13_1][arg_13_2]
 end
 
-function slot0.getNorSignActivityCos(slot0, slot1)
-	return slot0._norSignConfig.configDict[slot1]
+function var_0_0.getNorSignActivityCos(arg_14_0, arg_14_1)
+	return arg_14_0._norSignConfig.configDict[arg_14_1]
 end
 
-function slot0.initActivityDungeon(slot0)
-	for slot4, slot5 in ipairs(slot0._activityDungeonConfig.configList) do
-		slot0:addChapterId2ActId(slot5.story1ChapterId, slot5.id)
-		slot0:addChapterId2ActId(slot5.story2ChapterId, slot5.id)
-		slot0:addChapterId2ActId(slot5.story3ChapterId, slot5.id)
-		slot0:addChapterId2ActId(slot5.hardChapterId, slot5.id)
+function var_0_0.initActivityDungeon(arg_15_0)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._activityDungeonConfig.configList) do
+		arg_15_0:addChapterId2ActId(iter_15_1.story1ChapterId, iter_15_1.id)
+		arg_15_0:addChapterId2ActId(iter_15_1.story2ChapterId, iter_15_1.id)
+		arg_15_0:addChapterId2ActId(iter_15_1.story3ChapterId, iter_15_1.id)
+		arg_15_0:addChapterId2ActId(iter_15_1.hardChapterId, iter_15_1.id)
 	end
 end
 
-function slot0.addChapterId2ActId(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.addChapterId2ActId(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 == 0 then
 		return
 	end
 
-	if slot0.chapterId2ActId[slot1] then
-		logError(string.format("chapterId : %s multiple, exist actId : %s, current actId : %s", slot1, slot0.chapterId2ActId[slot1], slot2))
+	if arg_16_0.chapterId2ActId[arg_16_1] then
+		logError(string.format("chapterId : %s multiple, exist actId : %s, current actId : %s", arg_16_1, arg_16_0.chapterId2ActId[arg_16_1], arg_16_2))
 
 		return
 	end
 
-	slot0.chapterId2ActId[slot1] = slot2
+	arg_16_0.chapterId2ActId[arg_16_1] = arg_16_2
 end
 
-function slot0.getActIdByChapterId(slot0, slot1)
-	return slot0.chapterId2ActId[slot1]
+function var_0_0.getActIdByChapterId(arg_17_0, arg_17_1)
+	return arg_17_0.chapterId2ActId[arg_17_1]
 end
 
-function slot0.getActivityDungeonConfig(slot0, slot1)
-	return slot0._activityDungeonConfig.configDict[slot1]
+function var_0_0.getActivityDungeonConfig(arg_18_0, arg_18_1)
+	return arg_18_0._activityDungeonConfig.configDict[arg_18_1]
 end
 
-function slot0.getChapterIdMode(slot0, slot1)
-	if not slot0:getActIdByChapterId(slot1) then
+function var_0_0.getChapterIdMode(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0:getActIdByChapterId(arg_19_1)
+
+	if not var_19_0 then
 		return VersionActivityDungeonBaseEnum.DungeonMode.None
 	end
 
-	if slot1 == slot0:getActivityDungeonConfig(slot2).story1ChapterId then
+	local var_19_1 = arg_19_0:getActivityDungeonConfig(var_19_0)
+
+	if arg_19_1 == var_19_1.story1ChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Story
-	elseif slot1 == slot3.story2ChapterId then
+	elseif arg_19_1 == var_19_1.story2ChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Story2
-	elseif slot1 == slot3.story3ChapterId then
+	elseif arg_19_1 == var_19_1.story3ChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Story3
-	elseif slot1 == slot3.hardChapterId then
+	elseif arg_19_1 == var_19_1.hardChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Hard
 	else
 		return VersionActivityDungeonBaseEnum.DungeonMode.None
 	end
 end
 
-function slot0.getActivityShowTaskList(slot0, slot1, slot2)
-	return slot0._activityShowConfig.configDict[slot1][slot2]
+function var_0_0.getActivityShowTaskList(arg_20_0, arg_20_1, arg_20_2)
+	return arg_20_0._activityShowConfig.configDict[arg_20_1][arg_20_2]
 end
 
-function slot0.getActivityShowTaskCount(slot0, slot1)
-	return slot0._activityShowConfig.configDict[slot1]
+function var_0_0.getActivityShowTaskCount(arg_21_0, arg_21_1)
+	return arg_21_0._activityShowConfig.configDict[arg_21_1]
 end
 
-function slot0.getActivityTabBgPathes(slot0, slot1)
-	return string.split(slot0:getActivityCo(slot1).tabBgPath, "#")
+function var_0_0.getActivityTabBgPathes(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getActivityCo(arg_22_1).tabBgPath
+
+	return (string.split(var_22_0, "#"))
 end
 
-function slot0.getActivityTabButtonState(slot0, slot1)
-	return string.splitToNumber(slot0:getActivityCo(slot1).tabButton, "#") and slot4[1] == 1, slot4 and slot4[2] == 1, slot4 and slot4[3] == 1
+function var_0_0.getActivityTabButtonState(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getActivityCo(arg_23_1).tabButton
+	local var_23_1 = string.splitToNumber(var_23_0, "#")
+	local var_23_2 = var_23_1 and var_23_1[1] == 1
+	local var_23_3 = var_23_1 and var_23_1[2] == 1
+	local var_23_4 = var_23_1 and var_23_1[3] == 1
+
+	return var_23_2, var_23_3, var_23_4
 end
 
-function slot0.getActivityEnterViewBgm(slot0, slot1)
-	return slot0:getActivityCo(slot1).tabBgmId
+function var_0_0.getActivityEnterViewBgm(arg_24_0, arg_24_1)
+	return arg_24_0:getActivityCo(arg_24_1).tabBgmId
 end
 
-function slot0.isPermanent(slot0, slot1)
-	return slot0:getActivityCo(slot1).isRetroAcitivity == ActivityEnum.RetroType.Permanent
+function var_0_0.isPermanent(arg_25_0, arg_25_1)
+	return arg_25_0:getActivityCo(arg_25_1).isRetroAcitivity == ActivityEnum.RetroType.Permanent
 end
 
-function slot0.getPermanentChildActList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getPermanentChildActList(arg_26_0, arg_26_1)
+	local var_26_0 = {}
 
-	if not slot0._belongPermanentActDict then
-		slot0:_initBelongPermanentActDict()
+	if not arg_26_0._belongPermanentActDict then
+		arg_26_0:_initBelongPermanentActDict()
 	end
 
-	return slot0._belongPermanentActDict[slot1] or slot2
+	var_26_0 = arg_26_0._belongPermanentActDict[arg_26_1] or var_26_0
+
+	return var_26_0
 end
 
-function slot0._initBelongPermanentActDict(slot0)
-	slot0._belongPermanentActDict = {}
+function var_0_0._initBelongPermanentActDict(arg_27_0)
+	arg_27_0._belongPermanentActDict = {}
 
-	for slot4, slot5 in pairs(slot0._activityConfig.configDict) do
-		if slot0:isPermanent(slot4) and slot5.permanentParentAcitivityId ~= 0 then
-			if not slot0._belongPermanentActDict[slot6] then
-				slot0._belongPermanentActDict[slot6] = {}
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._activityConfig.configDict) do
+		if arg_27_0:isPermanent(iter_27_0) then
+			local var_27_0 = iter_27_1.permanentParentAcitivityId
+
+			if var_27_0 ~= 0 then
+				local var_27_1 = arg_27_0._belongPermanentActDict[var_27_0]
+
+				if not var_27_1 then
+					var_27_1 = {}
+					arg_27_0._belongPermanentActDict[var_27_0] = var_27_1
+				end
+
+				table.insert(var_27_1, iter_27_0)
 			end
-
-			table.insert(slot7, slot4)
 		end
 	end
 end
 
-function slot0.getActivityRedDotId(slot0, slot1)
-	return slot0:getActivityCo(slot1) and slot2.redDotId or 0
+function var_0_0.getActivityRedDotId(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:getActivityCo(arg_28_1)
+
+	return var_28_0 and var_28_0.redDotId or 0
 end
 
-function slot0.getActivityCenterRedDotId(slot0, slot1)
-	return slot0:getActivityCenterCo(slot1) and slot2.reddotid or 0
+function var_0_0.getActivityCenterRedDotId(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:getActivityCenterCo(arg_29_1)
+
+	return var_29_0 and var_29_0.reddotid or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

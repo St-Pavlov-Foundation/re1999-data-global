@@ -1,221 +1,262 @@
-module("modules.logic.tower.view.assistboss.TowerAssistBossTalentTreeView", package.seeall)
+﻿module("modules.logic.tower.view.assistboss.TowerAssistBossTalentTreeView", package.seeall)
 
-slot0 = class("TowerAssistBossTalentTreeView", BaseView)
+local var_0_0 = class("TowerAssistBossTalentTreeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goNode = gohelper.findChild(slot0.viewGO, "Scroll/Viewport/Tree/node/#goNode")
-	slot0.goLine = gohelper.findChild(slot0.viewGO, "Scroll/Viewport/Tree/line/#goLine")
-	slot0.nodeItems = {}
-	slot0.lineItems = {}
-	slot0.tempVect2 = Vector2(0, 0)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goNode = gohelper.findChild(arg_1_0.viewGO, "Scroll/Viewport/Tree/node/#goNode")
+	arg_1_0.goLine = gohelper.findChild(arg_1_0.viewGO, "Scroll/Viewport/Tree/line/#goLine")
+	arg_1_0.nodeItems = {}
+	arg_1_0.lineItems = {}
+	arg_1_0.tempVect2 = Vector2(0, 0)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, slot0._onSelectTalentItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_2_0._onSelectTalentItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
-	slot0:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, slot0._onSelectTalentItem, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_3_0._onResetTalent, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_3_0._onActiveTalent, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_3_0._onSelectTalentItem, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onResetTalent(slot0, slot1)
-	slot0:refreshView()
+function var_0_0._onResetTalent(arg_5_0, arg_5_1)
+	arg_5_0:refreshView()
 end
 
-function slot0._onActiveTalent(slot0, slot1)
-	slot0:playNodeLightingAnim(slot1)
+function var_0_0._onActiveTalent(arg_6_0, arg_6_1)
+	arg_6_0:playNodeLightingAnim(arg_6_1)
 end
 
-function slot0._onSelectTalentItem(slot0)
-	for slot4, slot5 in pairs(slot0.nodeItems) do
-		slot5:refreshSelect()
+function var_0_0._onSelectTalentItem(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.nodeItems) do
+		iter_7_1:refreshSelect()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:refreshParam()
+	arg_8_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	TowerAssistBossTalentListModel.instance:initBoss(slot0.bossId)
-	slot0:refreshView()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:refreshParam()
+	TowerAssistBossTalentListModel.instance:initBoss(arg_9_0.bossId)
+	arg_9_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.bossId = slot0.viewParam.bossId
-	slot0.bossMo = TowerAssistBossModel.instance:getBoss(slot0.bossId)
-	slot0.talentTree = slot0.bossMo:getTalentTree()
+function var_0_0.refreshParam(arg_10_0)
+	arg_10_0.bossId = arg_10_0.viewParam.bossId
+	arg_10_0.bossMo = TowerAssistBossModel.instance:getBoss(arg_10_0.bossId)
+	arg_10_0.talentTree = arg_10_0.bossMo:getTalentTree()
 end
 
-function slot0.refreshView(slot0)
-	slot0:refreshTree()
+function var_0_0.refreshView(arg_11_0)
+	arg_11_0:refreshTree()
 end
 
-function slot0.refreshTree(slot0)
-	for slot5, slot6 in ipairs(slot0.talentTree:getList()) do
-		slot0:updateNode(slot6)
+function var_0_0.refreshTree(arg_12_0)
+	local var_12_0 = arg_12_0.talentTree:getList()
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		arg_12_0:updateNode(iter_12_1)
 	end
 
-	for slot5, slot6 in pairs(slot0.nodeItems) do
-		for slot11, slot12 in pairs(slot6._mo:getParents()) do
-			if not slot12:isRootNode() then
-				slot0:updateLineItem(slot6._mo.nodeId, slot12.nodeId)
+	for iter_12_2, iter_12_3 in pairs(arg_12_0.nodeItems) do
+		local var_12_1 = iter_12_3._mo:getParents()
+
+		for iter_12_4, iter_12_5 in pairs(var_12_1) do
+			if not iter_12_5:isRootNode() then
+				arg_12_0:updateLineItem(iter_12_3._mo.nodeId, iter_12_5.nodeId)
 			end
 		end
 	end
 end
 
-function slot0.updateNode(slot0, slot1)
-	slot0:getNodeItem(slot1.id):onUpdateMO(slot1)
+function var_0_0.updateNode(arg_13_0, arg_13_1)
+	arg_13_0:getNodeItem(arg_13_1.id):onUpdateMO(arg_13_1)
 end
 
-function slot0.getNodeItem(slot0, slot1)
-	if not slot0.nodeItems[slot1] then
-		slot0.nodeItems[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0.goNode, tostring(slot1)), TowerAssistBossTalentItem)
+function var_0_0.getNodeItem(arg_14_0, arg_14_1)
+	if not arg_14_0.nodeItems[arg_14_1] then
+		local var_14_0 = gohelper.cloneInPlace(arg_14_0.goNode, tostring(arg_14_1))
+		local var_14_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0, TowerAssistBossTalentItem)
+
+		arg_14_0.nodeItems[arg_14_1] = var_14_1
 	end
 
-	return slot0.nodeItems[slot1]
+	return arg_14_0.nodeItems[arg_14_1]
 end
 
-function slot0.updateLineItem(slot0, slot1, slot2)
-	slot3 = slot0:getLineItem(slot1, slot2)
-	slot4 = slot0.talentTree:getNode(slot1)
+function var_0_0.updateLineItem(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = arg_15_0:getLineItem(arg_15_1, arg_15_2)
+	local var_15_1 = arg_15_0.talentTree:getNode(arg_15_1)
+	local var_15_2 = arg_15_0.talentTree:getNode(arg_15_2)
+	local var_15_3 = var_15_1:isActiveTalent()
+	local var_15_4 = var_15_1:isActiveGroup()
+	local var_15_5 = var_15_1:isParentActive()
+	local var_15_6 = var_15_2:isActiveTalent()
+	local var_15_7 = not var_15_3 and not var_15_4 and var_15_5 and var_15_6
 
-	if not slot4:isActiveTalent() and not slot4:isActiveGroup() and slot4:isParentActive() and slot0.talentTree:getNode(slot2):isActiveTalent() then
-		if slot3.isGray then
-			slot3.anim:Play("tocanlight")
+	if var_15_7 then
+		if var_15_0.isGray then
+			var_15_0.anim:Play("tocanlight")
 		else
-			slot3.anim:Play("canlight")
+			var_15_0.anim:Play("canlight")
 		end
-	elseif slot6 and slot9 then
-		slot3.anim:Play("lighted")
+	elseif var_15_3 and var_15_6 then
+		var_15_0.anim:Play("lighted")
 	else
-		slot3.anim:Play("gray")
+		var_15_0.anim:Play("gray")
 	end
 
-	slot3.isGray = not slot10 and not slot6 and not slot8
-	slot3.isActive = slot6 and slot8
+	var_15_0.isGray = not var_15_7 and not var_15_3 and not var_15_5
+	var_15_0.isActive = var_15_3 and var_15_5
 
-	slot0:updateLineItemPos(slot3, slot1, slot2)
+	arg_15_0:updateLineItemPos(var_15_0, arg_15_1, arg_15_2)
 
-	return slot3
+	return var_15_0
 end
 
-function slot0.updateLineItemPos(slot0, slot1, slot2, slot3)
-	slot4 = slot0.nodeItems[slot2]
-	slot5 = slot0.nodeItems[slot3]
-	slot6, slot7 = slot4:getLocalPos()
-	slot8 = slot4.transform.anchoredPosition
-	slot9 = slot5.transform.anchoredPosition
-	slot11 = slot5:getWidth()
-	slot13 = Vector2.Distance(slot9, slot8)
-	slot14 = slot4:getWidth() + slot13 * 0.5
+function var_0_0.updateLineItemPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_0.nodeItems[arg_16_2]
+	local var_16_1 = arg_16_0.nodeItems[arg_16_3]
+	local var_16_2, var_16_3 = var_16_0:getLocalPos()
+	local var_16_4 = var_16_0.transform.anchoredPosition
+	local var_16_5 = var_16_1.transform.anchoredPosition
+	local var_16_6 = var_16_0:getWidth()
+	local var_16_7 = var_16_1:getWidth()
+	local var_16_8 = Vector2.Distance(var_16_5, var_16_4)
+	local var_16_9 = var_16_6 + var_16_8 * 0.5
 
-	slot0.tempVect2:Set(slot8.x - slot9.x, slot8.y - slot9.y)
+	arg_16_0.tempVect2:Set(var_16_4.x - var_16_5.x, var_16_4.y - var_16_5.y)
 
-	slot15 = slot0.tempVect2
-	slot16 = (slot8 + slot9) * 0.5
+	local var_16_10 = arg_16_0.tempVect2
+	local var_16_11 = (var_16_4 + var_16_5) * 0.5
 
-	recthelper.setAnchor(slot1.transform, slot16.x, slot16.y)
-	recthelper.setHeight(slot1.imgLine.transform, slot13)
-	recthelper.setHeight(slot1.imgLine1.transform, slot13)
-	transformhelper.setLocalRotation(slot1.transform, 0, 0, Mathf.Atan2(slot15.y, slot15.x) * Mathf.Rad2Deg - 90)
+	recthelper.setAnchor(arg_16_1.transform, var_16_11.x, var_16_11.y)
+	recthelper.setHeight(arg_16_1.imgLine.transform, var_16_8)
+	recthelper.setHeight(arg_16_1.imgLine1.transform, var_16_8)
+
+	local var_16_12 = Mathf.Atan2(var_16_10.y, var_16_10.x) * Mathf.Rad2Deg - 90
+
+	transformhelper.setLocalRotation(arg_16_1.transform, 0, 0, var_16_12)
 end
 
-function slot0.getLineItem(slot0, slot1, slot2)
-	if not slot0.lineItems[string.format("%s_%s", slot1, slot2)] then
-		slot4 = gohelper.cloneInPlace(slot0.goLine, slot3)
-		slot5 = slot0:getUserDataTb_()
-		slot5.key = slot3
-		slot5.go = slot4
-		slot5.transform = slot4.transform
-		slot5.imgLine = gohelper.findChildImage(slot4, "#go_Line")
-		slot5.imgLine1 = gohelper.findChildImage(slot4, "Line1")
-		slot5.anim = slot4:GetComponent(gohelper.Type_Animator)
+function var_0_0.getLineItem(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = string.format("%s_%s", arg_17_1, arg_17_2)
 
-		gohelper.setActive(slot4, true)
+	if not arg_17_0.lineItems[var_17_0] then
+		local var_17_1 = gohelper.cloneInPlace(arg_17_0.goLine, var_17_0)
+		local var_17_2 = arg_17_0:getUserDataTb_()
 
-		slot0.lineItems[slot3] = slot5
+		var_17_2.key = var_17_0
+		var_17_2.go = var_17_1
+		var_17_2.transform = var_17_1.transform
+		var_17_2.imgLine = gohelper.findChildImage(var_17_1, "#go_Line")
+		var_17_2.imgLine1 = gohelper.findChildImage(var_17_1, "Line1")
+		var_17_2.anim = var_17_1:GetComponent(gohelper.Type_Animator)
+
+		gohelper.setActive(var_17_1, true)
+
+		arg_17_0.lineItems[var_17_0] = var_17_2
 	end
 
-	return slot0.lineItems[slot3]
+	return arg_17_0.lineItems[var_17_0]
 end
 
-function slot0.playNodeLightingAnim(slot0, slot1)
-	if not slot0.talentTree:getNode(slot1) then
+function var_0_0.playNodeLightingAnim(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0.talentTree:getNode(arg_18_1)
+
+	if not var_18_0 then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("playNodeLightingAnim")
 
-	for slot8, slot9 in pairs(slot2:getParents()) do
-		if slot9:isActiveTalent() and slot0.lineItems[string.format("%s_%s", slot1, slot9.nodeId)] and not slot11.isActive then
-			table.insert({}, slot11)
+	local var_18_1 = {}
+	local var_18_2 = var_18_0:getParents()
+
+	for iter_18_0, iter_18_1 in pairs(var_18_2) do
+		if iter_18_1:isActiveTalent() then
+			local var_18_3 = string.format("%s_%s", arg_18_1, iter_18_1.nodeId)
+			local var_18_4 = arg_18_0.lineItems[var_18_3]
+
+			if var_18_4 and not var_18_4.isActive then
+				table.insert(var_18_1, var_18_4)
+			end
 		end
 	end
 
-	for slot9, slot10 in pairs(slot2.childs) do
-		if slot10:isActiveTalent() and slot0.lineItems[string.format("%s_%s", slot10.nodeId, slot1)] and not slot12.isActive then
-			table.insert(slot3, slot12)
+	local var_18_5 = var_18_0.childs
+
+	for iter_18_2, iter_18_3 in pairs(var_18_5) do
+		if iter_18_3:isActiveTalent() then
+			local var_18_6 = string.format("%s_%s", iter_18_3.nodeId, arg_18_1)
+			local var_18_7 = arg_18_0.lineItems[var_18_6]
+
+			if var_18_7 and not var_18_7.isActive then
+				table.insert(var_18_1, var_18_7)
+			end
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot3) do
-		slot10.isActive = true
+	for iter_18_4, iter_18_5 in ipairs(var_18_1) do
+		iter_18_5.isActive = true
 
-		slot10.anim:Play("lighting")
+		iter_18_5.anim:Play("lighting")
 	end
 
-	if #slot3 > 0 then
-		slot0.lightingNodeId = slot1
+	if #var_18_1 > 0 then
+		arg_18_0.lightingNodeId = arg_18_1
 
-		TaskDispatcher.runDelay(slot0.delayLightNode, slot0, 0.5)
+		TaskDispatcher.runDelay(arg_18_0.delayLightNode, arg_18_0, 0.5)
 	else
-		slot0:_lightingNode(slot1)
+		arg_18_0:_lightingNode(arg_18_1)
 	end
 end
 
-function slot0.delayLightNode(slot0)
-	slot0:_lightingNode(slot0.lightingNodeId)
+function var_0_0.delayLightNode(arg_19_0)
+	arg_19_0:_lightingNode(arg_19_0.lightingNodeId)
 end
 
-function slot0._lightingNode(slot0, slot1)
+function var_0_0._lightingNode(arg_20_0, arg_20_1)
 	UIBlockMgr.instance:endBlock("playNodeLightingAnim")
 
-	slot0.lightingNodeId = nil
+	arg_20_0.lightingNodeId = nil
 
-	if slot0.nodeItems[slot1] then
-		slot2:playLightingAnim()
+	local var_20_0 = arg_20_0.nodeItems[arg_20_1]
+
+	if var_20_0 then
+		var_20_0:playLightingAnim()
 	end
 
-	slot0:delayRefreshView()
+	arg_20_0:delayRefreshView()
 end
 
-function slot0.delayRefreshView(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshView, slot0)
-	TaskDispatcher.runDelay(slot0.refreshView, slot0, 0.5)
+function var_0_0.delayRefreshView(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.refreshView, arg_21_0)
+	TaskDispatcher.runDelay(arg_21_0.refreshView, arg_21_0, 0.5)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_22_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_23_0)
 	UIBlockMgr.instance:endBlock("playNodeLightingAnim")
-	TaskDispatcher.cancelTask(slot0.delayLightNode, slot0)
-	TaskDispatcher.cancelTask(slot0.refreshView, slot0)
+	TaskDispatcher.cancelTask(arg_23_0.delayLightNode, arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0.refreshView, arg_23_0)
 end
 
-return slot0
+return var_0_0

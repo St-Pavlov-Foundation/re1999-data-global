@@ -1,48 +1,57 @@
-module("modules.logic.versionactivity1_4.act129.model.Activity129Mo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.model.Activity129Mo", package.seeall)
 
-slot0 = class("Activity129Mo")
+local var_0_0 = class("Activity129Mo")
 
-function slot0.ctor(slot0, slot1)
-	slot0.activityId = slot1
-	slot0.id = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1
+	arg_1_0.id = arg_1_1
 
-	slot0:initCfg()
+	arg_1_0:initCfg()
 end
 
-function slot0.initCfg(slot0)
-	slot0.poolDict = {}
+function var_0_0.initCfg(arg_2_0)
+	arg_2_0.poolDict = {}
 
-	if Activity129Config.instance:getPoolDict(slot0.activityId) then
-		for slot5, slot6 in pairs(slot1) do
-			slot0.poolDict[slot6.poolId] = Activity129PoolMo.New(slot6)
+	local var_2_0 = Activity129Config.instance:getPoolDict(arg_2_0.activityId)
+
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in pairs(var_2_0) do
+			arg_2_0.poolDict[iter_2_1.poolId] = Activity129PoolMo.New(iter_2_1)
 		end
 	end
 end
 
-function slot0.init(slot0, slot1)
-	for slot5 = 1, #slot1.lotteryDetail do
-		if slot0:getPoolMo(slot1.lotteryDetail[slot5].poolId) then
-			slot7:init(slot6)
+function var_0_0.init(arg_3_0, arg_3_1)
+	for iter_3_0 = 1, #arg_3_1.lotteryDetail do
+		local var_3_0 = arg_3_1.lotteryDetail[iter_3_0]
+		local var_3_1 = arg_3_0:getPoolMo(var_3_0.poolId)
+
+		if var_3_1 then
+			var_3_1:init(var_3_0)
 		else
-			logError(string.format("cant find poolCfg，poolId:%s", slot6.poolId))
+			logError(string.format("cant find poolCfg，poolId:%s", var_3_0.poolId))
 		end
 	end
 end
 
-function slot0.onLotterySuccess(slot0, slot1)
-	if slot0:getPoolMo(slot1.poolId) then
-		slot2:onLotterySuccess(slot1)
+function var_0_0.onLotterySuccess(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getPoolMo(arg_4_1.poolId)
+
+	if var_4_0 then
+		var_4_0:onLotterySuccess(arg_4_1)
 	else
-		logError(string.format("cant find poolCfg，poolId:%s", slot1.poolId))
+		logError(string.format("cant find poolCfg，poolId:%s", arg_4_1.poolId))
 	end
 end
 
-function slot0.getPoolMo(slot0, slot1)
-	return slot0.poolDict[slot1]
+function var_0_0.getPoolMo(arg_5_0, arg_5_1)
+	return arg_5_0.poolDict[arg_5_1]
 end
 
-function slot0.checkPoolIsEmpty(slot0, slot1)
-	return slot0:getPoolMo(slot1) and slot2:checkPoolIsEmpty()
+function var_0_0.checkPoolIsEmpty(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getPoolMo(arg_6_1)
+
+	return var_6_0 and var_6_0:checkPoolIsEmpty()
 end
 
-return slot0
+return var_0_0

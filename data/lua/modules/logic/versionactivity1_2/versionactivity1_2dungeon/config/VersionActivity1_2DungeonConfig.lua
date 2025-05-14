@@ -1,79 +1,90 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.config.VersionActivity1_2DungeonConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.config.VersionActivity1_2DungeonConfig", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonConfig", BaseConfig)
+local var_0_0 = class("VersionActivity1_2DungeonConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._elements = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._elements = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity116_building",
 		"activity116_episode_sp"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity116_building" then
-		slot0:_initConfig()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity116_building" then
+		arg_3_0:_initConfig()
 	end
 end
 
-function slot0._initConfig(slot0)
-	for slot4, slot5 in ipairs(lua_activity116_building.configList) do
-		slot0._elements[slot5.elementId] = slot0._elements[slot5.elementId] or {}
-		slot0._elements[slot5.elementId][slot5.id] = slot5
+function var_0_0._initConfig(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(lua_activity116_building.configList) do
+		arg_4_0._elements[iter_4_1.elementId] = arg_4_0._elements[iter_4_1.elementId] or {}
+		arg_4_0._elements[iter_4_1.elementId][iter_4_1.id] = iter_4_1
 	end
 end
 
-function slot0.getBuildingConfigsByElementID(slot0, slot1)
-	return slot0._elements and slot0._elements[slot1]
+function var_0_0.getBuildingConfigsByElementID(arg_5_0, arg_5_1)
+	return arg_5_0._elements and arg_5_0._elements[arg_5_1]
 end
 
-function slot0.get1_2EpisodeMapConfig(slot0, slot1)
-	slot2 = DungeonConfig.instance:getEpisodeCO(slot1)
-	slot4 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
-	slot2 = DungeonConfig.instance:getEpisodeCO(slot4 - slot4 % 100 + slot1 % 100)
+function var_0_0.get1_2EpisodeMapConfig(arg_6_0, arg_6_1)
+	local var_6_0 = DungeonConfig.instance:getEpisodeCO(arg_6_1)
+	local var_6_1 = arg_6_1 % 100
+	local var_6_2 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
+	local var_6_3 = var_6_2 - var_6_2 % 100 + var_6_1
+	local var_6_4 = DungeonConfig.instance:getEpisodeCO(var_6_3)
 
-	return DungeonConfig.instance:getChapterMapCfg(slot2.chapterId, slot2.preEpisode)
+	return DungeonConfig.instance:getChapterMapCfg(var_6_4.chapterId, var_6_4.preEpisode)
 end
 
-function slot0.getEpisodeIndex(slot0, slot1)
-	if (DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(slot1) and DungeonConfig.instance:getEpisodeCO(slot2[1]) or DungeonConfig.instance:getEpisodeCO(slot1)).chapterId == VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard then
-		slot5 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
+function var_0_0.getEpisodeIndex(arg_7_0, arg_7_1)
+	local var_7_0 = DungeonConfig.instance:get1_2VersionActivityEpisodeCoList(arg_7_1)
+	local var_7_1 = var_7_0 and DungeonConfig.instance:getEpisodeCO(var_7_0[1]) or DungeonConfig.instance:getEpisodeCO(arg_7_1)
 
-		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1, slot5 - slot5 % 100 + slot1 % 100)
+	if var_7_1.chapterId == VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonHard then
+		local var_7_2 = arg_7_1 % 100
+		local var_7_3 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1)[1].id
+		local var_7_4 = var_7_3 - var_7_3 % 100 + var_7_2
+
+		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal1, var_7_4)
 	else
-		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(slot3.chapterId, slot3.id)
+		return DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_7_1.chapterId, var_7_1.id)
 	end
 end
 
-function slot0.getConfigByEpisodeId(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0._buildingType4 or slot0:getType4List()) do
-		for slot12, slot13 in ipairs(string.splitToNumber(slot7.configType, "#")) do
-			if slot13 == slot1 then
-				return slot7
+function var_0_0.getConfigByEpisodeId(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._buildingType4 or arg_8_0:getType4List()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		local var_8_1 = string.splitToNumber(iter_8_1.configType, "#")
+
+		for iter_8_2, iter_8_3 in ipairs(var_8_1) do
+			if iter_8_3 == arg_8_1 then
+				return iter_8_1
 			end
 		end
 	end
 end
 
-function slot0.getType4List(slot0)
-	if slot0._buildingType4 then
-		return slot0._buildingType4
+function var_0_0.getType4List(arg_9_0)
+	if arg_9_0._buildingType4 then
+		return arg_9_0._buildingType4
 	end
 
-	slot0._buildingType4 = {}
+	arg_9_0._buildingType4 = {}
 
-	for slot4, slot5 in ipairs(lua_activity116_building.configList) do
-		if slot5.buildingType == 4 then
-			table.insert(slot0._buildingType4, slot5)
+	for iter_9_0, iter_9_1 in ipairs(lua_activity116_building.configList) do
+		if iter_9_1.buildingType == 4 then
+			table.insert(arg_9_0._buildingType4, iter_9_1)
 		end
 	end
 
-	return slot0._buildingType4
+	return arg_9_0._buildingType4
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

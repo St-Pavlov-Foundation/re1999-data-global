@@ -1,35 +1,35 @@
-module("modules.logic.explore.model.mo.ExploreChapterSimpleMo", package.seeall)
+﻿module("modules.logic.explore.model.mo.ExploreChapterSimpleMo", package.seeall)
 
-slot0 = pureTable("ExploreChapterSimpleMo")
+local var_0_0 = pureTable("ExploreChapterSimpleMo")
 
-function slot0.ctor(slot0)
-	slot0.archiveIds = {}
-	slot0.bonusScene = {}
-	slot0.isFinish = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.archiveIds = {}
+	arg_1_0.bonusScene = {}
+	arg_1_0.isFinish = false
 end
 
-function slot0.init(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.archiveIds) do
-		slot0.archiveIds[slot6] = true
+function var_0_0.init(arg_2_0, arg_2_1)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.archiveIds) do
+		arg_2_0.archiveIds[iter_2_1] = true
 	end
 
-	for slot5, slot6 in ipairs(slot1.bonusScene) do
-		slot0.bonusScene[slot6.bonusSceneId] = slot6.options
+	for iter_2_2, iter_2_3 in ipairs(arg_2_1.bonusScene) do
+		arg_2_0.bonusScene[iter_2_3.bonusSceneId] = iter_2_3.options
 	end
 
-	slot0.isFinish = slot1.isFinish
+	arg_2_0.isFinish = arg_2_1.isFinish
 end
 
-function slot0.onGetArchive(slot0, slot1)
-	slot0.archiveIds[slot1] = true
+function var_0_0.onGetArchive(arg_3_0, arg_3_1)
+	arg_3_0.archiveIds[arg_3_1] = true
 end
 
-function slot0.onGetBonus(slot0, slot1, slot2)
-	slot0.bonusScene[slot1] = slot2
+function var_0_0.onGetBonus(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.bonusScene[arg_4_1] = arg_4_2
 end
 
-function slot0.haveBonusScene(slot0)
-	return next(slot0.bonusScene) and true or false
+function var_0_0.haveBonusScene(arg_5_0)
+	return next(arg_5_0.bonusScene) and true or false
 end
 
-return slot0
+return var_0_0

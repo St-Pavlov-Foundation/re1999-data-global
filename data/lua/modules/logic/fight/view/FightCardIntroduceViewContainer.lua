@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightCardIntroduceViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightCardIntroduceViewContainer", package.seeall)
 
-slot0 = class("FightCardIntroduceViewContainer", BaseViewContainer)
+local var_0_0 = class("FightCardIntroduceViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightCardIntroduceView.New()
 	}
 end
 
-return slot0
+return var_0_0

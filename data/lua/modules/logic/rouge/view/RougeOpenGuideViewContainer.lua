@@ -1,13 +1,13 @@
-module("modules.logic.rouge.view.RougeOpenGuideViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeOpenGuideViewContainer", package.seeall)
 
-slot0 = class("RougeOpenGuideViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeOpenGuideViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeOpenGuideView.New())
+	table.insert(var_1_0, RougeOpenGuideView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

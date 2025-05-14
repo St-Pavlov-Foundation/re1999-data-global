@@ -1,170 +1,184 @@
-module("modules.logic.versionactivity1_5.dungeon.rpc.VersionActivity1_5DungeonRpc", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.rpc.VersionActivity1_5DungeonRpc", package.seeall)
 
-slot0 = class("VersionActivity1_5DungeonRpc", BaseRpc)
+local var_0_0 = class("VersionActivity1_5DungeonRpc", BaseRpc)
 
-function slot0.sendGet139InfosRequest(slot0, slot1, slot2)
-	slot3 = Activity139Module_pb.Get139InfosRequest()
-	slot3.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
+function var_0_0.sendGet139InfosRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = Activity139Module_pb.Get139InfosRequest()
 
-	return slot0:sendMsg(slot3, slot1, slot2)
+	var_1_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGet139InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet139InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5RevivalTaskModel.instance:updateExploreTaskInfo(slot2.gainedExploreReward)
-	VersionActivity1_5RevivalTaskModel.instance:updateHeroTaskInfos(slot2.heroTaskInfos)
-	VersionActivity1_5DungeonModel.instance:addDispatchInfos(slot2.dispatchInfos)
+	VersionActivity1_5RevivalTaskModel.instance:updateExploreTaskInfo(arg_2_2.gainedExploreReward)
+	VersionActivity1_5RevivalTaskModel.instance:updateHeroTaskInfos(arg_2_2.heroTaskInfos)
+	VersionActivity1_5DungeonModel.instance:addDispatchInfos(arg_2_2.dispatchInfos)
 end
 
-function slot0.sendAct139DispatchRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity139Module_pb.Act139DispatchRequest()
-	slot5.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
-	slot5.id = slot1
+function var_0_0.sendAct139DispatchRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = Activity139Module_pb.Act139DispatchRequest()
 
-	for slot9, slot10 in ipairs(slot2) do
-		slot5.heroIds:append(slot10)
+	var_3_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
+	var_3_0.id = arg_3_1
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
+		var_3_0.heroIds:append(iter_3_1)
 	end
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	return arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
 end
 
-function slot0.onReceiveAct139DispatchReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct139DispatchReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	ServerTime.update(math.floor(tonumber(slot2.startTime) / 1000))
-	VersionActivity1_5DungeonModel.instance:addOneDispatchInfo(slot2.id, slot2.endTime, slot2.heroIds)
+	local var_4_0 = tonumber(arg_4_2.startTime)
+	local var_4_1 = math.floor(var_4_0 / 1000)
+
+	ServerTime.update(var_4_1)
+	VersionActivity1_5DungeonModel.instance:addOneDispatchInfo(arg_4_2.id, arg_4_2.endTime, arg_4_2.heroIds)
 end
 
-function slot0.sendAct139InterruptDispatchRequest(slot0, slot1)
-	slot2 = Activity139Module_pb.Act139InterruptDispatchRequest()
-	slot2.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
-	slot2.id = slot1
+function var_0_0.sendAct139InterruptDispatchRequest(arg_5_0, arg_5_1)
+	local var_5_0 = Activity139Module_pb.Act139InterruptDispatchRequest()
 
-	return slot0:sendMsg(slot2)
+	var_5_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
+	var_5_0.id = arg_5_1
+
+	return arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveAct139InterruptDispatchReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct139InterruptDispatchReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5DungeonModel.instance:removeOneDispatchInfo(slot2.id)
+	VersionActivity1_5DungeonModel.instance:removeOneDispatchInfo(arg_6_2.id)
 end
 
-function slot0.sendAct139GainSubHeroTaskRewardRequest(slot0, slot1)
-	slot2 = Activity139Module_pb.Act139GainSubHeroTaskRewardRequest()
-	slot2.id = slot1
+function var_0_0.sendAct139GainSubHeroTaskRewardRequest(arg_7_0, arg_7_1)
+	local var_7_0 = Activity139Module_pb.Act139GainSubHeroTaskRewardRequest()
 
-	return slot0:sendMsg(slot2)
+	var_7_0.id = arg_7_1
+
+	return arg_7_0:sendMsg(var_7_0)
 end
 
-function slot0.onReceiveAct139GainSubHeroTaskRewardReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct139GainSubHeroTaskRewardReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5RevivalTaskModel.instance:gainedSubTaskReward(slot2.id)
+	VersionActivity1_5RevivalTaskModel.instance:gainedSubTaskReward(arg_8_2.id)
 end
 
-function slot0.sendAct139GainHeroTaskRewardRequest(slot0, slot1)
-	slot2 = Activity139Module_pb.Act139GainHeroTaskRewardRequest()
-	slot2.id = slot1
+function var_0_0.sendAct139GainHeroTaskRewardRequest(arg_9_0, arg_9_1)
+	local var_9_0 = Activity139Module_pb.Act139GainHeroTaskRewardRequest()
 
-	return slot0:sendMsg(slot2)
+	var_9_0.id = arg_9_1
+
+	return arg_9_0:sendMsg(var_9_0)
 end
 
-function slot0.onReceiveAct139GainHeroTaskRewardReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct139GainHeroTaskRewardReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5RevivalTaskModel.instance:gainedHeroTaskReward(slot2.id)
+	VersionActivity1_5RevivalTaskModel.instance:gainedHeroTaskReward(arg_10_2.id)
 end
 
-function slot0.sendAct139GainExploreRewardRequest(slot0)
-	slot1 = Activity139Module_pb.Act139GainExploreRewardRequest()
-	slot1.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
+function var_0_0.sendAct139GainExploreRewardRequest(arg_11_0)
+	local var_11_0 = Activity139Module_pb.Act139GainExploreRewardRequest()
 
-	return slot0:sendMsg(slot1)
+	var_11_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonExploreTask
+
+	return arg_11_0:sendMsg(var_11_0)
 end
 
-function slot0.onReceiveAct139GainExploreRewardReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct139GainExploreRewardReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5RevivalTaskModel.instance:gainedExploreTaskReward(slot2.id)
+	VersionActivity1_5RevivalTaskModel.instance:gainedExploreTaskReward(arg_12_2.id)
 end
 
-function slot0.sendGet140InfosRequest(slot0, slot1, slot2)
-	slot3 = Activity140Module_pb.Get140InfosRequest()
-	slot3.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+function var_0_0.sendGet140InfosRequest(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = Activity140Module_pb.Get140InfosRequest()
 
-	return slot0:sendMsg(slot3, slot1, slot2)
+	var_13_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+
+	return arg_13_0:sendMsg(var_13_0, arg_13_1, arg_13_2)
 end
 
-function slot0.onReceiveGet140InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet140InfosReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5BuildModel.instance:initBuildInfoList(slot2.info)
+	VersionActivity1_5BuildModel.instance:initBuildInfoList(arg_14_2.info)
 end
 
-function slot0.sendAct140BuildRequest(slot0, slot1)
-	slot2 = Activity140Module_pb.Act140BuildRequest()
-	slot2.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
-	slot2.id = slot1
+function var_0_0.sendAct140BuildRequest(arg_15_0, arg_15_1)
+	local var_15_0 = Activity140Module_pb.Act140BuildRequest()
 
-	return slot0:sendMsg(slot2)
+	var_15_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+	var_15_0.id = arg_15_1
+
+	return arg_15_0:sendMsg(var_15_0)
 end
 
-function slot0.onReceiveAct140BuildReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct140BuildReply(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5BuildModel.instance:addHadBuild(slot2.id)
+	VersionActivity1_5BuildModel.instance:addHadBuild(arg_16_2.id)
 end
 
-function slot0.sendAct140SelectBuildRequest(slot0, slot1)
-	Activity140Module_pb.Act140SelectBuildRequest().activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+function var_0_0.sendAct140SelectBuildRequest(arg_17_0, arg_17_1)
+	local var_17_0 = Activity140Module_pb.Act140SelectBuildRequest()
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot2.ids, slot7)
+	var_17_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		table.insert(var_17_0.ids, iter_17_1)
 	end
 
-	return slot0:sendMsg(slot2)
+	return arg_17_0:sendMsg(var_17_0)
 end
 
-function slot0.onReceiveAct140SelectBuildReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct140SelectBuildReply(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 ~= 0 then
 		return
 	end
 
-	VersionActivity1_5BuildModel.instance:updateSelectBuild(slot2.ids)
+	VersionActivity1_5BuildModel.instance:updateSelectBuild(arg_18_2.ids)
 end
 
-function slot0.sendAct140GainProgressRewardRequest(slot0)
-	slot1 = Activity140Module_pb.Act140GainProgressRewardRequest()
-	slot1.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+function var_0_0.sendAct140GainProgressRewardRequest(arg_19_0)
+	local var_19_0 = Activity140Module_pb.Act140GainProgressRewardRequest()
 
-	return slot0:sendMsg(slot1)
+	var_19_0.activityId = VersionActivity1_5Enum.ActivityId.DungeonBuilding
+
+	return arg_19_0:sendMsg(var_19_0)
 end
 
-function slot0.onReceiveAct140GainProgressRewardReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct140GainProgressRewardReply(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_1 ~= 0 then
 		return
 	end
 
 	VersionActivity1_5BuildModel.instance:updateGainedReward(true)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,92 +1,104 @@
-module("modules.logic.room.view.transport.RoomTransportPathView", package.seeall)
+﻿module("modules.logic.room.view.transport.RoomTransportPathView", package.seeall)
 
-slot0 = class("RoomTransportPathView", BaseView)
+local var_0_0 = class("RoomTransportPathView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._godragmap = gohelper.findChild(slot0.viewGO, "#go_dragmap")
-	slot0._gonavigatebuttonscontainer = gohelper.findChild(slot0.viewGO, "#go_navigatebuttonscontainer")
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#go_left")
-	slot0._btnsave = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/#btn_save")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/#btn_reset")
-	slot0._btnquick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/#btn_quick")
-	slot0._btnremoveBuilding = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_bottom/#btn_removeBuilding")
-	slot0._goselectRemove = gohelper.findChild(slot0.viewGO, "go_bottom/#btn_removeBuilding/#go_selectRemove")
-	slot0._btnremoveLand = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_bottom/#btn_removeLand")
-	slot0._goselectRemoveLand = gohelper.findChild(slot0.viewGO, "go_bottom/#btn_removeLand/#go_selectRemoveLand")
-	slot0._gotransportgroup = gohelper.findChild(slot0.viewGO, "#go_transportgroup")
-	slot0._gotypeitem = gohelper.findChild(slot0.viewGO, "#go_transportgroup/go_pathlinegroup/#go_typeitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._godragmap = gohelper.findChild(arg_1_0.viewGO, "#go_dragmap")
+	arg_1_0._gonavigatebuttonscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_navigatebuttonscontainer")
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+	arg_1_0._btnsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_save")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_reset")
+	arg_1_0._btnquick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_quick")
+	arg_1_0._btnremoveBuilding = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_bottom/#btn_removeBuilding")
+	arg_1_0._goselectRemove = gohelper.findChild(arg_1_0.viewGO, "go_bottom/#btn_removeBuilding/#go_selectRemove")
+	arg_1_0._btnremoveLand = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_bottom/#btn_removeLand")
+	arg_1_0._goselectRemoveLand = gohelper.findChild(arg_1_0.viewGO, "go_bottom/#btn_removeLand/#go_selectRemoveLand")
+	arg_1_0._gotransportgroup = gohelper.findChild(arg_1_0.viewGO, "#go_transportgroup")
+	arg_1_0._gotypeitem = gohelper.findChild(arg_1_0.viewGO, "#go_transportgroup/go_pathlinegroup/#go_typeitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnsave:AddClickListener(slot0._btnsaveOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnquick:AddClickListener(slot0._btnquickOnClick, slot0)
-	slot0._btnremoveBuilding:AddClickListener(slot0._btnremoveBuildingOnClick, slot0)
-	slot0._btnremoveLand:AddClickListener(slot0._btnbtnremoveLandOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnsave:AddClickListener(arg_2_0._btnsaveOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnquick:AddClickListener(arg_2_0._btnquickOnClick, arg_2_0)
+	arg_2_0._btnremoveBuilding:AddClickListener(arg_2_0._btnremoveBuildingOnClick, arg_2_0)
+	arg_2_0._btnremoveLand:AddClickListener(arg_2_0._btnbtnremoveLandOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnsave:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnquick:RemoveClickListener()
-	slot0._btnremoveBuilding:RemoveClickListener()
-	slot0._btnremoveLand:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnsave:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnquick:RemoveClickListener()
+	arg_3_0._btnremoveBuilding:RemoveClickListener()
+	arg_3_0._btnremoveLand:RemoveClickListener()
 end
 
-function slot0._btnquickOnClick(slot0)
-	if not slot0._lineDataMO then
+function var_0_0._btnquickOnClick(arg_4_0)
+	if not arg_4_0._lineDataMO then
 		return
 	end
 
-	if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot0._lineDataMO.fromType, slot0._lineDataMO.toType) and slot3:isLinkFinish() then
+	local var_4_0 = arg_4_0._lineDataMO.fromType
+	local var_4_1 = arg_4_0._lineDataMO.toType
+	local var_4_2 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_4_0, var_4_1)
+
+	if var_4_2 and var_4_2:isLinkFinish() then
 		GameFacade.showToast(ToastEnum.RoomTransportQuickLinkFinish)
 
 		return
 	end
 
-	if not slot0._quickLinkMO then
-		slot0._quickLinkMO = RoomTransportQuickLinkMO.New()
+	if not arg_4_0._quickLinkMO then
+		arg_4_0._quickLinkMO = RoomTransportQuickLinkMO.New()
 
-		slot0._quickLinkMO:init()
+		arg_4_0._quickLinkMO:init()
 	end
 
-	if not slot0._quickLinkMO:findPath(slot0._lineDataMO.fromType, slot0._lineDataMO.toType, false) or #slot5 < 2 and slot0._isRemoveBuilding then
-		slot5 = slot0._quickLinkMO:findPath(slot0._lineDataMO.fromType, slot0._lineDataMO.toType, slot0._isRemoveBuilding, true)
+	local var_4_3 = false
+	local var_4_4 = arg_4_0._quickLinkMO:findPath(arg_4_0._lineDataMO.fromType, arg_4_0._lineDataMO.toType, var_4_3)
+
+	if not var_4_4 or #var_4_4 < 2 and arg_4_0._isRemoveBuilding then
+		var_4_3 = true
+		var_4_4 = arg_4_0._quickLinkMO:findPath(arg_4_0._lineDataMO.fromType, arg_4_0._lineDataMO.toType, arg_4_0._isRemoveBuilding, var_4_3)
 	end
 
-	if not slot5 or #slot5 < 2 then
+	if not var_4_4 or #var_4_4 < 2 then
 		GameFacade.showToast(ToastEnum.RoomTransportQuickLinkFail)
 
 		return
 	end
 
-	if RoomMapTransportPathModel.instance:getTempTransportPathMO() or RoomMapTransportPathModel.instance:addTempTransportPathMO(slot5[1].hexPoint, slot1, slot2) then
-		slot6:clear()
+	local var_4_5 = RoomMapTransportPathModel.instance:getTempTransportPathMO() or RoomMapTransportPathModel.instance:addTempTransportPathMO(var_4_4[1].hexPoint, var_4_0, var_4_1)
 
-		slot6.blockCleanType = slot0:_getBlockCleanType()
+	if var_4_5 then
+		var_4_5:clear()
 
-		slot6:setIsEdit(true)
-		slot6:setIsQuickLink(true)
+		var_4_5.blockCleanType = arg_4_0:_getBlockCleanType()
 
-		slot6.fromType = slot1
-		slot6.toType = slot2
+		var_4_5:setIsEdit(true)
+		var_4_5:setIsQuickLink(true)
 
-		for slot11, slot12 in ipairs(slot5) do
-			table.insert(slot6:getHexPointList(), slot12.hexPoint)
+		var_4_5.fromType = var_4_0
+		var_4_5.toType = var_4_1
+
+		local var_4_6 = var_4_5:getHexPointList()
+
+		for iter_4_0, iter_4_1 in ipairs(var_4_4) do
+			table.insert(var_4_6, iter_4_1.hexPoint)
 		end
 
-		if slot4 then
-			for slot11, slot12 in ipairs(slot5) do
-				slot0:_unUseBuildingByHexXy(slot12.hexPoint.x, slot12.hexPoint.y)
+		if var_4_3 then
+			for iter_4_2, iter_4_3 in ipairs(var_4_4) do
+				arg_4_0:_unUseBuildingByHexXy(iter_4_3.hexPoint.x, iter_4_3.hexPoint.y)
 			end
 		end
 
 		RoomMapTransportPathModel.instance:placeTempTransportPathMO()
-		slot0:_clearLinkFailPathMO()
+		arg_4_0:_clearLinkFailPathMO()
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 		RoomTransportController.instance:updateBlockUseState()
 		GameFacade.showToast(ToastEnum.RoomTransportQuickLinkSuccess)
@@ -95,408 +107,453 @@ function slot0._btnquickOnClick(slot0)
 	end
 end
 
-function slot0._btnremoveBuildingOnClick(slot0)
-	slot0:_setIsRemoveBuiling(slot0._isRemoveBuilding ~= true)
+function var_0_0._btnremoveBuildingOnClick(arg_5_0)
+	arg_5_0:_setIsRemoveBuiling(arg_5_0._isRemoveBuilding ~= true)
 end
 
-function slot0._btnbtnremoveLandOnClick(slot0)
-	slot0:_setIsRemoveLand(slot0._isRemoveLand ~= true)
-	slot0:_updateAllPathBlockState()
+function var_0_0._btnbtnremoveLandOnClick(arg_6_0)
+	arg_6_0:_setIsRemoveLand(arg_6_0._isRemoveLand ~= true)
+	arg_6_0:_updateAllPathBlockState()
 end
 
-function slot0._btnsaveOnClick(slot0)
+function var_0_0._btnsaveOnClick(arg_7_0)
 	if RoomMapTransportPathModel.instance:isHasEdit() then
 		RoomTransportController.instance:saveEditPath()
 	else
-		slot0:closeThis()
+		arg_7_0:closeThis()
 	end
 
 	RoomStatController.instance:roomRoadEditClose()
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_8_0)
 	if RoomMapTransportPathModel.instance:isHasEdit() or RoomMapTransportPathModel.instance:getTempTransportPathMO() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomTransportPathResetConfirm, MsgBoxEnum.BoxType.Yes_No, slot0._clearPath, nil, , slot0, nil, )
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomTransportPathResetConfirm, MsgBoxEnum.BoxType.Yes_No, arg_8_0._clearPath, nil, nil, arg_8_0, nil, nil)
 	end
 end
 
-function slot0._onEscape(slot0)
-	slot0:_btnsaveOnClick()
+function var_0_0._onEscape(arg_9_0)
+	arg_9_0:_btnsaveOnClick()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gopathlinegroup = gohelper.findChild(slot0.viewGO, "#go_transportgroup/go_pathlinegroup")
-	slot0._godragmapTrs = slot0._godragmap.transform
-	slot0._dragMap = SLFramework.UGUI.UIDragListener.Get(slot0._godragmap)
-	slot0._isRemoveBuilding = RoomMapTransportPathModel.instance:getIsRemoveBuilding()
-	slot0._screenScaleX = 0
-	slot0._screenScaleY = 0
-	slot0._waitingBlockIdList = {}
-	slot0._unUseBuilingUidList = {}
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._gopathlinegroup = gohelper.findChild(arg_10_0.viewGO, "#go_transportgroup/go_pathlinegroup")
+	arg_10_0._godragmapTrs = arg_10_0._godragmap.transform
+	arg_10_0._dragMap = SLFramework.UGUI.UIDragListener.Get(arg_10_0._godragmap)
+	arg_10_0._isRemoveBuilding = RoomMapTransportPathModel.instance:getIsRemoveBuilding()
+	arg_10_0._screenScaleX = 0
+	arg_10_0._screenScaleY = 0
+	arg_10_0._waitingBlockIdList = {}
+	arg_10_0._unUseBuilingUidList = {}
 
-	slot0:_setIsRemoveBuiling(slot0._isRemoveBuilding)
-	slot0:_setIsRemoveLand(true)
+	arg_10_0:_setIsRemoveBuiling(arg_10_0._isRemoveBuilding)
+	arg_10_0:_setIsRemoveLand(true)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathLineChanged, slot0._refreshLineLinkUI, slot0)
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathLineChanged, arg_12_0._refreshLineLinkUI, arg_12_0)
 
-	if slot0.viewContainer then
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportPathDeleteLineItem, slot0._onDeleteLineItem, slot0)
-		slot0:addEventCb(slot0.viewContainer, RoomEvent.TransportPathSelectLineItem, slot0._onSelectLineItem, slot0)
+	if arg_12_0.viewContainer then
+		arg_12_0:addEventCb(arg_12_0.viewContainer, RoomEvent.TransportPathDeleteLineItem, arg_12_0._onDeleteLineItem, arg_12_0)
+		arg_12_0:addEventCb(arg_12_0.viewContainer, RoomEvent.TransportPathSelectLineItem, arg_12_0._onSelectLineItem, arg_12_0)
 	end
 
-	if slot0._dragMap then
-		slot0._dragMap:AddDragListener(slot0._onDragIng, slot0)
-		slot0._dragMap:AddDragBeginListener(slot0._onDragBegin, slot0)
-		slot0._dragMap:AddDragEndListener(slot0._onDragEnd, slot0)
+	if arg_12_0._dragMap then
+		arg_12_0._dragMap:AddDragListener(arg_12_0._onDragIng, arg_12_0)
+		arg_12_0._dragMap:AddDragBeginListener(arg_12_0._onDragBegin, arg_12_0)
+		arg_12_0._dragMap:AddDragEndListener(arg_12_0._onDragEnd, arg_12_0)
 	end
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._onEscape, slot0)
+	NavigateMgr.instance:addEscape(arg_12_0.viewName, arg_12_0._onEscape, arg_12_0)
 	RoomMapTransportPathModel.instance:setSelectBuildingType(nil)
-	slot0:refreshUI()
+	arg_12_0:refreshUI()
 	RoomStatController.instance:roomRoadEditView()
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathViewShowChanged)
 
-	if slot0._dataList and #slot0._dataList > 0 then
-		slot1 = nil
+	if arg_12_0._dataList and #arg_12_0._dataList > 0 then
+		local var_12_0
 
-		for slot5 = 1, #slot0._dataList do
-			slot6 = slot0._dataList[slot5]
+		for iter_12_0 = 1, #arg_12_0._dataList do
+			local var_12_1 = arg_12_0._dataList[iter_12_0]
 
-			if not RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot6.fromType, slot6.toType) then
-				slot1 = slot6
+			if not RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_12_1.fromType, var_12_1.toType) then
+				var_12_0 = var_12_1
 
 				break
 			end
 		end
 
-		slot0:_onSelectLineItem(slot1 or slot0._dataList[1])
+		arg_12_0:_onSelectLineItem(var_12_0 or arg_12_0._dataList[1])
 	end
 end
 
-function slot0.onClose(slot0)
-	if slot0._dragMap then
-		slot0._dragMap:RemoveDragBeginListener()
-		slot0._dragMap:RemoveDragListener()
-		slot0._dragMap:RemoveDragEndListener()
+function var_0_0.onClose(arg_13_0)
+	if arg_13_0._dragMap then
+		arg_13_0._dragMap:RemoveDragBeginListener()
+		arg_13_0._dragMap:RemoveDragListener()
+		arg_13_0._dragMap:RemoveDragEndListener()
 	end
 
-	slot0:_clearPath()
+	arg_13_0:_clearPath()
 	RoomMapTransportPathModel.instance:setSelectBuildingType(nil)
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathViewShowChanged)
 end
 
-function slot0._setIsRemoveBuiling(slot0, slot1)
-	slot0._isRemoveBuilding = slot1
+function var_0_0._setIsRemoveBuiling(arg_14_0, arg_14_1)
+	arg_14_0._isRemoveBuilding = arg_14_1
 
-	RoomMapTransportPathModel.instance:setIsRemoveBuilding(slot1)
-	gohelper.setActive(slot0._goselectRemove, slot0._isRemoveBuilding)
+	RoomMapTransportPathModel.instance:setIsRemoveBuilding(arg_14_1)
+	gohelper.setActive(arg_14_0._goselectRemove, arg_14_0._isRemoveBuilding)
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathConfirmChange)
 end
 
-function slot0._setIsRemoveLand(slot0, slot1)
-	slot0._isRemoveLand = slot1
+function var_0_0._setIsRemoveLand(arg_15_0, arg_15_1)
+	arg_15_0._isRemoveLand = arg_15_1
 
-	gohelper.setActive(slot0._goselectRemoveLand, slot0._isRemoveLand)
+	gohelper.setActive(arg_15_0._goselectRemoveLand, arg_15_0._isRemoveLand)
 end
 
-function slot0._getBlockCleanType(slot0)
-	if slot0._isRemoveLand then
+function var_0_0._getBlockCleanType(arg_16_0)
+	if arg_16_0._isRemoveLand then
 		return RoomBlockEnum.CleanType.CleanLand
 	end
 
 	return RoomBlockEnum.CleanType.Normal
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._isStarDragPath = false
-	slot0._canTouchDrag = true
-	slot0._isChangeSiteHexPoint = false
-	slot0._changeSiteBuildingType = nil
-	slot0._startDragSiteHexPoint = nil
-	slot0._canDelectfinishPathMOList = nil
-	slot0._pathMO = nil
-	slot0._lastMousePosition = slot2.position
-	slot0._screenScaleX = 1920 / UnityEngine.Screen.width
-	slot0._screenScaleY = 1080 / UnityEngine.Screen.height
+function var_0_0._onDragBegin(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_0._isStarDragPath = false
+	arg_18_0._canTouchDrag = true
+	arg_18_0._isChangeSiteHexPoint = false
+	arg_18_0._changeSiteBuildingType = nil
+	arg_18_0._startDragSiteHexPoint = nil
+	arg_18_0._canDelectfinishPathMOList = nil
+	arg_18_0._pathMO = nil
+	arg_18_0._lastMousePosition = arg_18_2.position
+	arg_18_0._screenScaleX = 1920 / UnityEngine.Screen.width
+	arg_18_0._screenScaleY = 1080 / UnityEngine.Screen.height
 
-	if not slot0._lineDataMO then
+	if not arg_18_0._lineDataMO then
 		return
 	end
 
-	if not slot0:_findeBlockMO(slot0._lastMousePosition) then
+	local var_18_0 = arg_18_0:_findeBlockMO(arg_18_0._lastMousePosition)
+
+	if not var_18_0 then
 		return
 	end
 
-	if not RoomTransportHelper.canPathByBlockMO(slot3, slot0._isRemoveBuilding) then
+	if not RoomTransportHelper.canPathByBlockMO(var_18_0, arg_18_0._isRemoveBuilding) then
 		return
 	end
 
-	if not (RoomMapTransportPathModel.instance:getTempTransportPathMO() or RoomMapTransportPathModel.instance:addTempTransportPathMO(slot3.hexPoint, slot0._lineDataMO.fromType, slot0._lineDataMO.toType)) then
+	local var_18_1 = RoomMapTransportPathModel.instance:getTempTransportPathMO() or RoomMapTransportPathModel.instance:addTempTransportPathMO(var_18_0.hexPoint, arg_18_0._lineDataMO.fromType, arg_18_0._lineDataMO.toType)
+
+	if not var_18_1 then
 		return
 	end
 
-	if slot3.hexPoint == slot4:getLastHexPoint() then
-		slot0._isStarDragPath = true
-		slot0._canTouchDrag = false
-	elseif slot3.hexPoint == slot4:getFirstHexPoint() then
-		slot4:changeBenEnd()
+	if var_18_0.hexPoint == var_18_1:getLastHexPoint() then
+		arg_18_0._isStarDragPath = true
+		arg_18_0._canTouchDrag = false
+	elseif var_18_0.hexPoint == var_18_1:getFirstHexPoint() then
+		var_18_1:changeBenEnd()
 
-		slot0._isStarDragPath = true
-		slot0._canTouchDrag = false
+		arg_18_0._isStarDragPath = true
+		arg_18_0._canTouchDrag = false
 	end
 
-	if not slot0._isStarDragPath then
+	if not arg_18_0._isStarDragPath then
 		return
 	end
 
-	slot4.blockCleanType = slot0:_getBlockCleanType()
+	var_18_1.blockCleanType = arg_18_0:_getBlockCleanType()
 
-	if slot4:isLinkFinish() then
-		if not slot4:checkSameType(slot0._lineDataMO.fromType, slot0._lineDataMO.toType) then
+	if var_18_1:isLinkFinish() then
+		if not var_18_1:checkSameType(arg_18_0._lineDataMO.fromType, arg_18_0._lineDataMO.toType) then
 			return
 		end
 
-		slot0._isChangeSiteHexPoint = true
-		slot0._changeSiteBuildingType = slot4.toType
+		arg_18_0._isChangeSiteHexPoint = true
+		arg_18_0._changeSiteBuildingType = var_18_1.toType
 
-		if RoomMapTransportPathModel.instance:getTransportPathMOListByHexPoint(slot3.hexPoint, true) and #slot5 > 1 then
-			tabletool.removeValue(slot5, slot4)
+		local var_18_2 = RoomMapTransportPathModel.instance:getTransportPathMOListByHexPoint(var_18_0.hexPoint, true)
 
-			slot0._canDelectfinishPathMOList = slot5
-			slot0._startDragSiteHexPoint = slot3.hexPoint
+		if var_18_2 and #var_18_2 > 1 then
+			tabletool.removeValue(var_18_2, var_18_1)
+
+			arg_18_0._canDelectfinishPathMOList = var_18_2
+			arg_18_0._startDragSiteHexPoint = var_18_0.hexPoint
 		end
 	end
 
-	slot0._pathMO = slot4
+	arg_18_0._pathMO = var_18_1
 
-	RoomMapTransportPathModel.instance:setOpParam(slot0._isStarDragPath, slot0._changeSiteBuildingType)
-	slot4:checkTempTypes(slot0._lineDataMO.typeList)
+	RoomMapTransportPathModel.instance:setOpParam(arg_18_0._isStarDragPath, arg_18_0._changeSiteBuildingType)
+	var_18_1:checkTempTypes(arg_18_0._lineDataMO.typeList)
 
-	if slot4:getHexPointCount() == 1 then
-		slot4.fromType = slot0:_getTempSiteTypeByHexPoint(slot0._pathMO:getLastHexPoint(), slot0._lineDataMO and slot0._lineDataMO.typeList)
-		slot4.toType = 0
+	if var_18_1:getHexPointCount() == 1 then
+		var_18_1.fromType = arg_18_0:_getTempSiteTypeByHexPoint(arg_18_0._pathMO:getLastHexPoint(), arg_18_0._lineDataMO and arg_18_0._lineDataMO.typeList)
+		var_18_1.toType = 0
 	end
 
-	if slot4:checkHexPoint(slot3.hexPoint) and slot3:getUseState() ~= RoomBlockEnum.UseState.TransportPath then
-		slot3:setUseState(RoomBlockEnum.UseState.TransportPath)
-		slot3:setCleanType(slot0._pathMO.blockCleanType)
-		slot0:_addRefreshBlockId(slot3.blockId)
+	if var_18_1:checkHexPoint(var_18_0.hexPoint) and var_18_0:getUseState() ~= RoomBlockEnum.UseState.TransportPath then
+		var_18_0:setUseState(RoomBlockEnum.UseState.TransportPath)
+		var_18_0:setCleanType(arg_18_0._pathMO.blockCleanType)
+		arg_18_0:_addRefreshBlockId(var_18_0.blockId)
 	end
 end
 
-function slot0._onDragIng(slot0, slot1, slot2)
-	if slot0._isStarDragPath then
-		slot0:_addPathByScreenPos(slot2.position)
+function var_0_0._onDragIng(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_0._isStarDragPath then
+		arg_19_0:_addPathByScreenPos(arg_19_2.position)
 	else
-		slot0:_touchDrag(slot2.position)
+		arg_19_0:_touchDrag(arg_19_2.position)
 	end
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	slot0._canTouchDrag = false
-	slot0._isStarDragPath = false
+function var_0_0._onDragEnd(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0._isStarDragPath
+
+	arg_20_0._canTouchDrag = false
+	arg_20_0._isStarDragPath = false
 
 	RoomMapTransportPathModel.instance:setOpParam(false, nil)
 
-	if slot0._isStarDragPath then
-		slot0:_dragPathFinishByPathMO(slot0._pathMO)
+	if var_20_0 then
+		local var_20_1 = arg_20_0._pathMO
+
+		arg_20_0:_dragPathFinishByPathMO(var_20_1)
 	end
 end
 
-function slot0._touchDrag(slot0, slot1)
-	if slot0._canTouchDrag then
-		slot2 = slot1 - slot0._lastMousePosition
-		slot0._lastMousePosition = slot1
+function var_0_0._touchDrag(arg_21_0, arg_21_1)
+	if arg_21_0._canTouchDrag then
+		local var_21_0 = arg_21_1 - arg_21_0._lastMousePosition
 
-		RoomMapController.instance:dispatchEvent(RoomEvent.TouchDrag, Vector2(slot2.x * slot0._screenScaleX, slot2.y * slot0._screenScaleY))
+		arg_21_0._lastMousePosition = arg_21_1
+
+		RoomMapController.instance:dispatchEvent(RoomEvent.TouchDrag, Vector2(var_21_0.x * arg_21_0._screenScaleX, var_21_0.y * arg_21_0._screenScaleY))
 	end
 end
 
-function slot0._findeBlockMO(slot0, slot1)
-	if RoomBendingHelper.screenToWorld(slot1) then
-		slot3, slot4 = HexMath.posXYToRoundHexYX(slot2.x, slot2.y, RoomBlockEnum.BlockSize)
+function var_0_0._findeBlockMO(arg_22_0, arg_22_1)
+	local var_22_0 = RoomBendingHelper.screenToWorld(arg_22_1)
 
-		if RoomMapBlockModel.instance:getBlockMO(slot3, slot4) and slot5:isInMapBlock() then
-			return slot5
+	if var_22_0 then
+		local var_22_1, var_22_2 = HexMath.posXYToRoundHexYX(var_22_0.x, var_22_0.y, RoomBlockEnum.BlockSize)
+		local var_22_3 = RoomMapBlockModel.instance:getBlockMO(var_22_1, var_22_2)
+
+		if var_22_3 and var_22_3:isInMapBlock() then
+			return var_22_3
 		end
 	end
 end
 
-function slot0._addPathByScreenPos(slot0, slot1)
-	if not slot0:_findeBlockMO(slot1) or not slot2:isInMapBlock() then
+function var_0_0._addPathByScreenPos(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:_findeBlockMO(arg_23_1)
+
+	if not var_23_0 or not var_23_0:isInMapBlock() then
 		return
 	end
 
-	slot4, slot5 = slot0._pathMO:checkHexPoint(slot2.hexPoint)
-	slot6 = false
+	local var_23_1 = var_23_0.hexPoint
+	local var_23_2, var_23_3 = arg_23_0._pathMO:checkHexPoint(var_23_1)
+	local var_23_4 = false
 
-	if slot4 then
-		if slot5 >= 1 and slot5 + 1 == slot0._pathMO:getHexPointCount() then
-			slot7 = slot0._pathMO:getLastHexPoint()
+	if var_23_2 then
+		if var_23_3 >= 1 and var_23_3 + 1 == arg_23_0._pathMO:getHexPointCount() then
+			local var_23_5 = arg_23_0._pathMO:getLastHexPoint()
+			local var_23_6 = RoomMapBlockModel.instance:getBlockMO(var_23_5.x, var_23_5.y)
 
-			if RoomMapBlockModel.instance:getBlockMO(slot7.x, slot7.y) and slot8:isInMapBlock() then
-				slot0._pathMO:removeLastHexPoint()
-				slot0._pathMO:setIsEdit(true)
-				slot0._pathMO:setIsQuickLink(false)
-				slot0:_changeSiteHexPoint(slot0._pathMO:getLastHexPoint())
-				slot0._pathMO:checkTempTypes(slot0._lineDataMO.typeList)
+			if var_23_6 and var_23_6:isInMapBlock() then
+				arg_23_0._pathMO:removeLastHexPoint()
+				arg_23_0._pathMO:setIsEdit(true)
+				arg_23_0._pathMO:setIsQuickLink(false)
+				arg_23_0:_changeSiteHexPoint(arg_23_0._pathMO:getLastHexPoint())
+				arg_23_0._pathMO:checkTempTypes(arg_23_0._lineDataMO.typeList)
 
-				if not RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(slot7) or slot9 == 0 then
-					slot8:setUseState(nil)
-					slot8:setCleanType(nil)
+				local var_23_7 = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(var_23_5)
+
+				if not var_23_7 or var_23_7 == 0 then
+					var_23_6:setUseState(nil)
+					var_23_6:setCleanType(nil)
 				end
 
-				slot0:_addRefreshBlockId(slot8.id)
+				arg_23_0:_addRefreshBlockId(var_23_6.id)
 			end
 		else
-			slot6 = true
+			var_23_4 = true
 		end
-	elseif HexPoint.Distance(slot0._pathMO:getLastHexPoint(), slot3) == 1 then
-		slot7, slot8 = slot0:_canPathByBlockMO(slot2)
+	elseif HexPoint.Distance(arg_23_0._pathMO:getLastHexPoint(), var_23_1) == 1 then
+		local var_23_8, var_23_9 = arg_23_0:_canPathByBlockMO(var_23_0)
 
-		if slot8 then
-			slot6 = true
+		if var_23_9 then
+			var_23_4 = true
 		end
 
-		if slot7 and slot0._pathMO:addHexPoint(slot3) then
-			slot2:setUseState(RoomBlockEnum.UseState.TransportPath)
-			slot2:setCleanType(slot0._pathMO.blockCleanType)
-			slot0._pathMO:setIsEdit(true)
-			slot0._pathMO:setIsQuickLink(false)
-			slot0:_changeSiteHexPoint(slot3)
-			slot0._pathMO:checkTempTypes(slot0._lineDataMO.typeList)
-			slot0:_addRefreshBlockId(slot2.id)
-			slot0:_unUseBuildingByHexXy(slot3.x, slot3.y)
+		if var_23_8 and arg_23_0._pathMO:addHexPoint(var_23_1) then
+			var_23_0:setUseState(RoomBlockEnum.UseState.TransportPath)
+			var_23_0:setCleanType(arg_23_0._pathMO.blockCleanType)
+			arg_23_0._pathMO:setIsEdit(true)
+			arg_23_0._pathMO:setIsQuickLink(false)
+			arg_23_0:_changeSiteHexPoint(var_23_1)
+			arg_23_0._pathMO:checkTempTypes(arg_23_0._lineDataMO.typeList)
+			arg_23_0:_addRefreshBlockId(var_23_0.id)
+			arg_23_0:_unUseBuildingByHexXy(var_23_1.x, var_23_1.y)
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_luxian)
 		end
 	end
 
-	if slot6 and slot0._isLastCrossBlockId ~= slot2.id and slot0._pathMO:getHexPointCount() > 0 and HexPoint.Distance(slot0._pathMO:getLastHexPoint(), slot3) == 1 then
-		slot0._isLastCrossBlockId = slot2.id
+	if var_23_4 and arg_23_0._isLastCrossBlockId ~= var_23_0.id and arg_23_0._pathMO:getHexPointCount() > 0 and HexPoint.Distance(arg_23_0._pathMO:getLastHexPoint(), var_23_1) == 1 then
+		arg_23_0._isLastCrossBlockId = var_23_0.id
 
 		GameFacade.showToast(ToastEnum.RoomTransportPathCross)
 	end
 end
 
-function slot0._canPathByBlockMO(slot0, slot1)
-	if slot0:_findLinkFinishPathMO(slot1.hexPoint) and slot2:getLastHexPoint() ~= slot1.hexPoint and slot2:getFirstHexPoint() ~= slot1.hexPoint then
+function var_0_0._canPathByBlockMO(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:_findLinkFinishPathMO(arg_24_1.hexPoint)
+
+	if var_24_0 and var_24_0:getLastHexPoint() ~= arg_24_1.hexPoint and var_24_0:getFirstHexPoint() ~= arg_24_1.hexPoint then
 		return false, true
 	end
 
-	if not slot0._isChangeSiteHexPoint then
-		if slot0._pathMO:getHexPointCount() > 1 and RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(slot0._pathMO:getLastHexPoint()) and slot3 ~= 0 and slot0._lineDataMO and (slot0._lineDataMO.fromType == slot3 or slot0._lineDataMO.toType == slot3) then
-			return false, true
+	if not arg_24_0._isChangeSiteHexPoint then
+		if arg_24_0._pathMO:getHexPointCount() > 1 then
+			local var_24_1 = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(arg_24_0._pathMO:getLastHexPoint())
+
+			if var_24_1 and var_24_1 ~= 0 and arg_24_0._lineDataMO and (arg_24_0._lineDataMO.fromType == var_24_1 or arg_24_0._lineDataMO.toType == var_24_1) then
+				return false, true
+			end
 		end
 
-		if RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(slot1.hexPoint) and slot3 ~= 0 then
-			if slot0._lineDataMO and (slot0._lineDataMO.fromType == slot3 or slot0._lineDataMO.toType == slot3) then
+		local var_24_2 = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(arg_24_1.hexPoint)
+
+		if var_24_2 and var_24_2 ~= 0 then
+			if arg_24_0._lineDataMO and (arg_24_0._lineDataMO.fromType == var_24_2 or arg_24_0._lineDataMO.toType == var_24_2) then
 				return true
 			end
 
 			return false, true
 		end
 
-		if slot0:_findLinkFinishPathMO(slot1.hexPoint) then
+		if arg_24_0:_findLinkFinishPathMO(arg_24_1.hexPoint) then
 			return false, true
 		end
-	elseif RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(slot1.hexPoint) and slot3 ~= 0 and slot3 ~= slot0._changeSiteBuildingType then
-		return false, true
+	else
+		local var_24_3 = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(arg_24_1.hexPoint)
+
+		if var_24_3 and var_24_3 ~= 0 and var_24_3 ~= arg_24_0._changeSiteBuildingType then
+			return false, true
+		end
 	end
 
-	return RoomTransportHelper.canPathByBlockMO(slot1, slot0._isRemoveBuilding)
+	return RoomTransportHelper.canPathByBlockMO(arg_24_1, arg_24_0._isRemoveBuilding)
 end
 
-function slot0._findLinkFinishPathMO(slot0, slot1)
-	slot3 = slot0._canDelectfinishPathMOList
+function var_0_0._findLinkFinishPathMO(arg_25_0, arg_25_1)
+	local var_25_0 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local var_25_1 = arg_25_0._canDelectfinishPathMOList
 
-	for slot7, slot8 in ipairs(RoomMapTransportPathModel.instance:getTransportPathMOList()) do
-		if slot8:isLinkFinish() and slot8:checkHexPoint(slot1) and (not slot3 or not tabletool.indexOf(slot3, slot8)) then
-			return slot8
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		if iter_25_1:isLinkFinish() and iter_25_1:checkHexPoint(arg_25_1) and (not var_25_1 or not tabletool.indexOf(var_25_1, iter_25_1)) then
+			return iter_25_1
 		end
 	end
 end
 
-function slot0._changeSiteHexPoint(slot0, slot1)
-	if slot0._isChangeSiteHexPoint and slot0._changeSiteBuildingType then
-		slot2 = nil
+function var_0_0._changeSiteHexPoint(arg_26_0, arg_26_1)
+	if arg_26_0._isChangeSiteHexPoint and arg_26_0._changeSiteBuildingType then
+		local var_26_0
 
-		if RoomTransportHelper.canSiteByHexPoint(slot1, slot0._changeSiteBuildingType) then
-			slot2 = slot1
+		if RoomTransportHelper.canSiteByHexPoint(arg_26_1, arg_26_0._changeSiteBuildingType) then
+			var_26_0 = arg_26_1
 		end
 
-		RoomMapTransportPathModel.instance:setSiteHexPointByType(slot0._changeSiteBuildingType, slot2)
-		slot0:_changeAllPathLineSite()
-	elseif slot0._pathMO then
-		slot0._pathMO.toType = slot0:_getTempSiteTypeByHexPoint(slot0._pathMO:getLastHexPoint(), slot0._lineDataMO and slot0._lineDataMO.typeList)
+		RoomMapTransportPathModel.instance:setSiteHexPointByType(arg_26_0._changeSiteBuildingType, var_26_0)
+		arg_26_0:_changeAllPathLineSite()
+	elseif arg_26_0._pathMO then
+		arg_26_0._pathMO.toType = arg_26_0:_getTempSiteTypeByHexPoint(arg_26_0._pathMO:getLastHexPoint(), arg_26_0._lineDataMO and arg_26_0._lineDataMO.typeList)
 	end
 end
 
-function slot0._dragPathFinishByPathMO(slot0, slot1)
-	if slot1:getHexPointCount() == 1 then
-		slot1:clear()
+function var_0_0._dragPathFinishByPathMO(arg_27_0, arg_27_1)
+	if arg_27_1:getHexPointCount() == 1 then
+		arg_27_1:clear()
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 		RoomTransportController.instance:waitRefreshPathLineChanged()
 		RoomMapTransportPathModel.instance:placeTempTransportPathMO()
-	elseif slot1:isLinkFinish() then
+	elseif arg_27_1:isLinkFinish() then
 		RoomMapTransportPathModel.instance:placeTempTransportPathMO()
-		RoomMapTransportPathModel.instance:setSiteHexPointByType(slot1.fromType, slot1:getFirstHexPoint())
-		RoomMapTransportPathModel.instance:setSiteHexPointByType(slot1.toType, slot1:getLastHexPoint())
+		RoomMapTransportPathModel.instance:setSiteHexPointByType(arg_27_1.fromType, arg_27_1:getFirstHexPoint())
+		RoomMapTransportPathModel.instance:setSiteHexPointByType(arg_27_1.toType, arg_27_1:getLastHexPoint())
 	end
 
-	slot0:_changeAllPathLineSite()
-	slot0:_clearLinkFailPathMO()
+	arg_27_0:_changeAllPathLineSite()
+	arg_27_0:_clearLinkFailPathMO()
 end
 
-function slot0._clearLinkFailPathMO(slot0)
-	slot3 = false
+function var_0_0._clearLinkFailPathMO(arg_28_0)
+	local var_28_0 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local var_28_1 = RoomMapTransportPathModel.instance:getTempTransportPathMO()
+	local var_28_2 = false
 
-	for slot7, slot8 in ipairs(RoomMapTransportPathModel.instance:getTransportPathMOList()) do
-		if not slot8:isLinkFinish() and slot8 ~= RoomMapTransportPathModel.instance:getTempTransportPathMO() then
-			slot8:clear()
+	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+		if not iter_28_1:isLinkFinish() and iter_28_1 ~= var_28_1 then
+			iter_28_1:clear()
 
-			slot3 = true
+			var_28_2 = true
 		end
 	end
 
-	if slot3 then
+	if var_28_2 then
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 		RoomTransportController.instance:updateBlockUseState()
 	end
 end
 
-function slot0._changeAllPathLineSite(slot0)
-	for slot6, slot7 in ipairs(RoomMapTransportPathModel.instance:getTransportPathMOList()) do
-		slot7.toType = slot1:getSiteTypeByHexPoint(slot7:getLastHexPoint())
-		slot7.fromType = slot1:getSiteTypeByHexPoint(slot7:getFirstHexPoint())
+function var_0_0._changeAllPathLineSite(arg_29_0)
+	local var_29_0 = RoomMapTransportPathModel.instance
+	local var_29_1 = var_29_0:getTransportPathMOList()
+
+	for iter_29_0, iter_29_1 in ipairs(var_29_1) do
+		iter_29_1.toType = var_29_0:getSiteTypeByHexPoint(iter_29_1:getLastHexPoint())
+		iter_29_1.fromType = var_29_0:getSiteTypeByHexPoint(iter_29_1:getFirstHexPoint())
 	end
 
-	if slot0._canDelectfinishPathMOList and slot0._pathMO then
-		for slot6, slot7 in ipairs(slot0._canDelectfinishPathMOList) do
-			if slot7:isLinkFinish() and slot0:_isHasIntersection(slot7, slot0._pathMO) then
-				slot7.toType = 0
-				slot7.fromType = 0
+	if arg_29_0._canDelectfinishPathMOList and arg_29_0._pathMO then
+		for iter_29_2, iter_29_3 in ipairs(arg_29_0._canDelectfinishPathMOList) do
+			if iter_29_3:isLinkFinish() and arg_29_0:_isHasIntersection(iter_29_3, arg_29_0._pathMO) then
+				iter_29_3.toType = 0
+				iter_29_3.fromType = 0
 			end
 		end
 	end
 end
 
-function slot0._isHasIntersection(slot0, slot1, slot2)
-	if slot1:getHexPointCount() < 1 or slot2:getHexPointCount() < 1 then
+function var_0_0._isHasIntersection(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = arg_30_1:getHexPointCount()
+	local var_30_1 = arg_30_2:getHexPointCount()
+
+	if var_30_0 < 1 or var_30_1 < 1 then
 		return false
 	end
 
-	for slot9, slot10 in ipairs(slot1:getHexPointList()) do
-		slot11, slot12 = slot2:checkHexPoint(slot10)
+	local var_30_2 = arg_30_1:getHexPointList()
 
-		if slot11 and (slot9 ~= 1 and slot12 ~= 1 and slot12 ~= slot4 or slot9 ~= slot3 and slot12 ~= 1 and slot12 ~= slot4) then
+	for iter_30_0, iter_30_1 in ipairs(var_30_2) do
+		local var_30_3, var_30_4 = arg_30_2:checkHexPoint(iter_30_1)
+
+		if var_30_3 and (iter_30_0 ~= 1 and var_30_4 ~= 1 and var_30_4 ~= var_30_1 or iter_30_0 ~= var_30_0 and var_30_4 ~= 1 and var_30_4 ~= var_30_1) then
 			return true
 		end
 	end
@@ -504,176 +561,203 @@ function slot0._isHasIntersection(slot0, slot1, slot2)
 	return false
 end
 
-function slot0._getTempSiteTypeByHexPoint(slot0, slot1, slot2)
-	if slot0._pathMO then
-		if RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(slot1) == 0 then
-			slot3 = RoomTransportHelper.getBuildingTypeByHexPoint(slot1, slot2)
+function var_0_0._getTempSiteTypeByHexPoint(arg_31_0, arg_31_1, arg_31_2)
+	if arg_31_0._pathMO then
+		local var_31_0 = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(arg_31_1)
+
+		if var_31_0 == 0 then
+			var_31_0 = RoomTransportHelper.getBuildingTypeByHexPoint(arg_31_1, arg_31_2)
 		end
 
-		return slot3
+		return var_31_0
 	end
 
 	return 0
 end
 
-function slot0._unUseBuildingByHexXy(slot0, slot1, slot2)
-	slot4 = RoomMapBuildingModel.instance:getBuildingParam(slot1, slot2) and slot3.buildingUid
+function var_0_0._unUseBuildingByHexXy(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = RoomMapBuildingModel.instance:getBuildingParam(arg_32_1, arg_32_2)
+	local var_32_1 = var_32_0 and var_32_0.buildingUid
 
-	if slot3 and not tabletool.indexOf(slot0._unUseBuilingUidList, slot4) and RoomMapBuildingModel.instance:getBuildingMOById(slot4) and slot5.config and RoomBuildingEnum.CanDateleBuildingType[slot6.buildingType] then
-		table.insert(slot0._unUseBuilingUidList, slot4)
-		RoomMapController.instance:unUseBuildingRequest(slot4)
-		GameFacade.showToast(ToastEnum.RoomTransportRemoveBuilding, slot6.name)
+	if var_32_0 and not tabletool.indexOf(arg_32_0._unUseBuilingUidList, var_32_1) then
+		local var_32_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_32_1)
+		local var_32_3 = var_32_2 and var_32_2.config
+
+		if var_32_3 and RoomBuildingEnum.CanDateleBuildingType[var_32_3.buildingType] then
+			table.insert(arg_32_0._unUseBuilingUidList, var_32_1)
+			RoomMapController.instance:unUseBuildingRequest(var_32_1)
+			GameFacade.showToast(ToastEnum.RoomTransportRemoveBuilding, var_32_3.name)
+		end
 	end
 end
 
-function slot0._checkCanBlockMO(slot0, slot1)
-	if not slot1 or slot1.packageId == RoomBlockPackageEnum.ID.RoleBirthday then
+function var_0_0._checkCanBlockMO(arg_33_0, arg_33_1)
+	if not arg_33_1 or arg_33_1.packageId == RoomBlockPackageEnum.ID.RoleBirthday then
 		return false
 	end
 
-	slot2 = slot1.hexPoint
+	local var_33_0 = arg_33_1.hexPoint
+	local var_33_1 = RoomMapBuildingModel.instance:getBuildingParam(var_33_0.x, var_33_0.y)
 
-	if RoomMapBuildingModel.instance:getBuildingParam(slot2.x, slot2.y) then
-		if slot3:isAreaMainBuilding() then
+	if var_33_1 then
+		if var_33_1:isAreaMainBuilding() then
 			return false
 		end
 
-		if slot0._isRemoveBuilding ~= true then
+		if arg_33_0._isRemoveBuilding ~= true then
 			return false
 		end
 	end
 end
 
-function slot0._onDeleteLineItem(slot0, slot1)
+function var_0_0._onDeleteLineItem(arg_34_0, arg_34_1)
+	return
 end
 
-function slot0._onSelectLineItem(slot0, slot1)
-	if slot0._canTouchDrag or slot0._isStarDragPath then
+function var_0_0._onSelectLineItem(arg_35_0, arg_35_1)
+	if arg_35_0._canTouchDrag or arg_35_0._isStarDragPath then
 		return
 	end
 
-	slot0._lineDataMO = slot1
+	local var_35_0 = arg_35_0._lineDataMO
 
-	RoomMapTransportPathModel.instance:setSelectBuildingType(slot1 and slot1.fromType)
+	arg_35_0._lineDataMO = arg_35_1
 
-	if not slot0._lineDataMO or slot1 and slot1.fromType ~= slot2.fromType then
+	RoomMapTransportPathModel.instance:setSelectBuildingType(arg_35_1 and arg_35_1.fromType)
+
+	if not var_35_0 or arg_35_1 and arg_35_1.fromType ~= var_35_0.fromType then
 		RoomMapTransportPathModel.instance:placeTempTransportPathMO()
-		slot0:_clearLinkFailPathMO()
+		arg_35_0:_clearLinkFailPathMO()
 	end
 
-	slot0:_refreshLineLinkUI()
+	arg_35_0:_refreshLineLinkUI()
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathViewShowChanged)
-	slot0:_initSelectLineRemoveLand()
-	slot0:_updateAllPathBlockState()
+	arg_35_0:_initSelectLineRemoveLand()
+	arg_35_0:_updateAllPathBlockState()
 end
 
-function slot0._initSelectLineRemoveLand(slot0)
-	if slot0._lineDataMO and RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot0._lineDataMO.fromType, slot0._lineDataMO.toType) then
-		slot0:_setIsRemoveLand(slot1.blockCleanType == RoomBlockEnum.CleanType.CleanLand)
+function var_0_0._initSelectLineRemoveLand(arg_36_0)
+	if arg_36_0._lineDataMO then
+		local var_36_0 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_36_0._lineDataMO.fromType, arg_36_0._lineDataMO.toType)
+
+		if var_36_0 then
+			arg_36_0:_setIsRemoveLand(var_36_0.blockCleanType == RoomBlockEnum.CleanType.CleanLand)
+		end
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0._dataList = slot0:getLineDataList()
-	slot0._lineItemCompList = {}
+function var_0_0.refreshUI(arg_37_0)
+	arg_37_0._dataList = arg_37_0:getLineDataList()
+	arg_37_0._lineItemCompList = {}
 
-	gohelper.CreateObjList(slot0, slot0._lineItemShow, slot0._dataList, slot0._gopathlinegroup, slot0._gotypeitem, RoomTransportLineItem)
+	local var_37_0 = arg_37_0._gopathlinegroup
+	local var_37_1 = arg_37_0._gotypeitem
+
+	gohelper.CreateObjList(arg_37_0, arg_37_0._lineItemShow, arg_37_0._dataList, var_37_0, var_37_1, RoomTransportLineItem)
 end
 
-function slot0._refreshLineLinkUI(slot0)
-	slot1 = false
+function var_0_0._refreshLineLinkUI(arg_38_0)
+	local var_38_0 = false
 
-	if slot0._lineItemCompList then
-		for slot5, slot6 in ipairs(slot0._lineItemCompList) do
-			slot6:refreshLinkUI()
+	if arg_38_0._lineItemCompList then
+		for iter_38_0, iter_38_1 in ipairs(arg_38_0._lineItemCompList) do
+			iter_38_1:refreshLinkUI()
 
-			slot7 = slot6:getDataMO()
+			local var_38_1 = iter_38_1:getDataMO()
 
-			if slot0._lineDataMO and slot7 and slot0._lineDataMO.buildingType == slot7.buildingType then
-				slot1 = true
+			if arg_38_0._lineDataMO and var_38_1 and arg_38_0._lineDataMO.buildingType == var_38_1.buildingType then
+				var_38_0 = true
 
-				slot6:onSelect(true)
+				iter_38_1:onSelect(true)
 			else
-				slot6:onSelect(false)
+				iter_38_1:onSelect(false)
 			end
 		end
 	end
 
-	if not slot1 then
-		slot0._lineDataMO = nil
+	if not var_38_0 then
+		arg_38_0._lineDataMO = nil
 
 		RoomMapTransportPathModel.instance:setSelectBuildingType(nil)
 	end
 end
 
-function slot0.getLineDataList(slot0)
-	slot2 = {}
-	slot3 = RoomMapBuildingAreaModel.instance
+function var_0_0.getLineDataList(arg_39_0)
+	local var_39_0 = RoomTransportHelper.getPathBuildingTypesList()
+	local var_39_1 = {}
+	local var_39_2 = RoomMapBuildingAreaModel.instance
 
-	for slot7, slot8 in ipairs(RoomTransportHelper.getPathBuildingTypesList()) do
-		slot10 = slot8[2]
+	for iter_39_0, iter_39_1 in ipairs(var_39_0) do
+		local var_39_3 = iter_39_1[1]
+		local var_39_4 = iter_39_1[2]
 
-		if slot3:getAreaMOByBType(slot8[1]) and slot3:getAreaMOByBType(slot10) then
-			slot11 = {}
+		if var_39_2:getAreaMOByBType(var_39_3) and var_39_2:getAreaMOByBType(var_39_4) then
+			local var_39_5 = {}
+			local var_39_6 = {
+				buildingType = var_39_3,
+				fromType = var_39_3,
+				toType = var_39_4,
+				typeList = var_39_5
+			}
 
-			tabletool.addValues(slot11, slot8)
-			table.insert(slot2, {
-				buildingType = slot9,
-				fromType = slot9,
-				toType = slot10,
-				typeList = slot11
-			})
+			tabletool.addValues(var_39_5, iter_39_1)
+			table.insert(var_39_1, var_39_6)
 		end
 	end
 
-	return slot2
+	return var_39_1
 end
 
-function slot0._lineItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
+function var_0_0._lineItemShow(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	arg_40_1:onUpdateMO(arg_40_2)
 
-	if not slot1._view then
-		slot1._view = slot0
+	if not arg_40_1._view then
+		arg_40_1._view = arg_40_0
 	end
 
-	table.insert(slot0._lineItemCompList, slot1)
+	table.insert(arg_40_0._lineItemCompList, arg_40_1)
 end
 
-function slot0._clearPath(slot0)
+function var_0_0._clearPath(arg_41_0)
 	RoomMapTransportPathModel.instance:placeTempTransportPathMO()
 
 	if RoomMapTransportPathModel.instance:isHasEdit() then
 		RoomMapTransportPathModel.instance:resetByTransportPathMOList(RoomTransportPathModel.instance:getList())
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 		RoomTransportController.instance:updateBlockUseState()
-		slot0:_initSelectLineRemoveLand()
+		arg_41_0:_initSelectLineRemoveLand()
 	end
 end
 
-function slot0._updateAllPathBlockState(slot0)
-	slot1 = slot0:_getBlockCleanType()
-	slot2 = false
+function var_0_0._updateAllPathBlockState(arg_42_0)
+	local var_42_0 = arg_42_0:_getBlockCleanType()
+	local var_42_1 = false
+	local var_42_2 = RoomMapTransportPathModel.instance:getTempTransportPathMO()
 
-	if RoomMapTransportPathModel.instance:getTempTransportPathMO() and slot3:getHexPointCount() > 0 and slot3.blockCleanType ~= slot1 then
-		slot3.blockCleanType = slot1
-		slot2 = true
+	if var_42_2 and var_42_2:getHexPointCount() > 0 and var_42_2.blockCleanType ~= var_42_0 then
+		var_42_2.blockCleanType = var_42_0
+		var_42_1 = true
 	end
 
-	if slot0._lineDataMO and RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(slot0._lineDataMO.fromType, slot0._lineDataMO.toType) and slot4:getHexPointCount() > 0 and slot4.blockCleanType ~= slot1 then
-		slot4.blockCleanType = slot1
-		slot2 = true
+	if arg_42_0._lineDataMO then
+		local var_42_3 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_42_0._lineDataMO.fromType, arg_42_0._lineDataMO.toType)
 
-		slot4:setIsEdit(true)
+		if var_42_3 and var_42_3:getHexPointCount() > 0 and var_42_3.blockCleanType ~= var_42_0 then
+			var_42_3.blockCleanType = var_42_0
+			var_42_1 = true
+
+			var_42_3:setIsEdit(true)
+		end
 	end
 
-	if slot2 then
+	if var_42_1 then
 		RoomTransportController.instance:updateBlockUseState()
 	end
 end
 
-function slot0._addRefreshBlockId(slot0, slot1)
-	RoomTransportController.instance:waitRefreshBlockById(slot1)
+function var_0_0._addRefreshBlockId(arg_43_0, arg_43_1)
+	RoomTransportController.instance:waitRefreshBlockById(arg_43_1)
 	RoomTransportController.instance:waitRefreshPathLineChanged()
 end
 
-return slot0
+return var_0_0

@@ -1,75 +1,85 @@
-module("modules.logic.summon.model.SummonLuckyBagChoiceListModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonLuckyBagChoiceListModel", package.seeall)
 
-slot0 = class("SummonLuckyBagChoiceListModel", ListScrollModel)
+local var_0_0 = class("SummonLuckyBagChoiceListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot1(slot0, slot1)
-	if HeroModel.instance:getByHeroId(slot0.id) ~= nil ~= (HeroModel.instance:getByHeroId(slot1.id) ~= nil) then
-		return slot5
+local function var_0_1(arg_3_0, arg_3_1)
+	local var_3_0 = HeroModel.instance:getByHeroId(arg_3_0.id)
+	local var_3_1 = HeroModel.instance:getByHeroId(arg_3_1.id)
+	local var_3_2 = var_3_0 ~= nil
+	local var_3_3 = var_3_1 ~= nil
+
+	if var_3_2 ~= var_3_3 then
+		return var_3_3
 	end
 
-	if (slot2 and slot2.exSkillLevel or -1) ~= (slot3 and slot3.exSkillLevel or -1) then
-		return slot6 < slot7
+	local var_3_4 = var_3_0 and var_3_0.exSkillLevel or -1
+	local var_3_5 = var_3_1 and var_3_1.exSkillLevel or -1
+
+	if var_3_4 ~= var_3_5 then
+		return var_3_4 < var_3_5
 	end
 
-	return slot0.id < slot1.id
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.initDatas(slot0, slot1, slot2)
-	slot0._poolId = slot2
-	slot0._luckyBagId = slot1
-	slot0._selectHeroId = nil
+function var_0_0.initDatas(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._poolId = arg_4_2
+	arg_4_0._luckyBagId = arg_4_1
+	arg_4_0._selectHeroId = nil
 
-	slot0:initList()
+	arg_4_0:initList()
 end
 
-function slot0.initList(slot0)
-	slot0.noGainList = {}
-	slot0.ownList = {}
+function var_0_0.initList(arg_5_0)
+	local var_5_0 = arg_5_0:getCharIdList()
 
-	for slot5, slot6 in ipairs(slot0:getCharIdList()) do
-		slot7 = SummonLuckyBagChoiceMO.New()
+	arg_5_0.noGainList = {}
+	arg_5_0.ownList = {}
 
-		slot7:init(slot6)
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		local var_5_1 = SummonLuckyBagChoiceMO.New()
 
-		if slot7:hasHero() then
-			table.insert(slot0.ownList, slot7)
+		var_5_1:init(iter_5_1)
+
+		if var_5_1:hasHero() then
+			table.insert(arg_5_0.ownList, var_5_1)
 		else
-			table.insert(slot0.noGainList, slot7)
+			table.insert(arg_5_0.noGainList, var_5_1)
 		end
 	end
 
-	table.sort(slot0.ownList, uv0)
-	table.sort(slot0.noGainList, uv0)
+	table.sort(arg_5_0.ownList, var_0_1)
+	table.sort(arg_5_0.noGainList, var_0_1)
 end
 
-function slot0.setSelectId(slot0, slot1)
-	slot0._selectHeroId = slot1
+function var_0_0.setSelectId(arg_6_0, arg_6_1)
+	arg_6_0._selectHeroId = arg_6_1
 end
 
-function slot0.getSelectId(slot0)
-	return slot0._selectHeroId
+function var_0_0.getSelectId(arg_7_0)
+	return arg_7_0._selectHeroId
 end
 
-function slot0.getLuckyBagId(slot0)
-	return slot0._luckyBagId
+function var_0_0.getLuckyBagId(arg_8_0)
+	return arg_8_0._luckyBagId
 end
 
-function slot0.getPoolId(slot0)
-	return slot0._poolId
+function var_0_0.getPoolId(arg_9_0)
+	return arg_9_0._poolId
 end
 
-function slot0.getCharIdList(slot0)
-	return SummonConfig.instance:getLuckyBagHeroIds(slot0._poolId, slot0._luckyBagId)
+function var_0_0.getCharIdList(arg_10_0)
+	return SummonConfig.instance:getLuckyBagHeroIds(arg_10_0._poolId, arg_10_0._luckyBagId)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

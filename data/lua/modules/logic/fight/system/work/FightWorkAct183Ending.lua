@@ -1,30 +1,36 @@
-module("modules.logic.fight.system.work.FightWorkAct183Ending", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkAct183Ending", package.seeall)
 
-slot0 = class("FightWorkAct183Ending", BaseWork)
+local var_0_0 = class("FightWorkAct183Ending", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	if not DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) or slot2.type ~= DungeonEnum.EpisodeType.Act183 then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if not var_1_0 or var_1_0.type ~= DungeonEnum.EpisodeType.Act183 then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot5 = slot3 and slot3.episodeMo
+	local var_1_1 = Act183Model.instance:getBattleFinishedInfo()
+	local var_1_2 = var_1_1 and var_1_1.record ~= nil
+	local var_1_3 = var_1_1 and var_1_1.episodeMo
 
-	if (slot5 and slot5:getGroupType()) ~= Act183Enum.GroupType.Daily and (Act183Model.instance:getBattleFinishedInfo() and slot3.record ~= nil) then
-		slot8 = {
-			activityId = slot3.activityId,
-			groupRecordMo = slot3.record
+	if (var_1_3 and var_1_3:getGroupType()) ~= Act183Enum.GroupType.Daily and var_1_2 then
+		local var_1_4 = var_1_1.activityId
+		local var_1_5 = {
+			activityId = var_1_4,
+			groupRecordMo = var_1_1.record
 		}
-		slot0._flow = FlowSequence.New()
 
-		slot0._flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.Act183FinishView, slot8))
-		slot0._flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.Act183SettlementView, slot8))
-		slot0._flow:addWork(FunctionWork.New(slot0.onDone, slot0, true))
-		slot0._flow:start()
+		arg_1_0._flow = FlowSequence.New()
+
+		arg_1_0._flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.Act183FinishView, var_1_5))
+		arg_1_0._flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.Act183SettlementView, var_1_5))
+		arg_1_0._flow:addWork(FunctionWork.New(arg_1_0.onDone, arg_1_0, true))
+		arg_1_0._flow:start()
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-return slot0
+return var_0_0

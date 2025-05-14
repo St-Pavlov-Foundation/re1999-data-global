@@ -1,146 +1,162 @@
-module("modules.logic.versionactivity1_6.quniang.model.ActQuNiangTaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.quniang.model.ActQuNiangTaskListModel", package.seeall)
 
-slot0 = class("ActQuNiangTaskListModel", ListScrollModel)
+local var_0_0 = class("ActQuNiangTaskListModel", ListScrollModel)
 
-function slot0.init(slot0)
+function var_0_0.init(arg_1_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.RoleActivity
-	}, slot0.refreshData, slot0)
+	}, arg_1_0.refreshData, arg_1_0)
 end
 
-function slot0.refreshData(slot0)
-	slot2 = {}
-	slot3 = 0
+function var_0_0.refreshData(arg_2_0)
+	local var_2_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.RoleActivity)
+	local var_2_1 = {}
+	local var_2_2 = 0
 
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.RoleActivity) ~= nil then
-		for slot8, slot9 in pairs(RoleActivityConfig.instance:getActicityTaskList(ActQuNiangEnum.ActivityId)) do
-			slot10 = ActQuNiangTaskMO.New()
+	if var_2_0 ~= nil then
+		local var_2_3 = RoleActivityConfig.instance:getActicityTaskList(ActQuNiangEnum.ActivityId)
 
-			slot10:init(slot9, slot1[slot9.id])
+		for iter_2_0, iter_2_1 in pairs(var_2_3) do
+			local var_2_4 = ActQuNiangTaskMO.New()
 
-			if slot10:alreadyGotReward() then
-				slot3 = slot3 + 1
+			var_2_4:init(iter_2_1, var_2_0[iter_2_1.id])
+
+			if var_2_4:alreadyGotReward() then
+				var_2_2 = var_2_2 + 1
 			end
 
-			table.insert(slot2, slot10)
+			table.insert(var_2_1, var_2_4)
 		end
 	end
 
-	if slot3 > 1 then
-		slot4 = ActQuNiangTaskMO.New()
-		slot4.id = ActQuNiangEnum.TaskMOAllFinishId
-		slot4.activityId = ActQuNiangEnum.ActivityId
+	if var_2_2 > 1 then
+		local var_2_5 = ActQuNiangTaskMO.New()
 
-		table.insert(slot2, slot4)
+		var_2_5.id = ActQuNiangEnum.TaskMOAllFinishId
+		var_2_5.activityId = ActQuNiangEnum.ActivityId
+
+		table.insert(var_2_1, var_2_5)
 	end
 
-	table.sort(slot2, uv0.sortMO)
+	table.sort(var_2_1, var_0_0.sortMO)
 
-	slot0._hasRankDiff = false
+	arg_2_0._hasRankDiff = false
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_1)
 end
 
-function slot0.sortMO(slot0, slot1)
-	if uv0.getSortIndex(slot0) ~= uv0.getSortIndex(slot1) then
-		return slot2 < slot3
-	elseif slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+function var_0_0.sortMO(arg_3_0, arg_3_1)
+	local var_3_0 = var_0_0.getSortIndex(arg_3_0)
+	local var_3_1 = var_0_0.getSortIndex(arg_3_1)
+
+	if var_3_0 ~= var_3_1 then
+		return var_3_0 < var_3_1
+	elseif arg_3_0.id ~= arg_3_1.id then
+		return arg_3_0.id < arg_3_1.id
 	end
 end
 
-function slot0.getSortIndex(slot0)
-	if slot0.id == ActQuNiangEnum.TaskMOAllFinishId then
+function var_0_0.getSortIndex(arg_4_0)
+	if arg_4_0.id == ActQuNiangEnum.TaskMOAllFinishId then
 		return 1
-	elseif slot0:isFinished() then
+	elseif arg_4_0:isFinished() then
 		return 100
-	elseif slot0:alreadyGotReward() then
+	elseif arg_4_0:alreadyGotReward() then
 		return 2
 	end
 
 	return 50
 end
 
-function slot0.createMO(slot0, slot1, slot2)
+function var_0_0.createMO(arg_5_0, arg_5_1, arg_5_2)
 	return {
-		config = slot2.config,
-		originTaskMO = slot2
+		config = arg_5_2.config,
+		originTaskMO = arg_5_2
 	}
 end
 
-function slot0.getRankDiff(slot0, slot1)
-	if slot0._hasRankDiff and slot1 then
-		slot3 = slot0:getIndex(slot1)
+function var_0_0.getRankDiff(arg_6_0, arg_6_1)
+	if arg_6_0._hasRankDiff and arg_6_1 then
+		local var_6_0 = tabletool.indexOf(arg_6_0._idIdxList, arg_6_1.id)
+		local var_6_1 = arg_6_0:getIndex(arg_6_1)
 
-		if tabletool.indexOf(slot0._idIdxList, slot1.id) and slot3 then
-			slot0._idIdxList[slot2] = -2
+		if var_6_0 and var_6_1 then
+			arg_6_0._idIdxList[var_6_0] = -2
 
-			return slot3 - slot2
+			return var_6_1 - var_6_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.refreshRankDiff(slot0)
-	slot0._idIdxList = {}
+function var_0_0.refreshRankDiff(arg_7_0)
+	arg_7_0._idIdxList = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		table.insert(slot0._idIdxList, slot6.id)
+	local var_7_0 = arg_7_0:getList()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		table.insert(arg_7_0._idIdxList, iter_7_1.id)
 	end
 end
 
-function slot0.preFinish(slot0, slot1)
-	if not slot1 then
+function var_0_0.preFinish(arg_8_0, arg_8_1)
+	if not arg_8_1 then
 		return
 	end
 
-	slot2 = false
-	slot0._hasRankDiff = false
+	local var_8_0 = false
 
-	slot0:refreshRankDiff()
+	arg_8_0._hasRankDiff = false
 
-	slot3 = 0
-	slot4 = slot0:getList()
+	arg_8_0:refreshRankDiff()
 
-	if slot1.id == ActQuNiangEnum.TaskMOAllFinishId then
-		for slot8, slot9 in ipairs(slot4) do
-			if slot9:alreadyGotReward() and slot9.id ~= ActQuNiangEnum.TaskMOAllFinishId then
-				slot9.preFinish = true
-				slot2 = true
-				slot3 = slot3 + 1
+	local var_8_1 = 0
+	local var_8_2 = arg_8_0:getList()
+
+	if arg_8_1.id == ActQuNiangEnum.TaskMOAllFinishId then
+		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
+			if iter_8_1:alreadyGotReward() and iter_8_1.id ~= ActQuNiangEnum.TaskMOAllFinishId then
+				iter_8_1.preFinish = true
+				var_8_0 = true
+				var_8_1 = var_8_1 + 1
 			end
 		end
-	elseif slot1:alreadyGotReward() then
-		slot1.preFinish = true
-		slot2 = true
-		slot3 = slot3 + 1
+	elseif arg_8_1:alreadyGotReward() then
+		arg_8_1.preFinish = true
+		var_8_0 = true
+		var_8_1 = var_8_1 + 1
 	end
 
-	if slot2 then
-		if slot0:getById(ActQuNiangEnum.TaskMOAllFinishId) and slot0:getGotRewardCount() < slot3 + 1 then
-			tabletool.removeValue(slot4, slot5)
+	if var_8_0 then
+		local var_8_3 = arg_8_0:getById(ActQuNiangEnum.TaskMOAllFinishId)
+
+		if var_8_3 and arg_8_0:getGotRewardCount() < var_8_1 + 1 then
+			tabletool.removeValue(var_8_2, var_8_3)
 		end
 
-		slot0._hasRankDiff = true
+		arg_8_0._hasRankDiff = true
 
-		table.sort(slot4, uv0.sortMO)
-		slot0:setList(slot4)
+		table.sort(var_8_2, var_0_0.sortMO)
+		arg_8_0:setList(var_8_2)
 
-		slot0._hasRankDiff = false
+		arg_8_0._hasRankDiff = false
 	end
 end
 
-function slot0.getGotRewardCount(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1 or slot0:getList()) do
-		if slot8:alreadyGotReward() and not slot8.preFinish and slot8.id ~= ActQuNiangEnum.TaskMOAllFinishId then
-			slot3 = 0 + 1
+function var_0_0.getGotRewardCount(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1 or arg_9_0:getList()
+	local var_9_1 = 0
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1:alreadyGotReward() and not iter_9_1.preFinish and iter_9_1.id ~= ActQuNiangEnum.TaskMOAllFinishId then
+			var_9_1 = var_9_1 + 1
 		end
 	end
 
-	return slot3
+	return var_9_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

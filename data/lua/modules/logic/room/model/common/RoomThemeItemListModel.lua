@@ -1,76 +1,91 @@
-module("modules.logic.room.model.common.RoomThemeItemListModel", package.seeall)
+﻿module("modules.logic.room.model.common.RoomThemeItemListModel", package.seeall)
 
-slot0 = class("RoomThemeItemListModel", ListScrollModel)
-slot0.SwitchType = {
+local var_0_0 = class("RoomThemeItemListModel", ListScrollModel)
+
+var_0_0.SwitchType = {
 	Source = 2,
 	Collect = 1
 }
 
-function slot0.setItemShowType(slot0, slot1)
-	slot0._showType = slot1
+function var_0_0.setItemShowType(arg_1_0, arg_1_1)
+	arg_1_0._showType = arg_1_1
 
-	slot0:onModelUpdate()
+	arg_1_0:onModelUpdate()
 end
 
-function slot0.getItemShowType(slot0)
-	return slot0._showType or uv0.SwitchType.Collect
+function var_0_0.getItemShowType(arg_2_0)
+	return arg_2_0._showType or var_0_0.SwitchType.Collect
 end
 
-function slot0.setThemeId(slot0, slot1)
-	slot3 = {}
+function var_0_0.setThemeId(arg_3_0, arg_3_1)
+	local var_3_0 = RoomModel.instance:getThemeItemMOListById(arg_3_1)
+	local var_3_1 = {}
 
-	tabletool.addValues(slot3, RoomModel.instance:getThemeItemMOListById(slot1))
-	table.sort(slot3, uv0.sortMOFunc)
-	slot0:setList(slot3)
-	slot0:onModelUpdate()
+	tabletool.addValues(var_3_1, var_3_0)
+	table.sort(var_3_1, var_0_0.sortMOFunc)
+	arg_3_0:setList(var_3_1)
+	arg_3_0:onModelUpdate()
 end
 
-function slot0.sortMOFunc(slot0, slot1)
-	if uv0._getFinishIndex(slot0) ~= uv0._getFinishIndex(slot1) then
-		return slot2 < slot3
+function var_0_0.sortMOFunc(arg_4_0, arg_4_1)
+	local var_4_0 = var_0_0._getFinishIndex(arg_4_0)
+	local var_4_1 = var_0_0._getFinishIndex(arg_4_1)
+
+	if var_4_0 ~= var_4_1 then
+		return var_4_0 < var_4_1
 	end
 
-	if uv0._getTypeIndex(slot0.materialType) ~= uv0._getTypeIndex(slot1.materialType) then
-		return slot4 < slot5
+	local var_4_2 = var_0_0._getTypeIndex(arg_4_0.materialType)
+	local var_4_3 = var_0_0._getTypeIndex(arg_4_1.materialType)
+
+	if var_4_2 ~= var_4_3 then
+		return var_4_2 < var_4_3
 	end
 
-	if slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+	if arg_4_0.id ~= arg_4_1.id then
+		return arg_4_0.id < arg_4_1.id
 	end
 end
 
-function slot0._getSourcesTypeIndex(slot0)
-	if slot0:getItemConfig() and not string.nilorempty(slot1.sourcesType) then
-		for slot7, slot8 in ipairs(string.splitToNumber(slot1.sourcesType, "#")) do
-			if RoomConfig.instance:getSourcesTypeConfig(slot8) and slot9.order < 9999 then
-				slot3 = slot9.order
+function var_0_0._getSourcesTypeIndex(arg_5_0)
+	local var_5_0 = arg_5_0:getItemConfig()
+
+	if var_5_0 and not string.nilorempty(var_5_0.sourcesType) then
+		local var_5_1 = string.splitToNumber(var_5_0.sourcesType, "#")
+		local var_5_2 = 9999
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			local var_5_3 = RoomConfig.instance:getSourcesTypeConfig(iter_5_1)
+
+			if var_5_3 and var_5_2 > var_5_3.order then
+				var_5_2 = var_5_3.order
 			end
 		end
 
-		return slot3
+		return var_5_2
 	end
 
 	return 99999
 end
 
-function slot0._getTypeIndex(slot0)
-	if slot0 == MaterialEnum.MaterialType.BlockPackage then
+function var_0_0._getTypeIndex(arg_6_0)
+	if arg_6_0 == MaterialEnum.MaterialType.BlockPackage then
 		return 1
-	elseif slot0 == MaterialEnum.MaterialType.Building then
+	elseif arg_6_0 == MaterialEnum.MaterialType.Building then
 		return 2
 	end
 
 	return 99999
 end
 
-function slot0._getFinishIndex(slot0)
-	if slot0:getItemQuantity() < slot0.itemNum then
+function var_0_0._getFinishIndex(arg_7_0)
+	if arg_7_0:getItemQuantity() < arg_7_0.itemNum then
 		return 1
 	end
 
 	return 99999
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

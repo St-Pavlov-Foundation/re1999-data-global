@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightFocusCameraAdjustViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightFocusCameraAdjustViewContainer", package.seeall)
 
-slot0 = class("FightFocusCameraAdjustViewContainer", BaseViewContainer)
+local var_0_0 = class("FightFocusCameraAdjustViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightFocusCameraAdjustView.New()
 	}
 end
 
-return slot0
+return var_0_0

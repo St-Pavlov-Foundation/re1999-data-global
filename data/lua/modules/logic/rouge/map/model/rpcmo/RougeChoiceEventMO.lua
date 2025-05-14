@@ -1,39 +1,39 @@
-module("modules.logic.rouge.map.model.rpcmo.RougeChoiceEventMO", package.seeall)
+﻿module("modules.logic.rouge.map.model.rpcmo.RougeChoiceEventMO", package.seeall)
 
-slot0 = class("RougeChoiceEventMO", RougeBaseEventMO)
+local var_0_0 = class("RougeChoiceEventMO", RougeBaseEventMO)
 
-function slot0.init(slot0, slot1, slot2)
-	uv0.super.init(slot0, slot1, slot2)
-	slot0:updateCanChoiceSet()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:updateCanChoiceSet()
 
-	slot0.choiceSelect = slot0.jsonData.choiceSelect
+	arg_1_0.choiceSelect = arg_1_0.jsonData.choiceSelect
 end
 
-function slot0.update(slot0, slot1, slot2)
-	uv0.super.update(slot0, slot1, slot2)
-	slot0:updateCanChoiceSet()
+function var_0_0.update(arg_2_0, arg_2_1, arg_2_2)
+	var_0_0.super.update(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:updateCanChoiceSet()
 
-	slot0.choiceSelect = slot0.jsonData.choiceSelect
+	arg_2_0.choiceSelect = arg_2_0.jsonData.choiceSelect
 end
 
-function slot0.updateCanChoiceSet(slot0)
-	slot0.canChoiceList = slot0.jsonData.canChoiceSet
+function var_0_0.updateCanChoiceSet(arg_3_0)
+	arg_3_0.canChoiceList = arg_3_0.jsonData.canChoiceSet
 
-	if slot0.canChoiceList then
-		table.sort(slot0.canChoiceList, slot0.sortChoice)
+	if arg_3_0.canChoiceList then
+		table.sort(arg_3_0.canChoiceList, arg_3_0.sortChoice)
 	end
 end
 
-function slot0.getChoiceIdList(slot0)
-	return slot0.canChoiceList
+function var_0_0.getChoiceIdList(arg_4_0)
+	return arg_4_0.canChoiceList
 end
 
-function slot0.sortChoice(slot0, slot1)
-	return slot0 < slot1
+function var_0_0.sortChoice(arg_5_0, arg_5_1)
+	return arg_5_0 < arg_5_1
 end
 
-function slot0.__tostring(slot0)
-	return uv0.super.__tostring(slot0)
+function var_0_0.__tostring(arg_6_0)
+	return var_0_0.super.__tostring(arg_6_0)
 end
 
-return slot0
+return var_0_0

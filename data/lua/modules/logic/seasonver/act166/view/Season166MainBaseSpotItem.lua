@@ -1,74 +1,81 @@
-module("modules.logic.seasonver.act166.view.Season166MainBaseSpotItem", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166MainBaseSpotItem", package.seeall)
 
-slot0 = class("Season166MainBaseSpotItem", LuaCompBase)
+local var_0_0 = class("Season166MainBaseSpotItem", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.param = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.param = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0:__onInit()
 
-	slot0.go = slot1
-	slot0.actId = slot0.param.actId
-	slot0.baseId = slot0.param.baseId
-	slot0.config = slot0.param.config
-	slot0.txtName = gohelper.findChildText(slot0.go, "txt_name")
-	slot0.txtTitle = gohelper.findChildText(slot0.go, "txt_title")
-	slot0.goStars = gohelper.findChild(slot0.go, "go_stars")
-	slot0.btnClick = gohelper.findChildButtonWithAudio(slot0.go, "btn_click")
-	slot2 = Season166Config.instance:getSeasonScoreCos(slot0.actId)
-	slot0.finalLevelScore = slot2[#slot2].needScore
-	slot0.starTab = slot0:getUserDataTb_()
+	arg_2_0.go = arg_2_1
+	arg_2_0.actId = arg_2_0.param.actId
+	arg_2_0.baseId = arg_2_0.param.baseId
+	arg_2_0.config = arg_2_0.param.config
+	arg_2_0.txtName = gohelper.findChildText(arg_2_0.go, "txt_name")
+	arg_2_0.txtTitle = gohelper.findChildText(arg_2_0.go, "txt_title")
+	arg_2_0.goStars = gohelper.findChild(arg_2_0.go, "go_stars")
+	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_0.go, "btn_click")
 
-	for slot6 = 1, 3 do
-		slot7 = {
-			star = gohelper.findChild(slot0.goStars, "go_star" .. slot6)
+	local var_2_0 = Season166Config.instance:getSeasonScoreCos(arg_2_0.actId)
+
+	arg_2_0.finalLevelScore = var_2_0[#var_2_0].needScore
+	arg_2_0.starTab = arg_2_0:getUserDataTb_()
+
+	for iter_2_0 = 1, 3 do
+		local var_2_1 = {
+			star = gohelper.findChild(arg_2_0.goStars, "go_star" .. iter_2_0)
 		}
-		slot7.dark = gohelper.findChild(slot7.star, "dark")
-		slot7.light = gohelper.findChild(slot7.star, "light")
-		slot7.imageLight = gohelper.findChildImage(slot7.star, "light")
-		slot7.imageLight1 = gohelper.findChildImage(slot7.star, "light/light1")
 
-		table.insert(slot0.starTab, slot7)
+		var_2_1.dark = gohelper.findChild(var_2_1.star, "dark")
+		var_2_1.light = gohelper.findChild(var_2_1.star, "light")
+		var_2_1.imageLight = gohelper.findChildImage(var_2_1.star, "light")
+		var_2_1.imageLight1 = gohelper.findChildImage(var_2_1.star, "light/light1")
+
+		table.insert(arg_2_0.starTab, var_2_1)
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0.btnClick:AddClickListener(slot0.onClickBaseSpotItem, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0.btnClick:AddClickListener(arg_3_0.onClickBaseSpotItem, arg_3_0)
 end
 
-function slot0.onClickBaseSpotItem(slot0)
-	Season166Controller.instance:openSeasonBaseSpotView({
-		actId = slot0.actId,
-		baseId = slot0.baseId,
-		config = slot0.config,
+function var_0_0.onClickBaseSpotItem(arg_4_0)
+	local var_4_0 = {
+		actId = arg_4_0.actId,
+		baseId = arg_4_0.baseId,
+		config = arg_4_0.config,
 		viewType = Season166Enum.WordBaseSpotType
-	})
+	}
+
+	Season166Controller.instance:openSeasonBaseSpotView(var_4_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0.txtName.text = slot0.config.name
-	slot0.txtTitle.text = string.format("St.%d", slot0.baseId)
-	slot1 = Season166BaseSpotModel.instance:getStarCount(slot0.actId, slot0.baseId)
+function var_0_0.refreshUI(arg_5_0)
+	arg_5_0.txtName.text = arg_5_0.config.name
+	arg_5_0.txtTitle.text = string.format("St.%d", arg_5_0.baseId)
 
-	for slot6 = 1, #slot0.starTab do
-		gohelper.setActive(slot0.starTab[slot6].light, slot6 <= slot1)
-		gohelper.setActive(slot0.starTab[slot6].dark, slot1 < slot6)
+	local var_5_0 = Season166BaseSpotModel.instance:getStarCount(arg_5_0.actId, arg_5_0.baseId)
+	local var_5_1 = Season166BaseSpotModel.instance:getBaseSpotMaxScore(arg_5_0.actId, arg_5_0.baseId)
 
-		slot7 = slot0.finalLevelScore <= Season166BaseSpotModel.instance:getBaseSpotMaxScore(slot0.actId, slot0.baseId) and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2"
+	for iter_5_0 = 1, #arg_5_0.starTab do
+		gohelper.setActive(arg_5_0.starTab[iter_5_0].light, iter_5_0 <= var_5_0)
+		gohelper.setActive(arg_5_0.starTab[iter_5_0].dark, var_5_0 < iter_5_0)
 
-		UISpriteSetMgr.instance:setSeason166Sprite(slot0.starTab[slot6].imageLight, slot7)
-		UISpriteSetMgr.instance:setSeason166Sprite(slot0.starTab[slot6].imageLight1, slot7)
+		local var_5_2 = var_5_1 >= arg_5_0.finalLevelScore and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2"
+
+		UISpriteSetMgr.instance:setSeason166Sprite(arg_5_0.starTab[iter_5_0].imageLight, var_5_2)
+		UISpriteSetMgr.instance:setSeason166Sprite(arg_5_0.starTab[iter_5_0].imageLight1, var_5_2)
 	end
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0.btnClick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_6_0)
+	arg_6_0.btnClick:RemoveClickListener()
 end
 
-function slot0.destroy(slot0)
-	slot0:__onDispose()
+function var_0_0.destroy(arg_7_0)
+	arg_7_0:__onDispose()
 end
 
-return slot0
+return var_0_0

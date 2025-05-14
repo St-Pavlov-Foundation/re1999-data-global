@@ -1,66 +1,73 @@
-module("modules.logic.seasonver.act123.view2_1.Season123_2_1FightCardView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1FightCardView", package.seeall)
 
-slot0 = class("Season123_2_1FightCardView", BaseView)
+local var_0_0 = class("Season123_2_1FightCardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goCardItem = gohelper.findChild(slot0.viewGO, "mask/Scroll View/Viewport/Content/#go_carditem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goCardItem = gohelper.findChild(arg_1_0.viewGO, "mask/Scroll View/Viewport/Content/#go_carditem")
 
-	gohelper.setActive(slot0._goCardItem, false)
+	gohelper.setActive(arg_1_0._goCardItem, false)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = Season123Model.instance:getFightCardDataList()
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = Season123Model.instance:getFightCardDataList()
 
-	if not slot0.itemList then
-		slot0.itemList = {}
+	if not arg_5_0.itemList then
+		arg_5_0.itemList = {}
 	end
 
-	slot5 = #slot1
+	for iter_5_0 = 1, math.max(#arg_5_0.itemList, #var_5_0) do
+		local var_5_1 = var_5_0[iter_5_0]
+		local var_5_2 = arg_5_0.itemList[iter_5_0] or arg_5_0:createItem(iter_5_0)
 
-	for slot5 = 1, math.max(#slot0.itemList, slot5) do
-		slot0:updateItem(slot0.itemList[slot5] or slot0:createItem(slot5), slot1[slot5])
+		arg_5_0:updateItem(var_5_2, var_5_1)
 	end
 end
 
-function slot0.createItem(slot0, slot1)
-	slot3 = Season123_2_1FightCardItem.New(gohelper.cloneInPlace(slot0._goCardItem, string.format("card%s", slot1)))
-	slot0.itemList[slot1] = slot3
+function var_0_0.createItem(arg_6_0, arg_6_1)
+	local var_6_0 = gohelper.cloneInPlace(arg_6_0._goCardItem, string.format("card%s", arg_6_1))
+	local var_6_1 = Season123_2_1FightCardItem.New(var_6_0)
 
-	return slot3
+	arg_6_0.itemList[arg_6_1] = var_6_1
+
+	return var_6_1
 end
 
-function slot0.updateItem(slot0, slot1, slot2)
-	slot1:setData(slot2)
+function var_0_0.updateItem(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_1:setData(arg_7_2)
 end
 
-function slot0.destroyItem(slot0, slot1)
-	slot1:destroy()
+function var_0_0.destroyItem(arg_8_0, arg_8_1)
+	arg_8_1:destroy()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.itemList then
-		for slot4, slot5 in pairs(slot0.itemList) do
-			slot0:destroyItem(slot5)
+function var_0_0.onDestroyView(arg_10_0)
+	if arg_10_0.itemList then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0.itemList) do
+			arg_10_0:destroyItem(iter_10_1)
 		end
 
-		slot0.itemList = nil
+		arg_10_0.itemList = nil
 	end
 end
 
-return slot0
+return var_0_0

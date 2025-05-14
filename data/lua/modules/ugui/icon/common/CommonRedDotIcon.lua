@@ -1,65 +1,68 @@
-module("modules.ugui.icon.common.CommonRedDotIcon", package.seeall)
+﻿module("modules.ugui.icon.common.CommonRedDotIcon", package.seeall)
 
-slot0 = class("CommonRedDotIcon", ListScrollCell)
+local var_0_0 = class("CommonRedDotIcon", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot5 = slot1
-	slot0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, slot5)
-	slot0._txtCount = gohelper.findChildText(slot0.go, "type2/#txt_count")
-	slot0.typeGoDict = slot0:getUserDataTb_()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, arg_1_1)
+	arg_1_0._txtCount = gohelper.findChildText(arg_1_0.go, "type2/#txt_count")
+	arg_1_0.typeGoDict = arg_1_0:getUserDataTb_()
 
-	for slot5, slot6 in pairs(RedDotEnum.Style) do
-		slot0.typeGoDict[slot6] = gohelper.findChild(slot0.go, "type" .. slot6)
+	for iter_1_0, iter_1_1 in pairs(RedDotEnum.Style) do
+		arg_1_0.typeGoDict[iter_1_1] = gohelper.findChild(arg_1_0.go, "type" .. iter_1_1)
 
-		gohelper.setActive(slot0.typeGoDict[slot6], false)
+		gohelper.setActive(arg_1_0.typeGoDict[iter_1_1], false)
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, slot0.refreshDot, slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, slot0.refreshDot, slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, slot0.refreshRelateDot, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, slot0.refreshDot, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, arg_2_0.refreshDot, arg_2_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, arg_2_0.refreshDot, arg_2_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_2_0.refreshRelateDot, arg_2_0)
+	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, arg_2_0.refreshDot, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, slot0.refreshDot, slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, slot0.refreshDot, slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, slot0.refreshRelateDot, slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, slot0.refreshDot, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, arg_3_0.refreshDot, arg_3_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, arg_3_0.refreshDot, arg_3_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0.refreshRelateDot, arg_3_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, arg_3_0.refreshDot, arg_3_0)
 end
 
-function slot0.onStart(slot0)
-	slot0:refreshDot()
+function var_0_0.onStart(arg_4_0)
+	arg_4_0:refreshDot()
 end
 
-function slot0.refreshDot(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.refreshDot(arg_5_0)
+	gohelper.setActive(arg_5_0.go, false)
 
-	if slot0.overrideFunc then
-		slot1, slot2 = pcall(slot0.overrideFunc, slot0.overrideFuncObj, slot0)
+	if arg_5_0.overrideFunc then
+		local var_5_0, var_5_1 = pcall(arg_5_0.overrideFunc, arg_5_0.overrideFuncObj, arg_5_0)
 
-		if not slot1 then
-			logError(string.format("CommonRedDotIcon:overrideFunc error:%s", slot2))
+		if not var_5_0 then
+			logError(string.format("CommonRedDotIcon:overrideFunc error:%s", var_5_1))
 		end
 
 		return
 	end
 
-	slot0:defaultRefreshDot()
+	arg_5_0:defaultRefreshDot()
 end
 
-function slot0.defaultRefreshDot(slot0)
-	slot0.show = false
+function var_0_0.defaultRefreshDot(arg_6_0)
+	arg_6_0.show = false
 
-	if slot0.infoList then
-		for slot4, slot5 in ipairs(slot0.infoList) do
-			slot0.show = RedDotModel.instance:isDotShow(slot5.id, slot5.uid)
+	if arg_6_0.infoList then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0.infoList) do
+			arg_6_0.show = RedDotModel.instance:isDotShow(iter_6_1.id, iter_6_1.uid)
 
-			if slot0.show then
-				slot0._txtCount.text = RedDotModel.instance:getDotInfoCount(slot5.id, slot5.uid)
+			if arg_6_0.show then
+				local var_6_0 = RedDotModel.instance:getDotInfoCount(iter_6_1.id, iter_6_1.uid)
 
-				slot0:showRedDot(RedDotConfig.instance:getRedDotCO(slot5.id).style)
+				arg_6_0._txtCount.text = var_6_0
+
+				local var_6_1 = RedDotConfig.instance:getRedDotCO(iter_6_1.id).style
+
+				arg_6_0:showRedDot(var_6_1)
 
 				return
 			end
@@ -67,70 +70,85 @@ function slot0.defaultRefreshDot(slot0)
 	end
 end
 
-function slot0.refreshRelateDot(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if slot0.infoDict[slot5] then
-			slot0:refreshDot()
+function var_0_0.refreshRelateDot(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
+		if arg_7_0.infoDict[iter_7_0] then
+			arg_7_0:refreshDot()
 
 			return
 		end
 	end
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.go.transform, slot1, slot1, slot1)
+function var_0_0.setScale(arg_8_0, arg_8_1)
+	transformhelper.setLocalScale(arg_8_0.go.transform, arg_8_1, arg_8_1, arg_8_1)
 end
 
-function slot0.setId(slot0, slot1, slot2)
-	slot0:setMultiId({
+function var_0_0.setId(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0:setMultiId({
 		{
-			id = slot1,
-			uid = slot2
+			id = arg_9_1,
+			uid = arg_9_2
 		}
 	})
 end
 
-function slot0.setMultiId(slot0, slot1)
-	slot0.infoDict = {}
+function var_0_0.setMultiId(arg_10_0, arg_10_1)
+	arg_10_0.infoDict = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot6.uid = slot6.uid or 0
-			slot0.infoDict[slot6.id] = slot6.uid
+	if arg_10_1 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+			iter_10_1.uid = iter_10_1.uid or 0
+			arg_10_0.infoDict[iter_10_1.id] = iter_10_1.uid
 		end
 	end
 
-	slot0.infoList = slot1
+	arg_10_0.infoList = arg_10_1
 end
 
-function slot0.showRedDot(slot0, slot1)
-	gohelper.setActive(slot0.go, slot0.show)
+function var_0_0.showRedDot(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0.go, arg_11_0.show)
 
-	if slot0.show then
-		for slot5, slot6 in pairs(RedDotEnum.Style) do
-			gohelper.setActive(slot0.typeGoDict[slot6], slot1 == slot6)
+	if arg_11_0.show then
+		for iter_11_0, iter_11_1 in pairs(RedDotEnum.Style) do
+			gohelper.setActive(arg_11_0.typeGoDict[iter_11_1], arg_11_1 == iter_11_1)
 		end
 	end
 end
 
-function slot0.SetRedDotTrsWithType(slot0, slot1, slot2, slot3)
-	recthelper.setAnchor(slot0.typeGoDict[slot1].transform, slot2, slot3)
+function var_0_0.SetRedDotTrsWithType(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_0.typeGoDict[arg_12_1].transform
+
+	recthelper.setAnchor(var_12_0, arg_12_2, arg_12_3)
 end
 
-function slot0.setRedDotTranScale(slot0, slot1, slot2, slot3, slot4)
-	transformhelper.setLocalScale(slot0.typeGoDict[slot1].transform, slot2 or 1, slot3 or 1, slot4 or 1)
+function var_0_0.setRedDotTranScale(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	arg_13_2 = arg_13_2 or 1
+	arg_13_3 = arg_13_3 or 1
+	arg_13_4 = arg_13_4 or 1
+
+	local var_13_0 = arg_13_0.typeGoDict[arg_13_1].transform
+
+	transformhelper.setLocalScale(var_13_0, arg_13_2, arg_13_3, arg_13_4)
 end
 
-function slot0.setRedDotTranLocalRotation(slot0, slot1, slot2, slot3, slot4)
-	transformhelper.setLocalRotation(slot0.typeGoDict[slot1].transform, slot2 or 0, slot3 or 0, slot4 or 0)
+function var_0_0.setRedDotTranLocalRotation(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	arg_14_2 = arg_14_2 or 0
+	arg_14_3 = arg_14_3 or 0
+	arg_14_4 = arg_14_4 or 0
+
+	local var_14_0 = arg_14_0.typeGoDict[arg_14_1].transform
+
+	transformhelper.setLocalRotation(var_14_0, arg_14_2, arg_14_3, arg_14_4)
 end
 
-function slot0.overrideRefreshDotFunc(slot0, slot1, slot2)
-	slot0.overrideFunc = slot1
-	slot0.overrideFuncObj = slot2
+function var_0_0.overrideRefreshDotFunc(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0.overrideFunc = arg_15_1
+	arg_15_0.overrideFuncObj = arg_15_2
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

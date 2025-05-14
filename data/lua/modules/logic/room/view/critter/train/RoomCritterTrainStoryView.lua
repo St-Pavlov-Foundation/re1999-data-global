@@ -1,481 +1,533 @@
-module("modules.logic.room.view.critter.train.RoomCritterTrainStoryView", package.seeall)
+﻿module("modules.logic.room.view.critter.train.RoomCritterTrainStoryView", package.seeall)
 
-slot0 = class("RoomCritterTrainStoryView", BaseView)
+local var_0_0 = class("RoomCritterTrainStoryView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomask2 = gohelper.findChild(slot0.viewGO, "mask2")
-	slot0._gomask = gohelper.findChild(slot0.viewGO, "mask")
-	slot0._golefttopbtns = gohelper.findChild(slot0.viewGO, "#go_lefttopbtns")
-	slot0._gorighttopbtns = gohelper.findChild(slot0.viewGO, "#go_righttopbtns")
-	slot0._btncurrency = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_currency")
-	slot0._imagecurrency = gohelper.findChildImage(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#image")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_add")
-	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "#go_righttopbtns/#go_container/currency/content/#txt")
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "#go_spine")
-	slot0._scrollselect = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_select")
-	slot0._golist = gohelper.findChild(slot0.viewGO, "#scroll_select/Viewport/#go_list")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#scroll_select/Viewport/#go_list/selectitem/bgdark/#txt_num")
-	slot0._gopcbtn = gohelper.findChild(slot0.viewGO, "#scroll_select/Viewport/#go_list/selectitem/bgdark/#go_pcbtn")
-	slot0._goconversation = gohelper.findChild(slot0.viewGO, "#go_conversation")
-	slot0._goname = gohelper.findChild(slot0.viewGO, "#go_conversation/#go_name")
-	slot0._txtnameen = gohelper.findChildText(slot0.viewGO, "#go_conversation/#go_name/#txt_nameen")
-	slot0._txtnamecn = gohelper.findChildText(slot0.viewGO, "#go_conversation/#go_name/#txt_namecn")
-	slot0._gocontents = gohelper.findChild(slot0.viewGO, "#go_conversation/#go_contents")
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "#go_conversation/#go_contents/#txt_content")
-	slot0._gotrainprogress = gohelper.findChild(slot0.viewGO, "#go_trainprogress")
-	slot0._imagetotalBarValue = gohelper.findChildImage(slot0.viewGO, "#go_trainprogress/progressbg/#image_totalBarValue")
-	slot0._goexittips = gohelper.findChild(slot0.viewGO, "#go_exittips")
-	slot0._goexittxt = gohelper.findChild(slot0.viewGO, "#go_exittips/txt")
-	slot0._goattribute = gohelper.findChild(slot0.viewGO, "#go_attribute")
-	slot0._goattributeup = gohelper.findChild(slot0.viewGO, "#go_attributeup")
-	slot0._goattributeupitem = gohelper.findChild(slot0.viewGO, "#go_attributeup/attributeup")
-	slot0._btntrainstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_trainstart")
-	slot0._goattributeupeffect = gohelper.findChild(slot0.viewGO, "#attributeup_effect")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomask2 = gohelper.findChild(arg_1_0.viewGO, "mask2")
+	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "mask")
+	arg_1_0._golefttopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_lefttopbtns")
+	arg_1_0._gorighttopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_righttopbtns")
+	arg_1_0._btncurrency = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_currency")
+	arg_1_0._imagecurrency = gohelper.findChildImage(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/#image")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_add")
+	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/content/#txt")
+	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_spine")
+	arg_1_0._scrollselect = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_select")
+	arg_1_0._golist = gohelper.findChild(arg_1_0.viewGO, "#scroll_select/Viewport/#go_list")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#scroll_select/Viewport/#go_list/selectitem/bgdark/#txt_num")
+	arg_1_0._gopcbtn = gohelper.findChild(arg_1_0.viewGO, "#scroll_select/Viewport/#go_list/selectitem/bgdark/#go_pcbtn")
+	arg_1_0._goconversation = gohelper.findChild(arg_1_0.viewGO, "#go_conversation")
+	arg_1_0._goname = gohelper.findChild(arg_1_0.viewGO, "#go_conversation/#go_name")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_conversation/#go_name/#txt_nameen")
+	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_conversation/#go_name/#txt_namecn")
+	arg_1_0._gocontents = gohelper.findChild(arg_1_0.viewGO, "#go_conversation/#go_contents")
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#go_conversation/#go_contents/#txt_content")
+	arg_1_0._gotrainprogress = gohelper.findChild(arg_1_0.viewGO, "#go_trainprogress")
+	arg_1_0._imagetotalBarValue = gohelper.findChildImage(arg_1_0.viewGO, "#go_trainprogress/progressbg/#image_totalBarValue")
+	arg_1_0._goexittips = gohelper.findChild(arg_1_0.viewGO, "#go_exittips")
+	arg_1_0._goexittxt = gohelper.findChild(arg_1_0.viewGO, "#go_exittips/txt")
+	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "#go_attribute")
+	arg_1_0._goattributeup = gohelper.findChild(arg_1_0.viewGO, "#go_attributeup")
+	arg_1_0._goattributeupitem = gohelper.findChild(arg_1_0.viewGO, "#go_attributeup/attributeup")
+	arg_1_0._btntrainstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_trainstart")
+	arg_1_0._goattributeupeffect = gohelper.findChild(arg_1_0.viewGO, "#attributeup_effect")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncurrency:AddClickListener(slot0._btncurrencyOnClick, slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btntrainstart:AddClickListener(slot0._btntrainstartOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncurrency:AddClickListener(arg_2_0._btncurrencyOnClick, arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btntrainstart:AddClickListener(arg_2_0._btntrainstartOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncurrency:RemoveClickListener()
-	slot0._btnadd:RemoveClickListener()
-	slot0._btntrainstart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncurrency:RemoveClickListener()
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btntrainstart:RemoveClickListener()
 end
 
-function slot0._btncurrencyOnClick(slot0)
-	slot2 = string.splitToNumber(CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId).cost, "#")
+function var_0_0._btncurrencyOnClick(arg_4_0)
+	local var_4_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_4_0.viewParam.eventId)
+	local var_4_1 = string.splitToNumber(var_4_0.cost, "#")
 
-	MaterialTipController.instance:showMaterialInfo(slot2[1], slot2[2], false, nil, false)
+	MaterialTipController.instance:showMaterialInfo(var_4_1[1], var_4_1[2], false, nil, false)
 end
 
-function slot0._btnaddOnClick(slot0)
-	RoomCritterController.instance:openExchangeView(string.splitToNumber(CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId).cost, "#"))
+function var_0_0._btnaddOnClick(arg_5_0)
+	local var_5_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_5_0.viewParam.eventId)
+	local var_5_1 = string.splitToNumber(var_5_0.cost, "#")
+
+	RoomCritterController.instance:openExchangeView(var_5_1)
 end
 
-function slot0._btntrainstartOnClick(slot0)
-	slot2 = string.splitToNumber(CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId).cost, "#")
+function var_0_0._btntrainstartOnClick(arg_6_0)
+	local var_6_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_6_0.viewParam.eventId)
+	local var_6_1 = string.splitToNumber(var_6_0.cost, "#")
+	local var_6_2 = math.floor(ItemModel.instance:getItemQuantity(var_6_1[1], var_6_1[2]) / var_6_1[3])
+	local var_6_3 = RoomTrainCritterModel.instance:getSelectOptionTotalCount()
+	local var_6_4 = ItemModel.instance:getItemConfig(var_6_1[1], var_6_1[2])
 
-	if math.floor(ItemModel.instance:getItemQuantity(slot2[1], slot2[2]) / slot2[3]) < RoomTrainCritterModel.instance:getSelectOptionTotalCount() then
-		GameFacade.showToast(ToastEnum.RoomCritterTrainCountNotEnoughCurrency, ItemModel.instance:getItemConfig(slot2[1], slot2[2]).name)
+	if var_6_2 < var_6_3 then
+		GameFacade.showToast(ToastEnum.RoomCritterTrainCountNotEnoughCurrency, var_6_4.name)
 
 		return
 	end
 
-	CritterRpc.instance:sendSelectMultiEventOptionRequest(slot0.viewParam.critterUid, slot0.viewParam.eventId, RoomTrainCritterModel.instance:getSelectOptionInfos(), slot0._attributeSelected, slot0)
+	local var_6_5 = RoomTrainCritterModel.instance:getSelectOptionInfos()
+
+	CritterRpc.instance:sendSelectMultiEventOptionRequest(arg_6_0.viewParam.critterUid, arg_6_0.viewParam.eventId, var_6_5, arg_6_0._attributeSelected, arg_6_0)
 end
 
-function slot0._attributeSelected(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._attributeSelected(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_2 ~= 0 then
 		return
 	end
 
-	slot0:_showEnterBtn(false)
-	gohelper.setActive(slot0._goattribute, false)
-	gohelper.setActive(slot0._scrollselect.gameObject, false)
-	gohelper.setActive(slot0._goconversation, false)
-	slot0._critterItem:fadeOut()
+	arg_7_0:_showEnterBtn(false)
+	gohelper.setActive(arg_7_0._goattribute, false)
+	gohelper.setActive(arg_7_0._scrollselect.gameObject, false)
+	gohelper.setActive(arg_7_0._goconversation, false)
+	arg_7_0._critterItem:fadeOut()
 
-	if slot0.viewParam.skipStory then
-		slot0.viewContainer:getSetting().viewType = ViewType.Full
+	if arg_7_0.viewParam.skipStory then
+		arg_7_0.viewContainer:getSetting().viewType = ViewType.Full
 	else
-		gohelper.setActive(slot0._storyViewGo, true)
+		gohelper.setActive(arg_7_0._storyViewGo, true)
 
-		slot0.viewContainer:getSetting().viewType = ViewType.Normal
+		arg_7_0.viewContainer:getSetting().viewType = ViewType.Normal
 	end
 
-	for slot7, slot8 in ipairs(slot3.infos) do
-		slot9 = {
-			optionId = slot8.optionId,
-			count = slot8.count
+	for iter_7_0, iter_7_1 in ipairs(arg_7_3.infos) do
+		local var_7_0 = {
+			optionId = iter_7_1.optionId,
+			count = iter_7_1.count
 		}
-		slot0._optionInfos[slot9.optionId] = slot9
+
+		arg_7_0._optionInfos[var_7_0.optionId] = var_7_0
 	end
 
-	slot0._attributeItem:playBarAdd(false)
-	slot0._viewAnim:Play("close", 0, 0)
-	TaskDispatcher.runDelay(slot0._showTrainProgress, slot0, 0.17)
+	arg_7_0._attributeItem:playBarAdd(false)
+	arg_7_0._viewAnim:Play("close", 0, 0)
+	TaskDispatcher.runDelay(arg_7_0._showTrainProgress, arg_7_0, 0.17)
 end
 
-function slot0._addEvents(slot0)
-	slot0._exitBtn:AddClickListener(slot0._onExitClick, slot0)
-	StoryController.instance:registerCallback(StoryEvent.DialogConFinished, slot0._onDialogConFinished, slot0)
-	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, slot0._refreshCurrency, slot0)
-	RoomController.instance:registerCallback(RoomEvent.CritterTrainAttributeSelected, slot0._onAttributeSelected, slot0)
-	RoomController.instance:registerCallback(RoomEvent.CritterTrainAttributeCancel, slot0._onAttributeCancel, slot0)
-	StoryController.instance:registerCallback(StoryEvent.OnReplaceHero, slot0._onStoryReplaceHero, slot0)
+function var_0_0._addEvents(arg_8_0)
+	arg_8_0._exitBtn:AddClickListener(arg_8_0._onExitClick, arg_8_0)
+	StoryController.instance:registerCallback(StoryEvent.DialogConFinished, arg_8_0._onDialogConFinished, arg_8_0)
+	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, arg_8_0._refreshCurrency, arg_8_0)
+	RoomController.instance:registerCallback(RoomEvent.CritterTrainAttributeSelected, arg_8_0._onAttributeSelected, arg_8_0)
+	RoomController.instance:registerCallback(RoomEvent.CritterTrainAttributeCancel, arg_8_0._onAttributeCancel, arg_8_0)
+	StoryController.instance:registerCallback(StoryEvent.OnReplaceHero, arg_8_0._onStoryReplaceHero, arg_8_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0._exitBtn:RemoveClickListener()
-	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, slot0._onDialogConFinished, slot0)
-	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, slot0._refreshCurrency, slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainAttributeSelected, slot0._onAttributeSelected, slot0)
-	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainAttributeCancel, slot0._onAttributeCancel, slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.Finish, slot0._onAttributeStoryFinished, slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.OnReplaceHero, slot0._onStoryReplaceHero, slot0)
+function var_0_0._removeEvents(arg_9_0)
+	arg_9_0._exitBtn:RemoveClickListener()
+	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, arg_9_0._onDialogConFinished, arg_9_0)
+	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, arg_9_0._refreshCurrency, arg_9_0)
+	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainAttributeSelected, arg_9_0._onAttributeSelected, arg_9_0)
+	RoomController.instance:unregisterCallback(RoomEvent.CritterTrainAttributeCancel, arg_9_0._onAttributeCancel, arg_9_0)
+	StoryController.instance:unregisterCallback(StoryEvent.Finish, arg_9_0._onAttributeStoryFinished, arg_9_0)
+	StoryController.instance:unregisterCallback(StoryEvent.OnReplaceHero, arg_9_0._onStoryReplaceHero, arg_9_0)
 end
 
-function slot0._onDialogConFinished(slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, slot0._onDialogConFinished, slot0)
-	slot0:_showAttributeSelect()
+function var_0_0._onDialogConFinished(arg_10_0)
+	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, arg_10_0._onDialogConFinished, arg_10_0)
+	arg_10_0:_showAttributeSelect()
 end
 
-function slot0._showAttributeSelect(slot0)
-	gohelper.setActive(slot0._goattribute, true)
-	gohelper.setActive(slot0._scrollselect.gameObject, true)
-	gohelper.setActive(slot0._goconversation, true)
+function var_0_0._showAttributeSelect(arg_11_0)
+	gohelper.setActive(arg_11_0._goattribute, true)
+	gohelper.setActive(arg_11_0._scrollselect.gameObject, true)
+	gohelper.setActive(arg_11_0._goconversation, true)
 
-	if slot0._storyViewGo then
-		gohelper.setActive(slot0._storyViewGo, false)
+	if arg_11_0._storyViewGo then
+		gohelper.setActive(arg_11_0._storyViewGo, false)
 
-		slot0.viewContainer:getSetting().viewType = ViewType.Full
+		arg_11_0.viewContainer:getSetting().viewType = ViewType.Full
 
-		slot0._critterItem:fadeIn()
-		slot0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
+		arg_11_0._critterItem:fadeIn()
+		arg_11_0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
 	else
-		slot0._critterItem:showByEffectType(slot0._critterMO, CritterEnum.PosType.Middle, false)
-		slot0._critterItem:fadeIn()
+		arg_11_0._critterItem:showByEffectType(arg_11_0._critterMO, CritterEnum.PosType.Middle, false)
+		arg_11_0._critterItem:fadeIn()
 	end
 
 	StoryController.instance:closeStoryView()
-	gohelper.setActive(slot0._gorighttopbtns, true)
-	slot0:_refreshCurrency()
-	slot0:_refreshAttribute()
-	slot0:_refreshSelect()
-	slot0:_playConversation()
-	slot0._attributeItem:playBarAdd(true, slot0._critterMO.trainInfo:getEventOptions(slot0.viewParam.eventId))
-	slot0._viewAnim:Play("open", 0, 0)
+	gohelper.setActive(arg_11_0._gorighttopbtns, true)
+	arg_11_0:_refreshCurrency()
+	arg_11_0:_refreshAttribute()
+	arg_11_0:_refreshSelect()
+	arg_11_0:_playConversation()
+
+	local var_11_0 = arg_11_0._critterMO.trainInfo:getEventOptions(arg_11_0.viewParam.eventId)
+
+	arg_11_0._attributeItem:playBarAdd(true, var_11_0)
+	arg_11_0._viewAnim:Play("open", 0, 0)
 end
 
-function slot0._onAttributeSelected(slot0, slot1, slot2)
-	RoomTrainCritterModel.instance:addSelectOptionCount(slot1)
-	slot0:_refreshAttribute()
-	slot0._attributeItem:playBarAdd(true, slot0._critterMO.trainInfo:getEventOptions(slot0.viewParam.eventId))
-	slot0:_refreshSelect()
-	slot0:_showEnterBtn(true)
+function var_0_0._onAttributeSelected(arg_12_0, arg_12_1, arg_12_2)
+	RoomTrainCritterModel.instance:addSelectOptionCount(arg_12_1)
+	arg_12_0:_refreshAttribute()
+
+	local var_12_0 = arg_12_0._critterMO.trainInfo:getEventOptions(arg_12_0.viewParam.eventId)
+
+	arg_12_0._attributeItem:playBarAdd(true, var_12_0)
+	arg_12_0:_refreshSelect()
+	arg_12_0:_showEnterBtn(true)
 end
 
-function slot0._onAttributeCancel(slot0, slot1, slot2)
-	RoomTrainCritterModel.instance:cancelSelectOptionCount(slot1)
-	slot0:_refreshAttribute()
-	slot0._attributeItem:playBarAdd(true, slot0._critterMO.trainInfo:getEventOptions(slot0.viewParam.eventId))
-	slot0:_refreshSelect()
-	slot0:_showEnterBtn(true)
+function var_0_0._onAttributeCancel(arg_13_0, arg_13_1, arg_13_2)
+	RoomTrainCritterModel.instance:cancelSelectOptionCount(arg_13_1)
+	arg_13_0:_refreshAttribute()
+
+	local var_13_0 = arg_13_0._critterMO.trainInfo:getEventOptions(arg_13_0.viewParam.eventId)
+
+	arg_13_0._attributeItem:playBarAdd(true, var_13_0)
+	arg_13_0:_refreshSelect()
+	arg_13_0:_showEnterBtn(true)
 end
 
-slot1 = {
-	[203.0] = "taming3",
-	[202.0] = "taming",
-	[201.0] = "taming2"
+local var_0_1 = {
+	[203] = "taming3",
+	[202] = "taming",
+	[201] = "taming2"
 }
-slot2 = {
-	[203.0] = 3,
-	[202.0] = 1,
-	[201.0] = 2
+local var_0_2 = {
+	[203] = 3,
+	[202] = 1,
+	[201] = 2
 }
 
-function slot0._showTrainProgress(slot0)
-	slot0.viewContainer:getSetting().viewType = ViewType.Full
+function var_0_0._showTrainProgress(arg_14_0)
+	arg_14_0.viewContainer:getSetting().viewType = ViewType.Full
 
-	gohelper.setActive(slot0._gospine, true)
-	slot0._critterItem:showTamingEffects(true, uv0[slot0.viewParam.eventId])
-	slot0._critterItem:setCritterEffectOffset(0, 30)
-	slot0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
-	slot0._critterItem:fadeIn()
-	gohelper.setActive(slot0._gotrainprogress, true)
-	gohelper.setActive(slot0._gorighttopbtns, false)
-	slot0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
-	slot0._critterItem:playBodyAnim(uv1[slot0.viewParam.eventId], true)
+	gohelper.setActive(arg_14_0._gospine, true)
+	arg_14_0._critterItem:showTamingEffects(true, var_0_2[arg_14_0.viewParam.eventId])
+	arg_14_0._critterItem:setCritterEffectOffset(0, 30)
+	arg_14_0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
+	arg_14_0._critterItem:fadeIn()
+	gohelper.setActive(arg_14_0._gotrainprogress, true)
+	gohelper.setActive(arg_14_0._gorighttopbtns, false)
 
-	slot0._progressTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, slot0._progressTime, slot0._progressUpdate, slot0._progressFinished, slot0, nil, EaseType.Linear)
+	local var_14_0 = var_0_1[arg_14_0.viewParam.eventId]
+
+	arg_14_0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
+	arg_14_0._critterItem:playBodyAnim(var_14_0, true)
+
+	arg_14_0._progressTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_14_0._progressTime, arg_14_0._progressUpdate, arg_14_0._progressFinished, arg_14_0, nil, EaseType.Linear)
 end
 
-function slot0._progressUpdate(slot0, slot1)
-	slot0._imagetotalBarValue.fillAmount = slot1
+function var_0_0._progressUpdate(arg_15_0, arg_15_1)
+	arg_15_0._imagetotalBarValue.fillAmount = arg_15_1
 end
 
-function slot0._progressFinished(slot0)
-	slot0._trainShowing = true
+function var_0_0._progressFinished(arg_16_0)
+	arg_16_0._trainShowing = true
 
-	gohelper.setActive(slot0._goexittips, true)
-	gohelper.setActive(slot0._goexittxt, false)
+	gohelper.setActive(arg_16_0._goexittips, true)
+	gohelper.setActive(arg_16_0._goexittxt, false)
 
-	if string.splitToNumber(CritterConfig.instance:getCritterCfg(slot0._critterMO.defineId).eventTimes, "#")[uv0[slot0.viewParam.eventId]] - slot0._progressTime <= 0 then
-		slot0:_critterAniFinished()
+	local var_16_0 = string.splitToNumber(CritterConfig.instance:getCritterCfg(arg_16_0._critterMO.defineId).eventTimes, "#")[var_0_2[arg_16_0.viewParam.eventId]] - arg_16_0._progressTime
+
+	if var_16_0 <= 0 then
+		arg_16_0:_critterAniFinished()
 	else
-		TaskDispatcher.runDelay(slot0._critterAniFinished, slot0, slot2)
+		TaskDispatcher.runDelay(arg_16_0._critterAniFinished, arg_16_0, var_16_0)
 	end
 end
 
-function slot0._critterAniFinished(slot0)
-	slot0._critterItem:playBodyAnim(RoomCharacterEnum.CharacterAnimStateName.Idle, true)
-	gohelper.setActive(slot0._gotrainprogress, false)
-	slot0._critterItem:fadeOut()
-	slot0._critterItem:showTamingEffects(false)
-	slot0._trainAnim:Play("close", 0, 0)
+function var_0_0._critterAniFinished(arg_17_0)
+	arg_17_0._critterItem:playBodyAnim(RoomCharacterEnum.CharacterAnimStateName.Idle, true)
+	gohelper.setActive(arg_17_0._gotrainprogress, false)
+	arg_17_0._critterItem:fadeOut()
+	arg_17_0._critterItem:showTamingEffects(false)
+	arg_17_0._trainAnim:Play("close", 0, 0)
 
-	slot0._trainShowing = false
+	arg_17_0._trainShowing = false
 
-	gohelper.setActive(slot0._goexittips, false)
-	TaskDispatcher.runDelay(slot0._startAttributeStory, slot0, 0.17)
+	gohelper.setActive(arg_17_0._goexittips, false)
+	TaskDispatcher.runDelay(arg_17_0._startAttributeStory, arg_17_0, 0.17)
 end
 
-function slot0._startAttributeStory(slot0)
-	if slot0.viewParam.skipStory then
-		slot0:_onAttributeStoryFinished()
+function var_0_0._startAttributeStory(arg_18_0)
+	if arg_18_0.viewParam.skipStory then
+		arg_18_0:_onAttributeStoryFinished()
 	else
-		slot0.viewContainer:getSetting().viewType = ViewType.Normal
+		arg_18_0.viewContainer:getSetting().viewType = ViewType.Normal
 
-		RoomCritterController.instance:startAttributeResult(slot0.viewParam.eventId, slot0.viewParam.critterUid, slot0.viewParam.heroId, slot0.optionId)
-		StoryController.instance:registerCallback(StoryEvent.Finish, slot0._onAttributeStoryFinished, slot0)
+		RoomCritterController.instance:startAttributeResult(arg_18_0.viewParam.eventId, arg_18_0.viewParam.critterUid, arg_18_0.viewParam.heroId, arg_18_0.optionId)
+		StoryController.instance:registerCallback(StoryEvent.Finish, arg_18_0._onAttributeStoryFinished, arg_18_0)
 	end
 end
 
-function slot0._onAttributeStoryFinished(slot0)
-	slot0.viewContainer:getSetting().viewType = ViewType.Full
+function var_0_0._onAttributeStoryFinished(arg_19_0)
+	arg_19_0.viewContainer:getSetting().viewType = ViewType.Full
 
-	StoryController.instance:unregisterCallback(StoryEvent.Finish, slot0._onAttributeStoryFinished, slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.OnReplaceHero, slot0._onStoryReplaceHero, slot0)
-	slot0._critterItem:fadeOut()
-	TaskDispatcher.runDelay(slot0._startShowResult, slot0, 0.17)
+	StoryController.instance:unregisterCallback(StoryEvent.Finish, arg_19_0._onAttributeStoryFinished, arg_19_0)
+	StoryController.instance:unregisterCallback(StoryEvent.OnReplaceHero, arg_19_0._onStoryReplaceHero, arg_19_0)
+	arg_19_0._critterItem:fadeOut()
+	TaskDispatcher.runDelay(arg_19_0._startShowResult, arg_19_0, 0.17)
 end
 
-function slot0._onExitClick(slot0)
-	if slot0._trainShowing then
-		if slot0._progressTweenId then
-			ZProj.TweenHelper.KillById(slot0._progressTweenId)
+function var_0_0._onExitClick(arg_20_0)
+	if arg_20_0._trainShowing then
+		if arg_20_0._progressTweenId then
+			ZProj.TweenHelper.KillById(arg_20_0._progressTweenId)
 
-			slot0._progressTweenId = nil
+			arg_20_0._progressTweenId = nil
 		end
 
-		TaskDispatcher.cancelTask(slot0._startAttributeStory, slot0)
-		TaskDispatcher.cancelTask(slot0._critterAniFinished, slot0)
-		slot0:_critterAniFinished()
+		TaskDispatcher.cancelTask(arg_20_0._startAttributeStory, arg_20_0)
+		TaskDispatcher.cancelTask(arg_20_0._critterAniFinished, arg_20_0)
+		arg_20_0:_critterAniFinished()
 
 		return
 	end
 
-	slot0:closeThis()
+	arg_20_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._selectItems = {}
-	slot0._optionInfos = {}
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._attributeItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(RoomCritterTrainDetailItem.prefabPath, slot0._goattribute), RoomCritterTrainDetailItem, slot0)
-	slot0._critterItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gospine, RoomCritterTrainCritterItem, slot0)
+function var_0_0._editableInitView(arg_21_0)
+	arg_21_0._selectItems = {}
+	arg_21_0._optionInfos = {}
+	arg_21_0._viewAnim = arg_21_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0._critterItem:init(slot0._gospine)
+	local var_21_0 = arg_21_0:getResInst(RoomCritterTrainDetailItem.prefabPath, arg_21_0._goattribute)
 
-	slot0._goselectitem = gohelper.findChild(slot0.viewGO, "#scroll_select/Viewport/#go_list/selectitem")
-	slot0._trainAnim = slot0._gotrainprogress:GetComponent(typeof(UnityEngine.Animator))
+	arg_21_0._attributeItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_0, RoomCritterTrainDetailItem, arg_21_0)
+	arg_21_0._critterItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_21_0._gospine, RoomCritterTrainCritterItem, arg_21_0)
 
-	gohelper.setActive(slot0._goselectitem, false)
+	arg_21_0._critterItem:init(arg_21_0._gospine)
 
-	slot0._exitBtn = gohelper.getClick(slot0._goexittips)
+	arg_21_0._goselectitem = gohelper.findChild(arg_21_0.viewGO, "#scroll_select/Viewport/#go_list/selectitem")
+	arg_21_0._trainAnim = arg_21_0._gotrainprogress:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0:_addEvents()
-	gohelper.setActive(slot0._goattribute, false)
-	gohelper.setActive(slot0._scrollselect.gameObject, false)
-	gohelper.setActive(slot0._goconversation, false)
-	gohelper.setActive(slot0._goexittips, false)
-	gohelper.setActive(slot0._gospine, false)
-	gohelper.setActive(slot0._gotrainprogress, false)
-	gohelper.setActive(slot0._gorighttopbtns, false)
-	gohelper.setActive(slot0._goattributeup, false)
-	gohelper.setActive(slot0._goattributeupitem, false)
-	slot0:_showEnterBtn(false)
+	gohelper.setActive(arg_21_0._goselectitem, false)
 
-	slot0._progressTime = tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.CritterTrainKeepTime)) / 1000
+	arg_21_0._exitBtn = gohelper.getClick(arg_21_0._goexittips)
+
+	arg_21_0:_addEvents()
+	gohelper.setActive(arg_21_0._goattribute, false)
+	gohelper.setActive(arg_21_0._scrollselect.gameObject, false)
+	gohelper.setActive(arg_21_0._goconversation, false)
+	gohelper.setActive(arg_21_0._goexittips, false)
+	gohelper.setActive(arg_21_0._gospine, false)
+	gohelper.setActive(arg_21_0._gotrainprogress, false)
+	gohelper.setActive(arg_21_0._gorighttopbtns, false)
+	gohelper.setActive(arg_21_0._goattributeup, false)
+	gohelper.setActive(arg_21_0._goattributeupitem, false)
+	arg_21_0:_showEnterBtn(false)
+
+	arg_21_0._progressTime = tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.CritterTrainKeepTime)) / 1000
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._critterMO = CritterModel.instance:getCritterMOByUid(slot0.viewParam.critterUid)
+function var_0_0.onUpdateParam(arg_22_0)
+	arg_22_0._critterMO = CritterModel.instance:getCritterMOByUid(arg_22_0.viewParam.critterUid)
 end
 
-function slot0._refreshAttribute(slot0)
-	slot0._attributeItem:onUpdateMO(RoomTrainSlotListModel.instance:getSlotMOByCritterUi(slot0.viewParam.critterUid).critterMO)
+function var_0_0._refreshAttribute(arg_23_0)
+	local var_23_0 = RoomTrainSlotListModel.instance:getSlotMOByCritterUi(arg_23_0.viewParam.critterUid)
+
+	arg_23_0._attributeItem:onUpdateMO(var_23_0.critterMO)
 end
 
-function slot0._refreshSelect(slot0)
-	for slot5 = 1, #slot0._critterMO.trainInfo:getEventOptions(slot0.viewParam.eventId) do
-		if not slot0._selectItems[slot5] then
-			slot0._selectItems[slot5] = RoomCritterTrainStorySelectItem.New()
+function var_0_0._refreshSelect(arg_24_0)
+	local var_24_0 = arg_24_0._critterMO.trainInfo:getEventOptions(arg_24_0.viewParam.eventId)
 
-			slot0._selectItems[slot5]:init(slot0._goselectitem, slot5)
+	for iter_24_0 = 1, #var_24_0 do
+		if not arg_24_0._selectItems[iter_24_0] then
+			arg_24_0._selectItems[iter_24_0] = RoomCritterTrainStorySelectItem.New()
+
+			arg_24_0._selectItems[iter_24_0]:init(arg_24_0._goselectitem, iter_24_0)
 		end
 
-		slot0._selectItems[slot5]:show(slot1[slot5].optionId, slot0._critterMO, slot0.viewParam.eventId, RoomTrainCritterModel.instance:getSelectOptionCount(slot1[slot5].optionId))
+		local var_24_1 = RoomTrainCritterModel.instance:getSelectOptionCount(var_24_0[iter_24_0].optionId)
+
+		arg_24_0._selectItems[iter_24_0]:show(var_24_0[iter_24_0].optionId, arg_24_0._critterMO, arg_24_0.viewParam.eventId, var_24_1)
 	end
 end
 
-function slot0._playConversation(slot0)
-	slot1 = HeroConfig.instance:getHeroCO(slot0.viewParam.heroId)
-	slot0._txtnameen.text = slot1.nameEn
-	slot0._txtnamecn.text = slot1.name
-	slot2 = CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId)
-	slot0._txtcontent.text = string.format(slot2.content, slot0._critterMO.trainInfo:getEvents(slot0.viewParam.eventId).remainCount, string.format("%s <sprite=0>", string.splitToNumber(slot2.cost, "#")[3]))
+function var_0_0._playConversation(arg_25_0)
+	local var_25_0 = HeroConfig.instance:getHeroCO(arg_25_0.viewParam.heroId)
 
-	slot0:_showEnterBtn(true)
+	arg_25_0._txtnameen.text = var_25_0.nameEn
+	arg_25_0._txtnamecn.text = var_25_0.name
+
+	local var_25_1 = CritterConfig.instance:getCritterTrainEventCfg(arg_25_0.viewParam.eventId)
+	local var_25_2 = string.splitToNumber(var_25_1.cost, "#")[3]
+	local var_25_3 = arg_25_0._critterMO.trainInfo:getEvents(arg_25_0.viewParam.eventId)
+
+	arg_25_0._txtcontent.text = string.format(var_25_1.content, var_25_3.remainCount, string.format("%s <sprite=0>", var_25_2))
+
+	arg_25_0:_showEnterBtn(true)
 end
 
-function slot0._showEnterBtn(slot0, slot1)
-	gohelper.setActive(slot0._btntrainstart, slot1 and RoomTrainCritterModel.instance:getSelectOptionTotalCount() > 0)
+function var_0_0._showEnterBtn(arg_26_0, arg_26_1)
+	local var_26_0 = RoomTrainCritterModel.instance:getSelectOptionTotalCount()
+	local var_26_1 = arg_26_1 and var_26_0 > 0
+
+	gohelper.setActive(arg_26_0._btntrainstart, var_26_1)
 end
 
-function slot0._refreshCurrency(slot0)
-	slot2 = string.splitToNumber(CritterConfig.instance:getCritterTrainEventCfg(slot0.viewParam.eventId).cost, "#")[2]
-	slot0._txtcurrency.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(slot2).quantity)
+function var_0_0._refreshCurrency(arg_27_0)
+	local var_27_0 = CritterConfig.instance:getCritterTrainEventCfg(arg_27_0.viewParam.eventId)
+	local var_27_1 = string.splitToNumber(var_27_0.cost, "#")[2]
+	local var_27_2 = CurrencyModel.instance:getCurrency(var_27_1)
+	local var_27_3 = CurrencyConfig.instance:getCurrencyCo(var_27_1)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecurrency, CurrencyConfig.instance:getCurrencyCo(slot2).icon .. "_1")
+	arg_27_0._txtcurrency.text = GameUtil.numberDisplay(var_27_2.quantity)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_27_0._imagecurrency, var_27_3.icon .. "_1")
 end
 
-function slot0._onStoryReplaceHero(slot0, slot1)
-	gohelper.setLayer(slot0._gomask, UnityLayer.UI, true)
-	gohelper.setLayer(slot0._gomask2, UnityLayer.UI, true)
-	gohelper.setActive(slot0._gospine, true)
+function var_0_0._onStoryReplaceHero(arg_28_0, arg_28_1)
+	gohelper.setLayer(arg_28_0._gomask, UnityLayer.UI, true)
+	gohelper.setLayer(arg_28_0._gomask2, UnityLayer.UI, true)
+	gohelper.setActive(arg_28_0._gospine, true)
 
-	if slot1.effs[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] == "" then
-		slot0._critterItem:setEffectByType(0)
-		slot0._critterItem:hideEffects()
+	local var_28_0 = arg_28_1.effs[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+
+	if var_28_0 == "" then
+		arg_28_0._critterItem:setEffectByType(0)
+		arg_28_0._critterItem:hideEffects()
 	else
-		slot7 = "#"
+		local var_28_1 = GameUtil.splitString2(var_28_0, false, "|", "#")
 
-		for slot7, slot8 in ipairs(GameUtil.splitString2(slot2, false, "|", slot7)) do
-			slot0._critterItem:setEffectByName(slot8[2])
-			slot0._critterItem:setCritterEffectOffset(tonumber(slot8[3]), tonumber(slot8[4]))
-			slot0._critterItem:setCritterEffectScale(tonumber(slot8[5]))
+		for iter_28_0, iter_28_1 in ipairs(var_28_1) do
+			arg_28_0._critterItem:setEffectByName(iter_28_1[2])
+			arg_28_0._critterItem:setCritterEffectOffset(tonumber(iter_28_1[3]), tonumber(iter_28_1[4]))
+			arg_28_0._critterItem:setCritterEffectScale(tonumber(iter_28_1[5]))
 		end
 	end
 
-	if slot0._critterItem:getCritterPos() ~= slot1.heroDir + 1 then
-		slot0._critterItem:fadeIn()
+	if arg_28_0._critterItem:getCritterPos() ~= arg_28_1.heroDir + 1 then
+		arg_28_0._critterItem:fadeIn()
 	end
 
-	slot0._critterItem:setCritterPos(slot1.heroDir + 1, true)
+	arg_28_0._critterItem:setCritterPos(arg_28_1.heroDir + 1, true)
 end
 
-function slot0._startShowResult(slot0)
-	RoomTrainCritterModel.instance:setEventTrainStoryPlayed(slot0.viewParam.heroId)
-	gohelper.setActive(slot0._gospine, true)
-	gohelper.setActive(slot0._goexittips, true)
-	gohelper.setActive(slot0._goexittxt, true)
-	gohelper.setActive(slot0._goattributeup, true)
-	gohelper.setActive(slot0._goattribute, true)
-	gohelper.setActive(slot0._goattributeupeffect, true)
+function var_0_0._startShowResult(arg_29_0)
+	RoomTrainCritterModel.instance:setEventTrainStoryPlayed(arg_29_0.viewParam.heroId)
+	gohelper.setActive(arg_29_0._gospine, true)
+	gohelper.setActive(arg_29_0._goexittips, true)
+	gohelper.setActive(arg_29_0._goexittxt, true)
+	gohelper.setActive(arg_29_0._goattributeup, true)
+	gohelper.setActive(arg_29_0._goattribute, true)
+	gohelper.setActive(arg_29_0._goattributeupeffect, true)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_peixun)
-	slot0._critterItem:fadeIn()
-	slot0._critterItem:showTamingEffects(false)
-	slot0._critterItem:setEffectByType(3)
-	slot0._critterItem:setCritterEffectOffset(0, 30)
-	slot0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
-	slot0._critterItem:playBodyAnim(RoomCharacterEnum.CharacterAnimStateName.Idle, true)
+	arg_29_0._critterItem:fadeIn()
+	arg_29_0._critterItem:showTamingEffects(false)
+	arg_29_0._critterItem:setEffectByType(3)
+	arg_29_0._critterItem:setCritterEffectOffset(0, 30)
+	arg_29_0._critterItem:setCritterPos(CritterEnum.PosType.Middle, false)
+	arg_29_0._critterItem:playBodyAnim(RoomCharacterEnum.CharacterAnimStateName.Idle, true)
+	arg_29_0._viewAnim:Play("open", 0, 0)
 
-	slot4 = 0
-	slot5 = 0
+	arg_29_0._resultAttributeMOs = {}
 
-	slot0._viewAnim:Play("open", slot4, slot5)
+	for iter_29_0, iter_29_1 in pairs(arg_29_0._optionInfos) do
+		local var_29_0 = iter_29_1.optionId
+		local var_29_1 = arg_29_0._critterMO.trainInfo:getEventOptionMOByOptionId(arg_29_0.viewParam.eventId, var_29_0).addAttriButes
 
-	slot0._resultAttributeMOs = {}
-
-	for slot4, slot5 in pairs(slot0._optionInfos) do
-		slot6 = slot5.optionId
-		slot7 = slot0._critterMO.trainInfo:getEventOptionMOByOptionId(slot0.viewParam.eventId, slot6).addAttriButes
-		slot0._resultAttributeMOs[slot6] = LuaUtil.deepCopy(slot7[1])
-		slot0._resultAttributeMOs[slot6].value = slot5.count * slot7[1].value
+		arg_29_0._resultAttributeMOs[var_29_0] = LuaUtil.deepCopy(var_29_1[1])
+		arg_29_0._resultAttributeMOs[var_29_0].value = iter_29_1.count * var_29_1[1].value
 	end
 
-	slot0._attributeItem:playLevelUp(slot0._resultAttributeMOs)
+	arg_29_0._attributeItem:playLevelUp(arg_29_0._resultAttributeMOs)
 
-	slot0._repeatCount = 0
+	arg_29_0._repeatCount = 0
 
-	TaskDispatcher.runRepeat(slot0._showAttribute, slot0, 0.3, #slot0._resultAttributeMOs)
+	TaskDispatcher.runRepeat(arg_29_0._showAttribute, arg_29_0, 0.3, #arg_29_0._resultAttributeMOs)
 end
 
-function slot0._showAttribute(slot0)
-	slot0._repeatCount = slot0._repeatCount + 1
-	slot2 = gohelper.clone(slot0._goattributeupitem)
+function var_0_0._showAttribute(arg_30_0)
+	arg_30_0._repeatCount = arg_30_0._repeatCount + 1
 
-	gohelper.addChild(gohelper.findChild(slot0._goattributeup, tostring(slot0._repeatCount)), slot2)
+	local var_30_0 = gohelper.findChild(arg_30_0._goattributeup, tostring(arg_30_0._repeatCount))
+	local var_30_1 = gohelper.clone(arg_30_0._goattributeupitem)
 
-	slot3 = gohelper.findChildText(slot2, "up/#txt_up")
-	slot4 = CritterConfig.instance:getCritterAttributeCfg(slot0._resultAttributeMOs[slot0._repeatCount].attributeId).name
+	gohelper.addChild(var_30_0, var_30_1)
 
-	if slot0._resultAttributeMOs[slot0._repeatCount].value <= 0 then
-		gohelper.setActive(slot2, false)
+	local var_30_2 = gohelper.findChildText(var_30_1, "up/#txt_up")
+	local var_30_3 = CritterConfig.instance:getCritterAttributeCfg(arg_30_0._resultAttributeMOs[arg_30_0._repeatCount].attributeId).name
+	local var_30_4 = arg_30_0._resultAttributeMOs[arg_30_0._repeatCount].value
+
+	if var_30_4 <= 0 then
+		gohelper.setActive(var_30_1, false)
 
 		return
 	end
 
-	gohelper.setActive(slot2, true)
+	gohelper.setActive(var_30_1, true)
 
-	slot3.text = string.format("%s + %s", slot4, slot5)
+	var_30_2.text = string.format("%s + %s", var_30_3, var_30_4)
 end
 
-slot3 = 2223
+local var_0_3 = 2223
 
-function slot0.onOpen(slot0)
-	slot0._critterMO = CritterModel.instance:getCritterMOByUid(slot0.viewParam.critterUid)
+function var_0_0.onOpen(arg_31_0)
+	arg_31_0._critterMO = CritterModel.instance:getCritterMOByUid(arg_31_0.viewParam.critterUid)
 
-	StoryModel.instance:setReplaceHero(uv0, ResUrl.getSpineUIPrefab(CritterConfig.instance:getCritterSkinCfg(slot0._critterMO:getSkinId()).spine))
-	gohelper.setActive(slot0._gospine, true)
+	local var_31_0 = CritterConfig.instance:getCritterSkinCfg(arg_31_0._critterMO:getSkinId())
+	local var_31_1 = ResUrl.getSpineUIPrefab(var_31_0.spine)
 
-	if slot0.viewParam.skipStory then
-		slot0:_showAttributeSelect()
+	StoryModel.instance:setReplaceHero(var_0_3, var_31_1)
+	gohelper.setActive(arg_31_0._gospine, true)
+
+	if arg_31_0.viewParam.skipStory then
+		arg_31_0:_showAttributeSelect()
 	else
-		slot0._storyViewGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+		arg_31_0._storyViewGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
 
-		slot0._critterItem:showByEffectName(slot0._critterMO, CritterEnum.PosType.Right, true)
-		slot0._critterItem:fadeIn()
+		arg_31_0._critterItem:showByEffectName(arg_31_0._critterMO, CritterEnum.PosType.Right, true)
+		arg_31_0._critterItem:fadeIn()
 	end
 
 	CritterController.instance:dispatchEvent(CritterEvent.CritterTrainStarted)
 end
 
-function slot0._onCurrencyChanged(slot0)
+function var_0_0._onCurrencyChanged(arg_32_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_33_0)
 	CritterController.instance:dispatchEvent(CritterEvent.CritterTrainFinished)
-	RoomCritterController.instance:endTrain(slot0.viewParam.eventId)
+	RoomCritterController.instance:endTrain(arg_33_0.viewParam.eventId)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
-	TaskDispatcher.cancelTask(slot0._startAttributeStory, slot0)
-	TaskDispatcher.cancelTask(slot0._showTrainProgress, slot0)
-	TaskDispatcher.cancelTask(slot0._startShowResult, slot0)
-	TaskDispatcher.cancelTask(slot0._showAttribute, slot0)
-	TaskDispatcher.cancelTask(slot0._critterAniFinished, slot0)
+function var_0_0.onDestroyView(arg_34_0)
+	arg_34_0:_removeEvents()
+	TaskDispatcher.cancelTask(arg_34_0._startAttributeStory, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._showTrainProgress, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._startShowResult, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._showAttribute, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._critterAniFinished, arg_34_0)
 
-	if slot0._selectItems then
-		for slot4, slot5 in pairs(slot0._selectItems) do
-			slot5:destroy()
+	if arg_34_0._selectItems then
+		for iter_34_0, iter_34_1 in pairs(arg_34_0._selectItems) do
+			iter_34_1:destroy()
 		end
 
-		slot0._selectItems = nil
+		arg_34_0._selectItems = nil
 	end
 
-	slot0._attributeItem:onDestroy()
+	arg_34_0._attributeItem:onDestroy()
 
-	if slot0._critterItem then
-		slot0._critterItem:onDestroy()
+	if arg_34_0._critterItem then
+		arg_34_0._critterItem:onDestroy()
 
-		slot0._critterItem = nil
+		arg_34_0._critterItem = nil
 	end
 
-	if slot0._progressTweenId then
-		ZProj.TweenHelper.KillById(slot0._progressTweenId)
+	if arg_34_0._progressTweenId then
+		ZProj.TweenHelper.KillById(arg_34_0._progressTweenId)
 
-		slot0._progressTweenId = nil
+		arg_34_0._progressTweenId = nil
 	end
 end
 
-return slot0
+return var_0_0

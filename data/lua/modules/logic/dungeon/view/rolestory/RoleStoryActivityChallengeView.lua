@@ -1,91 +1,97 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryActivityChallengeView", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryActivityChallengeView", package.seeall)
 
-slot0 = class("RoleStoryActivityChallengeView", BaseView)
+local var_0_0 = class("RoleStoryActivityChallengeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._challengeViewGO = gohelper.findChild(slot0.viewGO, "challengeview")
-	slot0.simagemonster = gohelper.findChildSingleImage(slot0._challengeViewGO, "BG/item/Root/#simage_Photo")
-	slot0.rewardBg = gohelper.findChildImage(slot0._challengeViewGO, "Info/image_InfoBG2")
-	slot0.btnReward = gohelper.findChildButtonWithAudio(slot0._challengeViewGO, "Info/btnReward")
-	slot0.simgaReward = gohelper.findChildSingleImage(slot0._challengeViewGO, "Info/btnReward/#image_Reward")
-	slot0.txtRewardNum = gohelper.findChildTextMesh(slot0._challengeViewGO, "Info/#txt_RewardNum")
-	slot0.goRewardRed = gohelper.findChild(slot0._challengeViewGO, "Info/#go_Reddot")
-	slot0.goRewardCanGet = gohelper.findChild(slot0._challengeViewGO, "Info/btnReward/canget")
-	slot0.goRewardHasGet = gohelper.findChild(slot0._challengeViewGO, "Info/btnReward/hasget")
-	slot0.slider = gohelper.findChildSlider(slot0._challengeViewGO, "Info/Slider")
-	slot0.txtProgress = gohelper.findChildTextMesh(slot0._challengeViewGO, "Info/#txt_ScheduleNum")
-	slot0.btnStart = gohelper.findChildButtonWithAudio(slot0._challengeViewGO, "#btn_start")
-	slot0.simageCost = gohelper.findChildSingleImage(slot0._challengeViewGO, "#btn_start/#simage_icon")
-	slot0.txtCostNum = gohelper.findChildTextMesh(slot0._challengeViewGO, "#btn_start/#simage_icon/#txt_num")
-	slot0.tipsBtn = gohelper.findChildButtonWithAudio(slot0._challengeViewGO, "tipsbg/tips1/icon")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._challengeViewGO = gohelper.findChild(arg_1_0.viewGO, "challengeview")
+	arg_1_0.simagemonster = gohelper.findChildSingleImage(arg_1_0._challengeViewGO, "BG/item/Root/#simage_Photo")
+	arg_1_0.rewardBg = gohelper.findChildImage(arg_1_0._challengeViewGO, "Info/image_InfoBG2")
+	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0._challengeViewGO, "Info/btnReward")
+	arg_1_0.simgaReward = gohelper.findChildSingleImage(arg_1_0._challengeViewGO, "Info/btnReward/#image_Reward")
+	arg_1_0.txtRewardNum = gohelper.findChildTextMesh(arg_1_0._challengeViewGO, "Info/#txt_RewardNum")
+	arg_1_0.goRewardRed = gohelper.findChild(arg_1_0._challengeViewGO, "Info/#go_Reddot")
+	arg_1_0.goRewardCanGet = gohelper.findChild(arg_1_0._challengeViewGO, "Info/btnReward/canget")
+	arg_1_0.goRewardHasGet = gohelper.findChild(arg_1_0._challengeViewGO, "Info/btnReward/hasget")
+	arg_1_0.slider = gohelper.findChildSlider(arg_1_0._challengeViewGO, "Info/Slider")
+	arg_1_0.txtProgress = gohelper.findChildTextMesh(arg_1_0._challengeViewGO, "Info/#txt_ScheduleNum")
+	arg_1_0.btnStart = gohelper.findChildButtonWithAudio(arg_1_0._challengeViewGO, "#btn_start")
+	arg_1_0.simageCost = gohelper.findChildSingleImage(arg_1_0._challengeViewGO, "#btn_start/#simage_icon")
+	arg_1_0.txtCostNum = gohelper.findChildTextMesh(arg_1_0._challengeViewGO, "#btn_start/#simage_icon/#txt_num")
+	arg_1_0.tipsBtn = gohelper.findChildButtonWithAudio(arg_1_0._challengeViewGO, "tipsbg/tips1/icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0.btnStart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0.btnReward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0.tipsBtn:AddClickListener(slot0._btntipsOnClick, slot0)
-	slot0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, slot0._onStoryChange, slot0)
-	slot0:addEventCb(RoleStoryController.instance, RoleStoryEvent.GetChallengeBonus, slot0._onGetChallengeBonus, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0.btnStart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0.btnReward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0.tipsBtn:AddClickListener(arg_2_0._btntipsOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, arg_2_0._onStoryChange, arg_2_0)
+	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.GetChallengeBonus, arg_2_0._onGetChallengeBonus, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.btnStart:RemoveClickListener()
-	slot0.btnReward:RemoveClickListener()
-	slot0.tipsBtn:RemoveClickListener()
-	slot0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, slot0._onStoryChange, slot0)
-	slot0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.GetChallengeBonus, slot0._onGetChallengeBonus, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0.btnStart:RemoveClickListener()
+	arg_3_0.btnReward:RemoveClickListener()
+	arg_3_0.tipsBtn:RemoveClickListener()
+	arg_3_0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, arg_3_0._onStoryChange, arg_3_0)
+	arg_3_0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.GetChallengeBonus, arg_3_0._onGetChallengeBonus, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._btntipsOnClick(slot0)
+function var_0_0._btntipsOnClick(arg_5_0)
 	ViewMgr.instance:openView(ViewName.RoleStoryTipView)
 end
 
-function slot0._btnstartOnClick(slot0)
-	if not slot0.storyMo then
+function var_0_0._btnstartOnClick(arg_6_0)
+	if not arg_6_0.storyMo then
 		return
 	end
 
-	slot5 = {}
+	local var_6_0 = arg_6_0.storyMo.cfg.episodeId
+	local var_6_1 = DungeonConfig.instance:getEpisodeCO(var_6_0)
+	local var_6_2 = GameUtil.splitString2(var_6_1.cost, true)
+	local var_6_3 = 1
+	local var_6_4 = {}
 
-	for slot9, slot10 in ipairs(GameUtil.splitString2(DungeonConfig.instance:getEpisodeCO(slot0.storyMo.cfg.episodeId).cost, true)) do
-		table.insert(slot5, {
-			type = slot10[1],
-			id = slot10[2],
-			quantity = slot10[3] * 1
+	for iter_6_0, iter_6_1 in ipairs(var_6_2) do
+		table.insert(var_6_4, {
+			type = iter_6_1[1],
+			id = iter_6_1[2],
+			quantity = iter_6_1[3] * var_6_3
 		})
 	end
 
-	slot6, slot7, slot8 = ItemModel.instance:hasEnoughItems(slot5)
+	local var_6_5, var_6_6, var_6_7 = ItemModel.instance:hasEnoughItems(var_6_4)
 
-	if not slot7 then
+	if not var_6_6 then
 		if RoleStoryModel.instance:checkTodayCanExchange() then
-			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough1, slot8, slot6)
+			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough1, var_6_7, var_6_5)
 		else
-			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough2, slot8, slot6)
+			GameFacade.showToastWithIcon(ToastEnum.RoleStoryTickNoEnough2, var_6_7, var_6_5)
 		end
 
 		return
 	end
 
-	DungeonFightController.instance:enterFightByBattleId(slot2.chapterId, slot1, slot2.battleId)
+	DungeonFightController.instance:enterFightByBattleId(var_6_1.chapterId, var_6_0, var_6_1.battleId)
 end
 
-function slot0._btnrewardOnClick(slot0)
-	if not slot0.storyMo then
+function var_0_0._btnrewardOnClick(arg_7_0)
+	if not arg_7_0.storyMo then
 		return
 	end
 
-	if slot0.storyMo.wave < slot0.storyMo.maxWave or slot0.storyMo.getChallengeReward then
-		slot3 = GameUtil.splitString2(slot0.storyMo.cfg.challengeBonus, true)[1]
+	if arg_7_0.storyMo.wave < arg_7_0.storyMo.maxWave or arg_7_0.storyMo.getChallengeReward then
+		local var_7_0 = arg_7_0.storyMo.cfg.challengeBonus
+		local var_7_1 = GameUtil.splitString2(var_7_0, true)[1]
 
-		MaterialTipController.instance:showMaterialInfo(slot3[1], slot3[2])
+		MaterialTipController.instance:showMaterialInfo(var_7_1[1], var_7_1[2])
 
 		return
 	end
@@ -93,97 +99,109 @@ function slot0._btnrewardOnClick(slot0)
 	HeroStoryRpc.instance:sendGetChallengeBonusRequest()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0._onStoryChange(slot0)
-	slot0:refreshView()
+function var_0_0._onStoryChange(arg_11_0)
+	arg_11_0:refreshView()
 end
 
-function slot0._onGetChallengeBonus(slot0)
-	slot0:refreshProgress()
+function var_0_0._onGetChallengeBonus(arg_12_0)
+	arg_12_0:refreshProgress()
 end
 
-function slot0.refreshView(slot0)
-	slot0.storyId = RoleStoryModel.instance:getCurActStoryId()
-	slot0.storyMo = RoleStoryModel.instance:getById(slot0.storyId)
+function var_0_0.refreshView(arg_13_0)
+	arg_13_0.storyId = RoleStoryModel.instance:getCurActStoryId()
+	arg_13_0.storyMo = RoleStoryModel.instance:getById(arg_13_0.storyId)
 
-	if not slot0.storyMo then
+	if not arg_13_0.storyMo then
 		return
 	end
 
-	slot0:refreshItem()
-	slot0:refreshProgress()
-	slot0:refreshCost()
+	arg_13_0:refreshItem()
+	arg_13_0:refreshProgress()
+	arg_13_0:refreshCost()
 end
 
-function slot0.refreshCost(slot0)
-	if not slot0.storyMo then
+function var_0_0.refreshCost(arg_14_0)
+	if not arg_14_0.storyMo then
 		return
 	end
 
-	if not DungeonConfig.instance:getEpisodeCO(slot0.storyMo.cfg.episodeId) then
+	local var_14_0 = arg_14_0.storyMo.cfg.episodeId
+	local var_14_1 = DungeonConfig.instance:getEpisodeCO(var_14_0)
+
+	if not var_14_1 then
 		return
 	end
 
-	slot4 = GameUtil.splitString2(slot2.cost, true)[1]
+	local var_14_2 = GameUtil.splitString2(var_14_1.cost, true)[1]
+	local var_14_3 = ItemModel.instance:getItemSmallIcon(var_14_2[2])
 
-	slot0.simageCost:LoadImage(ItemModel.instance:getItemSmallIcon(slot4[2]))
+	arg_14_0.simageCost:LoadImage(var_14_3)
 
-	slot0.txtCostNum.text = string.format("-%s", slot4[3] or 0)
+	arg_14_0.txtCostNum.text = string.format("-%s", var_14_2[3] or 0)
 end
 
-function slot0.refreshItem(slot0)
-	if not slot0.storyMo then
+function var_0_0.refreshItem(arg_15_0)
+	if not arg_15_0.storyMo then
 		return
 	end
 
-	slot0.simagemonster:LoadImage(string.format("singlebg/dungeon/rolestory_photo_singlebg/%s_1.png", slot0.storyMo.cfg.monster_pic))
+	local var_15_0 = arg_15_0.storyMo.cfg.monster_pic
+	local var_15_1 = string.format("singlebg/dungeon/rolestory_photo_singlebg/%s_1.png", var_15_0)
+
+	arg_15_0.simagemonster:LoadImage(var_15_1)
 end
 
-function slot0.refreshProgress(slot0)
-	if not slot0.storyMo then
+function var_0_0.refreshProgress(arg_16_0)
+	if not arg_16_0.storyMo then
 		return
 	end
 
-	slot1 = slot0.storyMo.wave
-	slot2 = slot0.storyMo.maxWave
+	local var_16_0 = arg_16_0.storyMo.wave
+	local var_16_1 = arg_16_0.storyMo.maxWave
+	local var_16_2 = arg_16_0.storyMo.getChallengeReward
 
-	if slot0.storyMo.getChallengeReward then
-		slot1 = slot2
+	if var_16_2 then
+		var_16_0 = var_16_1
 	end
 
-	slot0.txtProgress.text = string.format("<color=#c96635>%s</color>/%s", slot1, slot2)
+	arg_16_0.txtProgress.text = string.format("<color=#c96635>%s</color>/%s", var_16_0, var_16_1)
 
-	slot0.slider:SetValue(slot1 / slot2)
+	arg_16_0.slider:SetValue(var_16_0 / var_16_1)
 
-	slot6 = GameUtil.splitString2(slot0.storyMo.cfg.challengeBonus, true)[1]
-	slot7, slot8 = ItemModel.instance:getItemConfigAndIcon(slot6[1], slot6[2])
+	local var_16_3 = arg_16_0.storyMo.cfg.challengeBonus
+	local var_16_4 = GameUtil.splitString2(var_16_3, true)[1]
+	local var_16_5, var_16_6 = ItemModel.instance:getItemConfigAndIcon(var_16_4[1], var_16_4[2])
 
-	UISpriteSetMgr.instance:setUiFBSprite(slot0.rewardBg, "bg_pinjidi_" .. slot7.rare)
-	slot0.simgaReward:LoadImage(slot8)
+	UISpriteSetMgr.instance:setUiFBSprite(arg_16_0.rewardBg, "bg_pinjidi_" .. var_16_5.rare)
+	arg_16_0.simgaReward:LoadImage(var_16_6)
 
-	slot0.txtRewardNum.text = tostring(slot6[3])
+	arg_16_0.txtRewardNum.text = tostring(var_16_4[3])
 
-	gohelper.setActive(slot0.goRewardRed, slot2 <= slot1 and not slot3)
-	gohelper.setActive(slot0.goRewardCanGet, slot2 <= slot1 and not slot3)
-	gohelper.setActive(slot0.goRewardHasGet, slot3)
+	gohelper.setActive(arg_16_0.goRewardRed, var_16_1 <= var_16_0 and not var_16_2)
+	gohelper.setActive(arg_16_0.goRewardCanGet, var_16_1 <= var_16_0 and not var_16_2)
+	gohelper.setActive(arg_16_0.goRewardHasGet, var_16_2)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.simagemonster then
-		slot0.simagemonster:UnLoadImage()
+function var_0_0.onDestroyView(arg_17_0)
+	if arg_17_0.simagemonster then
+		arg_17_0.simagemonster:UnLoadImage()
 	end
 
-	if slot0.simageCost then
-		slot0.simageCost:UnLoadImage()
+	if arg_17_0.simageCost then
+		arg_17_0.simageCost:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

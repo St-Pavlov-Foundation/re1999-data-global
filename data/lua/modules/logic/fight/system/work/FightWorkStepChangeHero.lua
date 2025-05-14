@@ -1,275 +1,301 @@
-module("modules.logic.fight.system.work.FightWorkStepChangeHero", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkStepChangeHero", package.seeall)
 
-slot0 = class("FightWorkStepChangeHero", BaseWork)
+local var_0_0 = class("FightWorkStepChangeHero", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.isMySide(slot0)
-	if FightDataHelper.entityMgr:getById(slot0._fightStepMO.fromId) then
-		return slot1.side == FightEnum.EntitySide.MySide
+function var_0_0.isMySide(arg_2_0)
+	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0._fightStepMO.fromId)
+
+	if var_2_0 then
+		return var_2_0.side == FightEnum.EntitySide.MySide
 	end
 
-	return tonumber(slot0._fightStepMO.fromId) > 0
+	return tonumber(arg_2_0._fightStepMO.fromId) > 0
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 5)
+function var_0_0.onStart(arg_3_0)
+	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 5)
 
-	slot0.from_id = slot0._fightStepMO.fromId
-	slot0.to_id = slot0._fightStepMO.toId
+	arg_3_0.from_id = arg_3_0._fightStepMO.fromId
+	arg_3_0.to_id = arg_3_0._fightStepMO.toId
 
-	FightDataHelper.calMgr:playChangeHero(slot0._fightStepMO)
+	FightDataHelper.calMgr:playChangeHero(arg_3_0._fightStepMO)
 
-	slot0._changedEntityMO = FightDataHelper.entityMgr:getById(slot0.from_id)
-	slot0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	arg_3_0._changedEntityMO = FightDataHelper.entityMgr:getById(arg_3_0.from_id)
+	arg_3_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
-	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, slot0.to_id)
+	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, arg_3_0.to_id)
 
-	if FightHelper.getEntity(slot0.from_id) and slot1.spine:getSpineGO() ~= nil then
-		slot0:_startChangeHero()
+	local var_3_0 = FightHelper.getEntity(arg_3_0.from_id)
+
+	if var_3_0 and var_3_0.spine:getSpineGO() ~= nil then
+		arg_3_0:_startChangeHero()
 	else
-		slot2 = FightDataHelper.entityMgr:getById(slot0.from_id)
-		slot3 = FightHelper.getSubEntity(slot2.side)
+		local var_3_1 = FightDataHelper.entityMgr:getById(arg_3_0.from_id)
+		local var_3_2 = FightHelper.getSubEntity(var_3_1.side)
 
-		if slot2 and slot3 then
-			slot0.entityMgr:removeUnit(slot3:getTag(), slot3.id)
-			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
+		if var_3_1 and var_3_2 then
+			arg_3_0.entityMgr:removeUnit(var_3_2:getTag(), var_3_2.id)
+			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_3_0._onSubSpineLoaded, arg_3_0)
 
-			slot0._toBuildSubId = slot2.id
+			arg_3_0._toBuildSubId = var_3_1.id
 
-			if slot0.entityMgr:buildSubSpine(slot2) and lua_stance.configDict[FightHelper.getEntityStanceId(slot0._changedEntityMO)] then
-				transformhelper.setLocalPos(slot4.go.transform, slot5.subPos1[1] or 0, slot6[2] or 0, slot6[3] or 0)
+			local var_3_3 = arg_3_0.entityMgr:buildSubSpine(var_3_1)
+
+			if var_3_3 then
+				local var_3_4 = lua_stance.configDict[FightHelper.getEntityStanceId(arg_3_0._changedEntityMO)]
+
+				if var_3_4 then
+					local var_3_5 = var_3_4.subPos1
+
+					transformhelper.setLocalPos(var_3_3.go.transform, var_3_5[1] or 0, var_3_5[2] or 0, var_3_5[3] or 0)
+				end
 			end
 		else
-			slot0:_startChangeHero()
+			arg_3_0:_startChangeHero()
 		end
 	end
 end
 
-function slot0._startChangeHero(slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnStartChangeEntity, slot0._fromEntityMO)
+function var_0_0._startChangeHero(arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.OnStartChangeEntity, arg_4_0._fromEntityMO)
 
-	slot0.from_entity = slot0.entityMgr:getEntity(slot0.from_id)
-	slot0.from_entity_mo = FightDataHelper.entityMgr:getById(slot0.from_id)
-	slot0.to_entity = slot0.entityMgr:getEntity(slot0.to_id)
-	slot0.to_entity_mo = FightDataHelper.entityMgr:getById(slot0.to_id)
+	arg_4_0.from_entity = arg_4_0.entityMgr:getEntity(arg_4_0.from_id)
+	arg_4_0.from_entity_mo = FightDataHelper.entityMgr:getById(arg_4_0.from_id)
+	arg_4_0.to_entity = arg_4_0.entityMgr:getEntity(arg_4_0.to_id)
+	arg_4_0.to_entity_mo = FightDataHelper.entityMgr:getById(arg_4_0.to_id)
 
-	if slot0.to_entity then
-		slot1 = FightModel.instance:getSpeed()
+	if arg_4_0.to_entity then
+		local var_4_0 = FightModel.instance:getSpeed()
 
-		if slot0.to_entity.spineRenderer then
-			slot0.to_entity.spineRenderer:setAlpha(0, 0.4 / slot1)
+		if arg_4_0.to_entity.spineRenderer then
+			arg_4_0.to_entity.spineRenderer:setAlpha(0, 0.4 / var_4_0)
 
-			slot2 = slot0.to_entity.effect:addHangEffect("always/ui_renwuxiaoshi")
+			local var_4_1 = arg_4_0.to_entity.effect:addHangEffect("always/ui_renwuxiaoshi")
 
-			slot2:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(slot0.to_entity.id, slot2)
+			var_4_1:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(arg_4_0.to_entity.id, var_4_1)
 		end
 
-		TaskDispatcher.runDelay(slot0._targetEntityQuitFinish, slot0, 0.4 / slot1)
+		TaskDispatcher.runDelay(arg_4_0._targetEntityQuitFinish, arg_4_0, 0.4 / var_4_0)
 	else
-		slot0:_targetEntityQuitFinish()
+		arg_4_0:_targetEntityQuitFinish()
 	end
 end
 
-function slot0._targetEntityQuitFinish(slot0)
-	slot0._jump_end_pos = {}
-	slot0._jump_end_pos.x, slot0._jump_end_pos.y, slot0._jump_end_pos.z = FightHelper.getEntityStandPos(slot0._changedEntityMO)
+function var_0_0._targetEntityQuitFinish(arg_5_0)
+	arg_5_0._jump_end_pos = {}
+	arg_5_0._jump_end_pos.x, arg_5_0._jump_end_pos.y, arg_5_0._jump_end_pos.z = FightHelper.getEntityStandPos(arg_5_0._changedEntityMO)
 
-	if slot0.to_entity then
-		slot0.entityMgr:removeUnit(slot0.to_entity:getTag(), slot0.to_entity.id)
+	if arg_5_0.to_entity then
+		arg_5_0.entityMgr:removeUnit(arg_5_0.to_entity:getTag(), arg_5_0.to_entity.id)
 
-		slot0.to_entity = nil
+		arg_5_0.to_entity = nil
 	end
 
-	if slot0.from_entity_mo.side == FightEnum.EntitySide.MySide then
-		slot0:_playJumpTimeline()
+	if arg_5_0.from_entity_mo.side == FightEnum.EntitySide.MySide then
+		arg_5_0:_playJumpTimeline()
 	else
-		slot0:_entityEnter()
+		arg_5_0:_entityEnter()
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1)
-	if slot1 == slot0._subEntity then
-		slot0:_removeSubEntity()
+function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1)
+	if arg_6_1 == arg_6_0._subEntity then
+		arg_6_0:_removeSubEntity()
 	end
 end
 
-function slot0._onSkillPlayStart(slot0, slot1)
-	if slot1 == slot0._subEntity then
-		slot0._timeline_duration = slot1.skill and slot1.skill:getCurTimelineDuration()
+function var_0_0._onSkillPlayStart(arg_7_0, arg_7_1)
+	if arg_7_1 == arg_7_0._subEntity then
+		arg_7_0._timeline_duration = arg_7_1.skill and arg_7_1.skill:getCurTimelineDuration()
 
-		TaskDispatcher.runDelay(slot0._entityEnter, slot0, slot0._timeline_duration * 0.8)
+		TaskDispatcher.runDelay(arg_7_0._entityEnter, arg_7_0, arg_7_0._timeline_duration * 0.8)
 	end
 end
 
-function slot0._playJumpTimeline(slot0)
-	slot1 = {
+function var_0_0._playJumpTimeline(arg_8_0)
+	local var_8_0 = {
 		actId = 0,
 		customType = "change_hero",
 		actEffectMOs = {
 			{
-				targetId = slot0.to_id
+				targetId = arg_8_0.to_id
 			}
 		},
 		actEffect = {},
-		fromId = slot0.from_id,
-		toId = slot0.to_id,
+		fromId = arg_8_0.from_id,
+		toId = arg_8_0.to_id,
 		actType = FightEnum.ActType.SKILL,
-		forcePosX = slot0._jump_end_pos.x,
-		forcePosY = slot0._jump_end_pos.y,
-		forcePosZ = slot0._jump_end_pos.z
+		forcePosX = arg_8_0._jump_end_pos.x,
+		forcePosY = arg_8_0._jump_end_pos.y,
+		forcePosZ = arg_8_0._jump_end_pos.z
 	}
-	slot2 = nil
+	local var_8_1
+	local var_8_2 = SkinConfig.instance:getSkinCo(arg_8_0.from_entity_mo.skin)
 
-	if SkinConfig.instance:getSkinCo(slot0.from_entity_mo.skin) and not string.nilorempty(slot3.alternateSpineJump) then
-		slot2 = slot3.alternateSpineJump
+	if var_8_2 and not string.nilorempty(var_8_2.alternateSpineJump) then
+		var_8_1 = var_8_2.alternateSpineJump
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_8_0._onSkillPlayStart, arg_8_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_8_0._onSkillPlayFinish, arg_8_0)
 
-	slot0._subEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildTempSceneEntity(slot0.from_id)
-	uv0.playingChangeHero = true
+	arg_8_0._subEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildTempSceneEntity(arg_8_0.from_id)
+	var_0_0.playingChangeHero = true
 
-	slot0._subEntity.skill:playTimeline(slot2 or "change_hero_common", slot1)
+	arg_8_0._subEntity.skill:playTimeline(var_8_1 or "change_hero_common", var_8_0)
 end
 
-function slot0._removeSubEntity(slot0)
-	if slot0.from_entity and slot0.from_entity.go then
-		slot0.entityMgr:destroyUnit(slot0.from_entity)
+function var_0_0._removeSubEntity(arg_9_0)
+	if arg_9_0.from_entity and arg_9_0.from_entity.go then
+		arg_9_0.entityMgr:destroyUnit(arg_9_0.from_entity)
 
-		slot0.from_entity = nil
+		arg_9_0.from_entity = nil
 	end
 end
 
-function slot0._entityEnter(slot0)
-	if slot0.from_entity then
-		if slot0._timeline_duration then
-			slot0.from_entity:setAlpha(0, slot0._timeline_duration * 0.2 / FightModel.instance:getSpeed())
+function var_0_0._entityEnter(arg_10_0)
+	if arg_10_0.from_entity then
+		if arg_10_0._timeline_duration then
+			local var_10_0 = arg_10_0._timeline_duration * 0.2 / FightModel.instance:getSpeed()
 
-			slot0._need_invoke_remove_sub_entity = true
+			arg_10_0.from_entity:setAlpha(0, var_10_0)
 
-			slot0.entityMgr:removeUnitData(slot0.from_entity:getTag(), slot0.from_entity.id)
+			arg_10_0._need_invoke_remove_sub_entity = true
+
+			arg_10_0.entityMgr:removeUnitData(arg_10_0.from_entity:getTag(), arg_10_0.from_entity.id)
 		else
-			slot0.entityMgr:removeUnit(slot0.from_entity:getTag(), slot0.from_entity.id)
+			arg_10_0.entityMgr:removeUnit(arg_10_0.from_entity:getTag(), arg_10_0.from_entity.id)
 		end
 	end
 
-	slot0.from_entity_mo:onChangeHero()
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onEnterEntitySpineLoadFinish, slot0)
+	arg_10_0.from_entity_mo:onChangeHero()
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_10_0._onEnterEntitySpineLoadFinish, arg_10_0)
 
-	slot0._newEntity = slot0.entityMgr:buildSpine(slot0.from_entity_mo)
+	arg_10_0._newEntity = arg_10_0.entityMgr:buildSpine(arg_10_0.from_entity_mo)
 end
 
-function slot0._onEnterEntitySpineLoadFinish(slot0, slot1)
-	if slot1.unitSpawn.id == slot0.from_entity_mo.id then
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onEnterEntitySpineLoadFinish, slot0)
+function var_0_0._onEnterEntitySpineLoadFinish(arg_11_0, arg_11_1)
+	if arg_11_1.unitSpawn.id == arg_11_0.from_entity_mo.id then
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_11_0._onEnterEntitySpineLoadFinish, arg_11_0)
 
-		slot2 = slot0.entityMgr:getEntity(slot0.from_entity_mo.id)
-		slot0._work = FightWorkStartBornNormal.New(slot2, false)
+		local var_11_0 = arg_11_0.entityMgr:getEntity(arg_11_0.from_entity_mo.id)
 
-		slot0._work:registerDoneListener(slot0._onEntityBornDone, slot0)
-		slot0._work:onStart()
+		arg_11_0._work = FightWorkStartBornNormal.New(var_11_0, false)
 
-		if slot2:isMySide() then
-			FightAudioMgr.instance:playHeroVoiceRandom(slot0.from_entity_mo.modelId, CharacterEnum.VoiceType.EnterFight)
+		arg_11_0._work:registerDoneListener(arg_11_0._onEntityBornDone, arg_11_0)
+		arg_11_0._work:onStart()
+
+		if var_11_0:isMySide() then
+			FightAudioMgr.instance:playHeroVoiceRandom(arg_11_0.from_entity_mo.modelId, CharacterEnum.VoiceType.EnterFight)
 		end
 	end
 end
 
-function slot0._onEntityBornDone(slot0)
-	slot0._work:unregisterDoneListener(slot0._onEntityBornDone, slot0)
-	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, slot0._newEntity)
+function var_0_0._onEntityBornDone(arg_12_0)
+	arg_12_0._work:unregisterDoneListener(arg_12_0._onEntityBornDone, arg_12_0)
+	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, arg_12_0._newEntity)
 
-	if slot0.from_entity_mo and slot0.from_entity_mo.side == FightEnum.EntitySide.MySide and FightDataHelper.entityMgr:getMySubList()[1] then
-		slot0.nextSubEntityMO = slot2
+	if arg_12_0.from_entity_mo and arg_12_0.from_entity_mo.side == FightEnum.EntitySide.MySide then
+		local var_12_0 = FightDataHelper.entityMgr:getMySubList()[1]
 
-		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onNextSubSpineLoaded, slot0)
+		if var_12_0 then
+			arg_12_0.nextSubEntityMO = var_12_0
 
-		slot0._nextSubEntity = slot0.entityMgr:buildSubSpine(slot2)
+			FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_12_0._onNextSubSpineLoaded, arg_12_0)
+
+			arg_12_0._nextSubEntity = arg_12_0.entityMgr:buildSubSpine(var_12_0)
+		end
 	end
 
-	if FightDataHelper.entityMgr:getById(slot0.to_id) then
-		slot1:onChangeHero()
+	local var_12_1 = FightDataHelper.entityMgr:getById(arg_12_0.to_id)
+
+	if var_12_1 then
+		var_12_1:onChangeHero()
 	end
 
-	slot0:onDone(true)
+	arg_12_0:onDone(true)
 end
 
-function slot0._onNextSubSpineLoaded(slot0, slot1)
-	if slot1.unitSpawn.id == slot0.nextSubEntityMO.id then
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onNextSubSpineLoaded, slot0)
+function var_0_0._onNextSubSpineLoaded(arg_13_0, arg_13_1)
+	if arg_13_1.unitSpawn.id == arg_13_0.nextSubEntityMO.id then
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_13_0._onNextSubSpineLoaded, arg_13_0)
 
-		slot0._nextSubBornFlow = FlowSequence.New()
+		local var_13_0 = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(arg_13_0.nextSubEntityMO.id)
 
-		slot0._nextSubBornFlow:addWork(FightWorkStartBornNormal.New(GameSceneMgr.instance:getCurScene().entityMgr:getEntity(slot0.nextSubEntityMO.id), true))
-		slot0._nextSubBornFlow:start()
-	end
-end
+		arg_13_0._nextSubBornFlow = FlowSequence.New()
 
-function slot0._onSubSpineLoaded(slot0, slot1)
-	if slot1.unitSpawn.id == slot0._toBuildSubId then
-		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
-		slot0:_startChangeHero()
+		arg_13_0._nextSubBornFlow:addWork(FightWorkStartBornNormal.New(var_13_0, true))
+		arg_13_0._nextSubBornFlow:start()
 	end
 end
 
-function slot0._delayDone(slot0)
-	logError("change entity step timeout, targetId = " .. slot0._fightStepMO.fromId .. " -> " .. slot0._fightStepMO.toId)
-	slot0:onDone(true)
+function var_0_0._onSubSpineLoaded(arg_14_0, arg_14_1)
+	if arg_14_1.unitSpawn.id == arg_14_0._toBuildSubId then
+		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_14_0._onSubSpineLoaded, arg_14_0)
+		arg_14_0:_startChangeHero()
+	end
 end
 
-function slot0.clearWork(slot0)
-	uv0.playingChangeHero = false
+function var_0_0._delayDone(arg_15_0)
+	logError("change entity step timeout, targetId = " .. arg_15_0._fightStepMO.fromId .. " -> " .. arg_15_0._fightStepMO.toId)
+	arg_15_0:onDone(true)
+end
 
-	if slot0._subEntity then
-		if GameSceneMgr.instance:getCurScene().entityMgr then
-			slot1:removeUnit(slot0._subEntity:getTag(), slot0._subEntity.id)
+function var_0_0.clearWork(arg_16_0)
+	var_0_0.playingChangeHero = false
+
+	if arg_16_0._subEntity then
+		local var_16_0 = GameSceneMgr.instance:getCurScene().entityMgr
+
+		if var_16_0 then
+			var_16_0:removeUnit(arg_16_0._subEntity:getTag(), arg_16_0._subEntity.id)
 		end
 
-		slot0._subEntity = nil
+		arg_16_0._subEntity = nil
 	end
 
-	if slot0._need_invoke_remove_sub_entity then
-		slot0:_removeSubEntity()
+	if arg_16_0._need_invoke_remove_sub_entity then
+		arg_16_0:_removeSubEntity()
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	TaskDispatcher.cancelTask(slot0._targetEntityQuitFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._entityEnter, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSubSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onNextSubSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onEnterEntitySpineLoadFinish, slot0)
+	TaskDispatcher.cancelTask(arg_16_0._delayDone, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._targetEntityQuitFinish, arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._entityEnter, arg_16_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_16_0._onSubSpineLoaded, arg_16_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_16_0._onSkillPlayStart, arg_16_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_16_0._onSkillPlayFinish, arg_16_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_16_0._onNextSubSpineLoaded, arg_16_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_16_0._onEnterEntitySpineLoadFinish, arg_16_0)
 
-	slot0._fightStepMO = nil
+	arg_16_0._fightStepMO = nil
 
-	if slot0._work then
-		slot0._work:unregisterDoneListener(slot0._onEntityBornDone, slot0)
-		slot0._work:onStop()
+	if arg_16_0._work then
+		arg_16_0._work:unregisterDoneListener(arg_16_0._onEntityBornDone, arg_16_0)
+		arg_16_0._work:onStop()
 
-		slot0._work = nil
+		arg_16_0._work = nil
 	end
 
-	slot0._timeline_duration = nil
+	arg_16_0._timeline_duration = nil
 end
 
-function slot0.onResume(slot0)
+function var_0_0.onResume(arg_17_0)
 	logError("change entity step can't resume")
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._nextSubBornFlow then
-		slot0._nextSubBornFlow:stop()
+function var_0_0.onDestroy(arg_18_0)
+	if arg_18_0._nextSubBornFlow then
+		arg_18_0._nextSubBornFlow:stop()
 
-		slot0._nextSubBornFlow = nil
+		arg_18_0._nextSubBornFlow = nil
 	end
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_18_0)
 end
 
-return slot0
+return var_0_0

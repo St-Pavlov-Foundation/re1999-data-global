@@ -1,81 +1,90 @@
-module("modules.logic.fight.system.work.FightWorkSkillSwitchSpine", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSkillSwitchSpine", package.seeall)
 
-slot0 = class("FightWorkSkillSwitchSpine", BaseWork)
+local var_0_0 = class("FightWorkSkillSwitchSpine", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.5)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
 
-	if not (FightHelper.getEntity(slot0._fightStepMO.fromId) and slot1:getMO()) then
-		slot0:onDone(true)
+	local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+	local var_2_1 = var_2_0 and var_2_0:getMO()
 
-		return
-	end
-
-	if FightEntityDataHelper.isPlayerUid(slot2.id) then
-		slot0:onDone(true)
+	if not var_2_1 then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if not slot0._fightStepMO.supportHeroId then
-		slot0:onDone(true)
+	if FightEntityDataHelper.isPlayerUid(var_2_1.id) then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot3 ~= 0 and slot3 ~= slot2.modelId then
-		TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-		TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
+	local var_2_2 = arg_2_0._fightStepMO.supportHeroId
 
-		slot0._flow = FlowSequence.New()
+	if not var_2_2 then
+		arg_2_0:onDone(true)
 
-		if not (FightConfig.instance:getSkinCO(FightHelper.processSkinByStepMO(slot0._fightStepMO)) and slot1:getSpineUrl(slot5)) then
-			logError("释放支援角色技能,但是找不到替换spine的url, heroId:" .. slot2.modelId)
-			slot0:onDone(true)
+		return
+	end
+
+	if var_2_2 ~= 0 and var_2_2 ~= var_2_1.modelId then
+		TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
+		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
+
+		arg_2_0._flow = FlowSequence.New()
+
+		local var_2_3 = FightHelper.processSkinByStepMO(arg_2_0._fightStepMO)
+		local var_2_4 = FightConfig.instance:getSkinCO(var_2_3)
+		local var_2_5 = var_2_4 and var_2_0:getSpineUrl(var_2_4)
+
+		if not var_2_5 then
+			logError("释放支援角色技能,但是找不到替换spine的url, heroId:" .. var_2_1.modelId)
+			arg_2_0:onDone(true)
 
 			return
 		end
 
-		if slot1.spine and slot1.spine.releaseSpecialSpine then
-			slot1.spine:releaseSpecialSpine()
+		if var_2_0.spine and var_2_0.spine.releaseSpecialSpine then
+			var_2_0.spine:releaseSpecialSpine()
 
-			slot1.spine.LOCK_SPECIALSPINE = true
+			var_2_0.spine.LOCK_SPECIALSPINE = true
 		end
 
-		slot0.context.Custom_OriginSkin = slot2.skin
-		slot2.skin = slot4
+		arg_2_0.context.Custom_OriginSkin = var_2_1.skin
+		var_2_1.skin = var_2_3
 
-		slot0._flow:addWork(FightWorkChangeEntitySpine.New(slot1, slot6))
-		slot0._flow:registerDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:start()
+		arg_2_0._flow:addWork(FightWorkChangeEntitySpine.New(var_2_0, var_2_5))
+		arg_2_0._flow:registerDoneListener(arg_2_0._onFlowDone, arg_2_0)
+		arg_2_0._flow:start()
 
 		return
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onFlowDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
 
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onFlowDone, slot0)
-		slot0._flow:stop()
+	if arg_5_0._flow then
+		arg_5_0._flow:unregisterDoneListener(arg_5_0._onFlowDone, arg_5_0)
+		arg_5_0._flow:stop()
 
-		slot0._flow = nil
+		arg_5_0._flow = nil
 	end
 end
 
-return slot0
+return var_0_0

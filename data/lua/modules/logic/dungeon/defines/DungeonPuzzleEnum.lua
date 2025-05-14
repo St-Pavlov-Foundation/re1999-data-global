@@ -1,16 +1,17 @@
-module("modules.logic.dungeon.defines.DungeonPuzzleEnum", package.seeall)
+﻿module("modules.logic.dungeon.defines.DungeonPuzzleEnum", package.seeall)
 
-slot0 = _M
-slot0.hintCount = 3
-slot0.pipeEntryClearCount = 2
-slot0.pipeEntryClearDecimal = 10
-slot0.dir = {
+local var_0_0 = _M
+
+var_0_0.hintCount = 3
+var_0_0.pipeEntryClearCount = 2
+var_0_0.pipeEntryClearDecimal = 10
+var_0_0.dir = {
 	down = 2,
 	up = 8,
 	left = 4,
 	right = 6
 }
-slot0.backgroundRes = {
+var_0_0.backgroundRes = {
 	[0] = {
 		"bg_jiemi_weijietuong",
 		0,
@@ -78,7 +79,7 @@ slot0.backgroundRes = {
 		36
 	}
 }
-slot0.connectRes = {
+var_0_0.connectRes = {
 	[0] = {
 		"bg_jiemi_jietuong",
 		0,
@@ -146,51 +147,51 @@ slot0.connectRes = {
 		-6.4
 	}
 }
-slot0.mazeDrawWidth = 4
-slot0.mazeDrawHeight = 3
-slot0.mazeUIGridWidth = 257.3
-slot0.mazeUIGridHeight = 167.5
-slot0.mazeUILineWidth = 90
-slot0.mazeUILineHorizonUIWidth = 261.2
-slot0.mazeUILineVerticalUIWidth = 170.5
-slot0.mazeMonsterHeight = 45
-slot0.mazeMonsterTouchOffsetX = 0
-slot0.MazeObjType = {
+var_0_0.mazeDrawWidth = 4
+var_0_0.mazeDrawHeight = 3
+var_0_0.mazeUIGridWidth = 257.3
+var_0_0.mazeUIGridHeight = 167.5
+var_0_0.mazeUILineWidth = 90
+var_0_0.mazeUILineHorizonUIWidth = 261.2
+var_0_0.mazeUILineVerticalUIWidth = 170.5
+var_0_0.mazeMonsterHeight = 45
+var_0_0.mazeMonsterTouchOffsetX = 0
+var_0_0.MazeObjType = {
 	CheckPointPassed = 14,
 	End = 2,
 	CheckPoint = 4,
 	Start = 1,
 	Block = 3
 }
-slot0.MazeObjResType = {
-	[slot0.MazeObjType.Start] = {
+var_0_0.MazeObjResType = {
+	[var_0_0.MazeObjType.Start] = {
 		"ui_maze_start",
 		-13.1,
 		13.1
 	},
-	[slot0.MazeObjType.End] = {
+	[var_0_0.MazeObjType.End] = {
 		"ui_maze_end",
 		-21.7,
 		7.2
 	},
-	[slot0.MazeObjType.Block] = {
+	[var_0_0.MazeObjType.Block] = {
 		"bg_zhangai_1",
 		3.4,
 		0,
 		"bg_zhangai_1_dis"
 	},
-	[slot0.MazeObjType.CheckPoint] = {
+	[var_0_0.MazeObjType.CheckPoint] = {
 		"bg_didian_1_dis",
 		1.7,
 		22.1
 	},
-	[slot0.MazeObjType.CheckPointPassed] = {
+	[var_0_0.MazeObjType.CheckPointPassed] = {
 		"bg_didian_1",
 		1.7,
 		22.1
 	}
 }
-slot0.mazeCheckPointResMap = {
+var_0_0.mazeCheckPointResMap = {
 	[0] = {
 		"bg_didian_1_dis",
 		1,
@@ -217,7 +218,7 @@ slot0.mazeCheckPointResMap = {
 		29.1
 	}
 }
-slot0.mazeCheckPointPassedResMap = {
+var_0_0.mazeCheckPointPassedResMap = {
 	[0] = {
 		"bg_didian_1",
 		1,
@@ -244,7 +245,7 @@ slot0.mazeCheckPointPassedResMap = {
 		29.1
 	}
 }
-slot0.mazeBlockResMap = {
+var_0_0.mazeBlockResMap = {
 	[0] = {
 		"bg_zhangai_1",
 		-2.8,
@@ -270,25 +271,23 @@ slot0.mazeBlockResMap = {
 		"bg_zhangai_4_dis"
 	}
 }
-slot0.NormalLineResPath = {
+var_0_0.NormalLineResPath = {
 	"bg_huaxian_1",
 	0,
 	0,
 	"bg_huaxian_1_dis"
 }
-slot0.SpecLineResMap = {}
-slot0.MazeAlertBlockOffsetY = 48.5
-slot0.MazeAlertBlockOffsetX = 90.8
-slot0.MazeAlertCrossOffsetY = 33.1
-slot0.MazeAlertCrossOffsetX = 25.3
-slot0.MazePawnPath = {
+var_0_0.SpecLineResMap = {}
+var_0_0.MazeAlertBlockOffsetX, var_0_0.MazeAlertBlockOffsetY = 90.8, 48.5
+var_0_0.MazeAlertCrossOffsetX, var_0_0.MazeAlertCrossOffsetY = 25.3, 33.1
+var_0_0.MazePawnPath = {
 	"ui_maze_pawn",
 	3.1,
 	65.5
 }
-slot0.MazePawnWidth = 282
-slot0.MazePawnHeight = 216
-slot0.MazeAlertResPath = "ui_maze_alert"
-slot0.AnimEvent_OnJump = "OnJump"
+var_0_0.MazePawnWidth = 282
+var_0_0.MazePawnHeight = 216
+var_0_0.MazeAlertResPath = "ui_maze_alert"
+var_0_0.AnimEvent_OnJump = "OnJump"
 
-return slot0
+return var_0_0

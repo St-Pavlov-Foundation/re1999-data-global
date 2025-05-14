@@ -1,92 +1,98 @@
-module("modules.logic.versionactivity2_5.warmup.view.V2a5_WarmUp_rewarditem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.warmup.view.V2a5_WarmUp_rewarditem", package.seeall)
 
-slot0 = class("V2a5_WarmUp_rewarditem", RougeSimpleItemBase)
+local var_0_0 = class("V2a5_WarmUp_rewarditem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	var_0_0.super.ctor(arg_4_0, arg_4_1)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	var_0_0.super.onDestroyView(arg_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	var_0_0.super._editableInitView(arg_6_0)
 
-	slot0._go_hasget = gohelper.findChild(slot0.viewGO, "go_receive/go_hasget")
-	slot0._goreceive = gohelper.findChild(slot0.viewGO, "go_receive")
-	slot0._gocanget = gohelper.findChild(slot0.viewGO, "go_canget")
-	slot0._icon = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot0.viewGO, "go_icon"))
-	slot0._hasgetAnim = slot0._go_hasget:GetComponent(gohelper.Type_Animator)
+	arg_6_0._go_hasget = gohelper.findChild(arg_6_0.viewGO, "go_receive/go_hasget")
+	arg_6_0._goreceive = gohelper.findChild(arg_6_0.viewGO, "go_receive")
+	arg_6_0._gocanget = gohelper.findChild(arg_6_0.viewGO, "go_canget")
+	arg_6_0._icon = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(arg_6_0.viewGO, "go_icon"))
+	arg_6_0._hasgetAnim = arg_6_0._go_hasget:GetComponent(gohelper.Type_Animator)
 
-	gohelper.setActive(slot0._goreceive, true)
+	gohelper.setActive(arg_6_0._goreceive, true)
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goDateSelected, slot1)
-	gohelper.setActive(slot0._txtDateUnSelectedGo, not slot1)
+function var_0_0.onSelect(arg_7_0, arg_7_1)
+	gohelper.setActive(arg_7_0._goDateSelected, arg_7_1)
+	gohelper.setActive(arg_7_0._txtDateUnSelectedGo, not arg_7_1)
 end
 
-function slot0._getRLOC(slot0, slot1)
-	return slot0:_assetGetViewContainer():getRLOC(slot1)
+function var_0_0._getRLOC(arg_8_0, arg_8_1)
+	return arg_8_0:_assetGetViewContainer():getRLOC(arg_8_1)
 end
 
-function slot0._getCurSelectedEpisode(slot0)
-	return slot0:_assetGetViewContainer():getCurSelectedEpisode()
+function var_0_0._getCurSelectedEpisode(arg_9_0)
+	return arg_9_0:_assetGetViewContainer():getCurSelectedEpisode()
 end
 
-function slot0._isWaitingPlayHasGetAnim(slot0)
-	return slot0:_assetGetViewContainer():isWaitingPlayHasGetAnim()
+function var_0_0._isWaitingPlayHasGetAnim(arg_10_0)
+	return arg_10_0:_assetGetViewContainer():isWaitingPlayHasGetAnim()
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot1
-	slot4, slot5, slot6, slot7 = slot0:_getRLOC(slot0:_getCurSelectedEpisode())
-	slot8 = slot4 and not slot0:_isWaitingPlayHasGetAnim()
+function var_0_0.setData(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
 
-	slot0._icon:setMOValue(slot2[1], slot2[2], slot2[3])
-	slot0._icon:setCountFontSize(42)
-	slot0._icon:setScale(0.5)
-	slot0:_setActive_canget(slot7)
-	slot0:_setActive_hasget(slot8)
+	local var_11_0 = arg_11_1
+	local var_11_1 = arg_11_0:_getCurSelectedEpisode()
+	local var_11_2, var_11_3, var_11_4, var_11_5 = arg_11_0:_getRLOC(var_11_1)
+	local var_11_6 = var_11_2 and not arg_11_0:_isWaitingPlayHasGetAnim()
 
-	if slot8 then
-		slot0:_set_Received()
+	arg_11_0._icon:setMOValue(var_11_0[1], var_11_0[2], var_11_0[3])
+	arg_11_0._icon:setCountFontSize(42)
+	arg_11_0._icon:setScale(0.5)
+	arg_11_0:_setActive_canget(var_11_5)
+	arg_11_0:_setActive_hasget(var_11_6)
+
+	if var_11_6 then
+		arg_11_0:_set_Received()
 	end
 end
 
-slot1 = "go_hasget_in"
-slot2 = "go_hasget_idle"
+local var_0_1 = "go_hasget_in"
+local var_0_2 = "go_hasget_idle"
 
-function slot0.playAnim_hasget(slot0, slot1)
-	slot0:_setActive_canget(false)
-	slot0:_setActive_hasget(not slot1)
-	slot0._hasgetAnim:Play(slot1 and uv0 or uv1, 0, 0)
+function var_0_0.playAnim_hasget(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1 and var_0_2 or var_0_1
+
+	arg_12_0:_setActive_canget(false)
+	arg_12_0:_setActive_hasget(not arg_12_1)
+	arg_12_0._hasgetAnim:Play(var_12_0, 0, 0)
 end
 
-function slot0._set_Received(slot0)
-	slot0._hasgetAnim:Play(uv0, 0, 1)
+function var_0_0._set_Received(arg_13_0)
+	arg_13_0._hasgetAnim:Play(var_0_1, 0, 1)
 end
 
-function slot0._setActive_canget(slot0, slot1)
-	gohelper.setActive(slot0._gocanget, slot1)
+function var_0_0._setActive_canget(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._gocanget, arg_14_1)
 end
 
-function slot0._setActive_hasget(slot0, slot1)
-	gohelper.setActive(slot0._go_hasget, slot1)
+function var_0_0._setActive_hasget(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0._go_hasget, arg_15_1)
 end
 
-return slot0
+return var_0_0

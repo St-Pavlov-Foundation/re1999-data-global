@@ -1,60 +1,64 @@
-module("modules.logic.activity.controller.ActivityEnterMgr", package.seeall)
+﻿module("modules.logic.activity.controller.ActivityEnterMgr", package.seeall)
 
-slot0 = class("ActivityEnterMgr", BaseController)
+local var_0_0 = class("ActivityEnterMgr", BaseController)
 
-function slot0.init(slot0)
-	slot0:loadEnteredActivityDict()
+function var_0_0.init(arg_1_0)
+	arg_1_0:loadEnteredActivityDict()
 end
 
-function slot0.enterActivityByList(slot0, slot1)
-	slot2 = false
+function var_0_0.enterActivityByList(arg_2_0, arg_2_1)
+	local var_2_0 = false
 
-	for slot6, slot7 in ipairs(slot1) do
-		if not slot0:isEnteredActivity(slot7) then
-			slot2 = true
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		if not arg_2_0:isEnteredActivity(iter_2_1) then
+			var_2_0 = true
 
-			table.insert(slot0.enteredActList, slot0:getActId(slot7))
+			table.insert(arg_2_0.enteredActList, arg_2_0:getActId(iter_2_1))
 		end
 	end
 
-	if slot2 then
-		PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(slot0.enteredActList, ";"))
+	if var_2_0 then
+		PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(arg_2_0.enteredActList, ";"))
 		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateActTag)
 	end
 end
 
-function slot0.enterActivity(slot0, slot1)
-	if slot0:isEnteredActivity(slot1) then
+function var_0_0.enterActivity(arg_3_0, arg_3_1)
+	if arg_3_0:isEnteredActivity(arg_3_1) then
 		return
 	end
 
-	table.insert(slot0.enteredActList, slot0:getActId(slot1))
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(slot0.enteredActList, ";"))
+	table.insert(arg_3_0.enteredActList, arg_3_0:getActId(arg_3_1))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(arg_3_0.enteredActList, ";"))
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateActTag)
 end
 
-function slot0.loadEnteredActivityDict(slot0)
-	slot0.enteredActList = {}
+function var_0_0.loadEnteredActivityDict(arg_4_0)
+	arg_4_0.enteredActList = {}
 
-	if string.nilorempty(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), "")) then
+	local var_4_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), "")
+
+	if string.nilorempty(var_4_0) then
 		return
 	end
 
-	slot0.enteredActList = string.splitToNumber(slot1, ";")
+	arg_4_0.enteredActList = string.splitToNumber(var_4_0, ";")
 end
 
-function slot0.isEnteredActivity(slot0, slot1)
-	return tabletool.indexOf(slot0.enteredActList, slot0:getActId(slot1))
+function var_0_0.isEnteredActivity(arg_5_0, arg_5_1)
+	return tabletool.indexOf(arg_5_0.enteredActList, arg_5_0:getActId(arg_5_1))
 end
 
-function slot0.getActId(slot0, slot1)
-	if ActivityConfig.instance:getActivityCo(slot1) and slot2.isRetroAcitivity == 1 then
-		slot1 = -slot1
+function var_0_0.getActId(arg_6_0, arg_6_1)
+	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_1)
+
+	if var_6_0 and var_6_0.isRetroAcitivity == 1 then
+		arg_6_1 = -arg_6_1
 	end
 
-	return slot1
+	return arg_6_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

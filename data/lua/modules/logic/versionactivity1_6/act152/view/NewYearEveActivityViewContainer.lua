@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_6.act152.view.NewYearEveActivityViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act152.view.NewYearEveActivityViewContainer", package.seeall)
 
-slot0 = class("NewYearEveActivityViewContainer", BaseViewContainer)
+local var_0_0 = class("NewYearEveActivityViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		NewYearEveActivityView.New()
 	}
 end
 
-return slot0
+return var_0_0

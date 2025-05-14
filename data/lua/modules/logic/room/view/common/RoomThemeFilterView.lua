@@ -1,32 +1,32 @@
-module("modules.logic.room.view.common.RoomThemeFilterView", package.seeall)
+﻿module("modules.logic.room.view.common.RoomThemeFilterView", package.seeall)
 
-slot0 = class("RoomThemeFilterView", BaseView)
+local var_0_0 = class("RoomThemeFilterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_content")
-	slot0._gobuildingArrow = gohelper.findChild(slot0.viewGO, "#go_content/bg/#go_buildingArrow")
-	slot0._goblockpackageArrow = gohelper.findChild(slot0.viewGO, "#go_content/bg/#go_blockpackageArrow")
-	slot0._goall = gohelper.findChild(slot0.viewGO, "#go_content/#go_all")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_content/#go_all/#go_selected")
-	slot0._gounselected = gohelper.findChild(slot0.viewGO, "#go_content/#go_all/#go_unselected")
-	slot0._btnall = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_content/#go_all/#btn_all")
-	slot0._scrolltheme = gohelper.findChildScrollRect(slot0.viewGO, "#go_content/#scroll_theme")
-	slot0._gothemeitem = gohelper.findChild(slot0.viewGO, "#go_content/#go_themeitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
+	arg_1_0._gobuildingArrow = gohelper.findChild(arg_1_0.viewGO, "#go_content/bg/#go_buildingArrow")
+	arg_1_0._goblockpackageArrow = gohelper.findChild(arg_1_0.viewGO, "#go_content/bg/#go_blockpackageArrow")
+	arg_1_0._goall = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all/#go_selected")
+	arg_1_0._gounselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all/#go_unselected")
+	arg_1_0._btnall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#go_all/#btn_all")
+	arg_1_0._scrolltheme = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_theme")
+	arg_1_0._gothemeitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_themeitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnall:AddClickListener(slot0._btnallOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnall:AddClickListener(arg_2_0._btnallOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnall:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnall:RemoveClickListener()
 end
 
-function slot0._btnallOnClick(slot0)
+function var_0_0._btnallOnClick(arg_4_0)
 	if RoomThemeFilterListModel.instance:getIsAll() then
 		RoomThemeFilterListModel.instance:clearFilterData()
 	else
@@ -37,44 +37,50 @@ function slot0._btnallOnClick(slot0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.UIRoomThemeFilterChanged)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0._onThemeFilterChanged(slot0)
-	slot0:_refreshUI()
+function var_0_0._onThemeFilterChanged(arg_6_0)
+	arg_6_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	if slot0._lastSelect ~= RoomThemeFilterListModel.instance:getIsAll() then
-		slot0._lastSelect = slot1
+function var_0_0._refreshUI(arg_7_0)
+	local var_7_0 = RoomThemeFilterListModel.instance:getIsAll()
 
-		gohelper.setActive(slot0._goselected, slot1)
-		gohelper.setActive(slot0._gounselected, not slot1)
+	if arg_7_0._lastSelect ~= var_7_0 then
+		arg_7_0._lastSelect = var_7_0
+
+		gohelper.setActive(arg_7_0._goselected, var_7_0)
+		gohelper.setActive(arg_7_0._gounselected, not var_7_0)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, slot0._onThemeFilterChanged, slot0)
-	slot0:_refreshUI()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, arg_9_0._onThemeFilterChanged, arg_9_0)
+	arg_9_0:_refreshUI()
 
-	slot1 = false
+	local var_9_0 = false
 
-	if slot0.viewParam then
-		slot1 = slot0.viewParam.isBottom
+	if arg_9_0.viewParam then
+		var_9_0 = arg_9_0.viewParam.isBottom
 	end
 
-	gohelper.setActive(slot0._gobuildingArrow, slot1)
-	gohelper.setActive(slot0._goblockpackageArrow, not slot1)
-	slot0.viewContainer:layoutContentTrs(slot0._gocontent.transform, slot1)
+	gohelper.setActive(arg_9_0._gobuildingArrow, var_9_0)
+	gohelper.setActive(arg_9_0._goblockpackageArrow, not var_9_0)
+	arg_9_0.viewContainer:layoutContentTrs(arg_9_0._gocontent.transform, var_9_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

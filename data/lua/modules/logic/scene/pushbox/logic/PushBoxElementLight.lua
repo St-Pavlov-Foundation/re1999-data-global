@@ -1,280 +1,295 @@
-module("modules.logic.scene.pushbox.logic.PushBoxElementLight", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxElementLight", package.seeall)
 
-slot0 = class("PushBoxElementLight", UserDataDispose)
+local var_0_0 = class("PushBoxElementLight", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	slot0._gameObject = slot1
-	slot0._transform = slot1.transform
-	slot0._cell = slot2
+	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	arg_1_0._gameObject = arg_1_1
+	arg_1_0._transform = arg_1_1.transform
+	arg_1_0._cell = arg_1_2
 
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, slot0._onRefreshElement, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, slot0._onStepFinished, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, slot0._onRevertStep, slot0)
-	slot0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, slot0._onStartElement, slot0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
+	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
 end
 
-function slot0.setRendererIndex(slot0)
-	slot0._transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = slot0._cell:getRendererIndex()
+function var_0_0.setRendererIndex(arg_2_0)
+	arg_2_0._transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = arg_2_0._cell:getRendererIndex()
 
-	if gohelper.findChild(slot0._gameObject, "vx_light/vx_light_tou/glow1") then
-		slot2:GetComponent("MeshRenderer").sortingOrder = slot0._cell:getRendererIndex() + 1
+	local var_2_0 = gohelper.findChild(arg_2_0._gameObject, "vx_light/vx_light_tou/glow1")
+
+	if var_2_0 then
+		var_2_0:GetComponent("MeshRenderer").sortingOrder = arg_2_0._cell:getRendererIndex() + 1
 	end
 
-	if gohelper.findChild(slot0._gameObject, "vx_light/vx_light_tou/Particle System (1)") then
-		slot3:GetComponent("Renderer").sortingOrder = slot0._cell:getRendererIndex() + 1
+	local var_2_1 = gohelper.findChild(arg_2_0._gameObject, "vx_light/vx_light_tou/Particle System (1)")
+
+	if var_2_1 then
+		var_2_1:GetComponent("Renderer").sortingOrder = arg_2_0._cell:getRendererIndex() + 1
 	end
 
-	slot0._light = gohelper.findChild(slot0._gameObject, "light").transform
+	arg_2_0._light = gohelper.findChild(arg_2_0._gameObject, "light").transform
 end
 
-function slot0._onStartElement(slot0)
-	slot0._alarm_value = slot0._game_mgr:getConfig().light_alarm
+function var_0_0._onStartElement(arg_3_0)
+	arg_3_0._alarm_value = arg_3_0._game_mgr:getConfig().light_alarm
 
-	slot0:refreshActArea()
+	arg_3_0:refreshActArea()
 end
 
-function slot0._hideWallLight(slot0)
-	if gohelper.findChild(slot0._gameObject, "vx_light_qiang") then
-		gohelper.setActive(slot1, false)
+function var_0_0._hideWallLight(arg_4_0)
+	local var_4_0 = gohelper.findChild(arg_4_0._gameObject, "vx_light_qiang")
+
+	if var_4_0 then
+		gohelper.setActive(var_4_0, false)
 	end
 end
 
-function slot0._beforeRefreshActArea(slot0)
-	if slot0._act_list then
-		slot0._last_act_count = #slot0._act_list
+function var_0_0._beforeRefreshActArea(arg_5_0)
+	if arg_5_0._act_list then
+		arg_5_0._last_act_count = #arg_5_0._act_list
 	else
-		slot0._last_act_count = 0
+		arg_5_0._last_act_count = 0
 	end
 
-	slot0._act_list = {}
+	arg_5_0._act_list = {}
 
-	slot0:_hideWallLight()
+	arg_5_0:_hideWallLight()
 
-	slot0._play_tween = false
-	slot0._offset_scale = 0
-	slot0._box_show_light_obj = nil
+	arg_5_0._play_tween = false
+	arg_5_0._offset_scale = 0
+	arg_5_0._box_show_light_obj = nil
 
-	TaskDispatcher.cancelTask(slot0._showBoxLight, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._showBoxLight, arg_5_0)
 end
 
-function slot0.refreshActArea(slot0)
-	slot0:_beforeRefreshActArea()
+function var_0_0.refreshActArea(arg_6_0)
+	arg_6_0:_beforeRefreshActArea()
 
-	slot1 = gohelper.findChild(slot0._gameObject, "vx_light_qiang")
-	slot3, slot4, slot5, slot6 = slot0:_getActArea(slot0._cell:getCellType())
-	slot7 = slot0._cell:getRendererIndex()
+	local var_6_0 = gohelper.findChild(arg_6_0._gameObject, "vx_light_qiang")
+	local var_6_1 = arg_6_0._cell:getCellType()
+	local var_6_2, var_6_3, var_6_4, var_6_5 = arg_6_0:_getActArea(var_6_1)
+	local var_6_6 = arg_6_0._cell:getRendererIndex()
 
-	for slot11 = slot3, slot4, slot5 do
-		slot12 = slot6 and slot0._game_mgr:getCell(slot11, slot0._cell:getPosY()) or slot0._game_mgr:getCell(slot0._cell:getPosX(), slot11)
-		slot13 = slot12:getCellType()
+	for iter_6_0 = var_6_2, var_6_3, var_6_4 do
+		local var_6_7 = var_6_5 and arg_6_0._game_mgr:getCell(iter_6_0, arg_6_0._cell:getPosY()) or arg_6_0._game_mgr:getCell(arg_6_0._cell:getPosX(), iter_6_0)
+		local var_6_8 = var_6_7:getCellType()
 
-		if slot12:getBox() then
-			slot0:_tarCellBox(slot12, slot5, slot6)
+		if var_6_7:getBox() then
+			arg_6_0:_tarCellBox(var_6_7, var_6_4, var_6_5)
 
 			break
-		elseif slot13 == PushBoxGameMgr.ElementType.Enemy then
+		elseif var_6_8 == PushBoxGameMgr.ElementType.Enemy then
 			break
-		elseif slot13 == PushBoxGameMgr.ElementType.LightUp then
+		elseif var_6_8 == PushBoxGameMgr.ElementType.LightUp then
 			break
-		elseif slot13 == PushBoxGameMgr.ElementType.LightDown then
+		elseif var_6_8 == PushBoxGameMgr.ElementType.LightDown then
 			break
-		elseif slot13 == PushBoxGameMgr.ElementType.LightLeft then
+		elseif var_6_8 == PushBoxGameMgr.ElementType.LightLeft then
 			break
-		elseif slot13 == PushBoxGameMgr.ElementType.LightRight then
+		elseif var_6_8 == PushBoxGameMgr.ElementType.LightRight then
 			break
-		elseif slot13 == PushBoxGameMgr.ElementType.Empty then
-			if not slot6 and slot5 < 0 and slot1 then
-				slot0._offset_scale = 0.6
+		elseif var_6_8 == PushBoxGameMgr.ElementType.Empty then
+			if not var_6_5 and var_6_4 < 0 and var_6_0 then
+				arg_6_0._offset_scale = 0.6
 
-				gohelper.setActive(slot1, true)
+				gohelper.setActive(var_6_0, true)
 
-				slot14, slot15, slot16 = transformhelper.getPos(slot0._act_list[#slot0._act_list]:getCellObj().transform)
+				local var_6_9, var_6_10, var_6_11 = transformhelper.getPos(arg_6_0._act_list[#arg_6_0._act_list]:getCellObj().transform)
 
-				transformhelper.setPos(slot1.transform, slot14, slot15, slot16)
+				transformhelper.setPos(var_6_0.transform, var_6_9, var_6_10, var_6_11)
 			end
 
 			break
 		end
 
-		if slot7 <= slot12:getRendererIndex() then
-			slot7 = slot12:getRendererIndex()
+		if var_6_6 <= var_6_7:getRendererIndex() then
+			var_6_6 = var_6_7:getRendererIndex()
 		end
 
-		table.insert(slot0._act_list, slot12)
+		table.insert(arg_6_0._act_list, var_6_7)
 
-		if #slot0._act_list == math.abs(slot4 - slot3) + 1 and not slot6 and slot5 < 0 and slot1 then
-			slot0._offset_scale = 0.6
+		if #arg_6_0._act_list == math.abs(var_6_3 - var_6_2) + 1 and not var_6_5 and var_6_4 < 0 and var_6_0 then
+			arg_6_0._offset_scale = 0.6
 
-			gohelper.setActive(slot1, true)
+			gohelper.setActive(var_6_0, true)
 
-			slot14, slot15, slot16 = transformhelper.getPos(slot0._act_list[#slot0._act_list]:getCellObj().transform)
+			local var_6_12, var_6_13, var_6_14 = transformhelper.getPos(arg_6_0._act_list[#arg_6_0._act_list]:getCellObj().transform)
 
-			transformhelper.setPos(slot1.transform, slot14, slot15, slot16)
+			transformhelper.setPos(var_6_0.transform, var_6_12, var_6_13, var_6_14)
 		end
 	end
 
-	gohelper.findChild(slot0._gameObject, "light/glow1"):GetComponent("MeshRenderer").sortingOrder = slot7 - 1
+	gohelper.findChild(arg_6_0._gameObject, "light/glow1"):GetComponent("MeshRenderer").sortingOrder = var_6_6 - 1
 
-	if slot1 then
-		gohelper.findChild(slot1, "glow1"):GetComponent("MeshRenderer").sortingOrder = slot7
+	if var_6_0 then
+		gohelper.findChild(var_6_0, "glow1"):GetComponent("MeshRenderer").sortingOrder = var_6_6
 	end
 
-	slot0:_playTween()
+	arg_6_0:_playTween()
 end
 
-function slot0._tarCellBox(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChild(slot0._game_mgr._scene_root, "Root/ElementRoot/Box" .. slot1:getPosY() .. "_" .. slot1:getPosX())
-	slot5 = nil
+function var_0_0._tarCellBox(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = gohelper.findChild(arg_7_0._game_mgr._scene_root, "Root/ElementRoot/Box" .. arg_7_1:getPosY() .. "_" .. arg_7_1:getPosX())
+	local var_7_1
 
-	if slot3 then
-		if slot2 > 0 then
-			slot0._offset_scale = 0.29
+	if arg_7_3 then
+		if arg_7_2 > 0 then
+			arg_7_0._offset_scale = 0.29
 		else
-			slot0._offset_scale = 0.22
+			arg_7_0._offset_scale = 0.22
 		end
 
-		if slot0._game_mgr.character:getDirection() == PushBoxGameMgr.Direction.Left or slot6 == PushBoxGameMgr.Direction.Right then
-			slot0._play_tween = true
+		local var_7_2 = arg_7_0._game_mgr.character:getDirection()
+
+		if var_7_2 == PushBoxGameMgr.Direction.Left or var_7_2 == PushBoxGameMgr.Direction.Right then
+			arg_7_0._play_tween = true
 		end
 	else
-		if slot2 <= 0 then
-			slot5 = gohelper.findChild(slot4, "#vx_light_down")
+		if arg_7_2 > 0 then
+			-- block empty
+		else
+			var_7_1 = gohelper.findChild(var_7_0, "#vx_light_down")
 		end
 
-		if slot0._game_mgr.character:getDirection() == PushBoxGameMgr.Direction.Down or slot6 == PushBoxGameMgr.Direction.Up then
-			slot0._play_tween = true
+		local var_7_3 = arg_7_0._game_mgr.character:getDirection()
+
+		if var_7_3 == PushBoxGameMgr.Direction.Down or var_7_3 == PushBoxGameMgr.Direction.Up then
+			arg_7_0._play_tween = true
 		end
 
-		slot0._offset_scale = 0.6
+		arg_7_0._offset_scale = 0.6
 	end
 
-	if slot5 then
-		slot0._box_show_light_obj = slot5
+	if var_7_1 then
+		arg_7_0._box_show_light_obj = var_7_1
 
-		if slot0._play_tween then
-			gohelper.setActive(slot5, true)
+		if arg_7_0._play_tween then
+			gohelper.setActive(var_7_1, true)
 		else
-			TaskDispatcher.runDelay(slot0._showBoxLight, slot0, 0.2)
+			TaskDispatcher.runDelay(arg_7_0._showBoxLight, arg_7_0, 0.2)
 		end
 
-		if slot5:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer)) then
-			for slot10 = 0, slot6.Length - 1 do
-				slot6[slot10].sortingOrder = slot4.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder + 1
+		local var_7_4 = var_7_1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+
+		if var_7_4 then
+			for iter_7_0 = 0, var_7_4.Length - 1 do
+				var_7_4[iter_7_0].sortingOrder = var_7_0.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder + 1
 			end
 		end
 	end
 end
 
-function slot0._getActArea(slot0, slot1)
-	slot2 = 0
-	slot3 = 0
-	slot4 = 0
-	slot5 = false
+function var_0_0._getActArea(arg_8_0, arg_8_1)
+	local var_8_0 = 0
+	local var_8_1 = 0
+	local var_8_2 = 0
+	local var_8_3 = false
 
-	if slot1 == PushBoxGameMgr.ElementType.LightRight then
-		slot2 = slot0._cell:getPosX() + 1
-		slot3 = 8
-		slot4 = 1
-		slot5 = true
-	elseif slot1 == PushBoxGameMgr.ElementType.LightLeft then
-		slot2 = slot0._cell:getPosX() - 1
-		slot3 = 1
-		slot4 = -1
-		slot5 = true
-	elseif slot1 == PushBoxGameMgr.ElementType.LightUp then
-		slot2 = slot0._cell:getPosY() - 1
-		slot3 = 1
-		slot4 = -1
-	elseif slot1 == PushBoxGameMgr.ElementType.LightDown then
-		slot2 = slot0._cell:getPosY() + 1
-		slot3 = 6
-		slot4 = 1
+	if arg_8_1 == PushBoxGameMgr.ElementType.LightRight then
+		var_8_0 = arg_8_0._cell:getPosX() + 1
+		var_8_1 = 8
+		var_8_2 = 1
+		var_8_3 = true
+	elseif arg_8_1 == PushBoxGameMgr.ElementType.LightLeft then
+		var_8_0 = arg_8_0._cell:getPosX() - 1
+		var_8_1 = 1
+		var_8_2 = -1
+		var_8_3 = true
+	elseif arg_8_1 == PushBoxGameMgr.ElementType.LightUp then
+		var_8_0 = arg_8_0._cell:getPosY() - 1
+		var_8_1 = 1
+		var_8_2 = -1
+	elseif arg_8_1 == PushBoxGameMgr.ElementType.LightDown then
+		var_8_0 = arg_8_0._cell:getPosY() + 1
+		var_8_1 = 6
+		var_8_2 = 1
 	end
 
-	return slot2, slot3, slot4, slot5
+	return var_8_0, var_8_1, var_8_2, var_8_3
 end
 
-function slot0._playTween(slot0)
-	if slot0._play_tween then
-		slot0:_releaseTween()
+function var_0_0._playTween(arg_9_0)
+	if arg_9_0._play_tween then
+		arg_9_0:_releaseTween()
 
-		slot0._tween = ZProj.TweenHelper.DOTweenFloat(slot0._last_act_count + slot0._offset_scale, #slot0._act_list + slot0._offset_scale, 0.2, slot0._frameCallback, nil, slot0)
+		arg_9_0._tween = ZProj.TweenHelper.DOTweenFloat(arg_9_0._last_act_count + arg_9_0._offset_scale, #arg_9_0._act_list + arg_9_0._offset_scale, 0.2, arg_9_0._frameCallback, nil, arg_9_0)
 	else
-		if #slot0._act_list == slot0._last_act_count then
-			slot0:_showBoxLight()
+		if #arg_9_0._act_list == arg_9_0._last_act_count then
+			arg_9_0:_showBoxLight()
 		end
 
-		transformhelper.setLocalScale(slot0._light, #slot0._act_list + slot0._offset_scale, 1, 1)
+		transformhelper.setLocalScale(arg_9_0._light, #arg_9_0._act_list + arg_9_0._offset_scale, 1, 1)
 	end
 end
 
-function slot0._showBoxLight(slot0)
-	if slot0._box_show_light_obj then
-		gohelper.setActive(slot0._box_show_light_obj, true)
+function var_0_0._showBoxLight(arg_10_0)
+	if arg_10_0._box_show_light_obj then
+		gohelper.setActive(arg_10_0._box_show_light_obj, true)
 	end
 end
 
-function slot0._releaseTween(slot0)
-	if slot0._tween then
-		ZProj.TweenHelper.KillById(slot0._tween)
+function var_0_0._releaseTween(arg_11_0)
+	if arg_11_0._tween then
+		ZProj.TweenHelper.KillById(arg_11_0._tween)
 	end
 
-	slot0._tween = nil
+	arg_11_0._tween = nil
 end
 
-function slot0._frameCallback(slot0, slot1)
-	transformhelper.setLocalScale(slot0._light, slot1, 1, 1)
+function var_0_0._frameCallback(arg_12_0, arg_12_1)
+	transformhelper.setLocalScale(arg_12_0._light, arg_12_1, 1, 1)
 end
 
-function slot0._onRevertStep(slot0)
-	slot0:refreshActArea()
+function var_0_0._onRevertStep(arg_13_0)
+	arg_13_0:refreshActArea()
 end
 
-function slot0._onRefreshElement(slot0)
-	slot0:refreshActArea()
+function var_0_0._onRefreshElement(arg_14_0)
+	arg_14_0:refreshActArea()
 end
 
-function slot0._onStepFinished(slot0)
-	for slot4, slot5 in ipairs(slot0._act_list) do
-		if slot0._game_mgr:characterInArea(slot5:getPosX(), slot5:getPosY()) and not slot0._game_mgr:cellIsInvincible(slot5:getPosX(), slot5:getPosY()) then
-			slot0._game_mgr:changeWarning(slot0._alarm_value)
+function var_0_0._onStepFinished(arg_15_0)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._act_list) do
+		if arg_15_0._game_mgr:characterInArea(iter_15_1:getPosX(), iter_15_1:getPosY()) and not arg_15_0._game_mgr:cellIsInvincible(iter_15_1:getPosX(), iter_15_1:getPosY()) then
+			arg_15_0._game_mgr:changeWarning(arg_15_0._alarm_value)
 		end
 	end
 end
 
-function slot0._characterInArea(slot0)
-	slot0._in_area = slot0._game_mgr:characterInArea(slot0._act_cell_x, slot0._act_cell_y)
+function var_0_0._characterInArea(arg_16_0)
+	arg_16_0._in_area = arg_16_0._game_mgr:characterInArea(arg_16_0._act_cell_x, arg_16_0._act_cell_y)
 
-	return slot0._in_area
+	return arg_16_0._in_area
 end
 
-function slot0.getIndex(slot0)
-	return slot0._index
+function var_0_0.getIndex(arg_17_0)
+	return arg_17_0._index
 end
 
-function slot0.getPosX(slot0)
-	return slot0._cell:getPosX()
+function var_0_0.getPosX(arg_18_0)
+	return arg_18_0._cell:getPosX()
 end
 
-function slot0.getPosY(slot0)
-	return slot0._cell:getPosY()
+function var_0_0.getPosY(arg_19_0)
+	return arg_19_0._cell:getPosY()
 end
 
-function slot0.getObj(slot0)
-	return slot0._gameObject
+function var_0_0.getObj(arg_20_0)
+	return arg_20_0._gameObject
 end
 
-function slot0.getCell(slot0)
-	return slot0._cell
+function var_0_0.getCell(arg_21_0)
+	return arg_21_0._cell
 end
 
-function slot0.releaseSelf(slot0)
-	TaskDispatcher.cancelTask(slot0._showBoxLight, slot0)
-	slot0:_releaseTween()
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._showBoxLight, arg_22_0)
+	arg_22_0:_releaseTween()
+	arg_22_0:__onDispose()
 end
 
-return slot0
+return var_0_0

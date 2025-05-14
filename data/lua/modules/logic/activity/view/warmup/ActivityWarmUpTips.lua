@@ -1,62 +1,66 @@
-module("modules.logic.activity.view.warmup.ActivityWarmUpTips", package.seeall)
+﻿module("modules.logic.activity.view.warmup.ActivityWarmUpTips", package.seeall)
 
-slot0 = class("ActivityWarmUpTips", BaseView)
+local var_0_0 = class("ActivityWarmUpTips", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_icon")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "#scroll_info/Viewport/Content/#txt_info")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#txt_title")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#txt_info")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi8"))
-	slot0._simageicon:LoadImage(ResUrl.getActivityWarmUpBg("bg_tu1"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg1:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi8"))
+	arg_4_0._simageicon:LoadImage(ResUrl.getActivityWarmUpBg("bg_tu1"))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0._simagebg1:UnLoadImage()
+	arg_5_0._simageicon:UnLoadImage()
 end
 
-function slot0.onOpen(slot0)
-	slot0.orderCo = Activity106Config.instance:getActivityWarmUpOrderCo(slot0.viewParam.actId, slot0.viewParam.orderId)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.orderId
+	local var_6_1 = arg_6_0.viewParam.actId
 
-	slot0:refreshUI()
+	arg_6_0.orderCo = Activity106Config.instance:getActivityWarmUpOrderCo(var_6_1, var_6_0)
+
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0.refreshUI(slot0)
-	if slot0.orderCo then
-		slot0._txtinfo.text = slot0.orderCo.desc
-		slot0._txttitle.text = slot0.orderCo.name
+function var_0_0.refreshUI(arg_9_0)
+	if arg_9_0.orderCo then
+		arg_9_0._txtinfo.text = arg_9_0.orderCo.desc
+		arg_9_0._txttitle.text = arg_9_0.orderCo.name
 	else
-		slot0._txtinfo.text = ""
-		slot0._txttitle.text = ""
+		arg_9_0._txtinfo.text = ""
+		arg_9_0._txttitle.text = ""
 	end
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_10_0)
+	arg_10_0:closeThis()
 end
 
-return slot0
+return var_0_0

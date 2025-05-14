@@ -1,31 +1,31 @@
-module("modules.logic.dungeon.model.RoleStoryDispatchHeroMo", package.seeall)
+﻿module("modules.logic.dungeon.model.RoleStoryDispatchHeroMo", package.seeall)
 
-slot0 = pureTable("RoleStoryDispatchHeroMo")
+local var_0_0 = pureTable("RoleStoryDispatchHeroMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.heroId = 0
-	slot0.config = nil
-	slot0.storyId = 0
-	slot0.isEffect = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.heroId = 0
+	arg_1_0.config = nil
+	arg_1_0.storyId = 0
+	arg_1_0.isEffect = false
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.id = slot1.id
-	slot0.heroId = slot1.heroId
-	slot0.config = slot1.config
-	slot0.level = slot1.level
-	slot0.rare = slot0.config.rare
-	slot0.storyId = slot2
-	slot0.isEffect = slot3
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.heroId = arg_2_1.heroId
+	arg_2_0.config = arg_2_1.config
+	arg_2_0.level = arg_2_1.level
+	arg_2_0.rare = arg_2_0.config.rare
+	arg_2_0.storyId = arg_2_2
+	arg_2_0.isEffect = arg_2_3
 end
 
-function slot0.isDispatched(slot0)
-	return RoleStoryModel.instance:isHeroDispatching(slot0.heroId, slot0.storyId)
+function var_0_0.isDispatched(arg_3_0)
+	return RoleStoryModel.instance:isHeroDispatching(arg_3_0.heroId, arg_3_0.storyId)
 end
 
-function slot0.isEffectHero(slot0)
-	return slot0.isEffect
+function var_0_0.isEffectHero(arg_4_0)
+	return arg_4_0.isEffect
 end
 
-return slot0
+return var_0_0

@@ -1,17 +1,21 @@
-module("modules.logic.fight.entity.comp.FightAssistBossNameUI", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightAssistBossNameUI", package.seeall)
 
-slot0 = class("FightAssistBossNameUI", LuaCompBase)
+local var_0_0 = class("FightAssistBossNameUI", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	return
 end
 
-function slot0.load(slot0, slot1)
+function var_0_0.load(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.beforeDestroy(slot0)
+function var_0_0.beforeDestroy(arg_3_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

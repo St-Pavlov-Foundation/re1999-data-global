@@ -1,84 +1,88 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoResultView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoResultView", package.seeall)
 
-slot0 = class("FeiLinShiDuoResultView", BaseView)
+local var_0_0 = class("FeiLinShiDuoResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "#go_fail")
-	slot0._gotargetitem = gohelper.findChild(slot0.viewGO, "targets/#go_targetitem")
-	slot0._txttaskdesc = gohelper.findChildText(slot0.viewGO, "targets/#go_targetitem/#txt_taskdesc")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "targets/#go_targetitem/result/#go_finish")
-	slot0._gounfinish = gohelper.findChild(slot0.viewGO, "targets/#go_targetitem/result/#go_unfinish")
-	slot0._gobtn = gohelper.findChild(slot0.viewGO, "#go_btn")
-	slot0._btnquitgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btn/#btn_quitgame")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btn/#btn_restart")
-	slot0._btnsuccessClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_successClick")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
+	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
+	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "targets/#go_targetitem/#txt_taskdesc")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_finish")
+	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_unfinish")
+	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
+	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
+	arg_1_0._btnsuccessClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnquitgame:AddClickListener(slot0._btnquitgameOnClick, slot0)
-	slot0._btnrestart:AddClickListener(slot0._btnrestartOnClick, slot0)
-	slot0._btnsuccessClick:AddClickListener(slot0._btnquitgameOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+	arg_2_0._btnsuccessClick:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnquitgame:RemoveClickListener()
-	slot0._btnrestart:RemoveClickListener()
-	slot0._btnsuccessClick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnquitgame:RemoveClickListener()
+	arg_3_0._btnrestart:RemoveClickListener()
+	arg_3_0._btnsuccessClick:RemoveClickListener()
 end
 
-function slot0._btnquitgameOnClick(slot0)
+function var_0_0._btnquitgameOnClick(arg_4_0)
 	ViewMgr.instance:closeView(ViewName.FeiLinShiDuoGameView, false, true)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._btnrestartOnClick(slot0)
+function var_0_0._btnrestartOnClick(arg_5_0)
 	FeiLinShiDuoStatHelper.instance:initGameStartTime()
 	FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.ResultResetGame)
-	slot0:closeThis()
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_move_loop)
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_box_push_loop)
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_ladder_crawl_loop)
 
-	slot0.isSuccess = slot0.viewParam.isSuccess
+	arg_8_0.isSuccess = arg_8_0.viewParam.isSuccess
 
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._gosuccess, slot0.isSuccess)
-	gohelper.setActive(slot0._gofinish, slot0.isSuccess)
-	gohelper.setActive(slot0._gobtn, not slot0.isSuccess)
-	gohelper.setActive(slot0._gofail, not slot0.isSuccess)
-	gohelper.setActive(slot0._gounfinish, not slot0.isSuccess)
-	gohelper.setActive(slot0._btnsuccessClick.gameObject, slot0.isSuccess)
+function var_0_0.refreshUI(arg_9_0)
+	gohelper.setActive(arg_9_0._gosuccess, arg_9_0.isSuccess)
+	gohelper.setActive(arg_9_0._gofinish, arg_9_0.isSuccess)
+	gohelper.setActive(arg_9_0._gobtn, not arg_9_0.isSuccess)
+	gohelper.setActive(arg_9_0._gofail, not arg_9_0.isSuccess)
+	gohelper.setActive(arg_9_0._gounfinish, not arg_9_0.isSuccess)
+	gohelper.setActive(arg_9_0._btnsuccessClick.gameObject, arg_9_0.isSuccess)
 
-	slot0._txttaskdesc.text = luaLang("act185_gametarget")
+	arg_9_0._txttaskdesc.text = luaLang("act185_gametarget")
 
-	if slot0.isSuccess then
+	if arg_9_0.isSuccess then
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_pkls_endpoint_arrival)
 	else
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_pkls_challenge_fail)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

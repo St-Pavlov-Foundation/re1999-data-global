@@ -1,101 +1,110 @@
-module("modules.logic.room.entity.comp.RoomDebugPackageUIComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomDebugPackageUIComp", package.seeall)
 
-slot0 = class("RoomDebugPackageUIComp", RoomBaseUIComp)
+local var_0_0 = class("RoomDebugPackageUIComp", RoomBaseUIComp)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0._res = RoomScenePreloader.ResDebugPackageUI
+	arg_1_0._res = RoomScenePreloader.ResDebugPackageUI
 end
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	var_0_0.super.init(arg_2_0, arg_2_1)
 
-	slot0._name = "debugpackageui_" .. slot0.go.name
+	arg_2_0._name = "debugpackageui_" .. arg_2_0.go.name
 
-	slot0:refreshUI()
+	arg_2_0:refreshUI()
 end
 
-function slot0.addEventListeners(slot0)
-	uv0.super.addEventListeners(slot0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugSetPackage, slot0.refreshUI, slot0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugPlaceListShowChanged, slot0.refreshUI, slot0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugPackageListShowChanged, slot0.refreshUI, slot0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugPackageFilterChanged, slot0.refreshUI, slot0)
-	RoomDebugController.instance:registerCallback(RoomEvent.DebugPackageOrderChanged, slot0.refreshUI, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	var_0_0.super.addEventListeners(arg_3_0)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugSetPackage, arg_3_0.refreshUI, arg_3_0)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugPlaceListShowChanged, arg_3_0.refreshUI, arg_3_0)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugPackageListShowChanged, arg_3_0.refreshUI, arg_3_0)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugPackageFilterChanged, arg_3_0.refreshUI, arg_3_0)
+	RoomDebugController.instance:registerCallback(RoomEvent.DebugPackageOrderChanged, arg_3_0.refreshUI, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	uv0.super.removeEventListeners(slot0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugSetPackage, slot0.refreshUI, slot0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPlaceListShowChanged, slot0.refreshUI, slot0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPackageListShowChanged, slot0.refreshUI, slot0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPackageFilterChanged, slot0.refreshUI, slot0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPackageOrderChanged, slot0.refreshUI, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	var_0_0.super.removeEventListeners(arg_4_0)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugSetPackage, arg_4_0.refreshUI, arg_4_0)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPlaceListShowChanged, arg_4_0.refreshUI, arg_4_0)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPackageListShowChanged, arg_4_0.refreshUI, arg_4_0)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPackageFilterChanged, arg_4_0.refreshUI, arg_4_0)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPackageOrderChanged, arg_4_0.refreshUI, arg_4_0)
 end
 
-function slot0.refreshUI(slot0)
+function var_0_0.refreshUI(arg_5_0)
 	if not RoomDebugController.instance:isDebugPackageListShow() and not RoomDebugController.instance:isDebugPlaceListShow() then
-		slot0:returnUI()
+		arg_5_0:returnUI()
 
 		return
 	end
 
 	if RoomDebugController.instance:isDebugPackageListShow() and not RoomDebugController.instance:isEditPackageOrder() then
-		slot0:returnUI()
+		arg_5_0:returnUI()
 
 		return
 	end
 
-	slot1 = slot0.entity:getMO()
+	local var_5_0 = arg_5_0.entity:getMO()
 
 	if RoomDebugController.instance:isDebugPackageListShow() then
-		if not RoomDebugPackageListModel.instance:getFilterPackageId() or slot2 ~= slot1.packageId or slot2 <= 0 then
-			slot0:returnUI()
+		local var_5_1 = RoomDebugPackageListModel.instance:getFilterPackageId()
+
+		if not var_5_1 or var_5_1 ~= var_5_0.packageId or var_5_1 <= 0 then
+			arg_5_0:returnUI()
 
 			return
 		end
 
-		if slot1:getMainRes() ~= (RoomDebugPackageListModel.instance:getFilterMainRes() or RoomResourceEnum.ResourceId.Empty) then
-			slot0:returnUI()
+		local var_5_2 = RoomDebugPackageListModel.instance:getFilterMainRes() or RoomResourceEnum.ResourceId.Empty
+
+		if var_5_0:getMainRes() ~= var_5_2 then
+			arg_5_0:returnUI()
 
 			return
 		end
 
-		slot0:getUI()
+		arg_5_0:getUI()
 
-		slot0._txtcount.text = slot1.packageOrder
+		arg_5_0._txtcount.text = var_5_0.packageOrder
 
-		slot0:refreshPosition()
+		arg_5_0:refreshPosition()
 	elseif RoomDebugController.instance:isDebugPlaceListShow() then
-		slot0:getUI()
+		arg_5_0:getUI()
 
-		slot0._txtcount.text = RoomHelper.getBlockPrefabName(slot1:getBlockDefineCfg().prefabPath)
+		local var_5_3 = var_5_0:getBlockDefineCfg()
 
-		slot0:refreshPosition()
+		arg_5_0._txtcount.text = RoomHelper.getBlockPrefabName(var_5_3.prefabPath)
+
+		arg_5_0:refreshPosition()
 	end
 end
 
-function slot0.initUI(slot0)
-	slot0._txtcount = gohelper.findChildText(slot0._gocontainer, "txt_count")
+function var_0_0.initUI(arg_6_0)
+	arg_6_0._txtcount = gohelper.findChildText(arg_6_0._gocontainer, "txt_count")
 end
 
-function slot0.destoryUI(slot0)
-	slot0._txtcount = nil
+function var_0_0.destoryUI(arg_7_0)
+	arg_7_0._txtcount = nil
 end
 
-function slot0.getUIWorldPos(slot0)
-	slot2 = HexMath.hexToPosition(slot0.entity:getMO().hexPoint, RoomBlockEnum.BlockSize)
+function var_0_0.getUIWorldPos(arg_8_0)
+	local var_8_0 = arg_8_0.entity:getMO()
+	local var_8_1 = HexMath.hexToPosition(var_8_0.hexPoint, RoomBlockEnum.BlockSize)
 
-	return Vector3(slot2.x, 0.5, slot2.y)
+	return (Vector3(var_8_1.x, 0.5, var_8_1.y))
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_9_0)
 	if not RoomDebugController.instance:isDebugPackageListShow() then
 		return
 	end
 
-	RoomDebugController.instance:debugSetPackageOrder(slot0.entity:getMO().id)
+	local var_9_0 = arg_9_0.entity:getMO()
+
+	RoomDebugController.instance:debugSetPackageOrder(var_9_0.id)
 end
 
-return slot0
+return var_0_0

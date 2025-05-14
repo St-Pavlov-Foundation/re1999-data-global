@@ -1,893 +1,978 @@
-module("modules.logic.explore.map.ExploreMap", package.seeall)
+﻿module("modules.logic.explore.map.ExploreMap", package.seeall)
 
-slot0 = class("ExploreMap")
+local var_0_0 = class("ExploreMap")
 
-function slot0.ctor(slot0)
-	slot0._loader = nil
-	slot0._mapGo = nil
-	slot0._clickEffectContainer = nil
-	slot0._clickEffectLoader = nil
-	slot0._initDone = false
-	slot0._needLoadedCount = 0
-	slot0._needUnitLoadedCount = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._loader = nil
+	arg_1_0._mapGo = nil
+	arg_1_0._clickEffectContainer = nil
+	arg_1_0._clickEffectLoader = nil
+	arg_1_0._initDone = false
+	arg_1_0._needLoadedCount = 0
+	arg_1_0._needUnitLoadedCount = 0
 end
 
-function slot0.isInitDone(slot0)
-	return slot0._initDone
+function var_0_0.isInitDone(arg_2_0)
+	return arg_2_0._initDone
 end
 
-function slot0.getAllUnit(slot0)
-	return slot0._unitDic
+function var_0_0.getAllUnit(arg_3_0)
+	return arg_3_0._unitDic
 end
 
-function slot0.getUnit(slot0, slot1, slot2)
-	if slot0._unitDic[slot1] then
-		return slot0._unitDic[slot1]
-	elseif slot2 ~= true then
-		logError("unit not find in map:" .. slot1)
+function var_0_0.getUnit(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_0._unitDic[arg_4_1] then
+		return arg_4_0._unitDic[arg_4_1]
+	elseif arg_4_2 ~= true then
+		logError("unit not find in map:" .. arg_4_1)
 	end
 end
 
-function slot0.getUnitByPos(slot0, slot1)
-	slot3 = {}
+function var_0_0.getUnitByPos(arg_5_0, arg_5_1)
+	local var_5_0 = ExploreHelper.getKey(arg_5_1)
+	local var_5_1 = {}
 
-	if slot0._unitPosDic[ExploreHelper.getKey(slot1)] then
-		for slot7, slot8 in ipairs(slot0._unitPosDic[slot2]) do
-			if ExploreModel.instance:isUseItemOrUnit(slot8.id) == false then
-				table.insert(slot3, slot8)
+	if arg_5_0._unitPosDic[var_5_0] then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._unitPosDic[var_5_0]) do
+			if ExploreModel.instance:isUseItemOrUnit(iter_5_1.id) == false then
+				table.insert(var_5_1, iter_5_1)
 			end
 		end
 	end
 
-	return slot3
+	return var_5_1
 end
 
-function slot0.getUnitByType(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._unitDic) do
-		if slot6:getUnitType() == slot1 then
-			return slot6
+function var_0_0.getUnitByType(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._unitDic) do
+		if iter_6_1:getUnitType() == arg_6_1 then
+			return iter_6_1
 		end
 	end
 end
 
-function slot0.getUnitsByType(slot0, slot1)
-	slot2 = {}
+function var_0_0.getUnitsByType(arg_7_0, arg_7_1)
+	local var_7_0 = {}
 
-	for slot6, slot7 in pairs(slot0._unitDic) do
-		if slot7:getUnitType() == slot1 then
-			table.insert(slot2, slot7)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._unitDic) do
+		if iter_7_1:getUnitType() == arg_7_1 then
+			table.insert(var_7_0, iter_7_1)
 		end
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getUnitsByTypeDict(slot0, slot1)
-	slot2 = {}
+function var_0_0.getUnitsByTypeDict(arg_8_0, arg_8_1)
+	local var_8_0 = {}
 
-	for slot6, slot7 in pairs(slot0._unitDic) do
-		if slot1[slot7:getUnitType()] then
-			table.insert(slot2, slot7)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._unitDic) do
+		if arg_8_1[iter_8_1:getUnitType()] then
+			table.insert(var_8_0, iter_8_1)
 		end
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getHeroPos(slot0)
-	if slot0._hero then
-		return slot0._hero.nodePos
+function var_0_0.getHeroPos(arg_9_0)
+	if arg_9_0._hero then
+		return arg_9_0._hero.nodePos
 	end
 end
 
-function slot0.getHero(slot0)
-	return slot0._hero
+function var_0_0.getHero(arg_10_0)
+	return arg_10_0._hero
 end
 
-function slot0.loadMap(slot0)
-	ExploreMapTriggerController.instance:registerMap(slot0)
+function var_0_0.loadMap(arg_11_0)
+	ExploreMapTriggerController.instance:registerMap(arg_11_0)
 
-	slot0._root = GameSceneMgr.instance:getScene(SceneType.Explore):getSceneContainerGO()
-	slot0._mapId = ExploreModel.instance:getMapId()
-	slot0._episodeCo = DungeonConfig.instance:getEpisodeCO(ExploreConfig.instance:getEpisodeId(slot0._mapId))
-	slot0._mapPrefabPath = ExploreConstValue.MapPrefab
-	slot0._mapConfigPath = string.format(ExploreConstValue.MapConfigPath, ExploreModel.instance:getMapId())
-	slot0._meshPath = string.format(ExploreConstValue.MapNavMeshPath, ExploreModel.instance:getMapId())
-	slot3 = MultiAbLoader.New()
-	slot0._loader = slot3
+	arg_11_0._root = GameSceneMgr.instance:getScene(SceneType.Explore):getSceneContainerGO()
+	arg_11_0._mapId = ExploreModel.instance:getMapId()
 
-	slot3:addPath(slot0._mapPrefabPath)
-	slot3:addPath(ExploreConstValue.EntryCameraCtrlPath)
-	slot3:addPath(slot0._meshPath)
-	slot3:startLoad(slot0._loadedFinish, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnClickMap, slot0._onClickMap, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnClickUnit, slot0._onClickUnit, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, slot0._onCharacterPosChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, slot0._onCharacterPosChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterStartMove, slot0._onCharacterStartMove, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterNodeChange, slot0._onCharacterNodeChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.MoveHeroToPos, slot0.moveTo, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, slot0._onHeroMoveEnd, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnUnitNodeChange, slot0._onUnitNodeChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnUnitStatusChange, slot0._onUnitStatusChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnUnitStatus2Change, slot0.OnUnitStatus2Change, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.UpdateMoveDir, slot0.UpdateMoveDir, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.CounterChange, slot0.CounterChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.CounterInitDone, slot0.CounterInitDone, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroFirstAnimEnd, slot0.beginCameraAnim, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onViewClose, slot0)
+	local var_11_0 = ExploreConfig.instance:getEpisodeId(arg_11_0._mapId)
+
+	arg_11_0._episodeCo = DungeonConfig.instance:getEpisodeCO(var_11_0)
+	arg_11_0._mapPrefabPath = ExploreConstValue.MapPrefab
+	arg_11_0._mapConfigPath = string.format(ExploreConstValue.MapConfigPath, ExploreModel.instance:getMapId())
+	arg_11_0._meshPath = string.format(ExploreConstValue.MapNavMeshPath, ExploreModel.instance:getMapId())
+
+	local var_11_1 = MultiAbLoader.New()
+
+	arg_11_0._loader = var_11_1
+
+	var_11_1:addPath(arg_11_0._mapPrefabPath)
+	var_11_1:addPath(ExploreConstValue.EntryCameraCtrlPath)
+	var_11_1:addPath(arg_11_0._meshPath)
+	var_11_1:startLoad(arg_11_0._loadedFinish, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnClickMap, arg_11_0._onClickMap, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnClickUnit, arg_11_0._onClickUnit, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, arg_11_0._onCharacterPosChange, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, arg_11_0._onCharacterPosChange, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterStartMove, arg_11_0._onCharacterStartMove, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterNodeChange, arg_11_0._onCharacterNodeChange, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.MoveHeroToPos, arg_11_0.moveTo, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, arg_11_0._onHeroMoveEnd, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnUnitNodeChange, arg_11_0._onUnitNodeChange, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnUnitStatusChange, arg_11_0._onUnitStatusChange, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnUnitStatus2Change, arg_11_0.OnUnitStatus2Change, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.UpdateMoveDir, arg_11_0.UpdateMoveDir, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.CounterChange, arg_11_0.CounterChange, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.CounterInitDone, arg_11_0.CounterInitDone, arg_11_0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroFirstAnimEnd, arg_11_0.beginCameraAnim, arg_11_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_11_0._onViewClose, arg_11_0)
 end
 
-function slot0.unloadMap(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnClickMap, slot0._onClickMap, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnClickUnit, slot0._onClickUnit, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, slot0._onCharacterPosChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, slot0._onCharacterPosChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterStartMove, slot0._onCharacterStartMove, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterNodeChange, slot0._onCharacterNodeChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.MoveHeroToPos, slot0.moveTo, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, slot0._onHeroMoveEnd, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnUnitNodeChange, slot0._onUnitNodeChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnUnitStatusChange, slot0._onUnitStatusChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnUnitStatus2Change, slot0.OnUnitStatus2Change, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.UpdateMoveDir, slot0.UpdateMoveDir, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.CounterChange, slot0.CounterChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.CounterInitDone, slot0.CounterInitDone, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjLoadedCb, slot0.onSceneObjLoadedDone, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroFirstAnimEnd, slot0.beginCameraAnim, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onViewClose, slot0)
-	slot0:destroy()
-	gohelper.destroy(slot0._mapGo)
-	slot0._loader:dispose()
+function var_0_0.unloadMap(arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnClickMap, arg_12_0._onClickMap, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnClickUnit, arg_12_0._onClickUnit, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, arg_12_0._onCharacterPosChange, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, arg_12_0._onCharacterPosChange, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterStartMove, arg_12_0._onCharacterStartMove, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterNodeChange, arg_12_0._onCharacterNodeChange, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.MoveHeroToPos, arg_12_0.moveTo, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_12_0._onHeroMoveEnd, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnUnitNodeChange, arg_12_0._onUnitNodeChange, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnUnitStatusChange, arg_12_0._onUnitStatusChange, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnUnitStatus2Change, arg_12_0.OnUnitStatus2Change, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.UpdateMoveDir, arg_12_0.UpdateMoveDir, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.CounterChange, arg_12_0.CounterChange, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.CounterInitDone, arg_12_0.CounterInitDone, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjLoadedCb, arg_12_0.onSceneObjLoadedDone, arg_12_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroFirstAnimEnd, arg_12_0.beginCameraAnim, arg_12_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_12_0._onViewClose, arg_12_0)
+	arg_12_0:destroy()
+	gohelper.destroy(arg_12_0._mapGo)
+	arg_12_0._loader:dispose()
 end
 
-function slot0.setCameraPos(slot0, slot1)
-	slot0._cameraComponent:setCameraPos(slot1)
+function var_0_0.setCameraPos(arg_13_0, arg_13_1)
+	arg_13_0._cameraComponent:setCameraPos(arg_13_1)
 
-	if slot0._preloadComp then
-		slot0._preloadComp:updateCameraPos(slot1)
+	if arg_13_0._preloadComp then
+		arg_13_0._preloadComp:updateCameraPos(arg_13_1)
 	end
 end
 
-function slot0.clearUnUseObj(slot0)
-	if slot0._preloadComp then
-		slot0._preloadComp:clearUnUseObj()
+function var_0_0.clearUnUseObj(arg_14_0)
+	if arg_14_0._preloadComp then
+		arg_14_0._preloadComp:clearUnUseObj()
 	end
 
 	ResDispose.unloadTrue()
 end
 
-function slot0.addUnitNeedLoadedNum(slot0, slot1)
-	slot0._needUnitLoadedCount = slot0._needUnitLoadedCount + slot1
+function var_0_0.addUnitNeedLoadedNum(arg_15_0, arg_15_1)
+	arg_15_0._needUnitLoadedCount = arg_15_0._needUnitLoadedCount + arg_15_1
 
-	if slot0._waitAllObjLoaded and slot0._needLoadedCount <= 0 and slot0._needUnitLoadedCount <= 0 then
-		slot0._waitAllObjLoaded = false
+	if arg_15_0._waitAllObjLoaded and arg_15_0._needLoadedCount <= 0 and arg_15_0._needUnitLoadedCount <= 0 then
+		arg_15_0._waitAllObjLoaded = false
 
 		ExploreController.instance:dispatchEvent(ExploreEvent.SceneObjAllLoadedDone)
 	end
 end
 
-function slot0.markWaitAllSceneObj(slot0)
-	if not slot0._preloadComp then
+function var_0_0.markWaitAllSceneObj(arg_16_0)
+	if not arg_16_0._preloadComp then
 		ExploreController.instance:dispatchEvent(ExploreEvent.SceneObjAllLoadedDone)
 
 		return
 	end
 
-	slot0._waitAllObjLoaded = true
-	slot0._needLoadedCount = slot0._preloadComp:calcNeedLoadedSceneObj()
+	arg_16_0._waitAllObjLoaded = true
+	arg_16_0._needLoadedCount = arg_16_0._preloadComp:calcNeedLoadedSceneObj()
 
-	if slot0._needLoadedCount > 0 then
-		ExploreController.instance:registerCallback(ExploreEvent.SceneObjLoadedCb, slot0.onSceneObjLoadedDone, slot0)
-	elseif slot0._needUnitLoadedCount <= 0 then
-		slot0._waitAllObjLoaded = false
+	if arg_16_0._needLoadedCount > 0 then
+		ExploreController.instance:registerCallback(ExploreEvent.SceneObjLoadedCb, arg_16_0.onSceneObjLoadedDone, arg_16_0)
+	elseif arg_16_0._needUnitLoadedCount <= 0 then
+		arg_16_0._waitAllObjLoaded = false
 
 		ExploreController.instance:dispatchEvent(ExploreEvent.SceneObjAllLoadedDone)
 	end
 end
 
-function slot0.onSceneObjLoadedDone(slot0)
-	slot0._needLoadedCount = slot0._needLoadedCount - 1
+function var_0_0.onSceneObjLoadedDone(arg_17_0)
+	arg_17_0._needLoadedCount = arg_17_0._needLoadedCount - 1
 
-	if slot0._needLoadedCount <= 0 then
-		ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjLoadedCb, slot0.onSceneObjLoadedDone, slot0)
+	if arg_17_0._needLoadedCount <= 0 then
+		ExploreController.instance:unregisterCallback(ExploreEvent.SceneObjLoadedCb, arg_17_0.onSceneObjLoadedDone, arg_17_0)
 
-		if slot0._needUnitLoadedCount <= 0 then
-			slot0._waitAllObjLoaded = false
+		if arg_17_0._needUnitLoadedCount <= 0 then
+			arg_17_0._waitAllObjLoaded = false
 
 			ExploreController.instance:dispatchEvent(ExploreEvent.SceneObjAllLoadedDone)
 		end
 	end
 end
 
-function slot0.showGrid(slot0)
-	for slot4, slot5 in pairs(slot0._walkableList) do
-		slot6 = ExploreGrid.New(slot0:getContainRootByAreaId(slot5.areaId).node)
+function var_0_0.showGrid(arg_18_0)
+	for iter_18_0, iter_18_1 in pairs(arg_18_0._walkableList) do
+		local var_18_0 = ExploreGrid.New(arg_18_0:getContainRootByAreaId(iter_18_1.areaId).node)
 
-		slot6:setName(slot5.walkableKey)
-		slot6:setPosByNode(slot5.pos)
+		var_18_0:setName(iter_18_1.walkableKey)
+		var_18_0:setPosByNode(iter_18_1.pos)
 	end
 end
 
-function slot0.GetTilemapMousePos(slot0, slot1, slot2)
-	slot5, slot6 = UnityEngine.Physics.Raycast(slot0._cameraComponent:getCamera():ScreenPointToRay(slot1), nil, Mathf.Infinity, slot2 and ExploreHelper.getNavigateMask() or ExploreHelper.getSceneMask())
+function var_0_0.GetTilemapMousePos(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0._cameraComponent:getCamera():ScreenPointToRay(arg_19_1)
+	local var_19_1 = arg_19_2 and ExploreHelper.getNavigateMask() or ExploreHelper.getSceneMask()
+	local var_19_2, var_19_3 = UnityEngine.Physics.Raycast(var_19_0, nil, Mathf.Infinity, var_19_1)
 
-	if slot5 then
-		slot8 = slot6.point
+	if var_19_2 then
+		local var_19_4 = tolua.getpeer(var_19_3.collider)
+		local var_19_5 = var_19_3.point
 
-		return tolua.getpeer(slot6.collider), ExploreHelper.posToTile(slot8), slot8
+		return var_19_4, ExploreHelper.posToTile(var_19_5), var_19_5
 	end
 end
 
-function slot0.getHitTriggerTrans(slot0, slot1)
-	slot3, slot4 = UnityEngine.Physics.Raycast(slot0._cameraComponent:getCamera():ScreenPointToRay(GamepadController.instance:getMousePosition()), nil, Mathf.Infinity, slot1 or ExploreHelper.getTriggerMask())
+function var_0_0.getHitTriggerTrans(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0._cameraComponent:getCamera():ScreenPointToRay(GamepadController.instance:getMousePosition())
 
-	if slot3 then
-		return slot4.transform
+	arg_20_1 = arg_20_1 or ExploreHelper.getTriggerMask()
+
+	local var_20_1, var_20_2 = UnityEngine.Physics.Raycast(var_20_0, nil, Mathf.Infinity, arg_20_1)
+
+	if var_20_1 then
+		return var_20_2.transform
 	end
 end
 
-function slot0.getSceneY(slot0, slot1)
-	slot1.y = 10
-	slot3, slot4 = UnityEngine.Physics.Raycast(slot1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
-	slot1.y = slot1.y
+function var_0_0.getSceneY(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_1.y
 
-	if slot3 then
-		return slot4.point.y
+	arg_21_1.y = 10
+
+	local var_21_1, var_21_2 = UnityEngine.Physics.Raycast(arg_21_1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+
+	arg_21_1.y = var_21_0
+
+	if var_21_1 then
+		return var_21_2.point.y
 	else
-		return slot2
+		return var_21_0
 	end
 end
 
-function slot0.UpdateMoveDir(slot0, slot1)
-	if slot1 and slot0:getNowStatus() ~= ExploreEnum.MapStatus.Normal then
+function var_0_0.UpdateMoveDir(arg_22_0, arg_22_1)
+	if arg_22_1 and arg_22_0:getNowStatus() ~= ExploreEnum.MapStatus.Normal then
 		return
 	end
 
-	if slot0._hero then
-		slot0._hero:setMoveDir(slot1)
+	if arg_22_0._hero then
+		arg_22_0._hero:setMoveDir(arg_22_1)
 	end
 end
 
-function slot0._onViewClose(slot0, slot1)
-	if slot1 == ViewName.LoadingView and GameSceneMgr.instance:getCurSceneType() == SceneType.Explore then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onViewClose, slot0)
+function var_0_0._onViewClose(arg_23_0, arg_23_1)
+	if arg_23_1 == ViewName.LoadingView and GameSceneMgr.instance:getCurSceneType() == SceneType.Explore then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_23_0._onViewClose, arg_23_0)
 
 		if ExploreModel.instance.isFirstEnterMap ~= ExploreEnum.EnterMode.Battle then
 			ViewMgr.instance:openView(ViewName.ExploreEnterView)
-		elseif slot0._hero then
-			slot0._hero:onRoleFirstEnter()
+		elseif arg_23_0._hero then
+			arg_23_0._hero:onRoleFirstEnter()
 		end
 	end
 end
 
-function slot0.CounterChange(slot0, slot1, slot2)
-	if slot0:getUnit(slot1, true) then
-		slot3:onUpdateCount(slot2)
+function var_0_0.CounterChange(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = arg_24_0:getUnit(arg_24_1, true)
+
+	if var_24_0 then
+		var_24_0:onUpdateCount(arg_24_2)
 	end
 end
 
-function slot0.CounterInitDone(slot0)
-	for slot4, slot5 in pairs(slot0._unitDic) do
-		slot5:onUpdateCount(ExploreCounterModel.instance:getCount(slot4), ExploreCounterModel.instance:getTotalCount(slot4))
+function var_0_0.CounterInitDone(arg_25_0)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._unitDic) do
+		iter_25_1:onUpdateCount(ExploreCounterModel.instance:getCount(iter_25_0), ExploreCounterModel.instance:getTotalCount(iter_25_0))
 	end
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3)
-	if slot1 ~= nil then
-		for slot8, slot9 in ipairs(slot0:getUnitByPos(slot1)) do
-			if slot9.mo.triggerByClick ~= false and (not slot9.clickComp or slot9.clickComp.enable) then
-				slot0:_onClickUnit(slot9.mo)
+function var_0_0.moveTo(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	if arg_26_1 == nil then
+		-- block empty
+	else
+		local var_26_0 = arg_26_0:getUnitByPos(arg_26_1)
+
+		for iter_26_0, iter_26_1 in ipairs(var_26_0) do
+			if iter_26_1.mo.triggerByClick ~= false and (not iter_26_1.clickComp or iter_26_1.clickComp.enable) then
+				arg_26_0:_onClickUnit(iter_26_1.mo)
 
 				return true
 			end
 		end
 
-		slot0._hero:moveTo(slot1, slot2, slot3)
+		arg_26_0._hero:moveTo(arg_26_1, arg_26_2, arg_26_3)
 	end
 end
 
-function slot0._showClickEffect(slot0, slot1)
+function var_0_0._showClickEffect(arg_27_0, arg_27_1)
 	AudioMgr.instance:trigger(AudioEnum.Explore.ClickFloor)
-	gohelper.setActive(slot0._clickEffectContainer, false)
-	gohelper.setActive(slot0._clickEffectContainer, true)
+	gohelper.setActive(arg_27_0._clickEffectContainer, false)
+	gohelper.setActive(arg_27_0._clickEffectContainer, true)
 
-	slot2 = ExploreHelper.tileToPos(slot1)
-	slot2.y = slot0:getSceneY(slot2)
-	slot0._clickEffectContainer.transform.position = slot2
+	local var_27_0 = ExploreHelper.tileToPos(arg_27_1)
+
+	var_27_0.y = arg_27_0:getSceneY(var_27_0)
+	arg_27_0._clickEffectContainer.transform.position = var_27_0
 end
 
-function slot0.startFindPath(slot0, slot1, slot2, slot3)
-	slot0._route = slot0._route or ExploreAStarFindRoute.New()
+function var_0_0.startFindPath(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	arg_28_0._route = arg_28_0._route or ExploreAStarFindRoute.New()
 
-	for slot10, slot11 in pairs(slot0._walkableList) do
-		if slot11:isWalkable(slot0._walkableList[ExploreHelper.getKeyXY(slot1.x, slot1.y)].height) then
-			-- Nothing
+	local var_28_0 = ExploreHelper.getKeyXY(arg_28_1.x, arg_28_1.y)
+	local var_28_1 = arg_28_0._walkableList[var_28_0].height
+	local var_28_2 = {}
+
+	for iter_28_0, iter_28_1 in pairs(arg_28_0._walkableList) do
+		if iter_28_1:isWalkable(var_28_1) then
+			var_28_2[iter_28_0] = iter_28_1.walkableKey
 		end
 	end
 
-	slot7, slot8 = slot0._route:startFindPath({
-		[slot10] = slot11.walkableKey
-	}, slot1, slot2, slot3)
+	local var_28_3, var_28_4 = arg_28_0._route:startFindPath(var_28_2, arg_28_1, arg_28_2, arg_28_3)
 
-	if #slot7 <= 0 then
-		slot7, slot8 = slot0._route:startFindPath(slot6, slot1, slot8, slot3)
+	if #var_28_3 <= 0 then
+		arg_28_2 = var_28_4
+
+		local var_28_5
+
+		var_28_3, var_28_5 = arg_28_0._route:startFindPath(var_28_2, arg_28_1, arg_28_2, arg_28_3)
 	end
 
-	if ExploreHelper.getCornerNum(slot7, slot1) > 1 then
-		slot10 = slot0._route:startFindPath(slot6, slot2, slot1, slot3)
+	local var_28_6 = ExploreHelper.getCornerNum(var_28_3, arg_28_1)
 
-		if #slot10 > 0 and ExploreHelper.getCornerNum(slot10, slot2) < slot9 then
-			for slot15 = #slot10, 2, -1 do
-				table.insert({
-					slot2
-				}, slot10[slot15])
+	if var_28_6 > 1 then
+		local var_28_7 = arg_28_0._route:startFindPath(var_28_2, arg_28_2, arg_28_1, arg_28_3)
+		local var_28_8 = ExploreHelper.getCornerNum(var_28_7, arg_28_2)
+
+		if #var_28_7 > 0 and var_28_8 < var_28_6 then
+			var_28_3 = {
+				arg_28_2
+			}
+
+			for iter_28_2 = #var_28_7, 2, -1 do
+				table.insert(var_28_3, var_28_7[iter_28_2])
 			end
 		end
 	end
 
-	return slot7
+	return var_28_3
 end
 
-function slot0._onHeroMoveEnd(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getUnitByPos(slot1)) do
-		if slot7:isEnable() then
-			slot7:onRoleStay()
+function var_0_0._onHeroMoveEnd(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:getUnitByPos(arg_29_1)
+
+	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+		if iter_29_1:isEnable() then
+			iter_29_1:onRoleStay()
 		end
 	end
 end
 
-function slot0._onCharacterStartMove(slot0, slot1, slot2)
-	ExploreMapModel.instance:setNodeLight(slot1)
+function var_0_0._onCharacterStartMove(arg_30_0, arg_30_1, arg_30_2)
+	ExploreMapModel.instance:setNodeLight(arg_30_1)
 end
 
-function slot0._onUnitNodeChange(slot0, slot1, slot2, slot3)
-	if slot3 then
-		slot4 = slot1.mo
+function var_0_0._onUnitNodeChange(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	if arg_31_3 then
+		local var_31_0 = arg_31_1.mo
 
-		for slot8 = slot4.offsetSize[1], slot4.offsetSize[3] do
-			for slot12 = slot4.offsetSize[2], slot4.offsetSize[4] do
-				if slot0._unitPosDic[ExploreHelper.getKeyXY(slot3.x + slot8, slot3.y + slot12)] ~= nil then
-					tabletool.removeValue(slot0._unitPosDic[slot13], slot1)
+		for iter_31_0 = var_31_0.offsetSize[1], var_31_0.offsetSize[3] do
+			for iter_31_1 = var_31_0.offsetSize[2], var_31_0.offsetSize[4] do
+				local var_31_1 = ExploreHelper.getKeyXY(arg_31_3.x + iter_31_0, arg_31_3.y + iter_31_1)
+
+				if arg_31_0._unitPosDic[var_31_1] ~= nil then
+					tabletool.removeValue(arg_31_0._unitPosDic[var_31_1], arg_31_1)
 				end
 			end
 		end
 
-		if slot2 then
-			for slot8 = slot4.offsetSize[1], slot4.offsetSize[3] do
-				for slot12 = slot4.offsetSize[2], slot4.offsetSize[4] do
-					if slot0._unitPosDic[ExploreHelper.getKeyXY(slot2.x + slot8, slot2.y + slot12)] == nil then
-						slot0._unitPosDic[slot13] = {}
+		if arg_31_2 then
+			for iter_31_2 = var_31_0.offsetSize[1], var_31_0.offsetSize[3] do
+				for iter_31_3 = var_31_0.offsetSize[2], var_31_0.offsetSize[4] do
+					local var_31_2 = ExploreHelper.getKeyXY(arg_31_2.x + iter_31_2, arg_31_2.y + iter_31_3)
+
+					if arg_31_0._unitPosDic[var_31_2] == nil then
+						arg_31_0._unitPosDic[var_31_2] = {}
 					end
 
-					table.insert(slot0._unitPosDic[slot13], slot1)
+					table.insert(arg_31_0._unitPosDic[var_31_2], arg_31_1)
 				end
 			end
 		end
 	end
 
-	slot4 = {}
-	slot5 = {}
+	local var_31_3 = {}
+	local var_31_4 = {}
 
-	if slot2 then
-		slot5 = slot0:getUnitByPos(slot2)
+	if arg_31_2 then
+		var_31_4 = arg_31_0:getUnitByPos(arg_31_2)
 	end
 
-	if slot3 then
-		for slot9, slot10 in ipairs(slot0:getUnitByPos(slot3)) do
-			if slot1 ~= slot10 and slot10:isEnable() and tabletool.indexOf(slot5, slot10) == nil then
-				slot10:onRoleLeave(slot2 or slot3, slot3, slot1)
+	if arg_31_3 then
+		var_31_3 = arg_31_0:getUnitByPos(arg_31_3)
+
+		for iter_31_4, iter_31_5 in ipairs(var_31_3) do
+			if arg_31_1 ~= iter_31_5 and iter_31_5:isEnable() and tabletool.indexOf(var_31_4, iter_31_5) == nil then
+				iter_31_5:onRoleLeave(arg_31_2 or arg_31_3, arg_31_3, arg_31_1)
 			end
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot5) do
-		if slot1 ~= slot10 and slot10:isEnable() and tabletool.indexOf(slot4, slot10) == nil then
-			slot10:onRoleEnter(slot2, slot3, slot1)
+	for iter_31_6, iter_31_7 in ipairs(var_31_4) do
+		if arg_31_1 ~= iter_31_7 and iter_31_7:isEnable() and tabletool.indexOf(var_31_3, iter_31_7) == nil then
+			iter_31_7:onRoleEnter(arg_31_2, arg_31_3, arg_31_1)
 		end
 	end
 
-	slot0:checkUnitNear(slot2, slot1)
+	arg_31_0:checkUnitNear(arg_31_2, arg_31_1)
 end
 
-function slot0.checkAllRuneTrigger(slot0)
-	for slot4, slot5 in pairs(slot0._unitDic) do
-		if slot5:getUnitType() == ExploreEnum.ItemType.Rune then
-			slot5:checkShowIcon()
+function var_0_0.checkAllRuneTrigger(arg_32_0)
+	for iter_32_0, iter_32_1 in pairs(arg_32_0._unitDic) do
+		if iter_32_1:getUnitType() == ExploreEnum.ItemType.Rune then
+			iter_32_1:checkShowIcon()
 		end
 	end
 end
 
-function slot0.checkUnitNear(slot0, slot1, slot2)
-	if slot0._nearIdList and slot1 and slot2 then
-		slot3 = ExploreHelper.getDistance(slot1, slot0._hero.nodePos) == 1
-		slot4 = false
-		slot5 = nil
+function var_0_0.checkUnitNear(arg_33_0, arg_33_1, arg_33_2)
+	if arg_33_0._nearIdList and arg_33_1 and arg_33_2 then
+		local var_33_0 = ExploreHelper.getDistance(arg_33_1, arg_33_0._hero.nodePos) == 1
+		local var_33_1 = false
+		local var_33_2
 
-		for slot9, slot10 in pairs(slot0._nearIdList) do
-			if slot10 == slot2.id then
-				slot4 = true
-				slot5 = slot9
+		for iter_33_0, iter_33_1 in pairs(arg_33_0._nearIdList) do
+			if iter_33_1 == arg_33_2.id then
+				var_33_1 = true
+				var_33_2 = iter_33_0
 
 				break
 			end
 		end
 
-		if slot3 ~= slot4 then
-			if slot4 then
-				table.remove(slot0._nearIdList, slot5)
-				slot2:onRoleFar()
+		if var_33_0 ~= var_33_1 then
+			if var_33_1 then
+				table.remove(arg_33_0._nearIdList, var_33_2)
+				arg_33_2:onRoleFar()
 			else
-				table.insert(slot0._nearIdList, slot2.id)
-				slot2:onRoleNear()
+				table.insert(arg_33_0._nearIdList, arg_33_2.id)
+				arg_33_2:onRoleNear()
 			end
 		end
 	end
 end
 
-function slot0._onUnitStatusChange(slot0, slot1, slot2)
-	if not slot0._initDone then
+function var_0_0._onUnitStatusChange(arg_34_0, arg_34_1, arg_34_2)
+	if not arg_34_0._initDone then
 		return
 	end
 
-	if slot0:getUnit(slot1, true) then
-		slot3:onStatusChange(slot2)
+	local var_34_0 = arg_34_0:getUnit(arg_34_1, true)
+
+	if var_34_0 then
+		var_34_0:onStatusChange(arg_34_2)
 	end
 end
 
-function slot0.OnUnitStatus2Change(slot0, slot1, slot2, slot3)
-	if not slot0._initDone then
+function var_0_0.OnUnitStatus2Change(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	if not arg_35_0._initDone then
 		return
 	end
 
-	if slot0:getUnit(slot1, true) then
-		slot4:onStatus2Change(slot2, slot3)
+	local var_35_0 = arg_35_0:getUnit(arg_35_1, true)
+
+	if var_35_0 then
+		var_35_0:onStatus2Change(arg_35_2, arg_35_3)
 	end
 end
 
-function slot0._onCharacterNodeChange(slot0, slot1, slot2, slot3)
-	if slot2 and slot0._hero:getHeroStatus() ~= ExploreAnimEnum.RoleAnimStatus.Glide and slot0:getNowStatus() ~= ExploreEnum.MapStatus.MoveUnit then
+function var_0_0._onCharacterNodeChange(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	if arg_36_2 and arg_36_0._hero:getHeroStatus() ~= ExploreAnimEnum.RoleAnimStatus.Glide and arg_36_0:getNowStatus() ~= ExploreEnum.MapStatus.MoveUnit then
 		ExploreModel.instance:setStepPause(false)
 	end
 
-	slot4 = {}
-	slot5 = slot0:getUnitByPos(slot1)
+	local var_36_0 = {}
+	local var_36_1 = arg_36_0:getUnitByPos(arg_36_1)
 
-	if slot2 then
-		for slot9, slot10 in ipairs(slot0:getUnitByPos(slot2)) do
-			if slot10:isEnable() and tabletool.indexOf(slot5, slot10) == nil then
-				slot10:onRoleLeave(slot1, slot2, slot0._hero)
+	if arg_36_2 then
+		var_36_0 = arg_36_0:getUnitByPos(arg_36_2)
+
+		for iter_36_0, iter_36_1 in ipairs(var_36_0) do
+			if iter_36_1:isEnable() and tabletool.indexOf(var_36_1, iter_36_1) == nil then
+				iter_36_1:onRoleLeave(arg_36_1, arg_36_2, arg_36_0._hero)
 			end
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot5) do
-		if slot10:isEnable() and tabletool.indexOf(slot4, slot10) == nil then
-			slot10:onRoleEnter(slot1, slot2, slot0._hero)
+	for iter_36_2, iter_36_3 in ipairs(var_36_1) do
+		if iter_36_3:isEnable() and tabletool.indexOf(var_36_0, iter_36_3) == nil then
+			iter_36_3:onRoleEnter(arg_36_1, arg_36_2, arg_36_0._hero)
 		end
 	end
 
-	ExploreMapModel.instance:setNodeLight(slot1)
+	ExploreMapModel.instance:setNodeLight(arg_36_1)
 
-	if slot2 and slot0._hero:getHeroStatus() ~= ExploreAnimEnum.RoleAnimStatus.Glide and slot0:getNowStatus() ~= ExploreEnum.MapStatus.MoveUnit then
-		ExploreRpc.instance:sendExploreMoveRequest(slot1.x, slot1.y)
+	if arg_36_2 and arg_36_0._hero:getHeroStatus() ~= ExploreAnimEnum.RoleAnimStatus.Glide and arg_36_0:getNowStatus() ~= ExploreEnum.MapStatus.MoveUnit then
+		ExploreRpc.instance:sendExploreMoveRequest(arg_36_1.x, arg_36_1.y)
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnChangeCameraCO, ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot1)) and slot6.cameraId)
+	local var_36_2 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_36_1))
 
-	if slot6 and ExploreMapModel.instance:getMapAreaMO(slot6.areaId) then
-		ExploreMapModel.instance:setIsShowResetBtn(slot7.isCanReset)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnChangeCameraCO, var_36_2 and var_36_2.cameraId)
+
+	if var_36_2 then
+		local var_36_3 = ExploreMapModel.instance:getMapAreaMO(var_36_2.areaId)
+
+		if var_36_3 then
+			ExploreMapModel.instance:setIsShowResetBtn(var_36_3.isCanReset)
+		end
 	end
 
-	slot0._nearIdList = slot0._nearIdList or {}
-	slot7 = {}
+	arg_36_0._nearIdList = arg_36_0._nearIdList or {}
 
-	for slot11 = 0, 270, 90 do
-		slot12 = ExploreHelper.dirToXY(slot11)
+	local var_36_4 = {}
 
-		if slot0._unitPosDic[ExploreHelper.getKeyXY(slot1.x + slot12.x, slot1.y + slot12.y)] then
-			for slot18, slot19 in pairs(slot14) do
-				slot7[slot19.id] = true
+	for iter_36_4 = 0, 270, 90 do
+		local var_36_5 = ExploreHelper.dirToXY(iter_36_4)
+		local var_36_6 = ExploreHelper.getKeyXY(arg_36_1.x + var_36_5.x, arg_36_1.y + var_36_5.y)
+		local var_36_7 = arg_36_0._unitPosDic[var_36_6]
+
+		if var_36_7 then
+			for iter_36_5, iter_36_6 in pairs(var_36_7) do
+				var_36_4[iter_36_6.id] = true
 			end
 		end
 	end
 
-	for slot11 = #slot0._nearIdList, 1, -1 do
-		if slot7[slot0._nearIdList[slot11]] then
-			slot7[slot12] = nil
+	for iter_36_7 = #arg_36_0._nearIdList, 1, -1 do
+		local var_36_8 = arg_36_0._nearIdList[iter_36_7]
+
+		if var_36_4[var_36_8] then
+			var_36_4[var_36_8] = nil
 		else
-			if slot0:getUnit(slot12, true) then
-				slot13:onRoleFar()
+			local var_36_9 = arg_36_0:getUnit(var_36_8, true)
+
+			if var_36_9 then
+				var_36_9:onRoleFar()
 			end
 
-			table.remove(slot0._nearIdList, slot11)
+			table.remove(arg_36_0._nearIdList, iter_36_7)
 		end
 	end
 
-	for slot11 in pairs(slot7) do
-		table.insert(slot0._nearIdList, slot11)
+	for iter_36_8 in pairs(var_36_4) do
+		table.insert(arg_36_0._nearIdList, iter_36_8)
 
-		if slot0:getUnit(slot11, true) then
-			slot12:onRoleNear()
+		local var_36_10 = arg_36_0:getUnit(iter_36_8, true)
+
+		if var_36_10 then
+			var_36_10:onRoleNear()
 		end
 	end
 end
 
-function slot0._onCharacterPosChange(slot0, slot1)
-	slot0:setCameraPos(slot1)
+function var_0_0._onCharacterPosChange(arg_37_0, arg_37_1)
+	arg_37_0:setCameraPos(arg_37_1)
 end
 
-function slot0._onClickUnit(slot0, slot1)
-	slot0._hero:moveToTar(slot1)
+function var_0_0._onClickUnit(arg_38_0, arg_38_1)
+	arg_38_0._hero:moveToTar(arg_38_1)
 end
 
-function slot0.setMapStatus(slot0, slot1, slot2)
-	if slot0._compDict[slot0._nowStatus] then
-		if not slot0._compDict[slot0._nowStatus]:canSwitchStatus(slot1) then
+function var_0_0.setMapStatus(arg_39_0, arg_39_1, arg_39_2)
+	if arg_39_0._compDict[arg_39_0._nowStatus] then
+		if not arg_39_0._compDict[arg_39_0._nowStatus]:canSwitchStatus(arg_39_1) then
 			return false
 		end
 
-		slot0._compDict[slot0._nowStatus]:onStatusEnd()
+		arg_39_0._compDict[arg_39_0._nowStatus]:onStatusEnd()
 	end
 
-	slot0._nowStatus = slot1
+	arg_39_0._nowStatus = arg_39_1
 
-	if slot0._compDict[slot0._nowStatus] then
-		slot0._compDict[slot0._nowStatus]:onStatusStart(slot2)
+	if arg_39_0._compDict[arg_39_0._nowStatus] then
+		arg_39_0._compDict[arg_39_0._nowStatus]:onStatusStart(arg_39_2)
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.MapStatusChange, slot1)
+	ExploreController.instance:dispatchEvent(ExploreEvent.MapStatusChange, arg_39_1)
 
 	return true
 end
 
-function slot0._onClickMap(slot0, slot1)
-	if slot0._compDict[slot0._nowStatus] then
-		return slot0._compDict[slot0._nowStatus]:onMapClick(slot1)
+function var_0_0._onClickMap(arg_40_0, arg_40_1)
+	if arg_40_0._compDict[arg_40_0._nowStatus] then
+		return arg_40_0._compDict[arg_40_0._nowStatus]:onMapClick(arg_40_1)
 	end
 
-	if not slot0._mapGo or not slot0._mapGo.activeInHierarchy then
+	if not arg_40_0._mapGo or not arg_40_0._mapGo.activeInHierarchy then
 		return
 	end
 
-	slot2, slot3 = slot0:GetTilemapMousePos(slot1)
-	slot4 = false
+	local var_40_0, var_40_1 = arg_40_0:GetTilemapMousePos(arg_40_1)
+	local var_40_2 = false
 
-	if slot2 and slot2:click() then
-		-- Nothing
-	elseif slot2 == nil then
-		slot4 = slot0:moveTo(slot3)
+	if var_40_0 and var_40_0:click() then
+		-- block empty
+	elseif var_40_0 == nil then
+		var_40_2 = arg_40_0:moveTo(var_40_1)
 	else
-		slot2, slot6 = slot0:GetTilemapMousePos(slot1, true)
+		var_40_0, var_40_1 = arg_40_0:GetTilemapMousePos(arg_40_1, true)
 
-		if slot6 then
-			slot4 = slot0:moveTo(slot3)
+		if var_40_1 then
+			var_40_2 = arg_40_0:moveTo(var_40_1)
 		else
-			slot2, slot6 = slot0:GetTilemapMousePos(slot1)
-			slot4 = slot0:moveTo(slot6)
+			var_40_0, var_40_1 = arg_40_0:GetTilemapMousePos(arg_40_1)
+			var_40_2 = arg_40_0:moveTo(var_40_1)
 		end
 	end
 
-	slot5 = false
+	local var_40_3 = false
 
-	if slot3 then
-		slot5 = ExploreMapModel.instance:getNodeCanWalk(ExploreHelper.getKey(slot3))
+	if var_40_1 then
+		local var_40_4 = ExploreHelper.getKey(var_40_1)
+
+		var_40_3 = ExploreMapModel.instance:getNodeCanWalk(var_40_4)
 	end
 
-	if ExploreModel.instance:isHeroInControl() and slot3 and not slot2 and not slot4 and slot5 then
-		slot0:_showClickEffect(slot3)
-	end
-end
-
-function slot0.adjustSpineLookRotation(slot0, slot1)
-	if slot1 and not gohelper.isNil(slot1.go) then
-		slot1:setRotate(slot0._cameraComponent:getRotation())
+	if ExploreModel.instance:isHeroInControl() and var_40_1 and not var_40_0 and not var_40_2 and var_40_3 then
+		arg_40_0:_showClickEffect(var_40_1)
 	end
 end
 
-function slot0._loadedFinish(slot0, slot1)
-	if slot0._episodeCo and slot0._episodeCo.bgmevent > 0 then
-		-- Nothing
+function var_0_0.adjustSpineLookRotation(arg_41_0, arg_41_1)
+	if arg_41_1 and not gohelper.isNil(arg_41_1.go) then
+		arg_41_1:setRotate(arg_41_0._cameraComponent:getRotation())
+	end
+end
+
+function var_0_0._loadedFinish(arg_42_0, arg_42_1)
+	if arg_42_0._episodeCo and arg_42_0._episodeCo.bgmevent > 0 then
+		-- block empty
 	end
 
-	slot4 = gohelper.clone(slot0._loader:getAssetItem(slot0._mapPrefabPath):GetResource(slot0._mapPrefabPath), slot0._root)
-	slot0._mapGo = slot4
-	slot5 = gohelper.create3d(slot4, "NavMesh")
+	local var_42_0 = arg_42_0._loader:getAssetItem(arg_42_0._mapPrefabPath):GetResource(arg_42_0._mapPrefabPath)
+	local var_42_1 = gohelper.clone(var_42_0, arg_42_0._root)
 
-	if slot0._loader:getAssetItem(slot0._meshPath) and slot6.IsLoadSuccess then
-		gohelper.onceAddComponent(slot5, typeof(UnityEngine.MeshCollider)).sharedMesh = slot6:GetResource()
+	arg_42_0._mapGo = var_42_1
 
-		gohelper.setLayer(slot5, UnityLayer.Scene)
+	local var_42_2 = gohelper.create3d(var_42_1, "NavMesh")
+	local var_42_3 = arg_42_0._loader:getAssetItem(arg_42_0._meshPath)
+
+	if var_42_3 and var_42_3.IsLoadSuccess then
+		gohelper.onceAddComponent(var_42_2, typeof(UnityEngine.MeshCollider)).sharedMesh = var_42_3:GetResource()
+
+		gohelper.setLayer(var_42_2, UnityLayer.Scene)
 	end
 
 	ExploreConfig.instance:loadExploreConfig(ExploreModel.instance.mapId)
 	ExploreMapModel.instance:initMapData(ExploreConfig.instance:getMapConfig(), ExploreModel.instance.mapId)
-	slot4:SetActive(false)
-	slot0:_initMap()
+	var_42_1:SetActive(false)
+	arg_42_0:_initMap()
 
-	if slot0._preloadComp == nil then
+	if arg_42_0._preloadComp == nil then
 		ExploreController.instance:dispatchEvent(ExploreEvent.InitMapDone)
 	end
 end
 
-function slot0.getLoader(slot0)
-	return slot0._loader
+function var_0_0.getLoader(arg_43_0)
+	return arg_43_0._loader
 end
 
-function slot0.getNowStatus(slot0)
-	return slot0._nowStatus
+function var_0_0.getNowStatus(arg_44_0)
+	return arg_44_0._nowStatus
 end
 
-function slot0.getCompByType(slot0, slot1)
-	if not slot0._compDict then
+function var_0_0.getCompByType(arg_45_0, arg_45_1)
+	if not arg_45_0._compDict then
 		return
 	end
 
-	return slot0._compDict[slot1]
+	return arg_45_0._compDict[arg_45_1]
 end
 
-function slot0.getCatchComp(slot0)
-	return slot0._catchComponent
+function var_0_0.getCatchComp(arg_46_0)
+	return arg_46_0._catchComponent
 end
 
-function slot0._initMap(slot0)
-	if not slot0._mapGo then
+function var_0_0._initMap(arg_47_0)
+	if not arg_47_0._mapGo then
 		return
 	end
 
-	slot0._mapGo:SetActive(true)
+	arg_47_0._mapGo:SetActive(true)
 
-	slot0._cameraComponent = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreCamera)
+	arg_47_0._cameraComponent = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreCamera)
 
-	slot0._cameraComponent:setMap(slot0)
+	arg_47_0._cameraComponent:setMap(arg_47_0)
 
-	slot0._nowStatus = ExploreEnum.MapStatus.Normal
-	slot0._compDict = {
-		[ExploreEnum.MapStatus.UseItem] = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapUseItemComp),
-		[ExploreEnum.MapStatus.MoveUnit] = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapUnitMoveComp)
-	}
-	slot4 = slot0._mapGo
-	slot5 = ExploreMapUnitRotateComp
-	slot0._compDict[ExploreEnum.MapStatus.RotateUnit] = MonoHelper.addLuaComOnceToGo(slot4, slot5)
+	arg_47_0._nowStatus = ExploreEnum.MapStatus.Normal
+	arg_47_0._compDict = {}
+	arg_47_0._compDict[ExploreEnum.MapStatus.UseItem] = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreMapUseItemComp)
+	arg_47_0._compDict[ExploreEnum.MapStatus.MoveUnit] = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreMapUnitMoveComp)
+	arg_47_0._compDict[ExploreEnum.MapStatus.RotateUnit] = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreMapUnitRotateComp)
 
-	for slot4, slot5 in pairs(slot0._compDict) do
-		slot5:setMap(slot0)
-		slot5:setMapStatus(slot4)
+	for iter_47_0, iter_47_1 in pairs(arg_47_0._compDict) do
+		iter_47_1:setMap(arg_47_0)
+		iter_47_1:setMapStatus(iter_47_0)
 	end
 
-	slot0._preloadComp = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapScenePreloadComp)
+	arg_47_0._preloadComp = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreMapScenePreloadComp)
 
-	if slot0._preloadComp.hasInit == false then
-		slot0._preloadComp = nil
+	if arg_47_0._preloadComp.hasInit == false then
+		arg_47_0._preloadComp = nil
 	end
 
-	slot0._catchComponent = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapUnitCatchComp)
-	slot0._fovComponent = MonoHelper.addLuaComOnceToGo(slot0._mapGo, ExploreMapFOVComp)
-	slot0._unitRoot = gohelper.findChild(slot0._mapGo, "unit")
+	arg_47_0._catchComponent = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreMapUnitCatchComp)
+	arg_47_0._fovComponent = MonoHelper.addLuaComOnceToGo(arg_47_0._mapGo, ExploreMapFOVComp)
+	arg_47_0._unitRoot = gohelper.findChild(arg_47_0._mapGo, "unit")
 
-	slot0:_buildNode()
-	slot0:_buildUnit()
-	slot0:_initCharacter()
-	slot0:_initClickEffect()
+	arg_47_0:_buildNode()
+	arg_47_0:_buildUnit()
+	arg_47_0:_initCharacter()
+	arg_47_0:_initClickEffect()
 
-	if slot0._preloadComp == nil then
-		slot0:showGrid()
+	if arg_47_0._preloadComp == nil then
+		arg_47_0:showGrid()
 	end
 
-	slot0._fovComponent:setMap(slot0)
-	slot0._catchComponent:setMap(slot0)
+	arg_47_0._fovComponent:setMap(arg_47_0)
+	arg_47_0._catchComponent:setMap(arg_47_0)
 	ExploreCounterModel.instance:reCalcCount()
 
-	for slot4, slot5 in pairs(slot0._unitDic) do
-		slot5:onMapInit()
+	for iter_47_2, iter_47_3 in pairs(arg_47_0._unitDic) do
+		iter_47_3:onMapInit()
 	end
 
-	slot0._initDone = true
+	arg_47_0._initDone = true
 
 	ExploreController.instance:getMapLight():initLight()
-	ExploreController.instance:getMapWhirl():init(slot0._mapGo)
+	ExploreController.instance:getMapWhirl():init(arg_47_0._mapGo)
 	ExploreController.instance:getMapPipe():init()
-	slot0._cameraComponent:initHeroPos()
+	arg_47_0._cameraComponent:initHeroPos()
 end
 
-function slot0.beginCameraAnim(slot0)
-	for slot4, slot5 in pairs(slot0._unitDic) do
-		slot5:onHeroInitDone()
+function var_0_0.beginCameraAnim(arg_48_0)
+	for iter_48_0, iter_48_1 in pairs(arg_48_0._unitDic) do
+		iter_48_1:onHeroInitDone()
 	end
 end
 
-function slot0.getUnitRoot(slot0)
-	return slot0._unitRoot
+function var_0_0.getUnitRoot(arg_49_0)
+	return arg_49_0._unitRoot
 end
 
-function slot0.getContainRootByAreaId(slot0, slot1)
-	if type(slot1) ~= "number" then
-		slot1 = 0
+function var_0_0.getContainRootByAreaId(arg_50_0, arg_50_1)
+	if type(arg_50_1) ~= "number" then
+		arg_50_1 = 0
 	end
 
-	if not slot0._areaRoots then
-		slot0._areaRoots = {}
+	if not arg_50_0._areaRoots then
+		arg_50_0._areaRoots = {}
 	end
 
-	if not slot0._areaRoots[slot1] then
-		slot0._areaRoots[slot1] = {
-			go = gohelper.create3d(slot0._mapGo, "area_" .. slot1)
-		}
-		slot0._areaRoots[slot1].unit = gohelper.create3d(slot0._areaRoots[slot1].go, "unit")
-		slot0._areaRoots[slot1].sceneObj = gohelper.create3d(slot0._areaRoots[slot1].go, "sceneObj")
-		slot0._areaRoots[slot1].node = gohelper.create3d(slot0._areaRoots[slot1].go, "node")
+	if not arg_50_0._areaRoots[arg_50_1] then
+		arg_50_0._areaRoots[arg_50_1] = {}
+		arg_50_0._areaRoots[arg_50_1].go = gohelper.create3d(arg_50_0._mapGo, "area_" .. arg_50_1)
+		arg_50_0._areaRoots[arg_50_1].unit = gohelper.create3d(arg_50_0._areaRoots[arg_50_1].go, "unit")
+		arg_50_0._areaRoots[arg_50_1].sceneObj = gohelper.create3d(arg_50_0._areaRoots[arg_50_1].go, "sceneObj")
+		arg_50_0._areaRoots[arg_50_1].node = gohelper.create3d(arg_50_0._areaRoots[arg_50_1].go, "node")
 
-		if ExploreMapModel.instance:getMapAreaMO(slot1) and not slot2.visible then
-			gohelper.setActive(slot0._areaRoots[slot1].go, false)
+		local var_50_0 = ExploreMapModel.instance:getMapAreaMO(arg_50_1)
+
+		if var_50_0 and not var_50_0.visible then
+			gohelper.setActive(arg_50_0._areaRoots[arg_50_1].go, false)
 		end
 	end
 
-	return slot0._areaRoots[slot1]
+	return arg_50_0._areaRoots[arg_50_1]
 end
 
-function slot0._buildNode(slot0)
-	slot0._walkableList = {}
+function var_0_0._buildNode(arg_51_0)
+	arg_51_0._walkableList = {}
 
-	for slot5, slot6 in pairs(ExploreMapModel.instance:getNodeDic()) do
-		slot0._walkableList[slot6.walkableKey] = slot6
+	local var_51_0 = ExploreMapModel.instance:getNodeDic()
+
+	for iter_51_0, iter_51_1 in pairs(var_51_0) do
+		arg_51_0._walkableList[iter_51_1.walkableKey] = iter_51_1
 	end
 end
 
-function slot0._buildUnit(slot0)
-	slot0._unitDic = {}
-	slot0._hideUnitDic = {}
-	slot0._unitPosDic = {}
+function var_0_0._buildUnit(arg_52_0)
+	arg_52_0._unitDic = {}
+	arg_52_0._hideUnitDic = {}
+	arg_52_0._unitPosDic = {}
 
-	for slot5, slot6 in pairs(ExploreMapModel.instance:getUnitDic()) do
-		slot0:enterUnit(slot6)
+	local var_52_0 = ExploreMapModel.instance:getUnitDic()
+
+	for iter_52_0, iter_52_1 in pairs(var_52_0) do
+		arg_52_0:enterUnit(iter_52_1)
 	end
 
-	if ExploreModel.instance:getAllInteractInfo() then
-		for slot6, slot7 in pairs(slot2) do
-			if ExploreMapModel.instance:getUnitMO(slot6) == nil then
-				ExploreController.instance:updateUnit(slot7)
+	local var_52_1 = ExploreModel.instance:getAllInteractInfo()
+
+	if var_52_1 then
+		for iter_52_2, iter_52_3 in pairs(var_52_1) do
+			if ExploreMapModel.instance:getUnitMO(iter_52_2) == nil then
+				ExploreController.instance:updateUnit(iter_52_3)
 			end
 		end
 	end
 end
 
-function slot0.haveNodeXY(slot0, slot1)
-	return slot0._walkableList[slot1] and true or false
+function var_0_0.haveNodeXY(arg_53_0, arg_53_1)
+	return arg_53_0._walkableList[arg_53_1] and true or false
 end
 
-function slot0.enterUnit(slot0, slot1)
-	slot2 = slot0._unitDic[slot1.id]
+function var_0_0.enterUnit(arg_54_0, arg_54_1)
+	local var_54_0 = arg_54_0._unitDic[arg_54_1.id]
 
-	if not slot1:isEnter() then
-		slot0._hideUnitDic[slot1.id] = slot2
+	if not arg_54_1:isEnter() then
+		arg_54_0._hideUnitDic[arg_54_1.id] = var_54_0
 
 		return
 	end
 
-	slot3 = nil
+	local var_54_1
 
-	if slot2 == nil then
-		if slot0._hideUnitDic[slot1.id] then
-			slot2 = slot0._hideUnitDic[slot1.id]
-			slot0._hideUnitDic[slot1.id] = nil
+	if var_54_0 == nil then
+		if arg_54_0._hideUnitDic[arg_54_1.id] then
+			var_54_0 = arg_54_0._hideUnitDic[arg_54_1.id]
+			arg_54_0._hideUnitDic[arg_54_1.id] = nil
 		else
-			slot4 = slot1:getUnitClass()
-			slot5 = slot1.areaId
+			local var_54_2 = arg_54_1:getUnitClass()
+			local var_54_3 = arg_54_1.areaId
 
-			if slot1.type == ExploreEnum.ItemType.SceneAudio then
-				slot5 = -9999999
+			if arg_54_1.type == ExploreEnum.ItemType.SceneAudio then
+				var_54_3 = -9999999
 			end
 
-			slot2 = slot4.New(slot0:getContainRootByAreaId(slot5).unit)
+			var_54_0 = var_54_2.New(arg_54_0:getContainRootByAreaId(var_54_3).unit)
 		end
 
-		slot3 = true
+		var_54_1 = true or var_54_1
 	end
 
-	slot0._unitDic[slot1.id] = slot2
+	arg_54_0._unitDic[arg_54_1.id] = var_54_0
 
-	slot2:setData(slot1)
+	local var_54_4 = var_54_0.nodePos
 
-	if slot3 or not slot2.nodePos then
-		for slot8 = slot1.offsetSize[1], slot1.offsetSize[3] do
-			for slot12 = slot1.offsetSize[2], slot1.offsetSize[4] do
-				if slot0._unitPosDic[ExploreHelper.getKeyXY(slot1.nodePos.x + slot8, slot1.nodePos.y + slot12)] == nil then
-					slot0._unitPosDic[slot13] = {}
+	var_54_0:setData(arg_54_1)
+
+	if var_54_1 or not var_54_4 then
+		for iter_54_0 = arg_54_1.offsetSize[1], arg_54_1.offsetSize[3] do
+			for iter_54_1 = arg_54_1.offsetSize[2], arg_54_1.offsetSize[4] do
+				local var_54_5 = ExploreHelper.getKeyXY(arg_54_1.nodePos.x + iter_54_0, arg_54_1.nodePos.y + iter_54_1)
+
+				if arg_54_0._unitPosDic[var_54_5] == nil then
+					arg_54_0._unitPosDic[var_54_5] = {}
 				end
 
-				if not tabletool.indexOf(slot0._unitPosDic[slot13], slot2) then
-					table.insert(slot0._unitPosDic[slot13], slot2)
+				if not tabletool.indexOf(arg_54_0._unitPosDic[var_54_5], var_54_0) then
+					table.insert(arg_54_0._unitPosDic[var_54_5], var_54_0)
 				end
 			end
 		end
 
-		if slot0._initDone then
-			slot2:setInFOV(true)
-			slot2:checkLight()
+		if arg_54_0._initDone then
+			var_54_0:setInFOV(true)
+			var_54_0:checkLight()
 		end
 	end
 end
 
-function slot0.removeUnit(slot0, slot1)
-	if slot0._unitDic[slot1] then
-		slot3 = slot2.mo
-		slot0._hideUnitDic[slot3.id] = slot2
-		slot0._unitDic[slot3.id] = nil
+function var_0_0.removeUnit(arg_55_0, arg_55_1)
+	local var_55_0 = arg_55_0._unitDic[arg_55_1]
 
-		for slot7 = slot3.offsetSize[1], slot3.offsetSize[3] do
-			for slot11 = slot3.offsetSize[2], slot3.offsetSize[4] do
-				if slot0._unitPosDic[ExploreHelper.getKeyXY(slot3.nodePos.x + slot7, slot3.nodePos.y + slot11)] ~= nil then
-					for slot16, slot17 in pairs(slot0._unitPosDic[slot12]) do
-						if slot17 ~= slot2 then
-							slot17:onRoleLeave(slot2.nodePos, slot2.nodePos, slot2)
+	if var_55_0 then
+		local var_55_1 = var_55_0.mo
+
+		arg_55_0._hideUnitDic[var_55_1.id] = var_55_0
+		arg_55_0._unitDic[var_55_1.id] = nil
+
+		for iter_55_0 = var_55_1.offsetSize[1], var_55_1.offsetSize[3] do
+			for iter_55_1 = var_55_1.offsetSize[2], var_55_1.offsetSize[4] do
+				local var_55_2 = ExploreHelper.getKeyXY(var_55_1.nodePos.x + iter_55_0, var_55_1.nodePos.y + iter_55_1)
+
+				if arg_55_0._unitPosDic[var_55_2] ~= nil then
+					for iter_55_2, iter_55_3 in pairs(arg_55_0._unitPosDic[var_55_2]) do
+						if iter_55_3 ~= var_55_0 then
+							iter_55_3:onRoleLeave(var_55_0.nodePos, var_55_0.nodePos, var_55_0)
 						end
 					end
 
-					tabletool.removeValue(slot0._unitPosDic[slot12], slot2)
+					tabletool.removeValue(arg_55_0._unitPosDic[var_55_2], var_55_0)
 				end
 			end
 		end
 
-		slot2:setExit()
+		var_55_0:setExit()
 	end
 end
 
-function slot0._initCharacter(slot0)
-	slot0._hero = ExploreHero.New(gohelper.findChild(slot0._mapGo, "role"))
+function var_0_0._initCharacter(arg_56_0)
+	local var_56_0 = gohelper.findChild(arg_56_0._mapGo, "role")
 
-	slot0._hero:setMap(slot0)
-	slot0._hero:onUpdateExploreInfo()
-	slot0._hero:setResPath("explore/roles/prefabs/hero.prefab")
+	arg_56_0._hero = ExploreHero.New(var_56_0)
+
+	arg_56_0._hero:setMap(arg_56_0)
+	arg_56_0._hero:onUpdateExploreInfo()
+	arg_56_0._hero:setResPath("explore/roles/prefabs/hero.prefab")
 end
 
-function slot0._initClickEffect(slot0)
-	slot0._clickEffectContainer = UnityEngine.GameObject.New("ClickEffect")
+function var_0_0._initClickEffect(arg_57_0)
+	arg_57_0._clickEffectContainer = UnityEngine.GameObject.New("ClickEffect")
 
-	gohelper.addChild(slot0._mapGo, slot0._clickEffectContainer)
+	gohelper.addChild(arg_57_0._mapGo, arg_57_0._clickEffectContainer)
 
-	slot0._clickEffectLoader = PrefabInstantiate.Create(slot0._clickEffectContainer)
+	arg_57_0._clickEffectLoader = PrefabInstantiate.Create(arg_57_0._clickEffectContainer)
 
-	slot0._clickEffectLoader:startLoad(ResUrl.getExploreEffectPath(ExploreConstValue.ClickEffect), function ()
-		uv0._effectGo = uv0._clickEffectLoader:getInstGO()
+	arg_57_0._clickEffectLoader:startLoad(ResUrl.getExploreEffectPath(ExploreConstValue.ClickEffect), function()
+		arg_57_0._effectGo = arg_57_0._clickEffectLoader:getInstGO()
 
-		gohelper.addChild(uv0._clickEffectContainer, uv0._effectGo)
-		gohelper.setActive(uv0._clickEffectContainer, false)
+		gohelper.addChild(arg_57_0._clickEffectContainer, arg_57_0._effectGo)
+		gohelper.setActive(arg_57_0._clickEffectContainer, false)
 
-		uv0._effectOrderContainer = gohelper.findChildComponent(uv0._effectGo, "root", typeof(ZProj.EffectOrderContainer))
+		arg_57_0._effectOrderContainer = gohelper.findChildComponent(arg_57_0._effectGo, "root", typeof(ZProj.EffectOrderContainer))
 	end)
 end
 
-function slot0.destroy(slot0)
-	for slot4, slot5 in pairs(slot0._unitDic) do
-		slot5:destroy()
+function var_0_0.destroy(arg_59_0)
+	for iter_59_0, iter_59_1 in pairs(arg_59_0._unitDic) do
+		iter_59_1:destroy()
 	end
 
-	for slot4, slot5 in pairs(slot0._hideUnitDic) do
-		slot5:destroy()
+	for iter_59_2, iter_59_3 in pairs(arg_59_0._hideUnitDic) do
+		iter_59_3:destroy()
 	end
 
-	if slot0._hero then
-		slot0._hero:destroy()
+	if arg_59_0._hero then
+		arg_59_0._hero:destroy()
 
-		slot0._hero = nil
+		arg_59_0._hero = nil
 	end
 
-	if slot0._clickEffectLoader then
-		slot0._clickEffectLoader:dispose()
+	if arg_59_0._clickEffectLoader then
+		arg_59_0._clickEffectLoader:dispose()
 
-		slot0._clickEffectLoader = nil
+		arg_59_0._clickEffectLoader = nil
 	end
 
-	gohelper.destroy(slot0._clickEffectContainer)
+	gohelper.destroy(arg_59_0._clickEffectContainer)
 
-	slot0._clickEffectContainer = nil
-	slot0._unitDic = nil
-	slot0._hideUnitDic = nil
-	slot0._nowStatus = ExploreEnum.MapStatus.Normal
-	slot0._compDict = nil
+	arg_59_0._clickEffectContainer = nil
+	arg_59_0._unitDic = nil
+	arg_59_0._hideUnitDic = nil
+	arg_59_0._nowStatus = ExploreEnum.MapStatus.Normal
+	arg_59_0._compDict = nil
 
 	ExploreModel.instance:setHeroControl(true)
-	ExploreMapTriggerController.instance:unRegisterMap(slot0)
+	ExploreMapTriggerController.instance:unRegisterMap(arg_59_0)
 	ExploreMapModel.instance:clear()
 	ZProj.ExploreHelper.Clear()
 	ViewMgr.instance:closeView(ViewName.ExploreEnterView)
@@ -901,4 +986,4 @@ function slot0.destroy(slot0)
 	AudioMgr.instance:trigger(AudioEnum.Explore.ElevatorStop)
 end
 
-return slot0
+return var_0_0

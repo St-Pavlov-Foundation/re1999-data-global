@@ -1,89 +1,100 @@
-module("modules.common.tween.EaseType", package.seeall)
+﻿module("modules.common.tween.EaseType", package.seeall)
 
-slot0 = _M
-slot0.Linear = 1
-slot0.InSine = 2
-slot0.OutSine = 3
-slot0.InOutSine = 4
-slot0.InQuad = 5
-slot0.OutQuad = 6
-slot0.InOutQuad = 7
-slot0.InCubic = 8
-slot0.OutCubic = 9
-slot0.InOutCubic = 10
-slot0.InQuart = 11
-slot0.OutQuart = 12
-slot0.InOutQuart = 13
-slot0.InQuint = 14
-slot0.OutQuint = 15
-slot0.InOutQuint = 16
-slot0.InExpo = 17
-slot0.OutExpo = 18
-slot0.InOutExpo = 19
-slot0.InCirc = 20
-slot0.OutCirc = 21
-slot0.InOutCirc = 22
-slot0.InBack = 23
-slot0.OutBack = 24
-slot0.InOutBack = 25
-slot0.InElastic = 26
-slot0.OutElastic = 27
-slot0.InOutElastic = 28
-slot0.InBounce = 29
-slot0.OutBounce = 30
-slot0.InOutBounce = 31
-slot0.Str2TypeDict = {
-	linear = slot0.Linear,
-	insine = slot0.InSine,
-	outsine = slot0.OutSine,
-	inoutsine = slot0.InOutSine,
-	inquad = slot0.InQuad,
-	outquad = slot0.OutQuad,
-	inoutquad = slot0.InOutQuad,
-	incubic = slot0.InCubic,
-	outcubic = slot0.OutCubic,
-	inoutcubic = slot0.InOutCubic,
-	inquart = slot0.InQuart,
-	outquart = slot0.OutQuart,
-	inoutquart = slot0.InOutQuart,
-	inquint = slot0.InQuint,
-	outquint = slot0.OutQuint,
-	inoutquint = slot0.InOutQuint,
-	inexpo = slot0.InExpo,
-	outexpo = slot0.OutExpo,
-	inoutexpo = slot0.InOutExpo,
-	incirc = slot0.InCirc,
-	outcirc = slot0.OutCirc,
-	inoutcirc = slot0.InOutCirc,
-	inback = slot0.InBack,
-	outback = slot0.OutBack,
-	inoutback = slot0.InOutBack,
-	inelastic = slot0.InElastic,
-	outelastic = slot0.OutElastic,
-	inoutelastic = slot0.InOutElastic,
-	inbounce = slot0.InBounce,
-	outbounce = slot0.OutBounce,
-	inoutbounce = slot0.InOutBounce
+local var_0_0 = _M
+
+var_0_0.Linear = 1
+var_0_0.InSine = 2
+var_0_0.OutSine = 3
+var_0_0.InOutSine = 4
+var_0_0.InQuad = 5
+var_0_0.OutQuad = 6
+var_0_0.InOutQuad = 7
+var_0_0.InCubic = 8
+var_0_0.OutCubic = 9
+var_0_0.InOutCubic = 10
+var_0_0.InQuart = 11
+var_0_0.OutQuart = 12
+var_0_0.InOutQuart = 13
+var_0_0.InQuint = 14
+var_0_0.OutQuint = 15
+var_0_0.InOutQuint = 16
+var_0_0.InExpo = 17
+var_0_0.OutExpo = 18
+var_0_0.InOutExpo = 19
+var_0_0.InCirc = 20
+var_0_0.OutCirc = 21
+var_0_0.InOutCirc = 22
+var_0_0.InBack = 23
+var_0_0.OutBack = 24
+var_0_0.InOutBack = 25
+var_0_0.InElastic = 26
+var_0_0.OutElastic = 27
+var_0_0.InOutElastic = 28
+var_0_0.InBounce = 29
+var_0_0.OutBounce = 30
+var_0_0.InOutBounce = 31
+var_0_0.Str2TypeDict = {
+	linear = var_0_0.Linear,
+	insine = var_0_0.InSine,
+	outsine = var_0_0.OutSine,
+	inoutsine = var_0_0.InOutSine,
+	inquad = var_0_0.InQuad,
+	outquad = var_0_0.OutQuad,
+	inoutquad = var_0_0.InOutQuad,
+	incubic = var_0_0.InCubic,
+	outcubic = var_0_0.OutCubic,
+	inoutcubic = var_0_0.InOutCubic,
+	inquart = var_0_0.InQuart,
+	outquart = var_0_0.OutQuart,
+	inoutquart = var_0_0.InOutQuart,
+	inquint = var_0_0.InQuint,
+	outquint = var_0_0.OutQuint,
+	inoutquint = var_0_0.InOutQuint,
+	inexpo = var_0_0.InExpo,
+	outexpo = var_0_0.OutExpo,
+	inoutexpo = var_0_0.InOutExpo,
+	incirc = var_0_0.InCirc,
+	outcirc = var_0_0.OutCirc,
+	inoutcirc = var_0_0.InOutCirc,
+	inback = var_0_0.InBack,
+	outback = var_0_0.OutBack,
+	inoutback = var_0_0.InOutBack,
+	inelastic = var_0_0.InElastic,
+	outelastic = var_0_0.OutElastic,
+	inoutelastic = var_0_0.InOutElastic,
+	inbounce = var_0_0.InBounce,
+	outbounce = var_0_0.OutBounce,
+	inoutbounce = var_0_0.InOutBounce
 }
 
-function slot0.Str2Type(slot0)
-	if string.nilorempty(slot0) then
-		return uv0.Linear
+function var_0_0.Str2Type(arg_1_0)
+	if string.nilorempty(arg_1_0) then
+		return var_0_0.Linear
 	end
 
-	if type(slot0) == "number" then
-		return slot0
+	if type(arg_1_0) == "number" then
+		return arg_1_0
 	end
 
-	if uv0.Str2TypeDict[string.lower(slot0)] then
-		return slot1
+	arg_1_0 = string.lower(arg_1_0)
+
+	local var_1_0 = var_0_0.Str2TypeDict[arg_1_0]
+
+	if var_1_0 then
+		return var_1_0
 	end
 
-	if string.find(slot0, "ease") == 1 and uv0.Str2TypeDict[string.sub(slot0, 5)] then
-		return slot1
+	if string.find(arg_1_0, "ease") == 1 then
+		arg_1_0 = string.sub(arg_1_0, 5)
+
+		local var_1_1 = var_0_0.Str2TypeDict[arg_1_0]
+
+		if var_1_1 then
+			return var_1_1
+		end
 	end
 
-	return uv0.Linear
+	return var_0_0.Linear
 end
 
-return slot0
+return var_0_0

@@ -1,120 +1,152 @@
-module("modules.logic.tower.model.TowerEpisodeMo", package.seeall)
+﻿module("modules.logic.tower.model.TowerEpisodeMo", package.seeall)
 
-slot0 = pureTable("TowerEpisodeMo")
+local var_0_0 = pureTable("TowerEpisodeMo")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.towerType = slot1
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.towerType = arg_1_1
 
-	slot0:initEpisode(slot2)
+	arg_1_0:initEpisode(arg_1_2)
 end
 
-function slot0.initEpisode(slot0, slot1)
-	slot0.episodeList = {}
-	slot0.preEpisodeDict = {}
-	slot0.normalEpisodeCountDict = {}
-	slot0.configDict = slot1.configDict
-	slot2 = nil
+function var_0_0.initEpisode(arg_2_0, arg_2_1)
+	arg_2_0.episodeList = {}
+	arg_2_0.preEpisodeDict = {}
+	arg_2_0.normalEpisodeCountDict = {}
+	arg_2_0.configDict = arg_2_1.configDict
 
-	for slot6, slot7 in pairs(slot1.configList) do
-		if not slot0.preEpisodeDict[slot7.towerId] then
-			slot0.preEpisodeDict[slot2] = {}
+	local var_2_0
+
+	for iter_2_0, iter_2_1 in pairs(arg_2_1.configList) do
+		local var_2_1 = iter_2_1.towerId
+		local var_2_2 = arg_2_0.preEpisodeDict[var_2_1]
+
+		if not var_2_2 then
+			var_2_2 = {}
+			arg_2_0.preEpisodeDict[var_2_1] = var_2_2
 		end
 
-		slot8[slot7.preLayerId] = slot7.layerId
+		var_2_2[iter_2_1.preLayerId] = iter_2_1.layerId
 	end
 
-	slot3, slot4, slot5 = nil
+	local var_2_3
+	local var_2_4
+	local var_2_5
 
-	for slot9, slot10 in pairs(slot0.preEpisodeDict) do
-		if not slot0.episodeList[slot9] then
-			slot0.episodeList[slot9] = {}
+	for iter_2_2, iter_2_3 in pairs(arg_2_0.preEpisodeDict) do
+		local var_2_6 = arg_2_0.episodeList[iter_2_2]
+
+		if not var_2_6 then
+			var_2_6 = {}
+			arg_2_0.episodeList[iter_2_2] = var_2_6
 		end
 
-		slot4 = slot10[0]
-		slot5 = slot0:getEpisodeDict(slot9)
+		local var_2_7 = iter_2_3[0]
+		local var_2_8 = arg_2_0:getEpisodeDict(iter_2_2)
 
-		while slot4 ~= nil do
-			if slot5[slot4].openRound > 0 and slot0.normalEpisodeCountDict[slot9] == nil then
-				slot0.normalEpisodeCountDict[slot9] = #slot11
+		while var_2_7 ~= nil do
+			if var_2_8[var_2_7].openRound > 0 and arg_2_0.normalEpisodeCountDict[iter_2_2] == nil then
+				arg_2_0.normalEpisodeCountDict[iter_2_2] = #var_2_6
 			end
 
-			table.insert(slot11, slot4)
+			table.insert(var_2_6, var_2_7)
 
-			slot4 = slot10[slot4]
+			var_2_7 = iter_2_3[var_2_7]
 		end
 
-		if slot0.normalEpisodeCountDict[slot9] == nil then
-			slot0.normalEpisodeCountDict[slot9] = #slot11
+		if arg_2_0.normalEpisodeCountDict[iter_2_2] == nil then
+			arg_2_0.normalEpisodeCountDict[iter_2_2] = #var_2_6
 		end
 	end
 end
 
-function slot0.getEpisodeList(slot0, slot1)
-	return slot0.episodeList[slot1]
+function var_0_0.getEpisodeList(arg_3_0, arg_3_1)
+	return arg_3_0.episodeList[arg_3_1]
 end
 
-function slot0.getEpisodeDict(slot0, slot1)
-	return slot0.configDict[slot1]
+function var_0_0.getEpisodeDict(arg_4_0, arg_4_1)
+	return arg_4_0.configDict[arg_4_1]
 end
 
-function slot0.getEpisodeConfig(slot0, slot1, slot2)
-	if (slot0:getEpisodeDict(slot1) and slot3[slot2]) == nil and slot2 ~= 0 then
-		logError(string.format("episode config is nil, towerType:%s,towerId:%s,layer:%s", slot0.towerType, slot1, slot2))
+function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getEpisodeDict(arg_5_1)
+	local var_5_1 = var_5_0 and var_5_0[arg_5_2]
+
+	if var_5_1 == nil and arg_5_2 ~= 0 then
+		logError(string.format("episode config is nil, towerType:%s,towerId:%s,layer:%s", arg_5_0.towerType, arg_5_1, arg_5_2))
 	end
 
-	return slot4
+	return var_5_1
 end
 
-function slot0.getNextEpisodeLayer(slot0, slot1, slot2)
-	return slot0.preEpisodeDict[slot1] and slot3[slot2]
+function var_0_0.getNextEpisodeLayer(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0.preEpisodeDict[arg_6_1]
+
+	return var_6_0 and var_6_0[arg_6_2]
 end
 
-function slot0.getEpisodeIndex(slot0, slot1, slot2, slot3)
-	if not slot0:getEpisodeConfig(slot1, slot2) then
+function var_0_0.getEpisodeIndex(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = arg_7_0:getEpisodeConfig(arg_7_1, arg_7_2)
+
+	if not var_7_0 then
 		return 0
 	end
 
-	if not slot3 then
-		slot7 = tabletool.indexOf(slot0:getEpisodeList(slot1), slot2) - (slot4.openRound > 0 and slot0.normalEpisodeCountDict[slot1] or 0)
+	local var_7_1 = var_7_0.openRound > 0
+	local var_7_2 = arg_7_0:getEpisodeList(arg_7_1)
+	local var_7_3 = tabletool.indexOf(var_7_2, arg_7_2)
+
+	if not arg_7_3 then
+		var_7_3 = var_7_3 - (var_7_1 and arg_7_0.normalEpisodeCountDict[arg_7_1] or 0)
 	end
 
-	return slot7
+	return var_7_3
 end
 
-function slot0.getSpEpisodes(slot0, slot1)
-	slot2 = {}
+function var_0_0.getSpEpisodes(arg_8_0, arg_8_1)
+	local var_8_0 = {}
+	local var_8_1 = arg_8_0.normalEpisodeCountDict[arg_8_1]
 
-	if slot0.normalEpisodeCountDict[slot1] then
-		for slot8 = slot3 + 1, #slot0:getEpisodeList(slot1) do
-			table.insert(slot2, slot4[slot8])
+	if var_8_1 then
+		local var_8_2 = arg_8_0:getEpisodeList(arg_8_1)
+
+		for iter_8_0 = var_8_1 + 1, #var_8_2 do
+			table.insert(var_8_0, var_8_2[iter_8_0])
 		end
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getLayerCount(slot0, slot1, slot2)
-	if slot2 then
-		slot3 = #slot0:getEpisodeList(slot1) - (slot0.normalEpisodeCountDict[slot1] or 0)
+function var_0_0.getLayerCount(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0.normalEpisodeCountDict[arg_9_1] or 0
+
+	if arg_9_2 then
+		var_9_0 = #arg_9_0:getEpisodeList(arg_9_1) - var_9_0
 	end
 
-	return slot3
+	return var_9_0
 end
 
-function slot0.isPassAllUnlockLayers(slot0, slot1)
-	if not slot0:getNextEpisodeLayer(slot1, TowerModel.instance:getTowerInfoById(slot0.towerType, slot1) and slot2.passLayerId or 0) then
+function var_0_0.isPassAllUnlockLayers(arg_10_0, arg_10_1)
+	local var_10_0 = TowerModel.instance:getTowerInfoById(arg_10_0.towerType, arg_10_1)
+	local var_10_1 = var_10_0 and var_10_0.passLayerId or 0
+	local var_10_2 = arg_10_0:getNextEpisodeLayer(arg_10_1, var_10_1)
+
+	if not var_10_2 then
 		return true
 	end
 
-	if not slot0:getEpisodeConfig(slot1, slot4) then
+	local var_10_3 = arg_10_0:getEpisodeConfig(arg_10_1, var_10_2)
+
+	if not var_10_3 then
 		return true
 	end
 
-	if not (slot5.openRound > 0) then
+	if not (var_10_3.openRound > 0) then
 		return false
 	end
 
-	return not slot2:isSpLayerOpen(slot4)
+	return not var_10_0:isSpLayerOpen(var_10_2)
 end
 
-return slot0
+return var_0_0

@@ -1,136 +1,176 @@
-module("modules.logic.room.view.layout.RoomLayoutItemTipsItem", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutItemTipsItem", package.seeall)
 
-slot0 = class("RoomLayoutItemTipsItem", ListScrollCellExtend)
+local var_0_0 = class("RoomLayoutItemTipsItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "content")
-	slot0._gobuildingicon = gohelper.findChild(slot0.viewGO, "content/#go_buildingicon")
-	slot0._godikuaiicon = gohelper.findChild(slot0.viewGO, "content/#go_dikuaiicon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "content/#txt_name")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "content/#txt_num")
-	slot0._txtdegree = gohelper.findChildText(slot0.viewGO, "content/#txt_degree")
-	slot0._gobtnbuy = gohelper.findChild(slot0.viewGO, "#btn_buy")
-	slot0._gocanbuy = gohelper.findChild(slot0.viewGO, "#btn_buy/canBuy")
-	slot0._gonotcanbuy = gohelper.findChild(slot0.viewGO, "#btn_buy/notCanBuy")
-	slot0._btnbuy = gohelper.getClickWithDefaultAudio(slot0._gobtnbuy)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "content")
+	arg_1_0._gobuildingicon = gohelper.findChild(arg_1_0.viewGO, "content/#go_buildingicon")
+	arg_1_0._godikuaiicon = gohelper.findChild(arg_1_0.viewGO, "content/#go_dikuaiicon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_name")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_num")
+	arg_1_0._txtdegree = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_degree")
+	arg_1_0._gobtnbuy = gohelper.findChild(arg_1_0.viewGO, "#btn_buy")
+	arg_1_0._gocanbuy = gohelper.findChild(arg_1_0.viewGO, "#btn_buy/canBuy")
+	arg_1_0._gonotcanbuy = gohelper.findChild(arg_1_0.viewGO, "#btn_buy/notCanBuy")
+	arg_1_0._btnbuy = gohelper.getClickWithDefaultAudio(arg_1_0._gobtnbuy)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy:AddClickListener(slot0._onBtnBuyClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._onBtnBuyClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbuy:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbuy:RemoveClickListener()
 end
 
-function slot0._onBtnBuyClick(slot0)
-	if StoreConfig.instance:getRoomProductGoodsId(slot0._layoutItemMO and slot1.materialType, slot1 and slot1.itemId) and StoreModel.instance:getGoodsMO(slot4) and slot0:isCanBuyGoods() then
-		StoreController.instance:checkAndOpenStoreView(tonumber(slot6.config.storeId), slot4)
+function var_0_0._onBtnBuyClick(arg_4_0)
+	local var_4_0 = arg_4_0._layoutItemMO
+	local var_4_1 = var_4_0 and var_4_0.materialType
+	local var_4_2 = var_4_0 and var_4_0.itemId
+	local var_4_3 = StoreConfig.instance:getRoomProductGoodsId(var_4_1, var_4_2)
+	local var_4_4 = arg_4_0:isCanBuyGoods()
+	local var_4_5 = var_4_3 and StoreModel.instance:getGoodsMO(var_4_3)
+
+	if var_4_5 and var_4_4 then
+		StoreController.instance:checkAndOpenStoreView(tonumber(var_4_5.config.storeId), var_4_3)
 	else
 		GameFacade.showToast(ToastEnum.RoomNoneGoods)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._canvasGroup = gohelper.onceAddComponent(slot0._gocontent, gohelper.Type_CanvasGroup)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._canvasGroup = gohelper.onceAddComponent(arg_5_0._gocontent, gohelper.Type_CanvasGroup)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._layoutItemMO = slot1
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._layoutItemMO = arg_8_1
 
-	slot0:_refreshUI()
+	arg_8_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	if not slot0._layoutItemMO then
+function var_0_0._refreshUI(arg_10_0)
+	local var_10_0 = arg_10_0._layoutItemMO
+
+	if not var_10_0 then
 		return
 	end
 
-	if not slot1:getItemConfig() then
-		logError(string.format("itemId:%s itemType:%s not find itemConfig.", slot1.itemId, slot1.itemType))
+	local var_10_1 = var_10_0:getItemConfig()
+
+	if not var_10_1 then
+		logError(string.format("itemId:%s itemType:%s not find itemConfig.", var_10_0.itemId, var_10_0.itemType))
 
 		return
 	end
 
-	gohelper.setActive(slot0._gobuildingicon, slot1:isBuilding())
-	gohelper.setActive(slot0._godikuaiicon, slot1:isBlockPackage() or slot1:isSpecialBlock())
+	gohelper.setActive(arg_10_0._gobuildingicon, var_10_0:isBuilding())
+	gohelper.setActive(arg_10_0._godikuaiicon, var_10_0:isBlockPackage() or var_10_0:isSpecialBlock())
 
-	slot3 = slot1.itemNum or 0
-	slot4 = 0
-	slot5 = slot1:isLack()
+	local var_10_2 = var_10_0.itemNum or 0
+	local var_10_3 = 0
+	local var_10_4 = var_10_0:isLack()
 
-	if slot1:isBuilding() then
-		slot3 = RoomMapModel.instance:getBuildingConfigParam(slot1.itemId) and slot6.pointList and #slot6.pointList or 0
-		slot4 = slot2.buildDegree or 0
-	elseif slot1:isBlockPackage() then
-		slot4 = (slot2.blockBuildDegree or 0) * slot3
-	elseif slot1:isSpecialBlock() then
-		slot4 = RoomConfig.instance:getBlockPackageConfig(RoomBlockPackageEnum.ID.RoleBirthday) and slot6.blockBuildDegree or 0
+	if var_10_0:isBuilding() then
+		local var_10_5 = RoomMapModel.instance:getBuildingConfigParam(var_10_0.itemId)
+
+		var_10_2 = var_10_5 and var_10_5.pointList and #var_10_5.pointList or 0
+		var_10_3 = var_10_1.buildDegree or 0
+	elseif var_10_0:isBlockPackage() then
+		var_10_3 = (var_10_1.blockBuildDegree or 0) * var_10_2
+	elseif var_10_0:isSpecialBlock() then
+		local var_10_6 = RoomConfig.instance:getBlockPackageConfig(RoomBlockPackageEnum.ID.RoleBirthday)
+
+		var_10_3 = var_10_6 and var_10_6.blockBuildDegree or 0
 	end
 
-	if slot5 then
-		slot0._txtname.text = formatLuaLang("room_layoutplan_namemask_lack", slot2.name)
+	if var_10_4 then
+		arg_10_0._txtname.text = formatLuaLang("room_layoutplan_namemask_lack", var_10_1.name)
 	else
-		slot0._txtname.text = slot2.name
+		arg_10_0._txtname.text = var_10_1.name
 	end
 
-	slot0._txtnum.text = slot3
-	slot0._txtdegree.text = slot4
-	slot0._canvasGroup.alpha = slot5 and 0.3 or 1
+	arg_10_0._txtnum.text = var_10_2
+	arg_10_0._txtdegree.text = var_10_3
+	arg_10_0._canvasGroup.alpha = var_10_4 and 0.3 or 1
 
-	slot0:refreshBtnBuy()
+	arg_10_0:refreshBtnBuy()
 end
 
-function slot0.refreshBtnBuy(slot0)
-	slot1 = false
-	slot2 = slot0._layoutItemMO
+function var_0_0.refreshBtnBuy(arg_11_0)
+	local var_11_0 = false
+	local var_11_1 = arg_11_0._layoutItemMO
 
-	if slot0._view and slot0._view.viewParam and slot0._view.viewParam.showBuy then
-		slot1 = slot2 and slot2:isLack()
+	if arg_11_0._view and arg_11_0._view.viewParam and arg_11_0._view.viewParam.showBuy then
+		var_11_0 = var_11_1 and var_11_1:isLack()
 	end
 
-	if slot1 then
-		slot3 = slot0:isCanBuyGoods()
+	if var_11_0 then
+		local var_11_2 = arg_11_0:isCanBuyGoods()
 
-		gohelper.setActive(slot0._gocanbuy, slot3)
-		gohelper.setActive(slot0._gonotcanbuy, not slot3)
+		gohelper.setActive(arg_11_0._gocanbuy, var_11_2)
+		gohelper.setActive(arg_11_0._gonotcanbuy, not var_11_2)
 	end
 
-	gohelper.setActive(slot0._gobtnbuy, slot1)
+	gohelper.setActive(arg_11_0._gobtnbuy, var_11_0)
 end
 
-function slot0.isCanBuyGoods(slot0)
-	slot1 = true
-	slot2 = true
+function var_0_0.isCanBuyGoods(arg_12_0)
+	local var_12_0 = true
+	local var_12_1 = true
+	local var_12_2 = arg_12_0._layoutItemMO
+	local var_12_3 = var_12_2 and var_12_2.materialType
+	local var_12_4 = var_12_2 and var_12_2.itemId
+	local var_12_5 = StoreConfig.instance:getRoomProductGoodsId(var_12_3, var_12_4)
+	local var_12_6 = var_12_5 and StoreModel.instance:getGoodsMO(var_12_5)
 
-	if StoreConfig.instance:getRoomProductGoodsId(slot0._layoutItemMO and slot3.materialType, slot3 and slot3.itemId) and StoreModel.instance:getGoodsMO(slot6) then
-		if slot7:getIsActivityGoods() then
-			slot1 = ActivityHelper.getActivityStatus(slot7.config.activityId) ~= ActivityEnum.ActivityStatus.Normal
+	if var_12_6 then
+		if var_12_6:getIsActivityGoods() then
+			var_12_0 = ActivityHelper.getActivityStatus(var_12_6.config.activityId) ~= ActivityEnum.ActivityStatus.Normal
 		else
-			slot8 = ServerTime.now()
-			slot1 = slot7:getIsPackageGoods() and (StoreModel.instance:getGoodsMO(slot7.config.bindgoodid) and (slot8 < TimeUtil.stringToTimestamp(slot9.config.onlineTime) or TimeUtil.stringToTimestamp(slot9.config.offlineTime) <= slot8) or true) or slot7:getOfflineTime() > 0 and slot9 <= slot8
+			local var_12_7 = ServerTime.now()
+
+			if var_12_6:getIsPackageGoods() then
+				local var_12_8 = StoreModel.instance:getGoodsMO(var_12_6.config.bindgoodid)
+
+				if var_12_8 then
+					local var_12_9 = TimeUtil.stringToTimestamp(var_12_8.config.onlineTime)
+					local var_12_10 = TimeUtil.stringToTimestamp(var_12_8.config.offlineTime)
+
+					var_12_0 = var_12_7 < var_12_9 or var_12_10 <= var_12_7
+				else
+					var_12_0 = true
+				end
+			else
+				local var_12_11 = var_12_6:getOfflineTime()
+
+				var_12_0 = var_12_11 > 0 and var_12_11 <= var_12_7
+			end
 		end
 
-		slot2 = slot7:isSoldOut()
+		var_12_1 = var_12_6:isSoldOut()
 	end
 
-	return not slot1 and not slot2 and slot7:checkJumpGoodCanOpen()
+	return not var_12_0 and not var_12_1 and var_12_6:checkJumpGoodCanOpen()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

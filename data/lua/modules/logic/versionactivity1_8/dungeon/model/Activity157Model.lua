@@ -1,487 +1,555 @@
-module("modules.logic.versionactivity1_8.dungeon.model.Activity157Model", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.model.Activity157Model", package.seeall)
 
-slot0 = class("Activity157Model", BaseModel)
-slot1 = 0
-slot2 = 1
+local var_0_0 = class("Activity157Model", BaseModel)
+local var_0_1 = 0
+local var_0_2 = 1
 
-function slot0.onInit(slot0)
-	slot0:setIsUnlockEntrance(false, true)
-	slot0:setIsSideMissionUnlocked(false, true)
-	slot0:setUnlockComponentByList(nil, true)
-	slot0:setHasGotRewardComponentByList(nil, true)
-	slot0:setProductionInfo(nil, , true)
-	slot0:setMissionInfoByList(nil, true)
-	slot0:setInProgressMissionGroup(nil, true)
-	slot0:setHasPlayedAnim()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:setIsUnlockEntrance(false, true)
+	arg_1_0:setIsSideMissionUnlocked(false, true)
+	arg_1_0:setUnlockComponentByList(nil, true)
+	arg_1_0:setHasGotRewardComponentByList(nil, true)
+	arg_1_0:setProductionInfo(nil, nil, true)
+	arg_1_0:setMissionInfoByList(nil, true)
+	arg_1_0:setInProgressMissionGroup(nil, true)
+	arg_1_0:setHasPlayedAnim()
 
-	slot0._hasPlayedAnimDict = nil
+	arg_1_0._hasPlayedAnimDict = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	if not slot1 or not slot1.activityId or slot2 ~= slot0:getActId() then
+function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1 and arg_3_1.activityId
+	local var_3_1 = arg_3_0:getActId()
+
+	if not var_3_0 or var_3_0 ~= var_3_1 then
 		return
 	end
 
-	slot0:setIsUnlockEntrance(slot1.haveMap)
-	slot0:setIsSideMissionUnlocked(slot1.isSideMissionUnlocked)
-	slot0:setUnlockComponentByList(slot1.unlockedComponents)
-	slot0:setHasGotRewardComponentByList(slot1.gainRewardComponents)
-	slot0:setProductionInfo(slot1.productionInfo.productionMaterial.quantity, slot1.productionInfo.nextRecoverTime)
-	slot0:setMissionInfoByList(slot1.missionInfos)
-	slot0:setInProgressMissionGroup(slot1.inProgressSideMissionGroupId)
-	slot0:setSideMissionUnlockTime(slot1.sideMissionUnlockTime)
+	arg_3_0:setIsUnlockEntrance(arg_3_1.haveMap)
+	arg_3_0:setIsSideMissionUnlocked(arg_3_1.isSideMissionUnlocked)
+	arg_3_0:setUnlockComponentByList(arg_3_1.unlockedComponents)
+	arg_3_0:setHasGotRewardComponentByList(arg_3_1.gainRewardComponents)
+
+	local var_3_2 = arg_3_1.productionInfo.productionMaterial.quantity
+	local var_3_3 = arg_3_1.productionInfo.nextRecoverTime
+
+	arg_3_0:setProductionInfo(var_3_2, var_3_3)
+	arg_3_0:setMissionInfoByList(arg_3_1.missionInfos)
+	arg_3_0:setInProgressMissionGroup(arg_3_1.inProgressSideMissionGroupId)
+	arg_3_0:setSideMissionUnlockTime(arg_3_1.sideMissionUnlockTime)
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157UpdateInfo)
 end
 
-function slot0.setIsUnlockEntrance(slot0, slot1, slot2)
-	slot0._isUnlockEntrance = slot1
+function var_0_0.setIsUnlockEntrance(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._isUnlockEntrance = arg_4_1
 
-	if slot2 then
+	if arg_4_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RefreshEntrance)
 end
 
-function slot0.setIsSideMissionUnlocked(slot0, slot1, slot2)
-	slot0._isSideMissionUnlocked = slot1
+function var_0_0.setIsSideMissionUnlocked(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._isSideMissionUnlocked = arg_5_1
 
-	if slot2 then
+	if arg_5_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RefreshSideMission)
 end
 
-function slot0.setUnlockComponentByList(slot0, slot1, slot2)
-	slot0._unlockComponentDict = {}
+function var_0_0.setUnlockComponentByList(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._unlockComponentDict = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot0:setComponentUnlock(slot7, true)
+	if arg_6_1 then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+			arg_6_0:setComponentUnlock(iter_6_1, true)
 		end
 	end
 
-	if slot2 then
+	if arg_6_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RepairComponent)
 end
 
-function slot0.setComponentUnlock(slot0, slot1, slot2)
-	if not slot0._unlockComponentDict then
-		slot0._unlockComponentDict = {}
+function var_0_0.setComponentUnlock(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_0._unlockComponentDict then
+		arg_7_0._unlockComponentDict = {}
 	end
 
-	if not slot1 then
+	if not arg_7_1 then
 		return
 	end
 
-	slot0._unlockComponentDict[slot1] = true
+	arg_7_0._unlockComponentDict[arg_7_1] = true
 
-	if slot2 then
+	if arg_7_2 then
 		return
 	end
 
-	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RepairComponent, slot1)
+	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RepairComponent, arg_7_1)
 end
 
-function slot0.setHasGotRewardComponentByList(slot0, slot1, slot2)
-	slot0._hasGotRewardComponentDict = {}
+function var_0_0.setHasGotRewardComponentByList(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._hasGotRewardComponentDict = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot0:addHasGotRewardComponent(slot7, true)
+	if arg_8_1 then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+			arg_8_0:addHasGotRewardComponent(iter_8_1, true)
 		end
 	end
 
-	if slot2 then
+	if arg_8_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157GetComponentReward)
 end
 
-function slot0.addHasGotRewardComponent(slot0, slot1, slot2)
-	if not slot0._hasGotRewardComponentDict then
-		slot0._hasGotRewardComponentDict = {}
+function var_0_0.addHasGotRewardComponent(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._hasGotRewardComponentDict then
+		arg_9_0._hasGotRewardComponentDict = {}
 	end
 
-	if not slot1 then
+	if not arg_9_1 then
 		return
 	end
 
-	slot0._hasGotRewardComponentDict[slot1] = true
+	arg_9_0._hasGotRewardComponentDict[arg_9_1] = true
 
-	if slot2 then
+	if arg_9_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157GetComponentReward)
 end
 
-function slot0.setProductionInfo(slot0, slot1, slot2, slot3)
-	slot0._productionNum = slot1
-	slot0._nextRecoverTime = slot2
+function var_0_0.setProductionInfo(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_0._productionNum = arg_10_1
+	arg_10_0._nextRecoverTime = arg_10_2
 
-	if slot3 then
+	if arg_10_3 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157RefreshFactoryProduction)
 end
 
-function slot0.setMissionInfoByList(slot0, slot1, slot2)
-	slot0._missionGroupId2FinishMissions = {}
+function var_0_0.setMissionInfoByList(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._missionGroupId2FinishMissions = {}
 
-	if not slot1 then
+	if not arg_11_1 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		for slot12, slot13 in ipairs(slot7.finishedMissionIds) do
-			slot0:addFinishedMission(slot13, slot7.missionGroup, true)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		local var_11_0 = iter_11_1.missionGroup
+
+		for iter_11_2, iter_11_3 in ipairs(iter_11_1.finishedMissionIds) do
+			arg_11_0:addFinishedMission(iter_11_3, var_11_0, true)
 		end
 	end
 
-	if slot2 then
+	if arg_11_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157FinishMission)
 end
 
-function slot0.setInProgressMissionGroup(slot0, slot1, slot2)
-	slot0._inProcessMissionGroup = slot1
+function var_0_0.setInProgressMissionGroup(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._inProcessMissionGroup = arg_12_1
 
-	if slot2 then
+	if arg_12_2 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157ChangeInProgressMissionGroup)
 end
 
-function slot0.addFinishedMission(slot0, slot1, slot2, slot3)
-	if not slot0._missionGroupId2FinishMissions then
-		slot0._missionGroupId2FinishMissions = {}
+function var_0_0.addFinishedMission(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if not arg_13_0._missionGroupId2FinishMissions then
+		arg_13_0._missionGroupId2FinishMissions = {}
 	end
 
-	if not slot1 then
+	if not arg_13_1 then
 		return
 	end
 
-	if not (slot2 or Activity157Config.instance:getMissionGroup(slot0:getActId(), slot1)) then
+	local var_13_0 = arg_13_0:getActId()
+	local var_13_1 = arg_13_2 or Activity157Config.instance:getMissionGroup(var_13_0, arg_13_1)
+
+	if not var_13_1 then
 		return
 	end
 
-	if not slot0._missionGroupId2FinishMissions[slot5] then
-		slot0._missionGroupId2FinishMissions[slot5] = {}
+	local var_13_2 = arg_13_0._missionGroupId2FinishMissions[var_13_1]
+
+	if not var_13_2 then
+		var_13_2 = {}
+		arg_13_0._missionGroupId2FinishMissions[var_13_1] = var_13_2
 	end
 
-	slot6[slot1] = true
+	var_13_2[arg_13_1] = true
 
-	if slot3 then
+	if arg_13_3 then
 		return
 	end
 
 	Activity157Controller.instance:dispatchEvent(Activity157Event.Act157FinishMission)
 end
 
-function slot0.setSideMissionUnlockTime(slot0, slot1)
-	slot0._sideMissionUnlockTime = slot1
+function var_0_0.setSideMissionUnlockTime(arg_14_0, arg_14_1)
+	arg_14_0._sideMissionUnlockTime = arg_14_1
 end
 
-function slot0.getActId(slot0)
+function var_0_0.getActId(arg_15_0)
 	return VersionActivity1_8Enum.ActivityId.DungeonReturnToWork
 end
 
-function slot0.getIsUnlockEntrance(slot0)
-	return slot0._isUnlockEntrance
+function var_0_0.getIsUnlockEntrance(arg_16_0)
+	return arg_16_0._isUnlockEntrance
 end
 
-function slot0.getIsSideMissionUnlocked(slot0)
-	return slot0._isSideMissionUnlocked
+function var_0_0.getIsSideMissionUnlocked(arg_17_0)
+	return arg_17_0._isSideMissionUnlocked
 end
 
-function slot0.getIsUnlockFactoryBlueprint(slot0)
-	slot2 = false
+function var_0_0.getIsUnlockFactoryBlueprint(arg_18_0)
+	local var_18_0 = arg_18_0:getActId()
+	local var_18_1 = false
+	local var_18_2
 
-	return slot0:getIsFirstComponentRepair() and true or slot0:isCanRepairComponent(Activity157Config.instance:getAct157Const(slot0:getActId(), Activity157Enum.ConstId.FirstFactoryComponent))
-end
+	if arg_18_0:getIsFirstComponentRepair() then
+		var_18_2 = true
+	else
+		local var_18_3 = Activity157Config.instance:getAct157Const(var_18_0, Activity157Enum.ConstId.FirstFactoryComponent)
 
-function slot0.getIsNeedPlayMissionUnlockAnim(slot0, slot1)
-	if not slot1 then
-		return false
+		var_18_2 = arg_18_0:isCanRepairComponent(var_18_3)
 	end
 
-	slot3 = slot0:getActId()
-
-	if (not Activity157Config.instance:isRootMission(slot3, slot1) or slot5 and Activity157Config.instance:isSideMission(slot3, slot1)) and slot0:getIsUnlockMission(slot1) then
-		slot2 = not slot0:getHasPlayedAnim(VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedMissionNodeUnlocked .. slot1)
-	end
-
-	return slot2
+	return var_18_2
 end
 
-function slot0.getHasPlayedAnim(slot0, slot1)
-	if not slot0._hasPlayedAnimDict then
-		slot0._hasPlayedAnimDict = {}
+function var_0_0.getIsNeedPlayMissionUnlockAnim(arg_19_0, arg_19_1)
+	local var_19_0 = false
+
+	if not arg_19_1 then
+		return var_19_0
 	end
 
-	if not slot1 then
+	local var_19_1 = arg_19_0:getActId()
+	local var_19_2 = Activity157Config.instance:isSideMission(var_19_1, arg_19_1)
+	local var_19_3 = Activity157Config.instance:isRootMission(var_19_1, arg_19_1)
+
+	if (not var_19_3 or var_19_3 and var_19_2) and arg_19_0:getIsUnlockMission(arg_19_1) then
+		local var_19_4 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedMissionNodeUnlocked .. arg_19_1
+
+		var_19_0 = not arg_19_0:getHasPlayedAnim(var_19_4)
+	end
+
+	return var_19_0
+end
+
+function var_0_0.getHasPlayedAnim(arg_20_0, arg_20_1)
+	if not arg_20_0._hasPlayedAnimDict then
+		arg_20_0._hasPlayedAnimDict = {}
+	end
+
+	if not arg_20_1 then
 		return
 	end
 
-	if not slot0._hasPlayedAnimDict[slot1] then
-		slot0._hasPlayedAnimDict[slot1] = VersionActivity1_8DungeonController.instance:getPlayerPrefs(slot1, uv0)
+	if not arg_20_0._hasPlayedAnimDict[arg_20_1] then
+		arg_20_0._hasPlayedAnimDict[arg_20_1] = VersionActivity1_8DungeonController.instance:getPlayerPrefs(arg_20_1, var_0_1)
 	end
 
-	return slot0._hasPlayedAnimDict[slot1] ~= uv0
+	return arg_20_0._hasPlayedAnimDict[arg_20_1] ~= var_0_1
 end
 
-function slot0.setHasPlayedAnim(slot0, slot1)
-	if not slot1 then
+function var_0_0.setHasPlayedAnim(arg_21_0, arg_21_1)
+	if not arg_21_1 then
 		return
 	end
 
-	slot0._hasPlayedAnimDict[slot1] = uv0
+	arg_21_0._hasPlayedAnimDict[arg_21_1] = var_0_2
 
-	VersionActivity1_8DungeonController.instance:savePlayerPrefs(slot1, slot0._hasPlayedAnimDict[slot1])
+	VersionActivity1_8DungeonController.instance:savePlayerPrefs(arg_21_1, arg_21_0._hasPlayedAnimDict[arg_21_1])
 end
 
-function slot0.getFactoryProductionNum(slot0)
-	return slot0._productionNum or 0
+function var_0_0.getFactoryProductionNum(arg_22_0)
+	return arg_22_0._productionNum or 0
 end
 
-function slot0.getFactoryNextRecoverCountdown(slot0)
-	slot1 = ""
+function var_0_0.getFactoryNextRecoverCountdown(arg_23_0)
+	local var_23_0 = ""
 
-	if slot0._nextRecoverTime and slot0._nextRecoverTime ~= 0 then
-		slot1 = TimeUtil.second2TimeString(math.max(slot0._nextRecoverTime / 1000 - ServerTime.now(), 0), true)
+	if arg_23_0._nextRecoverTime and arg_23_0._nextRecoverTime ~= 0 then
+		local var_23_1 = math.max(arg_23_0._nextRecoverTime / 1000 - ServerTime.now(), 0)
+
+		var_23_0 = TimeUtil.second2TimeString(var_23_1, true)
 	end
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.getSideMissionUnlockTime(slot0)
-	slot1 = ""
-	slot2 = true
+function var_0_0.getSideMissionUnlockTime(arg_24_0)
+	local var_24_0 = ""
+	local var_24_1 = true
 
-	if slot0._sideMissionUnlockTime and slot0._sideMissionUnlockTime ~= 0 then
-		slot3 = math.max(slot0._sideMissionUnlockTime / 1000 - ServerTime.now(), 0)
-		slot1 = TimeUtil.second2TimeString(slot3, true)
-		slot2 = slot3 <= 0
+	if arg_24_0._sideMissionUnlockTime and arg_24_0._sideMissionUnlockTime ~= 0 then
+		local var_24_2 = math.max(arg_24_0._sideMissionUnlockTime / 1000 - ServerTime.now(), 0)
+
+		var_24_0 = TimeUtil.second2TimeString(var_24_2, true)
+		var_24_1 = var_24_2 <= 0
 	end
 
-	return slot1, slot2
+	return var_24_0, var_24_1
 end
 
-function slot0.isRepairComponent(slot0, slot1)
-	slot2 = false
+function var_0_0.isRepairComponent(arg_25_0, arg_25_1)
+	local var_25_0 = false
+	local var_25_1 = tonumber(arg_25_1)
 
-	if tonumber(slot1) and slot0._unlockComponentDict then
-		slot2 = slot0._unlockComponentDict[slot3] or false
+	if var_25_1 and arg_25_0._unlockComponentDict then
+		var_25_0 = arg_25_0._unlockComponentDict[var_25_1] or false
 	end
 
-	return slot2
+	return var_25_0
 end
 
-function slot0.getIsFirstComponentRepair(slot0)
-	return slot0:isRepairComponent(Activity157Config.instance:getAct157Const(slot0:getActId(), Activity157Enum.ConstId.FirstFactoryComponent))
+function var_0_0.getIsFirstComponentRepair(arg_26_0)
+	local var_26_0 = arg_26_0:getActId()
+	local var_26_1 = Activity157Config.instance:getAct157Const(var_26_0, Activity157Enum.ConstId.FirstFactoryComponent)
+
+	return (arg_26_0:isRepairComponent(var_26_1))
 end
 
-function slot0.isCanRepairComponent(slot0, slot1)
-	slot2 = false
+function var_0_0.isCanRepairComponent(arg_27_0, arg_27_1)
+	local var_27_0 = false
+	local var_27_1 = arg_27_0:getActId()
 
-	if slot0:isPreComponentRepaired(slot1) then
-		slot5, slot6, slot7 = Activity157Config.instance:getComponentUnlockCondition(slot0:getActId(), slot1)
+	if arg_27_0:isPreComponentRepaired(arg_27_1) then
+		local var_27_2, var_27_3, var_27_4 = Activity157Config.instance:getComponentUnlockCondition(var_27_1, arg_27_1)
+		local var_27_5 = ItemModel.instance:getItemQuantity(var_27_2, var_27_3)
 
-		if slot7 then
-			slot2 = slot7 <= ItemModel.instance:getItemQuantity(slot5, slot6)
+		if var_27_4 then
+			var_27_0 = var_27_4 <= var_27_5
 		end
 	end
 
-	return slot2
+	return var_27_0
 end
 
-function slot0.isPreComponentRepaired(slot0, slot1)
-	slot4 = true
+function var_0_0.isPreComponentRepaired(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:getActId()
+	local var_28_1 = Activity157Config.instance:getPreComponentId(var_28_0, arg_28_1)
+	local var_28_2 = true
 
-	if Activity157Config.instance:getPreComponentId(slot0:getActId(), slot1) and slot3 ~= 0 then
-		slot4 = slot0:isRepairComponent(slot3)
+	if var_28_1 and var_28_1 ~= 0 then
+		var_28_2 = arg_28_0:isRepairComponent(var_28_1)
 	end
 
-	return slot4
+	return var_28_2
 end
 
-function slot0.getLastWillBeRepairedComponent(slot0)
-	slot1 = nil
+function var_0_0.getLastWillBeRepairedComponent(arg_29_0)
+	local var_29_0
+	local var_29_1 = arg_29_0:getActId()
+	local var_29_2 = Activity157Config.instance:getComponentIdList(var_29_1)
 
-	for slot7, slot8 in ipairs(Activity157Config.instance:getComponentIdList(slot0:getActId())) do
-		if not slot0:isRepairComponent(slot8) then
-			slot1 = slot8
+	for iter_29_0, iter_29_1 in ipairs(var_29_2) do
+		if not arg_29_0:isRepairComponent(iter_29_1) then
+			var_29_0 = iter_29_1
 
 			break
 		end
 	end
 
-	return slot1
+	return var_29_0
 end
 
-function slot0.getComponentRepairProgress(slot0)
-	slot1 = 0
+function var_0_0.getComponentRepairProgress(arg_30_0)
+	local var_30_0 = 0
 
-	if slot0:getIsUnlockFactoryBlueprint() then
-		for slot9, slot10 in ipairs(Activity157Config.instance:getComponentIdList(slot0:getActId())) do
-			if slot0:isRepairComponent(slot10) then
-				slot4 = 0 + 1
+	if arg_30_0:getIsUnlockFactoryBlueprint() then
+		local var_30_1 = arg_30_0:getActId()
+		local var_30_2 = 0
+		local var_30_3 = Activity157Config.instance:getComponentIdList(var_30_1)
+
+		for iter_30_0, iter_30_1 in ipairs(var_30_3) do
+			if arg_30_0:isRepairComponent(iter_30_1) then
+				var_30_2 = var_30_2 + 1
 			end
 		end
 
-		slot1 = slot4 / #slot5
+		var_30_0 = var_30_2 / #var_30_3
 	end
 
-	return slot1
+	return var_30_0
 end
 
-function slot0.isAllComponentRepair(slot0)
-	return slot0:getComponentRepairProgress() >= 1
+function var_0_0.isAllComponentRepair(arg_31_0)
+	return arg_31_0:getComponentRepairProgress() >= 1
 end
 
-function slot0.hasComponentGotReward(slot0, slot1)
-	slot2 = false
+function var_0_0.hasComponentGotReward(arg_32_0, arg_32_1)
+	local var_32_0 = false
 
-	if slot1 and slot0._hasGotRewardComponentDict then
-		slot2 = slot0._hasGotRewardComponentDict[slot1] or false
+	if arg_32_1 and arg_32_0._hasGotRewardComponentDict then
+		var_32_0 = arg_32_0._hasGotRewardComponentDict[arg_32_1] or false
 	end
 
-	return slot2
+	return var_32_0
 end
 
-function slot0.getLastHasGotRewardComponent(slot0)
-	slot1 = nil
+function var_0_0.getLastHasGotRewardComponent(arg_33_0)
+	local var_33_0
+	local var_33_1 = arg_33_0:getActId()
+	local var_33_2 = Activity157Config.instance:getComponentIdList(var_33_1)
 
-	for slot7, slot8 in ipairs(Activity157Config.instance:getComponentIdList(slot0:getActId())) do
-		if not slot0:hasComponentGotReward(slot8) then
+	for iter_33_0, iter_33_1 in ipairs(var_33_2) do
+		if not arg_33_0:hasComponentGotReward(iter_33_1) then
 			break
 		end
 
-		slot1 = slot8
+		var_33_0 = iter_33_1
 	end
 
-	return slot1
+	return var_33_0
 end
 
-function slot0.getLastArchiveRewardComponent(slot0)
-	slot1 = nil
+function var_0_0.getLastArchiveRewardComponent(arg_34_0)
+	local var_34_0
+	local var_34_1 = arg_34_0:getActId()
+	local var_34_2 = Activity157Config.instance:getComponentIdList(var_34_1)
 
-	for slot7, slot8 in ipairs(Activity157Config.instance:getComponentIdList(slot0:getActId())) do
-		if not slot0:isRepairComponent(slot8) then
+	for iter_34_0, iter_34_1 in ipairs(var_34_2) do
+		if not arg_34_0:isRepairComponent(iter_34_1) then
 			break
 		end
 
-		if not slot0:hasComponentGotReward(slot8) then
-			slot1 = slot8
+		if not arg_34_0:hasComponentGotReward(iter_34_1) then
+			var_34_0 = iter_34_1
 		end
 	end
 
-	return slot1
+	return var_34_0
 end
 
-function slot0.isFinishMission(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.isFinishMission(arg_35_0, arg_35_1, arg_35_2)
+	local var_35_0 = false
 
-	if slot1 and slot2 then
-		slot4 = {}
+	if arg_35_1 and arg_35_2 then
+		local var_35_1 = {}
 
-		if slot0._missionGroupId2FinishMissions then
-			slot4 = slot0._missionGroupId2FinishMissions[slot1] or {}
+		if arg_35_0._missionGroupId2FinishMissions then
+			var_35_1 = arg_35_0._missionGroupId2FinishMissions[arg_35_1] or {}
 		end
 
-		slot3 = slot4[slot2] or false
+		var_35_0 = var_35_1[arg_35_2] or false
 	end
 
-	return slot3
+	return var_35_0
 end
 
-function slot0.isFinishAllMission(slot0, slot1)
-	slot2 = true
+function var_0_0.isFinishAllMission(arg_36_0, arg_36_1)
+	local var_36_0 = true
+	local var_36_1 = arg_36_0:getActId()
+	local var_36_2 = Activity157Config.instance:getAct157MissionList(var_36_1, arg_36_1)
 
-	for slot8, slot9 in ipairs(Activity157Config.instance:getAct157MissionList(slot0:getActId(), slot1)) do
-		if not slot0:isFinishMission(slot1, slot9) then
-			slot2 = false
+	for iter_36_0, iter_36_1 in ipairs(var_36_2) do
+		if not arg_36_0:isFinishMission(arg_36_1, iter_36_1) then
+			var_36_0 = false
 
 			break
 		end
 	end
 
-	return slot2
+	return var_36_0
 end
 
-function slot0.getAllActiveNodeGroupList(slot0)
-	slot1 = {}
+function var_0_0.getAllActiveNodeGroupList(arg_37_0)
+	local var_37_0 = {}
+	local var_37_1 = arg_37_0:getActId()
+	local var_37_2 = Activity157Config.instance:getAllMissionGroupIdList(var_37_1)
+	local var_37_3 = arg_37_0:getIsFirstComponentRepair()
 
-	for slot8, slot9 in ipairs(Activity157Config.instance:getAllMissionGroupIdList(slot0:getActId())) do
-		if not Activity157Config.instance:isSideMissionGroup(slot2, slot9) or slot10 and slot0:getIsFirstComponentRepair() then
-			slot1[#slot1 + 1] = slot9
+	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
+		local var_37_4 = Activity157Config.instance:isSideMissionGroup(var_37_1, iter_37_1)
+
+		if not var_37_4 or var_37_4 and var_37_3 then
+			var_37_0[#var_37_0 + 1] = iter_37_1
 		end
 	end
 
-	return slot1
+	return var_37_0
 end
 
-function slot0.getShowMissionIdList(slot0, slot1)
-	slot2 = {}
-	slot3 = slot0:getActId()
-	slot4 = Activity157Config.instance:getAct157MissionList(slot3, slot1)
+function var_0_0.getShowMissionIdList(arg_38_0, arg_38_1)
+	local var_38_0 = {}
+	local var_38_1 = arg_38_0:getActId()
+	local var_38_2 = Activity157Config.instance:getAct157MissionList(var_38_1, arg_38_1)
 
-	if not Activity157Config.instance:isSideMissionGroup(slot3, slot1) then
-		for slot9, slot10 in ipairs(slot4) do
-			slot11 = true
+	if not Activity157Config.instance:isSideMissionGroup(var_38_1, arg_38_1) then
+		for iter_38_0, iter_38_1 in ipairs(var_38_2) do
+			local var_38_3 = true
+			local var_38_4 = Activity157Config.instance:getAct157ParentMissionId(var_38_1, iter_38_1)
 
-			if Activity157Config.instance:getAct157ParentMissionId(slot3, slot10) then
-				slot11 = slot0:isFinishMission(slot1, slot12)
+			if var_38_4 then
+				var_38_3 = arg_38_0:isFinishMission(arg_38_1, var_38_4)
 			end
 
-			if slot0:getIsUnlockMission(slot10) or slot11 then
-				slot2[#slot2 + 1] = slot10
+			if arg_38_0:getIsUnlockMission(iter_38_1) or var_38_3 then
+				var_38_0[#var_38_0 + 1] = iter_38_1
 			end
 		end
 	else
-		for slot9, slot10 in ipairs(slot4) do
-			if slot0:getIsUnlockMission(slot10) or Activity157Config.instance:isRootMission(slot3, slot10) then
-				slot2[#slot2 + 1] = slot10
+		for iter_38_2, iter_38_3 in ipairs(var_38_2) do
+			local var_38_5 = arg_38_0:getIsUnlockMission(iter_38_3)
+			local var_38_6 = Activity157Config.instance:isRootMission(var_38_1, iter_38_3)
+
+			if var_38_5 or var_38_6 then
+				var_38_0[#var_38_0 + 1] = iter_38_3
 			end
 		end
 	end
 
-	return slot2
+	return var_38_0
 end
 
-function slot0.getMissionStatus(slot0, slot1, slot2)
-	if not Activity157Config.instance:getMissionElementId(slot0:getActId(), slot2) then
-		logError(string.format("Activity157Model:getMissionStatus error, elementId is nil, actId:%s missionId:%s", slot3, slot2))
+function var_0_0.getMissionStatus(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_0:getActId()
+	local var_39_1 = Activity157Config.instance:getMissionElementId(var_39_0, arg_39_2)
+
+	if not var_39_1 then
+		logError(string.format("Activity157Model:getMissionStatus error, elementId is nil, actId:%s missionId:%s", var_39_0, arg_39_2))
 
 		return Activity157Enum.MissionStatus.Locked
 	end
 
-	if slot0:isFinishMission(slot1, slot2) then
+	if arg_39_0:isFinishMission(arg_39_1, arg_39_2) then
 		return Activity157Enum.MissionStatus.Finish
 	end
 
-	if not DungeonMapModel.instance:getElementById(slot4) then
+	if not DungeonMapModel.instance:getElementById(var_39_1) then
 		return Activity157Enum.MissionStatus.Locked
 	end
 
-	if DungeonConfig.instance:isDispatchElement(slot4) then
-		if DispatchModel.instance:getDispatchStatus(slot4) == DispatchEnum.DispatchStatus.Finished then
+	if DungeonConfig.instance:isDispatchElement(var_39_1) then
+		local var_39_2 = DispatchModel.instance:getDispatchStatus(var_39_1)
+
+		if var_39_2 == DispatchEnum.DispatchStatus.Finished then
 			return Activity157Enum.MissionStatus.DispatchFinish
-		elseif slot8 == DispatchEnum.DispatchStatus.Dispatching then
+		elseif var_39_2 == DispatchEnum.DispatchStatus.Dispatching then
 			return Activity157Enum.MissionStatus.Dispatching
 		end
 	end
@@ -489,75 +557,95 @@ function slot0.getMissionStatus(slot0, slot1, slot2)
 	return Activity157Enum.MissionStatus.Normal
 end
 
-function slot0.getIsUnlockMission(slot0, slot1)
-	if not slot0:getIsSideMissionUnlocked() and Activity157Config.instance:isSideMission(slot0:getActId(), slot1) then
-		return false
+function var_0_0.getIsUnlockMission(arg_40_0, arg_40_1)
+	local var_40_0 = false
+	local var_40_1 = arg_40_0:getActId()
+	local var_40_2 = Activity157Config.instance:isSideMission(var_40_1, arg_40_1)
+
+	if not arg_40_0:getIsSideMissionUnlocked() and var_40_2 then
+		return var_40_0
 	end
 
-	if slot0:isFinishMission(Activity157Config.instance:getMissionGroup(slot3, slot1), slot1) or Activity157Config.instance:getMissionElementId(slot3, slot1) and DungeonMapModel.instance:getElementById(slot8) then
-		slot2 = true
+	local var_40_3 = Activity157Config.instance:getMissionGroup(var_40_1, arg_40_1)
+	local var_40_4 = arg_40_0:isFinishMission(var_40_3, arg_40_1)
+	local var_40_5 = Activity157Config.instance:getMissionElementId(var_40_1, arg_40_1)
+	local var_40_6 = var_40_5 and DungeonMapModel.instance:getElementById(var_40_5)
+
+	if var_40_4 or var_40_6 then
+		var_40_0 = true
 	end
 
-	return slot2
+	return var_40_0
 end
 
-function slot0.getMissionUnlockToastId(slot0, slot1, slot2)
-	if Activity157Config.instance:isSideMission(slot0:getActId(), slot1) and not slot0:getIsSideMissionUnlocked() then
+function var_0_0.getMissionUnlockToastId(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = arg_41_0:getActId()
+
+	if Activity157Config.instance:isSideMission(var_41_0, arg_41_1) and not arg_41_0:getIsSideMissionUnlocked() then
 		return ToastEnum.V1a8Activity157NotUnlockSideMission
 	end
 
-	slot5 = slot2 and DungeonConfig.instance:getChapterMapElement(slot2)
+	local var_41_1 = arg_41_2 and DungeonConfig.instance:getChapterMapElement(arg_41_2)
+	local var_41_2 = var_41_1 and var_41_1.condition
 
-	if string.nilorempty(slot5 and slot5.condition) then
+	if string.nilorempty(var_41_2) then
 		return
 	end
 
-	slot7, slot8 = string.match(slot6, "(ChapterMapElement=)(%d+)")
-	slot9 = slot8 and tonumber(slot8)
+	local var_41_3, var_41_4 = string.match(var_41_2, "(ChapterMapElement=)(%d+)")
+	local var_41_5 = var_41_4 and tonumber(var_41_4)
+	local var_41_6 = var_41_5 and DungeonMapModel.instance:elementIsFinished(var_41_5)
 
-	if slot9 and not (slot9 and DungeonMapModel.instance:elementIsFinished(slot9)) then
+	if var_41_5 and not var_41_6 then
 		return ToastEnum.V1a8Activity157MissionLockedByPreMission
 	end
 
-	slot11, slot12 = string.match(slot6, "(EpisodeFinish=)(%d+)")
+	local var_41_7, var_41_8 = string.match(var_41_2, "(EpisodeFinish=)(%d+)")
+	local var_41_9 = var_41_8 and DungeonModel.instance:hasPassLevelAndStory(var_41_8)
 
-	if slot12 and not (slot12 and DungeonModel.instance:hasPassLevelAndStory(slot12)) then
+	if var_41_8 and not var_41_9 then
 		return ToastEnum.V1a8Activity157MissionLockedByStory
 	end
 
-	slot14, slot15 = string.match(slot6, "(Act157ComponentUnlock=)(%d+)")
+	local var_41_10, var_41_11 = string.match(var_41_2, "(Act157ComponentUnlock=)(%d+)")
+	local var_41_12 = var_41_11 and arg_41_0:isRepairComponent(var_41_11)
 
-	if slot15 and not (slot15 and slot0:isRepairComponent(slot15)) then
+	if var_41_11 and not var_41_12 then
 		return ToastEnum.V1a8Activity157NotRepairComponent
 	end
 
 	return ToastEnum.ConditionLock
 end
 
-function slot0.getInProgressMissionGroup(slot0)
-	return slot0._inProcessMissionGroup
+function var_0_0.getInProgressMissionGroup(arg_42_0)
+	return arg_42_0._inProcessMissionGroup
 end
 
-function slot0.isInProgressOtherMissionGroup(slot0, slot1)
-	slot2 = false
+function var_0_0.isInProgressOtherMissionGroup(arg_43_0, arg_43_1)
+	local var_43_0 = false
+	local var_43_1 = arg_43_0:getInProgressMissionGroup()
 
-	if slot0:getInProgressMissionGroup() and slot3 ~= 0 then
-		slot2 = slot3 ~= slot1
+	if var_43_1 and var_43_1 ~= 0 then
+		var_43_0 = var_43_1 ~= arg_43_1
 	end
 
-	return slot2
+	return var_43_0
 end
 
-function slot0.isInProgressOtherMissionGroupByElementId(slot0, slot1)
-	slot2 = false
+function var_0_0.isInProgressOtherMissionGroupByElementId(arg_44_0, arg_44_1)
+	local var_44_0 = false
+	local var_44_1 = arg_44_0:getActId()
+	local var_44_2 = Activity157Config.instance:getMissionIdByElementId(var_44_1, arg_44_1)
 
-	if Activity157Config.instance:getMissionIdByElementId(slot0:getActId(), slot1) then
-		slot2 = slot0:isInProgressOtherMissionGroup(Activity157Config.instance:getMissionGroup(slot3, slot4))
+	if var_44_2 then
+		local var_44_3 = Activity157Config.instance:getMissionGroup(var_44_1, var_44_2)
+
+		var_44_0 = arg_44_0:isInProgressOtherMissionGroup(var_44_3)
 	end
 
-	return slot2
+	return var_44_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

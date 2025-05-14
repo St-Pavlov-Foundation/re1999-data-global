@@ -1,112 +1,117 @@
-module("modules.logic.room.view.RoomWaterReformView", package.seeall)
+﻿module("modules.logic.room.view.RoomWaterReformView", package.seeall)
 
-slot0 = class("RoomWaterReformView", BaseView)
+local var_0_0 = class("RoomWaterReformView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnsave = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/#btn_save")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_left/#btn_reset")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_bottom/#go_tip")
-	slot0._goblockContent = gohelper.findChild(slot0.viewGO, "#go_bottom/#go_blockContent")
-	slot0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.viewGO)
-	slot0._contentAnimator = slot0._goblockContent:GetComponent(RoomEnum.ComponentType.Animator)
-	slot0._contentAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0._goblockContent)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_save")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_left/#btn_reset")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_bottom/#go_tip")
+	arg_1_0._goblockContent = gohelper.findChild(arg_1_0.viewGO, "#go_bottom/#go_blockContent")
+	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
+	arg_1_0._contentAnimator = arg_1_0._goblockContent:GetComponent(RoomEnum.ComponentType.Animator)
+	arg_1_0._contentAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._goblockContent)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnsave:AddClickListener(slot0._btnsaveOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, slot0._waterReformShowChanged, slot0)
-	slot0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformSelectWaterChange, slot0.refreshSelectWater, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnsave:AddClickListener(arg_2_0._btnsaveOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_2_0._waterReformShowChanged, arg_2_0)
+	arg_2_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformSelectWaterChange, arg_2_0.refreshSelectWater, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnsave:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0:removeEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, slot0._waterReformShowChanged, slot0)
-	slot0:removeEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformSelectWaterChange, slot0.refreshSelectWater, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnsave:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_3_0._waterReformShowChanged, arg_3_0)
+	arg_3_0:removeEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformSelectWaterChange, arg_3_0.refreshSelectWater, arg_3_0)
 end
 
-function slot0._btnsaveOnClick(slot0)
+function var_0_0._btnsaveOnClick(arg_4_0)
 	RoomWaterReformController.instance:saveReform()
 end
 
-function slot0._btnresetOnClick(slot0)
+function var_0_0._btnresetOnClick(arg_5_0)
 	if RoomWaterReformModel.instance:hasChangedWaterType() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.WaterReformResetConfirm, MsgBoxEnum.BoxType.Yes_No, slot0._confirmReset, nil, , slot0)
+		GameFacade.showMessageBox(MessageBoxIdDefine.WaterReformResetConfirm, MsgBoxEnum.BoxType.Yes_No, arg_5_0._confirmReset, nil, nil, arg_5_0)
 	else
 		GameFacade.showToast(ToastEnum.NoWaterReform)
 	end
 end
 
-function slot0._confirmReset(slot0)
+function var_0_0._confirmReset(arg_6_0)
 	RoomWaterReformController.instance:resetReform()
 end
 
-function slot0._waterReformShowChanged(slot0)
+function var_0_0._waterReformShowChanged(arg_7_0)
 	if RoomWaterReformModel.instance:isWaterReform() then
-		slot0._animatorPlayer:Play("open")
-		slot0:refreshUI()
+		arg_7_0._animatorPlayer:Play("open")
+		arg_7_0:refreshUI()
 	else
-		slot0._animatorPlayer:Play("close", slot0._showBackBlock, slot0)
+		arg_7_0._animatorPlayer:Play("close", arg_7_0._showBackBlock, arg_7_0)
 	end
 end
 
-function slot0._showBackBlock(slot0)
-	slot0.viewContainer:selectBlockOpTab(RoomEnum.RoomViewBlockOpMode.BackBlock)
+function var_0_0._showBackBlock(arg_8_0)
+	arg_8_0.viewContainer:selectBlockOpTab(RoomEnum.RoomViewBlockOpMode.BackBlock)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_9_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.showWaterType = nil
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0.showWaterType = nil
 
-	gohelper.setActive(slot0._gotip, false)
-	slot0:refreshUI(true)
+	gohelper.setActive(arg_11_0._gotip, false)
+	arg_11_0:refreshUI(true)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:refreshSelectWater(slot1)
+function var_0_0.refreshUI(arg_12_0, arg_12_1)
+	arg_12_0:refreshSelectWater(arg_12_1)
 end
 
-function slot0.refreshSelectWater(slot0, slot1)
-	RoomWaterReformListModel.instance:setSelectWaterType(RoomWaterReformListModel.instance:getDefaultSelectWaterType())
+function var_0_0.refreshSelectWater(arg_13_0, arg_13_1)
+	local var_13_0 = RoomWaterReformListModel.instance:getDefaultSelectWaterType()
 
-	slot3 = RoomWaterReformModel.instance:hasSelectWaterArea()
+	RoomWaterReformListModel.instance:setSelectWaterType(var_13_0)
 
-	if slot0.showWaterType ~= nil and slot0.showWaterType == slot3 then
+	local var_13_1 = RoomWaterReformModel.instance:hasSelectWaterArea()
+
+	if arg_13_0.showWaterType ~= nil and arg_13_0.showWaterType == var_13_1 then
 		return
 	end
 
-	if slot3 then
-		gohelper.setActive(slot0._gotip, false)
-		slot0._contentAnimatorPlayer:Play("open")
-	elseif slot1 then
-		slot0:showTip()
-		slot0._contentAnimator:Play("close", 0, 1)
+	if var_13_1 then
+		gohelper.setActive(arg_13_0._gotip, false)
+		arg_13_0._contentAnimatorPlayer:Play("open")
+	elseif arg_13_1 then
+		arg_13_0:showTip()
+		arg_13_0._contentAnimator:Play("close", 0, 1)
 	else
-		slot0._contentAnimatorPlayer:Play("close", slot0.showTip, slot0)
+		arg_13_0._contentAnimatorPlayer:Play("close", arg_13_0.showTip, arg_13_0)
 	end
 
-	slot0.showWaterType = slot3
+	arg_13_0.showWaterType = var_13_1
 end
 
-function slot0.showTip(slot0)
-	gohelper.setActive(slot0._gotip, true)
+function var_0_0.showTip(arg_14_0)
+	gohelper.setActive(arg_14_0._gotip, true)
 end
 
-function slot0.onClose(slot0)
-	slot0.showWaterType = nil
+function var_0_0.onClose(arg_15_0)
+	arg_15_0.showWaterType = nil
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

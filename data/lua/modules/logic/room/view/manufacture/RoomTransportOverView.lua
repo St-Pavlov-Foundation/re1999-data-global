@@ -1,126 +1,135 @@
-module("modules.logic.room.view.manufacture.RoomTransportOverView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomTransportOverView", package.seeall)
 
-slot0 = class("RoomTransportOverView", BaseView)
+local var_0_0 = class("RoomTransportOverView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotransportContent = gohelper.findChild(slot0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content")
-	slot0._gotransportItem = gohelper.findChild(slot0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content/#go_buildingItem")
-	slot0._btnpopBlock = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_popBlock")
-	slot0._btnoneKeyCritter = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottomBtns/#btn_oneKeyCritter")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotransportContent = gohelper.findChild(arg_1_0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content")
+	arg_1_0._gotransportItem = gohelper.findChild(arg_1_0.viewGO, "centerArea/#go_building/#scroll_building/viewport/content/#go_buildingItem")
+	arg_1_0._btnpopBlock = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_popBlock")
+	arg_1_0._btnoneKeyCritter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottomBtns/#btn_oneKeyCritter")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnoneKeyCritter:AddClickListener(slot0._btnoneKeyCritterOnClick, slot0)
-	slot0._btnpopBlock:AddClickListener(slot0._btnpopBlockOnClick, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onManufactureInfoUpdate, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnoneKeyCritter:AddClickListener(arg_2_0._btnoneKeyCritterOnClick, arg_2_0)
+	arg_2_0._btnpopBlock:AddClickListener(arg_2_0._btnpopBlockOnClick, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_2_0._onManufactureInfoUpdate, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_2_0._onManufactureInfoUpdate, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onViewChange, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onViewChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnoneKeyCritter:RemoveClickListener()
-	slot0._btnpopBlock:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onManufactureInfoUpdate, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnoneKeyCritter:RemoveClickListener()
+	arg_3_0._btnpopBlock:RemoveClickListener()
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0._onManufactureInfoUpdate, arg_3_0)
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._onManufactureInfoUpdate, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onViewChange, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onViewChange, arg_3_0)
 end
 
-function slot0._btnoneKeyCritterOnClick(slot0)
+function var_0_0._btnoneKeyCritterOnClick(arg_4_0)
 	ManufactureController.instance:oneKeyCritter(true)
 end
 
-function slot0._btnpopBlockOnClick(slot0)
-	slot0:_closeCritterListView()
+function var_0_0._btnpopBlockOnClick(arg_5_0)
+	arg_5_0:_closeCritterListView()
 end
 
-function slot0._onManufactureInfoUpdate(slot0)
-	for slot4, slot5 in ipairs(slot0._transportItemList) do
-		slot5:onManufactureInfoUpdate()
+function var_0_0._onManufactureInfoUpdate(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._transportItemList) do
+		iter_6_1:onManufactureInfoUpdate()
 	end
 end
 
-function slot0._onViewChange(slot0, slot1)
-	if slot1 ~= ViewName.RoomCritterListView then
+function var_0_0._onViewChange(arg_7_0, arg_7_1)
+	if arg_7_1 ~= ViewName.RoomCritterListView then
 		return
 	end
 
-	slot0:refreshPopBlock()
+	arg_7_0:refreshPopBlock()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_setTransportList()
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0:_setTransportList()
 end
 
-function slot0._setTransportList(slot0)
-	slot0._transportItemList = {}
-	slot1 = true
+function var_0_0._setTransportList(arg_9_0)
+	arg_9_0._transportItemList = {}
 
-	if RoomMapTransportPathModel.instance:getMaxCount() < #RoomMapTransportPathModel.instance:getTransportPathMOList() then
-		slot1 = false
+	local var_9_0 = true
+	local var_9_1 = RoomMapTransportPathModel.instance:getMaxCount()
+	local var_9_2 = RoomMapTransportPathModel.instance:getTransportPathMOList()
 
-		logError(string.format("RoomTransportOverView:_setTransportList error path count more than maxCount, pathCount:%s, maxCount:%s", #slot3, slot2))
+	if var_9_1 < #var_9_2 then
+		var_9_0 = false
+
+		logError(string.format("RoomTransportOverView:_setTransportList error path count more than maxCount, pathCount:%s, maxCount:%s", #var_9_2, var_9_1))
 	end
 
-	slot4 = {}
+	local var_9_3 = {}
+	local var_9_4 = RoomTransportHelper.getSiteBuildingTypeList()
 
-	for slot9 = 1, #RoomTransportHelper.getSiteBuildingTypeList() do
-		slot11 = slot3[slot9]
+	for iter_9_0 = 1, #var_9_4 do
+		local var_9_5 = {}
+		local var_9_6 = var_9_2[iter_9_0]
 
-		if slot1 and slot11 and slot11:isLinkFinish() then
-			-- Nothing
+		if var_9_0 and var_9_6 and var_9_6:isLinkFinish() then
+			var_9_5.mo = var_9_6
 		end
 
-		slot4[slot9] = {
-			mo = slot11
-		}
+		var_9_3[iter_9_0] = var_9_5
 	end
 
-	gohelper.CreateObjList(slot0, slot0._onSetTransportItem, slot4, slot0._gotransportContent, slot0._gotransportItem, RoomTransportOverItem)
+	gohelper.CreateObjList(arg_9_0, arg_9_0._onSetTransportItem, var_9_3, arg_9_0._gotransportContent, arg_9_0._gotransportItem, RoomTransportOverItem)
 end
 
-function slot0._onSetTransportItem(slot0, slot1, slot2, slot3)
-	slot1:setData(slot2.mo)
+function var_0_0._onSetTransportItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = arg_10_2.mo
 
-	slot0._transportItemList[slot3] = slot1
+	arg_10_1:setData(var_10_0)
+
+	arg_10_0._transportItemList[arg_10_3] = arg_10_1
 end
 
-function slot0._closeCritterListView(slot0)
+function var_0_0._closeCritterListView(arg_11_0)
 	ManufactureController.instance:clearSelectTransportPath()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshPopBlock()
-	slot0:everySecondCall()
-	TaskDispatcher.runRepeat(slot0.everySecondCall, slot0, TimeUtil.OneSecond)
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0:refreshPopBlock()
+	arg_13_0:everySecondCall()
+	TaskDispatcher.runRepeat(arg_13_0.everySecondCall, arg_13_0, TimeUtil.OneSecond)
 end
 
-function slot0.refreshPopBlock(slot0)
-	gohelper.setActive(slot0._btnpopBlock, ViewMgr.instance:isOpen(ViewName.RoomCritterListView))
+function var_0_0.refreshPopBlock(arg_14_0)
+	local var_14_0 = ViewMgr.instance:isOpen(ViewName.RoomCritterListView)
+
+	gohelper.setActive(arg_14_0._btnpopBlock, var_14_0)
 end
 
-function slot0.everySecondCall(slot0)
-	if slot0._transportItemList then
-		for slot4, slot5 in ipairs(slot0._transportItemList) do
-			slot5:everySecondCall()
+function var_0_0.everySecondCall(arg_15_0)
+	if arg_15_0._transportItemList then
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0._transportItemList) do
+			iter_15_1:everySecondCall()
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.everySecondCall, slot0)
-	slot0:_closeCritterListView()
+function var_0_0.onClose(arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0.everySecondCall, arg_16_0)
+	arg_16_0:_closeCritterListView()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

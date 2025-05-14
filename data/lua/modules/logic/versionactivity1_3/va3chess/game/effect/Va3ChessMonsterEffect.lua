@@ -1,32 +1,37 @@
-module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessMonsterEffect", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessMonsterEffect", package.seeall)
 
-slot0 = class("Va3ChessMonsterEffect", Va3ChessEffectBase)
+local var_0_0 = class("Va3ChessMonsterEffect", Va3ChessEffectBase)
 
-function slot0.refreshEffect(slot0)
+function var_0_0.refreshEffect(arg_1_0)
+	return
 end
 
-function slot0.onDispose(slot0)
+function var_0_0.onDispose(arg_2_0)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
-	slot1 = slot0._loader
+function var_0_0.onAvatarLoaded(arg_3_0)
+	local var_3_0 = arg_3_0._loader
 
-	if not slot0._loader then
+	if not arg_3_0._loader then
 		return
 	end
 
-	if not gohelper.isNil(slot1:getInstGO()) then
-		slot3 = gohelper.findChild(slot2, "vx_tracked")
-		slot4 = gohelper.findChild(slot2, "vx_number")
+	local var_3_1 = var_3_0:getInstGO()
 
-		gohelper.setActive(slot0._target.avatar.goTrack, false)
-		gohelper.setActive(slot3, false)
-		gohelper.setActive(slot4, false)
-		gohelper.setActive(gohelper.findChild(slot2, "icon_tanhao"), false)
+	if not gohelper.isNil(var_3_1) then
+		local var_3_2 = gohelper.findChild(var_3_1, "vx_tracked")
+		local var_3_3 = gohelper.findChild(var_3_1, "vx_number")
+		local var_3_4 = gohelper.findChild(var_3_1, "icon_tanhao")
 
-		slot0._target.avatar.goTrack = slot3
-		slot0._target.avatar.goNumber = slot4
+		gohelper.setActive(arg_3_0._target.avatar.goTrack, false)
+		gohelper.setActive(var_3_2, false)
+		gohelper.setActive(var_3_3, false)
+		gohelper.setActive(var_3_4, false)
+
+		arg_3_0._target.avatar.goTrack = var_3_2
+		arg_3_0._target.avatar.goNumber = var_3_3
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,20 +1,20 @@
-module("modules.logic.task.config.TaskConfig", package.seeall)
+﻿module("modules.logic.task.config.TaskConfig", package.seeall)
 
-slot0 = string.format
-slot1 = class("TaskConfig", BaseConfig)
+local var_0_0 = string.format
+local var_0_1 = class("TaskConfig", BaseConfig)
 
-function slot1.ctor(slot0)
-	slot0.taskdailyConfig = nil
-	slot0.taskweeklyConfig = nil
-	slot0.taskactivitybonusConfig = nil
-	slot0.taskachievementConfig = nil
-	slot0.tasknoviceConfig = nil
-	slot0.tasktypeConfig = nil
-	slot0.taskseasonConfig = nil
-	slot0.taskactivityshowConfig = nil
+function var_0_1.ctor(arg_1_0)
+	arg_1_0.taskdailyConfig = nil
+	arg_1_0.taskweeklyConfig = nil
+	arg_1_0.taskactivitybonusConfig = nil
+	arg_1_0.taskachievementConfig = nil
+	arg_1_0.tasknoviceConfig = nil
+	arg_1_0.tasktypeConfig = nil
+	arg_1_0.taskseasonConfig = nil
+	arg_1_0.taskactivityshowConfig = nil
 end
 
-function slot1.reqConfigNames(slot0)
+function var_0_1.reqConfigNames(arg_2_0)
 	return {
 		"task_daily",
 		"task_weekly",
@@ -29,206 +29,236 @@ function slot1.reqConfigNames(slot0)
 	}
 end
 
-function slot1.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "task_daily" then
-		slot0.taskdailyConfig = slot2
-	elseif slot1 == "task_weekly" then
-		slot0.taskweeklyConfig = slot2
-	elseif slot1 == "task_activity_bonus" then
-		slot0.taskactivitybonusConfig = slot2
-	elseif slot1 == "task_achievement" then
-		slot0.taskachievementConfig = slot2
-	elseif slot1 == "task_guide" then
-		slot0.tasknoviceConfig = slot2
-	elseif slot1 == "task_type" then
-		slot0.tasktypeConfig = slot2
-	elseif slot1 == "task_room" then
-		slot0.taskroomConfig = slot2
-	elseif slot1 == "task_weekwalk" then
-		slot0:_initWeekWalkTask()
-	elseif slot1 == "task_season" then
-		slot0.taskseasonConfig = slot2
-	elseif slot1 == "task_activity_show" then
-		slot0.taskactivityshowConfig = slot2
+function var_0_1.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "task_daily" then
+		arg_3_0.taskdailyConfig = arg_3_2
+	elseif arg_3_1 == "task_weekly" then
+		arg_3_0.taskweeklyConfig = arg_3_2
+	elseif arg_3_1 == "task_activity_bonus" then
+		arg_3_0.taskactivitybonusConfig = arg_3_2
+	elseif arg_3_1 == "task_achievement" then
+		arg_3_0.taskachievementConfig = arg_3_2
+	elseif arg_3_1 == "task_guide" then
+		arg_3_0.tasknoviceConfig = arg_3_2
+	elseif arg_3_1 == "task_type" then
+		arg_3_0.tasktypeConfig = arg_3_2
+	elseif arg_3_1 == "task_room" then
+		arg_3_0.taskroomConfig = arg_3_2
+	elseif arg_3_1 == "task_weekwalk" then
+		arg_3_0:_initWeekWalkTask()
+	elseif arg_3_1 == "task_season" then
+		arg_3_0.taskseasonConfig = arg_3_2
+	elseif arg_3_1 == "task_activity_show" then
+		arg_3_0.taskactivityshowConfig = arg_3_2
 	end
 end
 
-function slot1.getSeasonTaskCo(slot0, slot1)
-	return slot0.taskseasonConfig.configDict[slot1]
+function var_0_1.getSeasonTaskCo(arg_4_0, arg_4_1)
+	return arg_4_0.taskseasonConfig.configDict[arg_4_1]
 end
 
-function slot1.getWeekWalkTaskList(slot0, slot1)
-	return slot0._taskTypeList[slot1]
+function var_0_1.getWeekWalkTaskList(arg_5_0, arg_5_1)
+	return arg_5_0._taskTypeList[arg_5_1]
 end
 
-function slot1._initWeekWalkTask(slot0)
-	slot0._taskRewardList = {}
-	slot0._taskTypeList = {}
+function var_0_1._initWeekWalkTask(arg_6_0)
+	arg_6_0._taskRewardList = {}
+	arg_6_0._taskTypeList = {}
 
-	for slot4, slot5 in ipairs(lua_task_weekwalk.configList) do
-		slot6 = slot0._taskTypeList[slot5.minTypeId] or {}
+	for iter_6_0, iter_6_1 in ipairs(lua_task_weekwalk.configList) do
+		local var_6_0 = arg_6_0._taskTypeList[iter_6_1.minTypeId] or {}
 
-		table.insert(slot6, slot5)
+		table.insert(var_6_0, iter_6_1)
 
-		slot0._taskTypeList[slot5.minTypeId] = slot6
+		arg_6_0._taskTypeList[iter_6_1.minTypeId] = var_6_0
 
-		slot0:_initTaskReward(slot5)
+		arg_6_0:_initTaskReward(iter_6_1)
 	end
 end
 
-function slot1._initTaskReward(slot0, slot1)
-	slot2 = nil
+function var_0_1._initTaskReward(arg_7_0, arg_7_1)
+	local var_7_0
 
-	if not ((slot1.listenerType ~= "WeekwalkBattle" or tonumber(string.split(slot1.listenerParam, "#")[1])) and tonumber(slot1.listenerParam)) then
+	if arg_7_1.listenerType == "WeekwalkBattle" then
+		local var_7_1 = string.split(arg_7_1.listenerParam, "#")
+
+		var_7_0 = tonumber(var_7_1[1])
+	else
+		var_7_0 = tonumber(arg_7_1.listenerParam)
+	end
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0._taskRewardList[slot2] = slot0._taskRewardList[slot2] or {}
+	local var_7_2 = arg_7_1.bonus
 
-	for slot8 = 1, #string.split(slot1.bonus, "|") do
-		if string.splitToNumber(slot4[slot8], "#")[1] == MaterialEnum.MaterialType.Currency and slot9[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			slot0._taskRewardList[slot2][slot1.id] = slot9[3]
+	arg_7_0._taskRewardList[var_7_0] = arg_7_0._taskRewardList[var_7_0] or {}
+
+	local var_7_3 = string.split(var_7_2, "|")
+
+	for iter_7_0 = 1, #var_7_3 do
+		local var_7_4 = string.splitToNumber(var_7_3[iter_7_0], "#")
+
+		if var_7_4[1] == MaterialEnum.MaterialType.Currency and var_7_4[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			arg_7_0._taskRewardList[var_7_0][arg_7_1.id] = var_7_4[3]
 		end
 	end
 end
 
-function slot1.getWeekWalkRewardList(slot0, slot1)
-	return slot0._taskRewardList[slot1]
+function var_0_1.getWeekWalkRewardList(arg_8_0, arg_8_1)
+	return arg_8_0._taskRewardList[arg_8_1]
 end
 
-function slot1.gettaskdailyCO(slot0, slot1)
-	return slot0.taskdailyConfig.configDict[slot1]
+function var_0_1.gettaskdailyCO(arg_9_0, arg_9_1)
+	return arg_9_0.taskdailyConfig.configDict[arg_9_1]
 end
 
-function slot1.gettaskweeklyCO(slot0, slot1)
-	return slot0.taskweeklyConfig.configDict[slot1]
+function var_0_1.gettaskweeklyCO(arg_10_0, arg_10_1)
+	return arg_10_0.taskweeklyConfig.configDict[arg_10_1]
 end
 
-function slot1.gettaskNoviceConfigs(slot0)
-	return slot0.tasknoviceConfig.configDict
+function var_0_1.gettaskNoviceConfigs(arg_11_0)
+	return arg_11_0.tasknoviceConfig.configDict
 end
 
-function slot1.gettaskNoviceConfig(slot0, slot1)
-	return slot0.tasknoviceConfig.configDict[slot1]
+function var_0_1.gettaskNoviceConfig(arg_12_0, arg_12_1)
+	return arg_12_0.tasknoviceConfig.configDict[arg_12_1]
 end
 
-function slot1.gettaskactivitybonusCO(slot0, slot1, slot2)
-	if slot0.taskactivitybonusConfig.configDict[slot1] then
-		return slot3[slot2]
+function var_0_1.gettaskactivitybonusCO(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0.taskactivitybonusConfig.configDict[arg_13_1]
+
+	if var_13_0 then
+		return var_13_0[arg_13_2]
 	end
 end
 
-function slot1.getTaskActivityBonusConfig(slot0, slot1)
-	return slot0.taskactivitybonusConfig.configDict[slot1]
+function var_0_1.getTaskActivityBonusConfig(arg_14_0, arg_14_1)
+	return arg_14_0.taskactivitybonusConfig.configDict[arg_14_1]
 end
 
-function slot1.getTaskBonusValue(slot0, slot1, slot2, slot3)
-	slot0.taskBonusValueDict = slot0.taskBonusValueDict or {}
+function var_0_1.getTaskBonusValue(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	arg_15_0.taskBonusValueDict = arg_15_0.taskBonusValueDict or {}
 
-	if not slot0.taskBonusValueDict[slot1] then
-		slot0.taskBonusValueDict[slot1] = {}
+	if not arg_15_0.taskBonusValueDict[arg_15_1] then
+		arg_15_0.taskBonusValueDict[arg_15_1] = {}
 
-		if not slot0:getTaskActivityBonusConfig(slot1) then
-			logError("not found task bonus , type : " .. tostring(slot1))
+		local var_15_0 = arg_15_0:getTaskActivityBonusConfig(arg_15_1)
+
+		if not var_15_0 then
+			logError("not found task bonus , type : " .. tostring(arg_15_1))
 
 			return 0
 		end
 
-		slot5 = {}
+		local var_15_1 = {}
 
-		for slot9, slot10 in pairs(slot4) do
-			table.insert(slot5, slot10)
+		for iter_15_0, iter_15_1 in pairs(var_15_0) do
+			table.insert(var_15_1, iter_15_1)
 		end
 
-		table.sort(slot5, function (slot0, slot1)
-			return slot0.id < slot1.id
+		table.sort(var_15_1, function(arg_16_0, arg_16_1)
+			return arg_16_0.id < arg_16_1.id
 		end)
 
-		slot6 = nil
+		local var_15_2
 
-		for slot10, slot11 in ipairs(slot5) do
-			slot0.taskBonusValueDict[slot1][slot10] = (slot6 and slot0.taskBonusValueDict[slot1][slot6] or 0) + slot11.needActivity
-			slot6 = slot10
+		for iter_15_2, iter_15_3 in ipairs(var_15_1) do
+			arg_15_0.taskBonusValueDict[arg_15_1][iter_15_2] = (var_15_2 and arg_15_0.taskBonusValueDict[arg_15_1][var_15_2] or 0) + iter_15_3.needActivity
+			var_15_2 = iter_15_2
 		end
 	end
 
-	return (slot0.taskBonusValueDict[slot1][slot2 - 1] or 0) + slot3
+	return (arg_15_0.taskBonusValueDict[arg_15_1][arg_15_2 - 1] or 0) + arg_15_3
 end
 
-function slot1.gettaskachievementCO(slot0, slot1)
-	return slot0.taskachievementConfig.configDict[slot1]
+function var_0_1.gettaskachievementCO(arg_17_0, arg_17_1)
+	return arg_17_0.taskachievementConfig.configDict[arg_17_1]
 end
 
-function slot1.gettasktypeCO(slot0, slot1)
-	return slot0.tasktypeConfig.configDict[slot1]
+function var_0_1.gettasktypeCO(arg_18_0, arg_18_1)
+	return arg_18_0.tasktypeConfig.configDict[arg_18_1]
 end
 
-function slot1.gettaskRoomCO(slot0, slot1)
-	return slot0.taskroomConfig.configDict[slot1]
+function var_0_1.gettaskRoomCO(arg_19_0, arg_19_1)
+	return arg_19_0.taskroomConfig.configDict[arg_19_1]
 end
 
-function slot1.gettaskroomlist(slot0)
-	return slot0.taskroomConfig.configList
+function var_0_1.gettaskroomlist(arg_20_0)
+	return arg_20_0.taskroomConfig.configList
 end
 
-function slot1.getTaskActivityShowConfig(slot0, slot1)
-	return slot0.taskactivityshowConfig.configDict[slot1]
+function var_0_1.getTaskActivityShowConfig(arg_21_0, arg_21_1)
+	return arg_21_0.taskactivityshowConfig.configDict[arg_21_1]
 end
 
-slot2 = "ReadTask"
+local var_0_2 = "ReadTask"
 
-function slot1.initReadTaskList(slot0, slot1, slot2, slot3, slot4)
-	slot5, slot6 = nil
+function var_0_1.initReadTaskList(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	local var_22_0
+	local var_22_1
 
 	if isDebugBuild then
-		slot6 = ConfigsCheckerMgr.instance:createStrBuf(slot1)
+		var_22_1 = ConfigsCheckerMgr.instance:createStrBuf(arg_22_1)
 	end
 
-	for slot10, slot11 in ipairs(slot4.configList) do
-		if not slot2[slot11.activityId] then
-			slot13 = {}
+	for iter_22_0, iter_22_1 in ipairs(arg_22_4.configList) do
+		local var_22_2 = iter_22_1.activityId
+		local var_22_3 = arg_22_2[var_22_2]
 
-			for slot17, slot18 in pairs(slot3) do
+		if not var_22_3 then
+			var_22_3 = {}
+
+			for iter_22_2, iter_22_3 in pairs(arg_22_3) do
 				if isDebugBuild then
-					slot6:appendLineIfOK(slot13[slot18], uv0("redefined enum enumKey: %s, enumValue: %s", slot17, slot18))
+					var_22_1:appendLineIfOK(var_22_3[iter_22_3], var_0_0("redefined enum enumKey: %s, enumValue: %s", iter_22_2, iter_22_3))
 				end
 
-				slot13[slot18] = {}
+				var_22_3[iter_22_3] = {}
 			end
 
-			slot2[slot12] = slot13
+			arg_22_2[var_22_2] = var_22_3
 		end
 
-		if slot11.isOnline then
-			if slot11.listenerType == uv1 then
-				if not slot3[slot11.tag] then
-					slot5 = uv0("[TaskConfig]: error actId: %s, taskId: %s", slot12, slot11.id)
+		if iter_22_1.isOnline then
+			local var_22_4 = iter_22_1.id
+
+			if iter_22_1.listenerType == var_0_2 then
+				local var_22_5 = arg_22_3[iter_22_1.tag]
+
+				if not var_22_5 then
+					local var_22_6 = var_0_0("[TaskConfig]: error actId: %s, taskId: %s", var_22_2, var_22_4)
 
 					if isDebugBuild then
-						slot6:appendLine(slot5)
+						var_22_1:appendLine(var_22_6)
 					end
 
-					logError(slot5)
-				elseif slot13[slot15] then
-					slot16[slot14] = slot11
+					logError(var_22_6)
 				else
-					slot5 = uv0("[TaskConfig]: unsupported actId: %s, tag: %s", slot12, slot11.tag)
+					local var_22_7 = var_22_3[var_22_5]
 
-					if isDebugBuild then
-						slot6:appendLine(slot5)
+					if var_22_7 then
+						var_22_7[var_22_4] = iter_22_1
+					else
+						local var_22_8 = var_0_0("[TaskConfig]: unsupported actId: %s, tag: %s", var_22_2, iter_22_1.tag)
+
+						if isDebugBuild then
+							var_22_1:appendLine(var_22_8)
+						end
+
+						logError(var_22_8)
 					end
-
-					logError(slot5)
 				end
 			end
 		end
 	end
 
 	if isDebugBuild then
-		slot6:logErrorIfGot()
+		var_22_1:logErrorIfGot()
 	end
 end
 
-slot1.instance = slot1.New()
+var_0_1.instance = var_0_1.New()
 
-return slot1
+return var_0_1

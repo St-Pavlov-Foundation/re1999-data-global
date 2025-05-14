@@ -1,40 +1,41 @@
-module("modules.logic.explore.map.unit.ExploreBaseLightUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreBaseLightUnit", package.seeall)
 
-slot0 = class("ExploreBaseLightUnit", ExploreBaseMoveUnit)
+local var_0_0 = class("ExploreBaseLightUnit", ExploreBaseMoveUnit)
 
-function slot0.initComponents(slot0, ...)
-	uv0.super.initComponents(slot0, ...)
-	slot0:addComp("lightComp", ExploreUnitLightComp)
+function var_0_0.initComponents(arg_1_0, ...)
+	var_0_0.super.initComponents(arg_1_0, ...)
+	arg_1_0:addComp("lightComp", ExploreUnitLightComp)
 end
 
-function slot0.onInFOVChange(slot0, slot1)
-	if slot1 then
-		slot0:setupRes()
-		TaskDispatcher.cancelTask(slot0._releaseDisplayGo, slot0)
+function var_0_0.onInFOVChange(arg_2_0, arg_2_1)
+	if arg_2_1 then
+		arg_2_0:setupRes()
+		TaskDispatcher.cancelTask(arg_2_0._releaseDisplayGo, arg_2_0)
 	else
-		TaskDispatcher.runDelay(slot0._releaseDisplayGo, slot0, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
+		TaskDispatcher.runDelay(arg_2_0._releaseDisplayGo, arg_2_0, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
 	end
 end
 
-function slot0.setActiveAnim(slot0, slot1)
-	if slot1 then
-		slot0:playAnim(ExploreAnimEnum.AnimName.nToA)
+function var_0_0.setActiveAnim(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		arg_3_0:playAnim(ExploreAnimEnum.AnimName.nToA)
 	else
-		slot0:playAnim(ExploreAnimEnum.AnimName.aToN)
+		arg_3_0:playAnim(ExploreAnimEnum.AnimName.aToN)
 	end
 end
 
-function slot0.onActiveChange(slot0, slot1)
+function var_0_0.onActiveChange(arg_4_0, arg_4_1)
+	return
 end
 
-function slot0.getIdleAnim(slot0)
-	if not slot0.mo:isInteractEnabled() then
+function var_0_0.getIdleAnim(arg_5_0)
+	if not arg_5_0.mo:isInteractEnabled() then
 		return ExploreAnimEnum.AnimName.unable
-	elseif not slot0:haveLight() then
+	elseif not arg_5_0:haveLight() then
 		return ExploreAnimEnum.AnimName.normal
 	else
 		return ExploreAnimEnum.AnimName.active
 	end
 end
 
-return slot0
+return var_0_0

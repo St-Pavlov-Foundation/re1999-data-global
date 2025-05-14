@@ -1,12 +1,12 @@
-module("modules.logic.fight.system.work.LY.FightWorkToCardAreaRedOrBlue", package.seeall)
+﻿module("modules.logic.fight.system.work.LY.FightWorkToCardAreaRedOrBlue", package.seeall)
 
-slot0 = class("FightWorkToCardAreaRedOrBlue", FightEffectBase)
+local var_0_0 = class("FightWorkToCardAreaRedOrBlue", FightEffectBase)
 
-function slot0.onStart(slot0)
-	FightPlayCardModel.instance:setUsedCard(slot0._actEffectMO.cardInfoList)
+function var_0_0.onStart(arg_1_0)
+	FightPlayCardModel.instance:setUsedCard(arg_1_0._actEffectMO.cardInfoList)
 	FightController.instance:dispatchEvent(FightEvent.SetUseCards)
 	FightViewPartVisible.set(false, false, false, false, true)
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

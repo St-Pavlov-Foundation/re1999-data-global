@@ -1,42 +1,44 @@
-module("modules.logic.rouge.view.RougeCollectionInitialCollectionTagItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionInitialCollectionTagItem", package.seeall)
 
-slot0 = class("RougeCollectionInitialCollectionTagItem", RougeSimpleItemBase)
+local var_0_0 = class("RougeCollectionInitialCollectionTagItem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0.ctor(slot0, slot1)
-	RougeSimpleItemBase.ctor(slot0, slot1)
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	RougeSimpleItemBase.ctor(arg_4_0, arg_4_1)
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0:parent():setActiveTips(true)
+function var_0_0._btnclickOnClick(arg_5_0)
+	arg_5_0:parent():setActiveTips(true)
 end
 
-function slot0._editableInitView(slot0)
-	RougeSimpleItemBase._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	RougeSimpleItemBase._editableInitView(arg_6_0)
 
-	slot0._imageTagFrame = gohelper.findChildImage(slot0.viewGO, "image_tagframe")
-	slot0._imageTagIcon = gohelper.findChildImage(slot0.viewGO, "image_tagicon")
+	arg_6_0._imageTagFrame = gohelper.findChildImage(arg_6_0.viewGO, "image_tagframe")
+	arg_6_0._imageTagIcon = gohelper.findChildImage(arg_6_0.viewGO, "image_tagicon")
 
-	UISpriteSetMgr.instance:setRougeSprite(slot0._imageTagFrame, "rouge_collection_tagframe_1")
+	UISpriteSetMgr.instance:setRougeSprite(arg_6_0._imageTagFrame, "rouge_collection_tagframe_1")
 end
 
-function slot0.setData(slot0, slot1)
-	UISpriteSetMgr.instance:setRougeSprite(slot0._imageTagIcon, lua_rouge_tag.configDict[slot1].iconUrl)
+function var_0_0.setData(arg_7_0, arg_7_1)
+	local var_7_0 = lua_rouge_tag.configDict[arg_7_1]
+
+	UISpriteSetMgr.instance:setRougeSprite(arg_7_0._imageTagIcon, var_7_0.iconUrl)
 end
 
-return slot0
+return var_0_0

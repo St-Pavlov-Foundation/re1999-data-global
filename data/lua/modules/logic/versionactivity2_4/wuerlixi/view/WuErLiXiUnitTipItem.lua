@@ -1,42 +1,44 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiUnitTipItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiUnitTipItem", package.seeall)
 
-slot0 = class("WuErLiXiUnitTipItem", LuaCompBase)
+local var_0_0 = class("WuErLiXiUnitTipItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._txtname = gohelper.findChildText(slot1, "txt_desc/image_bg/txt_namecn")
-	slot0._txtdesc = gohelper.findChildText(slot1, "txt_desc")
-	slot0._gonormalicon = gohelper.findChild(slot1, "Icon")
-	slot0._imageiconbg = gohelper.findChildImage(slot1, "Icon/image_IconBG")
-	slot0._imageicon = gohelper.findChildImage(slot1, "Icon/image_icon")
-	slot0._golongicon = gohelper.findChild(slot1, "Icon_long")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._txtname = gohelper.findChildText(arg_1_1, "txt_desc/image_bg/txt_namecn")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_1, "txt_desc")
+	arg_1_0._gonormalicon = gohelper.findChild(arg_1_1, "Icon")
+	arg_1_0._imageiconbg = gohelper.findChildImage(arg_1_1, "Icon/image_IconBG")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "Icon/image_icon")
+	arg_1_0._golongicon = gohelper.findChild(arg_1_1, "Icon_long")
 end
 
-function slot0.setItem(slot0, slot1)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.setItem(arg_2_0, arg_2_1)
+	gohelper.setActive(arg_2_0.go, true)
 
-	slot0._config = slot1
-	slot0._txtname.text = slot0._config.name
-	slot0._txtdesc.text = slot0._config.desc
+	arg_2_0._config = arg_2_1
+	arg_2_0._txtname.text = arg_2_0._config.name
+	arg_2_0._txtdesc.text = arg_2_0._config.desc
 
-	gohelper.setActive(slot0._golongicon, slot0._config.id == WuErLiXiEnum.UnitType.SignalMulti)
-	gohelper.setActive(slot0._gonormalicon, slot0._config.id ~= WuErLiXiEnum.UnitType.SignalMulti)
+	gohelper.setActive(arg_2_0._golongicon, arg_2_0._config.id == WuErLiXiEnum.UnitType.SignalMulti)
+	gohelper.setActive(arg_2_0._gonormalicon, arg_2_0._config.id ~= WuErLiXiEnum.UnitType.SignalMulti)
 
-	if slot0._config.id ~= WuErLiXiEnum.UnitType.SignalMulti then
-		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageicon, WuErLiXiHelper.getUnitSpriteName(slot0._config.id, false))
+	if arg_2_0._config.id ~= WuErLiXiEnum.UnitType.SignalMulti then
+		local var_2_0 = WuErLiXiHelper.getUnitSpriteName(arg_2_0._config.id, false)
 
-		slot3 = "v2a4_wuerlixi_node_icon2"
+		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_2_0._imageicon, var_2_0)
 
-		if slot0._config.id == WuErLiXiEnum.UnitType.SignalStart or slot0._config.id == WuErLiXiEnum.UnitType.SignalEnd then
-			slot3 = "v2a4_wuerlixi_node_icon4"
+		local var_2_1 = "v2a4_wuerlixi_node_icon2"
+
+		if arg_2_0._config.id == WuErLiXiEnum.UnitType.SignalStart or arg_2_0._config.id == WuErLiXiEnum.UnitType.SignalEnd then
+			var_2_1 = "v2a4_wuerlixi_node_icon4"
 		end
 
-		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(slot0._imageiconbg, slot3)
+		UISpriteSetMgr.instance:setV2a4WuErLiXiSprite(arg_2_0._imageiconbg, var_2_1)
 	end
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_3_0)
+	gohelper.setActive(arg_3_0.go, false)
 end
 
-return slot0
+return var_0_0

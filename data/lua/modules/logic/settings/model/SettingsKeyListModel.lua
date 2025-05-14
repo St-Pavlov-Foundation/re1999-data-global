@@ -1,76 +1,82 @@
-module("modules.logic.settings.model.SettingsKeyListModel", package.seeall)
+﻿module("modules.logic.settings.model.SettingsKeyListModel", package.seeall)
 
-slot0 = class("SettingsKeyListModel", ListScrollModel)
+local var_0_0 = class("SettingsKeyListModel", ListScrollModel)
 
-function slot0.Init(slot0)
-	slot0._keyMaps = PCInputController.instance:getKeyMap()
+function var_0_0.Init(arg_1_0)
+	arg_1_0._keyMaps = PCInputController.instance:getKeyMap()
 end
 
-function slot0.SetActivity(slot0, slot1)
-	slot0:clear()
+function var_0_0.SetActivity(arg_2_0, arg_2_1)
+	arg_2_0:clear()
 
-	if slot0._keyMaps[slot1] then
-		slot3 = {}
+	local var_2_0 = arg_2_0._keyMaps[arg_2_1]
 
-		for slot7, slot8 in ipairs(slot2) do
-			if slot8.editable == 1 then
-				table.insert(slot3, {
-					id = slot8.id,
-					value = slot8
+	if var_2_0 then
+		local var_2_1 = {}
+
+		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+			if iter_2_1.editable == 1 then
+				table.insert(var_2_1, {
+					id = iter_2_1.id,
+					value = iter_2_1
 				})
 			end
 		end
 
-		table.sort(slot3, function (slot0, slot1)
-			return slot0.id < slot1.id
+		table.sort(var_2_1, function(arg_3_0, arg_3_1)
+			return arg_3_0.id < arg_3_1.id
 		end)
-		slot0:setList(slot3)
+		arg_2_0:setList(var_2_1)
 	end
 end
 
-function slot0.Reset(slot0, slot1)
-	PCInputModel.instance:Reset(slot1)
+function var_0_0.Reset(arg_4_0, arg_4_1)
+	PCInputModel.instance:Reset(arg_4_1)
 
-	slot0._keyMaps = PCInputController.instance:getKeyMap()
+	arg_4_0._keyMaps = PCInputController.instance:getKeyMap()
 
-	slot0:SetActivity(slot1)
+	arg_4_0:SetActivity(arg_4_1)
 	SettingsController.instance:dispatchEvent(SettingsEvent.OnKeyTipsChange)
 end
 
-function slot0.modifyKey(slot0, slot1, slot2, slot3)
-	if not slot0._keyMaps[slot1] or not slot4[slot2] then
-		logError("SettingsKeyListModel:modifyKey error, activityId = %s, keyId = %s", slot1, slot2)
+function var_0_0.modifyKey(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_0._keyMaps[arg_5_1]
+
+	if not var_5_0 or not var_5_0[arg_5_2] then
+		logError("SettingsKeyListModel:modifyKey error, activityId = %s, keyId = %s", arg_5_1, arg_5_2)
 
 		return
 	end
 
-	slot4[slot2][4] = slot3
+	var_5_0[arg_5_2][4] = arg_5_3
 
-	slot0:SetActivity(slot1)
-	slot0:saveKeyMap()
+	arg_5_0:SetActivity(arg_5_1)
+	arg_5_0:saveKeyMap()
 	SettingsController.instance:dispatchEvent(SettingsEvent.OnKeyTipsChange)
 end
 
-function slot0.checkDunplicateKey(slot0, slot1, slot2)
-	if not slot0._keyMaps[slot1] then
-		logError("SettingsKeyListModel:checkDunplicateKey error, activityId = %s, keyId = %s", slot1, slot2)
+function var_0_0.checkDunplicateKey(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0._keyMaps[arg_6_1]
+
+	if not var_6_0 then
+		logError("SettingsKeyListModel:checkDunplicateKey error, activityId = %s, keyId = %s", arg_6_1, arg_6_2)
 
 		return
 	end
 
-	for slot7, slot8 in pairs(slot3) do
-		if slot8.key == slot2 then
-			return slot8
+	for iter_6_0, iter_6_1 in pairs(var_6_0) do
+		if iter_6_1.key == arg_6_2 then
+			return iter_6_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.saveKeyMap(slot0)
-	PCInputController.instance:saveKeyMap(slot0._keyMaps)
+function var_0_0.saveKeyMap(arg_7_0)
+	PCInputController.instance:saveKeyMap(arg_7_0._keyMaps)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

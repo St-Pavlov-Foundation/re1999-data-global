@@ -1,53 +1,67 @@
-module("modules.logic.summon.model.SummonLuckyBagModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonLuckyBagModel", package.seeall)
 
-slot0 = class("SummonLuckyBagModel", BaseModel)
+local var_0_0 = class("SummonLuckyBagModel", BaseModel)
 
-function slot0.isLuckyBagOpened(slot0, slot1, slot2)
-	if SummonMainModel.instance:getPoolServerMO(slot1) and slot3.luckyBagMO then
-		return slot3.luckyBagMO:isOpened()
+function var_0_0.isLuckyBagOpened(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = SummonMainModel.instance:getPoolServerMO(arg_1_1)
+
+	if var_1_0 and var_1_0.luckyBagMO then
+		return var_1_0.luckyBagMO:isOpened()
 	end
 
 	return false
 end
 
-function slot0.getGachaRemainTimes(slot0, slot1)
-	slot4 = SummonConfig.getSummonSSRTimes(SummonConfig.instance:getSummonPool(slot1))
+function var_0_0.getGachaRemainTimes(arg_2_0, arg_2_1)
+	local var_2_0 = SummonConfig.instance:getSummonPool(arg_2_1)
+	local var_2_1 = SummonMainModel.instance:getPoolServerMO(arg_2_1)
+	local var_2_2 = SummonConfig.getSummonSSRTimes(var_2_0)
 
-	if SummonMainModel.instance:getPoolServerMO(slot1) and slot3.luckyBagMO then
-		return slot4 - slot3.luckyBagMO.summonTimes
+	if var_2_1 and var_2_1.luckyBagMO then
+		return var_2_2 - var_2_1.luckyBagMO.summonTimes
 	end
 
-	return slot4
+	return var_2_2
 end
 
-function slot0.isLuckyBagGot(slot0, slot1)
-	if SummonMainModel.instance:getPoolServerMO(slot1) and slot2.luckyBagMO then
-		return slot2.luckyBagMO:isGot(), slot2.luckyBagMO.luckyBagId
+function var_0_0.isLuckyBagGot(arg_3_0, arg_3_1)
+	local var_3_0 = SummonMainModel.instance:getPoolServerMO(arg_3_1)
+
+	if var_3_0 and var_3_0.luckyBagMO then
+		return var_3_0.luckyBagMO:isGot(), var_3_0.luckyBagMO.luckyBagId
 	end
 
 	return false
 end
 
-function slot0.needAutoPopup(slot0, slot1)
-	if not PlayerModel.instance:getPlayinfo() or slot2.userId == 0 then
+function var_0_0.needAutoPopup(arg_4_0, arg_4_1)
+	local var_4_0 = PlayerModel.instance:getPlayinfo()
+
+	if not var_4_0 or var_4_0.userId == 0 then
 		return nil
 	end
 
-	if string.nilorempty(PlayerPrefsHelper.getString(string.format("LuckyBagAutoPopup_%s_%s", slot2.userId, slot1), "")) then
+	local var_4_1 = string.format("LuckyBagAutoPopup_%s_%s", var_4_0.userId, arg_4_1)
+
+	if string.nilorempty(PlayerPrefsHelper.getString(var_4_1, "")) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.recordAutoPopup(slot0, slot1)
-	if not PlayerModel.instance:getPlayinfo() or slot2.userId == 0 then
+function var_0_0.recordAutoPopup(arg_5_0, arg_5_1)
+	local var_5_0 = PlayerModel.instance:getPlayinfo()
+
+	if not var_5_0 or var_5_0.userId == 0 then
 		return nil
 	end
 
-	PlayerPrefsHelper.setString(string.format("LuckyBagAutoPopup_%s_%s", slot2.userId, slot1), "1")
+	local var_5_1 = string.format("LuckyBagAutoPopup_%s_%s", var_5_0.userId, arg_5_1)
+
+	PlayerPrefsHelper.setString(var_5_1, "1")
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

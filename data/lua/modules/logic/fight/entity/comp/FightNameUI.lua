@@ -1,490 +1,534 @@
-module("modules.logic.fight.entity.comp.FightNameUI", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightNameUI", package.seeall)
 
-slot0 = class("FightNameUI", LuaCompBase)
+local var_0_0 = class("FightNameUI", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._entity = slot1
-	slot0._nameUIActive = true
-	slot0._nameUIVisible = true
-	slot0._expointCtrl = FightNameUIExPointMgr.New(slot0)
-	slot0._opCtrl = FightNameUIOp.New(slot0)
-	slot0.buffMgr = FightNameUIBuffMgr.New()
-	slot0._power = FightNameUIPower.New(slot0, 1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._entity = arg_1_1
+	arg_1_0._nameUIActive = true
+	arg_1_0._nameUIVisible = true
+	arg_1_0._expointCtrl = FightNameUIExPointMgr.New(arg_1_0)
+	arg_1_0._opCtrl = FightNameUIOp.New(arg_1_0)
+	arg_1_0.buffMgr = FightNameUIBuffMgr.New()
+	arg_1_0._power = FightNameUIPower.New(arg_1_0, 1)
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
-		slot0._enemyOperation = FightNameUIEnemyOperation.New(slot0)
-		slot0._enemyOperation.INVOKED_OPEN_VIEW = true
+		arg_1_0._enemyOperation = FightNameUIEnemyOperation.New(arg_1_0)
+		arg_1_0._enemyOperation.INVOKED_OPEN_VIEW = true
 	end
 end
 
-function slot0.load(slot0, slot1)
-	if slot0._uiLoader then
-		slot0._uiLoader:dispose()
+function var_0_0.load(arg_2_0, arg_2_1)
+	if arg_2_0._uiLoader then
+		arg_2_0._uiLoader:dispose()
 	end
 
-	slot0._containerGO = gohelper.create2d(FightNameMgr.instance:getNameParent(), slot0.entity:getMO():getIdName())
-	slot0._floatContainerGO = gohelper.create2d(slot0._containerGO, "float")
+	arg_2_0._containerGO = gohelper.create2d(FightNameMgr.instance:getNameParent(), arg_2_0.entity:getMO():getIdName())
+	arg_2_0._floatContainerGO = gohelper.create2d(arg_2_0._containerGO, "float")
 
-	FightNameMgr.instance:register(slot0)
+	FightNameMgr.instance:register(arg_2_0)
 
-	slot0._uiLoader = PrefabInstantiate.Create(slot0._containerGO)
+	arg_2_0._uiLoader = PrefabInstantiate.Create(arg_2_0._containerGO)
 
-	slot0._uiLoader:startLoad(slot1, slot0._onLoaded, slot0)
+	arg_2_0._uiLoader:startLoad(arg_2_1, arg_2_0._onLoaded, arg_2_0)
 end
 
-function slot0.setActive(slot0, slot1)
-	if slot1 and slot0._curHp and slot0._curHp <= 0 then
+function var_0_0.setActive(arg_3_0, arg_3_1)
+	if arg_3_1 and arg_3_0._curHp and arg_3_0._curHp <= 0 then
 		return
 	end
 
-	slot0._nameUIActive = slot1
+	arg_3_0._nameUIActive = arg_3_1
 
-	slot0:_doSetActive()
+	arg_3_0:_doSetActive()
 end
 
-function slot0.playDeadEffect(slot0)
-	slot0:_playAni("die")
+function var_0_0.playDeadEffect(arg_4_0)
+	arg_4_0:_playAni("die")
 end
 
-function slot0.playOpenEffect(slot0)
-	slot0:_playAni(UIAnimationName.Open)
+function var_0_0.playOpenEffect(arg_5_0)
+	arg_5_0:_playAni(UIAnimationName.Open)
 end
 
-function slot0.playCloseEffect(slot0)
-	slot0:_playAni("close")
+function var_0_0.playCloseEffect(arg_6_0)
+	arg_6_0:_playAni("close")
 end
 
-function slot0._playAni(slot0, slot1)
-	if slot0._ani then
-		slot0._ani:Play(slot1, 0, 0)
+function var_0_0._playAni(arg_7_0, arg_7_1)
+	if arg_7_0._ani then
+		arg_7_0._ani:Play(arg_7_1, 0, 0)
 
-		slot0._ani.speed = FightModel.instance:getSpeed()
+		local var_7_0 = FightModel.instance:getSpeed()
+
+		arg_7_0._ani.speed = var_7_0
 	end
 end
 
-function slot0._setIsShowNameUI(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0._setIsShowNameUI(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = false
 
-	if not slot2 then
-		slot3 = true
+	if not arg_8_2 then
+		var_8_0 = true
 	else
-		for slot7, slot8 in ipairs(slot2) do
-			if slot8.id == slot0.entity.id then
-				slot3 = true
+		for iter_8_0, iter_8_1 in ipairs(arg_8_2) do
+			if iter_8_1.id == arg_8_0.entity.id then
+				var_8_0 = true
 
 				break
 			end
 		end
 	end
 
-	if slot3 then
-		slot0._nameUIVisible = slot1
+	if var_8_0 then
+		arg_8_0._nameUIVisible = arg_8_1
 
-		slot0:_doSetActive()
+		arg_8_0:_doSetActive()
 	end
 end
 
-function slot0._doSetActive(slot0)
-	if gohelper.isNil(slot0:getUIGO()) then
+function var_0_0._doSetActive(arg_9_0)
+	local var_9_0 = arg_9_0:getUIGO()
+
+	if gohelper.isNil(var_9_0) then
 		return
 	end
 
-	slot2 = slot0._nameUIActive and slot0._nameUIVisible
+	local var_9_1 = arg_9_0._nameUIActive and arg_9_0._nameUIVisible
 
-	if slot0.entity:getMO():hasBuffFeature(FightEnum.BuffType_HideLife) then
-		slot2 = false
+	if arg_9_0.entity:getMO():hasBuffFeature(FightEnum.BuffType_HideLife) then
+		var_9_1 = false
 	end
 
-	if not gohelper.isNil(slot0._uiCanvasGroup) then
-		if slot2 then
-			recthelper.setAnchor(slot0:getUIGO().transform, slot0._originPosOffsetX or 0, slot0._originPosOffsetY or 0)
+	if not gohelper.isNil(arg_9_0._uiCanvasGroup) then
+		if var_9_1 then
+			recthelper.setAnchor(arg_9_0:getUIGO().transform, arg_9_0._originPosOffsetX or 0, arg_9_0._originPosOffsetY or 0)
 		else
-			recthelper.setAnchor(slot0:getUIGO().transform, 20000, 20000)
+			recthelper.setAnchor(arg_9_0:getUIGO().transform, 20000, 20000)
 		end
 	end
 
-	if slot2 and slot0._uiFollower then
-		slot0._uiFollower:ForceUpdate()
+	if var_9_1 and arg_9_0._uiFollower then
+		arg_9_0._uiFollower:ForceUpdate()
 	end
 end
 
-function slot0.getAnchorXY(slot0)
-	if slot0._uiTransform then
-		slot1, slot2 = recthelper.getAnchor(slot0._uiTransform, 0, 0)
+function var_0_0.getAnchorXY(arg_10_0)
+	if arg_10_0._uiTransform then
+		local var_10_0, var_10_1 = recthelper.getAnchor(arg_10_0._uiTransform, 0, 0)
 
-		return recthelper.getAnchor(slot0._uiTransform, 0, 0)
+		return recthelper.getAnchor(arg_10_0._uiTransform, 0, 0)
 	end
 
 	return 0, 0
 end
 
-function slot0.getFloatContainerGO(slot0)
-	return slot0._floatContainerGO
+function var_0_0.getFloatContainerGO(arg_11_0)
+	return arg_11_0._floatContainerGO
 end
 
-function slot0.getGO(slot0)
-	return slot0._containerGO
+function var_0_0.getGO(arg_12_0)
+	return arg_12_0._containerGO
 end
 
-function slot0.getUIGO(slot0)
-	return slot0._uiGO
+function var_0_0.getUIGO(arg_13_0)
+	return arg_13_0._uiGO
 end
 
-function slot0.getOpCtrl(slot0)
-	return slot0._opCtrl
+function var_0_0.getOpCtrl(arg_14_0)
+	return arg_14_0._opCtrl
 end
 
-function slot0._onLoaded(slot0)
-	gohelper.setAsLastSibling(slot0._floatContainerGO)
+function var_0_0._onLoaded(arg_15_0)
+	gohelper.setAsLastSibling(arg_15_0._floatContainerGO)
 
-	slot0._uiGO = slot0._uiLoader:getInstGO()
-	slot0._uiTransform = slot0._uiGO.transform
-	slot0._uiCanvasGroup = gohelper.onceAddComponent(slot0._uiGO, typeof(UnityEngine.CanvasGroup))
-	slot0._txtName = gohelper.findChildText(slot0._uiGO, "layout/top/Text")
+	arg_15_0._uiGO = arg_15_0._uiLoader:getInstGO()
+	arg_15_0._uiTransform = arg_15_0._uiGO.transform
+	arg_15_0._uiCanvasGroup = gohelper.onceAddComponent(arg_15_0._uiGO, typeof(UnityEngine.CanvasGroup))
+	arg_15_0._txtName = gohelper.findChildText(arg_15_0._uiGO, "layout/top/Text")
 
-	slot0:_doSetActive()
+	arg_15_0:_doSetActive()
 
-	slot0._gohpbg = gohelper.findChild(slot0._uiGO, "layout/top/hp/container/bg")
-	slot0._gochoushibg = gohelper.findChild(slot0._uiGO, "layout/top/hp/container/choushibg")
-	slot0._imgHpMinus = gohelper.findChildImage(slot0._uiGO, "layout/top/hp/container/minus")
-	slot1 = slot0.entity:isMySide()
+	arg_15_0._gohpbg = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container/bg")
+	arg_15_0._gochoushibg = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container/choushibg")
+	arg_15_0._imgHpMinus = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/minus")
 
-	gohelper.setActive(gohelper.findChildImage(slot0._uiGO, "layout/top/hp/container/my").gameObject, slot1)
-	gohelper.setActive(gohelper.findChildImage(slot0._uiGO, "layout/top/hp/container/enemy").gameObject, not slot1)
+	local var_15_0 = arg_15_0.entity:isMySide()
+	local var_15_1 = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/my")
+	local var_15_2 = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/enemy")
 
-	slot0._hp_ani = gohelper.findChild(slot0._uiGO, "layout/top/hp"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._hp_container_tran = gohelper.findChild(slot0._uiGO, "layout/top/hp/container").transform
-	slot0._imgHp = slot1 and slot2 or slot3
-	slot0._imgHpShield = gohelper.findChildImage(slot0._uiGO, "layout/top/hp/container/shield")
-	slot0._txtHp = gohelper.findChildText(slot0._uiGO, "layout/top/hp/Text")
+	gohelper.setActive(var_15_1.gameObject, var_15_0)
+	gohelper.setActive(var_15_2.gameObject, not var_15_0)
 
-	slot0:resetHp()
+	arg_15_0._hp_ani = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp"):GetComponent(typeof(UnityEngine.Animator))
+	arg_15_0._hp_container_tran = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container").transform
+	arg_15_0._imgHp = var_15_0 and var_15_1 or var_15_2
+	arg_15_0._imgHpShield = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/shield")
+	arg_15_0._txtHp = gohelper.findChildText(arg_15_0._uiGO, "layout/top/hp/Text")
 
-	slot0._imgCareerIcon = gohelper.findChildImage(slot0._uiGO, "layout/top/imgCareerIcon")
-	slot0.careerTopRectTr = gohelper.findChildComponent(slot0._uiGO, "layout/top/imgCareerIcon/careertoppos", gohelper.Type_RectTransform)
+	arg_15_0:resetHp()
 
-	slot0:initExPointMgr()
-	slot0:initStressMgr()
+	arg_15_0._imgCareerIcon = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/imgCareerIcon")
+	arg_15_0.careerTopRectTr = gohelper.findChildComponent(arg_15_0._uiGO, "layout/top/imgCareerIcon/careertoppos", gohelper.Type_RectTransform)
 
-	slot0._opContainerGO = gohelper.findChild(slot0._uiGO, "layout/top/op")
-	slot0._opContainerCanvasGroup = gohelper.onceAddComponent(slot0._opContainerGO, typeof(UnityEngine.CanvasGroup))
-	slot0._opContainerTr = slot0._opContainerGO.transform
-	slot0._opItemGO = gohelper.findChild(slot0._uiGO, "layout/top/op/item")
+	arg_15_0:initExPointMgr()
+	arg_15_0:initStressMgr()
 
-	slot0._opCtrl:init(slot0.entity, slot0._opContainerGO, slot0._opItemGO)
+	arg_15_0._opContainerGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/op")
+	arg_15_0._opContainerCanvasGroup = gohelper.onceAddComponent(arg_15_0._opContainerGO, typeof(UnityEngine.CanvasGroup))
+	arg_15_0._opContainerTr = arg_15_0._opContainerGO.transform
+	arg_15_0._opItemGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/op/item")
 
-	if slot0._enemyOperation then
-		slot0._enemyOperation:init(slot0.entity, slot0._opContainerGO, slot0._opItemGO)
+	arg_15_0._opCtrl:init(arg_15_0.entity, arg_15_0._opContainerGO, arg_15_0._opItemGO)
+
+	if arg_15_0._enemyOperation then
+		arg_15_0._enemyOperation:init(arg_15_0.entity, arg_15_0._opContainerGO, arg_15_0._opItemGO)
 	end
 
-	slot0._buffContainerGO = gohelper.findChild(slot0._uiGO, "layout/top/buffContainer")
-	slot0._buffGO = gohelper.findChild(slot0._uiGO, "layout/top/buffContainer/buff")
+	arg_15_0._buffContainerGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/buffContainer")
+	arg_15_0._buffGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/buffContainer/buff")
 
-	slot0.buffMgr:init(slot0.entity, slot0._buffGO, slot0._opContainerTr)
-	gohelper.setActive(gohelper.findChild(slot0._uiGO, "#go_Shield"), false)
+	arg_15_0.buffMgr:init(arg_15_0.entity, arg_15_0._buffGO, arg_15_0._opContainerTr)
+	gohelper.setActive(gohelper.findChild(arg_15_0._uiGO, "#go_Shield"), false)
 
-	if FightModel.instance:isSeason2() and slot0.entity:getMO().guard ~= -1 then
-		slot0._seasonGuard = FightNameUISeasonGuard.New(slot0)
+	if FightModel.instance:isSeason2() and arg_15_0.entity:getMO().guard ~= -1 then
+		arg_15_0._seasonGuard = FightNameUISeasonGuard.New(arg_15_0)
 
-		slot0._seasonGuard:init(gohelper.findChild(slot0._uiGO, "#go_Shield"))
+		arg_15_0._seasonGuard:init(gohelper.findChild(arg_15_0._uiGO, "#go_Shield"))
 	end
 
-	slot0._ani = slot0._uiGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goBossFocusIcon = gohelper.findChild(slot0._uiGO, "go_bossfocusicon")
+	arg_15_0._ani = arg_15_0._uiGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_15_0._goBossFocusIcon = gohelper.findChild(arg_15_0._uiGO, "go_bossfocusicon")
 
-	gohelper.setActive(slot0._goBossFocusIcon, false)
-	slot0:updateUI()
-	slot0:_insteadSpecialHp()
-	slot0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._updateFollow, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, slot0._beforePlaySkill, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, slot0._onMySideRoundEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._updateUIPos, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, slot0._onStartSequenceFinish, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, slot0.updateUI, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0.updateActive, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SetIsShowFloat, slot0._setIsShowFloat, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.SetIsShowNameUI, slot0._setIsShowNameUI, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, slot0._onFloatEquipEffect, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnCameraFovChange, slot0._updateUIPos, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, slot0._onMaxHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, slot0._onCurrentHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.MultiHpChange, slot0._onMultiHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, slot0._onUpdateUIFollower, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.StageChanged, slot0._onStageChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	slot0._power:onOpen()
-	slot0:_setPosOffset()
-	slot0:updateInnerLayout()
+	gohelper.setActive(arg_15_0._goBossFocusIcon, false)
+	arg_15_0:updateUI()
+	arg_15_0:_insteadSpecialHp()
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_15_0._updateFollow, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, arg_15_0._beforePlaySkill, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_15_0._onMySideRoundEnd, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_15_0._updateUIPos, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_15_0._onStartSequenceFinish, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_15_0.updateUI, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_15_0._onRoundSequenceFinish, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_15_0.updateActive, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.SetIsShowFloat, arg_15_0._setIsShowFloat, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.SetIsShowNameUI, arg_15_0._setIsShowNameUI, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, arg_15_0._onFloatEquipEffect, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnCameraFovChange, arg_15_0._updateUIPos, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_15_0._onMaxHpChange, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_15_0._onCurrentHpChange, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.MultiHpChange, arg_15_0._onMultiHpChange, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, arg_15_0._onChangeWaveEnd, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_15_0._onForceUpdatePerformanceData, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeCareer, arg_15_0._onChangeCareer, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, arg_15_0._onUpdateUIFollower, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeShield, arg_15_0._onChangeShield, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_15_0._onStageChange, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_15_0._onSkillPlayFinish, arg_15_0)
+	arg_15_0._power:onOpen()
+	arg_15_0:_setPosOffset()
+	arg_15_0:updateInnerLayout()
 end
 
-function slot0._onStageChange(slot0)
+function var_0_0._onStageChange(arg_16_0)
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
-		slot0:refreshBossFocusIcon(FightModel.instance:getCurRoundMO() and slot2:getAIUseCardMOList())
+		local var_16_0 = FightModel.instance:getCurRoundMO()
+		local var_16_1 = var_16_0 and var_16_0:getAIUseCardMOList()
+
+		arg_16_0:refreshBossFocusIcon(var_16_1)
 	end
 end
 
-function slot0.refreshBossFocusIcon(slot0, slot1)
-	if not slot1 then
-		gohelper.setActive(slot0._goBossFocusIcon, false)
+function var_0_0.refreshBossFocusIcon(arg_17_0, arg_17_1)
+	if not arg_17_1 then
+		gohelper.setActive(arg_17_0._goBossFocusIcon, false)
 
 		return
 	end
 
-	slot3 = false
+	local var_17_0 = arg_17_0.entity and arg_17_0.entity:getMO()
+	local var_17_1 = false
 
-	if slot0.entity and slot0.entity:getMO() and slot2.side == FightEnum.EntitySide.MySide then
-		for slot7, slot8 in ipairs(slot1) do
-			if slot0:_checkCanMark(slot8) then
-				slot3 = true
+	if var_17_0 and var_17_0.side == FightEnum.EntitySide.MySide then
+		for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+			if arg_17_0:_checkCanMark(iter_17_1) then
+				var_17_1 = true
 
 				break
 			end
 		end
 	end
 
-	gohelper.setActive(slot0._goBossFocusIcon, slot3)
+	gohelper.setActive(arg_17_0._goBossFocusIcon, var_17_1)
 end
 
-function slot0._onSkillPlayFinish(slot0)
-	slot0:refreshBossFocusIcon(FightModel.instance:getCurRoundMO() and slot1:getAILastUseCard())
+function var_0_0._onSkillPlayFinish(arg_18_0)
+	local var_18_0 = FightModel.instance:getCurRoundMO()
+	local var_18_1 = var_18_0 and var_18_0:getAILastUseCard()
+
+	arg_18_0:refreshBossFocusIcon(var_18_1)
 end
 
-function slot0._checkCanMark(slot0, slot1)
-	if not slot1 then
+function var_0_0._checkCanMark(arg_19_0, arg_19_1)
+	if not arg_19_1 then
 		return false
 	end
 
-	if slot1.targetUid ~= slot0.entity.id then
+	if arg_19_1.targetUid ~= arg_19_0.entity.id then
 		return false
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot1.uid) or slot2:isStatusDead() then
+	local var_19_0 = FightDataHelper.entityMgr:getById(arg_19_1.uid)
+
+	if not var_19_0 or var_19_0:isStatusDead() then
 		return false
 	end
 
-	if not lua_ai_mark_skill.configDict[slot1.skillId] then
+	if not lua_ai_mark_skill.configDict[arg_19_1.skillId] then
 		return false
 	end
 
 	return true
 end
 
-function slot0.initExPointMgr(slot0)
-	slot0._exPointGO = gohelper.findChild(slot0._uiGO, "expointContainer")
+function var_0_0.initExPointMgr(arg_20_0)
+	arg_20_0._exPointGO = gohelper.findChild(arg_20_0._uiGO, "expointContainer")
 
-	slot0._expointCtrl:initMgr(slot0._exPointGO, slot0.entity)
+	arg_20_0._expointCtrl:initMgr(arg_20_0._exPointGO, arg_20_0.entity)
 end
 
-function slot0.initStressMgr(slot0)
-	if not slot0.entity:getMO():hasStress() then
+function var_0_0.initStressMgr(arg_21_0)
+	if not arg_21_0.entity:getMO():hasStress() then
 		return
 	end
 
-	slot0.stressMgr = FightNameUIStressMgr.New(slot0)
-	slot0.stressGo = gohelper.findChild(slot0._uiGO, "#go_fightstressitem")
+	arg_21_0.stressMgr = FightNameUIStressMgr.New(arg_21_0)
+	arg_21_0.stressGo = gohelper.findChild(arg_21_0._uiGO, "#go_fightstressitem")
 
-	slot0.stressMgr:initMgr(slot0.stressGo, slot0.entity)
+	arg_21_0.stressMgr:initMgr(arg_21_0.stressGo, arg_21_0.entity)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0._power:releaseSelf()
+function var_0_0.beforeDestroy(arg_22_0)
+	arg_22_0._power:releaseSelf()
 
-	if slot0._seasonGuard then
-		slot0._seasonGuard:releaseSelf()
+	if arg_22_0._seasonGuard then
+		arg_22_0._seasonGuard:releaseSelf()
 	end
 
-	slot0._expointCtrl:beforeDestroy()
+	arg_22_0._expointCtrl:beforeDestroy()
 
-	if slot0.stressMgr then
-		slot0.stressMgr:beforeDestroy()
+	if arg_22_0.stressMgr then
+		arg_22_0.stressMgr:beforeDestroy()
 	end
 
-	if slot0._enemyOperation then
-		slot0._enemyOperation:disposeSelf()
+	if arg_22_0._enemyOperation then
+		arg_22_0._enemyOperation:disposeSelf()
 	end
 
-	slot0._opCtrl:beforeDestroy()
-	slot0.buffMgr:beforeDestroy()
-	CameraMgr.instance:getCameraTrace():RemoveChangeActor(slot0._uiFollower)
-	FightFloatMgr.instance:nameUIBeforeDestroy(slot0._floatContainerGO)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, slot0._updateFollow, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.BeforePlayTimeline, slot0._beforePlaySkill, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, slot0._onMySideRoundEnd, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, slot0._updateUIPos, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, slot0._onStartSequenceFinish, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, slot0.updateUI, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0.updateActive, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SetIsShowFloat, slot0._setIsShowFloat, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.SetIsShowNameUI, slot0._setIsShowNameUI, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, slot0._onFloatEquipEffect, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnCameraFovChange, slot0._updateUIPos, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, slot0._onMaxHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, slot0._onCurrentHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, slot0._onMultiHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ChangeWaveEnd, slot0._onChangeWaveEnd, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, slot0._onUpdateUIFollower, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
-	slot0:_killHpTween()
-	TaskDispatcher.cancelTask(slot0._onDelAniOver, slot0)
-	FightNameMgr.instance:unregister(slot0)
-	gohelper.destroy(slot0._containerGO)
-	slot0._uiLoader:dispose()
+	arg_22_0._opCtrl:beforeDestroy()
+	arg_22_0.buffMgr:beforeDestroy()
+	CameraMgr.instance:getCameraTrace():RemoveChangeActor(arg_22_0._uiFollower)
+	FightFloatMgr.instance:nameUIBeforeDestroy(arg_22_0._floatContainerGO)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_22_0._updateFollow, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.BeforePlayTimeline, arg_22_0._beforePlaySkill, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_22_0._onMySideRoundEnd, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_22_0._updateUIPos, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_22_0._onStartSequenceFinish, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_22_0.updateUI, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_22_0._onRoundSequenceFinish, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_22_0.updateActive, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.SetIsShowFloat, arg_22_0._setIsShowFloat, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.SetIsShowNameUI, arg_22_0._setIsShowNameUI, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, arg_22_0._onFloatEquipEffect, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnCameraFovChange, arg_22_0._updateUIPos, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_22_0._onMaxHpChange, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_22_0._onCurrentHpChange, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, arg_22_0._onMultiHpChange, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.ChangeWaveEnd, arg_22_0._onChangeWaveEnd, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_22_0._onForceUpdatePerformanceData, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, arg_22_0._onChangeCareer, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, arg_22_0._onUpdateUIFollower, arg_22_0)
+	arg_22_0:removeEventCb(FightController.instance, FightEvent.ChangeShield, arg_22_0._onChangeShield, arg_22_0)
+	arg_22_0:_killHpTween()
+	TaskDispatcher.cancelTask(arg_22_0._onDelAniOver, arg_22_0)
+	FightNameMgr.instance:unregister(arg_22_0)
+	gohelper.destroy(arg_22_0._containerGO)
+	arg_22_0._uiLoader:dispose()
 
-	slot0._uiLoader = nil
-	slot0._containerGO = nil
+	arg_22_0._uiLoader = nil
+	arg_22_0._containerGO = nil
 end
 
-function slot0.updateUI(slot0)
-	slot0._txtName.text = slot0.entity:getMO():getEntityName()
+function var_0_0.updateUI(arg_23_0)
+	local var_23_0 = arg_23_0.entity:getMO()
 
-	slot0:_refreshCareer()
-	slot0:_updateFollow()
-	slot0:updateActive()
+	arg_23_0._txtName.text = var_23_0:getEntityName()
+
+	arg_23_0:_refreshCareer()
+	arg_23_0:_updateFollow()
+	arg_23_0:updateActive()
 end
 
-function slot0._refreshCareer(slot0)
-	slot2 = FightModel.instance:getVersion()
+function var_0_0._refreshCareer(arg_24_0)
+	local var_24_0 = arg_24_0.entity:getMO()
+	local var_24_1 = FightModel.instance:getVersion()
 
 	if SkillEditorMgr.instance.inEditMode then
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareerIcon, "sx_icon_" .. tostring(slot0.entity:getMO():getCO().career), true)
-	elseif slot2 >= 2 and slot1.career ~= 0 then
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareerIcon, "sx_icon_" .. tostring(slot1.career), true)
+		UISpriteSetMgr.instance:setCommonSprite(arg_24_0._imgCareerIcon, "sx_icon_" .. tostring(var_24_0:getCO().career), true)
+	elseif var_24_1 >= 2 and var_24_0.career ~= 0 then
+		UISpriteSetMgr.instance:setCommonSprite(arg_24_0._imgCareerIcon, "sx_icon_" .. tostring(var_24_0.career), true)
 	else
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareerIcon, "sx_icon_" .. tostring(slot1:getCO().career), true)
+		UISpriteSetMgr.instance:setCommonSprite(arg_24_0._imgCareerIcon, "sx_icon_" .. tostring(var_24_0:getCO().career), true)
 	end
 end
 
-function slot0._onChangeCareer(slot0, slot1)
-	if slot1 == slot0.entity.id then
-		slot0:_refreshCareer()
+function var_0_0._onChangeCareer(arg_25_0, arg_25_1)
+	if arg_25_1 == arg_25_0.entity.id then
+		arg_25_0:_refreshCareer()
 	end
 end
 
-function slot0._beforePlaySkill(slot0)
+function var_0_0._beforePlaySkill(arg_26_0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.ClothSkill then
 		return
 	end
 
-	slot0._opCtrl:hideOpContainer()
+	arg_26_0._opCtrl:hideOpContainer()
 end
 
-function slot0._onMySideRoundEnd(slot0)
-	slot0._opCtrl:showOpContainer()
+function var_0_0._onMySideRoundEnd(arg_27_0)
+	arg_27_0._opCtrl:showOpContainer()
 end
 
-function slot0._onStartSequenceFinish(slot0)
-	slot0:updateUI()
-	slot0._opCtrl:showOpContainer()
+function var_0_0._onStartSequenceFinish(arg_28_0)
+	arg_28_0:updateUI()
+	arg_28_0._opCtrl:showOpContainer()
 end
 
-function slot0._onRoundSequenceFinish(slot0)
-	slot0:updateUI()
-	slot0._opCtrl:showOpContainer()
+function var_0_0._onRoundSequenceFinish(arg_29_0)
+	arg_29_0:updateUI()
+	arg_29_0._opCtrl:showOpContainer()
 end
 
-function slot0._updateFollow(slot0, slot1)
-	if slot1 and slot1.unitSpawn ~= slot0.entity then
+function var_0_0._updateFollow(arg_30_0, arg_30_1)
+	if arg_30_1 and arg_30_1.unitSpawn ~= arg_30_0.entity then
 		return
 	end
 
-	if not (slot0.entity.spine and slot0.entity.spine:getSpineGO()) then
-		recthelper.setAnchorX(slot0._containerGO.transform, 20000)
+	local var_30_0 = arg_30_0.entity.spine and arg_30_0.entity.spine:getSpineGO()
+
+	if not var_30_0 then
+		recthelper.setAnchorX(arg_30_0._containerGO.transform, 20000)
 
 		return
 	end
 
-	slot5 = slot0.entity.go.transform
-	slot8 = FightConfig.instance:getSkinCO(slot0.entity:getMO().skin) and slot7.topuiOffset or {
+	local var_30_1 = CameraMgr.instance:getUnitCamera()
+	local var_30_2 = CameraMgr.instance:getUICamera()
+	local var_30_3 = arg_30_0.entity.go.transform
+	local var_30_4 = ViewMgr.instance:getUIRoot().transform
+	local var_30_5 = FightConfig.instance:getSkinCO(arg_30_0.entity:getMO().skin)
+	local var_30_6 = var_30_5 and var_30_5.topuiOffset or {
 		0,
 		0,
 		0,
 		0
 	}
-	slot14, slot15 = FightHelper.getEntityBoxSizeOffsetV2(slot0.entity)
-	slot16 = slot14.y
-	slot17, slot18, slot19 = transformhelper.getPos(slot0.entity:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle, true).transform)
-	slot20, slot21, slot22 = transformhelper.getPos(slot0.entity.go.transform)
-	slot0._uiFollower = gohelper.onceAddComponent(slot0._containerGO, typeof(ZProj.UIFollower))
+	local var_30_7 = var_30_6 and var_30_6[1] or 0
+	local var_30_8 = var_30_6 and var_30_6[2] or 0
+	local var_30_9 = var_30_6 and var_30_6[3] or 0
+	local var_30_10 = var_30_6 and var_30_6[4] or 0
+	local var_30_11 = arg_30_0.entity:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle, true)
+	local var_30_12, var_30_13 = FightHelper.getEntityBoxSizeOffsetV2(arg_30_0.entity)
+	local var_30_14 = var_30_12.y
+	local var_30_15, var_30_16, var_30_17 = transformhelper.getPos(var_30_11.transform)
+	local var_30_18, var_30_19, var_30_20 = transformhelper.getPos(arg_30_0.entity.go.transform)
 
-	slot0._uiFollower:SetCameraShake(CameraMgr.instance:getCameraShake())
+	arg_30_0._uiFollower = gohelper.onceAddComponent(arg_30_0._containerGO, typeof(ZProj.UIFollower))
 
-	if gohelper.findChild(slot2, ModuleEnum.SpineHangPointRoot) and gohelper.findChild(slot23, ModuleEnum.SpineHangPoint.mounthproot) then
-		slot25, slot26 = transformhelper.getLocalScale(slot0.entity.go.transform)
+	arg_30_0._uiFollower:SetCameraShake(CameraMgr.instance:getCameraShake())
 
-		slot0._uiFollower:Set(CameraMgr.instance:getUnitCamera(), CameraMgr.instance:getUICamera(), ViewMgr.instance:getUIRoot().transform, slot24.transform, slot8 and slot8[3] or 0, ((slot8 and slot8[4] or 0) + 0.5) * slot26, 0, slot8 and slot8[1] or 0, slot8 and slot8[2] or 0)
-	elseif isTypeOf(slot0.entity, FightEntityAssembledMonsterMain) or isTypeOf(slot0.entity, FightEntityAssembledMonsterSub) then
-		slot0._uiFollower:Set(slot3, slot4, slot6, slot13.transform, lua_fight_assembled_monster.configDict[slot0.entity:getMO().skin].hpPos[1] or 0, slot26.hpPos[2] or 0, 0, 0, 0)
+	local var_30_21 = gohelper.findChild(var_30_0, ModuleEnum.SpineHangPointRoot)
+	local var_30_22 = var_30_21 and gohelper.findChild(var_30_21, ModuleEnum.SpineHangPoint.mounthproot)
+
+	if var_30_22 then
+		local var_30_23, var_30_24 = transformhelper.getLocalScale(arg_30_0.entity.go.transform)
+		local var_30_25 = 0.5
+
+		arg_30_0._uiFollower:Set(var_30_1, var_30_2, var_30_4, var_30_22.transform, var_30_9, (var_30_10 + var_30_25) * var_30_24, 0, var_30_7, var_30_8)
+	elseif isTypeOf(arg_30_0.entity, FightEntityAssembledMonsterMain) or isTypeOf(arg_30_0.entity, FightEntityAssembledMonsterSub) then
+		local var_30_26 = arg_30_0.entity:getMO()
+		local var_30_27 = lua_fight_assembled_monster.configDict[var_30_26.skin]
+
+		arg_30_0._uiFollower:Set(var_30_1, var_30_2, var_30_4, var_30_11.transform, var_30_27.hpPos[1] or 0, var_30_27.hpPos[2] or 0, 0, 0, 0)
 	else
-		slot25, slot26 = transformhelper.getLocalScale(slot0.entity.go.transform)
+		local var_30_28, var_30_29 = transformhelper.getLocalScale(arg_30_0.entity.go.transform)
 
-		slot0._uiFollower:Set(slot3, slot4, slot6, slot13.transform, 0 + slot11, slot16 + slot21 - slot18 + slot12 * slot26, 0, slot9, slot10 + 15)
+		arg_30_0._uiFollower:Set(var_30_1, var_30_2, var_30_4, var_30_11.transform, 0 + var_30_9, var_30_14 + var_30_19 - var_30_16 + var_30_10 * var_30_29, 0, var_30_7, var_30_8 + 15)
 	end
 
-	slot0._uiFollower:SetEnable(true)
-	CameraMgr.instance:getCameraTrace():AddChangeActor(slot0._uiFollower)
+	arg_30_0._uiFollower:SetEnable(true)
+	CameraMgr.instance:getCameraTrace():AddChangeActor(arg_30_0._uiFollower)
 end
 
-function slot0._updateUIPos(slot0)
-	if slot0._uiFollower then
-		slot0._uiFollower:ForceUpdate()
+function var_0_0._updateUIPos(arg_31_0)
+	if arg_31_0._uiFollower then
+		arg_31_0._uiFollower:ForceUpdate()
 	end
 end
 
-function slot0.changeHpWithChoushiBuff(slot0, slot1)
-	if not slot0.entity:isMySide() then
-		gohelper.setActive(slot0._gohpbg, not slot1)
-		gohelper.setActive(slot0._gohpbg, slot1)
+function var_0_0.changeHpWithChoushiBuff(arg_32_0, arg_32_1)
+	if not arg_32_0.entity:isMySide() then
+		gohelper.setActive(arg_32_0._gohpbg, not arg_32_1)
+		gohelper.setActive(arg_32_0._gohpbg, arg_32_1)
 
-		if slot1 then
-			UISpriteSetMgr.instance:setFightSprite(slot0._imgHp, "bg_xt_choushi")
+		if arg_32_1 then
+			UISpriteSetMgr.instance:setFightSprite(arg_32_0._imgHp, "bg_xt_choushi")
 		else
-			UISpriteSetMgr.instance:setFightSprite(slot0._imgHp, "bg_xt2")
+			UISpriteSetMgr.instance:setFightSprite(arg_32_0._imgHp, "bg_xt2")
 		end
 	end
 end
 
-function slot0.getFollower(slot0)
-	return slot0._uiFollower
+function var_0_0.getFollower(arg_33_0)
+	return arg_33_0._uiFollower
 end
 
-function slot0.updateActive(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1 and slot1 ~= slot0.entity.id then
+function var_0_0.updateActive(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5)
+	if arg_34_1 and arg_34_1 ~= arg_34_0.entity.id then
 		return
 	end
 
-	if slot3 then
-		if lua_skill_buff.configDict[slot3] and slot6.typeId == 3120005 then
-			slot0:_insteadSpecialHp(slot2)
+	if arg_34_3 then
+		local var_34_0 = lua_skill_buff.configDict[arg_34_3]
+
+		if var_34_0 and var_34_0.typeId == 3120005 then
+			arg_34_0:_insteadSpecialHp(arg_34_2)
 		end
 
-		if FightConfig.instance:hasBuffFeature(slot3, FightEnum.BuffType_HideLife) then
-			slot0:_doSetActive()
+		if FightConfig.instance:hasBuffFeature(arg_34_3, FightEnum.BuffType_HideLife) then
+			arg_34_0:_doSetActive()
 		end
 	else
-		slot0:_doSetActive()
+		arg_34_0:_doSetActive()
 	end
 end
 
-function slot0._insteadSpecialHp(slot0, slot1)
-	if slot1 then
-		if slot1 == FightEnum.EffectType.BUFFADD then
-			slot0:changeHpWithChoushiBuff(true)
-		elseif slot1 == FightEnum.EffectType.BUFFDEL or slot1 == FightEnum.EffectType.BUFFDELNOEFFECT then
-			slot0:changeHpWithChoushiBuff(false)
+function var_0_0._insteadSpecialHp(arg_35_0, arg_35_1)
+	if arg_35_1 then
+		if arg_35_1 == FightEnum.EffectType.BUFFADD then
+			arg_35_0:changeHpWithChoushiBuff(true)
+		elseif arg_35_1 == FightEnum.EffectType.BUFFDEL or arg_35_1 == FightEnum.EffectType.BUFFDELNOEFFECT then
+			arg_35_0:changeHpWithChoushiBuff(false)
 		end
 	else
-		for slot6, slot7 in pairs(slot0.entity:getMO():getBuffDic()) do
-			if lua_skill_buff.configDict[slot7.buffId] and slot8.typeId == 3120005 then
-				slot0:changeHpWithChoushiBuff(true)
+		local var_35_0 = arg_35_0.entity:getMO():getBuffDic()
+
+		for iter_35_0, iter_35_1 in pairs(var_35_0) do
+			local var_35_1 = lua_skill_buff.configDict[iter_35_1.buffId]
+
+			if var_35_1 and var_35_1.typeId == 3120005 then
+				arg_35_0:changeHpWithChoushiBuff(true)
 
 				return
 			end
@@ -492,244 +536,294 @@ function slot0._insteadSpecialHp(slot0, slot1)
 	end
 end
 
-function slot0.getFloatItemStartY(slot0)
-	return (slot0.buffMgr:getBuffLineCount() or 0) * 34.5 + (#slot0._opCtrl:getOpItemList() > 0 and 42 or 0)
+function var_0_0.getFloatItemStartY(arg_36_0)
+	return (arg_36_0.buffMgr:getBuffLineCount() or 0) * 34.5 + (#arg_36_0._opCtrl:getOpItemList() > 0 and 42 or 0)
 end
 
-function slot0.showPoisoningEffect(slot0, slot1)
-	slot0.buffMgr:showPoisoningEffect(slot1)
+function var_0_0.showPoisoningEffect(arg_37_0, arg_37_1)
+	arg_37_0.buffMgr:showPoisoningEffect(arg_37_1)
 end
 
-function slot0._setIsShowFloat(slot0, slot1)
-	if not slot0._canvasGroup then
-		slot0._canvasGroup = gohelper.onceAddComponent(slot0._floatContainerGO, typeof(UnityEngine.CanvasGroup))
+function var_0_0._setIsShowFloat(arg_38_0, arg_38_1)
+	if not arg_38_0._canvasGroup then
+		arg_38_0._canvasGroup = gohelper.onceAddComponent(arg_38_0._floatContainerGO, typeof(UnityEngine.CanvasGroup))
 	end
 
-	gohelper.setActiveCanvasGroup(slot0._canvasGroup, slot1)
+	gohelper.setActiveCanvasGroup(arg_38_0._canvasGroup, arg_38_1)
 end
 
-function slot0.addHp(slot0, slot1)
-	slot3 = slot0.entity:getMO().attrMO.hp
-	slot0._curHp = slot0._curHp + slot1
-	slot0._curHp = slot0._curHp >= 0 and slot0._curHp or 0
-	slot0._curHp = slot0._curHp <= slot3 and slot0._curHp or slot3
-	slot0._txtHp.text = slot0._curHp
+function var_0_0.addHp(arg_39_0, arg_39_1)
+	local var_39_0 = arg_39_0.entity:getMO().attrMO.hp
 
-	slot0:_tweenFillAmount()
+	arg_39_0._curHp = arg_39_0._curHp + arg_39_1
+	arg_39_0._curHp = arg_39_0._curHp >= 0 and arg_39_0._curHp or 0
+	arg_39_0._curHp = var_39_0 >= arg_39_0._curHp and arg_39_0._curHp or var_39_0
+	arg_39_0._txtHp.text = arg_39_0._curHp
+
+	arg_39_0:_tweenFillAmount()
 end
 
-function slot0.getHp(slot0)
-	return slot0._curHp
+function var_0_0.getHp(arg_40_0)
+	return arg_40_0._curHp
 end
 
-function slot0.setShield(slot0, slot1)
-	slot0._curShield = slot1 > 0 and slot1 or 0
+function var_0_0.setShield(arg_41_0, arg_41_1)
+	arg_41_0._curShield = arg_41_1 > 0 and arg_41_1 or 0
 
-	slot0:_tweenFillAmount()
+	arg_41_0:_tweenFillAmount()
 end
 
-function slot0._tweenFillAmount(slot0)
-	slot1, slot2 = slot0:_getFillAmount()
-	slot0._imgHp.fillAmount = slot1
+function var_0_0._tweenFillAmount(arg_42_0)
+	local var_42_0, var_42_1 = arg_42_0:_getFillAmount()
 
-	ZProj.TweenHelper.KillByObj(slot0._imgHpMinus)
-	ZProj.TweenHelper.DOFillAmount(slot0._imgHpMinus, slot1, 0.5)
-	ZProj.TweenHelper.KillByObj(slot0._imgHpShield)
-	ZProj.TweenHelper.DOFillAmount(slot0._imgHpShield, slot2, 0.5)
-	gohelper.setActive(slot0._imgHpMinus.gameObject, slot0._curShield <= 0)
+	arg_42_0._imgHp.fillAmount = var_42_0
+
+	ZProj.TweenHelper.KillByObj(arg_42_0._imgHpMinus)
+	ZProj.TweenHelper.DOFillAmount(arg_42_0._imgHpMinus, var_42_0, 0.5)
+	ZProj.TweenHelper.KillByObj(arg_42_0._imgHpShield)
+	ZProj.TweenHelper.DOFillAmount(arg_42_0._imgHpShield, var_42_1, 0.5)
+	gohelper.setActive(arg_42_0._imgHpMinus.gameObject, arg_42_0._curShield <= 0)
 end
 
-function slot0.resetHp(slot0)
-	ZProj.TweenHelper.KillByObj(slot0._imgHpMinus)
-	ZProj.TweenHelper.KillByObj(slot0._imgHpShield)
+function var_0_0.resetHp(arg_43_0)
+	ZProj.TweenHelper.KillByObj(arg_43_0._imgHpMinus)
+	ZProj.TweenHelper.KillByObj(arg_43_0._imgHpShield)
 
-	slot0._curHp = slot0.entity:getMO().currentHp
-	slot0._curHp = slot0._curHp > 0 and slot0._curHp or 0
-	slot0._curShield = slot0.entity:getMO().shieldValue
-	slot1, slot0._imgHpShield.fillAmount = slot0:_getFillAmount()
-	slot0._imgHpMinus.fillAmount = slot1
-	slot0._imgHp.fillAmount = slot1
-	slot0._txtHp.text = slot0._curHp
+	arg_43_0._curHp = arg_43_0.entity:getMO().currentHp
+	arg_43_0._curHp = arg_43_0._curHp > 0 and arg_43_0._curHp or 0
+	arg_43_0._curShield = arg_43_0.entity:getMO().shieldValue
 
-	gohelper.setActive(slot0._imgHpMinus.gameObject, slot0._curShield <= 0)
+	local var_43_0, var_43_1 = arg_43_0:_getFillAmount()
+
+	arg_43_0._imgHpMinus.fillAmount = var_43_0
+	arg_43_0._imgHp.fillAmount = var_43_0
+	arg_43_0._imgHpShield.fillAmount = var_43_1
+	arg_43_0._txtHp.text = arg_43_0._curHp
+
+	gohelper.setActive(arg_43_0._imgHpMinus.gameObject, arg_43_0._curShield <= 0)
 end
 
-function slot0._getFillAmount(slot0)
-	slot2 = slot0.entity:getMO().attrMO and slot1.attrMO.hp > 0 and slot1.attrMO.hp or 1
-	slot3 = slot2 > 0 and slot0._curHp / slot2 or 0
-	slot4 = 0
+function var_0_0._getFillAmount(arg_44_0)
+	local var_44_0 = arg_44_0.entity:getMO()
+	local var_44_1 = var_44_0.attrMO and var_44_0.attrMO.hp > 0 and var_44_0.attrMO.hp or 1
+	local var_44_2 = var_44_1 > 0 and arg_44_0._curHp / var_44_1 or 0
+	local var_44_3 = 0
 
-	if slot2 >= slot0._curShield + slot0._curHp then
-		slot3 = slot0._curHp / slot2
-		slot4 = (slot0._curShield + slot0._curHp) / slot2
+	if var_44_1 >= arg_44_0._curShield + arg_44_0._curHp then
+		var_44_2 = arg_44_0._curHp / var_44_1
+		var_44_3 = (arg_44_0._curShield + arg_44_0._curHp) / var_44_1
 	else
-		slot3 = slot0._curHp / (slot0._curHp + slot0._curShield)
-		slot4 = 1
+		var_44_2 = arg_44_0._curHp / (arg_44_0._curHp + arg_44_0._curShield)
+		var_44_3 = 1
 	end
 
-	if slot2 < (slot1.attrMO and slot1.attrMO.original_max_hp or 1) then
-		slot6 = slot5 - slot2
-		slot3 = slot3 * slot2 / slot5 + slot6 / slot5
-		slot4 = slot4 * slot2 / slot5 + slot6 / slot5
+	local var_44_4 = var_44_0.attrMO and var_44_0.attrMO.original_max_hp or 1
+
+	if var_44_1 < var_44_4 then
+		local var_44_5 = var_44_4 - var_44_1
+
+		var_44_2 = var_44_2 * var_44_1 / var_44_4 + var_44_5 / var_44_4
+		var_44_3 = var_44_3 * var_44_1 / var_44_4 + var_44_5 / var_44_4
 	end
 
-	return slot3, slot4
+	return var_44_2, var_44_3
 end
 
-function slot0._onFloatEquipEffect(slot0, slot1, slot2)
-	if slot1 ~= slot0.entity.id then
+function var_0_0._onFloatEquipEffect(arg_45_0, arg_45_1, arg_45_2)
+	if arg_45_1 ~= arg_45_0.entity.id then
 		return
 	end
 
-	if not slot0._float_equip_time then
-		slot0._float_equip_time = Time.time
-	elseif Time.time - slot0._float_equip_time < 1 then
+	if not arg_45_0._float_equip_time then
+		arg_45_0._float_equip_time = Time.time
+	elseif Time.time - arg_45_0._float_equip_time < 1 then
 		return
 	end
 
-	slot0._float_equip_time = Time.time
+	arg_45_0._float_equip_time = Time.time
 
-	FightFloatMgr.instance:float(slot1, FightEnum.FloatType.equipeffect, "", slot2)
+	FightFloatMgr.instance:float(arg_45_1, FightEnum.FloatType.equipeffect, "", arg_45_2)
 end
 
-function slot0.setFloatRootVisble(slot0, slot1)
-	gohelper.setActive(slot0._floatContainerGO, slot1)
+function var_0_0.setFloatRootVisble(arg_46_0, arg_46_1)
+	gohelper.setActive(arg_46_0._floatContainerGO, arg_46_1)
 end
 
-function slot0._onMaxHpChange(slot0, slot1, slot2, slot3)
-	if slot1 ~= slot0.entity.id then
+function var_0_0._onMaxHpChange(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
+	if arg_47_1 ~= arg_47_0.entity.id then
 		return
 	end
 
-	slot0:_killHpTween()
+	arg_47_0:_killHpTween()
 
-	if not slot0._hp_tweens then
-		slot0._hp_tweens = {}
+	if not arg_47_0._hp_tweens then
+		arg_47_0._hp_tweens = {}
 	end
 
-	if slot2 < slot3 then
-		slot0._hp_ani:Play("up", 0, 0)
-		table.insert(slot0._hp_tweens, ZProj.TweenHelper.DOAnchorPosX(slot0._hp_container_tran, 0, 0.3, slot0._hpTweenDone, slot0))
-	elseif (slot0.entity:getMO().attrMO and slot4.attrMO.hp > 0 and slot4.attrMO.hp or 1) < (slot4.attrMO and slot4.attrMO.original_max_hp or 1) then
-		slot0._hp_ani:Play("down", 0, 0)
-		slot0:resetHp()
-	end
-end
+	if arg_47_2 < arg_47_3 then
+		arg_47_0._hp_ani:Play("up", 0, 0)
 
-function slot0._hpTweenDone(slot0)
-	slot0:resetHp()
-end
+		local var_47_0 = ZProj.TweenHelper.DOAnchorPosX(arg_47_0._hp_container_tran, 0, 0.3, arg_47_0._hpTweenDone, arg_47_0)
 
-function slot0._killHpTween(slot0)
-	if slot0._hp_tweens then
-		for slot4, slot5 in ipairs(slot0._hp_tweens) do
-			ZProj.TweenHelper.KillById(slot5)
-		end
+		table.insert(arg_47_0._hp_tweens, var_47_0)
+	else
+		local var_47_1 = arg_47_0.entity:getMO()
 
-		slot0._hp_tweens = {}
-	end
-end
-
-function slot0._onChangeShield(slot0, slot1)
-	if slot1 ~= slot0.entity.id then
-		return
-	end
-
-	slot0._curShield = FightDataHelper.entityMgr:getById(slot1).shieldValue
-
-	slot0:_tweenFillAmount()
-end
-
-function slot0._onCurrentHpChange(slot0, slot1, slot2, slot3)
-	if slot1 ~= slot0.entity.id then
-		return
-	end
-
-	slot0:resetHp()
-end
-
-function slot0._onMultiHpChange(slot0, slot1)
-	slot0:_onCurrentHpChange(slot1)
-end
-
-function slot0._onChangeWaveEnd(slot0)
-	slot0:_setPosOffset()
-end
-
-function slot0._onForceUpdatePerformanceData(slot0, slot1)
-	if slot1 ~= slot0.entity.id then
-		return
-	end
-
-	slot0:setShield(FightDataHelper.entityMgr:getById(slot1).shieldValue)
-	slot0:resetHp()
-	slot0.buffMgr:refreshBuffList()
-	slot0._power:_refreshUI()
-	slot0._expointCtrl:updateSelfExPoint()
-end
-
-function slot0._setPosOffset(slot0)
-	if slot0.entity:getSide() == FightEnum.EntitySide.MySide then
-		slot2 = FightEnum.MySideDefaultStanceId
-		slot3 = slot0.entity:getMO()
-		slot5 = FightModel.instance:getFightParam() and slot4.battleId
-
-		if slot5 and lua_battle.configDict[slot5] and not string.nilorempty(slot6.myStance) and not tonumber(slot6.myStance) and #string.splitToNumber(slot6.myStance, "#") > 0 then
-			slot8 = FightModel.instance:getCurWaveId() or 1
-			slot2 = slot7[slot8 <= #slot7 and slot8 or #slot7]
-		end
-
-		if lua_stance_hp_offset.configDict[slot2] and slot7["offsetPos" .. slot3.position] and #slot8 > 0 then
-			recthelper.setAnchor(slot0._floatContainerGO.transform, slot8[1], slot8[2])
-			recthelper.setAnchor(slot0._uiGO.transform, slot8[1], slot8[2])
-
-			slot0._originPosOffsetX = slot8[1]
-			slot0._originPosOffsetY = slot8[2]
+		if (var_47_1.attrMO and var_47_1.attrMO.hp > 0 and var_47_1.attrMO.hp or 1) < (var_47_1.attrMO and var_47_1.attrMO.original_max_hp or 1) then
+			arg_47_0._hp_ani:Play("down", 0, 0)
+			arg_47_0:resetHp()
 		end
 	end
 end
 
-slot1 = {
+function var_0_0._hpTweenDone(arg_48_0)
+	arg_48_0:resetHp()
+end
+
+function var_0_0._killHpTween(arg_49_0)
+	if arg_49_0._hp_tweens then
+		for iter_49_0, iter_49_1 in ipairs(arg_49_0._hp_tweens) do
+			ZProj.TweenHelper.KillById(iter_49_1)
+		end
+
+		arg_49_0._hp_tweens = {}
+	end
+end
+
+function var_0_0._onChangeShield(arg_50_0, arg_50_1)
+	if arg_50_1 ~= arg_50_0.entity.id then
+		return
+	end
+
+	arg_50_0._curShield = FightDataHelper.entityMgr:getById(arg_50_1).shieldValue
+
+	arg_50_0:_tweenFillAmount()
+end
+
+function var_0_0._onCurrentHpChange(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
+	if arg_51_1 ~= arg_51_0.entity.id then
+		return
+	end
+
+	arg_51_0:resetHp()
+end
+
+function var_0_0._onMultiHpChange(arg_52_0, arg_52_1)
+	arg_52_0:_onCurrentHpChange(arg_52_1)
+end
+
+function var_0_0._onChangeWaveEnd(arg_53_0)
+	arg_53_0:_setPosOffset()
+end
+
+function var_0_0._onForceUpdatePerformanceData(arg_54_0, arg_54_1)
+	if arg_54_1 ~= arg_54_0.entity.id then
+		return
+	end
+
+	local var_54_0 = FightDataHelper.entityMgr:getById(arg_54_1)
+
+	arg_54_0:setShield(var_54_0.shieldValue)
+	arg_54_0:resetHp()
+	arg_54_0.buffMgr:refreshBuffList()
+	arg_54_0._power:_refreshUI()
+	arg_54_0._expointCtrl:updateSelfExPoint()
+end
+
+function var_0_0._setPosOffset(arg_55_0)
+	if arg_55_0.entity:getSide() == FightEnum.EntitySide.MySide then
+		local var_55_0 = FightEnum.MySideDefaultStanceId
+		local var_55_1 = arg_55_0.entity:getMO()
+		local var_55_2 = FightModel.instance:getFightParam()
+		local var_55_3 = var_55_2 and var_55_2.battleId
+		local var_55_4 = var_55_3 and lua_battle.configDict[var_55_3]
+
+		if var_55_4 and not string.nilorempty(var_55_4.myStance) then
+			var_55_0 = tonumber(var_55_4.myStance)
+
+			if not var_55_0 then
+				local var_55_5 = string.splitToNumber(var_55_4.myStance, "#")
+
+				if #var_55_5 > 0 then
+					local var_55_6 = FightModel.instance:getCurWaveId() or 1
+
+					var_55_0 = var_55_5[var_55_6 <= #var_55_5 and var_55_6 or #var_55_5]
+				end
+			end
+		end
+
+		local var_55_7 = lua_stance_hp_offset.configDict[var_55_0]
+
+		if var_55_7 then
+			local var_55_8 = var_55_7["offsetPos" .. var_55_1.position]
+
+			if var_55_8 and #var_55_8 > 0 then
+				recthelper.setAnchor(arg_55_0._floatContainerGO.transform, var_55_8[1], var_55_8[2])
+				recthelper.setAnchor(arg_55_0._uiGO.transform, var_55_8[1], var_55_8[2])
+
+				arg_55_0._originPosOffsetX = var_55_8[1]
+				arg_55_0._originPosOffsetY = var_55_8[2]
+			end
+		end
+	end
+end
+
+local var_0_1 = {
 	NoExPoint_NoPower = 1,
 	ExPoint_NoPower = 2,
 	NoExPoint_Power = 3,
 	ExPoint_Power = 4
 }
-slot2 = {
-	[slot1.NoExPoint_NoPower] = {
+local var_0_2 = {
+	[var_0_1.NoExPoint_NoPower] = {
 		imageCareer = 5,
 		layout = 36
 	},
-	[slot1.ExPoint_NoPower] = {
+	[var_0_1.ExPoint_NoPower] = {
 		imageCareer = -5,
 		layout = 52
 	},
-	[slot1.NoExPoint_Power] = {
+	[var_0_1.NoExPoint_Power] = {
 		imageCareer = -5,
 		layout = 40
 	},
-	[slot1.ExPoint_Power] = {
+	[var_0_1.ExPoint_Power] = {
 		imageCareer = -12,
 		layout = 52
 	}
 }
 
-function slot0.updateInnerLayout(slot0)
-	slot2 = not slot0._expointCtrl:checkNeedShieldExPoint()
-	slot3 = nil
-	slot4 = uv1[(not slot0._power:_getPowerData() or not slot2 or uv0.ExPoint_Power) and (not slot1 or uv0.NoExPoint_Power) and (not slot2 or uv0.ExPoint_NoPower) and uv0.NoExPoint_NoPower]
+function var_0_0.updateInnerLayout(arg_56_0)
+	local var_56_0 = arg_56_0._power:_getPowerData()
+	local var_56_1 = not arg_56_0._expointCtrl:checkNeedShieldExPoint()
+	local var_56_2
 
-	recthelper.setAnchorY(slot0._imgCareerIcon:GetComponent(gohelper.Type_RectTransform), slot4.imageCareer)
-	recthelper.setAnchorY(gohelper.findChildComponent(slot0._uiGO, "layout", gohelper.Type_RectTransform), slot4.layout)
+	if var_56_0 and var_56_1 then
+		var_56_2 = var_0_1.ExPoint_Power
+	elseif var_56_0 then
+		var_56_2 = var_0_1.NoExPoint_Power
+	elseif var_56_1 then
+		var_56_2 = var_0_1.ExPoint_NoPower
+	else
+		var_56_2 = var_0_1.NoExPoint_NoPower
+	end
+
+	local var_56_3 = var_0_2[var_56_2]
+	local var_56_4 = arg_56_0._imgCareerIcon:GetComponent(gohelper.Type_RectTransform)
+	local var_56_5 = gohelper.findChildComponent(arg_56_0._uiGO, "layout", gohelper.Type_RectTransform)
+
+	recthelper.setAnchorY(var_56_4, var_56_3.imageCareer)
+	recthelper.setAnchorY(var_56_5, var_56_3.layout)
 end
 
-function slot0._onUpdateUIFollower(slot0, slot1)
-	if slot0._entity and slot1 == slot0._entity.id then
-		slot0:_updateFollow()
+function var_0_0._onUpdateUIFollower(arg_57_0, arg_57_1)
+	if arg_57_0._entity and arg_57_1 == arg_57_0._entity.id then
+		arg_57_0:_updateFollow()
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_58_0)
+	return
 end
 
-return slot0
+return var_0_0

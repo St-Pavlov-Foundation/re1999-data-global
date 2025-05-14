@@ -1,10 +1,11 @@
-module("modules.logic.currency.controller.CurrencyEvent", package.seeall)
+﻿module("modules.logic.currency.controller.CurrencyEvent", package.seeall)
 
-slot0 = _M
-slot0.CurrencyChange = 1
-slot0.PowerBuyCountChange = 2
-slot0.GetCurrencyInfoSuccess = 3
-slot0.PowerBuyTipToggleOn = 4
-slot0.PowerBuySuccess = 5
+local var_0_0 = _M
 
-return slot0
+var_0_0.CurrencyChange = 1
+var_0_0.PowerBuyCountChange = 2
+var_0_0.GetCurrencyInfoSuccess = 3
+var_0_0.PowerBuyTipToggleOn = 4
+var_0_0.PowerBuySuccess = 5
+
+return var_0_0

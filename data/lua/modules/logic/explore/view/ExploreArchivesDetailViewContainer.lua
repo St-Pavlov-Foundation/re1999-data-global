@@ -1,11 +1,11 @@
-module("modules.logic.explore.view.ExploreArchivesDetailViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreArchivesDetailViewContainer", package.seeall)
 
-slot0 = class("ExploreArchivesDetailViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreArchivesDetailViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreArchivesDetailView.New()
 	}
 end
 
-return slot0
+return var_0_0

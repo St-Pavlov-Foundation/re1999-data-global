@@ -1,52 +1,52 @@
-module("modules.logic.characterskin.view.CharacterSkinViewContainer", package.seeall)
+﻿module("modules.logic.characterskin.view.CharacterSkinViewContainer", package.seeall)
 
-slot0 = class("CharacterSkinViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterSkinViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, CharacterSkinSwitchRightView.New())
-	table.insert(slot1, CharacterSkinLeftView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btntopleft"))
-	table.insert(slot1, CharacterSkinSwitchSpineGCView.New())
+	table.insert(var_1_0, CharacterSkinSwitchRightView.New())
+	table.insert(var_1_0, CharacterSkinLeftView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btntopleft"))
+	table.insert(var_1_0, CharacterSkinSwitchSpineGCView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		slot0.navigateView
+		arg_2_0.navigateView
 	}
 end
 
-function slot0.playOpenTransition(slot0)
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
+function var_0_0.playOpenTransition(arg_3_0)
+	arg_3_0:_cancelBlock()
+	arg_3_0:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(slot0.viewGO):Play(UIAnimationName.Open, slot0.onOpenAnimDone, slot0)
+	ZProj.ProjAnimatorPlayer.Get(arg_3_0.viewGO):Play(UIAnimationName.Open, arg_3_0.onOpenAnimDone, arg_3_0)
 end
 
-function slot0.onOpenAnimDone(slot0)
+function var_0_0.onOpenAnimDone(arg_4_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	slot0:onPlayOpenTransitionFinish()
+	arg_4_0:onPlayOpenTransitionFinish()
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:_cancelBlock()
-	slot0:_stopOpenCloseAnim()
+function var_0_0.playCloseTransition(arg_5_0)
+	arg_5_0:_cancelBlock()
+	arg_5_0:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(slot0.viewGO):Play(UIAnimationName.Close, slot0.onCloseAnimDone, slot0)
+	ZProj.ProjAnimatorPlayer.Get(arg_5_0.viewGO):Play(UIAnimationName.Close, arg_5_0.onCloseAnimDone, arg_5_0)
 end
 
-function slot0.onCloseAnimDone(slot0)
+function var_0_0.onCloseAnimDone(arg_6_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	slot0:onPlayCloseTransitionFinish()
+	arg_6_0:onPlayCloseTransitionFinish()
 end
 
-return slot0
+return var_0_0

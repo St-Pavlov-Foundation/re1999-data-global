@@ -1,68 +1,70 @@
-module("modules.logic.social.model.ReportTypeListModel", package.seeall)
+﻿module("modules.logic.social.model.ReportTypeListModel", package.seeall)
 
-slot0 = class("ReportTypeListModel", ListScrollModel)
+local var_0_0 = class("ReportTypeListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0.reportTypeList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.reportTypeList = {}
 end
 
-function slot0.reInit(slot0)
-	slot0.reportTypeList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.reportTypeList = {}
 end
 
-function slot0.sortFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortFunc(arg_3_0, arg_3_1)
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.initType(slot0, slot1)
-	slot2 = nil
+function var_0_0.initType(arg_4_0, arg_4_1)
+	local var_4_0
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot0.reportTypeList, {
-			id = slot7.id,
-			desc = slot7.desc
-		})
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = {
+			id = iter_4_1.id,
+			desc = iter_4_1.desc
+		}
+
+		table.insert(arg_4_0.reportTypeList, var_4_1)
 	end
 
-	table.sort(slot1, slot0.sortFunc)
+	table.sort(arg_4_1, arg_4_0.sortFunc)
 end
 
-function slot0.initDone(slot0)
-	return slot0.reportTypeList and #slot0.reportTypeList > 0
+function var_0_0.initDone(arg_5_0)
+	return arg_5_0.reportTypeList and #arg_5_0.reportTypeList > 0
 end
 
-function slot0.refreshData(slot0)
-	slot0:setList(slot0.reportTypeList)
+function var_0_0.refreshData(arg_6_0)
+	arg_6_0:setList(arg_6_0.reportTypeList)
 end
 
-function slot0.setSelectReportItem(slot0, slot1)
-	slot2 = slot0.selectReportItem
+function var_0_0.setSelectReportItem(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.selectReportItem
 
-	if slot0:isSelect(slot1) then
-		slot0.selectReportItem = nil
+	if arg_7_0:isSelect(arg_7_1) then
+		arg_7_0.selectReportItem = nil
 	else
-		slot0.selectReportItem = slot1
+		arg_7_0.selectReportItem = arg_7_1
 	end
 
-	if slot2 then
-		slot2:refreshSelect()
+	if var_7_0 then
+		var_7_0:refreshSelect()
 	end
 
-	slot1:refreshSelect()
+	arg_7_1:refreshSelect()
 end
 
-function slot0.isSelect(slot0, slot1)
-	return slot0.selectReportItem and slot0.selectReportItem:getMo().id == slot1:getMo().id
+function var_0_0.isSelect(arg_8_0, arg_8_1)
+	return arg_8_0.selectReportItem and arg_8_0.selectReportItem:getMo().id == arg_8_1:getMo().id
 end
 
-function slot0.getSelectReportId(slot0)
-	return slot0.selectReportItem and slot0.selectReportItem:getMo().id
+function var_0_0.getSelectReportId(arg_9_0)
+	return arg_9_0.selectReportItem and arg_9_0.selectReportItem:getMo().id
 end
 
-function slot0.clearSelectReportItem(slot0)
-	slot0.selectReportItem = nil
+function var_0_0.clearSelectReportItem(arg_10_0)
+	arg_10_0.selectReportItem = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

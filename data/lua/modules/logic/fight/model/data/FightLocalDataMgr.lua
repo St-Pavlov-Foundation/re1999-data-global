@@ -1,8 +1,9 @@
-module("modules.logic.fight.model.data.FightLocalDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightLocalDataMgr", package.seeall)
 
-slot0 = class("FightLocalDataMgr", FightDataMgr)
-slot0.instance = slot0.New()
+local var_0_0 = class("FightLocalDataMgr", FightDataMgr)
 
-slot0.instance:initDataMgr()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+var_0_0.instance:initDataMgr()
+
+return var_0_0

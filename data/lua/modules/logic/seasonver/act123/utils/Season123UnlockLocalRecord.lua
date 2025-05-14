@@ -1,75 +1,79 @@
-module("modules.logic.seasonver.act123.utils.Season123UnlockLocalRecord", package.seeall)
+﻿module("modules.logic.seasonver.act123.utils.Season123UnlockLocalRecord", package.seeall)
 
-slot0 = class("Season123UnlockLocalRecord")
+local var_0_0 = class("Season123UnlockLocalRecord")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.activityId = slot1
-	slot0.reasonKey = slot2
-	slot0._localKey = slot0:getLocalKey()
-	slot0._dict = nil
-	slot0._moduleSet = {}
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.activityId = arg_1_1
+	arg_1_0.reasonKey = arg_1_2
+	arg_1_0._localKey = arg_1_0:getLocalKey()
+	arg_1_0._dict = nil
+	arg_1_0._moduleSet = {}
 
-	slot0:initLocalSave()
+	arg_1_0:initLocalSave()
 end
 
-function slot0.initLocalSave(slot0)
-	if string.nilorempty(slot0._localKey) then
+function var_0_0.initLocalSave(arg_2_0)
+	if string.nilorempty(arg_2_0._localKey) then
 		return
 	end
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(slot0._localKey, "")) then
-		if cjson.decode(slot1) then
-			slot0._dict = slot2
+	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0._localKey, "")
 
-			for slot6, slot7 in pairs(slot2) do
-				slot0._moduleSet[slot6] = {}
+	if not string.nilorempty(var_2_0) then
+		local var_2_1 = cjson.decode(var_2_0)
 
-				for slot11, slot12 in ipairs(slot7) do
-					slot0._moduleSet[slot6][slot12] = true
+		if var_2_1 then
+			arg_2_0._dict = var_2_1
+
+			for iter_2_0, iter_2_1 in pairs(var_2_1) do
+				arg_2_0._moduleSet[iter_2_0] = {}
+
+				for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
+					arg_2_0._moduleSet[iter_2_0][iter_2_3] = true
 				end
 			end
 		else
-			slot0._dict = {}
+			arg_2_0._dict = {}
 		end
 	else
-		slot0._dict = {}
+		arg_2_0._dict = {}
 	end
 end
 
-function slot0.add(slot0, slot1, slot2)
-	if string.nilorempty(slot0._localKey) then
+function var_0_0.add(arg_3_0, arg_3_1, arg_3_2)
+	if string.nilorempty(arg_3_0._localKey) then
 		return
 	end
 
-	slot0._moduleSet[slot2] = slot0._moduleSet[slot2] or {}
+	arg_3_0._moduleSet[arg_3_2] = arg_3_0._moduleSet[arg_3_2] or {}
 
-	if not slot0._moduleSet[slot2][slot1] then
-		slot0._moduleSet[slot2][slot1] = true
-		slot0._dict[slot2] = slot0._dict[slot2] or {}
+	if not arg_3_0._moduleSet[arg_3_2][arg_3_1] then
+		arg_3_0._moduleSet[arg_3_2][arg_3_1] = true
+		arg_3_0._dict[arg_3_2] = arg_3_0._dict[arg_3_2] or {}
 
-		table.insert(slot0._dict[slot2], slot1)
-		slot0:save()
+		table.insert(arg_3_0._dict[arg_3_2], arg_3_1)
+		arg_3_0:save()
 	end
 end
 
-function slot0.contain(slot0, slot1, slot2)
-	if string.nilorempty(slot0._localKey) then
+function var_0_0.contain(arg_4_0, arg_4_1, arg_4_2)
+	if string.nilorempty(arg_4_0._localKey) then
 		return false
 	end
 
-	return slot0._moduleSet[slot2] and slot0._moduleSet[slot2][slot1]
+	return arg_4_0._moduleSet[arg_4_2] and arg_4_0._moduleSet[arg_4_2][arg_4_1]
 end
 
-function slot0.save(slot0)
-	if string.nilorempty(slot0._localKey) then
+function var_0_0.save(arg_5_0)
+	if string.nilorempty(arg_5_0._localKey) then
 		return
 	end
 
-	PlayerPrefsHelper.setString(slot0._localKey, cjson.encode(slot0._dict))
+	PlayerPrefsHelper.setString(arg_5_0._localKey, cjson.encode(arg_5_0._dict))
 end
 
-function slot0.getLocalKey(slot0)
-	return tostring(slot0.reasonKey) .. "#" .. tostring(slot0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.getLocalKey(arg_6_0)
+	return tostring(arg_6_0.reasonKey) .. "#" .. tostring(arg_6_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return slot0
+return var_0_0

@@ -1,35 +1,38 @@
-module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114KeyDayCheckResultWork", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114KeyDayCheckResultWork", package.seeall)
 
-slot0 = class("Activity114KeyDayCheckResultWork", Activity114BaseWork)
+local var_0_0 = class("Activity114KeyDayCheckResultWork", Activity114BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot0:getFlow():addWork(Activity114StopStoryWork.New())
-	slot0:getFlow():addWork(Activity114OpenAttrViewWork.New())
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
+	arg_1_0:getFlow():addWork(Activity114OpenAttrViewWork.New())
 
-	slot3 = false
+	local var_1_0 = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, arg_1_0.context.nowDay)
+	local var_1_1 = false
 
-	if not Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, slot0.context.nowDay) then
-		slot4, slot5, slot6, slot7 = Activity114Helper.getWeekEndScore()
-		slot3 = slot7 < Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.ScoreC)
+	if not var_1_0 then
+		local var_1_2, var_1_3, var_1_4, var_1_5 = Activity114Helper.getWeekEndScore()
 
-		slot0:getFlow():addWork(Activity114WeekEndWork.New())
+		var_1_1 = var_1_5 < Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.ScoreC)
+
+		arg_1_0:getFlow():addWork(Activity114WeekEndWork.New())
 	end
 
-	slot0.context.storyId = nil
-	slot4 = slot0.context.eventCo
+	arg_1_0.context.storyId = nil
 
-	if slot0.context.result == Activity114Enum.Result.None then
-		-- Nothing
-	elseif slot2 and slot0.context.result == Activity114Enum.Result.Success or not slot2 and not slot3 then
-		slot0:getFlow():addWork(Activity114StoryWork.New(slot4.config.successStoryId, Activity114Enum.StoryType.Result))
-	elseif slot2 and slot0.context.result == Activity114Enum.Result.Fail or not slot2 and slot3 then
-		slot0:getFlow():addWork(Activity114StoryWork.New(slot4.config.failureStoryId, Activity114Enum.StoryType.Result))
+	local var_1_6 = arg_1_0.context.eventCo
+
+	if arg_1_0.context.result == Activity114Enum.Result.None then
+		-- block empty
+	elseif var_1_0 and arg_1_0.context.result == Activity114Enum.Result.Success or not var_1_0 and not var_1_1 then
+		arg_1_0:getFlow():addWork(Activity114StoryWork.New(var_1_6.config.successStoryId, Activity114Enum.StoryType.Result))
+	elseif var_1_0 and arg_1_0.context.result == Activity114Enum.Result.Fail or not var_1_0 and var_1_1 then
+		arg_1_0:getFlow():addWork(Activity114StoryWork.New(var_1_6.config.failureStoryId, Activity114Enum.StoryType.Result))
 	else
-		logError("error :" .. tostring(slot3) .. " +++ " .. tostring(slot0.context.nowDay))
+		logError("error :" .. tostring(var_1_1) .. " +++ " .. tostring(arg_1_0.context.nowDay))
 	end
 
-	slot0:getFlow():addWork(Activity114StopStoryWork.New())
-	slot0:startFlow()
+	arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
+	arg_1_0:startFlow()
 end
 
-return slot0
+return var_0_0

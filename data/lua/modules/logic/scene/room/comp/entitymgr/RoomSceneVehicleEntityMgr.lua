@@ -1,121 +1,135 @@
-module("modules.logic.scene.room.comp.entitymgr.RoomSceneVehicleEntityMgr", package.seeall)
+﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneVehicleEntityMgr", package.seeall)
 
-slot0 = class("RoomSceneVehicleEntityMgr", BaseSceneUnitMgr)
+local var_0_0 = class("RoomSceneVehicleEntityMgr", BaseSceneUnitMgr)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
-	slot0:_startSpawnVehicle()
+	arg_2_0:_startSpawnVehicle()
 end
 
-function slot0.onStopMode(slot0)
-	slot0:_onSwitchMode(true)
+function var_0_0.onStopMode(arg_3_0)
+	arg_3_0:_onSwitchMode(true)
 end
 
-function slot0.onSwitchMode(slot0)
-	slot0:_onSwitchMode(RoomController.instance:isEditMode())
+function var_0_0.onSwitchMode(arg_4_0)
+	arg_4_0:_onSwitchMode(RoomController.instance:isEditMode())
 end
 
-function slot0._onSwitchMode(slot0, slot1)
-	slot3 = slot0:getTagUnitDict(RoomMapVehicleEntity:getTag())
+function var_0_0._onSwitchMode(arg_5_0, arg_5_1)
+	local var_5_0 = RoomMapVehicleEntity:getTag()
+	local var_5_1 = arg_5_0:getTagUnitDict(var_5_0)
 
-	if slot1 then
-		slot0:_stopSpawnVehicle()
+	if arg_5_1 then
+		arg_5_0:_stopSpawnVehicle()
 
-		if slot3 then
-			for slot7, slot8 in pairs(slot3) do
-				slot8:setShow(false)
+		if var_5_1 then
+			for iter_5_0, iter_5_1 in pairs(var_5_1) do
+				iter_5_1:setShow(false)
 			end
 		end
 	else
-		if slot3 then
-			for slot8, slot9 in pairs(slot3) do
-				if RoomMapVehicleModel.instance:getById(slot8) then
-					slot0:setVehiclePosByMO(slot9, slot10)
-					slot9:setShow(true)
+		if var_5_1 then
+			local var_5_2 = RoomMapVehicleModel.instance
+
+			for iter_5_2, iter_5_3 in pairs(var_5_1) do
+				local var_5_3 = var_5_2:getById(iter_5_2)
+
+				if var_5_3 then
+					arg_5_0:setVehiclePosByMO(iter_5_3, var_5_3)
+					iter_5_3:setShow(true)
 				else
-					slot0:removeUnit(slot2, slot8)
+					arg_5_0:removeUnit(var_5_0, iter_5_2)
 				end
 			end
 		end
 
-		slot0:_startSpawnVehicle()
+		arg_5_0:_startSpawnVehicle()
 	end
 end
 
-function slot0._stopSpawnVehicle(slot0)
-	if slot0._isRuningSpawnVehicle then
-		slot0._isRuningSpawnVehicle = false
+function var_0_0._stopSpawnVehicle(arg_6_0)
+	if arg_6_0._isRuningSpawnVehicle then
+		arg_6_0._isRuningSpawnVehicle = false
 
-		TaskDispatcher.cancelTask(slot0._onRepeatSpawnVehicle, slot0)
+		TaskDispatcher.cancelTask(arg_6_0._onRepeatSpawnVehicle, arg_6_0)
 	end
 end
 
-function slot0._startSpawnVehicle(slot0)
-	slot0._waitVehicleMOList = nil
+function var_0_0._startSpawnVehicle(arg_7_0)
+	local var_7_0 = RoomMapVehicleEntity:getTag()
+	local var_7_1 = RoomMapVehicleModel.instance:getList()
 
-	for slot6, slot7 in ipairs(RoomMapVehicleModel.instance:getList()) do
-		if not slot0:getUnit(RoomMapVehicleEntity:getTag(), slot7.id) then
-			slot0._waitVehicleMOList = slot0._waitVehicleMOList or {}
+	arg_7_0._waitVehicleMOList = nil
 
-			table.insert(slot0._waitVehicleMOList, slot7)
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		if not arg_7_0:getUnit(var_7_0, iter_7_1.id) then
+			arg_7_0._waitVehicleMOList = arg_7_0._waitVehicleMOList or {}
+
+			table.insert(arg_7_0._waitVehicleMOList, iter_7_1)
 		end
 	end
 
-	if slot0._waitVehicleMOList and not slot0._isRuningSpawnVehicle then
-		slot0._isRuningSpawnVehicle = true
+	if arg_7_0._waitVehicleMOList and not arg_7_0._isRuningSpawnVehicle then
+		arg_7_0._isRuningSpawnVehicle = true
 
-		TaskDispatcher.runRepeat(slot0._onRepeatSpawnVehicle, slot0, 0)
+		TaskDispatcher.runRepeat(arg_7_0._onRepeatSpawnVehicle, arg_7_0, 0)
 	end
 end
 
-function slot0._onRepeatSpawnVehicle(slot0)
-	if slot0._waitVehicleMOList and #slot0._waitVehicleMOList > 0 then
-		table.remove(slot0._waitVehicleMOList, 1)
-		slot0:spawnMapVehicle(slot0._waitVehicleMOList[1])
+function var_0_0._onRepeatSpawnVehicle(arg_8_0)
+	if arg_8_0._waitVehicleMOList and #arg_8_0._waitVehicleMOList > 0 then
+		local var_8_0 = arg_8_0._waitVehicleMOList[1]
+
+		table.remove(arg_8_0._waitVehicleMOList, 1)
+		arg_8_0:spawnMapVehicle(var_8_0)
 	else
-		slot0:_stopSpawnVehicle()
+		arg_8_0:_stopSpawnVehicle()
 	end
 end
 
-function slot0.spawnMapVehicle(slot0, slot1)
-	slot2 = slot0._scene.go.vehicleRoot
-	slot3 = gohelper.create3d(slot2, slot1.id)
-	slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(slot3, RoomMapVehicleEntity, slot1.id)
+function var_0_0.spawnMapVehicle(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._scene.go.vehicleRoot
+	local var_9_1 = gohelper.create3d(var_9_0, arg_9_1.id)
+	local var_9_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, RoomMapVehicleEntity, arg_9_1.id)
 
-	slot0:addUnit(slot4)
-	gohelper.addChild(slot2, slot3)
-	slot0:setVehiclePosByMO(slot4, slot1)
+	arg_9_0:addUnit(var_9_2)
+	gohelper.addChild(var_9_0, var_9_1)
+	arg_9_0:setVehiclePosByMO(var_9_2, arg_9_1)
 
-	return slot4
+	return var_9_2
 end
 
-function slot0.setVehiclePosByMO(slot0, slot1, slot2)
-	if not ((slot2 or slot1:getMO()):getCurNode() and slot4.hexPoint) then
+function var_0_0.setVehiclePosByMO(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = (arg_10_2 or arg_10_1:getMO()):getCurNode()
+	local var_10_1 = var_10_0 and var_10_0.hexPoint
+
+	if not var_10_1 then
 		logError("RoomSceneVehicleEntityMgr: 没有位置信息")
 
 		return
 	end
 
-	slot6 = HexMath.hexToPosition(slot5, RoomBlockEnum.BlockSize)
+	local var_10_2 = HexMath.hexToPosition(var_10_1, RoomBlockEnum.BlockSize)
 
-	slot1:setLocalPos(slot6.x, RoomBuildingEnum.VehicleInitOffestY, slot6.y)
+	arg_10_1:setLocalPos(var_10_2.x, RoomBuildingEnum.VehicleInitOffestY, var_10_2.y)
 end
 
-function slot0.getVehicleEntity(slot0, slot1)
-	return slot0:getUnit(RoomMapVehicleEntity:getTag(), slot1)
+function var_0_0.getVehicleEntity(arg_11_0, arg_11_1)
+	return arg_11_0:getUnit(RoomMapVehicleEntity:getTag(), arg_11_1)
 end
 
-function slot0.destroyVehicle(slot0, slot1)
-	slot0:removeUnit(slot1:getTag(), slot1.id)
+function var_0_0.destroyVehicle(arg_12_0, arg_12_1)
+	arg_12_0:removeUnit(arg_12_1:getTag(), arg_12_1.id)
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
-	slot0:_stopSpawnVehicle()
+function var_0_0.onSceneClose(arg_13_0)
+	var_0_0.super.onSceneClose(arg_13_0)
+	arg_13_0:_stopSpawnVehicle()
 end
 
-return slot0
+return var_0_0

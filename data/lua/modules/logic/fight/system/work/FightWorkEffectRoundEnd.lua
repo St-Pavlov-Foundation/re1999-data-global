@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.FightWorkEffectRoundEnd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectRoundEnd", package.seeall)
 
-slot0 = class("FightWorkEffectRoundEnd", FightEffectBase)
+local var_0_0 = class("FightWorkEffectRoundEnd", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	FightController.instance:dispatchEvent(FightEvent.OnMySideRoundEnd)
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

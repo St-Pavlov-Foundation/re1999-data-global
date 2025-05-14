@@ -1,16 +1,16 @@
-module("modules.logic.common.model.CommonInputMO", package.seeall)
+﻿module("modules.logic.common.model.CommonInputMO", package.seeall)
 
-slot0 = class("CommonInputMO")
+local var_0_0 = class("CommonInputMO")
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4)
-	slot0.title = slot1 or ""
-	slot0.defaultInput = slot2 or ""
-	slot0.characterLimit = 50
-	slot0.cancelBtnName = luaLang("cancel")
-	slot0.sureBtnName = luaLang("sure")
-	slot0.cancelCallback = nil
-	slot0.sureCallback = slot3
-	slot0.callbackObj = slot4
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0.title = arg_1_1 or ""
+	arg_1_0.defaultInput = arg_1_2 or ""
+	arg_1_0.characterLimit = 50
+	arg_1_0.cancelBtnName = luaLang("cancel")
+	arg_1_0.sureBtnName = luaLang("sure")
+	arg_1_0.cancelCallback = nil
+	arg_1_0.sureCallback = arg_1_3
+	arg_1_0.callbackObj = arg_1_4
 end
 
-return slot0
+return var_0_0

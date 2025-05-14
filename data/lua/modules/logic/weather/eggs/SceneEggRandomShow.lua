@@ -1,17 +1,17 @@
-module("modules.logic.weather.eggs.SceneEggRandomShow", package.seeall)
+﻿module("modules.logic.weather.eggs.SceneEggRandomShow", package.seeall)
 
-slot0 = class("SceneEggRandomShow", SceneBaseEgg)
+local var_0_0 = class("SceneEggRandomShow", SceneBaseEgg)
 
-function slot0._onEnable(slot0)
-	slot0:setGoListVisible(true)
+function var_0_0._onEnable(arg_1_0)
+	arg_1_0:setGoListVisible(true)
 end
 
-function slot0._onDisable(slot0)
-	slot0:setGoListVisible(false)
+function var_0_0._onDisable(arg_2_0)
+	arg_2_0:setGoListVisible(false)
 end
 
-function slot0._onInit(slot0)
-	slot0:setGoListVisible(false)
+function var_0_0._onInit(arg_3_0)
+	arg_3_0:setGoListVisible(false)
 end
 
-return slot0
+return var_0_0

@@ -1,399 +1,457 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogContentView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogContentView", package.seeall)
 
-slot0 = class("AergusiDialogContentView", BaseView)
+local var_0_0 = class("AergusiDialogContentView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gonextstep = gohelper.findChild(slot0.viewGO, "#go_nextstep")
-	slot0._godialoguecontainer = gohelper.findChild(slot0.viewGO, "#go_dialoguecontainer")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content")
-	slot0._goleftdialogueitem = gohelper.findChild(slot0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem")
-	slot0._gorightdialogueitem = gohelper.findChild(slot0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_rightdialogueitem")
-	slot0._gosystemmessageitem = gohelper.findChild(slot0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_systemmessageitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonextstep = gohelper.findChild(arg_1_0.viewGO, "#go_nextstep")
+	arg_1_0._godialoguecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content")
+	arg_1_0._goleftdialogueitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem")
+	arg_1_0._gorightdialogueitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_rightdialogueitem")
+	arg_1_0._gosystemmessageitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_systemmessageitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._scrollcontent:AddOnValueChanged(slot0._onScrollValueChanged, slot0)
-	slot0._nextStepClick:AddClickListener(slot0._onClickNextStep, slot0)
-	slot0._drag:AddDragBeginListener(slot0._onBeginDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onEndDrag, slot0)
-	slot0._nextStepClick2:AddClickListener(slot0._onClickNextStep, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._scrollcontent:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
+	arg_2_0._nextStepClick:AddClickListener(arg_2_0._onClickNextStep, arg_2_0)
+	arg_2_0._drag:AddDragBeginListener(arg_2_0._onBeginDrag, arg_2_0)
+	arg_2_0._drag:AddDragEndListener(arg_2_0._onEndDrag, arg_2_0)
+	arg_2_0._nextStepClick2:AddClickListener(arg_2_0._onClickNextStep, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._scrollcontent:RemoveOnValueChanged()
-	slot0._nextStepClick:RemoveClickListener()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0._nextStepClick2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._scrollcontent:RemoveOnValueChanged()
+	arg_3_0._nextStepClick:RemoveClickListener()
+	arg_3_0._drag:RemoveDragBeginListener()
+	arg_3_0._drag:RemoveDragEndListener()
+	arg_3_0._nextStepClick2:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._itemRootGos = {
-		[AergusiEnum.DialogType.NormalLeft] = slot0._goleftdialogueitem,
-		[AergusiEnum.DialogType.NormalRight] = slot0._gorightdialogueitem,
-		[AergusiEnum.DialogType.SystemMsg] = slot0._gosystemmessageitem
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._itemRootGos = {
+		[AergusiEnum.DialogType.NormalLeft] = arg_4_0._goleftdialogueitem,
+		[AergusiEnum.DialogType.NormalRight] = arg_4_0._gorightdialogueitem,
+		[AergusiEnum.DialogType.SystemMsg] = arg_4_0._gosystemmessageitem
 	}
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "#go_dialoguecontainer/Scroll View")
-	slot0._contentMinHeight = recthelper.getHeight(slot0._scrollcontent.transform)
-	slot0._nextStepClick = gohelper.getClickWithDefaultAudio(slot0._gonextstep)
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._scrollcontent.gameObject)
-	slot0._nextStepClick2 = gohelper.getClickWithDefaultAudio(slot0._scrollcontent.gameObject)
-	slot0._rectTrContent = slot0._gocontent.transform
+	arg_4_0._scrollcontent = gohelper.findChildScrollRect(arg_4_0.viewGO, "#go_dialoguecontainer/Scroll View")
+	arg_4_0._contentMinHeight = recthelper.getHeight(arg_4_0._scrollcontent.transform)
+	arg_4_0._nextStepClick = gohelper.getClickWithDefaultAudio(arg_4_0._gonextstep)
+	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._scrollcontent.gameObject)
+	arg_4_0._nextStepClick2 = gohelper.getClickWithDefaultAudio(arg_4_0._scrollcontent.gameObject)
+	arg_4_0._rectTrContent = arg_4_0._gocontent.transform
 
-	for slot4, slot5 in pairs(slot0._itemRootGos) do
-		gohelper.setActive(slot5, false)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._itemRootGos) do
+		gohelper.setActive(iter_4_1, false)
 	end
 
-	slot0._dialogueItemList = {}
-	slot0._contentHeight = 0
-	slot0._startServerTime = ServerTime.now()
+	arg_4_0._dialogueItemList = {}
+	arg_4_0._contentHeight = 0
+	arg_4_0._startServerTime = ServerTime.now()
 
-	slot0:_addEvents()
+	arg_4_0:_addEvents()
 end
 
-function slot0._onScrollValueChanged(slot0)
-	gohelper.setActive(slot0._goArrow, slot0._scrollcontent.verticalNormalizedPosition >= 0.01)
+function var_0_0._onScrollValueChanged(arg_5_0)
+	gohelper.setActive(arg_5_0._goArrow, arg_5_0._scrollcontent.verticalNormalizedPosition >= 0.01)
 end
 
-function slot0._onClickNextStep(slot0)
-	if slot0._dragging then
+function var_0_0._onClickNextStep(arg_6_0)
+	if arg_6_0._dragging then
 		return
 	end
 
-	slot0:_playNext()
+	arg_6_0:_playNext()
 end
 
-function slot0._onBeginDrag(slot0)
-	slot0._dragging = true
+function var_0_0._onBeginDrag(arg_7_0)
+	arg_7_0._dragging = true
 end
 
-function slot0._onEndDrag(slot0)
-	slot0._dragging = false
+function var_0_0._onEndDrag(arg_8_0)
+	arg_8_0._dragging = false
 end
 
-function slot0.onOpen(slot0)
-	slot0._config = AergusiConfig.instance:getEpisodeConfig(nil, slot0.viewParam.episodeId)
-	slot0.stepCoList = {}
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._config = AergusiConfig.instance:getEpisodeConfig(nil, arg_9_0.viewParam.episodeId)
+	arg_9_0.stepCoList = {}
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("waitOpen")
-	TaskDispatcher.runDelay(slot0._startInitGroup, slot0, 0.83)
+	TaskDispatcher.runDelay(arg_9_0._startInitGroup, arg_9_0, 0.83)
 end
 
-function slot0._startInitGroup(slot0)
+function var_0_0._startInitGroup(arg_10_0)
 	UIBlockMgr.instance:endBlock("waitOpen")
-	slot0:_playGroup(AergusiDialogModel.instance:getCurDialogGroup())
+
+	local var_10_0 = AergusiDialogModel.instance:getCurDialogGroup()
+
+	arg_10_0:_playGroup(var_10_0)
 end
 
-function slot0._playGroup(slot0, slot1, slot2)
-	AergusiDialogModel.instance:addTargetGroup(slot1)
-	AergusiDialogModel.instance:setDialogGroup(slot1)
+function var_0_0._playGroup(arg_11_0, arg_11_1, arg_11_2)
+	AergusiDialogModel.instance:addTargetGroup(arg_11_1)
+	AergusiDialogModel.instance:setDialogGroup(arg_11_1)
 	AergusiDialogModel.instance:setShowingGroup(true)
 	AergusiController.instance:dispatchEvent(AergusiEvent.OnStartDialogGroup)
-	slot0:_addStepList(slot1)
-	slot0:_playNext(slot2)
+	arg_11_0:_addStepList(arg_11_1)
+	arg_11_0:_playNext(arg_11_2)
 end
 
-function slot0._addStepList(slot0, slot1)
-	for slot6 = #AergusiDialogModel.instance:getDialogStepList(slot1), 1, -1 do
-		table.insert(slot0.stepCoList, slot2[slot6])
+function var_0_0._addStepList(arg_12_0, arg_12_1)
+	local var_12_0 = AergusiDialogModel.instance:getDialogStepList(arg_12_1)
+
+	for iter_12_0 = #var_12_0, 1, -1 do
+		table.insert(arg_12_0.stepCoList, var_12_0[iter_12_0])
 	end
 end
 
-function slot0._playNext(slot0, slot1)
+function var_0_0._playNext(arg_13_0, arg_13_1)
 	if AergusiDialogModel.instance:getLeftErrorTimes() <= 0 then
 		return
 	end
 
-	if not slot0:_popNextStep() then
-		slot0:_setDialogGroupDone()
+	local var_13_0 = arg_13_0:_popNextStep()
+
+	if not var_13_0 then
+		arg_13_0:_setDialogGroupDone()
 
 		return
 	end
 
-	slot0._stepCo = slot3
+	arg_13_0._stepCo = var_13_0
 
-	if slot0._stepCo.id == AergusiModel.instance:getUnlockAutoTipProcess()[1] and slot0._stepCo.stepId == slot4[2] then
+	local var_13_1 = AergusiModel.instance:getUnlockAutoTipProcess()
+
+	if arg_13_0._stepCo.id == var_13_1[1] and arg_13_0._stepCo.stepId == var_13_1[2] then
 		AergusiDialogModel.instance:setUnlockAutoShow(false)
 	end
 
-	slot5 = slot0._stepCo.pos
+	local var_13_2 = arg_13_0._stepCo.pos
+	local var_13_3 = gohelper.cloneInPlace(arg_13_0._itemRootGos[var_13_2])
+	local var_13_4 = AergusiDialogItem.CreateItem(arg_13_0._stepCo, var_13_3, arg_13_0._contentHeight, var_13_2)
 
-	if slot5 == AergusiEnum.DialogPos.Right then
-		AergusiDialogItem.CreateItem(slot0._stepCo, gohelper.cloneInPlace(slot0._itemRootGos[slot5]), slot0._contentHeight, slot5):setQutation(slot1)
+	if var_13_2 == AergusiEnum.DialogPos.Right then
+		var_13_4:setQutation(arg_13_1)
 	end
 
-	for slot11, slot12 in pairs(slot0._dialogueItemList) do
-		slot12:refresh()
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._dialogueItemList) do
+		iter_13_1:refresh()
 	end
 
-	table.insert(slot0._dialogueItemList, slot7)
+	table.insert(arg_13_0._dialogueItemList, var_13_4)
 	UIBlockMgr.instance:startBlock("waitOpen")
-	AergusiDialogModel.instance:setCurDialogProcess(slot3.id, slot3.stepId)
-	TaskDispatcher.runDelay(slot0._startDialogNextStep, slot0, 0.1)
+	AergusiDialogModel.instance:setCurDialogProcess(var_13_0.id, var_13_0.stepId)
+	TaskDispatcher.runDelay(arg_13_0._startDialogNextStep, arg_13_0, 0.1)
 end
 
-function slot0._startDialogNextStep(slot0)
+function var_0_0._startDialogNextStep(arg_14_0)
 	UIBlockMgr.instance:endBlock("waitOpen")
-	slot0:_setDialogRt()
-	AergusiController.instance:dispatchEvent(AergusiEvent.OnStartDialogNextStep, slot0._stepCo)
-	slot0:_checkAutoOperate()
+	arg_14_0:_setDialogRt()
+	AergusiController.instance:dispatchEvent(AergusiEvent.OnStartDialogNextStep, arg_14_0._stepCo)
+	arg_14_0:_checkAutoOperate()
 end
 
-function slot0._setDialogRt(slot0)
-	slot0._contentHeight = slot0._contentHeight + slot0._dialogueItemList[#slot0._dialogueItemList]:getHeight() + AergusiEnum.IntervalY
+function var_0_0._setDialogRt(arg_15_0)
+	arg_15_0._contentHeight = arg_15_0._contentHeight + arg_15_0._dialogueItemList[#arg_15_0._dialogueItemList]:getHeight() + AergusiEnum.IntervalY
 
-	recthelper.setHeight(slot0._rectTrContent, Mathf.Max(slot0._contentHeight, slot0._contentMinHeight))
-	slot0:playUpAnimation()
+	recthelper.setHeight(arg_15_0._rectTrContent, Mathf.Max(arg_15_0._contentHeight, arg_15_0._contentMinHeight))
+	arg_15_0:playUpAnimation()
 end
 
-function slot0._checkAutoOperate(slot0)
-	if slot0._stepCo.condition ~= "" then
-		if string.splitToNumber(slot0._stepCo.condition, "#")[1] == AergusiEnum.OperationType.AutoBubble then
-			AergusiController.instance:dispatchEvent(AergusiEvent.OnStartAutoBubbleDialog, {
-				stepCo = slot0._stepCo
-			})
-		elseif slot1[1] == AergusiEnum.OperationType.GetClue then
-			Activity163Rpc.instance:sendAct163EvidenceOperationRequest(VersionActivity2_1Enum.ActivityId.Aergusi, slot0.viewParam.episodeId, AergusiEnum.OperationType.GetClue, string.format("%s", slot0._stepCo.stepId), slot0._onGetClueFinished, slot0)
+function var_0_0._checkAutoOperate(arg_16_0)
+	if arg_16_0._stepCo.condition ~= "" then
+		local var_16_0 = string.splitToNumber(arg_16_0._stepCo.condition, "#")
+
+		if var_16_0[1] == AergusiEnum.OperationType.AutoBubble then
+			local var_16_1 = {
+				stepCo = arg_16_0._stepCo
+			}
+
+			AergusiController.instance:dispatchEvent(AergusiEvent.OnStartAutoBubbleDialog, var_16_1)
+		elseif var_16_0[1] == AergusiEnum.OperationType.GetClue then
+			local var_16_2 = VersionActivity2_1Enum.ActivityId.Aergusi
+			local var_16_3 = arg_16_0.viewParam.episodeId
+			local var_16_4 = AergusiEnum.OperationType.GetClue
+			local var_16_5 = string.format("%s", arg_16_0._stepCo.stepId)
+
+			Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_16_2, var_16_3, var_16_4, var_16_5, arg_16_0._onGetClueFinished, arg_16_0)
 		end
 	end
 end
 
-function slot0._onGetClueFinished(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._onGetClueFinished(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_2 ~= 0 then
 		return
 	end
 
 	GameFacade.showToast(ToastEnum.Act163GetClueTip)
 end
 
-function slot0._setDialogGroupDone(slot0)
+function var_0_0._setDialogGroupDone(arg_18_0)
 	if not AergusiDialogModel.instance:getShowingGroupState() then
 		return
 	end
 
-	if AergusiConfig.instance:getEvidenceConfig(AergusiDialogModel.instance:getCurDialogGroup()).dialogGroupType == AergusiEnum.DialogGroupType.Normal then
-		slot0:_onShowingGroupFinished()
+	local var_18_0 = AergusiDialogModel.instance:getCurDialogGroup()
+
+	if AergusiConfig.instance:getEvidenceConfig(var_18_0).dialogGroupType == AergusiEnum.DialogGroupType.Normal then
+		arg_18_0:_onShowingGroupFinished()
 	else
-		AergusiController.instance:openAergusiDialogStartView(slot2, slot0._onShowingGroupFinished, slot0)
+		AergusiController.instance:openAergusiDialogStartView(var_18_0, arg_18_0._onShowingGroupFinished, arg_18_0)
 	end
 end
 
-function slot0._onShowingGroupFinished(slot0)
-	AergusiDialogModel.instance:setShowingGroup(AergusiConfig.instance:getEvidenceConfig(AergusiDialogModel.instance:getCurDialogGroup()).dialogGroupType == AergusiEnum.DialogGroupType.Normal)
-	AergusiController.instance:dispatchEvent(AergusiEvent.OnShowDialogGroupFinished, slot1)
+function var_0_0._onShowingGroupFinished(arg_19_0)
+	local var_19_0 = AergusiDialogModel.instance:getCurDialogGroup()
+	local var_19_1 = AergusiConfig.instance:getEvidenceConfig(var_19_0)
 
-	if AergusiConfig.instance:getEvidenceConfig(slot1).dialogGroupType == AergusiEnum.DialogGroupType.Interact then
-		slot4 = AergusiDialogModel.instance:getNextPromptOperate(false)
+	AergusiDialogModel.instance:setShowingGroup(var_19_1.dialogGroupType == AergusiEnum.DialogGroupType.Normal)
+	AergusiController.instance:dispatchEvent(AergusiEvent.OnShowDialogGroupFinished, var_19_0)
 
-		if string.splitToNumber(AergusiConfig.instance:getDialogConfig(slot4.groupId, slot4.stepId).condition, "#")[1] == AergusiEnum.OperationType.Refutation then
+	if AergusiConfig.instance:getEvidenceConfig(var_19_0).dialogGroupType == AergusiEnum.DialogGroupType.Interact then
+		local var_19_2 = AergusiDialogModel.instance:getNextPromptOperate(false)
+		local var_19_3 = AergusiConfig.instance:getDialogConfig(var_19_2.groupId, var_19_2.stepId)
+		local var_19_4 = string.splitToNumber(var_19_3.condition, "#")
+
+		if var_19_4[1] == AergusiEnum.OperationType.Refutation then
 			AergusiController.instance:dispatchEvent(AergusiEvent.OnGuideEnterInteractRefutation)
-		elseif slot6[1] == AergusiEnum.OperationType.Probe then
+		elseif var_19_4[1] == AergusiEnum.OperationType.Probe then
 			AergusiController.instance:dispatchEvent(AergusiEvent.OnGuideEnterInteractProbe)
 		end
 	end
 
-	if slot0._stepCo.condition ~= "" then
-		if string.splitToNumber(slot0._stepCo.condition, "#")[1] == AergusiEnum.OperationType.NextDialogs then
-			Activity163Rpc.instance:sendAct163EvidenceOperationRequest(VersionActivity2_1Enum.ActivityId.Aergusi, slot0.viewParam.episodeId, AergusiEnum.OperationType.NextDialogs, "", slot0._onNextDialogFinished, slot0)
-		elseif slot4[1] == AergusiEnum.OperationType.Submit then
-			slot0:_checkWaitGuide(slot4[3])
-		elseif slot4[1] == AergusiEnum.OperationType.EndEpisode then
+	if arg_19_0._stepCo.condition ~= "" then
+		local var_19_5 = string.splitToNumber(arg_19_0._stepCo.condition, "#")
+
+		if var_19_5[1] == AergusiEnum.OperationType.NextDialogs then
+			local var_19_6 = VersionActivity2_1Enum.ActivityId.Aergusi
+			local var_19_7 = arg_19_0.viewParam.episodeId
+			local var_19_8 = AergusiEnum.OperationType.NextDialogs
+			local var_19_9 = ""
+
+			Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_19_6, var_19_7, var_19_8, var_19_9, arg_19_0._onNextDialogFinished, arg_19_0)
+		elseif var_19_5[1] == AergusiEnum.OperationType.Submit then
+			arg_19_0:_checkWaitGuide(var_19_5[3])
+		elseif var_19_5[1] == AergusiEnum.OperationType.EndEpisode then
+			local var_19_10 = VersionActivity2_1Enum.ActivityId.Aergusi
+			local var_19_11 = arg_19_0.viewParam.episodeId
+			local var_19_12 = AergusiEnum.OperationType.EndEpisode
+			local var_19_13 = ""
+
 			UIBlockMgr.instance:startBlock("waitEndEpisode")
-			Activity163Rpc.instance:sendAct163EvidenceOperationRequest(VersionActivity2_1Enum.ActivityId.Aergusi, slot0.viewParam.episodeId, AergusiEnum.OperationType.EndEpisode, "", slot0._onEndEpisode, slot0)
+			Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_19_10, var_19_11, var_19_12, var_19_13, arg_19_0._onEndEpisode, arg_19_0)
 		end
 	end
 
-	if slot0._stepCo.id == AergusiModel.instance:getUnlockAutoTipProcess()[1] and slot0._stepCo.stepId == slot4[2] then
+	local var_19_14 = AergusiModel.instance:getUnlockAutoTipProcess()
+
+	if arg_19_0._stepCo.id == var_19_14[1] and arg_19_0._stepCo.stepId == var_19_14[2] then
 		AergusiDialogModel.instance:setUnlockAutoShow(false)
 	end
 end
 
-function slot0._checkWaitGuide(slot0, slot1)
-	slot0._groupId = slot1
+function var_0_0._checkWaitGuide(arg_20_0, arg_20_1)
+	arg_20_0._groupId = arg_20_1
 
-	if slot0._stepCo.id == AergusiEnum.FirstGroupId and slot0._stepCo.stepId == AergusiEnum.FirstGroupLastStepId and not GuideModel.instance:isGuideFinish(AergusiEnum.FirstDialogGuideId) and not GuideController.instance:isForbidGuides() then
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
+	if arg_20_0._stepCo.id == AergusiEnum.FirstGroupId and arg_20_0._stepCo.stepId == AergusiEnum.FirstGroupLastStepId and not GuideModel.instance:isGuideFinish(AergusiEnum.FirstDialogGuideId) and not GuideController.instance:isForbidGuides() then
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_20_0._onGuideFinish, arg_20_0)
 
 		return
 	end
 
-	slot0:_openClue()
+	arg_20_0:_openClue()
 end
 
-function slot0._onGuideFinish(slot0, slot1)
-	if slot1 ~= AergusiEnum.FirstDialogGuideId then
+function var_0_0._onGuideFinish(arg_21_0, arg_21_1)
+	if arg_21_1 ~= AergusiEnum.FirstDialogGuideId then
 		return
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, slot0._onGuideFinish, slot0)
-	slot0:_openClue()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_21_0._onGuideFinish, arg_21_0)
+	arg_21_0:_openClue()
 end
 
-function slot0._openClue(slot0)
-	AergusiController.instance:openAergusiClueView({
-		episodeId = slot0.viewParam.episodeId,
+function var_0_0._openClue(arg_22_0)
+	local var_22_0 = {
+		episodeId = arg_22_0.viewParam.episodeId,
 		type = AergusiEnum.OperationType.Submit,
-		groupId = slot0._groupId,
-		stepId = slot0._stepCo.stepId,
-		couldPrompt = true,
-		callback = slot0._onSubmitEvidenceFinished,
-		callbackObj = slot0
-	})
+		groupId = arg_22_0._groupId,
+		stepId = arg_22_0._stepCo.stepId
+	}
+
+	var_22_0.couldPrompt = true
+	var_22_0.callback = arg_22_0._onSubmitEvidenceFinished
+	var_22_0.callbackObj = arg_22_0
+
+	AergusiController.instance:openAergusiClueView(var_22_0)
 end
 
-function slot0._onEndEpisode(slot0, slot1, slot2)
+function var_0_0._onEndEpisode(arg_23_0, arg_23_1, arg_23_2)
 	UIBlockMgr.instance:endBlock("waitEndEpisode")
 
-	for slot8, slot9 in pairs(AergusiModel.instance.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, true)) do
-		table.insert({}, slot9.clueName)
+	local var_23_0 = {}
+	local var_23_1 = AergusiModel.instance.instance:getEpisodeClueConfigs(arg_23_0.viewParam.episodeId, true)
+
+	for iter_23_0, iter_23_1 in pairs(var_23_1) do
+		table.insert(var_23_0, iter_23_1.clueName)
 	end
 
-	if slot2 ~= 0 then
+	if arg_23_2 ~= 0 then
 		StatController.instance:track(StatEnum.EventName.ExitArgusActivity, {
-			[StatEnum.EventProperties.EpisodeId] = tostring(slot0.viewParam.episodeId),
+			[StatEnum.EventProperties.EpisodeId] = tostring(arg_23_0.viewParam.episodeId),
 			[StatEnum.EventProperties.Result] = "Abort",
-			[StatEnum.EventProperties.UseTime] = ServerTime.now() - slot0._startServerTime,
+			[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_23_0._startServerTime,
 			[StatEnum.EventProperties.GoalNum] = AergusiDialogModel.instance:getFinishedTargetGroupCount(),
 			[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-			[StatEnum.EventProperties.HoldClueName] = slot3
+			[StatEnum.EventProperties.HoldClueName] = var_23_0
 		})
-		slot0:closeThis()
+		arg_23_0:closeThis()
 
 		return
 	end
 
 	StatController.instance:track(StatEnum.EventName.ExitArgusActivity, {
-		[StatEnum.EventProperties.EpisodeId] = tostring(slot0.viewParam.episodeId),
+		[StatEnum.EventProperties.EpisodeId] = tostring(arg_23_0.viewParam.episodeId),
 		[StatEnum.EventProperties.Result] = "Success",
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - slot0._startServerTime,
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_23_0._startServerTime,
 		[StatEnum.EventProperties.GoalNum] = AergusiDialogModel.instance:getFinishedTargetGroupCount() + 1,
 		[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-		[StatEnum.EventProperties.HoldClueName] = slot3
+		[StatEnum.EventProperties.HoldClueName] = var_23_0
 	})
-	AergusiController.instance:openAergusiDialogEndView(slot0.viewParam.episodeId, slot0._realClose, slot0)
+	AergusiController.instance:openAergusiDialogEndView(arg_23_0.viewParam.episodeId, arg_23_0._realClose, arg_23_0)
 end
 
-function slot0._realClose(slot0)
-	if slot0.viewParam and slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj)
+function var_0_0._realClose(arg_24_0)
+	if arg_24_0.viewParam and arg_24_0.viewParam.callback then
+		arg_24_0.viewParam.callback(arg_24_0.viewParam.callbackObj)
 	end
 
-	TaskDispatcher.runDelay(slot0._waitStoryPlay, slot0, 1)
+	TaskDispatcher.runDelay(arg_24_0._waitStoryPlay, arg_24_0, 1)
 end
 
-function slot0._waitStoryPlay(slot0)
-	slot0:closeThis()
+function var_0_0._waitStoryPlay(arg_25_0)
+	arg_25_0:closeThis()
 end
 
-function slot0._onNextDialogFinished(slot0, slot1, slot2)
-	if slot2 ~= 0 then
-		slot0:closeThis()
+function var_0_0._onNextDialogFinished(arg_26_0, arg_26_1, arg_26_2)
+	if arg_26_2 ~= 0 then
+		arg_26_0:closeThis()
 
 		return
 	end
 
-	slot0:_playGroup(string.splitToNumber(slot0._stepCo.condition, "#")[2])
+	local var_26_0 = string.splitToNumber(arg_26_0._stepCo.condition, "#")
+
+	arg_26_0:_playGroup(var_26_0[2])
 end
 
-function slot0._onSubmitEvidenceFinished(slot0, slot1)
-	if slot1 == -1 then
+function var_0_0._onSubmitEvidenceFinished(arg_27_0, arg_27_1)
+	if arg_27_1 == -1 then
 		AergusiDialogModel.instance:setShowingGroup(true)
 
 		return
 	end
 
-	if not slot1 or slot1 == 0 then
+	if not arg_27_1 or arg_27_1 == 0 then
 		AergusiDialogModel.instance:setShowingGroup(true)
 
-		slot2, slot3 = AergusiDialogModel.instance:getCurDialogProcess()
+		local var_27_0, var_27_1 = AergusiDialogModel.instance:getCurDialogProcess()
+		local var_27_2 = AergusiConfig.instance:getDialogConfig(var_27_0, var_27_1)
+		local var_27_3 = AergusiEnum.OperationType.Submit
 
-		AergusiController.instance:dispatchEvent(AergusiEvent.EvidenceError, AergusiConfig.instance:getDialogConfig(slot2, slot3), AergusiEnum.OperationType.Submit)
+		AergusiController.instance:dispatchEvent(AergusiEvent.EvidenceError, var_27_2, var_27_3)
 
 		return
 	end
 
-	slot0:_playGroup(slot1)
+	arg_27_0:_playGroup(arg_27_1)
 end
 
-function slot0._popNextStep(slot0)
-	if #slot0.stepCoList <= 0 then
+function var_0_0._popNextStep(arg_28_0)
+	local var_28_0 = #arg_28_0.stepCoList
+
+	if var_28_0 <= 0 then
 		return
 	end
 
-	slot0.stepCoList[slot1] = nil
+	local var_28_1 = arg_28_0.stepCoList[var_28_0]
 
-	return slot0.stepCoList[slot1]
+	arg_28_0.stepCoList[var_28_0] = nil
+
+	return var_28_1
 end
 
-function slot0.playUpAnimation(slot0)
-	if slot0._contentHeight <= slot0._contentMinHeight then
+function var_0_0.playUpAnimation(arg_29_0)
+	if arg_29_0._contentHeight <= arg_29_0._contentMinHeight then
 		return
 	end
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_29_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_29_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_29_0._tweenId = nil
 	end
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot0._scrollcontent.verticalNormalizedPosition, 0, 0.5, slot0._frameUpdate, slot0._frameFinished, slot0)
+	arg_29_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_29_0._scrollcontent.verticalNormalizedPosition, 0, 0.5, arg_29_0._frameUpdate, arg_29_0._frameFinished, arg_29_0)
 end
 
-function slot0._frameUpdate(slot0, slot1)
-	slot0._scrollcontent.verticalNormalizedPosition = slot1
+function var_0_0._frameUpdate(arg_30_0, arg_30_1)
+	arg_30_0._scrollcontent.verticalNormalizedPosition = arg_30_1
 end
 
-function slot0._frameFinished(slot0)
-	gohelper.setActive(slot0._goArrow, false)
+function var_0_0._frameFinished(arg_31_0)
+	gohelper.setActive(arg_31_0._goArrow, false)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_32_0)
+	return
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnRefuteStartGroup, slot0._OnRefuteStartGroup, slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogAskSuccess, slot0._onDialogAskSuccess, slot0)
-	slot0:addEventCb(AergusiController.instance, AergusiEvent.OnClickEpisodeClueBtn, slot0._onEpisodeClueBtnClick, slot0)
+function var_0_0._addEvents(arg_33_0)
+	arg_33_0:addEventCb(AergusiController.instance, AergusiEvent.OnRefuteStartGroup, arg_33_0._OnRefuteStartGroup, arg_33_0)
+	arg_33_0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogAskSuccess, arg_33_0._onDialogAskSuccess, arg_33_0)
+	arg_33_0:addEventCb(AergusiController.instance, AergusiEvent.OnClickEpisodeClueBtn, arg_33_0._onEpisodeClueBtnClick, arg_33_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnRefuteStartGroup, slot0._OnRefuteStartGroup, slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogAskSuccess, slot0._onDialogAskSuccess, slot0)
-	slot0:removeEventCb(AergusiController.instance, AergusiEvent.OnClickEpisodeClueBtn, slot0._onEpisodeClueBtnClick, slot0)
+function var_0_0._removeEvents(arg_34_0)
+	arg_34_0:removeEventCb(AergusiController.instance, AergusiEvent.OnRefuteStartGroup, arg_34_0._OnRefuteStartGroup, arg_34_0)
+	arg_34_0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogAskSuccess, arg_34_0._onDialogAskSuccess, arg_34_0)
+	arg_34_0:removeEventCb(AergusiController.instance, AergusiEvent.OnClickEpisodeClueBtn, arg_34_0._onEpisodeClueBtnClick, arg_34_0)
 end
 
-function slot0._OnRefuteStartGroup(slot0, slot1)
-	slot0:_playGroup(slot1)
+function var_0_0._OnRefuteStartGroup(arg_35_0, arg_35_1)
+	arg_35_0:_playGroup(arg_35_1)
 end
 
-function slot0._onDialogAskSuccess(slot0, slot1)
-	slot0:_playGroup(string.splitToNumber(slot1.condition, "#")[2], slot1)
+function var_0_0._onDialogAskSuccess(arg_36_0, arg_36_1)
+	local var_36_0 = string.splitToNumber(arg_36_1.condition, "#")
+
+	arg_36_0:_playGroup(var_36_0[2], arg_36_1)
 end
 
-function slot0._onEpisodeClueBtnClick(slot0)
-	slot0:_setDialogGroupDone()
+function var_0_0._onEpisodeClueBtnClick(arg_37_0)
+	arg_37_0:_setDialogGroupDone()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_38_0)
 	UIBlockMgr.instance:endBlock("waitOpen")
-	TaskDispatcher.cancelTask(slot0._startInitGroup, slot0)
-	TaskDispatcher.cancelTask(slot0._waitStoryPlay, slot0)
-	slot0:_removeEvents()
+	TaskDispatcher.cancelTask(arg_38_0._startInitGroup, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._waitStoryPlay, arg_38_0)
+	arg_38_0:_removeEvents()
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_38_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_38_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_38_0._tweenId = nil
 	end
 
-	for slot4, slot5 in ipairs(slot0._dialogueItemList) do
-		slot5:destroy()
+	for iter_38_0, iter_38_1 in ipairs(arg_38_0._dialogueItemList) do
+		iter_38_1:destroy()
 	end
 end
 
-return slot0
+return var_0_0

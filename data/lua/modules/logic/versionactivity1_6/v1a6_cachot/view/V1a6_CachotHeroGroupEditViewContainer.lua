@@ -1,116 +1,125 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupEditViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupEditViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotHeroGroupEditViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotHeroGroupEditViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = V1a6_CachotHeroGroupEditItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 200
-	slot1.cellHeight = 440
-	slot1.cellSpaceH = 12
-	slot1.cellSpaceV = 10
-	slot1.startSpace = 37
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	for slot6 = 1, 15 do
+	var_1_0.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = V1a6_CachotHeroGroupEditItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 5
+	var_1_0.cellWidth = 200
+	var_1_0.cellHeight = 440
+	var_1_0.cellSpaceH = 12
+	var_1_0.cellSpaceV = 10
+	var_1_0.startSpace = 37
+
+	local var_1_1 = {}
+
+	for iter_1_0 = 1, 15 do
+		var_1_1[iter_1_0] = math.ceil((iter_1_0 - 1) % 5) * 0.03
 	end
 
 	return {
 		V1a6_CachotHeroGroupEditView.New(),
-		LuaListScrollViewWithAnimator.New(V1a6_CachotHeroGroupEditListModel.instance, slot1, {
-			[slot6] = math.ceil((slot6 - 1) % 5) * 0.03
-		}),
-		slot0:getQuickEditScroll(),
+		LuaListScrollViewWithAnimator.New(V1a6_CachotHeroGroupEditListModel.instance, var_1_0, var_1_1),
+		arg_1_0:getQuickEditScroll(),
 		CommonRainEffectView.New("bg/#go_raincontainer"),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.getQuickEditScroll(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#go_rolecontainer/#scroll_quickedit"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[2]
-	slot1.cellClass = V1a6_CachotHeroGroupEditItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 5
-	slot1.cellWidth = 200
-	slot1.cellHeight = 440
-	slot1.cellSpaceH = 12
-	slot1.cellSpaceV = 10
-	slot1.startSpace = 37
+function var_0_0.getQuickEditScroll(arg_2_0)
+	local var_2_0 = ListScrollParam.New()
 
-	for slot6 = 1, 15 do
+	var_2_0.scrollGOPath = "#go_rolecontainer/#scroll_quickedit"
+	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[2]
+	var_2_0.cellClass = V1a6_CachotHeroGroupEditItem
+	var_2_0.scrollDir = ScrollEnum.ScrollDirV
+	var_2_0.lineCount = 5
+	var_2_0.cellWidth = 200
+	var_2_0.cellHeight = 440
+	var_2_0.cellSpaceH = 12
+	var_2_0.cellSpaceV = 10
+	var_2_0.startSpace = 37
+
+	local var_2_1 = {}
+
+	for iter_2_0 = 1, 15 do
+		var_2_1[iter_2_0] = math.ceil((iter_2_0 - 1) % 5) * 0.03
 	end
 
-	return LuaListScrollViewWithAnimator.New(HeroGroupQuickEditListModel.instance, slot1, {
-		[slot6] = math.ceil((slot6 - 1) % 5) * 0.03
-	})
+	return LuaListScrollViewWithAnimator.New(HeroGroupQuickEditListModel.instance, var_2_0, var_2_1)
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	arg_3_0._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
 	}, HelpEnum.HelpId.Cachot1_6HeroGroupHelp)
 
-	slot0._navigateButtonView:setOverrideClose(slot0._overrideClose, slot0)
+	arg_3_0._navigateButtonView:setOverrideClose(arg_3_0._overrideClose, arg_3_0)
 
 	return {
-		slot0._navigateButtonView
+		arg_3_0._navigateButtonView
 	}
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.HeroGroupUI.Play_UI_Team_Close)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.HeroGroupUI.Play_UI_Team_Close)
 	FightAudioMgr.instance:init()
 end
 
-function slot0.onContainerOpen(slot0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnModifyHeroGroup, slot0._modifyHeroGroup, slot0)
+function var_0_0.onContainerOpen(arg_5_0)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnModifyHeroGroup, arg_5_0._modifyHeroGroup, arg_5_0)
 end
 
-function slot0._modifyHeroGroup(slot0)
-	if slot0.viewParam.selectHeroFromEvent then
-		if not HeroModel.instance:getById(tostring(V1a6_CachotHeroSingleGroupModel.instance:getList()[1].heroUid)) then
+function var_0_0._modifyHeroGroup(arg_6_0)
+	if arg_6_0.viewParam.selectHeroFromEvent then
+		local var_6_0 = V1a6_CachotHeroSingleGroupModel.instance:getList()[1].heroUid
+		local var_6_1 = HeroModel.instance:getById(tostring(var_6_0))
+
+		if not var_6_1 then
 			return
 		end
 
-		RogueRpc.instance:sendRogueEventSelectRequest(V1a6_CachotEnum.ActivityId, slot0.viewParam.eventMo.eventId, slot4.heroId, slot0._onSelectEnd, slot0)
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.SelectHero, slot4)
+		RogueRpc.instance:sendRogueEventSelectRequest(V1a6_CachotEnum.ActivityId, arg_6_0.viewParam.eventMo.eventId, var_6_1.heroId, arg_6_0._onSelectEnd, arg_6_0)
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.SelectHero, var_6_1)
 	end
 end
 
-function slot0._onSelectEnd(slot0)
+function var_0_0._onSelectEnd(arg_7_0)
 	ViewMgr.instance:closeView(ViewName.V1a6_CachotHeroGroupEditView, nil, true)
 end
 
-function slot0.onContainerClose(slot0)
-	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnModifyHeroGroup, slot0._modifyHeroGroup, slot0)
+function var_0_0.onContainerClose(arg_8_0)
+	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnModifyHeroGroup, arg_8_0._modifyHeroGroup, arg_8_0)
 end
 
-function slot0._checkClose(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6CachotMsgBox04, MsgBoxEnum.BoxType.Yes_No, function ()
-		uv0:_sendEndEventRequest()
-	end)
+function var_0_0._checkClose(arg_9_0)
+	local function var_9_0()
+		arg_9_0:_sendEndEventRequest()
+	end
+
+	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6CachotMsgBox04, MsgBoxEnum.BoxType.Yes_No, var_9_0)
 end
 
-function slot0._sendEndEventRequest(slot0)
-	RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, slot0.viewParam.eventMo.eventId, slot0._closeHeroGroupEditView, slot0)
+function var_0_0._sendEndEventRequest(arg_11_0)
+	RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, arg_11_0.viewParam.eventMo.eventId, arg_11_0._closeHeroGroupEditView, arg_11_0)
 end
 
-function slot0._closeHeroGroupEditView(slot0)
+function var_0_0._closeHeroGroupEditView(arg_12_0)
 	ViewMgr.instance:closeView(ViewName.V1a6_CachotHeroGroupEditView, nil, true)
 end
 
-function slot0._overrideClose(slot0)
-	if slot0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
-		slot0:_checkClose()
+function var_0_0._overrideClose(arg_13_0)
+	if arg_13_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+		arg_13_0:_checkClose()
 
 		return
 	end
@@ -122,12 +131,12 @@ function slot0._overrideClose(slot0)
 	end
 end
 
-function slot0._setHomeBtnVisible(slot0, slot1)
-	slot0._navigateButtonView:setParam({
+function var_0_0._setHomeBtnVisible(arg_14_0, arg_14_1)
+	arg_14_0._navigateButtonView:setParam({
 		true,
-		slot1,
+		arg_14_1,
 		true
 	})
 end
 
-return slot0
+return var_0_0

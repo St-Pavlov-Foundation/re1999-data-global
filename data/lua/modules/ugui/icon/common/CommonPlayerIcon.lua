@@ -1,159 +1,173 @@
-module("modules.ugui.icon.common.CommonPlayerIcon", package.seeall)
+﻿module("modules.ugui.icon.common.CommonPlayerIcon", package.seeall)
 
-slot0 = class("CommonPlayerIcon", ListScrollCell)
+local var_0_0 = class("CommonPlayerIcon", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.tr = slot1.transform
-	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.go, "bg/#simage_headicon")
-	slot0._goframenode = gohelper.findChild(slot0.go, "bg/#simage_headicon/#go_framenode")
-	slot0._golevel = gohelper.findChild(slot0.go, "#go_level")
-	slot0._imgLevelbg = gohelper.findChildImage(slot0.go, "#go_level")
-	slot0._txtlevel = gohelper.findChildText(slot0.go, "#go_level/#txt_level")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.go, "#btn_click")
-	slot0._loader = MultiAbLoader.New()
-	slot0._enableClick = true
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.tr = arg_1_1.transform
+	arg_1_0._simageheadicon = gohelper.findChildSingleImage(arg_1_0.go, "bg/#simage_headicon")
+	arg_1_0._goframenode = gohelper.findChild(arg_1_0.go, "bg/#simage_headicon/#go_framenode")
+	arg_1_0._golevel = gohelper.findChild(arg_1_0.go, "#go_level")
+	arg_1_0._imgLevelbg = gohelper.findChildImage(arg_1_0.go, "#go_level")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.go, "#go_level/#txt_level")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_click")
+	arg_1_0._loader = MultiAbLoader.New()
+	arg_1_0._enableClick = true
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._onClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0.setEnableClick(slot0, slot1)
-	slot0._enableClick = slot1
+function var_0_0.setEnableClick(arg_4_0, arg_4_1)
+	arg_4_0._enableClick = arg_4_1
 end
 
-function slot0.isSelectInFriend(slot0, slot1)
-	slot0._isSelectInFriend = slot1
+function var_0_0.isSelectInFriend(arg_5_0, arg_5_1)
+	arg_5_0._isSelectInFriend = arg_5_1
 end
 
-function slot0.setPlayerIconGray(slot0, slot1)
-	slot0._liveHeadIcon:setGray(slot1)
+function var_0_0.setPlayerIconGray(arg_6_0, arg_6_1)
+	arg_6_0._liveHeadIcon:setGray(arg_6_1)
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.tr, slot1, slot1, slot1)
+function var_0_0.setScale(arg_7_0, arg_7_1)
+	transformhelper.setLocalScale(arg_7_0.tr, arg_7_1, arg_7_1, arg_7_1)
 end
 
-function slot0.setPos(slot0, slot1, slot2, slot3)
-	if not slot0[slot1] then
+function var_0_0.setPos(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_0[arg_8_1] then
 		return
 	end
 
-	recthelper.setAnchor(slot0[slot1].transform, slot2, slot3)
+	recthelper.setAnchor(arg_8_0[arg_8_1].transform, arg_8_2, arg_8_3)
 end
 
-function slot0._onClick(slot0)
-	if not slot0._enableClick then
+function var_0_0._onClick(arg_9_0)
+	if not arg_9_0._enableClick then
 		return
 	end
 
-	if slot0._isSelectInFriend then
-		-- Nothing
+	local var_9_0 = arg_9_0._simageheadicon.transform.position
+	local var_9_1 = {
+		mo = arg_9_0._mo,
+		worldPos = var_9_0
+	}
+
+	if arg_9_0._isSelectInFriend then
+		var_9_1.isSelectInFriend = arg_9_0._isSelectInFriend
 	end
 
-	ViewMgr.instance:openView(ViewName.PlayerInfoView, {
-		mo = slot0._mo,
-		worldPos = slot0._simageheadicon.transform.position,
-		isSelectInFriend = slot0._isSelectInFriend
-	})
+	ViewMgr.instance:openView(ViewName.PlayerInfoView, var_9_1)
 end
 
-function slot0._refreshUI(slot0)
-	slot0._txtlevel.text = "Lv." .. slot0._mo.level
+function var_0_0._refreshUI(arg_10_0)
+	arg_10_0._txtlevel.text = "Lv." .. arg_10_0._mo.level
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageheadicon)
+	if not arg_10_0._liveHeadIcon then
+		arg_10_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_10_0._simageheadicon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot0._mo.portrait)
+	arg_10_0._liveHeadIcon:setLiveHead(arg_10_0._mo.portrait)
 
-	if slot0._mo.userId == PlayerModel.instance:getMyUserId() then
-		slot0:addEventCb(PlayerController.instance, PlayerEvent.ChangePlayerinfo, slot0._changePlayerinfo, slot0)
+	local var_10_0 = PlayerModel.instance:getMyUserId()
+
+	if arg_10_0._mo.userId == var_10_0 then
+		arg_10_0:addEventCb(PlayerController.instance, PlayerEvent.ChangePlayerinfo, arg_10_0._changePlayerinfo, arg_10_0)
 	else
-		slot0:removeEventCb(PlayerController.instance, PlayerEvent.ChangePlayerinfo, slot0._changePlayerinfo, slot0)
+		arg_10_0:removeEventCb(PlayerController.instance, PlayerEvent.ChangePlayerinfo, arg_10_0._changePlayerinfo, arg_10_0)
 	end
 end
 
-function slot0._onLoadCallback(slot0)
-	slot0.isloading = false
+function var_0_0._onLoadCallback(arg_11_0)
+	arg_11_0.isloading = false
 
-	gohelper.clone(slot0._loader:getFirstAssetItem():GetResource(), slot0._goframenode, "frame")
+	local var_11_0 = arg_11_0._loader:getFirstAssetItem():GetResource()
 
-	slot0.frame = gohelper.findChild(slot0._goframenode, "frame")
-	slot0.frame:GetComponent(gohelper.Type_Image).enabled = false
-	slot5 = 1.41 * recthelper.getWidth(slot0._simageheadicon.transform) / recthelper.getWidth(slot0.frame.transform)
+	gohelper.clone(var_11_0, arg_11_0._goframenode, "frame")
 
-	transformhelper.setLocalScale(slot0.frame.transform, slot5, slot5, 1)
+	arg_11_0.frame = gohelper.findChild(arg_11_0._goframenode, "frame")
+	arg_11_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+
+	local var_11_1 = 1.41 * (recthelper.getWidth(arg_11_0._simageheadicon.transform) / recthelper.getWidth(arg_11_0.frame.transform))
+
+	transformhelper.setLocalScale(arg_11_0.frame.transform, var_11_1, var_11_1, 1)
 end
 
-function slot0._changePlayerinfo(slot0)
-	slot0._mo = SocialModel.instance:getPlayerMO(slot0._mo.userId)
+function var_0_0._changePlayerinfo(arg_12_0)
+	arg_12_0._mo = SocialModel.instance:getPlayerMO(arg_12_0._mo.userId)
 
-	slot0:_refreshUI()
+	arg_12_0:_refreshUI()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
+	arg_13_0._mo = arg_13_1
 
-	slot0:_refreshUI()
-	slot0:refreshFrame()
+	arg_13_0:_refreshUI()
+	arg_13_0:refreshFrame()
 end
 
-function slot0.refreshFrame(slot0)
-	if #string.split(lua_item.configDict[slot0._mo.portrait].effect, "#") > 1 then
-		if slot1.id == tonumber(slot2[#slot2]) then
-			gohelper.setActive(slot0._goframenode, true)
+function var_0_0.refreshFrame(arg_14_0)
+	local var_14_0 = lua_item.configDict[arg_14_0._mo.portrait]
+	local var_14_1 = string.split(var_14_0.effect, "#")
 
-			if not slot0.frame and not slot0.isloading then
-				slot0.isloading = true
+	if #var_14_1 > 1 then
+		if var_14_0.id == tonumber(var_14_1[#var_14_1]) then
+			gohelper.setActive(arg_14_0._goframenode, true)
 
-				slot0._loader:addPath("ui/viewres/common/effect/frame.prefab")
-				slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+			if not arg_14_0.frame and not arg_14_0.isloading then
+				arg_14_0.isloading = true
+
+				local var_14_2 = "ui/viewres/common/effect/frame.prefab"
+
+				arg_14_0._loader:addPath(var_14_2)
+				arg_14_0._loader:startLoad(arg_14_0._onLoadCallback, arg_14_0)
 			end
 		end
 	else
-		gohelper.setActive(slot0._goframenode, false)
+		gohelper.setActive(arg_14_0._goframenode, false)
 	end
 end
 
-function slot0.setMOValue(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0._mo = SocialPlayerMO.New()
+function var_0_0.setMOValue(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
+	local var_15_0 = {
+		userId = arg_15_1,
+		name = arg_15_2,
+		level = arg_15_3,
+		portrait = arg_15_4,
+		time = arg_15_5,
+		bg = arg_15_6
+	}
 
-	slot0._mo:init({
-		userId = slot1,
-		name = slot2,
-		level = slot3,
-		portrait = slot4,
-		time = slot5,
-		bg = slot6
-	})
-	slot0:_refreshUI()
-	slot0:setShowLevel(true)
+	arg_15_0._mo = SocialPlayerMO.New()
+
+	arg_15_0._mo:init(var_15_0)
+	arg_15_0:_refreshUI()
+	arg_15_0:setShowLevel(true)
 end
 
-function slot0.setShowLevel(slot0, slot1)
-	gohelper.setActive(slot0._golevel, slot1)
+function var_0_0.setShowLevel(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._golevel, arg_16_1)
 end
 
-function slot0.getLevelBg(slot0)
-	return slot0._imgLevelbg
+function var_0_0.getLevelBg(arg_17_0)
+	return arg_17_0._imgLevelbg
 end
 
-function slot0.onDestroy(slot0)
-	slot0._simageheadicon:UnLoadImage()
+function var_0_0.onDestroy(arg_18_0)
+	arg_18_0._simageheadicon:UnLoadImage()
 
-	slot0._simageheadicon = nil
+	arg_18_0._simageheadicon = nil
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_18_0._loader then
+		arg_18_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_18_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

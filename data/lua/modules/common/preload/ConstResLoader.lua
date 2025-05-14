@@ -1,82 +1,83 @@
-module("modules.common.preload.ConstResLoader", package.seeall)
+﻿module("modules.common.preload.ConstResLoader", package.seeall)
 
-slot0 = class("ConstResLoader")
+local var_0_0 = class("ConstResLoader")
 
-function slot0.ctor(slot0)
-	slot0._loadFuncList = {
-		slot0._initLive2d,
-		slot0._loadConstAb,
-		slot0._loadIconPrefab,
-		slot0._loadAvProPrefab,
-		slot0._loadUIBlockAnim,
-		slot0._loadLoadingUIBg
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._loadFuncList = {
+		arg_1_0._initLive2d,
+		arg_1_0._loadConstAb,
+		arg_1_0._loadIconPrefab,
+		arg_1_0._loadAvProPrefab,
+		arg_1_0._loadUIBlockAnim,
+		arg_1_0._loadLoadingUIBg
 	}
-	slot0._loadIndex = nil
-	slot0._finishCb = nil
-	slot0._finishCbObj = nil
+	arg_1_0._loadIndex = nil
+	arg_1_0._finishCb = nil
+	arg_1_0._finishCbObj = nil
 end
 
-function slot0.startLoad(slot0, slot1, slot2)
-	slot0._loadIndex = 0
-	slot0._finishCb = slot1
-	slot0._finishCbObj = slot2
+function var_0_0.startLoad(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._loadIndex = 0
+	arg_2_0._finishCb = arg_2_1
+	arg_2_0._finishCbObj = arg_2_2
 
-	slot0:_loadShader()
+	arg_2_0:_loadShader()
 end
 
-function slot0._loadShader(slot0)
-	ShaderCache.instance:init(slot0._onShaderLoadFinish, slot0)
+function var_0_0._loadShader(arg_3_0)
+	ShaderCache.instance:init(arg_3_0._onShaderLoadFinish, arg_3_0)
 end
 
-function slot0._onShaderLoadFinish(slot0)
+function var_0_0._onShaderLoadFinish(arg_4_0)
 	BootLoadingView.instance:show(0.6, booterLang("loading_res"))
-	slot0:_startLoadOthers()
+	arg_4_0:_startLoadOthers()
 end
 
-function slot0._startLoadOthers(slot0)
-	for slot4, slot5 in ipairs(slot0._loadFuncList) do
-		slot5(slot0)
+function var_0_0._startLoadOthers(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._loadFuncList) do
+		iter_5_1(arg_5_0)
 
-		slot0._loadIndex = slot0._loadIndex + 1
+		arg_5_0._loadIndex = arg_5_0._loadIndex + 1
 	end
 end
 
-function slot0._onLoadFinish(slot0)
-	slot1 = #slot0._loadFuncList
+function var_0_0._onLoadFinish(arg_6_0)
+	local var_6_0 = #arg_6_0._loadFuncList
+	local var_6_1 = 0.25 * (var_6_0 - arg_6_0._loadIndex) / var_6_0
 
-	BootLoadingView.instance:show(0.6 + 0.25 * (slot1 - slot0._loadIndex) / slot1, booterLang("loading_res"))
+	BootLoadingView.instance:show(0.6 + var_6_1, booterLang("loading_res"))
 
-	slot0._loadIndex = slot0._loadIndex - 1
+	arg_6_0._loadIndex = arg_6_0._loadIndex - 1
 
-	if slot0._loadIndex == 0 then
-		slot0._finishCb(slot0._finishCbObj)
+	if arg_6_0._loadIndex == 0 then
+		arg_6_0._finishCb(arg_6_0._finishCbObj)
 	end
 end
 
-function slot0._initLive2d(slot0)
+function var_0_0._initLive2d(arg_7_0)
 	if GameResMgr.IsFromEditorDir then
-		slot0:_onLoadFinish()
+		arg_7_0:_onLoadFinish()
 	else
-		ZProj.Live2dHelper.Init(slot0._onLoadFinish, slot0)
+		ZProj.Live2dHelper.Init(arg_7_0._onLoadFinish, arg_7_0)
 	end
 end
 
-function slot0._loadConstAb(slot0)
-	ConstAbCache.instance:startLoad(slot0._onLoadFinish, slot0)
+function var_0_0._loadConstAb(arg_8_0)
+	ConstAbCache.instance:startLoad(arg_8_0._onLoadFinish, arg_8_0)
 end
 
-function slot0._loadIconPrefab(slot0)
-	IconMgr.instance:preload(slot0._onLoadFinish, slot0)
+function var_0_0._loadIconPrefab(arg_9_0)
+	IconMgr.instance:preload(arg_9_0._onLoadFinish, arg_9_0)
 end
 
-function slot0._loadAvProPrefab(slot0)
-	AvProMgr.instance:preload(slot0._onLoadFinish, slot0)
+function var_0_0._loadAvProPrefab(arg_10_0)
+	AvProMgr.instance:preload(arg_10_0._onLoadFinish, arg_10_0)
 end
 
-function slot0._loadUIBlockAnim(slot0)
-	UIBlockMgrExtend.preload(slot0._onLoadFinish, slot0)
+function var_0_0._loadUIBlockAnim(arg_11_0)
+	UIBlockMgrExtend.preload(arg_11_0._onLoadFinish, arg_11_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

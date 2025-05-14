@@ -1,18 +1,18 @@
-module("modules.logic.room.model.layout.RoomLayoutBgResMO", package.seeall)
+﻿module("modules.logic.room.model.layout.RoomLayoutBgResMO", package.seeall)
 
-slot0 = pureTable("RoomLayoutBgResMO")
+local var_0_0 = pureTable("RoomLayoutBgResMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1
-	slot0.config = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_1
+	arg_1_0.config = arg_1_2
 end
 
-function slot0.getName(slot0)
-	return slot0.config and slot0.config.name
+function var_0_0.getName(arg_2_0)
+	return arg_2_0.config and arg_2_0.config.name
 end
 
-function slot0.getResPath(slot0)
-	return slot0.config and slot0.config.coverResPath
+function var_0_0.getResPath(arg_3_0)
+	return arg_3_0.config and arg_3_0.config.coverResPath
 end
 
-return slot0
+return var_0_0

@@ -1,113 +1,118 @@
-module("modules.logic.rouge.map.model.mapmodel.RougePathSelectMapModel", package.seeall)
+﻿module("modules.logic.rouge.map.model.mapmodel.RougePathSelectMapModel", package.seeall)
 
-slot0 = class("RougePathSelectMapModel")
+local var_0_0 = class("RougePathSelectMapModel")
 
-function slot0.initMap(slot0, slot1)
-	slot0.layerId = slot1.layerId
-	slot0.layerCo = lua_rouge_layer.configDict[slot0.layerId]
-	slot0.middleLayerId = slot1.middleLayerId
-	slot0.middleLayerCo = lua_rouge_middle_layer.configDict[slot0.middleLayerId]
+function var_0_0.initMap(arg_1_0, arg_1_1)
+	arg_1_0.layerId = arg_1_1.layerId
+	arg_1_0.layerCo = lua_rouge_layer.configDict[arg_1_0.layerId]
+	arg_1_0.middleLayerId = arg_1_1.middleLayerId
+	arg_1_0.middleLayerCo = lua_rouge_middle_layer.configDict[arg_1_0.middleLayerId]
 
-	slot0:initPieceInfo(slot1.pieceInfo)
-	slot0:initNextLayerList()
-	slot0:initPathSelectCo()
+	arg_1_0:initPieceInfo(arg_1_1.pieceInfo)
+	arg_1_0:initNextLayerList()
+	arg_1_0:initPathSelectCo()
 end
 
-function slot0.initPieceInfo(slot0, slot1)
-	slot0.pieceDict = {}
-	slot0.pieceList = {}
+function var_0_0.initPieceInfo(arg_2_0, arg_2_1)
+	arg_2_0.pieceDict = {}
+	arg_2_0.pieceList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RougePieceInfoMO.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_0 = RougePieceInfoMO.New()
 
-		slot7:init(slot6)
+		var_2_0:init(iter_2_1)
 
-		slot0.pieceDict[slot7.index] = slot7
+		arg_2_0.pieceDict[var_2_0.index] = var_2_0
 
-		table.insert(slot0.pieceList, slot7)
+		table.insert(arg_2_0.pieceList, var_2_0)
 	end
 end
 
-function slot0.initPathSelectCo(slot0)
-	if #RougeMapConfig.instance:getPathSelectList(slot0.middleLayerId) == 1 then
-		slot0.pathSelectId = slot1[1]
-		slot0.pathSelectCo = lua_rouge_path_select.configDict[slot0.pathSelectId]
+function var_0_0.initPathSelectCo(arg_3_0)
+	local var_3_0 = RougeMapConfig.instance:getPathSelectList(arg_3_0.middleLayerId)
+
+	if #var_3_0 == 1 then
+		arg_3_0.pathSelectId = var_3_0[1]
+		arg_3_0.pathSelectCo = lua_rouge_path_select.configDict[arg_3_0.pathSelectId]
 
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0.allLayerList) do
-		if slot0.selectLayerId == slot6 then
-			slot0.pathSelectId = slot1[slot5]
-			slot0.pathSelectCo = lua_rouge_path_select.configDict[slot0.pathSelectId]
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.allLayerList) do
+		if arg_3_0.selectLayerId == iter_3_1 then
+			arg_3_0.pathSelectId = var_3_0[iter_3_0]
+			arg_3_0.pathSelectCo = lua_rouge_path_select.configDict[arg_3_0.pathSelectId]
 
 			return
 		end
 	end
 
-	logError("路线选择层 一个可以选择的路线都没找到, 间隙层id : " .. tostring(slot0.middleLayerId))
+	logError("路线选择层 一个可以选择的路线都没找到, 间隙层id : " .. tostring(arg_3_0.middleLayerId))
 end
 
-function slot0.updateMapInfo(slot0, slot1)
+function var_0_0.updateMapInfo(arg_4_0, arg_4_1)
+	return
 end
 
-function slot0.updateSimpleMapInfo(slot0, slot1)
-	slot0:updateMapInfo(slot1)
+function var_0_0.updateSimpleMapInfo(arg_5_0, arg_5_1)
+	arg_5_0:updateMapInfo(arg_5_1)
 end
 
-function slot0.initNextLayerList(slot0)
-	if not RougeMapConfig.instance:getNextLayerList(slot0.middleLayerId) then
-		slot0.nextLayerList = nil
-		slot0.selectLayerId = nil
+function var_0_0.initNextLayerList(arg_6_0)
+	local var_6_0 = RougeMapConfig.instance:getNextLayerList(arg_6_0.middleLayerId)
+
+	if not var_6_0 then
+		arg_6_0.nextLayerList = nil
+		arg_6_0.selectLayerId = nil
 
 		return
 	end
 
-	slot0.nextLayerList = {}
-	slot0.allLayerList = {}
+	arg_6_0.nextLayerList = {}
+	arg_6_0.allLayerList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = lua_rouge_layer.configDict[slot6]
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = lua_rouge_layer.configDict[iter_6_1]
 
-		if RougeMapUnlockHelper.checkIsUnlock(slot7.unlockType, slot7.unlockParam) then
-			slot0.selectLayerId = slot6
+		if RougeMapUnlockHelper.checkIsUnlock(var_6_1.unlockType, var_6_1.unlockParam) then
+			arg_6_0.selectLayerId = iter_6_1
 
-			table.insert(slot0.nextLayerList, slot6)
+			table.insert(arg_6_0.nextLayerList, iter_6_1)
 		end
 
-		table.insert(slot0.allLayerList, slot6)
+		table.insert(arg_6_0.allLayerList, iter_6_1)
 	end
 end
 
-function slot0.updateSelectLayerId(slot0, slot1)
-	if slot0.selectLayerId == slot1 then
+function var_0_0.updateSelectLayerId(arg_7_0, arg_7_1)
+	if arg_7_0.selectLayerId == arg_7_1 then
 		return
 	end
 
-	slot0.selectLayerId = slot1
+	arg_7_0.selectLayerId = arg_7_1
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectLayerChange, slot0.selectLayerId)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectLayerChange, arg_7_0.selectLayerId)
 end
 
-function slot0.getSelectLayerId(slot0)
-	return slot0.selectLayerId
+function var_0_0.getSelectLayerId(arg_8_0)
+	return arg_8_0.selectLayerId
 end
 
-function slot0.getPieceList(slot0)
-	return slot0.pieceList
+function var_0_0.getPieceList(arg_9_0)
+	return arg_9_0.pieceList
 end
 
-function slot0.getNextLayerList(slot0)
-	return slot0.nextLayerList
+function var_0_0.getNextLayerList(arg_10_0)
+	return arg_10_0.nextLayerList
 end
 
-function slot0.clear(slot0)
-	slot0.layerId = nil
-	slot0.layerCo = nil
-	slot0.middleLayerId = nil
-	slot0.middleCo = nil
-	slot0.pieceDict = nil
-	slot0.pieceList = nil
+function var_0_0.clear(arg_11_0)
+	arg_11_0.layerId = nil
+	arg_11_0.layerCo = nil
+	arg_11_0.middleLayerId = nil
+	arg_11_0.middleCo = nil
+	arg_11_0.pieceDict = nil
+	arg_11_0.pieceList = nil
 end
 
-return slot0
+return var_0_0

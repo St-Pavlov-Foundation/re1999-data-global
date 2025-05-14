@@ -1,107 +1,121 @@
-module("modules.logic.summon.view.component.SummonFreeSingleGacha", package.seeall)
+﻿module("modules.logic.summon.view.component.SummonFreeSingleGacha", package.seeall)
 
-slot0 = class("SummonFreeSingleGacha", UserDataDispose)
+local var_0_0 = class("SummonFreeSingleGacha", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._btnSummonGO = slot1
-	slot0._btnSummonGroupGO = nil
-	slot0._summonId = slot2
-	slot0._canShowFree = SummonConfig.instance:canShowSingleFree(slot0._summonId)
+	arg_1_0._btnSummonGO = arg_1_1
+	arg_1_0._btnSummonGroupGO = nil
+	arg_1_0._summonId = arg_1_2
+	arg_1_0._canShowFree = SummonConfig.instance:canShowSingleFree(arg_1_0._summonId)
 
-	if not gohelper.isNil(slot0._btnSummonGO) and slot0._canShowFree and not gohelper.isNil(slot0._btnSummonGO.transform.parent) and not gohelper.isNil(slot3.parent) then
-		slot0._btnSummonGroupGO = slot3.gameObject
+	if not gohelper.isNil(arg_1_0._btnSummonGO) and arg_1_0._canShowFree then
+		local var_1_0 = arg_1_0._btnSummonGO.transform.parent
 
-		gohelper.setActive(slot0._btnSummonGroupGO, false)
+		if not gohelper.isNil(var_1_0) and not gohelper.isNil(var_1_0.parent) then
+			arg_1_0._btnSummonGroupGO = var_1_0.gameObject
 
-		slot0._prefabLoader = PrefabInstantiate.Create(slot3.parent.gameObject)
+			local var_1_1 = var_1_0.parent.gameObject
 
-		slot0._prefabLoader:startLoad(ResUrl.getSummonFreeButton(), slot0.handleInstanceLoaded, slot0)
+			gohelper.setActive(arg_1_0._btnSummonGroupGO, false)
+
+			arg_1_0._prefabLoader = PrefabInstantiate.Create(var_1_1)
+
+			arg_1_0._prefabLoader:startLoad(ResUrl.getSummonFreeButton(), arg_1_0.handleInstanceLoaded, arg_1_0)
+		end
 	end
 end
 
-function slot0.dispose(slot0)
-	logNormal("SummonFreeSingleGacha dispose : " .. tostring(slot0._summonId))
+function var_0_0.dispose(arg_2_0)
+	logNormal("SummonFreeSingleGacha dispose : " .. tostring(arg_2_0._summonId))
 
-	if slot0._prefabLoader then
-		slot0._prefabLoader:onDestroy()
+	if arg_2_0._prefabLoader then
+		arg_2_0._prefabLoader:onDestroy()
 	end
 
-	if slot0._btnFreeSummon then
-		slot0._btnFreeSummon:RemoveClickListener()
+	if arg_2_0._btnFreeSummon then
+		arg_2_0._btnFreeSummon:RemoveClickListener()
 	end
 
-	slot0:__onDispose()
+	arg_2_0:__onDispose()
 end
 
-function slot0.handleInstanceLoaded(slot0)
-	if slot0._prefabLoader and slot0._summonId then
-		slot0._btnFreeSummonGO = slot0._prefabLoader:getInstGO()
+function var_0_0.handleInstanceLoaded(arg_3_0)
+	if arg_3_0._prefabLoader and arg_3_0._summonId then
+		arg_3_0._btnFreeSummonGO = arg_3_0._prefabLoader:getInstGO()
 
-		slot0._btnFreeSummonGO.transform:SetSiblingIndex(slot0._btnSummonGroupGO.transform:GetSiblingIndex() + 1)
-		slot0:initButton()
-		slot0:refreshUI()
-	end
-end
+		local var_3_0 = arg_3_0._btnSummonGroupGO.transform:GetSiblingIndex()
 
-function slot0.initButton(slot0)
-	if slot0._btnFreeSummonGO then
-		slot1, slot2 = recthelper.getAnchor(slot0._btnSummonGroupGO.transform)
-
-		recthelper.setAnchor(slot0._btnFreeSummonGO.transform, slot1, slot2)
-
-		slot0._gobtn = gohelper.findChild(slot0._btnFreeSummonGO, "#go_btn")
-		slot0._gobanner = gohelper.findChild(slot0._btnFreeSummonGO, "#go_banner")
-		slot0._txtbanner = gohelper.findChildText(slot0._btnFreeSummonGO, "#go_banner/#txt_banner")
-		slot0._btnFreeSummon = gohelper.findChildButton(slot0._btnFreeSummonGO, "#go_btn/#btn_summonfree")
-
-		slot0._btnFreeSummon:AddClickListener(slot0.onClickSummon, slot0)
-		slot0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, slot0.refreshOpenTime, slot0)
+		arg_3_0._btnFreeSummonGO.transform:SetSiblingIndex(var_3_0 + 1)
+		arg_3_0:initButton()
+		arg_3_0:refreshUI()
 	end
 end
 
-function slot0.onClickSummon(slot0)
-	if slot0._summonId then
+function var_0_0.initButton(arg_4_0)
+	if arg_4_0._btnFreeSummonGO then
+		local var_4_0, var_4_1 = recthelper.getAnchor(arg_4_0._btnSummonGroupGO.transform)
+
+		recthelper.setAnchor(arg_4_0._btnFreeSummonGO.transform, var_4_0, var_4_1)
+
+		arg_4_0._gobtn = gohelper.findChild(arg_4_0._btnFreeSummonGO, "#go_btn")
+		arg_4_0._gobanner = gohelper.findChild(arg_4_0._btnFreeSummonGO, "#go_banner")
+		arg_4_0._txtbanner = gohelper.findChildText(arg_4_0._btnFreeSummonGO, "#go_banner/#txt_banner")
+		arg_4_0._btnFreeSummon = gohelper.findChildButton(arg_4_0._btnFreeSummonGO, "#go_btn/#btn_summonfree")
+
+		arg_4_0._btnFreeSummon:AddClickListener(arg_4_0.onClickSummon, arg_4_0)
+		arg_4_0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_4_0.refreshOpenTime, arg_4_0)
+	end
+end
+
+function var_0_0.onClickSummon(arg_5_0)
+	if arg_5_0._summonId then
 		logNormal("SummonFreeSingleGacha send summon 1")
-		SummonMainController.instance:sendStartSummon(slot0._summonId, 1, false, true)
+		SummonMainController.instance:sendStartSummon(arg_5_0._summonId, 1, false, true)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	if slot0._summonId and not gohelper.isNil(slot0._btnFreeSummonGO) and not gohelper.isNil(slot0._btnSummonGroupGO) then
-		if SummonMainModel.instance:getPoolServerMO(slot0._summonId).haveFree then
-			slot0._needCountDown = false
+function var_0_0.refreshUI(arg_6_0)
+	if arg_6_0._summonId and not gohelper.isNil(arg_6_0._btnFreeSummonGO) and not gohelper.isNil(arg_6_0._btnSummonGroupGO) then
+		local var_6_0 = SummonMainModel.instance:getPoolServerMO(arg_6_0._summonId)
 
-			gohelper.setActive(slot0._btnFreeSummonGO, true)
-			gohelper.setActive(slot0._btnSummonGroupGO, false)
-			gohelper.setActive(slot0._gobtn, true)
+		if var_6_0.haveFree then
+			arg_6_0._needCountDown = false
 
-			slot0._txtbanner.text = luaLang("summon_timelimit_free")
+			gohelper.setActive(arg_6_0._btnFreeSummonGO, true)
+			gohelper.setActive(arg_6_0._btnSummonGroupGO, false)
+			gohelper.setActive(arg_6_0._gobtn, true)
+
+			arg_6_0._txtbanner.text = luaLang("summon_timelimit_free")
 		else
-			gohelper.setActive(slot0._gobtn, false)
-			gohelper.setActive(slot0._btnSummonGroupGO, true)
+			gohelper.setActive(arg_6_0._gobtn, false)
+			gohelper.setActive(arg_6_0._btnSummonGroupGO, true)
 
-			if SummonConfig.instance:getSummonPool(slot0._summonId) and slot1.usedFreeCount < slot2.totalFreeCount then
-				slot0._needCountDown = true
+			local var_6_1 = SummonConfig.instance:getSummonPool(arg_6_0._summonId)
 
-				gohelper.setActive(slot0._btnFreeSummonGO, true)
+			if var_6_1 and var_6_0.usedFreeCount < var_6_1.totalFreeCount then
+				arg_6_0._needCountDown = true
+
+				gohelper.setActive(arg_6_0._btnFreeSummonGO, true)
 			else
-				slot0._needCountDown = false
+				arg_6_0._needCountDown = false
 
-				gohelper.setActive(slot0._btnFreeSummonGO, false)
+				gohelper.setActive(arg_6_0._btnFreeSummonGO, false)
 			end
 		end
 	end
 
-	slot0:refreshOpenTime()
+	arg_6_0:refreshOpenTime()
 end
 
-function slot0.refreshOpenTime(slot0)
-	if slot0._needCountDown then
-		slot2, slot3 = TimeUtil.secondToRoughTime2(ServerTime.getToadyEndTimeStamp(true) - ServerTime.nowInLocal())
-		slot0._txtbanner.text = string.format(luaLang("summon_free_after_time"), tostring(slot2) .. tostring(slot3))
+function var_0_0.refreshOpenTime(arg_7_0)
+	if arg_7_0._needCountDown then
+		local var_7_0 = ServerTime.getToadyEndTimeStamp(true) - ServerTime.nowInLocal()
+		local var_7_1, var_7_2 = TimeUtil.secondToRoughTime2(var_7_0)
+
+		arg_7_0._txtbanner.text = string.format(luaLang("summon_free_after_time"), tostring(var_7_1) .. tostring(var_7_2))
 	end
 end
 
-return slot0
+return var_0_0

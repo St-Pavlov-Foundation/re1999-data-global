@@ -1,163 +1,187 @@
-module("modules.logic.versionactivity1_9.fairyland.view.FairyLandScene", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandScene", package.seeall)
 
-slot0 = class("FairyLandScene", BaseView)
+local var_0_0 = class("FairyLandScene", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.seasonCameraLocalPos = Vector3(0, 0, -3.9)
-	slot0.seasonCameraOrthographicSize = 5
-	slot0.focusCameraOrthographicSize = 2
-	slot0.focusTime = 0.45
-	slot0.cancelFocusTime = 0.45
-	slot0.goRoot = gohelper.findChild(slot0.viewGO, "main/#go_Root")
-	slot0.rootTrs = slot0.goRoot.transform
-	slot0.stopUpdatePos = false
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.seasonCameraLocalPos = Vector3(0, 0, -3.9)
+	arg_1_0.seasonCameraOrthographicSize = 5
+	arg_1_0.focusCameraOrthographicSize = 2
+	arg_1_0.focusTime = 0.45
+	arg_1_0.cancelFocusTime = 0.45
+	arg_1_0.goRoot = gohelper.findChild(arg_1_0.viewGO, "main/#go_Root")
+	arg_1_0.rootTrs = arg_1_0.goRoot.transform
+	arg_1_0.stopUpdatePos = false
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FairyLandController.instance, FairyLandEvent.SetSceneUpdatePos, slot0.onSetSceneUpdatePos, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.SetSceneUpdatePos, arg_2_0.onSetSceneUpdatePos, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._camera = CameraMgr.instance:getMainCamera()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._camera = CameraMgr.instance:getMainCamera()
 
-	slot0:_initSceneRootNode()
+	arg_4_0:_initSceneRootNode()
 end
 
-function slot0.initCamera(slot0)
-	transformhelper.setLocalPos(slot0._camera.transform, 0, 0, -10)
+function var_0_0.initCamera(arg_5_0)
+	transformhelper.setLocalPos(arg_5_0._camera.transform, 0, 0, -10)
 
-	slot0._camera.orthographic = true
-	slot0._camera.orthographicSize = 6.5
+	arg_5_0._camera.orthographic = true
+	arg_5_0._camera.orthographicSize = 6.5
 end
 
-function slot0._initSceneRootNode(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("FairyLandScene")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(slot0._camera.transform.parent)
+function var_0_0._initSceneRootNode(arg_6_0)
+	local var_6_0 = arg_6_0._camera.transform.parent
+	local var_6_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
-	slot0:setSceneVisible(slot0.isVisible or true)
+	arg_6_0._sceneRoot = UnityEngine.GameObject.New("FairyLandScene")
+
+	local var_6_2, var_6_3, var_6_4 = transformhelper.getLocalPos(var_6_0)
+
+	transformhelper.setLocalPos(arg_6_0._sceneRoot.transform, 0, var_6_3, 0)
+	gohelper.addChild(var_6_1, arg_6_0._sceneRoot)
+	arg_6_0:setSceneVisible(arg_6_0.isVisible or true)
 end
 
-function slot0._loadScene(slot0)
-	if slot0._sceneGo then
+function var_0_0._loadScene(arg_7_0)
+	if arg_7_0._sceneGo then
 		return
 	end
 
-	slot0._sceneGo = slot0.viewContainer:getResInst(slot0.viewContainer:getSetting().otherRes.scene, slot0._sceneRoot)
-	slot0._rootGo = gohelper.findChild(slot0._sceneGo, "root")
-	slot0._bgRoot = gohelper.findChild(slot0._sceneGo, "root/BackGround").transform
-	slot0._bgGo = gohelper.findChild(slot0._sceneGo, "root/BackGround/m_s08_hddt_background")
-	slot6 = slot0._bgGo:GetComponent(typeof(UnityEngine.MeshRenderer)).bounds:GetSize()
-	slot0.bgX = slot6.x
-	slot0.bgY = slot6.y
+	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes.scene
 
-	gohelper.setActive(slot0._bgGo, false)
-	slot0:_loadSceneFinish()
+	arg_7_0._sceneGo = arg_7_0.viewContainer:getResInst(var_7_0, arg_7_0._sceneRoot)
+	arg_7_0._rootGo = gohelper.findChild(arg_7_0._sceneGo, "root")
+	arg_7_0._bgRoot = gohelper.findChild(arg_7_0._sceneGo, "root/BackGround").transform
+	arg_7_0._bgGo = gohelper.findChild(arg_7_0._sceneGo, "root/BackGround/m_s08_hddt_background")
+
+	local var_7_1 = arg_7_0._bgGo:GetComponent(typeof(UnityEngine.MeshRenderer)).bounds:GetSize()
+
+	arg_7_0.bgX = var_7_1.x
+	arg_7_0.bgY = var_7_1.y
+
+	gohelper.setActive(arg_7_0._bgGo, false)
+	arg_7_0:_loadSceneFinish()
 end
 
-function slot0._loadSceneFinish(slot0)
-	LateUpdateBeat:Add(slot0._forceUpdatePos, slot0)
-	slot0:updateNineBg()
-	MainCameraMgr.instance:addView(ViewName.FairyLandView, slot0.autoInitMainViewCamera, nil, slot0)
-	FairyLandModel.instance:setPos(FairyLandModel.instance:caleCurStairPos())
+function var_0_0._loadSceneFinish(arg_8_0)
+	LateUpdateBeat:Add(arg_8_0._forceUpdatePos, arg_8_0)
+	arg_8_0:updateNineBg()
+	MainCameraMgr.instance:addView(ViewName.FairyLandView, arg_8_0.autoInitMainViewCamera, nil, arg_8_0)
+
+	local var_8_0 = FairyLandModel.instance:caleCurStairPos()
+
+	FairyLandModel.instance:setPos(var_8_0)
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.SceneLoadFinish)
 end
 
-function slot0.autoInitMainViewCamera(slot0)
-	slot0:initCamera()
+function var_0_0.autoInitMainViewCamera(arg_9_0)
+	arg_9_0:initCamera()
 end
 
-function slot0.onSetSceneUpdatePos(slot0, slot1)
-	slot0.stopUpdatePos = slot1
+function var_0_0.onSetSceneUpdatePos(arg_10_0, arg_10_1)
+	arg_10_0.stopUpdatePos = arg_10_1
 end
 
-function slot0.onOpen(slot0)
-	slot0:_loadScene()
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0:_loadScene()
 end
 
-function slot0._forceUpdatePos(slot0)
-	if slot0.stopUpdatePos then
+function var_0_0._forceUpdatePos(arg_12_0)
+	if arg_12_0.stopUpdatePos then
 		return
 	end
 
-	slot0:updateBgRootPos()
+	arg_12_0:updateBgRootPos()
 end
 
-function slot0.updateBgRootPos(slot0)
-	slot1 = recthelper.uiPosToScreenPos(slot0.rootTrs)
+function var_0_0.updateBgRootPos(arg_13_0)
+	local var_13_0 = recthelper.uiPosToScreenPos(arg_13_0.rootTrs)
 
-	if slot0.lastScreenPosX and math.abs(slot0.lastScreenPosX - slot1.x) < 0.1 then
+	if arg_13_0.lastScreenPosX and math.abs(arg_13_0.lastScreenPosX - var_13_0.x) < 0.1 then
 		return
 	end
 
-	slot0.lastScreenPosX = slot1.x
-	slot2, slot3 = recthelper.screenPosToWorldPos3(slot1, nil, slot0._rootGo.transform.position)
+	arg_13_0.lastScreenPosX = var_13_0.x
 
-	transformhelper.setLocalPos(slot0._bgRoot, slot2 % slot0.bgX - 2, slot3 % slot0.bgY, 0)
+	local var_13_1, var_13_2 = recthelper.screenPosToWorldPos3(var_13_0, nil, arg_13_0._rootGo.transform.position)
+	local var_13_3 = var_13_1 % arg_13_0.bgX
+	local var_13_4 = var_13_2 % arg_13_0.bgY
+
+	transformhelper.setLocalPos(arg_13_0._bgRoot, var_13_3 - 2, var_13_4, 0)
 end
 
-function slot0.updateNineBg(slot0)
-	if not slot0.bgList then
-		slot0.bgList = {}
+function var_0_0.updateNineBg(arg_14_0)
+	if not arg_14_0.bgList then
+		arg_14_0.bgList = {}
 	end
 
-	for slot4 = 0, 8 do
-		slot0:setBgPos(slot4)
+	for iter_14_0 = 0, 8 do
+		arg_14_0:setBgPos(iter_14_0)
 	end
 end
 
-function slot0.caleBgPos(slot0, slot1)
-	return (slot1 % 3 - 1) * slot0.bgX, (math.floor(slot1 / 3) - 1) * slot0.bgY
+function var_0_0.caleBgPos(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1 % 3
+	local var_15_1 = math.floor(arg_15_1 / 3)
+	local var_15_2 = (var_15_0 - 1) * arg_15_0.bgX
+	local var_15_3 = (var_15_1 - 1) * arg_15_0.bgY
+
+	return var_15_2, var_15_3
 end
 
-function slot0.setBgPos(slot0, slot1)
-	slot2, slot3 = slot0:caleBgPos(slot1)
+function var_0_0.setBgPos(arg_16_0, arg_16_1)
+	local var_16_0, var_16_1 = arg_16_0:caleBgPos(arg_16_1)
+	local var_16_2 = arg_16_0:getBg(arg_16_1)
 
-	transformhelper.setLocalPosXY(slot0:getBg(slot1), slot2, slot3)
+	transformhelper.setLocalPosXY(var_16_2, var_16_0, var_16_1)
 end
 
-function slot0.getBg(slot0, slot1)
-	if not slot0.bgList[slot1] then
-		slot3 = gohelper.clone(slot0._bgGo, slot0._bgRoot.gameObject, tostring(slot1))
+function var_0_0.getBg(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0.bgList[arg_17_1]
 
-		gohelper.setActive(slot3, true)
+	if not var_17_0 then
+		local var_17_1 = gohelper.clone(arg_17_0._bgGo, arg_17_0._bgRoot.gameObject, tostring(arg_17_1))
 
-		slot0.bgList[slot1] = slot3.transform
+		gohelper.setActive(var_17_1, true)
+
+		var_17_0 = var_17_1.transform
+		arg_17_0.bgList[arg_17_1] = var_17_0
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.onClose(slot0)
-	LateUpdateBeat:Remove(slot0._forceUpdatePos, slot0)
+function var_0_0.onClose(arg_18_0)
+	LateUpdateBeat:Remove(arg_18_0._forceUpdatePos, arg_18_0)
 end
 
-function slot0.setSceneVisible(slot0, slot1)
-	if slot1 == slot0.isVisible then
+function var_0_0.setSceneVisible(arg_19_0, arg_19_1)
+	if arg_19_1 == arg_19_0.isVisible then
 		return
 	end
 
-	slot0.isVisible = slot1
+	arg_19_0.isVisible = arg_19_1
 
-	gohelper.setActive(slot0._sceneRoot, slot1 and true or false)
+	gohelper.setActive(arg_19_0._sceneRoot, arg_19_1 and true or false)
 end
 
-function slot0.onDestroyView(slot0)
-	gohelper.destroy(slot0._sceneRoot)
+function var_0_0.onDestroyView(arg_20_0)
+	gohelper.destroy(arg_20_0._sceneRoot)
 
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if arg_20_0._mapLoader then
+		arg_20_0._mapLoader:dispose()
 
-		slot0._mapLoader = nil
+		arg_20_0._mapLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

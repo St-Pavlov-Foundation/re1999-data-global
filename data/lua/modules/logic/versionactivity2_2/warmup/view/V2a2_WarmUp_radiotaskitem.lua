@@ -1,107 +1,116 @@
-module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUp_radiotaskitem", package.seeall)
+﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUp_radiotaskitem", package.seeall)
 
-slot0 = class("V2a2_WarmUp_radiotaskitem", RougeSimpleItemBase)
+local var_0_0 = class("V2a2_WarmUp_radiotaskitem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "#go_reddot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_reddot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	var_0_0.super.ctor(arg_4_0, arg_4_1)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
 
-	slot0._txtDateUnSelected = gohelper.findChildText(slot0.viewGO, "txt_DateUnSelected")
-	slot0._goDateSelected = gohelper.findChild(slot0.viewGO, "image_Selected")
-	slot0._txtDateSelected = gohelper.findChildText(slot0.viewGO, "image_Selected/txt_DateSelected")
-	slot0._finishEffectGo = gohelper.findChild(slot0.viewGO, "image_Selected/Wave_effect2")
-	slot0._imagewave = gohelper.findChildImage(slot0.viewGO, "image_Selected/image_wave")
-	slot0._goDateLocked = gohelper.findChild(slot0.viewGO, "image_Locked")
-	slot0._goRed = gohelper.findChild(slot0.viewGO, "#go_reddot")
-	slot0._click = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_click")
-	slot0._txtDateUnSelectedGo = slot0._txtDateUnSelected.gameObject
+	arg_5_0._txtDateUnSelected = gohelper.findChildText(arg_5_0.viewGO, "txt_DateUnSelected")
+	arg_5_0._goDateSelected = gohelper.findChild(arg_5_0.viewGO, "image_Selected")
+	arg_5_0._txtDateSelected = gohelper.findChildText(arg_5_0.viewGO, "image_Selected/txt_DateSelected")
+	arg_5_0._finishEffectGo = gohelper.findChild(arg_5_0.viewGO, "image_Selected/Wave_effect2")
+	arg_5_0._imagewave = gohelper.findChildImage(arg_5_0.viewGO, "image_Selected/image_wave")
+	arg_5_0._goDateLocked = gohelper.findChild(arg_5_0.viewGO, "image_Locked")
+	arg_5_0._goRed = gohelper.findChild(arg_5_0.viewGO, "#go_reddot")
+	arg_5_0._click = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "btn_click")
+	arg_5_0._txtDateUnSelectedGo = arg_5_0._txtDateUnSelected.gameObject
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	arg_6_0._click:AddClickListener(arg_6_0._onClick, arg_6_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_7_0)
+	arg_7_0._click:RemoveClickListener()
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goDateSelected, slot1)
-	gohelper.setActive(slot0._txtDateUnSelectedGo, not slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0._goDateSelected, arg_8_1)
+	gohelper.setActive(arg_8_0._txtDateUnSelectedGo, not arg_8_1)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	var_0_0.super.onDestroyView(arg_9_0)
 end
 
-function slot0._getEpisodeConfig(slot0, slot1)
-	return slot0:_assetGetViewContainer():getEpisodeConfig(slot1)
+function var_0_0._getEpisodeConfig(arg_10_0, arg_10_1)
+	return arg_10_0:_assetGetViewContainer():getEpisodeConfig(arg_10_1)
 end
 
-function slot0._getRLOC(slot0, slot1)
-	return slot0:_assetGetViewContainer():getRLOC(slot1)
+function var_0_0._getRLOC(arg_11_0, arg_11_1)
+	return arg_11_0:_assetGetViewContainer():getRLOC(arg_11_1)
 end
 
-function slot0._isEpisodeDayOpen(slot0, slot1)
-	return slot0:_assetGetViewContainer():isEpisodeDayOpen(slot1)
+function var_0_0._isEpisodeDayOpen(arg_12_0, arg_12_1)
+	return arg_12_0:_assetGetViewContainer():isEpisodeDayOpen(arg_12_1)
 end
 
-function slot0._isEpisodeUnLock(slot0, slot1)
-	return slot0:_assetGetViewContainer():isEpisodeUnLock(slot1)
+function var_0_0._isEpisodeUnLock(arg_13_0, arg_13_1)
+	return arg_13_0:_assetGetViewContainer():isEpisodeUnLock(arg_13_1)
 end
 
-function slot0._isEpisodeReallyOpen(slot0, slot1)
-	return slot0:_assetGetViewContainer():isEpisodeReallyOpen(slot1)
+function var_0_0._isEpisodeReallyOpen(arg_14_0, arg_14_1)
+	return arg_14_0:_assetGetViewContainer():isEpisodeReallyOpen(arg_14_1)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot1
-	slot8 = "Day." .. tostring(slot0:_getEpisodeConfig(slot2).openDay)
-	slot0._txtDateUnSelected.text = slot8
-	slot0._txtDateSelected.text = slot8
+function var_0_0.setData(arg_15_0, arg_15_1)
+	arg_15_0._mo = arg_15_1
 
-	gohelper.setActive(slot0._goDateLocked, slot5)
-	gohelper.setActive(slot0._goRed, not not slot0:_isEpisodeReallyOpen(slot2) and not slot0:_getRLOC(slot2))
+	local var_15_0 = arg_15_1
+	local var_15_1 = arg_15_0:_getEpisodeConfig(var_15_0).openDay
+	local var_15_2 = not arg_15_0:_isEpisodeReallyOpen(var_15_0)
+	local var_15_3 = arg_15_0:_getRLOC(var_15_0)
+	local var_15_4 = not var_15_2 and not var_15_3
+	local var_15_5 = "Day." .. tostring(var_15_1)
+
+	arg_15_0._txtDateUnSelected.text = var_15_5
+	arg_15_0._txtDateSelected.text = var_15_5
+
+	gohelper.setActive(arg_15_0._goDateLocked, var_15_2)
+	gohelper.setActive(arg_15_0._goRed, var_15_4)
 end
 
-function slot0._onClick(slot0)
-	slot1 = slot0:_assetGetParent()
+function var_0_0._onClick(arg_16_0)
+	local var_16_0 = arg_16_0:_assetGetParent()
 
-	if not slot0:_checkIfOpenAndToast() then
+	if not arg_16_0:_checkIfOpenAndToast() then
 		return
 	end
 
-	slot1:onClickTab(slot0._mo)
+	var_16_0:onClickTab(arg_16_0._mo)
 end
 
-function slot0._checkIfOpenAndToast(slot0)
-	slot3, slot4 = slot0:_isEpisodeDayOpen(slot0._mo)
+function var_0_0._checkIfOpenAndToast(arg_17_0)
+	local var_17_0 = arg_17_0._mo
+	local var_17_1, var_17_2 = arg_17_0:_isEpisodeDayOpen(var_17_0)
 
-	if not slot3 then
-		GameFacade.showToast(ToastEnum.V2a0WarmupEpisodeNotOpen, slot4)
+	if not var_17_1 then
+		GameFacade.showToast(ToastEnum.V2a0WarmupEpisodeNotOpen, var_17_2)
 
 		return false
 	end
 
-	if not slot0:_isEpisodeUnLock(slot2) then
+	if not arg_17_0:_isEpisodeUnLock(var_17_0) then
 		GameFacade.showToast(ToastEnum.V2a0WarmupEpisodeLock)
 
 		return false
@@ -110,4 +119,4 @@ function slot0._checkIfOpenAndToast(slot0)
 	return true
 end
 
-return slot0
+return var_0_0

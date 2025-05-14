@@ -1,87 +1,91 @@
-module("modules.logic.mainsceneswitch.view.MainSceneSwitchInfoDisplayView", package.seeall)
+﻿module("modules.logic.mainsceneswitch.view.MainSceneSwitchInfoDisplayView", package.seeall)
 
-slot0 = class("MainSceneSwitchInfoDisplayView", BaseView)
+local var_0_0 = class("MainSceneSwitchInfoDisplayView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobg1 = gohelper.findChild(slot0.viewGO, "#go_bg1")
-	slot0._gobg2 = gohelper.findChild(slot0.viewGO, "#go_bg2")
-	slot0._simageFullBG1 = gohelper.findChildSingleImage(slot0._gobg1, "img")
-	slot0._simageFullBG2 = gohelper.findChildSingleImage(slot0._gobg2, "img")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobg1 = gohelper.findChild(arg_1_0.viewGO, "#go_bg1")
+	arg_1_0._gobg2 = gohelper.findChild(arg_1_0.viewGO, "#go_bg2")
+	arg_1_0._simageFullBG1 = gohelper.findChildSingleImage(arg_1_0._gobg1, "img")
+	arg_1_0._simageFullBG2 = gohelper.findChildSingleImage(arg_1_0._gobg2, "img")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._weatherRoot = gohelper.findChild(slot0.viewGO, "left/#go_weatherRoot")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._weatherRoot = gohelper.findChild(arg_4_0.viewGO, "left/#go_weatherRoot")
 
-	gohelper.setActive(slot0._weatherRoot, false)
+	gohelper.setActive(arg_4_0._weatherRoot, false)
 
-	slot0._rawImage = gohelper.onceAddComponent(gohelper.findChild(slot0.viewGO, "RawImage"), gohelper.Type_RawImage)
+	arg_4_0._rawImage = gohelper.onceAddComponent(gohelper.findChild(arg_4_0.viewGO, "RawImage"), gohelper.Type_RawImage)
 
-	gohelper.setActive(slot0._rawImage, false)
+	gohelper.setActive(arg_4_0._rawImage, false)
 	MainSceneSwitchCameraController.instance:clear()
-	slot0:_clearPage()
-	slot0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ShowPreviewSceneInfo, slot0._onShowSceneInfo, slot0)
+	arg_4_0:_clearPage()
+	arg_4_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ShowPreviewSceneInfo, arg_4_0._onShowSceneInfo, arg_4_0)
 end
 
-function slot0._onShowSceneInfo(slot0, slot1)
-	slot0:_hideMainScene()
+function var_0_0._onShowSceneInfo(arg_5_0, arg_5_1)
+	arg_5_0:_hideMainScene()
 
-	slot0._sceneId = slot1
+	arg_5_0._sceneId = arg_5_1
 
-	MainSceneSwitchCameraController.instance:showScene(slot1, slot0._showSceneFinished, slot0)
+	MainSceneSwitchCameraController.instance:showScene(arg_5_1, arg_5_0._showSceneFinished, arg_5_0)
 end
 
-function slot0.adjustRt(slot0, slot1)
-	slot0.texture = slot1
+function var_0_0.adjustRt(arg_6_0, arg_6_1)
+	arg_6_0.texture = arg_6_1
 
-	slot0:SetNativeSize()
+	arg_6_0:SetNativeSize()
 
-	slot5 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform) / slot1.width
+	local var_6_0 = arg_6_1.width
+	local var_6_1 = ViewMgr.instance:getUIRoot().transform
+	local var_6_2 = recthelper.getWidth(var_6_1) / var_6_0
 
-	transformhelper.setLocalScale(slot0.transform, slot5, slot5, 1)
+	transformhelper.setLocalScale(arg_6_0.transform, var_6_2, var_6_2, 1)
 end
 
-function slot0._showSceneFinished(slot0, slot1)
-	gohelper.setActive(slot0._rawImage, true)
-	uv0.adjustRt(slot0._rawImage, slot1)
+function var_0_0._showSceneFinished(arg_7_0, arg_7_1)
+	gohelper.setActive(arg_7_0._rawImage, true)
+	var_0_0.adjustRt(arg_7_0._rawImage, arg_7_1)
 
-	slot0._weatherSwitchControlComp = slot0._weatherSwitchControlComp or MonoHelper.addNoUpdateLuaComOnceToGo(slot0._weatherRoot, WeatherSwitchControlComp)
+	arg_7_0._weatherSwitchControlComp = arg_7_0._weatherSwitchControlComp or MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._weatherRoot, WeatherSwitchControlComp)
 
-	slot0._weatherSwitchControlComp:updateScene(slot0._sceneId, MainSceneSwitchCameraDisplayController.instance)
+	arg_7_0._weatherSwitchControlComp:updateScene(arg_7_0._sceneId, MainSceneSwitchCameraDisplayController.instance)
 end
 
-function slot0._clearPage(slot0)
-	gohelper.setActive(slot0._simageFullBG1, false)
-	gohelper.setActive(slot0._simageFullBG2, false)
+function var_0_0._clearPage(arg_8_0)
+	gohelper.setActive(arg_8_0._simageFullBG1, false)
+	gohelper.setActive(arg_8_0._simageFullBG2, false)
 end
 
-function slot0._hideMainScene(slot0)
-	slot0._isPreview = slot0.viewParam and slot0.viewParam.isPreview
+function var_0_0._hideMainScene(arg_9_0)
+	arg_9_0._isPreview = arg_9_0.viewParam and arg_9_0.viewParam.isPreview
 
-	if slot0._isPreview then
+	if arg_9_0._isPreview then
 		MainSceneSwitchDisplayController.instance:hideScene()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	MainSceneSwitchCameraController.instance:clear()
 
-	if slot0._isPreview then
+	if arg_10_0._isPreview then
 		MainSceneSwitchDisplayController.instance:showCurScene()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clearPage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0:_clearPage()
 end
 
-return slot0
+return var_0_0

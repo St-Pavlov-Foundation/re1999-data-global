@@ -1,166 +1,189 @@
-module("modules.logic.room.controller.RoomSceneTaskController", package.seeall)
+﻿module("modules.logic.room.controller.RoomSceneTaskController", package.seeall)
 
-slot0 = class("RoomSceneTaskController", BaseController)
+local var_0_0 = class("RoomSceneTaskController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0:release()
+function var_0_0.clear(arg_3_0)
+	arg_3_0:release()
 end
 
-function slot0.release(slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, slot0.refreshData, slot0)
-	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, slot0.updateData, slot0)
+function var_0_0.release(arg_4_0)
+	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, arg_4_0.refreshData, arg_4_0)
+	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, arg_4_0.updateData, arg_4_0)
 	RoomTaskModel.instance:clear()
 
-	slot0._taskList = nil
-	slot0._cfgGroup = nil
-	slot0._allTaskList = nil
-	slot0._taskMOIdSet = nil
-	slot0._needCheckFinish = true
+	arg_4_0._taskList = nil
+	arg_4_0._cfgGroup = nil
+	arg_4_0._allTaskList = nil
+	arg_4_0._taskMOIdSet = nil
+	arg_4_0._needCheckFinish = true
 end
 
-function slot0.init(slot0)
-	slot0:release()
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, slot0.refreshData, slot0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0.updateData, slot0)
+function var_0_0.init(arg_5_0)
+	arg_5_0:release()
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_5_0.refreshData, arg_5_0)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_5_0.updateData, arg_5_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Room
 	})
 	RoomTaskModel.instance:buildDatas()
 end
 
-function slot0.showHideRoomTopTaskUI(slot0, slot1)
-	slot0:dispatchEvent(RoomEvent.TaskShowHideAnim, slot1 == true)
+function var_0_0.showHideRoomTopTaskUI(arg_6_0, arg_6_1)
+	arg_6_0:dispatchEvent(RoomEvent.TaskShowHideAnim, arg_6_1 == true)
 end
 
-function slot0.refreshData(slot0)
+function var_0_0.refreshData(arg_7_0)
 	RoomTaskModel.instance:handleTaskUpdate()
-	slot0:dispatchEvent(RoomEvent.TaskUpdate)
-	slot0:checkTaskFinished()
+	arg_7_0:dispatchEvent(RoomEvent.TaskUpdate)
+	arg_7_0:checkTaskFinished()
 end
 
-function slot0.updateData(slot0)
+function var_0_0.updateData(arg_8_0)
 	RoomTaskModel.instance:handleTaskUpdate()
-	slot0:dispatchEvent(RoomEvent.TaskUpdate)
+	arg_8_0:dispatchEvent(RoomEvent.TaskUpdate)
 
-	if slot0._needCheckFinish then
-		slot0:checkTaskFinished()
+	if arg_8_0._needCheckFinish then
+		arg_8_0:checkTaskFinished()
 	end
 end
 
-function slot0.checkTaskFinished(slot0)
-	slot1, slot2 = slot0:isFirstTaskFinished()
+function var_0_0.checkTaskFinished(arg_9_0)
+	local var_9_0, var_9_1 = arg_9_0:isFirstTaskFinished()
 
-	if slot1 then
-		slot0:dispatchEvent(RoomEvent.TaskCanFinish, slot2)
+	if var_9_0 then
+		arg_9_0:dispatchEvent(RoomEvent.TaskCanFinish, var_9_1)
 	end
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.setTaskCheckFinishFlag(slot0, slot1)
-	slot0._needCheckFinish = slot1
+function var_0_0.setTaskCheckFinishFlag(arg_10_0, arg_10_1)
+	arg_10_0._needCheckFinish = arg_10_1
 end
 
-function slot0.isFirstTaskFinished(slot0)
-	if RoomTaskModel.instance:getShowList() ~= nil and #slot1 > 0 then
-		slot2 = nil
+function var_0_0.isFirstTaskFinished(arg_11_0)
+	local var_11_0 = RoomTaskModel.instance:getShowList()
 
-		for slot6, slot7 in ipairs(slot1) do
-			if RoomTaskModel.instance:tryGetTaskMO(slot7.id) and slot9.hasFinished and slot9.finishCount <= 0 then
-				table.insert(slot2 or {}, slot8)
+	if var_11_0 ~= nil and #var_11_0 > 0 then
+		local var_11_1
+
+		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+			local var_11_2 = iter_11_1.id
+			local var_11_3 = RoomTaskModel.instance:tryGetTaskMO(var_11_2)
+
+			if var_11_3 and var_11_3.hasFinished and var_11_3.finishCount <= 0 then
+				var_11_1 = var_11_1 or {}
+
+				table.insert(var_11_1, var_11_2)
 			else
-				return slot2 ~= nil, slot2
+				return var_11_1 ~= nil, var_11_1
 			end
 		end
 
-		return slot2 ~= nil, slot2
+		return var_11_1 ~= nil, var_11_1
 	end
 
 	return false
 end
 
-function slot0.getProgressStatus(slot0)
-	return slot0.hasFinished, slot0.progress
+function var_0_0.getProgressStatus(arg_12_0)
+	return arg_12_0.hasFinished, arg_12_0.progress
 end
 
-function slot0.hasLocalModifyBlock(slot0)
-	if slot0.hasFinished then
+function var_0_0.hasLocalModifyBlock(arg_13_0)
+	if arg_13_0.hasFinished then
 		return false
 	end
 
-	if not RoomSceneTaskValidator.canGetByLocal(slot0) then
+	if not RoomSceneTaskValidator.canGetByLocal(arg_13_0) then
 		return false
 	end
 
 	if RoomMapBlockModel.instance:getTempBlockMO() or RoomMapBuildingModel.instance:getTempBuildingMO() then
 		return true
-	elseif RoomMapBlockModel.instance:getBackBlockModel() then
-		return slot1:getCount() > 0
+	else
+		local var_13_0 = RoomMapBlockModel.instance:getBackBlockModel()
+
+		if var_13_0 then
+			return var_13_0:getCount() > 0
+		end
 	end
 
 	return false
 end
 
-function slot0.sortTask(slot0, slot1)
-	return uv0.sortTaskConfig(slot0.config, slot1.config)
+function var_0_0.sortTask(arg_14_0, arg_14_1)
+	return var_0_0.sortTaskConfig(arg_14_0.config, arg_14_1.config)
 end
 
-function slot0.sortTaskConfig(slot0, slot1)
-	if uv0.getOrder(slot0) ~= uv0.getOrder(slot1) then
-		return slot2 < slot3
+function var_0_0.sortTaskConfig(arg_15_0, arg_15_1)
+	local var_15_0 = var_0_0.getOrder(arg_15_0)
+	local var_15_1 = var_0_0.getOrder(arg_15_1)
+
+	if var_15_0 ~= var_15_1 then
+		return var_15_0 < var_15_1
 	else
-		return slot0.id < slot1.id
+		return arg_15_0.id < arg_15_1.id
 	end
 end
 
-function slot0.getOrder(slot0)
-	if not string.nilorempty(slot0.order) and not string.nilorempty(string.match(slot0.order, "%d+")) then
-		return tonumber(slot1)
+function var_0_0.getOrder(arg_16_0)
+	if not string.nilorempty(arg_16_0.order) then
+		local var_16_0 = string.match(arg_16_0.order, "%d+")
+
+		if not string.nilorempty(var_16_0) then
+			return tonumber(var_16_0)
+		end
 	end
 
 	return 0
 end
 
-function slot0.getTaskTypeKey(slot0, slot1)
-	if slot0 == RoomSceneTaskEnum.ListenerType.EditResTypeReach then
-		return tostring(slot0) .. "_" .. tostring(slot1)
+function var_0_0.getTaskTypeKey(arg_17_0, arg_17_1)
+	if arg_17_0 == RoomSceneTaskEnum.ListenerType.EditResTypeReach then
+		return tostring(arg_17_0) .. "_" .. tostring(arg_17_1)
 	else
-		return slot0
+		return arg_17_0
 	end
 end
 
-function slot0.isTaskOverUnlockLevel(slot0)
-	return uv0.getTaskUnlockLevel(slot0.openLimit) <= RoomMapModel.instance:getRoomLevel()
+function var_0_0.isTaskOverUnlockLevel(arg_18_0)
+	return RoomMapModel.instance:getRoomLevel() >= var_0_0.getTaskUnlockLevel(arg_18_0.openLimit)
 end
 
-function slot0.getTaskUnlockLevel(slot0)
-	for slot5, slot6 in string.gmatch(slot0, "(%w+)=(%w+)") do
-		-- Nothing
+function var_0_0.getTaskUnlockLevel(arg_19_0)
+	local var_19_0 = {}
+
+	for iter_19_0, iter_19_1 in string.gmatch(arg_19_0, "(%w+)=(%w+)") do
+		var_19_0[iter_19_0] = iter_19_1
 	end
 
-	return tonumber(({
-		[slot5] = slot6
-	}).RoomLevel) or 0
+	return tonumber(var_19_0.RoomLevel) or 0
 end
 
-function slot0.getRewardConfigAndIcon(slot0)
-	if slot0 and #string.split(slot0.bonus, "|") > 0 then
-		slot1 = string.splitToNumber(slot1[1], "#")
-		slot2, slot3 = ItemModel.instance:getItemConfigAndIcon(slot1[1], slot1[2])
+function var_0_0.getRewardConfigAndIcon(arg_20_0)
+	if arg_20_0 then
+		local var_20_0 = string.split(arg_20_0.bonus, "|")
 
-		return slot2, slot3, tonumber(slot1[3])
+		if #var_20_0 > 0 then
+			local var_20_1 = string.splitToNumber(var_20_0[1], "#")
+			local var_20_2, var_20_3 = ItemModel.instance:getItemConfigAndIcon(var_20_1[1], var_20_1[2])
+
+			return var_20_2, var_20_3, tonumber(var_20_1[3])
+		end
 	end
 
 	return nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

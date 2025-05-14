@@ -1,32 +1,38 @@
-module("modules.logic.main.model.MainBannerModel", package.seeall)
+﻿module("modules.logic.main.model.MainBannerModel", package.seeall)
 
-slot0 = class("MainBannerModel", BaseModel)
+local var_0_0 = class("MainBannerModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._notShowIds = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._notShowIds = {}
 
-	for slot6, slot7 in pairs(string.split(PlayerPrefsHelper.getString(PlayerPrefsKey.BannersNotShow, ""), "#")) do
-		if slot7 ~= nil and slot7 ~= "" then
-			table.insert(slot0._notShowIds, tonumber(slot7))
+	local var_1_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.BannersNotShow, "")
+	local var_1_1 = string.split(var_1_0, "#")
+
+	for iter_1_0, iter_1_1 in pairs(var_1_1) do
+		if iter_1_1 ~= nil and iter_1_1 ~= "" then
+			table.insert(arg_1_0._notShowIds, tonumber(iter_1_1))
 		end
 	end
 end
 
-function slot0.addNotShowid(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._notShowIds) do
-		if slot6 == slot1 then
+function var_0_0.addNotShowid(arg_2_0, arg_2_1)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._notShowIds) do
+		if iter_2_1 == arg_2_1 then
 			return
 		end
 	end
 
-	table.insert(slot0._notShowIds, slot1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.BannersNotShow, table.concat(slot0._notShowIds, "#"))
+	table.insert(arg_2_0._notShowIds, arg_2_1)
+
+	local var_2_0 = table.concat(arg_2_0._notShowIds, "#")
+
+	PlayerPrefsHelper.setString(PlayerPrefsKey.BannersNotShow, var_2_0)
 end
 
-function slot0.getBannerInfo(slot0)
-	return slot0._notShowIds
+function var_0_0.getBannerInfo(arg_3_0)
+	return arg_3_0._notShowIds
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

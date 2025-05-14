@@ -1,24 +1,27 @@
-module("modules.logic.teach.view.TeachNoteDescItem", package.seeall)
+﻿module("modules.logic.teach.view.TeachNoteDescItem", package.seeall)
 
-slot0 = class("TeachNoteDescItem", LuaCompBase)
+local var_0_0 = class("TeachNoteDescItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.go = slot1
-	slot0.index = slot2
-	slot0.id = slot3
-	slot0._txtdesccn = gohelper.findChildText(slot1, "desccn")
-	slot0._txtdescen = gohelper.findChildText(slot1, "descen")
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.go = arg_1_1
+	arg_1_0.index = arg_1_2
+	arg_1_0.id = arg_1_3
+	arg_1_0._txtdesccn = gohelper.findChildText(arg_1_1, "desccn")
+	arg_1_0._txtdescen = gohelper.findChildText(arg_1_1, "descen")
 
-	slot0:_refreshItem()
+	arg_1_0:_refreshItem()
 end
 
-function slot0._refreshItem(slot0)
-	slot0._txtdesccn.text = string.gsub(string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot0.id).desc, "#")[slot0.index], "<i>(.-)</i>", "<i><size=24>%1</size></i>")
-	slot0._txtdescen.text = string.split(TeachNoteConfig.instance:getInstructionLevelCO(slot0.id).desc_en, "#")[slot0.index]
+function var_0_0._refreshItem(arg_2_0)
+	local var_2_0 = string.split(TeachNoteConfig.instance:getInstructionLevelCO(arg_2_0.id).desc, "#")
+	local var_2_1 = string.split(TeachNoteConfig.instance:getInstructionLevelCO(arg_2_0.id).desc_en, "#")
+
+	arg_2_0._txtdesccn.text = string.gsub(var_2_0[arg_2_0.index], "<i>(.-)</i>", "<i><size=24>%1</size></i>")
+	arg_2_0._txtdescen.text = var_2_1[arg_2_0.index]
 end
 
-function slot0.onDestroyView(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.onDestroyView(arg_3_0)
+	gohelper.destroy(arg_3_0.go)
 end
 
-return slot0
+return var_0_0

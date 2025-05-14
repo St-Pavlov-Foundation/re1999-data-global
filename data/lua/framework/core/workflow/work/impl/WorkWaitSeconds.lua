@@ -1,41 +1,41 @@
-module("framework.core.workflow.work.impl.WorkWaitSeconds", package.seeall)
+﻿module("framework.core.workflow.work.impl.WorkWaitSeconds", package.seeall)
 
-slot0 = class("WorkWaitSeconds", BaseWork)
+local var_0_0 = class("WorkWaitSeconds", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._waitSeconds = slot1 or 0.01
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._waitSeconds = arg_1_1 or 0.01
 end
 
-function slot0.onStart(slot0)
-	slot0._startTime = Time.realtimeSinceStartup
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._startTime = Time.realtimeSinceStartup
 
-	TaskDispatcher.runDelay(slot0._onTimeEnd, slot0, slot0._waitSeconds)
+	TaskDispatcher.runDelay(arg_2_0._onTimeEnd, arg_2_0, arg_2_0._waitSeconds)
 end
 
-function slot0.onStop(slot0)
-	slot0._waitSeconds = Time.realtimeSinceStartup - slot0._startTime
+function var_0_0.onStop(arg_3_0)
+	arg_3_0._waitSeconds = Time.realtimeSinceStartup - arg_3_0._startTime
 
-	TaskDispatcher.cancelTask(slot0._onTimeEnd, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._onTimeEnd, arg_3_0)
 end
 
-function slot0.onResume(slot0)
-	if slot0._waitSeconds > 0 then
-		TaskDispatcher.runDelay(slot0._onTimeEnd, slot0, slot0._waitSeconds)
+function var_0_0.onResume(arg_4_0)
+	if arg_4_0._waitSeconds > 0 then
+		TaskDispatcher.runDelay(arg_4_0._onTimeEnd, arg_4_0, arg_4_0._waitSeconds)
 	else
-		slot0:onDone(true)
+		arg_4_0:onDone(true)
 	end
 end
 
-function slot0.onReset(slot0)
-	TaskDispatcher.cancelTask(slot0._onTimeEnd, slot0)
+function var_0_0.onReset(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._onTimeEnd, arg_5_0)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._onTimeEnd, slot0)
+function var_0_0.onDestroy(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._onTimeEnd, arg_6_0)
 end
 
-function slot0._onTimeEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onTimeEnd(arg_7_0)
+	arg_7_0:onDone(true)
 end
 
-return slot0
+return var_0_0

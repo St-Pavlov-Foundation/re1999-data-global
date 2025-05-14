@@ -1,180 +1,191 @@
-module("modules.logic.act189.controller.Activity189Testing", package.seeall)
+﻿module("modules.logic.act189.controller.Activity189Testing", package.seeall)
 
-slot0 = table.insert
-slot1 = _G.class("TestingBase")
-slot2 = TaskEnum.TaskType.Activity189
+local var_0_0 = table.insert
+local var_0_1 = _G.class("TestingBase")
+local var_0_2 = TaskEnum.TaskType.Activity189
 
-function slot1.ctor(slot0)
-	slot0._pb = Activity189Module_pb
-	slot0._cCfg = Activity189Config
-	slot0._cTaskCfg = TaskConfig
-	slot0._pbTask = TaskModule_pb
+function var_0_1.ctor(arg_1_0)
+	arg_1_0._pb = Activity189Module_pb
+	arg_1_0._cCfg = Activity189Config
+	arg_1_0._cTaskCfg = TaskConfig
+	arg_1_0._pbTask = TaskModule_pb
 end
 
-function slot1.build_test(slot0)
+function var_0_1.build_test(arg_2_0)
+	return
 end
 
-function slot1.link(slot0, slot1)
-	slot0._obj = slot1
+function var_0_1.link(arg_3_0, arg_3_1)
+	arg_3_0._obj = arg_3_1
 end
 
-slot3 = 0
-slot4 = 1
-slot5 = "服务器异常"
-slot6 = "returnCode: -2"
-slot7 = _G.class("STesting", slot1)
+local var_0_3 = 0
+local var_0_4 = 1
+local var_0_5 = "服务器异常"
+local var_0_6 = "returnCode: -2"
+local var_0_7 = _G.class("STesting", var_0_1)
 
-function slot7.ctor(slot0)
-	uv0.ctor(slot0)
+function var_0_7.ctor(arg_4_0)
+	var_0_1.ctor(arg_4_0)
 
-	slot0._taskInfoDict = {}
-	slot0._taskActivityInfoDict = {}
+	arg_4_0._taskInfoDict = {}
+	arg_4_0._taskActivityInfoDict = {}
 end
 
-function slot7._make_taskInfos(slot0, slot1)
-	slot2 = {}
+function var_0_7._make_taskInfos(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	if slot1 == uv0 then
-		for slot6, slot7 in ipairs(lua_activity189_task.configList) do
-			slot8 = slot7.id
-			slot2[slot9] = slot2[slot7.activityId] or {}
+	if arg_5_1 == var_0_2 then
+		for iter_5_0, iter_5_1 in ipairs(lua_activity189_task.configList) do
+			local var_5_1 = iter_5_1.id
+			local var_5_2 = iter_5_1.activityId
 
-			if slot7.isOnline then
-				slot2[slot9][slot8] = slot0:_make_TaskInfo(slot8, slot1)
+			var_5_0[var_5_2] = var_5_0[var_5_2] or {}
+
+			if iter_5_1.isOnline then
+				var_5_0[var_5_2][var_5_1] = arg_5_0:_make_TaskInfo(var_5_1, arg_5_1)
 			end
 		end
 	else
-		assert(false, "please init task type: " .. slot1)
+		assert(false, "please init task type: " .. arg_5_1)
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot7._make_TaskActivityInfo(slot0, slot1)
+function var_0_7._make_TaskActivityInfo(arg_6_0, arg_6_1)
 	return {
 		defineId = 0,
 		expiryTime = 0,
 		value = 0,
 		gainValue = 0,
-		typeId = slot1
+		typeId = arg_6_1
 	}
 end
 
-function slot7.handleGetTaskInfoReply(slot0, slot1, slot2)
-	slot4 = {}
-	slot5 = {}
+function var_0_7.handleGetTaskInfoReply(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_1.typeIds
+	local var_7_1 = {}
+	local var_7_2 = {}
 
-	for slot9, slot10 in ipairs(slot1.typeIds) do
-		if not slot0._taskInfoDict[slot10] then
-			slot0._taskInfoDict[slot10] = slot0:_make_taskInfos(slot10)
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if not arg_7_0._taskInfoDict[iter_7_1] then
+			arg_7_0._taskInfoDict[iter_7_1] = arg_7_0:_make_taskInfos(iter_7_1)
 		end
 
-		if not slot0._taskActivityInfoDict[slot10] then
-			slot0._taskActivityInfoDict[slot10] = slot0:_make_TaskActivityInfo(slot10)
+		if not arg_7_0._taskActivityInfoDict[iter_7_1] then
+			arg_7_0._taskActivityInfoDict[iter_7_1] = arg_7_0:_make_TaskActivityInfo(iter_7_1)
 		end
 
-		for slot14, slot15 in pairs(slot0._taskInfoDict[slot10]) do
-			for slot19, slot20 in pairs(slot15) do
-				uv0(slot4, slot20)
+		for iter_7_2, iter_7_3 in pairs(arg_7_0._taskInfoDict[iter_7_1]) do
+			for iter_7_4, iter_7_5 in pairs(iter_7_3) do
+				var_0_0(var_7_1, iter_7_5)
 			end
 		end
 
-		uv0(slot5, slot0._taskActivityInfoDict[slot10])
+		var_0_0(var_7_2, arg_7_0._taskActivityInfoDict[iter_7_1])
 	end
 
-	rawset(slot2, "taskInfo", slot4)
-	rawset(slot2, "activityInfo", slot5)
-	rawset(slot2, "typeIds", slot3)
+	rawset(arg_7_2, "taskInfo", var_7_1)
+	rawset(arg_7_2, "activityInfo", var_7_2)
+	rawset(arg_7_2, "typeIds", var_7_0)
 end
 
-function slot7._make_TaskInfo(slot0, slot1, slot2)
-	slot3 = TaskModel.instance:getTaskConfig(slot2, slot1)
+function var_0_7._make_TaskInfo(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = TaskModel.instance:getTaskConfig(arg_8_2, arg_8_1)
 
-	assert(slot3, uv0)
+	assert(var_8_0, var_0_5)
 
-	slot4 = slot3.maxProgress
-	slot5.hasFinished = ({
+	local var_8_1 = var_8_0.maxProgress
+	local var_8_2 = {
 		hasFinished = false,
 		expiryTime = 0,
 		finishCount = 0,
-		id = slot1,
-		type = slot2,
-		progress = math.random(0, slot4)
-	}).progress == slot4
+		id = arg_8_1,
+		type = arg_8_2,
+		progress = math.random(0, var_8_1)
+	}
 
-	return slot5
+	var_8_2.hasFinished = var_8_2.progress == var_8_1
+
+	return var_8_2
 end
 
-slot8 = 0
-slot9 = _G.class("CTesting", slot1)
+local var_0_8 = 0
+local var_0_9 = _G.class("CTesting", var_0_1)
 
-function slot9.ctor(slot0)
-	uv0.ctor(slot0)
+function var_0_9.ctor(arg_9_0)
+	var_0_1.ctor(arg_9_0)
 
-	slot0._cRpc = Activity189Rpc
-	slot0._cCtrl = Activity189Controller
-	slot0._cModel = Activity189Model
-	slot0._cTaskRpc = TaskRpc
-	slot0._cTaskModel = TaskModel
-	slot0._cTaskController = TaskController
+	arg_9_0._cRpc = Activity189Rpc
+	arg_9_0._cCtrl = Activity189Controller
+	arg_9_0._cModel = Activity189Model
+	arg_9_0._cTaskRpc = TaskRpc
+	arg_9_0._cTaskModel = TaskModel
+	arg_9_0._cTaskController = TaskController
 end
 
-function slot9.build_test(slot0)
-	slot0:build_test__Task()
-	slot0:build_test__Player()
+function var_0_9.build_test(arg_10_0)
+	arg_10_0:build_test__Task()
+	arg_10_0:build_test__Player()
 end
 
-function slot9.build_test__Player(slot0)
+function var_0_9.build_test__Player(arg_11_0)
 	function PlayerModel.forceSetSimpleProperty()
+		return
 	end
 end
 
-function slot9.build_test__Task(slot0)
-	slot1 = slot0._cTaskCfg.instance
-	slot2 = slot0._cTaskRpc.instance
-	slot3 = slot0._cTaskController.instance
-	slot4 = slot0._cTaskModel.instance
-	slot5 = slot0._pbTask
+function var_0_9.build_test__Task(arg_13_0)
+	local var_13_0 = arg_13_0._cTaskCfg.instance
+	local var_13_1 = arg_13_0._cTaskRpc.instance
+	local var_13_2 = arg_13_0._cTaskController.instance
+	local var_13_3 = arg_13_0._cTaskModel.instance
+	local var_13_4 = arg_13_0._pbTask
 
-	function slot0._cTaskRpc.sendGetTaskInfoRequest(slot0, slot1, slot2, slot3)
-		for slot8, slot9 in pairs(slot1) do
-			table.insert(uv0.GetTaskInfoRequest().typeIds, slot9)
+	function arg_13_0._cTaskRpc.sendGetTaskInfoRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+		local var_14_0 = var_13_4.GetTaskInfoRequest()
+
+		for iter_14_0, iter_14_1 in pairs(arg_14_1) do
+			table.insert(var_14_0.typeIds, iter_14_1)
 		end
 
-		if #slot1 == 1 and slot1[1] == uv1 then
-			slot5 = uv0.GetTaskInfoReply()
+		if #arg_14_1 == 1 and arg_14_1[1] == var_0_2 then
+			local var_14_1 = var_13_4.GetTaskInfoReply()
 
-			uv2._obj:handleGetTaskInfoReply(slot4, slot5)
-			uv3:onReceiveGetTaskInfoReply(uv4, slot5)
+			arg_13_0._obj:handleGetTaskInfoReply(var_14_0, var_14_1)
+			var_13_1:onReceiveGetTaskInfoReply(var_0_8, var_14_1)
 
-			if slot2 then
-				if slot3 then
-					slot2(slot3, LuaSocketMgr.instance:getCmdByPbStructName(slot4.__cname), uv4)
+			local var_14_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_14_0.__cname)
+
+			if arg_14_2 then
+				if arg_14_3 then
+					arg_14_2(arg_14_3, var_14_2, var_0_8)
 				else
-					slot2(slot6, uv4)
+					arg_14_2(var_14_2, var_0_8)
 				end
 			end
 		else
-			return slot0:sendMsg(slot4, slot2, slot3)
+			return arg_14_0:sendMsg(var_14_0, arg_14_2, arg_14_3)
 		end
 	end
 end
 
-slot10 = _G.class("Activity189Testing")
+local var_0_10 = _G.class("Activity189Testing")
 
-function slot10.ctor(slot0)
-	slot0._client = uv0.New()
-	slot0._sever = uv1.New()
+function var_0_10.ctor(arg_15_0)
+	arg_15_0._client = var_0_9.New()
+	arg_15_0._sever = var_0_7.New()
 
-	slot0._sever:link(slot0._client)
-	slot0._client:link(slot0._sever)
+	arg_15_0._sever:link(arg_15_0._client)
+	arg_15_0._client:link(arg_15_0._sever)
 end
 
-function slot10._test(slot0)
-	slot0._client:build_test()
-	slot0._sever:build_test()
+function var_0_10._test(arg_16_0)
+	arg_16_0._client:build_test()
+	arg_16_0._sever:build_test()
 end
 
-slot10.instance = slot10.New()
+var_0_10.instance = var_0_10.New()
 
-return slot10
+return var_0_10

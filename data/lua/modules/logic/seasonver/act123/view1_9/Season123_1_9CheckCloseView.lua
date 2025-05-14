@@ -1,39 +1,45 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9CheckCloseView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9CheckCloseView", package.seeall)
 
-slot0 = class("Season123_1_9CheckCloseView", BaseView)
+local var_0_0 = class("Season123_1_9CheckCloseView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.viewParam.actId
+function var_0_0.onOpen(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam.actId
 
-	if slot0:checkActNotOpen() then
+	if arg_4_0:checkActNotOpen() then
 		return
 	end
 
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.handleReceiveActChanged, slot0)
+	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0.handleReceiveActChanged, arg_4_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
+	return
 end
 
-function slot0.handleReceiveActChanged(slot0)
-	slot0:checkActNotOpen()
+function var_0_0.handleReceiveActChanged(arg_6_0)
+	arg_6_0:checkActNotOpen()
 end
 
-function slot0.checkActNotOpen(slot0)
-	if not ActivityModel.instance:getActMO(slot0.viewParam.actId) or not slot2:isOpen() or slot2:isExpired() then
-		TaskDispatcher.runDelay(slot0.handleNoActDelayClose, slot0, 0.1)
+function var_0_0.checkActNotOpen(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam.actId
+	local var_7_1 = ActivityModel.instance:getActMO(var_7_0)
+
+	if not var_7_1 or not var_7_1:isOpen() or var_7_1:isExpired() then
+		TaskDispatcher.runDelay(arg_7_0.handleNoActDelayClose, arg_7_0, 0.1)
 
 		return true
 	end
@@ -41,8 +47,8 @@ function slot0.checkActNotOpen(slot0)
 	return false
 end
 
-function slot0.handleNoActDelayClose(slot0)
-	slot0:closeThis()
+function var_0_0.handleNoActDelayClose(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-return slot0
+return var_0_0

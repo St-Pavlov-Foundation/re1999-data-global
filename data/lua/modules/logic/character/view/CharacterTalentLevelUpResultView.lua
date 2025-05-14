@@ -1,46 +1,48 @@
-module("modules.logic.character.view.CharacterTalentLevelUpResultView", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentLevelUpResultView", package.seeall)
 
-slot0 = class("CharacterTalentLevelUpResultView", BaseView)
+local var_0_0 = class("CharacterTalentLevelUpResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goclickmask = gohelper.findChild(slot0.viewGO, "clickmask")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
-	slot0._scrollup = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_up")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_up/Viewport/#go_Content")
-	slot0._gocapacity = gohelper.findChild(slot0.viewGO, "#scroll_up/Viewport/#go_Content/#go_capacity")
-	slot0._txtleveluptip = gohelper.findChildText(slot0.viewGO, "leveluptip/tip")
-	slot0._txtlevelup = gohelper.findChildText(slot0.viewGO, "leveluptip/tip/#txt_levelup")
-	slot0._goeasoning = gohelper.findChild(slot0.viewGO, "esonan/#go_easoning")
-	slot0._goesonan = gohelper.findChild(slot0.viewGO, "esonan/#go_esonan")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goclickmask = gohelper.findChild(arg_1_0.viewGO, "clickmask")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+	arg_1_0._scrollup = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_up")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_up/Viewport/#go_Content")
+	arg_1_0._gocapacity = gohelper.findChild(arg_1_0.viewGO, "#scroll_up/Viewport/#go_Content/#go_capacity")
+	arg_1_0._txtleveluptip = gohelper.findChildText(arg_1_0.viewGO, "leveluptip/tip")
+	arg_1_0._txtlevelup = gohelper.findChildText(arg_1_0.viewGO, "leveluptip/tip/#txt_levelup")
+	arg_1_0._goeasoning = gohelper.findChild(arg_1_0.viewGO, "esonan/#go_easoning")
+	arg_1_0._goesonan = gohelper.findChild(arg_1_0.viewGO, "esonan/#go_esonan")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(gohelper.getClick(slot0._goclickmask), slot0._closeSelf, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(gohelper.getClick(arg_2_0._goclickmask), arg_2_0._closeSelf, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_level_success)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0._closeSelf(slot0)
-	if ServerTime.now() - slot0.open_time < 2 then
+function var_0_0._closeSelf(arg_6_0)
+	if ServerTime.now() - arg_6_0.open_time < 2 then
 		return
 	end
 
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-slot0.DebrisType = {
+var_0_0.DebrisType = {
 	Chess = 0,
 	UnlockStyle = 5,
 	Exclusive = 1,
@@ -49,425 +51,481 @@ slot0.DebrisType = {
 	DebrisCountAndLevel = 4
 }
 
-function slot0.onOpen(slot0)
-	slot0.open_time = ServerTime.now()
-	slot0.hero_id = slot0.viewParam
-	slot0.hero_mo_data = HeroModel.instance:getByHeroId(slot0.hero_id)
-	slot0._mainCubeId = slot0.hero_mo_data.talentCubeInfos.own_main_cube_id
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.open_time = ServerTime.now()
+	arg_7_0.hero_id = arg_7_0.viewParam
+	arg_7_0.hero_mo_data = HeroModel.instance:getByHeroId(arg_7_0.hero_id)
+	arg_7_0._mainCubeId = arg_7_0.hero_mo_data.talentCubeInfos.own_main_cube_id
 
-	slot0:_bootLogic(slot0.hero_mo_data.talent, slot0.hero_mo_data.talent - 1)
-	TaskDispatcher.runDelay(slot0._playScrollTween, slot0, 1.2)
-	TaskDispatcher.runDelay(slot0._playAttrAni, slot0, 1.2)
+	arg_7_0:_bootLogic(arg_7_0.hero_mo_data.talent, arg_7_0.hero_mo_data.talent - 1)
+	TaskDispatcher.runDelay(arg_7_0._playScrollTween, arg_7_0, 1.2)
+	TaskDispatcher.runDelay(arg_7_0._playAttrAni, arg_7_0, 1.2)
 
-	slot0._txtleveluptip.text = luaLang("talent_charactertalentlevelupresult_tip" .. CharacterEnum.TalentTxtByHeroType[slot0.hero_mo_data.config.heroType])
+	arg_7_0._txtleveluptip.text = luaLang("talent_charactertalentlevelupresult_tip" .. CharacterEnum.TalentTxtByHeroType[arg_7_0.hero_mo_data.config.heroType])
 
-	gohelper.setActive(slot0._goeasoning, slot0.hero_mo_data.config.heroType == CharacterEnum.HumanHeroType)
-	gohelper.setActive(slot0._goesonan, slot0.hero_mo_data.config.heroType ~= CharacterEnum.HumanHeroType)
+	gohelper.setActive(arg_7_0._goeasoning, arg_7_0.hero_mo_data.config.heroType == CharacterEnum.HumanHeroType)
+	gohelper.setActive(arg_7_0._goesonan, arg_7_0.hero_mo_data.config.heroType ~= CharacterEnum.HumanHeroType)
 end
 
-function slot0._bootLogic(slot0, slot1, slot2)
-	slot0.target_lv = slot1
-	slot0.old_level = slot2
-	slot3 = HeroResonanceConfig.instance:getTalentConfig(slot0.hero_mo_data.heroId, slot2) or {}
-	slot4 = HeroResonanceConfig.instance:getTalentConfig(slot0.hero_mo_data.heroId, slot1)
-	slot0.old_model_config = HeroResonanceConfig.instance:getTalentModelConfig(slot0.hero_mo_data.heroId, slot2) or {}
-	slot0.target_model_config = HeroResonanceConfig.instance:getTalentModelConfig(slot0.hero_mo_data.heroId, slot1)
+function var_0_0._bootLogic(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.target_lv = arg_8_1
+	arg_8_0.old_level = arg_8_2
 
-	gohelper.setActive(slot0._goContent, slot0.target_model_config ~= nil)
+	local var_8_0 = HeroResonanceConfig.instance:getTalentConfig(arg_8_0.hero_mo_data.heroId, arg_8_2) or {}
+	local var_8_1 = HeroResonanceConfig.instance:getTalentConfig(arg_8_0.hero_mo_data.heroId, arg_8_1)
 
-	if not slot0.target_model_config then
+	arg_8_0.old_model_config = HeroResonanceConfig.instance:getTalentModelConfig(arg_8_0.hero_mo_data.heroId, arg_8_2) or {}
+	arg_8_0.target_model_config = HeroResonanceConfig.instance:getTalentModelConfig(arg_8_0.hero_mo_data.heroId, arg_8_1)
+
+	gohelper.setActive(arg_8_0._goContent, arg_8_0.target_model_config ~= nil)
+
+	if not arg_8_0.target_model_config then
 		return
 	end
 
-	if TalentStyleModel.instance:getLevelUnlockStyle(slot0._mainCubeId, slot1) then
-		table.insert({}, {
-			up_type = uv0.DebrisType.UnlockStyle
+	local var_8_2 = {}
+
+	if TalentStyleModel.instance:getLevelUnlockStyle(arg_8_0._mainCubeId, arg_8_1) then
+		table.insert(var_8_2, {
+			up_type = var_0_0.DebrisType.UnlockStyle
 		})
 	end
 
-	if slot0.target_model_config.allShape ~= slot0.old_model_config.allShape then
-		table.insert(slot5, {
-			up_type = uv0.DebrisType.Chess,
-			value = slot0.target_model_config.allShape
+	if arg_8_0.target_model_config.allShape ~= arg_8_0.old_model_config.allShape then
+		table.insert(var_8_2, {
+			up_type = var_0_0.DebrisType.Chess,
+			value = arg_8_0.target_model_config.allShape
 		})
 	end
 
-	if slot4.exclusive ~= slot3.exclusive then
-		slot7 = {
-			[slot15] = slot16 - (slot10[slot15] or 0)
-		}
-		slot8 = {}
-		slot9 = {}
-		slot10 = string.splitToNumber(slot3.exclusive, "#") or {}
+	if var_8_1.exclusive ~= var_8_0.exclusive then
+		local var_8_3 = {}
+		local var_8_4 = {}
+		local var_8_5 = {}
+		local var_8_6 = string.splitToNumber(var_8_0.exclusive, "#") or {}
+		local var_8_7 = string.splitToNumber(var_8_1.exclusive, "#") or {}
 
-		for slot15, slot16 in ipairs(string.splitToNumber(slot4.exclusive, "#") or {}) do
-			if slot16 ~= slot10[slot15] then
-				-- Nothing
+		for iter_8_0, iter_8_1 in ipairs(var_8_7) do
+			if iter_8_1 ~= var_8_6[iter_8_0] then
+				var_8_3[iter_8_0] = iter_8_1 - (var_8_6[iter_8_0] or 0)
 			end
 
-			slot8[slot15] = slot16
-			slot9[slot15] = slot10[slot15]
+			var_8_4[iter_8_0] = iter_8_1
+			var_8_5[iter_8_0] = var_8_6[iter_8_0]
 		end
 
-		if not string.nilorempty(slot4.exclusive) then
-			table.insert(slot5, {
-				cube_id = slot11[1],
-				up_type = uv0.DebrisType.Exclusive,
-				new_debris = #slot10 == 0,
-				value = slot7,
-				target_value_tab = slot8,
-				old_value_tab = slot9
+		if not string.nilorempty(var_8_1.exclusive) then
+			table.insert(var_8_2, {
+				cube_id = var_8_7[1],
+				up_type = var_0_0.DebrisType.Exclusive,
+				new_debris = #var_8_6 == 0,
+				value = var_8_3,
+				target_value_tab = var_8_4,
+				old_value_tab = var_8_5
 			})
 		end
 	end
 
-	for slot10 = 10, 20 do
-		slot11 = "type" .. slot10
+	for iter_8_2 = 10, 20 do
+		local var_8_8 = "type" .. iter_8_2
+		local var_8_9 = arg_8_0.old_model_config[var_8_8]
+		local var_8_10 = arg_8_0.target_model_config[var_8_8]
 
-		if slot0.old_model_config[slot11] ~= slot0.target_model_config[slot11] and not string.nilorempty(slot13) then
-			slot15 = {}
-			slot16 = {}
-			slot17 = string.splitToNumber(slot12, "#") or {}
+		if var_8_9 ~= var_8_10 and not string.nilorempty(var_8_10) then
+			local var_8_11 = {}
+			local var_8_12 = {}
+			local var_8_13 = {}
+			local var_8_14 = string.splitToNumber(var_8_9, "#") or {}
+			local var_8_15 = string.splitToNumber(var_8_10, "#") or {}
 
-			for slot22, slot23 in ipairs(string.splitToNumber(slot13, "#") or {}) do
-				if slot23 ~= slot17[slot22] then
-					-- Nothing
+			for iter_8_3, iter_8_4 in ipairs(var_8_15) do
+				if iter_8_4 ~= var_8_14[iter_8_3] then
+					var_8_11[iter_8_3] = iter_8_4 - (var_8_14[iter_8_3] or 0)
 				end
 
-				slot15[slot22] = slot23
-				slot16[slot22] = slot17[slot22]
+				var_8_12[iter_8_3] = iter_8_4
+				var_8_13[iter_8_3] = var_8_14[iter_8_3]
 			end
 
-			slot19 = nil
+			local var_8_16
 
-			if ({
-				[slot22] = slot23 - (slot17[slot22] or 0)
-			})[1] then
-				if slot14[2] then
-					slot19 = uv0.DebrisType.DebrisCountAndLevel
+			if var_8_11[1] then
+				if var_8_11[2] then
+					var_8_16 = var_0_0.DebrisType.DebrisCountAndLevel
 				else
-					slot19 = uv0.DebrisType.DebrisCount
+					var_8_16 = var_0_0.DebrisType.DebrisCount
 				end
-			elseif slot14[2] then
-				slot19 = uv0.DebrisType.DebrisLevel
+			elseif var_8_11[2] then
+				var_8_16 = var_0_0.DebrisType.DebrisLevel
 			end
 
-			table.insert(slot5, {
-				cube_id = slot10,
-				up_type = slot19,
-				new_debris = #slot17 == 0,
-				value = slot14,
-				target_value_tab = slot15,
-				old_value_tab = slot16
+			table.insert(var_8_2, {
+				cube_id = iter_8_2,
+				up_type = var_8_16,
+				new_debris = #var_8_14 == 0,
+				value = var_8_11,
+				target_value_tab = var_8_12,
+				old_value_tab = var_8_13
 			})
 		end
 	end
 
-	slot0.obj_list = slot0:getUserDataTb_()
-	slot0._attr_ani_tab = slot0:getUserDataTb_()
-	slot0._burst_effect_attr_tab = slot0:getUserDataTb_()
+	arg_8_0.obj_list = arg_8_0:getUserDataTb_()
+	arg_8_0._attr_ani_tab = arg_8_0:getUserDataTb_()
+	arg_8_0._burst_effect_attr_tab = arg_8_0:getUserDataTb_()
 
-	gohelper.CreateObjList(slot0, slot0._onItemShow, slot5, slot0._goContent, slot0._gocapacity)
+	gohelper.CreateObjList(arg_8_0, arg_8_0._onItemShow, var_8_2, arg_8_0._goContent, arg_8_0._gocapacity)
 
-	slot0._txtlevelup.text = string.format("Lv.<size=80>%s", slot0.target_lv)
+	arg_8_0._txtlevelup.text = string.format("Lv.<size=80>%s", arg_8_0.target_lv)
 end
 
-function slot0._playScrollTween(slot0)
-	slot0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = false
-	slot0.parallel_sequence = slot0.parallel_sequence or FlowParallel.New()
+function var_0_0._playScrollTween(arg_9_0)
+	arg_9_0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = false
+	arg_9_0.parallel_sequence = arg_9_0.parallel_sequence or FlowParallel.New()
 
-	for slot4, slot5 in ipairs(slot0.obj_list) do
-		slot6 = recthelper.getAnchorY(slot5)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.obj_list) do
+		local var_9_0 = recthelper.getAnchorY(iter_9_1)
 
-		recthelper.setAnchorY(slot5, slot6 - 200)
+		recthelper.setAnchorY(iter_9_1, var_9_0 - 200)
 
-		slot7 = FlowSequence.New()
+		local var_9_1 = FlowSequence.New()
 
-		slot7:addWork(WorkWaitSeconds.New(0.03 * (slot4 - 1)))
+		var_9_1:addWork(WorkWaitSeconds.New(0.03 * (iter_9_0 - 1)))
 
-		slot8 = FlowParallel.New()
+		local var_9_2 = FlowParallel.New()
 
-		slot8:addWork(TweenWork.New({
+		var_9_2:addWork(TweenWork.New({
 			type = "DOAnchorPosY",
 			t = 0.33,
-			tr = slot5,
-			to = slot6,
+			tr = iter_9_1,
+			to = var_9_0,
 			ease = EaseType.OutQuart
 		}))
-		slot8:addWork(TweenWork.New({
+		var_9_2:addWork(TweenWork.New({
 			from = 0,
 			type = "DOFadeCanvasGroup",
 			to = 1,
 			t = 0.6,
-			go = slot5.gameObject
+			go = iter_9_1.gameObject
 		}))
-		slot7:addWork(slot8)
+		var_9_1:addWork(var_9_2)
 
-		if slot4 == #slot0.obj_list then
-			slot7:addWork(FunctionWork.New(function ()
-				uv0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = true
+		if iter_9_0 == #arg_9_0.obj_list then
+			var_9_1:addWork(FunctionWork.New(function()
+				arg_9_0._goContent:GetComponent(gohelper.Type_VerticalLayoutGroup).enabled = true
 			end))
 		end
 
-		slot0.parallel_sequence:addWork(slot7)
+		arg_9_0.parallel_sequence:addWork(var_9_1)
 	end
 
-	slot0.parallel_sequence:start({})
+	arg_9_0.parallel_sequence:start({})
 end
 
-function slot0._playAttrAni(slot0)
-	slot0._parallel_attr_sequence = slot0._parallel_attr_sequence or FlowParallel.New()
+function var_0_0._playAttrAni(arg_11_0)
+	arg_11_0._parallel_attr_sequence = arg_11_0._parallel_attr_sequence or FlowParallel.New()
 
-	for slot4 = 1, #slot0._attr_ani_tab do
-		slot5 = FlowParallel.New()
+	for iter_11_0 = 1, #arg_11_0._attr_ani_tab do
+		local var_11_0 = FlowParallel.New()
 
-		for slot9, slot10 in ipairs(slot0._attr_ani_tab[slot4]) do
-			slot11 = FlowSequence.New()
+		for iter_11_1, iter_11_2 in ipairs(arg_11_0._attr_ani_tab[iter_11_0]) do
+			local var_11_1 = FlowSequence.New()
 
-			slot11:addWork(WorkWaitSeconds.New(0.06 * (slot9 - 1)))
+			var_11_1:addWork(WorkWaitSeconds.New(0.06 * (iter_11_1 - 1)))
 
-			slot12 = FlowParallel.New()
+			local var_11_2 = FlowParallel.New()
 
-			slot12:addWork(FunctionWork.New(function ()
-				gohelper.findChildComponent(uv0, "", gohelper.Type_CanvasGroup).alpha = 1
-				gohelper.findChildComponent(uv0, "", typeof(UnityEngine.Animator)).enabled = true
+			var_11_2:addWork(FunctionWork.New(function()
+				gohelper.findChildComponent(iter_11_2, "", gohelper.Type_CanvasGroup).alpha = 1
+				gohelper.findChildComponent(iter_11_2, "", typeof(UnityEngine.Animator)).enabled = true
 
-				gohelper.setActive(gohelper.findChild(uv0, "#new"), uv1._burst_effect_attr_tab[uv2][uv3])
+				gohelper.setActive(gohelper.findChild(iter_11_2, "#new"), arg_11_0._burst_effect_attr_tab[iter_11_0][iter_11_1])
 			end))
-			slot11:addWork(slot12)
-			slot5:addWork(slot11)
+			var_11_1:addWork(var_11_2)
+			var_11_0:addWork(var_11_1)
 		end
 
-		slot0._parallel_attr_sequence:addWork(slot5)
+		arg_11_0._parallel_attr_sequence:addWork(var_11_0)
 	end
 
-	slot0._parallel_attr_sequence:start({})
+	arg_11_0._parallel_attr_sequence:start({})
 end
 
-slot1 = {
-	slot0.DebrisType.Chess,
-	slot0.DebrisType.UnlockStyle
+local var_0_1 = {
+	var_0_0.DebrisType.Chess,
+	var_0_0.DebrisType.UnlockStyle
 }
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot0._attr_ani_tab[slot3] = slot0:getUserDataTb_()
-	slot0._burst_effect_attr_tab[slot3] = slot0:getUserDataTb_()
-	slot1.name = slot2.cube_id or "shape"
-	slot4 = slot1.transform
-	slot5 = slot4:Find("cell/cell_bg/click").gameObject
-	slot6 = slot4:Find("cell/cell_bg/icon"):GetComponent(gohelper.Type_Image)
-	slot7 = slot4:Find("cell/cell_bg"):GetComponent(gohelper.Type_Image)
-	slot17 = not LuaUtil.tableContains(uv0, slot2.up_type)
+function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_0._attr_ani_tab[arg_13_3] = arg_13_0:getUserDataTb_()
+	arg_13_0._burst_effect_attr_tab[arg_13_3] = arg_13_0:getUserDataTb_()
+	arg_13_1.name = arg_13_2.cube_id or "shape"
 
-	gohelper.setActive(slot4:Find("info/go_capacityTip").gameObject, slot2.up_type == uv1.DebrisType.Chess)
-	gohelper.setActive(slot4:Find("info/go_numTip").gameObject, slot17 and slot2.up_type == uv1.DebrisType.DebrisCount)
-	gohelper.setActive(slot4:Find("cell/go_new").gameObject, slot17 and slot2.new_debris)
-	gohelper.setActive(slot4:Find("info/attr").gameObject, slot17)
-	gohelper.setActive(slot4:Find("info/go_style").gameObject, slot2.up_type == uv1.DebrisType.UnlockStyle)
+	local var_13_0 = arg_13_1.transform
+	local var_13_1 = var_13_0:Find("cell/cell_bg/click").gameObject
+	local var_13_2 = var_13_0:Find("cell/cell_bg/icon"):GetComponent(gohelper.Type_Image)
+	local var_13_3 = var_13_0:Find("cell/cell_bg"):GetComponent(gohelper.Type_Image)
+	local var_13_4 = var_13_0:Find("info/go_style").gameObject
+	local var_13_5 = var_13_0:Find("info/go_style/txt_unlocked"):GetComponent(gohelper.Type_TextMesh)
+	local var_13_6 = var_13_0:Find("info/go_capacityTip").gameObject
+	local var_13_7 = var_13_0:Find("info/go_numTip").gameObject
+	local var_13_8 = var_13_0:Find("cell/go_new").gameObject
+	local var_13_9 = var_13_0:Find("info/attr").gameObject
+	local var_13_10 = var_13_0:Find("info/go_level").gameObject
+	local var_13_11 = var_13_0:Find("info/go_level/value"):GetComponent(gohelper.Type_TextMesh)
+	local var_13_12 = var_13_0:Find("info/go_level/addvalue"):GetComponent(gohelper.Type_TextMesh)
+	local var_13_13 = not LuaUtil.tableContains(var_0_1, arg_13_2.up_type)
 
-	slot4:Find("info/go_style/txt_unlocked"):GetComponent(gohelper.Type_TextMesh).text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("talent_levelup_unlockstyle"), "#eea259", luaLang("talent_style_title_cn_" .. CharacterEnum.TalentTxtByHeroType[slot0.hero_mo_data.config.heroType]))
+	gohelper.setActive(var_13_6, arg_13_2.up_type == var_0_0.DebrisType.Chess)
+	gohelper.setActive(var_13_7, var_13_13 and arg_13_2.up_type == var_0_0.DebrisType.DebrisCount)
+	gohelper.setActive(var_13_8, var_13_13 and arg_13_2.new_debris)
+	gohelper.setActive(var_13_9, var_13_13)
+	gohelper.setActive(var_13_4, arg_13_2.up_type == var_0_0.DebrisType.UnlockStyle)
 
-	if slot2.up_type == uv1.DebrisType.Exclusive then
-		gohelper.setActive(slot4:Find("info/go_level").gameObject, true)
+	local var_13_14 = luaLang("talent_style_title_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_13_0.hero_mo_data.config.heroType])
 
-		slot4:Find("info/go_level/value"):GetComponent(gohelper.Type_TextMesh).text = "Lv." .. slot2.target_value_tab[2]
-		slot4:Find("info/go_level/addvalue"):GetComponent(gohelper.Type_TextMesh).text = "+" .. slot2.value[2]
-	elseif slot2.up_type == uv1.DebrisType.DebrisLevel then
-		gohelper.setActive(slot14, true)
+	var_13_5.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("talent_levelup_unlockstyle"), "#eea259", var_13_14)
 
-		slot15.text = "Lv." .. slot2.target_value_tab[2]
-		slot16.text = "+" .. slot2.value[2]
-	elseif slot2.up_type == uv1.DebrisType.DebrisCountAndLevel then
-		gohelper.setActive(slot14, true)
+	if arg_13_2.up_type == var_0_0.DebrisType.Exclusive then
+		gohelper.setActive(var_13_10, true)
 
-		slot15.text = "Lv." .. slot2.target_value_tab[2]
-		slot16.text = "+" .. slot2.value[2]
+		var_13_11.text = "Lv." .. arg_13_2.target_value_tab[2]
+		var_13_12.text = "+" .. arg_13_2.value[2]
+	elseif arg_13_2.up_type == var_0_0.DebrisType.DebrisLevel then
+		gohelper.setActive(var_13_10, true)
+
+		var_13_11.text = "Lv." .. arg_13_2.target_value_tab[2]
+		var_13_12.text = "+" .. arg_13_2.value[2]
+	elseif arg_13_2.up_type == var_0_0.DebrisType.DebrisCountAndLevel then
+		gohelper.setActive(var_13_10, true)
+
+		var_13_11.text = "Lv." .. arg_13_2.target_value_tab[2]
+		var_13_12.text = "+" .. arg_13_2.value[2]
 	else
-		gohelper.setActive(slot14, false)
+		gohelper.setActive(var_13_10, false)
 	end
 
-	if slot2.new_debris then
-		slot16.text = ""
+	if arg_13_2.new_debris then
+		var_13_12.text = ""
 	end
 
-	if slot14.activeInHierarchy then
-		table.insert(slot0._attr_ani_tab[slot3], slot14)
-		table.insert(slot0._burst_effect_attr_tab[slot3], false)
+	if var_13_10.activeInHierarchy then
+		table.insert(arg_13_0._attr_ani_tab[arg_13_3], var_13_10)
+		table.insert(arg_13_0._burst_effect_attr_tab[arg_13_3], false)
 	end
 
-	if slot10.activeInHierarchy then
-		table.insert(slot0._attr_ani_tab[slot3], slot10)
-		table.insert(slot0._burst_effect_attr_tab[slot3], false)
+	if var_13_6.activeInHierarchy then
+		table.insert(arg_13_0._attr_ani_tab[arg_13_3], var_13_6)
+		table.insert(arg_13_0._burst_effect_attr_tab[arg_13_3], false)
 	end
 
-	if slot11.activeInHierarchy then
-		table.insert(slot0._attr_ani_tab[slot3], slot11)
-		table.insert(slot0._burst_effect_attr_tab[slot3], false)
+	if var_13_7.activeInHierarchy then
+		table.insert(arg_13_0._attr_ani_tab[arg_13_3], var_13_7)
+		table.insert(arg_13_0._burst_effect_attr_tab[arg_13_3], false)
 	end
 
-	for slot23, slot24 in ipairs(slot0._attr_ani_tab[slot3]) do
-		gohelper.findChildComponent(slot24, "", typeof(UnityEngine.Animator)).enabled = false
-		gohelper.findChildComponent(slot24, "", gohelper.Type_CanvasGroup).alpha = 0
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._attr_ani_tab[arg_13_3]) do
+		gohelper.findChildComponent(iter_13_1, "", typeof(UnityEngine.Animator)).enabled = false
+		gohelper.findChildComponent(iter_13_1, "", gohelper.Type_CanvasGroup).alpha = 0
 	end
 
-	if slot2.up_type == uv1.DebrisType.Chess then
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot6, "icon_danao", true)
+	if arg_13_2.up_type == var_0_0.DebrisType.Chess then
+		UISpriteSetMgr.instance:setCharacterTalentSprite(var_13_2, "icon_danao", true)
 
-		slot7.enabled = false
-		slot10.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_capacity_up")
-		slot10.transform:Find("name/value"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(slot0.old_model_config.allShape, ",", luaLang("multiple"))
-		slot10.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(slot2.value, ",", luaLang("multiple"))
+		var_13_3.enabled = false
+		var_13_6.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_capacity_up")
+		var_13_6.transform:Find("name/value"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(arg_13_0.old_model_config.allShape, ",", luaLang("multiple"))
+		var_13_6.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(arg_13_2.value, ",", luaLang("multiple"))
 
-		for slot26 = 1, HeroResonanceConfig.instance:getTalentModelShapeMaxLevel(slot0.hero_mo_data.heroId) do
-			({
-				[slot26] = {}
-			})[slot26].cur_level = HeroResonanceConfig.instance:getCurTalentModelShapeLevel(slot0.hero_mo_data.heroId, slot0.target_lv)
+		local var_13_15 = {}
+		local var_13_16 = HeroResonanceConfig.instance:getTalentModelShapeMaxLevel(arg_13_0.hero_mo_data.heroId)
+		local var_13_17 = HeroResonanceConfig.instance:getCurTalentModelShapeLevel(arg_13_0.hero_mo_data.heroId, arg_13_0.target_lv)
+
+		for iter_13_2 = 1, var_13_16 do
+			var_13_15[iter_13_2] = {}
+			var_13_15[iter_13_2].cur_level = var_13_17
 		end
-	elseif slot2.up_type ~= uv1.DebrisType.UnlockStyle then
-		if not HeroConfig.instance:getTalentCubeAttrConfig(slot2.cube_id, slot2.target_value_tab[2]) then
-			logError(slot2.cube_id, slot2.target_value_tab[2])
-		end
+	elseif arg_13_2.up_type == var_0_0.DebrisType.UnlockStyle then
+		-- block empty
+	else
+		local var_13_18 = HeroConfig.instance:getTalentCubeAttrConfig(arg_13_2.cube_id, arg_13_2.target_value_tab[2])
 
-		slot25 = slot2.cube_id
-
-		for slot25 = 1, HeroConfig.instance:getTalentCubeMaxLevel(slot25) do
-			({
-				[slot25] = {}
-			})[slot25].cur_level = slot20.level
-		end
-
-		if slot2.up_type == uv1.DebrisType.DebrisCount or slot2.up_type == uv1.DebrisType.DebrisCountAndLevel then
-			slot11.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_cube_count_up")
-			slot11.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = slot2.target_value_tab[1]
-			slot11.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = "+" .. slot2.value[1]
+		if not var_13_18 then
+			logError(arg_13_2.cube_id, arg_13_2.target_value_tab[2])
 		end
 
-		slot0.hero_mo_data:getTalentStyleCubeAttr(slot2.cube_id, {}, nil, , slot2.target_value_tab[2])
+		local var_13_19 = {}
 
-		if (slot2.up_type == uv1.DebrisType.Exclusive or slot2.up_type == uv1.DebrisType.DebrisCountAndLevel or slot2.up_type == uv1.DebrisType.DebrisLevel) and slot2.old_value_tab[2] then
-			slot0.hero_mo_data:getTalentStyleCubeAttr(slot2.cube_id, {}, nil, , slot2.old_value_tab[2] or 0)
+		for iter_13_3 = 1, HeroConfig.instance:getTalentCubeMaxLevel(arg_13_2.cube_id) do
+			var_13_19[iter_13_3] = {}
+			var_13_19[iter_13_3].cur_level = var_13_18.level
 		end
 
-		slot24 = {}
-		slot25 = HeroConfig.instance:getTalentCubeAttrConfig(slot2.cube_id, slot2.old_value_tab[2]) or slot20
+		if arg_13_2.up_type == var_0_0.DebrisType.DebrisCount or arg_13_2.up_type == var_0_0.DebrisType.DebrisCountAndLevel then
+			var_13_7.transform:Find("name"):GetComponent(gohelper.Type_TextMesh).text = luaLang("talent_cube_count_up")
+			var_13_7.transform:Find("value"):GetComponent(gohelper.Type_TextMesh).text = arg_13_2.target_value_tab[1]
+			var_13_7.transform:Find("addvalue"):GetComponent(gohelper.Type_TextMesh).text = "+" .. arg_13_2.value[1]
+		end
 
-		for slot29, slot30 in pairs(slot22) do
-			slot31 = 0
-			slot32 = false
+		local var_13_20 = {}
 
-			if slot23[slot29] then
-				slot31 = slot30 - slot23[slot29]
+		arg_13_0.hero_mo_data:getTalentStyleCubeAttr(arg_13_2.cube_id, var_13_20, nil, nil, arg_13_2.target_value_tab[2])
+
+		local var_13_21 = {}
+
+		if (arg_13_2.up_type == var_0_0.DebrisType.Exclusive or arg_13_2.up_type == var_0_0.DebrisType.DebrisCountAndLevel or arg_13_2.up_type == var_0_0.DebrisType.DebrisLevel) and arg_13_2.old_value_tab[2] then
+			arg_13_0.hero_mo_data:getTalentStyleCubeAttr(arg_13_2.cube_id, var_13_21, nil, nil, arg_13_2.old_value_tab[2] or 0)
+		end
+
+		local var_13_22 = {}
+		local var_13_23 = HeroConfig.instance:getTalentCubeAttrConfig(arg_13_2.cube_id, arg_13_2.old_value_tab[2]) or var_13_18
+
+		for iter_13_4, iter_13_5 in pairs(var_13_20) do
+			local var_13_24 = 0
+			local var_13_25 = false
+
+			if var_13_21[iter_13_4] then
+				var_13_24 = iter_13_5 - var_13_21[iter_13_4]
 			else
-				slot32 = true
+				var_13_25 = true
 			end
 
-			table.insert(slot24, {
-				is_new_attr = slot32,
-				debris_index = slot3,
-				key = slot29,
-				value = slot30,
-				add_value = slot31,
-				is_special = slot20.calculateType == 1,
-				config = slot20,
-				old_attr_config = slot25
+			table.insert(var_13_22, {
+				is_new_attr = var_13_25,
+				debris_index = arg_13_3,
+				key = iter_13_4,
+				value = iter_13_5,
+				add_value = var_13_24,
+				is_special = var_13_18.calculateType == 1,
+				config = var_13_18,
+				old_attr_config = var_13_23
 			})
 		end
 
-		table.sort(slot24, function (slot0, slot1)
-			return HeroConfig.instance:getIDByAttrType(slot0.key) < HeroConfig.instance:getIDByAttrType(slot1.key)
+		table.sort(var_13_22, function(arg_14_0, arg_14_1)
+			return HeroConfig.instance:getIDByAttrType(arg_14_0.key) < HeroConfig.instance:getIDByAttrType(arg_14_1.key)
 		end)
-		gohelper.CreateObjList(slot0, slot0._onShowSingleCubeAttr, slot24, slot13, slot13.transform:Find("go_attrItem").gameObject)
+		gohelper.CreateObjList(arg_13_0, arg_13_0._onShowSingleCubeAttr, var_13_22, var_13_9, var_13_9.transform:Find("go_attrItem").gameObject)
 
-		slot27 = string.split(HeroResonanceConfig.instance:getCubeConfig(slot2.cube_id).icon, "_")
+		local var_13_26 = HeroResonanceConfig.instance:getCubeConfig(arg_13_2.cube_id).icon
+		local var_13_27 = string.split(var_13_26, "_")
+		local var_13_28 = "gz_" .. var_13_27[#var_13_27]
 
-		if slot0._mainCubeId == slot2.cube_id and slot0.hero_mo_data:getHeroUseStyleCubeId() ~= slot0._mainCubeId and HeroResonanceConfig.instance:getCubeConfig(slot29) and not string.nilorempty(slot30.icon) then
-			slot26 = "mk_" .. slot31
-			slot28 = "gz_" .. slot27[#slot27] .. "_2"
+		if arg_13_0._mainCubeId == arg_13_2.cube_id then
+			local var_13_29 = arg_13_0.hero_mo_data:getHeroUseStyleCubeId()
+
+			if var_13_29 ~= arg_13_0._mainCubeId then
+				local var_13_30 = HeroResonanceConfig.instance:getCubeConfig(var_13_29)
+
+				if var_13_30 then
+					local var_13_31 = var_13_30.icon
+
+					if not string.nilorempty(var_13_31) then
+						var_13_26 = "mk_" .. var_13_31
+						var_13_28 = var_13_28 .. "_2"
+					end
+				end
+			end
 		end
 
-		slot7.enabled = true
+		var_13_3.enabled = true
 
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot6, slot26, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot7, slot28, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(var_13_2, var_13_26, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(var_13_3, var_13_28, true)
 	end
 
-	table.insert(slot0.obj_list, slot4)
+	table.insert(arg_13_0.obj_list, var_13_0)
 
-	if slot2.up_type ~= uv1.DebrisType.Chess and slot2.new_debris then
-		slot0:_setNewTipPos(slot12, slot2.cube_id)
+	if arg_13_2.up_type ~= var_0_0.DebrisType.Chess and arg_13_2.new_debris then
+		arg_13_0:_setNewTipPos(var_13_8, arg_13_2.cube_id)
 	end
 end
 
-function slot0._setNewTipPos(slot0, slot1, slot2)
-	if HeroResonanceConfig.instance:getCubeConfig(slot2).shape == nil then
+function var_0_0._setNewTipPos(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = HeroResonanceConfig.instance:getCubeConfig(arg_15_2).shape
+
+	if var_15_0 == nil then
 		return
 	end
 
-	slot5 = string.splitToNumber(string.split(slot3, "#")[1], ",")
+	local var_15_1 = string.split(var_15_0, "#")[1]
+	local var_15_2 = string.splitToNumber(var_15_1, ",")
+	local var_15_3 = var_15_2[#var_15_2] == 0
 
-	recthelper.setAnchorY(slot1.transform, slot5[#slot5] == 0 and 1.4 or 13.3)
+	recthelper.setAnchorY(arg_15_1.transform, var_15_3 and 1.4 or 13.3)
 end
 
-function slot0._onDebrisStarItemShow(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.transform:Find("lighticon").gameObject, slot3 <= slot2.cur_level)
+function var_0_0._onDebrisStarItemShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_1.transform
+
+	gohelper.setActive(var_16_0:Find("lighticon").gameObject, arg_16_3 <= arg_16_2.cur_level)
 end
 
-function slot0._onShowSingleCubeAttr(slot0, slot1, slot2, slot3)
-	slot4 = slot1.transform
-	slot7 = slot4:Find("value"):GetComponent(gohelper.Type_TextMesh)
-	slot8 = slot4:Find("addvalue"):GetComponent(gohelper.Type_TextMesh)
-	slot9 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(slot2.key))
-	slot4:Find("name"):GetComponent(gohelper.Type_TextMesh).text = slot9.name
+function var_0_0._onShowSingleCubeAttr(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = arg_17_1.transform
+	local var_17_1 = var_17_0:Find("icon"):GetComponent(gohelper.Type_Image)
+	local var_17_2 = var_17_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local var_17_3 = var_17_0:Find("value"):GetComponent(gohelper.Type_TextMesh)
+	local var_17_4 = var_17_0:Find("addvalue"):GetComponent(gohelper.Type_TextMesh)
+	local var_17_5 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(arg_17_2.key))
 
-	UISpriteSetMgr.instance:setCommonSprite(slot4:Find("icon"):GetComponent(gohelper.Type_Image), "icon_att_" .. slot9.id)
+	var_17_2.text = var_17_5.name
 
-	slot10 = slot2.add_value
+	UISpriteSetMgr.instance:setCommonSprite(var_17_1, "icon_att_" .. var_17_5.id)
 
-	if slot9.type ~= 1 then
-		slot2.value = slot2.value / 10 .. "%"
-		slot2.add_value = slot2.add_value / 10 .. "%"
-	elseif not slot2.is_special then
-		slot2.value = slot2.config[slot2.key] / 10 .. "%"
-		slot2.add_value = (slot2.config[slot2.key] - slot2.old_attr_config[slot2.key]) / 10 .. "%"
+	local var_17_6 = arg_17_2.add_value
+
+	if var_17_5.type ~= 1 then
+		arg_17_2.value = arg_17_2.value / 10 .. "%"
+		arg_17_2.add_value = arg_17_2.add_value / 10 .. "%"
+	elseif not arg_17_2.is_special then
+		arg_17_2.value = arg_17_2.config[arg_17_2.key] / 10 .. "%"
+		arg_17_2.add_value = (arg_17_2.config[arg_17_2.key] - arg_17_2.old_attr_config[arg_17_2.key]) / 10 .. "%"
 	else
-		slot2.value = math.floor(slot2.value)
-		slot2.add_value = math.floor(slot2.add_value)
+		arg_17_2.value = math.floor(arg_17_2.value)
+		arg_17_2.add_value = math.floor(arg_17_2.add_value)
 	end
 
-	slot7.text = slot2.value
-	slot8.text = slot10 == 0 and "" or "+" .. slot2.add_value
-	gohelper.findChildComponent(slot1, "", typeof(UnityEngine.Animator)).enabled = false
-	gohelper.findChildComponent(slot1, "", gohelper.Type_CanvasGroup).alpha = 0
+	var_17_3.text = arg_17_2.value
+	var_17_4.text = var_17_6 == 0 and "" or "+" .. arg_17_2.add_value
+	gohelper.findChildComponent(arg_17_1, "", typeof(UnityEngine.Animator)).enabled = false
+	gohelper.findChildComponent(arg_17_1, "", gohelper.Type_CanvasGroup).alpha = 0
 
-	table.insert(slot0._attr_ani_tab[slot2.debris_index], slot1)
-	table.insert(slot0._burst_effect_attr_tab[slot2.debris_index], slot2.is_new_attr)
+	table.insert(arg_17_0._attr_ani_tab[arg_17_2.debris_index], arg_17_1)
+	table.insert(arg_17_0._burst_effect_attr_tab[arg_17_2.debris_index], arg_17_2.is_new_attr)
 end
 
-function slot0._onCubeClick(slot0, slot1)
-	if slot1.name ~= "shape" then
+function var_0_0._onCubeClick(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_1.name
+
+	if var_18_0 ~= "shape" then
 		AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_property_click)
+
+		local var_18_1 = tonumber(var_18_0)
+
 		CharacterController.instance:openCharacterTalentTipView({
 			open_type = 1,
-			hero_id = slot0.hero_id,
-			cube_id = tonumber(slot2)
+			hero_id = arg_18_0.hero_id,
+			cube_id = var_18_1
 		})
 	end
 end
 
-function slot0.onClose(slot0)
-	if slot0.parallel_sequence then
-		slot0.parallel_sequence:destroy()
+function var_0_0.onClose(arg_19_0)
+	if arg_19_0.parallel_sequence then
+		arg_19_0.parallel_sequence:destroy()
 	end
 
-	if slot0._parallel_attr_sequence then
-		slot0._parallel_attr_sequence:destroy()
+	if arg_19_0._parallel_attr_sequence then
+		arg_19_0._parallel_attr_sequence:destroy()
 	end
 
-	TaskDispatcher.cancelTask(slot0._playScrollTween, slot0)
-	TaskDispatcher.cancelTask(slot0._playAttrAni, slot0)
+	TaskDispatcher.cancelTask(arg_19_0._playScrollTween, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._playAttrAni, arg_19_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

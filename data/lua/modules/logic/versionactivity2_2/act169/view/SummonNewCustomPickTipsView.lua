@@ -1,104 +1,109 @@
-module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickTipsView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act169.view.SummonNewCustomPickTipsView", package.seeall)
 
-slot0 = class("SummonNewCustomPickTipsView", BaseView)
+local var_0_0 = class("SummonNewCustomPickTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bg2")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._btncloseBg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeBg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg2")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._btncloseBg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeBg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btncloseBg:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, slot0.refreshUI, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btncloseBg:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_2_0.refreshUI, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btncloseBg:RemoveClickListener()
-	slot0:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, slot0.refreshUI, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btncloseBg:RemoveClickListener()
+	arg_3_0:removeEventCb(SummonNewCustomPickChoiceController.instance, SummonNewCustomPickEvent.OnCustomPickListChanged, arg_3_0.refreshUI, arg_3_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._noGainHeroes = {}
-	slot0._ownHeroes = {}
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem")
-	slot0._goNoGain = gohelper.findChild(slot0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/#go_nogain")
-	slot0._goOwn = gohelper.findChild(slot0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/#go_own")
-	slot0._goTitleNoGain = gohelper.findChild(slot0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/Title1")
-	slot0._goTitleOwn = gohelper.findChild(slot0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/Title2")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._noGainHeroes = {}
+	arg_5_0._ownHeroes = {}
+	arg_5_0._gobg = gohelper.findChild(arg_5_0.viewGO, "bg")
+	arg_5_0._goitem = gohelper.findChild(arg_5_0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/selfselectsixchoiceitem")
+	arg_5_0._gocontent = gohelper.findChild(arg_5_0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem")
+	arg_5_0._goNoGain = gohelper.findChild(arg_5_0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/#go_nogain")
+	arg_5_0._goOwn = gohelper.findChild(arg_5_0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/#go_own")
+	arg_5_0._goTitleNoGain = gohelper.findChild(arg_5_0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/Title1")
+	arg_5_0._goTitleOwn = gohelper.findChild(arg_5_0.viewGO, "root/#scroll_rule/Viewport/#go_storeItem/Title2")
 
-	gohelper.setActive(slot0._goitem, false)
+	gohelper.setActive(arg_5_0._goitem, false)
 
-	slot0._tfcontent = slot0._gocontent.transform
+	arg_5_0._tfcontent = arg_5_0._gocontent.transform
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	logNormal("SummonCustomPickChoiceList onOpen")
-	slot0:refreshUI()
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshList()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshList()
 end
 
-function slot0.refreshList(slot0)
-	slot0:refreshItems(SummonNewCustomPickChoiceListModel.instance.noGainList, slot0._noGainHeroes, slot0._goNoGain, slot0._goTitleNoGain)
-	slot0:refreshItems(SummonNewCustomPickChoiceListModel.instance.ownList, slot0._ownHeroes, slot0._goOwn, slot0._goTitleOwn)
-	ZProj.UGUIHelper.RebuildLayout(slot0._tfcontent)
+function var_0_0.refreshList(arg_9_0)
+	arg_9_0:refreshItems(SummonNewCustomPickChoiceListModel.instance.noGainList, arg_9_0._noGainHeroes, arg_9_0._goNoGain, arg_9_0._goTitleNoGain)
+	arg_9_0:refreshItems(SummonNewCustomPickChoiceListModel.instance.ownList, arg_9_0._ownHeroes, arg_9_0._goOwn, arg_9_0._goTitleOwn)
+	ZProj.UGUIHelper.RebuildLayout(arg_9_0._tfcontent)
 end
 
-function slot0.refreshItems(slot0, slot1, slot2, slot3, slot4)
-	if slot1 and #slot1 > 0 then
-		gohelper.setActive(slot3, true)
-		gohelper.setActive(slot4, true)
+function var_0_0.refreshItems(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if arg_10_1 and #arg_10_1 > 0 then
+		gohelper.setActive(arg_10_3, true)
+		gohelper.setActive(arg_10_4, true)
 
-		for slot8, slot9 in ipairs(slot1) do
-			slot0:getOrCreateItem(slot8, slot2, slot3).component:onUpdateMO(slot9)
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+			arg_10_0:getOrCreateItem(iter_10_0, arg_10_2, arg_10_3).component:onUpdateMO(iter_10_1)
 		end
 	else
-		gohelper.setActive(slot3, false)
-		gohelper.setActive(slot4, false)
+		gohelper.setActive(arg_10_3, false)
+		gohelper.setActive(arg_10_4, false)
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1, slot2, slot3)
-	if not slot2[slot1] then
-		slot4 = slot0:getUserDataTb_()
-		slot4.go = gohelper.clone(slot0._goitem, slot3, "item" .. tostring(slot1))
+function var_0_0.getOrCreateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = arg_11_2[arg_11_1]
 
-		gohelper.setActive(slot4.go, true)
+	if not var_11_0 then
+		var_11_0 = arg_11_0:getUserDataTb_()
+		var_11_0.go = gohelper.clone(arg_11_0._goitem, arg_11_3, "item" .. tostring(arg_11_1))
 
-		slot4.component = MonoHelper.addNoUpdateLuaComOnceToGo(slot4.go, SummonNewCustomPickChoiceItem)
+		gohelper.setActive(var_11_0.go, true)
 
-		slot4.component:init(slot4.go)
-		slot4.component:addEvents()
+		var_11_0.component = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0.go, SummonNewCustomPickChoiceItem)
 
-		slot2[slot1] = slot4
+		var_11_0.component:init(var_11_0.go)
+		var_11_0.component:addEvents()
+
+		arg_11_2[arg_11_1] = var_11_0
 	end
 
-	return slot4
+	return var_11_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

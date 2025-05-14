@@ -1,59 +1,65 @@
-module("modules.logic.player.view.UIDView", package.seeall)
+﻿module("modules.logic.player.view.UIDView", package.seeall)
 
-slot0 = class("UIDView", UserDataDispose)
-slot3 = 2.25 - 1.7777777777777777
-slot4 = 56
-slot5 = 135
+local var_0_0 = class("UIDView", UserDataDispose)
+local var_0_1 = 1.7777777777777777
+local var_0_2 = 2.25 - var_0_1
+local var_0_3 = 56
+local var_0_4 = 135
 
-function slot0.getInstance()
-	if not uv0.instance then
-		uv0.instance = uv0.New()
+function var_0_0.getInstance()
+	if not var_0_0.instance then
+		var_0_0.instance = var_0_0.New()
 
-		uv0.instance:__onInit()
+		var_0_0.instance:__onInit()
 	end
 
-	return uv0.instance
+	return var_0_0.instance
 end
 
-function slot0.hidePlayerId(slot0)
-	if slot0._txtId then
-		slot0._txtId.text = ""
+function var_0_0.hidePlayerId(arg_2_0)
+	if arg_2_0._txtId then
+		arg_2_0._txtId.text = ""
 	end
 end
 
-function slot0.showPlayerId(slot0)
-	if not slot0._txtId then
-		slot0:loadPrefab()
+function var_0_0.showPlayerId(arg_3_0)
+	if not arg_3_0._txtId then
+		arg_3_0:loadPrefab()
 
 		return
 	end
 
-	slot0._txtId.text = "ID : " .. PlayerModel.instance:getMyUserId()
+	arg_3_0._txtId.text = "ID : " .. PlayerModel.instance:getMyUserId()
 end
 
-function slot0.loadPrefab(slot0)
-	if slot0.loader then
+function var_0_0.loadPrefab(arg_4_0)
+	if arg_4_0.loader then
 		return
 	end
 
-	slot0.loader = PrefabInstantiate.Create(gohelper.find("IDCanvas/POPUP"))
+	local var_4_0 = "ui/viewres/common/uid.prefab"
+	local var_4_1 = gohelper.find("IDCanvas/POPUP")
 
-	slot0.loader:startLoad("ui/viewres/common/uid.prefab", slot0.loadedCallback, slot0)
+	arg_4_0.loader = PrefabInstantiate.Create(var_4_1)
+
+	arg_4_0.loader:startLoad(var_4_0, arg_4_0.loadedCallback, arg_4_0)
 end
 
-function slot0.loadedCallback(slot0)
-	slot0.tr = slot0.loader:getInstGO().transform
-	slot0._txtId = gohelper.findChildText(slot0.loader:getInstGO(), "#txt_id")
+function var_0_0.loadedCallback(arg_5_0)
+	arg_5_0.tr = arg_5_0.loader:getInstGO().transform
+	arg_5_0._txtId = gohelper.findChildText(arg_5_0.loader:getInstGO(), "#txt_id")
 
-	slot0:showPlayerId()
-	slot0:setAnchorPos()
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0.setAnchorPos, slot0)
+	arg_5_0:showPlayerId()
+	arg_5_0:setAnchorPos()
+	arg_5_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_5_0.setAnchorPos, arg_5_0)
 end
 
-function slot0.setAnchorPos(slot0)
-	slot1, slot2 = GameGlobalMgr.instance:getScreenState():getScreenSize()
+function var_0_0.setAnchorPos(arg_6_0)
+	local var_6_0, var_6_1 = GameGlobalMgr.instance:getScreenState():getScreenSize()
+	local var_6_2 = (var_6_0 / var_6_1 - var_0_1) / var_0_2
+	local var_6_3 = Mathf.Lerp(var_0_3, var_0_4, var_6_2)
 
-	recthelper.setAnchorX(slot0.tr, Mathf.Lerp(uv2, uv3, (slot1 / slot2 - uv0) / uv1))
+	recthelper.setAnchorX(arg_6_0.tr, var_6_3)
 end
 
-return slot0
+return var_0_0

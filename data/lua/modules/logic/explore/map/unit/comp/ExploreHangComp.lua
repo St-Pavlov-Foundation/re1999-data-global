@@ -1,30 +1,38 @@
-module("modules.logic.explore.map.unit.comp.ExploreHangComp", package.seeall)
+﻿module("modules.logic.explore.map.unit.comp.ExploreHangComp", package.seeall)
 
-slot0 = class("ExploreHangComp", LuaCompBase)
+local var_0_0 = class("ExploreHangComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.unit = slot1
-	slot0.hangList = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.unit = arg_1_1
+	arg_1_0.hangList = {}
 end
 
-function slot0.setup(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.setup(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 
-	for slot5, slot6 in pairs(slot0.hangList) do
-		slot0:addHang(slot5, slot6)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0.hangList) do
+		arg_2_0:addHang(iter_2_0, iter_2_1)
 	end
 end
 
-function slot0.addHang(slot0, slot1, slot2)
-	slot0.hangList[slot1] = slot2
+function var_0_0.addHang(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.hangList[arg_3_1] = arg_3_2
 
-	if slot0.go and gohelper.findChild(slot0.go, slot1) and PrefabInstantiate.Create(slot3):getPath() ~= slot2 then
-		slot4:startLoad(slot2)
+	if arg_3_0.go then
+		local var_3_0 = gohelper.findChild(arg_3_0.go, arg_3_1)
+
+		if var_3_0 then
+			local var_3_1 = PrefabInstantiate.Create(var_3_0)
+
+			if var_3_1:getPath() ~= arg_3_2 then
+				var_3_1:startLoad(arg_3_2)
+			end
+		end
 	end
 end
 
-function slot0.clear(slot0)
-	slot0.go = nil
+function var_0_0.clear(arg_4_0)
+	arg_4_0.go = nil
 end
 
-return slot0
+return var_0_0

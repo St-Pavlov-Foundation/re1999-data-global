@@ -1,122 +1,124 @@
-module("modules.logic.hotfix.controller.HotfixRuntimeCheckController", package.seeall)
+﻿module("modules.logic.hotfix.controller.HotfixRuntimeCheckController", package.seeall)
 
-slot0 = class("HotfixRuntimeCheckController", BaseController)
-slot0.NoInteractInterval = 600
-slot0.HotfixCheckInterval = 600
-slot1 = {
-	[610.0] = true,
-	[100.0] = true,
-	[110.0] = true,
-	[170.0] = true,
-	[410.0] = true
+local var_0_0 = class("HotfixRuntimeCheckController", BaseController)
+
+var_0_0.NoInteractInterval = 600
+var_0_0.HotfixCheckInterval = 600
+
+local var_0_1 = {
+	[610] = true,
+	[100] = true,
+	[110] = true,
+	[170] = true,
+	[410] = true
 }
 
-function slot0.onInit(slot0)
-	slot0.enableCheck = true
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.enableCheck = true
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_2_0)
 	logNormal("HotfixRuntimeCheckController addConstEvents")
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.handleOnOpenView, slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, slot0._handleSummonTabChange, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.OnSwitchTab, slot0._handleStoreTabChange, slot0)
-	slot0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, slot0._onTouchScreen, slot0)
-	TaskDispatcher.runRepeat(slot0._onTick, slot0, 10)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.handleOnOpenView, arg_2_0)
+	arg_2_0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_2_0._handleSummonTabChange, arg_2_0)
+	arg_2_0:addEventCb(StoreController.instance, StoreEvent.OnSwitchTab, arg_2_0._handleStoreTabChange, arg_2_0)
+	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_2_0._onTouchScreen, arg_2_0)
+	TaskDispatcher.runRepeat(arg_2_0._onTick, arg_2_0, 10)
 end
 
-function slot0.reInit(slot0)
-	slot0._lastCheckTime = nil
+function var_0_0.reInit(arg_3_0)
+	arg_3_0._lastCheckTime = nil
 
-	slot0:cleanFlow()
+	arg_3_0:cleanFlow()
 end
 
-function slot0.checkInitViewNames(slot0)
-	if ViewName and not slot0._focusViewNames then
-		slot0._focusViewNames = {
+function var_0_0.checkInitViewNames(arg_4_0)
+	if ViewName and not arg_4_0._focusViewNames then
+		arg_4_0._focusViewNames = {
 			[ViewName.SummonADView] = true,
 			[ViewName.StoreView] = true
 		}
 	end
 end
 
-function slot0.isViewNeedCheckVersion(slot0, slot1)
-	slot0:checkInitViewNames()
+function var_0_0.isViewNeedCheckVersion(arg_5_0, arg_5_1)
+	arg_5_0:checkInitViewNames()
 
-	if slot1 and slot0._focusViewNames and slot0._focusViewNames[slot1] then
+	if arg_5_1 and arg_5_0._focusViewNames and arg_5_0._focusViewNames[arg_5_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isTimeToCheckVersion(slot0)
-	return not slot0._lastCheckTime or uv0.HotfixCheckInterval < Time.time - slot0._lastCheckTime
+function var_0_0.isTimeToCheckVersion(arg_6_0)
+	return not arg_6_0._lastCheckTime or Time.time - arg_6_0._lastCheckTime > var_0_0.HotfixCheckInterval
 end
 
-function slot0._onTouchScreen(slot0)
-	slot0._lastInteractTime = Time.realtimeSinceStartup
+function var_0_0._onTouchScreen(arg_7_0)
+	arg_7_0._lastInteractTime = Time.realtimeSinceStartup
 end
 
-function slot0._onTick(slot0)
+function var_0_0._onTick(arg_8_0)
 	if not ViewMgr.instance:isOpen(ViewName.MainView) then
-		slot0._lastInteractTime = Time.realtimeSinceStartup
+		arg_8_0._lastInteractTime = Time.realtimeSinceStartup
 
 		return
 	end
 
-	slot1 = Time.realtimeSinceStartup
+	local var_8_0 = Time.realtimeSinceStartup
 
-	if slot0._lastInteractTime and uv0.NoInteractInterval < slot1 - slot0._lastInteractTime and slot0:isTimeToCheckVersion() then
-		slot0:checkNewVersion()
+	if arg_8_0._lastInteractTime and var_8_0 - arg_8_0._lastInteractTime > var_0_0.NoInteractInterval and arg_8_0:isTimeToCheckVersion() then
+		arg_8_0:checkNewVersion()
 
-		slot0._lastInteractTime = slot1
+		arg_8_0._lastInteractTime = var_8_0
 	end
 end
 
-function slot0.checkNewVersion(slot0)
-	if slot0.enableCheck and slot0:isTimeToCheckVersion() then
-		slot0._lastCheckTime = Time.time
+function var_0_0.checkNewVersion(arg_9_0)
+	if arg_9_0.enableCheck and arg_9_0:isTimeToCheckVersion() then
+		arg_9_0._lastCheckTime = Time.time
 
-		if not slot0._flowCheckVer then
-			slot0._flowCheckVer = FlowSequence.New()
+		if not arg_9_0._flowCheckVer then
+			arg_9_0._flowCheckVer = FlowSequence.New()
 
-			slot0._flowCheckVer:addWork(RuntimeCheckVersionWork.New())
-			slot0._flowCheckVer:registerDoneListener(slot0.handleCheckVersionFlowDone, slot0)
-			slot0._flowCheckVer:start()
+			arg_9_0._flowCheckVer:addWork(RuntimeCheckVersionWork.New())
+			arg_9_0._flowCheckVer:registerDoneListener(arg_9_0.handleCheckVersionFlowDone, arg_9_0)
+			arg_9_0._flowCheckVer:start()
 		end
 	end
 end
 
-function slot0.cleanFlow(slot0)
-	if slot0._flowCheckVer then
-		slot0._flowCheckVer:stop()
-		slot0._flowCheckVer:unregisterDoneListener(slot0.handleCheckVersionFlowDone, slot0)
+function var_0_0.cleanFlow(arg_10_0)
+	if arg_10_0._flowCheckVer then
+		arg_10_0._flowCheckVer:stop()
+		arg_10_0._flowCheckVer:unregisterDoneListener(arg_10_0.handleCheckVersionFlowDone, arg_10_0)
 
-		slot0._flowCheckVer = nil
+		arg_10_0._flowCheckVer = nil
 	end
 end
 
-function slot0.handleCheckVersionFlowDone(slot0, slot1)
-	logNormal("HotfixRuntimeCheckController CheckVersionFlowDone : " .. tostring(slot1))
-	slot0:cleanFlow()
+function var_0_0.handleCheckVersionFlowDone(arg_11_0, arg_11_1)
+	logNormal("HotfixRuntimeCheckController CheckVersionFlowDone : " .. tostring(arg_11_1))
+	arg_11_0:cleanFlow()
 end
 
-function slot0.handleOnOpenView(slot0, slot1)
-	if slot0:isViewNeedCheckVersion(slot1) then
-		slot0:checkNewVersion()
+function var_0_0.handleOnOpenView(arg_12_0, arg_12_1)
+	if arg_12_0:isViewNeedCheckVersion(arg_12_1) then
+		arg_12_0:checkNewVersion()
 	end
 end
 
-function slot0._handleSummonTabChange(slot0)
-	slot0:checkNewVersion()
+function var_0_0._handleSummonTabChange(arg_13_0)
+	arg_13_0:checkNewVersion()
 end
 
-function slot0._handleStoreTabChange(slot0, slot1)
-	if slot1 and uv0[slot1.id] then
-		slot0:checkNewVersion()
+function var_0_0._handleStoreTabChange(arg_14_0, arg_14_1)
+	if arg_14_1 and var_0_1[arg_14_1.id] then
+		arg_14_0:checkNewVersion()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

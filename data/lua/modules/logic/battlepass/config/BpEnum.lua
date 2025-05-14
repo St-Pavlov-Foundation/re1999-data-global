@@ -1,23 +1,24 @@
-module("modules.logic.battlepass.config.BpEnum", package.seeall)
+﻿module("modules.logic.battlepass.config.BpEnum", package.seeall)
 
-slot0 = _M
-slot0.PayStatus = {
+local var_0_0 = _M
+
+var_0_0.PayStatus = {
 	Pay1 = 1,
 	Pay2 = 2,
 	NotPay = 0
 }
-slot0.ScoreItemId = 970001
-slot0.LevelUpMinTime = 2
-slot0.LevelUpTotalTime = 5
-slot0.TaskGetAnimTime = 0.43
-slot0.TaskMaskTime = 0.6
-slot0.BonusTweenMin = 5
-slot0.BonusTweenTime = 3.5
-slot0.AddScoreTime = 1
-slot0.ButtonName = {
+var_0_0.ScoreItemId = 970001
+var_0_0.LevelUpMinTime = 2
+var_0_0.LevelUpTotalTime = 5
+var_0_0.TaskGetAnimTime = 0.43
+var_0_0.TaskMaskTime = 0.6
+var_0_0.BonusTweenMin = 5
+var_0_0.BonusTweenTime = 3.5
+var_0_0.AddScoreTime = 1
+var_0_0.ButtonName = {
 	Goto = "前往解锁",
 	Close = "关闭",
 	CloseBg = "空白处关闭"
 }
 
-return slot0
+return var_0_0

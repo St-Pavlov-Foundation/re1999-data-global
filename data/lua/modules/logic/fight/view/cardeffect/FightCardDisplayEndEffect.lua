@@ -1,53 +1,62 @@
-module("modules.logic.fight.view.cardeffect.FightCardDisplayEndEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardDisplayEndEffect", package.seeall)
 
-slot0 = class("FightCardDisplayEndEffect", BaseWork)
-slot2 = 1 * 0.033
+local var_0_0 = class("FightCardDisplayEndEffect", BaseWork)
+local var_0_1 = 1
+local var_0_2 = var_0_1 * 0.033
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._dt = uv1 / FightModel.instance:getUISpeed()
-	slot0._flow = FlowSequence.New()
+	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
+	arg_1_0._flow = FlowSequence.New()
 
-	if slot1.skillItemGO then
-		slot0._flow:addWork(TweenWork.New({
+	if arg_1_1.skillItemGO then
+		local var_1_0 = TweenWork.New({
 			from = 1,
 			type = "DOFadeCanvasGroup",
 			to = 0,
-			go = slot1.skillItemGO,
-			t = slot0._dt * 5
-		}))
+			go = arg_1_1.skillItemGO,
+			t = arg_1_0._dt * 5
+		})
+
+		arg_1_0._flow:addWork(var_1_0)
 	end
 
-	slot3 = slot1.skillTipsGO.transform
-
-	slot0._flow:addWork(TweenWork.New({
+	local var_1_1 = arg_1_1.waitingAreaGO.transform
+	local var_1_2 = arg_1_1.skillTipsGO.transform
+	local var_1_3 = recthelper.getWidth(var_1_1) + recthelper.getWidth(var_1_2)
+	local var_1_4 = TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = slot3,
-		to = recthelper.getWidth(slot1.waitingAreaGO.transform) + recthelper.getWidth(slot3),
-		t = slot0._dt * 3
-	}))
-	slot0._flow:addWork(FunctionWork.New(function ()
-		gohelper.setActive(uv0.skillItemGO, false)
-		gohelper.setActive(uv0.skillTipsGO, false)
-	end))
-	slot0._flow:registerDoneListener(slot0._onWorkDone, slot0)
-	slot0._flow:start()
+		tr = var_1_2,
+		to = var_1_3,
+		t = arg_1_0._dt * 3
+	})
+
+	arg_1_0._flow:addWork(var_1_4)
+
+	local var_1_5 = FunctionWork.New(function()
+		gohelper.setActive(arg_1_1.skillItemGO, false)
+		gohelper.setActive(arg_1_1.skillTipsGO, false)
+	end)
+
+	arg_1_0._flow:addWork(var_1_5)
+	arg_1_0._flow:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
+	arg_1_0._flow:start()
 end
 
-function slot0.onStop(slot0)
-	uv0.super.onStop(slot0)
+function var_0_0.onStop(arg_3_0)
+	var_0_0.super.onStop(arg_3_0)
 
-	if slot0._flow then
-		slot0._flow:unregisterDoneListener(slot0._onWorkDone, slot0)
-		slot0._flow:stop()
+	if arg_3_0._flow then
+		arg_3_0._flow:unregisterDoneListener(arg_3_0._onWorkDone, arg_3_0)
+		arg_3_0._flow:stop()
 
-		slot0._flow = nil
+		arg_3_0._flow = nil
 	end
 end
 
-function slot0._onWorkDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onWorkDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-return slot0
+return var_0_0

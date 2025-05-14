@@ -1,213 +1,258 @@
-module("modules.ugui.icon.IconMgr", package.seeall)
+﻿module("modules.ugui.icon.IconMgr", package.seeall)
 
-slot0 = class("IconMgr")
+local var_0_0 = class("IconMgr")
 
-function slot0.preload(slot0, slot1, slot2)
-	slot0._callback = slot1
-	slot0._callbackObj = slot2
-	slot0._resDict = {}
-	slot0._loader = MultiAbLoader.New()
+function var_0_0.preload(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._callback = arg_1_1
+	arg_1_0._callbackObj = arg_1_2
+	arg_1_0._resDict = {}
+	arg_1_0._loader = MultiAbLoader.New()
 
-	slot0._loader:setPathList(IconMgrConfig.getPreloadList())
-	slot0._loader:setOneFinishCallback(slot0._onOnePreloadCallback, slot0)
-	slot0._loader:startLoad(slot0._onPreloadCallback, slot0)
+	arg_1_0._loader:setPathList(IconMgrConfig.getPreloadList())
+	arg_1_0._loader:setOneFinishCallback(arg_1_0._onOnePreloadCallback, arg_1_0)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadCallback, arg_1_0)
 
-	slot0._liveIconReferenceTimeDic = {}
-	slot0._liveIconCountDic = {}
+	arg_1_0._liveIconReferenceTimeDic = {}
+	arg_1_0._liveIconCountDic = {}
 end
 
-function slot0.getCommonPropItemIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlPropItemIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonPropItemIcon)
+function var_0_0.getCommonPropItemIcon(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:_getIconInstance(IconMgrConfig.UrlPropItemIcon, arg_2_1)
+
+	if var_2_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_2_0, CommonPropItemIcon)
 	end
 end
 
-function slot0.getCommonPropListItemIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlPropItemIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonPropListItem)
+function var_0_0.getCommonPropListItemIcon(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:_getIconInstance(IconMgrConfig.UrlPropItemIcon, arg_3_1)
+
+	if var_3_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, CommonPropListItem)
 	end
 end
 
-function slot0.getCommonPropItemIconList(slot0, slot1, slot2, slot3, slot4)
-	slot0:CreateCellList(slot1, slot2, slot3, slot4, IconMgrConfig.UrlPropItemIcon, CommonPropItemIcon)
+function var_0_0.getCommonPropItemIconList(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	arg_4_0:CreateCellList(arg_4_1, arg_4_2, arg_4_3, arg_4_4, IconMgrConfig.UrlPropItemIcon, CommonPropItemIcon)
 end
 
-function slot0.getCommonItemIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlItemIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonItemIcon)
+function var_0_0.getCommonItemIcon(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:_getIconInstance(IconMgrConfig.UrlItemIcon, arg_5_1)
+
+	if var_5_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, CommonItemIcon)
 	end
 end
 
-function slot0.getCommonEquipIcon(slot0, slot1, slot2)
-	if slot0:_getIconInstance(IconMgrConfig.UrlEquipIcon, slot1) then
-		if slot2 then
-			transformhelper.setLocalScale(slot3.transform, slot2, slot2, slot2)
+function var_0_0.getCommonEquipIcon(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:_getIconInstance(IconMgrConfig.UrlEquipIcon, arg_6_1)
+
+	if var_6_0 then
+		if arg_6_2 then
+			transformhelper.setLocalScale(var_6_0.transform, arg_6_2, arg_6_2, arg_6_2)
 		end
 
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot3, CommonEquipIcon)
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, CommonEquipIcon)
 	end
 end
 
-function slot0.getCommonHeroIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlHeroIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonHeroIcon)
+function var_0_0.getCommonHeroIcon(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:_getIconInstance(IconMgrConfig.UrlHeroIcon, arg_7_1)
+
+	if var_7_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, CommonHeroIcon)
 	end
 end
 
-function slot0.getCommonHeroIconNew(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlHeroIconNew, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonHeroIconNew)
+function var_0_0.getCommonHeroIconNew(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:_getIconInstance(IconMgrConfig.UrlHeroIconNew, arg_8_1)
+
+	if var_8_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_8_0, CommonHeroIconNew)
 	end
 end
 
-function slot0.getCommonHeroItem(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlHeroItemNew, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonHeroItem)
+function var_0_0.getCommonHeroItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:_getIconInstance(IconMgrConfig.UrlHeroItemNew, arg_9_1)
+
+	if var_9_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_9_0, CommonHeroItem)
 	end
 end
 
-function slot0.getCommonPlayerIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlPlayerIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonPlayerIcon)
+function var_0_0.getCommonPlayerIcon(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:_getIconInstance(IconMgrConfig.UrlPlayerIcon, arg_10_1)
+
+	if var_10_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_10_0, CommonPlayerIcon)
 	end
 end
 
-function slot0.getRoomGoodsItem(slot0, slot1, slot2)
-	if slot2 and slot2:getResInst(IconMgrConfig.UrlRoomGoodsItemIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot3, RoomGoodsItem)
+function var_0_0.getRoomGoodsItem(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_2 and arg_11_2:getResInst(IconMgrConfig.UrlRoomGoodsItemIcon, arg_11_1)
+
+	if var_11_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0, RoomGoodsItem)
 	end
 end
 
-function slot0.getCommonTextMarkTop(slot0, slot1)
-	return slot0:_getIconInstance(IconMgrConfig.UrlCommonTextMarkTop, slot1)
+function var_0_0.getCommonTextMarkTop(arg_12_0, arg_12_1)
+	return (arg_12_0:_getIconInstance(IconMgrConfig.UrlCommonTextMarkTop, arg_12_1))
 end
 
-function slot0.getCommonTextDotBottom(slot0, slot1)
-	return slot0:_getIconInstance(IconMgrConfig.UrlCommonTextDotBottom, slot1)
+function var_0_0.getCommonTextDotBottom(arg_13_0, arg_13_1)
+	return (arg_13_0:_getIconInstance(IconMgrConfig.UrlCommonTextDotBottom, arg_13_1))
 end
 
-function slot0.getCommonHeadIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlHeadIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonHeadIcon)
+function var_0_0.getCommonHeadIcon(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:_getIconInstance(IconMgrConfig.UrlHeadIcon, arg_14_1)
+
+	if var_14_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0, CommonHeadIcon)
 	end
 end
 
-function slot0.getCommonCritterIcon(slot0, slot1)
-	if slot0:_getIconInstance(IconMgrConfig.UrlCritterIcon, slot1) then
-		return MonoHelper.addNoUpdateLuaComOnceToGo(slot2, CommonCritterIcon)
+function var_0_0.getCommonCritterIcon(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:_getIconInstance(IconMgrConfig.UrlCritterIcon, arg_15_1)
+
+	if var_15_0 then
+		return MonoHelper.addNoUpdateLuaComOnceToGo(var_15_0, CommonCritterIcon)
 	end
 end
 
-function slot0._getIconInstance(slot0, slot1, slot2)
-	if slot0._resDict[slot1] then
-		if slot3:GetResource(slot1) then
-			return gohelper.clone(slot4, slot2)
+function var_0_0._getIconInstance(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_0._resDict[arg_16_1]
+
+	if var_16_0 then
+		local var_16_1 = var_16_0:GetResource(arg_16_1)
+
+		if var_16_1 then
+			return gohelper.clone(var_16_1, arg_16_2)
 		else
-			logError(slot1 .. " prefab not in ab")
+			logError(arg_16_1 .. " prefab not in ab")
 		end
 	end
 
-	logError(slot1 .. " iconPrefab need preload")
+	logError(arg_16_1 .. " iconPrefab need preload")
 end
 
-function slot0._onOnePreloadCallback(slot0, slot1, slot2)
-	slot0._resDict[slot2.ResPath] = slot2
+function var_0_0._onOnePreloadCallback(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0._resDict[arg_17_2.ResPath] = arg_17_2
 end
 
-function slot0._onPreloadCallback(slot0)
-	if slot0._callback then
-		slot0._callback(slot0._callbackObj)
+function var_0_0._onPreloadCallback(arg_18_0)
+	if arg_18_0._callback then
+		arg_18_0._callback(arg_18_0._callbackObj)
 	end
 
-	slot0._callback = nil
-	slot0._callbackObj = nil
+	arg_18_0._callback = nil
+	arg_18_0._callbackObj = nil
 end
 
-function slot0.CreateCellList(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	gohelper.CreateObjList(slot1, slot2, slot3, slot4, slot0:getModelPrefab(slot5), slot6)
+function var_0_0.CreateCellList(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5, arg_19_6)
+	local var_19_0 = arg_19_0:getModelPrefab(arg_19_5)
+
+	gohelper.CreateObjList(arg_19_1, arg_19_2, arg_19_3, arg_19_4, var_19_0, arg_19_6)
 end
 
-function slot0.getModelPrefab(slot0, slot1)
-	return slot0._resDict[slot1]:GetResource(slot1)
+function var_0_0.getModelPrefab(arg_20_0, arg_20_1)
+	return arg_20_0._resDict[arg_20_1]:GetResource(arg_20_1)
 end
 
-function slot0.getCommonLiveHeadIcon(slot0, slot1)
-	slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot1.gameObject, CommonLiveHeadIcon)
+function var_0_0.getCommonLiveHeadIcon(arg_21_0, arg_21_1)
+	local var_21_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_21_1.gameObject, CommonLiveHeadIcon)
 
-	slot2:init(slot1)
+	var_21_0:init(arg_21_1)
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.setHeadIcon(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	slot3 = slot3 and true or false
-	slot4 = slot4 and true or false
-	slot5 = slot5 and true or false
+function var_0_0.setHeadIcon(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5, arg_22_6, arg_22_7, arg_22_8)
+	arg_22_0 = tonumber(arg_22_0)
+	arg_22_3 = arg_22_3 and true or false
+	arg_22_4 = arg_22_4 and true or false
+	arg_22_5 = arg_22_5 and true or false
 
-	if lua_item.configDict[tonumber(slot0)] == nil then
+	local var_22_0 = lua_item.configDict[arg_22_0]
+
+	if var_22_0 == nil then
 		return
 	end
 
-	if slot6 then
-		ZProj.UGUIHelper.SetColorAlpha(slot1.gameObject:GetComponent(gohelper.Type_Image), slot6)
+	if arg_22_6 then
+		local var_22_1 = arg_22_1.gameObject:GetComponent(gohelper.Type_Image)
+
+		ZProj.UGUIHelper.SetColorAlpha(var_22_1, arg_22_6)
 	end
 
-	slot10 = tonumber(slot9.icon)
+	local var_22_2 = tonumber(var_22_0.icon)
+	local var_22_3 = var_22_0.isDynamic == IconMgrConfig.HeadIconType.Dynamic
 
-	if slot9.isDynamic == IconMgrConfig.HeadIconType.Dynamic then
-		if not slot2 then
-			MonoHelper.addNoUpdateLuaComOnceToGo(slot1.gameObject, CommonLiveHeadIcon):init(slot5 and slot1.transform.parent.gameObject or slot1.transform.gameObject)
+	if var_22_3 then
+		if not arg_22_2 then
+			local var_22_4 = arg_22_5 and arg_22_1.transform.parent.gameObject or arg_22_1.transform.gameObject
+
+			arg_22_2 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_22_1.gameObject, CommonLiveHeadIcon)
+
+			arg_22_2:init(var_22_4)
 		end
 
-		slot2:setLiveHead(slot10, slot1.gameObject, slot3, slot5, slot6)
+		arg_22_2:setLiveHead(var_22_2, arg_22_1.gameObject, arg_22_3, arg_22_5, arg_22_6)
 	else
-		slot12 = ItemConfig.instance:getItemIconById(slot10)
-		slot13 = slot3 and function ()
-			if uv0 then
-				uv1.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+		local var_22_5 = ItemConfig.instance:getItemIconById(var_22_2)
+		local var_22_6 = arg_22_3 and function()
+			if arg_22_3 then
+				arg_22_1.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
 			end
 
-			if uv2 then
-				uv2(uv3)
+			if arg_22_7 then
+				arg_22_7(arg_22_8)
 			end
-		end or slot7
+		end or arg_22_7
 
-		if slot3 then
-			-- Nothing
+		if arg_22_3 then
+			-- block empty
 		end
 
-		slot1:LoadImage(ResUrl.getPlayerHeadIcon(slot12), slot13, slot8)
+		local var_22_7 = arg_22_8
+
+		arg_22_1:LoadImage(ResUrl.getPlayerHeadIcon(var_22_5), var_22_6, var_22_7)
 	end
 
-	if slot2 then
-		slot2:setVisible(slot11)
+	if arg_22_2 then
+		arg_22_2:setVisible(var_22_3)
 	end
 
-	if slot4 then
-		gohelper.setActive(slot1.gameObject, not slot11)
+	if arg_22_4 then
+		gohelper.setActive(arg_22_1.gameObject, not var_22_3)
 	end
 
-	return slot2
+	return arg_22_2
 end
 
-function slot0.addLiveIconAnimationReferenceTime(slot0, slot1)
-	if slot0._liveIconReferenceTimeDic == nil or slot0._liveIconCountDic == nil then
-		slot0._liveIconReferenceTimeDic = {}
-		slot0._liveIconCountDic = {}
+function var_0_0.addLiveIconAnimationReferenceTime(arg_24_0, arg_24_1)
+	if arg_24_0._liveIconReferenceTimeDic == nil or arg_24_0._liveIconCountDic == nil then
+		arg_24_0._liveIconReferenceTimeDic = {}
+		arg_24_0._liveIconCountDic = {}
 	end
 
 	logNormal("Add LiveIcon")
 
-	if not slot0._liveIconReferenceTimeDic[slot1] then
-		slot0._liveIconCountDic[slot1] = 1
-		slot0._liveIconReferenceTimeDic[slot1] = UnityEngine.Time.timeSinceLevelLoad
+	if not arg_24_0._liveIconReferenceTimeDic[arg_24_1] then
+		arg_24_0._liveIconCountDic[arg_24_1] = 1
+
+		local var_24_0 = UnityEngine.Time.timeSinceLevelLoad
+
+		arg_24_0._liveIconReferenceTimeDic[arg_24_1] = var_24_0
 	else
-		slot0._liveIconCountDic[slot1] = slot0._liveIconCountDic[slot1] + 1
+		local var_24_1 = arg_24_0._liveIconCountDic[arg_24_1]
+
+		arg_24_0._liveIconCountDic[arg_24_1] = var_24_1 + 1
 	end
 end
 
-function slot0.removeHeadLiveIcon(slot0, slot1)
-	if not slot0._liveIconReferenceTimeDic[slot1] then
+function var_0_0.removeHeadLiveIcon(arg_25_0, arg_25_1)
+	if not arg_25_0._liveIconReferenceTimeDic[arg_25_1] then
 		logNormal("Have no headLiveIcon Reference")
 
 		return
@@ -215,24 +260,27 @@ function slot0.removeHeadLiveIcon(slot0, slot1)
 
 	logNormal("Remove LiveIcon")
 
-	if math.max(0, slot0._liveIconCountDic[slot1] - 1) <= 0 then
-		slot0._liveIconReferenceTimeDic[slot1] = nil
-		slot0._liveIconCountDic[slot1] = nil
+	local var_25_0 = arg_25_0._liveIconCountDic[arg_25_1]
+	local var_25_1 = math.max(0, var_25_0 - 1)
+
+	if var_25_1 <= 0 then
+		arg_25_0._liveIconReferenceTimeDic[arg_25_1] = nil
+		arg_25_0._liveIconCountDic[arg_25_1] = nil
 	else
-		slot0._liveIconCountDic[slot1] = slot3
+		arg_25_0._liveIconCountDic[arg_25_1] = var_25_1
 	end
 end
 
-function slot0.getLiveIconReferenceTime(slot0, slot1)
-	if not slot0._liveIconReferenceTimeDic or not slot0._liveIconReferenceTimeDic[slot1] then
-		logError("Have no ReferenceTime id: " .. tostring(slot1))
+function var_0_0.getLiveIconReferenceTime(arg_26_0, arg_26_1)
+	if not arg_26_0._liveIconReferenceTimeDic or not arg_26_0._liveIconReferenceTimeDic[arg_26_1] then
+		logError("Have no ReferenceTime id: " .. tostring(arg_26_1))
 
 		return 0
 	end
 
-	return slot0._liveIconReferenceTimeDic[slot1]
+	return arg_26_0._liveIconReferenceTimeDic[arg_26_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

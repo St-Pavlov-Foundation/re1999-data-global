@@ -1,81 +1,90 @@
-module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPushed", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractPushed", package.seeall)
 
-slot0 = class("Va3ChessInteractPushed", Va3ChessInteractBase)
+local var_0_0 = class("Va3ChessInteractPushed", Va3ChessInteractBase)
 
-function slot0.checkCanBlock(slot0, slot1, slot2)
-	if slot2 == Va3ChessEnum.InteractType.AssistPlayer then
+function var_0_0.checkCanBlock(arg_1_0, arg_1_1, arg_1_2)
+	if arg_1_2 == Va3ChessEnum.InteractType.AssistPlayer then
 		return true
 	end
 
-	if slot0._target.originData.data.status then
+	if arg_1_0._target.originData.data.status then
 		return true
 	end
 
-	slot3, slot4 = Va3ChessMapUtils.CalNextCellPos(slot0._target.originData.posX, slot0._target.originData.posY, slot1)
+	local var_1_0, var_1_1 = Va3ChessMapUtils.CalNextCellPos(arg_1_0._target.originData.posX, arg_1_0._target.originData.posY, arg_1_1)
 
-	if slot0:checkNoTileByXY(slot3, slot4) then
+	if arg_1_0:checkNoTileByXY(var_1_0, var_1_1) then
 		return true
 	end
 
-	if Va3ChessGameController.instance:searchInteractByPos(slot3, slot4) > 0 then
+	if Va3ChessGameController.instance:searchInteractByPos(var_1_0, var_1_1) > 0 then
 		return true
 	end
 end
 
-function slot0.checkNoTileByXY(slot0, slot1, slot2)
-	if not Va3ChessGameModel.instance:isPosInChessBoard(slot1, slot2) then
+function var_0_0.checkNoTileByXY(arg_2_0, arg_2_1, arg_2_2)
+	if not Va3ChessGameModel.instance:isPosInChessBoard(arg_2_1, arg_2_2) then
 		return true
 	end
 
-	if not Va3ChessGameModel.instance:getTileMO(slot1, slot2) or slot3.tileType == Va3ChessEnum.TileBaseType.None or slot3:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui) then
+	local var_2_0 = Va3ChessGameModel.instance:getTileMO(arg_2_1, arg_2_2)
+
+	if not var_2_0 or var_2_0.tileType == Va3ChessEnum.TileBaseType.None or var_2_0:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.showStateView(slot0, slot1, slot2)
-	if slot1 == Va3ChessEnum.ObjState.Idle then
-		slot0:showIdleStateView()
-	elseif slot1 == Va3ChessEnum.ObjState.Interoperable then
-		slot0:showPushableStateView(slot2)
+function var_0_0.showStateView(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == Va3ChessEnum.ObjState.Idle then
+		arg_3_0:showIdleStateView()
+	elseif arg_3_1 == Va3ChessEnum.ObjState.Interoperable then
+		arg_3_0:showPushableStateView(arg_3_2)
 	end
 end
 
-function slot0.showIdleStateView(slot0)
-	slot0:setArrawDir(0)
+function var_0_0.showIdleStateView(arg_4_0)
+	arg_4_0:setArrawDir(0)
 end
 
-function slot0.showPushableStateView(slot0, slot1)
-	slot0:setArrawDir(slot1.dir)
+function var_0_0.showPushableStateView(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.dir
+
+	arg_5_0:setArrawDir(var_5_0)
 end
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_6_0)
+	var_0_0.super.onAvatarLoaded(arg_6_0)
 
-	for slot5, slot6 in ipairs(Va3ChessInteractObject.DirectionList) do
-		slot0._target.avatar["arraw" .. slot6] = gohelper.findChild(slot0._target.avatar.loader:getInstGO(), "icon/icon_direction/dir_" .. slot6)
+	local var_6_0 = arg_6_0._target.avatar.loader:getInstGO()
+
+	for iter_6_0, iter_6_1 in ipairs(Va3ChessInteractObject.DirectionList) do
+		arg_6_0._target.avatar["arraw" .. iter_6_1] = gohelper.findChild(var_6_0, "icon/icon_direction/dir_" .. iter_6_1)
 	end
 end
 
-function slot0.setArrawDir(slot0, slot1)
-	if slot0._target.avatar then
-		for slot5, slot6 in ipairs(Va3ChessInteractObject.DirectionList) do
-			if not gohelper.isNil(slot0._target.avatar["arraw" .. slot6]) then
-				gohelper.setActive(slot7, slot1 == slot6)
+function var_0_0.setArrawDir(arg_7_0, arg_7_1)
+	if arg_7_0._target.avatar then
+		for iter_7_0, iter_7_1 in ipairs(Va3ChessInteractObject.DirectionList) do
+			local var_7_0 = arg_7_0._target.avatar["arraw" .. iter_7_1]
+
+			if not gohelper.isNil(var_7_0) then
+				gohelper.setActive(var_7_0, arg_7_1 == iter_7_1)
 			end
 		end
 	end
 end
 
-slot1 = "vx_smoke"
+local var_0_1 = "vx_smoke"
 
-function slot0.onMoveBegin(slot0)
-	slot2 = gohelper.findChild(slot0._target.avatar.loader:getInstGO(), uv0)
+function var_0_0.onMoveBegin(arg_8_0)
+	local var_8_0 = arg_8_0._target.avatar.loader:getInstGO()
+	local var_8_1 = gohelper.findChild(var_8_0, var_0_1)
 
-	gohelper.setActive(slot2, false)
-	gohelper.setActive(slot2, true)
+	gohelper.setActive(var_8_1, false)
+	gohelper.setActive(var_8_1, true)
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.PushStone)
 end
 
-return slot0
+return var_0_0

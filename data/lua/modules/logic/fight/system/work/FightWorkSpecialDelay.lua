@@ -1,37 +1,44 @@
-module("modules.logic.fight.system.work.FightWorkSpecialDelay", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSpecialDelay", package.seeall)
 
-slot0 = class("FightWorkSpecialDelay", BaseWork)
+local var_0_0 = class("FightWorkSpecialDelay", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.5)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
 
-	if FightHelper.getEntity(slot0._fightStepMO.fromId) and slot1:getMO() and _G["FightWorkSpecialDelayModelId" .. slot2.modelId] then
-		TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+	local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+	local var_2_1 = var_2_0 and var_2_0:getMO()
 
-		slot0._delayClass = slot3.New(slot0, slot0._fightStepMO)
+	if var_2_1 then
+		local var_2_2 = _G["FightWorkSpecialDelayModelId" .. var_2_1.modelId]
 
-		return
+		if var_2_2 then
+			TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
+
+			arg_2_0._delayClass = var_2_2.New(arg_2_0, arg_2_0._fightStepMO)
+
+			return
+		end
 	end
 
-	slot0:_delayDone()
+	arg_2_0:_delayDone()
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 
-	if slot0._delayClass then
-		slot0._delayClass:releaseSelf()
+	if arg_4_0._delayClass then
+		arg_4_0._delayClass:releaseSelf()
 
-		slot0._delayClass = nil
+		arg_4_0._delayClass = nil
 	end
 end
 
-return slot0
+return var_0_0

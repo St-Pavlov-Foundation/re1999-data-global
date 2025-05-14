@@ -1,47 +1,54 @@
-module("modules.logic.endofdream.config.EndOfDreamConfig", package.seeall)
+﻿module("modules.logic.endofdream.config.EndOfDreamConfig", package.seeall)
 
-slot0 = class("EndOfDreamConfig", BaseConfig)
+local var_0_0 = class("EndOfDreamConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._levelConfig = nil
-	slot0._episodeConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._levelConfig = nil
+	arg_1_0._episodeConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot0.getLevelConfig(slot0, slot1)
-	return slot0._levelConfig.configDict[slot1]
+function var_0_0.getLevelConfig(arg_4_0, arg_4_1)
+	return arg_4_0._levelConfig.configDict[arg_4_1]
 end
 
-function slot0.getLevelConfigList(slot0)
-	return slot0._levelConfig.configList
+function var_0_0.getLevelConfigList(arg_5_0)
+	return arg_5_0._levelConfig.configList
 end
 
-function slot0.getLevelConfigByEpisodeId(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0:getLevelConfigList()) do
-		if slot7.episodeId == slot1 then
-			return slot7, false
-		elseif slot7.hardEpisodeId == slot1 then
-			return slot7, true
+function var_0_0.getLevelConfigByEpisodeId(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getLevelConfigList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1.episodeId == arg_6_1 then
+			return iter_6_1, false
+		elseif iter_6_1.hardEpisodeId == arg_6_1 then
+			return iter_6_1, true
 		end
 	end
 end
 
-function slot0.getFirstLevelConfig(slot0)
-	return slot0:getLevelConfigList()[1]
+function var_0_0.getFirstLevelConfig(arg_7_0)
+	return arg_7_0:getLevelConfigList()[1]
 end
 
-function slot0.getEpisodeConfig(slot0, slot1)
+function var_0_0.getEpisodeConfig(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.getEpisodeConfigByLevelId(slot0, slot1, slot2)
-	return slot0:getLevelConfig(slot1) and slot3.hardEpisodeId
+function var_0_0.getEpisodeConfigByLevelId(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:getLevelConfig(arg_9_1)
+
+	return var_9_0 and var_9_0.hardEpisodeId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

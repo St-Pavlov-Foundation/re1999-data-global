@@ -1,16 +1,16 @@
-module("modules.logic.backpack.model.BackpackCategoryListModel", package.seeall)
+﻿module("modules.logic.backpack.model.BackpackCategoryListModel", package.seeall)
 
-slot0 = class("BackpackCategoryListModel", ListScrollModel)
+local var_0_0 = class("BackpackCategoryListModel", ListScrollModel)
 
-function slot0.setCategoryList(slot0, slot1)
-	slot2 = slot1 and slot1 or {}
+function var_0_0.setCategoryList(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1 and arg_1_1 or {}
 
-	table.sort(slot2, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(var_1_0, function(arg_2_0, arg_2_1)
+		return arg_2_0.id < arg_2_1.id
 	end)
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

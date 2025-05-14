@@ -1,38 +1,40 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionBagViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionBagViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionBagViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotCollectionBagViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0._scrollView = LuaListScrollView.New(V1a6_CachotCollectionBagListModel.instance, slot0:getScrollParam())
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = arg_1_0:getScrollParam()
+
+	arg_1_0._scrollView = LuaListScrollView.New(V1a6_CachotCollectionBagListModel.instance, var_1_0)
 
 	return {
 		V1a6_CachotCollectionBagView.New(),
-		slot0._scrollView
+		arg_1_0._scrollView
 	}
 end
 
-function slot0.getScrollView(slot0)
-	return slot0._scrollView
+function var_0_0.getScrollView(arg_2_0)
+	return arg_2_0._scrollView
 end
 
-function slot0.getScrollParam(slot0)
-	if not slot0._scrollParam then
-		slot0._scrollParam = ListScrollParam.New()
-		slot0._scrollParam.scrollGOPath = "left/#scroll_view"
-		slot0._scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot0._scrollParam.prefabUrl = slot0._viewSetting.otherRes[1]
-		slot0._scrollParam.cellClass = V1a6_CachotCollectionBagItem
-		slot0._scrollParam.scrollDir = ScrollEnum.ScrollDirV
-		slot0._scrollParam.lineCount = 4
-		slot0._scrollParam.cellWidth = 248
-		slot0._scrollParam.cellHeight = 256
-		slot0._scrollParam.cellSpaceH = 0
-		slot0._scrollParam.cellSpaceV = 0
-		slot0._scrollParam.startSpace = 0
-		slot0._scrollParam.endSpace = 0
+function var_0_0.getScrollParam(arg_3_0)
+	if not arg_3_0._scrollParam then
+		arg_3_0._scrollParam = ListScrollParam.New()
+		arg_3_0._scrollParam.scrollGOPath = "left/#scroll_view"
+		arg_3_0._scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		arg_3_0._scrollParam.prefabUrl = arg_3_0._viewSetting.otherRes[1]
+		arg_3_0._scrollParam.cellClass = V1a6_CachotCollectionBagItem
+		arg_3_0._scrollParam.scrollDir = ScrollEnum.ScrollDirV
+		arg_3_0._scrollParam.lineCount = 4
+		arg_3_0._scrollParam.cellWidth = 248
+		arg_3_0._scrollParam.cellHeight = 256
+		arg_3_0._scrollParam.cellSpaceH = 0
+		arg_3_0._scrollParam.cellSpaceV = 0
+		arg_3_0._scrollParam.startSpace = 0
+		arg_3_0._scrollParam.endSpace = 0
 	end
 
-	return slot0._scrollParam
+	return arg_3_0._scrollParam
 end
 
-return slot0
+return var_0_0

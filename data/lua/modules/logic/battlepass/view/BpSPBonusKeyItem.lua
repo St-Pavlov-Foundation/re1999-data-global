@@ -1,156 +1,174 @@
-module("modules.logic.battlepass.view.BpSPBonusKeyItem", package.seeall)
+﻿module("modules.logic.battlepass.view.BpSPBonusKeyItem", package.seeall)
 
-slot0 = class("BpSPBonusKeyItem", ListScrollCell)
+local var_0_0 = class("BpSPBonusKeyItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._txtLevel = gohelper.findChildText(slot0.go, "#txtLevel")
-	slot0._freeItemGO = gohelper.findChild(slot0.go, "free/freenode/#goItem")
-	slot0._payItemGO = gohelper.findChild(slot0.go, "pay/paynode/#goItem")
-	slot0._freeHasGet = gohelper.findChild(slot0.go, "free/#goHasGet")
-	slot0._payHasGet = gohelper.findChild(slot0.go, "pay/#goHasGet")
-	slot0.freelock = gohelper.findChild(slot0.go, "free/freelock/lock")
-	slot0.paylock = gohelper.findChild(slot0.go, "pay/paylock/lock1")
-	slot0.paylock2 = gohelper.findChild(slot0.go, "pay/paylock/lock2")
-	slot0._payHasGet1 = gohelper.findChild(slot0.go, "pay/#goHasGet/get1")
-	slot0._payHasGet2 = gohelper.findChild(slot0.go, "pay/#goHasGet/get2")
-	slot0._getcanvasGroup1 = gohelper.onceAddComponent(slot0._payHasGet1, typeof(UnityEngine.CanvasGroup))
-	slot0._getcanvasGroup2 = gohelper.onceAddComponent(slot0._payHasGet2, typeof(UnityEngine.CanvasGroup))
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._txtLevel = gohelper.findChildText(arg_1_0.go, "#txtLevel")
+	arg_1_0._freeItemGO = gohelper.findChild(arg_1_0.go, "free/freenode/#goItem")
+	arg_1_0._payItemGO = gohelper.findChild(arg_1_0.go, "pay/paynode/#goItem")
+	arg_1_0._freeHasGet = gohelper.findChild(arg_1_0.go, "free/#goHasGet")
+	arg_1_0._payHasGet = gohelper.findChild(arg_1_0.go, "pay/#goHasGet")
+	arg_1_0.freelock = gohelper.findChild(arg_1_0.go, "free/freelock/lock")
+	arg_1_0.paylock = gohelper.findChild(arg_1_0.go, "pay/paylock/lock1")
+	arg_1_0.paylock2 = gohelper.findChild(arg_1_0.go, "pay/paylock/lock2")
+	arg_1_0._payHasGet1 = gohelper.findChild(arg_1_0.go, "pay/#goHasGet/get1")
+	arg_1_0._payHasGet2 = gohelper.findChild(arg_1_0.go, "pay/#goHasGet/get2")
+	arg_1_0._getcanvasGroup1 = gohelper.onceAddComponent(arg_1_0._payHasGet1, typeof(UnityEngine.CanvasGroup))
+	arg_1_0._getcanvasGroup2 = gohelper.onceAddComponent(arg_1_0._payHasGet2, typeof(UnityEngine.CanvasGroup))
 
-	gohelper.setActive(slot0._freeItemGO, false)
-	gohelper.setActive(slot0._payItemGO, false)
+	gohelper.setActive(arg_1_0._freeItemGO, false)
+	gohelper.setActive(arg_1_0._payItemGO, false)
 
-	slot0._freeBonusList = {}
-	slot0._payBonusList = {}
-	slot0._selectBonusList = {}
+	arg_1_0._freeBonusList = {}
+	arg_1_0._payBonusList = {}
+	arg_1_0._selectBonusList = {}
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(BpController.instance, BpEvent.onSelectBonusGet, slot0._refreshSelect, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(BpController.instance, BpEvent.onSelectBonusGet, arg_2_0._refreshSelect, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(BpController.instance, BpEvent.onSelectBonusGet, slot0._refreshSelect, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(BpController.instance, BpEvent.onSelectBonusGet, arg_3_0._refreshSelect, arg_3_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
-	slot0._txtLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("bp_sp_level"), slot0.mo.level)
-	slot4 = slot0.mo.level <= math.floor(BpModel.instance.score / BpConfig.instance:getLevelScore(BpModel.instance.id))
-	slot5 = slot0.mo.level <= slot3
-	slot10 = BpConfig.instance:getBonusCO(BpModel.instance.id, slot0.mo.level)
-	slot13 = GameUtil.splitString2(slot10.selfSelectPayItem, true) or {}
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0.mo = arg_4_1
+	arg_4_0._txtLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("bp_sp_level"), arg_4_0.mo.level)
 
-	slot0:_setBonus(GameUtil.splitString2(slot10.spFreeBonus, true), slot0._freeBonusList, slot0._freeItemGO, slot0._onFreeItemIconClick, slot4, slot0.mo.hasGetSpfreeBonus)
-	slot0:_setBonus(GameUtil.splitString2(slot10.spPayBonus, true), slot0._payBonusList, slot0._payItemGO, slot0._onPayItemIconClick, slot4, slot0.mo.hasGetSpPayBonus)
-	slot0:_setBonus(slot13, slot0._selectBonusList, slot0._payItemGO, slot0._onselectItemIconClick, slot0.mo.level <= slot3, BpBonusModel.instance:isGetSelectBonus(slot0.mo.level), true)
+	local var_4_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local var_4_1 = math.floor(BpModel.instance.score / var_4_0)
+	local var_4_2 = var_4_1 >= arg_4_0.mo.level
+	local var_4_3 = var_4_1 >= arg_4_0.mo.level
+	local var_4_4 = var_4_1 >= arg_4_0.mo.level
+	local var_4_5 = arg_4_0.mo.hasGetSpfreeBonus
+	local var_4_6 = arg_4_0.mo.hasGetSpPayBonus
+	local var_4_7 = BpBonusModel.instance:isGetSelectBonus(arg_4_0.mo.level)
+	local var_4_8 = BpConfig.instance:getBonusCO(BpModel.instance.id, arg_4_0.mo.level)
+	local var_4_9 = GameUtil.splitString2(var_4_8.spFreeBonus, true)
+	local var_4_10 = GameUtil.splitString2(var_4_8.spPayBonus, true)
+	local var_4_11 = GameUtil.splitString2(var_4_8.selfSelectPayItem, true) or {}
 
-	if #slot13 > 0 then
-		if #slot12 > 0 then
-			slot0._getcanvasGroup1.alpha = slot6 and slot8 and 1 or 0
-			slot0._getcanvasGroup2.alpha = slot9 and 1 or 0
+	arg_4_0:_setBonus(var_4_9, arg_4_0._freeBonusList, arg_4_0._freeItemGO, arg_4_0._onFreeItemIconClick, var_4_2, var_4_5)
+	arg_4_0:_setBonus(var_4_10, arg_4_0._payBonusList, arg_4_0._payItemGO, arg_4_0._onPayItemIconClick, var_4_2, var_4_6)
+	arg_4_0:_setBonus(var_4_11, arg_4_0._selectBonusList, arg_4_0._payItemGO, arg_4_0._onselectItemIconClick, var_4_4, var_4_7, true)
+
+	if #var_4_11 > 0 then
+		if #var_4_10 > 0 then
+			arg_4_0._getcanvasGroup1.alpha = var_4_4 and var_4_6 and 1 or 0
+			arg_4_0._getcanvasGroup2.alpha = var_4_7 and 1 or 0
 		else
-			slot0._getcanvasGroup1.alpha = slot9 and 1 or 0
+			arg_4_0._getcanvasGroup1.alpha = var_4_7 and 1 or 0
 		end
 	else
-		slot0._getcanvasGroup1.alpha = 1
-		slot0._getcanvasGroup2.alpha = 1
+		arg_4_0._getcanvasGroup1.alpha = 1
+		arg_4_0._getcanvasGroup2.alpha = 1
 	end
 
-	gohelper.setActive(slot0._freeHasGet, slot5 and slot7)
-	gohelper.setActive(slot0._payHasGet, slot6 and slot8 or slot9)
-	gohelper.setActive(slot0.freelock, not slot5)
-	gohelper.setActive(slot0.paylock, not slot6)
-	gohelper.setActive(slot0.paylock2, not slot6 and #slot12 + #slot13 == 2)
-	gohelper.setActive(slot0._payHasGet2, #slot12 + #slot13 == 2)
+	gohelper.setActive(arg_4_0._freeHasGet, var_4_3 and var_4_5)
+	gohelper.setActive(arg_4_0._payHasGet, var_4_4 and var_4_6 or var_4_7)
+	gohelper.setActive(arg_4_0.freelock, not var_4_3)
+	gohelper.setActive(arg_4_0.paylock, not var_4_4)
+	gohelper.setActive(arg_4_0.paylock2, not var_4_4 and #var_4_10 + #var_4_11 == 2)
+	gohelper.setActive(arg_4_0._payHasGet2, #var_4_10 + #var_4_11 == 2)
 end
 
-function slot0._setBonus(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	for slot11, slot12 in ipairs(slot1) do
-		if not slot2[slot11] then
-			slot14 = gohelper.cloneInPlace(slot3)
+function var_0_0._setBonus(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = arg_5_2[iter_5_0]
 
-			gohelper.setActive(slot14, true)
-			table.insert(slot2, IconMgr.instance:getCommonPropItemIcon(slot14))
+		if not var_5_0 then
+			local var_5_1 = gohelper.cloneInPlace(arg_5_3)
+
+			gohelper.setActive(var_5_1, true)
+
+			var_5_0 = IconMgr.instance:getCommonPropItemIcon(var_5_1)
+
+			table.insert(arg_5_2, var_5_0)
 		end
 
-		gohelper.setAsFirstSibling(slot13.go)
-		slot13:setMOValue(slot12[1], slot12[2], slot12[3], nil, true)
+		gohelper.setAsFirstSibling(var_5_0.go)
+		var_5_0:setMOValue(iter_5_1[1], iter_5_1[2], iter_5_1[3], nil, true)
 
-		if slot12[1] == MaterialEnum.MaterialType.Equip then
-			slot13._equipIcon:_overrideLoadIconFunc(EquipHelper.getEquipDefaultIconLoadPath, slot13._equipIcon)
-			slot13._equipIcon:_loadIconImage()
+		if iter_5_1[1] == MaterialEnum.MaterialType.Equip then
+			var_5_0._equipIcon:_overrideLoadIconFunc(EquipHelper.getEquipDefaultIconLoadPath, var_5_0._equipIcon)
+			var_5_0._equipIcon:_loadIconImage()
 		end
 
-		slot13:setCountFontSize(46)
-		slot13:setScale(0.6)
+		var_5_0:setCountFontSize(46)
+		var_5_0:setScale(0.6)
 
-		slot14, slot15, slot16 = BpConfig.instance:getItemShowSize(slot12[1], slot12[2])
+		local var_5_2, var_5_3, var_5_4 = BpConfig.instance:getItemShowSize(iter_5_1[1], iter_5_1[2])
 
-		slot13:setItemIconScale(slot14)
-		slot13:setItemOffset(slot15, slot16)
-		slot13:SetCountLocalY(43.6)
-		slot13:SetCountBgHeight(40)
-		slot13:SetCountBgScale(1, 1.3, 1)
-		slot13:showStackableNum()
-		slot13:setHideLvAndBreakFlag(true)
-		slot13:hideEquipLvAndBreak(true)
+		var_5_0:setItemIconScale(var_5_2)
+		var_5_0:setItemOffset(var_5_3, var_5_4)
+		var_5_0:SetCountLocalY(43.6)
+		var_5_0:SetCountBgHeight(40)
+		var_5_0:SetCountBgScale(1, 1.3, 1)
+		var_5_0:showStackableNum()
+		var_5_0:setHideLvAndBreakFlag(true)
+		var_5_0:hideEquipLvAndBreak(true)
 
-		if slot7 then
-			slot13:customOnClickCallback(slot4, slot0)
+		if arg_5_7 then
+			var_5_0:customOnClickCallback(arg_5_4, arg_5_0)
 		else
-			slot13:customOnClickCallback(nil, )
+			var_5_0:customOnClickCallback(nil, nil)
 		end
 
-		if slot6 then
-			slot13:setAlpha(0.45, 0.8)
+		if arg_5_6 then
+			var_5_0:setAlpha(0.45, 0.8)
 		else
-			slot13:setAlpha(1, 1)
+			var_5_0:setAlpha(1, 1)
 		end
 
-		slot13:isShowCount(slot12[1] ~= MaterialEnum.MaterialType.HeroSkin and not slot7)
-		gohelper.setActive(slot13.go.transform.parent.gameObject, true)
+		var_5_0:isShowCount(iter_5_1[1] ~= MaterialEnum.MaterialType.HeroSkin and not arg_5_7)
+		gohelper.setActive(var_5_0.go.transform.parent.gameObject, true)
 	end
 
-	for slot11 = #slot1 + 1, #slot2 do
-		gohelper.setActive(slot2[slot11].go.transform.parent.gameObject, false)
+	for iter_5_2 = #arg_5_1 + 1, #arg_5_2 do
+		local var_5_5 = arg_5_2[iter_5_2]
+
+		gohelper.setActive(var_5_5.go.transform.parent.gameObject, false)
 	end
 end
 
-function slot0._onselectItemIconClick(slot0)
+function var_0_0._onselectItemIconClick(arg_6_0)
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpBonusSelectView)
 end
 
-function slot0._onFreeItemIconClick(slot0)
+function var_0_0._onFreeItemIconClick(arg_7_0)
+	return
 end
 
-function slot0._onPayItemIconClick(slot0)
+function var_0_0._onPayItemIconClick(arg_8_0)
+	return
 end
 
-function slot0._refreshSelect(slot0, slot1)
-	if slot1 ~= slot0.mo.level then
+function var_0_0._refreshSelect(arg_9_0, arg_9_1)
+	if arg_9_1 ~= arg_9_0.mo.level then
 		return
 	end
 
-	slot0:onUpdateMO(slot0.mo)
+	arg_9_0:onUpdateMO(arg_9_0.mo)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._freeBonusList then
-		for slot4, slot5 in pairs(slot0._freeBonusList) do
-			slot5:onDestroy()
+function var_0_0.onDestroyView(arg_10_0)
+	if arg_10_0._freeBonusList then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0._freeBonusList) do
+			iter_10_1:onDestroy()
 		end
 
-		slot0._freeBonusList = nil
+		arg_10_0._freeBonusList = nil
 	end
 
-	if slot0._payBonusList then
-		for slot4, slot5 in pairs(slot0._payBonusList) do
-			slot5:onDestroy()
+	if arg_10_0._payBonusList then
+		for iter_10_2, iter_10_3 in pairs(arg_10_0._payBonusList) do
+			iter_10_3:onDestroy()
 		end
 
-		slot0._payBonusList = nil
+		arg_10_0._payBonusList = nil
 	end
 end
 
-return slot0
+return var_0_0

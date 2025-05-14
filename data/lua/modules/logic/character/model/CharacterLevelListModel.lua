@@ -1,20 +1,25 @@
-module("modules.logic.character.model.CharacterLevelListModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterLevelListModel", package.seeall)
 
-slot0 = class("CharacterLevelListModel", ListScrollModel)
+local var_0_0 = class("CharacterLevelListModel", ListScrollModel)
 
-function slot0.setCharacterLevelList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.setCharacterLevelList(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = {}
+	local var_1_1 = arg_1_1.heroId
+	local var_1_2 = arg_1_1.rank
+	local var_1_3 = CharacterModel.instance:getrankEffects(var_1_1, var_1_2)[1]
 
-	for slot11 = slot2 or slot1.level, CharacterModel.instance:getrankEffects(slot1.heroId, slot1.rank)[1] do
-		slot3[#slot3 + 1] = {
-			heroId = slot4,
-			level = slot11
+	for iter_1_0 = arg_1_2 or arg_1_1.level, var_1_3 do
+		local var_1_4 = {
+			heroId = var_1_1,
+			level = iter_1_0
 		}
+
+		var_1_0[#var_1_0 + 1] = var_1_4
 	end
 
-	slot0:setList(slot3)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

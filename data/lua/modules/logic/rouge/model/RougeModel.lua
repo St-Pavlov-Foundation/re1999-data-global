@@ -1,251 +1,258 @@
-module("modules.logic.rouge.model.RougeModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeModel", package.seeall)
 
-slot0 = class("RougeModel", BaseModel)
+local var_0_0 = class("RougeModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._rougeInfo = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._rougeInfo = nil
 end
 
-function slot0.updateRougeInfo(slot0, slot1)
-	slot0._rougeInfo = slot0._rougeInfo or RougeInfoMO.New()
+function var_0_0.updateRougeInfo(arg_3_0, arg_3_1)
+	arg_3_0._rougeInfo = arg_3_0._rougeInfo or RougeInfoMO.New()
 
-	slot0._rougeInfo:init(slot1)
+	arg_3_0._rougeInfo:init(arg_3_1)
 
-	if slot1:HasField("mapInfo") then
-		slot0._mapModel = RougeMapModel.instance
+	if arg_3_1:HasField("mapInfo") then
+		arg_3_0._mapModel = RougeMapModel.instance
 
-		slot0._mapModel:updateMapInfo(slot1.mapInfo)
+		arg_3_0._mapModel:updateMapInfo(arg_3_1.mapInfo)
 	end
 
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeInfo)
 end
 
-function slot0.updateResultInfo(slot0, slot1)
-	slot0._rougeResult = slot0._rougeResult or RougeResultMO.New()
+function var_0_0.updateResultInfo(arg_4_0, arg_4_1)
+	arg_4_0._rougeResult = arg_4_0._rougeResult or RougeResultMO.New()
 
-	slot0._rougeResult:init(slot1)
+	arg_4_0._rougeResult:init(arg_4_1)
 end
 
-function slot0.getRougeInfo(slot0)
-	return slot0._rougeInfo
+function var_0_0.getRougeInfo(arg_5_0)
+	return arg_5_0._rougeInfo
 end
 
-function slot0.getRougeResult(slot0)
-	return slot0._rougeResult
+function var_0_0.getRougeResult(arg_6_0)
+	return arg_6_0._rougeResult
 end
 
-function slot0.getMapModel(slot0)
-	return slot0._mapModel
+function var_0_0.getMapModel(arg_7_0)
+	return arg_7_0._mapModel
 end
 
-function slot0.getSeason(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.season
+function var_0_0.getSeason(arg_8_0)
+	return arg_8_0._rougeInfo and arg_8_0._rougeInfo.season
 end
 
-function slot0.getVersion(slot0)
-	if not slot0:inRouge() then
-		return RougeOutsideModel.instance:getRougeGameRecord() and slot2:getVersionIds() or {}
+function var_0_0.getVersion(arg_9_0)
+	if not arg_9_0:inRouge() then
+		local var_9_0 = RougeOutsideModel.instance:getRougeGameRecord()
+
+		return var_9_0 and var_9_0:getVersionIds() or {}
 	end
 
-	return slot0._rougeInfo and slot0._rougeInfo.version or nil or {}
+	return arg_9_0._rougeInfo and arg_9_0._rougeInfo.version or nil or {}
 end
 
-function slot0.getDifficulty(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.difficulty or nil
+function var_0_0.getDifficulty(arg_10_0)
+	return arg_10_0._rougeInfo and arg_10_0._rougeInfo.difficulty or nil
 end
 
-function slot0.getStyle(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.style or nil
+function var_0_0.getStyle(arg_11_0)
+	return arg_11_0._rougeInfo and arg_11_0._rougeInfo.style or nil
 end
 
-function slot0.getTeamCapacity(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.teamSize
+function var_0_0.getTeamCapacity(arg_12_0)
+	return arg_12_0._rougeInfo and arg_12_0._rougeInfo.teamSize
 end
 
-function slot0.getTeamInfo(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.teamInfo
+function var_0_0.getTeamInfo(arg_13_0)
+	return arg_13_0._rougeInfo and arg_13_0._rougeInfo.teamInfo
 end
 
-function slot0.updatePower(slot0, slot1, slot2)
-	if not slot0._rougeInfo then
+function var_0_0.updatePower(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_0._rougeInfo then
 		return
 	end
 
-	slot0._rougeInfo.power = slot1
-	slot0._rougeInfo.powerLimit = slot2
+	arg_14_0._rougeInfo.power = arg_14_1
+	arg_14_0._rougeInfo.powerLimit = arg_14_2
 
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeInfoPower)
 end
 
-function slot0.updateTeamInfo(slot0, slot1)
-	slot0._rougeInfo:updateTeamInfo(slot1)
+function var_0_0.updateTeamInfo(arg_15_0, arg_15_1)
+	arg_15_0._rougeInfo:updateTeamInfo(arg_15_1)
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeTeamInfo)
 end
 
-function slot0.updateTeamLife(slot0, slot1)
-	slot0._rougeInfo:updateTeamLife(slot1)
+function var_0_0.updateTeamLife(arg_16_0, arg_16_1)
+	arg_16_0._rougeInfo:updateTeamLife(arg_16_1)
 end
 
-function slot0.updateExtraHeroInfo(slot0, slot1)
-	slot0._rougeInfo:updateExtraHeroInfo(slot1)
+function var_0_0.updateExtraHeroInfo(arg_17_0, arg_17_1)
+	arg_17_0._rougeInfo:updateExtraHeroInfo(arg_17_1)
 end
 
-function slot0.updateTeamLifeAndDispatchEvent(slot0, slot1)
-	slot0._rougeInfo:updateTeamLifeAndDispatchEvent(slot1)
+function var_0_0.updateTeamLifeAndDispatchEvent(arg_18_0, arg_18_1)
+	arg_18_0._rougeInfo:updateTeamLifeAndDispatchEvent(arg_18_1)
 end
 
-function slot0.updateTalentInfo(slot0, slot1)
-	slot0._rougeInfo:updateTalentInfo(slot1)
+function var_0_0.updateTalentInfo(arg_19_0, arg_19_1)
+	arg_19_0._rougeInfo:updateTalentInfo(arg_19_1)
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeTalentInfo)
 end
 
-function slot0.isContinueLast(slot0)
-	if not slot0._rougeInfo then
+function var_0_0.isContinueLast(arg_20_0)
+	if not arg_20_0._rougeInfo then
 		return false
 	end
 
-	return slot0._rougeInfo:isContinueLast()
+	return arg_20_0._rougeInfo:isContinueLast()
 end
 
-function slot0.clear(slot0)
-	slot0._mapModel = nil
-	slot0._rougeInfo = nil
-	slot0._isAbort = nil
-	slot0._rougeResult = nil
-	slot0._initHeroDict = nil
+function var_0_0.clear(arg_21_0)
+	arg_21_0._mapModel = nil
+	arg_21_0._rougeInfo = nil
+	arg_21_0._isAbort = nil
+	arg_21_0._rougeResult = nil
+	arg_21_0._initHeroDict = nil
 
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeInfo)
 end
 
-function slot0.isCanSelectRewards(slot0)
-	if not slot0._rougeInfo then
+function var_0_0.isCanSelectRewards(arg_22_0)
+	if not arg_22_0._rougeInfo then
 		return false
 	end
 
-	return slot0._rougeInfo:isCanSelectRewards()
+	return arg_22_0._rougeInfo:isCanSelectRewards()
 end
 
-function slot0.isFinishedDifficulty(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.state == RougeEnum.State.Difficulty
+function var_0_0.isFinishedDifficulty(arg_23_0)
+	return arg_23_0._rougeInfo and arg_23_0._rougeInfo.state == RougeEnum.State.Difficulty
 end
 
-function slot0.isFinishedLastReward(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.state == RougeEnum.State.LastReward
+function var_0_0.isFinishedLastReward(arg_24_0)
+	return arg_24_0._rougeInfo and arg_24_0._rougeInfo.state == RougeEnum.State.LastReward
 end
 
-function slot0.isFinishedStyle(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.state == RougeEnum.State.Style
+function var_0_0.isFinishedStyle(arg_25_0)
+	return arg_25_0._rougeInfo and arg_25_0._rougeInfo.state == RougeEnum.State.Style
 end
 
-function slot0.isStarted(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.state == RougeEnum.State.Start
+function var_0_0.isStarted(arg_26_0)
+	return arg_26_0._rougeInfo and arg_26_0._rougeInfo.state == RougeEnum.State.Start
 end
 
-function slot0.isFinish(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.state == RougeEnum.State.isEnd
+function var_0_0.isFinish(arg_27_0)
+	return arg_27_0._rougeInfo and arg_27_0._rougeInfo.state == RougeEnum.State.isEnd
 end
 
-function slot0.getState(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.state or RougeEnum.State.Empty
+function var_0_0.getState(arg_28_0)
+	return arg_28_0._rougeInfo and arg_28_0._rougeInfo.state or RougeEnum.State.Empty
 end
 
-function slot0.inRouge(slot0)
-	return slot0:getState() ~= RougeEnum.State.Empty and slot1 ~= RougeEnum.State.isEnd
+function var_0_0.inRouge(arg_29_0)
+	local var_29_0 = arg_29_0:getState()
+
+	return var_29_0 ~= RougeEnum.State.Empty and var_29_0 ~= RougeEnum.State.isEnd
 end
 
-function slot0.getEndId(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.endId
+function var_0_0.getEndId(arg_30_0)
+	return arg_30_0._rougeInfo and arg_30_0._rougeInfo.endId
 end
 
-function slot0.updateFightResultMo(slot0, slot1)
-	if not slot0.fightResultMo then
-		slot0.fightResultMo = RougeFightResultMO.New()
+function var_0_0.updateFightResultMo(arg_31_0, arg_31_1)
+	if not arg_31_0.fightResultMo then
+		arg_31_0.fightResultMo = RougeFightResultMO.New()
 	end
 
-	slot0.fightResultMo:init(slot1)
+	arg_31_0.fightResultMo:init(arg_31_1)
 end
 
-function slot0.getFightResultInfo(slot0)
-	return slot0.fightResultMo
+function var_0_0.getFightResultInfo(arg_32_0)
+	return arg_32_0.fightResultMo
 end
 
-function slot0.getLastRewardList(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.lastReward or {}
+function var_0_0.getLastRewardList(arg_33_0)
+	return arg_33_0._rougeInfo and arg_33_0._rougeInfo.lastReward or {}
 end
 
-function slot0.getSelectRewardNum(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.selectRewardNum or 0
+function var_0_0.getSelectRewardNum(arg_34_0)
+	return arg_34_0._rougeInfo and arg_34_0._rougeInfo.selectRewardNum or 0
 end
 
-function slot0.getRougeRetryNum(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo.retryNum or 0
+function var_0_0.getRougeRetryNum(arg_35_0)
+	return arg_35_0._rougeInfo and arg_35_0._rougeInfo.retryNum or 0
 end
 
-function slot0.updateRetryNum(slot0, slot1)
-	if slot0._rougeInfo then
-		slot0._rougeInfo.retryNum = slot1
+function var_0_0.updateRetryNum(arg_36_0, arg_36_1)
+	if arg_36_0._rougeInfo then
+		arg_36_0._rougeInfo.retryNum = arg_36_1
 	end
 end
 
-function slot0.isRetryFight(slot0)
-	if not slot0:getRougeRetryNum() then
+function var_0_0.isRetryFight(arg_37_0)
+	local var_37_0 = arg_37_0:getRougeRetryNum()
+
+	if not var_37_0 then
 		return false
 	end
 
-	return slot1 > 0
+	return var_37_0 > 0
 end
 
-function slot0.getEffectDict(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo:getEffectDict()
+function var_0_0.getEffectDict(arg_38_0)
+	return arg_38_0._rougeInfo and arg_38_0._rougeInfo:getEffectDict()
 end
 
-function slot0.isAbortRouge(slot0)
-	return slot0._isAbort
+function var_0_0.isAbortRouge(arg_39_0)
+	return arg_39_0._isAbort
 end
 
-function slot0.onAbortRouge(slot0)
-	slot0._isAbort = true
+function var_0_0.onAbortRouge(arg_40_0)
+	arg_40_0._isAbort = true
 end
 
-function slot0.getDeadHeroNum(slot0)
-	return slot0._rougeInfo and slot0._rougeInfo:getDeadHeroNum() or 0
+function var_0_0.getDeadHeroNum(arg_41_0)
+	return arg_41_0._rougeInfo and arg_41_0._rougeInfo:getDeadHeroNum() or 0
 end
 
-function slot0.setTeamInitHeros(slot0, slot1)
-	slot0._initHeroDict = {}
+function var_0_0.setTeamInitHeros(arg_42_0, arg_42_1)
+	arg_42_0._initHeroDict = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0._initHeroDict[slot6] = true
+	if arg_42_1 then
+		for iter_42_0, iter_42_1 in ipairs(arg_42_1) do
+			arg_42_0._initHeroDict[iter_42_1] = true
 		end
 	end
 end
 
-function slot0.isInitHero(slot0, slot1)
-	slot2 = false
+function var_0_0.isInitHero(arg_43_0, arg_43_1)
+	local var_43_0 = false
 
-	if slot1 then
-		slot2 = slot0._initHeroDict and slot0._initHeroDict[slot1]
+	if arg_43_1 then
+		var_43_0 = arg_43_0._initHeroDict and arg_43_0._initHeroDict[arg_43_1]
 	end
 
-	return slot2
+	return var_43_0
 end
 
-function slot0.getInitHeroIds(slot0)
-	slot1 = {}
+function var_0_0.getInitHeroIds(arg_44_0)
+	local var_44_0 = {}
 
-	if slot0._initHeroDict then
-		for slot5, slot6 in pairs(slot0._initHeroDict) do
-			slot1[#slot1 + 1] = slot5
+	if arg_44_0._initHeroDict then
+		for iter_44_0, iter_44_1 in pairs(arg_44_0._initHeroDict) do
+			var_44_0[#var_44_0 + 1] = iter_44_0
 		end
 	end
 
-	return slot1
+	return var_44_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

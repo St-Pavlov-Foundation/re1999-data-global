@@ -1,87 +1,100 @@
-module("modules.logic.character.view.CharacterTalentStatView", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentStatView", package.seeall)
 
-slot0 = class("CharacterTalentStatView", BaseView)
+local var_0_0 = class("CharacterTalentStatView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "Scroll View/Viewport/Content/#go_item")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "Scroll View/Viewport/Content/#go_item/slot/#go_normal")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "Scroll View/Viewport/Content/#go_item/slot/#image_icon")
-	slot0._imageglow = gohelper.findChildImage(slot0.viewGO, "Scroll View/Viewport/Content/#go_item/slot/#image_glow")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "Scroll View/Viewport/Content/#go_item/#txt_name")
-	slot0._gopercent = gohelper.findChild(slot0.viewGO, "Scroll View/Viewport/Content/#go_item/#go_percent")
-	slot0._txtpercent = gohelper.findChildText(slot0.viewGO, "Scroll View/Viewport/Content/#go_item/#txt_percent")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item/slot/#go_normal")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item/slot/#image_icon")
+	arg_1_0._imageglow = gohelper.findChildImage(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item/slot/#image_glow")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item/#txt_name")
+	arg_1_0._gopercent = gohelper.findChild(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item/#go_percent")
+	arg_1_0._txtpercent = gohelper.findChildText(arg_1_0.viewGO, "Scroll View/Viewport/Content/#go_item/#txt_percent")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._goitem, false)
+function var_0_0.onOpen(arg_7_0)
+	gohelper.setActive(arg_7_0._goitem, false)
 
-	slot0.heroId = slot0.viewParam.heroId
+	arg_7_0.heroId = arg_7_0.viewParam.heroId
 
-	slot0:showStylePercentList()
+	arg_7_0:showStylePercentList()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0.showStylePercentList(slot0)
-	if not TalentStyleModel.instance:getStyleCoList(slot0.heroId) then
+function var_0_0.showStylePercentList(arg_10_0)
+	local var_10_0 = TalentStyleModel.instance:getStyleCoList(arg_10_0.heroId)
+
+	if not var_10_0 then
 		return
 	end
 
-	if not slot0._itemList then
-		slot0._itemList = slot0:getUserDataTb_()
+	if not arg_10_0._itemList then
+		arg_10_0._itemList = arg_10_0:getUserDataTb_()
 	end
 
-	slot2 = {}
+	local var_10_1 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		table.insert(slot2, slot7)
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		table.insert(var_10_1, iter_10_1)
 	end
 
-	table.sort(slot2, TalentStyleModel.sortUnlockPercent)
+	table.sort(var_10_1, TalentStyleModel.sortUnlockPercent)
 
-	for slot6, slot7 in ipairs(slot2) do
-		slot0:getItem(slot6):onRefreshMo(slot7)
+	for iter_10_2, iter_10_3 in ipairs(var_10_1) do
+		arg_10_0:getItem(iter_10_2):onRefreshMo(iter_10_3)
 	end
 
-	for slot6 = 1, #slot0._itemList do
-		gohelper.setActive(slot0._itemList[slot6].viewGO, slot6 <= #slot1)
+	for iter_10_4 = 1, #arg_10_0._itemList do
+		local var_10_2 = arg_10_0._itemList[iter_10_4]
+
+		gohelper.setActive(var_10_2.viewGO, iter_10_4 <= #var_10_0)
 	end
 end
 
-function slot0.getItem(slot0, slot1)
-	if not slot0._itemList[slot1] then
-		slot0._itemList[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._goitem, "item_" .. slot1), CharacterTalentStatItem)
+function var_0_0.getItem(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0._itemList[arg_11_1]
+
+	if not var_11_0 then
+		local var_11_1 = gohelper.cloneInPlace(arg_11_0._goitem, "item_" .. arg_11_1)
+
+		var_11_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, CharacterTalentStatItem)
+		arg_11_0._itemList[arg_11_1] = var_11_0
 	end
 
-	return slot2
+	return var_11_0
 end
 
-return slot0
+return var_0_0

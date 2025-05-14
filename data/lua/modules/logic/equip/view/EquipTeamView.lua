@@ -1,307 +1,335 @@
-module("modules.logic.equip.view.EquipTeamView", package.seeall)
+﻿module("modules.logic.equip.view.EquipTeamView", package.seeall)
 
-slot0 = class("EquipTeamView", BaseView)
+local var_0_0 = class("EquipTeamView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebgmask = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bgmask")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._goequipcontainer = gohelper.findChild(slot0.viewGO, "#go_equipcontainer")
-	slot0._scrollequip = gohelper.findChildScrollRect(slot0.viewGO, "#go_equipcontainer/#scroll_equip")
-	slot0._goequipsort = gohelper.findChild(slot0.viewGO, "#go_equipcontainer/#go_equipsort")
-	slot0._btnequiplv = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv")
-	slot0._btnequiprare = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare")
-	slot0._simagenoequiptip = gohelper.findChildSingleImage(slot0.viewGO, "#simage_noequiptip")
-	slot0._goroletags = gohelper.findChild(slot0.viewGO, "tags/#go_roletags")
-	slot0._goposlist = gohelper.findChild(slot0.viewGO, "tags/#go_poslist")
-	slot0._gostorytag = gohelper.findChild(slot0.viewGO, "tags/#go_roletags/#go_storytag")
-	slot0._goaidtag = gohelper.findChild(slot0.viewGO, "tags/#go_roletags/#go_aidtag")
-	slot0._goskillpos = gohelper.findChild(slot0.viewGO, "#go_skillpos")
-	slot0._goTouchArea = gohelper.findChild(slot0.viewGO, "#go_touchArea")
-	slot0._simageblurmask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blurmask")
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebgmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bgmask")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._goequipcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_equipcontainer")
+	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_equipcontainer/#scroll_equip")
+	arg_1_0._goequipsort = gohelper.findChild(arg_1_0.viewGO, "#go_equipcontainer/#go_equipsort")
+	arg_1_0._btnequiplv = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiplv")
+	arg_1_0._btnequiprare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_equipcontainer/#go_equipsort/#btn_equiprare")
+	arg_1_0._simagenoequiptip = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_noequiptip")
+	arg_1_0._goroletags = gohelper.findChild(arg_1_0.viewGO, "tags/#go_roletags")
+	arg_1_0._goposlist = gohelper.findChild(arg_1_0.viewGO, "tags/#go_poslist")
+	arg_1_0._gostorytag = gohelper.findChild(arg_1_0.viewGO, "tags/#go_roletags/#go_storytag")
+	arg_1_0._goaidtag = gohelper.findChild(arg_1_0.viewGO, "tags/#go_roletags/#go_aidtag")
+	arg_1_0._goskillpos = gohelper.findChild(arg_1_0.viewGO, "#go_skillpos")
+	arg_1_0._goTouchArea = gohelper.findChild(arg_1_0.viewGO, "#go_touchArea")
+	arg_1_0._simageblurmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blurmask")
+	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnequiplv:AddClickListener(slot0._btnequiplvOnClick, slot0)
-	slot0._btnequiprare:AddClickListener(slot0._btnequiprareOnClick, slot0)
-	slot0._slide:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._slide:AddDragEndListener(slot0._onDragEnd, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnequiplv:AddClickListener(arg_2_0._btnequiplvOnClick, arg_2_0)
+	arg_2_0._btnequiprare:AddClickListener(arg_2_0._btnequiprareOnClick, arg_2_0)
+	arg_2_0._slide:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
+	arg_2_0._slide:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnequiplv:RemoveClickListener()
-	slot0._btnequiprare:RemoveClickListener()
-	slot0._slide:RemoveDragBeginListener()
-	slot0._slide:RemoveDragEndListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnequiplv:RemoveClickListener()
+	arg_3_0._btnequiprare:RemoveClickListener()
+	arg_3_0._slide:RemoveDragBeginListener()
+	arg_3_0._slide:RemoveDragEndListener()
 end
 
-slot0.DragAbsPositionX = 30
+var_0_0.DragAbsPositionX = 30
 
-function slot0._btnshowskillOnClick(slot0)
+function var_0_0._btnshowskillOnClick(arg_4_0)
+	return
 end
 
-function slot0._btnequiplvOnClick(slot0)
+function var_0_0._btnequiplvOnClick(arg_5_0)
 	EquipTeamListModel.instance:sortByLevel()
-	slot0:_refreshEquipBtnIcon()
+	arg_5_0:_refreshEquipBtnIcon()
 end
 
-function slot0._btnequiprareOnClick(slot0)
+function var_0_0._btnequiprareOnClick(arg_6_0)
 	EquipTeamListModel.instance:sortByQuality()
-	slot0:_refreshEquipBtnIcon()
+	arg_6_0:_refreshEquipBtnIcon()
 end
 
-function slot0._refreshEquipBtnIcon(slot0)
-	gohelper.setActive(slot0._equipLvBtns[1], EquipTeamListModel.instance:getBtnTag() ~= 1)
-	gohelper.setActive(slot0._equipLvBtns[2], slot1 == 1)
-	gohelper.setActive(slot0._equipQualityBtns[1], slot1 ~= 2)
-	gohelper.setActive(slot0._equipQualityBtns[2], slot1 == 2)
+function var_0_0._refreshEquipBtnIcon(arg_7_0)
+	local var_7_0 = EquipTeamListModel.instance:getBtnTag()
 
-	slot2, slot3, slot4 = EquipTeamListModel.instance:getRankState()
+	gohelper.setActive(arg_7_0._equipLvBtns[1], var_7_0 ~= 1)
+	gohelper.setActive(arg_7_0._equipLvBtns[2], var_7_0 == 1)
+	gohelper.setActive(arg_7_0._equipQualityBtns[1], var_7_0 ~= 2)
+	gohelper.setActive(arg_7_0._equipQualityBtns[2], var_7_0 == 2)
 
-	transformhelper.setLocalScale(slot0._equipLvArrow[1], 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._equipLvArrow[2], 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._equipQualityArrow[1], 1, slot3, 1)
-	transformhelper.setLocalScale(slot0._equipQualityArrow[2], 1, slot3, 1)
+	local var_7_1, var_7_2, var_7_3 = EquipTeamListModel.instance:getRankState()
+
+	transformhelper.setLocalScale(arg_7_0._equipLvArrow[1], 1, var_7_1, 1)
+	transformhelper.setLocalScale(arg_7_0._equipLvArrow[2], 1, var_7_1, 1)
+	transformhelper.setLocalScale(arg_7_0._equipQualityArrow[1], 1, var_7_2, 1)
+	transformhelper.setLocalScale(arg_7_0._equipQualityArrow[2], 1, var_7_2, 1)
 end
 
-function slot0._onHyperLinkClick(slot0)
+function var_0_0._onHyperLinkClick(arg_8_0)
+	local var_8_0 = recthelper.uiPosToScreenPos(arg_8_0._goskillpos.transform, ViewMgr.instance:getUICanvas())
+
 	EquipController.instance:openEquipSkillTipView({
-		slot0._equipMO,
+		arg_8_0._equipMO,
 		nil,
 		true,
-		recthelper.uiPosToScreenPos(slot0._goskillpos.transform, ViewMgr.instance:getUICanvas())
+		var_8_0
 	})
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0.startDragPosX = slot2.position.x
+function var_0_0._onDragBegin(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.startDragPosX = arg_9_2.position.x
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if uv0.DragAbsPositionX < math.abs(slot2.position.x - slot0.startDragPosX) then
-		if slot3 < slot0.startDragPosX then
-			slot0:_onSlideNext()
+function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_2.position.x
+
+	if math.abs(var_10_0 - arg_10_0.startDragPosX) > var_0_0.DragAbsPositionX then
+		if var_10_0 < arg_10_0.startDragPosX then
+			arg_10_0:_onSlideNext()
 		else
-			slot0:_onSlideLast()
+			arg_10_0:_onSlideLast()
 		end
 	end
 
-	if Mathf.Clamp(slot0._currentSlideIndex - 1, 0, 3) == 3 then
-		slot4 = 0
-	end
+	local var_10_1 = Mathf.Clamp(arg_10_0._currentSlideIndex - 1, 0, 3)
 
-	slot0._simagebgmask:LoadImage(ResUrl.getEquipBg("bg_heromask_" .. slot4 .. ".png"))
-	slot0._simageblurmask:LoadImage(ResUrl.getUIMaskTexture("bg_zhezhao_" .. slot4))
+	var_10_1 = var_10_1 == 3 and 0 or var_10_1
 
-	slot0.viewParam.heroMO = HeroModel.instance:getById(HeroGroupModel.instance:getCurGroupMO().heroList[slot0._currentSlideIndex])
+	arg_10_0._simagebgmask:LoadImage(ResUrl.getEquipBg("bg_heromask_" .. var_10_1 .. ".png"))
+	arg_10_0._simageblurmask:LoadImage(ResUrl.getUIMaskTexture("bg_zhezhao_" .. var_10_1))
 
-	EquipTeamListModel.instance:openTeamEquip(slot0._currentSlideIndex - 1, slot0.viewParam.heroMO)
-	slot0:_changeEquip()
-	slot0:_setRoleTag()
+	local var_10_2 = HeroGroupModel.instance:getCurGroupMO().heroList[arg_10_0._currentSlideIndex]
+
+	arg_10_0.viewParam.heroMO = HeroModel.instance:getById(var_10_2)
+
+	EquipTeamListModel.instance:openTeamEquip(arg_10_0._currentSlideIndex - 1, arg_10_0.viewParam.heroMO)
+	arg_10_0:_changeEquip()
+	arg_10_0:_setRoleTag()
 end
 
-function slot0._setRoleTag(slot0)
-	slot2 = HeroSingleGroupModel.instance:getById(EquipTeamListModel.instance:getCurPosIndex() + 1)
+function var_0_0._setRoleTag(arg_11_0)
+	local var_11_0 = EquipTeamListModel.instance:getCurPosIndex()
+	local var_11_1 = HeroSingleGroupModel.instance:getById(var_11_0 + 1)
+	local var_11_2 = HeroGroupModel.instance.battleId
+	local var_11_3 = var_11_2 and lua_battle.configDict[var_11_2]
+	local var_11_4 = not HeroGroupModel.instance:isPositionOpen(var_11_1.id)
+	local var_11_5 = var_11_1.aid and var_11_1.aid == -1
+	local var_11_6 = HeroGroupModel.instance:getBattleRoleNum()
+	local var_11_7 = var_11_6 and var_11_6 < var_11_1.id
 
-	gohelper.setActive(slot0._gostorytag, slot2.aid and slot2.aid ~= -1)
+	gohelper.setActive(arg_11_0._gostorytag, var_11_1.aid and var_11_1.aid ~= -1)
 
-	if HeroGroupModel.instance.battleId and lua_battle.configDict[slot3] then
-		gohelper.setActive(slot0._goaidtag, not not HeroGroupModel.instance:isPositionOpen(slot2.id) and not (slot2.aid and slot2.aid == -1) and not (HeroGroupModel.instance:getBattleRoleNum() and slot7 < slot2.id) and slot4.playerMax < slot2.id)
+	if var_11_3 then
+		gohelper.setActive(arg_11_0._goaidtag, not var_11_4 and not var_11_5 and not var_11_7 and var_11_1.id > var_11_3.playerMax)
 	else
-		gohelper.setActive(slot0._goaidtag, not slot5 and not slot6 and not slot8 and slot2.id == ModuleEnum.MaxHeroCountInGroup)
+		gohelper.setActive(arg_11_0._goaidtag, not var_11_4 and not var_11_5 and not var_11_7 and var_11_1.id == ModuleEnum.MaxHeroCountInGroup)
 	end
 
-	if not slot0._goaidtag.activeSelf and not slot0._gostorytag.activeSelf then
-		slot0._isShowHeroTag = false
+	if not arg_11_0._goaidtag.activeSelf and not arg_11_0._gostorytag.activeSelf then
+		arg_11_0._isShowHeroTag = false
 
 		return
 	end
 
-	gohelper.setActive(slot0._goroletags, true)
+	gohelper.setActive(arg_11_0._goroletags, true)
 
-	slot0._isShowHeroTag = true
-	slot9, slot10 = recthelper.getAnchor(gohelper.findChild(slot0._goposlist, "pos" .. slot1).transform)
+	arg_11_0._isShowHeroTag = true
 
-	recthelper.setAnchor(slot0._goroletags.transform, slot9, slot10)
+	local var_11_8, var_11_9 = recthelper.getAnchor(gohelper.findChild(arg_11_0._goposlist, "pos" .. var_11_0).transform)
+
+	recthelper.setAnchor(arg_11_0._goroletags.transform, var_11_8, var_11_9)
 end
 
-function slot0._onSlideNext(slot0)
-	slot0._currentSlideIndex = slot0._currentSlideIndex + 1
+function var_0_0._onSlideNext(arg_12_0)
+	arg_12_0._currentSlideIndex = arg_12_0._currentSlideIndex + 1
 
-	if slot0._currentSlideIndex <= slot0._maxSlideIndex then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEquipItem, slot0._herogroupContainOffset_x[slot0._currentSlideIndex])
+	if arg_12_0._currentSlideIndex <= arg_12_0._maxSlideIndex then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEquipItem, arg_12_0._herogroupContainOffset_x[arg_12_0._currentSlideIndex])
 	else
-		slot0._currentSlideIndex = slot0._maxSlideIndex
+		arg_12_0._currentSlideIndex = arg_12_0._maxSlideIndex
 	end
 end
 
-function slot0._onSlideLast(slot0)
-	slot0._currentSlideIndex = slot0._currentSlideIndex - 1
+function var_0_0._onSlideLast(arg_13_0)
+	arg_13_0._currentSlideIndex = arg_13_0._currentSlideIndex - 1
 
-	if slot0._currentSlideIndex > 0 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEquipItem, slot0._herogroupContainOffset_x[slot0._currentSlideIndex])
+	if arg_13_0._currentSlideIndex > 0 then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickEquipItem, arg_13_0._herogroupContainOffset_x[arg_13_0._currentSlideIndex])
 	else
-		slot0._currentSlideIndex = 1
+		arg_13_0._currentSlideIndex = 1
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._strengthenattrs = slot0:getUserDataTb_()
-	slot4 = "bg_xinxiang_wuzhuangtai.png"
+function var_0_0._editableInitView(arg_14_0)
+	arg_14_0._strengthenattrs = arg_14_0:getUserDataTb_()
 
-	slot0._simagenoequiptip:LoadImage(ResUrl.getEquipBg(slot4))
+	arg_14_0._simagenoequiptip:LoadImage(ResUrl.getEquipBg("bg_xinxiang_wuzhuangtai.png"))
 
-	slot0._equipLvBtns = slot0:getUserDataTb_()
-	slot0._equipLvArrow = slot0:getUserDataTb_()
-	slot0._equipQualityBtns = slot0:getUserDataTb_()
-	slot0._equipQualityArrow = slot0:getUserDataTb_()
+	arg_14_0._equipLvBtns = arg_14_0:getUserDataTb_()
+	arg_14_0._equipLvArrow = arg_14_0:getUserDataTb_()
+	arg_14_0._equipQualityBtns = arg_14_0:getUserDataTb_()
+	arg_14_0._equipQualityArrow = arg_14_0:getUserDataTb_()
 
-	for slot4 = 1, 2 do
-		slot0._equipLvBtns[slot4] = gohelper.findChild(slot0._btnequiplv.gameObject, "btn" .. tostring(slot4))
-		slot0._equipLvArrow[slot4] = gohelper.findChild(slot0._equipLvBtns[slot4], "arrow").transform
-		slot0._equipQualityBtns[slot4] = gohelper.findChild(slot0._btnequiprare.gameObject, "btn" .. tostring(slot4))
-		slot0._equipQualityArrow[slot4] = gohelper.findChild(slot0._equipQualityBtns[slot4], "arrow").transform
+	for iter_14_0 = 1, 2 do
+		arg_14_0._equipLvBtns[iter_14_0] = gohelper.findChild(arg_14_0._btnequiplv.gameObject, "btn" .. tostring(iter_14_0))
+		arg_14_0._equipLvArrow[iter_14_0] = gohelper.findChild(arg_14_0._equipLvBtns[iter_14_0], "arrow").transform
+		arg_14_0._equipQualityBtns[iter_14_0] = gohelper.findChild(arg_14_0._btnequiprare.gameObject, "btn" .. tostring(iter_14_0))
+		arg_14_0._equipQualityArrow[iter_14_0] = gohelper.findChild(arg_14_0._equipQualityBtns[iter_14_0], "arrow").transform
 	end
 
-	gohelper.addUIClickAudio(slot0._btnequiplv.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnequiprare.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_14_0._btnequiplv.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_14_0._btnequiprare.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	slot0._slide = SLFramework.UGUI.UIDragListener.Get(slot0._goTouchArea)
-	slot0._herogroupContainOffset_x = slot0:getUserDataTb_()
-	slot0._maxSlideIndex = 4
+	arg_14_0._slide = SLFramework.UGUI.UIDragListener.Get(arg_14_0._goTouchArea)
+	arg_14_0._herogroupContainOffset_x = arg_14_0:getUserDataTb_()
+	arg_14_0._maxSlideIndex = 4
 
-	slot0._simagemask:LoadImage(ResUrl.getEquipBg("full/mask.png"))
+	arg_14_0._simagemask:LoadImage(ResUrl.getEquipBg("full/mask.png"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_15_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._heroId = EquipTeamListModel.instance:getHero() and slot1.heroId
+function var_0_0.onOpen(arg_16_0)
+	local var_16_0 = EquipTeamListModel.instance:getHero()
+	local var_16_1 = EquipTeamListModel.instance:getCurPosIndex()
 
-	if EquipTeamListModel.instance:getCurPosIndex() == 3 then
-		slot2 = 0
-	end
+	arg_16_0._heroId = var_16_0 and var_16_0.heroId
+	var_16_1 = var_16_1 == 3 and 0 or var_16_1
 
-	slot0._simagebgmask:LoadImage(ResUrl.getEquipBg("bg_heromask_" .. slot2 .. ".png"))
-	slot0._simageblurmask:LoadImage(ResUrl.getUIMaskTexture("bg_zhezhao_" .. slot2))
-	slot0:showEquipList()
-	slot0:_refreshEquipBtnIcon()
-	slot0:_setRoleTag()
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, slot0._changeEquip, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, slot0._onEquipChange, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, slot0._onEquipChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._hideNoEquipTip, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCompareEquip, slot0._setMaskVisible, slot0)
+	arg_16_0._simagebgmask:LoadImage(ResUrl.getEquipBg("bg_heromask_" .. var_16_1 .. ".png"))
+	arg_16_0._simageblurmask:LoadImage(ResUrl.getUIMaskTexture("bg_zhezhao_" .. var_16_1))
+	arg_16_0:showEquipList()
+	arg_16_0:_refreshEquipBtnIcon()
+	arg_16_0:_setRoleTag()
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, arg_16_0._changeEquip, arg_16_0)
+	arg_16_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_16_0._onEquipChange, arg_16_0)
+	arg_16_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_16_0._onEquipChange, arg_16_0)
+	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_16_0._hideNoEquipTip, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCompareEquip, arg_16_0._setMaskVisible, arg_16_0)
 
-	slot0._currentSlideIndex = slot0.viewParam.posIndex + 1
+	arg_16_0._currentSlideIndex = arg_16_0.viewParam.posIndex + 1
 
-	slot0:_initHeorGroupItemPos()
+	arg_16_0:_initHeorGroupItemPos()
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._viewAnim.enabled = true
+function var_0_0.onOpenFinish(arg_17_0)
+	arg_17_0._viewAnim.enabled = true
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.setHeroGroupEquipEffect, true)
 end
 
-function slot0._onEquipChange(slot0)
-	TaskDispatcher.cancelTask(slot0._changeEquip, slot0)
-	TaskDispatcher.runDelay(slot0._changeEquip, slot0, 0.1)
+function var_0_0._onEquipChange(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._changeEquip, arg_18_0)
+	TaskDispatcher.runDelay(arg_18_0._changeEquip, arg_18_0, 0.1)
 end
 
-function slot0._changeEquip(slot0)
-	slot0:showEquipList()
+function var_0_0._changeEquip(arg_19_0)
+	arg_19_0:showEquipList()
 end
 
-function slot0._initHeorGroupItemPos(slot0)
-	for slot5, slot6 in ipairs(HeroGroupModel.instance:getHeroGroupItemPos()) do
-		table.insert(slot0._herogroupContainOffset_x, recthelper.getAnchorX(slot6) + recthelper.getAnchorX(slot6.parent))
+function var_0_0._initHeorGroupItemPos(arg_20_0)
+	local var_20_0 = HeroGroupModel.instance:getHeroGroupItemPos()
+
+	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+		local var_20_1 = recthelper.getAnchorX(iter_20_1) + recthelper.getAnchorX(iter_20_1.parent)
+
+		table.insert(arg_20_0._herogroupContainOffset_x, var_20_1)
 	end
 end
 
-function slot0._showNoEquipTip(slot0, slot1)
-	if slot1 == ViewName.EquipTeamShowView then
-		gohelper.setActive(slot0._simagenoequiptip.gameObject, false)
+function var_0_0._showNoEquipTip(arg_21_0, arg_21_1)
+	if arg_21_1 == ViewName.EquipTeamShowView then
+		gohelper.setActive(arg_21_0._simagenoequiptip.gameObject, false)
 	end
 end
 
-function slot0._hideNoEquipTip(slot0, slot1)
-	if slot1 == ViewName.EquipTeamShowView then
-		gohelper.setActive(slot0._simagenoequiptip.gameObject, slot0._isNullEquipShow)
+function var_0_0._hideNoEquipTip(arg_22_0, arg_22_1)
+	if arg_22_1 == ViewName.EquipTeamShowView then
+		gohelper.setActive(arg_22_0._simagenoequiptip.gameObject, arg_22_0._isNullEquipShow)
 	end
 end
 
-function slot0.showEquipList(slot0)
+function var_0_0.showEquipList(arg_23_0)
 	EquipTeamListModel.instance:setEquipList(true)
 	EquipTeamAttrListModel.instance:SetAttrList()
 
-	slot0._isNullEquipShow = true
+	arg_23_0._isNullEquipShow = true
 
 	if EquipTeamAttrListModel.instance:getCount() > 0 then
-		for slot6, slot7 in ipairs(EquipTeamListModel.instance:getTeamEquip()) do
-			slot0._equipMO = EquipModel.instance:getEquip(slot7)
-			slot0._config = slot0._equipMO.config
-			slot9 = ViewMgr.instance:getOpenViewNameList()
+		local var_23_0 = EquipTeamListModel.instance:getTeamEquip()
 
-			if slot9[#slot9] == ViewName.EquipTeamShowView or not ViewMgr.instance:isOpen(ViewName.EquipTeamShowView) then
+		for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+			arg_23_0._equipMO = EquipModel.instance:getEquip(iter_23_1)
+			arg_23_0._config = arg_23_0._equipMO.config
+
+			local var_23_1 = ViewMgr.instance:getOpenViewNameList()
+
+			if var_23_1[#var_23_1] == ViewName.EquipTeamShowView or not ViewMgr.instance:isOpen(ViewName.EquipTeamShowView) then
 				EquipController.instance:openEquipTeamShowView({
-					slot0._equipMO.uid,
+					arg_23_0._equipMO.uid,
 					true
 				})
 			end
 
-			slot0._isNullEquipShow = false
+			arg_23_0._isNullEquipShow = false
 
 			break
 		end
 	end
 
-	if slot0._isNullEquipShow and (EquipTeamListModel.instance:getEquipList() and #slot2 or 0) > 0 then
-		for slot7, slot8 in ipairs(slot2) do
-			slot0._equipMO = slot8
-			slot0._config = slot0._equipMO.config
-			slot9 = ViewMgr.instance:getOpenViewNameList()
+	local var_23_2 = EquipTeamListModel.instance:getEquipList()
+	local var_23_3 = var_23_2 and #var_23_2 or 0
 
-			if slot9[#slot9] == ViewName.EquipTeamShowView or not ViewMgr.instance:isOpen(ViewName.EquipTeamShowView) then
+	if arg_23_0._isNullEquipShow and var_23_3 > 0 then
+		for iter_23_2, iter_23_3 in ipairs(var_23_2) do
+			arg_23_0._equipMO = iter_23_3
+			arg_23_0._config = arg_23_0._equipMO.config
+
+			local var_23_4 = ViewMgr.instance:getOpenViewNameList()
+
+			if var_23_4[#var_23_4] == ViewName.EquipTeamShowView or not ViewMgr.instance:isOpen(ViewName.EquipTeamShowView) then
 				EquipController.instance:openEquipTeamShowView({
-					slot0._equipMO.uid,
+					arg_23_0._equipMO.uid,
 					false
 				})
 			end
 
-			slot0._isNullEquipShow = false
+			arg_23_0._isNullEquipShow = false
 
 			break
 		end
 	end
 
-	gohelper.setActive(slot0._simagenoequiptip.gameObject, slot0._isNullEquipShow)
+	gohelper.setActive(arg_23_0._simagenoequiptip.gameObject, arg_23_0._isNullEquipShow)
 end
 
-function slot0._setMaskVisible(slot0, slot1)
-	gohelper.setActive(slot0._simagemask.gameObject, slot1)
-	gohelper.setActive(slot0._simageblurmask.gameObject, not slot1)
-	gohelper.setActive(slot0._goroletags, slot0._isShowHeroTag and not slot1)
+function var_0_0._setMaskVisible(arg_24_0, arg_24_1)
+	gohelper.setActive(arg_24_0._simagemask.gameObject, arg_24_1)
+	gohelper.setActive(arg_24_0._simageblurmask.gameObject, not arg_24_1)
+	gohelper.setActive(arg_24_0._goroletags, arg_24_0._isShowHeroTag and not arg_24_1)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._changeEquip, slot0)
+function var_0_0.onClose(arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._changeEquip, arg_25_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.setHeroGroupEquipEffect, false)
-	gohelper.setActive(slot0._goroletags, false)
+	gohelper.setActive(arg_25_0._goroletags, false)
 	EquipTeamListModel.instance:clearEquipList()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebgmask:UnLoadImage()
-	slot0._simageblurmask:UnLoadImage()
-	slot0._simagenoequiptip:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0._simagebgmask:UnLoadImage()
+	arg_26_0._simageblurmask:UnLoadImage()
+	arg_26_0._simagenoequiptip:UnLoadImage()
+	arg_26_0._simagemask:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,321 +1,329 @@
-module("modules.logic.social.model.SocialModel", package.seeall)
+﻿module("modules.logic.social.model.SocialModel", package.seeall)
 
-slot0 = class("SocialModel", BaseModel)
+local var_0_0 = class("SocialModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._friendsMODict = {}
-	slot0._blackListMODict = {}
-	slot0._requestMODict = {}
-	slot0._searchMODict = {}
-	slot0._recommendMODict = {}
-	slot0._friendUserIdDict = {}
-	slot0._blackListUserIdDict = {}
-	slot0._tempMODict = {}
-	slot0._playerSelfMO = nil
-	slot0._selectFriend = nil
-	slot0.playSearchItemAnimDt = 0
-	slot0.leftSendRecommendReqDt = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._friendsMODict = {}
+	arg_1_0._blackListMODict = {}
+	arg_1_0._requestMODict = {}
+	arg_1_0._searchMODict = {}
+	arg_1_0._recommendMODict = {}
+	arg_1_0._friendUserIdDict = {}
+	arg_1_0._blackListUserIdDict = {}
+	arg_1_0._tempMODict = {}
+	arg_1_0._playerSelfMO = nil
+	arg_1_0._selectFriend = nil
+	arg_1_0.playSearchItemAnimDt = 0
+	arg_1_0.leftSendRecommendReqDt = 0
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
 	SocialListModel.instance:reInit()
 
-	slot0._friendsMODict = {}
-	slot0._blackListMODict = {}
-	slot0._requestMODict = {}
-	slot0._searchMODict = {}
-	slot0._recommendMODict = {}
-	slot0._friendUserIdDict = {}
-	slot0._blackListUserIdDict = {}
-	slot0._tempMODict = {}
-	slot0._playerSelfMO = nil
-	slot0._selectFriend = nil
+	arg_2_0._friendsMODict = {}
+	arg_2_0._blackListMODict = {}
+	arg_2_0._requestMODict = {}
+	arg_2_0._searchMODict = {}
+	arg_2_0._recommendMODict = {}
+	arg_2_0._friendUserIdDict = {}
+	arg_2_0._blackListUserIdDict = {}
+	arg_2_0._tempMODict = {}
+	arg_2_0._playerSelfMO = nil
+	arg_2_0._selectFriend = nil
 end
 
-function slot0.getFriendIdDict(slot0)
-	return slot0._friendUserIdDict
+function var_0_0.getFriendIdDict(arg_3_0)
+	return arg_3_0._friendUserIdDict
 end
 
-function slot0.updateSocialInfosList(slot0, slot1, slot2)
-	slot0._friendUserIdDict = {}
-	slot0._blackListUserIdDict = {}
+function var_0_0.updateSocialInfosList(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._friendUserIdDict = {}
+	arg_4_0._blackListUserIdDict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot0._friendUserIdDict[slot7] = true
+	if arg_4_1 and #arg_4_1 > 0 then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+			arg_4_0._friendUserIdDict[iter_4_1] = true
 		end
 	end
 
-	if slot2 and #slot2 > 0 then
-		for slot6, slot7 in ipairs(slot2) do
-			slot0._blackListUserIdDict[slot7] = true
+	if arg_4_2 and #arg_4_2 > 0 then
+		for iter_4_2, iter_4_3 in ipairs(arg_4_2) do
+			arg_4_0._blackListUserIdDict[iter_4_3] = true
 		end
 	end
 
 	SocialMessageModel.instance:ensureDeleteSocialMessage()
 end
 
-function slot0.updateFriendList(slot0, slot1)
-	slot0._friendsMODict = {}
-	slot0._friendUserIdDict = {}
+function var_0_0.updateFriendList(arg_5_0, arg_5_1)
+	arg_5_0._friendsMODict = {}
+	arg_5_0._friendUserIdDict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = SocialPlayerMO.New()
+	if arg_5_1 and #arg_5_1 > 0 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+			local var_5_0 = SocialPlayerMO.New()
 
-			slot7:init(slot6)
+			var_5_0:init(iter_5_1)
 
-			slot0._friendsMODict[slot7.userId] = slot7
-			slot0._friendUserIdDict[slot7.userId] = true
+			arg_5_0._friendsMODict[var_5_0.userId] = var_5_0
+			arg_5_0._friendUserIdDict[var_5_0.userId] = true
 
-			slot0:_addTempMO(slot7)
+			arg_5_0:_addTempMO(var_5_0)
 		end
 	end
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Friend, slot0._friendsMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Friend, arg_5_0._friendsMODict)
 end
 
-function slot0.updateBlackList(slot0, slot1)
-	slot0._blackListMODict = {}
-	slot0._blackListUserIdDict = {}
+function var_0_0.updateBlackList(arg_6_0, arg_6_1)
+	arg_6_0._blackListMODict = {}
+	arg_6_0._blackListUserIdDict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = SocialPlayerMO.New()
+	if arg_6_1 and #arg_6_1 > 0 then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+			local var_6_0 = SocialPlayerMO.New()
 
-			slot7:init(slot6)
+			var_6_0:init(iter_6_1)
 
-			slot0._blackListMODict[slot7.userId] = slot7
-			slot0._blackListUserIdDict[slot7.userId] = true
+			arg_6_0._blackListMODict[var_6_0.userId] = var_6_0
+			arg_6_0._blackListUserIdDict[var_6_0.userId] = true
 
-			slot0:_addTempMO(slot7)
+			arg_6_0:_addTempMO(var_6_0)
 		end
 	end
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Black, slot0._blackListMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Black, arg_6_0._blackListMODict)
 end
 
-function slot0.updateRequestList(slot0, slot1)
-	slot0._requestMODict = {}
+function var_0_0.updateRequestList(arg_7_0, arg_7_1)
+	arg_7_0._requestMODict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = SocialPlayerMO.New()
+	if arg_7_1 and #arg_7_1 > 0 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+			local var_7_0 = SocialPlayerMO.New()
 
-			slot7:init(slot6)
+			var_7_0:init(iter_7_1)
 
-			slot0._requestMODict[slot7.userId] = slot7
+			arg_7_0._requestMODict[var_7_0.userId] = var_7_0
 
-			slot0:_addTempMO(slot7)
+			arg_7_0:_addTempMO(var_7_0)
 		end
 	end
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Request, slot0._requestMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Request, arg_7_0._requestMODict)
 end
 
-function slot0.updateRecommendList(slot0, slot1)
-	slot0._recommendMODict = {}
+function var_0_0.updateRecommendList(arg_8_0, arg_8_1)
+	arg_8_0._recommendMODict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = SocialPlayerMO.New()
+	if arg_8_1 and #arg_8_1 > 0 then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+			local var_8_0 = SocialPlayerMO.New()
 
-			slot7:init(slot6)
+			var_8_0:init(iter_8_1)
 
-			slot0._recommendMODict[slot7.userId] = slot7
+			arg_8_0._recommendMODict[var_8_0.userId] = var_8_0
 
-			slot0:_addTempMO(slot7)
+			arg_8_0:_addTempMO(var_8_0)
 		end
 	end
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Recommend, slot0._recommendMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Recommend, arg_8_0._recommendMODict)
 end
 
-function slot0.updateSearchList(slot0, slot1)
-	slot0._searchMODict = {}
+function var_0_0.updateSearchList(arg_9_0, arg_9_1)
+	arg_9_0._searchMODict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = SocialPlayerMO.New()
+	if arg_9_1 and #arg_9_1 > 0 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+			local var_9_0 = SocialPlayerMO.New()
 
-			slot7:init(slot6)
+			var_9_0:init(iter_9_1)
 
-			slot0._searchMODict[slot7.userId] = slot7
+			arg_9_0._searchMODict[var_9_0.userId] = var_9_0
 
-			slot0:_addTempMO(slot7)
+			arg_9_0:_addTempMO(var_9_0)
 		end
 	else
 		GameFacade.showToast(ToastEnum.SocialNoSearch)
 	end
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Search, slot0._searchMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Search, arg_9_0._searchMODict)
 end
 
-function slot0.addFriendsByUserIds(slot0, slot1)
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			if slot0:getPlayerMO(slot6) and not slot0._friendsMODict[slot7.userId] then
-				slot0._friendsMODict[slot7.userId] = slot7
+function var_0_0.addFriendsByUserIds(arg_10_0, arg_10_1)
+	if arg_10_1 and #arg_10_1 > 0 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+			local var_10_0 = arg_10_0:getPlayerMO(iter_10_1)
+
+			if var_10_0 and not arg_10_0._friendsMODict[var_10_0.userId] then
+				arg_10_0._friendsMODict[var_10_0.userId] = var_10_0
 			end
 
-			slot0._friendUserIdDict[slot6] = true
+			arg_10_0._friendUserIdDict[iter_10_1] = true
 		end
 
-		SocialListModel.instance:setModelList(SocialEnum.Type.Friend, slot0._friendsMODict)
+		SocialListModel.instance:setModelList(SocialEnum.Type.Friend, arg_10_0._friendsMODict)
 	end
 end
 
-function slot0.addFriendsByUserInfos(slot0, slot1)
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			if not slot0._friendsMODict[slot6.userId] then
-				slot7 = SocialPlayerMO.New()
+function var_0_0.addFriendsByUserInfos(arg_11_0, arg_11_1)
+	if arg_11_1 and #arg_11_1 > 0 then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+			if not arg_11_0._friendsMODict[iter_11_1.userId] then
+				local var_11_0 = SocialPlayerMO.New()
 
-				slot7:init(slot6)
+				var_11_0:init(iter_11_1)
 
-				slot0._friendsMODict[slot7.userId] = slot7
+				arg_11_0._friendsMODict[var_11_0.userId] = var_11_0
 
-				slot0:_addTempMO(slot7)
+				arg_11_0:_addTempMO(var_11_0)
 			else
-				slot7 = slot0._friendsMODict[slot6.userId]
+				local var_11_1 = arg_11_0._friendsMODict[iter_11_1.userId]
 
-				slot7:init(slot6)
-				slot0:_addTempMO(slot7)
+				var_11_1:init(iter_11_1)
+				arg_11_0:_addTempMO(var_11_1)
 			end
 
-			slot0._friendUserIdDict[slot6.userId] = true
+			arg_11_0._friendUserIdDict[iter_11_1.userId] = true
 		end
 
-		SocialListModel.instance:setModelList(SocialEnum.Type.Friend, slot0._friendsMODict)
+		SocialListModel.instance:setModelList(SocialEnum.Type.Friend, arg_11_0._friendsMODict)
 	end
 end
 
-function slot0.removeFriendByUserId(slot0, slot1)
-	SocialMessageModel.instance:deleteSocialMessage(SocialEnum.ChannelType.Friend, slot1)
+function var_0_0.removeFriendByUserId(arg_12_0, arg_12_1)
+	SocialMessageModel.instance:deleteSocialMessage(SocialEnum.ChannelType.Friend, arg_12_1)
 
-	slot0._friendsMODict[slot1] = nil
-	slot0._friendUserIdDict[slot1] = nil
+	arg_12_0._friendsMODict[arg_12_1] = nil
+	arg_12_0._friendUserIdDict[arg_12_1] = nil
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Friend, slot0._friendsMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Friend, arg_12_0._friendsMODict)
 end
 
-function slot0.addBlackListByUserId(slot0, slot1)
-	if slot0:getPlayerMO(slot1) and not slot0._blackListMODict[slot2.userId] then
-		slot0._blackListMODict[slot2.userId] = slot2
+function var_0_0.addBlackListByUserId(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getPlayerMO(arg_13_1)
+
+	if var_13_0 and not arg_13_0._blackListMODict[var_13_0.userId] then
+		arg_13_0._blackListMODict[var_13_0.userId] = var_13_0
 	end
 
-	slot0._blackListUserIdDict[slot1] = true
+	arg_13_0._blackListUserIdDict[arg_13_1] = true
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Black, slot0._blackListMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Black, arg_13_0._blackListMODict)
 end
 
-function slot0.removeBlackListByUserId(slot0, slot1)
-	slot0._blackListMODict[slot1] = nil
-	slot0._blackListUserIdDict[slot1] = nil
+function var_0_0.removeBlackListByUserId(arg_14_0, arg_14_1)
+	arg_14_0._blackListMODict[arg_14_1] = nil
+	arg_14_0._blackListUserIdDict[arg_14_1] = nil
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Black, slot0._blackListMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Black, arg_14_0._blackListMODict)
 end
 
-function slot0.clearRequestList(slot0)
-	slot0._requestMODict = {}
+function var_0_0.clearRequestList(arg_15_0)
+	arg_15_0._requestMODict = {}
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Request, slot0._requestMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Request, arg_15_0._requestMODict)
 end
 
-function slot0.removeRequestByUserId(slot0, slot1)
-	slot0._requestMODict[slot1] = nil
+function var_0_0.removeRequestByUserId(arg_16_0, arg_16_1)
+	arg_16_0._requestMODict[arg_16_1] = nil
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Request, slot0._requestMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Request, arg_16_0._requestMODict)
 end
 
-function slot0.clearSearchList(slot0)
-	slot0._searchMODict = {}
+function var_0_0.clearSearchList(arg_17_0)
+	arg_17_0._searchMODict = {}
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Search, slot0._searchMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Search, arg_17_0._searchMODict)
 end
 
-function slot0.clearRecommendList(slot0)
-	slot0._recommendMODict = {}
+function var_0_0.clearRecommendList(arg_18_0)
+	arg_18_0._recommendMODict = {}
 
-	SocialListModel.instance:setModelList(SocialEnum.Type.Recommend, slot0._recommendMODict)
+	SocialListModel.instance:setModelList(SocialEnum.Type.Recommend, arg_18_0._recommendMODict)
 end
 
-function slot0.isMyFriendByUserId(slot0, slot1)
-	return slot0._friendUserIdDict[slot1] or slot0._friendsMODict[slot1]
+function var_0_0.isMyFriendByUserId(arg_19_0, arg_19_1)
+	return arg_19_0._friendUserIdDict[arg_19_1] or arg_19_0._friendsMODict[arg_19_1]
 end
 
-function slot0.isMyBlackListByUserId(slot0, slot1)
-	return slot0._blackListUserIdDict[slot1] or slot0._blackListMODict[slot1]
+function var_0_0.isMyBlackListByUserId(arg_20_0, arg_20_1)
+	return arg_20_0._blackListUserIdDict[arg_20_1] or arg_20_0._blackListMODict[arg_20_1]
 end
 
-function slot0._addTempMO(slot0, slot1)
-	if not slot1 then
+function var_0_0._addTempMO(arg_21_0, arg_21_1)
+	if not arg_21_1 then
 		return
 	end
 
-	slot0._tempMODict[slot1.userId] = slot1
+	arg_21_0._tempMODict[arg_21_1.userId] = arg_21_1
 end
 
-function slot0.clearSelfPlayerMO(slot0)
-	slot0._playerSelfMO = nil
+function var_0_0.clearSelfPlayerMO(arg_22_0)
+	arg_22_0._playerSelfMO = nil
 end
 
-function slot0.getPlayerMO(slot0, slot1)
-	if PlayerModel.instance:getMyUserId() == slot1 then
-		if not slot0._playerSelfMO then
-			slot3 = PlayerModel.instance:getPlayinfo()
-			slot0._playerSelfMO = SocialPlayerMO.New()
+function var_0_0.getPlayerMO(arg_23_0, arg_23_1)
+	if PlayerModel.instance:getMyUserId() == arg_23_1 then
+		if not arg_23_0._playerSelfMO then
+			local var_23_0 = PlayerModel.instance:getPlayinfo()
 
-			slot0._playerSelfMO:init({
-				userId = slot3.userId,
-				name = slot3.name,
-				level = slot3.level,
-				portrait = slot3.portrait,
-				time = 0,
-				bg = slot3.bg
-			})
+			arg_23_0._playerSelfMO = SocialPlayerMO.New()
+
+			local var_23_1 = {
+				userId = var_23_0.userId,
+				name = var_23_0.name,
+				level = var_23_0.level,
+				portrait = var_23_0.portrait
+			}
+
+			var_23_1.time = 0
+			var_23_1.bg = var_23_0.bg
+
+			arg_23_0._playerSelfMO:init(var_23_1)
 		end
 
-		return slot0._playerSelfMO
+		return arg_23_0._playerSelfMO
 	end
 
-	return slot0._friendsMODict[slot1] or slot0._searchMODict[slot1] or slot0._recommendMODict[slot1] or slot0._requestMODict[slot1] or slot0._blackListMODict[slot1] or slot0._tempMODict[slot1]
+	return arg_23_0._friendsMODict[arg_23_1] or arg_23_0._searchMODict[arg_23_1] or arg_23_0._recommendMODict[arg_23_1] or arg_23_0._requestMODict[arg_23_1] or arg_23_0._blackListMODict[arg_23_1] or arg_23_0._tempMODict[arg_23_1]
 end
 
-function slot0.getFriendsCount(slot0)
-	return tabletool.len(slot0._friendUserIdDict)
+function var_0_0.getFriendsCount(arg_24_0)
+	return tabletool.len(arg_24_0._friendUserIdDict)
 end
 
-function slot0.getRequestCount(slot0)
-	return tabletool.len(slot0._requestMODict)
+function var_0_0.getRequestCount(arg_25_0)
+	return tabletool.len(arg_25_0._requestMODict)
 end
 
-function slot0.getBlackListCount(slot0)
-	return tabletool.len(slot0._blackListUserIdDict)
+function var_0_0.getBlackListCount(arg_26_0)
+	return tabletool.len(arg_26_0._blackListUserIdDict)
 end
 
-function slot0.getSearchCount(slot0)
-	return tabletool.len(slot0._searchMODict)
+function var_0_0.getSearchCount(arg_27_0)
+	return tabletool.len(arg_27_0._searchMODict)
 end
 
-function slot0.getRecommendCount(slot0)
-	return tabletool.len(slot0._recommendMODict)
+function var_0_0.getRecommendCount(arg_28_0)
+	return tabletool.len(arg_28_0._recommendMODict)
 end
 
-function slot0.setSelectFriend(slot0, slot1)
-	slot0._selectFriend = slot1
+function var_0_0.setSelectFriend(arg_29_0, arg_29_1)
+	arg_29_0._selectFriend = arg_29_1
 
 	SocialController.instance:dispatchEvent(SocialEvent.SelectFriend)
 end
 
-function slot0.getSelectFriend(slot0)
-	if slot0:isMyFriendByUserId(slot0._selectFriend) then
-		return slot0._selectFriend
+function var_0_0.getSelectFriend(arg_30_0)
+	if arg_30_0:isMyFriendByUserId(arg_30_0._selectFriend) then
+		return arg_30_0._selectFriend
 	else
 		return nil
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,80 +1,93 @@
-module("modules.logic.versionactivity1_4.act133.model.Activity133Model", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.model.Activity133Model", package.seeall)
 
-slot0 = class("Activity133Model", BaseModel)
+local var_0_0 = class("Activity133Model", BaseModel)
 
-function slot0.ctor(slot0)
-	slot0.super:ctor()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.super:ctor()
 
-	slot0.serverTaskModel = BaseModel.New()
+	arg_1_0.serverTaskModel = BaseModel.New()
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	slot0.actId = slot1.activityId
-	slot0.hasGetBonusIds = slot1.hasGetBonusIds
+function var_0_0.setActivityInfo(arg_2_0, arg_2_1)
+	arg_2_0.actId = arg_2_1.activityId
+	arg_2_0.hasGetBonusIds = arg_2_1.hasGetBonusIds
 
-	slot0:setTasksInfo(slot1.tasks)
+	arg_2_0:setTasksInfo(arg_2_1.tasks)
 end
 
-function slot0.getTasksInfo(slot0)
-	return slot0.serverTaskModel:getList()
+function var_0_0.getTasksInfo(arg_3_0)
+	return arg_3_0.serverTaskModel:getList()
 end
 
-function slot0.setTasksInfo(slot0, slot1)
-	slot2 = nil
+function var_0_0.setTasksInfo(arg_4_0, arg_4_1)
+	local var_4_0
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0.serverTaskModel:getById(slot7.id) then
-			slot8:update(slot7)
-		elseif Activity133Config.instance:getTaskCo(slot7.id) then
-			slot8 = TaskMo.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = arg_4_0.serverTaskModel:getById(iter_4_1.id)
 
-			slot8:init(slot7, slot9)
-			slot0.serverTaskModel:addAtLast(slot8)
-		end
-
-		slot2 = true
-	end
-
-	if slot2 then
-		slot0:sortList()
-	end
-
-	return slot2
-end
-
-function slot0.deleteInfo(slot0, slot1)
-	for slot6, slot7 in pairs(slot1) do
-		if slot0.serverTaskModel:getById(slot7) then
-			-- Nothing
-		end
-	end
-
-	for slot6, slot7 in pairs({
-		[slot7] = slot8
-	}) do
-		slot0.serverTaskModel:remove(slot7)
-	end
-
-	if next(slot2) and true or false then
-		slot0:sortList()
-	end
-
-	return slot3
-end
-
-function slot0.sortList(slot0)
-	slot0.serverTaskModel:sort(function (slot0, slot1)
-		if (slot0.finishCount > 0 and 3 or slot0.config.maxProgress <= slot0.progress and 1 or 2) ~= (slot1.finishCount > 0 and 3 or slot1.config.maxProgress <= slot1.progress and 1 or 2) then
-			return slot2 < slot3
+		if var_4_1 then
+			var_4_1:update(iter_4_1)
 		else
-			return slot0.config.id < slot1.config.id
+			local var_4_2 = Activity133Config.instance:getTaskCo(iter_4_1.id)
+
+			if var_4_2 then
+				local var_4_3 = TaskMo.New()
+
+				var_4_3:init(iter_4_1, var_4_2)
+				arg_4_0.serverTaskModel:addAtLast(var_4_3)
+			end
+		end
+
+		var_4_0 = true
+	end
+
+	if var_4_0 then
+		arg_4_0:sortList()
+	end
+
+	return var_4_0
+end
+
+function var_0_0.deleteInfo(arg_5_0, arg_5_1)
+	local var_5_0 = {}
+
+	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
+		local var_5_1 = arg_5_0.serverTaskModel:getById(iter_5_1)
+
+		if var_5_1 then
+			var_5_0[iter_5_1] = var_5_1
+		end
+	end
+
+	for iter_5_2, iter_5_3 in pairs(var_5_0) do
+		arg_5_0.serverTaskModel:remove(iter_5_3)
+	end
+
+	local var_5_2 = next(var_5_0) and true or false
+
+	if var_5_2 then
+		arg_5_0:sortList()
+	end
+
+	return var_5_2
+end
+
+function var_0_0.sortList(arg_6_0)
+	arg_6_0.serverTaskModel:sort(function(arg_7_0, arg_7_1)
+		local var_7_0 = arg_7_0.finishCount > 0 and 3 or arg_7_0.progress >= arg_7_0.config.maxProgress and 1 or 2
+		local var_7_1 = arg_7_1.finishCount > 0 and 3 or arg_7_1.progress >= arg_7_1.config.maxProgress and 1 or 2
+
+		if var_7_0 ~= var_7_1 then
+			return var_7_0 < var_7_1
+		else
+			return arg_7_0.config.id < arg_7_1.config.id
 		end
 	end)
 end
 
-function slot0.checkBonusReceived(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.hasGetBonusIds) do
-		if slot6 == slot1 then
+function var_0_0.checkBonusReceived(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0.hasGetBonusIds) do
+		if iter_8_1 == arg_8_1 then
 			return true
 		end
 	end
@@ -82,26 +95,26 @@ function slot0.checkBonusReceived(slot0, slot1)
 	return false
 end
 
-function slot0.getFixedNum(slot0)
-	if slot0.hasGetBonusIds then
-		return #slot0.hasGetBonusIds
+function var_0_0.getFixedNum(arg_9_0)
+	if arg_9_0.hasGetBonusIds then
+		return #arg_9_0.hasGetBonusIds
 	end
 
 	return 0
 end
 
-function slot0.setSelectID(slot0, slot1)
-	if not slot0._selectid then
-		slot0._selectid = slot1
+function var_0_0.setSelectID(arg_10_0, arg_10_1)
+	if not arg_10_0._selectid then
+		arg_10_0._selectid = arg_10_1
 	end
 
-	slot0._selectid = slot1
+	arg_10_0._selectid = arg_10_1
 end
 
-function slot0.getSelectID(slot0)
-	return slot0._selectid
+function var_0_0.getSelectID(arg_11_0)
+	return arg_11_0._selectid
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

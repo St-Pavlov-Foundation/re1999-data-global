@@ -1,104 +1,116 @@
-module("modules.logic.room.entity.comp.RoomAnimEventAudioComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomAnimEventAudioComp", package.seeall)
 
-slot0 = class("RoomAnimEventAudioComp", LuaCompBase)
-slot0.AUDIO_MAX = 4
+local var_0_0 = class("RoomAnimEventAudioComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0.__willDestroy = false
+var_0_0.AUDIO_MAX = 4
+
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.__willDestroy = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._effectKey = RoomEnum.EffectKey.BuildingGOKey
-	slot0._eventPrefix = "audio_"
-	slot0._configName = "room_building"
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+	arg_2_0._eventPrefix = "audio_"
+	arg_2_0._configName = "room_building"
 
-	if slot0:getMO() and slot2.config and not string.nilorempty(slot2.config.audioExtendIds) then
-		slot0._audioExtendIds = string.splitToNumber(slot2.config.audioExtendIds, "#")
+	local var_2_0 = arg_2_0:getMO()
+
+	if var_2_0 and var_2_0.config and not string.nilorempty(var_2_0.config.audioExtendIds) then
+		arg_2_0._audioExtendIds = string.splitToNumber(var_2_0.config.audioExtendIds, "#")
 	end
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.getMO(slot0)
-	return slot0.entity:getMO()
+function var_0_0.getMO(arg_5_0)
+	return arg_5_0.entity:getMO()
 end
 
-function slot0.setConfigName(slot0, slot1)
-	slot0._configName = slot1
+function var_0_0.setConfigName(arg_6_0, arg_6_1)
+	arg_6_0._configName = arg_6_1
 end
 
-function slot0.setEffectKey(slot0, slot1)
-	if slot0._effectKey ~= slot1 then
-		slot0._effectKey = slot1
+function var_0_0.setEffectKey(arg_7_0, arg_7_1)
+	if arg_7_0._effectKey ~= arg_7_1 then
+		arg_7_0._effectKey = arg_7_1
 
-		slot0:_removeAnimEvent()
+		arg_7_0:_removeAnimEvent()
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_8_0)
+	arg_8_0.__willDestroy = true
 
-	slot0:removeEventListeners()
-	slot0:_removeAnimEvent()
+	arg_8_0:removeEventListeners()
+	arg_8_0:_removeAnimEvent()
 end
 
-function slot0._onAnimEvent_1(slot0)
-	slot0:_playAudio(1)
+function var_0_0._onAnimEvent_1(arg_9_0)
+	arg_9_0:_playAudio(1)
 end
 
-function slot0._onAnimEvent_2(slot0)
-	slot0:_playAudio(2)
+function var_0_0._onAnimEvent_2(arg_10_0)
+	arg_10_0:_playAudio(2)
 end
 
-function slot0._onAnimEvent_3(slot0)
-	slot0:_playAudio(3)
+function var_0_0._onAnimEvent_3(arg_11_0)
+	arg_11_0:_playAudio(3)
 end
 
-function slot0._onAnimEvent_4(slot0)
-	slot0:_playAudio(4)
+function var_0_0._onAnimEvent_4(arg_12_0)
+	arg_12_0:_playAudio(4)
 end
 
-function slot0._playAudio(slot0, slot1)
-	if slot0.__willDestroy or slot0._audioExtendIds == nil then
+function var_0_0._playAudio(arg_13_0, arg_13_1)
+	if arg_13_0.__willDestroy or arg_13_0._audioExtendIds == nil then
 		return
 	end
 
-	if slot0._audioExtendIds[slot1] == nil then
-		logNormal(string.format("RoomAnimEventAudioComp 请检\"%s\"表中\"audioExtendIds\"配置的音效数量不足。当前第%s个", slot0._configName, slot1))
-	elseif slot2 ~= 0 then
-		RoomHelper.audioExtendTrigger(slot2, slot0.go)
+	local var_13_0 = arg_13_0._audioExtendIds[arg_13_1]
+
+	if var_13_0 == nil then
+		logNormal(string.format("RoomAnimEventAudioComp 请检\"%s\"表中\"audioExtendIds\"配置的音效数量不足。当前第%s个", arg_13_0._configName, arg_13_1))
+	elseif var_13_0 ~= 0 then
+		RoomHelper.audioExtendTrigger(var_13_0, arg_13_0.go)
 	end
 end
 
-function slot0._addAnimEvent(slot0)
-	if slot0.__willDestroy then
+function var_0_0._addAnimEvent(arg_14_0)
+	if arg_14_0.__willDestroy then
 		return
 	end
 
-	if slot0._animEventMonoList or not slot0.effect:isHasEffectGOByKey(slot0._effectKey) then
+	if arg_14_0._animEventMonoList or not arg_14_0.effect:isHasEffectGOByKey(arg_14_0._effectKey) then
 		return
 	end
 
-	if not slot0.effect:getComponentsByKey(slot0._effectKey, RoomEnum.ComponentName.AnimationEventWrap) then
+	local var_14_0 = arg_14_0.effect:getComponentsByKey(arg_14_0._effectKey, RoomEnum.ComponentName.AnimationEventWrap)
+
+	if not var_14_0 then
 		return
 	end
 
-	slot0._animEventMonoList = {}
+	arg_14_0._animEventMonoList = {}
 
-	tabletool.addValues(slot0._animEventMonoList, slot1)
+	tabletool.addValues(arg_14_0._animEventMonoList, var_14_0)
 
-	for slot5, slot6 in ipairs(slot0._animEventMonoList) do
-		for slot10 = 1, uv0.AUDIO_MAX do
-			if slot0["_onAnimEvent_" .. slot10] then
-				slot6:AddEventListener(slot0._eventPrefix .. slot10, slot12, slot0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._animEventMonoList) do
+		for iter_14_2 = 1, var_0_0.AUDIO_MAX do
+			local var_14_1 = "_onAnimEvent_" .. iter_14_2
+			local var_14_2 = arg_14_0[var_14_1]
+
+			if var_14_2 then
+				iter_14_1:AddEventListener(arg_14_0._eventPrefix .. iter_14_2, var_14_2, arg_14_0)
 			else
-				logError("RoomAnimEventAudioComp can not find function name is:" .. slot11)
+				logError("RoomAnimEventAudioComp can not find function name is:" .. var_14_1)
 
 				break
 			end
@@ -106,33 +118,37 @@ function slot0._addAnimEvent(slot0)
 	end
 end
 
-function slot0._removeAnimEvent(slot0)
-	if slot0._animEventMonoList then
-		slot0._animEventMonoList = nil
+function var_0_0._removeAnimEvent(arg_15_0)
+	if arg_15_0._animEventMonoList then
+		local var_15_0 = arg_15_0._animEventMonoList
 
-		for slot5, slot6 in ipairs(slot0._animEventMonoList) do
-			slot6:RemoveAllEventListener()
+		arg_15_0._animEventMonoList = nil
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			iter_15_1:RemoveAllEventListener()
 		end
 
-		for slot5 in pairs(slot1) do
-			rawset(slot1, slot5, nil)
+		for iter_15_2 in pairs(var_15_0) do
+			rawset(var_15_0, iter_15_2, nil)
 		end
 	end
 end
 
-function slot0.onEffectRebuild(slot0)
-	if slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) and not slot1:isSameResByKey(slot0._effectKey, slot0._effectRes) then
-		slot0._effectRes = slot1:getEffectRes(slot0._effectKey)
+function var_0_0.onEffectRebuild(arg_16_0)
+	local var_16_0 = arg_16_0.entity.effect
 
-		slot0:_removeAnimEvent()
-		slot0:_addAnimEvent()
+	if var_16_0:isHasEffectGOByKey(arg_16_0._effectKey) and not var_16_0:isSameResByKey(arg_16_0._effectKey, arg_16_0._effectRes) then
+		arg_16_0._effectRes = var_16_0:getEffectRes(arg_16_0._effectKey)
+
+		arg_16_0:_removeAnimEvent()
+		arg_16_0:_addAnimEvent()
 	end
 end
 
-function slot0.onEffectReturn(slot0, slot1, slot2)
-	if slot0._effectKey == slot1 then
-		slot0:_removeAnimEvent()
+function var_0_0.onEffectReturn(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_0._effectKey == arg_17_1 then
+		arg_17_0:_removeAnimEvent()
 	end
 end
 
-return slot0
+return var_0_0

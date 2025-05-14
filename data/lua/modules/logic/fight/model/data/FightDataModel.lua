@@ -1,19 +1,21 @@
-module("modules.logic.fight.model.data.FightDataModel", package.seeall)
+﻿module("modules.logic.fight.model.data.FightDataModel", package.seeall)
 
-slot0 = class("FightDataModel", BaseModel)
+local var_0_0 = class("FightDataModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.initDouQuQu(slot0)
-	slot0.douQuQuMgr = FightDouQuQuDataMgr.New()
+function var_0_0.initDouQuQu(arg_3_0)
+	arg_3_0.douQuQuMgr = FightDouQuQuDataMgr.New()
 
-	return slot0.douQuQuMgr
+	return arg_3_0.douQuQuMgr
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

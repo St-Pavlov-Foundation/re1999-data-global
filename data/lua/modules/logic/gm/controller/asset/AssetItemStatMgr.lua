@@ -1,29 +1,33 @@
-module("modules.logic.gm.controller.asset.AssetItemStatMgr", package.seeall)
+﻿module("modules.logic.gm.controller.asset.AssetItemStatMgr", package.seeall)
 
-slot0 = class("AssetItemStatMgr", BaseController)
-slot1 = SLFramework.ResMgr.Instance
+local var_0_0 = class("AssetItemStatMgr", BaseController)
+local var_0_1 = SLFramework.ResMgr.Instance
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
+	return
 end
 
-function slot0.initReflection()
-	if uv0.initedRef then
+function var_0_0.initReflection()
+	if var_0_0.initedRef then
 		return
 	end
 
 	require("tolua.reflection")
 	tolua.loadassembly("Assembly-CSharp")
 
-	slot1 = System.Reflection.BindingFlags
-	slot6 = tolua.getfield(tolua.findtype("SLFramework.ResMgr"), "assetCache", slot1.GetMask(slot1.Instance, slot1.NonPublic)):Get(uv1):GetEnumerator()
+	local var_2_0 = tolua.findtype("SLFramework.ResMgr")
+	local var_2_1 = System.Reflection.BindingFlags
+	local var_2_2 = var_2_1.GetMask(var_2_1.Instance, var_2_1.NonPublic)
+	local var_2_3 = tolua.getfield(var_2_0, "assetCache", var_2_2):Get(var_0_1):GetEnumerator()
 
-	while slot6:MoveNext() do
-		slot7 = slot6.Current.Key
+	while var_2_3:MoveNext() do
+		local var_2_4 = var_2_3.Current.Key
+		local var_2_5 = var_2_3.Current.Value
 
-		logError(slot6.Current.Value.ReferenceCount)
+		logError(var_2_5.ReferenceCount)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

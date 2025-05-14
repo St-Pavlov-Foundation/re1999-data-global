@@ -1,73 +1,75 @@
-module("modules.logic.fight.fightcomponent.FightEventComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightEventComponent", package.seeall)
 
-slot0 = class("FightEventComponent", FightBaseClass)
+local var_0_0 = class("FightEventComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._eventItems = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._eventItems = {}
 end
 
-function slot0.registEvent(slot0, slot1, slot2, slot3, slot4, slot5)
-	for slot9, slot10 in ipairs(slot0._eventItems) do
-		if slot1 == slot10[1] and slot2 == slot10[2] and slot3 == slot10[3] and slot4 == slot10[4] then
+function var_0_0.registEvent(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._eventItems) do
+		if arg_2_1 == iter_2_1[1] and arg_2_2 == iter_2_1[2] and arg_2_3 == iter_2_1[3] and arg_2_4 == iter_2_1[4] then
 			return
 		end
 	end
 
-	slot1:registerCallback(slot2, slot3, slot4, slot5)
-	table.insert(slot0._eventItems, {
-		slot1,
-		slot2,
-		slot3,
-		slot4,
-		slot5
+	arg_2_1:registerCallback(arg_2_2, arg_2_3, arg_2_4, arg_2_5)
+	table.insert(arg_2_0._eventItems, {
+		arg_2_1,
+		arg_2_2,
+		arg_2_3,
+		arg_2_4,
+		arg_2_5
 	})
 end
 
-function slot0.cancelEvent(slot0, slot1, slot2, slot3, slot4)
-	for slot8 = #slot0._eventItems, 1, -1 do
-		if slot1 == slot0._eventItems[slot8][1] and slot2 == slot9[2] and slot3 == slot9[3] and slot4 == slot9[4] then
-			slot1:unregisterCallback(slot2, slot3, slot4)
-			table.remove(slot0._eventItems, slot8)
+function var_0_0.cancelEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	for iter_3_0 = #arg_3_0._eventItems, 1, -1 do
+		local var_3_0 = arg_3_0._eventItems[iter_3_0]
+
+		if arg_3_1 == var_3_0[1] and arg_3_2 == var_3_0[2] and arg_3_3 == var_3_0[3] and arg_3_4 == var_3_0[4] then
+			arg_3_1:unregisterCallback(arg_3_2, arg_3_3, arg_3_4)
+			table.remove(arg_3_0._eventItems, iter_3_0)
 		end
 	end
 end
 
-function slot0.lockEvent(slot0)
-	if slot0.LOCK then
+function var_0_0.lockEvent(arg_4_0)
+	if arg_4_0.LOCK then
 		return
 	end
 
-	slot0.LOCK = true
+	arg_4_0.LOCK = true
 
-	for slot4 = #slot0._eventItems, 1, -1 do
-		slot5 = slot0._eventItems[slot4]
+	for iter_4_0 = #arg_4_0._eventItems, 1, -1 do
+		local var_4_0 = arg_4_0._eventItems[iter_4_0]
 
-		slot5[1]:unregisterCallback(slot5[2], slot5[3], slot5[4])
+		var_4_0[1]:unregisterCallback(var_4_0[2], var_4_0[3], var_4_0[4])
 	end
 end
 
-function slot0.unlockEvent(slot0)
-	if not slot0.LOCK then
+function var_0_0.unlockEvent(arg_5_0)
+	if not arg_5_0.LOCK then
 		return
 	end
 
-	slot0.LOCK = nil
+	arg_5_0.LOCK = nil
 
-	for slot4 = 1, #slot0._eventItems do
-		slot5 = slot0._eventItems[slot4]
+	for iter_5_0 = 1, #arg_5_0._eventItems do
+		local var_5_0 = arg_5_0._eventItems[iter_5_0]
 
-		slot5[1]:registerCallback(slot5[2], slot5[3], slot5[4], slot5[5])
+		var_5_0[1]:registerCallback(var_5_0[2], var_5_0[3], var_5_0[4], var_5_0[5])
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4 = #slot0._eventItems, 1, -1 do
-		slot5 = slot0._eventItems[slot4]
+function var_0_0.onDestructor(arg_6_0)
+	for iter_6_0 = #arg_6_0._eventItems, 1, -1 do
+		local var_6_0 = arg_6_0._eventItems[iter_6_0]
 
-		slot5[1]:unregisterCallback(slot5[2], slot5[3], slot5[4])
+		var_6_0[1]:unregisterCallback(var_6_0[2], var_6_0[3], var_6_0[4])
 	end
 
-	slot0._eventItems = nil
+	arg_6_0._eventItems = nil
 end
 
-return slot0
+return var_0_0

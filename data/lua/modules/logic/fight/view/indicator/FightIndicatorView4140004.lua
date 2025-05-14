@@ -1,9 +1,9 @@
-module("modules.logic.fight.view.indicator.FightIndicatorView4140004", package.seeall)
+﻿module("modules.logic.fight.view.indicator.FightIndicatorView4140004", package.seeall)
 
-slot0 = class("FightIndicatorView4140004", FightIndicatorView)
+local var_0_0 = class("FightIndicatorView4140004", FightIndicatorView)
 
-function slot0.getCardId(slot0)
+function var_0_0.getCardId(arg_1_0)
 	return 140002
 end
 
-return slot0
+return var_0_0

@@ -1,23 +1,27 @@
-module("modules.logic.fight.view.FightViewDragChangeSubHero", package.seeall)
+﻿module("modules.logic.fight.view.FightViewDragChangeSubHero", package.seeall)
 
-slot0 = class("FightViewDragChangeSubHero", BaseView)
+local var_0_0 = class("FightViewDragChangeSubHero", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._containerGO = gohelper.findChild(slot0.viewGO, "root/changeSub")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._containerGO = gohelper.findChild(arg_1_0.viewGO, "root/changeSub")
 
-	gohelper.setActive(slot0._containerGO, false)
+	gohelper.setActive(arg_1_0._containerGO, false)
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

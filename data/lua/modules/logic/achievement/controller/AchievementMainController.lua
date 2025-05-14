@@ -1,80 +1,96 @@
-module("modules.logic.achievement.controller.AchievementMainController", package.seeall)
+﻿module("modules.logic.achievement.controller.AchievementMainController", package.seeall)
 
-slot0 = class("AchievementMainController", BaseController)
+local var_0_0 = class("AchievementMainController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3, slot4)
-	slot1 = slot1 or AchievementEnum.Type.Story
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_1 = arg_1_1 or AchievementEnum.Type.Story
 
-	AchievementMainCommonModel.instance:initDatas(slot1, slot2, slot3, slot4)
-	slot0:cleanTabNew(slot1)
-	AchievementController.instance:registerCallback(AchievementEvent.UpdateAchievements, slot0.notifyUpdateView, slot0)
+	AchievementMainCommonModel.instance:initDatas(arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0:cleanTabNew(arg_1_1)
+	AchievementController.instance:registerCallback(AchievementEvent.UpdateAchievements, arg_1_0.notifyUpdateView, arg_1_0)
 end
 
-function slot0.updateAchievementState(slot0)
-	AchievementMainCommonModel.instance:initDatas(AchievementMainCommonModel.instance:getCurrentCategory(), AchievementMainCommonModel.instance:getCurrentViewType(), AchievementMainCommonModel.instance:getCurrentSortType(), AchievementMainCommonModel.instance:getCurrentFilterType())
+function var_0_0.updateAchievementState(arg_2_0)
+	local var_2_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+	local var_2_1 = AchievementMainCommonModel.instance:getCurrentViewType()
+	local var_2_2 = AchievementMainCommonModel.instance:getCurrentSortType()
+	local var_2_3 = AchievementMainCommonModel.instance:getCurrentFilterType()
+
+	AchievementMainCommonModel.instance:initDatas(var_2_0, var_2_1, var_2_2, var_2_3)
 end
 
-function slot0.onCloseView(slot0)
-	AchievementController.instance:unregisterCallback(AchievementEvent.UpdateAchievements, slot0.notifyUpdateView, slot0)
-	slot0:cleanCategoryNewFlag(AchievementMainCommonModel.instance:getCurrentCategory())
+function var_0_0.onCloseView(arg_3_0)
+	AchievementController.instance:unregisterCallback(AchievementEvent.UpdateAchievements, arg_3_0.notifyUpdateView, arg_3_0)
+
+	local var_3_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+
+	arg_3_0:cleanCategoryNewFlag(var_3_0)
 end
 
-function slot0.setCategory(slot0, slot1)
+function var_0_0.setCategory(arg_4_0, arg_4_1)
 	AchievementMainTileModel.instance:resetScrollFocusIndex()
 	AchievementMainTileModel.instance:setHasPlayOpenAnim(false)
 	AchievementMainCommonModel.instance:markCurrentScrollFocusing(true)
-	AchievementMainCommonModel.instance:switchCategory(slot1)
-	slot0:cleanCategoryNewFlag(AchievementMainCommonModel.instance:getCurrentCategory())
-	slot0:cleanTabNew(slot1)
-	slot0:dispatchEvent(AchievementEvent.OnSwitchCategory)
-	slot0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+
+	local var_4_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+
+	AchievementMainCommonModel.instance:switchCategory(arg_4_1)
+	arg_4_0:cleanCategoryNewFlag(var_4_0)
+	arg_4_0:cleanTabNew(arg_4_1)
+	arg_4_0:dispatchEvent(AchievementEvent.OnSwitchCategory)
+	arg_4_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function slot0.switchViewType(slot0, slot1)
+function var_0_0.switchViewType(arg_5_0, arg_5_1)
 	AchievementMainCommonModel.instance:markCurrentScrollFocusing(true)
-	AchievementMainCommonModel.instance:switchViewType(slot1)
-	slot0:dispatchEvent(AchievementEvent.OnSwitchViewType)
-	slot0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+	AchievementMainCommonModel.instance:switchViewType(arg_5_1)
+	arg_5_0:dispatchEvent(AchievementEvent.OnSwitchViewType)
+	arg_5_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function slot0.switchSortType(slot0, slot1)
-	AchievementMainCommonModel.instance:switchSortType(slot1)
-	slot0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+function var_0_0.switchSortType(arg_6_0, arg_6_1)
+	AchievementMainCommonModel.instance:switchSortType(arg_6_1)
+	arg_6_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function slot0.switchSearchFilterType(slot0, slot1)
-	AchievementMainCommonModel.instance:switchSearchFilterType(slot1)
-	slot0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
+function var_0_0.switchSearchFilterType(arg_7_0, arg_7_1)
+	AchievementMainCommonModel.instance:switchSearchFilterType(arg_7_1)
+	arg_7_0:dispatchEvent(AchievementEvent.AchievementMainViewUpdate)
 end
 
-function slot0.cleanTabNew(slot0, slot1)
-	AchievementMainCommonModel.instance.categoryNewDict[slot1] = false
+function var_0_0.cleanTabNew(arg_8_0, arg_8_1)
+	AchievementMainCommonModel.instance.categoryNewDict[arg_8_1] = false
 end
 
-function slot0.cleanCategoryNewFlag(slot0, slot1)
-	slot3 = {}
+function var_0_0.cleanCategoryNewFlag(arg_9_0, arg_9_1)
+	local var_9_0 = AchievementMainCommonModel.instance:getCategoryAchievementConfigList(arg_9_1)
+	local var_9_1 = {}
 
-	for slot7, slot8 in ipairs(AchievementMainCommonModel.instance:getCategoryAchievementConfigList(slot1)) do
-		if AchievementModel.instance:getAchievementTaskCoList(slot8.id) then
-			for slot13, slot14 in ipairs(slot9) do
-				if AchievementModel.instance:getById(slot14.id) and slot15.isNew then
-					table.insert(slot3, slot14.id)
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_2 = AchievementModel.instance:getAchievementTaskCoList(iter_9_1.id)
+
+		if var_9_2 then
+			for iter_9_2, iter_9_3 in ipairs(var_9_2) do
+				local var_9_3 = AchievementModel.instance:getById(iter_9_3.id)
+
+				if var_9_3 and var_9_3.isNew then
+					table.insert(var_9_1, iter_9_3.id)
 				end
 			end
 		end
 	end
 
-	if #slot3 > 0 then
-		AchievementRpc.instance:sendReadNewAchievementRequest(slot3)
+	if #var_9_1 > 0 then
+		AchievementRpc.instance:sendReadNewAchievementRequest(var_9_1)
 	end
 end
 
-function slot0.notifyUpdateView(slot0)
+function var_0_0.notifyUpdateView(arg_10_0)
 	AchievementMainTileModel.instance:onModelUpdate()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

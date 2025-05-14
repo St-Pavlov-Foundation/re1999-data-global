@@ -1,18 +1,18 @@
-module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow_WorkBase", package.seeall)
+﻿module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow_WorkBase", package.seeall)
 
-slot0 = class("VirtualSummonBehaviorFlow_WorkBase", BaseWork)
-slot1 = 3
+local var_0_0 = class("VirtualSummonBehaviorFlow_WorkBase", BaseWork)
+local var_0_1 = 3
 
-function slot0.startBlock(slot0, slot1, slot2)
-	slot3 = slot1 or slot0.class.__cname
+function var_0_0.startBlock(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = arg_1_1 or arg_1_0.class.__cname
 
-	UIBlockHelper.instance:startBlock(slot3, slot2 or uv0)
+	UIBlockHelper.instance:startBlock(var_1_0, arg_1_2 or var_0_1)
 
-	return slot3
+	return var_1_0
 end
 
-function slot0.endBlock(slot0, slot1)
-	UIBlockHelper.instance:startBlock(slot1 or slot0.class.__cname)
+function var_0_0.endBlock(arg_2_0, arg_2_1)
+	UIBlockHelper.instance:startBlock(arg_2_1 or arg_2_0.class.__cname)
 end
 
-return slot0
+return var_0_0

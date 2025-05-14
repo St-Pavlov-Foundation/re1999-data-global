@@ -1,53 +1,64 @@
-module("modules.logic.room.model.map.RoomShowBuildingMO", package.seeall)
+﻿module("modules.logic.room.model.map.RoomShowBuildingMO", package.seeall)
 
-slot0 = pureTable("RoomShowBuildingMO")
+local var_0_0 = pureTable("RoomShowBuildingMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id or slot1.uid
-	slot0.buildingId = slot1.buildingId or slot1.defineId
-	slot0.use = slot1.use
-	slot0.uids = slot1.uids or {}
-	slot0.levels = slot1.levels or {}
-	slot0.config = RoomConfig.instance:getBuildingConfig(slot0.buildingId)
-	slot0.level = slot1.level or 0
-	slot0.isNeedToBuy = slot1.isNeedToBuy or false
-	slot0.isBuyNoCost = slot1.isBuyNoCost or false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id or arg_1_1.uid
+	arg_1_0.buildingId = arg_1_1.buildingId or arg_1_1.defineId
+	arg_1_0.use = arg_1_1.use
+	arg_1_0.uids = arg_1_1.uids or {}
+	arg_1_0.levels = arg_1_1.levels or {}
+	arg_1_0.config = RoomConfig.instance:getBuildingConfig(arg_1_0.buildingId)
+	arg_1_0.level = arg_1_1.level or 0
+	arg_1_0.isNeedToBuy = arg_1_1.isNeedToBuy or false
+	arg_1_0.isBuyNoCost = arg_1_1.isBuyNoCost or false
 
-	if slot0.config.canLevelUp and RoomConfig.instance:getLevelGroupConfig(slot1.buildingId, slot0.level) then
-		slot0.config = RoomHelper.mergeCfg(slot0.config, slot2)
+	if arg_1_0.config.canLevelUp then
+		local var_1_0 = RoomConfig.instance:getLevelGroupConfig(arg_1_1.buildingId, arg_1_0.level)
+
+		if var_1_0 then
+			arg_1_0.config = RoomHelper.mergeCfg(arg_1_0.config, var_1_0)
+		end
 	end
 end
 
-function slot0.add(slot0, slot1, slot2)
-	if not tabletool.indexOf(slot0.uids, slot1) then
-		table.insert(slot0.uids, slot1)
-		table.insert(slot0.levels, slot2 or 0)
+function var_0_0.add(arg_2_0, arg_2_1, arg_2_2)
+	if not tabletool.indexOf(arg_2_0.uids, arg_2_1) then
+		table.insert(arg_2_0.uids, arg_2_1)
+		table.insert(arg_2_0.levels, arg_2_2 or 0)
 	end
 end
 
-function slot0.removeUId(slot0, slot1)
-	if tabletool.indexOf(slot0.uids, slot1) then
-		table.remove(slot0.uids, slot2)
-		table.remove(slot0.levels, slot2)
+function var_0_0.removeUId(arg_3_0, arg_3_1)
+	local var_3_0 = tabletool.indexOf(arg_3_0.uids, arg_3_1)
+
+	if var_3_0 then
+		table.remove(arg_3_0.uids, var_3_0)
+		table.remove(arg_3_0.levels, var_3_0)
 	end
 end
 
-function slot0.getCount(slot0)
-	return slot0.uids and #slot0.uids or 0
+function var_0_0.getCount(arg_4_0)
+	return arg_4_0.uids and #arg_4_0.uids or 0
 end
 
-function slot0.isDecoration(slot0)
-	return slot0.config and slot0.config.buildingType == RoomBuildingEnum.BuildingType.Decoration
+function var_0_0.isDecoration(arg_5_0)
+	return arg_5_0.config and arg_5_0.config.buildingType == RoomBuildingEnum.BuildingType.Decoration
 end
 
-function slot0.getIcon(slot0)
-	if slot0.config then
-		if slot0.config.canLevelUp and RoomConfig.instance:getLevelGroupConfig(slot0.buildingId, slot0.levels[1]) and not string.nilorempty(slot2.icon) then
-			return slot2.icon
+function var_0_0.getIcon(arg_6_0)
+	if arg_6_0.config then
+		if arg_6_0.config.canLevelUp then
+			local var_6_0 = arg_6_0.levels[1]
+			local var_6_1 = RoomConfig.instance:getLevelGroupConfig(arg_6_0.buildingId, var_6_0)
+
+			if var_6_1 and not string.nilorempty(var_6_1.icon) then
+				return var_6_1.icon
+			end
 		end
 
-		return slot0.config.icon
+		return arg_6_0.config.icon
 	end
 end
 
-return slot0
+return var_0_0

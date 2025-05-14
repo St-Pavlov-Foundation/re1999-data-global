@@ -1,113 +1,126 @@
-module("modules.logic.activity.view.show.ActivityClassShowView", package.seeall)
+﻿module("modules.logic.activity.view.show.ActivityClassShowView", package.seeall)
 
-slot0 = class("ActivityClassShowView", BaseView)
+local var_0_0 = class("ActivityClassShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/#txt_time")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "title/#txt_desc")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "reward/rewardPreview/#scroll_reward")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_desc")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0, LuaEventSystem.Low)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0, LuaEventSystem.Low)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnjump:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnjump:RemoveClickListener()
 end
 
-slot0.ShowCount = 1
-slot0.unlimitDay = 42
+var_0_0.ShowCount = 1
+var_0_0.unlimitDay = 42
 
-function slot0._btnjumpOnClick(slot0)
-	if not DungeonModel.instance:getLastEpisodeShowData() then
+function var_0_0._btnjumpOnClick(arg_4_0)
+	local var_4_0 = DungeonModel.instance:getLastEpisodeShowData()
+
+	if not var_4_0 then
 		return
 	end
 
 	if TeachNoteModel.instance:isTeachNoteUnlock() then
-		slot4 = slot1.chapterId
+		local var_4_1 = {}
+		local var_4_2 = var_4_0.id
+		local var_4_3 = var_4_0.chapterId
+
+		var_4_1.chapterType = lua_chapter.configDict[var_4_3].type
+		var_4_1.chapterId = var_4_3
+		var_4_1.episodeId = var_4_2
 
 		TeachNoteModel.instance:setJumpEnter(false)
-		DungeonController.instance:jumpDungeon({
-			chapterType = lua_chapter.configDict[slot4].type,
-			chapterId = slot4,
-			episodeId = slot1.id
-		})
+		DungeonController.instance:jumpDungeon(var_4_1)
 	else
 		GameFacade.showToast(ToastEnum.ClassShow)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_class_bg"))
-	gohelper.setActive(slot0._gorewarditem, false)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_class_bg"))
+	gohelper.setActive(arg_5_0._gorewarditem, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam.parent
 
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
+	arg_7_0._actId = arg_7_0.viewParam.actId
 
-	slot0._rewardItems = slot0:getUserDataTb_()
+	gohelper.addChild(var_7_0, arg_7_0.viewGO)
 
-	slot0:refreshUI()
+	arg_7_0._rewardItems = arg_7_0:getUserDataTb_()
+
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._config = ActivityConfig.instance:getActivityShowTaskList(slot0._actId, 1)
-	slot0._txtdesc.text = slot0._config.actDesc
-	slot1, slot2 = ActivityModel.instance:getRemainTime(slot0._actId)
-	slot0._txttime.text = uv0.unlimitDay < slot1 and luaLang("activityshow_unlimittime") or string.format(luaLang("activityshow_remaintime"), slot1, slot2)
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0._config = ActivityConfig.instance:getActivityShowTaskList(arg_8_0._actId, 1)
+	arg_8_0._txtdesc.text = arg_8_0._config.actDesc
 
-	for slot7 = 1, #string.split(slot0._config.showBonus, "|") do
-		if not slot0._rewardItems[slot7] then
-			slot8 = slot0:getUserDataTb_()
-			slot8.go = gohelper.clone(slot0._gorewarditem, slot0._gorewardContent, "rewarditem" .. slot7)
-			slot8.item = IconMgr.instance:getCommonPropItemIcon(slot8.go)
+	local var_8_0, var_8_1 = ActivityModel.instance:getRemainTime(arg_8_0._actId)
 
-			table.insert(slot0._rewardItems, slot8)
+	arg_8_0._txttime.text = var_8_0 > var_0_0.unlimitDay and luaLang("activityshow_unlimittime") or string.format(luaLang("activityshow_remaintime"), var_8_0, var_8_1)
+
+	local var_8_2 = string.split(arg_8_0._config.showBonus, "|")
+
+	for iter_8_0 = 1, #var_8_2 do
+		if not arg_8_0._rewardItems[iter_8_0] then
+			local var_8_3 = arg_8_0:getUserDataTb_()
+
+			var_8_3.go = gohelper.clone(arg_8_0._gorewarditem, arg_8_0._gorewardContent, "rewarditem" .. iter_8_0)
+			var_8_3.item = IconMgr.instance:getCommonPropItemIcon(var_8_3.go)
+
+			table.insert(arg_8_0._rewardItems, var_8_3)
 		end
 
-		gohelper.setActive(slot0._rewardItems[slot7].go, true)
+		gohelper.setActive(arg_8_0._rewardItems[iter_8_0].go, true)
 
-		slot9 = string.splitToNumber(slot3[slot7], "#")
+		local var_8_4 = string.splitToNumber(var_8_2[iter_8_0], "#")
 
-		slot0._rewardItems[slot7].item:setMOValue(slot9[1], slot9[2], slot9[3])
-		slot0._rewardItems[slot7].item:isShowCount(slot9[4] == uv0.ShowCount)
-		slot0._rewardItems[slot7].item:setCountFontSize(56)
-		slot0._rewardItems[slot7].item:setHideLvAndBreakFlag(true)
-		slot0._rewardItems[slot7].item:hideEquipLvAndBreak(true)
+		arg_8_0._rewardItems[iter_8_0].item:setMOValue(var_8_4[1], var_8_4[2], var_8_4[3])
+		arg_8_0._rewardItems[iter_8_0].item:isShowCount(var_8_4[4] == var_0_0.ShowCount)
+		arg_8_0._rewardItems[iter_8_0].item:setCountFontSize(56)
+		arg_8_0._rewardItems[iter_8_0].item:setHideLvAndBreakFlag(true)
+		arg_8_0._rewardItems[iter_8_0].item:hideEquipLvAndBreak(true)
 	end
 
-	for slot7 = #slot3 + 1, #slot0._rewardItems do
-		gohelper.setActive(slot0._rewardItems[slot7].go, false)
+	for iter_8_1 = #var_8_2 + 1, #arg_8_0._rewardItems do
+		gohelper.setActive(arg_8_0._rewardItems[iter_8_1].go, false)
 	end
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.DungeonMapView then
+function var_0_0._onOpenViewFinish(arg_9_0, arg_9_1)
+	if arg_9_1 == ViewName.DungeonMapView then
 		TeachNoteController.instance:enterTeachNoteView(nil, false)
 		ViewMgr.instance:closeView(ViewName.ActivityWelfareView, true)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

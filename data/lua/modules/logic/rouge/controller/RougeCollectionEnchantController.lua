@@ -1,151 +1,188 @@
-module("modules.logic.rouge.controller.RougeCollectionEnchantController", package.seeall)
+﻿module("modules.logic.rouge.controller.RougeCollectionEnchantController", package.seeall)
 
-slot0 = class("RougeCollectionEnchantController", BaseController)
-slot1 = 1
+local var_0_0 = class("RougeCollectionEnchantController", BaseController)
+local var_0_1 = 1
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3)
-	slot0:onInit(slot1, slot2, slot3, true)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0:onInit(arg_1_1, arg_1_2, arg_1_3, true)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
 	RougeCollectionUnEnchantListModel.instance:reInit()
 	RougeCollectionEnchantListModel.instance:reInit()
 end
 
-function slot0.onInit(slot0, slot1, slot2, slot3, slot4)
-	RougeCollectionUnEnchantListModel.instance:onInitData(slot2)
-	RougeCollectionEnchantListModel.instance:onInitData(slot4)
-	slot0:onSelectBagItem(RougeCollectionUnEnchantListModel.instance:getById(slot1) and RougeCollectionUnEnchantListModel.instance:getIndex(slot5), slot3)
+function var_0_0.onInit(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	RougeCollectionUnEnchantListModel.instance:onInitData(arg_3_2)
+	RougeCollectionEnchantListModel.instance:onInitData(arg_3_4)
+
+	local var_3_0 = RougeCollectionUnEnchantListModel.instance:getById(arg_3_1)
+	local var_3_1 = var_3_0 and RougeCollectionUnEnchantListModel.instance:getIndex(var_3_0)
+
+	arg_3_0:onSelectBagItem(var_3_1, arg_3_3)
 end
 
-function slot0.onSelectBagItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.onSelectBagItem(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0
+	local var_4_1 = RougeCollectionUnEnchantListModel.instance:getByIndex(arg_4_1)
 
-	if not RougeCollectionUnEnchantListModel.instance:getByIndex(slot1) then
+	if not var_4_1 then
 		return
 	end
 
-	slot2 = slot2 or uv0
+	arg_4_2 = arg_4_2 or var_0_1
 
-	RougeCollectionUnEnchantListModel.instance:markCurSelectHoleIndex(slot2)
-	RougeCollectionUnEnchantListModel.instance:switchSelectCollection(slot4.id)
-	slot0:onSelectEnchantItem(slot4.id, slot4:getEnchantIdAndCfgId(slot2), slot2)
+	RougeCollectionUnEnchantListModel.instance:markCurSelectHoleIndex(arg_4_2)
+	RougeCollectionUnEnchantListModel.instance:switchSelectCollection(var_4_1.id)
+
+	local var_4_2 = var_4_1:getEnchantIdAndCfgId(arg_4_2)
+
+	arg_4_0:onSelectEnchantItem(var_4_1.id, var_4_2, arg_4_2)
 end
 
-function slot0.onSelectEnchantItem(slot0, slot1, slot2, slot3)
-	slot2 = slot2 or 0
-	slot3 = slot3 or 0
+function var_0_0.onSelectEnchantItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_2 = arg_5_2 or 0
+	arg_5_3 = arg_5_3 or 0
 
-	if not slot1 or slot2 <= 0 or slot3 <= 0 then
+	if not arg_5_1 or not (arg_5_2 > 0) or not (arg_5_3 > 0) then
 		RougeCollectionEnchantListModel.instance:selectCell(nil, false)
-		uv0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, slot1)
+		var_0_0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, arg_5_1)
 
 		return
 	end
 
-	if (RougeCollectionModel.instance:getCollectionByUid(slot1) and slot4:getEnchantIdAndCfgId(slot3)) ~= slot2 then
-		slot0:trySendRogueCollectionEnchantRequest(slot1, slot2, slot3)
-	elseif RougeCollectionEnchantListModel.instance:getCurSelectEnchantId() ~= slot2 then
-		RougeCollectionEnchantListModel.instance:selectCell(slot2, true)
-		uv0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, slot1)
+	local var_5_0 = RougeCollectionModel.instance:getCollectionByUid(arg_5_1)
+
+	if (var_5_0 and var_5_0:getEnchantIdAndCfgId(arg_5_3)) ~= arg_5_2 then
+		arg_5_0:trySendRogueCollectionEnchantRequest(arg_5_1, arg_5_2, arg_5_3)
+	elseif RougeCollectionEnchantListModel.instance:getCurSelectEnchantId() ~= arg_5_2 then
+		RougeCollectionEnchantListModel.instance:selectCell(arg_5_2, true)
+		var_0_0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, arg_5_1)
 	end
 end
 
-function slot0.trySendRogueCollectionEnchantRequest(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 or not slot3 then
+function var_0_0.trySendRogueCollectionEnchantRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if not arg_6_1 or not arg_6_2 or not arg_6_3 then
 		return
 	end
 
-	if not RougeCollectionModel.instance:getCollectionByUid(slot1) then
-		logError("尝试将新的造物附魔数据发送给后端失败,失败原因:背包中找不到该造物,造物uid = " .. tostring(slot4.id))
+	local var_6_0 = RougeCollectionModel.instance:getCollectionByUid(arg_6_1)
 
-		return
-	end
-
-	if slot2 ~= RougeEnum.EmptyEnchantId and not (RougeCollectionModel.instance:getCollectionByUid(slot2) or RougeCollectionEnchantListModel.instance:getById(slot2)) then
-		logError("尝试将新的造物附魔数据发送给后端失败,失败原因:背包中找不到该附魔软盘,软盘uid = " .. tostring(slot2))
+	if not var_6_0 then
+		logError("尝试将新的造物附魔数据发送给后端失败,失败原因:背包中找不到该造物,造物uid = " .. tostring(var_6_0.id))
 
 		return
 	end
 
-	if (RougeCollectionConfig.instance:getCollectionCfg(slot4.cfgId).holeNum or 0) <= 0 then
-		return
-	end
-
-	if slot6 < slot3 then
-		logError(string.format("尝试将新的造物附魔数据发送给后端失败,失败原因:准备对序号为%s的孔位进行附魔操作,但是配置表中配置的孔位数量小于该序号,软盘uid = %s, 配置id = %s,孔位数量 = %s", slot3, slot4.id, slot4.cfgId, slot6))
+	if arg_6_2 ~= RougeEnum.EmptyEnchantId and not (RougeCollectionModel.instance:getCollectionByUid(arg_6_2) or RougeCollectionEnchantListModel.instance:getById(arg_6_2)) then
+		logError("尝试将新的造物附魔数据发送给后端失败,失败原因:背包中找不到该附魔软盘,软盘uid = " .. tostring(arg_6_2))
 
 		return
 	end
 
-	RougeRpc.instance:sendRougeInlayRequest(slot1, slot2, slot3)
+	local var_6_1 = RougeCollectionConfig.instance:getCollectionCfg(var_6_0.cfgId).holeNum or 0
+
+	if var_6_1 <= 0 then
+		return
+	end
+
+	if var_6_1 < arg_6_3 then
+		logError(string.format("尝试将新的造物附魔数据发送给后端失败,失败原因:准备对序号为%s的孔位进行附魔操作,但是配置表中配置的孔位数量小于该序号,软盘uid = %s, 配置id = %s,孔位数量 = %s", arg_6_3, var_6_0.id, var_6_0.cfgId, var_6_1))
+
+		return
+	end
+
+	RougeRpc.instance:sendRougeInlayRequest(arg_6_1, arg_6_2, arg_6_3)
 end
 
-function slot0.trySendRemoveCollectionEnchantRequest(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0.trySendRemoveCollectionEnchantRequest(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 or not arg_7_2 then
 		return
 	end
 
-	if not RougeCollectionModel.instance:getCollectionByUid(slot1) then
-		logError("尝试将新的造物附魔数据发送给后端失败,失败原因:背包中找不到该造物,造物uid = " .. tostring(slot1))
+	local var_7_0 = RougeCollectionModel.instance:getCollectionByUid(arg_7_1)
 
-		return
-	end
-
-	if not slot3:getEnchantIdAndCfgId(slot2) or slot4 <= 0 then
-		return
-	end
-
-	if slot2 > (RougeCollectionConfig.instance:getCollectionCfg(slot3.cfgId).holeNum or 0) then
-		logError(string.format("尝试将新的造物附魔数据发送给后端失败,失败原因:准备对序号为%s的孔位进行附魔操作,但是配置表中配置的孔位数量小于该序号,软盘uid = %s, 配置id = %s,孔位数量 = %s", slot2, slot3.id, slot3.cfgId, slot6))
+	if not var_7_0 then
+		logError("尝试将新的造物附魔数据发送给后端失败,失败原因:背包中找不到该造物,造物uid = " .. tostring(arg_7_1))
 
 		return
 	end
 
-	RougeRpc.instance:sendRougeDemountRequest(slot1, slot2)
+	local var_7_1 = var_7_0:getEnchantIdAndCfgId(arg_7_2)
+
+	if not var_7_1 or var_7_1 <= 0 then
+		return
+	end
+
+	local var_7_2 = RougeCollectionConfig.instance:getCollectionCfg(var_7_0.cfgId).holeNum or 0
+
+	if var_7_2 < arg_7_2 then
+		logError(string.format("尝试将新的造物附魔数据发送给后端失败,失败原因:准备对序号为%s的孔位进行附魔操作,但是配置表中配置的孔位数量小于该序号,软盘uid = %s, 配置id = %s,孔位数量 = %s", arg_7_2, var_7_0.id, var_7_0.cfgId, var_7_2))
+
+		return
+	end
+
+	RougeRpc.instance:sendRougeDemountRequest(arg_7_1, arg_7_2)
 end
 
-function slot0.onSelectHoleGrid(slot0, slot1)
-	RougeCollectionUnEnchantListModel.instance:markCurSelectHoleIndex(slot1)
+function var_0_0.onSelectHoleGrid(arg_8_0, arg_8_1)
+	RougeCollectionUnEnchantListModel.instance:markCurSelectHoleIndex(arg_8_1)
 
-	if RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId() then
-		slot0:onSelectEnchantItem(slot2, RougeCollectionUnEnchantListModel.instance:getById(slot2) and slot3:getEnchantIdAndCfgId(slot1), slot1)
+	local var_8_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
+
+	if var_8_0 then
+		local var_8_1 = RougeCollectionUnEnchantListModel.instance:getById(var_8_0)
+		local var_8_2 = var_8_1 and var_8_1:getEnchantIdAndCfgId(arg_8_1)
+
+		arg_8_0:onSelectEnchantItem(var_8_0, var_8_2, arg_8_1)
 	end
 end
 
-function slot0.switchCollection(slot0, slot1)
-	slot2 = RougeCollectionUnEnchantListModel.instance:getCurSelectIndex()
-	slot3 = RougeCollectionUnEnchantListModel.instance:getCount()
-	slot4 = nil
+function var_0_0.switchCollection(arg_9_0, arg_9_1)
+	local var_9_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectIndex()
+	local var_9_1 = RougeCollectionUnEnchantListModel.instance:getCount()
+	local var_9_2
 
-	if ((not slot1 or Mathf.Clamp(slot2 + 1, 1, slot3)) and Mathf.Clamp(slot2 - 1, 1, slot3)) ~= slot2 and RougeCollectionUnEnchantListModel.instance:getByIndex(slot4) then
+	if arg_9_1 then
+		var_9_2 = Mathf.Clamp(var_9_0 + 1, 1, var_9_1)
+	else
+		var_9_2 = Mathf.Clamp(var_9_0 - 1, 1, var_9_1)
+	end
+
+	if var_9_2 ~= var_9_0 and RougeCollectionUnEnchantListModel.instance:getByIndex(var_9_2) then
 		RougeCollectionEnchantListModel.instance:executeSortFunc()
-		slot0:onSelectBagItem(slot4, uv0)
+		arg_9_0:onSelectBagItem(var_9_2, var_0_1)
 	end
 end
 
-function slot0.removeEnchant(slot0, slot1, slot2)
-	if RougeCollectionModel.instance:getCollectionByUid(slot1) and slot3:getEnchantIdAndCfgId(slot2) and slot4 > 0 then
-		RougeCollectionEnchantListModel.instance:selectCell(slot4, false)
+function var_0_0.removeEnchant(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = RougeCollectionModel.instance:getCollectionByUid(arg_10_1)
+	local var_10_1 = var_10_0 and var_10_0:getEnchantIdAndCfgId(arg_10_2)
+
+	if var_10_1 and var_10_1 > 0 then
+		RougeCollectionEnchantListModel.instance:selectCell(var_10_1, false)
 	end
 
-	slot0:trySendRemoveCollectionEnchantRequest(slot1, slot2)
+	arg_10_0:trySendRemoveCollectionEnchantRequest(arg_10_1, arg_10_2)
 end
 
-function slot0.onRougeInlayInfoUpdate(slot0, slot1, slot2)
-	if RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId() == slot1 then
-		RougeCollectionEnchantListModel.instance:selectCell(RougeCollectionModel.instance:getCollectionByUid(slot1):getEnchantIdAndCfgId(RougeCollectionUnEnchantListModel.instance:getCurSelectHoleIndex()), true)
+function var_0_0.onRougeInlayInfoUpdate(arg_11_0, arg_11_1, arg_11_2)
+	if RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId() == arg_11_1 then
+		local var_11_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectHoleIndex()
+		local var_11_1 = RougeCollectionModel.instance:getCollectionByUid(arg_11_1):getEnchantIdAndCfgId(var_11_0)
+
+		RougeCollectionEnchantListModel.instance:selectCell(var_11_1, true)
 	end
 
-	if slot2 and slot2 > 0 then
-		uv0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, slot2)
+	if arg_11_2 and arg_11_2 > 0 then
+		var_0_0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, arg_11_2)
 	end
 
-	uv0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, slot1)
+	var_0_0.instance:dispatchEvent(RougeEvent.UpdateCollectionEnchant, arg_11_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

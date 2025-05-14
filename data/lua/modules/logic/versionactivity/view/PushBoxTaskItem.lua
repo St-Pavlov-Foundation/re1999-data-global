@@ -1,92 +1,97 @@
-module("modules.logic.versionactivity.view.PushBoxTaskItem", package.seeall)
+﻿module("modules.logic.versionactivity.view.PushBoxTaskItem", package.seeall)
 
-slot0 = class("PushBoxTaskItem", BaseView)
+local var_0_0 = class("PushBoxTaskItem", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.txt_desc = gohelper.findChildTextMesh(slot0.viewGO, "txt_desc")
-	slot0.txt_curcount = gohelper.findChildText(slot0.viewGO, "txt_curcount")
-	slot0.txt_totalcount = gohelper.findChildText(slot0.viewGO, "txt_totalcount")
-	slot0.btn_receive = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_receive")
-	slot0.btn_jump = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn_jump")
-	slot0.go_rewards = gohelper.findChild(slot0.viewGO, "go_rewards")
-	slot0.go_finish = gohelper.findChild(slot0.viewGO, "go_finish")
-	slot0.simage_bg = gohelper.findChildSingleImage(slot0.viewGO, "simage_bg")
-	slot0._go_blackmask = gohelper.findChild(slot0.viewGO, "go_blackmask")
-	slot0._ani = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.txt_desc = gohelper.findChildTextMesh(arg_1_0.viewGO, "txt_desc")
+	arg_1_0.txt_curcount = gohelper.findChildText(arg_1_0.viewGO, "txt_curcount")
+	arg_1_0.txt_totalcount = gohelper.findChildText(arg_1_0.viewGO, "txt_totalcount")
+	arg_1_0.btn_receive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_receive")
+	arg_1_0.btn_jump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_jump")
+	arg_1_0.go_rewards = gohelper.findChild(arg_1_0.viewGO, "go_rewards")
+	arg_1_0.go_finish = gohelper.findChild(arg_1_0.viewGO, "go_finish")
+	arg_1_0.simage_bg = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_bg")
+	arg_1_0._go_blackmask = gohelper.findChild(arg_1_0.viewGO, "go_blackmask")
+	arg_1_0._ani = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0.btn_jump:AddClickListener(slot0._onBtnJump, slot0)
-	slot0.btn_receive:AddClickListener(slot0._onBtnReceive, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0.btn_jump:AddClickListener(arg_2_0._onBtnJump, arg_2_0)
+	arg_2_0.btn_receive:AddClickListener(arg_2_0._onBtnReceive, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.btn_jump:RemoveClickListener()
-	slot0.btn_receive:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0.btn_jump:RemoveClickListener()
+	arg_3_0.btn_receive:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.simage_bg.curImageUrl = nil
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.simage_bg.curImageUrl = nil
 
-	slot0.simage_bg:LoadImage(ResUrl.getVersionActivityIcon("pushbox/ing_rwdi"))
+	arg_4_0.simage_bg:LoadImage(ResUrl.getVersionActivityIcon("pushbox/ing_rwdi"))
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
+	return
 end
 
-function slot0.playOpenAni(slot0, slot1)
-	slot0._ani:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.playOpenAni(arg_6_0, arg_6_1)
+	arg_6_0._ani:Play(UIAnimationName.Open, 0, 0)
 end
 
-function slot0._refreshData(slot0, slot1)
-	slot0._ani:Play(UIAnimationName.Idle, 0, 0)
+function var_0_0._refreshData(arg_7_0, arg_7_1)
+	arg_7_0._ani:Play(UIAnimationName.Idle, 0, 0)
 
-	slot0._task_data = PushBoxModel.instance:getTaskData(slot1.id)
-	slot0._config = slot1.config
-	slot0.txt_desc.text = slot0._config.desc
-	slot0.txt_curcount.text = slot0._task_data.progress
-	slot0.txt_totalcount.text = slot0._config.maxProgress
-	slot2 = ItemModel.instance:getItemDataListByConfigStr(slot0._config.bonus)
-	slot0.item_list = slot2
+	arg_7_0._task_data = PushBoxModel.instance:getTaskData(arg_7_1.id)
+	arg_7_0._config = arg_7_1.config
+	arg_7_0.txt_desc.text = arg_7_0._config.desc
+	arg_7_0.txt_curcount.text = arg_7_0._task_data.progress
+	arg_7_0.txt_totalcount.text = arg_7_0._config.maxProgress
 
-	IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onItemShow, slot2, slot0.go_rewards)
-	gohelper.setActive(slot0.btn_receive.gameObject, not slot0._task_data.hasGetBonus and slot0._config.maxProgress <= slot0._task_data.progress)
-	gohelper.setActive(slot0.go_finish, slot0._task_data.hasGetBonus)
-	gohelper.setActive(slot0.btn_jump.gameObject, not slot0._task_data.hasGetBonus and slot0._task_data.progress < slot0._config.maxProgress)
-	gohelper.setActive(slot0._go_blackmask, slot0._task_data.hasGetBonus)
+	local var_7_0 = ItemModel.instance:getItemDataListByConfigStr(arg_7_0._config.bonus)
+
+	arg_7_0.item_list = var_7_0
+
+	IconMgr.instance:getCommonPropItemIconList(arg_7_0, arg_7_0._onItemShow, var_7_0, arg_7_0.go_rewards)
+	gohelper.setActive(arg_7_0.btn_receive.gameObject, not arg_7_0._task_data.hasGetBonus and arg_7_0._task_data.progress >= arg_7_0._config.maxProgress)
+	gohelper.setActive(arg_7_0.go_finish, arg_7_0._task_data.hasGetBonus)
+	gohelper.setActive(arg_7_0.btn_jump.gameObject, not arg_7_0._task_data.hasGetBonus and arg_7_0._task_data.progress < arg_7_0._config.maxProgress)
+	gohelper.setActive(arg_7_0._go_blackmask, arg_7_0._task_data.hasGetBonus)
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:setConsume(true)
-	slot1:showStackableNum2()
-	slot1:isShowEffect(true)
-	slot1:setAutoPlay(true)
-	slot1:setCountFontSize(48)
+function var_0_0._onItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_1:onUpdateMO(arg_8_2)
+	arg_8_1:setConsume(true)
+	arg_8_1:showStackableNum2()
+	arg_8_1:isShowEffect(true)
+	arg_8_1:setAutoPlay(true)
+	arg_8_1:setCountFontSize(48)
 end
 
-function slot0._onBtnReceive(slot0)
-	if slot0._task_data.progress < slot0._config.maxProgress then
+function var_0_0._onBtnReceive(arg_9_0)
+	if arg_9_0._task_data.progress < arg_9_0._config.maxProgress then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("PushBoxTaskItemReward")
-	gohelper.setActive(slot0._go_blackmask, true)
-	slot0._ani:Play("finish", 0, 0)
-	TaskDispatcher.runDelay(slot0._taskRewardRequest, slot0, 0.6)
+	gohelper.setActive(arg_9_0._go_blackmask, true)
+	arg_9_0._ani:Play("finish", 0, 0)
+	TaskDispatcher.runDelay(arg_9_0._taskRewardRequest, arg_9_0, 0.6)
 end
 
-function slot0._taskRewardRequest(slot0)
+function var_0_0._taskRewardRequest(arg_10_0)
 	UIBlockMgr.instance:endBlock("PushBoxTaskItemReward")
-	PushBoxRpc.instance:sendReceiveTaskRewardRequest(nil, slot0._config.taskId)
+	PushBoxRpc.instance:sendReceiveTaskRewardRequest(nil, arg_10_0._config.taskId)
 end
 
-function slot0._onBtnJump(slot0)
-	if not PushBoxModel.instance:getPassData(tonumber(string.split(slot0._config.listenerParam, "#")[1])) then
+function var_0_0._onBtnJump(arg_11_0)
+	local var_11_0 = tonumber(string.split(arg_11_0._config.listenerParam, "#")[1])
+
+	if not PushBoxModel.instance:getPassData(var_11_0) then
 		GameFacade.showToast(ToastEnum.WarmUpGotoOrder)
 
 		return
@@ -95,14 +100,14 @@ function slot0._onBtnJump(slot0)
 	ViewMgr.instance:closeView(ViewName.VersionActivityPushBoxTaskView)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
 	UIBlockMgr.instance:endBlock("PushBoxTaskItemReward")
-	TaskDispatcher.cancelTask(slot0._showAni, slot0)
-	TaskDispatcher.cancelTask(slot0._taskRewardRequest, slot0)
+	TaskDispatcher.cancelTask(arg_12_0._showAni, arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._taskRewardRequest, arg_12_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.simage_bg:UnLoadImage()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0.simage_bg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

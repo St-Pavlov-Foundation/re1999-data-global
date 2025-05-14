@@ -1,99 +1,99 @@
-module("modules.logic.backpack.view.BackpackPropListItem", package.seeall)
+﻿module("modules.logic.backpack.view.BackpackPropListItem", package.seeall)
 
-slot0 = class("BackpackPropListItem", ListScrollCellExtend)
+local var_0_0 = class("BackpackPropListItem", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 
-	gohelper.setActive(slot1, false)
+	gohelper.setActive(arg_1_1, false)
 
-	slot0._itemIcon = IconMgr.instance:getCommonItemIcon(slot1)
+	arg_1_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_1_1)
 end
 
-function slot0.addEvents(slot0)
-	BackpackController.instance:registerCallback(BackpackEvent.SelectCategory, slot0._categorySelected, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onViewClose, slot0)
+function var_0_0.addEvents(arg_2_0)
+	BackpackController.instance:registerCallback(BackpackEvent.SelectCategory, arg_2_0._categorySelected, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onViewClose, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.SelectCategory, slot0._categorySelected, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0._onViewClose, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	BackpackController.instance:unregisterCallback(BackpackEvent.SelectCategory, arg_3_0._categorySelected, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onViewClose, arg_3_0)
 end
 
-function slot0._categorySelected(slot0)
-	if slot0._itemIcon then
-		slot0._itemIcon:setAutoPlay(false)
+function var_0_0._categorySelected(arg_4_0)
+	if arg_4_0._itemIcon then
+		arg_4_0._itemIcon:setAutoPlay(false)
 
-		if not slot0._canvasGroup then
-			slot0._canvasGroup = gohelper.onceAddComponent(slot0._itemIcon.go, typeof(UnityEngine.CanvasGroup))
+		if not arg_4_0._canvasGroup then
+			arg_4_0._canvasGroup = gohelper.onceAddComponent(arg_4_0._itemIcon.go, typeof(UnityEngine.CanvasGroup))
 		end
 
-		slot0._canvasGroup.alpha = 1
+		arg_4_0._canvasGroup.alpha = 1
 
-		TaskDispatcher.cancelTask(slot0._showItem, slot0)
+		TaskDispatcher.cancelTask(arg_4_0._showItem, arg_4_0)
 
-		slot0._itemIcon.go:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 1
+		arg_4_0._itemIcon.go:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 1
 
 		BackpackModel.instance:setItemAniHasShown(true)
 	end
 end
 
-function slot0._onViewClose(slot0, slot1)
-	if not slot0._mo or not slot0._itemIcon then
+function var_0_0._onViewClose(arg_5_0, arg_5_1)
+	if not arg_5_0._mo or not arg_5_0._itemIcon then
 		return
 	end
 
-	slot2 = slot0._mo.config
+	local var_5_0 = arg_5_0._mo.config
 
-	slot0._itemIcon:setRecordFarmItem({
-		type = slot2.type,
-		id = slot2.id,
+	arg_5_0._itemIcon:setRecordFarmItem({
+		type = var_5_0.type,
+		id = var_5_0.id,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
 end
 
-function slot0._showItem(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0._showItem(arg_6_0)
+	gohelper.setActive(arg_6_0.go, true)
 
 	if not BackpackModel.instance:getItemAniHasShown() then
-		slot0._itemIcon:playAnimation("backpack_common_in")
+		arg_6_0._itemIcon:playAnimation("backpack_common_in")
 	end
 
-	if slot0._index >= 24 then
+	if arg_6_0._index >= 24 then
 		BackpackModel.instance:setItemAniHasShown(true)
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 
-	if slot0._index <= 24 then
-		TaskDispatcher.runDelay(slot0._showItem, slot0, 0.03 * math.floor((slot0._index - 1) / 6))
+	if arg_7_0._index <= 24 then
+		TaskDispatcher.runDelay(arg_7_0._showItem, arg_7_0, 0.03 * math.floor((arg_7_0._index - 1) / 6))
 	else
-		slot0._itemIcon:setAutoPlay(false)
-		TaskDispatcher.cancelTask(slot0._showItem, slot0)
-		slot0:_showItem()
+		arg_7_0._itemIcon:setAutoPlay(false)
+		TaskDispatcher.cancelTask(arg_7_0._showItem, arg_7_0)
+		arg_7_0:_showItem()
 		BackpackModel.instance:setItemAniHasShown(true)
 	end
 
-	slot2 = slot1.config
+	local var_7_0 = arg_7_1.config
 
-	slot0._itemIcon:setInPack(true)
-	slot0._itemIcon:setMOValue(slot2.type, slot2.id, slot2.quantity, slot2.uid)
-	slot0._itemIcon:isShowName(false)
-	slot0._itemIcon:isShowCount(slot2.isStackable ~= 0)
-	slot0._itemIcon:isShowEffect(true)
-	slot0._itemIcon:setRecordFarmItem({
-		type = slot2.type,
-		id = slot2.id,
+	arg_7_0._itemIcon:setInPack(true)
+	arg_7_0._itemIcon:setMOValue(var_7_0.type, var_7_0.id, var_7_0.quantity, var_7_0.uid)
+	arg_7_0._itemIcon:isShowName(false)
+	arg_7_0._itemIcon:isShowCount(var_7_0.isStackable ~= 0)
+	arg_7_0._itemIcon:isShowEffect(true)
+	arg_7_0._itemIcon:setRecordFarmItem({
+		type = var_7_0.type,
+		id = var_7_0.id,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._showItem, slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._showItem, arg_8_0)
 end
 
-return slot0
+return var_0_0

@@ -1,33 +1,34 @@
-module("modules.logic.fight.system.work.FightWorkCurrentHpChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCurrentHpChange", package.seeall)
 
-slot0 = class("FightWorkCurrentHpChange", FightEffectBase)
+local var_0_0 = class("FightWorkCurrentHpChange", FightEffectBase)
 
-function slot0.beforePlayEffectData(slot0)
-	slot0._entityId = slot0._actEffectMO.targetId
-	slot0._entityMO = FightDataHelper.entityMgr:getById(slot0._entityId)
-	slot0._oldValue = slot0._entityMO and slot0._entityMO.currentHp
+function var_0_0.beforePlayEffectData(arg_1_0)
+	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
+	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
+	arg_1_0._oldValue = arg_1_0._entityMO and arg_1_0._entityMO.currentHp
 end
 
-function slot0.onStart(slot0)
-	if not FightHelper.getEntity(slot0._entityId) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if not FightHelper.getEntity(arg_2_0._entityId) then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if not slot0._entityMO then
-		slot0:onDone(true)
+	if not arg_2_0._entityMO then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	slot0._newValue = slot0._entityMO and slot0._entityMO.currentHp
+	arg_2_0._newValue = arg_2_0._entityMO and arg_2_0._entityMO.currentHp
 
-	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, slot0._actEffectMO.targetId, slot0._oldValue, slot0._newValue)
-	slot0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, arg_2_0._actEffectMO.targetId, arg_2_0._oldValue, arg_2_0._newValue)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,37 +1,37 @@
-module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuMo", package.seeall)
 
-slot0 = pureTable("VersionActivity2_4SudokuMo")
-slot1 = {
+local var_0_0 = pureTable("VersionActivity2_4SudokuMo")
+local var_0_1 = {
 	["break"] = "中断",
 	done = "成功",
 	reset = "重新开始"
 }
 
-function slot0.ctor(slot0)
-	slot0.beginTime = Time.realtimeSinceStartup
-	slot0.undoNum = 0
-	slot0.erroNum = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.beginTime = Time.realtimeSinceStartup
+	arg_1_0.undoNum = 0
+	arg_1_0.erroNum = 0
 end
 
-function slot0.setResult(slot0, slot1)
-	slot0.result = slot1
+function var_0_0.setResult(arg_2_0, arg_2_1)
+	arg_2_0.result = arg_2_1
 end
 
-function slot0.addUndoCount(slot0)
-	slot0.undoNum = slot0.undoNum + 1
+function var_0_0.addUndoCount(arg_3_0)
+	arg_3_0.undoNum = arg_3_0.undoNum + 1
 end
 
-function slot0.addErrorCount(slot0)
-	slot0.erroNum = slot0.erroNum + 1
+function var_0_0.addErrorCount(arg_4_0)
+	arg_4_0.erroNum = arg_4_0.erroNum + 1
 end
 
-function slot0.sendStatData(slot0)
+function var_0_0.sendStatData(arg_5_0)
 	StatController.instance:track(StatEnum.EventName.SudokuResult, {
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - slot0.beginTime,
-		[StatEnum.EventProperties.Result] = uv0[slot0.result],
-		[StatEnum.EventProperties.SudokuBackNum] = slot0.undoNum,
-		[StatEnum.EventProperties.SudokuErrorNum] = slot0.erroNum
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_5_0.beginTime,
+		[StatEnum.EventProperties.Result] = var_0_1[arg_5_0.result],
+		[StatEnum.EventProperties.SudokuBackNum] = arg_5_0.undoNum,
+		[StatEnum.EventProperties.SudokuErrorNum] = arg_5_0.erroNum
 	})
 end
 
-return slot0
+return var_0_0

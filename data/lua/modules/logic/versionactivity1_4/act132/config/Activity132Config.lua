@@ -1,14 +1,14 @@
-module("modules.logic.versionactivity1_4.act132.config.Activity132Config", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.config.Activity132Config", package.seeall)
 
-slot0 = class("Activity132Config", BaseConfig)
+local var_0_0 = class("Activity132Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.clueDict = {}
-	slot0.collectDict = {}
-	slot0.contentDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.clueDict = {}
+	arg_1_0.collectDict = {}
+	arg_1_0.contentDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity132_clue",
 		"activity132_collect",
@@ -16,52 +16,63 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("on%sConfigLoaded", slot1)] then
-		slot4(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("on%sConfigLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_1, arg_3_2)
 	end
 end
 
-function slot0.onactivity132_clueConfigLoaded(slot0, slot1, slot2)
-	slot0.clueDict = slot2.configDict
+function var_0_0.onactivity132_clueConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.clueDict = arg_4_2.configDict
 end
 
-function slot0.onactivity132_collectConfigLoaded(slot0, slot1, slot2)
-	slot0.collectDict = slot2.configDict
+function var_0_0.onactivity132_collectConfigLoaded(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.collectDict = arg_5_2.configDict
 end
 
-function slot0.onactivity132_contentConfigLoaded(slot0, slot1, slot2)
-	slot0.contentDict = slot2.configDict
+function var_0_0.onactivity132_contentConfigLoaded(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.contentDict = arg_6_2.configDict
 end
 
-function slot0.getCollectConfig(slot0, slot1, slot2)
-	if not (slot0.collectDict[slot1] and slot3[slot2]) then
-		logError(string.format("can not find collect! activityId:%s collectId:%s", slot1, slot2))
+function var_0_0.getCollectConfig(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0.collectDict[arg_7_1]
+	local var_7_1 = var_7_0 and var_7_0[arg_7_2]
+
+	if not var_7_1 then
+		logError(string.format("can not find collect! activityId:%s collectId:%s", arg_7_1, arg_7_2))
 	end
 
-	return slot4
+	return var_7_1
 end
 
-function slot0.getClueConfig(slot0, slot1, slot2)
-	if not (slot0.clueDict[slot1] and slot3[slot2]) then
-		logError(string.format("can not find clue config! activityId:%s clueId:%s", slot1, slot2))
+function var_0_0.getClueConfig(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0.clueDict[arg_8_1]
+	local var_8_1 = var_8_0 and var_8_0[arg_8_2]
+
+	if not var_8_1 then
+		logError(string.format("can not find clue config! activityId:%s clueId:%s", arg_8_1, arg_8_2))
 	end
 
-	return slot4
+	return var_8_1
 end
 
-function slot0.getContentConfig(slot0, slot1, slot2)
-	if not (slot0.contentDict[slot1] and slot3[slot2]) then
-		logError(string.format("can not find content config! activityId:%s contentId:%s", slot1, slot2))
+function var_0_0.getContentConfig(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0.contentDict[arg_9_1]
+	local var_9_1 = var_9_0 and var_9_0[arg_9_2]
+
+	if not var_9_1 then
+		logError(string.format("can not find content config! activityId:%s contentId:%s", arg_9_1, arg_9_2))
 	end
 
-	return slot4
+	return var_9_1
 end
 
-function slot0.getCollectDict(slot0, slot1)
-	return slot0.collectDict[slot1]
+function var_0_0.getCollectDict(arg_10_0, arg_10_1)
+	return arg_10_0.collectDict[arg_10_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

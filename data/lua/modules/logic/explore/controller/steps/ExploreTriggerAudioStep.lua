@@ -1,10 +1,10 @@
-module("modules.logic.explore.controller.steps.ExploreTriggerAudioStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreTriggerAudioStep", package.seeall)
 
-slot0 = class("ExploreTriggerAudioStep", ExploreStepBase)
+local var_0_0 = class("ExploreTriggerAudioStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	AudioMgr.instance:trigger(slot0._data.id)
-	slot0:onDone()
+function var_0_0.onStart(arg_1_0)
+	AudioMgr.instance:trigger(arg_1_0._data.id)
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

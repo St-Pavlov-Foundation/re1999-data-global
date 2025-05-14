@@ -1,64 +1,71 @@
-module("modules.logic.character.view.CharacterEquipItem", package.seeall)
+﻿module("modules.logic.character.view.CharacterEquipItem", package.seeall)
 
-slot0 = class("CharacterEquipItem", ListScrollCellExtend)
+local var_0_0 = class("CharacterEquipItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._click = gohelper.getClickWithAudio(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._click = gohelper.getClickWithAudio(arg_4_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_4_0._click:AddClickListener(arg_4_0._onClick, arg_4_0)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0._onClick(slot0)
-	EquipController.instance:openEquipView({
-		equipMO = slot0._mo,
+function var_0_0._onClick(arg_5_0)
+	local var_5_0 = {
+		equipMO = arg_5_0._mo,
 		equipList = CharacterBackpackEquipListModel.instance:_getEquipList()
-	})
+	}
+
+	EquipController.instance:openEquipView(var_5_0)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_6_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	if not slot0._commonEquipIcon then
-		slot0._commonEquipIcon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewGO, CommonEquipIcon)
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	if not arg_8_0._commonEquipIcon then
+		arg_8_0._commonEquipIcon = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0.viewGO, CommonEquipIcon)
 
-		slot0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, slot0._commonEquipIcon)
+		arg_8_0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, arg_8_0._commonEquipIcon)
 	end
 
-	slot0._mo = slot1
-	slot0._config = EquipConfig.instance:getEquipCo(slot1.equipId)
+	arg_8_0._mo = arg_8_1
+	arg_8_0._config = EquipConfig.instance:getEquipCo(arg_8_1.equipId)
 
-	slot0._commonEquipIcon:setEquipMO(slot1)
-	slot0._commonEquipIcon:refreshLock(slot0._mo.isLock)
-	slot0._commonEquipIcon:hideHeroIcon()
+	arg_8_0._commonEquipIcon:setEquipMO(arg_8_1)
+	arg_8_0._commonEquipIcon:refreshLock(arg_8_0._mo.isLock)
+	arg_8_0._commonEquipIcon:hideHeroIcon()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_10_0)
+	return arg_10_0._animator
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._click:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

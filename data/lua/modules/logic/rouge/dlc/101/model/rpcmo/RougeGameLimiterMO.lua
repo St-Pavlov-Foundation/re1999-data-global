@@ -1,24 +1,24 @@
-module("modules.logic.rouge.dlc.101.model.rpcmo.RougeGameLimiterMO", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeGameLimiterMO", package.seeall)
 
-slot0 = pureTable("RougeGameLimiterMO")
+local var_0_0 = pureTable("RougeGameLimiterMO")
 
-function slot0.init(slot0, slot1)
-	slot0.riskId = slot1.riskId
-	slot0.riskValue = slot1.riskValue
-	slot0.limitIds = tabletool.copy(slot1.limitIds)
-	slot0.limitBuffIds = tabletool.copy(slot1.limitBuffIds)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.riskId = arg_1_1.riskId
+	arg_1_0.riskValue = arg_1_1.riskValue
+	arg_1_0.limitIds = tabletool.copy(arg_1_1.limitIds)
+	arg_1_0.limitBuffIds = tabletool.copy(arg_1_1.limitBuffIds)
 end
 
-function slot0.getLimiterIds(slot0)
-	return slot0.limitIds
+function var_0_0.getLimiterIds(arg_2_0)
+	return arg_2_0.limitIds
 end
 
-function slot0.getLimiterBuffIds(slot0)
-	return slot0.limitBuffIds
+function var_0_0.getLimiterBuffIds(arg_3_0)
+	return arg_3_0.limitBuffIds
 end
 
-function slot0.getRiskValue(slot0)
-	return slot0.riskValue
+function var_0_0.getRiskValue(arg_4_0)
+	return arg_4_0.riskValue
 end
 
-return slot0
+return var_0_0

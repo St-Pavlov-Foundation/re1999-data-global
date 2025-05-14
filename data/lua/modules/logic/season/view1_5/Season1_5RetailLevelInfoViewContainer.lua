@@ -1,40 +1,40 @@
-module("modules.logic.season.view1_5.Season1_5RetailLevelInfoViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_5.Season1_5RetailLevelInfoViewContainer", package.seeall)
 
-slot0 = class("Season1_5RetailLevelInfoViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_5RetailLevelInfoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Season1_5RetailLevelInfoView.New())
+	table.insert(var_1_0, Season1_5RetailLevelInfoView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
-	}, 100, slot0._closeCallback, slot0._homeCallback, nil, slot0)
+	}, 100, arg_2_0._closeCallback, arg_2_0._homeCallback, nil, arg_2_0)
 
 	return {
-		slot0._navigateButtonView
+		arg_2_0._navigateButtonView
 	}
 end
 
-function slot0._closeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._closeCallback(arg_3_0)
+	arg_3_0:closeThis()
 end
 
-function slot0._homeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._homeCallback(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.playOpenTransition(slot0, slot1)
-	slot1 = slot1 or {}
-	slot1.duration = 0
+function var_0_0.playOpenTransition(arg_5_0, arg_5_1)
+	arg_5_1 = arg_5_1 or {}
+	arg_5_1.duration = 0
 
-	uv0.super.playOpenTransition(slot0, slot1)
+	var_0_0.super.playOpenTransition(arg_5_0, arg_5_1)
 end
 
-return slot0
+return var_0_0

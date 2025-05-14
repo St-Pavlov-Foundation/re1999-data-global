@@ -1,65 +1,66 @@
-module("modules.logic.explore.map.unit.comp.ExploreUnitClickComp", package.seeall)
+﻿module("modules.logic.explore.map.unit.comp.ExploreUnitClickComp", package.seeall)
 
-slot0 = class("ExploreUnitClickComp", LuaCompBase)
+local var_0_0 = class("ExploreUnitClickComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.unit = slot1
-	slot0.enable = true
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.unit = arg_1_1
+	arg_1_0.enable = true
 end
 
-function slot0.setup(slot0, slot1)
-	slot0.colliderList = slot1:GetComponentsInChildren(typeof(UnityEngine.Collider))
+function var_0_0.setup(arg_2_0, arg_2_1)
+	arg_2_0.colliderList = arg_2_1:GetComponentsInChildren(typeof(UnityEngine.Collider))
 
-	if slot0.colliderList == nil or slot0.colliderList.Length == 0 then
+	if arg_2_0.colliderList == nil or arg_2_0.colliderList.Length == 0 then
 		return
 	end
 
-	for slot5 = 0, slot0.colliderList.Length - 1 do
-		slot6 = slot0.colliderList[slot5]
+	for iter_2_0 = 0, arg_2_0.colliderList.Length - 1 do
+		local var_2_0 = arg_2_0.colliderList[iter_2_0]
 
-		tolua.setpeer(slot6, slot0)
+		tolua.setpeer(var_2_0, arg_2_0)
 
-		slot6.enabled = slot0.enable
+		var_2_0.enabled = arg_2_0.enable
 	end
 end
 
-function slot0.click(slot0)
-	if not slot0.enable then
+function var_0_0.click(arg_3_0)
+	if not arg_3_0.enable then
 		return false
 	end
 
-	if slot0.unit.mo.triggerByClick then
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickUnit, slot0.unit.mo)
+	if arg_3_0.unit.mo.triggerByClick then
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickUnit, arg_3_0.unit.mo)
 	end
 
-	return slot0.unit.mo.triggerByClick
+	return arg_3_0.unit.mo.triggerByClick
 end
 
-function slot0.setEnable(slot0, slot1)
-	slot0.enable = slot1
+function var_0_0.setEnable(arg_4_0, arg_4_1)
+	arg_4_0.enable = arg_4_1
 
-	if slot0.colliderList then
-		for slot5 = 0, slot0.colliderList.Length - 1 do
-			slot0.colliderList[slot5].enabled = slot1
+	if arg_4_0.colliderList then
+		for iter_4_0 = 0, arg_4_0.colliderList.Length - 1 do
+			arg_4_0.colliderList[iter_4_0].enabled = arg_4_1
 		end
 	end
 end
 
-function slot0.beforeDestroy(slot0)
+function var_0_0.beforeDestroy(arg_5_0)
+	return
 end
 
-function slot0.clear(slot0)
-	if slot0.colliderList then
-		for slot4 = 0, slot0.colliderList.Length - 1 do
-			tolua.setpeer(slot0.colliderList[slot4], nil)
+function var_0_0.clear(arg_6_0)
+	if arg_6_0.colliderList then
+		for iter_6_0 = 0, arg_6_0.colliderList.Length - 1 do
+			tolua.setpeer(arg_6_0.colliderList[iter_6_0], nil)
 		end
 	end
 
-	slot0.colliderList = nil
+	arg_6_0.colliderList = nil
 end
 
-function slot0.onDestroy(slot0)
-	slot0:clear()
+function var_0_0.onDestroy(arg_7_0)
+	arg_7_0:clear()
 end
 
-return slot0
+return var_0_0

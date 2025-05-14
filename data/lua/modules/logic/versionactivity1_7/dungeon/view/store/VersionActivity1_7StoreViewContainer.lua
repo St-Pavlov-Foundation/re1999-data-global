@@ -1,29 +1,30 @@
-module("modules.logic.versionactivity1_7.dungeon.view.store.VersionActivity1_7StoreViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_7.dungeon.view.store.VersionActivity1_7StoreViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_7StoreViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_7StoreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_store"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#scroll_store/Viewport/#go_content/#go_storegoodsitem"
-	slot1.cellClass = VersionActivity1_7StoreGoodsItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 4
-	slot1.cellWidth = 316
-	slot1.cellHeight = 365
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#scroll_store"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "#scroll_store/Viewport/#go_content/#go_storegoodsitem"
+	var_1_0.cellClass = VersionActivity1_7StoreGoodsItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 4
+	var_1_0.cellWidth = 316
+	var_1_0.cellHeight = 365
 
 	return {
 		VersionActivity1_7StoreView.New(),
 		VersionActivity1_7StoreTalk.New(),
-		LuaListScrollView.New(VersionActivity1_7StoreListModel.instance, slot1),
+		LuaListScrollView.New(VersionActivity1_7StoreListModel.instance, var_1_0),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_righttop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -33,40 +34,41 @@ function slot0.buildTabViews(slot0, slot1)
 		}
 	end
 
-	if slot1 == 2 then
-		slot0._currencyView = CurrencyView.New({
+	if arg_2_1 == 2 then
+		arg_2_0._currencyView = CurrencyView.New({
 			CurrencyEnum.CurrencyType.V1a7Dungeon
 		})
 
-		slot0._currencyView:setOpenCallback(slot0._onCurrencyOpen, slot0)
+		arg_2_0._currencyView:setOpenCallback(arg_2_0._onCurrencyOpen, arg_2_0)
 
 		return {
-			slot0._currencyView
+			arg_2_0._currencyView
 		}
 	end
 end
 
-function slot0._onCurrencyOpen(slot0)
-	slot1 = slot0._currencyView:getCurrencyItem(1)
+function var_0_0._onCurrencyOpen(arg_3_0)
+	local var_3_0 = arg_3_0._currencyView:getCurrencyItem(1)
 
-	gohelper.setActive(slot1.btn, false)
-	gohelper.setActive(slot1.click, true)
-	recthelper.setAnchorX(slot1.txt.transform, 313)
+	gohelper.setActive(var_3_0.btn, false)
+	gohelper.setActive(var_3_0.click, true)
+	recthelper.setAnchorX(var_3_0.txt.transform, 313)
 end
 
-function slot0.playOpenTransition(slot0)
-	slot0:startViewOpenBlock()
-	slot0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
-	TaskDispatcher.runDelay(slot0.onPlayOpenTransitionFinish, slot0, 1.6)
+function var_0_0.playOpenTransition(arg_4_0)
+	arg_4_0:startViewOpenBlock()
+	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
+	TaskDispatcher.runDelay(arg_4_0.onPlayOpenTransitionFinish, arg_4_0, 1.6)
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:startViewCloseBlock()
-	slot0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
-	TaskDispatcher.runDelay(slot0.onPlayCloseTransitionFinish, slot0, 0.167)
+function var_0_0.playCloseTransition(arg_5_0)
+	arg_5_0:startViewCloseBlock()
+	arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
+	TaskDispatcher.runDelay(arg_5_0.onPlayCloseTransitionFinish, arg_5_0, 0.167)
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

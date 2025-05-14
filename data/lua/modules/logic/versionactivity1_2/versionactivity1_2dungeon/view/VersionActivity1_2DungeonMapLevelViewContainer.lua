@@ -1,25 +1,25 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapLevelViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapLevelViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonMapLevelViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_2DungeonMapLevelViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.mapLevelView = VersionActivity1_2DungeonMapLevelView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.mapLevelView = VersionActivity1_2DungeonMapLevelView.New()
 
 	return {
-		slot0.mapLevelView,
+		arg_1_0.mapLevelView,
 		TabViewGroup.New(1, "anim/#go_righttop"),
 		TabViewGroup.New(2, "anim/#go_lefttop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.Power
 			})
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -30,33 +30,33 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.setOpenedEpisodeId(slot0, slot1)
-	slot0.openedEpisodeId = slot1
+function var_0_0.setOpenedEpisodeId(arg_3_0, arg_3_1)
+	arg_3_0.openedEpisodeId = arg_3_1
 end
 
-function slot0.getOpenedEpisodeId(slot0)
-	return slot0.openedEpisodeId
+function var_0_0.getOpenedEpisodeId(arg_4_0)
+	return arg_4_0.openedEpisodeId
 end
 
-function slot0.playCloseTransition(slot0)
-	UIBlockMgr.instance:endBlock(slot0.viewName .. "ViewOpenAnim")
-	TaskDispatcher.cancelTask(slot0._onOpenAnimDone, slot0)
+function var_0_0.playCloseTransition(arg_5_0)
+	UIBlockMgr.instance:endBlock(arg_5_0.viewName .. "ViewOpenAnim")
+	TaskDispatcher.cancelTask(arg_5_0._onOpenAnimDone, arg_5_0)
 
-	slot0._playCloseAnim = true
+	arg_5_0._playCloseAnim = true
 
-	UIBlockMgr.instance:startBlock(slot0.viewName .. "ViewCloseAnim")
-	SLFramework.AnimatorPlayer.Get(slot0.mapLevelView.goVersionActivity):Play("close", slot0._onCloseAnimDone, slot0)
-	TaskDispatcher.runDelay(slot0._onCloseAnimDone, slot0, 2)
+	UIBlockMgr.instance:startBlock(arg_5_0.viewName .. "ViewCloseAnim")
+	SLFramework.AnimatorPlayer.Get(arg_5_0.mapLevelView.goVersionActivity):Play("close", arg_5_0._onCloseAnimDone, arg_5_0)
+	TaskDispatcher.runDelay(arg_5_0._onCloseAnimDone, arg_5_0, 2)
 end
 
-function slot0._onCloseAnimDone(slot0)
-	TaskDispatcher.cancelTask(slot0._onCloseAnimDone, slot0, 2)
-	SLFramework.AnimatorPlayer.Get(slot0.mapLevelView.goVersionActivity):Stop()
-	slot0:onPlayCloseTransitionFinish()
+function var_0_0._onCloseAnimDone(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._onCloseAnimDone, arg_6_0, 2)
+	SLFramework.AnimatorPlayer.Get(arg_6_0.mapLevelView.goVersionActivity):Stop()
+	arg_6_0:onPlayCloseTransitionFinish()
 end
 
-function slot0.stopCloseViewTask(slot0)
-	slot0.mapLevelView:cancelStartCloseTask()
+function var_0_0.stopCloseViewTask(arg_7_0)
+	arg_7_0.mapLevelView:cancelStartCloseTask()
 end
 
-return slot0
+return var_0_0

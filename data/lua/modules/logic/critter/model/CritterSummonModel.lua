@@ -1,74 +1,84 @@
-module("modules.logic.critter.model.CritterSummonModel", package.seeall)
+﻿module("modules.logic.critter.model.CritterSummonModel", package.seeall)
 
-slot0 = class("CritterSummonModel", BaseModel)
+local var_0_0 = class("CritterSummonModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
+function var_0_0._clearData(arg_4_0)
+	return
 end
 
-function slot0.initSummonPools(slot0, slot1)
-	slot2 = {}
+function var_0_0.initSummonPools(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			slot8 = slot0:getById(slot7.poolId) or CritterSummonMO.New()
+	if arg_5_1 then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+			local var_5_1 = arg_5_0:getById(iter_5_1.poolId) or CritterSummonMO.New()
 
-			slot8:init(slot7)
-			table.insert(slot2, slot8)
+			var_5_1:init(iter_5_1)
+			table.insert(var_5_0, var_5_1)
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_5_0:setList(var_5_0)
 end
 
-function slot0.setSummonPoolList(slot0, slot1)
-	if slot0:getById(slot1) then
-		RoomSummonPoolCritterListModel.instance:setDataList(slot2.critterMos)
+function var_0_0.setSummonPoolList(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getById(arg_6_1)
+
+	if var_6_0 then
+		RoomSummonPoolCritterListModel.instance:setDataList(var_6_0.critterMos)
 	end
 end
 
-function slot0.onSummon(slot0, slot1, slot2)
-	slot0:getById(slot1):onRefresh(slot2)
+function var_0_0.onSummon(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:getById(arg_7_1):onRefresh(arg_7_2)
 end
 
-function slot0.getSummonPoolId(slot0)
+function var_0_0.getSummonPoolId(arg_8_0)
 	return 1
 end
 
-function slot0.getSummonCount(slot0)
+function var_0_0.getSummonCount(arg_9_0)
 	return 1
 end
 
-function slot0.isMaxCritterCount(slot0)
-	return tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.CritterBackpackCapacity) or 0) <= (#CritterModel.instance:getAllCritters() or 0)
+function var_0_0.isMaxCritterCount(arg_10_0)
+	local var_10_0 = #CritterModel.instance:getAllCritters() or 0
+	local var_10_1 = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.CritterBackpackCapacity) or 0
+
+	return var_10_0 >= tonumber(var_10_1)
 end
 
-function slot0.isCanSummon(slot0, slot1)
-	if slot0:isMaxCritterCount() then
+function var_0_0.isCanSummon(arg_11_0, arg_11_1)
+	if arg_11_0:isMaxCritterCount() then
 		return false, ToastEnum.RoomCritterMaxCount
 	end
 
-	if not slot0:isNullPool(slot1) then
+	if not arg_11_0:isNullPool(arg_11_1) then
 		return true
 	end
 
 	return false, ToastEnum.RoomCritterPoolEmpty
 end
 
-function slot0.isNullPool(slot0, slot1)
-	if slot0:getById(slot1) then
-		for slot6, slot7 in pairs(slot2.critterMos) do
-			if slot7:getPoolCount() > 0 then
+function var_0_0.isNullPool(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getById(arg_12_1)
+
+	if var_12_0 then
+		for iter_12_0, iter_12_1 in pairs(var_12_0.critterMos) do
+			if iter_12_1:getPoolCount() > 0 then
 				return false
 			end
 		end
@@ -77,10 +87,12 @@ function slot0.isNullPool(slot0, slot1)
 	return true
 end
 
-function slot0.isFullPool(slot0, slot1)
-	if slot0:getById(slot1) then
-		for slot6, slot7 in pairs(slot2.critterMos) do
-			if not slot7:isFullPool() then
+function var_0_0.isFullPool(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getById(arg_13_1)
+
+	if var_13_0 then
+		for iter_13_0, iter_13_1 in pairs(var_13_0.critterMos) do
+			if not iter_13_1:isFullPool() then
 				return false
 			end
 		end
@@ -89,82 +101,103 @@ function slot0.isFullPool(slot0, slot1)
 	return true
 end
 
-function slot0.getPoolCritterCount(slot0, slot1)
-	if slot0:getById(slot1) then
-		return slot2:getCritterCount()
+function var_0_0.getPoolCritterCount(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getById(arg_14_1)
+
+	if var_14_0 then
+		return var_14_0:getCritterCount()
 	end
 
 	return 0
 end
 
-function slot0.getPoolCurrency(slot0, slot1, slot2)
-	if not slot1 then
+function var_0_0.getPoolCurrency(arg_15_0, arg_15_1, arg_15_2)
+	if not arg_15_1 then
 		return
 	end
 
-	return slot0:getCostInfo(CritterConfig.instance:getCritterSummonCfg(slot1).cost, slot2)
+	local var_15_0 = CritterConfig.instance:getCritterSummonCfg(arg_15_1).cost
+
+	return arg_15_0:getCostInfo(var_15_0, arg_15_2)
 end
 
-function slot0.notSummonToast(slot0, slot1, slot2)
-	slot3, slot4 = slot0:isCanSummon(slot1)
-	slot5, slot6, slot7, slot8 = slot0:getPoolCurrency(slot1, slot2)
+function var_0_0.notSummonToast(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0, var_16_1 = arg_16_0:isCanSummon(arg_16_1)
+	local var_16_2, var_16_3, var_16_4, var_16_5 = arg_16_0:getPoolCurrency(arg_16_1, arg_16_2)
 
-	if not slot3 then
-		return slot4
-	elseif not slot7 then
-		return ToastEnum.RoomCritterNotEnough, slot8
+	if not var_16_0 then
+		return var_16_1
+	elseif not var_16_4 then
+		return ToastEnum.RoomCritterNotEnough, var_16_5
 	end
 
 	return ""
 end
 
-function slot0.getCostInfo(slot0, slot1, slot2)
-	if string.nilorempty(slot1) then
+function var_0_0.getCostInfo(arg_17_0, arg_17_1, arg_17_2)
+	if string.nilorempty(arg_17_1) then
 		return
 	end
 
-	slot3 = 1
+	local var_17_0 = 1
 
-	if slot2 then
-		slot3 = math.max(1, tonumber(slot2))
+	if arg_17_2 then
+		var_17_0 = math.max(1, tonumber(arg_17_2))
 	end
 
-	slot4, slot5, slot6 = SummonMainModel.getCostByConfig(slot1)
-	slot7, slot8 = ItemModel.instance:getItemConfigAndIcon(slot4, slot5)
+	local var_17_1, var_17_2, var_17_3 = SummonMainModel.getCostByConfig(arg_17_1)
+	local var_17_4, var_17_5 = ItemModel.instance:getItemConfigAndIcon(var_17_1, var_17_2)
+	local var_17_6 = ItemModel.instance:getItemQuantity(var_17_1, var_17_2) >= var_17_3 * var_17_0
+	local var_17_7 = luaLang("multiple") .. var_17_3 * var_17_0
 
-	return slot8, luaLang("multiple") .. slot6 * slot3, ItemModel.instance:getItemQuantity(slot4, slot5) >= slot6 * slot3, slot7.name
+	return var_17_5, var_17_7, var_17_6, var_17_4.name
 end
 
-function slot0.getCostCurrency(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0.getCostCurrency(arg_18_0)
+	local var_18_0 = {}
+	local var_18_1 = {}
 
-	for slot6, slot7 in ipairs(lua_critter_summon.configList) do
-		if not string.nilorempty(slot7.cost) and string.split(slot7.cost, "#")[1] and slot8[2] and not LuaUtil.tableContains(slot1, slot8[1] .. "#" .. slot8[2]) then
-			table.insert(slot1, slot9)
-		end
-	end
+	for iter_18_0, iter_18_1 in ipairs(lua_critter_summon.configList) do
+		if not string.nilorempty(iter_18_1.cost) then
+			local var_18_2 = string.split(iter_18_1.cost, "#")
 
-	for slot6, slot7 in ipairs(slot1) do
-		if string.split(slot7, "#")[1] and slot8[2] then
-			if tonumber(slot8[1]) == MaterialEnum.MaterialType.Item then
-				if not LuaUtil.tableContains(slot2, {
-					isIcon = true,
-					type = slot9,
-					id = tonumber(slot8[2]),
-					jumpFunc = SummonMainModel.jumpToSummonCostShop
-				}) then
-					table.insert(slot2, slot11)
+			if var_18_2[1] and var_18_2[2] then
+				local var_18_3 = var_18_2[1] .. "#" .. var_18_2[2]
+
+				if not LuaUtil.tableContains(var_18_0, var_18_3) then
+					table.insert(var_18_0, var_18_3)
 				end
-			elseif slot9 == MaterialEnum.MaterialType.Currency and not LuaUtil.tableContains(slot2, slot10) then
-				table.insert(slot2, slot10)
 			end
 		end
 	end
 
-	return slot2
+	for iter_18_2, iter_18_3 in ipairs(var_18_0) do
+		local var_18_4 = string.split(iter_18_3, "#")
+
+		if var_18_4[1] and var_18_4[2] then
+			local var_18_5 = tonumber(var_18_4[1])
+			local var_18_6 = tonumber(var_18_4[2])
+
+			if var_18_5 == MaterialEnum.MaterialType.Item then
+				local var_18_7 = {
+					isIcon = true,
+					type = var_18_5,
+					id = var_18_6,
+					jumpFunc = SummonMainModel.jumpToSummonCostShop
+				}
+
+				if not LuaUtil.tableContains(var_18_1, var_18_7) then
+					table.insert(var_18_1, var_18_7)
+				end
+			elseif var_18_5 == MaterialEnum.MaterialType.Currency and not LuaUtil.tableContains(var_18_1, var_18_6) then
+				table.insert(var_18_1, var_18_6)
+			end
+		end
+	end
+
+	return var_18_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

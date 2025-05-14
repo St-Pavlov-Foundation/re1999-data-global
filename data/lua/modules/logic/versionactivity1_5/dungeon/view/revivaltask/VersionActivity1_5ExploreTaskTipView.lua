@@ -1,116 +1,125 @@
-module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5ExploreTaskTipView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5ExploreTaskTipView", package.seeall)
 
-slot0 = class("VersionActivity1_5ExploreTaskTipView", BaseView)
+local var_0_0 = class("VersionActivity1_5ExploreTaskTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goTipContainer = gohelper.findChild(slot0.viewGO, "#go_exploretipcontainer")
-	slot0._goclosetip = gohelper.findChild(slot0.viewGO, "#go_exploretipcontainer/#go_closetip")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "#go_exploretipcontainer/#go_exploretip")
-	slot0._txtTipTitle = gohelper.findChildText(slot0._gotips, "#txt_title")
-	slot0._txtTipTitleEn = gohelper.findChildText(slot0._gotips, "#txt_title/#txt_en")
-	slot0._txtTipDesc = gohelper.findChildText(slot0._gotips, "scroll/view/#txt_dec")
-	slot0._goTipFinish = gohelper.findChild(slot0._gotips, "layout/#go_finish")
-	slot0._goTipGoTo = gohelper.findChild(slot0._gotips, "layout/#go_goto")
-	slot0._txtTipStatus = gohelper.findChildText(slot0._gotips, "layout/#go_goto/#txt_status")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goTipContainer = gohelper.findChild(arg_1_0.viewGO, "#go_exploretipcontainer")
+	arg_1_0._goclosetip = gohelper.findChild(arg_1_0.viewGO, "#go_exploretipcontainer/#go_closetip")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_exploretipcontainer/#go_exploretip")
+	arg_1_0._txtTipTitle = gohelper.findChildText(arg_1_0._gotips, "#txt_title")
+	arg_1_0._txtTipTitleEn = gohelper.findChildText(arg_1_0._gotips, "#txt_title/#txt_en")
+	arg_1_0._txtTipDesc = gohelper.findChildText(arg_1_0._gotips, "scroll/view/#txt_dec")
+	arg_1_0._goTipFinish = gohelper.findChild(arg_1_0._gotips, "layout/#go_finish")
+	arg_1_0._goTipGoTo = gohelper.findChild(arg_1_0._gotips, "layout/#go_goto")
+	arg_1_0._txtTipStatus = gohelper.findChildText(arg_1_0._gotips, "layout/#go_goto/#txt_status")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goTipContainer, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._goTipContainer, false)
 
-	slot0.goTipRectTr = slot0._gotips:GetComponent(typeof(UnityEngine.RectTransform))
-	slot0.goTipContainerTr = slot0._goTipContainer:GetComponent(typeof(UnityEngine.RectTransform))
-	slot0.halfViewWidth = recthelper.getWidth(slot0.goTipContainerTr) / 2
-	slot0.halfTipWidth = recthelper.getWidth(slot0.goTipRectTr) / 2
-	slot0.goToClick = gohelper.getClickWithDefaultAudio(slot0._goTipGoTo)
+	arg_4_0.goTipRectTr = arg_4_0._gotips:GetComponent(typeof(UnityEngine.RectTransform))
+	arg_4_0.goTipContainerTr = arg_4_0._goTipContainer:GetComponent(typeof(UnityEngine.RectTransform))
+	arg_4_0.halfViewWidth = recthelper.getWidth(arg_4_0.goTipContainerTr) / 2
+	arg_4_0.halfTipWidth = recthelper.getWidth(arg_4_0.goTipRectTr) / 2
+	arg_4_0.goToClick = gohelper.getClickWithDefaultAudio(arg_4_0._goTipGoTo)
 
-	slot0.goToClick:AddClickListener(slot0.onClickGoToBtn, slot0)
+	arg_4_0.goToClick:AddClickListener(arg_4_0.onClickGoToBtn, arg_4_0)
 
-	slot0.closeClick = gohelper.getClickWithDefaultAudio(slot0._goclosetip)
+	arg_4_0.closeClick = gohelper.getClickWithDefaultAudio(arg_4_0._goclosetip)
 
-	slot0.closeClick:AddClickListener(slot0.onHideTipContainer, slot0)
+	arg_4_0.closeClick:AddClickListener(arg_4_0.onHideTipContainer, arg_4_0)
 end
 
-function slot0.onHideTipContainer(slot0)
-	gohelper.setActive(slot0._goTipContainer, false)
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.HideExploreTip, slot0.taskItem)
+function var_0_0.onHideTipContainer(arg_5_0)
+	gohelper.setActive(arg_5_0._goTipContainer, false)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.HideExploreTip, arg_5_0.taskItem)
 
-	slot0.taskItem = nil
-	slot0.config = nil
+	arg_5_0.taskItem = nil
+	arg_5_0.config = nil
 end
 
-function slot0.onClickGoToBtn(slot0)
-	if slot0.isGainedReward then
+function var_0_0.onClickGoToBtn(arg_6_0)
+	if arg_6_0.isGainedReward then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0.config.elementList) do
-		if not DungeonMapModel.instance:elementIsFinished(slot5) then
-			if not DungeonMapModel.instance:getElementById(slot5) then
-				logError("element not exist or not unlock, element id : " .. slot5)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.config.elementList) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_6_1) then
+			if not DungeonMapModel.instance:getElementById(iter_6_1) then
+				logError("element not exist or not unlock, element id : " .. iter_6_1)
 
 				return
 			end
 
-			slot0:closeThis()
-			VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.FocusElement, slot5)
+			arg_6_0:closeThis()
+			VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.FocusElement, iter_6_1)
 
 			return
 		end
 	end
 end
 
-function slot0.showTip(slot0, slot1, slot2)
-	gohelper.setActive(slot0._goTipContainer, true)
+function var_0_0.showTip(arg_7_0, arg_7_1, arg_7_2)
+	gohelper.setActive(arg_7_0._goTipContainer, true)
 
-	slot0.taskItem = slot1
-	slot0.config = slot1.taskCo
+	arg_7_0.taskItem = arg_7_1
+	arg_7_0.config = arg_7_1.taskCo
 
-	slot0:setPos(slot2)
-	slot0:refreshUI()
+	arg_7_0:setPos(arg_7_2)
+	arg_7_0:refreshUI()
 end
 
-function slot0.setPos(slot0, slot1)
-	slot3 = recthelper.screenPosToAnchorPos(slot1, slot0.goTipContainerTr)
-	slot4 = slot3.x
-	slot6 = VersionActivity1_5DungeonEnum.ExploreTipOffsetX
+function var_0_0.setPos(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.x >= arg_8_0.halfViewWidth
+	local var_8_1 = recthelper.screenPosToAnchorPos(arg_8_1, arg_8_0.goTipContainerTr)
+	local var_8_2 = var_8_1.x
+	local var_8_3 = var_8_1.y
+	local var_8_4 = VersionActivity1_5DungeonEnum.ExploreTipOffsetX
 
-	recthelper.setAnchor(slot0.goTipRectTr, slot0.halfViewWidth <= slot1.x and slot4 - slot0.halfTipWidth - slot6 or slot4 + slot0.halfTipWidth + slot6, math.min(math.max(slot3.y, VersionActivity1_5DungeonEnum.ExploreTipAnchorY.Min), VersionActivity1_5DungeonEnum.ExploreTipAnchorY.Max))
+	var_8_2 = var_8_0 and var_8_2 - arg_8_0.halfTipWidth - var_8_4 or var_8_2 + arg_8_0.halfTipWidth + var_8_4
+
+	local var_8_5 = math.max(var_8_3, VersionActivity1_5DungeonEnum.ExploreTipAnchorY.Min)
+	local var_8_6 = math.min(var_8_5, VersionActivity1_5DungeonEnum.ExploreTipAnchorY.Max)
+
+	recthelper.setAnchor(arg_8_0.goTipRectTr, var_8_2, var_8_6)
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtTipTitle.text = slot0.config.title
-	slot0._txtTipTitleEn.text = slot0.config.titleEn
-	slot0._txtTipDesc.text = slot0.config.desc
-	slot0.status = VersionActivity1_5RevivalTaskModel.instance:getExploreTaskStatus(slot0.config)
-	slot0.isGainedReward = slot0.status == VersionActivity1_5DungeonEnum.ExploreTaskStatus.GainedReward
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0._txtTipTitle.text = arg_9_0.config.title
+	arg_9_0._txtTipTitleEn.text = arg_9_0.config.titleEn
+	arg_9_0._txtTipDesc.text = arg_9_0.config.desc
+	arg_9_0.status = VersionActivity1_5RevivalTaskModel.instance:getExploreTaskStatus(arg_9_0.config)
+	arg_9_0.isGainedReward = arg_9_0.status == VersionActivity1_5DungeonEnum.ExploreTaskStatus.GainedReward
 
-	gohelper.setActive(slot0._goTipFinish, slot0.isGainedReward)
-	gohelper.setActive(slot0._goTipGoTo, not slot0.isGainedReward)
+	gohelper.setActive(arg_9_0._goTipFinish, arg_9_0.isGainedReward)
+	gohelper.setActive(arg_9_0._goTipGoTo, not arg_9_0.isGainedReward)
 
-	if not slot0.isGainedReward then
-		if slot0.status == VersionActivity1_5DungeonEnum.ExploreTaskStatus.Finished then
-			slot0._txtTipStatus.text = luaLang("p_v1a5_dispatch_finish")
-		elseif slot0.status == VersionActivity1_5DungeonEnum.ExploreTaskStatus.Running then
-			slot0._txtTipStatus.text = luaLang("p_v1a5_dispatch_ing")
+	if not arg_9_0.isGainedReward then
+		if arg_9_0.status == VersionActivity1_5DungeonEnum.ExploreTaskStatus.Finished then
+			arg_9_0._txtTipStatus.text = luaLang("p_v1a5_dispatch_finish")
+		elseif arg_9_0.status == VersionActivity1_5DungeonEnum.ExploreTaskStatus.Running then
+			arg_9_0._txtTipStatus.text = luaLang("p_v1a5_dispatch_ing")
 		else
-			slot0._txtTipStatus.text = ""
+			arg_9_0._txtTipStatus.text = ""
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.goToClick:RemoveClickListener()
-	slot0.closeClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0.goToClick:RemoveClickListener()
+	arg_10_0.closeClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

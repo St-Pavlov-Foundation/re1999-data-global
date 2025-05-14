@@ -1,10 +1,10 @@
-module("modules.logic.explore.controller.steps.ExploreArchiveStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreArchiveStep", package.seeall)
 
-slot0 = class("ExploreArchiveStep", ExploreStepBase)
+local var_0_0 = class("ExploreArchiveStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	ExploreSimpleModel.instance:onGetArchive(slot0._data.archiveId)
-	slot0:onDone()
+function var_0_0.onStart(arg_1_0)
+	ExploreSimpleModel.instance:onGetArchive(arg_1_0._data.archiveId)
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

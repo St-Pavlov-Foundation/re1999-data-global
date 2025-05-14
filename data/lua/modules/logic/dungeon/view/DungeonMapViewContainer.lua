@@ -1,53 +1,56 @@
-module("modules.logic.dungeon.view.DungeonMapViewContainer", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonMapViewContainer", package.seeall)
 
-slot0 = class("DungeonMapViewContainer", BaseViewContainer)
+local var_0_0 = class("DungeonMapViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, DungeonMapHoleView.New())
+	table.insert(var_1_0, DungeonMapHoleView.New())
 
-	slot0._mapScene = DungeonMapScene.New()
-	slot0._mapTaskInfo = DungeonMapTaskInfo.New()
+	arg_1_0._mapScene = DungeonMapScene.New()
+	arg_1_0._mapTaskInfo = DungeonMapTaskInfo.New()
 
-	table.insert(slot1, DungeonMapView.New())
-	table.insert(slot1, slot0._mapTaskInfo)
-	table.insert(slot1, DungeonMapSceneElements.New())
-	table.insert(slot1, slot0._mapScene)
-	table.insert(slot1, DungeonMapEpisode.New())
-	table.insert(slot1, DungeonMapElementReward.New())
-	table.insert(slot1, DungeonMapEquipEntry.New())
-	table.insert(slot1, TabViewGroup.New(1, "top_left"))
-	table.insert(slot1, DungeonMapOtherBtnView.New())
-	table.insert(slot1, DungeonMapActDropView.New())
-	table.insert(slot1, DungeonMapToughBattleActView.New())
-	table.insert(slot1, BalanceUmbrellaDungeonMapView.New())
-	table.insert(slot1, InvestigateDungeonMapView.New())
+	table.insert(var_1_0, DungeonMapView.New())
+	table.insert(var_1_0, arg_1_0._mapTaskInfo)
+	table.insert(var_1_0, DungeonMapSceneElements.New())
+	table.insert(var_1_0, arg_1_0._mapScene)
+	table.insert(var_1_0, DungeonMapEpisode.New())
+	table.insert(var_1_0, DungeonMapElementReward.New())
+	table.insert(var_1_0, DungeonMapEquipEntry.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	table.insert(var_1_0, DungeonMapOtherBtnView.New())
+	table.insert(var_1_0, DungeonMapActDropView.New())
+	table.insert(var_1_0, DungeonMapToughBattleActView.New())
+	table.insert(var_1_0, BalanceUmbrellaDungeonMapView.New())
+	table.insert(var_1_0, InvestigateDungeonMapView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.getMapScene(slot0)
-	return slot0._mapScene
+function var_0_0.getMapScene(arg_2_0)
+	return arg_2_0._mapScene
 end
 
-function slot0.getMapTaskInfo(slot0)
-	return slot0._mapTaskInfo
+function var_0_0.getMapTaskInfo(arg_3_0)
+	return arg_3_0._mapTaskInfo
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_4_0, arg_4_1)
+	local var_4_0 = DungeonModel.instance.curChapterType
+	local var_4_1 = var_4_0 == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+
+	arg_4_0._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
-		DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+		var_4_1
 	}, HelpEnum.HelpId.Dungeon)
 
-	slot0._navigateButtonView:setOverrideClose(slot0.overrideClose, slot0)
+	arg_4_0._navigateButtonView:setOverrideClose(arg_4_0.overrideClose, arg_4_0)
 
-	if slot2 == DungeonEnum.ChapterType.Equip then
-		slot0._navigateButtonView.helpId = nil
+	if var_4_0 == DungeonEnum.ChapterType.Equip then
+		arg_4_0._navigateButtonView.helpId = nil
 
-		slot0._navigateButtonView:setParam({
+		arg_4_0._navigateButtonView:setParam({
 			true,
 			true,
 			false
@@ -55,58 +58,60 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 
 	return {
-		slot0._navigateButtonView
+		arg_4_0._navigateButtonView
 	}
 end
 
-function slot0.onContainerInit(slot0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, slot0.refreshHelpBtnIcon, slot0)
+function var_0_0.onContainerInit(arg_5_0)
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_5_0.refreshHelpBtnIcon, arg_5_0)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_OperaHouse)
+function var_0_0.onContainerOpenFinish(arg_6_0)
+	arg_6_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_OperaHouse)
 end
 
-function slot0.onContainerDestroy(slot0)
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, slot0.refreshHelpBtnIcon, slot0)
+function var_0_0.onContainerDestroy(arg_7_0)
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_7_0.refreshHelpBtnIcon, arg_7_0)
 end
 
-function slot0.refreshHelpBtnIcon(slot0)
-	slot0._navigateButtonView:changerHelpId(HelpEnum.HelpId.Dungeon)
+function var_0_0.refreshHelpBtnIcon(arg_8_0)
+	arg_8_0._navigateButtonView:changerHelpId(HelpEnum.HelpId.Dungeon)
 end
 
-function slot0.overrideCloseElement(slot0)
+function var_0_0.overrideCloseElement(arg_9_0)
 	DungeonController.instance:dispatchEvent(DungeonEvent.closeMapInteractiveItem)
 end
 
-function slot0._overrideHelp(slot0)
+function var_0_0._overrideHelp(arg_10_0)
 	ViewMgr.instance:openView(ViewName.DungeonRewardTipView)
 end
 
-function slot0.overrideClose(slot0)
-	slot0:closeThis()
+function var_0_0.overrideClose(arg_11_0)
+	arg_11_0:closeThis()
 end
 
-function slot0.refreshHelp(slot0)
-	if slot0._navigateButtonView then
-		slot0._navigateButtonView:setParam({
+function var_0_0.refreshHelp(arg_12_0)
+	if arg_12_0._navigateButtonView then
+		local var_12_0 = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+
+		arg_12_0._navigateButtonView:setParam({
 			true,
 			true,
-			DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+			var_12_0
 		})
 	end
 end
 
-function slot0.onContainerUpdateParam(slot0)
-	slot0._mapScene:setSceneVisible(true)
+function var_0_0.onContainerUpdateParam(arg_13_0)
+	arg_13_0._mapScene:setSceneVisible(true)
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_14_0, arg_14_1)
+	var_0_0.super.setVisibleInternal(arg_14_0, arg_14_1)
 
-	if slot0._mapScene then
-		slot0._mapScene:setSceneVisible(slot1)
+	if arg_14_0._mapScene then
+		arg_14_0._mapScene:setSceneVisible(arg_14_1)
 	end
 end
 
-return slot0
+return var_0_0

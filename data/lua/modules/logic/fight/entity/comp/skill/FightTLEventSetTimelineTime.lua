@@ -1,52 +1,62 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventSetTimelineTime", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetTimelineTime", package.seeall)
 
-slot0 = class("FightTLEventSetTimelineTime")
+local var_0_0 = class("FightTLEventSetTimelineTime")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot5 = tonumber(slot3[1])
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = tonumber(arg_1_3[1])
+	local var_1_1 = var_1_0
+	local var_1_2 = FightDataHelper.entityMgr:getById(arg_1_1.fromId)
 
-	if FightDataHelper.entityMgr:getById(slot1.fromId) and #string.splitToNumber(slot3[2], "#") > 0 then
-		for slot11, slot12 in ipairs(slot7) do
-			for slot16, slot17 in pairs(slot6:getBuffDic()) do
-				if slot17.buffId == slot12 then
-					slot5 = false
+	if var_1_2 then
+		local var_1_3 = string.splitToNumber(arg_1_3[2], "#")
 
+		if #var_1_3 > 0 then
+			for iter_1_0, iter_1_1 in ipairs(var_1_3) do
+				for iter_1_2, iter_1_3 in pairs(var_1_2:getBuffDic()) do
+					if iter_1_3.buffId == iter_1_1 then
+						var_1_1 = false
+
+						break
+					end
+				end
+
+				if not var_1_1 then
 					break
 				end
 			end
-
-			if not slot5 then
-				break
-			end
 		end
 	end
 
-	if not string.nilorempty(slot3[3]) then
-		slot8 = false
+	if not string.nilorempty(arg_1_3[3]) then
+		local var_1_4 = string.splitToNumber(arg_1_3[3], "#")
+		local var_1_5 = false
 
-		for slot12, slot13 in ipairs(string.splitToNumber(slot3[3], "#")) do
-			if slot13 == slot1.actId then
-				slot8 = true
+		for iter_1_4, iter_1_5 in ipairs(var_1_4) do
+			if iter_1_5 == arg_1_1.actId then
+				var_1_5 = true
 			end
 		end
 
-		if not slot8 then
-			slot5 = false
+		if not var_1_5 then
+			var_1_1 = false
 		end
 	end
 
-	if slot5 then
-		slot0._binder:SetTime(slot4)
+	if var_1_1 then
+		arg_1_0._binder:SetTime(var_1_0)
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_3_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	return
 end
 
-return slot0
+return var_0_0

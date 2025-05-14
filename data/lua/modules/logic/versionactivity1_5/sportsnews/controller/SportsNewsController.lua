@@ -1,67 +1,80 @@
-module("modules.logic.versionactivity1_5.sportsnews.controller.SportsNewsController", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.controller.SportsNewsController", package.seeall)
 
-slot0 = class("SportsNewsController", BaseController)
+local var_0_0 = class("SportsNewsController", BaseController)
 
-function slot0.openSportsNewsMainView(slot0, slot1)
+function var_0_0.openSportsNewsMainView(arg_1_0, arg_1_1)
 	SportsNewsModel.instance:setJumpToOrderId(nil)
+
+	arg_1_1 = arg_1_1 or VersionActivity1_5Enum.ActivityId.SportsNews
+
 	ViewMgr.instance:openView(ViewName.SportsNewsView, {
 		formToMain = true,
-		actId = slot1 or VersionActivity1_5Enum.ActivityId.SportsNews
+		actId = arg_1_1
 	})
 end
 
-slot0.UI_CLICK_BLOCK_KEY = "SportsNewsBlock"
+var_0_0.UI_CLICK_BLOCK_KEY = "SportsNewsBlock"
 
-function slot0.startBlock(slot0)
+function var_0_0.startBlock(arg_2_0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(uv0.UI_CLICK_BLOCK_KEY)
+	UIBlockMgr.instance:startBlock(var_0_0.UI_CLICK_BLOCK_KEY)
 end
 
-function slot0.endBlock(slot0)
-	UIBlockMgr.instance:endBlock(uv0.UI_CLICK_BLOCK_KEY)
+function var_0_0.endBlock(arg_3_0)
+	UIBlockMgr.instance:endBlock(var_0_0.UI_CLICK_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function slot0.cantJumpDungeonGetName(slot0, slot1)
-	if not JumpConfig.instance:getJumpConfig(slot1) then
+function var_0_0.cantJumpDungeonGetName(arg_4_0, arg_4_1)
+	local var_4_0 = JumpConfig.instance:getJumpConfig(arg_4_1)
+
+	if not var_4_0 then
 		return false
 	end
 
-	slot4, slot5 = JumpController.instance:canJumpNew(slot2.param)
+	local var_4_1 = var_4_0.param
+	local var_4_2, var_4_3 = JumpController.instance:canJumpNew(var_4_1)
 
-	if slot4 then
+	if var_4_2 then
 		return true
 	end
 
-	slot6 = string.split(slot3, "#")
+	local var_4_4 = string.split(var_4_1, "#")
+	local var_4_5 = tonumber(var_4_4[#var_4_4])
+	local var_4_6 = DungeonConfig.instance:getEpisodeCO(var_4_5)
 
-	if DungeonConfig.instance:getEpisodeCO(tonumber(slot6[#slot6])) then
-		return false, ToastEnum.V1a5SportNewsOrderJumpTo, DungeonController.getEpisodeName(slot8), slot8.name
+	if var_4_6 then
+		local var_4_7 = DungeonController.getEpisodeName(var_4_6)
+
+		return false, ToastEnum.V1a5SportNewsOrderJumpTo, var_4_7, var_4_6.name
 	end
 
-	return false, slot5
+	return false, var_4_3
 end
 
-function slot0.jumpToFinishTask(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6, slot7 = slot0:cantJumpDungeonGetName(slot1.cfg.jumpId)
+function var_0_0.jumpToFinishTask(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0, var_5_1, var_5_2, var_5_3 = arg_5_0:cantJumpDungeonGetName(arg_5_1.cfg.jumpId)
 
-	if not slot4 then
-		GameFacade.showToast(slot5, slot6, slot7)
+	if not var_5_0 then
+		GameFacade.showToast(var_5_1, var_5_2, var_5_3)
 	else
-		SportsNewsModel.instance:setJumpToOrderId(slot1.cfg.id)
-		JumpController.instance:jump(slot1.cfg.jumpId, slot2, slot3, {
+		local var_5_4 = {
+			luaLang("p_versionactivity_1_5_enterview_txt_Activity2"),
+			arg_5_1.cfg.name
+		}
+		local var_5_5 = {
 			special = true,
-			desc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a5_news_order_return_view"), {
-				luaLang("p_versionactivity_1_5_enterview_txt_Activity2"),
-				slot1.cfg.name
-			}),
-			checkFunc = slot1.canFinish,
-			checkFuncObj = slot1,
+			desc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a5_news_order_return_view"), var_5_4),
+			checkFunc = arg_5_1.canFinish,
+			checkFuncObj = arg_5_1,
 			openedViewNameList = JumpController.instance:getCurrentOpenedView()
-		})
+		}
+
+		SportsNewsModel.instance:setJumpToOrderId(arg_5_1.cfg.id)
+		JumpController.instance:jump(arg_5_1.cfg.jumpId, arg_5_2, arg_5_3, var_5_5)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

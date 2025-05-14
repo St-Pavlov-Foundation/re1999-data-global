@@ -1,94 +1,101 @@
-module("modules.logic.explore.map.whirl.comp.ExploreWhirlFollowComp", package.seeall)
+﻿module("modules.logic.explore.map.whirl.comp.ExploreWhirlFollowComp", package.seeall)
 
-slot0 = class("ExploreWhirlFollowComp", LuaCompBase)
-slot1 = {
+local var_0_0 = class("ExploreWhirlFollowComp", LuaCompBase)
+local var_0_1 = {
 	Down = -1,
 	Up = 1
 }
 
-function slot0.ctor(slot0, slot1)
-	slot0._whirl = slot1
-	slot0._isPause = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._whirl = arg_1_1
+	arg_1_0._isPause = false
 end
 
-function slot0.setup(slot0, slot1)
-	slot0._go = slot1
-	slot0._trans = slot1.transform
-	slot0._minHeight = 0.6
-	slot0._maxHeight = 0.8
-	slot0._radius = 0.4
-	slot0._upDownSpeed = 0.003
-	slot0._moveSpeed = 0.05
-	slot0._rotateSpeed = 1
-	slot0._nowHeight = 0.7
-	slot0._nowDir = uv0.Up
+function var_0_0.setup(arg_2_0, arg_2_1)
+	arg_2_0._go = arg_2_1
+	arg_2_0._trans = arg_2_1.transform
+	arg_2_0._minHeight = 0.6
+	arg_2_0._maxHeight = 0.8
+	arg_2_0._radius = 0.4
+	arg_2_0._upDownSpeed = 0.003
+	arg_2_0._moveSpeed = 0.05
+	arg_2_0._rotateSpeed = 1
+	arg_2_0._nowHeight = 0.7
+	arg_2_0._nowDir = var_0_1.Up
 end
 
-function slot0.start(slot0)
-	slot0._isPause = false
+function var_0_0.start(arg_3_0)
+	arg_3_0._isPause = false
 
-	slot0:onUpdatePos()
+	arg_3_0:onUpdatePos()
 end
 
-function slot0.pause(slot0)
-	slot0._isPause = true
+function var_0_0.pause(arg_4_0)
+	arg_4_0._isPause = true
 end
 
-function slot0.onUpdate(slot0)
-	if not slot0._go or slot0._isPause then
+function var_0_0.onUpdate(arg_5_0)
+	if not arg_5_0._go or arg_5_0._isPause then
 		return
 	end
 
-	slot0:onUpdatePos()
+	arg_5_0:onUpdatePos()
 end
 
-function slot0._getHero(slot0)
+function var_0_0._getHero(arg_6_0)
 	return ExploreController.instance:getMap():getHero()
 end
 
-function slot0.onUpdatePos(slot0)
-	slot1 = slot0:_getHero()._displayTr
-	slot3 = -slot1.forward:Mul(slot0._radius) + slot1.position
+function var_0_0.onUpdatePos(arg_7_0)
+	local var_7_0 = arg_7_0:_getHero()._displayTr
+	local var_7_1 = var_7_0.position
+	local var_7_2 = -var_7_0.forward:Mul(arg_7_0._radius) + var_7_1
 
-	if slot0._nowDir == uv0.Up then
-		slot0._nowHeight = slot0._nowHeight + slot0._upDownSpeed
+	if arg_7_0._nowDir == var_0_1.Up then
+		arg_7_0._nowHeight = arg_7_0._nowHeight + arg_7_0._upDownSpeed
 
-		if slot0._maxHeight <= slot0._nowHeight then
-			slot0._nowDir = uv0.Down
+		if arg_7_0._nowHeight >= arg_7_0._maxHeight then
+			arg_7_0._nowDir = var_0_1.Down
 		end
 	else
-		slot0._nowHeight = slot0._nowHeight - slot0._upDownSpeed
+		arg_7_0._nowHeight = arg_7_0._nowHeight - arg_7_0._upDownSpeed
 
-		if slot0._nowHeight <= slot0._minHeight then
-			slot0._nowDir = uv0.Up
+		if arg_7_0._nowHeight <= arg_7_0._minHeight then
+			arg_7_0._nowDir = var_0_1.Up
 		end
 	end
 
-	slot3.y = slot0._nowHeight
+	var_7_2.y = arg_7_0._nowHeight
 
-	slot0._trans:Rotate(0, slot0._rotateSpeed, 0)
+	arg_7_0._trans:Rotate(0, arg_7_0._rotateSpeed, 0)
 
-	if slot0._trans.position:Sub(slot3):SqrMagnitude() > slot0._moveSpeed * slot0._moveSpeed then
-		slot6 = Vector3.Lerp(slot0._trans.position, slot3, slot0._moveSpeed / math.sqrt(slot5)) - slot2
-		slot6.y = 0
+	local var_7_3 = arg_7_0._trans.position:Sub(var_7_2):SqrMagnitude()
 
-		if slot6:SqrMagnitude() > 1 then
-			slot8 = slot6:SetNormalize():Add(slot2)
-			slot8.y = slot3.y
-			slot3 = slot8
+	if var_7_3 > arg_7_0._moveSpeed * arg_7_0._moveSpeed then
+		var_7_2 = Vector3.Lerp(arg_7_0._trans.position, var_7_2, arg_7_0._moveSpeed / math.sqrt(var_7_3))
+
+		local var_7_4 = var_7_2 - var_7_1
+
+		var_7_4.y = 0
+
+		if var_7_4:SqrMagnitude() > 1 then
+			local var_7_5 = var_7_4:SetNormalize():Add(var_7_1)
+
+			var_7_5.y = var_7_2.y
+			var_7_2 = var_7_5
 		end
 
-		slot0._trans.position = slot3
+		arg_7_0._trans.position = var_7_2
 	else
-		slot0._trans.position = slot3
+		arg_7_0._trans.position = var_7_2
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0._go = nil
-	slot0._trans = nil
-	slot0._whirl = nil
-	slot0._isPause = false
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0._go = nil
+	arg_8_0._trans = nil
+	arg_8_0._whirl = nil
+	arg_8_0._isPause = false
 end
 
-return slot0
+return var_0_0

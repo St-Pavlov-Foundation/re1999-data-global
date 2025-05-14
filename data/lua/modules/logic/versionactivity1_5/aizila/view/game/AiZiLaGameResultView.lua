@@ -1,124 +1,135 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameResultView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameResultView", package.seeall)
 
-slot0 = class("AiZiLaGameResultView", BaseView)
+local var_0_0 = class("AiZiLaGameResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg2")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._txtday = gohelper.findChildText(slot0.viewGO, "content/Title/#txt_day")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "content/Title/#txt_Title")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "content/#go_success")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "content/#go_fail")
-	slot0._txtuseTimes = gohelper.findChildText(slot0.viewGO, "content/roundUse/#txt_useTimes")
-	slot0._txttimes = gohelper.findChildText(slot0.viewGO, "content/round/#txt_times")
-	slot0._goTips = gohelper.findChild(slot0.viewGO, "content/Layout/#go_Tips")
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "content/Layout/#go_Tips/#txt_Tips")
-	slot0._scrollItems = gohelper.findChildScrollRect(slot0.viewGO, "content/Layout/#scroll_Items")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "content/Layout/#scroll_Items/Viewport/#go_rewardContent")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._txtday = gohelper.findChildText(arg_1_0.viewGO, "content/Title/#txt_day")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "content/Title/#txt_Title")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "content/#go_success")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "content/#go_fail")
+	arg_1_0._txtuseTimes = gohelper.findChildText(arg_1_0.viewGO, "content/roundUse/#txt_useTimes")
+	arg_1_0._txttimes = gohelper.findChildText(arg_1_0.viewGO, "content/round/#txt_times")
+	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "content/Layout/#go_Tips")
+	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "content/Layout/#go_Tips/#txt_Tips")
+	arg_1_0._scrollItems = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/Layout/#scroll_Items")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "content/Layout/#scroll_Items/Viewport/#go_rewardContent")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0:isLockOp() then
+function var_0_0._btncloseOnClick(arg_4_0)
+	if arg_4_0:isLockOp() then
 		return
 	end
 
 	AiZiLaGameController.instance:gameResultOver()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goodsItemGo = slot0:getResInst(AiZiLaGoodsItem.prefabPath, slot0.viewGO)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goodsItemGo = arg_5_0:getResInst(AiZiLaGoodsItem.prefabPath, arg_5_0.viewGO)
 
-	gohelper.setActive(slot0._goodsItemGo, false)
+	gohelper.setActive(arg_5_0._goodsItemGo, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._animator = slot0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
 
-	slot0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, slot0.closeThis, slot0)
+	arg_7_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, arg_7_0.closeThis, arg_7_0)
 
-	if slot0.viewContainer then
-		NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._btncloseOnClick, slot0)
+	if arg_7_0.viewContainer then
+		NavigateMgr.instance:addEscape(arg_7_0.viewContainer.viewName, arg_7_0._btncloseOnClick, arg_7_0)
 	end
 
-	slot0:_setLockOpTime(1)
-	slot0:refreshUI()
-	AudioMgr.instance:trigger(AiZiLaGameModel.instance:getIsSafe() and AudioEnum.V1a5AiZiLa.ui_wulu_aizila_safe_away or AudioEnum.V1a5AiZiLa.ui_wulu_aizila_urgent_away)
+	arg_7_0:_setLockOpTime(1)
+	arg_7_0:refreshUI()
+
+	local var_7_0 = AiZiLaGameModel.instance:getIsSafe()
+
+	AudioMgr.instance:trigger(var_7_0 and AudioEnum.V1a5AiZiLa.ui_wulu_aizila_safe_away or AudioEnum.V1a5AiZiLa.ui_wulu_aizila_urgent_away)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0.playViewAnimator(slot0, slot1)
-	if slot0._animator then
-		slot0._animator.enabled = true
+function var_0_0.playViewAnimator(arg_10_0, arg_10_1)
+	if arg_10_0._animator then
+		arg_10_0._animator.enabled = true
 
-		slot0._animator:Play(slot1, 0, 0)
+		arg_10_0._animator:Play(arg_10_1, 0, 0)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = AiZiLaGameModel.instance:getIsSafe()
-	slot3 = AiZiLaGameModel.instance:getEpisodeMO() and slot2:getConfig()
-	slot4 = {}
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = AiZiLaGameModel.instance:getIsSafe()
+	local var_11_1 = AiZiLaGameModel.instance:getEpisodeMO()
+	local var_11_2 = var_11_1 and var_11_1:getConfig()
+	local var_11_3 = {}
 
-	if AiZiLaGameModel.instance:getIsFirstPass() and slot3 then
-		AiZiLaHelper.getItemMOListByBonusStr(slot3.bonus, slot4)
+	if AiZiLaGameModel.instance:getIsFirstPass() and var_11_2 then
+		AiZiLaHelper.getItemMOListByBonusStr(var_11_2.bonus, var_11_3)
 	end
 
-	tabletool.addValues(slot4, AiZiLaGameModel.instance:getResultItemList())
-	gohelper.setActive(slot0._gosuccess, slot1)
-	gohelper.setActive(slot0._gofail, not slot1)
-	gohelper.setActive(slot0._goTips, not slot1 and #slot4 > 0)
-	gohelper.CreateObjList(slot0, slot0._onRewardItem, slot4, slot0._gorewardContent, slot0._goodsItemGo, AiZiLaGoodsItem)
+	tabletool.addValues(var_11_3, AiZiLaGameModel.instance:getResultItemList())
+	gohelper.setActive(arg_11_0._gosuccess, var_11_0)
+	gohelper.setActive(arg_11_0._gofail, not var_11_0)
+	gohelper.setActive(arg_11_0._goTips, not var_11_0 and #var_11_3 > 0)
+	gohelper.CreateObjList(arg_11_0, arg_11_0._onRewardItem, var_11_3, arg_11_0._gorewardContent, arg_11_0._goodsItemGo, AiZiLaGoodsItem)
 
-	if slot2 then
-		slot5 = slot2.day or 0
-		slot0._txtuseTimes.text = string.format("%sm", math.max(0, slot2.altitude or 0))
-		slot0._txttimes.text = math.max(0, slot2.actionPoint or 0)
-		slot0._txtTitle.text = slot3 and slot3.name or ""
-		slot0._txtday.text = formatLuaLang("v1a5_aizila_day_str", slot5)
-		slot6 = AiZiLaConfig.instance:getRoundCo(slot3.activityId, slot3.episodeId, math.max(1, slot5))
+	if var_11_1 then
+		local var_11_4 = var_11_1.day or 0
 
-		if not slot1 and slot6 then
-			slot0._txtTips.text = formatLuaLang("v1a5_aizila_keep_material_rate", (1000 - slot6.keepMaterialRate) * 0.1 .. "%")
+		arg_11_0._txtuseTimes.text = string.format("%sm", math.max(0, var_11_1.altitude or 0))
+		arg_11_0._txttimes.text = math.max(0, var_11_1.actionPoint or 0)
+		arg_11_0._txtTitle.text = var_11_2 and var_11_2.name or ""
+		arg_11_0._txtday.text = formatLuaLang("v1a5_aizila_day_str", var_11_4)
+
+		local var_11_5 = AiZiLaConfig.instance:getRoundCo(var_11_2.activityId, var_11_2.episodeId, math.max(1, var_11_4))
+
+		if not var_11_0 and var_11_5 then
+			local var_11_6 = 1000 - var_11_5.keepMaterialRate
+
+			arg_11_0._txtTips.text = formatLuaLang("v1a5_aizila_keep_material_rate", var_11_6 * 0.1 .. "%")
 		end
 	end
 end
 
-function slot0._onRewardItem(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
+function var_0_0._onRewardItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_1:onUpdateMO(arg_12_2)
 end
 
-function slot0._setLockOpTime(slot0, slot1)
-	slot0._lockTime = Time.time + slot1
+function var_0_0._setLockOpTime(arg_13_0, arg_13_1)
+	arg_13_0._lockTime = Time.time + arg_13_1
 end
 
-function slot0.isLockOp(slot0)
-	if slot0._lockTime and Time.time < slot0._lockTime then
+function var_0_0.isLockOp(arg_14_0)
+	if arg_14_0._lockTime and Time.time < arg_14_0._lockTime then
 		return true
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

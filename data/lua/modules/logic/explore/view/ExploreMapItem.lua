@@ -1,8 +1,8 @@
-module("modules.logic.explore.view.ExploreMapItem", package.seeall)
+﻿module("modules.logic.explore.view.ExploreMapItem", package.seeall)
 
-slot0 = class("ExploreMapItem", LuaCompBase)
-slot1 = typeof(UnityEngine.UI.Mask)
-slot2 = {
+local var_0_0 = class("ExploreMapItem", LuaCompBase)
+local var_0_1 = typeof(UnityEngine.UI.Mask)
+local var_0_2 = {
 	"explore_map_img_mask7",
 	"explore_map_img_mask6",
 	"explore_map_img_mask8",
@@ -13,123 +13,131 @@ slot2 = {
 	"explore_map_img_mask2"
 }
 
-function slot0.ctor(slot0, slot1)
-	slot0._mo = slot1
-	slot0._nowIconRotate = 0
-	slot0._isShowIcon = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._mo = arg_1_1
+	arg_1_0._nowIconRotate = 0
+	arg_1_0._isShowIcon = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot1:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
-	slot2 = gohelper.findChild(slot1, "image_left")
-	slot3 = gohelper.findChild(slot1, "image_right")
-	slot4 = gohelper.findChild(slot1, "image_top")
-	slot5 = gohelper.findChild(slot1, "image_bottom")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_1:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 
-	if gohelper.findChild(slot1, "typemask") then
-		slot0._maskComp = slot6:GetComponent(uv0)
-		slot0._maskImageComp = slot6:GetComponent(gohelper.Type_Image)
+	local var_2_0 = gohelper.findChild(arg_2_1, "image_left")
+	local var_2_1 = gohelper.findChild(arg_2_1, "image_right")
+	local var_2_2 = gohelper.findChild(arg_2_1, "image_top")
+	local var_2_3 = gohelper.findChild(arg_2_1, "image_bottom")
+	local var_2_4 = gohelper.findChild(arg_2_1, "typemask")
+
+	if var_2_4 then
+		arg_2_0._maskComp = var_2_4:GetComponent(var_0_1)
+		arg_2_0._maskImageComp = var_2_4:GetComponent(gohelper.Type_Image)
 	end
 
-	slot0._type = gohelper.findChildImage(slot1, "type") or gohelper.findChildImage(slot1, "typemask/type")
-	slot0._icon = gohelper.findChildImage(slot1, "icon")
-	slot0._leftTrans = slot2.transform
-	slot0._rightTrans = slot3.transform
-	slot0._topTrans = slot4.transform
-	slot0._bottomTrans = slot5.transform
+	arg_2_0._type = gohelper.findChildImage(arg_2_1, "type") or gohelper.findChildImage(arg_2_1, "typemask/type")
+	arg_2_0._icon = gohelper.findChildImage(arg_2_1, "icon")
+	arg_2_0._leftTrans = var_2_0.transform
+	arg_2_0._rightTrans = var_2_1.transform
+	arg_2_0._topTrans = var_2_2.transform
+	arg_2_0._bottomTrans = var_2_3.transform
 
-	slot0:updateMo(slot0._mo)
+	arg_2_0:updateMo(arg_2_0._mo)
 end
 
-function slot0.updateMo(slot0, slot1)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.updateMo(arg_3_0, arg_3_1)
+	gohelper.setActive(arg_3_0.go, true)
 
-	slot0._mo = slot1
+	arg_3_0._mo = arg_3_1
 
-	gohelper.setActive(slot0._leftTrans, slot0._mo.left)
-	gohelper.setActive(slot0._rightTrans, slot0._mo.right)
-	gohelper.setActive(slot0._topTrans, slot0._mo.top)
-	gohelper.setActive(slot0._bottomTrans, slot0._mo.bottom)
+	gohelper.setActive(arg_3_0._leftTrans, arg_3_0._mo.left)
+	gohelper.setActive(arg_3_0._rightTrans, arg_3_0._mo.right)
+	gohelper.setActive(arg_3_0._topTrans, arg_3_0._mo.top)
+	gohelper.setActive(arg_3_0._bottomTrans, arg_3_0._mo.bottom)
 
-	if slot0._maskComp then
-		if slot0._mo.bound then
-			slot0._maskComp.enabled = true
-			slot0._maskImageComp.enabled = true
+	if arg_3_0._maskComp then
+		if arg_3_0._mo.bound then
+			arg_3_0._maskComp.enabled = true
+			arg_3_0._maskImageComp.enabled = true
 
-			UISpriteSetMgr.instance:setExploreSprite(slot0._maskImageComp, uv0[slot0._mo.bound])
+			local var_3_0 = var_0_2[arg_3_0._mo.bound]
+
+			UISpriteSetMgr.instance:setExploreSprite(arg_3_0._maskImageComp, var_3_0)
 		else
-			slot0._maskComp.enabled = false
-			slot0._maskImageComp.enabled = false
+			arg_3_0._maskComp.enabled = false
+			arg_3_0._maskImageComp.enabled = false
 		end
 	end
 
-	transformhelper.setLocalPosXY(slot0.go.transform, slot0._mo.posX, slot0._mo.posY)
+	transformhelper.setLocalPosXY(arg_3_0.go.transform, arg_3_0._mo.posX, arg_3_0._mo.posY)
 
-	if ExploreMapModel.instance:getNode(slot0._mo.key) then
-		UISpriteSetMgr.instance:setExploreSprite(slot0._type, "dungeon_secretroom_landbg_" .. slot2.nodeType)
+	local var_3_1 = ExploreMapModel.instance:getNode(arg_3_0._mo.key)
+
+	if var_3_1 then
+		UISpriteSetMgr.instance:setExploreSprite(arg_3_0._type, "dungeon_secretroom_landbg_" .. var_3_1.nodeType)
 	end
 
-	slot0:updateOutLineIcon()
+	arg_3_0:updateOutLineIcon()
 
-	if slot0._mo.rotate then
-		slot0:updateRotate()
+	if arg_3_0._mo.rotate then
+		arg_3_0:updateRotate()
 	end
 end
 
-function slot0.updateRotate(slot0)
-	if not slot0._isShowIcon or not slot0._mo.rotate or slot0._nowIconRotate == ExploreMapModel.instance.nowMapRotate then
+function var_0_0.updateRotate(arg_4_0)
+	if not arg_4_0._isShowIcon or not arg_4_0._mo.rotate or arg_4_0._nowIconRotate == ExploreMapModel.instance.nowMapRotate then
 		return
 	end
 
-	slot0._nowIconRotate = ExploreMapModel.instance.nowMapRotate
+	arg_4_0._nowIconRotate = ExploreMapModel.instance.nowMapRotate
 
-	transformhelper.setLocalRotation(slot0._icon.transform, 0, 0, -ExploreMapModel.instance.nowMapRotate)
+	transformhelper.setLocalRotation(arg_4_0._icon.transform, 0, 0, -ExploreMapModel.instance.nowMapRotate)
 end
 
-slot3 = Color.clear
-slot4 = Color.white
+local var_0_3 = Color.clear
+local var_0_4 = Color.white
 
-function slot0.updateOutLineIcon(slot0)
-	if not slot0._mo.bound and ExploreMapModel.instance:getSmallMapIcon(slot0._mo.key) then
-		UISpriteSetMgr.instance:setExploreSprite(slot0._icon, slot1)
+function var_0_0.updateOutLineIcon(arg_5_0)
+	local var_5_0 = not arg_5_0._mo.bound and ExploreMapModel.instance:getSmallMapIcon(arg_5_0._mo.key)
 
-		slot0._icon.color = uv0
-		slot0._isShowIcon = true
+	if var_5_0 then
+		UISpriteSetMgr.instance:setExploreSprite(arg_5_0._icon, var_5_0)
+
+		arg_5_0._icon.color = var_0_4
+		arg_5_0._isShowIcon = true
 	else
-		slot0._icon.color = uv1
-		slot0._isShowIcon = false
+		arg_5_0._icon.color = var_0_3
+		arg_5_0._isShowIcon = false
 	end
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0.setActive(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0.go, arg_6_1)
 end
 
-function slot0.markUse(slot0, slot1)
-	slot0._isUse = slot1
+function var_0_0.markUse(arg_7_0, arg_7_1)
+	arg_7_0._isUse = arg_7_1
 end
 
-function slot0.getIsUse(slot0)
-	return slot0._isUse
+function var_0_0.getIsUse(arg_8_0)
+	return arg_8_0._isUse
 end
 
-function slot0.setScale(slot0, slot1)
-	if slot0._mo.left then
-		transformhelper.setLocalScale(slot0._leftTrans, slot1, 1, 1)
+function var_0_0.setScale(arg_9_0, arg_9_1)
+	if arg_9_0._mo.left then
+		transformhelper.setLocalScale(arg_9_0._leftTrans, arg_9_1, 1, 1)
 	end
 
-	if slot0._mo.right then
-		transformhelper.setLocalScale(slot0._rightTrans, slot1, 1, 1)
+	if arg_9_0._mo.right then
+		transformhelper.setLocalScale(arg_9_0._rightTrans, arg_9_1, 1, 1)
 	end
 
-	if slot0._mo.top then
-		transformhelper.setLocalScale(slot0._topTrans, slot1, 1, 1)
+	if arg_9_0._mo.top then
+		transformhelper.setLocalScale(arg_9_0._topTrans, arg_9_1, 1, 1)
 	end
 
-	if slot0._mo.bottom then
-		transformhelper.setLocalScale(slot0._bottomTrans, slot1, 1, 1)
+	if arg_9_0._mo.bottom then
+		transformhelper.setLocalScale(arg_9_0._bottomTrans, arg_9_1, 1, 1)
 	end
 end
 
-return slot0
+return var_0_0

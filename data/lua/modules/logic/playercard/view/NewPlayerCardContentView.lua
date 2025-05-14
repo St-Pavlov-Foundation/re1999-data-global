@@ -1,260 +1,273 @@
-module("modules.logic.playercard.view.NewPlayerCardContentView", package.seeall)
+﻿module("modules.logic.playercard.view.NewPlayerCardContentView", package.seeall)
 
-slot0 = class("NewPlayerCardContentView", BaseView)
+local var_0_0 = class("NewPlayerCardContentView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "view")
-	slot0._goLoading = gohelper.findChild(slot0.viewGO, "loadingmainview")
-	slot0._loadAnim = slot0._goLoading:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goBottom = gohelper.findChild(slot0.viewGO, "bottom")
-	slot0._btnbottomclose = gohelper.findChildButton(slot0.viewGO, "bottom/#btn_bottomclose")
-	slot0._goskinpreviewnode = gohelper.findChild(slot0.viewGO, "bottom/#go_skinpreview")
-	slot0._btnswitchskin = gohelper.findChildButton(slot0.viewGO, "#btn_switch")
-	slot0._openswitchskin = false
-	slot0._firstopen = true
-	slot0._bottomAnimator = slot0._goBottom:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "view")
+	arg_1_0._goLoading = gohelper.findChild(arg_1_0.viewGO, "loadingmainview")
+	arg_1_0._loadAnim = arg_1_0._goLoading:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goBottom = gohelper.findChild(arg_1_0.viewGO, "bottom")
+	arg_1_0._btnbottomclose = gohelper.findChildButton(arg_1_0.viewGO, "bottom/#btn_bottomclose")
+	arg_1_0._goskinpreviewnode = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_skinpreview")
+	arg_1_0._btnswitchskin = gohelper.findChildButton(arg_1_0.viewGO, "#btn_switch")
+	arg_1_0._openswitchskin = false
+	arg_1_0._firstopen = true
+	arg_1_0._bottomAnimator = arg_1_0._goBottom:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbottomclose:AddClickListener(slot0._btnswitchskinOnClick, slot0)
-	slot0._btnswitchskin:AddClickListener(slot0._btnswitchskinOnClick, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, slot0.SwitchTheme, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, slot0.ChangeSkin, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbottomclose:AddClickListener(arg_2_0._btnswitchskinOnClick, arg_2_0)
+	arg_2_0._btnswitchskin:AddClickListener(arg_2_0._btnswitchskinOnClick, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_2_0.SwitchTheme, arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, arg_2_0.ChangeSkin, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbottomclose:RemoveClickListener()
-	slot0._btnswitchskin:RemoveClickListener()
-	slot0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, slot0.SwitchTheme, slot0)
-	slot0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, slot0.ChangeSkin, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbottomclose:RemoveClickListener()
+	arg_3_0._btnswitchskin:RemoveClickListener()
+	arg_3_0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_3_0.SwitchTheme, arg_3_0)
+	arg_3_0:removeEventCb(PlayerCardController.instance, PlayerCardEvent.ChangeSkin, arg_3_0.ChangeSkin, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam and slot0.viewParam.userId then
-		slot0.userId = slot0.viewParam.userId
+function var_0_0.onOpen(arg_6_0)
+	if arg_6_0.viewParam and arg_6_0.viewParam.userId then
+		arg_6_0.userId = arg_6_0.viewParam.userId
 	end
 
-	slot0.playercardinfo = PlayerCardModel.instance:getCardInfo(slot0.userId)
+	arg_6_0.playercardinfo = PlayerCardModel.instance:getCardInfo(arg_6_0.userId)
 
-	gohelper.setActive(slot0._goBottom, slot0._openswitchskin)
-	gohelper.setActive(slot0._btnswitchskin.gameObject, slot0.playercardinfo:isSelf())
+	gohelper.setActive(arg_6_0._goBottom, arg_6_0._openswitchskin)
+	gohelper.setActive(arg_6_0._btnswitchskin.gameObject, arg_6_0.playercardinfo:isSelf())
 
-	slot0.skinId = slot0.playercardinfo:getThemeId()
+	arg_6_0.skinId = arg_6_0.playercardinfo:getThemeId()
 
-	slot0:loadRes(slot0.skinId)
-	slot0:_initSkinPreView()
+	arg_6_0:loadRes(arg_6_0.skinId)
+	arg_6_0:_initSkinPreView()
 end
 
-function slot0._initSkinPreView(slot0)
-	slot0.goskinpreview = gohelper.clone(slot0.viewContainer:getRes(slot0.viewContainer:getSetting().otherRes.skinpreview), slot0._goskinpreviewnode)
-	slot0.skinpreviewcls = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.goskinpreview, PlayerCardSkinPreView)
-	slot0._skinCls = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewGO, PlayerCardThemeView)
-	slot0._skinCls.viewParam = slot0.viewParam
+function var_0_0._initSkinPreView(arg_7_0)
+	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes.skinpreview
+	local var_7_1 = arg_7_0.viewContainer:getRes(var_7_0)
 
-	slot0._skinCls:canOpen()
+	arg_7_0.goskinpreview = gohelper.clone(var_7_1, arg_7_0._goskinpreviewnode)
+	arg_7_0.skinpreviewcls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.goskinpreview, PlayerCardSkinPreView)
+	arg_7_0._skinCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0.viewGO, PlayerCardThemeView)
+	arg_7_0._skinCls.viewParam = arg_7_0.viewParam
+
+	arg_7_0._skinCls:canOpen()
 end
 
-function slot0.loadRes(slot0, slot1)
-	if not string.nilorempty(slot1) and slot1 ~= 0 then
-		slot2 = "playercardview" .. "_" .. slot1
+function var_0_0.loadRes(arg_8_0, arg_8_1)
+	local var_8_0 = "playercardview"
+
+	if not string.nilorempty(arg_8_1) and arg_8_1 ~= 0 then
+		var_8_0 = var_8_0 .. "_" .. arg_8_1
 	end
 
-	slot0._path = string.format("ui/viewres/player/playercard/%s.prefab", slot2)
-	slot0._loader = MultiAbLoader.New()
+	arg_8_0._path = string.format("ui/viewres/player/playercard/%s.prefab", var_8_0)
+	arg_8_0._loader = MultiAbLoader.New()
 
-	slot0._loader:addPath(slot0._path)
-	slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+	arg_8_0._loader:addPath(arg_8_0._path)
+	arg_8_0._loader:startLoad(arg_8_0._onLoadFinish, arg_8_0)
 end
 
-function slot0._onLoadFinish(slot0)
-	slot0._viewGo = gohelper.clone(slot0._loader:getAssetItem(slot0._path):GetResource(slot0._path), slot0._goContent)
-	slot0._viewCls = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._viewGo, NewPlayerCardView)
-	slot0._achievementCls = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._viewGo, PlayerCardAchievement)
-	slot0._infoCls = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._viewGo, PlayerCardPlayerInfo)
-	slot0._viewCls.viewParam = slot0.viewParam
-	slot0._viewCls.viewContainer = slot0.viewContainer
-	slot0._viewCls.contentview = slot0
-	slot0._achievementCls.viewParam = slot0.viewParam
-	slot0._achievementCls.viewContainer = slot0.viewContainer
-	slot0._infoCls.viewParam = slot0.viewParam
+function var_0_0._onLoadFinish(arg_9_0)
+	local var_9_0 = arg_9_0._loader:getAssetItem(arg_9_0._path):GetResource(arg_9_0._path)
 
-	if slot0._changeSkin then
-		slot0:closeLoading()
+	arg_9_0._viewGo = gohelper.clone(var_9_0, arg_9_0._goContent)
+	arg_9_0._viewCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_9_0._viewGo, NewPlayerCardView)
+	arg_9_0._achievementCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_9_0._viewGo, PlayerCardAchievement)
+	arg_9_0._infoCls = MonoHelper.addNoUpdateLuaComOnceToGo(arg_9_0._viewGo, PlayerCardPlayerInfo)
+	arg_9_0._viewCls.viewParam = arg_9_0.viewParam
+	arg_9_0._viewCls.viewContainer = arg_9_0.viewContainer
+	arg_9_0._viewCls.contentview = arg_9_0
+	arg_9_0._achievementCls.viewParam = arg_9_0.viewParam
+	arg_9_0._achievementCls.viewContainer = arg_9_0.viewContainer
+	arg_9_0._infoCls.viewParam = arg_9_0.viewParam
+
+	if arg_9_0._changeSkin then
+		arg_9_0:closeLoading()
 	end
 
-	if slot0._tempSkinId then
-		slot0._viewCls:toBottomView()
+	if arg_9_0._tempSkinId then
+		arg_9_0._viewCls:toBottomView()
 	else
-		slot0:closeLoading()
+		arg_9_0:closeLoading()
 
-		if not slot0._firstopen then
-			slot0._viewCls:backBottomView()
+		if not arg_9_0._firstopen then
+			arg_9_0._viewCls:backBottomView()
 		end
 	end
 
-	slot0._firstopen = false
+	arg_9_0._firstopen = false
 end
 
-function slot0.afterOpenAnim(slot0)
-	slot0._viewCls:toBottomView()
+function var_0_0.afterOpenAnim(arg_10_0)
+	arg_10_0._viewCls:toBottomView()
 end
 
-function slot0._btnswitchskinOnClick(slot0)
-	if slot0.playercardinfo:isSelf() then
-		slot0._openswitchskin = not slot0._openswitchskin
+function var_0_0._btnswitchskinOnClick(arg_11_0)
+	if arg_11_0.playercardinfo:isSelf() then
+		arg_11_0._openswitchskin = not arg_11_0._openswitchskin
 
-		if not slot0._openswitchskin then
-			slot0:onClickCloseBottomView()
-			slot0._viewCls:backBottomView()
+		if not arg_11_0._openswitchskin then
+			arg_11_0:onClickCloseBottomView()
+			arg_11_0._viewCls:backBottomView()
 		else
-			gohelper.setActive(slot0._goBottom, slot0._openswitchskin)
-			gohelper.setActive(slot0._btnswitchskin.gameObject, not slot0._openswitchskin)
+			gohelper.setActive(arg_11_0._goBottom, arg_11_0._openswitchskin)
+			gohelper.setActive(arg_11_0._btnswitchskin.gameObject, not arg_11_0._openswitchskin)
 		end
 
-		if slot0._openswitchskin then
+		if arg_11_0._openswitchskin then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity1_3.play_ui_molu_astrology_move)
-			slot0._viewCls:toBottomView()
+			arg_11_0._viewCls:toBottomView()
 			PlayerCardModel.instance:setIsOpenSkinView(true)
 			PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ShowTheme)
 		end
 	end
 end
 
-function slot0.closeLoading(slot0)
-	slot0:checkCanOpen()
-	slot0._loadAnim:Play("close")
-	TaskDispatcher.runDelay(slot0.afterClose, slot0, 0.3)
+function var_0_0.closeLoading(arg_12_0)
+	arg_12_0:checkCanOpen()
+	arg_12_0._loadAnim:Play("close")
+	TaskDispatcher.runDelay(arg_12_0.afterClose, arg_12_0, 0.3)
 end
 
-function slot0.afterClose(slot0)
-	TaskDispatcher.cancelTask(slot0.afterClose, slot0)
-	gohelper.setActive(slot0._goLoading, false)
+function var_0_0.afterClose(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0.afterClose, arg_13_0)
+	gohelper.setActive(arg_13_0._goLoading, false)
 
-	slot0._changeSkin = false
+	arg_13_0._changeSkin = false
 
 	UIBlockMgr.instance:endBlock("NewPlayerCardContentView")
 end
 
-function slot0.SwitchTheme(slot0, slot1)
-	if not slot1 then
+function var_0_0.SwitchTheme(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	if not slot0._tempSkinId and slot1 == slot0.skinId then
+	if not arg_14_0._tempSkinId and arg_14_1 == arg_14_0.skinId then
 		return
 	end
 
-	if slot0._tempSkinId == slot1 then
+	if arg_14_0._tempSkinId == arg_14_1 then
 		return
 	end
 
-	slot0._tempSkinId = slot1
+	arg_14_0._tempSkinId = arg_14_1
 
-	if not slot0._oldViewGo then
-		slot0._oldViewGo = slot0._viewGo
+	if not arg_14_0._oldViewGo then
+		arg_14_0._oldViewGo = arg_14_0._viewGo
 	end
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_14_0._loader then
+		arg_14_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_14_0._loader = nil
 	end
 
-	slot0._changeSkin = true
+	arg_14_0._changeSkin = true
 
-	gohelper.setActive(slot0._goLoading, true)
+	gohelper.setActive(arg_14_0._goLoading, true)
 	UIBlockMgr.instance:startBlock("NewPlayerCardContentView")
-	TaskDispatcher.runDelay(slot0.afterOpenLoad, slot0, 0.3)
+	TaskDispatcher.runDelay(arg_14_0.afterOpenLoad, arg_14_0, 0.3)
 end
 
-function slot0.afterOpenLoad(slot0)
-	TaskDispatcher.cancelTask(slot0.afterOpenLoad, slot0)
-	slot0:disposeView()
+function var_0_0.afterOpenLoad(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.afterOpenLoad, arg_15_0)
+	arg_15_0:disposeView()
 
-	if slot0._isreset and not slot0._tempSkinId then
-		slot0:loadRes(slot0.skinId)
+	if arg_15_0._isreset and not arg_15_0._tempSkinId then
+		arg_15_0:loadRes(arg_15_0.skinId)
 	else
-		slot0:loadRes(slot0._tempSkinId)
+		arg_15_0:loadRes(arg_15_0._tempSkinId)
 	end
 end
 
-function slot0.ChangeSkin(slot0, slot1)
-	slot0._tempSkinId = nil
-	slot0.skinId = slot1
+function var_0_0.ChangeSkin(arg_16_0, arg_16_1)
+	arg_16_0._tempSkinId = nil
+	arg_16_0.skinId = arg_16_1
 end
 
-function slot0.getCurrentView(slot0)
-	return slot0._viewCls
+function var_0_0.getCurrentView(arg_17_0)
+	return arg_17_0._viewCls
 end
 
-function slot0.checkCanOpen(slot0)
-	slot0._viewCls:canOpen(slot0._tempSkinId)
-	slot0._achievementCls:canOpen()
-	slot0._infoCls:canOpen()
+function var_0_0.checkCanOpen(arg_18_0)
+	arg_18_0._viewCls:canOpen(arg_18_0._tempSkinId)
+	arg_18_0._achievementCls:canOpen()
+	arg_18_0._infoCls:canOpen()
 end
 
-function slot0.onClickCloseBottomView(slot0)
-	slot0._bottomAnimator:Play("close")
+function var_0_0.onClickCloseBottomView(arg_19_0)
+	arg_19_0._bottomAnimator:Play("close")
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_pkls_enemy_move)
 
-	if slot0._tempSkinId and slot0._tempSkinId ~= slot0.skinId then
-		slot0:SwitchTheme(slot0.skinId)
+	if arg_19_0._tempSkinId and arg_19_0._tempSkinId ~= arg_19_0.skinId then
+		arg_19_0:SwitchTheme(arg_19_0.skinId)
 
-		slot0._isreset = true
-		slot0._tempSkinId = nil
+		arg_19_0._isreset = true
+		arg_19_0._tempSkinId = nil
 
-		gohelper.setActive(slot0._goBottom, slot0._openswitchskin)
+		gohelper.setActive(arg_19_0._goBottom, arg_19_0._openswitchskin)
 	else
-		TaskDispatcher.runDelay(slot0.afterAnim, slot0, 0.2)
+		TaskDispatcher.runDelay(arg_19_0.afterAnim, arg_19_0, 0.2)
 	end
 
 	PlayerCardModel.instance:setIsOpenSkinView(false)
-	PlayerCardModel.instance:setSelectSkinMO(PlayerCardThemeListModel.instance:getMoById(slot0.skinId))
-	slot0.skinpreviewcls:onHide()
-	gohelper.setActive(slot0._btnswitchskin.gameObject, not slot0._openswitchskin)
+
+	local var_19_0 = PlayerCardThemeListModel.instance:getMoById(arg_19_0.skinId)
+
+	PlayerCardModel.instance:setSelectSkinMO(var_19_0)
+	arg_19_0.skinpreviewcls:onHide()
+	gohelper.setActive(arg_19_0._btnswitchskin.gameObject, not arg_19_0._openswitchskin)
 end
 
-function slot0.afterAnim(slot0)
-	gohelper.setActive(slot0._goBottom, slot0._openswitchskin)
+function var_0_0.afterAnim(arg_20_0)
+	gohelper.setActive(arg_20_0._goBottom, arg_20_0._openswitchskin)
 end
 
-function slot0.disposeView(slot0)
-	slot0._achievementCls:onCloseInternal()
-	slot0._skinCls:onCloseInternal()
-	slot0._infoCls:onCloseInternal()
-	slot0._viewCls:onCloseInternal()
+function var_0_0.disposeView(arg_21_0)
+	arg_21_0._achievementCls:onCloseInternal()
+	arg_21_0._skinCls:onCloseInternal()
+	arg_21_0._infoCls:onCloseInternal()
+	arg_21_0._viewCls:onCloseInternal()
 
-	if slot0._oldViewGo then
-		gohelper.destroy(slot0._oldViewGo)
+	if arg_21_0._oldViewGo then
+		gohelper.destroy(arg_21_0._oldViewGo)
 
-		slot0._oldViewGo = nil
+		arg_21_0._oldViewGo = nil
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:disposeView()
-	TaskDispatcher.cancelTask(slot0.afterOpenLoad, slot0)
-	TaskDispatcher.cancelTask(slot0.afterClose, slot0)
-	TaskDispatcher.cancelTask(slot0.closeLoading, slot0)
+function var_0_0.onClose(arg_22_0)
+	arg_22_0:disposeView()
+	TaskDispatcher.cancelTask(arg_22_0.afterOpenLoad, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0.afterClose, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0.closeLoading, arg_22_0)
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_22_0._loader then
+		arg_22_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_22_0._loader = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_23_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,142 +1,148 @@
-module("modules.logic.room.model.debug.RoomDebugPlaceListModel", package.seeall)
+﻿module("modules.logic.room.model.debug.RoomDebugPlaceListModel", package.seeall)
 
-slot0 = class("RoomDebugPlaceListModel", ListScrollModel)
+local var_0_0 = class("RoomDebugPlaceListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._selectDefineId = nil
-	slot0._filterCategory = nil
-	slot0._filterPackageId = nil
-	slot0._defineIdToBlockId = nil
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._selectDefineId = nil
+	arg_4_0._filterCategory = nil
+	arg_4_0._filterPackageId = nil
+	arg_4_0._defineIdToBlockId = nil
 end
 
-function slot0.setFilterPackageId(slot0, slot1)
-	if slot0._filterPackageId == slot1 then
-		slot0._filterPackageId = nil
+function var_0_0.setFilterPackageId(arg_5_0, arg_5_1)
+	if arg_5_0._filterPackageId == arg_5_1 then
+		arg_5_0._filterPackageId = nil
 	else
-		slot0._filterPackageId = slot1
+		arg_5_0._filterPackageId = arg_5_1
 	end
 end
 
-function slot0.isFilterPackageId(slot0, slot1)
-	return slot0._filterPackageId == slot1
+function var_0_0.isFilterPackageId(arg_6_0, arg_6_1)
+	return arg_6_0._filterPackageId == arg_6_1
 end
 
-function slot0.setDebugPlaceList(slot0)
-	slot1 = {}
-	slot2 = nil
+function var_0_0.setDebugPlaceList(arg_7_0)
+	local var_7_0 = {}
+	local var_7_1
 
-	if slot0._filterPackageId then
-		slot2 = {}
+	if arg_7_0._filterPackageId then
+		var_7_1 = {}
 
-		if lua_block_package_data.packageDict[slot0._filterPackageId] then
-			for slot7, slot8 in pairs(slot3) do
-				slot2[slot8.defineId] = true
+		local var_7_2 = lua_block_package_data.packageDict[arg_7_0._filterPackageId]
+
+		if var_7_2 then
+			for iter_7_0, iter_7_1 in pairs(var_7_2) do
+				var_7_1[iter_7_1.defineId] = true
 			end
 		end
 	end
 
-	if not slot0._defineIdToBlockId then
-		slot0._defineIdToBlockId = {}
-		slot3 = {}
+	if not arg_7_0._defineIdToBlockId then
+		arg_7_0._defineIdToBlockId = {}
 
-		for slot7, slot8 in pairs(lua_block_package_data.packageDict) do
-			for slot12, slot13 in pairs(slot8) do
-				slot0._defineIdToBlockId[slot13.defineId] = slot13.blockId
+		local var_7_3 = {}
 
-				table.insert(slot3, slot13.blockId)
+		for iter_7_2, iter_7_3 in pairs(lua_block_package_data.packageDict) do
+			for iter_7_4, iter_7_5 in pairs(iter_7_3) do
+				arg_7_0._defineIdToBlockId[iter_7_5.defineId] = iter_7_5.blockId
+
+				table.insert(var_7_3, iter_7_5.blockId)
 			end
 		end
 
-		RoomInventoryBlockModel.instance:addSpecialBlockIds(slot3)
+		RoomInventoryBlockModel.instance:addSpecialBlockIds(var_7_3)
 	end
 
-	for slot7, slot8 in pairs(RoomConfig.instance:getBlockDefineConfigDict()) do
-		if slot0:isFilterCategory(slot8.category) and (not slot2 or slot2[slot7]) then
-			slot9 = RoomDebugPlaceMO.New()
+	local var_7_4 = RoomConfig.instance:getBlockDefineConfigDict()
 
-			slot9:init({
-				id = slot7,
-				blockId = slot0._defineIdToBlockId[slot7]
+	for iter_7_6, iter_7_7 in pairs(var_7_4) do
+		if arg_7_0:isFilterCategory(iter_7_7.category) and (not var_7_1 or var_7_1[iter_7_6]) then
+			local var_7_5 = RoomDebugPlaceMO.New()
+
+			var_7_5:init({
+				id = iter_7_6,
+				blockId = arg_7_0._defineIdToBlockId[iter_7_6]
 			})
-			table.insert(slot1, slot9)
+			table.insert(var_7_0, var_7_5)
 		end
 	end
 
-	table.sort(slot1, slot0._sortFunction)
-	slot0:setList(slot1)
-	slot0:_refreshSelect()
+	table.sort(var_7_0, arg_7_0._sortFunction)
+	arg_7_0:setList(var_7_0)
+	arg_7_0:_refreshSelect()
 end
 
-function slot0._sortFunction(slot0, slot1)
-	return slot0.config.defineId < slot1.config.defineId
+function var_0_0._sortFunction(arg_8_0, arg_8_1)
+	return arg_8_0.config.defineId < arg_8_1.config.defineId
 end
 
-function slot0.setFilterCategory(slot0, slot1)
-	slot0._filterCategory = slot1
+function var_0_0.setFilterCategory(arg_9_0, arg_9_1)
+	arg_9_0._filterCategory = arg_9_1
 end
 
-function slot0.isFilterCategory(slot0, slot1)
-	if string.nilorempty(slot1) and string.nilorempty(slot0._filterCategory) then
+function var_0_0.isFilterCategory(arg_10_0, arg_10_1)
+	if string.nilorempty(arg_10_1) and string.nilorempty(arg_10_0._filterCategory) then
 		return true
 	end
 
-	return slot0._filterCategory == slot1
+	return arg_10_0._filterCategory == arg_10_1
 end
 
-function slot0.getFilterCategory(slot0)
-	return slot0._filterCategory
+function var_0_0.getFilterCategory(arg_11_0)
+	return arg_11_0._filterCategory
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.clearSelect(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._scrollViews) do
+		iter_12_1:setSelect(nil)
 	end
 
-	slot0._selectDefineId = nil
+	arg_12_0._selectDefineId = nil
 end
 
-function slot0._refreshSelect(slot0)
-	slot1 = nil
+function var_0_0._refreshSelect(arg_13_0)
+	local var_13_0
+	local var_13_1 = arg_13_0:getList()
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.id == slot0._selectDefineId then
-			slot1 = slot7
+	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
+		if iter_13_1.id == arg_13_0._selectDefineId then
+			var_13_0 = iter_13_1
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._scrollViews) do
-		slot7:setSelect(slot1)
+	for iter_13_2, iter_13_3 in ipairs(arg_13_0._scrollViews) do
+		iter_13_3:setSelect(var_13_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectDefineId = slot1
+function var_0_0.setSelect(arg_14_0, arg_14_1)
+	arg_14_0._selectDefineId = arg_14_1
 
-	slot0:_refreshSelect()
+	arg_14_0:_refreshSelect()
 end
 
-function slot0.getSelect(slot0)
-	return slot0._selectDefineId
+function var_0_0.getSelect(arg_15_0)
+	return arg_15_0._selectDefineId
 end
 
-function slot0.initDebugPlace(slot0)
-	slot0:setDebugPlaceList()
-	slot0:setFilterCategory(nil)
+function var_0_0.initDebugPlace(arg_16_0)
+	arg_16_0:setDebugPlaceList()
+	arg_16_0:setFilterCategory(nil)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,45 +1,45 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueViewContainer", package.seeall)
 
-slot0 = class("V2a4_WarmUp_DialogueViewContainer", Activity125ViewBaseContainer)
-slot1 = 1
+local var_0_0 = class("V2a4_WarmUp_DialogueViewContainer", Activity125ViewBaseContainer)
+local var_0_1 = 1
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		V2a4_WarmUp_DialogueView.New(),
-		TabViewGroup.New(uv0, "#go_topleft")
+		TabViewGroup.New(var_0_1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == uv0 then
-		slot0._navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == var_0_1 then
+		arg_2_0._navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot0._navigationView:setOverrideClose(slot0._overrideClose, slot0)
+		arg_2_0._navigationView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
 
 		return {
-			slot0._navigationView
+			arg_2_0._navigationView
 		}
 	end
 end
 
-function slot0._overrideClose(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.V2a4_WarmUp_DialogueView_AbortRequest, MsgBoxEnum.BoxType.Yes_No, slot0._endYesCallback, nil, , slot0, nil, )
+function var_0_0._overrideClose(arg_3_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.V2a4_WarmUp_DialogueView_AbortRequest, MsgBoxEnum.BoxType.Yes_No, arg_3_0._endYesCallback, nil, nil, arg_3_0, nil, nil)
 end
 
-function slot0._endYesCallback(slot0)
+function var_0_0._endYesCallback(arg_4_0)
 	V2a4_WarmUpController.instance:abort()
 end
 
-function slot0.actId(slot0)
+function var_0_0.actId(arg_5_0)
 	return V2a4_WarmUpConfig.instance:actId()
 end
 
-function slot0.onContainerClose(slot0)
+function var_0_0.onContainerClose(arg_6_0)
 	V2a4_WarmUpController.instance:uploadToServer()
 end
 
-return slot0
+return var_0_0

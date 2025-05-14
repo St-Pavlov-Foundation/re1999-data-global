@@ -1,27 +1,29 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterEpisode", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterEpisode", package.seeall)
 
-slot0 = class("WaitGuideActionEnterEpisode", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionEnterEpisode", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._episodeId = tonumber(slot0.actionParam)
+	arg_1_0._episodeId = tonumber(arg_1_0.actionParam)
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._checkInEpisode, slot0)
-	slot0:_checkInEpisode(GameSceneMgr.instance:getCurSceneType(), nil)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._checkInEpisode, arg_1_0)
+	arg_1_0:_checkInEpisode(GameSceneMgr.instance:getCurSceneType(), nil)
 end
 
-function slot0._checkInEpisode(slot0, slot1, slot2)
-	if slot1 == SceneType.Fight then
-		if not slot0._episodeId or slot0._episodeId == FightModel.instance:getFightParam().episodeId then
-			GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, slot0._checkInEpisode, slot0)
-			slot0:onDone(true)
+function var_0_0._checkInEpisode(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == SceneType.Fight then
+		local var_2_0 = FightModel.instance:getFightParam()
+
+		if not arg_2_0._episodeId or arg_2_0._episodeId == var_2_0.episodeId then
+			GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_2_0._checkInEpisode, arg_2_0)
+			arg_2_0:onDone(true)
 		end
 	end
 end
 
-function slot0.clearWork(slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, slot0._checkInEpisode, slot0)
+function var_0_0.clearWork(arg_3_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_3_0._checkInEpisode, arg_3_0)
 end
 
-return slot0
+return var_0_0

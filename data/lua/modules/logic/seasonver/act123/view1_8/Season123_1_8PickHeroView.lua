@@ -1,71 +1,78 @@
-module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroView", package.seeall)
 
-slot0 = class("Season123_1_8PickHeroView", BaseView)
+local var_0_0 = class("Season123_1_8PickHeroView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtcount = gohelper.findChildText(slot0.viewGO, "#go_count/#txt_count")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ops/#btn_confirm")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ops/#btn_cancel")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_count/#txt_count")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_confirm")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_cancel")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
+function var_0_0._btnconfirmOnClick(arg_4_0)
 	Season123PickHeroController.instance:pickOver()
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._imgBg = gohelper.findChildSingleImage(slot0.viewGO, "bg/bgimg")
-	slot0._simageredlight = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_redlight")
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._imgBg = gohelper.findChildSingleImage(arg_6_0.viewGO, "bg/bgimg")
+	arg_6_0._simageredlight = gohelper.findChildSingleImage(arg_6_0.viewGO, "bg/#simage_redlight")
 
-	slot0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
-	slot0._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
+	arg_6_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
+	arg_6_0._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._imgBg:UnLoadImage()
-	slot0._simageredlight:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0._imgBg:UnLoadImage()
+	arg_7_0._simageredlight:UnLoadImage()
 	Season123PickHeroController.instance:onCloseView()
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.viewParam.actId
+function var_0_0.onOpen(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam.actId
+	local var_8_1 = arg_8_0.viewParam.stage
 
-	Season123PickHeroController.instance:onOpenView(slot1, slot0.viewParam.stage, slot0.viewParam.finishCall, slot0.viewParam.finishCallObj, slot0.viewParam.entryMOList, slot0.viewParam.selectHeroUid)
+	Season123PickHeroController.instance:onOpenView(var_8_0, var_8_1, arg_8_0.viewParam.finishCall, arg_8_0.viewParam.finishCallObj, arg_8_0.viewParam.entryMOList, arg_8_0.viewParam.selectHeroUid)
 
-	if not ActivityModel.instance:getActMO(slot1) or not slot3:isOpen() or slot3:isExpired() then
+	local var_8_2 = ActivityModel.instance:getActMO(var_8_0)
+
+	if not var_8_2 or not var_8_2:isOpen() or var_8_2:isExpired() then
 		return
 	end
 
-	slot0:addEventCb(Season123Controller.instance, Season123Event.PickViewRefresh, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+	arg_8_0:addEventCb(Season123Controller.instance, Season123Event.PickViewRefresh, arg_8_0.refreshUI, arg_8_0)
+	arg_8_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtcount.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season123_custompick_selectnum"), {
-		Season123PickHeroModel.instance:getSelectCount(),
-		Season123PickHeroModel.instance:getLimitCount()
+function var_0_0.refreshUI(arg_10_0)
+	local var_10_0 = Season123PickHeroModel.instance:getSelectCount()
+	local var_10_1 = Season123PickHeroModel.instance:getLimitCount()
+
+	arg_10_0._txtcount.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season123_custompick_selectnum"), {
+		var_10_0,
+		var_10_1
 	})
 end
 
-return slot0
+return var_0_0

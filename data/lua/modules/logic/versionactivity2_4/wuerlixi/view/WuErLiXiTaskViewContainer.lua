@@ -1,41 +1,43 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiTaskViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiTaskViewContainer", package.seeall)
 
-slot0 = class("WuErLiXiTaskViewContainer", BaseViewContainer)
+local var_0_0 = class("WuErLiXiTaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#scroll_TaskList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = WuErLiXiTaskItem.prefabPath
-	slot2.cellClass = WuErLiXiTaskItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 1160
-	slot2.cellHeight = 165
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	for slot7 = 1, 10 do
+	var_1_1.scrollGOPath = "#scroll_TaskList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = WuErLiXiTaskItem.prefabPath
+	var_1_1.cellClass = WuErLiXiTaskItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 1160
+	var_1_1.cellHeight = 165
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 10 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
 	end
 
-	table.insert(slot1, LuaListScrollViewWithAnimator.New(WuErLiXiTaskListModel.instance, slot2, {
-		[slot7] = (slot7 - 1) * 0.06
-	}))
-	table.insert(slot1, WuErLiXiTaskView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(WuErLiXiTaskListModel.instance, var_1_1, var_1_2))
+	table.insert(var_1_0, WuErLiXiTaskView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -46,4 +48,4 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

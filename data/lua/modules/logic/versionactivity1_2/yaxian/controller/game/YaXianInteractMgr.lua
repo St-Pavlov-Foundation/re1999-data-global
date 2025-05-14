@@ -1,30 +1,32 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianInteractMgr", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianInteractMgr", package.seeall)
 
-slot0 = class("YaXianInteractMgr")
+local var_0_0 = class("YaXianInteractMgr")
 
-function slot0.ctor(slot0)
-	slot0._list = {}
-	slot0._dict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._list = {}
+	arg_1_0._dict = {}
 end
 
-function slot0.add(slot0, slot1)
-	slot2 = slot1.id
+function var_0_0.add(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.id
 
-	slot0:remove(slot2)
+	arg_2_0:remove(var_2_0)
 
-	slot0._dict[slot2] = slot1
+	arg_2_0._dict[var_2_0] = arg_2_1
 
-	table.insert(slot0._list, slot1)
+	table.insert(arg_2_0._list, arg_2_1)
 end
 
-function slot0.remove(slot0, slot1)
-	if slot0._dict[slot1] then
-		slot0._dict[slot1] = nil
+function var_0_0.remove(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0._dict[arg_3_1]
 
-		for slot6, slot7 in ipairs(slot0._list) do
-			if slot7 == slot2 then
-				table.remove(slot0._list, slot6)
-				slot7:dispose()
+	if var_3_0 then
+		arg_3_0._dict[arg_3_1] = nil
+
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0._list) do
+			if iter_3_1 == var_3_0 then
+				table.remove(arg_3_0._list, iter_3_0)
+				iter_3_1:dispose()
 
 				return true
 			end
@@ -34,36 +36,36 @@ function slot0.remove(slot0, slot1)
 	return false
 end
 
-function slot0.getList(slot0)
-	return slot0._list
+function var_0_0.getList(arg_4_0)
+	return arg_4_0._list
 end
 
-function slot0.get(slot0, slot1)
-	if slot0._dict then
-		return slot0._dict[slot1]
+function var_0_0.get(arg_5_0, arg_5_1)
+	if arg_5_0._dict then
+		return arg_5_0._dict[arg_5_1]
 	end
 
 	return nil
 end
 
-function slot0.removeAll(slot0)
-	for slot4, slot5 in ipairs(slot0._list) do
-		slot5:dispose()
+function var_0_0.removeAll(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._list) do
+		iter_6_1:dispose()
 	end
 
-	slot0._list = {}
-	slot0._dict = {}
+	arg_6_0._list = {}
+	arg_6_0._dict = {}
 end
 
-function slot0.dispose(slot0)
-	if slot0._list then
-		for slot4, slot5 in ipairs(slot0._list) do
-			slot5:dispose()
+function var_0_0.dispose(arg_7_0)
+	if arg_7_0._list then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._list) do
+			iter_7_1:dispose()
 		end
 
-		slot0._list = nil
-		slot0._dict = nil
+		arg_7_0._list = nil
+		arg_7_0._dict = nil
 	end
 end
 
-return slot0
+return var_0_0

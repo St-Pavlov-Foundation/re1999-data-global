@@ -1,35 +1,37 @@
-module("modules.logic.versionactivity2_2.eliminate.model.mo.EliminateTipMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.EliminateTipMO", package.seeall)
 
-slot0 = class("EliminateTipMO")
+local var_0_0 = class("EliminateTipMO")
 
-function slot0.ctor(slot0)
-	slot0.from = {}
-	slot0.to = {}
-	slot0.eliminate = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.from = {}
+	arg_1_0.to = {}
+	arg_1_0.eliminate = {}
 end
 
-function slot0.updateInfoByServer(slot0, slot1)
-	if slot1 == nil or slot1.from == nil then
+function var_0_0.updateInfoByServer(arg_2_0, arg_2_1)
+	if arg_2_1 == nil or arg_2_1.from == nil then
 		return
 	end
 
-	slot0.from.x = slot1.from.x + 1
-	slot0.from.y = slot1.from.y + 1
-	slot0.to.x = slot1.to.x + 1
-	slot0.to.y = slot1.to.y + 1
+	arg_2_0.from.x = arg_2_1.from.x + 1
+	arg_2_0.from.y = arg_2_1.from.y + 1
+	arg_2_0.to.x = arg_2_1.to.x + 1
+	arg_2_0.to.y = arg_2_1.to.y + 1
 
-	tabletool.clear(slot0.eliminate)
+	tabletool.clear(arg_2_0.eliminate)
 
-	if slot1.eliminate then
-		for slot6, slot7 in ipairs(slot2.coordinate) do
-			slot0.eliminate[#slot0.eliminate + 1] = slot7.x + 1
-			slot0.eliminate[#slot0.eliminate + 1] = slot7.y + 1
+	local var_2_0 = arg_2_1.eliminate
+
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_0.coordinate) do
+			arg_2_0.eliminate[#arg_2_0.eliminate + 1] = iter_2_1.x + 1
+			arg_2_0.eliminate[#arg_2_0.eliminate + 1] = iter_2_1.y + 1
 		end
 	end
 end
 
-function slot0.getEliminateCount(slot0)
-	return tabletool.len(slot0.eliminate)
+function var_0_0.getEliminateCount(arg_3_0)
+	return tabletool.len(arg_3_0.eliminate)
 end
 
-return slot0
+return var_0_0

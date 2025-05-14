@@ -1,23 +1,29 @@
-module("modules.logic.video.adjust.PlaylistMediaPlayer_adjust", package.seeall)
+﻿module("modules.logic.video.adjust.PlaylistMediaPlayer_adjust", package.seeall)
 
-slot0 = class("PlaylistMediaPlayer_adjust")
+local var_0_0 = class("PlaylistMediaPlayer_adjust")
 
-function slot0.JumpToItem(slot0, slot1)
+function var_0_0.JumpToItem(arg_1_0, arg_1_1)
+	return
 end
 
-function slot0.Play(slot0)
+function var_0_0.Play(arg_2_0)
+	return
 end
 
-function slot0.Pause(slot0)
+function var_0_0.Pause(arg_3_0)
+	return
 end
 
-function slot0.Stop(slot0)
+function var_0_0.Stop(arg_4_0)
+	return
 end
 
-function slot0.IsPaused(slot0)
+function var_0_0.IsPaused(arg_5_0)
+	return
 end
 
-function slot0.Clear(slot0)
+function var_0_0.Clear(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

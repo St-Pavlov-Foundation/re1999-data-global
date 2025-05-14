@@ -1,23 +1,23 @@
-module("modules.logic.room.config.RoomTradeConfig", package.seeall)
+﻿module("modules.logic.room.config.RoomTradeConfig", package.seeall)
 
-slot0 = class("RoomTradeConfig", BaseConfig)
+local var_0_0 = class("RoomTradeConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._constConfig = nil
-	slot0._qualityConfig = nil
-	slot0._refreshConfig = nil
-	slot0._barrageConfig = nil
-	slot0._taskConfig = nil
-	slot0._supportBonusConfig = nil
-	slot0._levelUnlockConfig = nil
-	slot0._levelConfig = nil
-	slot0._qualityDic = nil
-	slot0._refreshDic = nil
-	slot0._barrageDic = nil
-	slot0._taskDic = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._constConfig = nil
+	arg_1_0._qualityConfig = nil
+	arg_1_0._refreshConfig = nil
+	arg_1_0._barrageConfig = nil
+	arg_1_0._taskConfig = nil
+	arg_1_0._supportBonusConfig = nil
+	arg_1_0._levelUnlockConfig = nil
+	arg_1_0._levelConfig = nil
+	arg_1_0._qualityDic = nil
+	arg_1_0._refreshDic = nil
+	arg_1_0._barrageDic = nil
+	arg_1_0._taskDic = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"room_order_const",
 		"room_order_quality",
@@ -30,169 +30,191 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "room_order_const" then
-		slot0._constConfig = slot2
-	elseif slot1 == "room_order_quality" then
-		slot0._qualityConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "room_order_const" then
+		arg_3_0._constConfig = arg_3_2
+	elseif arg_3_1 == "room_order_quality" then
+		arg_3_0._qualityConfig = arg_3_2
 
-		slot0:_initOrderQualityCo()
-	elseif slot1 == "room_order_refresh" then
-		slot0._refreshConfig = slot2
+		arg_3_0:_initOrderQualityCo()
+	elseif arg_3_1 == "room_order_refresh" then
+		arg_3_0._refreshConfig = arg_3_2
 
-		slot0:_initOrderRefreshCo()
-	elseif slot1 == "room_trade_barrage" then
-		slot0._barrageConfig = slot2
+		arg_3_0:_initOrderRefreshCo()
+	elseif arg_3_1 == "room_trade_barrage" then
+		arg_3_0._barrageConfig = arg_3_2
 
-		slot0:_initBarrageCo()
-	elseif slot1 == "trade_task" then
-		slot0._taskConfig = slot2
+		arg_3_0:_initBarrageCo()
+	elseif arg_3_1 == "trade_task" then
+		arg_3_0._taskConfig = arg_3_2
 
-		slot0:_initTaskCo()
-	elseif slot1 == "trade_support_bonus" then
-		slot0._supportBonusConfig = slot2
-	elseif slot1 == "trade_level_unlock" then
-		slot0._levelUnlockConfig = slot2
-	elseif slot1 == "trade_level" then
-		slot0._levelConfig = slot2
+		arg_3_0:_initTaskCo()
+	elseif arg_3_1 == "trade_support_bonus" then
+		arg_3_0._supportBonusConfig = arg_3_2
+	elseif arg_3_1 == "trade_level_unlock" then
+		arg_3_0._levelUnlockConfig = arg_3_2
+	elseif arg_3_1 == "trade_level" then
+		arg_3_0._levelConfig = arg_3_2
 	end
 end
 
-function slot0.getConstValue(slot0, slot1, slot2)
-	if slot0._constConfig and slot0._constConfig.configDict[slot1] then
-		if slot2 then
-			return tonumber(slot3.value)
+function var_0_0.getConstValue(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0._constConfig and arg_4_0._constConfig.configDict[arg_4_1]
+
+	if var_4_0 then
+		if arg_4_2 then
+			return tonumber(var_4_0.value)
 		end
 
-		return slot3.value
+		return var_4_0.value
 	end
 end
 
-function slot0._initOrderRefreshCo(slot0)
-	slot0._refreshDic = {}
+function var_0_0._initOrderRefreshCo(arg_5_0)
+	arg_5_0._refreshDic = {}
 
-	for slot4, slot5 in pairs(slot0._refreshConfig.configList) do
-		table.insert(slot0._refreshDic, {
-			daily = GameUtil.splitString2(slot5.qualityWeight, true),
-			wholesale = GameUtil.splitString2(slot5.wholesaleGoodsWeight, true),
-			co = slot5
-		})
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._refreshConfig.configList) do
+		local var_5_0 = GameUtil.splitString2(iter_5_1.qualityWeight, true)
+		local var_5_1 = GameUtil.splitString2(iter_5_1.wholesaleGoodsWeight, true)
+		local var_5_2 = {
+			daily = var_5_0,
+			wholesale = var_5_1,
+			co = iter_5_1
+		}
+
+		table.insert(arg_5_0._refreshDic, var_5_2)
 	end
 end
 
-function slot0.getOrderRefreshInfo(slot0, slot1)
-	return slot0._refreshDic[slot1]
+function var_0_0.getOrderRefreshInfo(arg_6_0, arg_6_1)
+	return arg_6_0._refreshDic[arg_6_1]
 end
 
-function slot0._initOrderQualityCo(slot0)
-	slot0._qualityDic = {}
+function var_0_0._initOrderQualityCo(arg_7_0)
+	arg_7_0._qualityDic = {}
 
-	for slot4, slot5 in pairs(slot0._qualityConfig.configList) do
-		table.insert(slot0._qualityDic, {
-			co = slot5,
-			goodsWeight = GameUtil.splitString2(slot5.goodsWeight, true),
-			typeCount = string.split(slot5.typeCount, "|")
-		})
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._qualityConfig.configList) do
+		local var_7_0 = GameUtil.splitString2(iter_7_1.goodsWeight, true)
+		local var_7_1 = string.split(iter_7_1.typeCount, "|")
+		local var_7_2 = {
+			co = iter_7_1,
+			goodsWeight = var_7_0,
+			typeCount = var_7_1
+		}
+
+		table.insert(arg_7_0._qualityDic, var_7_2)
 	end
 end
 
-function slot0.getOrderQualityInfo(slot0, slot1)
-	return slot0._qualityDic[slot1]
+function var_0_0.getOrderQualityInfo(arg_8_0, arg_8_1)
+	return arg_8_0._qualityDic[arg_8_1]
 end
 
-function slot0._initBarrageCo(slot0)
-	if not slot0._barrageDic then
-		slot0._barrageDic = {}
+function var_0_0._initBarrageCo(arg_9_0)
+	if not arg_9_0._barrageDic then
+		arg_9_0._barrageDic = {}
 	end
 
-	if not slot0._barrageTypeCount then
-		slot0._barrageTypeCount = {}
+	if not arg_9_0._barrageTypeCount then
+		arg_9_0._barrageTypeCount = {}
 	end
 
-	for slot4, slot5 in ipairs(slot0._barrageConfig.configList) do
-		if not slot0._barrageDic[slot5.type] then
-			slot0._barrageDic[slot6] = {}
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._barrageConfig.configList) do
+		local var_9_0 = iter_9_1.type
+		local var_9_1 = arg_9_0._barrageDic[var_9_0]
+
+		if not var_9_1 then
+			var_9_1 = {}
+			arg_9_0._barrageDic[var_9_0] = var_9_1
 		end
 
-		table.insert(slot7, slot5)
+		table.insert(var_9_1, iter_9_1)
 	end
 
-	for slot4, slot5 in pairs(RoomTradeEnum.BarrageType) do
-		slot0._barrageTypeCount[slot5] = slot0._barrageDic[slot5] and #slot0._barrageDic[slot5]
+	for iter_9_2, iter_9_3 in pairs(RoomTradeEnum.BarrageType) do
+		arg_9_0._barrageTypeCount[iter_9_3] = arg_9_0._barrageDic[iter_9_3] and #arg_9_0._barrageDic[iter_9_3]
 	end
 end
 
-function slot0.getBarrageCosByType(slot0, slot1)
-	if not slot0._barrageDic then
-		return {}
+function var_0_0.getBarrageCosByType(arg_10_0, arg_10_1)
+	local var_10_0 = {}
+
+	if not arg_10_0._barrageDic then
+		return var_10_0
 	end
 
-	return slot0._barrageDic[slot1]
+	return arg_10_0._barrageDic[arg_10_1]
 end
 
-function slot0.getBarrageCoByTypeIndex(slot0, slot1, slot2)
-	if not slot0._barrageDic or not slot0._barrageDic[slot1] then
+function var_0_0.getBarrageCoByTypeIndex(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0._barrageDic or not arg_11_0._barrageDic[arg_11_1] then
 		return
 	end
 
-	return slot0._barrageDic[slot1][slot2]
+	return arg_11_0._barrageDic[arg_11_1][arg_11_2]
 end
 
-function slot0.getBarrageTypeCount(slot0, slot1)
-	return slot0._barrageTypeCount[slot1] or 0
+function var_0_0.getBarrageTypeCount(arg_12_0, arg_12_1)
+	return arg_12_0._barrageTypeCount[arg_12_1] or 0
 end
 
-function slot0._initTaskCo(slot0)
-	slot0._taskDic = {}
-	slot0._taskMaxLevel = 0
+function var_0_0._initTaskCo(arg_13_0)
+	arg_13_0._taskDic = {}
+	arg_13_0._taskMaxLevel = 0
 
-	for slot4, slot5 in ipairs(slot0._taskConfig.configList) do
-		if not slot0._taskDic[slot5.tradeLevel] then
-			slot0._taskDic[slot6] = {}
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._taskConfig.configList) do
+		local var_13_0 = iter_13_1.tradeLevel
+		local var_13_1 = arg_13_0._taskDic[var_13_0]
+
+		if not var_13_1 then
+			var_13_1 = {}
+			arg_13_0._taskDic[var_13_0] = var_13_1
 		end
 
-		slot0._taskMaxLevel = math.max(slot0._taskMaxLevel, slot6)
+		arg_13_0._taskMaxLevel = math.max(arg_13_0._taskMaxLevel, var_13_0)
 
-		table.insert(slot7, slot5)
+		table.insert(var_13_1, iter_13_1)
 	end
 end
 
-function slot0.getTaskCosByLevel(slot0, slot1)
-	return slot0._taskDic[slot1]
+function var_0_0.getTaskCosByLevel(arg_14_0, arg_14_1)
+	return arg_14_0._taskDic[arg_14_1]
 end
 
-function slot0.getTaskCoById(slot0, slot1)
-	return slot0._taskConfig.configDict[slot1]
+function var_0_0.getTaskCoById(arg_15_0, arg_15_1)
+	return arg_15_0._taskConfig.configDict[arg_15_1]
 end
 
-function slot0.getSupportBonusById(slot0, slot1)
-	return slot0._supportBonusConfig.configDict[slot1]
+function var_0_0.getSupportBonusById(arg_16_0, arg_16_1)
+	return arg_16_0._supportBonusConfig.configDict[arg_16_1]
 end
 
-function slot0.getSupportBonusConfig(slot0)
-	return slot0._supportBonusConfig.configList
+function var_0_0.getSupportBonusConfig(arg_17_0)
+	return arg_17_0._supportBonusConfig.configList
 end
 
-function slot0.getTaskMaxLevel(slot0)
-	return slot0._taskMaxLevel
+function var_0_0.getTaskMaxLevel(arg_18_0)
+	return arg_18_0._taskMaxLevel
 end
 
-function slot0.getLevelUnlockCo(slot0, slot1)
-	return slot0._levelUnlockConfig.configDict[slot1]
+function var_0_0.getLevelUnlockCo(arg_19_0, arg_19_1)
+	return arg_19_0._levelUnlockConfig.configDict[arg_19_1]
 end
 
-function slot0.getLevelCo(slot0, slot1)
-	return slot0._levelConfig.configDict[slot1]
+function var_0_0.getLevelCo(arg_20_0, arg_20_1)
+	return arg_20_0._levelConfig.configDict[arg_20_1]
 end
 
-function slot0.getMaxLevel(slot0)
-	for slot5, slot6 in ipairs(slot0._levelConfig.configList) do
-		slot1 = math.max(0, slot6.level)
+function var_0_0.getMaxLevel(arg_21_0)
+	local var_21_0 = 0
+
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._levelConfig.configList) do
+		var_21_0 = math.max(var_21_0, iter_21_1.level)
 	end
 
-	return slot1
+	return var_21_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

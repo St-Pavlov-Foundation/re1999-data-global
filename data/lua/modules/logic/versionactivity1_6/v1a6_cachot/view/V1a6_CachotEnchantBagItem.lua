@@ -1,62 +1,70 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEnchantBagItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEnchantBagItem", package.seeall)
 
-slot0 = class("V1a6_CachotEnchantBagItem", ListScrollCellExtend)
+local var_0_0 = class("V1a6_CachotEnchantBagItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goscale = gohelper.findChild(slot0.viewGO, "#go_scale")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goscale = gohelper.findChild(arg_1_0.viewGO, "#go_scale")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0:refreshUI()
+	arg_5_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if slot0:getOrCreateCollectionItem() then
-		slot1:onUpdateMO(slot0._mo)
+function var_0_0.refreshUI(arg_6_0)
+	local var_6_0 = arg_6_0:getOrCreateCollectionItem()
+
+	if var_6_0 then
+		var_6_0:onUpdateMO(arg_6_0._mo)
 	end
 end
 
-function slot0.getOrCreateCollectionItem(slot0)
-	if not slot0._bagItem then
-		slot0._bagItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._view:getResInst(slot0._view.viewContainer._viewSetting.otherRes[1], slot0._goscale, "collectionitem"), V1a6_CachotCollectionBagItem)
+function var_0_0.getOrCreateCollectionItem(arg_7_0)
+	if not arg_7_0._bagItem then
+		local var_7_0 = arg_7_0._view.viewContainer._viewSetting.otherRes[1]
+		local var_7_1 = arg_7_0._view:getResInst(var_7_0, arg_7_0._goscale, "collectionitem")
 
-		slot0._bagItem:setClickCallBack(slot0.clikCallBack, slot0)
+		arg_7_0._bagItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, V1a6_CachotCollectionBagItem)
+
+		arg_7_0._bagItem:setClickCallBack(arg_7_0.clikCallBack, arg_7_0)
 	end
 
-	return slot0._bagItem
+	return arg_7_0._bagItem
 end
 
-function slot0.clikCallBack(slot0)
-	V1a6_CachotCollectionEnchantController.instance:onSelectBagItem(slot0._index)
+function var_0_0.clikCallBack(arg_8_0)
+	V1a6_CachotCollectionEnchantController.instance:onSelectBagItem(arg_8_0._index)
 end
 
-function slot0.onSelect(slot0, slot1)
-	if slot0._bagItem then
-		slot0._bagItem:onSelect(slot1)
-	end
-end
-
-function slot0.onDestroyView(slot0)
-	if slot0._bagItem then
-		slot0._bagItem:onDestroyView()
-
-		slot0._bagItem = nil
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	if arg_9_0._bagItem then
+		arg_9_0._bagItem:onSelect(arg_9_1)
 	end
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_10_0)
+	if arg_10_0._bagItem then
+		arg_10_0._bagItem:onDestroyView()
+
+		arg_10_0._bagItem = nil
+	end
+end
+
+return var_0_0

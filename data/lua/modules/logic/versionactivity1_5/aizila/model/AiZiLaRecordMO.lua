@@ -1,47 +1,50 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaRecordMO", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaRecordMO", package.seeall)
 
-slot0 = pureTable("AiZiLaRecordMO")
+local var_0_0 = pureTable("AiZiLaRecordMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.recordId
-	slot0.config = slot1
-	slot0._groupMOList = {}
-	slot0._actId = slot1.activityId
-	slot0._recordId = slot1.recordId
-	slot0._eventMOList = {}
-	slot2 = string.split(slot1.unLockDesc, "|") or {}
-	slot3 = GameUtil.splitString2(slot1.eventIds, true) or {}
-	slot4 = AiZiLaConfig.instance
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.recordId
+	arg_1_0.config = arg_1_1
+	arg_1_0._groupMOList = {}
+	arg_1_0._actId = arg_1_1.activityId
+	arg_1_0._recordId = arg_1_1.recordId
+	arg_1_0._eventMOList = {}
 
-	for slot8, slot9 in ipairs(slot3) do
-		slot10 = AiZiLaRecordEventGroupMO.New()
-		slot14 = slot2[slot8]
-		slot15 = slot1
+	local var_1_0 = string.split(arg_1_1.unLockDesc, "|") or {}
+	local var_1_1 = GameUtil.splitString2(arg_1_1.eventIds, true) or {}
+	local var_1_2 = AiZiLaConfig.instance
 
-		slot10:init(slot8, slot14, slot15)
-		table.insert(slot0._groupMOList, slot10)
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_3 = AiZiLaRecordEventGroupMO.New()
 
-		for slot14, slot15 in ipairs(slot9) do
-			if slot4:getEventCo(slot0._actId, slot15) then
-				slot17 = AiZiLaRecordEventMO.New()
+		var_1_3:init(iter_1_0, var_1_0[iter_1_0], arg_1_1)
+		table.insert(arg_1_0._groupMOList, var_1_3)
 
-				slot17:init(slot16)
-				slot10:addEventMO(slot17)
-				table.insert(slot0._eventMOList, slot17)
+		for iter_1_2, iter_1_3 in ipairs(iter_1_1) do
+			local var_1_4 = var_1_2:getEventCo(arg_1_0._actId, iter_1_3)
+
+			if var_1_4 then
+				local var_1_5 = AiZiLaRecordEventMO.New()
+
+				var_1_5:init(var_1_4)
+				var_1_3:addEventMO(var_1_5)
+				table.insert(arg_1_0._eventMOList, var_1_5)
 			else
-				logError(string.format("export_事件记录 activity:%s,eventId:%s 找不到", slot0._actId, slot15))
+				logError(string.format("export_事件记录 activity:%s,eventId:%s 找不到", arg_1_0._actId, iter_1_3))
 			end
 		end
 	end
 
-	if #slot3 - #slot2 > 0 then
-		logError(string.format("export_事件记录 activity:%s,recordId:%s unLockDesc数量少：%s", slot0._actId, slot0._recordId, slot5))
+	local var_1_6 = #var_1_1 - #var_1_0
+
+	if var_1_6 > 0 then
+		logError(string.format("export_事件记录 activity:%s,recordId:%s unLockDesc数量少：%s", arg_1_0._actId, arg_1_0._recordId, var_1_6))
 	end
 end
 
-function slot0.isUnLock(slot0)
-	for slot4, slot5 in ipairs(slot0._groupMOList) do
-		if slot5:isUnLock() then
+function var_0_0.isUnLock(arg_2_0)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._groupMOList) do
+		if iter_2_1:isUnLock() then
 			return true
 		end
 	end
@@ -49,9 +52,9 @@ function slot0.isUnLock(slot0)
 	return false
 end
 
-function slot0.isHasRed(slot0)
-	for slot4, slot5 in ipairs(slot0._groupMOList) do
-		if slot5:isHasRed() then
+function var_0_0.isHasRed(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._groupMOList) do
+		if iter_3_1:isHasRed() then
 			return true
 		end
 	end
@@ -59,22 +62,22 @@ function slot0.isHasRed(slot0)
 	return false
 end
 
-function slot0.finishRed(slot0)
-	for slot4, slot5 in ipairs(slot0._groupMOList) do
-		slot5:finishRed()
+function var_0_0.finishRed(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._groupMOList) do
+		iter_4_1:finishRed()
 	end
 end
 
-function slot0.getRedUid(slot0)
-	return slot0.id
+function var_0_0.getRedUid(arg_5_0)
+	return arg_5_0.id
 end
 
-function slot0.getRroupMOList(slot0)
-	return slot0._groupMOList
+function var_0_0.getRroupMOList(arg_6_0)
+	return arg_6_0._groupMOList
 end
 
-function slot0.getEventMOList(slot0)
-	return slot0._eventMOList
+function var_0_0.getEventMOList(arg_7_0)
+	return arg_7_0._eventMOList
 end
 
-return slot0
+return var_0_0

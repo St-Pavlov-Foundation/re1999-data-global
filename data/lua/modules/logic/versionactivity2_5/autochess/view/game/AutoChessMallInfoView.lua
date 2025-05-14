@@ -1,110 +1,126 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessMallInfoView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessMallInfoView", package.seeall)
 
-slot0 = class("AutoChessMallInfoView", BaseView)
+local var_0_0 = class("AutoChessMallInfoView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goTopRight = gohelper.findChild(slot0.viewGO, "#go_TopRight")
-	slot0._txtCoin = gohelper.findChildText(slot0.viewGO, "#go_TopRight/price/#txt_Coin")
-	slot0._goCardRoot = gohelper.findChild(slot0.viewGO, "#go_CardRoot")
-	slot0._btnLeft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Left")
-	slot0._btnRight = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Right")
-	slot0._txtPage = gohelper.findChildText(slot0.viewGO, "#txt_Page")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goTopRight = gohelper.findChild(arg_1_0.viewGO, "#go_TopRight")
+	arg_1_0._txtCoin = gohelper.findChildText(arg_1_0.viewGO, "#go_TopRight/price/#txt_Coin")
+	arg_1_0._goCardRoot = gohelper.findChild(arg_1_0.viewGO, "#go_CardRoot")
+	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Left")
+	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Right")
+	arg_1_0._txtPage = gohelper.findChildText(arg_1_0.viewGO, "#txt_Page")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnLeft:AddClickListener(slot0._btnLeftOnClick, slot0)
-	slot0._btnRight:AddClickListener(slot0._btnRightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
+	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnLeft:RemoveClickListener()
-	slot0._btnRight:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnLeft:RemoveClickListener()
+	arg_3_0._btnRight:RemoveClickListener()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnLeftOnClick(slot0)
-	slot0.curIndex = slot0.curIndex - 1
+function var_0_0._btnLeftOnClick(arg_5_0)
+	arg_5_0.curIndex = arg_5_0.curIndex - 1
 
-	slot0:refreshMallUI()
+	arg_5_0:refreshMallUI()
 end
 
-function slot0._btnRightOnClick(slot0)
-	slot0.curIndex = slot0.curIndex + 1
+function var_0_0._btnRightOnClick(arg_6_0)
+	arg_6_0.curIndex = arg_6_0.curIndex + 1
 
-	slot0:refreshMallUI()
+	arg_6_0:refreshMallUI()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.card = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.ChessCardPath, slot0._goCardRoot), AutoChessCard, slot0)
+function var_0_0._editableInitView(arg_7_0)
+	local var_7_0 = arg_7_0:getResInst(AutoChessEnum.ChessCardPath, arg_7_0._goCardRoot)
+
+	arg_7_0.card = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, AutoChessCard, arg_7_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	if not slot0.viewParam then
+function var_0_0.onOpen(arg_9_0)
+	if not arg_9_0.viewParam then
 		return
 	end
 
-	slot0._txtCoin.text = AutoChessModel.instance:getChessMo().svrMall.coin
+	local var_9_0 = AutoChessModel.instance:getChessMo()
 
-	if slot0.viewParam.mall then
-		slot0.mall = slot0.viewParam.mall
-		slot0.mallItems = slot0.mall.items
-		slot0.itemUId = slot0.viewParam.itemUId
+	arg_9_0._txtCoin.text = var_9_0.svrMall.coin
 
-		for slot5, slot6 in ipairs(slot0.mallItems) do
-			if slot6.uid == slot0.itemUId then
-				slot0.curIndex = slot5
+	if arg_9_0.viewParam.mall then
+		arg_9_0.mall = arg_9_0.viewParam.mall
+		arg_9_0.mallItems = arg_9_0.mall.items
+		arg_9_0.itemUId = arg_9_0.viewParam.itemUId
+
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0.mallItems) do
+			if iter_9_1.uid == arg_9_0.itemUId then
+				arg_9_0.curIndex = iter_9_0
 			end
 		end
 
-		slot0.maxCnt = #slot0.mallItems
+		arg_9_0.maxCnt = #arg_9_0.mallItems
 
-		slot0:refreshMallUI()
+		arg_9_0:refreshMallUI()
 	else
-		slot0:refreshChessUI()
+		arg_9_0:refreshChessUI()
 	end
 
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.BuyChessReply, slot0.closeThis, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.BuildReply, slot0.closeThis, slot0)
+	arg_9_0:addEventCb(AutoChessController.instance, AutoChessEvent.BuyChessReply, arg_9_0.closeThis, arg_9_0)
+	arg_9_0:addEventCb(AutoChessController.instance, AutoChessEvent.BuildReply, arg_9_0.closeThis, arg_9_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0.refreshChessUI(slot0)
-	gohelper.setActive(slot0._btnLeft, false)
-	gohelper.setActive(slot0._btnRight, false)
-	gohelper.setActive(slot0._txtPage, false)
-	gohelper.setActive(slot0._goTopRight, slot0.viewParam.chessEntity.teamType == AutoChessEnum.TeamType.Player)
-	slot0.card:setData({
+function var_0_0.refreshChessUI(arg_12_0)
+	gohelper.setActive(arg_12_0._btnLeft, false)
+	gohelper.setActive(arg_12_0._btnRight, false)
+	gohelper.setActive(arg_12_0._txtPage, false)
+
+	local var_12_0 = arg_12_0.viewParam.chessEntity
+
+	gohelper.setActive(arg_12_0._goTopRight, var_12_0.teamType == AutoChessEnum.TeamType.Player)
+
+	local var_12_1 = {
 		type = AutoChessCard.ShowType.Sell,
-		entity = slot1
-	})
+		entity = var_12_0
+	}
+
+	arg_12_0.card:setData(var_12_1)
 end
 
-function slot0.refreshMallUI(slot0)
-	gohelper.setActive(slot0._btnLeft, slot0.curIndex > 1)
-	gohelper.setActive(slot0._btnRight, slot0.curIndex < slot0.maxCnt)
+function var_0_0.refreshMallUI(arg_13_0)
+	gohelper.setActive(arg_13_0._btnLeft, arg_13_0.curIndex > 1)
+	gohelper.setActive(arg_13_0._btnRight, arg_13_0.curIndex < arg_13_0.maxCnt)
 
-	slot0._txtPage.text = string.format("%d/%d", slot0.curIndex, slot0.maxCnt)
+	arg_13_0._txtPage.text = string.format("%d/%d", arg_13_0.curIndex, arg_13_0.maxCnt)
 
-	slot0.card:setData({
+	local var_13_0 = arg_13_0.mallItems[arg_13_0.curIndex]
+	local var_13_1 = {
 		type = AutoChessCard.ShowType.Buy,
-		mallId = slot0.mall.mallId,
-		data = slot0.mallItems[slot0.curIndex]
-	})
+		mallId = arg_13_0.mall.mallId,
+		data = var_13_0
+	}
+
+	arg_13_0.card:setData(var_13_1)
 end
 
-return slot0
+return var_0_0

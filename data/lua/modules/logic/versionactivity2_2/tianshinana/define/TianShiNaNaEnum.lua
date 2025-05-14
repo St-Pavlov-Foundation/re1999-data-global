@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity2_2.tianshinana.define.TianShiNaNaEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.define.TianShiNaNaEnum", package.seeall)
 
-slot0 = _M
-slot0.Dir = {
+local var_0_0 = _M
+
+var_0_0.Dir = {
 	Down = -1,
 	Up = 1,
 	Right = -2,
@@ -9,19 +10,19 @@ slot0.Dir = {
 	Back = -3,
 	Left = 2
 }
-slot0.OperDir = {
+var_0_0.OperDir = {
 	Left = 1,
 	Back = -2,
 	Right = -1,
 	Forward = 2
 }
-slot0.ResDirPath = {
-	[slot0.OperDir.Left] = "size/dir_4",
-	[slot0.OperDir.Right] = "size/dir_6",
-	[slot0.OperDir.Forward] = "size/dir_8",
-	[slot0.OperDir.Back] = "size/dir_2"
+var_0_0.ResDirPath = {
+	[var_0_0.OperDir.Left] = "size/dir_4",
+	[var_0_0.OperDir.Right] = "size/dir_6",
+	[var_0_0.OperDir.Forward] = "size/dir_8",
+	[var_0_0.OperDir.Back] = "size/dir_2"
 }
-slot0.UnitType = {
+var_0_0.UnitType = {
 	Born = 2,
 	Obstacle = 5,
 	Player = 1,
@@ -29,31 +30,31 @@ slot0.UnitType = {
 	Destination = 6,
 	Hunter = 4
 }
-slot0.TianShiNaNaDieReason = {
+var_0_0.TianShiNaNaDieReason = {
 	Collapse = 1,
 	NoCube = 2,
 	CantPlace = 3,
 	InFog = 5,
 	BeHunter = 4
 }
-slot0.UnitTypeToName = {}
+var_0_0.UnitTypeToName = {}
 
-for slot4, slot5 in pairs(slot0.UnitType) do
-	slot0.UnitTypeToName[slot5] = slot4
+for iter_0_0, iter_0_1 in pairs(var_0_0.UnitType) do
+	var_0_0.UnitTypeToName[iter_0_1] = iter_0_0
 end
 
-slot0.NodeType = {
+var_0_0.NodeType = {
 	Fog = 2,
 	Swamp = 3,
 	Normal = 1
 }
-slot0.GridXOffset = 1.0593750000000002
-slot0.GridYOffset = 0.6900000000000001
-slot0.GridZOffset = 0.005
-slot0.OperDragBegin = 10
-slot0.OperDragVaild = 0.45
-slot0.OperDragMax = 100
-slot0.EffectType = {
+var_0_0.GridXOffset = 1.0593750000000002
+var_0_0.GridYOffset = 0.6900000000000001
+var_0_0.GridZOffset = 0.005
+var_0_0.OperDragBegin = 10
+var_0_0.OperDragVaild = 0.45
+var_0_0.OperDragMax = 100
+var_0_0.EffectType = {
 	Dialog = 4,
 	Story = 1,
 	Hide = 3,
@@ -61,22 +62,22 @@ slot0.EffectType = {
 	Die = 6,
 	Win = 5
 }
-slot0.CurState = {
+var_0_0.CurState = {
 	SelectDir = 1,
 	DoStep = 3,
 	Rotate = 2,
 	None = 0
 }
-slot0.CubeType = {
+var_0_0.CubeType = {
 	Type1 = 1,
 	Type2 = 2
 }
-slot0.EpisodeType = {
+var_0_0.EpisodeType = {
 	Hard = 3,
 	Story = 1,
 	Normal = 2
 }
-slot0.StepType = {
+var_0_0.StepType = {
 	Win = 6,
 	Story = 4,
 	Guide = 5,
@@ -87,75 +88,75 @@ slot0.StepType = {
 	DialogAndMove = 8,
 	Move = 2
 }
-slot0.StepTypeToName = {}
+var_0_0.StepTypeToName = {}
 
-for slot4, slot5 in pairs(slot0.StepType) do
-	slot0.StepTypeToName[slot5] = slot4
+for iter_0_2, iter_0_3 in pairs(var_0_0.StepType) do
+	var_0_0.StepTypeToName[iter_0_3] = iter_0_2
 end
 
-slot0.OperEffect = {
-	[slot0.OperDir.Left] = {
-		[slot0.Dir.Left] = slot0.Dir.Down,
-		[slot0.Dir.Right] = slot0.Dir.Up,
-		[slot0.Dir.Up] = slot0.Dir.Left,
-		[slot0.Dir.Down] = slot0.Dir.Right
+var_0_0.OperEffect = {
+	[var_0_0.OperDir.Left] = {
+		[var_0_0.Dir.Left] = var_0_0.Dir.Down,
+		[var_0_0.Dir.Right] = var_0_0.Dir.Up,
+		[var_0_0.Dir.Up] = var_0_0.Dir.Left,
+		[var_0_0.Dir.Down] = var_0_0.Dir.Right
 	},
-	[slot0.OperDir.Right] = {
-		[slot0.Dir.Left] = slot0.Dir.Up,
-		[slot0.Dir.Right] = slot0.Dir.Down,
-		[slot0.Dir.Up] = slot0.Dir.Right,
-		[slot0.Dir.Down] = slot0.Dir.Left
+	[var_0_0.OperDir.Right] = {
+		[var_0_0.Dir.Left] = var_0_0.Dir.Up,
+		[var_0_0.Dir.Right] = var_0_0.Dir.Down,
+		[var_0_0.Dir.Up] = var_0_0.Dir.Right,
+		[var_0_0.Dir.Down] = var_0_0.Dir.Left
 	},
-	[slot0.OperDir.Forward] = {
-		[slot0.Dir.Forward] = slot0.Dir.Down,
-		[slot0.Dir.Back] = slot0.Dir.Up,
-		[slot0.Dir.Up] = slot0.Dir.Forward,
-		[slot0.Dir.Down] = slot0.Dir.Back
+	[var_0_0.OperDir.Forward] = {
+		[var_0_0.Dir.Forward] = var_0_0.Dir.Down,
+		[var_0_0.Dir.Back] = var_0_0.Dir.Up,
+		[var_0_0.Dir.Up] = var_0_0.Dir.Forward,
+		[var_0_0.Dir.Down] = var_0_0.Dir.Back
 	},
-	[slot0.OperDir.Back] = {
-		[slot0.Dir.Forward] = slot0.Dir.Up,
-		[slot0.Dir.Back] = slot0.Dir.Down,
-		[slot0.Dir.Up] = slot0.Dir.Back,
-		[slot0.Dir.Down] = slot0.Dir.Forward
+	[var_0_0.OperDir.Back] = {
+		[var_0_0.Dir.Forward] = var_0_0.Dir.Up,
+		[var_0_0.Dir.Back] = var_0_0.Dir.Down,
+		[var_0_0.Dir.Up] = var_0_0.Dir.Back,
+		[var_0_0.Dir.Down] = var_0_0.Dir.Forward
 	}
 }
-slot0.DirToQuaternion = {
-	[slot0.Dir.Up] = {
-		[slot0.Dir.Back] = Quaternion.Euler(0, 0, 0),
-		[slot0.Dir.Left] = Quaternion.Euler(0, 90, 0),
-		[slot0.Dir.Right] = Quaternion.Euler(0, -90, 0),
-		[slot0.Dir.Forward] = Quaternion.Euler(0, 180, 0)
+var_0_0.DirToQuaternion = {
+	[var_0_0.Dir.Up] = {
+		[var_0_0.Dir.Back] = Quaternion.Euler(0, 0, 0),
+		[var_0_0.Dir.Left] = Quaternion.Euler(0, 90, 0),
+		[var_0_0.Dir.Right] = Quaternion.Euler(0, -90, 0),
+		[var_0_0.Dir.Forward] = Quaternion.Euler(0, 180, 0)
 	},
-	[slot0.Dir.Down] = {
-		[slot0.Dir.Back] = Quaternion.Euler(-180, 180, 0),
-		[slot0.Dir.Left] = Quaternion.Euler(-180, -90, 0),
-		[slot0.Dir.Right] = Quaternion.Euler(-180, 90, 0),
-		[slot0.Dir.Forward] = Quaternion.Euler(-180, 0, 0)
+	[var_0_0.Dir.Down] = {
+		[var_0_0.Dir.Back] = Quaternion.Euler(-180, 180, 0),
+		[var_0_0.Dir.Left] = Quaternion.Euler(-180, -90, 0),
+		[var_0_0.Dir.Right] = Quaternion.Euler(-180, 90, 0),
+		[var_0_0.Dir.Forward] = Quaternion.Euler(-180, 0, 0)
 	},
-	[slot0.Dir.Left] = {
-		[slot0.Dir.Back] = Quaternion.Euler(0, 0, 90),
-		[slot0.Dir.Up] = Quaternion.Euler(90, 0, 90),
-		[slot0.Dir.Down] = Quaternion.Euler(270, 0, 90),
-		[slot0.Dir.Forward] = Quaternion.Euler(180, 0, 90)
+	[var_0_0.Dir.Left] = {
+		[var_0_0.Dir.Back] = Quaternion.Euler(0, 0, 90),
+		[var_0_0.Dir.Up] = Quaternion.Euler(90, 0, 90),
+		[var_0_0.Dir.Down] = Quaternion.Euler(270, 0, 90),
+		[var_0_0.Dir.Forward] = Quaternion.Euler(180, 0, 90)
 	},
-	[slot0.Dir.Right] = {
-		[slot0.Dir.Back] = Quaternion.Euler(0, 0, -90),
-		[slot0.Dir.Up] = Quaternion.Euler(90, 0, -90),
-		[slot0.Dir.Down] = Quaternion.Euler(270, 0, -90),
-		[slot0.Dir.Forward] = Quaternion.Euler(180, 0, -90)
+	[var_0_0.Dir.Right] = {
+		[var_0_0.Dir.Back] = Quaternion.Euler(0, 0, -90),
+		[var_0_0.Dir.Up] = Quaternion.Euler(90, 0, -90),
+		[var_0_0.Dir.Down] = Quaternion.Euler(270, 0, -90),
+		[var_0_0.Dir.Forward] = Quaternion.Euler(180, 0, -90)
 	},
-	[slot0.Dir.Forward] = {
-		[slot0.Dir.Up] = Quaternion.Euler(90, 90, 90),
-		[slot0.Dir.Left] = Quaternion.Euler(0, 90, 90),
-		[slot0.Dir.Right] = Quaternion.Euler(180, 90, 90),
-		[slot0.Dir.Down] = Quaternion.Euler(-90, 90, 90)
+	[var_0_0.Dir.Forward] = {
+		[var_0_0.Dir.Up] = Quaternion.Euler(90, 90, 90),
+		[var_0_0.Dir.Left] = Quaternion.Euler(0, 90, 90),
+		[var_0_0.Dir.Right] = Quaternion.Euler(180, 90, 90),
+		[var_0_0.Dir.Down] = Quaternion.Euler(-90, 90, 90)
 	},
-	[slot0.Dir.Back] = {
-		[slot0.Dir.Up] = Quaternion.Euler(-270, -90, 90),
-		[slot0.Dir.Left] = Quaternion.Euler(-180, -90, 90),
-		[slot0.Dir.Right] = Quaternion.Euler(0, -90, 90),
-		[slot0.Dir.Down] = Quaternion.Euler(-90, -90, 90)
+	[var_0_0.Dir.Back] = {
+		[var_0_0.Dir.Up] = Quaternion.Euler(-270, -90, 90),
+		[var_0_0.Dir.Left] = Quaternion.Euler(-180, -90, 90),
+		[var_0_0.Dir.Right] = Quaternion.Euler(0, -90, 90),
+		[var_0_0.Dir.Down] = Quaternion.Euler(-90, -90, 90)
 	}
 }
 
-return slot0
+return var_0_0

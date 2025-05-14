@@ -1,87 +1,93 @@
-module("modules.logic.store.view.RoomCritterStoreView", package.seeall)
+﻿module("modules.logic.store.view.RoomCritterStoreView", package.seeall)
 
-slot0 = class("RoomCritterStoreView", BaseView)
+local var_0_0 = class("RoomCritterStoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrolltab = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_tab")
-	slot0._gotab = gohelper.findChild(slot0.viewGO, "#scroll_tab/Viewport/Content/#go_tab")
-	slot0._scrollgoods = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_goods")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrolltab = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tab")
+	arg_1_0._gotab = gohelper.findChild(arg_1_0.viewGO, "#scroll_tab/Viewport/Content/#go_tab")
+	arg_1_0._scrollgoods = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_goods")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, slot0._updateInfo, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._updateInfo, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_2_0._updateInfo, arg_2_0)
+	arg_2_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_2_0._updateInfo, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, slot0._updateInfo, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0._updateInfo, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_3_0._updateInfo, arg_3_0)
+	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_3_0._updateInfo, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0._updateInfo(slot0)
+function var_0_0._updateInfo(arg_6_0)
 	StoreCritterGoodsItemListModel.instance:setMOList(StoreEnum.StoreId.CritterStore)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._gotab, false)
-	gohelper.setActive(slot0._scrolltab.gameObject, false)
+function var_0_0.onOpen(arg_7_0)
+	gohelper.setActive(arg_7_0._gotab, false)
+	gohelper.setActive(arg_7_0._scrolltab.gameObject, false)
 	StoreRpc.instance:sendGetStoreInfosRequest({
 		StoreEnum.StoreId.CritterStore
-	}, slot0._updateInfo, slot0)
+	}, arg_7_0._updateInfo, arg_7_0)
 end
 
-function slot0._getTabItem(slot0, slot1)
-	if not slot0._tabItems then
-		slot0._tabItems = slot0:getUserDataTb_()
+function var_0_0._getTabItem(arg_8_0, arg_8_1)
+	if not arg_8_0._tabItems then
+		arg_8_0._tabItems = arg_8_0:getUserDataTb_()
 	end
 
-	if not slot0._tabItems[slot1] then
-		slot2 = {
-			goSelect = gohelper.findChild(slot3, "bg/select"),
-			btn = gohelper.findChildButtonWithAudio(slot3, "bg/btn")
-		}
-		slot3 = gohelper.cloneInPlace(slot0._gotab)
+	local var_8_0 = arg_8_0._tabItems[arg_8_1]
 
-		slot2.btn:AddClickListener(slot0._onClickTab, slot0, slot1)
+	if not var_8_0 then
+		var_8_0 = {}
 
-		slot2.txt = gohelper.findChildText(slot3, "txt")
-		slot2.go = slot3
+		local var_8_1 = gohelper.cloneInPlace(arg_8_0._gotab)
+
+		var_8_0.goSelect = gohelper.findChild(var_8_1, "bg/select")
+		var_8_0.btn = gohelper.findChildButtonWithAudio(var_8_1, "bg/btn")
+
+		var_8_0.btn:AddClickListener(arg_8_0._onClickTab, arg_8_0, arg_8_1)
+
+		var_8_0.txt = gohelper.findChildText(var_8_1, "txt")
+		var_8_0.go = var_8_1
 	end
 
-	slot0._tabItems[slot1] = slot2
+	arg_8_0._tabItems[arg_8_1] = var_8_0
 
-	return slot2
+	return var_8_0
 end
 
-function slot0._onClickTab(slot0, slot1)
-	if slot0._selectTabIndex == slot1 then
+function var_0_0._onClickTab(arg_9_0, arg_9_1)
+	if arg_9_0._selectTabIndex == arg_9_1 then
 		return
 	end
 
-	slot0._selectTabIndex = slot1
+	arg_9_0._selectTabIndex = arg_9_1
 
-	slot0:_refreshSelectTab()
+	arg_9_0:_refreshSelectTab()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._tabItems then
-		for slot4 = 1, #slot0._tabItems do
-			slot0._tabItems[slot4].btn:RemoveClickListener()
+function var_0_0.onDestroyView(arg_11_0)
+	if arg_11_0._tabItems then
+		for iter_11_0 = 1, #arg_11_0._tabItems do
+			arg_11_0._tabItems[iter_11_0].btn:RemoveClickListener()
 		end
 	end
 end
 
-return slot0
+return var_0_0

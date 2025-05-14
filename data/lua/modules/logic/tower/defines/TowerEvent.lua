@@ -1,23 +1,24 @@
-module("modules.logic.tower.defines.TowerEvent", package.seeall)
+﻿module("modules.logic.tower.defines.TowerEvent", package.seeall)
 
-slot0 = _M
-slot0.SelectPermanentAltitude = 10000
-slot0.SelectPermanentEpisode = 10001
-slot0.TowerTaskUpdated = 10002
-slot0.OnTaskRewardGetFinish = 10003
-slot0.OnTowerResetSubEpisode = 10004
-slot0.TowerMopUp = 10005
-slot0.TowerRefreshTask = 10006
-slot0.FoldCurStage = 10007
-slot0.UnFoldMaxStage = 10008
-slot0.PermanentTowerFinishLayer = 10009
-slot0.PermanentSelectNextLayer = 10010
-slot0.DailyReresh = 10011
-slot0.SelectTalentItem = 10100
-slot0.ResetTalent = 10101
-slot0.ActiveTalent = 10102
-slot0.LocalKeyChange = 10103
-slot0.RefreshTowerReddot = 10104
-slot0.TowerUpdate = 10105
+local var_0_0 = _M
 
-return slot0
+var_0_0.SelectPermanentAltitude = 10000
+var_0_0.SelectPermanentEpisode = 10001
+var_0_0.TowerTaskUpdated = 10002
+var_0_0.OnTaskRewardGetFinish = 10003
+var_0_0.OnTowerResetSubEpisode = 10004
+var_0_0.TowerMopUp = 10005
+var_0_0.TowerRefreshTask = 10006
+var_0_0.FoldCurStage = 10007
+var_0_0.UnFoldMaxStage = 10008
+var_0_0.PermanentTowerFinishLayer = 10009
+var_0_0.PermanentSelectNextLayer = 10010
+var_0_0.DailyReresh = 10011
+var_0_0.SelectTalentItem = 10100
+var_0_0.ResetTalent = 10101
+var_0_0.ActiveTalent = 10102
+var_0_0.LocalKeyChange = 10103
+var_0_0.RefreshTowerReddot = 10104
+var_0_0.TowerUpdate = 10105
+
+return var_0_0

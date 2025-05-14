@@ -1,322 +1,341 @@
-module("modules.logic.room.view.critter.summon.RoomGetCritterView", package.seeall)
+﻿module("modules.logic.room.view.critter.summon.RoomGetCritterView", package.seeall)
 
-slot0 = class("RoomGetCritterView", BaseView)
+local var_0_0 = class("RoomGetCritterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goegg = gohelper.findChild(slot0.viewGO, "#go_egg")
-	slot0._btnegg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_egg/#btn_egg")
-	slot0._gocritter = gohelper.findChild(slot0.viewGO, "#go_critter")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_critter/txt_tips")
-	slot0._simagefullbg1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#simage_fullbg1")
-	slot0._simagefullbg2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#simage_fullbg2")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critter/#btn_close")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#simage_title")
-	slot0._simagecard = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#simage_card")
-	slot0._simagecritter = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#simage_critter")
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "#go_critter/#simage_critter/#go_spine")
-	slot0._gostarList = gohelper.findChild(slot0.viewGO, "#go_critter/#go_starList")
-	slot0._goagain = gohelper.findChild(slot0.viewGO, "#go_critter/#go_again")
-	slot0._btnsummon = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_critter/#go_again/#btn_summon")
-	slot0._simagecurrency = gohelper.findChildSingleImage(slot0.viewGO, "#go_critter/#go_again/currency/#simage_currency")
-	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "#go_critter/#go_again/currency/#txt_currency")
-	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_skip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goegg = gohelper.findChild(arg_1_0.viewGO, "#go_egg")
+	arg_1_0._btnegg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_egg/#btn_egg")
+	arg_1_0._gocritter = gohelper.findChild(arg_1_0.viewGO, "#go_critter")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_critter/txt_tips")
+	arg_1_0._simagefullbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_fullbg1")
+	arg_1_0._simagefullbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_fullbg2")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critter/#btn_close")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_title")
+	arg_1_0._simagecard = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_card")
+	arg_1_0._simagecritter = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_critter")
+	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_critter/#simage_critter/#go_spine")
+	arg_1_0._gostarList = gohelper.findChild(arg_1_0.viewGO, "#go_critter/#go_starList")
+	arg_1_0._goagain = gohelper.findChild(arg_1_0.viewGO, "#go_critter/#go_again")
+	arg_1_0._btnsummon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_critter/#go_again/#btn_summon")
+	arg_1_0._simagecurrency = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#go_again/currency/#simage_currency")
+	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "#go_critter/#go_again/currency/#txt_currency")
+	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnegg:AddClickListener(slot0._btnEggOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnsummon:AddClickListener(slot0._btnsummonOnClick, slot0)
-	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnegg:AddClickListener(arg_2_0._btnEggOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnsummon:AddClickListener(arg_2_0._btnsummonOnClick, arg_2_0)
+	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnegg:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnsummon:RemoveClickListener()
-	slot0._btnskip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnegg:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnsummon:RemoveClickListener()
+	arg_3_0._btnskip:RemoveClickListener()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, slot0._onStartSummon, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, slot0._onSummonSkip, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseRoomCriiterDetailSimpleView, slot0._onCloseRoomCriiterDetailSimpleView, slot0)
+function var_0_0._addEvents(arg_4_0)
+	arg_4_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_4_0._onStartSummon, arg_4_0)
+	arg_4_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, arg_4_0._onSummonSkip, arg_4_0)
+	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+	arg_4_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseRoomCriiterDetailSimpleView, arg_4_0._onCloseRoomCriiterDetailSimpleView, arg_4_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, slot0._onStartSummon, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, slot0._onSummonSkip, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseRoomCriiterDetailSimpleView, slot0._onCloseRoomCriiterDetailSimpleView, slot0)
-	slot0._critterAnimEvent:RemoveEventListener("closeEgg")
+function var_0_0._removeEvents(arg_5_0)
+	arg_5_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_5_0._onStartSummon, arg_5_0)
+	arg_5_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, arg_5_0._onSummonSkip, arg_5_0)
+	arg_5_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_5_0._onOpenView, arg_5_0)
+	arg_5_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseRoomCriiterDetailSimpleView, arg_5_0._onCloseRoomCriiterDetailSimpleView, arg_5_0)
+	arg_5_0._critterAnimEvent:RemoveEventListener("closeEgg")
 end
 
-function slot0._btnEggOnClick(slot0)
-	if slot0.isOpeningEgg then
+function var_0_0._btnEggOnClick(arg_6_0)
+	if arg_6_0.isOpeningEgg then
 		return
 	end
 
-	slot0.isOpeningEgg = true
+	arg_6_0.isOpeningEgg = true
 
-	if slot0._egg then
-		slot0._egg:playOpenAnim(slot0.playerEggAnimFinish, slot0)
+	if arg_6_0._egg then
+		arg_6_0._egg:playOpenAnim(arg_6_0.playerEggAnimFinish, arg_6_0)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_open)
 	end
 
-	slot0:showCritter(true)
+	arg_6_0:showCritter(true)
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0._critterMOList and #slot0._critterMOList > 0 then
-		slot0._critterMo = slot0._critterMOList[1]
+function var_0_0._btncloseOnClick(arg_7_0)
+	if arg_7_0._critterMOList and #arg_7_0._critterMOList > 0 then
+		arg_7_0._critterMo = arg_7_0._critterMOList[1]
 
-		table.remove(slot0._critterMOList, 1)
-		slot0:_showGetCritter()
+		table.remove(arg_7_0._critterMOList, 1)
+		arg_7_0:_showGetCritter()
 
 		return
 	end
 
-	if slot0._mode ~= RoomSummonEnum.SummonType.ItemGet and not ViewMgr.instance:isOpen(ViewName.RoomCritterSummonResultView) then
+	if arg_7_0._mode ~= RoomSummonEnum.SummonType.ItemGet and not ViewMgr.instance:isOpen(ViewName.RoomCritterSummonResultView) then
 		CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingViewRefreshCamera)
 		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onCloseGetCritter)
 	end
 
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0._btnsummonOnClick(slot0)
-	slot1, slot2 = CritterSummonModel.instance:notSummonToast(slot0._poolId)
+function var_0_0._btnsummonOnClick(arg_8_0)
+	local var_8_0, var_8_1 = CritterSummonModel.instance:notSummonToast(arg_8_0._poolId)
 
-	if string.nilorempty(slot1) then
-		CritterRpc.instance:sendSummonCritterRequest(slot0._poolId, slot0._summonCount)
+	if string.nilorempty(var_8_0) then
+		CritterRpc.instance:sendSummonCritterRequest(arg_8_0._poolId, arg_8_0._summonCount)
 	else
-		GameFacade.showToast(slot1, slot2)
+		GameFacade.showToast(var_8_0, var_8_1)
 	end
 end
 
-function slot0._btncardOnClick(slot0)
-	CritterController.instance:openCriiterDetailSimpleView(slot0._critterMo)
+function var_0_0._btncardOnClick(arg_9_0)
+	CritterController.instance:openCriiterDetailSimpleView(arg_9_0._critterMo)
 end
 
-function slot0._btnskipOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnskipOnClick(arg_10_0)
+	arg_10_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_critter/txt_crittername")
-	slot4 = "#go_egg/bg/ssr"
-	slot0._eggRareVX = {
-		[3] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/r"),
-		[4] = gohelper.findChild(slot0.viewGO, "#go_egg/bg/sr"),
-		[5] = gohelper.findChild(slot0.viewGO, slot4)
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._txtname = gohelper.findChildText(arg_11_0.viewGO, "#go_critter/txt_crittername")
+	arg_11_0._eggRareVX = {
+		[3] = gohelper.findChild(arg_11_0.viewGO, "#go_egg/bg/r"),
+		[4] = gohelper.findChild(arg_11_0.viewGO, "#go_egg/bg/sr"),
+		[5] = gohelper.findChild(arg_11_0.viewGO, "#go_egg/bg/ssr")
 	}
-	slot0._star = slot0:getUserDataTb_()
+	arg_11_0._star = arg_11_0:getUserDataTb_()
 
-	for slot4 = 1, slot0._gostarList.transform.childCount do
-		table.insert(slot0._star, gohelper.findChild(slot0._gostarList, "star" .. slot4))
+	for iter_11_0 = 1, arg_11_0._gostarList.transform.childCount do
+		local var_11_0 = gohelper.findChild(arg_11_0._gostarList, "star" .. iter_11_0)
+
+		table.insert(arg_11_0._star, var_11_0)
 	end
 
-	slot0._critterAnim = SLFramework.AnimatorPlayer.Get(slot0._gocritter)
-	slot0._critterAnimEvent = slot0._gocritter:GetComponent(gohelper.Type_AnimationEventWrap)
+	arg_11_0._critterAnim = SLFramework.AnimatorPlayer.Get(arg_11_0._gocritter)
+	arg_11_0._critterAnimEvent = arg_11_0._gocritter:GetComponent(gohelper.Type_AnimationEventWrap)
 
-	slot0._critterAnimEvent:AddEventListener("closeEgg", slot0.closeEggCallback, slot0)
+	arg_11_0._critterAnimEvent:AddEventListener("closeEgg", arg_11_0.closeEggCallback, arg_11_0)
 end
 
-function slot0.closeEggCallback(slot0)
-	gohelper.setActive(slot0._goegg.gameObject, false)
+function var_0_0.closeEggCallback(arg_12_0)
+	gohelper.setActive(arg_12_0._goegg.gameObject, false)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_show)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_13_0)
+	return
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:_btncloseOnClick()
+function var_0_0.onClickModalMask(arg_14_0)
+	arg_14_0:_btncloseOnClick()
 end
 
-function slot0._onSummonSkip(slot0)
-	slot0:showCritter(true)
-	slot0:playCritterSkipAnim()
+function var_0_0._onSummonSkip(arg_15_0)
+	arg_15_0:showCritter(true)
+	arg_15_0:playCritterSkipAnim()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvents()
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0:_addEvents()
 
-	slot0._summonCount = 1
-	slot0._mode = slot0.viewParam.mode
-	slot0._critterMOList = {}
+	arg_16_0._summonCount = 1
+	arg_16_0._mode = arg_16_0.viewParam.mode
+	arg_16_0._critterMOList = {}
 
-	if slot0._mode == RoomSummonEnum.SummonType.Summon then
-		slot0._poolId = slot0.viewParam.poolId
-		slot0._critterMo = slot0.viewParam.critterMo
+	if arg_16_0._mode == RoomSummonEnum.SummonType.Summon then
+		arg_16_0._poolId = arg_16_0.viewParam.poolId
+		arg_16_0._critterMo = arg_16_0.viewParam.critterMo
 
-		if slot0.viewParam and slot0.viewParam.critterMOList then
-			tabletool.addValues(slot0._critterMOList, slot0.viewParam.critterMOList)
-			tabletool.removeValue(slot0._critterMOList, slot0._critterMo)
+		if arg_16_0.viewParam and arg_16_0.viewParam.critterMOList then
+			tabletool.addValues(arg_16_0._critterMOList, arg_16_0.viewParam.critterMOList)
+			tabletool.removeValue(arg_16_0._critterMOList, arg_16_0._critterMo)
 		end
-	elseif slot0._mode == RoomSummonEnum.SummonType.ItemGet then
-		slot0._critterMOList = slot0.viewParam.critterMOList
-		slot0._critterMo = slot0._critterMOList[1]
+	elseif arg_16_0._mode == RoomSummonEnum.SummonType.ItemGet then
+		arg_16_0._critterMOList = arg_16_0.viewParam.critterMOList
+		arg_16_0._critterMo = arg_16_0._critterMOList[1]
 
-		table.remove(slot0._critterMOList, 1)
+		table.remove(arg_16_0._critterMOList, 1)
 	else
-		slot0._critterMo = slot0.viewParam.critterMo
+		arg_16_0._critterMo = arg_16_0.viewParam.critterMo
 
-		if CritterIncubateController.instance:checkHasChildCritter() then
-			table.insert(slot0._critterMOList, slot1)
+		local var_16_0 = CritterIncubateController.instance:checkHasChildCritter()
+
+		if var_16_0 then
+			table.insert(arg_16_0._critterMOList, var_16_0)
 		end
 	end
 
-	gohelper.setActive(slot0._btnskip, slot0._critterMOList and #slot0._critterMOList > 1)
-	slot0:_showGetCritter()
+	gohelper.setActive(arg_16_0._btnskip, arg_16_0._critterMOList and #arg_16_0._critterMOList > 1)
+	arg_16_0:_showGetCritter()
 end
 
-function slot0._showGetCritter(slot0)
-	slot0.isOpeningEgg = false
+function var_0_0._showGetCritter(arg_17_0)
+	arg_17_0.isOpeningEgg = false
 
-	gohelper.setActive(slot0._simagecard.gameObject, true)
+	gohelper.setActive(arg_17_0._simagecard.gameObject, true)
 
-	slot0._rare = slot0._critterMo:getDefineCfg().rare
-	slot0._rareCo = CritterConfig.instance:getCritterRareCfg(slot0._rare)
+	arg_17_0._rare = arg_17_0._critterMo:getDefineCfg().rare
+	arg_17_0._rareCo = CritterConfig.instance:getCritterRareCfg(arg_17_0._rare)
 
-	for slot5, slot6 in pairs(slot0._eggRareVX) do
-		gohelper.setActive(slot6, slot5 == slot0._rare)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._eggRareVX) do
+		gohelper.setActive(iter_17_1, iter_17_0 == arg_17_0._rare)
 	end
 
-	if slot0._critterMo then
-		slot0:refreshCritter()
+	if arg_17_0._critterMo then
+		arg_17_0:refreshCritter()
 	end
 
-	gohelper.setActive(slot0._btnclose.gameObject, false)
-	gohelper.setActive(slot0._gotip.gameObject, false)
-	slot0:_refreshSingleCost()
+	gohelper.setActive(arg_17_0._btnclose.gameObject, false)
+	gohelper.setActive(arg_17_0._gotip.gameObject, false)
+	arg_17_0:_refreshSingleCost()
 
-	slot0._cardBtn = SLFramework.UGUI.UIClickListener.Get(gohelper.findChild(slot0.viewGO, "#go_critter/#simage_card"))
+	local var_17_0 = gohelper.findChild(arg_17_0.viewGO, "#go_critter/#simage_card")
 
-	slot0._cardBtn:AddClickListener(slot0._btncardOnClick, slot0)
-	slot0:_onRefreshBtn()
-	slot0:critterSpine()
+	arg_17_0._cardBtn = SLFramework.UGUI.UIClickListener.Get(var_17_0)
 
-	slot3 = slot0.viewParam.isSkip
+	arg_17_0._cardBtn:AddClickListener(arg_17_0._btncardOnClick, arg_17_0)
+	arg_17_0:_onRefreshBtn()
+	arg_17_0:critterSpine()
 
-	slot0:showCritter(slot3)
-	gohelper.setActive(slot0._goegg.gameObject, not slot3)
+	local var_17_1 = arg_17_0.viewParam.isSkip
 
-	if slot3 then
-		slot0:playCritterSkipAnim()
+	arg_17_0:showCritter(var_17_1)
+	gohelper.setActive(arg_17_0._goegg.gameObject, not var_17_1)
+
+	if var_17_1 then
+		arg_17_0:playCritterSkipAnim()
 	else
-		if not slot0._egg then
-			slot0._egg = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(ResUrl.getRoomCritterEggPrefab(slot0._rareCo.eggRes), gohelper.findChild(slot0.viewGO, "#go_egg/egg")), RoomGetCritterEgg)
+		if not arg_17_0._egg then
+			local var_17_2 = ResUrl.getRoomCritterEggPrefab(arg_17_0._rareCo.eggRes)
+			local var_17_3 = gohelper.findChild(arg_17_0.viewGO, "#go_egg/egg")
+			local var_17_4 = arg_17_0:getResInst(var_17_2, var_17_3)
+
+			arg_17_0._egg = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_4, RoomGetCritterEgg)
 		end
 
-		slot0:playerEggAnim()
+		arg_17_0:playerEggAnim()
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_obtain)
 	end
 end
 
-function slot0.playCritterSkipAnim(slot0)
-	slot0._critterAnim:Play("skip", slot0.showCloseBtn, slot0)
+function var_0_0.playCritterSkipAnim(arg_18_0)
+	arg_18_0._critterAnim:Play("skip", arg_18_0.showCloseBtn, arg_18_0)
 end
 
-function slot0.playCritterOpenAnim(slot0)
-	slot0._critterAnim:Play("open", slot0.showCloseBtn, slot0)
+function var_0_0.playCritterOpenAnim(arg_19_0)
+	arg_19_0._critterAnim:Play("open", arg_19_0.showCloseBtn, arg_19_0)
 end
 
-function slot0.showCloseBtn(slot0)
-	gohelper.setActive(slot0._btnclose.gameObject, true)
-	gohelper.setActive(slot0._gotip.gameObject, true)
+function var_0_0.showCloseBtn(arg_20_0)
+	gohelper.setActive(arg_20_0._btnclose.gameObject, true)
+	gohelper.setActive(arg_20_0._gotip.gameObject, true)
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeEvents()
+function var_0_0.onClose(arg_21_0)
+	arg_21_0:_removeEvents()
 
-	slot0.isOpeningEgg = false
+	arg_21_0.isOpeningEgg = false
 end
 
-function slot0._onRefreshBtn(slot0)
-	if slot0._mode == RoomSummonEnum.SummonType.Summon then
-		ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, not string.nilorempty(CritterSummonModel.instance:notSummonToast(slot0._poolId)))
+function var_0_0._onRefreshBtn(arg_22_0)
+	if arg_22_0._mode == RoomSummonEnum.SummonType.Summon then
+		local var_22_0 = CritterSummonModel.instance:notSummonToast(arg_22_0._poolId)
+		local var_22_1 = string.nilorempty(var_22_0)
+
+		ZProj.UGUIHelper.SetGrayscale(arg_22_0._btnsummon.gameObject, not var_22_1)
 	end
 
-	gohelper.setActive(slot0._goagain.gameObject, slot0._mode == RoomSummonEnum.SummonType.Summon and slot0._poolId ~= nil)
+	gohelper.setActive(arg_22_0._goagain.gameObject, arg_22_0._mode == RoomSummonEnum.SummonType.Summon and arg_22_0._poolId ~= nil)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagecard:UnLoadImage()
-	slot0._simagecurrency:UnLoadImage()
-	slot0._cardBtn:RemoveClickListener()
+function var_0_0.onDestroyView(arg_23_0)
+	arg_23_0._simagecard:UnLoadImage()
+	arg_23_0._simagecurrency:UnLoadImage()
+	arg_23_0._cardBtn:RemoveClickListener()
 end
 
-function slot0.playerEggAnim(slot0)
-	slot0._egg:playIdleAnim(slot0.playerEggIdleAnimFinish, slot0)
+function var_0_0.playerEggAnim(arg_24_0)
+	arg_24_0._egg:playIdleAnim(arg_24_0.playerEggIdleAnimFinish, arg_24_0)
 end
 
-function slot0.playerEggIdleAnimFinish(slot0)
+function var_0_0.playerEggIdleAnimFinish(arg_25_0)
+	return
 end
 
-function slot0.playerEggAnimFinish(slot0)
-	slot0.isOpeningEgg = false
+function var_0_0.playerEggAnimFinish(arg_26_0)
+	arg_26_0.isOpeningEgg = false
 
 	CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onOpenEgg)
 end
 
-function slot0.refreshIcon(slot0)
+function var_0_0.refreshIcon(arg_27_0)
+	return
 end
 
-function slot0.refreshCritter(slot0)
-	slot0._simagecard:LoadImage(ResUrl.getRoomCritterIcon(slot0._rareCo.cardRes))
+function var_0_0.refreshCritter(arg_28_0)
+	local var_28_0 = ResUrl.getRoomCritterIcon(arg_28_0._rareCo.cardRes)
 
-	slot0._txtname.text = slot0._critterMo:getName()
+	arg_28_0._simagecard:LoadImage(var_28_0)
 
-	for slot5 = 1, #slot0._star do
-		gohelper.setActive(slot0._star[slot5].gameObject, slot5 <= slot0._rare + 1)
+	arg_28_0._txtname.text = arg_28_0._critterMo:getName()
+
+	for iter_28_0 = 1, #arg_28_0._star do
+		gohelper.setActive(arg_28_0._star[iter_28_0].gameObject, iter_28_0 <= arg_28_0._rare + 1)
 	end
 
-	slot0:refreshIcon()
+	arg_28_0:refreshIcon()
 end
 
-function slot0.showCritter(slot0, slot1)
-	gohelper.setActive(slot0._gocritter, slot1)
+function var_0_0.showCritter(arg_29_0, arg_29_1)
+	gohelper.setActive(arg_29_0._gocritter, arg_29_1)
 
-	if slot1 then
-		slot0:playCritterOpenAnim()
-	end
-end
-
-function slot0._refreshSingleCost(slot0)
-	slot1, slot0._txtcurrency.text, slot3 = CritterSummonModel.instance:getPoolCurrency(slot0._poolId)
-
-	if not string.nilorempty(slot1) then
-		slot0._simagecurrency:LoadImage(slot1)
+	if arg_29_1 then
+		arg_29_0:playCritterOpenAnim()
 	end
 end
 
-function slot0._onStartSummon(slot0, slot1)
-	slot0:closeThis()
-	CritterSummonController.instance:openSummonView(nil, slot1)
-end
+function var_0_0._refreshSingleCost(arg_30_0)
+	local var_30_0, var_30_1, var_30_2 = CritterSummonModel.instance:getPoolCurrency(arg_30_0._poolId)
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.RoomCriiterDetailSimpleView then
-		gohelper.setActive(slot0._simagecard.gameObject, false)
+	if not string.nilorempty(var_30_0) then
+		arg_30_0._simagecurrency:LoadImage(var_30_0)
+
+		arg_30_0._txtcurrency.text = var_30_1
 	end
 end
 
-function slot0._onCloseRoomCriiterDetailSimpleView(slot0)
-	gohelper.setActive(slot0._simagecard.gameObject, true)
+function var_0_0._onStartSummon(arg_31_0, arg_31_1)
+	arg_31_0:closeThis()
+	CritterSummonController.instance:openSummonView(nil, arg_31_1)
 end
 
-function slot0.critterSpine(slot0)
-	if not slot0.bigSpine then
-		slot0.bigSpine = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gospine, RoomCritterUISpine)
+function var_0_0._onOpenView(arg_32_0, arg_32_1)
+	if arg_32_1 == ViewName.RoomCriiterDetailSimpleView then
+		gohelper.setActive(arg_32_0._simagecard.gameObject, false)
+	end
+end
+
+function var_0_0._onCloseRoomCriiterDetailSimpleView(arg_33_0)
+	gohelper.setActive(arg_33_0._simagecard.gameObject, true)
+end
+
+function var_0_0.critterSpine(arg_34_0)
+	if not arg_34_0.bigSpine then
+		arg_34_0.bigSpine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_34_0._gospine, RoomCritterUISpine)
 	end
 
-	slot0.bigSpine:stopVoice()
-	slot0.bigSpine:setResPath(slot0._critterMo)
+	arg_34_0.bigSpine:stopVoice()
+	arg_34_0.bigSpine:setResPath(arg_34_0._critterMo)
 end
 
-return slot0
+return var_0_0

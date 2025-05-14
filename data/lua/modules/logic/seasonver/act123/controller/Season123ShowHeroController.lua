@@ -1,25 +1,26 @@
-module("modules.logic.seasonver.act123.controller.Season123ShowHeroController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123ShowHeroController", package.seeall)
 
-slot0 = class("Season123ShowHeroController", BaseController)
+local var_0_0 = class("Season123ShowHeroController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3)
-	Season123ShowHeroModel.instance:init(slot1, slot2, slot3)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	Season123ShowHeroModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
 	Season123ShowHeroModel.instance:release()
 end
 
-function slot0.openReset(slot0)
+function var_0_0.openReset(arg_3_0)
 	Season123Controller.instance:openResetView({
 		actId = Season123ShowHeroModel.instance.activityId,
 		stage = Season123ShowHeroModel.instance.stage
 	})
 end
 
-function slot0.notifyView(slot0)
+function var_0_0.notifyView(arg_4_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,7 +1,8 @@
-module("modules.logic.fight.system.flow.FightStepBuilder", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightStepBuilder", package.seeall)
 
-slot0 = class("FightStepBuilder")
-slot0.ActEffectWorkCls = {
+local var_0_0 = class("FightStepBuilder")
+
+var_0_0.ActEffectWorkCls = {
 	[FightEnum.EffectType.MISS] = FightWorkEffectMiss,
 	[FightEnum.EffectType.DAMAGE] = FightWorkEffectDamage,
 	[FightEnum.EffectType.CRIT] = FightWorkEffectDamage,
@@ -160,7 +161,7 @@ slot0.ActEffectWorkCls = {
 	[FightEnum.EffectType.SAVEFIGHTRECORDUPDATE] = FightWorkSaveFightRecordUpdate,
 	[FightEnum.EffectType.ROUNDOFFSET] = FightWorkRoundOffset
 }
-slot0.EffectType2FlowOrWork = {
+var_0_0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,
 	[FightEnum.EffectType.SPCARDADD] = FightWorkSpCardAddContainer,
 	[FightEnum.EffectType.BUFFADD] = FightWorkBuffAddContainer,
@@ -190,168 +191,184 @@ slot0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = FightWorkDeadlyPoisonCritContainer
 }
 
-setmetatable(slot0.EffectType2FlowOrWork, {
-	__index = slot0.ActEffectWorkCls
+setmetatable(var_0_0.EffectType2FlowOrWork, {
+	__index = var_0_0.ActEffectWorkCls
 })
 
-function slot0.buildStepWorkList(slot0)
-	if not slot0 then
+function var_0_0.buildStepWorkList(arg_1_0)
+	if not arg_1_0 then
 		return
 	end
 
 	FightSkillBuffMgr.instance:clearCompleteBuff()
 
-	uv0.ASFDIndex = 0
-	slot1 = nil
-	slot2 = {}
-	slot3 = {}
+	var_0_0.ASFDIndex = 0
 
-	for slot7, slot8 in ipairs(slot0) do
-		if slot8.actType == FightEnum.ActType.SKILL then
-			if FightHelper.isASFDSkill(slot8.actId) then
-				uv0._buildASFDSkillWork(slot8, slot2, slot3, slot0[slot7 + 1])
+	local var_1_0
+	local var_1_1 = {}
+	local var_1_2 = {}
+
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
+		if iter_1_1.actType == FightEnum.ActType.SKILL then
+			if FightHelper.isASFDSkill(iter_1_1.actId) then
+				local var_1_3 = arg_1_0[iter_1_0 + 1]
+
+				var_0_0._buildASFDSkillWork(iter_1_1, var_1_1, var_1_2, var_1_3)
 			else
-				slot1 = uv0._buildSkillWork(slot0, slot8, slot1, slot0[slot7 + 1], slot2, slot3)
+				var_1_0 = var_0_0._buildSkillWork(arg_1_0, iter_1_1, var_1_0, arg_1_0[iter_1_0 + 1], var_1_1, var_1_2)
 			end
-		elseif slot8.actType == FightEnum.ActType.EFFECT then
-			slot12 = slot8
-			slot13 = nil
+		elseif iter_1_1.actType == FightEnum.ActType.EFFECT then
+			tabletool.addValues(var_1_1, var_0_0._buildEffectWorks(iter_1_1, nil))
 
-			tabletool.addValues(slot2, uv0._buildEffectWorks(slot12, slot13))
-
-			for slot12, slot13 in ipairs(slot8.actEffectMOs) do
-				if slot13.effectType == FightEnum.EffectType.DEALCARD1 or slot13.effectType == FightEnum.EffectType.DEALCARD2 or slot13.effectType == FightEnum.EffectType.ROUNDEND then
-					slot1 = nil
+			for iter_1_2, iter_1_3 in ipairs(iter_1_1.actEffectMOs) do
+				if iter_1_3.effectType == FightEnum.EffectType.DEALCARD1 or iter_1_3.effectType == FightEnum.EffectType.DEALCARD2 or iter_1_3.effectType == FightEnum.EffectType.ROUNDEND then
+					var_1_0 = nil
 
 					break
 				end
 			end
 
-			table.insert(slot2, FunctionWork.New(function ()
-				uv0.hasPlay = true
+			table.insert(var_1_1, FunctionWork.New(function()
+				iter_1_1.hasPlay = true
 			end))
-		elseif slot8.actType == FightEnum.ActType.CHANGEHERO then
-			slot1 = nil
+		elseif iter_1_1.actType == FightEnum.ActType.CHANGEHERO then
+			var_1_0 = nil
 
-			table.insert(slot2, FightWorkWaitForSkillsDone.New(tabletool.copy(slot3)))
-			table.insert(slot2, FightWorkStepChangeHero.New(slot8))
-			table.insert(slot2, FunctionWork.New(function ()
-				uv0.hasPlay = true
+			local var_1_4 = tabletool.copy(var_1_2)
+
+			table.insert(var_1_1, FightWorkWaitForSkillsDone.New(var_1_4))
+			table.insert(var_1_1, FightWorkStepChangeHero.New(iter_1_1))
+			table.insert(var_1_1, FunctionWork.New(function()
+				iter_1_1.hasPlay = true
 			end))
-		elseif slot8.actType == FightEnum.ActType.CHANGEWAVE then
-			slot1 = nil
+		elseif iter_1_1.actType == FightEnum.ActType.CHANGEWAVE then
+			var_1_0 = nil
 
-			table.insert(slot2, FightWorkWaitForSkillsDone.New(tabletool.copy(slot3)))
-			table.insert(slot2, FightWorkStepChangeWave.New(slot8))
-			table.insert(slot2, FightWorkAppearTimeline.New())
-			table.insert(slot2, FightWorkStartBornEnemy.New())
-			table.insert(slot2, FightWorkFocusMonster.New())
-			table.insert(slot2, FunctionWork.New(function ()
-				uv0.hasPlay = true
+			local var_1_5 = tabletool.copy(var_1_2)
+
+			table.insert(var_1_1, FightWorkWaitForSkillsDone.New(var_1_5))
+			table.insert(var_1_1, FightWorkStepChangeWave.New(iter_1_1))
+			table.insert(var_1_1, FightWorkAppearTimeline.New())
+			table.insert(var_1_1, FightWorkStartBornEnemy.New())
+			table.insert(var_1_1, FightWorkFocusMonster.New())
+			table.insert(var_1_1, FunctionWork.New(function()
+				iter_1_1.hasPlay = true
 
 				FightController.instance:beginWave()
 			end))
 		else
-			logError("step actType not implement: " .. slot8.actType)
+			logError("step actType not implement: " .. iter_1_1.actType)
 		end
 	end
 
-	return slot2, slot3
+	return var_1_1, var_1_2
 end
 
-function slot0._buildSkillWork(slot0, slot1, slot2, slot3, slot4, slot5)
-	table.insert(slot4, FightGuideBeforeSkill.New(slot1))
+function var_0_0._buildSkillWork(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+	table.insert(arg_5_4, FightGuideBeforeSkill.New(arg_5_1))
 
-	if not string.nilorempty(FightConfig.instance:getSkinSkillTimeline(FightDataHelper.entityMgr:getById(slot1.fromId) and slot6.skin, slot1.actId)) then
+	local var_5_0 = FightDataHelper.entityMgr:getById(arg_5_1.fromId)
+	local var_5_1 = var_5_0 and var_5_0.skin
+	local var_5_2 = FightConfig.instance:getSkinSkillTimeline(var_5_1, arg_5_1.actId)
+
+	if not string.nilorempty(var_5_2) then
 		if FightWorkFbStory.checkHasFbStory() then
-			table.insert(slot4, FightWorkFbStory.New(FightWorkFbStory.Type_BeforePlaySkill, slot1.actId))
+			table.insert(arg_5_4, FightWorkFbStory.New(FightWorkFbStory.Type_BeforePlaySkill, arg_5_1.actId))
 		end
 
-		table.insert(slot4, FightWorkShowEquipSkillEffect.New(slot1, slot3))
+		table.insert(arg_5_4, FightWorkShowEquipSkillEffect.New(arg_5_1, arg_5_3))
 
-		slot9 = FightSkillFlow.New(slot1)
+		local var_5_3 = FightSkillFlow.New(arg_5_1)
 
-		table.insert(slot4, slot9)
-		table.insert(slot5, slot9)
-		slot9:addAfterSkillEffects(uv0._buildEffectWorks(slot1))
-		table.insert(slot4, FightParallelPlayNextSkillStep.New(slot1, slot2, slot0))
-		table.insert(slot4, FightNextSkillIsSameStep.New(slot1, slot2))
+		table.insert(arg_5_4, var_5_3)
+		table.insert(arg_5_5, var_5_3)
+		var_5_3:addAfterSkillEffects(var_0_0._buildEffectWorks(arg_5_1))
+		table.insert(arg_5_4, FightParallelPlayNextSkillStep.New(arg_5_1, arg_5_2, arg_5_0))
+		table.insert(arg_5_4, FightNextSkillIsSameStep.New(arg_5_1, arg_5_2))
 
-		slot2 = slot1
+		arg_5_2 = arg_5_1
 	else
-		table.insert(slot4, FightWorkShowEquipSkillEffect.New(slot1, slot3))
-		table.insert(slot4, FightNonTimelineSkillStep.New(slot1))
-		tabletool.addValues(slot4, uv0._buildEffectWorks(slot1))
+		table.insert(arg_5_4, FightWorkShowEquipSkillEffect.New(arg_5_1, arg_5_3))
+		table.insert(arg_5_4, FightNonTimelineSkillStep.New(arg_5_1))
+		tabletool.addValues(arg_5_4, var_0_0._buildEffectWorks(arg_5_1))
 	end
 
-	table.insert(slot4, FunctionWork.New(function ()
-		uv0.hasPlay = true
+	table.insert(arg_5_4, FunctionWork.New(function()
+		arg_5_1.hasPlay = true
 
-		FightController.instance:dispatchEvent(FightEvent.OnSkillEffectPlayFinish, uv0)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillEffectPlayFinish, arg_5_1)
 	end))
-	table.insert(slot4, FightWorkSkillDelay.New(slot1))
-	table.insert(slot4, FightWorkSpecialDelay.New(slot1))
+	table.insert(arg_5_4, FightWorkSkillDelay.New(arg_5_1))
+	table.insert(arg_5_4, FightWorkSpecialDelay.New(arg_5_1))
 
-	return slot2
+	return arg_5_2
 end
 
-slot0.ASFDIndex = 0
+var_0_0.ASFDIndex = 0
 
-function slot0._buildASFDSkillWork(slot0, slot1, slot2, slot3)
-	uv0.ASFDIndex = uv0.ASFDIndex + 1
-	slot4 = FightASFDFlow.New(slot0, slot3, uv0.ASFDIndex)
+function var_0_0._buildASFDSkillWork(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	var_0_0.ASFDIndex = var_0_0.ASFDIndex + 1
 
-	table.insert(slot1, slot4)
-	table.insert(slot2, slot4)
+	local var_7_0 = FightASFDFlow.New(arg_7_0, arg_7_3, var_0_0.ASFDIndex)
 
-	return slot4
+	table.insert(arg_7_1, var_7_0)
+	table.insert(arg_7_2, var_7_0)
+
+	return var_7_0
 end
 
-slot0.lastEffect = nil
+var_0_0.lastEffect = nil
 
-function slot0._buildEffectWorks(slot0)
-	uv0.lastEffect = nil
-	slot1 = FightWorkFlowSequence.New(slot0)
+function var_0_0._buildEffectWorks(arg_8_0)
+	var_0_0.lastEffect = nil
 
-	uv0.addEffectWork(slot1, slot0)
+	local var_8_0 = FightWorkFlowSequence.New(arg_8_0)
 
-	uv0.lastEffect = nil
-	slot2 = FightStepEffectWork.New()
+	var_0_0.addEffectWork(var_8_0, arg_8_0)
 
-	slot2:setFlow(slot1)
+	var_0_0.lastEffect = nil
+
+	local var_8_1 = FightStepEffectWork.New()
+
+	var_8_1:setFlow(var_8_0)
 
 	return {
-		slot2
+		var_8_1
 	}
 end
 
-function slot0.addEffectWork(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1.actEffectMOs) do
-		slot8 = false
+function var_0_0.addEffectWork(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1.actEffectMOs) do
+		local var_9_0 = iter_9_1.effectType
+		local var_9_1 = false
 
-		if slot6.effectType == FightEnum.EffectType.FIGHTSTEP and not slot6.fightStep then
-			slot8 = true
+		if var_9_0 == FightEnum.EffectType.FIGHTSTEP and not iter_9_1.fightStep then
+			var_9_1 = true
 		end
 
-		if not slot8 and uv0.EffectType2FlowOrWork[slot7] then
-			slot10 = slot0:registWork(slot9, slot1, slot6)
+		if not var_9_1 then
+			local var_9_2 = var_0_0.EffectType2FlowOrWork[var_9_0]
 
-			if uv0.lastEffect then
-				uv0.lastEffect.NEXTEFFECT = slot6
-			end
+			if var_9_2 then
+				local var_9_3 = arg_9_0:registWork(var_9_2, arg_9_1, iter_9_1)
 
-			uv0.lastEffect = slot6
+				if var_0_0.lastEffect then
+					var_0_0.lastEffect.NEXTEFFECT = iter_9_1
+				end
 
-			if slot7 == FightEnum.EffectType.FIGHTSTEP then
-				slot11 = FightWorkFlowSequence.New()
+				var_0_0.lastEffect = iter_9_1
 
-				uv0.addEffectWork(slot11, slot6.cus_stepMO)
-				slot10:setFlow(slot11)
+				if var_9_0 == FightEnum.EffectType.FIGHTSTEP then
+					local var_9_4 = FightWorkFlowSequence.New()
 
-				slot6.FIGHTSTEPNEXTEFFECT = slot1.actEffectMOs[slot5 + 1]
+					var_0_0.addEffectWork(var_9_4, iter_9_1.cus_stepMO)
+					var_9_3:setFlow(var_9_4)
+
+					iter_9_1.FIGHTSTEPNEXTEFFECT = arg_9_1.actEffectMOs[iter_9_0 + 1]
+				end
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

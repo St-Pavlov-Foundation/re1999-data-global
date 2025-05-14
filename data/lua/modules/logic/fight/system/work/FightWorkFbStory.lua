@@ -1,78 +1,92 @@
-module("modules.logic.fight.system.work.FightWorkFbStory", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFbStory", package.seeall)
 
-slot0 = class("FightWorkFbStory", BaseWork)
-slot0.Type_EnterWave = 1
-slot0.Type_BeforePlaySkill = 2
+local var_0_0 = class("FightWorkFbStory", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0.conditionType = slot1
-	slot0.exParam = slot2
-	slot0.episodeId = FightModel.instance:getFightParam() and slot3.episodeId
-	slot4 = slot0.episodeId and DungeonConfig.instance:getEpisodeCO(slot0.episodeId)
-	slot5 = slot4 and string.split(slot4.story, "#")
-	slot0.configCondType = slot5 and tonumber(slot5[1])
-	slot0.configCondParam = slot5 and slot5[2]
-	slot0.configCondStoryId = slot5 and tonumber(slot5[3])
+var_0_0.Type_EnterWave = 1
+var_0_0.Type_BeforePlaySkill = 2
+
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.conditionType = arg_1_1
+	arg_1_0.exParam = arg_1_2
+
+	local var_1_0 = FightModel.instance:getFightParam()
+
+	arg_1_0.episodeId = var_1_0 and var_1_0.episodeId
+
+	local var_1_1 = arg_1_0.episodeId and DungeonConfig.instance:getEpisodeCO(arg_1_0.episodeId)
+	local var_1_2 = var_1_1 and string.split(var_1_1.story, "#")
+
+	arg_1_0.configCondType = var_1_2 and tonumber(var_1_2[1])
+	arg_1_0.configCondParam = var_1_2 and var_1_2[2]
+	arg_1_0.configCondStoryId = var_1_2 and tonumber(var_1_2[3])
 end
 
-function slot0.onStart(slot0)
-	if not slot0.configCondType or slot0.conditionType ~= slot0.configCondType then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if not arg_2_0.configCondType or arg_2_0.conditionType ~= arg_2_0.configCondType then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	if slot0.configCondType == 1 then
-		if FightModel.instance:getCurWaveId() ~= tonumber(slot0.configCondParam) then
-			slot0:onDone(true)
+	if arg_2_0.configCondType == 1 then
+		if FightModel.instance:getCurWaveId() ~= tonumber(arg_2_0.configCondParam) then
+			arg_2_0:onDone(true)
 
 			return
 		end
 
-		slot0:_checkPlayStory()
-	elseif slot0.configCondType == 2 then
-		if not tonumber(slot0.configCondParam) or not slot0.exParam or slot0.exParam ~= slot1 then
-			slot0:onDone(true)
+		arg_2_0:_checkPlayStory()
+	elseif arg_2_0.configCondType == 2 then
+		local var_2_0 = tonumber(arg_2_0.configCondParam)
+
+		if not var_2_0 or not arg_2_0.exParam or arg_2_0.exParam ~= var_2_0 then
+			arg_2_0:onDone(true)
 
 			return
 		end
 
-		slot0:_checkPlayStory()
+		arg_2_0:_checkPlayStory()
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._checkPlayStory(slot0)
-	if StoryModel.instance:isStoryFinished(slot0.configCondStoryId) then
-		slot0:onDone(true)
+function var_0_0._checkPlayStory(arg_3_0)
+	if StoryModel.instance:isStoryFinished(arg_3_0.configCondStoryId) then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	slot0:_setAllEntitysVisible(false)
-	StoryController.instance:playStory(slot0.configCondStoryId, {
-		mark = true,
-		episodeId = slot0.episodeId
-	}, slot0._afterPlayStory, slot0)
+	arg_3_0:_setAllEntitysVisible(false)
+
+	local var_3_0 = {}
+
+	var_3_0.mark = true
+	var_3_0.episodeId = arg_3_0.episodeId
+
+	StoryController.instance:playStory(arg_3_0.configCondStoryId, var_3_0, arg_3_0._afterPlayStory, arg_3_0)
 end
 
-function slot0._afterPlayStory(slot0)
-	slot0:_setAllEntitysVisible(true)
-	slot0:onDone(true)
+function var_0_0._afterPlayStory(arg_4_0)
+	arg_4_0:_setAllEntitysVisible(true)
+	arg_4_0:onDone(true)
 end
 
-function slot0._setAllEntitysVisible(slot0, slot1)
-	for slot6, slot7 in ipairs(FightHelper.getAllEntitys()) do
-		slot7:setActive(slot1)
+function var_0_0._setAllEntitysVisible(arg_5_0, arg_5_1)
+	local var_5_0 = FightHelper.getAllEntitys()
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		iter_5_1:setActive(arg_5_1)
 	end
 end
 
-function slot0.checkHasFbStory()
-	slot1 = FightModel.instance:getFightParam() and slot0.episodeId
-	slot2 = slot1 and DungeonConfig.instance:getEpisodeCO(slot1)
+function var_0_0.checkHasFbStory()
+	local var_6_0 = FightModel.instance:getFightParam()
+	local var_6_1 = var_6_0 and var_6_0.episodeId
+	local var_6_2 = var_6_1 and DungeonConfig.instance:getEpisodeCO(var_6_1)
 
-	return slot2 and not string.nilorempty(slot2.story)
+	return var_6_2 and not string.nilorempty(var_6_2.story)
 end
 
-return slot0
+return var_0_0

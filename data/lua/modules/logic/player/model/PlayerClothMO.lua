@@ -1,26 +1,26 @@
-module("modules.logic.player.model.PlayerClothMO", package.seeall)
+﻿module("modules.logic.player.model.PlayerClothMO", package.seeall)
 
-slot0 = pureTable("PlayerClothMO")
+local var_0_0 = pureTable("PlayerClothMO")
 
-function slot0.ctor(slot0)
-	slot0.id = nil
-	slot0.clothId = nil
-	slot0.level = nil
-	slot0.exp = nil
-	slot0.has = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = nil
+	arg_1_0.clothId = nil
+	arg_1_0.level = nil
+	arg_1_0.exp = nil
+	arg_1_0.has = nil
 end
 
-function slot0.initFromConfig(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.clothId = slot1.id
-	slot0.level = 0
-	slot0.exp = 0
+function var_0_0.initFromConfig(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.clothId = arg_2_1.id
+	arg_2_0.level = 0
+	arg_2_0.exp = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.level = slot1.level
-	slot0.exp = slot1.exp
-	slot0.has = true
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.level = arg_3_1.level
+	arg_3_0.exp = arg_3_1.exp
+	arg_3_0.has = true
 end
 
-return slot0
+return var_0_0

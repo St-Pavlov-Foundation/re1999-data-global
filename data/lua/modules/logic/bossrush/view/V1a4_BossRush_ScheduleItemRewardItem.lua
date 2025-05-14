@@ -1,75 +1,81 @@
-module("modules.logic.bossrush.view.V1a4_BossRush_ScheduleItemRewardItem", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRush_ScheduleItemRewardItem", package.seeall)
 
-slot0 = class("V1a4_BossRush_ScheduleItemRewardItem", LuaCompBase)
+local var_0_0 = class("V1a4_BossRush_ScheduleItemRewardItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._imageQualityBg = gohelper.findChildImage(slot1, "image_QualityBg")
-	slot0._simageReward = gohelper.findChildSingleImage(slot1, "simage_Reward")
-	slot0._imageQualityFrame = gohelper.findChildImage(slot1, "image_QualityFrame")
-	slot0._goHasGet = gohelper.findChild(slot1, "go_HasGet")
-	slot0._txtDesc = gohelper.findChildText(slot1, "txt_Desc")
-	slot0._click = gohelper.getClick(slot1)
-	slot0.go = slot1
-	slot0._anim = slot1:GetComponent(gohelper.Type_Animator)
-	slot0._goHasGetAnim = slot0._goHasGet:GetComponent(gohelper.Type_Animator)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._imageQualityBg = gohelper.findChildImage(arg_1_1, "image_QualityBg")
+	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_1, "simage_Reward")
+	arg_1_0._imageQualityFrame = gohelper.findChildImage(arg_1_1, "image_QualityFrame")
+	arg_1_0._goHasGet = gohelper.findChild(arg_1_1, "go_HasGet")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_1, "txt_Desc")
+	arg_1_0._click = gohelper.getClick(arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._anim = arg_1_1:GetComponent(gohelper.Type_Animator)
+	arg_1_0._goHasGetAnim = arg_1_0._goHasGet:GetComponent(gohelper.Type_Animator)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
 
-	slot0._isActive = false
+	arg_1_0._isActive = false
 
-	gohelper.setActive(slot1, false)
+	gohelper.setActive(arg_1_1, false)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.onDestroy(arg_2_0)
+	arg_2_0._click:RemoveClickListener()
 
-	if slot0._simageReward then
-		slot0._simageReward:UnLoadImage()
+	if arg_2_0._simageReward then
+		arg_2_0._simageReward:UnLoadImage()
 	end
 
-	slot0._simageReward = nil
+	arg_2_0._simageReward = nil
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:onDestroy()
+function var_0_0.onDestroyView(arg_3_0)
+	arg_3_0:onDestroy()
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._itemCO = slot1
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot1[1], slot1[2])
-	slot7 = slot5.rare
+function var_0_0.setData(arg_4_0, arg_4_1)
+	arg_4_0._itemCO = arg_4_1
 
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(slot0._imageQualityBg, BossRushConfig.instance:getQualityBgSpriteName(slot7))
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(slot0._imageQualityFrame, BossRushConfig.instance:getQualityFrameSpriteName(slot7))
-	slot0._simageReward:LoadImage(slot6)
+	local var_4_0 = arg_4_1[1]
+	local var_4_1 = arg_4_1[2]
+	local var_4_2 = arg_4_1[3]
+	local var_4_3, var_4_4 = ItemModel.instance:getItemConfigAndIcon(var_4_0, var_4_1)
+	local var_4_5 = var_4_3.rare
 
-	slot0._txtDesc.text = luaLang("multiple") .. slot1[3]
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(arg_4_0._imageQualityBg, BossRushConfig.instance:getQualityBgSpriteName(var_4_5))
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(arg_4_0._imageQualityFrame, BossRushConfig.instance:getQualityFrameSpriteName(var_4_5))
+	arg_4_0._simageReward:LoadImage(var_4_4)
+
+	arg_4_0._txtDesc.text = luaLang("multiple") .. var_4_2
 end
 
-function slot0.setActive(slot0, slot1)
-	if slot0._isActive == slot1 then
+function var_0_0.setActive(arg_5_0, arg_5_1)
+	if arg_5_0._isActive == arg_5_1 then
 		return
 	end
 
-	slot0._isActive = slot1
+	arg_5_0._isActive = arg_5_1
 
-	gohelper.setActive(slot0.go, slot1)
+	gohelper.setActive(arg_5_0.go, arg_5_1)
 end
 
-function slot0._onClick(slot0)
-	if not slot0._itemCO then
+function var_0_0._onClick(arg_6_0)
+	local var_6_0 = arg_6_0._itemCO
+
+	if not var_6_0 then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(slot1[1], slot1[2])
+	MaterialTipController.instance:showMaterialInfo(var_6_0[1], var_6_0[2])
 end
 
-function slot0.playAnim_HasGet(slot0, slot1, ...)
-	slot0._goHasGetAnim:Play(slot1, ...)
+function var_0_0.playAnim_HasGet(arg_7_0, arg_7_1, ...)
+	arg_7_0._goHasGetAnim:Play(arg_7_1, ...)
 end
 
-function slot0.playAnim(slot0, slot1, ...)
-	slot0._anim:Play(slot1, ...)
+function var_0_0.playAnim(arg_8_0, arg_8_1, ...)
+	arg_8_0._anim:Play(arg_8_1, ...)
 end
 
-return slot0
+return var_0_0

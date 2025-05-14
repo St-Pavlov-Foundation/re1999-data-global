@@ -1,16 +1,17 @@
-module("modules.logic.roleactivity.define.RoleActivityEnum", package.seeall)
+﻿module("modules.logic.roleactivity.define.RoleActivityEnum", package.seeall)
 
-slot0 = _M
-slot0.AnimEvt = {
+local var_0_0 = _M
+
+var_0_0.AnimEvt = {
 	OnGoStoryEnd = "goStoryEnd",
 	OnStoryOpenEnd = "storyOpenEnd",
 	OnFightOpenEnd = "fightOpenEnd"
 }
-slot0.AnimatorTime = {
+var_0_0.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-slot0.LevelView = {
+var_0_0.LevelView = {
 	[VersionActivity1_9Enum.ActivityId.Lucy] = ViewName.ActLucyLevelView,
 	[VersionActivity1_9Enum.ActivityId.KaKaNia] = ViewName.ActKaKaNiaLevelView,
 	[VersionActivity2_0Enum.ActivityId.Mercuria] = ViewName.ActMercuriaLevelView,
@@ -19,4 +20,4 @@ slot0.LevelView = {
 	[VersionActivity2_3Enum.ActivityId.DuDuGu] = ViewName.ActDuDuGuLevelView
 }
 
-return slot0
+return var_0_0

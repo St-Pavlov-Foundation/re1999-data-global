@@ -1,30 +1,30 @@
-module("modules.logic.meilanni.view.MeilanniViewContainer", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniViewContainer", package.seeall)
 
-slot0 = class("MeilanniViewContainer", BaseViewContainer)
+local var_0_0 = class("MeilanniViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, MeilanniView.New())
-	table.insert(slot1, MeilanniMap.New())
-	table.insert(slot1, MeilanniEventView.New())
-	table.insert(slot1, MeilanniDialogBtnView.New())
-	table.insert(slot1, MeilanniDialogView.New())
-	table.insert(slot1, TabViewGroup.New(1, "top_left"))
+	table.insert(var_1_0, MeilanniView.New())
+	table.insert(var_1_0, MeilanniMap.New())
+	table.insert(var_1_0, MeilanniEventView.New())
+	table.insert(var_1_0, MeilanniDialogBtnView.New())
+	table.insert(var_1_0, MeilanniDialogView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
 	}, HelpEnum.HelpId.VersionActivityMeiLanNi)
 
 	return {
-		slot0._navigateButtonView
+		arg_2_0._navigateButtonView
 	}
 end
 
-return slot0
+return var_0_0

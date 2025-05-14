@@ -1,30 +1,31 @@
-module("modules.logic.voyage.rpc.Activity1001Rpc", package.seeall)
+﻿module("modules.logic.voyage.rpc.Activity1001Rpc", package.seeall)
 
-slot0 = class("Activity1001Rpc", BaseRpc)
+local var_0_0 = class("Activity1001Rpc", BaseRpc)
 
-function slot0.sendAct1001GetInfoRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity1001Module_pb.Act1001GetInfoRequest()
-	slot5.activityId = slot1
+function var_0_0.sendAct1001GetInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	local var_1_0 = Activity1001Module_pb.Act1001GetInfoRequest()
 
-	slot0:sendMsg(slot5, slot2, slot3, slot4)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3, arg_1_4)
 end
 
-function slot0.onReceiveAct1001GetInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct1001GetInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	VoyageController.instance:_onReceiveAct1001GetInfoReply(slot2)
+	VoyageController.instance:_onReceiveAct1001GetInfoReply(arg_2_2)
 end
 
-function slot0.onReceiveAct1001UpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct1001UpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	VoyageController.instance:_onReceiveAct1001UpdatePush(slot2)
+	VoyageController.instance:_onReceiveAct1001UpdatePush(arg_3_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,36 +1,37 @@
-module("modules.logic.versionactivity2_2.act169.config.SummonNewCustomPickViewConfig", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act169.config.SummonNewCustomPickViewConfig", package.seeall)
 
-slot0 = class("SummonNewCustomPickViewConfig", BaseConfig)
-slot0.ACTIVITY_CONFIG_169 = "activity169"
+local var_0_0 = class("SummonNewCustomPickViewConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+var_0_0.ACTIVITY_CONFIG_169 = "activity169"
+
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
-		slot0.ACTIVITY_CONFIG_169
+		arg_1_0.ACTIVITY_CONFIG_169
 	}
 end
 
-function slot0.onInit(slot0)
-	slot0._summonNewPickConfig = nil
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._summonNewPickConfig = nil
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == slot0.ACTIVITY_CONFIG_169 then
-		slot0._summonNewPickConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == arg_3_0.ACTIVITY_CONFIG_169 then
+		arg_3_0._summonNewPickConfig = arg_3_2
 	end
 end
 
-function slot0.getAllConfig(slot0)
-	return slot0._summonNewPickConfig.configList
+function var_0_0.getAllConfig(arg_4_0)
+	return arg_4_0._summonNewPickConfig.configList
 end
 
-function slot0.getSummonConfig(slot0)
-	return slot0._summonNewPickConfig
+function var_0_0.getSummonConfig(arg_5_0)
+	return arg_5_0._summonNewPickConfig
 end
 
-function slot0.getSummonConfigById(slot0, slot1)
-	return slot0._summonNewPickConfig.configDict[slot1]
+function var_0_0.getSummonConfigById(arg_6_0, arg_6_1)
+	return arg_6_0._summonNewPickConfig.configDict[arg_6_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

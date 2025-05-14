@@ -1,10 +1,10 @@
-module("modules.logic.explore.map.unit.ExploreDichroicPrismUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreDichroicPrismUnit", package.seeall)
 
-slot0 = class("ExploreDichroicPrismUnit", ExplorePrismUnit)
+local var_0_0 = class("ExploreDichroicPrismUnit", ExplorePrismUnit)
 
-function slot0.addLights(slot0)
-	slot0.lightComp:addLight(slot0.mo.unitDir - 45)
-	slot0.lightComp:addLight(slot0.mo.unitDir + 45)
+function var_0_0.addLights(arg_1_0)
+	arg_1_0.lightComp:addLight(arg_1_0.mo.unitDir - 45)
+	arg_1_0.lightComp:addLight(arg_1_0.mo.unitDir + 45)
 end
 
-return slot0
+return var_0_0

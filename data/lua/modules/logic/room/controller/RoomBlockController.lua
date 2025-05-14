@@ -1,36 +1,40 @@
-module("modules.logic.room.controller.RoomBlockController", package.seeall)
+﻿module("modules.logic.room.controller.RoomBlockController", package.seeall)
 
-slot0 = class("RoomBlockController", BaseController)
+local var_0_0 = class("RoomBlockController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0._lastUpdatePathGraphicTimeDic = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._lastUpdatePathGraphicTimeDic = {}
 
-	slot0:clear()
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	return
 end
 
-function slot0.refreshResourceLight(slot0)
-	slot1 = slot0:_isHasResourceLight()
+function var_0_0.refreshResourceLight(arg_4_0)
+	local var_4_0 = arg_4_0:_isHasResourceLight()
 
-	if slot0._isLastHasResourceLight or slot1 then
-		slot0._isLastHasResourceLight = slot1
+	if arg_4_0._isLastHasResourceLight or var_4_0 then
+		arg_4_0._isLastHasResourceLight = var_4_0
 
 		RoomMapController.instance:dispatchEvent(RoomEvent.ResourceLight)
 	end
 end
 
-function slot0._isHasResourceLight(slot0)
-	if RoomMapBlockModel.instance:getTempBlockMO() and slot1:isHasLight() then
-		slot3 = slot1.hexPoint
+function var_0_0._isHasResourceLight(arg_5_0)
+	local var_5_0 = RoomMapBlockModel.instance:getTempBlockMO()
 
-		for slot7 = 1, 6 do
-			if RoomResourceModel.instance:isLightResourcePoint(slot3.x, slot3.y, slot7) then
+	if var_5_0 and var_5_0:isHasLight() then
+		local var_5_1 = RoomResourceModel.instance
+		local var_5_2 = var_5_0.hexPoint
+
+		for iter_5_0 = 1, 6 do
+			if var_5_1:isLightResourcePoint(var_5_2.x, var_5_2.y, iter_5_0) then
 				return true
 			end
 		end
@@ -39,29 +43,40 @@ function slot0._isHasResourceLight(slot0)
 	return false
 end
 
-function slot0.refreshNearLand(slot0, slot1, slot2)
-	RoomBlockHelper.refreshBlockEntity(RoomBlockHelper.getNearBlockEntity(false, slot1, 1, slot2, false), "refreshLand")
-	RoomBlockHelper.refreshBlockEntity(RoomBlockHelper.getNearBlockEntity(true, slot1, 1, slot2, true), "refreshWaveEffect")
+function var_0_0.refreshNearLand(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = RoomBlockHelper.getNearBlockEntity(false, arg_6_1, 1, arg_6_2, false)
+
+	RoomBlockHelper.refreshBlockEntity(var_6_0, "refreshLand")
+
+	local var_6_1 = RoomBlockHelper.getNearBlockEntity(true, arg_6_1, 1, arg_6_2, true)
+
+	RoomBlockHelper.refreshBlockEntity(var_6_1, "refreshWaveEffect")
 end
 
-function slot0.refreshBackBuildingEffect(slot0)
-	if not slot0._ishasWaitBlockBuildingEffect then
-		slot0._ishasWaitBlockBuildingEffect = true
+function var_0_0.refreshBackBuildingEffect(arg_7_0)
+	if not arg_7_0._ishasWaitBlockBuildingEffect then
+		arg_7_0._ishasWaitBlockBuildingEffect = true
 
-		TaskDispatcher.runDelay(slot0._onRefreshBackBuildingEffect, slot0, 0.01)
+		TaskDispatcher.runDelay(arg_7_0._onRefreshBackBuildingEffect, arg_7_0, 0.01)
 	end
 end
 
-function slot0._onRefreshBackBuildingEffect(slot0)
-	slot0._ishasWaitBlockBuildingEffect = false
+function var_0_0._onRefreshBackBuildingEffect(arg_8_0)
+	arg_8_0._ishasWaitBlockBuildingEffect = false
 
-	for slot6 = 1, #RoomMapBlockModel.instance:getFullBlockMOList() do
-		if GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(slot1[slot6].id, SceneTag.RoomMapBlock) then
-			slot8:refreshBackBuildingEffect(slot7)
+	local var_8_0 = RoomMapBlockModel.instance:getFullBlockMOList()
+	local var_8_1 = GameSceneMgr.instance:getCurScene()
+
+	for iter_8_0 = 1, #var_8_0 do
+		local var_8_2 = var_8_0[iter_8_0]
+		local var_8_3 = var_8_1.mapmgr:getBlockEntity(var_8_2.id, SceneTag.RoomMapBlock)
+
+		if var_8_3 then
+			var_8_3:refreshBackBuildingEffect(var_8_2)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

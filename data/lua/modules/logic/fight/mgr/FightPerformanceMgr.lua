@@ -1,75 +1,76 @@
-module("modules.logic.fight.mgr.FightPerformanceMgr", package.seeall)
+﻿module("modules.logic.fight.mgr.FightPerformanceMgr", package.seeall)
 
-slot0 = class("FightPerformanceMgr", FightBaseClass)
+local var_0_0 = class("FightPerformanceMgr", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0.gamePlayMgr = {}
-	slot0.userDataMgrList = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.gamePlayMgr = {}
+	arg_1_0.userDataMgrList = {}
 
-	slot0:com_registMsg(FightMsgId.RestartGame, slot0._onRestartGame)
+	arg_1_0:com_registMsg(FightMsgId.RestartGame, arg_1_0._onRestartGame)
 end
 
-function slot0.onAwake(slot0)
-	slot0:registFightMgr()
-	slot0:registGamePlayMgr()
+function var_0_0.onAwake(arg_2_0)
+	arg_2_0:registFightMgr()
+	arg_2_0:registGamePlayMgr()
 end
 
-function slot0.registFightMgr(slot0)
+function var_0_0.registFightMgr(arg_3_0)
+	return
 end
 
-function slot0.registGamePlayMgr(slot0)
-	slot0:registGamePlayClass(FightOperationMgr)
-	slot0:registGamePlayClass(FightEntityEvolutionMgr)
-	slot0:registGamePlayClass(FightBuffTypeId2EffectMgr)
-	slot0:registGamePlayClass(FightEntrustedWorkMgr)
-	slot0:registGamePlayClass(FightPlayMgr)
+function var_0_0.registGamePlayMgr(arg_4_0)
+	arg_4_0:registGamePlayClass(FightOperationMgr)
+	arg_4_0:registGamePlayClass(FightEntityEvolutionMgr)
+	arg_4_0:registGamePlayClass(FightBuffTypeId2EffectMgr)
+	arg_4_0:registGamePlayClass(FightEntrustedWorkMgr)
+	arg_4_0:registGamePlayClass(FightPlayMgr)
 
-	slot0.asfdMgr = slot0:registerUserDataClass(FightASFDMgr)
+	arg_4_0.asfdMgr = arg_4_0:registerUserDataClass(FightASFDMgr)
 end
 
-function slot0.registGamePlayClass(slot0, slot1)
-	slot2 = slot0:newClass(slot1)
+function var_0_0.registGamePlayClass(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:newClass(arg_5_1)
 
-	table.insert(slot0.gamePlayMgr, slot2)
+	table.insert(arg_5_0.gamePlayMgr, var_5_0)
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.registerUserDataClass(slot0, slot1)
-	slot2 = slot1.New()
+function var_0_0.registerUserDataClass(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1.New()
 
-	slot2:init()
-	table.insert(slot0.userDataMgrList, slot2)
+	var_6_0:init()
+	table.insert(arg_6_0.userDataMgrList, var_6_0)
 
-	return slot2
+	return var_6_0
 end
 
-function slot0._onRestartGame(slot0)
-	for slot4 = #slot0.gamePlayMgr, 1, -1 do
-		slot0.gamePlayMgr[slot4]:disposeSelf()
+function var_0_0._onRestartGame(arg_7_0)
+	for iter_7_0 = #arg_7_0.gamePlayMgr, 1, -1 do
+		arg_7_0.gamePlayMgr[iter_7_0]:disposeSelf()
 	end
 
-	tabletool.clear(slot0.gamePlayMgr)
-	slot0:clearUserDataMgr()
-	slot0:registGamePlayMgr()
+	tabletool.clear(arg_7_0.gamePlayMgr)
+	arg_7_0:clearUserDataMgr()
+	arg_7_0:registGamePlayMgr()
 end
 
-function slot0.clearUserDataMgr(slot0)
-	for slot4 = #slot0.userDataMgrList, 1, -1 do
-		slot0.userDataMgrList[slot4]:dispose()
+function var_0_0.clearUserDataMgr(arg_8_0)
+	for iter_8_0 = #arg_8_0.userDataMgrList, 1, -1 do
+		arg_8_0.userDataMgrList[iter_8_0]:dispose()
 	end
 
-	tabletool.clear(slot0.userDataMgrList)
+	tabletool.clear(arg_8_0.userDataMgrList)
 
-	slot0.asfdMgr = nil
+	arg_8_0.asfdMgr = nil
 end
 
-function slot0.getASFDMgr(slot0)
-	return slot0.asfdMgr
+function var_0_0.getASFDMgr(arg_9_0)
+	return arg_9_0.asfdMgr
 end
 
-function slot0.onDestructor(slot0)
-	slot0:clearUserDataMgr()
+function var_0_0.onDestructor(arg_10_0)
+	arg_10_0:clearUserDataMgr()
 end
 
-return slot0
+return var_0_0

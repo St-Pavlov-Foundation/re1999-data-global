@@ -1,10 +1,10 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaHideStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaHideStep", package.seeall)
 
-slot0 = class("TianShiNaNaHideStep", TianShiNaNaStepBase)
+local var_0_0 = class("TianShiNaNaHideStep", TianShiNaNaStepBase)
 
-function slot0.onStart(slot0, slot1)
-	TianShiNaNaModel.instance:removeUnit(slot0._data.id)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	TianShiNaNaModel.instance:removeUnit(arg_1_0._data.id)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

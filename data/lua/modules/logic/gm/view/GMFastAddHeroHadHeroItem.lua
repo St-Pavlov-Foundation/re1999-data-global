@@ -1,86 +1,91 @@
-module("modules.logic.gm.view.GMFastAddHeroHadHeroItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFastAddHeroHadHeroItem", package.seeall)
 
-slot0 = class("GMFastAddHeroHadHeroItem", ListScrollCell)
-slot0.SelectBgColor = GameUtil.parseColor("#EA4F4F")
-slot0.NotSelectBgColor = GameUtil.parseColor("#B0B0B0")
+local var_0_0 = class("GMFastAddHeroHadHeroItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.goClick = gohelper.getClick(slot1)
+var_0_0.SelectBgColor = GameUtil.parseColor("#EA4F4F")
+var_0_0.NotSelectBgColor = GameUtil.parseColor("#B0B0B0")
 
-	slot0.goClick:AddClickListener(slot0.onClickItem, slot0)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.goClick = gohelper.getClick(arg_1_1)
 
-	slot0.bgImg = slot1:GetComponent(gohelper.Type_Image)
-	slot0._txtName = gohelper.findChildText(slot1, "#txt_heroname")
-	slot0._txtherolv = gohelper.findChildText(slot1, "#txt_herolv")
-	slot0._txtherolabel = gohelper.findChildText(slot1, "#txt_herolv/label")
-	slot0._txtranklv = gohelper.findChildText(slot1, "#txt_ranklv")
-	slot0._txtranklabel = gohelper.findChildText(slot1, "#txt_ranklv/label")
-	slot0._txttalentlv = gohelper.findChildText(slot1, "#txt_talentlv")
-	slot0._txttalentlabel = gohelper.findChildText(slot1, "#txt_talentlv/label")
-	slot0._txtexskilllv = gohelper.findChildText(slot1, "#txt_exskilllv")
-	slot0._txtexskilllabel = gohelper.findChildText(slot1, "#txt_exskilllv/label")
-	slot0.isSelect = false
+	arg_1_0.goClick:AddClickListener(arg_1_0.onClickItem, arg_1_0)
 
-	GMController.instance:registerCallback(GMController.Event.ChangeSelectHeroItem, slot0.refreshSelect, slot0)
+	arg_1_0.bgImg = arg_1_1:GetComponent(gohelper.Type_Image)
+	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "#txt_heroname")
+	arg_1_0._txtherolv = gohelper.findChildText(arg_1_1, "#txt_herolv")
+	arg_1_0._txtherolabel = gohelper.findChildText(arg_1_1, "#txt_herolv/label")
+	arg_1_0._txtranklv = gohelper.findChildText(arg_1_1, "#txt_ranklv")
+	arg_1_0._txtranklabel = gohelper.findChildText(arg_1_1, "#txt_ranklv/label")
+	arg_1_0._txttalentlv = gohelper.findChildText(arg_1_1, "#txt_talentlv")
+	arg_1_0._txttalentlabel = gohelper.findChildText(arg_1_1, "#txt_talentlv/label")
+	arg_1_0._txtexskilllv = gohelper.findChildText(arg_1_1, "#txt_exskilllv")
+	arg_1_0._txtexskilllabel = gohelper.findChildText(arg_1_1, "#txt_exskilllv/label")
+	arg_1_0.isSelect = false
+
+	GMController.instance:registerCallback(GMController.Event.ChangeSelectHeroItem, arg_1_0.refreshSelect, arg_1_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0.mo = arg_2_1
 
 	if GMFastAddHeroHadHeroItemModel.instance:getShowType() == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		slot3 = slot1
-		slot0._txtName.text = slot3.config.name .. "#" .. tostring(slot3.config.id)
-		slot0._txtherolv.text = slot3.level
-		slot0._txtranklabel.text = "洞悉:"
-		slot0._txtranklv.text = slot3.rank - 1
-		slot0._txttalentlabel.text = "共鸣:"
-		slot0._txttalentlv.text = slot3.talent
-		slot0._txtexskilllabel.text = "塑造:"
-		slot0._txtexskilllv.text = slot3.exSkillLevel
+		local var_2_0 = arg_2_1
+
+		arg_2_0._txtName.text = var_2_0.config.name .. "#" .. tostring(var_2_0.config.id)
+		arg_2_0._txtherolv.text = var_2_0.level
+		arg_2_0._txtranklabel.text = "洞悉:"
+		arg_2_0._txtranklv.text = var_2_0.rank - 1
+		arg_2_0._txttalentlabel.text = "共鸣:"
+		arg_2_0._txttalentlv.text = var_2_0.talent
+		arg_2_0._txtexskilllabel.text = "塑造:"
+		arg_2_0._txtexskilllv.text = var_2_0.exSkillLevel
 	else
-		slot3 = slot1
-		slot0._txtName.text = slot3.config.name .. "#" .. tostring(slot3.config.id)
-		slot0._txtherolv.text = slot3.level
-		slot0._txtranklabel.text = "精炼:"
-		slot0._txtranklv.text = slot3.refineLv
-		slot0._txttalentlabel.text = "突破:"
-		slot0._txttalentlv.text = slot3.breakLv
-		slot0._txtexskilllabel.text = "uid:"
-		slot0._txtexskilllv.text = slot3.uid
+		local var_2_1 = arg_2_1
+
+		arg_2_0._txtName.text = var_2_1.config.name .. "#" .. tostring(var_2_1.config.id)
+		arg_2_0._txtherolv.text = var_2_1.level
+		arg_2_0._txtranklabel.text = "精炼:"
+		arg_2_0._txtranklv.text = var_2_1.refineLv
+		arg_2_0._txttalentlabel.text = "突破:"
+		arg_2_0._txttalentlv.text = var_2_1.breakLv
+		arg_2_0._txtexskilllabel.text = "uid:"
+		arg_2_0._txtexskilllv.text = var_2_1.uid
 	end
 
-	slot0:refreshSelect()
+	arg_2_0:refreshSelect()
 end
 
-function slot0.onClickItem(slot0)
-	slot0.isSelect = not slot0.isSelect
+function var_0_0.onClickItem(arg_3_0)
+	arg_3_0.isSelect = not arg_3_0.isSelect
 
-	if slot0.isSelect then
-		GMFastAddHeroHadHeroItemModel.instance:changeSelectHeroItem(slot0.mo)
-		GMFastAddHeroHadHeroItemModel.instance:setSelectMo(slot0.mo)
+	if arg_3_0.isSelect then
+		GMFastAddHeroHadHeroItemModel.instance:changeSelectHeroItem(arg_3_0.mo)
+		GMFastAddHeroHadHeroItemModel.instance:setSelectMo(arg_3_0.mo)
 	else
 		GMFastAddHeroHadHeroItemModel.instance:changeSelectHeroItem(nil)
 		GMFastAddHeroHadHeroItemModel.instance:setSelectMo(nil)
 	end
 end
 
-function slot0.refreshSelect(slot0)
-	if GMFastAddHeroHadHeroItemModel.instance:getSelectMo() then
-		slot0.isSelect = slot0.mo.uid == slot1.uid
+function var_0_0.refreshSelect(arg_4_0)
+	local var_4_0 = GMFastAddHeroHadHeroItemModel.instance:getSelectMo()
+
+	if var_4_0 then
+		arg_4_0.isSelect = arg_4_0.mo.uid == var_4_0.uid
 	else
-		slot0.isSelect = false
+		arg_4_0.isSelect = false
 	end
 
-	if slot0.isSelect then
-		slot0.bgImg.color = uv0.SelectBgColor
+	if arg_4_0.isSelect then
+		arg_4_0.bgImg.color = var_0_0.SelectBgColor
 	else
-		slot0.bgImg.color = uv0.NotSelectBgColor
+		arg_4_0.bgImg.color = var_0_0.NotSelectBgColor
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0.goClick:RemoveClickListener()
-	GMController.instance:unregisterCallback(GMController.Event.ChangeSelectHeroItem, slot0.refreshSelect, slot0)
+function var_0_0.onDestroy(arg_5_0)
+	arg_5_0.goClick:RemoveClickListener()
+	GMController.instance:unregisterCallback(GMController.Event.ChangeSelectHeroItem, arg_5_0.refreshSelect, arg_5_0)
 end
 
-return slot0
+return var_0_0

@@ -1,66 +1,87 @@
-module("modules.logic.versionactivity2_5.autochess.model.AutoChessGameModel", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.model.AutoChessGameModel", package.seeall)
 
-slot0 = class("AutoChessGameModel", BaseModel)
+local var_0_0 = class("AutoChessGameModel", BaseModel)
 
-function slot0.initTileNodes(slot0, slot1)
-	slot0.viewType = slot1
-	slot0.tileNodes = {}
-	slot3 = nil
-	slot3 = slot1 == AutoChessEnum.ViewType.All and AutoChessEnum.BoardSize.Column * 2 or AutoChessEnum.BoardSize.Column
-	slot4 = AutoChessEnum.TileOffsetX[slot1]
+function var_0_0.initTileNodes(arg_1_0, arg_1_1)
+	arg_1_0.viewType = arg_1_1
+	arg_1_0.tileNodes = {}
 
-	for slot8 = 1, AutoChessEnum.BoardSize.Row do
-		slot10 = AutoChessEnum.TileStartPos[slot1][slot8]
-		slot0.tileNodes[slot8] = slot0.tileNodes[slot8] or {}
+	local var_1_0 = AutoChessEnum.BoardSize.Row
+	local var_1_1
 
-		for slot14 = 1, slot3 do
-			slot0.tileNodes[slot8][slot14] = Vector2(slot10.x + (slot14 - 1) * (AutoChessEnum.TileSize[slot1][slot8].x + slot4), slot10.y)
+	if arg_1_1 == AutoChessEnum.ViewType.All then
+		var_1_1 = AutoChessEnum.BoardSize.Column * 2
+	else
+		var_1_1 = AutoChessEnum.BoardSize.Column
+	end
+
+	local var_1_2 = AutoChessEnum.TileOffsetX[arg_1_1]
+
+	for iter_1_0 = 1, var_1_0 do
+		local var_1_3 = AutoChessEnum.TileSize[arg_1_1][iter_1_0]
+		local var_1_4 = AutoChessEnum.TileStartPos[arg_1_1][iter_1_0]
+
+		arg_1_0.tileNodes[iter_1_0] = arg_1_0.tileNodes[iter_1_0] or {}
+
+		for iter_1_1 = 1, var_1_1 do
+			local var_1_5 = var_1_4.x + (iter_1_1 - 1) * (var_1_3.x + var_1_2)
+
+			arg_1_0.tileNodes[iter_1_0][iter_1_1] = Vector2(var_1_5, var_1_4.y)
 		end
 	end
 
-	return slot0.tileNodes
+	return arg_1_0.tileNodes
 end
 
-function slot0.getNearestTileXY(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0.tileNodes) do
-		slot8 = AutoChessEnum.TileSize[slot0.viewType][slot6]
+function var_0_0.getNearestTileXY(arg_2_0, arg_2_1, arg_2_2)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.tileNodes) do
+		local var_2_0 = AutoChessEnum.TileSize[arg_2_0.viewType][iter_2_0]
 
-		for slot12, slot13 in ipairs(slot7) do
-			if math.abs(slot1 - slot13.x) < slot8.x / 2 and math.abs(slot2 - slot13.y) < slot8.y / 2 then
-				return slot6, slot12
+		for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
+			local var_2_1 = math.abs(arg_2_1 - iter_2_3.x)
+			local var_2_2 = math.abs(arg_2_2 - iter_2_3.y)
+
+			if var_2_1 < var_2_0.x / 2 and var_2_2 < var_2_0.y / 2 then
+				return iter_2_0, iter_2_2
 			end
 		end
 	end
 end
 
-function slot0.getChessLocation(slot0, slot1, slot2)
-	return slot0.tileNodes[slot1][slot2] or slot3[slot2 - 5]
+function var_0_0.getChessLocation(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0.tileNodes[arg_3_1]
+
+	return var_3_0[arg_3_2] or var_3_0[arg_3_2 - 5]
 end
 
-function slot0.getNearestLeader(slot0, slot1)
-	if slot0.viewType == AutoChessEnum.ViewType.Player then
-		slot2 = slot0:getLeaderLocation(AutoChessEnum.TeamType.Player)
+function var_0_0.getNearestLeader(arg_4_0, arg_4_1)
+	if arg_4_0.viewType == AutoChessEnum.ViewType.Player then
+		local var_4_0 = arg_4_0:getLeaderLocation(AutoChessEnum.TeamType.Player)
+		local var_4_1 = math.abs(arg_4_1.x - var_4_0.x)
+		local var_4_2 = math.abs(arg_4_1.y - var_4_0.y)
 
-		if math.abs(slot1.x - slot2.x) < 55 and math.abs(slot1.y - slot2.y) < 145 then
+		if var_4_1 < 55 and var_4_2 < 145 then
 			return AutoChessModel.instance:getChessMo().svrFight.mySideMaster
 		end
-	elseif slot0.viewType == AutoChessEnum.ViewType.Enemy then
-		slot2 = slot0:getLeaderLocation(AutoChessEnum.TeamType.Enemy)
+	elseif arg_4_0.viewType == AutoChessEnum.ViewType.Enemy then
+		local var_4_3 = arg_4_0:getLeaderLocation(AutoChessEnum.TeamType.Enemy)
+		local var_4_4 = math.abs(arg_4_1.x - var_4_3.x)
+		local var_4_5 = math.abs(arg_4_1.y - var_4_3.y)
 
-		if math.abs(slot1.x - slot2.x) < 55 and math.abs(slot1.y - slot2.y) < 145 then
+		if var_4_4 < 55 and var_4_5 < 145 then
 			return AutoChessModel.instance:getChessMo().svrFight.enemyMaster
 		end
 	end
 end
 
-function slot0.getLeaderLocation(slot0, slot1)
-	return AutoChessEnum.LeaderPos[slot0.viewType][slot1]
+function var_0_0.getLeaderLocation(arg_5_0, arg_5_1)
+	return AutoChessEnum.LeaderPos[arg_5_0.viewType][arg_5_1]
 end
 
-function slot0.setChessAvatar(slot0, slot1)
-	slot0.avatar = slot1
+function var_0_0.setChessAvatar(arg_6_0, arg_6_1)
+	arg_6_0.avatar = arg_6_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

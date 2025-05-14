@@ -1,13 +1,14 @@
-module("modules.logic.mail.defines.MailEnum", package.seeall)
+﻿module("modules.logic.mail.defines.MailEnum", package.seeall)
 
-slot0 = _M
-slot0.SpecialTag = {
+local var_0_0 = _M
+
+var_0_0.SpecialTag = {
 	MonthExpired = 1,
 	ModifyName = 2
 }
-slot0.ReadStatus = {
+var_0_0.ReadStatus = {
 	Read = 1,
 	Unread = 0
 }
 
-return slot0
+return var_0_0

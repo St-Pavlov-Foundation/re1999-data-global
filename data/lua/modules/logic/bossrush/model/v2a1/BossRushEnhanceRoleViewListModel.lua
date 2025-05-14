@@ -1,71 +1,74 @@
-module("modules.logic.bossrush.model.v2a1.BossRushEnhanceRoleViewListModel", package.seeall)
+﻿module("modules.logic.bossrush.model.v2a1.BossRushEnhanceRoleViewListModel", package.seeall)
 
-slot0 = class("BossRushEnhanceRoleViewListModel", ListScrollModel)
+local var_0_0 = class("BossRushEnhanceRoleViewListModel", ListScrollModel)
 
-function slot0.setListData(slot0)
-	if BossRushConfig.instance:getActRoleEnhance() then
-		slot2 = {}
-		slot3 = 0
+function var_0_0.setListData(arg_1_0)
+	local var_1_0 = BossRushConfig.instance:getActRoleEnhance()
 
-		for slot7, slot8 in pairs(slot1) do
-			slot9 = {
-				characterId = slot8.characterId,
-				sort = slot8.sort
+	if var_1_0 then
+		local var_1_1 = {}
+		local var_1_2 = 0
+
+		for iter_1_0, iter_1_1 in pairs(var_1_0) do
+			local var_1_3 = {
+				characterId = iter_1_1.characterId,
+				sort = iter_1_1.sort
 			}
 
-			if slot8.sort == 1 then
-				slot3 = slot8.characterId
+			if iter_1_1.sort == 1 then
+				var_1_2 = iter_1_1.characterId
 			end
 
-			table.insert(slot2, slot9)
+			table.insert(var_1_1, var_1_3)
 		end
 
-		table.sort(slot2, slot0.sort)
-		slot0:setList(slot2)
+		table.sort(var_1_1, arg_1_0.sort)
+		arg_1_0:setList(var_1_1)
 
-		if slot3 ~= 0 then
-			slot0:setSelect(slot3)
+		if var_1_2 ~= 0 then
+			arg_1_0:setSelect(var_1_2)
 		end
 	end
 end
 
-function slot0.sort(slot0, slot1)
-	return slot0.sort < slot1.sort
+function var_0_0.sort(arg_2_0, arg_2_1)
+	return arg_2_0.sort < arg_2_1.sort
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.clearSelect(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._scrollViews) do
+		iter_3_1:setSelect(nil)
 	end
 
-	slot0._selectHeroId = nil
+	arg_3_0._selectHeroId = nil
 end
 
-function slot0._refreshSelect(slot0)
-	slot1 = nil
+function var_0_0._refreshSelect(arg_4_0)
+	local var_4_0
+	local var_4_1 = arg_4_0:getList()
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.characterId == slot0._selectHeroId then
-			slot1 = slot7
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		if iter_4_1.characterId == arg_4_0._selectHeroId then
+			var_4_0 = iter_4_1
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._scrollViews) do
-		slot7:setSelect(slot1)
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0._scrollViews) do
+		iter_4_3:setSelect(var_4_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectHeroId = slot1
+function var_0_0.setSelect(arg_5_0, arg_5_1)
+	arg_5_0._selectHeroId = arg_5_1
 
-	slot0:_refreshSelect()
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnSelectEnhanceRole, slot1)
+	arg_5_0:_refreshSelect()
+	BossRushController.instance:dispatchEvent(BossRushEvent.OnSelectEnhanceRole, arg_5_1)
 end
 
-function slot0.getSelectHeroId(slot0)
-	return slot0._selectHeroId
+function var_0_0.getSelectHeroId(arg_6_0)
+	return arg_6_0._selectHeroId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

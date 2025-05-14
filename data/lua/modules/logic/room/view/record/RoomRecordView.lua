@@ -1,74 +1,79 @@
-module("modules.logic.room.view.record.RoomRecordView", package.seeall)
+﻿module("modules.logic.room.view.record.RoomRecordView", package.seeall)
 
-slot0 = class("RoomRecordView", BaseView)
+local var_0_0 = class("RoomRecordView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.SwitchRecordView, slot0.switchTabView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(RoomController.instance, RoomEvent.SwitchRecordView, arg_2_0.switchTabView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(RoomController.instance, RoomEvent.SwitchRecordView, slot0.switchTabView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(RoomController.instance, RoomEvent.SwitchRecordView, arg_3_0.switchTabView, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_open)
 	CritterRpc.instance:sendGetCritterBookInfoRequest()
 	RoomRpc.instance:sendGetRoomLogRequest()
 end
 
-function slot0.switchTabView(slot0, slot1)
-	slot0._switchView = slot1.view
+function var_0_0.switchTabView(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1.animName
 
-	if not slot1.animName then
+	arg_7_0._switchView = arg_7_1.view
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0._animator.enabled = true
+	arg_7_0._animator.enabled = true
 
-	slot0._animator:Play(slot2, 0, 0)
-	TaskDispatcher.runDelay(slot0.switchTabViewAfterAnim, slot0, RoomRecordEnum.AnimTime)
+	arg_7_0._animator:Play(var_7_0, 0, 0)
+	TaskDispatcher.runDelay(arg_7_0.switchTabViewAfterAnim, arg_7_0, RoomRecordEnum.AnimTime)
 end
 
-function slot0.switchTabViewAfterAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.switchTabViewAfterAnim, slot0)
+function var_0_0.switchTabViewAfterAnim(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.switchTabViewAfterAnim, arg_8_0)
 
-	if not slot0._switchView then
+	if not arg_8_0._switchView then
 		return
 	end
 
-	if slot0._switchView == RoomRecordEnum.View.Task then
-		RoomRpc.instance:sendGetTradeTaskInfoRequest(slot0._reallySwitchTabView, slot0)
+	if arg_8_0._switchView == RoomRecordEnum.View.Task then
+		RoomRpc.instance:sendGetTradeTaskInfoRequest(arg_8_0._reallySwitchTabView, arg_8_0)
 	else
-		slot0:_reallySwitchTabView()
+		arg_8_0:_reallySwitchTabView()
 	end
 end
 
-function slot0._reallySwitchTabView(slot0)
-	slot0.viewContainer:selectTabView(slot0._switchView)
+function var_0_0._reallySwitchTabView(arg_9_0)
+	arg_9_0.viewContainer:selectTabView(arg_9_0._switchView)
 
-	slot0._switchView = nil
+	arg_9_0._switchView = nil
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.switchTabViewAfterAnim, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.switchTabViewAfterAnim, arg_10_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

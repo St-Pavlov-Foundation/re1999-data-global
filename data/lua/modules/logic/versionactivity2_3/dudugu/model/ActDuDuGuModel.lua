@@ -1,70 +1,79 @@
-module("modules.logic.versionactivity2_3.dudugu.model.ActDuDuGuModel", package.seeall)
+﻿module("modules.logic.versionactivity2_3.dudugu.model.ActDuDuGuModel", package.seeall)
 
-slot0 = class("ActDuDuGuModel", BaseModel)
+local var_0_0 = class("ActDuDuGuModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._curLvIndex = 0
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._curLvIndex = 0
 end
 
-function slot0.setCurLvIndex(slot0, slot1)
-	slot0._curLvIndex = slot1
+function var_0_0.setCurLvIndex(arg_3_0, arg_3_1)
+	arg_3_0._curLvIndex = arg_3_1
 end
 
-function slot0.getCurLvIndex(slot0)
-	return slot0._curLvIndex or 0
+function var_0_0.getCurLvIndex(arg_4_0)
+	return arg_4_0._curLvIndex or 0
 end
 
-function slot0.initData(slot0, slot1)
-	RoleActivityModel.instance:initData(slot1)
+function var_0_0.initData(arg_5_0, arg_5_1)
+	RoleActivityModel.instance:initData(arg_5_1)
 end
 
-function slot0.updateData(slot0, slot1)
-	RoleActivityModel.instance:updateData(slot1)
+function var_0_0.updateData(arg_6_0, arg_6_1)
+	RoleActivityModel.instance:updateData(arg_6_1)
 end
 
-function slot0.isLevelUnlock(slot0, slot1, slot2)
-	return RoleActivityModel.instance:isLevelUnlock(slot1, slot2)
+function var_0_0.isLevelUnlock(arg_7_0, arg_7_1, arg_7_2)
+	return (RoleActivityModel.instance:isLevelUnlock(arg_7_1, arg_7_2))
 end
 
-function slot0.isLevelPass(slot0, slot1, slot2)
-	return RoleActivityModel.instance:isLevelPass(slot1, slot2)
+function var_0_0.isLevelPass(arg_8_0, arg_8_1, arg_8_2)
+	return (RoleActivityModel.instance:isLevelPass(arg_8_1, arg_8_2))
 end
 
-function slot0.getNewFinishStoryLvl(slot0)
-	if not RoleActivityConfig.instance:getStoryLevelList(VersionActivity2_3Enum.ActivityId.DuDuGu)[slot0._curLvIndex].id or slot3 <= 0 then
+function var_0_0.getNewFinishStoryLvl(arg_9_0)
+	local var_9_0 = VersionActivity2_3Enum.ActivityId.DuDuGu
+	local var_9_1 = RoleActivityConfig.instance:getStoryLevelList(var_9_0)
+	local var_9_2 = var_9_1[arg_9_0._curLvIndex].id
+
+	if not var_9_2 or var_9_2 <= 0 then
 		return
 	end
 
-	if (slot0._curLvIndex + 1 <= #slot2 and slot2[slot0._curLvIndex + 1].id or 0) > 0 then
-		slot5 = slot0:isLevelPass(slot1, slot3)
-		slot6 = true
+	local var_9_3 = arg_9_0._curLvIndex + 1 <= #var_9_1 and var_9_1[arg_9_0._curLvIndex + 1].id or 0
 
-		if slot2[slot0._curLvIndex].afterStory > 0 then
-			slot6 = StoryModel.instance:isStoryFinished(slot7)
+	if var_9_3 > 0 then
+		local var_9_4 = arg_9_0:isLevelPass(var_9_0, var_9_2)
+		local var_9_5 = true
+		local var_9_6 = var_9_1[arg_9_0._curLvIndex].afterStory
+
+		if var_9_6 > 0 then
+			var_9_5 = StoryModel.instance:isStoryFinished(var_9_6)
 		end
 
-		if slot5 and not slot0:isLevelUnlock(slot1, slot4) and slot6 then
-			slot0.newFinishStoryLvlId = slot3
+		local var_9_7 = arg_9_0:isLevelUnlock(var_9_0, var_9_3)
 
-			return slot0.newFinishStoryLvlId
+		if var_9_4 and not var_9_7 and var_9_5 then
+			arg_9_0.newFinishStoryLvlId = var_9_2
+
+			return arg_9_0.newFinishStoryLvlId
 		end
 	end
 
-	slot0.newFinishStoryLvlId = RoleActivityModel.instance:getNewFinishStoryLvl()
+	arg_9_0.newFinishStoryLvlId = RoleActivityModel.instance:getNewFinishStoryLvl()
 
-	return slot0.newFinishStoryLvlId
+	return arg_9_0.newFinishStoryLvlId
 end
 
-function slot0.clearNewFinishStoryLvl(slot0)
+function var_0_0.clearNewFinishStoryLvl(arg_10_0)
 	RoleActivityModel.instance:clearNewFinishStoryLvl()
 
-	return slot0.newFinishStoryLvlId
+	return arg_10_0.newFinishStoryLvlId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

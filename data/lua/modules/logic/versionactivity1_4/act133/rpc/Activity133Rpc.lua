@@ -1,41 +1,45 @@
-module("modules.logic.versionactivity1_4.act133.rpc.Activity133Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.rpc.Activity133Rpc", package.seeall)
 
-slot0 = class("Activity133Rpc", BaseRpc)
+local var_0_0 = class("Activity133Rpc", BaseRpc)
 
-function slot0.sendGet133InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity133Module_pb.Get133InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet133InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity133Module_pb.Get133InfosRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet133InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet133InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	Activity133Model.instance:setActivityInfo(slot2)
+	Activity133Model.instance:setActivityInfo(arg_2_2)
 	Activity133Controller.instance:dispatchEvent(Activity133Event.OnUpdateInfo)
 end
 
-function slot0.sendAct133BonusRequest(slot0, slot1, slot2)
-	slot3 = Activity133Module_pb.Act133BonusRequest()
-	slot3.activityId = slot1
-	slot3.id = slot2
+function var_0_0.sendAct133BonusRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = Activity133Module_pb.Act133BonusRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.activityId = arg_3_1
+	var_3_0.id = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveAct133BonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct133BonusReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	slot0:sendGet133InfosRequest(VersionActivity1_4Enum.ActivityId.ShipRepair, function ()
-		Activity133Controller.instance:dispatchEvent(Activity133Event.OnGetBonus, uv0)
-	end, slot0)
+	local function var_4_0()
+		Activity133Controller.instance:dispatchEvent(Activity133Event.OnGetBonus, arg_4_2)
+	end
+
+	arg_4_0:sendGet133InfosRequest(VersionActivity1_4Enum.ActivityId.ShipRepair, var_4_0, arg_4_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

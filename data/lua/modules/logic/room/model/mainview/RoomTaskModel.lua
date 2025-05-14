@@ -1,184 +1,196 @@
-module("modules.logic.room.model.mainview.RoomTaskModel", package.seeall)
+﻿module("modules.logic.room.model.mainview.RoomTaskModel", package.seeall)
 
-slot0 = class("RoomTaskModel", BaseModel)
+local var_0_0 = class("RoomTaskModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
 
-	slot0._taskDatas = nil
-	slot0._taskMap = nil
-	slot0._showList = nil
-	slot0._taskFinishMap = nil
-	slot0.hasTask = false
-	slot0._isRunning = false
+	arg_3_0._taskDatas = nil
+	arg_3_0._taskMap = nil
+	arg_3_0._showList = nil
+	arg_3_0._taskFinishMap = nil
+	arg_3_0.hasTask = false
+	arg_3_0._isRunning = false
 end
 
-function slot0.buildDatas(slot0)
-	slot0._isRunning = true
-	slot0.hasTask = false
+function var_0_0.buildDatas(arg_4_0)
+	arg_4_0._isRunning = true
+	arg_4_0.hasTask = false
 
-	slot0:initData()
-	slot0:initConfig()
+	arg_4_0:initData()
+	arg_4_0:initConfig()
 end
 
-function slot0.handleTaskUpdate(slot0)
-	if slot0._isRunning then
-		slot0.hasTask = false
+function var_0_0.handleTaskUpdate(arg_5_0)
+	if arg_5_0._isRunning then
+		arg_5_0.hasTask = false
 
-		return slot0:updateData()
+		return arg_5_0:updateData()
 	end
 end
 
-function slot0.initData(slot0)
-	slot2 = {}
-	slot3 = {}
-	slot4 = {}
+function var_0_0.initData(arg_6_0)
+	local var_6_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room)
+	local var_6_1 = {}
+	local var_6_2 = {}
+	local var_6_3 = {}
 
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room) then
-		for slot8, slot9 in pairs(slot1) do
-			if slot9.config ~= nil then
-				if slot9.finishCount <= 0 then
-					slot0.hasTask = true
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in pairs(var_6_0) do
+			if iter_6_1.config ~= nil then
+				if iter_6_1.finishCount <= 0 then
+					arg_6_0.hasTask = true
 
-					table.insert(slot2, slot9)
+					table.insert(var_6_1, iter_6_1)
 
-					slot3[slot9.id] = slot9
+					var_6_2[iter_6_1.id] = iter_6_1
 				else
-					slot4[slot9.id] = slot9
+					var_6_3[iter_6_1.id] = iter_6_1
 				end
 			end
 		end
 	end
 
-	table.sort(slot2, RoomSceneTaskController.sortTask)
+	table.sort(var_6_1, RoomSceneTaskController.sortTask)
 
-	slot0._taskDatas = slot2
-	slot0._taskMap = slot3
-	slot0._taskFinishMap = slot4
+	arg_6_0._taskDatas = var_6_1
+	arg_6_0._taskMap = var_6_2
+	arg_6_0._taskFinishMap = var_6_3
 end
 
-function slot0.initConfig(slot0)
-	slot2 = {}
+function var_0_0.initConfig(arg_7_0)
+	local var_7_0 = TaskConfig.instance:gettaskroomlist()
+	local var_7_1 = {}
+	local var_7_2 = false
 
-	for slot7, slot8 in ipairs(TaskConfig.instance:gettaskroomlist()) do
-		slot9 = slot8.id
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_3 = iter_7_1.id
 
-		if not false and (slot0._taskFinishMap[slot9] or slot0._taskMap[slot9]) and slot8.isOnline == 1 then
-			slot3 = true
+		if not var_7_2 and (arg_7_0._taskFinishMap[var_7_3] or arg_7_0._taskMap[var_7_3]) and iter_7_1.isOnline == 1 then
+			var_7_2 = true
 		end
 
-		if slot3 and slot0._taskFinishMap[slot9] == nil then
-			table.insert(slot2, slot8)
+		local var_7_4 = arg_7_0._taskFinishMap[var_7_3] == nil
+
+		if var_7_2 and var_7_4 then
+			table.insert(var_7_1, iter_7_1)
 		end
 	end
 
-	table.sort(slot2, RoomSceneTaskController.sortTaskConfig)
+	table.sort(var_7_1, RoomSceneTaskController.sortTaskConfig)
 
-	slot0._showList = slot2
+	arg_7_0._showList = var_7_1
 end
 
-function slot0.updateData(slot0)
-	slot2 = nil
+function var_0_0.updateData(arg_8_0)
+	local var_8_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room)
+	local var_8_1
 
-	if TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room) then
-		slot3 = false
+	if var_8_0 then
+		local var_8_2 = false
 
-		for slot7, slot8 in pairs(slot1) do
-			if slot8.config ~= nil then
-				if not (slot8.finishCount <= 0) then
-					if slot0._taskMap[slot7] then
-						table.insert(slot2 or {}, slot8)
-						slot0:deleteTaskData(slot8)
+		for iter_8_0, iter_8_1 in pairs(var_8_0) do
+			if iter_8_1.config ~= nil then
+				local var_8_3 = iter_8_1.finishCount <= 0
+
+				if not var_8_3 then
+					if arg_8_0._taskMap[iter_8_0] then
+						var_8_1 = var_8_1 or {}
+
+						table.insert(var_8_1, iter_8_1)
+						arg_8_0:deleteTaskData(iter_8_1)
 					end
 
-					slot0._taskFinishMap[slot8.id] = slot8
-				elseif slot9 then
-					if not slot0._taskMap[slot7] then
-						slot0:addTaskData(slot8)
+					arg_8_0._taskFinishMap[iter_8_1.id] = iter_8_1
+				elseif var_8_3 then
+					if not arg_8_0._taskMap[iter_8_0] then
+						arg_8_0:addTaskData(iter_8_1)
 
-						slot3 = true
+						var_8_2 = true
 					else
-						slot0:updateTaskData(slot8)
+						arg_8_0:updateTaskData(iter_8_1)
 					end
 				end
 			end
 		end
 
-		if slot3 then
-			table.sort(slot0._taskDatas, RoomSceneTaskController.sortTask)
-			slot0:initConfig()
+		if var_8_2 then
+			table.sort(arg_8_0._taskDatas, RoomSceneTaskController.sortTask)
+			arg_8_0:initConfig()
 		end
 	end
 
-	return slot2
+	return var_8_1
 end
 
-function slot0.deleteTaskData(slot0, slot1)
-	for slot6, slot7 in pairs(slot0._taskDatas) do
-		if slot7.config.id == slot1.config.id then
-			table.remove(slot0._taskDatas, slot6)
+function var_0_0.deleteTaskData(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1.config.id
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._taskDatas) do
+		if iter_9_1.config.id == var_9_0 then
+			table.remove(arg_9_0._taskDatas, iter_9_0)
 		end
 	end
 
-	for slot6, slot7 in pairs(slot0._showList) do
-		if slot2 == slot7.id then
-			table.remove(slot0._showList, slot6)
+	for iter_9_2, iter_9_3 in pairs(arg_9_0._showList) do
+		if var_9_0 == iter_9_3.id then
+			table.remove(arg_9_0._showList, iter_9_2)
 		end
 	end
 
-	slot0._taskMap[slot2] = nil
+	arg_9_0._taskMap[var_9_0] = nil
 end
 
-function slot0.addTaskData(slot0, slot1)
-	table.insert(slot0._taskDatas, slot1)
+function var_0_0.addTaskData(arg_10_0, arg_10_1)
+	table.insert(arg_10_0._taskDatas, arg_10_1)
 
-	slot0._taskMap[slot1.id] = slot1
+	arg_10_0._taskMap[arg_10_1.id] = arg_10_1
 end
 
-function slot0.updateTaskData(slot0, slot1)
-	slot2 = slot1.config.id
+function var_0_0.updateTaskData(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.config.id
 
-	for slot6, slot7 in pairs(slot0._taskDatas) do
-		if slot7.config.id == slot2 then
-			slot0._taskDatas[slot6] = slot1
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._taskDatas) do
+		if iter_11_1.config.id == var_11_0 then
+			arg_11_0._taskDatas[iter_11_0] = arg_11_1
 
 			break
 		end
 	end
 
-	slot0._taskMap[slot2] = slot1
+	arg_11_0._taskMap[var_11_0] = arg_11_1
 end
 
-function slot0.getTaskDatas(slot0)
-	return slot0._taskDatas
+function var_0_0.getTaskDatas(arg_12_0)
+	return arg_12_0._taskDatas
 end
 
-function slot0.getNextTaskConfig(slot0)
-	for slot4, slot5 in ipairs(slot0._showList) do
-		if not slot0._taskMap[slot5.id] and not slot0._taskFinishMap[slot5.id] then
-			return slot5
+function var_0_0.getNextTaskConfig(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._showList) do
+		if not arg_13_0._taskMap[iter_13_1.id] and not arg_13_0._taskFinishMap[iter_13_1.id] then
+			return iter_13_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.tryGetTaskMO(slot0, slot1)
-	return slot0._taskMap[slot1]
+function var_0_0.tryGetTaskMO(arg_14_0, arg_14_1)
+	return arg_14_0._taskMap[arg_14_1]
 end
 
-function slot0.getShowList(slot0)
-	return slot0._showList
+function var_0_0.getShowList(arg_15_0)
+	return arg_15_0._showList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

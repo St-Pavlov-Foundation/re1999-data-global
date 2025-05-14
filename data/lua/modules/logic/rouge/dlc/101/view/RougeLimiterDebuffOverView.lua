@@ -1,59 +1,68 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterDebuffOverView", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterDebuffOverView", package.seeall)
 
-slot0 = class("RougeLimiterDebuffOverView", BaseView)
+local var_0_0 = class("RougeLimiterDebuffOverView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollviews = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_views")
-	slot0._godebuffitem = gohelper.findChild(slot0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem")
-	slot0._imagedebufficon = gohelper.findChildImage(slot0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#image_debufficon")
-	slot0._txtbufflevel = gohelper.findChildText(slot0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_bufflevel")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_dec")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_name")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollviews = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_views")
+	arg_1_0._godebuffitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem")
+	arg_1_0._imagedebufficon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#image_debufficon")
+	arg_1_0._txtbufflevel = gohelper.findChildText(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_bufflevel")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_dec")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#scroll_views/Viewport/Content/#go_debuffitem/#txt_name")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:initScroll()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:initScroll()
 end
 
-function slot0.initScroll(slot0)
-	if not slot0._scrollView then
-		slot1 = ListScrollParam.New()
-		slot1.scrollGOPath = "#scroll_views"
-		slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot1.prefabUrl = "#scroll_views/Viewport/Content/#go_debuffitem"
-		slot1.cellClass = RougeLimiterDebuffOverListItem
-		slot1.scrollDir = ScrollEnum.ScrollDirV
-		slot1.lineCount = 2
-		slot1.cellWidth = 756
-		slot1.cellHeight = 200
-		slot0._scrollView = LuaListScrollView.New(RougeLimiterDebuffOverListModel.instance, slot1)
+function var_0_0.initScroll(arg_7_0)
+	if not arg_7_0._scrollView then
+		local var_7_0 = ListScrollParam.New()
 
-		slot0:addChildView(slot0._scrollView)
+		var_7_0.scrollGOPath = "#scroll_views"
+		var_7_0.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_7_0.prefabUrl = "#scroll_views/Viewport/Content/#go_debuffitem"
+		var_7_0.cellClass = RougeLimiterDebuffOverListItem
+		var_7_0.scrollDir = ScrollEnum.ScrollDirV
+		var_7_0.lineCount = 2
+		var_7_0.cellWidth = 756
+		var_7_0.cellHeight = 200
+		arg_7_0._scrollView = LuaListScrollView.New(RougeLimiterDebuffOverListModel.instance, var_7_0)
+
+		arg_7_0:addChildView(arg_7_0._scrollView)
 	end
 
-	RougeLimiterDebuffOverListModel.instance:onInit(slot0.viewParam and slot0.viewParam.limiterIds)
+	local var_7_1 = arg_7_0.viewParam and arg_7_0.viewParam.limiterIds
+
+	RougeLimiterDebuffOverListModel.instance:onInit(var_7_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

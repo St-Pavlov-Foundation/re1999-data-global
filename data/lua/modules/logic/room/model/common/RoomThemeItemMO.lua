@@ -1,20 +1,20 @@
-module("modules.logic.room.model.common.RoomThemeItemMO", package.seeall)
+﻿module("modules.logic.room.model.common.RoomThemeItemMO", package.seeall)
 
-slot0 = pureTable("RoomThemeItemMO")
+local var_0_0 = pureTable("RoomThemeItemMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.id = slot1
-	slot0.itemId = slot1
-	slot0.itemNum = slot2 or 0
-	slot0.materialType = slot3
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.id = arg_1_1
+	arg_1_0.itemId = arg_1_1
+	arg_1_0.itemNum = arg_1_2 or 0
+	arg_1_0.materialType = arg_1_3
 end
 
-function slot0.getItemQuantity(slot0)
-	return ItemModel.instance:getItemQuantity(slot0.materialType, slot0.id) or 0
+function var_0_0.getItemQuantity(arg_2_0)
+	return ItemModel.instance:getItemQuantity(arg_2_0.materialType, arg_2_0.id) or 0
 end
 
-function slot0.getItemConfig(slot0)
-	return ItemModel.instance:getItemConfig(slot0.materialType, slot0.id)
+function var_0_0.getItemConfig(arg_3_0)
+	return ItemModel.instance:getItemConfig(arg_3_0.materialType, arg_3_0.id)
 end
 
-return slot0
+return var_0_0

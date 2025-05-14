@@ -1,101 +1,113 @@
-module("modules.logic.versionactivity1_4.act134.model.Activity134TaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act134.model.Activity134TaskListModel", package.seeall)
 
-slot0 = class("Activity134TaskListModel", ListScrollModel)
+local var_0_0 = class("Activity134TaskListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.sortTaskMoList(slot0)
-	slot2 = {}
-	slot3 = {}
-	slot4 = {}
+function var_0_0.sortTaskMoList(arg_3_0)
+	local var_3_0 = Activity134Model.instance:getTasksInfo()
+	local var_3_1 = {}
+	local var_3_2 = {}
+	local var_3_3 = {}
 
-	for slot8, slot9 in pairs(Activity134Model.instance:getTasksInfo()) do
-		if slot9.finishCount > 0 then
-			table.insert(slot4, slot9)
-		elseif slot9.hasFinished then
-			table.insert(slot2, slot9)
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		if iter_3_1.finishCount > 0 then
+			table.insert(var_3_3, iter_3_1)
+		elseif iter_3_1.hasFinished then
+			table.insert(var_3_1, iter_3_1)
 		else
-			table.insert(slot3, slot9)
+			table.insert(var_3_2, iter_3_1)
 		end
 	end
 
-	table.sort(slot2, uv0._sortFunc)
-	table.sort(slot3, uv0._sortFunc)
-	table.sort(slot4, uv0._sortFunc)
+	table.sort(var_3_1, var_0_0._sortFunc)
+	table.sort(var_3_2, var_0_0._sortFunc)
+	table.sort(var_3_3, var_0_0._sortFunc)
 
-	slot0.serverTaskModel = {}
+	arg_3_0.serverTaskModel = {}
 
-	tabletool.addValues(slot0.serverTaskModel, slot2)
-	tabletool.addValues(slot0.serverTaskModel, slot3)
-	tabletool.addValues(slot0.serverTaskModel, slot4)
-	slot0:refreshList()
+	tabletool.addValues(arg_3_0.serverTaskModel, var_3_1)
+	tabletool.addValues(arg_3_0.serverTaskModel, var_3_2)
+	tabletool.addValues(arg_3_0.serverTaskModel, var_3_3)
+	arg_3_0:refreshList()
 end
 
-function slot0._sortFunc(slot0, slot1)
-	if (slot0.finishCount > 0 and 3 or slot0.config.maxProgress <= slot0.progress and 1 or 2) ~= (slot1.finishCount > 0 and 3 or slot1.config.maxProgress <= slot1.progress and 1 or 2) then
-		return slot2 < slot3
+function var_0_0._sortFunc(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.finishCount > 0 and 3 or arg_4_0.progress >= arg_4_0.config.maxProgress and 1 or 2
+	local var_4_1 = arg_4_1.finishCount > 0 and 3 or arg_4_1.progress >= arg_4_1.config.maxProgress and 1 or 2
+
+	if var_4_0 ~= var_4_1 then
+		return var_4_0 < var_4_1
 	else
-		return slot0.config.id < slot1.config.id
+		return arg_4_0.config.id < arg_4_1.config.id
 	end
 end
 
-function slot0.refreshList(slot0)
-	if slot0:getFinishTaskCount() > 1 then
-		slot2 = tabletool.copy(slot0.serverTaskModel)
+function var_0_0.refreshList(arg_5_0)
+	if arg_5_0:getFinishTaskCount() > 1 then
+		local var_5_0 = tabletool.copy(arg_5_0.serverTaskModel)
 
-		table.insert(slot2, 1, {
+		table.insert(var_5_0, 1, {
 			getAll = true
 		})
-		slot0:setList(slot2)
+		arg_5_0:setList(var_5_0)
 	else
-		slot0:setList(slot0.serverTaskModel)
+		arg_5_0:setList(arg_5_0.serverTaskModel)
 	end
 end
 
-function slot0.getFinishTaskCount(slot0)
-	for slot5, slot6 in ipairs(slot0.serverTaskModel) do
-		if slot6.hasFinished and slot6.finishCount < slot6.config.maxProgress then
-			slot1 = 0 + 1
+function var_0_0.getFinishTaskCount(arg_6_0)
+	local var_6_0 = 0
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.serverTaskModel) do
+		if iter_6_1.hasFinished and iter_6_1.finishCount < iter_6_1.config.maxProgress then
+			var_6_0 = var_6_0 + 1
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.getFinishTaskActivityCount(slot0)
-	for slot5, slot6 in ipairs(slot0.serverTaskModel) do
-		if slot6.hasFinished and slot6.finishCount < slot6.config.maxProgress then
-			slot1 = 0 + slot6.config.activity
+function var_0_0.getFinishTaskActivityCount(arg_7_0)
+	local var_7_0 = 0
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.serverTaskModel) do
+		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1.config.maxProgress then
+			var_7_0 = var_7_0 + iter_7_1.config.activity
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.getGetRewardTaskCount(slot0)
-	for slot5, slot6 in ipairs(slot0.serverTaskModel) do
-		if slot6.config.maxProgress <= slot6.finishCount then
-			slot1 = 0 + 1
+function var_0_0.getGetRewardTaskCount(arg_8_0)
+	local var_8_0 = 0
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.serverTaskModel) do
+		if iter_8_1.finishCount >= iter_8_1.config.maxProgress then
+			var_8_0 = var_8_0 + 1
 		end
 	end
 
-	return slot1
+	return var_8_0
 end
 
-function slot0.getKeyRewardMo(slot0)
-	if slot0.serverTaskModel then
-		for slot4, slot5 in ipairs(slot0.serverTaskModel) do
-			if slot5.config.isKeyReward == 1 and slot5.finishCount < slot5.config.maxProgress then
-				return slot5
+function var_0_0.getKeyRewardMo(arg_9_0)
+	if arg_9_0.serverTaskModel then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0.serverTaskModel) do
+			if iter_9_1.config.isKeyReward == 1 and iter_9_1.finishCount < iter_9_1.config.maxProgress then
+				return iter_9_1
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

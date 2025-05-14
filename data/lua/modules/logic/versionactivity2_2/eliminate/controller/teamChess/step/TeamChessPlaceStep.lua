@@ -1,25 +1,28 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPlaceStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPlaceStep", package.seeall)
 
-slot0 = class("TeamChessPlaceStep", EliminateTeamChessStepBase)
+local var_0_0 = class("TeamChessPlaceStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	if EliminateTeamChessModel.instance:getCurTeamRoundStepState() == EliminateTeamChessEnum.TeamChessRoundType.enemy then
-		EliminateLevelController.instance:registerCallback(EliminateChessEvent.LevelDialogClosed, slot0._checkRoundStep, slot0)
+		EliminateLevelController.instance:registerCallback(EliminateChessEvent.LevelDialogClosed, arg_1_0._checkRoundStep, arg_1_0)
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessEnemyPlaceBefore)
 	else
-		slot0:_checkRoundStep()
+		arg_1_0:_checkRoundStep()
 	end
 end
 
-function slot0._checkRoundStep(slot0)
-	EliminateLevelController.instance:unregisterCallback(EliminateChessEvent.LevelDialogClosed, slot0._checkRoundStep, slot0)
+function var_0_0._checkRoundStep(arg_2_0)
+	EliminateLevelController.instance:unregisterCallback(EliminateChessEvent.LevelDialogClosed, arg_2_0._checkRoundStep, arg_2_0)
 
-	slot1 = slot0._data
-	slot2 = EliminateTeamChessModel.instance:getStronghold(slot1.strongholdId)
-	slot3 = slot1.chessPiece
+	local var_2_0 = arg_2_0._data
+	local var_2_1 = EliminateTeamChessModel.instance:getStronghold(var_2_0.strongholdId)
+	local var_2_2 = var_2_0.chessPiece
+	local var_2_3 = var_2_2.teamType
+	local var_2_4 = var_2_1:updatePiece(var_2_3, var_2_2)
+	local var_2_5 = var_2_1:getChess(var_2_2.uid)
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.AddStrongholdChess, slot2:getChess(slot3.uid), slot1.strongholdId, slot2:updatePiece(slot3.teamType, slot3))
-	TaskDispatcher.runDelay(slot0._onDone, slot0, EliminateTeamChessEnum.teamChessPlaceStep)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.AddStrongholdChess, var_2_5, var_2_0.strongholdId, var_2_4)
+	TaskDispatcher.runDelay(arg_2_0._onDone, arg_2_0, EliminateTeamChessEnum.teamChessPlaceStep)
 end
 
-return slot0
+return var_0_0

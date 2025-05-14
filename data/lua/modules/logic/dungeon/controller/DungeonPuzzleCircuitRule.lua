@@ -1,150 +1,159 @@
-module("modules.logic.dungeon.controller.DungeonPuzzleCircuitRule", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonPuzzleCircuitRule", package.seeall)
 
-slot0 = class("DungeonPuzzleCircuitRule")
-slot1 = DungeonPuzzleCircuitEnum.dir.left
-slot2 = DungeonPuzzleCircuitEnum.dir.right
-slot3 = DungeonPuzzleCircuitEnum.dir.down
-slot4 = DungeonPuzzleCircuitEnum.dir.up
+local var_0_0 = class("DungeonPuzzleCircuitRule")
+local var_0_1 = DungeonPuzzleCircuitEnum.dir.left
+local var_0_2 = DungeonPuzzleCircuitEnum.dir.right
+local var_0_3 = DungeonPuzzleCircuitEnum.dir.down
+local var_0_4 = DungeonPuzzleCircuitEnum.dir.up
 
-function slot0.ctor(slot0)
-	slot0._ruleChange = {
-		[28.0] = 46,
-		[248.0] = 468,
-		[24.0] = 48,
-		[46.0] = 28,
-		[48.0] = 68,
-		[246.0] = 248,
-		[268.0] = 246,
-		[468.0] = 268,
-		[26.0] = 24,
-		[68.0] = 26
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._ruleChange = {
+		[28] = 46,
+		[248] = 468,
+		[24] = 48,
+		[46] = 28,
+		[48] = 68,
+		[246] = 248,
+		[268] = 246,
+		[468] = 268,
+		[26] = 24,
+		[68] = 26
 	}
-	slot0._ruleConnect = {}
+	arg_1_0._ruleConnect = {}
 
-	for slot4, slot5 in pairs(slot0._ruleChange) do
-		if slot4 ~= 0 then
-			slot6 = {}
-			slot7 = slot4
+	for iter_1_0, iter_1_1 in pairs(arg_1_0._ruleChange) do
+		if iter_1_0 ~= 0 then
+			local var_1_0 = {}
+			local var_1_1 = iter_1_0
 
-			while slot7 > 0 do
-				slot8 = slot7 % 10
-				slot7 = (slot7 - slot8) / 10
-				slot6[slot8] = true
+			while var_1_1 > 0 do
+				local var_1_2 = var_1_1 % 10
+
+				var_1_1 = (var_1_1 - var_1_2) / 10
+				var_1_0[var_1_2] = true
 			end
 
-			slot0._ruleConnect[slot4] = slot6
+			arg_1_0._ruleConnect[iter_1_0] = var_1_0
 		end
 	end
 
-	slot0._ruleTypeConnect = {
-		[DungeonPuzzleCircuitEnum.type.power1] = {
-			[uv0] = true,
-			[uv1] = true
-		},
-		[DungeonPuzzleCircuitEnum.type.power2] = {
-			[uv2] = true,
-			[uv3] = true
-		},
-		[DungeonPuzzleCircuitEnum.type.capacitance] = {
-			[uv0] = true,
-			[uv1] = true,
-			[uv2] = true,
-			[uv3] = true
-		},
-		[DungeonPuzzleCircuitEnum.type.wrong] = {
-			[uv0] = true,
-			[uv1] = true,
-			[uv2] = true,
-			[uv3] = true
-		}
+	arg_1_0._ruleTypeConnect = {}
+	arg_1_0._ruleTypeConnect[DungeonPuzzleCircuitEnum.type.power1] = {
+		[var_0_2] = true,
+		[var_0_1] = true
+	}
+	arg_1_0._ruleTypeConnect[DungeonPuzzleCircuitEnum.type.power2] = {
+		[var_0_3] = true,
+		[var_0_4] = true
+	}
+	arg_1_0._ruleTypeConnect[DungeonPuzzleCircuitEnum.type.capacitance] = {
+		[var_0_2] = true,
+		[var_0_1] = true,
+		[var_0_3] = true,
+		[var_0_4] = true
+	}
+	arg_1_0._ruleTypeConnect[DungeonPuzzleCircuitEnum.type.wrong] = {
+		[var_0_2] = true,
+		[var_0_1] = true,
+		[var_0_3] = true,
+		[var_0_4] = true
 	}
 end
 
-function slot0.changeDirection(slot0, slot1, slot2)
-	if not DungeonPuzzleCircuitModel.instance:getData(slot1, slot2) then
+function var_0_0.changeDirection(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = DungeonPuzzleCircuitModel.instance:getData(arg_2_1, arg_2_2)
+
+	if not var_2_0 then
 		return
 	end
 
-	if slot0._ruleChange[slot3.value] then
-		slot3.value = slot4
+	local var_2_1 = arg_2_0._ruleChange[var_2_0.value]
+
+	if var_2_1 then
+		var_2_0.value = var_2_1
 	end
 
-	return slot3
+	return var_2_0
 end
 
-function slot0.getOldCircuitList(slot0)
-	return slot0._oldCircuiteList
+function var_0_0.getOldCircuitList(arg_3_0)
+	return arg_3_0._oldCircuiteList
 end
 
-function slot0.getOldCapacitanceList(slot0)
-	return slot0._oldCapacitanceList
+function var_0_0.getOldCapacitanceList(arg_4_0)
+	return arg_4_0._oldCapacitanceList
 end
 
-function slot0.getOldWrongList(slot0)
-	return slot0._oldWrongList
+function var_0_0.getOldWrongList(arg_5_0)
+	return arg_5_0._oldWrongList
 end
 
-function slot0.getCircuitList(slot0)
-	return slot0._circuitList
+function var_0_0.getCircuitList(arg_6_0)
+	return arg_6_0._circuitList
 end
 
-function slot0.getCapacitanceList(slot0)
-	return slot0._capacitanceList
+function var_0_0.getCapacitanceList(arg_7_0)
+	return arg_7_0._capacitanceList
 end
 
-function slot0.getWrongList(slot0)
-	return slot0._wrongList
+function var_0_0.getWrongList(arg_8_0)
+	return arg_8_0._wrongList
 end
 
-function slot0.isWin(slot0)
-	return slot0._win
+function var_0_0.isWin(arg_9_0)
+	return arg_9_0._win
 end
 
-function slot0.refreshAllConnection(slot0)
-	slot0._oldCircuiteList = slot0._circuitList
-	slot0._oldCapacitanceList = slot0._capacitanceList
+function var_0_0.refreshAllConnection(arg_10_0)
+	arg_10_0._oldCircuiteList = arg_10_0._circuitList
+	arg_10_0._oldCapacitanceList = arg_10_0._capacitanceList
 
-	slot0:_powerConnect()
+	arg_10_0:_powerConnect()
 
-	slot0._oldWrongList = slot0._wrongList
+	arg_10_0._oldWrongList = arg_10_0._wrongList
 
-	slot0:_wrongConnect()
+	arg_10_0:_wrongConnect()
 end
 
-function slot0._wrongConnect(slot0)
-	slot0._wrongList = {}
+function var_0_0._wrongConnect(arg_11_0)
+	arg_11_0._wrongList = {}
 
-	for slot5, slot6 in ipairs(DungeonPuzzleCircuitModel.instance:getWrongList()) do
-		slot7 = slot6.x
-		slot8 = slot6.y
+	local var_11_0 = DungeonPuzzleCircuitModel.instance:getWrongList()
 
-		slot0:_addWrongList(slot0:_findSingle(slot7 - 1, slot8, uv0, uv1, slot6))
-		slot0:_addWrongList(slot0:_findSingle(slot7 + 1, slot8, uv1, uv0, slot6))
-		slot0:_addWrongList(slot0:_findSingle(slot7, slot8 + 1, uv2, uv3, slot6))
-		slot0:_addWrongList(slot0:_findSingle(slot7, slot8 - 1, uv3, uv2, slot6))
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = iter_11_1.x
+		local var_11_2 = iter_11_1.y
+
+		arg_11_0:_addWrongList(arg_11_0:_findSingle(var_11_1 - 1, var_11_2, var_0_3, var_0_4, iter_11_1))
+		arg_11_0:_addWrongList(arg_11_0:_findSingle(var_11_1 + 1, var_11_2, var_0_4, var_0_3, iter_11_1))
+		arg_11_0:_addWrongList(arg_11_0:_findSingle(var_11_1, var_11_2 + 1, var_0_1, var_0_2, iter_11_1))
+		arg_11_0:_addWrongList(arg_11_0:_findSingle(var_11_1, var_11_2 - 1, var_0_2, var_0_1, iter_11_1))
 	end
 end
 
-function slot0._addWrongList(slot0, slot1)
-	if not slot1 then
+function var_0_0._addWrongList(arg_12_0, arg_12_1)
+	if not arg_12_1 then
 		return
 	end
 
-	slot0._wrongList[slot1.id] = slot1
+	arg_12_0._wrongList[arg_12_1.id] = arg_12_1
 end
 
-function slot0._powerConnect(slot0)
-	slot0._closeList = {}
-	slot0._powerList = {}
-	slot0._capacitanceList = {}
-	slot0._circuitList = {}
+function var_0_0._powerConnect(arg_13_0)
+	arg_13_0._closeList = {}
+	arg_13_0._powerList = {}
+	arg_13_0._capacitanceList = {}
+	arg_13_0._circuitList = {}
 
-	for slot6, slot7 in ipairs(DungeonPuzzleCircuitModel.instance:getPowerList()) do
-		if slot7.type == DungeonPuzzleCircuitEnum.type.power1 then
-			slot0:_findConnectPath(slot7)
+	local var_13_0 = DungeonPuzzleCircuitModel.instance:getPowerList()
+	local var_13_1 = DungeonPuzzleCircuitModel.instance:getCapacitanceList()
 
-			if #slot0._powerList == #slot1 and #slot0._capacitanceList == #DungeonPuzzleCircuitModel.instance:getCapacitanceList() then
-				slot0._win = true
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		if iter_13_1.type == DungeonPuzzleCircuitEnum.type.power1 then
+			arg_13_0:_findConnectPath(iter_13_1)
+
+			if #arg_13_0._powerList == #var_13_0 and #arg_13_0._capacitanceList == #var_13_1 then
+				arg_13_0._win = true
 
 				return
 			end
@@ -152,68 +161,75 @@ function slot0._powerConnect(slot0)
 	end
 end
 
-function slot0._findConnectPath(slot0, slot1)
-	slot2 = {
-		slot1
+function var_0_0._findConnectPath(arg_14_0, arg_14_1)
+	local var_14_0 = {
+		arg_14_1
 	}
 
-	while #slot2 > 0 do
-		if not slot0._closeList[table.remove(slot2).id] then
-			if slot3.type == DungeonPuzzleCircuitEnum.type.power1 or slot3.type == DungeonPuzzleCircuitEnum.type.power2 then
-				table.insert(slot0._powerList, slot3)
-			elseif slot3.type == DungeonPuzzleCircuitEnum.type.capacitance then
-				table.insert(slot0._capacitanceList, slot3)
+	while #var_14_0 > 0 do
+		local var_14_1 = table.remove(var_14_0)
+
+		if not arg_14_0._closeList[var_14_1.id] then
+			if var_14_1.type == DungeonPuzzleCircuitEnum.type.power1 or var_14_1.type == DungeonPuzzleCircuitEnum.type.power2 then
+				table.insert(arg_14_0._powerList, var_14_1)
+			elseif var_14_1.type == DungeonPuzzleCircuitEnum.type.capacitance then
+				table.insert(arg_14_0._capacitanceList, var_14_1)
 			end
 		end
 
-		slot0._closeList[slot3.id] = slot3
+		arg_14_0._closeList[var_14_1.id] = var_14_1
 
-		if slot3.type ~= DungeonPuzzleCircuitEnum.type.capacitance and slot3.type ~= DungeonPuzzleCircuitEnum.type.wrong then
-			if DungeonPuzzleCircuitEnum.type.straight <= slot3.type and slot3.type <= DungeonPuzzleCircuitEnum.type.t_shape then
-				table.insert(slot0._circuitList, slot3)
+		if var_14_1.type ~= DungeonPuzzleCircuitEnum.type.capacitance and var_14_1.type ~= DungeonPuzzleCircuitEnum.type.wrong then
+			if var_14_1.type >= DungeonPuzzleCircuitEnum.type.straight and var_14_1.type <= DungeonPuzzleCircuitEnum.type.t_shape then
+				table.insert(arg_14_0._circuitList, var_14_1)
 			end
 
-			slot4 = slot3.x
-			slot5 = slot3.y
+			local var_14_2 = var_14_1.x
+			local var_14_3 = var_14_1.y
 
-			slot0:_addToOpenList(slot0:_findSingle(slot4 - 1, slot5, uv0, uv1, slot3), slot2, slot0._closeList)
-			slot0:_addToOpenList(slot0:_findSingle(slot4 + 1, slot5, uv1, uv0, slot3), slot2, slot0._closeList)
-			slot0:_addToOpenList(slot0:_findSingle(slot4, slot5 + 1, uv2, uv3, slot3), slot2, slot0._closeList)
-			slot0:_addToOpenList(slot0:_findSingle(slot4, slot5 - 1, uv3, uv2, slot3), slot2, slot0._closeList)
+			arg_14_0:_addToOpenList(arg_14_0:_findSingle(var_14_2 - 1, var_14_3, var_0_3, var_0_4, var_14_1), var_14_0, arg_14_0._closeList)
+			arg_14_0:_addToOpenList(arg_14_0:_findSingle(var_14_2 + 1, var_14_3, var_0_4, var_0_3, var_14_1), var_14_0, arg_14_0._closeList)
+			arg_14_0:_addToOpenList(arg_14_0:_findSingle(var_14_2, var_14_3 + 1, var_0_1, var_0_2, var_14_1), var_14_0, arg_14_0._closeList)
+			arg_14_0:_addToOpenList(arg_14_0:_findSingle(var_14_2, var_14_3 - 1, var_0_2, var_0_1, var_14_1), var_14_0, arg_14_0._closeList)
 		end
 	end
 end
 
-function slot0._addToOpenList(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 or not slot3 or slot3[slot1.id] then
+function var_0_0._addToOpenList(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if not arg_15_1 or not arg_15_2 or not arg_15_3 or arg_15_3[arg_15_1.id] then
 		return
 	end
 
-	table.insert(slot2, slot1)
+	table.insert(arg_15_2, arg_15_1)
 end
 
-function slot0._findAround(slot0, slot1)
-	slot2 = slot1.x
-	slot3 = slot1.y
+function var_0_0._findAround(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_1.x
+	local var_16_1 = arg_16_1.y
 
-	slot0:_findSingle(slot2 - 1, slot3, uv0, uv1, slot1)
-	slot0:_findSingle(slot2 + 1, slot3, uv1, uv0, slot1)
-	slot0:_findSingle(slot2, slot3 + 1, uv2, uv3, slot1)
-	slot0:_findSingle(slot2, slot3 - 1, uv3, uv2, slot1)
+	arg_16_0:_findSingle(var_16_0 - 1, var_16_1, var_0_3, var_0_4, arg_16_1)
+	arg_16_0:_findSingle(var_16_0 + 1, var_16_1, var_0_4, var_0_3, arg_16_1)
+	arg_16_0:_findSingle(var_16_0, var_16_1 + 1, var_0_1, var_0_2, arg_16_1)
+	arg_16_0:_findSingle(var_16_0, var_16_1 - 1, var_0_2, var_0_1, arg_16_1)
 end
 
-function slot0._findSingle(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1 > 0 and slot1 <= DungeonPuzzleCircuitModel.constHeight and slot2 > 0 and slot2 <= DungeonPuzzleCircuitModel.constWidth then
-		if not DungeonPuzzleCircuitModel.instance:getData(slot1, slot2) then
+function var_0_0._findSingle(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
+	if arg_17_1 > 0 and arg_17_1 <= DungeonPuzzleCircuitModel.constHeight and arg_17_2 > 0 and arg_17_2 <= DungeonPuzzleCircuitModel.constWidth then
+		local var_17_0 = DungeonPuzzleCircuitModel.instance:getData(arg_17_1, arg_17_2)
+
+		if not var_17_0 then
 			return
 		end
 
-		return slot0:_getConnectRule(slot6)[slot3] and slot0:_getConnectRule(slot5)[slot4] and slot6
+		local var_17_1 = arg_17_0:_getConnectRule(var_17_0)
+		local var_17_2 = arg_17_0:_getConnectRule(arg_17_5)
+
+		return var_17_1[arg_17_3] and var_17_2[arg_17_4] and var_17_0
 	end
 end
 
-function slot0._getConnectRule(slot0, slot1)
-	return slot0._ruleConnect[slot1.value] or slot0._ruleTypeConnect[slot1.type]
+function var_0_0._getConnectRule(arg_18_0, arg_18_1)
+	return arg_18_0._ruleConnect[arg_18_1.value] or arg_18_0._ruleTypeConnect[arg_18_1.type]
 end
 
-return slot0
+return var_0_0

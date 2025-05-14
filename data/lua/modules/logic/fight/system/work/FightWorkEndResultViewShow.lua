@@ -1,85 +1,91 @@
-module("modules.logic.fight.system.work.FightWorkEndResultViewShow", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEndResultViewShow", package.seeall)
 
-slot0 = class("FightWorkEndResultViewShow", BaseWork)
+local var_0_0 = class("FightWorkEndResultViewShow", BaseWork)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	FightController.instance:checkFightQuitTipViewClose()
 
-	slot1 = DungeonModel.instance.curSendEpisodeId
-	slot3 = false
-	slot4 = nil
+	local var_1_0 = DungeonModel.instance.curSendEpisodeId
+	local var_1_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local var_1_2 = false
+	local var_1_3
 
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) then
-		slot3 = slot2.type == DungeonEnum.EpisodeType.Sp
-		slot4 = DungeonConfig.instance:getChapterCO(slot2.chapterId)
+	if var_1_1 then
+		var_1_2 = var_1_1.type == DungeonEnum.EpisodeType.Sp
+
+		local var_1_4 = var_1_1.chapterId
+		local var_1_5 = DungeonConfig.instance:getChapterCO(var_1_4)
 	end
 
-	if slot1 and DungeonConfig.instance:getElementEpisode(slot1) and not slot3 then
-		slot0:_done()
+	if var_1_0 and DungeonConfig.instance:getElementEpisode(var_1_0) and not var_1_2 then
+		arg_1_0:_done()
 
 		return
 	end
 
-	if slot0:_needHideEntity() then
+	if arg_1_0:_needHideEntity() then
 		FightHelper.hideAllEntity()
 		FightMsgMgr.sendMsg(FightMsgId.ReleaseAllEntrustedEntity)
 		FightController.instance:dispatchEvent(FightEvent.ReleaseAllEntrustedEntity)
 	end
 
-	slot7 = FightModel.instance:getRecordMO().fightResult
+	local var_1_6 = FightModel.instance:getRecordMO()
+	local var_1_7 = var_1_6.fightResult
 
 	if FightModel.instance:isShowSettlement() == false then
-		slot0:_done()
-	elseif slot7 == FightEnum.FightResult.Succ then
-		slot0:showSuccView()
-	elseif slot7 == FightEnum.FightResult.Fail or slot7 == FightEnum.FightResult.Abort or slot6.fightResult == FightEnum.FightResult.OutOfRoundFail then
-		if slot2 and slot2.type == DungeonEnum.EpisodeType.RoleStoryChallenge and slot7 ~= FightEnum.FightResult.Abort then
-			slot0:showSuccView()
-		elseif slot3 and slot7 ~= FightEnum.FightResult.Abort then
+		arg_1_0:_done()
+	elseif var_1_7 == FightEnum.FightResult.Succ then
+		arg_1_0:showSuccView()
+	elseif var_1_7 == FightEnum.FightResult.Fail or var_1_7 == FightEnum.FightResult.Abort or var_1_6.fightResult == FightEnum.FightResult.OutOfRoundFail then
+		if var_1_1 and var_1_1.type == DungeonEnum.EpisodeType.RoleStoryChallenge and var_1_7 ~= FightEnum.FightResult.Abort then
+			arg_1_0:showSuccView()
+		elseif var_1_2 and var_1_7 ~= FightEnum.FightResult.Abort then
 			ViewMgr.instance:openView(ViewName.FightFailTipsView, {
 				show_scene_dissolve_effect = true,
-				fight_result = slot7
+				fight_result = var_1_7
 			})
-		elseif slot2 and slot2.type == DungeonEnum.EpisodeType.TowerLimited then
-			slot0:showSuccView()
+		elseif var_1_1 and var_1_1.type == DungeonEnum.EpisodeType.TowerLimited then
+			arg_1_0:showSuccView()
 		else
-			if slot7 == FightEnum.FightResult.OutOfRoundFail then
+			if var_1_7 == FightEnum.FightResult.OutOfRoundFail then
 				if BossRushController.instance:isInBossRushDungeon() then
-					FightController.instance:registerCallback(FightEvent.OnResultViewClose, slot0._done, slot0)
+					FightController.instance:registerCallback(FightEvent.OnResultViewClose, arg_1_0._done, arg_1_0)
 					BossRushController.instance:openResultPanel()
 
 					return
 				end
 
 				ViewMgr.instance:openView(ViewName.FightFailTipsView, {
-					fight_result = slot7,
-					callback = function ()
-						uv0:showFailView()
+					fight_result = var_1_7,
+					callback = function()
+						arg_1_0:showFailView()
 					end
 				})
 
 				return
 			end
 
-			slot0:showFailView()
+			arg_1_0:showFailView()
 		end
 	end
 end
 
-function slot0.showSuccView(slot0)
+function var_0_0.showSuccView(arg_3_0)
 	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Victory)
 	PopupController.instance:setPause("fightsuccess", true)
-	FightController.instance:registerCallback(FightEvent.OnResultViewClose, slot0._done, slot0)
-	slot0:_showSuccView()
+	FightController.instance:registerCallback(FightEvent.OnResultViewClose, arg_3_0._done, arg_3_0)
+	arg_3_0:_showSuccView()
 end
 
-function slot0._showSuccView(slot0)
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) then
-		if slot1.type == DungeonEnum.EpisodeType.Season then
+function var_0_0._showSuccView(arg_4_0)
+	local var_4_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if var_4_0 then
+		if var_4_0.type == DungeonEnum.EpisodeType.Season then
 			Activity104Controller.instance:openSeasonSettlementView()
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.SeasonRetail or slot1.type == DungeonEnum.EpisodeType.SeasonTrial then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.SeasonRetail or var_4_0.type == DungeonEnum.EpisodeType.SeasonTrial then
 			PopupController.instance:setPause("fightsuccess", false)
 			Activity104Controller.instance:openSeasonFightSuccView()
 
@@ -88,50 +94,50 @@ function slot0._showSuccView(slot0)
 			ViewMgr.instance:openView(ViewName.ToughBattleFightSuccView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.SeasonSpecial then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.SeasonSpecial then
 			Activity104Controller.instance:openSeasonSettlementView()
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Season123 then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Season123 then
 			Season123Controller.instance:openSeason123SettlementView()
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Season123Retail or slot1.type == DungeonEnum.EpisodeType.Season123Trial then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Season123Retail or var_4_0.type == DungeonEnum.EpisodeType.Season123Trial then
 			PopupController.instance:setPause("fightsuccess", false)
 			Season123Controller.instance:openSeasonFightSuccView()
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.RoleStoryChallenge then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.RoleStoryChallenge then
 			ViewMgr.instance:openView(ViewName.RoleStoryFightSuccView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Act1_6DungeonBoss then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Act1_6DungeonBoss then
 			ViewMgr.instance:openView(ViewName.VersionActivity1_6BossFightSuccView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Cachot then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Cachot then
 			if V1a6_CachotModel.instance:getRogueEndingInfo() then
-				slot0:_done()
+				arg_4_0:_done()
 
 				return
 			end
-		elseif slot1.type == DungeonEnum.EpisodeType.Rouge then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Rouge then
 			ViewMgr.instance:openView(ViewName.RougeFightSuccessView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Season166Base or slot1.type == DungeonEnum.EpisodeType.Season166Train then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Season166Base or var_4_0.type == DungeonEnum.EpisodeType.Season166Train then
 			Season166Controller.instance:openResultPanel()
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.TowerBoss then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.TowerBoss then
 			ViewMgr.instance:openView(ViewName.TowerBossResultView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.TowerPermanent or slot1.type == DungeonEnum.EpisodeType.TowerLimited then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.TowerPermanent or var_4_0.type == DungeonEnum.EpisodeType.TowerLimited then
 			ViewMgr.instance:openView(ViewName.TowerPermanentResultView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Act183 then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Act183 then
 			ViewMgr.instance:openView(ViewName.Act183FightSuccView)
 
 			return
@@ -147,24 +153,26 @@ function slot0._showSuccView(slot0)
 	ViewMgr.instance:openView(ViewName.FightSuccView)
 end
 
-function slot0.showFailView(slot0)
+function var_0_0.showFailView(arg_5_0)
 	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Losing)
-	FightController.instance:registerCallback(FightEvent.OnResultViewClose, slot0._done, slot0)
+	FightController.instance:registerCallback(FightEvent.OnResultViewClose, arg_5_0._done, arg_5_0)
 
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) then
-		if Activity104Model.instance:isSeasonEpisodeType(slot1.type) then
+	local var_5_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if var_5_0 then
+		if Activity104Model.instance:isSeasonEpisodeType(var_5_0.type) then
 			Activity104Controller.instance:openSeasonFightFailView()
 
 			return
-		elseif Season123Controller.isSeason123EpisodeType(slot1.type) then
+		elseif Season123Controller.isSeason123EpisodeType(var_5_0.type) then
 			Season123Controller.instance:openSeasonFightFailView()
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Act1_6DungeonBoss then
+		elseif var_5_0.type == DungeonEnum.EpisodeType.Act1_6DungeonBoss then
 			ViewMgr.instance:openView(ViewName.VersionActivity1_6BossFightSuccView)
 
 			return
-		elseif slot1.type == DungeonEnum.EpisodeType.Season166Base then
+		elseif var_5_0.type == DungeonEnum.EpisodeType.Season166Base then
 			Season166Controller.instance:openResultPanel()
 
 			return
@@ -180,21 +188,23 @@ function slot0.showFailView(slot0)
 	ViewMgr.instance:openView(ViewName.FightFailView)
 end
 
-function slot0._needHideEntity(slot0)
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and slot1.type == DungeonEnum.EpisodeType.Season then
+function var_0_0._needHideEntity(arg_6_0)
+	local var_6_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if var_6_0 and var_6_0.type == DungeonEnum.EpisodeType.Season then
 		return false
 	end
 
 	return true
 end
 
-function slot0._done(slot0)
-	slot0:onDone(true)
+function var_0_0._done(arg_7_0)
+	arg_7_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnResultViewClose, slot0._done, slot0)
+function var_0_0.clearWork(arg_8_0)
+	FightController.instance:unregisterCallback(FightEvent.OnResultViewClose, arg_8_0._done, arg_8_0)
 	PopupController.instance:setPause("fightsuccess", false)
 end
 
-return slot0
+return var_0_0

@@ -1,41 +1,45 @@
-module("modules.logic.versionactivity2_5.liangyue.view.LiangYueAttributeDescItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueAttributeDescItem", package.seeall)
 
-slot0 = class("LiangYueAttributeDescItem")
+local var_0_0 = class("LiangYueAttributeDescItem")
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._txt_Num = gohelper.findChildText(slot1, "#txt_Num")
-	slot0._txt_NumChanged = gohelper.findChildText(slot1, "#txt_Num1")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._txt_Num = gohelper.findChildText(arg_1_1, "#txt_Num")
+	arg_1_0._txt_NumChanged = gohelper.findChildText(arg_1_1, "#txt_Num1")
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0.setActive(arg_2_0, arg_2_1)
+	gohelper.setActive(arg_2_0.go, arg_2_1)
 end
 
-function slot0.setInfo(slot0, slot1, slot2)
-	slot0._txt_Num.text = string.format("%s%s", LiangYueEnum.CalculateSymbol[slot1], slot2)
+function var_0_0.setInfo(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = string.format("%s%s", LiangYueEnum.CalculateSymbol[arg_3_1], arg_3_2)
 
-	if slot0._txt_NumChanged then
-		slot0._txt_NumChanged.text = slot3
+	arg_3_0._txt_Num.text = var_3_0
+
+	if arg_3_0._txt_NumChanged then
+		arg_3_0._txt_NumChanged.text = var_3_0
 	end
 end
 
-function slot0.setTargetInfo(slot0, slot1, slot2, slot3)
-	slot0._txt_Num.text = string.format("%s/%s", slot1, slot2)
+function var_0_0.setTargetInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = string.format("%s/%s", arg_4_1, arg_4_2)
 
-	if slot0._txt_NumChanged then
-		slot0._txt_NumChanged.text = slot4
+	arg_4_0._txt_Num.text = var_4_0
+
+	if arg_4_0._txt_NumChanged then
+		arg_4_0._txt_NumChanged.text = var_4_0
 	end
 
-	slot0:setTxtColor(slot3)
+	arg_4_0:setTxtColor(arg_4_3)
 end
 
-function slot0.setTxtColor(slot0, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txt_Num, slot1)
+function var_0_0.setTxtColor(arg_5_0, arg_5_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._txt_Num, arg_5_1)
 
-	if slot0._txt_NumChanged then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txt_NumChanged, slot1)
+	if arg_5_0._txt_NumChanged then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._txt_NumChanged, arg_5_1)
 	end
 end
 
-return slot0
+return var_0_0

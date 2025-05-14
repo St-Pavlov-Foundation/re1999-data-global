@@ -1,1451 +1,1575 @@
-module("modules.logic.room.view.RoomInitBuildingView", package.seeall)
+﻿module("modules.logic.room.view.RoomInitBuildingView", package.seeall)
 
-slot0 = class("RoomInitBuildingView", BaseView)
-slot1 = 0.3
-slot0.TabId = {
+local var_0_0 = class("RoomInitBuildingView", BaseView)
+local var_0_1 = 0.3
+
+var_0_0.TabId = {
 	ProductionLine = 1,
 	BuildDegree = 2
 }
 
-function slot0.onInitView(slot0)
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
-	slot0._gocategoryItem = gohelper.findChild(slot0.viewGO, "left/#scroll_catagory/viewport/content/#go_catagoryItem")
-	slot0._gotitle = gohelper.findChild(slot0.viewGO, "left/title")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "left/title/#image_icon")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "left/title/#txt_title")
-	slot0._txttitleEn = gohelper.findChildText(slot0.viewGO, "left/title/#txt_title/#txt_titleEn")
-	slot0._golevelitem = gohelper.findChild(slot0.viewGO, "left/title/activeLv/#go_levelitem")
-	slot0._btnlevelup = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/title/layout/#btn_levelup")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot")
-	slot0._btnskin = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/title/layout/#btn_skin")
-	slot0._goskinreddot = gohelper.findChild(slot0.viewGO, "left/title/layout/#btn_skin/#go_reddot")
-	slot0._gopart = gohelper.findChild(slot0.viewGO, "right/#go_part")
-	slot0._goinit = gohelper.findChild(slot0.viewGO, "right/#go_init")
-	slot0._goskin = gohelper.findChild(slot0.viewGO, "right/#go_skin")
-	slot0._gohubList = gohelper.findChild(slot0.viewGO, "right/#go_init/#go_hubList")
-	slot0._goactiveList = gohelper.findChild(slot0.viewGO, "right/#go_init/#go_activeList")
-	slot0._btnbuildingHub = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_init/buildingLayout/#btn_buildingHub")
-	slot0._btnbuildingActive = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#go_init/buildingLayout/#btn_buildingActive")
-	slot0._gogatherpart = gohelper.findChild(slot0.viewGO, "right/#go_init/#go_hubList/#go_gatherpart")
-	slot0._gochangepart = gohelper.findChild(slot0.viewGO, "right/#go_init/#go_hubList/#go_changepart")
-	slot0._gogather = gohelper.findChild(slot0.viewGO, "right/#go_part/#go_gather")
-	slot0._gochange = gohelper.findChild(slot0.viewGO, "right/#go_part/#go_change")
-	slot0._simagecombinebg = gohelper.findChildSingleImage(slot0.viewGO, "right/#go_part/#go_change/combine/go_combine3/#simage_combinebg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
+	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_catagory/viewport/content/#go_catagoryItem")
+	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "left/title")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "left/title/#image_icon")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "left/title/#txt_title")
+	arg_1_0._txttitleEn = gohelper.findChildText(arg_1_0.viewGO, "left/title/#txt_title/#txt_titleEn")
+	arg_1_0._golevelitem = gohelper.findChild(arg_1_0.viewGO, "left/title/activeLv/#go_levelitem")
+	arg_1_0._btnlevelup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/title/layout/#btn_levelup")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot")
+	arg_1_0._btnskin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/title/layout/#btn_skin")
+	arg_1_0._goskinreddot = gohelper.findChild(arg_1_0.viewGO, "left/title/layout/#btn_skin/#go_reddot")
+	arg_1_0._gopart = gohelper.findChild(arg_1_0.viewGO, "right/#go_part")
+	arg_1_0._goinit = gohelper.findChild(arg_1_0.viewGO, "right/#go_init")
+	arg_1_0._goskin = gohelper.findChild(arg_1_0.viewGO, "right/#go_skin")
+	arg_1_0._gohubList = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_hubList")
+	arg_1_0._goactiveList = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_activeList")
+	arg_1_0._btnbuildingHub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_init/buildingLayout/#btn_buildingHub")
+	arg_1_0._btnbuildingActive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_init/buildingLayout/#btn_buildingActive")
+	arg_1_0._gogatherpart = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_hubList/#go_gatherpart")
+	arg_1_0._gochangepart = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_hubList/#go_changepart")
+	arg_1_0._gogather = gohelper.findChild(arg_1_0.viewGO, "right/#go_part/#go_gather")
+	arg_1_0._gochange = gohelper.findChild(arg_1_0.viewGO, "right/#go_part/#go_change")
+	arg_1_0._simagecombinebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_part/#go_change/combine/go_combine3/#simage_combinebg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnskin:AddClickListener(slot0._btnskinOnClick, slot0)
-	slot0._btnlevelup:AddClickListener(slot0._btnlevelupOnClick, slot0)
-	slot0._btnbuildingHub:AddClickListener(slot0._btnbuildingHubOnClick, slot0)
-	slot0._btnbuildingActive:AddClickListener(slot0._btnbuildingActiveOnClick, slot0)
-	slot0:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, slot0._onSkinListViewShowChange, slot0)
-	slot0:addEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, slot0._refreshSkinReddot, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnskin:AddClickListener(arg_2_0._btnskinOnClick, arg_2_0)
+	arg_2_0._btnlevelup:AddClickListener(arg_2_0._btnlevelupOnClick, arg_2_0)
+	arg_2_0._btnbuildingHub:AddClickListener(arg_2_0._btnbuildingHubOnClick, arg_2_0)
+	arg_2_0._btnbuildingActive:AddClickListener(arg_2_0._btnbuildingActiveOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, arg_2_0._onSkinListViewShowChange, arg_2_0)
+	arg_2_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, arg_2_0._refreshSkinReddot, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnskin:RemoveClickListener()
-	slot0._btnlevelup:RemoveClickListener()
-	slot0._btnbuildingHub:RemoveClickListener()
-	slot0._btnbuildingActive:RemoveClickListener()
-	slot0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, slot0._onSkinListViewShowChange, slot0)
-	slot0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, slot0._refreshSkinReddot, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnskin:RemoveClickListener()
+	arg_3_0._btnlevelup:RemoveClickListener()
+	arg_3_0._btnbuildingHub:RemoveClickListener()
+	arg_3_0._btnbuildingActive:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, arg_3_0._onSkinListViewShowChange, arg_3_0)
+	arg_3_0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, arg_3_0._refreshSkinReddot, arg_3_0)
 end
 
-function slot0._btnskinOnClick(slot0)
-	RoomSkinController.instance:setRoomSkinListVisible(slot0._selectPartId)
+function var_0_0._btnskinOnClick(arg_4_0)
+	RoomSkinController.instance:setRoomSkinListVisible(arg_4_0._selectPartId)
 end
 
-function slot0._btnlevelupOnClick(slot0)
+function var_0_0._btnlevelupOnClick(arg_5_0)
 	RoomMapController.instance:openRoomLevelUpView()
 end
 
-function slot0._btnbuildingHubOnClick(slot0)
-	slot0:_changeSelectTab(1)
+function var_0_0._btnbuildingHubOnClick(arg_6_0)
+	arg_6_0:_changeSelectTab(1)
 end
 
-function slot0._btnbuildingActiveOnClick(slot0)
-	slot0:_changeSelectTab(2)
+function var_0_0._btnbuildingActiveOnClick(arg_7_0)
+	arg_7_0:_changeSelectTab(2)
 end
 
-function slot0._categoryItemOnClick(slot0, slot1)
+function var_0_0._categoryItemOnClick(arg_8_0, arg_8_1)
 	if ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
 		return
 	end
 
-	slot0:_changeSelectPart(slot0._categoryItemList[slot1].partId, true)
+	local var_8_0 = arg_8_0._categoryItemList[arg_8_1]
 
-	if slot0._lastItemIndex ~= slot1 then
-		slot0._lastItemIndex = slot1
+	arg_8_0:_changeSelectPart(var_8_0.partId, true)
 
-		if slot1 == 1 then
-			slot0:_changeSelectTab(1)
+	if arg_8_0._lastItemIndex ~= arg_8_1 then
+		arg_8_0._lastItemIndex = arg_8_1
+
+		if arg_8_1 == 1 then
+			arg_8_0:_changeSelectTab(1)
 		end
 	end
 end
 
-function slot0._btninitpartproductOnClick(slot0, slot1)
-	if #RoomProductionHelper.getCanGainLineIdList(slot1) > 0 then
-		slot0._flyEffectRewardInfoList = {}
+function var_0_0._btninitpartproductOnClick(arg_9_0, arg_9_1)
+	local var_9_0 = RoomProductionHelper.getCanGainLineIdList(arg_9_1)
 
-		for slot7, slot8 in ipairs(slot2) do
-			slot10 = RoomProductionModel.instance:getLineMO(slot8):getReservePer()
+	if #var_9_0 > 0 then
+		arg_9_0._flyEffectRewardInfoList = {}
 
-			if not LuaUtil.tableNotEmpty(slot0._flyEffectRewardInfoList) then
-				table.insert(slot0._flyEffectRewardInfoList, {
-					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(slot9.formulaId),
-					position = slot0:_getPartItemByPartId(slot1).simagereward.gameObject.transform.position
+		local var_9_1 = arg_9_0:_getPartItemByPartId(arg_9_1)
+
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			local var_9_2 = RoomProductionModel.instance:getLineMO(iter_9_1)
+			local var_9_3 = var_9_2:getReservePer()
+
+			if not LuaUtil.tableNotEmpty(arg_9_0._flyEffectRewardInfoList) then
+				table.insert(arg_9_0._flyEffectRewardInfoList, {
+					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(var_9_2.formulaId),
+					position = var_9_1.simagereward.gameObject.transform.position
 				})
 			end
 
-			slot0._lineIdPerDict[slot8] = slot10
+			arg_9_0._lineIdPerDict[iter_9_1] = var_9_3
 		end
 
-		RoomRpc.instance:sendGainProductionLineRequest(slot2, true)
+		RoomRpc.instance:sendGainProductionLineRequest(var_9_0, true)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_shop_collect)
 	end
 end
 
-function slot0._btninitpartProductOnClick(slot0, slot1)
-	slot0:_changeSelectPart(slot1)
+function var_0_0._btninitpartProductOnClick(arg_10_0, arg_10_1)
+	arg_10_0:_changeSelectPart(arg_10_1)
 end
 
-function slot0._btninitpartChangeOnClick(slot0, slot1)
-	slot0:_changeSelectPart(slot1, false, true)
+function var_0_0._btninitpartChangeOnClick(arg_11_0, arg_11_1)
+	arg_11_0:_changeSelectPart(arg_11_1, false, true)
 end
 
-function slot0._btnupgradeOnClick(slot0, slot1)
+function var_0_0._btnupgradeOnClick(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:_getLineItemByIndex(arg_12_1)
+	local var_12_1 = RoomProductionModel.instance:getLineMO(var_12_0.lineId)
+
 	ViewMgr.instance:openView(ViewName.RoomProductLineLevelUpView, {
-		lineMO = RoomProductionModel.instance:getLineMO(slot0:_getLineItemByIndex(slot1).lineId),
-		selectPartId = slot0._selectPartId
+		lineMO = var_12_1,
+		selectPartId = arg_12_0._selectPartId
 	})
 end
 
-function slot0._lineclickOnClick(slot0, slot1)
-	if RoomProductionModel.instance:getLineMO(slot0:_getLineItemByIndex(slot1).lineId):isLock() then
-		slot0:_hideExpandDetailUI()
-		ToastController.instance:showToast(RoomEnum.Toast.RoomProductLineLockTips, slot3.config.needRoomLevel)
-	elseif slot0._selectLineId == slot2.lineId then
-		if slot0._expandDetailLineId == slot0._selectLineId then
-			slot0._expandDetailLineId = nil
+function var_0_0._lineclickOnClick(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:_getLineItemByIndex(arg_13_1)
+	local var_13_1 = RoomProductionModel.instance:getLineMO(var_13_0.lineId)
+
+	if var_13_1:isLock() then
+		arg_13_0:_hideExpandDetailUI()
+		ToastController.instance:showToast(RoomEnum.Toast.RoomProductLineLockTips, var_13_1.config.needRoomLevel)
+	elseif arg_13_0._selectLineId == var_13_0.lineId then
+		if arg_13_0._expandDetailLineId == arg_13_0._selectLineId then
+			arg_13_0._expandDetailLineId = nil
 		else
-			slot0._expandDetailLineId = slot0._selectLineId
+			arg_13_0._expandDetailLineId = arg_13_0._selectLineId
 		end
 
-		slot0:_refreshDetailPartGather(slot0._selectPartId)
+		arg_13_0:_refreshDetailPartGather(arg_13_0._selectPartId)
 	else
-		slot0._expandDetailLineId = slot2.lineId
+		arg_13_0._expandDetailLineId = var_13_0.lineId
 
-		slot0:_changeSelectLine(slot2.lineId)
+		arg_13_0:_changeSelectLine(var_13_0.lineId)
 	end
 end
 
-function slot0._detailgathergetOnClick(slot0)
-	if #RoomProductionHelper.getCanGainLineIdList(slot0._selectPartId) > 0 then
-		slot0._flyEffectRewardInfoList = {}
-		slot0._lineIdPerDict = {}
+function var_0_0._detailgathergetOnClick(arg_14_0)
+	local var_14_0 = RoomProductionHelper.getCanGainLineIdList(arg_14_0._selectPartId)
 
-		for slot5, slot6 in ipairs(slot1) do
-			slot8 = RoomProductionModel.instance:getLineMO(slot6):getReservePer()
+	if #var_14_0 > 0 then
+		arg_14_0._flyEffectRewardInfoList = {}
+		arg_14_0._lineIdPerDict = {}
 
-			if not LuaUtil.tableNotEmpty(slot0._flyEffectRewardInfoList) then
-				table.insert(slot0._flyEffectRewardInfoList, {
-					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(slot7.formulaId),
-					position = slot0._gatherItem.btnget.gameObject.transform.position
+		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+			local var_14_1 = RoomProductionModel.instance:getLineMO(iter_14_1)
+			local var_14_2 = var_14_1:getReservePer()
+
+			if not LuaUtil.tableNotEmpty(arg_14_0._flyEffectRewardInfoList) then
+				table.insert(arg_14_0._flyEffectRewardInfoList, {
+					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(var_14_1.formulaId),
+					position = arg_14_0._gatherItem.btnget.gameObject.transform.position
 				})
 			end
 
-			slot0._lineIdPerDict[slot6] = slot8
+			arg_14_0._lineIdPerDict[iter_14_1] = var_14_2
 		end
 
-		RoomRpc.instance:sendGainProductionLineRequest(slot1, true)
+		RoomRpc.instance:sendGainProductionLineRequest(var_14_0, true)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_shop_collect)
 	end
 
-	slot0:_hideExpandDetailUI()
+	arg_14_0:_hideExpandDetailUI()
 end
 
-function slot0._gainProductionLineCallback(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0._gainProductionLineCallback(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 ~= 0 then
 		return
 	end
 
-	slot0:_playLineAnimation()
+	arg_15_0:_playLineAnimation()
 
-	if not slot0._flyEffectRewardInfoList or #slot0._flyEffectRewardInfoList <= 0 then
+	if not arg_15_0._flyEffectRewardInfoList or #arg_15_0._flyEffectRewardInfoList <= 0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0._flyEffectRewardInfoList) do
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._flyEffectRewardInfoList) do
 		RoomMapController.instance:dispatchEvent(RoomEvent.UIFlyEffect, {
-			startPos = slot7.position,
-			itemType = slot7.rewardInfo.type,
-			itemId = slot7.rewardInfo.id,
-			startQuantity = slot7.rewardInfo.quantity
+			startPos = iter_15_1.position,
+			itemType = iter_15_1.rewardInfo.type,
+			itemId = iter_15_1.rewardInfo.id,
+			startQuantity = iter_15_1.rewardInfo.quantity
 		})
 	end
 
-	slot0._flyEffectRewardInfoList = nil
+	arg_15_0._flyEffectRewardInfoList = nil
 end
 
-function slot0._playLineAnimation(slot0)
-	if slot0._lineGetTweenId then
-		if slot0._scene.tween then
-			slot0._scene.tween:killById(slot0._lineGetTweenId)
+function var_0_0._playLineAnimation(arg_16_0)
+	if arg_16_0._lineGetTweenId then
+		if arg_16_0._scene.tween then
+			arg_16_0._scene.tween:killById(arg_16_0._lineGetTweenId)
 		else
-			ZProj.TweenHelper.KillById(slot0._lineGetTweenId)
+			ZProj.TweenHelper.KillById(arg_16_0._lineGetTweenId)
 		end
 
-		slot0._lineGetTweenId = nil
+		arg_16_0._lineGetTweenId = nil
 	end
 
-	if LuaUtil.tableNotEmpty(slot0._lineIdPerDict) then
-		if slot0._scene.tween then
-			slot0._lineGetTweenId = slot0._scene.tween:tweenFloat(1, 0, 0.5, slot0._lineAnimationFrame, slot0._lineAnimationFinish, slot0)
+	if LuaUtil.tableNotEmpty(arg_16_0._lineIdPerDict) then
+		if arg_16_0._scene.tween then
+			arg_16_0._lineGetTweenId = arg_16_0._scene.tween:tweenFloat(1, 0, 0.5, arg_16_0._lineAnimationFrame, arg_16_0._lineAnimationFinish, arg_16_0)
 		else
-			slot0._lineGetTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, slot0._lineAnimationFrame, slot0._lineAnimationFinish, slot0)
+			arg_16_0._lineGetTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, arg_16_0._lineAnimationFrame, arg_16_0._lineAnimationFinish, arg_16_0)
 		end
 	end
 end
 
-function slot0._lineAnimationFrame(slot0, slot1)
-	if slot0._selectPartId == 0 then
-		for slot5, slot6 in ipairs(slot0._initPartProductItemList) do
-			for slot10, slot11 in ipairs(slot6.lineItemList) do
-				if slot0._lineIdPerDict[slot11.lineId] then
-					slot0:_refreshLineAnimationShow(slot12, slot1, slot11.imageprocess, slot11.txtprocess)
+function var_0_0._lineAnimationFrame(arg_17_0, arg_17_1)
+	if arg_17_0._selectPartId == 0 then
+		for iter_17_0, iter_17_1 in ipairs(arg_17_0._initPartProductItemList) do
+			for iter_17_2, iter_17_3 in ipairs(iter_17_1.lineItemList) do
+				local var_17_0 = arg_17_0._lineIdPerDict[iter_17_3.lineId]
+
+				if var_17_0 then
+					arg_17_0:_refreshLineAnimationShow(var_17_0, arg_17_1, iter_17_3.imageprocess, iter_17_3.txtprocess)
 				end
 			end
 		end
 	else
-		for slot5, slot6 in ipairs(slot0._gatherItem.lineItemList) do
-			if slot0._lineIdPerDict[slot6.lineId] then
-				slot0:_refreshLineAnimationShow(slot7, slot1, slot6.imageprocess, slot6.txtprocess)
+		for iter_17_4, iter_17_5 in ipairs(arg_17_0._gatherItem.lineItemList) do
+			local var_17_1 = arg_17_0._lineIdPerDict[iter_17_5.lineId]
+
+			if var_17_1 then
+				arg_17_0:_refreshLineAnimationShow(var_17_1, arg_17_1, iter_17_5.imageprocess, iter_17_5.txtprocess)
 			end
 		end
 
-		if slot0._lineIdPerDict[slot0._selectLineId] then
-			slot0:_refreshLineAnimationShow(slot2, slot1, nil, )
+		local var_17_2 = arg_17_0._lineIdPerDict[arg_17_0._selectLineId]
+
+		if var_17_2 then
+			arg_17_0:_refreshLineAnimationShow(var_17_2, arg_17_1, nil, nil)
 		end
 	end
 end
 
-function slot0._refreshLineAnimationShow(slot0, slot1, slot2, slot3, slot4)
-	if slot3 then
-		slot3.fillAmount = slot1 * slot2
+function var_0_0._refreshLineAnimationShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+	arg_18_1 = arg_18_1 * arg_18_2
+
+	if arg_18_3 then
+		arg_18_3.fillAmount = arg_18_1
 	end
 
-	if slot4 then
-		slot4.text = string.format("%d%%", math.max(0, math.floor(slot1 * 100)))
+	if arg_18_4 then
+		local var_18_0 = math.max(0, math.floor(arg_18_1 * 100))
+
+		arg_18_4.text = string.format("%d%%", var_18_0)
 	end
 end
 
-function slot0._lineAnimationFinish(slot0)
-	slot0:_lineAnimationFrame(0)
+function var_0_0._lineAnimationFinish(arg_19_0)
+	arg_19_0:_lineAnimationFrame(0)
 
-	slot0._lineIdPerDict = {}
+	arg_19_0._lineIdPerDict = {}
 end
 
-function slot0._clearLineAnimation(slot0)
-	if slot0._lineGetTweenId then
-		if slot0._scene.tween then
-			slot0._scene.tween:killById(slot0._lineGetTweenId)
+function var_0_0._clearLineAnimation(arg_20_0)
+	if arg_20_0._lineGetTweenId then
+		if arg_20_0._scene.tween then
+			arg_20_0._scene.tween:killById(arg_20_0._lineGetTweenId)
 		else
-			ZProj.TweenHelper.KillById(slot0._lineGetTweenId)
+			ZProj.TweenHelper.KillById(arg_20_0._lineGetTweenId)
 		end
 
-		slot0._lineGetTweenId = nil
+		arg_20_0._lineGetTweenId = nil
 	end
 
-	slot0._lineIdPerDict = {}
+	arg_20_0._lineIdPerDict = {}
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._selectPartId = 0
-	slot0._selectTabId = uv0.TabId.ProductionLine
-	slot0._selectLineId = 0
+function var_0_0._editableInitView(arg_21_0)
+	arg_21_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_21_0._selectPartId = 0
+	arg_21_0._selectTabId = var_0_0.TabId.ProductionLine
+	arg_21_0._selectLineId = 0
 
-	slot0.viewContainer:setSelectLine(slot0._selectLineId)
+	arg_21_0.viewContainer:setSelectLine(arg_21_0._selectLineId)
 
-	slot0._categoryItemList = {}
+	arg_21_0._categoryItemList = {}
 
-	gohelper.setActive(slot0._gocategoryItem, false)
+	gohelper.setActive(arg_21_0._gocategoryItem, false)
 
-	slot0._levelItemList = {}
+	arg_21_0._levelItemList = {}
 
-	gohelper.setActive(slot0._golevelitem, false)
+	gohelper.setActive(arg_21_0._golevelitem, false)
 
-	slot0._buildingInfoItemList = {}
-	slot0._detailInitTabHubItem = slot0:_getDetailInitItem(slot0._btnbuildingHub.gameObject)
-	slot0._detailInitTabActiveItem = slot0:_getDetailInitItem(slot0._btnbuildingActive.gameObject)
-	slot0._initPartProductItemList = {}
-	slot0._initPartChangeItemList = {}
+	arg_21_0._buildingInfoItemList = {}
+	arg_21_0._detailInitTabHubItem = arg_21_0:_getDetailInitItem(arg_21_0._btnbuildingHub.gameObject)
+	arg_21_0._detailInitTabActiveItem = arg_21_0:_getDetailInitItem(arg_21_0._btnbuildingActive.gameObject)
+	arg_21_0._initPartProductItemList = {}
+	arg_21_0._initPartChangeItemList = {}
 
-	gohelper.setActive(slot0._gogatherpart, false)
-	gohelper.setActive(slot0._gochangepart, false)
+	gohelper.setActive(arg_21_0._gogatherpart, false)
+	gohelper.setActive(arg_21_0._gochangepart, false)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._lineIdPerDict = {}
+	arg_21_0._animator = arg_21_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_21_0._lineIdPerDict = {}
 
-	gohelper.addUIClickAudio(slot0._btnlevelup.gameObject, AudioEnum.UI.UI_Rolesopen)
-	slot0._simagecombinebg:LoadImage(ResUrl.getRoomImage("bg_hechengdiban"))
-	slot0._simagemask:LoadImage(ResUrl.getRoomImage("full/bg_yinyingzhezhao"))
+	gohelper.addUIClickAudio(arg_21_0._btnlevelup.gameObject, AudioEnum.UI.UI_Rolesopen)
+	arg_21_0._simagecombinebg:LoadImage(ResUrl.getRoomImage("bg_hechengdiban"))
+	arg_21_0._simagemask:LoadImage(ResUrl.getRoomImage("full/bg_yinyingzhezhao"))
 
-	slot0._expandDetailLineId = nil
-	slot0._golevelupeffect = gohelper.findChild(slot0.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot/#leveup_effect")
+	arg_21_0._expandDetailLineId = nil
+	arg_21_0._golevelupeffect = gohelper.findChild(arg_21_0.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot/#leveup_effect")
 end
 
-function slot0._getLineItemByIndex(slot0, slot1)
-	if slot1 == 0 then
-		return slot0._changeItem.lineItem
+function var_0_0._getLineItemByIndex(arg_22_0, arg_22_1)
+	if arg_22_1 == 0 then
+		return arg_22_0._changeItem.lineItem
 	else
-		return slot0._gatherItem.lineItemList[slot1]
+		return arg_22_0._gatherItem.lineItemList[arg_22_1]
 	end
 end
 
-function slot0._getLineItemByLineId(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._gatherItem.lineItemList) do
-		if slot6.lineId == slot1 then
-			return slot6
+function var_0_0._getLineItemByLineId(arg_23_0, arg_23_1)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0._gatherItem.lineItemList) do
+		if iter_23_1.lineId == arg_23_1 then
+			return iter_23_1
 		end
 	end
 end
 
-function slot0._getPartItemByPartId(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._initPartProductItemList) do
-		if slot6.partId == slot1 then
-			return slot6
+function var_0_0._getPartItemByPartId(arg_24_0, arg_24_1)
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0._initPartProductItemList) do
+		if iter_24_1.partId == arg_24_1 then
+			return iter_24_1
 		end
 	end
 
-	for slot5, slot6 in ipairs(slot0._initPartChangeItemList) do
-		if slot6.partId == slot1 then
-			return slot6
+	for iter_24_2, iter_24_3 in ipairs(arg_24_0._initPartChangeItemList) do
+		if iter_24_3.partId == arg_24_1 then
+			return iter_24_3
 		end
 	end
 end
 
-function slot0._initChangeItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = slot0._gochange
-	slot1.goline = gohelper.findChild(slot1.go, "productLineItem")
-	slot1.gobgvx = gohelper.findChild(slot1.go, "combine/go_combine3/#bgvx")
-	slot1.gohechengeffect = gohelper.findChild(slot1.go, "combine/#hechengeffect")
-	slot1.lineItem = slot0:getUserDataTb_()
+function var_0_0._initChangeItem(arg_25_0)
+	local var_25_0 = arg_25_0:getUserDataTb_()
 
-	slot0:_initLine(slot1.lineItem, slot1.goline, false, 0)
-	gohelper.setActive(slot1.goline, true)
+	var_25_0.go = arg_25_0._gochange
+	var_25_0.goline = gohelper.findChild(var_25_0.go, "productLineItem")
+	var_25_0.gobgvx = gohelper.findChild(var_25_0.go, "combine/go_combine3/#bgvx")
+	var_25_0.gohechengeffect = gohelper.findChild(var_25_0.go, "combine/#hechengeffect")
+	var_25_0.lineItem = arg_25_0:getUserDataTb_()
 
-	return slot1
+	arg_25_0:_initLine(var_25_0.lineItem, var_25_0.goline, false, 0)
+	gohelper.setActive(var_25_0.goline, true)
+
+	return var_25_0
 end
 
-function slot0._initGatherItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = slot0._gogather
-	slot1.txtname = gohelper.findChildText(slot1.go, "collect/txt_productLineName")
-	slot1.txtprocess = gohelper.findChildText(slot1.go, "collect/txt_collectprocess")
-	slot1.goarrow = gohelper.findChild(slot1.go, "collect/txt_collectprocess/go_arrow")
-	slot1.gopause = gohelper.findChild(slot1.go, "collect/txt_collectprocess/go_pause")
-	slot1.imagereward = gohelper.findChildImage(slot1.go, "collect/image_curcollectitem")
-	slot1.goline = gohelper.findChild(slot1.go, "scroll_productLine/viewport/content/go_productLineItem")
-	slot1.goinfo = gohelper.findChild(slot1.go, "go_gatherInfo")
-	slot1.txtstore = gohelper.findChildText(slot1.go, "go_gatherInfo/collectinfo/right/txt_store")
-	slot1.txttime = gohelper.findChildText(slot1.go, "go_gatherInfo/collectinfo/right/txt_expspeed")
-	slot1.txtremain = gohelper.findChildText(slot1.go, "go_gatherInfo/collectinfo/right/txt_time")
-	slot1.goget = gohelper.findChild(slot1.go, "btn_get/go_get")
-	slot1.gonoget = gohelper.findChild(slot1.go, "btn_get/go_noget")
-	slot1.btnget = gohelper.findChildButton(slot1.go, "btn_get")
-	slot1.btnnewget = gohelper.findChildButton(slot1.go, "collect/btn_get")
-	slot1.animatorcircle = gohelper.findChild(slot1.go, "collect/bg"):GetComponent(typeof(UnityEngine.Animator))
-	slot1.animatorget = slot1.btnget.gameObject:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initGatherItem(arg_26_0)
+	local var_26_0 = arg_26_0:getUserDataTb_()
 
-	slot1.btnget:AddClickListener(slot0._detailgathergetOnClick, slot0)
-	slot1.btnnewget:AddClickListener(slot0._detailgathergetOnClick, slot0)
+	var_26_0.go = arg_26_0._gogather
+	var_26_0.txtname = gohelper.findChildText(var_26_0.go, "collect/txt_productLineName")
+	var_26_0.txtprocess = gohelper.findChildText(var_26_0.go, "collect/txt_collectprocess")
+	var_26_0.goarrow = gohelper.findChild(var_26_0.go, "collect/txt_collectprocess/go_arrow")
+	var_26_0.gopause = gohelper.findChild(var_26_0.go, "collect/txt_collectprocess/go_pause")
+	var_26_0.imagereward = gohelper.findChildImage(var_26_0.go, "collect/image_curcollectitem")
+	var_26_0.goline = gohelper.findChild(var_26_0.go, "scroll_productLine/viewport/content/go_productLineItem")
+	var_26_0.goinfo = gohelper.findChild(var_26_0.go, "go_gatherInfo")
+	var_26_0.txtstore = gohelper.findChildText(var_26_0.go, "go_gatherInfo/collectinfo/right/txt_store")
+	var_26_0.txttime = gohelper.findChildText(var_26_0.go, "go_gatherInfo/collectinfo/right/txt_expspeed")
+	var_26_0.txtremain = gohelper.findChildText(var_26_0.go, "go_gatherInfo/collectinfo/right/txt_time")
+	var_26_0.goget = gohelper.findChild(var_26_0.go, "btn_get/go_get")
+	var_26_0.gonoget = gohelper.findChild(var_26_0.go, "btn_get/go_noget")
+	var_26_0.btnget = gohelper.findChildButton(var_26_0.go, "btn_get")
+	var_26_0.btnnewget = gohelper.findChildButton(var_26_0.go, "collect/btn_get")
+	var_26_0.animatorcircle = gohelper.findChild(var_26_0.go, "collect/bg"):GetComponent(typeof(UnityEngine.Animator))
+	var_26_0.animatorget = var_26_0.btnget.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-	slot1.lineItemList = {}
+	var_26_0.btnget:AddClickListener(arg_26_0._detailgathergetOnClick, arg_26_0)
+	var_26_0.btnnewget:AddClickListener(arg_26_0._detailgathergetOnClick, arg_26_0)
 
-	gohelper.setActive(slot1.goline, false)
+	var_26_0.lineItemList = {}
 
-	return slot1
+	gohelper.setActive(var_26_0.goline, false)
+
+	return var_26_0
 end
 
-function slot0._initLine(slot0, slot1, slot2, slot3, slot4)
-	slot1.go = slot2
-	slot1.index = slot4
-	slot1.isGather = slot3
-	slot1.txtname = gohelper.findChildText(slot1.go, "name")
-	slot1.goshowprocess = gohelper.findChild(slot1.go, "go_process")
-	slot1.golevelitem = gohelper.findChild(slot1.go, "name/go_activeLv/go_normalitem")
-	slot1.imageprocess = gohelper.findChildImage(slot1.go, "go_process/go_process/processbar")
-	slot1.txtprocess = gohelper.findChildText(slot1.go, "go_process/go_process/num")
-	slot1.goprocess = gohelper.findChild(slot1.go, "go_process/go_process")
-	slot1.btnupgrade = gohelper.findChildButtonWithAudio(slot1.go, "btn_upgrade")
-	slot1.reddot = gohelper.findChild(slot1.go, "btn_upgrade/reddot")
+function var_0_0._initLine(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
+	arg_27_1.go = arg_27_2
+	arg_27_1.index = arg_27_4
+	arg_27_1.isGather = arg_27_3
+	arg_27_1.txtname = gohelper.findChildText(arg_27_1.go, "name")
+	arg_27_1.goshowprocess = gohelper.findChild(arg_27_1.go, "go_process")
+	arg_27_1.golevelitem = gohelper.findChild(arg_27_1.go, "name/go_activeLv/go_normalitem")
+	arg_27_1.imageprocess = gohelper.findChildImage(arg_27_1.go, "go_process/go_process/processbar")
+	arg_27_1.txtprocess = gohelper.findChildText(arg_27_1.go, "go_process/go_process/num")
+	arg_27_1.goprocess = gohelper.findChild(arg_27_1.go, "go_process/go_process")
+	arg_27_1.btnupgrade = gohelper.findChildButtonWithAudio(arg_27_1.go, "btn_upgrade")
+	arg_27_1.reddot = gohelper.findChild(arg_27_1.go, "btn_upgrade/reddot")
 
-	slot1.btnupgrade:AddClickListener(slot0._btnupgradeOnClick, slot0, slot1.index)
-	gohelper.addUIClickAudio(slot1.btnupgrade.gameObject, AudioEnum.UI.UI_Rolesopen)
+	arg_27_1.btnupgrade:AddClickListener(arg_27_0._btnupgradeOnClick, arg_27_0, arg_27_1.index)
+	gohelper.addUIClickAudio(arg_27_1.btnupgrade.gameObject, AudioEnum.UI.UI_Rolesopen)
 
-	slot1.levelItemList = slot0:getUserDataTb_()
+	arg_27_1.levelItemList = arg_27_0:getUserDataTb_()
 
-	if slot3 then
-		slot1.gofull = gohelper.findChild(slot1.go, "go_process/go_full")
-		slot1.gonormalbg = gohelper.findChild(slot1.go, "go_normalbg")
-		slot1.gofullbg = gohelper.findChild(slot1.go, "go_fullbg")
-		slot1.goselectbg = gohelper.findChild(slot1.go, "go_selectbg")
-		slot1.golock = gohelper.findChild(slot1.go, "go_lock")
-		slot1.txtlock = gohelper.findChildText(slot1.go, "go_lock/txt_lock")
-		slot1.btnclick = gohelper.findChildButtonWithAudio(slot1.go, "btn_click")
+	if arg_27_3 then
+		arg_27_1.gofull = gohelper.findChild(arg_27_1.go, "go_process/go_full")
+		arg_27_1.gonormalbg = gohelper.findChild(arg_27_1.go, "go_normalbg")
+		arg_27_1.gofullbg = gohelper.findChild(arg_27_1.go, "go_fullbg")
+		arg_27_1.goselectbg = gohelper.findChild(arg_27_1.go, "go_selectbg")
+		arg_27_1.golock = gohelper.findChild(arg_27_1.go, "go_lock")
+		arg_27_1.txtlock = gohelper.findChildText(arg_27_1.go, "go_lock/txt_lock")
+		arg_27_1.btnclick = gohelper.findChildButtonWithAudio(arg_27_1.go, "btn_click")
 
-		slot1.btnclick:AddClickListener(slot0._lineclickOnClick, slot0, slot1.index)
+		arg_27_1.btnclick:AddClickListener(arg_27_0._lineclickOnClick, arg_27_0, arg_27_1.index)
 
-		slot1.gatherAnimator = slot1.go:GetComponent(typeof(UnityEngine.Animator))
+		arg_27_1.gatherAnimator = arg_27_1.go:GetComponent(typeof(UnityEngine.Animator))
 	else
-		slot1.goselectbg = gohelper.findChild(slot1.go, "selectbg")
-		slot1.animator = slot1.goprocess:GetComponent(typeof(UnityEngine.Animator))
+		arg_27_1.goselectbg = gohelper.findChild(arg_27_1.go, "selectbg")
+		arg_27_1.animator = arg_27_1.goprocess:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	gohelper.setActive(slot1.golevelitem, false)
+	gohelper.setActive(arg_27_1.golevelitem, false)
 end
 
-function slot0._getDetailInitItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.gonormal = gohelper.findChild(slot2.go, "go_normalbg")
-	slot2.goselect = gohelper.findChild(slot2.go, "go_selectbg")
+function var_0_0._getDetailInitItem(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:getUserDataTb_()
 
-	return slot2
+	var_28_0.go = arg_28_1
+	var_28_0.gonormal = gohelper.findChild(var_28_0.go, "go_normalbg")
+	var_28_0.goselect = gohelper.findChild(var_28_0.go, "go_selectbg")
+
+	return var_28_0
 end
 
-function slot0._changeSelectPart(slot0, slot1, slot2, slot3)
-	if slot1 ~= 0 and not RoomProductionHelper.hasUnlockLine(slot1) then
-		if RoomProductionHelper.getPartType(slot1) == RoomProductLineEnum.ProductType.Change then
+function var_0_0._changeSelectPart(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	if arg_29_1 ~= 0 and not RoomProductionHelper.hasUnlockLine(arg_29_1) then
+		if RoomProductionHelper.getPartType(arg_29_1) == RoomProductLineEnum.ProductType.Change then
 			GameFacade.showToast(ToastEnum.MaterialItemLockOnClick2)
 		end
 
 		return
 	end
 
-	if slot0._selectPartId == slot1 then
+	if arg_29_0._selectPartId == arg_29_1 then
 		return
 	end
 
-	slot0._expandDetailLineId = nil
-	slot0._waitChangeSelectPartId = slot1
+	arg_29_0._expandDetailLineId = nil
+	arg_29_0._waitChangeSelectPartId = arg_29_1
 
-	slot0:_refreshCategory()
-	slot0:_refreshCamera()
+	arg_29_0:_refreshCategory()
+	arg_29_0:_refreshCamera()
 
-	slot0._keepOpenSkinListAfterChange = RoomSkinModel.instance:getIsShowRoomSkinList()
+	arg_29_0._keepOpenSkinListAfterChange = RoomSkinModel.instance:getIsShowRoomSkinList()
 
 	RoomSkinController.instance:clearPreviewRoomSkin()
 
-	slot0._animator.enabled = true
+	arg_29_0._animator.enabled = true
 
-	slot0._animator:Play("swicth", 0, 0)
-	TaskDispatcher.cancelTask(slot0._realChangeSelectPart, slot0)
-	TaskDispatcher.runDelay(slot0._realChangeSelectPart, slot0, uv0)
+	arg_29_0._animator:Play("swicth", 0, 0)
+	TaskDispatcher.cancelTask(arg_29_0._realChangeSelectPart, arg_29_0)
+	TaskDispatcher.runDelay(arg_29_0._realChangeSelectPart, arg_29_0, var_0_1)
 
-	if slot2 then
+	if arg_29_2 then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
 	end
 
-	if slot3 then
+	if arg_29_3 then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_shutdown)
 	end
 end
 
-function slot0._realChangeSelectPart(slot0)
-	if not slot0._waitChangeSelectPartId then
+function var_0_0._realChangeSelectPart(arg_30_0)
+	if not arg_30_0._waitChangeSelectPartId then
 		return
 	end
 
-	slot0._selectPartId = slot0._waitChangeSelectPartId
+	arg_30_0._selectPartId = arg_30_0._waitChangeSelectPartId
 
-	slot0.viewContainer:setSelectPartId(slot0._selectPartId)
-	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. slot0._selectPartId])
+	arg_30_0.viewContainer:setSelectPartId(arg_30_0._selectPartId)
+	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. arg_30_0._selectPartId])
 
-	slot0._waitChangeSelectPartId = nil
+	arg_30_0._waitChangeSelectPartId = nil
 
-	slot0:_refreshSelectPart(false, true)
+	arg_30_0:_refreshSelectPart(false, true)
 
-	if slot0._keepOpenSkinListAfterChange then
-		slot0:_btnskinOnClick()
+	if arg_30_0._keepOpenSkinListAfterChange then
+		arg_30_0:_btnskinOnClick()
 
-		slot0._keepOpenSkinListAfterChange = false
+		arg_30_0._keepOpenSkinListAfterChange = false
 	end
 end
 
-function slot0._changeSelectTab(slot0, slot1)
-	if slot0._selectTabId == slot1 then
+function var_0_0._changeSelectTab(arg_31_0, arg_31_1)
+	if arg_31_0._selectTabId == arg_31_1 then
 		return
 	end
 
-	slot0._selectTabId = slot1
+	arg_31_0._selectTabId = arg_31_1
 
-	slot0:_refreshSelectTab()
+	arg_31_0:_refreshSelectTab()
 end
 
-function slot0._changeSelectLine(slot0, slot1)
-	if slot0._selectLineId == slot1 then
+function var_0_0._changeSelectLine(arg_32_0, arg_32_1)
+	if arg_32_0._selectLineId == arg_32_1 then
 		return
 	end
 
-	slot0._selectLineId = slot1
+	arg_32_0._selectLineId = arg_32_1
 
-	slot0.viewContainer:setSelectLine(slot0._selectLineId)
-	slot0:_refreshDetailPartGather(slot0._selectPartId)
+	arg_32_0.viewContainer:setSelectLine(arg_32_0._selectLineId)
+	arg_32_0:_refreshDetailPartGather(arg_32_0._selectPartId)
 end
 
-function slot0._refreshUI(slot0, slot1)
-	slot0._selectPartId = slot0.viewParam and slot2.partId or 0
-	slot0._selectLineId = slot2 and slot2.lineId or 0
+function var_0_0._refreshUI(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0.viewParam
 
-	slot0.viewContainer:setSelectLine(slot0._selectLineId)
-	slot0.viewContainer:setSelectPartId(slot0._selectPartId)
-	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. slot0._selectPartId])
-	slot0:_refreshSelectPart(slot1)
+	arg_33_0._selectPartId = var_33_0 and var_33_0.partId or 0
+	arg_33_0._selectLineId = var_33_0 and var_33_0.lineId or 0
+
+	arg_33_0.viewContainer:setSelectLine(arg_33_0._selectLineId)
+	arg_33_0.viewContainer:setSelectPartId(arg_33_0._selectPartId)
+	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. arg_33_0._selectPartId])
+	arg_33_0:_refreshSelectPart(arg_33_1)
 end
 
-function slot0._refreshSelectPart(slot0, slot1, slot2)
-	slot0:_clearLineAnimation()
+function var_0_0._refreshSelectPart(arg_34_0, arg_34_1, arg_34_2)
+	arg_34_0:_clearLineAnimation()
 
-	if not slot1 and not slot2 then
-		slot0:_refreshCamera()
+	if not arg_34_1 and not arg_34_2 then
+		arg_34_0:_refreshCamera()
 	end
 
-	slot0:_refreshCategory()
-	slot0:_refreshTitle()
-	slot0:_refreshLevel()
-	slot0:_realChangeShowSkinList()
-	slot0:_refreshSkinReddot()
-	RoomSkinController.instance:clearInitBuildingEntranceReddot(slot0._selectPartId)
+	arg_34_0:_refreshCategory()
+	arg_34_0:_refreshTitle()
+	arg_34_0:_refreshLevel()
+	arg_34_0:_realChangeShowSkinList()
+	arg_34_0:_refreshSkinReddot()
+	RoomSkinController.instance:clearInitBuildingEntranceReddot(arg_34_0._selectPartId)
 end
 
-function slot0._refreshCamera(slot0)
-	RoomBuildingController.instance:tweenCameraFocusPart(slot0._waitChangeSelectPartId or slot0._selectPartId, RoomEnum.CameraState.Normal, 0)
+function var_0_0._refreshCamera(arg_35_0)
+	local var_35_0 = arg_35_0._waitChangeSelectPartId or arg_35_0._selectPartId
+
+	RoomBuildingController.instance:tweenCameraFocusPart(var_35_0, RoomEnum.CameraState.Normal, 0)
 end
 
-function slot0._refreshCategory(slot0)
-	table.insert({}, 0)
+function var_0_0._refreshCategory(arg_36_0)
+	local var_36_0 = {}
 
-	for slot6, slot7 in ipairs(RoomConfig.instance:getProductionPartConfigList()) do
-		table.insert(slot1, slot7.id)
+	table.insert(var_36_0, 0)
+
+	local var_36_1 = RoomConfig.instance:getProductionPartConfigList()
+
+	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
+		table.insert(var_36_0, iter_36_1.id)
 	end
 
-	for slot6 = 1, #slot1 do
-		slot7 = slot1[slot6]
+	for iter_36_2 = 1, #var_36_0 do
+		local var_36_2 = var_36_0[iter_36_2]
+		local var_36_3 = arg_36_0._categoryItemList[iter_36_2]
 
-		if not slot0._categoryItemList[slot6] then
-			slot8 = slot0:getUserDataTb_()
-			slot8.index = slot6
-			slot8.go = gohelper.cloneInPlace(slot0._gocategoryItem, "categoryItem" .. slot6)
-			slot8.gonormal = gohelper.findChild(slot8.go, "go_normal")
-			slot8.imageiconnormal = gohelper.findChildImage(slot8.go, "go_normal/icon")
-			slot8.goselect = gohelper.findChild(slot8.go, "go_select")
-			slot8.imageiconselect = gohelper.findChildImage(slot8.go, "go_select/icon")
-			slot8.goreddot = gohelper.findChild(slot8.go, "reddot")
-			slot8.gosubLine = gohelper.findChild(slot8.go, "go_subLine")
-			slot8.btnclick = gohelper.findChildButtonWithAudio(slot8.go, "btn_click")
+		if not var_36_3 then
+			var_36_3 = arg_36_0:getUserDataTb_()
+			var_36_3.index = iter_36_2
+			var_36_3.go = gohelper.cloneInPlace(arg_36_0._gocategoryItem, "categoryItem" .. iter_36_2)
+			var_36_3.gonormal = gohelper.findChild(var_36_3.go, "go_normal")
+			var_36_3.imageiconnormal = gohelper.findChildImage(var_36_3.go, "go_normal/icon")
+			var_36_3.goselect = gohelper.findChild(var_36_3.go, "go_select")
+			var_36_3.imageiconselect = gohelper.findChildImage(var_36_3.go, "go_select/icon")
+			var_36_3.goreddot = gohelper.findChild(var_36_3.go, "reddot")
+			var_36_3.gosubLine = gohelper.findChild(var_36_3.go, "go_subLine")
+			var_36_3.btnclick = gohelper.findChildButtonWithAudio(var_36_3.go, "btn_click")
 
-			slot8.btnclick:AddClickListener(slot0._categoryItemOnClick, slot0, slot8.index)
-			table.insert(slot0._categoryItemList, slot8)
+			var_36_3.btnclick:AddClickListener(arg_36_0._categoryItemOnClick, arg_36_0, var_36_3.index)
+			table.insert(arg_36_0._categoryItemList, var_36_3)
 		end
 
-		slot8.partId = slot7
+		var_36_3.partId = var_36_2
 
-		gohelper.setActive(slot8.gosubLine, slot7 == 0)
+		local var_36_4 = arg_36_0._waitChangeSelectPartId or arg_36_0._selectPartId
 
-		if slot7 == 0 then
-			if (slot0._waitChangeSelectPartId or slot0._selectPartId) ~= slot7 then
-				UISpriteSetMgr.instance:setRoomSprite(slot8.imageiconnormal, "bg_init")
+		gohelper.setActive(var_36_3.gosubLine, var_36_2 == 0)
+
+		if var_36_2 == 0 then
+			if var_36_4 ~= var_36_2 then
+				UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconnormal, "bg_init")
 			else
-				UISpriteSetMgr.instance:setRoomSprite(slot8.imageiconselect, "bg_init_ovr")
+				UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconselect, "bg_init_ovr")
 			end
-		elseif slot9 ~= slot7 then
-			UISpriteSetMgr.instance:setRoomSprite(slot8.imageiconnormal, "bg_part" .. slot7)
+		elseif var_36_4 ~= var_36_2 then
+			UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconnormal, "bg_part" .. var_36_2)
 		else
-			UISpriteSetMgr.instance:setRoomSprite(slot8.imageiconselect, "bg_part" .. slot7 .. "_ovr")
+			UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconselect, "bg_part" .. var_36_2 .. "_ovr")
 		end
 
-		gohelper.setActive(slot8.gonormal, slot9 ~= slot7)
-		gohelper.setActive(slot8.goselect, slot9 == slot7)
-		gohelper.setActive(slot8.goreddot, false)
-		gohelper.setActive(slot8.go, slot7 == 0 or RoomProductionHelper.hasUnlockLine(slot7))
+		gohelper.setActive(var_36_3.gonormal, var_36_4 ~= var_36_2)
+		gohelper.setActive(var_36_3.goselect, var_36_4 == var_36_2)
+		gohelper.setActive(var_36_3.goreddot, false)
+		gohelper.setActive(var_36_3.go, var_36_2 == 0 or RoomProductionHelper.hasUnlockLine(var_36_2))
 	end
 
-	for slot6 = #slot1 + 1, #slot0._categoryItemList do
-		gohelper.setActive(slot0._categoryItemList[slot6].go, false)
+	for iter_36_3 = #var_36_0 + 1, #arg_36_0._categoryItemList do
+		local var_36_5 = arg_36_0._categoryItemList[iter_36_3]
+
+		gohelper.setActive(var_36_5.go, false)
 	end
 end
 
-function slot0._refreshTitle(slot0)
-	if slot0._selectPartId == 0 then
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imageicon, "bg_init")
+function var_0_0._refreshTitle(arg_37_0)
+	if arg_37_0._selectPartId == 0 then
+		UISpriteSetMgr.instance:setRoomSprite(arg_37_0._imageicon, "bg_init")
 
-		slot0._txttitle.text = luaLang("room_initbuilding_title")
-		slot0._txttitleEn.text = "Paleohall"
+		arg_37_0._txttitle.text = luaLang("room_initbuilding_title")
+		arg_37_0._txttitleEn.text = "Paleohall"
 	else
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imageicon, "bg_part" .. slot0._selectPartId)
+		UISpriteSetMgr.instance:setRoomSprite(arg_37_0._imageicon, "bg_part" .. arg_37_0._selectPartId)
 
-		slot1 = RoomConfig.instance:getProductionPartConfig(slot0._selectPartId)
-		slot0._txttitle.text = slot1.name
-		slot0._txttitleEn.text = slot1.nameEn
+		local var_37_0 = RoomConfig.instance:getProductionPartConfig(arg_37_0._selectPartId)
+
+		arg_37_0._txttitle.text = var_37_0.name
+		arg_37_0._txttitleEn.text = var_37_0.nameEn
 	end
 end
 
-function slot0._refreshLevel(slot0)
-	slot1 = 0
-	slot2 = 0
+function var_0_0._refreshLevel(arg_38_0)
+	local var_38_0 = 0
+	local var_38_1 = 0
 
-	if slot0._selectPartId == 0 then
-		slot1 = RoomConfig.instance:getMaxRoomLevel()
-		slot2 = RoomMapModel.instance:getRoomLevel()
+	if arg_38_0._selectPartId == 0 then
+		var_38_0 = RoomConfig.instance:getMaxRoomLevel()
+		var_38_1 = RoomMapModel.instance:getRoomLevel()
 	end
 
-	for slot6 = 1, slot1 do
-		if not slot0._levelItemList[slot6] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = gohelper.cloneInPlace(slot0._golevelitem, "levelitem" .. slot6)
-			slot7.golight = gohelper.findChild(slot7.go, "go_light")
+	for iter_38_0 = 1, var_38_0 do
+		local var_38_2 = arg_38_0._levelItemList[iter_38_0]
 
-			table.insert(slot0._levelItemList, slot7)
+		if not var_38_2 then
+			var_38_2 = arg_38_0:getUserDataTb_()
+			var_38_2.go = gohelper.cloneInPlace(arg_38_0._golevelitem, "levelitem" .. iter_38_0)
+			var_38_2.golight = gohelper.findChild(var_38_2.go, "go_light")
+
+			table.insert(arg_38_0._levelItemList, var_38_2)
 		end
 
-		gohelper.setActive(slot7.golight, slot6 <= slot2)
-		gohelper.setActive(slot7.go, true)
+		gohelper.setActive(var_38_2.golight, iter_38_0 <= var_38_1)
+		gohelper.setActive(var_38_2.go, true)
 	end
 
-	for slot6 = slot1 + 1, #slot0._levelItemList do
-		gohelper.setActive(slot0._levelItemList[slot6].go, false)
+	for iter_38_1 = var_38_0 + 1, #arg_38_0._levelItemList do
+		local var_38_3 = arg_38_0._levelItemList[iter_38_1]
+
+		gohelper.setActive(var_38_3.go, false)
 	end
 
-	slot3 = slot0._selectPartId == 0 and slot2 < slot1
+	local var_38_4 = arg_38_0._selectPartId == 0 and var_38_1 < var_38_0
 
-	gohelper.setActive(slot0._btnlevelup.gameObject, slot3)
+	gohelper.setActive(arg_38_0._btnlevelup.gameObject, var_38_4)
 
-	if slot3 then
-		RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.RoomInitBuildingLevel)
-		slot0:_refreshRoomLevelUpEffect()
+	if var_38_4 then
+		RedDotController.instance:addRedDot(arg_38_0._goreddot, RedDotEnum.DotNode.RoomInitBuildingLevel)
+		arg_38_0:_refreshRoomLevelUpEffect()
 	end
 end
 
-function slot0._refreshSkinReddot(slot0)
-	if not slot0.skinRedDot then
-		slot0.skinRedDot = RedDotController.instance:addNotEventRedDot(slot0._goskinreddot, slot0._checkNewSkinReddot, slot0)
+function var_0_0._refreshSkinReddot(arg_39_0)
+	if not arg_39_0.skinRedDot then
+		arg_39_0.skinRedDot = RedDotController.instance:addNotEventRedDot(arg_39_0._goskinreddot, arg_39_0._checkNewSkinReddot, arg_39_0)
 
 		return
 	end
 
-	slot0.skinRedDot:refreshRedDot()
+	arg_39_0.skinRedDot:refreshRedDot()
 end
 
-function slot0._checkNewSkinReddot(slot0)
-	return RoomSkinModel.instance:isHasNewRoomSkin(slot0._selectPartId)
+function var_0_0._checkNewSkinReddot(arg_40_0)
+	return (RoomSkinModel.instance:isHasNewRoomSkin(arg_40_0._selectPartId))
 end
 
-function slot0._onSkinListViewShowChange(slot0, slot1)
-	slot0._animator.enabled = true
+function var_0_0._onSkinListViewShowChange(arg_41_0, arg_41_1)
+	arg_41_0._animator.enabled = true
 
-	if slot1 then
-		slot0._animator:Play("swicth", 0, 0)
+	if arg_41_1 then
+		arg_41_0._animator:Play("swicth", 0, 0)
 	end
 
-	TaskDispatcher.cancelTask(slot0._realChangeShowSkinList, slot0)
-	TaskDispatcher.runDelay(slot0._realChangeShowSkinList, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_41_0._realChangeShowSkinList, arg_41_0)
+	TaskDispatcher.runDelay(arg_41_0._realChangeShowSkinList, arg_41_0, var_0_1)
 end
 
-function slot0._realChangeShowSkinList(slot0)
-	if RoomSkinModel.instance:getIsShowRoomSkinList() then
-		gohelper.setActive(slot0._goinit, false)
-		gohelper.setActive(slot0._gopart, false)
+function var_0_0._realChangeShowSkinList(arg_42_0)
+	local var_42_0 = RoomSkinModel.instance:getIsShowRoomSkinList()
+
+	if var_42_0 then
+		gohelper.setActive(arg_42_0._goinit, false)
+		gohelper.setActive(arg_42_0._gopart, false)
 	else
-		slot0:_refreshDetail(true)
+		arg_42_0:_refreshDetail(true)
 	end
 
-	slot0:setTitleShow(not slot1)
-	gohelper.setActive(slot0._goskin, slot1)
+	arg_42_0:setTitleShow(not var_42_0)
+	gohelper.setActive(arg_42_0._goskin, var_42_0)
 end
 
-function slot0.setTitleShow(slot0, slot1)
-	gohelper.setActive(slot0._gotitle, slot1)
+function var_0_0.setTitleShow(arg_43_0, arg_43_1)
+	gohelper.setActive(arg_43_0._gotitle, arg_43_1)
 end
 
-function slot0._refreshRoomLevelUpEffect(slot0)
-	gohelper.setActive(slot0._golevelupeffect, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomInitBuildingLevel, 0))
+function var_0_0._refreshRoomLevelUpEffect(arg_44_0)
+	gohelper.setActive(arg_44_0._golevelupeffect, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomInitBuildingLevel, 0))
 end
 
-function slot0._refreshDetail(slot0, slot1)
-	gohelper.setActive(slot0._goinit, slot0._selectPartId == 0)
-	gohelper.setActive(slot0._gopart, slot0._selectPartId ~= 0)
+function var_0_0._refreshDetail(arg_45_0, arg_45_1)
+	gohelper.setActive(arg_45_0._goinit, arg_45_0._selectPartId == 0)
+	gohelper.setActive(arg_45_0._gopart, arg_45_0._selectPartId ~= 0)
 
-	if slot0._selectPartId == 0 then
-		slot0:_refreshDetailInit()
+	if arg_45_0._selectPartId == 0 then
+		arg_45_0:_refreshDetailInit()
 	else
-		slot0:_refreshDetailPart(slot1)
+		arg_45_0:_refreshDetailPart(arg_45_1)
 	end
 end
 
-function slot0._refreshDetailInit(slot0)
-	slot0:_refreshSelectTab()
+function var_0_0._refreshDetailInit(arg_46_0)
+	arg_46_0:_refreshSelectTab()
 end
 
-function slot0._refreshSelectTab(slot0)
-	gohelper.setActive(slot0._detailInitTabHubItem.gonormal, slot0._selectTabId ~= uv0.TabId.ProductionLine)
-	gohelper.setActive(slot0._detailInitTabHubItem.goselect, slot0._selectTabId == uv0.TabId.ProductionLine)
-	gohelper.setActive(slot0._detailInitTabActiveItem.gonormal, slot0._selectTabId ~= uv0.TabId.BuildDegree)
-	gohelper.setActive(slot0._detailInitTabActiveItem.goselect, slot0._selectTabId == uv0.TabId.BuildDegree)
-	gohelper.setActive(slot0._gohubList, slot0._selectTabId == uv0.TabId.ProductionLine)
-	gohelper.setActive(slot0._goactiveList, slot0._selectTabId == 2)
+function var_0_0._refreshSelectTab(arg_47_0)
+	gohelper.setActive(arg_47_0._detailInitTabHubItem.gonormal, arg_47_0._selectTabId ~= var_0_0.TabId.ProductionLine)
+	gohelper.setActive(arg_47_0._detailInitTabHubItem.goselect, arg_47_0._selectTabId == var_0_0.TabId.ProductionLine)
+	gohelper.setActive(arg_47_0._detailInitTabActiveItem.gonormal, arg_47_0._selectTabId ~= var_0_0.TabId.BuildDegree)
+	gohelper.setActive(arg_47_0._detailInitTabActiveItem.goselect, arg_47_0._selectTabId == var_0_0.TabId.BuildDegree)
+	gohelper.setActive(arg_47_0._gohubList, arg_47_0._selectTabId == var_0_0.TabId.ProductionLine)
+	gohelper.setActive(arg_47_0._goactiveList, arg_47_0._selectTabId == 2)
 
-	if slot0._selectTabId == uv0.TabId.ProductionLine then
-		slot0:_refreshInitPart()
-	elseif slot0._selectTabId == uv0.TabId.BuildDegree then
-		slot0:_refreshBuildDegree()
+	if arg_47_0._selectTabId == var_0_0.TabId.ProductionLine then
+		arg_47_0:_refreshInitPart()
+	elseif arg_47_0._selectTabId == var_0_0.TabId.BuildDegree then
+		arg_47_0:_refreshBuildDegree()
 	end
 end
 
-function slot0._refreshTabCountText(slot0)
-	slot0._detailInitTabHubItem.txtcount.text = #RoomConfig.instance:getProductionPartConfigList()
-	slot0._detailInitTabActiveItem.txtcount.text = RoomMapModel.instance:getAllBuildDegree()
+function var_0_0._refreshTabCountText(arg_48_0)
+	local var_48_0 = RoomConfig.instance:getProductionPartConfigList()
+
+	arg_48_0._detailInitTabHubItem.txtcount.text = #var_48_0
+
+	local var_48_1 = RoomMapModel.instance:getAllBuildDegree()
+
+	arg_48_0._detailInitTabActiveItem.txtcount.text = var_48_1
 end
 
-function slot0._refreshBuildDegree(slot0)
+function var_0_0._refreshBuildDegree(arg_49_0)
 	RoomShowDegreeListModel.instance:setShowDegreeList()
 end
 
-function slot0._refreshInitPart(slot0)
-	if slot0._selectPartId ~= 0 then
+function var_0_0._refreshInitPart(arg_50_0)
+	if arg_50_0._selectPartId ~= 0 then
 		return
 	end
 
-	slot2 = 0
-	slot3 = 0
+	local var_50_0 = RoomConfig.instance:getProductionPartConfigList()
+	local var_50_1 = 0
+	local var_50_2 = 0
 
-	for slot7, slot8 in ipairs(RoomConfig.instance:getProductionPartConfigList()) do
-		slot9, slot10 = RoomProductionHelper.getPartType(slot8.id)
+	for iter_50_0, iter_50_1 in ipairs(var_50_0) do
+		local var_50_3, var_50_4 = RoomProductionHelper.getPartType(iter_50_1.id)
 
-		if slot9 == RoomProductLineEnum.ProductType.Product then
-			slot0:_refreshInitPartProduct(slot8, slot2 + 1)
-		elseif slot9 == RoomProductLineEnum.ProductType.Change then
-			slot0:_refreshInitPartChange(slot8, slot3 + 1)
+		if var_50_3 == RoomProductLineEnum.ProductType.Product then
+			var_50_1 = var_50_1 + 1
+
+			arg_50_0:_refreshInitPartProduct(iter_50_1, var_50_1)
+		elseif var_50_3 == RoomProductLineEnum.ProductType.Change then
+			var_50_2 = var_50_2 + 1
+
+			arg_50_0:_refreshInitPartChange(iter_50_1, var_50_2)
 		end
 	end
 
-	for slot7 = slot2 + 1, #slot0._initPartProductItemList do
-		gohelper.setActive(slot0._initPartProductItemList[slot7].go, false)
+	for iter_50_2 = var_50_1 + 1, #arg_50_0._initPartProductItemList do
+		local var_50_5 = arg_50_0._initPartProductItemList[iter_50_2]
+
+		gohelper.setActive(var_50_5.go, false)
 	end
 
-	for slot7 = slot3 + 1, #slot0._initPartChangeItemList do
-		gohelper.setActive(slot0._initPartChangeItemList[slot7].go, false)
+	for iter_50_3 = var_50_2 + 1, #arg_50_0._initPartChangeItemList do
+		local var_50_6 = arg_50_0._initPartChangeItemList[iter_50_3]
+
+		gohelper.setActive(var_50_6.go, false)
 	end
 
-	slot0:_refreshInitPartProductGet()
+	arg_50_0:_refreshInitPartProductGet()
 end
 
-function slot0._refreshInitPartProduct(slot0, slot1, slot2)
-	if not slot0._initPartProductItemList[slot2] then
-		slot3 = slot0:getUserDataTb_()
-		slot3.partId = slot1.id
-		slot3.go = gohelper.cloneInPlace(slot0._gogatherpart, "gatheritem" .. slot2)
-		slot3.txtname = gohelper.findChildText(slot3.go, "title/txt")
-		slot3.txtnameen = gohelper.findChildText(slot3.go, "title/txt/txtEn")
-		slot3.golineitem = gohelper.findChild(slot3.go, "scroll_productline/viewport/content/go_productLineItem")
-		slot3.simagereward = gohelper.findChildSingleImage(slot3.go, "reward/simage_reward")
-		slot3.animator = gohelper.findChild(slot3.go, "reward/circle"):GetComponent(typeof(UnityEngine.Animator))
-		slot3.btnget = gohelper.findChildButton(slot3.go, "reward/btn_get")
-		slot3.btnjumpclick = gohelper.findChildButtonWithAudio(slot3.go, "btn_jumpclick")
+function var_0_0._refreshInitPartProduct(arg_51_0, arg_51_1, arg_51_2)
+	local var_51_0 = arg_51_0._initPartProductItemList[arg_51_2]
 
-		slot3.btnget:AddClickListener(slot0._btninitpartproductOnClick, slot0, slot3.partId)
-		slot3.btnjumpclick:AddClickListener(slot0._btninitpartProductOnClick, slot0, slot3.partId)
+	if not var_51_0 then
+		var_51_0 = arg_51_0:getUserDataTb_()
+		var_51_0.partId = arg_51_1.id
+		var_51_0.go = gohelper.cloneInPlace(arg_51_0._gogatherpart, "gatheritem" .. arg_51_2)
+		var_51_0.txtname = gohelper.findChildText(var_51_0.go, "title/txt")
+		var_51_0.txtnameen = gohelper.findChildText(var_51_0.go, "title/txt/txtEn")
+		var_51_0.golineitem = gohelper.findChild(var_51_0.go, "scroll_productline/viewport/content/go_productLineItem")
+		var_51_0.simagereward = gohelper.findChildSingleImage(var_51_0.go, "reward/simage_reward")
+		var_51_0.animator = gohelper.findChild(var_51_0.go, "reward/circle"):GetComponent(typeof(UnityEngine.Animator))
+		var_51_0.btnget = gohelper.findChildButton(var_51_0.go, "reward/btn_get")
+		var_51_0.btnjumpclick = gohelper.findChildButtonWithAudio(var_51_0.go, "btn_jumpclick")
 
-		slot3.lineItemList = {}
+		var_51_0.btnget:AddClickListener(arg_51_0._btninitpartproductOnClick, arg_51_0, var_51_0.partId)
+		var_51_0.btnjumpclick:AddClickListener(arg_51_0._btninitpartProductOnClick, arg_51_0, var_51_0.partId)
 
-		gohelper.setActive(slot3.golineitem, false)
-		table.insert(slot0._initPartProductItemList, slot3)
+		var_51_0.lineItemList = {}
+
+		gohelper.setActive(var_51_0.golineitem, false)
+		table.insert(arg_51_0._initPartProductItemList, var_51_0)
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_51_0.go, true)
 
-	slot4, slot5 = RoomProductionHelper.getPartType(slot1.id)
-	slot3.txtname.text = slot1.name
-	slot3.txtnameen.text = slot1.nameEn
+	local var_51_1, var_51_2 = RoomProductionHelper.getPartType(arg_51_1.id)
 
-	if slot5 == RoomProductLineEnum.ProductItemType.ProductExp then
-		slot3.simagereward:LoadImage(ResUrl.getPropItemIcon("5"))
-		transformhelper.setLocalPosXY(slot3.simagereward.gameObject.transform, -11, 5.45)
+	var_51_0.txtname.text = arg_51_1.name
+	var_51_0.txtnameen.text = arg_51_1.nameEn
 
-		slot3.simagereward.gameObject.transform.rotation = Quaternion.Euler(0, 0, -7)
-	elseif slot5 == RoomProductLineEnum.ProductItemType.ProductGold then
-		slot3.simagereward:LoadImage(ResUrl.getPropItemIcon("3"))
+	if var_51_2 == RoomProductLineEnum.ProductItemType.ProductExp then
+		var_51_0.simagereward:LoadImage(ResUrl.getPropItemIcon("5"))
+		transformhelper.setLocalPosXY(var_51_0.simagereward.gameObject.transform, -11, 5.45)
+
+		var_51_0.simagereward.gameObject.transform.rotation = Quaternion.Euler(0, 0, -7)
+	elseif var_51_2 == RoomProductLineEnum.ProductItemType.ProductGold then
+		var_51_0.simagereward:LoadImage(ResUrl.getPropItemIcon("3"))
 	end
 
-	slot0:_refreshInitPartProductLine(slot3, slot1)
+	arg_51_0:_refreshInitPartProductLine(var_51_0, arg_51_1)
 end
 
-function slot0._refreshInitPartProductLine(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot2.productionLines) do
-		if not slot1.lineItemList[slot7] then
-			slot9 = slot0:getUserDataTb_()
-			slot9.lineId = slot8
-			slot9.go = gohelper.cloneInPlace(slot1.golineitem, "item" .. slot7)
-			slot9.gonormal = gohelper.findChild(slot9.go, "go_normal")
-			slot9.txtname = gohelper.findChildText(slot9.go, "go_normal/name")
-			slot9.golevel = gohelper.findChild(slot9.go, "go_normal/name/go_activeLv/go_normalitem")
-			slot9.gofull = gohelper.findChild(slot9.go, "go_normal/go_process/go_full")
-			slot9.goprocess = gohelper.findChild(slot9.go, "go_normal/go_process/go_process")
-			slot9.imageprocess = gohelper.findChildImage(slot9.go, "go_normal/go_process/go_process/processbar")
-			slot9.txtprocess = gohelper.findChildText(slot9.go, "go_normal/go_process/go_process/num")
-			slot9.golock = gohelper.findChild(slot9.go, "go_lock")
-			slot9.lockdesc = gohelper.findChildText(slot9.go, "go_lock/txt_lockdesc")
-			slot9.levelItemList = {}
+function var_0_0._refreshInitPartProductLine(arg_52_0, arg_52_1, arg_52_2)
+	local var_52_0 = arg_52_2.productionLines
 
-			gohelper.setActive(slot9.golevel, false)
+	for iter_52_0, iter_52_1 in ipairs(var_52_0) do
+		local var_52_1 = arg_52_1.lineItemList[iter_52_0]
 
-			slot9.animator = slot9.go:GetComponent(typeof(UnityEngine.Animator))
+		if not var_52_1 then
+			var_52_1 = arg_52_0:getUserDataTb_()
+			var_52_1.lineId = iter_52_1
+			var_52_1.go = gohelper.cloneInPlace(arg_52_1.golineitem, "item" .. iter_52_0)
+			var_52_1.gonormal = gohelper.findChild(var_52_1.go, "go_normal")
+			var_52_1.txtname = gohelper.findChildText(var_52_1.go, "go_normal/name")
+			var_52_1.golevel = gohelper.findChild(var_52_1.go, "go_normal/name/go_activeLv/go_normalitem")
+			var_52_1.gofull = gohelper.findChild(var_52_1.go, "go_normal/go_process/go_full")
+			var_52_1.goprocess = gohelper.findChild(var_52_1.go, "go_normal/go_process/go_process")
+			var_52_1.imageprocess = gohelper.findChildImage(var_52_1.go, "go_normal/go_process/go_process/processbar")
+			var_52_1.txtprocess = gohelper.findChildText(var_52_1.go, "go_normal/go_process/go_process/num")
+			var_52_1.golock = gohelper.findChild(var_52_1.go, "go_lock")
+			var_52_1.lockdesc = gohelper.findChildText(var_52_1.go, "go_lock/txt_lockdesc")
+			var_52_1.levelItemList = {}
 
-			table.insert(slot1.lineItemList, slot9)
+			gohelper.setActive(var_52_1.golevel, false)
+
+			var_52_1.animator = var_52_1.go:GetComponent(typeof(UnityEngine.Animator))
+
+			table.insert(arg_52_1.lineItemList, var_52_1)
 		end
 
-		gohelper.setActive(slot9.go, true)
+		gohelper.setActive(var_52_1.go, true)
 
-		slot10 = RoomProductionModel.instance:getLineMO(slot8)
-		slot9.lockdesc.text = string.format(luaLang("room_initbuilding_linelock"), slot10.config.needRoomLevel)
-		slot9.txtname.text = slot10.config.name
+		local var_52_2 = RoomProductionModel.instance:getLineMO(iter_52_1)
 
-		if slot10:isLock() or slot10:isIdle() then
-			gohelper.setActive(slot9.gofull, false)
-			gohelper.setActive(slot9.goprocess, false)
-		elseif slot10:isFull() then
-			gohelper.setActive(slot9.gofull, true)
-			gohelper.setActive(slot9.goprocess, false)
+		var_52_1.lockdesc.text = string.format(luaLang("room_initbuilding_linelock"), var_52_2.config.needRoomLevel)
+		var_52_1.txtname.text = var_52_2.config.name
+
+		if var_52_2:isLock() or var_52_2:isIdle() then
+			gohelper.setActive(var_52_1.gofull, false)
+			gohelper.setActive(var_52_1.goprocess, false)
+		elseif var_52_2:isFull() then
+			gohelper.setActive(var_52_1.gofull, true)
+			gohelper.setActive(var_52_1.goprocess, false)
 		else
-			gohelper.setActive(slot9.gofull, false)
-			gohelper.setActive(slot9.goprocess, true)
+			gohelper.setActive(var_52_1.gofull, false)
+			gohelper.setActive(var_52_1.goprocess, true)
 
-			slot9.imageprocess.fillAmount, slot12 = slot10:getReservePer()
+			local var_52_3, var_52_4 = var_52_2:getReservePer()
 
-			if not slot0._lineIdPerDict[slot9.lineId] then
-				slot9.txtprocess.text = string.format("%d%%", slot12)
+			if not arg_52_0._lineIdPerDict[var_52_1.lineId] then
+				var_52_1.imageprocess.fillAmount = var_52_3
+				var_52_1.txtprocess.text = string.format("%d%%", var_52_4)
 			end
 		end
 
-		slot11 = slot10.level or 0
-		slot12 = slot10.maxLevel or 0
+		local var_52_5 = var_52_2.level or 0
+		local var_52_6 = var_52_2.maxLevel or 0
 
-		if slot10:isLock() then
-			slot12 = 0
+		if var_52_2:isLock() then
+			var_52_6 = 0
 		end
 
-		for slot16 = 1, slot12 do
-			if not slot9.levelItemList[slot16] then
-				slot17 = slot0:getUserDataTb_()
-				slot17.go = gohelper.cloneInPlace(slot9.golevel, "item" .. slot16)
-				slot17.golight = gohelper.findChild(slot17.go, "go_light")
+		for iter_52_2 = 1, var_52_6 do
+			local var_52_7 = var_52_1.levelItemList[iter_52_2]
 
-				table.insert(slot9.levelItemList, slot17)
+			if not var_52_7 then
+				var_52_7 = arg_52_0:getUserDataTb_()
+				var_52_7.go = gohelper.cloneInPlace(var_52_1.golevel, "item" .. iter_52_2)
+				var_52_7.golight = gohelper.findChild(var_52_7.go, "go_light")
+
+				table.insert(var_52_1.levelItemList, var_52_7)
 			end
 
-			gohelper.setActive(slot17.golight, slot16 <= slot11)
-			gohelper.setActive(slot17.go, true)
+			gohelper.setActive(var_52_7.golight, iter_52_2 <= var_52_5)
+			gohelper.setActive(var_52_7.go, true)
 		end
 
-		for slot16 = slot12 + 1, #slot9.levelItemList do
-			gohelper.setActive(slot9.levelItemList[slot16].go, false)
+		for iter_52_3 = var_52_6 + 1, #var_52_1.levelItemList do
+			local var_52_8 = var_52_1.levelItemList[iter_52_3]
+
+			gohelper.setActive(var_52_8.go, false)
 		end
 
-		if slot10:isLock() then
-			slot9.animator.speed = 0
+		if var_52_2:isLock() then
+			var_52_1.animator.speed = 0
 
-			slot9.animator:Play("unlock", 0, 0)
-			slot9.animator:Update(0)
-		elseif RoomProductionModel.instance:shouldPlayLineUnlock(slot8) then
-			slot9.animator.speed = 0
+			var_52_1.animator:Play("unlock", 0, 0)
+			var_52_1.animator:Update(0)
+		elseif RoomProductionModel.instance:shouldPlayLineUnlock(iter_52_1) then
+			var_52_1.animator.speed = 0
 
-			slot9.animator:Play("unlock", 0, 0)
-			slot9.animator:Update(0)
+			var_52_1.animator:Play("unlock", 0, 0)
+			var_52_1.animator:Update(0)
 
 			if not RoomMapModel.instance:isRoomLeveling() and not ViewMgr.instance:isOpen(ViewName.RoomLevelUpTipsView) then
-				RoomProductionModel.instance:setPlayLineUnlock(slot8, nil)
-				TaskDispatcher.runDelay(slot0._playLineUnlock, slot9, 0.4)
+				RoomProductionModel.instance:setPlayLineUnlock(iter_52_1, nil)
+				TaskDispatcher.runDelay(arg_52_0._playLineUnlock, var_52_1, 0.4)
 			end
 		else
-			slot9.animator.speed = 0
+			var_52_1.animator.speed = 0
 
-			slot9.animator:Play(UIAnimationName.Idle, 0, 0)
-			slot9.animator:Update(0)
+			var_52_1.animator:Play(UIAnimationName.Idle, 0, 0)
+			var_52_1.animator:Update(0)
 		end
 	end
 
-	for slot7 = #slot3 + 1, #slot1.lineItemList do
-		gohelper.setActive(slot1.lineItemList[slot7].go, false)
+	for iter_52_4 = #var_52_0 + 1, #arg_52_1.lineItemList do
+		local var_52_9 = arg_52_1.lineItemList[iter_52_4]
+
+		gohelper.setActive(var_52_9.go, false)
 	end
 end
 
-function slot0._playLineUnlock(slot0)
-	slot0.animator.speed = 1
+function var_0_0._playLineUnlock(arg_53_0)
+	arg_53_0.animator.speed = 1
 
-	slot0.animator:Play("unlock", 0, 0)
+	arg_53_0.animator:Play("unlock", 0, 0)
 end
 
-function slot0._refreshInitPartProductGet(slot0)
-	for slot4, slot5 in ipairs(slot0._initPartProductItemList) do
-		slot8 = false
-		slot9 = false
+function var_0_0._refreshInitPartProductGet(arg_54_0)
+	for iter_54_0, iter_54_1 in ipairs(arg_54_0._initPartProductItemList) do
+		local var_54_0 = RoomConfig.instance:getProductionPartConfig(iter_54_1.partId).productionLines
+		local var_54_1 = false
+		local var_54_2 = false
 
-		for slot13, slot14 in ipairs(RoomConfig.instance:getProductionPartConfig(slot5.partId).productionLines) do
-			if RoomProductionModel.instance:getLineMO(slot14) and not slot15:isLock() then
-				slot8 = true
+		for iter_54_2, iter_54_3 in ipairs(var_54_0) do
+			local var_54_3 = RoomProductionModel.instance:getLineMO(iter_54_3)
 
-				if not slot15:isIdle() and not slot15:isFull() then
-					slot9 = true
+			if var_54_3 and not var_54_3:isLock() then
+				var_54_1 = true
+
+				if not var_54_3:isIdle() and not var_54_3:isFull() then
+					var_54_2 = true
 				end
 			end
 		end
 
-		gohelper.setActive(slot5.btnget.gameObject, #RoomProductionHelper.getCanGainLineIdList(slot5.partId) > 0 and slot8)
-		slot5.animator:Play(slot9 and UIAnimationName.Loop or "idle")
+		local var_54_4 = #RoomProductionHelper.getCanGainLineIdList(iter_54_1.partId) > 0 and var_54_1
+
+		gohelper.setActive(iter_54_1.btnget.gameObject, var_54_4)
+		iter_54_1.animator:Play(var_54_2 and UIAnimationName.Loop or "idle")
 	end
 end
 
-function slot0._refreshInitPartChange(slot0, slot1, slot2)
-	if not slot0._initPartChangeItemList[slot2] then
-		slot3 = slot0:getUserDataTb_()
-		slot3.partId = slot1.id
-		slot3.go = gohelper.cloneInPlace(slot0._gochangepart, "changeitem" .. slot2)
-		slot3.txtname = gohelper.findChildText(slot3.go, "title/txt")
-		slot3.txtnameen = gohelper.findChildText(slot3.go, "title/txt/txtEn")
-		slot3.goformulaitem = gohelper.findChild(slot3.go, "scroll_productline/viewport/content/go_materialItem")
-		slot3.simagedoor = gohelper.findChildSingleImage(slot3.go, "reward/simage_door")
-		slot3.btncombine = gohelper.findChildButton(slot3.go, "reward/btn_combine")
+function var_0_0._refreshInitPartChange(arg_55_0, arg_55_1, arg_55_2)
+	local var_55_0 = arg_55_0._initPartChangeItemList[arg_55_2]
 
-		slot3.btncombine:AddClickListener(slot0._btninitpartChangeOnClick, slot0, slot3.partId)
+	if not var_55_0 then
+		var_55_0 = arg_55_0:getUserDataTb_()
+		var_55_0.partId = arg_55_1.id
+		var_55_0.go = gohelper.cloneInPlace(arg_55_0._gochangepart, "changeitem" .. arg_55_2)
+		var_55_0.txtname = gohelper.findChildText(var_55_0.go, "title/txt")
+		var_55_0.txtnameen = gohelper.findChildText(var_55_0.go, "title/txt/txtEn")
+		var_55_0.goformulaitem = gohelper.findChild(var_55_0.go, "scroll_productline/viewport/content/go_materialItem")
+		var_55_0.simagedoor = gohelper.findChildSingleImage(var_55_0.go, "reward/simage_door")
+		var_55_0.btncombine = gohelper.findChildButton(var_55_0.go, "reward/btn_combine")
 
-		slot3.formulaItemList = {}
+		var_55_0.btncombine:AddClickListener(arg_55_0._btninitpartChangeOnClick, arg_55_0, var_55_0.partId)
 
-		gohelper.setActive(slot3.goformulaitem, false)
-		table.insert(slot0._initPartChangeItemList, slot3)
+		var_55_0.formulaItemList = {}
+
+		gohelper.setActive(var_55_0.goformulaitem, false)
+		table.insert(arg_55_0._initPartChangeItemList, var_55_0)
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_55_0.go, true)
 
-	slot3.txtname.text = slot1.name
-	slot3.txtnameen.text = slot1.nameEn
+	local var_55_1 = RoomProductionHelper.getPartMaxLineLevel(arg_55_1.id)
 
-	slot3.simagedoor:LoadImage(ResUrl.getCurrencyItemIcon("door_room"))
-	slot0:_refreshInitPartChangeFormula(slot3, slot1, RoomProductionHelper.getPartMaxLineLevel(slot1.id))
+	var_55_0.txtname.text = arg_55_1.name
+	var_55_0.txtnameen.text = arg_55_1.nameEn
+
+	var_55_0.simagedoor:LoadImage(ResUrl.getCurrencyItemIcon("door_room"))
+	arg_55_0:_refreshInitPartChangeFormula(var_55_0, arg_55_1, var_55_1)
 end
 
-function slot0._refreshInitPartChangeFormula(slot0, slot1, slot2, slot3)
-	slot4 = {}
+function var_0_0._refreshInitPartChangeFormula(arg_56_0, arg_56_1, arg_56_2, arg_56_3)
+	local var_56_0 = {}
 
-	for slot8, slot9 in ipairs(lua_formula_showtype.configList) do
-		table.insert(slot4, slot9)
+	for iter_56_0, iter_56_1 in ipairs(lua_formula_showtype.configList) do
+		table.insert(var_56_0, iter_56_1)
 	end
 
-	table.sort(slot4, function (slot0, slot1)
-		if RoomProductionHelper.isFormulaShowTypeUnlock(slot0.id) <= uv0 and not (RoomProductionHelper.isFormulaShowTypeUnlock(slot1.id) <= uv0) then
+	table.sort(var_56_0, function(arg_57_0, arg_57_1)
+		local var_57_0 = RoomProductionHelper.isFormulaShowTypeUnlock(arg_57_0.id) <= arg_56_3
+		local var_57_1 = RoomProductionHelper.isFormulaShowTypeUnlock(arg_57_1.id) <= arg_56_3
+
+		if var_57_0 and not var_57_1 then
 			return true
-		elseif slot3 and not slot2 then
+		elseif var_57_1 and not var_57_0 then
 			return false
 		else
-			return slot0.id < slot1.id
+			return arg_57_0.id < arg_57_1.id
 		end
 	end)
 
-	for slot9, slot10 in ipairs(slot4) do
-		slot13 = RoomProductionHelper.isFormulaShowTypeUnlock(slot10.id) <= slot3 and RoomProductionHelper.hasUnlockLine(slot2.id)
+	local var_56_1 = RoomProductionHelper.hasUnlockLine(arg_56_2.id)
 
-		if not slot1.formulaItemList[slot9] then
-			slot11 = slot0:getUserDataTb_()
-			slot11.go = gohelper.cloneInPlace(slot1.goformulaitem, "item" .. slot9)
-			slot11.gonormal = gohelper.findChild(slot11.go, "go_normal")
-			slot11.txtnamenormal = gohelper.findChildText(slot11.go, "go_normal/txt_name")
-			slot11.golock = gohelper.findChild(slot11.go, "go_lock")
-			slot11.txtnamelock = gohelper.findChildText(slot11.go, "go_lock/txt_name")
-			slot11.btnlockclick = gohelper.findChildButtonWithAudio(slot11.go, "go_lock/btn_lockclick")
-			slot11.param = {}
+	for iter_56_2, iter_56_3 in ipairs(var_56_0) do
+		local var_56_2 = arg_56_1.formulaItemList[iter_56_2]
+		local var_56_3 = RoomProductionHelper.isFormulaShowTypeUnlock(iter_56_3.id)
+		local var_56_4 = var_56_3 <= arg_56_3 and var_56_1
 
-			table.insert(slot1.formulaItemList, slot11)
+		if not var_56_2 then
+			var_56_2 = arg_56_0:getUserDataTb_()
+			var_56_2.go = gohelper.cloneInPlace(arg_56_1.goformulaitem, "item" .. iter_56_2)
+			var_56_2.gonormal = gohelper.findChild(var_56_2.go, "go_normal")
+			var_56_2.txtnamenormal = gohelper.findChildText(var_56_2.go, "go_normal/txt_name")
+			var_56_2.golock = gohelper.findChild(var_56_2.go, "go_lock")
+			var_56_2.txtnamelock = gohelper.findChildText(var_56_2.go, "go_lock/txt_name")
+			var_56_2.btnlockclick = gohelper.findChildButtonWithAudio(var_56_2.go, "go_lock/btn_lockclick")
+			var_56_2.param = {}
+
+			table.insert(arg_56_1.formulaItemList, var_56_2)
 		end
 
-		slot11.btnlockclick:RemoveClickListener()
+		var_56_2.btnlockclick:RemoveClickListener()
 
-		slot11.param.partConfig = slot2
-		slot11.param.unlockLevel = slot12
-		slot11.param.unlockLevel = slot12
+		var_56_2.param.partConfig = arg_56_2
+		var_56_2.param.unlockLevel = var_56_3
+		var_56_2.param.unlockLevel = var_56_3
 
-		if not slot13 then
-			if slot5 then
-				slot11.btnlockclick:AddClickListener(slot0._btnMaterialItemLockOnClick, slot0, slot11.param)
+		if not var_56_4 then
+			if var_56_1 then
+				var_56_2.btnlockclick:AddClickListener(arg_56_0._btnMaterialItemLockOnClick, arg_56_0, var_56_2.param)
 			else
-				slot11.btnlockclick:AddClickListener(slot0._btnMaterialItemLockOnClick2, slot0)
+				var_56_2.btnlockclick:AddClickListener(arg_56_0._btnMaterialItemLockOnClick2, arg_56_0)
 			end
 		end
 
-		gohelper.setActive(slot11.gonormal, slot13)
-		gohelper.setActive(slot11.golock, not slot13)
+		gohelper.setActive(var_56_2.gonormal, var_56_4)
+		gohelper.setActive(var_56_2.golock, not var_56_4)
 
-		if slot13 then
-			slot11.txtnamenormal.text = slot10.name
+		if var_56_4 then
+			var_56_2.txtnamenormal.text = iter_56_3.name
 		else
-			slot11.txtnamelock.text = slot10.name
+			var_56_2.txtnamelock.text = iter_56_3.name
 		end
 
-		gohelper.setActive(slot11.go, true)
+		gohelper.setActive(var_56_2.go, true)
 	end
 
-	for slot9 = #slot4 + 1, #slot1.formulaItemList do
-		gohelper.setActive(slot1.formulaItemList[slot9].go, false)
+	for iter_56_4 = #var_56_0 + 1, #arg_56_1.formulaItemList do
+		local var_56_5 = arg_56_1.formulaItemList[iter_56_4]
+
+		gohelper.setActive(var_56_5.go, false)
 	end
 end
 
-function slot0._btnMaterialItemLockOnClick(slot0, slot1)
-	GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, slot1.partConfig.name, slot1.unlockLevel)
+function var_0_0._btnMaterialItemLockOnClick(arg_58_0, arg_58_1)
+	GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_58_1.partConfig.name, arg_58_1.unlockLevel)
 end
 
-function slot0._btnMaterialItemLockOnClick2(slot0)
+function var_0_0._btnMaterialItemLockOnClick2(arg_59_0)
 	GameFacade.showToast(ToastEnum.MaterialItemLockOnClick2)
 end
 
-function slot0._refreshDetailPart(slot0, slot1)
-	if slot0._selectPartId == 0 then
+function var_0_0._refreshDetailPart(arg_60_0, arg_60_1)
+	if arg_60_0._selectPartId == 0 then
 		return
 	end
 
-	slot3 = RoomConfig.instance:getProductionPartConfig(slot0._selectPartId).productionLines
+	local var_60_0 = RoomConfig.instance:getProductionPartConfig(arg_60_0._selectPartId).productionLines
 
-	if slot0._selectLineId == 0 or not LuaUtil.tableContains(slot3, slot0._selectLineId) then
-		slot0._selectLineId = slot3[1]
+	if arg_60_0._selectLineId == 0 or not LuaUtil.tableContains(var_60_0, arg_60_0._selectLineId) then
+		arg_60_0._selectLineId = var_60_0[1]
 
-		slot0.viewContainer:setSelectLine(slot0._selectLineId)
+		arg_60_0.viewContainer:setSelectLine(arg_60_0._selectLineId)
 	end
 
-	gohelper.setActive(slot0._gogather, RoomProductionHelper.getPartType(slot0._selectPartId) == RoomProductLineEnum.ProductType.Product)
-	gohelper.setActive(slot0._gochange, slot4 == RoomProductLineEnum.ProductType.Change)
+	local var_60_1 = RoomProductionHelper.getPartType(arg_60_0._selectPartId)
 
-	if slot4 == RoomProductLineEnum.ProductType.Product then
-		slot0:_refreshDetailPartGather(slot0._selectPartId, not slot1)
-	elseif slot4 == RoomProductLineEnum.ProductType.Change then
-		slot0:_refreshDetailPartChange(slot0._selectPartId)
+	gohelper.setActive(arg_60_0._gogather, var_60_1 == RoomProductLineEnum.ProductType.Product)
+	gohelper.setActive(arg_60_0._gochange, var_60_1 == RoomProductLineEnum.ProductType.Change)
+
+	if var_60_1 == RoomProductLineEnum.ProductType.Product then
+		arg_60_0:_refreshDetailPartGather(arg_60_0._selectPartId, not arg_60_1)
+	elseif var_60_1 == RoomProductLineEnum.ProductType.Change then
+		arg_60_0:_refreshDetailPartChange(arg_60_0._selectPartId)
 	end
 end
 
-function slot0._refreshDetailPartGather(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0._refreshDetailPartGather(arg_61_0, arg_61_1, arg_61_2)
+	if arg_61_1 == 0 then
 		return
 	end
 
-	if not slot0._gatherItem then
-		slot0._gatherItem = slot0:_initGatherItem()
+	if not arg_61_0._gatherItem then
+		arg_61_0._gatherItem = arg_61_0:_initGatherItem()
 	end
 
-	slot4 = RoomConfig.instance:getProductionPartConfig(slot1).productionLines
+	local var_61_0 = RoomConfig.instance:getProductionPartConfig(arg_61_1)
+	local var_61_1 = var_61_0.productionLines
+	local var_61_2 = #RoomProductionHelper.getCanGainLineIdList(arg_61_1) > 0
 
-	gohelper.setActive(slot0._gatherItem.btnget.gameObject, false)
+	gohelper.setActive(arg_61_0._gatherItem.btnget.gameObject, false)
 
-	slot7 = false
-	slot8 = 0
-	slot9 = nil
-	slot0._lastDetailPartGatherCanGet = #RoomProductionHelper.getCanGainLineIdList(slot1) > 0
+	local var_61_3 = false
+	local var_61_4 = 0
+	local var_61_5
 
-	for slot13, slot14 in ipairs(slot4) do
-		if not slot0._gatherItem.lineItemList[slot13] then
-			slot15 = slot0:getUserDataTb_()
-			slot15.lineId = slot14
-			slot15.go = gohelper.cloneInPlace(slot0._gatherItem.goline, "item" .. slot13)
+	arg_61_0._lastDetailPartGatherCanGet = var_61_2
 
-			slot0:_initLine(slot15, slot15.go, true, slot13)
-			table.insert(slot0._gatherItem.lineItemList, slot15)
+	for iter_61_0, iter_61_1 in ipairs(var_61_1) do
+		local var_61_6 = arg_61_0._gatherItem.lineItemList[iter_61_0]
+
+		if not var_61_6 then
+			var_61_6 = arg_61_0:getUserDataTb_()
+			var_61_6.lineId = iter_61_1
+			var_61_6.go = gohelper.cloneInPlace(arg_61_0._gatherItem.goline, "item" .. iter_61_0)
+
+			arg_61_0:_initLine(var_61_6, var_61_6.go, true, iter_61_0)
+			table.insert(arg_61_0._gatherItem.lineItemList, var_61_6)
 		end
 
-		slot16 = RoomProductionModel.instance:getLineMO(slot14)
+		local var_61_7 = RoomProductionModel.instance:getLineMO(iter_61_1)
 
-		gohelper.setActive(slot15.go, true)
-		slot0:_refreshLine(slot15, slot16, true)
+		gohelper.setActive(var_61_6.go, true)
+		arg_61_0:_refreshLine(var_61_6, var_61_7, true)
 
-		if not slot16:isLock() and not slot16:isIdle() and not slot16:isFull() then
-			slot8 = slot8 + 1
-			slot7 = true
+		if not var_61_7:isLock() and not var_61_7:isIdle() and not var_61_7:isFull() then
+			var_61_4 = var_61_4 + 1
+			var_61_3 = true
 		end
 
-		if not slot9 then
-			if slot16.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
-				slot9 = "1_huibiao"
-			elseif slot16.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
-				slot9 = "2_huibiao"
+		if not var_61_5 then
+			if var_61_7.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
+				var_61_5 = "1_huibiao"
+			elseif var_61_7.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
+				var_61_5 = "2_huibiao"
 			end
 		end
 	end
 
-	for slot13 = #slot4 + 1, #slot0._gatherItem.lineItemList do
-		gohelper.setActive(slot0._gatherItem.lineItemList[slot13].go, false)
+	for iter_61_2 = #var_61_1 + 1, #arg_61_0._gatherItem.lineItemList do
+		local var_61_8 = arg_61_0._gatherItem.lineItemList[iter_61_2]
+
+		gohelper.setActive(var_61_8.go, false)
 	end
 
-	gohelper.setActive(slot0._gatherItem.btnnewget.gameObject, slot6)
+	gohelper.setActive(arg_61_0._gatherItem.btnnewget.gameObject, var_61_2)
 
-	slot0._gatherItem.txtname.text = slot3.name
-	slot0._gatherItem.txtprocess.text = string.format("%s/%s", slot8, RoomProductionHelper.getUnlockLineCount(slot1))
+	arg_61_0._gatherItem.txtname.text = var_61_0.name
 
-	slot0._gatherItem.animatorcircle:Play(slot7 and UIAnimationName.Loop or "idle")
-	UISpriteSetMgr.instance:setRoomSprite(slot0._gatherItem.imagereward, slot9 or "2_huibiao")
+	local var_61_9 = RoomProductionHelper.getUnlockLineCount(arg_61_1)
 
-	slot11 = slot8 == 0 and slot10 > 0
+	arg_61_0._gatherItem.txtprocess.text = string.format("%s/%s", var_61_4, var_61_9)
 
-	gohelper.setActive(slot0._gatherItem.gopause, slot11)
-	gohelper.setActive(slot0._gatherItem.goarrow, not slot11)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._gatherItem.txtprocess, slot11 and "#D97373" or "#999999")
-	slot0:_refreshDetailPartGatherSelectLine()
+	arg_61_0._gatherItem.animatorcircle:Play(var_61_3 and UIAnimationName.Loop or "idle")
+	UISpriteSetMgr.instance:setRoomSprite(arg_61_0._gatherItem.imagereward, var_61_5 or "2_huibiao")
+
+	local var_61_10 = var_61_4 == 0 and var_61_9 > 0
+
+	gohelper.setActive(arg_61_0._gatherItem.gopause, var_61_10)
+	gohelper.setActive(arg_61_0._gatherItem.goarrow, not var_61_10)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_61_0._gatherItem.txtprocess, var_61_10 and "#D97373" or "#999999")
+	arg_61_0:_refreshDetailPartGatherSelectLine()
 end
 
-function slot0._hideExpandDetailUI(slot0)
-	if slot0._expandDetailLineId then
-		slot0._expandDetailLineId = nil
+function var_0_0._hideExpandDetailUI(arg_62_0)
+	if arg_62_0._expandDetailLineId then
+		arg_62_0._expandDetailLineId = nil
 
-		slot0:_refreshDetailPartGather(slot0._selectPartId)
+		arg_62_0:_refreshDetailPartGather(arg_62_0._selectPartId)
 	end
 end
 
-function slot0._refreshDetailPartGatherSelectLine(slot0)
-	TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot0)
+function var_0_0._refreshDetailPartGatherSelectLine(arg_63_0)
+	TaskDispatcher.cancelTask(arg_63_0._updateDetailPartGatherSelectLineTime, arg_63_0)
 
-	if slot0._selectPartId == 0 then
-		gohelper.setActive(slot0._gatherItem.goinfo, false)
+	if arg_63_0._selectPartId == 0 then
+		gohelper.setActive(arg_63_0._gatherItem.goinfo, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gatherItem.goinfo, slot0._expandDetailLineId == slot0._selectLineId)
+	gohelper.setActive(arg_63_0._gatherItem.goinfo, arg_63_0._expandDetailLineId == arg_63_0._selectLineId)
 
-	if slot0._expandDetailLineId == slot0._selectLineId then
-		slot2 = ""
+	if arg_63_0._expandDetailLineId == arg_63_0._selectLineId then
+		local var_63_0 = RoomProductionModel.instance:getLineMO(arg_63_0._selectLineId)
+		local var_63_1 = ""
 
-		if RoomProductionModel.instance:getLineMO(slot0._selectLineId).config.type == RoomProductLineEnum.ProductItemType.ProductExp then
-			slot2 = luaLang("roominitbuildingview_dust")
-		elseif slot1.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
-			slot2 = luaLang("roominitbuildingview_coin")
+		if var_63_0.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
+			var_63_1 = luaLang("roominitbuildingview_dust")
+		elseif var_63_0.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
+			var_63_1 = luaLang("roominitbuildingview_coin")
 		end
 
-		slot0._gatherItem.txtstore.text = string.format("<color=#65b96f>%s</color>/%s", slot1.useReserve, slot1.reserve)
-		slot3, slot4, slot5 = TimeUtil.secondToHMS(slot1.costTime)
+		arg_63_0._gatherItem.txtstore.text = string.format("<color=#65b96f>%s</color>/%s", var_63_0.useReserve, var_63_0.reserve)
 
-		if slot4 + slot3 * 60 > 0 then
-			if slot5 > 0 then
-				slot0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s<color=#65b96f>%d</color>%s", slot1.produceSpeed, slot2, slot6, luaLang("time_minute"), slot5, luaLang("time_second"))
+		local var_63_2, var_63_3, var_63_4 = TimeUtil.secondToHMS(var_63_0.costTime)
+		local var_63_5 = var_63_3 + var_63_2 * 60
+
+		if var_63_5 > 0 then
+			if var_63_4 > 0 then
+				arg_63_0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s<color=#65b96f>%d</color>%s", var_63_0.produceSpeed, var_63_1, var_63_5, luaLang("time_minute"), var_63_4, luaLang("time_second"))
 			else
-				slot0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", slot1.produceSpeed, slot2, slot6, luaLang("time_minute"))
+				arg_63_0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", var_63_0.produceSpeed, var_63_1, var_63_5, luaLang("time_minute"))
 			end
 		else
-			slot0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", slot1.produceSpeed, slot2, slot5, luaLang("time_second"))
+			arg_63_0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", var_63_0.produceSpeed, var_63_1, var_63_4, luaLang("time_second"))
 		end
 
-		slot0:_updateDetailPartGatherSelectLineTime()
-		TaskDispatcher.runRepeat(slot0._updateDetailPartGatherSelectLineTime, slot0, 1)
-		gohelper.addChild(slot0:_getLineItemByLineId(slot0._selectLineId).go, slot0._gatherItem.goinfo)
+		arg_63_0:_updateDetailPartGatherSelectLineTime()
+		TaskDispatcher.runRepeat(arg_63_0._updateDetailPartGatherSelectLineTime, arg_63_0, 1)
 
-		slot8, slot9, slot10 = transformhelper.getLocalPos(slot0._gatherItem.goinfo.transform)
+		local var_63_6 = arg_63_0:_getLineItemByLineId(arg_63_0._selectLineId)
 
-		transformhelper.setLocalPos(slot0._gatherItem.goinfo.transform, slot8, 0, slot10)
+		gohelper.addChild(var_63_6.go, arg_63_0._gatherItem.goinfo)
+
+		local var_63_7, var_63_8, var_63_9 = transformhelper.getLocalPos(arg_63_0._gatherItem.goinfo.transform)
+
+		transformhelper.setLocalPos(arg_63_0._gatherItem.goinfo.transform, var_63_7, 0, var_63_9)
 	end
 end
 
-function slot0._updateDetailPartGatherSelectLineTime(slot0)
-	if slot0._selectPartId == 0 then
-		TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot0)
+function var_0_0._updateDetailPartGatherSelectLineTime(arg_64_0)
+	if arg_64_0._selectPartId == 0 then
+		TaskDispatcher.cancelTask(arg_64_0._updateDetailPartGatherSelectLineTime, arg_64_0)
 
 		return
 	end
 
-	if slot0._selectLineId == 0 then
-		TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot0)
+	if arg_64_0._selectLineId == 0 then
+		TaskDispatcher.cancelTask(arg_64_0._updateDetailPartGatherSelectLineTime, arg_64_0)
 
 		return
 	end
 
-	if RoomProductionModel.instance:getLineMO(slot0._selectLineId).config.logic ~= RoomProductLineEnum.ProductType.Product then
-		TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot0)
+	local var_64_0 = RoomProductionModel.instance:getLineMO(arg_64_0._selectLineId)
+
+	if var_64_0.config.logic ~= RoomProductLineEnum.ProductType.Product then
+		TaskDispatcher.cancelTask(arg_64_0._updateDetailPartGatherSelectLineTime, arg_64_0)
 
 		return
 	end
 
-	slot2 = math.floor(slot1.allFinishTime - ServerTime.now())
+	local var_64_1 = math.floor(var_64_0.allFinishTime - ServerTime.now())
 
-	if not slot1:isIdle() and slot1:isFull() then
-		slot0._gatherItem.txtremain.text = luaLang("roominitbuildingview_fullpro")
+	if not var_64_0:isIdle() and var_64_0:isFull() then
+		arg_64_0._gatherItem.txtremain.text = luaLang("roominitbuildingview_fullpro")
 	else
-		slot0._gatherItem.txtremain.text = string.format("<color=#65B96F>%s </color>%s", TimeUtil.second2TimeString(math.max(0, slot2), true), luaLang("roominitbuildingview_stopproduct"))
+		arg_64_0._gatherItem.txtremain.text = string.format("<color=#65B96F>%s </color>%s", TimeUtil.second2TimeString(math.max(0, var_64_1), true), luaLang("roominitbuildingview_stopproduct"))
 	end
 end
 
-function slot0._refreshDetailPartChange(slot0, slot1)
-	if not slot0._changeItem then
-		slot0._changeItem = slot0:_initChangeItem()
+function var_0_0._refreshDetailPartChange(arg_65_0, arg_65_1)
+	if not arg_65_0._changeItem then
+		arg_65_0._changeItem = arg_65_0:_initChangeItem()
 	end
 
-	slot0:_refreshDetailPartChangeTitle(slot1)
-	gohelper.setActive(slot0._changeItem.gobgvx, false)
-	gohelper.setActive(slot0._changeItem.gohechengeffect, false)
+	arg_65_0:_refreshDetailPartChangeTitle(arg_65_1)
+	gohelper.setActive(arg_65_0._changeItem.gobgvx, false)
+	gohelper.setActive(arg_65_0._changeItem.gohechengeffect, false)
 end
 
-function slot0._refreshDetailPartChangeTitle(slot0, slot1)
-	slot0:_refreshLine(slot0._changeItem.lineItem, RoomProductionHelper.getChangePartLineMO(slot1), false)
+function var_0_0._refreshDetailPartChangeTitle(arg_66_0, arg_66_1)
+	local var_66_0 = RoomProductionHelper.getChangePartLineMO(arg_66_1)
+
+	arg_66_0:_refreshLine(arg_66_0._changeItem.lineItem, var_66_0, false)
 end
 
-function slot0._refreshLine(slot0, slot1, slot2, slot3)
-	slot1.lineId = slot2.id
-	slot1.txtname.text = slot2.config.name
+function var_0_0._refreshLine(arg_67_0, arg_67_1, arg_67_2, arg_67_3)
+	arg_67_1.lineId = arg_67_2.id
+	arg_67_1.txtname.text = arg_67_2.config.name
 
-	gohelper.setActive(slot1.btnupgrade.gameObject, slot2.level < slot2.maxConfigLevel)
+	gohelper.setActive(arg_67_1.btnupgrade.gameObject, arg_67_2.level < arg_67_2.maxConfigLevel)
 
-	if slot3 then
-		gohelper.setActive(slot1.txtname.gameObject, not slot2:isLock())
+	if arg_67_3 then
+		gohelper.setActive(arg_67_1.txtname.gameObject, not arg_67_2:isLock())
 
-		slot1.txtlock.text = string.format(luaLang("room_initbuilding_linelock"), slot2.config.needRoomLevel)
+		local var_67_0 = arg_67_2.config.needRoomLevel
 
-		if slot2:isLock() then
-			gohelper.setActive(slot1.gonormalbg, true)
-			gohelper.setActive(slot1.gofullbg, false)
-			gohelper.setActive(slot1.goshowprocess, false)
-			gohelper.setActive(slot1.btnupgrade.gameObject, false)
-			gohelper.setActive(slot1.goselectbg, false)
+		arg_67_1.txtlock.text = string.format(luaLang("room_initbuilding_linelock"), var_67_0)
+
+		if arg_67_2:isLock() then
+			gohelper.setActive(arg_67_1.gonormalbg, true)
+			gohelper.setActive(arg_67_1.gofullbg, false)
+			gohelper.setActive(arg_67_1.goshowprocess, false)
+			gohelper.setActive(arg_67_1.btnupgrade.gameObject, false)
+			gohelper.setActive(arg_67_1.goselectbg, false)
 		else
-			gohelper.setActive(slot1.gonormalbg, slot2:isIdle() or not slot2:isFull())
-			gohelper.setActive(slot1.gofullbg, not slot2:isIdle() and slot2:isFull())
-			gohelper.setActive(slot1.goshowprocess, not slot2:isIdle())
-			gohelper.setActive(slot1.goselectbg, slot0._expandDetailLineId == slot2.id)
+			gohelper.setActive(arg_67_1.gonormalbg, arg_67_2:isIdle() or not arg_67_2:isFull())
+			gohelper.setActive(arg_67_1.gofullbg, not arg_67_2:isIdle() and arg_67_2:isFull())
+			gohelper.setActive(arg_67_1.goshowprocess, not arg_67_2:isIdle())
+			gohelper.setActive(arg_67_1.goselectbg, arg_67_0._expandDetailLineId == arg_67_2.id)
 
-			if slot2:isIdle() then
-				gohelper.setActive(slot1.gofull, false)
-				gohelper.setActive(slot1.goprocess, false)
-			elseif slot2:isFull() then
-				gohelper.setActive(slot1.gofull, true)
-				gohelper.setActive(slot1.goprocess, false)
+			if arg_67_2:isIdle() then
+				gohelper.setActive(arg_67_1.gofull, false)
+				gohelper.setActive(arg_67_1.goprocess, false)
+			elseif arg_67_2:isFull() then
+				gohelper.setActive(arg_67_1.gofull, true)
+				gohelper.setActive(arg_67_1.goprocess, false)
 			else
-				gohelper.setActive(slot1.gofull, false)
-				gohelper.setActive(slot1.goprocess, true)
+				gohelper.setActive(arg_67_1.gofull, false)
+				gohelper.setActive(arg_67_1.goprocess, true)
 
-				slot1.imageprocess.fillAmount, slot6 = slot2:getReservePer()
+				local var_67_1, var_67_2 = arg_67_2:getReservePer()
 
-				if not slot0._lineIdPerDict[slot1.lineId] then
-					slot1.txtprocess.text = string.format("%d%%", slot6)
+				if not arg_67_0._lineIdPerDict[arg_67_1.lineId] then
+					arg_67_1.imageprocess.fillAmount = var_67_1
+					arg_67_1.txtprocess.text = string.format("%d%%", var_67_2)
 				end
 			end
 		end
 
-		if slot2:isLock() then
-			slot1.gatherAnimator.speed = 0
+		if arg_67_2:isLock() then
+			arg_67_1.gatherAnimator.speed = 0
 
-			slot1.gatherAnimator:Play("unlock", 0, 0)
-			slot1.gatherAnimator:Update(0)
-		elseif RoomProductionModel.instance:shouldPlayLineUnlockDetail(slot1.lineId) then
-			RoomProductionModel.instance:setPlayLineUnlockDetail(slot1.lineId, nil)
+			arg_67_1.gatherAnimator:Play("unlock", 0, 0)
+			arg_67_1.gatherAnimator:Update(0)
+		elseif RoomProductionModel.instance:shouldPlayLineUnlockDetail(arg_67_1.lineId) then
+			RoomProductionModel.instance:setPlayLineUnlockDetail(arg_67_1.lineId, nil)
 
-			slot1.gatherAnimator.speed = 0
+			arg_67_1.gatherAnimator.speed = 0
 
-			slot1.gatherAnimator:Play("unlock", 0, 0)
-			slot1.gatherAnimator:Update(0)
-			TaskDispatcher.runDelay(slot0._playLineUnlockDetail, slot1, 0.4)
+			arg_67_1.gatherAnimator:Play("unlock", 0, 0)
+			arg_67_1.gatherAnimator:Update(0)
+			TaskDispatcher.runDelay(arg_67_0._playLineUnlockDetail, arg_67_1, 0.4)
 		else
-			slot1.gatherAnimator.speed = 0
+			arg_67_1.gatherAnimator.speed = 0
 
-			slot1.gatherAnimator:Play(UIAnimationName.Idle, 0, 0)
-			slot1.gatherAnimator:Update(0)
+			arg_67_1.gatherAnimator:Play(UIAnimationName.Idle, 0, 0)
+			arg_67_1.gatherAnimator:Update(0)
 		end
 	else
-		gohelper.setActive(slot1.goselectbg, false)
-		gohelper.setActive(slot1.goshowprocess, true)
+		gohelper.setActive(arg_67_1.goselectbg, false)
+		gohelper.setActive(arg_67_1.goshowprocess, true)
 
-		slot1.imageprocess.fillAmount = 0
-		slot1.txtprocess.text = string.format("%d%%", 0)
+		arg_67_1.imageprocess.fillAmount = 0
+		arg_67_1.txtprocess.text = string.format("%d%%", 0)
 	end
 
-	slot4 = slot2.level or 0
-	slot5 = slot2.maxLevel or 0
+	local var_67_3 = arg_67_2.level or 0
+	local var_67_4 = arg_67_2.maxLevel or 0
 
-	for slot9 = 1, slot5 do
-		if not slot1.levelItemList[slot9] then
-			slot10 = slot0:getUserDataTb_()
-			slot10.go = gohelper.cloneInPlace(slot1.golevelitem, "item" .. slot9)
-			slot10.golight = gohelper.findChild(slot10.go, "go_light")
+	for iter_67_0 = 1, var_67_4 do
+		local var_67_5 = arg_67_1.levelItemList[iter_67_0]
 
-			table.insert(slot1.levelItemList, slot10)
+		if not var_67_5 then
+			var_67_5 = arg_67_0:getUserDataTb_()
+			var_67_5.go = gohelper.cloneInPlace(arg_67_1.golevelitem, "item" .. iter_67_0)
+			var_67_5.golight = gohelper.findChild(var_67_5.go, "go_light")
+
+			table.insert(arg_67_1.levelItemList, var_67_5)
 		end
 
-		gohelper.setActive(slot10.golight, slot9 <= slot4)
-		gohelper.setActive(slot10.go, true)
+		gohelper.setActive(var_67_5.golight, iter_67_0 <= var_67_3)
+		gohelper.setActive(var_67_5.go, true)
 	end
 
-	for slot9 = slot5 + 1, #slot1.levelItemList do
-		gohelper.setActive(slot1.levelItemList[slot9].go, false)
+	for iter_67_1 = var_67_4 + 1, #arg_67_1.levelItemList do
+		local var_67_6 = arg_67_1.levelItemList[iter_67_1]
+
+		gohelper.setActive(var_67_6.go, false)
 	end
 
-	RedDotController.instance:addRedDot(slot1.reddot, RedDotEnum.DotNode.RoomProductionLevel, slot1.lineId)
+	RedDotController.instance:addRedDot(arg_67_1.reddot, RedDotEnum.DotNode.RoomProductionLevel, arg_67_1.lineId)
 end
 
-function slot0._playLineUnlockDetail(slot0)
-	slot0.gatherAnimator.speed = 1
+function var_0_0._playLineUnlockDetail(arg_68_0)
+	arg_68_0.gatherAnimator.speed = 1
 
-	slot0.gatherAnimator:Play("unlock", 0, 0)
+	arg_68_0.gatherAnimator:Play("unlock", 0, 0)
 end
 
-function slot0._onChangePartStart(slot0)
+function var_0_0._onChangePartStart(arg_69_0)
 	PopupController.instance:setPause("roominitbuildingview_changeeffect", true)
 	UIBlockMgr.instance:startBlock("roominitbuildingview_changeeffect")
-	TaskDispatcher.cancelTask(slot0._resetChangeProcessText, slot0)
-	slot0._changeItem.lineItem.animator:Play(UIAnimationName.Open, 0, 0)
+	TaskDispatcher.cancelTask(arg_69_0._resetChangeProcessText, arg_69_0)
+	arg_69_0._changeItem.lineItem.animator:Play(UIAnimationName.Open, 0, 0)
 
-	if slot0._changeItem.lineItem.tweenId then
-		if slot0._scene.tween then
-			slot0._scene.tween:killById(slot0._changeItem.lineItem.tweenId)
+	if arg_69_0._changeItem.lineItem.tweenId then
+		if arg_69_0._scene.tween then
+			arg_69_0._scene.tween:killById(arg_69_0._changeItem.lineItem.tweenId)
 		else
-			ZProj.TweenHelper.KillById(slot0._changeItem.lineItem.tweenId)
+			ZProj.TweenHelper.KillById(arg_69_0._changeItem.lineItem.tweenId)
 		end
 
-		slot0._changeItem.lineItem.tweenId = nil
+		arg_69_0._changeItem.lineItem.tweenId = nil
 	end
 
-	if slot0._scene.tween then
-		slot0._changeItem.lineItem.tweenId = slot0._scene.tween:tweenFloat(0, 1, 1.3, slot0._changeEffectFrame, slot0._changeEffectFinish, slot0)
+	if arg_69_0._scene.tween then
+		arg_69_0._changeItem.lineItem.tweenId = arg_69_0._scene.tween:tweenFloat(0, 1, 1.3, arg_69_0._changeEffectFrame, arg_69_0._changeEffectFinish, arg_69_0)
 	else
-		slot0._changeItem.lineItem.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.3, slot0._changeEffectFrame, slot0._changeEffectFinish, slot0)
+		arg_69_0._changeItem.lineItem.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.3, arg_69_0._changeEffectFrame, arg_69_0._changeEffectFinish, arg_69_0)
 	end
 end
 
-function slot0._changeEffectFrame(slot0, slot1)
-	slot0._changeItem.lineItem.txtprocess.text = string.format("%d%%", math.ceil(slot1 * 100))
+function var_0_0._changeEffectFrame(arg_70_0, arg_70_1)
+	arg_70_0._changeItem.lineItem.txtprocess.text = string.format("%d%%", math.ceil(arg_70_1 * 100))
 end
 
-function slot0._changeEffectFinish(slot0)
-	slot0._changeItem.lineItem.txtprocess.text = "100%"
+function var_0_0._changeEffectFinish(arg_71_0)
+	arg_71_0._changeItem.lineItem.txtprocess.text = "100%"
 
 	PopupController.instance:setPause("roominitbuildingview_changeeffect", false)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changeeffect")
-	TaskDispatcher.runDelay(slot0._resetChangeProcessText, slot0, 1)
+	TaskDispatcher.runDelay(arg_71_0._resetChangeProcessText, arg_71_0, 1)
 end
 
-function slot0._resetChangeProcessText(slot0)
-	if slot0._changeItem then
-		slot0._changeItem.lineItem.txtprocess.text = "0%"
+function var_0_0._resetChangeProcessText(arg_72_0)
+	if arg_72_0._changeItem then
+		arg_72_0._changeItem.lineItem.txtprocess.text = "0%"
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	slot0:_resetChangeProcessText()
+function var_0_0._onCloseView(arg_73_0, arg_73_1)
+	arg_73_0:_resetChangeProcessText()
 
-	if slot1 == ViewName.RoomLevelUpTipsView and slot0._selectTabId == uv0.TabId.ProductionLine then
-		slot0:_refreshInitPart()
+	if arg_73_1 == ViewName.RoomLevelUpTipsView and arg_73_0._selectTabId == var_0_0.TabId.ProductionLine then
+		arg_73_0:_refreshInitPart()
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshUI(true)
+function var_0_0.onUpdateParam(arg_74_0)
+	arg_74_0:_refreshUI(true)
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshUI(true)
+function var_0_0.onOpen(arg_75_0)
+	arg_75_0:_refreshUI(true)
 
-	if slot0.viewParam and slot0.viewParam.showFormulaView then
-		slot0:_changeSelectPart(3)
+	if arg_75_0.viewParam and arg_75_0.viewParam.showFormulaView then
+		arg_75_0:_changeSelectPart(3)
 	end
 
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, slot0._refreshLevel, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, slot0._refreshCategory, slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, slot0._refreshInitPart, slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, slot0._refreshDetailPart, slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.GainProductionLineReply, slot0._gainProductionLineCallback, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, slot0._onChangePartStart, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, slot0._refreshRoomLevelUpEffect, slot0)
-	NavigateMgr.instance:addEscape(ViewName.RoomInitBuildingView, slot0._onEscape, slot0)
+	arg_75_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_75_0._refreshLevel, arg_75_0)
+	arg_75_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_75_0._refreshCategory, arg_75_0)
+	arg_75_0:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, arg_75_0._refreshInitPart, arg_75_0)
+	arg_75_0:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, arg_75_0._refreshDetailPart, arg_75_0)
+	arg_75_0:addEventCb(RoomController.instance, RoomEvent.GainProductionLineReply, arg_75_0._gainProductionLineCallback, arg_75_0)
+	arg_75_0:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, arg_75_0._onChangePartStart, arg_75_0)
+	arg_75_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_75_0._onCloseView, arg_75_0)
+	arg_75_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_75_0._refreshRoomLevelUpEffect, arg_75_0)
+	NavigateMgr.instance:addEscape(ViewName.RoomInitBuildingView, arg_75_0._onEscape, arg_75_0)
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewContainer:isManualClose() then
+function var_0_0.onClose(arg_76_0)
+	if arg_76_0.viewContainer:isManualClose() then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_close)
 	end
 end
 
-function slot0._onEscape(slot0)
+function var_0_0._onEscape(arg_77_0)
 	ViewMgr.instance:closeView(ViewName.RoomInitBuildingView, false, true)
 	RoomMapController.instance:onCloseRoomInitBuildingView()
 end
 
-function slot0.onDestroyView(slot0)
-	slot4 = false
-
-	PopupController.instance:setPause("roominitbuildingview_changeeffect", slot4)
+function var_0_0.onDestroyView(arg_78_0)
+	PopupController.instance:setPause("roominitbuildingview_changeeffect", false)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changeeffect")
-	TaskDispatcher.cancelTask(slot0._resetChangeProcessText, slot0)
-	TaskDispatcher.cancelTask(slot0._realChangeSelectPart, slot0)
-	TaskDispatcher.cancelTask(slot0._changeShowSkinList, slot0)
-	TaskDispatcher.cancelTask(slot0._updateDetailPartGatherSelectLineTime, slot0)
+	TaskDispatcher.cancelTask(arg_78_0._resetChangeProcessText, arg_78_0)
+	TaskDispatcher.cancelTask(arg_78_0._realChangeSelectPart, arg_78_0)
+	TaskDispatcher.cancelTask(arg_78_0._changeShowSkinList, arg_78_0)
+	TaskDispatcher.cancelTask(arg_78_0._updateDetailPartGatherSelectLineTime, arg_78_0)
 
-	slot0._keepOpenSkinListAfterChange = false
+	arg_78_0._keepOpenSkinListAfterChange = false
 
-	for slot4, slot5 in ipairs(slot0._categoryItemList) do
-		slot5.btnclick:RemoveClickListener()
+	for iter_78_0, iter_78_1 in ipairs(arg_78_0._categoryItemList) do
+		iter_78_1.btnclick:RemoveClickListener()
 	end
 
-	for slot4, slot5 in ipairs(slot0._initPartProductItemList) do
-		slot5.simagereward:UnLoadImage()
-		slot5.btnget:RemoveClickListener()
-		slot5.btnjumpclick:RemoveClickListener()
+	for iter_78_2, iter_78_3 in ipairs(arg_78_0._initPartProductItemList) do
+		iter_78_3.simagereward:UnLoadImage()
+		iter_78_3.btnget:RemoveClickListener()
+		iter_78_3.btnjumpclick:RemoveClickListener()
 
-		for slot9, slot10 in ipairs(slot5.lineItemList) do
-			TaskDispatcher.cancelTask(slot0._playLineUnlock, slot10)
+		for iter_78_4, iter_78_5 in ipairs(iter_78_3.lineItemList) do
+			TaskDispatcher.cancelTask(arg_78_0._playLineUnlock, iter_78_5)
 		end
 	end
 
-	for slot4, slot5 in ipairs(slot0._initPartChangeItemList) do
-		slot5.simagedoor:UnLoadImage()
-		slot5.btncombine:RemoveClickListener()
+	for iter_78_6, iter_78_7 in ipairs(arg_78_0._initPartChangeItemList) do
+		iter_78_7.simagedoor:UnLoadImage()
+		iter_78_7.btncombine:RemoveClickListener()
 
-		for slot9, slot10 in ipairs(slot5.formulaItemList) do
-			slot10.btnlockclick:RemoveClickListener()
+		for iter_78_8, iter_78_9 in ipairs(iter_78_7.formulaItemList) do
+			iter_78_9.btnlockclick:RemoveClickListener()
 		end
 	end
 
-	if slot0._changeItem then
-		slot0._changeItem.lineItem.btnupgrade:RemoveClickListener()
+	if arg_78_0._changeItem then
+		arg_78_0._changeItem.lineItem.btnupgrade:RemoveClickListener()
 
-		if slot0._changeItem.lineItem.tweenId then
-			if slot0._scene.tween then
-				slot0._scene.tween:killById(slot0._changeItem.lineItem.tweenId)
+		if arg_78_0._changeItem.lineItem.tweenId then
+			if arg_78_0._scene.tween then
+				arg_78_0._scene.tween:killById(arg_78_0._changeItem.lineItem.tweenId)
 			else
-				ZProj.TweenHelper.KillById(slot0._changeItem.lineItem.tweenId)
+				ZProj.TweenHelper.KillById(arg_78_0._changeItem.lineItem.tweenId)
 			end
 
-			slot0._changeItem.lineItem.tweenId = nil
+			arg_78_0._changeItem.lineItem.tweenId = nil
 		end
 
-		slot0._changeItem = nil
+		arg_78_0._changeItem = nil
 	end
 
-	if slot0._gatherItem then
-		slot0._gatherItem.btnget:RemoveClickListener()
-		slot0._gatherItem.btnnewget:RemoveClickListener()
+	if arg_78_0._gatherItem then
+		arg_78_0._gatherItem.btnget:RemoveClickListener()
+		arg_78_0._gatherItem.btnnewget:RemoveClickListener()
 
-		for slot4, slot5 in ipairs(slot0._gatherItem.lineItemList) do
-			slot5.btnupgrade:RemoveClickListener()
-			slot5.btnclick:RemoveClickListener()
+		for iter_78_10, iter_78_11 in ipairs(arg_78_0._gatherItem.lineItemList) do
+			iter_78_11.btnupgrade:RemoveClickListener()
+			iter_78_11.btnclick:RemoveClickListener()
 		end
 
-		for slot4, slot5 in ipairs(slot0._gatherItem.lineItemList) do
-			TaskDispatcher.cancelTask(slot0._playLineUnlockDetail, slot5)
+		for iter_78_12, iter_78_13 in ipairs(arg_78_0._gatherItem.lineItemList) do
+			TaskDispatcher.cancelTask(arg_78_0._playLineUnlockDetail, iter_78_13)
 		end
 
-		slot0._gatherItem = nil
+		arg_78_0._gatherItem = nil
 	end
 
-	slot0._flyEffectRewardInfoList = nil
+	arg_78_0._flyEffectRewardInfoList = nil
 
-	slot0:_clearLineAnimation()
-	slot0._simagecombinebg:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
+	arg_78_0:_clearLineAnimation()
+	arg_78_0._simagecombinebg:UnLoadImage()
+	arg_78_0._simagemask:UnLoadImage()
 	RoomSkinController.instance:setRoomSkinListVisible()
 end
 
-return slot0
+return var_0_0

@@ -1,8 +1,9 @@
-module("modules.logic.versionactivity2_5.act182.controller.Activity182Event", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act182.controller.Activity182Event", package.seeall)
 
-slot0 = _M
-slot1 = GameUtil.getUniqueTb()
-slot0.UpdateInfo = slot1()
-slot0.RandomMasterReply = slot1()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return slot0
+var_0_0.UpdateInfo = var_0_1()
+var_0_0.RandomMasterReply = var_0_1()
+
+return var_0_0

@@ -1,43 +1,47 @@
-module("modules.logic.reactivity.config.ReactivityConfig", package.seeall)
+﻿module("modules.logic.reactivity.config.ReactivityConfig", package.seeall)
 
-slot0 = class("ReactivityConfig", BaseConfig)
+local var_0_0 = class("ReactivityConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._retroItemConvertConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._retroItemConvertConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"retro_item_convert"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "retro_item_convert" then
-		slot0._retroItemConvertConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "retro_item_convert" then
+		arg_3_0._retroItemConvertConfig = arg_3_2
 	end
 end
 
-function slot0.getItemConvertList(slot0)
-	return slot0._retroItemConvertConfig.configList
+function var_0_0.getItemConvertList(arg_4_0)
+	return arg_4_0._retroItemConvertConfig.configList
 end
 
-function slot0.getItemConvertCO(slot0, slot1, slot2)
-	if not slot0._retroItemConvertConfig.configDict[slot1] then
+function var_0_0.getItemConvertCO(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0._retroItemConvertConfig.configDict[arg_5_1]
+
+	if not var_5_0 then
 		return
 	end
 
-	return slot3[slot2]
+	return var_5_0[arg_5_2]
 end
 
-function slot0.checkItemNeedConvert(slot0, slot1, slot2)
-	if not slot0:getItemConvertCO(slot1, slot2) then
+function var_0_0.checkItemNeedConvert(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:getItemConvertCO(arg_6_1, arg_6_2)
+
+	if not var_6_0 then
 		return false
 	end
 
-	return slot3.limit <= ItemModel.instance:getItemQuantity(slot1, slot2), slot3.price
+	return ItemModel.instance:getItemQuantity(arg_6_1, arg_6_2) >= var_6_0.limit, var_6_0.price
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

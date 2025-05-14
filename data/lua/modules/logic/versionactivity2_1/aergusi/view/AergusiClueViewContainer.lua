@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueViewContainer", package.seeall)
 
-slot0 = class("AergusiClueViewContainer", BaseViewContainer)
+local var_0_0 = class("AergusiClueViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		AergusiClueMergeView.New(),
 		AergusiClueListView.New(),
@@ -12,38 +12,40 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot0.viewParam and slot0.viewParam.episodeId then
-		NavigateButtonsView.New():setParam({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	local var_3_0 = NavigateButtonsView.New()
+
+	if arg_3_0.viewParam and arg_3_0.viewParam.episodeId then
+		var_3_0:setParam({
 			true,
 			false,
 			false
 		})
 	else
-		slot2:setParam({
+		var_3_0:setParam({
 			true,
 			true,
 			false
 		})
 	end
 
-	slot2:setOverrideClose(slot0.overrideOnCloseClick, slot0)
+	var_3_0:setOverrideClose(arg_3_0.overrideOnCloseClick, arg_3_0)
 
 	return {
-		slot2
+		var_3_0
 	}
 end
 
-function slot0.overrideOnCloseClick(slot0)
-	if slot0.viewParam and slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj, -1)
+function var_0_0.overrideOnCloseClick(arg_4_0)
+	if arg_4_0.viewParam and arg_4_0.viewParam.callback then
+		arg_4_0.viewParam.callback(arg_4_0.viewParam.callbackObj, -1)
 	end
 
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

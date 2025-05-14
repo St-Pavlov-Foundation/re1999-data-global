@@ -1,93 +1,96 @@
-module("modules.logic.summonsimulationpick.view.SummonSimulationPickListItem", package.seeall)
+﻿module("modules.logic.summonsimulationpick.view.SummonSimulationPickListItem", package.seeall)
 
-slot0 = class("SummonSimulationPickListItem", LuaCompBase)
+local var_0_0 = class("SummonSimulationPickListItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._simageHeroIcon = gohelper.findChildSingleImage(slot0.go, "heroicon/#simage_icon")
-	slot0._imagecareer = gohelper.findChildImage(slot0.go, "#image_career")
-	slot0._imagerare = gohelper.findChildImage(slot0.go, "#image_rare")
-	slot0._txtname = gohelper.findChildText(slot0.go, "#txt_name")
-	slot0._txtnameen = gohelper.findChildText(slot0.go, "#txt_nameen")
-	slot0._btnclick = gohelper.findChildButton(slot0.go, "")
-	slot0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(slot0.go)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._simageHeroIcon = gohelper.findChildSingleImage(arg_1_0.go, "heroicon/#simage_icon")
+	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.go, "#image_career")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.go, "#image_rare")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.go, "#txt_name")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.go, "#txt_nameen")
+	arg_1_0._btnclick = gohelper.findChildButton(arg_1_0.go, "")
+	arg_1_0._btnLongPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0.go)
 
-	slot0._btnLongPress:SetLongPressTime({
+	arg_1_0._btnLongPress:SetLongPressTime({
 		0.5,
 		99999
 	})
-	slot0._btnLongPress:AddLongPressListener(slot0._onLongClickItem, slot0)
-	slot0._btnclick:AddClickListener(slot0._onbtnclick, slot0)
+	arg_1_0._btnLongPress:AddLongPressListener(arg_1_0._onLongClickItem, arg_1_0)
+	arg_1_0._btnclick:AddClickListener(arg_1_0._onbtnclick, arg_1_0)
 
-	slot0._gonew = gohelper.findChild(slot0.go, "#go_new")
+	arg_1_0._gonew = gohelper.findChild(arg_1_0.go, "#go_new")
 end
 
-function slot0._onLongClickItem(slot0)
-	if not slot0._heroId then
+function var_0_0._onLongClickItem(arg_2_0)
+	if not arg_2_0._heroId then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_action_explore)
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
 		showHome = false,
-		heroId = slot0._heroId
+		heroId = arg_2_0._heroId
 	})
 end
 
-function slot0._onbtnclick(slot0)
-	if not slot0._selectType then
+function var_0_0._onbtnclick(arg_3_0)
+	if not arg_3_0._selectType then
 		return
 	end
 
-	SummonSimulationPickController.instance:dispatchEvent(SummonSimulationEvent.onSelectItem, slot0._selectType)
+	SummonSimulationPickController.instance:dispatchEvent(SummonSimulationEvent.onSelectItem, arg_3_0._selectType)
 end
 
-function slot0.removeEvent(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btnLongPress:RemoveLongPressListener()
+function var_0_0.removeEvent(arg_4_0)
+	arg_4_0._btnclick:RemoveClickListener()
+	arg_4_0._btnLongPress:RemoveLongPressListener()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnLongPress:RemoveLongPressListener()
+function var_0_0.removeEventListeners(arg_5_0)
+	arg_5_0._btnLongPress:RemoveLongPressListener()
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0._heroId = slot1
-	slot0._selectType = slot2
+function var_0_0.setData(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._heroId = arg_6_1
+	arg_6_0._selectType = arg_6_2
 
-	slot0:_refreshUI()
+	arg_6_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	slot2 = HeroConfig.instance:getHeroCO(slot0._heroId)
+function var_0_0._refreshUI(arg_7_0)
+	local var_7_0 = arg_7_0._heroId
+	local var_7_1 = HeroConfig.instance:getHeroCO(var_7_0)
+	local var_7_2 = var_7_1.skinId
+	local var_7_3 = SkinConfig.instance:getSkinCo(var_7_2)
 
-	slot0._simageHeroIcon:LoadImage(ResUrl.getHeadIconMiddle(tostring(SkinConfig.instance:getSkinCo(slot2.skinId).largeIcon)))
+	arg_7_0._simageHeroIcon:LoadImage(ResUrl.getHeadIconMiddle(tostring(var_7_3.largeIcon)))
 
-	slot0._txtname.text = slot2.name
-	slot0._txtnameen.text = slot2.nameEng
+	arg_7_0._txtname.text = var_7_1.name
+	arg_7_0._txtnameen.text = var_7_1.nameEng
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagecareer, "lssx_" .. tostring(slot2.career))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "bg_pz00" .. tostring(CharacterEnum.Color[slot2.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer, "lssx_" .. tostring(var_7_1.career))
+	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagerare, "bg_pz00" .. tostring(CharacterEnum.Color[var_7_1.rare]))
 
-	if not slot0.newDot then
-		slot0.newDot = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gonew, CommonRedDotIconNoEvent)
+	if not arg_7_0.newDot then
+		arg_7_0.newDot = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._gonew, CommonRedDotIconNoEvent)
 
-		slot0.newDot:setShowType(RedDotEnum.Style.Green)
-		slot0.newDot:setCheckShowRedDotFunc(slot0.refreshDot, slot0)
+		arg_7_0.newDot:setShowType(RedDotEnum.Style.Green)
+		arg_7_0.newDot:setCheckShowRedDotFunc(arg_7_0.refreshDot, arg_7_0)
 	else
-		slot0.newDot:refreshRedDot()
+		arg_7_0.newDot:refreshRedDot()
 	end
 
-	gohelper.setActive(slot0._gonew, true)
+	gohelper.setActive(arg_7_0._gonew, true)
 end
 
-function slot0.refreshDot(slot0, slot1)
-	return not HeroModel.instance:getByHeroId(slot0._heroId)
+function var_0_0.refreshDot(arg_8_0, arg_8_1)
+	return not HeroModel.instance:getByHeroId(arg_8_0._heroId)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._btnLongPress:RemoveLongPressListener()
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0._btnLongPress:RemoveLongPressListener()
+	arg_9_0._btnclick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

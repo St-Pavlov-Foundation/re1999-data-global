@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_activity108_map", package.seeall)
+﻿module("modules.configs.excel2json.lua_activity108_map", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	cookie = 16,
 	actContent = 13,
 	endContent = 18,
@@ -20,10 +21,10 @@ slot1 = {
 	consignor = 10,
 	initScore = 3
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	title = 2,
 	cookieContent = 7,
 	actContent = 4,
@@ -34,8 +35,8 @@ slot3 = {
 	enemyInfo = 6
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

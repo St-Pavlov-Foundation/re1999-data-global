@@ -1,115 +1,139 @@
-module("modules.logic.explore.view.ExploreRewardView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreRewardView", package.seeall)
 
-slot0 = class("ExploreRewardView", BaseView)
+local var_0_0 = class("ExploreRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1")
-	slot0._btnbox = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_box")
-	slot0._txtprogress0 = gohelper.findChildTextMesh(slot0.viewGO, "#btn_box/#txt_progress")
-	slot0._txtprogress1 = gohelper.findChildTextMesh(slot0.viewGO, "Top/title1/#txt_progress")
-	slot0._txtprogress2 = gohelper.findChildTextMesh(slot0.viewGO, "Top/title2/#txt_progress")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+	arg_1_0._btnbox = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_box")
+	arg_1_0._txtprogress0 = gohelper.findChildTextMesh(arg_1_0.viewGO, "#btn_box/#txt_progress")
+	arg_1_0._txtprogress1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "Top/title1/#txt_progress")
+	arg_1_0._txtprogress2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "Top/title2/#txt_progress")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbox:AddClickListener(slot0.openBoxView, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.TaskUpdate, slot0._onUpdateTaskList, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbox:AddClickListener(arg_2_0.openBoxView, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.TaskUpdate, arg_2_0._onUpdateTaskList, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbox:RemoveClickListener()
-	ExploreController.instance:unregisterCallback(ExploreEvent.TaskUpdate, slot0._onUpdateTaskList, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbox:RemoveClickListener()
+	ExploreController.instance:unregisterCallback(ExploreEvent.TaskUpdate, arg_3_0._onUpdateTaskList, arg_3_0)
 end
 
-function slot0.openBoxView(slot0)
-	ViewMgr.instance:openView(ViewName.ExploreBonusRewardView, slot0.viewParam)
+function var_0_0.openBoxView(arg_4_0)
+	ViewMgr.instance:openView(ViewName.ExploreBonusRewardView, arg_4_0.viewParam)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 
-	slot2, slot3, slot4, slot5, slot6, slot7 = ExploreSimpleModel.instance:getChapterCoinCount(slot0.viewParam.id)
-	slot8 = slot2 == slot5
-	slot9 = slot3 == slot6
-	slot10 = slot4 == slot7
-	slot0._txtprogress0.text = string.format("%d/%d", slot2, slot5)
-	slot0._txtprogress1.text = string.format("%d/%d", slot4, slot7)
-	slot0._txtprogress2.text = string.format("%d/%d", slot3, slot6)
-	slot11 = {}
+	local var_6_0 = arg_6_0.viewParam
+	local var_6_1, var_6_2, var_6_3, var_6_4, var_6_5, var_6_6 = ExploreSimpleModel.instance:getChapterCoinCount(var_6_0.id)
+	local var_6_7
 
-	for slot15 = 1, 2 do
-		slot16 = ExploreTaskModel.instance:getTaskList(3 - slot15)
+	var_6_7 = var_6_1 == var_6_4
 
-		for slot21, slot22 in pairs(ExploreConfig.instance:getTaskList(slot1.id, slot15)) do
-			if TaskModel.instance:getTaskById(slot22.id) and slot22.maxProgress <= slot23.progress and slot23.finishCount == 0 then
-				table.insert(slot11, slot22.id)
+	local var_6_8
+
+	var_6_8 = var_6_2 == var_6_5
+
+	local var_6_9
+
+	var_6_9 = var_6_3 == var_6_6
+	arg_6_0._txtprogress0.text = string.format("%d/%d", var_6_1, var_6_4)
+	arg_6_0._txtprogress1.text = string.format("%d/%d", var_6_3, var_6_6)
+	arg_6_0._txtprogress2.text = string.format("%d/%d", var_6_2, var_6_5)
+
+	local var_6_10 = {}
+
+	for iter_6_0 = 1, 2 do
+		local var_6_11 = ExploreTaskModel.instance:getTaskList(3 - iter_6_0)
+		local var_6_12 = ExploreConfig.instance:getTaskList(var_6_0.id, iter_6_0)
+
+		for iter_6_1, iter_6_2 in pairs(var_6_12) do
+			local var_6_13 = TaskModel.instance:getTaskById(iter_6_2.id)
+
+			if var_6_13 and var_6_13.progress >= iter_6_2.maxProgress and var_6_13.finishCount == 0 then
+				table.insert(var_6_10, iter_6_2.id)
 			end
 		end
 
-		slot16:setList(slot17)
+		var_6_11:setList(var_6_12)
 	end
 
-	if #slot11 > 0 then
-		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Explore, nil, slot11)
+	if #var_6_10 > 0 then
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Explore, nil, var_6_10)
 	end
 end
 
-function slot0._onUpdateTaskList(slot0)
+function var_0_0._onUpdateTaskList(arg_7_0)
+	return
 end
 
-function slot0._setitem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildImage(slot1, "bottom/image_progresssilder")
-	slot6 = gohelper.findChildImage(slot1, "bottom/bg")
-	slot7 = gohelper.findChild(slot1, "icons")
-	slot8 = gohelper.findChildButtonWithAudio(slot1, "btn_click")
-	slot9 = GameUtil.splitString2(slot2.bonus, true)
-	gohelper.findChildTextMesh(slot1, "bottom/txt_point").text = slot2.maxProgress
-	slot12 = slot10 and slot10.finishCount > 0 or false
-	slot13 = 1
+function var_0_0._setitem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = gohelper.findChildImage(arg_8_1, "bottom/image_progresssilder")
+	local var_8_1 = gohelper.findChildTextMesh(arg_8_1, "bottom/txt_point")
+	local var_8_2 = gohelper.findChildImage(arg_8_1, "bottom/bg")
+	local var_8_3 = gohelper.findChild(arg_8_1, "icons")
+	local var_8_4 = gohelper.findChildButtonWithAudio(arg_8_1, "btn_click")
+	local var_8_5 = GameUtil.splitString2(arg_8_2.bonus, true)
 
-	if slot2.maxProgress <= (TaskModel.instance:getTaskById(slot2.id) and slot10.progress or 0) then
-		if slot3 == #slot0._taskList then
-			slot13 = 1
+	var_8_1.text = arg_8_2.maxProgress
+
+	local var_8_6 = TaskModel.instance:getTaskById(arg_8_2.id)
+	local var_8_7 = var_8_6 and var_8_6.progress or 0
+	local var_8_8 = var_8_6 and var_8_6.finishCount > 0 or false
+	local var_8_9 = 1
+	local var_8_10 = var_8_7 >= arg_8_2.maxProgress
+
+	if var_8_10 then
+		if arg_8_3 == #arg_8_0._taskList then
+			var_8_9 = 1
 		else
-			if TaskModel.instance:getTaskById(slot0._taskList[slot3 + 1].id) then
-				slot11 = slot15.progress or slot11
-			end
+			local var_8_11 = TaskModel.instance:getTaskById(arg_8_0._taskList[arg_8_3 + 1].id)
 
-			slot13 = Mathf.Clamp((slot11 - slot2.maxProgress) / (slot0._taskList[slot3 + 1].maxProgress - slot2.maxProgress), 0, 0.5) + 0.5
+			var_8_7 = var_8_11 and var_8_11.progress or var_8_7
+			var_8_9 = Mathf.Clamp((var_8_7 - arg_8_2.maxProgress) / (arg_8_0._taskList[arg_8_3 + 1].maxProgress - arg_8_2.maxProgress), 0, 0.5) + 0.5
 		end
+	elseif arg_8_3 == 1 then
+		var_8_9 = var_8_7 / arg_8_2.maxProgress * 0.5
 	else
-		slot13 = slot3 == 1 and slot11 / slot2.maxProgress * 0.5 or Mathf.Clamp((slot11 - slot0._taskList[slot3 - 1].maxProgress) / (slot2.maxProgress - slot0._taskList[slot3 - 1].maxProgress), 0.5, 1) - 0.5
+		var_8_9 = Mathf.Clamp((var_8_7 - arg_8_0._taskList[arg_8_3 - 1].maxProgress) / (arg_8_2.maxProgress - arg_8_0._taskList[arg_8_3 - 1].maxProgress), 0.5, 1) - 0.5
 	end
 
-	slot4.fillAmount = slot13
+	var_8_0.fillAmount = var_8_9
 
-	ZProj.UGUIHelper.SetColorAlpha(slot6, slot14 and 1 or 0.15)
-	SLFramework.UGUI.GuiHelper.SetColor(slot5, slot14 and "#000000" or "#d2c197")
-	slot0:addClickCb(slot8, slot0._getReward, slot0, slot2)
-	gohelper.setActive(slot8, not slot12 and slot14)
+	ZProj.UGUIHelper.SetColorAlpha(var_8_2, var_8_10 and 1 or 0.15)
+	SLFramework.UGUI.GuiHelper.SetColor(var_8_1, var_8_10 and "#000000" or "#d2c197")
+	arg_8_0:addClickCb(var_8_4, arg_8_0._getReward, arg_8_0, arg_8_2)
+	gohelper.setActive(var_8_4, not var_8_8 and var_8_10)
 
-	slot0._isGet = slot12
+	arg_8_0._isGet = var_8_8
 
-	gohelper.CreateObjList(slot0, slot0._setRewardItem, slot9, slot7, slot0._gorewarditemicon)
+	gohelper.CreateObjList(arg_8_0, arg_8_0._setRewardItem, var_8_5, var_8_3, arg_8_0._gorewarditemicon)
 end
 
-function slot0._setRewardItem(slot0, slot1, slot2, slot3)
-	slot6 = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot1, "go_icon"))
+function var_0_0._setRewardItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = gohelper.findChild(arg_9_1, "go_icon")
+	local var_9_1 = gohelper.findChild(arg_9_1, "go_receive")
+	local var_9_2 = IconMgr.instance:getCommonPropItemIcon(var_9_0)
 
-	slot6:setMOValue(slot2[1], slot2[2], slot2[3], nil, true)
-	slot6:setCountFontSize(46)
-	slot6:SetCountBgHeight(31)
-	gohelper.setActive(gohelper.findChild(slot1, "go_receive"), slot0._isGet)
+	var_9_2:setMOValue(arg_9_2[1], arg_9_2[2], arg_9_2[3], nil, true)
+	var_9_2:setCountFontSize(46)
+	var_9_2:SetCountBgHeight(31)
+	gohelper.setActive(var_9_1, arg_9_0._isGet)
 end
 
-function slot0._getReward(slot0, slot1)
-	TaskRpc.instance:sendFinishTaskRequest(slot1.id)
+function var_0_0._getReward(arg_10_0, arg_10_1)
+	TaskRpc.instance:sendFinishTaskRequest(arg_10_1.id)
 end
 
-return slot0
+return var_0_0

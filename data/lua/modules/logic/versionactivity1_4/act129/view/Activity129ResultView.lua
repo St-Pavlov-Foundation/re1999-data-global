@@ -1,127 +1,141 @@
-module("modules.logic.versionactivity1_4.act129.view.Activity129ResultView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.view.Activity129ResultView", package.seeall)
 
-slot0 = class("Activity129ResultView", BaseView)
+local var_0_0 = class("Activity129ResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goRewards = gohelper.findChild(slot0.viewGO, "#go_Result")
-	slot0.bigList = slot0:createList(gohelper.findChild(slot0.goRewards, "#go_BigList"))
-	slot0.smallList = slot0:createList(gohelper.findChild(slot0.goRewards, "#go_SmallList"))
-	slot0.rewardItems = {}
-	slot0.click = gohelper.findChildClick(slot0.goRewards, "click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goRewards = gohelper.findChild(arg_1_0.viewGO, "#go_Result")
+	arg_1_0.bigList = arg_1_0:createList(gohelper.findChild(arg_1_0.goRewards, "#go_BigList"))
+	arg_1_0.smallList = arg_1_0:createList(gohelper.findChild(arg_1_0.goRewards, "#go_SmallList"))
+	arg_1_0.rewardItems = {}
+	arg_1_0.click = gohelper.findChildClick(arg_1_0.goRewards, "click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0.click:AddClickListener(slot0.onClick, slot0)
-	slot0:addEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, slot0.showReward, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onOnCloseViewFinish, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0.click:AddClickListener(arg_2_0.onClick, arg_2_0)
+	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, arg_2_0.showReward, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onOnCloseViewFinish, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0.click:RemoveClickListener()
-	slot0:removeEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, slot0.showReward, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onOnCloseViewFinish, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0.click:RemoveClickListener()
+	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, arg_3_0.showReward, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onOnCloseViewFinish, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onOnCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.RoomBlockPackageGetView then
+function var_0_0._onOnCloseViewFinish(arg_5_0, arg_5_1)
+	if arg_5_1 == ViewName.RoomBlockPackageGetView then
 		RoomController.instance:checkThemeCollerctFullReward()
 	end
 end
 
-function slot0.onClick(slot0)
-	gohelper.setActive(slot0.goRewards, false)
+function var_0_0.onClick(arg_6_0)
+	gohelper.setActive(arg_6_0.goRewards, false)
 	Activity129Controller.instance:dispatchEvent(Activity129Event.OnLotteryEnd)
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.actId = arg_7_0.viewParam.actId
 
 	Activity129ResultModel.instance:clear()
 end
 
-function slot0.showReward(slot0, slot1)
-	if not slot1 then
-		gohelper.setActive(slot0.goRewards, false)
+function var_0_0.showReward(arg_8_0, arg_8_1)
+	if not arg_8_1 then
+		gohelper.setActive(arg_8_0.goRewards, false)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_qiutu_award_all)
-	gohelper.setActive(slot0.goRewards, true)
-	gohelper.setActive(slot0.bigList.go, false)
-	gohelper.setActive(slot0.smallList.go, false)
-	gohelper.setActive((#slot1 > 8 and slot0.bigList or slot0.smallList).go, true)
+	gohelper.setActive(arg_8_0.goRewards, true)
+	gohelper.setActive(arg_8_0.bigList.go, false)
+	gohelper.setActive(arg_8_0.smallList.go, false)
 
-	if slot2 > 8 then
-		slot4 = {}
+	local var_8_0 = #arg_8_1
+	local var_8_1 = var_8_0 > 8 and arg_8_0.bigList or arg_8_0.smallList
 
-		for slot8, slot9 in ipairs(slot1) do
-			table.insert(slot4, {
-				materilType = slot9[1],
-				materilId = slot9[2],
-				quantity = slot9[3],
-				isIcon = true
-			})
+	gohelper.setActive(var_8_1.go, true)
+
+	if var_8_0 > 8 then
+		local var_8_2 = {}
+
+		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+			local var_8_3 = {
+				materilType = iter_8_1[1],
+				materilId = iter_8_1[2],
+				quantity = iter_8_1[3]
+			}
+
+			var_8_3.isIcon = true
+
+			table.insert(var_8_2, var_8_3)
 		end
 
-		Activity129ResultModel.instance:setList(slot4)
+		Activity129ResultModel.instance:setList(var_8_2)
 	else
-		slot7 = #slot0.rewardItems
+		for iter_8_2 = 1, math.max(var_8_0, #arg_8_0.rewardItems) do
+			local var_8_4 = arg_8_0.rewardItems[iter_8_2]
 
-		for slot7 = 1, math.max(slot2, slot7) do
-			if not slot0.rewardItems[slot7] then
-				slot0.rewardItems[slot7] = IconMgr.instance:getCommonPropItemIcon(slot3.goContent)
+			if not var_8_4 then
+				var_8_4 = IconMgr.instance:getCommonPropItemIcon(var_8_1.goContent)
+				arg_8_0.rewardItems[iter_8_2] = var_8_4
 			end
 
-			if slot1[slot7] then
-				gohelper.addChild(slot3.goContent, slot8.go)
-				gohelper.setAsLastSibling(slot8.go)
-				gohelper.setActive(slot8.go, true)
-				slot8:setMOValue(slot9[1], slot9[2], slot9[3], nil, true)
-				slot8:isShowEffect(true)
+			local var_8_5 = arg_8_1[iter_8_2]
+
+			if var_8_5 then
+				gohelper.addChild(var_8_1.goContent, var_8_4.go)
+				gohelper.setAsLastSibling(var_8_4.go)
+				gohelper.setActive(var_8_4.go, true)
+				var_8_4:setMOValue(var_8_5[1], var_8_5[2], var_8_5[3], nil, true)
+				var_8_4:isShowEffect(true)
 			else
-				gohelper.setActive(slot8.go, false)
+				gohelper.setActive(var_8_4.go, false)
 			end
 		end
 	end
 
-	slot4 = {}
+	local var_8_6 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9[1] == MaterialEnum.MaterialType.Building or slot9[1] == MaterialEnum.MaterialType.BlockPackage then
-			slot10 = MaterialDataMO.New()
+	for iter_8_3, iter_8_4 in ipairs(arg_8_1) do
+		if iter_8_4[1] == MaterialEnum.MaterialType.Building or iter_8_4[1] == MaterialEnum.MaterialType.BlockPackage then
+			local var_8_7 = MaterialDataMO.New()
 
-			slot10:initValue(slot9[1], slot9[2], 1, 0)
-			table.insert(slot4, slot10)
+			var_8_7:initValue(iter_8_4[1], iter_8_4[2], 1, 0)
+			table.insert(var_8_6, var_8_7)
 		end
 	end
 
-	if #slot4 > 0 then
-		RoomController.instance:popUpRoomBlockPackageView(slot4)
+	if #var_8_6 > 0 then
+		RoomController.instance:popUpRoomBlockPackageView(var_8_6)
 	end
 end
 
-function slot0.createList(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.title1 = gohelper.findChild(slot1, "image_SmallTitle1")
-	slot2.title2 = gohelper.findChild(slot1, "image_SmallTitle2")
-	slot2.goContent = gohelper.findChild(slot1, "#scroll_GetRewardList/Viewport/Content")
+function var_0_0.createList(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	return slot2
+	var_9_0.go = arg_9_1
+	var_9_0.title1 = gohelper.findChild(arg_9_1, "image_SmallTitle1")
+	var_9_0.title2 = gohelper.findChild(arg_9_1, "image_SmallTitle2")
+	var_9_0.goContent = gohelper.findChild(arg_9_1, "#scroll_GetRewardList/Viewport/Content")
+
+	return var_9_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

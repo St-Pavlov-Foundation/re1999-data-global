@@ -1,43 +1,43 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.controller.PuzzleMazeHelper", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.controller.PuzzleMazeHelper", package.seeall)
 
-slot0 = _M
-slot1 = PuzzleEnum.dir.left
-slot2 = PuzzleEnum.dir.right
-slot3 = PuzzleEnum.dir.down
-slot4 = PuzzleEnum.dir.up
+local var_0_0 = _M
+local var_0_1 = PuzzleEnum.dir.left
+local var_0_2 = PuzzleEnum.dir.right
+local var_0_3 = PuzzleEnum.dir.down
+local var_0_4 = PuzzleEnum.dir.up
 
-function slot0.formatPos(slot0, slot1, slot2, slot3)
-	if slot2 < slot0 then
-		slot0 = slot0
+function var_0_0.formatPos(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if arg_1_2 < arg_1_0 then
+		arg_1_0, arg_1_2 = arg_1_2, arg_1_0
 	end
 
-	if slot3 < slot1 then
-		slot1 = slot1
+	if arg_1_3 < arg_1_1 then
+		arg_1_1, arg_1_3 = arg_1_3, arg_1_1
 	end
 
-	return slot0, slot1, slot2, slot3
+	return arg_1_0, arg_1_1, arg_1_2, arg_1_3
 end
 
-function slot0.getFromToDir(slot0, slot1, slot2, slot3)
-	if slot0 ~= slot2 then
-		if slot1 ~= slot3 then
+function var_0_0.getFromToDir(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if arg_2_0 ~= arg_2_2 then
+		if arg_2_1 ~= arg_2_3 then
 			return nil
 		end
 
-		return slot0 < slot2 and uv0 or uv1
+		return arg_2_0 < arg_2_2 and var_0_2 or var_0_1
 	else
-		return slot1 < slot3 and uv2 or uv3
+		return arg_2_1 < arg_2_3 and var_0_4 or var_0_3
 	end
 end
 
-function slot0.getPosKey(slot0, slot1)
-	return string.format("%s_%s", slot0, slot1)
+function var_0_0.getPosKey(arg_3_0, arg_3_1)
+	return string.format("%s_%s", arg_3_0, arg_3_1)
 end
 
-function slot0.getLineKey(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6, slot7 = uv0.formatPos(slot0, slot1, slot2, slot3)
+function var_0_0.getLineKey(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0, var_4_1, var_4_2, var_4_3 = var_0_0.formatPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 
-	return string.format("%s_%s_%s_%s", slot4, slot5, slot6, slot7)
+	return string.format("%s_%s_%s_%s", var_4_0, var_4_1, var_4_2, var_4_3)
 end
 
-return slot0
+return var_0_0

@@ -1,90 +1,95 @@
-module("modules.logic.activity.model.ActivityModel", package.seeall)
+﻿module("modules.logic.activity.model.ActivityModel", package.seeall)
 
-slot0 = class("ActivityModel", BaseModel)
+local var_0_0 = class("ActivityModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._actInfo = {}
-	slot0._finishActTab = {}
-	slot0._actMoTab = {}
-	slot0._isNoviceTaskUnlock = false
-	slot0._targetActivityCategoryId = 0
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._actInfo = {}
+	arg_2_0._finishActTab = {}
+	arg_2_0._actMoTab = {}
+	arg_2_0._isNoviceTaskUnlock = false
+	arg_2_0._targetActivityCategoryId = 0
 end
 
-function slot0.setActivityInfo(slot0, slot1)
-	slot0._actInfo = {}
+function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
+	arg_3_0._actInfo = {}
 
-	for slot5, slot6 in ipairs(slot1.activityInfos) do
-		if ActivityConfig.instance:getActivityCo(slot6.id) then
-			slot8 = ActivityInfoMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.activityInfos) do
+		if ActivityConfig.instance:getActivityCo(iter_3_1.id) then
+			local var_3_0 = ActivityInfoMo.New()
 
-			slot8:init(slot6)
+			var_3_0:init(iter_3_1)
 
-			slot0._actInfo[slot6.id] = slot8
+			arg_3_0._actInfo[iter_3_1.id] = var_3_0
 		end
 	end
 end
 
-function slot0.updateActivityInfo(slot0, slot1)
-	slot2 = ActivityInfoMo.New()
+function var_0_0.updateActivityInfo(arg_4_0, arg_4_1)
+	local var_4_0 = ActivityInfoMo.New()
 
-	slot2:init(slot1)
+	var_4_0:init(arg_4_1)
 
-	slot0._actInfo[slot1.id] = slot2
+	arg_4_0._actInfo[arg_4_1.id] = var_4_0
 end
 
-function slot0.updateInfoNoRepleace(slot0, slot1)
-	if not slot0._actInfo[slot1.id] then
-		slot0._actInfo[slot1.id] = ActivityInfoMo.New()
+function var_0_0.updateInfoNoRepleace(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._actInfo[arg_5_1.id]
+
+	if not var_5_0 then
+		var_5_0 = ActivityInfoMo.New()
+		arg_5_0._actInfo[arg_5_1.id] = var_5_0
 	end
 
-	slot2:init(slot1)
+	var_5_0:init(arg_5_1)
 end
 
-function slot0.endActivity(slot0, slot1)
-	if slot0._actInfo[slot1] then
-		slot0._actInfo[slot1].online = false
+function var_0_0.endActivity(arg_6_0, arg_6_1)
+	if arg_6_0._actInfo[arg_6_1] then
+		arg_6_0._actInfo[arg_6_1].online = false
 	end
 end
 
-function slot0.getActivityInfo(slot0)
-	return slot0._actInfo
+function var_0_0.getActivityInfo(arg_7_0)
+	return arg_7_0._actInfo
 end
 
-function slot0.getActMO(slot0, slot1)
-	return slot0._actInfo[slot1]
+function var_0_0.getActMO(arg_8_0, arg_8_1)
+	return arg_8_0._actInfo[arg_8_1]
 end
 
-function slot0.isActOnLine(slot0, slot1)
-	return slot0._actInfo[slot1] and slot0._actInfo[slot1].online
+function var_0_0.isActOnLine(arg_9_0, arg_9_1)
+	return arg_9_0._actInfo[arg_9_1] and arg_9_0._actInfo[arg_9_1].online
 end
 
-function slot0.getOnlineActIdByType(slot0, slot1)
-	slot2 = nil
+function var_0_0.getOnlineActIdByType(arg_10_0, arg_10_1)
+	local var_10_0
 
-	for slot6, slot7 in pairs(slot0._actInfo) do
-		if slot7.actType == slot1 and slot7.online then
-			table.insert(slot2 or {}, slot6)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._actInfo) do
+		if iter_10_1.actType == arg_10_1 and iter_10_1.online then
+			var_10_0 = var_10_0 or {}
+
+			table.insert(var_10_0, iter_10_0)
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getActStartTime(slot0, slot1)
-	return slot0._actInfo[slot1].startTime
+function var_0_0.getActStartTime(arg_11_0, arg_11_1)
+	return arg_11_0._actInfo[arg_11_1].startTime
 end
 
-function slot0.getActEndTime(slot0, slot1)
-	return slot0._actInfo[slot1].endTime
+function var_0_0.getActEndTime(arg_12_0, arg_12_1)
+	return arg_12_0._actInfo[arg_12_1].endTime
 end
 
-function slot0.hasActivityUnlock(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._actInfo) do
-		if slot6.online then
+function var_0_0.hasActivityUnlock(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._actInfo) do
+		if iter_13_1.online then
 			return true
 		end
 	end
@@ -92,96 +97,98 @@ function slot0.hasActivityUnlock(slot0, slot1)
 	return false
 end
 
-function slot0.getTargetActivityCategoryId(slot0, slot1)
-	if not next(slot0._actInfo) then
-		slot0._targetActivityCategoryId = 0
+function var_0_0.getTargetActivityCategoryId(arg_14_0, arg_14_1)
+	if not next(arg_14_0._actInfo) then
+		arg_14_0._targetActivityCategoryId = 0
 
 		return 0
 	end
 
-	for slot5, slot6 in pairs(slot0._actInfo) do
-		if slot6.id == slot0._targetActivityCategoryId and slot6.centerId == slot1 and slot6.online then
-			return slot0._targetActivityCategoryId
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._actInfo) do
+		if iter_14_1.id == arg_14_0._targetActivityCategoryId and iter_14_1.centerId == arg_14_1 and iter_14_1.online then
+			return arg_14_0._targetActivityCategoryId
 		end
 	end
 
-	slot2 = {}
+	local var_14_0 = {}
 
-	for slot6, slot7 in pairs(slot0._actInfo) do
-		if slot7.centerId == slot1 and slot7.online then
-			table.insert(slot2, slot7.id)
+	for iter_14_2, iter_14_3 in pairs(arg_14_0._actInfo) do
+		if iter_14_3.centerId == arg_14_1 and iter_14_3.online then
+			table.insert(var_14_0, iter_14_3.id)
 
-			slot0._actMoTab[slot7.id] = slot7
+			arg_14_0._actMoTab[iter_14_3.id] = iter_14_3
 		end
 	end
 
-	slot2 = slot0:removeUnExitAct(slot2)
+	local var_14_1 = arg_14_0:removeUnExitAct(var_14_0)
 
-	table.sort(slot2, function (slot0, slot1)
-		return ActivityConfig.instance:getActivityCo(slot0).displayPriority < ActivityConfig.instance:getActivityCo(slot1).displayPriority
+	table.sort(var_14_1, function(arg_15_0, arg_15_1)
+		return ActivityConfig.instance:getActivityCo(arg_15_0).displayPriority < ActivityConfig.instance:getActivityCo(arg_15_1).displayPriority
 	end)
 
-	slot0._targetActivityCategoryId = #slot2 > 0 and slot2[1] or 0
+	arg_14_0._targetActivityCategoryId = #var_14_1 > 0 and var_14_1[1] or 0
 
-	return slot0._targetActivityCategoryId
+	return arg_14_0._targetActivityCategoryId
 end
 
-function slot0.setTargetActivityCategoryId(slot0, slot1)
-	slot0._targetActivityCategoryId = slot1
+function var_0_0.setTargetActivityCategoryId(arg_16_0, arg_16_1)
+	arg_16_0._targetActivityCategoryId = arg_16_1
 end
 
-function slot0.getCurTargetActivityCategoryId(slot0)
-	return slot0._targetActivityCategoryId
+function var_0_0.getCurTargetActivityCategoryId(arg_17_0)
+	return arg_17_0._targetActivityCategoryId
 end
 
-function slot0.addFinishActivity(slot0, slot1)
-	slot0._finishActTab[slot1] = slot1
+function var_0_0.addFinishActivity(arg_18_0, arg_18_1)
+	arg_18_0._finishActTab[arg_18_1] = arg_18_1
 end
 
-function slot0.removeUnExitAct(slot0, slot1)
-	if GameUtil.getTabLen(slot1) == 0 then
+function var_0_0.removeUnExitAct(arg_19_0, arg_19_1)
+	if GameUtil.getTabLen(arg_19_1) == 0 then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0._finishActTab) do
-		tabletool.removeValue(slot1, slot6)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._finishActTab) do
+		tabletool.removeValue(arg_19_1, iter_19_1)
 	end
 
-	return slot1
+	return arg_19_1
 end
 
-function slot0.getActivityCenter(slot0)
-	slot1 = {}
+function var_0_0.getActivityCenter(arg_20_0)
+	local var_20_0 = {}
 
-	for slot5, slot6 in pairs(slot0._actInfo) do
-		if slot6.centerId ~= 0 and slot6.online then
-			if not slot1[slot6.centerId] then
-				slot1[slot6.centerId] = {}
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._actInfo) do
+		if iter_20_1.centerId ~= 0 and iter_20_1.online then
+			if not var_20_0[iter_20_1.centerId] then
+				var_20_0[iter_20_1.centerId] = {}
 			end
 
-			table.insert(slot1[slot6.centerId], slot6.id)
+			table.insert(var_20_0[iter_20_1.centerId], iter_20_1.id)
 		end
 	end
 
-	return slot1
+	return var_20_0
 end
 
-function slot0.getCenterActivities(slot0, slot1)
-	slot2 = {}
+function var_0_0.getCenterActivities(arg_21_0, arg_21_1)
+	local var_21_0 = {}
 
-	for slot6, slot7 in pairs(slot0._actInfo) do
-		if slot7.centerId == slot1 and slot7.online then
-			table.insert(slot2, slot7.id)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._actInfo) do
+		if iter_21_1.centerId == arg_21_1 and iter_21_1.online then
+			table.insert(var_21_0, iter_21_1.id)
 		end
 	end
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.hasNorSignRewardUnReceived(slot0)
-	if ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NorSign) then
-		for slot5, slot6 in pairs(slot1) do
-			if slot6.state == 1 then
+function var_0_0.hasNorSignRewardUnReceived(arg_22_0)
+	local var_22_0 = ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NorSign)
+
+	if var_22_0 then
+		for iter_22_0, iter_22_1 in pairs(var_22_0) do
+			if iter_22_1.state == 1 then
 				return true
 			end
 		end
@@ -190,10 +197,12 @@ function slot0.hasNorSignRewardUnReceived(slot0)
 	return false
 end
 
-function slot0.hasNoviceSignRewardUnReceived(slot0)
-	if ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NoviceSign) then
-		for slot5, slot6 in pairs(slot1) do
-			if slot6.state == 1 then
+function var_0_0.hasNoviceSignRewardUnReceived(arg_23_0)
+	local var_23_0 = ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NoviceSign)
+
+	if var_23_0 then
+		for iter_23_0, iter_23_1 in pairs(var_23_0) do
+			if iter_23_1.state == 1 then
 				return true
 			end
 		end
@@ -202,100 +211,124 @@ function slot0.hasNoviceSignRewardUnReceived(slot0)
 	return false
 end
 
-function slot0.getRemainTime(slot0, slot1)
-	if slot0:getActMO(slot1) then
-		slot3 = slot2.endTime / 1000 - ServerTime.now()
-		slot5 = slot3 % TimeUtil.OneDaySecond
+function var_0_0.getRemainTime(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:getActMO(arg_24_1)
 
-		return Mathf.Floor(slot3 / TimeUtil.OneDaySecond), Mathf.Floor(slot5 / TimeUtil.OneHourSecond), Mathf.Ceil(slot5 % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond)
+	if var_24_0 then
+		local var_24_1 = var_24_0.endTime / 1000 - ServerTime.now()
+		local var_24_2 = Mathf.Floor(var_24_1 / TimeUtil.OneDaySecond)
+		local var_24_3 = var_24_1 % TimeUtil.OneDaySecond
+		local var_24_4 = Mathf.Floor(var_24_3 / TimeUtil.OneHourSecond)
+		local var_24_5 = var_24_3 % TimeUtil.OneHourSecond
+		local var_24_6 = Mathf.Ceil(var_24_5 / TimeUtil.OneMinuteSecond)
+
+		return var_24_2, var_24_4, var_24_6
 	end
 end
 
-function slot0.removeFinishedCategory(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if slot6 == ActivityEnum.Activity.DreamShow and TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.ActivityShow) and next(slot7) and TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow) and slot8[1].config.maxFinishCount <= slot8[1].finishCount then
-			slot1[slot5] = nil
+function var_0_0.removeFinishedCategory(arg_25_0, arg_25_1)
+	for iter_25_0, iter_25_1 in pairs(arg_25_1) do
+		if iter_25_1 == ActivityEnum.Activity.DreamShow then
+			local var_25_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.ActivityShow)
 
-			slot0:addFinishActivity(slot6)
+			if var_25_0 and next(var_25_0) then
+				local var_25_1 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
+
+				if var_25_1 and var_25_1[1].finishCount >= var_25_1[1].config.maxFinishCount then
+					arg_25_1[iter_25_0] = nil
+
+					arg_25_0:addFinishActivity(iter_25_1)
+				end
+			end
 		end
 	end
 end
 
-function slot0.removeFinishedWelfare(slot0, slot1)
-	slot2 = false
-	slot3 = ActivityType101Model.instance:hasReceiveAllReward(ActivityEnum.Activity.NoviceSign)
-	slot4 = TeachNoteModel.instance:isFinalRewardGet()
-	slot5 = nil
+function var_0_0.removeFinishedWelfare(arg_26_0, arg_26_1)
+	local var_26_0 = false
+	local var_26_1 = ActivityType101Model.instance:hasReceiveAllReward(ActivityEnum.Activity.NoviceSign)
+	local var_26_2 = TeachNoteModel.instance:isFinalRewardGet()
+	local var_26_3
 
-	for slot9, slot10 in pairs(slot1) do
-		if slot10 == ActivityEnum.Activity.StoryShow and TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
-			slot2 = true
-			slot1[slot9] = nil
+	for iter_26_0, iter_26_1 in pairs(arg_26_1) do
+		if iter_26_1 == ActivityEnum.Activity.StoryShow and TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
+			var_26_0 = true
+			arg_26_1[iter_26_0] = nil
 
-			slot0:addFinishActivity(slot10)
+			arg_26_0:addFinishActivity(iter_26_1)
 		end
 
-		if slot10 == ActivityEnum.Activity.ClassShow and slot4 then
-			slot1[slot9] = nil
+		if iter_26_1 == ActivityEnum.Activity.ClassShow and var_26_2 then
+			arg_26_1[iter_26_0] = nil
 
-			slot0:addFinishActivity(slot10)
+			arg_26_0:addFinishActivity(iter_26_1)
 		end
 
-		if slot10 == ActivityEnum.Activity.NoviceSign and slot3 then
-			slot1[slot9] = nil
+		if iter_26_1 == ActivityEnum.Activity.NoviceSign and var_26_1 then
+			arg_26_1[iter_26_0] = nil
 
-			slot0:addFinishActivity(slot10)
+			arg_26_0:addFinishActivity(iter_26_1)
 		end
 
-		if slot10 == ActivityEnum.Activity.NewWelfare then
-			slot5 = slot9
+		if iter_26_1 == ActivityEnum.Activity.NewWelfare then
+			var_26_3 = iter_26_0
 		end
 	end
 
-	if slot5 and not Activity160Model.instance:hasRewardCanGet(ActivityEnum.Activity.NewWelfare) and slot4 and slot2 and slot3 then
-		slot1[slot5] = nil
+	if var_26_3 and not Activity160Model.instance:hasRewardCanGet(ActivityEnum.Activity.NewWelfare) and var_26_2 and var_26_0 and var_26_1 then
+		arg_26_1[var_26_3] = nil
 
-		slot0:addFinishActivity(ActivityEnum.Activity.NewWelfare)
-	end
-end
-
-function slot0.getRemainTimeSec(slot0, slot1)
-	if slot0:getActMO(slot1) then
-		return slot2.endTime / 1000 - ServerTime.now()
+		arg_26_0:addFinishActivity(ActivityEnum.Activity.NewWelfare)
 	end
 end
 
-function slot0.setPermanentUnlock(slot0, slot1)
-	if slot0:getActMO(slot1) then
-		slot2:setPermanentUnlock()
+function var_0_0.getRemainTimeSec(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:getActMO(arg_27_1)
+
+	if var_27_0 then
+		return var_27_0.endTime / 1000 - ServerTime.now()
 	end
 end
 
-function slot0.isReceiveAllBonus(slot0, slot1)
-	if slot0:getActMO(slot1) then
-		return slot2.isReceiveAllBonus
+function var_0_0.setPermanentUnlock(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:getActMO(arg_28_1)
+
+	if var_28_0 then
+		var_28_0:setPermanentUnlock()
+	end
+end
+
+function var_0_0.isReceiveAllBonus(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:getActMO(arg_29_1)
+
+	if var_29_0 then
+		return var_29_0.isReceiveAllBonus
 	end
 
 	return false
 end
 
-function slot0.checkIsShowLogoVisible()
-	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+function var_0_0.checkIsShowLogoVisible()
+	local var_30_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+
+	if not var_30_0 then
 		return false
 	end
 
-	return slot0.isShowLogo or false
+	return var_30_0.isShowLogo or false
 end
 
-function slot0.checkIsShowActBgVisible()
-	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+function var_0_0.checkIsShowActBgVisible()
+	local var_31_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+
+	if not var_31_0 then
 		return false
 	end
 
-	return slot0.isShowActBg or false
+	return var_31_0.isShowActBg or false
 end
 
-function slot0.showActivityEffect()
+function var_0_0.showActivityEffect()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon) then
 		return false
 	end
@@ -304,17 +337,22 @@ function slot0.showActivityEffect()
 		return false
 	end
 
-	if not ActivityConfig.instance:getMainActAtmosphereConfig() then
+	local var_32_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+
+	if not var_32_0 then
 		return false
 	end
 
-	if ActivityHelper.getActivityStatus(slot1.id) == ActivityEnum.ActivityStatus.Normal or slot3 == ActivityEnum.ActivityStatus.NotUnlock then
+	local var_32_1 = var_32_0.id
+	local var_32_2 = ActivityHelper.getActivityStatus(var_32_1)
+
+	if var_32_2 == ActivityEnum.ActivityStatus.Normal or var_32_2 == ActivityEnum.ActivityStatus.NotUnlock then
 		return true
 	end
 
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

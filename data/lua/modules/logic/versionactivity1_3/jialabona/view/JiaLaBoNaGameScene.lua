@@ -1,229 +1,261 @@
-module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameScene", package.seeall)
+﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameScene", package.seeall)
 
-slot0 = class("JiaLaBoNaGameScene", Va3ChessGameScene)
+local var_0_0 = class("JiaLaBoNaGameScene", Va3ChessGameScene)
 
-function slot0._editableInitView(slot0)
-	slot0._posuiGroundTbList = {}
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._posuiGroundTbList = {}
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.resetCamera(slot0)
+function var_0_0.resetCamera(arg_3_0)
 	if not ViewMgr.instance:isOpen(ViewName.JiaLaBoNaMapView) then
-		uv0.super.resetCamera(slot0)
+		var_0_0.super.resetCamera(arg_3_0)
 	end
 end
 
-function slot0._getGroundItemUrlList(slot0)
-	slot1 = Va3ChessGameModel.instance:getMapId()
-	slot2 = Va3ChessGameModel.instance:getActId()
+function var_0_0._getGroundItemUrlList(arg_4_0)
+	local var_4_0 = Va3ChessGameModel.instance:getMapId()
+	local var_4_1 = Va3ChessGameModel.instance:getActId()
 
-	if slot0._groundItemUrlList and slot0._lastActId == slot2 and slot0._lastMapId == slot1 then
-		return slot0._groundItemUrlList
+	if arg_4_0._groundItemUrlList and arg_4_0._lastActId == var_4_1 and arg_4_0._lastMapId == var_4_0 then
+		return arg_4_0._groundItemUrlList
 	end
 
-	slot0._lastActId = slot2
-	slot0._lastMapId = slot1
-	slot0._groundItemUrlList = {}
+	arg_4_0._lastActId = var_4_1
+	arg_4_0._lastMapId = var_4_0
+	arg_4_0._groundItemUrlList = {}
 
-	if Va3ChessConfig.instance:getMapCo(slot2, slot1) and slot3.groundItems and not string.nilorempty(slot3.groundItems) and string.split(slot3.groundItems, "#") and #slot4 > 0 then
-		for slot8, slot9 in ipairs(slot4) do
-			if not string.nilorempty(slot9) then
-				table.insert(slot0._groundItemUrlList, string.format(Va3ChessEnum.SceneResPath.AvatarItemPath, slot9))
+	local var_4_2 = Va3ChessConfig.instance:getMapCo(var_4_1, var_4_0)
+
+	if var_4_2 and var_4_2.groundItems and not string.nilorempty(var_4_2.groundItems) then
+		local var_4_3 = string.split(var_4_2.groundItems, "#")
+
+		if var_4_3 and #var_4_3 > 0 then
+			for iter_4_0, iter_4_1 in ipairs(var_4_3) do
+				if not string.nilorempty(iter_4_1) then
+					table.insert(arg_4_0._groundItemUrlList, string.format(Va3ChessEnum.SceneResPath.AvatarItemPath, iter_4_1))
+				end
 			end
 		end
 	end
 
-	if #slot0._groundItemUrlList < 1 then
-		table.insert(slot0._groundItemUrlList, Va3ChessEnum.SceneResPath.GroundItem)
+	if #arg_4_0._groundItemUrlList < 1 then
+		table.insert(arg_4_0._groundItemUrlList, Va3ChessEnum.SceneResPath.GroundItem)
 	end
 
-	return slot0._groundItemUrlList
+	return arg_4_0._groundItemUrlList
 end
 
-function slot0.onLoadRes(slot0)
-	for slot5, slot6 in ipairs(slot0:_getGroundItemUrlList()) do
-		slot0._loader:addPath(slot6)
+function var_0_0.onLoadRes(arg_5_0)
+	local var_5_0 = arg_5_0:_getGroundItemUrlList()
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		arg_5_0._loader:addPath(iter_5_1)
 	end
 
-	slot0._loader:addPath(JiaLaBoNaEnum.SceneResPath.GroundPoSui)
+	arg_5_0._loader:addPath(JiaLaBoNaEnum.SceneResPath.GroundPoSui)
 end
 
-function slot0.getGroundItemUrl(slot0)
-	if slot0:_getGroundItemUrlList() and #slot1 > 0 then
-		return slot1[math.random(1, #slot1)]
+function var_0_0.getGroundItemUrl(arg_6_0)
+	local var_6_0 = arg_6_0:_getGroundItemUrlList()
+
+	if var_6_0 and #var_6_0 > 0 then
+		return var_6_0[math.random(1, #var_6_0)]
 	end
 
 	return Va3ChessEnum.SceneResPath.GroundItem
 end
 
-function slot0._initEventCb(slot0)
-	if slot0._isFinshInitEventCb then
+function var_0_0._initEventCb(arg_7_0)
+	if arg_7_0._isFinshInitEventCb then
 		return
 	end
 
-	slot0._isFinshInitEventCb = true
+	arg_7_0._isFinshInitEventCb = true
 
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, slot0._onEnterNextMap, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TilePosuiTrigger, slot0._onTilePosuiTrigger, slot0)
-	slot0:addEventCb(JiaLaBoNaController.instance, JiaLaBoNaEvent.GamePointReturn, slot0._onGamePointReturn, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, slot0.onGameDataUpdate, slot0)
-	uv0.super.addEvents(slot0)
+	arg_7_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_7_0._onEnterNextMap, arg_7_0)
+	arg_7_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TilePosuiTrigger, arg_7_0._onTilePosuiTrigger, arg_7_0)
+	arg_7_0:addEventCb(JiaLaBoNaController.instance, JiaLaBoNaEvent.GamePointReturn, arg_7_0._onGamePointReturn, arg_7_0)
+	arg_7_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, arg_7_0.onGameDataUpdate, arg_7_0)
+	var_0_0.super.addEvents(arg_7_0)
 end
 
-function slot0._onEnterNextMap(slot0)
-	slot0:_checkLoadMapScene()
-	slot0:resetTiles()
+function var_0_0._onEnterNextMap(arg_8_0)
+	arg_8_0:_checkLoadMapScene()
+	arg_8_0:resetTiles()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer()
 end
 
-function slot0._onGamePointReturn(slot0)
-	slot0:_checkLoadMapScene()
-	slot0:resetTiles()
+function var_0_0._onGamePointReturn(arg_9_0)
+	arg_9_0:_checkLoadMapScene()
+	arg_9_0:resetTiles()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer()
 end
 
-function slot0._checkLoadMapScene(slot0)
-	if slot0._currentSceneResPath ~= slot0:getCurrentSceneUrl() then
+function var_0_0._checkLoadMapScene(arg_10_0)
+	local var_10_0 = arg_10_0:getCurrentSceneUrl()
+
+	if arg_10_0._currentSceneResPath ~= var_10_0 then
 		UIBlockMgr.instance:startBlock(Va3ChessGameScene.BLOCK_KEY)
-		slot0._loader:addPath(slot1)
-		slot0._loader:startLoad(slot0.loadResCompleted, slot0)
+		arg_10_0._loader:addPath(var_10_0)
+		arg_10_0._loader:startLoad(arg_10_0.loadResCompleted, arg_10_0)
 	else
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameLoadingMapStateUpdate, Va3ChessEvent.LoadingMapState.Finish)
 	end
 end
 
-function slot0.loadResCompleted(slot0, slot1)
-	slot0._currentSceneResPath = slot0:getCurrentSceneUrl()
+function var_0_0.loadResCompleted(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0._sceneGo
 
-	uv0.super.loadResCompleted(slot0, slot1)
+	arg_11_0._currentSceneResPath = arg_11_0:getCurrentSceneUrl()
 
-	if slot0._sceneGo then
-		gohelper.destroy(slot2)
+	var_0_0.super.loadResCompleted(arg_11_0, arg_11_1)
+
+	if var_11_0 then
+		gohelper.destroy(var_11_0)
 	end
 
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameLoadingMapStateUpdate, Va3ChessEvent.LoadingMapState.Finish)
-	slot0:_initEventCb()
+	arg_11_0:_initEventCb()
 end
 
-function slot0.onResetGame(slot0)
-	slot0:_resetMapId()
-	slot0:_checkLoadMapScene()
-	uv0.super.onResetGame(slot0)
+function var_0_0.onResetGame(arg_12_0)
+	arg_12_0:_resetMapId()
+	arg_12_0:_checkLoadMapScene()
+	var_0_0.super.onResetGame(arg_12_0)
 end
 
-function slot0.handleResetByResult(slot0)
-	slot0:_resetMapId()
-	slot0:_checkLoadMapScene()
-	slot0:resetTiles()
-	uv0.super.handleResetByResult(slot0)
+function var_0_0.handleResetByResult(arg_13_0)
+	arg_13_0:_resetMapId()
+	arg_13_0:_checkLoadMapScene()
+	arg_13_0:resetTiles()
+	var_0_0.super.handleResetByResult(arg_13_0)
 end
 
-function slot0.fillChessBoardBase(slot0)
-	uv0.super.fillChessBoardBase(slot0)
+function var_0_0.fillChessBoardBase(arg_14_0)
+	var_0_0.super.fillChessBoardBase(arg_14_0)
 
-	slot2, slot3 = Va3ChessGameModel.instance:getGameSize()
-	slot4 = 0
+	local var_14_0 = Va3ChessGameModel.instance
+	local var_14_1, var_14_2 = var_14_0:getGameSize()
+	local var_14_3 = 0
 
-	for slot8 = 1, slot2 do
-		for slot12 = 1, slot3 do
-			if slot1:getTileMO(slot8 - 1, slot12 - 1) and slot13:isHasTrigger(Va3ChessEnum.TileTrigger.PoSui) then
-				if slot4 + 1 >= #slot0._posuiGroundTbList then
-					table.insert(slot0._posuiGroundTbList, slot0:_cratePosuiItemTb())
+	for iter_14_0 = 1, var_14_1 do
+		for iter_14_1 = 1, var_14_2 do
+			local var_14_4 = var_14_0:getTileMO(iter_14_0 - 1, iter_14_1 - 1)
+
+			if var_14_4 and var_14_4:isHasTrigger(Va3ChessEnum.TileTrigger.PoSui) then
+				var_14_3 = var_14_3 + 1
+
+				if var_14_3 >= #arg_14_0._posuiGroundTbList then
+					table.insert(arg_14_0._posuiGroundTbList, arg_14_0:_cratePosuiItemTb())
 				end
 
-				slot14 = slot0._posuiGroundTbList[slot4]
-				slot14.posX = slot8 - 1
-				slot14.posY = slot12 - 1
+				local var_14_5 = arg_14_0._posuiGroundTbList[var_14_3]
 
-				slot0:setTileBasePosition(slot14, slot14.posX, slot14.posY)
-				slot0:_updatePosuiItemTb(slot14, slot13)
+				var_14_5.posX = iter_14_0 - 1
+				var_14_5.posY = iter_14_1 - 1
 
-				if slot0:getBaseTile(slot14.posX, slot14.posY) then
-					gohelper.setActive(slot15.go, false)
+				arg_14_0:setTileBasePosition(var_14_5, var_14_5.posX, var_14_5.posY)
+				arg_14_0:_updatePosuiItemTb(var_14_5, var_14_4)
+
+				local var_14_6 = arg_14_0:getBaseTile(var_14_5.posX, var_14_5.posY)
+
+				if var_14_6 then
+					gohelper.setActive(var_14_6.go, false)
 				end
 			end
 		end
 	end
 
-	for slot8 = slot4 + 1, #slot0._posuiGroundTbList do
-		slot9 = slot0._posuiGroundTbList[slot8]
-		slot9.posX = -1
-		slot9.posY = -1
+	for iter_14_2 = var_14_3 + 1, #arg_14_0._posuiGroundTbList do
+		local var_14_7 = arg_14_0._posuiGroundTbList[iter_14_2]
 
-		slot0:_updatePosuiItemTb(slot9)
+		var_14_7.posX = -1
+		var_14_7.posY = -1
+
+		arg_14_0:_updatePosuiItemTb(var_14_7)
 	end
 end
 
-function slot0._cratePosuiItemTb(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot3 = gohelper.clone(slot0._loader:getAssetItem(JiaLaBoNaEnum.SceneResPath.GroundPoSui):GetResource(), slot0._sceneBackground, "posui")
-	slot1.go = slot3
-	slot1.sceneTf = slot3.transform
-	slot1.animName = nil
-	slot1.animator = slot3:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+function var_0_0._cratePosuiItemTb(arg_15_0)
+	local var_15_0 = arg_15_0:getUserDataTb_()
+	local var_15_1 = arg_15_0._loader:getAssetItem(JiaLaBoNaEnum.SceneResPath.GroundPoSui)
+	local var_15_2 = gohelper.clone(var_15_1:GetResource(), arg_15_0._sceneBackground, "posui")
 
-	return slot1
+	var_15_0.go = var_15_2
+	var_15_0.sceneTf = var_15_2.transform
+	var_15_0.animName = nil
+	var_15_0.animator = var_15_2:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+
+	return var_15_0
 end
 
-function slot0.getPosuiItem(slot0, slot1, slot2)
-	for slot6 = 1, #slot0._posuiGroundTbList do
-		if slot0._posuiGroundTbList[slot6].posX == slot1 and slot7.posY == slot2 then
-			return slot7
+function var_0_0.getPosuiItem(arg_16_0, arg_16_1, arg_16_2)
+	for iter_16_0 = 1, #arg_16_0._posuiGroundTbList do
+		local var_16_0 = arg_16_0._posuiGroundTbList[iter_16_0]
+
+		if var_16_0.posX == arg_16_1 and var_16_0.posY == arg_16_2 then
+			return var_16_0
 		end
 	end
 end
 
-function slot0._onTilePosuiTrigger(slot0, slot1, slot2)
-	slot0:_updatePosuiItemTb(slot0:getPosuiItem(slot1, slot2), Va3ChessGameModel.instance:getTileMO(slot1, slot2), true)
+function var_0_0._onTilePosuiTrigger(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0:getPosuiItem(arg_17_1, arg_17_2)
+	local var_17_1 = Va3ChessGameModel.instance:getTileMO(arg_17_1, arg_17_2)
+
+	arg_17_0:_updatePosuiItemTb(var_17_0, var_17_1, true)
 end
 
-function slot0._updatePosuiItemTb(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0._updatePosuiItemTb(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if not arg_18_1 then
 		return
 	end
 
-	if slot2 and slot2:isHasTrigger(Va3ChessEnum.TileTrigger.PoSui) then
-		gohelper.setActive(slot1.go, true)
+	if arg_18_2 and arg_18_2:isHasTrigger(Va3ChessEnum.TileTrigger.PoSui) then
+		gohelper.setActive(arg_18_1.go, true)
 
-		slot5 = slot2:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui) and "close" or "idle"
+		local var_18_0 = arg_18_2:isFinishTrigger(Va3ChessEnum.TileTrigger.PoSui)
+		local var_18_1 = var_18_0 and "close" or "idle"
 
-		if slot3 or slot5 ~= slot1.animName then
-			slot1.animName = slot5
+		if arg_18_3 or var_18_1 ~= arg_18_1.animName then
+			arg_18_1.animName = var_18_1
 
-			slot1.animator:Play(slot5, 0, slot3 and 0 or 1)
+			arg_18_1.animator:Play(var_18_1, 0, arg_18_3 and 0 or 1)
 		end
 
-		if slot3 and slot4 then
+		if arg_18_3 and var_18_0 then
 			AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_glass_broken)
 		end
 	else
-		slot1.animName = nil
+		arg_18_1.animName = nil
 
-		gohelper.setActive(slot1.go, false)
+		gohelper.setActive(arg_18_1.go, false)
 	end
 end
 
-function slot0._resetMapId(slot0)
+function var_0_0._resetMapId(arg_19_0)
 	Va3ChessGameModel.instance:initData(Va3ChessModel.instance:getActId(), Va3ChessModel.instance:getMapId())
 end
 
-function slot0.loadRes(slot0)
+function var_0_0.loadRes(arg_20_0)
 	UIBlockMgr.instance:startBlock(Va3ChessGameScene.BLOCK_KEY)
 
-	slot0._loader = MultiAbLoader.New()
+	arg_20_0._loader = MultiAbLoader.New()
 
-	slot0._loader:addPath(slot0:getCurrentSceneUrl())
-	slot0._loader:addPath(slot0:getGroundItemUrl())
-	slot0._loader:addPath(Va3ChessEnum.SceneResPath.DirItem)
-	slot0._loader:addPath(Va3ChessEnum.SceneResPath.AlarmItem)
-	slot0:onLoadRes()
-	slot0._loader:startLoad(slot0.loadResCompleted, slot0)
+	arg_20_0._loader:addPath(arg_20_0:getCurrentSceneUrl())
+	arg_20_0._loader:addPath(arg_20_0:getGroundItemUrl())
+	arg_20_0._loader:addPath(Va3ChessEnum.SceneResPath.DirItem)
+	arg_20_0._loader:addPath(Va3ChessEnum.SceneResPath.AlarmItem)
+	arg_20_0:onLoadRes()
+	arg_20_0._loader:startLoad(arg_20_0.loadResCompleted, arg_20_0)
 end
 
-return slot0
+return var_0_0

@@ -1,165 +1,200 @@
-module("modules.logic.character.view.CharacterSkillDescripte", package.seeall)
+﻿module("modules.logic.character.view.CharacterSkillDescripte", package.seeall)
 
-slot0 = class("CharacterSkillDescripte", BaseChildView)
+local var_0_0 = class("CharacterSkillDescripte", BaseChildView)
 
-function slot0.onInitView(slot0)
-	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "#txt_skillevel")
-	slot0._goCurlevel = gohelper.findChild(slot0.viewGO, "#go_curlevel")
-	slot0._txtskillDesc = gohelper.findChildText(slot0.viewGO, "#txt_descripte")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "#txt_skillevel")
+	arg_1_0._goCurlevel = gohelper.findChild(arg_1_0.viewGO, "#go_curlevel")
+	arg_1_0._txtskillDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_descripte")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.canvasGroup = gohelper.onceAddComponent(slot0._txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
-	slot0.txtlvcanvasGroup = gohelper.onceAddComponent(slot0._txtlv.gameObject, gohelper.Type_CanvasGroup)
-	slot0.govx = gohelper.findChild(slot0.viewGO, "vx")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.canvasGroup = gohelper.onceAddComponent(arg_4_0._txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
+	arg_4_0.txtlvcanvasGroup = gohelper.onceAddComponent(arg_4_0._txtlv.gameObject, gohelper.Type_CanvasGroup)
+	arg_4_0.govx = gohelper.findChild(arg_4_0.viewGO, "vx")
 
-	gohelper.setActive(slot0.govx, false)
+	gohelper.setActive(arg_4_0.govx, false)
 
-	slot0.vxAni = slot0.govx:GetComponent(typeof(UnityEngine.Animation))
-	slot0.aniLength = slot0.vxAni.clip.length
+	arg_4_0.vxAni = arg_4_0.govx:GetComponent(typeof(UnityEngine.Animation))
+	arg_4_0.aniLength = arg_4_0.vxAni.clip.length
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.updateInfo(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.parentView = slot1
-	slot0._txtlv.text = slot3
-	slot0._needUseSkillEffDescList = {}
-	slot0._needUseSkillEffDescList2 = {}
-	slot7, slot8, slot0._skillIndex = SkillConfig.instance:getExSkillDesc(SkillConfig.instance:getherolevelexskillCO(slot2, slot3))
-	slot0._heroId = slot2
-	slot7 = string.gsub(SkillHelper.addBracketColor(slot0:addNumColor(SkillHelper.addLink(string.gsub(slot7, "▩(%d)%%s", "CharacterSkillDescripte_skillNameDesc"))), "#7e99d0"), "CharacterSkillDescripte_skillNameDesc", slot0:_buildSkillNameLinkTag(slot8))
+function var_0_0.updateInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
+	arg_6_0.parentView = arg_6_1
 
-	gohelper.setActive(slot0._goCurlevel, not slot5 and slot4 + 1 == slot3)
+	local var_6_0 = SkillConfig.instance:getherolevelexskillCO(arg_6_2, arg_6_3)
 
-	slot0.canvasGroup.alpha = slot4 < slot3 and 0.5 or 1
-	slot0.txtlvcanvasGroup.alpha = slot4 < slot3 and 0.5 or 1
-	slot0._hyperLinkClick = slot0._txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
+	arg_6_0._txtlv.text = arg_6_3
+	arg_6_0._needUseSkillEffDescList = {}
+	arg_6_0._needUseSkillEffDescList2 = {}
 
-	slot0._hyperLinkClick:SetClickListener(slot0._onHyperLinkClick, slot0)
+	local var_6_1, var_6_2, var_6_3 = SkillConfig.instance:getExSkillDesc(var_6_0)
 
-	slot11 = GameUtil.getTextHeightByLine(slot0._txtskillDesc, slot7, 28, -3) + 54
+	arg_6_0._skillIndex = var_6_3
+	arg_6_0._heroId = arg_6_2
 
-	recthelper.setHeight(slot0.viewGO.transform, slot11)
+	local var_6_4 = string.gsub(var_6_1, "▩(%d)%%s", "CharacterSkillDescripte_skillNameDesc")
+	local var_6_5 = SkillHelper.addLink(var_6_4)
+	local var_6_6 = arg_6_0:addNumColor(var_6_5)
+	local var_6_7 = SkillHelper.addBracketColor(var_6_6, "#7e99d0")
+	local var_6_8 = arg_6_0:_buildSkillNameLinkTag(var_6_2)
+	local var_6_9 = string.gsub(var_6_7, "CharacterSkillDescripte_skillNameDesc", var_6_8)
 
-	slot0._txtskillDesc.text = slot7
-	slot0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._txtskillDesc.gameObject, FixTmpBreakLine)
+	gohelper.setActive(arg_6_0._goCurlevel, not arg_6_5 and arg_6_4 + 1 == arg_6_3)
 
-	slot0._fixTmpBreakLine:refreshTmpContent(slot0._txtskillDesc)
+	arg_6_0.canvasGroup.alpha = arg_6_4 < arg_6_3 and 0.5 or 1
+	arg_6_0.txtlvcanvasGroup.alpha = arg_6_4 < arg_6_3 and 0.5 or 1
+	arg_6_0._hyperLinkClick = arg_6_0._txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
-	return slot11
+	arg_6_0._hyperLinkClick:SetClickListener(arg_6_0._onHyperLinkClick, arg_6_0)
+
+	local var_6_10 = GameUtil.getTextHeightByLine(arg_6_0._txtskillDesc, var_6_9, 28, -3) + 54
+
+	recthelper.setHeight(arg_6_0.viewGO.transform, var_6_10)
+
+	arg_6_0._txtskillDesc.text = var_6_9
+	arg_6_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._txtskillDesc.gameObject, FixTmpBreakLine)
+
+	arg_6_0._fixTmpBreakLine:refreshTmpContent(arg_6_0._txtskillDesc)
+
+	return var_6_10
 end
 
-function slot0.addNumColor(slot0, slot1)
-	return slot0:revertRichText(string.gsub(slot0:filterRichText(slot1), "[+-]?[%d%./%%]+", SkillHelper.getColorFormat("#deaa79", "%1")))
+function var_0_0.addNumColor(arg_7_0, arg_7_1)
+	arg_7_1 = arg_7_0:filterRichText(arg_7_1)
+
+	local var_7_0 = SkillHelper.getColorFormat("#deaa79", "%1")
+
+	arg_7_1 = string.gsub(arg_7_1, "[+-]?[%d%./%%]+", var_7_0)
+	arg_7_1 = arg_7_0:revertRichText(arg_7_1)
+
+	return arg_7_1
 end
 
-function slot0.replaceColorFunc(slot0)
-	if string.find(slot0, "[<>]") then
-		return slot0
+function var_0_0.replaceColorFunc(arg_8_0)
+	if string.find(arg_8_0, "[<>]") then
+		return arg_8_0
 	end
 end
 
-slot0.richTextList = {}
-slot0.replaceText = "▩replace▩"
-slot0.replaceIndex = 0
+var_0_0.richTextList = {}
+var_0_0.replaceText = "▩replace▩"
+var_0_0.replaceIndex = 0
 
-function slot0.filterRichText(slot0, slot1)
-	tabletool.clear(uv0.richTextList)
+function var_0_0.filterRichText(arg_9_0, arg_9_1)
+	tabletool.clear(var_0_0.richTextList)
 
-	return string.gsub(slot1, "(<.->)", slot0._filterRichText)
+	arg_9_1 = string.gsub(arg_9_1, "(<.->)", arg_9_0._filterRichText)
+
+	return arg_9_1
 end
 
-function slot0._filterRichText(slot0)
-	table.insert(uv0.richTextList, slot0)
+function var_0_0._filterRichText(arg_10_0)
+	table.insert(var_0_0.richTextList, arg_10_0)
 
-	return uv0.replaceText
+	return var_0_0.replaceText
 end
 
-function slot0.revertRichText(slot0, slot1)
-	uv0.replaceIndex = 0
+function var_0_0.revertRichText(arg_11_0, arg_11_1)
+	var_0_0.replaceIndex = 0
+	arg_11_1 = string.gsub(arg_11_1, var_0_0.replaceText, arg_11_0._revertRichText)
 
-	tabletool.clear(uv0.richTextList)
+	tabletool.clear(var_0_0.richTextList)
 
-	return string.gsub(slot1, uv0.replaceText, slot0._revertRichText)
+	return arg_11_1
 end
 
-function slot0._revertRichText(slot0)
-	uv0.replaceIndex = uv0.replaceIndex + 1
+function var_0_0._revertRichText(arg_12_0)
+	var_0_0.replaceIndex = var_0_0.replaceIndex + 1
 
-	return uv0.richTextList[uv0.replaceIndex] or ""
+	return var_0_0.richTextList[var_0_0.replaceIndex] or ""
 end
 
-function slot0._onHyperLinkClick(slot0, slot1, slot2)
+function var_0_0._onHyperLinkClick(arg_13_0, arg_13_1, arg_13_2)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if slot1 ~= "skillIndex" then
-		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(slot1), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
-	elseif slot0._skillIndex == 0 then
-		CharacterController.instance:openCharacterTipView({
-			tag = "passiveskill",
-			heroid = slot0._heroId,
-			heroMo = slot0.parentView.viewParam.heroMo,
-			tipPos = Vector2.New(-292, -51.1),
-			anchorParams = {
-				Vector2.New(1, 0.5),
-				Vector2.New(1, 0.5)
-			},
-			buffTipsX = -776,
-			showAttributeOption = slot0.parentView:getShowAttributeOption(),
-			heroMo = slot0.parentView.viewParam.heroMo
-		})
+	if arg_13_1 ~= "skillIndex" then
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_13_1), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
+	elseif arg_13_0._skillIndex == 0 then
+		local var_13_0 = {}
+
+		var_13_0.tag = "passiveskill"
+		var_13_0.heroid = arg_13_0._heroId
+		var_13_0.heroMo = arg_13_0.parentView.viewParam.heroMo
+		var_13_0.tipPos = Vector2.New(-292, -51.1)
+		var_13_0.anchorParams = {
+			Vector2.New(1, 0.5),
+			Vector2.New(1, 0.5)
+		}
+		var_13_0.buffTipsX = -776
+		var_13_0.showAttributeOption = arg_13_0.parentView:getShowAttributeOption()
+		var_13_0.heroMo = arg_13_0.parentView.viewParam.heroMo
+
+		CharacterController.instance:openCharacterTipView(var_13_0)
 	else
-		ViewMgr.instance:openView(ViewName.SkillTipView, {
-			super = slot0._skillIndex == 3,
-			skillIdList = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(slot0._heroId, slot0.parentView:getShowAttributeOption(), slot0.parentView.viewParam.heroMo)[slot0._skillIndex],
-			monsterName = HeroConfig.instance:getHeroCO(slot0._heroId).name,
-			heroMo = slot0.parentView.viewParam.heroMo
-		})
+		local var_13_1 = {}
+		local var_13_2 = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(arg_13_0._heroId, arg_13_0.parentView:getShowAttributeOption(), arg_13_0.parentView.viewParam.heroMo)
+
+		var_13_1.super = arg_13_0._skillIndex == 3
+		var_13_1.skillIdList = var_13_2[arg_13_0._skillIndex]
+		var_13_1.monsterName = HeroConfig.instance:getHeroCO(arg_13_0._heroId).name
+		var_13_1.heroMo = arg_13_0.parentView.viewParam.heroMo
+
+		ViewMgr.instance:openView(ViewName.SkillTipView, var_13_1)
 	end
 end
 
-function slot0._buildSkillNameLinkTag(slot0, slot1)
-	return string.format(string.format("<link=\"skillIndex\"><color=#7e99d0>%s</color></link>", GameConfig:GetCurLangType() == LangSettings.en and "%s" or "【%s】"), slot1)
+function var_0_0._buildSkillNameLinkTag(arg_14_0, arg_14_1)
+	local var_14_0 = "<link=\"skillIndex\"><color=#7e99d0>%s</color></link>"
+	local var_14_1 = string.format(var_14_0, GameConfig:GetCurLangType() == LangSettings.en and "%s" or "【%s】")
+
+	return (string.format(var_14_1, arg_14_1))
 end
 
-function slot0.playHeroExSkillUPAnimation(slot0)
-	gohelper.setActive(slot0.govx, true)
-	TaskDispatcher.runDelay(slot0.onAnimationDone, slot0, slot0.aniLength)
+function var_0_0.playHeroExSkillUPAnimation(arg_15_0)
+	gohelper.setActive(arg_15_0.govx, true)
+	TaskDispatcher.runDelay(arg_15_0.onAnimationDone, arg_15_0, arg_15_0.aniLength)
 end
 
-function slot0.onAnimationDone(slot0)
-	gohelper.setActive(slot0.govx, false)
+function var_0_0.onAnimationDone(arg_16_0)
+	gohelper.setActive(arg_16_0.govx, false)
 end
 
-function slot0.jumpAnimation(slot0)
-	slot1 = 0.782608695652174
+function var_0_0.jumpAnimation(arg_17_0)
+	local var_17_0 = 0.782608695652174
 
-	TaskDispatcher.cancelTask(slot0.onAnimationDone, slot0)
-	TaskDispatcher.runDelay(slot0.onAnimationDone, slot0, slot0.aniLength * (1 - slot1))
-	ZProj.GameHelper.SetAnimationStateNormalizedTime(slot0.vxAni, "item_vx_in", slot1)
+	TaskDispatcher.cancelTask(arg_17_0.onAnimationDone, arg_17_0)
+	TaskDispatcher.runDelay(arg_17_0.onAnimationDone, arg_17_0, arg_17_0.aniLength * (1 - var_17_0))
+	ZProj.GameHelper.SetAnimationStateNormalizedTime(arg_17_0.vxAni, "item_vx_in", var_17_0)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_18_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.onAnimationDone, slot0)
-	slot0.vxAni:Stop()
+function var_0_0.onClose(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0.onAnimationDone, arg_19_0)
+	arg_19_0.vxAni:Stop()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_20_0)
+	return
 end
 
-return slot0
+return var_0_0

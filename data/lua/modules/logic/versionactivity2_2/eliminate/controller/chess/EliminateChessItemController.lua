@@ -1,119 +1,131 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.EliminateChessItemController", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.EliminateChessItemController", package.seeall)
 
-slot0 = class("EliminateChessItemController")
+local var_0_0 = class("EliminateChessItemController")
 
-function slot0.ctor(slot0)
-	slot0._chess = {}
-	slot0._chessboard = {}
-	slot0._chessboardMaxWidth = 0
-	slot0._chessboardMaxHeight = 0
-	slot0._chessboardMaxRowValue = 0
-	slot0._chessboardMaxLineValue = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._chess = {}
+	arg_1_0._chessboard = {}
+	arg_1_0._chessboardMaxWidth = 0
+	arg_1_0._chessboardMaxHeight = 0
+	arg_1_0._chessboardMaxRowValue = 0
+	arg_1_0._chessboardMaxLineValue = 0
 end
 
-function slot0.InitCloneGo(slot0, slot1, slot2, slot3, slot4)
-	if gohelper.isNil(slot1) or gohelper.isNil(slot2) or gohelper.isNil(slot3) or gohelper.isNil(slot4) then
+function var_0_0.InitCloneGo(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	if gohelper.isNil(arg_2_1) or gohelper.isNil(arg_2_2) or gohelper.isNil(arg_2_3) or gohelper.isNil(arg_2_4) then
 		return false
 	end
 
-	slot0._gochess = slot1
-	slot0._gochessBoard = slot2
-	slot0._gochessBg = slot3
-	slot0._gochessBoardBg = slot4
+	arg_2_0._gochess = arg_2_1
+	arg_2_0._gochessBoard = arg_2_2
+	arg_2_0._gochessBg = arg_2_3
+	arg_2_0._gochessBoardBg = arg_2_4
 
 	return true
 end
 
-function slot0.InitChess(slot0)
-	for slot5 = 1, #EliminateChessModel.instance:getChessMoList() do
-		if slot0._chess[slot5] == nil then
-			slot0._chess[slot5] = {}
+function var_0_0.InitChess(arg_3_0)
+	local var_3_0 = EliminateChessModel.instance:getChessMoList()
+
+	for iter_3_0 = 1, #var_3_0 do
+		if arg_3_0._chess[iter_3_0] == nil then
+			arg_3_0._chess[iter_3_0] = {}
 		end
 
-		for slot10 = 1, #slot1[slot5] do
-			slot12 = slot0:createChess(slot5, slot10)
+		local var_3_1 = var_3_0[iter_3_0]
 
-			slot12:initData(slot6[slot10])
+		for iter_3_1 = 1, #var_3_1 do
+			local var_3_2 = var_3_1[iter_3_1]
+			local var_3_3 = arg_3_0:createChess(iter_3_0, iter_3_1)
 
-			slot0._chess[slot5][slot10] = slot12
-		end
-	end
-end
+			var_3_3:initData(var_3_2)
 
-function slot0.refreshChess(slot0)
-	for slot4 = 1, #slot0._chess do
-		for slot9 = 1, #slot0._chess[slot4] do
-			slot5[slot9]:updateInfo()
+			arg_3_0._chess[iter_3_0][iter_3_1] = var_3_3
 		end
 	end
 end
 
-function slot0.InitChessBoard(slot0)
-	for slot5 = 1, #EliminateChessModel.instance:getChessMoList() do
-		if slot0._chessboard[slot5] == nil then
-			slot0._chessboard[slot5] = {}
+function var_0_0.refreshChess(arg_4_0)
+	for iter_4_0 = 1, #arg_4_0._chess do
+		local var_4_0 = arg_4_0._chess[iter_4_0]
+
+		for iter_4_1 = 1, #var_4_0 do
+			var_4_0[iter_4_1]:updateInfo()
+		end
+	end
+end
+
+function var_0_0.InitChessBoard(arg_5_0)
+	local var_5_0 = EliminateChessModel.instance:getChessMoList()
+
+	for iter_5_0 = 1, #var_5_0 do
+		if arg_5_0._chessboard[iter_5_0] == nil then
+			arg_5_0._chessboard[iter_5_0] = {}
 		end
 
-		for slot10 = 1, #slot1[slot5] do
-			slot12 = gohelper.clone(slot0._gochessBoard, slot0._gochessBoardBg, string.format("chessBoard_%d_%d", slot5, slot10))
+		local var_5_1 = var_5_0[iter_5_0]
 
-			gohelper.setActiveCanvasGroup(slot12, false)
+		for iter_5_1 = 1, #var_5_1 do
+			local var_5_2 = var_5_1[iter_5_1]
+			local var_5_3 = gohelper.clone(arg_5_0._gochessBoard, arg_5_0._gochessBoardBg, string.format("chessBoard_%d_%d", iter_5_0, iter_5_1))
 
-			slot13 = MonoHelper.addNoUpdateLuaComOnceToGo(slot12, EliminateChessBoardItem, slot0)
+			gohelper.setActiveCanvasGroup(var_5_3, false)
 
-			slot13:initData(slot6[slot10])
+			local var_5_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_3, EliminateChessBoardItem, arg_5_0)
 
-			slot0._chessboard[slot5][slot10] = slot13
+			var_5_4:initData(var_5_2)
+
+			arg_5_0._chessboard[iter_5_0][iter_5_1] = var_5_4
 		end
 	end
 
-	if slot1 and #slot1 > 0 then
-		slot0._chessboardMaxWidth = #slot1 * EliminateEnum.ChessWidth
-		slot0._chessboardMaxHeight = #slot1[1] * EliminateEnum.ChessHeight
-		slot0._chessboardMaxRowValue = #slot1
-		slot0._chessboardMaxLineValue = #slot1[1]
+	if var_5_0 and #var_5_0 > 0 then
+		arg_5_0._chessboardMaxWidth = #var_5_0 * EliminateEnum.ChessWidth
+		arg_5_0._chessboardMaxHeight = #var_5_0[1] * EliminateEnum.ChessHeight
+		arg_5_0._chessboardMaxRowValue = #var_5_0
+		arg_5_0._chessboardMaxLineValue = #var_5_0[1]
 	end
 end
 
-function slot0.createChess(slot0, slot1, slot2)
-	slot3 = slot0:getChessItemGo(string.format("chess_%d_%d", slot1, slot2), slot1, slot2)
-	slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(slot3, EliminateChessItem, slot0)
+function var_0_0.createChess(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:getChessItemGo(string.format("chess_%d_%d", arg_6_1, arg_6_2), arg_6_1, arg_6_2)
+	local var_6_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, EliminateChessItem, arg_6_0)
 
-	slot4:init(slot3)
+	var_6_1:init(var_6_0)
 
-	return slot4
+	return var_6_1
 end
 
-function slot0.getMaxWidthAndHeight(slot0)
-	return slot0._chessboardMaxWidth, slot0._chessboardMaxHeight
+function var_0_0.getMaxWidthAndHeight(arg_7_0)
+	return arg_7_0._chessboardMaxWidth, arg_7_0._chessboardMaxHeight
 end
 
-function slot0.getMaxLineAndRow(slot0)
-	return slot0._chessboardMaxLineValue, slot0._chessboardMaxRowValue
+function var_0_0.getMaxLineAndRow(arg_8_0)
+	return arg_8_0._chessboardMaxLineValue, arg_8_0._chessboardMaxRowValue
 end
 
-function slot0.getChessItem(slot0, slot1, slot2)
-	return slot0._chess[slot1][slot2]
+function var_0_0.getChessItem(arg_9_0, arg_9_1, arg_9_2)
+	return arg_9_0._chess[arg_9_1][arg_9_2]
 end
 
-function slot0.getChess(slot0)
-	return slot0._chess
+function var_0_0.getChess(arg_10_0)
+	return arg_10_0._chess
 end
 
-function slot0.updateChessItem(slot0, slot1, slot2, slot3)
-	slot0._chess[slot1][slot2] = slot3
-	slot3._go.name = string.format("chess_%d_%d", slot1, slot2)
+function var_0_0.updateChessItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	arg_11_0._chess[arg_11_1][arg_11_2] = arg_11_3
+	arg_11_3._go.name = string.format("chess_%d_%d", arg_11_1, arg_11_2)
 end
 
-function slot0.getChessBoardItem(slot0, slot1, slot2)
-	return slot0._chessboard[slot1][slot2]
+function var_0_0.getChessBoardItem(arg_12_0, arg_12_1, arg_12_2)
+	return arg_12_0._chessboard[arg_12_1][arg_12_2]
 end
 
-function slot0.getChessItemByModel(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._chess) do
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11._data == slot1 then
-				return slot11
+function var_0_0.getChessItemByModel(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._chess) do
+		for iter_13_2, iter_13_3 in ipairs(iter_13_1) do
+			if iter_13_3._data == arg_13_1 then
+				return iter_13_3
 			end
 		end
 	end
@@ -121,98 +133,102 @@ function slot0.getChessItemByModel(slot0, slot1)
 	return nil
 end
 
-function slot0.getChessItemGo(slot0, slot1, slot2, slot3)
-	if slot0.chessItemPool == nil then
-		slot0.chessItemPool = LuaObjPool.New(62, function ()
-			if gohelper.isNil(uv0._gochess) or gohelper.isNil(uv0._gochessBg) then
+function var_0_0.getChessItemGo(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if arg_14_0.chessItemPool == nil then
+		local var_14_0 = 62
+
+		arg_14_0.chessItemPool = LuaObjPool.New(var_14_0, function()
+			if gohelper.isNil(arg_14_0._gochess) or gohelper.isNil(arg_14_0._gochessBg) then
 				logError("EliminateChessItemController:getChessItemGo self._gochess or self._gochessBg is nil")
 			end
 
-			slot0 = gohelper.clone(uv0._gochess, uv0._gochessBg)
+			local var_15_0 = gohelper.clone(arg_14_0._gochess, arg_14_0._gochessBg)
 
-			if isDebugBuild and gohelper.isNil(slot0) then
+			if isDebugBuild and gohelper.isNil(var_15_0) then
 				logNormal("chessItemPool get go is nil")
 			end
 
-			gohelper.setActiveCanvasGroup(slot0, false)
+			gohelper.setActiveCanvasGroup(var_15_0, false)
 
-			return slot0
-		end, function (slot0)
-			if not gohelper.isNil(slot0) then
-				gohelper.setActiveCanvasGroup(slot0, false)
+			return var_15_0
+		end, function(arg_16_0)
+			if not gohelper.isNil(arg_16_0) then
+				gohelper.setActiveCanvasGroup(arg_16_0, false)
 			end
-		end, function (slot0)
-			if not gohelper.isNil(slot0) then
+		end, function(arg_17_0)
+			if not gohelper.isNil(arg_17_0) then
 				if isDebugBuild then
-					slot0.name = "cache"
+					arg_17_0.name = "cache"
 				end
 
-				gohelper.setActiveCanvasGroup(slot0, false)
+				gohelper.setActiveCanvasGroup(arg_17_0, false)
 			end
 		end)
 	end
 
-	if gohelper.isNil(slot0.chessItemPool:getObject()) then
-		slot4 = gohelper.clone(slot0._gochess, slot0._gochessBg)
+	local var_14_1 = arg_14_0.chessItemPool:getObject()
+
+	if gohelper.isNil(var_14_1) then
+		var_14_1 = gohelper.clone(arg_14_0._gochess, arg_14_0._gochessBg)
 	end
 
-	if not string.nilorempty(slot1) then
-		slot4.name = slot1
+	if not string.nilorempty(arg_14_1) then
+		var_14_1.name = arg_14_1
 	end
 
-	return slot4
+	return var_14_1
 end
 
-function slot0.getDebugIndex(slot0, slot1, slot2)
-	if slot0.debug == nil then
-		slot0.debug = {}
+function var_0_0.getDebugIndex(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_0.debug == nil then
+		arg_18_0.debug = {}
 	end
 
-	if slot0.debug[slot1] == nil then
-		slot0.debug[slot1] = {}
+	if arg_18_0.debug[arg_18_1] == nil then
+		arg_18_0.debug[arg_18_1] = {}
 	end
 
-	slot0.debug[slot1][slot2] = (slot0.debug[slot1][slot2] and slot0.debug[slot1][slot2] or 0) + 1
+	arg_18_0.debug[arg_18_1][arg_18_2] = (arg_18_0.debug[arg_18_1][arg_18_2] and arg_18_0.debug[arg_18_1][arg_18_2] or 0) + 1
 
-	return slot0.debug[slot1][slot2]
+	return arg_18_0.debug[arg_18_1][arg_18_2]
 end
 
-function slot0.putChessItemGo(slot0, slot1)
-	if slot0.chessItemPool ~= nil then
-		slot0.chessItemPool:putObject(slot1)
+function var_0_0.putChessItemGo(arg_19_0, arg_19_1)
+	if arg_19_0.chessItemPool ~= nil then
+		arg_19_0.chessItemPool:putObject(arg_19_1)
 	else
-		gohelper.destroy(slot1)
+		gohelper.destroy(arg_19_1)
 	end
 end
 
-function slot0.clear(slot0)
-	for slot4, slot5 in pairs(slot0._chess) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10:onDestroy()
+function var_0_0.clear(arg_20_0)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._chess) do
+		for iter_20_2, iter_20_3 in pairs(iter_20_1) do
+			iter_20_3:onDestroy()
 		end
 	end
 
-	for slot4, slot5 in pairs(slot0._chessboard) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10:onDestroy()
+	for iter_20_4, iter_20_5 in pairs(arg_20_0._chessboard) do
+		for iter_20_6, iter_20_7 in pairs(iter_20_5) do
+			iter_20_7:onDestroy()
 		end
 	end
 
-	if slot0.chessItemPool then
-		slot0.chessItemPool:dispose()
+	if arg_20_0.chessItemPool then
+		arg_20_0.chessItemPool:dispose()
 
-		slot0.chessItemPool = nil
+		arg_20_0.chessItemPool = nil
 	end
 
-	slot0._gochess = nil
-	slot0._gochessBoard = nil
-	slot0._gochessBg = nil
-	slot0._gochessBoardBg = nil
+	arg_20_0._gochess = nil
+	arg_20_0._gochessBoard = nil
+	arg_20_0._gochessBg = nil
+	arg_20_0._gochessBoardBg = nil
 
-	tabletool.clear(slot0._chess)
-	tabletool.clear(slot0._chessboard)
+	tabletool.clear(arg_20_0._chess)
+	tabletool.clear(arg_20_0._chessboard)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

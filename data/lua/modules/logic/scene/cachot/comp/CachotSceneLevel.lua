@@ -1,76 +1,88 @@
-module("modules.logic.scene.cachot.comp.CachotSceneLevel", package.seeall)
+﻿module("modules.logic.scene.cachot.comp.CachotSceneLevel", package.seeall)
 
-slot0 = class("CachotSceneLevel", CommonSceneLevelComp)
+local var_0_0 = class("CachotSceneLevel", CommonSceneLevelComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._eventTrs = {}
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._eventTrs = {}
 
-	uv0.super.onSceneStart(slot0, slot1, slot2)
+	var_0_0.super.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.switchLevel(slot0, slot1)
-	if slot1 == slot0._levelId then
-		if not slot0._isLoadingRes then
-			slot0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, slot0._levelId)
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, slot0._levelId)
+function var_0_0.switchLevel(arg_2_0, arg_2_1)
+	if arg_2_1 == arg_2_0._levelId then
+		if not arg_2_0._isLoadingRes then
+			arg_2_0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._levelId)
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, arg_2_0._levelId)
 		end
 
 		return
 	end
 
-	if slot0._isLoadingRes then
-		slot0._levelId = nil
-		slot0._isLoadingRes = nil
+	if arg_2_0._isLoadingRes then
+		arg_2_0._levelId = nil
+		arg_2_0._isLoadingRes = nil
 
-		removeAssetLoadCb(slot0._resPath, slot0._onLoadCallback, slot0)
+		removeAssetLoadCb(arg_2_0._resPath, arg_2_0._onLoadCallback, arg_2_0)
 	end
 
-	slot0._eventTrs = {}
+	arg_2_0._eventTrs = {}
 
-	slot0:loadLevel(slot1)
+	arg_2_0:loadLevel(arg_2_1)
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	slot0._isLoadingRes = false
+function var_0_0._onLoadCallback(arg_3_0, arg_3_1)
+	arg_3_0._isLoadingRes = false
 
-	if slot1.IsLoadSuccess then
-		slot0._assetItem = slot1
+	if arg_3_1.IsLoadSuccess then
+		arg_3_0._assetItem = arg_3_1
 
-		slot0._assetItem:Retain()
+		arg_3_0._assetItem:Retain()
 
-		slot0._instGO = gohelper.clone(slot0._assetItem:GetResource(slot0._resPath), slot0:getCurScene():getSceneContainerGO(), "CachotLevel")
-		slot3 = slot0._instGO
+		local var_3_0 = arg_3_0:getCurScene():getSceneContainerGO()
 
-		for slot7 = 1, 3 do
-			if not gohelper.findChild(slot3, "Obj-Plant/event/" .. slot7) then
-				if slot7 == 1 then
-					gohelper.create3d(gohelper.findChild(slot3, "Obj-Plant"), tostring(slot7)).transform.localPosition = Vector3.New(28, -7, 1)
-				elseif slot7 == 2 then
-					slot8.transform.localPosition = Vector3.New(32, -7, 1)
-				elseif slot7 == 3 then
-					slot8.transform.localPosition = Vector3.New(36, -7, 1)
+		arg_3_0._instGO = gohelper.clone(arg_3_0._assetItem:GetResource(arg_3_0._resPath), var_3_0, "CachotLevel")
+
+		local var_3_1 = arg_3_0._instGO
+
+		for iter_3_0 = 1, 3 do
+			local var_3_2 = gohelper.findChild(var_3_1, "Obj-Plant/event/" .. iter_3_0)
+
+			if not var_3_2 then
+				var_3_2 = gohelper.create3d(gohelper.findChild(var_3_1, "Obj-Plant"), tostring(iter_3_0))
+
+				if iter_3_0 == 1 then
+					var_3_2.transform.localPosition = Vector3.New(28, -7, 1)
+				elseif iter_3_0 == 2 then
+					var_3_2.transform.localPosition = Vector3.New(32, -7, 1)
+				elseif iter_3_0 == 3 then
+					var_3_2.transform.localPosition = Vector3.New(36, -7, 1)
 				end
 			end
 
-			slot0._eventTrs[slot7] = slot8.transform
+			arg_3_0._eventTrs[iter_3_0] = var_3_2.transform
 		end
 
-		slot0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, slot0._levelId)
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, slot0._levelId)
-		logNormal(string.format("load scene level finish: %s %d level_%d", SceneType.NameDict[GameSceneMgr.instance:getCurSceneType()], slot0._sceneId or -1, slot0._levelId or -1))
+		arg_3_0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._levelId)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.OnLevelLoaded, arg_3_0._levelId)
+
+		local var_3_3 = SceneType.NameDict[GameSceneMgr.instance:getCurSceneType()]
+		local var_3_4 = arg_3_0._sceneId or -1
+		local var_3_5 = arg_3_0._levelId or -1
+
+		logNormal(string.format("load scene level finish: %s %d level_%d", var_3_3, var_3_4, var_3_5))
 	else
-		logError("load scene level fail, level_" .. (slot0._levelId or "nil"))
+		logError("load scene level fail, level_" .. (arg_3_0._levelId or "nil"))
 	end
 end
 
-function slot0.getEventTr(slot0, slot1)
-	return slot0._eventTrs[slot1]
+function var_0_0.getEventTr(arg_4_0, arg_4_1)
+	return arg_4_0._eventTrs[arg_4_1]
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._eventTrs = {}
+function var_0_0.onSceneClose(arg_5_0)
+	arg_5_0._eventTrs = {}
 
-	uv0.super.onSceneClose(slot0)
+	var_0_0.super.onSceneClose(arg_5_0)
 end
 
-return slot0
+return var_0_0

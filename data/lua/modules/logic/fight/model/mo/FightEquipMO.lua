@@ -1,10 +1,10 @@
-module("modules.logic.fight.model.mo.FightEquipMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightEquipMO", package.seeall)
 
-slot0 = pureTable("FightEquipMO")
+local var_0_0 = pureTable("FightEquipMO")
 
-function slot0.ctor(slot0)
-	slot0.heroUid = nil
-	slot0.equipUid = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.heroUid = nil
+	arg_1_0.equipUid = nil
 end
 
-return slot0
+return var_0_0

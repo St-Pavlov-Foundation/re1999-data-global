@@ -1,109 +1,116 @@
-module("modules.logic.rouge.view.RougeIllustrationDetailView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeIllustrationDetailView", package.seeall)
 
-slot0 = class("RougeIllustrationDetailView", BaseView)
+local var_0_0 = class("RougeIllustrationDetailView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageFrameBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FrameBG")
-	slot0._simageBottomBG = gohelper.findChildSingleImage(slot0.viewGO, "Bottom/#simage_BottomBG")
-	slot0._txtName = gohelper.findChildText(slot0.viewGO, "Bottom/#txt_Name")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Bottom/#txt_Descr")
-	slot0._txtPage = gohelper.findChildText(slot0.viewGO, "Bottom/#txt_Page")
-	slot0._btnLeft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Left")
-	slot0._btnRight = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Right")
-	slot0._goLeftTop = gohelper.findChild(slot0.viewGO, "#go_LeftTop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageFrameBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FrameBG")
+	arg_1_0._simageBottomBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bottom/#simage_BottomBG")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_Name")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_Descr")
+	arg_1_0._txtPage = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_Page")
+	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Left")
+	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Right")
+	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnLeft:AddClickListener(slot0._btnLeftOnClick, slot0)
-	slot0._btnRight:AddClickListener(slot0._btnRightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
+	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnLeft:RemoveClickListener()
-	slot0._btnRight:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnLeft:RemoveClickListener()
+	arg_3_0._btnRight:RemoveClickListener()
 end
 
-function slot0._btnLeftOnClick(slot0)
-	slot0._index = slot0._index - 1
+function var_0_0._btnLeftOnClick(arg_4_0)
+	arg_4_0._index = arg_4_0._index - 1
 
-	if slot0._index < 1 then
-		slot0._index = slot0._num
+	if arg_4_0._index < 1 then
+		arg_4_0._index = arg_4_0._num
 	end
 
-	slot0:_changePage()
+	arg_4_0:_changePage()
 end
 
-function slot0._btnRightOnClick(slot0)
-	slot0._index = slot0._index + 1
+function var_0_0._btnRightOnClick(arg_5_0)
+	arg_5_0._index = arg_5_0._index + 1
 
-	if slot0._num < slot0._index then
-		slot0._index = 1
+	if arg_5_0._index > arg_5_0._num then
+		arg_5_0._index = 1
 	end
 
-	slot0:_changePage()
+	arg_5_0:_changePage()
 end
 
-function slot0._changePage(slot0)
-	slot0._aniamtor:Play("switch", 0, 0)
-	TaskDispatcher.cancelTask(slot0._delayUpdateInfo, slot0)
-	TaskDispatcher.runDelay(slot0._delayUpdateInfo, slot0, 0.3)
+function var_0_0._changePage(arg_6_0)
+	arg_6_0._aniamtor:Play("switch", 0, 0)
+	TaskDispatcher.cancelTask(arg_6_0._delayUpdateInfo, arg_6_0)
+	TaskDispatcher.runDelay(arg_6_0._delayUpdateInfo, arg_6_0, 0.3)
 end
 
-function slot0._delayUpdateInfo(slot0)
-	slot0:_updateInfo(slot0._list[slot0._index])
+function var_0_0._delayUpdateInfo(arg_7_0)
+	arg_7_0:_updateInfo(arg_7_0._list[arg_7_0._index])
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtNameEn = gohelper.findChildText(slot0.viewGO, "Bottom/#txt_Name/txt_NameEn")
-	slot0._aniamtor = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._txtNameEn = gohelper.findChildText(arg_8_0.viewGO, "Bottom/#txt_Name/txt_NameEn")
+	arg_8_0._aniamtor = gohelper.onceAddComponent(arg_8_0.viewGO, gohelper.Type_Animator)
 end
 
-function slot0._initIllustrationList(slot0)
-	slot0._list = {}
+function var_0_0._initIllustrationList(arg_9_0)
+	local var_9_0 = RougeFavoriteConfig.instance:getIllustrationList()
 
-	for slot5, slot6 in ipairs(RougeFavoriteConfig.instance:getIllustrationList()) do
-		if RougeOutsideModel.instance:passedAnyEventId(slot6.eventIdList) then
-			table.insert(slot0._list, slot6.config)
+	arg_9_0._list = {}
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if RougeOutsideModel.instance:passedAnyEventId(iter_9_1.eventIdList) then
+			table.insert(arg_9_0._list, iter_9_1.config)
 		end
 	end
 
-	slot0._num = #slot0._list
+	arg_9_0._num = #arg_9_0._list
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initIllustrationList()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:_initIllustrationList()
 
-	slot0._index = tabletool.indexOf(slot0._list, slot0.viewParam) or 1
+	local var_10_0 = arg_10_0.viewParam
 
-	slot0:_updateInfo(slot1)
+	arg_10_0._index = tabletool.indexOf(arg_10_0._list, var_10_0) or 1
+
+	arg_10_0:_updateInfo(var_10_0)
 end
 
-function slot0._updateInfo(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txtName.text = slot0._mo.name
-	slot0._txtNameEn.text = slot0._mo.nameEn
-	slot0._txtDescr.text = slot0._mo.desc
-	slot0._txtPage.text = string.format("%s/%s", slot0._index, slot0._num)
+function var_0_0._updateInfo(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
+	arg_11_0._txtName.text = arg_11_0._mo.name
+	arg_11_0._txtNameEn.text = arg_11_0._mo.nameEn
+	arg_11_0._txtDescr.text = arg_11_0._mo.desc
+	arg_11_0._txtPage.text = string.format("%s/%s", arg_11_0._index, arg_11_0._num)
 
-	if not string.nilorempty(slot0._mo.fullImage) then
-		slot0._simageFullBG:LoadImage(slot0._mo.fullImage)
+	if not string.nilorempty(arg_11_0._mo.fullImage) then
+		arg_11_0._simageFullBG:LoadImage(arg_11_0._mo.fullImage)
 	end
 
-	if RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Illustration, slot0._mo.id) ~= nil then
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(RougeOutsideModel.instance:season(), RougeEnum.FavoriteType.Illustration, slot0._mo.id)
+	if RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Illustration, arg_11_0._mo.id) ~= nil then
+		local var_11_0 = RougeOutsideModel.instance:season()
+
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_11_0, RougeEnum.FavoriteType.Illustration, arg_11_0._mo.id)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._delayUpdateInfo, slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._delayUpdateInfo, arg_13_0)
 end
 
-return slot0
+return var_0_0

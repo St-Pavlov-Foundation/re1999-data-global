@@ -1,90 +1,95 @@
-module("modules.logic.rouge.dlc.101.view.RougeLimiterGroupItem", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterGroupItem", package.seeall)
 
-slot0 = class("RougeLimiterGroupItem", LuaCompBase)
-slot1 = {
+local var_0_0 = class("RougeLimiterGroupItem", LuaCompBase)
+local var_0_1 = {
 	Locked2UnLocked = "tounlock",
 	Locked = "locked",
 	UnLocked = "unlock",
 	MaxLevel = "tohighest"
 }
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gounlock = gohelper.findChild(slot0.go, "#go_unlock")
-	slot0._imagebufficon = gohelper.findChildImage(slot0.go, "#go_unlock/#image_bufficon")
-	slot0._txtbufflevel = gohelper.findChildText(slot0.go, "#go_unlock/#txt_bufflevel")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.go, "#btn_cancel")
-	slot0._golocked = gohelper.findChild(slot0.go, "#go_locked")
-	slot0._btnclick = gohelper.findChildButton(slot0.go, "#btn_click")
-	slot0._gofulleffect = gohelper.findChild(slot0.go, "debuff3_light")
-	slot0._goaddeffect = gohelper.findChild(slot0.go, "click")
-	slot0._animator = gohelper.onceAddComponent(slot0.go, gohelper.Type_Animator)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gounlock = gohelper.findChild(arg_1_0.go, "#go_unlock")
+	arg_1_0._imagebufficon = gohelper.findChildImage(arg_1_0.go, "#go_unlock/#image_bufficon")
+	arg_1_0._txtbufflevel = gohelper.findChildText(arg_1_0.go, "#go_unlock/#txt_bufflevel")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_cancel")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0.go, "#go_locked")
+	arg_1_0._btnclick = gohelper.findChildButton(arg_1_0.go, "#btn_click")
+	arg_1_0._gofulleffect = gohelper.findChild(arg_1_0.go, "debuff3_light")
+	arg_1_0._goaddeffect = gohelper.findChild(arg_1_0.go, "click")
+	arg_1_0._animator = gohelper.onceAddComponent(arg_1_0.go, gohelper.Type_Animator)
 
-	slot0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, slot0._updateLimiterGroup, slot0)
+	arg_1_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateLimitGroup, arg_1_0._updateLimiterGroup, arg_1_0)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelkOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelkOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	slot0:refreshUI()
+	arg_4_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = RougeDLCModel101.instance:getCurLimiterGroupState(slot0._mo.id) == RougeDLCEnum101.LimitState.Locked
-	slot0._curLimitGroupLv = RougeDLCModel101.instance:getCurLimiterGroupLv(slot0._mo.id)
-	slot0._maxLimitGroupLv = RougeDLCConfig101.instance:getLimiterGroupMaxLevel(slot0._mo.id)
-	slot0._isCurMaxGroupLv = slot0._maxLimitGroupLv <= slot0._curLimitGroupLv
+function var_0_0.refreshUI(arg_5_0)
+	local var_5_0 = RougeDLCModel101.instance:getCurLimiterGroupState(arg_5_0._mo.id) == RougeDLCEnum101.LimitState.Locked
 
-	gohelper.setActive(slot0._golocked, slot2)
-	gohelper.setActive(slot0._gounlock, not slot2)
-	gohelper.setActive(slot0._btncancel.gameObject, not slot2 and slot0._curLimitGroupLv > 0)
-	gohelper.setActive(slot0._txtbufflevel.gameObject, not slot2 and slot0._curLimitGroupLv <= slot0._maxLimitGroupLv)
+	arg_5_0._curLimitGroupLv = RougeDLCModel101.instance:getCurLimiterGroupLv(arg_5_0._mo.id)
+	arg_5_0._maxLimitGroupLv = RougeDLCConfig101.instance:getLimiterGroupMaxLevel(arg_5_0._mo.id)
+	arg_5_0._isCurMaxGroupLv = arg_5_0._curLimitGroupLv >= arg_5_0._maxLimitGroupLv
 
-	if not slot2 then
-		slot0._txtbufflevel.text = GameUtil.getRomanNums(slot0._curLimitGroupLv)
+	gohelper.setActive(arg_5_0._golocked, var_5_0)
+	gohelper.setActive(arg_5_0._gounlock, not var_5_0)
+	gohelper.setActive(arg_5_0._btncancel.gameObject, not var_5_0 and arg_5_0._curLimitGroupLv > 0)
+	gohelper.setActive(arg_5_0._txtbufflevel.gameObject, not var_5_0 and arg_5_0._curLimitGroupLv <= arg_5_0._maxLimitGroupLv)
 
-		UISpriteSetMgr.instance:setRouge4Sprite(slot0._imagebufficon, slot0._mo.icon)
+	if not var_5_0 then
+		arg_5_0._txtbufflevel.text = GameUtil.getRomanNums(arg_5_0._curLimitGroupLv)
+
+		UISpriteSetMgr.instance:setRouge4Sprite(arg_5_0._imagebufficon, arg_5_0._mo.icon)
 	end
 
-	slot3 = uv0.Locked
+	local var_5_1 = var_0_1.Locked
 
-	if not slot2 then
-		slot3 = (not slot0._isCurMaxGroupLv or uv0.MaxLevel) and (RougeDLCModel101.instance:isLimiterGroupNewUnlocked(slot0._mo.id) and uv0.Locked2UnLocked or uv0.UnLocked)
+	if not var_5_0 then
+		if arg_5_0._isCurMaxGroupLv then
+			var_5_1 = var_0_1.MaxLevel
+		else
+			var_5_1 = RougeDLCModel101.instance:isLimiterGroupNewUnlocked(arg_5_0._mo.id) and var_0_1.Locked2UnLocked or var_0_1.UnLocked
+		end
 	end
 
-	gohelper.setActive(slot0._gofulleffect, slot0._isCurMaxGroupLv)
-	slot0._animator:Play(slot3, 0, 0)
+	gohelper.setActive(arg_5_0._gofulleffect, arg_5_0._isCurMaxGroupLv)
+	arg_5_0._animator:Play(var_5_1, 0, 0)
 end
 
-function slot0._btncancelkOnClick(slot0)
-	RougeDLCModel101.instance:removeLimiterGroupLv(slot0._mo.id)
-	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.RefreshLimiterDebuffTips, slot0._mo.id)
+function var_0_0._btncancelkOnClick(arg_6_0)
+	RougeDLCModel101.instance:removeLimiterGroupLv(arg_6_0._mo.id)
+	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.RefreshLimiterDebuffTips, arg_6_0._mo.id)
 end
 
-function slot0._btnclickOnClick(slot0)
-	if RougeDLCModel101.instance:getCurLimiterGroupState(slot0._mo.id) == RougeDLCEnum101.LimitState.Locked then
+function var_0_0._btnclickOnClick(arg_7_0)
+	if RougeDLCModel101.instance:getCurLimiterGroupState(arg_7_0._mo.id) == RougeDLCEnum101.LimitState.Locked then
 		RougeDLCController101.instance:openRougeLimiterLockedTipsView({
-			limiterGroupId = slot0._mo.id
+			limiterGroupId = arg_7_0._mo.id
 		})
 
 		return
 	end
 
-	if not slot0._isCurMaxGroupLv then
-		gohelper.setActive(slot0._goaddeffect, false)
-		gohelper.setActive(slot0._goaddeffect, true)
+	if not arg_7_0._isCurMaxGroupLv then
+		gohelper.setActive(arg_7_0._goaddeffect, false)
+		gohelper.setActive(arg_7_0._goaddeffect, true)
 
-		if slot0._curLimitGroupLv + 1 == slot0._maxLimitGroupLv then
+		if arg_7_0._curLimitGroupLv + 1 == arg_7_0._maxLimitGroupLv then
 			AudioMgr.instance:trigger(AudioEnum.UI.ClickLimiter2MaxLevel)
 		else
 			AudioMgr.instance:trigger(AudioEnum.UI.AddLimiterLevel)
@@ -93,17 +98,18 @@ function slot0._btnclickOnClick(slot0)
 		AudioMgr.instance:trigger(AudioEnum.UI.MaxLevelLimiter)
 	end
 
-	RougeDLCModel101.instance:addLimiterGroupLv(slot0._mo.id)
-	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.RefreshLimiterDebuffTips, slot0._mo.id)
+	RougeDLCModel101.instance:addLimiterGroupLv(arg_7_0._mo.id)
+	RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.RefreshLimiterDebuffTips, arg_7_0._mo.id)
 end
 
-function slot0._updateLimiterGroup(slot0, slot1)
-	if slot0._mo and slot0._mo.id == slot1 then
-		slot0:refreshUI()
+function var_0_0._updateLimiterGroup(arg_8_0, arg_8_1)
+	if arg_8_0._mo and arg_8_0._mo.id == arg_8_1 then
+		arg_8_0:refreshUI()
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,19 +1,25 @@
-module("modules.logic.explore.model.mo.unit.ExploreMapAreaMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreMapAreaMO", package.seeall)
 
-slot0 = pureTable("ExploreMapAreaMO")
+local var_0_0 = pureTable("ExploreMapAreaMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1[1]
-	slot0._unitData = slot1[2]
-	slot0.isCanReset = slot1[3]
-	slot0.visible = ExploreModel.instance:isAreaShow(slot0.id)
-	slot0.unitList = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1[1]
+	arg_1_0._unitData = arg_1_1[2]
+	arg_1_0.isCanReset = arg_1_1[3]
+	arg_1_0.visible = ExploreModel.instance:isAreaShow(arg_1_0.id)
+	arg_1_0.unitList = {}
 
-	for slot5, slot6 in ipairs(slot0._unitData) do
-		if ExploreModel.instance:hasInteractInfo(slot6[1]) and ExploreMapModel.instance:createUnitMO(slot6) then
-			table.insert(slot0.unitList, slot8)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0._unitData) do
+		local var_1_0 = iter_1_1[1]
+
+		if ExploreModel.instance:hasInteractInfo(var_1_0) then
+			local var_1_1 = ExploreMapModel.instance:createUnitMO(iter_1_1)
+
+			if var_1_1 then
+				table.insert(arg_1_0.unitList, var_1_1)
+			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

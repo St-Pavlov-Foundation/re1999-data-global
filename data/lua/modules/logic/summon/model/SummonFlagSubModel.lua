@@ -1,90 +1,97 @@
-module("modules.logic.summon.model.SummonFlagSubModel", package.seeall)
+﻿module("modules.logic.summon.model.SummonFlagSubModel", package.seeall)
 
-slot0 = class("SummonFlagSubModel", BaseModel)
+local var_0_0 = class("SummonFlagSubModel", BaseModel)
 
-function slot0.init(slot0)
-	slot0._isNew = false
-	slot0._newFlagDict = {}
+function var_0_0.init(arg_1_0)
+	arg_1_0._isNew = false
+	arg_1_0._newFlagDict = {}
 
-	slot0:initLocalSave()
+	arg_1_0:initLocalSave()
 end
 
-function slot0.initLocalSave(slot0)
-	slot0._lastDict = {}
+function var_0_0.initLocalSave(arg_2_0)
+	arg_2_0._lastDict = {}
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(slot0:getLocalKey(), "")) then
-		for slot6, slot7 in ipairs(cjson.decode(slot1)) do
-			slot0._lastDict[slot7] = 1
+	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0:getLocalKey(), "")
+
+	if not string.nilorempty(var_2_0) then
+		local var_2_1 = cjson.decode(var_2_0)
+
+		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+			arg_2_0._lastDict[iter_2_1] = 1
 		end
 	end
 end
 
-function slot0.compareRecord(slot0, slot1)
-	slot0._newFlagDict = {}
-	slot2 = {}
+function var_0_0.compareRecord(arg_3_0, arg_3_1)
+	arg_3_0._newFlagDict = {}
 
-	for slot6 = 1, #slot1 do
-		if not slot0._lastDict[slot1[slot6].id] then
-			slot0._newFlagDict[slot7.id] = 1
+	local var_3_0 = {}
+
+	for iter_3_0 = 1, #arg_3_1 do
+		local var_3_1 = arg_3_1[iter_3_0]
+
+		if not arg_3_0._lastDict[var_3_1.id] then
+			arg_3_0._newFlagDict[var_3_1.id] = 1
 		end
 
-		slot2[slot7.id] = 1
+		var_3_0[var_3_1.id] = 1
 	end
 
-	slot3 = false
+	local var_3_2 = false
 
-	for slot7, slot8 in pairs(slot0._lastDict) do
-		if not slot2[slot7] then
-			slot0._lastDict[slot7] = nil
-			slot3 = true
+	for iter_3_1, iter_3_2 in pairs(arg_3_0._lastDict) do
+		if not var_3_0[iter_3_1] then
+			arg_3_0._lastDict[iter_3_1] = nil
+			var_3_2 = true
 		end
 	end
 
-	if slot3 then
-		slot0:flush()
+	if var_3_2 then
+		arg_3_0:flush()
 	end
 
 	SummonController.instance:dispatchEvent(SummonEvent.onNewPoolChanged)
 end
 
-function slot0.cleanFlag(slot0, slot1)
-	if slot0._newFlagDict[slot1] then
-		slot0._newFlagDict[slot1] = nil
-		slot0._lastDict[slot1] = 1
+function var_0_0.cleanFlag(arg_4_0, arg_4_1)
+	if arg_4_0._newFlagDict[arg_4_1] then
+		arg_4_0._newFlagDict[arg_4_1] = nil
+		arg_4_0._lastDict[arg_4_1] = 1
 
-		slot0:flush()
+		arg_4_0:flush()
 		SummonController.instance:dispatchEvent(SummonEvent.onNewPoolChanged)
 	end
 end
 
-function slot0.hasNew(slot0)
-	if slot0._newFlagDict and next(slot0._newFlagDict) then
+function var_0_0.hasNew(arg_5_0)
+	if arg_5_0._newFlagDict and next(arg_5_0._newFlagDict) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isNew(slot0, slot1)
-	if slot0._newFlagDict and slot0._newFlagDict[slot1] then
+function var_0_0.isNew(arg_6_0, arg_6_1)
+	if arg_6_0._newFlagDict and arg_6_0._newFlagDict[arg_6_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.flush(slot0)
-	slot1 = {}
+function var_0_0.flush(arg_7_0)
+	local var_7_0 = {}
 
-	for slot5, slot6 in pairs(slot0._lastDict) do
-		table.insert(slot1, slot5)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._lastDict) do
+		table.insert(var_7_0, iter_7_0)
 	end
 
-	PlayerPrefsHelper.setString(slot0:getLocalKey(), cjson.encode(slot1))
+	PlayerPrefsHelper.setString(arg_7_0:getLocalKey(), cjson.encode(var_7_0))
 end
 
-function slot0.getLocalKey(slot0)
+function var_0_0.getLocalKey(arg_8_0)
 	return "SummonFlagSubModel#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return slot0
+return var_0_0

@@ -1,88 +1,102 @@
-module("modules.logic.versionactivity2_5.autochess.flow.AutoChessSideWork", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.flow.AutoChessSideWork", package.seeall)
 
-slot0 = class("AutoChessSideWork", BaseWork)
+local var_0_0 = class("AutoChessSideWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0.flowCnt = 1
-	slot0.seqFlow = FlowSequence.New()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.flowCnt = 1
+	arg_1_0.seqFlow = FlowSequence.New()
 
-	slot0.seqFlow:registerDoneListener(slot0.onDone, slot0)
+	arg_1_0.seqFlow:registerDoneListener(arg_1_0.onDone, arg_1_0)
 
-	slot0.effectList = slot1
+	arg_1_0.effectList = arg_1_1
 
-	slot0:initSideWork()
+	arg_1_0:initSideWork()
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0.seqFlow:start(slot1)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	arg_2_0.seqFlow:start(arg_2_1)
 end
 
-function slot0.onStop(slot0)
-	slot0.seqFlow:stop()
+function var_0_0.onStop(arg_3_0)
+	arg_3_0.seqFlow:stop()
 end
 
-function slot0.onResume(slot0)
-	slot0.seqFlow:resume()
+function var_0_0.onResume(arg_4_0)
+	arg_4_0.seqFlow:resume()
 end
 
-function slot0.onReset(slot0)
-	slot0.seqFlow:reset()
+function var_0_0.onReset(arg_5_0)
+	arg_5_0.seqFlow:reset()
 end
 
-function slot0.onDestroy(slot0)
-	slot0.seqFlow:unregisterDoneListener(slot0.onDone, slot0)
-	slot0.seqFlow:destroy()
+function var_0_0.onDestroy(arg_6_0)
+	arg_6_0.seqFlow:unregisterDoneListener(arg_6_0.onDone, arg_6_0)
+	arg_6_0.seqFlow:destroy()
 
-	slot0.seqFlow = nil
-	slot0.effectList = nil
+	arg_6_0.seqFlow = nil
+	arg_6_0.effectList = nil
 end
 
-function slot0.initSideWork(slot0)
-	for slot4, slot5 in ipairs(slot0.effectList) do
-		if slot5.effectType == AutoChessEnum.EffectType.NextFightStep then
-			slot0:recursion(slot5.nextFightStep)
+function var_0_0.initSideWork(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.effectList) do
+		if iter_7_1.effectType == AutoChessEnum.EffectType.NextFightStep then
+			arg_7_0:recursion(iter_7_1.nextFightStep)
 		else
-			slot0.seqFlow:addWork(AutoChessEffectWork.New(slot5))
+			local var_7_0 = AutoChessEffectWork.New(iter_7_1)
+
+			arg_7_0.seqFlow:addWork(var_7_0)
 		end
 	end
 end
 
-function slot0.recursion(slot0, slot1)
-	if slot1.actionType == AutoChessEnum.ActionType.ChessMove then
-		slot2 = FlowParallel.New()
+function var_0_0.recursion(arg_8_0, arg_8_1)
+	if arg_8_1.actionType == AutoChessEnum.ActionType.ChessMove then
+		local var_8_0 = FlowParallel.New()
 
-		for slot6, slot7 in ipairs(slot1.effect) do
-			if slot7.effectType == AutoChessEnum.EffectType.ChessMove then
-				slot2:addWork(AutoChessEffectWork.New(slot7))
+		for iter_8_0, iter_8_1 in ipairs(arg_8_1.effect) do
+			if iter_8_1.effectType == AutoChessEnum.EffectType.ChessMove then
+				local var_8_1 = AutoChessEffectWork.New(iter_8_1)
+
+				var_8_0:addWork(var_8_1)
 			else
 				logError("异常:棋子移动Action下面不该有其他类型Effect")
 			end
 		end
 
-		slot0.seqFlow:addWork(slot2)
+		arg_8_0.seqFlow:addWork(var_8_0)
 	else
-		slot2 = nil
+		local var_8_2
 
-		if slot1.actionType == AutoChessEnum.ActionType.ChessSkill then
-			slot0.seqFlow:addWork(AutoChessSkillWork.New(slot1))
+		if arg_8_1.actionType == AutoChessEnum.ActionType.ChessSkill then
+			local var_8_3 = AutoChessSkillWork.New(arg_8_1)
 
-			if lua_auto_chess_skill.configDict[tonumber(slot1.reasonId)] and not string.nilorempty(slot4.skilleffID) then
-				slot2 = string.splitToNumber(slot5, "#")
+			arg_8_0.seqFlow:addWork(var_8_3)
+
+			local var_8_4 = lua_auto_chess_skill.configDict[tonumber(arg_8_1.reasonId)]
+
+			if var_8_4 then
+				local var_8_5 = var_8_4.skilleffID
+
+				if not string.nilorempty(var_8_5) then
+					var_8_2 = string.splitToNumber(var_8_5, "#")
+				end
 			end
 		end
 
-		for slot6, slot7 in ipairs(slot1.effect) do
-			if slot7.effectType == AutoChessEnum.EffectType.NextFightStep then
-				slot0:recursion(slot7.nextFightStep)
+		for iter_8_2, iter_8_3 in ipairs(arg_8_1.effect) do
+			if iter_8_3.effectType == AutoChessEnum.EffectType.NextFightStep then
+				arg_8_0:recursion(iter_8_3.nextFightStep)
 			else
-				slot0.seqFlow:addWork(AutoChessEffectWork.New(slot7))
+				local var_8_6 = AutoChessEffectWork.New(iter_8_3)
 
-				if slot2 and slot7.effectType == slot2[2] then
-					slot8:markSkillEffect(slot2[1])
+				arg_8_0.seqFlow:addWork(var_8_6)
+
+				if var_8_2 and iter_8_3.effectType == var_8_2[2] then
+					var_8_6:markSkillEffect(var_8_2[1])
 				end
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

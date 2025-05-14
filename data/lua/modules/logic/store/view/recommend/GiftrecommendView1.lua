@@ -1,11 +1,11 @@
-module("modules.logic.store.view.recommend.GiftrecommendView1", package.seeall)
+﻿module("modules.logic.store.view.recommend.GiftrecommendView1", package.seeall)
 
-slot0 = class("GiftrecommendView1", GiftrecommendViewBase)
+local var_0_0 = class("GiftrecommendView1", GiftrecommendViewBase)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 
-	slot0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.GiftrecommendView1)
+	arg_1_0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.GiftrecommendView1)
 end
 
-return slot0
+return var_0_0

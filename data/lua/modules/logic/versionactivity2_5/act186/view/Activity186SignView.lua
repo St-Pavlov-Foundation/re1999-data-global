@@ -1,134 +1,151 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186SignView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186SignView", package.seeall)
 
-slot0 = class("Activity186SignView", BaseView)
+local var_0_0 = class("Activity186SignView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.signList = {}
-	slot0.signContent = gohelper.findChild(slot0.viewGO, "root/signList/Content")
-	slot0.btnTaskCanget = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/avgTask/#go_reward/go_canget")
-	slot0.goTaskReceive = gohelper.findChild(slot0.viewGO, "root/avgTask/#go_reward/go_receive")
-	slot0.goTaskReward = gohelper.findChild(slot0.viewGO, "root/avgTask/#go_reward/go_icon")
-	slot0.txtTaskDesc = gohelper.findChildTextMesh(slot0.viewGO, "root/avgTask/txtDesc")
-	slot0.hasgetHookAnim = gohelper.findChildComponent(slot0.viewGO, "root/avgTask/#go_reward/go_receive/go_hasget", gohelper.Type_Animator)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.signList = {}
+	arg_1_0.signContent = gohelper.findChild(arg_1_0.viewGO, "root/signList/Content")
+	arg_1_0.btnTaskCanget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/avgTask/#go_reward/go_canget")
+	arg_1_0.goTaskReceive = gohelper.findChild(arg_1_0.viewGO, "root/avgTask/#go_reward/go_receive")
+	arg_1_0.goTaskReward = gohelper.findChild(arg_1_0.viewGO, "root/avgTask/#go_reward/go_icon")
+	arg_1_0.txtTaskDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/avgTask/txtDesc")
+	arg_1_0.hasgetHookAnim = gohelper.findChildComponent(arg_1_0.viewGO, "root/avgTask/#go_reward/go_receive/go_hasget", gohelper.Type_Animator)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnTaskCanget, slot0.onClickBtnTaskCanget, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, slot0.onRefreshNorSignActivity, slot0)
-	slot0:addEventCb(Activity186Controller.instance, Activity186Event.SpBonusStageChange, slot0.onSpBonusStageChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnTaskCanget, arg_2_0.onClickBtnTaskCanget, arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_2_0.onRefreshNorSignActivity, arg_2_0)
+	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.SpBonusStageChange, arg_2_0.onSpBonusStageChange, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		if slot0._waitRefreshList then
-			slot0:refreshSignList()
+function var_0_0.onCloseView(arg_5_0, arg_5_1)
+	if arg_5_1 == ViewName.CommonPropView then
+		if arg_5_0._waitRefreshList then
+			arg_5_0:refreshSignList()
 		end
 
-		if slot0._waitRefreshTask then
-			slot0:refreshTask()
+		if arg_5_0._waitRefreshTask then
+			arg_5_0:refreshTask()
 		end
 	end
 end
 
-function slot0.onRefreshNorSignActivity(slot0)
-	slot0._waitRefreshList = true
+function var_0_0.onRefreshNorSignActivity(arg_6_0)
+	arg_6_0._waitRefreshList = true
 end
 
-function slot0.onSpBonusStageChange(slot0)
-	slot0._waitRefreshTask = true
+function var_0_0.onSpBonusStageChange(arg_7_0)
+	arg_7_0._waitRefreshTask = true
 end
 
-function slot0.onClickBtnTaskCanget(slot0)
-	Activity101Rpc.instance:sendAcceptAct186SpBonusRequest(slot0.signActId, slot0.actId)
+function var_0_0.onClickBtnTaskCanget(arg_8_0)
+	Activity101Rpc.instance:sendAcceptAct186SpBonusRequest(arg_8_0.signActId, arg_8_0.actId)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0:refreshParam()
+	arg_9_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:refreshParam()
+	arg_10_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.signActId = ActivityEnum.Activity.V2a5_Act186Sign
-	slot0.actMo = Activity186Model.instance:getById(slot0.actId)
+function var_0_0.refreshParam(arg_11_0)
+	arg_11_0.actId = arg_11_0.viewParam.actId
+	arg_11_0.signActId = ActivityEnum.Activity.V2a5_Act186Sign
+	arg_11_0.actMo = Activity186Model.instance:getById(arg_11_0.actId)
 end
 
-function slot0.refreshView(slot0)
-	slot0:refreshSignList()
-	slot0:refreshTask()
+function var_0_0.refreshView(arg_12_0)
+	arg_12_0:refreshSignList()
+	arg_12_0:refreshTask()
 end
 
-function slot0.refreshSignList(slot0)
-	slot0._waitRefresh = false
-	slot5 = #slot0.signList
+function var_0_0.refreshSignList(arg_13_0)
+	arg_13_0._waitRefresh = false
 
-	for slot5 = 1, math.max(#ActivityConfig.instance:getNorSignActivityCos(slot0.signActId), slot5) do
-		slot0:getOrCreateItem(slot5):onUpdateMO(slot1[slot5])
+	local var_13_0 = ActivityConfig.instance:getNorSignActivityCos(arg_13_0.signActId)
+
+	for iter_13_0 = 1, math.max(#var_13_0, #arg_13_0.signList) do
+		arg_13_0:getOrCreateItem(iter_13_0):onUpdateMO(var_13_0[iter_13_0])
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1)
-	if not slot0.signList[slot1] then
-		slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.viewContainer:getResInst(slot0.viewContainer:getSetting().otherRes.itemRes, slot0.signContent, string.format("item%s", slot1)), Activity186SignItem)
+function var_0_0.getOrCreateItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.signList[arg_14_1]
 
-		slot2:initActId(slot0.actId)
+	if not var_14_0 then
+		local var_14_1 = arg_14_0.viewContainer:getSetting().otherRes.itemRes
+		local var_14_2 = arg_14_0.viewContainer:getResInst(var_14_1, arg_14_0.signContent, string.format("item%s", arg_14_1))
 
-		slot0.signList[slot1] = slot2
+		var_14_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_2, Activity186SignItem)
+
+		var_14_0:initActId(arg_14_0.actId)
+
+		arg_14_0.signList[arg_14_1] = var_14_0
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.refreshTask(slot0)
-	slot0._waitRefreshTask = false
-	slot1 = slot0.actMo.spBonusStage
-	slot0.txtTaskDesc.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act186_signview_task_txt"), slot1 ~= 0 and 1 or 0)
+function var_0_0.refreshTask(arg_15_0)
+	arg_15_0._waitRefreshTask = false
 
-	gohelper.setActive(slot0.goTaskReceive, slot1 == 2)
-	gohelper.setActive(slot0.btnTaskCanget, slot1 == 1)
+	local var_15_0 = arg_15_0.actMo.spBonusStage
+	local var_15_1 = arg_15_0.spBonusStage and var_15_0 ~= arg_15_0.spBonusStage
+	local var_15_2 = var_15_0 ~= 0
+	local var_15_3 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act186_signview_task_txt"), var_15_2 and 1 or 0)
 
-	if slot1 == 2 then
-		if slot0.spBonusStage and slot1 ~= slot0.spBonusStage then
-			slot0.hasgetHookAnim:Play("go_hasget_in")
+	arg_15_0.txtTaskDesc.text = var_15_3
+
+	gohelper.setActive(arg_15_0.goTaskReceive, var_15_0 == 2)
+	gohelper.setActive(arg_15_0.btnTaskCanget, var_15_0 == 1)
+
+	if var_15_0 == 2 then
+		if var_15_1 then
+			arg_15_0.hasgetHookAnim:Play("go_hasget_in")
 		else
-			slot0.hasgetHookAnim:Play("go_hasget_idle")
+			arg_15_0.hasgetHookAnim:Play("go_hasget_idle")
 		end
 	end
 
-	slot0.spBonusStage = slot1
-	slot7 = GameUtil.splitString2(Activity186Config.instance:getConstStr(Activity186Enum.ConstId.Act101Reward), true)[1]
+	arg_15_0.spBonusStage = var_15_0
 
-	if not slot0.itemIcon then
-		slot0.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot0.goTaskReward)
+	local var_15_4 = Activity186Config.instance:getConstStr(Activity186Enum.ConstId.Act101Reward)
+	local var_15_5 = GameUtil.splitString2(var_15_4, true)[1]
+
+	if not arg_15_0.itemIcon then
+		arg_15_0.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_15_0.goTaskReward)
 	end
 
-	slot0.itemIcon:setMOValue(slot7[1], slot7[2], slot7[3])
-	slot0.itemIcon:setScale(0.7)
-	slot0.itemIcon:setCountFontSize(46)
-	slot0.itemIcon:setHideLvAndBreakFlag(true)
-	slot0.itemIcon:hideEquipLvAndBreak(true)
+	arg_15_0.itemIcon:setMOValue(var_15_5[1], var_15_5[2], var_15_5[3])
+	arg_15_0.itemIcon:setScale(0.7)
+	arg_15_0.itemIcon:setCountFontSize(46)
+	arg_15_0.itemIcon:setHideLvAndBreakFlag(true)
+	arg_15_0.itemIcon:hideEquipLvAndBreak(true)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

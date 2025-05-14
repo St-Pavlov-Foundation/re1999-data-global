@@ -1,49 +1,51 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183ReportViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183ReportViewContainer", package.seeall)
 
-slot0 = class("Act183ReportViewContainer", BaseViewContainer)
+local var_0_0 = class("Act183ReportViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(slot1, Act183ReportView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(var_1_0, Act183ReportView.New())
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "root/#scroll_report"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = Act183ReportListItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 1636
-	slot2.cellHeight = 248
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 20
-	slot2.startSpace = 0
-	slot2.endSpace = 0
+	local var_1_1 = ListScrollParam.New()
 
-	for slot7 = 1, 4 do
+	var_1_1.scrollGOPath = "root/#scroll_report"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = Act183ReportListItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 1636
+	var_1_1.cellHeight = 248
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 20
+	var_1_1.startSpace = 0
+	var_1_1.endSpace = 0
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 4 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.03
 	end
 
-	table.insert(slot1, LuaListScrollViewWithAnimator.New(Act183ReportListModel.instance, slot2, {
-		[slot7] = (slot7 - 1) * 0.03
-	}))
+	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Act183ReportListModel.instance, var_1_1, var_1_2))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
 	end
 end
 
-return slot0
+return var_0_0

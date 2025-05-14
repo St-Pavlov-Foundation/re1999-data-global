@@ -1,36 +1,38 @@
-module("modules.logic.character.view.CharacterRankUpViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterRankUpViewContainer", package.seeall)
 
-slot0 = class("CharacterRankUpViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterRankUpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {
 		CharacterRankUpView.New(),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_righttop")
 	}
-	slot2 = HelpShowView.New()
+	local var_1_1 = HelpShowView.New()
 
-	slot2:setHelpId(HelpEnum.HelpId.CharacterRankUp)
-	slot2:setDelayTime(0.5)
-	table.insert(slot1, slot2)
+	var_1_1:setHelpId(HelpEnum.HelpId.CharacterRankUp)
+	var_1_1:setDelayTime(0.5)
+	table.insert(var_1_0, var_1_1)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
+
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
-			HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
+			var_2_0
 		}, HelpEnum.HelpId.CharacterRankUp)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 
-	if slot1 == 2 then
+	if arg_2_1 == 2 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.Gold
@@ -39,14 +41,16 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.refreshHelp(slot0)
-	if slot0._navigateButtonView then
-		slot0._navigateButtonView:setParam({
+function var_0_0.refreshHelp(arg_3_0)
+	if arg_3_0._navigateButtonView then
+		local var_3_0 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
+
+		arg_3_0._navigateButtonView:setParam({
 			true,
 			true,
-			HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
+			var_3_0
 		})
 	end
 end
 
-return slot0
+return var_0_0

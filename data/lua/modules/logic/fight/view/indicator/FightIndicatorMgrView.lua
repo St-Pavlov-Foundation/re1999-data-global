@@ -1,7 +1,8 @@
-module("modules.logic.fight.view.indicator.FightIndicatorMgrView", package.seeall)
+﻿module("modules.logic.fight.view.indicator.FightIndicatorMgrView", package.seeall)
 
-slot0 = class("FightIndicatorMgrView", BaseView)
-slot0.IndicatorId2Behaviour = {
+local var_0_0 = class("FightIndicatorMgrView", BaseView)
+
+var_0_0.IndicatorId2Behaviour = {
 	[FightEnum.IndicatorId.Season] = FightIndicatorView,
 	[FightEnum.IndicatorId.FightSucc] = FightSuccIndicator,
 	[FightEnum.IndicatorId.Season1_2] = FightIndicatorView,
@@ -14,35 +15,39 @@ slot0.IndicatorId2Behaviour = {
 	[FightEnum.IndicatorId.Id6202] = FightIndicatorView6202
 }
 
-function slot0.onInitView(slot0)
-	slot0.indicatorId2View = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.indicatorId2View = {}
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, slot0.onIndicatorChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, arg_2_0.onIndicatorChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnIndicatorChange, slot0.onIndicatorChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnIndicatorChange, arg_3_0.onIndicatorChange, arg_3_0)
 end
 
-function slot0.checkNeedInitFightSuccIndicator(slot0)
-	slot1 = 8
-	slot3 = FightModel.instance:getFightParam() and slot2.episodeId
-	slot4 = slot3 and DungeonConfig.instance:getEpisodeCO(slot3)
-	slot5 = slot3 and DungeonConfig.instance:getEpisodeCondition(slot3)
-	slot6 = slot5 and FightStrUtil.instance:getSplitString2Cache(slot5, false, "|", "#")
+function var_0_0.checkNeedInitFightSuccIndicator(arg_4_0)
+	local var_4_0 = 8
+	local var_4_1 = FightModel.instance:getFightParam()
+	local var_4_2 = var_4_1 and var_4_1.episodeId
+	local var_4_3
+
+	var_4_3 = var_4_2 and DungeonConfig.instance:getEpisodeCO(var_4_2)
+
+	local var_4_4 = var_4_2 and DungeonConfig.instance:getEpisodeCondition(var_4_2)
+	local var_4_5 = var_4_4 and FightStrUtil.instance:getSplitString2Cache(var_4_4, false, "|", "#")
 
 	if BossRushController.instance:isInBossRushFight() then
-		slot0:createBehaviour(FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips, 0)
+		arg_4_0:createBehaviour(FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips, 0)
 	elseif VersionActivity1_6DungeonBossModel.instance:isInBossFight() then
-		slot0:createBehaviour(FightEnum.IndicatorId.Act1_6DungeonBoss, 0)
+		arg_4_0:createBehaviour(FightEnum.IndicatorId.Act1_6DungeonBoss, 0)
 	end
 
-	if slot6 then
-		for slot10, slot11 in ipairs(slot6) do
-			if tonumber(slot11[1]) == slot1 then
-				slot0:createBehaviour(tonumber(slot11[2]), tonumber(slot11[3]) or 0)
+	if var_4_5 then
+		for iter_4_0, iter_4_1 in ipairs(var_4_5) do
+			if tonumber(iter_4_1[1]) == var_4_0 then
+				arg_4_0:createBehaviour(tonumber(iter_4_1[2]), tonumber(iter_4_1[3]) or 0)
 
 				return
 			end
@@ -50,37 +55,40 @@ function slot0.checkNeedInitFightSuccIndicator(slot0)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:checkNeedInitFightSuccIndicator()
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:checkNeedInitFightSuccIndicator()
 end
 
-function slot0.createBehaviour(slot0, slot1, slot2)
-	slot4 = nil
+function var_0_0.createBehaviour(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = var_0_0.IndicatorId2Behaviour[arg_6_1]
+	local var_6_1
 
-	if uv0.IndicatorId2Behaviour[slot1] then
-		slot4 = slot3.New()
+	if var_6_0 then
+		var_6_1 = var_6_0.New()
 
-		slot4:initView(slot0, slot1, slot2)
-		slot4:startLoadPrefab()
+		var_6_1:initView(arg_6_0, arg_6_1, arg_6_2)
+		var_6_1:startLoadPrefab()
 
-		slot0.indicatorId2View[slot1] = slot4
+		arg_6_0.indicatorId2View[arg_6_1] = var_6_1
 	else
 		return nil
 	end
 
-	return slot4
+	return var_6_1
 end
 
-function slot0.onIndicatorChange(slot0, slot1)
-	if slot0.indicatorId2View[slot1] or slot0:createBehaviour(slot1) then
-		slot2:onIndicatorChange()
+function var_0_0.onIndicatorChange(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.indicatorId2View[arg_7_1] or arg_7_0:createBehaviour(arg_7_1)
+
+	if var_7_0 then
+		var_7_0:onIndicatorChange()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.indicatorId2View) do
-		slot5:onDestroy()
+function var_0_0.onDestroyView(arg_8_0)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0.indicatorId2View) do
+		iter_8_1:onDestroy()
 	end
 end
 
-return slot0
+return var_0_0

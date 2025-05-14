@@ -1,7 +1,8 @@
-module("modules.audio.AkCallbackEnum", package.seeall)
+﻿module("modules.audio.AkCallbackEnum", package.seeall)
 
-slot0 = _M
-slot0.Type = {
+local var_0_0 = _M
+
+var_0_0.Type = {
 	AK_EndOfEvent = 1,
 	AK_MusicPlaylistSelect = 64,
 	AK_MusicSyncBar = 512,
@@ -29,4 +30,4 @@ slot0.Type = {
 	AK_EndOfDynamicSequenceItem = 2
 }
 
-return slot0
+return var_0_0

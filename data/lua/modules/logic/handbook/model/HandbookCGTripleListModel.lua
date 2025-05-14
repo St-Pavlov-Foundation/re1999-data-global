@@ -1,70 +1,80 @@
-module("modules.logic.handbook.model.HandbookCGTripleListModel", package.seeall)
+﻿module("modules.logic.handbook.model.HandbookCGTripleListModel", package.seeall)
 
-slot0 = class("HandbookCGTripleListModel", MixScrollModel)
+local var_0_0 = class("HandbookCGTripleListModel", MixScrollModel)
 
-function slot0.setCGList(slot0, slot1)
-	slot4 = {}
+function var_0_0.setCGList(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1.cgType
+	local var_1_1 = arg_1_1.cgList
+	local var_1_2 = {}
+	local var_1_3
+	local var_1_4
 
-	for slot10, slot11 in ipairs(slot1.cgList) do
-		if HandbookModel.instance:isCGUnlock(slot11.id) then
-			slot12 = slot11.storyChapterId
-			slot6 = nil or {}
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		if HandbookModel.instance:isCGUnlock(iter_1_1.id) then
+			local var_1_5 = iter_1_1.storyChapterId
 
-			if not slot5 or slot5 ~= slot12 then
-				if #slot6 > 0 then
-					slot13 = HandbookCGTripleMO.New()
+			var_1_4 = var_1_4 or {}
 
-					slot13:init({
-						cgList = slot6,
-						cgType = slot1.cgType
+			if not var_1_3 or var_1_3 ~= var_1_5 then
+				if #var_1_4 > 0 then
+					local var_1_6 = HandbookCGTripleMO.New()
+
+					var_1_6:init({
+						cgList = var_1_4,
+						cgType = var_1_0
 					})
-					table.insert(slot4, slot13)
+					table.insert(var_1_2, var_1_6)
 
-					slot6 = {}
+					var_1_4 = {}
 				end
 
-				slot13 = HandbookCGTripleMO.New()
+				local var_1_7 = HandbookCGTripleMO.New()
 
-				slot13:init({
+				var_1_7:init({
 					isTitle = true,
-					storyChapterId = slot12
+					storyChapterId = var_1_5
 				})
-				table.insert(slot4, slot13)
+				table.insert(var_1_2, var_1_7)
 			end
 
-			if slot11.preCgId == 0 then
-				table.insert(slot6, slot11)
+			if iter_1_1.preCgId == 0 then
+				table.insert(var_1_4, iter_1_1)
 			end
 
-			slot5 = slot12
+			var_1_3 = var_1_5
 		end
 
-		if slot6 and #slot6 >= 3 or slot10 == #slot3 and slot6 and #slot6 > 0 then
-			slot12 = HandbookCGTripleMO.New()
+		if var_1_4 and #var_1_4 >= 3 or iter_1_0 == #var_1_1 and var_1_4 and #var_1_4 > 0 then
+			local var_1_8 = HandbookCGTripleMO.New()
 
-			slot12:init({
-				cgList = slot6,
-				cgType = slot2
+			var_1_8:init({
+				cgList = var_1_4,
+				cgType = var_1_0
 			})
-			table.insert(slot4, slot12)
+			table.insert(var_1_2, var_1_8)
 
-			slot6 = nil
+			var_1_4 = nil
 		end
 	end
 
-	slot0:setList(slot4)
+	arg_1_0:setList(var_1_2)
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getInfoList(arg_2_0, arg_2_1)
+	local var_2_0 = {}
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot7.isTitle and 0 or 1, slot8 and 90 or 298, nil))
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0:getList()) do
+		local var_2_1 = iter_2_1.isTitle
+		local var_2_2 = var_2_1 and 0 or 1
+		local var_2_3 = var_2_1 and 90 or 298
+		local var_2_4 = SLFramework.UGUI.MixCellInfo.New(var_2_2, var_2_3, nil)
+
+		table.insert(var_2_0, var_2_4)
 	end
 
-	return slot2
+	return var_2_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,115 +1,135 @@
-module("modules.logic.handbook.view.HandbookCGItem", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookCGItem", package.seeall)
 
-slot0 = class("HandbookCGItem", ListScrollCellExtend)
+local var_0_0 = class("HandbookCGItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gotitle = gohelper.findChild(slot0.viewGO, "#go_title")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "#go_title/#txt_time")
-	slot0._txtmessycodetime = gohelper.findChildText(slot0.viewGO, "#go_title/#txt_messycodetime")
-	slot0._txttitleName = gohelper.findChildText(slot0.viewGO, "#go_title/#txt_titleName")
-	slot0._txttitleNameEN = gohelper.findChildText(slot0.viewGO, "#go_title/#txt_titleNameEN")
-	slot0._gocg = gohelper.findChild(slot0.viewGO, "#go_cg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_time")
+	arg_1_0._txtmessycodetime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_messycodetime")
+	arg_1_0._txttitleName = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_titleName")
+	arg_1_0._txttitleNameEN = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_titleNameEN")
+	arg_1_0._gocg = gohelper.findChild(arg_1_0.viewGO, "#go_cg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot4 = HandbookEvent.OnReadInfoChanged
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:addEventCb(HandbookController.instance, HandbookEvent.OnReadInfoChanged, arg_4_0._onReadInfoChanged, arg_4_0)
 
-	slot0:addEventCb(HandbookController.instance, slot4, slot0._onReadInfoChanged, slot0)
+	arg_4_0._cgItemList = {}
 
-	slot0._cgItemList = {}
+	for iter_4_0 = 1, 3 do
+		local var_4_0 = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0._gocg, "go_cg" .. slot4)
-		slot5.simagecgicon = gohelper.findChildSingleImage(slot5.go, "mask/simage_cgicon")
-		slot5.gonew = gohelper.findChild(slot5.go, "go_new")
-		slot5.btnclick = gohelper.findChildButtonWithAudio(slot5.go, "btn_click", AudioEnum.UI.play_ui_screenplay_photo_open)
+		var_4_0.go = gohelper.findChild(arg_4_0._gocg, "go_cg" .. iter_4_0)
+		var_4_0.simagecgicon = gohelper.findChildSingleImage(var_4_0.go, "mask/simage_cgicon")
+		var_4_0.gonew = gohelper.findChild(var_4_0.go, "go_new")
+		var_4_0.btnclick = gohelper.findChildButtonWithAudio(var_4_0.go, "btn_click", AudioEnum.UI.play_ui_screenplay_photo_open)
 
-		slot5.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot4)
-		table.insert(slot0._cgItemList, slot5)
+		var_4_0.btnclick:AddClickListener(arg_4_0._btnclickOnClick, arg_4_0, iter_4_0)
+		table.insert(arg_4_0._cgItemList, var_4_0)
 	end
 end
 
-function slot0._btnclickOnClick(slot0, slot1)
-	if slot0._mo.isTitle then
+function var_0_0._btnclickOnClick(arg_5_0, arg_5_1)
+	if arg_5_0._mo.isTitle then
 		return
 	end
 
-	if not slot0._mo.cgList[slot1] then
+	local var_5_0 = arg_5_0._mo.cgList[arg_5_1]
+
+	if not var_5_0 then
 		return
 	end
 
 	HandbookController.instance:openCGDetailView({
-		id = slot4.id,
-		cgType = slot0._cgType
+		id = var_5_0.id,
+		cgType = arg_5_0._cgType
 	})
-	gohelper.setActive(slot0._cgItemList[slot1].gonew, false)
+
+	local var_5_1 = arg_5_0._cgItemList[arg_5_1]
+
+	gohelper.setActive(var_5_1.gonew, false)
 end
 
-function slot0._refreshUI(slot0)
-	gohelper.setActive(slot0._gotitle, slot0._mo.isTitle)
-	gohelper.setActive(slot0._gocg, not slot0._mo.isTitle)
+function var_0_0._refreshUI(arg_6_0)
+	gohelper.setActive(arg_6_0._gotitle, arg_6_0._mo.isTitle)
+	gohelper.setActive(arg_6_0._gocg, not arg_6_0._mo.isTitle)
 
-	if slot0._mo.isTitle then
-		slot2 = HandbookConfig.instance:getStoryChapterConfig(slot0._mo.storyChapterId)
-		slot0._txttitleName.text = slot2.name
-		slot0._txttitleNameEN.text = slot2.nameEn
-		slot3 = GameUtil.utf8isnum(slot2.year)
+	if arg_6_0._mo.isTitle then
+		local var_6_0 = arg_6_0._mo.storyChapterId
+		local var_6_1 = HandbookConfig.instance:getStoryChapterConfig(var_6_0)
 
-		gohelper.setActive(slot0._txttime.gameObject, slot3)
-		gohelper.setActive(slot0._txtmessycodetime.gameObject, not slot3)
+		arg_6_0._txttitleName.text = var_6_1.name
+		arg_6_0._txttitleNameEN.text = var_6_1.nameEn
 
-		slot0._txttime.text = slot3 and slot2.year or ""
-		slot0._txtmessycodetime.text = slot3 and "" or slot2.year
+		local var_6_2 = GameUtil.utf8isnum(var_6_1.year)
+
+		gohelper.setActive(arg_6_0._txttime.gameObject, var_6_2)
+		gohelper.setActive(arg_6_0._txtmessycodetime.gameObject, not var_6_2)
+
+		arg_6_0._txttime.text = var_6_2 and var_6_1.year or ""
+		arg_6_0._txtmessycodetime.text = var_6_2 and "" or var_6_1.year
 	else
-		for slot5, slot6 in ipairs(slot0._mo.cgList) do
-			slot7 = slot0._cgItemList[slot5]
+		local var_6_3 = arg_6_0._mo.cgList
 
-			slot7.simagecgicon:LoadImage(ResUrl.getStorySmallBg(slot6.image))
-			gohelper.setActive(slot7.gonew, not HandbookModel.instance:isRead(HandbookEnum.Type.CG, slot6.id))
-			gohelper.setActive(slot7.go, true)
+		for iter_6_0, iter_6_1 in ipairs(var_6_3) do
+			local var_6_4 = arg_6_0._cgItemList[iter_6_0]
+
+			var_6_4.simagecgicon:LoadImage(ResUrl.getStorySmallBg(iter_6_1.image))
+
+			local var_6_5 = HandbookModel.instance:isRead(HandbookEnum.Type.CG, iter_6_1.id)
+
+			gohelper.setActive(var_6_4.gonew, not var_6_5)
+			gohelper.setActive(var_6_4.go, true)
 		end
 
-		for slot5 = #slot1 + 1, 3 do
-			gohelper.setActive(slot0._cgItemList[slot5].go, false)
+		for iter_6_2 = #var_6_3 + 1, 3 do
+			local var_6_6 = arg_6_0._cgItemList[iter_6_2]
+
+			gohelper.setActive(var_6_6.go, false)
 		end
 	end
 end
 
-function slot0._onReadInfoChanged(slot0, slot1)
-	if slot0._mo.isTitle then
+function var_0_0._onReadInfoChanged(arg_7_0, arg_7_1)
+	if arg_7_0._mo.isTitle then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot0._mo.cgList) do
-		if slot8.id == slot1.id and slot1.type == HandbookEnum.Type.CG then
-			gohelper.setActive(slot0._cgItemList[slot7].gonew, not slot1.isRead)
+	local var_7_0 = arg_7_0._mo.cgList
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.id == arg_7_1.id and arg_7_1.type == HandbookEnum.Type.CG then
+			local var_7_1 = arg_7_0._cgItemList[iter_7_0]
+
+			gohelper.setActive(var_7_1.gonew, not arg_7_1.isRead)
 		end
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._cgType = slot1.cgType
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0._mo = arg_8_1
+	arg_8_0._cgType = arg_8_1.cgType
 
-	slot0:_refreshUI()
+	arg_8_0:_refreshUI()
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in ipairs(slot0._cgItemList) do
-		slot5.simagecgicon:UnLoadImage()
-		slot5.btnclick:RemoveClickListener()
+function var_0_0.onDestroy(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._cgItemList) do
+		iter_9_1.simagecgicon:UnLoadImage()
+		iter_9_1.btnclick:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,57 +1,65 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotController", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotController", package.seeall)
 
-slot0 = class("V1a6_CachotController", BaseController)
+local var_0_0 = class("V1a6_CachotController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0.needShowCureEffect = nil
-	slot0.heartNum = nil
-	slot0.cureAddHp = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.needShowCureEffect = nil
+	arg_1_0.heartNum = nil
+	arg_1_0.cureAddHp = nil
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0.needShowCureEffect = nil
-	slot0.heartNum = nil
-	slot0.cureAddHp = nil
+function var_0_0.reInit(arg_4_0)
+	arg_4_0.needShowCureEffect = nil
+	arg_4_0.heartNum = nil
+	arg_4_0.cureAddHp = nil
 end
 
-function slot0.enterMap(slot0, slot1)
+function var_0_0.enterMap(arg_5_0, arg_5_1)
 	if V1a6_CachotModel.instance:isInRogue() then
-		if not V1a6_CachotModel.instance:getRogueInfo() then
+		local var_5_0 = V1a6_CachotModel.instance:getRogueInfo()
+
+		if not var_5_0 then
 			RogueRpc.instance:sendGetRogueInfoRequest(V1a6_CachotEnum.ActivityId)
 		else
-			if V1a6_CachotRoomModel.instance:getNowBattleEventMo() and not slot3:isBattleSuccess() and slot3:getRetries() > 0 then
-				slot4 = lua_rogue_event_fight.configDict[slot3:getEventCo().eventId]
+			local var_5_1 = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
 
-				DungeonModel.instance:SetSendChapterEpisodeId(nil, slot4.episode)
-				FightController.instance:setFightParamByEpisodeId(slot4.episode, false, 1)
+			if var_5_1 and not var_5_1:isBattleSuccess() and var_5_1:getRetries() > 0 then
+				local var_5_2 = lua_rogue_event_fight.configDict[var_5_1:getEventCo().eventId]
+
+				DungeonModel.instance:SetSendChapterEpisodeId(nil, var_5_2.episode)
+				FightController.instance:setFightParamByEpisodeId(var_5_2.episode, false, 1)
 				V1a6_CachotHeroGroupModel.instance:clear()
 				V1a6_CachotHeroSingleGroupModel.instance:setMaxHeroCount(V1a6_CachotEnum.HeroCountInGroup)
 				V1a6_CachotHeroGroupModel.instance:onGetHeroGroupList(V1a6_CachotModel.instance:getTeamInfo():getGroupInfos())
 				V1a6_CachotHeroGroupModel.instance:updateGroupIndex()
-				slot0:setFightHeroGroup()
+				arg_5_0:setFightHeroGroup()
 
-				slot5 = FightModel.instance:getFightParam()
+				local var_5_3 = FightModel.instance:getFightParam()
 
-				DungeonFightController.instance:sendStartDungeonRequest(slot5.chapterId, slot5.episodeId, slot5, 1)
+				DungeonFightController.instance:sendStartDungeonRequest(var_5_3.chapterId, var_5_3.episodeId, var_5_3, 1)
 
 				return
 			end
 
 			if V1a6_CachotRoomModel.instance:getLayerIsChange() then
 				GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingCachotChangeView)
-			elseif not slot1 then
+			elseif not arg_5_1 then
 				GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingCachotView)
 			end
 
-			AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Cachot, V1a6_CachotEventConfig.instance:getBgmIdByLayer(slot2.layer))
+			local var_5_4 = V1a6_CachotEventConfig.instance:getBgmIdByLayer(var_5_0.layer)
+
+			AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Cachot, var_5_4)
 			V1a6_CachotRoomModel.instance:clearRoomChangeStatus()
-			GameSceneMgr.instance:startScene(SceneType.Cachot, 90001, V1a6_CachotConfig.instance:getSceneLevelId(slot2.sceneId), true, true)
+			GameSceneMgr.instance:startScene(SceneType.Cachot, 90001, V1a6_CachotConfig.instance:getSceneLevelId(var_5_0.sceneId), true, true)
 		end
 	else
 		AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Cachot, AudioEnum.Bgm.CachotMainScene)
@@ -59,12 +67,12 @@ function slot0.enterMap(slot0, slot1)
 	end
 end
 
-function slot0.abandonGame(slot0)
+function var_0_0.abandonGame(arg_6_0)
 	V1a6_CachotStatController.instance:statReset()
 	RogueRpc.instance:sendAbortRogueRequest(V1a6_CachotEnum.ActivityId)
 end
 
-function slot0.checkRogueStateInfo(slot0)
+function var_0_0.checkRogueStateInfo(arg_7_0)
 	if V1a6_CachotModel.instance:getRogueStateInfo() then
 		return
 	end
@@ -72,200 +80,214 @@ function slot0.checkRogueStateInfo(slot0)
 	RogueRpc.instance:sendGetRogueStateRequest()
 end
 
-function slot0.openRoom(slot0)
-	uv0.instance:openV1a6_CachotRoomView()
-	slot0:enterMap()
+function var_0_0.openRoom(arg_8_0)
+	var_0_0.instance:openV1a6_CachotRoomView()
+	arg_8_0:enterMap()
 end
 
-function slot0.openV1a6_CachotEnterView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotEnterView, slot1, slot2)
+function var_0_0.openV1a6_CachotEnterView(arg_9_0, arg_9_1, arg_9_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotEnterView, arg_9_1, arg_9_2)
 end
 
-function slot0.openV1a6_CachotMainView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotMainView, slot1, slot2)
+function var_0_0.openV1a6_CachotMainView(arg_10_0, arg_10_1, arg_10_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotMainView, arg_10_1, arg_10_2)
 end
 
-function slot0.openV1a6_CachotRoomView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotRoomView, slot1, slot2)
+function var_0_0.openV1a6_CachotRoomView(arg_11_0, arg_11_1, arg_11_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotRoomView, arg_11_1, arg_11_2)
 end
 
-function slot0.openV1a6_CachotCollectionView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionView(arg_12_0, arg_12_1, arg_12_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionView, arg_12_1, arg_12_2)
 end
 
-function slot0.openV1a6_CachotDifficultyView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotDifficultyView, slot1, slot2)
+function var_0_0.openV1a6_CachotDifficultyView(arg_13_0, arg_13_1, arg_13_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotDifficultyView, arg_13_1, arg_13_2)
 end
 
-function slot0.openV1a6_CachotResultView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotResultView, slot1, slot2)
+function var_0_0.openV1a6_CachotResultView(arg_14_0, arg_14_1, arg_14_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotResultView, arg_14_1, arg_14_2)
 end
 
-function slot0.openV1a6_CachotFinishView(slot0, slot1, slot2)
-	if not V1a6_CachotModel.instance:getRogueEndingInfo() or slot3:isEnterEndingFlow() then
+function var_0_0.openV1a6_CachotFinishView(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = V1a6_CachotModel.instance:getRogueEndingInfo()
+
+	if not var_15_0 or var_15_0:isEnterEndingFlow() then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.V1a6_CachotFinishView, slot1, slot2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotFinishView, arg_15_1, arg_15_2)
 end
 
-function slot0.openV1a6_CachotProgressView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotProgressView, slot1, slot2)
+function var_0_0.openV1a6_CachotProgressView(arg_16_0, arg_16_1, arg_16_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotProgressView, arg_16_1, arg_16_2)
 end
 
-function slot0.setFightHeroGroup(slot0)
-	if not FightModel.instance:getFightParam() then
+function var_0_0.setFightHeroGroup(arg_17_0)
+	local var_17_0 = FightModel.instance:getFightParam()
+
+	if not var_17_0 then
 		return false
 	end
 
-	if not V1a6_CachotHeroGroupModel.instance:getCurGroupMO() then
+	local var_17_1 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+
+	if not var_17_1 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	slot3, slot4 = slot2:getMainList()
-	slot5, slot6 = slot2:getSubList()
+	local var_17_2, var_17_3 = var_17_1:getMainList()
+	local var_17_4, var_17_5 = var_17_1:getSubList()
 
-	if (not slot2.aidDict or #slot2.aidDict <= 0) and slot4 + slot6 == 0 then
+	if (not var_17_1.aidDict or #var_17_1.aidDict <= 0) and var_17_3 + var_17_5 == 0 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	slot8 = slot1.battleId and lua_battle.configDict[slot7]
+	local var_17_6 = var_17_0.battleId
+	local var_17_7 = var_17_6 and lua_battle.configDict[var_17_6]
+	local var_17_8 = var_17_7 and var_17_7.noClothSkill == 0 and var_17_1.clothId or 0
 
-	slot1:setMySide(slot8 and slot8.noClothSkill == 0 and slot2.clothId or 0, slot3, slot2:getSubList(), slot2:getAllHeroEquips(), slot2:getAllHeroActivity104Equips())
+	var_17_0:setMySide(var_17_8, var_17_2, var_17_1:getSubList(), var_17_1:getAllHeroEquips(), var_17_1:getAllHeroActivity104Equips())
 
 	return true
 end
 
-function slot0._initHeroSingleGroupModel(slot0)
+function var_0_0._initHeroSingleGroupModel(arg_18_0)
 	V1a6_CachotHeroSingleGroupModel.instance:setMaxHeroCount(V1a6_CachotEnum.HeroCountInGroup)
 	V1a6_CachotHeroGroupModel.instance:clear()
 
-	slot1 = V1a6_CachotModel.instance:getTeamInfo()
+	local var_18_0 = V1a6_CachotModel.instance:getTeamInfo()
 
-	V1a6_CachotHeroGroupModel.instance:onGetHeroGroupList(slot1.groupInfos)
-	V1a6_CachotHeroGroupModel.instance:setCurGroupId(slot1.groupIdx)
+	V1a6_CachotHeroGroupModel.instance:onGetHeroGroupList(var_18_0.groupInfos)
+	V1a6_CachotHeroGroupModel.instance:setCurGroupId(var_18_0.groupIdx)
 end
 
-function slot0.selectHeroFromEvent(slot0, slot1)
+function var_0_0.selectHeroFromEvent(arg_19_0, arg_19_1)
 	V1a6_CachotHeroGroupModel.instance:clear()
 
-	slot3 = V1a6_CachotModel.instance:getTeamInfo():getAllHeroUids()
-	slot4 = V1a6_CachotHeroGroupMO.New()
+	local var_19_0 = V1a6_CachotModel.instance:getTeamInfo():getAllHeroUids()
+	local var_19_1 = V1a6_CachotHeroGroupMO.New()
 
-	slot4:setMaxHeroCount(#slot3)
-	slot4:init({
-		groupId = 1,
-		heroList = slot3
+	var_19_1:setMaxHeroCount(#var_19_0)
+
+	local var_19_2 = 1
+
+	var_19_1:init({
+		groupId = var_19_2,
+		heroList = var_19_0
 	})
-	V1a6_CachotHeroSingleGroupModel.instance:setMaxHeroCount(#slot3)
-	V1a6_CachotHeroSingleGroupModel.instance:setSingleGroup(slot4)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotHeroGroupEditView, {
-		singleGroupMOId = 1,
-		originalHeroUid = "0",
-		equips = {
-			"0"
-		},
-		hideCancel = true,
-		selectHeroFromEvent = true,
-		heroGroupEditType = V1a6_CachotEnum.HeroGroupEditType.Event,
-		eventMo = slot1
-	})
+	V1a6_CachotHeroSingleGroupModel.instance:setMaxHeroCount(#var_19_0)
+	V1a6_CachotHeroSingleGroupModel.instance:setSingleGroup(var_19_1)
+
+	local var_19_3 = {}
+
+	var_19_3.singleGroupMOId = 1
+	var_19_3.originalHeroUid = "0"
+	var_19_3.equips = {
+		"0"
+	}
+	var_19_3.hideCancel = true
+	var_19_3.selectHeroFromEvent = true
+	var_19_3.heroGroupEditType = V1a6_CachotEnum.HeroGroupEditType.Event
+	var_19_3.eventMo = arg_19_1
+
+	ViewMgr.instance:openView(ViewName.V1a6_CachotHeroGroupEditView, var_19_3)
 end
 
-function slot0.openV1a6_CachotTeamView(slot0, slot1, slot2)
-	if slot1 and slot1.selectLevel then
-		V1a6_CachotTeamModel.instance:setSelectLevel(slot1.selectLevel)
+function var_0_0.openV1a6_CachotTeamView(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_1 and arg_20_1.selectLevel then
+		V1a6_CachotTeamModel.instance:setSelectLevel(arg_20_1.selectLevel)
 	end
 
-	ViewMgr.instance:openView(ViewName.V1a6_CachotTeamView, slot1, slot2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotTeamView, arg_20_1, arg_20_2)
 end
 
-function slot0.openV1a6_CachotTeamPreView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotTeamPreView, slot1, slot2)
+function var_0_0.openV1a6_CachotTeamPreView(arg_21_0, arg_21_1, arg_21_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotTeamPreView, arg_21_1, arg_21_2)
 end
 
-function slot0.openV1a6_CachotLoadingView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotLoadingView, slot1, slot2)
+function var_0_0.openV1a6_CachotLoadingView(arg_22_0, arg_22_1, arg_22_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotLoadingView, arg_22_1, arg_22_2)
 end
 
-function slot0.openV1a6_CachotRoleRevivalView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRevivalView, slot1, slot2)
+function var_0_0.openV1a6_CachotRoleRevivalView(arg_23_0, arg_23_1, arg_23_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRevivalView, arg_23_1, arg_23_2)
 end
 
-function slot0.openV1a6_CachotRoleRevivalResultView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRevivalResultView, slot1, slot2)
+function var_0_0.openV1a6_CachotRoleRevivalResultView(arg_24_0, arg_24_1, arg_24_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRevivalResultView, arg_24_1, arg_24_2)
 end
 
-function slot0.openV1a6_CachotRoleRecoverView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRecoverView, slot1, slot2)
+function var_0_0.openV1a6_CachotRoleRecoverView(arg_25_0, arg_25_1, arg_25_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRecoverView, arg_25_1, arg_25_2)
 end
 
-function slot0.openV1a6_CachotRoleRecoverResultView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRecoverResultView, slot1, slot2)
+function var_0_0.openV1a6_CachotRoleRecoverResultView(arg_26_0, arg_26_1, arg_26_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotRoleRecoverResultView, arg_26_1, arg_26_2)
 end
 
-function slot0.openV1a6_CachotUpgradeView(slot0, slot1, slot2)
-	slot0:_initHeroSingleGroupModel()
-	ViewMgr.instance:openView(ViewName.V1a6_CachotUpgradeView, slot1, slot2)
+function var_0_0.openV1a6_CachotUpgradeView(arg_27_0, arg_27_1, arg_27_2)
+	arg_27_0:_initHeroSingleGroupModel()
+	ViewMgr.instance:openView(ViewName.V1a6_CachotUpgradeView, arg_27_1, arg_27_2)
 end
 
-function slot0.openV1a6_CachotUpgradeResultView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotUpgradeResultView, slot1, slot2)
+function var_0_0.openV1a6_CachotUpgradeResultView(arg_28_0, arg_28_1, arg_28_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotUpgradeResultView, arg_28_1, arg_28_2)
 end
 
-function slot0.openV1a6_CachotEquipInfoTeamShowView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotEquipInfoTeamShowView, slot1, slot2)
+function var_0_0.openV1a6_CachotEquipInfoTeamShowView(arg_29_0, arg_29_1, arg_29_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotEquipInfoTeamShowView, arg_29_1, arg_29_2)
 end
 
-function slot0.openV1a6_CachotEndingView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotEndingView, slot1, slot2)
+function var_0_0.openV1a6_CachotEndingView(arg_30_0, arg_30_1, arg_30_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotEndingView, arg_30_1, arg_30_2)
 end
 
-function slot0.openV1a6_CachotCollectionBagView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionBagView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionBagView(arg_31_0, arg_31_1, arg_31_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionBagView, arg_31_1, arg_31_2)
 end
 
-function slot0.openV1a6_CachotCollectionUnlockedView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionUnlockedView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionUnlockedView(arg_32_0, arg_32_1, arg_32_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionUnlockedView, arg_32_1, arg_32_2)
 end
 
-function slot0.openV1a6_CachotCollectionOverView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionOverView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionOverView(arg_33_0, arg_33_1, arg_33_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionOverView, arg_33_1, arg_33_2)
 end
 
-function slot0.openV1a6_CachotStoreView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotStoreView, slot1, slot2)
+function var_0_0.openV1a6_CachotStoreView(arg_34_0, arg_34_1, arg_34_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotStoreView, arg_34_1, arg_34_2)
 end
 
-function slot0.openV1a6_CachotTipsView(slot0, slot1, slot2)
+function var_0_0.openV1a6_CachotTipsView(arg_35_0, arg_35_1, arg_35_2)
 	V1a6_CachotEventController.instance:setPause(true, V1a6_CachotEnum.EventPauseType.Tips)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotTipsView, slot1, slot2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotTipsView, arg_35_1, arg_35_2)
 end
 
-function slot0.openV1a6_CachotEpisodeView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotEpisodeView, slot1, slot2)
+function var_0_0.openV1a6_CachotEpisodeView(arg_36_0, arg_36_1, arg_36_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotEpisodeView, arg_36_1, arg_36_2)
 end
 
-function slot0.openV1a6_CachotCollectionEnchantView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionEnchantView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionEnchantView(arg_37_0, arg_37_1, arg_37_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionEnchantView, arg_37_1, arg_37_2)
 end
 
-function slot0.openV1a6_CachotCollectionGetView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionGetView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionGetView(arg_38_0, arg_38_1, arg_38_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionGetView, arg_38_1, arg_38_2)
 end
 
-function slot0.openV1a6_CachotCollectionSelectView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionSelectView, slot1, slot2)
+function var_0_0.openV1a6_CachotCollectionSelectView(arg_39_0, arg_39_1, arg_39_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotCollectionSelectView, arg_39_1, arg_39_2)
 end
 
-function slot0.openV1a6_CachotRewardView(slot0, slot1, slot2)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotRewardView, slot1, slot2)
+function var_0_0.openV1a6_CachotRewardView(arg_40_0, arg_40_1, arg_40_2)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotRewardView, arg_40_1, arg_40_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

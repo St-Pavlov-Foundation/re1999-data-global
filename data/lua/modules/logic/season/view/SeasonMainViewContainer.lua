@@ -1,100 +1,102 @@
-module("modules.logic.season.view.SeasonMainViewContainer", package.seeall)
+﻿module("modules.logic.season.view.SeasonMainViewContainer", package.seeall)
 
-slot0 = class("SeasonMainViewContainer", BaseViewContainer)
+local var_0_0 = class("SeasonMainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.scene = SeasonMainScene.New()
-	slot0.view = SeasonMainView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.scene)
-	table.insert(slot1, slot0.view)
-	table.insert(slot1, TabViewGroup.New(1, "top_left"))
+	arg_1_0.scene = SeasonMainScene.New()
+	arg_1_0.view = SeasonMainView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.scene)
+	table.insert(var_1_0, arg_1_0.view)
+	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+
+	return var_1_0
 end
 
-function slot0.getScene(slot0)
-	return slot0.scene
+function var_0_0.getScene(arg_2_0)
+	return arg_2_0.scene
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	arg_3_0._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
-	}, 100, slot0._closeCallback, slot0._homeCallback, nil, slot0)
+	}, 100, arg_3_0._closeCallback, arg_3_0._homeCallback, nil, arg_3_0)
 
-	slot0._navigateButtonView:setOverrideClose(slot0._overrideClose, slot0)
-	slot0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season1_2MainViewHelp)
+	arg_3_0._navigateButtonView:setOverrideClose(arg_3_0._overrideClose, arg_3_0)
+	arg_3_0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season1_2MainViewHelp)
 
 	return {
-		slot0._navigateButtonView
+		arg_3_0._navigateButtonView
 	}
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_4_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivityEnum.ActivityId.Act104)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivityEnum.ActivityId.Act104
 	})
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0._navigateButtonView:resetOnCloseViewAudio()
+function var_0_0.onContainerOpenFinish(arg_5_0)
+	arg_5_0._navigateButtonView:resetOnCloseViewAudio()
 end
 
-function slot0._closeCallback(slot0)
+function var_0_0._closeCallback(arg_6_0)
+	return
 end
 
-function slot0._homeCallback(slot0)
-	slot0:closeThis()
+function var_0_0._homeCallback(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0.stopUI(slot0)
-	slot0:setVisibleInternal(true)
+function var_0_0.stopUI(arg_8_0)
+	arg_8_0:setVisibleInternal(true)
 
-	slot0._anim.speed = 0
-	slot0._animRetail.speed = 0
+	arg_8_0._anim.speed = 0
+	arg_8_0._animRetail.speed = 0
 
-	slot0.view:activeMask(true)
+	arg_8_0.view:activeMask(true)
 end
 
-function slot0.playUI(slot0)
-	slot0:setVisibleInternal(true)
+function var_0_0.playUI(arg_9_0)
+	arg_9_0:setVisibleInternal(true)
 
-	slot0._anim.speed = 1
-	slot0._animRetail.speed = 1
+	arg_9_0._anim.speed = 1
+	arg_9_0._animRetail.speed = 1
 
-	slot0.view:activeMask(false)
+	arg_9_0.view:activeMask(false)
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	if not slot0.viewGO then
+function var_0_0.setVisibleInternal(arg_10_0, arg_10_1)
+	if not arg_10_0.viewGO then
 		return
 	end
 
-	if not slot0._anim then
-		slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	if not arg_10_0._anim then
+		arg_10_0._anim = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if slot1 then
-		slot0:_setVisible(true)
-		slot0._anim:Play(UIAnimationName.Switch, 0, 0)
+	if arg_10_1 then
+		arg_10_0:_setVisible(true)
+		arg_10_0._anim:Play(UIAnimationName.Switch, 0, 0)
 
-		if not slot0._animRetail then
-			slot0._animRetail = gohelper.findChild(slot0.viewGO, "rightbtns/#go_retail"):GetComponent(typeof(UnityEngine.Animator))
+		if not arg_10_0._animRetail then
+			arg_10_0._animRetail = gohelper.findChild(arg_10_0.viewGO, "rightbtns/#go_retail"):GetComponent(typeof(UnityEngine.Animator))
 		end
 
-		slot0._animRetail:Play(UIAnimationName.Switch, 0, 0)
+		arg_10_0._animRetail:Play(UIAnimationName.Switch, 0, 0)
 
-		if slot0.scene then
-			slot0.scene:initCamera()
+		if arg_10_0.scene then
+			arg_10_0.scene:initCamera()
 		end
 	else
-		slot0:_setVisible(false)
-		slot0._anim:Play(UIAnimationName.Close)
+		arg_10_0:_setVisible(false)
+		arg_10_0._anim:Play(UIAnimationName.Close)
 	end
 end
 
-return slot0
+return var_0_0

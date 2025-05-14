@@ -1,18 +1,18 @@
-module("modules.logic.fight.system.work.FightWorkSendEvent", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSendEvent", package.seeall)
 
-slot0 = class("FightWorkSendEvent", FightWorkItem)
+local var_0_0 = class("FightWorkSendEvent", FightWorkItem)
 
-function slot0.onAwake(slot0, slot1, ...)
-	slot0._eventName = slot1
-	slot0._param = {
+function var_0_0.onAwake(arg_1_0, arg_1_1, ...)
+	arg_1_0._eventName = arg_1_1
+	arg_1_0._param = {
 		...
 	}
-	slot0._paramCount = select("#", ...)
+	arg_1_0._paramCount = select("#", ...)
 end
 
-function slot0.onStart(slot0)
-	slot0:com_sendFightEvent(slot0._eventName, unpack(slot0._param, 1, slot0._paramCount))
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:com_sendFightEvent(arg_2_0._eventName, unpack(arg_2_0._param, 1, arg_2_0._paramCount))
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

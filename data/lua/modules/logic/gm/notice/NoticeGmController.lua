@@ -1,86 +1,93 @@
-module("modules.logic.gm.notice.NoticeGmController", package.seeall)
+﻿module("modules.logic.gm.notice.NoticeGmController", package.seeall)
 
-slot0 = NoticeController
+local var_0_0 = NoticeController
 
-function slot0.active()
+function var_0_0.active()
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.onOpenView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0.onCloseView, arg_2_0)
 end
 
-function slot0.onOpenView(slot0, slot1)
+function var_0_0.onOpenView(arg_3_0, arg_3_1)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	if slot1 == ViewName.NoticeView then
-		NoticeGmView.showGmView(ViewMgr.instance:getContainer(ViewName.NoticeView).viewGO)
+	local var_3_0 = ViewMgr.instance:getContainer(ViewName.NoticeView)
+
+	if arg_3_1 == ViewName.NoticeView then
+		NoticeGmView.showGmView(var_3_0.viewGO)
 	end
 end
 
-function slot0.onCloseView(slot0, slot1)
+function var_0_0.onCloseView(arg_4_0, arg_4_1)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	if slot1 == ViewName.NoticeView then
+	if arg_4_1 == ViewName.NoticeView then
 		NoticeGmView.closeGmView()
 	end
 end
 
-function slot0.startRequest(slot0, slot1, slot2, slot3)
-	slot0._callback = slot1
-	slot0._callbackObj = slot2
-	slot0._beforeLogin = slot3
+function var_0_0.startRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	arg_5_0._callback = arg_5_1
+	arg_5_0._callbackObj = arg_5_2
+	arg_5_0._beforeLogin = arg_5_3
 
-	slot0:stopRequest()
+	arg_5_0:stopRequest()
 
-	slot5 = GameUrlConfig.getNoticeUrl() .. "/noticecp/client/query" .. slot0:getUrlSuffix()
+	local var_5_0 = (GameUrlConfig.getNoticeUrl() .. "/noticecp/client/query") .. arg_5_0:getUrlSuffix()
 
-	logNormal(string.format("发起公告请求 url : %s", slot5))
+	logNormal(string.format("发起公告请求 url : %s", var_5_0))
 
-	slot0._reqId = SLFramework.SLWebRequest.Instance:Get(slot5, slot0._reqCallback, slot0)
+	arg_5_0._reqId = SLFramework.SLWebRequest.Instance:Get(var_5_0, arg_5_0._reqCallback, arg_5_0)
 end
 
-function slot0.getUrlSuffix(slot0)
-	slot1, slot2, slot3, slot4 = nil
+function var_0_0.getUrlSuffix(arg_6_0)
+	local var_6_0
+	local var_6_1
+	local var_6_2
+	local var_6_3
 
-	if not slot0.sdkType then
-		slot1 = tostring(SDKMgr.instance:getGameId())
-		slot2 = tostring(SDKMgr.instance:getChannelId())
-		slot3 = tostring(SDKMgr.instance:getSubChannelId())
-		slot4 = tostring(GameChannelConfig.getServerType())
+	if not arg_6_0.sdkType then
+		var_6_0 = tostring(SDKMgr.instance:getGameId())
+		var_6_1 = tostring(SDKMgr.instance:getChannelId())
+		var_6_2 = tostring(SDKMgr.instance:getSubChannelId())
+		var_6_3 = tostring(GameChannelConfig.getServerType())
 	else
-		slot5 = NoticeGmDefine.SDKConfig[slot0.sdkType]
-		slot1 = slot5.gameId
-		slot2 = slot5.channelId
-		slot3 = slot5.subChannelId[slot0.subChannelType or NoticeGmDefine.SubChannelType.Android]
-		slot4 = slot0.serverType or NoticeGmDefine.ServerType.Dev
+		local var_6_4 = NoticeGmDefine.SDKConfig[arg_6_0.sdkType]
+
+		var_6_0 = var_6_4.gameId
+		var_6_1 = var_6_4.channelId
+		var_6_2 = var_6_4.subChannelId[arg_6_0.subChannelType or NoticeGmDefine.SubChannelType.Android]
+		var_6_3 = arg_6_0.serverType or NoticeGmDefine.ServerType.Dev
 	end
 
-	return string.format("?gameId=%s&channelId=%s&subChannelId=%s&serverType=%s", slot1, slot2, slot3, slot4)
+	return string.format("?gameId=%s&channelId=%s&subChannelId=%s&serverType=%s", var_6_0, var_6_1, var_6_2, var_6_3)
 end
 
-function slot0.setSdkType(slot0, slot1)
-	slot0.sdkType = slot1
+function var_0_0.setSdkType(arg_7_0, arg_7_1)
+	arg_7_0.sdkType = arg_7_1
 end
 
-function slot0.setSubChannelId(slot0, slot1)
-	slot0.subChannelType = slot1
+function var_0_0.setSubChannelId(arg_8_0, arg_8_1)
+	arg_8_0.subChannelType = arg_8_1
 end
 
-function slot0.setServerType(slot0, slot1)
-	slot0.serverType = slot1
+function var_0_0.setServerType(arg_9_0, arg_9_1)
+	arg_9_0.serverType = arg_9_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
-slot0.instance:__onInit()
-slot0.instance:onInit()
-slot0.instance:onInitFinish()
-slot0.instance:addConstEvents()
+LuaEventSystem.addEventMechanism(var_0_0.instance)
+var_0_0.instance:__onInit()
+var_0_0.instance:onInit()
+var_0_0.instance:onInitFinish()
+var_0_0.instance:addConstEvents()
 
-return slot0
+return var_0_0

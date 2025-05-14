@@ -1,416 +1,444 @@
-module("modules.logic.player.model.PlayerModel", package.seeall)
+﻿module("modules.logic.player.model.PlayerModel", package.seeall)
 
-slot0 = class("PlayerModel", BaseModel)
+local var_0_0 = class("PlayerModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._userId = 0
-	slot0._name = ""
-	slot0._portrait = 0
-	slot0._level = 0
-	slot0._exp = 0
-	slot0._signature = ""
-	slot0._birthday = ""
-	slot0._showHeros = {}
-	slot0._registerTime = 0
-	slot0._lastLoginTime = 0
-	slot0._lastLogoutTime = 0
-	slot0._heroRareNNCount = 0
-	slot0._heroRareNCount = 0
-	slot0._heroRareRCount = 0
-	slot0._heroRareSRCount = 0
-	slot0._heroRareSSRCount = 0
-	slot0._lastEpisodeId = 0
-	slot0._levelup = 0
-	slot0._preCommitFeedBackTime = -1
-	slot0._bg = 0
-	slot0._canRename = false
-	slot0._canRenameFlagMonth = nil
-	slot0._playerInfo = nil
-	slot0._showAchievement = nil
-	slot0._totalLoginDays = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._userId = 0
+	arg_1_0._name = ""
+	arg_1_0._portrait = 0
+	arg_1_0._level = 0
+	arg_1_0._exp = 0
+	arg_1_0._signature = ""
+	arg_1_0._birthday = ""
+	arg_1_0._showHeros = {}
+	arg_1_0._registerTime = 0
+	arg_1_0._lastLoginTime = 0
+	arg_1_0._lastLogoutTime = 0
+	arg_1_0._heroRareNNCount = 0
+	arg_1_0._heroRareNCount = 0
+	arg_1_0._heroRareRCount = 0
+	arg_1_0._heroRareSRCount = 0
+	arg_1_0._heroRareSSRCount = 0
+	arg_1_0._lastEpisodeId = 0
+	arg_1_0._levelup = 0
+	arg_1_0._preCommitFeedBackTime = -1
+	arg_1_0._bg = 0
+	arg_1_0._canRename = false
+	arg_1_0._canRenameFlagMonth = nil
+	arg_1_0._playerInfo = nil
+	arg_1_0._showAchievement = nil
+	arg_1_0._totalLoginDays = 0
 
-	slot0:updateAssistRewardCountData(0, 0, true)
+	arg_1_0:updateAssistRewardCountData(0, 0, true)
 end
 
-function slot0.reInit(slot0)
-	slot0._simpleProperties = {}
-	slot0._playerInfo = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._simpleProperties = {}
+	arg_2_0._playerInfo = nil
 
-	slot0:updateAssistRewardCountData(0, 0, true)
+	arg_2_0:updateAssistRewardCountData(0, 0, true)
 end
 
-function slot0.setPlayerinfo(slot0, slot1)
-	slot3 = slot0._lastEpisodeId
-	slot0._userId = slot1.userId
-	slot0._name = slot1.name
-	slot0._portrait = slot1.portrait
-	slot0._level = slot1.level
-	slot0._exp = slot1.exp
-	slot0._signature = slot1.signature
-	slot0._birthday = slot1.birthday
-	slot0._registerTime = slot1.registerTime
-	slot0._lastLoginTime = slot1.lastLoginTime
-	slot0._lastLogoutTime = slot1.lastLogoutTime
-	slot0._heroRareNNCount = slot1.heroRareNNCount
-	slot0._heroRareNCount = slot1.heroRareNCount
-	slot0._heroRareRCount = slot1.heroRareRCount
-	slot0._heroRareSRCount = slot1.heroRareSRCount
-	slot0._heroRareSSRCount = slot1.heroRareSSRCount
-	slot0._lastEpisodeId = slot1.lastEpisodeId
-	slot0._showAchievement = slot1.showAchievement
-	slot0._bg = slot1.bg
-	slot0._totalLoginDays = slot1.totalLoginDays
+function var_0_0.setPlayerinfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0._level
+	local var_3_1 = arg_3_0._lastEpisodeId
 
-	slot0:_checkHeroinfo(slot1.showHeros)
-	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerinfo, slot1)
+	arg_3_0._userId = arg_3_1.userId
+	arg_3_0._name = arg_3_1.name
+	arg_3_0._portrait = arg_3_1.portrait
+	arg_3_0._level = arg_3_1.level
+	arg_3_0._exp = arg_3_1.exp
+	arg_3_0._signature = arg_3_1.signature
+	arg_3_0._birthday = arg_3_1.birthday
+	arg_3_0._registerTime = arg_3_1.registerTime
+	arg_3_0._lastLoginTime = arg_3_1.lastLoginTime
+	arg_3_0._lastLogoutTime = arg_3_1.lastLogoutTime
+	arg_3_0._heroRareNNCount = arg_3_1.heroRareNNCount
+	arg_3_0._heroRareNCount = arg_3_1.heroRareNCount
+	arg_3_0._heroRareRCount = arg_3_1.heroRareRCount
+	arg_3_0._heroRareSRCount = arg_3_1.heroRareSRCount
+	arg_3_0._heroRareSSRCount = arg_3_1.heroRareSSRCount
+	arg_3_0._lastEpisodeId = arg_3_1.lastEpisodeId
+	arg_3_0._showAchievement = arg_3_1.showAchievement
+	arg_3_0._bg = arg_3_1.bg
+	arg_3_0._totalLoginDays = arg_3_1.totalLoginDays
 
-	if slot0._level < slot0._level and slot2 ~= 0 then
+	arg_3_0:_checkHeroinfo(arg_3_1.showHeros)
+	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerinfo, arg_3_1)
+
+	if var_3_0 < arg_3_0._level and var_3_0 ~= 0 then
 		SDKMgr.instance:upgradeRole(StatModel.instance:generateRoleInfo())
-		PlayerController.instance:dispatchEvent(PlayerEvent.PlayerLevelUp, slot2, slot0._level)
+		PlayerController.instance:dispatchEvent(PlayerEvent.PlayerLevelUp, var_3_0, arg_3_0._level)
 
-		slot0._levelup = slot0._level - slot2
+		arg_3_0._levelup = arg_3_0._level - var_3_0
 	end
 
-	if slot3 ~= 0 and slot0._lastEpisodeId ~= slot3 then
+	if var_3_1 ~= 0 and arg_3_0._lastEpisodeId ~= var_3_1 then
 		SDKMgr.instance:updateRole(StatModel.instance:generateRoleInfo())
 	end
 
 	if OpenConfig.instance:isShowWaterMarkConfig() then
-		slot0:showWaterMark()
+		arg_3_0:showWaterMark()
 	end
 
 	ActivityEnterMgr.instance:init()
 end
 
-function slot0.getAndResetPlayerLevelUp(slot0)
-	slot0._levelup = 0
+function var_0_0.getAndResetPlayerLevelUp(arg_4_0)
+	local var_4_0 = arg_4_0._levelup
 
-	return slot0._levelup
+	arg_4_0._levelup = 0
+
+	return var_4_0
 end
 
-function slot0._checkHeroinfo(slot0, slot1)
-	slot0._showHeros = {}
+function var_0_0._checkHeroinfo(arg_5_0, arg_5_1)
+	arg_5_0._showHeros = {}
 
-	for slot5 = 1, #slot1 do
-		if slot1[slot5].heroId == 0 then
-			slot1[slot5] = 0
+	for iter_5_0 = 1, #arg_5_1 do
+		if arg_5_1[iter_5_0].heroId == 0 then
+			arg_5_1[iter_5_0] = 0
 		end
 
-		table.insert(slot0._showHeros, slot1[slot5])
+		table.insert(arg_5_0._showHeros, arg_5_1[iter_5_0])
 	end
 
-	for slot5 = 1, 3 do
-		if slot5 > #slot0._showHeros then
-			slot0._showHeros[slot5] = 0
+	for iter_5_1 = 1, 3 do
+		if iter_5_1 > #arg_5_0._showHeros then
+			arg_5_0._showHeros[iter_5_1] = 0
 		end
 	end
 end
 
-function slot0.getPlayinfo(slot0)
-	slot0._playerInfo = slot0._playerInfo or {}
-	slot1 = slot0._playerInfo
-	slot1.userId = slot0._userId
-	slot1.name = slot0._name
-	slot1.portrait = slot0._portrait
-	slot1.level = slot0._level
-	slot1.exp = slot0._exp
-	slot1.signature = slot0._signature
-	slot1.birthday = slot0._birthday
-	slot1.showHeros = slot0._showHeros
-	slot1.registerTime = slot0._registerTime
-	slot1.lastLoginTime = slot0._lastLoginTime
-	slot1.lastLogoutTime = slot0._lastLogoutTime
-	slot1.heroRareNNCount = slot0._heroRareNNCount
-	slot1.heroRareNCount = slot0._heroRareNCount
-	slot1.heroRareRCount = slot0._heroRareRCount
-	slot1.heroRareSRCount = slot0._heroRareSRCount
-	slot1.heroRareSSRCount = slot0._heroRareSSRCount
-	slot1.lastEpisodeId = slot0._lastEpisodeId
-	slot1.showAchievement = slot0._showAchievement
-	slot1.bg = slot0._bg
-	slot1.totalLoginDays = slot0._totalLoginDays
+function var_0_0.getPlayinfo(arg_6_0)
+	arg_6_0._playerInfo = arg_6_0._playerInfo or {}
 
-	return slot0._playerInfo
+	local var_6_0 = arg_6_0._playerInfo
+
+	var_6_0.userId = arg_6_0._userId
+	var_6_0.name = arg_6_0._name
+	var_6_0.portrait = arg_6_0._portrait
+	var_6_0.level = arg_6_0._level
+	var_6_0.exp = arg_6_0._exp
+	var_6_0.signature = arg_6_0._signature
+	var_6_0.birthday = arg_6_0._birthday
+	var_6_0.showHeros = arg_6_0._showHeros
+	var_6_0.registerTime = arg_6_0._registerTime
+	var_6_0.lastLoginTime = arg_6_0._lastLoginTime
+	var_6_0.lastLogoutTime = arg_6_0._lastLogoutTime
+	var_6_0.heroRareNNCount = arg_6_0._heroRareNNCount
+	var_6_0.heroRareNCount = arg_6_0._heroRareNCount
+	var_6_0.heroRareRCount = arg_6_0._heroRareRCount
+	var_6_0.heroRareSRCount = arg_6_0._heroRareSRCount
+	var_6_0.heroRareSSRCount = arg_6_0._heroRareSSRCount
+	var_6_0.lastEpisodeId = arg_6_0._lastEpisodeId
+	var_6_0.showAchievement = arg_6_0._showAchievement
+	var_6_0.bg = arg_6_0._bg
+	var_6_0.totalLoginDays = arg_6_0._totalLoginDays
+
+	return arg_6_0._playerInfo
 end
 
-function slot0.getExpNowAndMax(slot0)
-	slot1 = slot0._exp
-	slot2 = 0
+function var_0_0.getExpNowAndMax(arg_7_0)
+	local var_7_0 = arg_7_0._exp
+	local var_7_1 = 0
 
-	if slot0._level < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
-		slot2 = PlayerConfig.instance:getPlayerLevelCO(slot0._level + 1).exp
+	if arg_7_0._level < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
+		var_7_1 = PlayerConfig.instance:getPlayerLevelCO(arg_7_0._level + 1).exp
 	else
-		slot1 = PlayerConfig.instance:getPlayerLevelCO(slot0._level).exp
+		var_7_1 = PlayerConfig.instance:getPlayerLevelCO(arg_7_0._level).exp
+		var_7_0 = var_7_1
 	end
 
 	return {
-		slot1,
-		slot2
+		var_7_0,
+		var_7_1
 	}
 end
 
-function slot0.getPlayerLevel(slot0)
-	return slot0._level
+function var_0_0.getPlayerLevel(arg_8_0)
+	return arg_8_0._level
 end
 
-function slot0.setPlayerName(slot0, slot1)
-	slot0._name = slot1
+function var_0_0.setPlayerName(arg_9_0, arg_9_1)
+	arg_9_0._name = arg_9_1
 
-	slot0:_changePlayerbassinfo()
+	arg_9_0:_changePlayerbassinfo()
 	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerName)
 end
 
-function slot0.setPlayerSignature(slot0, slot1)
-	slot0._signature = slot1
+function var_0_0.setPlayerSignature(arg_10_0, arg_10_1)
+	arg_10_0._signature = arg_10_1
 
-	slot0:_changePlayerbassinfo()
+	arg_10_0:_changePlayerbassinfo()
 end
 
-function slot0.setPlayerBirthday(slot0, slot1)
-	slot0._birthday = slot1
+function var_0_0.setPlayerBirthday(arg_11_0, arg_11_1)
+	arg_11_0._birthday = arg_11_1
 
-	slot0:_changePlayerbassinfo()
+	arg_11_0:_changePlayerbassinfo()
 end
 
-function slot0.getPlayerBirthday(slot0)
-	return slot0._birthday or ""
+function var_0_0.getPlayerBirthday(arg_12_0)
+	return arg_12_0._birthday or ""
 end
 
-function slot0.setPlayerPortrait(slot0, slot1)
-	PlayerController.instance:dispatchEvent(PlayerEvent.SetPortrait, slot1)
+function var_0_0.setPlayerPortrait(arg_13_0, arg_13_1)
+	PlayerController.instance:dispatchEvent(PlayerEvent.SetPortrait, arg_13_1)
 
-	slot0._portrait = slot1
+	arg_13_0._portrait = arg_13_1
 
-	slot0:_changePlayerbassinfo()
+	arg_13_0:_changePlayerbassinfo()
 end
 
-function slot0.setShowHeroUniqueIds(slot0)
-	PlayerController.instance:dispatchEvent(PlayerEvent.SetShowHero, slot0._showHeros)
+function var_0_0.setShowHeroUniqueIds(arg_14_0)
+	PlayerController.instance:dispatchEvent(PlayerEvent.SetShowHero, arg_14_0._showHeros)
 end
 
-function slot0._changePlayerbassinfo(slot0)
-	PlayerController.instance:dispatchEvent(PlayerEvent.PlayerbassinfoChange, slot0:getPlayinfo())
+function var_0_0._changePlayerbassinfo(arg_15_0)
+	local var_15_0 = arg_15_0:getPlayinfo()
+
+	PlayerController.instance:dispatchEvent(PlayerEvent.PlayerbassinfoChange, var_15_0)
 end
 
-function slot0.getShowHeros(slot0)
-	return slot0._showHeros
+function var_0_0.getShowHeros(arg_16_0)
+	return arg_16_0._showHeros
 end
 
-function slot0.getShowHeroUid(slot0)
-	slot1 = {}
+function var_0_0.getShowHeroUid(arg_17_0)
+	local var_17_0 = {}
 
-	for slot5 = 1, #slot0._showHeros do
-		if slot0._showHeros[slot5] ~= 0 then
-			table.insert(slot1, HeroModel.instance:getByHeroId(slot0._showHeros[slot5].heroId).uid)
+	for iter_17_0 = 1, #arg_17_0._showHeros do
+		if arg_17_0._showHeros[iter_17_0] ~= 0 then
+			local var_17_1 = HeroModel.instance:getByHeroId(arg_17_0._showHeros[iter_17_0].heroId).uid
+
+			table.insert(var_17_0, var_17_1)
 		else
-			table.insert(slot1, 0)
+			table.insert(var_17_0, 0)
 		end
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0.setShowHero(slot0, slot1, slot2)
-	if slot2 ~= 0 then
-		slot0._showHeros[slot1] = slot0:_setSimpleinfo(slot2)
+function var_0_0.setShowHero(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_2 ~= 0 then
+		arg_18_0._showHeros[arg_18_1] = arg_18_0:_setSimpleinfo(arg_18_2)
 	else
-		slot0._showHeros[slot1] = 0
+		arg_18_0._showHeros[arg_18_1] = 0
 	end
 end
 
-function slot0._setSimpleinfo(slot0, slot1)
-	slot2 = HeroModel.instance:getByHeroId(slot1)
+function var_0_0._setSimpleinfo(arg_19_0, arg_19_1)
+	local var_19_0 = HeroModel.instance:getByHeroId(arg_19_1)
 
 	return {
-		uid = slot2.uid,
-		heroId = slot2.heroId,
-		level = slot2.level,
-		rank = slot2.rank,
-		exSkillLevel = slot2.exSkillLevel,
-		skin = slot2.skin
+		uid = var_19_0.uid,
+		heroId = var_19_0.heroId,
+		level = var_19_0.level,
+		rank = var_19_0.rank,
+		exSkillLevel = var_19_0.exSkillLevel,
+		skin = var_19_0.skin
 	}
 end
 
-function slot0.updateAssistRewardCountData(slot0, slot1, slot2, slot3)
-	slot0._assistRewardCount = slot1 or 0
-	slot0._hasReceiveAssistBonus = slot2 or 0
+function var_0_0.updateAssistRewardCountData(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	arg_20_0._assistRewardCount = arg_20_1 or 0
+	arg_20_0._hasReceiveAssistBonus = arg_20_2 or 0
 
-	if slot3 then
+	if arg_20_3 then
 		return
 	end
 
 	PlayerController.instance:dispatchEvent(PlayerEvent.UpdateAssistRewardCount)
 end
 
-function slot0.getAssistRewardCount(slot0)
-	return slot0._assistRewardCount or 0
+function var_0_0.getAssistRewardCount(arg_21_0)
+	return arg_21_0._assistRewardCount or 0
 end
 
-function slot0.isHasAssistReward(slot0)
-	if slot0:isGetAssistRewardReachingLimit() then
-		return false
+function var_0_0.isHasAssistReward(arg_22_0)
+	local var_22_0 = false
+
+	if arg_22_0:isGetAssistRewardReachingLimit() then
+		return var_22_0
 	end
 
-	return slot0:getAssistRewardCount() and slot3 > 0
+	local var_22_1 = arg_22_0:getAssistRewardCount()
+
+	return var_22_1 and var_22_1 > 0
 end
 
-function slot0.getMaxAssistRewardCount(slot0)
+function var_0_0.getMaxAssistRewardCount(arg_23_0)
 	return CommonConfig.instance:getConstNum(ConstEnum.AssistRewardMaxNum) or 0
 end
 
-function slot0.getHasReceiveAssistBonus(slot0)
-	return slot0._hasReceiveAssistBonus or 0
+function var_0_0.getHasReceiveAssistBonus(arg_24_0)
+	return arg_24_0._hasReceiveAssistBonus or 0
 end
 
-function slot0.isGetAssistRewardReachingLimit(slot0)
-	return slot0:getMaxAssistRewardCount() <= slot0:getHasReceiveAssistBonus()
+function var_0_0.isGetAssistRewardReachingLimit(arg_25_0)
+	return arg_25_0:getMaxAssistRewardCount() <= arg_25_0:getHasReceiveAssistBonus()
 end
 
-function slot0.updateSimpleProperties(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:updateSimpleProperty(slot6)
+function var_0_0.updateSimpleProperties(arg_26_0, arg_26_1)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_1) do
+		arg_26_0:updateSimpleProperty(iter_26_1)
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	[PlayerEnum.SimpleProperty.SkinState] = KeyValueSimplePropertyMO,
 	[PlayerEnum.SimpleProperty.MainSceneSkinRedDot] = KeyValueSimplePropertyMO
 }
 
-function slot0._getSimplePropMo(slot0, slot1)
-	if not slot0._simpleProperties[slot1] then
-		slot0._simpleProperties[slot1] = (uv0[slot1] or SimplePropertyMO).New()
+function var_0_0._getSimplePropMo(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0._simpleProperties[arg_27_1]
+
+	if not var_27_0 then
+		var_27_0 = (var_0_1[arg_27_1] or SimplePropertyMO).New()
+		arg_27_0._simpleProperties[arg_27_1] = var_27_0
 	end
 
-	return slot2
+	return var_27_0
 end
 
-function slot0.updateSimpleProperty(slot0, slot1)
-	slot0._simpleProperties = slot0._simpleProperties or {}
+function var_0_0.updateSimpleProperty(arg_28_0, arg_28_1)
+	arg_28_0._simpleProperties = arg_28_0._simpleProperties or {}
 
-	slot0:_getSimplePropMo(slot1.id):init(slot1)
+	arg_28_0:_getSimplePropMo(arg_28_1.id):init(arg_28_1)
 end
 
-function slot0.forceSetSimpleProperty(slot0, slot1, slot2)
-	if slot0._simpleProperties[slot1] then
-		slot3.property = slot2
+function var_0_0.forceSetSimpleProperty(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = arg_29_0._simpleProperties[arg_29_1]
+
+	if var_29_0 then
+		var_29_0.property = arg_29_2
 	end
 end
 
-function slot0.getSimpleProperty(slot0, slot1)
-	if slot0._simpleProperties then
-		return slot0._simpleProperties[slot1] and slot2.property
+function var_0_0.getSimpleProperty(arg_30_0, arg_30_1)
+	if arg_30_0._simpleProperties then
+		local var_30_0 = arg_30_0._simpleProperties[arg_30_1]
+
+		return var_30_0 and var_30_0.property
 	end
 
 	return nil
 end
 
-function slot0.getPropKeyValue(slot0, slot1, slot2, slot3)
-	return slot0:_getSimplePropMo(slot1):getValue(slot2, slot3)
+function var_0_0.getPropKeyValue(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	return arg_31_0:_getSimplePropMo(arg_31_1):getValue(arg_31_2, arg_31_3)
 end
 
-function slot0.setPropKeyValue(slot0, slot1, slot2, slot3)
-	slot0:_getSimplePropMo(slot1):setValue(slot2, slot3)
+function var_0_0.setPropKeyValue(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	arg_32_0:_getSimplePropMo(arg_32_1):setValue(arg_32_2, arg_32_3)
 end
 
-function slot0.getPropKeyValueString(slot0, slot1)
-	return slot0:_getSimplePropMo(slot1):getString()
+function var_0_0.getPropKeyValueString(arg_33_0, arg_33_1)
+	return arg_33_0:_getSimplePropMo(arg_33_1):getString()
 end
 
-function slot0.getMyUserId(slot0)
-	return slot0._userId
+function var_0_0.getMyUserId(arg_34_0)
+	return arg_34_0._userId
 end
 
-function slot0.isPlayerSelf(slot0, slot1)
-	slot2 = true
+function var_0_0.isPlayerSelf(arg_35_0, arg_35_1)
+	local var_35_0 = true
+	local var_35_1 = arg_35_0:getMyUserId()
 
-	if slot0:getMyUserId() and slot1 then
-		slot2 = slot1 == slot3
+	if var_35_1 and arg_35_1 then
+		var_35_0 = arg_35_1 == var_35_1
 	end
 
-	return slot2
+	return var_35_0
 end
 
-function slot0.logout(slot0)
+function var_0_0.logout(arg_36_0)
+	return
 end
 
-function slot0.showWaterMark(slot0)
+function var_0_0.showWaterMark(arg_37_0)
 	ViewMgr.instance:openView(ViewName.WaterMarkView, {
-		userId = slot0._userId
+		userId = arg_37_0._userId
 	})
 end
 
-function slot0.changeWaterMarkStatus(slot0, slot1)
-	if not slot0.waterMarkView then
-		slot0:showWaterMark()
+function var_0_0.changeWaterMarkStatus(arg_38_0, arg_38_1)
+	if not arg_38_0.waterMarkView then
+		arg_38_0:showWaterMark()
 	end
 
-	if slot1 then
-		slot0.waterMarkView:showWaterMark()
+	if arg_38_1 then
+		arg_38_0.waterMarkView:showWaterMark()
 	else
-		slot0.waterMarkView:hideWaterMark()
+		arg_38_0.waterMarkView:hideWaterMark()
 	end
 end
 
-function slot0.getPreFeedBackTime(slot0)
-	return slot0._preCommitFeedBackTime
+function var_0_0.getPreFeedBackTime(arg_39_0)
+	return arg_39_0._preCommitFeedBackTime
 end
 
-function slot0.setPreFeedBackTime(slot0)
-	slot0._preCommitFeedBackTime = Time.time
+function var_0_0.setPreFeedBackTime(arg_40_0)
+	arg_40_0._preCommitFeedBackTime = Time.time
 end
 
-function slot0.setMainThumbnail(slot0, slot1)
-	slot0._mainThumbnail = slot1
+function var_0_0.setMainThumbnail(arg_41_0, arg_41_1)
+	arg_41_0._mainThumbnail = arg_41_1
 end
 
-function slot0.getMainThumbnail(slot0)
-	return slot0._mainThumbnail
+function var_0_0.getMainThumbnail(arg_42_0)
+	return arg_42_0._mainThumbnail
 end
 
-slot2 = 18000
+local var_0_2 = 18000
 
-function slot0.setCanRename(slot0, slot1)
-	slot0._canRename = slot1 == true
+function var_0_0.setCanRename(arg_43_0, arg_43_1)
+	arg_43_0._canRename = arg_43_1 == true
 
-	if os.date("*t", ServerTime.nowInLocal() - uv0) then
-		slot0._canRenameFlagMonth = slot2.month
+	local var_43_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
+
+	if var_43_0 then
+		arg_43_0._canRenameFlagMonth = var_43_0.month
 	end
 
 	PlayerController.instance:dispatchEvent(PlayerEvent.RenameFlagUpdate)
 end
 
-function slot0.setExtraRename(slot0, slot1)
-	slot0.extraRenameCount = slot1
+function var_0_0.setExtraRename(arg_44_0, arg_44_1)
+	arg_44_0.extraRenameCount = arg_44_1
 end
 
-function slot0.getExtraRename(slot0)
-	return slot0.extraRenameCount or 0
+function var_0_0.getExtraRename(arg_45_0)
+	return arg_45_0.extraRenameCount or 0
 end
 
-function slot0.checkCanRenameReset(slot0)
-	if os.date("*t", ServerTime.nowInLocal() - uv0) and slot0._canRenameFlagMonth ~= nil and slot0._canRenameFlagMonth ~= slot1.month then
+function var_0_0.checkCanRenameReset(arg_46_0)
+	local var_46_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
+
+	if var_46_0 and arg_46_0._canRenameFlagMonth ~= nil and arg_46_0._canRenameFlagMonth ~= var_46_0.month then
 		logNormal("CanRenameFlag Reset")
-		slot0:setCanRename(true)
+		arg_46_0:setCanRename(true)
 	end
 end
 
-function slot0.getCanRename(slot0)
-	return slot0._canRename
+function var_0_0.getCanRename(arg_47_0)
+	return arg_47_0._canRename
 end
 
-function slot0.getShowAchievement(slot0)
-	return slot0._showAchievement
+function var_0_0.getShowAchievement(arg_48_0)
+	return arg_48_0._showAchievement
 end
 
-function slot0.getPlayerPrefsKey(slot0, slot1)
-	return slot1 .. slot0._userId
+function var_0_0.getPlayerPrefsKey(arg_49_0, arg_49_1)
+	return arg_49_1 .. arg_49_0._userId
 end
 
-function slot0.getPlayerRegisterTime(slot0)
-	return slot0._registerTime
+function var_0_0.getPlayerRegisterTime(arg_50_0)
+	return arg_50_0._registerTime
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

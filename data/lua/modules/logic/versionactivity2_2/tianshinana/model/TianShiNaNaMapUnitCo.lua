@@ -1,26 +1,25 @@
-module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapUnitCo", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaMapUnitCo", package.seeall)
 
-slot0 = pureTable("TianShiNaNaMapUnitCo")
+local var_0_0 = pureTable("TianShiNaNaMapUnitCo")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1[1]
-	slot0.unitType = slot1[2]
-	slot0.x = slot1[3]
-	slot0.y = slot1[4]
-	slot0.unitPath = slot1[5]
-	slot5 = slot1[6][3]
-	slot0.offset = Vector3(slot1[6][1], slot1[6][2], slot5)
-	slot0.specialData = slot1[7]
-	slot0.dir = slot1[8]
-	slot0.walkable = slot1[9]
-	slot0.effects = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1[1]
+	arg_1_0.unitType = arg_1_1[2]
+	arg_1_0.x = arg_1_1[3]
+	arg_1_0.y = arg_1_1[4]
+	arg_1_0.unitPath = arg_1_1[5]
+	arg_1_0.offset = Vector3(arg_1_1[6][1], arg_1_1[6][2], arg_1_1[6][3])
+	arg_1_0.specialData = arg_1_1[7]
+	arg_1_0.dir = arg_1_1[8]
+	arg_1_0.walkable = arg_1_1[9]
+	arg_1_0.effects = {}
 
-	for slot5, slot6 in ipairs(slot1[10]) do
-		table.insert(slot0.effects, {
-			type = slot6[1],
-			param = slot6[2]
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1[10]) do
+		table.insert(arg_1_0.effects, {
+			type = iter_1_1[1],
+			param = iter_1_1[2]
 		})
 	end
 end
 
-return slot0
+return var_0_0

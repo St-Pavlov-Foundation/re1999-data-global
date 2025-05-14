@@ -1,69 +1,76 @@
-module("modules.logic.handbook.model.EquipFilterModel", package.seeall)
+﻿module("modules.logic.handbook.model.EquipFilterModel", package.seeall)
 
-slot0 = class("EquipFilterModel")
-slot0.ObtainEnum = {
+local var_0_0 = class("EquipFilterModel")
+
+var_0_0.ObtainEnum = {
 	Get = 1,
 	All = 0,
 	NotGet = 2
 }
 
-function slot0.getAllTagList()
+function var_0_0.getAllTagList()
 	return lua_equip_tag.configList
 end
 
-function slot0.generateFilterMo(slot0, slot1)
-	slot0.filterMoDict = slot0.filterMoDict or {}
-	slot2 = EquipFilterMo.New()
+function var_0_0.generateFilterMo(arg_2_0, arg_2_1)
+	arg_2_0.filterMoDict = arg_2_0.filterMoDict or {}
 
-	slot2:init(slot1)
+	local var_2_0 = EquipFilterMo.New()
 
-	slot0.filterMoDict[slot1] = slot2
+	var_2_0:init(arg_2_1)
 
-	return slot2
+	arg_2_0.filterMoDict[arg_2_1] = var_2_0
+
+	return var_2_0
 end
 
-function slot0.getFilterMo(slot0, slot1)
-	return slot0.filterMoDict and slot0.filterMoDict[slot1]
+function var_0_0.getFilterMo(arg_3_0, arg_3_1)
+	return arg_3_0.filterMoDict and arg_3_0.filterMoDict[arg_3_1]
 end
 
-function slot0.clear(slot0, slot1)
-	if slot0.filterMoDict then
-		slot0.filterMoDict[slot1] = nil
+function var_0_0.clear(arg_4_0, arg_4_1)
+	if arg_4_0.filterMoDict then
+		arg_4_0.filterMoDict[arg_4_1] = nil
 	end
 end
 
-function slot0.reset(slot0, slot1)
-	if slot0.filterMoDict and slot0.filterMoDict[slot1] then
-		slot2:init(slot1)
+function var_0_0.reset(arg_5_0, arg_5_1)
+	if arg_5_0.filterMoDict then
+		local var_5_0 = arg_5_0.filterMoDict[arg_5_1]
+
+		if var_5_0 then
+			var_5_0:init(arg_5_1)
+		end
 	end
 end
 
-function slot0.applyMo(slot0, slot1)
-	if slot0.filterMoDict[slot1.viewName].obtainShowType ~= slot1.obtainShowType then
-		slot3:updateMo(slot1)
-		EquipController.instance:dispatchEvent(EquipEvent.OnEquipTypeHasChange, slot2)
+function var_0_0.applyMo(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1.viewName
+	local var_6_1 = arg_6_0.filterMoDict[var_6_0]
+
+	if var_6_1.obtainShowType ~= arg_6_1.obtainShowType then
+		var_6_1:updateMo(arg_6_1)
+		EquipController.instance:dispatchEvent(EquipEvent.OnEquipTypeHasChange, var_6_0)
 
 		return
 	end
 
-	if #slot1.selectTagList ~= #slot3.selectTagList then
-		slot3:updateMo(slot1)
-		EquipController.instance:dispatchEvent(EquipEvent.OnEquipTypeHasChange, slot2)
+	if #arg_6_1.selectTagList ~= #var_6_1.selectTagList then
+		var_6_1:updateMo(arg_6_1)
+		EquipController.instance:dispatchEvent(EquipEvent.OnEquipTypeHasChange, var_6_0)
 
 		return
 	else
-		slot4 = {
-			[slot9] = true
-		}
+		local var_6_2 = {}
 
-		for slot8, slot9 in ipairs(slot3.selectTagList) do
-			-- Nothing
+		for iter_6_0, iter_6_1 in ipairs(var_6_1.selectTagList) do
+			var_6_2[iter_6_1] = true
 		end
 
-		for slot8, slot9 in ipairs(slot1.selectTagList) do
-			if not slot4[slot9] then
-				slot3:updateMo(slot1)
-				EquipController.instance:dispatchEvent(EquipEvent.OnEquipTypeHasChange, slot2)
+		for iter_6_2, iter_6_3 in ipairs(arg_6_1.selectTagList) do
+			if not var_6_2[iter_6_3] then
+				var_6_1:updateMo(arg_6_1)
+				EquipController.instance:dispatchEvent(EquipEvent.OnEquipTypeHasChange, var_6_0)
 
 				return
 			end
@@ -71,6 +78,6 @@ function slot0.applyMo(slot0, slot1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

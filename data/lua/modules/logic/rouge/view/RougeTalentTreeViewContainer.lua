@@ -1,62 +1,67 @@
-module("modules.logic.rouge.view.RougeTalentTreeViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeTalentTreeViewContainer", package.seeall)
 
-slot0 = class("RougeTalentTreeViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeTalentTreeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._treeview = RougeTalentTreeView.New()
-	slot0._poolview = RougeTalentTreeBranchPool.New(slot0._viewSetting.otherRes.branchitem)
-	slot0._tabview = TabViewGroup.New(2, "#go_talenttree")
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(slot1, slot0._tabview)
-	table.insert(slot1, slot0._treeview)
-	table.insert(slot1, slot0._poolview)
+	arg_1_0._treeview = RougeTalentTreeView.New()
+	arg_1_0._poolview = RougeTalentTreeBranchPool.New(arg_1_0._viewSetting.otherRes.branchitem)
+	arg_1_0._tabview = TabViewGroup.New(2, "#go_talenttree")
 
-	return slot1
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, arg_1_0._tabview)
+	table.insert(var_1_0, arg_1_0._treeview)
+	table.insert(var_1_0, arg_1_0._poolview)
+
+	return var_1_0
 end
 
-function slot0.getPoolView(slot0)
-	return slot0._poolview
+function var_0_0.getPoolView(arg_2_0)
+	return arg_2_0._poolview
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot0._navigateButtonView:setCloseCheck(slot0.defaultOverrideCloseCheck, slot0)
+		arg_3_0._navigateButtonView:setCloseCheck(arg_3_0.defaultOverrideCloseCheck, arg_3_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_3_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
-		slot2 = {}
+	elseif arg_3_1 == 2 then
+		local var_3_0 = {}
+		local var_3_1 = RougeConfig1.instance:season()
+		local var_3_2 = RougeTalentConfig.instance:getTalentNum(var_3_1)
 
-		for slot8 = 1, RougeTalentConfig.instance:getTalentNum(RougeConfig1.instance:season()) do
-			table.insert(slot2, RougeTalentTreeBranchView.New())
+		for iter_3_0 = 1, var_3_2 do
+			table.insert(var_3_0, RougeTalentTreeBranchView.New())
 		end
 
-		return slot2
+		return var_3_0
 	end
 end
 
-function slot0.getTabView(slot0)
-	return slot0._tabview
+function var_0_0.getTabView(arg_4_0)
+	return arg_4_0._tabview
 end
 
-function slot0.defaultOverrideCloseCheck(slot0)
+function var_0_0.defaultOverrideCloseCheck(arg_5_0)
 	RougeController.instance:dispatchEvent(RougeEvent.exitTalentView)
 
-	function slot0._closeCallback()
-		uv0._navigateButtonView:_reallyClose()
+	local var_5_0 = 0.5
+
+	function arg_5_0._closeCallback()
+		arg_5_0._navigateButtonView:_reallyClose()
 		RougeController.instance:dispatchEvent(RougeEvent.reallyExitTalentView)
 	end
 
-	TaskDispatcher.runDelay(slot0._closeCallback, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_5_0._closeCallback, arg_5_0, var_5_0)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.player.view.PlayerChangeBgListViewContainer", package.seeall)
+﻿module("modules.logic.player.view.PlayerChangeBgListViewContainer", package.seeall)
 
-slot0 = class("PlayerChangeBgListViewContainer", BaseViewContainer)
+local var_0_0 = class("PlayerChangeBgListViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		PlayerChangeBgListView.New()
 	}
 end
 
-return slot0
+return var_0_0

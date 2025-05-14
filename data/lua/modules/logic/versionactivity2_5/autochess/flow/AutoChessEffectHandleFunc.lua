@@ -1,231 +1,273 @@
-module("modules.logic.versionactivity2_5.autochess.flow.AutoChessEffectHandleFunc", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.flow.AutoChessEffectHandleFunc", package.seeall)
 
-slot0 = class("AutoChessEffectHandleFunc")
+local var_0_0 = class("AutoChessEffectHandleFunc")
 
-function slot0.ctor(slot0)
-	slot0._defineList = {
-		[AutoChessEnum.EffectType.LeaderHp] = uv0._handleLeaderHp,
-		[AutoChessEnum.EffectType.LeaderHpFloat] = uv0._handleLeaderHpFloat,
-		[AutoChessEnum.EffectType.ChessHp] = uv0._handleChessHp,
-		[AutoChessEnum.EffectType.ChessHpFloat] = uv0._handleChessHpFloat,
-		[AutoChessEnum.EffectType.ChessMove] = uv0._handleChessMove,
-		[AutoChessEnum.EffectType.ChessDie] = uv0._handleChessDie,
-		[AutoChessEnum.EffectType.AddBuff] = uv0._handleAddBuff,
-		[AutoChessEnum.EffectType.UpdateBuff] = uv0._handleUpdateBuff,
-		[AutoChessEnum.EffectType.DelBuff] = uv0._handleDelBuff,
-		[AutoChessEnum.EffectType.CoinChange] = uv0._handleCoinChange,
-		[AutoChessEnum.EffectType.ExpChange] = uv0._handleExpChange,
-		[AutoChessEnum.EffectType.StarChange] = uv0._handleStarChange,
-		[AutoChessEnum.EffectType.Summon] = uv0._handleSummon,
-		[AutoChessEnum.EffectType.BattleChange] = uv0._handleBattleChange,
-		[AutoChessEnum.EffectType.MallUpdate] = uv0._handleMallUpdate,
-		[AutoChessEnum.EffectType.PlayAttack] = uv0._handlePlayAttack,
-		[AutoChessEnum.EffectType.UpdateChessPos] = uv0._handleUpdateChessPos,
-		[AutoChessEnum.EffectType.FightUpdate] = uv0._handleFightUpdate,
-		[AutoChessEnum.EffectType.LeaderSkillUpdate] = uv0._handleLeaderSkillUpdate,
-		[AutoChessEnum.EffectType.LeaderChange] = uv0._handleLeaderChange
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._defineList = {
+		[AutoChessEnum.EffectType.LeaderHp] = var_0_0._handleLeaderHp,
+		[AutoChessEnum.EffectType.LeaderHpFloat] = var_0_0._handleLeaderHpFloat,
+		[AutoChessEnum.EffectType.ChessHp] = var_0_0._handleChessHp,
+		[AutoChessEnum.EffectType.ChessHpFloat] = var_0_0._handleChessHpFloat,
+		[AutoChessEnum.EffectType.ChessMove] = var_0_0._handleChessMove,
+		[AutoChessEnum.EffectType.ChessDie] = var_0_0._handleChessDie,
+		[AutoChessEnum.EffectType.AddBuff] = var_0_0._handleAddBuff,
+		[AutoChessEnum.EffectType.UpdateBuff] = var_0_0._handleUpdateBuff,
+		[AutoChessEnum.EffectType.DelBuff] = var_0_0._handleDelBuff,
+		[AutoChessEnum.EffectType.CoinChange] = var_0_0._handleCoinChange,
+		[AutoChessEnum.EffectType.ExpChange] = var_0_0._handleExpChange,
+		[AutoChessEnum.EffectType.StarChange] = var_0_0._handleStarChange,
+		[AutoChessEnum.EffectType.Summon] = var_0_0._handleSummon,
+		[AutoChessEnum.EffectType.BattleChange] = var_0_0._handleBattleChange,
+		[AutoChessEnum.EffectType.MallUpdate] = var_0_0._handleMallUpdate,
+		[AutoChessEnum.EffectType.PlayAttack] = var_0_0._handlePlayAttack,
+		[AutoChessEnum.EffectType.UpdateChessPos] = var_0_0._handleUpdateChessPos,
+		[AutoChessEnum.EffectType.FightUpdate] = var_0_0._handleFightUpdate,
+		[AutoChessEnum.EffectType.LeaderSkillUpdate] = var_0_0._handleLeaderSkillUpdate,
+		[AutoChessEnum.EffectType.LeaderChange] = var_0_0._handleLeaderChange
 	}
 end
 
-function slot0._handleLeaderHp(slot0)
-	if slot0.mgr:getLeaderEntity(slot0.effect.targetId) then
-		slot1:updateHp(slot0.effect.effectNum)
+function var_0_0._handleLeaderHp(arg_2_0)
+	local var_2_0 = arg_2_0.mgr:getLeaderEntity(arg_2_0.effect.targetId)
+
+	if var_2_0 then
+		var_2_0:updateHp(arg_2_0.effect.effectNum)
 	end
 
-	slot0:finishWork()
+	arg_2_0:finishWork()
 end
 
-function slot0._handleLeaderHpFloat(slot0)
-	if slot0.mgr:getLeaderEntity(slot0.effect.fromId) then
-		slot0.mgr:flyStarByTeam(slot1.data.teamType)
-		TaskDispatcher.runDelay(slot0.delayAttack, slot0, 1.1)
+function var_0_0._handleLeaderHpFloat(arg_3_0)
+	local var_3_0 = arg_3_0.mgr:getLeaderEntity(arg_3_0.effect.fromId)
+
+	if var_3_0 then
+		arg_3_0.mgr:flyStarByTeam(var_3_0.data.teamType)
+		TaskDispatcher.runDelay(arg_3_0.delayAttack, arg_3_0, 1.1)
 	else
-		slot0:delayFloatLeader()
-		TaskDispatcher.runDelay(slot0.finishWork, slot0, 1)
+		arg_3_0:delayFloatLeader()
+		TaskDispatcher.runDelay(arg_3_0.finishWork, arg_3_0, 1)
 	end
 end
 
-function slot0._handleChessHp(slot0)
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		slot1:updateHp(slot0.effect.effectNum)
+function var_0_0._handleChessHp(arg_4_0)
+	local var_4_0 = arg_4_0.mgr:getEntity(arg_4_0.effect.targetId)
+
+	if var_4_0 then
+		var_4_0:updateHp(arg_4_0.effect.effectNum)
 	end
 
-	slot0:finishWork()
+	arg_4_0:finishWork()
 end
 
-function slot0._handleChessHpFloat(slot0)
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		slot1:floatHp(slot0.effect.effectNum)
+function var_0_0._handleChessHpFloat(arg_5_0)
+	local var_5_0 = arg_5_0.mgr:getEntity(arg_5_0.effect.targetId)
+
+	if var_5_0 then
+		var_5_0:floatHp(arg_5_0.effect.effectNum)
 	end
 
-	TaskDispatcher.runDelay(slot0.finishWork, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_5_0.finishWork, arg_5_0, 0.5)
 end
 
-function slot0._handleChessMove(slot0)
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		if slot0.context == AutoChessEnum.ContextType.EndBuy or slot0.context == AutoChessEnum.ContextType.Fight then
-			fightData = slot0.chessMo.lastSvrFight
+function var_0_0._handleChessMove(arg_6_0)
+	local var_6_0 = arg_6_0.mgr:getEntity(arg_6_0.effect.targetId)
+
+	if var_6_0 then
+		if arg_6_0.context == AutoChessEnum.ContextType.EndBuy or arg_6_0.context == AutoChessEnum.ContextType.Fight then
+			fightData = arg_6_0.chessMo.lastSvrFight
 		else
-			fightData = slot0.chessMo.svrFight
+			fightData = arg_6_0.chessMo.svrFight
 		end
 
-		slot3 = slot0.chessMo:getChessPosition(slot1.warZone, tonumber(slot0.effect.effectNum) + 1, fightData)
+		local var_6_1 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.fromId) + 1, fightData)
+		local var_6_2 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.effectNum) + 1, fightData)
 
-		if slot0.chessMo:getChessPosition(slot1.warZone, tonumber(slot0.effect.fromId) + 1, fightData) and slot3 then
-			slot3.chess = slot2.chess
-			slot2.chess = AutoChessHelper.buildEmptyChess()
+		if var_6_1 and var_6_2 then
+			var_6_2.chess = var_6_1.chess
+			var_6_1.chess = AutoChessHelper.buildEmptyChess()
 		end
 
-		slot1:move(slot0.effect.effectNum)
+		var_6_0:move(arg_6_0.effect.effectNum)
 	end
 
-	TaskDispatcher.runDelay(slot0.finishWork, slot0, AutoChessEnum.ChessAniTime.Jump)
+	TaskDispatcher.runDelay(arg_6_0.finishWork, arg_6_0, AutoChessEnum.ChessAniTime.Jump)
 end
 
-function slot0._handleChessDie(slot0)
+function var_0_0._handleChessDie(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_chess_death)
 
-	slot1, slot2 = nil
+	local var_7_0
+	local var_7_1
+	local var_7_2
 
-	if slot0.context == AutoChessEnum.ContextType.EndBuy or slot0.context == AutoChessEnum.ContextType.Fight then
-		slot1 = slot0.chessMo.lastSvrFight
-		slot2 = true
+	if arg_7_0.context == AutoChessEnum.ContextType.EndBuy or arg_7_0.context == AutoChessEnum.ContextType.Fight then
+		var_7_0 = arg_7_0.chessMo.lastSvrFight
+		var_7_2 = true
 	else
-		slot1 = slot0.chessMo.svrFight
-		slot2 = false
+		var_7_0 = arg_7_0.chessMo.svrFight
+		var_7_2 = false
 	end
 
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		if slot4.go.activeInHierarchy then
-			if slot4:die(slot2) then
-				slot3 = math.max(AutoChessEnum.ChessAniTime.Die, lua_auto_chess_effect.configDict[slot5].duration)
+	local var_7_3 = AutoChessEnum.ChessAniTime.Die
+	local var_7_4 = arg_7_0.mgr:getEntity(arg_7_0.effect.targetId)
+
+	if var_7_4 then
+		if var_7_4.go.activeInHierarchy then
+			local var_7_5 = var_7_4:die(var_7_2)
+
+			if var_7_5 then
+				local var_7_6 = lua_auto_chess_effect.configDict[var_7_5]
+
+				var_7_3 = math.max(var_7_3, var_7_6.duration)
 			end
 		else
-			slot3 = 0
+			var_7_3 = 0
 		end
 	end
 
-	slot0.chessMo:getChessPosition(tonumber(slot0.effect.fromId), tonumber(slot0.effect.effectNum) + 1, slot1).chess = AutoChessHelper.buildEmptyChess()
+	arg_7_0.chessMo:getChessPosition(tonumber(arg_7_0.effect.fromId), tonumber(arg_7_0.effect.effectNum) + 1, var_7_0).chess = AutoChessHelper.buildEmptyChess()
 
-	TaskDispatcher.runDelay(slot0.finishWork, slot0, slot3)
+	TaskDispatcher.runDelay(arg_7_0.finishWork, arg_7_0, var_7_3)
 end
 
-function slot0._handleAddBuff(slot0)
-	if slot0.mgr:tryGetEntity(slot0.effect.targetId) or slot0.mgr:getLeaderEntity(slot0.effect.targetId) then
-		slot1:addBuff(slot0.effect.buff)
+function var_0_0._handleAddBuff(arg_8_0)
+	local var_8_0 = arg_8_0.mgr:tryGetEntity(arg_8_0.effect.targetId) or arg_8_0.mgr:getLeaderEntity(arg_8_0.effect.targetId)
+
+	if var_8_0 then
+		var_8_0:addBuff(arg_8_0.effect.buff)
 	end
 
-	slot0:finishWork()
+	arg_8_0:finishWork()
 end
 
-function slot0._handleUpdateBuff(slot0)
-	if slot0.mgr:tryGetEntity(slot0.effect.targetId) or slot0.mgr:getLeaderEntity(slot0.effect.targetId) then
-		slot1:updateBuff(slot0.effect.buff)
+function var_0_0._handleUpdateBuff(arg_9_0)
+	local var_9_0 = arg_9_0.mgr:tryGetEntity(arg_9_0.effect.targetId) or arg_9_0.mgr:getLeaderEntity(arg_9_0.effect.targetId)
+
+	if var_9_0 then
+		var_9_0:updateBuff(arg_9_0.effect.buff)
 	end
 
-	slot0:finishWork()
+	arg_9_0:finishWork()
 end
 
-function slot0._handleDelBuff(slot0)
-	if slot0.mgr:tryGetEntity(slot0.effect.targetId) or slot0.mgr:getLeaderEntity(slot0.effect.targetId) then
-		slot1:delBuff(slot0.effect.effectNum)
+function var_0_0._handleDelBuff(arg_10_0)
+	local var_10_0 = arg_10_0.mgr:tryGetEntity(arg_10_0.effect.targetId) or arg_10_0.mgr:getLeaderEntity(arg_10_0.effect.targetId)
+
+	if var_10_0 then
+		var_10_0:delBuff(arg_10_0.effect.effectNum)
 	end
 
-	slot0:finishWork()
+	arg_10_0:finishWork()
 end
 
-function slot0._handleCoinChange(slot0)
-	slot0.chessMo:updateSvrMallCoin(slot0.effect.effectNum)
-	slot0:finishWork()
+function var_0_0._handleCoinChange(arg_11_0)
+	arg_11_0.chessMo:updateSvrMallCoin(arg_11_0.effect.effectNum)
+	arg_11_0:finishWork()
 end
 
-function slot0._handleExpChange(slot0)
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		slot1:updateExp(slot0.effect.effectNum)
+function var_0_0._handleExpChange(arg_12_0)
+	local var_12_0 = arg_12_0.mgr:getEntity(arg_12_0.effect.targetId)
+
+	if var_12_0 then
+		var_12_0:updateExp(arg_12_0.effect.effectNum)
 	end
 
-	slot0:finishWork()
+	arg_12_0:finishWork()
 end
 
-function slot0._handleStarChange(slot0)
-	slot0.chessMo:getChessPosition1(slot0.effect.chess.uid).chess = slot0.effect.chess
+function var_0_0._handleStarChange(arg_13_0)
+	arg_13_0.chessMo:getChessPosition1(arg_13_0.effect.chess.uid).chess = arg_13_0.effect.chess
 
-	if slot0.mgr:getEntity(slot0.effect.chess.uid) then
-		TaskDispatcher.runDelay(slot0.finishWork, slot0, slot2:updateStar(slot0.effect.chess))
+	local var_13_0 = arg_13_0.mgr:getEntity(arg_13_0.effect.chess.uid)
+
+	if var_13_0 then
+		local var_13_1 = var_13_0:updateStar(arg_13_0.effect.chess)
+
+		TaskDispatcher.runDelay(arg_13_0.finishWork, arg_13_0, var_13_1)
 	else
-		slot0:finishWork()
+		arg_13_0:finishWork()
 	end
 end
 
-function slot0._handleBattleChange(slot0)
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		slot1:updateBattle(slot0.effect.effectNum)
+function var_0_0._handleBattleChange(arg_14_0)
+	local var_14_0 = arg_14_0.mgr:getEntity(arg_14_0.effect.targetId)
+
+	if var_14_0 then
+		var_14_0:updateBattle(arg_14_0.effect.effectNum)
 	end
 
-	slot0:finishWork()
+	arg_14_0:finishWork()
 end
 
-function slot0._handleSummon(slot0)
-	slot0.mgr:addEntity(slot0.effect.targetId, slot0.effect.chess, slot0.effect.effectNum)
+function var_0_0._handleSummon(arg_15_0)
+	arg_15_0.mgr:addEntity(arg_15_0.effect.targetId, arg_15_0.effect.chess, arg_15_0.effect.effectNum)
 
-	if slot0.context == AutoChessEnum.ContextType.EndBuy or slot0.context == AutoChessEnum.ContextType.Fight then
-		slot0.chessMo:getChessPosition(tonumber(slot0.effect.targetId), tonumber(slot0.effect.effectNum) + 1, slot0.chessMo.lastSvrFight).chess = slot0.effect.chess
+	if arg_15_0.context == AutoChessEnum.ContextType.EndBuy or arg_15_0.context == AutoChessEnum.ContextType.Fight then
+		arg_15_0.chessMo:getChessPosition(tonumber(arg_15_0.effect.targetId), tonumber(arg_15_0.effect.effectNum) + 1, arg_15_0.chessMo.lastSvrFight).chess = arg_15_0.effect.chess
 	else
-		slot0.chessMo:getChessPosition(tonumber(slot0.effect.targetId), tonumber(slot0.effect.effectNum) + 1).chess = slot0.effect.chess
+		arg_15_0.chessMo:getChessPosition(tonumber(arg_15_0.effect.targetId), tonumber(arg_15_0.effect.effectNum) + 1).chess = arg_15_0.effect.chess
 	end
 
-	TaskDispatcher.runDelay(slot0.finishWork, slot0, 0.2)
+	TaskDispatcher.runDelay(arg_15_0.finishWork, arg_15_0, 0.2)
 end
 
-function slot0._handlePlayAttack(slot0)
-	slot0.damageWork = AutoChessDamageWork.New(slot0.effect)
+function var_0_0._handlePlayAttack(arg_16_0)
+	arg_16_0.damageWork = AutoChessDamageWork.New(arg_16_0.effect)
 
-	slot0.damageWork:registerDoneListener(slot0.finishWork, slot0)
-	slot0.damageWork:onStart(slot0.context)
+	arg_16_0.damageWork:registerDoneListener(arg_16_0.finishWork, arg_16_0)
+	arg_16_0.damageWork:onStart(arg_16_0.context)
 end
 
-function slot0._handleUpdateChessPos(slot0)
-	if slot0.mgr:getEntity(slot0.effect.targetId) then
-		if slot0.effect.targetId ~= slot0.chessMo:getChessPosition(tonumber(slot0.effect.fromId), tonumber(slot0.effect.effectNum) + 1).chess.uid then
-			slot5 = slot0.chessMo:getChessPosition(slot1.warZone, slot1.index + 1)
-			slot5.chess = slot4.chess
-			slot4.chess = slot5.chess
+function var_0_0._handleUpdateChessPos(arg_17_0)
+	local var_17_0 = arg_17_0.mgr:getEntity(arg_17_0.effect.targetId)
+
+	if var_17_0 then
+		local var_17_1 = tonumber(arg_17_0.effect.fromId)
+		local var_17_2 = tonumber(arg_17_0.effect.effectNum)
+		local var_17_3 = arg_17_0.chessMo:getChessPosition(var_17_1, var_17_2 + 1)
+
+		if arg_17_0.effect.targetId ~= var_17_3.chess.uid then
+			local var_17_4 = arg_17_0.chessMo:getChessPosition(var_17_0.warZone, var_17_0.index + 1)
+
+			var_17_3.chess, var_17_4.chess = var_17_4.chess, var_17_3.chess
 		end
 
-		slot1:updateIndex(slot2, slot3)
+		var_17_0:updateIndex(var_17_1, var_17_2)
 	end
 
-	slot0:finishWork()
+	arg_17_0:finishWork()
 end
 
-function slot0._handleMallUpdate(slot0)
-	slot0.chessMo:updateSvrMallRegion(slot0.effect.region, true)
-	slot0:finishWork()
+function var_0_0._handleMallUpdate(arg_18_0)
+	arg_18_0.chessMo:updateSvrMallRegion(arg_18_0.effect.region, true)
+	arg_18_0:finishWork()
 end
 
-function slot0._handleFightUpdate(slot0)
-	slot0.chessMo:updateSvrFight(slot0.effect.fight)
-	slot0:finishWork()
+function var_0_0._handleFightUpdate(arg_19_0)
+	arg_19_0.chessMo:updateSvrFight(arg_19_0.effect.fight)
+	arg_19_0:finishWork()
 end
 
-function slot0._handleLeaderSkillUpdate(slot0)
-	slot0.chessMo.svrFight:unlockMasterSkill(slot0.effect.targetId)
-	slot0:finishWork()
+function var_0_0._handleLeaderSkillUpdate(arg_20_0)
+	arg_20_0.chessMo.svrFight:unlockMasterSkill(arg_20_0.effect.targetId)
+	arg_20_0:finishWork()
 end
 
-function slot0._handleLeaderChange(slot0)
-	if slot0.mgr:getLeaderEntity(slot0.chessMo.svrFight.mySideMaster.uid) then
-		slot1:setData(slot0.effect.master)
+function var_0_0._handleLeaderChange(arg_21_0)
+	local var_21_0 = arg_21_0.mgr:getLeaderEntity(arg_21_0.chessMo.svrFight.mySideMaster.uid)
+
+	if var_21_0 then
+		var_21_0:setData(arg_21_0.effect.master)
 	end
 
-	slot0.chessMo.svrFight:updateMaster(slot0.effect.master)
-	slot0:finishWork()
+	arg_21_0.chessMo.svrFight:updateMaster(arg_21_0.effect.master)
+	arg_21_0:finishWork()
 end
 
-function slot0.getHandleFunc(slot0, slot1)
-	return slot0._defineList[slot1]
+function var_0_0.getHandleFunc(arg_22_0, arg_22_1)
+	return arg_22_0._defineList[arg_22_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

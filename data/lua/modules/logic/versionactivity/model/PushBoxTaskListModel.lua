@@ -1,52 +1,64 @@
-module("modules.logic.versionactivity.model.PushBoxTaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity.model.PushBoxTaskListModel", package.seeall)
 
-slot0 = class("PushBoxTaskListModel", ListScrollModel)
+local var_0_0 = class("PushBoxTaskListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.initData(slot0, slot1)
-	slot0.data = {}
+function var_0_0.initData(arg_3_0, arg_3_1)
+	arg_3_0.data = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.data, {
-			id = slot6.taskId,
-			config = slot6
-		})
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = {
+			id = iter_3_1.taskId,
+			config = iter_3_1
+		}
+
+		table.insert(arg_3_0.data, var_3_0)
 	end
 end
 
-function slot0.sortData(slot0)
-	table.sort(slot0.data, uv0.sortList)
+function var_0_0.sortData(arg_4_0)
+	table.sort(arg_4_0.data, var_0_0.sortList)
 end
 
-function slot0.sortList(slot0, slot1)
-	if PushBoxModel.instance:getTaskData(slot0.config.taskId).hasGetBonus and not PushBoxModel.instance:getTaskData(slot1.config.taskId).hasGetBonus then
+function var_0_0.sortList(arg_5_0, arg_5_1)
+	local var_5_0 = PushBoxModel.instance:getTaskData(arg_5_0.config.taskId)
+	local var_5_1 = PushBoxModel.instance:getTaskData(arg_5_1.config.taskId)
+
+	if var_5_0.hasGetBonus and not var_5_1.hasGetBonus then
 		return false
-	elseif not slot2.hasGetBonus and slot3.hasGetBonus then
+	elseif not var_5_0.hasGetBonus and var_5_1.hasGetBonus then
 		return true
-	elseif slot0.config.maxProgress <= slot2.progress and not (slot1.config.maxProgress <= slot3.progress) then
-		return true
-	elseif not slot4 and slot5 then
-		return false
 	else
-		return slot0.config.sort < slot1.config.sort
+		local var_5_2 = var_5_0.progress >= arg_5_0.config.maxProgress
+		local var_5_3 = var_5_1.progress >= arg_5_1.config.maxProgress
+
+		if var_5_2 and not var_5_3 then
+			return true
+		elseif not var_5_2 and var_5_3 then
+			return false
+		else
+			return arg_5_0.config.sort < arg_5_1.config.sort
+		end
 	end
 end
 
-function slot0.refreshData(slot0)
-	slot0:setList(slot0.data)
+function var_0_0.refreshData(arg_6_0)
+	arg_6_0:setList(arg_6_0.data)
 end
 
-function slot0.clearData(slot0)
-	slot0:clear()
+function var_0_0.clearData(arg_7_0)
+	arg_7_0:clear()
 
-	slot0.data = nil
+	arg_7_0.data = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

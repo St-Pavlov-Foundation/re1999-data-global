@@ -1,48 +1,48 @@
-module("modules.logic.login.controller.work.LoginFirstGuideWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LoginFirstGuideWork", package.seeall)
 
-slot0 = class("LoginFirstGuideWork", BaseWork)
+local var_0_0 = class("LoginFirstGuideWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if GuideController.instance:isForbidGuides() then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	elseif GuideModel.instance:isGuideFinish(GuideController.FirstGuideId) then
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	else
-		GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0._enterSceneFinish, slot0)
+		GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._enterSceneFinish, arg_1_0)
 		GameSceneMgr.instance:startScene(SceneType.Newbie, 101, 10101)
 	end
 end
 
-function slot0._enterSceneFinish(slot0, slot1, slot2)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
+function var_0_0._enterSceneFinish(arg_2_0, arg_2_1, arg_2_2)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_2_0._onFinishGuide, arg_2_0)
 
 	if GuideModel.instance:isDoingFirstGuide() and not GuideController.instance:isForbidGuides() then
-		GameSceneMgr.instance:registerCallback(SceneEventName.WaitCloseHeadsetView, slot0._startFirstGuide, slot0)
+		GameSceneMgr.instance:registerCallback(SceneEventName.WaitCloseHeadsetView, arg_2_0._startFirstGuide, arg_2_0)
 	else
-		slot0:_startFirstGuide()
+		arg_2_0:_startFirstGuide()
 	end
 end
 
-function slot0._startFirstGuide(slot0)
-	slot1 = GuideConfig.instance:getGuideCO(GuideController.FirstGuideId)
+function var_0_0._startFirstGuide(arg_3_0)
+	local var_3_0 = GuideConfig.instance:getGuideCO(GuideController.FirstGuideId)
 
 	GuideController.instance:checkStartFirstGuide()
 end
 
-function slot0._onFinishGuide(slot0, slot1)
-	if slot1 == GuideController.FirstGuideId then
-		slot0:onDone(true)
+function var_0_0._onFinishGuide(arg_4_0, arg_4_1)
+	if arg_4_1 == GuideController.FirstGuideId then
+		arg_4_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.WaitCloseHeadsetView, slot0._startFirstGuide, slot0)
+function var_0_0.clearWork(arg_5_0)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_5_0._onFinishGuide, arg_5_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.WaitCloseHeadsetView, arg_5_0._startFirstGuide, arg_5_0)
 end
 
-function slot0._removeEvents(slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, slot0._enterSceneFinish, slot0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.WaitCloseHeadsetView, slot0._startFirstGuide, slot0)
+function var_0_0._removeEvents(arg_6_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_6_0._enterSceneFinish, arg_6_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.WaitCloseHeadsetView, arg_6_0._startFirstGuide, arg_6_0)
 end
 
-return slot0
+return var_0_0

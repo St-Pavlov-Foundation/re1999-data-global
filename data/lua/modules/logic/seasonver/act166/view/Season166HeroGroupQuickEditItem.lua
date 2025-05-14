@@ -1,122 +1,127 @@
-module("modules.logic.seasonver.act166.view.Season166HeroGroupQuickEditItem", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166HeroGroupQuickEditItem", package.seeall)
 
-slot0 = class("Season166HeroGroupQuickEditItem", Season166HeroGroupEditItem)
+local var_0_0 = class("Season166HeroGroupQuickEditItem", Season166HeroGroupEditItem)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._txtorder = gohelper.findChildText(slot1, "#go_orderbg/#txt_order")
-	slot0._goorderbg = gohelper.findChild(slot1, "#go_orderbg")
+	arg_1_0._txtorder = gohelper.findChildText(arg_1_1, "#go_orderbg/#txt_order")
+	arg_1_0._goorderbg = gohelper.findChild(arg_1_1, "#go_orderbg")
 
-	slot0:enableDeselect(false)
-	slot0._heroItem:setNewShow(false)
-	slot0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
-	slot0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
-	slot0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
-	gohelper.setActive(slot0._goorderbg, false)
+	arg_1_0:enableDeselect(false)
+	arg_1_0._heroItem:setNewShow(false)
+	arg_1_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
+	arg_1_0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
+	arg_1_0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
+	arg_1_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
+	arg_1_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
+	arg_1_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
+	gohelper.setActive(arg_1_0._goorderbg, false)
 
-	slot0._itemAnim.speed = 1
+	arg_1_0._itemAnim.speed = 1
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1
 
-	slot0._heroItem:onUpdateMO(slot1)
-	slot0._heroItem:setNewShow(false)
+	arg_2_0._heroItem:onUpdateMO(arg_2_1)
+	arg_2_0._heroItem:setNewShow(false)
 
-	if not slot1:isTrial() and slot1.level < HeroGroupBalanceHelper.getHeroBalanceLv(slot1.heroId) then
-		slot0._heroItem:setBalanceLv(slot2)
+	if not arg_2_1:isTrial() then
+		local var_2_0 = HeroGroupBalanceHelper.getHeroBalanceLv(arg_2_1.heroId)
+
+		if var_2_0 > arg_2_1.level then
+			arg_2_0._heroItem:setBalanceLv(var_2_0)
+		end
 	end
 
-	slot0:updateTrialTag()
-	slot0:updateTrialRepeat()
+	arg_2_0:updateTrialTag()
+	arg_2_0:updateTrialRepeat()
 
-	slot2 = Season166HeroGroupQuickEditModel.instance:getHeroTeamPos(slot0._mo.uid)
-	slot0._team_pos_index = slot2
+	local var_2_1 = Season166HeroGroupQuickEditModel.instance:getHeroTeamPos(arg_2_0._mo.uid)
 
-	if slot2 ~= 0 then
-		if not slot0._open_ani_finish then
-			TaskDispatcher.runDelay(slot0._show_goorderbg, slot0, 0.3)
+	arg_2_0._team_pos_index = var_2_1
+
+	if var_2_1 ~= 0 then
+		if not arg_2_0._open_ani_finish then
+			TaskDispatcher.runDelay(arg_2_0._show_goorderbg, arg_2_0, 0.3)
 		else
-			slot0:_show_goorderbg()
+			arg_2_0:_show_goorderbg()
 		end
 	else
-		gohelper.setActive(slot0._goorderbg, false)
+		gohelper.setActive(arg_2_0._goorderbg, false)
 	end
 
-	slot0._open_ani_finish = true
+	arg_2_0._open_ani_finish = true
 
-	slot0:refreshSelectState()
+	arg_2_0:refreshSelectState()
 end
 
-function slot0._show_goorderbg(slot0)
-	gohelper.setActive(slot0._goorderbg, true)
+function var_0_0._show_goorderbg(arg_3_0)
+	gohelper.setActive(arg_3_0._goorderbg, true)
 
-	slot0._txtorder.text = slot0._team_pos_index
+	arg_3_0._txtorder.text = arg_3_0._team_pos_index
 end
 
-function slot0.updateTrialRepeat(slot0, slot1)
-	if slot1 and (slot1.heroId ~= slot0._mo.heroId or slot1 == slot0._mo) then
+function var_0_0.updateTrialRepeat(arg_4_0, arg_4_1)
+	if arg_4_1 and (arg_4_1.heroId ~= arg_4_0._mo.heroId or arg_4_1 == arg_4_0._mo) then
 		return
 	end
 
-	slot0.isRepeat = Season166HeroGroupQuickEditModel.instance:isRepeatHero(slot0._mo.heroId, slot0._mo.uid)
+	arg_4_0.isRepeat = Season166HeroGroupQuickEditModel.instance:isRepeatHero(arg_4_0._mo.heroId, arg_4_0._mo.uid)
 
-	slot0._heroItem:setTrialRepeat(slot0.isRepeat)
+	arg_4_0._heroItem:setTrialRepeat(arg_4_0.isRepeat)
 end
 
-function slot0.refreshSelectState(slot0)
-	gohelper.setActive(slot0._goMainSelect, false)
-	gohelper.setActive(slot0._goHelpSelect, false)
+function var_0_0.refreshSelectState(arg_5_0)
+	gohelper.setActive(arg_5_0._goMainSelect, false)
+	gohelper.setActive(arg_5_0._goHelpSelect, false)
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if slot0._heroItem:getIsRepeat() then
+	if arg_6_0._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	if slot0._mo and slot0._mo.isPosLock then
+	if arg_6_0._mo and arg_6_0._mo.isPosLock then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if slot0._mo:isTrial() and not Season166HeroGroupQuickEditModel.instance:isInTeamHero(slot0._mo.uid) and Season166HeroGroupQuickEditModel.instance:isTrialLimit() then
+	if arg_6_0._mo:isTrial() and not Season166HeroGroupQuickEditModel.instance:isInTeamHero(arg_6_0._mo.uid) and Season166HeroGroupQuickEditModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if slot0._mo and not Season166HeroGroupQuickEditModel.instance:selectHero(slot0._mo.uid) then
+	if arg_6_0._mo and not Season166HeroGroupQuickEditModel.instance:selectHero(arg_6_0._mo.uid) then
 		return
 	end
 
-	if slot0._isSelect and slot0._enableDeselect then
-		slot0._view:selectCell(slot0._index, false)
+	if arg_6_0._isSelect and arg_6_0._enableDeselect then
+		arg_6_0._view:selectCell(arg_6_0._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		slot0._view:selectCell(slot0._index, true)
+		arg_6_0._view:selectCell(arg_6_0._index, true)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.onSelect(arg_7_0, arg_7_1)
+	arg_7_0._isSelect = arg_7_1
 
-	if slot1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, slot0._mo)
+	if arg_7_1 then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_7_0._mo)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._show_goorderbg, slot0)
-	uv0.super.onDestroy(slot0)
+function var_0_0.onDestroy(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._show_goorderbg, arg_8_0)
+	var_0_0.super.onDestroy(arg_8_0)
 end
 
-return slot0
+return var_0_0

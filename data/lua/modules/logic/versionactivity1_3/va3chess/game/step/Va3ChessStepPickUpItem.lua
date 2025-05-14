@@ -1,52 +1,71 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepPickUpItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepPickUpItem", package.seeall)
 
-slot0 = class("Va3ChessStepPickUpItem", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepPickUpItem", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot2 = 0
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.id
+	local var_1_1 = 0
+	local var_1_2 = Va3ChessGameController.instance.interacts
 
-	if Va3ChessGameController.instance.interacts and slot3:get(slot0.originData.id) and not gohelper.isNil(slot4:tryGetGameObject()) then
-		slot6 = gohelper.findChild(slot5, "vx_daoju")
+	if var_1_2 then
+		local var_1_3 = var_1_2:get(var_1_0)
 
-		gohelper.setActive(slot6, true)
+		if var_1_3 then
+			local var_1_4 = var_1_3:tryGetGameObject()
 
-		slot2 = slot6 and 1 or 0
+			if not gohelper.isNil(var_1_4) then
+				local var_1_5 = gohelper.findChild(var_1_4, "vx_daoju")
+
+				gohelper.setActive(var_1_5, true)
+
+				var_1_1 = var_1_5 and 1 or 0
+			end
+		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PickUpBottle)
 
-	if slot2 ~= 0 then
-		TaskDispatcher.runDelay(slot0.delayCallPick, slot0, slot2)
+	if var_1_1 ~= 0 then
+		TaskDispatcher.runDelay(arg_1_0.delayCallPick, arg_1_0, var_1_1)
 	else
-		slot0:delayCallPick()
+		arg_1_0:delayCallPick()
 	end
 end
 
-function slot0.delayCallPick(slot0)
-	TaskDispatcher.cancelTask(slot0.delayCallPick, slot0)
+function var_0_0.delayCallPick(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0.delayCallPick, arg_2_0)
 
-	if Va3ChessGameModel.instance:getActId() and Va3ChessConfig.instance:getInteractObjectCo(slot1, slot0.originData.id) then
-		Va3ChessGameController.instance:registerCallback(Va3ChessEvent.RewardIsClose, slot0.finish, slot0)
+	local var_2_0 = Va3ChessGameModel.instance:getActId()
+	local var_2_1 = arg_2_0.originData.id
 
-		if Va3ChessViewController.instance:openRewardView(slot1, slot3, {
-			collectionId = slot0.originData.collectionId
-		}) then
-			return
+	if var_2_0 then
+		local var_2_2 = Va3ChessConfig.instance:getInteractObjectCo(var_2_0, var_2_1)
+
+		if var_2_2 then
+			Va3ChessGameController.instance:registerCallback(Va3ChessEvent.RewardIsClose, arg_2_0.finish, arg_2_0)
+
+			local var_2_3 = {
+				collectionId = arg_2_0.originData.collectionId
+			}
+
+			if Va3ChessViewController.instance:openRewardView(var_2_0, var_2_2, var_2_3) then
+				return
+			end
 		end
 	end
 
-	slot0:finish()
+	arg_2_0:finish()
 end
 
-function slot0.finish(slot0)
-	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.RewardIsClose, slot0.finish, slot0)
-	uv0.super.finish(slot0)
+function var_0_0.finish(arg_3_0)
+	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.RewardIsClose, arg_3_0.finish, arg_3_0)
+	var_0_0.super.finish(arg_3_0)
 end
 
-function slot0.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0.delayCallPick, slot0)
-	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.RewardIsClose, slot0.finish, slot0)
-	uv0.super.dispose(slot0)
+function var_0_0.dispose(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.delayCallPick, arg_4_0)
+	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.RewardIsClose, arg_4_0.finish, arg_4_0)
+	var_0_0.super.dispose(arg_4_0)
 end
 
-return slot0
+return var_0_0

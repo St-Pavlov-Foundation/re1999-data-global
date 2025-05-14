@@ -1,98 +1,113 @@
-module("modules.logic.character.view.destiny.CharacterDestinyStoneEffectItem", package.seeall)
+﻿module("modules.logic.character.view.destiny.CharacterDestinyStoneEffectItem", package.seeall)
 
-slot0 = class("CharacterDestinyStoneEffectItem", LuaCompBase)
+local var_0_0 = class("CharacterDestinyStoneEffectItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._gounlock = gohelper.findChild(slot0.viewGO, "#go_unlock")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_unlock/#txt_desc")
-	slot0._gounlocktip = gohelper.findChild(slot0.viewGO, "#go_unlocktip")
-	slot0._txtunlocktips = gohelper.findChildText(slot0.viewGO, "#go_unlocktip/#txt_unlocktips")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_unlock")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_unlock/#txt_desc")
+	arg_1_0._gounlocktip = gohelper.findChild(arg_1_0.viewGO, "#go_unlocktip")
+	arg_1_0._txtunlocktips = gohelper.findChildText(arg_1_0.viewGO, "#go_unlocktip/#txt_unlocktips")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_5_0, arg_5_1)
+	arg_5_0.viewGO = arg_5_1
 
-	slot0:onInitView()
+	arg_5_0:onInitView()
 
-	slot0._unlockInfoItems = slot0:getUserDataTb_()
-	slot0._lockInfoItems = slot0:getUserDataTb_()
+	arg_5_0._unlockInfoItems = arg_5_0:getUserDataTb_()
+	arg_5_0._lockInfoItems = arg_5_0:getUserDataTb_()
 
-	gohelper.setActive(slot0.viewGO, true)
-	gohelper.setActive(slot0._gounlock, false)
-	gohelper.setActive(slot0._gounlocktip, false)
+	gohelper.setActive(arg_5_0.viewGO, true)
+	gohelper.setActive(arg_5_0._gounlock, false)
+	gohelper.setActive(arg_5_0._gounlocktip, false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_6_0)
+	arg_6_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_7_0)
+	arg_7_0:removeEvents()
 end
 
-function slot0.onUpdateMo(slot0, slot1)
-	if slot1.curUseStoneId == 0 then
+function var_0_0.onUpdateMo(arg_8_0, arg_8_1)
+	if arg_8_1.curUseStoneId == 0 then
 		return
 	end
 
-	slot2 = slot1.rank
-	slot0._mo = slot1
+	local var_8_0 = arg_8_1.rank
 
-	if CharacterDestinyConfig.instance:getDestinyFacetCo(slot1.curUseStoneId) then
-		for slot7, slot8 in ipairs(slot3) do
-			slot9 = slot8.level <= slot2 and slot0:_getUnlockItem(slot7) or slot0:_getLockItem(slot7)
-			slot9.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(slot9.txt.gameObject, SkillDescComp)
+	arg_8_0._mo = arg_8_1
 
-			slot9.skillDesc:updateInfo(slot9.txt, slot8.desc, slot1.heroId)
-			slot9.skillDesc:setTipParam(0, Vector2(380, 100))
-			gohelper.setSibling(slot9.go, slot7)
+	local var_8_1 = CharacterDestinyConfig.instance:getDestinyFacetCo(arg_8_1.curUseStoneId)
+
+	if var_8_1 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+			local var_8_2 = var_8_0 >= iter_8_1.level and arg_8_0:_getUnlockItem(iter_8_0) or arg_8_0:_getLockItem(iter_8_0)
+
+			var_8_2.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_2.txt.gameObject, SkillDescComp)
+
+			var_8_2.skillDesc:updateInfo(var_8_2.txt, iter_8_1.desc, arg_8_1.heroId)
+			var_8_2.skillDesc:setTipParam(0, Vector2(380, 100))
+			gohelper.setSibling(var_8_2.go, iter_8_0)
 		end
 
-		for slot7, slot8 in pairs(slot0._unlockInfoItems) do
-			gohelper.setActive(slot8.go, slot7 <= slot2)
+		for iter_8_2, iter_8_3 in pairs(arg_8_0._unlockInfoItems) do
+			gohelper.setActive(iter_8_3.go, iter_8_2 <= var_8_0)
 		end
 
-		for slot7, slot8 in pairs(slot0._lockInfoItems) do
-			gohelper.setActive(slot8.go, slot2 < slot7 and slot7 <= #slot3)
+		for iter_8_4, iter_8_5 in pairs(arg_8_0._lockInfoItems) do
+			gohelper.setActive(iter_8_5.go, var_8_0 < iter_8_4 and iter_8_4 <= #var_8_1)
 		end
 	end
 end
 
-function slot0._getUnlockItem(slot0, slot1)
-	if not slot0._unlockInfoItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._gounlock, "unlock" .. slot1)
-		slot2.go = slot3
-		slot2.txt = gohelper.findChildText(slot3, "#txt_desc")
-		slot0._unlockInfoItems[slot1] = slot2
+function var_0_0._getUnlockItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._unlockInfoItems[arg_9_1]
+
+	if not var_9_0 then
+		var_9_0 = arg_9_0:getUserDataTb_()
+
+		local var_9_1 = gohelper.cloneInPlace(arg_9_0._gounlock, "unlock" .. arg_9_1)
+
+		var_9_0.go = var_9_1
+		var_9_0.txt = gohelper.findChildText(var_9_1, "#txt_desc")
+		arg_9_0._unlockInfoItems[arg_9_1] = var_9_0
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0._getLockItem(slot0, slot1)
-	if not slot0._lockInfoItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._gounlocktip, "lock" .. slot1)
-		slot2.go = slot3
-		slot2.txt = gohelper.findChildText(slot3, "#txt_unlocktips")
-		slot0._lockInfoItems[slot1] = slot2
+function var_0_0._getLockItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._lockInfoItems[arg_10_1]
+
+	if not var_10_0 then
+		var_10_0 = arg_10_0:getUserDataTb_()
+
+		local var_10_1 = gohelper.cloneInPlace(arg_10_0._gounlocktip, "lock" .. arg_10_1)
+
+		var_10_0.go = var_10_1
+		var_10_0.txt = gohelper.findChildText(var_10_1, "#txt_unlocktips")
+		arg_10_0._lockInfoItems[arg_10_1] = var_10_0
 	end
 
-	return slot2
+	return var_10_0
 end
 
-return slot0
+return var_0_0

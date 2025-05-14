@@ -1,75 +1,88 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicTaskView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicTaskView", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicTaskView", BaseView)
+local var_0_0 = class("VersionActivity2_4MusicTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtremaintime = gohelper.findChildText(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshRight, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
-	slot0:refreshLeft()
+	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, TimeUtil.OneMinuteSecond)
+	arg_6_0:refreshLeft()
 	VersionActivity2_4MusicTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity179
-	}, slot0._oneClaimReward, slot0)
+	}, arg_6_0._oneClaimReward, arg_6_0)
 end
 
-function slot0._oneClaimReward(slot0)
-	slot0:refreshRight()
+function var_0_0._oneClaimReward(arg_7_0)
+	arg_7_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshRemainTime()
+function var_0_0.refreshLeft(arg_8_0)
+	arg_8_0:refreshRemainTime()
 end
 
-function slot0.refreshRemainTime(slot0)
-	if ActivityModel.instance:getActivityInfo()[Activity179Model.instance:getActivityId()] and slot2:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		slot0._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(slot3)
+function var_0_0.refreshRemainTime(arg_9_0)
+	local var_9_0 = Activity179Model.instance:getActivityId()
+	local var_9_1 = ActivityModel.instance:getActivityInfo()[var_9_0]
 
-		return
+	if var_9_1 then
+		local var_9_2 = var_9_1:getRealEndTimeStamp() - ServerTime.now()
+
+		if var_9_2 > 0 then
+			local var_9_3 = TimeUtil.SecondToActivityTimeFormat(var_9_2)
+
+			arg_9_0._txtremaintime.text = var_9_3
+
+			return
+		end
 	end
 
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+	TaskDispatcher.cancelTask(arg_9_0.refreshRemainTime, arg_9_0)
 end
 
-function slot0.refreshRight(slot0)
+function var_0_0.refreshRight(arg_10_0)
 	VersionActivity2_4MusicTaskListModel.instance:initTask()
 	VersionActivity2_4MusicTaskListModel.instance:sortTaskMoList()
 	VersionActivity2_4MusicTaskListModel.instance:refreshList()
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.VersionActivity2_4MusicOpinionTabView then
-		slot0:closeThis()
+function var_0_0._onOpenViewFinish(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.VersionActivity2_4MusicOpinionTabView then
+		arg_11_0:closeThis()
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.refreshRemainTime, arg_12_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

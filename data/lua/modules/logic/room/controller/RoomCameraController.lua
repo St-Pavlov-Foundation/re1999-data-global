@@ -1,88 +1,110 @@
-module("modules.logic.room.controller.RoomCameraController", package.seeall)
+﻿module("modules.logic.room.controller.RoomCameraController", package.seeall)
 
-slot0 = class("RoomCameraController", BaseController)
+local var_0_0 = class("RoomCameraController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.resetCameraStateByKey(slot0, slot1)
-	if slot0:isHasCameraStateByKey(slot1) then
-		slot2 = slot0._viewNameCameraStateDict[slot1]
-		slot0._viewNameCameraStateDict[slot1] = nil
+function var_0_0.resetCameraStateByKey(arg_4_0, arg_4_1)
+	if arg_4_0:isHasCameraStateByKey(arg_4_1) then
+		local var_4_0 = arg_4_0._viewNameCameraStateDict[arg_4_1]
 
-		if slot0:getRoomScene() then
-			slot3.cameraFollow:setFollowTarget(nil)
-			slot3.camera:switchCameraState(slot2.cameraState, {
-				zoom = slot2.zoom
+		arg_4_0._viewNameCameraStateDict[arg_4_1] = nil
+
+		local var_4_1 = arg_4_0:getRoomScene()
+
+		if var_4_1 then
+			var_4_1.cameraFollow:setFollowTarget(nil)
+			var_4_1.camera:switchCameraState(var_4_0.cameraState, {
+				zoom = var_4_0.zoom
 			})
-			slot3.fovblock:clearLookParam()
+			var_4_1.fovblock:clearLookParam()
 		end
 	end
 end
 
-function slot0.saveCameraStateByKey(slot0, slot1, slot2)
-	slot0._viewNameCameraStateDict = slot0._viewNameCameraStateDict or {}
+function var_0_0.saveCameraStateByKey(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._viewNameCameraStateDict = arg_5_0._viewNameCameraStateDict or {}
 
-	if slot0:getRoomCamera() then
-		slot0._viewNameCameraStateDict[slot1] = {
-			cameraState = slot2 or slot3:getCameraState(),
-			zoom = slot3:getCameraZoom()
+	local var_5_0 = arg_5_0:getRoomCamera()
+
+	if var_5_0 then
+		local var_5_1 = arg_5_2 or var_5_0:getCameraState()
+
+		arg_5_0._viewNameCameraStateDict[arg_5_1] = {
+			cameraState = var_5_1,
+			zoom = var_5_0:getCameraZoom()
 		}
 	end
 end
 
-function slot0.isHasCameraStateByKey(slot0, slot1)
-	if slot0._viewNameCameraStateDict and slot0._viewNameCameraStateDict[slot1] then
+function var_0_0.isHasCameraStateByKey(arg_6_0, arg_6_1)
+	if arg_6_0._viewNameCameraStateDict and arg_6_0._viewNameCameraStateDict[arg_6_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getRoomScene(slot0)
-	if GameSceneMgr.instance:getCurScene() and GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		return slot1
+function var_0_0.getRoomScene(arg_7_0)
+	local var_7_0 = GameSceneMgr.instance:getCurScene()
+
+	if var_7_0 and GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
+		return var_7_0
 	end
 
 	return nil
 end
 
-function slot0.getRoomCamera(slot0)
-	if slot0:getRoomScene() then
-		return slot1.camera
+function var_0_0.getRoomCamera(arg_8_0)
+	local var_8_0 = arg_8_0:getRoomScene()
+
+	if var_8_0 then
+		return var_8_0.camera
 	end
 
 	return nil
 end
 
-function slot0.tweenCameraFocusBuildingUseCameraId(slot0, slot1, slot2, slot3, slot4)
-	slot0:tweenCameraByBuildingUid(slot1, RoomEnum.CameraState.Manufacture, slot2, slot3, slot4)
-	slot0:getRoomScene().fovblock:setLookBuildingUid(RoomEnum.CameraState.Manufacture, slot1)
+function var_0_0.tweenCameraFocusBuildingUseCameraId(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	arg_9_0:tweenCameraByBuildingUid(arg_9_1, RoomEnum.CameraState.Manufacture, arg_9_2, arg_9_3, arg_9_4)
+	arg_9_0:getRoomScene().fovblock:setLookBuildingUid(RoomEnum.CameraState.Manufacture, arg_9_1)
 end
 
-function slot0.tweenCameraByBuildingUid(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = slot0:getRoomScene()
-	slot8 = RoomConfig.instance:getCharacterBuildingInteractCameraConfig(slot3) and string.splitToNumber(slot7.focusXYZ, "#")
-	slot13 = slot6.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding)
-	slot14 = slot13:transformPoint(slot8 and slot8[1] or 0, slot8 and slot8[2] or 0, slot8 and slot8[3] or 0)
-	slot16 = slot2
+function var_0_0.tweenCameraByBuildingUid(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
+	local var_10_0 = arg_10_0:getRoomScene()
+	local var_10_1 = RoomConfig.instance:getCharacterBuildingInteractCameraConfig(arg_10_3)
+	local var_10_2 = var_10_1 and string.splitToNumber(var_10_1.focusXYZ, "#")
+	local var_10_3 = var_10_2 and var_10_2[1] or 0
+	local var_10_4 = var_10_2 and var_10_2[2] or 0
+	local var_10_5 = var_10_2 and var_10_2[3] or 0
+	local var_10_6 = var_10_1 and var_10_1.rotate or 0
+	local var_10_7 = var_10_0.buildingmgr:getBuildingEntity(arg_10_1, SceneTag.RoomBuilding)
+	local var_10_8 = var_10_7:transformPoint(var_10_3, var_10_4, var_10_5)
+	local var_10_9 = tonumber(var_10_6) + var_10_7:getMO().rotate * 60
+	local var_10_10 = RoomRotateHelper.getMod(var_10_9, 360) * Mathf.Deg2Rad
+	local var_10_11 = arg_10_2
+	local var_10_12 = {
+		focusX = var_10_8.x,
+		focusY = var_10_8.z,
+		zoom = var_10_0.camera:getZoomInitValue(var_10_11),
+		rotate = var_10_10
+	}
 
-	slot6.cameraFollow:setFollowTarget(nil)
-	slot6.camera:setChangeCameraParamsById(slot16, slot3)
-	slot6.camera:switchCameraState(slot16, {
-		focusX = slot14.x,
-		focusY = slot14.z,
-		zoom = slot6.camera:getZoomInitValue(slot16),
-		rotate = RoomRotateHelper.getMod(tonumber(slot7 and slot7.rotate or 0) + slot13:getMO().rotate * 60, 360) * Mathf.Deg2Rad
-	}, nil, slot4, slot5)
+	var_10_0.cameraFollow:setFollowTarget(nil)
+	var_10_0.camera:setChangeCameraParamsById(var_10_11, arg_10_3)
+	var_10_0.camera:switchCameraState(var_10_11, var_10_12, nil, arg_10_4, arg_10_5)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

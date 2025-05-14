@@ -1,138 +1,151 @@
-module("modules.logic.dungeon.view.rolestory.BaseRoleStoryView", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.BaseRoleStoryView", package.seeall)
 
-slot0 = class("BaseRoleStoryView", UserDataDispose)
+local var_0_0 = class("BaseRoleStoryView", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.parentGO = slot1
-	slot0.isShow = false
+	arg_1_0.parentGO = arg_1_1
+	arg_1_0.isShow = false
 
-	slot0:onInit()
+	arg_1_0:onInit()
 end
 
-function slot0._loadPrefab(slot0)
-	if slot0._loader then
+function var_0_0._loadPrefab(arg_2_0)
+	if arg_2_0._loader then
 		return
 	end
 
-	if not slot0.resPathList then
+	if not arg_2_0.resPathList then
 		return
 	end
 
-	slot1 = {}
+	local var_2_0 = {}
 
-	for slot5, slot6 in pairs(slot0.resPathList) do
-		table.insert(slot1, slot6)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0.resPathList) do
+		table.insert(var_2_0, iter_2_1)
 	end
 
-	slot0._abLoader = MultiAbLoader.New()
+	arg_2_0._abLoader = MultiAbLoader.New()
 
-	slot0._abLoader:setPathList(slot1)
-	slot0._abLoader:startLoad(slot0._onLoaded, slot0)
+	arg_2_0._abLoader:setPathList(var_2_0)
+	arg_2_0._abLoader:startLoad(arg_2_0._onLoaded, arg_2_0)
 end
 
-function slot0._onLoaded(slot0)
-	slot0.viewGO = gohelper.clone(slot0._abLoader:getAssetItem(slot0.resPathList.mainRes):GetResource(slot0.resPathList.mainRes), slot0.parentGO, slot0.viewName)
+function var_0_0._onLoaded(arg_3_0)
+	local var_3_0 = arg_3_0._abLoader:getAssetItem(arg_3_0.resPathList.mainRes):GetResource(arg_3_0.resPathList.mainRes)
 
-	if not slot0.viewGO then
+	arg_3_0.viewGO = gohelper.clone(var_3_0, arg_3_0.parentGO, arg_3_0.viewName)
+
+	if not arg_3_0.viewGO then
 		return
 	end
 
-	slot0:onInitView()
-	slot0:addEvents()
+	arg_3_0:onInitView()
+	arg_3_0:addEvents()
 
-	if slot0.isShow then
-		slot0:show(true)
+	if arg_3_0.isShow then
+		arg_3_0:show(true)
 	else
-		slot0:hide(true)
+		arg_3_0:hide(true)
 	end
 end
 
-function slot0.getResInst(slot0, slot1, slot2, slot3)
-	if slot0._abLoader:getAssetItem(slot1) then
-		if slot4:GetResource(slot1) then
-			return gohelper.clone(slot5, slot2, slot3)
+function var_0_0.getResInst(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = arg_4_0._abLoader:getAssetItem(arg_4_1)
+
+	if var_4_0 then
+		local var_4_1 = var_4_0:GetResource(arg_4_1)
+
+		if var_4_1 then
+			return gohelper.clone(var_4_1, arg_4_2, arg_4_3)
 		else
-			logError(slot0.__cname .. " prefab not exist: " .. slot1)
+			logError(arg_4_0.__cname .. " prefab not exist: " .. arg_4_1)
 		end
 	else
-		logError(slot0.__cname .. " resource not load: " .. slot1)
+		logError(arg_4_0.__cname .. " resource not load: " .. arg_4_1)
 	end
 
 	return nil
 end
 
-function slot0.show(slot0, slot1)
-	if slot0.isShow and not slot1 then
+function var_0_0.show(arg_5_0, arg_5_1)
+	if arg_5_0.isShow and not arg_5_1 then
 		return
 	end
 
-	slot0.isShow = true
+	arg_5_0.isShow = true
 
-	if not slot0.viewGO then
-		slot0:_loadPrefab()
+	if not arg_5_0.viewGO then
+		arg_5_0:_loadPrefab()
 
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, true)
-	slot0:onShow()
+	gohelper.setActive(arg_5_0.viewGO, true)
+	arg_5_0:onShow()
 end
 
-function slot0.hide(slot0, slot1)
-	if not slot0.isShow and not slot1 then
+function var_0_0.hide(arg_6_0, arg_6_1)
+	if not arg_6_0.isShow and not arg_6_1 then
 		return
 	end
 
-	slot0.isShow = false
+	arg_6_0.isShow = false
 
-	if not slot0.viewGO then
+	if not arg_6_0.viewGO then
 		return
 	end
 
-	gohelper.setActive(slot0.viewGO, false)
-	slot0:onHide()
+	gohelper.setActive(arg_6_0.viewGO, false)
+	arg_6_0:onHide()
 end
 
-function slot0.destory(slot0)
-	slot0:removeEvents()
-	slot0:onDestroyView()
+function var_0_0.destory(arg_7_0)
+	arg_7_0:removeEvents()
+	arg_7_0:onDestroyView()
 
-	if slot0._abLoader then
-		slot0._abLoader:dispose()
+	if arg_7_0._abLoader then
+		arg_7_0._abLoader:dispose()
 
-		slot0._abLoader = nil
+		arg_7_0._abLoader = nil
 	end
 
-	if slot0.viewGO then
-		gohelper.destroy(slot0.viewGO)
+	if arg_7_0.viewGO then
+		gohelper.destroy(arg_7_0.viewGO)
 
-		slot0.viewGO = nil
+		arg_7_0.viewGO = nil
 	end
 
-	slot0:__onDispose()
+	arg_7_0:__onDispose()
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_8_0)
+	return
 end
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_9_0)
+	return
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_10_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_11_0)
+	return
 end
 
-function slot0.onShow(slot0)
+function var_0_0.onShow(arg_12_0)
+	return
 end
 
-function slot0.onHide(slot0)
+function var_0_0.onHide(arg_13_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

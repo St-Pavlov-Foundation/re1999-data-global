@@ -1,7 +1,8 @@
-module("modules.logic.character.defines.CharacterTalentStyleEnum", package.seeall)
+﻿module("modules.logic.character.defines.CharacterTalentStyleEnum", package.seeall)
 
-slot0 = _M
-slot0.AttrChange = {
+local var_0_0 = _M
+
+var_0_0.AttrChange = {
 	[0] = {
 		NumColor = "#CAC8C5"
 	},
@@ -25,7 +26,7 @@ slot0.AttrChange = {
 		NumColor = "#CAC8C5"
 	}
 }
-slot0.StatType = {
+var_0_0.StatType = {
 	{
 		TxtColor = "#EA8438",
 		ProgressColor = "#EA8438"
@@ -36,4 +37,4 @@ slot0.StatType = {
 	}
 }
 
-return slot0
+return var_0_0

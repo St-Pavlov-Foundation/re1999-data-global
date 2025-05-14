@@ -1,34 +1,33 @@
-module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuCmd", package.seeall)
+﻿module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuCmd", package.seeall)
 
-slot0 = class("VersionActivity2_4SudokuCmd")
+local var_0_0 = class("VersionActivity2_4SudokuCmd")
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0._idx = slot1
-	slot0._oriNum = slot2
-	slot0._newNum = slot3
-	slot0._undo = false
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._idx = arg_1_1
+	arg_1_0._oriNum = arg_1_2
+	arg_1_0._newNum = arg_1_3
+	arg_1_0._undo = false
 end
 
-function slot0.getIdx(slot0)
-	return slot0._idx
+function var_0_0.getIdx(arg_2_0)
+	return arg_2_0._idx
 end
 
-function slot0.getOriNum(slot0)
-	return slot0._oriNum
+function var_0_0.getOriNum(arg_3_0)
+	return arg_3_0._oriNum
 end
 
-function slot0.getNewNum(slot0)
-	return slot0._newNum
+function var_0_0.getNewNum(arg_4_0)
+	return arg_4_0._newNum
 end
 
-function slot0.isUndo(slot0)
-	return slot0._undo
+function var_0_0.isUndo(arg_5_0)
+	return arg_5_0._undo
 end
 
-function slot0.undo(slot0)
-	slot0._oriNum = slot0._newNum
-	slot0._newNum = slot0._oriNum
-	slot0._undo = true
+function var_0_0.undo(arg_6_0)
+	arg_6_0._newNum, arg_6_0._oriNum = arg_6_0._oriNum, arg_6_0._newNum
+	arg_6_0._undo = true
 end
 
-return slot0
+return var_0_0

@@ -1,8 +1,9 @@
-module("modules.logic.navigatebtn.mgr.NavigateEvent", package.seeall)
+﻿module("modules.logic.navigatebtn.mgr.NavigateEvent", package.seeall)
 
-slot0 = _M
-slot0.StoryNext = 1
-slot0.BeforeClickHome = 9
-slot0.ClickHome = 10
+local var_0_0 = _M
 
-return slot0
+var_0_0.StoryNext = 1
+var_0_0.BeforeClickHome = 9
+var_0_0.ClickHome = 10
+
+return var_0_0

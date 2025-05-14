@@ -1,34 +1,40 @@
-module("modules.logic.rouge.controller.RougeDLCController", package.seeall)
+﻿module("modules.logic.rouge.controller.RougeDLCController", package.seeall)
 
-slot0 = class("RougeDLCController", BaseController)
+local var_0_0 = class("RougeDLCController", BaseController)
 
-function slot0.addDLC(slot0, slot1)
-	if not slot0:checkCanUpdateVersion(slot1) then
+function var_0_0.addDLC(arg_1_0, arg_1_1)
+	if not arg_1_0:checkCanUpdateVersion(arg_1_1) then
 		GameFacade.showToast(ToastEnum.CantUpdateVersion)
 
 		return
 	end
 
-	RougeOutsideRpc.instance:sendRougeDLCSettingSaveRequest(RougeOutsideModel.instance:season(), slot0:_getTargetDLCs(slot1, true))
+	local var_1_0 = arg_1_0:_getTargetDLCs(arg_1_1, true)
+	local var_1_1 = RougeOutsideModel.instance:season()
+
+	RougeOutsideRpc.instance:sendRougeDLCSettingSaveRequest(var_1_1, var_1_0)
 end
 
-function slot0.removeDLC(slot0, slot1)
-	if not slot0:checkCanUpdateVersion(slot1) then
+function var_0_0.removeDLC(arg_2_0, arg_2_1)
+	if not arg_2_0:checkCanUpdateVersion(arg_2_1) then
 		GameFacade.showToast(ToastEnum.CantUpdateVersion)
 
 		return
 	end
 
-	RougeOutsideRpc.instance:sendRougeDLCSettingSaveRequest(RougeOutsideModel.instance:season(), slot0:_getTargetDLCs(slot1, false))
+	local var_2_0 = arg_2_0:_getTargetDLCs(arg_2_1, false)
+	local var_2_1 = RougeOutsideModel.instance:season()
+
+	RougeOutsideRpc.instance:sendRougeDLCSettingSaveRequest(var_2_1, var_2_0)
 end
 
-function slot0.checkCanUpdateVersion(slot0, slot1)
+function var_0_0.checkCanUpdateVersion(arg_3_0, arg_3_1)
 	if RougeModel.instance:inRouge() then
 		return
 	end
 
-	if not lua_rouge_season.configDict[slot1] then
-		logError(string.format("无法挂移除《%s》DLC,原因:DLC配置不存在", slot1))
+	if not lua_rouge_season.configDict[arg_3_1] then
+		logError(string.format("无法挂移除《%s》DLC,原因:DLC配置不存在", arg_3_1))
 
 		return
 	end
@@ -36,18 +42,20 @@ function slot0.checkCanUpdateVersion(slot0, slot1)
 	return true
 end
 
-function slot0._getTargetDLCs(slot0, slot1, slot2)
-	if slot2 then
-		table.insert(RougeDLCSelectListModel.instance:getCurSelectVersions(), slot1)
+function var_0_0._getTargetDLCs(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = RougeDLCSelectListModel.instance:getCurSelectVersions()
+
+	if arg_4_2 then
+		table.insert(var_4_0, arg_4_1)
 	else
-		tabletool.removeValue(slot3, slot1)
+		tabletool.removeValue(var_4_0, arg_4_1)
 	end
 
-	table.sort(slot3)
+	table.sort(var_4_0)
 
-	return slot3
+	return var_4_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

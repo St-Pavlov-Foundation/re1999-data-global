@@ -1,329 +1,383 @@
-module("modules.logic.fight.view.FightFloatMgr", package.seeall)
+﻿module("modules.logic.fight.view.FightFloatMgr", package.seeall)
 
-slot0 = class("FightFloatMgr")
-slot1 = 1
-slot2 = 4
-slot3 = 10
-slot4 = 0.3
-slot5 = 3
-slot6 = {
+local var_0_0 = class("FightFloatMgr")
+local var_0_1 = 1
+local var_0_2 = 4
+local var_0_3 = 10
+local var_0_4 = 0.3
+local var_0_5 = 3
+local var_0_6 = {
 	[FightEnum.FloatType.buff] = true
 }
 
-function slot0.ctor(slot0)
-	slot0._loader = nil
-	slot0._id2PlayingItem = {}
-	slot0._type2ItemPool = {}
-	slot0._entityTimeDict = {}
-	slot0._dataQueue4 = {}
-	slot0._floatParent = nil
-	slot0._entityId2PlayingItems = {}
-	slot0.canShowFightNumUI = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FightShowFightNum, 1) == 1
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._loader = nil
+	arg_1_0._id2PlayingItem = {}
+	arg_1_0._type2ItemPool = {}
+	arg_1_0._entityTimeDict = {}
+	arg_1_0._dataQueue4 = {}
+	arg_1_0._floatParent = nil
+	arg_1_0._entityId2PlayingItems = {}
+	arg_1_0.canShowFightNumUI = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FightShowFightNum, 1) == 1
 end
 
-function slot0.removeInterval(slot0)
-	uv0 = 0
+function var_0_0.removeInterval(arg_2_0)
+	var_0_4 = 0
 end
 
-function slot0.resetInterval(slot0)
-	uv0 = 0.3 / FightModel.instance:getUISpeed()
+function var_0_0.resetInterval(arg_3_0)
+	var_0_4 = 0.3 / FightModel.instance:getUISpeed()
 end
 
-function slot0.init(slot0)
-	slot0._classEnabled = true
-	slot0._loader = MultiAbLoader.New()
+function var_0_0.init(arg_4_0)
+	arg_4_0._classEnabled = true
+	arg_4_0._loader = MultiAbLoader.New()
 
-	slot0._loader:addPath(slot0:getFloatPrefab())
-	slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+	arg_4_0._loader:addPath(arg_4_0:getFloatPrefab())
+	arg_4_0._loader:startLoad(arg_4_0._onLoadCallback, arg_4_0)
 
-	slot0._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+	arg_4_0._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
 end
 
-function slot0.getFloatPrefab(slot0)
-	slot1 = nil
+function var_0_0.getFloatPrefab(arg_5_0)
+	local var_5_0
+	local var_5_1 = os.time()
 
-	for slot6, slot7 in ipairs(lua_fight_float_effect.configList) do
-		slot8 = true
-		slot9 = false
+	for iter_5_0, iter_5_1 in ipairs(lua_fight_float_effect.configList) do
+		local var_5_2 = true
+		local var_5_3 = false
 
-		if not string.nilorempty(slot7.startTime) then
-			slot8 = TimeUtil.stringToTimestamp(slot7.startTime) <= os.time()
+		if not string.nilorempty(iter_5_1.startTime) then
+			var_5_2 = var_5_1 >= TimeUtil.stringToTimestamp(iter_5_1.startTime)
 		end
 
-		if not string.nilorempty(slot7.endTime) then
-			slot9 = TimeUtil.stringToTimestamp(slot7.endTime) <= slot2
+		if not string.nilorempty(iter_5_1.endTime) then
+			var_5_3 = var_5_1 >= TimeUtil.stringToTimestamp(iter_5_1.endTime)
 		end
 
-		if slot8 and not slot9 then
-			if not slot1 then
-				slot1 = slot7
-			elseif slot1.priority < slot7.priority then
-				slot1 = slot7
+		if var_5_2 and not var_5_3 then
+			if not var_5_0 then
+				var_5_0 = iter_5_1
+			elseif iter_5_1.priority > var_5_0.priority then
+				var_5_0 = iter_5_1
 			end
 		end
 	end
 
-	if not slot1 then
+	if not var_5_0 then
 		return ResUrl.getSceneUIPrefab("fight", "fightfloat")
 	end
 
-	return ResUrl.getSceneUIPrefab("fight", slot1.prefabPath)
+	return ResUrl.getSceneUIPrefab("fight", var_5_0.prefabPath)
 end
 
-function slot0._onLoadCallback(slot0)
-	slot2 = slot0._loader:getFirstAssetItem():GetResource()
-	slot0._floatParent = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.Hud), "Float")
-	slot0._floatParentRectTr = slot0._floatParent:GetComponent(gohelper.Type_RectTransform)
-	slot4 = slot0._floatParent.transform
-	slot5 = Vector2.zero
-	slot4.anchorMin = slot5
-	slot4.anchorMax = Vector2.one
-	slot4.offsetMin = slot5
-	slot4.offsetMax = slot5
+function var_0_0._onLoadCallback(arg_6_0)
+	local var_6_0 = arg_6_0._loader:getFirstAssetItem():GetResource()
+	local var_6_1 = ViewMgr.instance:getUILayer(UILayerName.Hud)
 
-	slot0:_initPrefab(FightEnum.FloatType.equipeffect, gohelper.findChild(slot2, "equipeffect"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.crit_restrain, gohelper.findChild(slot2, "crit_restrain"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.crit_berestrain, gohelper.findChild(slot2, "crit_berestrain"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.crit_heal, gohelper.findChild(slot2, "crit_heal"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.crit_damage, gohelper.findChild(slot2, "crit_damage"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.restrain, gohelper.findChild(slot2, "restrain"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.berestrain, gohelper.findChild(slot2, "berestrain"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.heal, gohelper.findChild(slot2, "heal"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.damage, gohelper.findChild(slot2, "damage"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.buff, gohelper.findChild(slot2, "buff"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.miss, gohelper.findChild(slot2, "miss"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.total, gohelper.findChild(slot2, "total_damage"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.damage_origin, gohelper.findChild(slot2, "damage_origin"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.crit_damage_origin, gohelper.findChild(slot2, "crit_damage_origin"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.total_origin, gohelper.findChild(slot2, "total_damage_origin"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.stress, gohelper.findChild(slot2, "stress"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.additional_damage, gohelper.findChild(slot2, "additional_damage"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.crit_additional_damage, gohelper.findChild(slot2, "crit_additional_damage"), 0)
-	slot0:_initPrefab(FightEnum.FloatType.addShield, gohelper.findChild(slot2, "shield"), 0)
+	arg_6_0._floatParent = gohelper.create2d(var_6_1, "Float")
+	arg_6_0._floatParentRectTr = arg_6_0._floatParent:GetComponent(gohelper.Type_RectTransform)
+
+	local var_6_2 = arg_6_0._floatParent.transform
+	local var_6_3 = Vector2.zero
+
+	var_6_2.anchorMin = var_6_3
+	var_6_2.anchorMax = Vector2.one
+	var_6_2.offsetMin = var_6_3
+	var_6_2.offsetMax = var_6_3
+
+	arg_6_0:_initPrefab(FightEnum.FloatType.equipeffect, gohelper.findChild(var_6_0, "equipeffect"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.crit_restrain, gohelper.findChild(var_6_0, "crit_restrain"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.crit_berestrain, gohelper.findChild(var_6_0, "crit_berestrain"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.crit_heal, gohelper.findChild(var_6_0, "crit_heal"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.crit_damage, gohelper.findChild(var_6_0, "crit_damage"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.restrain, gohelper.findChild(var_6_0, "restrain"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.berestrain, gohelper.findChild(var_6_0, "berestrain"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.heal, gohelper.findChild(var_6_0, "heal"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.damage, gohelper.findChild(var_6_0, "damage"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.buff, gohelper.findChild(var_6_0, "buff"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.miss, gohelper.findChild(var_6_0, "miss"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.total, gohelper.findChild(var_6_0, "total_damage"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.damage_origin, gohelper.findChild(var_6_0, "damage_origin"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.crit_damage_origin, gohelper.findChild(var_6_0, "crit_damage_origin"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.total_origin, gohelper.findChild(var_6_0, "total_damage_origin"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.stress, gohelper.findChild(var_6_0, "stress"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.additional_damage, gohelper.findChild(var_6_0, "additional_damage"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.crit_additional_damage, gohelper.findChild(var_6_0, "crit_additional_damage"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.addShield, gohelper.findChild(var_6_0, "shield"), 0)
 end
 
-function slot0.dispose(slot0)
-	for slot4, slot5 in pairs(slot0._id2PlayingItem) do
-		slot5:stopFloat()
-		slot0._type2ItemPool[slot5.type]:putObject(slot5)
+function var_0_0.dispose(arg_7_0)
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._id2PlayingItem) do
+		iter_7_1:stopFloat()
+		arg_7_0._type2ItemPool[iter_7_1.type]:putObject(iter_7_1)
 	end
 
-	for slot4, slot5 in pairs(slot0._type2ItemPool) do
-		slot5:dispose()
+	for iter_7_2, iter_7_3 in pairs(arg_7_0._type2ItemPool) do
+		iter_7_3:dispose()
 	end
 
-	slot0._id2PlayingItem = {}
-	slot0._type2ItemPool = {}
-	slot0._dataQueue4 = {}
+	arg_7_0._id2PlayingItem = {}
+	arg_7_0._type2ItemPool = {}
+	arg_7_0._dataQueue4 = {}
 
-	if slot0._floatParent then
-		gohelper.destroy(slot0._floatParent)
+	if arg_7_0._floatParent then
+		gohelper.destroy(arg_7_0._floatParent)
 
-		slot0._floatParent = nil
+		arg_7_0._floatParent = nil
 	end
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_7_0._loader then
+		arg_7_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_7_0._loader = nil
 	end
 
-	slot0._classEnabled = false
+	arg_7_0._classEnabled = false
 end
 
-function slot0.clearFloatItem(slot0)
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
+function var_0_0.clearFloatItem(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._onTick, arg_8_0)
 
-	for slot4, slot5 in pairs(slot0._id2PlayingItem) do
-		slot5:stopFloat()
-		slot0._type2ItemPool[slot5.type]:putObject(slot5)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._id2PlayingItem) do
+		iter_8_1:stopFloat()
+		arg_8_0._type2ItemPool[iter_8_1.type]:putObject(iter_8_1)
 	end
 
-	slot0._dataQueue4 = {}
+	arg_8_0._dataQueue4 = {}
 end
 
-function slot0.float(slot0, slot1, slot2, slot3, slot4)
-	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
+function var_0_0.float(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	if FightDataHelper.entityMgr:isAssistBoss(arg_9_1) then
 		return
 	end
 
-	if not slot0._classEnabled then
+	if not arg_9_0._classEnabled then
 		return
 	end
 
-	if slot4 == nil then
-		slot4 = 0
+	if arg_9_4 == nil then
+		arg_9_4 = 0
 	end
 
-	if not slot0.canShowFightNumUI and slot2 ~= FightEnum.FloatType.buff and slot2 ~= FightEnum.FloatType.miss then
+	if not arg_9_0.canShowFightNumUI and arg_9_2 ~= FightEnum.FloatType.buff and arg_9_2 ~= FightEnum.FloatType.miss then
 		return
 	end
 
-	if FightDataHelper.entityMgr:getById(slot1) and slot5:hasBuffFeature(FightEnum.BuffType_HideLife) then
+	local var_9_0 = FightDataHelper.entityMgr:getById(arg_9_1)
+
+	if var_9_0 and var_9_0:hasBuffFeature(FightEnum.BuffType_HideLife) then
 		return
 	end
 
-	table.insert(slot0._dataQueue4, slot1)
-	table.insert(slot0._dataQueue4, slot2)
-	table.insert(slot0._dataQueue4, slot3)
-	table.insert(slot0._dataQueue4, slot4)
-	TaskDispatcher.runRepeat(slot0._onTick, slot0, 0.1 / FightModel.instance:getUISpeed())
+	table.insert(arg_9_0._dataQueue4, arg_9_1)
+	table.insert(arg_9_0._dataQueue4, arg_9_2)
+	table.insert(arg_9_0._dataQueue4, arg_9_3)
+	table.insert(arg_9_0._dataQueue4, arg_9_4)
+	TaskDispatcher.runRepeat(arg_9_0._onTick, arg_9_0, 0.1 / FightModel.instance:getUISpeed())
 end
 
-function slot0.floatEnd(slot0, slot1)
-	slot0._id2PlayingItem[slot1.id] = nil
+function var_0_0.floatEnd(arg_10_0, arg_10_1)
+	arg_10_0._id2PlayingItem[arg_10_1.id] = nil
 
-	slot0._type2ItemPool[slot1.type]:putObject(slot1)
+	arg_10_0._type2ItemPool[arg_10_1.type]:putObject(arg_10_1)
 
-	if slot0._entityId2PlayingItems[slot1.entityId] then
-		tabletool.removeValue(slot2, slot1)
+	local var_10_0 = arg_10_0._entityId2PlayingItems[arg_10_1.entityId]
+
+	if var_10_0 then
+		tabletool.removeValue(var_10_0, arg_10_1)
 	end
 end
 
-function slot0.nameUIBeforeDestroy(slot0, slot1)
-	for slot6 = slot1.transform.childCount, 1, -1 do
-		if string.find(slot2:GetChild(slot6 - 1).name, "float") then
-			if slot0._floatParent then
-				gohelper.addChild(slot0._floatParent, slot7.gameObject)
-				gohelper.setActive(slot7.gameObject, false)
+function var_0_0.nameUIBeforeDestroy(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1.transform
+
+	for iter_11_0 = var_11_0.childCount, 1, -1 do
+		local var_11_1 = var_11_0:GetChild(iter_11_0 - 1)
+
+		if string.find(var_11_1.name, "float") then
+			if arg_11_0._floatParent then
+				gohelper.addChild(arg_11_0._floatParent, var_11_1.gameObject)
+				gohelper.setActive(var_11_1.gameObject, false)
 			else
-				gohelper.destroy(slot7.gameObject)
+				gohelper.destroy(var_11_1.gameObject)
 			end
 		end
 	end
 end
 
-function slot0._initPrefab(slot0, slot1, slot2, slot3)
-	slot4 = slot0._floatParent
-	slot0._type2ItemPool[slot1] = LuaObjPool.New(20, function ()
-		return FightFloatItem.New(uv0, gohelper.clone(uv1, uv2, "float" .. uv0), uv3)
-	end, function (slot0)
-		slot0:onDestroy()
-	end, function (slot0)
-		slot0:reset()
+function var_0_0._initPrefab(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_0._floatParent
+
+	arg_12_0._type2ItemPool[arg_12_1] = LuaObjPool.New(20, function()
+		return FightFloatItem.New(arg_12_1, gohelper.clone(arg_12_2, var_12_0, "float" .. arg_12_1), arg_12_3)
+	end, function(arg_14_0)
+		arg_14_0:onDestroy()
+	end, function(arg_15_0)
+		arg_15_0:reset()
 	end)
 end
 
-function slot0._onTick(slot0)
-	slot1 = 0
+function var_0_0._onTick(arg_16_0)
+	local var_16_0 = 0
+	local var_16_1 = Time.time
+	local var_16_2
 
-	for slot7 = 1, #slot0._dataQueue4, uv0 do
-		slot12 = slot0._entityTimeDict[slot0._dataQueue4[slot7]]
+	for iter_16_0 = 1, #arg_16_0._dataQueue4, var_0_2 do
+		local var_16_3 = arg_16_0._dataQueue4[iter_16_0]
+		local var_16_4 = arg_16_0._dataQueue4[iter_16_0 + 1]
+		local var_16_5 = arg_16_0._dataQueue4[iter_16_0 + 2]
+		local var_16_6 = arg_16_0._dataQueue4[iter_16_0 + 3]
+		local var_16_7 = arg_16_0._entityTimeDict[var_16_3]
 
-		if not uv1[slot0._dataQueue4[slot7 + 1]] and slot12 and Time.time - slot12 < uv2 then
-			slot3 = nil or {}
+		if not var_0_6[var_16_4] and var_16_7 and var_16_1 - var_16_7 < var_0_4 then
+			var_16_2 = var_16_2 or {}
 
-			table.insert(slot3, slot8)
-			table.insert(slot3, slot9)
-			table.insert(slot3, slot0._dataQueue4[slot7 + 2])
-			table.insert(slot3, slot0._dataQueue4[slot7 + 3])
+			table.insert(var_16_2, var_16_3)
+			table.insert(var_16_2, var_16_4)
+			table.insert(var_16_2, var_16_5)
+			table.insert(var_16_2, var_16_6)
 		else
-			slot0._entityTimeDict[slot8] = slot2
+			arg_16_0._entityTimeDict[var_16_3] = var_16_1
 
-			slot0:_doShowTip(slot8, slot9, slot10, slot11)
+			arg_16_0:_doShowTip(var_16_3, var_16_4, var_16_5, var_16_6)
 
-			slot1 = slot1 + 1
+			var_16_0 = var_16_0 + 1
 		end
 
-		if slot1 == uv3 then
+		if var_16_0 == var_0_3 then
 			break
 		end
 	end
 
-	slot4 = slot3 and #slot3 or 0
+	local var_16_8 = var_16_2 and #var_16_2 or 0
 
-	for slot8 = 1, slot4 do
-		slot0._dataQueue4[slot8] = slot3[slot8]
+	for iter_16_1 = 1, var_16_8 do
+		arg_16_0._dataQueue4[iter_16_1] = var_16_2[iter_16_1]
 	end
 
-	for slot9 = slot4 + 1, #slot0._dataQueue4 do
-		slot0._dataQueue4[slot9] = slot0._dataQueue4[slot9 + slot1 * uv0]
+	local var_16_9 = var_16_0 * var_0_2
+
+	for iter_16_2 = var_16_8 + 1, #arg_16_0._dataQueue4 do
+		arg_16_0._dataQueue4[iter_16_2] = arg_16_0._dataQueue4[iter_16_2 + var_16_9]
 	end
 
-	if #slot0._dataQueue4 == 0 then
-		TaskDispatcher.cancelTask(slot0._onTick, slot0)
-	end
-end
-
-function slot0._doShowTip(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._entityId2PlayingItems[slot1] then
-		slot0._entityId2PlayingItems[slot1] = {}
-	end
-
-	if uv0 <= #slot5 then
-		table.remove(slot5, #slot5):stopFloat()
-	end
-
-	slot6 = FightHelper.getEntity(slot1)
-	slot7 = slot0._type2ItemPool[slot2]:getObject()
-	slot7.id = uv1
-	uv1 = uv1 + 1
-	slot0._id2PlayingItem[slot7.id] = slot7
-
-	table.insert(slot5, 1, slot7)
-
-	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
-		gohelper.addChild(slot0._floatParent, slot7:getGO())
-	elseif slot6 and slot6.nameUI then
-		gohelper.addChild(slot6.nameUI:getFloatContainerGO(), slot7:getGO())
-	end
-
-	slot7:startFloat(slot1, slot3, slot4)
-	slot7:setPos(0, slot6 and slot6.nameUI and slot6.nameUI:getFloatItemStartY() or 0)
-
-	if slot6 and slot6:getMO() and lua_monster_skin.configDict[slot10.skin] and #FightStrUtil.instance:getSplitToNumberCache(slot11.floatOffset, "#") > 0 then
-		slot7:setPos(slot12[1], slot12[2])
-
-		slot8 = slot12[1]
-		slot9 = slot12[2]
-	end
-
-	if slot4 and _G.type(slot4) == "table" then
-		if slot4.pos_x then
-			slot10 = recthelper.rectToRelativeAnchorPos(Vector3.New(slot4.pos_x, slot4.pos_y, 0), slot0._floatParent.transform)
-
-			slot7:setPos(slot10.x, slot10.y)
-			gohelper.addChild(slot0._floatParent, slot7:getGO())
-		end
-
-		if slot4.offset_x then
-			slot7:setPos(slot8 + slot4.offset_x, slot9 + slot4.offset_y)
-		end
-	end
-
-	slot10 = slot9
-
-	if FightDataHelper.entityMgr:isAssistBoss(slot1) then
-		slot12, slot13 = recthelper.worldPosToAnchorPos2((slot6:getHangPoint(ModuleEnum.SpineHangPoint.mounttop) or slot6:getHangPoint(ModuleEnum.SpineHangPointRoot)).transform.position, slot0._floatParentRectTr, nil, CameraMgr.instance:getUnitCamera())
-
-		slot7:setPos(slot12, slot13)
-
-		slot10 = slot13
-	end
-
-	for slot14, slot15 in ipairs(slot5) do
-		slot15:tweenPosY(50 + slot10)
-
-		if slot15.type == FightEnum.FloatType.total or slot15.type == FightEnum.FloatType.total_origin then
-			slot10 = slot10 + 50
-		end
-
-		gohelper.setAsFirstSibling(slot15:getGO())
+	if #arg_16_0._dataQueue4 == 0 then
+		TaskDispatcher.cancelTask(arg_16_0._onTick, arg_16_0)
 	end
 end
 
-function slot0.hideEntityEquipFloat(slot0, slot1)
-	if slot0._entityId2PlayingItems[slot1] then
-		for slot6, slot7 in ipairs(slot2) do
-			slot7:hideEquipFloat()
+function var_0_0._doShowTip(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	local var_17_0 = arg_17_0._entityId2PlayingItems[arg_17_1]
+
+	if not var_17_0 then
+		var_17_0 = {}
+		arg_17_0._entityId2PlayingItems[arg_17_1] = var_17_0
+	end
+
+	if #var_17_0 >= var_0_5 then
+		table.remove(var_17_0, #var_17_0):stopFloat()
+	end
+
+	local var_17_1 = FightHelper.getEntity(arg_17_1)
+	local var_17_2 = arg_17_0._type2ItemPool[arg_17_2]:getObject()
+
+	var_17_2.id = var_0_1
+	var_0_1 = var_0_1 + 1
+	arg_17_0._id2PlayingItem[var_17_2.id] = var_17_2
+
+	table.insert(var_17_0, 1, var_17_2)
+
+	if FightDataHelper.entityMgr:isAssistBoss(arg_17_1) then
+		gohelper.addChild(arg_17_0._floatParent, var_17_2:getGO())
+	elseif var_17_1 and var_17_1.nameUI then
+		gohelper.addChild(var_17_1.nameUI:getFloatContainerGO(), var_17_2:getGO())
+	end
+
+	var_17_2:startFloat(arg_17_1, arg_17_3, arg_17_4)
+
+	local var_17_3 = 0
+	local var_17_4 = var_17_1 and var_17_1.nameUI and var_17_1.nameUI:getFloatItemStartY() or 0
+
+	var_17_2:setPos(var_17_3, var_17_4)
+
+	if var_17_1 then
+		local var_17_5 = var_17_1:getMO()
+
+		if var_17_5 then
+			local var_17_6 = lua_monster_skin.configDict[var_17_5.skin]
+
+			if var_17_6 then
+				local var_17_7 = FightStrUtil.instance:getSplitToNumberCache(var_17_6.floatOffset, "#")
+
+				if #var_17_7 > 0 then
+					var_17_2:setPos(var_17_7[1], var_17_7[2])
+
+					var_17_3 = var_17_7[1]
+					var_17_4 = var_17_7[2]
+				end
+			end
+		end
+	end
+
+	if arg_17_4 and _G.type(arg_17_4) == "table" then
+		if arg_17_4.pos_x then
+			local var_17_8 = recthelper.rectToRelativeAnchorPos(Vector3.New(arg_17_4.pos_x, arg_17_4.pos_y, 0), arg_17_0._floatParent.transform)
+
+			var_17_3 = var_17_8.x
+			var_17_4 = var_17_8.y
+
+			var_17_2:setPos(var_17_3, var_17_4)
+			gohelper.addChild(arg_17_0._floatParent, var_17_2:getGO())
+		end
+
+		if arg_17_4.offset_x then
+			local var_17_9 = var_17_3 + arg_17_4.offset_x
+
+			var_17_4 = var_17_4 + arg_17_4.offset_y
+
+			var_17_2:setPos(var_17_9, var_17_4)
+		end
+	end
+
+	local var_17_10 = var_17_4
+
+	if FightDataHelper.entityMgr:isAssistBoss(arg_17_1) then
+		local var_17_11 = var_17_1:getHangPoint(ModuleEnum.SpineHangPoint.mounttop) or var_17_1:getHangPoint(ModuleEnum.SpineHangPointRoot)
+		local var_17_12, var_17_13 = recthelper.worldPosToAnchorPos2(var_17_11.transform.position, arg_17_0._floatParentRectTr, nil, CameraMgr.instance:getUnitCamera())
+
+		var_17_2:setPos(var_17_12, var_17_13)
+
+		var_17_10 = var_17_13
+	end
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		var_17_10 = 50 + var_17_10
+
+		iter_17_1:tweenPosY(var_17_10)
+
+		if iter_17_1.type == FightEnum.FloatType.total or iter_17_1.type == FightEnum.FloatType.total_origin then
+			var_17_10 = var_17_10 + 50
+		end
+
+		gohelper.setAsFirstSibling(iter_17_1:getGO())
+	end
+end
+
+function var_0_0.hideEntityEquipFloat(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._entityId2PlayingItems[arg_18_1]
+
+	if var_18_0 then
+		for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+			iter_18_1:hideEquipFloat()
 		end
 	end
 end
 
-function slot0.setCanShowFightNumUI(slot0, slot1)
-	slot0.canShowFightNumUI = slot1
+function var_0_0.setCanShowFightNumUI(arg_19_0, arg_19_1)
+	arg_19_0.canShowFightNumUI = arg_19_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

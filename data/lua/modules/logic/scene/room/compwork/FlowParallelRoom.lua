@@ -1,40 +1,40 @@
-module("modules.logic.scene.room.compwork.FlowParallelRoom", package.seeall)
+﻿module("modules.logic.scene.room.compwork.FlowParallelRoom", package.seeall)
 
-slot0 = class("FlowParallelRoom", FlowParallel)
+local var_0_0 = class("FlowParallelRoom", FlowParallel)
 
-function slot0.onStartInternal(slot0, slot1)
-	if #slot0._workList == 0 then
-		slot0:onDone(true)
+function var_0_0.onStartInternal(arg_1_0, arg_1_1)
+	if #arg_1_0._workList == 0 then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._doneCount = 0
-	slot0._succCount = 0
+	arg_1_0._doneCount = 0
+	arg_1_0._succCount = 0
 
-	for slot5, slot6 in ipairs(slot0._workList) do
-		if isTypeOf(slot6, RoomSceneCommonCompWork) then
-			RoomHelper.logElapse("++++++ " .. slot6.__cname .. " " .. slot6._comp.__cname, 0.001)
-		elseif isTypeOf(slot6, RoomSceneWaitEventCompWork) then
-			RoomHelper.logElapse("++++++ " .. slot6.__cname .. " " .. slot6._comp.__cname, 0.001)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0._workList) do
+		if isTypeOf(iter_1_1, RoomSceneCommonCompWork) then
+			RoomHelper.logElapse("++++++ " .. iter_1_1.__cname .. " " .. iter_1_1._comp.__cname, 0.001)
+		elseif isTypeOf(iter_1_1, RoomSceneWaitEventCompWork) then
+			RoomHelper.logElapse("++++++ " .. iter_1_1.__cname .. " " .. iter_1_1._comp.__cname, 0.001)
 		else
-			RoomHelper.logElapse("++++++ " .. slot6.__cname, 0.001)
+			RoomHelper.logElapse("++++++ " .. iter_1_1.__cname, 0.001)
 		end
 
-		slot6:onStartInternal(slot1)
+		iter_1_1:onStartInternal(arg_1_1)
 	end
 end
 
-function slot0.onWorkDone(slot0, slot1)
-	if isTypeOf(slot1, RoomSceneCommonCompWork) then
-		RoomHelper.logElapse("-------- " .. slot1.__cname .. " " .. slot1._comp.__cname, 0.001)
-	elseif isTypeOf(slot1, RoomSceneWaitEventCompWork) then
-		RoomHelper.logElapse("-------- " .. slot1.__cname .. " " .. slot1._comp.__cname, 0.001)
+function var_0_0.onWorkDone(arg_2_0, arg_2_1)
+	if isTypeOf(arg_2_1, RoomSceneCommonCompWork) then
+		RoomHelper.logElapse("-------- " .. arg_2_1.__cname .. " " .. arg_2_1._comp.__cname, 0.001)
+	elseif isTypeOf(arg_2_1, RoomSceneWaitEventCompWork) then
+		RoomHelper.logElapse("-------- " .. arg_2_1.__cname .. " " .. arg_2_1._comp.__cname, 0.001)
 	else
-		RoomHelper.logElapse("-------- " .. slot1.__cname, 0.001)
+		RoomHelper.logElapse("-------- " .. arg_2_1.__cname, 0.001)
 	end
 
-	uv0.super.onWorkDone(slot0, slot1)
+	var_0_0.super.onWorkDone(arg_2_0, arg_2_1)
 end
 
-return slot0
+return var_0_0

@@ -1,29 +1,33 @@
-module("modules.ugui.textmeshpro.TMPDynamicSizeTextMgr", package.seeall)
+﻿module("modules.ugui.textmeshpro.TMPDynamicSizeTextMgr", package.seeall)
 
-slot0 = class("TMPDynamicSizeTextMgr")
+local var_0_0 = class("TMPDynamicSizeTextMgr")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0)
-	slot0.csharpInst = ZProj.LangTextDynamicSizeMgr.Instance
+function var_0_0.init(arg_2_0)
+	arg_2_0.csharpInst = ZProj.LangTextDynamicSizeMgr.Instance
 
-	slot0.csharpInst:SetChangeSizeFunc(slot0._changeSize, slot0)
-	slot0.csharpInst:SetFilterRichTextFunc(slot0._filterRichText, slot0)
+	arg_2_0.csharpInst:SetChangeSizeFunc(arg_2_0._changeSize, arg_2_0)
+	arg_2_0.csharpInst:SetFilterRichTextFunc(arg_2_0._filterRichText, arg_2_0)
 end
 
-function slot0._changeSize(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in string.gmatch(slot3, "<size=(%d+)>(.+)</size>"), nil,  do
-		slot3 = string.gsub(slot3, string.format("<size=%d>%s</size>", slot8, slot9), string.format("<size=%d>%s</size>", slot8 * slot2, slot9))
+function var_0_0._changeSize(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	for iter_3_0, iter_3_1 in (string.gmatch(arg_3_3, "<size=(%d+)>(.+)</size>")) do
+		local var_3_0 = string.format("<size=%d>%s</size>", iter_3_0, iter_3_1)
+		local var_3_1 = string.format("<size=%d>%s</size>", iter_3_0 * arg_3_2, iter_3_1)
+
+		arg_3_3 = string.gsub(arg_3_3, var_3_0, var_3_1)
 	end
 
-	slot1:SetText(slot3)
+	arg_3_1:SetText(arg_3_3)
 end
 
-function slot0._filterRichText(slot0, slot1, slot2)
-	slot1:FilterRichTextCb(slot2)
+function var_0_0._filterRichText(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_1:FilterRichTextCb(arg_4_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,69 +1,76 @@
-module("modules.logic.versionactivity1_6.act147.view.FurnaceTreasureBuyView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act147.view.FurnaceTreasureBuyView", package.seeall)
 
-slot0 = class("FurnaceTreasureBuyView", BaseView)
+local var_0_0 = class("FurnaceTreasureBuyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "#go_spine")
-	slot0._txtcontentcn = gohelper.findChildText(slot0.viewGO, "#go_contents/txt_contentcn")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_spine")
+	arg_1_0._txtcontentcn = gohelper.findChildText(arg_1_0.viewGO, "#go_contents/txt_contentcn")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._uiSpine = GuiSpine.Create(slot0._gospine, true)
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._uiSpine = GuiSpine.Create(arg_2_0._gospine, true)
 end
 
-function slot0.onOpen(slot0)
-	slot0._storeId = slot0.viewParam and slot0.viewParam.storeId
-	slot0._goodsId = slot0.viewParam and slot0.viewParam.goodsId
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0._storeId = arg_3_0.viewParam and arg_3_0.viewParam.storeId
+	arg_3_0._goodsId = arg_3_0.viewParam and arg_3_0.viewParam.goodsId
 
-	if #FurnaceTreasureConfig.instance:getDialogList(FurnaceTreasureModel.instance:getActId()) > 0 and slot0._txtcontentcn then
-		slot0._txtcontentcn.text = slot2[math.random(1, #slot2)]
+	local var_3_0 = FurnaceTreasureModel.instance:getActId()
+	local var_3_1 = FurnaceTreasureConfig.instance:getDialogList(var_3_0)
+
+	if #var_3_1 > 0 and arg_3_0._txtcontentcn then
+		local var_3_2 = math.random(1, #var_3_1)
+
+		arg_3_0._txtcontentcn.text = var_3_1[var_3_2]
 	end
 
-	slot4 = FurnaceTreasureConfig.instance:getSpineRes(slot1)
+	local var_3_3 = FurnaceTreasureConfig.instance:getSpineRes(var_3_0)
 
-	if not slot0._uiSpine or string.nilorempty(slot4) then
+	if not arg_3_0._uiSpine or string.nilorempty(var_3_3) then
 		return
 	end
 
-	slot0._uiSpine:setResPath(slot4, slot0._onSpineLoaded, slot0)
+	arg_3_0._uiSpine:setResPath(var_3_3, arg_3_0._onSpineLoaded, arg_3_0)
 end
 
-function slot0._onSpineLoaded(slot0)
-	if not slot0._uiSpine then
+function var_0_0._onSpineLoaded(arg_4_0)
+	if not arg_4_0._uiSpine then
 		return
 	end
 
-	slot0._uiSpine:changeLookDir(SpineLookDir.Left)
+	arg_4_0._uiSpine:changeLookDir(SpineLookDir.Left)
 
-	slot1 = FurnaceTreasureModel.instance:getGoodsPoolId(slot0._storeId, slot0._goodsId)
+	local var_4_0 = FurnaceTreasureModel.instance:getGoodsPoolId(arg_4_0._storeId, arg_4_0._goodsId)
+	local var_4_1 = FurnaceTreasureModel.instance:getSpinePlayData(var_4_0)
 
-	slot0._uiSpine:playVoice(FurnaceTreasureModel.instance:getSpinePlayData(slot1))
+	arg_4_0._uiSpine:playVoice(var_4_1)
 
-	slot4 = AudioEnum.UI.FurnaceTreasureBuyViewNormalSpine
+	local var_4_2 = var_4_0 == FurnaceTreasureEnum.ActGoodsPool.Great
+	local var_4_3 = AudioEnum.UI.FurnaceTreasureBuyViewNormalSpine
 
-	if slot1 == FurnaceTreasureEnum.ActGoodsPool.Great then
-		slot4 = AudioEnum.UI.FurnaceTreasureBuyViewGreatSpine
+	if var_4_2 then
+		var_4_3 = AudioEnum.UI.FurnaceTreasureBuyViewGreatSpine
 	end
 
-	AudioMgr.instance:trigger(slot4)
+	AudioMgr.instance:trigger(var_4_3)
 end
 
-function slot0.onClickModalMask(slot0)
-	FurnaceTreasureController.instance:BuyFurnaceTreasureGoods(slot0._storeId, slot0._goodsId, slot0.closeThis, slot0)
+function var_0_0.onClickModalMask(arg_5_0)
+	FurnaceTreasureController.instance:BuyFurnaceTreasureGoods(arg_5_0._storeId, arg_5_0._goodsId, arg_5_0.closeThis, arg_5_0)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:doClear()
+function var_0_0.onDestroyView(arg_6_0)
+	if arg_6_0._uiSpine then
+		arg_6_0._uiSpine:doClear()
 	end
 
-	slot0._uiSpine = false
+	arg_6_0._uiSpine = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.FurnaceTreasureBuyViewFinish)
 end
 
-return slot0
+return var_0_0

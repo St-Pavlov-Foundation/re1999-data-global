@@ -1,22 +1,23 @@
-module("modules.logic.equip.view.EquipInfoTipsViewContainer", package.seeall)
+﻿module("modules.logic.equip.view.EquipInfoTipsViewContainer", package.seeall)
 
-slot0 = class("EquipInfoTipsViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipInfoTipsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.tipView = EquipInfoTipsView.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.tipView = EquipInfoTipsView.New()
 
 	return {
-		slot0.tipView
+		arg_1_0.tipView
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.playCloseTransition(slot0)
-	slot0:startViewCloseBlock()
-	slot0.tipView.animatorPlayer:Play(UIAnimationName.Close, slot0.onPlayCloseTransitionFinish, slot0)
-	TaskDispatcher.runDelay(slot0.onPlayCloseTransitionFinish, slot0, 2)
+function var_0_0.playCloseTransition(arg_3_0)
+	arg_3_0:startViewCloseBlock()
+	arg_3_0.tipView.animatorPlayer:Play(UIAnimationName.Close, arg_3_0.onPlayCloseTransitionFinish, arg_3_0)
+	TaskDispatcher.runDelay(arg_3_0.onPlayCloseTransitionFinish, arg_3_0, 2)
 end
 
-return slot0
+return var_0_0

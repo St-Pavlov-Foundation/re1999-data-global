@@ -1,91 +1,106 @@
-module("modules.logic.seasonver.act123.model.Season123RetailModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123RetailModel", package.seeall)
 
-slot0 = class("Season123RetailModel", BaseModel)
+local var_0_0 = class("Season123RetailModel", BaseModel)
 
-function slot0.release(slot0)
-	slot0.lastSendEpisodeCfg = nil
-	slot0.rewardIconCfgs = nil
+function var_0_0.release(arg_1_0)
+	arg_1_0.lastSendEpisodeCfg = nil
+	arg_1_0.rewardIconCfgs = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.activityId = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.activityId = arg_2_1
 
-	slot0:initDatas()
-	slot0:initRewards()
+	arg_2_0:initDatas()
+	arg_2_0:initRewards()
 end
 
-function slot0.initDatas(slot0)
-	if not Season123Model.instance:getActInfo(slot0.activityId) then
+function var_0_0.initDatas(arg_3_0)
+	local var_3_0 = Season123Model.instance:getActInfo(arg_3_0.activityId)
+
+	if not var_3_0 then
 		return
 	end
 
-	slot0.retailId = slot1.retailId
+	arg_3_0.retailId = var_3_0.retailId
 
-	if not slot0.retailId then
+	if not arg_3_0.retailId then
 		return
 	end
 
-	slot0.retailCO = Season123Config.instance:getRetailCO(slot0.activityId, slot0.retailId)
+	arg_3_0.retailCO = Season123Config.instance:getRetailCO(arg_3_0.activityId, arg_3_0.retailId)
 
-	if not slot0.retailCO then
+	if not arg_3_0.retailCO then
 		return
 	end
 
-	slot0.episodeCO = DungeonConfig.instance:getEpisodeCO(slot0.retailCO.episodeId)
+	arg_3_0.episodeCO = DungeonConfig.instance:getEpisodeCO(arg_3_0.retailCO.episodeId)
 end
 
-function slot0.initRewards(slot0)
-	slot0.rewardIcons = {}
-	slot0.rewardIconCfgs = {}
+function var_0_0.initRewards(arg_4_0)
+	arg_4_0.rewardIcons = {}
+	arg_4_0.rewardIconCfgs = {}
 
-	if not slot0.retailCO then
+	if not arg_4_0.retailCO then
 		return
 	end
 
-	slot5 = "#"
+	local var_4_0 = GameUtil.splitString2(arg_4_0.retailCO.bonus, true, "|", "#")
 
-	for slot5, slot6 in ipairs(GameUtil.splitString2(slot0.retailCO.bonus, true, "|", slot5)) do
-		slot9, slot10 = ItemModel.instance:getItemConfigAndIcon(slot6[1], slot6[2])
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		local var_4_1 = iter_4_1[1]
+		local var_4_2 = iter_4_1[2]
+		local var_4_3, var_4_4 = ItemModel.instance:getItemConfigAndIcon(var_4_1, var_4_2)
 
-		table.insert(slot0.rewardIconCfgs, slot6)
-		table.insert(slot0.rewardIcons, slot10)
+		table.insert(arg_4_0.rewardIconCfgs, iter_4_1)
+		table.insert(arg_4_0.rewardIcons, var_4_4)
 	end
 end
 
-function slot0.getRecommentLevel(slot0)
-	if not slot0.episodeCO then
+function var_0_0.getRecommentLevel(arg_5_0)
+	if not arg_5_0.episodeCO then
 		return nil
 	end
 
-	if FightHelper.getBattleRecommendLevel(DungeonConfig.instance:getEpisodeCO(slot0.episodeCO.id).battleId) >= 0 then
-		return slot3
+	local var_5_0 = arg_5_0.episodeCO.id
+	local var_5_1 = DungeonConfig.instance:getEpisodeCO(var_5_0)
+	local var_5_2 = FightHelper.getBattleRecommendLevel(var_5_1.battleId)
+
+	if var_5_2 >= 0 then
+		return var_5_2
 	else
 		return nil
 	end
 end
 
-function slot0.getEpisodeId(slot0)
-	if not slot0.episodeCO then
+function var_0_0.getEpisodeId(arg_6_0)
+	if not arg_6_0.episodeCO then
 		return nil
 	end
 
-	return slot0.episodeCO.id
+	return arg_6_0.episodeCO.id
 end
 
-function slot0.getRewards(slot0)
-	if not slot0.episodeCO then
-		return {}
+function var_0_0.getRewards(arg_7_0)
+	local var_7_0 = {}
+
+	if not arg_7_0.episodeCO then
+		return var_7_0
 	end
 end
 
-function slot0.getUTTUTicketNum(slot0)
-	if Season123Config.instance:getEquipItemCoin(slot0.activityId, Activity123Enum.Const.UttuTicketsCoin) then
-		return CurrencyModel.instance:getCurrency(slot2) and slot3.quantity or 0
+function var_0_0.getUTTUTicketNum(arg_8_0)
+	local var_8_0 = arg_8_0.activityId
+	local var_8_1 = Season123Config.instance:getEquipItemCoin(var_8_0, Activity123Enum.Const.UttuTicketsCoin)
+
+	if var_8_1 then
+		local var_8_2 = CurrencyModel.instance:getCurrency(var_8_1)
+
+		return var_8_2 and var_8_2.quantity or 0
 	end
 
 	return 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

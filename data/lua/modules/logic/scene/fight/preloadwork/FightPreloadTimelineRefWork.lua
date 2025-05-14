@@ -1,69 +1,82 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadTimelineRefWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadTimelineRefWork", package.seeall)
 
-slot0 = class("FightPreloadTimelineRefWork", BaseWork)
+local var_0_0 = class("FightPreloadTimelineRefWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot0._urlDict = slot0:_getUrlList()
-	slot0._loader = SequenceAbLoader.New()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	arg_1_0._urlDict = arg_1_0:_getUrlList()
+	arg_1_0._loader = SequenceAbLoader.New()
 
-	for slot5, slot6 in pairs(slot0._urlDict) do
-		slot0._loader:addPath(slot5)
+	for iter_1_0, iter_1_1 in pairs(arg_1_0._urlDict) do
+		arg_1_0._loader:addPath(iter_1_0)
 	end
 
-	slot0._loader:setLoadFailCallback(slot0._onOneLoadFail)
-	slot0._loader:setConcurrentCount(10)
-	slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	arg_1_0._loader:setLoadFailCallback(arg_1_0._onOneLoadFail)
+	arg_1_0._loader:setConcurrentCount(10)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.clearWork(arg_2_0)
+	if arg_2_0._loader then
+		arg_2_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_2_0._loader = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+	TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
 end
 
-function slot0._onOneLoadFail(slot0, slot1, slot2)
-	slot3 = slot2.ResPath
+function var_0_0._onOneLoadFail(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_2.ResPath
 
-	logError("预加载战斗Timeline引用资源失败！\nTimeline: " .. slot0._urlDict[slot3] .. "\n引用资源: " .. slot3)
+	logError("预加载战斗Timeline引用资源失败！\nTimeline: " .. arg_3_0._urlDict[var_3_0] .. "\n引用资源: " .. var_3_0)
 end
 
-function slot0._onPreloadFinish(slot0)
-	for slot5, slot6 in pairs(slot0._loader:getAssetItemDict()) do
-		slot0.context.callback(slot0.context.callbackObj, slot6)
-		FightPreloadController.instance:addTimelineRefAsset(slot6)
+function var_0_0._onPreloadFinish(arg_4_0)
+	local var_4_0 = arg_4_0._loader:getAssetItemDict()
+
+	for iter_4_0, iter_4_1 in pairs(var_4_0) do
+		arg_4_0.context.callback(arg_4_0.context.callbackObj, iter_4_1)
+		FightPreloadController.instance:addTimelineRefAsset(iter_4_1)
 	end
 
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.001)
+	TaskDispatcher.runDelay(arg_4_0._delayDone, arg_4_0, 0.001)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_5_0)
+	arg_5_0:onDone(true)
 end
 
-function slot0._getUrlList(slot0)
-	slot1 = {}
+function var_0_0._getUrlList(arg_6_0)
+	local var_6_0 = {}
 
-	for slot5, slot6 in pairs(slot0.context.timelineDict) do
-		if not string.nilorempty(ZProj.SkillTimelineAssetHelper.GeAssetJson(slot6, slot5)) then
-			for slot12 = 1, #cjson.decode(slot7), 2 do
-				slot14 = slot8[slot12 + 1]
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.context.timelineDict) do
+		local var_6_1 = ZProj.SkillTimelineAssetHelper.GeAssetJson(iter_6_1, iter_6_0)
 
-				if tonumber(slot8[slot12]) == 30 then
-					-- Nothing
-				elseif slot13 == 31 then
-					-- Nothing
-				elseif slot13 == 32 then
-					if not string.nilorempty(slot14[2]) then
-						slot1[ResUrl.getRoleSpineMatTex(slot15)] = slot5
+		if not string.nilorempty(var_6_1) then
+			local var_6_2 = cjson.decode(var_6_1)
+
+			for iter_6_2 = 1, #var_6_2, 2 do
+				local var_6_3 = tonumber(var_6_2[iter_6_2])
+				local var_6_4 = var_6_2[iter_6_2 + 1]
+
+				if var_6_3 == 30 then
+					-- block empty
+				elseif var_6_3 == 31 then
+					-- block empty
+				elseif var_6_3 == 32 then
+					local var_6_5 = var_6_4[2]
+
+					if not string.nilorempty(var_6_5) then
+						var_6_0[ResUrl.getRoleSpineMatTex(var_6_5)] = iter_6_0
 					end
-				elseif slot13 == 11 then
-					for slot19, slot20 in pairs(slot0.context.timelineSkinDict[slot5] or {}) do
-						if not string.nilorempty(FightTLEventCreateSpine.getSkinSpineName(slot14[1], slot19)) then
-							slot1[ResUrl.getSpineFightPrefab(slot21)] = slot5
+				elseif var_6_3 == 11 then
+					local var_6_6 = arg_6_0.context.timelineSkinDict[iter_6_0] or {}
+
+					for iter_6_3, iter_6_4 in pairs(var_6_6) do
+						local var_6_7 = FightTLEventCreateSpine.getSkinSpineName(var_6_4[1], iter_6_3)
+
+						if not string.nilorempty(var_6_7) then
+							var_6_0[ResUrl.getSpineFightPrefab(var_6_7)] = iter_6_0
 						end
 					end
 				end
@@ -71,7 +84,7 @@ function slot0._getUrlList(slot0)
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-return slot0
+return var_0_0

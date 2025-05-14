@@ -1,117 +1,127 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174BuffTipView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174BuffTipView", package.seeall)
 
-slot0 = class("Act174BuffTipView", BaseView)
+local var_0_0 = class("Act174BuffTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclosetip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closetip")
-	slot0._goscrolltips = gohelper.findChild(slot0.viewGO, "#go_scrolltips")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#go_scrolltips/viewport/content/go_title/#txt_title")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_scrolltips/viewport/content/go_title/#image_icon")
-	slot0._goskillitem = gohelper.findChild(slot0.viewGO, "#go_scrolltips/viewport/content/#go_skillitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closetip")
+	arg_1_0._goscrolltips = gohelper.findChild(arg_1_0.viewGO, "#go_scrolltips")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_scrolltips/viewport/content/go_title/#txt_title")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_scrolltips/viewport/content/go_title/#image_icon")
+	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "#go_scrolltips/viewport/content/#go_skillitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclosetip:AddClickListener(slot0._btnclosetipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclosetip:AddClickListener(arg_2_0._btnclosetipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclosetip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclosetip:RemoveClickListener()
 end
 
-function slot0._btnclosetipOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnclosetipOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#go_scrolltips/viewport/content")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goContent = gohelper.findChild(arg_5_0.viewGO, "#go_scrolltips/viewport/content")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 
-	if not slot0.viewParam then
+	if not arg_7_0.viewParam then
 		logError("please open with param")
 
 		return
 	end
 
-	slot1 = Activity174Model.instance:getActInfo():getGameInfo()
+	local var_7_0 = Activity174Model.instance:getActInfo():getGameInfo()
 
-	if slot0.viewParam.isEnemy then
-		slot3 = slot1:getFightInfo().matchInfo
+	if arg_7_0.viewParam.isEnemy then
+		local var_7_1 = var_7_0:getFightInfo().matchInfo
 
-		UISpriteSetMgr.instance:setAct174Sprite(slot0._imageicon, "act174_ready_icon_enemy")
+		UISpriteSetMgr.instance:setAct174Sprite(arg_7_0._imageicon, "act174_ready_icon_enemy")
 
-		slot0._txttitle.text = luaLang("act174_enhance_enemy")
+		arg_7_0._txttitle.text = luaLang("act174_enhance_enemy")
 
-		if slot1:getFightInfo() then
-			slot0.enhanceList = slot3.enhanceId
-			slot0.endEnhanceList = slot3.endEnhanceId
+		if var_7_0:getFightInfo() then
+			arg_7_0.enhanceList = var_7_1.enhanceId
+			arg_7_0.endEnhanceList = var_7_1.endEnhanceId
 		else
 			logError("dont exist fightInfo")
 
 			return
 		end
 	else
-		slot3 = slot1:getWarehouseInfo()
+		local var_7_2 = var_7_0:getWarehouseInfo()
 
-		UISpriteSetMgr.instance:setAct174Sprite(slot0._imageicon, "act174_ready_icon_player")
+		UISpriteSetMgr.instance:setAct174Sprite(arg_7_0._imageicon, "act174_ready_icon_player")
 
-		slot0._txttitle.text = luaLang("act174_enhance_player")
-		slot0.enhanceList = slot3.enhanceId
-		slot0.endEnhanceList = slot3.endEnhanceId
+		arg_7_0._txttitle.text = luaLang("act174_enhance_player")
+		arg_7_0.enhanceList = var_7_2.enhanceId
+		arg_7_0.endEnhanceList = var_7_2.endEnhanceId
 	end
 
-	slot0.buffIconList = slot0:getUserDataTb_()
+	arg_7_0.buffIconList = arg_7_0:getUserDataTb_()
 
-	for slot6, slot7 in ipairs(slot0.enhanceList) do
-		slot8 = gohelper.cloneInPlace(slot0._goskillitem)
-		slot9 = lua_activity174_enhance.configDict[slot7]
-		slot11 = gohelper.findChildSingleImage(slot8, "skillicon")
-		slot12 = gohelper.findChildText(slot8, "layout/txt_dec")
-		gohelper.findChildText(slot8, "txt_skill").text = slot9.title
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.enhanceList) do
+		local var_7_3 = gohelper.cloneInPlace(arg_7_0._goskillitem)
+		local var_7_4 = lua_activity174_enhance.configDict[iter_7_1]
+		local var_7_5 = gohelper.findChildText(var_7_3, "txt_skill")
+		local var_7_6 = gohelper.findChildSingleImage(var_7_3, "skillicon")
+		local var_7_7 = gohelper.findChildText(var_7_3, "layout/txt_dec")
 
-		if slot0.endEnhanceList and tabletool.indexOf(slot0.endEnhanceList, slot7) then
-			slot13 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act174_enhance_overduea"), slot9.desc)
+		var_7_5.text = var_7_4.title
+
+		local var_7_8 = var_7_4.desc
+
+		if arg_7_0.endEnhanceList and tabletool.indexOf(arg_7_0.endEnhanceList, iter_7_1) then
+			var_7_8 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act174_enhance_overduea"), var_7_8)
 		end
 
-		slot12.text = slot13
+		var_7_7.text = var_7_8
 
-		slot11:LoadImage(ResUrl.getAct174BuffIcon(slot9.icon))
+		var_7_6:LoadImage(ResUrl.getAct174BuffIcon(var_7_4.icon))
 
-		slot0.buffIconList[#slot0.buffIconList + 1] = slot11
+		arg_7_0.buffIconList[#arg_7_0.buffIconList + 1] = var_7_6
 	end
 
-	gohelper.setActive(slot0._goskillitem, false)
-	TaskDispatcher.runDelay(slot0.refreshAnchor, slot0, 0.01)
+	gohelper.setActive(arg_7_0._goskillitem, false)
+	TaskDispatcher.runDelay(arg_7_0.refreshAnchor, arg_7_0, 0.01)
 end
 
-function slot0.refreshAnchor(slot0)
-	slot5 = slot0.viewParam.pos
+function var_0_0.refreshAnchor(arg_8_0)
+	local var_8_0 = arg_8_0._goscrolltips.transform
+	local var_8_1 = recthelper.getHeight(var_8_0)
+	local var_8_2 = recthelper.getHeight(arg_8_0._goContent.transform)
+	local var_8_3 = var_8_1 < var_8_2 and var_8_1 or var_8_2
+	local var_8_4 = arg_8_0.viewParam.pos
 
-	if slot0.viewParam.isDown then
-		recthelper.setAnchor(slot1, slot5.x, slot5.y + (recthelper.getHeight(slot0._goscrolltips.transform) < recthelper.getHeight(slot0._goContent.transform) and slot2 or slot3))
+	if arg_8_0.viewParam.isDown then
+		recthelper.setAnchor(var_8_0, var_8_4.x, var_8_4.y + var_8_3)
 	else
-		recthelper.setAnchor(slot1, slot5.x, slot5.y)
+		recthelper.setAnchor(var_8_0, var_8_4.x, var_8_4.y)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.buffIconList) do
-		slot5:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.buffIconList) do
+		iter_10_1:UnLoadImage()
 	end
 
-	TaskDispatcher.cancelTask(slot0.refreshAnchor, slot0)
+	TaskDispatcher.cancelTask(arg_10_0.refreshAnchor, arg_10_0)
 end
 
-return slot0
+return var_0_0

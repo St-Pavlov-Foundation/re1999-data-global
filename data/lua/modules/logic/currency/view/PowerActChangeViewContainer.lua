@@ -1,27 +1,29 @@
-module("modules.logic.currency.view.PowerActChangeViewContainer", package.seeall)
+﻿module("modules.logic.currency.view.PowerActChangeViewContainer", package.seeall)
 
-slot0 = class("PowerActChangeViewContainer", BaseViewContainer)
+local var_0_0 = class("PowerActChangeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, PowerActChangeView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_righttop"))
+	table.insert(var_1_0, PowerActChangeView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = {
+		CurrencyEnum.CurrencyType.Power,
+		{
+			isCurrencySprite = true,
+			type = MaterialEnum.MaterialType.PowerPotion,
+			id = MaterialEnum.PowerId.ActPowerId
+		}
+	}
+
 	return {
-		CurrencyView.New({
-			CurrencyEnum.CurrencyType.Power,
-			{
-				isCurrencySprite = true,
-				type = MaterialEnum.MaterialType.PowerPotion,
-				id = MaterialEnum.PowerId.ActPowerId
-			}
-		})
+		CurrencyView.New(var_2_0)
 	}
 end
 
-return slot0
+return var_0_0

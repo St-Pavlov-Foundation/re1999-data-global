@@ -1,42 +1,46 @@
-module("modules.logic.explore.controller.trigger.ExploreTriggerDialogue", package.seeall)
+﻿module("modules.logic.explore.controller.trigger.ExploreTriggerDialogue", package.seeall)
 
-slot0 = class("ExploreTriggerDialogue", ExploreTriggerBase)
+local var_0_0 = class("ExploreTriggerDialogue", ExploreTriggerBase)
 
-function slot0.handle(slot0, slot1, slot2)
-	slot1 = tonumber(slot1)
+function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_1 = tonumber(arg_1_1)
 
-	if slot0.isNoFirstDialog then
-		ExploreStepController.instance:insertClientStep({
+	if arg_1_0.isNoFirstDialog then
+		local var_1_0 = {
 			alwaysLast = true,
 			stepType = ExploreEnum.StepType.Dialogue,
-			id = slot1
-		})
-		slot0:onDone(true)
+			id = arg_1_1
+		}
+
+		ExploreStepController.instance:insertClientStep(var_1_0)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.ExploreInteractView, {
-		id = slot1,
-		unit = slot2,
-		callBack = slot0.dialogueAccept,
-		callBackObj = slot0,
-		refuseCallBack = slot0.dialogueRefuse,
-		refuseCallBackObj = slot0
-	})
+	local var_1_1 = {
+		id = arg_1_1,
+		unit = arg_1_2,
+		callBack = arg_1_0.dialogueAccept,
+		callBackObj = arg_1_0,
+		refuseCallBack = arg_1_0.dialogueRefuse,
+		refuseCallBackObj = arg_1_0
+	}
+
+	ViewMgr.instance:openView(ViewName.ExploreInteractView, var_1_1)
 	ExploreController.instance:getMap():getHero():stopMoving(false)
 end
 
-function slot0.dialogueAccept(slot0)
-	slot0:onDone(true)
+function var_0_0.dialogueAccept(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.dialogueRefuse(slot0)
-	slot0:onDone(false)
+function var_0_0.dialogueRefuse(arg_3_0)
+	arg_3_0:onDone(false)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_4_0)
 	ViewMgr.instance:closeView(ViewName.ExploreInteractView)
 end
 
-return slot0
+return var_0_0

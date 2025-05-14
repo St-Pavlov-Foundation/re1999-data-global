@@ -1,19 +1,19 @@
-module("modules.logic.chessgame.game.step.ChessStepDead", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepDead", package.seeall)
 
-slot0 = class("ChessStepDead", BaseWork)
+local var_0_0 = class("ChessStepDead", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot0:_onFail()
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:_onFail()
 end
 
-function slot0._onFail(slot0)
+function var_0_0._onFail(arg_3_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.OnFail)
 	ChessGameController.instance:gameOver()
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

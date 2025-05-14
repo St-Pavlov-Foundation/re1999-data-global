@@ -1,38 +1,39 @@
-module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluViewContainer", package.seeall)
 
-slot0 = class("PeaceUluViewContainer", BaseViewContainer)
-slot1 = 1
-slot2 = 2
+local var_0_0 = class("PeaceUluViewContainer", BaseViewContainer)
+local var_0_1 = 1
+local var_0_2 = 2
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.peaceUluView = PeaceUluView.New()
-	slot0.navigatetionview = TabViewGroup.New(1, "#go_topleft")
-	slot0.tabgroupviews = TabViewGroup.New(2, "#go_content")
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.peaceUluView)
-	table.insert(slot1, slot0.navigatetionview)
-	table.insert(slot1, slot0.tabgroupviews)
+	arg_1_0.peaceUluView = PeaceUluView.New()
+	arg_1_0.navigatetionview = TabViewGroup.New(1, "#go_topleft")
+	arg_1_0.tabgroupviews = TabViewGroup.New(2, "#go_content")
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.peaceUluView)
+	table.insert(var_1_0, arg_1_0.navigatetionview)
+	table.insert(var_1_0, arg_1_0.tabgroupviews)
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == uv0 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == var_0_1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0._navigateButtonView:setCloseCheck(slot0.defaultOverrideCloseCheck, slot0)
+		arg_2_0._navigateButtonView:setCloseCheck(arg_2_0.defaultOverrideCloseCheck, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 
-	if slot1 == uv1 then
+	if arg_2_1 == var_0_2 then
 		return {
 			PeaceUluMainView.New(),
 			PeaceUluGameView.New(),
@@ -41,23 +42,23 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.getNavigateButtonView(slot0)
-	return slot0._navigateButtonView
+function var_0_0.getNavigateButtonView(arg_3_0)
+	return arg_3_0._navigateButtonView
 end
 
-function slot0.defaultOverrideCloseCheck(slot0)
-	if slot0.tabgroupviews:getCurTabId() ~= PeaceUluEnum.TabIndex.Main then
+function var_0_0.defaultOverrideCloseCheck(arg_4_0)
+	if arg_4_0.tabgroupviews:getCurTabId() ~= PeaceUluEnum.TabIndex.Main then
 		PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onSwitchTab, PeaceUluEnum.TabIndex.Main)
 	else
-		slot0._navigateButtonView:_reallyClose()
+		arg_4_0._navigateButtonView:_reallyClose()
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_5_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_5Enum.ActivityId.PeaceUlu
 	})
 end
 
-return slot0
+return var_0_0

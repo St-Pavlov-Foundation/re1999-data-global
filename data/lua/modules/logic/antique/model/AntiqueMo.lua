@@ -1,20 +1,20 @@
-module("modules.logic.antique.model.AntiqueMo", package.seeall)
+﻿module("modules.logic.antique.model.AntiqueMo", package.seeall)
 
-slot0 = pureTable("AntiqueMo")
+local var_0_0 = pureTable("AntiqueMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.getTime = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.getTime = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = tonumber(slot1.antiqueId)
-	slot0.getTime = slot1.getTime
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = tonumber(arg_2_1.antiqueId)
+	arg_2_0.getTime = arg_2_1.getTime
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.id = tonumber(slot1.antiqueId)
-	slot0.getTime = slot1.getTime
+function var_0_0.reset(arg_3_0, arg_3_1)
+	arg_3_0.id = tonumber(arg_3_1.antiqueId)
+	arg_3_0.getTime = arg_3_1.getTime
 end
 
-return slot0
+return var_0_0

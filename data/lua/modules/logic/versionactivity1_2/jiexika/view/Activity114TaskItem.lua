@@ -1,103 +1,107 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114TaskItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114TaskItem", package.seeall)
 
-slot0 = class("Activity114TaskItem", ListScrollCell)
+local var_0_0 = class("Activity114TaskItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.go, "#simage_bg")
-	slot0._txtTaskDesc = gohelper.findChildText(slot0.go, "#txt_taskdes")
-	slot0._txtTaskTotal = gohelper.findChildText(slot0.go, "#txt_total")
-	slot0._txtTaskComplete = gohelper.findChildText(slot0.go, "#txt_complete")
-	slot0._goNotFinish = gohelper.findChildButtonWithAudio(slot0.go, "#go_notget/#btn_notfinishbg")
-	slot0._goGetBonus = gohelper.findChild(slot0.go, "#go_notget/#btn_finishbg")
-	slot0._goFinishBg = gohelper.findChildButtonWithAudio(slot0.go, "#go_notget/#go_getbonus")
-	slot0._scrollreward = gohelper.findChild(slot0.go, "scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._gorewards = gohelper.findChild(slot0.go, "scroll_reward/Viewport/#go_rewards")
-	slot0._gorewarditem = gohelper.findChild(slot0.go, "scroll_reward/Viewport/#go_rewards/#go_rewarditem")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.go, "#simage_bg")
+	arg_1_0._txtTaskDesc = gohelper.findChildText(arg_1_0.go, "#txt_taskdes")
+	arg_1_0._txtTaskTotal = gohelper.findChildText(arg_1_0.go, "#txt_total")
+	arg_1_0._txtTaskComplete = gohelper.findChildText(arg_1_0.go, "#txt_complete")
+	arg_1_0._goNotFinish = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_notget/#btn_notfinishbg")
+	arg_1_0._goGetBonus = gohelper.findChild(arg_1_0.go, "#go_notget/#btn_finishbg")
+	arg_1_0._goFinishBg = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_notget/#go_getbonus")
+	arg_1_0._scrollreward = gohelper.findChild(arg_1_0.go, "scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/#go_rewards")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/#go_rewards/#go_rewarditem")
 
-	slot0._simagebg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("task/bg_renwulan.png"))
+	arg_1_0._simagebg:LoadImage(ResUrl.getVersionActivityWhiteHouse_1_2_Bg("task/bg_renwulan.png"))
 
-	slot0._rewardItems = {}
-	slot0._anim = slot0.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._rewardItems = {}
+	arg_1_0._anim = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._goFinishBg:AddClickListener(slot0._goFinishBgOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._goFinishBg:AddClickListener(arg_2_0._goFinishBgOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._goFinishBg:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._goFinishBg:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.mo = slot1
-	slot0._txtTaskDesc.text = slot0.mo.config.desc
-	slot0._txtTaskTotal.text = slot0.mo.config.maxProgress
-	slot0._txtTaskComplete.text = slot0.mo.progress
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0.mo = arg_4_1
+	arg_4_0._txtTaskDesc.text = arg_4_0.mo.config.desc
+	arg_4_0._txtTaskTotal.text = arg_4_0.mo.config.maxProgress
+	arg_4_0._txtTaskComplete.text = arg_4_0.mo.progress
 
-	gohelper.setActive(slot0._goNotFinish.gameObject, slot0.mo.finishStatus == Activity114Enum.TaskStatu.NoFinish)
-	gohelper.setActive(slot0._goFinishBg.gameObject, slot0.mo.finishStatus == Activity114Enum.TaskStatu.Finish)
-	gohelper.setActive(slot0._goGetBonus, slot0.mo.finishStatus == Activity114Enum.TaskStatu.GetBonus)
+	gohelper.setActive(arg_4_0._goNotFinish.gameObject, arg_4_0.mo.finishStatus == Activity114Enum.TaskStatu.NoFinish)
+	gohelper.setActive(arg_4_0._goFinishBg.gameObject, arg_4_0.mo.finishStatus == Activity114Enum.TaskStatu.Finish)
+	gohelper.setActive(arg_4_0._goGetBonus, arg_4_0.mo.finishStatus == Activity114Enum.TaskStatu.GetBonus)
 
-	slot0._scrollreward.parentGameObject = slot0._view._csListScroll.gameObject
+	arg_4_0._scrollreward.parentGameObject = arg_4_0._view._csListScroll.gameObject
 
-	if not slot0.bonusItems then
-		slot0.bonusItems = {}
+	if not arg_4_0.bonusItems then
+		arg_4_0.bonusItems = {}
 	end
 
-	for slot5, slot6 in pairs(slot0._rewardItems) do
-		gohelper.destroy(slot6.itemIcon.go)
-		gohelper.destroy(slot6.parentGo)
-		slot6.itemIcon:onDestroy()
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._rewardItems) do
+		gohelper.destroy(iter_4_1.itemIcon.go)
+		gohelper.destroy(iter_4_1.parentGo)
+		iter_4_1.itemIcon:onDestroy()
 	end
 
-	slot0._rewardItems = {}
-	slot0._gorewards:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #string.split(slot1.config.bonus, "|") > 2
+	arg_4_0._rewardItems = {}
 
-	for slot6 = 1, #slot2 do
-		slot7 = {
-			parentGo = gohelper.cloneInPlace(slot0._gorewarditem)
+	local var_4_0 = string.split(arg_4_1.config.bonus, "|")
+
+	arg_4_0._gorewards:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #var_4_0 > 2
+
+	for iter_4_2 = 1, #var_4_0 do
+		local var_4_1 = {
+			parentGo = gohelper.cloneInPlace(arg_4_0._gorewarditem)
 		}
 
-		gohelper.setActive(slot7.parentGo, true)
+		gohelper.setActive(var_4_1.parentGo, true)
 
-		slot8 = string.splitToNumber(slot2[slot6], "#")
-		slot7.itemIcon = IconMgr.instance:getCommonPropItemIcon(slot7.parentGo)
+		local var_4_2 = string.splitToNumber(var_4_0[iter_4_2], "#")
 
-		slot7.itemIcon:setMOValue(slot8[1], slot8[2], slot8[3], nil, true)
-		slot7.itemIcon:isShowCount(slot8[1] ~= MaterialEnum.MaterialType.Hero)
-		slot7.itemIcon:setCountFontSize(40)
-		slot7.itemIcon:showStackableNum2()
-		slot7.itemIcon:setHideLvAndBreakFlag(true)
-		slot7.itemIcon:hideEquipLvAndBreak(true)
-		table.insert(slot0._rewardItems, slot7)
+		var_4_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_4_1.parentGo)
+
+		var_4_1.itemIcon:setMOValue(var_4_2[1], var_4_2[2], var_4_2[3], nil, true)
+		var_4_1.itemIcon:isShowCount(var_4_2[1] ~= MaterialEnum.MaterialType.Hero)
+		var_4_1.itemIcon:setCountFontSize(40)
+		var_4_1.itemIcon:showStackableNum2()
+		var_4_1.itemIcon:setHideLvAndBreakFlag(true)
+		var_4_1.itemIcon:hideEquipLvAndBreak(true)
+		table.insert(arg_4_0._rewardItems, var_4_1)
 	end
 end
 
-function slot0._goFinishBgOnClick(slot0)
+function var_0_0._goFinishBgOnClick(arg_5_0)
 	if Activity114Model.instance:isEnd() then
 		Activity114Controller.instance:alertActivityEndMsgBox()
 
 		return
 	end
 
-	Activity114Rpc.instance:receiveTaskReward(Activity114Model.instance.id, slot0.mo.id)
+	Activity114Rpc.instance:receiveTaskReward(Activity114Model.instance.id, arg_5_0.mo.id)
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._anim
+function var_0_0.getAnimator(arg_6_0)
+	return arg_6_0._anim
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_7_0)
+	arg_7_0._simagebg:UnLoadImage()
 
-	for slot4, slot5 in pairs(slot0._rewardItems) do
-		gohelper.destroy(slot5.itemIcon.go)
-		gohelper.destroy(slot5.parentGo)
-		slot5.itemIcon:onDestroy()
+	for iter_7_0, iter_7_1 in pairs(arg_7_0._rewardItems) do
+		gohelper.destroy(iter_7_1.itemIcon.go)
+		gohelper.destroy(iter_7_1.parentGo)
+		iter_7_1.itemIcon:onDestroy()
 	end
 
-	slot0._rewardItems = nil
+	arg_7_0._rewardItems = nil
 end
 
-return slot0
+return var_0_0

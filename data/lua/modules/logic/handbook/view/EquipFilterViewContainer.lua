@@ -1,13 +1,13 @@
-module("modules.logic.handbook.view.EquipFilterViewContainer", package.seeall)
+﻿module("modules.logic.handbook.view.EquipFilterViewContainer", package.seeall)
 
-slot0 = class("EquipFilterViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipFilterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, EquipFilterView.New())
+	table.insert(var_1_0, EquipFilterView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

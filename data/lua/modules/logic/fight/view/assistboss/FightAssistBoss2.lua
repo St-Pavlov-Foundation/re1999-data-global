@@ -1,37 +1,39 @@
-module("modules.logic.fight.view.assistboss.FightAssistBoss2", package.seeall)
+﻿module("modules.logic.fight.view.assistboss.FightAssistBoss2", package.seeall)
 
-slot0 = class("FightAssistBoss2", FightAssistBossBase)
+local var_0_0 = class("FightAssistBoss2", FightAssistBossBase)
 
-function slot0.setPrefabPath(slot0)
-	slot0.prefabPath = "ui/viewres/assistboss/boss2.prefab"
+function var_0_0.setPrefabPath(arg_1_0)
+	arg_1_0.prefabPath = "ui/viewres/assistboss/boss2.prefab"
 end
 
-slot0.MaxPower = 6
+var_0_0.MaxPower = 6
 
-function slot0.initView(slot0)
-	uv0.super.initView(slot0)
+function var_0_0.initView(arg_2_0)
+	var_0_0.super.initView(arg_2_0)
 
-	slot0.goPowerList = slot0:getUserDataTb_()
+	arg_2_0.goPowerList = arg_2_0:getUserDataTb_()
 
-	for slot4 = 1, uv0.MaxPower do
-		table.insert(slot0.goPowerList, gohelper.findChild(slot0.viewGo, string.format("go_energy/%s/light", slot4)))
+	for iter_2_0 = 1, var_0_0.MaxPower do
+		table.insert(arg_2_0.goPowerList, gohelper.findChild(arg_2_0.viewGo, string.format("go_energy/%s/light", iter_2_0)))
 	end
 end
 
-function slot0.refreshPower(slot0)
-	uv0.super.refreshPower(slot0)
+function var_0_0.refreshPower(arg_3_0)
+	var_0_0.super.refreshPower(arg_3_0)
 
-	for slot5 = 1, uv0.MaxPower do
-		gohelper.setActive(slot0.goPowerList[slot5], slot5 <= FightDataHelper.paTaMgr:getAssistBossPower())
+	local var_3_0 = FightDataHelper.paTaMgr:getAssistBossPower()
+
+	for iter_3_0 = 1, var_0_0.MaxPower do
+		gohelper.setActive(arg_3_0.goPowerList[iter_3_0], iter_3_0 <= var_3_0)
 	end
 end
 
-function slot0.onPowerChange(slot0, slot1, slot2, slot3, slot4)
-	uv0.super.onPowerChange(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.onPowerChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	var_0_0.super.onPowerChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 
-	if slot3 < slot4 then
+	if arg_4_3 < arg_4_4 then
 		FightAudioMgr.instance:playAudio(20232001)
 	end
 end
 
-return slot0
+return var_0_0

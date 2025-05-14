@@ -1,123 +1,130 @@
-module("modules.logic.room.model.common.RoomThemeFilterListModel", package.seeall)
+﻿module("modules.logic.room.model.common.RoomThemeFilterListModel", package.seeall)
 
-slot0 = class("RoomThemeFilterListModel", ListScrollModel)
+local var_0_0 = class("RoomThemeFilterListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0:_clearSelectData()
+function var_0_0._clearData(arg_4_0)
+	arg_4_0:_clearSelectData()
 end
 
-function slot0._clearSelectData(slot0)
-	slot0._selectIdList = {}
-	slot0._isAll = false
+function var_0_0._clearSelectData(arg_5_0)
+	arg_5_0._selectIdList = {}
+	arg_5_0._isAll = false
 end
 
-function slot0.init(slot0)
-	slot0:_clearData()
+function var_0_0.init(arg_6_0)
+	arg_6_0:_clearData()
 
-	slot2 = {}
+	local var_6_0 = RoomConfig.instance:getThemeConfigList()
+	local var_6_1 = {}
 
-	for slot6, slot7 in ipairs(RoomConfig.instance:getThemeConfigList()) do
-		slot8 = RoomThemeMO.New()
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_2 = RoomThemeMO.New()
 
-		slot8:init(slot7.id, slot7)
-		table.insert(slot2, slot8)
+		var_6_2:init(iter_6_1.id, iter_6_1)
+		table.insert(var_6_1, var_6_2)
 	end
 
-	table.sort(slot2, uv0.sortMOFunc)
-	slot0:setList(slot2)
+	table.sort(var_6_1, var_0_0.sortMOFunc)
+	arg_6_0:setList(var_6_1)
 end
 
-function slot0.sortMOFunc(slot0, slot1)
-	if slot0.id ~= slot1.id then
-		return slot1.id < slot0.id
+function var_0_0.sortMOFunc(arg_7_0, arg_7_1)
+	if arg_7_0.id ~= arg_7_1.id then
+		return arg_7_0.id > arg_7_1.id
 	end
 end
 
-function slot0.clearFilterData(slot0)
-	slot0:_clearSelectData()
-	slot0:onModelUpdate()
+function var_0_0.clearFilterData(arg_8_0)
+	arg_8_0:_clearSelectData()
+	arg_8_0:onModelUpdate()
 end
 
-function slot0.getIsAll(slot0)
-	return slot0._isAll
+function var_0_0.getIsAll(arg_9_0)
+	return arg_9_0._isAll
 end
 
-function slot0.getSelectCount(slot0)
-	if slot0._selectIdList then
-		return #slot0._selectIdList
+function var_0_0.getSelectCount(arg_10_0)
+	if arg_10_0._selectIdList then
+		return #arg_10_0._selectIdList
 	end
 
 	return 0
 end
 
-function slot0.isSelectById(slot0, slot1)
-	if slot0._isAll then
+function var_0_0.isSelectById(arg_11_0, arg_11_1)
+	if arg_11_0._isAll then
 		return true
 	end
 
-	if tabletool.indexOf(slot0._selectIdList, slot1) then
+	if tabletool.indexOf(arg_11_0._selectIdList, arg_11_1) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.selectAll(slot0)
-	if slot0._isAll == true then
+function var_0_0.selectAll(arg_12_0)
+	if arg_12_0._isAll == true then
 		return
 	end
 
-	slot0._selectIdList = {}
+	arg_12_0._selectIdList = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		table.insert(slot0._selectIdList, slot6.id)
+	local var_12_0 = arg_12_0:getList()
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		table.insert(arg_12_0._selectIdList, iter_12_1.id)
 	end
 
-	slot0:_checkAll()
-	slot0:onModelUpdate()
+	arg_12_0:_checkAll()
+	arg_12_0:onModelUpdate()
 end
 
-function slot0.setSelectById(slot0, slot1, slot2)
-	if not slot0:getById(slot1) then
+function var_0_0.setSelectById(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_0:getById(arg_13_1) then
 		return
 	end
 
-	if slot2 == true then
-		if not tabletool.indexOf(slot0._selectIdList, slot1) then
-			table.insert(slot0._selectIdList, slot1)
-			slot0:_checkAll()
-			slot0:onModelUpdate()
+	if arg_13_2 == true then
+		if not tabletool.indexOf(arg_13_0._selectIdList, arg_13_1) then
+			table.insert(arg_13_0._selectIdList, arg_13_1)
+			arg_13_0:_checkAll()
+			arg_13_0:onModelUpdate()
 		end
-	elseif slot2 == false and tabletool.indexOf(slot0._selectIdList, slot1) then
-		table.remove(slot0._selectIdList, slot3)
-		slot0:_checkAll()
-		slot0:onModelUpdate()
+	elseif arg_13_2 == false then
+		local var_13_0 = tabletool.indexOf(arg_13_0._selectIdList, arg_13_1)
+
+		if var_13_0 then
+			table.remove(arg_13_0._selectIdList, var_13_0)
+			arg_13_0:_checkAll()
+			arg_13_0:onModelUpdate()
+		end
 	end
 end
 
-function slot0._checkAll(slot0)
-	slot1 = true
+function var_0_0._checkAll(arg_14_0)
+	local var_14_0 = true
 
-	if #slot0:getList() > #slot0._selectIdList then
-		slot1 = false
+	if #arg_14_0:getList() > #arg_14_0._selectIdList then
+		var_14_0 = false
 	end
 
-	slot0._isAll = slot1
+	arg_14_0._isAll = var_14_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

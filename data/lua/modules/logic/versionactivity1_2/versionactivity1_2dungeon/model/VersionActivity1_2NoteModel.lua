@@ -1,88 +1,98 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.model.VersionActivity1_2NoteModel", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.model.VersionActivity1_2NoteModel", package.seeall)
 
-slot0 = class("VersionActivity1_2NoteModel", BaseModel)
+local var_0_0 = class("VersionActivity1_2NoteModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onReceiveGet121InfosReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		slot0:_setData(slot2)
+function var_0_0.onReceiveGet121InfosReply(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == 0 then
+		arg_3_0:_setData(arg_3_2)
 	end
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveGet121InfosReply, slot1)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveGet121InfosReply, arg_3_1)
 end
 
-function slot0.getNotes(slot0)
-	return slot0._notes
+function var_0_0.getNotes(arg_4_0)
+	return arg_4_0._notes
 end
 
-function slot0.getNote(slot0, slot1)
-	return slot0._notes and slot0._notes[slot1]
+function var_0_0.getNote(arg_5_0, arg_5_1)
+	return arg_5_0._notes and arg_5_0._notes[arg_5_1]
 end
 
-function slot0.setNote(slot0, slot1)
-	slot0._notes = slot0._notes or {}
-	slot0._notes[slot1] = slot1
+function var_0_0.setNote(arg_6_0, arg_6_1)
+	arg_6_0._notes = arg_6_0._notes or {}
+	arg_6_0._notes[arg_6_1] = arg_6_1
 end
 
-function slot0.getBonusFinished(slot0, slot1)
-	return slot0._getBonusStory and slot0._getBonusStory[slot1]
+function var_0_0.getBonusFinished(arg_7_0, arg_7_1)
+	return arg_7_0._getBonusStory and arg_7_0._getBonusStory[arg_7_1]
 end
 
-function slot0._setData(slot0, slot1)
-	slot0._notes = {}
+function var_0_0._setData(arg_8_0, arg_8_1)
+	arg_8_0._notes = {}
 
-	for slot5, slot6 in ipairs(slot1.info.notes) do
-		slot0._notes[slot6] = slot6
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1.info.notes) do
+		arg_8_0._notes[iter_8_1] = iter_8_1
 	end
 
-	slot0._getBonusStory = {}
+	arg_8_0._getBonusStory = {}
 
-	for slot5, slot6 in ipairs(slot1.info.getBonusStory) do
-		slot0._getBonusStory[slot6] = slot6
+	for iter_8_2, iter_8_3 in ipairs(arg_8_1.info.getBonusStory) do
+		arg_8_0._getBonusStory[iter_8_3] = iter_8_3
 	end
 end
 
-function slot0.onReceiveGet121BonusReply(slot0, slot1)
-	slot0._getBonusStory = slot0._getBonusStory or {}
-	slot0._getBonusStory[slot1.storyId] = slot1.storyId
+function var_0_0.onReceiveGet121BonusReply(arg_9_0, arg_9_1)
+	arg_9_0._getBonusStory = arg_9_0._getBonusStory or {}
+	arg_9_0._getBonusStory[arg_9_1.storyId] = arg_9_1.storyId
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveGet121BonusReply, slot1.storyId)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveGet121BonusReply, arg_9_1.storyId)
 end
 
-function slot0.onReceiveAct121UpdatePush(slot0, slot1)
-	slot0:_setData(slot1)
+function var_0_0.onReceiveAct121UpdatePush(arg_10_0, arg_10_1)
+	local var_10_0 = tabletool.copy(arg_10_0._notes or {})
 
-	for slot6, slot7 in pairs(slot0._notes or {}) do
-		if not tabletool.copy(slot0._notes or {})[slot7] and #string.splitToNumber(lua_activity121_note.configDict[slot7].fightId, "#") == 0 then
-			slot0.showClueData = slot0.showClueData or {}
+	arg_10_0:_setData(arg_10_1)
 
-			table.insert(slot0.showClueData, {
-				showPaper = true,
-				id = slot7
-			})
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._notes or {}) do
+		if not var_10_0[iter_10_1] then
+			local var_10_1 = lua_activity121_note.configDict[iter_10_1]
+
+			if #string.splitToNumber(var_10_1.fightId, "#") == 0 then
+				arg_10_0.showClueData = arg_10_0.showClueData or {}
+
+				table.insert(arg_10_0.showClueData, {
+					showPaper = true,
+					id = iter_10_1
+				})
+			end
 		end
 	end
 
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveAct121UpdatePush)
 end
 
-function slot0.getClueData(slot0)
-	return slot0.showClueData
+function var_0_0.getClueData(arg_11_0)
+	return arg_11_0.showClueData
 end
 
-function slot0.isCollectedAllNote(slot0)
-	return VersionActivity1_2NoteConfig.instance:getAllNoteCount() <= (slot0._notes and tabletool.len(slot0._notes) or 0)
+function var_0_0.isCollectedAllNote(arg_12_0)
+	return VersionActivity1_2NoteConfig.instance:getAllNoteCount() <= (arg_12_0._notes and tabletool.len(arg_12_0._notes) or 0)
 end
 
-function slot0.isAllBonusFinished(slot0)
-	return tabletool.len(slot0._getBonusStory) == tabletool.len(VersionActivity1_2NoteConfig.instance:getStoryList())
+function var_0_0.isAllBonusFinished(arg_13_0)
+	local var_13_0 = VersionActivity1_2NoteConfig.instance:getStoryList()
+
+	return tabletool.len(arg_13_0._getBonusStory) == tabletool.len(var_13_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,149 +1,172 @@
-module("modules.logic.room.view.manufacture.RoomManufactureAccelerateView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureAccelerateView", package.seeall)
 
-slot0 = class("RoomManufactureAccelerateView", BaseView)
+local var_0_0 = class("RoomManufactureAccelerateView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._clickMask = gohelper.findChildClickWithAudio(slot0.viewGO, "mask")
-	slot0._imagebuildingIcon = gohelper.findChildImage(slot0.viewGO, "title/#simage_buildingIcon")
-	slot0._txtbuildingName = gohelper.findChildText(slot0.viewGO, "title/#txt_buildingName")
-	slot0._imgquality = gohelper.findChildImage(slot0.viewGO, "progress/#image_quality")
-	slot0._gomanufactureItem = gohelper.findChild(slot0.viewGO, "progress/#go_manufactureItem")
-	slot0._txtmanufactureItemName = gohelper.findChildText(slot0.viewGO, "progress/#txt_manufactureItemName")
-	slot0._simagebarIcon = gohelper.findChildSingleImage(slot0.viewGO, "progress/progressBar/#simage_barIcon")
-	slot0._simagebarValue = gohelper.findChildImage(slot0.viewGO, "progress/progressBar/#simage_barValue")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "progress/progressBar/#go_time")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "progress/progressBar/#go_time/#txt_time")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "itemArea/#scroll_item/viewport/content")
-	slot0._goaccelerateItem = gohelper.findChild(slot0.viewGO, "itemArea/#scroll_item/viewport/content/#go_accelerateItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._clickMask = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "mask")
+	arg_1_0._imagebuildingIcon = gohelper.findChildImage(arg_1_0.viewGO, "title/#simage_buildingIcon")
+	arg_1_0._txtbuildingName = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_buildingName")
+	arg_1_0._imgquality = gohelper.findChildImage(arg_1_0.viewGO, "progress/#image_quality")
+	arg_1_0._gomanufactureItem = gohelper.findChild(arg_1_0.viewGO, "progress/#go_manufactureItem")
+	arg_1_0._txtmanufactureItemName = gohelper.findChildText(arg_1_0.viewGO, "progress/#txt_manufactureItemName")
+	arg_1_0._simagebarIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "progress/progressBar/#simage_barIcon")
+	arg_1_0._simagebarValue = gohelper.findChildImage(arg_1_0.viewGO, "progress/progressBar/#simage_barValue")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "progress/progressBar/#go_time")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "progress/progressBar/#go_time/#txt_time")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "itemArea/#scroll_item/viewport/content")
+	arg_1_0._goaccelerateItem = gohelper.findChild(arg_1_0.viewGO, "itemArea/#scroll_item/viewport/content/#go_accelerateItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._clickMask:AddClickListener(slot0.onClickModalMask, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onManufactureBuildingInfoChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._clickMask:AddClickListener(arg_2_0.onClickModalMask, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_2_0._onManufactureInfoUpdate, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_2_0._onManufactureBuildingInfoChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._clickMask:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onManufactureBuildingInfoChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._clickMask:RemoveClickListener()
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0._onManufactureInfoUpdate, arg_3_0)
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._onManufactureBuildingInfoChange, arg_3_0)
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._onManufactureInfoUpdate(slot0)
-	slot0:refreshProgress()
+function var_0_0._onManufactureInfoUpdate(arg_5_0)
+	arg_5_0:refreshProgress()
 end
 
-function slot0._onManufactureBuildingInfoChange(slot0, slot1)
-	if slot1 and not slot1[slot0._buildingMO and slot0._buildingMO.id] then
+function var_0_0._onManufactureBuildingInfoChange(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._buildingMO and arg_6_0._buildingMO.id
+
+	if arg_6_1 and not arg_6_1[var_6_0] then
 		return
 	end
 
-	slot0:refreshProgress()
+	arg_6_0:refreshProgress()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._accelerateItemList = {}
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._accelerateItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(slot0.viewParam.buildingUid)
+function var_0_0.onUpdateParam(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam.buildingUid
 
-	slot0:refreshTitle()
-	slot0:setManufactureItem()
+	arg_8_0._buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(var_8_0)
+
+	arg_8_0:refreshTitle()
+	arg_8_0:setManufactureItem()
 end
 
-function slot0.setManufactureItem(slot0)
-	slot0.curSlotId = slot0._buildingMO and slot0._buildingMO:getSlotIdInProgress()
+function var_0_0.setManufactureItem(arg_9_0)
+	arg_9_0.curSlotId = arg_9_0._buildingMO and arg_9_0._buildingMO:getSlotIdInProgress()
 
-	if ManufactureConfig.instance:getItemId(slot0._buildingMO:getSlotManufactureItemId(slot0.curSlotId)) then
-		if not slot0._itemIcon then
-			slot0._itemIcon = IconMgr.instance:getCommonItemIcon(slot0._gomanufactureItem)
+	local var_9_0 = arg_9_0._buildingMO:getSlotManufactureItemId(arg_9_0.curSlotId)
+	local var_9_1 = ManufactureConfig.instance:getItemId(var_9_0)
 
-			slot0._itemIcon:isShowQuality(false)
+	if var_9_1 then
+		if not arg_9_0._itemIcon then
+			arg_9_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_9_0._gomanufactureItem)
+
+			arg_9_0._itemIcon:isShowQuality(false)
 		end
 
-		slot0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, slot2, nil, , , {
-			specificIcon = ManufactureConfig.instance:getBatchIconPath(slot1)
+		local var_9_2 = ManufactureConfig.instance:getBatchIconPath(var_9_0)
+
+		arg_9_0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, var_9_1, nil, nil, nil, {
+			specificIcon = var_9_2
 		})
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imgquality, RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()])
 
-		slot0._txtmanufactureItemName.text = ManufactureConfig.instance:getManufactureItemName(slot1)
+		local var_9_3 = arg_9_0._itemIcon:getRare()
+		local var_9_4 = RoomManufactureEnum.RareImageMap[var_9_3]
+
+		UISpriteSetMgr.instance:setCritterSprite(arg_9_0._imgquality, var_9_4)
+
+		local var_9_5 = ManufactureConfig.instance:getManufactureItemName(var_9_0)
+
+		arg_9_0._txtmanufactureItemName.text = var_9_5
 	end
 
-	slot0:refreshProgress()
+	arg_9_0:refreshProgress()
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
-	slot0:setAccelerateItemList()
-	slot0:everySecondCall()
-	TaskDispatcher.runRepeat(slot0.everySecondCall, slot0, 1)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:onUpdateParam()
+	arg_10_0:setAccelerateItemList()
+	arg_10_0:everySecondCall()
+	TaskDispatcher.runRepeat(arg_10_0.everySecondCall, arg_10_0, 1)
 end
 
-function slot0.setAccelerateItemList(slot0)
-	gohelper.CreateObjList(slot0, slot0._onSetAccelerateItem, ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.RoomManufactureAccelerateItem), slot0._gocontent, slot0._goaccelerateItem, RoomManufactureAccelerateItem)
+function var_0_0.setAccelerateItemList(arg_11_0)
+	local var_11_0 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.RoomManufactureAccelerateItem)
+
+	gohelper.CreateObjList(arg_11_0, arg_11_0._onSetAccelerateItem, var_11_0, arg_11_0._gocontent, arg_11_0._goaccelerateItem, RoomManufactureAccelerateItem)
 end
 
-function slot0._onSetAccelerateItem(slot0, slot1, slot2, slot3)
-	slot1:setData(slot0._buildingMO.id, slot2)
+function var_0_0._onSetAccelerateItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_1:setData(arg_12_0._buildingMO.id, arg_12_2)
 end
 
-function slot0.refreshTitle(slot0)
-	slot1 = ""
-	slot2 = nil
+function var_0_0.refreshTitle(arg_13_0)
+	local var_13_0 = ""
+	local var_13_1
 
-	if slot0._buildingMO then
-		slot1 = slot0._buildingMO.config.useDesc
-		slot2 = ManufactureConfig.instance:getManufactureBuildingIcon(slot0._buildingMO.buildingId)
+	if arg_13_0._buildingMO then
+		var_13_0 = arg_13_0._buildingMO.config.useDesc
+		var_13_1 = ManufactureConfig.instance:getManufactureBuildingIcon(arg_13_0._buildingMO.buildingId)
 	end
 
-	slot0._txtbuildingName.text = slot1
+	arg_13_0._txtbuildingName.text = var_13_0
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imagebuildingIcon, slot2)
+	UISpriteSetMgr.instance:setRoomSprite(arg_13_0._imagebuildingIcon, var_13_1)
 end
 
-function slot0.refreshProgress(slot0)
-	if not slot0._buildingMO then
+function var_0_0.refreshProgress(arg_14_0)
+	if not arg_14_0._buildingMO then
 		return
 	end
 
-	if not (slot0._buildingMO:getManufactureState() == RoomManufactureEnum.ManufactureState.Running) then
-		slot0:closeThis()
+	if not (arg_14_0._buildingMO:getManufactureState() == RoomManufactureEnum.ManufactureState.Running) then
+		arg_14_0:closeThis()
 	end
 
-	if not slot0._buildingMO:getSlotIdInProgress() or slot3 ~= slot0.curSlotId then
-		slot0:closeThis()
+	local var_14_0 = arg_14_0._buildingMO:getSlotIdInProgress()
+
+	if not var_14_0 or var_14_0 ~= arg_14_0.curSlotId then
+		arg_14_0:closeThis()
 	end
 
-	slot4 = 0
-	slot5 = slot0._buildingMO:getSlotProgress(slot0.curSlotId)
+	local var_14_1 = 0
+	local var_14_2 = arg_14_0._buildingMO:getSlotProgress(arg_14_0.curSlotId)
+	local var_14_3 = arg_14_0._buildingMO:getSlotManufactureItemId(arg_14_0.curSlotId)
 
-	if slot0._buildingMO:getSlotManufactureItemId(slot0.curSlotId) and slot6 ~= 0 then
-		slot4 = ManufactureConfig.instance:getNeedTime(slot6) * (1 - slot5)
+	if var_14_3 and var_14_3 ~= 0 then
+		var_14_1 = ManufactureConfig.instance:getNeedTime(var_14_3) * (1 - var_14_2)
 	end
 
-	slot0._simagebarValue.fillAmount = slot5
-	slot0._txttime.text = ManufactureController.instance:getFormatTime(slot4)
+	local var_14_4 = ManufactureController.instance:getFormatTime(var_14_1)
+
+	arg_14_0._simagebarValue.fillAmount = var_14_2
+	arg_14_0._txttime.text = var_14_4
 end
 
-function slot0.everySecondCall(slot0)
-	slot0:refreshProgress()
+function var_0_0.everySecondCall(arg_15_0)
+	arg_15_0:refreshProgress()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.everySecondCall, slot0)
+function var_0_0.onClose(arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0.everySecondCall, arg_16_0)
 	MessageBoxController.instance:dispatchEvent(MessageBoxEvent.CloseSpecificMessageBoxView, MessageBoxIdDefine.RoomManufactureAccelerateOver)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-return slot0
+return var_0_0

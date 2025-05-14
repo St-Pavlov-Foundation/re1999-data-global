@@ -1,17 +1,21 @@
-module("modules.logic.guide.controller.trigger.MainViewGuideCondition", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.MainViewGuideCondition", package.seeall)
 
-slot0 = class("MainViewGuideCondition")
+local var_0_0 = class("MainViewGuideCondition")
+local var_0_1 = 19701
 
-function slot0.getCondition(slot0)
-	return uv0.guideConditions[slot0]
+function var_0_0.getCondition(arg_1_0)
+	return var_0_0.guideConditions[arg_1_0]
 end
 
-function slot0._checkRougeOpen()
-	return RougeOutsideModel.instance:isUnlock() and not GuideModel.instance:isDoingClickGuide()
+function var_0_0._checkRougeOpen()
+	local var_2_0 = RougeOutsideModel.instance:isUnlock()
+	local var_2_1 = GuideModel.instance:isDoingClickGuide()
+
+	return var_2_0 and not var_2_1
 end
 
-slot0.guideConditions = {
-	[19701] = slot0._checkRougeOpen
+var_0_0.guideConditions = {
+	[var_0_1] = var_0_0._checkRougeOpen
 }
 
-return slot0
+return var_0_0

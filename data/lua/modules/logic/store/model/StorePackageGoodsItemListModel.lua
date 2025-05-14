@@ -1,120 +1,135 @@
-module("modules.logic.store.model.StorePackageGoodsItemListModel", package.seeall)
+﻿module("modules.logic.store.model.StorePackageGoodsItemListModel", package.seeall)
 
-slot0 = class("StorePackageGoodsItemListModel", ListScrollModel)
+local var_0_0 = class("StorePackageGoodsItemListModel", ListScrollModel)
 
-function slot0.setMOList(slot0, slot1, slot2, slot3)
-	slot4 = {}
-	slot5 = {
-		[slot10.config.preGoodsId] = true
-	}
-	slot0._moList = {}
+function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = {}
+	local var_1_1 = {}
 
-	for slot9, slot10 in pairs(slot2 or {}) do
-		if slot10.config.preGoodsId then
-			-- Nothing
+	arg_1_0._moList = {}
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_2 or {}) do
+		if iter_1_1.config.preGoodsId then
+			var_1_1[iter_1_1.config.preGoodsId] = true
 		end
 
-		if slot0:checkShow(slot10, true) then
-			table.insert(slot4, slot10)
+		if arg_1_0:checkShow(iter_1_1, true) then
+			table.insert(var_1_0, iter_1_1)
 		end
 	end
 
-	if slot1 then
-		for slot10, slot11 in pairs(slot1:getGoodsList()) do
-			if slot11.config.preGoodsId then
-				slot5[slot11.config.preGoodsId] = true
+	if arg_1_1 then
+		local var_1_2 = arg_1_1:getGoodsList()
+
+		for iter_1_2, iter_1_3 in pairs(var_1_2) do
+			if iter_1_3.config.preGoodsId then
+				var_1_1[iter_1_3.config.preGoodsId] = true
 			end
 
-			if slot0:checkShow(slot11) then
-				slot12 = StorePackageGoodsMO.New()
+			if arg_1_0:checkShow(iter_1_3) then
+				local var_1_3 = StorePackageGoodsMO.New()
 
-				slot12:init(slot1.id, slot11.goodsId, slot11.buyCount, slot11.offlineTime)
-				table.insert(slot4, slot12)
+				var_1_3:init(arg_1_1.id, iter_1_3.goodsId, iter_1_3.buyCount, iter_1_3.offlineTime)
+				table.insert(var_1_0, var_1_3)
 			end
 		end
 	end
 
-	slot6 = {}
+	local var_1_4 = {}
 
-	if slot3 then
-		for slot10, slot11 in ipairs(slot3) do
-			slot6[slot11.goodsId] = true
+	if arg_1_3 then
+		for iter_1_4, iter_1_5 in ipairs(arg_1_3) do
+			var_1_4[iter_1_5.goodsId] = true
 		end
 	end
 
-	for slot10, slot11 in ipairs(slot4) do
-		if not slot6[slot11.goodsId] and (slot5[slot11.goodsId] ~= true or (slot11.buyLevel > 0 and slot11:isSoldOut()) == false) then
-			table.insert(slot0._moList, slot11)
+	for iter_1_6, iter_1_7 in ipairs(var_1_0) do
+		if not var_1_4[iter_1_7.goodsId] and (var_1_1[iter_1_7.goodsId] ~= true or (iter_1_7.buyLevel > 0 and iter_1_7:isSoldOut()) == false) then
+			table.insert(arg_1_0._moList, iter_1_7)
 		end
 	end
 
-	table.sort(slot0._moList, slot0._sortFunction)
+	table.sort(arg_1_0._moList, arg_1_0._sortFunction)
 
-	if #slot0._moList == 0 and StoreModel.instance:getCurBuyPackageId() == nil then
+	local var_1_5 = StoreModel.instance:getCurBuyPackageId()
+
+	if #arg_1_0._moList == 0 and var_1_5 == nil then
 		StoreController.instance:dispatchEvent(StoreEvent.CurPackageListEmpty)
 	end
 
 	StoreController.instance:dispatchEvent(StoreEvent.BeforeUpdatePackageStore)
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 	StoreController.instance:dispatchEvent(StoreEvent.AfterUpdatePackageStore)
 end
 
-function slot0.checkShow(slot0, slot1, slot2)
-	slot2 = slot2 or false
-	slot3 = true
+function var_0_0.checkShow(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_2 = arg_2_2 or false
 
-	if slot1:isSoldOut() then
-		if slot2 and slot1.refreshTime == StoreEnum.ChargeRefreshTime.Forever then
-			slot3 = false
+	local var_2_0 = true
+
+	if arg_2_1:isSoldOut() then
+		if arg_2_2 and arg_2_1.refreshTime == StoreEnum.ChargeRefreshTime.Forever then
+			var_2_0 = false
 		end
 
-		if slot2 == false and slot1.config.refreshTime == StoreEnum.RefreshTime.Forever then
-			slot3 = false
+		if arg_2_2 == false and arg_2_1.config.refreshTime == StoreEnum.RefreshTime.Forever then
+			var_2_0 = false
 		end
 	end
 
-	if slot1.isChargeGoods == false then
-		slot3 = slot3 and slot0:checkPreGoodsId(slot1.config.preGoodsId)
+	if arg_2_1.isChargeGoods == false then
+		var_2_0 = var_2_0 and arg_2_0:checkPreGoodsId(arg_2_1.config.preGoodsId)
 	end
 
-	return slot3
+	return var_2_0
 end
 
-function slot0.checkPreGoodsId(slot0, slot1)
-	if slot1 == 0 then
+function var_0_0.checkPreGoodsId(arg_3_0, arg_3_1)
+	if arg_3_1 == 0 then
 		return true
 	end
 
-	return StoreModel.instance:getGoodsMO(slot1) and slot2:isSoldOut()
+	local var_3_0 = StoreModel.instance:getGoodsMO(arg_3_1)
+
+	return var_3_0 and var_3_0:isSoldOut()
 end
 
-function slot0._sortFunction(slot0, slot1)
-	slot2 = slot0.config
-	slot3 = slot1.config
+function var_0_0._sortFunction(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.config
+	local var_4_1 = arg_4_1.config
+	local var_4_2 = arg_4_0:isSoldOut()
+	local var_4_3 = arg_4_1:isSoldOut()
 
-	if slot0:isSoldOut() ~= slot1:isSoldOut() then
-		return slot5
+	if var_4_2 ~= var_4_3 then
+		return var_4_3
 	end
 
-	if slot0.goodsId == StoreEnum.MonthCardGoodsId ~= (slot1.goodsId == StoreEnum.MonthCardGoodsId) and StoreModel.instance:IsMonthCardDaysEnough() then
-		return slot7
+	local var_4_4 = arg_4_0.goodsId == StoreEnum.MonthCardGoodsId
+	local var_4_5 = arg_4_1.goodsId == StoreEnum.MonthCardGoodsId
+
+	if var_4_4 ~= var_4_5 and StoreModel.instance:IsMonthCardDaysEnough() then
+		return var_4_5
 	end
 
-	if slot0:isLevelOpen() ~= slot1:isLevelOpen() then
-		return slot8
+	local var_4_6 = arg_4_0:isLevelOpen()
+
+	if var_4_6 ~= arg_4_1:isLevelOpen() then
+		return var_4_6
 	end
 
-	if slot0:checkPreGoodsSoldOut() ~= slot1:checkPreGoodsSoldOut() then
-		return slot10
+	local var_4_7 = arg_4_0:checkPreGoodsSoldOut()
+
+	if var_4_7 ~= arg_4_1:checkPreGoodsSoldOut() then
+		return var_4_7
 	end
 
-	if slot2.order ~= slot3.order then
-		return slot2.order < slot3.order
+	if var_4_0.order ~= var_4_1.order then
+		return var_4_0.order < var_4_1.order
 	end
 
-	return slot2.id < slot3.id
+	return var_4_0.id < var_4_1.id
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

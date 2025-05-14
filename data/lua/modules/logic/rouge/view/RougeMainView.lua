@@ -1,260 +1,281 @@
-module("modules.logic.rouge.view.RougeMainView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeMainView", package.seeall)
 
-slot0 = class("RougeMainView", BaseView)
+local var_0_0 = class("RougeMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnfavorite = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_favorite")
-	slot0._btncultivate = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_cultivate")
-	slot0._goCultivateCanUp = gohelper.findChild(slot0.viewGO, "Left/#btn_cultivate/#go_up")
-	slot0._goCultivateNew = gohelper.findChild(slot0.viewGO, "Left/#btn_cultivate/#go_new")
-	slot0._btnreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_reward")
-	slot0._goRewardNew = gohelper.findChild(slot0.viewGO, "Left/#btn_reward/#go_new")
-	slot0._txtRewardNum = gohelper.findChildText(slot0.viewGO, "Left/#btn_reward/#txt_RewardNum")
-	slot0._btndlc = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_dlc")
-	slot0._btnexchange = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_exchange")
-	slot0._btnachievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_achievement")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_start")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "Right/#btn_start/#go_new")
-	slot0._gofavoritenew = gohelper.findChild(slot0.viewGO, "Left/#btn_favorite/#go_new")
-	slot0._goimage_start = gohelper.findChild(slot0.viewGO, "Right/#btn_start/#go_image_start")
-	slot0._goimage_start2 = gohelper.findChild(slot0.viewGO, "Right/#btn_start/#go_image_start2")
-	slot0._golocked = gohelper.findChild(slot0.viewGO, "Right/#go_locked")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "Right/#go_locked/#txt_time")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "Right/#go_progress")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "Right/#go_progress/#txt_name")
-	slot0._txtdiffculty = gohelper.findChildText(slot0.viewGO, "Right/#go_progress/#txt_difficulty")
-	slot0._btnend = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_end")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
-	slot0._gotitle = gohelper.findChild(slot0.viewGO, "title")
-	slot0._gonormaltitle = gohelper.findChild(slot0.viewGO, "title/normal")
-	slot0._godlctitles = gohelper.findChild(slot0.viewGO, "title/#go_dlctitles")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnfavorite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_favorite")
+	arg_1_0._btncultivate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_cultivate")
+	arg_1_0._goCultivateCanUp = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_cultivate/#go_up")
+	arg_1_0._goCultivateNew = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_cultivate/#go_new")
+	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_reward")
+	arg_1_0._goRewardNew = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_reward/#go_new")
+	arg_1_0._txtRewardNum = gohelper.findChildText(arg_1_0.viewGO, "Left/#btn_reward/#txt_RewardNum")
+	arg_1_0._btndlc = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_dlc")
+	arg_1_0._btnexchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_exchange")
+	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_achievement")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_start")
+	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_start/#go_new")
+	arg_1_0._gofavoritenew = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_favorite/#go_new")
+	arg_1_0._goimage_start = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_start/#go_image_start")
+	arg_1_0._goimage_start2 = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_start/#go_image_start2")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "Right/#go_locked")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_locked/#txt_time")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "Right/#go_progress")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_progress/#txt_name")
+	arg_1_0._txtdiffculty = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_progress/#txt_difficulty")
+	arg_1_0._btnend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_end")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "title")
+	arg_1_0._gonormaltitle = gohelper.findChild(arg_1_0.viewGO, "title/normal")
+	arg_1_0._godlctitles = gohelper.findChild(arg_1_0.viewGO, "title/#go_dlctitles")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfavorite:AddClickListener(slot0._btnfavoriteOnClick, slot0)
-	slot0._btncultivate:AddClickListener(slot0._btncultivateOnClick, slot0)
-	slot0._btnreward:AddClickListener(slot0._btnrewardOnClick, slot0)
-	slot0._btndlc:AddClickListener(slot0._btndlcOnClick, slot0)
-	slot0._btnexchange:AddClickListener(slot0._btnexchangeOnClick, slot0)
-	slot0._btnachievement:AddClickListener(slot0._btnachievementOnClick, slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
-	slot0._btnend:AddClickListener(slot0._btnendOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfavorite:AddClickListener(arg_2_0._btnfavoriteOnClick, arg_2_0)
+	arg_2_0._btncultivate:AddClickListener(arg_2_0._btncultivateOnClick, arg_2_0)
+	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+	arg_2_0._btndlc:AddClickListener(arg_2_0._btndlcOnClick, arg_2_0)
+	arg_2_0._btnexchange:AddClickListener(arg_2_0._btnexchangeOnClick, arg_2_0)
+	arg_2_0._btnachievement:AddClickListener(arg_2_0._btnachievementOnClick, arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+	arg_2_0._btnend:AddClickListener(arg_2_0._btnendOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfavorite:RemoveClickListener()
-	slot0._btncultivate:RemoveClickListener()
-	slot0._btnreward:RemoveClickListener()
-	slot0._btndlc:RemoveClickListener()
-	slot0._btnexchange:RemoveClickListener()
-	slot0._btnachievement:RemoveClickListener()
-	slot0._btnstart:RemoveClickListener()
-	slot0._btnend:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfavorite:RemoveClickListener()
+	arg_3_0._btncultivate:RemoveClickListener()
+	arg_3_0._btnreward:RemoveClickListener()
+	arg_3_0._btndlc:RemoveClickListener()
+	arg_3_0._btnexchange:RemoveClickListener()
+	arg_3_0._btnachievement:RemoveClickListener()
+	arg_3_0._btnstart:RemoveClickListener()
+	arg_3_0._btnend:RemoveClickListener()
 end
 
-function slot0._btnfavoriteOnClick(slot0)
+function var_0_0._btnfavoriteOnClick(arg_4_0)
 	RougeController.instance:openRougeFavoriteView()
 end
 
-function slot0._btncultivateOnClick(slot0)
+function var_0_0._btncultivateOnClick(arg_5_0)
 	RougeController.instance:openRougeTalentTreeTrunkView()
 end
 
-function slot0._btnrewardOnClick(slot0)
+function var_0_0._btnrewardOnClick(arg_6_0)
 	RougeController.instance:openRougeRewardView()
 end
 
-function slot0._btndlcOnClick(slot0)
+function var_0_0._btndlcOnClick(arg_7_0)
 	RougeController.instance:openRougeDLCSelectView()
 end
 
-function slot0._btnexchangeOnClick(slot0)
+function var_0_0._btnexchangeOnClick(arg_8_0)
+	return
 end
 
-function slot0._btnachievementOnClick(slot0)
+function var_0_0._btnachievementOnClick(arg_9_0)
 	JumpController.instance:jump(RougeConfig1.instance:achievementJumpId())
 end
 
-function slot0._btnstartOnClick(slot0)
-	slot0:_start()
+function var_0_0._btnstartOnClick(arg_10_0)
+	arg_10_0:_start()
 end
 
-function slot0._btnendOnClick(slot0)
-	slot0:_end()
+function var_0_0._btnendOnClick(arg_11_0)
+	arg_11_0:_end()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnstartCanvasGroup = slot0._btnstart.gameObject:GetComponent(gohelper.Type_CanvasGroup)
-	slot0._btnEndGo = slot0._btnend.gameObject
-	slot0._gotitleeffect = gohelper.findChild(slot0.viewGO, "title/eff_switch")
+function var_0_0._editableInitView(arg_12_0)
+	arg_12_0._btnstartCanvasGroup = arg_12_0._btnstart.gameObject:GetComponent(gohelper.Type_CanvasGroup)
+	arg_12_0._btnEndGo = arg_12_0._btnend.gameObject
+	arg_12_0._gotitleeffect = gohelper.findChild(arg_12_0.viewGO, "title/eff_switch")
 
-	gohelper.setActive(slot0._goimage_start, false)
-	gohelper.setActive(slot0._goimage_start2, false)
-	gohelper.setActive(slot0._btnEndGo, false)
-	gohelper.setActive(slot0._golocked, false)
-	gohelper.setActive(slot0._goprogress, false)
-	gohelper.setActive(slot0._gonew, false)
+	gohelper.setActive(arg_12_0._goimage_start, false)
+	gohelper.setActive(arg_12_0._goimage_start2, false)
+	gohelper.setActive(arg_12_0._btnEndGo, false)
+	gohelper.setActive(arg_12_0._golocked, false)
+	gohelper.setActive(arg_12_0._goprogress, false)
+	gohelper.setActive(arg_12_0._gonew, false)
 
-	slot0._btnstartCanvasGroup.alpha = 1
-	slot0._txtRewardNum.text = "0"
-	slot0._txttime.text = ""
-	slot0._originVersionStr = RougeDLCHelper.getCurVersionString()
+	arg_12_0._btnstartCanvasGroup.alpha = 1
+	arg_12_0._txtRewardNum.text = "0"
+	arg_12_0._txttime.text = ""
+	arg_12_0._originVersionStr = RougeDLCHelper.getCurVersionString()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_13_0)
+	arg_13_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
-	RougeController.instance:registerCallback(RougeEvent.OnUpdateRougeInfo, slot0._onUpdateRougeInfo, slot0)
-	RougeOutsideController.instance:registerCallback(RougeEvent.OnUpdateRougeOutsideInfo, slot0._onUpdateRougeOutsideInfo, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateFavoriteReddot, slot0._updateFavoriteNew, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._onUpdateRougeInfo, slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, slot0._onUpdateRougeInfo, slot0)
-	slot0:addEventCb(RougeDLCController.instance, RougeEvent.OnGetVersionInfo, slot0._onUpdateVersion, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewCallBack, slot0)
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:onUpdateParam()
+	RougeController.instance:registerCallback(RougeEvent.OnUpdateRougeInfo, arg_14_0._onUpdateRougeInfo, arg_14_0)
+	RougeOutsideController.instance:registerCallback(RougeEvent.OnUpdateRougeOutsideInfo, arg_14_0._onUpdateRougeOutsideInfo, arg_14_0)
+	arg_14_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateFavoriteReddot, arg_14_0._updateFavoriteNew, arg_14_0)
+	arg_14_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_14_0._onUpdateRougeInfo, arg_14_0)
+	arg_14_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, arg_14_0._onUpdateRougeInfo, arg_14_0)
+	arg_14_0:addEventCb(RougeDLCController.instance, RougeEvent.OnGetVersionInfo, arg_14_0._onUpdateVersion, arg_14_0)
+	arg_14_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_14_0._onCloseViewCallBack, arg_14_0)
 end
 
-function slot0._updateFavoriteNew(slot0)
-	gohelper.setActive(slot0._gofavoritenew, RougeFavoriteModel.instance:getAllReddotNum() > 0)
+function var_0_0._updateFavoriteNew(arg_15_0)
+	local var_15_0 = RougeFavoriteModel.instance:getAllReddotNum() > 0
+
+	gohelper.setActive(arg_15_0._gofavoritenew, var_15_0)
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_16_0)
 	RougeController.instance:startEndFlow()
 end
 
-function slot0.onClose(slot0)
-	slot0:_clearCdTick()
-	RougeController.instance:unregisterCallback(RougeEvent.OnUpdateRougeInfo, slot0._onUpdateRougeInfo, slot0)
-	RougeOutsideController.instance:unregisterCallback(RougeEvent.OnUpdateRougeOutsideInfo, slot0._onUpdateRougeOutsideInfo, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, slot0._onUpdateRougeInfo, slot0)
-	slot0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, slot0._onUpdateRougeInfo, slot0)
-	TaskDispatcher.cancelTask(slot0._onSwitchTitleDone, slot0)
+function var_0_0.onClose(arg_17_0)
+	arg_17_0:_clearCdTick()
+	RougeController.instance:unregisterCallback(RougeEvent.OnUpdateRougeInfo, arg_17_0._onUpdateRougeInfo, arg_17_0)
+	RougeOutsideController.instance:unregisterCallback(RougeEvent.OnUpdateRougeOutsideInfo, arg_17_0._onUpdateRougeOutsideInfo, arg_17_0)
+	arg_17_0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeTalentTreeInfo, arg_17_0._onUpdateRougeInfo, arg_17_0)
+	arg_17_0:removeEventCb(RougeController.instance, RougeEvent.OnUpdateRougeRewardInfo, arg_17_0._onUpdateRougeInfo, arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._onSwitchTitleDone, arg_17_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clearCdTick()
-	TaskDispatcher.cancelTask(slot0._refreshDLCTitle, slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0:_clearCdTick()
+	TaskDispatcher.cancelTask(arg_18_0._refreshDLCTitle, arg_18_0)
 end
 
-function slot0._onUpdateRougeInfo(slot0)
-	slot0:_refresh()
+function var_0_0._onUpdateRougeInfo(arg_19_0)
+	arg_19_0:_refresh()
 end
 
-function slot0._onUpdateRougeOutsideInfo(slot0)
-	slot0:_refresh()
+function var_0_0._onUpdateRougeOutsideInfo(arg_20_0)
+	arg_20_0:_refresh()
 end
 
-function slot0._isContinueLast(slot0)
+function var_0_0._isContinueLast(arg_21_0)
 	return RougeModel.instance:isContinueLast()
 end
 
-function slot0._isInCdStart(slot0)
-	return not slot0:_isContinueLast() and RougeOutsideModel.instance:isInCdStart()
+function var_0_0._isInCdStart(arg_22_0)
+	return not arg_22_0:_isContinueLast() and RougeOutsideModel.instance:isInCdStart()
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshStartBtn()
-	slot0:_refreshProgress()
-	slot0:_refreshCDLocked()
-	slot0:_updateFavoriteNew()
-	slot0:_refreshTalentBtn()
-	slot0:_refreshRewardBtn()
-	slot0:_refreshExchangeBtn()
-	slot0:_refreshTitle()
+function var_0_0._refresh(arg_23_0)
+	arg_23_0:_refreshStartBtn()
+	arg_23_0:_refreshProgress()
+	arg_23_0:_refreshCDLocked()
+	arg_23_0:_updateFavoriteNew()
+	arg_23_0:_refreshTalentBtn()
+	arg_23_0:_refreshRewardBtn()
+	arg_23_0:_refreshExchangeBtn()
+	arg_23_0:_refreshTitle()
 end
 
-function slot0._refreshTalentBtn(slot0)
-	gohelper.setActive(slot0._goCultivateNew, RougeTalentModel.instance:checkIsNewStage())
-	gohelper.setActive(slot0._goCultivateCanUp, RougeTalentModel.instance:checkAnyNodeCanUp())
+function var_0_0._refreshTalentBtn(arg_24_0)
+	local var_24_0 = RougeTalentModel.instance:checkIsNewStage()
+
+	gohelper.setActive(arg_24_0._goCultivateNew, var_24_0)
+
+	local var_24_1 = RougeTalentModel.instance:checkAnyNodeCanUp()
+
+	gohelper.setActive(arg_24_0._goCultivateCanUp, var_24_1)
 end
 
-function slot0._refreshRewardBtn(slot0)
-	slot0._txtRewardNum.text = RougeRewardModel.instance:getRewardPoint()
+function var_0_0._refreshRewardBtn(arg_25_0)
+	arg_25_0._txtRewardNum.text = RougeRewardModel.instance:getRewardPoint()
 
-	gohelper.setActive(slot0._goRewardNew, RougeRewardModel.instance:checkIsNewStage())
+	local var_25_0 = RougeRewardModel.instance:checkIsNewStage()
+
+	gohelper.setActive(arg_25_0._goRewardNew, var_25_0)
 end
 
-function slot0._refreshStartBtn(slot0)
-	slot1 = slot0:_isContinueLast()
+function var_0_0._refreshStartBtn(arg_26_0)
+	local var_26_0 = arg_26_0:_isContinueLast()
 
-	gohelper.setActive(slot0._goimage_start, not slot1)
-	gohelper.setActive(slot0._goimage_start2, slot1)
-	slot0:_refreshEndBtn()
+	gohelper.setActive(arg_26_0._goimage_start, not var_26_0)
+	gohelper.setActive(arg_26_0._goimage_start2, var_26_0)
+	arg_26_0:_refreshEndBtn()
 end
 
-function slot0._refreshEndBtn(slot0)
-	slot0._btnstartCanvasGroup.alpha = slot0:_isInCdStart() and 0.5 or 1
+function var_0_0._refreshEndBtn(arg_27_0)
+	local var_27_0 = arg_27_0:_isContinueLast()
+	local var_27_1 = arg_27_0:_isInCdStart()
 
-	gohelper.setActive(slot0._btnEndGo, not slot2 and slot0:_isContinueLast())
+	arg_27_0._btnstartCanvasGroup.alpha = var_27_1 and 0.5 or 1
+
+	gohelper.setActive(arg_27_0._btnEndGo, not var_27_1 and var_27_0)
 end
 
-function slot0._refreshProgress(slot0)
-	gohelper.setActive(slot0._goprogress, false)
+function var_0_0._refreshProgress(arg_28_0)
+	gohelper.setActive(arg_28_0._goprogress, false)
 
-	if not RougeModel.instance:getDifficulty() or slot1 == 0 then
+	local var_28_0 = RougeModel.instance:getDifficulty()
+
+	if not var_28_0 or var_28_0 == 0 then
 		return
 	end
 
-	gohelper.setActive(slot0._goprogress, true)
+	gohelper.setActive(arg_28_0._goprogress, true)
 
-	slot0._txtdiffculty.text = RougeOutsideModel.instance:config():getDifficultyCO(slot1).title
+	local var_28_1 = RougeOutsideModel.instance:config():getDifficultyCO(var_28_0)
+
+	arg_28_0._txtdiffculty.text = var_28_1.title
 
 	if RougeModel.instance:isStarted() then
-		slot4 = RougeMapModel.instance:getLayerCo()
+		local var_28_2 = RougeMapModel.instance:getLayerCo()
+		local var_28_3 = RougeMapModel.instance:getMiddleLayerCo()
 
-		if RougeMapModel.instance:getMiddleLayerCo() then
-			slot0._txtname.text = slot5.name
+		if var_28_3 then
+			arg_28_0._txtname.text = var_28_3.name
 		else
-			slot0._txtname.text = slot4.name
+			arg_28_0._txtname.text = var_28_2.name
 		end
 	else
-		slot0._txtname.text = ""
+		arg_28_0._txtname.text = ""
 	end
 end
 
-function slot0._refreshCDLocked(slot0)
-	slot0:_clearCdTick()
+function var_0_0._refreshCDLocked(arg_29_0)
+	arg_29_0:_clearCdTick()
 
-	if not slot0:_isInCdStart() then
+	if not arg_29_0:_isInCdStart() then
 		return
 	end
 
-	gohelper.setActive(slot0._golocked, true)
-	slot0:_onRefreshCdTick()
-	TaskDispatcher.runRepeat(slot0._onRefreshCdTick, slot0, 1)
+	gohelper.setActive(arg_29_0._golocked, true)
+	arg_29_0:_onRefreshCdTick()
+	TaskDispatcher.runRepeat(arg_29_0._onRefreshCdTick, arg_29_0, 1)
 end
 
-function slot0._clearCdTick(slot0)
-	gohelper.setActive(slot0._golocked, false)
-	TaskDispatcher.cancelTask(slot0._onRefreshCdTick, slot0)
+function var_0_0._clearCdTick(arg_30_0)
+	gohelper.setActive(arg_30_0._golocked, false)
+	TaskDispatcher.cancelTask(arg_30_0._onRefreshCdTick, arg_30_0)
 end
 
-function slot0._onRefreshCdTick(slot0)
-	if RougeOutsideModel.instance:leftCdSec() < 0 then
-		slot0:_onCdTickEnd()
+function var_0_0._onRefreshCdTick(arg_31_0)
+	local var_31_0 = RougeOutsideModel.instance:leftCdSec()
+
+	if var_31_0 < 0 then
+		arg_31_0:_onCdTickEnd()
 
 		return
 	end
 
-	slot2, slot3, slot4 = TimeUtil.secondToHMS(slot1)
-	slot0._txttime.text = formatLuaLang("rougemainview_cd_fmt", slot2, slot3, slot4)
+	local var_31_1, var_31_2, var_31_3 = TimeUtil.secondToHMS(var_31_0)
+
+	arg_31_0._txttime.text = formatLuaLang("rougemainview_cd_fmt", var_31_1, var_31_2, var_31_3)
 end
 
-function slot0._onCdTickEnd(slot0)
-	slot0._txttime.text = ""
+function var_0_0._onCdTickEnd(arg_32_0)
+	arg_32_0._txttime.text = ""
 
-	slot0:_clearCdTick()
-	slot0:_refreshStartBtn()
+	arg_32_0:_clearCdTick()
+	arg_32_0:_refreshStartBtn()
 end
 
-function slot0._start(slot0)
-	if slot0:_isInCdStart() then
+function var_0_0._start(arg_33_0)
+	if arg_33_0:_isInCdStart() then
 		return
 	end
 
@@ -262,7 +283,7 @@ function slot0._start(slot0)
 		return
 	end
 
-	if slot0:_isContinueLast() then
+	if arg_33_0:_isContinueLast() then
 		if RougeModel.instance:isStarted() then
 			RougeController.instance:enterRouge()
 		elseif RougeModel.instance:isFinishedStyle() then
@@ -288,107 +309,131 @@ function slot0._start(slot0)
 	RougeStatController.instance:statStart()
 end
 
-function slot0._end(slot0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.RougeMainView_AbortRequest, MsgBoxEnum.BoxType.Yes_No, slot0._endYesCallback, nil, , slot0, nil, )
+function var_0_0._end(arg_34_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.RougeMainView_AbortRequest, MsgBoxEnum.BoxType.Yes_No, arg_34_0._endYesCallback, nil, nil, arg_34_0, nil, nil)
 end
 
-function slot0._endYesCallback(slot0)
+function var_0_0._endYesCallback(arg_35_0)
 	RougeStatController.instance:setReset()
-	RougeRpc.instance:sendRougeAbortRequest(RougeModel.instance:getSeason(), slot0._onReceiveEndReply, slot0)
+	RougeRpc.instance:sendRougeAbortRequest(RougeModel.instance:getSeason(), arg_35_0._onReceiveEndReply, arg_35_0)
 end
 
-function slot0._onReceiveEndReply(slot0)
+function var_0_0._onReceiveEndReply(arg_36_0)
 	RougeController.instance:startEndFlow()
 end
 
-function slot0._refreshExchangeBtn(slot0)
-	slot2 = RougeOutsideModel.instance:getRougeGameRecord() and slot1:getVersionIds()
+function var_0_0._refreshExchangeBtn(arg_37_0)
+	local var_37_0 = RougeOutsideModel.instance:getRougeGameRecord()
+	local var_37_1 = var_37_0 and var_37_0:getVersionIds()
+	local var_37_2 = var_37_1 and #var_37_1 > 0
 
-	gohelper.setActive(slot0._btnexchange.gameObject, not (slot2 and #slot2 > 0))
+	gohelper.setActive(arg_37_0._btnexchange.gameObject, not var_37_2)
 end
 
-function slot0._refreshTitle(slot0)
-	slot0:_switchDLCTitle()
+function var_0_0._refreshTitle(arg_38_0)
+	arg_38_0:_switchDLCTitle()
 end
 
-slot1 = 1.6
+local var_0_1 = 1.6
 
-function slot0._switchDLCTitle(slot0)
-	if RougeDLCHelper.getCurVersionString() == slot0._originVersionStr then
-		slot0:_refreshDLCTitle()
+function var_0_0._switchDLCTitle(arg_39_0)
+	local var_39_0 = RougeDLCHelper.getCurVersionString()
+
+	if var_39_0 == arg_39_0._originVersionStr then
+		arg_39_0:_refreshDLCTitle()
 
 		return
 	end
 
-	slot2, slot3 = nil
-	slot3 = (not string.nilorempty(slot1) or slot0._gonormaltitle) and gohelper.findChild(slot0._godlctitles, slot1)
+	local var_39_1
+	local var_39_2
 
-	if not gohelper.isNil((not string.nilorempty(slot0._originVersionStr) or slot0._gonormaltitle) and gohelper.findChild(slot0._godlctitles, slot0._originVersionStr)) then
-		gohelper.setActive(slot2, true)
-		gohelper.onceAddComponent(slot2, gohelper.Type_Animator):Play("fadeout", 0, 0)
+	if string.nilorempty(arg_39_0._originVersionStr) then
+		var_39_1 = arg_39_0._gonormaltitle
+	else
+		var_39_1 = gohelper.findChild(arg_39_0._godlctitles, arg_39_0._originVersionStr)
 	end
 
-	if not gohelper.isNil(slot3) then
-		gohelper.setActive(slot3, true)
-		gohelper.onceAddComponent(slot3, gohelper.Type_Animator):Play("fadein", 0, 0)
+	if string.nilorempty(var_39_0) then
+		var_39_2 = arg_39_0._gonormaltitle
+	else
+		var_39_2 = gohelper.findChild(arg_39_0._godlctitles, var_39_0)
 	end
 
-	gohelper.setActive(slot0._gotitleeffect, true)
+	if not gohelper.isNil(var_39_1) then
+		gohelper.setActive(var_39_1, true)
+		gohelper.onceAddComponent(var_39_1, gohelper.Type_Animator):Play("fadeout", 0, 0)
+	end
+
+	if not gohelper.isNil(var_39_2) then
+		gohelper.setActive(var_39_2, true)
+		gohelper.onceAddComponent(var_39_2, gohelper.Type_Animator):Play("fadein", 0, 0)
+	end
+
+	gohelper.setActive(arg_39_0._gotitleeffect, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.SwitchRougeDLC)
-	TaskDispatcher.runDelay(slot0._onSwitchTitleDone, slot0, uv0)
+	TaskDispatcher.runDelay(arg_39_0._onSwitchTitleDone, arg_39_0, var_0_1)
 end
 
-function slot0._onSwitchTitleDone(slot0)
-	slot0:_refreshDLCTitle()
+function var_0_0._onSwitchTitleDone(arg_40_0)
+	arg_40_0:_refreshDLCTitle()
 end
 
-function slot0._refreshDLCTitle(slot0)
-	slot1 = RougeDLCHelper.getCurVersionString()
+function var_0_0._refreshDLCTitle(arg_41_0)
+	local var_41_0 = RougeDLCHelper.getCurVersionString()
+	local var_41_1 = arg_41_0._godlctitles.transform.childCount
 
-	for slot6 = 1, slot0._godlctitles.transform.childCount do
-		slot7 = slot0._godlctitles.transform:GetChild(slot6 - 1).gameObject
+	for iter_41_0 = 1, var_41_1 do
+		local var_41_2 = arg_41_0._godlctitles.transform:GetChild(iter_41_0 - 1).gameObject
+		local var_41_3 = var_41_2.name
 
-		gohelper.setActive(slot7, slot7.name == slot1)
+		gohelper.setActive(var_41_2, var_41_3 == var_41_0)
 	end
 
-	gohelper.setActive(slot0._gonormaltitle, string.nilorempty(slot1))
-	gohelper.setActive(slot0._gotitleeffect, false)
+	local var_41_4 = string.nilorempty(var_41_0)
 
-	slot0._originVersionStr = slot1
+	gohelper.setActive(arg_41_0._gonormaltitle, var_41_4)
+	gohelper.setActive(arg_41_0._gotitleeffect, false)
+
+	arg_41_0._originVersionStr = var_41_0
 end
 
-function slot0._onUpdateVersion(slot0)
-	if not slot0:checkIsTopView() then
-		slot0._waitUpdate = true
+function var_0_0._onUpdateVersion(arg_42_0)
+	if not arg_42_0:checkIsTopView() then
+		arg_42_0._waitUpdate = true
 
 		return
 	end
 
-	slot0._waitUpdate = nil
+	arg_42_0._waitUpdate = nil
 
-	slot0:_refreshExchangeBtn()
-	slot0:_refreshTitle()
+	arg_42_0:_refreshExchangeBtn()
+	arg_42_0:_refreshTitle()
 end
 
-function slot0._onCloseViewCallBack(slot0, slot1)
-	if slot1 == ViewName.RougeDLCSelectView and slot0._waitUpdate then
-		slot0:_onUpdateVersion()
+function var_0_0._onCloseViewCallBack(arg_43_0, arg_43_1)
+	if arg_43_1 == ViewName.RougeDLCSelectView and arg_43_0._waitUpdate then
+		arg_43_0:_onUpdateVersion()
 	end
 end
 
-slot2 = {
+local var_0_2 = {
 	[ViewName.ToastView] = true,
 	[ViewName.ToastTopView] = true,
 	[ViewName.WaterMarkView] = true,
 	[ViewName.GuideView] = true
 }
 
-function slot0.checkIsTopView(slot0)
-	for slot5 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if not uv0[slot1[slot5]] then
-			return slot6 == ViewName.RougeMainView
+function var_0_0.checkIsTopView(arg_44_0)
+	local var_44_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_44_0 = #var_44_0, 1, -1 do
+		local var_44_1 = var_44_0[iter_44_0]
+
+		if not var_0_2[var_44_1] then
+			return var_44_1 == ViewName.RougeMainView
 		end
 	end
 end
 
-return slot0
+return var_0_0

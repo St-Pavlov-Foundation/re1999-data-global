@@ -1,42 +1,48 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepCallEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepCallEvent", package.seeall)
 
-slot0 = class("YaXianStepCallEvent", YaXianStepBase)
+local var_0_0 = class("YaXianStepCallEvent", YaXianStepBase)
 
-function slot0.start(slot0)
-	if YaXianGameController.instance.state then
-		slot1:setCurEventByObj(slot0.originData.event)
+function var_0_0.start(arg_1_0)
+	local var_1_0 = YaXianGameController.instance.state
 
-		slot0._curState = slot1:getCurEvent()
+	if var_1_0 then
+		var_1_0:setCurEventByObj(arg_1_0.originData.event)
+
+		arg_1_0._curState = var_1_0:getCurEvent()
 	end
 
-	if slot0._curState then
-		YaXianGameController.instance:registerCallback(YaXianEvent.OnStateFinish, slot0.onReceiveFinished, slot0)
+	if arg_1_0._curState then
+		YaXianGameController.instance:registerCallback(YaXianEvent.OnStateFinish, arg_1_0.onReceiveFinished, arg_1_0)
 	else
-		slot0:finish()
+		arg_1_0:finish()
 	end
 end
 
-function slot0.onReceiveFinished(slot0, slot1)
-	if slot0._curState and slot0._curState.stateType == slot1 then
-		YaXianGameController.instance:unregisterCallback(YaXianEvent.OnStateFinish, slot0.onReceiveFinished, slot0)
-		slot0:finish()
+function var_0_0.onReceiveFinished(arg_2_0, arg_2_1)
+	if arg_2_0._curState and arg_2_0._curState.stateType == arg_2_1 then
+		YaXianGameController.instance:unregisterCallback(YaXianEvent.OnStateFinish, arg_2_0.onReceiveFinished, arg_2_0)
+		arg_2_0:finish()
 	end
 end
 
-function slot0.finish(slot0)
-	if YaXianGameController.instance.state then
-		slot1:disposeEventState()
+function var_0_0.finish(arg_3_0)
+	local var_3_0 = YaXianGameController.instance.state
+
+	if var_3_0 then
+		var_3_0:disposeEventState()
 	end
 
-	uv0.super.finish(slot0)
+	var_0_0.super.finish(arg_3_0)
 end
 
-function slot0.dispose(slot0)
-	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnStateFinish, slot0.onReceiveFinished, slot0)
+function var_0_0.dispose(arg_4_0)
+	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnStateFinish, arg_4_0.onReceiveFinished, arg_4_0)
 
-	if YaXianGameController.instance.state then
-		slot1:disposeEventState()
+	local var_4_0 = YaXianGameController.instance.state
+
+	if var_4_0 then
+		var_4_0:disposeEventState()
 	end
 end
 
-return slot0
+return var_0_0

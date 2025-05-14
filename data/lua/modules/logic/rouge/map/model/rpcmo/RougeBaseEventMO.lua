@@ -1,32 +1,32 @@
-module("modules.logic.rouge.map.model.rpcmo.RougeBaseEventMO", package.seeall)
+﻿module("modules.logic.rouge.map.model.rpcmo.RougeBaseEventMO", package.seeall)
 
-slot0 = pureTable("RougeBaseEventMO")
+local var_0_0 = pureTable("RougeBaseEventMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.eventCo = slot1
-	slot0.jsonData = cjson.decode(slot2)
-	slot0.state = slot0.jsonData.state
-	slot0.eventId = slot0.jsonData.eventId
-	slot0.type = slot0.jsonData.type
-	slot0.fightFail = slot0.jsonData.fightFail
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.eventCo = arg_1_1
+	arg_1_0.jsonData = cjson.decode(arg_1_2)
+	arg_1_0.state = arg_1_0.jsonData.state
+	arg_1_0.eventId = arg_1_0.jsonData.eventId
+	arg_1_0.type = arg_1_0.jsonData.type
+	arg_1_0.fightFail = arg_1_0.jsonData.fightFail
 end
 
-function slot0.update(slot0, slot1, slot2)
-	slot0.eventCo = slot1
-	slot0.jsonData = cjson.decode(slot2)
-	slot0.eventId = slot0.jsonData.eventId
-	slot0.type = slot0.jsonData.type
-	slot0.fightFail = slot0.jsonData.fightFail
+function var_0_0.update(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.eventCo = arg_2_1
+	arg_2_0.jsonData = cjson.decode(arg_2_2)
+	arg_2_0.eventId = arg_2_0.jsonData.eventId
+	arg_2_0.type = arg_2_0.jsonData.type
+	arg_2_0.fightFail = arg_2_0.jsonData.fightFail
 
-	if slot0.state ~= slot0.jsonData.state then
-		slot0.state = slot0.jsonData.state
+	if arg_2_0.state ~= arg_2_0.jsonData.state then
+		arg_2_0.state = arg_2_0.jsonData.state
 
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onNodeEventStatusChange, slot0.eventId, slot0.state)
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onNodeEventStatusChange, arg_2_0.eventId, arg_2_0.state)
 	end
 end
 
-function slot0.__tostring(slot0)
-	return string.format("eventId : %s, jsonData : %s, state : %s, type : %s, fightFail : %s", slot0.eventId, cjson.encode(slot0.jsonData), slot0.state, slot0.type, slot0.fightFail)
+function var_0_0.__tostring(arg_3_0)
+	return string.format("eventId : %s, jsonData : %s, state : %s, type : %s, fightFail : %s", arg_3_0.eventId, cjson.encode(arg_3_0.jsonData), arg_3_0.state, arg_3_0.type, arg_3_0.fightFail)
 end
 
-return slot0
+return var_0_0

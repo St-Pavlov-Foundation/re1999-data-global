@@ -1,34 +1,38 @@
-module("modules.logic.pcInput.activityAdapter.CommonActivityAdapter", package.seeall)
+﻿module("modules.logic.pcInput.activityAdapter.CommonActivityAdapter", package.seeall)
 
-slot0 = class("CommonActivityAdapter", BaseActivityAdapter)
-slot0.keytoFunction = {
-	Esc = function ()
+local var_0_0 = class("CommonActivityAdapter", BaseActivityAdapter)
+
+var_0_0.keytoFunction = {
+	Esc = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyCommonCancel)
 	end,
-	Return = function ()
+	Return = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyCommonConfirm)
 	end
 }
 
-function slot0.ctor(slot0)
-	slot0.keytoFunction = uv0.keytoFunction
-	slot0._priorty = 1
+function var_0_0.ctor(arg_3_0)
+	arg_3_0.keytoFunction = var_0_0.keytoFunction
+	arg_3_0._priorty = 1
 
-	slot0:registerFunction()
+	arg_3_0:registerFunction()
 end
 
-function slot0.registerFunction(slot0)
-	for slot4, slot5 in pairs(slot0.keytoFunction) do
-		PCInputController.instance:registerKey(slot4, ZProj.PCInputManager.PCInputEvent.KeyUp)
+function var_0_0.registerFunction(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0.keytoFunction) do
+		PCInputController.instance:registerKey(iter_4_0, ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 end
 
-function slot0.unRegisterFunction(slot0)
+function var_0_0.unRegisterFunction(arg_5_0)
+	return
 end
 
-function slot0.OnkeyUp(slot0, slot1)
-	if slot0.keytoFunction[slot1] then
-		slot2()
+function var_0_0.OnkeyUp(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0.keytoFunction[arg_6_1]
+
+	if var_6_0 then
+		var_6_0()
 
 		return true
 	end
@@ -36,9 +40,11 @@ function slot0.OnkeyUp(slot0, slot1)
 	return false
 end
 
-function slot0.OnkeyDown(slot0, slot1)
-	if slot0.keytoFunction[slot1] then
-		slot2()
+function var_0_0.OnkeyDown(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.keytoFunction[arg_7_1]
+
+	if var_7_0 then
+		var_7_0()
 
 		return true
 	end
@@ -46,8 +52,8 @@ function slot0.OnkeyDown(slot0, slot1)
 	return false
 end
 
-function slot0.destroy(slot0)
-	slot0:unRegisterFunction()
+function var_0_0.destroy(arg_8_0)
+	arg_8_0:unRegisterFunction()
 end
 
-return slot0
+return var_0_0

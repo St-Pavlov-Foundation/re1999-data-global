@@ -1,137 +1,151 @@
-module("modules.logic.seasonver.act166.view.Season166TrainView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166TrainView", package.seeall)
 
-slot0 = class("Season166TrainView", BaseView)
+local var_0_0 = class("Season166TrainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtcurIndex = gohelper.findChildText(slot0.viewGO, "right/title/#txt_curIndex")
-	slot0._txttotalIndex = gohelper.findChildText(slot0.viewGO, "right/title/#txt_totalIndex")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "right/title/#txt_title")
-	slot0._txttitleEn = gohelper.findChildText(slot0.viewGO, "right/title/#txt_titleen")
-	slot0._btnleftArrow = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/title/#btn_leftArrow")
-	slot0._btnrightArrow = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/title/#btn_rightArrow")
-	slot0._txtenemyinfo = gohelper.findChildText(slot0.viewGO, "right/episodeInfo/enemyInfo/#txt_enemyinfo")
-	slot0._txtepisodeInfo = gohelper.findChildText(slot0.viewGO, "right/episodeInfo/#txt_episodeInfo")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "right/reward/#go_rewardContent")
-	slot0._gorewardItem = gohelper.findChild(slot0.viewGO, "right/reward/#go_rewardContent/#go_rewardItem")
-	slot0._btnfight = gohelper.findChildButtonWithAudio(slot0.viewGO, "right/#btn_fight")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtcurIndex = gohelper.findChildText(arg_1_0.viewGO, "right/title/#txt_curIndex")
+	arg_1_0._txttotalIndex = gohelper.findChildText(arg_1_0.viewGO, "right/title/#txt_totalIndex")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "right/title/#txt_title")
+	arg_1_0._txttitleEn = gohelper.findChildText(arg_1_0.viewGO, "right/title/#txt_titleen")
+	arg_1_0._btnleftArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/title/#btn_leftArrow")
+	arg_1_0._btnrightArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/title/#btn_rightArrow")
+	arg_1_0._txtenemyinfo = gohelper.findChildText(arg_1_0.viewGO, "right/episodeInfo/enemyInfo/#txt_enemyinfo")
+	arg_1_0._txtepisodeInfo = gohelper.findChildText(arg_1_0.viewGO, "right/episodeInfo/#txt_episodeInfo")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "right/reward/#go_rewardContent")
+	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "right/reward/#go_rewardContent/#go_rewardItem")
+	arg_1_0._btnfight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_fight")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnleftArrow:AddClickListener(slot0._btnleftArrowOnClick, slot0)
-	slot0._btnrightArrow:AddClickListener(slot0._btnrightArrowOnClick, slot0)
-	slot0._btnfight:AddClickListener(slot0._btnfightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnleftArrow:AddClickListener(arg_2_0._btnleftArrowOnClick, arg_2_0)
+	arg_2_0._btnrightArrow:AddClickListener(arg_2_0._btnrightArrowOnClick, arg_2_0)
+	arg_2_0._btnfight:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnleftArrow:RemoveClickListener()
-	slot0._btnrightArrow:RemoveClickListener()
-	slot0._btnfight:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnleftArrow:RemoveClickListener()
+	arg_3_0._btnrightArrow:RemoveClickListener()
+	arg_3_0._btnfight:RemoveClickListener()
 end
 
-function slot0._btnleftArrowOnClick(slot0)
-	slot0.trainId = Mathf.Max(slot0.trainId - 1, 1)
+function var_0_0._btnleftArrowOnClick(arg_4_0)
+	arg_4_0.trainId = Mathf.Max(arg_4_0.trainId - 1, 1)
 
-	slot0:refreshUI()
+	arg_4_0:refreshUI()
 end
 
-function slot0._btnrightArrowOnClick(slot0)
-	if not slot0.unlockTrainMap[Mathf.Min(slot0.trainId + 1, #slot0.trainConfigList)] then
+function var_0_0._btnrightArrowOnClick(arg_5_0)
+	local var_5_0 = Mathf.Min(arg_5_0.trainId + 1, #arg_5_0.trainConfigList)
+
+	if not arg_5_0.unlockTrainMap[var_5_0] then
 		GameFacade.showToast(ToastEnum.Season166TrainLock)
 
 		return
 	end
 
-	slot0.trainId = slot1
+	arg_5_0.trainId = var_5_0
 
-	slot0:refreshUI()
+	arg_5_0:refreshUI()
 end
 
-function slot0._btnfightOnClick(slot0)
+function var_0_0._btnfightOnClick(arg_6_0)
 	Season166TrainController.instance:enterTrainFightScene()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.rightArrowCanvasGroup = slot0._btnrightArrow.gameObject:GetComponent(gohelper.Type_CanvasGroup)
-	slot0._animPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0.isClickClose = false
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0.rightArrowCanvasGroup = arg_7_0._btnrightArrow.gameObject:GetComponent(gohelper.Type_CanvasGroup)
+	arg_7_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_7_0.viewGO)
+	arg_7_0.isClickClose = false
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.trainId = slot0.viewParam.trainId
-	slot0.config = slot0.viewParam.config
-	slot0.trainConfigList = Season166Config.instance:getSeasonTrainCos(slot0.actId)
-	slot0.unlockTrainMap = Season166TrainModel.instance:getUnlockTrainInfoMap(slot0.actId)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.actId = arg_9_0.viewParam.actId
+	arg_9_0.trainId = arg_9_0.viewParam.trainId
+	arg_9_0.config = arg_9_0.viewParam.config
+	arg_9_0.trainConfigList = Season166Config.instance:getSeasonTrainCos(arg_9_0.actId)
+	arg_9_0.unlockTrainMap = Season166TrainModel.instance:getUnlockTrainInfoMap(arg_9_0.actId)
 
 	Season166Controller.instance:dispatchEvent(Season166Event.OpenTrainView, {
 		isEnter = true
 	})
-	slot0:refreshUI()
-	slot0.viewContainer:setOverrideCloseClick(slot0.setCloseOverrideFunc, slot0)
+	arg_9_0:refreshUI()
+	arg_9_0.viewContainer:setOverrideCloseClick(arg_9_0.setCloseOverrideFunc, arg_9_0)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshInfo()
-	slot0:refreshReward()
-	Season166Controller.instance:dispatchEvent(Season166Event.TrainViewChangeTrain, slot0.trainId)
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0:refreshInfo()
+	arg_10_0:refreshReward()
+	Season166Controller.instance:dispatchEvent(Season166Event.TrainViewChangeTrain, arg_10_0.trainId)
 end
 
-function slot0.refreshInfo(slot0)
-	slot0.config = slot0.trainConfigList[slot0.trainId]
-	slot0._txtcurIndex.text = string.format("%02d", slot0.trainId)
-	slot0._txttotalIndex.text = string.format("%02d", #slot0.trainConfigList)
-	slot0._txttitle.text = slot0.config.name
-	slot0._txttitleEn.text = slot0.config.nameEn
-	slot0._txtepisodeInfo.text = slot0.config.desc
-	slot0._txtenemyinfo.text = HeroConfig.instance:getLevelDisplayVariant(slot0.config.level)
+function var_0_0.refreshInfo(arg_11_0)
+	arg_11_0.config = arg_11_0.trainConfigList[arg_11_0.trainId]
+	arg_11_0._txtcurIndex.text = string.format("%02d", arg_11_0.trainId)
+	arg_11_0._txttotalIndex.text = string.format("%02d", #arg_11_0.trainConfigList)
+	arg_11_0._txttitle.text = arg_11_0.config.name
+	arg_11_0._txttitleEn.text = arg_11_0.config.nameEn
+	arg_11_0._txtepisodeInfo.text = arg_11_0.config.desc
+	arg_11_0._txtenemyinfo.text = HeroConfig.instance:getLevelDisplayVariant(arg_11_0.config.level)
 
-	Season166TrainModel.instance:initTrainData(slot0.actId, slot0.trainId)
-	gohelper.setActive(slot0._btnleftArrow.gameObject, slot0.trainId > 1)
-	gohelper.setActive(slot0._btnrightArrow.gameObject, slot0.trainId < #slot0.trainConfigList)
+	Season166TrainModel.instance:initTrainData(arg_11_0.actId, arg_11_0.trainId)
+	gohelper.setActive(arg_11_0._btnleftArrow.gameObject, arg_11_0.trainId > 1)
+	gohelper.setActive(arg_11_0._btnrightArrow.gameObject, arg_11_0.trainId < #arg_11_0.trainConfigList)
 
-	slot0.rightArrowCanvasGroup.alpha = slot0.unlockTrainMap[Mathf.Min(slot0.trainId + 1, #slot0.trainConfigList)] and 1 or 0.5
+	local var_11_0 = Mathf.Min(arg_11_0.trainId + 1, #arg_11_0.trainConfigList)
+
+	arg_11_0.rightArrowCanvasGroup.alpha = arg_11_0.unlockTrainMap[var_11_0] and 1 or 0.5
 end
 
-function slot0.refreshReward(slot0)
-	gohelper.CreateObjList(slot0, slot0.rewardItemShow, string.split(slot0.config.firstBonus, "|"), slot0._gorewardContent, slot0._gorewardItem)
+function var_0_0.refreshReward(arg_12_0)
+	local var_12_0 = string.split(arg_12_0.config.firstBonus, "|")
+
+	gohelper.CreateObjList(arg_12_0, arg_12_0.rewardItemShow, var_12_0, arg_12_0._gorewardContent, arg_12_0._gorewardItem)
 end
 
-function slot0.rewardItemShow(slot0, slot1, slot2, slot3)
-	slot6 = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot1, "go_itempos"))
-	slot7 = string.splitToNumber(slot2, "#")
+function var_0_0.rewardItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = gohelper.findChild(arg_13_1, "go_itempos")
+	local var_13_1 = gohelper.findChild(arg_13_1, "go_hasget")
+	local var_13_2 = IconMgr.instance:getCommonPropItemIcon(var_13_0)
+	local var_13_3 = string.splitToNumber(arg_13_2, "#")
 
-	slot6:setMOValue(slot7[1], slot7[2], slot7[3])
-	slot6:setHideLvAndBreakFlag(true)
-	slot6:hideEquipLvAndBreak(true)
-	slot6:setCountFontSize(51)
-	gohelper.setActive(gohelper.findChild(slot1, "go_hasget"), Season166TrainModel.instance:checkIsFinish(slot0.actId, slot0.trainId))
+	var_13_2:setMOValue(var_13_3[1], var_13_3[2], var_13_3[3])
+	var_13_2:setHideLvAndBreakFlag(true)
+	var_13_2:hideEquipLvAndBreak(true)
+	var_13_2:setCountFontSize(51)
+
+	local var_13_4 = Season166TrainModel.instance:checkIsFinish(arg_13_0.actId, arg_13_0.trainId)
+
+	gohelper.setActive(var_13_1, var_13_4)
 end
 
-function slot0.setCloseOverrideFunc(slot0)
-	if not slot0.isClickClose then
-		slot0._animPlayer:Play("out", slot0.closeThis, slot0)
+function var_0_0.setCloseOverrideFunc(arg_14_0)
+	if not arg_14_0.isClickClose then
+		arg_14_0._animPlayer:Play("out", arg_14_0.closeThis, arg_14_0)
 		Season166Controller.instance:dispatchEvent(Season166Event.CloseTrainView, {
 			isEnter = false
 		})
 		Season166Controller.instance:dispatchEvent(Season166Event.TrainViewChangeTrain)
 
-		slot0.isClickClose = true
+		arg_14_0.isClickClose = true
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

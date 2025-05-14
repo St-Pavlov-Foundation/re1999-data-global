@@ -1,33 +1,37 @@
-module("modules.logic.act189.view.ShortenAct_FullView", package.seeall)
+﻿module("modules.logic.act189.view.ShortenAct_FullView", package.seeall)
 
-slot0 = class("ShortenAct_FullView", ShortenActView_impl)
+local var_0_0 = class("ShortenAct_FullView", ShortenActView_impl)
 
-function slot0.onInitView(slot0)
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "root/right/limittimebg/#txt_time")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "root/right/#simage_title")
-	slot0._scrolltasklist = gohelper.findChildScrollRect(slot0.viewGO, "root/right/#scroll_tasklist")
-	slot0._go28days = gohelper.findChild(slot0.viewGO, "root/#go_28days")
-	slot0._go35days = gohelper.findChild(slot0.viewGO, "root/#go_35days")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/right/limittimebg/#txt_time")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/#simage_title")
+	arg_1_0._scrolltasklist = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#scroll_tasklist")
+	arg_1_0._go28days = gohelper.findChild(arg_1_0.viewGO, "root/#go_28days")
+	arg_1_0._go35days = gohelper.findChild(arg_1_0.viewGO, "root/#go_35days")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
-	Activity189Controller.instance:sendGetAct189InfoRequest(slot0:actId())
+function var_0_0._editableInitView(arg_4_0)
+	var_0_0.super._editableInitView(arg_4_0)
+	Activity189Controller.instance:sendGetAct189InfoRequest(arg_4_0:actId())
 end
 
-function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-	uv0.super.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam.parent
+
+	gohelper.addChild(var_5_0, arg_5_0.viewGO)
+	var_0_0.super.onOpen(arg_5_0)
 end
 
-return slot0
+return var_0_0

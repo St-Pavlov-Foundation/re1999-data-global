@@ -1,134 +1,136 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateStepUtil", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateStepUtil", package.seeall)
 
-slot0 = class("EliminateStepUtil")
+local var_0_0 = class("EliminateStepUtil")
 
-function slot0.createStep(slot0, slot1)
-	slot2 = nil
+function var_0_0.createStep(arg_1_0, arg_1_1)
+	local var_1_0
 
-	if slot0 == EliminateEnum.StepWorkType.Move then
-		slot2 = EliminateChessMoveStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.Move then
+		var_1_0 = EliminateChessMoveStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.Die then
-		slot2 = EliminateChessDieStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.Die then
+		var_1_0 = EliminateChessDieStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.Debug then
-		slot2 = EliminateChessDebugStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.Debug then
+		var_1_0 = EliminateChessDebugStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.Arrange then
-		slot2 = EliminateChessArrangeStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.Arrange then
+		var_1_0 = EliminateChessArrangeStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.HandleData then
-		slot2 = EliminateChessHandleDataStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.HandleData then
+		var_1_0 = EliminateChessHandleDataStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.StartShowView then
-		slot2 = EliminateChessShowStartStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.StartShowView then
+		var_1_0 = EliminateChessShowStartStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.EndShowView then
-		slot2 = EliminateChessShowEndStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.EndShowView then
+		var_1_0 = EliminateChessShowEndStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.ShowEvaluate then
-		slot2 = EliminateChessShowEvaluateStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.ShowEvaluate then
+		var_1_0 = EliminateChessShowEvaluateStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.PlayEffect then
-		slot2 = EliminateChessPlayEffectStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.PlayEffect then
+		var_1_0 = EliminateChessPlayEffectStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.PlayAudio then
-		slot2 = EliminateChessPlayAudioStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.PlayAudio then
+		var_1_0 = EliminateChessPlayAudioStep.New()
 	end
 
-	if slot0 == EliminateEnum.StepWorkType.RefreshEliminate then
-		slot2 = EliminateChessRefreshStep.New()
+	if arg_1_0 == EliminateEnum.StepWorkType.RefreshEliminate then
+		var_1_0 = EliminateChessRefreshStep.New()
 	end
 
-	if slot2 then
-		slot2:initData(slot1)
+	if var_1_0 then
+		var_1_0:initData(arg_1_1)
 	else
 		logError("EliminateChessController:getSetWork stepType error!")
 	end
 
-	return slot2
+	return var_1_0
 end
 
-function slot0.createCommonStepTable(slot0, slot1, slot2)
-	if uv0.stepPool == nil then
-		uv0.stepPool = LuaObjPool.New(10, function ()
+function var_0_0.createCommonStepTable(arg_2_0, arg_2_1, arg_2_2)
+	if var_0_0.stepPool == nil then
+		var_0_0.stepPool = LuaObjPool.New(10, function()
 			return {
-				x = uv0,
-				y = uv1,
-				time = uv2
+				x = arg_2_0,
+				y = arg_2_1,
+				time = arg_2_2
 			}
-		end, function (slot0)
-			slot0 = nil
-		end, function (slot0)
-			slot0.x = 0
-			slot0.y = 0
-			slot0.time = 0
+		end, function(arg_4_0)
+			arg_4_0 = nil
+		end, function(arg_5_0)
+			arg_5_0.x = 0
+			arg_5_0.y = 0
+			arg_5_0.time = 0
 		end)
 	end
 
-	return uv0.stepPool:getObject()
+	return var_0_0.stepPool:getObject()
 end
 
-function slot0.putCommonStepTable(slot0)
-	uv0.stepPool:putObject(slot0)
+function var_0_0.putCommonStepTable(arg_6_0)
+	var_0_0.stepPool:putObject(arg_6_0)
 end
 
-function slot0.releaseCommonStepTable()
-	if uv0.stepPool then
-		uv0.stepPool:dispose()
+function var_0_0.releaseCommonStepTable()
+	if var_0_0.stepPool then
+		var_0_0.stepPool:dispose()
 
-		uv0.stepPool = nil
+		var_0_0.stepPool = nil
 	end
 end
 
-function slot0.createOrGetMoveStepTable(slot0, slot1, slot2)
-	if uv0.moveStepPool == nil then
-		uv0.moveStepPool = LuaObjPool.New(10, function ()
+function var_0_0.createOrGetMoveStepTable(arg_8_0, arg_8_1, arg_8_2)
+	if var_0_0.moveStepPool == nil then
+		var_0_0.moveStepPool = LuaObjPool.New(10, function()
 			return {
-				chessItem = uv0,
-				time = uv1 and uv1 or EliminateEnum.AniTime.Move,
-				animType = uv2
+				chessItem = arg_8_0,
+				time = arg_8_1 and arg_8_1 or EliminateEnum.AniTime.Move,
+				animType = arg_8_2
 			}
-		end, function (slot0)
-			slot0.chessItem = nil
-			slot0.time = nil
-			slot0.animType = nil
-			slot0 = nil
-		end, function (slot0)
-			slot0.chessItem = nil
-			slot0.time = nil
-			slot0.animType = nil
+		end, function(arg_10_0)
+			arg_10_0.chessItem = nil
+			arg_10_0.time = nil
+			arg_10_0.animType = nil
+			arg_10_0 = nil
+		end, function(arg_11_0)
+			arg_11_0.chessItem = nil
+			arg_11_0.time = nil
+			arg_11_0.animType = nil
 		end)
 	end
 
-	uv0.moveStepPool:getObject().chessItem = slot0
-	slot3.time = slot1 and slot1 or EliminateEnum.AniTime.Move
-	slot3.animType = slot2
+	local var_8_0 = var_0_0.moveStepPool:getObject()
 
-	return slot3
+	var_8_0.chessItem = arg_8_0
+	var_8_0.time = arg_8_1 and arg_8_1 or EliminateEnum.AniTime.Move
+	var_8_0.animType = arg_8_2
+
+	return var_8_0
 end
 
-function slot0.putMoveStepTable(slot0)
-	if uv0.moveStepPool ~= nil then
-		uv0.moveStepPool:putObject(slot0)
+function var_0_0.putMoveStepTable(arg_12_0)
+	if var_0_0.moveStepPool ~= nil then
+		var_0_0.moveStepPool:putObject(arg_12_0)
 	end
 end
 
-function slot0.releaseMoveStepTable()
-	if uv0.moveStepPool ~= nil then
-		uv0.moveStepPool:dispose()
+function var_0_0.releaseMoveStepTable()
+	if var_0_0.moveStepPool ~= nil then
+		var_0_0.moveStepPool:dispose()
 
-		uv0.moveStepPool = nil
+		var_0_0.moveStepPool = nil
 	end
 end
 
-return slot0
+return var_0_0

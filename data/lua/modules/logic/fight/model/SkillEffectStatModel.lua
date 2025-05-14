@@ -1,166 +1,192 @@
-module("modules.logic.fight.model.SkillEffectStatModel", package.seeall)
+﻿module("modules.logic.fight.model.SkillEffectStatModel", package.seeall)
 
-slot0 = class("SkillEffectStatModel", ListScrollModel)
+local var_0_0 = class("SkillEffectStatModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0.idCounter = 1
-	slot0.toggleId = 1
-	slot0.titleMO = {}
-	slot0.maxMO = {}
-	slot0.totalMO = {}
-	slot0.type1MOList = {}
-	slot0.type2MOList = {}
-	slot0.type1MOCount = 0
-	slot0.type2MOCount = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.idCounter = 1
+	arg_1_0.toggleId = 1
+	arg_1_0.titleMO = {}
+	arg_1_0.maxMO = {}
+	arg_1_0.totalMO = {}
+	arg_1_0.type1MOList = {}
+	arg_1_0.type2MOList = {}
+	arg_1_0.type1MOCount = 0
+	arg_1_0.type2MOCount = 0
 
-	slot0:clearStat()
+	arg_1_0:clearStat()
 end
 
-function slot0.switchTab(slot0, slot1)
-	slot0.toggleId = slot1
+function var_0_0.switchTab(arg_2_0, arg_2_1)
+	arg_2_0.toggleId = arg_2_1
 end
 
-function slot0.clearStat(slot0)
-	slot0._maxParticleSystem = 0
-	slot0._maxParticleCount = 0
-	slot0._maxMaterialCount = 0
-	slot0._maxTextureCount = 0
+function var_0_0.clearStat(arg_3_0)
+	arg_3_0._maxParticleSystem = 0
+	arg_3_0._maxParticleCount = 0
+	arg_3_0._maxMaterialCount = 0
+	arg_3_0._maxTextureCount = 0
 end
 
-function slot0.statistic(slot0)
-	slot0.type1MOCount = 0
-	slot0.type2MOCount = 0
-	slot0.idCounter = 1
-	slot1 = 1
-	slot2 = {}
-	slot3 = {}
+function var_0_0.statistic(arg_4_0)
+	arg_4_0.type1MOCount = 0
+	arg_4_0.type2MOCount = 0
+	arg_4_0.idCounter = 1
 
-	for slot8, slot9 in pairs(FightEffectPool.getId2UsingWrapDict()) do
-		if not gohelper.isNil(slot9.effectGO) then
-			table.insert(slot2, slot9.effectGO)
+	local var_4_0 = 1
+	local var_4_1 = {}
+	local var_4_2 = {}
+	local var_4_3 = FightEffectPool.getId2UsingWrapDict()
+
+	for iter_4_0, iter_4_1 in pairs(var_4_3) do
+		if not gohelper.isNil(iter_4_1.effectGO) then
+			table.insert(var_4_1, iter_4_1.effectGO)
 		end
 	end
 
-	slot5 = 0
-	slot6 = 0
-	slot7 = 0
-	slot8 = 0
+	local var_4_4 = 0
+	local var_4_5 = 0
+	local var_4_6 = 0
+	local var_4_7 = 0
 
-	for slot12, slot13 in ipairs(slot2) do
-		slot14, slot15, slot16, slot17 = slot0:_statSingle(slot13)
+	for iter_4_2, iter_4_3 in ipairs(var_4_1) do
+		local var_4_8, var_4_9, var_4_10, var_4_11 = arg_4_0:_statSingle(iter_4_3)
 
-		if slot14 > 0 or slot15 > 0 or slot16 > 0 or slot17 > 0 then
-			slot0.type2MOCount = slot0.type2MOCount + 1
+		if var_4_8 > 0 or var_4_9 > 0 or var_4_10 > 0 or var_4_11 > 0 then
+			arg_4_0.type2MOCount = arg_4_0.type2MOCount + 1
 
-			if not slot0.type2MOList[slot0.type2MOCount] then
-				slot0.type2MOList[slot0.type2MOCount] = {}
+			local var_4_12 = arg_4_0.type2MOList[arg_4_0.type2MOCount]
+
+			if not var_4_12 then
+				var_4_12 = {}
+				arg_4_0.type2MOList[arg_4_0.type2MOCount] = var_4_12
 			end
 
-			slot0:_setMO(slot18, slot13.name, slot13, slot14, slot15, slot16, slot17)
+			arg_4_0:_setMO(var_4_12, iter_4_3.name, iter_4_3, var_4_8, var_4_9, var_4_10, var_4_11)
 		end
 
-		slot5 = slot5 + slot14
-		slot6 = slot6 + slot15
-		slot7 = slot7 + slot16
-		slot8 = slot8 + slot17
+		var_4_4 = var_4_4 + var_4_8
+		var_4_5 = var_4_5 + var_4_9
+		var_4_6 = var_4_6 + var_4_10
+		var_4_7 = var_4_7 + var_4_11
 	end
 
-	slot0:_setMO(slot0.titleMO, "", nil, "粒子系统", "粒子数", "材质数", "贴图数")
-	slot0:_setMO(slot0.totalMO, "总计", nil, slot5, slot6, slot7, slot8)
+	arg_4_0:_setMO(arg_4_0.titleMO, "", nil, "粒子系统", "粒子数", "材质数", "贴图数")
+	arg_4_0:_setMO(arg_4_0.totalMO, "总计", nil, var_4_4, var_4_5, var_4_6, var_4_7)
 
-	slot0._maxParticleSystem = slot5 < slot0._maxParticleSystem and slot0._maxParticleSystem or slot5
-	slot0._maxParticleCount = slot6 < slot0._maxParticleCount and slot0._maxParticleCount or slot6
-	slot0._maxMaterialCount = slot7 < slot0._maxMaterialCount and slot0._maxMaterialCount or slot7
-	slot0._maxTextureCount = slot8 < slot0._maxTextureCount and slot0._maxTextureCount or slot8
+	arg_4_0._maxParticleSystem = var_4_4 < arg_4_0._maxParticleSystem and arg_4_0._maxParticleSystem or var_4_4
+	arg_4_0._maxParticleCount = var_4_5 < arg_4_0._maxParticleCount and arg_4_0._maxParticleCount or var_4_5
+	arg_4_0._maxMaterialCount = var_4_6 < arg_4_0._maxMaterialCount and arg_4_0._maxMaterialCount or var_4_6
+	arg_4_0._maxTextureCount = var_4_7 < arg_4_0._maxTextureCount and arg_4_0._maxTextureCount or var_4_7
 
-	slot0:_setMO(slot0.maxMO, "最大数", nil, slot0._maxParticleSystem, slot0._maxParticleCount, slot0._maxMaterialCount, slot0._maxTextureCount)
+	arg_4_0:_setMO(arg_4_0.maxMO, "最大数", nil, arg_4_0._maxParticleSystem, arg_4_0._maxParticleCount, arg_4_0._maxMaterialCount, arg_4_0._maxTextureCount)
 
-	slot9 = {}
+	local var_4_13 = {}
 
-	if slot0.toggleId == 1 then
-		for slot13 = 1, slot0.type1MOCount do
-			table.insert(slot9, slot0.type1MOList[slot13])
+	if arg_4_0.toggleId == 1 then
+		for iter_4_4 = 1, arg_4_0.type1MOCount do
+			table.insert(var_4_13, arg_4_0.type1MOList[iter_4_4])
 		end
 	else
-		for slot13 = 1, slot0.type2MOCount do
-			table.insert(slot9, slot0.type2MOList[slot13])
+		for iter_4_5 = 1, arg_4_0.type2MOCount do
+			table.insert(var_4_13, arg_4_0.type2MOList[iter_4_5])
 		end
 	end
 
-	table.sort(slot9, function (slot0, slot1)
-		if slot0.particleCount ~= slot1.particleCount then
-			return slot1.particleCount < slot0.particleCount
-		elseif slot0.particleSystem ~= slot1.particleSystem then
-			return slot1.particleSystem < slot0.particleSystem
+	table.sort(var_4_13, function(arg_5_0, arg_5_1)
+		if arg_5_0.particleCount ~= arg_5_1.particleCount then
+			return arg_5_0.particleCount > arg_5_1.particleCount
+		elseif arg_5_0.particleSystem ~= arg_5_1.particleSystem then
+			return arg_5_0.particleSystem > arg_5_1.particleSystem
 		else
-			return slot0.id < slot1.id
+			return arg_5_0.id < arg_5_1.id
 		end
 	end)
-	table.insert(slot9, 1, slot0.totalMO)
-	table.insert(slot9, 1, slot0.maxMO)
-	table.insert(slot9, 1, slot0.titleMO)
-	slot0:setList(slot9)
+	table.insert(var_4_13, 1, arg_4_0.totalMO)
+	table.insert(var_4_13, 1, arg_4_0.maxMO)
+	table.insert(var_4_13, 1, arg_4_0.titleMO)
+	arg_4_0:setList(var_4_13)
 end
 
-function slot0._statSingle(slot0, slot1)
-	if not slot1.activeInHierarchy then
+function var_0_0._statSingle(arg_6_0, arg_6_1)
+	if not arg_6_1.activeInHierarchy then
 		return 0, 0, 0, 0
 	end
 
-	slot4 = 0
-	slot5 = 0
+	local var_6_0 = 0
+	local var_6_1 = 0
+	local var_6_2 = 0
+	local var_6_3 = 0
+	local var_6_4 = arg_6_1:GetComponent(typeof("UnityEngine.ParticleSystem"))
 
-	if slot1:GetComponent(typeof("UnityEngine.ParticleSystem")) then
-		slot2 = 0 + 1
-		slot3 = 0 + slot6.particleCount
+	if var_6_4 then
+		var_6_0 = var_6_0 + 1
+		var_6_1 = var_6_1 + var_6_4.particleCount
 	end
 
-	if slot1:GetComponent(typeof("UnityEngine.Renderer")) then
-		for slot13 = 0, slot7.sharedMaterials.Length - 1 do
-			if not gohelper.isNil(slot8[slot13]) then
-				slot4 = slot4 + 1
+	local var_6_5 = arg_6_1:GetComponent(typeof("UnityEngine.Renderer"))
 
-				for slot19 = 0, slot14:GetTexturePropertyNames().Length - 1 do
-					if slot14:GetTexture(slot15[slot19]) then
-						slot5 = slot5 + 1
+	if var_6_5 then
+		local var_6_6 = var_6_5.sharedMaterials
+		local var_6_7 = var_6_6.Length
+
+		for iter_6_0 = 0, var_6_7 - 1 do
+			local var_6_8 = var_6_6[iter_6_0]
+
+			if not gohelper.isNil(var_6_8) then
+				var_6_2 = var_6_2 + 1
+
+				local var_6_9 = var_6_8:GetTexturePropertyNames()
+
+				for iter_6_1 = 0, var_6_9.Length - 1 do
+					local var_6_10 = var_6_9[iter_6_1]
+
+					if var_6_8:GetTexture(var_6_10) then
+						var_6_3 = var_6_3 + 1
 					end
 				end
 			end
 		end
 	end
 
-	if slot2 > 0 or slot3 > 0 or slot4 > 0 or slot5 > 0 then
-		slot0.type1MOCount = slot0.type1MOCount + 1
+	if var_6_0 > 0 or var_6_1 > 0 or var_6_2 > 0 or var_6_3 > 0 then
+		arg_6_0.type1MOCount = arg_6_0.type1MOCount + 1
 
-		if not slot0.type1MOList[slot0.type1MOCount] then
-			slot0.type1MOList[slot0.type1MOCount] = {}
+		local var_6_11 = arg_6_0.type1MOList[arg_6_0.type1MOCount]
+
+		if not var_6_11 then
+			var_6_11 = {}
+			arg_6_0.type1MOList[arg_6_0.type1MOCount] = var_6_11
 		end
 
-		slot0:_setMO(slot8, slot1.name, slot1, slot2, slot3, slot4, slot5)
+		arg_6_0:_setMO(var_6_11, arg_6_1.name, arg_6_1, var_6_0, var_6_1, var_6_2, var_6_3)
 	end
 
-	for slot13 = 0, slot1.transform.childCount - 1 do
-		slot14, slot15, slot16, slot17 = slot0:_statSingle(slot8:GetChild(slot13).gameObject)
-		slot2 = slot2 + slot14
-		slot3 = slot3 + slot15
-		slot4 = slot4 + slot16
-		slot5 = slot5 + slot17
+	local var_6_12 = arg_6_1.transform
+	local var_6_13 = var_6_12.childCount
+
+	for iter_6_2 = 0, var_6_13 - 1 do
+		local var_6_14, var_6_15, var_6_16, var_6_17 = arg_6_0:_statSingle(var_6_12:GetChild(iter_6_2).gameObject)
+
+		var_6_0 = var_6_0 + var_6_14
+		var_6_1 = var_6_1 + var_6_15
+		var_6_2 = var_6_2 + var_6_16
+		var_6_3 = var_6_3 + var_6_17
 	end
 
-	return slot2, slot3, slot4, slot5
+	return var_6_0, var_6_1, var_6_2, var_6_3
 end
 
-function slot0._setMO(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot1.name = slot2
-	slot1.go = slot3
-	slot1.particleSystem = slot4
-	slot1.particleCount = slot5
-	slot1.materialCount = slot6
-	slot1.textureCount = slot7
-	slot1.id = slot0.idCounter
-	slot0.idCounter = slot0.idCounter + 1
+function var_0_0._setMO(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6, arg_7_7)
+	arg_7_1.name = arg_7_2
+	arg_7_1.go = arg_7_3
+	arg_7_1.particleSystem = arg_7_4
+	arg_7_1.particleCount = arg_7_5
+	arg_7_1.materialCount = arg_7_6
+	arg_7_1.textureCount = arg_7_7
+	arg_7_1.id = arg_7_0.idCounter
+	arg_7_0.idCounter = arg_7_0.idCounter + 1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,181 +1,187 @@
-module("modules.logic.rouge.map.view.map.RougeMapLayerLineView", package.seeall)
+﻿module("modules.logic.rouge.map.view.map.RougeMapLayerLineView", package.seeall)
 
-slot0 = class("RougeMapLayerLineView", BaseView)
+local var_0_0 = class("RougeMapLayerLineView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goLineContainer = gohelper.findChild(slot0.viewGO, "#go_linecontainer")
-	slot0.goLineIconItem = gohelper.findChild(slot0.viewGO, "#go_linecontainer/#go_lineitem")
-	slot0.goLine = gohelper.findChild(slot0.viewGO, "#go_linecontainer/#go_line")
-	slot0.goStart = gohelper.findChild(slot0.viewGO, "#go_linecontainer/#go_start")
-	slot0.goEnd = gohelper.findChild(slot0.viewGO, "#go_linecontainer/#go_end")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goLineContainer = gohelper.findChild(arg_1_0.viewGO, "#go_linecontainer")
+	arg_1_0.goLineIconItem = gohelper.findChild(arg_1_0.viewGO, "#go_linecontainer/#go_lineitem")
+	arg_1_0.goLine = gohelper.findChild(arg_1_0.viewGO, "#go_linecontainer/#go_line")
+	arg_1_0.goStart = gohelper.findChild(arg_1_0.viewGO, "#go_linecontainer/#go_start")
+	arg_1_0.goEnd = gohelper.findChild(arg_1_0.viewGO, "#go_linecontainer/#go_end")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0.goLineIconItem, false)
-	gohelper.setActive(slot0.goLine, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0.goLineIconItem, false)
+	gohelper.setActive(arg_4_0.goLine, false)
 
-	slot0.rectTrStart = slot0.goStart:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrEnd = slot0.goEnd:GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.rectTrStart = arg_4_0.goStart:GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.rectTrEnd = arg_4_0.goEnd:GetComponent(gohelper.Type_RectTransform)
 
-	slot0:hide()
+	arg_4_0:hide()
 
-	slot0.lineItemList = {}
+	arg_4_0.lineItemList = {}
 
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLayerChange, slot0.onSelectLayerChange, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onPathSelectMapFocusDone, slot0.onPathSelectMapFocusDone, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, slot0.onChangeMapInfo, slot0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLayerChange, arg_4_0.onSelectLayerChange, arg_4_0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onPathSelectMapFocusDone, arg_4_0.onPathSelectMapFocusDone, arg_4_0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, arg_4_0.onChangeMapInfo, arg_4_0)
 end
 
-function slot0.onChangeMapInfo(slot0)
+function var_0_0.onChangeMapInfo(arg_5_0)
 	if not RougeMapModel.instance:isPathSelect() then
-		slot0:hide()
+		arg_5_0:hide()
 
 		return
 	end
 
-	slot0:initData()
+	arg_5_0:initData()
 end
 
-function slot0.onSelectLayerChange(slot0, slot1)
-	slot0.selectLayerId = slot1
+function var_0_0.onSelectLayerChange(arg_6_0, arg_6_1)
+	arg_6_0.selectLayerId = arg_6_1
 
-	slot0:refreshLayerSelect()
+	arg_6_0:refreshLayerSelect()
 end
 
-function slot0.onOpen(slot0)
-	slot0:hide()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:hide()
 
 	if not RougeMapModel.instance:isPathSelect() then
 		return
 	end
 
-	slot0:initData()
+	arg_7_0:initData()
 end
 
-function slot0.initData(slot0)
-	slot0.pathSelectCo = RougeMapModel.instance:getPathSelectCo()
-	slot0.nextLayerList = RougeMapModel.instance:getNextLayerList()
-	slot0.selectLayerId = RougeMapModel.instance:getSelectLayerId()
+function var_0_0.initData(arg_8_0)
+	arg_8_0.pathSelectCo = RougeMapModel.instance:getPathSelectCo()
+	arg_8_0.nextLayerList = RougeMapModel.instance:getNextLayerList()
+	arg_8_0.selectLayerId = RougeMapModel.instance:getSelectLayerId()
 end
 
-function slot0.onPathSelectMapFocusDone(slot0)
-	slot0:show()
-	slot0:refreshLayer()
+function var_0_0.onPathSelectMapFocusDone(arg_9_0)
+	arg_9_0:show()
+	arg_9_0:refreshLayer()
 end
 
-function slot0.refreshLayer(slot0)
-	slot1, slot2 = RougeMapHelper.getPos(slot0.pathSelectCo.startPos)
+function var_0_0.refreshLayer(arg_10_0)
+	local var_10_0, var_10_1 = RougeMapHelper.getPos(arg_10_0.pathSelectCo.startPos)
 
-	recthelper.setAnchor(slot0.rectTrStart, slot1, slot2)
+	recthelper.setAnchor(arg_10_0.rectTrStart, var_10_0, var_10_1)
 
-	slot3, slot6 = RougeMapHelper.getPos(slot0.pathSelectCo.endPos)
+	local var_10_2, var_10_3 = RougeMapHelper.getPos(arg_10_0.pathSelectCo.endPos)
 
-	recthelper.setAnchor(slot0.rectTrEnd, slot3, slot6)
+	recthelper.setAnchor(arg_10_0.rectTrEnd, var_10_2, var_10_3)
 
-	for slot6, slot7 in ipairs(slot0.nextLayerList) do
-		slot8 = lua_rouge_layer.configDict[slot7]
-		slot9 = slot0.lineItemList[slot6] or slot0:createLineItem(slot8)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.nextLayerList) do
+		local var_10_4 = lua_rouge_layer.configDict[iter_10_1]
+		local var_10_5 = arg_10_0.lineItemList[iter_10_0] or arg_10_0:createLineItem(var_10_4)
 
-		gohelper.setActive(slot9.lineContainer, true)
+		gohelper.setActive(var_10_5.lineContainer, true)
 
-		slot9.lineContainer.name = slot8.id
+		var_10_5.lineContainer.name = var_10_4.id
 
-		slot9.simageLine:LoadImage(slot8.pathRes, slot0.onLoadImageDone, slot9)
+		var_10_5.simageLine:LoadImage(var_10_4.pathRes, arg_10_0.onLoadImageDone, var_10_5)
 
-		slot10 = slot8.name
-		slot9.txtSelectLayerName.text = slot10
-		slot9.txtUnSelectLayerName.text = slot10
-		slot9.layerCo = slot8
-		slot11, slot12 = RougeMapHelper.getPos(slot8.pathPos)
+		local var_10_6 = var_10_4.name
 
-		recthelper.setAnchor(slot9.rectLine, slot11, slot12)
+		var_10_5.txtSelectLayerName.text = var_10_6
+		var_10_5.txtUnSelectLayerName.text = var_10_6
+		var_10_5.layerCo = var_10_4
 
-		slot11, slot12 = RougeMapHelper.getPos(slot8.iconPos)
+		local var_10_7, var_10_8 = RougeMapHelper.getPos(var_10_4.pathPos)
 
-		recthelper.setAnchor(slot9.rectLineIcon, slot11, slot12)
+		recthelper.setAnchor(var_10_5.rectLine, var_10_7, var_10_8)
 
-		slot11 = slot9.layerCo.id == slot0.selectLayerId
+		local var_10_9, var_10_10 = RougeMapHelper.getPos(var_10_4.iconPos)
 
-		slot9.animator:Play(slot11 and "select_open" or "unselect_open")
-		ZProj.UGUIHelper.SetColorAlpha(slot9.imageLine, slot11 and 1 or 0.33)
+		recthelper.setAnchor(var_10_5.rectLineIcon, var_10_9, var_10_10)
+
+		local var_10_11 = var_10_5.layerCo.id == arg_10_0.selectLayerId
+
+		var_10_5.animator:Play(var_10_11 and "select_open" or "unselect_open")
+		ZProj.UGUIHelper.SetColorAlpha(var_10_5.imageLine, var_10_11 and 1 or 0.33)
 	end
 
-	for slot6 = #slot0.nextLayerList + 1, #slot0.lineItemList do
-		gohelper.setActive(slot0.lineItemList[slot6].lineContainer, false)
-	end
-end
-
-function slot0.refreshLayerSelect(slot0)
-	for slot4, slot5 in ipairs(slot0.lineItemList) do
-		slot6 = slot5.layerCo.id == slot0.selectLayerId
-
-		slot5.animator:Play(slot6 and "select" or "unselect")
-		ZProj.UGUIHelper.SetColorAlpha(slot5.imageLine, slot6 and 1 or 0.33)
+	for iter_10_2 = #arg_10_0.nextLayerList + 1, #arg_10_0.lineItemList do
+		gohelper.setActive(arg_10_0.lineItemList[iter_10_2].lineContainer, false)
 	end
 end
 
-function slot0.createLineItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot2 = gohelper.create2d(slot0.goLineContainer)
-	slot3 = gohelper.clone(slot0.goLine, slot2, "line")
-	slot4 = gohelper.clone(slot0.goLineIconItem, slot2, "lineIcon")
+function var_0_0.refreshLayerSelect(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.lineItemList) do
+		local var_11_0 = iter_11_1.layerCo.id == arg_11_0.selectLayerId
 
-	gohelper.setActive(slot3, true)
-	gohelper.setActive(slot4, true)
-
-	slot1.lineContainer = slot2
-	slot1.rectLine = slot3:GetComponent(gohelper.Type_RectTransform)
-	slot1.rectLineIcon = slot4:GetComponent(gohelper.Type_RectTransform)
-	slot1.simageLine = SLFramework.UGUI.SingleImage.Get(slot3)
-	slot1.imageLine = slot3:GetComponent(gohelper.Type_Image)
-	slot1.iconSelect = gohelper.findChild(slot4, "select")
-	slot1.txtSelectLayerName = gohelper.findChildText(slot4, "select/#txt_line")
-	slot1.iconUnSelect = gohelper.findChild(slot4, "unselect")
-	slot1.txtUnSelectLayerName = gohelper.findChildText(slot4, "unselect/#txt_line")
-	slot1.animator = slot4:GetComponent(gohelper.Type_Animator)
-	slot1.click = gohelper.getClickWithDefaultAudio(slot4)
-
-	slot1.click:AddClickListener(slot0.onClickLine, slot0, slot1)
-	gohelper.setActive(slot1.iconSelect, true)
-	gohelper.setActive(slot1.iconUnSelect, true)
-	table.insert(slot0.lineItemList, slot1)
-
-	return slot1
+		iter_11_1.animator:Play(var_11_0 and "select" or "unselect")
+		ZProj.UGUIHelper.SetColorAlpha(iter_11_1.imageLine, var_11_0 and 1 or 0.33)
+	end
 end
 
-function slot0.onClickLine(slot0, slot1)
-	RougeMapModel.instance:updateSelectLayerId(slot1.layerCo.id)
+function var_0_0.createLineItem(arg_12_0)
+	local var_12_0 = arg_12_0:getUserDataTb_()
+	local var_12_1 = gohelper.create2d(arg_12_0.goLineContainer)
+	local var_12_2 = gohelper.clone(arg_12_0.goLine, var_12_1, "line")
+	local var_12_3 = gohelper.clone(arg_12_0.goLineIconItem, var_12_1, "lineIcon")
+
+	gohelper.setActive(var_12_2, true)
+	gohelper.setActive(var_12_3, true)
+
+	var_12_0.lineContainer = var_12_1
+	var_12_0.rectLine = var_12_2:GetComponent(gohelper.Type_RectTransform)
+	var_12_0.rectLineIcon = var_12_3:GetComponent(gohelper.Type_RectTransform)
+	var_12_0.simageLine = SLFramework.UGUI.SingleImage.Get(var_12_2)
+	var_12_0.imageLine = var_12_2:GetComponent(gohelper.Type_Image)
+	var_12_0.iconSelect = gohelper.findChild(var_12_3, "select")
+	var_12_0.txtSelectLayerName = gohelper.findChildText(var_12_3, "select/#txt_line")
+	var_12_0.iconUnSelect = gohelper.findChild(var_12_3, "unselect")
+	var_12_0.txtUnSelectLayerName = gohelper.findChildText(var_12_3, "unselect/#txt_line")
+	var_12_0.animator = var_12_3:GetComponent(gohelper.Type_Animator)
+	var_12_0.click = gohelper.getClickWithDefaultAudio(var_12_3)
+
+	var_12_0.click:AddClickListener(arg_12_0.onClickLine, arg_12_0, var_12_0)
+	gohelper.setActive(var_12_0.iconSelect, true)
+	gohelper.setActive(var_12_0.iconUnSelect, true)
+	table.insert(arg_12_0.lineItemList, var_12_0)
+
+	return var_12_0
 end
 
-function slot0.onLoadImageDone(slot0)
-	slot0.imageLine:SetNativeSize()
+function var_0_0.onClickLine(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.layerCo.id
+
+	RougeMapModel.instance:updateSelectLayerId(var_13_0)
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.goLineContainer, true)
+function var_0_0.onLoadImageDone(arg_14_0)
+	arg_14_0.imageLine:SetNativeSize()
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.goLineContainer, false)
+function var_0_0.show(arg_15_0)
+	gohelper.setActive(arg_15_0.goLineContainer, true)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.lineItemList) do
-		slot5.simageLine:UnLoadImage()
-		slot5.click:RemoveClickListener()
+function var_0_0.hide(arg_16_0)
+	gohelper.setActive(arg_16_0.goLineContainer, false)
+end
+
+function var_0_0.onDestroyView(arg_17_0)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0.lineItemList) do
+		iter_17_1.simageLine:UnLoadImage()
+		iter_17_1.click:RemoveClickListener()
 	end
 
-	slot0.lineItemList = nil
+	arg_17_0.lineItemList = nil
 end
 
-return slot0
+return var_0_0

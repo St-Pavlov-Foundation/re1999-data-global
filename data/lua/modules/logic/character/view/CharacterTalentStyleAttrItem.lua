@@ -1,99 +1,118 @@
-module("modules.logic.character.view.CharacterTalentStyleAttrItem", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentStyleAttrItem", package.seeall)
 
-slot0 = class("CharacterTalentStyleAttrItem", LuaCompBase)
+local var_0_0 = class("CharacterTalentStyleAttrItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._gobg = gohelper.findChild(slot0.viewGO, "#go_bg")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "#go_new")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#image_icon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#txt_name/#txt_num")
-	slot0._txtchange = gohelper.findChildText(slot0.viewGO, "#txt_name/#txt_num/#txt_change")
-	slot0._imagechange = gohelper.findChildImage(slot0.viewGO, "#txt_name/#txt_num/#image_change")
-	slot0._godelete = gohelper.findChild(slot0.viewGO, "#go_delete")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
+	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_new")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_num")
+	arg_1_0._txtchange = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_num/#txt_change")
+	arg_1_0._imagechange = gohelper.findChildImage(arg_1_0.viewGO, "#txt_name/#txt_num/#image_change")
+	arg_1_0._godelete = gohelper.findChild(arg_1_0.viewGO, "#go_delete")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_5_0, arg_5_1)
+	arg_5_0.viewGO = arg_5_1
 
-	slot0:onInitView()
+	arg_5_0:onInitView()
 
-	slot0._canvasgroup = slot1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_5_0._canvasgroup = arg_5_1:GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_6_0)
+	arg_6_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_7_0)
+	arg_7_0:removeEvents()
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_8_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_9_0)
+	return
 end
 
-function slot0.onRefreshMo(slot0, slot1, slot2)
-	slot3 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(slot2.key))
-	slot4 = nil
-	slot5 = slot2.isDelete and 0 or slot2.value
-	slot0._txtnum.text = slot3.type ~= 1 and slot5 * 0.1 .. "%" or math.floor(slot5)
-	slot0._txtname.text = slot3.name
+function var_0_0.onRefreshMo(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(arg_10_2.key))
+	local var_10_1
+	local var_10_2 = arg_10_2.isDelete and 0 or arg_10_2.value
 
-	gohelper.setActive(slot0._gobg.gameObject, slot1 % 2 == 0)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imageicon, "icon_att_" .. slot3.id, true)
-	slot0:_showAttrChage(slot2)
-end
-
-function slot0._showAttrChage(slot0, slot1)
-	slot2 = 0
-
-	if slot1.isNew then
-		slot2 = 3
+	if var_10_0.type ~= 1 then
+		var_10_1 = var_10_2 * 0.1 .. "%"
+	else
+		var_10_1 = math.floor(var_10_2)
 	end
 
-	if slot1.isDelete then
-		slot2 = 4
-	end
+	arg_10_0._txtnum.text = var_10_1
+	arg_10_0._txtname.text = var_10_0.name
 
-	if slot1.changeNum then
-		slot2 = slot1.changeNum > 0 and 1 or 2
-	end
-
-	slot3 = CharacterTalentStyleEnum.AttrChange[slot2]
-	slot0._txtnum.color = GameUtil.parseColor(slot3.NumColor)
-
-	if not string.nilorempty(slot3.ChangeImage) then
-		UISpriteSetMgr.instance:setUiCharacterSprite(slot0._imagechange, slot3.ChangeImage)
-	end
-
-	gohelper.setActive(slot0._imagechange.gameObject, slot4)
-
-	if not string.nilorempty(slot3.ChangeText) then
-		slot0._txtchange.text = slot3.ChangeText
-		slot0._txtchange.color = GameUtil.parseColor(slot3.ChangeColor)
-	end
-
-	slot0._canvasgroup.alpha = slot3.Alpha or 1
-
-	gohelper.setActive(slot0._txtchange.gameObject, slot5)
-	gohelper.setActive(slot0._gonew.gameObject, slot1.isNew)
-	gohelper.setActive(slot0._godelete.gameObject, slot1.isDelete)
+	gohelper.setActive(arg_10_0._gobg.gameObject, arg_10_1 % 2 == 0)
+	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imageicon, "icon_att_" .. var_10_0.id, true)
+	arg_10_0:_showAttrChage(arg_10_2)
 end
 
-return slot0
+function var_0_0._showAttrChage(arg_11_0, arg_11_1)
+	local var_11_0 = 0
+
+	if arg_11_1.isNew then
+		var_11_0 = 3
+	end
+
+	if arg_11_1.isDelete then
+		var_11_0 = 4
+	end
+
+	if arg_11_1.changeNum then
+		var_11_0 = arg_11_1.changeNum > 0 and 1 or 2
+	end
+
+	local var_11_1 = CharacterTalentStyleEnum.AttrChange[var_11_0]
+
+	arg_11_0._txtnum.color = GameUtil.parseColor(var_11_1.NumColor)
+
+	local var_11_2 = not string.nilorempty(var_11_1.ChangeImage)
+
+	if var_11_2 then
+		UISpriteSetMgr.instance:setUiCharacterSprite(arg_11_0._imagechange, var_11_1.ChangeImage)
+	end
+
+	gohelper.setActive(arg_11_0._imagechange.gameObject, var_11_2)
+
+	local var_11_3 = not string.nilorempty(var_11_1.ChangeText)
+
+	if var_11_3 then
+		arg_11_0._txtchange.text = var_11_1.ChangeText
+		arg_11_0._txtchange.color = GameUtil.parseColor(var_11_1.ChangeColor)
+	end
+
+	local var_11_4 = var_11_1.Alpha or 1
+
+	arg_11_0._canvasgroup.alpha = var_11_4
+
+	gohelper.setActive(arg_11_0._txtchange.gameObject, var_11_3)
+	gohelper.setActive(arg_11_0._gonew.gameObject, arg_11_1.isNew)
+	gohelper.setActive(arg_11_0._godelete.gameObject, arg_11_1.isDelete)
+end
+
+return var_0_0

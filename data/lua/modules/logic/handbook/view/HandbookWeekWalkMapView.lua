@@ -1,127 +1,138 @@
-module("modules.logic.handbook.view.HandbookWeekWalkMapView", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookWeekWalkMapView", package.seeall)
 
-slot0 = class("HandbookWeekWalkMapView", BaseView)
+local var_0_0 = class("HandbookWeekWalkMapView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._goleftarrow = gohelper.findChild(slot0.viewGO, "#go_leftarrow")
-	slot0._gorightarrow = gohelper.findChild(slot0.viewGO, "#go_rightarrow")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._goleftarrow = gohelper.findChild(arg_1_0.viewGO, "#go_leftarrow")
+	arg_1_0._gorightarrow = gohelper.findChild(arg_1_0.viewGO, "#go_rightarrow")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goweekList = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.goweekList = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "weekwalkContainer/#go_week" .. slot4)
-		slot5.name = gohelper.findChildText(slot5.go, "txt_name")
-		slot5.click = gohelper.getClickWithAudio(slot5.go)
+	for iter_4_0 = 1, 3 do
+		local var_4_0 = arg_4_0:getUserDataTb_()
 
-		slot5.click:AddClickListener(slot0.onClickGoWeek, slot0, slot4)
-		table.insert(slot0.goweekList, slot5)
+		var_4_0.go = gohelper.findChild(arg_4_0.viewGO, "weekwalkContainer/#go_week" .. iter_4_0)
+		var_4_0.name = gohelper.findChildText(var_4_0.go, "txt_name")
+		var_4_0.click = gohelper.getClickWithAudio(var_4_0.go)
+
+		var_4_0.click:AddClickListener(arg_4_0.onClickGoWeek, arg_4_0, iter_4_0)
+		table.insert(arg_4_0.goweekList, var_4_0)
 	end
 
-	slot0.leftClick = gohelper.getClickWithAudio(slot0._goleftarrow)
-	slot0.rightClick = gohelper.getClickWithAudio(slot0._gorightarrow)
+	arg_4_0.leftClick = gohelper.getClickWithAudio(arg_4_0._goleftarrow)
+	arg_4_0.rightClick = gohelper.getClickWithAudio(arg_4_0._gorightarrow)
 
-	slot0.leftClick:AddClickListener(slot0.leftPageOnClick, slot0)
-	slot0.rightClick:AddClickListener(slot0.rightPageOnClick, slot0)
-	slot0._simagebg:LoadImage(ResUrl.getHandbookCharacterIcon("full/bg111"))
+	arg_4_0.leftClick:AddClickListener(arg_4_0.leftPageOnClick, arg_4_0)
+	arg_4_0.rightClick:AddClickListener(arg_4_0.rightPageOnClick, arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getHandbookCharacterIcon("full/bg111"))
 end
 
-function slot0.onClickGoWeek(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.HandbookWeekWalkView, slot0:getMapCoByPageNumAndIndex(slot0.pageNum, slot1))
+function var_0_0.onClickGoWeek(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.HandbookWeekWalkView, arg_5_0:getMapCoByPageNumAndIndex(arg_5_0.pageNum, arg_5_1))
 end
 
-function slot0.leftPageOnClick(slot0)
-	if slot0.pageNum <= 1 then
+function var_0_0.leftPageOnClick(arg_6_0)
+	if arg_6_0.pageNum <= 1 then
 		return
 	end
 
-	slot0.pageNum = slot0.pageNum - 1
+	arg_6_0.pageNum = arg_6_0.pageNum - 1
 
-	slot0:refreshMapElements(slot0.pageNum)
+	arg_6_0:refreshMapElements(arg_6_0.pageNum)
 end
 
-function slot0.rightPageOnClick(slot0)
-	if slot0.maxPageNum <= slot0.pageNum then
+function var_0_0.rightPageOnClick(arg_7_0)
+	if arg_7_0.pageNum >= arg_7_0.maxPageNum then
 		return
 	end
 
-	slot0.pageNum = slot0.pageNum + 1
+	arg_7_0.pageNum = arg_7_0.pageNum + 1
 
-	slot0:refreshMapElements(slot0.pageNum)
+	arg_7_0:refreshMapElements(arg_7_0.pageNum)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
-	slot0.pageNum = 1
-	slot0.pageSize = 3
-	slot0.maxPageNum = math.ceil(#lua_weekwalk.configList / 3)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.pageNum = 1
+	arg_9_0.pageSize = 3
+	arg_9_0.maxPageNum = math.ceil(#lua_weekwalk.configList / 3)
 
-	slot0:refreshMapElements(slot0.pageNum)
+	arg_9_0:refreshMapElements(arg_9_0.pageNum)
 end
 
-function slot0.refreshMapElements(slot0, slot1)
-	slot0.mapCoList = slot0:getMapCoListByPageNum(slot1)
+function var_0_0.refreshMapElements(arg_10_0, arg_10_1)
+	arg_10_0.mapCoList = arg_10_0:getMapCoListByPageNum(arg_10_1)
 
-	for slot6 = 1, #slot0.mapCoList do
-		slot0.goweekList[slot6].name.text = slot0.mapCoList[slot6].name
+	local var_10_0 = #arg_10_0.mapCoList
 
-		gohelper.setActive(slot0.goweekList[slot6].go, true)
+	for iter_10_0 = 1, var_10_0 do
+		arg_10_0.goweekList[iter_10_0].name.text = arg_10_0.mapCoList[iter_10_0].name
+
+		gohelper.setActive(arg_10_0.goweekList[iter_10_0].go, true)
 	end
 
-	for slot6 = slot2 + 1, 3 do
-		gohelper.setActive(slot0.goweekList[slot6].go, false)
+	for iter_10_1 = var_10_0 + 1, 3 do
+		gohelper.setActive(arg_10_0.goweekList[iter_10_1].go, false)
 	end
 
-	gohelper.setActive(slot0._goleftarrow, slot0.pageNum > 1)
-	gohelper.setActive(slot0._gorightarrow, slot0.pageNum < slot0.maxPageNum)
+	gohelper.setActive(arg_10_0._goleftarrow, arg_10_0.pageNum > 1)
+	gohelper.setActive(arg_10_0._gorightarrow, arg_10_0.pageNum < arg_10_0.maxPageNum)
 end
 
-function slot0.getMapCoListByPageNum(slot0, slot1)
-	slot3 = {}
-	slot4 = nil
+function var_0_0.getMapCoListByPageNum(arg_11_0, arg_11_1)
+	local var_11_0 = (arg_11_1 - 1) * 3
+	local var_11_1 = {}
+	local var_11_2
 
-	for slot8 = 1, 3 do
-		if not lua_weekwalk.configList[(slot1 - 1) * 3 + slot8] then
+	for iter_11_0 = 1, 3 do
+		local var_11_3 = lua_weekwalk.configList[var_11_0 + iter_11_0]
+
+		if not var_11_3 then
 			break
 		end
 
-		table.insert(slot3, slot4)
+		table.insert(var_11_1, var_11_3)
 	end
 
-	return slot3
+	return var_11_1
 end
 
-function slot0.getMapCoByPageNumAndIndex(slot0, slot1, slot2)
-	return lua_weekwalk.configList[(slot1 - 1) * 3 + slot2]
+function var_0_0.getMapCoByPageNumAndIndex(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = (arg_12_1 - 1) * 3
+
+	return lua_weekwalk.configList[var_12_0 + arg_12_2]
 end
 
-function slot0.onClose(slot0)
-	slot0.leftClick:RemoveClickListener()
-	slot0.rightClick:RemoveClickListener()
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onClose(arg_13_0)
+	arg_13_0.leftClick:RemoveClickListener()
+	arg_13_0.rightClick:RemoveClickListener()
+	arg_13_0._simagebg:UnLoadImage()
 
-	for slot4, slot5 in ipairs(slot0.goweekList) do
-		slot5.click:RemoveClickListener()
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.goweekList) do
+		iter_13_1.click:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

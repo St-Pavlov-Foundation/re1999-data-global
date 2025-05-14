@@ -1,33 +1,37 @@
-module("modules.logic.turnback.invitation.controller.TurnBackInvitationController", package.seeall)
+﻿module("modules.logic.turnback.invitation.controller.TurnBackInvitationController", package.seeall)
 
-slot0 = class("TurnBackInvitationController", BaseController)
+local var_0_0 = class("TurnBackInvitationController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	return
 end
 
-function slot0.getInvitationInfo(slot0, slot1, slot2, slot3)
-	TurnBackInvitationRpc.instance:sendGet171InfoRequest(slot1, slot2, slot3)
+function var_0_0.getInvitationInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	TurnBackInvitationRpc.instance:sendGet171InfoRequest(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function slot0.openMainView(slot0, slot1)
-	slot0:getInvitationInfo(slot1, slot0.onReceiveMsg, slot0)
+function var_0_0.openMainView(arg_6_0, arg_6_1)
+	arg_6_0:getInvitationInfo(arg_6_1, arg_6_0.onReceiveMsg, arg_6_0)
 end
 
-function slot0.onReceiveMsg(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ViewMgr.instance:openView(ViewName.TurnBackInvitationMainView, slot2.activityId, true)
+function var_0_0.onReceiveMsg(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 == 0 then
+		ViewMgr.instance:openView(ViewName.TurnBackInvitationMainView, arg_7_2.activityId, true)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

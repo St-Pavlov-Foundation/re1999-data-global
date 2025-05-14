@@ -1,15 +1,17 @@
-module("modules.logic.explore.controller.steps.ExploreRotateStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreRotateStep", package.seeall)
 
-slot0 = class("ExploreRotateStep", ExploreStepBase)
+local var_0_0 = class("ExploreRotateStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	if not ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.RotateUnit) then
-		slot0:onDone()
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.RotateUnit)
+
+	if not var_1_0 then
+		arg_1_0:onDone()
 
 		return
 	end
 
-	slot1:rotateByServer(slot0._data.interactId, slot0._data.newDir, slot0.onDone, slot0)
+	var_1_0:rotateByServer(arg_1_0._data.interactId, arg_1_0._data.newDir, arg_1_0.onDone, arg_1_0)
 end
 
-return slot0
+return var_0_0

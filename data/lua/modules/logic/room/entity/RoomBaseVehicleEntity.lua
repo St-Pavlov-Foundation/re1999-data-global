@@ -1,13 +1,13 @@
-module("modules.logic.room.entity.RoomBaseVehicleEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomBaseVehicleEntity", package.seeall)
 
-slot0 = class("RoomBaseVehicleEntity", RoomBaseEntity)
+local var_0_0 = class("RoomBaseVehicleEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
-	slot0._pathfindingEnabled = false
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
+	arg_1_0._pathfindingEnabled = false
 end
 
-return slot0
+return var_0_0

@@ -1,59 +1,59 @@
-module("modules.logic.activity.view.ActivityStarLightSignViewBase_1_3", package.seeall)
+﻿module("modules.logic.activity.view.ActivityStarLightSignViewBase_1_3", package.seeall)
 
-slot0 = class("ActivityStarLightSignViewBase_1_3", Activity101SignViewBase)
+local var_0_0 = class("ActivityStarLightSignViewBase_1_3", Activity101SignViewBase)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/#txt_LimitTime")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "Root/#scroll_ItemList")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_LimitTime")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
 	assert(false, "please override thid function")
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtLimitTime.text = ""
+function var_0_0.onOpen(arg_3_0)
+	arg_3_0._txtLimitTime.text = ""
 
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	slot0:internal_onOpen()
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+	arg_3_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	arg_3_0:internal_onOpen()
+	TaskDispatcher.runRepeat(arg_3_0._refreshTimeTick, arg_3_0, 1)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageTitle:UnLoadImage()
-	slot0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0.onDestroyView(arg_4_0)
+	arg_4_0._simageTitle:UnLoadImage()
+	arg_4_0._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_4_0._refreshTimeTick, arg_4_0)
 end
 
-function slot0._updateScrollViewPos(slot0)
-	if slot0._isFirst then
+function var_0_0._updateScrollViewPos(arg_5_0)
+	if arg_5_0._isFirst then
 		return
 	end
 
-	slot0._isFirst = true
+	arg_5_0._isFirst = true
 
-	slot0:updateRewardCouldGetHorizontalScrollPixel()
+	arg_5_0:updateRewardCouldGetHorizontalScrollPixel()
 end
 
-function slot0.onClose(slot0)
-	slot0._isFirst = nil
+function var_0_0.onClose(arg_6_0)
+	arg_6_0._isFirst = nil
 
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshList()
-	slot0:_refreshTimeTick()
+function var_0_0.onRefresh(arg_7_0)
+	arg_7_0:_refreshList()
+	arg_7_0:_refreshTimeTick()
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+function var_0_0._refreshTimeTick(arg_8_0)
+	arg_8_0._txtLimitTime.text = arg_8_0:getRemainTimeStr()
 end
 
-return slot0
+return var_0_0

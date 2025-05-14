@@ -1,24 +1,31 @@
-module("modules.logic.gm.model.GMLogModel", package.seeall)
+﻿module("modules.logic.gm.model.GMLogModel", package.seeall)
 
-slot0 = class("GMLogModel", BaseModel)
+local var_0_0 = class("GMLogModel", BaseModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.errorModel = ListScrollModel.New()
+	arg_1_0.errorModel = ListScrollModel.New()
 end
 
-function slot0.addMsg(slot0, slot1, slot2, slot3)
-	if ({
-		msg = string.gsub(string.gsub(slot1, "<color[^>]+>", ""), "</color>", ""),
-		stackTrace = string.gsub(string.gsub(slot2, "<color[^>]+>", ""), "</color>", ""),
-		type = slot3,
+function var_0_0.addMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_1 = string.gsub(arg_2_1, "<color[^>]+>", "")
+	arg_2_1 = string.gsub(arg_2_1, "</color>", "")
+	arg_2_2 = string.gsub(arg_2_2, "<color[^>]+>", "")
+	arg_2_2 = string.gsub(arg_2_2, "</color>", "")
+
+	local var_2_0 = {
+		msg = arg_2_1,
+		stackTrace = arg_2_2,
+		type = arg_2_3,
 		time = ServerTime.now()
-	}).type == 0 then
-		slot0.errorModel:addAtFirst(slot4)
+	}
+
+	if var_2_0.type == 0 then
+		arg_2_0.errorModel:addAtFirst(var_2_0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

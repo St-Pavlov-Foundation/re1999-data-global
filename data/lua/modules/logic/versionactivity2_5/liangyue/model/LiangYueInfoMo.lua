@@ -1,26 +1,28 @@
-module("modules.logic.versionactivity2_5.liangyue.model.LiangYueInfoMo", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.model.LiangYueInfoMo", package.seeall)
 
-slot0 = pureTable("LiangYueInfoMo")
+local var_0_0 = pureTable("LiangYueInfoMo")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.actId = slot1
-	slot0.episodeId = slot2
-	slot0.isFinish = slot3
-	slot0.puzzle = slot4
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0.actId = arg_1_1
+	arg_1_0.episodeId = arg_1_2
+	arg_1_0.isFinish = arg_1_3
+	arg_1_0.puzzle = arg_1_4
 
-	if LiangYueConfig.instance:getEpisodeConfigByActAndId(slot1, slot2) == nil then
-		logError("config is nil" .. slot2)
+	local var_1_0 = LiangYueConfig.instance:getEpisodeConfigByActAndId(arg_1_1, arg_1_2)
+
+	if var_1_0 == nil then
+		logError("config is nil" .. arg_1_2)
 
 		return
 	end
 
-	slot0.config = slot5
-	slot0.preEpisodeId = slot5.preEpisodeId
+	arg_1_0.config = var_1_0
+	arg_1_0.preEpisodeId = var_1_0.preEpisodeId
 end
 
-function slot0.updateMO(slot0, slot1, slot2)
-	slot0.isFinish = slot1
-	slot0.puzzle = slot2
+function var_0_0.updateMO(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.isFinish = arg_2_1
+	arg_2_0.puzzle = arg_2_2
 end
 
-return slot0
+return var_0_0

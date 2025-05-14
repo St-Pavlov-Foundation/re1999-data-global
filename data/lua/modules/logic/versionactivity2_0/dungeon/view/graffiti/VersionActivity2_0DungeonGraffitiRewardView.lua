@@ -1,280 +1,306 @@
-module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiRewardView", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiRewardView", package.seeall)
 
-slot0 = class("VersionActivity2_0DungeonGraffitiRewardView", BaseView)
+local var_0_0 = class("VersionActivity2_0DungeonGraffitiRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gorewardwindow = gohelper.findChild(slot0.viewGO, "#go_rewardwindow")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_rewardwindow/#btn_close")
-	slot0._imageprogressBar = gohelper.findChildImage(slot0.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar")
-	slot0._imageprogress = gohelper.findChildImage(slot0.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar/#image_progress")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "#go_rewardwindow/Content/#go_rewardContent")
-	slot0._gorewardItem = gohelper.findChild(slot0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_rewarditem")
-	slot0._gofinalrewardItem = gohelper.findChild(slot0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem")
-	slot0._gofinalreward = gohelper.findChild(slot0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem/#go_finalreward")
-	slot0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0._gorewardwindow)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gorewardwindow = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rewardwindow/#btn_close")
+	arg_1_0._imageprogressBar = gohelper.findChildImage(arg_1_0.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar")
+	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar/#image_progress")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent")
+	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_rewarditem")
+	arg_1_0._gofinalrewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem")
+	arg_1_0._gofinalreward = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem/#go_finalreward")
+	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._gorewardwindow)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, slot0.refreshUI, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, slot0.playHasGetEffect, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, arg_2_0.playHasGetEffect, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0:removeEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, slot0.refreshUI, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, slot0.playHasGetEffect, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, arg_3_0.playHasGetEffect, arg_3_0)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0._animatorPlayer:Play(UIAnimationName.Close, slot0.onCloseAnimDone, slot0)
-	gohelper.setActive(slot0._btnclose.gameObject, false)
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0._animatorPlayer:Play(UIAnimationName.Close, arg_4_0.onCloseAnimDone, arg_4_0)
+	gohelper.setActive(arg_4_0._btnclose.gameObject, false)
 end
 
-function slot0.onCloseAnimDone(slot0)
-	gohelper.setActive(slot0._gorewardwindow, false)
+function var_0_0.onCloseAnimDone(arg_5_0)
+	gohelper.setActive(arg_5_0._gorewardwindow, false)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gorewardwindow, false)
-	gohelper.setActive(slot0._gorewardItem, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._gorewardwindow, false)
+	gohelper.setActive(arg_6_0._gorewardItem, false)
 
-	slot0.rewardItemTab = slot0:getUserDataTb_()
-	slot0.stageRewardItems = slot0:getUserDataTb_()
-	slot0.finalItemTab = slot0:getUserDataTb_()
+	arg_6_0.rewardItemTab = arg_6_0:getUserDataTb_()
+	arg_6_0.stageRewardItems = arg_6_0:getUserDataTb_()
+	arg_6_0.finalItemTab = arg_6_0:getUserDataTb_()
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.allRewardConfig = Activity161Config.instance:getAllRewardCos(slot0.actId)
-	slot0.finalRewardList, slot0.finalRewardInfo = Activity161Config.instance:getFinalReward(slot0.actId)
-	slot0.lastHasGetRewardMap = tabletool.copy(Activity161Model.instance.curHasGetRewardMap)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.actId = arg_7_0.viewParam.actId
+	arg_7_0.allRewardConfig = Activity161Config.instance:getAllRewardCos(arg_7_0.actId)
+	arg_7_0.finalRewardList, arg_7_0.finalRewardInfo = Activity161Config.instance:getFinalReward(arg_7_0.actId)
+	arg_7_0.lastHasGetRewardMap = tabletool.copy(Activity161Model.instance.curHasGetRewardMap)
 
-	slot0:createRewardItem()
-	slot0:createFinalRewardItem()
-	slot0:refreshUI()
+	arg_7_0:createRewardItem()
+	arg_7_0:createFinalRewardItem()
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshItemState()
-	slot0:refreshProgress()
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0:refreshItemState()
+	arg_8_0:refreshProgress()
 end
 
-function slot0.createRewardItem(slot0)
-	slot0.rewardsConfig = tabletool.copy(slot0.allRewardConfig)
-	slot0.rewardCount = GameUtil.getTabLen(slot0.rewardsConfig)
-	slot0.lastStageRewardConfig = table.remove(slot0.rewardsConfig, #slot0.rewardsConfig)
+function var_0_0.createRewardItem(arg_9_0)
+	arg_9_0.rewardsConfig = tabletool.copy(arg_9_0.allRewardConfig)
+	arg_9_0.rewardCount = GameUtil.getTabLen(arg_9_0.rewardsConfig)
+	arg_9_0.lastStageRewardConfig = table.remove(arg_9_0.rewardsConfig, #arg_9_0.rewardsConfig)
 
-	for slot4, slot5 in pairs(slot0.rewardsConfig) do
-		if not slot0.rewardItemTab[slot4] then
-			slot6 = {
-				go = gohelper.clone(slot0._gorewardItem, slot0._gorewardContent, "rewardItem" .. slot4),
-				config = slot5
+	for iter_9_0, iter_9_1 in pairs(arg_9_0.rewardsConfig) do
+		local var_9_0 = arg_9_0.rewardItemTab[iter_9_0]
+
+		if not var_9_0 then
+			var_9_0 = {
+				go = gohelper.clone(arg_9_0._gorewardItem, arg_9_0._gorewardContent, "rewardItem" .. iter_9_0),
+				config = iter_9_1
 			}
-			slot0.rewardItemTab[slot4] = slot0:initWholeRewardItemComp(slot6, slot6.go)
+			var_9_0 = arg_9_0:initWholeRewardItemComp(var_9_0, var_9_0.go)
+			arg_9_0.rewardItemTab[iter_9_0] = var_9_0
 		end
 
-		slot0:initRewardItemData(slot6, slot5, slot4)
+		arg_9_0:initRewardItemData(var_9_0, iter_9_1, iter_9_0)
 	end
 
-	if not slot0.rewardItemTab[slot0.rewardCount] then
-		slot1 = {
-			go = slot0._gofinalrewardItem,
-			config = slot0.lastStageRewardConfig
+	local var_9_1 = arg_9_0.rewardItemTab[arg_9_0.rewardCount]
+
+	if not var_9_1 then
+		var_9_1 = {
+			go = arg_9_0._gofinalrewardItem,
+			config = arg_9_0.lastStageRewardConfig
 		}
-		slot0.rewardItemTab[slot0.rewardCount] = slot0:initWholeRewardItemComp(slot1, slot1.go)
+		var_9_1 = arg_9_0:initWholeRewardItemComp(var_9_1, var_9_1.go)
+		arg_9_0.rewardItemTab[arg_9_0.rewardCount] = var_9_1
 	end
 
-	gohelper.setAsLastSibling(slot1.go)
-	slot0:initRewardItemData(slot1, slot0.lastStageRewardConfig, slot0.rewardCount)
+	gohelper.setAsLastSibling(var_9_1.go)
+	arg_9_0:initRewardItemData(var_9_1, arg_9_0.lastStageRewardConfig, arg_9_0.rewardCount)
 end
 
-function slot0.initWholeRewardItemComp(slot0, slot1, slot2)
-	slot1.txtpaintedNum = gohelper.findChildTextMesh(slot2, "txt_paintedNum")
-	slot1.godarkPoint = gohelper.findChild(slot2, "darkpoint")
-	slot1.golightPoint = gohelper.findChild(slot2, "lightpoint")
-	slot1.goreward = gohelper.findChild(slot2, "layout/go_reward")
+function var_0_0.initWholeRewardItemComp(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_1.txtpaintedNum = gohelper.findChildTextMesh(arg_10_2, "txt_paintedNum")
+	arg_10_1.godarkPoint = gohelper.findChild(arg_10_2, "darkpoint")
+	arg_10_1.golightPoint = gohelper.findChild(arg_10_2, "lightpoint")
+	arg_10_1.goreward = gohelper.findChild(arg_10_2, "layout/go_reward")
 
-	gohelper.setActive(slot1.goreward, false)
+	gohelper.setActive(arg_10_1.goreward, false)
 
-	return slot1
+	return arg_10_1
 end
 
-function slot0.initRewardItemData(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.go, true)
+function var_0_0.initRewardItemData(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	gohelper.setActive(arg_11_1.go, true)
 
-	slot1.txtpaintedNum.text = slot2.paintedNum
-	slot4 = {}
-	slot4 = (slot3 ~= slot0.rewardCount or slot0.finalRewardList) and GameUtil.splitString2(slot2.bonus, true)
+	arg_11_1.txtpaintedNum.text = arg_11_2.paintedNum
 
-	if not slot0.stageRewardItems[slot3] then
-		for slot9, slot10 in ipairs(slot4) do
-			slot11 = {
-				itemGO = gohelper.cloneInPlace(slot1.goreward, "item" .. tostring(slot9))
+	local var_11_0 = {}
+
+	if arg_11_3 == arg_11_0.rewardCount then
+		var_11_0 = arg_11_0.finalRewardList
+	else
+		var_11_0 = GameUtil.splitString2(arg_11_2.bonus, true)
+	end
+
+	if not arg_11_0.stageRewardItems[arg_11_3] then
+		local var_11_1 = {}
+
+		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+			local var_11_2 = {
+				itemGO = gohelper.cloneInPlace(arg_11_1.goreward, "item" .. tostring(iter_11_0))
 			}
-			slot11 = slot0:initRewardItemComp(slot11, slot11.itemGO, slot10)
+			local var_11_3 = arg_11_0:initRewardItemComp(var_11_2, var_11_2.itemGO, iter_11_1)
 
-			gohelper.setActive(slot11.itemGO, true)
-			slot0:initItemIconInfo(slot11, slot10)
+			gohelper.setActive(var_11_3.itemGO, true)
+			arg_11_0:initItemIconInfo(var_11_3, iter_11_1)
+
+			var_11_1[iter_11_0] = var_11_3
 		end
 
-		slot0.stageRewardItems[slot3] = {
-			[slot9] = slot11
-		}
+		arg_11_0.stageRewardItems[arg_11_3] = var_11_1
 	end
 end
 
-function slot0.createFinalRewardItem(slot0)
-	if GameUtil.getTabLen(slot0.finalItemTab) == 0 then
-		slot0:initRewardItemComp(slot0.finalItemTab, slot0._gofinalreward, slot0.finalRewardInfo, true)
+function var_0_0.createFinalRewardItem(arg_12_0)
+	if GameUtil.getTabLen(arg_12_0.finalItemTab) == 0 then
+		arg_12_0:initRewardItemComp(arg_12_0.finalItemTab, arg_12_0._gofinalreward, arg_12_0.finalRewardInfo, true)
 	end
 
-	slot0:initItemIconInfo(slot0.finalItemTab, slot0.finalRewardInfo)
+	arg_12_0:initItemIconInfo(arg_12_0.finalItemTab, arg_12_0.finalRewardInfo)
 end
 
-function slot0.initRewardItemComp(slot0, slot1, slot2, slot3, slot4)
-	slot1.itemGO = slot2
-	slot1.itemRare = gohelper.findChildImage(slot1.itemGO, "item/image_rare")
-	slot1.itemIcon = gohelper.findChildSingleImage(slot1.itemGO, "item/simage_icon")
-	slot1.itemNum = gohelper.findChildText(slot1.itemGO, "item/txt_num")
-	slot1.goHasGet = gohelper.findChild(slot1.itemGO, "go_hasget")
-	slot1.goCanGet = gohelper.findChild(slot1.itemGO, "go_canget")
-	slot1.goLock = gohelper.findChild(slot1.itemGO, "go_lock")
-	slot1.hasGetAnim = slot1.goHasGet:GetComponent(gohelper.Type_Animator)
-	slot1.btnClick = gohelper.findChildButtonWithAudio(slot1.itemGO, "item/btn_click")
+function var_0_0.initRewardItemComp(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	arg_13_1.itemGO = arg_13_2
+	arg_13_1.itemRare = gohelper.findChildImage(arg_13_1.itemGO, "item/image_rare")
+	arg_13_1.itemIcon = gohelper.findChildSingleImage(arg_13_1.itemGO, "item/simage_icon")
+	arg_13_1.itemNum = gohelper.findChildText(arg_13_1.itemGO, "item/txt_num")
+	arg_13_1.goHasGet = gohelper.findChild(arg_13_1.itemGO, "go_hasget")
+	arg_13_1.goCanGet = gohelper.findChild(arg_13_1.itemGO, "go_canget")
+	arg_13_1.goLock = gohelper.findChild(arg_13_1.itemGO, "go_lock")
+	arg_13_1.hasGetAnim = arg_13_1.goHasGet:GetComponent(gohelper.Type_Animator)
+	arg_13_1.btnClick = gohelper.findChildButtonWithAudio(arg_13_1.itemGO, "item/btn_click")
 
-	slot1.btnClick:AddClickListener(slot0.rewardItemClick, slot0, slot3)
+	arg_13_1.btnClick:AddClickListener(arg_13_0.rewardItemClick, arg_13_0, arg_13_3)
 
-	slot1.isFinalReward = slot4
+	arg_13_1.isFinalReward = arg_13_4
 
-	return slot1
+	return arg_13_1
 end
 
-function slot0.initItemIconInfo(slot0, slot1, slot2)
-	slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot2[1], slot2[2], true)
+function var_0_0.initItemIconInfo(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0, var_14_1 = ItemModel.instance:getItemConfigAndIcon(arg_14_2[1], arg_14_2[2], true)
 
-	slot1.itemIcon:LoadImage(slot4)
+	arg_14_1.itemIcon:LoadImage(var_14_1)
 
-	if slot3.rare == 0 then
-		gohelper.setActive(slot1.itemRare.gameObject, false)
-	elseif slot3.rare < 5 and not slot1.isFinalReward then
-		UISpriteSetMgr.instance:setV2a0PaintSprite(slot1.itemRare, "v2a0_paint_rewardbg_" .. slot3.rare)
+	if var_14_0.rare == 0 then
+		gohelper.setActive(arg_14_1.itemRare.gameObject, false)
+	elseif var_14_0.rare < 5 and not arg_14_1.isFinalReward then
+		UISpriteSetMgr.instance:setV2a0PaintSprite(arg_14_1.itemRare, "v2a0_paint_rewardbg_" .. var_14_0.rare)
 	end
 
-	slot1.itemNum.text = luaLang("multiple") .. slot2[3]
+	arg_14_1.itemNum.text = luaLang("multiple") .. arg_14_2[3]
 end
 
-function slot0.rewardItemClick(slot0, slot1)
-	MaterialTipController.instance:showMaterialInfo(slot1[1], slot1[2])
+function var_0_0.rewardItemClick(arg_15_0, arg_15_1)
+	MaterialTipController.instance:showMaterialInfo(arg_15_1[1], arg_15_1[2])
 end
 
-function slot0.refreshItemState(slot0)
-	slot0.curHasGetRewardMap = Activity161Model.instance.curHasGetRewardMap
-	slot1 = Activity161Model.instance:getCurPaintedNum()
+function var_0_0.refreshItemState(arg_16_0)
+	arg_16_0.curHasGetRewardMap = Activity161Model.instance.curHasGetRewardMap
 
-	for slot5, slot6 in pairs(slot0.rewardItemTab) do
-		gohelper.setActive(slot6.godarkPoint, slot1 < slot6.config.paintedNum)
-		gohelper.setActive(slot6.golightPoint, slot7 <= slot1)
-		SLFramework.UGUI.GuiHelper.SetColor(slot6.txtpaintedNum, slot7 <= slot1 and "#E9842A" or "#666767")
+	local var_16_0 = Activity161Model.instance:getCurPaintedNum()
+
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.rewardItemTab) do
+		local var_16_1 = iter_16_1.config.paintedNum
+
+		gohelper.setActive(iter_16_1.godarkPoint, var_16_0 < var_16_1)
+		gohelper.setActive(iter_16_1.golightPoint, var_16_1 <= var_16_0)
+		SLFramework.UGUI.GuiHelper.SetColor(iter_16_1.txtpaintedNum, var_16_1 <= var_16_0 and "#E9842A" or "#666767")
 	end
 
-	for slot5, slot6 in pairs(slot0.stageRewardItems) do
-		slot7 = slot0.rewardItemTab[slot5].config.paintedNum
+	for iter_16_2, iter_16_3 in pairs(arg_16_0.stageRewardItems) do
+		local var_16_2 = arg_16_0.rewardItemTab[iter_16_2].config.paintedNum
 
-		for slot11, slot12 in pairs(slot6) do
-			gohelper.setActive(slot12.goHasGet, slot0.curHasGetRewardMap[slot5])
-			gohelper.setActive(slot12.goCanGet, not slot0.curHasGetRewardMap[slot5] and slot7 <= slot1)
-			gohelper.setActive(slot12.goLock, not slot0.curHasGetRewardMap[slot5] and slot1 < slot7)
-		end
-	end
-
-	gohelper.setActive(slot0.finalItemTab.goHasGet, slot0.curHasGetRewardMap[slot0.rewardCount])
-	gohelper.setActive(slot0.finalItemTab.goCanGet, not slot0.curHasGetRewardMap[slot0.rewardCount] and slot0.lastStageRewardConfig.paintedNum <= slot1)
-	gohelper.setActive(slot0.finalItemTab.goLock, not slot0.curHasGetRewardMap[slot0.rewardCount] and slot1 < slot0.lastStageRewardConfig.paintedNum)
-end
-
-function slot0.playHasGetEffect(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		for slot11, slot12 in pairs(slot0.stageRewardItems[slot6.rewardId]) do
-			gohelper.setActive(slot12.goHasGet, true)
-			gohelper.setActive(slot12.goCanGet, false)
-			slot12.hasGetAnim:Play("go_hasget_in", 0, 0)
-		end
-
-		if slot6.rewardId == slot0.rewardCount then
-			gohelper.setActive(slot0.finalItemTab.goHasGet, true)
-			gohelper.setActive(slot0.finalItemTab.goCanGet, false)
-			slot0.finalItemTab.hasGetAnim:Play("go_hasget_in", 0, 0)
+		for iter_16_4, iter_16_5 in pairs(iter_16_3) do
+			gohelper.setActive(iter_16_5.goHasGet, arg_16_0.curHasGetRewardMap[iter_16_2])
+			gohelper.setActive(iter_16_5.goCanGet, not arg_16_0.curHasGetRewardMap[iter_16_2] and var_16_2 <= var_16_0)
+			gohelper.setActive(iter_16_5.goLock, not arg_16_0.curHasGetRewardMap[iter_16_2] and var_16_0 < var_16_2)
 		end
 	end
 
-	TaskDispatcher.runDelay(slot0.rewardCanGetClick, slot0, 1)
+	gohelper.setActive(arg_16_0.finalItemTab.goHasGet, arg_16_0.curHasGetRewardMap[arg_16_0.rewardCount])
+	gohelper.setActive(arg_16_0.finalItemTab.goCanGet, not arg_16_0.curHasGetRewardMap[arg_16_0.rewardCount] and var_16_0 >= arg_16_0.lastStageRewardConfig.paintedNum)
+	gohelper.setActive(arg_16_0.finalItemTab.goLock, not arg_16_0.curHasGetRewardMap[arg_16_0.rewardCount] and var_16_0 < arg_16_0.lastStageRewardConfig.paintedNum)
 end
 
-function slot0.rewardCanGetClick(slot0)
-	Activity161Rpc.instance:sendAct161GainMilestoneRewardRequest(slot0.actId)
+function var_0_0.playHasGetEffect(arg_17_0, arg_17_1)
+	for iter_17_0, iter_17_1 in pairs(arg_17_1) do
+		local var_17_0 = arg_17_0.stageRewardItems[iter_17_1.rewardId]
+
+		for iter_17_2, iter_17_3 in pairs(var_17_0) do
+			gohelper.setActive(iter_17_3.goHasGet, true)
+			gohelper.setActive(iter_17_3.goCanGet, false)
+			iter_17_3.hasGetAnim:Play("go_hasget_in", 0, 0)
+		end
+
+		if iter_17_1.rewardId == arg_17_0.rewardCount then
+			gohelper.setActive(arg_17_0.finalItemTab.goHasGet, true)
+			gohelper.setActive(arg_17_0.finalItemTab.goCanGet, false)
+			arg_17_0.finalItemTab.hasGetAnim:Play("go_hasget_in", 0, 0)
+		end
+	end
+
+	TaskDispatcher.runDelay(arg_17_0.rewardCanGetClick, arg_17_0, 1)
+end
+
+function var_0_0.rewardCanGetClick(arg_18_0)
+	Activity161Rpc.instance:sendAct161GainMilestoneRewardRequest(arg_18_0.actId)
 	UIBlockMgr.instance:endBlock("GraffitiRewardViewPlayHasGetEffect")
 end
 
-function slot0.refreshProgress(slot0)
-	recthelper.setWidth(slot0._imageprogressBar.transform, 66 + 177 * Mathf.Max(0, slot0.rewardCount - 2) + 24 * slot0.rewardCount + 278)
+function var_0_0.refreshProgress(arg_19_0)
+	local var_19_0 = 66
+	local var_19_1 = 177
+	local var_19_2 = 278
+	local var_19_3 = 24
+	local var_19_4 = var_19_0 + var_19_1 * Mathf.Max(0, arg_19_0.rewardCount - 2) + var_19_3 * arg_19_0.rewardCount + var_19_2
 
-	slot6 = 0
-	slot8 = 0
-	slot9 = 0
-	slot10 = 0
-	slot11 = 0
+	recthelper.setWidth(arg_19_0._imageprogressBar.transform, var_19_4)
 
-	for slot15, slot16 in pairs(slot0.allRewardConfig) do
-		if slot16.paintedNum <= Activity161Model.instance:getCurPaintedNum() then
-			slot8 = slot15
-			slot9 = slot16.paintedNum
-			slot10 = slot16.paintedNum
-		elseif slot9 <= slot10 then
-			slot10 = slot16.paintedNum
+	local var_19_5 = 0
+	local var_19_6 = Activity161Model.instance:getCurPaintedNum()
+	local var_19_7 = 0
+	local var_19_8 = 0
+	local var_19_9 = 0
+	local var_19_10 = 0
+
+	for iter_19_0, iter_19_1 in pairs(arg_19_0.allRewardConfig) do
+		if var_19_6 >= iter_19_1.paintedNum then
+			var_19_7 = iter_19_0
+			var_19_8 = iter_19_1.paintedNum
+			var_19_9 = iter_19_1.paintedNum
+		elseif var_19_8 <= var_19_9 then
+			var_19_9 = iter_19_1.paintedNum
 
 			break
 		end
 	end
 
-	if slot10 ~= slot9 then
-		slot11 = (slot7 - slot9) / (slot10 - slot9)
+	if var_19_9 ~= var_19_8 then
+		var_19_10 = (var_19_6 - var_19_8) / (var_19_9 - var_19_8)
 	end
 
-	if slot8 == 0 then
-		slot6 = slot1 * slot7 / slot10
-	elseif slot8 >= 1 and slot8 < slot0.rewardCount - 1 then
-		slot6 = slot1 + slot2 * (slot8 - 1) + slot8 * slot4 + slot11 * slot2
-	elseif slot8 == slot0.rewardCount - 1 then
-		slot6 = slot1 + slot2 * (slot8 - 1) + slot8 * slot4 + slot11 * slot3
-	elseif slot8 == slot0.rewardCount then
-		slot6 = slot5
+	if var_19_7 == 0 then
+		var_19_5 = var_19_0 * var_19_6 / var_19_9
+	elseif var_19_7 >= 1 and var_19_7 < arg_19_0.rewardCount - 1 then
+		var_19_5 = var_19_0 + var_19_1 * (var_19_7 - 1) + var_19_7 * var_19_3 + var_19_10 * var_19_1
+	elseif var_19_7 == arg_19_0.rewardCount - 1 then
+		var_19_5 = var_19_0 + var_19_1 * (var_19_7 - 1) + var_19_7 * var_19_3 + var_19_10 * var_19_2
+	elseif var_19_7 == arg_19_0.rewardCount then
+		var_19_5 = var_19_4
 	end
 
-	recthelper.setWidth(slot0._imageprogress.transform, slot6)
+	recthelper.setWidth(arg_19_0._imageprogress.transform, var_19_5)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.rewardCanGetClick, slot0)
+function var_0_0.onClose(arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0.rewardCanGetClick, arg_20_0)
 	UIBlockMgr.instance:endBlock("GraffitiRewardViewPlayHasGetEffect")
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.stageRewardItems) do
-		for slot9, slot10 in pairs(slot5) do
-			slot10.btnClick:RemoveClickListener()
-			slot10.itemIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_21_0)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0.stageRewardItems) do
+		for iter_21_2, iter_21_3 in pairs(iter_21_1) do
+			iter_21_3.btnClick:RemoveClickListener()
+			iter_21_3.itemIcon:UnLoadImage()
 		end
 	end
 
-	slot0.finalItemTab.btnClick:RemoveClickListener()
-	slot0.finalItemTab.itemIcon:UnLoadImage()
+	arg_21_0.finalItemTab.btnClick:RemoveClickListener()
+	arg_21_0.finalItemTab.itemIcon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

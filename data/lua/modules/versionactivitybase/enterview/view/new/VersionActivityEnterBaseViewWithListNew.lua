@@ -1,271 +1,314 @@
-module("modules.versionactivitybase.enterview.view.new.VersionActivityEnterBaseViewWithListNew", package.seeall)
+﻿module("modules.versionactivitybase.enterview.view.new.VersionActivityEnterBaseViewWithListNew", package.seeall)
 
-slot0 = class("VersionActivityEnterBaseViewWithListNew", BaseView)
+local var_0_0 = class("VersionActivityEnterBaseViewWithListNew", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.tabLevelSetting = {}
-	slot0.activityTabItemList = {}
-	slot0.activityTabItemDict = {}
-	slot0.openActIdList = {}
-	slot0.noOpenActList = {}
-	slot0.curActId = 0
-	slot0.defaultTabIndex = 1
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.tabLevelSetting = {}
+	arg_1_0.activityTabItemList = {}
+	arg_1_0.activityTabItemDict = {}
+	arg_1_0.openActIdList = {}
+	arg_1_0.noOpenActList = {}
+	arg_1_0.curActId = 0
+	arg_1_0.defaultTabIndex = 1
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivity, slot0)
-	slot0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, slot0.onSelectActId, slot0)
-	slot0:childAddEvents()
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
+	arg_2_0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_2_0.onSelectActId, arg_2_0)
+	arg_2_0:childAddEvents()
 end
 
-function slot0.removeEvents(slot0)
-	slot0:childRemoveEvents()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:childRemoveEvents()
 end
 
-function slot0.onRefreshActivity(slot0, slot1)
-	if ActivityHelper.getActivityStatus(slot0.curStoreId or slot0.curActId) == ActivityEnum.ActivityStatus.NotOnLine or slot3 == ActivityEnum.ActivityStatus.Expired then
+function var_0_0.onRefreshActivity(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.curStoreId or arg_4_0.curActId
+	local var_4_1 = ActivityHelper.getActivityStatus(var_4_0)
+
+	if var_4_1 == ActivityEnum.ActivityStatus.NotOnLine or var_4_1 == ActivityEnum.ActivityStatus.Expired then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot0.activitySettingList) do
-		if VersionActivityEnterHelper.isActTabCanRemove(slot8) then
-			slot0:removeActItem(slot8)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.activitySettingList) do
+		if VersionActivityEnterHelper.isActTabCanRemove(iter_4_1) then
+			arg_4_0:removeActItem(iter_4_1)
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0.activityTabItemList) do
-		if slot8:updateActId() then
-			slot0.activityTabItemDict[slot8.actId] = slot8
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0.activityTabItemList) do
+		if iter_4_3:updateActId() then
+			arg_4_0.activityTabItemDict[iter_4_3.actId] = iter_4_3
 		end
 	end
 
-	slot0:sortTabItemList()
+	arg_4_0:sortTabItemList()
 end
 
-function slot0.onSelectActId(slot0, slot1, slot2)
-	if slot0.curActId == slot1 then
+function var_0_0.onSelectActId(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0.curActId == arg_5_1 then
 		return
 	end
 
-	slot0.curActId = slot1
-	slot0.curStoreId = slot2 and slot2.storeId
+	arg_5_0.curActId = arg_5_1
+	arg_5_0.curStoreId = arg_5_2 and arg_5_2.storeId
 
-	slot0.viewContainer:selectActTab(VersionActivityEnterHelper.getTabIndex(slot0.activitySettingList, slot1), slot0.curActId)
-	ActivityEnterMgr.instance:enterActivity(slot0.curActId)
+	local var_5_0 = VersionActivityEnterHelper.getTabIndex(arg_5_0.activitySettingList, arg_5_1)
+
+	arg_5_0.viewContainer:selectActTab(var_5_0, arg_5_0.curActId)
+	ActivityEnterMgr.instance:enterActivity(arg_5_0.curActId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		slot0.curActId
+		arg_5_0.curActId
 	})
-	slot0:refreshBtnVisible()
+	arg_5_0:refreshBtnVisible()
 end
 
-function slot0.removeActItem(slot0, slot1)
-	for slot5 = #slot0.activityTabItemList, 1, -1 do
-		if VersionActivityEnterHelper.checkIsSameAct(slot1, slot0.activityTabItemList[slot5].actId) then
-			table.remove(slot0.activityTabItemList, slot5)
+function var_0_0.removeActItem(arg_6_0, arg_6_1)
+	for iter_6_0 = #arg_6_0.activityTabItemList, 1, -1 do
+		local var_6_0 = arg_6_0.activityTabItemList[iter_6_0]
 
-			slot0.activityTabItemDict[slot6.actId] = nil
+		if VersionActivityEnterHelper.checkIsSameAct(arg_6_1, var_6_0.actId) then
+			table.remove(arg_6_0.activityTabItemList, iter_6_0)
 
-			slot6:dispose()
-			gohelper.destroy(slot6.go)
+			arg_6_0.activityTabItemDict[var_6_0.actId] = nil
+
+			local var_6_1 = var_6_0.go
+
+			var_6_0:dispose()
+			gohelper.destroy(var_6_1)
 		end
 	end
 end
 
-function slot0.childAddEvents(slot0)
+function var_0_0.childAddEvents(arg_7_0)
 	logError("override VersionActivityEnterBaseViewWithListNew:childAddEvents")
 end
 
-function slot0.childRemoveEvents(slot0)
+function var_0_0.childRemoveEvents(arg_8_0)
 	logError("override VersionActivityEnterBaseViewWithListNew:childRemoveEvents")
 end
 
-function slot0.playVideo(slot0)
+function var_0_0.playVideo(arg_9_0)
+	return
 end
 
-function slot0.refreshRedDot(slot0)
+function var_0_0.refreshRedDot(arg_10_0)
+	return
 end
 
-function slot0.refreshBtnVisible(slot0, slot1)
+function var_0_0.refreshBtnVisible(arg_11_0, arg_11_1)
 	logError("override VersionActivityEnterBaseViewWithListNew:refreshBtnVisible")
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:initViewParam()
-	slot0:refreshUI()
+function var_0_0.onUpdateParam(arg_12_0)
+	arg_12_0:initViewParam()
+	arg_12_0:refreshUI()
 
-	if slot0.activityTabItemDict[slot0.curActId] then
-		slot0.curActId = nil
+	local var_12_0 = arg_12_0.activityTabItemDict[arg_12_0.curActId]
 
-		slot1:onClick()
+	if var_12_0 then
+		arg_12_0.curActId = nil
+
+		var_12_0:onClick()
 	end
 end
 
-function slot0.onOpen(slot0)
-	for slot4, slot5 in ipairs(slot0.tabLevelSetting) do
-		gohelper.setActive(slot5.go, false)
+function var_0_0.onOpen(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.tabLevelSetting) do
+		local var_13_0 = iter_13_1.go
+
+		gohelper.setActive(var_13_0, false)
 	end
 
-	gohelper.setActive(slot0._goActivityLine, false)
-	slot0:initViewParam()
-	slot0:createActivityTabItem()
-	slot0:playVideo()
-	slot0:refreshUI()
-	slot0:refreshRedDot()
-	slot0:refreshBtnVisible(true)
+	gohelper.setActive(arg_13_0._goActivityLine, false)
+	arg_13_0:initViewParam()
+	arg_13_0:createActivityTabItem()
+	arg_13_0:playVideo()
+	arg_13_0:refreshUI()
+	arg_13_0:refreshRedDot()
+	arg_13_0:refreshBtnVisible(true)
 end
 
-function slot0.initViewParam(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.skipOpenAnim = slot0.viewParam.skipOpenAnim
-	slot0.activitySettingList = slot0.viewParam.activitySettingList
-	slot0.defaultTabIndex = VersionActivityEnterHelper.getTabIndex(slot0.activitySettingList, slot0.viewParam.jumpActId)
-	slot1 = slot0.activitySettingList[slot0.defaultTabIndex]
-	slot0.curActId = VersionActivityEnterHelper.getActId(slot1)
-	slot0.curStoreId = slot1 and slot1.storeId
+function var_0_0.initViewParam(arg_14_0)
+	arg_14_0.actId = arg_14_0.viewParam.actId
+	arg_14_0.skipOpenAnim = arg_14_0.viewParam.skipOpenAnim
+	arg_14_0.activitySettingList = arg_14_0.viewParam.activitySettingList
+	arg_14_0.defaultTabIndex = VersionActivityEnterHelper.getTabIndex(arg_14_0.activitySettingList, arg_14_0.viewParam.jumpActId)
+
+	local var_14_0 = arg_14_0.activitySettingList[arg_14_0.defaultTabIndex]
+
+	arg_14_0.curActId = VersionActivityEnterHelper.getActId(var_14_0)
+	arg_14_0.curStoreId = var_14_0 and var_14_0.storeId
 end
 
-function slot0.setTabLevelSetting(slot0, slot1, slot2, slot3)
-	if gohelper.isNil(slot2) or not slot1 or not slot3 then
+function var_0_0.setTabLevelSetting(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if gohelper.isNil(arg_15_2) or not arg_15_1 or not arg_15_3 then
 		return
 	end
 
-	if not slot0.tabLevelSetting then
-		slot0.tabLevelSetting = {}
+	if not arg_15_0.tabLevelSetting then
+		arg_15_0.tabLevelSetting = {}
 	end
 
-	slot0.tabLevelSetting[slot1] = slot0:getUserDataTb_()
-	slot0.tabLevelSetting[slot1].go = slot2
-	slot0.tabLevelSetting[slot1].cls = slot3
+	arg_15_0.tabLevelSetting[arg_15_1] = arg_15_0:getUserDataTb_()
+	arg_15_0.tabLevelSetting[arg_15_1].go = arg_15_2
+	arg_15_0.tabLevelSetting[arg_15_1].cls = arg_15_3
 end
 
-function slot0.setActivityLineGo(slot0, slot1)
-	if gohelper.isNil(slot1) then
+function var_0_0.setActivityLineGo(arg_16_0, arg_16_1)
+	if gohelper.isNil(arg_16_1) then
 		return
 	end
 
-	slot0._goActivityLine = slot1
+	arg_16_0._goActivityLine = arg_16_1
 end
 
-function slot0.getItemGoAndCls(slot0, slot1)
-	if not slot1 then
+function var_0_0.getItemGoAndCls(arg_17_0, arg_17_1)
+	if not arg_17_1 then
 		logError("VersionActivityEnterBaseViewWithListNew:getItemGoAndCls error, level is nil")
 
 		return
 	end
 
-	if not (slot0.tabLevelSetting and slot0.tabLevelSetting[slot1]) then
-		logError(string.format("VersionActivityEnterBaseViewWithListNew:getItemGoAndCls error, no tabSetting, level:%s", slot1))
+	local var_17_0 = arg_17_0.tabLevelSetting and arg_17_0.tabLevelSetting[arg_17_1]
+
+	if not var_17_0 then
+		logError(string.format("VersionActivityEnterBaseViewWithListNew:getItemGoAndCls error, no tabSetting, level:%s", arg_17_1))
 
 		return
 	end
 
-	return slot2.go, slot2.cls
+	return var_17_0.go, var_17_0.cls
 end
 
-function slot0.createActivityTabItem(slot0)
-	for slot4, slot5 in ipairs(slot0.activitySettingList) do
-		if not VersionActivityEnterHelper.isActTabCanRemove(slot5) then
-			slot7 = VersionActivityEnterHelper.getActId(slot5)
-			slot8, slot9 = slot0:getItemGoAndCls(slot5.actLevel)
+function var_0_0.createActivityTabItem(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.activitySettingList) do
+		if not VersionActivityEnterHelper.isActTabCanRemove(iter_18_1) then
+			local var_18_0 = VersionActivityEnterHelper.getActId(iter_18_1)
+			local var_18_1, var_18_2 = arg_18_0:getItemGoAndCls(iter_18_1.actLevel)
 
-			if slot8 and slot9 then
-				slot11 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot8, slot7), slot9)
+			if var_18_1 and var_18_2 then
+				local var_18_3 = gohelper.cloneInPlace(var_18_1, var_18_0)
+				local var_18_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_3, var_18_2)
 
-				slot11:setData(slot4, slot5)
-				slot11:refreshSelect(slot0.curActId)
+				var_18_4:setData(iter_18_0, iter_18_1)
+				var_18_4:refreshSelect(arg_18_0.curActId)
 
-				if slot0["onClickActivity" .. slot7] then
-					slot11:setClickFunc(slot12, slot0)
+				local var_18_5 = arg_18_0["onClickActivity" .. var_18_0]
+
+				if var_18_5 then
+					var_18_4:setClickFunc(var_18_5, arg_18_0)
 				end
 
-				slot0.activityTabItemDict[slot7] = slot11
+				arg_18_0.activityTabItemDict[var_18_0] = var_18_4
 
-				table.insert(slot0.activityTabItemList, slot11)
+				table.insert(arg_18_0.activityTabItemList, var_18_4)
 			end
 		end
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0:sortTabItemList()
+function var_0_0.refreshUI(arg_19_0)
+	arg_19_0:sortTabItemList()
 
-	for slot4, slot5 in ipairs(slot0.activityTabItemList) do
-		slot5:refreshUI()
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.activityTabItemList) do
+		iter_19_1:refreshUI()
 	end
 end
 
-function slot1(slot0, slot1)
-	slot3 = ActivityModel.instance:getActMO(slot1)
+local function var_0_1(arg_20_0, arg_20_1)
+	local var_20_0 = ActivityModel.instance:getActMO(arg_20_0)
+	local var_20_1 = ActivityModel.instance:getActMO(arg_20_1)
+	local var_20_2 = var_20_0 and var_20_0.config.displayPriority or 0
+	local var_20_3 = var_20_1 and var_20_1.config.displayPriority or 0
 
-	if (ActivityModel.instance:getActMO(slot0) and slot2.config.displayPriority or 0) ~= (slot3 and slot3.config.displayPriority or 0) then
-		return slot4 < slot5
+	if var_20_2 ~= var_20_3 then
+		return var_20_2 < var_20_3
 	end
 
-	if (slot2 and slot2:getRealStartTimeStamp() or 0) ~= (slot3 and slot3:getRealStartTimeStamp() or 0) then
-		return slot7 < slot6
+	local var_20_4 = var_20_0 and var_20_0:getRealStartTimeStamp() or 0
+	local var_20_5 = var_20_1 and var_20_1:getRealStartTimeStamp() or 0
+
+	if var_20_4 ~= var_20_5 then
+		return var_20_5 < var_20_4
 	end
 
-	return slot0 < slot1
+	return arg_20_0 < arg_20_1
 end
 
-function slot2(slot0, slot1)
-	if ActivityModel.instance:getActMO(slot0):getRealStartTimeStamp() ~= ActivityModel.instance:getActMO(slot1):getRealStartTimeStamp() then
-		return slot4 < slot5
+local function var_0_2(arg_21_0, arg_21_1)
+	local var_21_0 = ActivityModel.instance:getActMO(arg_21_0)
+	local var_21_1 = ActivityModel.instance:getActMO(arg_21_1)
+	local var_21_2 = var_21_0:getRealStartTimeStamp()
+	local var_21_3 = var_21_1:getRealStartTimeStamp()
+
+	if var_21_2 ~= var_21_3 then
+		return var_21_2 < var_21_3
 	end
 
-	if slot2.config.displayPriority ~= slot3.config.displayPriority then
-		return slot6 < slot7
+	local var_21_4 = var_21_0.config.displayPriority
+	local var_21_5 = var_21_1.config.displayPriority
+
+	if var_21_4 ~= var_21_5 then
+		return var_21_4 < var_21_5
 	end
 
-	return slot0 < slot1
+	return arg_21_0 < arg_21_1
 end
 
-function slot0.sortTabItemList(slot0)
-	tabletool.clear(slot0.openActIdList)
-	tabletool.clear(slot0.noOpenActList)
+function var_0_0.sortTabItemList(arg_22_0)
+	tabletool.clear(arg_22_0.openActIdList)
+	tabletool.clear(arg_22_0.noOpenActList)
 
-	for slot4, slot5 in ipairs(slot0.activityTabItemList) do
-		if ActivityHelper.getActivityStatus(slot5.actId) == ActivityEnum.ActivityStatus.NotOpen then
-			table.insert(slot0.noOpenActList, slot5.actId)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.activityTabItemList) do
+		if ActivityHelper.getActivityStatus(iter_22_1.actId) == ActivityEnum.ActivityStatus.NotOpen then
+			table.insert(arg_22_0.noOpenActList, iter_22_1.actId)
 		else
-			table.insert(slot0.openActIdList, slot5.actId)
+			table.insert(arg_22_0.openActIdList, iter_22_1.actId)
 		end
 	end
 
-	table.sort(slot0.openActIdList, uv0)
+	table.sort(arg_22_0.openActIdList, var_0_1)
 
-	for slot4, slot5 in ipairs(slot0.openActIdList) do
-		gohelper.setSibling(slot0.activityTabItemDict[slot5].go, slot4)
+	for iter_22_2, iter_22_3 in ipairs(arg_22_0.openActIdList) do
+		local var_22_0 = arg_22_0.activityTabItemDict[iter_22_3]
+
+		gohelper.setSibling(var_22_0.go, iter_22_2)
 	end
 
-	if #slot0.noOpenActList < 1 then
-		gohelper.setActive(slot0._goActivityLine, false)
+	if #arg_22_0.noOpenActList < 1 then
+		gohelper.setActive(arg_22_0._goActivityLine, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goActivityLine, true)
-	gohelper.setSibling(slot0._goActivityLine, #slot0.openActIdList + 1)
-	table.sort(slot0.noOpenActList, uv1)
+	gohelper.setActive(arg_22_0._goActivityLine, true)
 
-	for slot5, slot6 in ipairs(slot0.noOpenActList) do
-		gohelper.setSibling(slot0.activityTabItemDict[slot6].go, slot1 + 1 + slot5)
+	local var_22_1 = #arg_22_0.openActIdList
+
+	gohelper.setSibling(arg_22_0._goActivityLine, var_22_1 + 1)
+	table.sort(arg_22_0.noOpenActList, var_0_2)
+
+	for iter_22_4, iter_22_5 in ipairs(arg_22_0.noOpenActList) do
+		local var_22_2 = arg_22_0.activityTabItemDict[iter_22_5]
+
+		gohelper.setSibling(var_22_2.go, var_22_1 + 1 + iter_22_4)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.activityTabItemList) do
-		slot5:dispose()
+function var_0_0.onDestroyView(arg_23_0)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0.activityTabItemList) do
+		iter_23_1:dispose()
 	end
 
-	slot0.activityTabItemList = nil
-	slot0.activityTabItemDict = nil
+	arg_23_0.activityTabItemList = nil
+	arg_23_0.activityTabItemDict = nil
 end
 
-return slot0
+return var_0_0

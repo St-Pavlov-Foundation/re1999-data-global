@@ -1,198 +1,242 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183SettlementView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183SettlementView", package.seeall)
 
-slot0 = class("Act183SettlementView", BaseView)
-slot1 = 2
-slot2 = {
+local var_0_0 = class("Act183SettlementView", BaseView)
+local var_0_1 = 2
+local var_0_2 = {
 	"v2a5_challenge_result_roundbg4",
 	"v2a5_challenge_result_roundbg3",
 	"v2a5_challenge_result_roundbg2",
 	"v2a5_challenge_result_roundbg1"
 }
 
-function slot0.onInitView(slot0)
-	slot0._gohardbg = gohelper.findChild(slot0.viewGO, "root/mask")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "root/#go_topleft")
-	slot0._scrollbadge = gohelper.findChildScrollRect(slot0.viewGO, "root/left/#scroll_badge")
-	slot0._goepisodeitem = gohelper.findChild(slot0.viewGO, "root/left/#scroll_badge/Viewport/Content/#go_episodeitem")
-	slot0._simageplayericon = gohelper.findChildSingleImage(slot0.viewGO, "root/left/player/icon/#simage_playericon")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "root/left/player/#txt_name")
-	slot0._txtdate = gohelper.findChildText(slot0.viewGO, "root/left/player/#txt_date")
-	slot0._imageroundbg = gohelper.findChildImage(slot0.viewGO, "root/left/totalround/#image_roundbg")
-	slot0._txttotalround = gohelper.findChildText(slot0.viewGO, "root/left/totalround/#txt_totalround")
-	slot0._txtbossbadge = gohelper.findChildText(slot0.viewGO, "root/right/#txt_bossbadge")
-	slot0._gobossheros = gohelper.findChild(slot0.viewGO, "root/right/#go_bossheros")
-	slot0._goheroitem = gohelper.findChild(slot0.viewGO, "root/#go_heroitem")
-	slot0._gobuffs = gohelper.findChild(slot0.viewGO, "root/right/buffs/#go_buffs")
-	slot0._gobuffitem = gohelper.findChild(slot0.viewGO, "root/right/buffs/#go_buffs/#go_buffitem")
-	slot0._simageboss = gohelper.findChildSingleImage(slot0.viewGO, "root/right/#simage_boss")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gohardbg = gohelper.findChild(arg_1_0.viewGO, "root/mask")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+	arg_1_0._scrollbadge = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/left/#scroll_badge")
+	arg_1_0._goepisodeitem = gohelper.findChild(arg_1_0.viewGO, "root/left/#scroll_badge/Viewport/Content/#go_episodeitem")
+	arg_1_0._simageplayericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/player/icon/#simage_playericon")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/left/player/#txt_name")
+	arg_1_0._txtdate = gohelper.findChildText(arg_1_0.viewGO, "root/left/player/#txt_date")
+	arg_1_0._imageroundbg = gohelper.findChildImage(arg_1_0.viewGO, "root/left/totalround/#image_roundbg")
+	arg_1_0._txttotalround = gohelper.findChildText(arg_1_0.viewGO, "root/left/totalround/#txt_totalround")
+	arg_1_0._txtbossbadge = gohelper.findChildText(arg_1_0.viewGO, "root/right/#txt_bossbadge")
+	arg_1_0._gobossheros = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_bossheros")
+	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_heroitem")
+	arg_1_0._gobuffs = gohelper.findChild(arg_1_0.viewGO, "root/right/buffs/#go_buffs")
+	arg_1_0._gobuffitem = gohelper.findChild(arg_1_0.viewGO, "root/right/buffs/#go_buffs/#go_buffitem")
+	arg_1_0._simageboss = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/#simage_boss")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "root/left/#scroll_badge/Viewport/Content")
-	slot0._heroIconTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._gocontent = gohelper.findChild(arg_5_0.viewGO, "root/left/#scroll_badge/Viewport/Content")
+	arg_5_0._heroIconTab = arg_5_0:getUserDataTb_()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._activityId = slot0.viewParam and slot0.viewParam.activityId
-	slot0._groupRecordMo = slot0.viewParam and slot0.viewParam.groupRecordMo
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._activityId = arg_7_0.viewParam and arg_7_0.viewParam.activityId
+	arg_7_0._groupRecordMo = arg_7_0.viewParam and arg_7_0.viewParam.groupRecordMo
 
-	slot0:refresh()
+	arg_7_0:refresh()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_OpenSettlementView)
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshAllSubEpisodeItems()
-	slot0:refreshBossEpisodeItem()
-	slot0:refreshPlayerInfo()
-	slot0:refreshOtherInfo()
+function var_0_0.refresh(arg_8_0)
+	arg_8_0:refreshAllSubEpisodeItems()
+	arg_8_0:refreshBossEpisodeItem()
+	arg_8_0:refreshPlayerInfo()
+	arg_8_0:refreshOtherInfo()
 end
 
-function slot0.refreshAllSubEpisodeItems(slot0)
-	gohelper.CreateObjList(slot0, slot0.refreshSingleSubEpisodeItem, slot0._groupRecordMo:getEpusideListByTypeAndPassOrder(Act183Enum.EpisodeType.Sub) or {}, slot0._gocontent, slot0._goepisodeitem)
+function var_0_0.refreshAllSubEpisodeItems(arg_9_0)
+	local var_9_0 = arg_9_0._groupRecordMo:getEpusideListByTypeAndPassOrder(Act183Enum.EpisodeType.Sub)
+
+	gohelper.CreateObjList(arg_9_0, arg_9_0.refreshSingleSubEpisodeItem, var_9_0 or {}, arg_9_0._gocontent, arg_9_0._goepisodeitem)
 end
 
-function slot0.refreshSingleSubEpisodeItem(slot0, slot1, slot2, slot3)
-	slot7 = gohelper.findChildText(slot1, "txt_badgenum")
-	slot15 = slot2:getRuleStatus(1)
-	slot16 = slot2:getRuleStatus(2)
-	slot18 = slot2:getUseBadgeNum()
+function var_0_0.refreshSingleSubEpisodeItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = gohelper.findChildImage(arg_10_1, "image_index")
+	local var_10_1 = gohelper.findChildImage(arg_10_1, "image_star")
+	local var_10_2 = gohelper.findChild(arg_10_1, "mask")
+	local var_10_3 = gohelper.findChildText(arg_10_1, "txt_badgenum")
+	local var_10_4 = gohelper.findChildImage(arg_10_1, "rules/go_rule1/image_icon")
+	local var_10_5 = gohelper.findChild(arg_10_1, "rules/go_rule1/go_repress")
+	local var_10_6 = gohelper.findChild(arg_10_1, "rules/go_rule1/go_escape")
+	local var_10_7 = gohelper.findChildImage(arg_10_1, "rules/go_rule2/image_icon")
+	local var_10_8 = gohelper.findChild(arg_10_1, "rules/go_rule2/go_repress")
+	local var_10_9 = gohelper.findChild(arg_10_1, "rules/go_rule2/go_escape")
+	local var_10_10 = gohelper.findChildImage(arg_10_1, "image_episode")
+	local var_10_11 = arg_10_2:getRuleStatus(1)
+	local var_10_12 = arg_10_2:getRuleStatus(2)
+	local var_10_13 = arg_10_2:isAllConditionPass()
+	local var_10_14 = arg_10_2:getUseBadgeNum()
 
-	UISpriteSetMgr.instance:setChallengeSprite(gohelper.findChildImage(slot1, "image_index"), "v2a5_challenge_result_level_" .. slot2:getPassOrder())
+	UISpriteSetMgr.instance:setChallengeSprite(var_10_0, "v2a5_challenge_result_level_" .. arg_10_2:getPassOrder())
 
-	slot7.text = slot18
+	var_10_3.text = var_10_14
 
-	gohelper.setActive(slot7.gameObject, slot18 > 0)
-	gohelper.setActive(gohelper.findChild(slot1, "mask"), slot18 > 0)
+	gohelper.setActive(var_10_3.gameObject, var_10_14 > 0)
+	gohelper.setActive(var_10_2, var_10_14 > 0)
 
-	slot19 = slot2:getEpisodeId()
+	local var_10_15 = arg_10_2:getEpisodeId()
 
-	Act183Helper.setRuleIcon(slot19, 1, gohelper.findChildImage(slot1, "rules/go_rule1/image_icon"))
-	Act183Helper.setRuleIcon(slot19, 2, gohelper.findChildImage(slot1, "rules/go_rule2/image_icon"))
-	Act183Helper.setSubEpisodeResultIcon(slot19, gohelper.findChildImage(slot1, "image_episode"))
-	gohelper.setActive(gohelper.findChild(slot1, "rules/go_rule1/go_repress"), slot15 == Act183Enum.RuleStatus.Repress)
-	gohelper.setActive(gohelper.findChild(slot1, "rules/go_rule2/go_repress"), slot16 == Act183Enum.RuleStatus.Repress)
-	gohelper.setActive(gohelper.findChild(slot1, "rules/go_rule1/go_escape"), slot15 == Act183Enum.RuleStatus.Escape)
-	gohelper.setActive(gohelper.findChild(slot1, "rules/go_rule2/go_escape"), slot16 == Act183Enum.RuleStatus.Escape)
-	UISpriteSetMgr.instance:setChallengeSprite(gohelper.findChildImage(slot1, "image_star"), slot2:isAllConditionPass() and "v2a5_challenge_dungeon_reward_star_01" or "v2a5_challenge_dungeon_reward_star_02")
-	slot0:refreshSubEpisodeHeros(slot1, slot2:getHeroMos())
+	Act183Helper.setRuleIcon(var_10_15, 1, var_10_4)
+	Act183Helper.setRuleIcon(var_10_15, 2, var_10_7)
+	Act183Helper.setSubEpisodeResultIcon(var_10_15, var_10_10)
+	gohelper.setActive(var_10_5, var_10_11 == Act183Enum.RuleStatus.Repress)
+	gohelper.setActive(var_10_8, var_10_12 == Act183Enum.RuleStatus.Repress)
+	gohelper.setActive(var_10_6, var_10_11 == Act183Enum.RuleStatus.Escape)
+	gohelper.setActive(var_10_9, var_10_12 == Act183Enum.RuleStatus.Escape)
+
+	local var_10_16 = var_10_13 and "v2a5_challenge_dungeon_reward_star_01" or "v2a5_challenge_dungeon_reward_star_02"
+
+	UISpriteSetMgr.instance:setChallengeSprite(var_10_1, var_10_16)
+	arg_10_0:refreshSubEpisodeHeros(arg_10_1, arg_10_2:getHeroMos())
 end
 
-function slot0.refreshSubEpisodeHeros(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		if gohelper.isNil(gohelper.findChild(slot1, "heros/row_" .. math.ceil(slot6 / uv0))) then
-			gohelper.setActive(gohelper.cloneInPlace(gohelper.findChild(slot1, "heros/go_horizontal"), "row_" .. slot8), true)
+function var_0_0.refreshSubEpisodeHeros(arg_11_0, arg_11_1, arg_11_2)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
+		local var_11_0 = math.ceil(iter_11_0 / var_0_1)
+		local var_11_1 = gohelper.findChild(arg_11_1, "heros/row_" .. var_11_0)
+
+		if gohelper.isNil(var_11_1) then
+			local var_11_2 = gohelper.findChild(arg_11_1, "heros/go_horizontal")
+
+			var_11_1 = gohelper.cloneInPlace(var_11_2, "row_" .. var_11_0)
+
+			gohelper.setActive(var_11_1, true)
 		end
 
-		slot10 = gohelper.clone(slot0._goheroitem, slot9, "hero_" .. slot6)
+		local var_11_3 = gohelper.clone(arg_11_0._goheroitem, var_11_1, "hero_" .. iter_11_0)
 
-		slot0:refreshSingleHeroItem(slot10, slot7)
-		gohelper.setActive(slot10, true)
+		arg_11_0:refreshSingleHeroItem(var_11_3, iter_11_1)
+		gohelper.setActive(var_11_3, true)
 	end
 end
 
-function slot0.refreshBossEpisodeItem(slot0)
-	if not (slot0._groupRecordMo:getEpisodeListByType(Act183Enum.EpisodeType.Boss) and slot1[1]) then
+function var_0_0.refreshBossEpisodeItem(arg_12_0)
+	local var_12_0 = arg_12_0._groupRecordMo:getEpisodeListByType(Act183Enum.EpisodeType.Boss)
+	local var_12_1 = var_12_0 and var_12_0[1]
+
+	if not var_12_1 then
 		return
 	end
 
-	Act183Helper.setBossEpisodeResultIcon(slot2:getEpisodeId(), slot0._simageboss)
-	gohelper.setActive(slot0._txtbossbadge.gameObject, slot2:getUseBadgeNum() > 0)
+	local var_12_2 = var_12_1:getEpisodeId()
 
-	slot0._txtbossbadge.text = slot4
+	Act183Helper.setBossEpisodeResultIcon(var_12_2, arg_12_0._simageboss)
 
-	gohelper.CreateObjList(slot0, slot0.refreshSingleHeroItem, slot2:getHeroMos() or {}, slot0._gobossheros, slot0._goheroitem)
+	local var_12_3 = var_12_1:getUseBadgeNum()
 
-	slot6, slot7, slot8, slot9 = slot0._groupRecordMo:getBossEpisodeConditionStatus()
-	slot0._unlockConditionMap = Act183Helper.listToMap(slot7)
-	slot0._passConditionMap = Act183Helper.listToMap(slot8)
-	slot0._chooseConditionMap = Act183Helper.listToMap(slot9)
+	gohelper.setActive(arg_12_0._txtbossbadge.gameObject, var_12_3 > 0)
 
-	gohelper.CreateObjList(slot0, slot0.refreshBossEpisodeCondition, slot6 or {}, slot0._gobuffs, slot0._gobuffitem)
+	arg_12_0._txtbossbadge.text = var_12_3
+
+	local var_12_4 = var_12_1:getHeroMos()
+
+	gohelper.CreateObjList(arg_12_0, arg_12_0.refreshSingleHeroItem, var_12_4 or {}, arg_12_0._gobossheros, arg_12_0._goheroitem)
+
+	local var_12_5, var_12_6, var_12_7, var_12_8 = arg_12_0._groupRecordMo:getBossEpisodeConditionStatus()
+
+	arg_12_0._unlockConditionMap = Act183Helper.listToMap(var_12_6)
+	arg_12_0._passConditionMap = Act183Helper.listToMap(var_12_7)
+	arg_12_0._chooseConditionMap = Act183Helper.listToMap(var_12_8)
+
+	gohelper.CreateObjList(arg_12_0, arg_12_0.refreshBossEpisodeCondition, var_12_5 or {}, arg_12_0._gobuffs, arg_12_0._gobuffitem)
 end
 
-function slot0.refreshSingleHeroItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildSingleImage(slot1, "simage_heroicon")
+function var_0_0.refreshSingleHeroItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = gohelper.findChildSingleImage(arg_13_1, "simage_heroicon")
+	local var_13_1 = arg_13_2:getHeroIconUrl()
 
-	slot4:LoadImage(slot2:getHeroIconUrl())
+	var_13_0:LoadImage(var_13_1)
 
-	slot0._heroIconTab[slot4] = true
+	arg_13_0._heroIconTab[var_13_0] = true
 end
 
-function slot0.refreshBossEpisodeCondition(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.onceAddComponent(slot1, gohelper.Type_Image)
-	slot5 = slot0._unlockConditionMap[slot2] ~= nil
-	slot7 = "v2a5_challenge_dungeon_reward_star_02"
+function var_0_0.refreshBossEpisodeCondition(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = gohelper.onceAddComponent(arg_14_1, gohelper.Type_Image)
+	local var_14_1 = arg_14_0._unlockConditionMap[arg_14_2] ~= nil
+	local var_14_2 = arg_14_0._chooseConditionMap[arg_14_2] ~= nil
+	local var_14_3 = "v2a5_challenge_dungeon_reward_star_02"
 
-	if slot0._chooseConditionMap[slot2] ~= nil then
-		slot7 = "v2a5_challenge_dungeon_reward_star_01"
-	elseif slot5 then
-		slot7 = "v2a5_challenge_dungeon_reward_star_03"
+	if var_14_2 then
+		var_14_3 = "v2a5_challenge_dungeon_reward_star_01"
+	elseif var_14_1 then
+		var_14_3 = "v2a5_challenge_dungeon_reward_star_03"
 	end
 
-	UISpriteSetMgr.instance:setChallengeSprite(slot4, slot7)
+	UISpriteSetMgr.instance:setChallengeSprite(var_14_0, var_14_3)
 end
 
-function slot0.refreshPlayerInfo(slot0)
-	slot0._txtname.text = slot0._groupRecordMo:getUserName()
-	slot0._portraitId = slot0._groupRecordMo:getPortrait()
+function var_0_0.refreshPlayerInfo(arg_15_0)
+	arg_15_0._txtname.text = arg_15_0._groupRecordMo:getUserName()
+	arg_15_0._portraitId = arg_15_0._groupRecordMo:getPortrait()
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageplayericon)
+	if not arg_15_0._liveHeadIcon then
+		arg_15_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_15_0._simageplayericon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot0._portraitId)
+	arg_15_0._liveHeadIcon:setLiveHead(arg_15_0._portraitId)
 
-	slot0._txtdate.text = TimeUtil.timestampToString(slot0._groupRecordMo:getFinishedTime() / 1000)
+	arg_15_0._txtdate.text = TimeUtil.timestampToString(arg_15_0._groupRecordMo:getFinishedTime() / 1000)
 end
 
-function slot0.refreshOtherInfo(slot0)
-	slot1 = slot0._groupRecordMo:getAllRound()
-	slot0._txttotalround.text = slot1
+function var_0_0.refreshOtherInfo(arg_16_0)
+	local var_16_0 = arg_16_0._groupRecordMo:getAllRound()
 
-	if uv0[Act183Helper.getRoundStage(slot1)] then
-		UISpriteSetMgr.instance:setChallengeSprite(slot0._imageroundbg, slot3)
+	arg_16_0._txttotalround.text = var_16_0
+
+	local var_16_1 = Act183Helper.getRoundStage(var_16_0)
+	local var_16_2 = var_0_2[var_16_1]
+
+	if var_16_2 then
+		UISpriteSetMgr.instance:setChallengeSprite(arg_16_0._imageroundbg, var_16_2)
 	else
-		logError(string.format("缺少回合数挡位 --> 回合数背景图配置 allRoundNum = %s, stage = %s", slot1, slot2))
+		logError(string.format("缺少回合数挡位 --> 回合数背景图配置 allRoundNum = %s, stage = %s", var_16_0, var_16_1))
 	end
 
-	gohelper.setActive(slot0._gohardbg, slot0._groupRecordMo:getGroupType() == Act183Enum.GroupType.HardMain)
+	local var_16_3 = arg_16_0._groupRecordMo:getGroupType()
+
+	gohelper.setActive(arg_16_0._gohardbg, var_16_3 == Act183Enum.GroupType.HardMain)
 end
 
-function slot0.releaseAllSingleImage(slot0)
-	if slot0._heroIconTab then
-		for slot4, slot5 in pairs(slot0._heroIconTab) do
-			slot4:UnLoadImage()
+function var_0_0.releaseAllSingleImage(arg_17_0)
+	if arg_17_0._heroIconTab then
+		for iter_17_0, iter_17_1 in pairs(arg_17_0._heroIconTab) do
+			iter_17_0:UnLoadImage()
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:releaseAllSingleImage()
-	slot0._simageplayericon:UnLoadImage()
-	slot0._simageboss:UnLoadImage()
+function var_0_0.onClose(arg_18_0)
+	arg_18_0:releaseAllSingleImage()
+	arg_18_0._simageplayericon:UnLoadImage()
+	arg_18_0._simageboss:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_19_0)
+	return
 end
 
-return slot0
+return var_0_0

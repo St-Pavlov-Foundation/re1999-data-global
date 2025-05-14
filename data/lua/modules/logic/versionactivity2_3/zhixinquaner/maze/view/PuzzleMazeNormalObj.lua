@@ -1,18 +1,18 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeNormalObj", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeNormalObj", package.seeall)
 
-slot0 = class("PuzzleMazeNormalObj", PuzzleMazeBaseObj)
+local var_0_0 = class("PuzzleMazeNormalObj", PuzzleMazeBaseObj)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0._image = gohelper.findChildImage(slot0.go, "#image_content")
-	slot0._gochecked = gohelper.findChild(slot0.go, "#go_checked")
+	arg_1_0._image = gohelper.findChildImage(arg_1_0.go, "#image_content")
+	arg_1_0._gochecked = gohelper.findChild(arg_1_0.go, "#go_checked")
 
-	gohelper.setActive(slot0._gochecked, false)
+	gohelper.setActive(arg_1_0._gochecked, false)
 end
 
-function slot0._getIcon(slot0)
-	return slot0._image
+function var_0_0._getIcon(arg_2_0)
+	return arg_2_0._image
 end
 
-return slot0
+return var_0_0

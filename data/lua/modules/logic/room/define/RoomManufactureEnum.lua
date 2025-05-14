@@ -1,70 +1,71 @@
-module("modules.logic.room.define.RoomManufactureEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomManufactureEnum", package.seeall)
 
-slot0 = _M
-slot0.InvalidBuildingUid = "0"
-slot0.ConstId = {
+local var_0_0 = _M
+
+var_0_0.InvalidBuildingUid = "0"
+var_0_0.ConstId = {
 	OrderPriceMul = 10,
 	CritterMaxMood = 2,
 	CultivatingIcon = 9
 }
-slot0.ItemCountY = 36
-slot0.ItemCountBgY = 37
-slot0.AudioDelayTime = 0.5
-slot0.ManufactureState = {
+var_0_0.ItemCountY = 36
+var_0_0.ItemCountBgY = 37
+var_0_0.AudioDelayTime = 0.5
+var_0_0.ManufactureState = {
 	Stop = 2,
 	Running = 1,
 	Wait = 0
 }
-slot0.OneKeyType = {
+var_0_0.OneKeyType = {
 	Customize = 5,
 	ShortTime = 1,
 	LowQuantity = 3,
 	TracedOrder = 4,
 	LongTime = 2
 }
-slot0.ManufactureWrongType = {
+var_0_0.ManufactureWrongType = {
 	LackPreMat = 1,
 	NoCritter = 5,
 	NoLinkPath = 3,
 	WaitPreMat = 4,
 	PreMatNotUnlock = 2
 }
-slot0.DefaultPauseIcon = "room_trade_icon_1"
-slot0.ManufactureWrongDisplay = {
-	[slot0.ManufactureWrongType.LackPreMat] = {
+var_0_0.DefaultPauseIcon = "room_trade_icon_1"
+var_0_0.ManufactureWrongDisplay = {
+	[var_0_0.ManufactureWrongType.LackPreMat] = {
 		jumpDesc = "room_manufacture_jump_add",
 		icon = "room_trade_icon_2",
 		desc = "room_manufacture_lack_mat"
 	},
-	[slot0.ManufactureWrongType.PreMatNotUnlock] = {
+	[var_0_0.ManufactureWrongType.PreMatNotUnlock] = {
 		jumpDesc = "room_manufacture_jump_level_up_unlock",
 		icon = "room_trade_icon_2",
 		desc = "room_manufacture_lack_mat_level_up"
 	},
-	[slot0.ManufactureWrongType.NoLinkPath] = {
+	[var_0_0.ManufactureWrongType.NoLinkPath] = {
 		jumpDesc = "room_manufacture_jump_link_path",
 		icon = "room_trade_icon_3",
 		desc = "room_manufacture_lack_mat_link_path"
 	},
-	[slot0.ManufactureWrongType.WaitPreMat] = {
+	[var_0_0.ManufactureWrongType.WaitPreMat] = {
 		desc = "room_manufacture_wait_mat",
 		icon = "room_trade_icon_4"
 	},
-	[slot0.ManufactureWrongType.NoCritter] = {
+	[var_0_0.ManufactureWrongType.NoCritter] = {
 		jumpDesc = "room_manufacture_jump_place_critter",
 		icon = "room_trade_icon_1",
 		desc = "room_manufacture_no_critter"
 	}
 }
-slot0.WrongTypeHandlerFunc = {
-	[slot0.ManufactureWrongType.LackPreMat] = ManufactureController._addPreMat,
-	[slot0.ManufactureWrongType.PreMatNotUnlock] = ManufactureController._lvUpBuilding,
-	[slot0.ManufactureWrongType.NoLinkPath] = ManufactureController._linPath
+var_0_0.WrongTypeHandlerFunc = {
+	[var_0_0.ManufactureWrongType.LackPreMat] = ManufactureController._addPreMat,
+	[var_0_0.ManufactureWrongType.PreMatNotUnlock] = ManufactureController._lvUpBuilding,
+	[var_0_0.ManufactureWrongType.NoLinkPath] = ManufactureController._linPath
 }
-slot0.SlotItemSpace = 10
-slot0.OverviewSlotItemSpace = 15
-slot0.FirstSlotPriority = 0
-slot0.SlotState = {
+var_0_0.SlotItemSpace = 10
+var_0_0.OverviewSlotItemSpace = 15
+var_0_0.FirstSlotPriority = 0
+var_0_0.SlotState = {
 	Stop = 3,
 	Running = 1,
 	Wait = 2,
@@ -72,25 +73,25 @@ slot0.SlotState = {
 	Locked = 5,
 	None = 0
 }
-slot0.SlotOperation = {
+var_0_0.SlotOperation = {
 	Cancel = 1,
 	MoveTop = 4,
 	Add = 0,
 	MoveBottom = 5
 }
-slot0.RareImageMap = {
+var_0_0.RareImageMap = {
 	"critter_manufacture_itemquality1",
 	"critter_manufacture_itemquality2",
 	"critter_manufacture_itemquality3",
 	"critter_manufacture_itemquality4",
 	"critter_manufacture_itemquality5"
 }
-slot0.TradeLevelUnlock = {
+var_0_0.TradeLevelUnlock = {
 	Trade = 2
 }
-slot0.LuckyItemType = {
+var_0_0.LuckyItemType = {
 	All = 1,
 	ItemId = 2
 }
 
-return slot0
+return var_0_0

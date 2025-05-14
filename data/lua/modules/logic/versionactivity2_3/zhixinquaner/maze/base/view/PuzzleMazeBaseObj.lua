@@ -1,81 +1,88 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseObj", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseObj", package.seeall)
 
-slot0 = class("PuzzleMazeBaseObj", UserDataDispose)
+local var_0_0 = class("PuzzleMazeBaseObj", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.onInit(slot0, slot1)
-	slot0.mo = slot1
-	slot0.isEnter = false
+function var_0_0.onInit(arg_2_0, arg_2_1)
+	arg_2_0.mo = arg_2_1
+	arg_2_0.isEnter = false
 
-	slot0:_setVisible(true)
-	slot0:_setPosition()
-	slot0:_setIcon(slot0.isEnter)
+	arg_2_0:_setVisible(true)
+	arg_2_0:_setPosition()
+	arg_2_0:_setIcon(arg_2_0.isEnter)
 end
 
-function slot0.onEnter(slot0)
-	slot0.isEnter = true
+function var_0_0.onEnter(arg_3_0)
+	arg_3_0.isEnter = true
 
-	slot0:_setIcon(slot0.isEnter)
+	arg_3_0:_setIcon(arg_3_0.isEnter)
 end
 
-function slot0.onExit(slot0)
-	slot0.isEnter = false
+function var_0_0.onExit(arg_4_0)
+	arg_4_0.isEnter = false
 
-	slot0:_setIcon(slot0.isEnter)
+	arg_4_0:_setIcon(arg_4_0.isEnter)
 end
 
-function slot0.onAlreadyEnter(slot0)
+function var_0_0.onAlreadyEnter(arg_5_0)
+	return
 end
 
-function slot0.getKey(slot0)
+function var_0_0.getKey(arg_6_0)
+	return
 end
 
-function slot0.HasEnter(slot0)
-	return slot0.isEnter
+function var_0_0.HasEnter(arg_7_0)
+	return arg_7_0.isEnter
 end
 
-function slot0._setPosition(slot0)
-	slot1, slot2 = nil
+function var_0_0._setPosition(arg_8_0)
+	local var_8_0
+	local var_8_1
 
-	if slot0.mo.positionType == PuzzleEnum.PositionType.Point then
-		slot1, slot2 = PuzzleMazeDrawModel.instance:getObjectAnchor(slot0.mo.x, slot0.mo.y)
+	if arg_8_0.mo.positionType == PuzzleEnum.PositionType.Point then
+		var_8_0, var_8_1 = PuzzleMazeDrawModel.instance:getObjectAnchor(arg_8_0.mo.x, arg_8_0.mo.y)
 	else
-		slot1, slot2 = PuzzleMazeDrawModel.instance:getLineObjectAnchor(slot0.mo.x1, slot0.mo.y1, slot0.mo.x2, slot0.mo.y2)
+		var_8_0, var_8_1 = PuzzleMazeDrawModel.instance:getLineObjectAnchor(arg_8_0.mo.x1, arg_8_0.mo.y1, arg_8_0.mo.x2, arg_8_0.mo.y2)
 	end
 
-	recthelper.setAnchor(slot0.go.transform, slot1, slot2)
+	recthelper.setAnchor(arg_8_0.go.transform, var_8_0, var_8_1)
 end
 
-function slot0._setIcon(slot0, slot1)
-	UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(slot0:_getIcon(), slot0:_getIconUrl(slot1), true)
+function var_0_0._setIcon(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:_getIconUrl(arg_9_1)
+	local var_9_1 = arg_9_0:_getIcon()
+
+	UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(var_9_1, var_9_0, true)
 end
 
-function slot0._getIcon(slot0)
+function var_0_0._getIcon(arg_10_0)
+	return
 end
 
-function slot0._getIconUrl(slot0, slot1)
-	if not slot0.mo or not slot0.mo.iconUrl then
+function var_0_0._getIconUrl(arg_11_0, arg_11_1)
+	if not arg_11_0.mo or not arg_11_0.mo.iconUrl then
 		return
 	end
 
-	return slot0.mo and slot0.mo.iconUrl
+	return arg_11_0.mo and arg_11_0.mo.iconUrl
 end
 
-function slot0._setVisible(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0._setVisible(arg_12_0, arg_12_1)
+	gohelper.setActive(arg_12_0.go, arg_12_1)
 end
 
-function slot0.destroy(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.destroy(arg_13_0)
+	gohelper.destroy(arg_13_0.go)
 
-	slot0.isEnter = false
+	arg_13_0.isEnter = false
 
-	slot0:__onDispose()
+	arg_13_0:__onDispose()
 end
 
-return slot0
+return var_0_0

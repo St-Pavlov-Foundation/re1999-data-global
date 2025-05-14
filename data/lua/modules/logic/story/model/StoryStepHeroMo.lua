@@ -1,17 +1,17 @@
-module("modules.logic.story.model.StoryStepHeroMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepHeroMo", package.seeall)
 
-slot0 = pureTable("StoryStepHeroMo")
+local var_0_0 = pureTable("StoryStepHeroMo")
 
-function slot0.ctor(slot0)
-	slot0.heroIndex = 0
-	slot0.heroDir = 1
-	slot0.heroPos = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.heroIndex = 0
+	arg_1_0.heroDir = 1
+	arg_1_0.heroPos = {
 		0,
 		0
 	}
-	slot0.heroScale = 1
-	slot0.isFollow = false
-	slot0.mouses = {
+	arg_1_0.heroScale = 1
+	arg_1_0.isFollow = false
+	arg_1_0.mouses = {
 		"",
 		"",
 		"",
@@ -21,7 +21,7 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.anims = {
+	arg_1_0.anims = {
 		"",
 		"",
 		"",
@@ -31,7 +31,7 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.expressions = {
+	arg_1_0.expressions = {
 		"",
 		"",
 		"",
@@ -41,7 +41,7 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.effs = {
+	arg_1_0.effs = {
 		"",
 		"",
 		"",
@@ -53,34 +53,38 @@ function slot0.ctor(slot0)
 	}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.heroIndex = slot1[1]
-	slot0.heroDir = slot1[2]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.heroIndex = arg_2_1[1]
 
-	if StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(slot1[1]) then
-		slot3 = ""
+	local var_2_0 = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(arg_2_1[1])
 
-		if slot1[2] == 0 then
-			slot3 = slot2.type == 0 and slot2.leftParam or slot2.live2dLeftParam
-		elseif slot1[2] == 1 then
-			slot3 = slot2.type == 0 and slot2.midParam or slot2.live2dMidParam
-		elseif slot1[2] == 2 then
-			slot3 = slot2.type == 0 and slot2.rightParam or slot2.live2dRightParam
+	arg_2_0.heroDir = arg_2_1[2]
+
+	if var_2_0 then
+		local var_2_1 = ""
+
+		if arg_2_1[2] == 0 then
+			var_2_1 = var_2_0.type == 0 and var_2_0.leftParam or var_2_0.live2dLeftParam
+		elseif arg_2_1[2] == 1 then
+			var_2_1 = var_2_0.type == 0 and var_2_0.midParam or var_2_0.live2dMidParam
+		elseif arg_2_1[2] == 2 then
+			var_2_1 = var_2_0.type == 0 and var_2_0.rightParam or var_2_0.live2dRightParam
 		end
 
-		slot4 = string.split(slot3, "#")
-		slot0.heroPos = {
-			tonumber(slot4[1]),
-			tonumber(slot4[2])
+		local var_2_2 = string.split(var_2_1, "#")
+
+		arg_2_0.heroPos = {
+			tonumber(var_2_2[1]),
+			tonumber(var_2_2[2])
 		}
-		slot0.heroScale = tonumber(slot4[3])
+		arg_2_0.heroScale = tonumber(var_2_2[3])
 	end
 
-	slot0.isFollow = slot1[3]
-	slot0.mouses = slot1[4]
-	slot0.anims = slot1[5]
-	slot0.expressions = slot1[6]
-	slot0.effs = slot1[7]
+	arg_2_0.isFollow = arg_2_1[3]
+	arg_2_0.mouses = arg_2_1[4]
+	arg_2_0.anims = arg_2_1[5]
+	arg_2_0.expressions = arg_2_1[6]
+	arg_2_0.effs = arg_2_1[7]
 end
 
-return slot0
+return var_0_0

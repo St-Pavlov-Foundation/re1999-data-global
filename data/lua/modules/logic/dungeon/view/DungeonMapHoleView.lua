@@ -1,263 +1,291 @@
-module("modules.logic.dungeon.view.DungeonMapHoleView", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonMapHoleView", package.seeall)
 
-slot0 = class("DungeonMapHoleView", BaseView)
+local var_0_0 = class("DungeonMapHoleView", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, slot0.loadSceneFinish, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnMapPosChanged, slot0.onMapPosChanged, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementAdd, slot0._onAddElement, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementRemove, slot0._onRemoveElement, slot0)
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0.initCameraParam, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_2_0.loadSceneFinish, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnMapPosChanged, arg_2_0.onMapPosChanged, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementAdd, arg_2_0._onAddElement, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementRemove, arg_2_0._onRemoveElement, arg_2_0)
+	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0.initCameraParam, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, slot0.loadSceneFinish, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnMapPosChanged, slot0.onMapPosChanged, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementAdd, slot0._onAddElement, slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementRemove, slot0._onRemoveElement, slot0)
-	slot0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0.initCameraParam, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_3_0.loadSceneFinish, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnMapPosChanged, arg_3_0.onMapPosChanged, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementAdd, arg_3_0._onAddElement, arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnElementRemove, arg_3_0._onRemoveElement, arg_3_0)
+	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0.initCameraParam, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0.tempVector4 = Vector4()
-	slot0.shaderParamList = {}
-	slot0._tweens = {}
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0.tempVector4 = Vector4()
+	arg_4_0.shaderParamList = {}
+	arg_4_0._tweens = {}
 
-	for slot4 = 1, 5 do
-		table.insert(slot0.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. slot4))
+	for iter_4_0 = 1, 5 do
+		table.insert(arg_4_0.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. iter_4_0))
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.setHoleByTween, slot0)
-	slot0:clearTween()
+function var_0_0.onClose(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.setHoleByTween, arg_5_0)
+	arg_5_0:clearTween()
 end
 
-function slot0.clearTween(slot0)
-	for slot4, slot5 in pairs(slot0._tweens) do
-		ZProj.TweenHelper.KillById(slot5)
+function var_0_0.clearTween(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._tweens) do
+		ZProj.TweenHelper.KillById(iter_6_1)
 	end
 end
 
-function slot0._onAddElement(slot0, slot1)
-	if slot0._elementIndex[slot1] and slot0._tweens[slot0._elementIndex[slot1]] then
-		ZProj.TweenHelper.KillById(slot0._tweens[slot2], true)
+function var_0_0._onAddElement(arg_7_0, arg_7_1)
+	if arg_7_0._elementIndex[arg_7_1] then
+		local var_7_0 = arg_7_0._elementIndex[arg_7_1]
 
-		slot0._tweens[slot2] = nil
+		if arg_7_0._tweens[var_7_0] then
+			ZProj.TweenHelper.KillById(arg_7_0._tweens[var_7_0], true)
+
+			arg_7_0._tweens[var_7_0] = nil
+		end
 	end
 
-	if not slot0._elementIndex or slot0._elementIndex[slot1] or not slot0.defaultSceneWorldPosX then
+	if not arg_7_0._elementIndex or arg_7_0._elementIndex[arg_7_1] or not arg_7_0.defaultSceneWorldPosX then
 		return
 	end
 
-	if not lua_chapter_map_element.configDict[slot1] then
+	local var_7_1 = lua_chapter_map_element.configDict[arg_7_1]
+
+	if not var_7_1 then
 		return
 	end
 
-	if string.nilorempty(slot2.holeSize) then
+	if string.nilorempty(var_7_1.holeSize) then
 		return
 	end
 
-	slot3 = 1
+	local var_7_2 = 1
 
 	while true do
-		if not slot0.holdCoList[slot3] then
-			slot0._elementIndex[slot1] = slot3
-			slot8, slot9, slot10 = transformhelper.getLocalPos(CameraMgr.instance:getMainCameraTrs().parent)
-			slot0.holdCoList[slot3] = {
-				(string.splitToNumber(slot2.pos, "#")[1] or 0) + slot0.defaultSceneWorldPosX + (string.splitToNumber(slot2.holeSize, "#")[1] or 0),
-				(slot4[2] or 0) + slot0.defaultSceneWorldPosY + slot9 + (slot11[2] or 0),
-				0,
-				slot1
+		if not arg_7_0.holdCoList[var_7_2] then
+			arg_7_0._elementIndex[arg_7_1] = var_7_2
+
+			local var_7_3 = string.splitToNumber(var_7_1.pos, "#")
+			local var_7_4 = var_7_3[1] or 0
+			local var_7_5 = var_7_3[2] or 0
+			local var_7_6 = CameraMgr.instance:getMainCameraTrs().parent
+			local var_7_7, var_7_8, var_7_9 = transformhelper.getLocalPos(var_7_6)
+			local var_7_10 = string.splitToNumber(var_7_1.holeSize, "#")
+
+			arg_7_0.holdCoList[var_7_2] = {
+				var_7_4 + arg_7_0.defaultSceneWorldPosX + (var_7_10[1] or 0),
+				var_7_5 + arg_7_0.defaultSceneWorldPosY + var_7_8 + (var_7_10[2] or 0),
+				0
 			}
-			slot0._tweens[slot3] = ZProj.TweenHelper.DOTweenFloat(0, slot11[3] or 0, 0.2, slot0.onTweenOpen, slot0.onTweenOpenEnd, slot0, slot3, EaseType.Linear)
+			arg_7_0.holdCoList[var_7_2][4] = arg_7_1
+			arg_7_0._tweens[var_7_2] = ZProj.TweenHelper.DOTweenFloat(0, var_7_10[3] or 0, 0.2, arg_7_0.onTweenOpen, arg_7_0.onTweenOpenEnd, arg_7_0, var_7_2, EaseType.Linear)
 
 			return
 		end
 
-		slot3 = slot3 + 1
+		var_7_2 = var_7_2 + 1
 	end
 end
 
-function slot0.onTweenOpen(slot0, slot1, slot2)
-	if not slot0.holdCoList[slot2] then
+function var_0_0.onTweenOpen(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0.holdCoList[arg_8_2] then
 		return
 	end
 
-	slot0.holdCoList[slot2][3] = slot1
+	arg_8_0.holdCoList[arg_8_2][3] = arg_8_1
 
-	slot0:refreshHoles()
+	arg_8_0:refreshHoles()
 end
 
-function slot0.onTweenOpenEnd(slot0, slot1)
-	slot0._tweens[slot1] = nil
+function var_0_0.onTweenOpenEnd(arg_9_0, arg_9_1)
+	arg_9_0._tweens[arg_9_1] = nil
 end
 
-function slot0._onRemoveElement(slot0, slot1)
-	if not slot0._elementIndex then
+function var_0_0._onRemoveElement(arg_10_0, arg_10_1)
+	if not arg_10_0._elementIndex then
 		return
 	end
 
-	if not slot0._elementIndex or not slot0._elementIndex[slot1] then
+	if not arg_10_0._elementIndex or not arg_10_0._elementIndex[arg_10_1] then
 		return
 	end
 
-	slot2 = slot0._elementIndex[slot1]
-	slot0._tweens[slot2] = ZProj.TweenHelper.DOTweenFloat(slot0.holdCoList[slot2][3], 0, 0.2, slot0.onTweenClose, slot0.onTweenCloseEnd, slot0, slot2, EaseType.Linear)
+	local var_10_0 = arg_10_0._elementIndex[arg_10_1]
+	local var_10_1 = arg_10_0.holdCoList[var_10_0]
+
+	arg_10_0._tweens[var_10_0] = ZProj.TweenHelper.DOTweenFloat(var_10_1[3], 0, 0.2, arg_10_0.onTweenClose, arg_10_0.onTweenCloseEnd, arg_10_0, var_10_0, EaseType.Linear)
 end
 
-function slot0.onTweenClose(slot0, slot1, slot2)
-	if not slot0.holdCoList[slot2] then
+function var_0_0.onTweenClose(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0.holdCoList[arg_11_2] then
 		return
 	end
 
-	slot0.holdCoList[slot2][3] = slot1
+	arg_11_0.holdCoList[arg_11_2][3] = arg_11_1
 
-	slot0:refreshHoles()
+	arg_11_0:refreshHoles()
 end
 
-function slot0.onTweenCloseEnd(slot0, slot1)
-	slot0._tweens[slot1] = nil
-	slot0.holdCoList[slot1] = nil
+function var_0_0.onTweenCloseEnd(arg_12_0, arg_12_1)
+	arg_12_0._tweens[arg_12_1] = nil
+	arg_12_0.holdCoList[arg_12_1] = nil
 
-	for slot5, slot6 in pairs(slot0._elementIndex) do
-		if slot6 == slot1 then
-			slot0._elementIndex[slot5] = nil
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._elementIndex) do
+		if iter_12_1 == arg_12_1 then
+			arg_12_0._elementIndex[iter_12_0] = nil
 
-			slot0:refreshHoles()
+			arg_12_0:refreshHoles()
 
 			break
 		end
 	end
 end
 
-function slot0.loadSceneFinish(slot0, slot1)
-	slot0.mapCfg = slot1[1]
-	slot0.sceneGo = slot1[2]
-	slot0.mapScene = slot1[3]
+function var_0_0.loadSceneFinish(arg_13_0, arg_13_1)
+	arg_13_0.mapCfg = arg_13_1[1]
+	arg_13_0.sceneGo = arg_13_1[2]
+	arg_13_0.mapScene = arg_13_1[3]
 
-	TaskDispatcher.cancelTask(slot0.setHoleByTween, slot0)
+	TaskDispatcher.cancelTask(arg_13_0.setHoleByTween, arg_13_0)
 
-	if gohelper.isNil(slot0.sceneGo) then
-		slot0.loadSceneDone = false
+	if gohelper.isNil(arg_13_0.sceneGo) then
+		arg_13_0.loadSceneDone = false
 
 		return
 	end
 
-	slot0:clearTween()
+	arg_13_0:clearTween()
 
-	slot2 = lua_chapter_map_hole.configDict[slot0.mapCfg.id] or {}
-	slot0.holdCoList = {}
-	slot0._elementIndex = {}
+	local var_13_0 = lua_chapter_map_hole.configDict[arg_13_0.mapCfg.id] or {}
 
-	for slot6 = 1, #slot2 do
-		table.insert(slot0.holdCoList, string.splitToNumber(slot2[slot6].param, "#"))
+	arg_13_0.holdCoList = {}
+	arg_13_0._elementIndex = {}
+
+	for iter_13_0 = 1, #var_13_0 do
+		table.insert(arg_13_0.holdCoList, string.splitToNumber(var_13_0[iter_13_0].param, "#"))
 	end
 
-	slot0.loadSceneDone = true
-	slot0.sceneTrans = slot0.sceneGo.transform
+	arg_13_0.loadSceneDone = true
+	arg_13_0.sceneTrans = arg_13_0.sceneGo.transform
 
-	if not gohelper.findChild(slot0.sceneGo, "Obj-Plant/FogOfWar/mask") then
+	local var_13_1 = gohelper.findChild(arg_13_0.sceneGo, "Obj-Plant/FogOfWar/mask")
+
+	if not var_13_1 then
 		return
 	end
 
-	slot0.sceneWorldPosX, slot0.sceneWorldPosY = transformhelper.getLocalPos(slot0.sceneTrans)
-	slot5 = string.splitToNumber(slot0.mapCfg.initPos, "#")
-	slot0.defaultSceneWorldPosY = slot5[2]
-	slot0.defaultSceneWorldPosX = slot5[1]
-	slot0.mat = slot3:GetComponent(typeof(UnityEngine.MeshRenderer)).material
+	arg_13_0.sceneWorldPosX, arg_13_0.sceneWorldPosY = transformhelper.getLocalPos(arg_13_0.sceneTrans)
 
-	slot0:initCameraParam()
-	slot0:refreshHoles()
+	local var_13_2 = arg_13_0.mapCfg.initPos
+	local var_13_3 = string.splitToNumber(var_13_2, "#")
+
+	arg_13_0.defaultSceneWorldPosX, arg_13_0.defaultSceneWorldPosY = var_13_3[1], var_13_3[2]
+	arg_13_0.mat = var_13_1:GetComponent(typeof(UnityEngine.MeshRenderer)).material
+
+	arg_13_0:initCameraParam()
+	arg_13_0:refreshHoles()
 end
 
-function slot0.onMapPosChanged(slot0, slot1, slot2)
-	if not slot0.loadSceneDone then
+function var_0_0.onMapPosChanged(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_0.loadSceneDone then
 		return
 	end
 
-	if slot2 then
-		slot0.targetPosY = slot1.y
-		slot0.targetPosX = slot1.x
+	if arg_14_2 then
+		arg_14_0.targetPosX, arg_14_0.targetPosY = arg_14_1.x, arg_14_1.y
 
-		slot0:setHoleByTween()
-		TaskDispatcher.runRepeat(slot0.setHoleByTween, slot0, 0, -1)
+		arg_14_0:setHoleByTween()
+		TaskDispatcher.runRepeat(arg_14_0.setHoleByTween, arg_14_0, 0, -1)
 	else
-		TaskDispatcher.cancelTask(slot0.setHoleByTween, slot0)
+		TaskDispatcher.cancelTask(arg_14_0.setHoleByTween, arg_14_0)
 
-		slot0.sceneWorldPosY = slot1.y
-		slot0.sceneWorldPosX = slot1.x
+		arg_14_0.sceneWorldPosX, arg_14_0.sceneWorldPosY = arg_14_1.x, arg_14_1.y
 
-		slot0:refreshHoles()
+		arg_14_0:refreshHoles()
 	end
 end
 
-function slot0.setHoleByTween(slot0)
-	if not slot0.sceneTrans or tolua.isnull(slot0.sceneTrans) then
-		TaskDispatcher.cancelTask(slot0.setHoleByTween, slot0)
+function var_0_0.setHoleByTween(arg_15_0)
+	if not arg_15_0.sceneTrans or tolua.isnull(arg_15_0.sceneTrans) then
+		TaskDispatcher.cancelTask(arg_15_0.setHoleByTween, arg_15_0)
 
 		return
 	end
 
-	slot0.sceneWorldPosX, slot0.sceneWorldPosY = transformhelper.getLocalPos(slot0.sceneTrans)
+	arg_15_0.sceneWorldPosX, arg_15_0.sceneWorldPosY = transformhelper.getLocalPos(arg_15_0.sceneTrans)
 
-	if math.abs(slot0.sceneWorldPosX - slot0.targetPosX) < 0.01 and math.abs(slot0.sceneWorldPosY - slot0.targetPosY) < 0.01 then
-		slot0.sceneWorldPosY = slot0.targetPosY
-		slot0.sceneWorldPosX = slot0.targetPosX
+	if math.abs(arg_15_0.sceneWorldPosX - arg_15_0.targetPosX) < 0.01 and math.abs(arg_15_0.sceneWorldPosY - arg_15_0.targetPosY) < 0.01 then
+		arg_15_0.sceneWorldPosX, arg_15_0.sceneWorldPosY = arg_15_0.targetPosX, arg_15_0.targetPosY
 
-		TaskDispatcher.cancelTask(slot0.setHoleByTween, slot0)
+		TaskDispatcher.cancelTask(arg_15_0.setHoleByTween, arg_15_0)
 	end
 
-	slot0:refreshHoles()
+	arg_15_0:refreshHoles()
 end
 
-function slot0.initCameraParam(slot0)
-	if not slot0.loadSceneDone then
+function var_0_0.initCameraParam(arg_16_0)
+	if not arg_16_0.loadSceneDone then
 		return
 	end
 
-	slot2 = GameUtil.getAdapterScale()
-	slot3 = ViewMgr.instance:getUILayer(UILayerName.Hud).transform:GetWorldCorners()
-	slot0.mainCamera = CameraMgr.instance:getMainCamera()
-	slot0.mainCameraPosX, slot0.mainCameraPosY = transformhelper.getPos(CameraMgr.instance:getMainCameraTrs())
-	slot5 = 5 / slot0.mainCamera.orthographicSize
-	slot6 = slot3[1] * slot2 * slot5
-	slot7 = slot3[3] * slot2 * slot5
-	slot0._mapHalfWidth = math.abs(slot7.x - slot6.x) / 2
-	slot0._mapHalfHeight = math.abs(slot7.y - slot6.y) / 2
+	local var_16_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	local var_16_1 = GameUtil.getAdapterScale()
+	local var_16_2 = var_16_0.transform:GetWorldCorners()
 
-	slot0:refreshHoles()
+	arg_16_0.mainCamera = CameraMgr.instance:getMainCamera()
+	arg_16_0.mainCameraPosX, arg_16_0.mainCameraPosY = transformhelper.getPos(CameraMgr.instance:getMainCameraTrs())
+
+	local var_16_3 = 5 / arg_16_0.mainCamera.orthographicSize
+	local var_16_4 = var_16_2[1] * var_16_1 * var_16_3
+	local var_16_5 = var_16_2[3] * var_16_1 * var_16_3
+
+	arg_16_0._mapHalfWidth = math.abs(var_16_5.x - var_16_4.x) / 2
+	arg_16_0._mapHalfHeight = math.abs(var_16_5.y - var_16_4.y) / 2
+
+	arg_16_0:refreshHoles()
 end
 
-function slot0.refreshHoles(slot0)
-	if not slot0.loadSceneDone or gohelper.isNil(slot0.mat) then
+function var_0_0.refreshHoles(arg_17_0)
+	if not arg_17_0.loadSceneDone or gohelper.isNil(arg_17_0.mat) then
 		return
 	end
 
-	slot1 = 1
+	local var_17_0 = 1
 
-	for slot5, slot6 in pairs(slot0.holdCoList) do
-		if math.sqrt((slot0.mainCameraPosX - (slot6[1] + slot0.sceneWorldPosX - slot0.defaultSceneWorldPosX))^2) <= slot0._mapHalfWidth + math.abs(slot6[3]) and math.sqrt((slot0.mainCameraPosY - (slot6[2] + slot0.sceneWorldPosY - slot0.defaultSceneWorldPosY))^2) <= slot0._mapHalfHeight + slot9 then
-			if slot1 > 5 then
+	for iter_17_0, iter_17_1 in pairs(arg_17_0.holdCoList) do
+		local var_17_1 = iter_17_1[1] + arg_17_0.sceneWorldPosX - arg_17_0.defaultSceneWorldPosX
+		local var_17_2 = iter_17_1[2] + arg_17_0.sceneWorldPosY - arg_17_0.defaultSceneWorldPosY
+		local var_17_3 = math.abs(iter_17_1[3])
+		local var_17_4 = math.sqrt((arg_17_0.mainCameraPosX - var_17_1)^2)
+		local var_17_5 = math.sqrt((arg_17_0.mainCameraPosY - var_17_2)^2)
+
+		if var_17_4 <= arg_17_0._mapHalfWidth + var_17_3 and var_17_5 <= arg_17_0._mapHalfHeight + var_17_3 then
+			if var_17_0 > 5 then
 				logError("元件太多无法挖孔")
 
 				return
 			end
 
-			slot0.tempVector4:Set(slot7, slot8, slot6[3])
-			slot0.mat:SetVector(slot0.shaderParamList[slot1], slot0.tempVector4)
+			arg_17_0.tempVector4:Set(var_17_1, var_17_2, iter_17_1[3])
+			arg_17_0.mat:SetVector(arg_17_0.shaderParamList[var_17_0], arg_17_0.tempVector4)
 
-			slot1 = slot1 + 1
+			var_17_0 = var_17_0 + 1
 		end
 	end
 
-	for slot5 = slot1, 5 do
-		slot0.tempVector4:Set(100, 100, 100)
-		slot0.mat:SetVector(slot0.shaderParamList[slot5], slot0.tempVector4)
+	for iter_17_2 = var_17_0, 5 do
+		arg_17_0.tempVector4:Set(100, 100, 100)
+		arg_17_0.mat:SetVector(arg_17_0.shaderParamList[iter_17_2], arg_17_0.tempVector4)
 	end
 end
 
-return slot0
+return var_0_0

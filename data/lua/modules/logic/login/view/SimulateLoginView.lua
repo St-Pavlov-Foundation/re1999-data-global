@@ -1,312 +1,357 @@
-module("modules.logic.login.view.SimulateLoginView", package.seeall)
+﻿module("modules.logic.login.view.SimulateLoginView", package.seeall)
 
-slot0 = class("SimulateLoginView", BaseView)
-slot1 = UnityEngine.Input
-slot2 = UnityEngine.KeyCode
-slot3 = 10
+local var_0_0 = class("SimulateLoginView", BaseView)
+local var_0_1 = UnityEngine.Input
+local var_0_2 = UnityEngine.KeyCode
+local var_0_3 = 10
 
-function slot4()
+local function var_0_4()
+	local var_1_0 = ""
+
 	math.randomseed(os.time())
 
-	for slot4 = 1, 6 do
-		slot0 = "" .. ((math.random(0, os.time()) % 62 >= 10 or tostring(slot5)) and (slot5 >= 36 or string.char(slot5 - 10 + 65)) and string.char(slot5 - 36 + 97))
+	for iter_1_0 = 1, 6 do
+		local var_1_1 = math.random(0, os.time()) % 62
+
+		if var_1_1 < 10 then
+			var_1_1 = tostring(var_1_1)
+		elseif var_1_1 < 36 then
+			var_1_1 = var_1_1 - 10 + 65
+			var_1_1 = string.char(var_1_1)
+		else
+			var_1_1 = var_1_1 - 36 + 97
+			var_1_1 = string.char(var_1_1)
+		end
+
+		var_1_0 = var_1_0 .. var_1_1
 	end
 
-	return slot0
+	return var_1_0
 end
 
-function slot0._quickLogin(slot0)
-	if string.nilorempty(slot0._inputField:GetText()) then
+function var_0_0._quickLogin(arg_2_0)
+	local var_2_0 = arg_2_0._inputField:GetText()
+
+	if string.nilorempty(var_2_0) then
 		GameFacade.showToast(ToastEnum.SimulateLogin)
 
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, slot1)
-	slot0:onClickModalMask()
-	FrameTimerController.onDestroyViewMember(slot0, "_loginFrameTimer")
+	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, var_2_0)
+	arg_2_0:onClickModalMask()
+	FrameTimerController.onDestroyViewMember(arg_2_0, "_loginFrameTimer")
 
-	slot0._loginFrameTimer = FrameTimerController.instance:register(slot0._onClickLogin, slot0, 3, 1)
+	arg_2_0._loginFrameTimer = FrameTimerController.instance:register(arg_2_0._onClickLogin, arg_2_0, 3, 1)
 
-	slot0._loginFrameTimer:Start()
+	arg_2_0._loginFrameTimer:Start()
 end
 
-function slot0._onUpdate(slot0)
-	if uv0.GetKey(uv1.LeftControl) and uv0.GetKeyDown(uv1.Return) then
-		slot0:_setLoginAccountInput(uv2())
-		slot0:_quickLogin()
+function var_0_0._onUpdate(arg_3_0)
+	if var_0_1.GetKey(var_0_2.LeftControl) and var_0_1.GetKeyDown(var_0_2.Return) then
+		arg_3_0:_setLoginAccountInput(var_0_4())
+		arg_3_0:_quickLogin()
 
 		return
 	end
 
-	if uv0.GetKeyDown(uv1.UpArrow) then
-		slot0:_selectBeforeAccount()
-	elseif uv0.GetKeyDown(uv1.DownArrow) then
-		slot0:_selectNextAccount()
-	elseif uv0.GetKeyDown(uv1.KeypadEnter) or uv0.GetKeyDown(uv1.Return) then
-		slot0:_quickLogin()
+	if var_0_1.GetKeyDown(var_0_2.UpArrow) then
+		arg_3_0:_selectBeforeAccount()
+	elseif var_0_1.GetKeyDown(var_0_2.DownArrow) then
+		arg_3_0:_selectNextAccount()
+	elseif var_0_1.GetKeyDown(var_0_2.KeypadEnter) or var_0_1.GetKeyDown(var_0_2.Return) then
+		arg_3_0:_quickLogin()
 	end
 end
 
-function slot0._onClickLogin(slot0)
-	for slot5, slot6 in ipairs(ViewMgr.instance:getContainer(ViewName.LoginView)._views) do
-		if slot6.__cname == "LoginView" then
-			slot6:_onClickLogin()
+function var_0_0._onClickLogin(arg_4_0)
+	local var_4_0 = ViewMgr.instance:getContainer(ViewName.LoginView)
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_0._views) do
+		if iter_4_1.__cname == "LoginView" then
+			iter_4_1:_onClickLogin()
 
 			break
 		end
 	end
 end
 
-slot5 = "SimulateLoginView_HistoryAccount"
+local var_0_5 = "SimulateLoginView_HistoryAccount"
 
-function slot0._saveHistoryAccount(slot0)
-	slot2 = slot0._inputField:GetText()
-	slot3 = false
-	slot4 = {}
+function var_0_0._saveHistoryAccount(arg_5_0)
+	local var_5_0 = arg_5_0:_getHistoryAccountList()
+	local var_5_1 = arg_5_0._inputField:GetText()
+	local var_5_2 = false
+	local var_5_3 = {}
 
-	for slot8, slot9 in ipairs(slot0:_getHistoryAccountList()) do
-		if uv0 < slot8 then
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		if iter_5_0 > var_0_3 then
 			break
 		end
 
-		if slot9.account == slot2 then
-			table.insert(slot4, slot9.account .. "#" .. tostring(os.time()))
+		if iter_5_1.account == var_5_1 then
+			table.insert(var_5_3, iter_5_1.account .. "#" .. tostring(os.time()))
 
-			slot3 = true
+			var_5_2 = true
 		else
-			table.insert(slot4, slot9.account .. "#" .. tostring(slot9.ts))
+			table.insert(var_5_3, iter_5_1.account .. "#" .. tostring(iter_5_1.ts))
 		end
 	end
 
-	if not slot3 then
-		if uv0 <= #slot4 then
-			table.remove(slot4)
+	if not var_5_2 then
+		if #var_5_3 >= var_0_3 then
+			table.remove(var_5_3)
 		end
 
-		table.insert(slot4, 1, slot2 .. "#" .. tostring(os.time()))
+		table.insert(var_5_3, 1, var_5_1 .. "#" .. tostring(os.time()))
 	end
 
-	PlayerPrefsHelper.setString(uv1, table.concat(slot4, "|"))
+	local var_5_4 = table.concat(var_5_3, "|")
+
+	PlayerPrefsHelper.setString(var_0_5, var_5_4)
 end
 
-function slot0._getHistoryAccountPlayerPrefs(slot0)
-	slot1 = {
-		{
-			account = slot0._lastAccount,
-			ts = os.time()
-		}
-	}
+function var_0_0._getHistoryAccountPlayerPrefs(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = PlayerPrefsHelper.getString(var_0_5, "")
 
-	if string.nilorempty(PlayerPrefsHelper.getString(uv0, "")) then
-		if not string.nilorempty(slot0._lastAccount) then
-			-- Nothing
+	if string.nilorempty(var_6_1) then
+		if not string.nilorempty(arg_6_0._lastAccount) then
+			var_6_0[1] = {
+				account = arg_6_0._lastAccount,
+				ts = os.time()
+			}
 		end
 	else
-		for slot7, slot8 in ipairs(GameUtil.splitString2(slot2)) do
-			table.insert(slot1, {
-				account = slot8[1],
-				ts = tonumber(slot8[2])
+		local var_6_2 = GameUtil.splitString2(var_6_1)
+
+		for iter_6_0, iter_6_1 in ipairs(var_6_2) do
+			table.insert(var_6_0, {
+				account = iter_6_1[1],
+				ts = tonumber(iter_6_1[2])
 			})
 		end
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		return slot1.ts < slot0.ts
+	table.sort(var_6_0, function(arg_7_0, arg_7_1)
+		return arg_7_0.ts > arg_7_1.ts
 	end)
 
-	for slot7 = uv1 + 1, #slot1 do
-		table.remove(slot1)
+	local var_6_3 = #var_6_0
+
+	for iter_6_2 = var_0_3 + 1, var_6_3 do
+		table.remove(var_6_0)
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0._getHistoryAccountList(slot0)
-	if not slot0._historyAccountStrList then
-		slot0._historyAccountStrList = slot0:_getHistoryAccountPlayerPrefs()
+function var_0_0._getHistoryAccountList(arg_8_0)
+	if not arg_8_0._historyAccountStrList then
+		arg_8_0._historyAccountStrList = arg_8_0:_getHistoryAccountPlayerPrefs()
 	end
 
-	return slot0._historyAccountStrList
+	return arg_8_0._historyAccountStrList
 end
 
-function slot0._initHistoryAccountData(slot0)
-	slot0._lastAccount = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount, "")
-	slot0._curAccountIndex = 0
-	slot0.__firstInited = true
+function var_0_0._initHistoryAccountData(arg_9_0)
+	arg_9_0._lastAccount = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount, "")
+	arg_9_0._curAccountIndex = 0
+	arg_9_0.__firstInited = true
 end
 
-function slot0._initHistoryAccount(slot0)
-	if slot0.__isHistoryAccountInited then
+function var_0_0._initHistoryAccount(arg_10_0)
+	if arg_10_0.__isHistoryAccountInited then
 		return
 	end
 
-	slot0.__isHistoryAccountInited = true
+	arg_10_0.__isHistoryAccountInited = true
 
-	slot0:_initHistoryAccountData()
-	slot0:_initHistoryAccountView()
+	arg_10_0:_initHistoryAccountData()
+	arg_10_0:_initHistoryAccountView()
 end
 
-function slot0._initHistoryAccountView(slot0)
-	slot1 = slot0._inputField.gameObject
-	slot2 = gohelper.create2d(slot0.viewGO, "===History Account===")
-	slot3 = gohelper.create2d(slot2)
-	slot4 = slot3.transform
-	slot5 = gohelper.clone(gohelper.findChild(slot1, "Text"), slot3)
-	slot6 = slot5.transform
-	slot8 = gohelper.findChildText(slot5, "")
+function var_0_0._initHistoryAccountView(arg_11_0)
+	local var_11_0 = arg_11_0._inputField.gameObject
+	local var_11_1 = gohelper.create2d(arg_11_0.viewGO, "===History Account===")
+	local var_11_2 = gohelper.create2d(var_11_1)
+	local var_11_3 = var_11_2.transform
+	local var_11_4 = gohelper.clone(gohelper.findChild(var_11_0, "Text"), var_11_2)
+	local var_11_5 = var_11_4.transform
+	local var_11_6 = gohelper.onceAddComponent(var_11_2, gohelper.Type_Image)
+	local var_11_7 = gohelper.findChildText(var_11_4, "")
 
-	recthelper.setWidth(slot4, 500)
-	UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, slot4, slot1.transform)
+	recthelper.setWidth(var_11_3, 500)
+	UIDockingHelper.setDock(UIDockingHelper.Dock.MR_R, var_11_3, var_11_0.transform)
 
-	slot8.richText = true
-	slot6.anchorMin = Vector2.New(0, 0)
-	slot6.anchorMax = Vector2.New(1, 1)
-	slot6.pivot = Vector2.New(0.5, 0.5)
+	var_11_7.richText = true
+	var_11_5.anchorMin = Vector2.New(0, 0)
+	var_11_5.anchorMax = Vector2.New(1, 1)
+	var_11_5.pivot = Vector2.New(0.5, 0.5)
 
-	recthelper.setAnchor(slot6, 0, 0)
+	recthelper.setAnchor(var_11_5, 0, 0)
 
-	slot6.sizeDelta = Vector2.New(0, 0)
+	var_11_5.sizeDelta = Vector2.New(0, 0)
 
-	ZProj.UGUIHelper.SetColorAlpha(gohelper.onceAddComponent(slot3, gohelper.Type_Image), 0.5)
+	ZProj.UGUIHelper.SetColorAlpha(var_11_6, 0.5)
 
-	slot0._historyAccountGo = slot2
-	slot0._historyAccountText = slot8
-	slot0._historyAccountImgTrans = slot4
+	arg_11_0._historyAccountGo = var_11_1
+	arg_11_0._historyAccountText = var_11_7
+	arg_11_0._historyAccountImgTrans = var_11_3
 
-	slot0:_refreshHistoryAccountView()
+	arg_11_0:_refreshHistoryAccountView()
 end
 
-slot6 = "#00FF00"
+local var_0_6 = "#00FF00"
 
-function slot0._refreshHistoryAccountView(slot0)
-	slot2 = {}
+function var_0_0._refreshHistoryAccountView(arg_12_0)
+	local var_12_0 = arg_12_0:_getHistoryAccountList()
+	local var_12_1 = {}
 
-	for slot6, slot7 in ipairs(slot0:_getHistoryAccountList()) do
-		if slot6 - 1 == slot0._curAccountIndex then
-			slot8 = gohelper.getRichColorText(tostring(slot7.account), uv0)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_2 = tostring(iter_12_1.account)
+
+		if iter_12_0 - 1 == arg_12_0._curAccountIndex then
+			var_12_2 = gohelper.getRichColorText(var_12_2, var_0_6)
 		end
 
-		table.insert(slot2, slot8)
+		table.insert(var_12_1, var_12_2)
 	end
 
-	slot0._historyAccountText.text = table.concat(slot2, "\n")
+	arg_12_0._historyAccountText.text = table.concat(var_12_1, "\n")
 
-	recthelper.setHeight(slot0._historyAccountImgTrans, slot0._historyAccountText.preferredHeight)
+	recthelper.setHeight(arg_12_0._historyAccountImgTrans, arg_12_0._historyAccountText.preferredHeight)
 end
 
-function slot0._selectBeforeAccount(slot0)
-	slot0:_initHistoryAccount()
+function var_0_0._selectBeforeAccount(arg_13_0)
+	arg_13_0:_initHistoryAccount()
 
-	slot1 = #slot0:_getHistoryAccountList()
+	local var_13_0 = #arg_13_0:_getHistoryAccountList()
+	local var_13_1 = (arg_13_0._curAccountIndex + var_13_0 - 1) % var_13_0
 
-	slot0:_onHistoryAccountDropDownChange((slot0._curAccountIndex + slot1 - 1) % slot1)
+	arg_13_0:_onHistoryAccountDropDownChange(var_13_1)
 end
 
-function slot0._selectNextAccount(slot0)
-	slot0:_initHistoryAccount()
-	slot0:_onHistoryAccountDropDownChange((slot0._curAccountIndex + 1) % #slot0:_getHistoryAccountList())
+function var_0_0._selectNextAccount(arg_14_0)
+	arg_14_0:_initHistoryAccount()
+
+	local var_14_0 = #arg_14_0:_getHistoryAccountList()
+	local var_14_1 = (arg_14_0._curAccountIndex + 1) % var_14_0
+
+	arg_14_0:_onHistoryAccountDropDownChange(var_14_1)
 end
 
-function slot0._setLoginAccountInput(slot0, slot1)
-	slot0._inputField:SetText(slot1 or "")
+function var_0_0._setLoginAccountInput(arg_15_0, arg_15_1)
+	arg_15_0._inputField:SetText(arg_15_1 or "")
 end
 
-function slot0._onHistoryAccountDropDownChange(slot0, slot1)
-	if not slot0._historyAccountStrList then
+function var_0_0._onHistoryAccountDropDownChange(arg_16_0, arg_16_1)
+	if not arg_16_0._historyAccountStrList then
 		return
 	end
 
-	if slot0.__firstInited then
-		slot1 = 0
-		slot0.__firstInited = false
+	if arg_16_0.__firstInited then
+		arg_16_1 = 0
+		arg_16_0.__firstInited = false
 	end
 
-	if slot0._curAccountIndex == GameUtil.clamp(slot1, 0, #slot0._historyAccountStrList - 1) then
+	arg_16_1 = GameUtil.clamp(arg_16_1, 0, #arg_16_0._historyAccountStrList - 1)
+
+	if arg_16_0._curAccountIndex == arg_16_1 then
 		return
 	end
 
-	slot0._curAccountIndex = slot1
+	arg_16_0._curAccountIndex = arg_16_1
 
-	slot0:_setLoginAccountInput(slot0._historyAccountStrList[slot1 + 1].account)
-	slot0:_refreshHistoryAccountView()
+	local var_16_0 = arg_16_0._historyAccountStrList[arg_16_1 + 1]
+
+	arg_16_0:_setLoginAccountInput(var_16_0.account)
+	arg_16_0:_refreshHistoryAccountView()
 end
 
-function slot0.onClose_(slot0)
-	UpdateBeat:Remove(slot0._onUpdate, slot0)
+function var_0_0.onClose_(arg_17_0)
+	UpdateBeat:Remove(arg_17_0._onUpdate, arg_17_0)
 
-	if slot0._hestoryAccountDropDown then
-		slot0._hestoryAccountDropDown:RemoveOnValueChanged()
+	if arg_17_0._hestoryAccountDropDown then
+		arg_17_0._hestoryAccountDropDown:RemoveOnValueChanged()
 	end
 
-	slot0:_saveHistoryAccount()
+	arg_17_0:_saveHistoryAccount()
 end
 
-function slot0.ctor(slot0)
-	slot0._button = nil
-	slot0._inputField = nil
+function var_0_0.ctor(arg_18_0)
+	arg_18_0._button = nil
+	arg_18_0._inputField = nil
 end
 
-function slot0.onInitView(slot0)
-	slot0._button = gohelper.findChildButtonWithAudio(slot0.viewGO, "Button")
-	slot0._inputField = gohelper.findChildTextMeshInputField(slot0.viewGO, "InputField")
-	slot0._btnAgeFit = gohelper.findChildButtonWithAudio(slot0.viewGO, "leftbtn/#btn_agefit")
+function var_0_0.onInitView(arg_19_0)
+	arg_19_0._button = gohelper.findChildButtonWithAudio(arg_19_0.viewGO, "Button")
+	arg_19_0._inputField = gohelper.findChildTextMeshInputField(arg_19_0.viewGO, "InputField")
+	arg_19_0._btnAgeFit = gohelper.findChildButtonWithAudio(arg_19_0.viewGO, "leftbtn/#btn_agefit")
 end
 
-function slot0.addEvents(slot0)
-	slot0._button:AddClickListener(slot0._onClickButton, slot0)
-	slot0._btnAgeFit:AddClickListener(slot0._onClickAgeFit, slot0)
-	slot0._inputField:AddOnEndEdit(slot0._onEndEdit, slot0)
+function var_0_0.addEvents(arg_20_0)
+	arg_20_0._button:AddClickListener(arg_20_0._onClickButton, arg_20_0)
+	arg_20_0._btnAgeFit:AddClickListener(arg_20_0._onClickAgeFit, arg_20_0)
+	arg_20_0._inputField:AddOnEndEdit(arg_20_0._onEndEdit, arg_20_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._button:RemoveClickListener()
-	slot0._btnAgeFit:RemoveClickListener()
-	slot0._inputField:RemoveOnEndEdit()
+function var_0_0.removeEvents(arg_21_0)
+	arg_21_0._button:RemoveClickListener()
+	arg_21_0._btnAgeFit:RemoveClickListener()
+	arg_21_0._inputField:RemoveOnEndEdit()
 end
 
-function slot0.onOpen(slot0)
-	UpdateBeat:Add(slot0._onUpdate, slot0)
-	gohelper.addUIClickAudio(slot0._button.gameObject, AudioEnum.UI.UI_Common_Click)
-	slot0._inputField:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount))
-	TaskDispatcher.runRepeat(slot0._onTick, slot0, 0.1)
-	gohelper.setActive(slot0._btnAgeFit.gameObject, not (tostring(SDKMgr.instance:getChannelId()) == "102") and SettingsModel.instance:isZhRegion())
+function var_0_0.onOpen(arg_22_0)
+	UpdateBeat:Add(arg_22_0._onUpdate, arg_22_0)
+	gohelper.addUIClickAudio(arg_22_0._button.gameObject, AudioEnum.UI.UI_Common_Click)
+
+	local var_22_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.SimulateAccount)
+
+	arg_22_0._inputField:SetText(var_22_0)
+	TaskDispatcher.runRepeat(arg_22_0._onTick, arg_22_0, 0.1)
+
+	local var_22_1 = tostring(SDKMgr.instance:getChannelId()) == "102"
+
+	gohelper.setActive(arg_22_0._btnAgeFit.gameObject, not var_22_1 and SettingsModel.instance:isZhRegion())
 end
 
-function slot0.onClose(slot0)
-	slot0:onClose_()
-	TaskDispatcher.cancelTask(slot0._onTick, slot0)
+function var_0_0.onClose(arg_23_0)
+	arg_23_0:onClose_()
+	TaskDispatcher.cancelTask(arg_23_0._onTick, arg_23_0)
 end
 
-function slot0._onTick(slot0)
+function var_0_0._onTick(arg_24_0)
 	if not ViewMgr.instance:isOpen(ViewName.LoginView) then
 		logNormal("LoginView has close, close SimulateLoginView too")
-		slot0:closeThis()
+		arg_24_0:closeThis()
 	end
 end
 
-function slot0._onClickButton(slot0, slot1)
-	if string.nilorempty(slot0._inputField:GetText()) then
+function var_0_0._onClickButton(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0._inputField:GetText()
+
+	if string.nilorempty(var_25_0) then
 		GameFacade.showToast(ToastEnum.SimulateLogin)
 
 		return
 	end
 
-	slot0:closeThis()
-	LoginModel.instance:setChannelParam("", slot2, "", "", "")
+	arg_25_0:closeThis()
+	LoginModel.instance:setChannelParam("", var_25_0, "", "", "")
 	LoginController.instance:login({})
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:_onClickButton()
+function var_0_0.onClickModalMask(arg_26_0)
+	arg_26_0:_onClickButton()
 end
 
-function slot0._onClickAgeFit(slot0)
+function var_0_0._onClickAgeFit(arg_27_0)
 	ViewMgr.instance:openView(ViewName.SdkFitAgeTipView)
 end
 
-function slot0._onEndEdit(slot0, slot1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, slot1)
+function var_0_0._onEndEdit(arg_28_0, arg_28_1)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.SimulateAccount, arg_28_1)
 end
 
-return slot0
+return var_0_0

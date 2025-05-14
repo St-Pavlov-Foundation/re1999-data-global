@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerElasticityEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerElasticityEntity", package.seeall)
 
-slot0 = class("PinballTriggerElasticityEntity", PinballTriggerEntity)
+local var_0_0 = class("PinballTriggerElasticityEntity", PinballTriggerEntity)
 
-function slot0.onInit(slot0)
-	uv0.super.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	var_0_0.super.onInit(arg_1_0)
 end
 
-function slot0.onInitByCo(slot0)
-	slot0.force = (tonumber(slot0.spData) or 1000) / 1000
-	slot0.baseForceX = slot0.force
-	slot0.baseForceY = slot0.force
+function var_0_0.onInitByCo(arg_2_0)
+	arg_2_0.force = (tonumber(arg_2_0.spData) or 1000) / 1000
+	arg_2_0.baseForceX = arg_2_0.force
+	arg_2_0.baseForceY = arg_2_0.force
 end
 
-return slot0
+return var_0_0

@@ -1,19 +1,20 @@
-module("modules.logic.fight.view.FightSuccViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightSuccViewContainer", package.seeall)
 
-slot0 = class("FightSuccViewContainer", BaseViewContainer)
+local var_0_0 = class("FightSuccViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.fightSuccActView = FightSuccActView.New()
-	slot1 = {
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.fightSuccActView = FightSuccActView.New()
+
+	local var_1_0 = {
 		FightSuccView.New(),
-		slot0.fightSuccActView
+		arg_1_0.fightSuccActView
 	}
 
 	if isDebugBuild and GMBattleModel.instance.enableGMFightRecord then
-		table.insert(slot1, FightGMRecordView.New())
+		table.insert(var_1_0, FightGMRecordView.New())
 	end
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

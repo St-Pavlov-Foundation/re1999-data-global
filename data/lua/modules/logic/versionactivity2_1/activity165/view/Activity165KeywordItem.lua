@@ -1,106 +1,110 @@
-module("modules.logic.versionactivity2_1.activity165.view.Activity165KeywordItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165KeywordItem", package.seeall)
 
-slot0 = class("Activity165KeywordItem", LuaCompBase)
+local var_0_0 = class("Activity165KeywordItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#image_icon")
-	slot0._txtkeywords = gohelper.findChildText(slot0.viewGO, "#txt_keywords")
-	slot0._btnkeywords = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_keywords")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
+	arg_1_0._txtkeywords = gohelper.findChildText(arg_1_0.viewGO, "#txt_keywords")
+	arg_1_0._btnkeywords = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_keywords")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnkeywords:AddClickListener(slot0._btnkeywordsOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnkeywords:AddClickListener(arg_2_0._btnkeywordsOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnkeywords:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnkeywords:RemoveClickListener()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
-	slot0:_removeEventListeners()
+function var_0_0.removeEventListeners(arg_5_0)
+	arg_5_0:removeEvents()
+	arg_5_0:_removeEventListeners()
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_6_0)
+	return
 end
 
-function slot0._btnkeywordsOnClick(slot0)
-	Activity165Controller.instance:dispatchEvent(Activity165Event.onClickUsedKeyword, slot0._mo.keywordId)
-	slot0:onRefresh()
+function var_0_0._btnkeywordsOnClick(arg_7_0)
+	Activity165Controller.instance:dispatchEvent(Activity165Event.onClickUsedKeyword, arg_7_0._mo.keywordId)
+	arg_7_0:onRefresh()
 end
 
-function slot0._btnkewordsOnClick(slot0)
+function var_0_0._btnkewordsOnClick(arg_8_0)
+	return
 end
 
-function slot0._removeEventListeners(slot0)
-	if slot0.drag then
-		slot0.drag:RemoveDragBeginListener()
-		slot0.drag:RemoveDragListener()
-		slot0.drag:RemoveDragEndListener()
+function var_0_0._removeEventListeners(arg_9_0)
+	if arg_9_0.drag then
+		arg_9_0.drag:RemoveDragBeginListener()
+		arg_9_0.drag:RemoveDragListener()
+		arg_9_0.drag:RemoveDragEndListener()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._canvasgroup = slot0.viewGO:GetComponent(gohelper.Type_CanvasGroup)
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._canvasgroup = arg_10_0.viewGO:GetComponent(gohelper.Type_CanvasGroup)
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_11_0, arg_11_1)
+	arg_11_0.viewGO = arg_11_1
 
-	gohelper.setActive(slot1, true)
-	slot0:onInitView()
+	gohelper.setActive(arg_11_1, true)
+	arg_11_0:onInitView()
 end
 
-function slot0.setDragEvent(slot0, slot1, slot2, slot3, slot4)
-	if slot0._mo then
-		slot0.drag = SLFramework.UGUI.UIDragListener.Get(slot0._btnkeywords.gameObject)
+function var_0_0.setDragEvent(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	if arg_12_0._mo then
+		arg_12_0.drag = SLFramework.UGUI.UIDragListener.Get(arg_12_0._btnkeywords.gameObject)
 
-		slot0.drag:AddDragBeginListener(slot1, slot4, slot0._mo.keywordId)
-		slot0.drag:AddDragListener(slot2, slot4)
-		slot0.drag:AddDragEndListener(slot3, slot4)
+		arg_12_0.drag:AddDragBeginListener(arg_12_1, arg_12_4, arg_12_0._mo.keywordId)
+		arg_12_0.drag:AddDragListener(arg_12_2, arg_12_4)
+		arg_12_0.drag:AddDragEndListener(arg_12_3, arg_12_4)
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
+	arg_13_0._mo = arg_13_1
 
-	if slot1 then
-		slot0._txtkeywords.text = slot1.keywordCo.text
+	if arg_13_1 then
+		arg_13_0._txtkeywords.text = arg_13_1.keywordCo.text
 
-		if not string.nilorempty(slot1.keywordCo.pic) then
-			UISpriteSetMgr.instance:setV2a1Act165Sprite(slot0._imageicon, slot2)
+		local var_13_0 = arg_13_1.keywordCo.pic
+
+		if not string.nilorempty(var_13_0) then
+			UISpriteSetMgr.instance:setV2a1Act165Sprite(arg_13_0._imageicon, var_13_0)
 		end
 	end
 end
 
-function slot0.onRefresh(slot0)
-	if slot0._mo.isUsed then
-		slot0:Using()
+function var_0_0.onRefresh(arg_14_0)
+	if arg_14_0._mo.isUsed then
+		arg_14_0:Using()
 	else
-		slot0:clearUsing()
+		arg_14_0:clearUsing()
 	end
 end
 
-function slot0.Using(slot0)
-	slot0:_setAlpha(0.5)
+function var_0_0.Using(arg_15_0)
+	arg_15_0:_setAlpha(0.5)
 end
 
-function slot0.clearUsing(slot0)
-	slot0:_setAlpha(1)
+function var_0_0.clearUsing(arg_16_0)
+	arg_16_0:_setAlpha(1)
 end
 
-function slot0._setAlpha(slot0, slot1)
-	if slot0._canvasgroup then
-		slot0._canvasgroup.alpha = slot1
+function var_0_0._setAlpha(arg_17_0, arg_17_1)
+	if arg_17_0._canvasgroup then
+		arg_17_0._canvasgroup.alpha = arg_17_1
 	end
 end
 
-return slot0
+return var_0_0

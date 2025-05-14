@@ -1,234 +1,249 @@
-module("modules.logic.fight.view.FightViewBossHp", package.seeall)
+﻿module("modules.logic.fight.view.FightViewBossHp", package.seeall)
 
-slot0 = class("FightViewBossHp", BaseViewExtended)
-slot0.VariantIdToMaterialPath = {
+local var_0_0 = class("FightViewBossHp", BaseViewExtended)
+
+var_0_0.VariantIdToMaterialPath = {
 	"ui/materials/dynamic/ui_headicon_stylization_1.mat",
 	"ui/materials/dynamic/ui_headicon_stylization_2.mat",
 	"ui/materials/dynamic/ui_headicon_stylization_3.mat",
 	"ui/materials/dynamic/ui_headicon_stylization_4.mat"
 }
 
-function slot0.onInitView(slot0)
-	slot0._bossHpGO = gohelper.findChild(slot0.viewGO, "Alpha/bossHp")
-	slot0._imgbossHpbg = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp")
-	slot0._hp_container_tran = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/mask/container").transform
-	slot0._aniBossHp = slot0._bossHpGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._imgHp = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp/mask/container/imgHp")
-	slot0._gochoushi = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/choushi")
-	slot0._goHpShield = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/mask/container/imgProtect")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._bossHpGO = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp")
+	arg_1_0._imgbossHpbg = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp")
+	arg_1_0._hp_container_tran = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container").transform
+	arg_1_0._aniBossHp = arg_1_0._bossHpGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._imgHp = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgHp")
+	arg_1_0._gochoushi = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/choushi")
+	arg_1_0._goHpShield = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgProtect")
 
-	gohelper.setActive(slot0._goHpShield, true)
+	gohelper.setActive(arg_1_0._goHpShield, true)
 
-	slot0._imgHpShield = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp/mask/container/imgProtect/ani_idle/imgProtect")
-	slot0._trsShieldPosUI = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/mask/container/imgProtect/ani_posui").transform
-	slot0._rectMaskHpShield = slot0._goHpShield:GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	slot0._aniHpShield = slot0._goHpShield:GetComponent(typeof(UnityEngine.Animator))
-	slot0._txtHp = gohelper.findChildText(slot0.viewGO, "Alpha/bossHp/mask/container/imgHp/txtHp")
-	slot0._goHpEffect = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/#hpeffect")
-	slot0._aniHpEffect = slot0._goHpEffect:GetComponent(typeof(UnityEngine.Animator))
-	slot0._imgHead = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp/headbg/imgHead")
-	slot0._imgHeadIcon = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp/headbg/imgHead")
-	slot0._imgCareer = gohelper.findChildImage(slot0.viewGO, "Alpha/bossHp/headbg/imgCareer")
-	slot0._passiveSkillPrefab = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/passiveSkills/item")
-	slot0._btnpassiveSkill = gohelper.findChildButtonWithAudio(slot0.viewGO, "Alpha/bossHp/passiveSkills/btn_passiveclick")
-	slot0._exPointPrefab = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/exPoint/item")
-	slot0._imgSignHpContainer = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/mask/container/imgHp/imgSignHpContainer")
-	slot0._imgSignHpItem = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/mask/container/imgHp/imgSignHpContainer/imgSignHpItem")
+	arg_1_0._imgHpShield = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgProtect/ani_idle/imgProtect")
+	arg_1_0._trsShieldPosUI = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgProtect/ani_posui").transform
+	arg_1_0._rectMaskHpShield = arg_1_0._goHpShield:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	arg_1_0._aniHpShield = arg_1_0._goHpShield:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._txtHp = gohelper.findChildText(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgHp/txtHp")
+	arg_1_0._goHpEffect = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/#hpeffect")
+	arg_1_0._aniHpEffect = arg_1_0._goHpEffect:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._imgHead = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/headbg/imgHead")
+	arg_1_0._imgHeadIcon = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/headbg/imgHead")
+	arg_1_0._imgCareer = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/headbg/imgCareer")
+	arg_1_0._passiveSkillPrefab = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/passiveSkills/item")
+	arg_1_0._btnpassiveSkill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Alpha/bossHp/passiveSkills/btn_passiveclick")
+	arg_1_0._exPointPrefab = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/exPoint/item")
+	arg_1_0._imgSignHpContainer = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgHp/imgSignHpContainer")
+	arg_1_0._imgSignHpItem = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgHp/imgSignHpContainer/imgSignHpItem")
 
-	gohelper.setActive(slot0._passiveSkillPrefab, false)
-	gohelper.setActive(slot0._exPointPrefab, false)
+	gohelper.setActive(arg_1_0._passiveSkillPrefab, false)
+	gohelper.setActive(arg_1_0._exPointPrefab, false)
 
-	slot0._specialSkillGOs = slot0:getUserDataTb_()
-	slot0._passiveSkillImgs = slot0:getUserDataTb_()
-	slot0._exPointFullList = slot0:getUserDataTb_()
-	slot0.bossSkillInfos = {}
-	slot0._multiHpRoot = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/image_HPBG")
-	slot0._multiHpItemContent = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/image_HPBG/grid")
-	slot0._multiHpItem = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/image_HPBG/grid/image_HpItem")
-	slot0._bossActionRoot = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/actionbar")
-	slot0._bossEnergyRoot = gohelper.findChild(slot0.viewGO, "Alpha/bossHp/#go_assisthpbar")
+	arg_1_0._specialSkillGOs = arg_1_0:getUserDataTb_()
+	arg_1_0._passiveSkillImgs = arg_1_0:getUserDataTb_()
+	arg_1_0._exPointFullList = arg_1_0:getUserDataTb_()
+	arg_1_0.bossSkillInfos = {}
+	arg_1_0._multiHpRoot = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/image_HPBG")
+	arg_1_0._multiHpItemContent = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/image_HPBG/grid")
+	arg_1_0._multiHpItem = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/image_HPBG/grid/image_HpItem")
+	arg_1_0._bossActionRoot = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/actionbar")
+	arg_1_0._bossEnergyRoot = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/#go_assisthpbar")
 end
 
-function slot0.onOpen(slot0)
-	slot0._btnpassiveSkill:AddClickListener(slot0._onClickPassiveSkill, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RespBeginRound, slot0._checkBossAndUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnChangeEntity, slot0._checkBossAndUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnEntityDead, slot0._onEntityDead, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBeginWave, slot0._onBeginWave, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.UpdateExPoint, slot0._updateExPoint, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnHpChange, slot0._onHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnShieldChange, slot0._onShieldChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnMonsterChange, slot0._onMonsterChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, slot0._onRestartStage, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._checkBossAndUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, slot0._onMaxHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, slot0._onCurrentHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.MultiHpChange, slot0._onMultiHpChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, slot0._onBeforeDeadEffect, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.PushTeamInfo, slot0._onMonsterChange, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSummon, slot0._checkBossAndUpdate, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0._btnpassiveSkill:AddClickListener(arg_2_0._onClickPassiveSkill, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.RespBeginRound, arg_2_0._checkBossAndUpdate, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnChangeEntity, arg_2_0._checkBossAndUpdate, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnEntityDead, arg_2_0._onEntityDead, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBeginWave, arg_2_0._onBeginWave, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.UpdateExPoint, arg_2_0._updateExPoint, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnHpChange, arg_2_0._onHpChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnShieldChange, arg_2_0._onShieldChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnMonsterChange, arg_2_0._onMonsterChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, arg_2_0._onRestartStage, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_2_0._checkBossAndUpdate, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_2_0._onMaxHpChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_2_0._onCurrentHpChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.MultiHpChange, arg_2_0._onMultiHpChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_2_0._onBeforeDeadEffect, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.PushTeamInfo, arg_2_0._onMonsterChange, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnSummon, arg_2_0._checkBossAndUpdate, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_2_0._onForceUpdatePerformanceData, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeCareer, arg_2_0._onChangeCareer, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeShield, arg_2_0._onChangeShield, arg_2_0)
 
-	slot0.sheildWidth = recthelper.getWidth(slot0._goHpShield.transform)
+	arg_2_0.sheildWidth = recthelper.getWidth(arg_2_0._goHpShield.transform)
 
-	slot0:_checkBossAndUpdate()
+	arg_2_0:_checkBossAndUpdate()
 
 	if BossRushController.instance:isInBossRushFight(true) then
-		slot0:openSubView(FightViewBossHpBossRushAction, "ui/viewres/fight/fightviewbosshpbossrushaction.prefab", slot0._bossActionRoot)
+		arg_2_0:openSubView(FightViewBossHpBossRushAction, "ui/viewres/fight/fightviewbosshpbossrushaction.prefab", arg_2_0._bossActionRoot)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, slot0._checkBossAndUpdate, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnChangeEntity, slot0._checkBossAndUpdate, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnEntityDead, slot0._onEntityDead, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnBeginWave, slot0._onBeginWave, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.UpdateExPoint, slot0._updateExPoint, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnHpChange, slot0._onHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnShieldChange, slot0._onShieldChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnMonsterChange, slot0._onMonsterChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnRestartStageBefore, slot0._onRestartStage, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._checkBossAndUpdate, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, slot0._onMaxHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, slot0._onCurrentHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, slot0._onBuffUpdate, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, slot0._onMultiHpChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.BeforeDeadEffect, slot0._onBeforeDeadEffect, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.PushTeamInfo, slot0._onMonsterChange, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnSummon, slot0._checkBossAndUpdate, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, slot0._onForceUpdatePerformanceData, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, slot0._onChangeCareer, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.ChangeShield, slot0._onChangeShield, slot0)
-	slot0._btnpassiveSkill:RemoveClickListener()
+function var_0_0.onClose(arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, arg_3_0._checkBossAndUpdate, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnChangeEntity, arg_3_0._checkBossAndUpdate, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnEntityDead, arg_3_0._onEntityDead, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBeginWave, arg_3_0._onBeginWave, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.UpdateExPoint, arg_3_0._updateExPoint, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnHpChange, arg_3_0._onHpChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnShieldChange, arg_3_0._onShieldChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnMonsterChange, arg_3_0._onMonsterChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnRestartStageBefore, arg_3_0._onRestartStage, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._checkBossAndUpdate, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_3_0._onMaxHpChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_3_0._onCurrentHpChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, arg_3_0._onMultiHpChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_3_0._onBeforeDeadEffect, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.PushTeamInfo, arg_3_0._onMonsterChange, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnSummon, arg_3_0._checkBossAndUpdate, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_3_0._onForceUpdatePerformanceData, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, arg_3_0._onChangeCareer, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.ChangeShield, arg_3_0._onChangeShield, arg_3_0)
+	arg_3_0._btnpassiveSkill:RemoveClickListener()
 end
 
-function slot0._onBeginWave(slot0)
-	slot0._bossHasDead = nil
+function var_0_0._onBeginWave(arg_4_0)
+	arg_4_0._bossHasDead = nil
 
-	slot0:_checkBossAndUpdate()
+	arg_4_0:_checkBossAndUpdate()
 end
 
-function slot0._onEntityDead(slot0, slot1)
-	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
-		slot0._boss_hp_sign = nil
-		slot0._bossHasDead = true
+function var_0_0._onEntityDead(arg_5_0, arg_5_1)
+	if arg_5_0._bossEntityMO and arg_5_0._bossEntityMO.id == arg_5_1 then
+		arg_5_0._boss_hp_sign = nil
+		arg_5_0._bossHasDead = true
 
-		slot0:_checkBossAndUpdate()
+		arg_5_0:_checkBossAndUpdate()
 	end
 end
 
-function slot0._onBeforeDeadEffect(slot0, slot1)
-	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
-		slot0:_detectBossMultiHp()
+function var_0_0._onBeforeDeadEffect(arg_6_0, arg_6_1)
+	if arg_6_0._bossEntityMO and arg_6_0._bossEntityMO.id == arg_6_1 then
+		arg_6_0:_detectBossMultiHp()
 	end
 end
 
-function slot0._checkBossAndUpdate(slot0)
-	if slot0._bossHasDead then
-		gohelper.setActive(slot0._bossHpGO, false)
+function var_0_0._checkBossAndUpdate(arg_7_0)
+	if arg_7_0._bossHasDead then
+		gohelper.setActive(arg_7_0._bossHpGO, false)
 
-		slot0._aniHpEffect.enabled = false
-		slot0._bossEntityMO = nil
+		arg_7_0._aniHpEffect.enabled = false
+		arg_7_0._bossEntityMO = nil
 
 		return
 	end
 
-	if slot0._bossEntityMO and not FightDataHelper.entityMgr:getById(slot0._bossEntityMO.id) then
-		slot0._bossEntityMO = nil
+	if arg_7_0._bossEntityMO and not FightDataHelper.entityMgr:getById(arg_7_0._bossEntityMO.id) then
+		arg_7_0._bossEntityMO = nil
 	end
 
-	if not slot0._bossEntityMO then
-		slot0._bossEntityMO = slot0:_getBossEntityMO()
+	if not arg_7_0._bossEntityMO then
+		arg_7_0._bossEntityMO = arg_7_0:_getBossEntityMO()
 	end
 
-	if not slot0._bossEntityMO or not GMFightShowState.bossHp then
-		slot0._aniHpEffect.enabled = false
+	if not arg_7_0._bossEntityMO or not GMFightShowState.bossHp then
+		arg_7_0._aniHpEffect.enabled = false
 	end
 
-	gohelper.setActive(slot0._bossHpGO, slot0._bossEntityMO and GMFightShowState.bossHp)
+	gohelper.setActive(arg_7_0._bossHpGO, arg_7_0._bossEntityMO and GMFightShowState.bossHp)
 
-	if slot0._bossEntityMO then
-		slot0:_refreshBossHpUI()
+	if arg_7_0._bossEntityMO then
+		arg_7_0:_refreshBossHpUI()
 	end
 
-	if slot0._bossEntityMO and slot0._bossEntityMO:getPowerInfo(FightEnum.PowerType.Energy) then
-		if not slot0._bossEnergyView then
-			slot0._bossEnergyView = slot0:openSubView(FightViewBossEnergy, "ui/viewres/fight/assisthpbar.prefab", slot0._bossEnergyRoot, slot0._bossEntityMO)
+	if arg_7_0._bossEntityMO and arg_7_0._bossEntityMO:getPowerInfo(FightEnum.PowerType.Energy) then
+		if not arg_7_0._bossEnergyView then
+			arg_7_0._bossEnergyView = arg_7_0:openSubView(FightViewBossEnergy, "ui/viewres/fight/assisthpbar.prefab", arg_7_0._bossEnergyRoot, arg_7_0._bossEntityMO)
 		end
 
-		gohelper.setActive(slot0._bossEnergyRoot, true)
+		gohelper.setActive(arg_7_0._bossEnergyRoot, true)
 	else
-		gohelper.setActive(slot0._bossEnergyRoot, false)
+		gohelper.setActive(arg_7_0._bossEnergyRoot, false)
 	end
 end
 
-function slot0._refreshBossHpUI(slot0)
-	slot0._boss_hp_sign = nil
+function var_0_0._refreshBossHpUI(arg_8_0)
+	arg_8_0._boss_hp_sign = nil
 
-	slot0:_insteadSpecialHp()
-	slot0:_updateUI()
-	slot0:_updatePassiveSkill()
-	slot0:_updateExPoint()
+	arg_8_0:_insteadSpecialHp()
+	arg_8_0:_updateUI()
+	arg_8_0:_updatePassiveSkill()
+	arg_8_0:_updateExPoint()
 end
 
-function slot0._onRestartStage(slot0)
-	gohelper.setActive(slot0._bossHpGO, false)
+function var_0_0._onRestartStage(arg_9_0)
+	gohelper.setActive(arg_9_0._bossHpGO, false)
 
-	slot0._bossEntityMO = nil
+	arg_9_0._bossEntityMO = nil
 end
 
-function slot0._onMonsterChange(slot0, slot1, slot2)
-	slot0._bossEntityMO = nil
+function var_0_0._onMonsterChange(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._bossEntityMO = nil
 
-	slot0:_checkBossAndUpdate()
+	arg_10_0:_checkBossAndUpdate()
 end
 
-function slot0._getBossEntityMO(slot0)
-	if slot0:_getBossId() then
-		for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
-			if FightHelper.isBossId(slot1, slot7.modelId) then
-				return slot7
+function var_0_0._getBossEntityMO(arg_11_0)
+	local var_11_0 = arg_11_0:_getBossId()
+
+	if var_11_0 then
+		local var_11_1 = FightDataHelper.entityMgr:getEnemyNormalList()
+
+		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+			if FightHelper.isBossId(var_11_0, iter_11_1.modelId) then
+				return iter_11_1
 			end
 		end
 
-		if slot0:_getChangeBossId(slot1) then
-			for slot7, slot8 in ipairs(slot2) do
-				if slot3 == slot8.modelId then
-					return slot8
+		local var_11_2 = arg_11_0:_getChangeBossId(var_11_0)
+
+		if var_11_2 then
+			for iter_11_2, iter_11_3 in ipairs(var_11_1) do
+				if var_11_2 == iter_11_3.modelId then
+					return iter_11_3
 				end
 			end
 		end
 	end
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot0._bossEntityMO then
+function var_0_0._onBuffUpdate(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
+	if not arg_12_0._bossEntityMO then
 		return
 	end
 
-	if slot0._bossEntityMO.id ~= slot1 then
+	if arg_12_0._bossEntityMO.id ~= arg_12_1 then
 		return
 	end
 
-	if slot3 and lua_skill_buff.configDict[slot3] and slot6.typeId == 3120005 then
-		slot0:_insteadSpecialHp(slot2)
+	if arg_12_3 then
+		local var_12_0 = lua_skill_buff.configDict[arg_12_3]
+
+		if var_12_0 and var_12_0.typeId == 3120005 then
+			arg_12_0:_insteadSpecialHp(arg_12_2)
+		end
 	end
 end
 
-function slot0._insteadSpecialHp(slot0, slot1)
-	if slot1 then
-		if slot1 == FightEnum.EffectType.BUFFADD then
-			slot0:changeBossHpWithChouShiBuff(true)
-		elseif slot1 == FightEnum.EffectType.BUFFDEL or slot1 == FightEnum.EffectType.BUFFDELNOEFFECT then
-			slot0:changeBossHpWithChouShiBuff(false)
+function var_0_0._insteadSpecialHp(arg_13_0, arg_13_1)
+	if arg_13_1 then
+		if arg_13_1 == FightEnum.EffectType.BUFFADD then
+			arg_13_0:changeBossHpWithChouShiBuff(true)
+		elseif arg_13_1 == FightEnum.EffectType.BUFFDEL or arg_13_1 == FightEnum.EffectType.BUFFDELNOEFFECT then
+			arg_13_0:changeBossHpWithChouShiBuff(false)
 		end
-	elseif slot0._bossEntityMO then
-		for slot6, slot7 in pairs(slot0._bossEntityMO:getBuffDic()) do
-			if lua_skill_buff.configDict[slot7.buffId] and slot8.typeId == 3120005 then
-				slot0:changeBossHpWithChouShiBuff(true)
+	elseif arg_13_0._bossEntityMO then
+		local var_13_0 = arg_13_0._bossEntityMO:getBuffDic()
+
+		for iter_13_0, iter_13_1 in pairs(var_13_0) do
+			local var_13_1 = lua_skill_buff.configDict[iter_13_1.buffId]
+
+			if var_13_1 and var_13_1.typeId == 3120005 then
+				arg_13_0:changeBossHpWithChouShiBuff(true)
 
 				return
 			end
@@ -236,360 +251,416 @@ function slot0._insteadSpecialHp(slot0, slot1)
 	end
 end
 
-function slot0.changeBossHpWithChouShiBuff(slot0, slot1)
-	if slot1 then
-		UISpriteSetMgr.instance:setFightSprite(slot0._imgbossHpbg, "bg_xuetiaobossdi2")
-		UISpriteSetMgr.instance:setFightSprite(slot0._imgHp, "bg_xuetiaoboss_choushi")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imgHp, "#FFFFFF")
+function var_0_0.changeBossHpWithChouShiBuff(arg_14_0, arg_14_1)
+	if arg_14_1 then
+		UISpriteSetMgr.instance:setFightSprite(arg_14_0._imgbossHpbg, "bg_xuetiaobossdi2")
+		UISpriteSetMgr.instance:setFightSprite(arg_14_0._imgHp, "bg_xuetiaoboss_choushi")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._imgHp, "#FFFFFF")
 	else
-		UISpriteSetMgr.instance:setFightSprite(slot0._imgbossHpbg, "bg_xtiaodi")
-		UISpriteSetMgr.instance:setFightSprite(slot0._imgHp, "bosshp")
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imgHp, "#873816")
+		UISpriteSetMgr.instance:setFightSprite(arg_14_0._imgbossHpbg, "bg_xtiaodi")
+		UISpriteSetMgr.instance:setFightSprite(arg_14_0._imgHp, "bosshp")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._imgHp, "#873816")
 	end
 
-	gohelper.setActive(slot0._gochoushi, slot1)
+	gohelper.setActive(arg_14_0._gochoushi, arg_14_1)
 end
 
-function slot0._getBossId(slot0)
-	slot2 = FightModel.instance:getCurMonsterGroupId() and lua_monster_group.configDict[slot1]
+function var_0_0._getBossId(arg_15_0)
+	local var_15_0 = FightModel.instance:getCurMonsterGroupId()
+	local var_15_1 = var_15_0 and lua_monster_group.configDict[var_15_0]
 
-	return slot2 and not string.nilorempty(slot2.bossId) and slot2.bossId or nil
+	return var_15_1 and not string.nilorempty(var_15_1.bossId) and var_15_1.bossId or nil
 end
 
-function slot0._getChangeBossId(slot0, slot1)
-	for slot6, slot7 in ipairs(string.splitToNumber(slot1)) do
-		if not lua_monster.configDict[slot7] then
-			logError("怪物表找不到id:" .. slot7)
+function var_0_0._getChangeBossId(arg_16_0, arg_16_1)
+	local var_16_0 = string.splitToNumber(arg_16_1)
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		local var_16_1 = lua_monster.configDict[iter_16_1]
+
+		if not var_16_1 then
+			logError("怪物表找不到id:" .. iter_16_1)
 		end
 
-		for slot13, slot14 in ipairs(FightHelper._buildMonsterSkills(slot8)) do
-			if not lua_skill.configDict[slot14] then
-				logError("技能表找不到id: " .. slot14)
+		local var_16_2 = FightHelper._buildMonsterSkills(var_16_1)
+
+		for iter_16_2, iter_16_3 in ipairs(var_16_2) do
+			local var_16_3 = lua_skill.configDict[iter_16_3]
+
+			if not var_16_3 then
+				logError("技能表找不到id: " .. iter_16_3)
 			end
 
-			for slot19 = 1, FightEnum.MaxBehavior do
-				if string.splitToNumber(slot15["behavior" .. slot19], "#")[1] and lua_skill_behavior.configDict[slot22] and slot23.type == "MonsterChange" then
-					return slot21[2]
+			for iter_16_4 = 1, FightEnum.MaxBehavior do
+				local var_16_4 = var_16_3["behavior" .. iter_16_4]
+				local var_16_5 = string.splitToNumber(var_16_4, "#")
+				local var_16_6 = var_16_5[1]
+				local var_16_7 = var_16_6 and lua_skill_behavior.configDict[var_16_6]
+
+				if var_16_7 and var_16_7.type == "MonsterChange" then
+					return var_16_5[2]
 				end
 			end
 		end
 	end
 end
 
-function slot0._updateUI(slot0)
-	if not slot0._bossEntityMO then
+function var_0_0._updateUI(arg_17_0)
+	if not arg_17_0._bossEntityMO then
 		return
 	end
 
-	slot4 = slot0._bossEntityMO.currentHp
-	slot0._curHp = slot4
-	slot0._curShield = slot0._bossEntityMO.shieldValue
+	local var_17_0 = lua_monster.configDict[arg_17_0._bossEntityMO.modelId]
+	local var_17_1 = FightConfig.instance:getSkinCO(var_17_0.skinId)
+	local var_17_2 = arg_17_0._bossEntityMO.attrMO.hp
+	local var_17_3 = arg_17_0._bossEntityMO.currentHp
 
-	slot0:_tweenFillAmount()
+	arg_17_0._curHp = var_17_3
+	arg_17_0._curShield = arg_17_0._bossEntityMO.shieldValue
+	var_17_3 = var_17_3 > 0 and var_17_3 or 0
 
-	slot0._txtHp.text = string.format("%d/%d", slot4 > 0 and slot4 or 0, slot0._bossEntityMO.attrMO.hp)
+	arg_17_0:_tweenFillAmount()
 
-	if not string.nilorempty(FightConfig.instance:getSkinCO(lua_monster.configDict[slot0._bossEntityMO.modelId].skinId).headIcon) then
-		gohelper.getSingleImage(slot0._imgHead.gameObject):LoadImage(ResUrl.monsterHeadIcon(slot2.headIcon))
+	arg_17_0._txtHp.text = string.format("%d/%d", var_17_3, var_17_2)
 
-		if slot1.heartVariantId ~= 0 then
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(slot1.heartVariantId), slot0._imgHeadIcon)
+	if not string.nilorempty(var_17_1.headIcon) then
+		gohelper.getSingleImage(arg_17_0._imgHead.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_17_1.headIcon))
+
+		if var_17_0.heartVariantId ~= 0 then
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(var_17_0.heartVariantId), arg_17_0._imgHeadIcon)
 		end
 	else
-		gohelper.setActive(slot0._imgHead.gameObject, false)
+		gohelper.setActive(arg_17_0._imgHead.gameObject, false)
 	end
 
-	slot0:_refreshCareer()
-	slot0:_detectBossHpSign()
-	slot0:_detectBossMultiHp()
+	arg_17_0:_refreshCareer()
+	arg_17_0:_detectBossHpSign()
+	arg_17_0:_detectBossMultiHp()
 end
 
-function slot0._refreshCareer(slot0)
+function var_0_0._refreshCareer(arg_18_0)
 	if FightModel.instance:getVersion() >= 2 then
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareer, "sx_icon_" .. tostring(slot0._bossEntityMO.career))
+		UISpriteSetMgr.instance:setCommonSprite(arg_18_0._imgCareer, "sx_icon_" .. tostring(arg_18_0._bossEntityMO.career))
 	else
-		UISpriteSetMgr.instance:setCommonSprite(slot0._imgCareer, "sx_icon_" .. tostring(lua_monster.configDict[slot0._bossEntityMO.modelId].career))
+		local var_18_0 = lua_monster.configDict[arg_18_0._bossEntityMO.modelId]
+
+		UISpriteSetMgr.instance:setCommonSprite(arg_18_0._imgCareer, "sx_icon_" .. tostring(var_18_0.career))
 	end
 end
 
-function slot0._onChangeCareer(slot0, slot1)
-	if slot0._bossEntityMO and slot1 == slot0._bossEntityMO.id then
-		slot0:_refreshCareer()
+function var_0_0._onChangeCareer(arg_19_0, arg_19_1)
+	if arg_19_0._bossEntityMO and arg_19_1 == arg_19_0._bossEntityMO.id then
+		arg_19_0:_refreshCareer()
 	end
 end
 
-function slot0._onHpChange(slot0, slot1, slot2)
-	if slot2 ~= 0 and slot0._bossEntityMO and slot1.id == slot0._bossEntityMO.id then
-		if slot2 < 0 then
-			gohelper.setActive(slot0._goHpEffect, true)
+function var_0_0._onHpChange(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_2 ~= 0 and arg_20_0._bossEntityMO and arg_20_1.id == arg_20_0._bossEntityMO.id then
+		if arg_20_2 < 0 then
+			gohelper.setActive(arg_20_0._goHpEffect, true)
 
-			slot0._aniHpEffect.enabled = true
-			slot0._aniHpEffect.speed = 1
+			arg_20_0._aniHpEffect.enabled = true
+			arg_20_0._aniHpEffect.speed = 1
 
-			slot0._aniHpEffect:Play("hpeffect", 0, 0)
-			slot0._aniHpEffect:Update(0)
+			arg_20_0._aniHpEffect:Play("hpeffect", 0, 0)
+			arg_20_0._aniHpEffect:Update(0)
 		end
 
-		slot3 = slot0._bossEntityMO.attrMO.hp
-		slot0._curHp = slot0._curHp + slot2
-		slot0._curHp = slot0._curHp > 0 and slot0._curHp or 0
-		slot0._curHp = slot0._curHp <= slot3 and slot0._curHp or slot3
-		slot0._txtHp.text = slot0._curHp
+		local var_20_0 = arg_20_0._bossEntityMO.attrMO.hp
 
-		slot0:_tweenFillAmount()
+		arg_20_0._curHp = arg_20_0._curHp + arg_20_2
+		arg_20_0._curHp = arg_20_0._curHp > 0 and arg_20_0._curHp or 0
+		arg_20_0._curHp = var_20_0 >= arg_20_0._curHp and arg_20_0._curHp or var_20_0
+		arg_20_0._txtHp.text = arg_20_0._curHp
+
+		arg_20_0:_tweenFillAmount()
 	end
 end
 
-function slot0._playHpEffectAni(slot0)
+function var_0_0._playHpEffectAni(arg_21_0)
+	return
 end
 
-function slot0._detectBossHpSign(slot0)
-	if not string.nilorempty(slot0._bossEntityMO:getCO().hpSign) and not slot0._boss_hp_sign then
-		slot0._boss_hp_sign = string.splitToNumber(slot1.hpSign, "#")
+function var_0_0._detectBossHpSign(arg_22_0)
+	local var_22_0 = arg_22_0._bossEntityMO:getCO()
+
+	if not string.nilorempty(var_22_0.hpSign) and not arg_22_0._boss_hp_sign then
+		arg_22_0._boss_hp_sign = string.splitToNumber(var_22_0.hpSign, "#")
 	end
 
-	gohelper.setActive(slot0._imgSignHpContainer, slot0._boss_hp_sign)
+	gohelper.setActive(arg_22_0._imgSignHpContainer, arg_22_0._boss_hp_sign)
 
-	if slot0._boss_hp_sign then
-		gohelper.CreateObjList(slot0, slot0._bossHpSignShow, slot0._boss_hp_sign, slot0._imgSignHpContainer, slot0._imgSignHpItem)
-	end
-end
-
-function slot0._bossHpSignShow(slot0, slot1, slot2, slot3)
-	recthelper.setAnchorX(slot1.transform, slot2 / 1000 * recthelper.getWidth(slot1.transform.parent.parent))
-end
-
-function slot0._onMultiHpChange(slot0, slot1)
-	if slot0._bossEntityMO and slot1 == slot0._bossEntityMO.id then
-		slot0._imgHp.fillAmount, slot0._imgHpShield.fillAmount = slot0:_getFillAmount()
-		slot0._bossEntityMO = nil
-
-		slot0:_checkBossAndUpdate()
-		slot0:_tweenFillAmount(0.8)
+	if arg_22_0._boss_hp_sign then
+		gohelper.CreateObjList(arg_22_0, arg_22_0._bossHpSignShow, arg_22_0._boss_hp_sign, arg_22_0._imgSignHpContainer, arg_22_0._imgSignHpItem)
 	end
 end
 
-function slot0._detectBossMultiHp(slot0)
-	slot1 = slot0._bossEntityMO.attrMO.multiHpNum
+function var_0_0._bossHpSignShow(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	recthelper.setAnchorX(arg_23_1.transform, arg_23_2 / 1000 * recthelper.getWidth(arg_23_1.transform.parent.parent))
+end
 
-	if not slot0._hpMultiAni or slot0._bossEntityMO.attrMO:getCurMultiHpIndex() == 0 then
-		slot0._hpMultiAni = {}
-	end
+function var_0_0._onMultiHpChange(arg_24_0, arg_24_1)
+	if arg_24_0._bossEntityMO and arg_24_1 == arg_24_0._bossEntityMO.id then
+		local var_24_0, var_24_1 = arg_24_0:_getFillAmount()
 
-	gohelper.setActive(slot0._multiHpRoot, slot1 > 1)
+		arg_24_0._bossEntityMO = nil
 
-	if slot1 > 1 then
-		slot0:com_createObjList(slot0._onMultiHpItemShow, slot1, slot0._multiHpItemContent, slot0._multiHpItem)
+		arg_24_0:_checkBossAndUpdate()
+
+		arg_24_0._imgHp.fillAmount = var_24_0
+		arg_24_0._imgHpShield.fillAmount = var_24_1
+
+		arg_24_0:_tweenFillAmount(0.8)
 	end
 end
 
-slot1 = "idle"
-slot2 = "close"
+function var_0_0._detectBossMultiHp(arg_25_0)
+	local var_25_0 = arg_25_0._bossEntityMO.attrMO.multiHpNum
+	local var_25_1 = arg_25_0._bossEntityMO.attrMO:getCurMultiHpIndex()
 
-function slot0._onMultiHpItemShow(slot0, slot1, slot2, slot3)
-	slot7 = gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator))
-	slot8 = slot3 <= slot0._bossEntityMO.attrMO.multiHpNum - slot0._bossEntityMO.attrMO:getCurMultiHpIndex()
+	if not arg_25_0._hpMultiAni or var_25_1 == 0 then
+		arg_25_0._hpMultiAni = {}
+	end
 
-	if not slot0._hpMultiAni[slot3] then
-		gohelper.setActive(gohelper.findChild(slot1, "hp"), slot8)
+	gohelper.setActive(arg_25_0._multiHpRoot, var_25_0 > 1)
 
-		slot0._hpMultiAni[slot3] = slot8 and uv0 or uv1
-	elseif slot0._hpMultiAni[slot3] ~= (slot8 and uv0 or uv1) then
-		slot0._hpMultiAni[slot3] = slot9
-
-		slot7:Play(slot0._hpMultiAni[slot3])
+	if var_25_0 > 1 then
+		arg_25_0:com_createObjList(arg_25_0._onMultiHpItemShow, var_25_0, arg_25_0._multiHpItemContent, arg_25_0._multiHpItem)
 	end
 end
 
-function slot0._onShieldChange(slot0, slot1, slot2)
-	if slot0._bossEntityMO and slot1.id == slot0._bossEntityMO.id then
-		slot0._curShield = slot2 ~= 0 and slot0._curShield + slot2 or slot0._bossEntityMO.shieldValue
-		slot3, slot4 = slot0:_getFillAmount()
+local var_0_1 = "idle"
+local var_0_2 = "close"
 
-		slot0:_changeShieldPos(slot3)
+function var_0_0._onMultiHpItemShow(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = arg_26_0._bossEntityMO.attrMO.multiHpNum
+	local var_26_1 = arg_26_0._bossEntityMO.attrMO:getCurMultiHpIndex()
+	local var_26_2 = gohelper.findChild(arg_26_1, "hp")
+	local var_26_3 = gohelper.onceAddComponent(arg_26_1, typeof(UnityEngine.Animator))
+	local var_26_4 = arg_26_3 <= var_26_0 - var_26_1
 
-		if slot0._curShield <= 0 then
-			if slot0:_checkShieldBreakAnim() then
+	if not arg_26_0._hpMultiAni[arg_26_3] then
+		gohelper.setActive(var_26_2, var_26_4)
+
+		arg_26_0._hpMultiAni[arg_26_3] = var_26_4 and var_0_1 or var_0_2
+	else
+		local var_26_5 = var_26_4 and var_0_1 or var_0_2
+
+		if arg_26_0._hpMultiAni[arg_26_3] ~= var_26_5 then
+			arg_26_0._hpMultiAni[arg_26_3] = var_26_5
+
+			var_26_3:Play(arg_26_0._hpMultiAni[arg_26_3])
+		end
+	end
+end
+
+function var_0_0._onShieldChange(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_0._bossEntityMO and arg_27_1.id == arg_27_0._bossEntityMO.id then
+		arg_27_0._curShield = arg_27_2 ~= 0 and arg_27_0._curShield + arg_27_2 or arg_27_0._bossEntityMO.shieldValue
+
+		local var_27_0, var_27_1 = arg_27_0:_getFillAmount()
+
+		arg_27_0:_changeShieldPos(var_27_0)
+
+		if arg_27_0._curShield <= 0 then
+			if arg_27_0:_checkShieldBreakAnim() then
 				return
 			end
 
-			slot0._imgHp.fillAmount = slot3
+			arg_27_0._imgHp.fillAmount = var_27_0
 
-			slot0._aniHpShield:Play(UIAnimationName.Open)
-			slot0._aniBossHp:Play("shake", 0, 0)
+			arg_27_0._aniHpShield:Play(UIAnimationName.Open)
+			arg_27_0._aniBossHp:Play("shake", 0, 0)
 		else
-			slot0._aniHpShield:Play(UIAnimationName.Idle)
+			arg_27_0._aniHpShield:Play(UIAnimationName.Idle)
 		end
 
-		slot0:_tweenFillAmount()
+		arg_27_0:_tweenFillAmount()
 	end
 end
 
-function slot0._checkShieldBreakAnim(slot0)
-	if slot0._aniHpShield:GetCurrentAnimatorStateInfo(0).normalizedTime <= 1 then
+function var_0_0._checkShieldBreakAnim(arg_28_0)
+	if arg_28_0._aniHpShield:GetCurrentAnimatorStateInfo(0).normalizedTime <= 1 then
 		return true
 	end
 
 	return false
 end
 
-function slot0._tweenFillAmount(slot0, slot1)
-	slot1 = slot1 or 0.5
-	slot2, slot3 = slot0:_getFillAmount()
+function var_0_0._tweenFillAmount(arg_29_0, arg_29_1)
+	arg_29_1 = arg_29_1 or 0.5
 
-	slot0:_changeShieldPos(slot2)
-	ZProj.TweenHelper.KillByObj(slot0._imgHp)
-	ZProj.TweenHelper.KillByObj(slot0._imgHpShield)
-	ZProj.TweenHelper.DOFillAmount(slot0._imgHp, slot2, slot1 / FightModel.instance:getUISpeed())
-	ZProj.TweenHelper.DOFillAmount(slot0._imgHpShield, slot3, slot1 / FightModel.instance:getUISpeed())
+	local var_29_0, var_29_1 = arg_29_0:_getFillAmount()
+
+	arg_29_0:_changeShieldPos(var_29_0)
+	ZProj.TweenHelper.KillByObj(arg_29_0._imgHp)
+	ZProj.TweenHelper.KillByObj(arg_29_0._imgHpShield)
+	ZProj.TweenHelper.DOFillAmount(arg_29_0._imgHp, var_29_0, arg_29_1 / FightModel.instance:getUISpeed())
+	ZProj.TweenHelper.DOFillAmount(arg_29_0._imgHpShield, var_29_1, arg_29_1 / FightModel.instance:getUISpeed())
 end
 
-function slot0._changeShieldPos(slot0, slot1)
-	if slot0:_checkShieldBreakAnim() then
+function var_0_0._changeShieldPos(arg_30_0, arg_30_1)
+	if arg_30_0:_checkShieldBreakAnim() then
 		return
 	end
 
-	recthelper.setAnchorX(slot0._trsShieldPosUI, slot1 * slot0.sheildWidth)
+	recthelper.setAnchorX(arg_30_0._trsShieldPosUI, arg_30_1 * arg_30_0.sheildWidth)
 end
 
-function slot0._getFillAmount(slot0)
-	if not slot0._bossEntityMO then
+function var_0_0._getFillAmount(arg_31_0)
+	if not arg_31_0._bossEntityMO then
 		return 0, 0
 	end
 
-	slot2 = slot0._bossEntityMO.attrMO and slot1.attrMO.hp > 0 and slot1.attrMO.hp or 1
-	slot3 = slot2 > 0 and slot0._curHp / slot2 or 0
-	slot4 = 0
+	local var_31_0 = arg_31_0._bossEntityMO
+	local var_31_1 = var_31_0.attrMO and var_31_0.attrMO.hp > 0 and var_31_0.attrMO.hp or 1
+	local var_31_2 = var_31_1 > 0 and arg_31_0._curHp / var_31_1 or 0
+	local var_31_3 = 0
 
-	if slot2 >= slot0._curShield + slot0._curHp then
-		slot3 = slot0._curHp / slot2
-		slot4 = (slot0._curShield + slot0._curHp) / slot2
+	if var_31_1 >= arg_31_0._curShield + arg_31_0._curHp then
+		var_31_2 = arg_31_0._curHp / var_31_1
+		var_31_3 = (arg_31_0._curShield + arg_31_0._curHp) / var_31_1
 	else
-		slot3 = slot0._curHp / (slot0._curHp + slot0._curShield)
-		slot4 = 1
+		var_31_2 = arg_31_0._curHp / (arg_31_0._curHp + arg_31_0._curShield)
+		var_31_3 = 1
 	end
 
-	if slot2 < (slot1.attrMO and slot1.attrMO.original_max_hp or 1) then
-		slot6 = slot5 - slot2
-		slot3 = slot3 * slot2 / slot5 + slot6 / slot5
-		slot4 = slot4 * slot2 / slot5 + slot6 / slot5
-		slot0._hp_width = slot0._hp_width or recthelper.getWidth(slot0._hp_container_tran)
+	local var_31_4 = var_31_0.attrMO and var_31_0.attrMO.original_max_hp or 1
 
-		recthelper.setAnchorX(slot0._hp_container_tran, 0 - slot0._hp_width * slot6 / slot5)
+	if var_31_1 < var_31_4 then
+		local var_31_5 = var_31_4 - var_31_1
+
+		var_31_2 = var_31_2 * var_31_1 / var_31_4 + var_31_5 / var_31_4
+		var_31_3 = var_31_3 * var_31_1 / var_31_4 + var_31_5 / var_31_4
+		arg_31_0._hp_width = arg_31_0._hp_width or recthelper.getWidth(arg_31_0._hp_container_tran)
+
+		recthelper.setAnchorX(arg_31_0._hp_container_tran, 0 - arg_31_0._hp_width * (var_31_5 / var_31_4))
 	else
-		recthelper.setAnchorX(slot0._hp_container_tran, 0)
+		recthelper.setAnchorX(arg_31_0._hp_container_tran, 0)
 	end
 
-	return slot3, slot4
+	return var_31_2, var_31_3
 end
 
-function slot0._updatePassiveSkill(slot0)
-	if not slot0._bossEntityMO then
+function var_0_0._updatePassiveSkill(arg_32_0)
+	if not arg_32_0._bossEntityMO then
 		return
 	end
 
-	slot6 = true
-	slot0.bossSkillInfos = {}
+	local var_32_0 = lua_monster.configDict[arg_32_0._bossEntityMO.modelId]
+	local var_32_1 = FightConfig.instance:getPassiveSkillsAfterUIFilter(var_32_0.id)
+	local var_32_2 = FightConfig.instance:_filterSpeicalSkillIds(var_32_1, true)
 
-	for slot6 = 1, #FightConfig.instance:_filterSpeicalSkillIds(FightConfig.instance:getPassiveSkillsAfterUIFilter(lua_monster.configDict[slot0._bossEntityMO.modelId].id), slot6) do
-		if lua_skill_specialbuff.configDict[slot2[slot6]] then
-			if not slot0._specialSkillGOs[slot6] then
-				slot9 = slot0:getUserDataTb_()
-				slot9.go = gohelper.cloneInPlace(slot0._passiveSkillPrefab, "item" .. slot6)
-				slot9._gotag = gohelper.findChild(slot9.go, "tag")
-				slot9._txttag = gohelper.findChildText(slot9.go, "tag/#txt_tag")
+	arg_32_0.bossSkillInfos = {}
 
-				table.insert(slot0._specialSkillGOs, slot9)
-				table.insert(slot0._passiveSkillImgs, gohelper.findChildImage(slot9.go, "icon"))
+	for iter_32_0 = 1, #var_32_2 do
+		local var_32_3 = var_32_2[iter_32_0]
+		local var_32_4 = lua_skill_specialbuff.configDict[var_32_3]
+
+		if var_32_4 then
+			local var_32_5 = arg_32_0._specialSkillGOs[iter_32_0]
+
+			if not var_32_5 then
+				var_32_5 = arg_32_0:getUserDataTb_()
+				var_32_5.go = gohelper.cloneInPlace(arg_32_0._passiveSkillPrefab, "item" .. iter_32_0)
+				var_32_5._gotag = gohelper.findChild(var_32_5.go, "tag")
+				var_32_5._txttag = gohelper.findChildText(var_32_5.go, "tag/#txt_tag")
+
+				table.insert(arg_32_0._specialSkillGOs, var_32_5)
+
+				local var_32_6 = gohelper.findChildImage(var_32_5.go, "icon")
+
+				table.insert(arg_32_0._passiveSkillImgs, var_32_6)
 			end
 
-			if not string.nilorempty(slot8.lv) then
-				gohelper.setActive(slot9._gotag, true)
+			if not string.nilorempty(var_32_4.lv) then
+				gohelper.setActive(var_32_5._gotag, true)
 
-				slot9._txttag.text = slot8.lv
+				var_32_5._txttag.text = var_32_4.lv
 			else
-				gohelper.setActive(slot9._gotag, false)
+				gohelper.setActive(var_32_5._gotag, false)
 			end
 
-			if slot8.icon == 0 then
-				logError("boss抗性表的icon字段没有配置,技能ID:" .. slot8.id)
+			if var_32_4.icon == 0 then
+				logError("boss抗性表的icon字段没有配置,技能ID:" .. var_32_4.id)
 			end
 
-			UISpriteSetMgr.instance:setFightPassiveSprite(slot0._passiveSkillImgs[slot6], slot8.icon)
-			gohelper.setActive(slot9.go, true)
-			table.insert(slot0.bossSkillInfos, {
-				skillId = slot7,
-				icon = slot8.icon
+			UISpriteSetMgr.instance:setFightPassiveSprite(arg_32_0._passiveSkillImgs[iter_32_0], var_32_4.icon)
+			gohelper.setActive(var_32_5.go, true)
+			table.insert(arg_32_0.bossSkillInfos, {
+				skillId = var_32_3,
+				icon = var_32_4.icon
 			})
 		end
 	end
 
-	gohelper.setAsLastSibling(slot0._btnpassiveSkill.gameObject)
+	gohelper.setAsLastSibling(arg_32_0._btnpassiveSkill.gameObject)
 
-	for slot6 = #slot2 + 1, #slot0._specialSkillGOs do
-		gohelper.setActive(slot0._specialSkillGOs[slot6].go, false)
+	for iter_32_1 = #var_32_2 + 1, #arg_32_0._specialSkillGOs do
+		gohelper.setActive(arg_32_0._specialSkillGOs[iter_32_1].go, false)
 	end
 end
 
-function slot0._onClickPassiveSkill(slot0)
+function var_0_0._onClickPassiveSkill(arg_33_0)
 	if not FightModel.instance:isStartFinish() then
 		return
 	end
 
-	if not slot0.bossSkillInfos then
+	if not arg_33_0.bossSkillInfos then
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnPassiveSkillClick, slot0.bossSkillInfos, slot0._btnpassiveSkill.transform, -509.5, -29, slot0._bossEntityMO.id)
+	FightController.instance:dispatchEvent(FightEvent.OnPassiveSkillClick, arg_33_0.bossSkillInfos, arg_33_0._btnpassiveSkill.transform, -509.5, -29, arg_33_0._bossEntityMO.id)
 end
 
-function slot0._updateExPoint(slot0)
-	if not slot0._bossEntityMO then
+function var_0_0._updateExPoint(arg_34_0)
+	if not arg_34_0._bossEntityMO then
 		return
 	end
 
-	slot1 = slot0._bossEntityMO.exPoint
+	local var_34_0 = arg_34_0._bossEntityMO.exPoint
+	local var_34_1 = arg_34_0._bossEntityMO:getMaxExPoint()
 
-	for slot6 = 1, slot0._bossEntityMO:getMaxExPoint() do
-		if not slot0._exPointFullList[slot6] then
-			slot8 = gohelper.cloneInPlace(slot0._exPointPrefab, slot0._exPointPrefab.name .. slot6)
+	for iter_34_0 = 1, var_34_1 do
+		if not arg_34_0._exPointFullList[iter_34_0] then
+			local var_34_2 = gohelper.cloneInPlace(arg_34_0._exPointPrefab, arg_34_0._exPointPrefab.name .. iter_34_0)
 
-			table.insert(slot0._exPointFullList, gohelper.findChild(slot8, "full"))
-			gohelper.setActive(slot8, true)
+			table.insert(arg_34_0._exPointFullList, gohelper.findChild(var_34_2, "full"))
+			gohelper.setActive(var_34_2, true)
 		end
 
-		gohelper.setActive(slot0._exPointFullList[slot6], slot6 <= slot1)
+		gohelper.setActive(arg_34_0._exPointFullList[iter_34_0], iter_34_0 <= var_34_0)
 	end
 
-	for slot6 = slot2 + 1, #slot0._exPointFullList do
-		gohelper.setActive(slot0._exPointFullList[slot6], false)
-	end
-end
-
-function slot0._onMaxHpChange(slot0, slot1, slot2, slot3)
-	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
-		slot0:_updateUI()
+	for iter_34_1 = var_34_1 + 1, #arg_34_0._exPointFullList do
+		gohelper.setActive(arg_34_0._exPointFullList[iter_34_1], false)
 	end
 end
 
-function slot0._onCurrentHpChange(slot0, slot1, slot2, slot3)
-	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
-		slot0:_updateUI()
+function var_0_0._onMaxHpChange(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	if arg_35_0._bossEntityMO and arg_35_0._bossEntityMO.id == arg_35_1 then
+		arg_35_0:_updateUI()
 	end
 end
 
-function slot0._onChangeShield(slot0, slot1)
-	if slot0._bossEntityMO and slot0._bossEntityMO.id == slot1 then
-		slot0:_updateUI()
+function var_0_0._onCurrentHpChange(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	if arg_36_0._bossEntityMO and arg_36_0._bossEntityMO.id == arg_36_1 then
+		arg_36_0:_updateUI()
 	end
 end
 
-function slot0._onForceUpdatePerformanceData(slot0, slot1)
-	if not slot0._bossEntityMO or slot1 ~= slot0._bossEntityMO.id then
+function var_0_0._onChangeShield(arg_37_0, arg_37_1)
+	if arg_37_0._bossEntityMO and arg_37_0._bossEntityMO.id == arg_37_1 then
+		arg_37_0:_updateUI()
+	end
+end
+
+function var_0_0._onForceUpdatePerformanceData(arg_38_0, arg_38_1)
+	if not arg_38_0._bossEntityMO or arg_38_1 ~= arg_38_0._bossEntityMO.id then
 		return
 	end
 
-	slot0:_tweenFillAmount()
+	arg_38_0:_tweenFillAmount()
 end
 
-return slot0
+return var_0_0

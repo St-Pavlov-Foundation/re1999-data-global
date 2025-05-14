@@ -1,12 +1,12 @@
-module("modules.spine.roleeffect.RoleEffect307904_6", package.seeall)
+﻿module("modules.spine.roleeffect.RoleEffect307904_6", package.seeall)
 
-slot0 = class("RoleEffect307904_6", CommonRoleEffect)
+local var_0_0 = class("RoleEffect307904_6", CommonRoleEffect)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._idleIndex = tabletool.indexOf(slot0._motionList, "b_idle")
-	slot0._lightBodyList = {
+	arg_1_0._idleIndex = tabletool.indexOf(arg_1_0._motionList, "b_idle")
+	arg_1_0._lightBodyList = {
 		"b_idle",
 		"b_diantou",
 		"b_yaotou",
@@ -14,36 +14,36 @@ function slot0.init(slot0, slot1)
 	}
 end
 
-function slot0.showBodyEffect(slot0, slot1, slot2, slot3)
-	slot0._effectVisible = false
+function var_0_0.showBodyEffect(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._effectVisible = false
 
-	if slot0._index == slot0._idleIndex then
-		if not tabletool.indexOf(slot0._lightBodyList, slot1) then
-			slot0:_setNodeVisible(slot0._index, false)
+	if arg_2_0._index == arg_2_0._idleIndex then
+		if not tabletool.indexOf(arg_2_0._lightBodyList, arg_2_1) then
+			arg_2_0:_setNodeVisible(arg_2_0._index, false)
 		end
 	else
-		slot0:_setNodeVisible(slot0._index, false)
+		arg_2_0:_setNodeVisible(arg_2_0._index, false)
 	end
 
-	slot0._index = tabletool.indexOf(slot0._motionList, slot1)
+	arg_2_0._index = tabletool.indexOf(arg_2_0._motionList, arg_2_1)
 
-	slot0:_setNodeVisible(slot0._index, true)
+	arg_2_0:_setNodeVisible(arg_2_0._index, true)
 
-	if tabletool.indexOf(slot0._lightBodyList, slot1) then
-		slot0:_setNodeVisible(slot0._idleIndex, true)
+	if tabletool.indexOf(arg_2_0._lightBodyList, arg_2_1) then
+		arg_2_0:_setNodeVisible(arg_2_0._idleIndex, true)
 	end
 
-	if not slot0._firstShow then
-		slot0._firstShow = true
+	if not arg_2_0._firstShow then
+		arg_2_0._firstShow = true
 
-		slot0:showEverNodes(false)
-		TaskDispatcher.cancelTask(slot0._delayShowEverNodes, slot0)
-		TaskDispatcher.runDelay(slot0._delayShowEverNodes, slot0, 0.3)
+		arg_2_0:showEverNodes(false)
+		TaskDispatcher.cancelTask(arg_2_0._delayShowEverNodes, arg_2_0)
+		TaskDispatcher.runDelay(arg_2_0._delayShowEverNodes, arg_2_0, 0.3)
 	end
 
-	if slot2 and slot3 then
-		slot2(slot3, slot0._effectVisible or slot0._showEverEffect)
+	if arg_2_2 and arg_2_3 then
+		arg_2_2(arg_2_3, arg_2_0._effectVisible or arg_2_0._showEverEffect)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,25 +1,26 @@
-module("modules.logic.versionactivity2_5.act186.view.Activity186GameHeroView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameHeroView", package.seeall)
 
-slot0 = class("Activity186GameHeroView", Activity186HeroView)
+local var_0_0 = class("Activity186GameHeroView", Activity186HeroView)
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_1_0)
+	return
 end
 
-function slot0._onLightSpineLoaded(slot0)
-	slot0._uiSpine:showModel()
-	slot0._uiSpine:setActionEventCb(slot0._onAnimEnd, slot0)
-	slot0._uiSpine:play("b_daoju", true)
-	gohelper.setActive(slot0._gocontentbg, true)
+function var_0_0._onLightSpineLoaded(arg_2_0)
+	arg_2_0._uiSpine:showModel()
+	arg_2_0._uiSpine:setActionEventCb(arg_2_0._onAnimEnd, arg_2_0)
+	arg_2_0._uiSpine:play("b_daoju", true)
+	gohelper.setActive(arg_2_0._gocontentbg, true)
 end
 
-function slot0.showText(slot0, slot1)
-	if string.nilorempty(slot1) then
-		gohelper.setActive(slot0._gocontentbg, false)
+function var_0_0.showText(arg_3_0, arg_3_1)
+	if string.nilorempty(arg_3_1) then
+		gohelper.setActive(arg_3_0._gocontentbg, false)
 	else
-		gohelper.setActive(slot0._gocontentbg, true)
+		gohelper.setActive(arg_3_0._gocontentbg, true)
 
-		slot0._txtanacn.text = slot1
+		arg_3_0._txtanacn.text = arg_3_1
 	end
 end
 
-return slot0
+return var_0_0

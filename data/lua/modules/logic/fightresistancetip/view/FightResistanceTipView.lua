@@ -1,240 +1,257 @@
-module("modules.logic.fightresistancetip.view.FightResistanceTipView", package.seeall)
+﻿module("modules.logic.fightresistancetip.view.FightResistanceTipView", package.seeall)
 
-slot0 = class("FightResistanceTipView", BaseView)
+local var_0_0 = class("FightResistanceTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goresistance = gohelper.findChild(slot0.viewGO, "#go_resistance")
-	slot0._scrollresistance = gohelper.findChildScrollRect(slot0.viewGO, "#go_resistance/#scroll_resistance")
-	slot0._goresistanceitem = gohelper.findChild(slot0.viewGO, "#go_resistance/#scroll_resistance/viewport/content/#go_resistanceitem")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_resistance/#scroll_resistance/viewport/content")
-	slot0._btnclosedetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closedetail")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "#go_tips")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_tips/#txt_name")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "#go_tips/#txt_desc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goresistance = gohelper.findChild(arg_1_0.viewGO, "#go_resistance")
+	arg_1_0._scrollresistance = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_resistance/#scroll_resistance")
+	arg_1_0._goresistanceitem = gohelper.findChild(arg_1_0.viewGO, "#go_resistance/#scroll_resistance/viewport/content/#go_resistanceitem")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_resistance/#scroll_resistance/viewport/content")
+	arg_1_0._btnclosedetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closedetail")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_name")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_desc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnclosedetail:AddClickListener(slot0._btnclosedetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnclosedetail:AddClickListener(arg_2_0._btnclosedetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnclosedetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnclosedetail:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnclosedetailOnClick(slot0)
-	slot0:hideDescTip()
+function var_0_0._btnclosedetailOnClick(arg_5_0)
+	arg_5_0:hideDescTip()
 end
 
-slot0.Interval = 10
-slot0.MaxHeight = 535
+var_0_0.Interval = 10
+var_0_0.MaxHeight = 535
 
-function slot0._editableInitView(slot0)
-	slot0.goDetailClose = slot0._btnclosedetail.gameObject
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0.goDetailClose = arg_6_0._btnclosedetail.gameObject
 
-	gohelper.setActive(slot0._goresistanceitem, false)
-	slot0:hideDescTip()
+	gohelper.setActive(arg_6_0._goresistanceitem, false)
+	arg_6_0:hideDescTip()
 
-	slot0.rectTrResistance = slot0._goresistance:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrTips = slot0._gotips:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrScrollResistance = slot0._scrollresistance:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrContent = slot0._gocontent:GetComponent(gohelper.Type_RectTransform)
-	slot0.itemList = {}
-	slot0.rectTrViewGo = slot0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrView = slot0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	slot0.viewWidth = recthelper.getWidth(slot0.rectTrView)
-	slot0.resistanceWidth = recthelper.getWidth(slot0.rectTrResistance)
-	slot0.tipWidth = recthelper.getWidth(slot0.rectTrTips)
+	arg_6_0.rectTrResistance = arg_6_0._goresistance:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectTrTips = arg_6_0._gotips:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectTrScrollResistance = arg_6_0._scrollresistance:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectTrContent = arg_6_0._gocontent:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.itemList = {}
+	arg_6_0.rectTrViewGo = arg_6_0.viewGO:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectTrView = arg_6_0.viewGO:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.viewWidth = recthelper.getWidth(arg_6_0.rectTrView)
+	arg_6_0.resistanceWidth = recthelper.getWidth(arg_6_0.rectTrResistance)
+	arg_6_0.tipWidth = recthelper.getWidth(arg_6_0.rectTrTips)
 end
 
-function slot0.onOpen(slot0)
-	slot0.screenPos = slot0.viewParam.screenPos
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.screenPos = arg_7_0.viewParam.screenPos
 
-	slot0:buildResistanceList(slot0.viewParam.resistanceDict)
-	slot0:refreshResistanceItem()
-	slot0:setAnchor()
-	slot0:calculateMaxHeight()
-	slot0:changeScrollHeight()
+	arg_7_0:buildResistanceList(arg_7_0.viewParam.resistanceDict)
+	arg_7_0:refreshResistanceItem()
+	arg_7_0:setAnchor()
+	arg_7_0:calculateMaxHeight()
+	arg_7_0:changeScrollHeight()
 end
 
-function slot0.buildResistanceList(slot0, slot1)
-	slot0.resistanceList = slot0.resistanceList or {}
-	slot0.resistanceDict = slot0.resistanceDict or {}
+function var_0_0.buildResistanceList(arg_8_0, arg_8_1)
+	arg_8_0.resistanceList = arg_8_0.resistanceList or {}
+	arg_8_0.resistanceDict = arg_8_0.resistanceDict or {}
 
-	tabletool.clear(slot0.resistanceList)
-	tabletool.clear(slot0.resistanceDict)
+	tabletool.clear(arg_8_0.resistanceList)
+	tabletool.clear(arg_8_0.resistanceDict)
 
-	if not slot1 then
+	if not arg_8_1 then
 		return
 	end
 
-	slot0:buildResistanceListByReToughness(slot1, FightEnum.Resistance.controlResilience)
-	slot0:buildResistanceListByReToughness(slot1, FightEnum.Resistance.delExPointResilience)
-	slot0:buildResistanceListByReToughness(slot1, FightEnum.Resistance.stressUpResilience)
-	slot0:buildResistanceListByResistanceDict(slot1)
+	arg_8_0:buildResistanceListByReToughness(arg_8_1, FightEnum.Resistance.controlResilience)
+	arg_8_0:buildResistanceListByReToughness(arg_8_1, FightEnum.Resistance.delExPointResilience)
+	arg_8_0:buildResistanceListByReToughness(arg_8_1, FightEnum.Resistance.stressUpResilience)
+	arg_8_0:buildResistanceListByResistanceDict(arg_8_1)
 end
 
-function slot0.buildResistanceListByReToughness(slot0, slot1, slot2)
-	slot3 = FightEnum.ToughnessToResistance[slot2]
-	slot0.tempResistanceList = slot0.tempResistanceList or {}
+function var_0_0.buildResistanceListByReToughness(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = FightEnum.ToughnessToResistance[arg_9_2]
+	local var_9_1 = arg_9_0:getResistanceValue(arg_9_1, arg_9_2)
 
-	tabletool.clear(slot0.tempResistanceList)
+	arg_9_0.tempResistanceList = arg_9_0.tempResistanceList or {}
 
-	if slot0:getResistanceValue(slot1, slot2) and slot4 > 0 then
-		table.insert(slot0.resistanceList, {
-			resistanceId = slot2,
-			value = slot4
+	tabletool.clear(arg_9_0.tempResistanceList)
+
+	if var_9_1 and var_9_1 > 0 then
+		table.insert(arg_9_0.resistanceList, {
+			resistanceId = arg_9_2,
+			value = var_9_1
 		})
 
-		slot0.resistanceDict[slot2] = true
+		arg_9_0.resistanceDict[arg_9_2] = true
 
-		for slot8, slot9 in ipairs(slot3) do
-			table.insert(slot0.tempResistanceList, {
-				resistanceId = slot9,
-				value = slot0:getResistanceValue(slot1, slot9)
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			table.insert(arg_9_0.tempResistanceList, {
+				resistanceId = iter_9_1,
+				value = arg_9_0:getResistanceValue(arg_9_1, iter_9_1)
 			})
 
-			slot0.resistanceDict[slot9] = true
+			arg_9_0.resistanceDict[iter_9_1] = true
 		end
 
-		table.sort(slot0.tempResistanceList, uv0.sortResistance)
+		table.sort(arg_9_0.tempResistanceList, var_0_0.sortResistance)
 
-		for slot8, slot9 in ipairs(slot0.tempResistanceList) do
-			table.insert(slot0.resistanceList, slot9)
-		end
-	end
-end
-
-function slot0.buildResistanceListByResistanceDict(slot0, slot1)
-	slot0.tempResistanceList = slot0.tempResistanceList or {}
-
-	tabletool.clear(slot0.tempResistanceList)
-
-	for slot5, slot6 in pairs(slot1) do
-		if slot6 > 0 and FightEnum.Resistance[slot5] and not slot0.resistanceDict[slot7] then
-			table.insert(slot0.tempResistanceList, {
-				resistanceId = slot7,
-				value = slot0:getResistanceValue(slot1, slot7)
-			})
-
-			slot0.resistanceDict[slot7] = true
-		end
-	end
-
-	if #slot0.tempResistanceList > 0 then
-		table.sort(slot0.tempResistanceList, uv0.sortResistance)
-
-		for slot5, slot6 in ipairs(slot0.tempResistanceList) do
-			table.insert(slot0.resistanceList, slot6)
+		for iter_9_2, iter_9_3 in ipairs(arg_9_0.tempResistanceList) do
+			table.insert(arg_9_0.resistanceList, iter_9_3)
 		end
 	end
 end
 
-function slot0.getResistanceValue(slot0, slot1, slot2)
-	return FightHelper.getResistanceKeyById(slot2) and slot1[slot3] or 0
-end
+function var_0_0.buildResistanceListByResistanceDict(arg_10_0, arg_10_1)
+	arg_10_0.tempResistanceList = arg_10_0.tempResistanceList or {}
 
-function slot0.refreshResistanceItem(slot0)
-	for slot4, slot5 in pairs(slot0.resistanceList) do
-		slot6 = slot0.itemList[slot4] or slot0:createResistanceItem()
+	tabletool.clear(arg_10_0.tempResistanceList)
 
-		gohelper.setActive(slot6.go, true)
+	for iter_10_0, iter_10_1 in pairs(arg_10_1) do
+		if iter_10_1 > 0 then
+			local var_10_0 = FightEnum.Resistance[iter_10_0]
 
-		slot7 = lua_character_attribute.configDict[slot5.resistanceId]
+			if var_10_0 and not arg_10_0.resistanceDict[var_10_0] then
+				table.insert(arg_10_0.tempResistanceList, {
+					resistanceId = var_10_0,
+					value = arg_10_0:getResistanceValue(arg_10_1, var_10_0)
+				})
 
-		UISpriteSetMgr.instance:setBuffSprite(slot6.imageIcon, slot7.icon)
-
-		slot6.attrCo = slot7
-		slot6.txtName.text = slot7.name
-		slot6.txtValue.text = string.format("%s%%", math.floor(slot5.value / 10))
+				arg_10_0.resistanceDict[var_10_0] = true
+			end
+		end
 	end
 
-	for slot4 = #slot0.resistanceList + 1, #slot0.itemList do
-		gohelper.setActive(slot0.itemList[slot4].go, false)
+	if #arg_10_0.tempResistanceList > 0 then
+		table.sort(arg_10_0.tempResistanceList, var_0_0.sortResistance)
+
+		for iter_10_2, iter_10_3 in ipairs(arg_10_0.tempResistanceList) do
+			table.insert(arg_10_0.resistanceList, iter_10_3)
+		end
+	end
+end
+
+function var_0_0.getResistanceValue(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = FightHelper.getResistanceKeyById(arg_11_2)
+
+	return var_11_0 and arg_11_1[var_11_0] or 0
+end
+
+function var_0_0.refreshResistanceItem(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.resistanceList) do
+		local var_12_0 = arg_12_0.itemList[iter_12_0] or arg_12_0:createResistanceItem()
+
+		gohelper.setActive(var_12_0.go, true)
+
+		local var_12_1 = lua_character_attribute.configDict[iter_12_1.resistanceId]
+
+		UISpriteSetMgr.instance:setBuffSprite(var_12_0.imageIcon, var_12_1.icon)
+
+		var_12_0.attrCo = var_12_1
+		var_12_0.txtName.text = var_12_1.name
+		var_12_0.txtValue.text = string.format("%s%%", math.floor(iter_12_1.value / 10))
 	end
 
-	slot0._scrollresistance.horizontalNormalizedPosition = 1
+	for iter_12_2 = #arg_12_0.resistanceList + 1, #arg_12_0.itemList do
+		gohelper.setActive(arg_12_0.itemList[iter_12_2].go, false)
+	end
+
+	arg_12_0._scrollresistance.horizontalNormalizedPosition = 1
 end
 
-function slot0.calculateMaxHeight(slot0)
-	slot0.maxHeight = recthelper.getHeight(slot0.rectTrViewGo) - math.abs(recthelper.getAnchorY(slot0.rectTrResistance)) - 50
+function var_0_0.calculateMaxHeight(arg_13_0)
+	arg_13_0.maxHeight = recthelper.getHeight(arg_13_0.rectTrViewGo) - math.abs(recthelper.getAnchorY(arg_13_0.rectTrResistance)) - 50
 end
 
-function slot0.setAnchor(slot0)
-	slot1, slot2 = recthelper.screenPosToAnchorPos2(slot0.screenPos, slot0.rectTrView)
+function var_0_0.setAnchor(arg_14_0)
+	local var_14_0, var_14_1 = recthelper.screenPosToAnchorPos2(arg_14_0.screenPos, arg_14_0.rectTrView)
 
-	recthelper.setAnchor(slot0.rectTrResistance, slot1, slot2)
+	recthelper.setAnchor(arg_14_0.rectTrResistance, var_14_0, var_14_1)
 
-	if slot0.tipWidth <= slot0.viewWidth - (math.abs(slot1) + uv0.Interval + slot0.resistanceWidth) then
-		recthelper.setAnchor(slot0.rectTrTips, slot1 - slot0.resistanceWidth - uv0.Interval, slot2)
+	if arg_14_0.viewWidth - (math.abs(var_14_0) + var_0_0.Interval + arg_14_0.resistanceWidth) >= arg_14_0.tipWidth then
+		recthelper.setAnchor(arg_14_0.rectTrTips, var_14_0 - arg_14_0.resistanceWidth - var_0_0.Interval, var_14_1)
 	else
-		recthelper.setAnchor(slot0.rectTrTips, slot1 + uv0.Interval + slot0.tipWidth, slot2)
+		recthelper.setAnchor(arg_14_0.rectTrTips, var_14_0 + var_0_0.Interval + arg_14_0.tipWidth, var_14_1)
 	end
 end
 
-function slot0.changeScrollHeight(slot0)
-	recthelper.setHeight(slot0.rectTrScrollResistance, math.min(recthelper.getHeight(slot0.rectTrContent), slot0.maxHeight))
+function var_0_0.changeScrollHeight(arg_15_0)
+	local var_15_0 = recthelper.getHeight(arg_15_0.rectTrContent)
+	local var_15_1 = math.min(var_15_0, arg_15_0.maxHeight)
+
+	recthelper.setHeight(arg_15_0.rectTrScrollResistance, var_15_1)
 end
 
-function slot0.createResistanceItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._goresistanceitem)
-	slot1.imageIcon = gohelper.findChildImage(slot1.go, "#image_icon")
-	slot1.txtName = gohelper.findChildText(slot1.go, "#txt_name")
-	slot1.txtValue = gohelper.findChildText(slot1.go, "#txt_value")
-	slot1.btnDetails = gohelper.findChildClickWithDefaultAudio(slot1.go, "#txt_name/icon/#btn_details")
+function var_0_0.createResistanceItem(arg_16_0)
+	local var_16_0 = arg_16_0:getUserDataTb_()
 
-	slot1.btnDetails:AddClickListener(slot0.onClickResistanceItem, slot0, slot1)
-	table.insert(slot0.itemList, slot1)
+	var_16_0.go = gohelper.cloneInPlace(arg_16_0._goresistanceitem)
+	var_16_0.imageIcon = gohelper.findChildImage(var_16_0.go, "#image_icon")
+	var_16_0.txtName = gohelper.findChildText(var_16_0.go, "#txt_name")
+	var_16_0.txtValue = gohelper.findChildText(var_16_0.go, "#txt_value")
+	var_16_0.btnDetails = gohelper.findChildClickWithDefaultAudio(var_16_0.go, "#txt_name/icon/#btn_details")
 
-	return slot1
+	var_16_0.btnDetails:AddClickListener(arg_16_0.onClickResistanceItem, arg_16_0, var_16_0)
+	table.insert(arg_16_0.itemList, var_16_0)
+
+	return var_16_0
 end
 
-function slot0.onClickResistanceItem(slot0, slot1)
-	slot0:showDescTip()
+function var_0_0.onClickResistanceItem(arg_17_0, arg_17_1)
+	arg_17_0:showDescTip()
 
-	slot2 = slot1.attrCo
-	slot0._txtname.text = slot2.name
-	slot0._txtdesc.text = slot2.desc
+	local var_17_0 = arg_17_1.attrCo
+
+	arg_17_0._txtname.text = var_17_0.name
+	arg_17_0._txtdesc.text = var_17_0.desc
 end
 
-function slot0.showDescTip(slot0)
-	gohelper.setActive(slot0.goDetailClose, true)
-	gohelper.setActive(slot0._gotips, true)
+function var_0_0.showDescTip(arg_18_0)
+	gohelper.setActive(arg_18_0.goDetailClose, true)
+	gohelper.setActive(arg_18_0._gotips, true)
 end
 
-function slot0.hideDescTip(slot0)
-	gohelper.setActive(slot0.goDetailClose, false)
-	gohelper.setActive(slot0._gotips, false)
+function var_0_0.hideDescTip(arg_19_0)
+	gohelper.setActive(arg_19_0.goDetailClose, false)
+	gohelper.setActive(arg_19_0._gotips, false)
 end
 
-function slot0.sortResistance(slot0, slot1)
-	if slot0.value ~= slot1.value then
-		return slot1.value < slot0.value
+function var_0_0.sortResistance(arg_20_0, arg_20_1)
+	if arg_20_0.value ~= arg_20_1.value then
+		return arg_20_0.value > arg_20_1.value
 	end
 
-	return lua_character_attribute.configDict[slot0.resistanceId].sortId < lua_character_attribute.configDict[slot1.resistanceId].sortId
+	local var_20_0 = lua_character_attribute.configDict[arg_20_0.resistanceId]
+	local var_20_1 = lua_character_attribute.configDict[arg_20_1.resistanceId]
+
+	return var_20_0.sortId < var_20_1.sortId
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_21_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.itemList) do
-		slot5.btnDetails:RemoveClickListener()
+function var_0_0.onDestroyView(arg_22_0)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.itemList) do
+		iter_22_1.btnDetails:RemoveClickListener()
 	end
 
-	slot0.itemList = nil
+	arg_22_0.itemList = nil
 end
 
-return slot0
+return var_0_0

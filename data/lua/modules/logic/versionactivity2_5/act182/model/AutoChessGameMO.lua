@@ -1,25 +1,25 @@
-module("modules.logic.versionactivity2_5.act182.model.AutoChessGameMO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act182.model.AutoChessGameMO", package.seeall)
 
-slot0 = pureTable("AutoChessGameMO")
+local var_0_0 = pureTable("AutoChessGameMO")
 
-function slot0.init(slot0, slot1)
-	slot0.module = slot1.module
-	slot0.start = slot1.start
-	slot0.currRound = slot1.currRound
-	slot0.episodeId = slot1.episodeId
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.module = arg_1_1.module
+	arg_1_0.start = arg_1_1.start
+	arg_1_0.currRound = arg_1_1.currRound
+	arg_1_0.episodeId = arg_1_1.episodeId
 
-	slot0:updateMasterIdBox(slot1.masterIdBox)
+	arg_1_0:updateMasterIdBox(arg_1_1.masterIdBox)
 
-	slot0.selectMasterId = slot1.selectMasterId
-	slot0.refreshed = slot1.refreshed
+	arg_1_0.selectMasterId = arg_1_1.selectMasterId
+	arg_1_0.refreshed = arg_1_1.refreshed
 end
 
-function slot0.updateMasterIdBox(slot0, slot1)
-	slot0.masterIdBox = {}
+function var_0_0.updateMasterIdBox(arg_2_0, arg_2_1)
+	arg_2_0.masterIdBox = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.masterIdBox[#slot0.masterIdBox + 1] = slot6
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		arg_2_0.masterIdBox[#arg_2_0.masterIdBox + 1] = iter_2_1
 	end
 end
 
-return slot0
+return var_0_0

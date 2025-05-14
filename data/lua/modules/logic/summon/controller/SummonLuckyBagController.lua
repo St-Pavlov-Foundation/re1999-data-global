@@ -1,47 +1,52 @@
-module("modules.logic.summon.controller.SummonLuckyBagController", package.seeall)
+﻿module("modules.logic.summon.controller.SummonLuckyBagController", package.seeall)
 
-slot0 = class("SummonLuckyBagController", BaseController)
+local var_0_0 = class("SummonLuckyBagController", BaseController)
 
-function slot0.skipOpenGetChar(slot0, slot1, slot2, slot3)
-	if not slot3 then
+function var_0_0.skipOpenGetChar(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	if not arg_1_3 then
 		return
 	end
 
-	slot4 = SummonConfig.instance:getSummonPool(slot3)
+	local var_1_0 = SummonConfig.instance:getSummonPool(arg_1_3)
+	local var_1_1 = {
+		heroId = arg_1_1,
+		duplicateCount = arg_1_2
+	}
 
-	if SummonController.instance:getMvSkinIdByHeroId(slot1) then
-		-- Nothing
+	var_1_1.isSummon = true
+	var_1_1.skipVideo = true
+
+	local var_1_2 = SummonController.instance:getMvSkinIdByHeroId(arg_1_1)
+
+	if var_1_2 then
+		var_1_1.mvSkinId = var_1_2
 	end
 
-	if slot4 and slot4.ticketId ~= 0 then
-		slot5.summonTicketId = slot4.ticketId
+	if var_1_0 and var_1_0.ticketId ~= 0 then
+		var_1_1.summonTicketId = var_1_0.ticketId
 	end
 
-	CharacterController.instance:openCharacterGetView({
-		heroId = slot1,
-		duplicateCount = slot2,
-		isSummon = true,
-		skipVideo = true,
-		mvSkinId = slot6
-	})
+	CharacterController.instance:openCharacterGetView(var_1_1)
 end
 
-function slot0.skipOpenGetLuckyBag(slot0, slot1, slot2)
-	if not slot2 then
+function var_0_0.skipOpenGetLuckyBag(arg_2_0, arg_2_1, arg_2_2)
+	if not arg_2_2 then
 		return
 	end
 
-	if SummonConfig.instance:getSummonPool(slot2) and slot4.ticketId ~= 0 then
-		-- Nothing
+	local var_2_0 = {
+		luckyBagId = arg_2_1,
+		poolId = arg_2_2
+	}
+	local var_2_1 = SummonConfig.instance:getSummonPool(arg_2_2)
+
+	if var_2_1 and var_2_1.ticketId ~= 0 then
+		var_2_0.summonTicketId = var_2_1.ticketId
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonGetLuckyBag, {
-		luckyBagId = slot1,
-		poolId = slot2,
-		summonTicketId = slot4.ticketId
-	})
+	ViewMgr.instance:openView(ViewName.SummonGetLuckyBag, var_2_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

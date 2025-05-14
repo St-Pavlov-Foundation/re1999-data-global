@@ -1,46 +1,46 @@
-module("modules.logic.fight.system.work.FightWorkMasterAddHandCard", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkMasterAddHandCard", package.seeall)
 
-slot0 = class("FightWorkMasterAddHandCard", FightEffectBase)
+local var_0_0 = class("FightWorkMasterAddHandCard", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._revertVisible = true
+	arg_1_0._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 	AudioMgr.instance:trigger(20190019)
 
-	slot1 = FightCardInfoMO.New()
+	local var_1_0 = FightCardInfoMO.New()
 
-	slot1:init(slot0._actEffectMO.cardInfo)
+	var_1_0:init(arg_1_0._actEffectMO.cardInfo)
 
-	slot2 = FightCardModel.instance:getHandCards()
+	local var_1_1 = FightCardModel.instance:getHandCards()
 
-	table.insert(slot2, slot1)
-	FightCardModel.instance:coverCard(slot2)
+	table.insert(var_1_1, var_1_0)
+	FightCardModel.instance:coverCard(var_1_1)
 
 	if FightModel.instance:getVersion() >= 4 then
-		FightController.instance:dispatchEvent(FightEvent.MasterAddHandCard, slot1)
-		slot0:com_registTimer(slot0._delayAfterPerformance, 1 / FightModel.instance:getUISpeed())
+		FightController.instance:dispatchEvent(FightEvent.MasterAddHandCard, var_1_0)
+		arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, 1 / FightModel.instance:getUISpeed())
 	else
-		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(slot2))
+		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(var_1_1))
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._delayAfterPerformance(slot0)
-	slot0:onDone(true)
+function var_0_0._delayAfterPerformance(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._revertVisible then
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return slot0
+return var_0_0

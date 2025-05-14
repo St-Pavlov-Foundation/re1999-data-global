@@ -1,45 +1,45 @@
-module("modules.logic.fight.FightTimerItem", package.seeall)
+﻿module("modules.logic.fight.FightTimerItem", package.seeall)
 
-slot0 = class("FightTimerItem")
+local var_0_0 = class("FightTimerItem")
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.time = slot1
-	slot0.originRepeatCount = slot2
-	slot0.repeatCount = slot2
-	slot0.callback = slot3
-	slot0.handle = slot4
-	slot0.param = slot5
-	slot0.updateTime = 0
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
+	arg_1_0.time = arg_1_1
+	arg_1_0.originRepeatCount = arg_1_2
+	arg_1_0.repeatCount = arg_1_2
+	arg_1_0.callback = arg_1_3
+	arg_1_0.handle = arg_1_4
+	arg_1_0.param = arg_1_5
+	arg_1_0.updateTime = 0
 end
 
-function slot0.restart(slot0, slot1, slot2, slot3)
-	slot0.updateTime = 0
-	slot0.time = slot1 or slot0.time
-	slot0.repeatCount = slot2 or slot0.originRepeatCount
-	slot0.param = slot3 or slot0.param
-	slot0.isDone = false
+function var_0_0.restart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.updateTime = 0
+	arg_2_0.time = arg_2_1 or arg_2_0.time
+	arg_2_0.repeatCount = arg_2_2 or arg_2_0.originRepeatCount
+	arg_2_0.param = arg_2_3 or arg_2_0.param
+	arg_2_0.isDone = false
 end
 
-function slot0.update(slot0, slot1)
-	if slot0.isDone then
+function var_0_0.update(arg_3_0, arg_3_1)
+	if arg_3_0.isDone then
 		return
 	end
 
-	slot0.updateTime = slot0.updateTime + slot1
+	arg_3_0.updateTime = arg_3_0.updateTime + arg_3_1
 
-	if slot0.time <= slot0.updateTime then
-		slot0.updateTime = 0
+	if arg_3_0.updateTime >= arg_3_0.time then
+		arg_3_0.updateTime = 0
 
-		if slot0.repeatCount ~= -1 then
-			slot0.repeatCount = slot0.repeatCount - 1
+		if arg_3_0.repeatCount ~= -1 then
+			arg_3_0.repeatCount = arg_3_0.repeatCount - 1
 		end
 
-		xpcall(slot0.callback, __G__TRACKBACK__, slot0.handle, slot0.param)
+		xpcall(arg_3_0.callback, __G__TRACKBACK__, arg_3_0.handle, arg_3_0.param)
 
-		if slot0.repeatCount == 0 then
-			slot0.isDone = true
+		if arg_3_0.repeatCount == 0 then
+			arg_3_0.isDone = true
 		end
 	end
 end
 
-return slot0
+return var_0_0

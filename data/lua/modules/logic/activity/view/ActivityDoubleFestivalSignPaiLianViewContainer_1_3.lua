@@ -1,23 +1,23 @@
-module("modules.logic.activity.view.ActivityDoubleFestivalSignPaiLianViewContainer_1_3", package.seeall)
+﻿module("modules.logic.activity.view.ActivityDoubleFestivalSignPaiLianViewContainer_1_3", package.seeall)
 
-slot0 = class("ActivityDoubleFestivalSignPaiLianViewContainer_1_3", Activity101SignViewBaseContainer)
+local var_0_0 = class("ActivityDoubleFestivalSignPaiLianViewContainer_1_3", Activity101SignViewBaseContainer)
 
-function slot0.onModifyListScrollParam(slot0, slot1)
-	slot1.cellClass = ActivityDoubleFestivalSignItem_1_3
-	slot1.scrollGOPath = "Root/#scroll_ItemList"
-	slot1.cellWidth = 220
-	slot1.cellHeight = 600
-	slot1.cellSpaceH = -16
+function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
+	arg_1_1.cellClass = ActivityDoubleFestivalSignItem_1_3
+	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
+	arg_1_1.cellWidth = 220
+	arg_1_1.cellHeight = 600
+	arg_1_1.cellSpaceH = -16
 end
 
-function slot0.onGetMainViewClassType(slot0)
+function var_0_0.onGetMainViewClassType(arg_2_0)
 	return ActivityDoubleFestivalSignPaiLianView_1_3
 end
 
-function slot0.onBuildViews(slot0)
+function var_0_0.onBuildViews(arg_3_0)
 	return {
-		slot0.__mainView
+		arg_3_0.__mainView
 	}
 end
 
-return slot0
+return var_0_0

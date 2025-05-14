@@ -1,13 +1,13 @@
-module("modules.logic.explore.model.mo.unit.ExplorePrismMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExplorePrismMO", package.seeall)
 
-slot0 = class("ExplorePrismMO", ExploreBaseUnitMO)
+local var_0_0 = class("ExplorePrismMO", ExploreBaseUnitMO)
 
-function slot0.initTypeData(slot0)
-	slot0.fixItemId = tonumber(slot0.specialDatas[1])
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.fixItemId = tonumber(arg_1_0.specialDatas[1])
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_2_0)
 	return ExplorePrismUnit
 end
 
-return slot0
+return var_0_0

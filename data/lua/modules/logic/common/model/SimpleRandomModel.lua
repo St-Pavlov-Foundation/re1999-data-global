@@ -1,148 +1,164 @@
-module("modules.logic.common.model.SimpleRandomModel", package.seeall)
+﻿module("modules.logic.common.model.SimpleRandomModel", package.seeall)
 
-slot0 = class("SimpleRandomModel", BaseModel)
-slot1 = math.random
-slot2 = math.randomseed
-slot3 = table.insert
-slot4 = string.format
+local var_0_0 = class("SimpleRandomModel", BaseModel)
+local var_0_1 = math.random
+local var_0_2 = math.randomseed
+local var_0_3 = table.insert
+local var_0_4 = string.format
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._rdHashSet = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._rdHashSet = {}
 end
 
-function slot0.getListIdxAndItemIdx(slot0, slot1)
+function var_0_0.getListIdxAndItemIdx(arg_3_0, arg_3_1)
 	if isDebugBuild then
-		assert(#slot1 > 0)
+		assert(#arg_3_1 > 0)
 	end
 
-	slot2 = nil
+	local var_3_0
+	local var_3_1 = 0
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot3 = 0 + #slot8
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		var_3_1 = var_3_1 + #iter_3_1
 
-		if slot7 == 1 then
-			slot0._rdHashSet[slot8] = slot0._rdHashSet[slot8] or {}
-			slot2 = slot0._rdHashSet[slot8]
+		if iter_3_0 == 1 then
+			arg_3_0._rdHashSet[iter_3_1] = arg_3_0._rdHashSet[iter_3_1] or {}
+			var_3_0 = arg_3_0._rdHashSet[iter_3_1]
 		else
-			slot2[slot8] = slot2[slot8] or {}
-			slot2 = slot2[slot8]
+			var_3_0[iter_3_1] = var_3_0[iter_3_1] or {}
+			var_3_0 = var_3_0[iter_3_1]
 		end
 	end
 
 	if isDebugBuild then
-		assert(type(slot2) == "table", "never happen")
-		assert(slot3 > 0, "empty reqLists")
+		assert(type(var_3_0) == "table", "never happen")
+		assert(var_3_1 > 0, "empty reqLists")
 	end
 
-	slot6 = slot2.rdIdx2RealIdxPairDict or {}
+	local var_3_2 = var_3_0.curRdIdx or 0
+	local var_3_3 = var_3_0.rdIdxList or {}
+	local var_3_4 = var_3_0.rdIdx2RealIdxPairDict or {}
 
-	if (slot2.curRdIdx or 0) < #(slot2.rdIdxList or {}) then
-		slot4 = slot4 + 1
-		slot2.curRdIdx = slot4
-		slot7 = slot2.rdIdx2RealIdxPairDict[slot4]
+	if var_3_2 < #var_3_3 then
+		local var_3_5 = var_3_2 + 1
 
-		return slot7.whichList, slot7.whichItem
+		var_3_0.curRdIdx = var_3_5
+
+		local var_3_6 = var_3_0.rdIdx2RealIdxPairDict[var_3_5]
+
+		return var_3_6.whichList, var_3_6.whichItem
 	end
 
-	for slot10 = #slot5 + 1, slot3 do
-		uv0(slot5, slot10)
-		uv0(slot6, {})
+	for iter_3_2 = #var_3_3 + 1, var_3_1 do
+		var_0_3(var_3_3, iter_3_2)
+		var_0_3(var_3_4, {})
 	end
 
-	slot4 = 1
+	local var_3_7 = 1
 
-	uv1(os.time())
+	var_0_2(os.time())
 
-	slot5 = GameUtil.randomTable(slot5)
-	slot7 = {
+	local var_3_8 = GameUtil.randomTable(var_3_3)
+	local var_3_9 = {
 		[0] = 0
 	}
 
-	for slot11, slot12 in ipairs(slot1) do
-		slot7[slot11] = slot7[slot11 - 1] + #slot12
+	for iter_3_3, iter_3_4 in ipairs(arg_3_1) do
+		var_3_9[iter_3_3] = var_3_9[iter_3_3 - 1] + #iter_3_4
 	end
 
-	for slot11, slot12 in ipairs(slot5) do
-		slot13 = slot6[slot11]
+	for iter_3_5, iter_3_6 in ipairs(var_3_8) do
+		local var_3_10 = var_3_4[iter_3_5]
 
-		for slot17 = 1, #slot7 do
-			if slot12 <= slot7[slot17] then
-				slot13.whichList = slot17
-				slot13.whichItem = slot12 - slot7[slot17 - 1]
+		for iter_3_7 = 1, #var_3_9 do
+			if iter_3_6 <= var_3_9[iter_3_7] then
+				local var_3_11 = var_3_9[iter_3_7 - 1]
+
+				var_3_10.whichList = iter_3_7
+				var_3_10.whichItem = iter_3_6 - var_3_11
 
 				break
 			end
 		end
 	end
 
-	slot2.rdIdxList = slot5
-	slot2.curRdIdx = slot4
-	slot2.rdIdx2RealIdxPairDict = slot6
-	slot8 = slot2.rdIdx2RealIdxPairDict[slot4]
+	var_3_0.rdIdxList = var_3_8
+	var_3_0.curRdIdx = var_3_7
+	var_3_0.rdIdx2RealIdxPairDict = var_3_4
 
-	return slot8.whichList, slot8.whichItem
+	local var_3_12 = var_3_0.rdIdx2RealIdxPairDict[var_3_7]
+
+	return var_3_12.whichList, var_3_12.whichItem
 end
 
-function slot0.getRateIndex(slot0, slot1)
-	uv0(os.time())
+function var_0_0.getRateIndex(arg_4_0, arg_4_1)
+	var_0_2(os.time())
 
-	slot2 = 0
+	local var_4_0 = 0
+	local var_4_1 = 0
 
-	for slot7, slot8 in ipairs(slot1) do
-		if slot8 > 0 then
-			slot3 = 0 + slot8
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		if iter_4_1 > 0 then
+			var_4_1 = var_4_1 + iter_4_1
 		end
 	end
 
-	slot4 = uv1(1, slot3)
+	local var_4_2 = var_0_1(1, var_4_1)
 
-	for slot8, slot9 in ipairs(slot1) do
-		if slot9 > 0 then
-			if slot4 <= slot9 then
-				return slot2 + 1
+	for iter_4_2, iter_4_3 in ipairs(arg_4_1) do
+		var_4_0 = var_4_0 + 1
+
+		if iter_4_3 > 0 then
+			if var_4_2 <= iter_4_3 then
+				return var_4_0
 			end
 
-			slot4 = slot4 - slot9
+			var_4_2 = var_4_2 - iter_4_3
 		end
 	end
 
 	if isDebugBuild and false then
-		slot5 = {}
+		local var_4_3 = {}
 
-		uv2("[SimpleRandomModel - getRateIndex] =========== begin")
-		uv2("tot: " .. slot3)
-		uv2("result index: " .. slot2)
+		var_0_3("[SimpleRandomModel - getRateIndex] =========== begin")
+		var_0_3("tot: " .. var_4_1)
+		var_0_3("result index: " .. var_4_0)
 
-		for slot9, slot10 in ipairs(slot1) do
-			uv2(uv3("\t[%s]: %s", slot9, slot10))
+		for iter_4_4, iter_4_5 in ipairs(arg_4_1) do
+			var_0_3(var_0_4("\t[%s]: %s", iter_4_4, iter_4_5))
 		end
 
-		uv2("[SimpleRandomModel - getRateIndex] =========== end")
-		logError(table.concat(slot5, "\n"))
+		var_0_3("[SimpleRandomModel - getRateIndex] =========== end")
+		logError(table.concat(var_4_3, "\n"))
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.clean(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1 or {}) do
-		if nil == nil then
-			slot2 = slot0._rdHashSet[slot7]
-			slot0._rdHashSet[slot7] = nil
-		else
-			slot2[slot7] = nil
+function var_0_0.clean(arg_5_0, arg_5_1)
+	local var_5_0
 
-			if not slot2[slot7] then
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1 or {}) do
+		if var_5_0 == nil then
+			var_5_0 = arg_5_0._rdHashSet[iter_5_1]
+			arg_5_0._rdHashSet[iter_5_1] = nil
+		else
+			local var_5_1 = var_5_0
+
+			var_5_0 = var_5_0[iter_5_1]
+			var_5_1[iter_5_1] = nil
+
+			if not var_5_0 then
 				break
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

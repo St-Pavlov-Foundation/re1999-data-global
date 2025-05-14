@@ -1,175 +1,191 @@
-module("modules.logic.gm.view.rouge.GMSubViewResource", package.seeall)
+﻿module("modules.logic.gm.view.rouge.GMSubViewResource", package.seeall)
 
-slot0 = class("GMSubViewResource", GMSubViewBase)
+local var_0_0 = class("GMSubViewResource", GMSubViewBase)
 
-function slot0.ctor(slot0)
-	slot0.tabName = "资源"
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.tabName = "资源"
 end
 
-function slot0.addLineIndex(slot0)
-	slot0.lineIndex = slot0.lineIndex + 1
+function var_0_0.addLineIndex(arg_2_0)
+	arg_2_0.lineIndex = arg_2_0.lineIndex + 1
 end
 
-function slot0.getLineGroup(slot0)
-	return "L" .. slot0.lineIndex
+function var_0_0.getLineGroup(arg_3_0)
+	return "L" .. arg_3_0.lineIndex
 end
 
-function slot0.addFilterVerticalGroup(slot0, slot1)
-	slot0.verticalId = slot0.verticalId or 0
-	slot0.verticalId = slot0.verticalId + 1
-	slot3 = slot0:getUserDataTb_()
+function var_0_0.addFilterVerticalGroup(arg_4_0, arg_4_1)
+	arg_4_0.verticalId = arg_4_0.verticalId or 0
+	arg_4_0.verticalId = arg_4_0.verticalId + 1
 
-	for slot7 = 1, slot1 do
-		table.insert(slot3, slot0:addVerticalInput(slot0:addVerticalGroup(slot0:getLineGroup(), slot0.verticalId, uv0.FilterItemSize.Width, slot0.filterGroupHeight), "", "正则表达式"))
+	local var_4_0 = arg_4_0:addVerticalGroup(arg_4_0:getLineGroup(), arg_4_0.verticalId, var_0_0.FilterItemSize.Width, arg_4_0.filterGroupHeight)
+	local var_4_1 = arg_4_0:getUserDataTb_()
+
+	for iter_4_0 = 1, arg_4_1 do
+		table.insert(var_4_1, arg_4_0:addVerticalInput(var_4_0, "", "正则表达式"))
 	end
 
-	return slot3
+	return var_4_1
 end
 
-slot0.FilterItemSize = {
+var_0_0.FilterItemSize = {
 	Height = 80,
 	Width = 500
 }
 
-function slot0.addVerticalInput(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.clone(slot0._goInputTextTemplate, slot1, "InputText")
+function var_0_0.addVerticalInput(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = gohelper.clone(arg_5_0._goInputTextTemplate, arg_5_1, "InputText")
 
-	gohelper.setActive(slot4, true)
-	slot0._setFontSize(gohelper.findChildText(slot4, "Text"), nil, 30)
-	slot0._setRectTransSize(slot4, nil, uv0.FilterItemSize.Width, uv0.FilterItemSize.Height)
+	gohelper.setActive(var_5_0, true)
 
-	SLFramework.UGUI.InputFieldWrap.Get(slot4).inputField.lineType = System.Enum.Parse(tolua.findtype("UnityEngine.UI.InputField+LineType"), "MultiLineSubmit")
-	gohelper.findChildText(slot4, "Placeholder").text = slot3 or ""
+	local var_5_1 = gohelper.findChildText(var_5_0, "Text")
+	local var_5_2 = gohelper.findChildText(var_5_0, "Placeholder")
 
-	slot7:SetText(slot2 or "")
-	slot7:AddOnValueChanged(slot0.onInputFilterValueChange, slot0)
+	arg_5_0._setFontSize(var_5_1, nil, 30)
+	arg_5_0._setRectTransSize(var_5_0, nil, var_0_0.FilterItemSize.Width, var_0_0.FilterItemSize.Height)
 
-	slot0._inputTexts[#slot0._inputTexts + 1] = slot7
+	local var_5_3 = SLFramework.UGUI.InputFieldWrap.Get(var_5_0)
+	local var_5_4 = tolua.findtype("UnityEngine.UI.InputField+LineType")
+	local var_5_5 = System.Enum.Parse(var_5_4, "MultiLineSubmit")
 
-	return slot7
+	var_5_3.inputField.lineType = var_5_5
+	var_5_2.text = arg_5_3 or ""
+
+	var_5_3:SetText(arg_5_2 or "")
+	var_5_3:AddOnValueChanged(arg_5_0.onInputFilterValueChange, arg_5_0)
+
+	arg_5_0._inputTexts[#arg_5_0._inputTexts + 1] = var_5_3
+
+	return var_5_3
 end
 
-function slot0.initViewContent(slot0)
-	if slot0._inited then
+function var_0_0.initViewContent(arg_6_0)
+	if arg_6_0._inited then
 		return
 	end
 
-	slot0.lineIndex = 1
-	slot4 = "开启资源慢加载"
-	slot5 = slot0.onStartToggleChange
-	slot0.startToggle = slot0:addToggle(slot0:getLineGroup(), slot4, slot5, slot0)
-	slot0.strategyList = {
+	arg_6_0.lineIndex = 1
+	arg_6_0.startToggle = arg_6_0:addToggle(arg_6_0:getLineGroup(), "开启资源慢加载", arg_6_0.onStartToggleChange, arg_6_0)
+	arg_6_0.strategyList = {
 		DelayLoadResMgr.DelayStrategyEnum.Multiple,
 		DelayLoadResMgr.DelayStrategyEnum.Fixed
 	}
-	slot0.strategyNameList = {}
+	arg_6_0.strategyNameList = {}
 
-	for slot4, slot5 in ipairs(slot0.strategyList) do
-		table.insert(slot0.strategyNameList, DelayLoadResMgr.DelayStrategyName[slot5])
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.strategyList) do
+		table.insert(arg_6_0.strategyNameList, DelayLoadResMgr.DelayStrategyName[iter_6_1])
 	end
 
-	slot0.strategyDrop = slot0:addDropDown(slot0:getLineGroup(), "延时策略", slot0.strategyNameList, slot0.onStrategyDropValueChange, slot0)
-	slot0.strategyInput = slot0:addInputText(slot0:getLineGroup(), "", "延迟数值", slot0.onStrategyInputValueChange, slot0)
+	arg_6_0.strategyDrop = arg_6_0:addDropDown(arg_6_0:getLineGroup(), "延时策略", arg_6_0.strategyNameList, arg_6_0.onStrategyDropValueChange, arg_6_0)
+	arg_6_0.strategyInput = arg_6_0:addInputText(arg_6_0:getLineGroup(), "", "延迟数值", arg_6_0.onStrategyInputValueChange, arg_6_0)
 
-	slot0:addLineIndex()
-	slot0:addLabel(slot0:getLineGroup(), "默认全部文件都会开开启慢加载，如果设置了任意'启用慢加载'， 那么只有匹配的文件才会启用慢加载。'禁用慢加载文件'优先级最高", {
+	arg_6_0:addLineIndex()
+	arg_6_0:addLabel(arg_6_0:getLineGroup(), "默认全部文件都会开开启慢加载，如果设置了任意'启用慢加载'， 那么只有匹配的文件才会启用慢加载。'禁用慢加载文件'优先级最高", {
 		w = 1200,
 		fsize = 25,
 		h = 160
 	})
-	slot0:addLineIndex()
+	arg_6_0:addLineIndex()
 
-	slot0.filterGroupHeight = 500
-	slot0.filterGroupHeight = 500
-	slot1 = {
+	arg_6_0.filterGroupHeight = 500
+	arg_6_0.filterGroupHeight = 500
+
+	local var_6_0 = {
 		w = 50,
-		h = slot0.filterGroupHeight,
+		h = arg_6_0.filterGroupHeight,
 		align = TMPro.TextAlignmentOptions.Top
 	}
 
-	slot0:addHorizontalGroup(slot0:getLineGroup(), nil, slot0.filterGroupHeight)
-	slot0:addLabel(slot0:getLineGroup(), "启用慢加载文件", slot1)
+	arg_6_0:addHorizontalGroup(arg_6_0:getLineGroup(), nil, arg_6_0.filterGroupHeight)
+	arg_6_0:addLabel(arg_6_0:getLineGroup(), "启用慢加载文件", var_6_0)
 
-	slot0.enablePatternInputList = slot0:addFilterVerticalGroup(5)
+	arg_6_0.enablePatternInputList = arg_6_0:addFilterVerticalGroup(5)
 
-	slot0:addLabel(slot0:getLineGroup(), "禁用慢加载文件", slot1)
+	arg_6_0:addLabel(arg_6_0:getLineGroup(), "禁用慢加载文件", var_6_0)
 
-	slot0.disablePatternInputList = slot0:addFilterVerticalGroup(5)
+	arg_6_0.disablePatternInputList = arg_6_0:addFilterVerticalGroup(5)
 
-	slot0:initUIValue()
-	uv0.super.initViewContent(slot0)
+	arg_6_0:initUIValue()
+	var_0_0.super.initViewContent(arg_6_0)
 end
 
-function slot0.initUIValue(slot0)
-	slot0.startToggle.isOn = DelayLoadResMgr.instance:isStartDelayLoad()
+function var_0_0.initUIValue(arg_7_0)
+	arg_7_0.startToggle.isOn = DelayLoadResMgr.instance:isStartDelayLoad()
 
-	for slot5, slot6 in ipairs(slot0.strategyList) do
-		if DelayLoadResMgr.instance:getDelayStrategy() == slot6 then
-			slot0.strategyDrop:SetValue(slot5 - 1)
+	local var_7_0 = DelayLoadResMgr.instance:getDelayStrategy()
+
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.strategyList) do
+		if var_7_0 == iter_7_1 then
+			arg_7_0.strategyDrop:SetValue(iter_7_0 - 1)
 		end
 	end
 
-	slot0.strategyInput:SetText(DelayLoadResMgr.instance:getDelayStrategyValue())
+	local var_7_1 = DelayLoadResMgr.instance:getDelayStrategyValue()
 
-	slot0.enablePatternList = tabletool.copy(DelayLoadResMgr.instance:getEnablePatternList())
-	slot0.disablePatternList = tabletool.copy(DelayLoadResMgr.instance:getDisablePatternList())
+	arg_7_0.strategyInput:SetText(var_7_1)
 
-	for slot6, slot7 in ipairs(slot0.enablePatternList) do
-		slot0.enablePatternInputList[slot6]:SetText(slot7)
+	arg_7_0.enablePatternList = tabletool.copy(DelayLoadResMgr.instance:getEnablePatternList())
+	arg_7_0.disablePatternList = tabletool.copy(DelayLoadResMgr.instance:getDisablePatternList())
+
+	for iter_7_2, iter_7_3 in ipairs(arg_7_0.enablePatternList) do
+		arg_7_0.enablePatternInputList[iter_7_2]:SetText(iter_7_3)
 	end
 
-	for slot6, slot7 in ipairs(slot0.disablePatternList) do
-		slot0.disablePatternInputList[slot6]:SetText(slot7)
+	for iter_7_4, iter_7_5 in ipairs(arg_7_0.disablePatternList) do
+		arg_7_0.disablePatternInputList[iter_7_4]:SetText(iter_7_5)
 	end
 end
 
-function slot0.onInputFilterValueChange(slot0)
-	if not slot0._inited then
+function var_0_0.onInputFilterValueChange(arg_8_0)
+	if not arg_8_0._inited then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0.enablePatternInputList) do
-		slot0.enablePatternList[slot4] = slot5:GetText()
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.enablePatternInputList) do
+		arg_8_0.enablePatternList[iter_8_0] = iter_8_1:GetText()
 	end
 
-	for slot4, slot5 in ipairs(slot0.disablePatternInputList) do
-		slot0.disablePatternList[slot4] = slot5:GetText()
+	for iter_8_2, iter_8_3 in ipairs(arg_8_0.disablePatternInputList) do
+		arg_8_0.disablePatternList[iter_8_2] = iter_8_3:GetText()
 	end
 
-	DelayLoadResMgr.instance:setEnablePatternList(slot0.enablePatternList)
-	DelayLoadResMgr.instance:setDisablePatternList(slot0.disablePatternList)
+	DelayLoadResMgr.instance:setEnablePatternList(arg_8_0.enablePatternList)
+	DelayLoadResMgr.instance:setDisablePatternList(arg_8_0.disablePatternList)
 end
 
-function slot0.onStartToggleChange(slot0)
-	if not slot0._inited then
+function var_0_0.onStartToggleChange(arg_9_0)
+	if not arg_9_0._inited then
 		return
 	end
 
-	if slot0.startToggle.isOn then
+	if arg_9_0.startToggle.isOn then
 		DelayLoadResMgr.instance:startDelayLoad()
 	else
 		DelayLoadResMgr.instance:stopDelayLoad()
 	end
 end
 
-function slot0.onStrategyDropValueChange(slot0, slot1)
-	if not slot0._inited then
+function var_0_0.onStrategyDropValueChange(arg_10_0, arg_10_1)
+	if not arg_10_0._inited then
 		return
 	end
 
-	DelayLoadResMgr.instance:setDelayStrategy(slot0.strategyList[slot1 + 1])
+	DelayLoadResMgr.instance:setDelayStrategy(arg_10_0.strategyList[arg_10_1 + 1])
 end
 
-function slot0.onStrategyInputValueChange(slot0)
-	if not slot0._inited then
+function var_0_0.onStrategyInputValueChange(arg_11_0)
+	if not arg_11_0._inited then
 		return
 	end
 
-	if not tonumber(slot0.strategyInput:GetText()) then
+	local var_11_0 = arg_11_0.strategyInput:GetText()
+	local var_11_1 = tonumber(var_11_0)
+
+	if not var_11_1 then
 		return
 	end
 
-	DelayLoadResMgr.instance:setDelayStrategyValue(slot1)
+	DelayLoadResMgr.instance:setDelayStrategyValue(var_11_1)
 end
 
-return slot0
+return var_0_0

@@ -1,6 +1,7 @@
-module("modules.logic.versionactivity1_4.dungeon.define.VersionActivity1_4DungeonEvent", package.seeall)
+﻿module("modules.logic.versionactivity1_4.dungeon.define.VersionActivity1_4DungeonEvent", package.seeall)
 
-slot0 = _M
-slot0.OnSelectEpisodeId = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnSelectEpisodeId = 1
+
+return var_0_0

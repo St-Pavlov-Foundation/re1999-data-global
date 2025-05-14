@@ -1,160 +1,175 @@
-module("modules.logic.versionactivity1_4.act129.view.Activity129EntranceView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.view.Activity129EntranceView", package.seeall)
 
-slot0 = class("Activity129EntranceView", BaseView)
+local var_0_0 = class("Activity129EntranceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goEntrance = gohelper.findChild(slot0.viewGO, "#go_Entrance")
-	slot0.txtLimitTime = gohelper.findChildTextMesh(slot0.viewGO, "#go_Entrance/Title/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0.itemDict = {}
-	slot0.anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goEntrance = gohelper.findChild(arg_1_0.viewGO, "#go_Entrance")
+	arg_1_0.txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Entrance/Title/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0.itemDict = {}
+	arg_1_0.anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, slot0.onEnterPool, slot0)
-	slot0:addEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, slot0.OnGetInfoSuccess, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_2_0.onEnterPool, arg_2_0)
+	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, arg_2_0.OnGetInfoSuccess, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, slot0.onEnterPool, slot0)
-	slot0:removeEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, slot0.OnGetInfoSuccess, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_3_0.onEnterPool, arg_3_0)
+	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, arg_3_0.OnGetInfoSuccess, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onEnterPool(slot0)
-	slot0:refreshView()
+function var_0_0.onEnterPool(arg_6_0)
+	arg_6_0:refreshView()
 end
 
-function slot0.OnGetInfoSuccess(slot0)
-	slot0:refreshView(true)
+function var_0_0.OnGetInfoSuccess(arg_7_0)
+	arg_7_0:refreshView(true)
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.isOpen = true
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0.actId = arg_8_0.viewParam.actId
+	arg_8_0.isOpen = true
 
-	slot0:refreshView()
+	arg_8_0:refreshView()
 end
 
-function slot0.refreshView(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0.refreshLeftTime, slot0)
+function var_0_0.refreshView(arg_9_0, arg_9_1)
+	TaskDispatcher.cancelTask(arg_9_0.refreshLeftTime, arg_9_0)
 
 	if Activity129Model.instance:getSelectPoolId() then
-		gohelper.setActive(slot0.goEntrance, false)
+		gohelper.setActive(arg_9_0.goEntrance, false)
 
-		slot0.isOpen = false
+		arg_9_0.isOpen = false
 
 		return
 	end
 
-	gohelper.setActive(slot0.goEntrance, true)
+	gohelper.setActive(arg_9_0.goEntrance, true)
 
-	if not slot0.isOpen then
-		slot0.anim:Play("switch", 0, 0)
+	if not arg_9_0.isOpen then
+		arg_9_0.anim:Play("switch", 0, 0)
 	end
 
-	slot0.isOpen = true
+	arg_9_0.isOpen = true
 
-	if not slot1 then
+	if not arg_9_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_smalluncharted_open)
 	end
 
-	if Activity129Config.instance:getPoolDict(slot0.actId) then
-		for slot7, slot8 in pairs(slot3) do
-			slot0:refreshPoolItem(slot0.itemDict[slot8.poolId] or slot0:createPoolItem(slot8.poolId), slot8)
+	local var_9_0 = Activity129Config.instance:getPoolDict(arg_9_0.actId)
+
+	if var_9_0 then
+		for iter_9_0, iter_9_1 in pairs(var_9_0) do
+			local var_9_1 = arg_9_0.itemDict[iter_9_1.poolId] or arg_9_0:createPoolItem(iter_9_1.poolId)
+
+			arg_9_0:refreshPoolItem(var_9_1, iter_9_1)
 		end
 	end
 
-	slot0:refreshLeftTime()
-	TaskDispatcher.runRepeat(slot0.refreshLeftTime, slot0, 60)
+	arg_9_0:refreshLeftTime()
+	TaskDispatcher.runRepeat(arg_9_0.refreshLeftTime, arg_9_0, 60)
 end
 
-function slot0.createPoolItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.poolId = slot1
-	slot2.go = gohelper.findChild(slot0.goEntrance, string.format("Item%s", slot1))
-	slot2.goItems = gohelper.findChild(slot2.go, "items")
-	slot2.txtItemTitle = gohelper.findChildTextMesh(slot2.go, "items/txt_ItemTitle")
-	slot2.goGet = gohelper.findChild(slot2.go, "#go_Get")
-	slot2.click = gohelper.findChildClickWithAudio(slot2.go, "click", AudioEnum.UI.play_ui_payment_click)
+function var_0_0.createPoolItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getUserDataTb_()
 
-	slot2.click:AddClickListener(slot0._onClickItem, slot0, slot2)
+	var_10_0.poolId = arg_10_1
+	var_10_0.go = gohelper.findChild(arg_10_0.goEntrance, string.format("Item%s", arg_10_1))
+	var_10_0.goItems = gohelper.findChild(var_10_0.go, "items")
+	var_10_0.txtItemTitle = gohelper.findChildTextMesh(var_10_0.go, "items/txt_ItemTitle")
+	var_10_0.goGet = gohelper.findChild(var_10_0.go, "#go_Get")
+	var_10_0.click = gohelper.findChildClickWithAudio(var_10_0.go, "click", AudioEnum.UI.play_ui_payment_click)
 
-	slot2.simages = slot2.goItems:GetComponentsInChildren(typeof(SLFramework.UGUI.SingleImage), true)
-	slot3 = slot2.simages:GetEnumerator()
+	var_10_0.click:AddClickListener(arg_10_0._onClickItem, arg_10_0, var_10_0)
 
-	while slot3:MoveNext() do
-		slot3.Current.curImageUrl = nil
+	var_10_0.simages = var_10_0.goItems:GetComponentsInChildren(typeof(SLFramework.UGUI.SingleImage), true)
 
-		slot3.Current:LoadImage(slot3.Current.curImageUrl)
+	local var_10_1 = var_10_0.simages:GetEnumerator()
+
+	while var_10_1:MoveNext() do
+		local var_10_2 = var_10_1.Current.curImageUrl
+
+		var_10_1.Current.curImageUrl = nil
+
+		var_10_1.Current:LoadImage(var_10_2)
 	end
 
-	slot2.graphics = {}
-	slot5 = slot2.goItems:GetComponentsInChildren(gohelper.Type_Image, true):GetEnumerator()
+	var_10_0.graphics = {}
 
-	while slot5:MoveNext() do
-		table.insert(slot2.graphics, {
-			comp = slot5.Current,
-			color = GameUtil.colorToHex(slot5.Current.color)
+	local var_10_3 = var_10_0.goItems:GetComponentsInChildren(gohelper.Type_Image, true):GetEnumerator()
+
+	while var_10_3:MoveNext() do
+		table.insert(var_10_0.graphics, {
+			comp = var_10_3.Current,
+			color = GameUtil.colorToHex(var_10_3.Current.color)
 		})
 	end
 
-	slot7 = slot2.goItems:GetComponentsInChildren(gohelper.Type_TextMesh, true):GetEnumerator()
+	local var_10_4 = var_10_0.goItems:GetComponentsInChildren(gohelper.Type_TextMesh, true):GetEnumerator()
 
-	while slot7:MoveNext() do
-		table.insert(slot2.graphics, {
-			comp = slot7.Current,
-			color = GameUtil.colorToHex(slot7.Current.color)
+	while var_10_4:MoveNext() do
+		table.insert(var_10_0.graphics, {
+			comp = var_10_4.Current,
+			color = GameUtil.colorToHex(var_10_4.Current.color)
 		})
 	end
 
-	slot0.itemDict[slot1] = slot2
+	arg_10_0.itemDict[arg_10_1] = var_10_0
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.refreshPoolItem(slot0, slot1, slot2)
-	slot1.txtItemTitle.text = slot2.name
+function var_0_0.refreshPoolItem(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_1.txtItemTitle.text = arg_11_2.name
 
-	gohelper.setActive(slot1.goGet, Activity129Model.instance:checkPoolIsEmpty(slot0.actId, slot2.poolId))
+	local var_11_0 = Activity129Model.instance:checkPoolIsEmpty(arg_11_0.actId, arg_11_2.poolId)
 
-	for slot7, slot8 in ipairs(slot1.graphics) do
-		SLFramework.UGUI.GuiHelper.SetColor(slot8.comp, slot3 and "#808080" or slot8.color)
+	gohelper.setActive(arg_11_1.goGet, var_11_0)
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1.graphics) do
+		SLFramework.UGUI.GuiHelper.SetColor(iter_11_1.comp, var_11_0 and "#808080" or iter_11_1.color)
 	end
 end
 
-function slot0._onClickItem(slot0, slot1)
-	Activity129Model.instance:setSelectPoolId(slot1.poolId)
+function var_0_0._onClickItem(arg_12_0, arg_12_1)
+	Activity129Model.instance:setSelectPoolId(arg_12_1.poolId)
 end
 
-function slot0.refreshLeftTime(slot0)
-	if ActivityModel.instance:getActMO(slot0.actId) then
-		slot0.txtLimitTime.text = formatLuaLang("remain", string.format("%s%s", slot1:getRemainTime()))
+function var_0_0.refreshLeftTime(arg_13_0)
+	local var_13_0 = ActivityModel.instance:getActMO(arg_13_0.actId)
+
+	if var_13_0 then
+		arg_13_0.txtLimitTime.text = formatLuaLang("remain", string.format("%s%s", var_13_0:getRemainTime()))
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshLeftTime, slot0)
+function var_0_0.onClose(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0.refreshLeftTime, arg_14_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.itemDict) do
-		slot6 = slot5.simages:GetEnumerator()
+function var_0_0.onDestroyView(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0.itemDict) do
+		local var_15_0 = iter_15_1.simages:GetEnumerator()
 
-		while slot6:MoveNext() do
-			slot6.Current:UnLoadImage()
+		while var_15_0:MoveNext() do
+			var_15_0.Current:UnLoadImage()
 		end
 
-		slot5.click:RemoveClickListener()
+		iter_15_1.click:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

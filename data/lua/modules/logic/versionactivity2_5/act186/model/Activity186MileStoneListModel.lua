@@ -1,48 +1,76 @@
-module("modules.logic.versionactivity2_5.act186.model.Activity186MileStoneListModel", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.model.Activity186MileStoneListModel", package.seeall)
 
-slot0 = class("Activity186MileStoneListModel", MixScrollModel)
+local var_0_0 = class("Activity186MileStoneListModel", MixScrollModel)
 
-function slot0.init(slot0, slot1)
-	slot0.actMo = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.actMo = arg_1_1
 end
 
-function slot0.refresh(slot0)
-	slot2 = {}
+function var_0_0.refresh(arg_2_0)
+	local var_2_0 = Activity186Config.instance:getMileStoneList(arg_2_0.actMo.id)
+	local var_2_1 = {}
 
-	for slot6, slot7 in ipairs(Activity186Config.instance:getMileStoneList(slot0.actMo.id)) do
-		table.insert(slot2, {
-			id = slot7.rewardId,
-			rewardId = slot7.rewardId,
-			activityId = slot7.activityId,
-			isLoopBonus = slot7.isLoopBonus,
-			bonus = slot7.bonus,
-			isSpBonus = slot7.isSpBonus
-		})
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		local var_2_2 = {
+			id = iter_2_1.rewardId,
+			rewardId = iter_2_1.rewardId,
+			activityId = iter_2_1.activityId,
+			isLoopBonus = iter_2_1.isLoopBonus,
+			bonus = iter_2_1.bonus,
+			isSpBonus = iter_2_1.isSpBonus
+		}
+
+		table.insert(var_2_1, var_2_2)
 	end
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_1)
 end
 
-function slot0.caleProgressIndex(slot0)
-	slot2 = 0
-	slot4 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId))
-	slot5 = 0
+function var_0_0.caleProgressIndex(arg_3_0)
+	local var_3_0 = Activity186Config.instance:getMileStoneList(arg_3_0.actMo.id)
+	local var_3_1 = 0
+	local var_3_2 = Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId)
+	local var_3_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_3_2)
+	local var_3_4 = 0
 
-	for slot9, slot10 in ipairs(Activity186Config.instance:getMileStoneList(slot0.actMo.id)) do
-		if slot4 < slot10.coinNum then
-			return slot9 + (slot4 - slot5) / (slot11 - slot5) - 1
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		local var_3_5 = iter_3_1.coinNum
+
+		if var_3_3 < var_3_5 then
+			var_3_1 = iter_3_0 + (var_3_3 - var_3_4) / (var_3_5 - var_3_4) - 1
+
+			return var_3_1
 		end
 
-		slot5 = slot11
+		var_3_4 = var_3_5
 	end
 
-	slot5 = slot1[#slot1 - 1] and slot1[slot6 - 1].coinNum or 0
-	slot8 = slot0.actMo.getMilestoneProgress
-	slot9 = slot1[slot6].loopBonusIntervalNum or 1
+	local var_3_6 = #var_3_0
+	local var_3_7
 
-	return slot8 < slot7.coinNum and slot6 or math.floor((slot8 - slot10) / slot9) < math.floor((slot4 - slot10) / slot9) and slot6 or slot6 - 1 + slot11 - slot12
+	var_3_7 = var_3_0[var_3_6 - 1] and var_3_0[var_3_6 - 1].coinNum or 0
+
+	local var_3_8 = var_3_0[var_3_6]
+	local var_3_9 = arg_3_0.actMo.getMilestoneProgress
+	local var_3_10 = var_3_8.loopBonusIntervalNum or 1
+	local var_3_11 = var_3_8.coinNum
+
+	if var_3_9 < var_3_11 then
+		var_3_1 = var_3_6
+	else
+		local var_3_12 = (var_3_3 - var_3_11) / var_3_10
+		local var_3_13 = math.floor(var_3_12)
+
+		if var_3_13 > math.floor((var_3_9 - var_3_11) / var_3_10) then
+			var_3_1 = var_3_6
+		else
+			var_3_1 = var_3_6 - 1 + var_3_12 - var_3_13
+		end
+	end
+
+	return var_3_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

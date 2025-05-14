@@ -1,42 +1,42 @@
-module("modules.logic.achievement.model.mo.AchievementTileMO", package.seeall)
+﻿module("modules.logic.achievement.model.mo.AchievementTileMO", package.seeall)
 
-slot0 = pureTable("AchievementTileMO")
+local var_0_0 = pureTable("AchievementTileMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.achievementCfgs = slot1
-	slot0.groupId = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.achievementCfgs = arg_1_1
+	arg_1_0.groupId = arg_1_2
 end
 
-function slot0.getLineHeight(slot0)
-	if slot0.groupId == 0 then
+function var_0_0.getLineHeight(arg_2_0)
+	if arg_2_0.groupId == 0 then
 		return 313
 	else
 		return 460
 	end
 end
 
-function slot0.getAchievementType(slot0)
-	return slot0.groupId and slot0.groupId ~= 0 and AchievementEnum.AchievementType.Group or AchievementEnum.AchievementType.Single
+function var_0_0.getAchievementType(arg_3_0)
+	return arg_3_0.groupId and arg_3_0.groupId ~= 0 and AchievementEnum.AchievementType.Group or AchievementEnum.AchievementType.Single
 end
 
-function slot0.isAchievementMatch(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.isAchievementMatch(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = false
 
-	if slot1 == AchievementEnum.AchievementType.Single then
-		if slot0.achievementCfgs then
-			for slot7, slot8 in ipairs(slot0.achievementCfgs) do
-				if slot8.id == slot2 then
-					slot3 = true
+	if arg_4_1 == AchievementEnum.AchievementType.Single then
+		if arg_4_0.achievementCfgs then
+			for iter_4_0, iter_4_1 in ipairs(arg_4_0.achievementCfgs) do
+				if iter_4_1.id == arg_4_2 then
+					var_4_0 = true
 
 					break
 				end
 			end
 		end
 	else
-		slot3 = slot2 == slot0.groupId
+		var_4_0 = arg_4_2 == arg_4_0.groupId
 	end
 
-	return slot3
+	return var_4_0
 end
 
-return slot0
+return var_0_0

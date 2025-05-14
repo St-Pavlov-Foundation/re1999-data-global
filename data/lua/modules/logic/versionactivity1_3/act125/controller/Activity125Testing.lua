@@ -1,354 +1,391 @@
-module("modules.logic.versionactivity1_3.act125.controller.Activity125Testing", package.seeall)
+﻿module("modules.logic.versionactivity1_3.act125.controller.Activity125Testing", package.seeall)
 
-slot0 = _G.class("TestingBase")
-slot1 = TaskEnum.TaskType.Activity125
+local var_0_0 = _G.class("TestingBase")
+local var_0_1 = TaskEnum.TaskType.Activity125
 
-function slot0.ctor(slot0)
-	slot0._pb = Activity125Module_pb
-	slot0._cCfg = Activity125Config
-	slot0._cTaskCfg = TaskConfig
-	slot0._pbTask = TaskModule_pb
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._pb = Activity125Module_pb
+	arg_1_0._cCfg = Activity125Config
+	arg_1_0._cTaskCfg = TaskConfig
+	arg_1_0._pbTask = TaskModule_pb
 end
 
-function slot0.build_test(slot0)
+function var_0_0.build_test(arg_2_0)
+	return
 end
 
-function slot0.link(slot0, slot1)
-	slot0._obj = slot1
+function var_0_0.link(arg_3_0, arg_3_1)
+	arg_3_0._obj = arg_3_1
 end
 
-slot2 = 0
-slot3 = 1
-slot4 = "服务器异常"
-slot5 = "returnCode: -2"
-slot6 = _G.class("STesting", slot0)
+local var_0_2 = 0
+local var_0_3 = 1
+local var_0_4 = "服务器异常"
+local var_0_5 = "returnCode: -2"
+local var_0_6 = _G.class("STesting", var_0_0)
 
-function slot6.ctor(slot0)
-	uv0.ctor(slot0)
+function var_0_6.ctor(arg_4_0)
+	var_0_0.ctor(arg_4_0)
 
-	slot0._actId2InfoDict = {}
-	slot0._taskInfoDict = {}
-	slot0._taskActivityInfoDict = {}
+	arg_4_0._actId2InfoDict = {}
+	arg_4_0._taskInfoDict = {}
+	arg_4_0._taskActivityInfoDict = {}
 end
 
-function slot6._make_Act125Episode(slot0, slot1, slot2)
+function var_0_6._make_Act125Episode(arg_5_0, arg_5_1, arg_5_2)
 	return {
-		id = slot1,
-		state = slot2 or math.random(0, 99999) % 2 == 0 and uv0 or uv1
+		id = arg_5_1,
+		state = arg_5_2 or math.random(0, 99999) % 2 == 0 and var_0_3 or var_0_2
 	}
 end
 
-function slot6._make_Info(slot0, slot1)
-	assert(slot1, uv0)
+function var_0_6._make_Info(arg_6_0, arg_6_1)
+	assert(arg_6_1, var_0_4)
 
-	for slot8, slot9 in pairs(assert(slot0._cCfg.instance:getAct125Config(slot1), uv0 .. slot1)) do
-		slot10 = slot9.id
+	local var_6_0 = arg_6_0._cCfg.instance
+	local var_6_1 = assert(var_6_0:getAct125Config(arg_6_1), var_0_4 .. arg_6_1)
+	local var_6_2 = {}
+
+	for iter_6_0, iter_6_1 in pairs(var_6_1) do
+		local var_6_3 = iter_6_1.id
+
+		var_6_2[var_6_3] = arg_6_0:_make_Act125Episode(var_6_3, var_0_2)
 	end
 
-	slot5 = {
-		activityId = slot1,
-		act125Episodes = {
-			[slot10] = slot0:_make_Act125Episode(slot10, uv1)
-		}
+	local var_6_4 = {
+		activityId = arg_6_1,
+		act125Episodes = var_6_2
 	}
+	local var_6_5 = 0
 
-	for slot10 = 1, 0 do
-		slot4[slot10].state = uv2
+	for iter_6_2 = 1, var_6_5 do
+		var_6_2[iter_6_2].state = var_0_3
 	end
 
-	return slot5
+	return var_6_4
 end
 
-function slot6.handleGetInfos(slot0, slot1, slot2)
-	if not slot0:_getInfo(slot1.activityId) then
-		slot0._actId2InfoDict[slot3] = slot0:_make_Info(slot3)
+function var_0_6.handleGetInfos(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_1.activityId
+
+	if not arg_7_0:_getInfo(var_7_0) then
+		local var_7_1 = arg_7_0:_make_Info(var_7_0)
+
+		arg_7_0._actId2InfoDict[var_7_0] = var_7_1
 	end
 
-	rawset(slot2, "activityId", slot3)
-	rawset(slot2, "act125Episodes", slot0:_getEpisodeList(slot3))
+	rawset(arg_7_2, "activityId", var_7_0)
+	rawset(arg_7_2, "act125Episodes", arg_7_0:_getEpisodeList(var_7_0))
 end
 
-function slot6.handleFinishAct125Episode(slot0, slot1, slot2)
-	slot3 = slot1.activityId
-	slot6 = slot0._cCfg.instance
-	slot7 = slot6:getAct125Config(slot3)
-	slot8 = assert(slot0:_getInfo(slot3), uv0)
-	slot10 = {}
+function var_0_6.handleFinishAct125Episode(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_1.activityId
+	local var_8_1 = arg_8_1.episodeId
+	local var_8_2 = arg_8_1.targetFrequency
+	local var_8_3 = arg_8_0._cCfg.instance
+	local var_8_4 = var_8_3:getAct125Config(var_8_0)
+	local var_8_5 = assert(arg_8_0:_getInfo(var_8_0), var_0_4)
+	local var_8_6 = var_8_3:getEpisodeConfig(var_8_0, var_8_1)
+	local var_8_7 = {}
 
-	if slot6:getEpisodeConfig(slot3, slot1.episodeId).targetFrequency <= slot1.targetFrequency then
-		table.insert(slot10, slot0:_retainEpisodeNewState(slot3, slot4, uv1))
+	if var_8_2 >= var_8_6.targetFrequency then
+		local var_8_8 = arg_8_0:_retainEpisodeNewState(var_8_0, var_8_1, var_0_3)
+
+		table.insert(var_8_7, var_8_8)
 	end
 
-	rawset(slot2, "activityId", slot3)
-	rawset(slot2, "episodeId", slot4)
-	rawset(slot2, "updateAct125Episodes", slot10)
+	rawset(arg_8_2, "activityId", var_8_0)
+	rawset(arg_8_2, "episodeId", var_8_1)
+	rawset(arg_8_2, "updateAct125Episodes", var_8_7)
 end
 
-function slot6._make_taskInfos(slot0, slot1)
-	slot2 = {}
+function var_0_6._make_taskInfos(arg_9_0, arg_9_1)
+	local var_9_0 = {}
 
-	if slot1 == uv0 then
-		for slot6, slot7 in ipairs(lua_activity125_task.configList) do
-			slot8 = slot7.id
-			slot2[slot9] = slot2[slot7.activityId] or {}
+	if arg_9_1 == var_0_1 then
+		for iter_9_0, iter_9_1 in ipairs(lua_activity125_task.configList) do
+			local var_9_1 = iter_9_1.id
+			local var_9_2 = iter_9_1.activityId
 
-			if slot7.isOnline then
-				slot2[slot9][slot8] = slot0:_make_TaskInfo(slot8, slot1)
+			var_9_0[var_9_2] = var_9_0[var_9_2] or {}
+
+			if iter_9_1.isOnline then
+				var_9_0[var_9_2][var_9_1] = arg_9_0:_make_TaskInfo(var_9_1, arg_9_1)
 			end
 		end
 	else
-		assert(false, "please init task type: " .. slot1)
+		assert(false, "please init task type: " .. arg_9_1)
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot6._make_TaskActivityInfo(slot0, slot1)
+function var_0_6._make_TaskActivityInfo(arg_10_0, arg_10_1)
 	return {
 		defineId = 0,
 		expiryTime = 0,
 		value = 0,
 		gainValue = 0,
-		typeId = slot1
+		typeId = arg_10_1
 	}
 end
 
-function slot6.handleGetTaskInfoReply(slot0, slot1, slot2)
-	slot4 = {}
-	slot5 = {}
+function var_0_6.handleGetTaskInfoReply(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = arg_11_1.typeIds
+	local var_11_1 = {}
+	local var_11_2 = {}
 
-	for slot9, slot10 in ipairs(slot1.typeIds) do
-		if not slot0._taskInfoDict[slot10] then
-			slot0._taskInfoDict[slot10] = slot0:_make_taskInfos(slot10)
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if not arg_11_0._taskInfoDict[iter_11_1] then
+			arg_11_0._taskInfoDict[iter_11_1] = arg_11_0:_make_taskInfos(iter_11_1)
 		end
 
-		if not slot0._taskActivityInfoDict[slot10] then
-			slot0._taskActivityInfoDict[slot10] = slot0:_make_TaskActivityInfo(slot10)
+		if not arg_11_0._taskActivityInfoDict[iter_11_1] then
+			arg_11_0._taskActivityInfoDict[iter_11_1] = arg_11_0:_make_TaskActivityInfo(iter_11_1)
 		end
 
-		for slot14, slot15 in pairs(slot0._taskInfoDict[slot10]) do
-			if slot14 == 12436 then
-				for slot19, slot20 in pairs(slot15) do
-					table.insert(slot4, slot20)
+		for iter_11_2, iter_11_3 in pairs(arg_11_0._taskInfoDict[iter_11_1]) do
+			if iter_11_2 == 12436 then
+				for iter_11_4, iter_11_5 in pairs(iter_11_3) do
+					table.insert(var_11_1, iter_11_5)
 				end
 			end
 		end
 
-		table.insert(slot5, slot0._taskActivityInfoDict[slot10])
+		table.insert(var_11_2, arg_11_0._taskActivityInfoDict[iter_11_1])
 	end
 
-	rawset(slot2, "taskInfo", slot4)
-	rawset(slot2, "activityInfo", slot5)
-	rawset(slot2, "typeIds", slot3)
+	rawset(arg_11_2, "taskInfo", var_11_1)
+	rawset(arg_11_2, "activityInfo", var_11_2)
+	rawset(arg_11_2, "typeIds", var_11_0)
 end
 
-function slot6._getInfo(slot0, slot1)
-	return slot0._actId2InfoDict[slot1]
+function var_0_6._getInfo(arg_12_0, arg_12_1)
+	return arg_12_0._actId2InfoDict[arg_12_1]
 end
 
-function slot6._getEpisodeList(slot0, slot1)
-	slot3 = {}
+function var_0_6._getEpisodeList(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:_getInfo(arg_13_1)
+	local var_13_1 = {}
 
-	for slot7, slot8 in pairs(slot0:_getInfo(slot1).act125Episodes) do
-		table.insert(slot3, slot8)
+	for iter_13_0, iter_13_1 in pairs(var_13_0.act125Episodes) do
+		table.insert(var_13_1, iter_13_1)
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		return slot0.id < slot1.id
+	table.sort(var_13_1, function(arg_14_0, arg_14_1)
+		return arg_14_0.id < arg_14_1.id
 	end)
 
-	return slot3
+	return var_13_1
 end
 
-function slot6._retainEpisodeNewState(slot0, slot1, slot2, slot3)
-	assert(slot1, uv0)
-	assert(slot2, uv0)
-	assert(slot3, uv0)
+function var_0_6._retainEpisodeNewState(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	assert(arg_15_1, var_0_4)
+	assert(arg_15_2, var_0_4)
+	assert(arg_15_3, var_0_4)
 
-	if not assert(slot0:_getInfo(slot1), uv0).act125Episodes[slot2] then
-		logError(uv1)
+	local var_15_0 = assert(arg_15_0:_getInfo(arg_15_1), var_0_4).act125Episodes[arg_15_2]
+
+	if not var_15_0 then
+		logError(var_0_5)
 
 		return
 	end
 
-	slot5.state = slot3
+	var_15_0.state = arg_15_3
 
-	return slot5
+	return var_15_0
 end
 
-function slot6._make_TaskInfo(slot0, slot1, slot2)
-	slot3 = TaskModel.instance:getTaskConfig(slot2, slot1)
+function var_0_6._make_TaskInfo(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = TaskModel.instance:getTaskConfig(arg_16_2, arg_16_1)
 
-	assert(slot3, uv0)
+	assert(var_16_0, var_0_4)
 
-	slot4 = slot3.maxProgress
-	slot5.hasFinished = ({
+	local var_16_1 = var_16_0.maxProgress
+	local var_16_2 = {
 		hasFinished = false,
 		expiryTime = 0,
 		finishCount = 0,
-		id = slot1,
-		type = slot2,
-		progress = math.random(0, slot4)
-	}).progress == slot4
+		id = arg_16_1,
+		type = arg_16_2,
+		progress = math.random(0, var_16_1)
+	}
 
-	return slot5
+	var_16_2.hasFinished = var_16_2.progress == var_16_1
+
+	return var_16_2
 end
 
-slot7 = 0
-slot8 = _G.class("CTesting", slot0)
+local var_0_7 = 0
+local var_0_8 = _G.class("CTesting", var_0_0)
 
-function slot8.ctor(slot0)
-	uv0.ctor(slot0)
+function var_0_8.ctor(arg_17_0)
+	var_0_0.ctor(arg_17_0)
 
-	slot0._cRpc = Activity125Rpc
-	slot0._cCtrl = Activity125Controller
-	slot0._cModel = Activity125Model
-	slot0._cActivity125ViewBaseContainer = Activity125ViewBaseContainer
-	slot0._cTaskRpc = TaskRpc
-	slot0._cTaskModel = TaskModel
-	slot0._cTaskController = TaskController
+	arg_17_0._cRpc = Activity125Rpc
+	arg_17_0._cCtrl = Activity125Controller
+	arg_17_0._cModel = Activity125Model
+	arg_17_0._cActivity125ViewBaseContainer = Activity125ViewBaseContainer
+	arg_17_0._cTaskRpc = TaskRpc
+	arg_17_0._cTaskModel = TaskModel
+	arg_17_0._cTaskController = TaskController
 end
 
-function slot8.build_test(slot0)
-	slot0:build_test__Act125()
-	slot0:build_test__Task()
-	slot0:build_test__Player()
+function var_0_8.build_test(arg_18_0)
+	arg_18_0:build_test__Act125()
+	arg_18_0:build_test__Task()
+	arg_18_0:build_test__Player()
 end
 
-function slot8.build_test__Player(slot0)
+function var_0_8.build_test__Player(arg_19_0)
 	function PlayerModel.forceSetSimpleProperty()
+		return
 	end
 end
 
-function slot8.build_test__Act125(slot0)
-	slot1 = slot0._cCfg.instance
-	slot2 = slot0._cRpc.instance
-	slot3 = slot0._cCtrl.instance
-	slot4 = slot0._cModel.instance
-	slot5 = slot0._pb
+function var_0_8.build_test__Act125(arg_21_0)
+	local var_21_0 = arg_21_0._cCfg.instance
+	local var_21_1 = arg_21_0._cRpc.instance
+	local var_21_2 = arg_21_0._cCtrl.instance
+	local var_21_3 = arg_21_0._cModel.instance
+	local var_21_4 = arg_21_0._pb
 
-	function slot0._cRpc.sendGetAct125InfosRequest(slot0, slot1, slot2, slot3)
-		slot4 = uv0.GetAct125InfosRequest()
-		slot4.activityId = slot1
-		slot5 = uv0.GetAct125InfosReply()
+	function arg_21_0._cRpc.sendGetAct125InfosRequest(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+		local var_22_0 = var_21_4.GetAct125InfosRequest()
 
-		uv1._obj:handleGetInfos(slot4, slot5)
-		uv2:onReceiveGetAct125InfosReply(uv3, slot5)
+		var_22_0.activityId = arg_22_1
 
-		if slot2 then
-			if slot3 then
-				slot2(slot3, LuaSocketMgr.instance:getCmdByPbStructName(slot4.__cname), uv3)
+		local var_22_1 = var_21_4.GetAct125InfosReply()
+
+		arg_21_0._obj:handleGetInfos(var_22_0, var_22_1)
+		var_21_1:onReceiveGetAct125InfosReply(var_0_7, var_22_1)
+
+		local var_22_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_22_0.__cname)
+
+		if arg_22_2 then
+			if arg_22_3 then
+				arg_22_2(arg_22_3, var_22_2, var_0_7)
 			else
-				slot2(slot6, uv3)
+				arg_22_2(var_22_2, var_0_7)
 			end
 		end
 	end
 
-	function slot0._cRpc.sendFinishAct125EpisodeRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-		slot6 = uv0.FinishAct125EpisodeRequest()
-		slot6.activityId = slot1
-		slot6.episodeId = slot2
-		slot6.targetFrequency = slot3
-		slot7 = uv0.FinishAct125EpisodeReply()
+	function arg_21_0._cRpc.sendFinishAct125EpisodeRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
+		local var_23_0 = var_21_4.FinishAct125EpisodeRequest()
 
-		uv1._obj:handleFinishAct125Episode(slot6, slot7)
-		uv2:onReceiveFinishAct125EpisodeReply(uv3, slot7)
+		var_23_0.activityId = arg_23_1
+		var_23_0.episodeId = arg_23_2
+		var_23_0.targetFrequency = arg_23_3
 
-		if slot4 then
-			if slot5 then
-				slot4(slot5, LuaSocketMgr.instance:getCmdByPbStructName(slot6.__cname), uv3)
+		local var_23_1 = var_21_4.FinishAct125EpisodeReply()
+
+		arg_21_0._obj:handleFinishAct125Episode(var_23_0, var_23_1)
+		var_21_1:onReceiveFinishAct125EpisodeReply(var_0_7, var_23_1)
+
+		local var_23_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_23_0.__cname)
+
+		if arg_23_4 then
+			if arg_23_5 then
+				arg_23_4(arg_23_5, var_23_2, var_0_7)
 			else
-				slot4(slot8, uv3)
+				arg_23_4(var_23_2, var_0_7)
 			end
 		end
 	end
 
-	slot6 = Activity125MO
-	slot8 = true
-	slot9 = true
+	local var_21_5 = Activity125MO
+	local var_21_6 = true
+	local var_21_7 = true
+	local var_21_8 = true
 
-	if true and slot6 then
-		slot10 = {}
+	if var_21_6 and var_21_5 then
+		local var_21_9 = {}
 
-		function slot6.setLocalIsPlay(slot0, slot1)
-			uv0[slot0.id] = uv0[slot0.id] or {}
-			uv0[slot0.id][slot1] = true
+		function var_21_5.setLocalIsPlay(arg_24_0, arg_24_1)
+			var_21_9[arg_24_0.id] = var_21_9[arg_24_0.id] or {}
+			var_21_9[arg_24_0.id][arg_24_1] = true
 		end
 
-		function slot6.checkLocalIsPlay(slot0, slot1)
-			uv0[slot0.id] = uv0[slot0.id] or {}
+		function var_21_5.checkLocalIsPlay(arg_25_0, arg_25_1)
+			var_21_9[arg_25_0.id] = var_21_9[arg_25_0.id] or {}
 
-			return uv0[slot0.id][slot1]
-		end
-	end
-
-	if not slot9 then
-		function slot0._cActivity125ViewBaseContainer.saveInt(slot0, slot1, slot2)
-			logError("[Activity125Testing] saveInt: key=" .. slot1 .. " value=" .. tostring(slot2))
+			return var_21_9[arg_25_0.id][arg_25_1]
 		end
 	end
 
-	if slot8 and slot6 then
-		function slot6.isEpisodeDayOpen(slot0, slot1)
+	if not var_21_8 then
+		function arg_21_0._cActivity125ViewBaseContainer.saveInt(arg_26_0, arg_26_1, arg_26_2)
+			logError("[Activity125Testing] saveInt: key=" .. arg_26_1 .. " value=" .. tostring(arg_26_2))
+		end
+	end
+
+	if var_21_7 and var_21_5 then
+		function var_21_5.isEpisodeDayOpen(arg_27_0, arg_27_1)
 			return true
 		end
 
-		function slot6.isEpisodeReallyOpen(slot0, slot1)
+		function var_21_5.isEpisodeReallyOpen(arg_28_0, arg_28_1)
 			return true
 		end
 
-		function slot6.isEpisodeUnLock(slot0, slot1)
+		function var_21_5.isEpisodeUnLock(arg_29_0, arg_29_1)
 			return true
 		end
 	end
 end
 
-function slot8.build_test__Task(slot0)
-	slot1 = slot0._cTaskCfg.instance
-	slot2 = slot0._cTaskRpc.instance
-	slot3 = slot0._cTaskController.instance
-	slot4 = slot0._cTaskModel.instance
-	slot5 = slot0._pbTask
+function var_0_8.build_test__Task(arg_30_0)
+	local var_30_0 = arg_30_0._cTaskCfg.instance
+	local var_30_1 = arg_30_0._cTaskRpc.instance
+	local var_30_2 = arg_30_0._cTaskController.instance
+	local var_30_3 = arg_30_0._cTaskModel.instance
+	local var_30_4 = arg_30_0._pbTask
 
-	function slot0._cTaskRpc.sendGetTaskInfoRequest(slot0, slot1, slot2, slot3)
-		for slot8, slot9 in pairs(slot1) do
-			table.insert(uv0.GetTaskInfoRequest().typeIds, slot9)
+	function arg_30_0._cTaskRpc.sendGetTaskInfoRequest(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+		local var_31_0 = var_30_4.GetTaskInfoRequest()
+
+		for iter_31_0, iter_31_1 in pairs(arg_31_1) do
+			table.insert(var_31_0.typeIds, iter_31_1)
 		end
 
-		if #slot1 == 1 and slot1[1] == uv1 then
-			slot5 = uv0.GetTaskInfoReply()
+		if #arg_31_1 == 1 and arg_31_1[1] == var_0_1 then
+			local var_31_1 = var_30_4.GetTaskInfoReply()
 
-			uv2._obj:handleGetTaskInfoReply(slot4, slot5)
-			uv3:onReceiveGetTaskInfoReply(uv4, slot5)
+			arg_30_0._obj:handleGetTaskInfoReply(var_31_0, var_31_1)
+			var_30_1:onReceiveGetTaskInfoReply(var_0_7, var_31_1)
 
-			if slot2 then
-				if slot3 then
-					slot2(slot3, LuaSocketMgr.instance:getCmdByPbStructName(slot4.__cname), uv4)
+			local var_31_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_31_0.__cname)
+
+			if arg_31_2 then
+				if arg_31_3 then
+					arg_31_2(arg_31_3, var_31_2, var_0_7)
 				else
-					slot2(slot6, uv4)
+					arg_31_2(var_31_2, var_0_7)
 				end
 			end
 		else
-			return slot0:sendMsg(slot4, slot2, slot3)
+			return arg_31_0:sendMsg(var_31_0, arg_31_2, arg_31_3)
 		end
 	end
 end
 
-slot9 = _G.class("Activity125Testing")
+local var_0_9 = _G.class("Activity125Testing")
 
-function slot9.ctor(slot0)
-	slot0._client = uv0.New()
-	slot0._sever = uv1.New()
+function var_0_9.ctor(arg_32_0)
+	arg_32_0._client = var_0_8.New()
+	arg_32_0._sever = var_0_6.New()
 
-	slot0._sever:link(slot0._client)
-	slot0._client:link(slot0._sever)
+	arg_32_0._sever:link(arg_32_0._client)
+	arg_32_0._client:link(arg_32_0._sever)
 end
 
-function slot9._test(slot0)
-	slot0._client:build_test()
-	slot0._sever:build_test()
+function var_0_9._test(arg_33_0)
+	arg_33_0._client:build_test()
+	arg_33_0._sever:build_test()
 end
 
-slot9.instance = slot9.New()
+var_0_9.instance = var_0_9.New()
 
-return slot9
+return var_0_9

@@ -1,63 +1,69 @@
-module("modules.logic.fight.entity.pool.FightTLEventPool", package.seeall)
+﻿module("modules.logic.fight.entity.pool.FightTLEventPool", package.seeall)
 
-slot0 = class("FightTLEventPool")
-slot1 = {}
+local var_0_0 = class("FightTLEventPool")
+local var_0_1 = {}
 
-function slot0.getHandlerInst(slot0, slot1)
-	if not uv0[slot0] then
-		uv0[slot0] = LuaObjPool.New(32, function ()
-			if uv0 then
-				if uv0.New then
-					return uv0.New()
+function var_0_0.getHandlerInst(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_1[arg_1_0]
+
+	if not var_1_0 then
+		var_1_0 = LuaObjPool.New(32, function()
+			if arg_1_1 then
+				if arg_1_1.New then
+					return arg_1_1.New()
 				else
-					logError("FightTLEvent class.ctor is nil: " .. uv1)
+					logError("FightTLEvent class.ctor is nil: " .. arg_1_0)
 				end
 			else
-				logError("FightTLEvent class is nil: " .. uv1)
+				logError("FightTLEvent class is nil: " .. arg_1_0)
 			end
 
 			return FightTLEvent.New()
-		end, uv1._releaseFunc, uv1._resetFunc)
+		end, var_0_0._releaseFunc, var_0_0._resetFunc)
+		var_0_1[arg_1_0] = var_1_0
 	end
 
-	slot3 = slot2:getObject()
-	slot3.type = slot0
+	local var_1_1 = var_1_0:getObject()
 
-	return slot3
+	var_1_1.type = arg_1_0
+
+	return var_1_1
 end
 
-function slot0.dispose()
-	for slot3, slot4 in pairs(uv0) do
-		slot4:dispose()
+function var_0_0.dispose()
+	for iter_3_0, iter_3_1 in pairs(var_0_1) do
+		iter_3_1:dispose()
 	end
 
-	uv0 = {}
+	var_0_1 = {}
 end
 
-function slot0.putHandlerInst(slot0)
-	if uv0[slot0.type] then
-		slot1:putObject(slot0)
+function var_0_0.putHandlerInst(arg_4_0)
+	local var_4_0 = var_0_1[arg_4_0.type]
+
+	if var_4_0 then
+		var_4_0:putObject(arg_4_0)
 	else
-		if slot0.reset then
-			slot0:reset()
+		if arg_4_0.reset then
+			arg_4_0:reset()
 		end
 
-		if slot0.dispose then
-			slot0:dispose()
+		if arg_4_0.dispose then
+			arg_4_0:dispose()
 		end
 	end
 end
 
-function slot0._releaseFunc(slot0)
-	if slot0.dispose then
-		slot0:dispose()
+function var_0_0._releaseFunc(arg_5_0)
+	if arg_5_0.dispose then
+		arg_5_0:dispose()
 	end
 end
 
-function slot0._resetFunc(slot0)
-	if slot0.reset then
-		slot0:reset()
+function var_0_0._resetFunc(arg_6_0)
+	if arg_6_0.reset then
+		arg_6_0:reset()
 	end
 end
 
-return slot0
+return var_0_0

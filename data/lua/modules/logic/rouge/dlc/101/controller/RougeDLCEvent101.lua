@@ -1,19 +1,20 @@
-module("modules.logic.rouge.dlc.101.controller.RougeDLCEvent101", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.controller.RougeDLCEvent101", package.seeall)
 
-slot1 = 1
+local var_0_0 = _M
+local var_0_1 = 1
 
-function slot2(slot0)
-	assert(uv0[slot0] == nil, "[RougeDLCEvent101] error redefined RougeDLCEvent101." .. slot0)
+local function var_0_2(arg_1_0)
+	assert(var_0_0[arg_1_0] == nil, "[RougeDLCEvent101] error redefined RougeDLCEvent101." .. arg_1_0)
 
-	uv0[slot0] = uv1
-	uv1 = uv1 + 1
+	var_0_0[arg_1_0] = var_0_1
+	var_0_1 = var_0_1 + 1
 end
 
-slot2("UpdateLimitGroup")
-slot2("OnSelectBuff")
-slot2("RefreshLimiterDebuffTips")
-slot2("UpdateBuffState")
-slot2("UpdateEmblem")
-slot2("CloseBuffDescTips")
+var_0_2("UpdateLimitGroup")
+var_0_2("OnSelectBuff")
+var_0_2("RefreshLimiterDebuffTips")
+var_0_2("UpdateBuffState")
+var_0_2("UpdateEmblem")
+var_0_2("CloseBuffDescTips")
 
-return _M
+return var_0_0

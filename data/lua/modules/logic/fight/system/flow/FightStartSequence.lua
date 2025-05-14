@@ -1,150 +1,160 @@
-module("modules.logic.fight.system.flow.FightStartSequence", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightStartSequence", package.seeall)
 
-slot0 = class("FightStartSequence", BaseFightSequence)
+local var_0_0 = class("FightStartSequence", BaseFightSequence)
 
-function slot0.buildFlow(slot0, slot1)
-	uv0.super.buildFlow(slot0)
+function var_0_0.buildFlow(arg_1_0, arg_1_1)
+	var_0_0.super.buildFlow(arg_1_0)
 
-	slot0.startRoundMO = slot1
+	arg_1_0.startRoundMO = arg_1_1
 
-	slot0:_buildStartRoundSteps()
+	arg_1_0:_buildStartRoundSteps()
 end
 
-function slot0._buildStartRoundSteps(slot0)
-	slot0:addWork(FightWorkDialogBeforeStartFight.New())
-	slot0:addWork(FightWorkAppearPerformance.New())
-	slot0:addWork(FightWorkDetectReplayEnterSceneActive.New())
+function var_0_0._buildStartRoundSteps(arg_2_0)
+	arg_2_0:addWork(FightWorkDialogBeforeStartFight.New())
+	arg_2_0:addWork(FightWorkAppearPerformance.New())
+	arg_2_0:addWork(FightWorkDetectReplayEnterSceneActive.New())
 
-	uv0.needStopMonsterWave = nil
+	var_0_0.needStopMonsterWave = nil
 
 	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWave, 1)
 
-	if FightWorkFocusMonster.getFocusEntityId() or uv0.needStopMonsterWave then
-		slot0:_buildFocusBorn()
+	if FightWorkFocusMonster.getFocusEntityId() or var_0_0.needStopMonsterWave then
+		arg_2_0:_buildFocusBorn()
 	else
-		slot0:_buildNormalBorn()
+		arg_2_0:_buildNormalBorn()
 	end
 
-	slot0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_2_0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
+	arg_2_0:addWork(FunctionWork.New(function()
 		FightRpc.instance:dealCardInfoPushData()
 	end))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_2_0:addWork(FunctionWork.New(function()
 		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
 	end))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_2_0:addWork(FunctionWork.New(function()
 		FightViewPartVisible.set(true, true, true, false, false)
 	end))
 end
 
-function slot0._buildFocusBorn(slot0)
-	if uv0.needStopMonsterWave then
-		slot0:addWork(FunctionWork.New(function ()
-			uv0:_setMonsterVisible(false)
+function var_0_0._buildFocusBorn(arg_6_0)
+	if var_0_0.needStopMonsterWave then
+		arg_6_0:addWork(FunctionWork.New(function()
+			arg_6_0:_setMonsterVisible(false)
 		end))
 	end
 
-	slot0:addWork(FightWorkStartBorn.New())
+	arg_6_0:addWork(FightWorkStartBorn.New())
 
-	if uv0.needStopMonsterWave then
-		slot0:addWork(FightWorkWaitDialog.New(1))
-		slot0:addWork(FunctionWork.New(function ()
-			uv0:_setMonsterVisible(true)
+	if var_0_0.needStopMonsterWave then
+		arg_6_0:addWork(FightWorkWaitDialog.New(1))
+		arg_6_0:addWork(FunctionWork.New(function()
+			arg_6_0:_setMonsterVisible(true)
 		end))
 	end
 
-	slot0:addWork(FightWorkFocusMonster.New())
+	arg_6_0:addWork(FightWorkFocusMonster.New())
 
 	if FightModel.instance:getVersion() < 4 then
-		slot0:addWork(FightWorkDistributeCard.New())
-		slot0:addWork(FunctionWork.New(function ()
+		arg_6_0:addWork(FightWorkDistributeCard.New())
+		arg_6_0:addWork(FunctionWork.New(function()
 			FightController.instance:setCurStage(FightEnum.Stage.StartRound)
 		end))
 	end
 
-	slot0:addWork(FunctionWork.New(slot0._dealStartBuff))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_6_0:addWork(FunctionWork.New(arg_6_0._dealStartBuff))
+	arg_6_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	if FightStepBuilder.buildStepWorkList(slot0.startRoundMO.fightStepMOs) then
-		for slot6, slot7 in ipairs(slot2) do
-			slot0:addWork(slot7)
+	local var_6_0 = FightStepBuilder.buildStepWorkList(arg_6_0.startRoundMO.fightStepMOs)
+
+	if var_6_0 then
+		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+			arg_6_0:addWork(iter_6_1)
 		end
 	end
 
-	slot0:addWork(FunctionWork.New(function ()
+	arg_6_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.AfterEnterStepBehaviour)
 	end))
 
 	if FightController.instance:canOpenRoundView() then
-		slot0:addWork(FightWorkBeforeStartNoticeView.New())
+		arg_6_0:addWork(FightWorkBeforeStartNoticeView.New())
 	end
 
-	if slot0:_buildRoundViewWork() then
-		slot0:addWork(slot3)
+	local var_6_1 = arg_6_0:_buildRoundViewWork()
+
+	if var_6_1 then
+		arg_6_0:addWork(var_6_1)
 	end
 end
 
-function slot0._buildNormalBorn(slot0)
-	slot1 = FlowParallel.New()
+function var_0_0._buildNormalBorn(arg_12_0)
+	local var_12_0 = FlowParallel.New()
 
-	slot1:addWork(FightWorkStartBorn.New())
+	var_12_0:addWork(FightWorkStartBorn.New())
 
-	slot2 = FlowSequence.New()
+	local var_12_1 = FlowSequence.New()
 
-	slot1:addWork(slot2)
-	slot0:addWork(slot1)
-	slot2:addWork(WorkWaitSeconds.New(1.4 / FightModel.instance:getSpeed()))
+	var_12_0:addWork(var_12_1)
+	arg_12_0:addWork(var_12_0)
+	var_12_1:addWork(WorkWaitSeconds.New(1.4 / FightModel.instance:getSpeed()))
 
-	if slot0:_buildRoundViewWork() then
-		slot2:addWork(slot3)
-		slot2:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getSpeed()))
+	local var_12_2 = arg_12_0:_buildRoundViewWork()
+
+	if var_12_2 then
+		var_12_1:addWork(var_12_2)
+		var_12_1:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getSpeed()))
 	end
 
 	if FightModel.instance:getVersion() < 4 then
-		slot2:addWork(FightWorkDistributeCard.New())
-		slot0:addWork(FunctionWork.New(function ()
+		var_12_1:addWork(FightWorkDistributeCard.New())
+		arg_12_0:addWork(FunctionWork.New(function()
 			FightController.instance:setCurStage(FightEnum.Stage.StartRound)
 		end))
 	end
 
-	slot0:addWork(FunctionWork.New(slot0._dealStartBuff))
-	slot0:addWork(FunctionWork.New(function ()
+	arg_12_0:addWork(FunctionWork.New(arg_12_0._dealStartBuff))
+	arg_12_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	if FightStepBuilder.buildStepWorkList(slot0.startRoundMO and slot0.startRoundMO.fightStepMOs) then
-		for slot9, slot10 in ipairs(slot5) do
-			slot0:addWork(slot10)
+	local var_12_3 = FightStepBuilder.buildStepWorkList(arg_12_0.startRoundMO and arg_12_0.startRoundMO.fightStepMOs)
+
+	if var_12_3 then
+		for iter_12_0, iter_12_1 in ipairs(var_12_3) do
+			arg_12_0:addWork(iter_12_1)
 		end
 	end
 
 	if FightController.instance:canOpenRoundView() then
-		slot0:addWork(FightWorkBeforeStartNoticeView.New())
+		arg_12_0:addWork(FightWorkBeforeStartNoticeView.New())
 	end
 end
 
-function slot0._buildRoundViewWork(slot0)
+function var_0_0._buildRoundViewWork(arg_15_0)
 	if FightController.instance:canOpenRoundView() and GMFightShowState.roundSpecialView then
-		return FunctionWork.New(function ()
+		return FunctionWork.New(function()
 			FightController.instance:openRoundView()
 		end)
 	end
 end
 
-function slot0._dealStartBuff(slot0)
-	for slot4, slot5 in ipairs(FightHelper.getAllEntitys()) do
-		if slot5.buff then
-			slot5.buff:dealStartBuff()
+function var_0_0._dealStartBuff(arg_17_0)
+	for iter_17_0, iter_17_1 in ipairs(FightHelper.getAllEntitys()) do
+		if iter_17_1.buff then
+			iter_17_1.buff:dealStartBuff()
 		end
 	end
 end
 
-function slot0._setMonsterVisible(slot0, slot1)
-	for slot6, slot7 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)) do
-		slot7:setActive(slot1)
+function var_0_0._setMonsterVisible(arg_18_0, arg_18_1)
+	local var_18_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		iter_18_1:setActive(arg_18_1)
 	end
 end
 
-return slot0
+return var_0_0

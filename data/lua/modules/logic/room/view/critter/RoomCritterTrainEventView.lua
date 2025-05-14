@@ -1,63 +1,76 @@
-module("modules.logic.room.view.critter.RoomCritterTrainEventView", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterTrainEventView", package.seeall)
 
-slot0 = class("RoomCritterTrainEventView", BaseView)
+local var_0_0 = class("RoomCritterTrainEventView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goeventitem = gohelper.findChild(slot0.viewGO, "go_content/#go_event_item")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "go_content/#go_event_item/#txt_name")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "go_content/#go_event_item/#txt_num")
-	slot0._btnevent = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_content/#go_event_item/#btn_event")
-	slot0._gopos41 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_1")
-	slot0._gopos42 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_2")
-	slot0._gopos43 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_3")
-	slot0._gopos44 = gohelper.findChild(slot0.viewGO, "go_content/#go_pos4_4")
-	slot0._gorighttopbtns = gohelper.findChild(slot0.viewGO, "#go_righttopbtns")
-	slot0._btncurrency = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_currency")
-	slot0._imagecurrency = gohelper.findChildImage(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#image")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_add")
-	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "#go_righttopbtns/#go_container/currency/content/#txt")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "#go_BackBtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goeventitem = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_event_item")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "go_content/#go_event_item/#txt_name")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "go_content/#go_event_item/#txt_num")
+	arg_1_0._btnevent = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_content/#go_event_item/#btn_event")
+	arg_1_0._gopos41 = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_pos4_1")
+	arg_1_0._gopos42 = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_pos4_2")
+	arg_1_0._gopos43 = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_pos4_3")
+	arg_1_0._gopos44 = gohelper.findChild(arg_1_0.viewGO, "go_content/#go_pos4_4")
+	arg_1_0._gorighttopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_righttopbtns")
+	arg_1_0._btncurrency = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_currency")
+	arg_1_0._imagecurrency = gohelper.findChildImage(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/#image")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/#btn_add")
+	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "#go_righttopbtns/#go_container/currency/content/#txt")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncurrency:AddClickListener(slot0._btncurrencyOnClick, slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btnevent:AddClickListener(slot0._btneventOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncurrency:AddClickListener(arg_2_0._btncurrencyOnClick, arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btnevent:AddClickListener(arg_2_0._btneventOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncurrency:RemoveClickListener()
-	slot0._btnadd:RemoveClickListener()
-	slot0._btnevent:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncurrency:RemoveClickListener()
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btnevent:RemoveClickListener()
 end
 
-function slot0._btncurrencyOnClick(slot0)
+function var_0_0._btncurrencyOnClick(arg_4_0)
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.RoomCritterTrain, false, nil, false)
 end
 
-function slot0._btnaddOnClick(slot0)
-	RoomCritterController.instance:openExchangeView({
+function var_0_0._btnaddOnClick(arg_5_0)
+	local var_5_0 = {
 		MaterialEnum.MaterialType.Currency,
 		CurrencyEnum.CurrencyType.RoomCritterTrain,
 		1
-	})
+	}
+
+	RoomCritterController.instance:openExchangeView(var_5_0)
 end
 
-function slot0._btneventOnClick(slot0)
+function var_0_0._btneventOnClick(arg_6_0)
+	return
 end
 
-function slot0._refreshCurrency(slot0)
-	slot0._txtcurrency.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.RoomCritterTrain).quantity)
+function var_0_0._refreshCurrency(arg_7_0)
+	local var_7_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.RoomCritterTrain)
+	local var_7_1 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoomCritterTrain)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecurrency, CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.RoomCritterTrain).icon .. "_1")
+	arg_7_0._txtcurrency.text = GameUtil.numberDisplay(var_7_0.quantity)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_7_0._imagecurrency, var_7_1.icon .. "_1")
 end
 
-function slot0._editableInitView(slot0)
-	slot0._numPostDict = {
+function var_0_0._editableInitView(arg_8_0)
+	local var_8_0 = {
+		arg_8_0._gopos41,
+		arg_8_0._gopos42,
+		arg_8_0._gopos43,
+		arg_8_0._gopos44
+	}
+
+	arg_8_0._numPostDict = {
 		[3] = {
 			80,
 			0,
@@ -67,164 +80,192 @@ function slot0._editableInitView(slot0)
 			97.4
 		}
 	}
-	slot0._eventIconDict = {
-		[203.0] = "room_train_btn_3",
-		[202.0] = "room_train_btn_4",
-		[201.0] = "room_train_btn_1",
+	arg_8_0._eventIconDict = {
+		[203] = "room_train_btn_3",
+		[202] = "room_train_btn_4",
+		[201] = "room_train_btn_1",
 		[CritterEnum.EventType.Special] = "room_train_btn_2",
 		[CritterEnum.EventType.ActiveTime] = "room_train_btn_1"
 	}
-	slot0._eventTbList = slot0:getUserDataTb_()
+	arg_8_0._eventTbList = arg_8_0:getUserDataTb_()
 
-	for slot5 = 1, #{
-		slot0._gopos41,
-		slot0._gopos42,
-		slot0._gopos43,
-		slot0._gopos44
-	} do
-		table.insert(slot0._eventTbList, slot0:_initCreateTB(gohelper.clone(slot0._goeventitem, slot1[slot5])))
+	for iter_8_0 = 1, #var_8_0 do
+		local var_8_1 = gohelper.clone(arg_8_0._goeventitem, var_8_0[iter_8_0])
+
+		table.insert(arg_8_0._eventTbList, arg_8_0:_initCreateTB(var_8_1))
 	end
 
-	gohelper.setActive(slot0._goeventitem, false)
+	gohelper.setActive(arg_8_0._goeventitem, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, slot0._refreshUI, slot0)
-	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, slot0._refreshCurrency, slot0)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, arg_10_0._refreshUI, arg_10_0)
+	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, arg_10_0._refreshCurrency, arg_10_0)
 
-	slot0._critterUid = slot0.viewParam and slot0.viewParam.critterUid
+	arg_10_0._critterUid = arg_10_0.viewParam and arg_10_0.viewParam.critterUid
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0.onClose(slot0)
-	slot4 = slot0._refreshCurrency
+function var_0_0.onClose(arg_11_0)
+	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, arg_11_0._refreshCurrency, arg_11_0)
 
-	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, slot4, slot0)
-
-	for slot4 = 1, #slot0._eventTbList do
-		slot0._eventTbList[slot4]._btnevent:RemoveClickListener()
+	for iter_11_0 = 1, #arg_11_0._eventTbList do
+		arg_11_0._eventTbList[iter_11_0]._btnevent:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-function slot0._initCreateTB(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goTrs = slot1.transform
-	slot2._gospecialbg = gohelper.findChild(slot1, "specialbg")
-	slot2._gonormalbg = gohelper.findChild(slot1, "normalbg")
-	slot2._gonumbg = gohelper.findChild(slot1, "numbg")
-	slot2._txtname = gohelper.findChildText(slot1, "#txt_name")
-	slot2._txtnum = gohelper.findChildText(slot1, "#txt_num")
-	slot2._imageicon = gohelper.findChildImage(slot1, "#image_icon")
-	slot2._btnevent = gohelper.findChildButtonWithAudio(slot1, "#btn_event")
+function var_0_0._initCreateTB(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getUserDataTb_()
 
-	slot2._btnevent:AddClickListener(slot0._onItemEventClick, slot0, slot2)
+	var_13_0.go = arg_13_1
+	var_13_0.goTrs = arg_13_1.transform
+	var_13_0._gospecialbg = gohelper.findChild(arg_13_1, "specialbg")
+	var_13_0._gonormalbg = gohelper.findChild(arg_13_1, "normalbg")
+	var_13_0._gonumbg = gohelper.findChild(arg_13_1, "numbg")
+	var_13_0._txtname = gohelper.findChildText(arg_13_1, "#txt_name")
+	var_13_0._txtnum = gohelper.findChildText(arg_13_1, "#txt_num")
+	var_13_0._imageicon = gohelper.findChildImage(arg_13_1, "#image_icon")
+	var_13_0._btnevent = gohelper.findChildButtonWithAudio(arg_13_1, "#btn_event")
 
-	slot2._gograyList = {
-		slot2._imageicon.gameObject,
-		slot2._gospecialbg,
-		slot2._gonormalbg,
-		slot2._gonumbg
+	var_13_0._btnevent:AddClickListener(arg_13_0._onItemEventClick, arg_13_0, var_13_0)
+
+	var_13_0._gograyList = {
+		var_13_0._imageicon.gameObject,
+		var_13_0._gospecialbg,
+		var_13_0._gonormalbg,
+		var_13_0._gonumbg
 	}
-	slot2.eventMO = nil
+	var_13_0.eventMO = nil
 
-	return slot2
+	return var_13_0
 end
 
-function slot0._refreshTB(slot0, slot1, slot2, slot3)
-	if not slot1 then
+function var_0_0._refreshTB(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	if not arg_14_1 then
 		return
 	end
 
-	slot1.eventMO = slot2
-	slot1.critterUid = slot3
+	arg_14_1.eventMO = arg_14_2
+	arg_14_1.critterUid = arg_14_3
 
-	if slot2 then
-		slot4 = slot2:getEventType() == CritterEnum.EventType.Special
-		slot1._txtname.text = slot2:getDefineCfg() and slot5.name
-		slot1._txtnum.text = slot2.remainCount
+	if arg_14_2 then
+		local var_14_0 = arg_14_2:getEventType() == CritterEnum.EventType.Special
+		local var_14_1 = arg_14_2:getDefineCfg()
 
-		gohelper.setActive(slot1._gospecialbg, slot4)
-		gohelper.setActive(slot1._gonormalbg, not slot4)
+		arg_14_1._txtname.text = var_14_1 and var_14_1.name
+		arg_14_1._txtnum.text = arg_14_2.remainCount
 
-		for slot10, slot11 in ipairs(slot1._gograyList) do
-			ZProj.UGUIHelper.SetGrayFactor(slot11, slot2:isHasEventAction() and 0 or 1)
+		gohelper.setActive(arg_14_1._gospecialbg, var_14_0)
+		gohelper.setActive(arg_14_1._gonormalbg, not var_14_0)
+
+		local var_14_2 = arg_14_2:isHasEventAction() and 0 or 1
+
+		for iter_14_0, iter_14_1 in ipairs(arg_14_1._gograyList) do
+			ZProj.UGUIHelper.SetGrayFactor(iter_14_1, var_14_2)
 		end
 
-		UISpriteSetMgr.instance:setCritterSprite(slot1._imageicon, slot0._eventIconDict[slot5 and slot5.id] or slot0._eventIconDict[CritterEnum.EventType.Special])
+		local var_14_3 = var_14_1 and var_14_1.id
+		local var_14_4 = arg_14_0._eventIconDict[var_14_3] or arg_14_0._eventIconDict[CritterEnum.EventType.Special]
+
+		UISpriteSetMgr.instance:setCritterSprite(arg_14_1._imageicon, var_14_4)
 	end
 end
 
-function slot0._onItemEventClick(slot0, slot1)
-	slot2 = slot1.eventMO
+function var_0_0._onItemEventClick(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.eventMO
+	local var_15_1 = arg_15_0:getCritterMO()
 
-	if slot0:getCritterMO() and slot2 and slot2:isHasEventAction() and slot2.activeTime <= slot3.trainInfo:getProcessTime() then
-		if not CritterConfig.instance:getCritterTrainEventCfg(slot2.eventId) then
+	if var_15_1 and var_15_0 and var_15_0:isHasEventAction() and var_15_1.trainInfo:getProcessTime() >= var_15_0.activeTime then
+		local var_15_2 = CritterConfig.instance:getCritterTrainEventCfg(var_15_0.eventId)
+
+		if not var_15_2 then
 			return
 		end
 
-		if slot6 and slot6[3] and slot9 > 0 and ItemModel.instance:getItemQuantity(string.splitToNumber(slot5.cost, "#") and slot6[1], slot6 and slot6[2]) < slot9 then
-			GameFacade.showMessageBox(MessageBoxIdDefine.RoomCritterTrainItemInsufficiency, MsgBoxEnum.BoxType.Yes_No, slot0._onYesOpenTradeView, nil, , slot0, nil, )
+		local var_15_3 = string.splitToNumber(var_15_2.cost, "#")
+		local var_15_4 = var_15_3 and var_15_3[1]
+		local var_15_5 = var_15_3 and var_15_3[2]
+		local var_15_6 = var_15_3 and var_15_3[3]
+
+		if var_15_6 and var_15_6 > 0 and var_15_6 > ItemModel.instance:getItemQuantity(var_15_4, var_15_5) then
+			GameFacade.showMessageBox(MessageBoxIdDefine.RoomCritterTrainItemInsufficiency, MsgBoxEnum.BoxType.Yes_No, arg_15_0._onYesOpenTradeView, nil, nil, arg_15_0, nil, nil)
 
 			return
 		end
 
-		slot0:closeThis()
-		RoomCritterController.instance:startTrain(slot2.eventId, slot0._critterUid, slot3 and slot3.trainInfo.heroId)
+		arg_15_0:closeThis()
+
+		local var_15_7 = var_15_1 and var_15_1.trainInfo.heroId
+
+		RoomCritterController.instance:startTrain(var_15_0.eventId, arg_15_0._critterUid, var_15_7)
 	end
 end
 
-function slot0._onYesOpenTradeView(slot0)
+function var_0_0._onYesOpenTradeView(arg_16_0)
 	GameFacade.jump(JumpEnum.JumpId.RoomStoreTabFluff)
 end
 
-function slot0._refreshUI(slot0)
-	if not slot0:getCritterMO() or not slot1.trainInfo or slot1.trainInfo:isFinishAllEvent() then
-		slot0:closeThis()
+function var_0_0._refreshUI(arg_17_0)
+	local var_17_0 = arg_17_0:getCritterMO()
+
+	if not var_17_0 or not var_17_0.trainInfo or var_17_0.trainInfo:isFinishAllEvent() then
+		arg_17_0:closeThis()
 
 		return
 	end
 
-	slot0:_refreshEventBnts(slot1.trainInfo.events)
-	slot0:_refreshCurrency()
+	arg_17_0:_refreshEventBnts(var_17_0.trainInfo.events)
+	arg_17_0:_refreshCurrency()
 end
 
-function slot0._refreshEventBnts(slot0, slot1)
-	slot2 = 0
+function var_0_0._refreshEventBnts(arg_18_0, arg_18_1)
+	local var_18_0 = 0
 
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			if CritterEnum.NeedActionEventTypeDict[slot7:getEventType()] and slot0:_checkEventMOShow(slot7) then
-				slot0:_refreshTB(slot0._eventTbList[slot2 + 1], slot7, slot0._critterUid)
+	if arg_18_1 then
+		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+			if CritterEnum.NeedActionEventTypeDict[iter_18_1:getEventType()] and arg_18_0:_checkEventMOShow(iter_18_1) then
+				var_18_0 = var_18_0 + 1
+
+				local var_18_1 = arg_18_0._eventTbList[var_18_0]
+
+				arg_18_0:_refreshTB(var_18_1, iter_18_1, arg_18_0._critterUid)
 			end
 		end
 	end
 
-	slot3 = slot0._numPostDict[slot2]
+	local var_18_2 = arg_18_0._numPostDict[var_18_0]
 
-	for slot7 = 1, #slot0._eventTbList do
-		gohelper.setActive(slot0._eventTbList[slot7].go, slot7 <= slot2)
-		recthelper.setAnchor(slot8.goTrs, slot3 and slot3[2 * slot7 - 1] or 0, slot3 and slot3[2 * slot7] or 0)
+	for iter_18_2 = 1, #arg_18_0._eventTbList do
+		local var_18_3 = arg_18_0._eventTbList[iter_18_2]
+
+		gohelper.setActive(var_18_3.go, iter_18_2 <= var_18_0)
+
+		local var_18_4 = var_18_2 and var_18_2[2 * iter_18_2 - 1] or 0
+		local var_18_5 = var_18_2 and var_18_2[2 * iter_18_2] or 0
+
+		recthelper.setAnchor(var_18_3.goTrs, var_18_4, var_18_5)
 	end
 end
 
-function slot0._checkEventMOShow(slot0, slot1)
-	if slot1:getEventType() == CritterEnum.EventType.Special then
-		return slot1:isEventActive()
+function var_0_0._checkEventMOShow(arg_19_0, arg_19_1)
+	if arg_19_1:getEventType() == CritterEnum.EventType.Special then
+		return arg_19_1:isEventActive()
 	end
 
 	return true
 end
 
-function slot0.getCritterMO(slot0)
-	return CritterModel.instance:getCritterMOByUid(slot0._critterUid)
+function var_0_0.getCritterMO(arg_20_0)
+	return CritterModel.instance:getCritterMOByUid(arg_20_0._critterUid)
 end
 
-return slot0
+return var_0_0

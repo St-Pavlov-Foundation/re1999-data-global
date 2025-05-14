@@ -1,22 +1,23 @@
-module("modules.logic.scene.rouge.comp.RougeSceneDirector", package.seeall)
+﻿module("modules.logic.scene.rouge.comp.RougeSceneDirector", package.seeall)
 
-slot0 = class("RougeSceneDirector", BaseSceneComp)
+local var_0_0 = class("RougeSceneDirector", BaseSceneComp)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, slot0.onMapLoadDone, slot0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onLoadMapDone, arg_2_0.onMapLoadDone, arg_2_0)
 end
 
-function slot0.onMapLoadDone(slot0)
-	slot0._scene:onPrepared()
+function var_0_0.onMapLoadDone(arg_3_0)
+	arg_3_0._scene:onPrepared()
 end
 
-function slot0.onSceneClose(slot0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, slot0.onMapLoadDone, slot0)
+function var_0_0.onSceneClose(arg_4_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onLoadMapDone, arg_4_0.onMapLoadDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

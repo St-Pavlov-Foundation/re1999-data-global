@@ -1,23 +1,24 @@
-module("modules.logic.explore.controller.steps.ExploreSpikeStep", package.seeall)
+﻿module("modules.logic.explore.controller.steps.ExploreSpikeStep", package.seeall)
 
-slot0 = class("ExploreSpikeStep", ExploreStepBase)
+local var_0_0 = class("ExploreSpikeStep", ExploreStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = slot0._data.triggerInteractId
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._data.triggerInteractId
+	local var_1_1 = ExploreController.instance:getMap():getUnit(var_1_0)
 
-	GameSceneMgr.instance:getCurScene().stat:onTriggerSpike(slot1)
+	GameSceneMgr.instance:getCurScene().stat:onTriggerSpike(var_1_0)
 	ExploreModel.instance:addChallengeCount()
 
-	if not ExploreController.instance:getMap():getUnit(slot1) or slot2:getUnitType() ~= ExploreEnum.ItemType.Spike then
-		slot0:onDone()
+	if not var_1_1 or var_1_1:getUnitType() ~= ExploreEnum.ItemType.Spike then
+		arg_1_0:onDone()
 
 		return
 	end
 
 	ViewMgr.instance:closeView(ViewName.ExploreEnterView)
-	ExploreMapModel.instance:updatHeroPos(slot0._data.x, slot0._data.y, 0)
-	ExploreHeroFallAnimFlow.instance:begin(slot0._data, slot1)
-	slot0:onDone()
+	ExploreMapModel.instance:updatHeroPos(arg_1_0._data.x, arg_1_0._data.y, 0)
+	ExploreHeroFallAnimFlow.instance:begin(arg_1_0._data, var_1_0)
+	arg_1_0:onDone()
 end
 
-return slot0
+return var_0_0

@@ -1,52 +1,57 @@
-module("modules.logic.antique.view.AntiqueBackpackView", package.seeall)
+﻿module("modules.logic.antique.view.AntiqueBackpackView", package.seeall)
 
-slot0 = class("AntiqueBackpackView", BaseView)
+local var_0_0 = class("AntiqueBackpackView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollantique = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_antique")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollantique = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_antique")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._ani = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._ani = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.viewContainer:setCurrentSelectCategoryId(ItemEnum.CategoryType.Antique)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0.viewContainer:setCurrentSelectCategoryId(ItemEnum.CategoryType.Antique)
 
-	slot0._ani.enabled = #slot0.tabContainer._tabAbLoaders < 2
-	slot0._scrollantique.verticalNormalizedPosition = 1
+	arg_6_0._ani.enabled = #arg_6_0.tabContainer._tabAbLoaders < 2
+	arg_6_0._scrollantique.verticalNormalizedPosition = 1
 
-	slot0:refreshAntique()
+	arg_6_0:refreshAntique()
 end
 
-function slot0.refreshAntique(slot0)
-	slot2 = {}
+function var_0_0.refreshAntique(arg_7_0)
+	local var_7_0 = AntiqueModel.instance:getAntiqueList()
+	local var_7_1 = {}
 
-	for slot6, slot7 in pairs(AntiqueModel.instance:getAntiqueList()) do
-		table.insert(slot2, slot7)
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		table.insert(var_7_1, iter_7_1)
 	end
 
-	AntiqueBackpackListModel.instance:setAntiqueList(slot2)
+	AntiqueBackpackListModel.instance:setAntiqueList(var_7_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
 	AntiqueBackpackListModel.instance:clearAntiqueList()
 end
 
-return slot0
+return var_0_0

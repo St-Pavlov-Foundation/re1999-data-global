@@ -1,7 +1,8 @@
-module("modules.logic.custompickchoice.controller.CustomPickChoiceEvent", package.seeall)
+﻿module("modules.logic.custompickchoice.controller.CustomPickChoiceEvent", package.seeall)
 
-slot0 = _M
-slot0.onCustomPickComplete = 1
-slot0.onCustomPickListChanged = 2
+local var_0_0 = _M
 
-return slot0
+var_0_0.onCustomPickComplete = 1
+var_0_0.onCustomPickListChanged = 2
+
+return var_0_0

@@ -1,64 +1,65 @@
-module("modules.logic.equip.model.EquipTeamAttrListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipTeamAttrListModel", package.seeall)
 
-slot0 = class("EquipTeamAttrListModel", ListScrollModel)
+local var_0_0 = class("EquipTeamAttrListModel", ListScrollModel)
 
-function slot0.init(slot0)
+function var_0_0.init(arg_1_0)
+	return
 end
 
-function slot0.SetAttrList(slot0)
-	slot1 = {}
+function var_0_0.SetAttrList(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = EquipTeamListModel.instance:getTeamEquip()
 
-	for slot6, slot7 in ipairs(EquipTeamListModel.instance:getTeamEquip()) do
-		if EquipModel.instance:getEquip(slot7) then
-			slot9, slot10, slot11, slot12, slot13 = EquipConfig.instance:getEquipStrengthenAttr(slot8)
+	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+		local var_2_2 = EquipModel.instance:getEquip(iter_2_1)
 
-			slot0:setAttr(slot1, 101, 0, slot9)
-			slot0:setAttr(slot1, 102, 0, slot10)
-			slot0:setAttr(slot1, 103, 0, slot11)
+		if var_2_2 then
+			local var_2_3, var_2_4, var_2_5, var_2_6, var_2_7 = EquipConfig.instance:getEquipStrengthenAttr(var_2_2)
 
-			slot17 = 104
-			slot18 = 0
+			arg_2_0:setAttr(var_2_0, 101, 0, var_2_3)
+			arg_2_0:setAttr(var_2_0, 102, 0, var_2_4)
+			arg_2_0:setAttr(var_2_0, 103, 0, var_2_5)
+			arg_2_0:setAttr(var_2_0, 104, 0, var_2_6)
 
-			slot0:setAttr(slot1, slot17, slot18, slot12)
-
-			for slot17, slot18 in pairs(lua_character_attribute.configDict) do
-				if slot18.type == 2 or slot18.type == 3 then
-					slot0:setAttr(slot1, slot17, slot18.showType, slot13[slot18.attrType])
+			for iter_2_2, iter_2_3 in pairs(lua_character_attribute.configDict) do
+				if iter_2_3.type == 2 or iter_2_3.type == 3 then
+					arg_2_0:setAttr(var_2_0, iter_2_2, iter_2_3.showType, var_2_7[iter_2_3.attrType])
 				end
 			end
 		end
 	end
 
-	slot3 = {}
+	local var_2_8 = {}
 
-	for slot7, slot8 in pairs(slot1) do
-		for slot12, slot13 in pairs(slot8) do
-			table.insert(slot3, {
-				attrId = slot7,
-				showType = slot12,
-				value = slot13
+	for iter_2_4, iter_2_5 in pairs(var_2_0) do
+		for iter_2_6, iter_2_7 in pairs(iter_2_5) do
+			table.insert(var_2_8, {
+				attrId = iter_2_4,
+				showType = iter_2_6,
+				value = iter_2_7
 			})
 		end
 	end
 
-	table.sort(slot3, uv0._sort)
-	slot0:setList(slot3)
+	table.sort(var_2_8, var_0_0._sort)
+	arg_2_0:setList(var_2_8)
 end
 
-function slot0._sort(slot0, slot1)
-	return slot0.attrId < slot1.attrId
+function var_0_0._sort(arg_3_0, arg_3_1)
+	return arg_3_0.attrId < arg_3_1.attrId
 end
 
-function slot0.setAttr(slot0, slot1, slot2, slot3, slot4)
-	if slot4 <= -1 then
+function var_0_0.setAttr(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	if arg_4_4 <= -1 then
 		return
 	end
 
-	slot5 = slot1[slot2] or {}
-	slot1[slot2] = slot5
-	slot5[slot3] = (slot5[slot3] or 0) + slot4
+	local var_4_0 = arg_4_1[arg_4_2] or {}
+
+	arg_4_1[arg_4_2] = var_4_0
+	var_4_0[arg_4_3] = (var_4_0[arg_4_3] or 0) + arg_4_4
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

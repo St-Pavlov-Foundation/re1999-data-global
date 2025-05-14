@@ -1,139 +1,160 @@
-module("modules.logic.versionactivity1_3.armpipe.controller.ArmPuzzlePipeController", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.controller.ArmPuzzlePipeController", package.seeall)
 
-slot0 = class("ArmPuzzlePipeController", BaseController)
+local var_0_0 = class("ArmPuzzlePipeController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.openMainView(slot0)
-	Activity124Rpc.instance:sendGetAct124InfosRequest(VersionActivity1_3Enum.ActivityId.Act305, slot0._onOpenMainViewCB, slot0)
+function var_0_0.openMainView(arg_5_0)
+	Activity124Rpc.instance:sendGetAct124InfosRequest(VersionActivity1_3Enum.ActivityId.Act305, arg_5_0._onOpenMainViewCB, arg_5_0)
 end
 
-function slot0._onOpenMainViewCB(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._onOpenMainViewCB(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_2 == 0 then
 		ViewMgr.instance:openView(ViewName.ArmMainView)
 	end
 end
 
-slot1 = ArmPuzzlePipeEnum.dir.left
-slot2 = ArmPuzzlePipeEnum.dir.right
-slot3 = ArmPuzzlePipeEnum.dir.down
-slot4 = ArmPuzzlePipeEnum.dir.up
+local var_0_1 = ArmPuzzlePipeEnum.dir.left
+local var_0_2 = ArmPuzzlePipeEnum.dir.right
+local var_0_3 = ArmPuzzlePipeEnum.dir.down
+local var_0_4 = ArmPuzzlePipeEnum.dir.up
 
-function slot0.release(slot0)
-	slot0._rule = nil
+function var_0_0.release(arg_7_0)
+	arg_7_0._rule = nil
 end
 
-function slot0.checkInit(slot0)
-	slot0._rule = slot0._rule or ArmPuzzlePipeRule.New()
-	slot1, slot2 = ArmPuzzlePipeModel.instance:getGameSize()
+function var_0_0.checkInit(arg_8_0)
+	arg_8_0._rule = arg_8_0._rule or ArmPuzzlePipeRule.New()
 
-	slot0._rule:setGameSize(slot1, slot2)
+	local var_8_0, var_8_1 = ArmPuzzlePipeModel.instance:getGameSize()
+
+	arg_8_0._rule:setGameSize(var_8_0, var_8_1)
 end
 
-function slot0.openGame(slot0, slot1)
-	slot0._waitEpisodeCo = slot1
+function var_0_0.openGame(arg_9_0, arg_9_1)
+	arg_9_0._waitEpisodeCo = arg_9_1
 
-	if not Activity124Model.instance:getEpisodeData(slot1.activityId, slot1.episodeId) then
-		Activity124Rpc.instance:sendGetAct124InfosRequest(VersionActivity1_3Enum.ActivityId.Act305, slot0._onOpenGame, slot0)
+	if not Activity124Model.instance:getEpisodeData(arg_9_1.activityId, arg_9_1.episodeId) then
+		Activity124Rpc.instance:sendGetAct124InfosRequest(VersionActivity1_3Enum.ActivityId.Act305, arg_9_0._onOpenGame, arg_9_0)
 	else
-		slot0:_onOpenGame()
+		arg_9_0:_onOpenGame()
 	end
 end
 
-function slot0._onOpenGame(slot0)
-	slot0._waitEpisodeCo = nil
+function var_0_0._onOpenGame(arg_10_0)
+	local var_10_0 = arg_10_0._waitEpisodeCo
 
-	if slot0._waitEpisodeCo and Activity124Model.instance:getEpisodeData(slot1.activityId, slot1.episodeId) then
-		ArmPuzzlePipeModel.instance:initByEpisodeCo(slot1)
-		slot0:checkInit()
-		slot0:refreshAllConnection()
-		slot0:updateConnection()
+	arg_10_0._waitEpisodeCo = nil
+
+	if var_10_0 and Activity124Model.instance:getEpisodeData(var_10_0.activityId, var_10_0.episodeId) then
+		ArmPuzzlePipeModel.instance:initByEpisodeCo(var_10_0)
+		arg_10_0:checkInit()
+		arg_10_0:refreshAllConnection()
+		arg_10_0:updateConnection()
 		ViewMgr.instance:openView(ViewName.ArmPuzzlePipeView)
-		slot0:dispatchEvent(ArmPuzzlePipeEvent.GuideOpenGameView, slot1.episodeId)
+
+		local var_10_1 = var_10_0.episodeId
+
+		arg_10_0:dispatchEvent(ArmPuzzlePipeEvent.GuideOpenGameView, var_10_1)
 	end
 end
 
-function slot0.resetGame(slot0)
-	ArmPuzzlePipeModel.instance:initByEpisodeCo(ArmPuzzlePipeModel.instance:getEpisodeCo())
-	slot0:refreshAllConnection()
-	slot0:updateConnection()
-	slot0:dispatchEvent(ArmPuzzlePipeEvent.ResetGameRefresh)
+function var_0_0.resetGame(arg_11_0)
+	local var_11_0 = ArmPuzzlePipeModel.instance:getEpisodeCo()
+
+	ArmPuzzlePipeModel.instance:initByEpisodeCo(var_11_0)
+	arg_11_0:refreshAllConnection()
+	arg_11_0:updateConnection()
+	arg_11_0:dispatchEvent(ArmPuzzlePipeEvent.ResetGameRefresh)
 end
 
-function slot0.changeDirection(slot0, slot1, slot2, slot3)
-	if slot3 then
-		slot0:refreshConnection(slot0._rule:changeDirection(slot1, slot2))
+function var_0_0.changeDirection(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = arg_12_0._rule:changeDirection(arg_12_1, arg_12_2)
+
+	if arg_12_3 then
+		arg_12_0:refreshConnection(var_12_0)
 	end
 end
 
-function slot0.randomPuzzle(slot0)
-	slot1 = slot0._rule:getRandomSkipSet()
-	slot2, slot3 = ArmPuzzlePipeModel.instance:getGameSize()
+function var_0_0.randomPuzzle(arg_13_0)
+	local var_13_0 = arg_13_0._rule:getRandomSkipSet()
+	local var_13_1, var_13_2 = ArmPuzzlePipeModel.instance:getGameSize()
 
-	for slot7 = 1, slot2 do
-		for slot11 = 1, slot3 do
-			if not slot1[ArmPuzzlePipeModel.instance:getData(slot7, slot11)] then
-				for slot17 = 1, math.random(0, 3) do
-					slot0._rule:changeDirection(slot7, slot11)
+	for iter_13_0 = 1, var_13_1 do
+		for iter_13_1 = 1, var_13_2 do
+			if not var_13_0[ArmPuzzlePipeModel.instance:getData(iter_13_0, iter_13_1)] then
+				local var_13_3 = math.random(0, 3)
+
+				for iter_13_2 = 1, var_13_3 do
+					arg_13_0._rule:changeDirection(iter_13_0, iter_13_1)
 				end
 			end
 		end
 	end
 
-	slot0:refreshAllConnection()
-	slot0:updateConnection()
+	arg_13_0:refreshAllConnection()
+	arg_13_0:updateConnection()
 end
 
-function slot0.refreshAllConnection(slot0)
-	slot1, slot2 = ArmPuzzlePipeModel.instance:getGameSize()
+function var_0_0.refreshAllConnection(arg_14_0)
+	local var_14_0, var_14_1 = ArmPuzzlePipeModel.instance:getGameSize()
 
-	for slot6 = 1, slot1 do
-		for slot10 = 1, slot2 do
-			slot0:refreshConnection(ArmPuzzlePipeModel.instance:getData(slot6, slot10))
+	for iter_14_0 = 1, var_14_0 do
+		for iter_14_1 = 1, var_14_1 do
+			local var_14_2 = ArmPuzzlePipeModel.instance:getData(iter_14_0, iter_14_1)
+
+			arg_14_0:refreshConnection(var_14_2)
 		end
 	end
 end
 
-function slot0.refreshConnection(slot0, slot1)
-	slot2 = slot1.x
-	slot3 = slot1.y
+function var_0_0.refreshConnection(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.x
+	local var_15_1 = arg_15_1.y
 
-	slot0._rule:setSingleConnection(slot2 - 1, slot3, uv0, uv1, slot1)
-	slot0._rule:setSingleConnection(slot2 + 1, slot3, uv1, uv0, slot1)
-	slot0._rule:setSingleConnection(slot2, slot3 + 1, uv2, uv3, slot1)
-	slot0._rule:setSingleConnection(slot2, slot3 - 1, uv3, uv2, slot1)
+	arg_15_0._rule:setSingleConnection(var_15_0 - 1, var_15_1, var_0_2, var_0_1, arg_15_1)
+	arg_15_0._rule:setSingleConnection(var_15_0 + 1, var_15_1, var_0_1, var_0_2, arg_15_1)
+	arg_15_0._rule:setSingleConnection(var_15_0, var_15_1 + 1, var_0_3, var_0_4, arg_15_1)
+	arg_15_0._rule:setSingleConnection(var_15_0, var_15_1 - 1, var_0_4, var_0_3, arg_15_1)
 end
 
-function slot0.updateConnection(slot0)
+function var_0_0.updateConnection(arg_16_0)
 	ArmPuzzlePipeModel.instance:resetEntryConnect()
 
-	slot1, slot2 = slot0._rule:getReachTable()
+	local var_16_0, var_16_1 = arg_16_0._rule:getReachTable()
 
-	slot0._rule:_mergeReachDir(slot1)
-	slot0._rule:_unmarkBranch()
-	ArmPuzzlePipeModel.instance:setGameClear(slot0._rule:isGameClear(slot2))
+	arg_16_0._rule:_mergeReachDir(var_16_0)
+	arg_16_0._rule:_unmarkBranch()
+
+	local var_16_2 = arg_16_0._rule:isGameClear(var_16_1)
+
+	ArmPuzzlePipeModel.instance:setGameClear(var_16_2)
 end
 
-function slot0.checkDispatchClear(slot0)
+function var_0_0.checkDispatchClear(arg_17_0)
 	if ArmPuzzlePipeModel.instance:getGameClear() then
-		slot0:dispatchEvent(ArmPuzzlePipeEvent.PipeGameClear)
+		arg_17_0:dispatchEvent(ArmPuzzlePipeEvent.PipeGameClear)
 	end
 end
 
-function slot0.getIsEntryClear(slot0, slot1)
-	return slot0._rule:getIsEntryClear(slot1)
+function var_0_0.getIsEntryClear(arg_18_0, arg_18_1)
+	return arg_18_0._rule:getIsEntryClear(arg_18_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

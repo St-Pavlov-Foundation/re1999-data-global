@@ -1,67 +1,66 @@
-module("modules.logic.prototest.view.ProtoTestReqView", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoTestReqView", package.seeall)
 
-slot0 = class("ProtoTestReqView", BaseView)
+local var_0_0 = class("ProtoTestReqView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._panelNew = gohelper.findChild(slot0.viewGO, "Panel_testcase/Panel_new")
-	slot0._bgGO = gohelper.findChild(slot0.viewGO, "Panel_testcase/Panel_new/bg")
-	slot0._bgTr = slot0._bgGO.transform
-	slot0._inpRequest = gohelper.findChildTextMeshInputField(slot0.viewGO, "Panel_testcase/Panel_new/bg/inpRequest")
-	slot0._btnNewCase = gohelper.findChildButtonWithAudio(slot0.viewGO, "Panel_testcase/Panel_oprator/Btn_NewCase")
-	slot0._click = gohelper.getClick(slot0._panelNew)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._panelNew = gohelper.findChild(arg_1_0.viewGO, "Panel_testcase/Panel_new")
+	arg_1_0._bgGO = gohelper.findChild(arg_1_0.viewGO, "Panel_testcase/Panel_new/bg")
+	arg_1_0._bgTr = arg_1_0._bgGO.transform
+	arg_1_0._inpRequest = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "Panel_testcase/Panel_new/bg/inpRequest")
+	arg_1_0._btnNewCase = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel_testcase/Panel_oprator/Btn_NewCase")
+	arg_1_0._click = gohelper.getClick(arg_1_0._panelNew)
 end
 
-function slot0.addEvents(slot0)
-	slot0._click:AddClickListener(slot0._onClickMask, slot0)
-	slot0._btnNewCase:AddClickListener(slot0._onClickBtnNewCase, slot0)
-	slot0._inpRequest:AddOnValueChanged(slot0._onValueChanged, slot0)
-	slot0:addEventCb(ProtoTestMgr.instance, ProtoEnum.OnClickReqListItem, slot0._onClickReqListItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickMask, arg_2_0)
+	arg_2_0._btnNewCase:AddClickListener(arg_2_0._onClickBtnNewCase, arg_2_0)
+	arg_2_0._inpRequest:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
+	arg_2_0:addEventCb(ProtoTestMgr.instance, ProtoEnum.OnClickReqListItem, arg_2_0._onClickReqListItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
-	slot0._btnNewCase:RemoveClickListener()
-	slot0._inpRequest:RemoveOnValueChanged()
-	slot0:removeEventCb(ProtoTestMgr.instance, ProtoEnum.OnClickReqListItem, slot0._onClickReqListItem, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	arg_3_0._btnNewCase:RemoveClickListener()
+	arg_3_0._inpRequest:RemoveOnValueChanged()
+	arg_3_0:removeEventCb(ProtoTestMgr.instance, ProtoEnum.OnClickReqListItem, arg_3_0._onClickReqListItem, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._panelNew, false)
+function var_0_0.onOpen(arg_4_0)
+	gohelper.setActive(arg_4_0._panelNew, false)
 end
 
-function slot0._onClickMask(slot0)
-	gohelper.setActive(slot0._panelNew, false)
+function var_0_0._onClickMask(arg_5_0)
+	gohelper.setActive(arg_5_0._panelNew, false)
 end
 
-function slot0._onClickBtnNewCase(slot0)
-	gohelper.setActive(slot0._panelNew, true)
-	slot0:_updateListView()
+function var_0_0._onClickBtnNewCase(arg_6_0)
+	gohelper.setActive(arg_6_0._panelNew, true)
+	arg_6_0:_updateListView()
 end
 
-function slot0._onValueChanged(slot0, slot1)
-	slot0:_updateListView()
+function var_0_0._onValueChanged(arg_7_0, arg_7_1)
+	arg_7_0:_updateListView()
 end
 
-function slot0._onClickReqListItem(slot0, slot1)
-	gohelper.setActive(slot0._panelNew, false)
+function var_0_0._onClickReqListItem(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0._panelNew, false)
 
-	slot3 = ProtoTestCaseMO.New()
+	local var_8_0 = ProtoParamHelper.buildProtoByStructName(arg_8_1.req)
+	local var_8_1 = ProtoTestCaseMO.New()
 
-	slot3:initFromProto(slot1.cmd, ProtoParamHelper.buildProtoByStructName(slot1.req))
-	ProtoTestCaseModel.instance:addAtLast(slot3)
+	var_8_1:initFromProto(arg_8_1.cmd, var_8_0)
+	ProtoTestCaseModel.instance:addAtLast(var_8_1)
 end
 
-function slot0._updateListView(slot0)
-	if #ProtoReqListModel.instance:getFilterList(slot0._inpRequest:GetText()) > 10 then
-		slot2 = 10
-	end
+function var_0_0._updateListView(arg_9_0)
+	local var_9_0 = ProtoReqListModel.instance:getFilterList(arg_9_0._inpRequest:GetText())
+	local var_9_1 = #var_9_0
 
-	if slot2 < 1 then
-		slot2 = 1
-	end
+	var_9_1 = var_9_1 > 10 and 10 or var_9_1
+	var_9_1 = var_9_1 < 1 and 1 or var_9_1
 
-	recthelper.setHeight(slot0._bgTr, 40 + slot2 * 60)
-	ProtoReqListModel.instance:setList(slot1)
+	recthelper.setHeight(arg_9_0._bgTr, 40 + var_9_1 * 60)
+	ProtoReqListModel.instance:setList(var_9_0)
 end
 
-return slot0
+return var_0_0

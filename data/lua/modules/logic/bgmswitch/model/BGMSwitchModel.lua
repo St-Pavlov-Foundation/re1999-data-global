@@ -1,37 +1,38 @@
-module("modules.logic.bgmswitch.model.BGMSwitchModel", package.seeall)
+﻿module("modules.logic.bgmswitch.model.BGMSwitchModel", package.seeall)
 
-slot0 = class("BGMSwitchModel", BaseModel)
-slot0.InvalidBgmId = -1
-slot0.RandomBgmId = 0
+local var_0_0 = class("BGMSwitchModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+var_0_0.InvalidBgmId = -1
+var_0_0.RandomBgmId = 0
+
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._playMode = BGMSwitchEnum.PlayMode.LoopOne
-	slot0._playingState = BGMSwitchEnum.PlayingState.FoldPlaying
-	slot0._selectType = BGMSwitchEnum.SelectType.All
-	slot0._bgmInfos = {}
-	slot0._filterTypes = {}
-	slot0._isFilteredAllListDirty = true
-	slot0._filteredAllBgmListSorted = {}
-	slot0._filteredAllBgmListRandom = {}
-	slot0._isUnfilteredAllListDirty = true
-	slot0._unfilteredAllBgmListSorted = {}
-	slot0._isFilteredFavoriteListDirty = true
-	slot0._filteredFavoriteBgmListSorted = {}
-	slot0._filteredFavoriteBgmListRandom = {}
-	slot0._isUnfilteredFavoriteListDirty = true
-	slot0._unfilteredFavoriteBgmListSorted = {}
-	slot0._curBgm = uv0.RandomBgmId
-	slot0._useBgmIdFromServer = uv0.RandomBgmId
-	slot0._curMechineGear = BGMSwitchEnum.Gear.On1
-	slot0._curAudioShowType = BGMSwitchEnum.BGMDetailShowType.Progress
-	slot0._recordBgmInfos = {}
-	slot0._pptEffectEgg2Id = nil
-	slot0._eggIsTrigger = false
-	slot0._egg2State = {
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._playMode = BGMSwitchEnum.PlayMode.LoopOne
+	arg_2_0._playingState = BGMSwitchEnum.PlayingState.FoldPlaying
+	arg_2_0._selectType = BGMSwitchEnum.SelectType.All
+	arg_2_0._bgmInfos = {}
+	arg_2_0._filterTypes = {}
+	arg_2_0._isFilteredAllListDirty = true
+	arg_2_0._filteredAllBgmListSorted = {}
+	arg_2_0._filteredAllBgmListRandom = {}
+	arg_2_0._isUnfilteredAllListDirty = true
+	arg_2_0._unfilteredAllBgmListSorted = {}
+	arg_2_0._isFilteredFavoriteListDirty = true
+	arg_2_0._filteredFavoriteBgmListSorted = {}
+	arg_2_0._filteredFavoriteBgmListRandom = {}
+	arg_2_0._isUnfilteredFavoriteListDirty = true
+	arg_2_0._unfilteredFavoriteBgmListSorted = {}
+	arg_2_0._curBgm = var_0_0.RandomBgmId
+	arg_2_0._useBgmIdFromServer = var_0_0.RandomBgmId
+	arg_2_0._curMechineGear = BGMSwitchEnum.Gear.On1
+	arg_2_0._curAudioShowType = BGMSwitchEnum.BGMDetailShowType.Progress
+	arg_2_0._recordBgmInfos = {}
+	arg_2_0._pptEffectEgg2Id = nil
+	arg_2_0._eggIsTrigger = false
+	arg_2_0._egg2State = {
 		false,
 		false,
 		false,
@@ -39,49 +40,51 @@ function slot0.reInit(slot0)
 	}
 end
 
-function slot0.setBgmInfos(slot0, slot1)
-	slot0._bgmInfos = {}
+function var_0_0.setBgmInfos(arg_3_0, arg_3_1)
+	arg_3_0._bgmInfos = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		BGMSwitchInfoMo.New():init(slot6)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = BGMSwitchInfoMo.New()
 
-		if BGMSwitchConfig.instance:getBGMSwitchCO(slot6.bgmId) then
-			slot0._bgmInfos[slot6.bgmId] = slot7
+		var_3_0:init(iter_3_1)
+
+		if BGMSwitchConfig.instance:getBGMSwitchCO(iter_3_1.bgmId) then
+			arg_3_0._bgmInfos[iter_3_1.bgmId] = var_3_0
 		end
 	end
 
-	slot0._isFilteredAllListDirty = true
-	slot0._isUnfilteredAllListDirty = true
-	slot0._isFilteredFavoriteListDirty = true
-	slot0._isUnfilteredFavoriteListDirty = true
+	arg_3_0._isFilteredAllListDirty = true
+	arg_3_0._isUnfilteredAllListDirty = true
+	arg_3_0._isFilteredFavoriteListDirty = true
+	arg_3_0._isUnfilteredFavoriteListDirty = true
 end
 
-function slot0.updateBgmInfos(slot0, slot1)
-	if not slot0._bgmInfos then
+function var_0_0.updateBgmInfos(arg_4_0, arg_4_1)
+	if not arg_4_0._bgmInfos then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0._bgmInfos[slot6.bgmId] then
-			slot0._bgmInfos[slot6.bgmId]:reset(slot6)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		if arg_4_0._bgmInfos[iter_4_1.bgmId] then
+			arg_4_0._bgmInfos[iter_4_1.bgmId]:reset(iter_4_1)
 		else
-			slot7 = BGMSwitchInfoMo.New()
+			local var_4_0 = BGMSwitchInfoMo.New()
 
-			slot7:init(slot6)
+			var_4_0:init(iter_4_1)
 
-			slot0._bgmInfos[slot6.bgmId] = slot7
+			arg_4_0._bgmInfos[iter_4_1.bgmId] = var_4_0
 		end
 	end
 
-	slot0._isFilteredAllListDirty = true
-	slot0._isUnfilteredAllListDirty = true
-	slot0._isFilteredFavoriteListDirty = true
-	slot0._isUnfilteredFavoriteListDirty = true
+	arg_4_0._isFilteredAllListDirty = true
+	arg_4_0._isUnfilteredAllListDirty = true
+	arg_4_0._isFilteredFavoriteListDirty = true
+	arg_4_0._isUnfilteredFavoriteListDirty = true
 end
 
-function slot0.hasUnreadBgm(slot0)
-	for slot4, slot5 in pairs(slot0._bgmInfos) do
-		if not slot5.isRead then
+function var_0_0.hasUnreadBgm(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._bgmInfos) do
+		if not iter_5_1.isRead then
 			return true
 		end
 	end
@@ -89,457 +92,492 @@ function slot0.hasUnreadBgm(slot0)
 	return false
 end
 
-function slot0.getBgmInfo(slot0, slot1)
-	return slot0._bgmInfos[slot1]
+function var_0_0.getBgmInfo(arg_6_0, arg_6_1)
+	return arg_6_0._bgmInfos[arg_6_1]
 end
 
-function slot0.updateFilteredAllBgmsList(slot0)
-	if not slot0._isFilteredAllListDirty then
+function var_0_0.updateFilteredAllBgmsList(arg_7_0)
+	if not arg_7_0._isFilteredAllListDirty then
 		return
 	end
 
-	slot0._isFilteredAllListDirty = false
-	slot0._filteredAllBgmListSorted = {}
-	slot0._filteredAllBgmListRandom = {}
+	arg_7_0._isFilteredAllListDirty = false
+	arg_7_0._filteredAllBgmListSorted = {}
+	arg_7_0._filteredAllBgmListRandom = {}
 
-	if slot0:isFilterMode() then
-		for slot4, slot5 in pairs(slot0._bgmInfos) do
-			if slot0._filterTypes[BGMSwitchConfig.instance:getBGMSwitchCO(slot5.bgmId).audioType] ~= nil and slot0._filterTypes[slot6.audioType] == true then
-				table.insert(slot0._filteredAllBgmListSorted, slot5.bgmId)
-				table.insert(slot0._filteredAllBgmListRandom, slot5.bgmId)
+	if arg_7_0:isFilterMode() then
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._bgmInfos) do
+			local var_7_0 = BGMSwitchConfig.instance:getBGMSwitchCO(iter_7_1.bgmId)
+
+			if arg_7_0._filterTypes[var_7_0.audioType] ~= nil and arg_7_0._filterTypes[var_7_0.audioType] == true then
+				table.insert(arg_7_0._filteredAllBgmListSorted, iter_7_1.bgmId)
+				table.insert(arg_7_0._filteredAllBgmListRandom, iter_7_1.bgmId)
 			end
 		end
 	else
-		for slot4, slot5 in pairs(slot0._bgmInfos) do
-			table.insert(slot0._filteredAllBgmListSorted, slot5.bgmId)
-			table.insert(slot0._filteredAllBgmListRandom, slot5.bgmId)
+		for iter_7_2, iter_7_3 in pairs(arg_7_0._bgmInfos) do
+			table.insert(arg_7_0._filteredAllBgmListSorted, iter_7_3.bgmId)
+			table.insert(arg_7_0._filteredAllBgmListRandom, iter_7_3.bgmId)
 		end
 	end
 
-	table.sort(slot0._filteredAllBgmListSorted, uv0._sortBgm)
-	slot0:regenerateRandomList(slot0._filteredAllBgmListRandom, true)
+	table.sort(arg_7_0._filteredAllBgmListSorted, var_0_0._sortBgm)
+	arg_7_0:regenerateRandomList(arg_7_0._filteredAllBgmListRandom, true)
 end
 
-function slot0.updateUnfilteredAllBgmsList(slot0)
-	if not slot0._isUnfilteredAllListDirty then
+function var_0_0.updateUnfilteredAllBgmsList(arg_8_0)
+	if not arg_8_0._isUnfilteredAllListDirty then
 		return
 	end
 
-	slot0._isUnfilteredAllListDirty = false
-	slot0._unfilteredAllBgmListSorted = {}
+	arg_8_0._isUnfilteredAllListDirty = false
+	arg_8_0._unfilteredAllBgmListSorted = {}
 
-	for slot4, slot5 in pairs(slot0._bgmInfos) do
-		table.insert(slot0._unfilteredAllBgmListSorted, slot5.bgmId)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._bgmInfos) do
+		table.insert(arg_8_0._unfilteredAllBgmListSorted, iter_8_1.bgmId)
 	end
 
-	table.sort(slot0._unfilteredAllBgmListSorted, uv0._sortBgm)
+	table.sort(arg_8_0._unfilteredAllBgmListSorted, var_0_0._sortBgm)
 end
 
-function slot0.updateFilteredFavoriteBgmsList(slot0)
-	if not slot0._isFilteredFavoriteListDirty then
+function var_0_0.updateFilteredFavoriteBgmsList(arg_9_0)
+	if not arg_9_0._isFilteredFavoriteListDirty then
 		return
 	end
 
-	slot0._isFilteredFavoriteListDirty = false
-	slot0._filteredFavoriteBgmListSorted = {}
-	slot0._filteredFavoriteBgmListRandom = {}
+	arg_9_0._isFilteredFavoriteListDirty = false
+	arg_9_0._filteredFavoriteBgmListSorted = {}
+	arg_9_0._filteredFavoriteBgmListRandom = {}
 
-	if slot0:isFilterMode() then
-		for slot4, slot5 in pairs(slot0._bgmInfos) do
-			if slot5.favorite and slot0._filterTypes[BGMSwitchConfig.instance:getBGMSwitchCO(slot5.bgmId).audioType] ~= nil and slot0._filterTypes[slot6.audioType] == true then
-				table.insert(slot0._filteredFavoriteBgmListSorted, slot5.bgmId)
-				table.insert(slot0._filteredFavoriteBgmListRandom, slot5.bgmId)
+	if arg_9_0:isFilterMode() then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._bgmInfos) do
+			if iter_9_1.favorite then
+				local var_9_0 = BGMSwitchConfig.instance:getBGMSwitchCO(iter_9_1.bgmId)
+
+				if arg_9_0._filterTypes[var_9_0.audioType] ~= nil and arg_9_0._filterTypes[var_9_0.audioType] == true then
+					table.insert(arg_9_0._filteredFavoriteBgmListSorted, iter_9_1.bgmId)
+					table.insert(arg_9_0._filteredFavoriteBgmListRandom, iter_9_1.bgmId)
+				end
 			end
 		end
 	else
-		for slot4, slot5 in pairs(slot0._bgmInfos) do
-			if slot5.favorite then
-				table.insert(slot0._filteredFavoriteBgmListSorted, slot5.bgmId)
-				table.insert(slot0._filteredFavoriteBgmListRandom, slot5.bgmId)
+		for iter_9_2, iter_9_3 in pairs(arg_9_0._bgmInfos) do
+			if iter_9_3.favorite then
+				table.insert(arg_9_0._filteredFavoriteBgmListSorted, iter_9_3.bgmId)
+				table.insert(arg_9_0._filteredFavoriteBgmListRandom, iter_9_3.bgmId)
 			end
 		end
 	end
 
-	table.sort(slot0._filteredFavoriteBgmListSorted, uv0._sortBgm)
-	slot0:regenerateRandomList(slot0._filteredFavoriteBgmListRandom, true)
+	table.sort(arg_9_0._filteredFavoriteBgmListSorted, var_0_0._sortBgm)
+	arg_9_0:regenerateRandomList(arg_9_0._filteredFavoriteBgmListRandom, true)
 end
 
-function slot0.regenerateRandomList(slot0, slot1, slot2)
-	if #slot1 <= 0 then
+function var_0_0.regenerateRandomList(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = #arg_10_1
+
+	if var_10_0 <= 0 then
 		return nil
 	end
 
-	slot4 = slot1[1]
-	slot5 = slot1[slot3]
+	local var_10_1 = arg_10_1[1]
+	local var_10_2 = arg_10_1[var_10_0]
 
-	for slot9 = 1, slot3 do
-		slot10 = math.random(slot3)
-		slot1[slot9] = slot1[slot10]
-		slot1[slot10] = slot1[slot9]
+	for iter_10_0 = 1, var_10_0 do
+		local var_10_3 = math.random(var_10_0)
+
+		arg_10_1[var_10_3], arg_10_1[iter_10_0] = arg_10_1[iter_10_0], arg_10_1[var_10_3]
 	end
 
-	if slot2 and slot5 == slot1[1] or not slot2 and slot4 == slot1[slot3] then
-		slot1[1] = slot1[slot3]
-		slot1[slot3] = slot1[1]
+	if arg_10_2 and var_10_2 == arg_10_1[1] or not arg_10_2 and var_10_1 == arg_10_1[var_10_0] then
+		arg_10_1[var_10_0], arg_10_1[1] = arg_10_1[1], arg_10_1[var_10_0]
 	end
 
-	return slot1[1]
+	return arg_10_1[1]
 end
 
-function slot0.updateUnfilteredFavoriteBgmsList(slot0)
-	if not slot0._isUnfilteredFavoriteListDirty then
+function var_0_0.updateUnfilteredFavoriteBgmsList(arg_11_0)
+	if not arg_11_0._isUnfilteredFavoriteListDirty then
 		return
 	end
 
-	slot0._isUnfilteredFavoriteListDirty = false
-	slot0._unfilteredFavoriteBgmListSorted = {}
+	arg_11_0._isUnfilteredFavoriteListDirty = false
+	arg_11_0._unfilteredFavoriteBgmListSorted = {}
 
-	for slot4, slot5 in pairs(slot0._bgmInfos) do
-		if slot5.favorite then
-			table.insert(slot0._unfilteredFavoriteBgmListSorted, slot5.bgmId)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._bgmInfos) do
+		if iter_11_1.favorite then
+			table.insert(arg_11_0._unfilteredFavoriteBgmListSorted, iter_11_1.bgmId)
 		end
 	end
 
-	table.sort(slot0._unfilteredFavoriteBgmListSorted, uv0._sortBgm)
+	table.sort(arg_11_0._unfilteredFavoriteBgmListSorted, var_0_0._sortBgm)
 end
 
-function slot0.getFilteredAllBgmsSorted(slot0)
-	slot0:updateFilteredAllBgmsList()
+function var_0_0.getFilteredAllBgmsSorted(arg_12_0)
+	arg_12_0:updateFilteredAllBgmsList()
 
-	return slot0._filteredAllBgmListSorted
+	return arg_12_0._filteredAllBgmListSorted
 end
 
-function slot0.getFilteredAllBgmsRandom(slot0)
-	slot0:updateFilteredAllBgmsList()
+function var_0_0.getFilteredAllBgmsRandom(arg_13_0)
+	arg_13_0:updateFilteredAllBgmsList()
 
-	return slot0._filteredAllBgmListRandom
+	return arg_13_0._filteredAllBgmListRandom
 end
 
-function slot0.getUnfilteredAllBgmsSorted(slot0)
-	slot0:updateUnfilteredAllBgmsList()
+function var_0_0.getUnfilteredAllBgmsSorted(arg_14_0)
+	arg_14_0:updateUnfilteredAllBgmsList()
 
-	return slot0._unfilteredAllBgmListSorted
+	return arg_14_0._unfilteredAllBgmListSorted
 end
 
-function slot0.getFilteredFavoriteBgmsSorted(slot0)
-	slot0:updateFilteredFavoriteBgmsList()
+function var_0_0.getFilteredFavoriteBgmsSorted(arg_15_0)
+	arg_15_0:updateFilteredFavoriteBgmsList()
 
-	return slot0._filteredFavoriteBgmListSorted
+	return arg_15_0._filteredFavoriteBgmListSorted
 end
 
-function slot0.getFilteredFavoriteBgmsRandom(slot0)
-	slot0:updateFilteredFavoriteBgmsList()
+function var_0_0.getFilteredFavoriteBgmsRandom(arg_16_0)
+	arg_16_0:updateFilteredFavoriteBgmsList()
 
-	return slot0._filteredFavoriteBgmListRandom
+	return arg_16_0._filteredFavoriteBgmListRandom
 end
 
-function slot0.getUnfilteredFavoriteBgmsSorted(slot0)
-	slot0:updateUnfilteredFavoriteBgmsList()
+function var_0_0.getUnfilteredFavoriteBgmsSorted(arg_17_0)
+	arg_17_0:updateUnfilteredFavoriteBgmsList()
 
-	return slot0._unfilteredFavoriteBgmListSorted
+	return arg_17_0._unfilteredFavoriteBgmListSorted
 end
 
-function slot0.getCurrentUsingBgmList(slot0)
-	if slot0:isRandomMode() then
-		if slot0:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
-			return slot0:getFilteredAllBgmsRandom()
+function var_0_0.getCurrentUsingBgmList(arg_18_0)
+	if arg_18_0:isRandomMode() then
+		if arg_18_0:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
+			return arg_18_0:getFilteredAllBgmsRandom()
 		else
-			return slot0:getFilteredFavoriteBgmsRandom()
+			return arg_18_0:getFilteredFavoriteBgmsRandom()
 		end
-	elseif slot0:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
-		return slot0:getFilteredAllBgmsSorted()
+	elseif arg_18_0:getBGMSelectType() == BGMSwitchEnum.SelectType.All then
+		return arg_18_0:getFilteredAllBgmsSorted()
 	else
-		return slot0:getFilteredFavoriteBgmsSorted()
+		return arg_18_0:getFilteredFavoriteBgmsSorted()
 	end
 
 	return {}
 end
 
-function slot0.getCurrentServerUsingBgmList(slot0)
-	if slot0:isRandomMode() then
-		if slot0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType) == BGMSwitchEnum.SelectType.All then
-			return slot0:getFilteredAllBgmsRandom()
+function var_0_0.getCurrentServerUsingBgmList(arg_19_0)
+	local var_19_0 = arg_19_0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+
+	if arg_19_0:isRandomMode() then
+		if var_19_0 == BGMSwitchEnum.SelectType.All then
+			return arg_19_0:getFilteredAllBgmsRandom()
 		else
-			return slot0:getFilteredFavoriteBgmsRandom()
+			return arg_19_0:getFilteredFavoriteBgmsRandom()
 		end
-	elseif slot1 == BGMSwitchEnum.SelectType.All then
-		return slot0:getFilteredAllBgmsSorted()
+	elseif var_19_0 == BGMSwitchEnum.SelectType.All then
+		return arg_19_0:getFilteredAllBgmsSorted()
 	else
-		return slot0:getFilteredFavoriteBgmsSorted()
+		return arg_19_0:getFilteredFavoriteBgmsSorted()
 	end
 
 	return {}
 end
 
-function slot0.getReportBgmAudioLength(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.getReportBgmAudioLength(arg_20_0, arg_20_1)
+	if arg_20_1 == nil then
 		return 0
 	end
 
-	slot2 = slot1.audioLength
+	local var_20_0 = arg_20_1.audioLength
 
-	if slot1.isReport == 1 and WeatherController.instance:getCurrReport() ~= nil then
-		slot2 = slot3.audioLength
+	if arg_20_1.isReport == 1 then
+		local var_20_1 = WeatherController.instance:getCurrReport()
+
+		if var_20_1 ~= nil then
+			var_20_0 = var_20_1.audioLength
+		end
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0.getPlayingState(slot0)
-	return slot0._playingState
+function var_0_0.getPlayingState(arg_21_0)
+	return arg_21_0._playingState
 end
 
-function slot0.setPlayingState(slot0, slot1)
-	slot0._playingState = slot1
+function var_0_0.setPlayingState(arg_22_0, arg_22_1)
+	arg_22_0._playingState = arg_22_1
 end
 
-function slot0.setEggHideState(slot0, slot1)
-	slot0._eggShowState = slot1
+function var_0_0.setEggHideState(arg_23_0, arg_23_1)
+	arg_23_0._eggShowState = arg_23_1
 end
 
-function slot0.getEggHideState(slot0)
-	return slot0._eggShowState
+function var_0_0.getEggHideState(arg_24_0)
+	return arg_24_0._eggShowState
 end
 
-function slot0.setBgmFavorite(slot0, slot1, slot2)
-	if slot0._bgmInfos[slot1] then
-		slot0._bgmInfos[slot1].favorite = slot2 or not slot0._bgmInfos[slot1].favorite
-		slot0._isFilteredFavoriteListDirty = true
-		slot0._isUnfilteredFavoriteListDirty = true
+function var_0_0.setBgmFavorite(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_0._bgmInfos[arg_25_1] then
+		arg_25_0._bgmInfos[arg_25_1].favorite = arg_25_2 or not arg_25_0._bgmInfos[arg_25_1].favorite
+		arg_25_0._isFilteredFavoriteListDirty = true
+		arg_25_0._isUnfilteredFavoriteListDirty = true
 	end
 end
 
-function slot0.isBgmFavorite(slot0, slot1)
-	return slot0._bgmInfos[slot1] and slot0._bgmInfos[slot1].favorite or false
+function var_0_0.isBgmFavorite(arg_26_0, arg_26_1)
+	return arg_26_0._bgmInfos[arg_26_1] and arg_26_0._bgmInfos[arg_26_1].favorite or false
 end
 
-function slot0._sortBgm(slot0, slot1)
-	return BGMSwitchConfig.instance:getBGMSwitchCO(slot0).sort < BGMSwitchConfig.instance:getBGMSwitchCO(slot1).sort
+function var_0_0._sortBgm(arg_27_0, arg_27_1)
+	local var_27_0 = BGMSwitchConfig.instance:getBGMSwitchCO(arg_27_0)
+	local var_27_1 = BGMSwitchConfig.instance:getBGMSwitchCO(arg_27_1)
+
+	return var_27_0.sort < var_27_1.sort
 end
 
-function slot0.setBGMSelectType(slot0, slot1)
-	slot0._selectType = slot1
+function var_0_0.setBGMSelectType(arg_28_0, arg_28_1)
+	arg_28_0._selectType = arg_28_1
 
-	slot0:recordInfoByType(BGMSwitchEnum.RecordInfoType.ListType, slot0._selectType, false)
+	arg_28_0:recordInfoByType(BGMSwitchEnum.RecordInfoType.ListType, arg_28_0._selectType, false)
 end
 
-function slot0.getBGMSelectType(slot0)
-	slot0._selectType = slot0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+function var_0_0.getBGMSelectType(arg_29_0)
+	arg_29_0._selectType = arg_29_0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
 
-	return slot0._selectType
+	return arg_29_0._selectType
 end
 
-function slot0.setCurBgm(slot0, slot1)
-	if slot1 == uv0.RandomBgmId then
-		if slot0._playMode ~= BGMSwitchEnum.PlayMode.Random then
-			slot0._playMode = BGMSwitchEnum.PlayMode.Random
-			slot0._curBgm = slot0:getNextBgm(1, false)
+function var_0_0.setCurBgm(arg_30_0, arg_30_1)
+	if arg_30_1 == var_0_0.RandomBgmId then
+		if arg_30_0._playMode ~= BGMSwitchEnum.PlayMode.Random then
+			arg_30_0._playMode = BGMSwitchEnum.PlayMode.Random
+			arg_30_0._curBgm = arg_30_0:getNextBgm(1, false)
 		end
 	else
-		slot0._playMode = BGMSwitchEnum.PlayMode.LoopOne
-		slot0._curBgm = slot1
+		arg_30_0._playMode = BGMSwitchEnum.PlayMode.LoopOne
+		arg_30_0._curBgm = arg_30_1
 	end
 end
 
-function slot0.getCurBgm(slot0)
-	return slot0._curBgm
+function var_0_0.getCurBgm(arg_31_0)
+	return arg_31_0._curBgm
 end
 
-function slot0.nextBgm(slot0, slot1, slot2)
-	slot0._curBgm = slot0:getNextBgm(slot1, slot2)
-	slot3 = slot0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
-	slot4 = slot0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+function var_0_0.nextBgm(arg_32_0, arg_32_1, arg_32_2)
+	arg_32_0._curBgm = arg_32_0:getNextBgm(arg_32_1, arg_32_2)
 
-	if slot2 and slot4 ~= nil then
-		slot3 = slot4
+	local var_32_0 = arg_32_0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+	local var_32_1 = arg_32_0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+
+	if arg_32_2 and var_32_1 ~= nil then
+		var_32_0 = var_32_1
 	end
 
-	slot5 = slot0:isRandomMode()
+	local var_32_2 = arg_32_0:isRandomMode()
 
-	if slot2 then
-		slot5 = slot0:isRandomBgmId(slot0:getUsedBgmIdFromServer())
+	if arg_32_2 then
+		var_32_2 = arg_32_0:isRandomBgmId(arg_32_0:getUsedBgmIdFromServer())
 	end
 
-	if slot5 and slot3 == BGMSwitchEnum.SelectType.Loved and #slot0:getFilteredFavoriteBgmsRandom() == 0 then
-		slot3 = BGMSwitchEnum.SelectType.All
+	if var_32_2 and var_32_0 == BGMSwitchEnum.SelectType.Loved and #arg_32_0:getFilteredFavoriteBgmsRandom() == 0 then
+		var_32_0 = BGMSwitchEnum.SelectType.All
 	end
 
-	if slot5 then
-		slot6 = -1
-		slot7 = -1
+	if var_32_2 then
+		local var_32_3 = -1
+		local var_32_4 = -1
 
-		if slot3 == BGMSwitchEnum.SelectType.All then
-			slot6 = LuaUtil.indexOfElement(slot0:getFilteredAllBgmsRandom(), slot0._curBgm)
-			slot7 = #slot0:getFilteredAllBgmsRandom()
+		if var_32_0 == BGMSwitchEnum.SelectType.All then
+			var_32_3 = LuaUtil.indexOfElement(arg_32_0:getFilteredAllBgmsRandom(), arg_32_0._curBgm)
+			var_32_4 = #arg_32_0:getFilteredAllBgmsRandom()
 		else
-			slot6 = LuaUtil.indexOfElement(slot0:getFilteredFavoriteBgmsRandom(), slot0._curBgm)
-			slot7 = #slot0:getFilteredFavoriteBgmsRandom()
+			var_32_3 = LuaUtil.indexOfElement(arg_32_0:getFilteredFavoriteBgmsRandom(), arg_32_0._curBgm)
+			var_32_4 = #arg_32_0:getFilteredFavoriteBgmsRandom()
 		end
 
-		if slot6 == 1 and slot1 >= 1 then
-			if slot3 == BGMSwitchEnum.SelectType.All then
-				slot0._curBgm = slot0:regenerateRandomList(slot0:getFilteredAllBgmsRandom(), true)
+		if var_32_3 == 1 and arg_32_1 >= 1 then
+			if var_32_0 == BGMSwitchEnum.SelectType.All then
+				arg_32_0._curBgm = arg_32_0:regenerateRandomList(arg_32_0:getFilteredAllBgmsRandom(), true)
 			else
-				slot0._curBgm = slot0:regenerateRandomList(slot0:getFilteredFavoriteBgmsRandom(), true)
+				arg_32_0._curBgm = arg_32_0:regenerateRandomList(arg_32_0:getFilteredFavoriteBgmsRandom(), true)
 			end
-		elseif slot6 == slot7 and slot1 <= -1 then
-			if slot3 == BGMSwitchEnum.SelectType.All then
-				slot0._curBgm = slot0:regenerateRandomList(slot0:getFilteredAllBgmsRandom(), false)
+		elseif var_32_3 == var_32_4 and arg_32_1 <= -1 then
+			if var_32_0 == BGMSwitchEnum.SelectType.All then
+				arg_32_0._curBgm = arg_32_0:regenerateRandomList(arg_32_0:getFilteredAllBgmsRandom(), false)
 			else
-				slot0._curBgm = slot0:regenerateRandomList(slot0:getFilteredFavoriteBgmsRandom(), false)
+				arg_32_0._curBgm = arg_32_0:regenerateRandomList(arg_32_0:getFilteredFavoriteBgmsRandom(), false)
 			end
 		end
 	end
 
-	return slot0._curBgm
+	return arg_32_0._curBgm
 end
 
-function slot0.setUsedBgmIdFromServer(slot0, slot1)
-	slot0._useBgmIdFromServer = slot1
+function var_0_0.setUsedBgmIdFromServer(arg_33_0, arg_33_1)
+	arg_33_0._useBgmIdFromServer = arg_33_1
 end
 
-function slot0.getUsedBgmIdFromServer(slot0)
-	return slot0._useBgmIdFromServer
+function var_0_0.getUsedBgmIdFromServer(arg_34_0)
+	return arg_34_0._useBgmIdFromServer
 end
 
-function slot0.getBgmIdByDistance(slot0, slot1, slot2, slot3)
-	if #slot1 == 0 then
-		return uv0.InvalidBgmId
+function var_0_0.getBgmIdByDistance(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	local var_35_0 = #arg_35_1
+
+	if var_35_0 == 0 then
+		return var_0_0.InvalidBgmId
 	end
 
-	if LuaUtil.indexOfElement(slot1, slot2) == -1 then
-		return slot1[1]
+	local var_35_1 = LuaUtil.indexOfElement(arg_35_1, arg_35_2)
+
+	if var_35_1 == -1 then
+		return arg_35_1[1]
 	end
 
-	if (slot5 + slot3) % slot4 == 0 then
-		slot5 = slot4
-	elseif slot5 < 0 then
-		slot5 = slot5 + slot4
+	local var_35_2 = (var_35_1 + arg_35_3) % var_35_0
+
+	if var_35_2 == 0 then
+		var_35_2 = var_35_0
+	elseif var_35_2 < 0 then
+		var_35_2 = var_35_2 + var_35_0
 	end
 
-	return slot1[slot5]
+	return arg_35_1[var_35_2]
 end
 
-function slot0.getNextBgm(slot0, slot1, slot2)
-	slot3 = slot0._curBgm
-	slot4 = 0
-	slot5 = slot0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
-	slot6 = slot0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+function var_0_0.getNextBgm(arg_36_0, arg_36_1, arg_36_2)
+	local var_36_0 = arg_36_0._curBgm
+	local var_36_1 = 0
+	local var_36_2 = arg_36_0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
+	local var_36_3 = arg_36_0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
 
-	if slot2 and slot6 ~= nil then
-		slot5 = slot6
+	if arg_36_2 and var_36_3 ~= nil then
+		var_36_2 = var_36_3
 	end
 
-	slot7 = slot0:isRandomMode()
+	local var_36_4 = arg_36_0:isRandomMode()
 
-	if slot2 then
-		slot7 = slot0:isRandomBgmId(slot0:getUsedBgmIdFromServer())
+	if arg_36_2 then
+		var_36_4 = arg_36_0:isRandomBgmId(arg_36_0:getUsedBgmIdFromServer())
 	end
 
-	if slot7 and slot5 == BGMSwitchEnum.SelectType.Loved and #slot0:getFilteredFavoriteBgmsRandom() == 0 then
-		slot5 = BGMSwitchEnum.SelectType.All
+	if var_36_4 and var_36_2 == BGMSwitchEnum.SelectType.Loved and #arg_36_0:getFilteredFavoriteBgmsRandom() == 0 then
+		var_36_2 = BGMSwitchEnum.SelectType.All
 	end
 
-	return (slot5 ~= BGMSwitchEnum.SelectType.All or (not slot7 or slot0:getBgmIdByDistance(slot0:getFilteredAllBgmsRandom(), slot3, slot1)) and slot0:getBgmIdByDistance(slot0:getFilteredAllBgmsSorted(), slot3, slot1)) and (not slot7 or slot0:getBgmIdByDistance(slot0:getFilteredFavoriteBgmsRandom(), slot3, slot1)) and slot0:getBgmIdByDistance(slot0:getFilteredFavoriteBgmsSorted(), slot3, slot1)
-end
-
-function slot0.isRandomMode(slot0)
-	return slot0._playMode == BGMSwitchEnum.PlayMode.Random
-end
-
-function slot0.isLoopOneMode(slot0)
-	return slot0._playMode == BGMSwitchEnum.PlayMode.LoopOne
-end
-
-function slot0.isLocalRemoteListTypeMatched(slot0)
-	return slot0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType) == slot0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
-end
-
-function slot0.isLocalRemoteBgmIdMatched(slot0)
-	slot1 = slot0:getCurBgm()
-
-	if slot0:isRandomMode() then
-		slot1 = uv0.RandomBgmId
+	if var_36_2 == BGMSwitchEnum.SelectType.All then
+		if var_36_4 then
+			var_36_1 = arg_36_0:getBgmIdByDistance(arg_36_0:getFilteredAllBgmsRandom(), var_36_0, arg_36_1)
+		else
+			var_36_1 = arg_36_0:getBgmIdByDistance(arg_36_0:getFilteredAllBgmsSorted(), var_36_0, arg_36_1)
+		end
+	elseif var_36_4 then
+		var_36_1 = arg_36_0:getBgmIdByDistance(arg_36_0:getFilteredFavoriteBgmsRandom(), var_36_0, arg_36_1)
+	else
+		var_36_1 = arg_36_0:getBgmIdByDistance(arg_36_0:getFilteredFavoriteBgmsSorted(), var_36_0, arg_36_1)
 	end
 
-	return slot1 == slot0:getUsedBgmIdFromServer()
+	return var_36_1
 end
 
-function slot0.isValidBgmId(slot0, slot1)
-	return slot1 ~= nil and slot1 ~= uv0.RandomBgmId and slot1 ~= uv0.InvalidBgmId
+function var_0_0.isRandomMode(arg_37_0)
+	return arg_37_0._playMode == BGMSwitchEnum.PlayMode.Random
 end
 
-function slot0.isRandomBgmId(slot0, slot1)
-	return slot1 == uv0.RandomBgmId
+function var_0_0.isLoopOneMode(arg_38_0)
+	return arg_38_0._playMode == BGMSwitchEnum.PlayMode.LoopOne
 end
 
-function slot0.getBGMPlayMode(slot0)
-	return slot0._playMode
+function var_0_0.isLocalRemoteListTypeMatched(arg_39_0)
+	return arg_39_0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType) == arg_39_0:getServerRecordInfoByType(BGMSwitchEnum.RecordInfoType.ListType)
 end
 
-function slot0.setMechineGear(slot0, slot1)
-	slot0._curMechineGear = slot1
+function var_0_0.isLocalRemoteBgmIdMatched(arg_40_0)
+	local var_40_0 = arg_40_0:getCurBgm()
 
-	slot0:recordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear, slot0._curMechineGear, true)
+	if arg_40_0:isRandomMode() then
+		var_40_0 = var_0_0.RandomBgmId
+	end
+
+	return var_40_0 == arg_40_0:getUsedBgmIdFromServer()
 end
 
-function slot0.getMechineGear(slot0)
-	slot0._curMechineGear = slot0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear)
-
-	return slot0._curMechineGear
+function var_0_0.isValidBgmId(arg_41_0, arg_41_1)
+	return arg_41_1 ~= nil and arg_41_1 ~= var_0_0.RandomBgmId and arg_41_1 ~= var_0_0.InvalidBgmId
 end
 
-function slot0.machineGearIsNeedPlayBgm(slot0)
-	return slot0._curMechineGear == BGMSwitchEnum.Gear.On1
+function var_0_0.isRandomBgmId(arg_42_0, arg_42_1)
+	return arg_42_1 == var_0_0.RandomBgmId
 end
 
-function slot0.machineGearIsInSnowflakeScene(slot0)
-	return slot0._curMechineGear == BGMSwitchEnum.Gear.On2 or slot0._curMechineGear == BGMSwitchEnum.Gear.On3
+function var_0_0.getBGMPlayMode(arg_43_0)
+	return arg_43_0._playMode
 end
 
-function slot0.setAudioCurShowType(slot0, slot1)
-	slot0._curAudioShowType = slot1
+function var_0_0.setMechineGear(arg_44_0, arg_44_1)
+	arg_44_0._curMechineGear = arg_44_1
+
+	arg_44_0:recordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear, arg_44_0._curMechineGear, true)
 end
 
-function slot0.getAudioCurShowType(slot0)
-	return slot0._curAudioShowType
+function var_0_0.getMechineGear(arg_45_0)
+	arg_45_0._curMechineGear = arg_45_0:getRecordInfoByType(BGMSwitchEnum.RecordInfoType.BGMSwitchGear)
+
+	return arg_45_0._curMechineGear
 end
 
-function slot0.setEggIsTrigger(slot0, slot1)
-	slot0._eggIsTrigger = slot1
+function var_0_0.machineGearIsNeedPlayBgm(arg_46_0)
+	return arg_46_0._curMechineGear == BGMSwitchEnum.Gear.On1
 end
 
-function slot0.getEggIsTrigger(slot0)
-	return slot0._eggIsTrigger
+function var_0_0.machineGearIsInSnowflakeScene(arg_47_0)
+	return arg_47_0._curMechineGear == BGMSwitchEnum.Gear.On2 or arg_47_0._curMechineGear == BGMSwitchEnum.Gear.On3
 end
 
-function slot0.setPPtEffectEgg2Id(slot0, slot1)
-	slot0._pptEffectEgg2Id = slot1
+function var_0_0.setAudioCurShowType(arg_48_0, arg_48_1)
+	arg_48_0._curAudioShowType = arg_48_1
 end
 
-function slot0.getPPtEffectEgg2Id(slot0)
-	return slot0._pptEffectEgg2Id
+function var_0_0.getAudioCurShowType(arg_49_0)
+	return arg_49_0._curAudioShowType
 end
 
-function slot0.setFilterType(slot0, slot1, slot2)
-	slot0._filterTypes[slot1] = slot2
-	slot0._isFilteredAllListDirty = true
-	slot0._isFilteredFavoriteListDirty = true
+function var_0_0.setEggIsTrigger(arg_50_0, arg_50_1)
+	arg_50_0._eggIsTrigger = arg_50_1
 end
 
-function slot0.getFilterTypeSelectState(slot0, slot1)
-	return slot0._filterTypes[slot1]
+function var_0_0.getEggIsTrigger(arg_51_0)
+	return arg_51_0._eggIsTrigger
 end
 
-function slot0.clearFilterTypes(slot0)
-	slot0._filterTypes = {}
-	slot0._isFilteredAllListDirty = true
-	slot0._isFilteredFavoriteListDirty = true
+function var_0_0.setPPtEffectEgg2Id(arg_52_0, arg_52_1)
+	arg_52_0._pptEffectEgg2Id = arg_52_1
 end
 
-function slot0.isFilterMode(slot0)
-	for slot4, slot5 in pairs(slot0._filterTypes) do
-		if slot5 ~= nil and slot5 == true then
+function var_0_0.getPPtEffectEgg2Id(arg_53_0)
+	return arg_53_0._pptEffectEgg2Id
+end
+
+function var_0_0.setFilterType(arg_54_0, arg_54_1, arg_54_2)
+	arg_54_0._filterTypes[arg_54_1] = arg_54_2
+	arg_54_0._isFilteredAllListDirty = true
+	arg_54_0._isFilteredFavoriteListDirty = true
+end
+
+function var_0_0.getFilterTypeSelectState(arg_55_0, arg_55_1)
+	return arg_55_0._filterTypes[arg_55_1]
+end
+
+function var_0_0.clearFilterTypes(arg_56_0)
+	arg_56_0._filterTypes = {}
+	arg_56_0._isFilteredAllListDirty = true
+	arg_56_0._isFilteredFavoriteListDirty = true
+end
+
+function var_0_0.isFilterMode(arg_57_0)
+	for iter_57_0, iter_57_1 in pairs(arg_57_0._filterTypes) do
+		if iter_57_1 ~= nil and iter_57_1 == true then
 			return true
 		end
 	end
@@ -547,109 +585,135 @@ function slot0.isFilterMode(slot0)
 	return false
 end
 
-function slot0.getEggType2Sates(slot0)
-	return slot0._egg2State
+function var_0_0.getEggType2Sates(arg_58_0)
+	return arg_58_0._egg2State
 end
 
-function slot0.getEggType2SateByIndex(slot0, slot1)
-	return slot0._egg2State[slot1]
+function var_0_0.getEggType2SateByIndex(arg_59_0, arg_59_1)
+	return arg_59_0._egg2State[arg_59_1]
 end
 
-function slot0.setEggType2State(slot0, slot1, slot2)
-	slot0._egg2State[slot1] = slot2
+function var_0_0.setEggType2State(arg_60_0, arg_60_1, arg_60_2)
+	arg_60_0._egg2State[arg_60_1] = arg_60_2
 end
 
-function slot0.recordInfoByType(slot0, slot1, slot2, slot3)
-	slot0._recordBgmInfos[slot1] = slot2
+function var_0_0.recordInfoByType(arg_61_0, arg_61_1, arg_61_2, arg_61_3)
+	arg_61_0._recordBgmInfos[arg_61_1] = arg_61_2
 
-	if slot3 then
-		slot0:_recordInfo(slot1, slot2)
+	if arg_61_3 then
+		arg_61_0:_recordInfo(arg_61_1, arg_61_2)
 	end
 end
 
-function slot0._recordInfo(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot0._recordBgmInfos) do
-		if slot0:getServerRecordInfoByType(slot7) then
-			-- Nothing
+function var_0_0._recordInfo(arg_62_0, arg_62_1, arg_62_2)
+	local var_62_0 = {}
+
+	for iter_62_0, iter_62_1 in pairs(arg_62_0._recordBgmInfos) do
+		local var_62_1 = arg_62_0:getServerRecordInfoByType(iter_62_0)
+
+		if var_62_1 then
+			var_62_0[iter_62_0] = var_62_1
 		else
-			slot3[slot7] = slot8
+			var_62_0[iter_62_0] = iter_62_1
 		end
 	end
 
-	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.BGMViewInfo, slot0:encodeRecordInfo({
-		[slot7] = slot9,
-		[slot1] = slot2
-	}))
+	var_62_0[arg_62_1] = arg_62_2
+
+	local var_62_2 = arg_62_0:encodeRecordInfo(var_62_0)
+
+	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.BGMViewInfo, var_62_2)
 end
 
-function slot0.encodeRecordInfo(slot0, slot1)
-	for slot6, slot7 in pairs(slot1) do
-		slot2 = "" .. slot6 .. ":" .. slot7 .. "|"
+function var_0_0.encodeRecordInfo(arg_63_0, arg_63_1)
+	local var_63_0 = ""
+
+	for iter_63_0, iter_63_1 in pairs(arg_63_1) do
+		var_63_0 = var_63_0 .. iter_63_0 .. ":" .. iter_63_1 .. "|"
 	end
 
-	return slot2
+	return var_63_0
 end
 
-function slot0.decodeRecordInfo(slot0, slot1)
-	for slot7 = 1, #string.split(slot1, "|") do
-		if slot3[slot7] and string.split(slot3[slot7], ":") and #slot8 > 1 then
-			-- Nothing
+function var_0_0.decodeRecordInfo(arg_64_0, arg_64_1)
+	local var_64_0 = {}
+	local var_64_1 = string.split(arg_64_1, "|")
+
+	for iter_64_0 = 1, #var_64_1 do
+		if var_64_1[iter_64_0] then
+			local var_64_2 = string.split(var_64_1[iter_64_0], ":")
+
+			if var_64_2 and #var_64_2 > 1 then
+				var_64_0[tonumber(var_64_2[1])] = tonumber(var_64_2[2])
+			end
 		end
 	end
 
-	return {
-		[tonumber(slot8[1])] = tonumber(slot8[2])
-	}
+	return var_64_0
 end
 
-function slot0.getRecordInfoByType(slot0, slot1)
-	if slot0._recordBgmInfos and #slot0._recordBgmInfos <= 0 and not slot0._recordBgmInfos[slot1] and PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.BGMViewInfo) then
-		slot0._recordBgmInfos = slot0:decodeRecordInfo(slot2)
+function var_0_0.getRecordInfoByType(arg_65_0, arg_65_1)
+	if arg_65_0._recordBgmInfos and #arg_65_0._recordBgmInfos <= 0 and not arg_65_0._recordBgmInfos[arg_65_1] then
+		local var_65_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.BGMViewInfo)
+
+		if var_65_0 then
+			arg_65_0._recordBgmInfos = arg_65_0:decodeRecordInfo(var_65_0)
+		end
 	end
 
-	if not slot0._recordBgmInfos[slot1] then
-		if slot1 == BGMSwitchEnum.RecordInfoType.ListType then
+	if not arg_65_0._recordBgmInfos[arg_65_1] then
+		if arg_65_1 == BGMSwitchEnum.RecordInfoType.ListType then
 			return BGMSwitchEnum.SelectType.All
 		end
 
-		if slot1 == BGMSwitchEnum.RecordInfoType.BGMSwitchGear then
+		if arg_65_1 == BGMSwitchEnum.RecordInfoType.BGMSwitchGear then
 			return BGMSwitchEnum.Gear.On1
 		end
 	end
 
-	return slot0._recordBgmInfos[slot1]
+	return arg_65_0._recordBgmInfos[arg_65_1]
 end
 
-function slot0.getServerRecordInfoByType(slot0, slot1)
-	if PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.BGMViewInfo) and slot0:decodeRecordInfo(slot2)[slot1] then
-		return slot3[slot1]
+function var_0_0.getServerRecordInfoByType(arg_66_0, arg_66_1)
+	local var_66_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.BGMViewInfo)
+
+	if var_66_0 then
+		local var_66_1 = arg_66_0:decodeRecordInfo(var_66_0)
+
+		if var_66_1[arg_66_1] then
+			return var_66_1[arg_66_1]
+		end
 	end
 
-	if slot1 == BGMSwitchEnum.RecordInfoType.ListType then
+	if arg_66_1 == BGMSwitchEnum.RecordInfoType.ListType then
 		return BGMSwitchEnum.SelectType.All
 	end
 
-	if slot1 == BGMSwitchEnum.RecordInfoType.BGMSwitchGear then
+	if arg_66_1 == BGMSwitchEnum.RecordInfoType.BGMSwitchGear then
 		return BGMSwitchEnum.Gear.On1
 	end
 end
 
-function slot0.markRead(slot0, slot1)
-	if slot0._bgmInfos[slot1] then
-		slot2.isRead = true
+function var_0_0.markRead(arg_67_0, arg_67_1)
+	local var_67_0 = arg_67_0._bgmInfos[arg_67_1]
+
+	if var_67_0 then
+		var_67_0.isRead = true
 	end
 end
 
-function slot0.getUnReadCount(slot0)
-	for slot5, slot6 in pairs(slot0._bgmInfos) do
-		if not slot6.isRead then
-			slot1 = 0 + 1
+function var_0_0.getUnReadCount(arg_68_0)
+	local var_68_0 = 0
+
+	for iter_68_0, iter_68_1 in pairs(arg_68_0._bgmInfos) do
+		if not iter_68_1.isRead then
+			var_68_0 = var_68_0 + 1
 		end
 	end
 
-	return slot1
+	return var_68_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

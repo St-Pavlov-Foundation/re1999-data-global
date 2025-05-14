@@ -1,8 +1,8 @@
-module("modules.logic.weather.config.WeatherConfig", package.seeall)
+﻿module("modules.logic.weather.config.WeatherConfig", package.seeall)
 
-slot0 = class("WeatherConfig", BaseConfig)
+local var_0_0 = class("WeatherConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"weather_month",
 		"weather_week",
@@ -14,110 +14,132 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "weather_day_new" then
-		slot0:_initWeatherDayNew()
-	elseif slot1 == "scene_mat_report_settings" then
-		slot0:_initSceneMatReportSettings()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "weather_day_new" then
+		arg_3_0:_initWeatherDayNew()
+	elseif arg_3_1 == "scene_mat_report_settings" then
+		arg_3_0:_initSceneMatReportSettings()
 	end
 end
 
-function slot0._initSceneMatReportSettings(slot0)
-	slot0._sceneMatReportSettings = {}
+function var_0_0._initSceneMatReportSettings(arg_4_0)
+	arg_4_0._sceneMatReportSettings = {}
 
-	for slot4, slot5 in ipairs(lua_scene_mat_report_settings.configList) do
-		slot0._sceneMatReportSettings[slot5.sceneId] = slot0._sceneMatReportSettings[slot5.sceneId] or {}
-		slot0._sceneMatReportSettings[slot5.sceneId][slot5.mat] = slot0._sceneMatReportSettings[slot5.sceneId][slot5.mat] or {}
+	for iter_4_0, iter_4_1 in ipairs(lua_scene_mat_report_settings.configList) do
+		local var_4_0 = GameUtil.splitString2(iter_4_1.lightmap, false, "|", "#")
 
-		for slot10, slot11 in ipairs(GameUtil.splitString2(slot5.lightmap, false, "|", "#")) do
-			if lua_weather_report.configDict[tonumber(slot11[1])] then
-				slot0._sceneMatReportSettings[slot5.sceneId][slot5.mat][slot13.lightMode] = slot11[2]
+		arg_4_0._sceneMatReportSettings[iter_4_1.sceneId] = arg_4_0._sceneMatReportSettings[iter_4_1.sceneId] or {}
+		arg_4_0._sceneMatReportSettings[iter_4_1.sceneId][iter_4_1.mat] = arg_4_0._sceneMatReportSettings[iter_4_1.sceneId][iter_4_1.mat] or {}
+
+		for iter_4_2, iter_4_3 in ipairs(var_4_0) do
+			local var_4_1 = tonumber(iter_4_3[1])
+			local var_4_2 = lua_weather_report.configDict[var_4_1]
+
+			if var_4_2 then
+				arg_4_0._sceneMatReportSettings[iter_4_1.sceneId][iter_4_1.mat][var_4_2.lightMode] = iter_4_3[2]
 			else
-				print("WeatherConfig:_initSceneMatReportSettings error reportId:", slot12)
+				print("WeatherConfig:_initSceneMatReportSettings error reportId:", var_4_1)
 			end
 		end
 	end
 end
 
-function slot0.getMatReportSettings(slot0, slot1)
-	return slot0._sceneMatReportSettings[slot1]
+function var_0_0.getMatReportSettings(arg_5_0, arg_5_1)
+	return arg_5_0._sceneMatReportSettings[arg_5_1]
 end
 
-function slot0.getNowDate(slot0)
+function var_0_0.getNowDate(arg_6_0)
 	return os.date("*t", os.time())
 end
 
-function slot0.getWeek(slot0, slot1)
-	if not slot1 then
-		slot6 = string.split(lua_weather_month.configDict[slot0:getNowDate().month].weekList, "#")
-		slot1 = tonumber(slot6[math.random(#slot6)])
+function var_0_0.getWeek(arg_7_0, arg_7_1)
+	if not arg_7_1 then
+		local var_7_0 = arg_7_0:getNowDate().month
+		local var_7_1 = lua_weather_month.configDict[var_7_0].weekList
+		local var_7_2 = string.split(var_7_1, "#")
+		local var_7_3 = math.random(#var_7_2)
+
+		arg_7_1 = tonumber(var_7_2[var_7_3])
 	end
 
-	return lua_weather_week.configDict[slot1], slot1
+	return lua_weather_week.configDict[arg_7_1], arg_7_1
 end
 
-function slot0.getDay(slot0, slot1, slot2, slot3)
-	if not slot2 then
-		slot4, slot1 = slot0:getWeek(slot1)
-		slot9 = string.split(slot4["day" .. slot0:getNowDate().wday], "#")
-		slot2 = tonumber(slot9[math.random(#slot9)])
+function var_0_0.getDay(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_2 then
+		local var_8_0, var_8_1 = arg_8_0:getWeek(arg_8_1)
+
+		arg_8_1 = var_8_1
+
+		local var_8_2 = arg_8_0:getNowDate().wday
+		local var_8_3 = var_8_0["day" .. var_8_2]
+		local var_8_4 = string.split(var_8_3, "#")
+
+		arg_8_2 = tonumber(var_8_4[math.random(#var_8_4)])
 	end
 
-	if not (slot3 and lua_weather_day_new.configDict[slot3]) then
-		logError(string.format("WeatherConfig:getDay error, sceneId:%s", slot3))
+	local var_8_5 = arg_8_3 and lua_weather_day_new.configDict[arg_8_3]
 
-		slot4 = lua_weather_day_new.configDict[MainSceneSwitchEnum.DefaultScene]
+	if not var_8_5 then
+		logError(string.format("WeatherConfig:getDay error, sceneId:%s", arg_8_3))
+
+		var_8_5 = lua_weather_day_new.configDict[MainSceneSwitchEnum.DefaultScene]
 	end
 
-	return slot4[slot2], slot1, slot2
+	return var_8_5[arg_8_2], arg_8_1, arg_8_2
 end
 
-function slot0._initWeatherDayNew(slot0)
-	slot0._sceneReportDict = {}
+function var_0_0._initWeatherDayNew(arg_9_0)
+	arg_9_0._sceneReportDict = {}
 
-	for slot4, slot5 in ipairs(lua_weather_day_new.configList) do
-		slot0._sceneReportDict[slot5.sceneId] = slot0._sceneReportDict[slot5.sceneId] or {}
-		slot11 = "#"
+	for iter_9_0, iter_9_1 in ipairs(lua_weather_day_new.configList) do
+		arg_9_0._sceneReportDict[iter_9_1.sceneId] = arg_9_0._sceneReportDict[iter_9_1.sceneId] or {}
 
-		for slot11, slot12 in ipairs(GameUtil.splitString2(slot5.reportList, false, "|", slot11)) do
-			slot0._sceneReportDict[slot5.sceneId][tonumber(slot12[2])] = true
+		local var_9_0 = arg_9_0._sceneReportDict[iter_9_1.sceneId]
+		local var_9_1 = GameUtil.splitString2(iter_9_1.reportList, false, "|", "#")
+
+		for iter_9_2, iter_9_3 in ipairs(var_9_1) do
+			var_9_0[tonumber(iter_9_3[2])] = true
 		end
 	end
 end
 
-function slot0.sceneContainReport(slot0, slot1, slot2)
-	return slot0._sceneReportDict[slot1] and slot3[slot2]
+function var_0_0.sceneContainReport(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0._sceneReportDict[arg_10_1]
+
+	return var_10_0 and var_10_0[arg_10_2]
 end
 
-function slot0.getReport(slot0, slot1)
-	return lua_weather_report.configDict[slot1]
+function var_0_0.getReport(arg_11_0, arg_11_1)
+	return lua_weather_report.configDict[arg_11_1]
 end
 
-function slot0.getReportList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getReportList(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = {}
 
-	for slot7, slot8 in ipairs(lua_weather_report.configList) do
-		if slot8.lightMode == slot1 and slot0:sceneContainReport(slot2, slot8.id) then
-			table.insert(slot3, slot8)
+	for iter_12_0, iter_12_1 in ipairs(lua_weather_report.configList) do
+		if iter_12_1.lightMode == arg_12_1 and arg_12_0:sceneContainReport(arg_12_2, iter_12_1.id) then
+			table.insert(var_12_0, iter_12_1)
 		end
 	end
 
-	return slot3
+	return var_12_0
 end
 
-function slot0.getRandomReport(slot0, slot1, slot2)
-	slot3 = slot0:getReportList(slot1, slot2)
+function var_0_0.getRandomReport(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0:getReportList(arg_13_1, arg_13_2)
 
-	return slot3[math.random(#slot3)]
+	return var_13_0[math.random(#var_13_0)]
 end
 
-function slot0.getSkinWeatherParam(slot0, slot1)
-	return lua_skin_weather_param.configDict[slot1]
+function var_0_0.getSkinWeatherParam(arg_14_0, arg_14_1)
+	return lua_skin_weather_param.configDict[arg_14_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

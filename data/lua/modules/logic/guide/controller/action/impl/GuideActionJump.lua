@@ -1,11 +1,14 @@
-module("modules.logic.guide.controller.action.impl.GuideActionJump", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionJump", package.seeall)
 
-slot0 = class("GuideActionJump", BaseGuideAction)
+local var_0_0 = class("GuideActionJump", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	JumpController.instance:jumpByParam(slot0.actionParam)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+
+	local var_1_0 = arg_1_0.actionParam
+
+	JumpController.instance:jumpByParam(var_1_0)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

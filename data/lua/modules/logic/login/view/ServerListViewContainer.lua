@@ -1,29 +1,30 @@
-module("modules.logic.login.view.ServerListViewContainer", package.seeall)
+﻿module("modules.logic.login.view.ServerListViewContainer", package.seeall)
 
-slot0 = class("ServerListViewContainer", BaseViewContainer)
+local var_0_0 = class("ServerListViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "serverlist"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = ServerListItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 2
-	slot2.cellWidth = 400
-	slot2.cellHeight = 60
-	slot2.cellSpaceH = 50
-	slot2.cellSpaceV = 40
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(ServerListModel.instance, slot2))
-	table.insert(slot1, ServerListView.New())
+	var_1_1.scrollGOPath = "serverlist"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = ServerListItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 2
+	var_1_1.cellWidth = 400
+	var_1_1.cellHeight = 60
+	var_1_1.cellSpaceH = 50
+	var_1_1.cellSpaceV = 40
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(ServerListModel.instance, var_1_1))
+	table.insert(var_1_0, ServerListView.New())
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

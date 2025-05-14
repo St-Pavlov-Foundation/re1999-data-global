@@ -1,181 +1,223 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.PuzzleMazeDrawController", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.controller.PuzzleMazeDrawController", package.seeall)
 
-slot0 = class("PuzzleMazeDrawController", PuzzleMazeDrawBaseController)
+local var_0_0 = class("PuzzleMazeDrawController", PuzzleMazeDrawBaseController)
 
-function slot0.openGame(slot0, slot1)
-	slot0:setModelInst(PuzzleMazeDrawModel.instance)
-	uv0.super.openGame(slot0, slot1)
+function var_0_0.openGame(arg_1_0, arg_1_1)
+	arg_1_0:setModelInst(PuzzleMazeDrawModel.instance)
+	var_0_0.super.openGame(arg_1_0, arg_1_1)
 	ViewMgr.instance:openView(ViewName.PuzzleMazeDrawView)
 end
 
-function slot0.interactSwitchObj(slot0, slot1, slot2)
+function var_0_0.interactSwitchObj(arg_2_0, arg_2_1, arg_2_2)
 	PuzzleMazeDrawModel.instance:setCanFlyPane(false)
-	PuzzleMazeDrawModel.instance:setPlanePlacePos(slot1, slot2)
-	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_On, slot1, slot2)
-	uv0.instance:dispatchEvent(PuzzleEvent.SimulatePlane, slot1, slot2)
+	PuzzleMazeDrawModel.instance:setPlanePlacePos(arg_2_1, arg_2_2)
+	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_On, arg_2_1, arg_2_2)
+	var_0_0.instance:dispatchEvent(PuzzleEvent.SimulatePlane, arg_2_1, arg_2_2)
 end
 
-function slot0.recyclePlane(slot0)
-	slot1, slot2 = PuzzleMazeDrawModel.instance:getCurPlanePos()
+function var_0_0.recyclePlane(arg_3_0)
+	local var_3_0, var_3_1 = PuzzleMazeDrawModel.instance:getCurPlanePos()
 
-	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_Off, slot1, slot2)
+	PuzzleMazeDrawModel.instance:switchLine(PuzzleEnum.LineState.Switch_Off, var_3_0, var_3_1)
 	PuzzleMazeDrawModel.instance:setCanFlyPane(true)
-	uv0.instance:dispatchEvent(PuzzleEvent.RecyclePlane)
+	var_0_0.instance:dispatchEvent(PuzzleEvent.RecyclePlane)
 end
 
-function slot0.processPath(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = slot8[1]
-		slot13 = nil
+function var_0_0.processPath(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_0 = iter_4_1[1]
+		local var_4_1 = iter_4_1[2]
+		local var_4_2 = iter_4_1[3]
+		local var_4_3 = arg_4_0:isBackward(var_4_1, var_4_2)
+		local var_4_4
 
-		if not slot0:isBackward(slot8[2], slot8[3]) then
-			for slot17, slot18 in pairs(slot0._alertMoMap) do
+		if not var_4_3 then
+			for iter_4_2, iter_4_3 in pairs(arg_4_0._alertMoMap) do
 				return false
 			end
 
-			slot13 = 1
+			var_4_4 = 1
 		end
 
-		if PuzzleMazeDrawModel.instance:getObjAtLine(slot0._curPosX, slot0._curPosY, slot10, slot11) ~= nil and slot15.objType == PuzzleEnum.MazeObjType.Block then
-			slot0._alertMoMap[PuzzleMazeHelper.getLineKey(slot0._curPosX, slot0._curPosY, slot10, slot11)] = PuzzleEnum.MazeAlertType.VisitBlock
+		local var_4_5 = PuzzleMazeHelper.getLineKey(arg_4_0._curPosX, arg_4_0._curPosY, var_4_1, var_4_2)
+		local var_4_6 = PuzzleMazeDrawModel.instance:getObjAtLine(arg_4_0._curPosX, arg_4_0._curPosY, var_4_1, var_4_2)
+
+		if var_4_6 ~= nil and var_4_6.objType == PuzzleEnum.MazeObjType.Block then
+			arg_4_0._alertMoMap[var_4_5] = PuzzleEnum.MazeAlertType.VisitBlock
 		end
 
-		if slot12 then
-			slot0._alertMoMap[PuzzleMazeHelper.getPosKey(slot0._curPosX, slot0._curPosY)] = nil
-			slot0._alertMoMap[PuzzleMazeHelper.getLineKey(slot0._curPosX, slot0._curPosY, slot10, slot11)] = nil
+		if var_4_3 then
+			local var_4_7 = PuzzleMazeHelper.getPosKey(arg_4_0._curPosX, arg_4_0._curPosY)
 
-			if PuzzleMazeDrawModel.instance:getObjAtPos(slot0._curPosX, slot0._curPosY) ~= nil and slot15.objType == PuzzleEnum.MazeObjType.CheckPoint and not slot0:alreadyPassed(slot0._curPosX, slot0._curPosY, true) then
-				slot0._passedCheckPoint[slot15] = slot13
+			arg_4_0._alertMoMap[var_4_7] = nil
+
+			local var_4_8 = PuzzleMazeHelper.getLineKey(arg_4_0._curPosX, arg_4_0._curPosY, var_4_1, var_4_2)
+
+			arg_4_0._alertMoMap[var_4_8] = nil
+
+			local var_4_9 = PuzzleMazeDrawModel.instance:getObjAtPos(arg_4_0._curPosX, arg_4_0._curPosY)
+
+			if var_4_9 ~= nil and var_4_9.objType == PuzzleEnum.MazeObjType.CheckPoint and not arg_4_0:alreadyPassed(arg_4_0._curPosX, arg_4_0._curPosY, true) then
+				arg_4_0._passedCheckPoint[var_4_9] = var_4_4
 			end
 		else
-			if not slot0:canPassLine(slot10, slot11) then
-				slot0._alertMoMap[slot14] = PuzzleEnum.MazeAlertType.DisconnectLine
-			elseif slot0:alreadyPassed(slot10, slot11) then
-				slot0._alertMoMap[PuzzleMazeHelper.getPosKey(slot10, slot11)] = PuzzleEnum.MazeAlertType.VisitRepeat
+			if not arg_4_0:canPassLine(var_4_1, var_4_2) then
+				arg_4_0._alertMoMap[var_4_5] = PuzzleEnum.MazeAlertType.DisconnectLine
+			elseif arg_4_0:alreadyPassed(var_4_1, var_4_2) then
+				local var_4_10 = PuzzleMazeHelper.getPosKey(var_4_1, var_4_2)
+
+				arg_4_0._alertMoMap[var_4_10] = PuzzleEnum.MazeAlertType.VisitRepeat
 			end
 
-			if PuzzleMazeDrawModel.instance:getObjAtPos(slot10, slot11) ~= nil and slot15.objType == PuzzleEnum.MazeObjType.CheckPoint then
-				slot0._passedCheckPoint[slot15] = slot13
+			local var_4_11 = PuzzleMazeDrawModel.instance:getObjAtPos(var_4_1, var_4_2)
+
+			if var_4_11 ~= nil and var_4_11.objType == PuzzleEnum.MazeObjType.CheckPoint then
+				arg_4_0._passedCheckPoint[var_4_11] = var_4_4
 			end
 		end
 
-		if slot12 then
-			slot0._passedPosX[#slot0._passedPosX] = nil
-			slot0._passedPosY[#slot0._passedPosY] = nil
+		if var_4_3 then
+			arg_4_0._passedPosX[#arg_4_0._passedPosX] = nil
+			arg_4_0._passedPosY[#arg_4_0._passedPosY] = nil
 		else
-			table.insert(slot0._passedPosX, slot10)
-			table.insert(slot0._passedPosY, slot11)
+			table.insert(arg_4_0._passedPosX, var_4_1)
+			table.insert(arg_4_0._passedPosY, var_4_2)
 		end
 
-		slot0._curPosX = slot10
-		slot0._curPosY = slot11
-		slot0._nextDir = slot9
-		slot0._lineDirty = true
+		arg_4_0._curPosX = var_4_1
+		arg_4_0._curPosY = var_4_2
+		arg_4_0._nextDir = var_4_0
+		arg_4_0._lineDirty = true
 	end
 
 	return true
 end
 
-function slot0.canPassLine(slot0, slot1, slot2)
-	return PuzzleMazeDrawModel.instance:getMapLineState(slot0._curPosX, slot0._curPosY, slot1, slot2) ~= PuzzleEnum.LineState.Disconnect and slot3 ~= PuzzleEnum.LineState.Switch_Off
+function var_0_0.canPassLine(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = PuzzleMazeDrawModel.instance:getMapLineState(arg_5_0._curPosX, arg_5_0._curPosY, arg_5_1, arg_5_2)
+
+	return var_5_0 ~= PuzzleEnum.LineState.Disconnect and var_5_0 ~= PuzzleEnum.LineState.Switch_Off
 end
 
-function slot0.savePuzzleProgress(slot0)
-	if not PuzzleMazeDrawModel.instance:getElementCo() then
+function var_0_0.savePuzzleProgress(arg_6_0)
+	local var_6_0 = PuzzleMazeDrawModel.instance:getElementCo()
+
+	if not var_6_0 then
 		return
 	end
 
-	if slot0:hasAlertObj() then
+	if arg_6_0:hasAlertObj() then
 		return
 	end
 
-	slot3, slot4 = slot0:getPassedPoints()
-	slot5, slot6 = PuzzleMazeDrawModel.instance:getInteractPos()
+	local var_6_1, var_6_2 = arg_6_0:getPassedPoints()
+	local var_6_3, var_6_4 = PuzzleMazeDrawModel.instance:getInteractPos()
+	local var_6_5 = {
+		passX = var_6_1,
+		passY = var_6_2
+	}
 
-	if slot5 and slot6 then
-		-- Nothing
+	if var_6_3 and var_6_4 then
+		var_6_5.interactPosX = var_6_3
+		var_6_5.interactPosY = var_6_4
 	end
 
-	DungeonRpc.instance:sendSavePuzzleProgressRequest(slot1.id, cjson.encode({
-		passX = slot3,
-		passY = slot4,
-		interactPosX = slot5,
-		interactPosY = slot6
-	}))
+	local var_6_6 = cjson.encode(var_6_5)
+
+	DungeonRpc.instance:sendSavePuzzleProgressRequest(var_6_0.id, var_6_6)
 end
 
-function slot0.getPuzzleDrawProgress(slot0)
-	if not PuzzleMazeDrawModel.instance:getElementCo() then
+function var_0_0.getPuzzleDrawProgress(arg_7_0)
+	local var_7_0 = PuzzleMazeDrawModel.instance:getElementCo()
+
+	if not var_7_0 then
 		return
 	end
 
-	DungeonRpc.instance:sendGetPuzzleProgressRequest(slot1.id)
+	DungeonRpc.instance:sendGetPuzzleProgressRequest(var_7_0.id)
 end
 
-function slot0.onGetPuzzleDrawProgress(slot0, slot1, slot2)
-	if string.nilorempty(slot2) then
+function var_0_0.onGetPuzzleDrawProgress(arg_8_0, arg_8_1, arg_8_2)
+	if string.nilorempty(arg_8_2) then
 		return
 	end
 
-	if cjson.decode(slot2).interactPosX and slot3.interactPosY then
-		slot0:interactSwitchObj(slot3.interactPosX, slot3.interactPosY)
+	local var_8_0 = cjson.decode(arg_8_2)
+
+	if var_8_0.interactPosX and var_8_0.interactPosY then
+		arg_8_0:interactSwitchObj(var_8_0.interactPosX, var_8_0.interactPosY)
 	end
 
-	for slot8 = 1, slot3.passX and #slot3.passX or 0 do
-		slot9 = slot3.passX[slot8]
-		slot10 = slot3.passY[slot8]
-		slot12 = slot3.passY[slot8 - 1]
-		slot13 = false
+	local var_8_1 = var_8_0.passX and #var_8_0.passX or 0
 
-		if slot3.passX[slot8 - 1] ~= nil and slot0._modelInst:getMapLineState(slot11, slot12, slot9, slot10) == PuzzleEnum.LineState.Switch_Off then
-			slot0._modelInst:setMapLineState(slot11, slot12, slot9, slot10, PuzzleEnum.LineState.Switch_On)
+	for iter_8_0 = 1, var_8_1 do
+		local var_8_2 = var_8_0.passX[iter_8_0]
+		local var_8_3 = var_8_0.passY[iter_8_0]
+		local var_8_4 = var_8_0.passX[iter_8_0 - 1]
+		local var_8_5 = var_8_0.passY[iter_8_0 - 1]
+		local var_8_6 = false
 
-			slot13 = true
+		if var_8_4 ~= nil and arg_8_0._modelInst:getMapLineState(var_8_4, var_8_5, var_8_2, var_8_3) == PuzzleEnum.LineState.Switch_Off then
+			arg_8_0._modelInst:setMapLineState(var_8_4, var_8_5, var_8_2, var_8_3, PuzzleEnum.LineState.Switch_On)
+
+			var_8_6 = true
 		end
 
-		slot0:goPassPos(slot9, slot10)
+		arg_8_0:goPassPos(var_8_2, var_8_3)
 
-		if slot13 then
-			slot0._modelInst:setMapLineState(slot11, slot12, slot9, slot10, PuzzleEnum.LineState.Switch_Off)
+		if var_8_6 then
+			arg_8_0._modelInst:setMapLineState(var_8_4, var_8_5, var_8_2, var_8_3, PuzzleEnum.LineState.Switch_Off)
 		end
 	end
 end
 
-function slot0.hasAlertObj(slot0)
-	for slot4, slot5 in pairs(slot0._alertMoMap) do
+function var_0_0.hasAlertObj(arg_9_0)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._alertMoMap) do
 		return true
 	end
 
-	if (slot0._passedPosX and #slot0._passedPosX or 0) >= 2 and not slot0._modelInst:getObjAtPos(slot0._passedPosX and slot0._passedPosX[slot1], slot0._passedPosY and slot0._passedPosY[slot1]) then
-		return true
+	local var_9_0 = arg_9_0._passedPosX and #arg_9_0._passedPosX or 0
+
+	if var_9_0 >= 2 then
+		local var_9_1 = arg_9_0._passedPosX and arg_9_0._passedPosX[var_9_0]
+		local var_9_2 = arg_9_0._passedPosY and arg_9_0._passedPosY[var_9_0]
+
+		if not arg_9_0._modelInst:getObjAtPos(var_9_1, var_9_2) then
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.goBackPos(slot0)
-	if #slot0._passedPosX >= 2 then
-		slot5 = slot0._passedPosY[slot1 - 1]
+function var_0_0.goBackPos(arg_10_0)
+	local var_10_0 = #arg_10_0._passedPosX
 
-		slot0:goPassPos(slot0._passedPosX[slot1 - 1], slot5)
+	if var_10_0 >= 2 then
+		arg_10_0:goPassPos(arg_10_0._passedPosX[var_10_0 - 1], arg_10_0._passedPosY[var_10_0 - 1])
 
-		for slot5 = slot1 - 1, 2, -1 do
-			if slot0._modelInst:getObjAtPos(slot0._passedPosX[slot5], slot0._passedPosY[slot5]) then
+		for iter_10_0 = var_10_0 - 1, 2, -1 do
+			local var_10_1 = arg_10_0._passedPosX[iter_10_0]
+			local var_10_2 = arg_10_0._passedPosY[iter_10_0]
+
+			if arg_10_0._modelInst:getObjAtPos(var_10_1, var_10_2) then
 				break
 			end
 
-			slot0:goPassPos(slot0._passedPosX[slot5 - 1], slot0._passedPosY[slot5 - 1])
+			arg_10_0:goPassPos(arg_10_0._passedPosX[iter_10_0 - 1], arg_10_0._passedPosY[iter_10_0 - 1])
 		end
 	end
 end
 
-function slot0.restartGame(slot0)
-	uv0.super.restartGame(slot0)
-	slot0._modelInst:setTriggerEffectDoneMap(slot0._modelInst:getTriggerEffectDoneMap())
+function var_0_0.restartGame(arg_11_0)
+	local var_11_0 = arg_11_0._modelInst:getTriggerEffectDoneMap()
+
+	var_0_0.super.restartGame(arg_11_0)
+	arg_11_0._modelInst:setTriggerEffectDoneMap(var_11_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

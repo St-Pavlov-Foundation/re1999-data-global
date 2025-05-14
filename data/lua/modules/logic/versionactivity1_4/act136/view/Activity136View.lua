@@ -1,107 +1,113 @@
-module("modules.logic.versionactivity1_4.act136.view.Activity136View", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.view.Activity136View", package.seeall)
 
-slot0 = class("Activity136View", BaseView)
+local var_0_0 = class("Activity136View", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._txtremainTime = gohelper.findChildText(slot0.viewGO, "timebg/#txt_remainTime")
-	slot0._goUninvite = gohelper.findChild(slot0.viewGO, "#go_inviteContent/#go_uninvite")
-	slot0._btnInvite = gohelper.findChildButton(slot0.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
-	slot0._goInvited = gohelper.findChild(slot0.viewGO, "#go_inviteContent/#go_invited")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_remainTime")
+	arg_1_0._goUninvite = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite")
+	arg_1_0._btnInvite = gohelper.findChildButton(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
+	arg_1_0._goInvited = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_invited")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnInvite:AddClickListener(slot0._btnInviteOnClick, slot0)
-	Activity136Controller.instance:registerCallback(Activity136Event.ActivityDataUpdate, slot0.refresh, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnInvite:AddClickListener(arg_2_0._btnInviteOnClick, arg_2_0)
+	Activity136Controller.instance:registerCallback(Activity136Event.ActivityDataUpdate, arg_2_0.refresh, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnInvite:RemoveClickListener()
-	Activity136Controller.instance:unregisterCallback(Activity136Event.ActivityDataUpdate, slot0.refresh, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnInvite:RemoveClickListener()
+	Activity136Controller.instance:unregisterCallback(Activity136Event.ActivityDataUpdate, arg_3_0.refresh, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnInviteOnClick(slot0)
+function var_0_0._btnInviteOnClick(arg_6_0)
 	Activity136Controller.instance:openActivity136ChoiceView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refresh()
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:refresh()
+	TaskDispatcher.cancelTask(arg_7_0.refreshRemainTime, arg_7_0)
+	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshStatus()
-	slot0:refreshRemainTime()
+function var_0_0.refresh(arg_8_0)
+	arg_8_0:refreshStatus()
+	arg_8_0:refreshRemainTime()
 end
 
-function slot0.refreshStatus(slot0)
-	slot1 = Activity136Model.instance:hasReceivedCharacter()
+function var_0_0.refreshStatus(arg_9_0)
+	local var_9_0 = Activity136Model.instance:hasReceivedCharacter()
 
-	gohelper.setActive(slot0._goInvited, slot1)
-	gohelper.setActive(slot0._goUninvite, not slot1)
+	gohelper.setActive(arg_9_0._goInvited, var_9_0)
+	gohelper.setActive(arg_9_0._goUninvite, not var_9_0)
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot3, slot4 = slot0:_getRemainTimeStr(ActivityModel.instance:getActMO(Activity136Model.instance:getCurActivity136Id()))
-	slot0._txtremainTime.text = string.format(luaLang("remain"), slot3)
+function var_0_0.refreshRemainTime(arg_10_0)
+	local var_10_0 = Activity136Model.instance:getCurActivity136Id()
+	local var_10_1 = ActivityModel.instance:getActMO(var_10_0)
+	local var_10_2, var_10_3 = arg_10_0:_getRemainTimeStr(var_10_1)
 
-	if slot4 then
-		TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+	arg_10_0._txtremainTime.text = string.format(luaLang("remain"), var_10_2)
+
+	if var_10_3 then
+		TaskDispatcher.cancelTask(arg_10_0.refreshRemainTime, arg_10_0)
 	end
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewParam and slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj)
+function var_0_0.onClose(arg_11_0)
+	if arg_11_0.viewParam and arg_11_0.viewParam.callback then
+		arg_11_0.viewParam.callback(arg_11_0.viewParam.callbackObj)
 	end
 
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+	TaskDispatcher.cancelTask(arg_11_0.refreshRemainTime, arg_11_0)
 end
 
-function slot0._getRemainTimeStr(slot0, slot1)
-	slot2 = nil
+function var_0_0._getRemainTimeStr(arg_12_0, arg_12_1)
+	local var_12_0
 
-	if slot1 then
-		slot2 = slot1:getRealEndTimeStamp() - ServerTime.now()
+	if arg_12_1 then
+		var_12_0 = arg_12_1:getRealEndTimeStamp() - ServerTime.now()
 	end
 
-	if not slot2 or slot2 <= 0 then
+	if not var_12_0 or var_12_0 <= 0 then
 		return luaLang("turnback_end"), true
 	end
 
-	slot3, slot4, slot5, slot6 = TimeUtil.secondsToDDHHMMSS(slot2)
+	local var_12_1, var_12_2, var_12_3, var_12_4 = TimeUtil.secondsToDDHHMMSS(var_12_0)
 
-	if slot3 > 0 then
+	if var_12_1 > 0 then
+		local var_12_5 = luaLang("time_day")
+
 		if LangSettings.instance:isEn() then
-			slot7 = luaLang("time_day") .. " "
+			var_12_5 = var_12_5 .. " "
 		end
 
-		return slot3 .. slot7 .. slot4 .. luaLang("time_hour2")
+		return (var_12_1 .. var_12_5) .. var_12_2 .. luaLang("time_hour2")
 	end
 
-	if slot4 > 0 then
-		return slot4 .. luaLang("time_hour2")
+	if var_12_2 > 0 then
+		return var_12_2 .. luaLang("time_hour2")
 	end
 
-	if slot5 <= 0 then
-		slot5 = "<1"
+	if var_12_3 <= 0 then
+		var_12_3 = "<1"
 	end
 
-	return slot5 .. luaLang("time_minute2")
+	return var_12_3 .. luaLang("time_minute2")
 end
 
-return slot0
+return var_0_0

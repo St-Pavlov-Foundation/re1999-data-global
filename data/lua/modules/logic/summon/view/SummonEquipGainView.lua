@@ -1,39 +1,47 @@
-module("modules.logic.summon.view.SummonEquipGainView", package.seeall)
+﻿module("modules.logic.summon.view.SummonEquipGainView", package.seeall)
 
-slot0 = class("SummonEquipGainView", BaseView)
+local var_0_0 = class("SummonEquipGainView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonEquipSingleFinish, slot0.onSummonSingleAnimFinish, slot0)
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0:addEventCb(SummonController.instance, SummonEvent.onSummonEquipSingleFinish, arg_4_0.onSummonSingleAnimFinish, arg_4_0)
 end
 
-function slot0.onSummonSingleAnimFinish(slot0)
-	if #SummonModel.getRewardList({
-		slot0.viewParam.summonResultMo
-	}) <= 0 then
+function var_0_0.onSummonSingleAnimFinish(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam.summonResultMo
+	local var_5_1 = SummonModel.getRewardList({
+		var_5_0
+	})
+
+	if #var_5_1 <= 0 then
 		return
 	end
 
-	table.sort(slot2, SummonModel.sortRewards)
+	table.sort(var_5_1, SummonModel.sortRewards)
 
-	for slot6, slot7 in ipairs(slot2) do
-		if slot7.materilType == MaterialEnum.MaterialType.Currency then
-			slot8, slot9 = ItemModel.instance:getItemConfigAndIcon(slot7.materilType, slot7.materilId)
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		if iter_5_1.materilType == MaterialEnum.MaterialType.Currency then
+			local var_5_2, var_5_3 = ItemModel.instance:getItemConfigAndIcon(iter_5_1.materilType, iter_5_1.materilId)
+			local var_5_4 = iter_5_1.quantity
+			local var_5_5 = luaLang("equip_duplicate_tips")
+			local var_5_6 = string.format("%s\n%sX%s", var_5_5, var_5_2.name, var_5_4)
 
-			GameFacade.showToastWithIcon(ToastEnum.IconId, slot9, string.format("%s\n%sX%s", luaLang("equip_duplicate_tips"), slot8.name, slot7.quantity))
+			GameFacade.showToastWithIcon(ToastEnum.IconId, var_5_3, var_5_6)
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,50 +1,58 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeLookBack", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeLookBack", package.seeall)
 
-slot0 = class("FightTLEventInvokeLookBack")
+local var_0_0 = class("FightTLEventInvokeLookBack")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if not (slot1 and slot1.actEffectMOs) then
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_1 and arg_1_1.actEffectMOs
+
+	if not var_1_0 then
 		return
 	end
 
-	slot5 = {}
-	slot6 = false
+	local var_1_1 = {}
+	local var_1_2 = false
 
-	for slot10, slot11 in ipairs(slot4) do
-		if slot11.effectType == FightEnum.EffectType.SAVEFIGHTRECORDSTART then
-			slot6 = true
-		elseif slot11.effectType == FightEnum.EffectType.SAVEFIGHTRECORDEND then
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		if iter_1_1.effectType == FightEnum.EffectType.SAVEFIGHTRECORDSTART then
+			var_1_2 = true
+		elseif iter_1_1.effectType == FightEnum.EffectType.SAVEFIGHTRECORDEND then
 			break
-		elseif slot6 then
-			table.insert(slot5, slot11)
+		elseif var_1_2 then
+			table.insert(var_1_1, iter_1_1)
 		end
 	end
 
-	if #slot5 < 1 then
+	if #var_1_1 < 1 then
 		return
 	end
 
-	slot0._flow = FlowParallel.New()
+	arg_1_0._flow = FlowParallel.New()
 
-	for slot10, slot11 in ipairs(slot5) do
-		if FightStepBuilder.ActEffectWorkCls[slot11.effectType] then
-			slot0._flow:addWork(FightWork2Work.New(slot12, slot1, slot11))
+	for iter_1_2, iter_1_3 in ipairs(var_1_1) do
+		local var_1_3 = FightStepBuilder.ActEffectWorkCls[iter_1_3.effectType]
+
+		if var_1_3 then
+			arg_1_0._flow:addWork(FightWork2Work.New(var_1_3, arg_1_1, iter_1_3))
 		end
 	end
 
-	slot0._flow:start()
+	arg_1_0._flow:start()
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
+function var_0_0.onSkillEnd(arg_3_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_4_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

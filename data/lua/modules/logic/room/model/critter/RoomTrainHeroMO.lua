@@ -1,91 +1,101 @@
-module("modules.logic.room.model.critter.RoomTrainHeroMO", package.seeall)
+﻿module("modules.logic.room.model.critter.RoomTrainHeroMO", package.seeall)
 
-slot0 = pureTable("RoomTrainHeroMO")
+local var_0_0 = pureTable("RoomTrainHeroMO")
 
-function slot0.init(slot0, slot1)
-	slot0:initHeroMO(HeroModel.instance:getByHeroId(slot1.heroId))
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0 = HeroModel.instance:getByHeroId(arg_1_1.heroId)
+
+	arg_1_0:initHeroMO(var_1_0)
 end
 
-function slot0.initHeroMO(slot0, slot1)
-	slot0.id = slot1.heroId
-	slot0.heroId = slot0.id
-	slot0.heroMO = slot1
-	slot0.skinId = slot0.heroMO.skin
-	slot0.heroConfig = HeroConfig.instance:getHeroCO(slot0.heroId)
-	slot0.skinConfig = SkinConfig.instance:getSkinCo(slot0.skinId)
-	slot0.critterHeroConfig = CritterConfig.instance:getCritterHeroPreferenceCfg(slot0.heroId)
-	slot0._prefernectType = nil
-	slot0._prefernectValueNums = nil
-	slot2 = slot0:getAttributeInfoMO()
+function var_0_0.initHeroMO(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.heroId
+	arg_2_0.heroId = arg_2_0.id
+	arg_2_0.heroMO = arg_2_1
+	arg_2_0.skinId = arg_2_0.heroMO.skin
+	arg_2_0.heroConfig = HeroConfig.instance:getHeroCO(arg_2_0.heroId)
+	arg_2_0.skinConfig = SkinConfig.instance:getSkinCo(arg_2_0.skinId)
+	arg_2_0.critterHeroConfig = CritterConfig.instance:getCritterHeroPreferenceCfg(arg_2_0.heroId)
+	arg_2_0._prefernectType = nil
+	arg_2_0._prefernectValueNums = nil
 
-	if slot0.critterHeroConfig then
-		slot0._prefernectType = slot0.critterHeroConfig.preferenceType
+	local var_2_0 = arg_2_0:getAttributeInfoMO()
 
-		slot2:setAttr(slot0.critterHeroConfig.effectAttribute, 0)
+	if arg_2_0.critterHeroConfig then
+		arg_2_0._prefernectType = arg_2_0.critterHeroConfig.preferenceType
 
-		slot2.rate = slot0.critterHeroConfig.addIncrRate + 10000
+		var_2_0:setAttr(arg_2_0.critterHeroConfig.effectAttribute, 0)
 
-		if not string.nilorempty(slot0.critterHeroConfig.preferenceValue) then
-			slot0._prefernectValueNums = string.splitToNumber(slot0.critterHeroConfig.preferenceValue, "#")
+		var_2_0.rate = arg_2_0.critterHeroConfig.addIncrRate + 10000
+
+		if not string.nilorempty(arg_2_0.critterHeroConfig.preferenceValue) then
+			arg_2_0._prefernectValueNums = string.splitToNumber(arg_2_0.critterHeroConfig.preferenceValue, "#")
 		end
 	end
 end
 
-function slot0.updateSkinId(slot0, slot1)
-	slot0.skinId = slot1
-	slot0.skinConfig = SkinConfig.instance:getSkinCo(slot0.skinId)
+function var_0_0.updateSkinId(arg_3_0, arg_3_1)
+	arg_3_0.skinId = arg_3_1
+	arg_3_0.skinConfig = SkinConfig.instance:getSkinCo(arg_3_0.skinId)
 end
 
-function slot0.getAttributeInfoMO(slot0)
-	if not slot0._attributeInfoMO then
-		slot0._attributeInfoMO = CritterAttributeInfoMO.New()
+function var_0_0.getAttributeInfoMO(arg_4_0)
+	if not arg_4_0._attributeInfoMO then
+		arg_4_0._attributeInfoMO = CritterAttributeInfoMO.New()
 
-		slot0._attributeInfoMO:init()
+		arg_4_0._attributeInfoMO:init()
 	end
 
-	return slot0._attributeInfoMO
+	return arg_4_0._attributeInfoMO
 end
 
-function slot0.getPrefernectType(slot0)
-	return slot0._prefernectType
+function var_0_0.getPrefernectType(arg_5_0)
+	return arg_5_0._prefernectType
 end
 
-function slot0.getPrefernectIds(slot0)
-	return slot0._prefernectValueNums
+function var_0_0.getPrefernectIds(arg_6_0)
+	return arg_6_0._prefernectValueNums
 end
 
-function slot0.chcekPrefernectCritterId(slot0, slot1)
-	if slot0._prefernectType == CritterEnum.PreferenceType.All then
+function var_0_0.chcekPrefernectCritterId(arg_7_0, arg_7_1)
+	if arg_7_0._prefernectType == CritterEnum.PreferenceType.All then
 		return true
 	end
 
-	if slot0._prefernectType == CritterEnum.PreferenceType.Catalogue then
-		slot3 = CritterConfig.instance:getCritterCatalogue(slot1)
+	if arg_7_0._prefernectType == CritterEnum.PreferenceType.Catalogue then
+		local var_7_0 = CritterConfig.instance
+		local var_7_1 = var_7_0:getCritterCatalogue(arg_7_1)
 
-		for slot7 = 1, #slot0._prefernectValueNums do
-			if slot0._prefernectValueNums[slot7] == slot3 or slot2:isHasCatalogueChildId(slot8, slot3) then
+		for iter_7_0 = 1, #arg_7_0._prefernectValueNums do
+			local var_7_2 = arg_7_0._prefernectValueNums[iter_7_0]
+
+			if var_7_2 == var_7_1 or var_7_0:isHasCatalogueChildId(var_7_2, var_7_1) then
 				return true
 			end
 		end
-	elseif slot0._prefernectType == CritterEnum.PreferenceType.Critter and tabletool.indexOf(slot0._prefernectValueNums, slot1) then
+	elseif arg_7_0._prefernectType == CritterEnum.PreferenceType.Critter and tabletool.indexOf(arg_7_0._prefernectValueNums, arg_7_1) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getPrefernectName(slot0)
-	if slot0._prefernectType == CritterEnum.PreferenceType.All then
+function var_0_0.getPrefernectName(arg_8_0)
+	if arg_8_0._prefernectType == CritterEnum.PreferenceType.All then
 		return luaLang("critter_train_hero_prefernect_all_txt")
-	elseif slot0._prefernectType == CritterEnum.PreferenceType.Catalogue then
-		if slot0._prefernectValueNums and #slot0._prefernectValueNums > 0 then
-			return CritterConfig.instance:getCritterCatalogueCfg(slot0._prefernectValueNums[1]) and slot1.name or slot0._prefernectValueNums[1]
+	elseif arg_8_0._prefernectType == CritterEnum.PreferenceType.Catalogue then
+		if arg_8_0._prefernectValueNums and #arg_8_0._prefernectValueNums > 0 then
+			local var_8_0 = CritterConfig.instance:getCritterCatalogueCfg(arg_8_0._prefernectValueNums[1])
+
+			return var_8_0 and var_8_0.name or arg_8_0._prefernectValueNums[1]
 		end
-	elseif slot0._prefernectType == CritterEnum.PreferenceType.Critter and slot0._prefernectValueNums and #slot0._prefernectValueNums > 0 then
-		return CritterConfig.instance:getCritterCfg(slot0._prefernectValueNums[1]) and slot1.name or slot0._prefernectValueNums[1]
+	elseif arg_8_0._prefernectType == CritterEnum.PreferenceType.Critter and arg_8_0._prefernectValueNums and #arg_8_0._prefernectValueNums > 0 then
+		local var_8_1 = CritterConfig.instance:getCritterCfg(arg_8_0._prefernectValueNums[1])
+
+		return var_8_1 and var_8_1.name or arg_8_0._prefernectValueNums[1]
 	end
 
 	return ""
 end
 
-return slot0
+return var_0_0

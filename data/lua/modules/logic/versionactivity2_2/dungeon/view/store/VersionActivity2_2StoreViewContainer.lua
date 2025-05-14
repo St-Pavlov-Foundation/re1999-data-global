@@ -1,29 +1,30 @@
-module("modules.logic.versionactivity2_2.dungeon.view.store.VersionActivity2_2StoreViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_2.dungeon.view.store.VersionActivity2_2StoreViewContainer", package.seeall)
 
-slot0 = class("VersionActivity2_2StoreViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity2_2StoreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_store"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#scroll_store/Viewport/#go_content/#go_storegoodsitem"
-	slot1.cellClass = VersionActivity2_2StoreGoodsItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 4
-	slot1.cellWidth = 316
-	slot1.cellHeight = 365
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#scroll_store"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "#scroll_store/Viewport/#go_content/#go_storegoodsitem"
+	var_1_0.cellClass = VersionActivity2_2StoreGoodsItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 4
+	var_1_0.cellWidth = 316
+	var_1_0.cellHeight = 365
 
 	return {
 		VersionActivity2_2StoreView.New(),
 		VersionActivity2_2StoreTalk.New(),
-		LuaListScrollView.New(VersionActivity2_2StoreListModel.instance, slot1),
+		LuaListScrollView.New(VersionActivity2_2StoreListModel.instance, var_1_0),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_righttop")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -33,32 +34,32 @@ function slot0.buildTabViews(slot0, slot1)
 		}
 	end
 
-	if slot1 == 2 then
-		slot0._currencyView = CurrencyView.New({
+	if arg_2_1 == 2 then
+		arg_2_0._currencyView = CurrencyView.New({
 			CurrencyEnum.CurrencyType.V2a2Dungeon
 		})
 
-		slot0._currencyView:setOpenCallback(slot0._onCurrencyOpen, slot0)
+		arg_2_0._currencyView:setOpenCallback(arg_2_0._onCurrencyOpen, arg_2_0)
 
 		return {
-			slot0._currencyView
+			arg_2_0._currencyView
 		}
 	end
 end
 
-function slot0._onCurrencyOpen(slot0)
-	slot1 = slot0._currencyView:getCurrencyItem(1)
+function var_0_0._onCurrencyOpen(arg_3_0)
+	local var_3_0 = arg_3_0._currencyView:getCurrencyItem(1)
 
-	gohelper.setActive(slot1.btn, false)
-	gohelper.setActive(slot1.click, true)
-	recthelper.setAnchorX(slot1.txt.transform, 313)
+	gohelper.setActive(var_3_0.btn, false)
+	gohelper.setActive(var_3_0.click, true)
+	recthelper.setAnchorX(var_3_0.txt.transform, 313)
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_4_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_2Enum.ActivityId.DungeonStore)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_2Enum.ActivityId.DungeonStore
 	})
 end
 
-return slot0
+return var_0_0

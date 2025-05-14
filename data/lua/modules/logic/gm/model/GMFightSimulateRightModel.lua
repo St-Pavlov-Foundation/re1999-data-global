@@ -1,19 +1,19 @@
-module("modules.logic.gm.model.GMFightSimulateRightModel", package.seeall)
+﻿module("modules.logic.gm.model.GMFightSimulateRightModel", package.seeall)
 
-slot0 = class("GMFightSimulateRightModel", ListScrollModel)
+local var_0_0 = class("GMFightSimulateRightModel", ListScrollModel)
 
-function slot0.setChapterId(slot0, slot1)
-	slot2 = {}
+function var_0_0.setChapterId(arg_1_0, arg_1_1)
+	local var_1_0 = {}
 
-	for slot6, slot7 in ipairs(lua_episode.configList) do
-		if slot7.chapterId == slot1 then
-			table.insert(slot2, slot7)
+	for iter_1_0, iter_1_1 in ipairs(lua_episode.configList) do
+		if iter_1_1.chapterId == arg_1_1 then
+			table.insert(var_1_0, iter_1_1)
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

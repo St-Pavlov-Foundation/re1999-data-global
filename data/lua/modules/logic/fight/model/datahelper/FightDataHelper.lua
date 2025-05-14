@@ -1,283 +1,312 @@
-module("modules.logic.fight.model.datahelper.FightDataHelper", package.seeall)
+﻿module("modules.logic.fight.model.datahelper.FightDataHelper", package.seeall)
 
-slot0 = {
-	defineMgrRef = function ()
-		slot0 = FightDataMgr.instance.mgrList
+local var_0_0 = {}
 
-		for slot4, slot5 in pairs(FightDataMgr.instance) do
-			for slot9, slot10 in ipairs(slot0) do
-				if slot10 == slot5 then
-					uv0[slot4] = slot10
+function var_0_0.defineMgrRef()
+	local var_1_0 = FightDataMgr.instance.mgrList
 
-					break
-				end
+	for iter_1_0, iter_1_1 in pairs(FightDataMgr.instance) do
+		for iter_1_2, iter_1_3 in ipairs(var_1_0) do
+			if iter_1_3 == iter_1_1 then
+				var_0_0[iter_1_0] = iter_1_3
+
+				break
 			end
 		end
-	end,
-	initDataMgr = function ()
-		uv0.lastFightResult = nil
-
-		FightLocalDataMgr.instance:initDataMgr()
-		FightDataMgr.instance:initDataMgr()
-		uv0.defineMgrRef()
-		FightMsgMgr.sendMsg(FightMsgId.AfterInitDataMgrRef)
-	end,
-	initFightData = function (slot0)
-		if not slot0 then
-			uv0.version = 999
-			FightModel.instance._version = uv0.version
-
-			return
-		end
-
-		uv0.version = FightModel.GMForceVersion or slot0.version or 0
-		FightModel.instance._version = uv0.version
-
-		uv0.checkReplay(slot0)
-		FightLocalDataMgr.instance:updateFightData(slot0)
-		FightDataMgr.instance:updateFightData(slot0)
-	end,
-	checkReplay = function (slot0)
-		if uv0.version >= 1 then
-			if slot0.isRecord then
-				uv0.stageMgr:enterFightState(FightStageMgr.FightStateType.Replay)
-			end
-		elseif FightModel.instance:getFightParam() and slot3.isReplay then
-			uv0.stageMgr:enterFightState(FightStageMgr.FightStateType.Replay)
-		elseif FightReplayModel.instance:isReconnectReplay() then
-			uv0.stageMgr:enterFightState(FightStageMgr.FightStateType.Replay)
-		end
-	end,
-	cacheFightWavePush = function (slot0)
-		FightLocalDataMgr.instance.cacheFightMgr:cacheFightWavePush(slot0.fight)
-		FightDataMgr.instance.cacheFightMgr:cacheFightWavePush(slot0.fight)
-	end,
-	playEffectData = function (slot0)
-		if slot0:isDone() then
-			return
-		end
-
-		uv0.calMgr:playActEffectData(slot0)
-	end,
-	coverData = function (slot0, slot1, slot2, slot3)
-		if slot0 == nil then
-			slot0 = {}
-		end
-
-		if slot1 == nil then
-			if getmetatable(slot0) then
-				setmetatable({}, slot4)
-			end
-		end
-
-		for slot7, slot8 in pairs(slot1) do
-			slot9 = false
-
-			if slot2 and slot2[slot7] then
-				slot9 = true
-			end
-
-			if uv0[slot7] then
-				slot9 = true
-			end
-
-			if not slot9 and slot0[slot7] == nil then
-				slot1[slot7] = nil
-			end
-		end
-
-		for slot7, slot8 in pairs(slot0) do
-			slot9 = false
-
-			if slot2 and slot2[slot7] then
-				slot9 = true
-			end
-
-			if uv0[slot7] then
-				slot9 = true
-			end
-
-			if not slot9 then
-				if slot3 and slot3[slot7] then
-					slot3[slot7](slot0, slot1)
-				elseif slot1[slot7] == nil then
-					slot1[slot7] = FightHelper.deepCopySimpleWithMeta(slot0[slot7])
-				elseif type(slot8) == "table" then
-					uv1.coverInternal(slot8, slot1[slot7])
-				else
-					slot1[slot7] = slot8
-				end
-			end
-		end
-
-		return slot1
-	end,
-	coverInternal = function (slot0, slot1)
-		for slot5, slot6 in pairs(slot1) do
-			if slot0[slot5] == nil then
-				slot1[slot5] = nil
-			end
-		end
-
-		for slot5, slot6 in pairs(slot0) do
-			if type(slot6) == "table" then
-				if slot1[slot5] == nil then
-					slot1[slot5] = FightHelper.deepCopySimpleWithMeta(slot6)
-				else
-					uv0.coverInternal(slot6, slot1[slot5])
-				end
-			else
-				slot1[slot5] = slot6
-			end
-		end
-	end,
-	findDiffList = {},
-	findDiffPath = {},
-	addPathkey = function (slot0)
-		table.insert(uv0.findDiffPath, slot0)
-	end,
-	removePathKey = function ()
-		table.remove(uv0.findDiffPath)
-	end,
-	findDiff = function (slot0, slot1, slot2, slot3)
-		uv0.findDiffList = {}
-		uv0.findDiffPath = {}
-		slot8 = slot3
-
-		uv0.doFindDiff(slot0, slot1, slot2, slot8)
-
-		slot4 = {}
-
-		for slot8, slot9 in ipairs(uv0.findDiffList) do
-			slot4[slot10] = slot4[slot9.pathList[1]] or {}
-
-			table.insert(slot4[slot10], slot9)
-		end
-
-		return #uv0.findDiffList > 0, slot4, uv0.findDiffList
-	end,
-	doFindDiff = function (slot0, slot1, slot2, slot3, slot4)
-		if type(slot0) ~= "table" or type(slot1) ~= "table" then
-			logError("传入的参数必须是表结构,请检查代码")
-
-			return
-		end
-
-		slot8 = slot2
-
-		uv0.doCheckMissing(slot0, slot1, slot8)
-
-		for slot8, slot9 in pairs(slot0) do
-			slot10 = false
-
-			if slot2 and slot2[slot8] then
-				slot10 = true
-			end
-
-			if not slot10 and slot1[slot8] ~= nil then
-				uv0.addPathkey(slot8)
-
-				if slot3 and slot3[slot8] then
-					slot3[slot8](slot0[slot8], slot1[slot8], slot0, slot1)
-				elseif slot4 then
-					slot4(slot0[slot8], slot1[slot8])
-				else
-					uv0.checkDifference(slot0[slot8], slot1[slot8])
-				end
-
-				uv0.removePathKey()
-			end
-		end
-	end,
-	checkDifference = function (slot0, slot1)
-		if type(slot0) ~= type(slot1) then
-			uv0.addDiff(nil, uv0.diffType.difference)
-
-			return
-		elseif type(slot0) == "table" then
-			uv0.doCheckMissing(slot0, slot1)
-
-			for slot5, slot6 in pairs(slot0) do
-				if slot1[slot5] ~= nil then
-					uv0.addPathkey(slot5)
-					uv0.checkDifference(slot6, slot1[slot5])
-					uv0.removePathKey()
-				end
-			end
-		elseif slot0 ~= slot1 then
-			uv0.addDiff(nil, uv0.diffType.difference)
-		end
-	end,
-	doCheckMissing = function (slot0, slot1, slot2)
-		for slot6, slot7 in pairs(slot1) do
-			slot8 = false
-
-			if slot2 and slot2[slot6] then
-				slot8 = true
-			end
-
-			if not slot8 and slot0[slot6] == nil then
-				uv0.addDiff(slot6, uv0.diffType.missingSource)
-			end
-		end
-
-		for slot6, slot7 in pairs(slot0) do
-			slot8 = false
-
-			if slot2 and slot2[slot6] then
-				slot8 = true
-			end
-
-			if not slot8 and slot1[slot6] == nil then
-				uv0.addDiff(slot6, uv0.diffType.missingTarget)
-			end
-		end
-	end,
-	diffType = {
-		missingTarget = 2,
-		difference = 3,
-		missingSource = 1
-	},
-	addDiff = function (slot0, slot1)
-		slot2 = {
-			diffType = slot1 or uv0.diffType.difference
-		}
-		slot3 = uv0.coverData(uv0.findDiffPath)
-
-		if slot0 then
-			table.insert(slot3, slot0)
-		end
-
-		slot2.pathList = slot3
-		slot2.pathStr = table.concat(slot3, ".")
-
-		table.insert(uv0.findDiffList, slot2)
-
-		return slot2
-	end,
-	getDiffValue = function (slot0, slot1, slot2)
-		slot3, slot4 = nil
-
-		for slot11, slot12 in ipairs(slot2.pathList) do
-			slot6 = slot0[slot12]
-			slot7 = slot1[slot12]
-		end
-
-		if slot3 == nil then
-			slot3 = "nil"
-		end
-
-		if slot4 == nil then
-			slot4 = "nil"
-		end
-
-		return slot3, slot4
 	end
-}
-slot1 = {
+end
+
+function var_0_0.initDataMgr()
+	var_0_0.lastFightResult = nil
+
+	FightLocalDataMgr.instance:initDataMgr()
+	FightDataMgr.instance:initDataMgr()
+	var_0_0.defineMgrRef()
+	FightMsgMgr.sendMsg(FightMsgId.AfterInitDataMgrRef)
+end
+
+function var_0_0.initFightData(arg_3_0)
+	if not arg_3_0 then
+		var_0_0.version = 999
+		FightModel.instance._version = var_0_0.version
+
+		return
+	end
+
+	var_0_0.version = FightModel.GMForceVersion or arg_3_0.version or 0
+	FightModel.instance._version = var_0_0.version
+
+	var_0_0.checkReplay(arg_3_0)
+	FightLocalDataMgr.instance:updateFightData(arg_3_0)
+	FightDataMgr.instance:updateFightData(arg_3_0)
+end
+
+function var_0_0.checkReplay(arg_4_0)
+	local var_4_0 = var_0_0.version
+	local var_4_1 = arg_4_0.isRecord
+
+	if var_4_0 >= 1 then
+		if var_4_1 then
+			var_0_0.stageMgr:enterFightState(FightStageMgr.FightStateType.Replay)
+		end
+	else
+		local var_4_2 = FightModel.instance:getFightParam()
+
+		if var_4_2 and var_4_2.isReplay then
+			var_0_0.stageMgr:enterFightState(FightStageMgr.FightStateType.Replay)
+		elseif FightReplayModel.instance:isReconnectReplay() then
+			var_0_0.stageMgr:enterFightState(FightStageMgr.FightStateType.Replay)
+		end
+	end
+end
+
+function var_0_0.cacheFightWavePush(arg_5_0)
+	FightLocalDataMgr.instance.cacheFightMgr:cacheFightWavePush(arg_5_0.fight)
+	FightDataMgr.instance.cacheFightMgr:cacheFightWavePush(arg_5_0.fight)
+end
+
+function var_0_0.playEffectData(arg_6_0)
+	if arg_6_0:isDone() then
+		return
+	end
+
+	var_0_0.calMgr:playActEffectData(arg_6_0)
+end
+
+local var_0_1 = {
 	class = true
 }
 
-slot0.initDataMgr()
+function var_0_0.coverData(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_0 == nil then
+		arg_7_0 = {}
+	end
 
-return slot0
+	if arg_7_1 == nil then
+		arg_7_1 = {}
+
+		local var_7_0 = getmetatable(arg_7_0)
+
+		if var_7_0 then
+			setmetatable(arg_7_1, var_7_0)
+		end
+	end
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
+		local var_7_1 = false
+
+		if arg_7_2 and arg_7_2[iter_7_0] then
+			var_7_1 = true
+		end
+
+		if var_0_1[iter_7_0] then
+			var_7_1 = true
+		end
+
+		if not var_7_1 and arg_7_0[iter_7_0] == nil then
+			arg_7_1[iter_7_0] = nil
+		end
+	end
+
+	for iter_7_2, iter_7_3 in pairs(arg_7_0) do
+		local var_7_2 = false
+
+		if arg_7_2 and arg_7_2[iter_7_2] then
+			var_7_2 = true
+		end
+
+		if var_0_1[iter_7_2] then
+			var_7_2 = true
+		end
+
+		if not var_7_2 then
+			if arg_7_3 and arg_7_3[iter_7_2] then
+				arg_7_3[iter_7_2](arg_7_0, arg_7_1)
+			elseif arg_7_1[iter_7_2] == nil then
+				arg_7_1[iter_7_2] = FightHelper.deepCopySimpleWithMeta(arg_7_0[iter_7_2])
+			elseif type(iter_7_3) == "table" then
+				var_0_0.coverInternal(iter_7_3, arg_7_1[iter_7_2])
+			else
+				arg_7_1[iter_7_2] = iter_7_3
+			end
+		end
+	end
+
+	return arg_7_1
+end
+
+function var_0_0.coverInternal(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
+		if arg_8_0[iter_8_0] == nil then
+			arg_8_1[iter_8_0] = nil
+		end
+	end
+
+	for iter_8_2, iter_8_3 in pairs(arg_8_0) do
+		if type(iter_8_3) == "table" then
+			if arg_8_1[iter_8_2] == nil then
+				arg_8_1[iter_8_2] = FightHelper.deepCopySimpleWithMeta(iter_8_3)
+			else
+				var_0_0.coverInternal(iter_8_3, arg_8_1[iter_8_2])
+			end
+		else
+			arg_8_1[iter_8_2] = iter_8_3
+		end
+	end
+end
+
+var_0_0.findDiffList = {}
+var_0_0.findDiffPath = {}
+
+function var_0_0.addPathkey(arg_9_0)
+	table.insert(var_0_0.findDiffPath, arg_9_0)
+end
+
+function var_0_0.removePathKey()
+	table.remove(var_0_0.findDiffPath)
+end
+
+function var_0_0.findDiff(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	var_0_0.findDiffList = {}
+	var_0_0.findDiffPath = {}
+
+	var_0_0.doFindDiff(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+
+	local var_11_0 = {}
+
+	for iter_11_0, iter_11_1 in ipairs(var_0_0.findDiffList) do
+		local var_11_1 = iter_11_1.pathList[1]
+
+		var_11_0[var_11_1] = var_11_0[var_11_1] or {}
+
+		table.insert(var_11_0[var_11_1], iter_11_1)
+	end
+
+	return #var_0_0.findDiffList > 0, var_11_0, var_0_0.findDiffList
+end
+
+function var_0_0.doFindDiff(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	if type(arg_12_0) ~= "table" or type(arg_12_1) ~= "table" then
+		logError("传入的参数必须是表结构,请检查代码")
+
+		return
+	end
+
+	var_0_0.doCheckMissing(arg_12_0, arg_12_1, arg_12_2)
+
+	for iter_12_0, iter_12_1 in pairs(arg_12_0) do
+		local var_12_0 = false
+
+		if arg_12_2 and arg_12_2[iter_12_0] then
+			var_12_0 = true
+		end
+
+		if not var_12_0 and arg_12_1[iter_12_0] ~= nil then
+			var_0_0.addPathkey(iter_12_0)
+
+			if arg_12_3 and arg_12_3[iter_12_0] then
+				arg_12_3[iter_12_0](arg_12_0[iter_12_0], arg_12_1[iter_12_0], arg_12_0, arg_12_1)
+			elseif arg_12_4 then
+				arg_12_4(arg_12_0[iter_12_0], arg_12_1[iter_12_0])
+			else
+				var_0_0.checkDifference(arg_12_0[iter_12_0], arg_12_1[iter_12_0])
+			end
+
+			var_0_0.removePathKey()
+		end
+	end
+end
+
+function var_0_0.checkDifference(arg_13_0, arg_13_1)
+	if type(arg_13_0) ~= type(arg_13_1) then
+		var_0_0.addDiff(nil, var_0_0.diffType.difference)
+
+		return
+	elseif type(arg_13_0) == "table" then
+		var_0_0.doCheckMissing(arg_13_0, arg_13_1)
+
+		for iter_13_0, iter_13_1 in pairs(arg_13_0) do
+			if arg_13_1[iter_13_0] ~= nil then
+				var_0_0.addPathkey(iter_13_0)
+				var_0_0.checkDifference(iter_13_1, arg_13_1[iter_13_0])
+				var_0_0.removePathKey()
+			end
+		end
+	elseif arg_13_0 ~= arg_13_1 then
+		var_0_0.addDiff(nil, var_0_0.diffType.difference)
+	end
+end
+
+function var_0_0.doCheckMissing(arg_14_0, arg_14_1, arg_14_2)
+	for iter_14_0, iter_14_1 in pairs(arg_14_1) do
+		local var_14_0 = false
+
+		if arg_14_2 and arg_14_2[iter_14_0] then
+			var_14_0 = true
+		end
+
+		if not var_14_0 and arg_14_0[iter_14_0] == nil then
+			var_0_0.addDiff(iter_14_0, var_0_0.diffType.missingSource)
+		end
+	end
+
+	for iter_14_2, iter_14_3 in pairs(arg_14_0) do
+		local var_14_1 = false
+
+		if arg_14_2 and arg_14_2[iter_14_2] then
+			var_14_1 = true
+		end
+
+		if not var_14_1 and arg_14_1[iter_14_2] == nil then
+			var_0_0.addDiff(iter_14_2, var_0_0.diffType.missingTarget)
+		end
+	end
+end
+
+var_0_0.diffType = {
+	missingTarget = 2,
+	difference = 3,
+	missingSource = 1
+}
+
+function var_0_0.addDiff(arg_15_0, arg_15_1)
+	local var_15_0 = {
+		diffType = arg_15_1 or var_0_0.diffType.difference
+	}
+	local var_15_1 = var_0_0.coverData(var_0_0.findDiffPath)
+
+	if arg_15_0 then
+		table.insert(var_15_1, arg_15_0)
+	end
+
+	var_15_0.pathList = var_15_1
+	var_15_0.pathStr = table.concat(var_15_1, ".")
+
+	table.insert(var_0_0.findDiffList, var_15_0)
+
+	return var_15_0
+end
+
+function var_0_0.getDiffValue(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0
+	local var_16_1
+	local var_16_2 = arg_16_2.pathList
+	local var_16_3 = arg_16_0
+	local var_16_4 = arg_16_1
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_2) do
+		var_16_0 = var_16_3[iter_16_1]
+		var_16_1 = var_16_4[iter_16_1]
+		var_16_3 = var_16_0
+		var_16_4 = var_16_1
+	end
+
+	var_16_0 = var_16_0 == nil and "nil" or var_16_0
+	var_16_1 = var_16_1 == nil and "nil" or var_16_1
+
+	return var_16_0, var_16_1
+end
+
+var_0_0.initDataMgr()
+
+return var_0_0

@@ -1,76 +1,87 @@
-module("modules.logic.versionactivity2_5.autochess.mgr.AutoChessEffectMgr", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.mgr.AutoChessEffectMgr", package.seeall)
 
-slot0 = class("AutoChessEffectMgr")
+local var_0_0 = class("AutoChessEffectMgr")
 
-function slot0.init(slot0)
-	slot0.pathList = {}
-	slot0.resList = {}
-	slot0.path2AssetItemDic = {}
-	slot0.path2PointListDic = {}
+function var_0_0.init(arg_1_0)
+	arg_1_0.pathList = {}
+	arg_1_0.resList = {}
+	arg_1_0.path2AssetItemDic = {}
+	arg_1_0.path2PointListDic = {}
 end
 
-function slot0.getEffectRes(slot0, slot1, slot2)
-	if slot0.path2AssetItemDic[AutoChessHelper.getEffectUrl(slot1)] then
-		gohelper.addChild(slot2, gohelper.clone(slot4:GetResource(slot3)))
+function var_0_0.getEffectRes(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = AutoChessHelper.getEffectUrl(arg_2_1)
+	local var_2_1 = arg_2_0.path2AssetItemDic[var_2_0]
+
+	if var_2_1 then
+		local var_2_2 = gohelper.clone(var_2_1:GetResource(var_2_0))
+
+		gohelper.addChild(arg_2_2, var_2_2)
 	else
-		if not slot0.path2PointListDic[slot3] then
-			slot0.path2PointListDic[slot3] = {}
+		if not arg_2_0.path2PointListDic[var_2_0] then
+			arg_2_0.path2PointListDic[var_2_0] = {}
 		end
 
-		table.insert(slot0.path2PointListDic[slot3], slot2)
-		table.insert(slot0.pathList, slot3)
-		loadAbAsset(slot3, false, slot0.onLoadCallback, slot0)
+		table.insert(arg_2_0.path2PointListDic[var_2_0], arg_2_2)
+		table.insert(arg_2_0.pathList, var_2_0)
+		loadAbAsset(var_2_0, false, arg_2_0.onLoadCallback, arg_2_0)
 	end
 end
 
-function slot0.onLoadCallback(slot0, slot1)
-	if not slot0.resList then
+function var_0_0.onLoadCallback(arg_3_0, arg_3_1)
+	if not arg_3_0.resList then
 		return
 	end
 
-	table.insert(slot0.resList, slot1)
+	table.insert(arg_3_0.resList, arg_3_1)
 
-	slot2 = slot1.ResPath
+	local var_3_0 = arg_3_1.ResPath
 
-	if slot1.IsLoadSuccess then
-		slot1:Retain()
+	if arg_3_1.IsLoadSuccess then
+		arg_3_1:Retain()
 
-		slot0.path2AssetItemDic[slot2] = slot1
+		arg_3_0.path2AssetItemDic[var_3_0] = arg_3_1
 
-		if slot0.path2PointListDic[slot2] then
-			for slot8, slot9 in ipairs(slot3) do
-				if not gohelper.isNil(slot9) then
-					gohelper.addChild(slot9, gohelper.clone(slot1:GetResource(slot2)))
+		local var_3_1 = arg_3_0.path2PointListDic[var_3_0]
+
+		if var_3_1 then
+			local var_3_2 = arg_3_1:GetResource(var_3_0)
+
+			for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+				if not gohelper.isNil(iter_3_1) then
+					local var_3_3 = gohelper.clone(var_3_2)
+
+					gohelper.addChild(iter_3_1, var_3_3)
 				end
 			end
 
-			tabletool.clear(slot0.path2PointListDic[slot2])
+			tabletool.clear(arg_3_0.path2PointListDic[var_3_0])
 		end
 	else
-		logError(string.format("异常:自走棋特效加载失败%s", slot2))
+		logError(string.format("异常:自走棋特效加载失败%s", var_3_0))
 	end
 end
 
-function slot0.dispose(slot0)
-	if slot0.pathList and #slot0.resList < #slot0.pathList then
-		for slot4, slot5 in ipairs(slot0.pathList) do
-			removeAssetLoadCb(slot5, slot0.onLoadCallback, slot0)
+function var_0_0.dispose(arg_4_0)
+	if arg_4_0.pathList and #arg_4_0.resList < #arg_4_0.pathList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0.pathList) do
+			removeAssetLoadCb(iter_4_1, arg_4_0.onLoadCallback, arg_4_0)
 		end
 	end
 
-	if slot0.resList then
-		for slot4, slot5 in ipairs(slot0.resList) do
-			slot5:Release()
-			rawset(slot0.resList, slot4, nil)
+	if arg_4_0.resList then
+		for iter_4_2, iter_4_3 in ipairs(arg_4_0.resList) do
+			iter_4_3:Release()
+			rawset(arg_4_0.resList, iter_4_2, nil)
 		end
 	end
 
-	slot0.pathList = nil
-	slot0.resList = nil
-	slot0.path2AssetItemDic = nil
-	slot0.path2PointListDic = nil
+	arg_4_0.pathList = nil
+	arg_4_0.resList = nil
+	arg_4_0.path2AssetItemDic = nil
+	arg_4_0.path2PointListDic = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

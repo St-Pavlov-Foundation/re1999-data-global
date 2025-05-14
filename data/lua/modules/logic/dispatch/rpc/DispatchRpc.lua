@@ -1,58 +1,65 @@
-module("modules.logic.dispatch.rpc.DispatchRpc", package.seeall)
+﻿module("modules.logic.dispatch.rpc.DispatchRpc", package.seeall)
 
-slot0 = class("DispatchRpc", BaseRpc)
+local var_0_0 = class("DispatchRpc", BaseRpc)
 
-function slot0.sendGetDispatchInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(DispatchModule_pb.GetDispatchInfoRequest(), slot1, slot2)
+function var_0_0.sendGetDispatchInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = DispatchModule_pb.GetDispatchInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetDispatchInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetDispatchInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	DispatchModel.instance:initDispatchInfos(slot2.dispatchInfos)
+	DispatchModel.instance:initDispatchInfos(arg_2_2.dispatchInfos)
 end
 
-function slot0.sendDispatchRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = DispatchModule_pb.DispatchRequest()
-	slot6.elementId = slot1
-	slot6.dispatchId = slot2
+function var_0_0.sendDispatchRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = DispatchModule_pb.DispatchRequest()
 
-	if slot3 then
-		for slot10, slot11 in ipairs(slot3) do
-			slot6.heroIds:append(slot11)
+	var_3_0.elementId = arg_3_1
+	var_3_0.dispatchId = arg_3_2
+
+	if arg_3_3 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_3) do
+			var_3_0.heroIds:append(iter_3_1)
 		end
 	end
 
-	return slot0:sendMsg(slot6, slot4, slot5)
+	return arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
 end
 
-function slot0.onReceiveDispatchReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveDispatchReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	ServerTime.update(math.floor(tonumber(slot2.startTime) / 1000))
-	DispatchModel.instance:addDispatch(slot2)
+	local var_4_0 = tonumber(arg_4_2.startTime)
+	local var_4_1 = math.floor(var_4_0 / 1000)
+
+	ServerTime.update(var_4_1)
+	DispatchModel.instance:addDispatch(arg_4_2)
 end
 
-function slot0.sendInterruptDispatchRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = DispatchModule_pb.InterruptDispatchRequest()
-	slot5.elementId = slot1
-	slot5.dispatchId = slot2
+function var_0_0.sendInterruptDispatchRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = DispatchModule_pb.InterruptDispatchRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_5_0.elementId = arg_5_1
+	var_5_0.dispatchId = arg_5_2
+
+	return arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
 end
 
-function slot0.onReceiveInterruptDispatchReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveInterruptDispatchReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
-	DispatchModel.instance:removeDispatch(slot2)
+	DispatchModel.instance:removeDispatch(arg_6_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

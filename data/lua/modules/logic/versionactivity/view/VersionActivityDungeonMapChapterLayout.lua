@@ -1,3 +1,3 @@
-module("modules.logic.versionactivity.view.VersionActivityDungeonMapChapterLayout", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapChapterLayout", package.seeall)
 
-return class("VersionActivityDungeonMapChapterLayout", VersionActivityDungeonBaseChapterLayout)
+return (class("VersionActivityDungeonMapChapterLayout", VersionActivityDungeonBaseChapterLayout))

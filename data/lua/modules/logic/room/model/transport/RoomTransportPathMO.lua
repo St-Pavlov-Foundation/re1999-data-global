@@ -1,130 +1,140 @@
-module("modules.logic.room.model.transport.RoomTransportPathMO", package.seeall)
+﻿module("modules.logic.room.model.transport.RoomTransportPathMO", package.seeall)
 
-slot0 = pureTable("RoomTransportPathMO")
+local var_0_0 = pureTable("RoomTransportPathMO")
 
-function slot0.init(slot0, slot1)
-	slot0.hexPointList = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.hexPointList = {}
 
-	slot0:setId(slot1 and slot1.id)
+	arg_1_0:setId(arg_1_1 and arg_1_1.id)
 end
 
-function slot0.setId(slot0, slot1)
-	slot0.id = slot1 or 0
+function var_0_0.setId(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1 or 0
 end
 
-function slot0.updateCritterInfo(slot0, slot1)
-	slot0.critterUid = slot1.critterUid or slot0.critterUid or 0
+function var_0_0.updateCritterInfo(arg_3_0, arg_3_1)
+	arg_3_0.critterUid = arg_3_1.critterUid or arg_3_0.critterUid or 0
 
-	if tonumber(slot0.critterUid) == 0 then
-		slot0.critterUid = 0
+	if tonumber(arg_3_0.critterUid) == 0 then
+		arg_3_0.critterUid = 0
 	end
 end
 
-function slot0.updateBuildingInfo(slot0, slot1)
-	slot0.buildingUid = slot1.buildingUid or slot0.buildingUid or 0
-	slot0.buildingId = slot1.buildingId or slot1.buildingDefineId or slot0.buildingId or 0
-	slot0.buildingSkinId = slot1.buildingSkinId or slot1.skinId or slot0.buildingSkinId or 0
+function var_0_0.updateBuildingInfo(arg_4_0, arg_4_1)
+	arg_4_0.buildingUid = arg_4_1.buildingUid or arg_4_0.buildingUid or 0
+	arg_4_0.buildingId = arg_4_1.buildingId or arg_4_1.buildingDefineId or arg_4_0.buildingId or 0
+	arg_4_0.buildingSkinId = arg_4_1.buildingSkinId or arg_4_1.skinId or arg_4_0.buildingSkinId or 0
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.fromType = slot1.fromType or slot0.fromType or 0
-	slot0.toType = slot1.toType or slot0.toType or 0
-	slot0.blockCleanType = slot1.blockCleanType or slot0.blockCleanType or 0
+function var_0_0.updateInfo(arg_5_0, arg_5_1)
+	arg_5_0.fromType = arg_5_1.fromType or arg_5_0.fromType or 0
+	arg_5_0.toType = arg_5_1.toType or arg_5_0.toType or 0
+	arg_5_0.blockCleanType = arg_5_1.blockCleanType or arg_5_0.blockCleanType or 0
 
-	slot0:updateCritterInfo(slot1)
-	slot0:updateBuildingInfo(slot1)
+	arg_5_0:updateCritterInfo(arg_5_1)
+	arg_5_0:updateBuildingInfo(arg_5_1)
 
-	if slot1.hexPointList then
-		slot0.hexPointList = {}
+	local var_5_0 = arg_5_1.hexPointList
 
-		tabletool.addValues(slot0.hexPointList, slot2)
+	if var_5_0 then
+		arg_5_0.hexPointList = {}
+
+		tabletool.addValues(arg_5_0.hexPointList, var_5_0)
 	end
 end
 
-function slot0.setServerRoadInfo(slot0, slot1)
-	slot0:updateInfo(RoomTransportHelper.serverRoadInfo2Info(slot1))
+function var_0_0.setServerRoadInfo(arg_6_0, arg_6_1)
+	local var_6_0 = RoomTransportHelper.serverRoadInfo2Info(arg_6_1)
+
+	arg_6_0:updateInfo(var_6_0)
 end
 
-function slot0.checkSameType(slot0, slot1, slot2)
-	if slot0.fromType == slot1 and slot0.toType == slot2 or slot0.fromType == slot2 and slot0.toType == slot1 then
+function var_0_0.checkSameType(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0.fromType == arg_7_1 and arg_7_0.toType == arg_7_2 or arg_7_0.fromType == arg_7_2 and arg_7_0.toType == arg_7_1 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isLinkFinish(slot0)
-	if not slot0.fromType or not slot0.toType or slot0.fromType == slot0.toType then
+function var_0_0.isLinkFinish(arg_8_0)
+	if not arg_8_0.fromType or not arg_8_0.toType or arg_8_0.fromType == arg_8_0.toType then
 		return false
 	end
 
-	if RoomBuildingEnum.BuildingArea[slot0.fromType] and RoomBuildingEnum.BuildingArea[slot0.toType] then
+	if RoomBuildingEnum.BuildingArea[arg_8_0.fromType] and RoomBuildingEnum.BuildingArea[arg_8_0.toType] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.getHexPointList(slot0)
-	return slot0.hexPointList
+function var_0_0.getHexPointList(arg_9_0)
+	return arg_9_0.hexPointList
 end
 
-function slot0.getHexPointCount(slot0)
-	return slot0.hexPointList and #slot0.hexPointList or 0
+function var_0_0.getHexPointCount(arg_10_0)
+	return arg_10_0.hexPointList and #arg_10_0.hexPointList or 0
 end
 
-function slot0.setHexPointList(slot0, slot1)
-	slot0.hexPointList = {}
+function var_0_0.setHexPointList(arg_11_0, arg_11_1)
+	arg_11_0.hexPointList = {}
 
-	tabletool.addValues(slot0.hexPointList, slot1)
+	tabletool.addValues(arg_11_0.hexPointList, arg_11_1)
 end
 
-function slot0.getLastHexPoint(slot0)
-	return slot0.hexPointList[#slot0.hexPointList]
+function var_0_0.getLastHexPoint(arg_12_0)
+	return arg_12_0.hexPointList[#arg_12_0.hexPointList]
 end
 
-function slot0.getFirstHexPoint(slot0)
-	return slot0.hexPointList[1]
+function var_0_0.getFirstHexPoint(arg_13_0)
+	return arg_13_0.hexPointList[1]
 end
 
-function slot0.changeBenEnd(slot0)
-	if slot0.hexPointList and #slot0.hexPointList > 1 then
-		slot0.fromType = slot0.toType
-		slot0.toType = slot0.fromType
+function var_0_0.changeBenEnd(arg_14_0)
+	if arg_14_0.hexPointList and #arg_14_0.hexPointList > 1 then
+		arg_14_0.toType, arg_14_0.fromType = arg_14_0.fromType, arg_14_0.toType
 
-		for slot7 = 1, math.floor(#slot0.hexPointList * 0.5) do
-			slot9 = slot2 - slot7 + 1
-			slot0.hexPointList[slot7] = slot0.hexPointList[slot9]
-			slot0.hexPointList[slot9] = slot0.hexPointList[slot7]
+		local var_14_0 = #arg_14_0.hexPointList
+		local var_14_1 = math.floor(var_14_0 * 0.5)
+
+		for iter_14_0 = 1, var_14_1 do
+			local var_14_2 = arg_14_0.hexPointList[iter_14_0]
+			local var_14_3 = var_14_0 - iter_14_0 + 1
+
+			arg_14_0.hexPointList[iter_14_0] = arg_14_0.hexPointList[var_14_3]
+			arg_14_0.hexPointList[var_14_3] = var_14_2
 		end
 	end
 end
 
-function slot0.removeLastHexPoint(slot0)
-	if slot0:getHexPointCount() > 0 then
-		table.remove(slot0.hexPointList, slot1)
+function var_0_0.removeLastHexPoint(arg_15_0)
+	local var_15_0 = arg_15_0:getHexPointCount()
+
+	if var_15_0 > 0 then
+		table.remove(arg_15_0.hexPointList, var_15_0)
 	end
 end
 
-function slot0.setIsEdit(slot0, slot1)
-	slot0._isEdit = slot1
+function var_0_0.setIsEdit(arg_16_0, arg_16_1)
+	arg_16_0._isEdit = arg_16_1
 end
 
-function slot0.getIsEdit(slot0)
-	return slot0._isEdit
+function var_0_0.getIsEdit(arg_17_0)
+	return arg_17_0._isEdit
 end
 
-function slot0.setIsQuickLink(slot0, slot1)
-	slot0._isQuickLink = slot1
+function var_0_0.setIsQuickLink(arg_18_0, arg_18_1)
+	arg_18_0._isQuickLink = arg_18_1
 end
 
-function slot0.getIsQuickLink(slot0)
-	return slot0._isQuickLink
+function var_0_0.getIsQuickLink(arg_19_0)
+	return arg_19_0._isQuickLink
 end
 
-function slot0.addHexPoint(slot0, slot1)
-	if slot0:isCanAddHexPoint(slot1) then
-		table.insert(slot0.hexPointList, slot1)
+function var_0_0.addHexPoint(arg_20_0, arg_20_1)
+	if arg_20_0:isCanAddHexPoint(arg_20_1) then
+		table.insert(arg_20_0.hexPointList, arg_20_1)
 
 		return true
 	end
@@ -132,82 +142,88 @@ function slot0.addHexPoint(slot0, slot1)
 	return false
 end
 
-function slot0.isCanAddHexPoint(slot0, slot1)
-	if not slot1 or slot0:checkHexPoint(slot1) then
+function var_0_0.isCanAddHexPoint(arg_21_0, arg_21_1)
+	if not arg_21_1 or arg_21_0:checkHexPoint(arg_21_1) then
 		return false
 	end
 
-	if slot0:getLastHexPoint() == nil or HexPoint.Distance(slot2, slot1) == 1 then
+	local var_21_0 = arg_21_0:getLastHexPoint()
+
+	if var_21_0 == nil or HexPoint.Distance(var_21_0, arg_21_1) == 1 then
 		return true
 	end
 
 	return false
 end
 
-function slot0.checkHexPoint(slot0, slot1)
-	if slot1 then
-		return slot0:checkHexXY(slot1.x, slot1.y)
+function var_0_0.checkHexPoint(arg_22_0, arg_22_1)
+	if arg_22_1 then
+		return arg_22_0:checkHexXY(arg_22_1.x, arg_22_1.y)
 	end
 
 	return false
 end
 
-function slot0.checkHexXY(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0.hexPointList) do
-		if slot7.x == slot1 and slot7.y == slot2 then
-			return true, slot6
+function var_0_0.checkHexXY(arg_23_0, arg_23_1, arg_23_2)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0.hexPointList) do
+		if iter_23_1.x == arg_23_1 and iter_23_1.y == arg_23_2 then
+			return true, iter_23_0
 		end
 	end
 
 	return false
 end
 
-function slot0.checkTempTypes(slot0, slot1)
-	slot0.tempFromTypes = RoomTransportHelper.getBuildingTypeListByHexPoint(slot0:getFirstHexPoint(), slot1)
-	slot0.tempToTypes = RoomTransportHelper.getBuildingTypeListByHexPoint(slot0:getLastHexPoint(), slot1)
-	slot0.fromType, slot0.toType = slot0:_find2ListValue(slot0.tempFromTypes, slot0.tempToTypes, 0)
+function var_0_0.checkTempTypes(arg_24_0, arg_24_1)
+	arg_24_0.tempFromTypes = RoomTransportHelper.getBuildingTypeListByHexPoint(arg_24_0:getFirstHexPoint(), arg_24_1)
+	arg_24_0.tempToTypes = RoomTransportHelper.getBuildingTypeListByHexPoint(arg_24_0:getLastHexPoint(), arg_24_1)
+	arg_24_0.fromType, arg_24_0.toType = arg_24_0:_find2ListValue(arg_24_0.tempFromTypes, arg_24_0.tempToTypes, 0)
 end
 
-function slot0._find2ListValue(slot0, slot1, slot2, slot3)
-	for slot7 = 1, #slot1 do
-		for slot11 = 1, #slot2 do
-			if slot1[slot7] ~= slot2[slot11] then
-				return slot1[slot7], slot2[slot11]
+function var_0_0._find2ListValue(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	for iter_25_0 = 1, #arg_25_1 do
+		for iter_25_1 = 1, #arg_25_2 do
+			if arg_25_1[iter_25_0] ~= arg_25_2[iter_25_1] then
+				return arg_25_1[iter_25_0], arg_25_2[iter_25_1]
 			end
 		end
 	end
 
-	return slot1[1] or slot3, slot2[1] or slot3
+	return arg_25_1[1] or arg_25_3, arg_25_2[1] or arg_25_3
 end
 
-function slot0.isTransporting(slot0)
-	slot1 = false
+function var_0_0.isTransporting(arg_26_0)
+	local var_26_0 = false
 
-	if slot0:hasCritterWorking() then
-		if ManufactureModel.instance:isAreaHasManufactureRunning(slot0.fromType) or ManufactureModel.instance:isAreaHasManufactureRunning(slot0.toType) then
-			slot1 = true
+	if arg_26_0:hasCritterWorking() then
+		local var_26_1 = ManufactureModel.instance:isAreaHasManufactureRunning(arg_26_0.fromType)
+		local var_26_2 = ManufactureModel.instance:isAreaHasManufactureRunning(arg_26_0.toType)
+
+		if var_26_1 or var_26_2 then
+			var_26_0 = true
 		end
 	end
 
-	return slot1
+	return var_26_0
 end
 
-function slot0.hasCritterWorking(slot0)
-	slot1 = 0
+function var_0_0.hasCritterWorking(arg_27_0)
+	local var_27_0 = 0
+	local var_27_1 = CritterModel.instance:getCritterMOByUid(arg_27_0.critterUid)
 
-	if CritterModel.instance:getCritterMOByUid(slot0.critterUid) then
-		slot1 = slot2:getMoodValue()
+	if var_27_1 then
+		var_27_0 = var_27_1:getMoodValue()
 	end
 
-	return slot1 > 0
+	return var_27_0 > 0
 end
 
-function slot0.clear(slot0)
-	if slot0.hexPointList and #slot0.hexPointList > 0 then
-		slot0.hexPointList = {}
-		slot0.fromType = 0
-		slot0.toType = 0
+function var_0_0.clear(arg_28_0)
+	if arg_28_0.hexPointList and #arg_28_0.hexPointList > 0 then
+		arg_28_0.hexPointList = {}
+		arg_28_0.fromType = 0
+		arg_28_0.toType = 0
 	end
 end
 
-return slot0
+return var_0_0

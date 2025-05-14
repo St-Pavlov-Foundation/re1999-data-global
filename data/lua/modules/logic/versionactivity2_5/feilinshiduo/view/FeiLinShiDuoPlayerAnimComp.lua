@@ -1,7 +1,7 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoPlayerAnimComp", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoPlayerAnimComp", package.seeall)
 
-slot0 = class("FeiLinShiDuoPlayerAnimComp", BaseUnitSpawn)
-slot1 = {
+local var_0_0 = class("FeiLinShiDuoPlayerAnimComp", BaseUnitSpawn)
+local var_0_1 = {
 	LoopClimb = "loop_climb",
 	EndClimb = "end_climb",
 	StartClimb = "start_climb",
@@ -17,156 +17,163 @@ slot1 = {
 	LoopPush = "loop_push",
 	LoopRun = "loop_run"
 }
-slot2 = {
-	[slot1.Idle] = true,
-	[slot1.LoopClimb] = true,
-	[slot1.LoopPush] = true,
-	[slot1.LoopRun] = true,
-	[slot1.Fall] = true
+local var_0_2 = {
+	[var_0_1.Idle] = true,
+	[var_0_1.LoopClimb] = true,
+	[var_0_1.LoopPush] = true,
+	[var_0_1.LoopRun] = true,
+	[var_0_1.Fall] = true
 }
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0.trans = slot1.transform
-	slot0.curAnimName = uv1.Idle
-	slot0.mapConfigData = FeiLinShiDuoGameModel.instance:getMapConfigData()
-	slot0.curDeltaMoveX = slot0.mapConfigData.gameConfig.playerForward
-	slot0.guiSpine = GuiSpine.Create(slot1, true)
+	arg_1_0.trans = arg_1_1.transform
+	arg_1_0.curAnimName = var_0_1.Idle
+	arg_1_0.mapConfigData = FeiLinShiDuoGameModel.instance:getMapConfigData()
+	arg_1_0.curDeltaMoveX = arg_1_0.mapConfigData.gameConfig.playerForward
+	arg_1_0.guiSpine = GuiSpine.Create(arg_1_1, true)
 
-	slot0.guiSpine:setResPath(FeiLinShiDuoEnum.RoleResPath, slot0._onSpineLoaded, slot0, true)
+	arg_1_0.guiSpine:setResPath(FeiLinShiDuoEnum.RoleResPath, arg_1_0._onSpineLoaded, arg_1_0, true)
 
-	slot0.maxMoveSpeed = FeiLinShiDuoEnum.PlayerMoveSpeed
-	slot0.maxPushSpeed = FeiLinShiDuoEnum.PlayerPushBoxSpeed
-	slot0.curMoveSpeed = 0
-	slot0.isStartMove = false
-	slot0.isEndMove = false
-	slot0.isStartPush = false
-	slot0.isEndPush = false
-	slot0.isFalling = false
-	slot0.isClimbing = false
-	slot0.isJumping = false
-	slot0.isDying = false
-	slot0.playerComp = MonoHelper.getLuaComFromGo(slot1, FeiLinShiDuoPlayerComp)
+	arg_1_0.maxMoveSpeed = FeiLinShiDuoEnum.PlayerMoveSpeed
+	arg_1_0.maxPushSpeed = FeiLinShiDuoEnum.PlayerPushBoxSpeed
+	arg_1_0.curMoveSpeed = 0
+	arg_1_0.isStartMove = false
+	arg_1_0.isEndMove = false
+	arg_1_0.isStartPush = false
+	arg_1_0.isEndPush = false
+	arg_1_0.isFalling = false
+	arg_1_0.isClimbing = false
+	arg_1_0.isJumping = false
+	arg_1_0.isDying = false
+	arg_1_0.playerComp = MonoHelper.getLuaComFromGo(arg_1_1, FeiLinShiDuoPlayerComp)
 
-	FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(slot0.curMoveSpeed)
+	FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(arg_1_0.curMoveSpeed)
 end
 
-function slot0._onSpineLoaded(slot0)
-	slot0.spineGO = slot0.guiSpine:getSpineGo()
+function var_0_0._onSpineLoaded(arg_2_0)
+	arg_2_0.spineGO = arg_2_0.guiSpine:getSpineGo()
 
-	slot0.guiSpine:setActionEventCb(slot0.onAnimEvent, slot0)
+	arg_2_0.guiSpine:setActionEventCb(arg_2_0.onAnimEvent, arg_2_0)
 
-	slot2 = UnityEngine.Object.Instantiate(slot0.guiSpine:getSkeletonGraphic().material)
-	slot0.guiSpine:getSkeletonGraphic().material = slot2
-	slot0.spineMaterial = slot2
+	local var_2_0 = arg_2_0.guiSpine:getSkeletonGraphic().material
+	local var_2_1 = UnityEngine.Object.Instantiate(var_2_0)
 
-	slot0:changePlayerColor(FeiLinShiDuoEnum.ColorType.None)
+	arg_2_0.guiSpine:getSkeletonGraphic().material = var_2_1
+	arg_2_0.spineMaterial = var_2_1
+
+	arg_2_0:changePlayerColor(FeiLinShiDuoEnum.ColorType.None)
 end
 
-function slot0.addEventListeners(slot0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.changePlayerColor, slot0.changePlayerColor, slot0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, slot0.resetData, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.changePlayerColor, arg_3_0.changePlayerColor, arg_3_0)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, arg_3_0.resetData, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.changePlayerColor, slot0.changePlayerColor, slot0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, slot0.resetData, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.changePlayerColor, arg_4_0.changePlayerColor, arg_4_0)
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, arg_4_0.resetData, arg_4_0)
 end
 
-function slot0.changePlayerColor(slot0, slot1)
-	if slot0.spineMaterial then
-		slot0.spineMaterial:SetColor(FeiLinShiDuoEnum.playerColor, GameUtil.parseColor(FeiLinShiDuoEnum.ColorStr[slot1]))
+function var_0_0.changePlayerColor(arg_5_0, arg_5_1)
+	if arg_5_0.spineMaterial then
+		local var_5_0 = FeiLinShiDuoEnum.ColorStr[arg_5_1]
+		local var_5_1 = GameUtil.parseColor(var_5_0)
+
+		arg_5_0.spineMaterial:SetColor(FeiLinShiDuoEnum.playerColor, var_5_1)
 	end
 end
 
-function slot0.playAnim(slot0, slot1, slot2)
-	slot0.curAnimName = slot1
+function var_0_0.playAnim(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.curAnimName = arg_6_1
 
-	if slot0.spineGO then
-		slot0.guiSpine:setBodyAnimation(slot1, uv0[slot1], slot2 or 0.1)
+	if arg_6_0.spineGO then
+		local var_6_0 = arg_6_2 or 0.1
+
+		arg_6_0.guiSpine:setBodyAnimation(arg_6_1, var_0_2[arg_6_1], var_6_0)
 	end
 
-	FeiLinShiDuoGameModel.instance:setPlayerIsIdleState(slot0.curAnimName == uv1.Idle)
+	FeiLinShiDuoGameModel.instance:setPlayerIsIdleState(arg_6_0.curAnimName == var_0_1.Idle)
 	FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.playerChangeAnim)
 end
 
-function slot0.getSpineGO(slot0)
-	return slot0.spineGO
+function var_0_0.getSpineGO(arg_7_0)
+	return arg_7_0.spineGO
 end
 
-function slot0.onAnimEvent(slot0, slot1, slot2)
-	if slot2 == SpineAnimEvent.ActionComplete then
-		if (slot1 == uv0.EndRun or slot1 == uv0.EndClimb or slot1 == uv0.EndPush or slot1 == uv0.Jump or slot1 == uv0.EndFall or slot1 == uv0.Die) and not slot0.isClimbing and not slot0.isFalling then
-			slot0:playAnim(uv0.Idle)
+function var_0_0.onAnimEvent(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 == SpineAnimEvent.ActionComplete then
+		if (arg_8_1 == var_0_1.EndRun or arg_8_1 == var_0_1.EndClimb or arg_8_1 == var_0_1.EndPush or arg_8_1 == var_0_1.Jump or arg_8_1 == var_0_1.EndFall or arg_8_1 == var_0_1.Die) and not arg_8_0.isClimbing and not arg_8_0.isFalling then
+			arg_8_0:playAnim(var_0_1.Idle)
 
-			slot0.curMoveSpeed = 0
-			slot0.curDeltaMoveX = 0
-			slot0.isJumping = false
-			slot0.isDying = false
+			arg_8_0.curMoveSpeed = 0
+			arg_8_0.curDeltaMoveX = 0
+			arg_8_0.isJumping = false
+			arg_8_0.isDying = false
 
-			if slot0.playerComp then
-				if slot1 == uv0.Die then
-					slot0.playerComp:playerReborn()
+			if arg_8_0.playerComp then
+				if arg_8_1 == var_0_1.Die then
+					arg_8_0.playerComp:playerReborn()
 				end
 
-				slot0.playerComp:setIdleState()
+				arg_8_0.playerComp:setIdleState()
 			end
 
-			slot0:stopLoopAudio()
-		elseif slot1 == uv0.StartRun and not slot0.isFalling and not slot0.isClimbing and not slot0.isJumping and not slot0.isDying then
-			slot0:playAnim(uv0.LoopRun)
+			arg_8_0:stopLoopAudio()
+		elseif arg_8_1 == var_0_1.StartRun and not arg_8_0.isFalling and not arg_8_0.isClimbing and not arg_8_0.isJumping and not arg_8_0.isDying then
+			arg_8_0:playAnim(var_0_1.LoopRun)
 
-			slot0.curMoveSpeed = slot0.maxMoveSpeed
+			arg_8_0.curMoveSpeed = arg_8_0.maxMoveSpeed
 
-			slot0:stopLoopAudio()
+			arg_8_0:stopLoopAudio()
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_move_loop)
-		elseif slot1 == uv0.StartPush and not slot0.isFalling and not slot0.isClimbing and not slot0.isJumping and not slot0.isDying then
-			slot0:playAnim(uv0.LoopPush)
+		elseif arg_8_1 == var_0_1.StartPush and not arg_8_0.isFalling and not arg_8_0.isClimbing and not arg_8_0.isJumping and not arg_8_0.isDying then
+			arg_8_0:playAnim(var_0_1.LoopPush)
 
-			slot0.curMoveSpeed = slot0.maxPushSpeed
+			arg_8_0.curMoveSpeed = arg_8_0.maxPushSpeed
 
-			slot0:stopLoopAudio()
+			arg_8_0:stopLoopAudio()
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_box_push_loop)
-		elseif slot1 == uv0.StartClimb and not slot0.isFalling and not slot0.isJumping and not slot0.isDying then
-			slot0:playAnim(uv0.LoopClimb)
+		elseif arg_8_1 == var_0_1.StartClimb and not arg_8_0.isFalling and not arg_8_0.isJumping and not arg_8_0.isDying then
+			arg_8_0:playAnim(var_0_1.LoopClimb)
 
-			slot0.curMoveSpeed = FeiLinShiDuoEnum.climbSpeed
+			arg_8_0.curMoveSpeed = FeiLinShiDuoEnum.climbSpeed
 
-			slot0:stopLoopAudio()
+			arg_8_0:stopLoopAudio()
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_ladder_crawl_loop)
 		end
 
-		slot0.isStartMove = false
-		slot0.isEndMove = false
-		slot0.isStartPush = false
-		slot0.isEndPush = false
+		arg_8_0.isStartMove = false
+		arg_8_0.isEndMove = false
+		arg_8_0.isStartPush = false
+		arg_8_0.isEndPush = false
 
-		FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(slot0.curMoveSpeed)
+		FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(arg_8_0.curMoveSpeed)
 	end
 end
 
-function slot0.setMoveAnim(slot0, slot1, slot2)
-	slot0.playerCanMove = slot0.playerComp:checkPlayerCanMove()
-	slot0.isFalling = false
-	slot0.isClimbing = false
-	slot0.isTouchBox = slot0:checkIsTouchBox(slot2)
+function var_0_0.setMoveAnim(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.playerCanMove = arg_9_0.playerComp:checkPlayerCanMove()
+	arg_9_0.isFalling = false
+	arg_9_0.isClimbing = false
+	arg_9_0.isTouchBox = arg_9_0:checkIsTouchBox(arg_9_2)
 
-	if slot0.isTouchBox then
-		slot0:pushBoxMove(slot1)
+	if arg_9_0.isTouchBox then
+		arg_9_0:pushBoxMove(arg_9_1)
 	else
-		slot0:normalMove(slot1)
+		arg_9_0:normalMove(arg_9_1)
 	end
 
-	FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(slot0.curMoveSpeed)
+	FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(arg_9_0.curMoveSpeed)
 
-	return slot0.curDeltaMoveX
+	return arg_9_0.curDeltaMoveX
 end
 
-function slot0.checkIsTouchBox(slot0, slot1)
-	if #slot1 > 0 then
-		for slot5, slot6 in pairs(slot1) do
-			if slot6.type == FeiLinShiDuoEnum.ObjectType.Box then
+function var_0_0.checkIsTouchBox(arg_10_0, arg_10_1)
+	if #arg_10_1 > 0 then
+		for iter_10_0, iter_10_1 in pairs(arg_10_1) do
+			if iter_10_1.type == FeiLinShiDuoEnum.ObjectType.Box then
 				return true
 			end
 		end
@@ -175,191 +182,191 @@ function slot0.checkIsTouchBox(slot0, slot1)
 	return false
 end
 
-function slot0.normalMove(slot0, slot1)
-	if slot1 ~= 0 and slot0.curMoveSpeed == 0 and not slot0.isStartMove and not slot0.isEndMove and slot0.playerCanMove then
-		slot0.curDeltaMoveX = slot1
+function var_0_0.normalMove(arg_11_0, arg_11_1)
+	if arg_11_1 ~= 0 and arg_11_0.curMoveSpeed == 0 and not arg_11_0.isStartMove and not arg_11_0.isEndMove and arg_11_0.playerCanMove then
+		arg_11_0.curDeltaMoveX = arg_11_1
 
-		slot0:playAnim(uv0.StartRun)
+		arg_11_0:playAnim(var_0_1.StartRun)
 
-		slot0.isStartMove = true
-		slot0.isEndMove = false
-		slot0.curMoveSpeed = slot0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed
-	elseif slot0.isStartMove and slot0.playerCanMove then
-		slot0.curMoveSpeed = math.max(slot0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed, slot0.maxMoveSpeed)
-	elseif ((slot1 == 0 or slot0.curDeltaMoveX == -slot1) and slot0.curDeltaMoveX ~= 0 and slot0.curMoveSpeed > 0 or slot0.curAnimName == uv0.LoopPush or not slot0.playerCanMove) and not slot0.isEndMove and slot0.curAnimName ~= uv0.Idle then
-		slot0.curMoveSpeed = math.min(slot0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
+		arg_11_0.isStartMove = true
+		arg_11_0.isEndMove = false
+		arg_11_0.curMoveSpeed = arg_11_0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed
+	elseif arg_11_0.isStartMove and arg_11_0.playerCanMove then
+		arg_11_0.curMoveSpeed = math.max(arg_11_0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed, arg_11_0.maxMoveSpeed)
+	elseif ((arg_11_1 == 0 or arg_11_0.curDeltaMoveX == -arg_11_1) and arg_11_0.curDeltaMoveX ~= 0 and arg_11_0.curMoveSpeed > 0 or arg_11_0.curAnimName == var_0_1.LoopPush or not arg_11_0.playerCanMove) and not arg_11_0.isEndMove and arg_11_0.curAnimName ~= var_0_1.Idle then
+		arg_11_0.curMoveSpeed = math.min(arg_11_0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
 
-		slot0:playAnim(uv0.EndRun)
+		arg_11_0:playAnim(var_0_1.EndRun)
 
-		slot0.isEndMove = true
+		arg_11_0.isEndMove = true
 
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_move_loop)
-	elseif slot0.isEndMove then
-		slot0.curMoveSpeed = math.min(slot0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
+	elseif arg_11_0.isEndMove then
+		arg_11_0.curMoveSpeed = math.min(arg_11_0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
 	end
 end
 
-function slot0.pushBoxMove(slot0, slot1)
-	if slot1 ~= 0 and not slot0.isStartPush and not slot0.isEndMove and slot0.curAnimName == uv0.Idle and slot0.playerCanMove then
-		slot0.curDeltaMoveX = slot1
+function var_0_0.pushBoxMove(arg_12_0, arg_12_1)
+	if arg_12_1 ~= 0 and not arg_12_0.isStartPush and not arg_12_0.isEndMove and arg_12_0.curAnimName == var_0_1.Idle and arg_12_0.playerCanMove then
+		arg_12_0.curDeltaMoveX = arg_12_1
 
-		slot0:playAnim(uv0.StartPush)
+		arg_12_0:playAnim(var_0_1.StartPush)
 
-		slot0.isStartPush = true
-		slot0.isEndPush = false
-		slot0.curMoveSpeed = slot0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed
-	elseif not slot0:checkCurIsMoveAnim() and slot0.isStartPush and slot0.playerCanMove then
-		slot0.curMoveSpeed = math.max(slot0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed, slot0.maxPushSpeed)
-	elseif slot0:checkCurIsMoveAnim() and not slot0.isEndPush then
-		slot0.curMoveSpeed = math.min(slot0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
+		arg_12_0.isStartPush = true
+		arg_12_0.isEndPush = false
+		arg_12_0.curMoveSpeed = arg_12_0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed
+	elseif not arg_12_0:checkCurIsMoveAnim() and arg_12_0.isStartPush and arg_12_0.playerCanMove then
+		arg_12_0.curMoveSpeed = math.max(arg_12_0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed, arg_12_0.maxPushSpeed)
+	elseif arg_12_0:checkCurIsMoveAnim() and not arg_12_0.isEndPush then
+		arg_12_0.curMoveSpeed = math.min(arg_12_0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
 
-		slot0:playAnim(uv0.EndRun)
+		arg_12_0:playAnim(var_0_1.EndRun)
 
-		slot0.isEndPush = true
+		arg_12_0.isEndPush = true
 
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_move_loop)
-	elseif not slot0:checkCurIsMoveAnim() and slot1 == 0 and slot0.curDeltaMoveX ~= 0 then
-		slot0.curMoveSpeed = 0
-	elseif not slot0:checkCurIsMoveAnim() and slot1 ~= 0 and slot0.curAnimName == uv0.LoopPush and slot1 == slot0.curDeltaMoveX and slot0.playerCanMove then
-		slot0.curMoveSpeed = math.max(slot0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed, slot0.maxPushSpeed)
-	elseif not slot0:checkCurIsMoveAnim() and (slot1 == -slot0.curDeltaMoveX and slot1 ~= 0 or not slot0.playerCanMove) and not slot0.isEndPush and slot0.curAnimName ~= uv0.EndPush and slot0.curAnimName ~= uv0.Idle then
-		slot0.curMoveSpeed = math.min(slot0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
+	elseif not arg_12_0:checkCurIsMoveAnim() and arg_12_1 == 0 and arg_12_0.curDeltaMoveX ~= 0 then
+		arg_12_0.curMoveSpeed = 0
+	elseif not arg_12_0:checkCurIsMoveAnim() and arg_12_1 ~= 0 and arg_12_0.curAnimName == var_0_1.LoopPush and arg_12_1 == arg_12_0.curDeltaMoveX and arg_12_0.playerCanMove then
+		arg_12_0.curMoveSpeed = math.max(arg_12_0.curMoveSpeed + FeiLinShiDuoEnum.startMoveAddSpeed, arg_12_0.maxPushSpeed)
+	elseif not arg_12_0:checkCurIsMoveAnim() and (arg_12_1 == -arg_12_0.curDeltaMoveX and arg_12_1 ~= 0 or not arg_12_0.playerCanMove) and not arg_12_0.isEndPush and arg_12_0.curAnimName ~= var_0_1.EndPush and arg_12_0.curAnimName ~= var_0_1.Idle then
+		arg_12_0.curMoveSpeed = math.min(arg_12_0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
 
-		slot0:playAnim(uv0.EndPush)
+		arg_12_0:playAnim(var_0_1.EndPush)
 
-		slot0.isEndPush = true
+		arg_12_0.isEndPush = true
 
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_box_push_loop)
-	elseif slot0.isEndPush then
-		slot0.curMoveSpeed = math.min(slot0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
+	elseif arg_12_0.isEndPush then
+		arg_12_0.curMoveSpeed = math.min(arg_12_0.curMoveSpeed - FeiLinShiDuoEnum.endMoveAddSpeed, 0)
 	end
 end
 
-function slot0.setPlayerMove(slot0, slot1)
-	if slot0.curDeltaMoveX ~= 0 then
-		slot0:setForward(slot0.curDeltaMoveX)
+function var_0_0.setPlayerMove(arg_13_0, arg_13_1)
+	if arg_13_0.curDeltaMoveX ~= 0 then
+		arg_13_0:setForward(arg_13_0.curDeltaMoveX)
 	end
 
-	transformhelper.setLocalPosXY(slot1, slot1.localPosition.x + slot0.curDeltaMoveX * slot0.curMoveSpeed * Time.deltaTime, slot1.localPosition.y)
+	transformhelper.setLocalPosXY(arg_13_1, arg_13_1.localPosition.x + arg_13_0.curDeltaMoveX * arg_13_0.curMoveSpeed * Time.deltaTime, arg_13_1.localPosition.y)
 end
 
-function slot0.checkCurIsMoveAnim(slot0)
-	return slot0.curAnimName == uv0.StartRun or slot0.curAnimName == uv0.LoopRun or slot0.curAnimName == uv0.EndRun
+function var_0_0.checkCurIsMoveAnim(arg_14_0)
+	return arg_14_0.curAnimName == var_0_1.StartRun or arg_14_0.curAnimName == var_0_1.LoopRun or arg_14_0.curAnimName == var_0_1.EndRun
 end
 
-function slot0.setForward(slot0, slot1)
-	slot0.guiSpine:changeLookDir(slot1)
+function var_0_0.setForward(arg_15_0, arg_15_1)
+	arg_15_0.guiSpine:changeLookDir(arg_15_1)
 end
 
-function slot0.getLookDir(slot0)
-	return slot0.guiSpine:getLookDir()
+function var_0_0.getLookDir(arg_16_0)
+	return arg_16_0.guiSpine:getLookDir()
 end
 
-function slot0.playJumpAnim(slot0)
-	slot0.isJumping = true
+function var_0_0.playJumpAnim(arg_17_0)
+	arg_17_0.isJumping = true
 
-	slot0:playAnim(uv0.Jump)
+	arg_17_0:playAnim(var_0_1.Jump)
 
-	slot0.curMoveSpeed = 0
+	arg_17_0.curMoveSpeed = 0
 
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_bounced)
-	slot0:stopLoopAudio()
+	arg_17_0:stopLoopAudio()
 end
 
-function slot0.playFallAnim(slot0)
-	if not slot0.isFalling then
-		slot0:playAnim(uv0.Fall)
+function var_0_0.playFallAnim(arg_18_0)
+	if not arg_18_0.isFalling then
+		arg_18_0:playAnim(var_0_1.Fall)
 
-		slot0.isFalling = true
-		slot0.curDeltaMoveX = 0
-		slot0.curMoveSpeed = 0
+		arg_18_0.isFalling = true
+		arg_18_0.curDeltaMoveX = 0
+		arg_18_0.curMoveSpeed = 0
 
-		slot0:stopLoopAudio()
+		arg_18_0:stopLoopAudio()
 	end
 end
 
-function slot0.playFallEndAnim(slot0)
-	if slot0.isFalling then
-		slot0:playAnim(uv0.EndFall)
+function var_0_0.playFallEndAnim(arg_19_0)
+	if arg_19_0.isFalling then
+		arg_19_0:playAnim(var_0_1.EndFall)
 
-		slot0.isFalling = false
-		slot0.curDeltaMoveX = 0
-		slot0.curMoveSpeed = 0
+		arg_19_0.isFalling = false
+		arg_19_0.curDeltaMoveX = 0
+		arg_19_0.curMoveSpeed = 0
 
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_landing)
-		slot0:stopLoopAudio()
+		arg_19_0:stopLoopAudio()
 	end
 end
 
-function slot0.playStartClimbAnim(slot0)
-	if not slot0.isClimbing then
-		slot0:playAnim(uv0.StartClimb)
+function var_0_0.playStartClimbAnim(arg_20_0)
+	if not arg_20_0.isClimbing then
+		arg_20_0:playAnim(var_0_1.StartClimb)
 
-		slot0.isClimbing = true
-		slot0.curDeltaMoveX = 0
+		arg_20_0.isClimbing = true
+		arg_20_0.curDeltaMoveX = 0
 	end
 end
 
-function slot0.playEndClimbAnim(slot0)
-	if slot0.isClimbing then
-		slot0:playAnim(uv0.EndClimb)
+function var_0_0.playEndClimbAnim(arg_21_0)
+	if arg_21_0.isClimbing then
+		arg_21_0:playAnim(var_0_1.EndClimb)
 
-		slot0.isClimbing = false
+		arg_21_0.isClimbing = false
 	end
 end
 
-function slot0.playDieAnim(slot0)
-	if not slot0.isDying then
-		slot0:playAnim(uv0.Die)
+function var_0_0.playDieAnim(arg_22_0)
+	if not arg_22_0.isDying then
+		arg_22_0:playAnim(var_0_1.Die)
 
-		slot0.isDying = true
+		arg_22_0.isDying = true
 
 		AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_spikes_death)
-		slot0:stopLoopAudio()
+		arg_22_0:stopLoopAudio()
 	end
 end
 
-function slot0.playIdleAnim(slot0)
-	slot0:playAnim(uv0.Idle)
+function var_0_0.playIdleAnim(arg_23_0)
+	arg_23_0:playAnim(var_0_1.Idle)
 
-	slot0.curMoveSpeed = 0
-	slot0.curDeltaMoveX = 0
-	slot0.isJumping = false
-	slot0.isDying = false
+	arg_23_0.curMoveSpeed = 0
+	arg_23_0.curDeltaMoveX = 0
+	arg_23_0.isJumping = false
+	arg_23_0.isDying = false
 
-	if slot0.playerComp then
-		slot0.playerComp:setIdleState()
+	if arg_23_0.playerComp then
+		arg_23_0.playerComp:setIdleState()
 	end
 end
 
-function slot0.resetData(slot0)
-	slot0.curDeltaMoveX = slot0.mapConfigData.gameConfig.playerForward
-	slot0.curMoveSpeed = 0
-	slot0.isStartMove = false
-	slot0.isEndMove = false
-	slot0.isStartPush = false
-	slot0.isEndPush = false
-	slot0.isFalling = false
-	slot0.isClimbing = false
-	slot0.isJumping = false
-	slot0.isDying = false
-	slot0.curAnimName = uv0.Idle
+function var_0_0.resetData(arg_24_0)
+	arg_24_0.curDeltaMoveX = arg_24_0.mapConfigData.gameConfig.playerForward
+	arg_24_0.curMoveSpeed = 0
+	arg_24_0.isStartMove = false
+	arg_24_0.isEndMove = false
+	arg_24_0.isStartPush = false
+	arg_24_0.isEndPush = false
+	arg_24_0.isFalling = false
+	arg_24_0.isClimbing = false
+	arg_24_0.isJumping = false
+	arg_24_0.isDying = false
+	arg_24_0.curAnimName = var_0_1.Idle
 
-	slot0:playAnim(uv0.Idle)
-	slot0:setForward(slot0.curDeltaMoveX)
-	FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(slot0.curMoveSpeed)
-	slot0:stopLoopAudio()
+	arg_24_0:playAnim(var_0_1.Idle)
+	arg_24_0:setForward(arg_24_0.curDeltaMoveX)
+	FeiLinShiDuoGameModel.instance:setCurPlayerMoveSpeed(arg_24_0.curMoveSpeed)
+	arg_24_0:stopLoopAudio()
 end
 
-function slot0.stopLoopAudio(slot0)
+function var_0_0.stopLoopAudio(arg_25_0)
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_move_loop)
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_box_push_loop)
 	AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.stop_ui_tangren_ladder_crawl_loop)
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
-	slot0:stopLoopAudio()
+function var_0_0.onDestroy(arg_26_0)
+	var_0_0.super.onDestroy(arg_26_0)
+	arg_26_0:stopLoopAudio()
 end
 
-return slot0
+return var_0_0

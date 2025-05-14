@@ -1,14 +1,18 @@
-module("modules.logic.guide.controller.invalidcondition.GuideInvalidCondition", package.seeall)
+﻿module("modules.logic.guide.controller.invalidcondition.GuideInvalidCondition", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.checkSetEquip()
-	if not HeroGroupModel.instance:getCustomHeroGroupMo(ModuleEnum.HeroGroupServerType.Equip) then
+function var_0_0.checkSetEquip()
+	local var_1_0 = HeroGroupModel.instance:getCustomHeroGroupMo(ModuleEnum.HeroGroupServerType.Equip)
+
+	if not var_1_0 then
 		return false
 	end
 
-	for slot5, slot6 in pairs(slot0:getAllPosEquips()) do
-		if slot6 and slot6.equipUid and slot6.equipUid[1] ~= "0" then
+	local var_1_1 = var_1_0:getAllPosEquips()
+
+	for iter_1_0, iter_1_1 in pairs(var_1_1) do
+		if iter_1_1 and iter_1_1.equipUid and iter_1_1.equipUid[1] ~= "0" then
 			return true
 		end
 	end
@@ -16,10 +20,14 @@ function slot0.checkSetEquip()
 	return false
 end
 
-function slot0.checkAllGroupSetEquip()
-	for slot4, slot5 in ipairs(HeroGroupModel.instance:getList()) do
-		for slot10, slot11 in pairs(slot5:getAllPosEquips()) do
-			if slot11 and slot11.equipUid and slot11.equipUid[1] ~= "0" then
+function var_0_0.checkAllGroupSetEquip()
+	local var_2_0 = HeroGroupModel.instance:getList()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		local var_2_1 = iter_2_1:getAllPosEquips()
+
+		for iter_2_2, iter_2_3 in pairs(var_2_1) do
+			if iter_2_3 and iter_2_3.equipUid and iter_2_3.equipUid[1] ~= "0" then
 				return true
 			end
 		end
@@ -28,40 +36,43 @@ function slot0.checkAllGroupSetEquip()
 	return false
 end
 
-function slot0.checkSummon()
-	return HeroModel.instance:getList() and #slot0 > 1
+function var_0_0.checkSummon()
+	local var_3_0 = HeroModel.instance:getList()
+
+	return var_3_0 and #var_3_0 > 1
 end
 
-function slot0.checkMainSceneSkin()
+function var_0_0.checkMainSceneSkin()
 	return MainSceneSwitchModel.instance:getCurSceneId() ~= MainSceneSwitchConfig.instance:getDefaultSceneId()
 end
 
-function slot0.checkFinishElement4_6()
+function var_0_0.checkFinishElement4_6()
 	return DungeonMapModel.instance:elementIsFinished(1040601)
 end
 
-function slot0.checkFinishGuide(slot0, slot1)
-	return GuideModel.instance:isGuideFinish(tonumber(slot1[3]))
+function var_0_0.checkFinishGuide(arg_6_0, arg_6_1)
+	return GuideModel.instance:isGuideFinish(tonumber(arg_6_1[3]))
 end
 
-function slot0.checkViewsIsClose(slot0, slot1)
-	if not GuideModel.instance:getById(slot0) then
+function var_0_0.checkViewsIsClose(arg_7_0, arg_7_1)
+	if not GuideModel.instance:getById(arg_7_0) then
 		return false
 	end
 
-	slot4 = true
+	local var_7_0 = {
+		unpack(arg_7_1, 3)
+	}
+	local var_7_1 = true
 
-	for slot8, slot9 in pairs({
-		unpack(slot1, 3)
-	}) do
-		if ViewMgr.instance:isOpen(slot9) then
-			slot4 = false
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		if ViewMgr.instance:isOpen(iter_7_1) then
+			var_7_1 = false
 
 			break
 		end
 	end
 
-	return slot4
+	return var_7_1
 end
 
-return slot0
+return var_0_0

@@ -1,664 +1,754 @@
-module("modules.logic.room.entity.comp.RoomEffectComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomEffectComp", package.seeall)
 
-slot0 = class("RoomEffectComp", LuaCompBase)
-slot0.SCENE_TRANSPARNET_OBJECT_KEY = "__transparent_set_layer_"
+local var_0_0 = class("RoomEffectComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0.__willDestroy = false
+var_0_0.SCENE_TRANSPARNET_OBJECT_KEY = "__transparent_set_layer_"
+
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.__willDestroy = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0.go = slot1
-	slot0._paramDict = {}
-	slot0._applyParamDict = {}
-	slot0._goDict = slot0:getUserDataTb_()
-	slot0._goTransformDict = slot0:getUserDataTb_()
-	slot0._animatorDict = slot0:getUserDataTb_()
-	slot0._resDict = {}
-	slot0._goActiveDict = {}
-	slot0._goHasDict = {}
-	slot0._delayDestroyDict = {}
-	slot0._delayDestroyMinTime = nil
-	slot0._sameNameComponentsDic = {}
-	slot0._typeComponentsData = RoomEffectCompCacheData.New(slot0)
-	slot0._goSameNameChildsData = RoomEffectCompCacheData.New(slot0)
-	slot0._goPathChildsData = RoomEffectCompCacheData.New(slot0)
-	slot0._goSameNameChildsTrsData = RoomEffectCompCacheData.New(slot0)
-	slot0._goPathChildsTrsData = RoomEffectCompCacheData.New(slot0)
-	slot0.isEmulator = SDKMgr.instance:isEmulator()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_2_0.go = arg_2_1
+	arg_2_0._paramDict = {}
+	arg_2_0._applyParamDict = {}
+	arg_2_0._goDict = arg_2_0:getUserDataTb_()
+	arg_2_0._goTransformDict = arg_2_0:getUserDataTb_()
+	arg_2_0._animatorDict = arg_2_0:getUserDataTb_()
+	arg_2_0._resDict = {}
+	arg_2_0._goActiveDict = {}
+	arg_2_0._goHasDict = {}
+	arg_2_0._delayDestroyDict = {}
+	arg_2_0._delayDestroyMinTime = nil
+	arg_2_0._sameNameComponentsDic = {}
+	arg_2_0._typeComponentsData = RoomEffectCompCacheData.New(arg_2_0)
+	arg_2_0._goSameNameChildsData = RoomEffectCompCacheData.New(arg_2_0)
+	arg_2_0._goPathChildsData = RoomEffectCompCacheData.New(arg_2_0)
+	arg_2_0._goSameNameChildsTrsData = RoomEffectCompCacheData.New(arg_2_0)
+	arg_2_0._goPathChildsTrsData = RoomEffectCompCacheData.New(arg_2_0)
+	arg_2_0.isEmulator = SDKMgr.instance:isEmulator()
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0.__willDestroy = true
 
-	TaskDispatcher.cancelTask(slot0._delayDestroy, slot0)
-	slot0:removeEventListeners()
-	slot0:returnAllEffect()
+	TaskDispatcher.cancelTask(arg_5_0._delayDestroy, arg_5_0)
+	arg_5_0:removeEventListeners()
+	arg_5_0:returnAllEffect()
 end
 
-function slot0.isHasKey(slot0, slot1)
-	if slot0._delayDestroyDict[slot1] then
+function var_0_0.isHasKey(arg_6_0, arg_6_1)
+	if arg_6_0._delayDestroyDict[arg_6_1] then
 		return false
 	end
 
-	if slot0._paramDict[slot1] == nil then
+	if arg_6_0._paramDict[arg_6_1] == nil then
 		return false
 	end
 
 	return true
 end
 
-function slot0.addParams(slot0, slot1, slot2)
-	if slot0.__willDestroy then
+function var_0_0.addParams(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_0.__willDestroy then
 		return
 	end
 
-	for slot7, slot8 in pairs(slot1) do
-		slot0._paramDict[slot7] = slot8
+	local var_7_0 = Time.time
 
-		if slot2 and slot2 > 0 then
-			slot0._delayDestroyDict[slot7] = slot2 + Time.time
+	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
+		arg_7_0._paramDict[iter_7_0] = iter_7_1
+
+		if arg_7_2 and arg_7_2 > 0 then
+			arg_7_0._delayDestroyDict[iter_7_0] = arg_7_2 + var_7_0
 		else
-			slot0._delayDestroyDict[slot7] = nil
+			arg_7_0._delayDestroyDict[iter_7_0] = nil
 		end
 	end
 
-	slot0:_refreshDelayDestroyTask()
+	arg_7_0:_refreshDelayDestroyTask()
 end
 
-function slot0._refreshDelayDestroyTask(slot0)
-	slot1 = nil
+function var_0_0._refreshDelayDestroyTask(arg_8_0)
+	local var_8_0
 
-	for slot5, slot6 in pairs(slot0._delayDestroyDict) do
-		if slot6 and (not slot1 or slot6 < slot1) then
-			slot1 = slot6
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._delayDestroyDict) do
+		if iter_8_1 and (not var_8_0 or iter_8_1 < var_8_0) then
+			var_8_0 = iter_8_1
 		end
 	end
 
-	if (slot1 and slot1 - Time.time) == nil and slot0._delayDestroyMinTime then
-		slot0._delayDestroyMinTime = nil
+	var_8_0 = var_8_0 and var_8_0 - Time.time
 
-		TaskDispatcher.cancelTask(slot0._delayDestroy, slot0)
+	if var_8_0 == nil and arg_8_0._delayDestroyMinTime then
+		arg_8_0._delayDestroyMinTime = nil
+
+		TaskDispatcher.cancelTask(arg_8_0._delayDestroy, arg_8_0)
 	end
 
-	if slot1 and (slot0._delayDestroyMinTime == nil or slot1 < slot0._delayDestroyMinTime) then
-		if slot0._delayDestroyMinTime then
-			TaskDispatcher.cancelTask(slot0._delayDestroy, slot0)
+	if var_8_0 and (arg_8_0._delayDestroyMinTime == nil or var_8_0 < arg_8_0._delayDestroyMinTime) then
+		if arg_8_0._delayDestroyMinTime then
+			TaskDispatcher.cancelTask(arg_8_0._delayDestroy, arg_8_0)
 		end
 
-		slot0._delayDestroyMinTime = slot1
+		arg_8_0._delayDestroyMinTime = var_8_0
 
-		TaskDispatcher.runDelay(slot0._delayDestroy, slot0, slot0._delayDestroyMinTime)
+		TaskDispatcher.runDelay(arg_8_0._delayDestroy, arg_8_0, arg_8_0._delayDestroyMinTime)
 	end
 end
 
-function slot0._delayDestroy(slot0)
-	slot0._delayDestroyMinTime = nil
-	slot2 = {}
+function var_0_0._delayDestroy(arg_9_0)
+	local var_9_0 = Time.time + 0.001
 
-	for slot6, slot7 in pairs(slot0._delayDestroyDict) do
-		if slot7 and slot7 <= Time.time + 0.001 then
-			table.insert(slot2, slot6)
+	arg_9_0._delayDestroyMinTime = nil
+
+	local var_9_1 = {}
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._delayDestroyDict) do
+		if iter_9_1 and iter_9_1 <= var_9_0 then
+			table.insert(var_9_1, iter_9_0)
 		end
 	end
 
-	slot0:removeParams(slot2)
-	slot0:refreshEffect()
+	arg_9_0:removeParams(var_9_1)
+	arg_9_0:refreshEffect()
 end
 
-function slot0.changeParams(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if slot0._paramDict[slot5] then
-			for slot10, slot11 in pairs(slot6) do
-				slot0._paramDict[slot5][slot10] = slot11
+function var_0_0.changeParams(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in pairs(arg_10_1) do
+		if arg_10_0._paramDict[iter_10_0] then
+			for iter_10_2, iter_10_3 in pairs(iter_10_1) do
+				arg_10_0._paramDict[iter_10_0][iter_10_2] = iter_10_3
 			end
 		end
 	end
 end
 
-function slot0.removeParams(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot1) do
-		if slot2 and slot2 > 0 then
-			slot0._delayDestroyDict[slot8] = slot2 + Time.time
+function var_0_0.removeParams(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = Time.time
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		if arg_11_2 and arg_11_2 > 0 then
+			arg_11_0._delayDestroyDict[iter_11_1] = arg_11_2 + var_11_0
 		else
-			slot0._paramDict[slot8] = nil
-			slot0._delayDestroyDict[slot8] = nil
+			arg_11_0._paramDict[iter_11_1] = nil
+			arg_11_0._delayDestroyDict[iter_11_1] = nil
 		end
 	end
 
-	slot0:_refreshDelayDestroyTask()
+	arg_11_0:_refreshDelayDestroyTask()
 end
 
-function slot0.getEffectGOTrs(slot0, slot1)
-	return slot0._goTransformDict[slot1]
+function var_0_0.getEffectGOTrs(arg_12_0, arg_12_1)
+	return arg_12_0._goTransformDict[arg_12_1]
 end
 
-function slot0.getEffectGO(slot0, slot1)
-	return slot0._goDict[slot1]
+function var_0_0.getEffectGO(arg_13_0, arg_13_1)
+	return arg_13_0._goDict[arg_13_1]
 end
 
-function slot0.getEffectRes(slot0, slot1)
-	return slot0._resDict[slot1]
+function var_0_0.getEffectRes(arg_14_0, arg_14_1)
+	return arg_14_0._resDict[arg_14_1]
 end
 
-function slot0.isSameResByKey(slot0, slot1, slot2)
-	return slot0._resDict[slot1] == slot2
+function var_0_0.isSameResByKey(arg_15_0, arg_15_1, arg_15_2)
+	return arg_15_0._resDict[arg_15_1] == arg_15_2
 end
 
-function slot0.isHasEffectGOByKey(slot0, slot1)
-	return slot0._goHasDict[slot1]
+function var_0_0.isHasEffectGOByKey(arg_16_0, arg_16_1)
+	return arg_16_0._goHasDict[arg_16_1]
 end
 
-function slot0.setActiveByKey(slot0, slot1, slot2)
-	if slot0.__willDestroy or slot2 == nil then
+function var_0_0.setActiveByKey(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_0.__willDestroy or arg_17_2 == nil then
 		return
 	end
 
-	if slot0._goActiveDict[slot1] ~= (slot2 and true or false) then
-		slot0._goActiveDict[slot1] = slot3
+	local var_17_0 = arg_17_2 and true or false
 
-		if slot0._goHasDict[slot1] then
-			gohelper.setActive(slot0._goDict[slot1], slot3)
+	if arg_17_0._goActiveDict[arg_17_1] ~= var_17_0 then
+		arg_17_0._goActiveDict[arg_17_1] = var_17_0
+
+		if arg_17_0._goHasDict[arg_17_1] then
+			gohelper.setActive(arg_17_0._goDict[arg_17_1], var_17_0)
 		end
 	end
 end
 
-function slot0.playEffectAnimator(slot0, slot1, slot2)
-	if slot0.__willDestroy then
+function var_0_0.playEffectAnimator(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_0.__willDestroy then
 		return
 	end
 
-	if slot0._animatorDict[slot1] == nil and slot0:getEffectGO(slot1) then
-		slot0._animatorDict[slot1] = slot4:GetComponent(RoomEnum.ComponentType.Animator) or false
+	local var_18_0 = arg_18_0._animatorDict[arg_18_1]
+
+	if var_18_0 == nil then
+		local var_18_1 = arg_18_0:getEffectGO(arg_18_1)
+
+		if var_18_1 then
+			var_18_0 = var_18_1:GetComponent(RoomEnum.ComponentType.Animator)
+			arg_18_0._animatorDict[arg_18_1] = var_18_0 or false
+		end
 	end
 
-	if slot3 then
-		slot3:Play(slot2, 0, 0)
+	if var_18_0 then
+		var_18_0:Play(arg_18_2, 0, 0)
 
 		return true
 	end
 end
 
-function slot0.getMeshRenderersByKey(slot0, slot1)
-	return slot0:getComponentsByKey(slot1, RoomEnum.ComponentName.MeshRenderer)
+function var_0_0.getMeshRenderersByKey(arg_19_0, arg_19_1)
+	return arg_19_0:getComponentsByKey(arg_19_1, RoomEnum.ComponentName.MeshRenderer)
 end
 
-function slot0.getMeshRenderersByPath(slot0, slot1, slot2)
-	return slot0:getComponentsByPath(slot1, RoomEnum.ComponentName.MeshRenderer, slot2)
+function var_0_0.getMeshRenderersByPath(arg_20_0, arg_20_1, arg_20_2)
+	return arg_20_0:getComponentsByPath(arg_20_1, RoomEnum.ComponentName.MeshRenderer, arg_20_2)
 end
 
-function slot0.getComponentsByPath(slot0, slot1, slot2, slot3)
-	if not RoomEnum.ComponentType[slot2] then
+function var_0_0.getComponentsByPath(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = RoomEnum.ComponentType[arg_21_2]
+
+	if not var_21_0 then
 		return
 	end
 
-	slot6 = slot0:_getSameCacheData(slot2):getDataByKey(slot1, slot3)
+	local var_21_1 = arg_21_0:_getSameCacheData(arg_21_2)
+	local var_21_2 = var_21_1:getDataByKey(arg_21_1, arg_21_3)
 
-	if slot0.__willDestroy then
-		return slot6
+	if arg_21_0.__willDestroy then
+		return var_21_2
 	end
 
-	if not slot6 and slot0._goHasDict[slot1] then
-		slot5:addDataByKey(slot1, slot3, {})
+	if not var_21_2 and arg_21_0._goHasDict[arg_21_1] then
+		var_21_2 = {}
 
-		if gohelper.findChild(slot0._goDict[slot1], slot3) then
-			slot0:_cArrayToLuaTable(slot7:GetComponentsInChildren(slot4, true), slot6)
+		var_21_1:addDataByKey(arg_21_1, arg_21_3, var_21_2)
+
+		local var_21_3 = gohelper.findChild(arg_21_0._goDict[arg_21_1], arg_21_3)
+
+		if var_21_3 then
+			local var_21_4 = var_21_3:GetComponentsInChildren(var_21_0, true)
+
+			arg_21_0:_cArrayToLuaTable(var_21_4, var_21_2)
 		end
 	end
 
-	return slot6
+	return var_21_2
 end
 
-function slot0._getSameCacheData(slot0, slot1)
-	if not slot0._sameNameComponentsDic[slot1] then
-		slot0._sameNameComponentsDic[slot1] = RoomEffectCompCacheData.New(slot0)
+function var_0_0._getSameCacheData(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0._sameNameComponentsDic[arg_22_1]
+
+	if not var_22_0 then
+		var_22_0 = RoomEffectCompCacheData.New(arg_22_0)
+		arg_22_0._sameNameComponentsDic[arg_22_1] = var_22_0
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0.getComponentsByKey(slot0, slot1, slot2)
-	if not RoomEnum.ComponentType[slot2] then
+function var_0_0.getComponentsByKey(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = RoomEnum.ComponentType[arg_23_2]
+
+	if not var_23_0 then
 		return
 	end
 
-	slot4 = slot0._typeComponentsData:getDataByKey(slot1, slot2)
+	local var_23_1 = arg_23_0._typeComponentsData:getDataByKey(arg_23_1, arg_23_2)
 
-	if slot0.__willDestroy then
-		return slot4
+	if arg_23_0.__willDestroy then
+		return var_23_1
 	end
 
-	if not slot4 and slot0._goHasDict[slot1] then
-		slot4 = {}
+	if not var_23_1 and arg_23_0._goHasDict[arg_23_1] then
+		var_23_1 = {}
 
-		slot0._typeComponentsData:addDataByKey(slot1, slot2, slot4)
-		slot0:_cArrayToLuaTable(slot0._goDict[slot1]:GetComponentsInChildren(slot3, true), slot4)
+		arg_23_0._typeComponentsData:addDataByKey(arg_23_1, arg_23_2, var_23_1)
+
+		local var_23_2 = arg_23_0._goDict[arg_23_1]:GetComponentsInChildren(var_23_0, true)
+
+		arg_23_0:_cArrayToLuaTable(var_23_2, var_23_1)
 	end
 
-	return slot4
+	return var_23_1
 end
 
-function slot0.getGameObjectsByName(slot0, slot1, slot2)
-	slot3 = slot0._goSameNameChildsData:getDataByKey(slot1, slot2)
+function var_0_0.getGameObjectsByName(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = arg_24_0._goSameNameChildsData:getDataByKey(arg_24_1, arg_24_2)
 
-	if slot0.__willDestroy then
-		return slot3
+	if arg_24_0.__willDestroy then
+		return var_24_0
 	end
 
-	if not slot3 and slot0._goHasDict[slot1] then
-		slot0._goSameNameChildsData:addDataByKey(slot1, slot2, {})
+	if not var_24_0 and arg_24_0._goHasDict[arg_24_1] then
+		var_24_0 = {}
 
-		if uv0.SCENE_TRANSPARNET_OBJECT_KEY == slot2 then
-			for slot8 = 1, #slot0:getMeshRenderersByKey(slot1) do
-				if string.find(slot4[slot8].name, "transparent") and slot10 == 1 then
-					table.insert(slot3, slot9.gameObject)
+		arg_24_0._goSameNameChildsData:addDataByKey(arg_24_1, arg_24_2, var_24_0)
+
+		if var_0_0.SCENE_TRANSPARNET_OBJECT_KEY == arg_24_2 then
+			local var_24_1 = arg_24_0:getMeshRenderersByKey(arg_24_1)
+
+			for iter_24_0 = 1, #var_24_1 do
+				local var_24_2 = var_24_1[iter_24_0]
+				local var_24_3 = string.find(var_24_2.name, "transparent")
+
+				if var_24_3 and var_24_3 == 1 then
+					table.insert(var_24_0, var_24_2.gameObject)
 				end
 			end
 		else
-			RoomHelper.getGameObjectsByNameInChildren(slot0._goDict[slot1], slot2, slot3)
+			RoomHelper.getGameObjectsByNameInChildren(arg_24_0._goDict[arg_24_1], arg_24_2, var_24_0)
 		end
 	end
 
-	return slot3
+	return var_24_0
 end
 
-function slot0.getGameObjectByPath(slot0, slot1, slot2)
-	slot3 = slot0._goPathChildsData:getDataByKey(slot1, slot2)
+function var_0_0.getGameObjectByPath(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0 = arg_25_0._goPathChildsData:getDataByKey(arg_25_1, arg_25_2)
 
-	if not slot0.__willDestroy and not slot3 and slot0._goHasDict[slot1] then
-		slot0._goPathChildsData:addDataByKey(slot1, slot2, {})
+	if not arg_25_0.__willDestroy and not var_25_0 and arg_25_0._goHasDict[arg_25_1] then
+		var_25_0 = {}
 
-		if gohelper.findChild(slot0._goDict[slot1], slot2) then
-			table.insert(slot3, slot4)
+		arg_25_0._goPathChildsData:addDataByKey(arg_25_1, arg_25_2, var_25_0)
+
+		local var_25_1 = gohelper.findChild(arg_25_0._goDict[arg_25_1], arg_25_2)
+
+		if var_25_1 then
+			table.insert(var_25_0, var_25_1)
 		end
 	end
 
-	if slot3 then
-		return slot3[1]
+	if var_25_0 then
+		return var_25_0[1]
 	end
 end
 
-function slot0.getGameObjectsTrsByName(slot0, slot1, slot2)
-	slot3 = slot0._goSameNameChildsTrsData:getDataByKey(slot1, slot2)
+function var_0_0.getGameObjectsTrsByName(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_0._goSameNameChildsTrsData:getDataByKey(arg_26_1, arg_26_2)
 
-	if slot0.__willDestroy then
-		return slot3
+	if arg_26_0.__willDestroy then
+		return var_26_0
 	end
 
-	if not slot3 and slot0._goHasDict[slot1] and slot0:getGameObjectsByName(slot1, slot2) then
-		slot8 = slot2
-		slot9 = {}
+	if not var_26_0 and arg_26_0._goHasDict[arg_26_1] then
+		local var_26_1 = arg_26_0:getGameObjectsByName(arg_26_1, arg_26_2)
 
-		slot0._goSameNameChildsTrsData:addDataByKey(slot1, slot8, slot9)
+		if var_26_1 then
+			var_26_0 = {}
 
-		for slot8, slot9 in ipairs(slot4) do
-			table.insert(slot3, slot9.transform)
-		end
-	end
+			arg_26_0._goSameNameChildsTrsData:addDataByKey(arg_26_1, arg_26_2, var_26_0)
 
-	return slot3
-end
-
-function slot0.getGameObjectTrsByPath(slot0, slot1, slot2)
-	slot3 = slot0._goPathChildsTrsData:getDataByKey(slot1, slot2)
-
-	if not slot0.__willDestroy and not slot3 and slot0._goHasDict[slot1] then
-		slot0._goPathChildsTrsData:addDataByKey(slot1, slot2, {})
-
-		if slot0:getGameObjectByPath(slot1, slot2) then
-			table.insert(slot3, slot4)
-		end
-	end
-
-	if slot3 then
-		return slot3[1]
-	end
-end
-
-function slot0.removeComponentsByKey(slot0, slot1)
-	slot0._typeComponentsData:removeDataByKey(slot1)
-	slot0._goSameNameChildsData:removeDataByKey(slot1)
-	slot0._goPathChildsData:removeDataByKey(slot1)
-	slot0._goSameNameChildsTrsData:removeDataByKey(slot1)
-	slot0._goPathChildsTrsData:removeDataByKey(slot1)
-
-	for slot5, slot6 in pairs(slot0._sameNameComponentsDic) do
-		slot6:removeDataByKey(slot1)
-	end
-end
-
-function slot0.refreshEffect(slot0)
-	if slot0.__willDestroy then
-		return
-	end
-
-	slot1 = false
-
-	for slot5, slot6 in pairs(slot0._resDict) do
-		if not slot0._paramDict[slot5] or slot7.res ~= slot6 then
-			slot0:returnEffect(slot5, slot0._goDict[slot5], slot6)
-
-			if slot0._applyParamDict[slot5] and slot8.pathfinding then
-				slot1 = true
+			for iter_26_0, iter_26_1 in ipairs(var_26_1) do
+				table.insert(var_26_0, iter_26_1.transform)
 			end
 		end
 	end
 
-	slot2 = {}
+	return var_26_0
+end
 
-	for slot7, slot8 in pairs(slot0._paramDict) do
-		if GameResMgr.IsFromEditorDir then
-			table.insert(slot2, slot8.res)
+function var_0_0.getGameObjectTrsByPath(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = arg_27_0._goPathChildsTrsData:getDataByKey(arg_27_1, arg_27_2)
+
+	if not arg_27_0.__willDestroy and not var_27_0 and arg_27_0._goHasDict[arg_27_1] then
+		var_27_0 = {}
+
+		arg_27_0._goPathChildsTrsData:addDataByKey(arg_27_1, arg_27_2, var_27_0)
+
+		local var_27_1 = arg_27_0:getGameObjectByPath(arg_27_1, arg_27_2)
+
+		if var_27_1 then
+			table.insert(var_27_0, var_27_1)
+		end
+	end
+
+	if var_27_0 then
+		return var_27_0[1]
+	end
+end
+
+function var_0_0.removeComponentsByKey(arg_28_0, arg_28_1)
+	arg_28_0._typeComponentsData:removeDataByKey(arg_28_1)
+	arg_28_0._goSameNameChildsData:removeDataByKey(arg_28_1)
+	arg_28_0._goPathChildsData:removeDataByKey(arg_28_1)
+	arg_28_0._goSameNameChildsTrsData:removeDataByKey(arg_28_1)
+	arg_28_0._goPathChildsTrsData:removeDataByKey(arg_28_1)
+
+	for iter_28_0, iter_28_1 in pairs(arg_28_0._sameNameComponentsDic) do
+		iter_28_1:removeDataByKey(arg_28_1)
+	end
+end
+
+function var_0_0.refreshEffect(arg_29_0)
+	if arg_29_0.__willDestroy then
+		return
+	end
+
+	local var_29_0 = false
+
+	for iter_29_0, iter_29_1 in pairs(arg_29_0._resDict) do
+		local var_29_1 = arg_29_0._paramDict[iter_29_0]
+
+		if not var_29_1 or var_29_1.res ~= iter_29_1 then
+			arg_29_0:returnEffect(iter_29_0, arg_29_0._goDict[iter_29_0], iter_29_1)
+
+			local var_29_2 = arg_29_0._applyParamDict[iter_29_0]
+
+			if var_29_2 and var_29_2.pathfinding then
+				var_29_0 = true
+			end
+		end
+	end
+
+	local var_29_3 = {}
+	local var_29_4 = GameResMgr.IsFromEditorDir
+
+	for iter_29_2, iter_29_3 in pairs(arg_29_0._paramDict) do
+		if var_29_4 then
+			table.insert(var_29_3, iter_29_3.res)
 		else
-			table.insert(slot2, slot8.ab or slot8.res)
+			table.insert(var_29_3, iter_29_3.ab or iter_29_3.res)
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().loader:makeSureLoaded(slot2, slot0._rebuildEffect, slot0)
-	slot0:_tryClearClickCollider()
+	GameSceneMgr.instance:getCurScene().loader:makeSureLoaded(var_29_3, arg_29_0._rebuildEffect, arg_29_0)
+	arg_29_0:_tryClearClickCollider()
 
-	if slot1 then
-		slot0:_tryUpdatePathfindingCollider()
+	if var_29_0 then
+		arg_29_0:_tryUpdatePathfindingCollider()
 	end
 end
 
-function slot0._rebuildEffect(slot0)
-	if slot0.__willDestroy then
+function var_0_0._rebuildEffect(arg_30_0)
+	if arg_30_0.__willDestroy then
 		return
 	end
 
-	slot1 = false
-	slot2 = GameSceneMgr.instance:getCurScene().preloader
-	slot3 = GameResMgr.IsFromEditorDir
+	local var_30_0 = false
+	local var_30_1 = GameSceneMgr.instance:getCurScene().preloader
+	local var_30_2 = GameResMgr.IsFromEditorDir
 
-	for slot7, slot8 in pairs(slot0._paramDict) do
-		slot10 = slot0._goTransformDict[slot7]
-		slot11 = true
+	for iter_30_0, iter_30_1 in pairs(arg_30_0._paramDict) do
+		local var_30_3 = arg_30_0._goDict[iter_30_0]
+		local var_30_4 = arg_30_0._goTransformDict[iter_30_0]
+		local var_30_5 = true
 
-		if slot0._goDict[slot7] then
-			slot11 = false
+		if var_30_3 then
+			var_30_5 = false
 		end
 
-		slot12 = slot8.res
-		slot13 = slot8.ab
-		slot14 = slot8.localPos or slot11 and Vector3.zero
-		slot15 = slot8.localRotation or slot11 and Vector3.zero
-		slot16 = slot8.localScale or slot11 and Vector3.one
-		slot17 = slot8.layer
-		slot18 = slot8.shadow
-		slot19 = slot8.batch
-		slot20 = slot8.highlight
-		slot21 = slot8.alphaThreshold
-		slot22 = slot8.isInventory
-		slot23 = slot0._applyParamDict[slot7]
+		local var_30_6 = iter_30_1.res
+		local var_30_7 = iter_30_1.ab
+		local var_30_8 = iter_30_1.localPos or var_30_5 and Vector3.zero
+		local var_30_9 = iter_30_1.localRotation or var_30_5 and Vector3.zero
+		local var_30_10 = iter_30_1.localScale or var_30_5 and Vector3.one
+		local var_30_11 = iter_30_1.layer
+		local var_30_12 = iter_30_1.shadow
+		local var_30_13 = iter_30_1.batch
+		local var_30_14 = iter_30_1.highlight
+		local var_30_15 = iter_30_1.alphaThreshold
+		local var_30_16 = iter_30_1.isInventory
+		local var_30_17 = arg_30_0._applyParamDict[iter_30_0]
 
-		if slot11 and slot2 and slot2:exist(slot3 and slot12 or slot13 or slot12) then
-			slot24 = slot0.entity.containerGO
+		if var_30_5 and var_30_1 and var_30_1:exist(var_30_2 and var_30_6 or var_30_7 or var_30_6) then
+			local var_30_18 = arg_30_0.entity.containerGO
 
-			if slot8.containerGO then
-				slot24 = slot8.containerGO
+			if iter_30_1.containerGO then
+				var_30_18 = iter_30_1.containerGO
 			end
 
-			slot9 = RoomGOPool.getInstance(slot12, slot24, slot8.name or slot7, slot13)
-			slot0._goDict[slot7] = slot9
-			slot0._goTransformDict[slot7] = slot9.transform
-			slot0._resDict[slot7] = slot12
-			slot0._goHasDict[slot7] = true
+			local var_30_19 = iter_30_1.name or iter_30_0
 
-			if slot8.pathfinding then
-				slot1 = true
+			var_30_3 = RoomGOPool.getInstance(var_30_6, var_30_18, var_30_19, var_30_7)
+			var_30_4 = var_30_3.transform
+			arg_30_0._goDict[iter_30_0] = var_30_3
+			arg_30_0._goTransformDict[iter_30_0] = var_30_4
+			arg_30_0._resDict[iter_30_0] = var_30_6
+			arg_30_0._goHasDict[iter_30_0] = true
+
+			if iter_30_1.pathfinding then
+				var_30_0 = true
 			end
 
-			if slot8.deleteChildPath and gohelper.findChild(slot9, slot8.deleteChildPath) then
-				gohelper.addChild(RoomGOPool.getPoolContainerGO(), slot26)
-				gohelper.destroy(slot26)
+			if iter_30_1.deleteChildPath then
+				local var_30_20 = gohelper.findChild(var_30_3, iter_30_1.deleteChildPath)
+
+				if var_30_20 then
+					gohelper.addChild(RoomGOPool.getPoolContainerGO(), var_30_20)
+					gohelper.destroy(var_30_20)
+				end
 			end
 
-			if slot0._goActiveDict[slot7] ~= nil then
-				gohelper.setActive(slot9, slot0._goActiveDict[slot7])
+			if arg_30_0._goActiveDict[iter_30_0] ~= nil then
+				gohelper.setActive(var_30_3, arg_30_0._goActiveDict[iter_30_0])
 			end
 		end
 
-		if slot9 then
-			if slot8.containerGO then
-				slot8.containerGO = nil
+		if var_30_3 then
+			if iter_30_1.containerGO then
+				iter_30_1.containerGO = nil
 			end
 
-			if slot14 then
-				transformhelper.setLocalPos(slot10, slot14.x, slot14.y, slot14.z)
+			if var_30_8 then
+				transformhelper.setLocalPos(var_30_4, var_30_8.x, var_30_8.y, var_30_8.z)
 			end
 
-			if slot15 then
-				transformhelper.setLocalRotation(slot10, slot15.x, slot15.y, slot15.z)
+			if var_30_9 then
+				transformhelper.setLocalRotation(var_30_4, var_30_9.x, var_30_9.y, var_30_9.z)
 			end
 
-			if slot16 then
-				transformhelper.setLocalScale(slot10, slot16.x, slot16.y, slot16.z)
+			if var_30_10 then
+				transformhelper.setLocalScale(var_30_4, var_30_10.x, var_30_10.y, var_30_10.z)
 			end
 
-			if slot19 ~= nil and (not slot23 or slot23.batch ~= slot19) then
-				slot0:setBatch(slot7, slot19)
+			if var_30_13 ~= nil and (not var_30_17 or var_30_17.batch ~= var_30_13) then
+				arg_30_0:setBatch(iter_30_0, var_30_13)
 			end
 
-			if slot17 ~= nil and (not slot23 or slot23.layer ~= slot17) and slot17 ~= UnityLayer.SceneOpaque then
-				slot0:setLayer(slot7, slot17)
+			if var_30_11 ~= nil and (not var_30_17 or var_30_17.layer ~= var_30_11) and var_30_11 ~= UnityLayer.SceneOpaque then
+				arg_30_0:setLayer(iter_30_0, var_30_11)
 			end
 
-			CurveWorldRenderer.InitCurveWorldRenderer(slot9)
+			CurveWorldRenderer.InitCurveWorldRenderer(var_30_3)
 
-			if slot18 ~= nil and (not slot23 or slot23.shadow ~= slot18) then
-				slot0:setShadow(slot7, slot18)
+			if var_30_12 ~= nil and (not var_30_17 or var_30_17.shadow ~= var_30_12) then
+				arg_30_0:setShadow(iter_30_0, var_30_12)
 			end
 
-			slot24 = false
-			slot25 = false
+			local var_30_21 = false
+			local var_30_22 = false
 
-			if not slot23 or slot20 ~= nil and slot23.highlight ~= slot20 then
-				slot24 = true
+			if not var_30_17 or var_30_14 ~= nil and var_30_17.highlight ~= var_30_14 then
+				var_30_21 = true
 			end
 
-			if not slot23 or slot22 ~= nil and slot23.isInventory ~= slot22 then
-				slot25 = slot22
+			if not var_30_17 or var_30_16 ~= nil and var_30_17.isInventory ~= var_30_16 then
+				var_30_22 = var_30_16
 			end
 
-			if not slot23 or slot21 ~= nil and slot23.alphaThreshold ~= slot21 then
-				slot24 = true
+			if not var_30_17 or var_30_15 ~= nil and var_30_17.alphaThreshold ~= var_30_15 then
+				var_30_21 = true
 			end
 
-			if slot24 then
-				slot0:setMPB(slot7, slot20, slot21, slot8.alphaThresholdValue)
+			if var_30_21 then
+				arg_30_0:setMPB(iter_30_0, var_30_14, var_30_15, iter_30_1.alphaThresholdValue)
 			end
 
-			if slot25 then
-				slot0:setDimdegeKey(slot7, false)
+			if var_30_22 then
+				arg_30_0:setDimdegeKey(iter_30_0, false)
 			end
 
-			slot0._applyParamDict[slot7] = tabletool.copy(slot8)
-		end
-	end
-
-	slot0:_tryClearClickCollider()
-
-	if slot0.entity.onEffectRebuild then
-		slot0.entity:onEffectRebuild()
-	end
-
-	for slot7, slot8 in ipairs(RoomEnum.EffectRebuildCompNames) do
-		if slot0.entity[slot8] and slot9.onEffectRebuild then
-			slot9:onEffectRebuild()
+			arg_30_0._applyParamDict[iter_30_0] = tabletool.copy(iter_30_1)
 		end
 	end
 
-	if slot1 then
-		slot0:_tryUpdatePathfindingCollider()
+	arg_30_0:_tryClearClickCollider()
+
+	if arg_30_0.entity.onEffectRebuild then
+		arg_30_0.entity:onEffectRebuild()
+	end
+
+	for iter_30_2, iter_30_3 in ipairs(RoomEnum.EffectRebuildCompNames) do
+		local var_30_23 = arg_30_0.entity[iter_30_3]
+
+		if var_30_23 and var_30_23.onEffectRebuild then
+			var_30_23:onEffectRebuild()
+		end
+	end
+
+	if var_30_0 then
+		arg_30_0:_tryUpdatePathfindingCollider()
 	end
 end
 
-function slot0.setLayer(slot0, slot1, slot2)
-	if not slot0._goDict[slot1] then
+function var_0_0.setLayer(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0._goDict[arg_31_1]
+
+	if not var_31_0 then
 		return
 	end
 
-	if slot2 == UnityLayer.SceneOrthogonalOpaque then
-		RenderPipelineSetting.SetChildRenderLayerMask(slot3, 7, 8, true)
-		RenderPipelineSetting.SetChildRenderLayerMask(slot3, 0, 8, false)
+	if arg_31_2 == UnityLayer.SceneOrthogonalOpaque then
+		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 7, 8, true)
+		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 0, 8, false)
 	else
-		RenderPipelineSetting.SetChildRenderLayerMask(slot3, 0, 8, true)
-		RenderPipelineSetting.SetChildRenderLayerMask(slot3, 7, 8, false)
+		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 0, 8, true)
+		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 7, 8, false)
 	end
 end
 
-function slot0.setShadow(slot0, slot1, slot2)
-	if slot0:getMeshRenderersByKey(slot1) then
-		for slot7 = 1, #slot3 do
-			slot8 = slot3[slot7]
+function var_0_0.setShadow(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = arg_32_0:getMeshRenderersByKey(arg_32_1)
 
-			if slot2 then
-				slot8.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
-				slot8.receiveShadows = true
+	if var_32_0 then
+		for iter_32_0 = 1, #var_32_0 do
+			local var_32_1 = var_32_0[iter_32_0]
+
+			if arg_32_2 then
+				var_32_1.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
+				var_32_1.receiveShadows = true
 			else
-				slot8.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off
-				slot8.receiveShadows = false
+				var_32_1.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off
+				var_32_1.receiveShadows = false
 			end
 		end
 	end
 end
 
-function slot0.setBatch(slot0, slot1, slot2)
-	if slot0:getComponentsByKey(slot1, RoomEnum.ComponentName.BatchRendererEntity) then
-		for slot7 = 1, #slot3 do
-			slot3[slot7].enabled = slot2
+function var_0_0.setBatch(arg_33_0, arg_33_1, arg_33_2)
+	local var_33_0 = arg_33_0:getComponentsByKey(arg_33_1, RoomEnum.ComponentName.BatchRendererEntity)
+
+	if var_33_0 then
+		for iter_33_0 = 1, #var_33_0 do
+			var_33_0[iter_33_0].enabled = arg_33_2
 		end
 	end
 end
 
-function slot0.setMPB(slot0, slot1, slot2, slot3, slot4)
-	slot5 = slot0:getMeshRenderersByKey(slot1)
-	slot7 = nil
+function var_0_0.setMPB(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4)
+	local var_34_0 = arg_34_0:getMeshRenderersByKey(arg_34_1)
+	local var_34_1 = GameSceneMgr.instance:getCurScene()
+	local var_34_2
 
-	if slot2 or slot3 then
-		GameSceneMgr.instance:getCurScene().mapmgr:getPropertyBlock():Clear()
+	if arg_34_2 or arg_34_3 then
+		var_34_2 = var_34_1.mapmgr:getPropertyBlock()
 
-		if slot2 then
-			slot7:SetVector("_Highlight", Vector4.New(0.3, 0.19, 0.06, 0))
+		var_34_2:Clear()
+
+		if arg_34_2 then
+			var_34_2:SetVector("_Highlight", Vector4.New(0.3, 0.19, 0.06, 0))
 		end
 
-		if slot3 then
-			slot7:SetFloat("_AlphaThreshold", slot4 or 0.6)
+		if arg_34_3 then
+			var_34_2:SetFloat("_AlphaThreshold", arg_34_4 or 0.6)
 		end
 	end
 
-	if slot5 then
-		for slot11 = 1, #slot5 do
-			slot12 = slot5[slot11]
+	if var_34_0 then
+		for iter_34_0 = 1, #var_34_0 do
+			local var_34_3 = var_34_0[iter_34_0]
 
-			if slot3 ~= nil then
-				MaterialReplaceHelper.SetRendererKeyworld(slot12, "_SCREENCOORD", slot3 and true or false)
+			if arg_34_3 ~= nil then
+				MaterialReplaceHelper.SetRendererKeyworld(var_34_3, "_SCREENCOORD", arg_34_3 and true or false)
 			end
 
-			slot12:SetPropertyBlock(slot7)
+			var_34_3:SetPropertyBlock(var_34_2)
 		end
 	end
 end
 
-function slot0.setDimdegeKey(slot0, slot1, slot2)
-	if slot0:getMeshRenderersByKey(slot1) then
-		slot4 = GameSceneMgr.instance:getCurScene().mapmgr:getPropertyBlock()
+function var_0_0.setDimdegeKey(arg_35_0, arg_35_1, arg_35_2)
+	local var_35_0 = arg_35_0:getMeshRenderersByKey(arg_35_1)
 
-		slot4:Clear()
-		slot4:SetFloat("_DimEdgeSize", slot2 and 0 or 1)
+	if var_35_0 then
+		local var_35_1 = GameSceneMgr.instance:getCurScene().mapmgr:getPropertyBlock()
 
-		for slot8 = 1, #slot3 do
-			slot3[slot8]:SetPropertyBlock(slot4)
+		var_35_1:Clear()
+		var_35_1:SetFloat("_DimEdgeSize", arg_35_2 and 0 or 1)
+
+		for iter_35_0 = 1, #var_35_0 do
+			var_35_0[iter_35_0]:SetPropertyBlock(var_35_1)
 		end
 	end
 end
 
-function slot0.setMaterialKeyword(slot0, slot1, slot2, slot3)
-	if slot0:_cArrayToLuaTable(slot1.materials) then
-		for slot8 = 1, #slot4 do
-			if slot3 then
-				slot4[slot8]:EnableKeyword(slot2)
+function var_0_0.setMaterialKeyword(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	local var_36_0 = arg_36_0:_cArrayToLuaTable(arg_36_1.materials)
+
+	if var_36_0 then
+		for iter_36_0 = 1, #var_36_0 do
+			local var_36_1 = var_36_0[iter_36_0]
+
+			if arg_36_3 then
+				var_36_1:EnableKeyword(arg_36_2)
 			else
-				slot9:DisableKeyword(slot2)
+				var_36_1:DisableKeyword(arg_36_2)
 			end
 		end
 	end
 end
 
-function slot0.returnEffect(slot0, slot1, slot2, slot3)
-	if not slot2 or string.nilorempty(slot3) then
+function var_0_0.returnEffect(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	if not arg_37_2 or string.nilorempty(arg_37_3) then
 		return
 	end
 
-	if slot0._applyParamDict[slot1] then
-		if slot4.isInventory then
-			slot0:setDimdegeKey(slot1, true)
+	local var_37_0 = arg_37_0._applyParamDict[arg_37_1]
+
+	if var_37_0 then
+		if var_37_0.isInventory then
+			arg_37_0:setDimdegeKey(arg_37_1, true)
 		end
 
-		if slot4.layer and slot4.layer ~= UnityLayer.SceneOpaque then
-			slot0:setLayer(slot1, UnityLayer.SceneOpaque)
+		if var_37_0.layer and var_37_0.layer ~= UnityLayer.SceneOpaque then
+			arg_37_0:setLayer(arg_37_1, UnityLayer.SceneOpaque)
 		end
 
-		if slot4.batch == false then
-			slot0:setBatch(true)
+		if var_37_0.batch == false then
+			arg_37_0:setBatch(true)
 		end
 
-		if slot0._goActiveDict[slot1] == false then
-			gohelper.setActive(slot0._goDict[slot1], true)
-		end
-	end
-
-	for slot8, slot9 in ipairs(RoomEnum.EffectRebuildCompNames) do
-		if slot0.entity[slot9] and slot10.onEffectReturn then
-			slot10:onEffectReturn(slot1, slot3)
+		if arg_37_0._goActiveDict[arg_37_1] == false then
+			gohelper.setActive(arg_37_0._goDict[arg_37_1], true)
 		end
 	end
 
-	RoomGOPool.returnInstance(slot3, slot2)
-	slot0:removeComponentsByKey(slot1)
+	for iter_37_0, iter_37_1 in ipairs(RoomEnum.EffectRebuildCompNames) do
+		local var_37_1 = arg_37_0.entity[iter_37_1]
 
-	slot0._goDict[slot1] = nil
-	slot0._resDict[slot1] = nil
-	slot0._animatorDict[slot1] = nil
-	slot0._applyParamDict[slot1] = nil
-	slot0._goTransformDict[slot1] = nil
-	slot0._goActiveDict[slot1] = nil
-	slot0._goHasDict[slot1] = nil
-end
-
-function slot0.returnAllEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDestroy, slot0)
-
-	for slot4, slot5 in pairs(slot0._resDict) do
-		slot0:returnEffect(slot4, slot0._goDict[slot4], slot5)
+		if var_37_1 and var_37_1.onEffectReturn then
+			var_37_1:onEffectReturn(arg_37_1, arg_37_3)
+		end
 	end
 
-	slot0._resDict = nil
-	slot0._paramDict = nil
-	slot0._applyParamDict = nil
+	RoomGOPool.returnInstance(arg_37_3, arg_37_2)
+	arg_37_0:removeComponentsByKey(arg_37_1)
+
+	arg_37_0._goDict[arg_37_1] = nil
+	arg_37_0._resDict[arg_37_1] = nil
+	arg_37_0._animatorDict[arg_37_1] = nil
+	arg_37_0._applyParamDict[arg_37_1] = nil
+	arg_37_0._goTransformDict[arg_37_1] = nil
+	arg_37_0._goActiveDict[arg_37_1] = nil
+	arg_37_0._goHasDict[arg_37_1] = nil
 end
 
-function slot0._cArrayToLuaTable(slot0, slot1, slot2)
-	return RoomHelper.cArrayToLuaTable(slot1, slot2)
+function var_0_0.returnAllEffect(arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._delayDestroy, arg_38_0)
+
+	for iter_38_0, iter_38_1 in pairs(arg_38_0._resDict) do
+		arg_38_0:returnEffect(iter_38_0, arg_38_0._goDict[iter_38_0], iter_38_1)
+	end
+
+	arg_38_0._resDict = nil
+	arg_38_0._paramDict = nil
+	arg_38_0._applyParamDict = nil
 end
 
-function slot0._tryClearClickCollider(slot0)
-	if slot0.entity.collider then
-		slot0.entity.collider:clearColliderGOList()
+function var_0_0._cArrayToLuaTable(arg_39_0, arg_39_1, arg_39_2)
+	return RoomHelper.cArrayToLuaTable(arg_39_1, arg_39_2)
+end
+
+function var_0_0._tryClearClickCollider(arg_40_0)
+	if arg_40_0.entity.collider then
+		arg_40_0.entity.collider:clearColliderGOList()
 	end
 end
 
-function slot0._tryUpdatePathfindingCollider(slot0)
-	RoomScenePathComp.addEntityCollider(slot0.entity.go)
+function var_0_0._tryUpdatePathfindingCollider(arg_41_0)
+	RoomScenePathComp.addEntityCollider(arg_41_0.entity.go)
 end
 
-return slot0
+return var_0_0

@@ -1,256 +1,281 @@
-module("modules.logic.season.view1_3.Season1_3CelebrityCardTipView", package.seeall)
+﻿module("modules.logic.season.view1_3.Season1_3CelebrityCardTipView", package.seeall)
 
-slot0 = class("Season1_3CelebrityCardTipView", BaseView)
+local var_0_0 = class("Season1_3CelebrityCardTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageblur = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blur")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if GMController.instance:getGMNode("seasoncelebritycardtipview", slot0.viewGO) then
-		slot0._gogm = gohelper.findChild(slot1, "#go_gm")
-		slot0._txtmattip = gohelper.findChildText(slot1, "#go_gm/bg/#txt_mattip")
-		slot0._btnone = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_one")
-		slot0._btnten = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_ten")
-		slot0._btnhundred = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_hundred")
-		slot0._btnthousand = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_thousand")
-		slot0._btntenthousand = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_tenthousand")
-		slot0._btntenmillion = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_tenmillion")
-		slot0._btninput = gohelper.findChildButtonWithAudio(slot1, "#go_gm/#btn_input")
+	local var_1_0 = GMController.instance:getGMNode("seasoncelebritycardtipview", arg_1_0.viewGO)
+
+	if var_1_0 then
+		arg_1_0._gogm = gohelper.findChild(var_1_0, "#go_gm")
+		arg_1_0._txtmattip = gohelper.findChildText(var_1_0, "#go_gm/bg/#txt_mattip")
+		arg_1_0._btnone = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_one")
+		arg_1_0._btnten = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_ten")
+		arg_1_0._btnhundred = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_hundred")
+		arg_1_0._btnthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_thousand")
+		arg_1_0._btntenthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenthousand")
+		arg_1_0._btntenmillion = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenmillion")
+		arg_1_0._btninput = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_input")
 	end
 
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg2")
-	slot0._txtpropname = gohelper.findChildText(slot0.viewGO, "#txt_propname")
-	slot0._txtpropnameen = gohelper.findChildText(slot0.viewGO, "#txt_propname/#txt_propnameen")
-	slot0._scrolldesc = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_desc")
-	slot0._goeffect = gohelper.findChild(slot0.viewGO, "#scroll_desc/viewport/content/#go_effect")
-	slot0._goeffectitem = gohelper.findChild(slot0.viewGO, "#scroll_desc/viewport/content/#go_effect/#go_effectitem")
-	slot0._goeffectdesc = gohelper.findChild(slot0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc")
-	slot0._goeffectdescitem = gohelper.findChild(slot0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/#go_effectdescitem")
-	slot0._txthadnumber = gohelper.findChildText(slot0.viewGO, "#go_quantity/#txt_hadnumber")
-	slot0._goquantity = gohelper.findChild(slot0.viewGO, "#go_quantity")
-	slot0._gocard = gohelper.findChild(slot0.viewGO, "#go_card")
-	slot0._gocarditem = gohelper.findChild(slot0.viewGO, "#go_ctrl/#go_targetcardpos/#go_carditem")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
+	arg_1_0._txtpropname = gohelper.findChildText(arg_1_0.viewGO, "#txt_propname")
+	arg_1_0._txtpropnameen = gohelper.findChildText(arg_1_0.viewGO, "#txt_propname/#txt_propnameen")
+	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
+	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effect")
+	arg_1_0._goeffectitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effect/#go_effectitem")
+	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc")
+	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/#go_effectdescitem")
+	arg_1_0._txthadnumber = gohelper.findChildText(arg_1_0.viewGO, "#go_quantity/#txt_hadnumber")
+	arg_1_0._goquantity = gohelper.findChild(arg_1_0.viewGO, "#go_quantity")
+	arg_1_0._gocard = gohelper.findChild(arg_1_0.viewGO, "#go_card")
+	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "#go_ctrl/#go_targetcardpos/#go_carditem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
-	end
-end
-
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-
-	if slot0._gogm then
-		slot0._btnone:AddClickListener(slot0.onClickGMAdd, slot0, 1)
-		slot0._btnten:AddClickListener(slot0.onClickGMAdd, slot0, 10)
-		slot0._btnhundred:AddClickListener(slot0.onClickGMAdd, slot0, 100)
-		slot0._btnthousand:AddClickListener(slot0.onClickGMAdd, slot0, 1000)
-		slot0._btntenthousand:AddClickListener(slot0.onClickGMAdd, slot0, 10000)
-		slot0._btntenmillion:AddClickListener(slot0.onClickGMAdd, slot0, 10000000)
-		slot0._btninput:AddClickListener(slot0._btninputOnClick, slot0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 
-	if slot0._gogm then
-		slot0._btnone:RemoveClickListener()
-		slot0._btnten:RemoveClickListener()
-		slot0._btnhundred:RemoveClickListener()
-		slot0._btnthousand:RemoveClickListener()
-		slot0._btntenthousand:RemoveClickListener()
-		slot0._btntenmillion:RemoveClickListener()
-		slot0._btninput:RemoveClickListener()
+	if arg_2_0._gogm then
+		arg_2_0._btnone:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 1)
+		arg_2_0._btnten:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 10)
+		arg_2_0._btnhundred:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 100)
+		arg_2_0._btnthousand:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 1000)
+		arg_2_0._btntenthousand:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 10000)
+		arg_2_0._btntenmillion:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 10000000)
+		arg_2_0._btninput:AddClickListener(arg_2_0._btninputOnClick, arg_2_0)
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+
+	if arg_3_0._gogm then
+		arg_3_0._btnone:RemoveClickListener()
+		arg_3_0._btnten:RemoveClickListener()
+		arg_3_0._btnhundred:RemoveClickListener()
+		arg_3_0._btnthousand:RemoveClickListener()
+		arg_3_0._btntenthousand:RemoveClickListener()
+		arg_3_0._btntenmillion:RemoveClickListener()
+		arg_3_0._btninput:RemoveClickListener()
+	end
 end
 
-function slot0.onClickGMAdd(slot0, slot1)
-	GameFacade.showToast(ToastEnum.GMTool5, slot0.viewParam.id)
-	GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", slot0.viewParam.type, slot0.viewParam.id, 10))
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btninputOnClick(slot0)
-	slot1 = CommonInputMO.New()
-	slot1.title = "请输入增加道具数量！"
-	slot1.defaultInput = "Enter Item Num"
+function var_0_0.onClickGMAdd(arg_5_0, arg_5_1)
+	GameFacade.showToast(ToastEnum.GMTool5, arg_5_0.viewParam.id)
+	GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", arg_5_0.viewParam.type, arg_5_0.viewParam.id, 10))
+end
 
-	function slot1.sureCallback(slot0)
+function var_0_0._btninputOnClick(arg_6_0)
+	local var_6_0 = CommonInputMO.New()
+
+	var_6_0.title = "请输入增加道具数量！"
+	var_6_0.defaultInput = "Enter Item Num"
+
+	function var_6_0.sureCallback(arg_7_0)
 		GameFacade.closeInputBox()
 
-		if tonumber(slot0) and slot1 > 0 then
-			GameFacade.showToast(ToastEnum.GMTool5, uv0.viewParam.id)
-			GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", uv0.viewParam.type, uv0.viewParam.id, slot1))
+		local var_7_0 = tonumber(arg_7_0)
+
+		if var_7_0 and var_7_0 > 0 then
+			GameFacade.showToast(ToastEnum.GMTool5, arg_6_0.viewParam.id)
+			GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", arg_6_0.viewParam.type, arg_6_0.viewParam.id, var_7_0))
 		end
 	end
 
-	GameFacade.openInputBox(slot1)
+	GameFacade.openInputBox(var_6_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_8_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	slot0._goSkillTitle = gohelper.findChild(slot0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/title")
-	slot0._propItems = {}
-	slot0._skillItems = {}
+	arg_8_0._goSkillTitle = gohelper.findChild(arg_8_0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/title")
+	arg_8_0._propItems = {}
+	arg_8_0._skillItems = {}
 
-	if slot0._gogm then
-		gohelper.setActive(slot0._gogm, GMController.instance:isOpenGM())
+	if arg_8_0._gogm then
+		gohelper.setActive(arg_8_0._gogm, GMController.instance:isOpenGM())
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simagebg1:UnLoadImage()
+	arg_9_0._simagebg2:UnLoadImage()
 
-	if slot0._icon then
-		slot0._icon:disposeUI()
+	if arg_9_0._icon then
+		arg_9_0._icon:disposeUI()
 
-		slot0._icon = nil
+		arg_9_0._icon = nil
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._itemId = slot0.viewParam.id
-	slot0._itemCfg = ItemModel.instance:getItemConfigAndIcon(slot0.viewParam.type, slot0._itemId)
-	slot0._activityId = slot0.viewParam.actId or Activity104Model.instance:getCurSeasonId()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._itemId = arg_10_0.viewParam.id
+	arg_10_0._itemCfg = ItemModel.instance:getItemConfigAndIcon(arg_10_0.viewParam.type, arg_10_0._itemId)
+	arg_10_0._activityId = arg_10_0.viewParam.actId or Activity104Model.instance:getCurSeasonId()
 
-	if not slot0._itemCfg then
-		logError("can't find card cfg : " .. tostring(slot0._itemId))
+	if not arg_10_0._itemCfg then
+		logError("can't find card cfg : " .. tostring(arg_10_0._itemId))
 
 		return
 	end
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtpropname.text = slot0._itemCfg.name
+function var_0_0.refreshUI(arg_12_0)
+	arg_12_0._txtpropname.text = arg_12_0._itemCfg.name
 
-	if slot0._txtmattip then
-		slot0._txtmattip.text = tostring(slot0.viewParam.type) .. "#" .. tostring(slot0.viewParam.id)
+	if arg_12_0._txtmattip then
+		arg_12_0._txtmattip.text = tostring(arg_12_0.viewParam.type) .. "#" .. tostring(arg_12_0.viewParam.id)
 	end
 
-	slot0:checkCreateIcon()
-	slot0._icon:updateData(slot0._itemId)
-	slot0:refreshQuantity()
+	arg_12_0:checkCreateIcon()
+	arg_12_0._icon:updateData(arg_12_0._itemId)
+	arg_12_0:refreshQuantity()
 
-	if not slot0:refreshProps() or not slot0:refreshSkills() then
-		gohelper.setActive(slot0._goSkillTitle, false)
+	local var_12_0 = arg_12_0:refreshProps()
+	local var_12_1 = arg_12_0:refreshSkills()
+
+	if not var_12_0 or not var_12_1 then
+		gohelper.setActive(arg_12_0._goSkillTitle, false)
 	end
 end
 
-function slot0.refreshQuantity(slot0)
-	if slot0.viewParam.needQuantity then
-		gohelper.setActive(slot0._goquantity, true)
+function var_0_0.refreshQuantity(arg_13_0)
+	if arg_13_0.viewParam.needQuantity then
+		gohelper.setActive(arg_13_0._goquantity, true)
 
-		slot1 = nil
-		slot0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", (not slot0.viewParam.fakeQuantity or tostring(slot0.viewParam.fakeQuantity)) and (not slot0._activityId or tostring(GameUtil.numberDisplay(SeasonEquipMetaUtils.getEquipCount(slot0._activityId, slot0._itemId)))) and tostring(SeasonEquipMetaUtils.getCurSeasonEquipCount(slot0._itemId)))
+		local var_13_0
+
+		if arg_13_0.viewParam.fakeQuantity then
+			var_13_0 = tostring(arg_13_0.viewParam.fakeQuantity)
+		elseif arg_13_0._activityId then
+			var_13_0 = tostring(GameUtil.numberDisplay(SeasonEquipMetaUtils.getEquipCount(arg_13_0._activityId, arg_13_0._itemId)))
+		else
+			var_13_0 = tostring(SeasonEquipMetaUtils.getCurSeasonEquipCount(arg_13_0._itemId))
+		end
+
+		arg_13_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_13_0)
 	else
-		gohelper.setActive(slot0._goquantity, false)
+		gohelper.setActive(arg_13_0._goquantity, false)
 	end
 end
 
-function slot0.refreshProps(slot0)
-	slot1 = false
-	slot3 = SeasonEquipMetaUtils.getCareerColorBrightBg(slot0._itemId)
-	slot4 = {
-		[slot10] = true
-	}
+function var_0_0.refreshProps(arg_14_0)
+	local var_14_0 = false
+	local var_14_1 = SeasonEquipMetaUtils.getEquipPropsStrList(arg_14_0._itemCfg.attrId, true)
+	local var_14_2 = SeasonEquipMetaUtils.getCareerColorBrightBg(arg_14_0._itemId)
+	local var_14_3 = {}
 
-	for slot8, slot9 in ipairs(SeasonEquipMetaUtils.getEquipPropsStrList(slot0._itemCfg.attrId, true)) do
-		slot10 = slot0:getOrCreatePropText(slot8)
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		local var_14_4 = arg_14_0:getOrCreatePropText(iter_14_0)
 
-		gohelper.setActive(slot10.go, true)
+		gohelper.setActive(var_14_4.go, true)
 
-		slot10.txtDesc.text = slot9
+		var_14_4.txtDesc.text = iter_14_1
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot10.txtDesc, slot3)
-		SLFramework.UGUI.GuiHelper.SetColor(slot10.imagePoint, slot3)
+		SLFramework.UGUI.GuiHelper.SetColor(var_14_4.txtDesc, var_14_2)
+		SLFramework.UGUI.GuiHelper.SetColor(var_14_4.imagePoint, var_14_2)
 
-		slot1 = true
+		var_14_3[var_14_4] = true
+		var_14_0 = true
 	end
 
-	for slot8, slot9 in pairs(slot0._propItems) do
-		if not slot4[slot9] then
-			gohelper.setActive(slot9.go, false)
+	for iter_14_2, iter_14_3 in pairs(arg_14_0._propItems) do
+		if not var_14_3[iter_14_3] then
+			gohelper.setActive(iter_14_3.go, false)
 		end
 	end
 
-	gohelper.setActive(slot0._goeffect, slot1)
+	gohelper.setActive(arg_14_0._goeffect, var_14_0)
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.refreshSkills(slot0)
-	slot2 = SeasonEquipMetaUtils.getCareerColorBrightBg(slot0._itemId)
-	slot3 = false
-	slot4 = {
-		[slot10] = true
-	}
+function var_0_0.refreshSkills(arg_15_0)
+	local var_15_0 = SeasonEquipMetaUtils.getSkillEffectStrList(arg_15_0._itemCfg)
+	local var_15_1 = SeasonEquipMetaUtils.getCareerColorBrightBg(arg_15_0._itemId)
+	local var_15_2 = false
+	local var_15_3 = {}
 
-	for slot8, slot9 in ipairs(SeasonEquipMetaUtils.getSkillEffectStrList(slot0._itemCfg)) do
-		slot10 = slot0:getOrCreateSkillText(slot8)
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		local var_15_4 = arg_15_0:getOrCreateSkillText(iter_15_0)
 
-		gohelper.setActive(slot10.go, true)
+		gohelper.setActive(var_15_4.go, true)
 
-		slot10.txtDesc.text = slot9
+		var_15_4.txtDesc.text = iter_15_1
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot10.txtDesc, slot2)
-		SLFramework.UGUI.GuiHelper.SetColor(slot10.imagePoint, slot2)
+		SLFramework.UGUI.GuiHelper.SetColor(var_15_4.txtDesc, var_15_1)
+		SLFramework.UGUI.GuiHelper.SetColor(var_15_4.imagePoint, var_15_1)
 
-		slot3 = true
+		var_15_3[var_15_4] = true
+		var_15_2 = true
 	end
 
-	for slot8, slot9 in pairs(slot0._skillItems) do
-		if not slot4[slot9] then
-			gohelper.setActive(slot9.go, false)
+	for iter_15_2, iter_15_3 in pairs(arg_15_0._skillItems) do
+		if not var_15_3[iter_15_3] then
+			gohelper.setActive(iter_15_3.go, false)
 		end
 	end
 
-	return slot3
+	return var_15_2
 end
 
-function slot0.checkCreateIcon(slot0)
-	if not slot0._icon then
-		slot0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocard, "icon"), Season1_3CelebrityCardEquip)
+function var_0_0.checkCreateIcon(arg_16_0)
+	if not arg_16_0._icon then
+		local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes[1]
+		local var_16_1 = arg_16_0:getResInst(var_16_0, arg_16_0._gocard, "icon")
+
+		arg_16_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_1, Season1_3CelebrityCardEquip)
 	end
 end
 
-function slot0.getOrCreatePropText(slot0, slot1)
-	if not slot0._propItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goeffectitem, "propname_" .. tostring(slot1))
-		slot2.txtDesc = gohelper.findChildText(slot2.go, "txt_desc")
-		slot2.imagePoint = gohelper.findChildImage(slot2.go, "point")
-		slot0._propItems[slot1] = slot2
+function var_0_0.getOrCreatePropText(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._propItems[arg_17_1]
+
+	if not var_17_0 then
+		var_17_0 = arg_17_0:getUserDataTb_()
+		var_17_0.go = gohelper.cloneInPlace(arg_17_0._goeffectitem, "propname_" .. tostring(arg_17_1))
+		var_17_0.txtDesc = gohelper.findChildText(var_17_0.go, "txt_desc")
+		var_17_0.imagePoint = gohelper.findChildImage(var_17_0.go, "point")
+		arg_17_0._propItems[arg_17_1] = var_17_0
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.getOrCreateSkillText(slot0, slot1)
-	if not slot0._skillItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goeffectdescitem, "skill_" .. tostring(slot1))
-		slot2.txtDesc = gohelper.findChildText(slot2.go, "txt_desc")
-		slot2.imagePoint = gohelper.findChildImage(slot2.go, "point")
-		slot0._skillItems[slot1] = slot2
+function var_0_0.getOrCreateSkillText(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._skillItems[arg_18_1]
+
+	if not var_18_0 then
+		var_18_0 = arg_18_0:getUserDataTb_()
+		var_18_0.go = gohelper.cloneInPlace(arg_18_0._goeffectdescitem, "skill_" .. tostring(arg_18_1))
+		var_18_0.txtDesc = gohelper.findChildText(var_18_0.go, "txt_desc")
+		var_18_0.imagePoint = gohelper.findChildImage(var_18_0.go, "point")
+		arg_18_0._skillItems[arg_18_1] = var_18_0
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_19_0)
+	arg_19_0:closeThis()
 end
 
-return slot0
+return var_0_0

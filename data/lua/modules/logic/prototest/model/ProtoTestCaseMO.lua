@@ -1,87 +1,94 @@
-module("modules.logic.prototest.model.ProtoTestCaseMO", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoTestCaseMO", package.seeall)
 
-slot0 = pureTable("ProtoTestCaseMO")
+local var_0_0 = pureTable("ProtoTestCaseMO")
 
-function slot0.ctor(slot0)
-	slot0.cmd = nil
-	slot0.time = nil
-	slot0.struct = nil
-	slot0.value = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.cmd = nil
+	arg_1_0.time = nil
+	arg_1_0.struct = nil
+	arg_1_0.value = nil
 end
 
-function slot0.initFromProto(slot0, slot1, slot2)
-	slot0.cmd = slot1
-	slot0.time = ServerTime.now()
-	slot0.struct = slot2.__cname
-	slot0.value = ProtoParamHelper.buildProtoParamsByProto(slot2)
+function var_0_0.initFromProto(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.cmd = arg_2_1
+	arg_2_0.time = ServerTime.now()
+	arg_2_0.struct = arg_2_2.__cname
+	arg_2_0.value = ProtoParamHelper.buildProtoParamsByProto(arg_2_2)
 end
 
-function slot0.initFromJson(slot0, slot1)
+function var_0_0.initFromJson(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0.clone(slot0)
-	slot1 = uv0.New()
-	slot1.cmd = slot0.cmd
-	slot1.time = ServerTime.now()
-	slot1.struct = slot0.struct
-	slot1.value = {}
+function var_0_0.clone(arg_4_0)
+	local var_4_0 = var_0_0.New()
 
-	for slot5, slot6 in ipairs(slot0.value) do
-		table.insert(slot1.value, slot6:clone())
+	var_4_0.cmd = arg_4_0.cmd
+	var_4_0.time = ServerTime.now()
+	var_4_0.struct = arg_4_0.struct
+	var_4_0.value = {}
+
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.value) do
+		table.insert(var_4_0.value, iter_4_1:clone())
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.buildProtoMsg(slot0)
-	if not LuaSocketMgr.instance:getCmdSetting(slot0.cmd) then
-		logError("module not exist, cmd = " .. slot0.cmd)
+function var_0_0.buildProtoMsg(arg_5_0)
+	local var_5_0 = LuaSocketMgr.instance:getCmdSetting(arg_5_0.cmd)
+
+	if not var_5_0 then
+		logError("module not exist, cmd = " .. arg_5_0.cmd)
 
 		return
 	end
 
-	if not (getGlobal(slot1[1] .. "Module_pb") or addGlobalModule("modules.proto." .. slot2, slot2)) then
-		logError(string.format("pb not exist: %s.%s", slot2, slot0.struct))
+	local var_5_1 = var_5_0[1] .. "Module_pb"
+	local var_5_2 = getGlobal(var_5_1) or addGlobalModule("modules.proto." .. var_5_1, var_5_1)
+
+	if not var_5_2 then
+		logError(string.format("pb not exist: %s.%s", var_5_1, arg_5_0.struct))
 
 		return
 	end
 
-	slot5 = slot3[slot0.struct]()
+	local var_5_3 = var_5_2[arg_5_0.struct]()
 
-	for slot9, slot10 in ipairs(slot0.value) do
-		slot10:fillProtoMsg(slot5)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.value) do
+		iter_5_1:fillProtoMsg(var_5_3)
 	end
 
-	return slot5
+	return var_5_3
 end
 
-function slot0.serialize(slot0)
-	slot1 = {
-		cmd = slot0.cmd,
-		time = slot0.time,
-		struct = slot0.struct,
+function var_0_0.serialize(arg_6_0)
+	local var_6_0 = {
+		cmd = arg_6_0.cmd,
+		time = arg_6_0.time,
+		struct = arg_6_0.struct,
 		value = {}
 	}
 
-	for slot5, slot6 in ipairs(slot0.value) do
-		table.insert(slot1.value, slot6:serialize())
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.value) do
+		table.insert(var_6_0.value, iter_6_1:serialize())
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.deserialize(slot0, slot1)
-	slot0.cmd = slot1.cmd
-	slot0.time = slot1.time
-	slot0.struct = slot1.struct
-	slot0.value = {}
+function var_0_0.deserialize(arg_7_0, arg_7_1)
+	arg_7_0.cmd = arg_7_1.cmd
+	arg_7_0.time = arg_7_1.time
+	arg_7_0.struct = arg_7_1.struct
+	arg_7_0.value = {}
 
-	for slot5, slot6 in ipairs(slot1.value) do
-		slot7 = ProtoTestCaseParamMO.New()
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1.value) do
+		local var_7_0 = ProtoTestCaseParamMO.New()
 
-		slot7:deserialize(slot6)
-		table.insert(slot0.value, slot7)
+		var_7_0:deserialize(iter_7_1)
+		table.insert(arg_7_0.value, var_7_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,30 +1,34 @@
-module("modules.logic.explore.map.unit.ExploreIlluminantUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreIlluminantUnit", package.seeall)
 
-slot0 = class("ExploreIlluminantUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreIlluminantUnit", ExploreBaseDisplayUnit)
 
-function slot0.onEnter(slot0)
-	slot0:updatePrism()
-	uv0.super.onEnter(slot0)
+function var_0_0.onEnter(arg_1_0)
+	arg_1_0:updatePrism()
+	var_0_0.super.onEnter(arg_1_0)
 end
 
-function slot0.onExit(slot0)
-	slot0:updatePrism()
+function var_0_0.onExit(arg_2_0)
+	arg_2_0:updatePrism()
 end
 
-function slot0.updatePrism(slot0)
-	if not ExploreController.instance:getMapLight():isInitDone() then
+function var_0_0.updatePrism(arg_3_0)
+	local var_3_0 = ExploreController.instance:getMapLight()
+
+	if not var_3_0:isInitDone() then
 		return
 	end
 
-	slot1:beginCheckStatusChange()
+	var_3_0:beginCheckStatusChange()
 
-	for slot6, slot7 in pairs(ExploreController.instance:getMap():getUnitByPos(slot0.nodePos)) do
-		if slot7.mo:isInteractEnabled() and ExploreEnum.PrismTypes[slot7:getUnitType()] then
-			slot7:onBallLightChange()
+	local var_3_1 = ExploreController.instance:getMap():getUnitByPos(arg_3_0.nodePos)
+
+	for iter_3_0, iter_3_1 in pairs(var_3_1) do
+		if iter_3_1.mo:isInteractEnabled() and ExploreEnum.PrismTypes[iter_3_1:getUnitType()] then
+			iter_3_1:onBallLightChange()
 		end
 	end
 
-	slot1:endCheckStatus()
+	var_3_0:endCheckStatus()
 end
 
-return slot0
+return var_0_0

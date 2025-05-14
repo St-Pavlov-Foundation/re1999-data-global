@@ -1,48 +1,52 @@
-module("modules.logic.fight.system.work.FightWorkChangeEntitySpine", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkChangeEntitySpine", package.seeall)
 
-slot0 = class("FightWorkChangeEntitySpine", BaseWork)
+local var_0_0 = class("FightWorkChangeEntitySpine", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._entity = slot1
-	slot0._url = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._entity = arg_1_1
+	arg_1_0._url = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 10)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
 
-	slot0._lastSpineObj = slot0._entity.spine:getSpineGO()
+	arg_2_0._lastSpineObj = arg_2_0._entity.spine:getSpineGO()
 
-	slot0._entity:loadSpine(slot0._onLoaded, slot0, slot0._url)
+	arg_2_0._entity:loadSpine(arg_2_0._onLoaded, arg_2_0, arg_2_0._url)
 end
 
-function slot0._onLoaded(slot0)
-	if slot0._entity then
-		slot0._entity:initHangPointDict()
+function var_0_0._onLoaded(arg_3_0)
+	if arg_3_0._entity then
+		arg_3_0._entity:initHangPointDict()
 
-		if slot0._entity.effect:getHangEffect() then
-			for slot5, slot6 in pairs(slot1) do
-				slot7 = slot6.effectWrap
-				slot9, slot10, slot11 = transformhelper.getLocalPos(slot7.containerTr)
+		local var_3_0 = arg_3_0._entity.effect:getHangEffect()
 
-				gohelper.addChild(slot0._entity:getHangPoint(slot6.hangPoint), slot7.containerGO)
-				transformhelper.setLocalPos(slot7.containerTr, slot9, slot10, slot11)
+		if var_3_0 then
+			for iter_3_0, iter_3_1 in pairs(var_3_0) do
+				local var_3_1 = iter_3_1.effectWrap
+				local var_3_2 = iter_3_1.hangPoint
+				local var_3_3, var_3_4, var_3_5 = transformhelper.getLocalPos(var_3_1.containerTr)
+				local var_3_6 = arg_3_0._entity:getHangPoint(var_3_2)
+
+				gohelper.addChild(var_3_6, var_3_1.containerGO)
+				transformhelper.setLocalPos(var_3_1.containerTr, var_3_3, var_3_4, var_3_5)
 			end
 		end
 
-		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, slot0._entity.spine)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, slot0._entity.spine)
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, arg_3_0._entity.spine)
+		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, arg_3_0._entity.spine)
 	end
 
-	gohelper.destroy(slot0._lastSpineObj)
-	slot0:onDone(true)
+	gohelper.destroy(arg_3_0._lastSpineObj)
+	arg_3_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
 end
 
-return slot0
+return var_0_0

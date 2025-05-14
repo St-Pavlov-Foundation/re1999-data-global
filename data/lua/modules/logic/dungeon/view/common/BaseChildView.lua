@@ -1,39 +1,40 @@
-module("modules.logic.dungeon.view.common.BaseChildView", package.seeall)
+﻿module("modules.logic.dungeon.view.common.BaseChildView", package.seeall)
 
-slot0 = class("BaseChildView", UserDataDispose)
+local var_0_0 = class("BaseChildView", UserDataDispose)
 
-function slot0.initView(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.viewParam = slot2
-	slot0.viewGO = slot1
+	arg_1_0.viewParam = arg_1_2
+	arg_1_0.viewGO = arg_1_1
 
-	slot0:onInitView()
-	slot0:addEvents()
-	slot0:onOpen()
+	arg_1_0:onInitView()
+	arg_1_0:addEvents()
+	arg_1_0:onOpen()
 end
 
-function slot0.updateParam(slot0, slot1)
-	slot0.viewParam = slot1
+function var_0_0.updateParam(arg_2_0, arg_2_1)
+	arg_2_0.viewParam = arg_2_1
 
-	slot0:onUpdateParam()
+	arg_2_0:onUpdateParam()
 end
 
-function slot0.onOpenFinish(slot0)
+function var_0_0.onOpenFinish(arg_3_0)
+	return
 end
 
-function slot0.destroyView(slot0)
-	slot0:onClose()
-	slot0:removeEvents()
-	slot0:onDestroyView()
+function var_0_0.destroyView(arg_4_0)
+	arg_4_0:onClose()
+	arg_4_0:removeEvents()
+	arg_4_0:onDestroyView()
 
-	if slot0.viewGO then
-		gohelper.destroy(slot0.viewGO)
+	if arg_4_0.viewGO then
+		gohelper.destroy(arg_4_0.viewGO)
 
-		slot0.viewGO = nil
+		arg_4_0.viewGO = nil
 	end
 
-	slot0:__onDispose()
+	arg_4_0:__onDispose()
 end
 
-return slot0
+return var_0_0

@@ -1,31 +1,31 @@
-module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainViewContainer", package.seeall)
 
-slot0 = class("ActivityTradeBargainViewContainer", BaseViewContainer)
+local var_0_0 = class("ActivityTradeBargainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, ActivityTradeBargainView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_content"))
+	table.insert(var_1_0, ActivityTradeBargainView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_content"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.VersionActivity_1_2_Trade)
 
-		slot0._navigateButtonView:setCloseCheck(slot0._closeCheckFunc, slot0)
+		arg_2_0._navigateButtonView:setCloseCheck(arg_2_0._closeCheckFunc, arg_2_0)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			ActivityTradeBargainQuoteView.New(),
 			ActivityTradeBargainRewardView.New()
@@ -33,7 +33,7 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_2Enum.ActivityId.Trade)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_2Enum.ActivityId.Trade
@@ -41,12 +41,12 @@ function slot0.onContainerInit(slot0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function slot0.setActId(slot0, slot1)
-	slot0.actId = slot1
+function var_0_0.setActId(arg_4_0, arg_4_1)
+	arg_4_0.actId = arg_4_1
 end
 
-function slot0.getActId(slot0)
-	return slot0.actId
+function var_0_0.getActId(arg_5_0)
+	return arg_5_0.actId
 end
 
-return slot0
+return var_0_0

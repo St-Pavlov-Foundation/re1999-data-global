@@ -1,63 +1,73 @@
-module("modules.logic.tower.model.TowerAssistBossTalentListModel", package.seeall)
+﻿module("modules.logic.tower.model.TowerAssistBossTalentListModel", package.seeall)
 
-slot0 = class("TowerAssistBossTalentListModel", ListScrollModel)
+local var_0_0 = class("TowerAssistBossTalentListModel", ListScrollModel)
 
-function slot0.initBoss(slot0, slot1)
-	slot0.bossId = slot1
-	slot0.selectTalentId = nil
+function var_0_0.initBoss(arg_1_0, arg_1_1)
+	arg_1_0.bossId = arg_1_1
+	arg_1_0.selectTalentId = nil
 end
 
-function slot0.refreshList(slot0)
-	if #slot0._scrollViews == 0 then
+function var_0_0.refreshList(arg_2_0)
+	if #arg_2_0._scrollViews == 0 then
 		return
 	end
 
-	if not TowerAssistBossModel.instance:getById(slot0.bossId) then
+	local var_2_0 = TowerAssistBossModel.instance:getById(arg_2_0.bossId)
+
+	if not var_2_0 then
 		return
 	end
 
-	slot0:setList(slot1:getTalentTree():getList())
+	local var_2_1 = var_2_0:getTalentTree():getList()
+
+	arg_2_0:setList(var_2_1)
 end
 
-function slot0.getSelectTalent(slot0)
-	return slot0.selectTalentId
+function var_0_0.getSelectTalent(arg_3_0)
+	return arg_3_0.selectTalentId
 end
 
-function slot0.isSelectTalent(slot0, slot1)
-	return slot0.selectTalentId == slot1
+function var_0_0.isSelectTalent(arg_4_0, arg_4_1)
+	return arg_4_0.selectTalentId == arg_4_1
 end
 
-function slot0.setSelectTalent(slot0, slot1)
-	if slot0:isSelectTalent(slot1) then
+function var_0_0.setSelectTalent(arg_5_0, arg_5_1)
+	if arg_5_0:isSelectTalent(arg_5_1) then
 		return
 	end
 
-	slot0.selectTalentId = slot1
+	arg_5_0.selectTalentId = arg_5_1
 
-	slot0:refreshList()
+	arg_5_0:refreshList()
 	TowerController.instance:dispatchEvent(TowerEvent.SelectTalentItem)
 end
 
-function slot0.isTalentCanReset(slot0, slot1, slot2)
-	if not (slot1 or slot0.selectTalentId) then
+function var_0_0.isTalentCanReset(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_1 = arg_6_1 or arg_6_0.selectTalentId
+
+	if not arg_6_1 then
 		return false
 	end
 
-	if not TowerAssistBossModel.instance:getById(slot0.bossId):isActiveTalent(slot1) then
+	local var_6_0 = TowerAssistBossModel.instance:getById(arg_6_0.bossId)
+
+	if not var_6_0:isActiveTalent(arg_6_1) then
 		return false
 	end
 
-	if not slot3:getTalentTree():getNode(slot1) then
+	local var_6_1 = var_6_0:getTalentTree():getNode(arg_6_1)
+
+	if not var_6_1 then
 		return false
 	end
 
-	if not slot5:isLeafNode() then
+	if not var_6_1:isLeafNode() then
 		return false
 	end
 
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

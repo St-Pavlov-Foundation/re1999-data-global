@@ -1,83 +1,95 @@
-module("modules.logic.explore.model.ExploreCounterModel", package.seeall)
+﻿module("modules.logic.explore.model.ExploreCounterModel", package.seeall)
 
-slot0 = class("ExploreCounterModel", BaseModel)
+local var_0_0 = class("ExploreCounterModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clearData()
 end
 
-function slot0.clearData(slot0)
-	slot0._countDic = {}
+function var_0_0.clearData(arg_3_0)
+	arg_3_0._countDic = {}
 end
 
-function slot0.reCalcCount(slot0)
-	for slot4, slot5 in pairs(slot0._countDic) do
-		slot5:reCalcCount()
+function var_0_0.reCalcCount(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._countDic) do
+		iter_4_1:reCalcCount()
 	end
 
 	ExploreController.instance:dispatchEvent(ExploreEvent.CounterInitDone)
 end
 
-function slot0.addCountSource(slot0, slot1, slot2)
-	if slot0._countDic[slot1] == nil then
-		slot3 = ExploreCounterMO.New()
+function var_0_0.addCountSource(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0._countDic[arg_5_1]
 
-		slot3:init(slot1)
+	if var_5_0 == nil then
+		var_5_0 = ExploreCounterMO.New()
 
-		slot0._countDic[slot1] = slot3
+		var_5_0:init(arg_5_1)
+
+		arg_5_0._countDic[arg_5_1] = var_5_0
 	end
 
-	slot3:addCountSource(slot2)
+	var_5_0:addCountSource(arg_5_2)
 end
 
-function slot0.add(slot0, slot1, slot2)
-	if slot0._countDic[slot1] then
-		slot5 = slot3:add(slot2)
+function var_0_0.add(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0._countDic[arg_6_1]
 
-		if slot3.nowCount ~= slot3.nowCount then
-			ExploreController.instance:dispatchEvent(ExploreEvent.CounterChange, slot3.tarUnitId, slot3.nowCount)
+	if var_6_0 then
+		local var_6_1 = var_6_0.nowCount
+		local var_6_2 = var_6_0:add(arg_6_2)
+
+		if var_6_1 ~= var_6_0.nowCount then
+			ExploreController.instance:dispatchEvent(ExploreEvent.CounterChange, var_6_0.tarUnitId, var_6_0.nowCount)
 		end
 
-		if slot5 then
-			ExploreController.instance:dispatchEvent(ExploreEvent.TryTriggerUnit, slot3.tarUnitId, true)
-		end
-	end
-end
-
-function slot0.reduce(slot0, slot1, slot2)
-	if slot0._countDic[slot1] then
-		slot5 = slot3:reduce(slot2)
-
-		if slot3.nowCount ~= slot3.nowCount then
-			ExploreController.instance:dispatchEvent(ExploreEvent.CounterChange, slot3.tarUnitId, slot3.nowCount)
-		end
-
-		if slot5 then
-			ExploreController.instance:dispatchEvent(ExploreEvent.TryCancelTriggerUnit, slot3.tarUnitId)
+		if var_6_2 then
+			ExploreController.instance:dispatchEvent(ExploreEvent.TryTriggerUnit, var_6_0.tarUnitId, true)
 		end
 	end
 end
 
-function slot0.getCount(slot0, slot1)
-	if slot0._countDic[slot1] then
-		return slot2.nowCount
+function var_0_0.reduce(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0._countDic[arg_7_1]
+
+	if var_7_0 then
+		local var_7_1 = var_7_0.nowCount
+		local var_7_2 = var_7_0:reduce(arg_7_2)
+
+		if var_7_1 ~= var_7_0.nowCount then
+			ExploreController.instance:dispatchEvent(ExploreEvent.CounterChange, var_7_0.tarUnitId, var_7_0.nowCount)
+		end
+
+		if var_7_2 then
+			ExploreController.instance:dispatchEvent(ExploreEvent.TryCancelTriggerUnit, var_7_0.tarUnitId)
+		end
+	end
+end
+
+function var_0_0.getCount(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._countDic[arg_8_1]
+
+	if var_8_0 then
+		return var_8_0.nowCount
 	else
 		return 0
 	end
 end
 
-function slot0.getTotalCount(slot0, slot1)
-	if slot0._countDic[slot1] then
-		return slot2.tarCount
+function var_0_0.getTotalCount(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._countDic[arg_9_1]
+
+	if var_9_0 then
+		return var_9_0.tarCount
 	else
 		return 0
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

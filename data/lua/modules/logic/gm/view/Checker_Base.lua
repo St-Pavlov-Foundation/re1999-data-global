@@ -1,7 +1,8 @@
-module("modules.logic.gm.view.Checker_Base", package.seeall)
+﻿module("modules.logic.gm.view.Checker_Base", package.seeall)
 
-slot0 = class("Checker_Base")
-slot0.Color = {
+local var_0_0 = class("Checker_Base")
+
+var_0_0.Color = {
 	Blue = "#0000FF",
 	Green = "#00FF00",
 	Red = "#FF0000",
@@ -9,114 +10,128 @@ slot0.Color = {
 	White = "#FFFFFF"
 }
 
-function slot0.makeColorStr(slot0, slot1, slot2)
-	return gohelper.getRichColorText(tostring(slot1), slot2 or "#FFFFFF")
+function var_0_0.makeColorStr(arg_1_0, arg_1_1, arg_1_2)
+	return gohelper.getRichColorText(tostring(arg_1_1), arg_1_2 or "#FFFFFF")
 end
 
-function slot0.ctor(slot0)
-	slot0:clearAll()
+function var_0_0.ctor(arg_2_0)
+	arg_2_0:clearAll()
 end
 
-function slot0.clearAll(slot0)
-	slot0._strBuilder = {}
-	slot0._indentCount = 0
-	slot0._stackIndent = {}
-	slot0._stackMarkLineIndex = {}
+function var_0_0.clearAll(arg_3_0)
+	arg_3_0._strBuilder = {}
+	arg_3_0._indentCount = 0
+	arg_3_0._stackIndent = {}
+	arg_3_0._stackMarkLineIndex = {}
 end
 
-function slot0.lineCount(slot0)
-	return #slot0._strBuilder
+function var_0_0.lineCount(arg_4_0)
+	return #arg_4_0._strBuilder
 end
 
-function slot0.addIndent(slot0)
-	slot0._indentCount = slot0._indentCount + 1
+function var_0_0.addIndent(arg_5_0)
+	arg_5_0._indentCount = arg_5_0._indentCount + 1
 end
 
-function slot0.subIndent(slot0)
-	slot0._indentCount = slot0._indentCount - 1
+function var_0_0.subIndent(arg_6_0)
+	arg_6_0._indentCount = arg_6_0._indentCount - 1
 end
 
-function slot0.pushIndent(slot0)
-	table.insert(slot0._stackIndent, slot0._indentCount)
+function var_0_0.pushIndent(arg_7_0)
+	table.insert(arg_7_0._stackIndent, arg_7_0._indentCount)
 
-	slot0._indentCount = 0
+	arg_7_0._indentCount = 0
 end
 
-function slot0.popIndent(slot0)
-	assert(#slot0._stackIndent > 0, "[popIndent] invalid stack balance!")
+function var_0_0.popIndent(arg_8_0)
+	assert(#arg_8_0._stackIndent > 0, "[popIndent] invalid stack balance!")
 
-	slot0._indentCount = table.remove(slot0._stackIndent)
+	arg_8_0._indentCount = table.remove(arg_8_0._stackIndent)
 end
 
-function slot0.pushMarkLine(slot0)
-	table.insert(slot0._stackMarkLineIndex, slot0:lineCount())
+function var_0_0.pushMarkLine(arg_9_0)
+	table.insert(arg_9_0._stackMarkLineIndex, arg_9_0:lineCount())
 end
 
-function slot0.popMarkLine(slot0)
-	assert(#slot0._stackMarkLineIndex > 0, "[popMarkLine]invalid stack balance!")
+function var_0_0.popMarkLine(arg_10_0)
+	assert(#arg_10_0._stackMarkLineIndex > 0, "[popMarkLine]invalid stack balance!")
 
-	return table.remove(slot0._stackMarkLineIndex)
+	return table.remove(arg_10_0._stackMarkLineIndex)
 end
 
-function slot0.appendWithIndex(slot0, slot1, slot2)
-	assert(tonumber(slot2) ~= nil)
+function var_0_0.appendWithIndex(arg_11_0, arg_11_1, arg_11_2)
+	assert(tonumber(arg_11_2) ~= nil)
 
-	slot4 = nil
-	slot0._strBuilder[slot2] = (slot2 > 0 and slot0:lineCount() >= slot2 or slot0:_validateValue(slot1)) and slot0._strBuilder[slot2] .. slot0:_validateValue(slot1)
+	local var_11_0 = arg_11_0:lineCount()
+	local var_11_1
+
+	if arg_11_2 <= 0 or var_11_0 < arg_11_2 then
+		var_11_1 = arg_11_0:_validateValue(arg_11_1)
+	else
+		var_11_1 = arg_11_0._strBuilder[arg_11_2] .. arg_11_0:_validateValue(arg_11_1)
+	end
+
+	arg_11_0._strBuilder[arg_11_2] = var_11_1
 end
 
-function slot0.append(slot0, slot1)
-	slot0:appendWithIndex(slot1, math.max(1, slot0:lineCount()))
+function var_0_0.append(arg_12_0, arg_12_1)
+	local var_12_0 = math.max(1, arg_12_0:lineCount())
+
+	arg_12_0:appendWithIndex(arg_12_1, var_12_0)
 end
 
-function slot0.appendLine(slot0, slot1)
-	table.insert(slot0._strBuilder, slot0:_validateValue(slot1))
+function var_0_0.appendLine(arg_13_0, arg_13_1)
+	table.insert(arg_13_0._strBuilder, arg_13_0:_validateValue(arg_13_1))
 end
 
-function slot0.insertLine(slot0, slot1, slot2)
-	table.insert(slot0._strBuilder, slot0:_validateValue(slot2), GameUtil.clamp(slot1, 1, slot0:lineCount()))
+function var_0_0.insertLine(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_1 = GameUtil.clamp(arg_14_1, 1, arg_14_0:lineCount())
+
+	table.insert(arg_14_0._strBuilder, arg_14_0:_validateValue(arg_14_2), arg_14_1)
 end
 
-function slot0.appendRange(slot0, slot1)
-	if not slot1 or #slot1 == 0 then
+function var_0_0.appendRange(arg_15_0, arg_15_1)
+	if not arg_15_1 or #arg_15_1 == 0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:appendLine(slot6)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
+		arg_15_0:appendLine(iter_15_1)
 	end
 end
 
-function slot0.move(slot0, slot1)
-	if not slot1 then
+function var_0_0.move(arg_16_0, arg_16_1)
+	if not arg_16_1 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1._strBuilder) do
-		slot0:appendLine(slot7)
+	local var_16_0 = arg_16_1._strBuilder
+
+	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+		arg_16_0:appendLine(iter_16_1)
 	end
 
-	slot1._strBuilder = {}
+	arg_16_1._strBuilder = {}
 end
 
-function slot0.tostring(slot0)
-	return table.concat(slot0._strBuilder, "\n")
+function var_0_0.tostring(arg_17_0)
+	return table.concat(arg_17_0._strBuilder, "\n")
 end
 
-function slot0._indentStr(slot0)
-	if slot0._indentCount <= 0 then
+function var_0_0._indentStr(arg_18_0)
+	if arg_18_0._indentCount <= 0 then
 		return ""
 	end
 
-	return string.rep("\t", slot0._indentCount)
+	return string.rep("\t", arg_18_0._indentCount)
 end
 
-function slot0._validateValue(slot0, slot1)
-	return slot0:_indentStr() .. tostring(slot1)
+function var_0_0._validateValue(arg_19_0, arg_19_1)
+	return arg_19_0:_indentStr() .. tostring(arg_19_1)
 end
 
-function slot0.log(slot0)
-	logNormal(slot0:tostring())
+function var_0_0.log(arg_20_0)
+	logNormal(arg_20_0:tostring())
 end
 
-return slot0
+return var_0_0

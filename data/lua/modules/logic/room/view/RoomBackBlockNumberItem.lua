@@ -1,37 +1,37 @@
-module("modules.logic.room.view.RoomBackBlockNumberItem", package.seeall)
+﻿module("modules.logic.room.view.RoomBackBlockNumberItem", package.seeall)
 
-slot0 = class("RoomBackBlockNumberItem", LuaCompBase)
+local var_0_0 = class("RoomBackBlockNumberItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._goTrs = slot1.transform
-	slot0._txtnumber = gohelper.findChildText(slot1, "txt_number")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._goTrs = arg_1_1.transform
+	arg_1_0._txtnumber = gohelper.findChildText(arg_1_1, "txt_number")
 end
 
-function slot0.getGO(slot0)
-	return slot0._go
+function var_0_0.getGO(arg_2_0)
+	return arg_2_0._go
 end
 
-function slot0.getGOTrs(slot0)
-	return slot0._goTrs
+function var_0_0.getGOTrs(arg_3_0)
+	return arg_3_0._goTrs
 end
 
-function slot0.setNumber(slot0, slot1)
-	slot0._txtnumber.text = slot1
+function var_0_0.setNumber(arg_4_0, arg_4_1)
+	arg_4_0._txtnumber.text = arg_4_1
 end
 
-function slot0.setBlockMO(slot0, slot1)
-	slot0._blockMO = slot1
+function var_0_0.setBlockMO(arg_5_0, arg_5_1)
+	arg_5_0._blockMO = arg_5_1
 
-	if slot0._blockMO then
-		gohelper.setActive(slot0._go, true)
+	if arg_5_0._blockMO then
+		gohelper.setActive(arg_5_0._go, true)
 	else
-		gohelper.setActive(slot0._go, false)
+		gohelper.setActive(arg_5_0._go, false)
 	end
 end
 
-function slot0.getBlockMO(slot0, slot1)
-	return slot0._blockMO
+function var_0_0.getBlockMO(arg_6_0, arg_6_1)
+	return arg_6_0._blockMO
 end
 
-return slot0
+return var_0_0

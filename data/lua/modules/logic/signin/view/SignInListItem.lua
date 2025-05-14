@@ -1,452 +1,491 @@
-module("modules.logic.signin.view.SignInListItem", package.seeall)
+﻿module("modules.logic.signin.view.SignInListItem", package.seeall)
 
-slot0 = class("SignInListItem", ListScrollCellExtend)
+local var_0_0 = class("SignInListItem", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._gonormal = gohelper.findChild(slot1, "normal")
-	slot0._bgImg = gohelper.findChildImage(slot1, "normal/bg")
-	slot0._gobirthday = gohelper.findChild(slot1, "birthday")
-	slot0._gobirthday_act = gohelper.findChild(slot1, "birthday_act")
-	slot0._txtbirthdaydate = gohelper.findChildText(slot1, "birthday/date")
-	slot0._txtbirthdaydate_act = gohelper.findChildText(slot0._gobirthday_act, "date")
-	slot0._gosingle = gohelper.findChild(slot1, "single")
-	slot0._imagesinglerolebg = gohelper.findChildImage(slot0._gosingle, "bg")
-	slot0._simagesingleicon = gohelper.findChildSingleImage(slot0._gosingle, "icon")
-	slot0._gomultiple = gohelper.findChild(slot1, "multiple")
-	slot0._goroles = {}
-	slot0._imagerolesbg = {}
-	slot0._simagemultiroleicons = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._gonormal = gohelper.findChild(arg_1_1, "normal")
+	arg_1_0._bgImg = gohelper.findChildImage(arg_1_1, "normal/bg")
+	arg_1_0._gobirthday = gohelper.findChild(arg_1_1, "birthday")
+	arg_1_0._gobirthday_act = gohelper.findChild(arg_1_1, "birthday_act")
+	arg_1_0._txtbirthdaydate = gohelper.findChildText(arg_1_1, "birthday/date")
+	arg_1_0._txtbirthdaydate_act = gohelper.findChildText(arg_1_0._gobirthday_act, "date")
+	arg_1_0._gosingle = gohelper.findChild(arg_1_1, "single")
+	arg_1_0._imagesinglerolebg = gohelper.findChildImage(arg_1_0._gosingle, "bg")
+	arg_1_0._simagesingleicon = gohelper.findChildSingleImage(arg_1_0._gosingle, "icon")
+	arg_1_0._gomultiple = gohelper.findChild(arg_1_1, "multiple")
+	arg_1_0._goroles = {}
+	arg_1_0._imagerolesbg = {}
+	arg_1_0._simagemultiroleicons = {}
 
-	for slot5 = 1, 3 do
-		slot0._goroles[slot5] = gohelper.findChild(slot0._gomultiple, "role" .. tostring(slot5))
-		slot0._imagerolesbg[slot5] = gohelper.findChildImage(slot0._gomultiple, "role" .. tostring(slot5) .. "/bg")
-		slot0._simagemultiroleicons[slot5] = gohelper.findChildSingleImage(slot0._gomultiple, "role" .. tostring(slot5) .. "/icon")
+	for iter_1_0 = 1, 3 do
+		arg_1_0._goroles[iter_1_0] = gohelper.findChild(arg_1_0._gomultiple, "role" .. tostring(iter_1_0))
+		arg_1_0._imagerolesbg[iter_1_0] = gohelper.findChildImage(arg_1_0._gomultiple, "role" .. tostring(iter_1_0) .. "/bg")
+		arg_1_0._simagemultiroleicons[iter_1_0] = gohelper.findChildSingleImage(arg_1_0._gomultiple, "role" .. tostring(iter_1_0) .. "/icon")
 	end
 
-	slot0._gocurrent = gohelper.findChild(slot1, "current")
-	slot0._gogold = gohelper.findChild(slot1, "#go_gold")
-	slot0._txtgolddaydate = gohelper.findChildText(slot1, "#go_gold/date")
-	slot0._imageweek = gohelper.findChildImage(slot1, "img_week")
-	slot0._imagebirthdayicon = gohelper.findChildImage(slot1, "img_birthdayicon")
-	slot0._icon = gohelper.findChildSingleImage(slot1, "icon")
-	slot0._gocount = gohelper.findChild(slot1, "count")
-	slot0._quantity = gohelper.findChildText(slot1, "count/num")
-	slot0._txtnormaldate = gohelper.findChildText(slot1, "normal/date")
-	slot0._gomask = gohelper.findChild(slot1, "mask")
-	slot0._gopast = gohelper.findChild(slot1, "#go_past")
-	slot0._gosigned = gohelper.findChild(slot1, "#go_past/#go_signed")
-	slot0._gonosigned = gohelper.findChild(slot1, "#go_past/#go_nosigned")
-	slot0._pastselect = gohelper.findChild(slot1, "#go_past/select")
-	slot0._get = gohelper.findChild(slot1, "get")
-	slot0._itemClick = gohelper.getClickWithAudio(slot1)
-	slot0._goanim = slot1:GetComponent(typeof(UnityEngine.Animator))
-	slot0._bgcanvasGroup = slot0._bgImg:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._datecanvasGroup = slot0._txtnormaldate:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._gocurrent = gohelper.findChild(arg_1_1, "current")
+	arg_1_0._gogold = gohelper.findChild(arg_1_1, "#go_gold")
+	arg_1_0._txtgolddaydate = gohelper.findChildText(arg_1_1, "#go_gold/date")
+	arg_1_0._imageweek = gohelper.findChildImage(arg_1_1, "img_week")
+	arg_1_0._imagebirthdayicon = gohelper.findChildImage(arg_1_1, "img_birthdayicon")
+	arg_1_0._icon = gohelper.findChildSingleImage(arg_1_1, "icon")
+	arg_1_0._gocount = gohelper.findChild(arg_1_1, "count")
+	arg_1_0._quantity = gohelper.findChildText(arg_1_1, "count/num")
+	arg_1_0._txtnormaldate = gohelper.findChildText(arg_1_1, "normal/date")
+	arg_1_0._gomask = gohelper.findChild(arg_1_1, "mask")
+	arg_1_0._gopast = gohelper.findChild(arg_1_1, "#go_past")
+	arg_1_0._gosigned = gohelper.findChild(arg_1_1, "#go_past/#go_signed")
+	arg_1_0._gonosigned = gohelper.findChild(arg_1_1, "#go_past/#go_nosigned")
+	arg_1_0._pastselect = gohelper.findChild(arg_1_1, "#go_past/select")
+	arg_1_0._get = gohelper.findChild(arg_1_1, "get")
+	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_1)
+	arg_1_0._goanim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._bgcanvasGroup = arg_1_0._bgImg:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._datecanvasGroup = arg_1_0._txtnormaldate:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.setActive(slot0._go, false)
+	gohelper.setActive(arg_1_0._go, false)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
-	SignInController.instance:registerCallback(SignInEvent.ClickSignInMonthItem, slot0._closeItemEffect, slot0)
-	SignInController.instance:registerCallback(SignInEvent.GetSignInReply, slot0._onGetSignInReply, slot0)
-	SignInController.instance:registerCallback(SignInEvent.SwitchBirthdayState, slot0._onRefreshBirthdayState, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+	SignInController.instance:registerCallback(SignInEvent.ClickSignInMonthItem, arg_2_0._closeItemEffect, arg_2_0)
+	SignInController.instance:registerCallback(SignInEvent.GetSignInReply, arg_2_0._onGetSignInReply, arg_2_0)
+	SignInController.instance:registerCallback(SignInEvent.SwitchBirthdayState, arg_2_0._onRefreshBirthdayState, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._itemClick:RemoveClickListener()
-	SignInController.instance:unregisterCallback(SignInEvent.ClickSignInMonthItem, slot0._closeItemEffect, slot0)
-	SignInController.instance:unregisterCallback(SignInEvent.GetSignInReply, slot0._onGetSignInReply, slot0)
-	SignInController.instance:unregisterCallback(SignInEvent.SwitchBirthdayState, slot0._onRefreshBirthdayState, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._itemClick:RemoveClickListener()
+	SignInController.instance:unregisterCallback(SignInEvent.ClickSignInMonthItem, arg_3_0._closeItemEffect, arg_3_0)
+	SignInController.instance:unregisterCallback(SignInEvent.GetSignInReply, arg_3_0._onGetSignInReply, arg_3_0)
+	SignInController.instance:unregisterCallback(SignInEvent.SwitchBirthdayState, arg_3_0._onRefreshBirthdayState, arg_3_0)
 end
 
-function slot0._onItemClick(slot0)
-	if slot0._isCurMonth then
-		if not SignInModel.instance:isSignDayRewardGet(slot0._index) and slot0._index <= slot0._curDate.day then
+function var_0_0._onItemClick(arg_4_0)
+	if arg_4_0._isCurMonth then
+		if not SignInModel.instance:isSignDayRewardGet(arg_4_0._index) and arg_4_0._index <= arg_4_0._curDate.day then
 			GameFacade.showToast(ToastEnum.SignInError)
 
 			return
 		end
-	elseif 12 * (slot0._curDate.year - slot0._targetDate[1] - 1) + 13 - slot0._targetDate[2] + slot0._curDate.month <= 13 and not SignInModel.instance:isHistoryDaySigned(slot0._targetDate[2], slot0._index) then
+	elseif 12 * (arg_4_0._curDate.year - arg_4_0._targetDate[1] - 1) + 13 - arg_4_0._targetDate[2] + arg_4_0._curDate.month <= 13 and not SignInModel.instance:isHistoryDaySigned(arg_4_0._targetDate[2], arg_4_0._index) then
 		GameFacade.showToast(ToastEnum.SignInError)
 
 		return
 	end
 
-	if not slot0._isCurMonth or slot0._index <= slot0._curDate.day then
-		SignInModel.instance:setTargetDate(slot0._targetDate[1], slot0._targetDate[2], slot0._index)
+	if not arg_4_0._isCurMonth or arg_4_0._index <= arg_4_0._curDate.day then
+		SignInModel.instance:setTargetDate(arg_4_0._targetDate[1], arg_4_0._targetDate[2], arg_4_0._index)
 		SignInController.instance:dispatchEvent(SignInEvent.SignInItemClick)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_calendar_day_turn)
-	elseif not slot0._showBirthday then
-		MaterialTipController.instance:showMaterialInfo(slot0._mo.materilType, slot0._mo.materilId)
+	elseif not arg_4_0._showBirthday then
+		MaterialTipController.instance:showMaterialInfo(arg_4_0._mo.materilType, arg_4_0._mo.materilId)
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._showItemEffect)
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	TaskDispatcher.cancelTask(arg_5_0._showItemEffect)
 
-	if slot0._mo == slot1 then
+	if arg_5_0._mo == arg_5_1 then
 		return
 	end
 
-	slot0._mo = slot1
+	arg_5_0._mo = arg_5_1
 
-	gohelper.setActive(slot0._go, false)
-	slot0:_refreshData()
-	slot0:_startShowItem()
+	gohelper.setActive(arg_5_0._go, false)
+	arg_5_0:_refreshData()
+	arg_5_0:_startShowItem()
 end
 
-function slot0._refreshData(slot0)
-	slot0._targetDate = SignInModel.instance:getSignTargetDate()
-	slot0._curDate = SignInModel.instance:getCurDate()
-	slot0._isCurMonth = slot0._targetDate[1] == slot0._curDate.year and slot0._targetDate[2] == slot0._curDate.month
-	slot0._isSelect = slot0._index == slot0._targetDate[3]
-	slot0._isFollowDay = slot0._curDate.day < slot0._index
-	slot0._rewardGet = SignInModel.instance:isSignDayRewardGet(slot0._index)
-	slot0._isBeforeRegisterTime = slot0._targetDate[1] == os.date("!*t", tonumber(PlayerModel.instance:getPlayinfo().registerTime) / 1000 + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600).year and slot0._targetDate[2] == slot2.month and slot0._index < slot2.day
-	slot0._showBirthday = SignInModel.instance:isShowBirthday()
-	slot0._birthHeros = SignInModel.instance:getSignBirthdayHeros(slot0._targetDate[1], slot0._targetDate[2], slot0._index)
+function var_0_0._refreshData(arg_6_0)
+	arg_6_0._targetDate = SignInModel.instance:getSignTargetDate()
+	arg_6_0._curDate = SignInModel.instance:getCurDate()
+	arg_6_0._isCurMonth = arg_6_0._targetDate[1] == arg_6_0._curDate.year and arg_6_0._targetDate[2] == arg_6_0._curDate.month
+	arg_6_0._isSelect = arg_6_0._index == arg_6_0._targetDate[3]
+	arg_6_0._isFollowDay = arg_6_0._curDate.day < arg_6_0._index
+	arg_6_0._rewardGet = SignInModel.instance:isSignDayRewardGet(arg_6_0._index)
 
-	if slot0._isCurMonth and not slot0._isBeforeRegisterTime then
-		if slot0._index == slot0._curDate.day then
-			slot0._birthHeros = SignInModel.instance:getCurDayBirthdayHeros()
-		elseif slot0._curDate.day < slot0._index then
-			slot0._birthHeros = SignInModel.instance:getNoSignBirthdayHeros(slot0._targetDate[2], slot0._index)
-		elseif not slot0._rewardGet then
-			slot0._birthHeros = SignInModel.instance:getNoSignBirthdayHeros(slot0._targetDate[2], slot0._index)
+	local var_6_0 = tonumber(PlayerModel.instance:getPlayinfo().registerTime)
+	local var_6_1 = os.date("!*t", var_6_0 / 1000 + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600)
+
+	arg_6_0._isBeforeRegisterTime = arg_6_0._targetDate[1] == var_6_1.year and arg_6_0._targetDate[2] == var_6_1.month and arg_6_0._index < var_6_1.day
+	arg_6_0._showBirthday = SignInModel.instance:isShowBirthday()
+	arg_6_0._birthHeros = SignInModel.instance:getSignBirthdayHeros(arg_6_0._targetDate[1], arg_6_0._targetDate[2], arg_6_0._index)
+
+	if arg_6_0._isCurMonth and not arg_6_0._isBeforeRegisterTime then
+		if arg_6_0._index == arg_6_0._curDate.day then
+			arg_6_0._birthHeros = SignInModel.instance:getCurDayBirthdayHeros()
+		elseif arg_6_0._index > arg_6_0._curDate.day then
+			arg_6_0._birthHeros = SignInModel.instance:getNoSignBirthdayHeros(arg_6_0._targetDate[2], arg_6_0._index)
+		elseif not arg_6_0._rewardGet then
+			arg_6_0._birthHeros = SignInModel.instance:getNoSignBirthdayHeros(arg_6_0._targetDate[2], arg_6_0._index)
 		end
 	end
 
-	if #slot0._birthHeros > 0 and slot0._isCurMonth then
-		slot3 = not (slot0._curDate.day <= slot0._index) and slot3 and slot0._rewardGet or slot3 and slot4
+	local var_6_2 = #arg_6_0._birthHeros > 0
+
+	if var_6_2 and arg_6_0._isCurMonth then
+		local var_6_3 = arg_6_0._index >= arg_6_0._curDate.day
+
+		if not var_6_3 then
+			var_6_2 = var_6_2 and arg_6_0._rewardGet
+		else
+			var_6_2 = var_6_2 and var_6_3
+		end
 	end
 
-	slot0._isAllowShowHead = slot3
+	arg_6_0._isAllowShowHead = var_6_2
 end
 
-function slot0._startShowItem(slot0)
+function var_0_0._startShowItem(arg_7_0)
 	if SignInModel.instance:isNewShowDetail() then
-		slot0._delayTime = (slot0._index - 1) % 7 * 0.03
+		arg_7_0._delayTime = (arg_7_0._index - 1) % 7 * 0.03
 
-		TaskDispatcher.runDelay(slot0._showItemEffect, slot0, slot0._delayTime)
+		TaskDispatcher.runDelay(arg_7_0._showItemEffect, arg_7_0, arg_7_0._delayTime)
 
 		return
 	end
 
 	if SignInModel.instance:isNewSwitch() then
-		slot0._delayTime = (slot0._index - 1) % 7 * 0.03
+		arg_7_0._delayTime = (arg_7_0._index - 1) % 7 * 0.03
 
-		TaskDispatcher.runDelay(slot0._showSwitchEffect, slot0, slot0._delayTime)
+		TaskDispatcher.runDelay(arg_7_0._showSwitchEffect, arg_7_0, arg_7_0._delayTime)
 
 		return
 	end
 
-	slot0._goanim.enabled = false
+	arg_7_0._goanim.enabled = false
 
-	slot0:_refreshItem()
+	arg_7_0:_refreshItem()
 end
 
-function slot0._refreshItem(slot0)
-	if slot0._isCurMonth then
-		if slot0._showBirthday then
-			slot0:_refreshBirthdayCurrentMonth()
+function var_0_0._refreshItem(arg_8_0)
+	if arg_8_0._isCurMonth then
+		if arg_8_0._showBirthday then
+			arg_8_0:_refreshBirthdayCurrentMonth()
 		else
-			slot0:_refreshNormalCurrentMonth()
+			arg_8_0:_refreshNormalCurrentMonth()
 		end
-	elseif slot0._showBirthday then
-		slot0:_refreshBirthdayPastMonth()
+	elseif arg_8_0._showBirthday then
+		arg_8_0:_refreshBirthdayPastMonth()
 	else
-		slot0:_refreshNormalPastMonth()
+		arg_8_0:_refreshNormalPastMonth()
 	end
 end
 
-function slot0._showSwitchEffect(slot0)
-	if slot0._delayTime >= 0.16 then
+function var_0_0._showSwitchEffect(arg_9_0)
+	if arg_9_0._delayTime >= 0.16 then
 		SignInModel.instance:setNewSwitch(false)
 	end
 
-	slot0._goanim.enabled = true
+	arg_9_0._goanim.enabled = true
 
-	slot0._goanim:Play(UIAnimationName.Switch, 0, 0)
-	TaskDispatcher.runDelay(slot0._refreshItem, slot0, 0.3)
+	arg_9_0._goanim:Play(UIAnimationName.Switch, 0, 0)
+	TaskDispatcher.runDelay(arg_9_0._refreshItem, arg_9_0, 0.3)
 end
 
-function slot0._showItemEffect(slot0)
-	if slot0._delayTime >= 0.16 then
+function var_0_0._showItemEffect(arg_10_0)
+	if arg_10_0._delayTime >= 0.16 then
 		SignInModel.instance:setNewShowDetail(false)
 	end
 
-	slot0:_refreshItem()
+	arg_10_0:_refreshItem()
 
-	slot0._goanim.enabled = true
+	arg_10_0._goanim.enabled = true
 
-	slot0._goanim:Play(UIAnimationName.Open)
+	arg_10_0._goanim:Play(UIAnimationName.Open)
 end
 
-function slot0._refreshNormalCurrentMonth(slot0)
-	slot1 = "birthday_icon2"
+function var_0_0._refreshNormalCurrentMonth(arg_11_0)
+	local var_11_0 = "birthday_icon2"
 
-	if slot0._curDate.day <= slot0._index then
-		slot1 = "birthday_icon1"
+	if arg_11_0._index >= arg_11_0._curDate.day then
+		var_11_0 = "birthday_icon1"
 	end
 
-	slot2 = SignInModel.instance:checkIsGoldDayAndPass(slot0._targetDate, true, slot0._index)
+	local var_11_1 = SignInModel.instance:checkIsGoldDayAndPass(arg_11_0._targetDate, true, arg_11_0._index)
+	local var_11_2 = TimeUtil.timeToTimeStamp(arg_11_0._targetDate[1], arg_11_0._targetDate[2], arg_11_0._index, TimeDispatcher.DailyRefreshTime, 1, 1)
+	local var_11_3 = os.date("%w", var_11_2)
 
-	gohelper.setActive(slot0._go, true)
-	gohelper.setActive(slot0._gopast, false)
-	gohelper.setActive(slot0._gonormal, true)
-	gohelper.setActive(slot0._gomultiple, false)
-	gohelper.setActive(slot0._gosingle, false)
+	gohelper.setActive(arg_11_0._go, true)
+	gohelper.setActive(arg_11_0._gopast, false)
+	gohelper.setActive(arg_11_0._gonormal, true)
+	gohelper.setActive(arg_11_0._gomultiple, false)
+	gohelper.setActive(arg_11_0._gosingle, false)
 
-	slot0._txtnormaldate.text = string.format("%02d", slot0._index)
-	slot0._txtbirthdaydate.text = string.format("%02d", slot0._index)
-	slot0._txtgolddaydate.text = string.format("%02d", slot0._index)
+	arg_11_0._txtnormaldate.text = string.format("%02d", arg_11_0._index)
+	arg_11_0._txtbirthdaydate.text = string.format("%02d", arg_11_0._index)
+	arg_11_0._txtgolddaydate.text = string.format("%02d", arg_11_0._index)
 
-	UISpriteSetMgr.instance:setSignInSprite(slot0._imageweek, "date_small_" .. os.date("%w", TimeUtil.timeToTimeStamp(slot0._targetDate[1], slot0._targetDate[2], slot0._index, TimeDispatcher.DailyRefreshTime, 1, 1)))
+	UISpriteSetMgr.instance:setSignInSprite(arg_11_0._imageweek, "date_small_" .. var_11_3)
 
-	slot0._bgcanvasGroup.alpha = 1
-	slot0._datecanvasGroup.alpha = 1
+	arg_11_0._bgcanvasGroup.alpha = 1
+	arg_11_0._datecanvasGroup.alpha = 1
 
-	gohelper.setActive(slot0._icon.gameObject, true)
-	gohelper.setActive(slot0._gocount, true)
-	gohelper.setActive(slot0._gocurrent, slot0._isSelect)
+	gohelper.setActive(arg_11_0._icon.gameObject, true)
+	gohelper.setActive(arg_11_0._gocount, true)
+	gohelper.setActive(arg_11_0._gocurrent, arg_11_0._isSelect)
 
-	if slot0._isBeforeRegisterTime then
-		slot0:_refreshNormalPastMonth()
+	if arg_11_0._isBeforeRegisterTime then
+		arg_11_0:_refreshNormalPastMonth()
 	else
-		gohelper.setActive(slot0._gopast, false)
+		gohelper.setActive(arg_11_0._gopast, false)
 
-		slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot0._mo.materilType, slot0._mo.materilId, true)
+		local var_11_4, var_11_5 = ItemModel.instance:getItemConfigAndIcon(arg_11_0._mo.materilType, arg_11_0._mo.materilId, true)
 
-		if tonumber(slot0._mo.materilType) == MaterialEnum.MaterialType.Equip then
-			slot6 = ResUrl.getPropItemIcon(slot5.icon)
+		if tonumber(arg_11_0._mo.materilType) == MaterialEnum.MaterialType.Equip then
+			var_11_5 = ResUrl.getPropItemIcon(var_11_4.icon)
 		end
 
-		slot0._icon:LoadImage(slot6)
+		arg_11_0._icon:LoadImage(var_11_5)
 
-		slot0._quantity.text = luaLang("multiple") .. GameUtil.numberDisplay(slot0._mo.quantity)
+		arg_11_0._quantity.text = luaLang("multiple") .. GameUtil.numberDisplay(arg_11_0._mo.quantity)
 
-		gohelper.setActive(slot0._get, slot0._rewardGet)
-		gohelper.setActive(slot0._gomask, not slot0._rewardGet and slot0._index < slot0._curDate.day)
+		gohelper.setActive(arg_11_0._get, arg_11_0._rewardGet)
+		gohelper.setActive(arg_11_0._gomask, not arg_11_0._rewardGet and arg_11_0._index < arg_11_0._curDate.day)
 	end
 
-	gohelper.setActive(slot0._gogold, slot2)
-	gohelper.setActive(slot0._imagebirthdayicon.gameObject, slot0._isAllowShowHead)
-	slot0:_setActive_birthday(slot0._isAllowShowHead)
-	UISpriteSetMgr.instance:setSignInSprite(slot0._imagebirthdayicon, slot1)
+	gohelper.setActive(arg_11_0._gogold, var_11_1)
+	gohelper.setActive(arg_11_0._imagebirthdayicon.gameObject, arg_11_0._isAllowShowHead)
+	arg_11_0:_setActive_birthday(arg_11_0._isAllowShowHead)
+	UISpriteSetMgr.instance:setSignInSprite(arg_11_0._imagebirthdayicon, var_11_0)
 end
 
-function slot0._refreshBirthdayCurrentMonth(slot0)
-	if slot0._isBeforeRegisterTime then
-		slot0:_refreshBirthdayPastMonth()
+function var_0_0._refreshBirthdayCurrentMonth(arg_12_0)
+	if arg_12_0._isBeforeRegisterTime then
+		arg_12_0:_refreshBirthdayPastMonth()
 
 		return
 	end
 
-	slot1 = SignInModel.instance:isHistoryDaySigned(slot0._targetDate[2], slot0._index)
-	slot2 = slot0._curDate.day <= slot0._index
-	slot3 = not slot2
-	slot5 = os.date("%w", TimeUtil.timeToTimeStamp(slot0._targetDate[1], slot0._targetDate[2], slot0._index, TimeDispatcher.DailyRefreshTime, 1, 1))
-	slot7 = slot0._isAllowShowHead and #slot0._birthHeros == 1
-	slot8 = slot6 and #slot0._birthHeros > 1
-	slot9 = "birthday_icon2"
-	slot10 = "birthday_herobg2"
+	local var_12_0 = SignInModel.instance:isHistoryDaySigned(arg_12_0._targetDate[2], arg_12_0._index)
+	local var_12_1 = arg_12_0._index >= arg_12_0._curDate.day
+	local var_12_2 = not var_12_1
+	local var_12_3 = TimeUtil.timeToTimeStamp(arg_12_0._targetDate[1], arg_12_0._targetDate[2], arg_12_0._index, TimeDispatcher.DailyRefreshTime, 1, 1)
+	local var_12_4 = os.date("%w", var_12_3)
+	local var_12_5 = arg_12_0._isAllowShowHead
+	local var_12_6 = var_12_5 and #arg_12_0._birthHeros == 1
+	local var_12_7 = var_12_5 and #arg_12_0._birthHeros > 1
+	local var_12_8 = "birthday_icon2"
+	local var_12_9 = "birthday_herobg2"
 
-	if slot2 then
-		slot9 = "birthday_icon1"
-		slot10 = "birthday_herobg1"
+	if var_12_1 then
+		var_12_8 = "birthday_icon1"
+		var_12_9 = "birthday_herobg1"
 	end
 
-	gohelper.setActive(slot0._go, true)
-	gohelper.setActive(slot0._gopast, false)
+	gohelper.setActive(arg_12_0._go, true)
+	gohelper.setActive(arg_12_0._gopast, false)
 
-	slot0._txtnormaldate.text = string.format("%02d", slot0._index)
-	slot0._txtbirthdaydate.text = string.format("%02d", slot0._index)
-	slot0._txtgolddaydate.text = string.format("%02d", slot0._index)
+	arg_12_0._txtnormaldate.text = string.format("%02d", arg_12_0._index)
+	arg_12_0._txtbirthdaydate.text = string.format("%02d", arg_12_0._index)
+	arg_12_0._txtgolddaydate.text = string.format("%02d", arg_12_0._index)
 
-	UISpriteSetMgr.instance:setSignInSprite(slot0._imageweek, "date_small_" .. slot5)
-	gohelper.setActive(slot0._icon.gameObject, false)
-	gohelper.setActive(slot0._gocurrent, slot0._isSelect)
-	gohelper.setActive(slot0._gomask, not slot0._rewardGet and slot3)
-	gohelper.setActive(slot0._gonormal, true)
-	gohelper.setActive(slot0._gocount, false)
-	gohelper.setActive(slot0._get, slot0._rewardGet)
-	gohelper.setActive(slot0._gosingle, slot7)
-	gohelper.setActive(slot0._gomultiple, slot8)
-	gohelper.setActive(slot0._gogold, false)
-	gohelper.setActive(slot0._imagebirthdayicon.gameObject, slot6)
-	UISpriteSetMgr.instance:setSignInSprite(slot0._imagebirthdayicon, slot9)
+	UISpriteSetMgr.instance:setSignInSprite(arg_12_0._imageweek, "date_small_" .. var_12_4)
+	gohelper.setActive(arg_12_0._icon.gameObject, false)
+	gohelper.setActive(arg_12_0._gocurrent, arg_12_0._isSelect)
+	gohelper.setActive(arg_12_0._gomask, not arg_12_0._rewardGet and var_12_2)
+	gohelper.setActive(arg_12_0._gonormal, true)
+	gohelper.setActive(arg_12_0._gocount, false)
+	gohelper.setActive(arg_12_0._get, arg_12_0._rewardGet)
+	gohelper.setActive(arg_12_0._gosingle, var_12_6)
+	gohelper.setActive(arg_12_0._gomultiple, var_12_7)
+	gohelper.setActive(arg_12_0._gogold, false)
+	gohelper.setActive(arg_12_0._imagebirthdayicon.gameObject, var_12_5)
+	UISpriteSetMgr.instance:setSignInSprite(arg_12_0._imagebirthdayicon, var_12_8)
 
-	if slot6 then
-		if #slot0._birthHeros > 1 then
-			for slot14 = 1, 3 do
-				gohelper.setActive(slot0._goroles[slot14], slot14 <= #slot0._birthHeros)
+	if var_12_5 then
+		if #arg_12_0._birthHeros > 1 then
+			for iter_12_0 = 1, 3 do
+				gohelper.setActive(arg_12_0._goroles[iter_12_0], iter_12_0 <= #arg_12_0._birthHeros)
 
-				if slot14 <= #slot0._birthHeros then
-					slot0._simagemultiroleicons[slot14]:LoadImage(ResUrl.getHeadIconSmall(HeroModel.instance:getByHeroId(slot0._birthHeros[slot14]) and slot15.skin or HeroConfig.instance:getHeroCO(slot0._birthHeros[slot14]).skinId))
-					UISpriteSetMgr.instance:setSignInSprite(slot0._imagerolesbg[slot14], slot10)
+				if iter_12_0 <= #arg_12_0._birthHeros then
+					local var_12_10 = HeroModel.instance:getByHeroId(arg_12_0._birthHeros[iter_12_0])
+					local var_12_11 = var_12_10 and var_12_10.skin or HeroConfig.instance:getHeroCO(arg_12_0._birthHeros[iter_12_0]).skinId
+
+					arg_12_0._simagemultiroleicons[iter_12_0]:LoadImage(ResUrl.getHeadIconSmall(var_12_11))
+					UISpriteSetMgr.instance:setSignInSprite(arg_12_0._imagerolesbg[iter_12_0], var_12_9)
 				end
 			end
-		elseif #slot0._birthHeros == 1 then
-			slot0._simagesingleicon:LoadImage(ResUrl.getHeadIconSmall(HeroModel.instance:getByHeroId(slot0._birthHeros[1]) and slot11.skin or HeroConfig.instance:getHeroCO(slot0._birthHeros[1]).skinId))
-			UISpriteSetMgr.instance:setSignInSprite(slot0._imagesinglerolebg, slot10)
+		elseif #arg_12_0._birthHeros == 1 then
+			local var_12_12 = HeroModel.instance:getByHeroId(arg_12_0._birthHeros[1])
+			local var_12_13 = var_12_12 and var_12_12.skin or HeroConfig.instance:getHeroCO(arg_12_0._birthHeros[1]).skinId
+
+			arg_12_0._simagesingleicon:LoadImage(ResUrl.getHeadIconSmall(var_12_13))
+			UISpriteSetMgr.instance:setSignInSprite(arg_12_0._imagesinglerolebg, var_12_9)
 		end
 	end
 
-	slot0:_setActive_birthday(slot6)
+	arg_12_0:_setActive_birthday(var_12_5)
 end
 
-function slot0._refreshNormalPastMonth(slot0)
-	slot4 = slot0._isAllowShowHead and SignInModel.instance:isHistoryDaySigned(slot0._targetDate[2], slot0._index)
-	slot5 = SignInModel.instance:checkIsGoldDay(slot0._targetDate, true, slot0._index)
-	slot0._txtnormaldate.text = string.format("%02d", slot0._index)
-	slot0._txtbirthdaydate.text = string.format("%02d", slot0._index)
-	slot0._txtgolddaydate.text = string.format("%02d", slot0._index)
+function var_0_0._refreshNormalPastMonth(arg_13_0)
+	local var_13_0 = SignInModel.instance:isHistoryDaySigned(arg_13_0._targetDate[2], arg_13_0._index)
+	local var_13_1 = TimeUtil.timeToTimeStamp(arg_13_0._targetDate[1], arg_13_0._targetDate[2], arg_13_0._index, TimeDispatcher.DailyRefreshTime, 1, 1)
+	local var_13_2 = os.date("%w", var_13_1)
+	local var_13_3 = arg_13_0._isAllowShowHead and var_13_0
+	local var_13_4 = SignInModel.instance:checkIsGoldDay(arg_13_0._targetDate, true, arg_13_0._index)
 
-	UISpriteSetMgr.instance:setSignInSprite(slot0._imageweek, "date_small_" .. os.date("%w", TimeUtil.timeToTimeStamp(slot0._targetDate[1], slot0._targetDate[2], slot0._index, TimeDispatcher.DailyRefreshTime, 1, 1)))
-	gohelper.setActive(slot0._go, true)
-	gohelper.setActive(slot0._gopast, true)
-	gohelper.setActive(slot0._gonormal, true)
-	gohelper.setActive(slot0._gosingle, false)
-	gohelper.setActive(slot0._gomultiple, false)
-	gohelper.setActive(slot0._pastselect, slot0._isSelect)
-	gohelper.setActive(slot0._gocurrent, false)
-	gohelper.setActive(slot0._gomask, false)
-	gohelper.setActive(slot0._icon.gameObject, false)
-	gohelper.setActive(slot0._gocount, false)
-	gohelper.setActive(slot0._get, false)
+	arg_13_0._txtnormaldate.text = string.format("%02d", arg_13_0._index)
+	arg_13_0._txtbirthdaydate.text = string.format("%02d", arg_13_0._index)
+	arg_13_0._txtgolddaydate.text = string.format("%02d", arg_13_0._index)
 
-	slot0._bgcanvasGroup.alpha = 0.6
-	slot0._datecanvasGroup.alpha = 0.6
+	UISpriteSetMgr.instance:setSignInSprite(arg_13_0._imageweek, "date_small_" .. var_13_2)
+	gohelper.setActive(arg_13_0._go, true)
+	gohelper.setActive(arg_13_0._gopast, true)
+	gohelper.setActive(arg_13_0._gonormal, true)
+	gohelper.setActive(arg_13_0._gosingle, false)
+	gohelper.setActive(arg_13_0._gomultiple, false)
+	gohelper.setActive(arg_13_0._pastselect, arg_13_0._isSelect)
+	gohelper.setActive(arg_13_0._gocurrent, false)
+	gohelper.setActive(arg_13_0._gomask, false)
+	gohelper.setActive(arg_13_0._icon.gameObject, false)
+	gohelper.setActive(arg_13_0._gocount, false)
+	gohelper.setActive(arg_13_0._get, false)
 
-	gohelper.setActive(slot0._imagebirthdayicon.gameObject, slot4)
+	arg_13_0._bgcanvasGroup.alpha = 0.6
+	arg_13_0._datecanvasGroup.alpha = 0.6
 
-	if slot4 then
-		UISpriteSetMgr.instance:setSignInSprite(slot0._imagebirthdayicon, "birthday_icon2")
+	gohelper.setActive(arg_13_0._imagebirthdayicon.gameObject, var_13_3)
+
+	if var_13_3 then
+		UISpriteSetMgr.instance:setSignInSprite(arg_13_0._imagebirthdayicon, "birthday_icon2")
 	end
 
-	if 12 * (slot0._curDate.year - slot0._targetDate[1] - 1) + 13 - slot0._targetDate[2] + slot0._curDate.month > 13 then
-		slot0:_setActive_sign(false)
+	if 12 * (arg_13_0._curDate.year - arg_13_0._targetDate[1] - 1) + 13 - arg_13_0._targetDate[2] + arg_13_0._curDate.month > 13 then
+		arg_13_0:_setActive_sign(false)
 	else
-		slot0:_setActive_sign(not slot1)
+		arg_13_0:_setActive_sign(not var_13_0)
 	end
 
-	gohelper.setActive(slot0._gogold, slot5)
-	slot0:_setActive_birthday(slot4)
+	gohelper.setActive(arg_13_0._gogold, var_13_4)
+	arg_13_0:_setActive_birthday(var_13_3)
 end
 
-function slot0._refreshBirthdayPastMonth(slot0)
-	slot1 = "birthday_herobg2"
-	slot3 = slot0._showBirthday and slot0._isAllowShowHead and SignInModel.instance:isHistoryDaySigned(slot0._targetDate[2], slot0._index)
-	slot4 = slot3 and #slot0._birthHeros == 1
-	slot5 = slot3 and #slot0._birthHeros > 1
-	slot0._txtnormaldate.text = string.format("%02d", slot0._index)
-	slot0._txtbirthdaydate.text = string.format("%02d", slot0._index)
-	slot0._txtgolddaydate.text = string.format("%02d", slot0._index)
+function var_0_0._refreshBirthdayPastMonth(arg_14_0)
+	local var_14_0 = "birthday_herobg2"
+	local var_14_1 = SignInModel.instance:isHistoryDaySigned(arg_14_0._targetDate[2], arg_14_0._index)
+	local var_14_2 = arg_14_0._showBirthday and arg_14_0._isAllowShowHead and var_14_1
+	local var_14_3 = var_14_2 and #arg_14_0._birthHeros == 1
+	local var_14_4 = var_14_2 and #arg_14_0._birthHeros > 1
+	local var_14_5 = TimeUtil.timeToTimeStamp(arg_14_0._targetDate[1], arg_14_0._targetDate[2], arg_14_0._index, TimeDispatcher.DailyRefreshTime, 1, 1)
+	local var_14_6 = os.date("%w", var_14_5)
 
-	gohelper.setActive(slot0._gopast, true)
-	gohelper.setActive(slot0._go, true)
-	gohelper.setActive(slot0._gomask, false)
-	gohelper.setActive(slot0._icon.gameObject, false)
-	gohelper.setActive(slot0._gocount, false)
-	gohelper.setActive(slot0._pastselect, slot0._isSelect)
-	gohelper.setActive(slot0._gocurrent, false)
-	gohelper.setActive(slot0._get, false)
+	arg_14_0._txtnormaldate.text = string.format("%02d", arg_14_0._index)
+	arg_14_0._txtbirthdaydate.text = string.format("%02d", arg_14_0._index)
+	arg_14_0._txtgolddaydate.text = string.format("%02d", arg_14_0._index)
 
-	slot0._bgcanvasGroup.alpha = 0.6
-	slot0._datecanvasGroup.alpha = 0.6
+	gohelper.setActive(arg_14_0._gopast, true)
+	gohelper.setActive(arg_14_0._go, true)
+	gohelper.setActive(arg_14_0._gomask, false)
+	gohelper.setActive(arg_14_0._icon.gameObject, false)
+	gohelper.setActive(arg_14_0._gocount, false)
+	gohelper.setActive(arg_14_0._pastselect, arg_14_0._isSelect)
+	gohelper.setActive(arg_14_0._gocurrent, false)
+	gohelper.setActive(arg_14_0._get, false)
 
-	UISpriteSetMgr.instance:setSignInSprite(slot0._imageweek, "date_small_" .. os.date("%w", TimeUtil.timeToTimeStamp(slot0._targetDate[1], slot0._targetDate[2], slot0._index, TimeDispatcher.DailyRefreshTime, 1, 1)))
+	arg_14_0._bgcanvasGroup.alpha = 0.6
+	arg_14_0._datecanvasGroup.alpha = 0.6
 
-	if slot0._showBirthday then
-		gohelper.setActive(slot0._icon.gameObject, false)
+	UISpriteSetMgr.instance:setSignInSprite(arg_14_0._imageweek, "date_small_" .. var_14_6)
+
+	if arg_14_0._showBirthday then
+		gohelper.setActive(arg_14_0._icon.gameObject, false)
 	end
 
-	gohelper.setActive(slot0._gonormal, true)
-	gohelper.setActive(slot0._imagebirthdayicon.gameObject, slot3)
+	gohelper.setActive(arg_14_0._gonormal, true)
+	gohelper.setActive(arg_14_0._imagebirthdayicon.gameObject, var_14_2)
 
-	if slot3 then
-		UISpriteSetMgr.instance:setSignInSprite(slot0._imagebirthdayicon, "birthday_icon2")
+	if var_14_2 then
+		UISpriteSetMgr.instance:setSignInSprite(arg_14_0._imagebirthdayicon, "birthday_icon2")
 	end
 
-	gohelper.setActive(slot0._gosingle, slot4)
-	gohelper.setActive(slot0._gomultiple, slot5)
+	gohelper.setActive(arg_14_0._gosingle, var_14_3)
+	gohelper.setActive(arg_14_0._gomultiple, var_14_4)
 
-	if slot3 then
-		if #slot0._birthHeros > 1 then
-			for slot11 = 1, 3 do
-				gohelper.setActive(slot0._goroles[slot11], slot11 <= #slot0._birthHeros)
+	if var_14_2 then
+		if #arg_14_0._birthHeros > 1 then
+			for iter_14_0 = 1, 3 do
+				gohelper.setActive(arg_14_0._goroles[iter_14_0], iter_14_0 <= #arg_14_0._birthHeros)
 
-				if slot11 <= #slot0._birthHeros then
-					slot0._simagemultiroleicons[slot11]:LoadImage(ResUrl.getHeadIconSmall(HeroModel.instance:getByHeroId(slot0._birthHeros[slot11]) and slot12.skin or HeroConfig.instance:getHeroCO(slot0._birthHeros[slot11]).skinId))
-					UISpriteSetMgr.instance:setSignInSprite(slot0._imagerolesbg[slot11], slot1)
+				if iter_14_0 <= #arg_14_0._birthHeros then
+					local var_14_7 = HeroModel.instance:getByHeroId(arg_14_0._birthHeros[iter_14_0])
+					local var_14_8 = var_14_7 and var_14_7.skin or HeroConfig.instance:getHeroCO(arg_14_0._birthHeros[iter_14_0]).skinId
+
+					arg_14_0._simagemultiroleicons[iter_14_0]:LoadImage(ResUrl.getHeadIconSmall(var_14_8))
+					UISpriteSetMgr.instance:setSignInSprite(arg_14_0._imagerolesbg[iter_14_0], var_14_0)
 				end
 			end
-		elseif #slot0._birthHeros == 1 then
-			slot0._simagesingleicon:LoadImage(ResUrl.getHeadIconSmall(HeroModel.instance:getByHeroId(slot0._birthHeros[1]) and slot8.skin or HeroConfig.instance:getHeroCO(slot0._birthHeros[1]).skinId))
-			UISpriteSetMgr.instance:setSignInSprite(slot0._imagesinglerolebg, slot1)
+		elseif #arg_14_0._birthHeros == 1 then
+			local var_14_9 = HeroModel.instance:getByHeroId(arg_14_0._birthHeros[1])
+			local var_14_10 = var_14_9 and var_14_9.skin or HeroConfig.instance:getHeroCO(arg_14_0._birthHeros[1]).skinId
+
+			arg_14_0._simagesingleicon:LoadImage(ResUrl.getHeadIconSmall(var_14_10))
+			UISpriteSetMgr.instance:setSignInSprite(arg_14_0._imagesinglerolebg, var_14_0)
 		end
 	end
 
-	if 12 * (slot0._curDate.year - slot0._targetDate[1] - 1) + 13 - slot0._targetDate[2] + slot0._curDate.month > 13 then
-		slot0:_setActive_sign(false)
+	if 12 * (arg_14_0._curDate.year - arg_14_0._targetDate[1] - 1) + 13 - arg_14_0._targetDate[2] + arg_14_0._curDate.month > 13 then
+		arg_14_0:_setActive_sign(false)
 	else
-		slot0:_setActive_sign(not slot2)
+		arg_14_0:_setActive_sign(not var_14_1)
 	end
 
-	gohelper.setActive(slot0._gogold, false)
-	slot0:_setActive_birthday(slot3)
+	gohelper.setActive(arg_14_0._gogold, false)
+	arg_14_0:_setActive_birthday(var_14_2)
 end
 
-function slot0._closeItemEffect(slot0)
+function var_0_0._closeItemEffect(arg_15_0)
+	return
 end
 
-function slot0._onRefreshBirthdayState(slot0)
-	slot0:_refreshData()
-	slot0:_startShowItem()
+function var_0_0._onRefreshBirthdayState(arg_16_0)
+	arg_16_0:_refreshData()
+	arg_16_0:_startShowItem()
 end
 
-function slot0._onGetSignInReply(slot0)
-	if slot0._targetDate[1] ~= slot0._curDate.year or slot0._targetDate[2] ~= slot0._curDate.month or slot0._curDate.day ~= slot0._index then
+function var_0_0._onGetSignInReply(arg_17_0)
+	if arg_17_0._targetDate[1] ~= arg_17_0._curDate.year or arg_17_0._targetDate[2] ~= arg_17_0._curDate.month or arg_17_0._curDate.day ~= arg_17_0._index then
 		return
 	end
 
-	slot0:_refreshData()
-	slot0:_startShowItem()
+	arg_17_0:_refreshData()
+	arg_17_0:_startShowItem()
 end
 
-function slot0.onClose(slot0)
-	gohelper.setActive(slot0._go, false)
+function var_0_0.onClose(arg_18_0)
+	gohelper.setActive(arg_18_0._go, false)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._icon:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._refreshItem, slot0, 0.3)
-	TaskDispatcher.cancelTask(slot0._showItemEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._showSwitchEffect, slot0)
+function var_0_0.onDestroy(arg_19_0)
+	arg_19_0._icon:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_19_0._refreshItem, arg_19_0, 0.3)
+	TaskDispatcher.cancelTask(arg_19_0._showItemEffect, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._showSwitchEffect, arg_19_0)
 end
 
-function slot0.parent(slot0)
-	return slot0._mo.parent
+function var_0_0.parent(arg_20_0)
+	return arg_20_0._mo.parent
 end
 
-function slot0.haveFestival(slot0)
-	return slot0:parent() and slot1:haveFestival() or false
+function var_0_0.haveFestival(arg_21_0)
+	local var_21_0 = arg_21_0:parent()
+
+	return var_21_0 and var_21_0:haveFestival() or false
 end
 
-function slot0._setActive_birthday(slot0, slot1)
-	slot2 = slot0:haveFestival()
+function var_0_0._setActive_birthday(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:haveFestival()
 
-	gohelper.setActive(slot0._gobirthday, slot1 and not slot2)
-	gohelper.setActive(slot0._gobirthday_act, slot1 and slot2)
+	gohelper.setActive(arg_22_0._gobirthday, arg_22_1 and not var_22_0)
+	gohelper.setActive(arg_22_0._gobirthday_act, arg_22_1 and var_22_0)
 
-	slot0._txtbirthdaydate_act.text = string.format("%02d", slot0._index)
+	arg_22_0._txtbirthdaydate_act.text = string.format("%02d", arg_22_0._index)
 end
 
-function slot0._setActive_sign(slot0, slot1)
-	gohelper.setActive(slot0._gosigned, slot1)
-	gohelper.setActive(slot0._gonosigned, not slot1)
+function var_0_0._setActive_sign(arg_23_0, arg_23_1)
+	gohelper.setActive(arg_23_0._gosigned, arg_23_1)
+	gohelper.setActive(arg_23_0._gonosigned, not arg_23_1)
 end
 
-return slot0
+return var_0_0

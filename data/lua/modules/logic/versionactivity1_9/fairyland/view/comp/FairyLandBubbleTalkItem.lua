@@ -1,91 +1,94 @@
-module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandBubbleTalkItem", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandBubbleTalkItem", package.seeall)
 
-slot0 = class("FairyLandBubbleTalkItem", UserDataDispose)
+local var_0_0 = class("FairyLandBubbleTalkItem", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0._go = slot1
-	slot0.bubbleView = slot2
-	slot0.transform = slot1.transform
-	slot0.parent = slot0.transform.parent
-	slot0.goRoot = gohelper.findChild(slot0._go, "root")
-	slot0.goBubble = gohelper.findChild(slot0.goRoot, "image_Bubble")
-	slot0.trsBubble = slot0.goBubble.transform
-	slot0.goText = gohelper.findChild(slot0.goRoot, "image_Bubble/Scroll View/Viewport/#txt_Descr")
-	slot0.textFade = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.goText, FairyLandTextFade)
-	slot0.goArrow = gohelper.findChild(slot0.goRoot, "image_Bubble/Scroll View/image_Arrow")
+	arg_1_0._go = arg_1_1
+	arg_1_0.bubbleView = arg_1_2
+	arg_1_0.transform = arg_1_1.transform
+	arg_1_0.parent = arg_1_0.transform.parent
+	arg_1_0.goRoot = gohelper.findChild(arg_1_0._go, "root")
+	arg_1_0.goBubble = gohelper.findChild(arg_1_0.goRoot, "image_Bubble")
+	arg_1_0.trsBubble = arg_1_0.goBubble.transform
+	arg_1_0.goText = gohelper.findChild(arg_1_0.goRoot, "image_Bubble/Scroll View/Viewport/#txt_Descr")
+	arg_1_0.textFade = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goText, FairyLandTextFade)
+	arg_1_0.goArrow = gohelper.findChild(arg_1_0.goRoot, "image_Bubble/Scroll View/image_Arrow")
 end
 
-function slot0.showBubble(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot0._go, true)
-	slot0.textFade:setText({
-		content = slot1,
-		tween = slot2,
-		layoutCallback = slot0.layoutBubble,
-		callback = slot0.onTextPlayFinish,
-		callbackObj = slot0
-	})
-	gohelper.setActive(slot0.goArrow, slot3)
-	slot0:addUpdate()
+function var_0_0.showBubble(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	gohelper.setActive(arg_2_0._go, true)
+
+	local var_2_0 = {
+		content = arg_2_1,
+		tween = arg_2_2,
+		layoutCallback = arg_2_0.layoutBubble,
+		callback = arg_2_0.onTextPlayFinish,
+		callbackObj = arg_2_0
+	}
+
+	arg_2_0.textFade:setText(var_2_0)
+	gohelper.setActive(arg_2_0.goArrow, arg_2_3)
+	arg_2_0:addUpdate()
 end
 
-function slot0.addUpdate(slot0)
-	if not slot0.addFlag then
-		slot0.addFlag = true
+function var_0_0.addUpdate(arg_3_0)
+	if not arg_3_0.addFlag then
+		arg_3_0.addFlag = true
 
-		LateUpdateBeat:Add(slot0._forceUpdatePos, slot0)
+		LateUpdateBeat:Add(arg_3_0._forceUpdatePos, arg_3_0)
 	end
 end
 
-function slot0.layoutBubble(slot0, slot1)
-	recthelper.setHeight(slot0.trsBubble, slot1 + 215)
+function var_0_0.layoutBubble(arg_4_0, arg_4_1)
+	recthelper.setHeight(arg_4_0.trsBubble, arg_4_1 + 215)
 end
 
-function slot0.onTextPlayFinish(slot0)
-	slot0.bubbleView:onTextPlayFinish()
+function var_0_0.onTextPlayFinish(arg_5_0)
+	arg_5_0.bubbleView:onTextPlayFinish()
 end
 
-function slot0.setTargetGO(slot0, slot1)
-	slot0.targetGO = slot1
+function var_0_0.setTargetGO(arg_6_0, arg_6_1)
+	arg_6_0.targetGO = arg_6_1
 end
 
-function slot0._forceUpdatePos(slot0)
-	if gohelper.isNil(slot0.targetGO) then
+function var_0_0._forceUpdatePos(arg_7_0)
+	if gohelper.isNil(arg_7_0.targetGO) then
 		return
 	end
 
-	slot1, slot2 = recthelper.rectToRelativeAnchorPos2(slot0.targetGO.transform.position, slot0.parent)
+	local var_7_0, var_7_1 = recthelper.rectToRelativeAnchorPos2(arg_7_0.targetGO.transform.position, arg_7_0.parent)
 
-	recthelper.setAnchor(slot0.transform, slot1, slot2)
+	recthelper.setAnchor(arg_7_0.transform, var_7_0, var_7_1)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0._go, false)
+function var_0_0.hide(arg_8_0)
+	gohelper.setActive(arg_8_0._go, false)
 
-	if slot0.addFlag then
-		LateUpdateBeat:Remove(slot0._forceUpdatePos, slot0)
+	if arg_8_0.addFlag then
+		LateUpdateBeat:Remove(arg_8_0._forceUpdatePos, arg_8_0)
 
-		slot0.addFlag = false
+		arg_8_0.addFlag = false
 	end
 
-	if slot0.textFade then
-		slot0.textFade:killTween()
+	if arg_8_0.textFade then
+		arg_8_0.textFade:killTween()
 	end
 end
 
-function slot0.dispose(slot0)
-	if slot0.addFlag then
-		LateUpdateBeat:Remove(slot0._forceUpdatePos, slot0)
+function var_0_0.dispose(arg_9_0)
+	if arg_9_0.addFlag then
+		LateUpdateBeat:Remove(arg_9_0._forceUpdatePos, arg_9_0)
 
-		slot0.addFlag = false
+		arg_9_0.addFlag = false
 	end
 
-	if slot0.textFade then
-		slot0.textFade:onDestroy()
+	if arg_9_0.textFade then
+		arg_9_0.textFade:onDestroy()
 	end
 
-	slot0:__onDispose()
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

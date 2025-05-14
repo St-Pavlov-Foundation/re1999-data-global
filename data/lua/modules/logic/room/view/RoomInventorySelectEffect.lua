@@ -1,90 +1,94 @@
-module("modules.logic.room.view.RoomInventorySelectEffect", package.seeall)
+﻿module("modules.logic.room.view.RoomInventorySelectEffect", package.seeall)
 
-slot0 = class("RoomInventorySelectEffect", BaseView)
+local var_0_0 = class("RoomInventorySelectEffect", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goreclaim = gohelper.findChild(slot0.viewGO, "go_content/go_count/#reclaim")
-	slot0._gomassif = gohelper.findChild(slot0.viewGO, "go_content/go_count/#reclaim/reclaim_massif/#massif")
-	slot0._goreclaimtips = gohelper.findChild(slot0.viewGO, "go_content/#go_reclaimtips")
-	slot0._gomassiftips = gohelper.findChild(slot0.viewGO, "go_content/#go_reclaimtips/#massiftips")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._goreclaim = gohelper.findChild(arg_4_0.viewGO, "go_content/go_count/#reclaim")
+	arg_4_0._gomassif = gohelper.findChild(arg_4_0.viewGO, "go_content/go_count/#reclaim/reclaim_massif/#massif")
+	arg_4_0._goreclaimtips = gohelper.findChild(arg_4_0.viewGO, "go_content/#go_reclaimtips")
+	arg_4_0._gomassiftips = gohelper.findChild(arg_4_0.viewGO, "go_content/#go_reclaimtips/#massiftips")
 
-	gohelper.setActive(slot0._gomassif, false)
-	gohelper.setActive(slot0._gomassiftips, false)
-	gohelper.setActive(slot0._goreclaimtips, true)
+	gohelper.setActive(arg_4_0._gomassif, false)
+	gohelper.setActive(arg_4_0._gomassiftips, false)
+	gohelper.setActive(arg_4_0._goreclaimtips, true)
 
-	slot0._isViewShow = false
-	slot0._isViewShowing = false
-	slot0._nextPlayTipsTime = 0
-	slot0._isFlag = false
-	slot0._massifEffList = {}
-	slot0._massifTipEffList = {}
-	slot0._reclaimEffTab = slot0:_getUserDataTbEffect(slot0._goreclaim)
-	slot0._backBlockIds = {}
-	slot0._tipsInfoList = {}
+	arg_4_0._isViewShow = false
+	arg_4_0._isViewShowing = false
+	arg_4_0._nextPlayTipsTime = 0
+	arg_4_0._isFlag = false
+	arg_4_0._massifEffList = {}
+	arg_4_0._massifTipEffList = {}
+	arg_4_0._reclaimEffTab = arg_4_0:_getUserDataTbEffect(arg_4_0._goreclaim)
+	arg_4_0._backBlockIds = {}
+	arg_4_0._tipsInfoList = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockListDataChanged, slot0._onBackBlockChanged, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockPlayUIAnim, slot0._onBackBlockPlayUIAnim, slot0)
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockListDataChanged, arg_5_0._onBackBlockChanged, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockPlayUIAnim, arg_5_0._onBackBlockPlayUIAnim, arg_5_0)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayPlayTipsEffect, slot0)
+function var_0_0.onClose(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._delayPlayTipsEffect, arg_6_0)
 
-	if slot0._reclaimEffTab then
-		slot0._reclaimEffTab:dispose()
+	if arg_6_0._reclaimEffTab then
+		arg_6_0._reclaimEffTab:dispose()
 	end
 
-	slot0._reclaimEffTab = nil
+	arg_6_0._reclaimEffTab = nil
 
-	for slot4 = 1, #slot0._massifEffList do
-		slot0._massifEffList[slot4]:dispose()
+	for iter_6_0 = 1, #arg_6_0._massifEffList do
+		arg_6_0._massifEffList[iter_6_0]:dispose()
 	end
 
-	slot0._massifEffList = {}
+	arg_6_0._massifEffList = {}
 
-	for slot4 = 1, #slot0._massifTipEffList do
-		slot0._massifTipEffList[slot4]:dispose()
+	for iter_6_1 = 1, #arg_6_0._massifTipEffList do
+		arg_6_0._massifTipEffList[iter_6_1]:dispose()
 	end
 
-	slot0._massifTipEffList = {}
+	arg_6_0._massifTipEffList = {}
 end
 
-function slot0._onBackBlockChanged(slot0, slot1, slot2, slot3)
-	tabletool.addValues(slot0._backBlockIds, slot1)
+function var_0_0._onBackBlockChanged(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	tabletool.addValues(arg_7_0._backBlockIds, arg_7_1)
 
-	for slot7 = 1, #slot1 do
-		if RoomConfig.instance:getBlock(slot1[slot7]) then
-			slot0:_addPackageId(slot8.packageId)
+	for iter_7_0 = 1, #arg_7_1 do
+		local var_7_0 = RoomConfig.instance:getBlock(arg_7_1[iter_7_0])
+
+		if var_7_0 then
+			arg_7_0:_addPackageId(var_7_0.packageId)
 		end
 	end
 
-	if slot3 and #slot3 > 0 then
-		for slot7 = 1, #slot3 do
-			slot0:_addBuildingId(slot3[slot7])
+	if arg_7_3 and #arg_7_3 > 0 then
+		for iter_7_1 = 1, #arg_7_3 do
+			arg_7_0:_addBuildingId(arg_7_3[iter_7_1])
 		end
 	end
 
-	slot0:_playEffect()
+	arg_7_0:_playEffect()
 end
 
-function slot0._onBackBlockPlayUIAnim(slot0)
-	slot0:_playEffect()
+function var_0_0._onBackBlockPlayUIAnim(arg_8_0)
+	arg_8_0:_playEffect()
 end
 
-function slot0._getIsShow(slot0)
+function var_0_0._getIsShow(arg_9_0)
 	if RoomMapBlockModel.instance:isBackMore() or RoomBuildingController.instance:isBuildingListShow() then
 		return false
 	end
@@ -92,179 +96,218 @@ function slot0._getIsShow(slot0)
 	return true
 end
 
-function slot0._playEffect(slot0)
-	slot0:_playMassifEffect()
-	slot0:_playTipsEffect()
+function var_0_0._playEffect(arg_10_0)
+	arg_10_0:_playMassifEffect()
+	arg_10_0:_playTipsEffect()
 end
 
-function slot0._addPackageId(slot0, slot1)
-	if slot0:_getTipsInfo(slot1, true) then
-		slot3.count = slot3.count + 1
-	elseif RoomConfig.instance:getBlockPackageConfig(slot1) then
-		table.insert(slot0._tipsInfoList, {
-			count = 1,
-			id = slot1,
-			isBlock = slot2,
-			name = slot4.name,
-			rare = slot4.rare
-		})
-	end
-end
+function var_0_0._addPackageId(arg_11_0, arg_11_1)
+	local var_11_0 = true
+	local var_11_1 = arg_11_0:_getTipsInfo(arg_11_1, var_11_0)
 
-function slot0._addBuildingId(slot0, slot1)
-	if slot0:_getTipsInfo(slot1, false) then
-		slot3.count = slot3.count + 1
-	elseif RoomConfig.instance:getBuildingConfig(slot1) then
-		table.insert(slot0._tipsInfoList, {
-			count = 1,
-			id = slot1,
-			isBlock = slot2,
-			name = slot4.name,
-			rare = slot4.rare
-		})
-	end
-end
+	if var_11_1 then
+		var_11_1.count = var_11_1.count + 1
+	else
+		local var_11_2 = RoomConfig.instance:getBlockPackageConfig(arg_11_1)
 
-function slot0._getTipsInfo(slot0, slot1, slot2)
-	for slot7 = 1, #slot0._tipsInfoList do
-		if slot3[slot7].id == slot1 and slot8.isBlock == slot2 then
-			return slot8
+		if var_11_2 then
+			local var_11_3 = {
+				count = 1,
+				id = arg_11_1,
+				isBlock = var_11_0,
+				name = var_11_2.name,
+				rare = var_11_2.rare
+			}
+
+			table.insert(arg_11_0._tipsInfoList, var_11_3)
 		end
 	end
 end
 
-function slot0._getUserDataTbEffect(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.effectTime = 2
-	slot2.isRunning = false
+function var_0_0._addBuildingId(arg_12_0, arg_12_1)
+	local var_12_0 = false
+	local var_12_1 = arg_12_0:_getTipsInfo(arg_12_1, var_12_0)
 
-	function slot2.playEffect(slot0, slot1)
-		slot0.isRunning = true
+	if var_12_1 then
+		var_12_1.count = var_12_1.count + 1
+	else
+		local var_12_2 = RoomConfig.instance:getBuildingConfig(arg_12_1)
 
-		TaskDispatcher.cancelTask(slot0._playEffect, slot0)
-		TaskDispatcher.runDelay(slot0._playEffect, slot0, slot1 or 0)
+		if var_12_2 then
+			local var_12_3 = {
+				count = 1,
+				id = arg_12_1,
+				isBlock = var_12_0,
+				name = var_12_2.name,
+				rare = var_12_2.rare
+			}
+
+			table.insert(arg_12_0._tipsInfoList, var_12_3)
+		end
 	end
-
-	function slot2._playEffect(slot0)
-		gohelper.setActive(slot0.go, false)
-		gohelper.setActive(slot0.go, true)
-		TaskDispatcher.cancelTask(slot0._stopEffect, slot0)
-		TaskDispatcher.runDelay(slot0._stopEffect, slot0, slot0.effectTime or 1.5)
-	end
-
-	function slot2._stopEffect(slot0)
-		slot0.isRunning = false
-
-		gohelper.setActive(slot0.go, false)
-	end
-
-	function slot2._clearTask(slot0)
-		TaskDispatcher.cancelTask(slot0._playEffect, slot0)
-		TaskDispatcher.cancelTask(slot0._stopEffect, slot0)
-	end
-
-	function slot2.dispose(slot0)
-		slot0:_clearTask()
-		slot0:_stopEffect()
-	end
-
-	return slot2
 end
 
-function slot0._playMassifEffect(slot0)
-	if not slot0:_getIsShow() then
+function var_0_0._getTipsInfo(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0._tipsInfoList
+
+	for iter_13_0 = 1, #var_13_0 do
+		local var_13_1 = var_13_0[iter_13_0]
+
+		if var_13_1.id == arg_13_1 and var_13_1.isBlock == arg_13_2 then
+			return var_13_1
+		end
+	end
+end
+
+function var_0_0._getUserDataTbEffect(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getUserDataTb_()
+
+	var_14_0.go = arg_14_1
+	var_14_0.effectTime = 2
+	var_14_0.isRunning = false
+
+	function var_14_0.playEffect(arg_15_0, arg_15_1)
+		arg_15_0.isRunning = true
+
+		TaskDispatcher.cancelTask(arg_15_0._playEffect, arg_15_0)
+		TaskDispatcher.runDelay(arg_15_0._playEffect, arg_15_0, arg_15_1 or 0)
+	end
+
+	function var_14_0._playEffect(arg_16_0)
+		gohelper.setActive(arg_16_0.go, false)
+		gohelper.setActive(arg_16_0.go, true)
+		TaskDispatcher.cancelTask(arg_16_0._stopEffect, arg_16_0)
+		TaskDispatcher.runDelay(arg_16_0._stopEffect, arg_16_0, arg_16_0.effectTime or 1.5)
+	end
+
+	function var_14_0._stopEffect(arg_17_0)
+		arg_17_0.isRunning = false
+
+		gohelper.setActive(arg_17_0.go, false)
+	end
+
+	function var_14_0._clearTask(arg_18_0)
+		TaskDispatcher.cancelTask(arg_18_0._playEffect, arg_18_0)
+		TaskDispatcher.cancelTask(arg_18_0._stopEffect, arg_18_0)
+	end
+
+	function var_14_0.dispose(arg_19_0)
+		arg_19_0:_clearTask()
+		arg_19_0:_stopEffect()
+	end
+
+	return var_14_0
+end
+
+function var_0_0._playMassifEffect(arg_20_0)
+	if not arg_20_0:_getIsShow() then
 		return
 	end
 
-	slot0._backBlockIds = {}
+	local var_20_0 = arg_20_0._backBlockIds
 
-	if math.min(5, #slot0._backBlockIds) > 0 then
-		slot0._reclaimEffTab.effectTime = 3
+	arg_20_0._backBlockIds = {}
 
-		slot0._reclaimEffTab:playEffect()
+	local var_20_1 = math.min(5, #var_20_0)
+
+	if var_20_1 > 0 then
+		arg_20_0._reclaimEffTab.effectTime = 3
+
+		arg_20_0._reclaimEffTab:playEffect()
 	end
 
-	for slot6 = 1, slot2 do
-		if not slot0._massifEffList[slot6] then
-			table.insert(slot0._massifEffList, slot0:_getUserDataTbEffect(gohelper.cloneInPlace(slot0._gomassif, "massif" .. slot6)))
+	for iter_20_0 = 1, var_20_1 do
+		local var_20_2 = arg_20_0._massifEffList[iter_20_0]
+
+		if not var_20_2 then
+			local var_20_3 = gohelper.cloneInPlace(arg_20_0._gomassif, "massif" .. iter_20_0)
+
+			var_20_2 = arg_20_0:_getUserDataTbEffect(var_20_3)
+
+			table.insert(arg_20_0._massifEffList, var_20_2)
 		end
 
-		slot7:playEffect(slot6 * 0.06)
+		var_20_2:playEffect(iter_20_0 * 0.06)
 	end
 end
 
-function slot0._delayPlayTipsEffect(slot0)
-	if #slot0._tipsInfoList > 0 then
-		slot0:_playTipsEffect()
+function var_0_0._delayPlayTipsEffect(arg_21_0)
+	if #arg_21_0._tipsInfoList > 0 then
+		arg_21_0:_playTipsEffect()
 	end
 end
 
-function slot0._playTipsEffect(slot0)
-	if not slot0:_getIsShow() then
+function var_0_0._playTipsEffect(arg_22_0)
+	if not arg_22_0:_getIsShow() then
 		return
 	end
 
-	slot1 = Time.time
-	slot2 = slot0._tipsInfoList
-	slot3 = 1
-	slot4 = RoomInventoryBlockModel.instance:getCurPackageMO()
+	local var_22_0 = Time.time
+	local var_22_1 = arg_22_0._tipsInfoList
+	local var_22_2 = 1
+	local var_22_3 = RoomInventoryBlockModel.instance:getCurPackageMO()
 
-	for slot8 = 1, 5 do
-		if not slot0._massifTipEffList[slot8] then
-			slot10 = gohelper.cloneInPlace(slot0._gomassiftips, "gomassiftips" .. slot8)
-			slot9 = slot0:_getUserDataTbEffect(slot10)
-			slot9._imagerare = gohelper.findChildImage(slot10, "bg/rare")
-			slot9._txtname = gohelper.findChildText(slot10, "bg/txt_name")
-			slot9._txtnum = gohelper.findChildText(slot10, "bg/txt_num")
-			slot9._goicon = gohelper.findChild(slot10, "bg/txt_num/icon")
-			slot9._gobuildingicon = gohelper.findChild(slot10, "bg/txt_num/building_icon")
-			slot9.finishTime = 0
-			slot9.effectTime = 3.7
+	for iter_22_0 = 1, 5 do
+		local var_22_4 = arg_22_0._massifTipEffList[iter_22_0]
 
-			table.insert(slot0._massifTipEffList, slot9)
+		if not var_22_4 then
+			local var_22_5 = gohelper.cloneInPlace(arg_22_0._gomassiftips, "gomassiftips" .. iter_22_0)
+
+			var_22_4 = arg_22_0:_getUserDataTbEffect(var_22_5)
+			var_22_4._imagerare = gohelper.findChildImage(var_22_5, "bg/rare")
+			var_22_4._txtname = gohelper.findChildText(var_22_5, "bg/txt_name")
+			var_22_4._txtnum = gohelper.findChildText(var_22_5, "bg/txt_num")
+			var_22_4._goicon = gohelper.findChild(var_22_5, "bg/txt_num/icon")
+			var_22_4._gobuildingicon = gohelper.findChild(var_22_5, "bg/txt_num/building_icon")
+			var_22_4.finishTime = 0
+			var_22_4.effectTime = 3.7
+
+			table.insert(arg_22_0._massifTipEffList, var_22_4)
 		end
 
-		if slot1 < slot9.finishTime then
-			slot3 = math.min(slot3, slot9.finishTime - slot1)
-		elseif #slot2 > 0 then
-			slot10 = slot2[1]
+		if var_22_0 < var_22_4.finishTime then
+			var_22_2 = math.min(var_22_2, var_22_4.finishTime - var_22_0)
+		elseif #var_22_1 > 0 then
+			local var_22_6 = var_22_1[1]
 
-			table.remove(slot2, 1)
+			table.remove(var_22_1, 1)
 
-			slot11 = slot4 and slot10.isBlock and slot4.id == slot10.id
-			slot12 = slot11 and "#FFFFFF" or "#FFFFFF"
-			slot9._txtname.text = slot11 and luaLang("room_backblock_curpackage") or slot10.name
-			slot9._txtnum.text = "+" .. slot10.count
-			slot9.finishTime = slot1 + slot9.effectTime
+			local var_22_7 = var_22_3 and var_22_6.isBlock and var_22_3.id == var_22_6.id
+			local var_22_8 = var_22_7 and "#FFFFFF" or "#FFFFFF"
 
-			if slot9.isBlock ~= slot10.isBlock then
-				slot9.isBlock = slot10.isBlock
+			var_22_4._txtname.text = var_22_7 and luaLang("room_backblock_curpackage") or var_22_6.name
+			var_22_4._txtnum.text = "+" .. var_22_6.count
+			var_22_4.finishTime = var_22_0 + var_22_4.effectTime
 
-				gohelper.setActive(slot9._goicon, slot10.isBlock)
-				gohelper.setActive(slot9._gobuildingicon, not slot10.isBlock)
+			if var_22_4.isBlock ~= var_22_6.isBlock then
+				var_22_4.isBlock = var_22_6.isBlock
+
+				gohelper.setActive(var_22_4._goicon, var_22_6.isBlock)
+				gohelper.setActive(var_22_4._gobuildingicon, not var_22_6.isBlock)
 			end
 
-			if slot9.txtColorStr ~= slot12 then
-				slot9.txtColorStr = slot12
+			if var_22_4.txtColorStr ~= var_22_8 then
+				var_22_4.txtColorStr = var_22_8
 
-				SLFramework.UGUI.GuiHelper.SetColor(slot9._txtnum, slot12)
-				SLFramework.UGUI.GuiHelper.SetColor(slot9._txtname, slot12)
+				SLFramework.UGUI.GuiHelper.SetColor(var_22_4._txtnum, var_22_8)
+				SLFramework.UGUI.GuiHelper.SetColor(var_22_4._txtname, var_22_8)
 			end
 
-			UISpriteSetMgr.instance:setRoomSprite(slot9._imagerare, RoomBlockPackageEnum.RareIcon[slot10.rare] or RoomBlockPackageEnum.RareIcon[1])
-			slot9:playEffect()
-			gohelper.setAsLastSibling(slot9.go)
+			local var_22_9 = RoomBlockPackageEnum.RareIcon[var_22_6.rare] or RoomBlockPackageEnum.RareIcon[1]
+
+			UISpriteSetMgr.instance:setRoomSprite(var_22_4._imagerare, var_22_9)
+			var_22_4:playEffect()
+			gohelper.setAsLastSibling(var_22_4.go)
 		end
 
-		if #slot2 < 1 then
+		if #var_22_1 < 1 then
 			break
 		end
 	end
 
-	if #slot2 > 0 then
-		TaskDispatcher.runDelay(slot0._delayPlayTipsEffect, slot0, slot3)
+	if #var_22_1 > 0 then
+		TaskDispatcher.runDelay(arg_22_0._delayPlayTipsEffect, arg_22_0, var_22_2)
 	end
 end
 
-return slot0
+return var_0_0

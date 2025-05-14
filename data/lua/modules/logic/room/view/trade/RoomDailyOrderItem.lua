@@ -1,71 +1,71 @@
-module("modules.logic.room.view.trade.RoomDailyOrderItem", package.seeall)
+﻿module("modules.logic.room.view.trade.RoomDailyOrderItem", package.seeall)
 
-slot0 = class("RoomDailyOrderItem", LuaCompBase)
+local var_0_0 = class("RoomDailyOrderItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._simagenormalbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_normalbg")
-	slot0._simagespecialbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_specialbg")
-	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.viewGO, "customer/#simage_headicon")
-	slot0._txtcustomername = gohelper.findChildText(slot0.viewGO, "customer/#txt_customername")
-	slot0._btnrefresh = gohelper.findChildButtonWithAudio(slot0.viewGO, "refresh/#btn_refresh")
-	slot0._gocanrefresh = gohelper.findChild(slot0.viewGO, "refresh/#btn_refresh/#go_refresh")
-	slot0._golockrefresh = gohelper.findChild(slot0.viewGO, "refresh/#btn_refresh/#go_lock")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "refresh/#go_time")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "refresh/#go_time/#txt_time")
-	slot0._gostuffitem = gohelper.findChild(slot0.viewGO, "stuff/#go_stuffitem")
-	slot0._gomaterial = gohelper.findChild(slot0.viewGO, "stuff/#go_material")
-	slot0._simagerewardicon = gohelper.findChildSingleImage(slot0.viewGO, "reward/#simage_rewardicon")
-	slot0._txtrewardcount = gohelper.findChildText(slot0.viewGO, "reward/#txt_rewardcount")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "reward/#go_tips")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "reward/#go_tips/#txt_num")
-	slot0._btnlocked = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#btn_lock")
-	slot0._golocked = gohelper.findChild(slot0.viewGO, "#btn_lock/#go_locked")
-	slot0._gounlocked = gohelper.findChild(slot0.viewGO, "#btn_lock/#go_unlocked")
-	slot0._gounselect = gohelper.findChild(slot0.viewGO, "btn/traced/#go_unselect")
-	slot0._gounselecticon = gohelper.findChild(slot0.viewGO, "btn/traced/#go_unselect/icon")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "btn/traced/#go_select")
-	slot0._btntraced = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/traced/#btn_traced")
-	slot0._btnunconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_unconfirm")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_confirm")
-	slot0._btnwrongjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_wrongjump")
-	slot0._txtwrongtip = gohelper.findChildText(slot0.viewGO, "btn/#btn_wrongjump/#txt_wrong")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_normalbg")
+	arg_1_0._simagespecialbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_specialbg")
+	arg_1_0._simageheadicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "customer/#simage_headicon")
+	arg_1_0._txtcustomername = gohelper.findChildText(arg_1_0.viewGO, "customer/#txt_customername")
+	arg_1_0._btnrefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "refresh/#btn_refresh")
+	arg_1_0._gocanrefresh = gohelper.findChild(arg_1_0.viewGO, "refresh/#btn_refresh/#go_refresh")
+	arg_1_0._golockrefresh = gohelper.findChild(arg_1_0.viewGO, "refresh/#btn_refresh/#go_lock")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "refresh/#go_time")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "refresh/#go_time/#txt_time")
+	arg_1_0._gostuffitem = gohelper.findChild(arg_1_0.viewGO, "stuff/#go_stuffitem")
+	arg_1_0._gomaterial = gohelper.findChild(arg_1_0.viewGO, "stuff/#go_material")
+	arg_1_0._simagerewardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "reward/#simage_rewardicon")
+	arg_1_0._txtrewardcount = gohelper.findChildText(arg_1_0.viewGO, "reward/#txt_rewardcount")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "reward/#go_tips")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "reward/#go_tips/#txt_num")
+	arg_1_0._btnlocked = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_lock")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#btn_lock/#go_locked")
+	arg_1_0._gounlocked = gohelper.findChild(arg_1_0.viewGO, "#btn_lock/#go_unlocked")
+	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "btn/traced/#go_unselect")
+	arg_1_0._gounselecticon = gohelper.findChild(arg_1_0.viewGO, "btn/traced/#go_unselect/icon")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "btn/traced/#go_select")
+	arg_1_0._btntraced = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/traced/#btn_traced")
+	arg_1_0._btnunconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_unconfirm")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_confirm")
+	arg_1_0._btnwrongjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_wrongjump")
+	arg_1_0._txtwrongtip = gohelper.findChildText(arg_1_0.viewGO, "btn/#btn_wrongjump/#txt_wrong")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrefresh:AddClickListener(slot0._btnrefreshOnClick, slot0)
-	slot0._btntraced:AddClickListener(slot0._btntracedOnClick, slot0)
-	slot0._btnlocked:AddClickListener(slot0._btnlockedOnClick, slot0)
-	slot0._btnunconfirm:AddClickListener(slot0._btnunconfirmOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btnwrongjump:AddClickListener(slot0._btnwrongjumpOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnrefresh:AddClickListener(arg_2_0._btnrefreshOnClick, arg_2_0)
+	arg_2_0._btntraced:AddClickListener(arg_2_0._btntracedOnClick, arg_2_0)
+	arg_2_0._btnlocked:AddClickListener(arg_2_0._btnlockedOnClick, arg_2_0)
+	arg_2_0._btnunconfirm:AddClickListener(arg_2_0._btnunconfirmOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btnwrongjump:AddClickListener(arg_2_0._btnwrongjumpOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrefresh:RemoveClickListener()
-	slot0._btntraced:RemoveClickListener()
-	slot0._btnlocked:RemoveClickListener()
-	slot0._btnunconfirm:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btnwrongjump:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnrefresh:RemoveClickListener()
+	arg_3_0._btntraced:RemoveClickListener()
+	arg_3_0._btnlocked:RemoveClickListener()
+	arg_3_0._btnunconfirm:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btnwrongjump:RemoveClickListener()
 end
 
-function slot0._btntracedOnClick(slot0)
-	if not slot0._mo then
+function var_0_0._btntracedOnClick(arg_4_0)
+	if not arg_4_0._mo then
 		return
 	end
 
-	if slot0.isWrong then
+	if arg_4_0.isWrong then
 		GameFacade.showToast(ToastEnum.RoomOrderTracedWrong)
 	else
-		slot1 = not slot0._mo.isTraced
+		local var_4_0 = not arg_4_0._mo.isTraced
 
-		RoomTradeController.instance:tracedDailyOrder(slot0._mo.orderId, slot1)
+		RoomTradeController.instance:tracedDailyOrder(arg_4_0._mo.orderId, var_4_0)
 
-		if slot1 then
+		if var_4_0 then
 			GameFacade.showToast(ToastEnum.RoomOrderTraced)
 		else
 			GameFacade.showToast(ToastEnum.RoomOrderNotTraced)
@@ -73,28 +73,28 @@ function slot0._btntracedOnClick(slot0)
 	end
 end
 
-function slot0._btnlockedOnClick(slot0)
-	if not slot0._mo then
+function var_0_0._btnlockedOnClick(arg_5_0)
+	if not arg_5_0._mo then
 		return
 	end
 
-	slot1 = not slot0._mo:getLocked()
+	local var_5_0 = not arg_5_0._mo:getLocked()
 
-	RoomTradeController.instance:lockedDailyOrder(slot0._mo.orderId, slot1)
+	RoomTradeController.instance:lockedDailyOrder(arg_5_0._mo.orderId, var_5_0)
 
-	if slot1 then
+	if var_5_0 then
 		GameFacade.showToast(ToastEnum.RoomOrderLocked)
 	else
 		GameFacade.showToast(ToastEnum.RoomOrderUnlocked)
 	end
 end
 
-function slot0._btnrefreshOnClick(slot0)
-	if not slot0._mo or slot0:isHasRefreshTime() then
+function var_0_0._btnrefreshOnClick(arg_6_0)
+	if not arg_6_0._mo or arg_6_0:isHasRefreshTime() then
 		return
 	end
 
-	if slot0._mo:getLocked() then
+	if arg_6_0._mo:getLocked() then
 		GameFacade.showToast(ToastEnum.RoomOrderLockedWrong)
 
 		return
@@ -106,305 +106,336 @@ function slot0._btnrefreshOnClick(slot0)
 		return
 	end
 
-	slot0._mo:setWaitRefresh(true)
+	arg_6_0._mo:setWaitRefresh(true)
 
-	if GuideModel.instance:getLockGuideId() == GuideEnum.GuideId.RoomDailyOrder then
-		RoomTradeController.instance:refreshDailyOrder(slot0._mo.orderId, slot1, GuideModel.instance:getById(slot1).currStepId)
+	local var_6_0 = GuideModel.instance:getLockGuideId()
+
+	if var_6_0 == GuideEnum.GuideId.RoomDailyOrder then
+		local var_6_1 = GuideModel.instance:getById(var_6_0).currStepId
+
+		RoomTradeController.instance:refreshDailyOrder(arg_6_0._mo.orderId, var_6_0, var_6_1)
 	else
-		RoomTradeController.instance:refreshDailyOrder(slot0._mo.orderId)
+		RoomTradeController.instance:refreshDailyOrder(arg_6_0._mo.orderId)
 	end
 end
 
-function slot0._btnunconfirmOnClick(slot0)
+function var_0_0._btnunconfirmOnClick(arg_7_0)
 	GameFacade.showToast(ToastEnum.RoomOrderNotCommit)
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	if not slot0._mo then
+function var_0_0._btnconfirmOnClick(arg_8_0)
+	if not arg_8_0._mo then
 		return
 	end
 
-	RoomTradeController.instance:finishDailyOrder(RoomTradeEnum.Mode.DailyOrder, slot0._mo.orderId)
+	RoomTradeController.instance:finishDailyOrder(RoomTradeEnum.Mode.DailyOrder, arg_8_0._mo.orderId)
 end
 
-function slot0._btnwrongjumpOnClick(slot0)
-	if not slot0.isWrong then
+function var_0_0._btnwrongjumpOnClick(arg_9_0)
+	if not arg_9_0.isWrong then
 		return
 	end
 
-	if slot0.wrongBuildingUid then
-		ManufactureController.instance:jumpToManufactureBuildingLevelUpView(slot0.wrongBuildingUid)
+	if arg_9_0.wrongBuildingUid then
+		ManufactureController.instance:jumpToManufactureBuildingLevelUpView(arg_9_0.wrongBuildingUid)
 	else
 		ManufactureController.instance:jump2PlaceManufactureBuildingView()
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_10_0, arg_10_1)
+	arg_10_0.viewGO = arg_10_1
 
-	slot0:onInitView()
+	arg_10_0:onInitView()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_11_0)
+	arg_11_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
-	TaskDispatcher.cancelTask(slot0.showItem, slot0)
-	TaskDispatcher.cancelTask(slot0._reallyPlayOpenAnim, slot0)
+function var_0_0.removeEventListeners(arg_12_0)
+	arg_12_0:removeEvents()
+	TaskDispatcher.cancelTask(arg_12_0.showItem, arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._reallyPlayOpenAnim, arg_12_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._imgconfirm = gohelper.findChildImage(slot0.viewGO, "btn/#btn_confirm")
-	slot0._gorefresh = gohelper.findChild(slot0.viewGO, "refresh")
+function var_0_0._editableInitView(arg_13_0)
+	arg_13_0._imgconfirm = gohelper.findChildImage(arg_13_0.viewGO, "btn/#btn_confirm")
+	arg_13_0._gorefresh = gohelper.findChild(arg_13_0.viewGO, "refresh")
 
-	gohelper.setActive(slot0._gostuffitem, false)
+	gohelper.setActive(arg_13_0._gostuffitem, false)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_13_0._animator = arg_13_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.onDestroy(slot0)
-	slot0._simageheadicon:UnLoadImage()
-	slot0._simagerewardicon:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._refreshTimeCB, slot0)
+function var_0_0.onDestroy(arg_14_0)
+	arg_14_0._simageheadicon:UnLoadImage()
+	arg_14_0._simagerewardicon:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_14_0._refreshTimeCB, arg_14_0)
 end
 
-slot1 = 0.16
+local var_0_1 = 0.16
 
-function slot0.onUpdateMo(slot0, slot1)
-	slot0._mo = slot1
-	slot0.isWrong = false
-	slot0.wrongBuildingUid = nil
-	slot0.refreshTime = slot0._mo:getRefreshTime()
+function var_0_0.onUpdateMo(arg_15_0, arg_15_1)
+	arg_15_0._mo = arg_15_1
+	arg_15_0.isWrong = false
+	arg_15_0.wrongBuildingUid = nil
+	arg_15_0.refreshTime = arg_15_0._mo:getRefreshTime()
 
-	if slot1.isFinish then
-		slot0:playFinishAnim()
-	elseif slot1.isNewRefresh or slot1:isWaitRefresh() then
-		slot0:playRefreshAnim()
-		TaskDispatcher.cancelTask(slot0.showItem, slot0)
-		TaskDispatcher.runDelay(slot0.showItem, slot0, uv0)
-		slot1:cancelNewRefresh()
+	if arg_15_1.isFinish then
+		arg_15_0:playFinishAnim()
+	elseif arg_15_1.isNewRefresh or arg_15_1:isWaitRefresh() then
+		arg_15_0:playRefreshAnim()
+		TaskDispatcher.cancelTask(arg_15_0.showItem, arg_15_0)
+		TaskDispatcher.runDelay(arg_15_0.showItem, arg_15_0, var_0_1)
+		arg_15_1:cancelNewRefresh()
 	else
-		slot0:showItem()
+		arg_15_0:showItem()
 	end
 end
 
-function slot0.showItem(slot0)
-	slot2 = HeroConfig.instance:getHeroCO(slot0._mo.buyerId)
+function var_0_0.showItem(arg_16_0)
+	local var_16_0 = arg_16_0._mo.buyerId
+	local var_16_1 = HeroConfig.instance:getHeroCO(var_16_0)
+	local var_16_2 = var_16_1.skinId
+	local var_16_3 = SkinConfig.instance:getSkinCo(var_16_2)
 
-	slot0._simageheadicon:LoadImage(ResUrl.getRoomHeadIcon(SkinConfig.instance:getSkinCo(slot2.skinId).headIcon))
+	arg_16_0._simageheadicon:LoadImage(ResUrl.getRoomHeadIcon(var_16_3.headIcon))
 
-	slot0._txtcustomername.text = slot2.name
+	arg_16_0._txtcustomername.text = var_16_1.name
 
-	slot0:setPrice()
-	slot0:onRefresh()
+	arg_16_0:setPrice()
+	arg_16_0:onRefresh()
 
-	slot0._txtnum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("room_wholesaleorder_priceratio"), slot0._mo:getAdvancedRate() * 100)
+	local var_16_4 = luaLang("room_wholesaleorder_priceratio")
 
-	gohelper.setActive(slot0._simagenormalbg.gameObject, not slot0._mo.isAdvanced)
-	gohelper.setActive(slot0._simagespecialbg.gameObject, slot0._mo.isAdvanced)
-	gohelper.setActive(slot0._gotips.gameObject, slot0._mo.isAdvanced)
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imgconfirm, slot0._mo.isAdvanced and "room_trade_btn_spsubmit" or "room_trade_btn_submit")
-	gohelper.setActive(slot0.viewGO, true)
+	arg_16_0._txtnum.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_16_4, arg_16_0._mo:getAdvancedRate() * 100)
+
+	gohelper.setActive(arg_16_0._simagenormalbg.gameObject, not arg_16_0._mo.isAdvanced)
+	gohelper.setActive(arg_16_0._simagespecialbg.gameObject, arg_16_0._mo.isAdvanced)
+	gohelper.setActive(arg_16_0._gotips.gameObject, arg_16_0._mo.isAdvanced)
+
+	local var_16_5 = arg_16_0._mo.isAdvanced and "room_trade_btn_spsubmit" or "room_trade_btn_submit"
+
+	UISpriteSetMgr.instance:setRoomSprite(arg_16_0._imgconfirm, var_16_5)
+	gohelper.setActive(arg_16_0.viewGO, true)
 end
 
-function slot0.onRefresh(slot0)
-	if not slot0._mo then
+function var_0_0.onRefresh(arg_17_0)
+	if not arg_17_0._mo then
 		return
 	end
 
-	slot0:onRefreshMaterials()
-	slot0:refreshConfirmBtn()
-	slot0:refreshTraced()
-	slot0:refreshLocked()
-	slot0:checkRefreshTime()
+	arg_17_0:onRefreshMaterials()
+	arg_17_0:refreshConfirmBtn()
+	arg_17_0:refreshTraced()
+	arg_17_0:refreshLocked()
+	arg_17_0:checkRefreshTime()
 end
 
-function slot0.setPrice(slot0)
-	slot1 = string.split(slot0._mo:getPrice(), "#")
-	slot4 = slot1[3]
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot1[1], slot1[2])
+function var_0_0.setPrice(arg_18_0)
+	local var_18_0 = string.split(arg_18_0._mo:getPrice(), "#")
+	local var_18_1 = var_18_0[1]
+	local var_18_2 = var_18_0[2]
+	local var_18_3 = var_18_0[3]
+	local var_18_4, var_18_5 = ItemModel.instance:getItemConfigAndIcon(var_18_1, var_18_2)
 
-	slot0._simagerewardicon:LoadImage(slot6)
+	arg_18_0._simagerewardicon:LoadImage(var_18_5)
 
-	slot0._txtrewardcount.text = slot0._mo:getPriceCount()
+	arg_18_0._txtrewardcount.text = arg_18_0._mo:getPriceCount()
 end
 
-function slot0.getMaterialItem(slot0, slot1)
-	if not slot0._materialItem then
-		slot0._materialItem = slot0:getUserDataTb_()
+function var_0_0.getMaterialItem(arg_19_0, arg_19_1)
+	if not arg_19_0._materialItem then
+		arg_19_0._materialItem = arg_19_0:getUserDataTb_()
 	end
 
-	if not slot0._materialItem[slot1] then
-		slot2 = {
-			go = slot3,
-			icon = gohelper.findChild(slot3, "icon"),
-			txt = gohelper.findChildText(slot3, "count")
-		}
-		slot2.itemIcon = IconMgr.instance:getCommonItemIcon(slot2.icon)
-		slot2.goWrong = gohelper.findChild(gohelper.clone(slot0._gostuffitem, slot0._gomaterial), "#go_wrong")
-		slot0._materialItem[slot1] = slot2
+	local var_19_0 = arg_19_0._materialItem[arg_19_1]
+
+	if not var_19_0 then
+		var_19_0 = {}
+
+		local var_19_1 = gohelper.clone(arg_19_0._gostuffitem, arg_19_0._gomaterial)
+
+		var_19_0.go = var_19_1
+		var_19_0.icon = gohelper.findChild(var_19_1, "icon")
+		var_19_0.txt = gohelper.findChildText(var_19_1, "count")
+		var_19_0.itemIcon = IconMgr.instance:getCommonItemIcon(var_19_0.icon)
+		var_19_0.goWrong = gohelper.findChild(var_19_1, "#go_wrong")
+		arg_19_0._materialItem[arg_19_1] = var_19_0
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.onRefreshMaterials(slot0)
-	if not slot0._mo then
+function var_0_0.onRefreshMaterials(arg_20_0)
+	if not arg_20_0._mo then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._mo.goodsInfo) do
-		slot7 = slot0:getMaterialItem(slot5)
+	local var_20_0 = arg_20_0._mo.goodsInfo
 
-		transformhelper.setLocalScale(slot7.itemIcon.go.transform, 0.5, 0.5, 1)
+	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+		local var_20_1 = arg_20_0:getMaterialItem(iter_20_0)
 
-		slot8, slot9, slot10 = slot6:getItem()
+		transformhelper.setLocalScale(var_20_1.itemIcon.go.transform, 0.5, 0.5, 1)
 
-		slot7.itemIcon:setMOValue(slot8, slot9, slot10, nil, true)
-		slot7.itemIcon:isShowQuality(false)
-		slot7.itemIcon:isShowCount(false)
+		local var_20_2, var_20_3, var_20_4 = iter_20_1:getItem()
 
-		slot7.txt.text = slot6:getQuantityStr()
-		slot11 = false
+		var_20_1.itemIcon:setMOValue(var_20_2, var_20_3, var_20_4, nil, true)
+		var_20_1.itemIcon:isShowQuality(false)
+		var_20_1.itemIcon:isShowCount(false)
 
-		if not slot6:isEnoughCount() then
-			slot11 = not slot6:isPlacedProduceBuilding() or slot6:checkProduceBuildingLevel()
+		var_20_1.txt.text = iter_20_1:getQuantityStr()
+
+		local var_20_5 = false
+
+		if not iter_20_1:isEnoughCount() then
+			var_20_5 = not iter_20_1:isPlacedProduceBuilding() or iter_20_1:checkProduceBuildingLevel()
 		end
 
-		gohelper.setActive(slot7.goWrong, slot11)
+		gohelper.setActive(var_20_1.goWrong, var_20_5)
 	end
 
-	if slot0._materialItem then
-		for slot5 = 1, #slot0._materialItem do
-			gohelper.setActive(slot0._materialItem[slot5].go, slot5 <= #slot1)
+	if arg_20_0._materialItem then
+		for iter_20_2 = 1, #arg_20_0._materialItem do
+			gohelper.setActive(arg_20_0._materialItem[iter_20_2].go, iter_20_2 <= #var_20_0)
 		end
 	end
 end
 
-function slot0.refreshConfirmBtn(slot0)
-	slot1, slot0.wrongBuildingUid = slot0._mo:checkGoodsCanProduct()
-	slot0.isWrong = not string.nilorempty(slot1)
+function var_0_0.refreshConfirmBtn(arg_21_0)
+	local var_21_0, var_21_1 = arg_21_0._mo:checkGoodsCanProduct()
 
-	if not slot0._mo:isCanConfirm() and slot0.isWrong then
-		gohelper.setActive(slot0._btnunconfirm.gameObject, false)
-		gohelper.setActive(slot0._btnconfirm.gameObject, false)
+	arg_21_0.isWrong = not string.nilorempty(var_21_0)
+	arg_21_0.wrongBuildingUid = var_21_1
 
-		slot0._txtwrongtip.text = slot1
+	local var_21_2 = arg_21_0._mo:isCanConfirm()
 
-		gohelper.setActive(slot0._btnwrongjump.gameObject, true)
+	if not var_21_2 and arg_21_0.isWrong then
+		gohelper.setActive(arg_21_0._btnunconfirm.gameObject, false)
+		gohelper.setActive(arg_21_0._btnconfirm.gameObject, false)
+
+		arg_21_0._txtwrongtip.text = var_21_0
+
+		gohelper.setActive(arg_21_0._btnwrongjump.gameObject, true)
 	else
-		gohelper.setActive(slot0._btnunconfirm.gameObject, not slot3)
-		gohelper.setActive(slot0._btnconfirm.gameObject, slot3)
-		gohelper.setActive(slot0._btnwrongjump.gameObject, false)
+		gohelper.setActive(arg_21_0._btnunconfirm.gameObject, not var_21_2)
+		gohelper.setActive(arg_21_0._btnconfirm.gameObject, var_21_2)
+		gohelper.setActive(arg_21_0._btnwrongjump.gameObject, false)
 	end
 end
 
-function slot0.refreshTraced(slot0)
-	if slot0.isWrong then
-		gohelper.setActive(slot0._gounselect, true)
-		gohelper.setActive(slot0._goselect, false)
-		ZProj.UGUIHelper.SetGrayscale(slot0._gounselecticon, true)
-	else
-		slot3 = slot0._mo.isTraced
+function var_0_0.refreshTraced(arg_22_0)
+	local var_22_0 = arg_22_0._gounselect
+	local var_22_1 = arg_22_0._goselect
 
-		gohelper.setActive(slot1, not slot3)
-		gohelper.setActive(slot2, slot3)
-		ZProj.UGUIHelper.SetGrayscale(slot0._gounselecticon, false)
+	if arg_22_0.isWrong then
+		gohelper.setActive(var_22_0, true)
+		gohelper.setActive(var_22_1, false)
+		ZProj.UGUIHelper.SetGrayscale(arg_22_0._gounselecticon, true)
+	else
+		local var_22_2 = arg_22_0._mo.isTraced
+
+		gohelper.setActive(var_22_0, not var_22_2)
+		gohelper.setActive(var_22_1, var_22_2)
+		ZProj.UGUIHelper.SetGrayscale(arg_22_0._gounselecticon, false)
 	end
 end
 
-function slot0.refreshLocked(slot0)
-	slot1 = slot0._mo:getLocked()
+function var_0_0.refreshLocked(arg_23_0)
+	local var_23_0 = arg_23_0._mo:getLocked()
 
-	gohelper.setActive(slot0._golocked, slot1)
-	gohelper.setActive(slot0._gounlocked, not slot1)
+	gohelper.setActive(arg_23_0._golocked, var_23_0)
+	gohelper.setActive(arg_23_0._gounlocked, not var_23_0)
 
-	if slot1 then
-		gohelper.setActive(slot0._gotime, false)
+	if var_23_0 then
+		gohelper.setActive(arg_23_0._gotime, false)
 	else
-		slot0:checkRefreshTime()
+		arg_23_0:checkRefreshTime()
 	end
 
-	gohelper.setActive(slot0._gocanrefresh, not slot1)
-	gohelper.setActive(slot0._golockrefresh, slot1)
+	gohelper.setActive(arg_23_0._gocanrefresh, not var_23_0)
+	gohelper.setActive(arg_23_0._golockrefresh, var_23_0)
 end
 
-function slot0._refreshTimeCB(slot0)
-	if not slot0:isHasRefreshTime() then
-		if slot0._mo:getRefreshTime() <= 0 then
-			TaskDispatcher.cancelTask(slot0._refreshTimeCB, slot0)
-			gohelper.setActive(slot0._gotime, false)
+function var_0_0._refreshTimeCB(arg_24_0)
+	if not arg_24_0:isHasRefreshTime() then
+		if arg_24_0._mo:getRefreshTime() <= 0 then
+			TaskDispatcher.cancelTask(arg_24_0._refreshTimeCB, arg_24_0)
+			gohelper.setActive(arg_24_0._gotime, false)
 
-			slot0.refreshTime = 0
+			arg_24_0.refreshTime = 0
 
 			return
 		else
-			slot0.refreshTime = 0
+			arg_24_0.refreshTime = 0
 		end
 	else
-		slot0.refreshTime = slot0.refreshTime - 1
+		arg_24_0.refreshTime = arg_24_0.refreshTime - 1
 	end
 
-	slot0:_updateTime()
+	arg_24_0:_updateTime()
 end
 
-function slot0._updateTime(slot0)
-	slot0._txttime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("room_dailyorder_refreshtime"), slot0.refreshTime)
+function var_0_0._updateTime(arg_25_0)
+	arg_25_0._txttime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("room_dailyorder_refreshtime"), arg_25_0.refreshTime)
 end
 
-function slot0.isHasRefreshTime(slot0)
-	return slot0.refreshTime and slot0.refreshTime > 0
+function var_0_0.isHasRefreshTime(arg_26_0)
+	return arg_26_0.refreshTime and arg_26_0.refreshTime > 0
 end
 
-function slot0.checkRefreshTime(slot0)
-	slot0.refreshTime = slot0._mo:getRefreshTime()
-	slot1 = slot0:isHasRefreshTime()
+function var_0_0.checkRefreshTime(arg_27_0)
+	arg_27_0.refreshTime = arg_27_0._mo:getRefreshTime()
 
-	TaskDispatcher.cancelTask(slot0._refreshTimeCB, slot0)
-	gohelper.setActive(slot0._gotime, slot1)
+	local var_27_0 = arg_27_0:isHasRefreshTime()
 
-	if slot1 then
-		slot0:_updateTime()
-		TaskDispatcher.runRepeat(slot0._refreshTimeCB, slot0, 1)
+	TaskDispatcher.cancelTask(arg_27_0._refreshTimeCB, arg_27_0)
+	gohelper.setActive(arg_27_0._gotime, var_27_0)
+
+	if var_27_0 then
+		arg_27_0:_updateTime()
+		TaskDispatcher.runRepeat(arg_27_0._refreshTimeCB, arg_27_0, 1)
 	end
 
-	gohelper.setActive(slot0._gorefresh, RoomTradeModel.instance:isCanRefreshDailyOrder())
+	local var_27_1 = RoomTradeModel.instance:isCanRefreshDailyOrder()
+
+	gohelper.setActive(arg_27_0._gorefresh, var_27_1)
 end
 
-function slot0.playOpenAnim(slot0, slot1)
-	if not slot0._canvasGroup then
-		slot0._canvasGroup = slot0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+function var_0_0.playOpenAnim(arg_28_0, arg_28_1)
+	if not arg_28_0._canvasGroup then
+		arg_28_0._canvasGroup = arg_28_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
 	end
 
-	slot0._animator.enabled = false
-	slot0._canvasGroup.alpha = 0
+	arg_28_0._animator.enabled = false
+	arg_28_0._canvasGroup.alpha = 0
 
-	TaskDispatcher.cancelTask(slot0._reallyPlayOpenAnim, slot0)
-	TaskDispatcher.runDelay(slot0._reallyPlayOpenAnim, slot0, (slot1 - 1) * 0.06)
+	TaskDispatcher.cancelTask(arg_28_0._reallyPlayOpenAnim, arg_28_0)
+	TaskDispatcher.runDelay(arg_28_0._reallyPlayOpenAnim, arg_28_0, (arg_28_1 - 1) * 0.06)
 end
 
-function slot0._reallyPlayOpenAnim(slot0)
-	slot0._animator.enabled = true
+function var_0_0._reallyPlayOpenAnim(arg_29_0)
+	arg_29_0._animator.enabled = true
 
-	slot0._animator:Play(RoomTradeEnum.TradeDailyOrderAnim.Open, 0, 0)
+	arg_29_0._animator:Play(RoomTradeEnum.TradeDailyOrderAnim.Open, 0, 0)
 end
 
-function slot0.playRefreshAnim(slot0)
-	slot0._animator.enabled = true
+function var_0_0.playRefreshAnim(arg_30_0)
+	arg_30_0._animator.enabled = true
 
-	slot0._animator:Play(RoomTradeEnum.TradeDailyOrderAnim.Update, 0, 0)
+	arg_30_0._animator:Play(RoomTradeEnum.TradeDailyOrderAnim.Update, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_jiaoyi_order)
 end
 
-function slot0.playFinishAnim(slot0)
-	slot0._animator.enabled = true
+function var_0_0.playFinishAnim(arg_31_0)
+	arg_31_0._animator.enabled = true
 
-	slot0._animator:Play(RoomTradeEnum.TradeDailyOrderAnim.Delivery, 0, 0)
+	arg_31_0._animator:Play(RoomTradeEnum.TradeDailyOrderAnim.Delivery, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_jiaoyi_order)
 end
 
-slot0.ResUrl = "ui/viewres/room/trade/roomdailyorderitem.prefab"
+var_0_0.ResUrl = "ui/viewres/room/trade/roomdailyorderitem.prefab"
 
-return slot0
+return var_0_0

@@ -1,175 +1,188 @@
-module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessLeaderEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessLeaderEntity", package.seeall)
 
-slot0 = class("AutoChessLeaderEntity", LuaCompBase)
+local var_0_0 = class("AutoChessLeaderEntity", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.transform = slot1.transform
-	slot0.goEntity = gohelper.findChild(slot1, "ani/Entity")
-	slot0.dirTrs = slot0.goEntity.transform
-	slot0.goMesh = gohelper.findChild(slot1, "ani/Entity/Mesh")
-	slot2 = gohelper.findChild(slot1, "ani/Bar")
-	slot0.goHp = gohelper.findChild(slot2, "Hp")
-	slot0.txtHp = gohelper.findChildText(slot2, "Hp/txt_Hp")
-	slot0.anim = gohelper.findChild(slot1, "ani"):GetComponent(gohelper.Type_Animator)
-	slot0.hpChangeAnim = gohelper.findChild(slot2, "HpChange"):GetComponent(gohelper.Type_Animator)
-	slot0.txtHpAdd = gohelper.findChildText(slot2, "HpChange/txt_HpAdd")
-	slot0.txtHpSub = gohelper.findChildText(slot2, "HpChange/txt_HpSub")
-	slot0.meshComp = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.goMesh, AutoChessMeshComp)
-	slot0.effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(slot0.goEntity, AutoChessEffectComp)
-	slot0.goEnergyL = gohelper.findChild(slot1, "ani/go_EnergyL")
-	slot0.txtEnergyL = gohelper.findChildText(slot1, "ani/go_EnergyL/txt_EnergyL")
-	slot0.goEnergyR = gohelper.findChild(slot1, "ani/go_EnergyR")
-	slot0.txtEnergyR = gohelper.findChildText(slot1, "ani/go_EnergyR/txt_EnergyR")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.transform = arg_1_1.transform
+	arg_1_0.goEntity = gohelper.findChild(arg_1_1, "ani/Entity")
+	arg_1_0.dirTrs = arg_1_0.goEntity.transform
+	arg_1_0.goMesh = gohelper.findChild(arg_1_1, "ani/Entity/Mesh")
+
+	local var_1_0 = gohelper.findChild(arg_1_1, "ani/Bar")
+
+	arg_1_0.goHp = gohelper.findChild(var_1_0, "Hp")
+	arg_1_0.txtHp = gohelper.findChildText(var_1_0, "Hp/txt_Hp")
+	arg_1_0.anim = gohelper.findChild(arg_1_1, "ani"):GetComponent(gohelper.Type_Animator)
+	arg_1_0.hpChangeAnim = gohelper.findChild(var_1_0, "HpChange"):GetComponent(gohelper.Type_Animator)
+	arg_1_0.txtHpAdd = gohelper.findChildText(var_1_0, "HpChange/txt_HpAdd")
+	arg_1_0.txtHpSub = gohelper.findChildText(var_1_0, "HpChange/txt_HpSub")
+	arg_1_0.meshComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goMesh, AutoChessMeshComp)
+	arg_1_0.effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goEntity, AutoChessEffectComp)
+	arg_1_0.goEnergyL = gohelper.findChild(arg_1_1, "ani/go_EnergyL")
+	arg_1_0.txtEnergyL = gohelper.findChildText(arg_1_1, "ani/go_EnergyL/txt_EnergyL")
+	arg_1_0.goEnergyR = gohelper.findChild(arg_1_1, "ani/go_EnergyR")
+	arg_1_0.txtEnergyR = gohelper.findChildText(arg_1_1, "ani/go_EnergyR/txt_EnergyR")
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_2_0)
+	return
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.data = slot1
-	slot0.data.hp = tonumber(slot1.hp)
-	slot0.config = lua_auto_chess_master.configDict[slot0.data.id]
+function var_0_0.setData(arg_3_0, arg_3_1)
+	arg_3_0.data = arg_3_1
+	arg_3_0.data.hp = tonumber(arg_3_1.hp)
+	arg_3_0.config = lua_auto_chess_master.configDict[arg_3_0.data.id]
 
-	transformhelper.setLocalScale(slot0.dirTrs, slot0.data.teamType == AutoChessEnum.TeamType.Enemy and 1 or -1, 1, 1)
+	local var_3_0 = arg_3_0.data.teamType == AutoChessEnum.TeamType.Enemy and 1 or -1
 
-	slot0.isEnemey = slot0.data.teamType == AutoChessEnum.TeamType.Enemy
+	transformhelper.setLocalScale(arg_3_0.dirTrs, var_3_0, 1, 1)
 
-	if slot0.isEnemey then
-		recthelper.setAnchorX(slot0.goHp.transform, 130)
+	arg_3_0.isEnemey = arg_3_0.data.teamType == AutoChessEnum.TeamType.Enemy
+
+	if arg_3_0.isEnemey then
+		recthelper.setAnchorX(arg_3_0.goHp.transform, 130)
 	end
 
-	slot0.meshComp:setData(slot0.config.image, slot0.isEnemey, true)
-	slot0:updateHp(0)
-	slot0:show()
+	arg_3_0.meshComp:setData(arg_3_0.config.image, arg_3_0.isEnemey, true)
+	arg_3_0:updateHp(0)
+	arg_3_0:show()
 end
 
-function slot0.attack(slot0)
-	slot0.anim:Play("attack", 0, 0)
+function var_0_0.attack(arg_4_0)
+	arg_4_0.anim:Play("attack", 0, 0)
 end
 
-function slot0.skillAnim(slot0, slot1)
-	slot0.anim:Play(slot1, 0, 0)
+function var_0_0.skillAnim(arg_5_0, arg_5_1)
+	arg_5_0.anim:Play(arg_5_1, 0, 0)
 
 	return 0.44
 end
 
-function slot0.ranged(slot0, slot1, slot2)
-	slot3 = lua_auto_chess_effect.configDict[slot2]
+function var_0_0.ranged(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = lua_auto_chess_effect.configDict[arg_6_2]
 
-	gohelper.setAsLastSibling(slot0.go)
-	slot0.anim:Play("attack", 0, 0)
-	slot0.effectComp:playEffect(slot2)
-	slot0.effectComp:moveEffect(slot3.nameUp, slot1, slot3.duration)
+	gohelper.setAsLastSibling(arg_6_0.go)
+	arg_6_0.anim:Play("attack", 0, 0)
+	arg_6_0.effectComp:playEffect(arg_6_2)
+	arg_6_0.effectComp:moveEffect(var_6_0.nameUp, arg_6_1, var_6_0.duration)
 
-	return slot3.duration
+	return var_6_0.duration
 end
 
-function slot0.updateHp(slot0, slot1)
-	slot0.data.hp = slot0.data.hp + tonumber(slot1)
-	slot0.txtHp.text = slot0.data.hp
+function var_0_0.updateHp(arg_7_0, arg_7_1)
+	arg_7_1 = tonumber(arg_7_1)
+	arg_7_0.data.hp = arg_7_0.data.hp + arg_7_1
+	arg_7_0.txtHp.text = arg_7_0.data.hp
 end
 
-function slot0.floatHp(slot0, slot1)
-	if tonumber(slot1) > 0 then
-		slot0.txtHpAdd.text = "+" .. slot1
+function var_0_0.floatHp(arg_8_0, arg_8_1)
+	arg_8_1 = tonumber(arg_8_1)
 
-		slot0.hpChangeAnim:Play("hpadd", 0, 0)
+	if arg_8_1 > 0 then
+		arg_8_0.txtHpAdd.text = "+" .. arg_8_1
+
+		arg_8_0.hpChangeAnim:Play("hpadd", 0, 0)
 	else
-		slot0.txtHpSub.text = slot1
+		arg_8_0.txtHpSub.text = arg_8_1
 
-		slot0.hpChangeAnim:Play("hpsub", 0, 0)
-		slot0.effectComp:playEffect(20001)
+		arg_8_0.hpChangeAnim:Play("hpsub", 0, 0)
+		arg_8_0.effectComp:playEffect(20001)
 	end
 end
 
-function slot0.addBuff(slot0, slot1)
-	table.insert(slot0.data.buffContainer.buffs, slot1)
+function var_0_0.addBuff(arg_9_0, arg_9_1)
+	table.insert(arg_9_0.data.buffContainer.buffs, arg_9_1)
 
-	if slot1.id == 1004 or slot1.id == 1005 then
+	if arg_9_1.id == 1004 or arg_9_1.id == 1005 then
 		AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderEnergy)
-		slot0:refreshEnergy()
+		arg_9_0:refreshEnergy()
 	end
 end
 
-function slot0.updateBuff(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0.data.buffContainer.buffs) do
-		if slot7.uid == slot1.uid then
-			slot2[slot6] = slot1
+function var_0_0.updateBuff(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.data.buffContainer.buffs
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		if iter_10_1.uid == arg_10_1.uid then
+			var_10_0[iter_10_0] = arg_10_1
 
 			break
 		end
 	end
 
-	if slot1.id == 1004 or slot1.id == 1005 then
+	if arg_10_1.id == 1004 or arg_10_1.id == 1005 then
 		AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderEnergy)
-		slot0:refreshEnergy()
+		arg_10_0:refreshEnergy()
 	end
 end
 
-function slot0.delBuff(slot0, slot1)
-	slot3 = nil
+function var_0_0.delBuff(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0.data.buffContainer.buffs
+	local var_11_1
 
-	for slot7, slot8 in ipairs(slot0.data.buffContainer.buffs) do
-		if slot8.uid == slot1 then
-			slot3 = slot7
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if iter_11_1.uid == arg_11_1 then
+			var_11_1 = iter_11_0
 
-			if slot8.id == 1004 or slot8.id == 1005 then
+			if iter_11_1.id == 1004 or iter_11_1.id == 1005 then
 				AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderEnergy)
-				slot0:refreshEnergy()
+				arg_11_0:refreshEnergy()
 			end
 
 			break
 		end
 	end
 
-	if slot3 then
-		table.remove(slot2, slot3)
+	if var_11_1 then
+		table.remove(var_11_0, var_11_1)
 	else
-		logError(string.format("异常:移除了不存在的棋子UID%s", slot1))
+		logError(string.format("异常:移除了不存在的棋子UID%s", arg_11_1))
 	end
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_12_0)
+	gohelper.setActive(arg_12_0.go, false)
 end
 
-function slot0.show(slot0)
-	slot0.pos = AutoChessGameModel.instance:getLeaderLocation(slot0.data.teamType)
+function var_0_0.show(arg_13_0)
+	arg_13_0.pos = AutoChessGameModel.instance:getLeaderLocation(arg_13_0.data.teamType)
 
-	if slot0.pos then
-		recthelper.setAnchor(slot0.transform, slot0.pos.x, slot0.pos.y)
-		gohelper.setActive(slot0.go, true)
+	if arg_13_0.pos then
+		recthelper.setAnchor(arg_13_0.transform, arg_13_0.pos.x, arg_13_0.pos.y)
+		gohelper.setActive(arg_13_0.go, true)
 	end
 end
 
-function slot0.showEnergy(slot0)
-	slot0.needShowEnergy = true
+function var_0_0.showEnergy(arg_14_0)
+	arg_14_0.needShowEnergy = true
 
-	slot0:refreshEnergy()
+	arg_14_0:refreshEnergy()
 end
 
-function slot0.refreshEnergy(slot0)
-	if not slot0.needShowEnergy then
+function var_0_0.refreshEnergy(arg_15_0)
+	if not arg_15_0.needShowEnergy then
 		return
 	end
 
-	if AutoChessHelper.getBuffEnergy(slot0.data.buffContainer.buffs) == 0 then
-		gohelper.setActive(slot0.goEnergyL, false)
-		gohelper.setActive(slot0.goEnergyR, false)
+	local var_15_0 = AutoChessHelper.getBuffEnergy(arg_15_0.data.buffContainer.buffs)
+
+	if var_15_0 == 0 then
+		gohelper.setActive(arg_15_0.goEnergyL, false)
+		gohelper.setActive(arg_15_0.goEnergyR, false)
 
 		return
 	end
 
-	if slot0.isEnemey then
-		slot0.txtEnergyR.text = slot1
+	if arg_15_0.isEnemey then
+		arg_15_0.txtEnergyR.text = var_15_0
 
-		gohelper.setActive(slot0.goEnergyR, true)
+		gohelper.setActive(arg_15_0.goEnergyR, true)
 	else
-		slot0.txtEnergyL.text = slot1
+		arg_15_0.txtEnergyL.text = var_15_0
 
-		gohelper.setActive(slot0.goEnergyL, true)
+		gohelper.setActive(arg_15_0.goEnergyL, true)
 	end
 end
 
-return slot0
+return var_0_0

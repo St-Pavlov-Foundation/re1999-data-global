@@ -1,268 +1,306 @@
-module("modules.logic.summon.view.luckybag.SummonLuckyBagDescProbUpView", package.seeall)
+﻿module("modules.logic.summon.view.luckybag.SummonLuckyBagDescProbUpView", package.seeall)
 
-slot0 = class("SummonLuckyBagDescProbUpView", BaseView)
+local var_0_0 = class("SummonLuckyBagDescProbUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goheroitem = gohelper.findChild(slot0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem")
-	slot0._godesctitle = gohelper.findChild(slot0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem/#go_desctitle")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem")
+	arg_1_0._godesctitle = gohelper.findChild(arg_1_0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem/#go_desctitle")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = 5
-slot2 = 5
+local var_0_1 = 5
+local var_0_2 = 5
 
-function slot0._editableInitView(slot0)
-	slot0._scrollroot = gohelper.findChildScrollRect(slot0.viewGO, "infoScroll")
-	slot0._goscrollcontent = gohelper.findChild(slot0.viewGO, "infoScroll/Viewport/#go_Content")
-	slot0._rectscrollcontent = slot0._goscrollcontent.transform
-	slot0._probUpItemMap = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._scrollroot = gohelper.findChildScrollRect(arg_4_0.viewGO, "infoScroll")
+	arg_4_0._goscrollcontent = gohelper.findChild(arg_4_0.viewGO, "infoScroll/Viewport/#go_Content")
+	arg_4_0._rectscrollcontent = arg_4_0._goscrollcontent.transform
+	arg_4_0._probUpItemMap = {}
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.delayJumpToLuckyBag, slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.delayJumpToLuckyBag, arg_5_0)
 
-	if slot0._probUpItemMap then
-		for slot4, slot5 in pairs(slot0._probUpItemMap) do
-			for slot9, slot10 in pairs(slot5.heroIcons) do
-				slot10.simageHero:UnLoadImage()
-				slot10.btn:RemoveClickListener()
+	if arg_5_0._probUpItemMap then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._probUpItemMap) do
+			for iter_5_2, iter_5_3 in pairs(iter_5_1.heroIcons) do
+				iter_5_3.simageHero:UnLoadImage()
+				iter_5_3.btn:RemoveClickListener()
 			end
 
-			for slot9, slot10 in pairs(slot5.equipIcons) do
-				slot10.simageEquip:UnLoadImage()
-				slot10.btn:RemoveClickListener()
+			for iter_5_4, iter_5_5 in pairs(iter_5_1.equipIcons) do
+				iter_5_5.simageEquip:UnLoadImage()
+				iter_5_5.btn:RemoveClickListener()
 			end
 		end
 
-		slot0._probUpItemMap = nil
+		arg_5_0._probUpItemMap = nil
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
-	slot0._poolParam = SummonController.instance:getPoolInfo()
-	slot0._poolDetailId = slot0._poolParam.poolDetailId
-	slot0._poolId = slot0._poolParam.poolId
-	slot1 = SummonConfig.instance:getSummonPool(slot0._poolId)
-	slot0._resultType = SummonMainModel.getResultType(slot1)
-	slot0._poolType = slot1.type
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._poolParam = SummonController.instance:getPoolInfo()
+	arg_7_0._poolDetailId = arg_7_0._poolParam.poolDetailId
+	arg_7_0._poolId = arg_7_0._poolParam.poolId
 
-	slot0:refreshUI()
-	slot0:checkJumpToTarget()
+	local var_7_0 = SummonConfig.instance:getSummonPool(arg_7_0._poolId)
+
+	arg_7_0._resultType = SummonMainModel.getResultType(var_7_0)
+	arg_7_0._poolType = var_7_0.type
+
+	arg_7_0:refreshUI()
+	arg_7_0:checkJumpToTarget()
 end
 
-function slot0.checkJumpToTarget(slot0)
+function var_0_0.checkJumpToTarget(arg_8_0)
 	if SummonPoolDetailCategoryListModel.instance:getJumpLuckyBag() ~= nil then
-		TaskDispatcher.runDelay(slot0.delayJumpToLuckyBag, slot0, 0.01)
+		TaskDispatcher.runDelay(arg_8_0.delayJumpToLuckyBag, arg_8_0, 0.01)
 	end
 end
 
-function slot0.delayJumpToLuckyBag(slot0)
-	if not slot0._probUpItemMap then
+function var_0_0.delayJumpToLuckyBag(arg_9_0)
+	if not arg_9_0._probUpItemMap then
 		return
 	end
 
-	if slot0._probUpItemMap[SummonPoolDetailCategoryListModel.instance:getJumpLuckyBag()] then
-		slot3 = slot2.go.transform
-		slot4 = recthelper.getHeight(slot0._rectscrollcontent)
-		slot5, slot6 = recthelper.getAnchor(slot3)
+	local var_9_0 = SummonPoolDetailCategoryListModel.instance:getJumpLuckyBag()
+	local var_9_1 = arg_9_0._probUpItemMap[var_9_0]
 
-		recthelper.setAnchorY(slot0._rectscrollcontent, slot6 + recthelper.getHeight(slot3) * 0.5)
+	if var_9_1 then
+		local var_9_2 = var_9_1.go.transform
+		local var_9_3 = recthelper.getHeight(arg_9_0._rectscrollcontent)
+		local var_9_4, var_9_5 = recthelper.getAnchor(var_9_2)
+		local var_9_6 = var_9_5 + recthelper.getHeight(var_9_2) * 0.5
 
-		slot0._scrollroot.verticalNormalizedPosition = 1 - (slot0._scrollroot.verticalNormalizedPosition - 1)
-		uv0._test = slot0._scrollroot
+		recthelper.setAnchorY(arg_9_0._rectscrollcontent, var_9_6)
+
+		local var_9_7 = arg_9_0._scrollroot.verticalNormalizedPosition - 1
+
+		arg_9_0._scrollroot.verticalNormalizedPosition = 1 - var_9_7
+		var_0_0._test = arg_9_0._scrollroot
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0._resultIds, slot0._resultArrs = SummonPoolDetailCategoryListModel.buildLuckyBagDict(slot0._poolId)
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0._resultIds, arg_10_0._resultArrs = SummonPoolDetailCategoryListModel.buildLuckyBagDict(arg_10_0._poolId)
 
-	slot0:refreshPropUpAD()
+	arg_10_0:refreshPropUpAD()
 end
 
-function slot0.refreshPropUpAD(slot0)
-	slot1 = SummonConfig.instance:getSummonPool(slot0._poolId)
+function var_0_0.refreshPropUpAD(arg_11_0)
+	local var_11_0 = SummonConfig.instance:getSummonPool(arg_11_0._poolId)
+	local var_11_1 = next(arg_11_0._resultIds) ~= nil
 
-	if next(slot0._resultIds) ~= nil then
-		for slot6, slot7 in ipairs(slot0._resultIds) do
-			slot0:addProbUpItemByLuckyBagId(slot6, slot7)
+	if var_11_1 then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0._resultIds) do
+			arg_11_0:addProbUpItemByLuckyBagId(iter_11_0, iter_11_1)
 		end
 	end
 
-	gohelper.setActive(slot0._goheroitem, slot2)
+	gohelper.setActive(arg_11_0._goheroitem, var_11_1)
 end
 
-function slot0.addProbUpItemByLuckyBagId(slot0, slot1, slot2)
-	if not slot0._resultArrs[slot1] or not next(slot3) then
+function var_0_0.addProbUpItemByLuckyBagId(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._resultArrs[arg_12_1]
+
+	if not var_12_0 or not next(var_12_0) then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot9 = slot0:getProbUpItem(slot2)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_1 = arg_12_0:getProbUpItem(arg_12_2)
 
-		gohelper.setActive(slot9.go, true)
-		slot0:applyRareStar(slot9, -1)
-		slot0:refreshProbIcons(slot9, slot3)
+		gohelper.setActive(var_12_1.go, true)
+		arg_12_0:applyRareStar(var_12_1, -1)
+		arg_12_0:refreshProbIcons(var_12_1, var_12_0)
 
-		slot11 = ConstEnum.SummonSSRUpProb
-		slot9.txtProbabilityLabel.text = string.format(luaLang("summonpooldetail_luckybag_prop_all"), SummonConfig.instance:getLuckyBag(slot0._poolId, slot2).name)
-		slot9.txtProbability.text = ""
+		local var_12_2 = SummonConfig.instance:getLuckyBag(arg_12_0._poolId, arg_12_2)
+		local var_12_3 = ConstEnum.SummonSSRUpProb
+
+		var_12_1.txtProbabilityLabel.text = string.format(luaLang("summonpooldetail_luckybag_prop_all"), var_12_2.name)
+		var_12_1.txtProbability.text = ""
 	end
 end
 
-function slot0.getProbUpItem(slot0, slot1)
-	if not slot0._probUpItemMap[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.heroIcons = {}
-		slot2.equipIcons = {}
-		slot7 = tostring(slot1)
-		slot3 = gohelper.clone(slot0._godesctitle, slot0._goheroitem, "prob_up_item_" .. slot7)
-		slot2.go = slot3
-		slot2.starList = slot0:getUserDataTb_()
-		slot2.iconContainerGo = gohelper.findChild(slot3, "heroshowlist")
-		slot2.iconEquipContainerGo = gohelper.findChild(slot3, "equipshowlist")
-		slot2.iconTemplateGo = gohelper.findChild(slot3, "heroshowlist/summonpooldetailheroitem")
-		slot2.iconEquipTemplateGo = gohelper.findChild(slot3, "equipshowlist/summonpooldetailequipitem")
-		slot2.starContainerGo = gohelper.findChild(slot3, "#go_starList")
+function var_0_0.getProbUpItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._probUpItemMap[arg_13_1]
 
-		for slot7 = 1, uv0 + 1 do
-			slot2.starList[slot7] = gohelper.findChild(slot2.starContainerGo, "star" .. tostring(slot7))
+	if not var_13_0 then
+		var_13_0 = arg_13_0:getUserDataTb_()
+		var_13_0.heroIcons = {}
+		var_13_0.equipIcons = {}
+
+		local var_13_1 = gohelper.clone(arg_13_0._godesctitle, arg_13_0._goheroitem, "prob_up_item_" .. tostring(arg_13_1))
+
+		var_13_0.go = var_13_1
+		var_13_0.starList = arg_13_0:getUserDataTb_()
+		var_13_0.iconContainerGo = gohelper.findChild(var_13_1, "heroshowlist")
+		var_13_0.iconEquipContainerGo = gohelper.findChild(var_13_1, "equipshowlist")
+		var_13_0.iconTemplateGo = gohelper.findChild(var_13_1, "heroshowlist/summonpooldetailheroitem")
+		var_13_0.iconEquipTemplateGo = gohelper.findChild(var_13_1, "equipshowlist/summonpooldetailequipitem")
+		var_13_0.starContainerGo = gohelper.findChild(var_13_1, "#go_starList")
+
+		for iter_13_0 = 1, var_0_1 + 1 do
+			var_13_0.starList[iter_13_0] = gohelper.findChild(var_13_0.starContainerGo, "star" .. tostring(iter_13_0))
 		end
 
-		slot2.txtProbability = gohelper.findChildText(slot2.starContainerGo, "probability/#txt_probability")
-		slot2.txtProbabilityLabel = gohelper.findChildText(slot2.starContainerGo, "probability")
-		slot0._probUpItemMap[slot1] = slot2
+		var_13_0.txtProbability = gohelper.findChildText(var_13_0.starContainerGo, "probability/#txt_probability")
+		var_13_0.txtProbabilityLabel = gohelper.findChildText(var_13_0.starContainerGo, "probability")
+		arg_13_0._probUpItemMap[arg_13_1] = var_13_0
 	end
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.applyRareStar(slot0, slot1, slot2)
-	for slot6 = 1, uv0 + 1 do
-		gohelper.setActive(slot1.starList[slot6], slot6 <= slot2 + 1)
-	end
-end
-
-function slot0.refreshProbIcons(slot0, slot1, slot2)
-	if slot0._resultType == SummonEnum.ResultType.Char then
-		slot0:refreshHeroProbIcons(slot1, slot2)
-	elseif slot0._resultType == SummonEnum.ResultType.Equip then
-		slot0:refreshEquipProbIcons(slot1, slot2)
-	end
-
-	gohelper.setActive(slot1.iconContainerGo, slot0._resultType == SummonEnum.ResultType.Char)
-	gohelper.setActive(slot1.iconEquipContainerGo, slot0._resultType == SummonEnum.ResultType.Equip)
-end
-
-function slot0.refreshHeroProbIcons(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		slot8 = slot0:getProbUpHeroIconItem(slot1, slot6)
-
-		gohelper.setActive(slot8.go, true)
-		slot0:refreshProbUpHeroIconItem(slot7, slot8)
+function var_0_0.applyRareStar(arg_14_0, arg_14_1, arg_14_2)
+	for iter_14_0 = 1, var_0_1 + 1 do
+		gohelper.setActive(arg_14_1.starList[iter_14_0], iter_14_0 <= arg_14_2 + 1)
 	end
 end
 
-function slot0.refreshEquipProbIcons(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot2) do
-		slot8 = slot0:getProbUpEquipIconItem(slot1, slot6)
+function var_0_0.refreshProbIcons(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0._resultType == SummonEnum.ResultType.Char then
+		arg_15_0:refreshHeroProbIcons(arg_15_1, arg_15_2)
+	elseif arg_15_0._resultType == SummonEnum.ResultType.Equip then
+		arg_15_0:refreshEquipProbIcons(arg_15_1, arg_15_2)
+	end
 
-		gohelper.setActive(slot8.go, true)
-		slot0:refreshProbUpEquipIconItem(slot7, slot8)
+	gohelper.setActive(arg_15_1.iconContainerGo, arg_15_0._resultType == SummonEnum.ResultType.Char)
+	gohelper.setActive(arg_15_1.iconEquipContainerGo, arg_15_0._resultType == SummonEnum.ResultType.Equip)
+end
+
+function var_0_0.refreshHeroProbIcons(arg_16_0, arg_16_1, arg_16_2)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_2) do
+		local var_16_0 = arg_16_0:getProbUpHeroIconItem(arg_16_1, iter_16_0)
+
+		gohelper.setActive(var_16_0.go, true)
+		arg_16_0:refreshProbUpHeroIconItem(iter_16_1, var_16_0)
 	end
 end
 
-function slot0.getProbUpHeroIconItem(slot0, slot1, slot2)
-	if not slot1.heroIcons[slot2] then
-		slot3 = slot0:getUserDataTb_()
-		slot4 = gohelper.clone(slot1.iconTemplateGo, slot1.iconContainerGo, "prob_up_item")
-		slot3.go = slot4
-		slot3.imageRare = gohelper.findChildImage(slot4, "image_rare")
-		slot3.imageCareer = gohelper.findChildImage(slot4, "image_career")
-		slot3.simageHero = gohelper.findChildSingleImage(slot4, "simage_hero")
-		slot3.imageNameEn = gohelper.findChildImage(slot4, "image_nameen")
-		slot3.txtNameCn = gohelper.findChildText(slot4, "txt_namecn")
-		slot3.data = {}
-		slot3.btn = gohelper.findChildButtonWithAudio(slot4, "simage_hero")
+function var_0_0.refreshEquipProbIcons(arg_17_0, arg_17_1, arg_17_2)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_2) do
+		local var_17_0 = arg_17_0:getProbUpEquipIconItem(arg_17_1, iter_17_0)
 
-		slot3.btn:AddClickListener(slot0.onClickHeroItem, slot0, slot3.data)
+		gohelper.setActive(var_17_0.go, true)
+		arg_17_0:refreshProbUpEquipIconItem(iter_17_1, var_17_0)
+	end
+end
 
-		slot1.heroIcons[slot2] = slot3
+function var_0_0.getProbUpHeroIconItem(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_1.heroIcons[arg_18_2]
+
+	if not var_18_0 then
+		var_18_0 = arg_18_0:getUserDataTb_()
+
+		local var_18_1 = gohelper.clone(arg_18_1.iconTemplateGo, arg_18_1.iconContainerGo, "prob_up_item")
+
+		var_18_0.go = var_18_1
+		var_18_0.imageRare = gohelper.findChildImage(var_18_1, "image_rare")
+		var_18_0.imageCareer = gohelper.findChildImage(var_18_1, "image_career")
+		var_18_0.simageHero = gohelper.findChildSingleImage(var_18_1, "simage_hero")
+		var_18_0.imageNameEn = gohelper.findChildImage(var_18_1, "image_nameen")
+		var_18_0.txtNameCn = gohelper.findChildText(var_18_1, "txt_namecn")
+		var_18_0.data = {}
+		var_18_0.btn = gohelper.findChildButtonWithAudio(var_18_1, "simage_hero")
+
+		var_18_0.btn:AddClickListener(arg_18_0.onClickHeroItem, arg_18_0, var_18_0.data)
+
+		arg_18_1.heroIcons[arg_18_2] = var_18_0
 	end
 
-	return slot3
+	return var_18_0
 end
 
-function slot0.refreshProbUpHeroIconItem(slot0, slot1, slot2)
-	UISpriteSetMgr.instance:setSummonSprite(slot2.imageRare, HeroConfig.instance:getHeroCO(slot1).rare < uv0 and "bg_choukahuang" or "bg_choukaju")
-	UISpriteSetMgr.instance:setCommonSprite(slot2.imageCareer, "lssx_" .. tostring(slot3.career))
-	slot2.simageHero:LoadImage(ResUrl.getHandbookheroIcon(slot3.skinId))
+function var_0_0.refreshProbUpHeroIconItem(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = HeroConfig.instance:getHeroCO(arg_19_1)
 
-	slot2.data.clickId = slot1
-	slot2.txtNameCn.text = slot3.name
+	UISpriteSetMgr.instance:setSummonSprite(arg_19_2.imageRare, var_19_0.rare < var_0_2 and "bg_choukahuang" or "bg_choukaju")
+	UISpriteSetMgr.instance:setCommonSprite(arg_19_2.imageCareer, "lssx_" .. tostring(var_19_0.career))
+	arg_19_2.simageHero:LoadImage(ResUrl.getHandbookheroIcon(var_19_0.skinId))
+
+	arg_19_2.data.clickId = arg_19_1
+	arg_19_2.txtNameCn.text = var_19_0.name
 end
 
-function slot0.getProbUpEquipIconItem(slot0, slot1, slot2)
-	if not slot1.equipIcons[slot2] then
-		slot3 = slot0:getUserDataTb_()
-		slot4 = gohelper.clone(slot1.iconEquipTemplateGo, slot1.iconEquipContainerGo, "prob_up_equip_item")
-		slot3.go = slot4
-		slot3.imageCareer = gohelper.findChildImage(slot4, "txt_namecn/image_career")
-		slot3.simageEquip = gohelper.findChildSingleImage(slot4, "simage_equip")
-		slot3.imageNameEn = gohelper.findChildImage(slot4, "image_nameen")
-		slot3.txtNameCn = gohelper.findChildText(slot4, "txt_namecn")
-		slot3.data = {}
-		slot3.btn = gohelper.findChildButtonWithAudio(slot4, "simage_equip")
+function var_0_0.getProbUpEquipIconItem(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_1.equipIcons[arg_20_2]
 
-		slot3.btn:AddClickListener(slot0.onClickEquipItem, slot0, slot3.data)
+	if not var_20_0 then
+		var_20_0 = arg_20_0:getUserDataTb_()
 
-		slot1.equipIcons[slot2] = slot3
+		local var_20_1 = gohelper.clone(arg_20_1.iconEquipTemplateGo, arg_20_1.iconEquipContainerGo, "prob_up_equip_item")
+
+		var_20_0.go = var_20_1
+		var_20_0.imageCareer = gohelper.findChildImage(var_20_1, "txt_namecn/image_career")
+		var_20_0.simageEquip = gohelper.findChildSingleImage(var_20_1, "simage_equip")
+		var_20_0.imageNameEn = gohelper.findChildImage(var_20_1, "image_nameen")
+		var_20_0.txtNameCn = gohelper.findChildText(var_20_1, "txt_namecn")
+		var_20_0.data = {}
+		var_20_0.btn = gohelper.findChildButtonWithAudio(var_20_1, "simage_equip")
+
+		var_20_0.btn:AddClickListener(arg_20_0.onClickEquipItem, arg_20_0, var_20_0.data)
+
+		arg_20_1.equipIcons[arg_20_2] = var_20_0
 	end
 
-	return slot3
+	return var_20_0
 end
 
-function slot0.refreshProbUpEquipIconItem(slot0, slot1, slot2)
-	slot2.simageEquip:LoadImage(ResUrl.getEquipSuit(EquipConfig.instance:getEquipCo(slot1).icon))
-	transformhelper.setLocalScale(slot2.simageEquip.transform, 0.39, 0.39, 1)
+function var_0_0.refreshProbUpEquipIconItem(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = EquipConfig.instance:getEquipCo(arg_21_1)
 
-	if not string.nilorempty(EquipHelper.getEquipSkillCareer(slot1, EquipHelper.createMaxLevelEquipMo(slot1).refineLv)) then
-		gohelper.setActive(slot2.imageCareer.gameObject, true)
-		UISpriteSetMgr.instance:setCommonSprite(slot2.imageCareer, "jinglian_" .. slot5)
+	arg_21_2.simageEquip:LoadImage(ResUrl.getEquipSuit(var_21_0.icon))
+	transformhelper.setLocalScale(arg_21_2.simageEquip.transform, 0.39, 0.39, 1)
+
+	local var_21_1 = EquipHelper.createMaxLevelEquipMo(arg_21_1)
+	local var_21_2 = EquipHelper.getEquipSkillCareer(arg_21_1, var_21_1.refineLv)
+
+	if not string.nilorempty(var_21_2) then
+		gohelper.setActive(arg_21_2.imageCareer.gameObject, true)
+
+		local var_21_3 = "jinglian_" .. var_21_2
+
+		UISpriteSetMgr.instance:setCommonSprite(arg_21_2.imageCareer, var_21_3)
 	else
-		gohelper.setActive(slot2.imageCareer.gameObject, false)
+		gohelper.setActive(arg_21_2.imageCareer.gameObject, false)
 	end
 
-	slot2.data.clickId = slot1
-	slot2.txtNameCn.text = slot3.name
+	arg_21_2.data.clickId = arg_21_1
+	arg_21_2.txtNameCn.text = var_21_0.name
 end
 
-function slot0.onClickHeroItem(slot0, slot1)
-	if slot1.clickId ~= nil then
+function var_0_0.onClickHeroItem(arg_22_0, arg_22_1)
+	if arg_22_1.clickId ~= nil then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			heroId = slot1.clickId
+			heroId = arg_22_1.clickId
 		})
 	end
 end
 
-function slot0.onClickEquipItem(slot0, slot1)
-	if slot1.clickId ~= nil then
-		EquipController.instance:openEquipView({
-			equipId = slot1.clickId
-		})
+function var_0_0.onClickEquipItem(arg_23_0, arg_23_1)
+	if arg_23_1.clickId ~= nil then
+		local var_23_0 = {
+			equipId = arg_23_1.clickId
+		}
+
+		EquipController.instance:openEquipView(var_23_0)
 	end
 end
 
-return slot0
+return var_0_0

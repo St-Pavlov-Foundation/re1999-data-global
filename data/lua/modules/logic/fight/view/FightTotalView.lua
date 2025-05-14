@@ -1,3 +1,3 @@
-module("modules.logic.fight.view.FightTotalView", package.seeall)
+﻿module("modules.logic.fight.view.FightTotalView", package.seeall)
 
-return class("FightTotalView", BaseView)
+return (class("FightTotalView", BaseView))

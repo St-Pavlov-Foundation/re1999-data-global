@@ -1,81 +1,90 @@
-module("modules.logic.versionactivity2_2.eliminate.model.EliminateMapModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateMapModel", package.seeall)
 
-slot0 = class("EliminateMapModel", BaseModel)
+local var_0_0 = class("EliminateMapModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.isPlayingClickAnimation = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.isPlayingClickAnimation = false
 end
 
-function slot0.getChapterStatus(slot0, slot1)
-	if not slot0:checkChapterIsUnlock(slot1) then
+function var_0_0.getChapterStatus(arg_3_0, arg_3_1)
+	if not arg_3_0:checkChapterIsUnlock(arg_3_1) then
 		return EliminateMapEnum.ChapterStatus.Lock
 	end
 
 	return EliminateMapEnum.ChapterStatus.Normal
 end
 
-function slot0.isFirstEpisode(slot0, slot1)
-	return EliminateOutsideModel.instance:getChapterList()[lua_eliminate_episode.configDict[slot1].chapterId][1].id == slot1
+function var_0_0.isFirstEpisode(arg_4_0, arg_4_1)
+	local var_4_0 = lua_eliminate_episode.configDict[arg_4_1].chapterId
+
+	return EliminateOutsideModel.instance:getChapterList()[var_4_0][1].id == arg_4_1
 end
 
-function slot0.getEpisodeConfig(slot0, slot1)
-	return lua_eliminate_episode.configDict[slot1]
+function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1)
+	return lua_eliminate_episode.configDict[arg_5_1]
 end
 
-function slot0.getLastCanFightEpisodeMo(slot0, slot1)
-	for slot7, slot8 in ipairs(EliminateOutsideModel.instance:getChapterList()[slot1]) do
-		if slot8.star == 0 then
-			return slot8
+function var_0_0.getLastCanFightEpisodeMo(arg_6_0, arg_6_1)
+	local var_6_0 = EliminateOutsideModel.instance:getChapterList()[arg_6_1]
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1.star == 0 then
+			return iter_6_1
 		end
 	end
 
-	return slot3[#slot3]
+	return var_6_0[#var_6_0]
 end
 
-function slot0.getEpisodeList(slot0, slot1)
-	return EliminateOutsideModel.instance:getChapterList()[slot1]
+function var_0_0.getEpisodeList(arg_7_0, arg_7_1)
+	return EliminateOutsideModel.instance:getChapterList()[arg_7_1]
 end
 
-function slot0.checkChapterIsUnlock(slot0, slot1)
-	if not EliminateOutsideModel.instance:getChapterList()[slot1] or #slot3 == 0 then
+function var_0_0.checkChapterIsUnlock(arg_8_0, arg_8_1)
+	local var_8_0 = EliminateOutsideModel.instance:getChapterList()[arg_8_1]
+
+	if not var_8_0 or #var_8_0 == 0 then
 		return false
 	end
 
-	return slot3[1].config.preEpisode == 0 or EliminateOutsideModel.instance:hasPassedEpisode(slot4.preEpisode)
+	local var_8_1 = var_8_0[1].config
+
+	return var_8_1.preEpisode == 0 or EliminateOutsideModel.instance:hasPassedEpisode(var_8_1.preEpisode)
 end
 
-function slot0.getLastCanFightChapterId(slot0)
-	slot1 = nil
+function var_0_0.getLastCanFightChapterId(arg_9_0)
+	local var_9_0
+	local var_9_1 = EliminateOutsideModel.instance:getChapterList()
 
-	for slot6, slot7 in ipairs(EliminateOutsideModel.instance:getChapterList()) do
-		if slot0:checkChapterIsUnlock(slot6) then
-			slot1 = slot6
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if arg_9_0:checkChapterIsUnlock(iter_9_0) then
+			var_9_0 = iter_9_0
 		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.getChapterNum()
-	return #uv0.getChapterConfigList()
+function var_0_0.getChapterNum()
+	return #var_0_0.getChapterConfigList()
 end
 
-function slot0.getChapterConfigList()
+function var_0_0.getChapterConfigList()
 	return EliminateConfig.instance:getNormalChapterList()
 end
 
-function slot0.setPlayingClickAnimation(slot0, slot1)
-	slot0.isPlayingClickAnimation = slot1
+function var_0_0.setPlayingClickAnimation(arg_12_0, arg_12_1)
+	arg_12_0.isPlayingClickAnimation = arg_12_1
 end
 
-function slot0.checkIsPlayingClickAnimation(slot0)
-	return slot0.isPlayingClickAnimation
+function var_0_0.checkIsPlayingClickAnimation(arg_13_0)
+	return arg_13_0.isPlayingClickAnimation
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

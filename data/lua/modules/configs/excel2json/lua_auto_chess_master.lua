@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_auto_chess_master", package.seeall)
+﻿module("modules.configs.excel2json.lua_auto_chess_master", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	roundTriggerCountLimit = 8,
 	name = 2,
 	unlockSkill = 6,
@@ -16,10 +17,10 @@ slot1 = {
 	skillDesc = 12,
 	skillLockDesc = 14
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	name = 1,
 	skillProgressDesc = 4,
 	skillName = 2,
@@ -27,8 +28,8 @@ slot3 = {
 	skillLockDesc = 5
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

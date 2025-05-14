@@ -1,181 +1,190 @@
-module("modules.logic.toast.view.ToastItem", package.seeall)
+﻿module("modules.logic.toast.view.ToastItem", package.seeall)
 
-slot0 = class("ToastItem", LuaCompBase)
-slot1 = 10000
-slot2 = ZProj.TweenHelper
-slot0.ToastType = {
+local var_0_0 = class("ToastItem", LuaCompBase)
+local var_0_1 = 10000
+local var_0_2 = ZProj.TweenHelper
+
+var_0_0.ToastType = {
 	Achievement = 2,
 	Season166 = 3,
 	Normal = 1
 }
 
-function slot0.init(slot0, slot1)
-	slot0.tr = slot1.transform
-	slot0._gonormal = gohelper.findChild(slot1, "#go_normal")
-	slot0._txt = gohelper.findChildText(slot1, "#go_normal/content/contentText")
-	slot0._icon = gohelper.findChildImage(slot1, "#go_normal/icon")
-	slot0._sicon = gohelper.findChildSingleImage(slot1, "#go_normal/sicon")
-	slot0._goachievement = gohelper.findChild(slot1, "#go_achievement")
-	slot0._goseason166 = gohelper.findChild(slot1, "#go_season166")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.tr = arg_1_1.transform
+	arg_1_0._gonormal = gohelper.findChild(arg_1_1, "#go_normal")
+	arg_1_0._txt = gohelper.findChildText(arg_1_1, "#go_normal/content/contentText")
+	arg_1_0._icon = gohelper.findChildImage(arg_1_1, "#go_normal/icon")
+	arg_1_0._sicon = gohelper.findChildSingleImage(arg_1_1, "#go_normal/sicon")
+	arg_1_0._goachievement = gohelper.findChild(arg_1_1, "#go_achievement")
+	arg_1_0._goseason166 = gohelper.findChild(arg_1_1, "#go_season166")
 
-	if slot0._txt == nil then
-		slot0._txt = gohelper.findChildText(slot1, "bg/content/contentText")
-		slot0._icon = gohelper.findChildImage(slot1, "icon")
-		slot0._sicon = gohelper.findChildSingleImage(slot1, "sicon")
+	if arg_1_0._txt == nil then
+		arg_1_0._txt = gohelper.findChildText(arg_1_1, "bg/content/contentText")
+		arg_1_0._icon = gohelper.findChildImage(arg_1_1, "icon")
+		arg_1_0._sicon = gohelper.findChildSingleImage(arg_1_1, "sicon")
 	end
 
-	slot0.canvasGroup = slot1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._duration = 0.5
-	slot0._showToastDuration = 3
-	slot0.startAnchorPositionY = 0
+	arg_1_0.canvasGroup = arg_1_1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._duration = 0.5
+	arg_1_0._showToastDuration = 3
+	arg_1_0.startAnchorPositionY = 0
 end
 
-function slot0.setMsg(slot0, slot1)
-	slot0.msg = slot1
-	slot0.canvasGroup.alpha = 1
-	slot0._txt.text = slot0:getTip()
+function var_0_0.setMsg(arg_2_0, arg_2_1)
+	arg_2_0.msg = arg_2_1
+	arg_2_0.canvasGroup.alpha = 1
+	arg_2_0._txt.text = arg_2_0:getTip()
 
-	slot0:setToastType(uv0.ToastType.Normal)
+	arg_2_0:setToastType(var_0_0.ToastType.Normal)
 
-	if not slot1.co.icon or slot1.co.icon == 0 or not string.nilorempty(slot1.sicon) then
-		gohelper.setActive(slot0._icon.gameObject, false)
+	if not arg_2_1.co.icon or arg_2_1.co.icon == 0 or not string.nilorempty(arg_2_1.sicon) then
+		gohelper.setActive(arg_2_0._icon.gameObject, false)
 	else
-		gohelper.setActive(slot0._icon.gameObject, true)
-		UISpriteSetMgr.instance:setToastSprite(slot0._icon, tostring(slot1.co.icon), false)
+		gohelper.setActive(arg_2_0._icon.gameObject, true)
+		UISpriteSetMgr.instance:setToastSprite(arg_2_0._icon, tostring(arg_2_1.co.icon), false)
 	end
 
-	if string.nilorempty(slot1.sicon) then
-		gohelper.setActive(slot0._sicon.gameObject, false)
+	if string.nilorempty(arg_2_1.sicon) then
+		gohelper.setActive(arg_2_0._sicon.gameObject, false)
 	else
-		gohelper.setActive(slot0._sicon.gameObject, true)
-		slot0._sicon:LoadImage(slot1.sicon)
+		gohelper.setActive(arg_2_0._sicon.gameObject, true)
+		arg_2_0._sicon:LoadImage(arg_2_1.sicon)
 	end
 
-	if slot0.msg and slot0.msg.callbackGroup then
-		slot0.msg.callbackGroup:tryOnOpen(slot0)
+	if arg_2_0.msg and arg_2_0.msg.callbackGroup then
+		arg_2_0.msg.callbackGroup:tryOnOpen(arg_2_0)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0.tr)
+	ZProj.UGUIHelper.RebuildLayout(arg_2_0.tr)
 
-	slot0.height = recthelper.getHeight(slot0.tr)
-	slot0.width = recthelper.getWidth(slot0.tr)
+	arg_2_0.height = recthelper.getHeight(arg_2_0.tr)
+	arg_2_0.width = recthelper.getWidth(arg_2_0.tr)
 end
 
-function slot0._delay(slot0)
-	ToastController.instance:dispatchEvent(ToastEvent.RecycleToast, slot0)
+function var_0_0._delay(arg_3_0)
+	ToastController.instance:dispatchEvent(ToastEvent.RecycleToast, arg_3_0)
 end
 
-function slot0.appearAnimation(slot0)
-	if slot0.msg and slot0.msg.co.audioId ~= 0 then
+function var_0_0.appearAnimation(arg_4_0)
+	if arg_4_0.msg and arg_4_0.msg.co.audioId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 	end
 
-	recthelper.setAnchorX(slot0.tr, slot0.width)
-	uv0.KillById(slot0.startTweenId or -1)
+	recthelper.setAnchorX(arg_4_0.tr, arg_4_0.width)
+	var_0_2.KillById(arg_4_0.startTweenId or -1)
 
-	slot0.startTweenId = uv0.DOAnchorPosX(slot0.tr, 0, slot0._duration, function ()
-		uv0.startTweenId = nil
+	arg_4_0.startTweenId = var_0_2.DOAnchorPosX(arg_4_0.tr, 0, arg_4_0._duration, function()
+		arg_4_0.startTweenId = nil
 
-		TaskDispatcher.runDelay(uv0._delay, uv0, uv0._showToastDuration)
+		TaskDispatcher.runDelay(arg_4_0._delay, arg_4_0, arg_4_0._showToastDuration)
 	end)
 end
 
-function slot0.upAnimation(slot0, slot1)
-	uv0.KillById(slot0.upTweenId or -1)
+function var_0_0.upAnimation(arg_6_0, arg_6_1)
+	var_0_2.KillById(arg_6_0.upTweenId or -1)
 
-	slot0.upTweenId = uv0.DOAnchorPosY(slot0.tr, slot1, slot0._duration, function ()
-		uv0.upTweenId = nil
+	arg_6_0.upTweenId = var_0_2.DOAnchorPosY(arg_6_0.tr, arg_6_1, arg_6_0._duration, function()
+		arg_6_0.upTweenId = nil
 	end)
 end
 
-function slot0.quitAnimation(slot0, slot1, slot2)
-	uv0.KillById(slot0.quitTweenId or -1)
+function var_0_0.quitAnimation(arg_8_0, arg_8_1, arg_8_2)
+	var_0_2.KillById(arg_8_0.quitTweenId or -1)
 
-	slot0.quitAnimationDoneCallback = slot1
-	slot0.callbackObj = slot2
-	slot0.startAnchorPositionY = slot0.tr.anchoredPosition.y
-	slot0.quitTweenId = uv0.DOTweenFloat(1, 0, slot0._duration, slot0.quitAnimationFrame, slot0.quitAnimationDone, slot0)
+	arg_8_0.quitAnimationDoneCallback = arg_8_1
+	arg_8_0.callbackObj = arg_8_2
+	arg_8_0.startAnchorPositionY = arg_8_0.tr.anchoredPosition.y
+	arg_8_0.quitTweenId = var_0_2.DOTweenFloat(1, 0, arg_8_0._duration, arg_8_0.quitAnimationFrame, arg_8_0.quitAnimationDone, arg_8_0)
 end
 
-function slot0.quitAnimationFrame(slot0, slot1)
-	recthelper.setAnchorY(slot0.tr, slot0.startAnchorPositionY + (1 - slot1) * slot0.height)
+function var_0_0.quitAnimationFrame(arg_9_0, arg_9_1)
+	local var_9_0 = (1 - arg_9_1) * arg_9_0.height
 
-	slot0.canvasGroup.alpha = slot1
+	recthelper.setAnchorY(arg_9_0.tr, arg_9_0.startAnchorPositionY + var_9_0)
+
+	arg_9_0.canvasGroup.alpha = arg_9_1
 end
 
-function slot0.quitAnimationDone(slot0)
-	if slot0.msg and slot0.msg.callbackGroup then
-		slot0.msg.callbackGroup:tryOnClose(slot0)
+function var_0_0.quitAnimationDone(arg_10_0)
+	if arg_10_0.msg and arg_10_0.msg.callbackGroup then
+		arg_10_0.msg.callbackGroup:tryOnClose(arg_10_0)
 	end
 
-	if slot0.quitAnimationDoneCallback then
-		slot0.quitAnimationDoneCallback(slot0.callbackObj, slot0)
+	if arg_10_0.quitAnimationDoneCallback then
+		arg_10_0.quitAnimationDoneCallback(arg_10_0.callbackObj, arg_10_0)
 	end
 
-	slot0.quitAnimationDoneCallback = nil
-	slot0.callbackObj = nil
-	slot0.quitTweenId = nil
+	arg_10_0.quitAnimationDoneCallback = nil
+	arg_10_0.callbackObj = nil
+	arg_10_0.quitTweenId = nil
 end
 
-function slot0.getToastItemHeight(slot0)
-	return slot0.height
+function var_0_0.getToastItemHeight(arg_11_0)
+	return arg_11_0.height
 end
 
-function slot0.clearAllTask(slot0)
-	TaskDispatcher.cancelTask(slot0._delay, slot0)
-	uv0.KillById(slot0.startTweenId or -1)
-	uv0.KillById(slot0.upTweenId or -1)
-	uv0.KillById(slot0.quitTweenId or -1)
+function var_0_0.clearAllTask(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._delay, arg_12_0)
+	var_0_2.KillById(arg_12_0.startTweenId or -1)
+	var_0_2.KillById(arg_12_0.upTweenId or -1)
+	var_0_2.KillById(arg_12_0.quitTweenId or -1)
 
-	slot0.startTweenId = nil
-	slot0.upTweenId = nil
-	slot0.quitTweenId = nil
-	slot0.quitAnimationDoneCallback = nil
-	slot0.callbackObj = nil
+	arg_12_0.startTweenId = nil
+	arg_12_0.upTweenId = nil
+	arg_12_0.quitTweenId = nil
+	arg_12_0.quitAnimationDoneCallback = nil
+	arg_12_0.callbackObj = nil
 end
 
-function slot0.setToastType(slot0, slot1)
-	if slot1 == uv0.ToastType.Normal then
-		gohelper.setActive(slot0._gonormal, true)
-		gohelper.setActive(slot0._goachievement, false)
-		gohelper.setActive(slot0._goseason166, false)
-	elseif slot1 == uv0.ToastType.Achievement then
-		gohelper.setActive(slot0._gonormal, false)
-		gohelper.setActive(slot0._goachievement, true)
-		gohelper.setActive(slot0._goseason166, false)
-	elseif slot1 == uv0.ToastType.Season166 then
-		gohelper.setActive(slot0._gonormal, false)
-		gohelper.setActive(slot0._goachievement, false)
-		gohelper.setActive(slot0._goseason166, true)
-	end
-end
-
-function slot0.getToastRootByType(slot0, slot1)
-	if slot1 == uv0.ToastType.Normal then
-		return slot0._gonormal
-	elseif slot1 == uv0.ToastType.Achievement then
-		return slot0._goachievement
-	elseif slot1 == uv0.ToastType.Season166 then
-		return slot0._goseason166
+function var_0_0.setToastType(arg_13_0, arg_13_1)
+	if arg_13_1 == var_0_0.ToastType.Normal then
+		gohelper.setActive(arg_13_0._gonormal, true)
+		gohelper.setActive(arg_13_0._goachievement, false)
+		gohelper.setActive(arg_13_0._goseason166, false)
+	elseif arg_13_1 == var_0_0.ToastType.Achievement then
+		gohelper.setActive(arg_13_0._gonormal, false)
+		gohelper.setActive(arg_13_0._goachievement, true)
+		gohelper.setActive(arg_13_0._goseason166, false)
+	elseif arg_13_1 == var_0_0.ToastType.Season166 then
+		gohelper.setActive(arg_13_0._gonormal, false)
+		gohelper.setActive(arg_13_0._goachievement, false)
+		gohelper.setActive(arg_13_0._goseason166, true)
 	end
 end
 
-function slot0.getTip(slot0)
-	slot1 = ""
-
-	return ServerTime.ReplaceUTCStr((not slot0.msg.extra or #slot0.msg.extra <= 0 or GameUtil.getSubPlaceholderLuaLang(slot0.msg.co.tips, slot0.msg.extra)) and slot0.msg.co.tips)
+function var_0_0.getToastRootByType(arg_14_0, arg_14_1)
+	if arg_14_1 == var_0_0.ToastType.Normal then
+		return arg_14_0._gonormal
+	elseif arg_14_1 == var_0_0.ToastType.Achievement then
+		return arg_14_0._goachievement
+	elseif arg_14_1 == var_0_0.ToastType.Season166 then
+		return arg_14_0._goseason166
+	end
 end
 
-function slot0.reset(slot0)
-	slot0.msg = nil
-	slot0.startAnchorPositionY = 0
+function var_0_0.getTip(arg_15_0)
+	local var_15_0 = ""
 
-	recthelper.setAnchor(slot0.tr, uv0, uv0)
+	if arg_15_0.msg.extra and #arg_15_0.msg.extra > 0 then
+		var_15_0 = GameUtil.getSubPlaceholderLuaLang(arg_15_0.msg.co.tips, arg_15_0.msg.extra)
+	else
+		var_15_0 = arg_15_0.msg.co.tips
+	end
+
+	return ServerTime.ReplaceUTCStr(var_15_0)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._sicon:UnLoadImage()
-	slot0:clearAllTask()
+function var_0_0.reset(arg_16_0)
+	arg_16_0.msg = nil
+	arg_16_0.startAnchorPositionY = 0
+
+	recthelper.setAnchor(arg_16_0.tr, var_0_1, var_0_1)
 end
 
-return slot0
+function var_0_0.onDestroy(arg_17_0)
+	arg_17_0._sicon:UnLoadImage()
+	arg_17_0:clearAllTask()
+end
+
+return var_0_0

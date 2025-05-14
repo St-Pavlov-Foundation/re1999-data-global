@@ -1,20 +1,21 @@
-module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114RoundBeginFlow", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114RoundBeginFlow", package.seeall)
 
-slot0 = class("Activity114RoundBeginFlow", FlowSequence)
+local var_0_0 = class("Activity114RoundBeginFlow", FlowSequence)
 
-function slot0.beginFlow(slot0)
-	slot1 = {
+function var_0_0.beginFlow(arg_1_0)
+	local var_1_0 = {
 		day = Activity114Model.instance.serverData.day,
 		round = Activity114Model.instance.serverData.round
 	}
+	local var_1_1 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, var_1_0.day, var_1_0.round)
 
-	if not Activity114Config.instance:getRoundCo(Activity114Model.instance.id, slot1.day, slot1.round) then
-		logError("没有回合配置：" .. slot0.context.day .. "#" .. slot0.context.round)
+	if not var_1_1 then
+		logError("没有回合配置：" .. arg_1_0.context.day .. "#" .. arg_1_0.context.round)
 
 		return
 	end
 
-	if string.nilorempty(slot2.preStoryId) then
+	if string.nilorempty(var_1_1.preStoryId) then
 		return
 	end
 
@@ -28,26 +29,28 @@ function slot0.beginFlow(slot0)
 		return
 	end
 
-	if #string.splitToNumber(slot2.preStoryId, "#") == 1 then
-		slot3[2] = slot3[1]
-		slot3[1] = Activity114Enum.PlayStartRoundType.Story
+	local var_1_2 = string.splitToNumber(var_1_1.preStoryId, "#")
+
+	if #var_1_2 == 1 then
+		var_1_2[2] = var_1_2[1]
+		var_1_2[1] = Activity114Enum.PlayStartRoundType.Story
 	end
 
-	if slot3[1] == Activity114Enum.PlayStartRoundType.Story then
-		slot0:addWork(Activity114StoryWork.New(slot3[2], Activity114Enum.StoryType.RoundStart))
-	elseif slot3[1] == Activity114Enum.PlayStartRoundType.Guide then
-		slot0:addWork(Activity114GuideWork.New(slot3[2]))
+	if var_1_2[1] == Activity114Enum.PlayStartRoundType.Story then
+		arg_1_0:addWork(Activity114StoryWork.New(var_1_2[2], Activity114Enum.StoryType.RoundStart))
+	elseif var_1_2[1] == Activity114Enum.PlayStartRoundType.Guide then
+		arg_1_0:addWork(Activity114GuideWork.New(var_1_2[2]))
 	else
-		logError("回合开始配置错误" .. slot2.preStoryId)
+		logError("回合开始配置错误" .. var_1_1.preStoryId)
 
 		return
 	end
 
-	slot0:addWork(Activity114SendRoundBeginReqWork.New())
-	slot0:addWork(Activity114ChangeEventWork.New())
-	slot0:start(slot1)
+	arg_1_0:addWork(Activity114SendRoundBeginReqWork.New())
+	arg_1_0:addWork(Activity114ChangeEventWork.New())
+	arg_1_0:start(var_1_0)
 
 	return true
 end
 
-return slot0
+return var_0_0

@@ -1,136 +1,152 @@
-module("modules.logic.playercard.view.comp.PlayerCardPlayerInfo", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardPlayerInfo", package.seeall)
 
-slot0 = class("PlayerCardPlayerInfo", BaseView)
+local var_0_0 = class("PlayerCardPlayerInfo", BaseView)
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
 
-	slot0:onInitView()
+	arg_1_0:onInitView()
 end
 
-function slot0.canOpen(slot0)
-	slot0:onOpen()
-	slot0:addEvents()
+function var_0_0.canOpen(arg_2_0)
+	arg_2_0:onOpen()
+	arg_2_0:addEvents()
 end
 
-function slot0.onInitView(slot0)
-	slot0.go = gohelper.findChild(slot0.viewGO, "root/main/playerinfo")
-	slot0._simageheadicon = gohelper.findChildSingleImage(slot0.go, "ani/headframe/#simage_headicon")
-	slot0._btnheadicon = gohelper.findChildButtonWithAudio(slot0.go, "ani/headframe/#simage_headicon")
-	slot0._goframenode = gohelper.findChild(slot0.go, "ani/headframe/#simage_headicon/#go_framenode")
-	slot0._txtlevel = gohelper.findChildText(slot0.go, "ani/lv/#txt_level")
-	slot0._txtplayerid = gohelper.findChildText(slot0.go, "ani/#txt_playerid")
-	slot0._btnplayerid = gohelper.findChildButtonWithAudio(slot0.go, "ani/#txt_playerid/#btn_playerid")
-	slot0._txtname = gohelper.findChildText(slot0.go, "ani/#txt_name")
+function var_0_0.onInitView(arg_3_0)
+	arg_3_0.go = gohelper.findChild(arg_3_0.viewGO, "root/main/playerinfo")
+	arg_3_0._simageheadicon = gohelper.findChildSingleImage(arg_3_0.go, "ani/headframe/#simage_headicon")
+	arg_3_0._btnheadicon = gohelper.findChildButtonWithAudio(arg_3_0.go, "ani/headframe/#simage_headicon")
+	arg_3_0._goframenode = gohelper.findChild(arg_3_0.go, "ani/headframe/#simage_headicon/#go_framenode")
+	arg_3_0._txtlevel = gohelper.findChildText(arg_3_0.go, "ani/lv/#txt_level")
+	arg_3_0._txtplayerid = gohelper.findChildText(arg_3_0.go, "ani/#txt_playerid")
+	arg_3_0._btnplayerid = gohelper.findChildButtonWithAudio(arg_3_0.go, "ani/#txt_playerid/#btn_playerid")
+	arg_3_0._txtname = gohelper.findChildText(arg_3_0.go, "ani/#txt_name")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnplayerid:AddClickListener(slot0._btnplayeridOnClick, slot0)
-	slot0._btnheadicon:AddClickListener(slot0._changeIcon, slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, slot0.onRefreshView, slot0)
-	slot0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, slot0.onRefreshView, slot0)
+function var_0_0.addEvents(arg_4_0)
+	arg_4_0._btnplayerid:AddClickListener(arg_4_0._btnplayeridOnClick, arg_4_0)
+	arg_4_0._btnheadicon:AddClickListener(arg_4_0._changeIcon, arg_4_0)
+	arg_4_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, arg_4_0.onRefreshView, arg_4_0)
+	arg_4_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_4_0.onRefreshView, arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnplayerid:RemoveClickListener()
-	slot0._btnheadicon:RemoveClickListener()
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0._btnplayerid:RemoveClickListener()
+	arg_5_0._btnheadicon:RemoveClickListener()
 end
 
-function slot0._changeIcon(slot0)
-	if slot0:isPlayerSelf() then
+function var_0_0._changeIcon(arg_6_0)
+	if arg_6_0:isPlayerSelf() then
 		ViewMgr.instance:openView(ViewName.IconTipView)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Magazinespage)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0.userId = slot0.viewParam.userId
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.userId = arg_7_0.viewParam.userId
 
-	slot0:updateBaseInfo()
+	arg_7_0:updateBaseInfo()
 end
 
-function slot0.getCardInfo(slot0)
-	return PlayerCardModel.instance:getCardInfo(slot0.userId)
+function var_0_0.getCardInfo(arg_8_0)
+	return PlayerCardModel.instance:getCardInfo(arg_8_0.userId)
 end
 
-function slot0.isPlayerSelf(slot0)
-	return slot0:getCardInfo() and slot1:isSelf()
+function var_0_0.isPlayerSelf(arg_9_0)
+	local var_9_0 = arg_9_0:getCardInfo()
+
+	return var_9_0 and var_9_0:isSelf()
 end
 
-function slot0.getPlayerInfo(slot0)
-	return slot0:getCardInfo() and slot1:getPlayerInfo()
+function var_0_0.getPlayerInfo(arg_10_0)
+	local var_10_0 = arg_10_0:getCardInfo()
+
+	return var_10_0 and var_10_0:getPlayerInfo()
 end
 
-function slot0._btnplayeridOnClick(slot0)
-	if not slot0:getPlayerInfo() then
+function var_0_0._btnplayeridOnClick(arg_11_0)
+	local var_11_0 = arg_11_0:getPlayerInfo()
+
+	if not var_11_0 then
 		return
 	end
 
-	slot0._txtplayerid.text = slot1.userId
+	arg_11_0._txtplayerid.text = var_11_0.userId
 
-	ZProj.UGUIHelper.CopyText(slot0._txtplayerid.text)
+	ZProj.UGUIHelper.CopyText(arg_11_0._txtplayerid.text)
 
-	slot0._txtplayerid.text = string.format("ID:%s", slot1.userId)
+	arg_11_0._txtplayerid.text = string.format("ID:%s", var_11_0.userId)
 
 	GameFacade.showToast(ToastEnum.ClickPlayerId)
 end
 
-function slot0.onRefreshView(slot0)
-	slot0:updateBaseInfo()
+function var_0_0.onRefreshView(arg_12_0)
+	arg_12_0:updateBaseInfo()
 end
 
-function slot0.updateBaseInfo(slot0)
-	if not slot0:getPlayerInfo() then
+function var_0_0.updateBaseInfo(arg_13_0)
+	local var_13_0 = arg_13_0:getPlayerInfo()
+
+	if not var_13_0 then
 		return
 	end
 
-	slot0._txtname.text = slot1.name
-	slot0._txtplayerid.text = string.format("ID:%s", slot1.userId)
-	slot0._txtlevel.text = slot1.level
-	slot2 = lua_item.configDict[slot1.portrait]
+	arg_13_0._txtname.text = var_13_0.name
+	arg_13_0._txtplayerid.text = string.format("ID:%s", var_13_0.userId)
+	arg_13_0._txtlevel.text = var_13_0.level
 
-	if not slot0._liveHeadIcon then
-		slot0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(slot0._simageheadicon)
+	local var_13_1 = lua_item.configDict[var_13_0.portrait]
+
+	if not arg_13_0._liveHeadIcon then
+		arg_13_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_13_0._simageheadicon)
 	end
 
-	slot0._liveHeadIcon:setLiveHead(slot1.portrait)
+	arg_13_0._liveHeadIcon:setLiveHead(var_13_0.portrait)
 
-	if #string.split(slot2.effect, "#") > 1 then
-		if slot2.id == tonumber(slot3[#slot3]) then
-			gohelper.setActive(slot0._goframenode, true)
+	local var_13_2 = string.split(var_13_1.effect, "#")
 
-			if not slot0.frame and not slot0._loader then
-				slot0._loader = MultiAbLoader.New()
+	if #var_13_2 > 1 then
+		if var_13_1.id == tonumber(var_13_2[#var_13_2]) then
+			gohelper.setActive(arg_13_0._goframenode, true)
 
-				slot0._loader:addPath("ui/viewres/common/effect/frame.prefab")
-				slot0._loader:startLoad(slot0._onLoadCallback, slot0)
+			if not arg_13_0.frame and not arg_13_0._loader then
+				arg_13_0._loader = MultiAbLoader.New()
+
+				local var_13_3 = "ui/viewres/common/effect/frame.prefab"
+
+				arg_13_0._loader:addPath(var_13_3)
+				arg_13_0._loader:startLoad(arg_13_0._onLoadCallback, arg_13_0)
 			end
 		end
 	else
-		gohelper.setActive(slot0._goframenode, false)
+		gohelper.setActive(arg_13_0._goframenode, false)
 	end
 end
 
-function slot0._onLoadCallback(slot0)
-	gohelper.clone(slot0._loader:getFirstAssetItem():GetResource(), slot0._goframenode, "frame")
+function var_0_0._onLoadCallback(arg_14_0)
+	local var_14_0 = arg_14_0._loader:getFirstAssetItem():GetResource()
 
-	slot0.frame = gohelper.findChild(slot0._goframenode, "frame")
-	slot0.frame:GetComponent(gohelper.Type_Image).enabled = false
-	slot5 = 1.41 * recthelper.getWidth(slot0._simageheadicon.transform) / recthelper.getWidth(slot0.frame.transform)
+	gohelper.clone(var_14_0, arg_14_0._goframenode, "frame")
 
-	transformhelper.setLocalScale(slot0.frame.transform, slot5, slot5, 1)
+	arg_14_0.frame = gohelper.findChild(arg_14_0._goframenode, "frame")
+	arg_14_0.frame:GetComponent(gohelper.Type_Image).enabled = false
+
+	local var_14_1 = 1.41 * (recthelper.getWidth(arg_14_0._simageheadicon.transform) / recthelper.getWidth(arg_14_0.frame.transform))
+
+	transformhelper.setLocalScale(arg_14_0.frame.transform, var_14_1, var_14_1, 1)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._simageheadicon:UnLoadImage()
+function var_0_0.onDestroy(arg_15_0)
+	arg_15_0._simageheadicon:UnLoadImage()
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_15_0._loader then
+		arg_15_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_15_0._loader = nil
 	end
 
-	slot0:removeEvents()
+	arg_15_0:removeEvents()
 end
 
-return slot0
+return var_0_0

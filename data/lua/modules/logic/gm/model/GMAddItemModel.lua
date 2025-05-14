@@ -1,17 +1,17 @@
-module("modules.logic.gm.model.GMAddItemModel", package.seeall)
+﻿module("modules.logic.gm.model.GMAddItemModel", package.seeall)
 
-slot0 = class("GMAddItemModel", ListScrollModel)
+local var_0_0 = class("GMAddItemModel", ListScrollModel)
 
-function slot0.setFastAddHeroView(slot0, slot1)
-	slot0.fastAddHeroView = slot1
+function var_0_0.setFastAddHeroView(arg_1_0, arg_1_1)
+	arg_1_0.fastAddHeroView = arg_1_1
 end
 
-function slot0.onOnClickItem(slot0, slot1)
-	if slot0.fastAddHeroView then
-		slot0.fastAddHeroView:onAddItemOnClick(slot1)
+function var_0_0.onOnClickItem(arg_2_0, arg_2_1)
+	if arg_2_0.fastAddHeroView then
+		arg_2_0.fastAddHeroView:onAddItemOnClick(arg_2_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

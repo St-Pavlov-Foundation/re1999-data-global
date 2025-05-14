@@ -1,28 +1,31 @@
-module("modules.logic.minors.config.MinorsConfig", package.seeall)
+﻿module("modules.logic.minors.config.MinorsConfig", package.seeall)
 
-slot0 = class("MinorsConfig", BaseConfig)
-slot0.DateCmpType = {
+local var_0_0 = class("MinorsConfig", BaseConfig)
+
+var_0_0.DateCmpType = {
 	Day = 3,
 	Month = 2,
 	Year = 1
 }
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"const"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot0.getDateOfBirthSelectionViewStartYear(slot0)
+function var_0_0.getDateOfBirthSelectionViewStartYear(arg_4_0)
 	return tonumber(CommonConfig.instance:getConstStr(ConstEnum.dateOfBirthSelectionViewStartYear)) or 1970
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

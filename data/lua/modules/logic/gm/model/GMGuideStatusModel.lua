@@ -1,74 +1,75 @@
-module("modules.logic.gm.model.GMGuideStatusModel", package.seeall)
+﻿module("modules.logic.gm.model.GMGuideStatusModel", package.seeall)
 
-slot0 = class("GMGuideStatusModel", ListScrollModel)
+local var_0_0 = class("GMGuideStatusModel", ListScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.showOpBtn = true
-	slot0.idReverse = false
-	slot0.search = ""
+	arg_1_0.showOpBtn = true
+	arg_1_0.idReverse = false
+	arg_1_0.search = ""
 end
 
-function slot0.reInit(slot0)
-	slot0._hasInit = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._hasInit = nil
 end
 
-function slot0.onClickShowOpBtn(slot0)
-	slot0.showOpBtn = not slot0.showOpBtn
+function var_0_0.onClickShowOpBtn(arg_3_0)
+	arg_3_0.showOpBtn = not arg_3_0.showOpBtn
 
-	slot0:updateModel()
+	arg_3_0:updateModel()
 end
 
-function slot0.onClickReverse(slot0)
-	slot0.idReverse = not slot0.idReverse
+function var_0_0.onClickReverse(arg_4_0)
+	arg_4_0.idReverse = not arg_4_0.idReverse
 
-	slot0:reInit()
-	slot0:updateModel()
+	arg_4_0:reInit()
+	arg_4_0:updateModel()
 end
 
-function slot0.setSearch(slot0, slot1)
-	slot0.search = slot1
+function var_0_0.setSearch(arg_5_0, arg_5_1)
+	arg_5_0.search = arg_5_1
 
-	slot0:reInit()
-	slot0:updateModel()
+	arg_5_0:reInit()
+	arg_5_0:updateModel()
 end
 
-function slot0.getSearch(slot0)
-	return slot0.search
+function var_0_0.getSearch(arg_6_0)
+	return arg_6_0.search
 end
 
-function slot0.updateModel(slot0)
-	if not slot0._hasInit then
-		slot0._hasInit = true
-		slot1 = {}
+function var_0_0.updateModel(arg_7_0)
+	if not arg_7_0._hasInit then
+		arg_7_0._hasInit = true
 
-		for slot5, slot6 in ipairs(lua_guide.configList) do
-			slot7 = true
+		local var_7_0 = {}
 
-			if slot0.search then
-				slot7 = string.find(tostring(slot6.id), slot0.search) or string.find(slot6.desc, slot0.search)
+		for iter_7_0, iter_7_1 in ipairs(lua_guide.configList) do
+			local var_7_1 = true
+
+			if arg_7_0.search then
+				var_7_1 = string.find(tostring(iter_7_1.id), arg_7_0.search) or string.find(iter_7_1.desc, arg_7_0.search)
 			end
 
-			if slot6.isOnline == 1 and slot7 then
-				table.insert(slot1, slot6)
+			if iter_7_1.isOnline == 1 and var_7_1 then
+				table.insert(var_7_0, iter_7_1)
 			end
 		end
 
-		table.sort(slot1, function (slot0, slot1)
-			return slot0.id < slot1.id
+		table.sort(var_7_0, function(arg_8_0, arg_8_1)
+			return arg_8_0.id < arg_8_1.id
 		end)
 
-		if slot0.idReverse then
-			tabletool.revert(slot1)
+		if arg_7_0.idReverse then
+			tabletool.revert(var_7_0)
 		end
 
-		slot0:setList(slot1)
+		arg_7_0:setList(var_7_0)
 	else
-		slot0:onModelUpdate()
+		arg_7_0:onModelUpdate()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

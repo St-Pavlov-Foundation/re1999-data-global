@@ -1,52 +1,52 @@
-module("modules.logic.herogroup.view.HeroGroupBalanceTipView", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupBalanceTipView", package.seeall)
 
-slot0 = class("HeroGroupBalanceTipView", BaseView)
+local var_0_0 = class("HeroGroupBalanceTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButton(slot0.viewGO, "#btn_close")
-	slot0._txtroleLv = gohelper.findChildTextMesh(slot0.viewGO, "lv/#txt_roleLv")
-	slot0._txtequipLv = gohelper.findChildTextMesh(slot0.viewGO, "equipLv/#txt_equipLv")
-	slot0._txttalent = gohelper.findChildTextMesh(slot0.viewGO, "talent/#txt_talent")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._txtroleLv = gohelper.findChildTextMesh(arg_1_0.viewGO, "lv/#txt_roleLv")
+	arg_1_0._txtequipLv = gohelper.findChildTextMesh(arg_1_0.viewGO, "equipLv/#txt_equipLv")
+	arg_1_0._txttalent = gohelper.findChildTextMesh(arg_1_0.viewGO, "talent/#txt_talent")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rankGo = gohelper.findChild(slot0.viewGO, "lv/rankobj")
-	slot0._ranks = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._rankGo = gohelper.findChild(arg_4_0.viewGO, "lv/rankobj")
+	arg_4_0._ranks = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		slot0._ranks[slot4] = gohelper.findChild(slot0._rankGo, "rank" .. slot4)
+	for iter_4_0 = 1, 3 do
+		arg_4_0._ranks[iter_4_0] = gohelper.findChild(arg_4_0._rankGo, "rank" .. iter_4_0)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot1, slot2, slot3 = HeroGroupBalanceHelper.getBalanceLv()
-	slot4, slot5 = HeroConfig.instance:getShowLevel(slot1)
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0, var_5_1, var_5_2 = HeroGroupBalanceHelper.getBalanceLv()
+	local var_5_3, var_5_4 = HeroConfig.instance:getShowLevel(var_5_0)
 
-	for slot9 = 1, 3 do
-		gohelper.setActive(slot0._ranks[slot9], slot5 - 1 == slot9)
+	for iter_5_0 = 1, 3 do
+		gohelper.setActive(arg_5_0._ranks[iter_5_0], var_5_4 - 1 == iter_5_0)
 	end
 
-	slot0._txtroleLv.text = "Lv.<size=38>" .. slot4
-	slot0._txtequipLv.text = "Lv.<size=38>" .. slot3
-	slot0._txttalent.text = "Lv.<size=38>" .. slot2
+	arg_5_0._txtroleLv.text = "Lv.<size=38>" .. var_5_3
+	arg_5_0._txtequipLv.text = "Lv.<size=38>" .. var_5_2
+	arg_5_0._txttalent.text = "Lv.<size=38>" .. var_5_1
 
-	if slot5 == 1 then
-		slot0._txtroleLv.alignment = TMPro.TextAlignmentOptions.Center
+	if var_5_4 == 1 then
+		arg_5_0._txtroleLv.alignment = TMPro.TextAlignmentOptions.Center
 
-		recthelper.setAnchorX(slot0._txtroleLv.transform, 0)
+		recthelper.setAnchorX(arg_5_0._txtroleLv.transform, 0)
 	end
 end
 
-return slot0
+return var_0_0

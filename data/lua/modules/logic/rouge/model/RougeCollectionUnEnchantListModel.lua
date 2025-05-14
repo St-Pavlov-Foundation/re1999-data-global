@@ -1,51 +1,56 @@
-module("modules.logic.rouge.model.RougeCollectionUnEnchantListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionUnEnchantListModel", package.seeall)
 
-slot0 = class("RougeCollectionUnEnchantListModel", ListScrollModel)
+local var_0_0 = class("RougeCollectionUnEnchantListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._collections = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._collections = nil
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.onInitData(slot0, slot1)
-	slot0._collections = {}
+function var_0_0.onInitData(arg_3_0, arg_3_1)
+	arg_3_0._collections = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			table.insert(slot0._collections, RougeCollectionModel.instance:getCollectionByUid(slot6))
+	if arg_3_1 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+			local var_3_0 = RougeCollectionModel.instance:getCollectionByUid(iter_3_1)
+
+			table.insert(arg_3_0._collections, var_3_0)
 		end
 	end
 
-	slot0:setList(slot0._collections)
+	arg_3_0:setList(arg_3_0._collections)
 end
 
-function slot0.isBagEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBagEmpty(arg_4_0)
+	return arg_4_0:getCount() <= 0
 end
 
-function slot0.markCurSelectHoleIndex(slot0, slot1)
-	slot0._selectHoleIndex = slot1 or 1
+function var_0_0.markCurSelectHoleIndex(arg_5_0, arg_5_1)
+	arg_5_0._selectHoleIndex = arg_5_1 or 1
 end
 
-function slot0.getCurSelectHoleIndex(slot0)
-	return slot0._selectHoleIndex
+function var_0_0.getCurSelectHoleIndex(arg_6_0)
+	return arg_6_0._selectHoleIndex
 end
 
-function slot0.switchSelectCollection(slot0, slot1)
-	slot0._curSelectCollectionId = slot1
+function var_0_0.switchSelectCollection(arg_7_0, arg_7_1)
+	arg_7_0._curSelectCollectionId = arg_7_1
 end
 
-function slot0.getCurSelectIndex(slot0)
-	return slot0:getIndex(slot0:getById(slot0:getCurSelectCollectionId()))
+function var_0_0.getCurSelectIndex(arg_8_0)
+	local var_8_0 = arg_8_0:getCurSelectCollectionId()
+	local var_8_1 = arg_8_0:getById(var_8_0)
+
+	return (arg_8_0:getIndex(var_8_1))
 end
 
-function slot0.getCurSelectCollectionId(slot0)
-	return slot0._curSelectCollectionId
+function var_0_0.getCurSelectCollectionId(arg_9_0)
+	return arg_9_0._curSelectCollectionId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

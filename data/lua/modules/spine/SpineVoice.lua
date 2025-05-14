@@ -1,218 +1,223 @@
-module("modules.spine.SpineVoice", package.seeall)
+﻿module("modules.spine.SpineVoice", package.seeall)
 
-slot0 = class("SpineVoice")
+local var_0_0 = class("SpineVoice")
 
-function slot0.ctor(slot0)
-	slot0._componentStopVoiceCount = 0
-	slot0._spineVoiceText = slot0:_addComponent(SpineVoiceText)
-	slot0._spineVoiceBody = slot0:_addComponent(SpineVoiceBody, true)
-	slot0._spineVoiceAudio = slot0:_addComponent(SpineVoiceAudio, true)
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._componentStopVoiceCount = 0
+	arg_1_0._spineVoiceText = arg_1_0:_addComponent(SpineVoiceText)
+	arg_1_0._spineVoiceBody = arg_1_0:_addComponent(SpineVoiceBody, true)
+	arg_1_0._spineVoiceAudio = arg_1_0:_addComponent(SpineVoiceAudio, true)
 
-	slot0:_init()
+	arg_1_0:_init()
 end
 
-function slot0._init(slot0)
-	slot0._spineVoiceMouth = slot0:_addComponent(SpineVoiceMouth, true)
-	slot0._voiceFace = slot0:_addComponent(SpineVoiceFace, true)
+function var_0_0._init(arg_2_0)
+	arg_2_0._spineVoiceMouth = arg_2_0:_addComponent(SpineVoiceMouth, true)
+	arg_2_0._voiceFace = arg_2_0:_addComponent(SpineVoiceFace, true)
 end
 
-function slot0._addComponent(slot0, slot1, slot2)
-	if slot2 then
-		slot0._componentStopVoiceCount = slot0._componentStopVoiceCount + 1
+function var_0_0._addComponent(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_2 then
+		arg_3_0._componentStopVoiceCount = arg_3_0._componentStopVoiceCount + 1
 	end
 
-	return slot1.New()
+	return arg_3_1.New()
 end
 
-function slot0.stopVoice(slot0)
-	slot0._manualStopVoice = true
+function var_0_0.stopVoice(arg_4_0)
+	arg_4_0._manualStopVoice = true
 
-	if not slot0._playVoice then
+	if not arg_4_0._playVoice then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
-	slot0:_onVoiceStop()
+	arg_4_0:_onVoiceStop()
 end
 
-function slot0.setDiffFaceBiYan(slot0, slot1)
-	slot0._voiceFace:setDiffFaceBiYan(slot1)
+function var_0_0.setDiffFaceBiYan(arg_5_0, arg_5_1)
+	arg_5_0._voiceFace:setDiffFaceBiYan(arg_5_1)
 end
 
-function slot0.setInStory(slot0)
-	slot0._isInStory = true
+function var_0_0.setInStory(arg_6_0)
+	arg_6_0._isInStory = true
 end
 
-function slot0.getInStory(slot0)
-	return slot0._isInStory
+function var_0_0.getInStory(arg_7_0)
+	return arg_7_0._isInStory
 end
 
-function slot0.getVoiceLang(slot0)
-	return slot0._lang
+function var_0_0.getVoiceLang(arg_8_0)
+	return arg_8_0._lang
 end
 
-function slot0.getPlayVoiceStartTime(slot0)
-	return slot0._playVoiceStartTime
+function var_0_0.getPlayVoiceStartTime(arg_9_0)
+	return arg_9_0._playVoiceStartTime
 end
 
-function slot0.playVoice(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if slot2 and slot2.audio then
+function var_0_0.playVoice(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7)
+	if arg_10_2 and arg_10_2.audio then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_Hero_Voc_Bus)
 	end
 
-	slot0._playVoiceStartTime = Time.time
-	slot0._playVoice = true
-	slot0._manualStopVoice = false
-	slot0._stopVoiceCount = 0
-	slot0._callback = slot3
-	slot0._spine = slot1
-	slot0._voiceConfig = slot2
-	slot0._txtContent = slot4
-	slot0._txtEnContent = slot5
-	slot0._bgGo = slot6
-	slot0._showBg = slot7
+	arg_10_0._playVoiceStartTime = Time.time
+	arg_10_0._playVoice = true
+	arg_10_0._manualStopVoice = false
+	arg_10_0._stopVoiceCount = 0
+	arg_10_0._callback = arg_10_3
+	arg_10_0._spine = arg_10_1
+	arg_10_0._voiceConfig = arg_10_2
+	arg_10_0._txtContent = arg_10_4
+	arg_10_0._txtEnContent = arg_10_5
+	arg_10_0._bgGo = arg_10_6
+	arg_10_0._showBg = arg_10_7
 
-	slot0:setBgVisible(true)
-	slot0._spine:stopTransition()
+	arg_10_0:setBgVisible(true)
+	arg_10_0._spine:stopTransition()
 
-	if slot2.heroId then
-		slot9, slot10, slot11 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(slot8)
-		slot13 = GameConfig:GetCurVoiceShortcut()
+	local var_10_0 = arg_10_2.heroId
 
-		if not string.nilorempty(LangSettings.shortcutTab[slot9]) and not slot11 then
-			slot0._spineVoiceAudio:init(slot0, slot2, slot1, slot12)
+	if var_10_0 then
+		local var_10_1, var_10_2, var_10_3 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_10_0)
+		local var_10_4 = LangSettings.shortcutTab[var_10_1]
+		local var_10_5 = GameConfig:GetCurVoiceShortcut()
+
+		if not string.nilorempty(var_10_4) and not var_10_3 then
+			arg_10_0._spineVoiceAudio:init(arg_10_0, arg_10_2, arg_10_1, var_10_4)
 		else
-			slot0._spineVoiceAudio:init(slot0, slot2, slot1)
+			arg_10_0._spineVoiceAudio:init(arg_10_0, arg_10_2, arg_10_1)
 		end
 	else
-		slot0._spineVoiceAudio:init(slot0, slot2, slot1)
+		arg_10_0._spineVoiceAudio:init(arg_10_0, arg_10_2, arg_10_1)
 	end
 
-	if slot0._spineVoiceAudio:hasAudio() then
-		slot0._lang = AudioMgr.instance:getLangByAudioId(slot2.audio)
+	if arg_10_0._spineVoiceAudio:hasAudio() then
+		arg_10_0._lang = AudioMgr.instance:getLangByAudioId(arg_10_2.audio)
 	else
-		slot0._lang = AudioMgr.instance:getCurLang()
+		arg_10_0._lang = AudioMgr.instance:getCurLang()
 	end
 
-	if slot4 or slot5 then
-		slot0._spineVoiceText:init(slot0, slot2, slot4, slot5, slot7)
+	if arg_10_4 or arg_10_5 then
+		arg_10_0._spineVoiceText:init(arg_10_0, arg_10_2, arg_10_4, arg_10_5, arg_10_7)
 	end
 
-	slot0:_initSpineVoiceMouth(slot2, slot1)
-	slot0._voiceFace:init(slot0, slot2, slot1)
-	slot0._spineVoiceBody:init(slot0, slot2, slot1)
+	arg_10_0:_initSpineVoiceMouth(arg_10_2, arg_10_1)
+	arg_10_0._voiceFace:init(arg_10_0, arg_10_2, arg_10_1)
+	arg_10_0._spineVoiceBody:init(arg_10_0, arg_10_2, arg_10_1)
 end
 
-function slot0._initSpineVoiceMouth(slot0, slot1, slot2)
-	slot0._spineVoiceMouth:init(slot0, slot1, slot2)
+function var_0_0._initSpineVoiceMouth(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._spineVoiceMouth:init(arg_11_0, arg_11_1, arg_11_2)
 end
 
-function slot0.setSwitch(slot0, slot1, slot2, slot3)
-	slot0._spineVoiceAudio:setSwitch(slot1, slot2, slot3)
+function var_0_0.setSwitch(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_0._spineVoiceAudio:setSwitch(arg_12_1, arg_12_2, arg_12_3)
 end
 
-function slot0.playing(slot0)
-	return slot0._playVoice
+function var_0_0.playing(arg_13_0)
+	return arg_13_0._playVoice
 end
 
-function slot0.onSpineVoiceAudioStop(slot0)
-	slot0._spineVoiceText:onVoiceStop()
-	slot0:_doCallback()
+function var_0_0.onSpineVoiceAudioStop(arg_14_0)
+	arg_14_0._spineVoiceText:onVoiceStop()
+	arg_14_0:_doCallback()
 end
 
-function slot0._onComponentStop(slot0, slot1)
-	slot0._stopVoiceCount = slot0._stopVoiceCount + 1
+function var_0_0._onComponentStop(arg_15_0, arg_15_1)
+	arg_15_0._stopVoiceCount = arg_15_0._stopVoiceCount + 1
 
-	if slot0._componentStopVoiceCount <= slot0._stopVoiceCount then
-		slot0:_onVoiceStop()
+	if arg_15_0._stopVoiceCount >= arg_15_0._componentStopVoiceCount then
+		arg_15_0:_onVoiceStop()
 	end
 end
 
-function slot0.forceNoMouth(slot0)
-	slot0._spineVoiceMouth:forceNoMouth()
+function var_0_0.forceNoMouth(arg_16_0)
+	arg_16_0._spineVoiceMouth:forceNoMouth()
 end
 
-function slot0._onVoiceStop(slot0)
-	if not slot0._playVoice then
+function var_0_0._onVoiceStop(arg_17_0)
+	if not arg_17_0._playVoice then
 		return
 	end
 
-	slot0._playVoice = false
+	arg_17_0._playVoice = false
 
-	slot0._spineVoiceAudio:onVoiceStop()
-	slot0._spineVoiceMouth:onVoiceStop()
-	slot0._spineVoiceText:onVoiceStop()
-	slot0._voiceFace:onVoiceStop()
-	slot0._spineVoiceBody:onVoiceStop()
-	slot0:_doCallback()
+	arg_17_0._spineVoiceAudio:onVoiceStop()
+	arg_17_0._spineVoiceMouth:onVoiceStop()
+	arg_17_0._spineVoiceText:onVoiceStop()
+	arg_17_0._voiceFace:onVoiceStop()
+	arg_17_0._spineVoiceBody:onVoiceStop()
+	arg_17_0:_doCallback()
 end
 
-function slot0._doCallback(slot0)
-	slot0._callback = nil
+function var_0_0._doCallback(arg_18_0)
+	local var_18_0 = arg_18_0._callback
 
-	if slot0._callback then
-		slot1()
-	end
-end
+	arg_18_0._callback = nil
 
-function slot0.setBgVisible(slot0, slot1)
-	gohelper.setActive(slot0._bgGo, slot1)
-end
-
-function slot0.onAnimationEvent(slot0, slot1, slot2, slot3)
-	if slot2 ~= SpineAnimEvent.ActionComplete then
-		return
-	end
-
-	if slot0._manualStopVoice then
-		return
-	end
-
-	if slot0._voiceFace:checkFaceEnd(slot1) then
-		return
-	end
-
-	if slot0._spineVoiceBody:checkBodyEnd(slot1) then
-		return
-	end
-
-	if slot0._spineVoiceMouth:checkMouthEnd(slot1) then
-		return
+	if var_18_0 then
+		var_18_0()
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._spineVoiceText then
-		slot0._spineVoiceText:onDestroy()
-
-		slot0._spineVoiceText = nil
-	end
-
-	if slot0._spineVoiceMouth then
-		slot0._spineVoiceMouth:onDestroy()
-
-		slot0._spineVoiceMouth = nil
-	end
-
-	if slot0._voiceFace then
-		slot0._voiceFace:onDestroy()
-
-		slot0._voiceFace = nil
-	end
-
-	if slot0._spineVoiceBody then
-		slot0._spineVoiceBody:onDestroy()
-
-		slot0._spineVoiceBody = nil
-	end
-
-	if slot0._spineVoiceAudio then
-		slot0._spineVoiceAudio:onDestroy()
-
-		slot0._spineVoiceAudio = nil
-	end
-
-	slot0._spine = nil
+function var_0_0.setBgVisible(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._bgGo, arg_19_1)
 end
 
-return slot0
+function var_0_0.onAnimationEvent(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	if arg_20_2 ~= SpineAnimEvent.ActionComplete then
+		return
+	end
+
+	if arg_20_0._manualStopVoice then
+		return
+	end
+
+	if arg_20_0._voiceFace:checkFaceEnd(arg_20_1) then
+		return
+	end
+
+	if arg_20_0._spineVoiceBody:checkBodyEnd(arg_20_1) then
+		return
+	end
+
+	if arg_20_0._spineVoiceMouth:checkMouthEnd(arg_20_1) then
+		return
+	end
+end
+
+function var_0_0.onDestroy(arg_21_0)
+	if arg_21_0._spineVoiceText then
+		arg_21_0._spineVoiceText:onDestroy()
+
+		arg_21_0._spineVoiceText = nil
+	end
+
+	if arg_21_0._spineVoiceMouth then
+		arg_21_0._spineVoiceMouth:onDestroy()
+
+		arg_21_0._spineVoiceMouth = nil
+	end
+
+	if arg_21_0._voiceFace then
+		arg_21_0._voiceFace:onDestroy()
+
+		arg_21_0._voiceFace = nil
+	end
+
+	if arg_21_0._spineVoiceBody then
+		arg_21_0._spineVoiceBody:onDestroy()
+
+		arg_21_0._spineVoiceBody = nil
+	end
+
+	if arg_21_0._spineVoiceAudio then
+		arg_21_0._spineVoiceAudio:onDestroy()
+
+		arg_21_0._spineVoiceAudio = nil
+	end
+
+	arg_21_0._spine = nil
+end
+
+return var_0_0

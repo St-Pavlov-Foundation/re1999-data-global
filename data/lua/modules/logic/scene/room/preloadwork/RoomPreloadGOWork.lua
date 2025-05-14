@@ -1,93 +1,97 @@
-module("modules.logic.scene.room.preloadwork.RoomPreloadGOWork", package.seeall)
+﻿module("modules.logic.scene.room.preloadwork.RoomPreloadGOWork", package.seeall)
 
-slot0 = class("RoomPreloadGOWork", BaseWork)
+local var_0_0 = class("RoomPreloadGOWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot0._loader = MultiAbLoader.New()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0:_getUIUrlList()
 
-	for slot6, slot7 in ipairs(slot0:_getUIUrlList()) do
-		slot0._loader:addPath(slot7)
+	arg_1_0._loader = MultiAbLoader.New()
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		arg_1_0._loader:addPath(iter_1_1)
 	end
 
-	slot0._loader:setLoadFailCallback(slot0._onPreloadOneFail)
-	slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
 end
 
-function slot0._onPreloadFinish(slot0, slot1)
-	for slot6, slot7 in pairs(slot1:getAssetItemDict()) do
-		slot0.context.callback(slot0.context.callbackObj, slot6, slot7)
+function var_0_0._onPreloadFinish(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1:getAssetItemDict()
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_0, iter_2_1)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onPreloadOneFail(slot0, slot1, slot2)
-	logError("RoomPreloadGOWork: 加载失败, url: " .. slot2.ResPath)
+function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
+	logError("RoomPreloadGOWork: 加载失败, url: " .. arg_3_2.ResPath)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._loader then
+		arg_4_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_4_0._loader = nil
 	end
 end
 
-function slot0._getUIUrlList(slot0)
-	slot1 = {}
+function var_0_0._getUIUrlList(arg_5_0)
+	local var_5_0 = {}
 
 	if RoomController.instance:isEditMode() then
-		table.insert(slot1, RoomScenePreloader.ResEffectB)
-		table.insert(slot1, RoomScenePreloader.ResVXPlacingHere)
-		table.insert(slot1, RoomScenePreloader.ResSmoke)
-		table.insert(slot1, RoomScenePreloader.ResSmokeSnow)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectB)
+		table.insert(var_5_0, RoomScenePreloader.ResVXPlacingHere)
+		table.insert(var_5_0, RoomScenePreloader.ResSmoke)
+		table.insert(var_5_0, RoomScenePreloader.ResSmokeSnow)
 	end
 
 	if RoomController.instance:isObMode() then
-		table.insert(slot1, RoomScenePreloader.ResEffectE)
-		table.insert(slot1, RoomScenePreloader.ResEffectD01)
-		table.insert(slot1, RoomScenePreloader.ResEffectD02)
-		table.insert(slot1, RoomScenePreloader.ResEffectD05)
-		table.insert(slot1, RoomScenePreloader.ResVXXuXian)
-		table.insert(slot1, RoomScenePreloader.ResCharacterClickHelper)
-		table.insert(slot1, RoomScenePreloader.ResEffectConfirmCharacter)
-		table.insert(slot1, RoomScenePreloader.ResEffectCharacterShadow)
-		table.insert(slot1, RoomScenePreloader.ResEffectPressingCharacter)
-		table.insert(slot1, RoomScenePreloader.ResEffectPlaceCharacter)
-		table.insert(slot1, RoomScenePreloader.ResCharacterFaithEffect)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectE)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectD01)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectD02)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectD05)
+		table.insert(var_5_0, RoomScenePreloader.ResVXXuXian)
+		table.insert(var_5_0, RoomScenePreloader.ResCharacterClickHelper)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectConfirmCharacter)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectCharacterShadow)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectPressingCharacter)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectPlaceCharacter)
+		table.insert(var_5_0, RoomScenePreloader.ResCharacterFaithEffect)
 	end
 
 	if RoomController.instance:isVisitMode() then
-		table.insert(slot1, RoomScenePreloader.ResEffectCharacterShadow)
+		table.insert(var_5_0, RoomScenePreloader.ResEffectCharacterShadow)
 	end
 
-	for slot5, slot6 in ipairs(RoomScenePreloader.ResEffectWaveList) do
-		table.insert(slot1, slot6)
+	for iter_5_0, iter_5_1 in ipairs(RoomScenePreloader.ResEffectWaveList) do
+		table.insert(var_5_0, iter_5_1)
 	end
 
-	for slot5, slot6 in ipairs(RoomScenePreloader.ResEffectWaveWithRiverList) do
-		table.insert(slot1, slot6)
+	for iter_5_2, iter_5_3 in ipairs(RoomScenePreloader.ResEffectWaveWithRiverList) do
+		table.insert(var_5_0, iter_5_3)
 	end
 
-	table.insert(slot1, RoomScenePreloader.ResOcean)
+	table.insert(var_5_0, RoomScenePreloader.ResOcean)
 
 	if RoomController.instance:isDebugPackageMode() then
-		for slot5, slot6 in pairs(RoomScenePreloader.ResDebugPackageColorDict) do
-			table.insert(slot1, slot6)
+		for iter_5_4, iter_5_5 in pairs(RoomScenePreloader.ResDebugPackageColorDict) do
+			table.insert(var_5_0, iter_5_5)
 		end
 	end
 
-	for slot5, slot6 in ipairs(RoomScenePreloader.ResCommonList) do
-		table.insert(slot1, slot6)
+	for iter_5_6, iter_5_7 in ipairs(RoomScenePreloader.ResCommonList) do
+		table.insert(var_5_0, iter_5_7)
 	end
 
-	table.insert(slot1, RoomScenePreloader.ResFogParticle)
+	table.insert(var_5_0, RoomScenePreloader.ResFogParticle)
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.context.poolGODict[slot6] = 6
+	for iter_5_8, iter_5_9 in ipairs(var_5_0) do
+		arg_5_0.context.poolGODict[iter_5_9] = 6
 	end
 
-	return slot1
+	return var_5_0
 end
 
-return slot0
+return var_0_0

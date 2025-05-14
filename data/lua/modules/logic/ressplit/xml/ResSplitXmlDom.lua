@@ -1,6 +1,6 @@
-module("modules.logic.ressplit.xml.ResSplitXmlDom", package.seeall)
+﻿module("modules.logic.ressplit.xml.ResSplitXmlDom", package.seeall)
 
-slot1 = function ()
+local function var_0_0()
 	return {
 		options = {
 			declNode = 1,
@@ -14,92 +14,107 @@ slot1 = function ()
 		},
 		_stack = {}
 	}
-end()
-
-function slot1.new(slot0)
-	slot1 = uv0()
-	slot1.__index = slot0
-
-	setmetatable(slot1, slot0)
-
-	return slot1
 end
 
-function slot1.starttag(slot0, slot1)
-	slot2 = {
+local var_0_1 = var_0_0()
+
+function var_0_1.new(arg_2_0)
+	local var_2_0 = var_0_0()
+
+	var_2_0.__index = arg_2_0
+
+	setmetatable(var_2_0, arg_2_0)
+
+	return var_2_0
+end
+
+function var_0_1.starttag(arg_3_0, arg_3_1)
+	local var_3_0 = {
 		_type = "ELEMENT",
-		_name = slot1.name,
-		_attr = slot1.attrs,
+		_name = arg_3_1.name,
+		_attr = arg_3_1.attrs,
 		_children = {}
 	}
 
-	if slot0.root == nil then
-		slot0.root = slot2
+	if arg_3_0.root == nil then
+		arg_3_0.root = var_3_0
 	end
 
-	table.insert(slot0._stack, slot2)
-	table.insert(slot0.current._children, slot2)
+	table.insert(arg_3_0._stack, var_3_0)
+	table.insert(arg_3_0.current._children, var_3_0)
 
-	slot0.current = slot2
+	arg_3_0.current = var_3_0
 end
 
-function slot1.endtag(slot0, slot1, slot2)
-	if slot1.name ~= slot0._stack[#slot0._stack]._name then
-		error("XML Error - Unmatched Tag [" .. slot2 .. ":" .. slot1.name .. "]\n")
+function var_0_1.endtag(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0._stack[#arg_4_0._stack]
+
+	if arg_4_1.name ~= var_4_0._name then
+		error("XML Error - Unmatched Tag [" .. arg_4_2 .. ":" .. arg_4_1.name .. "]\n")
 	end
 
-	table.remove(slot0._stack)
+	table.remove(arg_4_0._stack)
 
-	slot0.current = slot0._stack[#slot0._stack]
+	arg_4_0.current = arg_4_0._stack[#arg_4_0._stack]
 end
 
-function slot1.text(slot0, slot1)
-	table.insert(slot0.current._children, {
+function var_0_1.text(arg_5_0, arg_5_1)
+	local var_5_0 = {
 		_type = "TEXT",
-		_text = slot1
-	})
+		_text = arg_5_1
+	}
+
+	table.insert(arg_5_0.current._children, var_5_0)
 end
 
-function slot1.comment(slot0, slot1)
-	if slot0.options.commentNode then
-		table.insert(slot0.current._children, {
+function var_0_1.comment(arg_6_0, arg_6_1)
+	if arg_6_0.options.commentNode then
+		local var_6_0 = {
 			_type = "COMMENT",
-			_text = slot1
-		})
+			_text = arg_6_1
+		}
+
+		table.insert(arg_6_0.current._children, var_6_0)
 	end
 end
 
-function slot1.pi(slot0, slot1)
-	if slot0.options.piNode then
-		table.insert(slot0.current._children, {
+function var_0_1.pi(arg_7_0, arg_7_1)
+	if arg_7_0.options.piNode then
+		local var_7_0 = {
 			_type = "PI",
-			_name = slot1.name,
-			_attr = slot1.attrs
-		})
+			_name = arg_7_1.name,
+			_attr = arg_7_1.attrs
+		}
+
+		table.insert(arg_7_0.current._children, var_7_0)
 	end
 end
 
-function slot1.decl(slot0, slot1)
-	if slot0.options.declNode then
-		table.insert(slot0.current._children, {
+function var_0_1.decl(arg_8_0, arg_8_1)
+	if arg_8_0.options.declNode then
+		local var_8_0 = {
 			_type = "DECL",
-			_name = slot1.name,
-			_attr = slot1.attrs
-		})
+			_name = arg_8_1.name,
+			_attr = arg_8_1.attrs
+		}
+
+		table.insert(arg_8_0.current._children, var_8_0)
 	end
 end
 
-function slot1.dtd(slot0, slot1)
-	if slot0.options.dtdNode then
-		table.insert(slot0.current._children, {
+function var_0_1.dtd(arg_9_0, arg_9_1)
+	if arg_9_0.options.dtdNode then
+		local var_9_0 = {
 			_type = "DTD",
-			_name = slot1.name,
-			_attr = slot1.attrs
-		})
+			_name = arg_9_1.name,
+			_attr = arg_9_1.attrs
+		}
+
+		table.insert(arg_9_0.current._children, var_9_0)
 	end
 end
 
-slot1.cdata = slot1.text
-slot1.__index = slot1
+var_0_1.cdata = var_0_1.text
+var_0_1.__index = var_0_1
 
-return slot1
+return var_0_1

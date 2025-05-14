@@ -1,103 +1,123 @@
-module("modules.logic.versionactivity2_0.dungeon.view.store.VersionActivity2_0StoreView", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.view.store.VersionActivity2_0StoreView", package.seeall)
 
-slot0 = class("VersionActivity2_0StoreView", BaseView)
+local var_0_0 = class("VersionActivity2_0StoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollstore = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_store")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content")
-	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/timebg/#txt_time")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content")
+	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/timebg/#txt_time")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._scrollstore:AddOnValueChanged(slot0._onScrollValueChanged, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._scrollstore:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
+	arg_2_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._scrollstore:RemoveOnValueChanged()
-	slot0:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._scrollstore:RemoveOnValueChanged()
+	arg_3_0:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_3_0.closeThis, arg_3_0)
 end
 
-function slot0._onScrollValueChanged(slot0)
-	if #slot0.storeItemList > 0 and slot0.storeItemList[1] then
-		slot1:refreshTagClip(slot0._scrollstore)
+function var_0_0._onScrollValueChanged(arg_4_0)
+	if #arg_4_0.storeItemList > 0 then
+		local var_4_0 = arg_4_0.storeItemList[1]
+
+		if var_4_0 then
+			var_4_0:refreshTagClip(arg_4_0._scrollstore)
+		end
 	end
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gostoreItem, false)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._gostoreItem, false)
 
-	slot0.actId = VersionActivity2_0Enum.ActivityId.DungeonStore
-	slot0.storeItemList = slot0:getUserDataTb_()
-	slot0.rectTrContent = slot0._goContent:GetComponent(gohelper.Type_RectTransform)
+	arg_5_0.actId = VersionActivity2_0Enum.ActivityId.DungeonStore
+	arg_5_0.storeItemList = arg_5_0:getUserDataTb_()
+	arg_5_0.rectTrContent = arg_5_0._goContent:GetComponent(gohelper.Type_RectTransform)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	slot0:refreshTime()
-	TaskDispatcher.runRepeat(slot0.refreshTime, slot0, TimeUtil.OneMinuteSecond)
-	slot0:refreshStoreContent()
-	slot0:_onScrollValueChanged()
-	slot0:scrollToFirstNoSellOutStore()
+	arg_6_0:refreshTime()
+	TaskDispatcher.runRepeat(arg_6_0.refreshTime, arg_6_0, TimeUtil.OneMinuteSecond)
+	arg_6_0:refreshStoreContent()
+	arg_6_0:_onScrollValueChanged()
+	arg_6_0:scrollToFirstNoSellOutStore()
 end
 
-function slot0.refreshTime(slot0)
-	slot0._txttime.text = ActivityModel.instance:getActivityInfo()[VersionActivity2_0Enum.ActivityId.DungeonStore]:getRemainTimeStr3(false, true)
+function var_0_0.refreshTime(arg_7_0)
+	local var_7_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_0Enum.ActivityId.DungeonStore]:getRemainTimeStr3(false, true)
+
+	arg_7_0._txttime.text = var_7_0
 end
 
-function slot0.refreshStoreContent(slot0)
-	if not (slot0.actId and ActivityStoreConfig.instance:getActivityStoreGroupDict(slot0.actId)) then
+function var_0_0.refreshStoreContent(arg_8_0)
+	local var_8_0 = arg_8_0.actId and ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_8_0.actId)
+
+	if not var_8_0 then
 		return
 	end
 
-	slot2 = nil
+	local var_8_1
 
-	for slot6 = 1, #slot1 do
-		if not slot0.storeItemList[slot6] then
-			slot2 = VersionActivity2_0StoreItem.New()
+	for iter_8_0 = 1, #var_8_0 do
+		local var_8_2 = arg_8_0.storeItemList[iter_8_0]
 
-			slot2:onInitView(gohelper.cloneInPlace(slot0._gostoreItem))
-			table.insert(slot0.storeItemList, slot2)
+		if not var_8_2 then
+			local var_8_3 = gohelper.cloneInPlace(arg_8_0._gostoreItem)
+
+			var_8_2 = VersionActivity2_0StoreItem.New()
+
+			var_8_2:onInitView(var_8_3)
+			table.insert(arg_8_0.storeItemList, var_8_2)
 		end
 
-		slot2:updateInfo(slot6, slot1[slot6])
+		var_8_2:updateInfo(iter_8_0, var_8_0[iter_8_0])
 	end
 end
 
-function slot0.scrollToFirstNoSellOutStore(slot0)
-	if slot0:getFirstNoSellOutGroup() <= 1 then
+function var_0_0.scrollToFirstNoSellOutStore(arg_9_0)
+	local var_9_0 = arg_9_0:getFirstNoSellOutGroup()
+
+	if var_9_0 <= 1 then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
+	ZProj.UGUIHelper.RebuildLayout(arg_9_0.rectTrContent)
 
-	slot2 = 0
+	local var_9_1 = 0
 
-	for slot6, slot7 in ipairs(slot0.storeItemList) do
-		if slot1 <= slot6 then
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.storeItemList) do
+		if var_9_0 <= iter_9_0 then
 			break
 		end
 
-		slot2 = slot2 + slot7:getHeight()
+		var_9_1 = var_9_1 + iter_9_1:getHeight()
 	end
 
-	recthelper.setAnchorY(slot0.rectTrContent, math.min(slot2, recthelper.getHeight(slot0.rectTrContent) - recthelper.getHeight(gohelper.findChildComponent(slot0.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform))))
+	local var_9_2 = gohelper.findChildComponent(arg_9_0.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform)
+	local var_9_3 = recthelper.getHeight(var_9_2)
+	local var_9_4 = recthelper.getHeight(arg_9_0.rectTrContent) - var_9_3
+
+	recthelper.setAnchorY(arg_9_0.rectTrContent, math.min(var_9_1, var_9_4))
 end
 
-function slot0.getFirstNoSellOutGroup(slot0)
-	for slot5, slot6 in ipairs(ActivityStoreConfig.instance:getActivityStoreGroupDict(slot0.actId)) do
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11.maxBuyCount == 0 then
-				return slot5
+function var_0_0.getFirstNoSellOutGroup(arg_10_0)
+	local var_10_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_10_0.actId)
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		for iter_10_2, iter_10_3 in ipairs(iter_10_1) do
+			if iter_10_3.maxBuyCount == 0 then
+				return iter_10_0
 			end
 
-			if slot11.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.actId, slot11.id) > 0 then
-				return slot5
+			if iter_10_3.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_10_0.actId, iter_10_3.id) > 0 then
+				return iter_10_0
 			end
 		end
 	end
@@ -105,14 +125,14 @@ function slot0.getFirstNoSellOutGroup(slot0)
 	return 1
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshTime, slot0)
+function var_0_0.onClose(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0.refreshTime, arg_11_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.storeItemList) do
-		slot5:onDestroy()
+function var_0_0.onDestroyView(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.storeItemList) do
+		iter_12_1:onDestroy()
 	end
 end
 
-return slot0
+return var_0_0

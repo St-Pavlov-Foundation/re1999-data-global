@@ -1,37 +1,44 @@
-module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMixListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMixListModel", package.seeall)
 
-slot0 = class("PuzzleRecordMixListModel", MixScrollModel)
+local var_0_0 = class("PuzzleRecordMixListModel", MixScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._infos = nil
+	arg_1_0._infos = nil
 end
 
-function slot0.setRecordList(slot0, slot1)
-	slot0._infos = slot1
+function var_0_0.setRecordList(arg_2_0, arg_2_1)
+	arg_2_0._infos = arg_2_1
 
-	slot0:setList(slot1)
+	arg_2_0:setList(arg_2_1)
 end
 
-function slot0.getInfoList(slot0, slot1)
-	if not slot0._infos or #slot0._infos <= 0 then
-		return {}
+function var_0_0.getInfoList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+
+	if not arg_3_0._infos or #arg_3_0._infos <= 0 then
+		return var_3_0
 	end
 
-	for slot8, slot9 in ipairs(slot0._infos) do
-		slot10 = 0
+	local var_3_1 = gohelper.findChildText(arg_3_1, "Viewport/Content/RecordItem")
+	local var_3_2 = 0
 
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(0, GameUtil.getTextHeightByLine(gohelper.findChildText(slot1, "Viewport/Content/RecordItem"), GameUtil.filterRichText(slot9:GetRecord()) .. "   ", 37.1) + 20, nil))
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._infos) do
+		local var_3_3 = 0
+		local var_3_4 = GameUtil.filterRichText(iter_3_1:GetRecord())
+		local var_3_5 = GameUtil.getTextHeightByLine(var_3_1, var_3_4 .. "   ", 37.1) + 20
+
+		table.insert(var_3_0, SLFramework.UGUI.MixCellInfo.New(var_3_2, var_3_5, nil))
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.clearData(slot0)
-	slot0._infos = nil
+function var_0_0.clearData(arg_4_0)
+	arg_4_0._infos = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

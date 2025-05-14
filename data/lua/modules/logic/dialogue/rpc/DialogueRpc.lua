@@ -1,34 +1,37 @@
-module("modules.logic.dialogue.rpc.DialogueRpc", package.seeall)
+﻿module("modules.logic.dialogue.rpc.DialogueRpc", package.seeall)
 
-slot0 = class("DialogueRpc", BaseRpc)
+local var_0_0 = class("DialogueRpc", BaseRpc)
 
-function slot0.sendGetDialogInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(DialogModule_pb.GetDialogInfoRequest(), slot1, slot2)
+function var_0_0.sendGetDialogInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = DialogModule_pb.GetDialogInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetDialogInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetDialogInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	DialogueModel.instance:initDialogue(slot2.dialogIds)
+	DialogueModel.instance:initDialogue(arg_2_2.dialogIds)
 end
 
-function slot0.sendRecordDialogInfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = DialogModule_pb.RecordDialogInfoRequest()
-	slot4.dialogId = slot1
+function var_0_0.sendRecordDialogInfoRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = DialogModule_pb.RecordDialogInfoRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_3_0.dialogId = arg_3_1
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
 end
 
-function slot0.onReceiveRecordDialogInfoReplay(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRecordDialogInfoReplay(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	DialogueModel.instance:updateDialogueInfo(slot2.dialogId)
+	DialogueModel.instance:updateDialogueInfo(arg_4_2.dialogId)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

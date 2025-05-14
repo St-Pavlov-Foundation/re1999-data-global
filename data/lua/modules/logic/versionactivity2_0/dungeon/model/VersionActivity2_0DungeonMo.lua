@@ -1,50 +1,60 @@
-module("modules.logic.versionactivity2_0.dungeon.model.VersionActivity2_0DungeonMo", package.seeall)
+﻿module("modules.logic.versionactivity2_0.dungeon.model.VersionActivity2_0DungeonMo", package.seeall)
 
-slot0 = pureTable("VersionActivity2_0DungeonMo", VersionActivityDungeonBaseMo)
+local var_0_0 = pureTable("VersionActivity2_0DungeonMo", VersionActivityDungeonBaseMo)
 
-function slot0.updateEpisodeId(slot0, slot1)
-	slot2 = nil
+function var_0_0.updateEpisodeId(arg_1_0, arg_1_1)
+	local var_1_0
 
-	if slot1 then
-		if DungeonConfig.instance:getEpisodeCO(slot1).chapterId == slot0.activityDungeonConfig.story2ChapterId or slot3.chapterId == slot0.activityDungeonConfig.story3ChapterId then
-			while slot3.chapterId ~= slot0.activityDungeonConfig.story1ChapterId do
-				slot3 = DungeonConfig.instance:getEpisodeCO(slot3.preEpisode)
+	if arg_1_1 then
+		var_1_0 = arg_1_1
+
+		local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0)
+
+		if var_1_1.chapterId == arg_1_0.activityDungeonConfig.story2ChapterId or var_1_1.chapterId == arg_1_0.activityDungeonConfig.story3ChapterId then
+			while var_1_1.chapterId ~= arg_1_0.activityDungeonConfig.story1ChapterId do
+				var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_1.preEpisode)
 			end
 		end
 
-		slot2 = slot3.id
+		var_1_0 = var_1_1.id
 	else
-		slot3 = DungeonConfig.instance:getChapterEpisodeCOList(slot0.chapterId)
+		local var_1_2 = DungeonConfig.instance:getChapterEpisodeCOList(arg_1_0.chapterId)
 
-		if DungeonModel.instance:hasPassAllChapterEpisode(slot0.chapterId) then
-			slot2 = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(slot0.chapterId)
+		if DungeonModel.instance:hasPassAllChapterEpisode(arg_1_0.chapterId) then
+			var_1_0 = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(arg_1_0.chapterId)
 		else
-			slot5 = nil
+			local var_1_3
 
-			for slot9, slot10 in ipairs(slot3) do
-				if (slot10 and DungeonModel.instance:getEpisodeInfo(slot10.id) or nil) and slot0:checkEpisodeUnLock(slot10) then
-					slot2 = slot10.id
+			for iter_1_0, iter_1_1 in ipairs(var_1_2) do
+				if (iter_1_1 and DungeonModel.instance:getEpisodeInfo(iter_1_1.id) or nil) and arg_1_0:checkEpisodeUnLock(iter_1_1) then
+					var_1_0 = iter_1_1.id
 				end
 			end
 		end
 	end
 
-	slot0.episodeId = slot2
+	arg_1_0.episodeId = var_1_0
 
-	VersionActivity2_0DungeonController.instance:savePlayerPrefs(VersionActivity2_0DungeonEnum.PlayerPrefsKey.DungeonLastSelectEpisode, slot0.episodeId)
+	local var_1_4 = VersionActivity2_0DungeonEnum.PlayerPrefsKey.DungeonLastSelectEpisode
+
+	VersionActivity2_0DungeonController.instance:savePlayerPrefs(var_1_4, arg_1_0.episodeId)
 end
 
-function slot0.checkEpisodeUnLock(slot0, slot1)
-	if not slot1 then
+function var_0_0.checkEpisodeUnLock(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return true
 	end
 
-	if string.nilorempty(slot1.elementList) then
+	local var_2_0 = arg_2_1.elementList
+
+	if string.nilorempty(var_2_0) then
 		return true
 	end
 
-	for slot7, slot8 in ipairs(string.splitToNumber(slot2, "#")) do
-		if not DungeonMapModel.instance:elementIsFinished(slot8) then
+	local var_2_1 = string.splitToNumber(var_2_0, "#")
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
+		if not DungeonMapModel.instance:elementIsFinished(iter_2_1) then
 			return false
 		end
 	end
@@ -52,4 +62,4 @@ function slot0.checkEpisodeUnLock(slot0, slot1)
 	return true
 end
 
-return slot0
+return var_0_0

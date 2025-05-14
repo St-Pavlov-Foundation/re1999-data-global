@@ -1,346 +1,377 @@
-module("modules.logic.seasonver.act166.view.Season166MainView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166MainView", package.seeall)
 
-slot0 = class("Season166MainView", BaseView)
+local var_0_0 = class("Season166MainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goStarCollect = gohelper.findChild(slot0.viewGO, "starCollect")
-	slot0._txttotalStarCount = gohelper.findChildText(slot0.viewGO, "starCollect/#txt_totalStarCount")
-	slot0._gomainContent = gohelper.findChild(slot0.viewGO, "#go_mainContent")
-	slot0._txtremainTime = gohelper.findChildText(slot0.viewGO, "#go_mainContent/title/#txt_remainTime")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "trainEntrance/progress")
-	slot0._goprogressItem = gohelper.findChild(slot0.viewGO, "trainEntrance/progress/#go_progress")
-	slot0._goepisodeContent = gohelper.findChild(slot0.viewGO, "trainEntrance/#go_episodeContent")
-	slot0._goepisodeItem = gohelper.findChild(slot0.viewGO, "trainEntrance/#go_episodeContent/#go_episodeItem")
-	slot0._btntrainClick = gohelper.findChildButtonWithAudio(slot0.viewGO, "trainEntrance/#btn_trainClick")
-	slot0._gohardUnlock = gohelper.findChild(slot0.viewGO, "trainEntrance/#go_hardUnlock")
-	slot0._txthardUnlockTime = gohelper.findChildText(slot0.viewGO, "trainEntrance/#go_hardUnlock/#txt_hardUnlockTime")
-	slot0._gospotEntrance = gohelper.findChild(slot0.viewGO, "spotEntrance")
-	slot0._gospot1 = gohelper.findChild(slot0.viewGO, "spotEntrance/#go_spot1")
-	slot0._gospot2 = gohelper.findChild(slot0.viewGO, "spotEntrance/#go_spot2")
-	slot0._gospot3 = gohelper.findChild(slot0.viewGO, "spotEntrance/#go_spot3")
-	slot0._gospotItem = gohelper.findChild(slot0.viewGO, "spotEntrance/#go_spotItem")
-	slot0._btninformation = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_mainContent/#btn_information")
-	slot0._imagecoin = gohelper.findChildImage(slot0.viewGO, "#go_mainContent/#btn_information/#image_coin")
-	slot0._txtcoinNum = gohelper.findChildText(slot0.viewGO, "#go_mainContent/#btn_information/#txt_coinNum")
-	slot0._goinfoReddot = gohelper.findChild(slot0.viewGO, "#go_mainContent/#btn_information/#go_infoReddot")
-	slot0._goinfoNewReddot = gohelper.findChild(slot0.viewGO, "#go_mainContent/#btn_information/#go_infoNewReddot")
-	slot0._btntalenttree = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_mainContent/#btn_talenttree")
-	slot0._gotalentReddot = gohelper.findChild(slot0.viewGO, "#go_mainContent/#btn_talenttree/#go_talentReddot")
-	slot0._btnteach = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_mainContent/#btn_teach")
-	slot0._goteachNormal = gohelper.findChild(slot0.viewGO, "#go_mainContent/#btn_teach/#go_teachNormal")
-	slot0._goteachFinish = gohelper.findChild(slot0.viewGO, "#go_mainContent/#btn_teach/#go_teachFinish")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goStarCollect = gohelper.findChild(arg_1_0.viewGO, "starCollect")
+	arg_1_0._txttotalStarCount = gohelper.findChildText(arg_1_0.viewGO, "starCollect/#txt_totalStarCount")
+	arg_1_0._gomainContent = gohelper.findChild(arg_1_0.viewGO, "#go_mainContent")
+	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "#go_mainContent/title/#txt_remainTime")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "trainEntrance/progress")
+	arg_1_0._goprogressItem = gohelper.findChild(arg_1_0.viewGO, "trainEntrance/progress/#go_progress")
+	arg_1_0._goepisodeContent = gohelper.findChild(arg_1_0.viewGO, "trainEntrance/#go_episodeContent")
+	arg_1_0._goepisodeItem = gohelper.findChild(arg_1_0.viewGO, "trainEntrance/#go_episodeContent/#go_episodeItem")
+	arg_1_0._btntrainClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "trainEntrance/#btn_trainClick")
+	arg_1_0._gohardUnlock = gohelper.findChild(arg_1_0.viewGO, "trainEntrance/#go_hardUnlock")
+	arg_1_0._txthardUnlockTime = gohelper.findChildText(arg_1_0.viewGO, "trainEntrance/#go_hardUnlock/#txt_hardUnlockTime")
+	arg_1_0._gospotEntrance = gohelper.findChild(arg_1_0.viewGO, "spotEntrance")
+	arg_1_0._gospot1 = gohelper.findChild(arg_1_0.viewGO, "spotEntrance/#go_spot1")
+	arg_1_0._gospot2 = gohelper.findChild(arg_1_0.viewGO, "spotEntrance/#go_spot2")
+	arg_1_0._gospot3 = gohelper.findChild(arg_1_0.viewGO, "spotEntrance/#go_spot3")
+	arg_1_0._gospotItem = gohelper.findChild(arg_1_0.viewGO, "spotEntrance/#go_spotItem")
+	arg_1_0._btninformation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mainContent/#btn_information")
+	arg_1_0._imagecoin = gohelper.findChildImage(arg_1_0.viewGO, "#go_mainContent/#btn_information/#image_coin")
+	arg_1_0._txtcoinNum = gohelper.findChildText(arg_1_0.viewGO, "#go_mainContent/#btn_information/#txt_coinNum")
+	arg_1_0._goinfoReddot = gohelper.findChild(arg_1_0.viewGO, "#go_mainContent/#btn_information/#go_infoReddot")
+	arg_1_0._goinfoNewReddot = gohelper.findChild(arg_1_0.viewGO, "#go_mainContent/#btn_information/#go_infoNewReddot")
+	arg_1_0._btntalenttree = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mainContent/#btn_talenttree")
+	arg_1_0._gotalentReddot = gohelper.findChild(arg_1_0.viewGO, "#go_mainContent/#btn_talenttree/#go_talentReddot")
+	arg_1_0._btnteach = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mainContent/#btn_teach")
+	arg_1_0._goteachNormal = gohelper.findChild(arg_1_0.viewGO, "#go_mainContent/#btn_teach/#go_teachNormal")
+	arg_1_0._goteachFinish = gohelper.findChild(arg_1_0.viewGO, "#go_mainContent/#btn_teach/#go_teachFinish")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btninformation:AddClickListener(slot0._btninformationOnClick, slot0)
-	slot0._btntalenttree:AddClickListener(slot0._btntalenttreeOnClick, slot0)
-	slot0._btnteach:AddClickListener(slot0._btnteachOnClick, slot0)
-	slot0._btntrainClick:AddClickListener(slot0._btntrainOnClick, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.refreshUI, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshInformationCoin, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.TrainViewChangeTrain, slot0.refreshProgressCurEffect, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btninformation:AddClickListener(arg_2_0._btninformationOnClick, arg_2_0)
+	arg_2_0._btntalenttree:AddClickListener(arg_2_0._btntalenttreeOnClick, arg_2_0)
+	arg_2_0._btnteach:AddClickListener(arg_2_0._btnteachOnClick, arg_2_0)
+	arg_2_0._btntrainClick:AddClickListener(arg_2_0._btntrainOnClick, arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshInformationCoin, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0, LuaEventSystem.Low)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.TrainViewChangeTrain, arg_2_0.refreshProgressCurEffect, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btninformation:RemoveClickListener()
-	slot0._btntalenttree:RemoveClickListener()
-	slot0._btnteach:RemoveClickListener()
-	slot0._btntrainClick:RemoveClickListener()
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.refreshUI, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshInformationCoin, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
-	slot0:removeEventCb(Season166Controller.instance, Season166Event.TrainViewChangeTrain, slot0.refreshProgressCurEffect, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btninformation:RemoveClickListener()
+	arg_3_0._btntalenttree:RemoveClickListener()
+	arg_3_0._btnteach:RemoveClickListener()
+	arg_3_0._btntrainClick:RemoveClickListener()
+	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshInformationCoin, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0, LuaEventSystem.Low)
+	arg_3_0:removeEventCb(Season166Controller.instance, Season166Event.TrainViewChangeTrain, arg_3_0.refreshProgressCurEffect, arg_3_0)
 end
 
-function slot0._btninformationOnClick(slot0)
+function var_0_0._btninformationOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.Season166InformationMainView, {
-		actId = slot0.actId
+		actId = arg_4_0.actId
 	})
 end
 
-function slot0._btntalenttreeOnClick(slot0)
+function var_0_0._btntalenttreeOnClick(arg_5_0)
 	ViewMgr.instance:openView(ViewName.Season166TalentView)
 end
 
-function slot0._btnteachOnClick(slot0)
+function var_0_0._btnteachOnClick(arg_6_0)
 	Season166Controller.instance:enterSeasonTeachView({
-		actId = slot0.actId
+		actId = arg_6_0.actId
 	})
 end
 
-function slot0._btntrainOnClick(slot0)
-	slot0.isTrainState = true
+function var_0_0._btntrainOnClick(arg_7_0)
+	arg_7_0.isTrainState = true
 
-	slot0:refreshEntranceState()
+	arg_7_0:refreshEntranceState()
 	Season166Controller.instance:dispatchEvent(Season166Event.MainShowTrainList)
-	slot0.viewContainer:getMainSceneView():playTrainAnim(true)
+	arg_7_0.viewContainer:getMainSceneView():playTrainAnim(true)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.baseSpotItemTab = slot0:getUserDataTb_()
-	slot0.trainItemTab = slot0:getUserDataTb_()
-	slot0.trainProgressTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.baseSpotItemTab = arg_8_0:getUserDataTb_()
+	arg_8_0.trainItemTab = arg_8_0:getUserDataTb_()
+	arg_8_0.trainProgressTab = arg_8_0:getUserDataTb_()
 
-	for slot4 = 1, 6 do
-		slot0["_goEpisodePos" .. slot4] = gohelper.findChild(slot0._goepisodeContent, "#go_episodePos" .. slot4)
+	for iter_8_0 = 1, 6 do
+		arg_8_0["_goEpisodePos" .. iter_8_0] = gohelper.findChild(arg_8_0._goepisodeContent, "#go_episodePos" .. iter_8_0)
 	end
 
-	gohelper.setActive(slot0._gospotItem, false)
-	gohelper.setActive(slot0._goepisodeItem, false)
-	gohelper.setActive(slot0._goprogressItem, false)
+	gohelper.setActive(arg_8_0._gospotItem, false)
+	gohelper.setActive(arg_8_0._goepisodeItem, false)
+	gohelper.setActive(arg_8_0._goprogressItem, false)
 
-	slot0.isTrainState = false
+	arg_8_0.isTrainState = false
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
-	slot0.infoCoinId = Season166Config.instance:getSeasonConstNum(slot0.actId, Season166Enum.InfoCostId)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.actId = arg_10_0.viewParam.actId
+	arg_10_0.infoCoinId = Season166Config.instance:getSeasonConstNum(arg_10_0.actId, Season166Enum.InfoCostId)
 
-	slot0:refreshUI()
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, 1)
-	slot0.viewContainer:getMainSceneView():playInViewAnim(slot0.viewParam.jumpId)
+	arg_10_0:refreshUI()
+	TaskDispatcher.runRepeat(arg_10_0.refreshRemainTime, arg_10_0, 1)
+	arg_10_0.viewContainer:getMainSceneView():playInViewAnim(arg_10_0.viewParam.jumpId)
 
-	if slot0.viewParam.jumpId then
-		slot0:processSeason166JumpParam(slot0.viewParam)
+	if arg_10_0.viewParam.jumpId then
+		arg_10_0:processSeason166JumpParam(arg_10_0.viewParam)
 	end
 end
 
-function slot0.initBaseSpotItem(slot0)
-	for slot5, slot6 in ipairs(Season166Config.instance:getSeasonBaseSpotCos(slot0.actId) or {}) do
-		if not slot0.baseSpotItemTab[slot5] then
-			slot7 = {
-				pos = slot0["_gospot" .. slot5]
+function var_0_0.initBaseSpotItem(arg_11_0)
+	local var_11_0 = Season166Config.instance:getSeasonBaseSpotCos(arg_11_0.actId) or {}
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = arg_11_0.baseSpotItemTab[iter_11_0]
+
+		if not var_11_1 then
+			var_11_1 = {
+				pos = arg_11_0["_gospot" .. iter_11_0]
 			}
-			slot7.go = gohelper.clone(slot0._gospotItem, slot7.pos, "baseSpotItem" .. slot5)
-			slot7.item = MonoHelper.addNoUpdateLuaComOnceToGo(slot7.go, Season166MainBaseSpotItem, {
-				actId = slot0.actId,
-				baseId = slot5,
-				config = slot6
+			var_11_1.go = gohelper.clone(arg_11_0._gospotItem, var_11_1.pos, "baseSpotItem" .. iter_11_0)
+			var_11_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1.go, Season166MainBaseSpotItem, {
+				actId = arg_11_0.actId,
+				baseId = iter_11_0,
+				config = iter_11_1
 			})
-			slot0.baseSpotItemTab[slot5] = slot7
+			arg_11_0.baseSpotItemTab[iter_11_0] = var_11_1
 		end
 
-		slot7.item:refreshUI()
-		gohelper.setActive(slot7.go, true)
+		var_11_1.item:refreshUI()
+		gohelper.setActive(var_11_1.go, true)
 	end
 end
 
-function slot0.initTrainEntrance(slot0)
-	for slot5, slot6 in ipairs(Season166Config.instance:getSeasonTrainCos(slot0.actId)) do
-		if not slot0.trainItemTab[slot5] then
-			slot7 = {
-				pos = slot0["_goEpisodePos" .. slot5]
+function var_0_0.initTrainEntrance(arg_12_0)
+	local var_12_0 = Season166Config.instance:getSeasonTrainCos(arg_12_0.actId)
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		local var_12_1 = arg_12_0.trainItemTab[iter_12_0]
+
+		if not var_12_1 then
+			var_12_1 = {
+				pos = arg_12_0["_goEpisodePos" .. iter_12_0]
 			}
-			slot7.go = gohelper.clone(slot0._goepisodeItem, slot7.pos, "trainItem" .. slot5)
-			slot7.item = MonoHelper.addNoUpdateLuaComOnceToGo(slot7.go, Season166MainTrainItem, {
-				actId = slot0.actId,
-				trainId = slot5,
-				config = slot6
+			var_12_1.go = gohelper.clone(arg_12_0._goepisodeItem, var_12_1.pos, "trainItem" .. iter_12_0)
+			var_12_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1.go, Season166MainTrainItem, {
+				actId = arg_12_0.actId,
+				trainId = iter_12_0,
+				config = iter_12_1
 			})
-			slot0.trainItemTab[slot5] = slot7
+			arg_12_0.trainItemTab[iter_12_0] = var_12_1
 		end
 
-		slot7.item:refreshUI()
-		gohelper.setActive(slot7.go, true)
+		var_12_1.item:refreshUI()
+		gohelper.setActive(var_12_1.go, true)
 	end
 
-	slot0.viewContainer:getMainSceneView():setTrainItemTab(slot0.trainItemTab)
-	slot0.viewContainer:getMainSceneView():refreshTrainEntranceNew()
+	arg_12_0.viewContainer:getMainSceneView():setTrainItemTab(arg_12_0.trainItemTab)
+	arg_12_0.viewContainer:getMainSceneView():refreshTrainEntranceNew()
 end
 
-function slot0.initTrainProgress(slot0)
-	for slot5 = 1, #Season166Config.instance:getSeasonTrainCos(slot0.actId) do
-		if not slot0.trainProgressTab[slot5] then
-			slot6 = {
-				go = gohelper.clone(slot0._goprogressItem, slot0._goprogress, "progressItem" .. slot5)
+function var_0_0.initTrainProgress(arg_13_0)
+	local var_13_0 = Season166Config.instance:getSeasonTrainCos(arg_13_0.actId)
+
+	for iter_13_0 = 1, #var_13_0 do
+		local var_13_1 = arg_13_0.trainProgressTab[iter_13_0]
+
+		if not var_13_1 then
+			var_13_1 = {
+				go = gohelper.clone(arg_13_0._goprogressItem, arg_13_0._goprogress, "progressItem" .. iter_13_0)
 			}
-			slot6.light = gohelper.findChild(slot6.go, "light")
-			slot6.dark = gohelper.findChild(slot6.go, "dark")
-			slot6.imageLight = gohelper.findChildImage(slot6.go, "light")
-			slot6.imageDark = gohelper.findChildImage(slot6.go, "dark")
-			slot6.goCurEffect = gohelper.findChild(slot6.go, "go_curEffect")
-			slot6.config = slot1[slot5]
-			slot0.trainProgressTab[slot5] = slot6
+			var_13_1.light = gohelper.findChild(var_13_1.go, "light")
+			var_13_1.dark = gohelper.findChild(var_13_1.go, "dark")
+			var_13_1.imageLight = gohelper.findChildImage(var_13_1.go, "light")
+			var_13_1.imageDark = gohelper.findChildImage(var_13_1.go, "dark")
+			var_13_1.goCurEffect = gohelper.findChild(var_13_1.go, "go_curEffect")
+			var_13_1.config = var_13_0[iter_13_0]
+			arg_13_0.trainProgressTab[iter_13_0] = var_13_1
 
-			gohelper.setActive(slot6.goCurEffect, false)
+			gohelper.setActive(var_13_1.goCurEffect, false)
 		end
 
-		gohelper.setActive(slot6.go, true)
+		gohelper.setActive(var_13_1.go, true)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	slot0:initBaseSpotItem()
-	slot0:initTrainEntrance()
-	slot0:initTrainProgress()
-	slot0:refreshEntranceState()
-	slot0:refreshRemainTime()
-	slot0:refreshTrainProgress()
-	slot0:refreshInformation()
-	slot0:refreshInfoReddot()
-	slot0:refreshTalentReddot()
+function var_0_0.refreshUI(arg_14_0)
+	arg_14_0:initBaseSpotItem()
+	arg_14_0:initTrainEntrance()
+	arg_14_0:initTrainProgress()
+	arg_14_0:refreshEntranceState()
+	arg_14_0:refreshRemainTime()
+	arg_14_0:refreshTrainProgress()
+	arg_14_0:refreshInformation()
+	arg_14_0:refreshInfoReddot()
+	arg_14_0:refreshTalentReddot()
 
-	slot0._txttotalStarCount.text = Season166BaseSpotModel.instance:getCurTotalStarCount(slot0.actId)
+	arg_14_0._txttotalStarCount.text = Season166BaseSpotModel.instance:getCurTotalStarCount(arg_14_0.actId)
 
-	gohelper.setActive(slot0._goteachFinish, Season166TeachModel.instance:checkIsAllTeachFinish(slot0.actId))
+	local var_14_0 = Season166TeachModel.instance:checkIsAllTeachFinish(arg_14_0.actId)
+
+	gohelper.setActive(arg_14_0._goteachFinish, var_14_0)
 end
 
-function slot0.refreshEntranceState(slot0)
-	slot0.viewContainer:getMainSceneView():playTrainEpisodeAnim(slot0.isTrainState)
-	gohelper.setActive(slot0._btntrainClick.gameObject, not slot0.isTrainState)
+function var_0_0.refreshEntranceState(arg_15_0)
+	arg_15_0.viewContainer:getMainSceneView():playTrainEpisodeAnim(arg_15_0.isTrainState)
+	gohelper.setActive(arg_15_0._btntrainClick.gameObject, not arg_15_0.isTrainState)
 
-	slot1, slot2 = Season166TrainModel.instance:isHardEpisodeUnlockTime(slot0.actId)
+	local var_15_0, var_15_1 = Season166TrainModel.instance:isHardEpisodeUnlockTime(arg_15_0.actId)
 
-	gohelper.setActive(slot0._gohardUnlock, slot0.isTrainState and not slot1 and slot2 > 0)
+	gohelper.setActive(arg_15_0._gohardUnlock, arg_15_0.isTrainState and not var_15_0 and var_15_1 > 0)
 
-	slot0._txthardUnlockTime.text = not slot1 and GameUtil.getSubPlaceholderLuaLang(luaLang("season166_unlockHardEpisodeTime"), {
-		slot2
+	arg_15_0._txthardUnlockTime.text = not var_15_0 and GameUtil.getSubPlaceholderLuaLang(luaLang("season166_unlockHardEpisodeTime"), {
+		var_15_1
 	}) or ""
 
-	slot0.viewContainer:setHelpBtnShowState(slot0.isTrainState)
-	slot0:setCloseOverrideFunc()
-	slot0.viewContainer:getMainSceneView():setTrainLevelBg()
+	arg_15_0.viewContainer:setHelpBtnShowState(arg_15_0.isTrainState)
+	arg_15_0:setCloseOverrideFunc()
+	arg_15_0.viewContainer:getMainSceneView():setTrainLevelBg()
 end
 
-function slot0.setCloseOverrideFunc(slot0)
-	if slot0.isTrainState then
-		slot0.isTrainState = false
+function var_0_0.setCloseOverrideFunc(arg_16_0)
+	if arg_16_0.isTrainState then
+		arg_16_0.isTrainState = false
 
-		slot0.viewContainer:setOverrideCloseClick(slot0.setTrainClose, slot0)
+		arg_16_0.viewContainer:setOverrideCloseClick(arg_16_0.setTrainClose, arg_16_0)
 	else
-		slot0.viewContainer:setOverrideCloseClick(slot0.closeThis, slot0)
+		arg_16_0.viewContainer:setOverrideCloseClick(arg_16_0.closeThis, arg_16_0)
 	end
 end
 
-function slot0.setTrainClose(slot0)
-	slot0:refreshEntranceState()
-	slot0.viewContainer:getMainSceneView():cleanJumpData()
-	slot0.viewContainer:getMainSceneView():playTrainAnim(false)
+function var_0_0.setTrainClose(arg_17_0)
+	arg_17_0:refreshEntranceState()
+	arg_17_0.viewContainer:getMainSceneView():cleanJumpData()
+	arg_17_0.viewContainer:getMainSceneView():playTrainAnim(false)
 end
 
-function slot0.refreshRemainTime(slot0)
-	if not ActivityModel.instance:getActMO(slot0.actId) then
-		slot0._txtremainTime.text = ""
+function var_0_0.refreshRemainTime(arg_18_0)
+	if not ActivityModel.instance:getActMO(arg_18_0.actId) then
+		arg_18_0._txtremainTime.text = ""
 
 		return
 	end
 
-	slot2, slot3 = Season166Controller.instance:getSeasonEnterCloseTimeStamp(slot0.actId)
+	local var_18_0, var_18_1 = Season166Controller.instance:getSeasonEnterCloseTimeStamp(arg_18_0.actId)
 
-	if slot3 > 0 then
-		slot0._txtremainTime.text = TimeUtil.SecondToActivityTimeFormat(slot3)
+	if var_18_1 > 0 then
+		local var_18_2 = TimeUtil.SecondToActivityTimeFormat(var_18_1)
+
+		arg_18_0._txtremainTime.text = var_18_2
 	else
-		slot0._txtremainTime.text = luaLang("ended")
+		arg_18_0._txtremainTime.text = luaLang("ended")
 
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 	end
 end
 
-function slot0.refreshTrainProgress(slot0)
-	slot1 = Season166TrainModel.instance:getCurTrainPassCount(slot0.actId)
+function var_0_0.refreshTrainProgress(arg_19_0)
+	local var_19_0 = Season166TrainModel.instance:getCurTrainPassCount(arg_19_0.actId)
 
-	for slot5, slot6 in ipairs(slot0.trainProgressTab) do
-		slot7 = Season166TrainModel.instance:checkIsFinish(slot0.actId, slot5)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.trainProgressTab) do
+		local var_19_1 = Season166TrainModel.instance:checkIsFinish(arg_19_0.actId, iter_19_0)
 
-		gohelper.setActive(slot6.light, slot7)
-		gohelper.setActive(slot6.dark, not slot7)
-		UISpriteSetMgr.instance:setSeason166Sprite(slot6.imageLight, slot6.config.type == Season166Enum.TrainSpType and "season_main_chapterdifficulticon2" or "season_main_chaptericon2", true)
-		UISpriteSetMgr.instance:setSeason166Sprite(slot6.imageDark, slot6.config.type == Season166Enum.TrainSpType and "season_main_chapterdifficulticon1" or "season_main_chaptericon1", true)
+		gohelper.setActive(iter_19_1.light, var_19_1)
+		gohelper.setActive(iter_19_1.dark, not var_19_1)
+
+		local var_19_2 = iter_19_1.config.type == Season166Enum.TrainSpType and "season_main_chapterdifficulticon2" or "season_main_chaptericon2"
+		local var_19_3 = iter_19_1.config.type == Season166Enum.TrainSpType and "season_main_chapterdifficulticon1" or "season_main_chaptericon1"
+
+		UISpriteSetMgr.instance:setSeason166Sprite(iter_19_1.imageLight, var_19_2, true)
+		UISpriteSetMgr.instance:setSeason166Sprite(iter_19_1.imageDark, var_19_3, true)
 	end
 end
 
-function slot0.refreshProgressCurEffect(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.trainProgressTab) do
-		gohelper.setActive(slot6.goCurEffect, slot5 == slot1)
+function var_0_0.refreshProgressCurEffect(arg_20_0, arg_20_1)
+	for iter_20_0, iter_20_1 in ipairs(arg_20_0.trainProgressTab) do
+		gohelper.setActive(iter_20_1.goCurEffect, iter_20_0 == arg_20_1)
 
-		if slot5 == slot1 then
-			transformhelper.setLocalScale(slot6.light.transform, 1.3, 1.3, 1.3)
-			transformhelper.setLocalScale(slot6.dark.transform, 1.3, 1.3, 1.3)
+		if iter_20_0 == arg_20_1 then
+			transformhelper.setLocalScale(iter_20_1.light.transform, 1.3, 1.3, 1.3)
+			transformhelper.setLocalScale(iter_20_1.dark.transform, 1.3, 1.3, 1.3)
 		else
-			transformhelper.setLocalScale(slot6.light.transform, 1, 1, 1)
-			transformhelper.setLocalScale(slot6.dark.transform, 1, 1, 1)
+			transformhelper.setLocalScale(iter_20_1.light.transform, 1, 1, 1)
+			transformhelper.setLocalScale(iter_20_1.dark.transform, 1, 1, 1)
 		end
 	end
 end
 
-function slot0.refreshInformation(slot0)
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecoin, string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(slot0.infoCoinId) and slot1.icon), true)
-	slot0:refreshInformationCoin()
+function var_0_0.refreshInformation(arg_21_0)
+	local var_21_0 = CurrencyConfig.instance:getCurrencyCo(arg_21_0.infoCoinId)
+	local var_21_1 = string.format("%s_1", var_21_0 and var_21_0.icon)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_21_0._imagecoin, var_21_1, true)
+	arg_21_0:refreshInformationCoin()
 end
 
-function slot0.refreshInformationCoin(slot0)
-	slot0._txtcoinNum.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(slot0.infoCoinId).quantity)
+function var_0_0.refreshInformationCoin(arg_22_0)
+	local var_22_0 = CurrencyModel.instance:getCurrency(arg_22_0.infoCoinId)
+
+	arg_22_0._txtcoinNum.text = GameUtil.numberDisplay(var_22_0.quantity)
 end
 
-function slot0.processSeason166JumpParam(slot0, slot1)
-	if slot1.jumpId == Season166Enum.JumpId.BaseSpotEpisode then
-		slot0.isTrainState = false
+function var_0_0.processSeason166JumpParam(arg_23_0, arg_23_1)
+	if arg_23_1.jumpId == Season166Enum.JumpId.BaseSpotEpisode then
+		arg_23_0.isTrainState = false
 
-		slot0.baseSpotItemTab[slot1.jumpParam.baseId].item:onClickBaseSpotItem()
-		slot0:refreshEntranceState()
-	elseif slot1.jumpId == Season166Enum.JumpId.TrainEpisode then
-		slot0.isTrainState = true
+		local var_23_0 = arg_23_1.jumpParam.baseId
 
-		slot0.trainItemTab[slot1.jumpParam.trainId].item:onClickTrainItem()
-		slot0:refreshEntranceState()
-	elseif slot1.jumpId == Season166Enum.JumpId.MainView then
-		slot0.isTrainState = false
+		arg_23_0.baseSpotItemTab[var_23_0].item:onClickBaseSpotItem()
+		arg_23_0:refreshEntranceState()
+	elseif arg_23_1.jumpId == Season166Enum.JumpId.TrainEpisode then
+		arg_23_0.isTrainState = true
 
-		slot0:refreshEntranceState()
-	elseif slot1.jumpId == Season166Enum.JumpId.TrainView then
-		slot0:_btntrainOnClick()
-	elseif slot1.jumpId == Season166Enum.JumpId.TeachView then
+		local var_23_1 = arg_23_1.jumpParam.trainId
+
+		arg_23_0.trainItemTab[var_23_1].item:onClickTrainItem()
+		arg_23_0:refreshEntranceState()
+	elseif arg_23_1.jumpId == Season166Enum.JumpId.MainView then
+		arg_23_0.isTrainState = false
+
+		arg_23_0:refreshEntranceState()
+	elseif arg_23_1.jumpId == Season166Enum.JumpId.TrainView then
+		arg_23_0:_btntrainOnClick()
+	elseif arg_23_1.jumpId == Season166Enum.JumpId.TeachView then
 		Season166Controller.instance:enterSeasonTeachView({
-			actId = slot0.actId
+			actId = arg_23_0.actId
 		})
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.Season166InformationMainView then
-		slot0:refreshInfoReddot()
+function var_0_0._onCloseViewFinish(arg_24_0, arg_24_1)
+	if arg_24_1 == ViewName.Season166InformationMainView then
+		arg_24_0:refreshInfoReddot()
 	end
 
-	if slot1 == ViewName.Season166TalentView then
-		slot0:refreshTalentReddot()
+	if arg_24_1 == ViewName.Season166TalentView then
+		arg_24_0:refreshTalentReddot()
 	end
 end
 
-function slot0.refreshInfoReddot(slot0)
-	RedDotController.instance:addRedDot(slot0._goinfoReddot, RedDotEnum.DotNode.Season166InformationEnter, nil, slot0.checkInfoReddotShow, slot0)
+function var_0_0.refreshInfoReddot(arg_25_0)
+	RedDotController.instance:addRedDot(arg_25_0._goinfoReddot, RedDotEnum.DotNode.Season166InformationEnter, nil, arg_25_0.checkInfoReddotShow, arg_25_0)
 end
 
-function slot0.checkInfoReddotShow(slot0, slot1)
-	slot1:defaultRefreshDot()
+function var_0_0.checkInfoReddotShow(arg_26_0, arg_26_1)
+	arg_26_1:defaultRefreshDot()
 
 	if Season166Model.instance:checkHasNewUnlockInfo() then
-		gohelper.setActive(slot0._goinfoNewReddot, true)
-		gohelper.setActive(slot0._goinfoReddot, false)
+		gohelper.setActive(arg_26_0._goinfoNewReddot, true)
+		gohelper.setActive(arg_26_0._goinfoReddot, false)
 	else
-		gohelper.setActive(slot0._goinfoNewReddot, false)
-		gohelper.setActive(slot0._goinfoReddot, true)
-		slot1:showRedDot(RedDotEnum.Style.Normal)
+		gohelper.setActive(arg_26_0._goinfoNewReddot, false)
+		gohelper.setActive(arg_26_0._goinfoReddot, true)
+		arg_26_1:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 
-function slot0.refreshTalentReddot(slot0)
-	gohelper.setActive(slot0._gotalentReddot, Season166Model.instance:checkAllHasNewTalent(slot0.actId))
+function var_0_0.refreshTalentReddot(arg_27_0)
+	gohelper.setActive(arg_27_0._gotalentReddot, Season166Model.instance:checkAllHasNewTalent(arg_27_0.actId))
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0.refreshRemainTime, arg_28_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_29_0)
+	return
 end
 
-return slot0
+return var_0_0

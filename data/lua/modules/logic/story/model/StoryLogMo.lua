@@ -1,13 +1,13 @@
-module("modules.logic.story.model.StoryLogMo", package.seeall)
+﻿module("modules.logic.story.model.StoryLogMo", package.seeall)
 
-slot0 = pureTable("StoryLogMo")
+local var_0_0 = pureTable("StoryLogMo")
 
-function slot0.ctor(slot0)
-	slot0.info = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.info = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.info = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.info = arg_2_1
 end
 
-return slot0
+return var_0_0

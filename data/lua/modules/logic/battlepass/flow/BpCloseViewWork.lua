@@ -1,14 +1,14 @@
-module("modules.logic.battlepass.flow.BpCloseViewWork", package.seeall)
+﻿module("modules.logic.battlepass.flow.BpCloseViewWork", package.seeall)
 
-slot0 = class("BpCloseViewWork", BaseWork)
+local var_0_0 = class("BpCloseViewWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._viewName = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._viewName = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	ViewMgr.instance:closeView(slot0._viewName)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	ViewMgr.instance:closeView(arg_2_0._viewName)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

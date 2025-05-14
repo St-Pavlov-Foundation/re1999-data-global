@@ -1,26 +1,26 @@
-module("modules.logic.gm.view.GMFightEntitySkillItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFightEntitySkillItem", package.seeall)
 
-slot0 = class("GMFightEntitySkillItem", ListScrollCell)
+local var_0_0 = class("GMFightEntitySkillItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._id = gohelper.findChildTextMeshInputField(slot1, "id")
-	slot0._name = gohelper.findChildTextMeshInputField(slot1, "name")
-	slot0._level = gohelper.findChildText(slot1, "level")
-	slot0._effect = gohelper.findChildTextMeshInputField(slot1, "effect")
-	slot0._type = gohelper.findChildTextMeshInputField(slot1, "type")
-	slot0._btnDel = gohelper.findChildButtonWithAudio(slot1, "btnDel")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._id = gohelper.findChildTextMeshInputField(arg_1_1, "id")
+	arg_1_0._name = gohelper.findChildTextMeshInputField(arg_1_1, "name")
+	arg_1_0._level = gohelper.findChildText(arg_1_1, "level")
+	arg_1_0._effect = gohelper.findChildTextMeshInputField(arg_1_1, "effect")
+	arg_1_0._type = gohelper.findChildTextMeshInputField(arg_1_1, "type")
+	arg_1_0._btnDel = gohelper.findChildButtonWithAudio(arg_1_1, "btnDel")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnDel:AddClickListener(slot0._onClickDel, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnDel:AddClickListener(arg_2_0._onClickDel, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnDel:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnDel:RemoveClickListener()
 end
 
-slot1 = {
+local var_0_1 = {
 	"现实创伤",
 	"精神创伤",
 	"减益",
@@ -29,34 +29,38 @@ slot1 = {
 	"治疗"
 }
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._skillCO = slot1
-	slot2 = GMFightEntityModel.instance.entityMO
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._skillCO = arg_4_1
 
-	gohelper.setActive(slot0._btnDel.gameObject, slot2:isPassiveSkill(slot0._skillCO.id))
-	slot0._id:SetText(tostring(slot0._skillCO.id))
-	slot0._name:SetText(slot0._skillCO.name)
+	local var_4_0 = GMFightEntityModel.instance.entityMO
 
-	if slot2:isPassiveSkill(slot0._skillCO.id) then
-		slot0._level.text = "被动"
-	elseif slot2:isUniqueSkill(slot0._skillCO.id) then
-		slot0._level.text = "大招"
+	gohelper.setActive(arg_4_0._btnDel.gameObject, var_4_0:isPassiveSkill(arg_4_0._skillCO.id))
+	arg_4_0._id:SetText(tostring(arg_4_0._skillCO.id))
+	arg_4_0._name:SetText(arg_4_0._skillCO.name)
+
+	if var_4_0:isPassiveSkill(arg_4_0._skillCO.id) then
+		arg_4_0._level.text = "被动"
+	elseif var_4_0:isUniqueSkill(arg_4_0._skillCO.id) then
+		arg_4_0._level.text = "大招"
 	else
-		slot0._level.text = slot2:getSkillLv(slot0._skillCO.id)
+		arg_4_0._level.text = var_4_0:getSkillLv(arg_4_0._skillCO.id)
 	end
 
-	slot0._effect:SetText(tostring(slot0._skillCO.skillEffect))
-	slot0._type:SetText(uv0[slot0._skillCO.effectTag] or "无")
+	arg_4_0._effect:SetText(tostring(arg_4_0._skillCO.skillEffect))
+
+	local var_4_1 = var_0_1[arg_4_0._skillCO.effectTag] or "无"
+
+	arg_4_0._type:SetText(var_4_1)
 end
 
-function slot0._onClickDel(slot0)
-	GameFacade.showToast(ToastEnum.IconId, "del skill " .. slot0._skillCO.name)
+function var_0_0._onClickDel(arg_5_0)
+	GameFacade.showToast(ToastEnum.IconId, "del skill " .. arg_5_0._skillCO.name)
 
-	slot1 = GMFightEntityModel.instance.entityMO
+	local var_5_0 = GMFightEntityModel.instance.entityMO
 
-	GMRpc.instance:sendGMRequest(string.format("fightDelPassiveSkill %s %s", tostring(slot1.id), tostring(slot0._skillCO.id)))
-	slot1:removePassiveSkill(slot0._skillCO.id)
-	GMFightEntityModel.instance:setEntityMO(slot1)
+	GMRpc.instance:sendGMRequest(string.format("fightDelPassiveSkill %s %s", tostring(var_5_0.id), tostring(arg_5_0._skillCO.id)))
+	var_5_0:removePassiveSkill(arg_5_0._skillCO.id)
+	GMFightEntityModel.instance:setEntityMO(var_5_0)
 end
 
-return slot0
+return var_0_0

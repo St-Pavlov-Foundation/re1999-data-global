@@ -1,185 +1,191 @@
-module("modules.logic.rouge.view.RougeDifficultyItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeDifficultyItem", package.seeall)
 
-slot0 = class("RougeDifficultyItem", RougeSimpleItemBase)
-slot1 = ZProj.TweenHelper
-slot2 = SLFramework.AnimatorPlayer
-slot0.ScalerSelected = 1
-slot0.ScalerSelectedAdjacent = 0.9
-slot0.ScalerNormal = 0.85
+local var_0_0 = class("RougeDifficultyItem", RougeSimpleItemBase)
+local var_0_1 = ZProj.TweenHelper
+local var_0_2 = SLFramework.AnimatorPlayer
 
-function slot0.ctor(slot0, slot1)
-	RougeSimpleItemBase.ctor(slot0, slot1)
+var_0_0.ScalerSelected = 1
+var_0_0.ScalerSelectedAdjacent = 0.9
+var_0_0.ScalerNormal = 0.85
 
-	slot0._staticData.parentScrollViewGo = slot1.baseViewContainer:getScrollViewGo()
-	slot0._staticData.geniusBranchStartViewInfo = RougeOutsideModel.instance:getGeniusBranchStartViewAllInfo()
-	slot0._selected = RougeDifficultyItemSelected.New(slot0)
-	slot0._unSelected = RougeDifficultyItemUnselected.New(slot0)
-	slot0._locked = RougeDifficultyItemLocked.New(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	RougeSimpleItemBase.ctor(arg_1_0, arg_1_1)
+
+	arg_1_0._staticData.parentScrollViewGo = arg_1_1.baseViewContainer:getScrollViewGo()
+	arg_1_0._staticData.geniusBranchStartViewInfo = RougeOutsideModel.instance:getGeniusBranchStartViewAllInfo()
+	arg_1_0._selected = RougeDifficultyItemSelected.New(arg_1_0)
+	arg_1_0._unSelected = RougeDifficultyItemUnselected.New(arg_1_0)
+	arg_1_0._locked = RougeDifficultyItemLocked.New(arg_1_0)
 end
 
-function slot0._editableInitView(slot0)
-	RougeSimpleItemBase._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	RougeSimpleItemBase._editableInitView(arg_2_0)
 
-	slot0._animatorPlayer = uv0.Get(slot0.viewGO)
-	slot0._animSelf = slot0._animatorPlayer.animator
-	slot0._root = gohelper.findChild(slot0.viewGO, "Root")
-	slot0._rootTrans = slot0._root.transform
+	arg_2_0._animatorPlayer = var_0_2.Get(arg_2_0.viewGO)
+	arg_2_0._animSelf = arg_2_0._animatorPlayer.animator
+	arg_2_0._root = gohelper.findChild(arg_2_0.viewGO, "Root")
+	arg_2_0._rootTrans = arg_2_0._root.transform
 
-	slot0._selected:init(gohelper.findChild(slot0._root, "Select"))
-	slot0._unSelected:init(gohelper.findChild(slot0._root, "Unselect"))
-	slot0._locked:init(gohelper.findChild(slot0._root, "Locked"))
+	arg_2_0._selected:init(gohelper.findChild(arg_2_0._root, "Select"))
+	arg_2_0._unSelected:init(gohelper.findChild(arg_2_0._root, "Unselect"))
+	arg_2_0._locked:init(gohelper.findChild(arg_2_0._root, "Locked"))
 
-	slot0._itemClick = gohelper.getClickWithAudio(slot0._gobg)
+	arg_2_0._itemClick = gohelper.getClickWithAudio(arg_2_0._gobg)
 
-	slot0:setScale(uv1.ScalerSelectedAdjacent)
-	slot0._selected:setActive(false)
-	slot0._unSelected:setActive(false)
-	slot0._locked:setActive(false)
+	arg_2_0:setScale(var_0_0.ScalerSelectedAdjacent)
+	arg_2_0._selected:setActive(false)
+	arg_2_0._unSelected:setActive(false)
+	arg_2_0._locked:setActive(false)
 end
 
-function slot0.onDestroyView(slot0)
-	RougeSimpleItemBase.onDestroyView(slot0)
-	slot0:_killTween()
-	GameUtil.onDestroyViewMember(slot0, "_selected")
-	GameUtil.onDestroyViewMember(slot0, "_unSelected")
-	GameUtil.onDestroyViewMember(slot0, "_locked")
+function var_0_0.onDestroyView(arg_3_0)
+	RougeSimpleItemBase.onDestroyView(arg_3_0)
+	arg_3_0:_killTween()
+	GameUtil.onDestroyViewMember(arg_3_0, "_selected")
+	GameUtil.onDestroyViewMember(arg_3_0, "_unSelected")
+	GameUtil.onDestroyViewMember(arg_3_0, "_locked")
 end
 
-function slot0.setSelected(slot0, slot1)
-	if not slot0:isUnLocked() then
+function var_0_0.setSelected(arg_4_0, arg_4_1)
+	if not arg_4_0:isUnLocked() then
 		return
 	end
 
-	RougeSimpleItemBase.setSelected(slot0, slot1)
+	RougeSimpleItemBase.setSelected(arg_4_0, arg_4_1)
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._staticData.isSelected = slot1
+function var_0_0.onSelect(arg_5_0, arg_5_1)
+	arg_5_0._staticData.isSelected = arg_5_1
 
-	slot0._selected:setActive(slot1)
-	slot0._unSelected:setActive(not slot1)
+	arg_5_0._selected:setActive(arg_5_1)
+	arg_5_0._unSelected:setActive(not arg_5_1)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._mo = slot1
-	slot0._isUnLocked = slot1.isUnLocked
+function var_0_0.setData(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
+	arg_6_0._isUnLocked = arg_6_1.isUnLocked
 
-	slot0._selected:setData(slot1)
-	slot0._unSelected:setData(slot1)
-	slot0._locked:setData(slot1)
+	arg_6_0._selected:setData(arg_6_1)
+	arg_6_0._unSelected:setData(arg_6_1)
+	arg_6_0._locked:setData(arg_6_1)
 
-	slot2 = slot0:isSelected()
+	local var_6_0 = arg_6_0:isSelected()
 
-	if slot0:isUnLocked() then
-		slot0._selected:setActive(slot2)
-		slot0._unSelected:setActive(not slot2)
+	if arg_6_0:isUnLocked() then
+		arg_6_0._selected:setActive(var_6_0)
+		arg_6_0._unSelected:setActive(not var_6_0)
 	else
-		slot0._locked:setActive(true)
+		arg_6_0._locked:setActive(true)
 	end
 end
 
-function slot0.isUnLocked(slot0)
-	return slot0._mo.isUnLocked
+function var_0_0.isUnLocked(arg_7_0)
+	return arg_7_0._mo.isUnLocked
 end
 
-function slot0.setScale(slot0, slot1, slot2)
-	if slot2 then
-		slot0:tweenScale(slot1)
+function var_0_0.setScale(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 then
+		arg_8_0:tweenScale(arg_8_1)
 	else
-		transformhelper.setLocalScale(slot0._rootTrans, slot1, slot1, slot1)
+		transformhelper.setLocalScale(arg_8_0._rootTrans, arg_8_1, arg_8_1, arg_8_1)
 	end
 end
 
-function slot0.setScale01(slot0, slot1)
-	slot0:setScale(GameUtil.remap(slot1 or 1, 0, 1, uv0.ScalerSelectedAdjacent, uv0.ScalerSelected))
+function var_0_0.setScale01(arg_9_0, arg_9_1)
+	arg_9_1 = arg_9_1 or 1
+	arg_9_1 = GameUtil.remap(arg_9_1, 0, 1, var_0_0.ScalerSelectedAdjacent, var_0_0.ScalerSelected)
+
+	arg_9_0:setScale(arg_9_1)
 end
 
-function slot0.tweenScale(slot0, slot1, slot2)
-	slot0:_killTween()
+function var_0_0.tweenScale(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_2 = arg_10_2 or 0.4
 
-	slot0._tweenRotationId = uv0.DOScale(slot0._rootTrans, slot1, slot1, slot1, slot2 or 0.4, nil, , , EaseType.OutQuad)
+	arg_10_0:_killTween()
+
+	arg_10_0._tweenRotationId = var_0_1.DOScale(arg_10_0._rootTrans, arg_10_1, arg_10_1, arg_10_1, arg_10_2, nil, nil, nil, EaseType.OutQuad)
 end
 
-function slot0._killTween(slot0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweenRotationId")
+function var_0_0._killTween(arg_11_0)
+	GameUtil.onDestroyViewMember_TweenId(arg_11_0, "_tweenRotationId")
 end
 
-function slot0.setIsLocked(slot0, slot1, slot2)
-	slot0._locked:setActive(slot1)
+function var_0_0.setIsLocked(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._locked:setActive(arg_12_1)
 
-	if not slot2 then
-		slot0:playIdle()
-		slot0:onSelect(slot0._staticData.isSelected)
+	if not arg_12_2 then
+		arg_12_0:playIdle()
+		arg_12_0:onSelect(arg_12_0._staticData.isSelected)
 	end
 end
 
-function slot0.playOpen(slot0, slot1)
-	if slot1 == true then
-		slot0._isNewUnlockAnim = true
+function var_0_0.playOpen(arg_13_0, arg_13_1)
+	if arg_13_1 == true then
+		arg_13_0._isNewUnlockAnim = true
 
-		slot0:setIsLocked(true, true)
+		arg_13_0:setIsLocked(true, true)
 	end
 
-	slot0:_playAnim(UIAnimationName.Open, slot0._onOpenEnd, slot0)
+	arg_13_0:_playAnim(UIAnimationName.Open, arg_13_0._onOpenEnd, arg_13_0)
 end
 
-function slot0.playIdle(slot0)
-	slot0._animSelf.enabled = true
+function var_0_0.playIdle(arg_14_0)
+	arg_14_0._animSelf.enabled = true
 
-	slot0._animSelf:Play(UIAnimationName.Open, 0, 1)
+	arg_14_0._animSelf:Play(UIAnimationName.Open, 0, 1)
 end
 
-function slot0.playClose(slot0)
-	slot0:_playAnim(UIAnimationName.Close, slot0._onCloseEnd, slot0)
+function var_0_0.playClose(arg_15_0)
+	arg_15_0:_playAnim(UIAnimationName.Close, arg_15_0._onCloseEnd, arg_15_0)
 end
 
-function slot0.setOnOpenEndCb(slot0, slot1)
-	slot0._onOpenEndCb = slot1
+function var_0_0.setOnOpenEndCb(arg_16_0, arg_16_1)
+	arg_16_0._onOpenEndCb = arg_16_1
 end
 
-function slot0._onOpenEnd(slot0)
-	if slot0._onOpenEndCb then
-		slot0._onOpenEndCb()
+function var_0_0._onOpenEnd(arg_17_0)
+	if arg_17_0._onOpenEndCb then
+		arg_17_0._onOpenEndCb()
 
-		slot0._onOpenEndCb = nil
+		arg_17_0._onOpenEndCb = nil
 	end
 
-	if slot0._isNewUnlockAnim then
-		slot0:_playAnim(UIAnimationName.Unlock, slot0._onUnlockEnd, slot0)
+	if arg_17_0._isNewUnlockAnim then
+		arg_17_0:_playAnim(UIAnimationName.Unlock, arg_17_0._onUnlockEnd, arg_17_0)
 
-		slot0._isNewUnlockAnim = nil
-	end
-end
-
-function slot0.setOnCloseEndCb(slot0, slot1)
-	slot0._onCloseEndCb = slot1
-end
-
-function slot0._onCloseEnd(slot0)
-	if slot0._onCloseEndCb then
-		slot0._onCloseEndCb()
-
-		slot0._onCloseEndCb = nil
+		arg_17_0._isNewUnlockAnim = nil
 	end
 end
 
-function slot0.setOnUnlockEndCb(slot0, slot1)
-	slot0._onUnlockEndCb = slot1
+function var_0_0.setOnCloseEndCb(arg_18_0, arg_18_1)
+	arg_18_0._onCloseEndCb = arg_18_1
 end
 
-function slot0._onUnlockEnd(slot0)
-	if slot0._onUnlockEndCb then
-		slot0._onUnlockEndCb()
+function var_0_0._onCloseEnd(arg_19_0)
+	if arg_19_0._onCloseEndCb then
+		arg_19_0._onCloseEndCb()
 
-		slot0._onUnlockEndCb = nil
+		arg_19_0._onCloseEndCb = nil
+	end
+end
+
+function var_0_0.setOnUnlockEndCb(arg_20_0, arg_20_1)
+	arg_20_0._onUnlockEndCb = arg_20_1
+end
+
+function var_0_0._onUnlockEnd(arg_21_0)
+	if arg_21_0._onUnlockEndCb then
+		arg_21_0._onUnlockEndCb()
+
+		arg_21_0._onUnlockEndCb = nil
 	end
 
-	slot0:setIsLocked(false)
-	slot0:onSelect(slot0._staticData.isSelected)
+	arg_21_0:setIsLocked(false)
+	arg_21_0:onSelect(arg_21_0._staticData.isSelected)
 end
 
-function slot0._playAnim(slot0, slot1, slot2, slot3)
-	slot0._animatorPlayer:Play(slot1, slot2, slot3)
+function var_0_0._playAnim(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	arg_22_0._animatorPlayer:Play(arg_22_1, arg_22_2, arg_22_3)
 end
 
-return slot0
+return var_0_0

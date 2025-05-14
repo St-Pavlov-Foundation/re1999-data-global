@@ -1,163 +1,190 @@
-module("modules.logic.rouge.model.RougeResultMO", package.seeall)
+﻿module("modules.logic.rouge.model.RougeResultMO", package.seeall)
 
-slot0 = pureTable("RougeResultMO", RougeCollectionMO)
+local var_0_0 = pureTable("RougeResultMO", RougeCollectionMO)
 
-function slot0.init(slot0, slot1)
-	slot0.season = tonumber(slot1.season)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.season = tonumber(arg_1_1.season)
 
-	slot0:updateHeroId(slot1.initHeroId)
+	arg_1_0:updateHeroId(arg_1_1.initHeroId)
 
-	slot0.collectionNum = GameUtil.splitString2(slot1.collection2NumStr, true)
-	slot0.composeRes = GameUtil.splitString2(slot1.composeRes2NumStr, true)
+	arg_1_0.collectionNum = GameUtil.splitString2(arg_1_1.collection2NumStr, true)
+	arg_1_0.composeRes = GameUtil.splitString2(arg_1_1.composeRes2NumStr, true)
 
-	slot0:updateFinishEventIds(slot1.finishEventId)
-	slot0:updateFinishEntrustIds(slot1.finishEntrustId)
+	arg_1_0:updateFinishEventIds(arg_1_1.finishEventId)
+	arg_1_0:updateFinishEntrustIds(arg_1_1.finishEntrustId)
 
-	slot0.consumeCoin = tonumber(slot1.consumeCoin)
-	slot0.consumePower = tonumber(slot1.consumePower)
-	slot0.maxDamage = tonumber(slot1.maxDamage)
-	slot0.deadNum = tonumber(slot1.deadNum)
-	slot0.reviveNum = tonumber(slot1.reviveNum)
-	slot0.repairShopNum = tonumber(slot1.repairShopNum)
-	slot0.displaceNum = tonumber(slot1.displaceNum)
-	slot0.stepNum = tonumber(slot1.stepNum)
-	slot0.badge2Score = GameUtil.splitString2(slot1.badge2Score, true)
-	slot0.normalFight2Score = string.splitToNumber(slot1.normalFight2Score, "#")
-	slot0.difficultFight2Score = string.splitToNumber(slot1.difficultFight2Score, "#")
-	slot0.dangerousFight2Score = string.splitToNumber(slot1.dangerousFight2Score, "#")
-	slot0.collection2Score = string.splitToNumber(slot1.collection2Score, "#")
-	slot0.layer2Score = string.splitToNumber(slot1.layer2Score, "#")
-	slot0.entrust2Score = string.splitToNumber(slot1.entrust2Score, "#")
-	slot0.end2Score = string.splitToNumber(slot1.end2Score, "#")
-	slot0.scoreReward = tonumber(slot1.scoreReward)
-	slot0.beforeScore = tonumber(slot1.beforeScore)
-	slot0.finalScore = tonumber(slot1.finalScore)
-	slot0.addPoint = tonumber(slot1.addPoint)
-	slot0.remainScore2Point = tonumber(slot1.remainScore2Point)
-	slot0.addGeniusPoint = tonumber(slot1.addGeniusPoint)
-	slot0.remainScore2GeniusPoint = tonumber(slot1.remainScore2GeniusPoint)
+	arg_1_0.consumeCoin = tonumber(arg_1_1.consumeCoin)
+	arg_1_0.consumePower = tonumber(arg_1_1.consumePower)
+	arg_1_0.maxDamage = tonumber(arg_1_1.maxDamage)
+	arg_1_0.deadNum = tonumber(arg_1_1.deadNum)
+	arg_1_0.reviveNum = tonumber(arg_1_1.reviveNum)
+	arg_1_0.repairShopNum = tonumber(arg_1_1.repairShopNum)
+	arg_1_0.displaceNum = tonumber(arg_1_1.displaceNum)
+	arg_1_0.stepNum = tonumber(arg_1_1.stepNum)
+	arg_1_0.badge2Score = GameUtil.splitString2(arg_1_1.badge2Score, true)
+	arg_1_0.normalFight2Score = string.splitToNumber(arg_1_1.normalFight2Score, "#")
+	arg_1_0.difficultFight2Score = string.splitToNumber(arg_1_1.difficultFight2Score, "#")
+	arg_1_0.dangerousFight2Score = string.splitToNumber(arg_1_1.dangerousFight2Score, "#")
+	arg_1_0.collection2Score = string.splitToNumber(arg_1_1.collection2Score, "#")
+	arg_1_0.layer2Score = string.splitToNumber(arg_1_1.layer2Score, "#")
+	arg_1_0.entrust2Score = string.splitToNumber(arg_1_1.entrust2Score, "#")
+	arg_1_0.end2Score = string.splitToNumber(arg_1_1.end2Score, "#")
+	arg_1_0.scoreReward = tonumber(arg_1_1.scoreReward)
+	arg_1_0.beforeScore = tonumber(arg_1_1.beforeScore)
+	arg_1_0.finalScore = tonumber(arg_1_1.finalScore)
+	arg_1_0.addPoint = tonumber(arg_1_1.addPoint)
+	arg_1_0.remainScore2Point = tonumber(arg_1_1.remainScore2Point)
+	arg_1_0.addGeniusPoint = tonumber(arg_1_1.addGeniusPoint)
+	arg_1_0.remainScore2GeniusPoint = tonumber(arg_1_1.remainScore2GeniusPoint)
 
-	slot0:updateReviewInfo(slot1.reviewInfo)
+	arg_1_0:updateReviewInfo(arg_1_1.reviewInfo)
 
-	slot0.preRemainScore2Point = tonumber(slot1.preRemainScore2Point)
-	slot0.preRemainScore2GeniusPoint = tonumber(slot1.preRemainScore2GeniusPoint)
+	arg_1_0.preRemainScore2Point = tonumber(arg_1_1.preRemainScore2Point)
+	arg_1_0.preRemainScore2GeniusPoint = tonumber(arg_1_1.preRemainScore2GeniusPoint)
 
-	slot0:updateLimiterResult(slot1)
+	arg_1_0:updateLimiterResult(arg_1_1)
 end
 
-function slot0.updateReviewInfo(slot0, slot1)
-	slot0.reviewInfo = RougeReviewMO.New()
+function var_0_0.updateReviewInfo(arg_2_0, arg_2_1)
+	arg_2_0.reviewInfo = RougeReviewMO.New()
 
-	slot0.reviewInfo:init(slot1)
+	arg_2_0.reviewInfo:init(arg_2_1)
 end
 
-function slot0.getReviewInfo(slot0)
-	return slot0.reviewInfo
+function var_0_0.getReviewInfo(arg_3_0)
+	return arg_3_0.reviewInfo
 end
 
-function slot0.updateHeroId(slot0, slot1)
-	slot0.initHeroId = {}
+function var_0_0.updateHeroId(arg_4_0, arg_4_1)
+	arg_4_0.initHeroId = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.initHeroId, slot6)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		table.insert(arg_4_0.initHeroId, iter_4_1)
 	end
 end
 
-function slot0.getInitHeroId(slot0)
-	return slot0.initHeroId
+function var_0_0.getInitHeroId(arg_5_0)
+	return arg_5_0.initHeroId
 end
 
-function slot0.updateFinishEventIds(slot0, slot1)
-	slot0.finishEventId = {}
-	slot0.finishEventMap = {}
+function var_0_0.updateFinishEventIds(arg_6_0, arg_6_1)
+	arg_6_0.finishEventId = {}
+	arg_6_0.finishEventMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.finishEventId, slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		table.insert(arg_6_0.finishEventId, iter_6_1)
 
-		slot0.finishEventMap[slot6] = true
+		arg_6_0.finishEventMap[iter_6_1] = true
 	end
 end
 
-function slot0.updateFinishEntrustIds(slot0, slot1)
-	slot0.finishEntrustId = {}
-	slot0.finishEntrustIdMap = {}
+function var_0_0.updateFinishEntrustIds(arg_7_0, arg_7_1)
+	arg_7_0.finishEntrustId = {}
+	arg_7_0.finishEntrustIdMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		table.insert(slot0.finishEntrustId, slot6)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		table.insert(arg_7_0.finishEntrustId, iter_7_1)
 
-		slot0.finishEntrustIdMap[slot6] = true
+		arg_7_0.finishEntrustIdMap[iter_7_1] = true
 	end
 end
 
-function slot0.getNormalFightCountAndScore(slot0)
-	return slot0.normalFight2Score and slot0.normalFight2Score[1] or 0, slot0.normalFight2Score and slot0.normalFight2Score[2] or 0
+function var_0_0.getNormalFightCountAndScore(arg_8_0)
+	local var_8_0 = arg_8_0.normalFight2Score and arg_8_0.normalFight2Score[1] or 0
+	local var_8_1 = arg_8_0.normalFight2Score and arg_8_0.normalFight2Score[2] or 0
+
+	return var_8_0, var_8_1
 end
 
-function slot0.getDifficultFightCountAndScore(slot0)
-	return slot0.difficultFight2Score and slot0.difficultFight2Score[1] or 0, slot0.difficultFight2Score and slot0.difficultFight2Score[2] or 0
+function var_0_0.getDifficultFightCountAndScore(arg_9_0)
+	local var_9_0 = arg_9_0.difficultFight2Score and arg_9_0.difficultFight2Score[1] or 0
+	local var_9_1 = arg_9_0.difficultFight2Score and arg_9_0.difficultFight2Score[2] or 0
+
+	return var_9_0, var_9_1
 end
 
-function slot0.getDangerousFightCountAndScore(slot0)
-	return slot0.dangerousFight2Score and slot0.dangerousFight2Score[1] or 0, slot0.dangerousFight2Score and slot0.dangerousFight2Score[2] or 0
+function var_0_0.getDangerousFightCountAndScore(arg_10_0)
+	local var_10_0 = arg_10_0.dangerousFight2Score and arg_10_0.dangerousFight2Score[1] or 0
+	local var_10_1 = arg_10_0.dangerousFight2Score and arg_10_0.dangerousFight2Score[2] or 0
+
+	return var_10_0, var_10_1
 end
 
-function slot0.getCollectionCountAndScore(slot0)
-	return slot0.collection2Score and slot0.collection2Score[1] or 0, slot0.collection2Score and slot0.collection2Score[2] or 0
+function var_0_0.getCollectionCountAndScore(arg_11_0)
+	local var_11_0 = arg_11_0.collection2Score and arg_11_0.collection2Score[1] or 0
+	local var_11_1 = arg_11_0.collection2Score and arg_11_0.collection2Score[2] or 0
+
+	return var_11_0, var_11_1
 end
 
-function slot0.getLayerCountAndScore(slot0)
-	return slot0.layer2Score and slot0.layer2Score[1] or 0, slot0.layer2Score and slot0.layer2Score[2] or 0
+function var_0_0.getLayerCountAndScore(arg_12_0)
+	local var_12_0 = arg_12_0.layer2Score and arg_12_0.layer2Score[1] or 0
+	local var_12_1 = arg_12_0.layer2Score and arg_12_0.layer2Score[2] or 0
+
+	return var_12_0, var_12_1
 end
 
-function slot0.getEntrustCountAndScore(slot0)
-	return slot0.entrust2Score and slot0.entrust2Score[1] or 0, slot0.entrust2Score and slot0.entrust2Score[2] or 0
+function var_0_0.getEntrustCountAndScore(arg_13_0)
+	local var_13_0 = arg_13_0.entrust2Score and arg_13_0.entrust2Score[1] or 0
+	local var_13_1 = arg_13_0.entrust2Score and arg_13_0.entrust2Score[2] or 0
+
+	return var_13_0, var_13_1
 end
 
-function slot0.getEndCountAndScore(slot0)
-	return slot0:isSucceed() and 1 or 0, slot0.end2Score and slot0.end2Score[2] or 0
+function var_0_0.getEndCountAndScore(arg_14_0)
+	local var_14_0 = arg_14_0:isSucceed() and 1 or 0
+	local var_14_1 = arg_14_0.end2Score and arg_14_0.end2Score[2] or 0
+
+	return var_14_0, var_14_1
 end
 
-function slot0.getResultSeason(slot0)
-	return slot0.season
+function var_0_0.getResultSeason(arg_15_0)
+	return arg_15_0.season
 end
 
-function slot0.getTotalFightCount(slot0)
-	return slot0:getNormalFightCountAndScore() + slot0:getDifficultFightCountAndScore() + slot0:getDangerousFightCountAndScore()
+function var_0_0.getTotalFightCount(arg_16_0)
+	local var_16_0 = arg_16_0:getNormalFightCountAndScore()
+	local var_16_1 = arg_16_0:getDifficultFightCountAndScore()
+	local var_16_2 = arg_16_0:getDangerousFightCountAndScore()
+
+	return var_16_0 + var_16_1 + var_16_2
 end
 
-function slot0.isEntrustFinish(slot0, slot1)
-	return slot0.finishEntrustIdMap and slot0.finishEntrustIdMap[slot1] == true
+function var_0_0.isEntrustFinish(arg_17_0, arg_17_1)
+	return arg_17_0.finishEntrustIdMap and arg_17_0.finishEntrustIdMap[arg_17_1] == true
 end
 
-function slot0.isEventFinish(slot0, slot1)
-	return slot0.finishEventMap and slot0.finishEventMap[slot1] == true
+function var_0_0.isEventFinish(arg_18_0, arg_18_1)
+	return arg_18_0.finishEventMap and arg_18_0.finishEventMap[arg_18_1] == true
 end
 
-function slot0.isSucceed(slot0)
-	slot1 = slot0.end2Score and slot0.end2Score[1]
+function var_0_0.isSucceed(arg_19_0)
+	local var_19_0 = arg_19_0.end2Score and arg_19_0.end2Score[1]
 
-	return slot1 and slot1 ~= 0
+	return var_19_0 and var_19_0 ~= 0
 end
 
-function slot0.getCompositeCollectionIdAndCount(slot0)
-	return slot0.composeRes
+function var_0_0.getCompositeCollectionIdAndCount(arg_20_0)
+	return arg_20_0.composeRes
 end
 
-function slot0.updateLimiterResult(slot0, slot1)
-	if not slot1:HasField("limiterResNO") then
-		slot0.limiterResultMo = nil
+function var_0_0.updateLimiterResult(arg_21_0, arg_21_1)
+	if not arg_21_1:HasField("limiterResNO") then
+		arg_21_0.limiterResultMo = nil
 
 		return
 	end
 
-	slot0.limiterResultMo = RougeLimiterResultMO.New()
+	local var_21_0 = RougeDLCModel101.instance:getTotalEmblemCount()
 
-	slot0.limiterResultMo:init(slot1.limiterResNO)
-	slot0.limiterResultMo:setPreEmbleCount(RougeDLCModel101.instance:getTotalEmblemCount())
+	arg_21_0.limiterResultMo = RougeLimiterResultMO.New()
+
+	arg_21_0.limiterResultMo:init(arg_21_1.limiterResNO)
+	arg_21_0.limiterResultMo:setPreEmbleCount(var_21_0)
 end
 
-function slot0.getLimiterResultMo(slot0)
-	return slot0.limiterResultMo
+function var_0_0.getLimiterResultMo(arg_22_0)
+	return arg_22_0.limiterResultMo
 end
 
-return slot0
+return var_0_0

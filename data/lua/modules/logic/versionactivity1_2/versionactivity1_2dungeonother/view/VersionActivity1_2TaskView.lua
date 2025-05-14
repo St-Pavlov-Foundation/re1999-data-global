@@ -1,101 +1,114 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeonother.view.VersionActivity1_2TaskView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeonother.view.VersionActivity1_2TaskView", package.seeall)
 
-slot0 = class("VersionActivity1_2TaskView", BaseView)
+local var_0_0 = class("VersionActivity1_2TaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simagelangtxt = gohelper.findChildSingleImage(slot0.viewGO, "left/#simage_langtxt")
-	slot0._txtremaintime = gohelper.findChildText(slot0.viewGO, "left/#simage_langtxt/#txt_remaintime")
-	slot0._txtcurrencynum = gohelper.findChildText(slot0.viewGO, "left/node/cn/#txt_currencynum")
-	slot0._scrolllist = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_list")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_langtxt")
+	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "left/#simage_langtxt/#txt_remaintime")
+	arg_1_0._txtcurrencynum = gohelper.findChildText(arg_1_0.viewGO, "left/node/cn/#txt_currencynum")
+	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_list")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickStore(slot0)
+function var_0_0.onClickStore(arg_4_0)
 	VersionActivity1_2EnterController.instance:openActivityStoreView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_bj"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_bj"))
 
-	slot0.storeClick = gohelper.findChildClick(slot0.viewGO, "left/node")
+	arg_5_0.storeClick = gohelper.findChildClick(arg_5_0.viewGO, "left/node")
 
-	slot0.storeClick:AddClickListener(slot0.onClickStore, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshCurrency, slot0)
+	arg_5_0.storeClick:AddClickListener(arg_5_0.onClickStore, arg_5_0)
+	arg_5_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_5_0.refreshCurrency, arg_5_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, slot0._onOpen, slot0)
+	}, arg_7_0._onOpen, arg_7_0)
 end
 
-function slot0._onOpen(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshRight, slot0)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
+function var_0_0._onOpen(arg_8_0)
+	arg_8_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_8_0.refreshRight, arg_8_0)
+	arg_8_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_8_0.refreshRight, arg_8_0)
+	arg_8_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_8_0.refreshRight, arg_8_0)
+	TaskDispatcher.runRepeat(arg_8_0.refreshRemainTime, arg_8_0, TimeUtil.OneMinuteSecond)
 	VersionActivity1_2TaskListModel.instance:initTask()
-	slot0:refreshLeft()
-	slot0:refreshRight()
+	arg_8_0:refreshLeft()
+	arg_8_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshRemainTime()
-	slot0:refreshCurrency()
+function var_0_0.refreshLeft(arg_9_0)
+	arg_9_0:refreshRemainTime()
+	arg_9_0:refreshCurrency()
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot2 = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
+function var_0_0.refreshRemainTime(arg_10_0)
+	local var_10_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
+	local var_10_1 = Mathf.Floor(var_10_0 / TimeUtil.OneDaySecond)
+	local var_10_2 = var_10_0 % TimeUtil.OneDaySecond
+	local var_10_3 = Mathf.Floor(var_10_2 / TimeUtil.OneHourSecond)
 
-	if Mathf.Floor(slot2 / TimeUtil.OneDaySecond) > 0 then
+	if var_10_1 > 0 then
 		if LangSettings.instance:isEn() then
-			slot0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", slot3, luaLang("time_day"), Mathf.Floor(slot2 % TimeUtil.OneDaySecond / TimeUtil.OneHourSecond), luaLang("time_hour")))
+			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", var_10_1, luaLang("time_day"), var_10_3, luaLang("time_hour")))
 		else
-			slot0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", slot3, luaLang("time_day"), slot5, luaLang("time_hour")))
+			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_10_1, luaLang("time_day"), var_10_3, luaLang("time_hour")))
 		end
-	elseif slot5 > 0 then
-		if LangSettings.instance:isEn() then
-			slot0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", slot5, luaLang("time_hour"), Mathf.Floor(slot4 % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond), luaLang("time_minute2")))
-		else
-			slot0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", slot5, luaLang("time_hour"), slot7, luaLang("time_minute2")))
-		end
-	elseif slot7 > 0 then
-		slot0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s", slot7, luaLang("time_minute")))
 	else
-		slot0._txtremaintime.text = string.format(luaLang("remain"), string.format("<1%s", luaLang("time_minute")))
+		local var_10_4 = var_10_2 % TimeUtil.OneHourSecond
+		local var_10_5 = Mathf.Floor(var_10_4 / TimeUtil.OneMinuteSecond)
+
+		if var_10_3 > 0 then
+			if LangSettings.instance:isEn() then
+				arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s %s%s", var_10_3, luaLang("time_hour"), var_10_5, luaLang("time_minute2")))
+			else
+				arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_10_3, luaLang("time_hour"), var_10_5, luaLang("time_minute2")))
+			end
+		elseif var_10_5 > 0 then
+			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("%s%s", var_10_5, luaLang("time_minute")))
+		else
+			arg_10_0._txtremaintime.text = string.format(luaLang("remain"), string.format("<1%s", luaLang("time_minute")))
+		end
 	end
 end
 
-function slot0.refreshCurrency(slot0)
-	slot0._txtcurrencynum.text = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.LvHuEMen) and GameUtil.numberDisplay(slot1.quantity) or 0
+function var_0_0.refreshCurrency(arg_11_0)
+	local var_11_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.LvHuEMen)
+
+	arg_11_0._txtcurrencynum.text = var_11_0 and GameUtil.numberDisplay(var_11_0.quantity) or 0
 end
 
-function slot0.refreshRight(slot0)
+function var_0_0.refreshRight(arg_12_0)
 	VersionActivity1_2TaskListModel.instance:sortTaskMoList()
 	VersionActivity1_2TaskListModel.instance:refreshList()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0.refreshRemainTime, arg_13_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0.storeClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0._simagebg:UnLoadImage()
+	arg_14_0.storeClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

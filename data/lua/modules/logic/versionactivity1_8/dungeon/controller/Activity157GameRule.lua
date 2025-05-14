@@ -1,57 +1,59 @@
-module("modules.logic.versionactivity1_8.dungeon.controller.Activity157GameRule", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.controller.Activity157GameRule", package.seeall)
 
-slot0 = class("Activity157GameRule")
-slot1 = ArmPuzzlePipeEnum.dir.left
-slot2 = ArmPuzzlePipeEnum.dir.right
-slot3 = ArmPuzzlePipeEnum.dir.down
-slot4 = ArmPuzzlePipeEnum.dir.up
-slot5 = 0
+local var_0_0 = class("Activity157GameRule")
+local var_0_1 = ArmPuzzlePipeEnum.dir.left
+local var_0_2 = ArmPuzzlePipeEnum.dir.right
+local var_0_3 = ArmPuzzlePipeEnum.dir.down
+local var_0_4 = ArmPuzzlePipeEnum.dir.up
+local var_0_5 = 0
 
-function slot0.ctor(slot0)
-	slot0._ruleChange = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._ruleChange = {
 		[0] = 0,
-		[28.0] = 46,
-		[248.0] = 468,
-		[24.0] = 48,
-		[46.0] = 28,
-		[48.0] = 68,
-		[246.0] = 248,
-		[268.0] = 246,
-		[468.0] = 268,
-		[26.0] = 24,
-		[68.0] = 26,
-		[2468.0] = 2468
+		[28] = 46,
+		[248] = 468,
+		[24] = 48,
+		[46] = 28,
+		[48] = 68,
+		[246] = 248,
+		[268] = 246,
+		[468] = 268,
+		[26] = 24,
+		[68] = 26,
+		[2468] = 2468
 	}
-	slot0._ruleConnect = {}
+	arg_1_0._ruleConnect = {}
 
-	for slot4, slot5 in pairs(slot0._ruleChange) do
-		slot6 = {}
-		slot7 = slot4
+	for iter_1_0, iter_1_1 in pairs(arg_1_0._ruleChange) do
+		local var_1_0 = {}
+		local var_1_1 = iter_1_0
 
-		while slot7 > 0 do
-			slot7 = math.floor(slot7 / 10)
-			slot6[slot7 % 10] = true
+		while var_1_1 > 0 do
+			local var_1_2 = var_1_1 % 10
+
+			var_1_1 = math.floor(var_1_1 / 10)
+			var_1_0[var_1_2] = true
 		end
 
-		slot0._ruleConnect[slot4] = slot6
+		arg_1_0._ruleConnect[iter_1_0] = var_1_0
 	end
 
-	slot0._ruleConnect[uv0] = {
-		[uv1] = false,
-		[uv2] = false,
-		[uv3] = false,
-		[uv4] = false
+	arg_1_0._ruleConnect[var_0_5] = {
+		[var_0_2] = false,
+		[var_0_1] = false,
+		[var_0_3] = false,
+		[var_0_4] = false
 	}
 end
 
-function slot0.setGameSize(slot0, slot1, slot2)
-	slot0._gameWidth = slot1
-	slot0._gameHeight = slot2
+function var_0_0.setGameSize(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._gameWidth = arg_2_1
+	arg_2_0._gameHeight = arg_2_2
 end
 
-function slot0.isGameClear(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if not slot0:getIsEntryClear(slot5) then
+function var_0_0.isGameClear(arg_3_0, arg_3_1)
+	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
+		if not arg_3_0:getIsEntryClear(iter_3_0) then
 			return false
 		end
 	end
@@ -59,121 +61,125 @@ function slot0.isGameClear(slot0, slot1)
 	return true
 end
 
-function slot0.getIsEntryClear(slot0, slot1)
-	if slot1.typeId == ArmPuzzlePipeEnum.type.first or slot1.typeId == ArmPuzzlePipeEnum.type.last then
-		return slot1.entryCount >= 1
+function var_0_0.getIsEntryClear(arg_4_0, arg_4_1)
+	if arg_4_1.typeId == ArmPuzzlePipeEnum.type.first or arg_4_1.typeId == ArmPuzzlePipeEnum.type.last then
+		return arg_4_1.entryCount >= 1
 	end
 
-	return ArmPuzzlePipeEnum.pipeEntryClearCount <= slot1.entryCount and ArmPuzzlePipeEnum.pipeEntryClearDecimal <= slot1:getConnectValue()
+	return arg_4_1.entryCount >= ArmPuzzlePipeEnum.pipeEntryClearCount and arg_4_1:getConnectValue() >= ArmPuzzlePipeEnum.pipeEntryClearDecimal
 end
 
-function slot0.getReachTable(slot0)
-	slot1 = {
-		[slot10] = slot0:_getSearchPipeResult(slot10, slot3)
-	}
-	slot2 = {
-		[slot10] = slot12
-	}
-	slot3 = {}
-	slot4 = {}
-	slot5 = Activity157RepairGameModel.instance:getEntryList()
+function var_0_0.getReachTable(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = {}
+	local var_5_2 = {}
+	local var_5_3 = {}
+	local var_5_4 = Activity157RepairGameModel.instance:getEntryList()
 
-	table.sort(slot5, uv0._sortOrderList)
+	table.sort(var_5_4, var_0_0._sortOrderList)
 
-	for slot9, slot10 in ipairs(slot5) do
-		table.insert(slot3, slot10)
+	for iter_5_0, iter_5_1 in ipairs(var_5_4) do
+		table.insert(var_5_2, iter_5_1)
 
-		slot10.entryCount = #slot12
+		local var_5_5, var_5_6 = arg_5_0:_getSearchPipeResult(iter_5_1, var_5_2)
 
-		if slot10.pathType == ArmPuzzlePipeEnum.PathType.Order then
-			table.insert(slot4, slot10)
+		var_5_1[iter_5_1] = var_5_6
+		var_5_0[iter_5_1] = var_5_5
+		iter_5_1.entryCount = #var_5_6
+
+		if iter_5_1.pathType == ArmPuzzlePipeEnum.PathType.Order then
+			table.insert(var_5_3, iter_5_1)
 		end
 	end
 
-	if #slot4 > 0 then
-		slot0:_mergeReachDir(slot1)
-		table.sort(slot4, uv0._sortOrderList)
+	if #var_5_3 > 0 then
+		arg_5_0:_mergeReachDir(var_5_0)
+		table.sort(var_5_3, var_0_0._sortOrderList)
 
-		slot6 = false
+		local var_5_7 = false
 
-		for slot10, slot11 in ipairs(slot4) do
-			if slot11.typeId == ArmPuzzlePipeEnum.type.first then
-				slot6 = slot11.entryCount > 0
+		for iter_5_2, iter_5_3 in ipairs(var_5_3) do
+			if iter_5_3.typeId == ArmPuzzlePipeEnum.type.first then
+				var_5_7 = iter_5_3.entryCount > 0
 			else
-				if not slot6 then
-					slot11:cleanEntrySet()
+				if not var_5_7 then
+					iter_5_3:cleanEntrySet()
 
-					slot11.entryCount = 0
-					slot2[slot11] = {}
-					slot1[slot11] = {}
+					iter_5_3.entryCount = 0
+					var_5_1[iter_5_3] = {}
+					var_5_0[iter_5_3] = {}
 				end
 
-				if slot6 and not slot0:getIsEntryClear(slot11) then
-					slot6 = false
+				if var_5_7 and not arg_5_0:getIsEntryClear(iter_5_3) then
+					var_5_7 = false
 				end
 			end
 		end
 
-		slot0:_cleaConnMark()
+		arg_5_0:_cleaConnMark()
 	end
 
-	return slot1, slot2
+	return var_5_0, var_5_1
 end
 
-function slot0._cleaConnMark(slot0)
-	for slot4 = 1, slot0._gameWidth do
-		for slot8 = 1, slot0._gameHeight do
-			slot9 = Activity157RepairGameModel.instance:getData(slot4, slot8)
+function var_0_0._cleaConnMark(arg_6_0)
+	for iter_6_0 = 1, arg_6_0._gameWidth do
+		for iter_6_1 = 1, arg_6_0._gameHeight do
+			local var_6_0 = Activity157RepairGameModel.instance:getData(iter_6_0, iter_6_1)
 
-			slot9:cleanEntrySet()
-
-			slot9.entryCount = slot9.entryCount
+			var_6_0.entryCount = var_6_0.entryCount, var_6_0:cleanEntrySet()
 		end
 	end
 end
 
-function slot0._sortOrderList(slot0, slot1)
-	if slot0.pathIndex ~= slot1.pathIndex then
-		return slot0.pathIndex < slot1.pathIndex
+function var_0_0._sortOrderList(arg_7_0, arg_7_1)
+	if arg_7_0.pathIndex ~= arg_7_1.pathIndex then
+		return arg_7_0.pathIndex < arg_7_1.pathIndex
 	end
 
-	if slot0.numIndex ~= slot1.numIndex then
-		return slot0.numIndex < slot1.numIndex
+	if arg_7_0.numIndex ~= arg_7_1.numIndex then
+		return arg_7_0.numIndex < arg_7_1.numIndex
 	end
 end
 
-function slot0._getSearchPipeResult(slot0, slot1, slot2)
-	slot3 = {}
-	slot4 = {}
+function var_0_0._getSearchPipeResult(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = {}
+	local var_8_1 = {}
 
-	while #slot2 > 0 do
-		slot0:_addToOpenSet(table.remove(slot2), slot4, slot2, slot3)
+	while #arg_8_2 > 0 do
+		local var_8_2 = table.remove(arg_8_2)
+
+		arg_8_0:_addToOpenSet(var_8_2, var_8_1, arg_8_2, var_8_0)
 	end
 
-	for slot8 = #slot3, 1, -1 do
-		if not slot0:_checkEntryConnect(slot1, slot3[slot8]) or slot1 == slot9 then
-			slot4[slot9] = nil
+	for iter_8_0 = #var_8_0, 1, -1 do
+		local var_8_3 = var_8_0[iter_8_0]
 
-			table.remove(slot3, slot8)
+		if not arg_8_0:_checkEntryConnect(arg_8_1, var_8_3) or arg_8_1 == var_8_3 then
+			var_8_1[var_8_3] = nil
+
+			table.remove(var_8_0, iter_8_0)
 		end
 	end
 
-	if #slot3 < 1 then
-		slot4 = {}
+	if #var_8_0 < 1 then
+		var_8_1 = {}
 	end
 
-	return slot4, slot3
+	return var_8_1, var_8_0
 end
 
-function slot0._checkEntryConnect(slot0, slot1, slot2)
-	if slot2.pathIndex ~= slot1.pathIndex or slot2.pathType ~= slot1.pathType then
+function var_0_0._checkEntryConnect(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_2.pathIndex ~= arg_9_1.pathIndex or arg_9_2.pathType ~= arg_9_1.pathType then
 		return false
 	end
 
-	if slot2.pathType == ArmPuzzlePipeEnum.PathType.Order then
-		slot3 = Activity157RepairGameModel.instance
+	if arg_9_2.pathType == ArmPuzzlePipeEnum.PathType.Order then
+		local var_9_0 = Activity157RepairGameModel.instance
+		local var_9_1 = var_9_0:getIndexByMO(arg_9_2)
+		local var_9_2 = var_9_0:getIndexByMO(arg_9_1)
 
-		if math.abs(slot3:getIndexByMO(slot1) - slot3:getIndexByMO(slot2)) ~= 1 then
+		if math.abs(var_9_2 - var_9_1) ~= 1 then
 			return false
 		end
 	end
@@ -181,150 +187,180 @@ function slot0._checkEntryConnect(slot0, slot1, slot2)
 	return true
 end
 
-function slot0._addToOpenSet(slot0, slot1, slot2, slot3, slot4)
-	for slot8, slot9 in pairs(slot1.connectSet) do
-		slot10, slot11, slot12 = uv0.getIndexByDir(slot1.x, slot1.y, slot8)
+function var_0_0._addToOpenSet(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	for iter_10_0, iter_10_1 in pairs(arg_10_1.connectSet) do
+		local var_10_0, var_10_1, var_10_2 = var_0_0.getIndexByDir(arg_10_1.x, arg_10_1.y, iter_10_0)
 
-		if slot10 > 0 and slot10 <= slot0._gameWidth and slot11 > 0 and slot11 <= slot0._gameHeight and not slot2[Activity157RepairGameModel.instance:getData(slot10, slot11)] then
-			slot2[slot13] = true
+		if var_10_0 > 0 and var_10_0 <= arg_10_0._gameWidth and var_10_1 > 0 and var_10_1 <= arg_10_0._gameHeight then
+			local var_10_3 = Activity157RepairGameModel.instance:getData(var_10_0, var_10_1)
 
-			if slot13:isEntry() then
-				table.insert(slot4, slot13)
-			else
-				table.insert(slot3, slot13)
+			if not arg_10_2[var_10_3] then
+				arg_10_2[var_10_3] = true
+
+				if var_10_3:isEntry() then
+					table.insert(arg_10_4, var_10_3)
+				else
+					table.insert(arg_10_3, var_10_3)
+				end
 			end
 		end
 	end
 
-	slot2[slot1] = true
+	arg_10_2[arg_10_1] = true
 end
 
-function slot0._mergeReachDir(slot0, slot1)
-	slot2 = {}
+function var_0_0._mergeReachDir(arg_11_0, arg_11_1)
+	local var_11_0 = {}
+	local var_11_1 = {}
 
-	for slot7, slot8 in pairs(slot1) do
-		table.insert(slot2, slot8)
-		table.insert({}, slot7)
+	for iter_11_0, iter_11_1 in pairs(arg_11_1) do
+		table.insert(var_11_0, iter_11_1)
+		table.insert(var_11_1, iter_11_0)
 	end
 
-	for slot8 = 1, #slot2 do
-		slot9 = {}
+	local var_11_2 = #var_11_0
 
-		for slot13 = slot8 + 1, slot4 do
-			if slot0:_checkEntryConnect(slot3[slot8], slot3[slot13]) then
-				for slot21, slot22 in pairs(slot2[slot8]) do
-					if slot2[slot13][slot21] then
-						slot9[slot21] = slot14.pathIndex
+	for iter_11_2 = 1, var_11_2 do
+		local var_11_3 = {}
+
+		for iter_11_3 = iter_11_2 + 1, var_11_2 do
+			local var_11_4 = var_11_1[iter_11_2]
+			local var_11_5 = var_11_1[iter_11_3]
+
+			if arg_11_0:_checkEntryConnect(var_11_4, var_11_5) then
+				local var_11_6 = var_11_0[iter_11_2]
+				local var_11_7 = var_11_0[iter_11_3]
+
+				for iter_11_4, iter_11_5 in pairs(var_11_6) do
+					if var_11_7[iter_11_4] then
+						var_11_3[iter_11_4] = var_11_4.pathIndex
 					end
 				end
 
-				slot0:_markReachDir(slot9)
+				arg_11_0:_markReachDir(var_11_3)
 			end
 		end
 	end
 end
 
-function slot0._markReachDir(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		for slot10, slot11 in pairs(slot5.connectSet) do
-			slot12, slot13, slot14 = uv0.getIndexByDir(slot5.x, slot5.y, slot10)
+function var_0_0._markReachDir(arg_12_0, arg_12_1)
+	for iter_12_0, iter_12_1 in pairs(arg_12_1) do
+		for iter_12_2, iter_12_3 in pairs(iter_12_0.connectSet) do
+			local var_12_0, var_12_1, var_12_2 = var_0_0.getIndexByDir(iter_12_0.x, iter_12_0.y, iter_12_2)
 
-			if slot12 > 0 and slot12 <= slot0._gameWidth and slot13 > 0 and slot13 <= slot0._gameHeight and slot1[Activity157RepairGameModel.instance:getData(slot12, slot13)] then
-				slot5.entryConnect[slot10] = true
-				slot15.entryConnect[slot14] = true
-				slot5.connectPathIndex = slot6
-				slot15.connectPathIndex = slot6
+			if var_12_0 > 0 and var_12_0 <= arg_12_0._gameWidth and var_12_1 > 0 and var_12_1 <= arg_12_0._gameHeight then
+				local var_12_3 = Activity157RepairGameModel.instance:getData(var_12_0, var_12_1)
+
+				if arg_12_1[var_12_3] then
+					iter_12_0.entryConnect[iter_12_2] = true
+					var_12_3.entryConnect[var_12_2] = true
+					iter_12_0.connectPathIndex = iter_12_1
+					var_12_3.connectPathIndex = iter_12_1
+				end
 			end
 		end
 	end
 end
 
-function slot0._unmarkBranch(slot0)
-	for slot4 = 1, slot0._gameWidth do
-		for slot8 = 1, slot0._gameHeight do
-			slot0:_unmarkSearchNode(Activity157RepairGameModel.instance:getData(slot4, slot8))
+function var_0_0._unmarkBranch(arg_13_0)
+	for iter_13_0 = 1, arg_13_0._gameWidth do
+		for iter_13_1 = 1, arg_13_0._gameHeight do
+			local var_13_0 = Activity157RepairGameModel.instance:getData(iter_13_0, iter_13_1)
+
+			arg_13_0:_unmarkSearchNode(var_13_0)
 		end
 	end
 end
 
-function slot0._unmarkSearchNode(slot0, slot1)
-	slot2 = slot1
+function var_0_0._unmarkSearchNode(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1
 
-	while slot2 ~= nil do
-		if tabletool.len(slot2.entryConnect) == 1 and not slot2:isEntry() then
-			slot3 = nil
+	while var_14_0 ~= nil do
+		if tabletool.len(var_14_0.entryConnect) == 1 and not var_14_0:isEntry() then
+			local var_14_1
 
-			for slot7, slot8 in pairs(slot2.entryConnect) do
-				slot3 = slot7
+			for iter_14_0, iter_14_1 in pairs(var_14_0.entryConnect) do
+				var_14_1 = iter_14_0
 			end
 
-			slot4, slot5, slot6 = uv0.getIndexByDir(slot2.x, slot2.y, slot3)
-			slot7 = Activity157RepairGameModel.instance:getData(slot4, slot5)
-			slot2.entryConnect[slot3] = nil
-			slot7.entryConnect[slot6] = nil
-			slot2 = slot7
+			local var_14_2, var_14_3, var_14_4 = var_0_0.getIndexByDir(var_14_0.x, var_14_0.y, var_14_1)
+			local var_14_5 = Activity157RepairGameModel.instance:getData(var_14_2, var_14_3)
+
+			var_14_0.entryConnect[var_14_1] = nil
+			var_14_5.entryConnect[var_14_4] = nil
+			var_14_0 = var_14_5
 		else
-			slot2 = nil
+			var_14_0 = nil
 		end
 	end
 end
 
-function slot0.setSingleConnection(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot1 > 0 and slot1 <= slot0._gameWidth and slot2 > 0 and slot2 <= slot0._gameHeight then
-		slot10 = slot6.connectSet[slot3] == true
+function var_0_0.setSingleConnection(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+	if arg_15_1 > 0 and arg_15_1 <= arg_15_0._gameWidth and arg_15_2 > 0 and arg_15_2 <= arg_15_0._gameHeight then
+		local var_15_0 = Activity157RepairGameModel.instance:getData(arg_15_1, arg_15_2)
+		local var_15_1 = arg_15_0._ruleConnect[var_15_0.value]
+		local var_15_2 = arg_15_0._ruleConnect[arg_15_5.value]
+		local var_15_3 = var_15_1[arg_15_3] and var_15_2[arg_15_4]
+		local var_15_4
 
-		if slot0._ruleConnect[Activity157RepairGameModel.instance:getData(slot1, slot2).value][slot3] and slot0._ruleConnect[slot5.value][slot4] then
-			slot6.connectSet[slot3] = true
-			slot5.connectSet[slot4] = true
+		var_15_4 = var_15_0.connectSet[arg_15_3] == true
+
+		if var_15_3 then
+			var_15_0.connectSet[arg_15_3] = true
+			arg_15_5.connectSet[arg_15_4] = true
 		else
-			slot6.connectSet[slot3] = nil
-			slot5.connectSet[slot4] = nil
+			var_15_0.connectSet[arg_15_3] = nil
+			arg_15_5.connectSet[arg_15_4] = nil
 		end
 	end
 end
 
-function slot0.changeDirection(slot0, slot1, slot2)
-	if slot0._ruleChange[Activity157RepairGameModel.instance:getData(slot1, slot2).value] then
-		slot3.value = slot4
+function var_0_0.changeDirection(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = Activity157RepairGameModel.instance:getData(arg_16_1, arg_16_2)
+	local var_16_1 = arg_16_0._ruleChange[var_16_0.value]
+
+	if var_16_1 then
+		var_16_0.value = var_16_1
 	end
 
-	return slot3
+	return var_16_0
 end
 
-function slot0.getRandomSkipSet(slot0)
-	slot1 = {
-		[slot7] = true
-	}
+function var_0_0.getRandomSkipSet(arg_17_0)
+	local var_17_0 = {}
+	local var_17_1 = Activity157RepairGameModel.instance:getEntryList()
 
-	for slot6, slot7 in ipairs(Activity157RepairGameModel.instance:getEntryList()) do
-		slot8 = slot7.x
-		slot9 = slot7.y
+	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
+		var_17_0[iter_17_1] = true
 
-		slot0:_insertToSet(slot8 - 1, slot9, slot1)
-		slot0:_insertToSet(slot8 + 1, slot9, slot1)
-		slot0:_insertToSet(slot8, slot9 - 1, slot1)
-		slot0:_insertToSet(slot8, slot9 + 1, slot1)
+		local var_17_2 = iter_17_1.x
+		local var_17_3 = iter_17_1.y
+
+		arg_17_0:_insertToSet(var_17_2 - 1, var_17_3, var_17_0)
+		arg_17_0:_insertToSet(var_17_2 + 1, var_17_3, var_17_0)
+		arg_17_0:_insertToSet(var_17_2, var_17_3 - 1, var_17_0)
+		arg_17_0:_insertToSet(var_17_2, var_17_3 + 1, var_17_0)
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0._insertToSet(slot0, slot1, slot2, slot3)
-	if slot1 > 0 and slot1 <= slot0._gameWidth and slot2 > 0 and slot2 <= slot0._gameHeight then
-		slot3[Activity157RepairGameModel.instance:getData(slot1, slot2)] = true
-	end
-end
-
-function slot0.getIndexByDir(slot0, slot1, slot2)
-	if slot2 == uv0 then
-		return slot0 - 1, slot1, uv1
-	elseif slot2 == uv1 then
-		return slot0 + 1, slot1, uv0
-	elseif slot2 == uv2 then
-		return slot0, slot1 + 1, uv3
-	elseif slot2 == uv3 then
-		return slot0, slot1 - 1, uv2
+function var_0_0._insertToSet(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if arg_18_1 > 0 and arg_18_1 <= arg_18_0._gameWidth and arg_18_2 > 0 and arg_18_2 <= arg_18_0._gameHeight then
+		arg_18_3[Activity157RepairGameModel.instance:getData(arg_18_1, arg_18_2)] = true
 	end
 end
 
-return slot0
+function var_0_0.getIndexByDir(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_2 == var_0_1 then
+		return arg_19_0 - 1, arg_19_1, var_0_2
+	elseif arg_19_2 == var_0_2 then
+		return arg_19_0 + 1, arg_19_1, var_0_1
+	elseif arg_19_2 == var_0_4 then
+		return arg_19_0, arg_19_1 + 1, var_0_3
+	elseif arg_19_2 == var_0_3 then
+		return arg_19_0, arg_19_1 - 1, var_0_4
+	end
+end
+
+return var_0_0

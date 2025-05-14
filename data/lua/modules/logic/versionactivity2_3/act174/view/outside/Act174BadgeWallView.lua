@@ -1,63 +1,76 @@
-module("modules.logic.versionactivity2_3.act174.view.outside.Act174BadgeWallView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.outside.Act174BadgeWallView", package.seeall)
 
-slot0 = class("Act174BadgeWallView", BaseView)
+local var_0_0 = class("Act174BadgeWallView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:freshBadgeItem()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:freshBadgeItem()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.badgeIconList) do
-		slot5:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.badgeIconList) do
+		iter_9_1:UnLoadImage()
 	end
 end
 
-function slot0.freshBadgeItem(slot0)
-	slot0.badgeIconList = {}
+function var_0_0.freshBadgeItem(arg_10_0)
+	local var_10_0 = Activity174Model.instance:getActInfo():getBadgeMoList()
 
-	for slot6 = 1, 8 do
-		slot7 = gohelper.findChild(slot0.viewGO, "badgeitem" .. slot6)
+	arg_10_0.badgeIconList = {}
 
-		if Activity174Model.instance:getActInfo():getBadgeMoList()[slot6] then
-			slot9 = gohelper.findChildSingleImage(slot7, "badgeIcon/root/image_icon")
-			gohelper.findChildText(slot7, "badgeIcon/root/txt_num").text = slot8.count
-			gohelper.findChildText(slot7, "txt_name").text = slot8.config.name
-			gohelper.findChildText(slot7, "scroll_desc/Viewport/content/txt_desc").text = slot8.config.desc
+	for iter_10_0 = 1, 8 do
+		local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "badgeitem" .. iter_10_0)
+		local var_10_2 = var_10_0[iter_10_0]
 
-			slot9:LoadImage(ResUrl.getAct174BadgeIcon(slot8.config.icon, slot8:getState()))
+		if var_10_2 then
+			local var_10_3 = gohelper.findChildSingleImage(var_10_1, "badgeIcon/root/image_icon")
+			local var_10_4 = gohelper.findChildText(var_10_1, "badgeIcon/root/txt_num")
+			local var_10_5 = gohelper.findChildText(var_10_1, "txt_name")
+			local var_10_6 = gohelper.findChildText(var_10_1, "scroll_desc/Viewport/content/txt_desc")
 
-			slot0.badgeIconList[slot6] = slot9
+			var_10_4.text = var_10_2.count
+			var_10_5.text = var_10_2.config.name
+			var_10_6.text = var_10_2.config.desc
+
+			local var_10_7 = var_10_2:getState()
+			local var_10_8 = ResUrl.getAct174BadgeIcon(var_10_2.config.icon, var_10_7)
+
+			var_10_3:LoadImage(var_10_8)
+
+			arg_10_0.badgeIconList[iter_10_0] = var_10_3
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,35 +1,41 @@
-module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardListModel", package.seeall)
 
-slot0 = class("Activity124RewardListModel", ListScrollModel)
+local var_0_0 = class("Activity124RewardListModel", ListScrollModel)
 
-function slot0.init(slot0, slot1)
-	slot2 = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0 = {}
+	local var_1_1 = Activity124Config.instance:getEpisodeList(arg_1_1)
 
-	for slot7, slot8 in ipairs(Activity124Config.instance:getEpisodeList(slot1)) do
-		slot9 = Activity124RewardMO.New()
+	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+		local var_1_2 = Activity124RewardMO.New()
 
-		slot9:init(slot8)
-		table.insert(slot2, slot9)
+		var_1_2:init(iter_1_1)
+		table.insert(var_1_0, var_1_2)
 	end
 
-	table.sort(slot2, uv0.sortMO)
-	slot0:setList(slot2)
+	table.sort(var_1_0, var_0_0.sortMO)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.sortMO(slot0, slot1)
-	if slot0:isHasReard() ~= slot1:isHasReard() then
-		return slot2
+function var_0_0.sortMO(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:isHasReard()
+
+	if var_2_0 ~= arg_2_1:isHasReard() then
+		return var_2_0
 	end
 
-	if slot0:isReceived() ~= slot1:isReceived() then
-		return slot5
+	local var_2_1 = arg_2_0:isReceived()
+	local var_2_2 = arg_2_1:isReceived()
+
+	if var_2_1 ~= var_2_2 then
+		return var_2_2
 	end
 
-	if slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+	if arg_2_0.id ~= arg_2_1.id then
+		return arg_2_0.id < arg_2_1.id
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

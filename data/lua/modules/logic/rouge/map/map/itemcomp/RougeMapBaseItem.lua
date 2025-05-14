@@ -1,62 +1,67 @@
-module("modules.logic.rouge.map.map.itemcomp.RougeMapBaseItem", package.seeall)
+﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapBaseItem", package.seeall)
 
-slot0 = class("RougeMapBaseItem", UserDataDispose)
+local var_0_0 = class("RougeMapBaseItem", UserDataDispose)
 
-function slot0.init(slot0)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0)
+	arg_1_0:__onInit()
 
-	slot0.id = nil
-	slot0.scenePos = nil
+	arg_1_0.id = nil
+	arg_1_0.scenePos = nil
 end
 
-function slot0.setId(slot0, slot1)
-	slot0.id = slot1
+function var_0_0.setId(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1
 end
 
-function slot0.getScenePos(slot0)
-	return slot0.scenePos
+function var_0_0.getScenePos(arg_3_0)
+	return arg_3_0.scenePos
 end
 
-function slot0.getMapPos(slot0)
+function var_0_0.getMapPos(arg_4_0)
 	return 0, 0, 0
 end
 
-function slot0.getActorPos(slot0)
+function var_0_0.getActorPos(arg_5_0)
 	return 0, 0, 0
 end
 
-function slot0.getUiPos(slot0, slot1)
-	return recthelper.worldPosToAnchorPos2(slot0:getScenePos(), slot1)
+function var_0_0.getUiPos(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getScenePos()
+
+	return recthelper.worldPosToAnchorPos2(var_6_0, arg_6_1)
 end
 
-function slot0.getClickArea(slot0)
+function var_0_0.getClickArea(arg_7_0)
 	return Vector4(100, 100, 0, 0)
 end
 
-function slot0.checkInClickArea(slot0, slot1, slot2, slot3)
-	if not slot0:isActive() then
+function var_0_0.checkInClickArea(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_0:isActive() then
 		return
 	end
 
-	slot4, slot5 = slot0:getUiPos(slot3)
-	slot6 = slot0:getClickArea()
-	slot8 = slot6.y / 2
-	slot5 = slot5 + slot6.w
+	local var_8_0, var_8_1 = arg_8_0:getUiPos(arg_8_3)
+	local var_8_2 = arg_8_0:getClickArea()
+	local var_8_3 = var_8_2.x / 2
+	local var_8_4 = var_8_2.y / 2
+	local var_8_5 = var_8_0 + var_8_2.z
+	local var_8_6 = var_8_1 + var_8_2.w
 
-	if slot1 >= slot4 + slot6.z - slot6.x / 2 and slot1 <= slot4 + slot7 and slot2 >= slot5 - slot8 and slot2 <= slot5 + slot8 then
+	if arg_8_1 >= var_8_5 - var_8_3 and arg_8_1 <= var_8_5 + var_8_3 and arg_8_2 >= var_8_6 - var_8_4 and arg_8_2 <= var_8_6 + var_8_4 then
 		return true
 	end
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_9_0)
+	return
 end
 
-function slot0.isActive(slot0)
+function var_0_0.isActive(arg_10_0)
 	return true
 end
 
-function slot0.destroy(slot0)
-	slot0:__onDispose()
+function var_0_0.destroy(arg_11_0)
+	arg_11_0:__onDispose()
 end
 
-return slot0
+return var_0_0

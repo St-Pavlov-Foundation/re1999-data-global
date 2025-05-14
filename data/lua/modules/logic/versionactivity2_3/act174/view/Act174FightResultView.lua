@@ -1,166 +1,206 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174FightResultView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174FightResultView", package.seeall)
 
-slot0 = class("Act174FightResultView", BaseView)
+local var_0_0 = class("Act174FightResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnEnemyBuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "enemy/txt_enemy/#btn_EnemyBuff")
-	slot0._btnPlayerBuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "player/txt_player/#btn_PlayerBuff")
-	slot0._goresultitem = gohelper.findChild(slot0.viewGO, "Group/#go_resultitem")
-	slot0._txtRound = gohelper.findChildText(slot0.viewGO, "go_top/tips/#txt_Round")
-	slot0._imageHpPercent = gohelper.findChildImage(slot0.viewGO, "go_top/hp/bg/#image_HpPercent")
-	slot0._gowin = gohelper.findChild(slot0.viewGO, "go_top/result/#go_win")
-	slot0._godraw = gohelper.findChild(slot0.viewGO, "go_top/result/#go_draw")
-	slot0._golose = gohelper.findChild(slot0.viewGO, "go_top/result/#go_lose")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnEnemyBuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "enemy/txt_enemy/#btn_EnemyBuff")
+	arg_1_0._btnPlayerBuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "player/txt_player/#btn_PlayerBuff")
+	arg_1_0._goresultitem = gohelper.findChild(arg_1_0.viewGO, "Group/#go_resultitem")
+	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "go_top/tips/#txt_Round")
+	arg_1_0._imageHpPercent = gohelper.findChildImage(arg_1_0.viewGO, "go_top/hp/bg/#image_HpPercent")
+	arg_1_0._gowin = gohelper.findChild(arg_1_0.viewGO, "go_top/result/#go_win")
+	arg_1_0._godraw = gohelper.findChild(arg_1_0.viewGO, "go_top/result/#go_draw")
+	arg_1_0._golose = gohelper.findChild(arg_1_0.viewGO, "go_top/result/#go_lose")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnEnemyBuff:AddClickListener(slot0._btnEnemyBuffOnClick, slot0)
-	slot0._btnPlayerBuff:AddClickListener(slot0._btnPlayerBuffOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnEnemyBuff:AddClickListener(arg_2_0._btnEnemyBuffOnClick, arg_2_0)
+	arg_2_0._btnPlayerBuff:AddClickListener(arg_2_0._btnPlayerBuffOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnEnemyBuff:RemoveClickListener()
-	slot0._btnPlayerBuff:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnEnemyBuff:RemoveClickListener()
+	arg_3_0._btnPlayerBuff:RemoveClickListener()
 end
 
-function slot0.onClickModalMask(slot0)
-	Activity174Rpc.instance:sendEnterNextAct174FightRequest(slot0.actId, slot0.enterReply, slot0)
+function var_0_0.onClickModalMask(arg_4_0)
+	Activity174Rpc.instance:sendEnterNextAct174FightRequest(arg_4_0.actId, arg_4_0.enterReply, arg_4_0)
 end
 
-function slot0.enterReply(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		if slot3.gameInfo.state == Activity174Enum.GameState.None then
+function var_0_0.enterReply(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_2 == 0 then
+		if arg_5_3.gameInfo.state == Activity174Enum.GameState.None then
 			Activity174Controller.instance:dispatchEvent(Activity174Event.EndGame)
 		else
 			Activity174Controller.instance:dispatchEvent(Activity174Event.EnterNextAct174FightReply)
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.DouQuQuSettlementFinish)
-		slot0:closeThis()
+		arg_5_0:closeThis()
 	end
 end
 
-function slot0._btnEnemyBuffOnClick(slot0)
+function var_0_0._btnEnemyBuffOnClick(arg_6_0)
 	Activity174Controller.instance:openBuffTipView(true, Vector2.New(-450, 80))
 end
 
-function slot0._btnPlayerBuffOnClick(slot0)
+function var_0_0._btnPlayerBuffOnClick(arg_7_0)
 	Activity174Controller.instance:openBuffTipView(false, Vector2.New(450, 80))
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.SeasonChange, slot0.closeThis, slot0)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:addEventCb(Activity174Controller.instance, Activity174Event.SeasonChange, arg_10_0.closeThis, arg_10_0)
 
-	slot0.actId = Activity174Model.instance:getCurActId()
-	slot0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
-	slot0.fightInfo = slot0.gameInfo:getFightInfo()
-	slot0.fightResInfos = slot0.fightInfo.fightResInfo
-	slot0.entityId2HeroIdDicList = cjson.decode(slot0.fightInfo.param)
-	slot0.playerTeamInfos = slot0.gameInfo:getTeamMoList()
-	slot0.enemyTeamInfos = slot0.fightInfo.matchInfo.teamInfo
-	slot1 = slot0.gameInfo.gameCount
-	slot0._txtRound.text = slot1 .. "/" .. Activity174Config.instance:getMaxRound(slot0.actId, slot1)
+	arg_10_0.actId = Activity174Model.instance:getCurActId()
+	arg_10_0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	arg_10_0.fightInfo = arg_10_0.gameInfo:getFightInfo()
+	arg_10_0.fightResInfos = arg_10_0.fightInfo.fightResInfo
+	arg_10_0.entityId2HeroIdDicList = cjson.decode(arg_10_0.fightInfo.param)
+	arg_10_0.playerTeamInfos = arg_10_0.gameInfo:getTeamMoList()
+	arg_10_0.enemyTeamInfos = arg_10_0.fightInfo.matchInfo.teamInfo
 
-	gohelper.setActive(slot0._btnPlayerBuff, #slot0.gameInfo:getWarehouseInfo().enhanceId ~= 0)
-	gohelper.setActive(slot0._btnEnemyBuff, #slot0.fightInfo.matchInfo.enhanceId ~= 0)
+	local var_10_0 = arg_10_0.gameInfo.gameCount
+	local var_10_1 = Activity174Config.instance:getMaxRound(arg_10_0.actId, var_10_0)
 
-	if slot0.fightInfo.state == Activity174Enum.FightResult.Lose then
-		if slot0.fightInfo.betHp then
-			slot0.gameInfo.hp = slot0.gameInfo.hp - 2
+	arg_10_0._txtRound.text = var_10_0 .. "/" .. var_10_1
+
+	local var_10_2 = arg_10_0.gameInfo:getWarehouseInfo()
+	local var_10_3 = arg_10_0.fightInfo.matchInfo.enhanceId
+
+	gohelper.setActive(arg_10_0._btnPlayerBuff, #var_10_2.enhanceId ~= 0)
+	gohelper.setActive(arg_10_0._btnEnemyBuff, #var_10_3 ~= 0)
+
+	if arg_10_0.fightInfo.state == Activity174Enum.FightResult.Lose then
+		if arg_10_0.fightInfo.betHp then
+			arg_10_0.gameInfo.hp = arg_10_0.gameInfo.hp - 2
 		else
-			slot0.gameInfo.hp = slot0.gameInfo.hp - 1
+			arg_10_0.gameInfo.hp = arg_10_0.gameInfo.hp - 1
 		end
 	end
 
-	slot0._imageHpPercent.fillAmount = slot0.gameInfo.hp / tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
-	slot7 = slot0.fightInfo.state == Activity174Enum.FightResult.Win
+	local var_10_4 = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
 
-	gohelper.setActive(slot0._gowin, slot7)
-	gohelper.setActive(slot0._golose, slot6 == Activity174Enum.FightResult.Lose)
-	gohelper.setActive(slot0._godraw, slot6 == Activity174Enum.FightResult.Draw)
+	arg_10_0._imageHpPercent.fillAmount = arg_10_0.gameInfo.hp / var_10_4
 
-	slot10 = nil
+	local var_10_5 = arg_10_0.fightInfo.state
+	local var_10_6 = var_10_5 == Activity174Enum.FightResult.Win
+	local var_10_7 = var_10_5 == Activity174Enum.FightResult.Lose
+	local var_10_8 = var_10_5 == Activity174Enum.FightResult.Draw
 
-	if slot7 then
-		slot10 = AudioEnum.Act174.play_ui_shenghuo_dqq_win
-	elseif slot8 then
-		slot10 = AudioEnum.Act174.play_ui_shenghuo_dqq_lose
-	elseif slot9 then
-		slot10 = AudioEnum.Act174.play_ui_shenghuo_dqq_draw
+	gohelper.setActive(arg_10_0._gowin, var_10_6)
+	gohelper.setActive(arg_10_0._golose, var_10_7)
+	gohelper.setActive(arg_10_0._godraw, var_10_8)
+
+	local var_10_9
+
+	if var_10_6 then
+		var_10_9 = AudioEnum.Act174.play_ui_shenghuo_dqq_win
+	elseif var_10_7 then
+		var_10_9 = AudioEnum.Act174.play_ui_shenghuo_dqq_lose
+	elseif var_10_8 then
+		var_10_9 = AudioEnum.Act174.play_ui_shenghuo_dqq_draw
 	end
 
-	if slot10 then
-		AudioMgr.instance:trigger(slot10)
+	if var_10_9 then
+		AudioMgr.instance:trigger(var_10_9)
 	end
 
-	slot0.teamCnt = Activity174Config.instance:getTurnCo(slot0.actId, slot0.gameInfo.gameCount).groupNum
-	slot0.resultItemList = {}
+	arg_10_0.teamCnt = Activity174Config.instance:getTurnCo(arg_10_0.actId, arg_10_0.gameInfo.gameCount).groupNum
+	arg_10_0.resultItemList = {}
 
-	for slot15 = 1, slot0.teamCnt do
-		slot0:initResultItem(gohelper.cloneInPlace(slot0._goresultitem, "resultItem" .. slot15), slot15)
+	for iter_10_0 = 1, arg_10_0.teamCnt do
+		local var_10_10 = gohelper.cloneInPlace(arg_10_0._goresultitem, "resultItem" .. iter_10_0)
+
+		arg_10_0:initResultItem(var_10_10, iter_10_0)
 	end
 
-	gohelper.setActive(slot0._goresultitem, false)
-	slot0:playEndAnim()
+	gohelper.setActive(arg_10_0._goresultitem, false)
+	arg_10_0:playEndAnim()
 	AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shenghuo_dqq_fight_result)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0.initResultItem(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot4 = gohelper.findChild(slot1, "EnemyGroup")
-	slot3.goEnemyWin = gohelper.findChild(slot1, "simage_enemywin")
-	slot3.goEnemyMask = gohelper.findChild(slot4, "go_mask")
-	slot10 = slot2
+function var_0_0.initResultItem(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getUserDataTb_()
+	local var_12_1 = gohelper.findChild(arg_12_1, "EnemyGroup")
 
-	UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot4, "numbg/image_Num"), "act174_ready_num_0" .. slot10)
+	var_12_0.goEnemyWin = gohelper.findChild(arg_12_1, "simage_enemywin")
+	var_12_0.goEnemyMask = gohelper.findChild(var_12_1, "go_mask")
 
-	for slot10 = 4, 1, -1 do
-		slot12 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(Activity174Enum.PrefabPath.BattleHero, slot4), Act174BattleHeroItem)
+	local var_12_2 = gohelper.findChildImage(var_12_1, "numbg/image_Num")
 
-		slot12:setIndex(slot10)
-		slot12:setData(Activity174Helper.MatchKeyInArray(Activity174Helper.MatchKeyInArray(slot0.enemyTeamInfos, slot2, "index").battleHeroInfo, slot10, "index"), slot2, true)
+	UISpriteSetMgr.instance:setAct174Sprite(var_12_2, "act174_ready_num_0" .. arg_12_2)
+
+	local var_12_3 = Activity174Helper.MatchKeyInArray(arg_12_0.enemyTeamInfos, arg_12_2, "index")
+
+	for iter_12_0 = 4, 1, -1 do
+		local var_12_4 = arg_12_0:getResInst(Activity174Enum.PrefabPath.BattleHero, var_12_1)
+		local var_12_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_4, Act174BattleHeroItem)
+		local var_12_6 = Activity174Helper.MatchKeyInArray(var_12_3.battleHeroInfo, iter_12_0, "index")
+
+		var_12_5:setIndex(iter_12_0)
+		var_12_5:setData(var_12_6, arg_12_2, true)
 	end
 
-	gohelper.setAsLastSibling(slot3.goEnemyMask)
+	gohelper.setAsLastSibling(var_12_0.goEnemyMask)
 
-	slot7 = gohelper.findChild(slot1, "PlayerGroup")
-	slot3.goPlayerWin = gohelper.findChild(slot1, "simage_playerwin")
-	slot3.goPlayerMask = gohelper.findChild(slot7, "go_mask")
-	slot13 = slot2
+	local var_12_7 = gohelper.findChild(arg_12_1, "PlayerGroup")
 
-	UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot7, "numbg/image_Num"), "act174_ready_num_0" .. slot13)
+	var_12_0.goPlayerWin = gohelper.findChild(arg_12_1, "simage_playerwin")
+	var_12_0.goPlayerMask = gohelper.findChild(var_12_7, "go_mask")
 
-	for slot13 = 1, 4 do
-		slot15 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(Activity174Enum.PrefabPath.BattleHero, slot7), Act174BattleHeroItem)
+	local var_12_8 = gohelper.findChildImage(var_12_7, "numbg/image_Num")
 
-		slot15:setIndex(slot13)
-		slot15:setData(Activity174Helper.MatchKeyInArray(Activity174Helper.MatchKeyInArray(slot0.playerTeamInfos, slot2, "index").battleHeroInfo, slot13, "index"), slot2, false)
+	UISpriteSetMgr.instance:setAct174Sprite(var_12_8, "act174_ready_num_0" .. arg_12_2)
+
+	local var_12_9 = Activity174Helper.MatchKeyInArray(arg_12_0.playerTeamInfos, arg_12_2, "index")
+
+	for iter_12_1 = 1, 4 do
+		local var_12_10 = arg_12_0:getResInst(Activity174Enum.PrefabPath.BattleHero, var_12_7)
+		local var_12_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_10, Act174BattleHeroItem)
+		local var_12_12 = Activity174Helper.MatchKeyInArray(var_12_9.battleHeroInfo, iter_12_1, "index")
+
+		var_12_11:setIndex(iter_12_1)
+		var_12_11:setData(var_12_12, arg_12_2, false)
 	end
 
-	gohelper.setAsLastSibling(slot3.goPlayerMask)
-	slot0:addClickCb(gohelper.findChildButtonWithAudio(slot1, "btn_replay"), slot0.onClickReplay, slot0, slot2)
-	slot0:addClickCb(gohelper.findChildButtonWithAudio(slot1, "btn_detail"), slot0.onClickDetail, slot0, slot2)
+	gohelper.setAsLastSibling(var_12_0.goPlayerMask)
 
-	slot0.resultItemList[#slot0.resultItemList + 1] = slot3
+	local var_12_13 = gohelper.findChildButtonWithAudio(arg_12_1, "btn_replay")
+	local var_12_14 = gohelper.findChildButtonWithAudio(arg_12_1, "btn_detail")
+
+	arg_12_0:addClickCb(var_12_13, arg_12_0.onClickReplay, arg_12_0, arg_12_2)
+	arg_12_0:addClickCb(var_12_14, arg_12_0.onClickDetail, arg_12_0, arg_12_2)
+
+	arg_12_0.resultItemList[#arg_12_0.resultItemList + 1] = var_12_0
 end
 
-function slot0.onClickDetail(slot0, slot1)
-	if Activity174Helper.MatchKeyInArray(slot0.fightResInfos, slot1, "index") then
-		if slot0.entityId2HeroIdDicList[tostring(slot1)] then
-			FightStatModel.instance:setAtkStatInfo(Activity174Model.instance:geAttackStatisticsByServerData(slot2.attackStatistics, slot4))
+function var_0_0.onClickDetail(arg_13_0, arg_13_1)
+	local var_13_0 = Activity174Helper.MatchKeyInArray(arg_13_0.fightResInfos, arg_13_1, "index")
+
+	if var_13_0 then
+		local var_13_1 = var_13_0.attackStatistics
+		local var_13_2 = arg_13_0.entityId2HeroIdDicList[tostring(arg_13_1)]
+
+		if var_13_2 then
+			local var_13_3 = Activity174Model.instance:geAttackStatisticsByServerData(var_13_1, var_13_2)
+
+			FightStatModel.instance:setAtkStatInfo(var_13_3)
 			ViewMgr.instance:openView(ViewName.FightStatView)
 		end
 	else
@@ -168,41 +208,42 @@ function slot0.onClickDetail(slot0, slot1)
 	end
 end
 
-function slot0.onClickReplay(slot0, slot1)
-	if Activity174Helper.MatchKeyInArray(slot0.fightResInfos, slot1, "index") then
+function var_0_0.onClickReplay(arg_14_0, arg_14_1)
+	if Activity174Helper.MatchKeyInArray(arg_14_0.fightResInfos, arg_14_1, "index") then
 		Activity174Controller.instance:playFight({
-			slot1
+			arg_14_1
 		}, true)
-		slot0:closeThis()
+		arg_14_0:closeThis()
 	end
 end
 
-function slot0.playEndAnim(slot0)
+function var_0_0.playEndAnim(arg_15_0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("Act174FightResultView_endAnim")
 
-	slot0.curTeam = 1
+	arg_15_0.curTeam = 1
 
-	TaskDispatcher.runRepeat(slot0.lightBg, slot0, 0.5)
+	TaskDispatcher.runRepeat(arg_15_0.lightBg, arg_15_0, 0.5)
 end
 
-function slot0.lightBg(slot0)
-	slot1 = slot0.resultItemList[slot0.curTeam]
+function var_0_0.lightBg(arg_16_0)
+	local var_16_0 = arg_16_0.resultItemList[arg_16_0.curTeam]
+	local var_16_1 = Activity174Helper.MatchKeyInArray(arg_16_0.fightResInfos, arg_16_0.curTeam, "index")
 
-	if Activity174Helper.MatchKeyInArray(slot0.fightResInfos, slot0.curTeam, "index") then
-		gohelper.setActive(slot1.goPlayerWin, slot2.win)
-		gohelper.setActive(slot1.goEnemyWin, not slot2.win)
-		gohelper.setActive(slot1.goPlayerMask, not slot2.win)
-		gohelper.setActive(slot1.goEnemyMask, slot2.win)
+	if var_16_1 then
+		gohelper.setActive(var_16_0.goPlayerWin, var_16_1.win)
+		gohelper.setActive(var_16_0.goEnemyWin, not var_16_1.win)
+		gohelper.setActive(var_16_0.goPlayerMask, not var_16_1.win)
+		gohelper.setActive(var_16_0.goEnemyMask, var_16_1.win)
 	end
 
-	slot0.curTeam = slot0.curTeam + 1
+	arg_16_0.curTeam = arg_16_0.curTeam + 1
 
-	if slot0.teamCnt < slot0.curTeam then
-		TaskDispatcher.cancelTask(slot0.lightBg, slot0)
+	if arg_16_0.curTeam > arg_16_0.teamCnt then
+		TaskDispatcher.cancelTask(arg_16_0.lightBg, arg_16_0)
 		UIBlockMgr.instance:endBlock("Act174FightResultView_endAnim")
 		UIBlockMgrExtend.setNeedCircleMv(true)
 	end
 end
 
-return slot0
+return var_0_0

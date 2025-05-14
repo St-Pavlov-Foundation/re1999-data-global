@@ -1,20 +1,22 @@
-module("modules.logic.prototest.core.ProtoTestPreSender", package.seeall)
+﻿module("modules.logic.prototest.core.ProtoTestPreSender", package.seeall)
 
-slot0 = class("ProtoTestPreSender", BasePreSender)
+local var_0_0 = class("ProtoTestPreSender", BasePreSender)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.preSendSysMsg(slot0, slot1, slot2, slot3)
+function var_0_0.preSendSysMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	return
 end
 
-function slot0.preSendProto(slot0, slot1, slot2, slot3)
-	if not ProtoEnum.IgnoreCmdList[slot1] then
-		slot4 = ProtoTestCaseMO.New()
+function var_0_0.preSendProto(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if not ProtoEnum.IgnoreCmdList[arg_3_1] then
+		local var_3_0 = ProtoTestCaseMO.New()
 
-		slot4:initFromProto(slot1, slot2)
-		ProtoTestCaseModel.instance:addAtLast(slot4)
+		var_3_0:initFromProto(arg_3_1, arg_3_2)
+		ProtoTestCaseModel.instance:addAtLast(var_3_0)
 	end
 end
 
-return slot0
+return var_0_0

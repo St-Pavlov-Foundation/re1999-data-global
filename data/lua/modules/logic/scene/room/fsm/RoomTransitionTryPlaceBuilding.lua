@@ -1,183 +1,213 @@
-module("modules.logic.scene.room.fsm.RoomTransitionTryPlaceBuilding", package.seeall)
+﻿module("modules.logic.scene.room.fsm.RoomTransitionTryPlaceBuilding", package.seeall)
 
-slot0 = class("RoomTransitionTryPlaceBuilding", SimpleFSMBaseTransition)
+local var_0_0 = class("RoomTransitionTryPlaceBuilding", SimpleFSMBaseTransition)
 
-function slot0.start(slot0)
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.start(arg_1_0)
+	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function slot0.check(slot0)
+function var_0_0.check(arg_2_0)
 	return true
 end
 
-function slot0.onStart(slot0, slot1)
-	slot0._param = slot1
-	slot2 = slot0._param.buildingUid
-	slot3 = RoomMapBuildingModel.instance:getTempBuildingMO()
-	slot4 = slot0._param.hexPoint or slot3 and slot3.hexPoint
-	slot5 = slot0._param.press
-	slot6 = slot0._param.focus
-	slot7 = true
+function var_0_0.onStart(arg_3_0, arg_3_1)
+	arg_3_0._param = arg_3_1
 
-	if slot3 and slot2 and slot3.uid ~= slot2 then
-		slot0:_replaceBuilding()
-	elseif slot3 then
-		slot0:_changeBuilding()
+	local var_3_0 = arg_3_0._param.buildingUid
+	local var_3_1 = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local var_3_2 = arg_3_0._param.hexPoint or var_3_1 and var_3_1.hexPoint
+	local var_3_3 = arg_3_0._param.press
+	local var_3_4 = arg_3_0._param.focus
+	local var_3_5 = true
 
-		slot7 = false
+	if var_3_1 and var_3_0 and var_3_1.uid ~= var_3_0 then
+		arg_3_0:_replaceBuilding()
+	elseif var_3_1 then
+		arg_3_0:_changeBuilding()
+
+		var_3_5 = false
 	else
-		slot0:_placeBuilding()
+		arg_3_0:_placeBuilding()
 	end
 
-	if slot7 then
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.ClientPlaceBuilding, slot2)
-		slot0:_startDelayRefresh()
+	if var_3_5 then
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.ClientPlaceBuilding, var_3_0)
+		arg_3_0:_startDelayRefresh()
 	end
 
-	slot0:onDone()
+	arg_3_0:onDone()
 	RoomBuildingController.instance:refreshBuildingOccupy()
 
-	if slot4 and (not slot5 or slot6) then
-		slot8 = HexMath.hexToPosition(slot4, RoomBlockEnum.BlockSize)
+	if var_3_2 and (not var_3_3 or var_3_4) then
+		local var_3_6 = HexMath.hexToPosition(var_3_2, RoomBlockEnum.BlockSize)
 
-		if slot6 or slot0:_isOutScreen(slot8) then
-			slot0._scene.camera:tweenCamera({
-				focusX = slot8.x,
-				focusY = slot8.y
-			}, nil, slot0.onDone, slot0)
+		if var_3_4 or arg_3_0:_isOutScreen(var_3_6) then
+			local var_3_7 = {
+				focusX = var_3_6.x,
+				focusY = var_3_6.y
+			}
+
+			arg_3_0._scene.camera:tweenCamera(var_3_7, nil, arg_3_0.onDone, arg_3_0)
 		end
 	end
 end
 
-function slot0._startDelayRefresh(slot0)
-	if not slot0._isStartDelayResfresh then
-		slot0._isStartDelayResfresh = true
+function var_0_0._startDelayRefresh(arg_4_0)
+	if not arg_4_0._isStartDelayResfresh then
+		arg_4_0._isStartDelayResfresh = true
 
-		TaskDispatcher.runDelay(slot0._onDelayRefresh, slot0, 0.05)
+		TaskDispatcher.runDelay(arg_4_0._onDelayRefresh, arg_4_0, 0.05)
 	end
 end
 
-function slot0._onDelayRefresh(slot0)
-	slot0._isStartDelayResfresh = false
+function var_0_0._onDelayRefresh(arg_5_0)
+	arg_5_0._isStartDelayResfresh = false
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingCanConfirm)
 end
 
-function slot0._isOutScreen(slot0, slot1)
-	return RoomHelper.isOutCameraFocus(slot1)
+function var_0_0._isOutScreen(arg_6_0, arg_6_1)
+	return RoomHelper.isOutCameraFocus(arg_6_1)
 end
 
-function slot0._replaceBuilding(slot0)
-	slot1 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function var_0_0._replaceBuilding(arg_7_0)
+	local var_7_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	slot0:_addBuildingNearBlock(slot1.buildingId, slot1.hexPoint, slot1.rotate)
+	arg_7_0:_addBuildingNearBlock(var_7_0.buildingId, var_7_0.hexPoint, var_7_0.rotate)
 
-	slot2 = slot0._scene.buildingmgr:getBuildingEntity(slot1.id, SceneTag.RoomBuilding)
+	local var_7_1 = arg_7_0._scene.buildingmgr:getBuildingEntity(var_7_0.id, SceneTag.RoomBuilding)
 
-	if slot1.buildingState == RoomBuildingEnum.BuildingState.Temp then
+	if var_7_0.buildingState == RoomBuildingEnum.BuildingState.Temp then
 		RoomMapBuildingModel.instance:removeTempBuildingMO()
 
-		if slot2 then
-			slot0._scene.buildingmgr:destroyBuilding(slot2)
+		if var_7_1 then
+			arg_7_0._scene.buildingmgr:destroyBuilding(var_7_1)
 		end
-	elseif slot1.buildingState == RoomBuildingEnum.BuildingState.Revert then
-		slot3, slot4, slot5 = RoomMapBuildingModel.instance:removeRevertBuildingMO()
+	elseif var_7_0.buildingState == RoomBuildingEnum.BuildingState.Revert then
+		local var_7_2, var_7_3, var_7_4 = RoomMapBuildingModel.instance:removeRevertBuildingMO()
 
-		slot0:_addBuildingNearBlock(slot3, slot4, slot5)
+		arg_7_0:_addBuildingNearBlock(var_7_2, var_7_3, var_7_4)
 
-		if slot2 then
-			slot0._scene.buildingmgr:moveTo(slot2, slot4)
-			slot2:refreshRotation()
-			slot2:refreshBuilding()
+		if var_7_1 then
+			arg_7_0._scene.buildingmgr:moveTo(var_7_1, var_7_3)
+			var_7_1:refreshRotation()
+			var_7_1:refreshBuilding()
 		end
 
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, slot1.id)
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_7_0.id)
 	end
 
-	slot0:_placeBuilding()
+	arg_7_0:_placeBuilding()
 end
 
-function slot0._changeBuilding(slot0)
-	slot3 = slot0._param.focus
-	slot4 = slot0._param.press
-	slot5 = RoomMapBuildingModel.instance:getTempBuildingMO()
-	slot1 = slot0._param.hexPoint or slot5.hexPoint
+function var_0_0._changeBuilding(arg_8_0)
+	local var_8_0 = arg_8_0._param.hexPoint
+	local var_8_1 = arg_8_0._param.rotate
+	local var_8_2 = arg_8_0._param.focus
+	local var_8_3 = arg_8_0._param.press
+	local var_8_4 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	slot0:_addBuildingNearBlock(slot5.buildingId, slot5.hexPoint, slot5.rotate)
+	var_8_0 = var_8_0 or var_8_4.hexPoint
+	var_8_1 = var_8_1 or var_8_4.rotate
 
-	slot7 = slot5.rotate
+	arg_8_0:_addBuildingNearBlock(var_8_4.buildingId, var_8_4.hexPoint, var_8_4.rotate)
 
-	RoomMapBuildingModel.instance:changeTempBuildingMO(slot1, slot0._param.rotate or slot5.rotate)
-	slot0:_addBuildingNearBlock(slot5.buildingId, slot5.hexPoint, slot5.rotate)
+	local var_8_5 = HexPoint(var_8_4.hexPoint.x, var_8_4.hexPoint.y)
+	local var_8_6 = var_8_4.rotate
 
-	if HexPoint(slot5.hexPoint.x, slot5.hexPoint.y) ~= slot1 or slot4 then
-		if slot0._scene.buildingmgr:getBuildingEntity(slot5.id, SceneTag.RoomBuilding) then
-			slot0._scene.buildingmgr:moveTo(slot8, slot1)
+	RoomMapBuildingModel.instance:changeTempBuildingMO(var_8_0, var_8_1)
+	arg_8_0:_addBuildingNearBlock(var_8_4.buildingId, var_8_4.hexPoint, var_8_4.rotate)
+
+	if var_8_5 ~= var_8_0 or var_8_3 then
+		local var_8_7 = arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_4.id, SceneTag.RoomBuilding)
+
+		if var_8_7 then
+			arg_8_0._scene.buildingmgr:moveTo(var_8_7, var_8_0)
 		end
 
-		if not slot4 then
-			slot0:_playAnimatorOpen(slot8)
+		if not var_8_3 then
+			arg_8_0:_playAnimatorOpen(var_8_7)
 		end
 	end
 
-	if slot7 ~= slot2 and slot0._scene.buildingmgr:getBuildingEntity(slot5.id, SceneTag.RoomBuilding) then
-		slot8:refreshRotation(true)
-		slot8:refreshBuilding()
+	if var_8_6 ~= var_8_1 then
+		local var_8_8 = arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_4.id, SceneTag.RoomBuilding)
+
+		if var_8_8 then
+			var_8_8:refreshRotation(true)
+			var_8_8:refreshBuilding()
+		end
 	end
 
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, slot5.id)
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_8_4.id)
 end
 
-function slot0._placeBuilding(slot0)
-	slot3 = slot0._param.rotate
-	slot4 = slot0._param.press
+function var_0_0._placeBuilding(arg_9_0)
+	local var_9_0 = arg_9_0._param.buildingUid
+	local var_9_1 = arg_9_0._param.hexPoint
+	local var_9_2 = arg_9_0._param.rotate
+	local var_9_3 = arg_9_0._param.press
+	local var_9_4 = RoomMapBuildingModel.instance:revertTempBuildingMO(var_9_0)
 
-	if not RoomMapBuildingModel.instance:revertTempBuildingMO(slot0._param.buildingUid) then
-		RoomMapBuildingModel.instance:addTempBuildingMO(RoomInventoryBuildingModel.instance:getBuildingMOById(slot1), slot0._param.hexPoint)
+	if not var_9_4 then
+		local var_9_5 = RoomInventoryBuildingModel.instance:getBuildingMOById(var_9_0)
+
+		RoomMapBuildingModel.instance:addTempBuildingMO(var_9_5, var_9_1)
 	end
 
-	if RoomMapBuildingModel.instance:getTempBuildingMO() then
-		RoomMapBuildingModel.instance:changeTempBuildingMO(slot2, slot3)
-		slot0:_addBuildingNearBlock(slot6.buildingId, slot6.hexPoint, slot6.rotate)
+	local var_9_6 = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-		if slot0._scene.buildingmgr:getBuildingEntity(slot6.id, SceneTag.RoomBuilding) then
-			slot0._scene.buildingmgr:moveTo(slot7, slot2)
-			slot7:refreshRotation()
-			slot7:refreshBuilding()
+	if var_9_6 then
+		RoomMapBuildingModel.instance:changeTempBuildingMO(var_9_1, var_9_2)
+		arg_9_0:_addBuildingNearBlock(var_9_6.buildingId, var_9_6.hexPoint, var_9_6.rotate)
 
-			if slot5 then
-				slot0:_playAnimatorOpen(slot7)
+		local var_9_7 = arg_9_0._scene.buildingmgr:getBuildingEntity(var_9_6.id, SceneTag.RoomBuilding)
+
+		if var_9_7 then
+			arg_9_0._scene.buildingmgr:moveTo(var_9_7, var_9_1)
+			var_9_7:refreshRotation()
+			var_9_7:refreshBuilding()
+
+			if var_9_4 then
+				arg_9_0:_playAnimatorOpen(var_9_7)
 			end
 		else
-			slot0:_playAnimatorOpen(slot0._scene.buildingmgr:spawnMapBuilding(slot6))
+			local var_9_8 = arg_9_0._scene.buildingmgr:spawnMapBuilding(var_9_6)
+
+			arg_9_0:_playAnimatorOpen(var_9_8)
 		end
 
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, slot6.id)
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_9_6.id)
 	end
 
-	slot0:onDone()
+	arg_9_0:onDone()
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshResourceUIShow)
 end
 
-function slot0._addBuildingNearBlock(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0._addBuildingNearBlock(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if not arg_10_2 then
 		return
 	end
 
-	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(slot1, slot2, slot3)
+	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(arg_10_1, arg_10_2, arg_10_3)
 end
 
-function slot0._playAnimatorOpen(slot0, slot1)
-	if slot1 then
-		slot1:playAnimator("open")
-		slot1:tweenAlphaThreshold(1, slot1:getAlphaThresholdValue() or 0, 0.5)
+function var_0_0._playAnimatorOpen(arg_11_0, arg_11_1)
+	if arg_11_1 then
+		arg_11_1:playAnimator("open")
+
+		local var_11_0 = arg_11_1:getAlphaThresholdValue() or 0
+
+		arg_11_1:tweenAlphaThreshold(1, var_11_0, 0.5)
 	end
 end
 
-function slot0.stop(slot0)
+function var_0_0.stop(arg_12_0)
+	return
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

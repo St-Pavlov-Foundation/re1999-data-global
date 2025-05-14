@@ -1,75 +1,83 @@
-module("modules.logic.room.entity.RoomMapTransportPathEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomMapTransportPathEntity", package.seeall)
 
-slot0 = class("RoomMapTransportPathEntity", RoomBaseEntity)
+local var_0_0 = class("RoomMapTransportPathEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.Untagged
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.StaticContainerGOKey)
-	slot0.goTrs = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.StaticContainerGOKey)
+	arg_3_0.goTrs = arg_3_1.transform
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("effect", RoomEffectComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
 end
 
-function slot0.setLocalPos(slot0, slot1, slot2, slot3)
-	transformhelper.setLocalPos(slot0.goTrs, slot1, slot2, slot3)
+function var_0_0.setLocalPos(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	transformhelper.setLocalPos(arg_6_0.goTrs, arg_6_1, arg_6_2, arg_6_3)
 end
 
-function slot0.getMO(slot0)
+function var_0_0.getMO(arg_7_0)
 	return nil
 end
 
-function slot0._refreshCanPlaceEffect(slot0)
-	for slot11, slot12 in ipairs(RoomMapTransportPathModel.instance:getTempTransportPathMO():getHexPointList()) do
-		slot13 = slot0:getEffectKeyById(slot11)
+function var_0_0._refreshCanPlaceEffect(arg_8_0)
+	local var_8_0 = arg_8_0:_isCanShowPlaceEffect()
+	local var_8_1 = RoomMapBlockModel.instance
+	local var_8_2
+	local var_8_3
+	local var_8_4 = arg_8_0.entity.effect
+	local var_8_5 = RoomMapTransportPathModel.instance:getTempTransportPathMO():getHexPointList()
 
-		if slot0:_isCanShowPlaceEffect() and slot0:_checkByXY(slot12.x, slot12.y, RoomMapBlockModel.instance) then
-			if not slot0.entity.effect:isHasKey(slot13) then
-				if nil == nil then
-					slot3 = {}
+	for iter_8_0, iter_8_1 in ipairs(var_8_5) do
+		local var_8_6 = arg_8_0:getEffectKeyById(iter_8_0)
+
+		if var_8_0 and arg_8_0:_checkByXY(iter_8_1.x, iter_8_1.y, var_8_1) then
+			if not var_8_4:isHasKey(var_8_6) then
+				if var_8_2 == nil then
+					var_8_2 = {}
 				end
 
-				slot14 = HexMath.hexToPosition(slot12, RoomBlockEnum.BlockSize)
-				slot3[slot13] = {
+				local var_8_7 = HexMath.hexToPosition(iter_8_1, RoomBlockEnum.BlockSize)
+
+				var_8_2[var_8_6] = {
 					res = RoomScenePreloader.ResEffectD03,
-					localPos = Vector3(slot14.x, -0.12, slot14.y)
+					localPos = Vector3(var_8_7.x, -0.12, var_8_7.y)
 				}
 			end
-		elseif slot5:getEffectRes(slot13) then
-			if slot4 == nil then
-				slot4 = {}
+		elseif var_8_4:getEffectRes(var_8_6) then
+			if var_8_3 == nil then
+				var_8_3 = {}
 			end
 
-			table.insert(slot4, slot13)
+			table.insert(var_8_3, var_8_6)
 		end
 	end
 
-	if slot3 then
-		slot5:addParams(slot3)
-		slot5:refreshEffect()
+	if var_8_2 then
+		var_8_4:addParams(var_8_2)
+		var_8_4:refreshEffect()
 	end
 
-	if slot4 then
-		slot0:removeParamsAndPlayAnimator(slot4, "close", RoomBlockEnum.PlaceEffectAnimatorCloseTime)
+	if var_8_3 then
+		arg_8_0:removeParamsAndPlayAnimator(var_8_3, "close", RoomBlockEnum.PlaceEffectAnimatorCloseTime)
 	end
 end
 
-return slot0
+return var_0_0

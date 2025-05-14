@@ -1,273 +1,290 @@
-module("modules.logic.explore.model.mo.unit.ExploreBaseUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreBaseUnitMO", package.seeall)
 
-slot0 = pureTable("ExploreBaseUnitMO")
-slot1 = {
+local var_0_0 = pureTable("ExploreBaseUnitMO")
+local var_0_1 = {
 	x = 0,
 	y = 0
 }
 
-function slot0.init(slot0, slot1)
-	slot2 = nil
+function var_0_0.init(arg_1_0, arg_1_1)
+	local var_1_0
 
-	if slot0.nodePos and (slot0.nodePos.x ~= slot1[ExploreUnitMoFieldEnum.nodePos][1] or slot0.nodePos.y ~= slot1[ExploreUnitMoFieldEnum.nodePos][2]) then
-		uv0.x = slot0.nodePos.x
-		uv0.y = slot0.nodePos.y
-		slot2 = uv0
+	if arg_1_0.nodePos and (arg_1_0.nodePos.x ~= arg_1_1[ExploreUnitMoFieldEnum.nodePos][1] or arg_1_0.nodePos.y ~= arg_1_1[ExploreUnitMoFieldEnum.nodePos][2]) then
+		var_0_1.x = arg_1_0.nodePos.x
+		var_0_1.y = arg_1_0.nodePos.y
+		var_1_0 = var_0_1
 	end
 
-	slot0.hasInteract = false
+	arg_1_0.hasInteract = false
 
-	for slot6, slot7 in pairs(ExploreUnitMoFieldEnum) do
-		slot0[slot6] = slot1[slot7] or slot1[slot7] == nil and slot0[slot6]
+	for iter_1_0, iter_1_1 in pairs(ExploreUnitMoFieldEnum) do
+		arg_1_0[iter_1_0] = arg_1_1[iter_1_1] or arg_1_1[iter_1_1] == nil and arg_1_0[iter_1_0]
 	end
 
-	slot0.nodePos.x = slot0.nodePos[1]
-	slot0.nodePos.y = slot0.nodePos[2]
-	slot0.enterTriggerType = false
-	slot0.defaultWalkable = slot0.defaultWalkable ~= false
-	slot0.triggerEffects = slot0.triggerEffects or {}
-	slot0.doneEffects = slot0.doneEffects or {}
-	slot0.unitDir = slot0.unitDir or 0
-	slot0.specialDatas = slot0.specialDatas or {
+	arg_1_0.nodePos.x = arg_1_0.nodePos[1]
+	arg_1_0.nodePos.y = arg_1_0.nodePos[2]
+	arg_1_0.enterTriggerType = false
+	arg_1_0.defaultWalkable = arg_1_0.defaultWalkable ~= false
+	arg_1_0.triggerEffects = arg_1_0.triggerEffects or {}
+	arg_1_0.doneEffects = arg_1_0.doneEffects or {}
+	arg_1_0.unitDir = arg_1_0.unitDir or 0
+	arg_1_0.specialDatas = arg_1_0.specialDatas or {
 		1,
 		1
 	}
-	slot0.offsetSize = slot0.offsetSize or {
+	arg_1_0.offsetSize = arg_1_0.offsetSize or {
 		0,
 		0,
 		0,
 		0
 	}
-	slot0.resRotation = slot0.resRotation or {
+	arg_1_0.resRotation = arg_1_0.resRotation or {
 		0,
 		0,
 		0
 	}
-	slot0.resPosition = slot0.resPosition or {
+	arg_1_0.resPosition = arg_1_0.resPosition or {
 		0,
 		0,
 		0
 	}
-	slot0.customIconType = nil
+	arg_1_0.customIconType = nil
 
-	for slot6, slot7 in pairs(slot0.triggerEffects) do
-		if slot7[1] == ExploreEnum.TriggerEvent.ChangeIcon then
-			slot0.customIconType = slot7[2]
+	for iter_1_2, iter_1_3 in pairs(arg_1_0.triggerEffects) do
+		if iter_1_3[1] == ExploreEnum.TriggerEvent.ChangeIcon then
+			arg_1_0.customIconType = iter_1_3[2]
 		end
 	end
 
-	slot0:initTypeData()
+	arg_1_0:initTypeData()
 
-	slot0.triggerEffectsCount = #slot0.triggerEffects + 1
+	arg_1_0.triggerEffectsCount = #arg_1_0.triggerEffects + 1
 
-	if ExploreModel.instance:hasInteractInfo(slot0.id) == false then
-		slot0:setStatus(tonumber(slot0.interact) or 0)
+	if ExploreModel.instance:hasInteractInfo(arg_1_0.id) == false then
+		arg_1_0:setStatus(tonumber(arg_1_0.interact) or 0)
 	else
-		slot3 = slot0:getInteractInfoMO()
-		slot0.unitDir = slot3.dir
-		slot0.nodePos.x = slot3.posx
-		slot0.nodePos.y = slot3.posy
+		local var_1_1 = arg_1_0:getInteractInfoMO()
+
+		arg_1_0.unitDir = var_1_1.dir
+		arg_1_0.nodePos.x = var_1_1.posx
+		arg_1_0.nodePos.y = var_1_1.posy
 	end
 
-	if slot0._hasInit ~= true then
-		slot0:buildTriggerExData()
+	if arg_1_0._hasInit ~= true then
+		arg_1_0:buildTriggerExData()
 	end
 
-	slot0._hasInit = true
+	arg_1_0._hasInit = true
 
-	if slot2 then
-		slot0:_updateNodeOpenKey(slot2, slot0.nodePos)
+	if var_1_0 then
+		arg_1_0:_updateNodeOpenKey(var_1_0, arg_1_0.nodePos)
 	end
 end
 
-function slot0.initTypeData(slot0)
+function var_0_0.initTypeData(arg_2_0)
+	return
 end
 
-function slot0.updateNO(slot0)
+function var_0_0.updateNO(arg_3_0)
+	return
 end
 
-function slot0.activeStateChange(slot0, slot1)
-	if not slot0._countSource then
+function var_0_0.activeStateChange(arg_4_0, arg_4_1)
+	if not arg_4_0._countSource then
 		return
 	end
 
-	for slot5, slot6 in pairs(slot0._countSource) do
-		if slot1 then
-			ExploreCounterModel.instance:add(slot6, slot0.id)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._countSource) do
+		if arg_4_1 then
+			ExploreCounterModel.instance:add(iter_4_1, arg_4_0.id)
 		else
-			ExploreCounterModel.instance:reduce(slot6, slot0.id)
+			ExploreCounterModel.instance:reduce(iter_4_1, arg_4_0.id)
 		end
 	end
 end
 
-function slot0.buildTriggerExData(slot0)
-	for slot4, slot5 in ipairs(slot0.triggerEffects) do
-		if slot5[1] == ExploreEnum.TriggerEvent.Counter then
-			if not slot0._countSource then
-				slot0._countSource = {}
+function var_0_0.buildTriggerExData(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.triggerEffects) do
+		if iter_5_1[1] == ExploreEnum.TriggerEvent.Counter then
+			if not arg_5_0._countSource then
+				arg_5_0._countSource = {}
 			end
 
-			slot7 = string.splitToNumber(tostring(slot5[2]), "#") or {}
+			local var_5_0 = tostring(iter_5_1[2])
+			local var_5_1 = string.splitToNumber(var_5_0, "#") or {}
 
-			table.insert(slot0._countSource, slot7[1])
-			ExploreCounterModel.instance:addCountSource(slot7[1], slot0.id)
+			table.insert(arg_5_0._countSource, var_5_1[1])
+			ExploreCounterModel.instance:addCountSource(var_5_1[1], arg_5_0.id)
 		end
 	end
 end
 
-function slot0.onEnterScene(slot0)
-	slot0:updatePos(Vector2.New(slot0.nodePos.x, slot0.nodePos.y))
-	ExploreMapModel.instance:addUnitMO(slot0)
+function var_0_0.onEnterScene(arg_6_0)
+	local var_6_0 = Vector2.New(arg_6_0.nodePos.x, arg_6_0.nodePos.y)
+
+	arg_6_0:updatePos(var_6_0)
+	ExploreMapModel.instance:addUnitMO(arg_6_0)
 end
 
-function slot0.onRemoveScene(slot0)
-	if slot0:isWalkable() == false then
-		ExploreMapModel.instance:updateNodeOpenKey(ExploreHelper.getKey(slot0.nodePos), slot0.id, true)
+function var_0_0.onRemoveScene(arg_7_0)
+	if arg_7_0:isWalkable() == false then
+		local var_7_0 = ExploreHelper.getKey(arg_7_0.nodePos)
+
+		ExploreMapModel.instance:updateNodeOpenKey(var_7_0, arg_7_0.id, true)
 	end
 
-	ExploreMapModel.instance:removeUnit(slot0.id)
+	ExploreMapModel.instance:removeUnit(arg_7_0.id)
 end
 
-function slot0.getTriggerPos(slot0)
-	if slot0.triggerDir == ExploreEnum.TriggerDir.Left then
+function var_0_0.getTriggerPos(arg_8_0)
+	if arg_8_0.triggerDir == ExploreEnum.TriggerDir.Left then
 		return {
-			x = slot0.nodePos.x - 1,
-			y = slot0.nodePos.y
+			x = arg_8_0.nodePos.x - 1,
+			y = arg_8_0.nodePos.y
 		}
-	elseif slot0.triggerDir == ExploreEnum.TriggerDir.Right then
+	elseif arg_8_0.triggerDir == ExploreEnum.TriggerDir.Right then
 		return {
-			x = slot0.nodePos.x + 1,
-			y = slot0.nodePos.y
+			x = arg_8_0.nodePos.x + 1,
+			y = arg_8_0.nodePos.y
 		}
-	elseif slot0.triggerDir == ExploreEnum.TriggerDir.Up then
+	elseif arg_8_0.triggerDir == ExploreEnum.TriggerDir.Up then
 		return {
-			x = slot0.nodePos.x,
-			y = slot0.nodePos.y + 1
+			x = arg_8_0.nodePos.x,
+			y = arg_8_0.nodePos.y + 1
 		}
-	elseif slot0.triggerDir == ExploreEnum.TriggerDir.Down then
+	elseif arg_8_0.triggerDir == ExploreEnum.TriggerDir.Down then
 		return {
-			x = slot0.nodePos.x,
-			y = slot0.nodePos.y - 1
+			x = arg_8_0.nodePos.x,
+			y = arg_8_0.nodePos.y - 1
 		}
 	end
 
-	return slot0.nodePos
+	return arg_8_0.nodePos
 end
 
-function slot0.canTrigger(slot0, slot1)
-	if slot0.triggerDir == ExploreEnum.TriggerDir.Left then
-		return slot1.x == slot0.nodePos.x - 1 and slot1.y == slot0.nodePos.y
-	elseif slot0.triggerDir == ExploreEnum.TriggerDir.Right then
-		return slot1.x == slot0.nodePos.x + 1 and slot1.y == slot0.nodePos.y
-	elseif slot0.triggerDir == ExploreEnum.TriggerDir.Up then
-		return slot1.x == slot0.nodePos.x and slot1.y == slot0.nodePos.y + 1
-	elseif slot0.triggerDir == ExploreEnum.TriggerDir.Down then
-		return slot1.x == slot0.nodePos.x and slot1.y == slot0.nodePos.y - 1
+function var_0_0.canTrigger(arg_9_0, arg_9_1)
+	if arg_9_0.triggerDir == ExploreEnum.TriggerDir.Left then
+		return arg_9_1.x == arg_9_0.nodePos.x - 1 and arg_9_1.y == arg_9_0.nodePos.y
+	elseif arg_9_0.triggerDir == ExploreEnum.TriggerDir.Right then
+		return arg_9_1.x == arg_9_0.nodePos.x + 1 and arg_9_1.y == arg_9_0.nodePos.y
+	elseif arg_9_0.triggerDir == ExploreEnum.TriggerDir.Up then
+		return arg_9_1.x == arg_9_0.nodePos.x and arg_9_1.y == arg_9_0.nodePos.y + 1
+	elseif arg_9_0.triggerDir == ExploreEnum.TriggerDir.Down then
+		return arg_9_1.x == arg_9_0.nodePos.x and arg_9_1.y == arg_9_0.nodePos.y - 1
 	end
 
 	return true
 end
 
-function slot0.updatePos(slot0, slot1)
-	slot0.nodeKey = ExploreHelper.getKey(slot1)
+function var_0_0.updatePos(arg_10_0, arg_10_1)
+	arg_10_0.nodeKey = ExploreHelper.getKey(arg_10_1)
 
-	slot0:_updateNodeOpenKey(slot0.nodePos, slot1)
-	slot0:onPosChange(slot0.nodePos, slot1)
+	arg_10_0:_updateNodeOpenKey(arg_10_0.nodePos, arg_10_1)
+	arg_10_0:onPosChange(arg_10_0.nodePos, arg_10_1)
 
-	slot0.nodePos.x = slot1.x
-	slot0.nodePos.y = slot1.y
+	arg_10_0.nodePos.x = arg_10_1.x
+	arg_10_0.nodePos.y = arg_10_1.y
 end
 
-function slot0.removeFromNode(slot0)
-	slot0:_updateNodeOpenKey(slot0.nodePos)
-	slot0:onPosChange(slot0.nodePos)
+function var_0_0.removeFromNode(arg_11_0)
+	arg_11_0:_updateNodeOpenKey(arg_11_0.nodePos)
+	arg_11_0:onPosChange(arg_11_0.nodePos)
 end
 
-function slot0.setNodeOpenKey(slot0, slot1)
-	ExploreMapModel.instance:updateNodeOpenKey(slot0.nodeKey, slot0.id, slot1, true)
+function var_0_0.setNodeOpenKey(arg_12_0, arg_12_1)
+	ExploreMapModel.instance:updateNodeOpenKey(arg_12_0.nodeKey, arg_12_0.id, arg_12_1, true)
 end
 
-function slot0._updateNodeOpenKey(slot0, slot1, slot2)
-	if slot0:isWalkable() == false then
-		if slot1 then
-			for slot6 = slot0.offsetSize[1], slot0.offsetSize[3] do
-				for slot10 = slot0.offsetSize[2], slot0.offsetSize[4] do
-					ExploreMapModel.instance:updateNodeOpenKey(ExploreHelper.getKeyXY(slot1.x + slot6, slot1.y + slot10), slot0.id, true)
+function var_0_0._updateNodeOpenKey(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_0:isWalkable() == false then
+		if arg_13_1 then
+			for iter_13_0 = arg_13_0.offsetSize[1], arg_13_0.offsetSize[3] do
+				for iter_13_1 = arg_13_0.offsetSize[2], arg_13_0.offsetSize[4] do
+					local var_13_0 = ExploreHelper.getKeyXY(arg_13_1.x + iter_13_0, arg_13_1.y + iter_13_1)
+
+					ExploreMapModel.instance:updateNodeOpenKey(var_13_0, arg_13_0.id, true)
 				end
 			end
 		end
 
-		if slot2 then
-			for slot6 = slot0.offsetSize[1], slot0.offsetSize[3] do
-				for slot10 = slot0.offsetSize[2], slot0.offsetSize[4] do
-					ExploreMapModel.instance:updateNodeOpenKey(ExploreHelper.getKeyXY(slot2.x + slot6, slot2.y + slot10), slot0.id, false)
+		if arg_13_2 then
+			for iter_13_2 = arg_13_0.offsetSize[1], arg_13_0.offsetSize[3] do
+				for iter_13_3 = arg_13_0.offsetSize[2], arg_13_0.offsetSize[4] do
+					local var_13_1 = ExploreHelper.getKeyXY(arg_13_2.x + iter_13_2, arg_13_2.y + iter_13_3)
+
+					ExploreMapModel.instance:updateNodeOpenKey(var_13_1, arg_13_0.id, false)
 				end
 			end
 		end
 	end
 end
 
-function slot0.getConfigId(slot0)
-	return slot0.config.configId
+function var_0_0.getConfigId(arg_14_0)
+	return arg_14_0.config.configId
 end
 
-function slot0.isWalkable(slot0)
-	return slot0.defaultWalkable
+function var_0_0.isWalkable(arg_15_0)
+	return arg_15_0.defaultWalkable
 end
 
-function slot0.setStatus(slot0, slot1)
-	slot0:getInteractInfoMO():updateStatus(slot1)
+function var_0_0.setStatus(arg_16_0, arg_16_1)
+	arg_16_0:getInteractInfoMO():updateStatus(arg_16_1)
 end
 
-function slot0.getStatus(slot0)
-	return slot0:getInteractInfoMO().status
+function var_0_0.getStatus(arg_17_0)
+	return arg_17_0:getInteractInfoMO().status
 end
 
-function slot0.isEnter(slot0)
-	return slot0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.IsEnter) == 1
+function var_0_0.isEnter(arg_18_0)
+	return arg_18_0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.IsEnter) == 1
 end
 
-function slot0.setEnter(slot0, slot1)
-	if slot1 then
-		slot0:onEnterScene()
+function var_0_0.setEnter(arg_19_0, arg_19_1)
+	if arg_19_1 then
+		arg_19_0:onEnterScene()
 	else
-		slot0:onRemoveScene()
+		arg_19_0:onRemoveScene()
 	end
 
-	return slot0:getInteractInfoMO():setBitByIndex(ExploreEnum.InteractIndex.IsEnter, slot1 and 1 or 0)
+	return arg_19_0:getInteractInfoMO():setBitByIndex(ExploreEnum.InteractIndex.IsEnter, arg_19_1 and 1 or 0)
 end
 
-function slot0.isInteractEnabled(slot0)
-	return slot0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.InteractEnabled) == 1
+function var_0_0.isInteractEnabled(arg_20_0)
+	return arg_20_0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.InteractEnabled) == 1
 end
 
-function slot0.getInteractInfoMO(slot0)
-	return ExploreModel.instance:getInteractInfo(slot0.id)
+function var_0_0.getInteractInfoMO(arg_21_0)
+	return ExploreModel.instance:getInteractInfo(arg_21_0.id)
 end
 
-function slot0.isInteractDone(slot0)
+function var_0_0.isInteractDone(arg_22_0)
 	return true
 end
 
-function slot0.isInteractActiveState(slot0)
-	return slot0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
+function var_0_0.isInteractActiveState(arg_23_0)
+	return arg_23_0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.ActiveState) == 1
 end
 
-function slot0.isInteractFinishState(slot0)
-	return slot0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.IsFinish) == 1
+function var_0_0.isInteractFinishState(arg_24_0)
+	return arg_24_0:getInteractInfoMO():getBitByIndex(ExploreEnum.InteractIndex.IsFinish) == 1
 end
 
-function slot0.onPosChange(slot0, slot1, slot2)
+function var_0_0.onPosChange(arg_25_0, arg_25_1, arg_25_2)
+	return
 end
 
-slot2 = {}
+local var_0_2 = {}
 
-function slot0.getUnitClass(slot0)
-	if not uv0[ExploreEnum.ItemTypeToName[slot0.type]] then
-		uv0[slot1] = _G[string.format("Explore%sUnit", slot1)] or _G[string.format("Explore%s", slot1)] or ExploreBaseMoveUnit
+function var_0_0.getUnitClass(arg_26_0)
+	local var_26_0 = ExploreEnum.ItemTypeToName[arg_26_0.type]
+
+	if not var_0_2[var_26_0] then
+		local var_26_1 = _G[string.format("Explore%sUnit", var_26_0)] or _G[string.format("Explore%s", var_26_0)] or ExploreBaseMoveUnit
+
+		var_0_2[var_26_0] = var_26_1
 	end
 
-	return uv0[slot1]
+	return var_0_2[var_26_0]
 end
 
-return slot0
+return var_0_0

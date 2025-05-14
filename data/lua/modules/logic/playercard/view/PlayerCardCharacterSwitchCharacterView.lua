@@ -1,108 +1,113 @@
-module("modules.logic.playercard.view.PlayerCardCharacterSwitchCharacterView", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardCharacterSwitchCharacterView", package.seeall)
 
-slot0 = class("PlayerCardCharacterSwitchCharacterView", BaseView)
+local var_0_0 = class("PlayerCardCharacterSwitchCharacterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goLeft = gohelper.findChild(slot0.viewGO, "#go_characterswitchview/characterswitchview/rightLeft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goLeft = gohelper.findChild(arg_1_0.viewGO, "#go_characterswitchview/characterswitchview/rightLeft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, slot0._onRefreshSwitchView, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, arg_2_0._onRefreshSwitchView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onSwitchAnimDone(slot0)
+function var_0_0.onSwitchAnimDone(arg_4_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._simageskin.gameObject, true)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._simageskin.gameObject, true)
 end
 
-function slot0._onRefreshSwitchView(slot0, slot1)
-	slot0:_updateHero(slot1.heroId, slot1.skinId, slot1.isL2d)
+function var_0_0._onRefreshSwitchView(arg_6_0, arg_6_1)
+	arg_6_0:_updateHero(arg_6_1.heroId, arg_6_1.skinId, arg_6_1.isL2d)
 end
 
-function slot0.setHeroId(slot0, slot1)
-	if slot1 then
-		if not slot0._heroIdSet then
-			slot0._heroIdSet = {}
+function var_0_0.setHeroId(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		if not arg_7_0._heroIdSet then
+			arg_7_0._heroIdSet = {}
 		end
 
-		slot0._heroIdSet[slot1] = true
+		arg_7_0._heroIdSet[arg_7_1] = true
 
-		if tabletool.len(slot0._heroIdSet) >= 5 then
-			slot0._heroIdSet = {}
+		if tabletool.len(arg_7_0._heroIdSet) >= 5 then
+			arg_7_0._heroIdSet = {}
 
-			GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0.5, slot0)
+			GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 0.5, arg_7_0)
 		end
 	end
 end
 
-function slot0._updateHero(slot0, slot1, slot2, slot3)
-	slot4 = HeroModel.instance:getByHeroId(slot1)
+function var_0_0._updateHero(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = HeroModel.instance:getByHeroId(arg_8_1)
+	local var_8_1 = SkinConfig.instance:getSkinCo(arg_8_2 or var_8_0 and var_8_0.skin)
 
-	if not SkinConfig.instance:getSkinCo(slot2 or slot4 and slot4.skin) then
-		gohelper.setActive(slot0.goLeft, false)
+	if not var_8_1 then
+		gohelper.setActive(arg_8_0.goLeft, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.goLeft, true)
+	gohelper.setActive(arg_8_0.goLeft, true)
 
-	slot0.skinCo = slot5
-	slot0.heroCo = HeroConfig.instance:getHeroCO(slot0.skinCo.characterId)
+	arg_8_0.skinCo = var_8_1
+	arg_8_0.heroCo = HeroConfig.instance:getHeroCO(arg_8_0.skinCo.characterId)
 
-	slot0:refreshSkin(slot3)
+	arg_8_0:refreshSkin(arg_8_3)
 end
 
-function slot0.refreshSkin(slot0, slot1)
-	slot0:resetRes()
-	slot0:refreshBigVertical(slot1)
+function var_0_0.refreshSkin(arg_9_0, arg_9_1)
+	arg_9_0:resetRes()
+	arg_9_0:refreshBigVertical(arg_9_1)
 end
 
-function slot0.resetRes(slot0)
-	slot0._simageskin:UnLoadImage()
+function var_0_0.resetRes(arg_10_0)
+	arg_10_0._simageskin:UnLoadImage()
 end
 
-function slot0.refreshBigVertical(slot0, slot1)
-	slot0._simageskin:LoadImage(ResUrl.getHeadIconImg(slot0.skinCo.id), slot0._loadedImage, slot0)
+function var_0_0.refreshBigVertical(arg_11_0, arg_11_1)
+	arg_11_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_11_0.skinCo.id), arg_11_0._loadedImage, arg_11_0)
 end
 
-function slot0._loadedImage(slot0)
-	ZProj.UGUIHelper.SetImageSize(slot0._simageskin.gameObject)
+function var_0_0._loadedImage(arg_12_0)
+	ZProj.UGUIHelper.SetImageSize(arg_12_0._simageskin.gameObject)
 
-	if string.nilorempty(slot0.skinCo.playercardViewImgOffset) then
-		slot1 = slot0.skinCo.characterViewImgOffset
+	local var_12_0 = arg_12_0.skinCo.playercardViewImgOffset
+
+	if string.nilorempty(var_12_0) then
+		var_12_0 = arg_12_0.skinCo.characterViewImgOffset
 	end
 
-	if not string.nilorempty(slot1) then
-		slot2 = string.splitToNumber(slot1, "#")
+	if not string.nilorempty(var_12_0) then
+		local var_12_1 = string.splitToNumber(var_12_0, "#")
 
-		recthelper.setAnchor(slot0._simageskin.transform, tonumber(slot2[1]), tonumber(slot2[2]))
-		transformhelper.setLocalScale(slot0._simageskin.transform, tonumber(slot2[3]), tonumber(slot2[3]), tonumber(slot2[3]))
+		recthelper.setAnchor(arg_12_0._simageskin.transform, tonumber(var_12_1[1]), tonumber(var_12_1[2]))
+		transformhelper.setLocalScale(arg_12_0._simageskin.transform, tonumber(var_12_1[3]), tonumber(var_12_1[3]), tonumber(var_12_1[3]))
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0._simageskin:UnLoadImage()
+function var_0_0.onClose(arg_13_0)
+	arg_13_0._simageskin:UnLoadImage()
 end
 
-function slot0.setShaderKeyWord(slot0, slot1)
-	if slot1 then
+function var_0_0.setShaderKeyWord(arg_14_0, arg_14_1)
+	if arg_14_1 then
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 	else
 		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageskin:UnLoadImage()
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._simageskin:UnLoadImage()
 end
 
-return slot0
+return var_0_0

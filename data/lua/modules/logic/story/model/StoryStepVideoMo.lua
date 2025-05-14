@@ -1,10 +1,10 @@
-module("modules.logic.story.model.StoryStepVideoMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepVideoMo", package.seeall)
 
-slot0 = pureTable("StoryStepVideoMo")
+local var_0_0 = pureTable("StoryStepVideoMo")
 
-function slot0.ctor(slot0)
-	slot0.video = ""
-	slot0.delayTimes = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.video = ""
+	arg_1_0.delayTimes = {
 		0,
 		0,
 		0,
@@ -14,17 +14,17 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.orderType = 0
-	slot0.loop = false
-	slot0.layer = 6
+	arg_1_0.orderType = 0
+	arg_1_0.loop = false
+	arg_1_0.layer = 6
 end
 
-function slot0.init(slot0, slot1)
-	slot0.video = slot1[1]
-	slot0.delayTimes = slot1[2]
-	slot0.orderType = slot1[3]
-	slot0.loop = slot1[4]
-	slot0.layer = slot1[5]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.video = arg_2_1[1]
+	arg_2_0.delayTimes = arg_2_1[2]
+	arg_2_0.orderType = arg_2_1[3]
+	arg_2_0.loop = arg_2_1[4]
+	arg_2_0.layer = arg_2_1[5]
 end
 
-return slot0
+return var_0_0

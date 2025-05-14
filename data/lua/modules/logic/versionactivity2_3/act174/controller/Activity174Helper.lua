@@ -1,73 +1,87 @@
-module("modules.logic.versionactivity2_3.act174.controller.Activity174Helper", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.controller.Activity174Helper", package.seeall)
 
-slot0 = class("Activity174Helper")
+local var_0_0 = class("Activity174Helper")
 
-function slot0.MatchKeyInArray(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0) do
-		if slot7[slot2] == slot1 then
-			return slot7
+function var_0_0.MatchKeyInArray(arg_1_0, arg_1_1, arg_1_2)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
+		if iter_1_1[arg_1_2] == arg_1_1 then
+			return iter_1_1
 		end
 	end
 end
 
-function slot0.CalculateRowColumn(slot0)
-	return math.ceil(slot0 / 4), slot0 % 4 ~= 0 and slot2 or 4
+function var_0_0.CalculateRowColumn(arg_2_0)
+	local var_2_0 = math.ceil(arg_2_0 / 4)
+	local var_2_1 = arg_2_0 % 4
+
+	var_2_1 = var_2_1 ~= 0 and var_2_1 or 4
+
+	return var_2_0, var_2_1
 end
 
-function slot0.sortActivity174RoleCo(slot0, slot1)
-	if slot0.type == Activity174Enum.CharacterType.Hero ~= (slot1.type == Activity174Enum.CharacterType.Hero) then
-		return slot2
+function var_0_0.sortActivity174RoleCo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0.type == Activity174Enum.CharacterType.Hero
+
+	if var_3_0 ~= (arg_3_1.type == Activity174Enum.CharacterType.Hero) then
+		return var_3_0
 	end
 
-	if slot0.rare ~= slot1.rare then
-		return slot1.rare < slot0.rare
+	if arg_3_0.rare ~= arg_3_1.rare then
+		return arg_3_0.rare > arg_3_1.rare
 	end
 
-	return slot0.heroId < slot1.heroId
+	return arg_3_0.heroId < arg_3_1.heroId
 end
 
-function slot0.getEmptyFightEntityMO(slot0, slot1)
-	if not slot1 then
+function var_0_0.getEmptyFightEntityMO(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	slot2 = FightEntityMO.New()
-	slot2.id = tostring(slot0)
-	slot2.uid = slot2.id
-	slot2.modelId = slot1.heroId or 0
-	slot2.entityType = 1
-	slot2.exPoint = 0
-	slot2.side = FightEnum.EntitySide.MySide
-	slot2.currentHp = 0
-	slot2.attrMO = FightHelper._buildAttr(slot1)
-	slot2.skillIds = uv0.buildRoleSkills(slot1)
-	slot2.shieldValue = 0
-	slot2.level = 1
-	slot2.skin = slot1.skinId
+	local var_4_0 = FightEntityMO.New()
 
-	return slot2
+	var_4_0.id = tostring(arg_4_0)
+	var_4_0.uid = var_4_0.id
+	var_4_0.modelId = arg_4_1.heroId or 0
+	var_4_0.entityType = 1
+	var_4_0.exPoint = 0
+	var_4_0.side = FightEnum.EntitySide.MySide
+	var_4_0.currentHp = 0
+	var_4_0.attrMO = FightHelper._buildAttr(arg_4_1)
+	var_4_0.skillIds = var_0_0.buildRoleSkills(arg_4_1)
+	var_4_0.shieldValue = 0
+	var_4_0.level = 1
+	var_4_0.skin = arg_4_1.skinId
+
+	return var_4_0
 end
 
-function slot0.buildRoleSkills(slot0)
-	slot1 = {}
+function var_0_0.buildRoleSkills(arg_5_0)
+	local var_5_0 = {}
 
-	if slot0 then
-		for slot6, slot7 in ipairs(string.splitToNumber(slot0.passiveSkill, "|")) do
-			slot1[#slot1 + 1] = slot7
+	if arg_5_0 then
+		local var_5_1 = string.splitToNumber(arg_5_0.passiveSkill, "|")
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			var_5_0[#var_5_0 + 1] = iter_5_1
 		end
 
-		for slot7, slot8 in ipairs(string.splitToNumber(slot0.activeSkill1, "#")) do
-			slot1[#slot1 + 1] = slot8
+		local var_5_2 = string.splitToNumber(arg_5_0.activeSkill1, "#")
+
+		for iter_5_2, iter_5_3 in ipairs(var_5_2) do
+			var_5_0[#var_5_0 + 1] = iter_5_3
 		end
 
-		for slot8, slot9 in ipairs(string.splitToNumber(slot0.activeSkill2, "#")) do
-			slot1[#slot1 + 1] = slot9
+		local var_5_3 = string.splitToNumber(arg_5_0.activeSkill2, "#")
+
+		for iter_5_4, iter_5_5 in ipairs(var_5_3) do
+			var_5_0[#var_5_0 + 1] = iter_5_5
 		end
 
-		slot1[#slot1 + 1] = slot0.uniqueSkill
+		var_5_0[#var_5_0 + 1] = arg_5_0.uniqueSkill
 	end
 
-	return slot1
+	return var_5_0
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,12 @@
-module("modules.logic.story.define.StoryEnum", package.seeall)
+﻿module("modules.logic.story.define.StoryEnum", package.seeall)
 
-slot0 = _M
-slot0.StepType = {
+local var_0_0 = _M
+
+var_0_0.StepType = {
 	Interaction = 1,
 	Normal = 0
 }
-slot0.ConversationType = {
+var_0_0.ConversationType = {
 	ScreenDialog = 5,
 	Normal = 1,
 	NoInteract = 6,
@@ -16,7 +17,7 @@ slot0.ConversationType = {
 	Player = 4,
 	None = 0
 }
-slot0.ConversationEffectType = {
+var_0_0.ConversationEffectType = {
 	Hard = 6,
 	Magic = 7,
 	SoftLight = 8,
@@ -28,20 +29,20 @@ slot0.ConversationEffectType = {
 	Fade = 2,
 	None = 0
 }
-slot0.HeroPos = {
+var_0_0.HeroPos = {
 	Right = 2,
 	Middle = 1,
 	Left = 0
 }
-slot0.HeroEffect = {
+var_0_0.HeroEffect = {
 	StyDissolve = "stydissolve",
 	Gray = "gray"
 }
-slot0.BgType = {
+var_0_0.BgType = {
 	Effect = 1,
 	Picture = 0
 }
-slot0.BgTransType = {
+var_0_0.BgTransType = {
 	WhiteFade = 4,
 	DarkFade = 3,
 	TurnPage2 = 12,
@@ -65,7 +66,7 @@ slot0.BgTransType = {
 	TransparencyFade = 2,
 	Hard = 1
 }
-slot0.BgEffectType = {
+var_0_0.BgEffectType = {
 	BgBlur = 1,
 	FishEye = 2,
 	FullGray = 6,
@@ -75,74 +76,74 @@ slot0.BgEffectType = {
 	MoveCurve = 7,
 	None = 0
 }
-slot0.AudioOrderType = {
+var_0_0.AudioOrderType = {
 	Continuity = 0,
 	Single = 1,
 	Destroy = 2,
 	Adjust = 3
 }
-slot0.AudioInType = {
+var_0_0.AudioInType = {
 	FadeIn = 1,
 	Hard = 0
 }
-slot0.AudioOutType = {
+var_0_0.AudioOutType = {
 	FadeOut = 1,
 	Hard = 0
 }
-slot0.EffectOrderType = {
+var_0_0.EffectOrderType = {
 	Destroy = 2,
 	ContinuityUnscale = 3,
 	Single = 1,
 	SingleUnscale = 4,
 	Continuity = 0
 }
-slot0.EffectInType = {
+var_0_0.EffectInType = {
 	FadeIn = 1,
 	Hard = 0
 }
-slot0.EffectOutType = {
+var_0_0.EffectOutType = {
 	FadeOut = 1,
 	Hard = 0
 }
-slot0.PictureType = {
+var_0_0.PictureType = {
 	PicTxt = 3,
 	Float = 2,
 	FullScreen = 1,
 	Normal = 0
 }
-slot0.PictureOrderType = {
+var_0_0.PictureOrderType = {
 	Destroy = 1,
 	Produce = 0
 }
-slot0.PictureInType = {
+var_0_0.PictureInType = {
 	FadeIn = 1,
 	Hard = 0
 }
-slot0.PictureOutType = {
+var_0_0.PictureOutType = {
 	FadeOut = 1,
 	Hard = 0
 }
-slot0.PictureEffectType = {
+var_0_0.PictureEffectType = {
 	Scale = 3,
 	FollowBg = 2,
 	Shake = 1,
 	None = 0
 }
-slot0.VideoOrderType = {
+var_0_0.VideoOrderType = {
 	Destroy = 1,
 	Restart = 3,
 	Pause = 2,
 	Produce = 0
 }
-slot0.OptionFeedbackType = {
+var_0_0.OptionFeedbackType = {
 	HeroLead = 1,
 	None = 0
 }
-slot0.OptionConditionType = {
+var_0_0.OptionConditionType = {
 	HeroLead = 1,
 	None = 0
 }
-slot0.NavigateType = {
+var_0_0.NavigateType = {
 	ChapterEnd = 4,
 	Map = 1,
 	ChapterStart = 3,
@@ -154,18 +155,18 @@ slot0.NavigateType = {
 	ActivityEnd = 7,
 	None = 0
 }
-slot0.SkipType = {
+var_0_0.SkipType = {
 	ChapterEnd = 4,
 	InDarkFade = 1,
 	OutDarkFade = 2,
 	AudioFade = 3,
 	None = 0
 }
-slot0.BorderType = {
+var_0_0.BorderType = {
 	FadeOut = 1,
 	Keep = 3,
 	FadeIn = 2,
 	None = 0
 }
 
-return slot0
+return var_0_0

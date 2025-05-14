@@ -1,80 +1,92 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesEntity", package.seeall)
 
-slot0 = class("PinballMarblesEntity", PinballColliderEntity)
+local var_0_0 = class("PinballMarblesEntity", PinballColliderEntity)
 
-function slot0.onInit(slot0)
-	slot0.ay = PinballConst.Const5
-	slot0.shape = PinballEnum.Shape.Circle
-	slot0.speedScale = 1
-	slot0.path = "v2a4_tutushizi_ball_0"
-	slot0.decx = PinballConst.Const14
-	slot0.decy = PinballConst.Const14
-	slot0._isTemp = false
-	slot0._hitDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.ay = PinballConst.Const5
+	arg_1_0.shape = PinballEnum.Shape.Circle
+	arg_1_0.speedScale = 1
+	arg_1_0.path = "v2a4_tutushizi_ball_0"
+	arg_1_0.decx = PinballConst.Const14
+	arg_1_0.decy = PinballConst.Const14
+	arg_1_0._isTemp = false
+	arg_1_0._hitDict = {}
 end
 
-function slot0.initByCo(slot0)
-	slot0.co = lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot0.unitType]
-	slot0.path = slot0.co.icon
-	slot0.lv = PinballModel.instance:getMarblesLvCache(slot0.unitType)
-	slot1 = string.splitToNumber(slot0.co.radius, "#") or {}
-	slot0.scale = (slot1[slot0.lv] or slot1[#slot1] or 1000) / 1000 * PinballConst.Const7
-	slot0.width = PinballConst.Const6 * slot0.scale
-	slot0.height = PinballConst.Const6 * slot0.scale
-	slot2 = string.splitToNumber(slot0.co.elasticity, "#") or {}
-	slot3 = (slot2[slot0.lv] or slot2[#slot2] or 1000) / 1000
-	slot0.baseForceX = slot3
-	slot0.baseForceY = slot3
-	slot0.speedScale = slot0.co.velocity / 1000
-	slot4 = string.splitToNumber(slot0.co.detectTime, "#") or {}
-	slot0.hitNum = slot4[slot0.lv] or slot4[#slot4] or 1
-	slot5 = string.splitToNumber(slot0.co.effectTime, "#") or {}
-	slot0.effectNum = slot5[slot0.lv] or slot5[#slot5] or 1
-	slot6 = string.splitToNumber(slot0.co.effectTime2, "#") or {}
-	slot0.effectNum2 = slot6[slot0.lv] or slot6[#slot6] or 1
+function var_0_0.initByCo(arg_2_0)
+	arg_2_0.co = lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_2_0.unitType]
+	arg_2_0.path = arg_2_0.co.icon
+	arg_2_0.lv = PinballModel.instance:getMarblesLvCache(arg_2_0.unitType)
+
+	local var_2_0 = string.splitToNumber(arg_2_0.co.radius, "#") or {}
+
+	arg_2_0.scale = (var_2_0[arg_2_0.lv] or var_2_0[#var_2_0] or 1000) / 1000 * PinballConst.Const7
+	arg_2_0.width = PinballConst.Const6 * arg_2_0.scale
+	arg_2_0.height = PinballConst.Const6 * arg_2_0.scale
+
+	local var_2_1 = string.splitToNumber(arg_2_0.co.elasticity, "#") or {}
+	local var_2_2 = (var_2_1[arg_2_0.lv] or var_2_1[#var_2_1] or 1000) / 1000
+
+	arg_2_0.baseForceX = var_2_2
+	arg_2_0.baseForceY = var_2_2
+	arg_2_0.speedScale = arg_2_0.co.velocity / 1000
+
+	local var_2_3 = string.splitToNumber(arg_2_0.co.detectTime, "#") or {}
+
+	arg_2_0.hitNum = var_2_3[arg_2_0.lv] or var_2_3[#var_2_3] or 1
+
+	local var_2_4 = string.splitToNumber(arg_2_0.co.effectTime, "#") or {}
+
+	arg_2_0.effectNum = var_2_4[arg_2_0.lv] or var_2_4[#var_2_4] or 1
+
+	local var_2_5 = string.splitToNumber(arg_2_0.co.effectTime2, "#") or {}
+
+	arg_2_0.effectNum2 = var_2_5[arg_2_0.lv] or var_2_5[#var_2_5] or 1
 end
 
-function slot0.fixedPos(slot0)
-	if slot0.y < PinballConst.Const2 and slot0.vy < 0 then
-		slot0:markDead()
+function var_0_0.fixedPos(arg_3_0)
+	if arg_3_0.y < PinballConst.Const2 and arg_3_0.vy < 0 then
+		arg_3_0:markDead()
 	end
 
-	if PinballConst.Const1 < slot0.y and slot0.vy > 0 then
-		slot0.vy = -slot0.vy
+	if arg_3_0.y > PinballConst.Const1 and arg_3_0.vy > 0 then
+		arg_3_0.vy = -arg_3_0.vy
 	end
 
-	if PinballConst.Const3 < slot0.x + slot0.width and slot0.vx > 0 then
-		slot0.vx = -slot0.vx
-		slot1 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
+	if arg_3_0.x + arg_3_0.width > PinballConst.Const3 and arg_3_0.vx > 0 then
+		arg_3_0.vx = -arg_3_0.vx
 
-		slot1:setDelayDispose(2)
+		local var_3_0 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
 
-		slot1.x = slot0.x + slot0.width
-		slot1.y = slot0.y
+		var_3_0:setDelayDispose(2)
 
-		slot1:tick(0)
-		slot1:playAnim("hit")
+		var_3_0.x = arg_3_0.x + arg_3_0.width
+		var_3_0.y = arg_3_0.y
 
-		if slot0.unitType == PinballEnum.UnitType.MarblesElasticity then
+		var_3_0:tick(0)
+		var_3_0:playAnim("hit")
+
+		if arg_3_0.unitType == PinballEnum.UnitType.MarblesElasticity then
 			AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio18)
 		else
 			AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio13)
 		end
 	end
 
-	if slot0.x - slot0.width < PinballConst.Const4 and slot0.vx < 0 then
-		slot0.vx = -slot0.vx
-		slot1 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
+	if arg_3_0.x - arg_3_0.width < PinballConst.Const4 and arg_3_0.vx < 0 then
+		arg_3_0.vx = -arg_3_0.vx
 
-		slot1:setDelayDispose(2)
+		local var_3_1 = PinballEntityMgr.instance:addEntity(PinballEnum.UnitType.CommonEffect)
 
-		slot1.x = slot0.x - slot0.width
-		slot1.y = slot0.y
+		var_3_1:setDelayDispose(2)
 
-		slot1:tick(0)
-		slot1:playAnim("hit")
+		var_3_1.x = arg_3_0.x - arg_3_0.width
+		var_3_1.y = arg_3_0.y
 
-		if slot0.unitType == PinballEnum.UnitType.MarblesElasticity then
+		var_3_1:tick(0)
+		var_3_1:playAnim("hit")
+
+		if arg_3_0.unitType == PinballEnum.UnitType.MarblesElasticity then
 			AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio18)
 		else
 			AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio13)
@@ -82,101 +94,117 @@ function slot0.fixedPos(slot0)
 	end
 end
 
-function slot0.onTick(slot0, slot1)
-	if slot0._isTemp then
+function var_0_0.onTick(arg_4_0, arg_4_1)
+	if arg_4_0._isTemp then
 		return
 	end
 
-	slot0.vx = Mathf.Clamp(slot0.vx, PinballConst.Const8, PinballConst.Const9)
-	slot0.vy = Mathf.Clamp(slot0.vy, PinballConst.Const10, PinballConst.Const11)
+	arg_4_0.vx = Mathf.Clamp(arg_4_0.vx, PinballConst.Const8, PinballConst.Const9)
+	arg_4_0.vy = Mathf.Clamp(arg_4_0.vy, PinballConst.Const10, PinballConst.Const11)
 
-	if math.abs(slot0.vx) < PinballConst.Const12 and math.abs(slot0.vy) < PinballConst.Const12 then
-		if not slot0.stopDt then
-			slot0.stopDt = 0
+	if math.abs(arg_4_0.vx) < PinballConst.Const12 and math.abs(arg_4_0.vy) < PinballConst.Const12 then
+		if not arg_4_0.stopDt then
+			arg_4_0.stopDt = 0
 		else
-			slot0.stopDt = slot0.stopDt + slot1
+			arg_4_0.stopDt = arg_4_0.stopDt + arg_4_1
 		end
 
-		if PinballConst.Const13 < slot0.stopDt then
-			slot0:markDead()
+		if arg_4_0.stopDt > PinballConst.Const13 then
+			arg_4_0:markDead()
 		end
 	else
-		slot0.stopDt = nil
+		arg_4_0.stopDt = nil
 	end
 end
 
-function slot0.canHit(slot0)
-	return not slot0._isTemp
+function var_0_0.canHit(arg_5_0)
+	return not arg_5_0._isTemp
 end
 
-function slot0.isCheckHit(slot0)
-	return not slot0._isTemp
+function var_0_0.isCheckHit(arg_6_0)
+	return not arg_6_0._isTemp
 end
 
-function slot0.setTemp(slot0)
-	slot0._isTemp = true
-	slot0.ay = 0
+function var_0_0.setTemp(arg_7_0)
+	arg_7_0._isTemp = true
+	arg_7_0.ay = 0
 end
 
-function slot0.getHitResCount(slot0)
+function var_0_0.getHitResCount(arg_8_0)
 	return 1
 end
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	if not PinballEntityMgr.instance:getEntity(slot1) then
+function var_0_0.onHitEnter(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = PinballEntityMgr.instance:getEntity(arg_9_1)
+
+	if not var_9_0 then
 		return
 	end
 
-	if slot5:isResType() then
-		slot5:doHit(slot0:getHitResCount())
+	if var_9_0:isResType() then
+		var_9_0:doHit(arg_9_0:getHitResCount())
 	end
 
-	if slot5.unitType == PinballEnum.UnitType.TriggerElasticity then
+	if var_9_0.unitType == PinballEnum.UnitType.TriggerElasticity then
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio14)
-	elseif slot0.unitType == PinballEnum.UnitType.MarblesElasticity then
+	elseif arg_9_0.unitType == PinballEnum.UnitType.MarblesElasticity then
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio18)
 	else
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio13)
 	end
 
-	if not slot5:isBounce() then
+	if not var_9_0:isBounce() then
 		return
 	end
 
-	slot0.vx = slot0.vx * slot0.baseForceX * slot5.baseForceX
-	slot0.vy = slot0.vy * slot0.baseForceY * slot5.baseForceY
-	slot6 = 0
+	arg_9_0.vx = arg_9_0.vx * arg_9_0.baseForceX * var_9_0.baseForceX
+	arg_9_0.vy = arg_9_0.vy * arg_9_0.baseForceY * var_9_0.baseForceY
 
-	if next(slot0._hitDict) then
-		if PinballEntityMgr.instance:getEntity(slot7):isOtherType() and not slot5:isOtherType() then
+	local var_9_1 = 0
+	local var_9_2 = next(arg_9_0._hitDict)
+
+	if var_9_2 then
+		if PinballEntityMgr.instance:getEntity(var_9_2):isOtherType() and not var_9_0:isOtherType() then
 			return
 		end
 
-		for slot14, slot15 in pairs(slot0._hitDict) do
-			slot9 = slot2 - slot0.x + slot15.x
-			slot10 = slot3 - slot0.y + slot15.y
+		local var_9_3 = arg_9_2 - arg_9_0.x
+		local var_9_4 = arg_9_3 - arg_9_0.y
+
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._hitDict) do
+			var_9_3 = var_9_3 + iter_9_1.x
+			var_9_4 = var_9_4 + iter_9_1.y
 		end
 
-		slot6 = math.deg(math.atan2(slot10, slot9))
+		var_9_1 = math.deg(math.atan2(var_9_4, var_9_3))
 	else
-		slot6 = math.deg(math.atan2(slot0.y - slot3, slot0.x - slot2)) * 2 - (180 + math.deg(math.atan2(slot0.vy, slot0.vx))) % 360 + math.random(0, 20) - 10
+		local var_9_5 = math.deg(math.atan2(arg_9_0.y - arg_9_3, arg_9_0.x - arg_9_2))
+		local var_9_6 = (180 + math.deg(math.atan2(arg_9_0.vy, arg_9_0.vx))) % 360
+
+		var_9_1 = var_9_5 * 2 - var_9_6
+		var_9_1 = var_9_1 + math.random(0, 20) - 10
 	end
 
-	slot0.vx, slot0.vy = PinballHelper.rotateAngle(math.sqrt(slot0.vx * slot0.vx + slot0.vy * slot0.vy), 0, slot6)
-	slot9 = math.max(slot0.width - math.sqrt((slot2 - slot0.x)^2 + (slot3 - slot0.y)^2), 0.1)
-	slot0._hitDict[slot1] = {
-		x = slot2 - slot0.x,
-		y = slot3 - slot0.y
+	local var_9_7 = math.sqrt(arg_9_0.vx * arg_9_0.vx + arg_9_0.vy * arg_9_0.vy)
+
+	arg_9_0.vx, arg_9_0.vy = PinballHelper.rotateAngle(var_9_7, 0, var_9_1)
+
+	local var_9_8 = arg_9_0.width - math.sqrt((arg_9_2 - arg_9_0.x)^2 + (arg_9_3 - arg_9_0.y)^2)
+	local var_9_9 = math.max(var_9_8, 0.1)
+
+	arg_9_0._hitDict[arg_9_1] = {
+		x = arg_9_2 - arg_9_0.x,
+		y = arg_9_3 - arg_9_0.y
 	}
-	slot0.ay = 0
+	arg_9_0.ay = 0
 end
 
-function slot0.onHitExit(slot0, slot1)
-	slot0._hitDict[slot1] = nil
+function var_0_0.onHitExit(arg_10_0, arg_10_1)
+	arg_10_0._hitDict[arg_10_1] = nil
 
-	if not next(slot0._hitDict) then
-		slot0.ay = PinballConst.Const5
+	if not next(arg_10_0._hitDict) then
+		arg_10_0.ay = PinballConst.Const5
 	end
 end
 
-return slot0
+return var_0_0

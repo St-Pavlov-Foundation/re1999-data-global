@@ -1,97 +1,102 @@
-module("modules.live2d.Live2dVoice", package.seeall)
+﻿module("modules.live2d.Live2dVoice", package.seeall)
 
-slot0 = class("Live2dVoice", SpineVoice)
+local var_0_0 = class("Live2dVoice", SpineVoice)
 
-function slot0._init(slot0)
-	slot0._normalVoiceMouth = slot0:_addComponent(Live2dVoiceMouth, true)
-	slot0._spineVoiceMouth = slot0._normalVoiceMouth
-	slot0._voiceFace = slot0:_addComponent(Live2dVoiceFace, true)
+function var_0_0._init(arg_1_0)
+	arg_1_0._normalVoiceMouth = arg_1_0:_addComponent(Live2dVoiceMouth, true)
+	arg_1_0._spineVoiceMouth = arg_1_0._normalVoiceMouth
+	arg_1_0._voiceFace = arg_1_0:_addComponent(Live2dVoiceFace, true)
 end
 
-function slot0.getMouth(slot0, slot1)
-	if slot0:getVoiceLang() == "zh" then
-		return slot1.mouth
+function var_0_0.getMouth(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getVoiceLang()
+
+	if var_2_0 == "zh" then
+		return arg_2_1.mouth
 	else
-		return slot1[slot2 .. "mouth"] or slot1.mouth
+		return arg_2_1[var_2_0 .. "mouth"] or arg_2_1.mouth
 	end
 end
 
-function slot0._initSpineVoiceMouth(slot0, slot1, slot2)
-	slot0._useAutoMouth = string.find(slot0:getMouth(slot1), Live2dVoiceMouthAuto.AutoActionName)
-	slot4 = slot0._spineVoiceMouth
+function var_0_0._initSpineVoiceMouth(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0:getMouth(arg_3_1)
 
-	if slot0._useAutoMouth then
-		slot0._autoVoiceMouth = slot0._autoVoiceMouth or Live2dVoiceMouthAuto.New()
-		slot0._spineVoiceMouth = slot0._autoVoiceMouth
+	arg_3_0._useAutoMouth = string.find(var_3_0, Live2dVoiceMouthAuto.AutoActionName)
+
+	local var_3_1 = arg_3_0._spineVoiceMouth
+
+	if arg_3_0._useAutoMouth then
+		arg_3_0._autoVoiceMouth = arg_3_0._autoVoiceMouth or Live2dVoiceMouthAuto.New()
+		arg_3_0._spineVoiceMouth = arg_3_0._autoVoiceMouth
 	else
-		slot0._spineVoiceMouth = slot0._normalVoiceMouth
+		arg_3_0._spineVoiceMouth = arg_3_0._normalVoiceMouth
 	end
 
-	if slot4 and slot4 ~= slot0._spineVoiceMouth then
-		slot4:suspend()
+	if var_3_1 and var_3_1 ~= arg_3_0._spineVoiceMouth then
+		var_3_1:suspend()
 	end
 
-	slot0._spineVoiceMouth:init(slot0, slot1, slot2)
+	arg_3_0._spineVoiceMouth:init(arg_3_0, arg_3_1, arg_3_2)
 end
 
-function slot0.onSpineVoiceAudioStop(slot0)
-	slot0._spineVoiceText:onVoiceStop()
+function var_0_0.onSpineVoiceAudioStop(arg_4_0)
+	arg_4_0._spineVoiceText:onVoiceStop()
 
-	if slot0._useAutoMouth then
-		slot0._spineVoiceMouth:onVoiceStop()
+	if arg_4_0._useAutoMouth then
+		arg_4_0._spineVoiceMouth:onVoiceStop()
 	end
 
-	slot0:_doCallback()
+	arg_4_0:_doCallback()
 end
 
-function slot0.playVoice(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0._spine = slot1
+function var_0_0.playVoice(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
+	arg_5_0._spine = arg_5_1
 
-	slot1:setParameterStoreEnabled(true)
+	arg_5_1:setParameterStoreEnabled(true)
 
-	if slot0:getInStory() then
-		slot0._spine:setAlwaysFade(true)
+	if arg_5_0:getInStory() then
+		arg_5_0._spine:setAlwaysFade(true)
 	end
 
-	uv0.super.playVoice(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
+	var_0_0.super.playVoice(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
 end
 
-function slot0._onComponentStop(slot0, slot1)
-	if slot1 == slot0._spineVoiceBody and slot0._spine and slot0:getInStory() then
-		slot0._spine:setAlwaysFade(false)
+function var_0_0._onComponentStop(arg_6_0, arg_6_1)
+	if arg_6_1 == arg_6_0._spineVoiceBody and arg_6_0._spine and arg_6_0:getInStory() then
+		arg_6_0._spine:setAlwaysFade(false)
 	end
 
-	uv0.super._onComponentStop(slot0, slot1)
+	var_0_0.super._onComponentStop(arg_6_0, arg_6_1)
 end
 
-function slot0.playing(slot0)
-	if slot0._spineVoiceMouth._setComponentStop then
-		return uv0.super.playing(slot0)
+function var_0_0.playing(arg_7_0)
+	if arg_7_0._spineVoiceMouth._setComponentStop then
+		return var_0_0.super.playing(arg_7_0)
 	end
 
-	if slot0._useAutoMouth then
-		return slot0._stopVoiceCount < slot0._componentStopVoiceCount - 1
+	if arg_7_0._useAutoMouth then
+		return not (arg_7_0._stopVoiceCount >= arg_7_0._componentStopVoiceCount - 1)
 	end
 
-	return slot0._stopVoiceCount < slot0._componentStopVoiceCount - 1 or not slot0._spineVoiceMouth._playLastOne
+	return not (arg_7_0._stopVoiceCount >= arg_7_0._componentStopVoiceCount - 1) or not arg_7_0._spineVoiceMouth._playLastOne
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._normalVoiceMouth then
-		slot0._normalVoiceMouth:onDestroy()
+function var_0_0.onDestroy(arg_8_0)
+	if arg_8_0._normalVoiceMouth then
+		arg_8_0._normalVoiceMouth:onDestroy()
 
-		slot0._normalVoiceMouth = nil
+		arg_8_0._normalVoiceMouth = nil
 	end
 
-	if slot0._autoVoiceMouth then
-		slot0._autoVoiceMouth:onDestroy()
+	if arg_8_0._autoVoiceMouth then
+		arg_8_0._autoVoiceMouth:onDestroy()
 
-		slot0._autoVoiceMouth = nil
+		arg_8_0._autoVoiceMouth = nil
 	end
 
-	slot0._spineVoiceMouth = nil
+	arg_8_0._spineVoiceMouth = nil
 
-	uv0.super.onDestroy(slot0)
+	var_0_0.super.onDestroy(arg_8_0)
 end
 
-return slot0
+return var_0_0

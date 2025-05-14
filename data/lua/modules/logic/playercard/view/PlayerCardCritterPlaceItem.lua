@@ -1,78 +1,83 @@
-module("modules.logic.playercard.view.PlayerCardCritterPlaceItem", package.seeall)
+﻿module("modules.logic.playercard.view.PlayerCardCritterPlaceItem", package.seeall)
 
-slot0 = class("PlayerCardCritterPlaceItem", ListScrollCellExtend)
+local var_0_0 = class("PlayerCardCritterPlaceItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "#go_icon")
-	slot0._goclick = gohelper.findChild(slot0.viewGO, "#go_click")
-	slot0._uiclick = gohelper.getClickWithDefaultAudio(slot0._goclick)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
+	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
+	arg_1_0._uiclick = gohelper.getClickWithDefaultAudio(arg_1_0._goclick)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._uiclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._uiclick:AddClickDownListener(slot0._btnclickOnClickDown, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._uiclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._uiclick:AddClickDownListener(arg_2_0._btnclickOnClickDown, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._uiclick:RemoveClickListener()
-	slot0._uiclick:RemoveClickDownListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._uiclick:RemoveClickListener()
+	arg_3_0._uiclick:RemoveClickDownListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot1, slot2 = slot0:getCritterId()
-	slot0.filterMO = CritterFilterModel.instance:generateFilterMO(ViewName.PlayerCardCritterPlaceView)
+function var_0_0._btnclickOnClick(arg_4_0)
+	local var_4_0, var_4_1 = arg_4_0:getCritterId()
 
-	PlayerCardModel.instance:setSelectCritterUid(slot1)
-	PlayerCardRpc.instance:sendSetPlayerCardCritterRequest(slot1)
+	arg_4_0.filterMO = CritterFilterModel.instance:generateFilterMO(ViewName.PlayerCardCritterPlaceView)
+
+	PlayerCardModel.instance:setSelectCritterUid(var_4_0)
+	PlayerCardRpc.instance:sendSetPlayerCardCritterRequest(var_4_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	slot0:setCritter()
+	arg_6_0:setCritter()
 end
 
-function slot0.setCritter(slot0)
-	slot1, slot2 = slot0:getCritterId()
+function var_0_0.setCritter(arg_7_0)
+	local var_7_0, var_7_1 = arg_7_0:getCritterId()
 
-	if not slot0.critterIcon then
-		slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._goicon)
+	if not arg_7_0.critterIcon then
+		arg_7_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_7_0._goicon)
 
-		slot0.critterIcon:setSelectUIVisible(true)
+		arg_7_0.critterIcon:setSelectUIVisible(true)
 	end
 
-	slot0.critterIcon:setMOValue(slot1, slot2)
-	slot0.critterIcon:showSpeical()
-	slot0.critterIcon:setMaturityIconShow(true)
-	slot0:_refreshSelect()
+	arg_7_0.critterIcon:setMOValue(var_7_0, var_7_1)
+	arg_7_0.critterIcon:showSpeical()
+	arg_7_0.critterIcon:setMaturityIconShow(true)
+	arg_7_0:_refreshSelect()
 end
 
-function slot0._refreshSelect(slot0)
-	slot1, slot2 = slot0:getCritterId()
-	slot0._isSelect = tonumber(slot1) == PlayerCardModel.instance:getSelectCritterUid()
+function var_0_0._refreshSelect(arg_8_0)
+	local var_8_0, var_8_1 = arg_8_0:getCritterId()
 
-	slot0.critterIcon:onSelect(slot0._isSelect)
+	arg_8_0._isSelect = tonumber(var_8_0) == PlayerCardModel.instance:getSelectCritterUid()
+
+	arg_8_0.critterIcon:onSelect(arg_8_0._isSelect)
 end
 
-function slot0.getCritterId(slot0)
-	slot1, slot2 = nil
+function var_0_0.getCritterId(arg_9_0)
+	local var_9_0
+	local var_9_1
 
-	if slot0._mo then
-		slot1 = slot0._mo:getId()
-		slot2 = slot0._mo:getDefineId()
+	if arg_9_0._mo then
+		var_9_0 = arg_9_0._mo:getId()
+		var_9_1 = arg_9_0._mo:getDefineId()
 	end
 
-	return slot1, slot2
+	return var_9_0, var_9_1
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

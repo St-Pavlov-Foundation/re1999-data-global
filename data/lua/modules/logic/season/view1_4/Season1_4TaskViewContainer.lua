@@ -1,17 +1,17 @@
-module("modules.logic.season.view1_4.Season1_4TaskViewContainer", package.seeall)
+﻿module("modules.logic.season.view1_4.Season1_4TaskViewContainer", package.seeall)
 
-slot0 = class("Season1_4TaskViewContainer", BaseViewContainer)
+local var_0_0 = class("Season1_4TaskViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Season1_4TaskView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, Season1_4TaskView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -21,4 +21,4 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-return slot0
+return var_0_0

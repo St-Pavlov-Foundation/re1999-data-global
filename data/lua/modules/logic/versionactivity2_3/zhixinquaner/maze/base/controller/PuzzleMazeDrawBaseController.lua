@@ -1,83 +1,90 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.controller.PuzzleMazeDrawBaseController", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.controller.PuzzleMazeDrawBaseController", package.seeall)
 
-slot0 = class("PuzzleMazeDrawBaseController", BaseController)
-slot1 = PuzzleEnum.dir.left
-slot2 = PuzzleEnum.dir.right
-slot3 = PuzzleEnum.dir.down
-slot4 = PuzzleEnum.dir.up
+local var_0_0 = class("PuzzleMazeDrawBaseController", BaseController)
+local var_0_1 = PuzzleEnum.dir.left
+local var_0_2 = PuzzleEnum.dir.right
+local var_0_3 = PuzzleEnum.dir.down
+local var_0_4 = PuzzleEnum.dir.up
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_1_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0:release()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:release()
 end
 
-function slot0.release(slot0)
-	slot0._curPosX = nil
-	slot0._curPosY = nil
-	slot0._passedPosX = nil
-	slot0._passedPosY = nil
-	slot0._passedCheckPoint = nil
-	slot0._alertMoMap = nil
-	slot0._nextDir = nil
-	slot0._nextForwardX = nil
-	slot0._nextForwardY = nil
-	slot0._nextProgressX = nil
-	slot0._nextProgressY = nil
-	slot0._lineDirty = nil
+function var_0_0.release(arg_4_0)
+	arg_4_0._curPosX = nil
+	arg_4_0._curPosY = nil
+	arg_4_0._passedPosX = nil
+	arg_4_0._passedPosY = nil
+	arg_4_0._passedCheckPoint = nil
+	arg_4_0._alertMoMap = nil
+	arg_4_0._nextDir = nil
+	arg_4_0._nextForwardX = nil
+	arg_4_0._nextForwardY = nil
+	arg_4_0._nextProgressX = nil
+	arg_4_0._nextProgressY = nil
+	arg_4_0._lineDirty = nil
 end
 
-function slot0.openGame(slot0, slot1)
-	if not slot0._modelInst then
+function var_0_0.openGame(arg_5_0, arg_5_1)
+	if not arg_5_0._modelInst then
 		logError("进入游戏失败:未配置Model实例")
 
 		return
 	end
 
-	slot0:startGame(slot1)
+	arg_5_0:startGame(arg_5_1)
 end
 
-function slot0.setModelInst(slot0, slot1)
-	slot0._modelInst = slot1
+function var_0_0.setModelInst(arg_6_0, arg_6_1)
+	arg_6_0._modelInst = arg_6_1
 end
 
-function slot0.goStartPoint(slot0)
-	slot1, slot2 = slot0._modelInst:getStartPoint()
-	slot0._curPosX = slot1
-	slot0._curPosY = slot2
+function var_0_0.goStartPoint(arg_7_0)
+	local var_7_0, var_7_1 = arg_7_0._modelInst:getStartPoint()
 
-	table.insert(slot0._passedPosX, slot1)
-	table.insert(slot0._passedPosY, slot2)
+	arg_7_0._curPosX = var_7_0
+	arg_7_0._curPosY = var_7_1
+
+	table.insert(arg_7_0._passedPosX, var_7_0)
+	table.insert(arg_7_0._passedPosY, var_7_1)
 end
 
-function slot0.startGame(slot0, slot1)
-	slot0:release()
-	slot0._modelInst:startGame(slot1)
+function var_0_0.startGame(arg_8_0, arg_8_1)
+	arg_8_0:release()
+	arg_8_0._modelInst:startGame(arg_8_1)
 
-	slot0._passedPosX = {}
-	slot0._passedPosY = {}
-	slot0._passedCheckPoint = {}
-	slot0._alertMoMap = {}
+	arg_8_0._passedPosX = {}
+	arg_8_0._passedPosY = {}
+	arg_8_0._passedCheckPoint = {}
+	arg_8_0._alertMoMap = {}
 
-	slot0:goStartPoint()
+	arg_8_0:goStartPoint()
 end
 
-function slot0.restartGame(slot0)
-	if slot0._modelInst:getElementCo() then
-		slot0:startGame(slot1)
+function var_0_0.restartGame(arg_9_0)
+	local var_9_0 = arg_9_0._modelInst:getElementCo()
+
+	if var_9_0 then
+		arg_9_0:startGame(var_9_0)
 	end
 end
 
-function slot0.isGameClear(slot0)
-	slot1, slot2 = slot0._modelInst:getEndPoint()
+function var_0_0.isGameClear(arg_10_0)
+	local var_10_0, var_10_1 = arg_10_0._modelInst:getEndPoint()
 
-	if not slot0:hasAlertObj() and slot0._curPosX == slot1 and slot0._curPosY == slot2 then
-		for slot7, slot8 in pairs(slot0._modelInst:getList()) do
-			if slot8.objType == PuzzleEnum.MazeObjType.CheckPoint and not slot0._passedCheckPoint[slot8] then
+	if not arg_10_0:hasAlertObj() and arg_10_0._curPosX == var_10_0 and arg_10_0._curPosY == var_10_1 then
+		local var_10_2 = arg_10_0._modelInst:getList()
+
+		for iter_10_0, iter_10_1 in pairs(var_10_2) do
+			if iter_10_1.objType == PuzzleEnum.MazeObjType.CheckPoint and not arg_10_0._passedCheckPoint[iter_10_1] then
 				return false
 			end
 		end
@@ -88,213 +95,244 @@ function slot0.isGameClear(slot0)
 	return false
 end
 
-function slot0.goPassLine(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0._nextDir = nil
-	slot0._nextForwardX = slot0._curPosX ~= slot1 and slot1 or slot3
-	slot0._nextForwardY = slot0._curPosY ~= slot2 and slot2 or slot4
+function var_0_0.goPassLine(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6)
+	local var_11_0
+	local var_11_1
 
-	if slot0._curPosX ~= slot1 or slot0._curPosX ~= slot3 then
-		slot8 = slot8 or {}
+	arg_11_0._nextDir = nil
+	arg_11_0._nextForwardX = arg_11_0._curPosX ~= arg_11_1 and arg_11_1 or arg_11_3
+	arg_11_0._nextForwardY = arg_11_0._curPosY ~= arg_11_2 and arg_11_2 or arg_11_4
 
-		if (slot0._curPosX < slot3 and uv0 or uv1) == uv0 then
-			for slot12 = slot0._curPosX + 1, slot1 do
-				table.insert(slot8, {
-					uv1,
-					slot12,
-					slot2
+	if arg_11_0._curPosX ~= arg_11_1 or arg_11_0._curPosX ~= arg_11_3 then
+		var_11_0 = arg_11_3 > arg_11_0._curPosX and var_0_1 or var_0_2
+		var_11_1 = var_11_1 or {}
+
+		if var_11_0 == var_0_1 then
+			for iter_11_0 = arg_11_0._curPosX + 1, arg_11_1 do
+				table.insert(var_11_1, {
+					var_0_2,
+					iter_11_0,
+					arg_11_2
 				})
 			end
 
-			slot0._nextForwardX = slot3
+			arg_11_0._nextForwardX = arg_11_3
 		else
-			for slot12 = slot0._curPosX - 1, slot3, -1 do
-				table.insert(slot8, {
-					uv0,
-					slot12,
-					slot2
+			for iter_11_1 = arg_11_0._curPosX - 1, arg_11_3, -1 do
+				table.insert(var_11_1, {
+					var_0_1,
+					iter_11_1,
+					arg_11_2
 				})
 			end
 
-			slot0._nextForwardX = slot1
+			arg_11_0._nextForwardX = arg_11_1
 		end
 
-		slot6 = nil
+		arg_11_6 = nil
 	end
 
-	if slot0._curPosY ~= slot2 or slot0._curPosY ~= slot4 then
-		if slot7 ~= nil then
-			slot0._nextForwardX = nil
-			slot0._nextForwardY = nil
+	if arg_11_0._curPosY ~= arg_11_2 or arg_11_0._curPosY ~= arg_11_4 then
+		if var_11_0 ~= nil then
+			arg_11_0._nextForwardX = nil
+			arg_11_0._nextForwardY = nil
 
 			return false
 		end
 
-		slot8 = slot8 or {}
+		var_11_0 = arg_11_4 > arg_11_0._curPosY and var_0_3 or var_0_4
+		var_11_1 = var_11_1 or {}
 
-		if (slot0._curPosY < slot4 and uv2 or uv3) == uv2 then
-			for slot12 = slot0._curPosY + 1, slot2 do
-				table.insert(slot8, {
-					uv3,
-					slot1,
-					slot12
+		if var_11_0 == var_0_3 then
+			for iter_11_2 = arg_11_0._curPosY + 1, arg_11_2 do
+				table.insert(var_11_1, {
+					var_0_4,
+					arg_11_1,
+					iter_11_2
 				})
 			end
 
-			slot0._nextForwardY = slot4
+			arg_11_0._nextForwardY = arg_11_4
 		else
-			for slot12 = slot0._curPosY - 1, slot4, -1 do
-				table.insert(slot8, {
-					uv2,
-					slot1,
-					slot12
+			for iter_11_3 = arg_11_0._curPosY - 1, arg_11_4, -1 do
+				table.insert(var_11_1, {
+					var_0_3,
+					arg_11_1,
+					iter_11_3
 				})
 			end
 
-			slot0._nextForwardY = slot2
+			arg_11_0._nextForwardY = arg_11_2
 		end
 
-		slot5 = nil
+		arg_11_5 = nil
 	end
 
-	slot0._nextDir = slot7
-	slot0._nextProgressX = slot5
-	slot0._nextProgressY = slot6
+	arg_11_0._nextDir = var_11_0
+	arg_11_0._nextProgressX = arg_11_5
+	arg_11_0._nextProgressY = arg_11_6
 
-	if slot8 and #slot8 > 0 then
-		return slot0:processPath(slot8, slot5, slot6)
+	if var_11_1 and #var_11_1 > 0 then
+		return arg_11_0:processPath(var_11_1, arg_11_5, arg_11_6)
 	end
 
 	return false
 end
 
-function slot0.goPassPos(slot0, slot1, slot2)
-	if slot0._curPosX ~= slot1 then
-		slot4 = nil or {}
+function var_0_0.goPassPos(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0
+	local var_12_1
 
-		if (slot0._curPosX < slot1 and uv0 or uv1) == uv0 then
-			for slot8 = slot0._curPosX + 1, slot1 do
-				table.insert(slot4, {
-					uv1,
-					slot8,
-					slot2
+	if arg_12_0._curPosX ~= arg_12_1 then
+		var_12_0 = arg_12_1 > arg_12_0._curPosX and var_0_1 or var_0_2
+		var_12_1 = var_12_1 or {}
+
+		if var_12_0 == var_0_1 then
+			for iter_12_0 = arg_12_0._curPosX + 1, arg_12_1 do
+				table.insert(var_12_1, {
+					var_0_2,
+					iter_12_0,
+					arg_12_2
 				})
 			end
 		else
-			for slot8 = slot0._curPosX - 1, slot1, -1 do
-				table.insert(slot4, {
-					uv0,
-					slot8,
-					slot2
+			for iter_12_1 = arg_12_0._curPosX - 1, arg_12_1, -1 do
+				table.insert(var_12_1, {
+					var_0_1,
+					iter_12_1,
+					arg_12_2
 				})
 			end
 		end
 	end
 
-	if slot0._curPosY ~= slot2 then
-		if slot3 ~= nil then
-			slot0._nextDir = nil
-			slot0._nextForwardX = nil
-			slot0._nextForwardY = nil
+	if arg_12_0._curPosY ~= arg_12_2 then
+		if var_12_0 ~= nil then
+			arg_12_0._nextDir = nil
+			arg_12_0._nextForwardX = nil
+			arg_12_0._nextForwardY = nil
 
 			return false
 		end
 
-		slot4 = slot4 or {}
+		local var_12_2 = arg_12_2 > arg_12_0._curPosY and var_0_3 or var_0_4
 
-		if (slot0._curPosY < slot2 and uv2 or uv3) == uv2 then
-			for slot8 = slot0._curPosY + 1, slot2 do
-				table.insert(slot4, {
-					uv3,
-					slot1,
-					slot8
+		var_12_1 = var_12_1 or {}
+
+		if var_12_2 == var_0_3 then
+			for iter_12_2 = arg_12_0._curPosY + 1, arg_12_2 do
+				table.insert(var_12_1, {
+					var_0_4,
+					arg_12_1,
+					iter_12_2
 				})
 			end
 		else
-			for slot8 = slot0._curPosY - 1, slot2, -1 do
-				table.insert(slot4, {
-					uv2,
-					slot1,
-					slot8
+			for iter_12_3 = arg_12_0._curPosY - 1, arg_12_2, -1 do
+				table.insert(var_12_1, {
+					var_0_3,
+					arg_12_1,
+					iter_12_3
 				})
 			end
 		end
 	end
 
-	slot0._nextProgressX = nil
-	slot0._nextProgressY = nil
+	arg_12_0._nextProgressX = nil
+	arg_12_0._nextProgressY = nil
 
-	if slot4 and #slot4 > 0 then
-		slot5 = slot0:processPath(slot4)
+	if var_12_1 and #var_12_1 > 0 then
+		local var_12_3 = arg_12_0:processPath(var_12_1)
 	end
 
 	return false
 end
 
-function slot0.processPath(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = slot8[1]
-		slot13 = nil
+function var_0_0.processPath(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		local var_13_0 = iter_13_1[1]
+		local var_13_1 = iter_13_1[2]
+		local var_13_2 = iter_13_1[3]
+		local var_13_3 = arg_13_0:isBackward(var_13_1, var_13_2)
+		local var_13_4
 
-		if not slot0:isBackward(slot8[2], slot8[3]) then
-			for slot17, slot18 in pairs(slot0._alertMoMap) do
+		if not var_13_3 then
+			for iter_13_2, iter_13_3 in pairs(arg_13_0._alertMoMap) do
 				return false
 			end
 
-			slot13 = 1
+			var_13_4 = 1
 		end
 
-		if slot0._modelInst:getObjAtLine(slot0._curPosX, slot0._curPosY, slot10, slot11) and slot0._modelInst:getMapLineState(slot0._curPosX, slot0._curPosY, slot10, slot11) == PuzzleEnum.LineState.Disconnect then
-			slot0._alertMoMap[slot14] = slot13
+		local var_13_5 = arg_13_0._modelInst:getObjAtLine(arg_13_0._curPosX, arg_13_0._curPosY, var_13_1, var_13_2)
+		local var_13_6 = arg_13_0._modelInst:getMapLineState(arg_13_0._curPosX, arg_13_0._curPosY, var_13_1, var_13_2)
+
+		if var_13_5 and var_13_6 == PuzzleEnum.LineState.Disconnect then
+			arg_13_0._alertMoMap[var_13_5] = var_13_4
 		end
 
-		if slot12 then
-			slot0._alertMoMap[PuzzleMazeHelper.getPosKey(slot0._curPosX, slot0._curPosY)] = nil
+		if var_13_3 then
+			local var_13_7 = PuzzleMazeHelper.getPosKey(arg_13_0._curPosX, arg_13_0._curPosY)
 
-			if slot0._modelInst:getObjAtPos(slot0._curPosX, slot0._curPosY) ~= nil and slot14.objType == PuzzleEnum.MazeObjType.CheckPoint and not slot0:alreadyPassed(slot0._curPosX, slot0._curPosY, true) then
-				slot0._passedCheckPoint[slot14] = slot13
+			arg_13_0._alertMoMap[var_13_7] = nil
+
+			local var_13_8 = arg_13_0._modelInst:getObjAtPos(arg_13_0._curPosX, arg_13_0._curPosY)
+
+			if var_13_8 ~= nil and var_13_8.objType == PuzzleEnum.MazeObjType.CheckPoint and not arg_13_0:alreadyPassed(arg_13_0._curPosX, arg_13_0._curPosY, true) then
+				arg_13_0._passedCheckPoint[var_13_8] = var_13_4
 			end
 		else
-			if slot0._modelInst:getObjAtPos(slot10, slot11) ~= nil and slot14.objType == PuzzleEnum.MazeObjType.CheckPoint then
-				slot0._passedCheckPoint[slot14] = slot13
+			local var_13_9 = arg_13_0._modelInst:getObjAtPos(var_13_1, var_13_2)
+
+			if var_13_9 ~= nil and var_13_9.objType == PuzzleEnum.MazeObjType.CheckPoint then
+				arg_13_0._passedCheckPoint[var_13_9] = var_13_4
 			end
 
-			if slot0:alreadyPassed(slot10, slot11) then
-				slot0._alertMoMap[PuzzleMazeHelper.getPosKey(slot10, slot11)] = slot13
+			if arg_13_0:alreadyPassed(var_13_1, var_13_2) then
+				local var_13_10 = PuzzleMazeHelper.getPosKey(var_13_1, var_13_2)
+
+				arg_13_0._alertMoMap[var_13_10] = var_13_4
 			end
 		end
 
-		if slot12 then
-			slot0._passedPosX[#slot0._passedPosX] = nil
-			slot0._passedPosY[#slot0._passedPosY] = nil
+		if var_13_3 then
+			arg_13_0._passedPosX[#arg_13_0._passedPosX] = nil
+			arg_13_0._passedPosY[#arg_13_0._passedPosY] = nil
 		else
-			table.insert(slot0._passedPosX, slot10)
-			table.insert(slot0._passedPosY, slot11)
+			table.insert(arg_13_0._passedPosX, var_13_1)
+			table.insert(arg_13_0._passedPosY, var_13_2)
 		end
 
-		slot0._curPosX = slot10
-		slot0._curPosY = slot11
-		slot0._nextDir = slot9
-		slot0._lineDirty = true
+		arg_13_0._curPosX = var_13_1
+		arg_13_0._curPosY = var_13_2
+		arg_13_0._nextDir = var_13_0
+		arg_13_0._lineDirty = true
 	end
 
 	return true
 end
 
-function slot0.goBackPos(slot0)
-	if #slot0._passedPosX >= 2 then
-		slot0:goPassPos(slot0._passedPosX[slot1 - 1], slot0._passedPosY[slot1 - 1])
+function var_0_0.goBackPos(arg_14_0)
+	local var_14_0 = #arg_14_0._passedPosX
+
+	if var_14_0 >= 2 then
+		arg_14_0:goPassPos(arg_14_0._passedPosX[var_14_0 - 1], arg_14_0._passedPosY[var_14_0 - 1])
 	end
 end
 
-function slot0.isBackward(slot0, slot1, slot2)
-	return #slot0._passedPosX > 1 and slot0._passedPosX[#slot0._passedPosX - 1] == slot1 and slot0._passedPosY[#slot0._passedPosY - 1] == slot2
+function var_0_0.isBackward(arg_15_0, arg_15_1, arg_15_2)
+	return #arg_15_0._passedPosX > 1 and arg_15_0._passedPosX[#arg_15_0._passedPosX - 1] == arg_15_1 and arg_15_0._passedPosY[#arg_15_0._passedPosY - 1] == arg_15_2
 end
 
-function slot0.alreadyPassed(slot0, slot1, slot2, slot3)
-	slot4 = slot0._passedPosX and #slot0._passedPosX or 0
+function var_0_0.alreadyPassed(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_0._passedPosX and #arg_16_0._passedPosX or 0
+	local var_16_1 = arg_16_3 and var_16_0 - 1 or var_16_0
 
-	for slot9 = 1, slot3 and slot4 - 1 or slot4 do
-		if slot0._passedPosX[slot9] == slot1 and slot0._passedPosY[slot9] == slot2 then
+	for iter_16_0 = 1, var_16_1 do
+		local var_16_2 = arg_16_0._passedPosX[iter_16_0]
+		local var_16_3 = arg_16_0._passedPosY[iter_16_0]
+
+		if var_16_2 == arg_16_1 and var_16_3 == arg_16_2 then
 			return true
 		end
 	end
@@ -302,44 +340,44 @@ function slot0.alreadyPassed(slot0, slot1, slot2, slot3)
 	return false
 end
 
-function slot0.alreadyCheckPoint(slot0, slot1)
-	return slot0._passedCheckPoint and slot0._passedCheckPoint[slot1] ~= nil
+function var_0_0.alreadyCheckPoint(arg_17_0, arg_17_1)
+	return arg_17_0._passedCheckPoint and arg_17_0._passedCheckPoint[arg_17_1] ~= nil
 end
 
-function slot0.getLastPos(slot0)
-	return slot0._curPosX, slot0._curPosY
+function var_0_0.getLastPos(arg_18_0)
+	return arg_18_0._curPosX, arg_18_0._curPosY
 end
 
-function slot0.getPassedPoints(slot0)
-	return slot0._passedPosX, slot0._passedPosY
+function var_0_0.getPassedPoints(arg_19_0)
+	return arg_19_0._passedPosX, arg_19_0._passedPosY
 end
 
-function slot0.getProgressLine(slot0)
-	return slot0._nextForwardX, slot0._nextForwardY, slot0._nextProgressX, slot0._nextProgressY
+function var_0_0.getProgressLine(arg_20_0)
+	return arg_20_0._nextForwardX, arg_20_0._nextForwardY, arg_20_0._nextProgressX, arg_20_0._nextProgressY
 end
 
-function slot0.getAlertMap(slot0)
-	return slot0._alertMoMap
+function var_0_0.getAlertMap(arg_21_0)
+	return arg_21_0._alertMoMap
 end
 
-function slot0.hasAlertObj(slot0)
-	for slot4, slot5 in pairs(slot0._alertMoMap) do
+function var_0_0.hasAlertObj(arg_22_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._alertMoMap) do
 		return true
 	end
 
 	return false
 end
 
-function slot0.isLineDirty(slot0)
-	return slot0._lineDirty
+function var_0_0.isLineDirty(arg_23_0)
+	return arg_23_0._lineDirty
 end
 
-function slot0.resetLineDirty(slot0)
-	slot0._lineDirty = false
+function var_0_0.resetLineDirty(arg_24_0)
+	arg_24_0._lineDirty = false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

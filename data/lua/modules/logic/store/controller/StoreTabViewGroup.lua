@@ -1,48 +1,56 @@
-module("modules.logic.store.controller.StoreTabViewGroup", package.seeall)
+﻿module("modules.logic.store.controller.StoreTabViewGroup", package.seeall)
 
-slot0 = class("StoreTabViewGroup", TabViewGroup)
+local var_0_0 = class("StoreTabViewGroup", TabViewGroup)
 
-function slot0.onOpen(slot0)
-	slot0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, slot0._toSwitchTab, slot0)
-	slot0:_openTabView(slot0.viewParam and type(slot0.viewParam) == "table" and slot0.viewParam.defaultTabIds and slot0.viewParam.defaultTabIds[slot0._tabContainerId] or 1)
+function var_0_0.onOpen(arg_1_0)
+	arg_1_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_1_0._toSwitchTab, arg_1_0)
+
+	local var_1_0 = arg_1_0.viewParam and type(arg_1_0.viewParam) == "table" and arg_1_0.viewParam.defaultTabIds and arg_1_0.viewParam.defaultTabIds[arg_1_0._tabContainerId] or 1
+
+	arg_1_0:_openTabView(var_1_0)
 end
 
-function slot0._toSwitchTab(slot0, slot1, slot2)
-	if slot1 == slot0._tabContainerId then
-		slot0:_openTabView(slot2)
+function var_0_0._toSwitchTab(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == arg_2_0._tabContainerId then
+		arg_2_0:_openTabView(arg_2_2)
 	end
 end
 
-function slot0._openTabView(slot0, slot1)
-	slot0:_closeTabView()
+function var_0_0._openTabView(arg_3_0, arg_3_1)
+	arg_3_0:_closeTabView()
 
-	slot0._curTabId = slot1
+	arg_3_0._curTabId = arg_3_1
 
-	if slot0._tabAbLoaders[slot0._curTabId] then
-		slot0:_setVisible(slot0._curTabId, true)
-		slot0._tabViews[slot0._curTabId]:onOpenInternal()
+	if arg_3_0._tabAbLoaders[arg_3_0._curTabId] then
+		arg_3_0:_setVisible(arg_3_0._curTabId, true)
+		arg_3_0._tabViews[arg_3_0._curTabId]:onOpenInternal()
 	else
-		slot0._tabAbLoaders[slot0._curTabId] = MultiAbLoader.New()
-		slot3 = slot0.viewContainer:getSetting().tabRes
+		local var_3_0 = MultiAbLoader.New()
 
-		for slot7, slot8 in pairs(lua_store_recommend.configDict) do
-			if slot8.isCustomLoad == 1 and slot8.prefab == slot0._curTabId then
-				slot3[slot0._tabContainerId][slot8.prefab] = {
-					string.format("ui/viewres/%s.prefab", slot8.res)
+		arg_3_0._tabAbLoaders[arg_3_0._curTabId] = var_3_0
+
+		local var_3_1 = arg_3_0.viewContainer:getSetting().tabRes
+
+		for iter_3_0, iter_3_1 in pairs(lua_store_recommend.configDict) do
+			if iter_3_1.isCustomLoad == 1 and iter_3_1.prefab == arg_3_0._curTabId then
+				var_3_1[arg_3_0._tabContainerId][iter_3_1.prefab] = {
+					string.format("ui/viewres/%s.prefab", iter_3_1.res)
 				}
-				slot0._tabViews[slot0._curTabId] = _G[slot8.className].New()
-				slot0._tabViews[slot0._curTabId].config = slot8
+				arg_3_0._tabViews[arg_3_0._curTabId] = _G[iter_3_1.className].New()
+				arg_3_0._tabViews[arg_3_0._curTabId].config = iter_3_1
 			end
 		end
 
-		if slot3 and slot3[slot0._tabContainerId] and slot3[slot0._tabContainerId][slot0._curTabId] then
-			UIBlockMgr.instance:startBlock(slot0._UIBlockKey)
-			slot2:setPathList(slot4)
-			slot2:startLoad(slot0._finishCallback, slot0)
+		local var_3_2 = var_3_1 and var_3_1[arg_3_0._tabContainerId] and var_3_1[arg_3_0._tabContainerId][arg_3_0._curTabId]
+
+		if var_3_2 then
+			UIBlockMgr.instance:startBlock(arg_3_0._UIBlockKey)
+			var_3_0:setPathList(var_3_2)
+			var_3_0:startLoad(arg_3_0._finishCallback, arg_3_0)
 		else
-			logError(string.format("TabView no res: tabContainerId_%d, tabId_%d", slot0._tabContainerId, slot0._curTabId))
+			logError(string.format("TabView no res: tabContainerId_%d, tabId_%d", arg_3_0._tabContainerId, arg_3_0._curTabId))
 		end
 	end
 end
 
-return slot0
+return var_0_0

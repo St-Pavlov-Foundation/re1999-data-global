@@ -1,185 +1,195 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventObjFly", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventObjFly", package.seeall)
 
-slot0 = class("FightTLEventObjFly")
+local var_0_0 = class("FightTLEventObjFly")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0.fly_obj = nil
-	slot0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	slot0.from_entity = slot0.entityMgr:getEntity(slot1.fromId)
-	slot0.to_entity = slot0.entityMgr:getEntity(slot1.toId)
-	slot0.params_arr = slot3
-	slot0._duration = slot2
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.fly_obj = nil
+	arg_1_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	arg_1_0.from_entity = arg_1_0.entityMgr:getEntity(arg_1_1.fromId)
+	arg_1_0.to_entity = arg_1_0.entityMgr:getEntity(arg_1_1.toId)
+	arg_1_0.params_arr = arg_1_3
+	arg_1_0._duration = arg_1_2
 
-	if tonumber(slot3[1]) == 1 then
-		-- Nothing
-	elseif slot4 == 2 and slot0.from_entity and slot0.from_entity:isMySide() then
-		slot0.fly_obj = slot0.entityMgr:getEntity(slot1.fromId).spine:getSpineGO()
-		slot0._attacker = FightHelper.getEntity(FightEntityScene.MySideId)
+	local var_1_0 = tonumber(arg_1_3[1])
 
-		slot0._attacker.skill:_cancelSideRenderOrder()
+	if var_1_0 == 1 then
+		-- block empty
+	elseif var_1_0 == 2 and arg_1_0.from_entity and arg_1_0.from_entity:isMySide() then
+		arg_1_0.fly_obj = arg_1_0.entityMgr:getEntity(arg_1_1.fromId).spine:getSpineGO()
+		arg_1_0._attacker = FightHelper.getEntity(FightEntityScene.MySideId)
+
+		arg_1_0._attacker.skill:_cancelSideRenderOrder()
 	end
 
-	if not slot0.fly_obj then
+	if not arg_1_0.fly_obj then
 		return
 	end
 
-	slot0:calFly(slot1, slot3)
+	arg_1_0:calFly(arg_1_1, arg_1_3)
 end
 
-function slot0.calFly(slot0, slot1, slot2)
-	slot0._fightStepMO = slot1
-	slot4 = 0
-	slot5 = 0
+function var_0_0.calFly(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._fightStepMO = arg_2_1
 
-	if slot2[3] then
-		if string.split(slot2[3], ",")[1] then
-			slot3 = tonumber(slot6[1]) or 0
-		end
+	local var_2_0 = 0
+	local var_2_1 = 0
+	local var_2_2 = 0
 
-		if slot6[2] then
-			slot4 = tonumber(slot6[2]) or slot4
-		end
+	if arg_2_2[3] then
+		local var_2_3 = string.split(arg_2_2[3], ",")
 
-		if slot6[3] then
-			slot5 = tonumber(slot6[3]) or slot5
-		end
+		var_2_0 = var_2_3[1] and tonumber(var_2_3[1]) or var_2_0
+		var_2_1 = var_2_3[2] and tonumber(var_2_3[2]) or var_2_1
+		var_2_2 = var_2_3[3] and tonumber(var_2_3[3]) or var_2_2
 	end
 
-	slot7 = 0
-	slot8 = 0
+	local var_2_4 = 0
+	local var_2_5 = 0
+	local var_2_6 = 0
 
-	if slot2[4] then
-		if string.split(slot2[4], ",")[1] then
-			slot6 = tonumber(slot9[1]) or 0
-		end
+	if arg_2_2[4] then
+		local var_2_7 = string.split(arg_2_2[4], ",")
 
-		if slot9[2] then
-			slot7 = tonumber(slot9[2]) or slot7
-		end
-
-		if slot9[3] then
-			slot8 = tonumber(slot9[3]) or slot8
-		end
+		var_2_4 = var_2_7[1] and tonumber(var_2_7[1]) or var_2_4
+		var_2_5 = var_2_7[2] and tonumber(var_2_7[2]) or var_2_5
+		var_2_6 = var_2_7[3] and tonumber(var_2_7[3]) or var_2_6
 	end
 
-	slot0._easeFunc = slot2[5]
-	slot0._y_offset_cruve = slot2[6]
-	slot0._x_move_cruve = slot2[7]
-	slot0._y_move_cruve = slot2[8]
-	slot0._z_move_cruve = slot2[9]
-	slot0._withRotation = slot2[10] and tonumber(slot2[10]) or 0
+	arg_2_0._easeFunc = arg_2_2[5]
+	arg_2_0._y_offset_cruve = arg_2_2[6]
+	arg_2_0._x_move_cruve = arg_2_2[7]
+	arg_2_0._y_move_cruve = arg_2_2[8]
+	arg_2_0._z_move_cruve = arg_2_2[9]
+	arg_2_0._withRotation = arg_2_2[10] and tonumber(arg_2_2[10]) or 0
 
-	if slot0.from_entity and not slot0.from_entity:isMySide() then
-		slot3 = -slot3
+	if arg_2_0.from_entity and not arg_2_0.from_entity:isMySide() then
+		var_2_0 = -var_2_0
 	end
 
-	slot9, slot10, slot11 = transformhelper.getPos(slot0.fly_obj.transform)
-	slot12 = slot9 + slot3
-	slot13 = slot10 + slot4
-	slot14 = slot11 + slot5
-	slot15 = string.nilorempty(slot2[2]) and 2 or tonumber(slot2[2])
-	slot16, slot17, slot18 = nil
+	local var_2_8, var_2_9, var_2_10 = transformhelper.getPos(arg_2_0.fly_obj.transform)
+	local var_2_11 = var_2_8 + var_2_0
+	local var_2_12 = var_2_9 + var_2_1
+	local var_2_13 = var_2_10 + var_2_2
+	local var_2_14 = string.nilorempty(arg_2_2[2]) and 2 or tonumber(arg_2_2[2])
+	local var_2_15
+	local var_2_16
+	local var_2_17
 
-	if slot1.forcePosX then
-		slot18 = slot1.forcePosZ
-		slot17 = slot1.forcePosY
-		slot16 = slot1.forcePosX
+	if arg_2_1.forcePosX then
+		var_2_15, var_2_16, var_2_17 = arg_2_1.forcePosX, arg_2_1.forcePosY, arg_2_1.forcePosZ
 	else
-		slot16, slot17, slot18 = slot0:calEndPos(slot15, slot6, slot7, slot8)
+		var_2_15, var_2_16, var_2_17 = arg_2_0:calEndPos(var_2_14, var_2_4, var_2_5, var_2_6)
 	end
 
-	slot0._totalFrame = slot0._binder:GetFrameFloatByTime(slot0._duration * FightModel.instance:getSpeed())
-	slot0._startFrame = slot0._binder.CurFrameFloat + 1
+	local var_2_18 = arg_2_0._duration * FightModel.instance:getSpeed()
 
-	slot0:_startFly(slot12, slot13, slot14, slot16, slot17, slot18)
+	arg_2_0._totalFrame = arg_2_0._binder:GetFrameFloatByTime(var_2_18)
+	arg_2_0._startFrame = arg_2_0._binder.CurFrameFloat + 1
+
+	arg_2_0:_startFly(var_2_11, var_2_12, var_2_13, var_2_15, var_2_16, var_2_17)
 end
 
-function slot0._startFly(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0:_setCurveMove(slot0.fly_obj, slot1, slot2, slot3, slot4, slot5, slot6)
+function var_0_0._startFly(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
+	arg_3_0:_setCurveMove(arg_3_0.fly_obj, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
 end
 
-function slot0._setCurveMove(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	if slot0._withRotation == 1 then
-		slot0:_calcRotation(slot1, slot2, slot3, slot4, slot5, slot6, slot7)
+function var_0_0._setCurveMove(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
+	if arg_4_0._withRotation == 1 then
+		arg_4_0:_calcRotation(arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
 	end
 
-	slot0.UnitMoverCurve_comp = MonoHelper.getLuaComFromGo(slot1, UnitMoverCurve)
-	slot0.UnitMoverHandler_comp = MonoHelper.getLuaComFromGo(slot1, UnitMoverHandler)
-	slot8 = MonoHelper.addLuaComOnceToGo(slot1, UnitMoverCurve)
-	slot9 = MonoHelper.addLuaComOnceToGo(slot1, UnitMoverHandler)
+	arg_4_0.UnitMoverCurve_comp = MonoHelper.getLuaComFromGo(arg_4_1, UnitMoverCurve)
+	arg_4_0.UnitMoverHandler_comp = MonoHelper.getLuaComFromGo(arg_4_1, UnitMoverHandler)
 
-	slot9:init(slot1)
-	slot9:addEventListeners()
-	slot8:setXMoveCruve(slot0._x_move_cruve)
-	slot8:setYMoveCruve(slot0._y_move_cruve)
-	slot8:setZMoveCruve(slot0._z_move_cruve)
-	slot8:setCurveParam(slot0._y_offset_cruve)
+	local var_4_0 = MonoHelper.addLuaComOnceToGo(arg_4_1, UnitMoverCurve)
+	local var_4_1 = MonoHelper.addLuaComOnceToGo(arg_4_1, UnitMoverHandler)
 
-	if not string.nilorempty(slot0._easeFunc) then
-		slot8:setEaseType(EaseType.Str2Type(slot0._easeFunc))
+	var_4_1:init(arg_4_1)
+	var_4_1:addEventListeners()
+	var_4_0:setXMoveCruve(arg_4_0._x_move_cruve)
+	var_4_0:setYMoveCruve(arg_4_0._y_move_cruve)
+	var_4_0:setZMoveCruve(arg_4_0._z_move_cruve)
+	var_4_0:setCurveParam(arg_4_0._y_offset_cruve)
+
+	if not string.nilorempty(arg_4_0._easeFunc) then
+		var_4_0:setEaseType(EaseType.Str2Type(arg_4_0._easeFunc))
 	else
-		slot8:setEaseType(nil)
+		var_4_0:setEaseType(nil)
 	end
 
-	slot8:simpleMove(slot2, slot3, slot4, slot5, slot6, slot7, slot0._duration)
+	var_4_0:simpleMove(arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7, arg_4_0._duration)
 end
 
-function slot0._onPosChange(slot0, slot1)
-	if slot0._moverParamDict and slot0._moverParamDict[slot1] then
-		slot3, slot4, slot5 = slot1:getPos()
+function var_0_0._onPosChange(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._moverParamDict and arg_5_0._moverParamDict[arg_5_1]
 
-		slot0:_calcRotation(slot2.target_obj, slot2.startPosX, slot2.startPosY, slot2.startPosZ, slot3, slot4, slot5)
+	if var_5_0 then
+		local var_5_1, var_5_2, var_5_3 = arg_5_1:getPos()
+		local var_5_4 = var_5_0.target_obj
+		local var_5_5 = var_5_0.startPosX
+		local var_5_6 = var_5_0.startPosY
+		local var_5_7 = var_5_0.startPosZ
 
-		slot2.startPosX = slot3
-		slot2.startPosY = slot4
-		slot2.startPosZ = slot5
+		arg_5_0:_calcRotation(var_5_4, var_5_5, var_5_6, var_5_7, var_5_1, var_5_2, var_5_3)
+
+		var_5_0.startPosX = var_5_1
+		var_5_0.startPosY = var_5_2
+		var_5_0.startPosZ = var_5_3
 	end
 end
 
-function slot0._calcRotation(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot1.transform.rotation = Quaternion.LookRotation(Vector3.New(slot5 - slot2, slot6 - slot3, slot7 - slot4), Vector3.up) * Quaternion.AngleAxis(FightHelper.getEffectLookDir(slot0.from_entity:getSide()), Vector3.up) * Quaternion.AngleAxis(90, Vector3.up)
+function var_0_0._calcRotation(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
+	local var_6_0 = FightHelper.getEffectLookDir(arg_6_0.from_entity:getSide())
+	local var_6_1 = Quaternion.LookRotation(Vector3.New(arg_6_5 - arg_6_2, arg_6_6 - arg_6_3, arg_6_7 - arg_6_4), Vector3.up)
+	local var_6_2 = Quaternion.AngleAxis(var_6_0, Vector3.up)
+	local var_6_3 = Quaternion.AngleAxis(90, Vector3.up)
+
+	arg_6_1.transform.rotation = var_6_1 * var_6_2 * var_6_3
 end
 
-function slot0.calEndPos(slot0, slot1, slot2, slot3, slot4)
-	if slot1 == 1 then
-		return slot2, slot3, slot4
-	elseif slot1 == 2 then
-		return slot0:_flyEffectTarget(slot2, slot3, slot4, FightHelper.getEntityWorldCenterPos)
-	elseif slot1 == 3 then
-		return slot0:_flyEffectTarget(slot2, slot3, slot4, false)
+function var_0_0.calEndPos(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	if arg_7_1 == 1 then
+		return arg_7_2, arg_7_3, arg_7_4
+	elseif arg_7_1 == 2 then
+		return arg_7_0:_flyEffectTarget(arg_7_2, arg_7_3, arg_7_4, FightHelper.getEntityWorldCenterPos)
+	elseif arg_7_1 == 3 then
+		return arg_7_0:_flyEffectTarget(arg_7_2, arg_7_3, arg_7_4, false)
 	else
-		return slot0:_flyEffectTarget(slot2, slot3, slot4, FightHelper.getEntityHangPointPos, slot0.params_arr[2])
+		return arg_7_0:_flyEffectTarget(arg_7_2, arg_7_3, arg_7_4, FightHelper.getEntityHangPointPos, arg_7_0.params_arr[2])
 	end
 end
 
-function slot0._flyEffectTarget(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot0.to_entity then
-		slot7, slot8, slot9 = slot4 or FightHelper.getEntityWorldBottomPos(slot0.to_entity, slot5)
+function var_0_0._flyEffectTarget(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
+	if arg_8_0.to_entity then
+		local var_8_0, var_8_1, var_8_2 = (arg_8_4 or FightHelper.getEntityWorldBottomPos)(arg_8_0.to_entity, arg_8_5)
+		local var_8_3 = var_8_0 + (arg_8_0.to_entity:isMySide() and -arg_8_1 or arg_8_1)
+		local var_8_4 = var_8_1 + arg_8_2
+		local var_8_5 = var_8_2 + arg_8_3
 
-		return slot7 + (slot0.to_entity:isMySide() and -slot1 or slot1), slot8 + slot2, slot9 + slot3
+		return var_8_3, var_8_4, var_8_5
 	end
 
-	return slot1, slot2, slot3
+	return arg_8_1, arg_8_2, arg_8_3
 end
 
-function slot0.reset(slot0)
-	slot0:dispose()
+function var_0_0.reset(arg_9_0)
+	arg_9_0:dispose()
 end
 
-function slot0.dispose(slot0)
-	if not gohelper.isNil(slot0.fly_obj) then
-		if not slot0.UnitMoverHandler_comp then
-			MonoHelper.removeLuaComFromGo(slot0.fly_obj, UnitMoverHandler)
+function var_0_0.dispose(arg_10_0)
+	if not gohelper.isNil(arg_10_0.fly_obj) then
+		if not arg_10_0.UnitMoverHandler_comp then
+			MonoHelper.removeLuaComFromGo(arg_10_0.fly_obj, UnitMoverHandler)
 
-			slot0.UnitMoverHandler_comp = nil
+			arg_10_0.UnitMoverHandler_comp = nil
 		end
 
-		if not slot0.UnitMoverCurve_comp then
-			MonoHelper.removeLuaComFromGo(slot0.fly_obj, UnitMoverCurve)
+		if not arg_10_0.UnitMoverCurve_comp then
+			MonoHelper.removeLuaComFromGo(arg_10_0.fly_obj, UnitMoverCurve)
 
-			slot0.UnitMoverCurve_comp = nil
+			arg_10_0.UnitMoverCurve_comp = nil
 		end
 	end
 end
 
-return slot0
+return var_0_0

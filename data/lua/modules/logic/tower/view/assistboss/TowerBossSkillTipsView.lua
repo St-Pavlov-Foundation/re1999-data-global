@@ -1,188 +1,228 @@
-module("modules.logic.tower.view.assistboss.TowerBossSkillTipsView", package.seeall)
+﻿module("modules.logic.tower.view.assistboss.TowerBossSkillTipsView", package.seeall)
 
-slot0 = class("TowerBossSkillTipsView", BaseView)
+local var_0_0 = class("TowerBossSkillTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtpassivename = gohelper.findChildText(slot0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
-	slot0._gopassiveskilltip = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip")
-	slot0._goeffectdesc = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
-	slot0._goeffectdescitem = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
-	slot0._gomask1 = gohelper.findChild(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
-	slot0._simageshadow = gohelper.findChildSingleImage(slot0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
-	slot0._btnclosepassivetip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
-	slot0._passiveskillitems = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	arg_1_0._gopassiveskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip")
+	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
+	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
+	arg_1_0._gomask1 = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
+	arg_1_0._simageshadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
+	arg_1_0._btnclosepassivetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
+	arg_1_0._passiveskillitems = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(slot4))
-		slot5.desc = gohelper.findChildTextMesh(slot5.go, "desctxt")
-		slot5.hyperLinkClick = SkillHelper.addHyperLinkClick(slot5.desc, slot0._onHyperLinkClick, slot0)
-		slot5.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot5.desc.gameObject, FixTmpBreakLine)
-		slot5.on = gohelper.findChild(slot5.go, "#go_passiveskills/passiveskill/on")
-		slot5.unlocktxt = gohelper.findChildText(slot5.go, "#go_passiveskills/passiveskill/unlocktxt")
-		slot5.canvasgroup = gohelper.onceAddComponent(slot5.go, typeof(UnityEngine.CanvasGroup))
-		slot5.connectline = gohelper.findChild(slot5.go, "line")
-		slot0._passiveskillitems[slot4] = slot5
+	for iter_1_0 = 1, 3 do
+		local var_1_0 = arg_1_0:getUserDataTb_()
+
+		var_1_0.go = gohelper.findChild(arg_1_0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(iter_1_0))
+		var_1_0.desc = gohelper.findChildTextMesh(var_1_0.go, "desctxt")
+		var_1_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_1_0.desc, arg_1_0._onHyperLinkClick, arg_1_0)
+		var_1_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0.desc.gameObject, FixTmpBreakLine)
+		var_1_0.on = gohelper.findChild(var_1_0.go, "#go_passiveskills/passiveskill/on")
+		var_1_0.unlocktxt = gohelper.findChildText(var_1_0.go, "#go_passiveskills/passiveskill/unlocktxt")
+		var_1_0.canvasgroup = gohelper.onceAddComponent(var_1_0.go, typeof(UnityEngine.CanvasGroup))
+		var_1_0.connectline = gohelper.findChild(var_1_0.go, "line")
+		arg_1_0._passiveskillitems[iter_1_0] = var_1_0
 	end
 
-	slot0._skillEffectDescItems = slot0:getUserDataTb_()
-	slot0._txtpassivename = gohelper.findChildText(slot0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	arg_1_0._skillEffectDescItems = arg_1_0:getUserDataTb_()
+	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._btnclosepassivetip, slot0._btnclosepassivetipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnclosepassivetip, arg_2_0._btnclosepassivetipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0._btnclosepassivetip)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0._btnclosepassivetip)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onHyperLinkClick(slot0, slot1, slot2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(slot1), slot0.setTipPosCallback, slot0)
+function var_0_0._onHyperLinkClick(arg_5_0, arg_5_1, arg_5_2)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(arg_5_1), arg_5_0.setTipPosCallback, arg_5_0)
 end
 
-slot0.LeftWidth = 470
-slot0.RightWidth = 190
-slot0.TopHeight = 292
-slot0.Interval = 10
+var_0_0.LeftWidth = 470
+var_0_0.RightWidth = 190
+var_0_0.TopHeight = 292
+var_0_0.Interval = 10
 
-function slot0.setTipPosCallback(slot0, slot1, slot2)
-	slot0.rectTrPassive = slot0.rectTrPassive or slot0._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
-	slot5, slot6 = recthelper.uiPosToScreenPos2(slot0.rectTrPassive)
-	slot7, slot8 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(slot5, slot6, slot1, CameraMgr.instance:getUICamera(), nil, )
-	slot2.pivot = CommonBuffTipEnum.Pivot.Right
-	slot12 = slot7
+function var_0_0.setTipPosCallback(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.rectTrPassive = arg_6_0.rectTrPassive or arg_6_0._gopassiveskilltip:GetComponent(gohelper.Type_RectTransform)
 
-	recthelper.setAnchor(slot2, recthelper.getWidth(slot2) <= GameUtil.getViewSize() / 2 + slot7 - uv0.LeftWidth - uv0.Interval and slot12 - uv0.LeftWidth - uv0.Interval or slot12 + uv0.RightWidth + uv0.Interval + slot10, slot8 + uv0.TopHeight)
+	local var_6_0 = GameUtil.getViewSize() / 2
+	local var_6_1, var_6_2 = recthelper.uiPosToScreenPos2(arg_6_0.rectTrPassive)
+	local var_6_3, var_6_4 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_6_1, var_6_2, arg_6_1, CameraMgr.instance:getUICamera(), nil, nil)
+	local var_6_5 = var_6_0 + var_6_3 - var_0_0.LeftWidth - var_0_0.Interval
+	local var_6_6 = recthelper.getWidth(arg_6_2)
+	local var_6_7 = var_6_6 <= var_6_5
+
+	arg_6_2.pivot = CommonBuffTipEnum.Pivot.Right
+
+	local var_6_8 = var_6_3
+	local var_6_9 = var_6_4
+
+	if var_6_7 then
+		var_6_8 = var_6_8 - var_0_0.LeftWidth - var_0_0.Interval
+	else
+		var_6_8 = var_6_8 + var_0_0.RightWidth + var_0_0.Interval + var_6_6
+	end
+
+	local var_6_10 = var_6_9 + var_0_0.TopHeight
+
+	recthelper.setAnchor(arg_6_2, var_6_8, var_6_10)
 end
 
-function slot0._btnclosepassivetipOnClick(slot0)
+function var_0_0._btnclosepassivetipOnClick(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:refreshParam()
+	arg_8_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:refreshParam()
+	arg_9_0:refreshView()
 end
 
-function slot0.refreshParam(slot0)
-	slot0.bossId = slot0.viewParam.bossId
-	slot0.bossMo = TowerAssistBossModel.instance:getById(slot0.bossId)
-	slot0.config = TowerConfig.instance:getAssistBossConfig(slot0.bossId)
+function var_0_0.refreshParam(arg_10_0)
+	arg_10_0.bossId = arg_10_0.viewParam.bossId
+	arg_10_0.bossMo = TowerAssistBossModel.instance:getById(arg_10_0.bossId)
+	arg_10_0.config = TowerConfig.instance:getAssistBossConfig(arg_10_0.bossId)
 end
 
-function slot0.refreshView(slot0)
-	slot0:refreshPassiveSkill()
+function var_0_0.refreshView(arg_11_0)
+	arg_11_0:refreshPassiveSkill()
 end
 
-function slot0.refreshPassiveSkill(slot0)
-	slot0._txtpassivename.text = slot0.config.passiveSkillName
+function var_0_0.refreshPassiveSkill(arg_12_0)
+	local var_12_0 = TowerConfig.instance:getPassiveSKills(arg_12_0.bossId)
 
-	for slot6 = 1, #TowerConfig.instance:getPassiveSKills(slot0.bossId) do
+	arg_12_0._txtpassivename.text = arg_12_0.config.passiveSkillName
+
+	local var_12_1 = {}
+
+	for iter_12_0 = 1, #var_12_0 do
+		local var_12_2 = var_12_0[iter_12_0][1]
+		local var_12_3 = lua_skill.configDict[var_12_2]
+
+		var_12_1[iter_12_0] = FightConfig.instance:getSkillEffectDesc(arg_12_0.config.name, var_12_3)
 	end
 
-	slot3 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion({
-		[slot6] = FightConfig.instance:getSkillEffectDesc(slot0.config.name, lua_skill.configDict[slot1[slot6][1]])
-	})
-	slot4 = {}
-	slot5 = {}
+	local var_12_4 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_12_1)
+	local var_12_5 = {}
+	local var_12_6 = {}
+	local var_12_7 = arg_12_0.bossMo and arg_12_0.bossMo.level or 0
 
-	for slot10, slot11 in ipairs(slot0._passiveskillitems) do
-		if slot1[slot10] and slot1[slot10][1] then
-			gohelper.setActive(slot11.go, true)
+	for iter_12_1, iter_12_2 in ipairs(arg_12_0._passiveskillitems) do
+		local var_12_8 = var_12_0[iter_12_1] and var_12_0[iter_12_1][1]
 
-			slot13 = TowerConfig.instance:isSkillActive(slot0.bossId, slot12, slot0.bossMo and slot0.bossMo.level or 0)
-			slot14 = lua_skill.configDict[slot12]
+		if var_12_8 then
+			gohelper.setActive(iter_12_2.go, true)
 
-			for slot18, slot19 in ipairs(slot3[slot10]) do
-				if HeroSkillModel.instance:canShowSkillTag(SkillConfig.instance:getSkillEffectDescCo(slot19).name) and not slot5[slot21] then
-					slot5[slot21] = true
+			local var_12_9 = TowerConfig.instance:isSkillActive(arg_12_0.bossId, var_12_8, var_12_7)
+			local var_12_10 = lua_skill.configDict[var_12_8]
 
-					if slot20.isSpecialCharacter == 1 then
-						table.insert(slot4, {
-							desc = SkillHelper.buildDesc(slot20.desc),
-							title = slot20.name
+			for iter_12_3, iter_12_4 in ipairs(var_12_4[iter_12_1]) do
+				local var_12_11 = SkillConfig.instance:getSkillEffectDescCo(iter_12_4)
+				local var_12_12 = var_12_11.name
+
+				if HeroSkillModel.instance:canShowSkillTag(var_12_12) and not var_12_6[var_12_12] then
+					var_12_6[var_12_12] = true
+
+					if var_12_11.isSpecialCharacter == 1 then
+						local var_12_13 = var_12_11.desc
+						local var_12_14 = SkillHelper.buildDesc(var_12_13)
+
+						table.insert(var_12_5, {
+							desc = var_12_14,
+							title = var_12_11.name
 						})
 					end
 				end
 			end
 
-			slot15 = SkillHelper.buildDesc(slot2[slot10])
+			local var_12_15 = SkillHelper.buildDesc(var_12_1[iter_12_1])
 
-			if not slot13 then
-				slot11.unlocktxt.text = formatLuaLang("towerboss_skill_get", TowerConfig.instance:getPassiveSkillActiveLev(slot0.bossId, slot12))
+			if not var_12_9 then
+				local var_12_16 = TowerConfig.instance:getPassiveSkillActiveLev(arg_12_0.bossId, var_12_8)
+
+				iter_12_2.unlocktxt.text = formatLuaLang("towerboss_skill_get", var_12_16)
 			else
-				slot11.unlocktxt.text = formatLuaLang("towerboss_skill_order", GameUtil.getRomanNums(slot10))
+				iter_12_2.unlocktxt.text = formatLuaLang("towerboss_skill_order", GameUtil.getRomanNums(iter_12_1))
 			end
 
-			slot11.canvasgroup.alpha = slot13 and 1 or 0.5
+			iter_12_2.canvasgroup.alpha = var_12_9 and 1 or 0.5
 
-			gohelper.setActive(slot11.on, slot13)
+			gohelper.setActive(iter_12_2.on, var_12_9)
 
-			slot11.desc.text = slot15
+			iter_12_2.desc.text = var_12_15
 
-			slot11.fixTmpBreakLine:refreshTmpContent(slot11.desc)
-			gohelper.setActive(slot11.go, true)
-			gohelper.setActive(slot11.connectline, slot10 ~= #slot1)
+			iter_12_2.fixTmpBreakLine:refreshTmpContent(iter_12_2.desc)
+			gohelper.setActive(iter_12_2.go, true)
+			gohelper.setActive(iter_12_2.connectline, iter_12_1 ~= #var_12_0)
 		else
-			gohelper.setActive(slot11.go, false)
+			gohelper.setActive(iter_12_2.go, false)
 		end
 	end
 
-	slot0:_showSkillEffectDesc(slot4)
+	arg_12_0:_showSkillEffectDesc(var_12_5)
 end
 
-function slot0._showSkillEffectDesc(slot0, slot1)
-	gohelper.setActive(slot0._goeffectdesc, slot1 and #slot1 > 0)
+function var_0_0._showSkillEffectDesc(arg_13_0, arg_13_1)
+	gohelper.setActive(arg_13_0._goeffectdesc, arg_13_1 and #arg_13_1 > 0)
 
-	for slot5 = 1, #slot1 do
-		slot6 = slot1[slot5]
-		slot7 = slot0:_getSkillEffectDescItem(slot5)
-		slot7.desc.text = slot6.desc
-		slot7.title.text = SkillHelper.removeRichTag(slot6.title)
+	for iter_13_0 = 1, #arg_13_1 do
+		local var_13_0 = arg_13_1[iter_13_0]
+		local var_13_1 = arg_13_0:_getSkillEffectDescItem(iter_13_0)
 
-		slot7.fixTmpBreakLine:refreshTmpContent(slot7.desc)
-		gohelper.setActive(slot7.go, true)
+		var_13_1.desc.text = var_13_0.desc
+		var_13_1.title.text = SkillHelper.removeRichTag(var_13_0.title)
+
+		var_13_1.fixTmpBreakLine:refreshTmpContent(var_13_1.desc)
+		gohelper.setActive(var_13_1.go, true)
 	end
 
-	for slot5 = #slot1 + 1, #slot0._skillEffectDescItems do
-		gohelper.setActive(slot0._passiveskillitems[slot5].go, false)
+	for iter_13_1 = #arg_13_1 + 1, #arg_13_0._skillEffectDescItems do
+		gohelper.setActive(arg_13_0._passiveskillitems[iter_13_1].go, false)
 	end
 end
 
-function slot0._getSkillEffectDescItem(slot0, slot1)
-	if not slot0._skillEffectDescItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.cloneInPlace(slot0._goeffectdescitem, "descitem" .. slot1)
-		slot2.desc = gohelper.findChildText(slot2.go, "effectdesc")
-		slot2.title = gohelper.findChildText(slot2.go, "titlebg/bg/name")
-		slot2.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(slot2.desc.gameObject, FixTmpBreakLine)
-		slot2.hyperLinkClick = SkillHelper.addHyperLinkClick(slot2.desc, slot0._onHyperLinkClick, slot0)
+function var_0_0._getSkillEffectDescItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._skillEffectDescItems[arg_14_1]
 
-		table.insert(slot0._skillEffectDescItems, slot1, slot2)
+	if not var_14_0 then
+		var_14_0 = arg_14_0:getUserDataTb_()
+		var_14_0.go = gohelper.cloneInPlace(arg_14_0._goeffectdescitem, "descitem" .. arg_14_1)
+		var_14_0.desc = gohelper.findChildText(var_14_0.go, "effectdesc")
+		var_14_0.title = gohelper.findChildText(var_14_0.go, "titlebg/bg/name")
+		var_14_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0.desc.gameObject, FixTmpBreakLine)
+		var_14_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_14_0.desc, arg_14_0._onHyperLinkClick, arg_14_0)
+
+		table.insert(arg_14_0._skillEffectDescItems, arg_14_1, var_14_0)
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

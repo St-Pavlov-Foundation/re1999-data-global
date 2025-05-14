@@ -1,21 +1,21 @@
-module("modules.logic.versionactivity1_2.yaxian.config.YaXianConfig", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.config.YaXianConfig", package.seeall)
 
-slot0 = class("YaXianConfig", BaseConfig)
+local var_0_0 = class("YaXianConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.chapterConfig = nil
-	slot0.chapterId2EpisodeList = nil
-	slot0.mapConfig = nil
-	slot0.interactObjectConfig = nil
-	slot0.episodeConfig = nil
-	slot0.skillConfig = nil
-	slot0.toothConfig = nil
-	slot0.toothUnlockEpisodeIdDict = {}
-	slot0.toothUnlockSkillIdDict = {}
-	slot0.toothUnlockHeroTemplateDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.chapterConfig = nil
+	arg_1_0.chapterId2EpisodeList = nil
+	arg_1_0.mapConfig = nil
+	arg_1_0.interactObjectConfig = nil
+	arg_1_0.episodeConfig = nil
+	arg_1_0.skillConfig = nil
+	arg_1_0.toothConfig = nil
+	arg_1_0.toothUnlockEpisodeIdDict = {}
+	arg_1_0.toothUnlockSkillIdDict = {}
+	arg_1_0.toothUnlockHeroTemplateDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity115_chapter",
 		"activity115_episode",
@@ -27,182 +27,189 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity115_chapter" then
-		slot0.chapterConfig = slot2
-	elseif slot1 == "activity115_episode" then
-		slot0.episodeConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity115_chapter" then
+		arg_3_0.chapterConfig = arg_3_2
+	elseif arg_3_1 == "activity115_episode" then
+		arg_3_0.episodeConfig = arg_3_2
 
-		slot0:initEpisode()
-	elseif slot1 == "activity115_map" then
-		slot0.mapConfig = slot2
-	elseif slot1 == "activity115_interact_object" then
-		slot0.interactObjectConfig = slot2
-	elseif slot1 == "activity115_skill" then
-		slot0.skillConfig = slot2
-	elseif slot1 == "activity115_tooth" then
-		slot0.toothConfig = slot2
+		arg_3_0:initEpisode()
+	elseif arg_3_1 == "activity115_map" then
+		arg_3_0.mapConfig = arg_3_2
+	elseif arg_3_1 == "activity115_interact_object" then
+		arg_3_0.interactObjectConfig = arg_3_2
+	elseif arg_3_1 == "activity115_skill" then
+		arg_3_0.skillConfig = arg_3_2
+	elseif arg_3_1 == "activity115_tooth" then
+		arg_3_0.toothConfig = arg_3_2
 	end
 end
 
-function slot0.initEpisode(slot0)
-	slot0.chapterId2EpisodeList = {}
+function var_0_0.initEpisode(arg_4_0)
+	arg_4_0.chapterId2EpisodeList = {}
 
-	for slot4, slot5 in ipairs(slot0.episodeConfig.configList) do
-		if not slot0.chapterId2EpisodeList[slot5.chapterId] then
-			slot0.chapterId2EpisodeList[slot5.chapterId] = {}
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.episodeConfig.configList) do
+		if not arg_4_0.chapterId2EpisodeList[iter_4_1.chapterId] then
+			arg_4_0.chapterId2EpisodeList[iter_4_1.chapterId] = {}
 		end
 
-		table.insert(slot0.chapterId2EpisodeList[slot5.chapterId], slot5)
+		table.insert(arg_4_0.chapterId2EpisodeList[iter_4_1.chapterId], iter_4_1)
 
-		if slot5.tooth ~= 0 then
-			slot0.toothUnlockEpisodeIdDict[slot5.tooth] = slot5.id
+		if iter_4_1.tooth ~= 0 then
+			arg_4_0.toothUnlockEpisodeIdDict[iter_4_1.tooth] = iter_4_1.id
 
-			if slot5.unlockSkill ~= 0 then
-				slot0.toothUnlockSkillIdDict[slot5.tooth] = slot5.unlockSkill
+			if iter_4_1.unlockSkill ~= 0 then
+				arg_4_0.toothUnlockSkillIdDict[iter_4_1.tooth] = iter_4_1.unlockSkill
 			end
 
-			if slot5.trialTemplate ~= 0 then
-				slot0.toothUnlockHeroTemplateDict[slot5.tooth] = slot5.trialTemplate
+			if iter_4_1.trialTemplate ~= 0 then
+				arg_4_0.toothUnlockHeroTemplateDict[iter_4_1.tooth] = iter_4_1.trialTemplate
 			end
 		end
 	end
 
-	for slot4, slot5 in ipairs(slot0.chapterId2EpisodeList) do
-		table.sort(slot5, function (slot0, slot1)
-			return slot0.id < slot1.id
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0.chapterId2EpisodeList) do
+		table.sort(iter_4_3, function(arg_5_0, arg_5_1)
+			return arg_5_0.id < arg_5_1.id
 		end)
 	end
 end
 
-function slot0.getChapterConfigList(slot0)
-	return slot0.chapterConfig.configList
+function var_0_0.getChapterConfigList(arg_6_0)
+	return arg_6_0.chapterConfig.configList
 end
 
-function slot0.getChapterConfig(slot0, slot1)
-	return slot0.chapterConfig.configDict[YaXianEnum.ActivityId][slot1]
+function var_0_0.getChapterConfig(arg_7_0, arg_7_1)
+	return arg_7_0.chapterConfig.configDict[YaXianEnum.ActivityId][arg_7_1]
 end
 
-function slot0.getMapConfig(slot0, slot1, slot2)
-	if slot0.mapConfig.configDict[slot1] then
-		return slot0.mapConfig.configDict[slot1][slot2]
+function var_0_0.getMapConfig(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0.mapConfig.configDict[arg_8_1] then
+		return arg_8_0.mapConfig.configDict[arg_8_1][arg_8_2]
 	end
 
 	return nil
 end
 
-function slot0.getEpisodeConfig(slot0, slot1, slot2)
-	if slot0.episodeConfig.configDict[slot1] then
-		return slot0.episodeConfig.configDict[slot1][slot2]
+function var_0_0.getEpisodeConfig(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0.episodeConfig.configDict[arg_9_1] then
+		return arg_9_0.episodeConfig.configDict[arg_9_1][arg_9_2]
 	end
 
 	return nil
 end
 
-function slot0.getPreEpisodeConfig(slot0, slot1, slot2)
-	return slot0:getEpisodeConfig(slot1, slot2 - 1)
+function var_0_0.getPreEpisodeConfig(arg_10_0, arg_10_1, arg_10_2)
+	return arg_10_0:getEpisodeConfig(arg_10_1, arg_10_2 - 1)
 end
 
-function slot0.getEpisodeCanFinishInteractCount(slot0, slot1)
-	if not slot1 then
+function var_0_0.getEpisodeCanFinishInteractCount(arg_11_0, arg_11_1)
+	if not arg_11_1 then
 		return 0
 	end
 
-	slot0.episodeCanFinishInteractCountDict = slot0.episodeCanFinishInteractCountDict or {}
+	arg_11_0.episodeCanFinishInteractCountDict = arg_11_0.episodeCanFinishInteractCountDict or {}
 
-	if slot0.episodeCanFinishInteractCountDict[slot1.mapId] then
-		return slot0.episodeCanFinishInteractCountDict[slot1.mapId]
+	if arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId] then
+		return arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId]
 	end
 
-	if not slot0:getMapConfig(slot1.activityId, slot1.mapId) then
-		slot0.episodeCanFinishInteractCountDict[slot1.mapId] = 0
+	local var_11_0 = arg_11_0:getMapConfig(arg_11_1.activityId, arg_11_1.mapId)
+
+	if not var_11_0 then
+		arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId] = 0
 
 		return 0
 	end
 
-	for slot8, slot9 in ipairs(cjson.decode(slot2.objects)) do
-		if slot0:checkInteractCanFinish(slot0:getInteractObjectCo(slot9.actId, slot9.id)) then
-			slot4 = 0 + 1
+	local var_11_1 = cjson.decode(var_11_0.objects)
+	local var_11_2 = 0
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+		if arg_11_0:checkInteractCanFinish(arg_11_0:getInteractObjectCo(iter_11_1.actId, iter_11_1.id)) then
+			var_11_2 = var_11_2 + 1
 		end
 	end
 
-	slot0.episodeCanFinishInteractCountDict[slot1.mapId] = slot4
+	arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId] = var_11_2
 
-	return slot4
+	return var_11_2
 end
 
-function slot0.checkInteractCanFinish(slot0, slot1)
-	return slot1 and slot1.interactType == YaXianGameEnum.InteractType.Enemy
+function var_0_0.checkInteractCanFinish(arg_12_0, arg_12_1)
+	return arg_12_1 and arg_12_1.interactType == YaXianGameEnum.InteractType.Enemy
 end
 
-function slot0.getConditionList(slot0, slot1)
-	if not slot1 then
+function var_0_0.getConditionList(arg_13_0, arg_13_1)
+	if not arg_13_1 then
 		return {}
 	end
 
-	slot2 = GameUtil.splitString2(slot1.extStarCondition, true, "|", "#") or {}
+	local var_13_0 = GameUtil.splitString2(arg_13_1.extStarCondition, true, "|", "#") or {}
 
-	table.insert(slot2, {
+	table.insert(var_13_0, {
 		YaXianGameEnum.ConditionType.PassEpisode
 	})
 
-	return slot2
+	return var_13_0
 end
 
-function slot0.getInteractObjectCo(slot0, slot1, slot2)
-	if slot0.interactObjectConfig.configDict[slot1] then
-		return slot0.interactObjectConfig.configDict[slot1][slot2]
+function var_0_0.getInteractObjectCo(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0.interactObjectConfig.configDict[arg_14_1] then
+		return arg_14_0.interactObjectConfig.configDict[arg_14_1][arg_14_2]
 	end
 
 	return nil
 end
 
-function slot0.getSkillConfig(slot0, slot1, slot2)
-	if slot0.skillConfig.configDict[slot1] then
-		return slot0.skillConfig.configDict[slot1][slot2]
+function var_0_0.getSkillConfig(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0.skillConfig.configDict[arg_15_1] then
+		return arg_15_0.skillConfig.configDict[arg_15_1][arg_15_2]
 	end
 
 	return nil
 end
 
-function slot0.getThroughSkillDistance(slot0)
-	if not slot0.throughSkillDistance then
-		slot0.throughSkillDistance = slot0:getSkillConfig(YaXianEnum.ActivityId, YaXianGameEnum.SkillId.ThroughWall) and tonumber(slot1.param)
+function var_0_0.getThroughSkillDistance(arg_16_0)
+	if not arg_16_0.throughSkillDistance then
+		local var_16_0 = arg_16_0:getSkillConfig(YaXianEnum.ActivityId, YaXianGameEnum.SkillId.ThroughWall)
+
+		arg_16_0.throughSkillDistance = var_16_0 and tonumber(var_16_0.param)
 	end
 
-	return slot0.throughSkillDistance
+	return arg_16_0.throughSkillDistance
 end
 
-function slot0.getToothConfig(slot0, slot1)
-	return slot0.toothConfig.configDict[YaXianEnum.ActivityId][slot1]
+function var_0_0.getToothConfig(arg_17_0, arg_17_1)
+	return arg_17_0.toothConfig.configDict[YaXianEnum.ActivityId][arg_17_1]
 end
 
-function slot0.getToothUnlockEpisode(slot0, slot1)
-	return slot0.toothUnlockEpisodeIdDict and slot0.toothUnlockEpisodeIdDict[slot1]
+function var_0_0.getToothUnlockEpisode(arg_18_0, arg_18_1)
+	return arg_18_0.toothUnlockEpisodeIdDict and arg_18_0.toothUnlockEpisodeIdDict[arg_18_1]
 end
 
-function slot0.getToothUnlockSkill(slot0, slot1)
-	return slot0.toothUnlockSkillIdDict and slot0.toothUnlockSkillIdDict[slot1]
+function var_0_0.getToothUnlockSkill(arg_19_0, arg_19_1)
+	return arg_19_0.toothUnlockSkillIdDict and arg_19_0.toothUnlockSkillIdDict[arg_19_1]
 end
 
-function slot0.getToothUnlockHeroTemplate(slot0, slot1)
-	return slot0.toothUnlockHeroTemplateDict and slot0.toothUnlockHeroTemplateDict[slot1]
+function var_0_0.getToothUnlockHeroTemplate(arg_20_0, arg_20_1)
+	return arg_20_0.toothUnlockHeroTemplateDict and arg_20_0.toothUnlockHeroTemplateDict[arg_20_1]
 end
 
-function slot0.getMaxBonusScore(slot0)
-	if not slot0.maxBonusScore then
-		slot0.maxBonusScore = 0
+function var_0_0.getMaxBonusScore(arg_21_0)
+	if not arg_21_0.maxBonusScore then
+		arg_21_0.maxBonusScore = 0
 
-		for slot4, slot5 in ipairs(lua_activity115_bonus.configList) do
-			if slot0.maxBonusScore < slot5.needScore then
-				slot0.maxBonusScore = slot5.needScore
+		for iter_21_0, iter_21_1 in ipairs(lua_activity115_bonus.configList) do
+			if iter_21_1.needScore > arg_21_0.maxBonusScore then
+				arg_21_0.maxBonusScore = iter_21_1.needScore
 			end
 		end
 	end
 
-	return slot0.maxBonusScore
+	return arg_21_0.maxBonusScore
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

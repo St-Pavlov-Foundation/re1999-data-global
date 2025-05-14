@@ -1,99 +1,113 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventPlayServerEffect", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlayServerEffect", package.seeall)
 
-slot0 = class("FightTLEventPlayServerEffect")
+local var_0_0 = class("FightTLEventPlayServerEffect")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._list = {}
-	slot0._fightStepMO = slot1
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._list = {}
+	arg_1_0._fightStepMO = arg_1_1
 
-	if slot3[1] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.SUMMONEDDELETE)
+	if arg_1_3[1] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.SUMMONEDDELETE)
 	end
 
-	if slot3[2] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.MAGICCIRCLEDELETE)
+	if arg_1_3[2] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.MAGICCIRCLEDELETE)
 	end
 
-	if slot3[3] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.MAGICCIRCLEADD)
+	if arg_1_3[3] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.MAGICCIRCLEADD)
 	end
 
-	if slot3[4] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.MOVE)
+	if arg_1_3[4] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.MOVE)
 	end
 
-	if slot3[5] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.MOVEFRONT)
+	if arg_1_3[5] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.MOVEFRONT)
 	end
 
-	if slot3[6] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.MOVEBACK)
+	if arg_1_3[6] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.MOVEBACK)
 	end
 
-	if slot3[7] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.AVERAGELIFE)
+	if arg_1_3[7] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.AVERAGELIFE)
 	end
 
-	if slot3[8] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.BUFFADD)
+	if arg_1_3[8] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.BUFFADD)
 	end
 
-	if slot3[9] == "1" then
-		slot0:_playEffect(FightEnum.EffectType.BUFFDEL)
+	if arg_1_3[9] == "1" then
+		arg_1_0:_playEffect(FightEnum.EffectType.BUFFDEL)
 	end
 
-	if not string.nilorempty(slot3[10]) then
-		for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
-			if slot8.effectType == FightEnum.EffectType.BUFFADD and lua_skill_buff.configDict[slot8.buff.buddId] and lua_skill_bufftype.configDict[slot10.typeId] and slot11.type == tonumber(slot3[10]) then
-				slot12 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.BUFFADD], slot0._fightStepMO, slot8)
+	if not string.nilorempty(arg_1_3[10]) then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_0._fightStepMO.actEffectMOs) do
+			if iter_1_1.effectType == FightEnum.EffectType.BUFFADD then
+				local var_1_0 = iter_1_1.buff.buddId
+				local var_1_1 = lua_skill_buff.configDict[var_1_0]
+				local var_1_2 = var_1_1 and lua_skill_bufftype.configDict[var_1_1.typeId]
 
-				slot12:onStart()
-				table.insert(slot0._list, slot12)
+				if var_1_2 and var_1_2.type == tonumber(arg_1_3[10]) then
+					local var_1_3 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.BUFFADD], arg_1_0._fightStepMO, iter_1_1)
+
+					var_1_3:onStart()
+					table.insert(arg_1_0._list, var_1_3)
+				end
 			end
 		end
 	end
 
-	if not string.nilorempty(slot3[11]) then
-		for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
-			if slot8.effectType == FightEnum.EffectType.BUFFDEL and lua_skill_buff.configDict[slot8.buff.buddId] and lua_skill_bufftype.configDict[slot10.typeId] and slot11.type == tonumber(slot3[11]) then
-				slot12 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.BUFFDEL], slot0._fightStepMO, slot8)
+	if not string.nilorempty(arg_1_3[11]) then
+		for iter_1_2, iter_1_3 in ipairs(arg_1_0._fightStepMO.actEffectMOs) do
+			if iter_1_3.effectType == FightEnum.EffectType.BUFFDEL then
+				local var_1_4 = iter_1_3.buff.buddId
+				local var_1_5 = lua_skill_buff.configDict[var_1_4]
+				local var_1_6 = var_1_5 and lua_skill_bufftype.configDict[var_1_5.typeId]
 
-				slot12:onStart()
-				table.insert(slot0._list, slot12)
+				if var_1_6 and var_1_6.type == tonumber(arg_1_3[11]) then
+					local var_1_7 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[FightEnum.EffectType.BUFFDEL], arg_1_0._fightStepMO, iter_1_3)
+
+					var_1_7:onStart()
+					table.insert(arg_1_0._list, var_1_7)
+				end
 			end
 		end
 	end
 end
 
-function slot0._playEffect(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._fightStepMO.actEffectMOs) do
-		if slot6.effectType == slot1 then
-			slot7 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[slot1], slot0._fightStepMO, slot6)
+function var_0_0._playEffect(arg_2_0, arg_2_1)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._fightStepMO.actEffectMOs) do
+		if iter_2_1.effectType == arg_2_1 then
+			local var_2_0 = FightWork2Work.New(FightStepBuilder.ActEffectWorkCls[arg_2_1], arg_2_0._fightStepMO, iter_2_1)
 
-			slot7:onStart()
-			table.insert(slot0._list, slot7)
+			var_2_0:onStart()
+			table.insert(arg_2_0._list, var_2_0)
 		end
 	end
 end
 
-function slot0.onSkillEnd(slot0)
-	if slot0._list then
-		for slot4, slot5 in ipairs(slot0._list) do
-			slot5:onStop()
+function var_0_0.onSkillEnd(arg_3_0)
+	if arg_3_0._list then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0._list) do
+			iter_3_1:onStop()
 		end
 
-		slot0._list = nil
+		arg_3_0._list = nil
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_4_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_5_0)
+	return
 end
 
-function slot0.dispose(slot0)
-	slot0:onSkillEnd()
+function var_0_0.dispose(arg_6_0)
+	arg_6_0:onSkillEnd()
 end
 
-return slot0
+return var_0_0

@@ -1,23 +1,24 @@
-module("modules.logic.versionactivity2_4.common.AudioEnum2_4", package.seeall)
+﻿module("modules.logic.versionactivity2_4.common.AudioEnum2_4", package.seeall)
 
-slot0 = AudioEnum
-slot0.VersionActivity2_4Dungeon = {
+local var_0_0 = AudioEnum
+
+var_0_0.VersionActivity2_4Dungeon = {
 	play_ui_diqiu_complete = 20240060,
 	play_ui_lvhu_clue_write_2 = 20240058,
 	enterview_tab_switch = 20240063,
 	play_ui_diqiu_open = 20240057,
 	play_ui_mln_page_turn = 20240059
 }
-slot0.Bakaluoer = {
+var_0_0.Bakaluoer = {
 	play_ui_diqiu_settle_accounts = 20240050,
 	play_ui_diqiu_unlock = 20240051,
 	play_ui_diqiu_perfect = 20240056,
 	play_ui_diqiu_count_down = 20240049
 }
-slot0.Act181 = {
+var_0_0.Act181 = {
 	play_ui_diqiu_xueye_open = 20240052
 }
-slot0.Act178 = {
+var_0_0.Act178 = {
 	act178_audio8 = 20249008,
 	act178_audio14 = 20249014,
 	bgm_city = 20240047,
@@ -42,7 +43,7 @@ slot0.Act178 = {
 	act178_audio2 = 20249002,
 	act178_audio11 = 20249011
 }
-slot0.WuErLiXi = {
+var_0_0.WuErLiXi = {
 	play_ui_diqiu_put = 20246004,
 	bgm_wuerliximapgame = 20240045,
 	play_ui_diqiu_jinru = 20246001,
@@ -53,11 +54,11 @@ slot0.WuErLiXi = {
 	play_ui_diqiu_signal = 20246002,
 	play_ui_diqiu_enable = 20246006
 }
-slot0.PlayerCard = {
+var_0_0.PlayerCard = {
 	play_ui_diqiu_card_open_2 = 20240062,
 	play_ui_diqiu_card_open_1 = 20240061
 }
-slot0.NewTurnabck = {
+var_0_0.NewTurnabck = {
 	play_ui_call_back_Interface_entry_04 = 20249025,
 	play_ui_call_back_letter_expansion = 20249021,
 	play_ui_call_back_Interface_entry_01 = 20249022,
@@ -65,30 +66,33 @@ slot0.NewTurnabck = {
 	play_ui_call_back_Interface_entry_02 = 20249023,
 	play_ui_call_back_Interface_entry_03 = 20249024
 }
-slot2 = {
+
+local var_0_1 = {}
+local var_0_2 = {
 	play_ui_diqiu_yure_ring_20249041 = 20249041,
 	play_ui_diqiu_yure_click_20249044 = 20249044,
 	play_ui_diqiu_yure_success_20249043 = 20249043,
-	play_ui_mln_remove_effect_20249042 = slot0.Meilanni.play_ui_mln_remove_effect
+	play_ui_mln_remove_effect_20249042 = var_0_0.Meilanni.play_ui_mln_remove_effect
 }
 
-for slot6, slot7 in pairs({}) do
-	if isDebugBuild and slot0.Bgm[slot6] then
-		logError("AudioEnum.Bgm重复定义" .. slot6)
+for iter_0_0, iter_0_1 in pairs(var_0_1) do
+	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
+		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
 	end
 
-	slot0.Bgm[slot6] = slot7
+	var_0_0.Bgm[iter_0_0] = iter_0_1
 end
 
-for slot6, slot7 in pairs(slot2) do
-	if isDebugBuild and slot0.UI[slot6] then
-		logError("AudioEnum.UI重复定义" .. slot6)
+for iter_0_2, iter_0_3 in pairs(var_0_2) do
+	if isDebugBuild and var_0_0.UI[iter_0_2] then
+		logError("AudioEnum.UI重复定义" .. iter_0_2)
 	end
 
-	slot0.UI[slot6] = slot7
+	var_0_0.UI[iter_0_2] = iter_0_3
 end
 
-function slot0.activate()
+function var_0_0.activate()
+	return
 end
 
-return slot0
+return var_0_0

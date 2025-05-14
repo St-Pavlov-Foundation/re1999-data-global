@@ -1,44 +1,44 @@
-module("modules.logic.room.entity.RoomBlockCanPlaceEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomBlockCanPlaceEntity", package.seeall)
 
-slot0 = class("RoomBlockCanPlaceEntity", RoomBaseEntity)
+local var_0_0 = class("RoomBlockCanPlaceEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+	arg_1_0.id = arg_1_1
+	arg_1_0.entityId = arg_1_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_2_0)
 	return SceneTag.Untagged
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.StaticContainerGOKey)
-	slot0.goTrs = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_3_0.staticContainerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.StaticContainerGOKey)
+	arg_3_0.goTrs = arg_3_1.transform
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_3_0, arg_3_1)
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
-	slot0:addComp("placeBuildingEffectComp", RoomPlaceBuildingEffectComp)
-	slot0:addComp("placeBlockEffectComp", RoomPlaceBlockEffectComp)
-	slot0:addComp("transportPathLinkEffectComp", RoomTransportPathLinkEffectComp)
-	slot0:addComp("transportPathEffectComp", RoomTransportPathEffectComp)
+function var_0_0.initComponents(arg_4_0)
+	arg_4_0:addComp("effect", RoomEffectComp)
+	arg_4_0:addComp("placeBuildingEffectComp", RoomPlaceBuildingEffectComp)
+	arg_4_0:addComp("placeBlockEffectComp", RoomPlaceBlockEffectComp)
+	arg_4_0:addComp("transportPathLinkEffectComp", RoomTransportPathLinkEffectComp)
+	arg_4_0:addComp("transportPathEffectComp", RoomTransportPathEffectComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_5_0)
+	var_0_0.super.onStart(arg_5_0)
 end
 
-function slot0.setLocalPos(slot0, slot1, slot2, slot3)
-	transformhelper.setLocalPos(slot0.goTrs, slot1, slot2, slot3)
+function var_0_0.setLocalPos(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	transformhelper.setLocalPos(arg_6_0.goTrs, arg_6_1, arg_6_2, arg_6_3)
 end
 
-function slot0.getMO(slot0)
+function var_0_0.getMO(arg_7_0)
 	return nil
 end
 
-return slot0
+return var_0_0

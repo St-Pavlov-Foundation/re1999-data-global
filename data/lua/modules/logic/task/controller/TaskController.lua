@@ -1,33 +1,36 @@
-module("modules.logic.task.controller.TaskController", package.seeall)
+﻿module("modules.logic.task.controller.TaskController", package.seeall)
 
-slot0 = class("TaskController", BaseController)
+local var_0_0 = class("TaskController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.enterTaskView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.TaskView, slot1)
+function var_0_0.enterTaskView(arg_5_0, arg_5_1)
+	ViewMgr.instance:openView(ViewName.TaskView, arg_5_1)
 end
 
-function slot0.enterTaskViewCheckUnlock(slot0)
+function var_0_0.enterTaskViewCheckUnlock(arg_6_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Task) then
-		uv0.instance:enterTaskView()
+		var_0_0.instance:enterTaskView()
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Task))
 	end
 end
 
-function slot0._onDailyRefresh(slot0)
+function var_0_0._onDailyRefresh(arg_7_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Daily,
 		TaskEnum.TaskType.Weekly,
@@ -35,16 +38,16 @@ function slot0._onDailyRefresh(slot0)
 	})
 end
 
-function slot0.getRewardByLine(slot0, slot1, slot2, slot3)
-	if not slot0._priority then
-		slot0._priority = 10000
+function var_0_0.getRewardByLine(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_0._priority then
+		arg_8_0._priority = 10000
 	end
 
-	slot0._priority = slot0._priority - 1
+	arg_8_0._priority = arg_8_0._priority - 1
 
-	PopupController.instance:addPopupView(slot0._priority, slot2, slot3)
+	PopupController.instance:addPopupView(arg_8_0._priority, arg_8_2, arg_8_3)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

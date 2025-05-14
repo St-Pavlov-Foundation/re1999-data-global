@@ -1,149 +1,179 @@
-module("modules.logic.chessgame.game.interact.ChessInteractBase", package.seeall)
+﻿module("modules.logic.chessgame.game.interact.ChessInteractBase", package.seeall)
 
-slot0 = class("ChessInteractBase")
+local var_0_0 = class("ChessInteractBase")
 
-function slot0.init(slot0, slot1)
-	slot0._target = slot1
-	slot0._isMoving = false
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._target = arg_1_1
+	arg_1_0._isMoving = false
 end
 
-function slot0.onSelectCall(slot0)
+function var_0_0.onSelectCall(arg_2_0)
+	return
 end
 
-function slot0.onCancelSelect(slot0)
+function var_0_0.onCancelSelect(arg_3_0)
+	return
 end
 
-function slot0.onSelectPos(slot0, slot1, slot2)
+function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
+	return
 end
 
-function slot0.updatePos(slot0, slot1, slot2)
-	slot0._srcY = slot0._target.mo.posY
-	slot0._srcX = slot0._target.mo.posX
-	slot0._target.mo.posX = slot1
-	slot0._target.mo.posY = slot2
+function var_0_0.updatePos(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._srcX, arg_5_0._srcY = arg_5_0._target.mo.posX, arg_5_0._target.mo.posY
+	arg_5_0._target.mo.posX = arg_5_1
+	arg_5_0._target.mo.posY = arg_5_2
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3, slot4)
-	if slot0._target.avatar then
-		slot6 = ChessGameHelper.nodePosToWorldPos({
+function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	if arg_6_0._target.avatar then
+		local var_6_0 = {
 			z = 0,
-			x = slot1,
-			y = slot2
-		})
+			x = arg_6_1,
+			y = arg_6_2
+		}
+		local var_6_1 = ChessGameHelper.nodePosToWorldPos(var_6_0)
+		local var_6_2 = arg_6_0._target.avatar
 
-		slot0:killMoveTween()
+		arg_6_0:killMoveTween()
 
-		slot0._moveCallback = slot3
-		slot0._moveCallbackObj = slot4
-		slot0._isMoving = true
-		slot0._tweenIdMoveScene = ZProj.TweenHelper.DOLocalMove(slot0._target.avatar.sceneTf, slot6.x, slot6.y, slot6.z, 0.225, slot0.onMoveCompleted, slot0, nil, EaseType.Linear)
+		arg_6_0._moveCallback = arg_6_3
+		arg_6_0._moveCallbackObj = arg_6_4
+		arg_6_0._isMoving = true
+		arg_6_0._tweenIdMoveScene = ZProj.TweenHelper.DOLocalMove(var_6_2.sceneTf, var_6_1.x, var_6_1.y, var_6_1.z, 0.225, arg_6_0.onMoveCompleted, arg_6_0, nil, EaseType.Linear)
 
-		slot0:onMoveBegin()
-		slot0:faceTo(ChessGameHelper.ToDirection(slot0._srcX or slot0._target.mo.posX, slot0._srcY or slot0._target.mo.posY, slot1, slot2))
-		slot0:_setDirNodeShow(false)
-	elseif slot3 then
-		slot3(slot4)
+		arg_6_0:onMoveBegin()
+
+		local var_6_3 = ChessGameHelper.ToDirection(arg_6_0._srcX or arg_6_0._target.mo.posX, arg_6_0._srcY or arg_6_0._target.mo.posY, arg_6_1, arg_6_2)
+
+		arg_6_0:faceTo(var_6_3)
+		arg_6_0:_setDirNodeShow(false)
+	elseif arg_6_3 then
+		arg_6_3(arg_6_4)
 	end
 end
 
-function slot0.faceTo(slot0, slot1)
-	slot0._curDir = slot1
+function var_0_0.faceTo(arg_7_0, arg_7_1)
+	arg_7_0._curDir = arg_7_1
 
-	if slot0._target.avatar then
-		if not ChessInteractComp.DirectionSet[slot0._curDir] then
+	if arg_7_0._target.avatar then
+		if not ChessInteractComp.DirectionSet[arg_7_0._curDir] then
 			return
 		end
 
-		for slot5, slot6 in ipairs(ChessInteractComp.DirectionList) do
-			if not gohelper.isNil(slot0._target.avatar["goFaceTo" .. slot6]) then
-				gohelper.setActive(slot7, slot1 == slot6)
+		for iter_7_0, iter_7_1 in ipairs(ChessInteractComp.DirectionList) do
+			local var_7_0 = arg_7_0._target.avatar["goFaceTo" .. iter_7_1]
+
+			if not gohelper.isNil(var_7_0) then
+				local var_7_1 = arg_7_1 == iter_7_1
+
+				gohelper.setActive(var_7_0, var_7_1)
 			end
 
-			if not gohelper.isNil(slot0._target.avatar["goMovetoDir" .. slot6]) then
-				gohelper.setActive(slot8, slot1 == slot6)
+			local var_7_2 = arg_7_0._target.avatar["goMovetoDir" .. iter_7_1]
+
+			if not gohelper.isNil(var_7_2) then
+				gohelper.setActive(var_7_2, arg_7_1 == iter_7_1)
 			end
 		end
 
-		if slot0._target.mo then
-			slot0._target.mo:setDirection(slot1)
+		if arg_7_0._target.mo then
+			arg_7_0._target.mo:setDirection(arg_7_1)
 		end
 	end
 
-	if slot0._target.chessEffectObj and slot0._target.chessEffectObj.refreshEffectFaceTo then
-		slot0._target.chessEffectObj:refreshEffectFaceTo()
+	if arg_7_0._target.chessEffectObj and arg_7_0._target.chessEffectObj.refreshEffectFaceTo then
+		arg_7_0._target.chessEffectObj:refreshEffectFaceTo()
 	end
 end
 
-function slot0._setDirNodeShow(slot0, slot1)
-	if slot0._target.avatar and not gohelper.isNil(slot0._target.avatar.goNextDirection) then
-		gohelper.setActive(slot2, slot1)
+function var_0_0._setDirNodeShow(arg_8_0, arg_8_1)
+	if arg_8_0._target.avatar then
+		local var_8_0 = arg_8_0._target.avatar.goNextDirection
+
+		if not gohelper.isNil(var_8_0) then
+			gohelper.setActive(var_8_0, arg_8_1)
+		end
 	end
 end
 
-function slot0.onMoveBegin(slot0)
+function var_0_0.onMoveBegin(arg_9_0)
+	return
 end
 
-function slot0.onMoveCompleted(slot0)
-	slot0:_setDirNodeShow(true)
-	slot0:refreshAlarmArea()
+function var_0_0.onMoveCompleted(arg_10_0)
+	arg_10_0:_setDirNodeShow(true)
+	arg_10_0:refreshAlarmArea()
 
-	if slot0._moveCallback then
-		slot0._moveCallback = nil
-		slot0._moveCallbackObj = nil
-		slot0._isMoving = false
+	if arg_10_0._moveCallback then
+		local var_10_0 = arg_10_0._moveCallback
+		local var_10_1 = arg_10_0._moveCallbackObj
 
-		slot0._moveCallback(slot0._moveCallbackObj)
+		arg_10_0._moveCallback = nil
+		arg_10_0._moveCallbackObj = nil
+		arg_10_0._isMoving = false
+
+		var_10_0(var_10_1)
 	end
 end
 
-function slot0.onDrawAlert(slot0, slot1)
+function var_0_0.onDrawAlert(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.setAlertActive(slot0, slot1)
+function var_0_0.setAlertActive(arg_12_0, arg_12_1)
+	return
 end
 
-function slot0.refreshAlarmArea(slot0)
+function var_0_0.refreshAlarmArea(arg_13_0)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
-	if (slot0._curDir or slot0._target.mo.direction or slot0._target.mo:getConfig().dir) ~= nil and slot1 ~= 0 then
-		slot0:faceTo(slot1)
+function var_0_0.onAvatarLoaded(arg_14_0)
+	local var_14_0 = arg_14_0._curDir or arg_14_0._target.mo.direction or arg_14_0._target.mo:getConfig().dir
+
+	if var_14_0 ~= nil and var_14_0 ~= 0 then
+		arg_14_0:faceTo(var_14_0)
 	end
 
-	if not slot0._target.avatar.loader then
+	local var_14_1 = arg_14_0._target.avatar.loader
+
+	if not var_14_1 then
 		return
 	end
 
-	if not gohelper.isNil(slot2:getInstGO()) then
-		slot0._animSelf = slot3:GetComponent(typeof(UnityEngine.Animator))
+	local var_14_2 = var_14_1:getInstGO()
+
+	if not gohelper.isNil(var_14_2) then
+		arg_14_0._animSelf = var_14_2:GetComponent(typeof(UnityEngine.Animator))
 	end
 end
 
-function slot0.showDestoryAni(slot0, slot1, slot2)
-	if slot0._animSelf then
-		slot0._animSelf:Update(0)
-		slot0._animSelf:Play("close", 0, 0)
+function var_0_0.showDestoryAni(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0._animSelf then
+		arg_15_0._animSelf:Update(0)
+		arg_15_0._animSelf:Play("close", 0, 0)
 
-		slot0._closeAnimCallback = slot1
-		slot0._closeAnimCallbackObj = slot2
+		arg_15_0._closeAnimCallback = arg_15_1
+		arg_15_0._closeAnimCallbackObj = arg_15_2
 
-		TaskDispatcher.runDelay(slot0._closeAnimCallback, slot0._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
+		TaskDispatcher.runDelay(arg_15_0._closeAnimCallback, arg_15_0._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
 	else
-		slot1(slot2)
+		arg_15_1(arg_15_2)
 	end
 end
 
-function slot0.killMoveTween(slot0)
-	if slot0._tweenIdMoveScene then
-		ZProj.TweenHelper.KillById(slot0._tweenIdMoveScene)
+function var_0_0.killMoveTween(arg_16_0)
+	if arg_16_0._tweenIdMoveScene then
+		ZProj.TweenHelper.KillById(arg_16_0._tweenIdMoveScene)
 
-		slot0._tweenIdMoveScene = nil
+		arg_16_0._tweenIdMoveScene = nil
 	end
 end
 
-function slot0.dispose(slot0)
-	slot0:killMoveTween()
-	TaskDispatcher.cancelTask(slot0._closeAnimCallback, slot0._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
+function var_0_0.dispose(arg_17_0)
+	arg_17_0:killMoveTween()
+	TaskDispatcher.cancelTask(arg_17_0._closeAnimCallback, arg_17_0._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
 end
 
-return slot0
+return var_0_0

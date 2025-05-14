@@ -1,251 +1,286 @@
-module("modules.logic.room.view.layout.RoomLayoutView", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutView", package.seeall)
 
-slot0 = class("RoomLayoutView", BaseView)
+local var_0_0 = class("RoomLayoutView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagemaskbg = gohelper.findChildSingleImage(slot0.viewGO, "go_normalroot/#simage_maskbg")
-	slot0._gotitleLayout = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_titleLayout")
-	slot0._gotitleCopy = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_titleCopy")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "go_normalroot/#scroll_ItemList")
-	slot0._gotipsusing = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_tips_using")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/Btn/#btn_cancel")
-	slot0._btncover = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/Btn/#btn_cover")
-	slot0._btnchange = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/Btn/#btn_change")
-	slot0._btnnew = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/Btn/#btn_new")
-	slot0._btnvisitcover = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/Btn/#btn_visitcover")
-	slot0._btnsave = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/Btn/#btn_save")
-	slot0._btnsharecode = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/#btn_sharecode")
-	slot0._txtshareCount = gohelper.findChildText(slot0.viewGO, "go_normalroot/rightTop/#txt_shareCount")
-	slot0._btnshareCount = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/rightTop/#txt_shareCount/#btn_shareCount")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_normalroot/#simage_maskbg")
+	arg_1_0._gotitleLayout = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_titleLayout")
+	arg_1_0._gotitleCopy = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_titleCopy")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_normalroot/#scroll_ItemList")
+	arg_1_0._gotipsusing = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#go_tips_using")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Btn/#btn_cancel")
+	arg_1_0._btncover = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Btn/#btn_cover")
+	arg_1_0._btnchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Btn/#btn_change")
+	arg_1_0._btnnew = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Btn/#btn_new")
+	arg_1_0._btnvisitcover = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Btn/#btn_visitcover")
+	arg_1_0._btnsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Btn/#btn_save")
+	arg_1_0._btnsharecode = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/#btn_sharecode")
+	arg_1_0._txtshareCount = gohelper.findChildText(arg_1_0.viewGO, "go_normalroot/rightTop/#txt_shareCount")
+	arg_1_0._btnshareCount = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/rightTop/#txt_shareCount/#btn_shareCount")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
-	slot0._btncover:AddClickListener(slot0._btncoverOnClick, slot0)
-	slot0._btnchange:AddClickListener(slot0._btnchangeOnClick, slot0)
-	slot0._btnnew:AddClickListener(slot0._btnnewOnClick, slot0)
-	slot0._btnvisitcover:AddClickListener(slot0._btnvisitcoverOnClick, slot0)
-	slot0._btnsave:AddClickListener(slot0._btnsaveOnClick, slot0)
-	slot0._btnsharecode:AddClickListener(slot0._btnsharecodeOnClick, slot0)
-	slot0._btnshareCount:AddClickListener(slot0._btnshareCountOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+	arg_2_0._btncover:AddClickListener(arg_2_0._btncoverOnClick, arg_2_0)
+	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
+	arg_2_0._btnnew:AddClickListener(arg_2_0._btnnewOnClick, arg_2_0)
+	arg_2_0._btnvisitcover:AddClickListener(arg_2_0._btnvisitcoverOnClick, arg_2_0)
+	arg_2_0._btnsave:AddClickListener(arg_2_0._btnsaveOnClick, arg_2_0)
+	arg_2_0._btnsharecode:AddClickListener(arg_2_0._btnsharecodeOnClick, arg_2_0)
+	arg_2_0._btnshareCount:AddClickListener(arg_2_0._btnshareCountOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncancel:RemoveClickListener()
-	slot0._btncover:RemoveClickListener()
-	slot0._btnchange:RemoveClickListener()
-	slot0._btnnew:RemoveClickListener()
-	slot0._btnvisitcover:RemoveClickListener()
-	slot0._btnsave:RemoveClickListener()
-	slot0._btnsharecode:RemoveClickListener()
-	slot0._btnshareCount:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btncover:RemoveClickListener()
+	arg_3_0._btnchange:RemoveClickListener()
+	arg_3_0._btnnew:RemoveClickListener()
+	arg_3_0._btnvisitcover:RemoveClickListener()
+	arg_3_0._btnsave:RemoveClickListener()
+	arg_3_0._btnsharecode:RemoveClickListener()
+	arg_3_0._btnshareCount:RemoveClickListener()
 end
 
-function slot0._btnsaveOnClick(slot0)
-	slot0:_onOpenCreateTipsView()
+function var_0_0._btnsaveOnClick(arg_4_0)
+	arg_4_0:_onOpenCreateTipsView()
 end
 
-function slot0._btnshareCountOnClick(slot0)
+function var_0_0._btnshareCountOnClick(arg_5_0)
 	ViewMgr.instance:openView(ViewName.RoomTipsView, {
 		type = RoomTipsView.ViewType.PlanShare,
 		shareCount = RoomLayoutModel.instance:getUseCount()
 	})
 end
 
-function slot0._btnsharecodeOnClick(slot0)
+function var_0_0._btnsharecodeOnClick(arg_6_0)
 	ViewMgr.instance:openView(ViewName.RoomLayoutFindShareView)
 end
 
-function slot0._btnvisitcoverOnClick(slot0)
-	slot0:_onOpenCreateTipsView(slot0:_getCoverTitleStr())
+function var_0_0._btnvisitcoverOnClick(arg_7_0)
+	local var_7_0 = arg_7_0:_getCoverTitleStr()
+
+	arg_7_0:_onOpenCreateTipsView(var_7_0)
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._btncoverOnClick(slot0)
-	slot0:_onOpenCreateTipsView(slot0:_getCoverTitleStr())
+function var_0_0._btncoverOnClick(arg_9_0)
+	local var_9_0 = arg_9_0:_getCoverTitleStr()
+
+	arg_9_0:_onOpenCreateTipsView(var_9_0)
 end
 
-function slot0._btnchangeOnClick(slot0)
-	if not RoomLayoutListModel.instance:getSelectMO() then
+function var_0_0._btnchangeOnClick(arg_10_0)
+	local var_10_0 = RoomLayoutListModel.instance:getSelectMO()
+
+	if not var_10_0 then
 		return
 	end
 
-	if (RoomCharacterModel.instance:getConfirmCharacterCount() or 0) - (RoomCharacterModel.instance:getMaxCharacterCount(slot1.buildingDegree) or 0) > 0 then
+	local var_10_1 = RoomCharacterModel.instance:getMaxCharacterCount(var_10_0.buildingDegree) or 0
+	local var_10_2 = (RoomCharacterModel.instance:getConfirmCharacterCount() or 0) - var_10_1
+	local var_10_3 = var_10_0.id
+
+	if var_10_2 > 0 then
 		ViewMgr.instance:openView(ViewName.RoomCharacterPlaceInfoView, {
-			needRemoveCount = slot4,
-			sureCallback = slot0._confirmSwitchPlanCallback,
-			callbackObj = slot0,
+			needRemoveCount = var_10_2,
+			sureCallback = arg_10_0._confirmSwitchPlanCallback,
+			callbackObj = arg_10_0,
 			callbackParam = {
-				switchPlanId = slot1.id
+				switchPlanId = var_10_3
 			}
 		})
 	else
-		slot0:_sendSwitchRoomPlan(slot5)
+		arg_10_0:_sendSwitchRoomPlan(var_10_3)
 	end
 end
 
-function slot0._btnnewOnClick(slot0)
-	slot0:_onOpenCreateTipsView()
+function var_0_0._btnnewOnClick(arg_11_0)
+	arg_11_0:_onOpenCreateTipsView()
 end
 
-function slot0._confirmSwitchPlanCallback(slot0, slot1)
-	slot0:_sendSwitchRoomPlan(slot1.switchPlanId)
+function var_0_0._confirmSwitchPlanCallback(arg_12_0, arg_12_1)
+	arg_12_0:_sendSwitchRoomPlan(arg_12_1.switchPlanId)
 end
 
-function slot0._sendSwitchRoomPlan(slot0, slot1)
-	RoomLayoutController.instance:sendSwitchRoomPlanRequest(slot1)
+function var_0_0._sendSwitchRoomPlan(arg_13_0, arg_13_1)
+	RoomLayoutController.instance:sendSwitchRoomPlanRequest(arg_13_1)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animator = slot0.viewGO:GetComponent(RoomEnum.ComponentType.Animator)
-	slot0._gorightTop = gohelper.findChild(slot0.viewGO, "go_normalroot/rightTop")
+function var_0_0._editableInitView(arg_14_0)
+	arg_14_0._animator = arg_14_0.viewGO:GetComponent(RoomEnum.ComponentType.Animator)
+	arg_14_0._gorightTop = gohelper.findChild(arg_14_0.viewGO, "go_normalroot/rightTop")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_15_0)
+	return
 end
 
-function slot0._getCoverTitleStr(slot0)
-	if RoomLayoutListModel.instance:getSelectMO() and slot1:isSharing() then
+function var_0_0._getCoverTitleStr(arg_16_0)
+	local var_16_0 = RoomLayoutListModel.instance:getSelectMO()
+
+	if var_16_0 and var_16_0:isSharing() then
 		return luaLang("room_layoutplan_cover_sharecode_tips")
 	end
 
 	return luaLang("room_layoutplan_cover_tips")
 end
 
-function slot0._onOpenCreateTipsView(slot0, slot1)
-	if RoomLayoutListModel.instance:getSelectMO() then
-		RoomLayoutController.instance:openCreateTipsView(slot1, false, slot2.id ~= RoomEnum.LayoutUsedPlanId and RoomController.instance:isVisitMode(), slot0._onCreateCallblck, slot0)
+function var_0_0._onOpenCreateTipsView(arg_17_0, arg_17_1)
+	local var_17_0 = RoomLayoutListModel.instance:getSelectMO()
+
+	if var_17_0 then
+		local var_17_1 = var_17_0.id ~= RoomEnum.LayoutUsedPlanId and RoomController.instance:isVisitMode()
+
+		RoomLayoutController.instance:openCreateTipsView(arg_17_1, false, var_17_1, arg_17_0._onCreateCallblck, arg_17_0)
 	end
 end
 
-function slot0._onCreateCallblck(slot0, slot1)
+function var_0_0._onCreateCallblck(arg_18_0, arg_18_1)
+	local var_18_0 = RoomLayoutListModel.instance:getSelectMO()
+
 	if not RoomController.instance:isVisitMode() then
-		RoomLayoutController.instance:sendCreateRpc(RoomLayoutListModel.instance:getSelectMO(), slot1)
+		RoomLayoutController.instance:sendCreateRpc(var_18_0, arg_18_1)
 
 		return
 	end
 
-	slot0._isVisitCopyRpcSelect = slot1
+	arg_18_0._isVisitCopyRpcSelect = arg_18_1
 
 	if RoomController.instance:isVisitShareMode() then
-		if RoomLayoutModel.instance:getCanUseShareCount() <= 0 then
+		local var_18_1 = RoomLayoutModel.instance:getCanUseShareCount()
+
+		if var_18_1 <= 0 then
 			GameFacade.showToast(RoomEnum.Toast.LayoutPlanUseShareCodeNotNum)
 
 			return
 		end
 
-		if slot3 <= CommonConfig.instance:getConstNum(ConstEnum.RoomPlanCanUseShareTipNum) then
-			GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanCanUseShareCount, MsgBoxEnum.BoxType.Yes_No, slot0._checkVisitCharacterPlaceCount, nil, , slot0, nil, , slot3)
+		if var_18_1 <= CommonConfig.instance:getConstNum(ConstEnum.RoomPlanCanUseShareTipNum) then
+			GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanCanUseShareCount, MsgBoxEnum.BoxType.Yes_No, arg_18_0._checkVisitCharacterPlaceCount, nil, nil, arg_18_0, nil, nil, var_18_1)
 
 			return
 		end
 	end
 
-	slot0:_checkVisitCharacterPlaceCount()
+	arg_18_0:_checkVisitCharacterPlaceCount()
 end
 
-function slot0._checkVisitCharacterPlaceCount(slot0)
-	slot1 = RoomLayoutListModel.instance:getSelectMO()
+function var_0_0._checkVisitCharacterPlaceCount(arg_19_0)
+	local var_19_0 = RoomLayoutListModel.instance:getSelectMO()
 
-	if slot0._isVisitCopyRpcSelect or slot1 and slot1.id == RoomEnum.LayoutUsedPlanId then
-		slot3, slot4 = RoomLayoutHelper.findHasBlockBuildingInfos(RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode()) and slot2.infos, slot2 and slot2.buildingInfos)
-		slot5, slot6 = RoomLayoutHelper.sunDegreeInfos(slot3, slot4)
-		slot9 = RoomModel.instance:getObInfo()
+	if arg_19_0._isVisitCopyRpcSelect or var_19_0 and var_19_0.id == RoomEnum.LayoutUsedPlanId then
+		local var_19_1 = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
+		local var_19_2, var_19_3 = RoomLayoutHelper.findHasBlockBuildingInfos(var_19_1 and var_19_1.infos, var_19_1 and var_19_1.buildingInfos)
+		local var_19_4, var_19_5 = RoomLayoutHelper.sunDegreeInfos(var_19_2, var_19_3)
+		local var_19_6 = RoomModel.instance:getRoomLevel()
+		local var_19_7 = RoomCharacterModel.instance:getMaxCharacterCount(var_19_4, var_19_6) or 0
+		local var_19_8 = RoomModel.instance:getObInfo()
+		local var_19_9 = RoomModel.instance:getCharacterList()
+		local var_19_10 = #var_19_9 - var_19_7
 
-		if #RoomModel.instance:getCharacterList() - (RoomCharacterModel.instance:getMaxCharacterCount(slot5, RoomModel.instance:getRoomLevel()) or 0) > 0 then
+		if var_19_10 > 0 then
 			ViewMgr.instance:openView(ViewName.RoomCharacterPlaceInfoView, {
 				notUpdateMapModel = true,
-				needRemoveCount = slot11,
-				sureCallback = slot0._sendVisitCopyRpc,
-				callbackObj = slot0,
-				roomCharacterMOList = slot10
+				needRemoveCount = var_19_10,
+				sureCallback = arg_19_0._sendVisitCopyRpc,
+				callbackObj = arg_19_0,
+				roomCharacterMOList = var_19_9
 			})
 
 			return
 		end
 	end
 
-	slot0:_sendVisitCopyRpc()
+	arg_19_0:_sendVisitCopyRpc()
 end
 
-function slot0._sendVisitCopyRpc(slot0)
-	RoomLayoutController.instance:sendVisitCopyRpc(RoomLayoutListModel.instance:getSelectMO(), slot0._isVisitCopyRpcSelect)
-	slot0:closeThis()
+function var_0_0._sendVisitCopyRpc(arg_20_0)
+	local var_20_0 = RoomLayoutListModel.instance:getSelectMO()
+
+	RoomLayoutController.instance:sendVisitCopyRpc(var_20_0, arg_20_0._isVisitCopyRpcSelect)
+	arg_20_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomLayoutController.instance, RoomEvent.UISelectLayoutPlanItem, slot0._onUISelectLayoutPlan, slot0)
+function var_0_0.onOpen(arg_21_0)
+	arg_21_0:addEventCb(RoomLayoutController.instance, RoomEvent.UISelectLayoutPlanItem, arg_21_0._onUISelectLayoutPlan, arg_21_0)
 	RoomLayoutListModel.instance:initScelect(RoomController.instance:isVisitMode())
-	slot0:_onUISelectLayoutPlan()
-	slot0.viewContainer:movetoSelect()
+	arg_21_0:_onUISelectLayoutPlan()
+	arg_21_0.viewContainer:movetoSelect()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_22_0)
+	return
 end
 
-function slot0._onUISelectLayoutPlan(slot0)
-	slot0:_showButUI()
+function var_0_0._onUISelectLayoutPlan(arg_23_0)
+	arg_23_0:_showButUI()
 end
 
-function slot0._showButUI(slot0)
-	slot0._isObMode = RoomController.instance:isObMode()
-	slot0._isVisitMode = RoomController.instance:isVisitMode()
-	slot2 = true
-	slot0._isEmpty = true
+function var_0_0._showButUI(arg_24_0)
+	arg_24_0._isObMode = RoomController.instance:isObMode()
+	arg_24_0._isVisitMode = RoomController.instance:isVisitMode()
 
-	if RoomLayoutListModel.instance:getSelectMO() == nil or slot1:isUse() and slot0._isObMode then
-		slot2 = false
+	local var_24_0 = RoomLayoutListModel.instance:getSelectMO()
+	local var_24_1 = true
+
+	arg_24_0._isEmpty = true
+
+	if var_24_0 == nil or var_24_0:isUse() and arg_24_0._isObMode then
+		var_24_1 = false
 	else
-		slot0._isEmpty = slot1:isEmpty()
+		arg_24_0._isEmpty = var_24_0:isEmpty()
 	end
 
-	gohelper.setActive(slot0._gotitleLayout, slot0._isObMode)
-	gohelper.setActive(slot0._gotitleCopy, slot0._isVisitMode)
-	gohelper.setActive(slot0._gorightTop, slot0._isObMode)
+	gohelper.setActive(arg_24_0._gotitleLayout, arg_24_0._isObMode)
+	gohelper.setActive(arg_24_0._gotitleCopy, arg_24_0._isVisitMode)
+	gohelper.setActive(arg_24_0._gorightTop, arg_24_0._isObMode)
 
-	slot0._isLastShowBtn = slot2
+	local var_24_2 = arg_24_0._isLastShowBtn ~= var_24_1 and arg_24_0._isLastShowBtn ~= nil
 
-	if slot0._isLastShowBtn ~= slot2 and slot0._isLastShowBtn ~= nil then
-		if slot2 then
-			slot0:_onShowButUI()
+	arg_24_0._isLastShowBtn = var_24_1
+
+	if var_24_2 then
+		if var_24_1 then
+			arg_24_0:_onShowButUI()
 		end
 
-		gohelper.setActive(slot0._gotipsusing, true)
-		slot0._animator:Play(slot2 and "switch_btn" or "switch_tips")
-		TaskDispatcher.cancelTask(slot0._onShowButUI, slot0)
-		TaskDispatcher.runDelay(slot0._onShowButUI, slot0, 0.5)
+		gohelper.setActive(arg_24_0._gotipsusing, true)
+		arg_24_0._animator:Play(var_24_1 and "switch_btn" or "switch_tips")
+		TaskDispatcher.cancelTask(arg_24_0._onShowButUI, arg_24_0)
+		TaskDispatcher.runDelay(arg_24_0._onShowButUI, arg_24_0, 0.5)
 	else
-		slot0:_onShowButUI()
+		arg_24_0:_onShowButUI()
 	end
 
-	slot0._txtshareCount.text = RoomLayoutModel.instance:getUseCount()
+	arg_24_0._txtshareCount.text = RoomLayoutModel.instance:getUseCount()
 end
 
-function slot0._onShowButUI(slot0)
-	slot1 = RoomController.instance:isObMode()
-	slot2 = RoomController.instance:isVisitMode()
-	slot4 = slot0._isEmpty
+function var_0_0._onShowButUI(arg_25_0)
+	local var_25_0 = RoomController.instance:isObMode()
+	local var_25_1 = RoomController.instance:isVisitMode()
+	local var_25_2 = arg_25_0._isLastShowBtn
+	local var_25_3 = arg_25_0._isEmpty
 
-	gohelper.setActive(slot0._btncancel, slot0._isLastShowBtn and slot2)
-	gohelper.setActive(slot0._btncover, slot3 and slot1 and not slot4)
-	gohelper.setActive(slot0._btnvisitcover, slot3 and slot2 and not slot4)
-	gohelper.setActive(slot0._btnnew, slot3 and slot1 and slot4)
-	gohelper.setActive(slot0._btnsave, slot3 and slot2 and slot4)
-	gohelper.setActive(slot0._btnchange, slot3 and slot1 and not slot4)
-	gohelper.setActive(slot0._gotipsusing, not slot3)
-	gohelper.setActive(slot0._btnsharecode, slot1)
+	gohelper.setActive(arg_25_0._btncancel, var_25_2 and var_25_1)
+	gohelper.setActive(arg_25_0._btncover, var_25_2 and var_25_0 and not var_25_3)
+	gohelper.setActive(arg_25_0._btnvisitcover, var_25_2 and var_25_1 and not var_25_3)
+	gohelper.setActive(arg_25_0._btnnew, var_25_2 and var_25_0 and var_25_3)
+	gohelper.setActive(arg_25_0._btnsave, var_25_2 and var_25_1 and var_25_3)
+	gohelper.setActive(arg_25_0._btnchange, var_25_2 and var_25_0 and not var_25_3)
+	gohelper.setActive(arg_25_0._gotipsusing, not var_25_2)
+	gohelper.setActive(arg_25_0._btnsharecode, var_25_0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onShowButUI, slot0)
+function var_0_0.onDestroyView(arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0._onShowButUI, arg_26_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.ResumeAtmosphereEffect)
 end
 
-return slot0
+return var_0_0

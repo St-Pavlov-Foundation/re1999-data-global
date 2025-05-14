@@ -1,19 +1,20 @@
-module("modules.logic.fight.system.work.FightWorkEffectShieldChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectShieldChange", package.seeall)
 
-slot0 = class("FightWorkEffectShieldChange", FightEffectBase)
+local var_0_0 = class("FightWorkEffectShieldChange", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot2 = slot0._actEffectMO.effectNum
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+	local var_1_1 = arg_1_0._actEffectMO.effectNum
 
-	if FightHelper.getEntity(slot0._actEffectMO.targetId) and slot1.nameUI and slot2 > 0 then
-		slot1.nameUI:addHp(slot2)
-		slot1.nameUI:setShield(0)
-		FightFloatMgr.instance:float(slot1.id, FightEnum.FloatType.heal, slot2)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, slot1, slot2)
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, slot1, 0)
+	if var_1_0 and var_1_0.nameUI and var_1_1 > 0 then
+		var_1_0.nameUI:addHp(var_1_1)
+		var_1_0.nameUI:setShield(0)
+		FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.heal, var_1_1)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, var_1_1)
+		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, var_1_0, 0)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

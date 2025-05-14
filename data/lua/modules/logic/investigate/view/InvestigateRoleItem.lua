@@ -1,116 +1,126 @@
-module("modules.logic.investigate.view.InvestigateRoleItem", package.seeall)
+﻿module("modules.logic.investigate.view.InvestigateRoleItem", package.seeall)
 
-slot0 = class("InvestigateRoleItem", ListScrollCellExtend)
+local var_0_0 = class("InvestigateRoleItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._simagerole = gohelper.findChildSingleImage(slot0.viewGO, "role")
-	slot0._golocked = gohelper.findChild(slot0.viewGO, "locked")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "clickarea")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "progress")
-	slot0._goprogresitem = gohelper.findChild(slot0.viewGO, "progress/item")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "reddot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.viewGO, "role")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "locked")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "clickarea")
+	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "progress")
+	arg_1_0._goprogresitem = gohelper.findChild(arg_1_0.viewGO, "progress/item")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "reddot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	if not slot0._isUnlocked then
+function var_0_0._btnclickOnClick(arg_4_0)
+	if not arg_4_0._isUnlocked then
 		return
 	end
 
 	InvestigateController.instance:openInvestigateOpinionTabView({
-		mo = slot0._mo
+		mo = arg_4_0._mo
 	})
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gounlockEffect = gohelper.findChild(slot0.viewGO, "#unlock")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._gounlockEffect = gohelper.findChild(arg_5_0.viewGO, "#unlock")
 
-	slot0:addEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, slot0._onLinkedOpinionSuccess, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewCall, slot0)
+	arg_5_0:addEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, arg_5_0._onLinkedOpinionSuccess, arg_5_0)
+	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_5_0._onCloseViewCall, arg_5_0)
 end
 
-function slot0._onCloseViewCall(slot0, slot1)
-	if slot1 == ViewName.InvestigateOpinionTabView then
-		-- Nothing
+function var_0_0._onCloseViewCall(arg_6_0, arg_6_1)
+	if arg_6_1 == ViewName.InvestigateOpinionTabView then
+		-- block empty
 	end
 end
 
-function slot0._isShowRedDot(slot0)
-	return slot0._isUnlocked and InvestigateController.showInfoRedDot(slot0._mo.id)
+function var_0_0._isShowRedDot(arg_7_0)
+	return arg_7_0._isUnlocked and InvestigateController.showInfoRedDot(arg_7_0._mo.id)
 end
 
-function slot0._onLinkedOpinionSuccess(slot0)
-	slot0:_updateProgress()
+function var_0_0._onLinkedOpinionSuccess(arg_8_0)
+	arg_8_0:_updateProgress()
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_9_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_10_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._isUnlocked = slot1.episode == 0 or DungeonModel.instance:hasPassLevel(slot1.episode)
+function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
+	arg_11_0._mo = arg_11_1
+	arg_11_0._isUnlocked = arg_11_1.episode == 0 or DungeonModel.instance:hasPassLevel(arg_11_1.episode)
 
-	gohelper.setActive(slot0._simagerole, slot0._isUnlocked)
-	gohelper.setActive(slot0._golocked, not slot0._isUnlocked)
+	gohelper.setActive(arg_11_0._simagerole, arg_11_0._isUnlocked)
+	gohelper.setActive(arg_11_0._golocked, not arg_11_0._isUnlocked)
 
-	if slot0._isUnlocked and not InvestigateController.hasOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, slot0._mo.id) then
-		gohelper.setActive(slot0._gounlockEffect, slot0._isUnlocked)
-		InvestigateController.setOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, slot0._mo.id)
+	if arg_11_0._isUnlocked and not InvestigateController.hasOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, arg_11_0._mo.id) then
+		gohelper.setActive(arg_11_0._gounlockEffect, arg_11_0._isUnlocked)
+		InvestigateController.setOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, arg_11_0._mo.id)
 	end
 
-	if slot0._isUnlocked then
-		slot0._simagerole:LoadImage(slot1.icon)
+	if arg_11_0._isUnlocked then
+		arg_11_0._simagerole:LoadImage(arg_11_1.icon)
 	end
 
-	slot0:_initOpinionProgress()
+	arg_11_0:_initOpinionProgress()
 end
 
-function slot0._initOpinionProgress(slot0)
-	slot0._progressItemList = slot0:getUserDataTb_()
+function var_0_0._initOpinionProgress(arg_12_0)
+	arg_12_0._progressItemList = arg_12_0:getUserDataTb_()
 
-	gohelper.CreateObjList(slot0, slot0._onItemShow, InvestigateConfig.instance:getInvestigateRelatedClueInfos(slot0._mo.id), slot0._goprogress, slot0._goprogresitem)
-	slot0:_updateProgress()
+	local var_12_0 = InvestigateConfig.instance:getInvestigateRelatedClueInfos(arg_12_0._mo.id)
+
+	gohelper.CreateObjList(arg_12_0, arg_12_0._onItemShow, var_12_0, arg_12_0._goprogress, arg_12_0._goprogresitem)
+	arg_12_0:_updateProgress()
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot0._progressItemList[slot3] = slot4
-	slot4.unfinished = gohelper.findChild(slot1, "unfinished")
-	slot4.finished = gohelper.findChild(slot1, "finished")
-	slot4.light = gohelper.findChild(slot1, "light")
-	slot4.reddot = gohelper.findChild(slot1, "reddot")
-	slot4.config = slot2
+function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = arg_13_0:getUserDataTb_()
+
+	arg_13_0._progressItemList[arg_13_3] = var_13_0
+	var_13_0.unfinished = gohelper.findChild(arg_13_1, "unfinished")
+	var_13_0.finished = gohelper.findChild(arg_13_1, "finished")
+	var_13_0.light = gohelper.findChild(arg_13_1, "light")
+	var_13_0.reddot = gohelper.findChild(arg_13_1, "reddot")
+	var_13_0.config = arg_13_2
 end
 
-function slot0._updateProgress(slot0)
-	for slot4, slot5 in ipairs(slot0._progressItemList) do
-		slot6 = slot5.config.id
-		slot7 = InvestigateOpinionModel.instance:getLinkedStatus(slot6)
+function var_0_0._updateProgress(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._progressItemList) do
+		local var_14_0 = iter_14_1.config.id
+		local var_14_1 = InvestigateOpinionModel.instance:getLinkedStatus(var_14_0)
 
-		gohelper.setActive(slot5.unfinished, not slot7)
-		gohelper.setActive(slot5.finished, slot7)
-		gohelper.setActive(slot5.reddot, InvestigateOpinionModel.instance:isUnlocked(slot6) and slot0._isUnlocked and not slot7)
+		gohelper.setActive(iter_14_1.unfinished, not var_14_1)
+		gohelper.setActive(iter_14_1.finished, var_14_1)
+
+		local var_14_2 = InvestigateOpinionModel.instance:isUnlocked(var_14_0) and arg_14_0._isUnlocked
+
+		gohelper.setActive(iter_14_1.reddot, var_14_2 and not var_14_1)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

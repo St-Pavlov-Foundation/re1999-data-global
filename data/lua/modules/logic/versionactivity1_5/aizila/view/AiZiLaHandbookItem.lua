@@ -1,56 +1,64 @@
-module("modules.logic.versionactivity1_5.aizila.view.AiZiLaHandbookItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaHandbookItem", package.seeall)
 
-slot0 = class("AiZiLaHandbookItem", AiZiLaGoodsItem)
+local var_0_0 = class("AiZiLaHandbookItem", AiZiLaGoodsItem)
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._mo then
-		AiZiLaHandbookListModel.instance:setSelect(slot0._mo.itemId)
+function var_0_0._btnclickOnClick(arg_1_0)
+	if arg_1_0._mo then
+		AiZiLaHandbookListModel.instance:setSelect(arg_1_0._mo.itemId)
 		AiZiLaController.instance:dispatchEvent(AiZiLaEvent.SelectItem)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._canvasGroup = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_CanvasGroup)
-	slot0._goimagerare = slot0._imagerare.gameObject
-	slot0._goimageicon = slot0._imageicon.gameObject
-	slot0._goimagecountBG = slot0._imagecountBG.gameObject
-	slot0._lastGray = false
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._canvasGroup = gohelper.onceAddComponent(arg_2_0.viewGO, gohelper.Type_CanvasGroup)
+	arg_2_0._goimagerare = arg_2_0._imagerare.gameObject
+	arg_2_0._goimageicon = arg_2_0._imageicon.gameObject
+	arg_2_0._goimagecountBG = arg_2_0._imagecountBG.gameObject
+	arg_2_0._lastGray = false
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_3_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txtcount.text = slot1:getQuantity()
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0:_refreshIcon(slot1.itemId)
-	slot0:_refreshGray(not AiZiLaModel.instance:isCollectItemId(slot1.itemId))
+	local var_5_0 = arg_5_1:getQuantity()
+
+	arg_5_0._txtcount.text = var_5_0
+
+	arg_5_0:_refreshIcon(arg_5_1.itemId)
+	arg_5_0:_refreshGray(not AiZiLaModel.instance:isCollectItemId(arg_5_1.itemId))
 end
 
-function slot0._refreshGray(slot0, slot1)
-	if slot0._lastGray ~= (slot1 and true or false) then
-		slot0._lastGray = slot2
-		slot0._canvasGroup.alpha = slot2 and 0.75 or 1
+function var_0_0._refreshGray(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1 and true or false
 
-		slot0:_setGrayMode(slot0._goimagerare, slot2)
-		slot0:_setGrayMode(slot0._goimageicon, slot2)
-		slot0:_setGrayMode(slot0._goimagecountBG, slot2)
+	if arg_6_0._lastGray ~= var_6_0 then
+		arg_6_0._lastGray = var_6_0
+		arg_6_0._canvasGroup.alpha = var_6_0 and 0.75 or 1
+
+		arg_6_0:_setGrayMode(arg_6_0._goimagerare, var_6_0)
+		arg_6_0:_setGrayMode(arg_6_0._goimageicon, var_6_0)
+		arg_6_0:_setGrayMode(arg_6_0._goimagecountBG, var_6_0)
 	end
 end
 
-function slot0._setGrayMode(slot0, slot1, slot2)
-	if slot2 then
-		ZProj.UGUIHelper.SetGrayFactor(slot1, 0.8)
+function var_0_0._setGrayMode(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_2 then
+		ZProj.UGUIHelper.SetGrayFactor(arg_7_1, 0.8)
 	else
-		ZProj.UGUIHelper.SetGrayscale(slot1, false)
+		ZProj.UGUIHelper.SetGrayscale(arg_7_1, false)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

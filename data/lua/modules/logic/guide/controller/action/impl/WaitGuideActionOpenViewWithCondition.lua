@@ -1,65 +1,78 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewWithCondition", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewWithCondition", package.seeall)
 
-slot0 = class("WaitGuideActionOpenViewWithCondition", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionOpenViewWithCondition", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot0._viewName = ViewName[slot2[1]]
-	slot0._conditionParam = slot2[3]
-	slot0._conditionCheckFun = slot0[slot2[2]]
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	if ViewMgr.instance:isOpen(slot0._viewName) and slot0._conditionCheckFun(slot0._conditionParam) then
-		slot0:onDone(true)
+	arg_1_0._viewName = ViewName[var_1_0[1]]
+
+	local var_1_1 = var_1_0[2]
+
+	arg_1_0._conditionParam = var_1_0[3]
+	arg_1_0._conditionCheckFun = arg_1_0[var_1_1]
+
+	if ViewMgr.instance:isOpen(arg_1_0._viewName) and arg_1_0._conditionCheckFun(arg_1_0._conditionParam) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenView, arg_1_0)
 end
 
-function slot0._checkOpenView(slot0, slot1, slot2)
-	if slot0._viewName == slot1 and slot0._conditionCheckFun(slot0._conditionParam) then
-		slot0:clearWork()
-		slot0:onDone(true)
+function var_0_0._checkOpenView(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_0._viewName == arg_2_1 and arg_2_0._conditionCheckFun(arg_2_0._conditionParam) then
+		arg_2_0:clearWork()
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
+function var_0_0.clearWork(arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0._checkOpenView, arg_3_0)
 end
 
-function slot0.manyFailure()
+function var_0_0.manyFailure()
 	if GuideModel.instance:getDoingGuideId() then
 		return
 	end
 
-	if not (DungeonModel.instance.curLookEpisodeId and lua_episode.configDict[slot1]) then
+	local var_4_0 = DungeonModel.instance.curLookEpisodeId
+	local var_4_1 = var_4_0 and lua_episode.configDict[var_4_0]
+
+	if not var_4_1 then
 		return
 	end
 
-	if DungeonConfig.instance:getChapterCO(slot2.chapterId).type ~= DungeonEnum.ChapterType.Normal then
+	if DungeonConfig.instance:getChapterCO(var_4_1.chapterId).type ~= DungeonEnum.ChapterType.Normal then
 		return
 	end
 
-	if DungeonModel.instance:hasPassLevel(slot1) then
+	if DungeonModel.instance:hasPassLevel(var_4_0) then
 		return
 	end
 
-	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.DungeonFailure .. PlayerModel.instance:getPlayinfo().userId .. slot1, 0) < 3 then
+	local var_4_2 = PlayerPrefsKey.DungeonFailure .. PlayerModel.instance:getPlayinfo().userId .. var_4_0
+
+	if PlayerPrefsHelper.getNumber(var_4_2, 0) < 3 then
 		return
 	end
 
 	return true
 end
 
-function slot0.enterFightSubEntity()
-	if not FightDataHelper.entityMgr:getMyNormalList() or #slot0 < 3 then
+function var_0_0.enterFightSubEntity()
+	local var_5_0 = FightDataHelper.entityMgr:getMyNormalList()
+
+	if not var_5_0 or #var_5_0 < 3 then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getMySubList() or #slot1 == 0 then
+	local var_5_1 = FightDataHelper.entityMgr:getMySubList()
+
+	if not var_5_1 or #var_5_1 == 0 then
 		return
 	end
 
@@ -70,53 +83,63 @@ function slot0.enterFightSubEntity()
 	return true
 end
 
-function slot0.clearedOneBattle()
-	if not WeekWalkModel.instance:getMapInfo(201) then
+function var_0_0.clearedOneBattle()
+	local var_6_0 = WeekWalkModel.instance:getMapInfo(201)
+
+	if not var_6_0 then
 		return
 	end
 
-	slot1, slot2 = slot0:getCurStarInfo()
+	local var_6_1, var_6_2 = var_6_0:getCurStarInfo()
 
-	return slot1 > 0
+	return var_6_1 > 0
 end
 
-function slot0.remainStars()
-	if not WeekWalkModel.instance:getCurMapInfo() or slot0.isFinish <= 0 then
+function var_0_0.remainStars()
+	local var_7_0 = WeekWalkModel.instance:getCurMapInfo()
+
+	if not var_7_0 or var_7_0.isFinish <= 0 then
 		return
 	end
 
-	slot1, slot2 = slot0:getCurStarInfo()
+	local var_7_1, var_7_2 = var_7_0:getCurStarInfo()
 
-	return slot1 ~= slot2
+	return var_7_1 ~= var_7_2
 end
 
-function slot0.weekWalkFinishLayer()
-	if not WeekWalkModel.instance:getCurMapInfo() or slot0.isFinish <= 0 then
+function var_0_0.weekWalkFinishLayer()
+	local var_8_0 = WeekWalkModel.instance:getCurMapInfo()
+
+	if not var_8_0 or var_8_0.isFinish <= 0 then
 		return
 	end
 
 	return true
 end
 
-function slot0.checkFirstPosHasEquip()
-	slot2 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(0).equipUid and slot1[1]
+function var_0_0.checkFirstPosHasEquip()
+	local var_9_0 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(0).equipUid
+	local var_9_1 = var_9_0 and var_9_0[1]
 
-	if slot2 and EquipModel.instance:getEquip(slot2) then
+	if var_9_1 and EquipModel.instance:getEquip(var_9_1) then
 		return true
 	end
 
 	return false
 end
 
-function slot0.enterWeekWalkMap(slot0)
-	return WeekWalkModel.instance:getCurMapId() == tonumber(slot0)
+function var_0_0.enterWeekWalkMap(arg_10_0)
+	return WeekWalkModel.instance:getCurMapId() == tonumber(arg_10_0)
 end
 
-function slot0.enterWeekWalkBattle(slot0)
-	return DungeonConfig.instance:getChapterCO(DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId).chapterId).type == DungeonEnum.ChapterType.WeekWalk and WeekWalkModel.instance:getCurMapId() == tonumber(slot0)
+function var_0_0.enterWeekWalkBattle(arg_11_0)
+	local var_11_0 = HeroGroupModel.instance.episodeId
+	local var_11_1 = DungeonConfig.instance:getEpisodeCO(var_11_0)
+
+	return DungeonConfig.instance:getChapterCO(var_11_1.chapterId).type == DungeonEnum.ChapterType.WeekWalk and WeekWalkModel.instance:getCurMapId() == tonumber(arg_11_0)
 end
 
-function slot0.checkBuildingPutInObMode(slot0)
+function var_0_0.checkBuildingPutInObMode(arg_12_0)
 	if not RoomController.instance:isObMode() then
 		return
 	end
@@ -125,7 +148,7 @@ function slot0.checkBuildingPutInObMode(slot0)
 		return
 	end
 
-	if not RoomInventoryBuildingModel.instance:checkBuildingPut(slot0) then
+	if not RoomInventoryBuildingModel.instance:checkBuildingPut(arg_12_0) then
 		GameFacade.showToast(ToastEnum.WaitGuideActionOpen)
 
 		return false
@@ -134,27 +157,32 @@ function slot0.checkBuildingPutInObMode(slot0)
 	return true
 end
 
-function slot0.isMainMode()
-	if not DungeonModel.instance.curLookChapterId then
+function var_0_0.isMainMode()
+	local var_13_0 = DungeonModel.instance.curLookChapterId
+
+	if not var_13_0 then
 		return false
 	end
 
-	return DungeonConfig.instance:getChapterCO(slot0).type == DungeonEnum.ChapterType.Normal
+	return DungeonConfig.instance:getChapterCO(var_13_0).type == DungeonEnum.ChapterType.Normal
 end
 
-function slot0.isHardMode()
-	return DungeonConfig.instance:getChapterCO(DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId).chapterId).type == DungeonEnum.ChapterType.Hard
+function var_0_0.isHardMode()
+	local var_14_0 = HeroGroupModel.instance.episodeId
+	local var_14_1 = DungeonConfig.instance:getEpisodeCO(var_14_0)
+
+	return DungeonConfig.instance:getChapterCO(var_14_1.chapterId).type == DungeonEnum.ChapterType.Hard
 end
 
-function slot0.isEditMode()
+function var_0_0.isEditMode()
 	return RoomController.instance:isEditMode()
 end
 
-function slot0.isObMode()
+function var_0_0.isObMode()
 	return RoomController.instance:isObMode()
 end
 
-function slot0.buildingStrengthen()
+function var_0_0.buildingStrengthen()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
 		return
 	end
@@ -167,8 +195,10 @@ function slot0.buildingStrengthen()
 		return false
 	end
 
-	for slot6, slot7 in ipairs(RoomMapBuildingModel.instance:getBuildingMOList()) do
-		if slot7.buildingId == 2002 then
+	local var_17_0 = RoomMapBuildingModel.instance:getBuildingMOList()
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		if iter_17_1.buildingId == 2002 then
 			return true
 		end
 	end
@@ -176,60 +206,73 @@ function slot0.buildingStrengthen()
 	return false
 end
 
-function slot0.openSeasonDiscount()
+function var_0_0.openSeasonDiscount()
 	return Activity104Model.instance:isEnterSpecial()
 end
 
-function slot0.checkAct114CanGuide()
+function var_0_0.checkAct114CanGuide()
 	return Activity114Model.instance:have114StoryFlow()
 end
 
-function slot0.checkActivity1_2DungeonBuildingNum()
-	return VersionActivity1_2DungeonModel.instance:getBuildingGainList() and #slot0 > 0
+function var_0_0.checkActivity1_2DungeonBuildingNum()
+	local var_20_0 = VersionActivity1_2DungeonModel.instance:getBuildingGainList()
+
+	return var_20_0 and #var_20_0 > 0
 end
 
-function slot0.checkActivity1_2DungeonTrapPutting()
-	return VersionActivity1_2DungeonModel.instance:getTrapPutting() and slot0 ~= 0
+function var_0_0.checkActivity1_2DungeonTrapPutting()
+	local var_21_0 = VersionActivity1_2DungeonModel.instance:getTrapPutting()
+
+	return var_21_0 and var_21_0 ~= 0
 end
 
-function slot0.check1_2DungeonCollectAllNote()
+function var_0_0.check1_2DungeonCollectAllNote()
 	return VersionActivity1_2NoteModel.instance:isCollectedAllNote()
 end
 
-function slot0.checkInEliminateEpisode(slot0)
-	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(slot0)
+function var_0_0.checkInEliminateEpisode(arg_23_0)
+	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(arg_23_0)
 end
 
-function slot0.checkInWindows(slot0)
+function var_0_0.checkInWindows(arg_24_0)
 	return BootNativeUtil.isWindows()
 end
 
-function slot0.enterWuErLiXiMap(slot0)
-	return WuErLiXiMapModel.instance:getCurMapId() == tonumber(slot0)
+function var_0_0.enterWuErLiXiMap(arg_25_0)
+	return WuErLiXiMapModel.instance:getCurMapId() == tonumber(arg_25_0)
 end
 
-function slot0.enterFeiLinShiDuoMap(slot0)
-	return FeiLinShiDuoGameModel.instance:getCurMapId() == tonumber(slot0)
+function var_0_0.enterFeiLinShiDuoMap(arg_26_0)
+	return FeiLinShiDuoGameModel.instance:getCurMapId() == tonumber(arg_26_0)
 end
 
-function slot0.isOpenEpisode(slot0)
-	return LiangYueModel.instance:getCurEpisodeId() == tonumber(slot0)
+function var_0_0.isOpenEpisode(arg_27_0)
+	return LiangYueModel.instance:getCurEpisodeId() == tonumber(arg_27_0)
 end
 
-function slot0.isAutoChessInEpisodeAndRound(slot0)
-	if not AutoChessModel.instance.episodeId or AutoChessModel.instance.episodeId ~= string.splitToNumber(slot0, ",")[1] then
+function var_0_0.isAutoChessInEpisodeAndRound(arg_28_0)
+	local var_28_0 = string.splitToNumber(arg_28_0, ",")
+	local var_28_1 = var_28_0[1]
+
+	if not AutoChessModel.instance.episodeId or AutoChessModel.instance.episodeId ~= var_28_1 then
 		return
 	end
 
-	if AutoChessModel.instance:getChessMo() == nil or slot3.sceneRound == nil then
+	local var_28_2 = AutoChessModel.instance:getChessMo()
+
+	if var_28_2 == nil or var_28_2.sceneRound == nil then
 		return false
 	end
 
-	return slot3.sceneRound == slot1[2]
+	local var_28_3 = var_28_0[2]
+
+	return var_28_2.sceneRound == var_28_3
 end
 
-function slot0.isUnlockEpisode(slot0)
-	return LiangYueModel.instance:isEpisodeFinish(LiangYueModel.instance:getCurActId(), slot0) == tonumber(slot0)
+function var_0_0.isUnlockEpisode(arg_29_0)
+	local var_29_0 = LiangYueModel.instance:getCurActId()
+
+	return LiangYueModel.instance:isEpisodeFinish(var_29_0, arg_29_0) == tonumber(arg_29_0)
 end
 
-return slot0
+return var_0_0

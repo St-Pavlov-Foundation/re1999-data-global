@@ -1,101 +1,117 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentSetView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentSetView", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeInstrumentSetView", BaseView)
+local var_0_0 = class("VersionActivity2_4MusicFreeInstrumentSetView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "root/#txt_info")
-	slot0._goinstrument = gohelper.findChild(slot0.viewGO, "root/#go_instrument")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_info")
+	arg_1_0._goinstrument = gohelper.findChild(arg_1_0.viewGO, "root/#go_instrument")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._indexList = tabletool.copy(VersionActivity2_4MusicFreeModel.instance:getInstrumentIndexList())
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._indexList = tabletool.copy(VersionActivity2_4MusicFreeModel.instance:getInstrumentIndexList())
 
-	slot0:_initItem()
-	slot0:_updateItems()
+	arg_6_0:_initItem()
+	arg_6_0:_updateItems()
 end
 
-function slot0._initItem(slot0)
-	slot0._itemList = slot0:getUserDataTb_()
+function var_0_0._initItem(arg_7_0)
+	arg_7_0._itemList = arg_7_0:getUserDataTb_()
 
-	for slot5, slot6 in ipairs(Activity179Config.instance:getInstrumentSwitchList()) do
-		slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goinstrument), VersionActivity2_4MusicFreeInstrumentSetItem)
-		slot0._itemList[slot5] = slot9
+	local var_7_0 = Activity179Config.instance:getInstrumentSwitchList()
 
-		slot9:onUpdateMO(slot6, slot0)
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = arg_7_0.viewContainer:getSetting().otherRes[1]
+		local var_7_2 = arg_7_0:getResInst(var_7_1, arg_7_0._goinstrument)
+		local var_7_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_2, VersionActivity2_4MusicFreeInstrumentSetItem)
+
+		arg_7_0._itemList[iter_7_0] = var_7_3
+
+		var_7_3:onUpdateMO(iter_7_1, arg_7_0)
 	end
 end
 
-function slot0._updateItems(slot0)
-	for slot4, slot5 in ipairs(slot0._itemList) do
-		slot5:updateIndex()
+function var_0_0._updateItems(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._itemList) do
+		iter_8_1:updateIndex()
 	end
 
-	slot0._txtinfo.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("MusicInstrumentsSelectedTips"), string.format("<color=#C66030>%s</color>/%s", slot0:_getSelectedNum(), 2))
-	slot0._hasSelectedChange = true
+	local var_8_0 = arg_8_0:_getSelectedNum()
+	local var_8_1 = string.format("<color=#C66030>%s</color>/%s", var_8_0, 2)
+
+	arg_8_0._txtinfo.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("MusicInstrumentsSelectedTips"), var_8_1)
+	arg_8_0._hasSelectedChange = true
 end
 
-function slot0.addInstrument(slot0, slot1)
-	if VersionActivity2_4MusicEnum.SelectInstrumentNum <= slot0:_getSelectedNum() then
+function var_0_0.addInstrument(arg_9_0, arg_9_1)
+	if arg_9_0:_getSelectedNum() >= VersionActivity2_4MusicEnum.SelectInstrumentNum then
 		return
 	end
 
-	slot0._indexList[tabletool.indexOf(slot0._indexList, 0)] = slot1
+	local var_9_0 = tabletool.indexOf(arg_9_0._indexList, 0)
 
-	slot0:_updateItems()
+	arg_9_0._indexList[var_9_0] = arg_9_1
+
+	arg_9_0:_updateItems()
 end
 
-function slot0.removeInstrument(slot0, slot1)
-	if tabletool.indexOf(slot0._indexList, slot1) then
-		slot0._indexList[slot2] = 0
+function var_0_0.removeInstrument(arg_10_0, arg_10_1)
+	local var_10_0 = tabletool.indexOf(arg_10_0._indexList, arg_10_1)
 
-		slot0:_updateItems()
+	if var_10_0 then
+		arg_10_0._indexList[var_10_0] = 0
+
+		arg_10_0:_updateItems()
 	end
 end
 
-function slot0._getSelectedNum(slot0)
-	for slot5, slot6 in ipairs(slot0._indexList) do
-		if slot6 ~= 0 then
-			slot1 = 0 + 1
+function var_0_0._getSelectedNum(arg_11_0)
+	local var_11_0 = 0
+
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._indexList) do
+		if iter_11_1 ~= 0 then
+			var_11_0 = var_11_0 + 1
 		end
 	end
 
-	return slot1
+	return var_11_0
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_12_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	if not slot0._hasSelectedChange then
+function var_0_0.onClose(arg_13_0)
+	if not arg_13_0._hasSelectedChange then
 		return
 	end
 
-	VersionActivity2_4MusicFreeModel.instance:setInstrumentIndexList(slot0._indexList)
+	VersionActivity2_4MusicFreeModel.instance:setInstrumentIndexList(arg_13_0._indexList)
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.InstrumentSelectChange)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-return slot0
+return var_0_0

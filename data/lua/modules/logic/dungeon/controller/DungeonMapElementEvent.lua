@@ -1,18 +1,19 @@
-module("modules.logic.dungeon.controller.DungeonMapElementEvent", package.seeall)
+﻿module("modules.logic.dungeon.controller.DungeonMapElementEvent", package.seeall)
 
-slot0 = _M
-slot0.OnSetClickDown = 90301
-slot0.OnUpdateElementArrow = 90302
-slot0.OnChangeMap = 90303
-slot0.OnLoadSceneFinish = 90304
-slot0.OnDisposeScene = 90305
-slot0.OnInitElements = 90306
-slot0.OnDisposeOldMap = 90307
-slot0.OnFocusElement = 90308
-slot0.OnFinishAndDisposeElement = 90309
-slot0.OnClickExploreElement = 90310
-slot0.OnNormalDungeonInitElements = 90311
-slot0.OnElementAdd = 90312
-slot0.OnElementRemove = 90313
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnSetClickDown = 90301
+var_0_0.OnUpdateElementArrow = 90302
+var_0_0.OnChangeMap = 90303
+var_0_0.OnLoadSceneFinish = 90304
+var_0_0.OnDisposeScene = 90305
+var_0_0.OnInitElements = 90306
+var_0_0.OnDisposeOldMap = 90307
+var_0_0.OnFocusElement = 90308
+var_0_0.OnFinishAndDisposeElement = 90309
+var_0_0.OnClickExploreElement = 90310
+var_0_0.OnNormalDungeonInitElements = 90311
+var_0_0.OnElementAdd = 90312
+var_0_0.OnElementRemove = 90313
+
+return var_0_0

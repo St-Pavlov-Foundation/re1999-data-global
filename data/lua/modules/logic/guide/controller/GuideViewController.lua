@@ -1,54 +1,61 @@
-module("modules.logic.guide.controller.GuideViewController", package.seeall)
+﻿module("modules.logic.guide.controller.GuideViewController", package.seeall)
 
-slot0 = class("GuideViewController", BaseController)
+local var_0_0 = class("GuideViewController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	GuideController.instance:registerCallback(GuideEvent.FadeView, slot0._onReceiveFadeView, slot0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, slot0._onFinishGuide, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	GuideController.instance:registerCallback(GuideEvent.FadeView, arg_3_0._onReceiveFadeView, arg_3_0)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_3_0._onFinishGuide, arg_3_0)
 end
 
-function slot0._onFinishGuide(slot0, slot1)
-	if slot0._isShow == false and slot1 == 501 then
-		slot0._isShow = nil
+function var_0_0._onFinishGuide(arg_4_0, arg_4_1)
+	if arg_4_0._isShow == false and arg_4_1 == 501 then
+		arg_4_0._isShow = nil
 
-		slot0:_fadeView(true)
+		arg_4_0:_fadeView(true)
 	end
 end
 
-function slot0._onReceiveFadeView(slot0, slot1)
-	slot2 = slot1 == "1"
-	slot0._isShow = slot2
+function var_0_0._onReceiveFadeView(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1 == "1"
 
-	slot0:_fadeView(slot2)
+	arg_5_0._isShow = var_5_0
+
+	arg_5_0:_fadeView(var_5_0)
 end
 
-function slot0._fadeView(slot0, slot1)
-	for slot6, slot7 in ipairs({
+function var_0_0._fadeView(arg_6_0, arg_6_1)
+	local var_6_0 = {
 		ViewName.DungeonMapView,
 		ViewName.MainView
-	}) do
-		if ViewMgr.instance:getContainer(slot7) and slot8:isOpen() and slot8.viewGO then
-			if slot1 then
-				slot8:_setVisible(true)
-				gohelper.setActive(slot8.viewGO, false)
-				gohelper.setActive(slot8.viewGO, true)
+	}
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = ViewMgr.instance:getContainer(iter_6_1)
+
+		if var_6_1 and var_6_1:isOpen() and var_6_1.viewGO then
+			if arg_6_1 then
+				var_6_1:_setVisible(true)
+				gohelper.setActive(var_6_1.viewGO, false)
+				gohelper.setActive(var_6_1.viewGO, true)
 
 				break
 			end
 
-			slot8:_setVisible(false)
+			var_6_1:_setVisible(false)
 
 			break
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

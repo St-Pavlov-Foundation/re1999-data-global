@@ -1,103 +1,118 @@
-module("modules.logic.turnback.view.TurnbackTaskItem", package.seeall)
+﻿module("modules.logic.turnback.view.TurnbackTaskItem", package.seeall)
 
-slot0 = class("TurnbackTaskItem", ListScrollCell)
+local var_0_0 = class("TurnbackTaskItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gocommon = gohelper.findChild(slot1, "#go_common")
-	slot0._goline = gohelper.findChild(slot1, "#go_common/#go_line")
-	slot0._simagebg = gohelper.findChildSingleImage(slot1, "#go_common/#simage_bg")
-	slot0._txttaskdes = gohelper.findChildText(slot1, "#go_common/info/#txt_taskdes")
-	slot0._txtprocess = gohelper.findChildText(slot1, "#go_common/info/#txt_process")
-	slot0._scrollreward = gohelper.findChild(slot1, "#go_common/#scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._gorewardContent = gohelper.findChild(slot1, "#go_common/#scroll_reward/Viewport/#go_rewardContent")
-	slot0._gonotget = gohelper.findChild(slot1, "#go_common/#go_notget")
-	slot0._btngoto = gohelper.findChildButtonWithAudio(slot1, "#go_common/#go_notget/#btn_goto")
-	slot0._btncanget = gohelper.findChildButtonWithAudio(slot1, "#go_common/#go_notget/#btn_canget")
-	slot0._godoing = gohelper.findChild(slot1, "#go_common/#go_notget/#go_doing")
-	slot0._goget = gohelper.findChild(slot1, "#go_common/#go_get")
-	slot0._goreddot = gohelper.findChild(slot1, "#go_common/#go_reddot")
-	slot0._animator = slot0.go:GetComponent(typeof(UnityEngine.Animator))
-	slot0._rewardTab = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gocommon = gohelper.findChild(arg_1_1, "#go_common")
+	arg_1_0._goline = gohelper.findChild(arg_1_1, "#go_common/#go_line")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_1, "#go_common/#simage_bg")
+	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_1, "#go_common/info/#txt_taskdes")
+	arg_1_0._txtprocess = gohelper.findChildText(arg_1_1, "#go_common/info/#txt_process")
+	arg_1_0._scrollreward = gohelper.findChild(arg_1_1, "#go_common/#scroll_reward"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_1, "#go_common/#scroll_reward/Viewport/#go_rewardContent")
+	arg_1_0._gonotget = gohelper.findChild(arg_1_1, "#go_common/#go_notget")
+	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_1, "#go_common/#go_notget/#btn_goto")
+	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_1, "#go_common/#go_notget/#btn_canget")
+	arg_1_0._godoing = gohelper.findChild(arg_1_1, "#go_common/#go_notget/#go_doing")
+	arg_1_0._goget = gohelper.findChild(arg_1_1, "#go_common/#go_get")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_1, "#go_common/#go_reddot")
+	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._rewardTab = {}
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btngoto:AddClickListener(slot0._btngotoOnClick, slot0)
-	slot0._btncanget:AddClickListener(slot0._btncangetOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
+	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btngoto:RemoveClickListener()
-	slot0._btncanget:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btngoto:RemoveClickListener()
+	arg_3_0._btncanget:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	if arg_4_1 == nil then
 		return
 	end
 
-	slot0.mo = slot1
-	slot0._scrollreward.parentGameObject = slot0._view._csListScroll.gameObject
-	slot0._txttaskdes.text = slot0.mo.config.desc
-	slot0._txtprocess.text = string.format(slot0.mo.progress < slot0.mo.config.maxProgress and "<color=#d97373>%s/%s</color>" or "%s/%s", slot0.mo.progress, slot0.mo.config.maxProgress)
+	arg_4_0.mo = arg_4_1
+	arg_4_0._scrollreward.parentGameObject = arg_4_0._view._csListScroll.gameObject
 
-	gohelper.setActive(slot0._goline, slot0._index ~= 1)
-	gohelper.setActive(slot0._btngoto.gameObject, slot0.mo.progress < slot0.mo.config.maxProgress and slot0.mo.config.jumpId > 0)
-	gohelper.setActive(slot0._godoing.gameObject, slot3 < slot4 and slot0.mo.config.jumpId == 0)
-	gohelper.setActive(slot0._btncanget.gameObject, slot4 <= slot3 and slot0.mo.finishCount == 0)
-	gohelper.setActive(slot0._goreddot, false)
-	gohelper.setActive(slot0._goget, slot0.mo.finishCount > 0)
+	local var_4_0 = arg_4_0.mo.progress < arg_4_0.mo.config.maxProgress and "<color=#d97373>%s/%s</color>" or "%s/%s"
 
-	for slot9 = 1, #string.split(slot0.mo.config.bonus, "|") do
-		if not slot0._rewardTab[slot9] then
-			table.insert(slot0._rewardTab, IconMgr.instance:getCommonPropItemIcon(slot0._gorewardContent))
+	arg_4_0._txttaskdes.text = arg_4_0.mo.config.desc
+	arg_4_0._txtprocess.text = string.format(var_4_0, arg_4_0.mo.progress, arg_4_0.mo.config.maxProgress)
+
+	gohelper.setActive(arg_4_0._goline, arg_4_0._index ~= 1)
+
+	local var_4_1 = arg_4_0.mo.progress
+	local var_4_2 = arg_4_0.mo.config.maxProgress
+
+	gohelper.setActive(arg_4_0._btngoto.gameObject, var_4_1 < var_4_2 and arg_4_0.mo.config.jumpId > 0)
+	gohelper.setActive(arg_4_0._godoing.gameObject, var_4_1 < var_4_2 and arg_4_0.mo.config.jumpId == 0)
+	gohelper.setActive(arg_4_0._btncanget.gameObject, var_4_2 <= var_4_1 and arg_4_0.mo.finishCount == 0)
+	gohelper.setActive(arg_4_0._goreddot, false)
+	gohelper.setActive(arg_4_0._goget, arg_4_0.mo.finishCount > 0)
+
+	local var_4_3 = string.split(arg_4_0.mo.config.bonus, "|")
+
+	for iter_4_0 = 1, #var_4_3 do
+		local var_4_4 = arg_4_0._rewardTab[iter_4_0]
+
+		if not var_4_4 then
+			var_4_4 = IconMgr.instance:getCommonPropItemIcon(arg_4_0._gorewardContent)
+
+			table.insert(arg_4_0._rewardTab, var_4_4)
 		end
 
-		slot11 = string.split(slot5[slot9], "#")
+		local var_4_5 = string.split(var_4_3[iter_4_0], "#")
 
-		slot10:setMOValue(slot11[1], slot11[2], slot11[3])
-		slot10:setPropItemScale(0.6)
-		slot10:setHideLvAndBreakFlag(true)
-		slot10:hideEquipLvAndBreak(true)
-		slot10:setCountFontSize(51)
-		gohelper.setActive(slot10.go, true)
+		var_4_4:setMOValue(var_4_5[1], var_4_5[2], var_4_5[3])
+		var_4_4:setPropItemScale(0.6)
+		var_4_4:setHideLvAndBreakFlag(true)
+		var_4_4:hideEquipLvAndBreak(true)
+		var_4_4:setCountFontSize(51)
+		gohelper.setActive(var_4_4.go, true)
 	end
 
-	for slot9 = #slot5 + 1, #slot0._rewardTab do
-		gohelper.setActive(slot0._rewardTab[slot9].go, false)
+	for iter_4_1 = #var_4_3 + 1, #arg_4_0._rewardTab do
+		gohelper.setActive(arg_4_0._rewardTab[iter_4_1].go, false)
 	end
 
-	slot0._scrollreward.horizontalNormalizedPosition = 0
+	arg_4_0._scrollreward.horizontalNormalizedPosition = 0
 
-	slot0._animator:Play(UIAnimationName.Idle, 0, 0)
+	arg_4_0._animator:Play(UIAnimationName.Idle, 0, 0)
 end
 
-function slot0._btngotoOnClick(slot0)
-	if slot0.mo.config.jumpId ~= 0 then
-		GameFacade.jump(slot1)
+function var_0_0._btngotoOnClick(arg_5_0)
+	local var_5_0 = arg_5_0.mo.config.jumpId
+
+	if var_5_0 ~= 0 then
+		GameFacade.jump(var_5_0)
 	end
 end
 
-function slot0._btncangetOnClick(slot0)
+function var_0_0._btncangetOnClick(arg_6_0)
 	if not TurnbackModel.instance:isInOpenTime() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("TurnbackTaskItemFinish")
-	TaskDispatcher.runDelay(slot0.finishTask, slot0, TurnbackEnum.TaskMaskTime)
-	TurnbackController.instance:dispatchEvent(TurnbackEvent.OnTaskRewardGetFinish, slot0._index)
-	slot0._animator:Play(UIAnimationName.Finish, 0, 0)
+	TaskDispatcher.runDelay(arg_6_0.finishTask, arg_6_0, TurnbackEnum.TaskMaskTime)
+	TurnbackController.instance:dispatchEvent(TurnbackEvent.OnTaskRewardGetFinish, arg_6_0._index)
+	arg_6_0._animator:Play(UIAnimationName.Finish, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_task_slide)
 end
 
-function slot0.finishTask(slot0)
-	TaskDispatcher.cancelTask(slot0.finishTask, slot0)
+function var_0_0.finishTask(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.finishTask, arg_7_0)
 	UIBlockMgr.instance:endBlock("TurnbackTaskItemFinish")
-	TaskRpc.instance:sendFinishTaskRequest(slot0.mo.id)
+	TaskRpc.instance:sendFinishTaskRequest(arg_7_0.mo.id)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.finishTask, slot0)
+function var_0_0.onDestroy(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.finishTask, arg_8_0)
 end
 
-return slot0
+return var_0_0

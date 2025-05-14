@@ -1,109 +1,118 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.model.VersionActivity1_2DungeonModel", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.model.VersionActivity1_2DungeonModel", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonModel", BaseModel)
+local var_0_0 = class("VersionActivity1_2DungeonModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.getTrapPutting(slot0)
-	return slot0.putTrap ~= 0 and slot0.putTrap
+function var_0_0.getTrapPutting(arg_3_0)
+	return arg_3_0.putTrap ~= 0 and arg_3_0.putTrap
 end
 
-function slot0.onReceiveGet116InfosReply(slot0, slot1)
-	slot0._activity_id = slot1.activityId
-	slot0.element_data = {}
+function var_0_0.onReceiveGet116InfosReply(arg_4_0, arg_4_1)
+	arg_4_0._activity_id = arg_4_1.activityId
+	arg_4_0.element_data = {}
 
-	for slot5, slot6 in ipairs(slot1.infos) do
-		slot0.element_data[slot6.elementId] = {
-			elementId = slot6.elementId,
-			level = slot6.level
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.infos) do
+		local var_4_0 = iter_4_1.elementId
+		local var_4_1 = {
+			elementId = iter_4_1.elementId,
+			level = iter_4_1.level
 		}
+
+		arg_4_0.element_data[var_4_0] = var_4_1
 	end
 
-	slot0.trapIds = {}
+	arg_4_0.trapIds = {}
 
-	for slot5, slot6 in ipairs(slot1.trapIds) do
-		slot0.trapIds[slot6] = slot6
+	for iter_4_2, iter_4_3 in ipairs(arg_4_1.trapIds) do
+		arg_4_0.trapIds[iter_4_3] = iter_4_3
 	end
 
-	slot0.putTrap = slot1.putTrap
-	slot0.spStatus = {}
+	arg_4_0.putTrap = arg_4_1.putTrap
+	arg_4_0.spStatus = {}
 
-	for slot5, slot6 in ipairs(slot1.spStatus) do
-		slot0.spStatus[slot6.episodeId] = {
-			episodeId = slot6.episodeId,
-			chapterId = slot6.chapterId,
-			status = slot6.status,
-			refreshTime = slot6.refreshTime
+	for iter_4_4, iter_4_5 in ipairs(arg_4_1.spStatus) do
+		local var_4_2 = iter_4_5.episodeId
+		local var_4_3 = {
+			episodeId = iter_4_5.episodeId,
+			chapterId = iter_4_5.chapterId,
+			status = iter_4_5.status,
+			refreshTime = iter_4_5.refreshTime
 		}
+
+		arg_4_0.spStatus[var_4_2] = var_4_3
 	end
 
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveGet116InfosReply)
 end
 
-function slot0.getSpStatus(slot0, slot1)
-	return slot0.spStatus and slot0.spStatus[slot1]
+function var_0_0.getSpStatus(arg_5_0, arg_5_1)
+	return arg_5_0.spStatus and arg_5_0.spStatus[arg_5_1]
 end
 
-function slot0.onReceiveAct116InfoUpdatePush(slot0, slot1)
-	slot0.newSp = {}
+function var_0_0.onReceiveAct116InfoUpdatePush(arg_6_0, arg_6_1)
+	arg_6_0.newSp = {}
 
-	for slot5, slot6 in ipairs(slot1.spStatus) do
-		if slot0.spStatus then
-			if slot6.status == 1 and slot0.spStatus[slot6.episodeId].status ~= 1 then
-				slot0.newSp[slot6.episodeId] = true
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1.spStatus) do
+		if arg_6_0.spStatus then
+			if iter_6_1.status == 1 and arg_6_0.spStatus[iter_6_1.episodeId].status ~= 1 then
+				arg_6_0.newSp[iter_6_1.episodeId] = true
 			end
 		else
-			slot0.newSp[slot6.episodeId] = true
+			arg_6_0.newSp[iter_6_1.episodeId] = true
 		end
 	end
 
-	slot0:onReceiveGet116InfosReply(slot1)
+	arg_6_0:onReceiveGet116InfosReply(arg_6_1)
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveAct116InfoUpdatePush)
 end
 
-function slot0.onReceiveUpgradeElementReply(slot0, slot1)
-	slot0.element_data = slot0.element_data or {}
-	slot0.element_data[slot1.elementId] = {
-		elementId = slot1.elementId,
-		level = slot1.level
-	}
+function var_0_0.onReceiveUpgradeElementReply(arg_7_0, arg_7_1)
+	arg_7_0.element_data = arg_7_0.element_data or {}
+	arg_7_0.element_data[arg_7_1.elementId] = {}
+	arg_7_0.element_data[arg_7_1.elementId].elementId = arg_7_1.elementId
+	arg_7_0.element_data[arg_7_1.elementId].level = arg_7_1.level
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, slot1.elementId)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveUpgradeElementReply, arg_7_1.elementId)
 end
 
-function slot0.getElementData(slot0, slot1)
-	return slot0.element_data and slot0.element_data[slot1]
+function var_0_0.getElementData(arg_8_0, arg_8_1)
+	return arg_8_0.element_data and arg_8_0.element_data[arg_8_1]
 end
 
-function slot0.onReceiveBuildTrapReply(slot0, slot1)
-	slot0.trapIds = slot0.trapIds or {}
-	slot0.trapIds[slot1.trapId] = slot1.trapId
+function var_0_0.onReceiveBuildTrapReply(arg_9_0, arg_9_1)
+	arg_9_0.trapIds = arg_9_0.trapIds or {}
+	arg_9_0.trapIds[arg_9_1.trapId] = arg_9_1.trapId
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveBuildTrapReply, slot1.trapId)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceiveBuildTrapReply, arg_9_1.trapId)
 end
 
-function slot0.onReceivePutTrapReply(slot0, slot1)
-	slot0.putTrap = slot1.trapId
+function var_0_0.onReceivePutTrapReply(arg_10_0, arg_10_1)
+	arg_10_0.putTrap = arg_10_1.trapId
 
 	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.onReceivePutTrapReply)
 end
 
-function slot0.getCurActivityID(slot0)
-	return slot0._activity_id or VersionActivity1_2Enum.ActivityId.Dungeon
+function var_0_0.getCurActivityID(arg_11_0)
+	return arg_11_0._activity_id or VersionActivity1_2Enum.ActivityId.Dungeon
 end
 
-function slot0.getAttrUpDic(slot0)
-	slot1 = {}
+function var_0_0.getAttrUpDic(arg_12_0)
+	local var_12_0 = {}
 
-	for slot5, slot6 in pairs(slot0.element_data) do
-		if slot6.level > 0 then
-			for slot11, slot12 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot6.elementId)) do
-				if slot12.level == slot6.level then
-					table.insert(slot1, slot12)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.element_data) do
+		if iter_12_1.level > 0 then
+			local var_12_1 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(iter_12_1.elementId)
+
+			for iter_12_2, iter_12_3 in pairs(var_12_1) do
+				if iter_12_3.level == iter_12_1.level then
+					table.insert(var_12_0, iter_12_3)
 
 					break
 				end
@@ -111,29 +120,36 @@ function slot0.getAttrUpDic(slot0)
 		end
 	end
 
-	slot2 = {}
+	local var_12_2 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.buildingType == 2 then
-			for slot12, slot13 in ipairs(string.split(slot7.configType, "|")) do
-				slot14 = string.splitToNumber(slot13, "#")
-				slot2[slot15] = (slot2[slot14[1]] or 0) + slot14[2]
+	for iter_12_4, iter_12_5 in ipairs(var_12_0) do
+		if iter_12_5.buildingType == 2 then
+			local var_12_3 = string.split(iter_12_5.configType, "|")
+
+			for iter_12_6, iter_12_7 in ipairs(var_12_3) do
+				local var_12_4 = string.splitToNumber(iter_12_7, "#")
+				local var_12_5 = var_12_4[1]
+				local var_12_6 = var_12_4[2]
+
+				var_12_2[var_12_5] = (var_12_2[var_12_5] or 0) + var_12_6
 			end
 		end
 	end
 
-	return slot2
+	return var_12_2
 end
 
-function slot0.getBuildingGainList(slot0)
-	slot1 = {}
+function var_0_0.getBuildingGainList(arg_13_0)
+	local var_13_0 = {}
 
-	if slot0.element_data then
-		for slot5, slot6 in pairs(slot0.element_data) do
-			if slot6.level > 0 then
-				for slot11, slot12 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot6.elementId)) do
-					if (slot12.buildingType == 2 or slot12.buildingType == 3) and slot12.level == slot6.level then
-						table.insert(slot1, slot12)
+	if arg_13_0.element_data then
+		for iter_13_0, iter_13_1 in pairs(arg_13_0.element_data) do
+			if iter_13_1.level > 0 then
+				local var_13_1 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(iter_13_1.elementId)
+
+				for iter_13_2, iter_13_3 in pairs(var_13_1) do
+					if (iter_13_3.buildingType == 2 or iter_13_3.buildingType == 3) and iter_13_3.level == iter_13_1.level then
+						table.insert(var_13_0, iter_13_3)
 
 						break
 					end
@@ -142,84 +158,108 @@ function slot0.getBuildingGainList(slot0)
 		end
 	end
 
-	if slot0.putTrap ~= 0 then
-		table.insert(slot1, lua_activity116_building.configDict[slot0.putTrap])
+	if arg_13_0.putTrap ~= 0 then
+		table.insert(var_13_0, lua_activity116_building.configDict[arg_13_0.putTrap])
 	end
 
-	return slot1
+	return var_13_0
 end
 
-function slot0.haveNextLevel(slot0, slot1)
-	if not slot0:getElementData(slot1) then
+function var_0_0.haveNextLevel(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getElementData(arg_14_1)
+
+	if not var_14_0 then
 		return true
 	end
 
-	slot3 = {}
-	slot7 = slot1
+	local var_14_1 = {}
 
-	for slot7, slot8 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot7)) do
-		table.insert(slot3, slot8)
+	for iter_14_0, iter_14_1 in pairs(VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(arg_14_1)) do
+		table.insert(var_14_1, iter_14_1)
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		return slot0.level < slot1.level
+	table.sort(var_14_1, function(arg_15_0, arg_15_1)
+		return arg_15_0.level < arg_15_1.level
 	end)
 
-	return slot3[slot2.level + 2]
+	return var_14_1[var_14_0.level + 2]
 end
 
-function slot0.getDailyEpisodeConfigByElementId(slot0, slot1)
-	if lua_chapter_map_element.configDict[slot1].type == DungeonEnum.ElementType.DailyEpisode then
-		slot4 = nil
+function var_0_0.getDailyEpisodeConfigByElementId(arg_16_0, arg_16_1)
+	local var_16_0 = lua_chapter_map_element.configDict[arg_16_1]
 
-		if VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot2.id) then
-			for slot8, slot9 in pairs(slot3) do
-				slot4 = slot9
+	if var_16_0.type == DungeonEnum.ElementType.DailyEpisode then
+		local var_16_1 = VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(var_16_0.id)
+		local var_16_2
+
+		if var_16_1 then
+			for iter_16_0, iter_16_1 in pairs(var_16_1) do
+				var_16_2 = iter_16_1
 
 				break
 			end
 		end
 
-		if slot4 then
-			for slot9, slot10 in ipairs(string.splitToNumber(slot4.configType, "#")) do
-				if uv0.instance:getSpStatus(slot10) and slot11.status == 1 then
-					return DungeonConfig.instance:getEpisodeCO(slot10)
+		if var_16_2 then
+			local var_16_3 = string.splitToNumber(var_16_2.configType, "#")
+
+			for iter_16_2, iter_16_3 in ipairs(var_16_3) do
+				local var_16_4 = var_0_0.instance:getSpStatus(iter_16_3)
+
+				if var_16_4 and var_16_4.status == 1 then
+					return DungeonConfig.instance:getEpisodeCO(iter_16_3)
 				end
 			end
 		end
 	end
 end
 
-function slot0.jump2DailyEpisode(slot0, slot1)
-	if string.splitToNumber(JumpConfig.instance:getJumpConfig(slot1).param, "#")[1] == 100 and slot3[2] == JumpEnum.ActIdEnum.Act1_2Dungeon and slot3[3] == JumpEnum.Activity1_2DungeonJump.Jump2Daily then
-		if VersionActivity1_2DungeonConfig.instance:getConfigByEpisodeId(slot3[4]) then
-			if not DungeonMapModel.instance:getElementById(slot5.elementId) then
-				slot9 = string.splitToNumber(lua_chapter_map_element.configDict[slot6].condition, "=")[2]
+function var_0_0.jump2DailyEpisode(arg_17_0, arg_17_1)
+	local var_17_0 = JumpConfig.instance:getJumpConfig(arg_17_1)
+	local var_17_1 = string.splitToNumber(var_17_0.param, "#")
 
-				GameFacade.showToastString(string.format(luaLang("dungeon_unlock_episode_mode"), luaLang("dungeon_story_mode") .. DungeonConfig.instance:getChapterCO(DungeonConfig.instance:getEpisodeCO(slot9).chapterId).chapterIndex .. "-" .. VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(slot9)))
-			elseif slot0:getDailyEpisodeConfigByElementId(slot6) then
-				if slot8.id == slot4 then
-					ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
-					VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, slot6)
-				else
-					GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function ()
-						ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
-						VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, uv0)
-					end)
-				end
+	if var_17_1[1] == 100 and var_17_1[2] == JumpEnum.ActIdEnum.Act1_2Dungeon and var_17_1[3] == JumpEnum.Activity1_2DungeonJump.Jump2Daily then
+		local var_17_2 = var_17_1[4]
+		local var_17_3 = VersionActivity1_2DungeonConfig.instance:getConfigByEpisodeId(var_17_2)
+
+		if var_17_3 then
+			local var_17_4 = var_17_3.elementId
+
+			if not DungeonMapModel.instance:getElementById(var_17_4) then
+				local var_17_5 = lua_chapter_map_element.configDict[var_17_4]
+				local var_17_6 = string.splitToNumber(var_17_5.condition, "=")[2]
+				local var_17_7 = DungeonConfig.instance:getEpisodeCO(var_17_6)
+				local var_17_8 = DungeonConfig.instance:getChapterCO(var_17_7.chapterId)
+				local var_17_9 = string.format(luaLang("dungeon_unlock_episode_mode"), luaLang("dungeon_story_mode") .. var_17_8.chapterIndex .. "-" .. VersionActivity1_2DungeonConfig.instance:getEpisodeIndex(var_17_6))
+
+				GameFacade.showToastString(var_17_9)
 			else
-				for slot12, slot13 in ipairs(VersionActivity1_2DungeonConfig.instance:getType4List()) do
-					if slot0:getDailyEpisodeConfigByElementId(slot13.elementId) then
-						GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function ()
+				local var_17_10 = arg_17_0:getDailyEpisodeConfigByElementId(var_17_4)
+
+				if var_17_10 then
+					if var_17_10.id == var_17_2 then
+						ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
+						VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, var_17_4)
+					else
+						GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function()
 							ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
-							VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, uv0.elementId)
+							VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, var_17_4)
 						end)
-
-						return true
 					end
-				end
+				else
+					for iter_17_0, iter_17_1 in ipairs(VersionActivity1_2DungeonConfig.instance:getType4List()) do
+						if arg_17_0:getDailyEpisodeConfigByElementId(iter_17_1.elementId) then
+							GameFacade.showMessageBox(MessageBoxIdDefine.Dungeon1_2Jump2Daily, MsgBoxEnum.BoxType.Yes_No, function()
+								ViewMgr.instance:closeView(ViewName.VersionActivity1_2TaskView)
+								VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.clickDailyEpisode, iter_17_1.elementId)
+							end)
 
-				GameFacade.showToast(ToastEnum.Dungeon1_2CanNotJump2Daily)
+							return true
+						end
+					end
+
+					GameFacade.showToast(ToastEnum.Dungeon1_2CanNotJump2Daily)
+				end
 			end
 		end
 
@@ -229,6 +269,6 @@ function slot0.jump2DailyEpisode(slot0, slot1)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,158 +1,177 @@
-module("modules.logic.scene.fight.comp.FightSceneEntityFootRing", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneEntityFootRing", package.seeall)
 
-slot0 = class("FightSceneEntityFootRing", BaseSceneComp)
+local var_0_0 = class("FightSceneEntityFootRing", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0:_setLevelCO(slot2)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, slot0._onEntityDeadBefore, slot0)
-	FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, slot0._onBeforePlayUniqueSkill, slot0)
-	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, slot0._onAfterPlayUniqueSkill, slot0)
-	FightController.instance:registerCallback(FightEvent.SetEntityFootEffectVisible, slot0._onSetEntityFootEffectVisible, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._releaseAllEntityEffect, slot0)
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:_setLevelCO(arg_1_2)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_1_0._onEntityDeadBefore, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.BeforePlayUniqueSkill, arg_1_0._onBeforePlayUniqueSkill, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, arg_1_0._onAfterPlayUniqueSkill, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.SetEntityFootEffectVisible, arg_1_0._onSetEntityFootEffectVisible, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntityEffect, arg_1_0)
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, slot0._onEntityDeadBefore, slot0)
-	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, slot0._onBeforePlayUniqueSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, slot0._onAfterPlayUniqueSkill, slot0)
-	FightController.instance:unregisterCallback(FightEvent.SetEntityFootEffectVisible, slot0._onSetEntityFootEffectVisible, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._releaseAllEntityEffect, slot0)
-	slot0:_releaseFlyEffect()
+function var_0_0.onSceneClose(arg_3_0)
+	arg_3_0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_3_0._onEntityDeadBefore, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, arg_3_0._onBeforePlayUniqueSkill, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, arg_3_0._onAfterPlayUniqueSkill, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.SetEntityFootEffectVisible, arg_3_0._onSetEntityFootEffectVisible, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_3_0._releaseAllEntityEffect, arg_3_0)
+	arg_3_0:_releaseFlyEffect()
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if not slot1 or not slot0._fly_effect_url then
+function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
+	if not arg_4_1 or not arg_4_0._fly_effect_url then
 		return
 	end
 
-	slot0:_setSpineFlyEffect(slot1)
+	arg_4_0:_setSpineFlyEffect(arg_4_1)
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	slot0:_releaseFlyEffect()
-	slot0:_setLevelCO(slot1)
-	slot0:_setAllSpineFlyEffect()
+function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
+	arg_5_0:_releaseFlyEffect()
+	arg_5_0:_setLevelCO(arg_5_1)
+	arg_5_0:_setAllSpineFlyEffect()
 end
 
-function slot0._setLevelCO(slot0, slot1)
-	if not string.nilorempty(lua_scene_level.configDict[slot1].flyEffect) then
-		TaskDispatcher.runRepeat(slot0._onFrameUpdateEffectPos, slot0, 0.01)
+function var_0_0._setLevelCO(arg_6_0, arg_6_1)
+	local var_6_0 = lua_scene_level.configDict[arg_6_1].flyEffect
 
-		slot0._fly_effect_url = "buff/buff_feixing"
+	if not string.nilorempty(var_6_0) then
+		TaskDispatcher.runRepeat(arg_6_0._onFrameUpdateEffectPos, arg_6_0, 0.01)
+
+		arg_6_0._fly_effect_url = "buff/buff_feixing"
 	end
 end
 
-function slot0._setAllSpineFlyEffect(slot0)
-	if not slot0._fly_effect_url then
+function var_0_0._setAllSpineFlyEffect(arg_7_0)
+	if not arg_7_0._fly_effect_url then
 		return
 	end
 
-	for slot5, slot6 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)) do
-		if slot6.spine and slot0._fly_effect_url then
-			slot0:_setSpineFlyEffect(slot6.spine)
+	local var_7_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.spine and arg_7_0._fly_effect_url then
+			arg_7_0:_setSpineFlyEffect(iter_7_1.spine)
 		end
 	end
 end
 
-function slot0._setSpineFlyEffect(slot0, slot1)
-	if not slot1.unitSpawn:isMySide() then
+function var_0_0._setSpineFlyEffect(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.unitSpawn
+
+	if not var_8_0:isMySide() then
 		return
 	end
 
-	slot3 = slot2.id
+	local var_8_1 = var_8_0.id
+	local var_8_2 = var_8_0:getMO()
 
-	if not slot2:getMO() then
+	if not var_8_2 then
 		return
 	end
 
-	if not FightConfig.instance:getSkinCO(slot4.skin) or slot5.isFly == 1 then
+	local var_8_3 = FightConfig.instance:getSkinCO(var_8_2.skin)
+
+	if not var_8_3 or var_8_3.isFly == 1 then
 		return
 	end
 
-	if not slot0.foot_effect then
-		slot0.foot_effect = {}
-		slot0.origin_pos_y = {}
-		slot0.cache_entity = {}
+	if not arg_8_0.foot_effect then
+		arg_8_0.foot_effect = {}
+		arg_8_0.origin_pos_y = {}
+		arg_8_0.cache_entity = {}
 	end
 
-	if slot0.cache_entity[slot3] then
-		slot0:_onEntityDeadBefore(slot3)
+	if arg_8_0.cache_entity[var_8_1] then
+		arg_8_0:_onEntityDeadBefore(var_8_1)
 	end
 
-	slot6, slot0.origin_pos_y[slot3] = FightHelper.getEntityStandPos(slot4)
-	slot0.cache_entity[slot3] = slot2
-	slot0.foot_effect[slot3] = slot0.foot_effect[slot3] or slot2.effect:addHangEffect(slot0._fly_effect_url)
+	local var_8_4, var_8_5 = FightHelper.getEntityStandPos(var_8_2)
+
+	arg_8_0.origin_pos_y[var_8_1] = var_8_5
+	arg_8_0.cache_entity[var_8_1] = var_8_0
+	arg_8_0.foot_effect[var_8_1] = arg_8_0.foot_effect[var_8_1] or var_8_0.effect:addHangEffect(arg_8_0._fly_effect_url)
 end
 
-function slot0._onFrameUpdateEffectPos(slot0)
-	if slot0.foot_effect then
-		for slot4, slot5 in pairs(slot0.foot_effect) do
-			if slot0.cache_entity[slot4] and not gohelper.isNil(slot6.go) and slot6.go then
-				slot8, slot9, slot10 = transformhelper.getPos(slot7.transform)
+function var_0_0._onFrameUpdateEffectPos(arg_9_0)
+	if arg_9_0.foot_effect then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0.foot_effect) do
+			local var_9_0 = arg_9_0.cache_entity[iter_9_0]
 
-				slot0.foot_effect[slot4]:setWorldPos(slot8, slot0.origin_pos_y[slot4], slot10)
+			if var_9_0 and not gohelper.isNil(var_9_0.go) then
+				local var_9_1 = var_9_0.go
+
+				if var_9_1 then
+					local var_9_2, var_9_3, var_9_4 = transformhelper.getPos(var_9_1.transform)
+
+					arg_9_0.foot_effect[iter_9_0]:setWorldPos(var_9_2, arg_9_0.origin_pos_y[iter_9_0], var_9_4)
+				end
 			end
 		end
 	end
 end
 
-function slot0._onBeforePlayUniqueSkill(slot0)
-	if slot0.foot_effect then
-		for slot4, slot5 in pairs(slot0.foot_effect) do
-			gohelper.setActive(slot5.containerGO, false)
+function var_0_0._onBeforePlayUniqueSkill(arg_10_0)
+	if arg_10_0.foot_effect then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0.foot_effect) do
+			gohelper.setActive(iter_10_1.containerGO, false)
 		end
 	end
 end
 
-function slot0._onAfterPlayUniqueSkill(slot0)
-	if slot0.foot_effect then
-		for slot4, slot5 in pairs(slot0.foot_effect) do
-			gohelper.setActive(slot5.containerGO, true)
+function var_0_0._onAfterPlayUniqueSkill(arg_11_0)
+	if arg_11_0.foot_effect then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0.foot_effect) do
+			gohelper.setActive(iter_11_1.containerGO, true)
 		end
 	end
 end
 
-function slot0._onEntityDeadBefore(slot0, slot1)
-	if slot0.foot_effect and slot0.foot_effect[slot1] then
-		if slot0.cache_entity[slot1] and slot2.effect then
-			slot2.effect:removeEffect(slot0.foot_effect[slot1])
+function var_0_0._onEntityDeadBefore(arg_12_0, arg_12_1)
+	if arg_12_0.foot_effect and arg_12_0.foot_effect[arg_12_1] then
+		local var_12_0 = arg_12_0.cache_entity[arg_12_1]
+
+		if var_12_0 and var_12_0.effect then
+			var_12_0.effect:removeEffect(arg_12_0.foot_effect[arg_12_1])
 		end
 
-		slot0.foot_effect[slot1] = nil
-		slot0.cache_entity[slot1] = nil
+		arg_12_0.foot_effect[arg_12_1] = nil
+		arg_12_0.cache_entity[arg_12_1] = nil
 	end
 end
 
-function slot0._onSetEntityFootEffectVisible(slot0, slot1, slot2)
-	if slot0.foot_effect and slot0.foot_effect[slot1] then
-		slot0:_onFrameUpdateEffectPos()
-		gohelper.setActive(slot0.foot_effect[slot1].containerGO, slot2 or false)
+function var_0_0._onSetEntityFootEffectVisible(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_0.foot_effect and arg_13_0.foot_effect[arg_13_1] then
+		arg_13_0:_onFrameUpdateEffectPos()
+		gohelper.setActive(arg_13_0.foot_effect[arg_13_1].containerGO, arg_13_2 or false)
 	end
 end
 
-function slot0._releaseAllEntityEffect(slot0)
-	if slot0.foot_effect then
-		for slot4, slot5 in pairs(slot0.foot_effect) do
-			slot0:_onEntityDeadBefore(slot4)
+function var_0_0._releaseAllEntityEffect(arg_14_0)
+	if arg_14_0.foot_effect then
+		for iter_14_0, iter_14_1 in pairs(arg_14_0.foot_effect) do
+			arg_14_0:_onEntityDeadBefore(iter_14_0)
 		end
 	end
 end
 
-function slot0._releaseFlyEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._onFrameUpdateEffectPos, slot0)
-	slot0:_releaseAllEntityEffect()
+function var_0_0._releaseFlyEffect(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._onFrameUpdateEffectPos, arg_15_0)
+	arg_15_0:_releaseAllEntityEffect()
 
-	slot0.origin_pos_y = nil
-	slot0.foot_effect = nil
-	slot0._fly_effect_url = nil
-	slot0.cache_entity = nil
+	arg_15_0.origin_pos_y = nil
+	arg_15_0.foot_effect = nil
+	arg_15_0._fly_effect_url = nil
+	arg_15_0.cache_entity = nil
 end
 
-return slot0
+return var_0_0

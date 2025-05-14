@@ -1,104 +1,122 @@
-module("modules.logic.reactivity.view.ReactivityStoreView", package.seeall)
+﻿module("modules.logic.reactivity.view.ReactivityStoreView", package.seeall)
 
-slot0 = class("ReactivityStoreView", BaseView)
+local var_0_0 = class("ReactivityStoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/timebg/#txt_time")
-	slot0._scrollstore = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_store")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content")
-	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
-	slot0._gostoregoodsitem = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
-	slot0._btnExchange = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Exchange")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/timebg/#txt_time")
+	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content")
+	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
+	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
+	arg_1_0._btnExchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Exchange")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._scrollstore:AddOnValueChanged(slot0._onScrollValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._scrollstore:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
 
-	if slot0._btnExchange then
-		slot0:addClickCb(slot0._btnExchange, slot0._onClickExchange, slot0)
+	if arg_2_0._btnExchange then
+		arg_2_0:addClickCb(arg_2_0._btnExchange, arg_2_0._onClickExchange, arg_2_0)
 	end
 end
 
-function slot0.removeEvents(slot0)
-	slot0._scrollstore:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._scrollstore:RemoveOnValueChanged()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gostoreItem, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._gostoreItem, false)
 
-	slot0.rectTrContent = slot0._goContent:GetComponent(gohelper.Type_RectTransform)
-	slot0.storeItemList = slot0:getUserDataTb_()
+	arg_4_0.rectTrContent = arg_4_0._goContent:GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.storeItemList = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0._onScrollValueChanged(slot0)
-	if #slot0.storeItemList > 0 and slot0.storeItemList[1] then
-		slot1:refreshTagClip(slot0._scrollstore)
+function var_0_0._onScrollValueChanged(arg_6_0)
+	if #arg_6_0.storeItemList > 0 then
+		local var_6_0 = arg_6_0.storeItemList[1]
+
+		if var_6_0 then
+			var_6_0:refreshTagClip(arg_6_0._scrollstore)
+		end
 	end
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(slot0.refreshTime, slot0, TimeUtil.OneMinuteSecond)
+	TaskDispatcher.runRepeat(arg_7_0.refreshTime, arg_7_0, TimeUtil.OneMinuteSecond)
 
-	slot0.actId = slot0.viewParam.actId
+	arg_7_0.actId = arg_7_0.viewParam.actId
 
-	slot0:refreshTime()
-	slot0:refreshStoreContent()
-	slot0:_onScrollValueChanged()
-	slot0:scrollToFirstNoSellOutStore()
+	arg_7_0:refreshTime()
+	arg_7_0:refreshStoreContent()
+	arg_7_0:_onScrollValueChanged()
+	arg_7_0:scrollToFirstNoSellOutStore()
 end
 
-function slot0.refreshStoreContent(slot0)
-	slot2 = nil
+function var_0_0.refreshStoreContent(arg_8_0)
+	local var_8_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_8_0.actId)
+	local var_8_1
 
-	for slot6 = 1, #ActivityStoreConfig.instance:getActivityStoreGroupDict(slot0.actId) do
-		if not slot0.storeItemList[slot6] then
-			slot2 = ReactivityStoreItem.New()
+	for iter_8_0 = 1, #var_8_0 do
+		local var_8_2 = arg_8_0.storeItemList[iter_8_0]
 
-			slot2:onInitView(gohelper.cloneInPlace(slot0._gostoreItem))
-			table.insert(slot0.storeItemList, slot2)
+		if not var_8_2 then
+			var_8_2 = ReactivityStoreItem.New()
+
+			var_8_2:onInitView(gohelper.cloneInPlace(arg_8_0._gostoreItem))
+			table.insert(arg_8_0.storeItemList, var_8_2)
 		end
 
-		slot2:updateInfo(slot6, slot1[slot6])
+		var_8_2:updateInfo(iter_8_0, var_8_0[iter_8_0])
 	end
 end
 
-function slot0.scrollToFirstNoSellOutStore(slot0)
-	if slot0:getFirstNoSellOutGroup() <= 1 then
+function var_0_0.scrollToFirstNoSellOutStore(arg_9_0)
+	local var_9_0 = arg_9_0:getFirstNoSellOutGroup()
+
+	if var_9_0 <= 1 then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
+	ZProj.UGUIHelper.RebuildLayout(arg_9_0.rectTrContent)
 
-	slot2 = 0
+	local var_9_1 = 0
 
-	for slot6, slot7 in ipairs(slot0.storeItemList) do
-		if slot1 <= slot6 then
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.storeItemList) do
+		if var_9_0 <= iter_9_0 then
 			break
 		end
 
-		slot2 = slot2 + slot7:getHeight()
+		var_9_1 = var_9_1 + iter_9_1:getHeight()
 	end
 
-	recthelper.setAnchorY(slot0.rectTrContent, math.min(slot2, recthelper.getHeight(slot0.rectTrContent) - recthelper.getHeight(gohelper.findChildComponent(slot0.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform))))
+	local var_9_2 = gohelper.findChildComponent(arg_9_0.viewGO, "#scroll_store/Viewport", gohelper.Type_RectTransform)
+	local var_9_3 = recthelper.getHeight(var_9_2)
+	local var_9_4 = recthelper.getHeight(arg_9_0.rectTrContent) - var_9_3
+
+	recthelper.setAnchorY(arg_9_0.rectTrContent, math.min(var_9_1, var_9_4))
 end
 
-function slot0.getFirstNoSellOutGroup(slot0)
-	for slot5, slot6 in ipairs(ActivityStoreConfig.instance:getActivityStoreGroupDict(slot0.actId)) do
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11.maxBuyCount == 0 then
-				return slot5
+function var_0_0.getFirstNoSellOutGroup(arg_10_0)
+	local var_10_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_10_0.actId)
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		for iter_10_2, iter_10_3 in ipairs(iter_10_1) do
+			if iter_10_3.maxBuyCount == 0 then
+				return iter_10_0
 			end
 
-			if slot11.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.actId, slot11.id) > 0 then
-				return slot5
+			local var_10_1 = ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_10_0.actId, iter_10_3.id)
+
+			if iter_10_3.maxBuyCount - var_10_1 > 0 then
+				return iter_10_0
 			end
 		end
 	end
@@ -106,26 +124,30 @@ function slot0.getFirstNoSellOutGroup(slot0)
 	return 1
 end
 
-function slot0.refreshTime(slot0)
-	if ActivityModel.instance:getActMO(slot0.actId):getRealEndTimeStamp() - ServerTime.now() > 0 then
-		slot0._txttime.text = TimeUtil.SecondToActivityTimeFormat(slot2)
+function var_0_0.refreshTime(arg_11_0)
+	local var_11_0 = ActivityModel.instance:getActMO(arg_11_0.actId):getRealEndTimeStamp() - ServerTime.now()
+
+	if var_11_0 > 0 then
+		local var_11_1 = TimeUtil.SecondToActivityTimeFormat(var_11_0)
+
+		arg_11_0._txttime.text = var_11_1
 	else
-		slot0._txttime.text = luaLang("ended")
+		arg_11_0._txttime.text = luaLang("ended")
 	end
 end
 
-function slot0._onClickExchange(slot0)
+function var_0_0._onClickExchange(arg_12_0)
 	ViewMgr.instance:openView(ViewName.ReactivityRuleView)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshTime, slot0)
+function var_0_0.onClose(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0.refreshTime, arg_13_0)
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.storeItemList) do
-		slot5:onDestroy()
+function var_0_0.onDestroyView(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.storeItemList) do
+		iter_14_1:onDestroy()
 	end
 end
 
-return slot0
+return var_0_0

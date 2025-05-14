@@ -1,11 +1,11 @@
-module("modules.logic.login.view.NicknameConfirmViewContainer", package.seeall)
+﻿module("modules.logic.login.view.NicknameConfirmViewContainer", package.seeall)
 
-slot0 = class("NicknameConfirmViewContainer", BaseViewContainer)
+local var_0_0 = class("NicknameConfirmViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		NickNameConfirmView.New()
 	}
 end
 
-return slot0
+return var_0_0

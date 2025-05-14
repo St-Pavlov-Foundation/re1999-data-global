@@ -1,138 +1,155 @@
-module("modules.logic.versionactivity1_8.enter.view.subview.V1a8_DungeonEnterView", package.seeall)
+﻿module("modules.logic.versionactivity1_8.enter.view.subview.V1a8_DungeonEnterView", package.seeall)
 
-slot0 = class("V1a8_DungeonEnterView", BaseView)
+local var_0_0 = class("V1a8_DungeonEnterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "logo/#txt_dec")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "logo/timebg")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "logo/timebg/#txt_time")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_task")
-	slot0._gotaskreddot = gohelper.findChild(slot0.viewGO, "entrance/#btn_task/#go_reddot")
-	slot0._btnstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_store")
-	slot0._txtStoreNum = gohelper.findChildText(slot0.viewGO, "entrance/#btn_store/normal/#txt_num")
-	slot0._txtStoreTime = gohelper.findChildText(slot0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
-	slot0._btnenter = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_enter")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "entrance/#btn_enter/#go_reddot")
-	slot0._btnFinished = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_Finished")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_dec")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "logo/timebg")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/timebg/#txt_time")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_task")
+	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_task/#go_reddot")
+	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
+	arg_1_0._txtStoreNum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/normal/#txt_num")
+	arg_1_0._txtStoreTime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
+	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_enter")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_reddot")
+	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Finished")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshStoreCurrency, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivity, slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
-	slot0._btnstore:AddClickListener(slot0._btnstoreOnClick, slot0)
-	slot0._btnenter:AddClickListener(slot0._btnenterOnClick, slot0)
-	slot0._btnFinished:AddClickListener(slot0._btnFinishedOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshStoreCurrency, arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+	arg_2_0._btnstore:AddClickListener(arg_2_0._btnstoreOnClick, arg_2_0)
+	arg_2_0._btnenter:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
+	arg_2_0._btnFinished:AddClickListener(arg_2_0._btnFinishedOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshStoreCurrency, slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivity, slot0)
-	slot0._btntask:RemoveClickListener()
-	slot0._btnstore:RemoveClickListener()
-	slot0._btnenter:RemoveClickListener()
-	slot0._btnFinished:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshStoreCurrency, arg_3_0)
+	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.onRefreshActivity, arg_3_0)
+	arg_3_0._btntask:RemoveClickListener()
+	arg_3_0._btnstore:RemoveClickListener()
+	arg_3_0._btnenter:RemoveClickListener()
+	arg_3_0._btnFinished:RemoveClickListener()
 end
 
-function slot0.onRefreshActivity(slot0, slot1)
-	if slot1 ~= slot0.actId then
+function var_0_0.onRefreshActivity(arg_4_0, arg_4_1)
+	if arg_4_1 ~= arg_4_0.actId then
 		return
 	end
 
-	slot0:refreshActivityState()
+	arg_4_0:refreshActivityState()
 end
 
-function slot0._btntaskOnClick(slot0)
+function var_0_0._btntaskOnClick(arg_5_0)
 	VersionActivity1_8DungeonController.instance:openTaskView()
 end
 
-function slot0._btnstoreOnClick(slot0)
+function var_0_0._btnstoreOnClick(arg_6_0)
 	VersionActivity1_8DungeonController.instance:openStoreView()
 end
 
-function slot0._btnenterOnClick(slot0)
+function var_0_0._btnenterOnClick(arg_7_0)
 	VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function slot0._btnFinishedOnClick(slot0)
+function var_0_0._btnFinishedOnClick(arg_8_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = VersionActivity1_8Enum.ActivityId.Dungeon
-	slot0.animComp = VersionActivitySubAnimatorComp.get(slot0.viewGO, slot0)
-	slot0.goEnter = slot0._btnenter.gameObject
-	slot0.goFinish = slot0._btnFinished.gameObject
-	slot0.goStore = slot0._btnstore.gameObject
-	slot0.actId = VersionActivity1_8Enum.ActivityId.Dungeon
-	slot0.actCo = ActivityConfig.instance:getActivityCo(slot0.actId)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0.actId = VersionActivity1_8Enum.ActivityId.Dungeon
+	arg_9_0.animComp = VersionActivitySubAnimatorComp.get(arg_9_0.viewGO, arg_9_0)
+	arg_9_0.goEnter = arg_9_0._btnenter.gameObject
+	arg_9_0.goFinish = arg_9_0._btnFinished.gameObject
+	arg_9_0.goStore = arg_9_0._btnstore.gameObject
+	arg_9_0.actId = VersionActivity1_8Enum.ActivityId.Dungeon
+	arg_9_0.actCo = ActivityConfig.instance:getActivityCo(arg_9_0.actId)
 
-	slot0:_setDesc()
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.V1a8DungeonEnter)
+	arg_9_0:_setDesc()
+	RedDotController.instance:addRedDot(arg_9_0._goreddot, RedDotEnum.DotNode.V1a8DungeonEnter)
 end
 
-function slot0._setDesc(slot0)
-	if not slot0.actCo or not slot0._txtdesc then
+function var_0_0._setDesc(arg_10_0)
+	if not arg_10_0.actCo or not arg_10_0._txtdesc then
 		return
 	end
 
-	slot0._txtdesc.text = slot0.actCo.actDesc
+	arg_10_0._txtdesc.text = arg_10_0.actCo.actDesc
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshUI()
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0:refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
-	slot0.animComp:playOpenAnim()
-	TaskDispatcher.runRepeat(slot0.everyMinuteCall, slot0, TimeUtil.OneMinuteSecond)
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:refreshUI()
+	arg_12_0.animComp:playOpenAnim()
+	TaskDispatcher.runRepeat(arg_12_0.everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0.everyMinuteCall(slot0)
-	slot0:refreshUI()
+function var_0_0.everyMinuteCall(arg_13_0)
+	arg_13_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshRemainTime()
-	slot0:refreshActivityState()
-	slot0:refreshStoreCurrency()
+function var_0_0.refreshUI(arg_14_0)
+	arg_14_0:refreshRemainTime()
+	arg_14_0:refreshActivityState()
+	arg_14_0:refreshStoreCurrency()
 end
 
-function slot0.refreshRemainTime(slot0)
-	if ActivityModel.instance:getActivityInfo()[slot0.actId]:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		slot0._txttime.text = TimeUtil.SecondToActivityTimeFormat(slot2)
+function var_0_0.refreshRemainTime(arg_15_0)
+	local var_15_0 = ActivityModel.instance:getActivityInfo()[arg_15_0.actId]:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(slot0._txttime, true)
+	if var_15_0 > 0 then
+		local var_15_1 = TimeUtil.SecondToActivityTimeFormat(var_15_0)
+
+		arg_15_0._txttime.text = var_15_1
+
+		gohelper.setActive(arg_15_0._txttime, true)
 	else
-		gohelper.setActive(slot0._txttime, false)
+		gohelper.setActive(arg_15_0._txttime, false)
 	end
 
-	slot0._txtStoreTime.text = ActivityModel.instance:getActivityInfo()[VersionActivity1_8Enum.ActivityId.DungeonStore]:getRemainTimeStr2ByEndTime(true)
+	local var_15_2 = ActivityModel.instance:getActivityInfo()[VersionActivity1_8Enum.ActivityId.DungeonStore]
+
+	arg_15_0._txtStoreTime.text = var_15_2:getRemainTimeStr2ByEndTime(true)
 end
 
-function slot0.refreshActivityState(slot0)
-	slot2 = ActivityHelper.getActivityStatusAndToast(slot0.actId) == ActivityEnum.ActivityStatus.Normal
+function var_0_0.refreshActivityState(arg_16_0)
+	local var_16_0 = ActivityHelper.getActivityStatusAndToast(arg_16_0.actId)
+	local var_16_1 = var_16_0 == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(slot0.goEnter, slot2)
-	gohelper.setActive(slot0.goFinish, not slot2)
-	gohelper.setActive(slot0._gotime, not (slot1 == ActivityEnum.ActivityStatus.Expired))
-	gohelper.setActive(slot0.goStore, ActivityHelper.getActivityStatusAndToast(VersionActivity1_8Enum.ActivityId.DungeonStore) == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(arg_16_0.goEnter, var_16_1)
+	gohelper.setActive(arg_16_0.goFinish, not var_16_1)
+
+	local var_16_2 = var_16_0 == ActivityEnum.ActivityStatus.Expired
+
+	gohelper.setActive(arg_16_0._gotime, not var_16_2)
+
+	local var_16_3 = ActivityHelper.getActivityStatusAndToast(VersionActivity1_8Enum.ActivityId.DungeonStore) == ActivityEnum.ActivityStatus.Normal
+
+	gohelper.setActive(arg_16_0.goStore, var_16_3)
 end
 
-function slot0.refreshStoreCurrency(slot0)
-	slot0._txtStoreNum.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a8Dungeon) and slot1.quantity or 0)
+function var_0_0.refreshStoreCurrency(arg_17_0)
+	local var_17_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a8Dungeon)
+	local var_17_1 = var_17_0 and var_17_0.quantity or 0
+
+	arg_17_0._txtStoreNum.text = GameUtil.numberDisplay(var_17_1)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.everyMinuteCall, slot0)
+function var_0_0.onClose(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0.everyMinuteCall, arg_18_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.animComp:destroy()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0.animComp:destroy()
 end
 
-return slot0
+return var_0_0

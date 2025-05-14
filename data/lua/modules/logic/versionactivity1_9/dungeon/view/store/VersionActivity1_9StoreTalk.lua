@@ -1,429 +1,465 @@
-module("modules.logic.versionactivity1_9.dungeon.view.store.VersionActivity1_9StoreTalk", package.seeall)
+﻿module("modules.logic.versionactivity1_9.dungeon.view.store.VersionActivity1_9StoreTalk", package.seeall)
 
-slot0 = class("VersionActivity1_9StoreTalk", BaseView)
+local var_0_0 = class("VersionActivity1_9StoreTalk", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gostagearea = gohelper.findChild(slot0.viewGO, "#go_stagearea")
-	slot0._imagechess = gohelper.findChildImage(slot0.viewGO, "Right/#chess/#image_chess")
-	slot0._gochess = gohelper.findChild(slot0.viewGO, "Right/#chess")
-	slot0._godot = gohelper.findChild(slot0.viewGO, "Right/vx_pot")
-	slot0._goTalk = gohelper.findChild(slot0.viewGO, "Right/#go_talk")
-	slot0._goArrowTip = gohelper.findChild(slot0.viewGO, "Right/#go_talk/#go_ArrowTips")
-	slot0._scrollTalk = gohelper.findChildScrollRect(slot0.viewGO, "Right/#go_talk/Scroll View")
-	slot0._txttalk = gohelper.findChildText(slot0.viewGO, "Right/#go_talk/Scroll View/Viewport/Content/#txt_talk")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gostagearea = gohelper.findChild(arg_1_0.viewGO, "#go_stagearea")
+	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0.viewGO, "Right/#chess/#image_chess")
+	arg_1_0._gochess = gohelper.findChild(arg_1_0.viewGO, "Right/#chess")
+	arg_1_0._godot = gohelper.findChild(arg_1_0.viewGO, "Right/vx_pot")
+	arg_1_0._goTalk = gohelper.findChild(arg_1_0.viewGO, "Right/#go_talk")
+	arg_1_0._goArrowTip = gohelper.findChild(arg_1_0.viewGO, "Right/#go_talk/#go_ArrowTips")
+	arg_1_0._scrollTalk = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_talk/Scroll View")
+	arg_1_0._txttalk = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_talk/Scroll View/Viewport/Content/#txt_talk")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot0.TalkMinTriggerDuration = 2
-slot0.TalkStepShowDuration = 2
-slot0.TalkTxtShowDuration = 6
-slot0.TextSpawnInterval = 0.06
-slot0.ChessJumpAnimDuration = 1.167
-slot0.ScrollTalkMargin = 40
-slot0.TextMaxHeight = 99999
-slot0.TipHeight = 10
-slot0.SplitChar = "|"
+var_0_0.TalkMinTriggerDuration = 2
+var_0_0.TalkStepShowDuration = 2
+var_0_0.TalkTxtShowDuration = 6
+var_0_0.TextSpawnInterval = 0.06
+var_0_0.ChessJumpAnimDuration = 1.167
+var_0_0.ScrollTalkMargin = 40
+var_0_0.TextMaxHeight = 99999
+var_0_0.TipHeight = 10
+var_0_0.SplitChar = "|"
 
-function slot0.onClickStage(slot0)
+function var_0_0.onClickStage(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_9Store.play_ui_jinye_click_stage)
-	slot0:triggerTalkByType(ActivityStoreConfig.BubbleTalkTriggerType.ClickStageArea)
+	arg_4_0:triggerTalkByType(ActivityStoreConfig.BubbleTalkTriggerType.ClickStageArea)
 end
 
-function slot0.onClickText(slot0)
-	if slot0.waitFinishTalk then
+function var_0_0.onClickText(arg_5_0)
+	if arg_5_0.waitFinishTalk then
 		return
 	end
 
-	if slot0.waitPlayNextStep then
-		TaskDispatcher.cancelTask(slot0.playNextStep, slot0)
-		slot0:playNextStep()
+	if arg_5_0.waitPlayNextStep then
+		TaskDispatcher.cancelTask(arg_5_0.playNextStep, arg_5_0)
+		arg_5_0:playNextStep()
 
 		return
 	end
 
-	if slot0.start then
-		slot0.currentCharIndex = slot0.contentLen
+	if arg_5_0.start then
+		arg_5_0.currentCharIndex = arg_5_0.contentLen
 
-		slot0:_tickContent()
+		arg_5_0:_tickContent()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._scrollTalk.verticalNormalizedPosition = 1
-	slot0.lastTriggerTime = -uv0.TalkMinTriggerDuration
-	slot0.canTriggerList = {}
-	slot0.tempTypeList = {}
-	slot0.triggerStepList = {}
-	slot0.actId = VersionActivity1_9Enum.ActivityId.DungeonStore
-	slot0.stageClick = gohelper.getClickWithDefaultAudio(slot0._gostagearea)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._scrollTalk.verticalNormalizedPosition = 1
+	arg_6_0.lastTriggerTime = -var_0_0.TalkMinTriggerDuration
+	arg_6_0.canTriggerList = {}
+	arg_6_0.tempTypeList = {}
+	arg_6_0.triggerStepList = {}
+	arg_6_0.actId = VersionActivity1_9Enum.ActivityId.DungeonStore
+	arg_6_0.stageClick = gohelper.getClickWithDefaultAudio(arg_6_0._gostagearea)
 
-	slot0.stageClick:AddClickListener(slot0.onClickStage, slot0)
+	arg_6_0.stageClick:AddClickListener(arg_6_0.onClickStage, arg_6_0)
 
-	slot0.talkTextClick = gohelper.getClickWithDefaultAudio(slot0._goTalk)
+	arg_6_0.talkTextClick = gohelper.getClickWithDefaultAudio(arg_6_0._goTalk)
 
-	slot0.talkTextClick:AddClickListener(slot0.onClickText, slot0)
+	arg_6_0.talkTextClick:AddClickListener(arg_6_0.onClickText, arg_6_0)
 
-	slot0.rectTrTalk = slot0._goTalk:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrContent = gohelper.findChildComponent(slot0.viewGO, "Right/#go_talk/Scroll View/Viewport/Content", gohelper.Type_RectTransform)
-	slot0.chessAnim = slot0._gochess:GetComponent(gohelper.Type_Animator)
+	arg_6_0.rectTrTalk = arg_6_0._goTalk:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.rectTrContent = gohelper.findChildComponent(arg_6_0.viewGO, "Right/#go_talk/Scroll View/Viewport/Content", gohelper.Type_RectTransform)
+	arg_6_0.chessAnim = arg_6_0._gochess:GetComponent(gohelper.Type_Animator)
 
-	gohelper.setActive(slot0._godot, false)
-	gohelper.setActive(slot0._goTalk, false)
-	gohelper.setActive(slot0._goArrowTip, false)
-	slot0:initUpdateBeat()
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0.onBuyGoodsSuccess, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0, LuaEventSystem.Low)
+	gohelper.setActive(arg_6_0._godot, false)
+	gohelper.setActive(arg_6_0._goTalk, false)
+	gohelper.setActive(arg_6_0._goArrowTip, false)
+	arg_6_0:initUpdateBeat()
+	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_6_0.onBuyGoodsSuccess, arg_6_0, LuaEventSystem.Low)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_6_0.onCloseViewFinish, arg_6_0, LuaEventSystem.Low)
 end
 
-function slot0.initUpdateBeat(slot0)
-	slot0.updateHandle = UpdateBeat:CreateListener(slot0._onFrame, slot0)
+function var_0_0.initUpdateBeat(arg_7_0)
+	arg_7_0.updateHandle = UpdateBeat:CreateListener(arg_7_0._onFrame, arg_7_0)
 
-	UpdateBeat:AddListener(slot0.updateHandle)
+	UpdateBeat:AddListener(arg_7_0.updateHandle)
 
-	slot0.lateUpdateHandle = LateUpdateBeat:CreateListener(slot0._onFrameLateUpdate, slot0)
+	arg_7_0.lateUpdateHandle = LateUpdateBeat:CreateListener(arg_7_0._onFrameLateUpdate, arg_7_0)
 
-	LateUpdateBeat:AddListener(slot0.lateUpdateHandle)
+	LateUpdateBeat:AddListener(arg_7_0.lateUpdateHandle)
 end
 
-function slot0._onFrameLateUpdate(slot0)
-	if slot0.closed then
+function var_0_0._onFrameLateUpdate(arg_8_0)
+	if arg_8_0.closed then
 		return
 	end
 
-	if not slot0.start then
+	if not arg_8_0.start then
 		return
 	end
 
-	if slot0.needSetVerticalNormalized then
-		slot0._scrollTalk.verticalNormalizedPosition = 0
-		slot0.needSetVerticalNormalized = false
+	if arg_8_0.needSetVerticalNormalized then
+		arg_8_0._scrollTalk.verticalNormalizedPosition = 0
+		arg_8_0.needSetVerticalNormalized = false
 	end
 
-	if not slot0.isDirty then
+	if not arg_8_0.isDirty then
 		return
 	end
 
-	slot0.isDirty = false
-	slot0.needSetVerticalNormalized = true
-	slot2 = uv0.ScrollTalkMargin
-	slot3 = nil
+	arg_8_0.isDirty = false
+	arg_8_0.needSetVerticalNormalized = true
 
-	if slot0.waitPlayNextStep then
-		slot3 = (uv0.TextMaxHeight < slot0._txttalk.preferredHeight and uv0.TextMaxHeight + slot2 or slot1 + slot2) + uv0.TipHeight
+	local var_8_0 = arg_8_0._txttalk.preferredHeight
+	local var_8_1 = var_0_0.ScrollTalkMargin
+	local var_8_2
+
+	if var_8_0 > var_0_0.TextMaxHeight then
+		var_8_2 = var_0_0.TextMaxHeight + var_8_1
+	else
+		var_8_2 = var_8_0 + var_8_1
 	end
 
-	recthelper.setHeight(slot0.rectTrTalk, slot3)
+	if arg_8_0.waitPlayNextStep then
+		var_8_2 = var_8_2 + var_0_0.TipHeight
+	end
+
+	recthelper.setHeight(arg_8_0.rectTrTalk, var_8_2)
 end
 
-function slot0._onFrame(slot0)
-	if slot0.closed then
+function var_0_0._onFrame(arg_9_0)
+	if arg_9_0.closed then
 		return
 	end
 
-	if not slot0.start then
+	if not arg_9_0.start then
 		return
 	end
 
-	if slot0.waitPlayNextStep or slot0.waitFinishTalk then
+	if arg_9_0.waitPlayNextStep or arg_9_0.waitFinishTalk then
 		return
 	end
 
-	if Time.time - slot0.lastSpawnTime < uv0.TextSpawnInterval then
+	if Time.time - arg_9_0.lastSpawnTime < var_0_0.TextSpawnInterval then
 		return
 	end
 
-	slot0:_tickContent()
+	arg_9_0:_tickContent()
 end
 
-function slot0._tickContent(slot0)
-	if slot0.closed then
+function var_0_0._tickContent(arg_10_0)
+	if arg_10_0.closed then
 		return
 	end
 
-	slot0.lastSpawnTime = Time.time
-	slot0.currentCharIndex = slot0.currentCharIndex + 1
-	slot0._txttalk.text = utf8.sub(slot0.content, 1, slot0.currentCharIndex)
-	slot0.isDirty = true
+	arg_10_0.lastSpawnTime = Time.time
+	arg_10_0.currentCharIndex = arg_10_0.currentCharIndex + 1
+	arg_10_0._txttalk.text = utf8.sub(arg_10_0.content, 1, arg_10_0.currentCharIndex)
+	arg_10_0.isDirty = true
 
-	if slot0.currentCharIndex == slot0.contentLen + 1 then
-		if slot0.triggerStepList[slot0.currentStepIndex + 1] then
-			slot0:startWaitPlayNextStep()
-			TaskDispatcher.runDelay(slot0.playNextStep, slot0, uv0.TalkStepShowDuration)
+	if arg_10_0.currentCharIndex == arg_10_0.contentLen + 1 then
+		if arg_10_0.triggerStepList[arg_10_0.currentStepIndex + 1] then
+			arg_10_0:startWaitPlayNextStep()
+			TaskDispatcher.runDelay(arg_10_0.playNextStep, arg_10_0, var_0_0.TalkStepShowDuration)
 		else
-			slot0:startWaitFinishTalk()
-			TaskDispatcher.runDelay(slot0.onFinishTalk, slot0, uv0.TalkTxtShowDuration)
+			arg_10_0:startWaitFinishTalk()
+			TaskDispatcher.runDelay(arg_10_0.onFinishTalk, arg_10_0, var_0_0.TalkTxtShowDuration)
 		end
 	end
 end
 
-function slot0.startWaitFinishTalk(slot0)
-	slot0.waitFinishTalk = true
+function var_0_0.startWaitFinishTalk(arg_11_0)
+	arg_11_0.waitFinishTalk = true
 end
 
-function slot0.startWaitPlayNextStep(slot0)
-	slot0.waitPlayNextStep = true
+function var_0_0.startWaitPlayNextStep(arg_12_0)
+	arg_12_0.waitPlayNextStep = true
 
-	gohelper.setActive(slot0._goArrowTip, true)
+	gohelper.setActive(arg_12_0._goArrowTip, true)
 end
 
-function slot0.onFinishTalk(slot0)
-	if slot0._scrollTalk then
-		slot0._scrollTalk.verticalNormalizedPosition = 0
+function var_0_0.onFinishTalk(arg_13_0)
+	if arg_13_0._scrollTalk then
+		arg_13_0._scrollTalk.verticalNormalizedPosition = 0
 	end
 
-	slot0.lastSpawnTime = nil
-	slot0.currentCharIndex = nil
-	slot0.currentStepIndex = nil
-	slot0.content = nil
-	slot0.start = false
-	slot0.waitFinishTalk = false
+	arg_13_0.lastSpawnTime = nil
+	arg_13_0.currentCharIndex = nil
+	arg_13_0.currentStepIndex = nil
+	arg_13_0.content = nil
+	arg_13_0.start = false
+	arg_13_0.waitFinishTalk = false
 
-	gohelper.setActive(slot0._goTalk, false)
+	gohelper.setActive(arg_13_0._goTalk, false)
 end
 
-function slot0.playNextStep(slot0)
-	slot0:playStep(slot0.currentStepIndex + 1)
+function var_0_0.playNextStep(arg_14_0)
+	arg_14_0:playStep(arg_14_0.currentStepIndex + 1)
 
-	slot0.waitPlayNextStep = false
+	arg_14_0.waitPlayNextStep = false
 
-	gohelper.setActive(slot0._goArrowTip, false)
+	gohelper.setActive(arg_14_0._goArrowTip, false)
 end
 
-function slot0.onCloseViewFinish(slot0, slot1)
-	if slot1 ~= ViewName.CommonPropView then
+function var_0_0.onCloseViewFinish(arg_15_0, arg_15_1)
+	if arg_15_1 ~= ViewName.CommonPropView then
 		return
 	end
 
-	if not slot0.buyGoodsId then
+	if not arg_15_0.buyGoodsId then
 		return
 	end
 
-	tabletool.clear(slot0.tempTypeList)
-	table.insert(slot0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.BuyGoodsByRare)
-	table.insert(slot0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.BuyGoodsById)
+	tabletool.clear(arg_15_0.tempTypeList)
+	table.insert(arg_15_0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.BuyGoodsByRare)
+	table.insert(arg_15_0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.BuyGoodsById)
 
-	if lua_activity107.configDict[slot0.actId][slot0.buyGoodsId].maxBuyCount ~= 0 and slot2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(slot0.actId, slot2.id) < 1 then
-		table.insert(slot0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.SellOutGoodsByRare)
-		table.insert(slot0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.SellOutGoodsById)
+	local var_15_0 = lua_activity107.configDict[arg_15_0.actId][arg_15_0.buyGoodsId]
+
+	if var_15_0.maxBuyCount ~= 0 and var_15_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_15_0.actId, var_15_0.id) < 1 then
+		table.insert(arg_15_0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.SellOutGoodsByRare)
+		table.insert(arg_15_0.tempTypeList, ActivityStoreConfig.BubbleTalkTriggerType.SellOutGoodsById)
 	end
 
-	slot0:triggerTalkByTypeList(slot0.tempTypeList, slot0.buyGoodsId)
+	arg_15_0:triggerTalkByTypeList(arg_15_0.tempTypeList, arg_15_0.buyGoodsId)
 
-	slot0.buyGoodsId = nil
+	arg_15_0.buyGoodsId = nil
 end
 
-function slot0.onBuyGoodsSuccess(slot0, slot1, slot2)
-	if slot0.actId ~= slot1 then
+function var_0_0.onBuyGoodsSuccess(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_0.actId ~= arg_16_1 then
 		return
 	end
 
-	slot0.buyGoodsId = slot2
+	arg_16_0.buyGoodsId = arg_16_2
 end
 
-function slot0.onOpen(slot0)
-	slot0:initGroupCo()
-	TaskDispatcher.runDelay(slot0._triggerEnterAudio, slot0, 0.5)
+function var_0_0.onOpen(arg_17_0)
+	arg_17_0:initGroupCo()
+	TaskDispatcher.runDelay(arg_17_0._triggerEnterAudio, arg_17_0, 0.5)
 end
 
-function slot0._triggerEnterAudio(slot0)
+function var_0_0._triggerEnterAudio(arg_18_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_9Store.play_ui_jinye_chess_enter)
 end
 
-function slot0.onOpenFinish(slot0)
-	if slot0.isFirstEnter then
-		slot0:triggerTalkByType(ActivityStoreConfig.BubbleTalkTriggerType.FirstEnterActivityStore)
+function var_0_0.onOpenFinish(arg_19_0)
+	if arg_19_0.isFirstEnter then
+		arg_19_0:triggerTalkByType(ActivityStoreConfig.BubbleTalkTriggerType.FirstEnterActivityStore)
 
-		slot1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_9PlayedStoreGroupIdKey)
-		slot3 = string.splitToNumber(PlayerPrefsHelper.getString(slot1, ""), uv0.SplitChar)
+		local var_19_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_9PlayedStoreGroupIdKey)
+		local var_19_1 = PlayerPrefsHelper.getString(var_19_0, "")
+		local var_19_2 = string.splitToNumber(var_19_1, var_0_0.SplitChar)
 
-		table.insert(slot3, slot0.groupCo.groupId)
-		PlayerPrefsHelper.setString(slot1, table.concat(slot3, uv0.SplitChar))
+		table.insert(var_19_2, arg_19_0.groupCo.groupId)
+		PlayerPrefsHelper.setString(var_19_0, table.concat(var_19_2, var_0_0.SplitChar))
 	else
-		slot0:triggerTalkByType(ActivityStoreConfig.BubbleTalkTriggerType.EnterActivityStore)
+		arg_19_0:triggerTalkByType(ActivityStoreConfig.BubbleTalkTriggerType.EnterActivityStore)
 	end
 end
 
-function slot0.initGroupCo(slot0)
-	slot1 = ActivityStoreConfig.instance:getUnlockGroupList(slot0.actId)
-	slot8 = ""
-	slot7 = uv0.SplitChar
+function var_0_0.initGroupCo(arg_20_0)
+	local var_20_0 = ActivityStoreConfig.instance:getUnlockGroupList(arg_20_0.actId)
+	local var_20_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_9PlayedStoreGroupIdKey)
+	local var_20_2 = {}
 
-	for slot7, slot8 in ipairs(string.split(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.Version1_9PlayedStoreGroupIdKey), slot8), slot7)) do
-		table.insert({}, tonumber(slot8))
+	for iter_20_0, iter_20_1 in ipairs(string.split(PlayerPrefsHelper.getString(var_20_1, ""), var_0_0.SplitChar)) do
+		local var_20_3 = tonumber(iter_20_1)
+
+		table.insert(var_20_2, var_20_3)
 	end
 
-	for slot8 = #slot1, 1, -1 do
-		if not tabletool.indexOf(slot3, slot1[slot8].groupId) then
-			slot0.isFirstEnter = true
-			slot0.groupCo = slot9
-			slot0.talkCoList = ActivityStoreConfig.instance:getGroupTalkCoList(slot0.groupCo.groupId)
+	local var_20_4 = #var_20_0
+
+	for iter_20_2 = var_20_4, 1, -1 do
+		local var_20_5 = var_20_0[iter_20_2]
+
+		if not tabletool.indexOf(var_20_2, var_20_5.groupId) then
+			arg_20_0.isFirstEnter = true
+			arg_20_0.groupCo = var_20_5
+			arg_20_0.talkCoList = ActivityStoreConfig.instance:getGroupTalkCoList(arg_20_0.groupCo.groupId)
 
 			return
 		end
 	end
 
-	slot0.isFirstEnter = false
+	arg_20_0.isFirstEnter = false
 
 	math.randomseed(tonumber(tostring(os.time()):reverse():sub(1, 7)))
 
-	slot0.groupCo = slot1[math.random(slot4)]
-	slot0.talkCoList = ActivityStoreConfig.instance:getGroupTalkCoList(slot0.groupCo.groupId)
+	arg_20_0.groupCo = var_20_0[math.random(var_20_4)]
+	arg_20_0.talkCoList = ActivityStoreConfig.instance:getGroupTalkCoList(arg_20_0.groupCo.groupId)
 end
 
-function slot0.triggerTalkByTypeList(slot0, slot1, slot2)
-	tabletool.clear(slot0.canTriggerList)
+function var_0_0.triggerTalkByTypeList(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = ActivityStoreConfig.BubbleTalkTriggerType.None
 
-	for slot7, slot8 in ipairs(slot0.talkCoList) do
-		if tabletool.indexOf(slot1, slot8.triggerType) and ActivityStoreConfig.instance:checkTalkCanTrigger(slot0.actId, slot8, slot2) then
-			table.insert(slot0.canTriggerList, slot8)
+	tabletool.clear(arg_21_0.canTriggerList)
 
-			if ActivityStoreConfig.BubbleTalkTriggerType.None < slot8.triggerType then
-				slot3 = slot8.triggerType
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0.talkCoList) do
+		if tabletool.indexOf(arg_21_1, iter_21_1.triggerType) and ActivityStoreConfig.instance:checkTalkCanTrigger(arg_21_0.actId, iter_21_1, arg_21_2) then
+			table.insert(arg_21_0.canTriggerList, iter_21_1)
+
+			if var_21_0 < iter_21_1.triggerType then
+				var_21_0 = iter_21_1.triggerType
 			end
 		end
 	end
 
-	for slot7 = #slot0.canTriggerList, 1, -1 do
-		if slot0.canTriggerList[slot7].triggerType ~= slot3 then
-			GameUtil.tabletool_fastRemoveValueByPos(slot0.canTriggerList, slot7)
+	for iter_21_2 = #arg_21_0.canTriggerList, 1, -1 do
+		if arg_21_0.canTriggerList[iter_21_2].triggerType ~= var_21_0 then
+			GameUtil.tabletool_fastRemoveValueByPos(arg_21_0.canTriggerList, iter_21_2)
 		end
 	end
 
-	if #slot0.canTriggerList < 1 then
+	if #arg_21_0.canTriggerList < 1 then
 		return
 	end
 
-	slot0:_triggerTalk(slot0:getRandomTalkCo(slot0.canTriggerList))
+	arg_21_0:_triggerTalk(arg_21_0:getRandomTalkCo(arg_21_0.canTriggerList))
 end
 
-function slot0.triggerTalkByType(slot0, slot1, slot2)
-	tabletool.clear(slot0.canTriggerList)
+function var_0_0.triggerTalkByType(arg_22_0, arg_22_1, arg_22_2)
+	tabletool.clear(arg_22_0.canTriggerList)
 
-	for slot6, slot7 in ipairs(slot0.talkCoList) do
-		if slot1 == slot7.triggerType and ActivityStoreConfig.instance:checkTalkCanTrigger(slot0.actId, slot7, slot2) then
-			table.insert(slot0.canTriggerList, slot7)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0.talkCoList) do
+		if arg_22_1 == iter_22_1.triggerType and ActivityStoreConfig.instance:checkTalkCanTrigger(arg_22_0.actId, iter_22_1, arg_22_2) then
+			table.insert(arg_22_0.canTriggerList, iter_22_1)
 		end
 	end
 
-	if #slot0.canTriggerList < 1 then
+	if #arg_22_0.canTriggerList < 1 then
 		return
 	end
 
-	slot0:_triggerTalk(slot0:getRandomTalkCo(slot0.canTriggerList))
+	arg_22_0:_triggerTalk(arg_22_0:getRandomTalkCo(arg_22_0.canTriggerList))
 end
 
-function slot0.getRandomTalkCo(slot0, slot1)
-	if #slot1 == 1 then
-		return slot1[1]
+function var_0_0.getRandomTalkCo(arg_23_0, arg_23_1)
+	local var_23_0 = #arg_23_1
+
+	if var_23_0 == 1 then
+		return arg_23_1[1]
 	end
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot3 = 0 + slot8.weight
+	local var_23_1 = 0
+
+	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
+		var_23_1 = var_23_1 + iter_23_1.weight
 	end
 
-	for slot9, slot10 in ipairs(slot1) do
-		if math.random(slot3) <= 0 + slot10.weight then
-			return slot10
+	local var_23_2 = math.random(var_23_1)
+	local var_23_3 = 0
+
+	for iter_23_2, iter_23_3 in ipairs(arg_23_1) do
+		var_23_3 = var_23_3 + iter_23_3.weight
+
+		if var_23_2 <= var_23_3 then
+			return iter_23_3
 		end
 	end
 
-	return slot1[slot2]
+	return arg_23_1[var_23_0]
 end
 
-function slot0._triggerTalk(slot0, slot1)
-	if Time.time - slot0.lastTriggerTime < uv0.TalkMinTriggerDuration then
+function var_0_0._triggerTalk(arg_24_0, arg_24_1)
+	local var_24_0 = Time.time
+
+	if var_24_0 - arg_24_0.lastTriggerTime < var_0_0.TalkMinTriggerDuration then
 		return
 	end
 
-	slot0:buildStepCoList(slot1)
-	TaskDispatcher.cancelTask(slot0.playNextStep, slot0)
-	TaskDispatcher.cancelTask(slot0.onFinishTalk, slot0)
-	gohelper.setActive(slot0._goTalk, true)
-	gohelper.setActive(slot0._goArrowTip, false)
+	arg_24_0:buildStepCoList(arg_24_1)
+	TaskDispatcher.cancelTask(arg_24_0.playNextStep, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0.onFinishTalk, arg_24_0)
+	gohelper.setActive(arg_24_0._goTalk, true)
+	gohelper.setActive(arg_24_0._goArrowTip, false)
 
-	slot0._txttalk.text = ""
-	slot0.lastTriggerTime = slot2
-	slot0.lastSpawnTime = slot2 - uv0.TextSpawnInterval
+	arg_24_0._txttalk.text = ""
+	arg_24_0.lastTriggerTime = var_24_0
+	arg_24_0.lastSpawnTime = var_24_0 - var_0_0.TextSpawnInterval
 
-	slot0:playStep(1)
+	arg_24_0:playStep(1)
 
-	slot0.start = true
-	slot0.waitFinishTalk = false
-	slot0.waitPlayNextStep = false
+	arg_24_0.start = true
+	arg_24_0.waitFinishTalk = false
+	arg_24_0.waitPlayNextStep = false
 end
 
-function slot0.playStep(slot0, slot1)
-	if not slot0.triggerStepList[slot1] then
+function var_0_0.playStep(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0.triggerStepList[arg_25_1]
+
+	if not var_25_0 then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0.stopChessAnim, slot0)
-	TaskDispatcher.runRepeat(slot0.stopChessAnim, slot0, uv0.ChessJumpAnimDuration)
-	slot0.chessAnim:Play("jump")
-	gohelper.setActive(slot0._godot, true)
+	TaskDispatcher.cancelTask(arg_25_0.stopChessAnim, arg_25_0)
+	TaskDispatcher.runRepeat(arg_25_0.stopChessAnim, arg_25_0, var_0_0.ChessJumpAnimDuration)
+	arg_25_0.chessAnim:Play("jump")
+	gohelper.setActive(arg_25_0._godot, true)
 
-	slot0.currentCharIndex = 1
-	slot0.currentStepIndex = slot1
-	slot0.content = slot2.content
-	slot0.contentLen = utf8.len(slot0.content)
+	arg_25_0.currentCharIndex = 1
+	arg_25_0.currentStepIndex = arg_25_1
+	arg_25_0.content = var_25_0.content
+	arg_25_0.contentLen = utf8.len(arg_25_0.content)
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_9Store.play_ui_jinye_chess_talk)
 end
 
-function slot0.buildStepCoList(slot0, slot1)
-	tabletool.clear(slot0.triggerStepList)
+function var_0_0.buildStepCoList(arg_26_0, arg_26_1)
+	tabletool.clear(arg_26_0.triggerStepList)
 
-	for slot6, slot7 in pairs(lua_activity107_bubble_talk_step.configDict[slot1.id]) do
-		table.insert(slot0.triggerStepList, slot7)
+	local var_26_0 = lua_activity107_bubble_talk_step.configDict[arg_26_1.id]
+
+	for iter_26_0, iter_26_1 in pairs(var_26_0) do
+		table.insert(arg_26_0.triggerStepList, iter_26_1)
 	end
 
-	if #slot0.triggerStepList > 1 then
-		table.sort(slot0.triggerStepList, uv0.sortStep)
-	end
-end
-
-function slot0.stopChessAnim(slot0)
-	if slot0.waitPlayNextStep or slot0.waitFinishTalk then
-		slot0.chessAnim:Play("idle")
-		gohelper.setActive(slot0._godot, false)
-		TaskDispatcher.cancelTask(slot0.stopChessAnim, slot0)
+	if #arg_26_0.triggerStepList > 1 then
+		table.sort(arg_26_0.triggerStepList, var_0_0.sortStep)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.stopChessAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.playNextStep, slot0)
-	TaskDispatcher.cancelTask(slot0.onFinishTalk, slot0)
+function var_0_0.stopChessAnim(arg_27_0)
+	if arg_27_0.waitPlayNextStep or arg_27_0.waitFinishTalk then
+		arg_27_0.chessAnim:Play("idle")
+		gohelper.setActive(arg_27_0._godot, false)
+		TaskDispatcher.cancelTask(arg_27_0.stopChessAnim, arg_27_0)
+	end
+end
+
+function var_0_0.onClose(arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0.stopChessAnim, arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0.playNextStep, arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0.onFinishTalk, arg_28_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_9Store.stop_ui_jinye_chess_talk)
-	TaskDispatcher.cancelTask(slot0._triggerEnterAudio, slot0)
+	TaskDispatcher.cancelTask(arg_28_0._triggerEnterAudio, arg_28_0)
 
-	if slot0.updateHandle then
-		UpdateBeat:RemoveListener(slot0.updateHandle)
+	if arg_28_0.updateHandle then
+		UpdateBeat:RemoveListener(arg_28_0.updateHandle)
 	end
 
-	if slot0.lateUpdateHandle then
-		LateUpdateBeat:RemoveListener(slot0.lateUpdateHandle)
+	if arg_28_0.lateUpdateHandle then
+		LateUpdateBeat:RemoveListener(arg_28_0.lateUpdateHandle)
 	end
 
-	slot0.closed = true
+	arg_28_0.closed = true
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.stageClick:RemoveClickListener()
-	slot0.talkTextClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_29_0)
+	arg_29_0.stageClick:RemoveClickListener()
+	arg_29_0.talkTextClick:RemoveClickListener()
 end
 
-function slot0.sortStep(slot0, slot1)
-	return slot0.step < slot1.step
+function var_0_0.sortStep(arg_30_0, arg_30_1)
+	return arg_30_0.step < arg_30_1.step
 end
 
-return slot0
+return var_0_0

@@ -1,37 +1,40 @@
-module("modules.logic.patface.controller.work.TurnbackViewPatFaceWork", package.seeall)
+﻿module("modules.logic.patface.controller.work.TurnbackViewPatFaceWork", package.seeall)
 
-slot0 = class("TurnbackViewPatFaceWork", PatFaceWorkBase)
+local var_0_0 = class("TurnbackViewPatFaceWork", PatFaceWorkBase)
 
-function slot0.checkCanPat(slot0)
-	return TurnbackModel.instance:canShowTurnbackPop() and TurnbackModel.instance:isInOpenTime()
+function var_0_0.checkCanPat(arg_1_0)
+	local var_1_0 = TurnbackModel.instance:canShowTurnbackPop()
+	local var_1_1 = TurnbackModel.instance:isInOpenTime()
+
+	return var_1_0 and var_1_1
 end
 
-function slot0.startPat(slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0.onCloseViewFinish, slot0)
+function var_0_0.startPat(arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
 
-	slot0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	arg_2_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	slot0:_openView()
-	TurnbackRpc.instance:sendTurnbackFirstShowRequest(slot0.turnbackId)
+	arg_2_0:_openView()
+	TurnbackRpc.instance:sendTurnbackFirstShowRequest(arg_2_0.turnbackId)
 end
 
-function slot0._openView(slot0)
+function var_0_0._openView(arg_3_0)
 	if TurnbackModel.instance:isNewType() then
 		ViewMgr.instance:openView(ViewName.TurnbackNewLatterView)
 	else
-		ViewMgr.instance:openView(slot0._patViewName)
+		ViewMgr.instance:openView(arg_3_0._patViewName)
 	end
 end
 
-function slot0.onCloseViewFinish(slot0, slot1)
-	if string.nilorempty(slot0._patViewName) or slot0._patViewName == slot1 or slot1 == ViewName.TurnbackNewLatterView then
-		slot0:patComplete()
-		TurnbackRpc.instance:sendTurnbackFirstShowRequest(slot0.turnbackId)
+function var_0_0.onCloseViewFinish(arg_4_0, arg_4_1)
+	if string.nilorempty(arg_4_0._patViewName) or arg_4_0._patViewName == arg_4_1 or arg_4_1 == ViewName.TurnbackNewLatterView then
+		arg_4_0:patComplete()
+		TurnbackRpc.instance:sendTurnbackFirstShowRequest(arg_4_0.turnbackId)
 	end
 end
 
-function slot0.customerClearWork(slot0)
-	slot0.turnbackId = nil
+function var_0_0.customerClearWork(arg_5_0)
+	arg_5_0.turnbackId = nil
 end
 
-return slot0
+return var_0_0

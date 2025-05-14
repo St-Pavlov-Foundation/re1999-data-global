@@ -1,101 +1,104 @@
-module("modules.logic.characterskin.view.CharacterSkinTipRightView", package.seeall)
+﻿module("modules.logic.characterskin.view.CharacterSkinTipRightView", package.seeall)
 
-slot0 = class("CharacterSkinTipRightView", BaseView)
+local var_0_0 = class("CharacterSkinTipRightView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageskinSwitchBg = gohelper.findChildSingleImage(slot0.viewGO, "container/#simage_skinSwitchBg")
-	slot0._simageskinicon = gohelper.findChildSingleImage(slot0.viewGO, "container/skinTip/skinSwitch/skinmask/skinicon")
-	slot0._btnBpPay = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/skinTip/skinSwitch/#btn_bpPay", AudioEnum.UI.UI_vertical_first_tabs_click)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageskinSwitchBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/#simage_skinSwitchBg")
+	arg_1_0._simageskinicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/skinTip/skinSwitch/skinmask/skinicon")
+	arg_1_0._btnBpPay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinTip/skinSwitch/#btn_bpPay", AudioEnum.UI.UI_vertical_first_tabs_click)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnBpPay:AddClickListener(slot0._jumpBpCharge, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnBpPay:AddClickListener(arg_2_0._jumpBpCharge, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnBpPay:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.OnOpenViewFinish, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnBpPay:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0.OnOpenViewFinish, arg_3_0)
 end
 
-function slot0.refreshRightContainer(slot0)
-	slot0.goSkinNormalContainer = gohelper.findChild(slot0.viewGO, "container/normal")
-	slot0.goSkinTipContainer = gohelper.findChild(slot0.viewGO, "container/skinTip")
-	slot0.goSkinStoreContainer = gohelper.findChild(slot0.viewGO, "container/skinStore")
+function var_0_0.refreshRightContainer(arg_4_0)
+	arg_4_0.goSkinNormalContainer = gohelper.findChild(arg_4_0.viewGO, "container/normal")
+	arg_4_0.goSkinTipContainer = gohelper.findChild(arg_4_0.viewGO, "container/skinTip")
+	arg_4_0.goSkinStoreContainer = gohelper.findChild(arg_4_0.viewGO, "container/skinStore")
 
-	gohelper.setActive(slot0.goSkinNormalContainer, false)
-	gohelper.setActive(slot0.goSkinTipContainer, true)
-	gohelper.setActive(slot0.goSkinStoreContainer, false)
+	gohelper.setActive(arg_4_0.goSkinNormalContainer, false)
+	gohelper.setActive(arg_4_0.goSkinTipContainer, true)
+	gohelper.setActive(arg_4_0.goSkinStoreContainer, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:refreshRightContainer()
-	slot0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0:refreshRightContainer()
+	arg_5_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
 end
 
-function slot0.initViewParam(slot0)
-	if LuaUtil.isTable(slot0.viewParam) then
-		slot0.skinCo = SkinConfig.instance:getSkinCo(slot0.viewParam.skinId)
+function var_0_0.initViewParam(arg_6_0)
+	if LuaUtil.isTable(arg_6_0.viewParam) then
+		local var_6_0 = arg_6_0.viewParam.skinId
 
-		slot0.viewContainer:setHomeBtnVisible(slot0.viewParam.isShowHomeBtn)
+		arg_6_0.skinCo = SkinConfig.instance:getSkinCo(var_6_0)
+
+		arg_6_0.viewContainer:setHomeBtnVisible(arg_6_0.viewParam.isShowHomeBtn)
 	else
-		slot0.skinCo = SkinConfig.instance:getSkinCo(slot0.viewParam)
+		arg_6_0.skinCo = SkinConfig.instance:getSkinCo(arg_6_0.viewParam)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:initViewParam()
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_7_0)
+	arg_7_0:initViewParam()
+	arg_7_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:initViewParam()
-	slot0:refreshView()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:initViewParam()
+	arg_8_0:refreshView()
 end
 
-function slot0.refreshView(slot0)
-	slot0:refreshLeftUI()
-	slot0:refreshRightUI()
+function var_0_0.refreshView(arg_9_0)
+	arg_9_0:refreshLeftUI()
+	arg_9_0:refreshRightUI()
 end
 
-function slot0._jumpBpCharge(slot0)
+function var_0_0._jumpBpCharge(arg_10_0)
 	if ViewMgr.instance:isOpen(ViewName.BpChargeView) then
-		slot0:closeThis()
+		arg_10_0:closeThis()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0.OnOpenViewFinish, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_10_0.OnOpenViewFinish, arg_10_0)
 	end
 
 	BpController.instance:openBattlePassView(false, nil, true)
 end
 
-function slot0.OnOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.BpChargeView then
-		slot0:closeThis()
+function var_0_0.OnOpenViewFinish(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.BpChargeView then
+		arg_11_0:closeThis()
 	end
 end
 
-function slot0.refreshLeftUI(slot0)
-	CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSkin, slot0.skinCo, slot0.viewName)
+function var_0_0.refreshLeftUI(arg_12_0)
+	CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSkin, arg_12_0.skinCo, arg_12_0.viewName)
 end
 
-function slot0.refreshRightUI(slot0)
-	slot0._simageskinicon:LoadImage(ResUrl.getHeadSkinSmall(slot0.skinCo.id))
-	gohelper.setActive(slot0._btnBpPay, false)
+function var_0_0.refreshRightUI(arg_13_0)
+	arg_13_0._simageskinicon:LoadImage(ResUrl.getHeadSkinSmall(arg_13_0.skinCo.id))
+	gohelper.setActive(arg_13_0._btnBpPay, false)
 
-	if slot0.skinCo.id == BpConfig.instance:getCurSkinId(BpModel.instance.id) and not BpModel.instance:isEnd() and BpModel.instance.payStatus == BpEnum.PayStatus.NotPay then
-		gohelper.setActive(slot0._btnBpPay, true)
+	if arg_13_0.skinCo.id == BpConfig.instance:getCurSkinId(BpModel.instance.id) and not BpModel.instance:isEnd() and BpModel.instance.payStatus == BpEnum.PayStatus.NotPay then
+		gohelper.setActive(arg_13_0._btnBpPay, true)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_14_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageskinSwitchBg:UnLoadImage()
-	slot0._simageskinicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._simageskinSwitchBg:UnLoadImage()
+	arg_15_0._simageskinicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

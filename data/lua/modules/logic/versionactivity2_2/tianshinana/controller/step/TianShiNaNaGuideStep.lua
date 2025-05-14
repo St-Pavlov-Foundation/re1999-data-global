@@ -1,10 +1,10 @@
-module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaGuideStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaGuideStep", package.seeall)
 
-slot0 = class("TianShiNaNaGuideStep", TianShiNaNaStepBase)
+local var_0_0 = class("TianShiNaNaGuideStep", TianShiNaNaStepBase)
 
-function slot0.onStart(slot0, slot1)
-	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.OnGuideTrigger, tostring(slot0._data.guideId))
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.OnGuideTrigger, tostring(arg_1_0._data.guideId))
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

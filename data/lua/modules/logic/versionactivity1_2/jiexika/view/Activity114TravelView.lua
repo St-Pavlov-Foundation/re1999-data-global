@@ -1,70 +1,67 @@
-module("modules.logic.versionactivity1_2.jiexika.view.Activity114TravelView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114TravelView", package.seeall)
 
-slot0 = class("Activity114TravelView", BaseView)
+local var_0_0 = class("Activity114TravelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagemaskbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_maskbg")
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg2")
-	slot0._simagebg3 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg3")
-	slot0._simagebg5 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg5")
-	slot0._simageqianbi = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_qianbi")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
+	arg_1_0._simagebg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg3")
+	arg_1_0._simagebg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg5")
+	arg_1_0._simageqianbi = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_qianbi")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagemaskbg:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_beijing"))
-	slot0._simagebg1:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang1"))
-	slot0._simagebg2:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang2"))
-	slot0._simagebg3:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang3"))
-	slot0._simagebg5:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang5"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagemaskbg:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_beijing"))
+	arg_5_0._simagebg1:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang1"))
+	arg_5_0._simagebg2:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang2"))
+	arg_5_0._simagebg3:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang3"))
+	arg_5_0._simagebg5:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_zhizhang5"))
+	arg_5_0._simageqianbi:LoadImage(ResUrl.getVersionActivityTrip_1_2("bg_qianbi"))
 
-	slot4 = "bg_qianbi"
+	arg_5_0.entrances = {}
 
-	slot0._simageqianbi:LoadImage(ResUrl.getVersionActivityTrip_1_2(slot4))
-
-	slot0.entrances = {}
-
-	for slot4 = 1, 6 do
-		slot0.entrances[slot4] = Activity114TravelItem.New(gohelper.findChild(slot0.viewGO, "entrances/entrance" .. slot4), slot4)
+	for iter_5_0 = 1, 6 do
+		arg_5_0.entrances[iter_5_0] = Activity114TravelItem.New(gohelper.findChild(arg_5_0.viewGO, "entrances/entrance" .. iter_5_0), iter_5_0)
 	end
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_delete)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagemaskbg:UnLoadImage()
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
-	slot0._simagebg3:UnLoadImage()
-	slot0._simagebg5:UnLoadImage()
-	slot0._simageqianbi:UnLoadImage()
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0._simagemaskbg:UnLoadImage()
+	arg_8_0._simagebg1:UnLoadImage()
+	arg_8_0._simagebg2:UnLoadImage()
+	arg_8_0._simagebg3:UnLoadImage()
+	arg_8_0._simagebg5:UnLoadImage()
+	arg_8_0._simageqianbi:UnLoadImage()
 
-	for slot4 = 1, 6 do
-		slot0.entrances[slot4]:onDestroy()
+	for iter_8_0 = 1, 6 do
+		arg_8_0.entrances[iter_8_0]:onDestroy()
 	end
 end
 
-return slot0
+return var_0_0

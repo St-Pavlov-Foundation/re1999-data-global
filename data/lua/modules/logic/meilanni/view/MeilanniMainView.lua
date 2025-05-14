@@ -1,105 +1,121 @@
-module("modules.logic.meilanni.view.MeilanniMainView", package.seeall)
+﻿module("modules.logic.meilanni.view.MeilanniMainView", package.seeall)
 
-slot0 = class("MeilanniMainView", BaseView)
+local var_0_0 = class("MeilanniMainView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._simageheroup1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_hero_up1")
-	slot0._simagehero = gohelper.findChildSingleImage(slot0.viewGO, "#simage_hero")
-	slot0._goday = gohelper.findChild(slot0.viewGO, "remaintime/#go_day")
-	slot0._txtremainday = gohelper.findChildText(slot0.viewGO, "remaintime/#go_day/#txt_remainday")
-	slot0._gohour = gohelper.findChild(slot0.viewGO, "remaintime/#go_hour")
-	slot0._txtremainhour = gohelper.findChildText(slot0.viewGO, "remaintime/#go_hour/#txt_remainhour")
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._gomaplist = gohelper.findChild(slot0.viewGO, "#go_maplist")
-	slot0._btnend = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_maplist/#btn_end")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
-	slot0._imageremainday = gohelper.findChildImage(slot0.viewGO, "#go_lock/horizontal/part2/#image_remainday")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_task")
-	slot0._gotaskredpoint = gohelper.findChild(slot0.viewGO, "#btn_task/#go_taskredpoint")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._simageheroup1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_hero_up1")
+	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_hero")
+	arg_1_0._goday = gohelper.findChild(arg_1_0.viewGO, "remaintime/#go_day")
+	arg_1_0._txtremainday = gohelper.findChildText(arg_1_0.viewGO, "remaintime/#go_day/#txt_remainday")
+	arg_1_0._gohour = gohelper.findChild(arg_1_0.viewGO, "remaintime/#go_hour")
+	arg_1_0._txtremainhour = gohelper.findChildText(arg_1_0.viewGO, "remaintime/#go_hour/#txt_remainhour")
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._gomaplist = gohelper.findChild(arg_1_0.viewGO, "#go_maplist")
+	arg_1_0._btnend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_maplist/#btn_end")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+	arg_1_0._imageremainday = gohelper.findChildImage(arg_1_0.viewGO, "#go_lock/horizontal/part2/#image_remainday")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
+	arg_1_0._gotaskredpoint = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_taskredpoint")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnend:AddClickListener(slot0._btnendOnClick, slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnend:AddClickListener(arg_2_0._btnendOnClick, arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnend:RemoveClickListener()
-	slot0._btntask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnend:RemoveClickListener()
+	arg_3_0._btntask:RemoveClickListener()
 end
 
-function slot0._btnendOnClick(slot0)
+function var_0_0._btnendOnClick(arg_4_0)
 	MeilanniMapItem.playStoryList(MeilanniEnum.endStoryBindIndex)
 end
 
-function slot0._btntaskOnClick(slot0)
+function var_0_0._btntaskOnClick(arg_5_0)
 	MeilanniController.instance:openMeilanniTaskView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getMeilanniIcon("full/bg_beijing"))
-	slot0._simagehero:LoadImage(ResUrl.getMeilanniIcon("bg_renwu"))
-	gohelper.addUIClickAudio(slot0._btntask.gameObject, AudioEnum.UI.play_ui_common_pause)
-	RedDotController.instance:addRedDot(slot0._gotaskredpoint, RedDotEnum.DotNode.MeilanniTaskBtn)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simagebg1:LoadImage(ResUrl.getMeilanniIcon("full/bg_beijing"))
+	arg_6_0._simagehero:LoadImage(ResUrl.getMeilanniIcon("bg_renwu"))
+	gohelper.addUIClickAudio(arg_6_0._btntask.gameObject, AudioEnum.UI.play_ui_common_pause)
+	RedDotController.instance:addRedDot(arg_6_0._gotaskredpoint, RedDotEnum.DotNode.MeilanniTaskBtn)
 	UIBlockMgr.instance:endAll()
 end
 
-function slot0._checkFinishAllMapStory(slot0)
-	for slot4, slot5 in ipairs(lua_activity108_map.configList) do
-		if MeilanniModel.instance:getMapHighestScore(slot5.id) <= 0 then
-			slot0:_forceUpdateTime()
+function var_0_0._checkFinishAllMapStory(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(lua_activity108_map.configList) do
+		local var_7_0 = iter_7_1.id
+
+		if MeilanniModel.instance:getMapHighestScore(var_7_0) <= 0 then
+			arg_7_0:_forceUpdateTime()
 
 			return
 		end
 	end
 
-	for slot5, slot6 in ipairs(MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.finishAllMap)) do
-		if not StoryModel.instance:isStoryFinished(slot6[1].story) then
-			StoryController.instance:playStory(slot8, nil, slot0._finishAllMapCallback, slot0)
+	local var_7_1 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.finishAllMap)
+
+	for iter_7_2, iter_7_3 in ipairs(var_7_1) do
+		local var_7_2 = iter_7_3[1].story
+
+		if not StoryModel.instance:isStoryFinished(var_7_2) then
+			StoryController.instance:playStory(var_7_2, nil, arg_7_0._finishAllMapCallback, arg_7_0)
 
 			return
 		end
 	end
 
-	slot0:_forceUpdateTime()
+	arg_7_0:_forceUpdateTime()
 end
 
-function slot0._finishAllMapCallback(slot0)
-	slot0:_forceUpdateTime()
+function var_0_0._finishAllMapCallback(arg_8_0)
+	arg_8_0:_forceUpdateTime()
 end
 
-function slot0._forceUpdateTime(slot0)
-	if slot0:_getLockTime() > 0 then
-		slot0:_showMapList()
+function var_0_0._forceUpdateTime(arg_9_0)
+	if arg_9_0:_getLockTime() > 0 then
+		arg_9_0:_showMapList()
 	end
 
-	slot0._openMeilanniView = false
+	arg_9_0._openMeilanniView = false
 
-	slot0:_updateTime()
+	arg_9_0:_updateTime()
 end
 
-function slot0._checkOpenDayAndFinishMapStory(slot0)
-	if uv0.getOpenDayAndFinishMapStory() then
-		StoryController.instance:playStory(slot1)
+function var_0_0._checkOpenDayAndFinishMapStory(arg_10_0)
+	local var_10_0 = var_0_0.getOpenDayAndFinishMapStory()
+
+	if var_10_0 then
+		StoryController.instance:playStory(var_10_0)
 	end
 end
 
-function slot0.getOpenDayAndFinishMapStory()
-	if ServerTime.now() - ActivityModel.instance:getActMO(MeilanniEnum.activityId):getRealStartTimeStamp() <= 0 then
+function var_0_0.getOpenDayAndFinishMapStory()
+	local var_11_0 = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
+	local var_11_1 = ServerTime.now() - var_11_0:getRealStartTimeStamp()
+
+	if var_11_1 <= 0 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDayAndFinishMap)) do
-		slot9 = MeilanniModel.instance:getMapInfo(slot8[3])
+	local var_11_2 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDayAndFinishMap)
+	local var_11_3 = math.ceil(var_11_1 / 86400)
 
-		if slot8[2] <= math.ceil(slot1 / 86400) and slot9 and (slot9:checkFinish() or slot9.highestScore > 0) then
-			if not StoryModel.instance:isStoryFinished(slot8[1].story) then
-				return slot11
+	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
+		local var_11_4 = MeilanniModel.instance:getMapInfo(iter_11_1[3])
+
+		if var_11_3 >= iter_11_1[2] and var_11_4 and (var_11_4:checkFinish() or var_11_4.highestScore > 0) then
+			local var_11_5 = iter_11_1[1].story
+
+			if not StoryModel.instance:isStoryFinished(var_11_5) then
+				return var_11_5
 			end
 
 			break
@@ -107,15 +123,22 @@ function slot0.getOpenDayAndFinishMapStory()
 	end
 end
 
-function slot0._checkOpenDayStory(slot0)
-	if ServerTime.now() - slot0._actMO:getRealStartTimeStamp() <= 0 then
+function var_0_0._checkOpenDayStory(arg_12_0)
+	local var_12_0 = ServerTime.now() - arg_12_0._actMO:getRealStartTimeStamp()
+
+	if var_12_0 <= 0 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDay)) do
-		if slot8[2] <= math.ceil(slot1 / 86400) then
-			if not StoryModel.instance:isStoryFinished(slot8[1].story) then
-				StoryController.instance:playStory(slot10)
+	local var_12_1 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDay)
+	local var_12_2 = math.ceil(var_12_0 / 86400)
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+		if var_12_2 >= iter_12_1[2] then
+			local var_12_3 = iter_12_1[1].story
+
+			if not StoryModel.instance:isStoryFinished(var_12_3) then
+				StoryController.instance:playStory(var_12_3)
 			end
 
 			break
@@ -123,54 +146,56 @@ function slot0._checkOpenDayStory(slot0)
 	end
 end
 
-function slot0._checkStory(slot0)
-	if not (slot0.viewParam and slot0.viewParam.checkStory) then
+function var_0_0._checkStory(arg_13_0)
+	if not (arg_13_0.viewParam and arg_13_0.viewParam.checkStory) then
 		return
 	end
 
-	slot0:_checkOpenDayStory()
-	slot0:_checkOpenDayAndFinishMapStory()
-	slot0:_checkFinishAllMapStory()
+	arg_13_0:_checkOpenDayStory()
+	arg_13_0:_checkOpenDayAndFinishMapStory()
+	arg_13_0:_checkFinishAllMapStory()
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.MeilanniView then
-		TaskDispatcher.runDelay(slot0._checkFinishAllMapStory, slot0, 0)
+function var_0_0._onCloseViewFinish(arg_14_0, arg_14_1)
+	if arg_14_1 == ViewName.MeilanniView then
+		TaskDispatcher.runDelay(arg_14_0._checkFinishAllMapStory, arg_14_0, 0)
 	end
 
-	if slot1 == ViewName.StoryView and not slot0._hasOpenMeilanniView then
-		slot0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
-	end
-end
-
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.MeilanniView then
-		slot0._openMeilanniView = true
-		slot0._hasOpenMeilanniView = true
+	if arg_14_1 == ViewName.StoryView and not arg_14_0._hasOpenMeilanniView then
+		arg_14_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0._onOpenViewFinish(arg_15_0, arg_15_1)
+	if arg_15_1 == ViewName.MeilanniView then
+		arg_15_0._openMeilanniView = true
+		arg_15_0._hasOpenMeilanniView = true
+	end
+end
 
-	slot0._actMO = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
-	slot0._endTime = slot0._actMO:getRealEndTimeStamp()
-	slot0._mapItemList = slot0:getUserDataTb_()
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_16_0._onCloseViewFinish, arg_16_0)
+	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_16_0._onOpenViewFinish, arg_16_0)
 
-	slot0:_showMapList()
+	arg_16_0._actMO = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
+	arg_16_0._endTime = arg_16_0._actMO:getRealEndTimeStamp()
+	arg_16_0._mapItemList = arg_16_0:getUserDataTb_()
 
-	slot0._unlockMapConfig = lua_activity108_map.configDict[MeilanniEnum.unlockMapId]
-	slot0._unlockStartTime = slot0._actMO:getRealStartTimeStamp() + (slot0._unlockMapConfig.onlineDay - 1) * 86400
+	arg_16_0:_showMapList()
 
-	slot0:_updateTime()
-	TaskDispatcher.runRepeat(slot0._updateTime, slot0, 1)
-	slot0:_checkStory()
+	arg_16_0._unlockMapConfig = lua_activity108_map.configDict[MeilanniEnum.unlockMapId]
+	arg_16_0._unlockStartTime = arg_16_0._actMO:getRealStartTimeStamp() + (arg_16_0._unlockMapConfig.onlineDay - 1) * 86400
+
+	arg_16_0:_updateTime()
+	TaskDispatcher.runRepeat(arg_16_0._updateTime, arg_16_0, 1)
+	arg_16_0:_checkStory()
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_cardappear)
 end
 
-function slot0._updateTime(slot0)
-	if slot0._endTime - ServerTime.now() <= 0 then
+function var_0_0._updateTime(arg_17_0)
+	local var_17_0 = arg_17_0._endTime - ServerTime.now()
+
+	if var_17_0 <= 0 then
 		ViewMgr.instance:closeView(ViewName.MeilanniTaskView)
 		ViewMgr.instance:closeView(ViewName.MeilanniEntrustView)
 		ViewMgr.instance:closeView(ViewName.MeilanniView)
@@ -180,62 +205,74 @@ function slot0._updateTime(slot0)
 		return
 	end
 
-	if slot0._openMeilanniView then
+	if arg_17_0._openMeilanniView then
 		return
 	end
 
-	slot2, slot3 = TimeUtil.secondsToDDHHMMSS(slot1)
+	local var_17_1, var_17_2 = TimeUtil.secondsToDDHHMMSS(var_17_0)
+	local var_17_3 = var_17_1 > 0
 
-	if slot2 > 0 then
-		slot0._txtremainday.text = slot2
+	if var_17_3 then
+		arg_17_0._txtremainday.text = var_17_1
 	else
-		slot0._txtremainhour.text = slot3
+		arg_17_0._txtremainhour.text = var_17_2
 	end
 
-	gohelper.setActive(slot0._goday, slot4)
-	gohelper.setActive(slot0._gohour, not slot4)
+	gohelper.setActive(arg_17_0._goday, var_17_3)
+	gohelper.setActive(arg_17_0._gohour, not var_17_3)
 
-	if slot0:_getLockTime() > 0 then
-		UISpriteSetMgr.instance:setMeilanniSprite(slot0._imageremainday, "bg_daojishi_" .. math.max(math.min(math.ceil(slot5 / 86400), 6), 1))
-		slot0._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_2"))
+	local var_17_4 = arg_17_0:_getLockTime()
+
+	if var_17_4 > 0 then
+		local var_17_5 = math.ceil(var_17_4 / 86400)
+		local var_17_6 = math.max(math.min(var_17_5, 6), 1)
+
+		UISpriteSetMgr.instance:setMeilanniSprite(arg_17_0._imageremainday, "bg_daojishi_" .. var_17_6)
+		arg_17_0._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_2"))
 	else
-		gohelper.setActive(slot0._golock, false)
-		slot0._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_1"))
-		slot0:_showMapList()
+		gohelper.setActive(arg_17_0._golock, false)
+		arg_17_0._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_1"))
+		arg_17_0:_showMapList()
 	end
 end
 
-function slot0._getLockTime(slot0)
-	return slot0._unlockStartTime - ServerTime.now()
+function var_0_0._getLockTime(arg_18_0)
+	return arg_18_0._unlockStartTime - ServerTime.now()
 end
 
-function slot0._showMapList(slot0)
-	for slot4, slot5 in ipairs(lua_activity108_map.configList) do
-		slot7 = slot0._mapItemList[slot5.id] or slot0:_getMapItem(gohelper.findChild(slot0._gomaplist, "pos" .. slot4), slot5)
-		slot0._mapItemList[slot5.id] = slot7
+function var_0_0._showMapList(arg_19_0)
+	for iter_19_0, iter_19_1 in ipairs(lua_activity108_map.configList) do
+		local var_19_0 = gohelper.findChild(arg_19_0._gomaplist, "pos" .. iter_19_0)
+		local var_19_1 = arg_19_0._mapItemList[iter_19_1.id] or arg_19_0:_getMapItem(var_19_0, iter_19_1)
 
-		slot7:updateLockStatus()
+		arg_19_0._mapItemList[iter_19_1.id] = var_19_1
 
-		if slot5.id == 104 then
-			gohelper.setActive(slot0._btnend, MeilanniModel.instance:getMapInfo(slot5.id) and slot8.highestScore > 0)
+		var_19_1:updateLockStatus()
+
+		if iter_19_1.id == 104 then
+			local var_19_2 = MeilanniModel.instance:getMapInfo(iter_19_1.id)
+
+			gohelper.setActive(arg_19_0._btnend, var_19_2 and var_19_2.highestScore > 0)
 		end
 	end
 end
 
-function slot0._getMapItem(slot0, slot1, slot2)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChild(slot1, "item"), MeilanniMapItem, slot2)
+function var_0_0._getMapItem(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = gohelper.findChild(arg_20_1, "item")
+
+	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_20_0, MeilanniMapItem, arg_20_2))
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._updateTime, slot0)
-	TaskDispatcher.cancelTask(slot0._checkFinishAllMapStory, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.onClose(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._updateTime, arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._checkFinishAllMapStory, arg_21_0)
+	arg_21_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_21_0._onCloseViewFinish, arg_21_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simageheroup1:UnLoadImage()
-	slot0._simagehero:UnLoadImage()
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0._simagebg1:UnLoadImage()
+	arg_22_0._simageheroup1:UnLoadImage()
+	arg_22_0._simagehero:UnLoadImage()
 end
 
-return slot0
+return var_0_0

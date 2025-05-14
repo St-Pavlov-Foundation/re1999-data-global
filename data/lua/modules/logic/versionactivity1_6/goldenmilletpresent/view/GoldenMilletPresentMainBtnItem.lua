@@ -1,60 +1,62 @@
-module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPresentMainBtnItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.view.GoldenMilletPresentMainBtnItem", package.seeall)
 
-slot0 = class("GoldenMilletPresentMainBtnItem", LuaCompBase)
+local var_0_0 = class("GoldenMilletPresentMainBtnItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._imgitem = gohelper.findChildImage(slot0.go, "bg")
-	slot0._btnitem = gohelper.findChildClickWithAudio(slot0.go, "bg", AudioEnum.UI.GoldenMilletMainBtnClick)
-	slot0._redDotParent = gohelper.findChild(slot0.go, "go_activityreddot")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._imgitem = gohelper.findChildImage(arg_1_0.go, "bg")
+	arg_1_0._btnitem = gohelper.findChildClickWithAudio(arg_1_0.go, "bg", AudioEnum.UI.GoldenMilletMainBtnClick)
+	arg_1_0._redDotParent = gohelper.findChild(arg_1_0.go, "go_activityreddot")
 
-	UISpriteSetMgr.instance:setMainSprite(slot0._imgitem, "v1a6_act_icon4")
+	UISpriteSetMgr.instance:setMainSprite(arg_1_0._imgitem, "v1a6_act_icon4")
 
-	if not ActivityType101Model.instance:isInit(GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()) then
-		Activity101Rpc.instance:sendGet101InfosRequest(slot2)
+	local var_1_0 = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
+
+	if not ActivityType101Model.instance:isInit(var_1_0) then
+		Activity101Rpc.instance:sendGet101InfosRequest(var_1_0)
 	end
 
-	slot0.redDot = RedDotController.instance:addNotEventRedDot(slot0._redDotParent, GoldenMilletPresentModel.isShowRedDot, GoldenMilletPresentModel.instance)
+	arg_1_0.redDot = RedDotController.instance:addNotEventRedDot(arg_1_0._redDotParent, GoldenMilletPresentModel.isShowRedDot, GoldenMilletPresentModel.instance)
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_1_0.go, true)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnitem:AddClickListener(slot0._onItemClick, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, slot0.refreshRedDot, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnitem:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshRedDot, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnitem:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, slot0.refreshRedDot, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnitem:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshRedDot, arg_3_0)
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_4_0)
 	GoldenMilletPresentController.instance:openGoldenMilletPresentView()
 end
 
-function slot0.refreshRedDot(slot0)
-	if not gohelper.isNil(slot0.redDot.gameObject) then
+function var_0_0.refreshRedDot(arg_5_0)
+	if not gohelper.isNil(arg_5_0.redDot.gameObject) then
 		return
 	end
 
-	slot0.redDot:refreshRedDot()
+	arg_5_0.redDot:refreshRedDot()
 end
 
-function slot0.isShowRedDot(slot0)
-	return slot0.redDot and slot0.redDot.isShowRedDot
+function var_0_0.isShowRedDot(arg_6_0)
+	return arg_6_0.redDot and arg_6_0.redDot.isShowRedDot
 end
 
-function slot0.destroy(slot0)
-	gohelper.setActive(slot0.go, false)
-	gohelper.destroy(slot0.go)
+function var_0_0.destroy(arg_7_0)
+	gohelper.setActive(arg_7_0.go, false)
+	gohelper.destroy(arg_7_0.go)
 end
 
-function slot0.onDestroy(slot0)
-	slot0.go = nil
-	slot0._imgitem = nil
-	slot0._btnitem = nil
-	slot0.redDot = nil
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0.go = nil
+	arg_8_0._imgitem = nil
+	arg_8_0._btnitem = nil
+	arg_8_0.redDot = nil
 end
 
-return slot0
+return var_0_0

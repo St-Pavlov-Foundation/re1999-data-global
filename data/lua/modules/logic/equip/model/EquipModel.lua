@@ -1,62 +1,63 @@
-module("modules.logic.equip.model.EquipModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipModel", package.seeall)
 
-slot0 = class("EquipModel", BaseModel)
+local var_0_0 = class("EquipModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.strengthenPrompt = nil
-	slot0._equipQualityDic = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.strengthenPrompt = nil
+	arg_1_0._equipQualityDic = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._equipList = nil
-	slot0._equipDic = nil
-	slot0._equipQualityDic = {}
-	slot0.strengthenPrompt = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._equipList = nil
+	arg_2_0._equipDic = nil
+	arg_2_0._equipQualityDic = {}
+	arg_2_0.strengthenPrompt = nil
 end
 
-function slot0.getEquips(slot0)
-	return slot0._equipList
+function var_0_0.getEquips(arg_3_0)
+	return arg_3_0._equipList
 end
 
-function slot0.getEquip(slot0, slot1)
-	return slot1 and slot0._equipDic[slot1]
+function var_0_0.getEquip(arg_4_0, arg_4_1)
+	return arg_4_1 and arg_4_0._equipDic[arg_4_1]
 end
 
-function slot0.haveEquip(slot0, slot1)
-	return slot0._equipQualityDic[slot1] and slot0._equipQualityDic[slot1] > 0
+function var_0_0.haveEquip(arg_5_0, arg_5_1)
+	return arg_5_0._equipQualityDic[arg_5_1] and arg_5_0._equipQualityDic[arg_5_1] > 0
 end
 
-function slot0.getEquipQuantity(slot0, slot1)
-	return slot0._equipQualityDic[slot1] or 0
+function var_0_0.getEquipQuantity(arg_6_0, arg_6_1)
+	return arg_6_0._equipQualityDic[arg_6_1] or 0
 end
 
-function slot0.addEquips(slot0, slot1)
-	slot0._equipList = slot0._equipList or {}
-	slot0._equipDic = slot0._equipDic or {}
+function var_0_0.addEquips(arg_7_0, arg_7_1)
+	arg_7_0._equipList = arg_7_0._equipList or {}
+	arg_7_0._equipDic = arg_7_0._equipDic or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot8 = false
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_0 = arg_7_0._equipDic[iter_7_1.uid]
+		local var_7_1 = false
 
-		if not slot0._equipDic[slot6.uid] then
-			slot7 = EquipMO.New()
+		if not var_7_0 then
+			var_7_0 = EquipMO.New()
 
-			table.insert(slot0._equipList, slot7)
+			table.insert(arg_7_0._equipList, var_7_0)
 
-			slot0._equipDic[slot6.uid] = slot7
-			slot8 = true
+			arg_7_0._equipDic[iter_7_1.uid] = var_7_0
+			var_7_1 = true
 		end
 
-		slot7:init(slot6)
+		var_7_0:init(iter_7_1)
 
-		if not slot7.config then
-			logError("equipId " .. slot7.equipId .. " not found config")
+		if not var_7_0.config then
+			logError("equipId " .. var_7_0.equipId .. " not found config")
 		else
-			slot0._equipQualityDic[slot7.config.id] = slot0._equipQualityDic[slot7.config.id] or 0
+			arg_7_0._equipQualityDic[var_7_0.config.id] = arg_7_0._equipQualityDic[var_7_0.config.id] or 0
 
-			if slot7.config.isExpEquip == 1 then
-				slot0._equipQualityDic[slot7.config.id] = slot7.count
-			elseif slot8 then
-				slot0._equipQualityDic[slot7.config.id] = slot0._equipQualityDic[slot7.config.id] + 1
+			if var_7_0.config.isExpEquip == 1 then
+				arg_7_0._equipQualityDic[var_7_0.config.id] = var_7_0.count
+			elseif var_7_1 then
+				arg_7_0._equipQualityDic[var_7_0.config.id] = arg_7_0._equipQualityDic[var_7_0.config.id] + 1
 			end
 		end
 	end
@@ -64,48 +65,52 @@ function slot0.addEquips(slot0, slot1)
 	EquipController.instance:dispatchEvent(EquipEvent.onUpdateEquip)
 end
 
-function slot0.removeEquips(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0._equipDic[slot6].config.isExpEquip == 1 then
-			slot0._equipQualityDic[slot7.config.id] = 0
+function var_0_0.removeEquips(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		local var_8_0 = arg_8_0._equipDic[iter_8_1]
+
+		if var_8_0.config.isExpEquip == 1 then
+			arg_8_0._equipQualityDic[var_8_0.config.id] = 0
 		else
-			slot0._equipQualityDic[slot7.config.id] = slot0._equipQualityDic[slot7.config.id] - 1
+			arg_8_0._equipQualityDic[var_8_0.config.id] = arg_8_0._equipQualityDic[var_8_0.config.id] - 1
 		end
 
-		slot0._equipDic[slot6] = nil
+		arg_8_0._equipDic[iter_8_1] = nil
 	end
 
-	slot2 = 1
-	slot3 = #slot0._equipList
+	local var_8_1 = 1
+	local var_8_2 = #arg_8_0._equipList
 
-	for slot7, slot8 in pairs(slot0._equipDic) do
-		slot0._equipList[slot2] = slot8
-		slot2 = slot2 + 1
+	for iter_8_2, iter_8_3 in pairs(arg_8_0._equipDic) do
+		arg_8_0._equipList[var_8_1] = iter_8_3
+		var_8_1 = var_8_1 + 1
 	end
 
-	for slot7 = slot2, slot3 do
-		slot0._equipList[slot7] = nil
+	for iter_8_4 = var_8_1, var_8_2 do
+		arg_8_0._equipList[iter_8_4] = nil
 	end
 
-	EquipController.instance:dispatchEvent(EquipEvent.onDeleteEquip, slot1)
+	EquipController.instance:dispatchEvent(EquipEvent.onDeleteEquip, arg_8_1)
 end
 
-function slot0.canShowVfx(slot0)
-	return slot0 ~= nil and slot0.rare >= 4
+function var_0_0.canShowVfx(arg_9_0)
+	return arg_9_0 ~= nil and arg_9_0.rare >= 4
 end
 
-function slot0.isLimit(slot0, slot1)
-	return EquipConfig.instance:getEquipCo(slot1).upperLimit >= 1
+function var_0_0.isLimit(arg_10_0, arg_10_1)
+	return EquipConfig.instance:getEquipCo(arg_10_1).upperLimit >= 1
 end
 
-function slot0.isLimitAndAlreadyHas(slot0, slot1)
-	if EquipConfig.instance:getEquipCo(slot1).upperLimit == 0 then
+function var_0_0.isLimitAndAlreadyHas(arg_11_0, arg_11_1)
+	local var_11_0 = EquipConfig.instance:getEquipCo(arg_11_1)
+
+	if var_11_0.upperLimit == 0 then
 		return false
 	end
 
-	return slot2.upperLimit <= slot0:getEquipQuantity(slot1)
+	return arg_11_0:getEquipQuantity(arg_11_1) >= var_11_0.upperLimit
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

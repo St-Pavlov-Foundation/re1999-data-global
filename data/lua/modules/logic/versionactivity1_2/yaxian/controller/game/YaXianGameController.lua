@@ -1,44 +1,48 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianGameController", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianGameController", package.seeall)
 
-slot0 = class("YaXianGameController", BaseController)
+local var_0_0 = class("YaXianGameController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.release(slot0)
-	if slot0.state then
-		slot0.state:removeAll()
+function var_0_0.release(arg_3_0)
+	if arg_3_0.state then
+		arg_3_0.state:removeAll()
 	end
 
-	if slot0.stepMgr then
-		slot0.stepMgr:removeAll()
-		slot0.stepMgr:dispose()
+	if arg_3_0.stepMgr then
+		arg_3_0.stepMgr:removeAll()
+		arg_3_0.stepMgr:dispose()
 	end
 
-	slot0.interactItemList = nil
-	slot0.state = nil
-	slot0.stepMgr = nil
-	slot0.searchTree = nil
-	slot0.selectInteractObjId = nil
-	slot0.clickStatus = YaXianGameEnum.SelectPosStatus.None
+	arg_3_0.interactItemList = nil
+	arg_3_0.state = nil
+	arg_3_0.stepMgr = nil
+	arg_3_0.searchTree = nil
+	arg_3_0.selectInteractObjId = nil
+	arg_3_0.clickStatus = YaXianGameEnum.SelectPosStatus.None
 end
 
-function slot0.enterChessGame(slot0, slot1)
-	Activity115Rpc.instance:sendAct115StartEpisodeRequest(YaXianGameEnum.ActivityId, slot1, slot0._openGame, slot0)
+function var_0_0.enterChessGame(arg_4_0, arg_4_1)
+	Activity115Rpc.instance:sendAct115StartEpisodeRequest(YaXianGameEnum.ActivityId, arg_4_1, arg_4_0._openGame, arg_4_0)
 end
 
-function slot0._openGame(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._openGame(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_2 ~= 0 then
 		return
 	end
 
-	if YaXianGameModel.instance:getInteractMo(YaXianGameEnum.BossInteractId) then
-		slot4:setXY(YaXianGameEnum.FakeBossStartPos.posX, YaXianGameEnum.FakeBossStartPos.posY)
-		slot4:setDirection(YaXianGameEnum.FakeBossDirection)
-		YaXianGameModel.instance:setNeedFeatureInteractMo(slot4)
+	local var_5_0 = YaXianGameModel.instance:getInteractMo(YaXianGameEnum.BossInteractId)
+
+	if var_5_0 then
+		var_5_0:setXY(YaXianGameEnum.FakeBossStartPos.posX, YaXianGameEnum.FakeBossStartPos.posY)
+		var_5_0:setDirection(YaXianGameEnum.FakeBossDirection)
+		YaXianGameModel.instance:setNeedFeatureInteractMo(var_5_0)
 	else
 		YaXianGameModel.instance:clearFeatureInteract()
 	end
@@ -47,204 +51,210 @@ function slot0._openGame(slot0, slot1, slot2, slot3)
 	ViewMgr.instance:openView(ViewName.YaXianGameView)
 end
 
-function slot0.initMapByMapMsg(slot0, slot1, slot2)
+function var_0_0.initMapByMapMsg(arg_6_0, arg_6_1, arg_6_2)
 	YaXianGameModel.instance:release()
-	YaXianGameModel.instance:initLocalConfig(slot1, slot2.id)
-	YaXianGameModel.instance:initServerDataByServerData(slot2)
-	slot0:setSelectObj()
+	YaXianGameModel.instance:initLocalConfig(arg_6_1, arg_6_2.id)
+	YaXianGameModel.instance:initServerDataByServerData(arg_6_2)
+	arg_6_0:setSelectObj()
 
-	slot0.state = slot0.state or YaXianStateMgr.New()
+	arg_6_0.state = arg_6_0.state or YaXianStateMgr.New()
 
-	slot0.state:removeAll()
-	slot0.state:setCurEvent(slot2.currentEvent)
+	arg_6_0.state:removeAll()
+	arg_6_0.state:setCurEvent(arg_6_2.currentEvent)
 
-	slot0.stepMgr = slot0.stepMgr or YaXianStepMgr.New()
+	arg_6_0.stepMgr = arg_6_0.stepMgr or YaXianStepMgr.New()
 
-	slot0.stepMgr:disposeAllStep()
+	arg_6_0.stepMgr:disposeAllStep()
 end
 
-function slot0.initMapByMapMo(slot0, slot1)
+function var_0_0.initMapByMapMo(arg_7_0, arg_7_1)
 	YaXianGameModel.instance:release()
-	YaXianGameModel.instance:initLocalConfig(slot1.actId, slot1.episodeId)
-	YaXianGameModel.instance:initServerDataByMapMo(slot1)
-	slot0:setSelectObj()
+	YaXianGameModel.instance:initLocalConfig(arg_7_1.actId, arg_7_1.episodeId)
+	YaXianGameModel.instance:initServerDataByMapMo(arg_7_1)
+	arg_7_0:setSelectObj()
 
-	slot0.state = slot0.state or YaXianStateMgr.New()
+	arg_7_0.state = arg_7_0.state or YaXianStateMgr.New()
 
-	slot0.state:removeAll()
-	slot0.state:setCurEvent(slot1.currentEvent)
+	arg_7_0.state:removeAll()
+	arg_7_0.state:setCurEvent(arg_7_1.currentEvent)
 
-	slot0.stepMgr = slot0.stepMgr or YaXianStepMgr.New()
+	arg_7_0.stepMgr = arg_7_0.stepMgr or YaXianStepMgr.New()
 
-	slot0.stepMgr:disposeAllStep()
+	arg_7_0.stepMgr:disposeAllStep()
 end
 
-function slot0.setInteractItemList(slot0, slot1)
-	slot0.interactItemList = slot1
+function var_0_0.setInteractItemList(arg_8_0, arg_8_1)
+	arg_8_0.interactItemList = arg_8_1
 end
 
-function slot0.setPlayerInteractItem(slot0, slot1)
-	slot0.playerInteractItem = slot1
+function var_0_0.setPlayerInteractItem(arg_9_0, arg_9_1)
+	arg_9_0.playerInteractItem = arg_9_1
 end
 
-function slot0.getInteractItemList(slot0)
-	return slot0.interactItemList
+function var_0_0.getInteractItemList(arg_10_0)
+	return arg_10_0.interactItemList
 end
 
-function slot0.getInteractItem(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.interactItemList) do
-		if slot6.id == slot1 then
-			return slot6
+function var_0_0.getInteractItem(arg_11_0, arg_11_1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.interactItemList) do
+		if iter_11_1.id == arg_11_1 then
+			return iter_11_1
 		end
 	end
 end
 
-function slot0.getPlayerInteractItem(slot0)
-	return slot0.playerInteractItem
+function var_0_0.getPlayerInteractItem(arg_12_0)
+	return arg_12_0.playerInteractItem
 end
 
-function slot0.getSelectedInteractItem(slot0)
-	return slot0:getInteractItem(slot0.selectInteractObjId)
+function var_0_0.getSelectedInteractItem(arg_13_0)
+	return arg_13_0:getInteractItem(arg_13_0.selectInteractObjId)
 end
 
-function slot0.initSceneTree(slot0, slot1, slot2)
-	slot0.searchTree = YaXianGameTree.New()
-	slot3 = slot0.searchTree:createLeaveNode()
-	slot4, slot5 = YaXianGameModel.instance:getGameSize()
+function var_0_0.initSceneTree(arg_14_0, arg_14_1, arg_14_2)
+	arg_14_0.searchTree = YaXianGameTree.New()
 
-	for slot9 = 1, slot4 do
-		for slot13 = 1, slot5 do
-			slot14 = {
-				y = slot18.y,
-				x = slot18.x,
-				tileY = slot13 - 1,
-				tileX = slot9 - 1
-			}
-			slot15, slot16, slot17 = YaXianGameHelper.calcTilePosInScene(slot9 - 1, slot13 - 1)
-			slot18 = recthelper.worldPosToAnchorPos(Vector3.New(slot15, slot16 + slot2, 0), slot1.transform)
+	local var_14_0 = arg_14_0.searchTree:createLeaveNode()
+	local var_14_1, var_14_2 = YaXianGameModel.instance:getGameSize()
 
-			table.insert(slot3.nodes, slot14)
+	for iter_14_0 = 1, var_14_1 do
+		for iter_14_1 = 1, var_14_2 do
+			local var_14_3 = {}
+			local var_14_4, var_14_5, var_14_6 = YaXianGameHelper.calcTilePosInScene(iter_14_0 - 1, iter_14_1 - 1)
+			local var_14_7 = recthelper.worldPosToAnchorPos(Vector3.New(var_14_4, var_14_5 + arg_14_2, 0), arg_14_1.transform)
 
-			slot3.keys = slot14
+			var_14_3.x, var_14_3.y = var_14_7.x, var_14_7.y
+			var_14_3.tileX, var_14_3.tileY = iter_14_0 - 1, iter_14_1 - 1
+
+			table.insert(var_14_0.nodes, var_14_3)
+
+			var_14_0.keys = var_14_3
 		end
 	end
 
-	slot0.searchTree:growToBranch(slot3)
-	slot0.searchTree:buildTree(slot3)
+	arg_14_0.searchTree:growToBranch(var_14_0)
+	arg_14_0.searchTree:buildTree(var_14_0)
 end
 
-function slot0.searchInteractByPos(slot0, slot1, slot2, slot3)
-	slot5 = {}
+function var_0_0.searchInteractByPos(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = YaXianGameModel.instance:getInteractMoList()
+	local var_15_1 = {}
 
-	for slot9, slot10 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
-		if slot10.posX == slot1 and slot10.posY == slot2 and (not slot3 or slot3(slot10.config)) then
-			table.insert(slot5, slot10)
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		if iter_15_1.posX == arg_15_1 and iter_15_1.posY == arg_15_2 and (not arg_15_3 or arg_15_3(iter_15_1.config)) then
+			table.insert(var_15_1, iter_15_1)
 		end
 	end
 
-	if #slot5 > 1 then
-		table.sort(slot5, slot0.sortSelectObj)
+	if #var_15_1 > 1 then
+		table.sort(var_15_1, arg_15_0.sortSelectObj)
 	end
 
-	return slot5
+	return var_15_1
 end
 
-function slot0.sortSelectObj(slot0, slot1)
-	return (YaXianGameEnum.InteractSelectPriority[slot0.config.interactType] or slot0.id) < (YaXianGameEnum.InteractSelectPriority[slot1.config.interactType] or slot1.id)
+function var_0_0.sortSelectObj(arg_16_0, arg_16_1)
+	return (YaXianGameEnum.InteractSelectPriority[arg_16_0.config.interactType] or arg_16_0.id) < (YaXianGameEnum.InteractSelectPriority[arg_16_1.config.interactType] or arg_16_1.id)
 end
 
-function slot0.updateAllPosInteractActive(slot0)
-	slot1 = {}
+function var_0_0.updateAllPosInteractActive(arg_17_0)
+	local var_17_0 = {}
 
-	for slot5, slot6 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
-		if not slot1[YaXianGameHelper.getPosHashKey(slot6.posX, slot6.posY)] then
-			slot0:updatePosInteractActive(slot6.posX, slot6.posY)
+	for iter_17_0, iter_17_1 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
+		local var_17_1 = YaXianGameHelper.getPosHashKey(iter_17_1.posX, iter_17_1.posY)
 
-			slot1[slot7] = true
+		if not var_17_0[var_17_1] then
+			arg_17_0:updatePosInteractActive(iter_17_1.posX, iter_17_1.posY)
+
+			var_17_0[var_17_1] = true
 		end
 	end
 end
 
-function slot0.updatePosInteractActive(slot0, slot1, slot2)
-	if #slot0:searchInteractByPos(slot1, slot2) < 1 then
+function var_0_0.updatePosInteractActive(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0:searchInteractByPos(arg_18_1, arg_18_2)
+
+	if #var_18_0 < 1 then
 		return
 	end
 
-	if #slot3 == 1 then
-		slot0:getInteractItem(slot3[1].id):updateActiveByShowPriority(YaXianGameEnum.MinShowPriority)
+	if #var_18_0 == 1 then
+		arg_18_0:getInteractItem(var_18_0[1].id):updateActiveByShowPriority(YaXianGameEnum.MinShowPriority)
 
 		return
 	end
 
-	slot4 = YaXianGameEnum.MinShowPriority
-	slot5 = {}
+	local var_18_1 = YaXianGameEnum.MinShowPriority
+	local var_18_2 = {}
 
-	for slot9, slot10 in ipairs(slot3) do
-		table.insert(slot5, slot0:getInteractItem(slot10.id))
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		table.insert(var_18_2, arg_18_0:getInteractItem(iter_18_1.id))
 	end
 
-	for slot9, slot10 in ipairs(slot5) do
-		if slot4 < slot10:getShowPriority() then
-			slot4 = slot10:getShowPriority()
+	for iter_18_2, iter_18_3 in ipairs(var_18_2) do
+		if var_18_1 < iter_18_3:getShowPriority() then
+			var_18_1 = iter_18_3:getShowPriority()
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot5) do
-		slot10:updateActiveByShowPriority(slot4)
+	for iter_18_4, iter_18_5 in ipairs(var_18_2) do
+		iter_18_5:updateActiveByShowPriority(var_18_1)
 	end
 end
 
-function slot0.setSelectObj(slot0, slot1)
-	if slot0.selectInteractObjId and slot0.selectInteractObjId ~= slot1 then
-		slot0:dispatchEvent(YaXianEvent.OnCancelSelectInteract, slot0.selectInteractObjId)
+function var_0_0.setSelectObj(arg_19_0, arg_19_1)
+	if arg_19_0.selectInteractObjId and arg_19_0.selectInteractObjId ~= arg_19_1 then
+		arg_19_0:dispatchEvent(YaXianEvent.OnCancelSelectInteract, arg_19_0.selectInteractObjId)
 	end
 
-	slot0.selectInteractObjId = slot1
+	arg_19_0.selectInteractObjId = arg_19_1
 
-	if slot1 ~= nil and slot1 ~= 0 then
-		slot0:dispatchEvent(YaXianEvent.OnSelectInteract, slot0.selectInteractObjId)
+	if arg_19_1 ~= nil and arg_19_1 ~= 0 then
+		arg_19_0:dispatchEvent(YaXianEvent.OnSelectInteract, arg_19_0.selectInteractObjId)
 	end
 end
 
-function slot0.getSelectInteractId(slot0)
-	return slot0.selectInteractObjId
+function var_0_0.getSelectInteractId(arg_20_0)
+	return arg_20_0.selectInteractObjId
 end
 
-function slot0.isSelectingPlayer(slot0)
-	return slot0.selectInteractObjId and slot0.selectInteractObjId == YaXianGameModel.instance:getPlayerInteractMo().id
+function var_0_0.isSelectingPlayer(arg_21_0)
+	return arg_21_0.selectInteractObjId and arg_21_0.selectInteractObjId == YaXianGameModel.instance:getPlayerInteractMo().id
 end
 
-function slot0.autoSelectPlayer(slot0)
-	slot0:setSelectObj(YaXianGameModel.instance:getPlayerInteractMo().id)
+function var_0_0.autoSelectPlayer(arg_22_0)
+	arg_22_0:setSelectObj(YaXianGameModel.instance:getPlayerInteractMo().id)
 end
 
-function slot0.sortInteractObjById(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortInteractObjById(arg_23_0, arg_23_1)
+	return arg_23_0.id < arg_23_1.id
 end
 
-function slot0.gameVictory(slot0)
+function var_0_0.gameVictory(arg_24_0)
 	YaXianGameModel.instance:setResult(true)
 	Stat1_2Controller.instance:yaXianStatEnd(StatEnum.Result.Success)
-	slot0:dispatchEvent(YaXianEvent.OnGameVictory)
+	arg_24_0:dispatchEvent(YaXianEvent.OnGameVictory)
 end
 
-function slot0.gameOver(slot0)
+function var_0_0.gameOver(arg_25_0)
 	YaXianGameModel.instance:setResult(false)
 	Stat1_2Controller.instance:yaXianStatEnd(StatEnum.Result.Fail)
-	slot0:dispatchEvent(YaXianEvent.OnGameFail)
+	arg_25_0:dispatchEvent(YaXianEvent.OnGameFail)
 end
 
-function slot0.posCanWalk(slot0, slot1, slot2)
-	if YaXianGameModel.instance:isPosInChessBoard(slot1, slot2) and YaXianGameModel.instance:getBaseTile(slot1, slot2) ~= YaXianGameEnum.TileBaseType.None then
-		return slot0:posObjCanWalk(slot1, slot2)
+function var_0_0.posCanWalk(arg_26_0, arg_26_1, arg_26_2)
+	if YaXianGameModel.instance:isPosInChessBoard(arg_26_1, arg_26_2) and YaXianGameModel.instance:getBaseTile(arg_26_1, arg_26_2) ~= YaXianGameEnum.TileBaseType.None then
+		return arg_26_0:posObjCanWalk(arg_26_1, arg_26_2)
 	end
 
 	return false
 end
 
-function slot0.posObjCanWalk(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot0:searchInteractByPos(slot1, slot2)) do
-		if YaXianGameHelper.canBlock(slot8.config) then
+function var_0_0.posObjCanWalk(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = arg_27_0:searchInteractByPos(arg_27_1, arg_27_2)
+
+	for iter_27_0, iter_27_1 in ipairs(var_27_0) do
+		if YaXianGameHelper.canBlock(iter_27_1.config) then
 			return false
 		end
 	end
@@ -252,189 +262,202 @@ function slot0.posObjCanWalk(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.getMoveTargetPos(slot0, slot1)
-	slot2 = slot1.posX
-	slot3 = slot1.posY
-	slot4 = slot1.moveDirection
-	slot5 = slot1.throughDistance
-	slot6 = slot1.isHide
-	slot8 = slot1.lastCanWalkPosX
-	slot9 = slot1.lastCanWalkPosY
-	slot11 = slot1.level and slot1.level + 1 or 1
+function var_0_0.getMoveTargetPos(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_1.posX
+	local var_28_1 = arg_28_1.posY
+	local var_28_2 = arg_28_1.moveDirection
+	local var_28_3 = arg_28_1.throughDistance
+	local var_28_4 = arg_28_1.isHide
+	local var_28_5 = arg_28_1.isBafflePos
+	local var_28_6 = arg_28_1.lastCanWalkPosX
+	local var_28_7 = arg_28_1.lastCanWalkPosY
+	local var_28_8 = arg_28_1.usedThrough
+	local var_28_9 = arg_28_1.level and arg_28_1.level + 1 or 1
 
-	if slot1.usedThrough and not slot1.isBafflePos and slot0:posObjCanWalk(slot2, slot3) then
-		return slot2, slot3, slot10
+	if var_28_8 and not var_28_5 and arg_28_0:posObjCanWalk(var_28_0, var_28_1) then
+		return var_28_0, var_28_1, var_28_8
 	end
 
-	slot8 = slot8 or slot2
-	slot9 = slot9 or slot3
+	var_28_6 = var_28_6 or var_28_0
+	var_28_7 = var_28_7 or var_28_1
 
-	if slot11 > 1 and not slot6 and YaXianGameModel.instance:isAlertArea(slot8, slot9) then
-		return slot8, slot9, slot10
+	if var_28_9 > 1 and not var_28_4 and YaXianGameModel.instance:isAlertArea(var_28_6, var_28_7) then
+		return var_28_6, var_28_7, var_28_8
 	end
 
-	if YaXianGameModel.instance:hasInteract(slot8, slot9) then
-		return slot8, slot9, slot10
+	if YaXianGameModel.instance:hasInteract(var_28_6, var_28_7) then
+		return var_28_6, var_28_7, var_28_8
 	end
 
-	slot12, slot13, slot14, slot15 = nil
+	local var_28_10
+	local var_28_11
+	local var_28_12
+	local var_28_13
 
-	if slot4 == YaXianGameEnum.MoveDirection.Bottom then
-		slot12 = slot2
-		slot13 = slot3 - 1
-		slot14 = YaXianGameEnum.BaffleDirectionPowerPos.Bottom
-		slot15 = YaXianGameEnum.BaffleDirectionPowerPos.Top
-	elseif slot4 == YaXianGameEnum.MoveDirection.Left then
-		slot12 = slot2 - 1
-		slot13 = slot3
-		slot14 = YaXianGameEnum.BaffleDirectionPowerPos.Left
-		slot15 = YaXianGameEnum.BaffleDirectionPowerPos.Right
-	elseif slot4 == YaXianGameEnum.MoveDirection.Right then
-		slot12 = slot2 + 1
-		slot13 = slot3
-		slot14 = YaXianGameEnum.BaffleDirectionPowerPos.Right
-		slot15 = YaXianGameEnum.BaffleDirectionPowerPos.Left
-	elseif slot4 == YaXianGameEnum.MoveDirection.Top then
-		slot12 = slot2
-		slot13 = slot3 + 1
-		slot14 = YaXianGameEnum.BaffleDirectionPowerPos.Top
-		slot15 = YaXianGameEnum.BaffleDirectionPowerPos.Bottom
+	if var_28_2 == YaXianGameEnum.MoveDirection.Bottom then
+		var_28_10 = var_28_0
+		var_28_11 = var_28_1 - 1
+		var_28_12 = YaXianGameEnum.BaffleDirectionPowerPos.Bottom
+		var_28_13 = YaXianGameEnum.BaffleDirectionPowerPos.Top
+	elseif var_28_2 == YaXianGameEnum.MoveDirection.Left then
+		var_28_10 = var_28_0 - 1
+		var_28_11 = var_28_1
+		var_28_12 = YaXianGameEnum.BaffleDirectionPowerPos.Left
+		var_28_13 = YaXianGameEnum.BaffleDirectionPowerPos.Right
+	elseif var_28_2 == YaXianGameEnum.MoveDirection.Right then
+		var_28_10 = var_28_0 + 1
+		var_28_11 = var_28_1
+		var_28_12 = YaXianGameEnum.BaffleDirectionPowerPos.Right
+		var_28_13 = YaXianGameEnum.BaffleDirectionPowerPos.Left
+	elseif var_28_2 == YaXianGameEnum.MoveDirection.Top then
+		var_28_10 = var_28_0
+		var_28_11 = var_28_1 + 1
+		var_28_12 = YaXianGameEnum.BaffleDirectionPowerPos.Top
+		var_28_13 = YaXianGameEnum.BaffleDirectionPowerPos.Bottom
 	else
-		logError(string.format("un support direction, x : %s, y : %s, direction : %s", slot2, slot3, slot4))
+		logError(string.format("un support direction, x : %s, y : %s, direction : %s", var_28_0, var_28_1, var_28_2))
 
-		return slot8, slot9, slot10
+		return var_28_6, var_28_7, var_28_8
 	end
 
-	if not YaXianGameModel.instance:isPosInChessBoard(slot12, slot13) then
-		return slot8, slot9, slot10
+	if not YaXianGameModel.instance:isPosInChessBoard(var_28_10, var_28_11) then
+		return var_28_6, var_28_7, var_28_8
 	end
 
-	if YaXianGameModel.instance:getBaseTile(slot12, slot13) == 0 then
-		return slot8, slot9, slot10
+	if YaXianGameModel.instance:getBaseTile(var_28_10, var_28_11) == 0 then
+		return var_28_6, var_28_7, var_28_8
 	end
 
-	if slot7 then
-		if slot0:posObjCanWalk(slot12, slot13) then
-			return slot12, slot13, slot10
+	if var_28_5 then
+		if arg_28_0:posObjCanWalk(var_28_10, var_28_11) then
+			return var_28_10, var_28_11, var_28_8
 		else
-			return slot0:getMoveTargetPos({
+			return arg_28_0:getMoveTargetPos({
 				isBafflePos = false,
-				posX = slot12,
-				posY = slot13,
-				moveDirection = slot4,
-				throughDistance = slot5 - 1,
-				isHide = slot6,
-				lastCanWalkPosX = slot8,
-				lastCanWalkPosY = slot9,
-				usedThrough = slot10,
-				level = slot11
+				posX = var_28_10,
+				posY = var_28_11,
+				moveDirection = var_28_2,
+				throughDistance = var_28_3 - 1,
+				isHide = var_28_4,
+				lastCanWalkPosX = var_28_6,
+				lastCanWalkPosY = var_28_7,
+				usedThrough = var_28_8,
+				level = var_28_9
 			})
 		end
 	end
 
-	if YaXianGameHelper.hasBaffle(YaXianGameModel.instance:getBaseTile(slot2, slot3), slot14) or YaXianGameHelper.hasBaffle(YaXianGameModel.instance:getBaseTile(slot12, slot13), slot15) then
-		if slot5 <= 0 then
-			return slot8, slot9, slot10
+	if YaXianGameHelper.hasBaffle(YaXianGameModel.instance:getBaseTile(var_28_0, var_28_1), var_28_12) or YaXianGameHelper.hasBaffle(YaXianGameModel.instance:getBaseTile(var_28_10, var_28_11), var_28_13) then
+		if var_28_3 <= 0 then
+			return var_28_6, var_28_7, var_28_8
 		else
-			return slot0:getMoveTargetPos({
+			return arg_28_0:getMoveTargetPos({
 				isBafflePos = true,
 				usedThrough = true,
-				posX = slot2,
-				posY = slot3,
-				moveDirection = slot4,
-				throughDistance = slot5 - 1,
-				isHide = slot6,
-				lastCanWalkPosX = slot8,
-				lastCanWalkPosY = slot9,
-				level = slot11
+				posX = var_28_0,
+				posY = var_28_1,
+				moveDirection = var_28_2,
+				throughDistance = var_28_3 - 1,
+				isHide = var_28_4,
+				lastCanWalkPosX = var_28_6,
+				lastCanWalkPosY = var_28_7,
+				level = var_28_9
 			})
 		end
-	elseif slot0:posObjCanWalk(slot12, slot13) then
-		return slot0:getMoveTargetPos({
+	elseif arg_28_0:posObjCanWalk(var_28_10, var_28_11) then
+		return arg_28_0:getMoveTargetPos({
 			isBafflePos = false,
-			posX = slot12,
-			posY = slot13,
-			moveDirection = slot4,
-			throughDistance = slot5,
-			isHide = slot6,
-			usedThrough = slot10,
-			level = slot11
+			posX = var_28_10,
+			posY = var_28_11,
+			moveDirection = var_28_2,
+			throughDistance = var_28_3,
+			isHide = var_28_4,
+			usedThrough = var_28_8,
+			level = var_28_9
 		})
-	elseif slot5 <= 0 then
-		return slot8, slot9, slot10
+	elseif var_28_3 <= 0 then
+		return var_28_6, var_28_7, var_28_8
 	else
-		return slot0:getMoveTargetPos({
+		return arg_28_0:getMoveTargetPos({
 			isBafflePos = false,
 			usedThrough = true,
-			posX = slot12,
-			posY = slot13,
-			moveDirection = slot4,
-			throughDistance = slot5 - 1,
-			isHide = slot6,
-			lastCanWalkPosX = slot8,
-			lastCanWalkPosY = slot9,
-			level = slot11
+			posX = var_28_10,
+			posY = var_28_11,
+			moveDirection = var_28_2,
+			throughDistance = var_28_3 - 1,
+			isHide = var_28_4,
+			lastCanWalkPosX = var_28_6,
+			lastCanWalkPosY = var_28_7,
+			level = var_28_9
 		})
 	end
 end
 
-function slot0.getNearestScenePos(slot0, slot1, slot2)
-	if not slot0.searchTree then
+function var_0_0.getNearestScenePos(arg_29_0, arg_29_1, arg_29_2)
+	if not arg_29_0.searchTree then
 		return nil
 	end
 
-	slot4 = 99999999
-	slot5 = nil
-	slot6 = YaXianGameEnum.ClickYWeight
+	local var_29_0 = arg_29_0.searchTree:search(arg_29_1, arg_29_2)
+	local var_29_1 = 99999999
+	local var_29_2
+	local var_29_3 = YaXianGameEnum.ClickYWeight
 
-	if slot0.searchTree:search(slot1, slot2) then
-		for slot10 = 1, #slot3 do
-			slot11 = slot3[slot10]
-			slot13 = slot11.y - slot2
+	if var_29_0 then
+		for iter_29_0 = 1, #var_29_0 do
+			local var_29_4 = var_29_0[iter_29_0]
+			local var_29_5 = var_29_4.x - arg_29_1
+			local var_29_6 = var_29_4.y - arg_29_2
 
-			if math.abs(slot11.x - slot1) <= YaXianGameEnum.ClickRangeX and math.abs(slot13) <= YaXianGameEnum.ClickRangeY and slot4 > slot12 * slot12 + slot13 * slot13 * slot6 then
-				slot5 = slot11
-				slot4 = slot14
+			if math.abs(var_29_5) <= YaXianGameEnum.ClickRangeX and math.abs(var_29_6) <= YaXianGameEnum.ClickRangeY then
+				local var_29_7 = var_29_5 * var_29_5 + var_29_6 * var_29_6 * var_29_3
+
+				if var_29_7 < var_29_1 then
+					var_29_2 = var_29_4
+					var_29_1 = var_29_7
+				end
 			end
 		end
 	end
 
-	if slot5 then
-		return slot5.tileX, slot5.tileY
+	if var_29_2 then
+		return var_29_2.tileX, var_29_2.tileY
 	else
 		return nil
 	end
 end
 
-function slot0.getInteractStatusPool(slot0)
-	if not slot0.interactStatusPool then
-		slot0.interactStatusPool = LuaObjPool.New(16, YaXianGameStatusMo.NewFunc, YaXianGameStatusMo.releaseFunc, YaXianGameStatusMo.resetFunc)
+function var_0_0.getInteractStatusPool(arg_30_0)
+	if not arg_30_0.interactStatusPool then
+		arg_30_0.interactStatusPool = LuaObjPool.New(16, YaXianGameStatusMo.NewFunc, YaXianGameStatusMo.releaseFunc, YaXianGameStatusMo.resetFunc)
 	end
 
-	return slot0.interactStatusPool
+	return arg_30_0.interactStatusPool
 end
 
-function slot0.stopRunningStep(slot0)
-	if slot0.stepMgr then
-		slot0.stepMgr:disposeAllStep()
+function var_0_0.stopRunningStep(arg_31_0)
+	if arg_31_0.stepMgr then
+		arg_31_0.stepMgr:disposeAllStep()
 	end
 end
 
-function slot0.playEffectAudio(slot0, slot1)
-	if not slot1 or slot1 == 0 then
+function var_0_0.playEffectAudio(arg_32_0, arg_32_1)
+	if not arg_32_1 or arg_32_1 == 0 then
 		return
 	end
 
-	slot0.lastPlayTimeDict = slot0.lastPlayTimeDict or {}
-	slot3 = Time.realtimeSinceStartup
+	arg_32_0.lastPlayTimeDict = arg_32_0.lastPlayTimeDict or {}
 
-	if not slot0.lastPlayTimeDict[slot1] or YaXianGameEnum.EffectInterval <= slot3 - slot2 then
-		AudioMgr.instance:trigger(slot1)
+	local var_32_0 = arg_32_0.lastPlayTimeDict[arg_32_1]
+	local var_32_1 = Time.realtimeSinceStartup
 
-		slot0.lastPlayTimeDict[slot1] = slot3
+	if not var_32_0 or var_32_1 - var_32_0 >= YaXianGameEnum.EffectInterval then
+		AudioMgr.instance:trigger(arg_32_1)
+
+		arg_32_0.lastPlayTimeDict[arg_32_1] = var_32_1
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

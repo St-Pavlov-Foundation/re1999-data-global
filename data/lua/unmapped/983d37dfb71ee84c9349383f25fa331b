@@ -1,8 +1,0 @@
-module("framework.mvc.model.MixScrollModel", package.seeall)
-
-slot0 = class("MixScrollModel", ListScrollModel)
-
-function slot0.getInfoList(slot0, slot1)
-end
-
-return slot0

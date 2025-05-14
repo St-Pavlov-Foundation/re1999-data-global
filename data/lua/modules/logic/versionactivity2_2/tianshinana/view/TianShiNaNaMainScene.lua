@@ -1,21 +1,21 @@
-module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaMainScene", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaMainScene", package.seeall)
 
-slot0 = class("TianShiNaNaMainScene", TianShiNaNaBaseSceneView)
+local var_0_0 = class("TianShiNaNaMainScene", TianShiNaNaBaseSceneView)
 
-function slot0.addEvents(slot0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.DragMainScene, slot0._onSetScenePos, slot0)
+function var_0_0.addEvents(arg_1_0)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.DragMainScene, arg_1_0._onSetScenePos, arg_1_0)
 end
 
-function slot0.removeEvents(slot0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.DragMainScene, slot0._onSetScenePos, slot0)
+function var_0_0.removeEvents(arg_2_0)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.DragMainScene, arg_2_0._onSetScenePos, arg_2_0)
 end
 
-function slot0.getScenePath(slot0)
+function var_0_0.getScenePath(arg_3_0)
 	return "scenes/v2a2_m_s12_tsnn_jshd/scenes_prefab/v2a2_m_s12_tsnn_jshd_background_p.prefab"
 end
 
-function slot0._onSetScenePos(slot0, slot1)
-	transformhelper.setPosXY(slot0._sceneRoot.transform, slot1 + 16.14, 6.63)
+function var_0_0._onSetScenePos(arg_4_0, arg_4_1)
+	transformhelper.setPosXY(arg_4_0._sceneRoot.transform, arg_4_1 + 16.14, 6.63)
 end
 
-return slot0
+return var_0_0

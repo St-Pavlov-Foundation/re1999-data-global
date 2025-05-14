@@ -1,377 +1,420 @@
-module("modules.logic.room.view.critter.summon.RoomCritterIncubateView", package.seeall)
+﻿module("modules.logic.room.view.critter.summon.RoomCritterIncubateView", package.seeall)
 
-slot0 = class("RoomCritterIncubateView", BaseView)
+local var_0_0 = class("RoomCritterIncubateView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.root = gohelper.findChild(slot0.viewGO, "root")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "root/top/#simage_title")
-	slot0._gocritter = gohelper.findChild(slot0.viewGO, "root/right/#go_critter")
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "root/right/#go_critter/#simage_rightbg")
-	slot0._goEmpty = gohelper.findChild(slot0.viewGO, "root/right/#go_critter/#go_empty")
-	slot0._scrollcritter = gohelper.findChildScrollRect(slot0.viewGO, "root/right/#go_critter/#scroll_critter")
-	slot0._gocritterItem = gohelper.findChild(slot0.viewGO, "root/right/#go_critter/#scroll_critter/viewport/content/#go_critterItem")
-	slot0._btnsort = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/#go_critter/sort/#drop_sort/#btn_sort")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/right/#go_critter/sort/#btn_filter")
-	slot0._gonotfilter = gohelper.findChild(slot0.viewGO, "root/right/#go_critter/sort/#btn_filter/#go_notfilter")
-	slot0._gofilter = gohelper.findChild(slot0.viewGO, "root/right/#go_critter/sort/#btn_filter/#go_filter")
-	slot0._gocritter1 = gohelper.findChild(slot0.viewGO, "root/middle/#go_critter1")
-	slot0._btnclickarea1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/middle/#go_critter1/#btn_clickarea1")
-	slot0._gocritter2 = gohelper.findChild(slot0.viewGO, "root/middle/#go_critter2")
-	slot0._btnclickarea2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/middle/#go_critter2/#btn_clickarea2")
-	slot0._btnsummon = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/bottom/#btn_summon")
-	slot0._simagecurrency = gohelper.findChildSingleImage(slot0.viewGO, "root/bottom/#btn_summon/currency/#simage_currency")
-	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "root/bottom/#btn_summon/currency/#txt_currency")
-	slot0._btnoverview = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/bottom/#btn_overview")
-	slot0._imageselect = gohelper.findChildImage(slot0.viewGO, "root/bottom/#image_select")
-	slot0._txtselect = gohelper.findChildText(slot0.viewGO, "root/bottom/#image_select/#txt_select")
-	slot0._imagetips1 = gohelper.findChildImage(slot0.viewGO, "root/bottom/#image_tips1")
-	slot0._txttips1 = gohelper.findChildText(slot0.viewGO, "root/bottom/#image_tips1/#txt_tips1")
-	slot0._imagetips2 = gohelper.findChildImage(slot0.viewGO, "root/bottom/#image_tips2")
-	slot0._txttips2 = gohelper.findChildText(slot0.viewGO, "root/bottom/#image_tips2/#txt_tips2")
-	slot0._goBackBtns = gohelper.findChild(slot0.viewGO, "root/#go_BackBtns")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.root = gohelper.findChild(arg_1_0.viewGO, "root")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/top/#simage_title")
+	arg_1_0._gocritter = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critter")
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/#go_critter/#simage_rightbg")
+	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critter/#go_empty")
+	arg_1_0._scrollcritter = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#go_critter/#scroll_critter")
+	arg_1_0._gocritterItem = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critter/#scroll_critter/viewport/content/#go_critterItem")
+	arg_1_0._btnsort = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#go_critter/sort/#drop_sort/#btn_sort")
+	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#go_critter/sort/#btn_filter")
+	arg_1_0._gonotfilter = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critter/sort/#btn_filter/#go_notfilter")
+	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_critter/sort/#btn_filter/#go_filter")
+	arg_1_0._gocritter1 = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_critter1")
+	arg_1_0._btnclickarea1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/middle/#go_critter1/#btn_clickarea1")
+	arg_1_0._gocritter2 = gohelper.findChild(arg_1_0.viewGO, "root/middle/#go_critter2")
+	arg_1_0._btnclickarea2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/middle/#go_critter2/#btn_clickarea2")
+	arg_1_0._btnsummon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/bottom/#btn_summon")
+	arg_1_0._simagecurrency = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bottom/#btn_summon/currency/#simage_currency")
+	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#btn_summon/currency/#txt_currency")
+	arg_1_0._btnoverview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/bottom/#btn_overview")
+	arg_1_0._imageselect = gohelper.findChildImage(arg_1_0.viewGO, "root/bottom/#image_select")
+	arg_1_0._txtselect = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#image_select/#txt_select")
+	arg_1_0._imagetips1 = gohelper.findChildImage(arg_1_0.viewGO, "root/bottom/#image_tips1")
+	arg_1_0._txttips1 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#image_tips1/#txt_tips1")
+	arg_1_0._imagetips2 = gohelper.findChildImage(arg_1_0.viewGO, "root/bottom/#image_tips2")
+	arg_1_0._txttips2 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#image_tips2/#txt_tips2")
+	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "root/#go_BackBtns")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnsort:AddClickListener(slot0._btnsortOnClick, slot0)
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
-	slot0._btnsummon:AddClickListener(slot0._btnsummonOnClick, slot0)
-	slot0._btnoverview:AddClickListener(slot0._btnoverviewOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnsort:AddClickListener(arg_2_0._btnsortOnClick, arg_2_0)
+	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+	arg_2_0._btnsummon:AddClickListener(arg_2_0._btnsummonOnClick, arg_2_0)
+	arg_2_0._btnoverview:AddClickListener(arg_2_0._btnoverviewOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnsort:RemoveClickListener()
-	slot0._btnfilter:RemoveClickListener()
-	slot0._btnclickarea1:RemoveClickListener()
-	slot0._btnclickarea2:RemoveClickListener()
-	slot0._btnsummon:RemoveClickListener()
-	slot0._btnoverview:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnsort:RemoveClickListener()
+	arg_3_0._btnfilter:RemoveClickListener()
+	arg_3_0._btnclickarea1:RemoveClickListener()
+	arg_3_0._btnclickarea2:RemoveClickListener()
+	arg_3_0._btnsummon:RemoveClickListener()
+	arg_3_0._btnoverview:RemoveClickListener()
 end
 
-function slot0._btnsortOnClick(slot0)
-	slot0._curSortWay = not slot0._curSortWay
+function var_0_0._btnsortOnClick(arg_4_0)
+	arg_4_0._curSortWay = not arg_4_0._curSortWay
 
-	CritterIncubateModel.instance:setSortWay(slot0._curSortWay)
-	slot0:_setSortWay()
+	CritterIncubateModel.instance:setSortWay(arg_4_0._curSortWay)
+	arg_4_0:_setSortWay()
 end
 
-function slot0._btnfilterOnClick(slot0)
-	CritterController.instance:openCritterFilterView({
+function var_0_0._btnfilterOnClick(arg_5_0)
+	local var_5_0 = {
 		CritterEnum.FilterType.Race,
 		CritterEnum.FilterType.SkillTag
-	}, slot0.viewName)
+	}
+
+	CritterController.instance:openCritterFilterView(var_5_0, arg_5_0.viewName)
 end
 
-function slot0._btnsummonOnClick(slot0)
-	slot1, slot2 = CritterIncubateModel.instance:notSummonToast()
+function var_0_0._btnsummonOnClick(arg_6_0)
+	local var_6_0, var_6_1 = CritterIncubateModel.instance:notSummonToast()
 
-	if string.nilorempty(slot1) then
+	if string.nilorempty(var_6_0) then
 		CritterIncubateController.instance:onIncubateCritter()
 	else
-		GameFacade.showToast(slot1, slot2)
+		GameFacade.showToast(var_6_0, var_6_1)
 	end
 end
 
-function slot0._btnoverviewOnClick(slot0)
+function var_0_0._btnoverviewOnClick(arg_7_0)
 	CritterIncubateController.instance:openRoomCritterDetailView()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onSelectParentCritter, slot0._onSelectParentCritter, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onRemoveParentCritter, slot0._onRemoveParentCritter, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onRefreshBtn, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, slot0._onStartSummon, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, slot0._onCloseGetCritter, slot0)
-	slot0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onIncubateCritterPreviewReply, slot0._showPreview, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, slot0.onCritterFilterTypeChange, slot0)
+function var_0_0._addEvents(arg_8_0)
+	arg_8_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onSelectParentCritter, arg_8_0._onSelectParentCritter, arg_8_0)
+	arg_8_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onRemoveParentCritter, arg_8_0._onRemoveParentCritter, arg_8_0)
+	arg_8_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_8_0._onRefreshBtn, arg_8_0)
+	arg_8_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_8_0._onStartSummon, arg_8_0)
+	arg_8_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_8_0._onCloseGetCritter, arg_8_0)
+	arg_8_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onIncubateCritterPreviewReply, arg_8_0._showPreview, arg_8_0)
+	arg_8_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, arg_8_0.onCritterFilterTypeChange, arg_8_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onSelectParentCritter, slot0._onSelectParentCritter, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onRemoveParentCritter, slot0._onRemoveParentCritter, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onRefreshBtn, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, slot0._onStartSummon, slot0)
-	slot0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onIncubateCritterPreviewReply, slot0._showPreview, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, slot0.onCritterFilterTypeChange, slot0)
+function var_0_0._removeEvents(arg_9_0)
+	arg_9_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onSelectParentCritter, arg_9_0._onSelectParentCritter, arg_9_0)
+	arg_9_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onRemoveParentCritter, arg_9_0._onRemoveParentCritter, arg_9_0)
+	arg_9_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_9_0._onRefreshBtn, arg_9_0)
+	arg_9_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummon, arg_9_0._onStartSummon, arg_9_0)
+	arg_9_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onIncubateCritterPreviewReply, arg_9_0._showPreview, arg_9_0)
+	arg_9_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, arg_9_0.onCritterFilterTypeChange, arg_9_0)
 
-	if slot0._parentCritterItem then
-		for slot4, slot5 in pairs(slot0._parentCritterItem) do
-			slot5.btn:RemoveClickListener()
+	if arg_9_0._parentCritterItem then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._parentCritterItem) do
+			iter_9_1.btn:RemoveClickListener()
 		end
 	end
 
-	if slot0._dropSort then
-		slot0._dropSort:RemoveOnValueChanged()
+	if arg_9_0._dropSort then
+		arg_9_0._dropSort:RemoveOnValueChanged()
 	end
 end
 
-function slot0._onSelectParentCritter(slot0, slot1, slot2)
-	slot0:_refreshParentCritter(slot1, slot2)
+function var_0_0._onSelectParentCritter(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:_refreshParentCritter(arg_10_1, arg_10_2)
 end
 
-function slot0._onRemoveParentCritter(slot0, slot1, slot2)
-	slot0:_refreshParentCritter(slot1, slot2)
+function var_0_0._onRemoveParentCritter(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0:_refreshParentCritter(arg_11_1, arg_11_2)
 end
 
-function slot0._onStartSummon(slot0, slot1)
+function var_0_0._onStartSummon(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.viewContainer:getContainerViewBuilding()
+
 	CritterController.instance:dispatchEvent(CritterEvent.CritterBuildingHideView)
-	CritterSummonController.instance:openSummonView(slot0.viewContainer:getContainerViewBuilding(), slot1)
+	CritterSummonController.instance:openSummonView(var_12_0, arg_12_1)
 
-	if slot0.root then
-		gohelper.setActive(slot0.root, false)
+	if arg_12_0.root then
+		gohelper.setActive(arg_12_0.root, false)
 	end
 end
 
-function slot0._showPreview(slot0)
-	slot1, slot2 = CritterIncubateModel.instance:getSelectParentCritterCount()
+function var_0_0._showPreview(arg_13_0)
+	local var_13_0, var_13_1 = CritterIncubateModel.instance:getSelectParentCritterCount()
 
-	if slot2 <= slot1 then
-		slot6 = {}
+	if var_13_1 <= var_13_0 then
+		local var_13_2 = CritterIncubateModel.instance:getChildMOList()
+		local var_13_3
+		local var_13_4 = {}
 
-		for slot10, slot11 in ipairs(CritterIncubateModel.instance:getChildMOList()) do
-			slot5 = nil or next(slot11:getAdditionAttr()) ~= nil
+		for iter_13_0, iter_13_1 in ipairs(var_13_2) do
+			local var_13_5 = iter_13_1:getAdditionAttr()
+
+			var_13_3 = var_13_3 or next(var_13_5) ~= nil
 		end
 
-		for slot10 = 1, slot2 do
-			if CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(slot10) and CritterModel.instance:getCritterMOByUid(slot11):getIsHighQuality() and not LuaUtil.tableContains(slot6, slot12:getCatalogueName()) then
-				table.insert(slot6, slot12:getCatalogueName())
+		for iter_13_2 = 1, var_13_1 do
+			local var_13_6 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(iter_13_2)
+
+			if var_13_6 then
+				local var_13_7 = CritterModel.instance:getCritterMOByUid(var_13_6)
+
+				if var_13_7:getIsHighQuality() and not LuaUtil.tableContains(var_13_4, var_13_7:getCatalogueName()) then
+					table.insert(var_13_4, var_13_7:getCatalogueName())
+				end
 			end
 
-			gohelper.setActive(slot0._btnoverview.gameObject, true)
-			gohelper.setActive(slot0._imageselect.gameObject, false)
-			ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, false)
+			gohelper.setActive(arg_13_0._btnoverview.gameObject, true)
+			gohelper.setActive(arg_13_0._imageselect.gameObject, false)
+			ZProj.UGUIHelper.SetGrayscale(arg_13_0._btnsummon.gameObject, false)
 		end
 
-		slot0:_refreshTip(slot5, slot6)
+		arg_13_0:_refreshTip(var_13_3, var_13_4)
 	end
 end
 
-function slot0._hidePreview(slot0)
-	gohelper.setActive(slot0._btnoverview.gameObject, false)
-	gohelper.setActive(slot0._imageselect.gameObject, true)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, true)
+function var_0_0._hidePreview(arg_14_0)
+	gohelper.setActive(arg_14_0._btnoverview.gameObject, false)
+	gohelper.setActive(arg_14_0._imageselect.gameObject, true)
+	ZProj.UGUIHelper.SetGrayscale(arg_14_0._btnsummon.gameObject, true)
 
-	for slot4, slot5 in ipairs(slot0._tipItem) do
-		gohelper.setActive(slot5.go, false)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._tipItem) do
+		gohelper.setActive(iter_14_1.go, false)
 	end
 end
 
-function slot0.onCritterFilterTypeChange(slot0, slot1)
-	if slot1 ~= slot0.viewName then
+function var_0_0.onCritterFilterTypeChange(arg_15_0, arg_15_1)
+	if arg_15_1 ~= arg_15_0.viewName then
 		return
 	end
 
-	slot0:refreshCritterList()
+	arg_15_0:refreshCritterList()
 end
 
-function slot0.refreshCritterList(slot0)
-	gohelper.setActive(slot0._goEmpty.gameObject, CritterIncubateListModel.instance:setMoList(slot0.filterMO) <= 0)
-	gohelper.setActive(slot0._scrollcritter.gameObject, slot1 > 0)
-	slot0:refreshFilterBtn()
+function var_0_0.refreshCritterList(arg_16_0)
+	local var_16_0 = CritterIncubateListModel.instance:setMoList(arg_16_0.filterMO)
+
+	gohelper.setActive(arg_16_0._goEmpty.gameObject, var_16_0 <= 0)
+	gohelper.setActive(arg_16_0._scrollcritter.gameObject, var_16_0 > 0)
+	arg_16_0:refreshFilterBtn()
 end
 
-function slot0.refreshFilterBtn(slot0)
-	slot1 = slot0.filterMO:isFiltering()
+function var_0_0.refreshFilterBtn(arg_17_0)
+	local var_17_0 = arg_17_0.filterMO:isFiltering()
 
-	gohelper.setActive(slot0._gonotfilter, not slot1)
-	gohelper.setActive(slot0._gofilter, slot1)
+	gohelper.setActive(arg_17_0._gonotfilter, not var_17_0)
+	gohelper.setActive(arg_17_0._gofilter, var_17_0)
 end
 
-function slot0._onCloseGetCritter(slot0)
-	if slot0.root then
-		gohelper.setActive(slot0.root, true)
+function var_0_0._onCloseGetCritter(arg_18_0)
+	if arg_18_0.root then
+		gohelper.setActive(arg_18_0.root, true)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._dropSort = gohelper.findChildDropdown(slot0.viewGO, "root/right/#go_critter/sort/#drop_sort")
-	slot0._goSortWay = gohelper.findChild(slot0.viewGO, "root/right/#go_critter/sort/#drop_sort/arrow")
-	slot0._canvasGroup = slot0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._tipItem = slot0:getUserDataTb_()
-	slot0._tipItem = {
+function var_0_0._editableInitView(arg_19_0)
+	arg_19_0._dropSort = gohelper.findChildDropdown(arg_19_0.viewGO, "root/right/#go_critter/sort/#drop_sort")
+	arg_19_0._goSortWay = gohelper.findChild(arg_19_0.viewGO, "root/right/#go_critter/sort/#drop_sort/arrow")
+	arg_19_0._canvasGroup = arg_19_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_19_0._tipItem = arg_19_0:getUserDataTb_()
+	arg_19_0._tipItem = {
 		{
-			go = slot0._imagetips1.gameObject,
-			txt = slot0._txttips1
+			go = arg_19_0._imagetips1.gameObject,
+			txt = arg_19_0._txttips1
 		},
 		{
-			go = slot0._imagetips2.gameObject,
-			txt = slot0._txttips2
+			go = arg_19_0._imagetips2.gameObject,
+			txt = arg_19_0._txttips2
 		}
 	}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_20_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_addEvents()
+function var_0_0.onOpen(arg_21_0)
+	arg_21_0:_addEvents()
 
-	slot0.filterMO = CritterFilterModel.instance:generateFilterMO(slot0.viewName)
+	arg_21_0.filterMO = CritterFilterModel.instance:generateFilterMO(arg_21_0.viewName)
 
-	slot0:_refreshParentCritter()
-	slot0:_initSortFilter()
+	arg_21_0:_refreshParentCritter()
+	arg_21_0:_initSortFilter()
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeEvents()
+function var_0_0.onClose(arg_22_0)
+	arg_22_0:_removeEvents()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagecurrency:UnLoadImage()
+function var_0_0.onDestroyView(arg_23_0)
+	arg_23_0._simagecurrency:UnLoadImage()
 end
 
-function slot0._onRefreshBtn(slot0)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnsummon.gameObject, not string.nilorempty(CritterIncubateModel.instance:notSummonToast()))
+function var_0_0._onRefreshBtn(arg_24_0)
+	local var_24_0 = CritterIncubateModel.instance:notSummonToast()
+	local var_24_1 = string.nilorempty(var_24_0)
 
-	slot3, slot4 = CritterIncubateModel.instance:getPoolCurrency()
+	ZProj.UGUIHelper.SetGrayscale(arg_24_0._btnsummon.gameObject, not var_24_1)
 
-	if string.nilorempty(slot3) then
+	local var_24_2, var_24_3 = CritterIncubateModel.instance:getPoolCurrency()
+
+	if string.nilorempty(var_24_2) then
 		return
 	end
 
-	slot0._simagecurrency:LoadImage(slot3)
+	arg_24_0._simagecurrency:LoadImage(var_24_2)
 
-	slot0._txtcurrency.text = slot4 or ""
+	arg_24_0._txtcurrency.text = var_24_3 or ""
 end
 
-function slot0._refreshParentCritter(slot0, slot1, slot2)
-	slot3, slot4 = CritterIncubateModel.instance:getSelectParentCritterCount()
-	slot5 = 0
+function var_0_0._refreshParentCritter(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0, var_25_1 = CritterIncubateModel.instance:getSelectParentCritterCount()
+	local var_25_2 = 0
 
-	if slot1 and slot0:_getParentCritterItem(slot1) then
-		slot0:_playParentCritterEffect(slot1)
+	if arg_25_1 and arg_25_0:_getParentCritterItem(arg_25_1) then
+		arg_25_0:_playParentCritterEffect(arg_25_1)
 	end
 
-	for slot9 = 1, slot4 do
-		slot10 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(slot9)
+	for iter_25_0 = 1, var_25_1 do
+		local var_25_3 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(iter_25_0)
+		local var_25_4 = arg_25_0:_getParentCritterItem(iter_25_0)
 
-		if slot0:_getParentCritterItem(slot9) then
-			if slot10 then
-				slot12 = CritterModel.instance:getCritterMOByUid(slot10)
+		if var_25_4 then
+			if var_25_3 then
+				local var_25_5 = CritterModel.instance:getCritterMOByUid(var_25_3)
 
-				if not slot11._critterIcon then
-					slot11._critterIcon = IconMgr.instance:getCommonCritterIcon(slot11.icon)
+				if not var_25_4._critterIcon then
+					var_25_4._critterIcon = IconMgr.instance:getCommonCritterIcon(var_25_4.icon)
 				end
 
-				slot11._critterIcon:onUpdateMO(slot12)
-				slot11._critterIcon:hideMood()
-				slot11._critterIcon:setCustomClick(slot0._onClickParentCritter, slot0, slot12)
-				gohelper.setActive(slot11._critterIcon.viewGO.gameObject, true)
-				slot11._critterIcon:showUpTip(next(slot12:getAdditionAttr()) ~= nil)
+				var_25_4._critterIcon:onUpdateMO(var_25_5)
+				var_25_4._critterIcon:hideMood()
+				var_25_4._critterIcon:setCustomClick(arg_25_0._onClickParentCritter, arg_25_0, var_25_5)
+				gohelper.setActive(var_25_4._critterIcon.viewGO.gameObject, true)
 
-				slot5 = slot5 + 1
-			elseif slot11._critterIcon then
-				gohelper.setActive(slot11._critterIcon.viewGO.gameObject, false)
+				local var_25_6 = var_25_5:getAdditionAttr()
+
+				var_25_4._critterIcon:showUpTip(next(var_25_6) ~= nil)
+
+				var_25_2 = var_25_2 + 1
+			elseif var_25_4._critterIcon then
+				gohelper.setActive(var_25_4._critterIcon.viewGO.gameObject, false)
 			end
 		end
 	end
 
-	slot0:_onRefreshBtn()
+	arg_25_0:_onRefreshBtn()
 
-	if slot4 <= slot5 then
+	if var_25_1 <= var_25_2 then
 		CritterIncubateController.instance:onIncubateCritterPreview()
 	else
-		slot0:_hidePreview()
+		arg_25_0:_hidePreview()
 
-		slot0._txtselect.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_critter_incubate_select_count"), slot5, slot4)
+		arg_25_0._txtselect.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_critter_incubate_select_count"), var_25_2, var_25_1)
 	end
 end
 
-function slot0._refreshTip(slot0, slot1, slot2)
-	slot3 = 1
+function var_0_0._refreshTip(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = 1
 
-	if slot1 then
-		slot4 = slot0._tipItem[slot3]
-		slot4.txt.text = luaLang("room_critter_incubate_tip_1")
+	if arg_26_1 then
+		local var_26_1 = arg_26_0._tipItem[var_26_0]
 
-		gohelper.setActive(slot4.go, true)
+		var_26_1.txt.text = luaLang("room_critter_incubate_tip_1")
 
-		slot3 = slot3 + 1
+		gohelper.setActive(var_26_1.go, true)
+
+		var_26_0 = var_26_0 + 1
 	end
 
-	if LuaUtil.tableNotEmpty(slot2) then
-		if #slot2 == 1 then
-			slot0._tipItem[slot3].txt.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("room_critter_incubate_tip_2"), slot2[1])
-		elseif slot5 == 2 then
-			slot4.txt.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_critter_incubate_tip_3"), slot2[1], slot2[2])
+	if LuaUtil.tableNotEmpty(arg_26_2) then
+		local var_26_2 = arg_26_0._tipItem[var_26_0]
+		local var_26_3 = #arg_26_2
+
+		if var_26_3 == 1 then
+			local var_26_4 = luaLang("room_critter_incubate_tip_2")
+
+			var_26_2.txt.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_26_4, arg_26_2[1])
+		elseif var_26_3 == 2 then
+			local var_26_5 = luaLang("room_critter_incubate_tip_3")
+
+			var_26_2.txt.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_26_5, arg_26_2[1], arg_26_2[2])
 		end
 
-		gohelper.setActive(slot4.go, true)
+		gohelper.setActive(var_26_2.go, true)
 
-		slot3 = slot3 + 1
+		var_26_0 = var_26_0 + 1
 	end
 
-	for slot7, slot8 in ipairs(slot0._tipItem) do
-		gohelper.setActive(slot8.go, slot7 < slot3)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0._tipItem) do
+		gohelper.setActive(iter_26_1.go, iter_26_0 < var_26_0)
 	end
 end
 
-function slot0._onClickParentCritter(slot0, slot1)
-	CritterIncubateModel.instance:removeSelectParentCritter(slot1.uid)
+function var_0_0._onClickParentCritter(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_1.uid
+
+	CritterIncubateModel.instance:removeSelectParentCritter(var_27_0)
 end
 
-function slot0._getParentCritterItem(slot0, slot1)
-	if not slot0._parentCritterItem then
-		slot0._parentCritterItem = slot0:getUserDataTb_()
+function var_0_0._getParentCritterItem(arg_28_0, arg_28_1)
+	if not arg_28_0._parentCritterItem then
+		arg_28_0._parentCritterItem = arg_28_0:getUserDataTb_()
 	end
 
-	if not slot0._parentCritterItem[slot1] then
-		slot3 = slot0["_gocritter" .. slot1]
+	local var_28_0 = arg_28_0._parentCritterItem[arg_28_1]
 
-		if ({
-			go = slot3,
-			icon = gohelper.findChild(slot3, "go_crittericon"),
-			btn = slot0["_btnclickarea" .. slot1]
-		}).btn then
-			gohelper.setActive(slot2.btn.gameObject, false)
+	if not var_28_0 then
+		var_28_0 = {}
+
+		local var_28_1 = arg_28_0["_gocritter" .. arg_28_1]
+		local var_28_2 = arg_28_0["_btnclickarea" .. arg_28_1]
+
+		var_28_0.go = var_28_1
+		var_28_0.icon = gohelper.findChild(var_28_1, "go_crittericon")
+		var_28_0.btn = var_28_2
+
+		if var_28_0.btn then
+			gohelper.setActive(var_28_0.btn.gameObject, false)
 		end
 
-		slot2.effect = gohelper.findChild(slot3, "#add_effect"):GetComponent(typeof(UnityEngine.Animation))
+		var_28_0.effect = gohelper.findChild(var_28_1, "#add_effect"):GetComponent(typeof(UnityEngine.Animation))
 
-		table.insert(slot0._parentCritterItem, slot2)
+		table.insert(arg_28_0._parentCritterItem, var_28_0)
 	end
 
-	return slot2
+	return var_28_0
 end
 
-function slot0._playParentCritterEffect(slot0, slot1)
-	if slot0:_getParentCritterItem(slot1) then
-		slot2.effect:Stop()
-		gohelper.setActive(slot2.effect.gameObject, true)
-		slot2.effect:Play()
+function var_0_0._playParentCritterEffect(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0:_getParentCritterItem(arg_29_1)
+
+	if var_29_0 then
+		var_29_0.effect:Stop()
+		gohelper.setActive(var_29_0.effect.gameObject, true)
+		var_29_0.effect:Play()
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan_put)
 	end
 end
 
-function slot0._initSortFilter(slot0)
-	slot1 = {}
+function var_0_0._initSortFilter(arg_30_0)
+	local var_30_0 = {}
 
-	for slot5, slot6 in ipairs(lua_critter_attribute.configList) do
-		table.insert(slot1, slot6.name)
+	for iter_30_0, iter_30_1 in ipairs(lua_critter_attribute.configList) do
+		table.insert(var_30_0, iter_30_1.name)
 	end
 
-	slot0._curSelectOpetion = CritterIncubateModel.instance:getSortType()
-	slot0._curSortWay = CritterIncubateModel.instance:getSortWay()
+	arg_30_0._curSelectOpetion = CritterIncubateModel.instance:getSortType()
+	arg_30_0._curSortWay = CritterIncubateModel.instance:getSortWay()
 
-	slot0._dropSort:ClearOptions()
-	slot0._dropSort:AddOptions(slot1)
-	slot0._dropSort:AddOnValueChanged(slot0.onDropValueChanged, slot0)
-	slot0._dropSort:SetValue(slot0._curSelectOpetion - 1)
-	slot0:_setSortWay()
-	slot0:refreshCritterList()
+	arg_30_0._dropSort:ClearOptions()
+	arg_30_0._dropSort:AddOptions(var_30_0)
+	arg_30_0._dropSort:AddOnValueChanged(arg_30_0.onDropValueChanged, arg_30_0)
+	arg_30_0._dropSort:SetValue(arg_30_0._curSelectOpetion - 1)
+	arg_30_0:_setSortWay()
+	arg_30_0:refreshCritterList()
 end
 
-function slot0.onDropValueChanged(slot0, slot1)
-	CritterIncubateModel.instance:setSortType(slot1 + 1)
-	CritterIncubateListModel.instance:sortMoList(slot0.filterMO)
+function var_0_0.onDropValueChanged(arg_31_0, arg_31_1)
+	CritterIncubateModel.instance:setSortType(arg_31_1 + 1)
+	CritterIncubateListModel.instance:sortMoList(arg_31_0.filterMO)
 end
 
-function slot0._setSortWay(slot0)
-	transformhelper.setLocalRotation(slot0._goSortWay.transform, 0, 0, CritterIncubateModel.instance:getSortWay() and 180 or 0)
-	CritterIncubateListModel.instance:sortMoList(slot0.filterMO)
+function var_0_0._setSortWay(arg_32_0)
+	local var_32_0 = CritterIncubateModel.instance:getSortWay()
+
+	transformhelper.setLocalRotation(arg_32_0._goSortWay.transform, 0, 0, var_32_0 and 180 or 0)
+	CritterIncubateListModel.instance:sortMoList(arg_32_0.filterMO)
 end
 
-return slot0
+return var_0_0

@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity2_2.enter.define.VersionActivity2_2Enum", package.seeall)
+﻿module("modules.logic.versionactivity2_2.enter.define.VersionActivity2_2Enum", package.seeall)
 
-slot0 = _M
-slot0.ActivityId = {
+local var_0_0 = _M
+
+var_0_0.ActivityId = {
 	BossRush = 12209,
 	TurnBackInvitation = 12222,
 	RoleStory1 = 12207,
@@ -17,68 +18,68 @@ slot0.ActivityId = {
 	LimitDecorate = 12236,
 	EnterView = 12201
 }
-slot0.EnterViewActSetting = {
+var_0_0.EnterViewActSetting = {
 	{
-		actId = slot0.ActivityId.Dungeon,
+		actId = var_0_0.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = slot0.ActivityId.DungeonStore
+		storeId = var_0_0.ActivityId.DungeonStore
 	},
 	{
-		actId = slot0.ActivityId.TianShiNaNa,
+		actId = var_0_0.ActivityId.TianShiNaNa,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = slot0.ActivityId.TianShiNaNa
+		redDotUid = var_0_0.ActivityId.TianShiNaNa
 	},
 	{
-		actId = slot0.ActivityId.Eliminate,
+		actId = var_0_0.ActivityId.Eliminate,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = slot0.ActivityId.Season,
+		actId = var_0_0.ActivityId.Season,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = slot0.ActivityId.BossRush,
+		actId = var_0_0.ActivityId.BossRush,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
 		actId = {
-			slot0.ActivityId.RoleStory1,
-			slot0.ActivityId.RoleStory2
+			var_0_0.ActivityId.RoleStory1,
+			var_0_0.ActivityId.RoleStory2
 		},
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Multi
 	},
 	{
-		actId = slot0.ActivityId.Lopera,
+		actId = var_0_0.ActivityId.Lopera,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = slot0.ActivityId.Lopera
+		redDotUid = var_0_0.ActivityId.Lopera
 	},
 	{
-		actId = slot0.ActivityId.RoomCritter,
+		actId = var_0_0.ActivityId.RoomCritter,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	}
 }
-slot0.EnterViewActIdListWithRedDot = {
-	slot0.ActivityId.Dungeon,
-	slot0.ActivityId.BossRush,
-	slot0.ActivityId.Season,
-	slot0.ActivityId.TurnBackInvitation
+var_0_0.EnterViewActIdListWithRedDot = {
+	var_0_0.ActivityId.Dungeon,
+	var_0_0.ActivityId.BossRush,
+	var_0_0.ActivityId.Season,
+	var_0_0.ActivityId.TurnBackInvitation
 }
-slot0.TabSetting = {
+var_0_0.TabSetting = {
 	select = {
 		fontSize = 42,
 		cnColor = "#FFFFFF",
 		enFontSize = 14,
 		enColor = "#337C61",
 		act2TabImg = {
-			[slot0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
+			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -87,11 +88,11 @@ slot0.TabSetting = {
 		enFontSize = 14,
 		enColor = "#485143",
 		act2TabImg = {
-			[slot0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
+			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a2_mainactivity_singlebg/v2a2_enterview_itemtitleselected.png"
 		}
 	}
 }
-slot0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-slot0.RedDotOffsetY = 56
+var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+var_0_0.RedDotOffsetY = 56
 
-return slot0
+return var_0_0

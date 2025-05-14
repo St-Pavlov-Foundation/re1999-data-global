@@ -1,30 +1,35 @@
-module("modules.logic.versionactivity1_4.puzzle.view.PuzzleRecordItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.puzzle.view.PuzzleRecordItem", package.seeall)
 
-slot0 = class("PuzzleRecordItem", MixScrollCell)
+local var_0_0 = class("PuzzleRecordItem", MixScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._txtRecord = gohelper.findChildText(slot1, "")
-	slot0._txtRecordNum = gohelper.findChildTextMesh(slot1, "txt_RecordNum")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._txtRecord = gohelper.findChildText(arg_1_1, "")
+	arg_1_0._txtRecordNum = gohelper.findChildTextMesh(arg_1_1, "txt_RecordNum")
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._txtRecordNum.text = slot1:GetIndex()
-	slot0._txtRecord.text = slot1:GetRecord()
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._txtRecordNum.text = arg_5_1:GetIndex()
+	arg_5_0._txtRecord.text = arg_5_1:GetRecord()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_6_0, arg_6_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

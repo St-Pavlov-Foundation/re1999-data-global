@@ -1,26 +1,28 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesGlassEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesGlassEntity", package.seeall)
 
-slot0 = class("PinballMarblesGlassEntity", PinballMarblesEntity)
+local var_0_0 = class("PinballMarblesGlassEntity", PinballMarblesEntity)
 
-function slot0.onHitEnter(slot0, slot1, slot2, slot3, slot4)
-	if not PinballEntityMgr.instance:getEntity(slot1) then
+function var_0_0.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	local var_1_0 = PinballEntityMgr.instance:getEntity(arg_1_1)
+
+	if not var_1_0 then
 		return
 	end
 
-	if slot5:isResType() then
-		if slot5.unitType == PinballEnum.UnitType.ResMine and slot0.hitNum < slot5.totalHitCount then
-			uv0.super.onHitEnter(slot0, slot1, slot2, slot3, slot4)
+	if var_1_0:isResType() then
+		if var_1_0.unitType == PinballEnum.UnitType.ResMine and var_1_0.totalHitCount > arg_1_0.hitNum then
+			var_0_0.super.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 		else
 			AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio16)
-			slot5:doHit(slot0.hitNum)
+			var_1_0:doHit(arg_1_0.hitNum)
 		end
 	else
-		uv0.super.onHitEnter(slot0, slot1, slot2, slot3, slot4)
+		var_0_0.super.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	end
 end
 
-function slot0.getHitResCount(slot0)
-	return slot0.hitNum
+function var_0_0.getHitResCount(arg_2_0)
+	return arg_2_0.hitNum
 end
 
-return slot0
+return var_0_0

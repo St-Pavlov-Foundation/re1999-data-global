@@ -1,71 +1,75 @@
-module("modules.logic.battlepass.view.BpRuleTipsView", package.seeall)
+﻿module("modules.logic.battlepass.view.BpRuleTipsView", package.seeall)
 
-slot0 = class("BpRuleTipsView", BaseView)
+local var_0_0 = class("BpRuleTipsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1", AudioEnum.UI.play_ui_help_close)
-	slot0._scrollinfo = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_info")
-	slot0._goinfoitem = gohelper.findChild(slot0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
-	slot0._btnclose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close2", AudioEnum.UI.play_ui_help_close)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1", AudioEnum.UI.play_ui_help_close)
+	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_info")
+	arg_1_0._goinfoitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
+	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2", AudioEnum.UI.play_ui_help_close)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose1:AddClickListener(slot0._btnclose1OnClick, slot0)
-	slot0._btnclose2:AddClickListener(slot0._btnclose2OnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
+	arg_2_0._btnclose2:AddClickListener(arg_2_0._btnclose2OnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose1:RemoveClickListener()
-	slot0._btnclose2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose1:RemoveClickListener()
+	arg_3_0._btnclose2:RemoveClickListener()
 end
 
-slot1 = string.split
+local var_0_1 = string.split
 
-function slot0._btnclose1OnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnclose1OnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnclose2OnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnclose2OnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._titlecn = gohelper.findChildText(slot0.viewGO, "title/titlecn")
-	slot0._titleen = gohelper.findChildText(slot0.viewGO, "title/titlecn/titleen")
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._titlecn = gohelper.findChildText(arg_6_0.viewGO, "title/titlecn")
+	arg_6_0._titleen = gohelper.findChildText(arg_6_0.viewGO, "title/titlecn/titleen")
 end
 
-function slot0._ruleDesc(slot0)
-	if slot0.viewParam and slot0.viewParam.ruleDesc then
-		return slot1
+function var_0_0._ruleDesc(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam and arg_7_0.viewParam.ruleDesc
+
+	if var_7_0 then
+		return var_7_0
 	end
 
-	return slot0.viewName == ViewName.BpSPRuleTipsView and luaLang("bp_sp_rule") or luaLang("bp_rule")
+	return arg_7_0.viewName == ViewName.BpSPRuleTipsView and luaLang("bp_sp_rule") or luaLang("bp_rule")
 end
 
-function slot0._title(slot0)
-	return slot0.viewParam and slot0.viewParam.title or luaLang("p_bpruletipsview_title")
+function var_0_0._title(arg_8_0)
+	return arg_8_0.viewParam and arg_8_0.viewParam.title or luaLang("p_bpruletipsview_title")
 end
 
-function slot0._titleEn(slot0)
-	return slot0.viewParam and slot0.viewParam.titleEn or "JUKEBOX DETAILS"
+function var_0_0._titleEn(arg_9_0)
+	return arg_9_0.viewParam and arg_9_0.viewParam.titleEn or "JUKEBOX DETAILS"
 end
 
-function slot0.onOpen(slot0)
-	slot0._titlecn.text = slot0:_title()
-	slot0._titleen.text = slot0:_titleEn()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._titlecn.text = arg_10_0:_title()
+	arg_10_0._titleen.text = arg_10_0:_titleEn()
 
-	for slot5 = 1, #uv0(slot0:_ruleDesc(), "|"), 2 do
-		slot6 = gohelper.cloneInPlace(slot0._goinfoitem, "infoitem")
+	local var_10_0 = var_0_1(arg_10_0:_ruleDesc(), "|")
 
-		gohelper.setActive(slot6, true)
+	for iter_10_0 = 1, #var_10_0, 2 do
+		local var_10_1 = gohelper.cloneInPlace(arg_10_0._goinfoitem, "infoitem")
 
-		gohelper.findChildTextMesh(slot6, "txt_title").text = slot1[slot5]
-		gohelper.findChildTextMesh(slot6, "txt_desc").text = string.gsub(slot1[slot5 + 1] or "", "UTC%+8", ServerTime.GetUTCOffsetStr())
+		gohelper.setActive(var_10_1, true)
+
+		gohelper.findChildTextMesh(var_10_1, "txt_title").text = var_10_0[iter_10_0]
+		gohelper.findChildTextMesh(var_10_1, "txt_desc").text = string.gsub(var_10_0[iter_10_0 + 1] or "", "UTC%+8", ServerTime.GetUTCOffsetStr())
 	end
 end
 
-return slot0
+return var_0_0

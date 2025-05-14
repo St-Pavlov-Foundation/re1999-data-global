@@ -1,391 +1,426 @@
-module("modules.logic.explore.map.unit.ExploreBaseUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreBaseUnit", package.seeall)
 
-slot0 = class("ExploreBaseUnit", BaseUnitSpawn)
-slot1 = typeof(SLFramework.LuaMonobehavier)
+local var_0_0 = class("ExploreBaseUnit", BaseUnitSpawn)
+local var_0_1 = typeof(SLFramework.LuaMonobehavier)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot3 = gohelper.create3d(slot1, slot2)
-	slot0.trans = slot3.transform
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = gohelper.create3d(arg_1_1, arg_1_2)
 
-	slot0:init(slot3)
+	arg_1_0.trans = var_1_0.transform
 
-	slot0._hasInteract = false
-	slot0._isEnter = false
+	arg_1_0:init(var_1_0)
 
-	slot0:onInit()
+	arg_1_0._hasInteract = false
+	arg_1_0._isEnter = false
 
-	slot0._luamonoContainer = slot3:GetComponent(uv0)
+	arg_1_0:onInit()
 
-	slot0:_checkContainerNeedUpdate()
+	arg_1_0._luamonoContainer = var_1_0:GetComponent(var_0_1)
+
+	arg_1_0:_checkContainerNeedUpdate()
 end
 
-function slot0.isRole(slot0)
+function var_0_0.isRole(arg_2_0)
 	return false
 end
 
-function slot0.canMove(slot0)
+function var_0_0.canMove(arg_3_0)
 	return false
 end
 
-function slot0.onEnter(slot0)
+function var_0_0.onEnter(arg_4_0)
+	return
 end
 
-function slot0.onUpdateCount(slot0, slot1, slot2)
+function var_0_0.onUpdateCount(arg_5_0, arg_5_1, arg_5_2)
+	return
 end
 
-function slot0.setupMO(slot0)
+function var_0_0.setupMO(arg_6_0)
+	return
 end
 
-function slot0.doFix(slot0)
+function var_0_0.doFix(arg_7_0)
+	return
 end
 
-function slot0.onTriggerDone(slot0)
+function var_0_0.onTriggerDone(arg_8_0)
+	return
 end
 
-function slot0.onTrigger(slot0)
+function var_0_0.onTrigger(arg_9_0)
+	return
 end
 
-function slot0.onCancelTrigger(slot0)
+function var_0_0.onCancelTrigger(arg_10_0)
+	return
 end
 
-function slot0.onRoleEnter(slot0, slot1, slot2)
+function var_0_0.onRoleEnter(arg_11_0, arg_11_1, arg_11_2)
+	return
 end
 
-function slot0.onRoleStay(slot0)
+function var_0_0.onRoleStay(arg_12_0)
+	return
 end
 
-function slot0.onRoleLeave(slot0)
+function var_0_0.onRoleLeave(arg_13_0)
+	return
 end
 
-function slot0.onExit(slot0)
+function var_0_0.onExit(arg_14_0)
+	return
 end
 
-function slot0.onRelease(slot0)
+function var_0_0.onRelease(arg_15_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_16_0)
+	return
 end
 
-function slot0.isMoving(slot0)
+function var_0_0.isMoving(arg_17_0)
 	return false
 end
 
-function slot0._checkContainerNeedUpdate(slot0)
+function var_0_0._checkContainerNeedUpdate(arg_18_0)
+	return
 end
 
-function slot0.onLightDataChange(slot0, slot1)
-	if slot0.lightComp then
-		slot0.lightComp:onLightDataChange(slot1)
+function var_0_0.onLightDataChange(arg_19_0, arg_19_1)
+	if arg_19_0.lightComp then
+		arg_19_0.lightComp:onLightDataChange(arg_19_1)
 	end
 end
 
-function slot0.onStatusChange(slot0, slot1)
-	if ExploreHelper.getBit(slot1, ExploreEnum.InteractIndex.InteractEnabled) > 0 then
-		slot0:onInteractChange(slot0.mo:isInteractEnabled())
+function var_0_0.onStatusChange(arg_20_0, arg_20_1)
+	if ExploreHelper.getBit(arg_20_1, ExploreEnum.InteractIndex.InteractEnabled) > 0 then
+		arg_20_0:onInteractChange(arg_20_0.mo:isInteractEnabled())
 	end
 
-	if ExploreHelper.getBit(slot1, ExploreEnum.InteractIndex.ActiveState) > 0 then
-		slot0:onActiveChange(slot0.mo:isInteractActiveState())
+	if ExploreHelper.getBit(arg_20_1, ExploreEnum.InteractIndex.ActiveState) > 0 then
+		local var_20_0 = arg_20_0.mo:isInteractActiveState()
 
-		if slot0.mo then
-			slot0.mo:activeStateChange(slot2)
+		arg_20_0:onActiveChange(var_20_0)
+
+		if arg_20_0.mo then
+			arg_20_0.mo:activeStateChange(var_20_0)
 		end
 	end
 end
 
-function slot0.onStatus2Change(slot0, slot1, slot2)
+function var_0_0.onStatus2Change(arg_21_0, arg_21_1, arg_21_2)
+	return
 end
 
-function slot0.onInteractChange(slot0, slot1)
+function var_0_0.onInteractChange(arg_22_0, arg_22_1)
+	return
 end
 
-function slot0.onActiveChange(slot0, slot1)
+function var_0_0.onActiveChange(arg_23_0, arg_23_1)
+	return
 end
 
-function slot0.onNodeChange(slot0, slot1, slot2)
+function var_0_0.onNodeChange(arg_24_0, arg_24_1, arg_24_2)
+	return
 end
 
-function slot0.onRoleNear(slot0)
-	slot0._roleNear = true
+function var_0_0.onRoleNear(arg_25_0)
+	arg_25_0._roleNear = true
 end
 
-function slot0.onRoleFar(slot0)
-	slot0._roleNear = false
+function var_0_0.onRoleFar(arg_26_0)
+	arg_26_0._roleNear = false
 end
 
-function slot0.onMapInit(slot0)
+function var_0_0.onMapInit(arg_27_0)
+	return
 end
 
-function slot0.onHeroInitDone(slot0)
+function var_0_0.onHeroInitDone(arg_28_0)
+	return
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.mo = slot1
-	slot0.id = slot1.id
-	slot0.go.name = slot0.__cname .. slot1.id
+function var_0_0.setData(arg_29_0, arg_29_1)
+	arg_29_0.mo = arg_29_1
+	arg_29_0.id = arg_29_1.id
+	arg_29_0.go.name = arg_29_0.__cname .. arg_29_1.id
 
-	slot0:setPosByNode(slot1.nodePos)
+	arg_29_0:setPosByNode(arg_29_1.nodePos)
 
-	if slot0.mo:isEnter() then
-		slot0:setEnter()
+	if arg_29_0.mo:isEnter() then
+		arg_29_0:setEnter()
 	else
-		slot0:setExit()
+		arg_29_0:setExit()
 	end
 
-	slot0:_setupMO()
+	arg_29_0:_setupMO()
 end
 
-function slot0.getExploreUnitMO(slot0)
-	return slot0.mo
+function var_0_0.getExploreUnitMO(arg_30_0)
+	return arg_30_0.mo
 end
 
-function slot0.setTmpData(slot0, slot1)
-	slot0.mo = slot1
-	slot0.id = slot1.id
-	slot0.go.name = slot0.__cname .. slot1.id
+function var_0_0.setTmpData(arg_31_0, arg_31_1)
+	arg_31_0.mo = arg_31_1
+	arg_31_0.id = arg_31_1.id
+	arg_31_0.go.name = arg_31_0.__cname .. arg_31_1.id
 
-	slot0:setPosByNode(slot1.nodePos, true)
-	slot0:_setupMO()
+	arg_31_0:setPosByNode(arg_31_1.nodePos, true)
+	arg_31_0:_setupMO()
 end
 
-function slot0._setupMO(slot0)
-	slot0:setupMO()
+function var_0_0._setupMO(arg_32_0)
+	arg_32_0:setupMO()
 end
 
-function slot0.tryTrigger(slot0, slot1)
-	if slot0.mo:isInteractEnabled() and slot0._isEnter then
-		slot0:onTrigger()
-		ExploreMapTriggerController.instance:triggerUnit(slot0, slot1)
+function var_0_0.tryTrigger(arg_33_0, arg_33_1)
+	if arg_33_0.mo:isInteractEnabled() and arg_33_0._isEnter then
+		arg_33_0:onTrigger()
+		ExploreMapTriggerController.instance:triggerUnit(arg_33_0, arg_33_1)
 
-		return slot0:needInteractAnim()
+		return arg_33_0:needInteractAnim()
 	end
 end
 
-function slot0.needInteractAnim(slot0)
+function var_0_0.needInteractAnim(arg_34_0)
 	return false
 end
 
-function slot0.cancelTrigger(slot0)
-	slot0:onCancelTrigger()
-	ExploreMapTriggerController.instance:cancelTrigger(slot0)
+function var_0_0.cancelTrigger(arg_35_0)
+	arg_35_0:onCancelTrigger()
+	ExploreMapTriggerController.instance:cancelTrigger(arg_35_0)
 end
 
-function slot0.getHasInteract(slot0)
-	return slot0.mo:isInteractDone()
+function var_0_0.getHasInteract(arg_36_0)
+	return arg_36_0.mo:isInteractDone()
 end
 
-function slot0.setName(slot0, slot1)
-	slot0.go.name = slot1
+function var_0_0.setName(arg_37_0, arg_37_1)
+	arg_37_0.go.name = arg_37_1
 end
 
-function slot0.setParent(slot0, slot1)
-	slot0.trans:SetParent(slot1)
+function var_0_0.setParent(arg_38_0, arg_38_1)
+	arg_38_0.trans:SetParent(arg_38_1)
 end
 
-function slot0.getPos(slot0)
-	return slot0.position
+function var_0_0.getPos(arg_39_0)
+	return arg_39_0.position
 end
 
-function slot0.getUnitType(slot0)
-	if slot0.mo then
-		return slot0.mo.type
+function var_0_0.getUnitType(arg_40_0)
+	if arg_40_0.mo then
+		return arg_40_0.mo.type
 	end
 end
 
-function slot0.needUpdateHeroPos(slot0)
+function var_0_0.needUpdateHeroPos(arg_41_0)
 	return false
 end
 
-function slot0.getFixItemId(slot0)
+function var_0_0.getFixItemId(arg_42_0)
 	return nil
 end
 
-function slot0.canTrigger(slot0)
-	return slot0.mo and slot0.mo:isInteractEnabled() and not slot0.mo:isInteractFinishState() and slot0:isEnter()
+function var_0_0.canTrigger(arg_43_0)
+	return arg_43_0.mo and arg_43_0.mo:isInteractEnabled() and not arg_43_0.mo:isInteractFinishState() and arg_43_0:isEnter()
 end
 
-function slot0.isInteractActiveState(slot0)
-	if slot0.mo then
-		return slot0.mo:isInteractActiveState()
+function var_0_0.isInteractActiveState(arg_44_0)
+	if arg_44_0.mo then
+		return arg_44_0.mo:isInteractActiveState()
 	end
 
 	return false
 end
 
-function slot0.setPos(slot0, slot1, slot2)
-	if gohelper.isNil(slot0.go) == false then
-		transformhelper.setPos(slot0.trans, -999999, 0, -99999)
+function var_0_0.setPos(arg_45_0, arg_45_1, arg_45_2)
+	if gohelper.isNil(arg_45_0.go) == false then
+		transformhelper.setPos(arg_45_0.trans, -999999, 0, -99999)
 
-		slot1.y = 10
-		slot3, slot4 = UnityEngine.Physics.Raycast(slot1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+		arg_45_1.y = 10
 
-		if slot3 then
-			slot1.y = slot4.point.y
+		local var_45_0, var_45_1 = UnityEngine.Physics.Raycast(arg_45_1, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+
+		if var_45_0 then
+			arg_45_1.y = var_45_1.point.y
 		else
-			slot1.y = slot0.trans.position.y
+			arg_45_1.y = arg_45_0.trans.position.y
 		end
 
-		slot0.position = slot1
+		arg_45_0.position = arg_45_1
 
-		transformhelper.setPos(slot0.trans, slot0.position.x, slot0.position.y, slot0.position.z)
+		transformhelper.setPos(arg_45_0.trans, arg_45_0.position.x, arg_45_0.position.y, arg_45_0.position.z)
 
-		if ExploreHelper.posToTile(slot1) ~= slot0.nodePos then
-			slot6 = slot0.nodePos
-			slot0.nodePos = slot5
+		local var_45_2 = ExploreHelper.posToTile(arg_45_1)
 
-			if slot0.mo then
-				slot0.mo:updatePos(slot5)
+		if var_45_2 ~= arg_45_0.nodePos then
+			local var_45_3 = arg_45_0.nodePos
+
+			arg_45_0.nodePos = var_45_2
+
+			if arg_45_0.mo then
+				arg_45_0.mo:updatePos(var_45_2)
 			end
 
-			slot0.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(slot0.nodePos))
+			arg_45_0.nodeMO = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_45_0.nodePos))
 
-			if slot2 ~= true then
-				ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, slot0, slot0.nodePos, slot6)
+			if arg_45_2 ~= true then
+				ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, arg_45_0, arg_45_0.nodePos, var_45_3)
 			end
 
-			slot0:onNodeChange(slot6, slot0.nodePos)
+			arg_45_0:onNodeChange(var_45_3, arg_45_0.nodePos)
 		end
 	end
 end
 
-function slot0.removeFromNode(slot0)
-	slot1 = slot0.nodePos
-	slot0.nodePos = nil
+function var_0_0.removeFromNode(arg_46_0)
+	local var_46_0 = arg_46_0.nodePos
 
-	if slot0.mo then
-		slot0.mo:removeFromNode()
+	arg_46_0.nodePos = nil
+
+	if arg_46_0.mo then
+		arg_46_0.mo:removeFromNode()
 	end
 
-	slot0.nodeMO = nil
+	arg_46_0.nodeMO = nil
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, slot0, false, slot1)
-	slot0:onNodeChange(slot1, slot0.nodePos)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitNodeChange, arg_46_0, false, var_46_0)
+	arg_46_0:onNodeChange(var_46_0, arg_46_0.nodePos)
 end
 
-function slot0.isPassLight(slot0)
-	return slot0:getLightRecvType() == ExploreEnum.LightRecvType.Photic
+function var_0_0.isPassLight(arg_47_0)
+	return arg_47_0:getLightRecvType() == ExploreEnum.LightRecvType.Photic
 end
 
-function slot0.getLightRecvType(slot0)
-	return slot0.mo.isPhotic and ExploreEnum.LightRecvType.Photic or ExploreEnum.LightRecvType.Barricade
+function var_0_0.getLightRecvType(arg_48_0)
+	return arg_48_0.mo.isPhotic and ExploreEnum.LightRecvType.Photic or ExploreEnum.LightRecvType.Barricade
 end
 
-function slot0.getLightRecvDirs(slot0)
+function var_0_0.getLightRecvDirs(arg_49_0)
 	return nil
 end
 
-function slot0.onLightChange(slot0, slot1, slot2)
+function var_0_0.onLightChange(arg_50_0, arg_50_1, arg_50_2)
+	return
 end
 
-function slot0.onLightEnter(slot0, slot1)
+function var_0_0.onLightEnter(arg_51_0, arg_51_1)
+	return
 end
 
-function slot0.onLightExit(slot0)
+function var_0_0.onLightExit(arg_52_0)
+	return
 end
 
-function slot0.onRotation(slot0)
+function var_0_0.onRotation(arg_53_0)
+	return
 end
 
-function slot0.setInFOV(slot0, slot1)
-	if slot0:isEnter() and slot0._isInFOV ~= slot1 then
-		slot0._isInFOV = slot1
+function var_0_0.setInFOV(arg_54_0, arg_54_1)
+	if arg_54_0:isEnter() and arg_54_0._isInFOV ~= arg_54_1 then
+		arg_54_0._isInFOV = arg_54_1
 
-		slot0:onInFOVChange(slot1)
+		arg_54_0:onInFOVChange(arg_54_1)
 	end
 end
 
-function slot0.isInFOV(slot0)
-	return slot0._isInFOV or false
+function var_0_0.isInFOV(arg_55_0)
+	return arg_55_0._isInFOV or false
 end
 
-function slot0.onInFOVChange(slot0, slot1)
+function var_0_0.onInFOVChange(arg_56_0, arg_56_1)
+	return
 end
 
-function slot0.updateSceneY(slot0, slot1)
-	if slot1 then
-		slot0.position.y = slot1
+function var_0_0.updateSceneY(arg_57_0, arg_57_1)
+	if arg_57_1 then
+		arg_57_0.position.y = arg_57_1
 	else
-		slot2 = slot0.position.y
-		slot0.position.y = 10
-		slot3, slot4 = UnityEngine.Physics.Raycast(slot0.position, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+		local var_57_0 = arg_57_0.position.y
 
-		if slot3 then
-			slot0.position.y = slot4.point.y
+		arg_57_0.position.y = 10
+
+		local var_57_1, var_57_2 = UnityEngine.Physics.Raycast(arg_57_0.position, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getNavigateMask())
+
+		if var_57_1 then
+			arg_57_0.position.y = var_57_2.point.y
 		else
-			slot0.position.y = slot0.trans.position.y
+			arg_57_0.position.y = arg_57_0.trans.position.y
 		end
 	end
 
-	transformhelper.setPos(slot0.trans, slot0.position.x, slot0.position.y, slot0.position.z)
+	transformhelper.setPos(arg_57_0.trans, arg_57_0.position.x, arg_57_0.position.y, arg_57_0.position.z)
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.trans, slot1, slot1, slot1)
+function var_0_0.setScale(arg_58_0, arg_58_1)
+	transformhelper.setLocalScale(arg_58_0.trans, arg_58_1, arg_58_1, arg_58_1)
 end
 
-function slot0.setRotate(slot0, slot1, slot2, slot3)
-	transformhelper.setLocalRotation(slot0.trans, slot1, slot2, slot3)
+function var_0_0.setRotate(arg_59_0, arg_59_1, arg_59_2, arg_59_3)
+	transformhelper.setLocalRotation(arg_59_0.trans, arg_59_1, arg_59_2, arg_59_3)
 end
 
-function slot0.setPosByNode(slot0, slot1, slot2)
-	slot0:setPos(ExploreHelper.tileToPos(slot1), slot2)
+function var_0_0.setPosByNode(arg_60_0, arg_60_1, arg_60_2)
+	arg_60_0:setPos(ExploreHelper.tileToPos(arg_60_1), arg_60_2)
 end
 
-function slot0.isEnter(slot0)
-	return slot0._isEnter
+function var_0_0.isEnter(arg_61_0)
+	return arg_61_0._isEnter
 end
 
-function slot0.isActive(slot0)
-	return slot0.go.activeSelf
+function var_0_0.isActive(arg_62_0)
+	return arg_62_0.go.activeSelf
 end
 
-function slot0.isEnable(slot0)
-	return slot0:isActive()
+function var_0_0.isEnable(arg_63_0)
+	return arg_63_0:isActive()
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.go, slot1)
+function var_0_0.setActive(arg_64_0, arg_64_1)
+	gohelper.setActive(arg_64_0.go, arg_64_1)
 end
 
-function slot0.setEnter(slot0)
-	if not slot0:isEnter() then
-		slot0._isEnter = true
+function var_0_0.setEnter(arg_65_0)
+	if not arg_65_0:isEnter() then
+		arg_65_0._isEnter = true
 
-		slot0.mo:setEnter(true)
+		arg_65_0.mo:setEnter(true)
 
 		if isDebugBuild then
-			logWarn(string.format("[+]%s:%s进入地图", slot0.__cname, slot0.id))
+			logWarn(string.format("[+]%s:%s进入地图", arg_65_0.__cname, arg_65_0.id))
 		end
 
-		slot0:setActive(true)
-		slot0:onEnter()
+		arg_65_0:setActive(true)
+		arg_65_0:onEnter()
 	end
 end
 
-function slot0.setExit(slot0)
-	if slot0:isEnter() then
-		slot0._isEnter = false
+function var_0_0.setExit(arg_66_0)
+	if arg_66_0:isEnter() then
+		arg_66_0._isEnter = false
 
-		slot0.mo:setEnter(false)
+		arg_66_0.mo:setEnter(false)
 
 		if isDebugBuild then
-			logWarn(string.format("[-]%s:%s退出地图", slot0.__cname, slot0.id))
+			logWarn(string.format("[-]%s:%s退出地图", arg_66_0.__cname, arg_66_0.id))
 		end
 
-		slot0:setActive(false)
-		slot0:onExit()
+		arg_66_0:setActive(false)
+		arg_66_0:onExit()
 	else
-		logWarn("重复退出" .. slot0.id .. slot0.__cname)
+		logWarn("重复退出" .. arg_66_0.id .. arg_66_0.__cname)
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:onDestroy()
-	gohelper.destroy(slot0.go)
+function var_0_0.destroy(arg_67_0)
+	arg_67_0:onDestroy()
+	gohelper.destroy(arg_67_0.go)
 
-	slot0.trans = nil
-	slot0.mo = nil
-	slot0.go = nil
+	arg_67_0.trans = nil
+	arg_67_0.mo = nil
+	arg_67_0.go = nil
 end
 
-return slot0
+return var_0_0

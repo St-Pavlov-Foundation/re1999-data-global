@@ -1,17 +1,28 @@
-module("modules.logic.versionactivity1_9.common.AudioEnum1_9", package.seeall)
+﻿module("modules.logic.versionactivity1_9.common.AudioEnum1_9", package.seeall)
 
-slot0 = AudioEnum
-slot0.VersionActivity1_9Store = {
+local var_0_0 = AudioEnum
+
+var_0_0.VersionActivity1_9Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-slot0.VersionActivity1_9Enter = {
+var_0_0.VersionActivity1_9Enter = {
 	play_ui_jinye_open = 20190004,
 	play_ui_jinye_unfold = 20190021
 }
-slot2 = {
+
+local var_0_1 = {
+	RougeMain = 3200143,
+	ToughBattle = 3200140,
+	FairyLand = 3200063,
+	Act1_9DungeonBgm = 3200118,
+	HeroInvitation = 3200062,
+	SemmelWeisGift = 20190124,
+	RougeFavorite = 3200099
+}
+local var_0_2 = {
 	OpenRewardNoticeView = 20190380,
 	AddRougeDLC = 25002406,
 	RougeFavoriteAudio4 = 20190386,
@@ -148,31 +159,24 @@ slot2 = {
 	EquipedNormalLimiterBuff = 20211707
 }
 
-for slot6, slot7 in pairs({
-	RougeMain = 3200143,
-	ToughBattle = 3200140,
-	FairyLand = 3200063,
-	Act1_9DungeonBgm = 3200118,
-	HeroInvitation = 3200062,
-	SemmelWeisGift = 20190124,
-	RougeFavorite = 3200099
-}) do
-	if isDebugBuild and slot0.Bgm[slot6] then
-		logError("AudioEnum.Bgm重复定义" .. slot6)
+for iter_0_0, iter_0_1 in pairs(var_0_1) do
+	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
+		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
 	end
 
-	slot0.Bgm[slot6] = slot7
+	var_0_0.Bgm[iter_0_0] = iter_0_1
 end
 
-for slot6, slot7 in pairs(slot2) do
-	if isDebugBuild and slot0.UI[slot6] then
-		logError("AudioEnum.UI重复定义" .. slot6)
+for iter_0_2, iter_0_3 in pairs(var_0_2) do
+	if isDebugBuild and var_0_0.UI[iter_0_2] then
+		logError("AudioEnum.UI重复定义" .. iter_0_2)
 	end
 
-	slot0.UI[slot6] = slot7
+	var_0_0.UI[iter_0_2] = iter_0_3
 end
 
-function slot0.activate()
+function var_0_0.activate()
+	return
 end
 
-return slot0
+return var_0_0

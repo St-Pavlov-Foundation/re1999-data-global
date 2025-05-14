@@ -1,43 +1,43 @@
-module("modules.logic.fight.system.work.FightWorkFightStep", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkFightStep", package.seeall)
 
-slot0 = class("FightWorkFightStep", FightEffectBase)
+local var_0_0 = class("FightWorkFightStep", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not slot0._workFlow then
-		slot0._workFlow = FightWorkFlowSequence.New()
+function var_0_0.onStart(arg_1_0)
+	if not arg_1_0._workFlow then
+		arg_1_0._workFlow = FightWorkFlowSequence.New()
 		FightStepBuilder.lastEffect = nil
 
-		FightStepBuilder.addEffectWork(slot0._workFlow, slot0._actEffectMO.cus_stepMO)
+		FightStepBuilder.addEffectWork(arg_1_0._workFlow, arg_1_0._actEffectMO.cus_stepMO)
 
 		FightStepBuilder.lastEffect = nil
 	end
 
-	slot0._workFlow:addWork(Work2FightWork.New(FightWorkShowEquipSkillEffect, slot0._actEffectMO.cus_stepMO))
+	arg_1_0._workFlow:addWork(Work2FightWork.New(FightWorkShowEquipSkillEffect, arg_1_0._actEffectMO.cus_stepMO))
 
-	if slot0._actEffectMO.cus_stepMO.actType == FightEnum.ActType.SKILL and not FightHelper.isTimelineStep(slot0._actEffectMO.cus_stepMO) then
-		slot0._workFlow:addWork(Work2FightWork.New(FightNonTimelineSkillStep, slot0._actEffectMO.cus_stepMO))
+	if arg_1_0._actEffectMO.cus_stepMO.actType == FightEnum.ActType.SKILL and not FightHelper.isTimelineStep(arg_1_0._actEffectMO.cus_stepMO) then
+		arg_1_0._workFlow:addWork(Work2FightWork.New(FightNonTimelineSkillStep, arg_1_0._actEffectMO.cus_stepMO))
 	end
 
-	slot0:cancelFightWorkSafeTimer()
-	slot0._workFlow:registFinishCallback(slot0._onFlowDone, slot0)
+	arg_1_0:cancelFightWorkSafeTimer()
+	arg_1_0._workFlow:registFinishCallback(arg_1_0._onFlowDone, arg_1_0)
 
-	return slot0._workFlow:start()
+	return arg_1_0._workFlow:start()
 end
 
-function slot0.setFlow(slot0, slot1)
-	slot0._workFlow = slot1
+function var_0_0.setFlow(arg_2_0, arg_2_1)
+	arg_2_0._workFlow = arg_2_1
 end
 
-function slot0._onFlowDone(slot0)
-	return slot0:onDone(true)
+function var_0_0._onFlowDone(arg_3_0)
+	return arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._workFlow then
-		slot0._workFlow:disposeSelf()
+function var_0_0.clearWork(arg_4_0)
+	if arg_4_0._workFlow then
+		arg_4_0._workFlow:disposeSelf()
 
-		slot0._workFlow = nil
+		arg_4_0._workFlow = nil
 	end
 end
 
-return slot0
+return var_0_0

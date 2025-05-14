@@ -1,31 +1,32 @@
-module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_6_BossScheduleViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_6_BossScheduleViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.cellClass = VersionActivity1_6_BossScheduleItem
-	slot1.scrollGOPath = "Root/#scroll_Reward"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = 200
-	slot1.cellHeight = 700
-	slot1.cellSpaceH = 100
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 0
-	slot1.endSpace = 300
-	slot0._listScrollParam = slot1
-	slot0._scheduleView = VersionActivity1_6_BossScheduleView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.cellClass = VersionActivity1_6_BossScheduleItem
+	var_1_0.scrollGOPath = "Root/#scroll_Reward"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.scrollDir = ScrollEnum.ScrollDirH
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 200
+	var_1_0.cellHeight = 700
+	var_1_0.cellSpaceH = 100
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 0
+	var_1_0.endSpace = 300
+	arg_1_0._listScrollParam = var_1_0
+	arg_1_0._scheduleView = VersionActivity1_6_BossScheduleView.New()
 
 	return {
-		slot0._scheduleView
+		arg_1_0._scheduleView
 	}
 end
 
-function slot0.getListScrollParam(slot0)
-	return slot0._listScrollParam
+function var_0_0.getListScrollParam(arg_2_0)
+	return arg_2_0._listScrollParam
 end
 
-return slot0
+return var_0_0

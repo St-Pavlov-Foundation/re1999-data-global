@@ -1,34 +1,34 @@
-module("modules.logic.fight.system.work.FightStepEffectWork", package.seeall)
+﻿module("modules.logic.fight.system.work.FightStepEffectWork", package.seeall)
 
-slot0 = class("FightStepEffectWork", BaseWork)
+local var_0_0 = class("FightStepEffectWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
-	slot0._workFlow = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._workFlow = nil
 end
 
-function slot0.onStart(slot0)
-	if slot0._workFlow then
-		return slot0._workFlow:start()
+function var_0_0.onStart(arg_2_0)
+	if arg_2_0._workFlow then
+		return arg_2_0._workFlow:start()
 	end
 end
 
-function slot0.setFlow(slot0, slot1)
-	slot0._workFlow = slot1
+function var_0_0.setFlow(arg_3_0, arg_3_1)
+	arg_3_0._workFlow = arg_3_1
 
-	slot1:registFinishCallback(slot0._onFlowDone, slot0)
+	arg_3_1:registFinishCallback(arg_3_0._onFlowDone, arg_3_0)
 end
 
-function slot0._onFlowDone(slot0)
-	return slot0:onDone(true)
+function var_0_0._onFlowDone(arg_4_0)
+	return arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._workFlow then
-		slot0._workFlow:disposeSelf()
+function var_0_0.clearWork(arg_5_0)
+	if arg_5_0._workFlow then
+		arg_5_0._workFlow:disposeSelf()
 
-		slot0._workFlow = nil
+		arg_5_0._workFlow = nil
 	end
 end
 
-return slot0
+return var_0_0

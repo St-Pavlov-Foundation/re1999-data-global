@@ -1,24 +1,24 @@
-module("modules.logic.balanceumbrella.view.BalanceUmbrellaViewContainer", package.seeall)
+﻿module("modules.logic.balanceumbrella.view.BalanceUmbrellaViewContainer", package.seeall)
 
-slot0 = class("BalanceUmbrellaViewContainer", BaseViewContainer)
+local var_0_0 = class("BalanceUmbrellaViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		BalanceUmbrellaView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
 	return {
-		slot0.navigateView
+		arg_2_0.navigateView
 	}
 end
 
-return slot0
+return var_0_0

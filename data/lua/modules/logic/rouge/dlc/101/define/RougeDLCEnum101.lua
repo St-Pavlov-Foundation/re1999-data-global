@@ -1,30 +1,31 @@
-module("modules.logic.rouge.dlc.101.define.RougeDLCEnum101", package.seeall)
+﻿module("modules.logic.rouge.dlc.101.define.RougeDLCEnum101", package.seeall)
 
-slot0 = _M
-slot0.LimitState = {
+local var_0_0 = _M
+
+var_0_0.LimitState = {
 	Unlocked = 2,
 	Locked = 1
 }
-slot0.BuffType = {
+var_0_0.BuffType = {
 	Middle = 2,
 	Large = 3,
 	Small = 1
 }
-slot0.BuffState = {
+var_0_0.BuffState = {
 	Unlocked = 2,
 	Locked = 1,
 	CD = 3,
 	Equiped = 4
 }
-slot0.MaxRiskDescCount = 3
-slot0.Const = {
+var_0_0.MaxRiskDescCount = 3
+var_0_0.Const = {
 	SpeedupCost = 4,
 	MaxEmblemCount = 5
 }
-slot0.LimiterBuffType = {
+var_0_0.LimiterBuffType = {
 	Middle = 2,
 	Large = 3,
 	Small = 1
 }
 
-return slot0
+return var_0_0

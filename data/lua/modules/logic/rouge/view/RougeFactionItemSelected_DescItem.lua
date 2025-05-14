@@ -1,57 +1,59 @@
-module("modules.logic.rouge.view.RougeFactionItemSelected_DescItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFactionItemSelected_DescItem", package.seeall)
 
-slot0 = class("RougeFactionItemSelected_DescItem", UserDataDispose)
+local var_0_0 = class("RougeFactionItemSelected_DescItem", UserDataDispose)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	arg_4_0:__onInit()
 
-	slot0._parent = slot1
+	arg_4_0._parent = arg_4_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_5_0, arg_5_1)
+	arg_5_0.viewGO = arg_5_1
 
-	slot0:onInitView()
+	arg_5_0:onInitView()
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0._index = slot1
+function var_0_0.setIndex(arg_6_0, arg_6_1)
+	arg_6_0._index = arg_6_1
 end
 
-function slot0.index(slot0)
-	return slot0._index
+function var_0_0.index(arg_7_0)
+	return arg_7_0._index
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txt = gohelper.findChildText(slot0.viewGO, "")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._txt = gohelper.findChildText(arg_8_0.viewGO, "")
 
-	slot0:setData(nil)
+	arg_8_0:setData(nil)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._txt.text = slot1 or ""
+function var_0_0.setData(arg_9_0, arg_9_1)
+	arg_9_0._txt.text = arg_9_1 or ""
 
-	slot0:setActive(not string.nilorempty(slot1))
+	arg_9_0:setActive(not string.nilorempty(arg_9_1))
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0.viewGO, arg_10_1)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:__onDispose()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0:__onDispose()
 end
 
-return slot0
+return var_0_0

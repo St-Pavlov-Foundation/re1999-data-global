@@ -1,96 +1,112 @@
-module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessStepMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessStepMO", package.seeall)
 
-slot0 = class("WarChessStepMO")
+local var_0_0 = class("WarChessStepMO")
 
-function slot0.init(slot0, slot1)
-	slot0.actionType = slot1.actionType
-	slot0.reasonId = slot1.reasonId
-	slot0.fromId = slot1.fromId
-	slot0.toId = slot1.toId
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.actionType = arg_1_1.actionType
+	arg_1_0.reasonId = arg_1_1.reasonId
+	arg_1_0.fromId = arg_1_1.fromId
+	arg_1_0.toId = arg_1_1.toId
 
-	if slot1.effect then
-		slot0.effect = GameUtil.rpcInfosToList(slot1.effect, WarChessEffectMO)
+	if arg_1_1.effect then
+		arg_1_0.effect = GameUtil.rpcInfosToList(arg_1_1.effect, WarChessEffectMO)
 	end
 end
 
-slot1 = {}
+local var_0_1 = {}
 
-function slot0.buildSteps(slot0)
-	slot1 = {}
-	slot2 = FlowParallel.New()
-	slot3 = FlowParallel.New()
+function var_0_0.buildSteps(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = FlowParallel.New()
+	local var_2_2 = FlowParallel.New()
 
-	if slot0.actionType == EliminateTeamChessEnum.StepActionType.chessSkill and not string.nilorempty(EliminateConfig.instance:getSoliderSkillConfig(slot0.reasonId).type) then
-		tabletool.clear(uv0)
+	if arg_2_0.actionType == EliminateTeamChessEnum.StepActionType.chessSkill then
+		local var_2_3 = EliminateConfig.instance:getSoliderSkillConfig(arg_2_0.reasonId)
 
-		uv0.uid = slot0.fromId
-		uv0.effectType = EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect
+		if not string.nilorempty(var_2_3.type) then
+			tabletool.clear(var_0_1)
 
-		if slot4.type == EliminateTeamChessEnum.SoliderSkillType.Die then
-			uv0.vxEffectType = EliminateTeamChessEnum.VxEffectType.WangYu
-			uv0.time = EliminateTeamChessEnum.VxEffectTypePlayTime[uv0.vxEffectType]
+			var_0_1.uid = arg_2_0.fromId
+			var_0_1.effectType = EliminateTeamChessEnum.StepWorkType.teamChessShowVxEffect
+
+			if var_2_3.type == EliminateTeamChessEnum.SoliderSkillType.Die then
+				var_0_1.vxEffectType = EliminateTeamChessEnum.VxEffectType.WangYu
+				var_0_1.time = EliminateTeamChessEnum.VxEffectTypePlayTime[var_0_1.vxEffectType]
+			end
+
+			if var_2_3.type == EliminateTeamChessEnum.SoliderSkillType.Raw or var_2_3.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp then
+				var_0_1.vxEffectType = EliminateTeamChessEnum.VxEffectType.ZhanHou
+				var_0_1.time = EliminateTeamChessEnum.VxEffectTypePlayTime[var_0_1.vxEffectType]
+			end
+
+			local var_2_4 = arg_2_0.reasonId
+
+			if var_2_4 ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(var_2_4)) then
+				var_0_1.time = EliminateTeamChessEnum.teamChessGrowUpZhanHouStepTime
+			end
+
+			local var_2_5 = EliminateTeamChessStepUtil.createStep(var_0_1)
+
+			var_2_0[#var_2_0 + 1] = var_2_5
 		end
-
-		if slot4.type == EliminateTeamChessEnum.SoliderSkillType.Raw or slot4.type == EliminateTeamChessEnum.SoliderSkillType.GrowUp then
-			uv0.vxEffectType = EliminateTeamChessEnum.VxEffectType.ZhanHou
-			uv0.time = EliminateTeamChessEnum.VxEffectTypePlayTime[uv0.vxEffectType]
-		end
-
-		if slot0.reasonId ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(slot5)) then
-			uv0.time = EliminateTeamChessEnum.teamChessGrowUpZhanHouStepTime
-		end
-
-		slot1[#slot1 + 1] = EliminateTeamChessStepUtil.createStep(uv0)
 	end
 
-	slot4 = true
+	local var_2_6 = true
 
-	for slot8 = 1, #slot0.effect do
-		if slot0.effect[slot8].effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-			if slot0.actionType == EliminateTeamChessEnum.StepActionType.chessSkill or slot0.actionType == EliminateTeamChessEnum.StepActionType.strongHoldSkill then
-				slot9.needShowDamage = true
+	for iter_2_0 = 1, #arg_2_0.effect do
+		local var_2_7 = arg_2_0.effect[iter_2_0]
+
+		if var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+			if arg_2_0.actionType == EliminateTeamChessEnum.StepActionType.chessSkill or arg_2_0.actionType == EliminateTeamChessEnum.StepActionType.strongHoldSkill then
+				var_2_7.needShowDamage = true
 			else
-				slot9.needShowDamage = false
+				var_2_7.needShowDamage = false
 			end
 		end
 
-		if slot9.effectType == EliminateTeamChessEnum.StepWorkType.placeChess and tonumber(slot9.chessPiece.uid) < 0 and slot4 then
-			slot1[#slot1 + 1] = EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessUpdateForecast)
-			slot4 = false
+		if var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.placeChess then
+			local var_2_8 = var_2_7.chessPiece
+
+			if tonumber(var_2_8.uid) < 0 and var_2_6 then
+				local var_2_9 = EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessUpdateForecast)
+
+				var_2_0[#var_2_0 + 1] = var_2_9
+				var_2_6 = false
+			end
 		end
 
-		slot10, slot11 = slot9:buildStep(slot0)
+		local var_2_10, var_2_11 = var_2_7:buildStep(arg_2_0)
 
-		if slot9.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
-			for slot15, slot16 in ipairs(slot10) do
-				slot2:addWork(slot16)
+		if var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.chessPowerChange then
+			for iter_2_1, iter_2_2 in ipairs(var_2_10) do
+				var_2_1:addWork(iter_2_2)
 			end
 
-			if #slot10 == #slot2:getWorkList() then
-				slot1[#slot1 + 1] = slot2
+			if #var_2_10 == #var_2_1:getWorkList() then
+				var_2_0[#var_2_0 + 1] = var_2_1
 			end
-		elseif slot9.effectType == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
-			for slot15, slot16 in ipairs(slot10) do
-				slot3:addWork(slot16)
+		elseif var_2_7.effectType == EliminateTeamChessEnum.StepWorkType.chessGrowUpChange then
+			for iter_2_3, iter_2_4 in ipairs(var_2_10) do
+				var_2_2:addWork(iter_2_4)
 			end
 
-			if #slot10 == #slot3:getWorkList() then
-				slot1[#slot1 + 1] = slot3
+			if #var_2_10 == #var_2_2:getWorkList() then
+				var_2_0[#var_2_0 + 1] = var_2_2
 			end
 		else
-			for slot15, slot16 in ipairs(slot10) do
-				slot1[#slot1 + 1] = slot16
+			for iter_2_5, iter_2_6 in ipairs(var_2_10) do
+				var_2_0[#var_2_0 + 1] = iter_2_6
 			end
 		end
 
-		if slot11 then
-			for slot15, slot16 in ipairs(slot11) do
-				slot1[#slot1 + 1] = slot16
+		if var_2_11 then
+			for iter_2_7, iter_2_8 in ipairs(var_2_11) do
+				var_2_0[#var_2_0 + 1] = iter_2_8
 			end
 		end
 	end
 
-	return slot1
+	return var_2_0
 end
 
-return slot0
+return var_0_0

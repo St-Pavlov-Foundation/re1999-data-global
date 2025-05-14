@@ -1,39 +1,42 @@
-module("modules.logic.character.rpc.HeroRpc", package.seeall)
+﻿module("modules.logic.character.rpc.HeroRpc", package.seeall)
 
-slot0 = class("HeroRpc", BaseRpc)
+local var_0_0 = class("HeroRpc", BaseRpc)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0:set_onReceiveHeroGainPushOnce(nil, )
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:set_onReceiveHeroGainPushOnce(nil, nil)
 end
 
-function slot0.sendHeroInfoListRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(HeroModule_pb.HeroInfoListRequest(), slot1, slot2)
+function var_0_0.sendHeroInfoListRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = HeroModule_pb.HeroInfoListRequest()
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_1, arg_3_2)
 end
 
-function slot0.onReceiveHeroInfoListReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		HeroModel.instance:onGetHeroList(slot2.heros)
-		HeroModel.instance:onGetSkinList(slot2.allHeroSkin)
-		HeroModel.instance:setTouchHeadNumber(slot2.touchCountLeft)
-		SignInModel.instance:setHeroBirthdayInfos(slot2.birthdayInfos)
+function var_0_0.onReceiveHeroInfoListReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 == 0 then
+		HeroModel.instance:onGetHeroList(arg_4_2.heros)
+		HeroModel.instance:onGetSkinList(arg_4_2.allHeroSkin)
+		HeroModel.instance:setTouchHeadNumber(arg_4_2.touchCountLeft)
+		SignInModel.instance:setHeroBirthdayInfos(arg_4_2.birthdayInfos)
 		CharacterController.instance:dispatchEvent(CharacterEvent.HeroInfoListReply)
 	end
 end
 
-function slot0.sendHeroLevelUpRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = HeroModule_pb.HeroLevelUpRequest()
-	slot5.heroId = slot1
-	slot5.expectLevel = slot2
+function var_0_0.sendHeroLevelUpRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = HeroModule_pb.HeroLevelUpRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_5_0.heroId = arg_5_1
+	var_5_0.expectLevel = arg_5_2
+
+	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
 end
 
-function slot0.onReceiveHeroLevelUpReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveHeroLevelUpReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 == 0 then
 		CharacterModel.instance:setFakeLevel()
 		CharacterController.instance:dispatchEvent(CharacterEvent.successHeroLevelUp)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
@@ -42,10 +45,10 @@ function slot0.onReceiveHeroLevelUpReply(slot0, slot1, slot2)
 	end
 end
 
-function slot0.onReceiveHeroLevelUpUpdatePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		HeroModel.instance:setHeroLevel(slot2.heroId, slot2.newLevel)
-		HeroModel.instance:setHeroRank(slot2.heroId, slot2.newRank)
+function var_0_0.onReceiveHeroLevelUpUpdatePush(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 == 0 then
+		HeroModel.instance:setHeroLevel(arg_7_2.heroId, arg_7_2.newLevel)
+		HeroModel.instance:setHeroRank(arg_7_2.heroId, arg_7_2.newRank)
 		CharacterController.instance:dispatchEvent(CharacterEvent.successHeroLevelUp)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	else
@@ -53,33 +56,38 @@ function slot0.onReceiveHeroLevelUpUpdatePush(slot0, slot1, slot2)
 	end
 end
 
-function slot0.sendHeroRankUpRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroModule_pb.HeroRankUpRequest()
-	slot4.heroId = slot1
+function var_0_0.sendHeroRankUpRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = HeroModule_pb.HeroRankUpRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_8_0.heroId = arg_8_1
+
+	arg_8_0:sendMsg(var_8_0, arg_8_2, arg_8_3)
 end
 
-function slot0.onReceiveHeroRankUpReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveHeroRankUpReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.successHeroRankUp)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, {
-			heroId = slot2.heroId,
-			newRank = slot2.newRank,
-			isRank = true
-		})
 
-		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) and slot2.newRank == CharacterEnum.TalentRank then
-			CharacterController.instance:stateTalent(slot2.heroId)
+		local var_9_0 = {
+			heroId = arg_9_2.heroId,
+			newRank = arg_9_2.newRank
+		}
+
+		var_9_0.isRank = true
+
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, var_9_0)
+
+		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) and arg_9_2.newRank == CharacterEnum.TalentRank then
+			CharacterController.instance:stateTalent(arg_9_2.heroId)
 		end
 
-		SDKChannelEventModel.instance:heroRankUp(slot2.newRank)
+		SDKChannelEventModel.instance:heroRankUp(arg_9_2.newRank)
 	end
 end
 
-function slot0.onReceiveHeroSkinGainPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroSkinGainPush(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= 0 then
 		return
 	end
 
@@ -87,487 +95,537 @@ function slot0.onReceiveHeroSkinGainPush(slot0, slot1, slot2)
 		return
 	end
 
-	if not ({
-		skinId = slot2.skinId,
-		firstGain = slot2.firstGain
-	}).firstGain then
-		slot0:_showTipsGainSkinRedundantly(slot2.skinId)
-	end
-
-	HeroModel.instance:onGainSkinList(slot2.skinId)
-
-	if slot2.getApproach == MaterialEnum.GetApproach.Task or slot2.getApproach == MaterialEnum.GetApproach.TaskAct then
-		TaskController.instance:getRewardByLine(slot2.getApproach, ViewName.CharacterSkinGainView, slot3)
-	elseif slot2.getApproach == MaterialEnum.GetApproach.AutoChessRankReward then
-		AutoChessController.instance:addPopupView(ViewName.CharacterSkinGainView, slot3)
-	elseif slot2.getApproach ~= MaterialEnum.GetApproach.NoviceStageReward then
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainSkinView, ViewName.CharacterSkinGainView, slot3)
-	else
-		TaskModel.instance:setTaskNoviceStageHeroParam(slot3)
-	end
-end
-
-function slot0._showTipsGainSkinRedundantly(slot0, slot1)
-	slot2 = lua_skin.configDict[slot1]
-
-	if not string.nilorempty(slot2.compensate) then
-		slot6 = string.splitToNumber(slot3, "#")
-		slot10 = ItemConfig.instance:getItemConfig(slot6[1], slot6[2])
-
-		GameFacade.showIconToastWithTableParam(ToastEnum.GainSkinRedundantly, ResUrl.getCurrencyItemIcon(slot10.icon), {
-			slot2.characterSkin,
-			slot10.name,
-			slot6[3],
-			[2.0] = "",
-			[3.0] = ""
-		})
-	else
-		GameFacade.showToastWithTableParam(slot5, slot4)
-	end
-end
-
-function slot0.set_onReceiveHeroGainPushOnce(slot0, slot1, slot2)
-	slot0._heroGainPushOnceCb = slot1
-	slot0._heroGainPushOnceCbObj = slot2
-end
-
-function slot0.onReceiveHeroGainPush(slot0, slot1, slot2)
-	if slot0._heroGainPushOnceCb then
-		slot0:set_onReceiveHeroGainPushOnce(nil, )
-		slot3(slot0._heroGainPushOnceCbObj, slot1, slot2)
-
-		return
-	end
-
-	if slot1 ~= 0 then
-		slot0._onReceiveHeroGainPushMsg = nil
-
-		return
-	end
-
-	slot0:_onReceiveHeroGainPush(slot2)
-end
-
-function slot0._onReceiveHeroGainPush(slot0, slot1)
-	slot2 = {
-		heroId = slot1.heroId,
-		duplicateCount = slot1.duplicateCount or 0
+	local var_10_0 = {
+		skinId = arg_10_2.skinId,
+		firstGain = arg_10_2.firstGain
 	}
 
-	if not CharacterModel.instance:getGainHeroViewShowState() then
-		if CharacterModel.instance:getGainHeroViewShowNewState() and slot1.duplicateCount > 0 then
+	if not var_10_0.firstGain then
+		arg_10_0:_showTipsGainSkinRedundantly(arg_10_2.skinId)
+	end
+
+	HeroModel.instance:onGainSkinList(arg_10_2.skinId)
+
+	if arg_10_2.getApproach == MaterialEnum.GetApproach.Task or arg_10_2.getApproach == MaterialEnum.GetApproach.TaskAct then
+		TaskController.instance:getRewardByLine(arg_10_2.getApproach, ViewName.CharacterSkinGainView, var_10_0)
+	elseif arg_10_2.getApproach == MaterialEnum.GetApproach.AutoChessRankReward then
+		AutoChessController.instance:addPopupView(ViewName.CharacterSkinGainView, var_10_0)
+	elseif arg_10_2.getApproach ~= MaterialEnum.GetApproach.NoviceStageReward then
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainSkinView, ViewName.CharacterSkinGainView, var_10_0)
+	else
+		TaskModel.instance:setTaskNoviceStageHeroParam(var_10_0)
+	end
+end
+
+function var_0_0._showTipsGainSkinRedundantly(arg_11_0, arg_11_1)
+	local var_11_0 = lua_skin.configDict[arg_11_1]
+	local var_11_1 = var_11_0.compensate
+	local var_11_2 = {
+		var_11_0.characterSkin,
+		[2] = "",
+		[3] = ""
+	}
+	local var_11_3 = ToastEnum.GainSkinRedundantly
+
+	if not string.nilorempty(var_11_1) then
+		local var_11_4 = string.splitToNumber(var_11_1, "#")
+		local var_11_5 = var_11_4[1]
+		local var_11_6 = var_11_4[2]
+		local var_11_7 = var_11_4[3]
+		local var_11_8 = ItemConfig.instance:getItemConfig(var_11_5, var_11_6)
+
+		var_11_2[2] = var_11_8.name
+		var_11_2[3] = var_11_7
+
+		local var_11_9 = ResUrl.getCurrencyItemIcon(var_11_8.icon)
+
+		GameFacade.showIconToastWithTableParam(var_11_3, var_11_9, var_11_2)
+	else
+		GameFacade.showToastWithTableParam(var_11_3, var_11_2)
+	end
+end
+
+function var_0_0.set_onReceiveHeroGainPushOnce(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0._heroGainPushOnceCb = arg_12_1
+	arg_12_0._heroGainPushOnceCbObj = arg_12_2
+end
+
+function var_0_0.onReceiveHeroGainPush(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0._heroGainPushOnceCb
+
+	if var_13_0 then
+		local var_13_1 = arg_13_0._heroGainPushOnceCbObj
+
+		arg_13_0:set_onReceiveHeroGainPushOnce(nil, nil)
+		var_13_0(var_13_1, arg_13_1, arg_13_2)
+
+		return
+	end
+
+	if arg_13_1 ~= 0 then
+		arg_13_0._onReceiveHeroGainPushMsg = nil
+
+		return
+	end
+
+	arg_13_0:_onReceiveHeroGainPush(arg_13_2)
+end
+
+function var_0_0._onReceiveHeroGainPush(arg_14_0, arg_14_1)
+	local var_14_0 = {
+		heroId = arg_14_1.heroId,
+		duplicateCount = arg_14_1.duplicateCount or 0
+	}
+	local var_14_1 = CharacterModel.instance:getGainHeroViewShowState()
+	local var_14_2 = CharacterModel.instance:getGainHeroViewShowNewState()
+
+	if not var_14_1 then
+		if var_14_2 and arg_14_1.duplicateCount > 0 then
 			return
 		end
 
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, slot2)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, var_14_0)
 	end
 end
 
-function slot0.sendHeroTalentUpRequest(slot0, slot1)
-	slot2 = HeroModule_pb.HeroTalentUpRequest()
-	slot2.heroId = slot1
+function var_0_0.sendHeroTalentUpRequest(arg_15_0, arg_15_1)
+	local var_15_0 = HeroModule_pb.HeroTalentUpRequest()
 
-	slot0:sendMsg(slot2)
+	var_15_0.heroId = arg_15_1
+
+	arg_15_0:sendMsg(var_15_0)
 end
 
-function slot0.onReceiveHeroTalentUpReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveHeroTalentUpReply(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.successHeroTalentUp)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function slot0.onReceiveHeroUpdatePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		HeroModel.instance:onSetHeroChange(slot2.heroUpdates)
+function var_0_0.onReceiveHeroUpdatePush(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 == 0 then
+		HeroModel.instance:onSetHeroChange(arg_17_2.heroUpdates)
 		CharacterController.instance:dispatchEvent(CharacterEvent.HeroUpdatePush)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function slot0.sendHeroUpgradeSkillRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroModule_pb.HeroUpgradeSkillRequest()
-	slot4.heroId = slot1
-	slot4.type = slot2
-	slot4.consume = slot3
+function var_0_0.sendHeroUpgradeSkillRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = HeroModule_pb.HeroUpgradeSkillRequest()
 
-	slot0:sendMsg(slot4)
+	var_18_0.heroId = arg_18_1
+	var_18_0.type = arg_18_2
+	var_18_0.consume = arg_18_3
+
+	arg_18_0:sendMsg(var_18_0)
 end
 
-function slot0.onReceiveHeroUpgradeSkillReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveHeroUpgradeSkillReply(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.successHeroExSkillUp)
 	end
 end
 
-function slot0.sendItemUnlockRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.ItemUnlockRequest()
-	slot3.heroId = slot1
-	slot3.itemId = slot2
+function var_0_0.sendItemUnlockRequest(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = HeroModule_pb.ItemUnlockRequest()
 
-	slot0:sendMsg(slot3)
+	var_20_0.heroId = arg_20_1
+	var_20_0.itemId = arg_20_2
+
+	arg_20_0:sendMsg(var_20_0)
 end
 
-function slot0.onReceiveItemUnlockReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.HeroDataAddUnlockItem, slot2.heroId, slot2.itemId)
+function var_0_0.onReceiveItemUnlockReply(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_1 == 0 then
+		CharacterController.instance:dispatchEvent(CharacterEvent.HeroDataAddUnlockItem, arg_21_2.heroId, arg_21_2.itemId)
 	else
 		CharacterController.instance:dispatchEvent(CharacterEvent.HeroDataAddUnlockItemFail)
 	end
 end
 
-function slot0.sendUnMarkIsNewRequest(slot0, slot1)
-	slot2 = HeroModule_pb.UnMarkIsNewRequest()
-	slot2.heroId = slot1
+function var_0_0.sendUnMarkIsNewRequest(arg_22_0, arg_22_1)
+	local var_22_0 = HeroModule_pb.UnMarkIsNewRequest()
 
-	slot0:sendMsg(slot2)
+	var_22_0.heroId = arg_22_1
+
+	arg_22_0:sendMsg(var_22_0)
 end
 
-function slot0.onReceiveUnMarkIsNewReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		logNormal("更新角色" .. tostring(slot2.heroId) .. tostring("新旧标记成功！"))
+function var_0_0.onReceiveUnMarkIsNewReply(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_1 == 0 then
+		logNormal("更新角色" .. tostring(arg_23_2.heroId) .. tostring("新旧标记成功！"))
 	end
 end
 
-function slot0.sendUnlockVoiceRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.UnlockVoiceRequest()
-	slot3.heroId = slot1
-	slot3.voiceId = slot2
+function var_0_0.sendUnlockVoiceRequest(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = HeroModule_pb.UnlockVoiceRequest()
 
-	slot0:sendMsg(slot3)
+	var_24_0.heroId = arg_24_1
+	var_24_0.voiceId = arg_24_2
+
+	arg_24_0:sendMsg(var_24_0)
 end
 
-function slot0.onReceiveUnlockVoiceReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveUnlockVoiceReply(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.HeroDataAddVoice)
 	end
 end
 
-function slot0.sendUseSkinRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.UseSkinRequest()
-	slot3.heroId = slot1
-	slot3.skinId = slot2
+function var_0_0.sendUseSkinRequest(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = HeroModule_pb.UseSkinRequest()
 
-	slot0:sendMsg(slot3)
+	var_26_0.heroId = arg_26_1
+	var_26_0.skinId = arg_26_2
+
+	arg_26_0:sendMsg(var_26_0)
 end
 
-function slot0.onReceiveUseSkinReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUseSkinReply(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_1 ~= 0 then
 		return
 	end
 
 	CharacterController.instance:dispatchEvent(CharacterEvent.successDressUpSkin, {
-		heroId = slot2.heroId,
-		skinId = slot2.skinId
+		heroId = arg_27_2.heroId,
+		skinId = arg_27_2.skinId
 	})
 end
 
-function slot0.sendTouchHeadRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroModule_pb.HeroTouchRequest()
-	slot4.heroId = slot1
+function var_0_0.sendTouchHeadRequest(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	local var_28_0 = HeroModule_pb.HeroTouchRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_28_0.heroId = arg_28_1
+
+	arg_28_0:sendMsg(var_28_0, arg_28_2, arg_28_3)
 end
 
-function slot0.onReceiveHeroTouchReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		HeroModel.instance:setTouchHeadNumber(slot2.touchCountLeft)
-		MainController.instance:dispatchEvent(MainEvent.OnReceiveAddFaithEvent, slot2.success)
+function var_0_0.onReceiveHeroTouchReply(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_1 == 0 then
+		local var_29_0 = arg_29_2.touchCountLeft
+		local var_29_1 = arg_29_2.success
+
+		HeroModel.instance:setTouchHeadNumber(var_29_0)
+		MainController.instance:dispatchEvent(MainEvent.OnReceiveAddFaithEvent, var_29_1)
 	end
 end
 
-slot0.CubePut = "putCubeInfo"
-slot0.CubeGet = "getCubeInfo"
+var_0_0.CubePut = "putCubeInfo"
+var_0_0.CubeGet = "getCubeInfo"
 
-function slot0.PutTalentCubeRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = HeroModule_pb.PutTalentCubeRequest()
-	slot8 = slot2 == HeroResonanceEnum.PutCube and uv0.CubePut or uv0.CubeGet
-	slot7.heroId = slot1
-	slot7[slot8].cubeId = slot3
-	slot7[slot8].direction = slot4
-	slot7[slot8].posX = slot5
-	slot7[slot8].posY = slot6
-	slot7.templateId = HeroModel.instance:getCurTemplateId(slot1)
+function var_0_0.PutTalentCubeRequest(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4, arg_30_5, arg_30_6)
+	local var_30_0 = HeroModule_pb.PutTalentCubeRequest()
+	local var_30_1 = arg_30_2 == HeroResonanceEnum.PutCube and var_0_0.CubePut or var_0_0.CubeGet
 
-	slot0:sendMsg(slot7)
+	var_30_0.heroId = arg_30_1
+	var_30_0[var_30_1].cubeId = arg_30_3
+	var_30_0[var_30_1].direction = arg_30_4
+	var_30_0[var_30_1].posX = arg_30_5
+	var_30_0[var_30_1].posY = arg_30_6
+	var_30_0.templateId = HeroModel.instance:getCurTemplateId(arg_30_1)
+
+	arg_30_0:sendMsg(var_30_0)
 end
 
-function slot0.onReceivePutTalentCubeReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceivePutTalentCubeReply(arg_31_0, arg_31_1, arg_31_2)
+	if arg_31_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.OnPutTalentCubeReply)
 		CharacterController.instance:dispatchEvent(CharacterEvent.RefreshCubeList)
 	end
 end
 
-function slot0.RenameTalentTemplateRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroModule_pb.RenameTalentTemplateRequest()
-	slot4.heroId = slot1
-	slot4.templateId = slot2
-	slot4.name = slot3
+function var_0_0.RenameTalentTemplateRequest(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	local var_32_0 = HeroModule_pb.RenameTalentTemplateRequest()
 
-	slot0:sendMsg(slot4)
+	var_32_0.heroId = arg_32_1
+	var_32_0.templateId = arg_32_2
+	var_32_0.name = arg_32_3
+
+	arg_32_0:sendMsg(var_32_0)
 end
 
-function slot0.onReceiveRenameTalentTemplateReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveRenameTalentTemplateReply(arg_33_0, arg_33_1, arg_33_2)
+	if arg_33_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.RenameTalentTemplateReply)
 	end
 end
 
-function slot0.UseTalentTemplateRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.UseTalentTemplateRequest()
-	slot3.heroId = slot1
-	slot3.templateId = slot2
+function var_0_0.UseTalentTemplateRequest(arg_34_0, arg_34_1, arg_34_2)
+	local var_34_0 = HeroModule_pb.UseTalentTemplateRequest()
 
-	slot0:sendMsg(slot3)
+	var_34_0.heroId = arg_34_1
+	var_34_0.templateId = arg_34_2
+
+	arg_34_0:sendMsg(var_34_0)
 end
 
-function slot0.onReceiveUseTalentTemplateReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveUseTalentTemplateReply(arg_35_0, arg_35_1, arg_35_2)
+	if arg_35_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.UseTalentTemplateReply)
 		CharacterController.instance:dispatchEvent(CharacterEvent.RefreshCubeList)
 	end
 end
 
-function slot0.TakeoffAllTalentCubeRequest(slot0, slot1)
-	slot2 = HeroModule_pb.TakeoffAllTalentCubeRequest()
-	slot2.heroId = slot1
-	slot2.templateId = HeroModel.instance:getCurTemplateId(slot1)
+function var_0_0.TakeoffAllTalentCubeRequest(arg_36_0, arg_36_1)
+	local var_36_0 = HeroModule_pb.TakeoffAllTalentCubeRequest()
 
-	slot0:sendMsg(slot2)
+	var_36_0.heroId = arg_36_1
+	var_36_0.templateId = HeroModel.instance:getCurTemplateId(arg_36_1)
+
+	arg_36_0:sendMsg(var_36_0)
 end
 
-function slot0.onReceiveTakeoffAllTalentCubeReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		HeroModel.instance:takeoffAllTalentCube(slot2.heroId)
-		CharacterController.instance:dispatchEvent(CharacterEvent.RefreshCubeList, slot2.heroId)
+function var_0_0.onReceiveTakeoffAllTalentCubeReply(arg_37_0, arg_37_1, arg_37_2)
+	if arg_37_1 == 0 then
+		HeroModel.instance:takeoffAllTalentCube(arg_37_2.heroId)
+		CharacterController.instance:dispatchEvent(CharacterEvent.RefreshCubeList, arg_37_2.heroId)
 	end
 end
 
-function slot0.PutTalentSchemeRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = HeroModule_pb.PutTalentSchemeRequest()
-	slot5.heroId = slot1
-	slot5.talentId = slot2
-	slot5.talentMould = slot3
-	slot5.starMould = slot4
-	slot5.templateId = HeroModel.instance:getCurTemplateId(slot1)
+function var_0_0.PutTalentSchemeRequest(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
+	local var_38_0 = HeroModule_pb.PutTalentSchemeRequest()
 
-	slot0:sendMsg(slot5)
+	var_38_0.heroId = arg_38_1
+	var_38_0.talentId = arg_38_2
+	var_38_0.talentMould = arg_38_3
+	var_38_0.starMould = arg_38_4
+	var_38_0.templateId = HeroModel.instance:getCurTemplateId(arg_38_1)
+
+	arg_38_0:sendMsg(var_38_0)
 end
 
-function slot0.setPutTalentCubeBatchRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = HeroModule_pb.PutTalentCubeBatchRequest()
-	slot5.heroId = slot1
-	slot5.templateId = slot3
-	slot5.style = slot4
+function var_0_0.setPutTalentCubeBatchRequest(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4)
+	local var_39_0 = HeroModule_pb.PutTalentCubeBatchRequest()
 
-	for slot9, slot10 in pairs(slot2) do
-		slot11 = slot5.putCubeInfo:add()
-		slot11.cubeId = slot10.cubeId
-		slot11.direction = slot10.direction
-		slot11.posX = slot10.posX
-		slot11.posY = slot10.posY
+	var_39_0.heroId = arg_39_1
+	var_39_0.templateId = arg_39_3
+	var_39_0.style = arg_39_4
+
+	for iter_39_0, iter_39_1 in pairs(arg_39_2) do
+		local var_39_1 = var_39_0.putCubeInfo:add()
+
+		var_39_1.cubeId = iter_39_1.cubeId
+		var_39_1.direction = iter_39_1.direction
+		var_39_1.posX = iter_39_1.posX
+		var_39_1.posY = iter_39_1.posY
 	end
 
-	slot0:sendMsg(slot5)
+	arg_39_0:sendMsg(var_39_0)
 end
 
-function slot0.onReceivePutTalentCubeBatchReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		HeroResonanceController.instance:dispatchEvent(HeroResonanceEvent.UseShareCode, slot2)
+function var_0_0.onReceivePutTalentCubeBatchReply(arg_40_0, arg_40_1, arg_40_2)
+	if arg_40_1 == 0 then
+		HeroResonanceController.instance:dispatchEvent(HeroResonanceEvent.UseShareCode, arg_40_2)
 	end
 end
 
-function slot0.onReceivePutTalentSchemeReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceivePutTalentSchemeReply(arg_41_0, arg_41_1, arg_41_2)
+	if arg_41_1 == 0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.OnPutTalentCubeReply)
 		CharacterController.instance:dispatchEvent(CharacterEvent.RefreshCubeList)
 	end
 end
 
-function slot0.setHeroDefaultEquipRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.HeroDefaultEquipRequest()
-	slot3.heroId = slot1
-	slot3.defaultEquipUid = slot2
+function var_0_0.setHeroDefaultEquipRequest(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = HeroModule_pb.HeroDefaultEquipRequest()
 
-	slot0:sendMsg(slot3)
+	var_42_0.heroId = arg_42_1
+	var_42_0.defaultEquipUid = arg_42_2
 
-	slot5 = HeroModel.instance:getByHeroId(slot1).uid
+	arg_42_0:sendMsg(var_42_0)
 
-	for slot9, slot10 in ipairs(HeroGroupModel.instance:getList()) do
-		for slot15, slot16 in ipairs(slot10:_getHeroListBackup()) do
-			if slot16 == slot5 then
-				HeroGroupRpc.instance:sendSetHeroGroupEquipRequest(slot10.groupId, slot15 - 1, {
-					slot2
+	local var_42_1 = HeroGroupModel.instance:getList()
+	local var_42_2 = HeroModel.instance:getByHeroId(arg_42_1).uid
+
+	for iter_42_0, iter_42_1 in ipairs(var_42_1) do
+		local var_42_3 = iter_42_1:_getHeroListBackup()
+
+		for iter_42_2, iter_42_3 in ipairs(var_42_3) do
+			if iter_42_3 == var_42_2 then
+				HeroGroupRpc.instance:sendSetHeroGroupEquipRequest(iter_42_1.groupId, iter_42_2 - 1, {
+					arg_42_2
 				})
 			end
 		end
 	end
 end
 
-function slot0.onReceiveHeroDefaultEquipReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.successSetDefaultEquip, slot2.defaultEquipUid)
+function var_0_0.onReceiveHeroDefaultEquipReply(arg_43_0, arg_43_1, arg_43_2)
+	if arg_43_1 == 0 then
+		local var_43_0 = arg_43_2.defaultEquipUid
+
+		CharacterController.instance:dispatchEvent(CharacterEvent.successSetDefaultEquip, var_43_0)
 	end
 end
 
-function slot0.setUnlockTalentStyleRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.UnlockTalentStyleRequest()
-	slot3.heroId = slot1
-	slot3.style = slot2
+function var_0_0.setUnlockTalentStyleRequest(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = HeroModule_pb.UnlockTalentStyleRequest()
 
-	slot0:sendMsg(slot3)
+	var_44_0.heroId = arg_44_1
+	var_44_0.style = arg_44_2
+
+	arg_44_0:sendMsg(var_44_0)
 end
 
-function slot0.onReceiveUnlockTalentStyleReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.onUnlockTalentStyleReply, slot2)
+function var_0_0.onReceiveUnlockTalentStyleReply(arg_45_0, arg_45_1, arg_45_2)
+	if arg_45_1 == 0 then
+		CharacterController.instance:dispatchEvent(CharacterEvent.onUnlockTalentStyleReply, arg_45_2)
 	end
 end
 
-function slot0.setUseTalentStyleRequest(slot0, slot1, slot2, slot3)
-	slot4 = HeroModule_pb.UseTalentStyleRequest()
-	slot4.heroId = slot1
-	slot4.templateId = slot2
-	slot4.style = slot3
+function var_0_0.setUseTalentStyleRequest(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
+	local var_46_0 = HeroModule_pb.UseTalentStyleRequest()
 
-	slot0:sendMsg(slot4)
+	var_46_0.heroId = arg_46_1
+	var_46_0.templateId = arg_46_2
+	var_46_0.style = arg_46_3
+
+	arg_46_0:sendMsg(var_46_0)
 end
 
-function slot0.onReceiveUseTalentStyleReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.onUseTalentStyleReply, slot2)
+function var_0_0.onReceiveUseTalentStyleReply(arg_47_0, arg_47_1, arg_47_2)
+	if arg_47_1 == 0 then
+		CharacterController.instance:dispatchEvent(CharacterEvent.onUseTalentStyleReply, arg_47_2)
 	end
 end
 
-function slot0.setTalentStyleReadRequest(slot0, slot1)
-	slot2 = HeroModule_pb.TalentStyleReadRequest()
-	slot2.heroId = slot1
+function var_0_0.setTalentStyleReadRequest(arg_48_0, arg_48_1)
+	local var_48_0 = HeroModule_pb.TalentStyleReadRequest()
 
-	slot0:sendMsg(slot2)
+	var_48_0.heroId = arg_48_1
+
+	arg_48_0:sendMsg(var_48_0)
 end
 
-function slot0.onReceiveTalentStyleReadReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.onTalentStyleRead, slot2.heroId)
+function var_0_0.onReceiveTalentStyleReadReply(arg_49_0, arg_49_1, arg_49_2)
+	if arg_49_1 == 0 then
+		CharacterController.instance:dispatchEvent(CharacterEvent.onTalentStyleRead, arg_49_2.heroId)
 	end
 end
 
-function slot0.setHeroTalentStyleStatRequest(slot0, slot1)
-	slot2 = HeroModule_pb.HeroTalentStyleStatRequest()
-	slot2.heroId = slot1
+function var_0_0.setHeroTalentStyleStatRequest(arg_50_0, arg_50_1)
+	local var_50_0 = HeroModule_pb.HeroTalentStyleStatRequest()
 
-	slot0:sendMsg(slot2)
+	var_50_0.heroId = arg_50_1
+
+	arg_50_0:sendMsg(var_50_0)
 end
 
-function slot0.onReceiveHeroTalentStyleStatReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		TalentStyleModel.instance:setHeroTalentStyleStatInfo(slot2)
-		CharacterController.instance:dispatchEvent(CharacterEvent.onHeroTalentStyleStatReply, slot2)
+function var_0_0.onReceiveHeroTalentStyleStatReply(arg_51_0, arg_51_1, arg_51_2)
+	if arg_51_1 == 0 then
+		TalentStyleModel.instance:setHeroTalentStyleStatInfo(arg_51_2)
+		CharacterController.instance:dispatchEvent(CharacterEvent.onHeroTalentStyleStatReply, arg_51_2)
 	end
 end
 
-function slot0.setMarkHeroFavorRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.MarkHeroFavorRequest()
-	slot3.heroId = slot1
-	slot3.isFavor = slot2
+function var_0_0.setMarkHeroFavorRequest(arg_52_0, arg_52_1, arg_52_2)
+	local var_52_0 = HeroModule_pb.MarkHeroFavorRequest()
 
-	slot0:sendMsg(slot3)
+	var_52_0.heroId = arg_52_1
+	var_52_0.isFavor = arg_52_2
+
+	arg_52_0:sendMsg(var_52_0)
 end
 
-function slot0.onReceiveMarkHeroFavorReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMarkHeroFavorReply(arg_53_0, arg_53_1, arg_53_2)
+	if arg_53_1 ~= 0 then
 		return
 	end
 
-	HeroModel.instance:setHeroFavorState(slot2.heroId, slot2.isFavor)
+	HeroModel.instance:setHeroFavorState(arg_53_2.heroId, arg_53_2.isFavor)
 
-	if slot2.isFavor then
+	if arg_53_2.isFavor then
 		GameFacade.showToast(ToastEnum.HeroFavorMarked)
 	end
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.OnMarkFavorSuccess, slot2.heroId)
+	CharacterController.instance:dispatchEvent(CharacterEvent.OnMarkFavorSuccess, arg_53_2.heroId)
 end
 
-function slot0.setDestinyLevelUpRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.DestinyLevelUpRequest()
-	slot3.heroId = slot1
-	slot3.level = slot2
+function var_0_0.setDestinyLevelUpRequest(arg_54_0, arg_54_1, arg_54_2)
+	local var_54_0 = HeroModule_pb.DestinyLevelUpRequest()
 
-	slot0:sendMsg(slot3)
+	var_54_0.heroId = arg_54_1
+	var_54_0.level = arg_54_2
+
+	arg_54_0:sendMsg(var_54_0)
 end
 
-function slot0.onReceiveDestinyLevelUpReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveDestinyLevelUpReply(arg_55_0, arg_55_1, arg_55_2)
+	if arg_55_1 ~= 0 then
 		return
 	end
 
-	CharacterDestinyController.instance:onLevelUpReply(slot2.heroId, slot2.level)
+	CharacterDestinyController.instance:onLevelUpReply(arg_55_2.heroId, arg_55_2.level)
 end
 
-function slot0.setDestinyRankUpRequest(slot0, slot1)
-	slot2 = HeroModule_pb.DestinyRankUpRequest()
-	slot2.heroId = slot1
+function var_0_0.setDestinyRankUpRequest(arg_56_0, arg_56_1)
+	local var_56_0 = HeroModule_pb.DestinyRankUpRequest()
 
-	slot0:sendMsg(slot2)
+	var_56_0.heroId = arg_56_1
+
+	arg_56_0:sendMsg(var_56_0)
 end
 
-function slot0.onReceiveDestinyRankUpReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveDestinyRankUpReply(arg_57_0, arg_57_1, arg_57_2)
+	if arg_57_1 ~= 0 then
 		return
 	end
 
-	CharacterDestinyController.instance:onRankUpReply(slot2.heroId)
+	CharacterDestinyController.instance:onRankUpReply(arg_57_2.heroId)
 end
 
-function slot0.setDestinyStoneUnlockRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.DestinyStoneUnlockRequest()
-	slot3.heroId = slot1
-	slot3.stoneId = slot2
+function var_0_0.setDestinyStoneUnlockRequest(arg_58_0, arg_58_1, arg_58_2)
+	local var_58_0 = HeroModule_pb.DestinyStoneUnlockRequest()
 
-	slot0:sendMsg(slot3)
+	var_58_0.heroId = arg_58_1
+	var_58_0.stoneId = arg_58_2
+
+	arg_58_0:sendMsg(var_58_0)
 end
 
-function slot0.onReceiveDestinyStoneUnlockReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveDestinyStoneUnlockReply(arg_59_0, arg_59_1, arg_59_2)
+	if arg_59_1 ~= 0 then
 		return
 	end
 
-	CharacterDestinyController.instance:onUnlockStoneReply(slot2.heroId, slot2.stoneId)
+	CharacterDestinyController.instance:onUnlockStoneReply(arg_59_2.heroId, arg_59_2.stoneId)
 end
 
-function slot0.setDestinyStoneUseRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.DestinyStoneUseRequest()
-	slot3.heroId = slot1
-	slot3.stoneId = slot2
+function var_0_0.setDestinyStoneUseRequest(arg_60_0, arg_60_1, arg_60_2)
+	local var_60_0 = HeroModule_pb.DestinyStoneUseRequest()
 
-	slot0:sendMsg(slot3)
+	var_60_0.heroId = arg_60_1
+	var_60_0.stoneId = arg_60_2
+
+	arg_60_0:sendMsg(var_60_0)
 end
 
-function slot0.onReceiveDestinyStoneUseReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveDestinyStoneUseReply(arg_61_0, arg_61_1, arg_61_2)
+	if arg_61_1 ~= 0 then
 		return
 	end
 
-	CharacterDestinyController.instance:onUseStoneReply(slot2.heroId, slot2.stoneId)
+	CharacterDestinyController.instance:onUseStoneReply(arg_61_2.heroId, arg_61_2.stoneId)
 end
 
-function slot0.setHeroRedDotReadRequest(slot0, slot1, slot2)
-	slot3 = HeroModule_pb.HeroRedDotReadRequest()
-	slot3.heroId = slot1
-	slot3.redDotType = slot2
+function var_0_0.setHeroRedDotReadRequest(arg_62_0, arg_62_1, arg_62_2)
+	local var_62_0 = HeroModule_pb.HeroRedDotReadRequest()
 
-	slot0:sendMsg(slot3)
+	var_62_0.heroId = arg_62_1
+	var_62_0.redDotType = arg_62_2
+
+	arg_62_0:sendMsg(var_62_0)
 end
 
-function slot0.onReceiveHeroRedDotReadReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveHeroRedDotReadReply(arg_63_0, arg_63_1, arg_63_2)
+	if arg_63_1 ~= 0 then
 		return
 	end
 
-	CharacterDestinyController.instance:onHeroRedDotReadReply(slot2.heroId, slot2.redDot)
+	CharacterDestinyController.instance:onHeroRedDotReadReply(arg_63_2.heroId, arg_63_2.redDot)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

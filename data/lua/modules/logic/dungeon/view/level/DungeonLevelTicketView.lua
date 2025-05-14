@@ -1,71 +1,78 @@
-module("modules.logic.dungeon.view.level.DungeonLevelTicketView", package.seeall)
+﻿module("modules.logic.dungeon.view.level.DungeonLevelTicketView", package.seeall)
 
-slot0 = class("DungeonLevelTicketView", BaseChildView)
+local var_0_0 = class("DungeonLevelTicketView", BaseChildView)
 
-function slot0.onInitView(slot0)
-	slot0._goticketinfo = gohelper.findChild(slot0.viewGO, "#go_ticketinfo")
-	slot0._simageticket = gohelper.findChildSingleImage(slot0.viewGO, "#go_ticketinfo/#simage_ticket")
-	slot0._txtticket = gohelper.findChildText(slot0.viewGO, "#go_ticketinfo/#txt_ticket")
-	slot0._gonoticket = gohelper.findChild(slot0.viewGO, "#go_noticket")
-	slot0._txtnoticket1 = gohelper.findChildText(slot0.viewGO, "#go_noticket/#txt_noticket1")
-	slot0._txtnoticket2 = gohelper.findChildText(slot0.viewGO, "#go_noticket/#txt_noticket2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goticketinfo = gohelper.findChild(arg_1_0.viewGO, "#go_ticketinfo")
+	arg_1_0._simageticket = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ticketinfo/#simage_ticket")
+	arg_1_0._txtticket = gohelper.findChildText(arg_1_0.viewGO, "#go_ticketinfo/#txt_ticket")
+	arg_1_0._gonoticket = gohelper.findChild(arg_1_0.viewGO, "#go_noticket")
+	arg_1_0._txtnoticket1 = gohelper.findChildText(arg_1_0.viewGO, "#go_noticket/#txt_noticket1")
+	arg_1_0._txtnoticket2 = gohelper.findChildText(arg_1_0.viewGO, "#go_noticket/#txt_noticket2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0:onUpdateParam()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0:onUpdateParam()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._goticketinfo:SetActive(slot0.viewParam ~= 0)
-	slot0._gonoticket:SetActive(slot1 == 0)
+function var_0_0.onUpdateParam(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam
 
-	if slot1 ~= 0 then
-		slot0._simageticket:LoadImage(ResUrl.getPropItemIcon(ItemConfig.instance:getItemIconById(slot1)))
+	arg_5_0._goticketinfo:SetActive(var_5_0 ~= 0)
+	arg_5_0._gonoticket:SetActive(var_5_0 == 0)
 
-		slot0._txtticket.text = ItemModel.instance:getItemCount(slot1)
+	if var_5_0 ~= 0 then
+		local var_5_1 = ItemConfig.instance:getItemIconById(var_5_0)
+
+		arg_5_0._simageticket:LoadImage(ResUrl.getPropItemIcon(var_5_1))
+
+		arg_5_0._txtticket.text = ItemModel.instance:getItemCount(var_5_0)
 	else
-		slot0._txtnoticket1.gameObject:SetActive(slot0._click ~= nil)
-		slot0._txtnoticket2.gameObject:SetActive(not slot0._click)
+		arg_5_0._txtnoticket1.gameObject:SetActive(arg_5_0._click ~= nil)
+		arg_5_0._txtnoticket2.gameObject:SetActive(not arg_5_0._click)
 	end
 end
 
-function slot0._onClick(slot0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnSelectTicket, slot0.viewParam)
+function var_0_0._onClick(arg_6_0)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnSelectTicket, arg_6_0.viewParam)
 end
 
-function slot0.addClick(slot0)
-	if slot0._click then
+function var_0_0.addClick(arg_7_0)
+	if arg_7_0._click then
 		return
 	end
 
-	slot0._canvasGroup = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup))
-	slot0._canvasGroup.blocksRaycasts = true
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0.viewGO)
+	arg_7_0._canvasGroup = gohelper.onceAddComponent(arg_7_0.viewGO, typeof(UnityEngine.CanvasGroup))
+	arg_7_0._canvasGroup.blocksRaycasts = true
+	arg_7_0._click = SLFramework.UGUI.UIClickListener.Get(arg_7_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_7_0._click:AddClickListener(arg_7_0._onClick, arg_7_0)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	if slot0._click then
-		slot0._click:RemoveClickListener()
+function var_0_0.onClose(arg_9_0)
+	if arg_9_0._click then
+		arg_9_0._click:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageticket:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simageticket:UnLoadImage()
 end
 
-return slot0
+return var_0_0

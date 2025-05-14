@@ -1,146 +1,147 @@
-module("framework.core.userdata.UserDataDispose", package.seeall)
+﻿module("framework.core.userdata.UserDataDispose", package.seeall)
 
-slot0 = class("UserDataDispose")
+local var_0_0 = class("UserDataDispose")
 
-function slot0.__onInit(slot0)
-	getmetatable(slot0).__newindex = function (slot0, slot1, slot2)
-		rawset(slot0, slot1, slot2)
+function var_0_0.__onInit(arg_1_0)
+	getmetatable(arg_1_0).__newindex = function(arg_2_0, arg_2_1, arg_2_2)
+		rawset(arg_2_0, arg_2_1, arg_2_2)
 
-		if type(slot2) == "userdata" then
-			if not rawget(slot0, "__userDataKeys") then
-				rawset(slot0, "__userDataKeys", {})
+		if type(arg_2_2) == "userdata" then
+			if not rawget(arg_2_0, "__userDataKeys") then
+				rawset(arg_2_0, "__userDataKeys", {})
 			end
 
-			slot0.__userDataKeys[slot1] = true
+			arg_2_0.__userDataKeys[arg_2_1] = true
 		end
 	end
-
-	slot0.__userDataTbs = {}
-	slot0.__eventTbs = {}
-	slot0.__clickObjs = {}
+	arg_1_0.__userDataTbs = {}
+	arg_1_0.__eventTbs = {}
+	arg_1_0.__clickObjs = {}
 end
 
-function slot0.__onDispose(slot0)
-	if slot0.__userDataKeys then
-		for slot5, slot6 in pairs(slot0.__userDataKeys) do
-			rawset(slot0, slot5, nil)
+function var_0_0.__onDispose(arg_3_0)
+	if arg_3_0.__userDataKeys then
+		local var_3_0 = arg_3_0.__userDataKeys
+
+		for iter_3_0, iter_3_1 in pairs(var_3_0) do
+			rawset(arg_3_0, iter_3_0, nil)
 		end
 
-		slot0.__userDataKeys = nil
+		arg_3_0.__userDataKeys = nil
 	end
 
-	if slot0.__userDataTbs then
-		for slot4, slot5 in ipairs(slot0.__userDataTbs) do
-			for slot9 in pairs(slot5) do
-				rawset(slot5, slot9, nil)
+	if arg_3_0.__userDataTbs then
+		for iter_3_2, iter_3_3 in ipairs(arg_3_0.__userDataTbs) do
+			for iter_3_4 in pairs(iter_3_3) do
+				rawset(iter_3_3, iter_3_4, nil)
 			end
 
-			rawset(slot0.__userDataTbs, slot4, nil)
+			rawset(arg_3_0.__userDataTbs, iter_3_2, nil)
 		end
 
-		slot0.__userDataTbs = nil
+		arg_3_0.__userDataTbs = nil
 	end
 
-	if slot0.__eventTbs then
-		for slot4, slot5 in ipairs(slot0.__eventTbs) do
-			slot5[1]:unregisterCallback(slot5[2], slot5[3], slot5[4])
+	if arg_3_0.__eventTbs then
+		for iter_3_5, iter_3_6 in ipairs(arg_3_0.__eventTbs) do
+			iter_3_6[1]:unregisterCallback(iter_3_6[2], iter_3_6[3], iter_3_6[4])
 		end
 
-		slot0.__eventTbs = nil
+		arg_3_0.__eventTbs = nil
 	end
 
-	if slot0.__clickObjs then
-		for slot4, slot5 in pairs(slot0.__clickObjs) do
-			if not slot4:Equals(nil) then
-				slot4:RemoveClickListener()
+	if arg_3_0.__clickObjs then
+		for iter_3_7, iter_3_8 in pairs(arg_3_0.__clickObjs) do
+			if not iter_3_7:Equals(nil) then
+				iter_3_7:RemoveClickListener()
 			end
 		end
 
-		slot0.__clickObjs = nil
+		arg_3_0.__clickObjs = nil
 	end
 end
 
-function slot0.getUserDataTb_(slot0)
-	slot1 = {}
+function var_0_0.getUserDataTb_(arg_4_0)
+	local var_4_0 = {}
 
-	if slot0.__userDataTbs then
-		table.insert(slot0.__userDataTbs, slot1)
+	if arg_4_0.__userDataTbs then
+		table.insert(arg_4_0.__userDataTbs, var_4_0)
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.addEventCb(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot1 or not slot2 or not slot3 then
+function var_0_0.addEventCb(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+	if not arg_5_1 or not arg_5_2 or not arg_5_3 then
 		logError("UserDataDispose:addEventCb ctrlInstance or evtName or callback is null!")
 
 		return
 	end
 
-	slot1:registerCallback(slot2, slot3, slot4, slot5)
+	arg_5_1:registerCallback(arg_5_2, arg_5_3, arg_5_4, arg_5_5)
 
-	if slot0.__eventTbs then
-		for slot9, slot10 in ipairs(slot0.__eventTbs) do
-			if slot10[1] == slot1 and slot10[2] == slot2 and slot10[3] == slot3 and slot10[4] == slot4 then
+	if arg_5_0.__eventTbs then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0.__eventTbs) do
+			if iter_5_1[1] == arg_5_1 and iter_5_1[2] == arg_5_2 and iter_5_1[3] == arg_5_3 and iter_5_1[4] == arg_5_4 then
 				return
 			end
 		end
 	end
 
-	table.insert(slot0.__eventTbs, {
-		slot1,
-		slot2,
-		slot3,
-		slot4
+	table.insert(arg_5_0.__eventTbs, {
+		arg_5_1,
+		arg_5_2,
+		arg_5_3,
+		arg_5_4
 	})
 end
 
-function slot0.removeEventCb(slot0, slot1, slot2, slot3, slot4)
-	if not slot1 or not slot2 or not slot3 then
+function var_0_0.removeEventCb(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	if not arg_6_1 or not arg_6_2 or not arg_6_3 then
 		logError("UserDataDispose:removeEventCb ctrlInstance or evtName or callback is null!")
 
 		return
 	end
 
-	if slot0.__eventTbs then
-		for slot8, slot9 in ipairs(slot0.__eventTbs) do
-			if slot9[1] == slot1 and slot9[2] == slot2 and slot9[3] == slot3 and slot9[4] == slot4 then
-				table.remove(slot0.__eventTbs, slot8)
+	if arg_6_0.__eventTbs then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0.__eventTbs) do
+			if iter_6_1[1] == arg_6_1 and iter_6_1[2] == arg_6_2 and iter_6_1[3] == arg_6_3 and iter_6_1[4] == arg_6_4 then
+				table.remove(arg_6_0.__eventTbs, iter_6_0)
 
 				break
 			end
 		end
 	end
 
-	slot1:unregisterCallback(slot2, slot3, slot4)
+	arg_6_1:unregisterCallback(arg_6_2, arg_6_3, arg_6_4)
 end
 
-function slot0.addClickCb(slot0, slot1, slot2, slot3, slot4)
-	if not slot1 or slot1:Equals(nil) or not slot2 or not slot3 then
+function var_0_0.addClickCb(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	if not arg_7_1 or arg_7_1:Equals(nil) or not arg_7_2 or not arg_7_3 then
 		logError("UserDataDispose:addClickCb clickObj or callback or cbObj is null!")
 
 		return
 	end
 
-	if slot0.__clickObjs and not slot0.__clickObjs[slot1] then
-		slot0.__clickObjs[slot1] = true
+	if arg_7_0.__clickObjs and not arg_7_0.__clickObjs[arg_7_1] then
+		arg_7_0.__clickObjs[arg_7_1] = true
 
-		slot1:AddClickListener(slot2, slot3, slot4)
+		arg_7_1:AddClickListener(arg_7_2, arg_7_3, arg_7_4)
 	end
 end
 
-function slot0.removeClickCb(slot0, slot1)
-	if not slot1 or slot1:Equals(nil) then
+function var_0_0.removeClickCb(arg_8_0, arg_8_1)
+	if not arg_8_1 or arg_8_1:Equals(nil) then
 		logError("UserDataDispose:removeClickCb clickObj is null!")
 
 		return
 	end
 
-	if slot0.__clickObjs and slot0.__clickObjs[slot1] then
-		slot0.__clickObjs[slot1] = nil
+	if arg_8_0.__clickObjs and arg_8_0.__clickObjs[arg_8_1] then
+		arg_8_0.__clickObjs[arg_8_1] = nil
 
-		slot1:RemoveClickListener()
+		arg_8_1:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

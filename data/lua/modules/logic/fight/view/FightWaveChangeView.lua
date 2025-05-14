@@ -1,26 +1,33 @@
-module("modules.logic.fight.view.FightWaveChangeView", package.seeall)
+﻿module("modules.logic.fight.view.FightWaveChangeView", package.seeall)
 
-slot0 = class("FightWaveChangeView", BaseView)
+local var_0_0 = class("FightWaveChangeView", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btnskipOnClick(slot0)
+function var_0_0._btnskipOnClick(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_6_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

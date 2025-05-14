@@ -1,188 +1,201 @@
-module("modules.logic.versionactivity1_2.yaxian.view.YaXianCollectView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianCollectView", package.seeall)
 
-slot0 = class("YaXianCollectView", BaseView)
+local var_0_0 = class("YaXianCollectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btncloseView = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeview")
-	slot0._simageblackbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_blackbg")
-	slot0._gonodeitem = gohelper.findChild(slot0.viewGO, "#simage_blackbg/#scroll_reward/Viewport/#go_content/#go_nodeitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#simage_blackbg/#btn_close")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#simage_blackbg/bottom/#txt_num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btncloseView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+	arg_1_0._simageblackbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blackbg")
+	arg_1_0._gonodeitem = gohelper.findChild(arg_1_0.viewGO, "#simage_blackbg/#scroll_reward/Viewport/#go_content/#go_nodeitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#simage_blackbg/#btn_close")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#simage_blackbg/bottom/#txt_num")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btncloseView:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btncloseView:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btncloseView:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btncloseView:RemoveClickListener()
 end
 
-slot0.IndexColor = {
+var_0_0.IndexColor = {
 	Had = GameUtil.parseColor("#EDFFDD"),
 	NotHad = GameUtil.parseColor("#86907E")
 }
-slot0.DescColor = {
+var_0_0.DescColor = {
 	Had = GameUtil.parseColor("#A3AB9C"),
 	NotHad = GameUtil.parseColor("#7C8376")
 }
 
-function slot0._btncloseviewOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseviewOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnrepalyOnClick(slot0)
+function var_0_0._btnrepalyOnClick(arg_5_0)
+	return
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0.btnReplayClick(slot0, slot1)
-	if YaXianModel.instance:hadTooth(slot1.toothConfig.id) then
-		StoryController.instance:playStory(slot1.toothConfig.story)
+function var_0_0.btnReplayClick(arg_7_0, arg_7_1)
+	if YaXianModel.instance:hadTooth(arg_7_1.toothConfig.id) then
+		StoryController.instance:playStory(arg_7_1.toothConfig.story)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goScroll = gohelper.findChild(slot0.viewGO, "#simage_blackbg/#scroll_reward")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._goScroll = gohelper.findChild(arg_8_0.viewGO, "#simage_blackbg/#scroll_reward")
 
-	slot0._simagebg:LoadImage(ResUrl.getYaXianImage("img_deco_zhizhuwang"))
-	slot0._simageblackbg:LoadImage(ResUrl.getYaXianImage("img_tanchuang_bg"))
+	arg_8_0._simagebg:LoadImage(ResUrl.getYaXianImage("img_deco_zhizhuwang"))
+	arg_8_0._simageblackbg:LoadImage(ResUrl.getYaXianImage("img_tanchuang_bg"))
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._goScroll)
+	arg_8_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_8_0._goScroll)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBeginHandler, slot0)
-	gohelper.setActive(slot0._gonodeitem, false)
+	arg_8_0._drag:AddDragBeginListener(arg_8_0._onDragBeginHandler, arg_8_0)
+	gohelper.setActive(arg_8_0._gonodeitem, false)
 
-	slot0.toothItemList = {}
+	arg_8_0.toothItemList = {}
 end
 
-function slot0._onDragBeginHandler(slot0)
+function var_0_0._onDragBeginHandler(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_swath_open)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.totalToothCount = #lua_activity115_tooth.configList
-	slot0._txtnum.text = YaXianModel.instance:getHadToothCount() - 1 .. "/" .. slot0.totalToothCount - 1
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0.totalToothCount = #lua_activity115_tooth.configList
+	arg_11_0._txtnum.text = YaXianModel.instance:getHadToothCount() - 1 .. "/" .. arg_11_0.totalToothCount - 1
 
-	slot0:refreshUI()
+	arg_11_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	for slot4, slot5 in ipairs(lua_activity115_tooth.configList) do
-		slot0:createToothItem().toothConfig = slot5
+function var_0_0.refreshUI(arg_12_0)
+	for iter_12_0, iter_12_1 in ipairs(lua_activity115_tooth.configList) do
+		local var_12_0 = arg_12_0:createToothItem()
 
-		if slot5.id == 0 then
-			slot0.zeroToothItem = slot6
+		var_12_0.toothConfig = iter_12_1
+
+		if iter_12_1.id == 0 then
+			arg_12_0.zeroToothItem = var_12_0
 		end
 
-		gohelper.setActive(slot6.go, true)
-		gohelper.setActive(slot6.goRightLine, slot0.totalToothCount ~= slot4)
+		gohelper.setActive(var_12_0.go, true)
+		gohelper.setActive(var_12_0.goRightLine, arg_12_0.totalToothCount ~= iter_12_0)
 
-		slot7 = YaXianModel.instance:hadTooth(slot5.id)
+		local var_12_1 = YaXianModel.instance:hadTooth(iter_12_1.id)
 
-		gohelper.setActive(slot6.goTooth, slot7)
-		gohelper.setActive(slot6.goNone, not slot7)
+		gohelper.setActive(var_12_0.goTooth, var_12_1)
+		gohelper.setActive(var_12_0.goNone, not var_12_1)
 
-		slot6.txtIndex.text = string.format("%02d", slot5.id)
-		slot6.txtIndex.color = slot7 and uv0.IndexColor.Had or uv0.IndexColor.NotHad
-		slot6.txtDesc.color = slot7 and uv0.DescColor.Had or uv0.DescColor.NotHad
+		var_12_0.txtIndex.text = string.format("%02d", iter_12_1.id)
+		var_12_0.txtIndex.color = var_12_1 and var_0_0.IndexColor.Had or var_0_0.IndexColor.NotHad
+		var_12_0.txtDesc.color = var_12_1 and var_0_0.DescColor.Had or var_0_0.DescColor.NotHad
 
-		if slot7 then
-			slot6.txtDesc.text = slot5.desc
-			slot6.txtName.text = slot5.name
+		if var_12_1 then
+			var_12_0.txtDesc.text = iter_12_1.desc
+			var_12_0.txtName.text = iter_12_1.name
 
-			slot0:loadToothIcon(slot6)
+			arg_12_0:loadToothIcon(var_12_0)
 
-			slot8 = YaXianConfig.instance:getToothUnlockSkill(slot5.id)
+			local var_12_2 = YaXianConfig.instance:getToothUnlockSkill(iter_12_1.id)
 
-			gohelper.setActive(slot6.goUnLockSkill, slot8)
+			gohelper.setActive(var_12_0.goUnLockSkill, var_12_2)
 
-			if slot8 then
-				slot6.txtUnLockSkill.text = luaLang("versionactivity_1_2_yaxian_unlock_skill_" .. slot8)
+			if var_12_2 then
+				var_12_0.txtUnLockSkill.text = luaLang("versionactivity_1_2_yaxian_unlock_skill_" .. var_12_2)
 			end
 
-			slot6.txtUp.text = string.format(luaLang("versionactivity_1_2_yaxian_up_to_level"), HeroConfig.instance:getCommonLevelDisplay(lua_hero_trial.configDict[YaXianEnum.HeroTrialId][YaXianConfig.instance:getToothUnlockHeroTemplate(slot5.id)] and slot10.level or 0))
+			local var_12_3 = YaXianConfig.instance:getToothUnlockHeroTemplate(iter_12_1.id)
+			local var_12_4 = lua_hero_trial.configDict[YaXianEnum.HeroTrialId][var_12_3]
+			local var_12_5 = HeroConfig.instance:getCommonLevelDisplay(var_12_4 and var_12_4.level or 0)
+
+			var_12_0.txtUp.text = string.format(luaLang("versionactivity_1_2_yaxian_up_to_level"), var_12_5)
 		else
-			slot6.txtDesc.text = luaLang("versionactivity_1_2_yaxian_not_found_tooth")
+			var_12_0.txtDesc.text = luaLang("versionactivity_1_2_yaxian_not_found_tooth")
 		end
 	end
 end
 
-function slot0.loadToothIcon(slot0, slot1)
-	if slot1.toothConfig.id ~= 0 then
-		slot1.toothIcon:LoadImage(ResUrl.getYaXianImage(slot2.icon))
+function var_0_0.loadToothIcon(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.toothConfig
+
+	if var_13_0.id ~= 0 then
+		arg_13_1.toothIcon:LoadImage(ResUrl.getYaXianImage(var_13_0.icon))
 
 		return
 	end
 
-	slot1.toothIcon:LoadImage(ResUrl.getYaXianImage(slot2.icon), slot0.loadImageDone, slot0)
+	arg_13_1.toothIcon:LoadImage(ResUrl.getYaXianImage(var_13_0.icon), arg_13_0.loadImageDone, arg_13_0)
 
-	slot4 = slot1.toothIcon.gameObject.transform
-	slot4.anchorMin = RectTransformDefine.Anchor.CenterMiddle
-	slot4.anchorMax = RectTransformDefine.Anchor.CenterMiddle
+	local var_13_1 = arg_13_1.toothIcon.gameObject.transform
 
-	recthelper.setAnchor(slot4, 0, 0)
+	var_13_1.anchorMin = RectTransformDefine.Anchor.CenterMiddle
+	var_13_1.anchorMax = RectTransformDefine.Anchor.CenterMiddle
 
-	slot4.parent:GetComponent(typeof(UnityEngine.UI.Image)).enabled = false
+	recthelper.setAnchor(var_13_1, 0, 0)
+
+	var_13_1.parent:GetComponent(typeof(UnityEngine.UI.Image)).enabled = false
 end
 
-function slot0.loadImageDone(slot0)
-	if slot0.zeroToothItem then
-		slot0.zeroToothItem.toothIcon.gameObject:GetComponent(typeof(UnityEngine.UI.Image)):SetNativeSize()
+function var_0_0.loadImageDone(arg_14_0)
+	if arg_14_0.zeroToothItem then
+		arg_14_0.zeroToothItem.toothIcon.gameObject:GetComponent(typeof(UnityEngine.UI.Image)):SetNativeSize()
 	end
 end
 
-function slot0.createToothItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gonodeitem)
-	slot1.goTooth = gohelper.findChild(slot1.go, "go_tooth")
-	slot1.goNone = gohelper.findChild(slot1.go, "go_none")
-	slot1.txtIndex = gohelper.findChildText(slot1.go, "txt_index")
-	slot1.txtDesc = gohelper.findChildText(slot1.go, "#scroll_desc/Viewport/Content/txt_desc")
-	slot1.goRightLine = gohelper.findChild(slot1.go, "line")
-	slot1._scrolldesc = gohelper.findChild(slot1.go, "#scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot1.toothIcon = gohelper.findChildSingleImage(slot1.go, "go_tooth/icon_bg/tooth_icon")
-	slot1.txtName = gohelper.findChildText(slot1.go, "go_tooth/middle/txt_name")
-	slot1.goUnLockSkill = gohelper.findChild(slot1.go, "go_tooth/middle/go_unlockskill")
-	slot1.txtUnLockSkill = gohelper.findChildText(slot1.go, "go_tooth/middle/go_unlockskill/txt_unlockskill")
-	slot1.txtUp = gohelper.findChildText(slot1.go, "go_tooth/middle/txt_up")
-	slot1.btnReplay = gohelper.findChildButtonWithAudio(slot1.go, "go_tooth/bottom/btn_replay")
+function var_0_0.createToothItem(arg_15_0)
+	local var_15_0 = arg_15_0:getUserDataTb_()
 
-	slot1.btnReplay:AddClickListener(slot0.btnReplayClick, slot0, slot1)
+	var_15_0.go = gohelper.cloneInPlace(arg_15_0._gonodeitem)
+	var_15_0.goTooth = gohelper.findChild(var_15_0.go, "go_tooth")
+	var_15_0.goNone = gohelper.findChild(var_15_0.go, "go_none")
+	var_15_0.txtIndex = gohelper.findChildText(var_15_0.go, "txt_index")
+	var_15_0.txtDesc = gohelper.findChildText(var_15_0.go, "#scroll_desc/Viewport/Content/txt_desc")
+	var_15_0.goRightLine = gohelper.findChild(var_15_0.go, "line")
+	var_15_0._scrolldesc = gohelper.findChild(var_15_0.go, "#scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	var_15_0.toothIcon = gohelper.findChildSingleImage(var_15_0.go, "go_tooth/icon_bg/tooth_icon")
+	var_15_0.txtName = gohelper.findChildText(var_15_0.go, "go_tooth/middle/txt_name")
+	var_15_0.goUnLockSkill = gohelper.findChild(var_15_0.go, "go_tooth/middle/go_unlockskill")
+	var_15_0.txtUnLockSkill = gohelper.findChildText(var_15_0.go, "go_tooth/middle/go_unlockskill/txt_unlockskill")
+	var_15_0.txtUp = gohelper.findChildText(var_15_0.go, "go_tooth/middle/txt_up")
+	var_15_0.btnReplay = gohelper.findChildButtonWithAudio(var_15_0.go, "go_tooth/bottom/btn_replay")
 
-	slot1._scrolldesc.parentGameObject = slot0._goScroll
+	var_15_0.btnReplay:AddClickListener(arg_15_0.btnReplayClick, arg_15_0, var_15_0)
 
-	table.insert(slot0.toothItemList, slot1)
+	var_15_0._scrolldesc.parentGameObject = arg_15_0._goScroll
 
-	return slot1
+	table.insert(arg_15_0.toothItemList, var_15_0)
+
+	return var_15_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_16_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageblackbg:UnLoadImage()
-	slot0._drag:RemoveDragBeginListener()
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0._simagebg:UnLoadImage()
+	arg_17_0._simageblackbg:UnLoadImage()
+	arg_17_0._drag:RemoveDragBeginListener()
 
-	slot0._drag = nil
+	arg_17_0._drag = nil
 
-	for slot4, slot5 in ipairs(slot0.toothItemList) do
-		slot5.btnReplay:RemoveClickListener()
-		slot5.toothIcon:UnLoadImage()
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0.toothItemList) do
+		iter_17_1.btnReplay:RemoveClickListener()
+		iter_17_1.toothIcon:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

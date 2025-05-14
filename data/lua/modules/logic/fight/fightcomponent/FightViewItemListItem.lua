@@ -1,18 +1,20 @@
-module("modules.logic.fight.fightcomponent.FightViewItemListItem", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightViewItemListItem", package.seeall)
 
-slot0 = class("FightViewItemListItem", FightObjItemListItem)
+local var_0_0 = class("FightViewItemListItem", FightObjItemListItem)
 
-function slot0.newItem(slot0)
-	slot1 = uv0.super.newItem(slot0)
-	slot3 = slot0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS
-	slot1.viewName = slot3.viewName
-	slot1.viewContainer = slot3.viewContainer
-	slot1.PARENT_VIEW = slot3
-	slot1.viewGO = slot1.keyword_gameObject
+function var_0_0.newItem(arg_1_0)
+	local var_1_0 = var_0_0.super.newItem(arg_1_0)
+	local var_1_1 = var_1_0.keyword_gameObject
+	local var_1_2 = arg_1_0.PARENT_ROOT_CLASS.PARENT_ROOT_CLASS
 
-	slot1:inner_startView()
+	var_1_0.viewName = var_1_2.viewName
+	var_1_0.viewContainer = var_1_2.viewContainer
+	var_1_0.PARENT_VIEW = var_1_2
+	var_1_0.viewGO = var_1_1
 
-	return slot1
+	var_1_0:inner_startView()
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

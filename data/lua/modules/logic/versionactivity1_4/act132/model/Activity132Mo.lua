@@ -1,80 +1,86 @@
-module("modules.logic.versionactivity1_4.act132.model.Activity132Mo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act132.model.Activity132Mo", package.seeall)
 
-slot0 = class("Activity132Mo")
+local var_0_0 = class("Activity132Mo")
 
-function slot0.ctor(slot0, slot1)
-	slot0.id = slot1
-	slot0.selectCollectId = nil
-	slot0.contentStateDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.selectCollectId = nil
+	arg_1_0.contentStateDict = {}
 
-	slot0:initCfg()
+	arg_1_0:initCfg()
 end
 
-function slot0.initCfg(slot0)
-	slot0.collectDict = {}
+function var_0_0.initCfg(arg_2_0)
+	arg_2_0.collectDict = {}
 
-	if Activity132Config.instance:getCollectDict(slot0.id) then
-		for slot5, slot6 in pairs(slot1) do
-			slot0.collectDict[slot6.collectId] = Activity132CollectMo.New(slot6)
+	local var_2_0 = Activity132Config.instance:getCollectDict(arg_2_0.id)
+
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in pairs(var_2_0) do
+			arg_2_0.collectDict[iter_2_1.collectId] = Activity132CollectMo.New(iter_2_1)
 		end
 	end
 end
 
-function slot0.init(slot0, slot1)
-	if not slot1 then
+function var_0_0.init(arg_3_0, arg_3_1)
+	if not arg_3_1 then
 		return
 	end
 
-	for slot5 = 1, #slot1.contents do
-		slot6 = slot1.contents[slot5]
-		slot0.contentStateDict[slot6.Id] = slot6.state
+	for iter_3_0 = 1, #arg_3_1.contents do
+		local var_3_0 = arg_3_1.contents[iter_3_0]
+
+		arg_3_0.contentStateDict[var_3_0.Id] = var_3_0.state
 	end
 end
 
-function slot0.getCollectList(slot0)
-	slot1 = {}
+function var_0_0.getCollectList(arg_4_0)
+	local var_4_0 = {}
 
-	for slot5, slot6 in pairs(slot0.collectDict) do
-		table.insert(slot1, slot6)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0.collectDict) do
+		table.insert(var_4_0, iter_4_1)
 	end
 
-	if #slot1 > 1 then
-		table.sort(slot1, SortUtil.keyLower("collectId"))
+	if #var_4_0 > 1 then
+		table.sort(var_4_0, SortUtil.keyLower("collectId"))
 	end
 
-	return slot1
+	return var_4_0
 end
 
-function slot0.getCollectMo(slot0, slot1)
-	return slot0.collectDict[slot1]
+function var_0_0.getCollectMo(arg_5_0, arg_5_1)
+	return arg_5_0.collectDict[arg_5_1]
 end
 
-function slot0.getContentState(slot0, slot1)
-	return slot0.contentStateDict[slot1] or Activity132Enum.ContentState.Lock
+function var_0_0.getContentState(arg_6_0, arg_6_1)
+	return arg_6_0.contentStateDict[arg_6_1] or Activity132Enum.ContentState.Lock
 end
 
-function slot0.getSelectCollectId(slot0)
-	return slot0.selectCollectId
+function var_0_0.getSelectCollectId(arg_7_0)
+	return arg_7_0.selectCollectId
 end
 
-function slot0.setSelectCollectId(slot0, slot1)
-	slot0.selectCollectId = slot1
+function var_0_0.setSelectCollectId(arg_8_0, arg_8_1)
+	arg_8_0.selectCollectId = arg_8_1
 end
 
-function slot0.setContentUnlock(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		slot0.contentStateDict[slot1[slot5]] = Activity132Enum.ContentState.Unlock
+function var_0_0.setContentUnlock(arg_9_0, arg_9_1)
+	for iter_9_0 = 1, #arg_9_1 do
+		arg_9_0.contentStateDict[arg_9_1[iter_9_0]] = Activity132Enum.ContentState.Unlock
 	end
 end
 
-function slot0.checkClueRed(slot0, slot1)
-	if string.splitToNumber(Activity132Config.instance:getClueConfig(slot0.id, slot1).contents, "#") then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot0:getContentState(slot8) == Activity132Enum.ContentState.CanUnlock then
+function var_0_0.checkClueRed(arg_10_0, arg_10_1)
+	local var_10_0 = Activity132Config.instance:getClueConfig(arg_10_0.id, arg_10_1)
+	local var_10_1 = string.splitToNumber(var_10_0.contents, "#")
+
+	if var_10_1 then
+		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+			if arg_10_0:getContentState(iter_10_1) == Activity132Enum.ContentState.CanUnlock then
 				return true
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,116 +1,124 @@
-module("modules.logic.room.model.manufacture.RoomBuildingCritterMO", package.seeall)
+﻿module("modules.logic.room.model.manufacture.RoomBuildingCritterMO", package.seeall)
 
-slot0 = pureTable("RoomBuildingCritterMO")
+local var_0_0 = pureTable("RoomBuildingCritterMO")
 
-function slot1(slot0, slot1)
-	slot3 = slot1 and slot1:getSeatSlotId()
+local function var_0_1(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0 and arg_1_0:getSeatSlotId()
+	local var_1_1 = arg_1_1 and arg_1_1:getSeatSlotId()
 
-	if not slot0 or not slot0:getSeatSlotId() or not slot3 then
+	if not var_1_0 or not var_1_1 then
 		return false
 	end
 
-	return slot2 < slot3
+	return var_1_0 < var_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.buildingUid
-	slot0.uid = slot0.id
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.buildingUid
+	arg_2_0.uid = arg_2_0.id
 
-	slot0:setSeatSlotInfos(slot1.unlockSlotInfos)
+	arg_2_0:setSeatSlotInfos(arg_2_1.unlockSlotInfos)
 end
 
-function slot0.setSeatSlotInfos(slot0, slot1)
-	slot0.seatSlotMODict = {}
-	slot0.seatSlotMOList = {}
+function var_0_0.setSeatSlotInfos(arg_3_0, arg_3_1)
+	arg_3_0.seatSlotMODict = {}
+	arg_3_0.seatSlotMOList = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = CritterSeatSlotMO.New()
+	if arg_3_1 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+			local var_3_0 = CritterSeatSlotMO.New()
 
-			slot7:init(slot6)
+			var_3_0:init(iter_3_1)
 
-			slot0.seatSlotMODict[slot6.critterSlotId] = slot7
-			slot0.seatSlotMOList[#slot0.seatSlotMOList + 1] = slot7
+			arg_3_0.seatSlotMODict[iter_3_1.critterSlotId] = var_3_0
+			arg_3_0.seatSlotMOList[#arg_3_0.seatSlotMOList + 1] = var_3_0
 		end
 
-		table.sort(slot0.seatSlotMOList, uv0)
+		table.sort(arg_3_0.seatSlotMOList, var_0_1)
 	end
 end
 
-function slot0.unlockSeatSlot(slot0, slot1)
-	if slot0.seatSlotMODict[slot1] then
+function var_0_0.unlockSeatSlot(arg_4_0, arg_4_1)
+	if arg_4_0.seatSlotMODict[arg_4_1] then
 		return
 	end
 
-	slot2 = CritterSeatSlotMO.New()
-	slot3 = {
-		critterSlotId = slot1
+	local var_4_0 = CritterSeatSlotMO.New()
+	local var_4_1 = {
+		critterSlotId = arg_4_1
 	}
 
-	slot2:init(slot3)
+	var_4_0:init(var_4_1)
 
-	slot0.seatSlotMODict[slot3.critterSlotId] = slot2
-	slot0.seatSlotMOList[#slot0.seatSlotMOList + 1] = slot2
+	arg_4_0.seatSlotMODict[var_4_1.critterSlotId] = var_4_0
+	arg_4_0.seatSlotMOList[#arg_4_0.seatSlotMOList + 1] = var_4_0
 
-	table.sort(slot0.seatSlotMOList, uv0)
+	table.sort(arg_4_0.seatSlotMOList, var_0_1)
 end
 
-function slot0.getBuildingUid(slot0)
-	return slot0.uid
+function var_0_0.getBuildingUid(arg_5_0)
+	return arg_5_0.uid
 end
 
-function slot0.getSeatSlotMO(slot0, slot1, slot2)
-	if not slot0.seatSlotMODict[slot1] and slot2 then
-		logError(string.format("RoomBuildingCritterMO:getSeatSlotMO error, slotId:%s", slot1))
+function var_0_0.getSeatSlotMO(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0.seatSlotMODict[arg_6_1]
+
+	if not var_6_0 and arg_6_2 then
+		logError(string.format("RoomBuildingCritterMO:getSeatSlotMO error, slotId:%s", arg_6_1))
 	end
 
-	return slot3
+	return var_6_0
 end
 
-function slot0.getSeatSlot2CritterDict(slot0)
-	for slot5, slot6 in pairs(slot0.seatSlotMODict) do
-		if not slot6:isEmpty() then
-			-- Nothing
+function var_0_0.getSeatSlot2CritterDict(arg_7_0)
+	local var_7_0 = {}
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.seatSlotMODict) do
+		if not iter_7_1:isEmpty() then
+			var_7_0[iter_7_0] = iter_7_1:getRestingCritter()
 		end
 	end
 
-	return {
-		[slot5] = slot6:getRestingCritter()
-	}
+	return var_7_0
 end
 
-function slot0.isCritterInSeatSlot(slot0, slot1)
-	slot2 = nil
+function var_0_0.isCritterInSeatSlot(arg_8_0, arg_8_1)
+	local var_8_0
 
-	for slot6, slot7 in pairs(slot0.seatSlotMODict) do
-		if slot7:getRestingCritter() and slot8 == slot1 then
-			slot2 = slot6
+	for iter_8_0, iter_8_1 in pairs(arg_8_0.seatSlotMODict) do
+		local var_8_1 = iter_8_1:getRestingCritter()
+
+		if var_8_1 and var_8_1 == arg_8_1 then
+			var_8_0 = iter_8_0
 
 			break
 		end
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getNextEmptyCritterSeatSlot(slot0)
-	slot1 = nil
+function var_0_0.getNextEmptyCritterSeatSlot(arg_9_0)
+	local var_9_0
 
-	for slot5, slot6 in ipairs(slot0.seatSlotMOList) do
-		if slot6:isEmpty() then
-			slot1 = slot6:getSeatSlotId()
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.seatSlotMOList) do
+		if iter_9_1:isEmpty() then
+			var_9_0 = iter_9_1:getSeatSlotId()
 
 			break
 		end
 	end
 
-	return slot1
+	return var_9_0
 end
 
-function slot0.removeRestingCritter(slot0, slot1)
-	if slot0:getSeatSlotMO(slot0:isCritterInSeatSlot(slot1)) then
-		slot3:removeCritter()
+function var_0_0.removeRestingCritter(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:isCritterInSeatSlot(arg_10_1)
+	local var_10_1 = arg_10_0:getSeatSlotMO(var_10_0)
+
+	if var_10_1 then
+		var_10_1:removeCritter()
 	end
 end
 
-return slot0
+return var_0_0

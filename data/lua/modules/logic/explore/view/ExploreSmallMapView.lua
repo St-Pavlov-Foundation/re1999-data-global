@@ -1,208 +1,219 @@
-module("modules.logic.explore.view.ExploreSmallMapView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreSmallMapView", package.seeall)
 
-slot0 = class("ExploreSmallMapView", BaseView)
+local var_0_0 = class("ExploreSmallMapView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnsmallmap = gohelper.findChildButtonWithAudio(slot0.viewGO, "topright/minimap/#btn_smallmap")
-	slot0._keytips = gohelper.findChild(slot0._btnsmallmap.gameObject, "#go_pcbtn1")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnsmallmap = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "topright/minimap/#btn_smallmap")
+	arg_1_0._keytips = gohelper.findChild(arg_1_0._btnsmallmap.gameObject, "#go_pcbtn1")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, slot0.applyRolePos, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, slot0.applyRolePos, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.AreaShow, slot0._areaShowChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.UnitOutlineChange, slot0.outlineChange, slot0)
-	ExploreController.instance:registerCallback(ExploreEvent.MapRotate, slot0.applyRolePos, slot0)
-	slot0._btnsmallmap:AddClickListener(slot0._openSmallMap, slot0)
+function var_0_0.addEvents(arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroTweenDisTr, arg_2_0.applyRolePos, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, arg_2_0.applyRolePos, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.AreaShow, arg_2_0._areaShowChange, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.UnitOutlineChange, arg_2_0.outlineChange, arg_2_0)
+	ExploreController.instance:registerCallback(ExploreEvent.MapRotate, arg_2_0.applyRolePos, arg_2_0)
+	arg_2_0._btnsmallmap:AddClickListener(arg_2_0._openSmallMap, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, slot0.applyRolePos, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, slot0.applyRolePos, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.AreaShow, slot0._areaShowChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.UnitOutlineChange, slot0.outlineChange, slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.MapRotate, slot0.applyRolePos, slot0)
-	slot0._btnsmallmap:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroTweenDisTr, arg_3_0.applyRolePos, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, arg_3_0.applyRolePos, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.AreaShow, arg_3_0._areaShowChange, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.UnitOutlineChange, arg_3_0.outlineChange, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.MapRotate, arg_3_0.applyRolePos, arg_3_0)
+	arg_3_0._btnsmallmap:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._mapItems = {}
-	slot0._mapItemsNoUse = {}
-	slot1 = gohelper.findChild(slot0.viewGO, "topright/minimap/mask").transform
-	slot0._maskHalfWidth = recthelper.getWidth(slot1) / 2
-	slot0._maskHalfHeight = recthelper.getHeight(slot1) / 2
-	slot0._container = gohelper.findChild(slot0.viewGO, "topright/minimap/mask/container").transform
-	slot0._mapItem = gohelper.findChild(slot0.viewGO, "topright/minimap/mask/container/#go_mapitem")
-	slot0._itemWidth = recthelper.getWidth(slot0._mapItem.transform)
-	slot0._itemHeight = recthelper.getHeight(slot0._mapItem.transform)
-	slot2 = ExploreMapModel.instance.mapBound
-	slot0._offsetX = slot2.x
-	slot0._offsetY = slot2.z
-	slot0._mapWidth = (slot2.y - slot2.x + 1) * slot0._itemWidth
-	slot0._mapHeight = (slot2.w - slot2.z + 1) * slot0._itemHeight
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._mapItems = {}
+	arg_4_0._mapItemsNoUse = {}
 
-	recthelper.setWidth(slot0._container, slot0._mapWidth)
-	recthelper.setHeight(slot0._container, slot0._mapHeight)
-	slot0:applyRolePos()
-	slot0:showKeyTips()
+	local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "topright/minimap/mask").transform
+
+	arg_4_0._maskHalfWidth = recthelper.getWidth(var_4_0) / 2
+	arg_4_0._maskHalfHeight = recthelper.getHeight(var_4_0) / 2
+	arg_4_0._container = gohelper.findChild(arg_4_0.viewGO, "topright/minimap/mask/container").transform
+	arg_4_0._mapItem = gohelper.findChild(arg_4_0.viewGO, "topright/minimap/mask/container/#go_mapitem")
+	arg_4_0._itemWidth = recthelper.getWidth(arg_4_0._mapItem.transform)
+	arg_4_0._itemHeight = recthelper.getHeight(arg_4_0._mapItem.transform)
+
+	local var_4_1 = ExploreMapModel.instance.mapBound
+
+	arg_4_0._offsetX = var_4_1.x
+	arg_4_0._offsetY = var_4_1.z
+	arg_4_0._mapWidth = (var_4_1.y - var_4_1.x + 1) * arg_4_0._itemWidth
+	arg_4_0._mapHeight = (var_4_1.w - var_4_1.z + 1) * arg_4_0._itemHeight
+
+	recthelper.setWidth(arg_4_0._container, arg_4_0._mapWidth)
+	recthelper.setHeight(arg_4_0._container, arg_4_0._mapHeight)
+	arg_4_0:applyRolePos()
+	arg_4_0:showKeyTips()
 end
 
-function slot0._openSmallMap(slot0)
+function var_0_0._openSmallMap(arg_5_0)
 	ViewMgr.instance:openView(ViewName.ExploreMapView)
 end
 
-function slot0.outlineChange(slot0, slot1)
-	if slot0._mapItems[slot1] then
-		slot0._mapItems[slot1]:updateOutLineIcon()
+function var_0_0.outlineChange(arg_6_0, arg_6_1)
+	if arg_6_0._mapItems[arg_6_1] then
+		arg_6_0._mapItems[arg_6_1]:updateOutLineIcon()
 	end
 end
 
-function slot0._areaShowChange(slot0)
-	slot0._fromX = nil
+function var_0_0._areaShowChange(arg_7_0)
+	arg_7_0._fromX = nil
 
-	slot0:applyRolePos()
+	arg_7_0:applyRolePos()
 end
 
-function slot0.applyRolePos(slot0, slot1)
-	if not slot1 then
-		slot0._hero = slot0._hero or ExploreController.instance:getMap():getHero()
+function var_0_0.applyRolePos(arg_8_0, arg_8_1)
+	if not arg_8_1 then
+		arg_8_0._hero = arg_8_0._hero or ExploreController.instance:getMap():getHero()
 
-		if not slot0._hero then
+		if not arg_8_0._hero then
 			return
 		end
 
-		slot1 = slot0._hero:getPos()
+		arg_8_1 = arg_8_0._hero:getPos()
 	end
 
-	slot5 = -(-slot0._offsetX + slot1.x) * slot0._itemWidth
-	slot6 = -(-slot0._offsetY + slot1.z) * slot0._itemWidth
-	slot7 = math.floor((-slot5 - slot0._maskHalfWidth) / slot0._itemWidth)
-	slot8 = math.ceil((-slot5 + slot0._maskHalfWidth) / slot0._itemWidth)
-	slot9 = math.floor((-slot6 - slot0._maskHalfHeight) / slot0._itemHeight)
-	slot10 = math.ceil((-slot6 + slot0._maskHalfHeight) / slot0._itemHeight)
+	local var_8_0 = -arg_8_0._offsetX
+	local var_8_1 = -arg_8_0._offsetY
+	local var_8_2 = ExploreMapModel.instance.nowMapRotate
+	local var_8_3 = -(var_8_0 + arg_8_1.x) * arg_8_0._itemWidth
+	local var_8_4 = -(var_8_1 + arg_8_1.z) * arg_8_0._itemWidth
+	local var_8_5 = math.floor((-var_8_3 - arg_8_0._maskHalfWidth) / arg_8_0._itemWidth)
+	local var_8_6 = math.ceil((-var_8_3 + arg_8_0._maskHalfWidth) / arg_8_0._itemWidth)
+	local var_8_7 = math.floor((-var_8_4 - arg_8_0._maskHalfHeight) / arg_8_0._itemHeight)
+	local var_8_8 = math.ceil((-var_8_4 + arg_8_0._maskHalfHeight) / arg_8_0._itemHeight)
 
-	if ExploreMapModel.instance.nowMapRotate ~= 0 then
-		slot5 = slot6 * math.sin(-slot4 * Mathf.Deg2Rad) + slot5 * math.cos(-slot4 * Mathf.Deg2Rad)
-		slot6 = slot6 * math.cos(-slot4 * Mathf.Deg2Rad) + slot5 * math.sin(slot4 * Mathf.Deg2Rad)
+	if var_8_2 ~= 0 then
+		local var_8_9 = var_8_3
+
+		var_8_3 = var_8_4 * math.sin(-var_8_2 * Mathf.Deg2Rad) + var_8_3 * math.cos(-var_8_2 * Mathf.Deg2Rad)
+		var_8_4 = var_8_4 * math.cos(-var_8_2 * Mathf.Deg2Rad) + var_8_9 * math.sin(var_8_2 * Mathf.Deg2Rad)
 	end
 
-	transformhelper.setLocalPosXY(slot0._container, slot5, slot6)
-	transformhelper.setLocalRotation(slot0._container, 0, 0, slot4)
-	slot0:showMapItem(slot7 + slot0._offsetX, slot9 + slot0._offsetY, slot8 + slot0._offsetX, slot10 + slot0._offsetY)
+	transformhelper.setLocalPosXY(arg_8_0._container, var_8_3, var_8_4)
+	transformhelper.setLocalRotation(arg_8_0._container, 0, 0, var_8_2)
+	arg_8_0:showMapItem(var_8_5 + arg_8_0._offsetX, var_8_7 + arg_8_0._offsetY, var_8_6 + arg_8_0._offsetX, var_8_8 + arg_8_0._offsetY)
 end
 
-function slot0.showMapItem(slot0, slot1, slot2, slot3, slot4)
-	if slot0._fromX == slot1 and slot0._fromY == slot2 and slot0._toX == slot3 and slot0._toY == slot4 then
-		for slot8, slot9 in pairs(slot0._mapItems) do
-			slot9:updateRotate()
+function var_0_0.showMapItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	if arg_9_0._fromX == arg_9_1 and arg_9_0._fromY == arg_9_2 and arg_9_0._toX == arg_9_3 and arg_9_0._toY == arg_9_4 then
+		for iter_9_0, iter_9_1 in pairs(arg_9_0._mapItems) do
+			iter_9_1:updateRotate()
 		end
 
 		return
 	end
 
-	slot0._toY = slot4
-	slot0._toX = slot3
-	slot0._fromY = slot2
-	slot0._fromX = slot1
+	arg_9_0._fromX, arg_9_0._fromY, arg_9_0._toX, arg_9_0._toY = arg_9_1, arg_9_2, arg_9_3, arg_9_4
 
-	for slot8, slot9 in pairs(slot0._mapItems) do
-		slot9:markUse(false)
+	for iter_9_2, iter_9_3 in pairs(arg_9_0._mapItems) do
+		iter_9_3:markUse(false)
 	end
 
-	slot5 = {}
-	slot6 = {}
+	local var_9_0 = {}
+	local var_9_1 = {}
 
-	for slot10 = slot1, slot3 do
-		for slot14 = slot2, slot4 do
-			if ExploreMapModel.instance:getNodeIsShow(ExploreHelper.getKeyXY(slot10, slot14)) then
-				if slot0._mapItems[slot15] then
-					slot0._mapItems[slot15]:markUse(true)
+	for iter_9_4 = arg_9_1, arg_9_3 do
+		for iter_9_5 = arg_9_2, arg_9_4 do
+			local var_9_2 = ExploreHelper.getKeyXY(iter_9_4, iter_9_5)
 
-					slot0._mapItems[slot15]._mo.rotate = true
+			if ExploreMapModel.instance:getNodeIsShow(var_9_2) then
+				if arg_9_0._mapItems[var_9_2] then
+					arg_9_0._mapItems[var_9_2]:markUse(true)
 
-					slot0._mapItems[slot15]:updateRotate()
+					arg_9_0._mapItems[var_9_2]._mo.rotate = true
+
+					arg_9_0._mapItems[var_9_2]:updateRotate()
 				else
-					slot17 = ExploreHelper.getKeyXY(slot10 - 1, slot14)
-					slot5[slot15] = {
-						left = not ExploreMapModel.instance:getNodeIsShow(slot17),
-						right = not ExploreMapModel.instance:getNodeIsShow(ExploreHelper.getKeyXY(slot10 + 1, slot14)),
-						top = not ExploreMapModel.instance:getNodeIsShow(ExploreHelper.getKeyXY(slot10, slot14 + 1)),
-						bottom = not ExploreMapModel.instance:getNodeIsShow(ExploreHelper.getKeyXY(slot10, slot14 - 1)),
-						key = slot15,
-						posY = (slot14 - slot0._offsetY) * slot0._itemHeight,
-						posX = (slot10 - slot0._offsetX) * slot0._itemWidth,
-						rotate = true
-					}
+					local var_9_3 = {}
+					local var_9_4 = ExploreHelper.getKeyXY(iter_9_4 - 1, iter_9_5)
+					local var_9_5 = ExploreHelper.getKeyXY(iter_9_4 + 1, iter_9_5)
+					local var_9_6 = ExploreHelper.getKeyXY(iter_9_4, iter_9_5 + 1)
+					local var_9_7 = ExploreHelper.getKeyXY(iter_9_4, iter_9_5 - 1)
 
-					if slot0._mapItems[slot17] then
-						slot0._mapItems[slot17]._mo.right = false
-						slot6[slot17] = true
+					var_9_3.left = not ExploreMapModel.instance:getNodeIsShow(var_9_4)
+					var_9_3.right = not ExploreMapModel.instance:getNodeIsShow(var_9_5)
+					var_9_3.top = not ExploreMapModel.instance:getNodeIsShow(var_9_6)
+					var_9_3.bottom = not ExploreMapModel.instance:getNodeIsShow(var_9_7)
+					var_9_3.key = var_9_2
+					var_9_3.posX, var_9_3.posY = (iter_9_4 - arg_9_0._offsetX) * arg_9_0._itemWidth, (iter_9_5 - arg_9_0._offsetY) * arg_9_0._itemHeight
+					var_9_3.rotate = true
+					var_9_0[var_9_2] = var_9_3
+
+					if arg_9_0._mapItems[var_9_4] then
+						arg_9_0._mapItems[var_9_4]._mo.right = false
+						var_9_1[var_9_4] = true
 					end
 
-					if slot0._mapItems[slot18] then
-						slot0._mapItems[slot18]._mo.left = false
-						slot6[slot18] = true
+					if arg_9_0._mapItems[var_9_5] then
+						arg_9_0._mapItems[var_9_5]._mo.left = false
+						var_9_1[var_9_5] = true
 					end
 
-					if slot0._mapItems[slot19] then
-						slot0._mapItems[slot19]._mo.bottom = false
-						slot6[slot19] = true
+					if arg_9_0._mapItems[var_9_6] then
+						arg_9_0._mapItems[var_9_6]._mo.bottom = false
+						var_9_1[var_9_6] = true
 					end
 
-					if slot0._mapItems[slot20] then
-						slot0._mapItems[slot20]._mo.top = false
-						slot6[slot20] = true
+					if arg_9_0._mapItems[var_9_7] then
+						arg_9_0._mapItems[var_9_7]._mo.top = false
+						var_9_1[var_9_7] = true
 					end
 				end
 			end
 		end
 	end
 
-	for slot10, slot11 in pairs(slot0._mapItems) do
-		if not slot11:getIsUse() then
-			table.insert(slot0._mapItemsNoUse, slot11)
+	for iter_9_6, iter_9_7 in pairs(arg_9_0._mapItems) do
+		if not iter_9_7:getIsUse() then
+			table.insert(arg_9_0._mapItemsNoUse, iter_9_7)
 
-			slot0._mapItems[slot10] = nil
-			slot6[slot10] = nil
+			arg_9_0._mapItems[iter_9_6] = nil
+			var_9_1[iter_9_6] = nil
 		end
 	end
 
-	slot7 = #slot0._mapItemsNoUse
+	local var_9_8 = #arg_9_0._mapItemsNoUse
 
-	for slot11, slot12 in pairs(slot5) do
-		if slot7 > 0 then
-			slot0._mapItems[slot11] = slot0._mapItemsNoUse[slot7]
-			slot0._mapItemsNoUse[slot7] = nil
-			slot7 = slot7 - 1
+	for iter_9_8, iter_9_9 in pairs(var_9_0) do
+		if var_9_8 > 0 then
+			arg_9_0._mapItems[iter_9_8] = arg_9_0._mapItemsNoUse[var_9_8]
+			arg_9_0._mapItemsNoUse[var_9_8] = nil
+			var_9_8 = var_9_8 - 1
 
-			slot0._mapItems[slot11]:markUse()
-			slot0._mapItems[slot11]:updateMo(slot12)
-			slot0._mapItems[slot11]:updateRotate()
+			arg_9_0._mapItems[iter_9_8]:markUse()
+			arg_9_0._mapItems[iter_9_8]:updateMo(iter_9_9)
+			arg_9_0._mapItems[iter_9_8]:updateRotate()
 		else
-			slot13 = gohelper.cloneInPlace(slot0._mapItem)
+			local var_9_9 = gohelper.cloneInPlace(arg_9_0._mapItem)
 
-			gohelper.setActive(slot13, true)
+			gohelper.setActive(var_9_9, true)
 
-			slot0._mapItems[slot11] = MonoHelper.addNoUpdateLuaComOnceToGo(slot13, ExploreMapItem, slot12)
+			arg_9_0._mapItems[iter_9_8] = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_9, ExploreMapItem, iter_9_9)
 		end
 	end
 
-	for slot11 in pairs(slot6) do
-		slot0._mapItems[slot11]:updateMo(slot0._mapItems[slot11]._mo)
-		slot0._mapItems[slot11]:updateRotate()
+	for iter_9_10 in pairs(var_9_1) do
+		arg_9_0._mapItems[iter_9_10]:updateMo(arg_9_0._mapItems[iter_9_10]._mo)
+		arg_9_0._mapItems[iter_9_10]:updateRotate()
 	end
 
-	for slot11 = 1, slot7 do
-		slot0._mapItemsNoUse[slot11]:setActive(false)
+	for iter_9_11 = 1, var_9_8 do
+		arg_9_0._mapItemsNoUse[iter_9_11]:setActive(false)
 	end
 end
 
-function slot0.showKeyTips(slot0)
-	PCInputController.instance:showkeyTips(slot0._keytips, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.map)
+function var_0_0.showKeyTips(arg_10_0)
+	PCInputController.instance:showkeyTips(arg_10_0._keytips, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.map)
 end
 
-return slot0
+return var_0_0

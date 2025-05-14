@@ -1,107 +1,123 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.model.PuzzleMazeDrawModel", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.model.PuzzleMazeDrawModel", package.seeall)
 
-slot0 = class("PuzzleMazeDrawModel", PuzzleMazeDrawBaseModel)
+local var_0_0 = class("PuzzleMazeDrawModel", PuzzleMazeDrawBaseModel)
 
-function slot0.release(slot0)
-	uv0.super.release(slot0)
+function var_0_0.release(arg_1_0)
+	var_0_0.super.release(arg_1_0)
 
-	slot0._interactPosX = nil
-	slot0._interactPosY = nil
-	slot0._effectDoneMap = nil
-	slot0._canFlyPlane = true
-	slot0._planePosX = nil
-	slot0._planePosY = nil
+	arg_1_0._interactPosX = nil
+	arg_1_0._interactPosY = nil
+	arg_1_0._effectDoneMap = nil
+	arg_1_0._canFlyPlane = true
+	arg_1_0._planePosX = nil
+	arg_1_0._planePosY = nil
 end
 
-function slot0.startGame(slot0, slot1)
-	uv0.super.startGame(slot0, slot1)
-	slot0:setCanFlyPane(true)
+function var_0_0.startGame(arg_2_0, arg_2_1)
+	var_0_0.super.startGame(arg_2_0, arg_2_1)
+	arg_2_0:setCanFlyPane(true)
 end
 
-function slot0.switchLine(slot0, slot1, slot2, slot3)
-	if not slot0:getInteractLines(slot2, slot3) then
+function var_0_0.switchLine(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_0:getInteractLines(arg_3_2, arg_3_3)
+
+	if not var_3_0 then
 		return
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		slot10 = slot9.x1
-		slot11 = slot9.y1
-		slot12 = slot9.x2
-		slot13 = slot9.y2
-		slot0._lineMap[PuzzleMazeHelper.getLineKey(slot10, slot11, slot12, slot13)] = slot1
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		local var_3_1 = iter_3_1.x1
+		local var_3_2 = iter_3_1.y1
+		local var_3_3 = iter_3_1.x2
+		local var_3_4 = iter_3_1.y2
+		local var_3_5 = PuzzleMazeHelper.getLineKey(var_3_1, var_3_2, var_3_3, var_3_4)
 
-		PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.SwitchLineState, slot10, slot11, slot12, slot13)
+		arg_3_0._lineMap[var_3_5] = arg_3_1
+
+		PuzzleMazeDrawController.instance:dispatchEvent(PuzzleEvent.SwitchLineState, var_3_1, var_3_2, var_3_3, var_3_4)
 	end
 
-	if slot1 == PuzzleEnum.LineState.Connect then
-		slot0._interactPosX = slot2
-		slot0._interactPosY = slot3
+	if arg_3_1 == PuzzleEnum.LineState.Connect then
+		arg_3_0._interactPosX = arg_3_2
+		arg_3_0._interactPosY = arg_3_3
 	else
-		slot0._interactPosX = nil
-		slot0._interactPosY = nil
+		arg_3_0._interactPosX = nil
+		arg_3_0._interactPosY = nil
 	end
 end
 
-function slot0.getInteractLines(slot0, slot1, slot2)
-	if slot0:getObjAtPos(slot1, slot2) then
-		return slot3.interactLines
+function var_0_0.getInteractLines(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = arg_4_0:getObjAtPos(arg_4_1, arg_4_2)
+
+	if var_4_0 then
+		return var_4_0.interactLines
 	end
 end
 
-function slot0.getInteractPos(slot0)
-	return slot0._interactPosX, slot0._interactPosY
+function var_0_0.getInteractPos(arg_5_0)
+	return arg_5_0._interactPosX, arg_5_0._interactPosY
 end
 
-function slot0.isCanFlyPlane(slot0)
-	return slot0._canFlyPlane
+function var_0_0.isCanFlyPlane(arg_6_0)
+	return arg_6_0._canFlyPlane
 end
 
-function slot0.setCanFlyPane(slot0, slot1)
-	slot0._canFlyPlane = slot1
+function var_0_0.setCanFlyPane(arg_7_0, arg_7_1)
+	arg_7_0._canFlyPlane = arg_7_1
 end
 
-function slot0.setPlanePlacePos(slot0, slot1, slot2)
-	slot0._planePosX = slot1
-	slot0._planePosY = slot2
+function var_0_0.setPlanePlacePos(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._planePosX = arg_8_1
+	arg_8_0._planePosY = arg_8_2
 end
 
-function slot0.getCurPlanePos(slot0)
-	if slot0:isCanFlyPlane() then
+function var_0_0.getCurPlanePos(arg_9_0)
+	if arg_9_0:isCanFlyPlane() then
 		return PuzzleMazeDrawController.instance:getLastPos()
 	else
-		return slot0._planePosX, slot0._planePosY
+		return arg_9_0._planePosX, arg_9_0._planePosY
 	end
 end
 
-function slot0.setTriggerEffectDone(slot0, slot1, slot2)
-	slot0._effectDoneMap = slot0._effectDoneMap or {}
-	slot0._effectDoneMap[PuzzleMazeHelper.getPosKey(slot1, slot2)] = true
+function var_0_0.setTriggerEffectDone(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._effectDoneMap = arg_10_0._effectDoneMap or {}
+
+	local var_10_0 = PuzzleMazeHelper.getPosKey(arg_10_1, arg_10_2)
+
+	arg_10_0._effectDoneMap[var_10_0] = true
 end
 
-function slot0.hasTriggerEffect(slot0, slot1, slot2)
-	return slot0._effectDoneMap and slot0._effectDoneMap[PuzzleMazeHelper.getPosKey(slot1, slot2)]
+function var_0_0.hasTriggerEffect(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = PuzzleMazeHelper.getPosKey(arg_11_1, arg_11_2)
+
+	return arg_11_0._effectDoneMap and arg_11_0._effectDoneMap[var_11_0]
 end
 
-function slot0.canTriggerEffect(slot0, slot1, slot2)
-	if slot0:hasTriggerEffect(slot1, slot2) then
+function var_0_0.canTriggerEffect(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_0:hasTriggerEffect(arg_12_1, arg_12_2) then
 		return false
 	end
 
-	if not slot0:getObjAtPos(slot1, slot2) then
+	local var_12_0 = arg_12_0:getObjAtPos(arg_12_1, arg_12_2)
+
+	if not var_12_0 then
 		return false
 	end
 
-	return (slot0._effectDoneMap and tabletool.len(slot0._effectDoneMap) or 0) + 1 == slot4.priority
+	local var_12_1 = arg_12_0._effectDoneMap and tabletool.len(arg_12_0._effectDoneMap) or 0
+	local var_12_2 = var_12_0.priority
+
+	return var_12_1 + 1 == var_12_2
 end
 
-function slot0.getTriggerEffectDoneMap(slot0)
-	return slot0._effectDoneMap
+function var_0_0.getTriggerEffectDoneMap(arg_13_0)
+	return arg_13_0._effectDoneMap
 end
 
-function slot0.setTriggerEffectDoneMap(slot0, slot1)
-	slot0._effectDoneMap = slot1
+function var_0_0.setTriggerEffectDoneMap(arg_14_0, arg_14_1)
+	arg_14_0._effectDoneMap = arg_14_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

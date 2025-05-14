@@ -1,25 +1,26 @@
-module("modules.logic.gm.view.GMAudioBankViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GMAudioBankViewContainer", package.seeall)
 
-slot0 = class("GMAudioBankViewContainer", BaseViewContainer)
+local var_0_0 = class("GMAudioBankViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "view/scroll"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "view/scroll/item"
-	slot2.cellClass = GMAudioBankViewItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 962.5
-	slot2.cellHeight = 85
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, GMAudioBankView.New())
-	table.insert(slot1, LuaListScrollView.New(GMAudioBankViewModel.instance, slot2))
+	var_1_1.scrollGOPath = "view/scroll"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "view/scroll/item"
+	var_1_1.cellClass = GMAudioBankViewItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 962.5
+	var_1_1.cellHeight = 85
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
 
-	return slot1
+	table.insert(var_1_0, GMAudioBankView.New())
+	table.insert(var_1_0, LuaListScrollView.New(GMAudioBankViewModel.instance, var_1_1))
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

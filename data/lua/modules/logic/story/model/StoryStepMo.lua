@@ -1,160 +1,160 @@
-module("modules.logic.story.model.StoryStepMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepMo", package.seeall)
 
-slot0 = pureTable("StoryStepMo")
+local var_0_0 = pureTable("StoryStepMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.name = ""
-	slot0.conversation = {}
-	slot0.heroList = {}
-	slot0.bg = {}
-	slot0.audioList = {}
-	slot0.effList = {}
-	slot0.picList = {}
-	slot0.videoList = {}
-	slot0.navigateList = {}
-	slot0.optList = {}
-	slot0.mainRole = {}
-	slot0.mourningBorder = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.name = ""
+	arg_1_0.conversation = {}
+	arg_1_0.heroList = {}
+	arg_1_0.bg = {}
+	arg_1_0.audioList = {}
+	arg_1_0.effList = {}
+	arg_1_0.picList = {}
+	arg_1_0.videoList = {}
+	arg_1_0.navigateList = {}
+	arg_1_0.optList = {}
+	arg_1_0.mainRole = {}
+	arg_1_0.mourningBorder = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1[1]
-	slot0.name = slot1[2]
-	slot0.conversation = slot0:_buildConversation(slot1[3])
-	slot0.heroList = slot0:_buildHero(slot1[4])
-	slot0.bg = slot0:_buildBackground(slot1[5])
-	slot0.audioList = slot0:_buildAudio(slot1[6])
-	slot0.effList = slot0:_buildEffect(slot1[7])
-	slot0.picList = slot0:_buildPictures(slot1[8])
-	slot0.videoList = slot0:_buildVideo(slot1[9])
-	slot0.navigateList = slot0:_buildNavigate(slot1[10])
-	slot0.optList = slot0:_buildOption(slot1[11])
-	slot0.mainRole = slot0:_buildMainRole(slot1[12])
-	slot0.mourningBorder = slot0:_buildMourningBorder(slot1[13])
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1[1]
+	arg_2_0.name = arg_2_1[2]
+	arg_2_0.conversation = arg_2_0:_buildConversation(arg_2_1[3])
+	arg_2_0.heroList = arg_2_0:_buildHero(arg_2_1[4])
+	arg_2_0.bg = arg_2_0:_buildBackground(arg_2_1[5])
+	arg_2_0.audioList = arg_2_0:_buildAudio(arg_2_1[6])
+	arg_2_0.effList = arg_2_0:_buildEffect(arg_2_1[7])
+	arg_2_0.picList = arg_2_0:_buildPictures(arg_2_1[8])
+	arg_2_0.videoList = arg_2_0:_buildVideo(arg_2_1[9])
+	arg_2_0.navigateList = arg_2_0:_buildNavigate(arg_2_1[10])
+	arg_2_0.optList = arg_2_0:_buildOption(arg_2_1[11])
+	arg_2_0.mainRole = arg_2_0:_buildMainRole(arg_2_1[12])
+	arg_2_0.mourningBorder = arg_2_0:_buildMourningBorder(arg_2_1[13])
 end
 
-function slot0._buildConversation(slot0, slot1)
-	slot2 = StoryStepConversationMo.New()
+function var_0_0._buildConversation(arg_3_0, arg_3_1)
+	local var_3_0 = StoryStepConversationMo.New()
 
-	slot2:init(slot1)
+	var_3_0:init(arg_3_1)
 
-	return slot2
+	return var_3_0
 end
 
-function slot0._buildHero(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildHero(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepHeroMo.New()
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = StoryStepHeroMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_4_1:init(iter_4_1)
+		table.insert(var_4_0, var_4_1)
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0._buildBackground(slot0, slot1)
-	slot2 = StoryStepBGMo.New()
+function var_0_0._buildBackground(arg_5_0, arg_5_1)
+	local var_5_0 = StoryStepBGMo.New()
 
-	slot2:init(slot1)
+	var_5_0:init(arg_5_1)
 
-	return slot2
+	return var_5_0
 end
 
-function slot0._buildAudio(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildAudio(arg_6_0, arg_6_1)
+	local var_6_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepAudioMo.New()
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		local var_6_1 = StoryStepAudioMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_6_1:init(iter_6_1)
+		table.insert(var_6_0, var_6_1)
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0._buildEffect(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildEffect(arg_7_0, arg_7_1)
+	local var_7_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepEffectMo.New()
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_1 = StoryStepEffectMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_7_1:init(iter_7_1)
+		table.insert(var_7_0, var_7_1)
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0._buildPictures(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildPictures(arg_8_0, arg_8_1)
+	local var_8_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepPictureMo.New()
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		local var_8_1 = StoryStepPictureMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_8_1:init(iter_8_1)
+		table.insert(var_8_0, var_8_1)
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0._buildVideo(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildVideo(arg_9_0, arg_9_1)
+	local var_9_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepVideoMo.New()
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_1 = StoryStepVideoMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_9_1:init(iter_9_1)
+		table.insert(var_9_0, var_9_1)
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0._buildNavigate(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildNavigate(arg_10_0, arg_10_1)
+	local var_10_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepNavigateMo.New()
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+		local var_10_1 = StoryStepNavigateMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_10_1:init(iter_10_1)
+		table.insert(var_10_0, var_10_1)
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0._buildOption(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildOption(arg_11_0, arg_11_1)
+	local var_11_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryStepOptionMo.New()
+	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
+		local var_11_1 = StoryStepOptionMo.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_11_1:init(iter_11_1)
+		table.insert(var_11_0, var_11_1)
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0._buildMainRole(slot0, slot1)
-	slot2 = StoryStepMainHeroMo.New()
+function var_0_0._buildMainRole(arg_12_0, arg_12_1)
+	local var_12_0 = StoryStepMainHeroMo.New()
 
-	slot2:init(slot1)
+	var_12_0:init(arg_12_1)
 
-	return slot2
+	return var_12_0
 end
 
-function slot0._buildMourningBorder(slot0, slot1)
-	slot2 = StoryStepMourningBorderMo.New()
+function var_0_0._buildMourningBorder(arg_13_0, arg_13_1)
+	local var_13_0 = StoryStepMourningBorderMo.New()
 
-	slot2:init(slot1)
+	var_13_0:init(arg_13_1)
 
-	return slot2
+	return var_13_0
 end
 
-return slot0
+return var_0_0

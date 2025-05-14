@@ -1,310 +1,356 @@
-module("modules.logic.room.entity.comp.RoomAtmosphereComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomAtmosphereComp", package.seeall)
 
-slot0 = class("RoomAtmosphereComp", LuaCompBase)
+local var_0_0 = class("RoomAtmosphereComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._buildingId = slot0.entity.id
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._buildingId = arg_1_0.entity.id
 
-	if slot0.entity.getMO then
-		slot0._buildingId = slot0.entity:getMO().buildingId
+	if arg_1_0.entity.getMO then
+		arg_1_0._buildingId = arg_1_0.entity:getMO().buildingId
 	end
 
-	slot0._atmosphereDict = {}
+	arg_1_0._atmosphereDict = {}
 
-	slot0:setIsBlockAtmosphere(false)
+	arg_1_0:setIsBlockAtmosphere(false)
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot2 = {}
-	slot3 = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 
-	for slot8, slot9 in ipairs(RoomConfig.instance:getBuildingAtmospheres(slot0._buildingId)) do
-		for slot14, slot15 in ipairs(RoomConfig.instance:getAtmosphereAllEffectPathList(slot9)) do
-			if not slot3[slot15] then
-				slot2[#slot2 + 1] = slot15
-				slot3[slot15] = true
+	local var_2_0 = {}
+	local var_2_1 = {}
+	local var_2_2 = RoomConfig.instance:getBuildingAtmospheres(arg_2_0._buildingId)
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+		local var_2_3 = RoomConfig.instance:getAtmosphereAllEffectPathList(iter_2_1)
+
+		for iter_2_2, iter_2_3 in ipairs(var_2_3) do
+			if not var_2_1[iter_2_3] then
+				var_2_0[#var_2_0 + 1] = iter_2_3
+				var_2_1[iter_2_3] = true
 			end
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().loader:makeSureLoaded(slot2, slot0.beginCheckAtmosphere, slot0)
+	GameSceneMgr.instance:getCurScene().loader:makeSureLoaded(var_2_0, arg_2_0.beginCheckAtmosphere, arg_2_0)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, slot0.onBlockAtmosphere, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, slot0.onResumeAtmosphere, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0.refreshManufactureState, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0.refreshManufactureState, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, arg_3_0.onBlockAtmosphere, arg_3_0)
+	arg_3_0:addEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, arg_3_0.onResumeAtmosphere, arg_3_0)
+	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_3_0.onOpenViewFinish, arg_3_0)
+	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0.onCloseView, arg_3_0)
+	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0.refreshManufactureState, arg_3_0)
+	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0.refreshManufactureState, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, slot0.onBlockAtmosphere, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, slot0.onResumeAtmosphere, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0.onOpenViewFinish, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0.refreshManufactureState, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0.refreshManufactureState, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.BlockAtmosphereEffect, arg_4_0.onBlockAtmosphere, arg_4_0)
+	arg_4_0:removeEventCb(RoomMapController.instance, RoomEvent.ResumeAtmosphereEffect, arg_4_0.onResumeAtmosphere, arg_4_0)
+	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_4_0.onOpenViewFinish, arg_4_0)
+	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
+	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_4_0.refreshManufactureState, arg_4_0)
+	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_4_0.refreshManufactureState, arg_4_0)
 end
 
-function slot0.onBlockAtmosphere(slot0)
-	slot0:setIsBlockAtmosphere(true)
-	TaskDispatcher.cancelTask(slot0.repeatCheckAtmosphere, slot0)
-	slot0:stopAllAtmosphere()
+function var_0_0.onBlockAtmosphere(arg_5_0)
+	arg_5_0:setIsBlockAtmosphere(true)
+	TaskDispatcher.cancelTask(arg_5_0.repeatCheckAtmosphere, arg_5_0)
+	arg_5_0:stopAllAtmosphere()
 end
 
-function slot0.onResumeAtmosphere(slot0)
-	slot0:setIsBlockAtmosphere(false)
-	slot0:beginCheckAtmosphere()
+function var_0_0.onResumeAtmosphere(arg_6_0)
+	arg_6_0:setIsBlockAtmosphere(false)
+	arg_6_0:beginCheckAtmosphere()
 end
 
-function slot0.onOpenViewFinish(slot0, slot1)
-	if RoomEnum.AtmosphereAudioFadeView[slot1] then
-		slot0:setAtmosphereAudioIsFade(true)
+function var_0_0.onOpenViewFinish(arg_7_0, arg_7_1)
+	if RoomEnum.AtmosphereAudioFadeView[arg_7_1] then
+		arg_7_0:setAtmosphereAudioIsFade(true)
 	end
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if RoomEnum.AtmosphereAudioFadeView[slot1] then
-		slot0:setAtmosphereAudioIsFade(false)
+function var_0_0.onCloseView(arg_8_0, arg_8_1)
+	if RoomEnum.AtmosphereAudioFadeView[arg_8_1] then
+		arg_8_0:setAtmosphereAudioIsFade(false)
 	end
 end
 
-function slot0.setAtmosphereAudioIsFade(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._atmosphereDict) do
-		if slot0:_getAtmosphereFlow(slot5) then
-			slot7:setAllWorkAudioIsFade(slot1)
+function var_0_0.setAtmosphereAudioIsFade(arg_9_0, arg_9_1)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._atmosphereDict) do
+		local var_9_0 = arg_9_0:_getAtmosphereFlow(iter_9_0)
+
+		if var_9_0 then
+			var_9_0:setAllWorkAudioIsFade(arg_9_1)
 		end
 	end
 end
 
-function slot0.setIsBlockAtmosphere(slot0, slot1)
-	slot0._isBlockAtmosphere = slot1
+function var_0_0.setIsBlockAtmosphere(arg_10_0, arg_10_1)
+	arg_10_0._isBlockAtmosphere = arg_10_1
 end
 
-function slot0._getAtmosphere(slot0, slot1)
-	if not slot0._atmosphereDict then
-		slot0._atmosphereDict = {}
+function var_0_0._getAtmosphere(arg_11_0, arg_11_1)
+	if not arg_11_0._atmosphereDict then
+		arg_11_0._atmosphereDict = {}
 	end
 
-	if not slot0._atmosphereDict[slot1] then
-		slot2 = {}
+	local var_11_0 = arg_11_0._atmosphereDict[arg_11_1]
 
-		slot0:_resetAtmosphere(slot2)
+	if not var_11_0 then
+		var_11_0 = {}
 
-		slot0._atmosphereDict[slot1] = slot2
+		arg_11_0:_resetAtmosphere(var_11_0)
+
+		arg_11_0._atmosphereDict[arg_11_1] = var_11_0
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0._getAtmosphereFlow(slot0, slot1, slot2)
-	if not slot0:_getAtmosphere(slot1).flow and slot2 then
-		slot4 = RoomAtmosphereFlowSequence.New(slot1)
+function var_0_0._getAtmosphereFlow(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:_getAtmosphere(arg_12_1)
+	local var_12_1 = var_12_0.flow
 
-		for slot9, slot10 in ipairs(RoomConfig.instance:getAtmosphereEffectIdList(slot1)) do
-			slot4:addWork(RoomAtmosphereEffectWork.New(slot10, slot0.go))
+	if not var_12_1 and arg_12_2 then
+		var_12_1 = RoomAtmosphereFlowSequence.New(arg_12_1)
+
+		local var_12_2 = RoomConfig.instance:getAtmosphereEffectIdList(arg_12_1)
+
+		for iter_12_0, iter_12_1 in ipairs(var_12_2) do
+			local var_12_3 = RoomAtmosphereEffectWork.New(iter_12_1, arg_12_0.go)
+
+			var_12_1:addWork(var_12_3)
 		end
 
-		slot3.flow = slot4
+		var_12_0.flow = var_12_1
 
-		slot4:registerDoneListener(slot0.atmosphereSequenceFinish, slot0)
+		var_12_1:registerDoneListener(arg_12_0.atmosphereSequenceFinish, arg_12_0)
 	end
 
-	return slot4
+	return var_12_1
 end
 
-function slot0._getAtmosphereResidentEffGO(slot0, slot1, slot2)
-	if not RoomConfig.instance:getAtmosphereResidentEffect(slot1) or slot3 == 0 then
+function var_0_0._getAtmosphereResidentEffGO(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = RoomConfig.instance:getAtmosphereResidentEffect(arg_13_1)
+
+	if not var_13_0 or var_13_0 == 0 then
 		return
 	end
 
-	if gohelper.isNil(slot0:_getAtmosphere(slot1).residentEffGO) and slot2 then
-		slot6 = RoomConfig.instance:getRoomEffectPath(slot3)
-		slot7 = nil
+	local var_13_1 = arg_13_0:_getAtmosphere(arg_13_1)
+	local var_13_2 = var_13_1.residentEffGO
+
+	if gohelper.isNil(var_13_2) and arg_13_2 then
+		local var_13_3 = RoomConfig.instance:getRoomEffectPath(var_13_0)
+		local var_13_4
 
 		if not GameResMgr.IsFromEditorDir then
-			slot7 = FightHelper.getEffectAbPath(slot6)
+			var_13_4 = FightHelper.getEffectAbPath(var_13_3)
 		end
 
-		slot4.residentEffGO = RoomGOPool.getInstance(slot6, slot0.go, "residentEffect_" .. slot3, slot7)
+		var_13_2 = RoomGOPool.getInstance(var_13_3, arg_13_0.go, "residentEffect_" .. var_13_0, var_13_4)
+		var_13_1.residentEffGO = var_13_2
 	end
 
-	return slot5
+	return var_13_2
 end
 
-function slot0._resetAtmosphere(slot0, slot1)
-	if not slot1 then
+function var_0_0._resetAtmosphere(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	slot1.cyclesTimes = 0
-	slot1.isPlaying = false
-	slot1.isFlowPlaying = false
+	arg_14_1.cyclesTimes = 0
+	arg_14_1.isPlaying = false
+	arg_14_1.isFlowPlaying = false
 end
 
-function slot0.beginCheckAtmosphere(slot0)
-	slot0:repeatCheckAtmosphere()
-	TaskDispatcher.cancelTask(slot0.repeatCheckAtmosphere, slot0)
-	TaskDispatcher.runRepeat(slot0.repeatCheckAtmosphere, slot0, 1)
+function var_0_0.beginCheckAtmosphere(arg_15_0)
+	arg_15_0:repeatCheckAtmosphere()
+	TaskDispatcher.cancelTask(arg_15_0.repeatCheckAtmosphere, arg_15_0)
+	TaskDispatcher.runRepeat(arg_15_0.repeatCheckAtmosphere, arg_15_0, 1)
 end
 
-function slot0.repeatCheckAtmosphere(slot0)
-	if slot0._isBlockAtmosphere then
+function var_0_0.repeatCheckAtmosphere(arg_16_0)
+	if arg_16_0._isBlockAtmosphere then
 		return
 	end
 
-	slot1, slot2 = RoomModel.instance:getOpenAndEndAtmosphereList(slot0._buildingId)
+	local var_16_0, var_16_1 = RoomModel.instance:getOpenAndEndAtmosphereList(arg_16_0._buildingId)
 
-	for slot6, slot7 in ipairs(slot2) do
-		slot0:stopAtmosphere(slot7)
+	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
+		arg_16_0:stopAtmosphere(iter_16_1)
 	end
 
-	if not slot1 or #slot1 <= 0 then
+	if not var_16_0 or #var_16_0 <= 0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if not slot0:_getAtmosphere(slot7).isFlowPlaying then
-			slot0:beginAtmosphere(slot7)
+	for iter_16_2, iter_16_3 in ipairs(var_16_0) do
+		if not arg_16_0:_getAtmosphere(iter_16_3).isFlowPlaying then
+			arg_16_0:beginAtmosphere(iter_16_3)
 		end
 	end
 end
 
-function slot0.beginAtmosphere(slot0, slot1)
-	slot2 = slot0:_getAtmosphere(slot1)
-	slot2.cyclesTimes = 1
-	slot2.isFlowPlaying = true
-	slot3 = slot0:_getAtmosphereResidentEffGO(slot1, true)
+function var_0_0.beginAtmosphere(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:_getAtmosphere(arg_17_1)
 
-	gohelper.setActive(slot3, false)
-	gohelper.setActive(slot3, true)
+	var_17_0.cyclesTimes = 1
+	var_17_0.isFlowPlaying = true
 
-	slot2.isPlaying = true
-	slot4 = slot0:_getAtmosphereFlow(slot1, true)
+	local var_17_1 = arg_17_0:_getAtmosphereResidentEffGO(arg_17_1, true)
 
-	slot4:reset()
-	slot4:start()
+	gohelper.setActive(var_17_1, false)
+	gohelper.setActive(var_17_1, true)
+
+	var_17_0.isPlaying = true
+
+	local var_17_2 = arg_17_0:_getAtmosphereFlow(arg_17_1, true)
+
+	var_17_2:reset()
+	var_17_2:start()
 end
 
-function slot0.atmosphereSequenceFinish(slot0, slot1, slot2)
-	if not (slot2 and slot0:_getAtmosphere(slot2) or nil) then
+function var_0_0.atmosphereSequenceFinish(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_2 and arg_18_0:_getAtmosphere(arg_18_2) or nil
+
+	if not var_18_0 then
 		return
 	end
 
-	if not slot1 then
-		slot0:stopAtmosphere(slot2)
+	if not arg_18_1 then
+		arg_18_0:stopAtmosphere(arg_18_2)
 
 		return
 	end
 
-	slot4 = RoomConfig.instance:getAtmosphereCyclesTimes(slot2)
+	local var_18_1 = RoomConfig.instance:getAtmosphereCyclesTimes(arg_18_2)
+	local var_18_2 = RoomConfig.instance:getAtmosphereCfg(arg_18_2)
+	local var_18_3 = var_18_2 and var_18_2.cdtimes or 0
+	local var_18_4 = var_18_0.cyclesTimes
+	local var_18_5 = var_18_1 == 0 or var_18_4 < var_18_1
+	local var_18_6 = arg_18_0:_getAtmosphereFlow(arg_18_2)
 
-	if slot0:_getAtmosphereFlow(slot2) and (slot4 == 0 or slot3.cyclesTimes < slot4) and (RoomConfig.instance:getAtmosphereCfg(slot2) and slot5.cdtimes or 0) == 0 then
-		slot9:start()
+	if var_18_6 and var_18_5 and var_18_3 == 0 then
+		var_18_6:start()
 
-		slot3.cyclesTimes = slot7 + 1
+		var_18_0.cyclesTimes = var_18_4 + 1
 	else
-		if slot9 then
-			slot9:reset()
+		if var_18_6 then
+			var_18_6:reset()
 		end
 
-		slot0:stopAtmosphere(slot2)
-		RoomModel.instance:setAtmosphereHasPlay(slot2)
+		arg_18_0:stopAtmosphere(arg_18_2)
+		RoomModel.instance:setAtmosphereHasPlay(arg_18_2)
 	end
 end
 
-function slot0.stopAllAtmosphere(slot0)
-	for slot4, slot5 in pairs(slot0._atmosphereDict) do
-		slot0:stopAtmosphere(slot4)
+function var_0_0.stopAllAtmosphere(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._atmosphereDict) do
+		arg_19_0:stopAtmosphere(iter_19_0)
 	end
 end
 
-function slot0.stopAtmosphere(slot0, slot1)
-	if not slot0:_getAtmosphere(slot1).isPlaying then
+function var_0_0.stopAtmosphere(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:_getAtmosphere(arg_20_1)
+
+	if not var_20_0.isPlaying then
 		return
 	end
 
-	if slot0:_getAtmosphereFlow(slot1) then
-		slot3:stop()
+	local var_20_1 = arg_20_0:_getAtmosphereFlow(arg_20_1)
+
+	if var_20_1 then
+		var_20_1:stop()
 	end
 
-	slot0:_resetAtmosphere(slot2)
-	gohelper.setActive(slot0:_getAtmosphereResidentEffGO(slot1), false)
+	arg_20_0:_resetAtmosphere(var_20_0)
+
+	local var_20_2 = arg_20_0:_getAtmosphereResidentEffGO(arg_20_1)
+
+	gohelper.setActive(var_20_2, false)
 end
 
-function slot0.onEffectRebuild(slot0)
-	if slot0.__willDestroy then
+function var_0_0.onEffectRebuild(arg_21_0)
+	if arg_21_0.__willDestroy then
 		return
 	end
 
-	slot0:refreshManufactureState()
+	arg_21_0:refreshManufactureState()
 end
 
-function slot0.refreshManufactureState(slot0)
-	slot1 = nil
+function var_0_0.refreshManufactureState(arg_22_0)
+	local var_22_0
 
-	if slot0.entity.getMO then
-		slot1 = slot0.entity:getMO()
+	if arg_22_0.entity.getMO then
+		var_22_0 = arg_22_0.entity:getMO()
 	end
 
-	if not slot1 then
+	if not var_22_0 then
 		return
 	end
 
-	if not ManufactureConfig.instance:isManufactureBuilding(slot0._buildingId) then
+	if not ManufactureConfig.instance:isManufactureBuilding(arg_22_0._buildingId) then
 		return
 	end
 
-	slot5 = RoomBuildingEnum.AnimName.Idel
+	local var_22_1 = var_22_0:getManufactureState() == RoomManufactureEnum.ManufactureState.Running
+	local var_22_2 = RoomBuildingEnum.AnimName.Idel
 
-	if slot1:getManufactureState() == RoomManufactureEnum.ManufactureState.Running then
-		slot5 = RoomBuildingEnum.AnimName.Produce
+	if var_22_1 then
+		var_22_2 = RoomBuildingEnum.AnimName.Produce
 	end
 
-	slot6 = slot0.entity:getMainEffectKey()
+	local var_22_3 = arg_22_0.entity:getMainEffectKey()
 
-	slot0.entity.effect:playEffectAnimator(slot6, slot5)
+	arg_22_0.entity.effect:playEffectAnimator(var_22_3, var_22_2)
 
-	if slot0.entity.effect:getGameObjectsByName(slot6, RoomEnum.EntityChildKey.ProduceGOKey) then
-		for slot11, slot12 in ipairs(slot7) do
-			gohelper.setActive(slot12, slot4)
+	local var_22_4 = arg_22_0.entity.effect:getGameObjectsByName(var_22_3, RoomEnum.EntityChildKey.ProduceGOKey)
+
+	if var_22_4 then
+		for iter_22_0, iter_22_1 in ipairs(var_22_4) do
+			gohelper.setActive(iter_22_1, var_22_1)
 		end
 	end
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_23_0)
+	arg_23_0.__willDestroy = true
 
-	slot0:removeEventListeners()
+	arg_23_0:removeEventListeners()
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.repeatCheckAtmosphere, slot0)
+function var_0_0.onDestroy(arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0.repeatCheckAtmosphere, arg_24_0)
 
-	slot0.entity = nil
-	slot0.go = nil
-	slot0._buildingId = nil
+	arg_24_0.entity = nil
+	arg_24_0.go = nil
+	arg_24_0._buildingId = nil
 
-	for slot4, slot5 in pairs(slot0._atmosphereDict) do
-		if not gohelper.isNil(slot5.residentEffGO) then
-			RoomGOPool.returnInstance(RoomConfig.instance:getRoomEffectPath(RoomConfig.instance:getAtmosphereResidentEffect(slot4)), slot5.residentEffGO)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0._atmosphereDict) do
+		if not gohelper.isNil(iter_24_1.residentEffGO) then
+			local var_24_0 = RoomConfig.instance:getAtmosphereResidentEffect(iter_24_0)
+			local var_24_1 = RoomConfig.instance:getRoomEffectPath(var_24_0)
+
+			RoomGOPool.returnInstance(var_24_1, iter_24_1.residentEffGO)
 		end
 
-		if slot5.flow then
-			slot6:unregisterDoneListener(slot0.atmosphereSequenceFinish, slot0)
-			slot6:destroy()
+		local var_24_2 = iter_24_1.flow
+
+		if var_24_2 then
+			var_24_2:unregisterDoneListener(arg_24_0.atmosphereSequenceFinish, arg_24_0)
+			var_24_2:destroy()
 		end
 
-		slot0:_resetAtmosphere(slot5)
+		arg_24_0:_resetAtmosphere(iter_24_1)
 	end
 
-	slot0._atmosphereDict = nil
+	arg_24_0._atmosphereDict = nil
 
-	slot0:setIsBlockAtmosphere(false)
+	arg_24_0:setIsBlockAtmosphere(false)
 end
 
-return slot0
+return var_0_0

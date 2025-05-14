@@ -1,42 +1,45 @@
-module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationViewContainer", package.seeall)
 
-slot0 = class("HeroInvitationViewContainer", BaseViewContainer)
+local var_0_0 = class("HeroInvitationViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "Right/#scroll_RoleList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes.itemRes
-	slot2.cellClass = HeroInvitationItem
-	slot2.scrollDir = ScrollEnum.ScrollDirH
-	slot2.lineCount = 1
-	slot2.cellWidth = 204
-	slot2.cellHeight = 528
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
-	slot0.scrollView = LuaListScrollViewWithAnimator.New(HeroInvitationListModel.instance, slot2)
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, slot0.scrollView)
-	table.insert(slot1, HeroInvitationView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_lefttop"))
+	var_1_1.scrollGOPath = "Right/#scroll_RoleList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes.itemRes
+	var_1_1.cellClass = HeroInvitationItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirH
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 204
+	var_1_1.cellHeight = 528
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+	arg_1_0.scrollView = LuaListScrollViewWithAnimator.New(HeroInvitationListModel.instance, var_1_1)
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.scrollView)
+	table.insert(var_1_0, HeroInvitationView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = NavigateButtonsView.New({
+		true,
+		true,
+		false
+	})
+
 	return {
-		NavigateButtonsView.New({
-			true,
-			true,
-			false
-		})
+		var_2_0
 	}
 end
 
-function slot0.getScrollView(slot0)
-	return slot0.scrollView
+function var_0_0.getScrollView(arg_3_0)
+	return arg_3_0.scrollView
 end
 
-return slot0
+return var_0_0

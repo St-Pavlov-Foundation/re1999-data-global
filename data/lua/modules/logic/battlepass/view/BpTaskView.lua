@@ -1,153 +1,173 @@
-module("modules.logic.battlepass.view.BpTaskView", package.seeall)
+﻿module("modules.logic.battlepass.view.BpTaskView", package.seeall)
 
-slot0 = class("BpTaskView", BaseView)
+local var_0_0 = class("BpTaskView", BaseView)
 
-function slot0.ctor(slot0)
-	slot0._taskLoopType = 1
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._taskLoopType = 1
 end
 
-function slot0.onInitView(slot0)
-	slot0._goline = gohelper.findChild(slot0.viewGO, "#go_line")
-	slot0._goallcomplete = gohelper.findChild(slot0.viewGO, "#go_allcomplete")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "toggleGroup/toggle3/#go_new")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._goline = gohelper.findChild(arg_2_0.viewGO, "#go_line")
+	arg_2_0._goallcomplete = gohelper.findChild(arg_2_0.viewGO, "#go_allcomplete")
+	arg_2_0._gonew = gohelper.findChild(arg_2_0.viewGO, "toggleGroup/toggle3/#go_new")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(BpController.instance, BpEvent.OnGetInfo, slot0._onTaskUpdate, slot0)
-	slot0:addEventCb(BpController.instance, BpEvent.OnTaskUpdate, slot0._onTaskUpdate, slot0)
-	slot0:addEventCb(BpController.instance, BpEvent.OnRedDotUpdate, slot0._onRedDotUpdate, slot0)
-	slot0:addEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, slot0.updateLineEnable, slot0)
-	slot0:addEventCb(slot0.viewContainer, BpEvent.OnTaskFinishAnim, slot0.playFinishAnim, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0:addEventCb(BpController.instance, BpEvent.OnGetInfo, arg_3_0._onTaskUpdate, arg_3_0)
+	arg_3_0:addEventCb(BpController.instance, BpEvent.OnTaskUpdate, arg_3_0._onTaskUpdate, arg_3_0)
+	arg_3_0:addEventCb(BpController.instance, BpEvent.OnRedDotUpdate, arg_3_0._onRedDotUpdate, arg_3_0)
+	arg_3_0:addEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, arg_3_0.updateLineEnable, arg_3_0)
+	arg_3_0:addEventCb(arg_3_0.viewContainer, BpEvent.OnTaskFinishAnim, arg_3_0.playFinishAnim, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(BpController.instance, BpEvent.OnGetInfo, slot0._onTaskUpdate, slot0)
-	slot0:removeEventCb(BpController.instance, BpEvent.OnTaskUpdate, slot0._onTaskUpdate, slot0)
-	slot0:removeEventCb(BpController.instance, BpEvent.OnRedDotUpdate, slot0._onRedDotUpdate, slot0)
-	slot0:removeEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, slot0.updateLineEnable, slot0)
-	slot0:removeEventCb(slot0.viewContainer, BpEvent.OnTaskFinishAnim, slot0.playFinishAnim, slot0)
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0:removeEventCb(BpController.instance, BpEvent.OnGetInfo, arg_4_0._onTaskUpdate, arg_4_0)
+	arg_4_0:removeEventCb(BpController.instance, BpEvent.OnTaskUpdate, arg_4_0._onTaskUpdate, arg_4_0)
+	arg_4_0:removeEventCb(BpController.instance, BpEvent.OnRedDotUpdate, arg_4_0._onRedDotUpdate, arg_4_0)
+	arg_4_0:removeEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, arg_4_0.updateLineEnable, arg_4_0)
+	arg_4_0:removeEventCb(arg_4_0.viewContainer, BpEvent.OnTaskFinishAnim, arg_4_0.playFinishAnim, arg_4_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot3 = ListScrollParam.New()
-	slot3.scrollGOPath = "#scroll"
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot3.prefabUrl = "#scroll/item"
-	slot3.cellClass = BpTaskItem
-	slot3.scrollDir = ScrollEnum.ScrollDirV
-	slot3.lineCount = 1
-	slot3.cellWidth = 1330
-	slot3.cellHeight = 132
-	slot3.cellSpaceH = 0
-	slot3.cellSpaceV = 15
-	slot3.startSpace = -2.5
-	slot3.frameUpdateMs = 100
-	slot0._scrollView = LuaListScrollView.New(BpTaskModel.instance, slot3)
+function var_0_0._editableInitView(arg_5_0)
+	local var_5_0 = 132
+	local var_5_1 = 15
+	local var_5_2 = ListScrollParam.New()
 
-	slot0:addChildView(slot0._scrollView)
+	var_5_2.scrollGOPath = "#scroll"
+	var_5_2.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_5_2.prefabUrl = "#scroll/item"
+	var_5_2.cellClass = BpTaskItem
+	var_5_2.scrollDir = ScrollEnum.ScrollDirV
+	var_5_2.lineCount = 1
+	var_5_2.cellWidth = 1330
+	var_5_2.cellHeight = var_5_0
+	var_5_2.cellSpaceH = 0
+	var_5_2.cellSpaceV = var_5_1
+	var_5_2.startSpace = -2.5
+	var_5_2.frameUpdateMs = 100
+	arg_5_0._scrollView = LuaListScrollView.New(BpTaskModel.instance, var_5_2)
 
-	slot0._toggleGroupGO = gohelper.findChild(slot0.viewGO, "toggleGroup")
-	slot0._toggleGroup = slot0._toggleGroupGO:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
-	slot0._redDotGO = gohelper.findChild(slot0.viewGO, "redDot")
-	slot0._toggleWraps = slot0:getUserDataTb_()
-	slot0._toggleRedDots = slot0:getUserDataTb_()
-	slot0._expupGos = slot0:getUserDataTb_()
+	arg_5_0:addChildView(arg_5_0._scrollView)
 
-	for slot9 = 1, slot0._toggleGroupGO.transform.childCount do
-		slot0._toggleRedDots[slot9] = gohelper.findChild(slot0._redDotGO, "#go_reddot" .. slot9)
+	arg_5_0._toggleGroupGO = gohelper.findChild(arg_5_0.viewGO, "toggleGroup")
+	arg_5_0._toggleGroup = arg_5_0._toggleGroupGO:GetComponent(typeof(UnityEngine.UI.ToggleGroup))
+	arg_5_0._redDotGO = gohelper.findChild(arg_5_0.viewGO, "redDot")
+	arg_5_0._toggleWraps = arg_5_0:getUserDataTb_()
+	arg_5_0._toggleRedDots = arg_5_0:getUserDataTb_()
+	arg_5_0._expupGos = arg_5_0:getUserDataTb_()
 
-		if slot4:GetChild(slot9 - 1).gameObject:GetComponent(typeof(UnityEngine.UI.Toggle)) then
-			slot13 = gohelper.onceAddComponent(slot11, typeof(SLFramework.UGUI.ToggleWrap))
+	local var_5_3 = arg_5_0._toggleGroupGO.transform
+	local var_5_4 = var_5_3.childCount
 
-			slot13:AddOnValueChanged(slot0._onToggleValueChanged, slot0, slot9)
+	for iter_5_0 = 1, var_5_4 do
+		local var_5_5 = var_5_3:GetChild(iter_5_0 - 1).gameObject
+		local var_5_6 = var_5_5:GetComponent(typeof(UnityEngine.UI.Toggle))
 
-			slot0._toggleWraps[slot9] = slot13
+		arg_5_0._toggleRedDots[iter_5_0] = gohelper.findChild(arg_5_0._redDotGO, "#go_reddot" .. iter_5_0)
+
+		if var_5_6 then
+			local var_5_7 = gohelper.onceAddComponent(var_5_5, typeof(SLFramework.UGUI.ToggleWrap))
+
+			var_5_7:AddOnValueChanged(arg_5_0._onToggleValueChanged, arg_5_0, iter_5_0)
+
+			arg_5_0._toggleWraps[iter_5_0] = var_5_7
 		end
 
-		table.insert(slot0._expupGos, gohelper.findChild(slot11, "Label/#go_expup"))
+		local var_5_8 = gohelper.findChild(var_5_5, "Label/#go_expup")
+
+		table.insert(arg_5_0._expupGos, var_5_8)
 	end
 
-	slot0._taskHeight = slot1 + slot2
-	slot0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(slot0._scrollView)
+	arg_5_0._taskHeight = var_5_0 + var_5_1
+	arg_5_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_5_0._scrollView)
 
-	slot0._taskAnimRemoveItem:setMoveInterval(0)
-	slot0._taskAnimRemoveItem:setMoveAnimationTime(BpEnum.TaskMaskTime - BpEnum.TaskGetAnimTime)
-	slot0:_onRedDotUpdate()
-	TaskDispatcher.runDelay(slot0._delayPlayTaskAnim, slot0, 0)
+	arg_5_0._taskAnimRemoveItem:setMoveInterval(0)
+	arg_5_0._taskAnimRemoveItem:setMoveAnimationTime(BpEnum.TaskMaskTime - BpEnum.TaskGetAnimTime)
+	arg_5_0:_onRedDotUpdate()
+	TaskDispatcher.runDelay(arg_5_0._delayPlayTaskAnim, arg_5_0, 0)
 end
 
-function slot0._delayPlayTaskAnim(slot0)
-	slot0.viewContainer:dispatchEvent(BpEvent.TapViewOpenAnimBegin, 2)
+function var_0_0._delayPlayTaskAnim(arg_6_0)
+	arg_6_0.viewContainer:dispatchEvent(BpEvent.TapViewOpenAnimBegin, 2)
 end
 
-function slot0._onClickbtnGetAll(slot0)
-	slot1 = BpTaskModel.instance:getList()
-	slot2 = false
-	slot0._tweenIndexes = {}
+function var_0_0._onClickbtnGetAll(arg_7_0)
+	local var_7_0 = BpTaskModel.instance:getList()
+	local var_7_1 = false
 
-	if not BpModel.instance:isWeeklyScoreFull() or slot3 and slot0._taskLoopType == 3 then
-		for slot7, slot8 in ipairs(slot1) do
-			if slot8.config.maxProgress <= slot8.progress and slot8.finishCount == 0 then
-				slot2 = true
+	arg_7_0._tweenIndexes = {}
 
-				table.insert(slot0._tweenIndexes, slot7)
+	local var_7_2 = BpModel.instance:isWeeklyScoreFull()
+
+	if not var_7_2 or var_7_2 and arg_7_0._taskLoopType == 3 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			if iter_7_1.progress >= iter_7_1.config.maxProgress and iter_7_1.finishCount == 0 then
+				var_7_1 = true
+
+				table.insert(arg_7_0._tweenIndexes, iter_7_0)
 
 				break
 			end
 		end
 	end
 
-	if slot2 then
-		slot0.viewContainer:dispatchEvent(BpEvent.OnTaskFinishAnim)
+	if var_7_1 then
+		arg_7_0.viewContainer:dispatchEvent(BpEvent.OnTaskFinishAnim)
 		UIBlockMgr.instance:startBlock("BpTaskItemFinish")
-		TaskDispatcher.runDelay(slot0.finishAllTask, slot0, BpEnum.TaskMaskTime)
+		TaskDispatcher.runDelay(arg_7_0.finishAllTask, arg_7_0, BpEnum.TaskMaskTime)
 	else
-		slot0:finishAllTask()
+		arg_7_0:finishAllTask()
 	end
 end
 
-function slot0.playFinishAnim(slot0, slot1)
-	if slot1 then
-		slot0._tweenIndexes = {
-			slot1
+function var_0_0.playFinishAnim(arg_8_0, arg_8_1)
+	if arg_8_1 then
+		arg_8_0._tweenIndexes = {
+			arg_8_1
 		}
 	end
 
-	TaskDispatcher.runDelay(slot0.delayPlayFinishAnim, slot0, BpEnum.TaskGetAnimTime)
+	TaskDispatcher.runDelay(arg_8_0.delayPlayFinishAnim, arg_8_0, BpEnum.TaskGetAnimTime)
 end
 
-function slot0.delayPlayFinishAnim(slot0)
-	slot0._taskAnimRemoveItem:removeByIndexs(slot0._tweenIndexes)
+function var_0_0.delayPlayFinishAnim(arg_9_0)
+	arg_9_0._taskAnimRemoveItem:removeByIndexs(arg_9_0._tweenIndexes)
 end
 
-function slot0.finishAllTask(slot0)
+function var_0_0.finishAllTask(arg_10_0)
 	UIBlockMgr.instance:endBlock("BpTaskItemFinish")
-	TaskDispatcher.cancelTask(slot0.finishAllTask, slot0)
-	TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
+	TaskDispatcher.cancelTask(arg_10_0.finishAllTask, arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.delayPlayFinishAnim, arg_10_0)
 
-	slot0._preBpScore = BpModel.instance.score
+	arg_10_0._preBpScore = BpModel.instance.score
 	BpModel.instance.lockLevelUpShow = true
-	slot2 = nil
 
-	if BpModel.instance:isWeeklyScoreFull() then
-		for slot6, slot7 in pairs(BpTaskModel.instance.serverTaskModel:getList()) do
-			if slot7.config.loopType ~= 1 and slot8 ~= 2 and slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 and slot7.config.bpId == BpModel.instance.id then
-				table.insert({}, slot7.config.id)
+	local var_10_0 = BpModel.instance:isWeeklyScoreFull()
+	local var_10_1
+
+	if var_10_0 then
+		var_10_1 = {}
+
+		for iter_10_0, iter_10_1 in pairs(BpTaskModel.instance.serverTaskModel:getList()) do
+			local var_10_2 = iter_10_1.config.loopType
+
+			if var_10_2 ~= 1 and var_10_2 ~= 2 and iter_10_1.progress >= iter_10_1.config.maxProgress and iter_10_1.finishCount == 0 and iter_10_1.config.bpId == BpModel.instance.id then
+				table.insert(var_10_1, iter_10_1.config.id)
 			end
 		end
 	end
 
-	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.BattlePass, nil, slot2, slot0._onTaskSendFinish, slot0)
+	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.BattlePass, nil, var_10_1, arg_10_0._onTaskSendFinish, arg_10_0)
 end
 
-function slot0._onTaskSendFinish(slot0, slot1, slot2, slot3)
-	if slot2 == 0 and BpModel.instance.lockLevelUpShow and BpModel.instance:checkLevelUp(BpModel.instance.score, slot0._preBpScore) then
+function var_0_0._onTaskSendFinish(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if arg_11_2 == 0 and BpModel.instance.lockLevelUpShow and BpModel.instance:checkLevelUp(BpModel.instance.score, arg_11_0._preBpScore) then
 		BpModel.instance.preStatus = {
-			score = slot0._preBpScore,
+			score = arg_11_0._preBpScore,
 			payStatus = BpModel.instance.payStatus
 		}
 
@@ -157,129 +177,132 @@ function slot0._onTaskSendFinish(slot0, slot1, slot2, slot3)
 	BpModel.instance.lockLevelUpShow = false
 end
 
-function slot0._onRedDotUpdate(slot0)
-	for slot4 = 1, #slot0._toggleRedDots do
-		gohelper.setActive(slot0._toggleRedDots[slot4], BpTaskModel.instance:getHaveRedDot(slot4))
+function var_0_0._onRedDotUpdate(arg_12_0)
+	for iter_12_0 = 1, #arg_12_0._toggleRedDots do
+		gohelper.setActive(arg_12_0._toggleRedDots[iter_12_0], BpTaskModel.instance:getHaveRedDot(iter_12_0))
 	end
 end
 
-function slot0._onToggleValueChanged(slot0, slot1, slot2)
-	if slot2 then
+function var_0_0._onToggleValueChanged(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_2 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_vertical_second_tabs_click)
 
-		slot0._taskLoopType = slot1
+		arg_13_0._taskLoopType = arg_13_1
 
-		slot0:_onTaskUpdate()
+		arg_13_0:_onTaskUpdate()
 	end
 
-	slot0:_setToggleLabelColor()
+	arg_13_0:_setToggleLabelColor()
 end
 
-function slot0._setToggleLabelColor(slot0)
-	for slot4 = 1, #slot0._toggleWraps do
-		SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0._toggleWraps[slot4].gameObject, "Label"), slot0._taskLoopType == slot4 and "#c66030" or "#888888")
+function var_0_0._setToggleLabelColor(arg_14_0)
+	for iter_14_0 = 1, #arg_14_0._toggleWraps do
+		local var_14_0 = gohelper.findChildText(arg_14_0._toggleWraps[iter_14_0].gameObject, "Label")
+
+		SLFramework.UGUI.GuiHelper.SetColor(var_14_0, arg_14_0._taskLoopType == iter_14_0 and "#c66030" or "#888888")
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._delayPlayTaskAnim, slot0)
+function var_0_0.onClose(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._delayPlayTaskAnim, arg_15_0)
 	UIBlockMgr.instance:endBlock("BpTaskItemFinish")
-	TaskDispatcher.cancelTask(slot0.finishAllTask, slot0)
-	TaskDispatcher.cancelTask(slot0.delayPlayFinishAnim, slot0)
+	TaskDispatcher.cancelTask(arg_15_0.finishAllTask, arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.delayPlayFinishAnim, arg_15_0)
 
 	BpModel.instance.lockLevelUpShow = false
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4 = 1, #slot0._toggleWraps do
-		slot0._toggleWraps[slot4]:RemoveOnValueChanged()
+function var_0_0.onDestroyView(arg_16_0)
+	for iter_16_0 = 1, #arg_16_0._toggleWraps do
+		arg_16_0._toggleWraps[iter_16_0]:RemoveOnValueChanged()
 	end
 
-	slot0._toggleWraps = nil
+	arg_16_0._toggleWraps = nil
 end
 
-function slot0.onOpen(slot0)
-	slot5 = slot0
+function var_0_0.onOpen(arg_17_0)
+	BpController.instance:dispatchEvent(BpEvent.SetGetAllCallBack, arg_17_0._onClickbtnGetAll, arg_17_0)
 
-	BpController.instance:dispatchEvent(BpEvent.SetGetAllCallBack, slot0._onClickbtnGetAll, slot5)
+	local var_17_0 = 1
 
-	slot1 = 1
-
-	for slot5 = 1, 3 do
-		if BpTaskModel.instance:getHaveRedDot(slot5) then
-			slot1 = slot5
+	for iter_17_0 = 1, 3 do
+		if BpTaskModel.instance:getHaveRedDot(iter_17_0) then
+			var_17_0 = iter_17_0
 
 			break
 		end
 	end
 
-	slot0._taskLoopType = slot1
+	arg_17_0._taskLoopType = var_17_0
 
-	for slot5 = 1, #slot0._toggleWraps do
-		slot0._toggleWraps[slot5].isOn = slot5 == slot1
+	for iter_17_1 = 1, #arg_17_0._toggleWraps do
+		arg_17_0._toggleWraps[iter_17_1].isOn = iter_17_1 == var_17_0
 	end
 
 	BpTaskModel.instance:sortList()
-	slot0:_onTaskUpdate()
-	slot0:_refreshExpUp()
+	arg_17_0:_onTaskUpdate()
+	arg_17_0:_refreshExpUp()
 end
 
-function slot0._onTaskUpdate(slot0)
-	slot0.viewContainer:dispatchEvent(BpEvent.TaskTabChange, slot0._taskLoopType)
-	gohelper.setActive(slot0._goallcomplete, slot0._taskLoopType <= 2 and BpModel.instance:isWeeklyScoreFull())
-	BpTaskModel.instance:refreshListView(slot0._taskLoopType)
-	slot0:updateLineEnable()
+function var_0_0._onTaskUpdate(arg_18_0)
+	arg_18_0.viewContainer:dispatchEvent(BpEvent.TaskTabChange, arg_18_0._taskLoopType)
+	gohelper.setActive(arg_18_0._goallcomplete, arg_18_0._taskLoopType <= 2 and BpModel.instance:isWeeklyScoreFull())
+	BpTaskModel.instance:refreshListView(arg_18_0._taskLoopType)
+	arg_18_0:updateLineEnable()
 	BpController.instance:dispatchEvent(BpEvent.SetGetAllEnable, BpTaskModel.instance.showQuickFinishTask)
 
-	slot2 = false
+	local var_18_0 = BpModel.instance.id or 0
+	local var_18_1 = false
 
-	if BpTaskModel.instance.haveTurnBackTask and GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.BpTurnBackNewMark .. (BpModel.instance.id or 0), "0") == "0" then
-		slot2 = true
+	if BpTaskModel.instance.haveTurnBackTask and GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.BpTurnBackNewMark .. var_18_0, "0") == "0" then
+		var_18_1 = true
 	end
 
-	if slot0._taskLoopType == 3 and slot2 then
-		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.BpTurnBackNewMark .. slot1, "1")
+	if arg_18_0._taskLoopType == 3 and var_18_1 then
+		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.BpTurnBackNewMark .. var_18_0, "1")
 
-		slot2 = false
+		var_18_1 = false
 	end
 
-	gohelper.setActive(slot0._gonew, slot2)
+	gohelper.setActive(arg_18_0._gonew, var_18_1)
 end
 
-function slot0.updateLineEnable(slot0)
-	slot1 = true
+function var_0_0.updateLineEnable(arg_19_0)
+	local var_19_0 = true
 
 	if BpTaskModel.instance.showQuickFinishTask then
-		slot1 = false
+		var_19_0 = false
 	end
 
 	if BpModel.instance.payStatus ~= BpEnum.PayStatus.Pay2 then
-		slot1 = false
+		var_19_0 = false
 	end
 
-	gohelper.setActive(slot0._goline, slot1)
+	gohelper.setActive(arg_19_0._goline, var_19_0)
 end
 
-function slot0._refreshExpUp(slot0)
+function var_0_0._refreshExpUp(arg_20_0)
 	if not BpModel.instance:isShowExpUp() then
-		for slot5, slot6 in ipairs(slot0._expupGos) do
-			gohelper.setActive(slot6, false)
+		for iter_20_0, iter_20_1 in ipairs(arg_20_0._expupGos) do
+			gohelper.setActive(iter_20_1, false)
 		end
 
 		return
 	end
 
-	slot2 = {}
+	local var_20_0 = {}
 
-	for slot6, slot7 in pairs(BpTaskModel.instance.serverTaskModel:getList()) do
-		slot8 = slot7.config
-		slot9 = slot8.loopType
-		slot2[slot9] = slot2[slot9] or 1000 + (slot8.bonusScoreTimes or 0) > 1000
+	for iter_20_2, iter_20_3 in pairs(BpTaskModel.instance.serverTaskModel:getList()) do
+		local var_20_1 = iter_20_3.config
+		local var_20_2 = var_20_1.loopType
+		local var_20_3 = 1000 + (var_20_1.bonusScoreTimes or 0) > 1000
+
+		var_20_0[var_20_2] = var_20_0[var_20_2] or var_20_3
 	end
 
-	for slot6, slot7 in ipairs(slot0._expupGos) do
-		gohelper.setActive(slot7, slot2[slot6] or false)
+	for iter_20_4, iter_20_5 in ipairs(arg_20_0._expupGos) do
+		gohelper.setActive(iter_20_5, var_20_0[iter_20_4] or false)
 	end
 end
 
-return slot0
+return var_0_0

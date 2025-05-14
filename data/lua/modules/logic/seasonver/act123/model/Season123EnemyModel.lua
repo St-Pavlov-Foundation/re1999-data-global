@@ -1,141 +1,162 @@
-module("modules.logic.seasonver.act123.model.Season123EnemyModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123EnemyModel", package.seeall)
 
-slot0 = class("Season123EnemyModel", BaseModel)
+local var_0_0 = class("Season123EnemyModel", BaseModel)
 
-function slot0.release(slot0)
-	slot0.selectIndex = nil
-	slot0.battleIdList = nil
-	slot0.stage = nil
-	slot0._groupMap = nil
-	slot0._monsterGroupMap = nil
-	slot0._group2Monsters = nil
-	slot0.selectMonsterGroupIndex = nil
-	slot0.selectMonsterIndex = nil
-	slot0.selectMonsterId = nil
+function var_0_0.release(arg_1_0)
+	arg_1_0.selectIndex = nil
+	arg_1_0.battleIdList = nil
+	arg_1_0.stage = nil
+	arg_1_0._groupMap = nil
+	arg_1_0._monsterGroupMap = nil
+	arg_1_0._group2Monsters = nil
+	arg_1_0.selectMonsterGroupIndex = nil
+	arg_1_0.selectMonsterIndex = nil
+	arg_1_0.selectMonsterId = nil
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.activityId = slot1
-	slot0.stage = slot2
-	slot0.selectIndex = 1
-	slot0.battleIdList = uv0.getStageBattleIds(slot1, slot2)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.stage = arg_2_2
+	arg_2_0.selectIndex = 1
+	arg_2_0.battleIdList = var_0_0.getStageBattleIds(arg_2_1, arg_2_2)
 
-	slot0:initDatas()
-	slot0:initSelect(slot3)
+	arg_2_0:initDatas()
+	arg_2_0:initSelect(arg_2_3)
 end
 
-function slot0.initDatas(slot0)
-	slot0._groupMap = {}
-	slot0._monsterGroupMap = {}
-	slot0._group2Monsters = {}
+function var_0_0.initDatas(arg_3_0)
+	arg_3_0._groupMap = {}
+	arg_3_0._monsterGroupMap = {}
+	arg_3_0._group2Monsters = {}
 end
 
-function slot0.initSelect(slot0, slot1)
-	if not Season123Config.instance:getSeasonEpisodeStageCos(slot0.activityId, slot0.stage) then
+function var_0_0.initSelect(arg_4_0, arg_4_1)
+	local var_4_0 = Season123Config.instance:getSeasonEpisodeStageCos(arg_4_0.activityId, arg_4_0.stage)
+
+	if not var_4_0 then
 		return nil
 	end
 
-	for slot6, slot7 in ipairs(slot2) do
-		if slot7.layer == slot1 then
-			slot0.selectIndex = slot6
+	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
+		if iter_4_1.layer == arg_4_1 then
+			arg_4_0.selectIndex = iter_4_0
 
 			return
 		end
 	end
 end
 
-function slot0.getCurrentBattleGroupIds(slot0)
-	if not slot0:getSelectBattleId() then
+function var_0_0.getCurrentBattleGroupIds(arg_5_0)
+	local var_5_0 = arg_5_0:getSelectBattleId()
+
+	if not var_5_0 then
 		return
 	end
 
-	if not slot0._groupMap[slot1] then
-		if string.nilorempty(lua_battle.configDict[slot1].monsterGroupIds) then
-			slot2 = {}
-		else
-			for slot7, slot8 in ipairs(string.splitToNumber(slot3.monsterGroupIds, "#")) do
-				slot9 = lua_monster_group.configDict[slot8]
-				slot0._monsterGroupMap[slot8] = slot9
+	local var_5_1 = arg_5_0._groupMap[var_5_0]
 
-				slot0:initGroup2Monster(slot8, slot9)
+	if not var_5_1 then
+		local var_5_2 = lua_battle.configDict[var_5_0]
+
+		if string.nilorempty(var_5_2.monsterGroupIds) then
+			var_5_1 = {}
+		else
+			var_5_1 = string.splitToNumber(var_5_2.monsterGroupIds, "#")
+
+			for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+				local var_5_3 = lua_monster_group.configDict[iter_5_1]
+
+				arg_5_0._monsterGroupMap[iter_5_1] = var_5_3
+
+				arg_5_0:initGroup2Monster(iter_5_1, var_5_3)
 			end
 		end
 
-		slot0._groupMap[slot1] = slot2
+		arg_5_0._groupMap[var_5_0] = var_5_1
 	end
 
-	return slot2
+	return var_5_1
 end
 
-function slot0.initGroup2Monster(slot0, slot1, slot2)
-	slot3 = {}
-	slot5 = string.nilorempty(slot2.spMonster)
+function var_0_0.initGroup2Monster(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = {}
+	local var_6_1 = string.nilorempty(arg_6_2.monster)
+	local var_6_2 = string.nilorempty(arg_6_2.spMonster)
 
-	if string.nilorempty(slot2.monster) and slot5 then
+	if var_6_1 and var_6_2 then
 		return
 	end
 
-	slot3 = slot4 and {} or string.splitToNumber(slot2.monster, "#")
+	local var_6_3 = var_6_1 and {} or string.splitToNumber(arg_6_2.monster, "#")
+	local var_6_4 = var_6_2 and {} or string.splitToNumber(arg_6_2.spMonster, "#")
 
-	for slot10, slot11 in ipairs(slot5 and {} or string.splitToNumber(slot2.spMonster, "#")) do
-		table.insert(slot3, slot11)
+	for iter_6_0, iter_6_1 in ipairs(var_6_4) do
+		table.insert(var_6_3, iter_6_1)
 	end
 
-	slot0._group2Monsters[slot1] = slot3
+	arg_6_0._group2Monsters[arg_6_1] = var_6_3
 end
 
-function slot0.getMonsterIds(slot0, slot1)
-	return slot0._group2Monsters[slot1]
+function var_0_0.getMonsterIds(arg_7_0, arg_7_1)
+	return arg_7_0._group2Monsters[arg_7_1]
 end
 
-function slot0.setSelectIndex(slot0, slot1)
-	slot0.selectIndex = slot1
+function var_0_0.setSelectIndex(arg_8_0, arg_8_1)
+	arg_8_0.selectIndex = arg_8_1
 
-	slot0:getCurrentBattleGroupIds()
+	arg_8_0:getCurrentBattleGroupIds()
 end
 
-function slot0.getSelectedIndex(slot0)
-	return slot0.selectIndex
+function var_0_0.getSelectedIndex(arg_9_0)
+	return arg_9_0.selectIndex
 end
 
-function slot0.getBattleIds(slot0)
-	return slot0.battleIdList
+function var_0_0.getBattleIds(arg_10_0)
+	return arg_10_0.battleIdList
 end
 
-function slot0.getSelectBattleId(slot0)
-	return slot0.battleIdList[slot0.selectIndex]
+function var_0_0.getSelectBattleId(arg_11_0)
+	return arg_11_0.battleIdList[arg_11_0.selectIndex]
 end
 
-function slot0.setEnemySelectMonsterId(slot0, slot1, slot2, slot3)
-	slot0.selectMonsterGroupIndex = slot1
-	slot0.selectMonsterIndex = slot2
-	slot0.selectMonsterId = slot3
+function var_0_0.setEnemySelectMonsterId(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	arg_12_0.selectMonsterGroupIndex = arg_12_1
+	arg_12_0.selectMonsterIndex = arg_12_2
+	arg_12_0.selectMonsterId = arg_12_3
 end
 
-function slot0.getBossId(slot0, slot1)
-	if not slot0:getSelectBattleId() then
+function var_0_0.getBossId(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getSelectBattleId()
+
+	if not var_13_0 then
 		return
 	end
 
-	slot4 = FightModel.instance:getSelectMonsterGroupId(slot1, slot2) and lua_monster_group.configDict[slot3]
+	local var_13_1 = FightModel.instance:getSelectMonsterGroupId(arg_13_1, var_13_0)
+	local var_13_2 = var_13_1 and lua_monster_group.configDict[var_13_1]
 
-	return slot4 and not string.nilorempty(slot4.bossId) and slot4.bossId or nil
+	return var_13_2 and not string.nilorempty(var_13_2.bossId) and var_13_2.bossId or nil
 end
 
-function slot0.getStageBattleIds(slot0, slot1)
-	if not Season123Config.instance:getSeasonEpisodeStageCos(slot0, slot1) then
-		return {}
+function var_0_0.getStageBattleIds(arg_14_0, arg_14_1)
+	local var_14_0 = {}
+	local var_14_1 = Season123Config.instance:getSeasonEpisodeStageCos(arg_14_0, arg_14_1)
+
+	if not var_14_1 then
+		return var_14_0
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if DungeonConfig.instance:getEpisodeCO(slot8.episodeId) then
-			table.insert(slot2, slot9.battleId)
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		local var_14_2 = DungeonConfig.instance:getEpisodeCO(iter_14_1.episodeId)
+
+		if var_14_2 then
+			table.insert(var_14_0, var_14_2.battleId)
 		end
 	end
 
-	return slot2
+	return var_14_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

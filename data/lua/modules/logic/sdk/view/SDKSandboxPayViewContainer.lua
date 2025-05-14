@@ -1,13 +1,13 @@
-module("modules.logic.sdk.view.SDKSandboxPayViewContainer", package.seeall)
+﻿module("modules.logic.sdk.view.SDKSandboxPayViewContainer", package.seeall)
 
-slot0 = class("SDKSandboxPayViewContainer", BaseViewContainer)
+local var_0_0 = class("SDKSandboxPayViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, SDKSandboxPayView.New())
+	table.insert(var_1_0, SDKSandboxPayView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

@@ -1,36 +1,46 @@
-module("modules.logic.guide.controller.action.impl.GuideActionRoomFocusBlock", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.GuideActionRoomFocusBlock", package.seeall)
 
-slot0 = class("GuideActionRoomFocusBlock", BaseGuideAction)
+local var_0_0 = class("GuideActionRoomFocusBlock", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = slot0.actionParam and string.splitToNumber(slot0.actionParam, "#")
+	local var_1_0 = arg_1_0.actionParam and string.splitToNumber(arg_1_0.actionParam, "#")
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		slot5 = gohelper.find(GuideModel.instance:getStepGOPath(slot0.guideId, slot0.stepId)) and MonoHelper.getLuaComFromGo(slot4, RoomMapBlockEntity) or slot4 and MonoHelper.getLuaComFromGo(slot4, RoomEmptyBlockEntity) or slot4 and MonoHelper.getLuaComFromGo(slot4, RoomBuildingEntity)
+		local var_1_1 = GuideModel.instance:getStepGOPath(arg_1_0.guideId, arg_1_0.stepId)
+		local var_1_2 = gohelper.find(var_1_1)
+		local var_1_3 = var_1_2 and MonoHelper.getLuaComFromGo(var_1_2, RoomMapBlockEntity)
 
-		if slot5 and slot5:getMO() then
-			GameSceneMgr.instance:getCurScene().camera:tweenCamera({
-				focusX = HexMath.hexToPosition(slot6.hexPoint, RoomBlockEnum.BlockSize).x + (slot2 and slot2[1] or 0),
-				focusY = slot7.y + (slot2 and slot2[2] or 0)
-			})
-			TaskDispatcher.runDelay(slot0._onDone, slot0, 0.7)
+		var_1_3 = var_1_3 or var_1_2 and MonoHelper.getLuaComFromGo(var_1_2, RoomEmptyBlockEntity)
+		var_1_3 = var_1_3 or var_1_2 and MonoHelper.getLuaComFromGo(var_1_2, RoomBuildingEntity)
+
+		local var_1_4 = var_1_3 and var_1_3:getMO()
+
+		if var_1_4 then
+			local var_1_5 = HexMath.hexToPosition(var_1_4.hexPoint, RoomBlockEnum.BlockSize)
+			local var_1_6 = {
+				focusX = var_1_5.x + (var_1_0 and var_1_0[1] or 0),
+				focusY = var_1_5.y + (var_1_0 and var_1_0[2] or 0)
+			}
+
+			GameSceneMgr.instance:getCurScene().camera:tweenCamera(var_1_6)
+			TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, 0.7)
 		else
-			slot0:onDone(true)
+			arg_1_0:onDone(true)
 		end
 	else
-		logError("不在小屋场景，指引失败 " .. slot0.guideId .. "_" .. slot0.stepId)
-		slot0:onDone(true)
+		logError("不在小屋场景，指引失败 " .. arg_1_0.guideId .. "_" .. arg_1_0.stepId)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onDone(slot0, slot1)
-	slot0:onDone(true)
+function var_0_0._onDone(arg_2_0, arg_2_1)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._onDone, slot0)
+function var_0_0.clearWork(arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._onDone, arg_3_0)
 end
 
-return slot0
+return var_0_0

@@ -1,69 +1,69 @@
-module("modules.logic.scene.cachot.entity.CachotDoorEffect", package.seeall)
+﻿module("modules.logic.scene.cachot.entity.CachotDoorEffect", package.seeall)
 
-slot0 = class("CachotDoorEffect", LuaCompBase)
-slot1 = {
+local var_0_0 = class("CachotDoorEffect", LuaCompBase)
+local var_0_1 = {
 	enter = UnityEngine.Animator.StringToHash("enter"),
 	active = UnityEngine.Animator.StringToHash("active"),
 	exit = UnityEngine.Animator.StringToHash("exit")
 }
-slot2 = 0.5
+local var_0_2 = 0.5
 
-function slot0.Create(slot0)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(slot0, uv0)
+function var_0_0.Create(arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
 end
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	var_0_0.super.init(arg_2_0, arg_2_1)
 
-	slot0.go = slot1
-	slot0.trans = slot1.transform
-	slot0._animator = slot1:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0.go = arg_2_1
+	arg_2_0.trans = arg_2_1.transform
+	arg_2_0._animator = arg_2_1:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot1, false)
+	gohelper.setActive(arg_2_1, false)
 
-	slot0._isInDoor = false
+	arg_2_0._isInDoor = false
 end
 
-function slot0.setIsInDoor(slot0, slot1)
-	if slot0._isInDoor == slot1 then
+function var_0_0.setIsInDoor(arg_3_0, arg_3_1)
+	if arg_3_0._isInDoor == arg_3_1 then
 		return
 	end
 
-	slot0._isInDoor = slot1
+	arg_3_0._isInDoor = arg_3_1
 
-	gohelper.setActive(slot0.go, true)
-	TaskDispatcher.cancelTask(slot0.hideEffect, slot0)
+	gohelper.setActive(arg_3_0.go, true)
+	TaskDispatcher.cancelTask(arg_3_0.hideEffect, arg_3_0)
 
-	slot2 = slot0._animator:GetCurrentAnimatorStateInfo(0)
-	slot3 = 0
+	local var_3_0 = arg_3_0._animator:GetCurrentAnimatorStateInfo(0)
+	local var_3_1 = 0
 
-	if slot1 then
-		if slot2.shortNameHash == uv0.exit then
-			slot3 = 1 - slot2.normalizedTime
+	if arg_3_1 then
+		if var_3_0.shortNameHash == var_0_1.exit then
+			var_3_1 = 1 - var_3_0.normalizedTime
 		end
 
-		slot0._animator:Play(uv0.enter, 0, slot3)
+		arg_3_0._animator:Play(var_0_1.enter, 0, var_3_1)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_entrance_light)
 	else
-		if slot2.shortNameHash == uv0.enter then
-			slot3 = 1 - slot2.normalizedTime
+		if var_3_0.shortNameHash == var_0_1.enter then
+			var_3_1 = 1 - var_3_0.normalizedTime
 		end
 
-		slot0._animator:Play(uv0.exit, 0, slot3)
-		TaskDispatcher.runDelay(slot0.hideEffect, slot0, (1 - slot3) * uv1)
+		arg_3_0._animator:Play(var_0_1.exit, 0, var_3_1)
+		TaskDispatcher.runDelay(arg_3_0.hideEffect, arg_3_0, (1 - var_3_1) * var_0_2)
 	end
 end
 
-function slot0.hideEffect(slot0)
-	slot0._isInDoor = false
+function var_0_0.hideEffect(arg_4_0)
+	arg_4_0._isInDoor = false
 
-	TaskDispatcher.cancelTask(slot0.hideEffect, slot0)
-	gohelper.setActive(slot0.go, false)
+	TaskDispatcher.cancelTask(arg_4_0.hideEffect, arg_4_0)
+	gohelper.setActive(arg_4_0.go, false)
 end
 
-function slot0.dispose(slot0)
-	gohelper.destroy(slot0.go)
-	TaskDispatcher.cancelTask(slot0.hideEffect, slot0)
+function var_0_0.dispose(arg_5_0)
+	gohelper.destroy(arg_5_0.go)
+	TaskDispatcher.cancelTask(arg_5_0.hideEffect, arg_5_0)
 end
 
-return slot0
+return var_0_0

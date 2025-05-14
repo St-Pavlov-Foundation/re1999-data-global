@@ -1,69 +1,82 @@
-module("modules.logic.open.model.OpenModel", package.seeall)
+﻿module("modules.logic.open.model.OpenModel", package.seeall)
 
-slot0 = class("OpenModel", BaseModel)
+local var_0_0 = class("OpenModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._unlocks = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._unlocks = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._unlocks = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._unlocks = {}
 end
 
-function slot0.setOpenInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = tonumber(slot6.id)
+function var_0_0.setOpenInfo(arg_3_0, arg_3_1)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = tonumber(iter_3_1.id)
+		local var_3_1 = iter_3_1.isOpen
 
 		if VersionValidator.instance:isInReviewing() then
-			slot8 = slot6.isOpen and OpenConfig.instance:getOpenCo(slot7).verifingHide == 0
+			local var_3_2 = OpenConfig.instance:getOpenCo(var_3_0)
+
+			var_3_1 = var_3_1 and var_3_2.verifingHide == 0
 		end
 
-		slot0._unlocks[slot7] = slot8
+		arg_3_0._unlocks[var_3_0] = var_3_1
 	end
 end
 
-function slot0.updateOpenInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = tonumber(slot6.id)
+function var_0_0.updateOpenInfo(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_0 = tonumber(iter_4_1.id)
+		local var_4_1 = iter_4_1.isOpen
 
 		if VersionValidator.instance:isInReviewing() then
-			slot8 = slot6.isOpen and OpenConfig.instance:getOpenCo(slot7).verifingHide == 0
+			local var_4_2 = OpenConfig.instance:getOpenCo(var_4_0)
+
+			var_4_1 = var_4_1 and var_4_2.verifingHide == 0
 		end
 
-		slot0._unlocks[slot7] = slot8
+		arg_4_0._unlocks[var_4_0] = var_4_1
 	end
 end
 
-function slot0.isFunctionUnlock(slot0, slot1)
-	return slot0._unlocks[tonumber(slot1)]
+function var_0_0.isFunctionUnlock(arg_5_0, arg_5_1)
+	return arg_5_0._unlocks[tonumber(arg_5_1)]
 end
 
-function slot0.isFuncBtnShow(slot0, slot1)
-	slot2 = OpenConfig.instance:getOpenCo(slot1)
+function var_0_0.isFuncBtnShow(arg_6_0, arg_6_1)
+	local var_6_0 = OpenConfig.instance:getOpenCo(arg_6_1)
 
-	if VersionValidator.instance:isInReviewing() and slot2.verifingHide == 1 then
+	if VersionValidator.instance:isInReviewing() and var_6_0.verifingHide == 1 then
 		return false
 	end
 
-	if tonumber(slot2.isOnline) == 0 then
+	if tonumber(var_6_0.isOnline) == 0 then
 		return false
 	end
 
-	return tonumber(slot2.isAlwaysShowBtn) > 0 or slot0._unlocks[slot1]
+	return tonumber(var_6_0.isAlwaysShowBtn) > 0 or arg_6_0._unlocks[arg_6_1]
 end
 
-function slot0.getFuncUnlockDesc(slot0, slot1)
-	if OpenConfig.instance:getOpenCo(slot1).dec == 2003 then
-		if (not VersionValidator.instance:isInReviewing() or not slot2.verifingEpisodeId) and not slot2.episodeId or slot4 == 0 then
-			return slot3
+function var_0_0.getFuncUnlockDesc(arg_7_0, arg_7_1)
+	local var_7_0 = OpenConfig.instance:getOpenCo(arg_7_1)
+	local var_7_1 = var_7_0.dec
+
+	if var_7_1 == 2003 then
+		local var_7_2 = VersionValidator.instance:isInReviewing() and var_7_0.verifingEpisodeId or var_7_0.episodeId
+
+		if not var_7_2 or var_7_2 == 0 then
+			return var_7_1
 		end
 
-		return slot3, DungeonConfig.instance:getEpisodeDisplay(slot4)
+		local var_7_3 = DungeonConfig.instance:getEpisodeDisplay(var_7_2)
+
+		return var_7_1, var_7_3
 	end
 
-	return slot3
+	return var_7_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

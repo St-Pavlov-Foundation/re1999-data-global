@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_battle_dialog", package.seeall)
+﻿module("modules.configs.excel2json.lua_battle_dialog", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	param = 3,
 	icon = 7,
 	canRepeat = 4,
@@ -13,16 +14,16 @@ slot1 = {
 	code = 1,
 	tipsDir = 10
 }
-slot2 = {
+local var_0_2 = {
 	"code",
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	text = 1
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

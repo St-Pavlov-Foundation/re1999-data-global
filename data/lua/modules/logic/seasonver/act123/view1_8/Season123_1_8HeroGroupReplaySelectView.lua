@@ -1,148 +1,174 @@
-module("modules.logic.seasonver.act123.view1_8.Season123_1_8HeroGroupReplaySelectView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8HeroGroupReplaySelectView", package.seeall)
 
-slot0 = class("Season123_1_8HeroGroupReplaySelectView", BaseView)
+local var_0_0 = class("Season123_1_8HeroGroupReplaySelectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnmultispeed = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed")
-	slot0._txtmultispeed = gohelper.findChildTextMesh(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/Label")
-	slot0._btnclosemult = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closemult")
-	slot0._gomultPos = gohelper.findChild(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/#go_multpos")
-	slot0._gomultispeed = gohelper.findChild(slot0.viewGO, "#go_multispeed")
-	slot0._gomultContent = gohelper.findChild(slot0.viewGO, "#go_multispeed/Viewport/Content")
-	slot0._gomultitem = gohelper.findChild(slot0.viewGO, "#go_multispeed/Viewport/Content/#go_multitem")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_startseasonreplay/#go_cost/#image_icon")
-	slot0._txtcostNum = gohelper.findChildText(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_startseasonreplay/#go_cost/#txt_num")
-	slot0._godropbg = gohelper.findChild(slot0.viewGO, "#go_multispeed/Viewport/bg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnmultispeed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed")
+	arg_1_0._txtmultispeed = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/Label")
+	arg_1_0._btnclosemult = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closemult")
+	arg_1_0._gomultPos = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/#go_multpos")
+	arg_1_0._gomultispeed = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed")
+	arg_1_0._gomultContent = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/Content")
+	arg_1_0._gomultitem = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/Content/#go_multitem")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_startseasonreplay/#go_cost/#image_icon")
+	arg_1_0._txtcostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_startseasonreplay/#go_cost/#txt_num")
+	arg_1_0._godropbg = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/bg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmultispeed:AddClickListener(slot0._btnmultispeedOnClick, slot0)
-	slot0._btnclosemult:AddClickListener(slot0._btnclosemultOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmultispeed:AddClickListener(arg_2_0._btnmultispeedOnClick, arg_2_0)
+	arg_2_0._btnclosemult:AddClickListener(arg_2_0._btnclosemultOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmultispeed:RemoveClickListener()
-	slot0._btnclosemult:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmultispeed:RemoveClickListener()
+	arg_3_0._btnclosemult:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._isMultiOpen = false
-	slot0.rectdropbg = slot0._godropbg.transform
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._isMultiOpen = false
+	arg_4_0.rectdropbg = arg_4_0._godropbg.transform
 
-	slot0:refreshMulti()
+	arg_4_0:refreshMulti()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:initCostIcon()
-	slot0:initMultiGroup()
-	slot0:refreshSelection()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:initCostIcon()
+	arg_6_0:initMultiGroup()
+	arg_6_0:refreshSelection()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-slot0.ItemHeight = 92
+var_0_0.ItemHeight = 92
 
-function slot0.initMultiGroup(slot0)
-	slot0._multSpeedItems = {}
-	slot0.maxMultiplicationTimes = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication)
-	slot2 = nil
-	slot2 = (not Season123HeroGroupModel.instance:isEpisodeSeason123Retail() or math.min(slot0.maxMultiplicationTimes, Season123HeroGroupModel.instance:getMultiplicationTicket())) and 1
+function var_0_0.initMultiGroup(arg_8_0)
+	arg_8_0._multSpeedItems = {}
+	arg_8_0.maxMultiplicationTimes = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication)
 
-	for slot6 = 1, slot0.maxMultiplicationTimes do
-		if slot2 < slot0.maxMultiplicationTimes - slot6 + 1 then
-			gohelper.setActive(slot0._gomultContent.transform:GetChild(slot6 - 1), false)
+	local var_8_0 = arg_8_0._gomultContent.transform
+	local var_8_1
+
+	if Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
+		local var_8_2 = Season123HeroGroupModel.instance:getMultiplicationTicket()
+
+		var_8_1 = math.min(arg_8_0.maxMultiplicationTimes, var_8_2)
+	else
+		var_8_1 = 1
+	end
+
+	for iter_8_0 = 1, arg_8_0.maxMultiplicationTimes do
+		local var_8_3 = var_8_0:GetChild(iter_8_0 - 1)
+		local var_8_4 = arg_8_0.maxMultiplicationTimes - iter_8_0 + 1
+
+		if var_8_1 < var_8_4 then
+			gohelper.setActive(var_8_3, false)
 		else
-			gohelper.setActive(slot7, true)
-			slot0:initMultSpeedItem(slot7.gameObject, slot8, slot2)
+			gohelper.setActive(var_8_3, true)
+			arg_8_0:initMultSpeedItem(var_8_3.gameObject, var_8_4, var_8_1)
 		end
 	end
 
-	recthelper.setHeight(slot0.rectdropbg, uv0.ItemHeight * slot2)
+	recthelper.setHeight(arg_8_0.rectdropbg, var_0_0.ItemHeight * var_8_1)
 end
 
-function slot0.initMultSpeedItem(slot0, slot1, slot2, slot3)
-	if not slot0._multSpeedItems[slot2] then
-		slot0:addClickCb(gohelper.getClick(slot1), slot0.onClickSetSpeed, slot0, slot2)
+function var_0_0.initMultSpeedItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if not arg_9_0._multSpeedItems[arg_9_2] then
+		local var_9_0 = gohelper.findChild(arg_9_1, "line")
+		local var_9_1 = gohelper.findChildTextMesh(arg_9_1, "num")
+		local var_9_2 = gohelper.findChild(arg_9_1, "selecticon")
 
-		gohelper.findChildTextMesh(slot1, "num").text = luaLang("multiple") .. slot2
+		arg_9_0:addClickCb(gohelper.getClick(arg_9_1), arg_9_0.onClickSetSpeed, arg_9_0, arg_9_2)
 
-		gohelper.setActive(gohelper.findChild(slot1, "line"), slot2 ~= slot3)
+		var_9_1.text = luaLang("multiple") .. arg_9_2
 
-		slot0._multSpeedItems[slot2] = slot0:getUserDataTb_()
-		slot0._multSpeedItems[slot2].txtnum = slot5
-		slot0._multSpeedItems[slot2].goselecticon = gohelper.findChild(slot1, "selecticon")
+		gohelper.setActive(var_9_0, arg_9_2 ~= arg_9_3)
+
+		arg_9_0._multSpeedItems[arg_9_2] = arg_9_0:getUserDataTb_()
+		arg_9_0._multSpeedItems[arg_9_2].txtnum = var_9_1
+		arg_9_0._multSpeedItems[arg_9_2].goselecticon = var_9_2
 	end
 end
 
-function slot0.initCostIcon(slot0)
-	if Season123Config.instance:getEquipItemCoin(Season123HeroGroupModel.instance.activityId, Activity123Enum.Const.UttuTicketsCoin) then
-		if not CurrencyConfig.instance:getCurrencyCo(slot2) then
+function var_0_0.initCostIcon(arg_10_0)
+	local var_10_0 = Season123HeroGroupModel.instance.activityId
+	local var_10_1 = Season123Config.instance:getEquipItemCoin(var_10_0, Activity123Enum.Const.UttuTicketsCoin)
+
+	if var_10_1 then
+		local var_10_2 = CurrencyConfig.instance:getCurrencyCo(var_10_1)
+
+		if not var_10_2 then
 			return
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageicon, tostring(slot3.icon) .. "_1")
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._imageicon, tostring(var_10_2.icon) .. "_1")
 	else
-		logNormal("Season123 ticketId is nil : " .. tostring(slot1))
+		logNormal("Season123 ticketId is nil : " .. tostring(var_10_0))
 	end
 end
 
-function slot0.refreshMulti(slot0)
-	gohelper.setActive(slot0._gomultispeed, slot0._isMultiOpen)
-	gohelper.setActive(slot0._btnclosemult, slot0._isMultiOpen)
+function var_0_0.refreshMulti(arg_11_0)
+	gohelper.setActive(arg_11_0._gomultispeed, arg_11_0._isMultiOpen)
+	gohelper.setActive(arg_11_0._btnclosemult, arg_11_0._isMultiOpen)
 
-	slot0._gomultispeed.transform.position = slot0._gomultPos.transform.position
+	arg_11_0._gomultispeed.transform.position = arg_11_0._gomultPos.transform.position
 end
 
-function slot0.onClickSetSpeed(slot0, slot1)
-	slot0:setMultSpeed(slot1)
+function var_0_0.onClickSetSpeed(arg_12_0, arg_12_1)
+	arg_12_0:setMultSpeed(arg_12_1)
 end
 
-slot1 = GameUtil.parseColor("#efb785")
-slot2 = GameUtil.parseColor("#C3BEB6")
+local var_0_1 = GameUtil.parseColor("#efb785")
+local var_0_2 = GameUtil.parseColor("#C3BEB6")
 
-function slot0.setMultSpeed(slot0, slot1)
-	Season123HeroGroupController.instance:setMultiplication(slot1)
+function var_0_0.setMultSpeed(arg_13_0, arg_13_1)
+	Season123HeroGroupController.instance:setMultiplication(arg_13_1)
 
-	slot2 = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(Season123HeroGroupModel.instance.multiplication))
-	slot0._isMultiOpen = false
+	local var_13_0 = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(Season123HeroGroupModel.instance.multiplication))
 
-	slot0:refreshMulti()
-	slot0:refreshSelection()
+	arg_13_0._isMultiOpen = false
+
+	arg_13_0:refreshMulti()
+	arg_13_0:refreshSelection()
 end
 
-function slot0.refreshSelection(slot0)
-	slot1 = Season123HeroGroupModel.instance.multiplication
-	slot0._txtmultispeed.text = luaLang("multiple") .. slot1
-	slot5 = slot1
-	slot0._txtcostNum.text = "-" .. tostring(slot5)
+function var_0_0.refreshSelection(arg_14_0)
+	local var_14_0 = Season123HeroGroupModel.instance.multiplication
 
-	for slot5 = 1, slot0.maxMultiplicationTimes do
-		if slot0._multSpeedItems[slot5] then
-			slot6.txtnum.color = slot1 == slot5 and uv0 or uv1
+	arg_14_0._txtmultispeed.text = luaLang("multiple") .. var_14_0
+	arg_14_0._txtcostNum.text = "-" .. tostring(var_14_0)
 
-			gohelper.setActive(slot6.goselecticon, slot1 == slot5)
+	for iter_14_0 = 1, arg_14_0.maxMultiplicationTimes do
+		local var_14_1 = arg_14_0._multSpeedItems[iter_14_0]
+
+		if var_14_1 then
+			var_14_1.txtnum.color = var_14_0 == iter_14_0 and var_0_1 or var_0_2
+
+			gohelper.setActive(var_14_1.goselecticon, var_14_0 == iter_14_0)
 		end
 	end
 end
 
-function slot0._btnmultispeedOnClick(slot0)
-	slot0._isMultiOpen = not slot0._isMultiOpen
+function var_0_0._btnmultispeedOnClick(arg_15_0)
+	arg_15_0._isMultiOpen = not arg_15_0._isMultiOpen
 
-	slot0:refreshMulti()
+	arg_15_0:refreshMulti()
 end
 
-function slot0._btnclosemultOnClick(slot0)
-	slot0._isMultiOpen = false
+function var_0_0._btnclosemultOnClick(arg_16_0)
+	arg_16_0._isMultiOpen = false
 
-	slot0:refreshMulti()
+	arg_16_0:refreshMulti()
 end
 
-return slot0
+return var_0_0
